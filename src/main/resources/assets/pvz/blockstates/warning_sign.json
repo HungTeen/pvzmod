@@ -1,0 +1,8 @@
+{
+    "variants": {
+        "facing=north":{"model":"pvz:warning_sign"},
+        "facing=east":{"model":"pvz:warning_sign","y":90},
+        "facing=south":{"model":"pvz:warning_sign","y":180},
+        "facing=west":{"model":"pvz:warning_sign","y":270}
+    }
+}

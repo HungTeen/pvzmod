@@ -1,0 +1,20 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "XXX",
+    "XBX",
+    "XXX"
+  ],
+  "key": {
+    "X": {
+      "item": "minecraft:emerald"
+    },
+    "B": {
+      "item": "pvz:origin_element"
+    }
+  },
+  "result": {
+    "item": "pvz:green_card",
+    "count": 1
+  }
+}

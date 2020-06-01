@@ -1,0 +1,8 @@
+{
+    "variants": {
+        "facing=north":{"model":"pvz:zombie_doll"},
+        "facing=east":{"model":"pvz:zombie_doll","y":90},
+        "facing=south":{"model":"pvz:zombie_doll","y":180},
+        "facing=west":{"model":"pvz:zombie_doll","y":270}
+    }
+}

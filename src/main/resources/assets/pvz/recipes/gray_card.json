@@ -1,0 +1,21 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "XXX",
+    "XBX",
+    "XXX"
+  ],
+  "key": {
+    "X": {
+      "item": "minecraft:stone",
+      "data": 0
+    },
+    "B": {
+      "item": "pvz:origin_element"
+    }
+  },
+  "result": {
+    "item": "pvz:gray_card",
+    "count": 1
+  }
+}

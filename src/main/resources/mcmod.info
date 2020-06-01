@@ -1,0 +1,16 @@
+[
+{
+  "modid": "pvz",
+  "name": "Plants vs Zombies",
+  "description": "A mod that brings Plants vs Zombies to Minecraft ~",
+  "version": "beta 0.7",
+  "mcversion": "1.12.2",
+  "url": "https://space.bilibili.com/362855464",
+  "updateUrl": "",
+  "authorList": ["_HungTeen_ & Wolf__Crystal & Men_Tian_Bai"],
+  "credits": "Nothing",
+  "logoFile": "assets/pvz/textures/logo.png",
+  "screenshots": [],
+  "dependencies": []
+}
+]

@@ -1,0 +1,26 @@
+{
+  "display": {
+    "icon": {
+      "item": "minecraft:diamond_sword"
+    },
+    "title": {
+      "translate": "itemGroup.pvz"
+    },
+    "description": {
+      "translate": "advancement.pvz.root.desc"
+    },
+    "background": "pvz:textures/blocks/the_origin.png",
+    "announce_to_chat": true
+  },
+  "criteria": {
+    "in_world": {
+      "trigger": "minecraft:location",
+      "conditions": {
+        "dimension": "overworld"
+      }
+    }
+  },
+  "requirements": [[
+    "in_world"
+  ]]
+}
