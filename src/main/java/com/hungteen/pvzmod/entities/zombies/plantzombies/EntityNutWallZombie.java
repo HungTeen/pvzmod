@@ -1,11 +1,11 @@
 package com.hungteen.pvzmod.entities.zombies.plantzombies;
 
-import com.hungteen.pvzmod.entities.zombies.base.EntityZombieBase;
+import com.hungteen.pvzmod.entities.zombies.grassday.EntityNormalZombie;
+import com.hungteen.pvzmod.util.enums.Zombies;
 
-import net.minecraft.entity.SharedMonsterAttributes;
 import net.minecraft.world.World;
 
-public class EntityNutWallZombie extends EntityZombieBase{
+public class EntityNutWallZombie extends EntityNormalZombie{
 
 	public EntityNutWallZombie(World world) {
 		super(world);
@@ -18,9 +18,12 @@ public class EntityNutWallZombie extends EntityZombieBase{
 	}
 	
 	@Override
-	protected void applyEntityAttributes()
-    {
-        super.applyEntityAttributes();
-        this.getEntityAttribute(SharedMonsterAttributes.MAX_HEALTH).setBaseValue(130.0D);
-    }
+	public float getLife() {
+		return 130;
+	}
+	
+	@Override
+	public Zombies getZombieEnumName() {
+		return Zombies.NUTWALL_ZOMBIE;
+	}
 }

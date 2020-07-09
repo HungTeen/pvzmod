@@ -5,8 +5,8 @@ import java.util.List;
 import com.hungteen.pvzmod.damage.PVZDamageSource;
 import com.hungteen.pvzmod.damage.PVZDamageType;
 import com.hungteen.pvzmod.entities.plants.base.EntityPlantBase;
-import com.hungteen.pvzmod.entities.zombies.EntityZomboni;
 import com.hungteen.pvzmod.entities.zombies.base.EntityZombieBase;
+import com.hungteen.pvzmod.entities.zombies.poolday.EntityZomboni;
 import com.hungteen.pvzmod.util.EntityUtil;
 import com.hungteen.pvzmod.util.enums.Plants;
 

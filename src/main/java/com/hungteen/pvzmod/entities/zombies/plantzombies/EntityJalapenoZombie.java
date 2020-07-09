@@ -1,16 +1,13 @@
 package com.hungteen.pvzmod.entities.zombies.plantzombies;
 
 import com.hungteen.pvzmod.damage.PVZDamageSource;
-import com.hungteen.pvzmod.entities.plants.base.EntityPlantBase;
 import com.hungteen.pvzmod.entities.zombies.base.EntityZombieBase;
-import com.hungteen.pvzmod.registry.PotionRegister;
+import com.hungteen.pvzmod.util.EntityUtil;
 import com.hungteen.pvzmod.util.SoundsHandler;
+import com.hungteen.pvzmod.util.enums.Zombies;
 
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
-import net.minecraft.entity.SharedMonsterAttributes;
-import net.minecraft.entity.monster.EntityMob;
-import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumParticleTypes;
@@ -30,11 +27,10 @@ public class EntityJalapenoZombie extends EntityZombieBase {
 	protected void setSmallSize() {
 		this.setSize(0.3f, 0.5f);
 	}
-
+	
 	@Override
-	protected void applyEntityAttributes() {
-		super.applyEntityAttributes();
-		this.getEntityAttribute(SharedMonsterAttributes.MAX_HEALTH).setBaseValue(35.0D);
+	public float getLife() {
+		return 35;
 	}
 
 	@Override
@@ -77,16 +73,17 @@ public class EntityJalapenoZombie extends EntityZombieBase {
 		}
 		if (!this.world.isRemote) {
 			for (Entity entity : this.world.getEntitiesWithinAABB(EntityLivingBase.class, aabb)) {
-				if (!(entity instanceof EntityMob)) {
-					if (entity instanceof EntityPlantBase) {
-						entity.attackEntityFrom(PVZDamageSource.causeFireDamage(this, this), 1000);
-					} else {
-						entity.attackEntityFrom(PVZDamageSource.causeFireDamage(this, this), 20);
-					}
+				if(EntityUtil.checkCanEntityAttack(this, entity)&&entity instanceof EntityZombieBase) {
+						entity.attackEntityFrom(PVZDamageSource.causeFireDamage(this, this), ((EntityLivingBase) entity).getMaxHealth());
 				}
 			}
-			this.world.playSound(null, this.posX, this.posY, this.posZ, SoundsHandler.JALAPENO, SoundCategory.VOICE, 4,
+			this.playSound(SoundsHandler.JALAPENO, 4,
 					1);
 		}
+	}
+
+	@Override
+	public Zombies getZombieEnumName() {
+		return Zombies.JALAPENO_ZOMBIE;
 	}
 }

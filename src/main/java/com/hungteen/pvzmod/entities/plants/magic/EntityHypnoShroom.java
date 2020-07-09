@@ -3,8 +3,8 @@ package com.hungteen.pvzmod.entities.plants.magic;
 import com.hungteen.pvzmod.damage.PVZDamageSource;
 import com.hungteen.pvzmod.damage.PVZDamageType;
 import com.hungteen.pvzmod.entities.plants.base.EntityShroomBase;
-import com.hungteen.pvzmod.entities.zombies.EntityGargantuar;
 import com.hungteen.pvzmod.entities.zombies.base.EntityZombieBase;
+import com.hungteen.pvzmod.entities.zombies.roof.EntityGargantuar;
 import com.hungteen.pvzmod.util.EntityUtil;
 import com.hungteen.pvzmod.util.enums.Plants;
 

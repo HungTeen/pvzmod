@@ -10,8 +10,8 @@ import com.hungteen.pvzmod.entities.plants.fight.EntitySpikeWeed;
 import com.hungteen.pvzmod.entities.plants.fight.EntitySquash;
 import com.hungteen.pvzmod.entities.plants.flame.EntityJalapeno;
 import com.hungteen.pvzmod.entities.plants.ice.EntityIceShroom;
-import com.hungteen.pvzmod.entities.zombies.EntityImp;
 import com.hungteen.pvzmod.entities.zombies.base.EntityZombieBase;
+import com.hungteen.pvzmod.entities.zombies.roof.EntityImp;
 import com.hungteen.pvzmod.entities.zombies.special.EntityDolphin;
 import com.hungteen.pvzmod.entities.zombies.special.EntityDuckyTube;
 import com.hungteen.pvzmod.entities.zombies.special.EntityElementBall;
@@ -30,26 +30,6 @@ import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.World;
 
 public class EntityUtil {
-    
-	//zombies speed
-	public static final float VERY_SLOW_SPEED = 0.16f; //伽刚特尔
-	public static final float SLOW_CAR = 0.18f;     //车子
-	public static final float SLOW_WALK = 0.19f;    //报纸
-	public static final float NORMAL_SPEED = 0.20f;   
-	public static final float FLAG_SPEED = 0.22f;
-	public static final float POLE_SPEED = 0.24f;
-	public static final float FOOTBALL_SPEED = 0.27f;
-	public static final float FAST_SPEED = 0.28f;
-	
-	//zombies attackDamage
-	public static final float ZOMBIE_LITTLE_DAMAGE = 4;
-	public static final float ZOMBIE_NORMAL_DAMAGE=6;
-	public static final float ZOMBIE_FOOTBALL_DAMAGE = 8;
-	public static final float ZOMBIE_BEARD_DAMAGE=10;
-	public static final float ZOMBIE_ANGRY_DAMAGE = 20;
-	public static final float ZOMBIE_VERY_ANGRY_DAMAGE = 40;
-	public static final float ZOMBIE_GIANT_DAMAGE = 1000;
-	public static final float ZOMBIE_CAR_DAMAGE = 2000;
 	
 	public static double getAttackRange(Entity a,Entity b,double r)
 	{

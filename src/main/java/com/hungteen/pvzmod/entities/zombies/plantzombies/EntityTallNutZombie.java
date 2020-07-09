@@ -2,6 +2,7 @@ package com.hungteen.pvzmod.entities.zombies.plantzombies;
 
 import com.hungteen.pvzmod.entities.zombies.base.EntityZombieBase;
 import com.hungteen.pvzmod.util.EntityUtil;
+import com.hungteen.pvzmod.util.enums.Zombies;
 
 import net.minecraft.entity.SharedMonsterAttributes;
 import net.minecraft.world.World;
@@ -19,11 +20,13 @@ public class EntityTallNutZombie extends EntityZombieBase{
 	}
 	
 	@Override
-	protected void applyEntityAttributes()
-    {
-        super.applyEntityAttributes();
-        this.getEntityAttribute(SharedMonsterAttributes.MOVEMENT_SPEED).setBaseValue(EntityUtil.SLOW_WALK);
-        this.getEntityAttribute(SharedMonsterAttributes.MAX_HEALTH).setBaseValue(280.0D);
-    }
+	public float getLife() {
+		return 280;
+	}
+
+	@Override
+	public Zombies getZombieEnumName() {
+		return Zombies.TALLNUT_ZOMBIE;
+	}
 	
 }

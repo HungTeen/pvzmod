@@ -1,6 +1,7 @@
 package com.hungteen.pvzmod.util;
 
 import com.hungteen.pvzmod.client.gui.render.ResourcesRenderer;
+import com.hungteen.pvzmod.util.enums.Difficulty;
 
 import net.minecraftforge.common.config.Config;
 
@@ -24,14 +25,14 @@ public class ConfigurationUtil {
 		public static class SubCategoryGlobalSettings{
 			@Config.Comment("Choose the global difficulty")
 			@Config.LangKey("gui.pvzconfig.difficulty")
-			public Difficulty globalDifficulty = Difficulty.NORMAL;//植物能否伤害植物
+			public Difficulty pvzDifficulty = Difficulty.NORMAL;//植物能否伤害植物
 		}
 		
 		public static class SubCategoryDamageSettings{
 			
-			@Config.Comment("Can one hurt its friends by mistake.(eg:your PeaShooter's pea may hurt you by mistake")
-			@Config.LangKey("gui.pvzconfig.canHurtFriendByMistake")
-			public boolean canHurtFriendByAccident = false;//是否会误伤友军
+//			@Config.Comment("Can one hurt its friends by mistake.(eg:your PeaShooter's pea may hurt you by mistake")
+//			@Config.LangKey("gui.pvzconfig.canHurtFriendByMistake")
+//			public boolean canHurtFriendByAccident = false;//是否会误伤友军
 			
 			@Config.Comment("Plants can target and hurt the other players(expect its owner) when it's true)")
 			@Config.LangKey("gui.pvzconfig.canPlantHurtPlayers")
@@ -67,9 +68,8 @@ public class ConfigurationUtil {
 		}
 	}
 	
-	public enum Difficulty{
-		EASY,
-		NORMAL,
-		HARD
+	public static int getPVZDifficulty()
+	{
+		return MainConfig.globalSettings.pvzDifficulty.ordinal();
 	}
 }

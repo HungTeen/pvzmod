@@ -1,6 +1,6 @@
 package com.hungteen.pvzmod.render.layers;
 
-import com.hungteen.pvzmod.model.entities.zombies.ModelGargantuar;
+import com.hungteen.pvzmod.model.entities.zombies.roof.ModelGargantuar;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.model.ModelBiped;

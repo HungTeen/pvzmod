@@ -1,9 +1,10 @@
 package com.hungteen.pvzmod.entities.zombies.special;
 
-import com.hungteen.pvzmod.entities.zombies.EntityDolphinRider;
 import com.hungteen.pvzmod.entities.zombies.base.EntityWaterToolBase;
+import com.hungteen.pvzmod.entities.zombies.poolday.EntityDolphinRider;
 import com.hungteen.pvzmod.util.EntityUtil;
 import com.hungteen.pvzmod.util.SoundsHandler;
+import com.hungteen.pvzmod.util.ZombieUtil;
 
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
@@ -40,7 +41,7 @@ public class EntityDolphin extends EntityWaterToolBase{
 	@Override
 	protected void applyEntityAttributes() {
 		super.applyEntityAttributes();
-		this.getEntityAttribute(SharedMonsterAttributes.MOVEMENT_SPEED).setBaseValue(EntityUtil.FAST_SPEED);
+		this.getEntityAttribute(SharedMonsterAttributes.MOVEMENT_SPEED).setBaseValue(ZombieUtil.FAST);
 	}
 	
 	@Override
@@ -56,6 +57,11 @@ public class EntityDolphin extends EntityWaterToolBase{
 			    }
 			}
 		}
+	}
+	
+	@Override
+	protected void onNormalZombieUpdate() {
+		super.onNormalZombieUpdate();
 		if(!this.world.isRemote&&this.ticksExisted%100==0) {
 			EntityLivingBase target=this.getAttackTarget();
 //			System.out.println("1");
@@ -64,7 +70,7 @@ public class EntityDolphin extends EntityWaterToolBase{
 				this.motionY=0.7;
 				this.motionX*=4;
 				this.motionZ*=4;
-				this.world.playSound(null, posX, posY, posZ, SoundsHandler.DOLPHIN_JUMP, SoundCategory.VOICE, 1f,1f);
+				this.playSound(SoundsHandler.DOLPHIN_JUMP, 1f,1f);
 			}
 		}
 	}
@@ -82,5 +88,10 @@ public class EntityDolphin extends EntityWaterToolBase{
 	@Override
 	public double getMountedYOffset() {
 		return -0.65f;
+	}
+
+	@Override
+	public float getLife() {
+		return 20;
 	}
 }

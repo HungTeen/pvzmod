@@ -55,7 +55,7 @@ public class EntityMelon extends EntityPult{
 					    }
 //					}
 			}
-			this.world.playSound(null, posX, posY, posZ, SoundsHandler.MELON_HIT, SoundCategory.AMBIENT, 1f,1f);
+			this.playSound(SoundsHandler.MELON_HIT, 1f,1f);
 		}
 	}
 	

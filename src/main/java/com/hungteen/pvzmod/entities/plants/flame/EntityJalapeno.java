@@ -85,7 +85,7 @@ public class EntityJalapeno extends EntityBombBase {
 			for (Entity entity : EntityUtil.getEntityAttackableTarget(this, aabb)) {
 					entity.attackEntityFrom(PVZDamageSource.causeFireDamage(this, this), this.getAttackDamage());
 			}
-			this.world.playSound(null, this.posX, this.posY, this.posZ, SoundsHandler.JALAPENO, SoundCategory.VOICE, 4,
+			this.playSound(SoundsHandler.JALAPENO, 4,
 					1);
 		}
 	}

@@ -15,7 +15,7 @@ import com.hungteen.pvzmod.entities.plants.light.EntityTwinSunFlower;
 import com.hungteen.pvzmod.registry.BlockRegister;
 import com.hungteen.pvzmod.registry.ItemRegister;
 import com.hungteen.pvzmod.registry.PotionRegister;
-import com.hungteen.pvzmod.util.enums.PlantRanks;
+import com.hungteen.pvzmod.util.enums.Ranks;
 import com.hungteen.pvzmod.util.enums.Plants;
 
 import net.minecraft.block.Block;
@@ -240,7 +240,7 @@ public class PlantsUtil {
 	 * 获得当前植物的品质
 	 * 1 - 7 对应 灰 白 绿 蓝 紫 金 红
 	 */
-	public static PlantRanks getPlantRank(Plants plant)
+	public static Ranks getPlantRank(Plants plant)
 	{
 		switch(plant) {
 		case PEA_SHOOTER:
@@ -248,21 +248,21 @@ public class PlantsUtil {
 		case LILY_PAD:
 		case CABBAGE_PULT:
 		case FLOWER_POT:
-		case KERNEL_PULT:return PlantRanks.GRAY;
+		case KERNEL_PULT:return Ranks.GRAY;
 		case NUT_WALL:
 		case POTATO_MINE:
 		case TANGLE_KELP:
 		case SPIKE_WEED:
 		case SPLIT_PEA:
 		case PUMPKIN:
-		case ICEBERG_LETTUCE:return PlantRanks.WHITE;
+		case ICEBERG_LETTUCE:return Ranks.WHITE;
 		case SNOW_PEA:
 		case DOUBLE_SHOOTER:
 		case SQUASH:
 		case TORCH_WOOD:
 		case COFFEE_BEAN:
 		case MARIGOLD:
-		case LIGHTLING_ROD:return PlantRanks.GREEN;
+		case LIGHTLING_ROD:return Ranks.GREEN;
 		case CHERRY_BOMB:
 		case HYPNO_SHROOM:
 		case ICE_SHROOM:
@@ -270,13 +270,13 @@ public class PlantsUtil {
 		case JALAPENO:
 		case TALL_NUT:
 		case TWIN_SUNFLOWER:
-		case CAT_TAIL:return PlantRanks.BLUE;
+		case CAT_TAIL:return Ranks.BLUE;
 		case MELON_PULT:
 		case GATLING_PEA:
 		case SPIKE_ROCK:
 		case GOLD_LEAF:
-		case STRANGE_CAT:return PlantRanks.PURPLE;
-		case WINTER_MELON:return PlantRanks.GOLD;
+		case STRANGE_CAT:return Ranks.PURPLE;
+		case WINTER_MELON:return Ranks.GOLD;
 		default:{
 			System.out.println("plant type error");
 			return null;

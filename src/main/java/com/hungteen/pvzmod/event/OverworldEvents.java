@@ -6,10 +6,10 @@ import java.util.Random;
 import javax.annotation.Nonnull;
 
 import com.hungteen.pvzmod.Main;
-import com.hungteen.pvzmod.entities.zombies.normal.EntityBucketHeadZombie;
-import com.hungteen.pvzmod.entities.zombies.normal.EntityConeHeadZombie;
-import com.hungteen.pvzmod.entities.zombies.normal.EntityFlagZombie;
-import com.hungteen.pvzmod.entities.zombies.normal.EntityNormalZombie;
+import com.hungteen.pvzmod.entities.zombies.grassday.EntityBucketHeadZombie;
+import com.hungteen.pvzmod.entities.zombies.grassday.EntityConeHeadZombie;
+import com.hungteen.pvzmod.entities.zombies.grassday.EntityFlagZombie;
+import com.hungteen.pvzmod.entities.zombies.grassday.EntityNormalZombie;
 import com.hungteen.pvzmod.registry.EntitySpawnRegister;
 import com.hungteen.pvzmod.util.ConfigurationUtil;
 import com.hungteen.pvzmod.util.SoundsHandler;

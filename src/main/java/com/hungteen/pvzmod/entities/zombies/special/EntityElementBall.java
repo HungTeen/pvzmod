@@ -11,6 +11,7 @@ import com.hungteen.pvzmod.entities.zombies.base.EntityZombieBase;
 import com.hungteen.pvzmod.particles.base.PVZParticleType;
 import com.hungteen.pvzmod.util.EntityUtil;
 import com.hungteen.pvzmod.util.SoundsHandler;
+import com.hungteen.pvzmod.util.enums.Zombies;
 
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
@@ -165,6 +166,16 @@ public class EntityElementBall extends EntityZombieBase{
 	public State getBallState()
 	{
 		return State.values()[dataManager.get(STATE)];
+	}
+	
+	@Override
+	public Zombies getZombieEnumName() {
+		return Zombies.TOOL;
+	}
+
+	@Override
+	public float getLife() {
+		return 10;
 	}
 	
 	public enum State{

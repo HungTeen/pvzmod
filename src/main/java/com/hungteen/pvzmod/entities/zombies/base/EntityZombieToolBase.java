@@ -3,6 +3,7 @@ package com.hungteen.pvzmod.entities.zombies.base;
 import com.hungteen.pvzmod.entities.zombies.base.EntityZombieBase.Type;
 import com.hungteen.pvzmod.entities.zombies.special.EntityDuckyTube;
 import com.hungteen.pvzmod.util.EntityUtil;
+import com.hungteen.pvzmod.util.enums.Zombies;
 
 import net.minecraft.entity.SharedMonsterAttributes;
 import net.minecraft.entity.ai.EntityAILookIdle;
@@ -37,7 +38,7 @@ public abstract class EntityZombieToolBase extends EntityZombieBase{
 	@Override
 	protected void initEntityAI()
     {
-        this.tasks.addTask(5, new EntityAILookIdle(this));
+//        this.tasks.addTask(5, new EntityAILookIdle(this));
         initAITargetTask();
     }
 	
@@ -87,5 +88,10 @@ public abstract class EntityZombieToolBase extends EntityZombieBase{
 	@Override
 	public boolean isEntityInvulnerable(DamageSource source) {
 		return source != DamageSource.OUT_OF_WORLD;
+	}
+	
+	@Override
+	public Zombies getZombieEnumName() {
+		return Zombies.TOOL;
 	}
 }

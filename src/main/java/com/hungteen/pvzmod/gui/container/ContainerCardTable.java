@@ -6,7 +6,7 @@ import com.hungteen.pvzmod.registry.BlockRegister;
 import com.hungteen.pvzmod.util.CraftUtil;
 import com.hungteen.pvzmod.util.ItemUtil;
 import com.hungteen.pvzmod.util.PlantsUtil;
-import com.hungteen.pvzmod.util.enums.PlantRanks;
+import com.hungteen.pvzmod.util.enums.Ranks;
 import com.hungteen.pvzmod.util.enums.Plants;
 
 import net.minecraft.entity.player.EntityPlayer;
@@ -110,7 +110,7 @@ public class ContainerCardTable extends Container{
 		if(inventory==this.craftSlots) {
 			this.checkPlant();
 			if(this.resultPlant!=null) {
-				PlantRanks rank=PlantsUtil.getPlantRank(resultPlant);
+				Ranks rank=PlantsUtil.getPlantRank(resultPlant);
 //				System.out.println(rank);
 				if(rank==null) {
 					System.out.println("error plant rank!");

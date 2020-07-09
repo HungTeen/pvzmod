@@ -1,7 +1,7 @@
 package com.hungteen.pvzmod.util;
 
 import com.hungteen.pvzmod.entities.npcs.EntityTreeMan;
-import com.hungteen.pvzmod.entities.zombies.normal.EntityNormalZombie;
+import com.hungteen.pvzmod.entities.zombies.grassday.EntityNormalZombie;
 import com.hungteen.pvzmod.entities.zombies.special.EntityDolphin;
 
 import net.minecraft.entity.passive.EntityParrot;

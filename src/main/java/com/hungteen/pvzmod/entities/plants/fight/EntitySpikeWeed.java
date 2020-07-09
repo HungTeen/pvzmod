@@ -4,8 +4,8 @@ import com.hungteen.pvzmod.damage.PVZDamageSource;
 import com.hungteen.pvzmod.entities.ai.PVZAISpikeAttack;
 import com.hungteen.pvzmod.entities.ai.target.PVZAIPlantGlobalTarget;
 import com.hungteen.pvzmod.entities.plants.base.EntityPlantBase;
-import com.hungteen.pvzmod.entities.zombies.EntityBobsle;
-import com.hungteen.pvzmod.entities.zombies.EntityZomboni;
+import com.hungteen.pvzmod.entities.zombies.poolday.EntityBobsle;
+import com.hungteen.pvzmod.entities.zombies.poolday.EntityZomboni;
 import com.hungteen.pvzmod.util.enums.Plants;
 
 import net.minecraft.entity.Entity;

@@ -2,6 +2,7 @@ package com.hungteen.pvzmod.entities.zombies.special;
 
 import com.hungteen.pvzmod.entities.zombies.base.EntityWaterToolBase;
 import com.hungteen.pvzmod.entities.zombies.base.EntityZombieBase.Type;
+import com.hungteen.pvzmod.util.enums.Zombies;
 
 import net.minecraft.block.Block;
 import net.minecraft.entity.Entity;
@@ -36,5 +37,10 @@ public class EntityDuckyTube extends EntityWaterToolBase{
 			    }
 			}
 		}
+	}
+
+	@Override
+	public float getLife() {
+		return 20;
 	}
 }

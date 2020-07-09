@@ -1,13 +1,15 @@
 package com.hungteen.pvzmod.entities.zombies.plantzombies;
 
 import com.hungteen.pvzmod.entities.plants.fight.EntitySquash;
-import com.hungteen.pvzmod.entities.zombies.base.EntityZombieBase;
+import com.hungteen.pvzmod.entities.zombies.grassday.EntityNormalZombie;
+import com.hungteen.pvzmod.util.ZombieUtil;
+import com.hungteen.pvzmod.util.enums.Zombies;
 
-import net.minecraft.entity.EntityLiving;
 import net.minecraft.entity.EntityLivingBase;
+import net.minecraft.entity.SharedMonsterAttributes;
 import net.minecraft.world.World;
 
-public class EntitySquashZombie extends EntityZombieBase{
+public class EntitySquashZombie extends EntityNormalZombie{
 
 	public EntitySquashZombie(World worldIn) {
 		super(worldIn);
@@ -18,10 +20,17 @@ public class EntitySquashZombie extends EntityZombieBase{
 	protected void setSmallSize() {
 		this.setSize(0.4f, 0.7f);
 	}
+	
+	@Override
+	protected void applyEntityAttributes()
+    {
+        super.applyEntityAttributes();
+        this.getEntityAttribute(SharedMonsterAttributes.MOVEMENT_SPEED).setBaseValue(ZombieUtil.LITTLE_FAST);
+    }
 
 	@Override
-	public void onEntityUpdate() {
-		super.onEntityUpdate();
+	public void onNormalZombieUpdate() {
+		super.onNormalZombieUpdate();
 		if(this.getAttackTarget()!=null&&!this.world.isRemote) {
 			EntityLivingBase target=this.getAttackTarget();
 			double dis=this.getDistanceSq(target);
@@ -33,5 +42,10 @@ public class EntitySquashZombie extends EntityZombieBase{
 				this.setDead();
 			}
 		}
+	}
+	
+	@Override
+	public Zombies getZombieEnumName() {
+		return Zombies.SQUASH_ZOMBIE;
 	}
 }

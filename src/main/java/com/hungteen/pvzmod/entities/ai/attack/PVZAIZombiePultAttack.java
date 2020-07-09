@@ -1,7 +1,7 @@
 package com.hungteen.pvzmod.entities.ai.attack;
 
 import com.hungteen.pvzmod.entities.plants.base.EntityPultBase;
-import com.hungteen.pvzmod.entities.zombies.EntityCataPultZombie;
+import com.hungteen.pvzmod.entities.zombies.roof.EntityCataPultZombie;
 
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.IRangedAttackMob;

@@ -1,7 +1,7 @@
 package com.hungteen.pvzmod.entities.ai;
 
-import com.hungteen.pvzmod.entities.zombies.EntityGargantuar;
 import com.hungteen.pvzmod.entities.zombies.base.EntityZombieBase;
+import com.hungteen.pvzmod.entities.zombies.roof.EntityGargantuar;
 import com.hungteen.pvzmod.registry.PotionRegister;
 import com.hungteen.pvzmod.util.EntityUtil;
 

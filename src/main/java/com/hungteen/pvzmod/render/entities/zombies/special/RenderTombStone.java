@@ -1,7 +1,7 @@
 package com.hungteen.pvzmod.render.entities.zombies.special;
 
-import com.hungteen.pvzmod.entities.zombies.special.EntityTombStone;
-import com.hungteen.pvzmod.model.entities.zombies.special.ModelTombStone;
+import com.hungteen.pvzmod.entities.zombies.grassnight.EntityTombStone;
+import com.hungteen.pvzmod.model.entities.zombies.grassnight.ModelTombStone;
 import com.hungteen.pvzmod.util.Reference;
 
 import net.minecraft.client.renderer.GlStateManager;

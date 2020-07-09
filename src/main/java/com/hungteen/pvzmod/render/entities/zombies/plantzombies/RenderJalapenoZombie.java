@@ -1,6 +1,6 @@
 package com.hungteen.pvzmod.render.entities.zombies.plantzombies;
 
-import com.hungteen.pvzmod.entities.zombies.normal.EntityConeHeadZombie;
+import com.hungteen.pvzmod.entities.zombies.grassday.EntityConeHeadZombie;
 import com.hungteen.pvzmod.entities.zombies.plantzombies.EntityJalapenoZombie;
 import com.hungteen.pvzmod.model.entities.zombies.plantzombies.ModelJalapenoZombie;
 import com.hungteen.pvzmod.render.entities.zombies.RenderZombieBase;

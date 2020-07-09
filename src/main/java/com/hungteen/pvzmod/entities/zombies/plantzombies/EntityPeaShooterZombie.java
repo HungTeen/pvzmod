@@ -1,7 +1,8 @@
 package com.hungteen.pvzmod.entities.zombies.plantzombies;
 
 import com.hungteen.pvzmod.entities.bullets.EntityPea;
-import com.hungteen.pvzmod.entities.zombies.base.EntityZombieBase;
+import com.hungteen.pvzmod.entities.zombies.grassday.EntityNormalZombie;
+import com.hungteen.pvzmod.util.enums.Zombies;
 
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.network.datasync.DataParameter;
@@ -10,7 +11,7 @@ import net.minecraft.network.datasync.EntityDataManager;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.World;
 
-public class EntityPeaShooterZombie extends EntityZombieBase{
+public class EntityPeaShooterZombie extends EntityNormalZombie{
 
 	private static final DataParameter<Integer> ATTACK_TIME =EntityDataManager.createKey(EntityPeaShooterZombie.class, DataSerializers.VARINT);
 	private final int MAXTIME=30;
@@ -27,8 +28,8 @@ public class EntityPeaShooterZombie extends EntityZombieBase{
 	}
 	
 	@Override
-	public void onEntityUpdate() {
-		super.onEntityUpdate();
+	public void onNormalZombieUpdate() {
+		super.onNormalZombieUpdate();
 		if(this.getAttackTime()+this.getShootNum()>MAXTIME) {
 			this.shoot();
 		}
@@ -79,5 +80,15 @@ public class EntityPeaShooterZombie extends EntityZombieBase{
 	public void setAttackTime(int time)
 	{
 		dataManager.set(ATTACK_TIME, time);
+	}
+
+	@Override
+	public Zombies getZombieEnumName() {
+		return Zombies.PEASHOOTER_ZOMBIE;
+	}
+
+	@Override
+	public float getLife() {
+		return 20;
 	}
 }

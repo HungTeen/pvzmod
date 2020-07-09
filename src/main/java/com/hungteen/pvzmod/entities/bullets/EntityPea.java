@@ -119,14 +119,14 @@ public class EntityPea extends PVZThrowable{
         	else if(this.getPeaState()==State.SNOW) {
         		if(target instanceof EntityZombieBase) {
         			if(!this.world.isRemote&&!((EntityZombieBase) target).getIsCold()) {
-						this.world.playSound(null, this.posX, this.posY, this.posZ, SoundsHandler.FROZEN_PEA, SoundCategory.VOICE, 4, 1);
+						this.playSound(SoundsHandler.FROZEN_PEA, 4, 1);
         			}
         		}
         		target.attackEntityFrom(PVZDamageSource.causeSnowDamage(this, this.getThrower()), this.getAttackDamage());//damage
         	}
         	else if(this.getPeaState()==State.FIRE||this.getPeaState()==State.BLUE_FIRE) {
         		if(!this.world.isRemote) {
-					this.world.playSound(null, this.posX, this.posY, this.posZ, SoundsHandler.FIRE_PEA, SoundCategory.VOICE, 4, 1);
+					this.playSound(SoundsHandler.FIRE_PEA, 4, 1);
         		}
         		target.attackEntityFrom(PVZDamageSource.causeFireDamage(this, this.getThrower()), this.getAttackDamage());//damage
         	}

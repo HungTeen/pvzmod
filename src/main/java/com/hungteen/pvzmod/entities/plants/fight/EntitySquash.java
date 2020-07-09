@@ -67,7 +67,7 @@ public class EntitySquash extends EntityPlantBase{
 		if(!this.world.isRemote) {
 			if(this.getAttackTime()==1) {//跳起来了
 				if(EntityUtil.isOnGround(this)) {//着陆
-					this.world.playSound(null, this.posX, this.posY, this.posZ, SoundsHandler.GROUND_SHAKE, SoundCategory.BLOCKS, 4f, 1f);
+					this.playSound(SoundsHandler.GROUND_SHAKE, 4f, 1f);
 					this.dealDamage();
 					if(this.getExtraChance()>0) {//有免死机会就免死
 						this.setExtraChance(this.getExtraChance()-1);
@@ -81,7 +81,7 @@ public class EntitySquash extends EntityPlantBase{
 				}
 			}else {//在地面
 				if(target!=null&&EntityUtil.checkCanEntityAttack(this, target)) {//有目标
-					this.world.playSound(null, this.posX, this.posY, this.posZ, SoundsHandler.SQUASH_HMM, SoundCategory.VOICE, 4f, 1f);
+					this.playSound(SoundsHandler.SQUASH_HMM,4f, 1f);
 					this.smash(target);
 				}
 			}

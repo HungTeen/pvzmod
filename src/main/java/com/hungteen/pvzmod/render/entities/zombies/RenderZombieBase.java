@@ -1,7 +1,7 @@
 package com.hungteen.pvzmod.render.entities.zombies;
 
 import com.hungteen.pvzmod.entities.zombies.base.EntityZombieBase;
-import com.hungteen.pvzmod.entities.zombies.normal.EntityFlagZombie;
+import com.hungteen.pvzmod.entities.zombies.grassday.EntityFlagZombie;
 import com.hungteen.pvzmod.render.layers.LayerButter;
 import com.hungteen.pvzmod.render.layers.LayerCharm;
 import com.hungteen.pvzmod.render.layers.LayerCold;

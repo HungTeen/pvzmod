@@ -10,6 +10,7 @@ import com.hungteen.pvzmod.packet.PacketPlantLvlData;
 import com.hungteen.pvzmod.packet.PacketPlayerData;
 import com.hungteen.pvzmod.util.PlantsUtil;
 import com.hungteen.pvzmod.util.PlayerUtil;
+import com.hungteen.pvzmod.util.SoundsHandler;
 import com.hungteen.pvzmod.util.enums.Plants;
 
 import net.minecraft.entity.Entity;
@@ -25,6 +26,7 @@ import net.minecraft.stats.StatList;
 import net.minecraft.util.EnumHand;
 import net.minecraft.util.SoundCategory;
 import net.minecraft.world.World;
+import net.minecraftforge.client.event.sound.SoundSetupEvent;
 import net.minecraftforge.event.entity.player.PlayerEvent;
 import net.minecraftforge.event.entity.player.PlayerInteractEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
@@ -58,6 +60,10 @@ public class PlayerEvents {
 //			}
 			//ev.player.addItemStackToInventory(new ItemStack(ItemRegister.PEA_SHOOTER_CARD));
 		}
+//		EntityPlayer player = ev.player;
+//		if(!player.world.isRemote) {
+//		    player.world.playSound((EntityPlayer)null, player.posX, player.posY, player.posZ, SoundsHandler.CAR_START, SoundCategory.PLAYERS, 1, 1);
+//		}
 	}
 
 	@SubscribeEvent

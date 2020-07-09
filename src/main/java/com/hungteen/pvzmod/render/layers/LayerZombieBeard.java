@@ -1,7 +1,7 @@
 package com.hungteen.pvzmod.render.layers;
 
 import com.hungteen.pvzmod.entities.zombies.base.EntityZombieBase;
-import com.hungteen.pvzmod.entities.zombies.normal.EntityNormalZombie;
+import com.hungteen.pvzmod.entities.zombies.grassday.EntityNormalZombie;
 import com.hungteen.pvzmod.util.Reference;
 
 import net.minecraft.client.model.ModelBase;

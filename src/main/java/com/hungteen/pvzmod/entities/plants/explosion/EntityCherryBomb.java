@@ -29,7 +29,7 @@ public class EntityCherryBomb extends EntityBombBase{
 			for(Entity entity:EntityUtil.getEntityAttackableTarget(this, aabb)) {
 				 entity.attackEntityFrom(PVZDamageSource.causeExplosionDamage(this, this), this.getAttackDamage());
 			}
-			this.world.playSound(null,this.posX,this.posY,this.posZ,SoundsHandler.CHERRY_BOMB,SoundCategory.VOICE, 4, 1);
+			this.playSound(SoundsHandler.CHERRY_BOMB, 4, 1);
 		}
 		for(int i=1;i<=5;i++) {
 			Main.proxy.spawnParticle(PVZParticleType.DARK_RED_BOMB, this.posX, this.posY, this.posZ, 0, 0, 0);

@@ -1,8 +1,10 @@
 package com.hungteen.pvzmod.entities.zombies.special;
 
-import com.hungteen.pvzmod.entities.zombies.EntityBalloonZombie;
 import com.hungteen.pvzmod.entities.zombies.base.EntityZombieToolBase;
+import com.hungteen.pvzmod.entities.zombies.poolnight.EntityBalloonZombie;
 import com.hungteen.pvzmod.util.EntityUtil;
+import com.hungteen.pvzmod.util.ZombieUtil;
+import com.hungteen.pvzmod.util.enums.Zombies;
 
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.IEntityLivingData;
@@ -50,7 +52,7 @@ public class EntityBalloon extends EntityZombieToolBase{
 	
 	protected void applyEntityAttributes() {
 		super.applyEntityAttributes();
-		this.getEntityAttribute(SharedMonsterAttributes.MOVEMENT_SPEED).setBaseValue(EntityUtil.POLE_SPEED);
+		this.getEntityAttribute(SharedMonsterAttributes.MOVEMENT_SPEED).setBaseValue(ZombieUtil.BIT_FAST);
 	}
 	
 	@Override
@@ -61,5 +63,10 @@ public class EntityBalloon extends EntityZombieToolBase{
 	@Override
 	public double getMountedYOffset() {
 		return -1f;
+	}
+
+	@Override
+	public float getLife() {
+		return 20;
 	}
 }

@@ -4,8 +4,8 @@ import java.util.Random;
 
 import com.hungteen.pvzmod.entities.drops.EntityCoin;
 import com.hungteen.pvzmod.entities.drops.EntityPlantFood;
-import com.hungteen.pvzmod.entities.zombies.EntityYetiZombie;
 import com.hungteen.pvzmod.entities.zombies.base.EntityZombieBase;
+import com.hungteen.pvzmod.entities.zombies.poolnight.EntityYetiZombie;
 import com.hungteen.pvzmod.util.SoundsHandler;
 
 import net.minecraft.entity.Entity;

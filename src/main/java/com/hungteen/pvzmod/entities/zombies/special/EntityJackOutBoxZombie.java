@@ -2,11 +2,12 @@ package com.hungteen.pvzmod.entities.zombies.special;
 
 import com.hungteen.pvzmod.Main;
 import com.hungteen.pvzmod.damage.PVZDamageSource;
-import com.hungteen.pvzmod.entities.zombies.EntityGargantuar;
 import com.hungteen.pvzmod.entities.zombies.base.EntityZombieBase;
+import com.hungteen.pvzmod.entities.zombies.roof.EntityGargantuar;
 import com.hungteen.pvzmod.particles.base.PVZParticleType;
 import com.hungteen.pvzmod.util.EntityUtil;
 import com.hungteen.pvzmod.util.SoundsHandler;
+import com.hungteen.pvzmod.util.enums.Zombies;
 
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLiving;
@@ -81,9 +82,9 @@ public class EntityJackOutBoxZombie extends EntityZombieBase{
 		float len=getExpLen();
 		AxisAlignedBB aabb=new AxisAlignedBB(posX-len, posY-len, posZ-len, posX+len, posY+len, posZ+len);
 		for(Entity entity:EntityUtil.getEntityAttackableTarget(this, aabb)) {
-				entity.attackEntityFrom(PVZDamageSource.causeMotalDamage(this, this),((EntityLivingBase) entity).getHealth()*2);
+				entity.attackEntityFrom(PVZDamageSource.causeMotalDamage(this, this),((EntityLivingBase) entity).getMaxHealth());
 		}
-		this.world.playSound(null, posX,posY,posZ, SoundsHandler.CAR_EXPLOSION, SoundCategory.AMBIENT, 1f,1f);
+		this.playSound(SoundsHandler.CAR_EXPLOSION, 1f,1f);
 	}
 	
 	private float getExpLen()
@@ -116,6 +117,16 @@ public class EntityJackOutBoxZombie extends EntityZombieBase{
 	public void setAttackTime(int cd)
 	{
 	    dataManager.set(ATTACK_TIME, cd);
+	}
+
+	@Override
+	public Zombies getZombieEnumName() {
+		return Zombies.TOOL;
+	}
+
+	@Override
+	public float getLife() {
+		return 20;
 	}
 	
 }

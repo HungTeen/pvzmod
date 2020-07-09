@@ -7,6 +7,8 @@ import com.hungteen.pvzmod.entities.zombies.special.EntityElementBall;
 import com.hungteen.pvzmod.entities.zombies.special.EntityNormalDefence;
 import com.hungteen.pvzmod.util.EntityUtil;
 import com.hungteen.pvzmod.util.SoundsHandler;
+import com.hungteen.pvzmod.util.ZombieUtil;
+import com.hungteen.pvzmod.util.enums.Zombies;
 
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
@@ -59,10 +61,14 @@ public class EntityZomBoss extends EntityZombieBase implements IEntityMultiPart{
 	}
 	
 	@Override
+	public float getLife() {
+		return 3000;
+	}
+	
+	@Override
 	protected void applyEntityAttributes() {
 		super.applyEntityAttributes();
-		this.getEntityAttribute(SharedMonsterAttributes.MAX_HEALTH).setBaseValue(3000);
-		this.getEntityAttribute(SharedMonsterAttributes.MOVEMENT_SPEED).setBaseValue(EntityUtil.VERY_SLOW_SPEED);
+		this.getEntityAttribute(SharedMonsterAttributes.MOVEMENT_SPEED).setBaseValue(ZombieUtil.SLOW);
 	}
 	
 	@Override
@@ -260,5 +266,10 @@ public class EntityZomBoss extends EntityZombieBase implements IEntityMultiPart{
 		NORMAL,
 		ICE,
 		FLAME,
+	}
+
+	@Override
+	public Zombies getZombieEnumName() {
+		return Zombies.ZOMBOSS;
 	}
 }

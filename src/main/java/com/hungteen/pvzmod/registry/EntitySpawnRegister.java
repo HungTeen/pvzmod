@@ -3,16 +3,16 @@ package com.hungteen.pvzmod.registry;
 import java.util.ArrayList;
 
 import com.hungteen.pvzmod.entities.drops.EntitySun;
-import com.hungteen.pvzmod.entities.zombies.EntityBobsle;
-import com.hungteen.pvzmod.entities.zombies.EntityLavaZombie;
-import com.hungteen.pvzmod.entities.zombies.EntitySnorkelZombie;
-import com.hungteen.pvzmod.entities.zombies.EntityZomboni;
-import com.hungteen.pvzmod.entities.zombies.normal.EntityBucketHeadZombie;
-import com.hungteen.pvzmod.entities.zombies.normal.EntityConeHeadZombie;
-import com.hungteen.pvzmod.entities.zombies.normal.EntityNormalZombie;
+import com.hungteen.pvzmod.entities.zombies.grassday.EntityBucketHeadZombie;
+import com.hungteen.pvzmod.entities.zombies.grassday.EntityConeHeadZombie;
+import com.hungteen.pvzmod.entities.zombies.grassday.EntityNormalZombie;
 import com.hungteen.pvzmod.entities.zombies.plantzombies.EntityJalapenoZombie;
 import com.hungteen.pvzmod.entities.zombies.plantzombies.EntityNutWallZombie;
 import com.hungteen.pvzmod.entities.zombies.plantzombies.EntityPeaShooterZombie;
+import com.hungteen.pvzmod.entities.zombies.poolday.EntityBobsle;
+import com.hungteen.pvzmod.entities.zombies.poolday.EntityLavaZombie;
+import com.hungteen.pvzmod.entities.zombies.poolday.EntitySnorkelZombie;
+import com.hungteen.pvzmod.entities.zombies.poolday.EntityZomboni;
 import com.hungteen.pvzmod.util.BiomeUtil;
 import com.hungteen.pvzmod.util.enums.SpecialEvents;
 

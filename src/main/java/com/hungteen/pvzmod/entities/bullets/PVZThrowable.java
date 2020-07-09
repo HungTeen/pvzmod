@@ -50,12 +50,6 @@ public abstract class PVZThrowable extends EntityThrowable implements IThrowable
 	 */
 	protected boolean checkCanAttack(Entity target)
 	{
-		
-		if(ConfigurationUtil.MainConfig.damageSettings.canHurtFriendByAccident) {
-			if(!target.isEntityEqual(getThrower())) {
-				return true;
-			}
-		}
 		return EntityUtil.checkCanEntityAttack(getThrower(), target);
 	}
 	

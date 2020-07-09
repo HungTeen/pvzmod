@@ -10,17 +10,16 @@ import com.hungteen.pvzmod.entities.ai.EntityAIZombieEat;
 import com.hungteen.pvzmod.entities.ai.target.PVZAIZombieGlobalTarget;
 import com.hungteen.pvzmod.entities.plants.base.EntityPlantBase;
 import com.hungteen.pvzmod.entities.plants.common.EntityKernelPult;
-import com.hungteen.pvzmod.entities.plants.ice.EntityIceShroom;
-import com.hungteen.pvzmod.entities.plants.ice.EntityIcebergLettuce;
-import com.hungteen.pvzmod.entities.plants.ice.EntitySnowPea;
-import com.hungteen.pvzmod.entities.plants.ice.EntityWinterMelon;
 import com.hungteen.pvzmod.registry.PotionRegister;
 import com.hungteen.pvzmod.util.ConfigurationUtil;
 import com.hungteen.pvzmod.util.EntityUtil;
 import com.hungteen.pvzmod.util.PlantsUtil;
 import com.hungteen.pvzmod.util.PlayerUtil;
 import com.hungteen.pvzmod.util.SoundsHandler;
+import com.hungteen.pvzmod.util.ZombieUtil;
 import com.hungteen.pvzmod.util.enums.Plants;
+import com.hungteen.pvzmod.util.enums.Ranks;
+import com.hungteen.pvzmod.util.interfaces.IZombie;
 import com.hungteen.pvzmod.world.data.OverworldData;
 
 import net.minecraft.advancements.CriteriaTriggers;
@@ -50,14 +49,13 @@ import net.minecraft.potion.PotionEffect;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.EntityDamageSource;
 import net.minecraft.util.ResourceLocation;
-import net.minecraft.util.SoundCategory;
 import net.minecraft.util.SoundEvent;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.DifficultyInstance;
 import net.minecraft.world.World;
 
-public abstract class EntityZombieBase extends EntityMob {
+public abstract class EntityZombieBase extends EntityMob implements IZombie{
 
 	// 僵尸种类 普通 能量豆 胡子[成就]
 	private static final DataParameter<Integer> ZOMBIE_TYPE = EntityDataManager.createKey(EntityZombieBase.class,
@@ -82,7 +80,13 @@ public abstract class EntityZombieBase extends EntityMob {
 	public EntityZombieBase(World worldIn) {
 		super(worldIn);
 		this.getType();
+		this.setZombieAttributes();
 		this.isImmuneToFire = true;
+	}
+	
+	protected void setZombieAttributes()
+	{
+		this.setZombieMaxHealth(this.getLife());
 	}
 
 	@Override
@@ -114,9 +118,12 @@ public abstract class EntityZombieBase extends EntityMob {
 //		this.targetTasks.addTask(0, new PVZAIZombieGlobalTarget(this, EntityCrazyDave.class, 100, 100)); //打戴夫
 	}
 
+	/**
+	 * 能量豆：疯狂模式 1% 困难模式 2% 普通模式 3% 简单模式4%
+	 */
 	protected Type getType() {
 		int t = this.getRNG().nextInt(100);
-		if (t <= 1)
+		if (t <= 3-ConfigurationUtil.getPVZDifficulty()) 
 			return Type.SUPER;
 		else
 			return Type.NORMAL;
@@ -315,8 +322,9 @@ public abstract class EntityZombieBase extends EntityMob {
 		if (this.getIsSmall()) {
 			setSmallSize();
 		}
-		if (this.getIsFrozen() || this.getIsButter())
+		if (this.getIsFrozen() || this.getIsButter()) {
 			return;
+		}
 //		if(this.ticksExisted%20==0) {
 //			System.out.println(this.getIsSmall());
 //		}
@@ -324,6 +332,10 @@ public abstract class EntityZombieBase extends EntityMob {
 
 	}
 
+	/**
+	 * 僵尸的逻辑更新
+	 * 冰封时不执行
+	 */
 	protected void onNormalZombieUpdate() {
 		;
 	}
@@ -331,9 +343,9 @@ public abstract class EntityZombieBase extends EntityMob {
 	@Override
 	protected void applyEntityAttributes() {
 		super.applyEntityAttributes();
-		this.getEntityAttribute(SharedMonsterAttributes.ATTACK_DAMAGE).setBaseValue(EntityUtil.ZOMBIE_NORMAL_DAMAGE);
-		this.getEntityAttribute(SharedMonsterAttributes.FOLLOW_RANGE).setBaseValue(100D);
-		this.getEntityAttribute(SharedMonsterAttributes.MOVEMENT_SPEED).setBaseValue(EntityUtil.NORMAL_SPEED);
+		this.getEntityAttribute(SharedMonsterAttributes.ATTACK_DAMAGE).setBaseValue(ZombieUtil.EAT);
+		this.getEntityAttribute(SharedMonsterAttributes.FOLLOW_RANGE).setBaseValue(ZombieUtil.ZOMBIE_FOLLOW_RANGE);
+		this.getEntityAttribute(SharedMonsterAttributes.MOVEMENT_SPEED).setBaseValue(ZombieUtil.NORMAL_SPEED);
 		this.getEntityAttribute(SharedMonsterAttributes.KNOCKBACK_RESISTANCE).setBaseValue(1D);
 	}
 
@@ -632,6 +644,10 @@ public abstract class EntityZombieBase extends EntityMob {
 		}
 	}
 
+	/**
+	 * 给僵尸设置最大生命值
+	 * 并回血
+	 */
 	public void setZombieMaxHealth(float health) {
 		this.getEntityAttribute(SharedMonsterAttributes.MAX_HEALTH).setBaseValue(health);
 		this.heal(health);
@@ -665,6 +681,16 @@ public abstract class EntityZombieBase extends EntityMob {
 		return true;
 	}
 
+	public Ranks getZombieRank()
+	{
+		return ZombieUtil.getZombieRank(getZombieEnumName());
+	}
+	
+	@Override
+	public int getZombieXp() {
+		return ZombieUtil.getZombieXp(getZombieEnumName());
+	}
+	
 	@Override
 	protected boolean isValidLightLevel() {
 		return true;

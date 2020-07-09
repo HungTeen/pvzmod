@@ -3,6 +3,7 @@ package com.hungteen.pvzmod.entities.zombies.base;
 import com.hungteen.pvzmod.entities.zombies.base.EntityZombieBase.Type;
 import com.hungteen.pvzmod.entities.zombies.special.EntityDuckyTube;
 import com.hungteen.pvzmod.util.EntityUtil;
+import com.hungteen.pvzmod.util.enums.Zombies;
 
 import net.minecraft.block.Block;
 import net.minecraft.entity.Entity;
@@ -50,5 +51,10 @@ public abstract class EntityWaterToolBase extends EntityZombieToolBase{
 	@Override
 	public boolean shouldDismountInWater(Entity rider) {
 		return false;
+	}
+	
+	@Override
+	public Zombies getZombieEnumName() {
+		return Zombies.TOOL;
 	}
 }

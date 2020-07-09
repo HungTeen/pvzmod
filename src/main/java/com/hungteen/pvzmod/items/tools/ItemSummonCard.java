@@ -233,17 +233,17 @@ public class ItemSummonCard extends ItemBase {
 		}
 		if (itemUsed) {
 			player.getCooldownTracker().setCooldown(this, coolDownTime);
-			if (ConfigurationUtil.MainConfig.globalSettings.globalDifficulty == ConfigurationUtil.Difficulty.EASY) {
-				PlayerUtil.addPlayerXp(player, 1);
-			} else if (ConfigurationUtil.MainConfig.globalSettings.globalDifficulty == ConfigurationUtil.Difficulty.NORMAL) {
-				if (this.itemRand.nextInt(2) == 0) {
-					PlayerUtil.addPlayerXp(player, 1);
-				}
-			} else if (ConfigurationUtil.MainConfig.globalSettings.globalDifficulty == ConfigurationUtil.Difficulty.HARD) {
-				if (this.itemRand.nextInt(4) == 0) {
-					PlayerUtil.addPlayerXp(player, 1);
-				}
-			}
+//			if (ConfigurationUtil.MainConfig.globalSettings.globalDifficulty == ConfigurationUtil.Difficulty.EASY) {
+//				PlayerUtil.addPlayerXp(player, 1);
+//			} else if (ConfigurationUtil.MainConfig.globalSettings.globalDifficulty == ConfigurationUtil.Difficulty.NORMAL) {
+//				if (this.itemRand.nextInt(2) == 0) {
+//					PlayerUtil.addPlayerXp(player, 1);
+//				}
+//			} else if (ConfigurationUtil.MainConfig.globalSettings.globalDifficulty == ConfigurationUtil.Difficulty.HARD) {
+//				if (this.itemRand.nextInt(4) == 0) {
+//					PlayerUtil.addPlayerXp(player, 1);
+//				}
+//			}
 			return EnumActionResult.SUCCESS;
 		} else {
 			return EnumActionResult.FAIL;
