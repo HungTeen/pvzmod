@@ -3,6 +3,7 @@ package com.hungteen.pvzmod.blocks;
 import java.util.Random;
 
 import com.hungteen.pvzmod.registry.BlockRegister;
+import com.hungteen.pvzmod.util.ConfigurationUtil;
 import com.hungteen.pvzmod.util.Reference;
 
 import net.minecraft.block.Block;
@@ -40,7 +41,9 @@ public class BlockOrigin extends BlockBase
             	for(int j=-1;j<=1;j++) {
             		for(int k=-1;k<=1;k++) {
             			if(i==k&&k==j&&i==0) continue;
-            			flag|=check(worldIn,pos.getX()+i,pos.getY()+j,pos.getZ()+k);
+            			if(rand.nextInt(this.getChangeChance())==0) {
+            			    flag|=check(worldIn,pos.getX()+i,pos.getY()+j,pos.getZ()+k);
+            			}
             		}
             	}
             }
@@ -48,6 +51,16 @@ public class BlockOrigin extends BlockBase
             	//worldIn.setBlockState(pos, Blocks.AIR.getDefaultState());
             }
         }
+	}
+	
+	/**
+	 * 原始精华块将周围可变方块改变
+	 * 如 草方块->普通精华
+	 */
+	private int getChangeChance()
+	{
+		int dif=ConfigurationUtil.getPVZDifficulty();
+		return 3+2*dif;
 	}
 	
 	public boolean isOpaqueCube(IBlockState state)

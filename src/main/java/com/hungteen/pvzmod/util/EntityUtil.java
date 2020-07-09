@@ -77,7 +77,7 @@ public class EntityUtil {
 				if(target.isRiding()) return false;
 			}
 		}
-		boolean flag = ConfigurationUtil.MainConfig.damageSettings.canPlantHurtOtherPlayers;
+		boolean flag = ConfigurationUtil.MainConfig.damageSettings.canPlantHurtOtherTeams;
 		if(flag) {
 			Team team1=getEntityTeam(world, attacker);
 			Team team2=getEntityTeam(world, target);

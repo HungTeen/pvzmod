@@ -47,11 +47,11 @@ public class OverworldEvents{
 		switch(time) {
 		case 500:
 			rand.setSeed(ev.world.getSeed() + ev.world.getTotalWorldTime());
-			if (rand.nextInt(ConfigurationUtil.MainConfig.overworldEvents.plantZombieDayChance)==0)
+			if (rand.nextInt(ConfigurationUtil.MainConfig.eventSettings.plantZombieDayChance)==0)
 				activateEvent(ev.world, SpecialEvents.PLANTZOMBIE_DAY);
-			if (rand.nextInt(ConfigurationUtil.MainConfig.overworldEvents.smallZombieDayChance)==0)
+			if (rand.nextInt(ConfigurationUtil.MainConfig.eventSettings.smallZombieDayChance)==0)
 				activateEvent(ev.world, SpecialEvents.SMALLZOMBIE_DAY);
-			if (rand.nextInt(ConfigurationUtil.MainConfig.overworldEvents.invisZombieDayChance)==0)
+			if (rand.nextInt(ConfigurationUtil.MainConfig.eventSettings.invisZombieDayChance)==0)
 				activateEvent(ev.world, SpecialEvents.INVISZOMBIE_DAY);
 			break;
 		case 6000:

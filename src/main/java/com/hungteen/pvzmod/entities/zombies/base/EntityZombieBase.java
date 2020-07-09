@@ -148,13 +148,13 @@ public abstract class EntityZombieBase extends EntityMob implements IZombie{
 //			    this.addPotionEffect(new PotionEffect(PotionRegister.SMALL_LIFE_EFFECT, 9999999, 4,false,false));//可随难度而调
 //			}
 //		}
-		if (this.getRNG().nextInt(ConfigurationUtil.MainConfig.overworldEvents.invisZombieDayChance) == 0) {
+		if (this.getRNG().nextInt(ConfigurationUtil.MainConfig.eventSettings.invisZombieDayChance) == 0) {
 			if (this.getCanBeInvis()) {
 				this.setIsInvis(true);
 				this.addPotionEffect(new PotionEffect(MobEffects.INVISIBILITY, 9999999, 0, false, false));// 可随难度而调
 			}
 		}
-		if (this.getRNG().nextInt(ConfigurationUtil.MainConfig.overworldEvents.smallZombieDayChance) == 0) {
+		if (this.getRNG().nextInt(ConfigurationUtil.MainConfig.eventSettings.smallZombieDayChance) == 0) {
 			if (this.getCanBeSmall()) {
 				this.setIsSmall(true);
 				this.setSize(0.2f, 0.3f);

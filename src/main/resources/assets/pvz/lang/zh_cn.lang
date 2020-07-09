@@ -1,3 +1,14 @@
+//item
+//entity
+//block
+//text
+//gui
+//msg
+//config
+//death msg
+//creativetabs
+//keyboard
+
 //Items
 item.coal_nugget.name=炭粒
 item.steel_ingot.name=钢锭
@@ -73,6 +84,23 @@ item.iceberg_lettuce_card.name=冰冻生菜卡
 item.gold_leaf_card.name=黄金叶卡
 item.lightning_rod_card.name=避雷草卡
 item.strange_cat_card.name=奇怪猫卡
+//tools
+item.steel_sword.name=钢剑
+item.steel_axe.name=钢斧
+item.steel_pickaxe.name=钢镐
+item.steel_hoe.name=钢锄
+item.steel_shovel.name=钢铲
+item.dave_shovel.name=戴夫铲
+item.pea_gun.name=豌豆枪
+item.car_key.name=车钥匙
+//food
+item.apple_juice.name=苹果汁
+item.melon_juice.name=西瓜汁
+//armors
+item.steel_helmet.name=钢头盔
+item.steel_chestplate.name=钢胸甲
+item.steel_leggings.name=钢护腿
+item.steel_boots.name=钢靴子
 
 //entities
 //plants
@@ -165,24 +193,6 @@ entity.jalapeno_zombie.name=火爆辣椒僵尸
 entity.gatlingpea_zombie.name=机枪射手僵尸
 entity.squash_zombie.name=窝瓜僵尸
 
-//tools
-item.steel_sword.name=钢剑
-item.steel_axe.name=钢斧
-item.steel_pickaxe.name=钢镐
-item.steel_hoe.name=钢锄
-item.steel_shovel.name=钢铲
-item.dave_shovel.name=戴夫铲
-item.pea_gun.name=豌豆枪
-item.car_key.name=车钥匙
-//food
-item.apple_juice.name=苹果汁
-item.melon_juice.name=西瓜汁
-//armors
-item.steel_helmet.name=钢头盔
-item.steel_chestplate.name=钢胸甲
-item.steel_leggings.name=钢护腿
-item.steel_boots.name=钢靴子
-
 //Blocks
 tile.steel_block.name=钢块
 tile.aluminum_ore.name=铝矿石
@@ -210,9 +220,6 @@ tile.pole.name=电线杆
 tile.zombie_doll.name=僵尸玩偶
 tile.warning_sign.name=警示牌
 tile.lily_pad.name=睡莲
-
-//message
-message.huge_wave=一大波僵尸正在来袭 ！
 
 //text
 text.plantLvl.name=等级
@@ -354,6 +361,25 @@ pvzgui.panney_shop_price.name=价格
 pvzgui.panney_shop_left.name=上一页
 pvzgui.panney_shop_right.name=下一页
 pvzgui.panney_shop_buy.name=购买
+
+//message
+message.huge_wave=一大波僵尸正在来袭 ！
+
+//config
+gui.pvzconfig.title=植物大战僵尸mod配置
+gui.pvzconfig.globalSettings=全局设置
+gui.pvzconfig.eventSettings=事件设置
+gui.pvzconfig.damageSettings=伤害设置
+gui.pvzconfig.displaySettings=显示设置
+gui.pvzconfig.difficulty=独立于原版难度
+gui.pvzconfig.canPlantHurtTeams=植物能攻击其他队伍（没有队伍不算）
+gui.pvzconfig.canBulletPassEntity=子弹能穿过不能攻击的实体
+gui.pvzconfig.plantZombieDayChance=植物僵尸事件的概率
+gui.pvzconfig.smallZombieDayChance=迷你僵尸事件的概率
+gui.pvzconfig.invisZombieDayChance=隐形僵尸事件的概率
+gui.pvzconfig.showSun=显示阳光数
+gui.pvzconfig.showEnergy=显示能量豆数
+gui.pvzconfig.showMoney=显示金钱数
 
 //deathMsg
 death.attack.pvz_weak=%s虚弱致死

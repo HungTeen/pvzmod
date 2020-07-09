@@ -1,3 +1,14 @@
+//item
+//entity
+//block
+//text
+//gui
+//msg
+//config
+//death msg
+//creativetabs
+//keyboard
+
 //Items
 item.coal_nugget.name=Coal Nugget
 item.steel_ingot.name=Steel Ingot
@@ -73,6 +84,23 @@ item.iceberg_lettuce_card.name=IcebergLettuce Card
 item.gold_leaf_card.name=GoldLeaf Card
 item.lightning_rod_card.name=LightningRod Card
 item.strange_cat_card.name=StrangeCat Card
+//tools
+item.steel_sword.name=Steel Sword
+item.steel_axe.name=Steel Axe
+item.steel_pickaxe.name=Steel Pickaxe
+item.steel_hoe.name=Steel Hoe
+item.steel_shovel.name=Steel Shovel
+item.dave_shovel.name=Dave Shovel
+item_pea_gun.name=Pea Gun
+item_car_key.name=Car Key
+//food
+item.apple_juice.name=Apple Juice
+item.melon_juice.name=Melon Juice
+//armors
+item.steel_helmet.name=Steel Helmet
+item.steel_chestplate.name=Steel Chestplate
+item.steel_leggings.name=Steel Leggings
+item.steel_boots.name=Steel Boots
 
 //entities
 //plants
@@ -165,24 +193,6 @@ entity.jalapeno_zombie.name=Jalapeno Zombie
 entity.gatlingpea_zombie.name=GatlingPea Zombie
 entity.squash_zombie.name=Squash Zombie
 
-//tools
-item.steel_sword.name=Steel Sword
-item.steel_axe.name=Steel Axe
-item.steel_pickaxe.name=Steel Pickaxe
-item.steel_hoe.name=Steel Hoe
-item.steel_shovel.name=Steel Shovel
-item.dave_shovel.name=Dave Shovel
-item_pea_gun.name=Pea Gun
-item_car_key.name=Car Key
-//food
-item.apple_juice.name=Apple Juice
-item.melon_juice.name=Melon Juice
-//armors
-item.steel_helmet.name=Steel Helmet
-item.steel_chestplate.name=Steel Chestplate
-item.steel_leggings.name=Steel Leggings
-item.steel_boots.name=Steel Boots
-
 //Blocks
 tile.steel_block.name=Steel Block
 tile.aluminum_ore.name=Aluminum Ore
@@ -210,9 +220,6 @@ tile.pole.name=Pole
 tile.zombie_doll.name=Zombie Doll
 tile.warning_sign.name=Warning Sign
 tile.lily_pad.name=Lily Pad
-
-//message
-message.huge_wave=A huge wave of Zombies are coming !
 
 //text
 text.plantLvl.name=LVL
@@ -354,6 +361,11 @@ pvzgui.panney_shop_price.name=Price
 pvzgui.panney_shop_left.name=Left
 pvzgui.panney_shop_right.name=Right
 pvzgui.panney_shop_buy.name=Buy
+
+//config
+
+//message
+message.huge_wave=A huge wave of Zombies are coming !
 
 //deathMsg
 death.attack.pvz_weak=Weak to death

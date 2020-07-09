@@ -14,16 +14,20 @@ public class ConfigurationUtil {
 		@Config.LangKey("gui.pvzconfig.globalSettings")
 		public static final SubCategoryGlobalSettings globalSettings= new SubCategoryGlobalSettings();//全局设置
 		
-		@Config.Comment("Configure random events that happen in the overworld each day")
-		@Config.LangKey("gui.pvzconfig.overworldEvents")
-		public static final SubCategoryOverworldEvents overworldEvents = new SubCategoryOverworldEvents();//主世界的特殊事件
-		
 		@Config.Comment("Configure damage settings")
 		@Config.LangKey("gui.pvzconfig.damageSettings")
 		public static final SubCategoryDamageSettings damageSettings =new SubCategoryDamageSettings();//伤害设置
 		
+		@Config.Comment("Configure random events")
+		@Config.LangKey("gui.pvzconfig.eventSettings")
+		public static final SubCategoryEventSettings eventSettings = new SubCategoryEventSettings();//特殊事件设置
+		
+		@Config.Comment("Configure display")
+		@Config.LangKey("gui.pvzconfig.displaySettings")
+		public static final SubCategoryDisplaySettings displaySettings = new SubCategoryDisplaySettings();//特殊事件设置
+		
 		public static class SubCategoryGlobalSettings{
-			@Config.Comment("Choose the global difficulty")
+			@Config.Comment("different with default difficulty")
 			@Config.LangKey("gui.pvzconfig.difficulty")
 			public Difficulty pvzDifficulty = Difficulty.NORMAL;//植物能否伤害植物
 		}
@@ -34,37 +38,45 @@ public class ConfigurationUtil {
 //			@Config.LangKey("gui.pvzconfig.canHurtFriendByMistake")
 //			public boolean canHurtFriendByAccident = false;//是否会误伤友军
 			
-			@Config.Comment("Plants can target and hurt the other players(expect its owner) when it's true)")
-			@Config.LangKey("gui.pvzconfig.canPlantHurtPlayers")
-			public boolean canPlantHurtOtherPlayers = false;//植物能否伤害其他玩家
+			@Config.Comment("Plants can hurt the other teams when it's true)")
+			@Config.LangKey("gui.pvzconfig.canPlantHurtTeams")
+			public boolean canPlantHurtOtherTeams = false;//植物能否伤害其他队伍
 			
 			@Config.Comment("Can bullet pass through the entities that it can't hurt")
 			@Config.LangKey("gui.pvzconfig.canBulletPassEntity")
 			public boolean canBulletPassEntity = true;//子弹能否穿过不能伤害的实体
 		}
 		
-		public static class SubCategoryOverworldEvents{
+		public static class SubCategoryEventSettings{
 			
-			@Config.Comment("Chance per day for the PlantZombie Day to occur. Value is represented as a chance of 1/n.")
+			@Config.Comment("Chancefor the PlantZombie Day to occur. Value is represented as a chance of 1/n.")
 			@Config.LangKey("gui.pvzconfig.plantZombieDayChance")
 			@Config.RangeInt(min = 1, max = 1000000)
 			public int plantZombieDayChance = 10;
 
-			@Config.Comment("Chance per day for the SmallZombie Day to occur. Value is represented as a chance of 1/n.")
+			@Config.Comment("Chancefor the SmallZombie Day to occur. Value is represented as a chance of 1/n.")
 			@Config.LangKey("gui.pvzconfig.smallZombieDayChance")
 			@Config.RangeInt(min = 1, max = 1000000)
 			public int smallZombieDayChance = 15;
 			
-			@Config.Comment("Chance per day for the InvisZombie Day to occur. Value is represented as a chance of 1/n.")
-			@Config.LangKey("gui.pvzconfig.smallZombieDayChance")
+			@Config.Comment("Chance for the InvisZombie Day to occur. Value is represented as a chance of 1/n.")
+			@Config.LangKey("gui.pvzconfig.invisZombieDayChance")
 			@Config.RangeInt(min = 1, max = 1000000)
-			public int invisZombieDayChance = 15;
+			public int invisZombieDayChance = 15;		
+		}
+		
+		public static class SubCategoryDisplaySettings{
+			@Config.Comment("Show sun amount bar")
+			@Config.LangKey("gui.pvzconfig.showSun")
+			public boolean showSunNum = true;//
 			
-			@Config.Comment("Chance per day for the Vase Day to occur. Value is represented as a chance of 1/n.")
-			@Config.LangKey("gui.pvzconfig.vaseDayChance")
-			@Config.RangeInt(min = 1, max = 1000000)
-			public int vaseDayChance = 8;
+			@Config.Comment("Show energy amount bar")
+			@Config.LangKey("gui.pvzconfig.showEnergy")
+			public boolean showEnergyNum = true;//
 			
+			@Config.Comment("Show money amount bar")
+			@Config.LangKey("gui.pvzconfig.showMoney")
+			public boolean showMoneyNum = true;//
 		}
 	}
 	
