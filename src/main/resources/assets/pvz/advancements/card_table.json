@@ -1,0 +1,42 @@
+{
+  "display": {
+    "icon": {
+      "item": "pvz:card_table"
+    },
+    "title": {
+      "translate": "advancement.pvz.card_table"
+    },
+    "description": {
+      "translate": "advancement.pvz.card_table.desc"
+    },
+	"frame":"task",
+    "announce_to_chat": true
+  },
+  "parent":"pvz:origin",
+  "criteria": {
+    "get_origin_element": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items":[
+		  {
+		    "item":"pvz:card_table"
+		  }
+		]
+      }
+    }
+  },
+  "requirements": [[
+    "get_origin_element"
+  ]],
+  "rewards":{
+    "recipes":[
+	    "pvz:gray_card",
+		"pvz:white_card",
+		"pvz:green_card",
+		"pvz:blue_card",
+		"pvz:purple_card",
+		"pvz:gold_card",
+		"pvz:red_card"
+    ]
+  }
+}

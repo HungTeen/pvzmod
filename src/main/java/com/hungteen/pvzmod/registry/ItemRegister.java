@@ -40,7 +40,7 @@ public class ItemRegister {
 	//Items
 	public static final Item COAL_NUGGET = new ItemBase("coal_nugget",CreativeTabRegister.MATERIAL_TAB);
 	public static final Item STEEL_INGOT = new ItemBase("steel_ingot",CreativeTabRegister.MATERIAL_TAB);
-	public static final Item ALUMINUM_INGOT = new ItemBase("aluminum_ingot",CreativeTabRegister.MATERIAL_TAB);
+//	public static final Item ALUMINUM_INGOT = new ItemBase("aluminum_ingot",CreativeTabRegister.MATERIAL_TAB);
 	public static final Item ORIGIN_ELEMENT = new ItemBase("origin_element",CreativeTabRegister.MATERIAL_TAB);
 	public static final Item COMMON_ELEMENT = new ItemBase("common_element",CreativeTabRegister.MATERIAL_TAB);
 	public static final Item ELECTRICITY_ELEMENT = new ItemBase("electricity_element",CreativeTabRegister.MATERIAL_TAB);

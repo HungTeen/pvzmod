@@ -1,5 +1,7 @@
 package com.hungteen.pvzmod;
 
+import com.hungteen.pvzmod.event.OverworldEvents;
+import com.hungteen.pvzmod.registry.EntitySpawnRegister;
 import com.hungteen.pvzmod.registry.RegistryHandler;
 import com.hungteen.pvzmod.registry.TileEntityRegister;
 import com.hungteen.pvzmod.util.Reference;
@@ -46,8 +48,9 @@ public class Main {
 	}
 	
 	@EventHandler
-	public static void serverInt(FMLServerStartingEvent event)
+	public static void serverInit(FMLServerStartingEvent event)
 	{
 		RegistryHandler.serverRegistries(event);
+		EntitySpawnRegister.updateEntitySpawn(event.getServer().getWorld(0));
 	}
 }

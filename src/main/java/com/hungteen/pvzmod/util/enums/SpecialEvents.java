@@ -2,9 +2,10 @@ package com.hungteen.pvzmod.util.enums;
 
 public enum SpecialEvents {
     
-	
-	PLANTZOMBIE_DAY,
-	SMALLZOMBIE_DAY,
-	INVISZOMBIE_DAY,
-	VASE_DAY;
+	NORMAL_ZOMBIE,
+	DAY_ZOMBIE,
+	NIGHT_ZOMBIE,
+	PLANT_ZOMBIE,
+	MINI_ZOMBIE,
+	INVIS_ZOMBIE,
 }

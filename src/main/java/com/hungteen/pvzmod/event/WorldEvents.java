@@ -21,7 +21,7 @@ public class WorldEvents {
 		int dim = ev.world.provider.getDimension();
         //System.out.println(""+dim);
 		if (dim == 0) {
-//			OverworldEvents.doTickCheck(ev);
+			OverworldEvents.doTickCheck(ev);
 		}
 	}
 }

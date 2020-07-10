@@ -9,7 +9,7 @@ public class CreativeTabRegister {
 	public static final CreativeTabs MATERIAL_TAB = new CreativeTabs("Materials") {
 		@Override
 		public ItemStack getTabIconItem() {
-			return new ItemStack(ItemRegister.ALUMINUM_INGOT,1,0);
+			return new ItemStack(ItemRegister.STEEL_INGOT,1,0);
 		}
 	};
 	

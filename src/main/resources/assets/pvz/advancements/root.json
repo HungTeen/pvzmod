@@ -4,11 +4,12 @@
       "item": "minecraft:diamond_sword"
     },
     "title": {
-      "translate": "itemGroup.pvz"
+      "translate": "advancement.pvz.root"
     },
     "description": {
       "translate": "advancement.pvz.root.desc"
     },
+	"frame":"task",
     "background": "pvz:textures/blocks/the_origin.png",
     "announce_to_chat": true
   },
@@ -22,5 +23,10 @@
   },
   "requirements": [[
     "in_world"
-  ]]
+  ]],
+  "rewards":{
+    "recipes":[
+	    
+    ]
+  }
 }

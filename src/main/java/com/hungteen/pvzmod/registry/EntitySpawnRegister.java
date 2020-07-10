@@ -5,46 +5,99 @@ import java.util.ArrayList;
 import com.hungteen.pvzmod.entities.drops.EntitySun;
 import com.hungteen.pvzmod.entities.zombies.grassday.EntityBucketHeadZombie;
 import com.hungteen.pvzmod.entities.zombies.grassday.EntityConeHeadZombie;
+import com.hungteen.pvzmod.entities.zombies.grassday.EntityFlagZombie;
 import com.hungteen.pvzmod.entities.zombies.grassday.EntityNormalZombie;
+import com.hungteen.pvzmod.entities.zombies.grassday.EntityPoleZombie;
+import com.hungteen.pvzmod.entities.zombies.grassnight.EntityFootballZombie;
+import com.hungteen.pvzmod.entities.zombies.grassnight.EntityGigaFootballZombie;
+import com.hungteen.pvzmod.entities.zombies.grassnight.EntityOldZombie;
+import com.hungteen.pvzmod.entities.zombies.grassnight.EntityPaperZombie;
+import com.hungteen.pvzmod.entities.zombies.grassnight.EntityScreenDoorZombie;
+import com.hungteen.pvzmod.entities.zombies.grassnight.EntityTombStone;
+import com.hungteen.pvzmod.entities.zombies.plantzombies.EntityGatlingPeaZombie;
 import com.hungteen.pvzmod.entities.zombies.plantzombies.EntityJalapenoZombie;
 import com.hungteen.pvzmod.entities.zombies.plantzombies.EntityNutWallZombie;
 import com.hungteen.pvzmod.entities.zombies.plantzombies.EntityPeaShooterZombie;
+import com.hungteen.pvzmod.entities.zombies.plantzombies.EntitySquashZombie;
+import com.hungteen.pvzmod.entities.zombies.plantzombies.EntityTallNutZombie;
 import com.hungteen.pvzmod.entities.zombies.poolday.EntityBobsle;
 import com.hungteen.pvzmod.entities.zombies.poolday.EntityLavaZombie;
 import com.hungteen.pvzmod.entities.zombies.poolday.EntitySnorkelZombie;
 import com.hungteen.pvzmod.entities.zombies.poolday.EntityZomboni;
+import com.hungteen.pvzmod.entities.zombies.poolnight.EntityDiggerZombie;
+import com.hungteen.pvzmod.entities.zombies.poolnight.EntityJackInBoxZombie;
+import com.hungteen.pvzmod.entities.zombies.poolnight.EntityPogoZombie;
+import com.hungteen.pvzmod.entities.zombies.poolnight.EntityYetiZombie;
+import com.hungteen.pvzmod.entities.zombies.roof.EntityCataPultZombie;
+import com.hungteen.pvzmod.entities.zombies.roof.EntityGargantuar;
+import com.hungteen.pvzmod.entities.zombies.roof.EntitySadGargantuar;
+import com.hungteen.pvzmod.entities.zombies.special.EntityBalloon;
+import com.hungteen.pvzmod.entities.zombies.special.EntityDolphin;
 import com.hungteen.pvzmod.util.BiomeUtil;
 import com.hungteen.pvzmod.util.enums.SpecialEvents;
 
 import net.minecraft.entity.EntityLiving;
 import net.minecraft.entity.EnumCreatureType;
+import net.minecraft.world.World;
 import net.minecraft.world.biome.Biome;
 import net.minecraftforge.fml.common.registry.EntityRegistry;
 
 public class EntitySpawnRegister {
 
-	private static final ArrayList<SpawnEntry> plantZombieDaySpawns = new ArrayList<SpawnEntry>();
+	private static final ArrayList<SpawnEntry> commonSpawns = new ArrayList<SpawnEntry>();
+	private static final ArrayList<SpawnEntry> dayTimeSpawns = new ArrayList<SpawnEntry>();
+	private static final ArrayList<SpawnEntry> nightTimeSpawns = new ArrayList<SpawnEntry>();
+	private static final ArrayList<SpawnEntry> plantZombieEventSpawns = new ArrayList<SpawnEntry>();
+	
 	
 	public static void registerEntitySpawn()
 	{
-		plantZombieDaySpawns.add(new SpawnEntry(EntityJalapenoZombie.class, 20, 1, 1, EnumCreatureType.MONSTER, BiomeUtil.overworldLand));
-		plantZombieDaySpawns.add(new SpawnEntry(EntityPeaShooterZombie.class, 80, 1, 2, EnumCreatureType.MONSTER, BiomeUtil.overworldLand));
-		plantZombieDaySpawns.add(new SpawnEntry(EntityNutWallZombie.class, 50, 1, 1, EnumCreatureType.MONSTER, BiomeUtil.overworldLand));
+		//ÆÕÍ¨½©Ê¬
+		commonSpawns.add(new SpawnEntry(EntityNormalZombie.class, 80, 1, 3, EnumCreatureType.MONSTER, BiomeUtil.overworldLand));
+		commonSpawns.add(new SpawnEntry(EntityFlagZombie.class, 5, 1, 3, EnumCreatureType.MONSTER, BiomeUtil.overworldLand));
+		commonSpawns.add(new SpawnEntry(EntityConeHeadZombie.class, 30, 1, 2, EnumCreatureType.MONSTER, BiomeUtil.overworldLand));
+		commonSpawns.add(new SpawnEntry(EntityBucketHeadZombie.class, 10, 1, 1, EnumCreatureType.MONSTER, BiomeUtil.overworldLand));
+		commonSpawns.add(new SpawnEntry(EntitySnorkelZombie.class, 50, 1, 1, EnumCreatureType.MONSTER, BiomeUtil.sea));
+		commonSpawns.add(new SpawnEntry(EntityJackInBoxZombie.class, 15, 1, 1, EnumCreatureType.MONSTER, BiomeUtil.overworldLand));
+
+		//°×Ìì½©Ê¬
+		dayTimeSpawns.add(new SpawnEntry(EntityPoleZombie.class, 20, 1, 2, EnumCreatureType.MONSTER, BiomeUtil.overworldLand));
+		dayTimeSpawns.add(new SpawnEntry(EntityBobsle.class, 10, 1, 1, EnumCreatureType.MONSTER, BiomeUtil.snowLand));
+		dayTimeSpawns.add(new SpawnEntry(EntityZomboni.class, 40, 1, 1, EnumCreatureType.MONSTER, BiomeUtil.snowLand));
+		dayTimeSpawns.add(new SpawnEntry(EntityCataPultZombie.class, 20, 1, 2, EnumCreatureType.MONSTER, BiomeUtil.overworldLand));
+		dayTimeSpawns.add(new SpawnEntry(EntityGargantuar.class, 5, 1, 1, EnumCreatureType.MONSTER, BiomeUtil.desert));
+		dayTimeSpawns.add(new SpawnEntry(EntitySadGargantuar.class, 1, 1, 1, EnumCreatureType.MONSTER, BiomeUtil.mesa));
+		dayTimeSpawns.add(new SpawnEntry(EntityDolphin.class, 20, 1, 1, EnumCreatureType.MONSTER, BiomeUtil.sea));
+		dayTimeSpawns.add(new SpawnEntry(EntitySun.class, 100, 1, 1, EnumCreatureType.CREATURE, BiomeUtil.overworldLand));
 		
-		//zombie
-		EntityRegistry.addSpawn(EntityNormalZombie.class, 100, 2, 3, EnumCreatureType.MONSTER, BiomeUtil.overworldLand);
-		EntityRegistry.addSpawn(EntityConeHeadZombie.class, 30, 1, 2, EnumCreatureType.MONSTER, BiomeUtil.overworldLand);
-		EntityRegistry.addSpawn(EntityBucketHeadZombie.class, 10, 1, 1, EnumCreatureType.MONSTER, BiomeUtil.overworldLand);
+		//Ò¹Íí½©Ê¬
+		nightTimeSpawns.add(new SpawnEntry(EntityPaperZombie.class, 50, 1, 1, EnumCreatureType.MONSTER, BiomeUtil.overworldLand));
+		nightTimeSpawns.add(new SpawnEntry(EntityOldZombie.class, 5, 1, 1, EnumCreatureType.MONSTER, BiomeUtil.overworldLand));
+		nightTimeSpawns.add(new SpawnEntry(EntityTombStone.class, 5, 1, 2, EnumCreatureType.MONSTER, BiomeUtil.overworldLand));
+		nightTimeSpawns.add(new SpawnEntry(EntityScreenDoorZombie.class, 10, 1, 1, EnumCreatureType.MONSTER, BiomeUtil.overworldLand));
+		nightTimeSpawns.add(new SpawnEntry(EntityDiggerZombie.class, 15, 1, 1, EnumCreatureType.MONSTER, BiomeUtil.mountain));
+		nightTimeSpawns.add(new SpawnEntry(EntityPogoZombie.class, 20, 1, 2, EnumCreatureType.MONSTER, BiomeUtil.mountain));
+		nightTimeSpawns.add(new SpawnEntry(EntityBalloon.class, 20, 1, 2, EnumCreatureType.MONSTER, BiomeUtil.sky));
+		nightTimeSpawns.add(new SpawnEntry(EntityYetiZombie.class, 1, 1, 1, EnumCreatureType.MONSTER, BiomeUtil.snowLand));
+		nightTimeSpawns.add(new SpawnEntry(EntityFootballZombie.class, 8, 1, 1, EnumCreatureType.MONSTER, BiomeUtil.overworldLand));
+		nightTimeSpawns.add(new SpawnEntry(EntityGigaFootballZombie.class, 1, 1, 1, EnumCreatureType.MONSTER, BiomeUtil.swampland));
 		
-		EntityRegistry.addSpawn(EntityBobsle.class, 20, 1, 1, EnumCreatureType.MONSTER, BiomeUtil.snowLand);
-		EntityRegistry.addSpawn(EntityZomboni.class, 40, 1, 2, EnumCreatureType.MONSTER, BiomeUtil.snowLand);
+		//Ö²Îï½©Ê¬
+		plantZombieEventSpawns.add(new SpawnEntry(EntityJalapenoZombie.class, 5, 1, 1, EnumCreatureType.MONSTER, BiomeUtil.overworldLand));
+		plantZombieEventSpawns.add(new SpawnEntry(EntityPeaShooterZombie.class, 50, 1, 2, EnumCreatureType.MONSTER, BiomeUtil.overworldLand));
+		plantZombieEventSpawns.add(new SpawnEntry(EntityNutWallZombie.class, 20, 1, 1, EnumCreatureType.MONSTER, BiomeUtil.overworldLand));
+		plantZombieEventSpawns.add(new SpawnEntry(EntityGatlingPeaZombie.class, 20, 1, 1, EnumCreatureType.MONSTER, BiomeUtil.overworldLand));
+		plantZombieEventSpawns.add(new SpawnEntry(EntityTallNutZombie.class, 10, 1, 1, EnumCreatureType.MONSTER, BiomeUtil.overworldLand));
+		plantZombieEventSpawns.add(new SpawnEntry(EntitySquashZombie.class, 10, 1, 1, EnumCreatureType.MONSTER, BiomeUtil.overworldLand));
 		
-		EntityRegistry.addSpawn(EntitySnorkelZombie.class, 50, 1, 1, EnumCreatureType.MONSTER, BiomeUtil.sea);
-		
+		//µØÓü
 		EntityRegistry.addSpawn(EntityLavaZombie.class, 40, 1, 1, EnumCreatureType.MONSTER, BiomeUtil.hell);
+	}
+	
+	public static void updateEntitySpawn(World world)
+	{
+		if(world.isRemote) return ;
 		
-		//others
-		EntityRegistry.addSpawn(EntitySun.class, 100, 1, 1, EnumCreatureType.CREATURE, BiomeUtil.overworldLand);
 	}
 	
 	public static void addEventSpawns(SpecialEvents event) {
@@ -52,7 +105,7 @@ public class EntitySpawnRegister {
 
         switch (event) {
             case PLANTZOMBIE_DAY:
-                spawnList = plantZombieDaySpawns;
+                spawnList = plantZombieEventSpawns;
                 break;
 		default:
 			break;
@@ -68,7 +121,7 @@ public class EntitySpawnRegister {
 
         switch (event) {
             case PLANTZOMBIE_DAY:
-                spawnList = plantZombieDaySpawns;
+                spawnList = plantZombieEventSpawns;
                 break;
 		default:
 			break;

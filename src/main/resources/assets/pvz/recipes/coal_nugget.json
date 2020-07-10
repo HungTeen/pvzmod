@@ -1,0 +1,16 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "ingredients":
+    [
+        {
+             "item": "pvz:coal",
+             "data":0
+        }
+ 
+    ],
+
+     "result": {
+          "item": "pvz:coal_nugget",
+          "count": 9
+      }
+}

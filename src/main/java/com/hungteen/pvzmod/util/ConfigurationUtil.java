@@ -49,20 +49,20 @@ public class ConfigurationUtil {
 		
 		public static class SubCategoryEventSettings{
 			
-			@Config.Comment("Chancefor the PlantZombie Day to occur. Value is represented as a chance of 1/n.")
-			@Config.LangKey("gui.pvzconfig.plantZombieDayChance")
+			@Config.Comment("Chance for the Plant-Zombie-Event to occur. Value is represented as a chance of 1/n.")
+			@Config.LangKey("gui.pvzconfig.plantZombieEventChance")
 			@Config.RangeInt(min = 1, max = 1000000)
-			public int plantZombieDayChance = 10;
+			public int plantZombieEventChance = 15;
 
-			@Config.Comment("Chancefor the SmallZombie Day to occur. Value is represented as a chance of 1/n.")
-			@Config.LangKey("gui.pvzconfig.smallZombieDayChance")
+			@Config.Comment("Chance for the Mini-Zombie-Event to occur. Value is represented as a chance of 1/n.")
+			@Config.LangKey("gui.pvzconfig.miniZombieEventChance")
 			@Config.RangeInt(min = 1, max = 1000000)
-			public int smallZombieDayChance = 15;
+			public int miniZombieEventChance = 15;
 			
-			@Config.Comment("Chance for the InvisZombie Day to occur. Value is represented as a chance of 1/n.")
-			@Config.LangKey("gui.pvzconfig.invisZombieDayChance")
+			@Config.Comment("Chance for the Invis-Zombie-Event to occur. Value is represented as a chance of 1/n.")
+			@Config.LangKey("gui.pvzconfig.invisZombieEventChance")
 			@Config.RangeInt(min = 1, max = 1000000)
-			public int invisZombieDayChance = 15;		
+			public int invisZombieEventChance = 15;		
 		}
 		
 		public static class SubCategoryDisplaySettings{

@@ -22,7 +22,7 @@ public class WorldGenOres implements IWorldGenerator{
 	}
 	
 	private void generateOverworld(Random random, int chunkX, int chunkZ, World world, IChunkGenerator chunkGenerator,IChunkProvider chunkProvider) {
-		generateOres(BlockRegister.ALUMINUM_ORE.getDefaultState(),world,random,chunkX*16,chunkZ*16,6,164,random.nextInt(7)+1,45);
+//		generateOres(BlockRegister.ALUMINUM_ORE.getDefaultState(),world,random,chunkX*16,chunkZ*16,6,164,random.nextInt(7)+1,45);
 		generateOres(BlockRegister.JEWEL_ORE.getDefaultState(),world,random,chunkX*16,chunkZ*16,6,14,random.nextInt(3)+1,3);
 	}
 	

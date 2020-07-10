@@ -34,6 +34,7 @@ import net.minecraft.world.biome.Biome;
 import net.minecraft.world.storage.WorldSavedData;
 import net.minecraftforge.client.event.sound.PlaySoundEvent;
 import net.minecraftforge.common.BiomeManager.BiomeType;
+import net.minecraftforge.event.terraingen.BiomeEvent.GetWaterColor;
 import net.minecraftforge.fml.common.gameevent.TickEvent;
 
 public class OverworldEvents{
@@ -42,29 +43,57 @@ public class OverworldEvents{
 	
 	public static void doTickCheck(TickEvent.WorldTickEvent ev)
 	{
-		if (ev.world.getTotalWorldTime() <= 24000L) return; //第一天莫得
-		int time = (int)(ev.world.getWorldTime() % 24000L);
+		long totalTime = ev.world.getTotalWorldTime();
+		if(totalTime<=24000l*getSafeDayLength()) return ; //世界安全时间
+		int time = (int)(totalTime % 24000L);//当天的时间
 		switch(time) {
-		case 500:
-			rand.setSeed(ev.world.getSeed() + ev.world.getTotalWorldTime());
-			if (rand.nextInt(ConfigurationUtil.MainConfig.eventSettings.plantZombieDayChance)==0)
-				activateEvent(ev.world, SpecialEvents.PLANTZOMBIE_DAY);
-			if (rand.nextInt(ConfigurationUtil.MainConfig.eventSettings.smallZombieDayChance)==0)
-				activateEvent(ev.world, SpecialEvents.SMALLZOMBIE_DAY);
-			if (rand.nextInt(ConfigurationUtil.MainConfig.eventSettings.invisZombieDayChance)==0)
-				activateEvent(ev.world, SpecialEvents.INVISZOMBIE_DAY);
+		case 10:{//10tick：开始生成特殊事件
+			OverworldData data=OverworldData.getGlobalData(ev.world);
+			if(!data.hasChanged()) {//还没改变，防止世界时间停止，而不停刷新
+				data.setChanged(true);
+				rand.setSeed(ev.world.getSeed() + totalTime);
+				if(data.isZombossDefeated()||rand.nextInt(100)<getAttackChance(totalTime)) {//可以攻击
+					data.setAttack(true);
+					activateEvent(ev.world, SpecialEvents.NORMAL_ZOMBIE);
+					activateEvent(ev.world, SpecialEvents.DAY_ZOMBIE);
+					if (rand.nextInt(ConfigurationUtil.MainConfig.eventSettings.plantZombieEventChance)==0) {
+						activateEvent(ev.world, SpecialEvents.PLANT_ZOMBIE);
+				    }
+			        if (rand.nextInt(ConfigurationUtil.MainConfig.eventSettings.miniZombieEventChance)==0) {
+				        activateEvent(ev.world, SpecialEvents.MINI_ZOMBIE);
+			        }
+			        if (rand.nextInt(ConfigurationUtil.MainConfig.eventSettings.invisZombieEventChance)==0) {
+				        activateEvent(ev.world, SpecialEvents.INVIS_ZOMBIE);
+			        }
+				}
+			}
 			break;
-		case 6000:
-			hugeWave(ev.world,1);
+		}
+		case 11800:{//11800 tick:白天结束 白天僵尸消失
+			OverworldData data=OverworldData.getGlobalData(ev.world);
+			data.setChanged(false);
+			deactivateEvent(ev.world, SpecialEvents.DAY_ZOMBIE);
 			break;
-		case 18000:
-			hugeWave(ev.world,2);
+		}
+		case 12020:{//12020 tick:夜晚开始 夜晚僵尸生成
+			OverworldData data=OverworldData.getGlobalData(ev.world);
+			if(!data.hasChanged()) {
+				data.setChanged(true);
+				if(data.isAttack()) {
+					activateEvent(ev.world, SpecialEvents.NIGHT_ZOMBIE);
+				}
+			}
+		}
+		case 23800:{//23800 tick:一天结束，取消所有生成
+			OverworldData data=OverworldData.getGlobalData(ev.world);
+			data.setChanged(false);
+			deactivateEvent(ev.world, SpecialEvents.NORMAL_ZOMBIE);
+			deactivateEvent(ev.world, SpecialEvents.NIGHT_ZOMBIE);
+			deactivateEvent(ev.world, SpecialEvents.PLANT_ZOMBIE);
+			deactivateEvent(ev.world, SpecialEvents.MINI_ZOMBIE);
+			deactivateEvent(ev.world, SpecialEvents.INVIS_ZOMBIE);
 			break;
-		case 23500:
-			deactivateEvent(ev.world, SpecialEvents.PLANTZOMBIE_DAY);
-			deactivateEvent(ev.world, SpecialEvents.SMALLZOMBIE_DAY);
-			deactivateEvent(ev.world, SpecialEvents.INVISZOMBIE_DAY);
-			break;
+		}
 		}
 	}
 	
@@ -72,19 +101,21 @@ public class OverworldEvents{
 		OverworldData data=OverworldData.getGlobalData(world);
 		if (!data.hasEvent(event)) {
 			data.add(event);
-			if(event==SpecialEvents.PLANTZOMBIE_DAY)
-			    EntitySpawnRegister.addEventSpawns(event);
-
-			ITextComponent message = getEventMessage(event, false);
-			SoundEvent sound = null;
+			switch(event) {
+			case NORMAL_ZOMBIE:
+			case DAY_ZOMBIE:
+			case NIGHT_ZOMBIE:
+			case PLANT_ZOMBIE:{
+				EntitySpawnRegister.addEventSpawns(event);
+				break;
+			}
+			default:break;
+			}
 			
-			//sound = SoundsHandler.eventSpecialDayStart;
-
+			ITextComponent message = getEventMessage(event, false);
 			for (EntityPlayer pl : world.playerEntities) {
 				pl.sendMessage(message);
-
-				if (sound != null)
-					world.playSound(null, pl.posX, pl.posY, pl.posZ, sound, SoundCategory.AMBIENT, 1.0f, 1.0f);
+				world.playSound(null, pl.posX, pl.posY, pl.posZ, SoundsHandler.HUGE_WAVE, SoundCategory.AMBIENT, 1.0f, 1.0f);
 			}
 		}
 	}
@@ -94,9 +125,17 @@ public class OverworldEvents{
 		OverworldData data=OverworldData.getGlobalData(world);
 		if(data.hasEvent(event)) {
 			data.remove(event);
+			switch(event) {
+			case NORMAL_ZOMBIE:
+			case DAY_ZOMBIE:
+			case NIGHT_ZOMBIE:
+			case PLANT_ZOMBIE:{
+				EntitySpawnRegister.removeEventSpawns(event);
+				break;
+			}
+			default:break;
+			}
 			ITextComponent message = getEventMessage(event, true);
-			if(event==SpecialEvents.PLANTZOMBIE_DAY)
-			    EntitySpawnRegister.removeEventSpawns(event);
 			for (EntityPlayer pl : world.playerEntities) {
 				pl.sendMessage(message);
 			}
@@ -105,11 +144,11 @@ public class OverworldEvents{
 	
 	private static ITextComponent getEventMessage(SpecialEvents event, boolean isEnding) {
 		switch (event) {
-			case PLANTZOMBIE_DAY:
+			case PLANT_ZOMBIE:
 				return StringUtil.getColourLocale("message.event." + (isEnding ? "end" : "start") + ".plantZombieDay", TextFormatting.DARK_GREEN);
-			case SMALLZOMBIE_DAY:
+			case MINI_ZOMBIE:
 			    return StringUtil.getColourLocale("message.event." + (isEnding ? "end" : "start") + ".smallZombieDay", TextFormatting.DARK_GRAY);
-			case INVISZOMBIE_DAY:
+			case INVIS_ZOMBIE:
 			    return StringUtil.getColourLocale("message.event." + (isEnding ? "end" : "start") + ".invisZombieDay", TextFormatting.DARK_BLUE);
 			default:
 				return null;
@@ -167,5 +206,21 @@ public class OverworldEvents{
 				return new BlockPos(nowX,nowY+1,nowZ);
 			}
 		}
+	}
+	
+	/**
+	 * 获取进攻概率
+	 */
+	public static int getAttackChance(long time)
+	{
+		int dif=ConfigurationUtil.getPVZDifficulty();
+		int chance=10+dif*10;
+		return chance;
+	}
+	
+	public static int getSafeDayLength()
+	{
+		int dif=ConfigurationUtil.getPVZDifficulty();
+		return 3-dif;
 	}
 }

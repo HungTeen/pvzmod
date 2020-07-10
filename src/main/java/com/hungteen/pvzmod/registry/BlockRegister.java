@@ -29,7 +29,7 @@ public class BlockRegister {
 
 	public static List<Block> BLOCKS = new ArrayList<Block>();
 	//ores
-	public static final Block ALUMINUM_ORE = new OreBase("aluminum_ore",Material.ROCK);
+//	public static final Block ALUMINUM_ORE = new OreBase("aluminum_ore",Material.ROCK);
 	public static final Block JEWEL_ORE = new JewelOre("jewel_ore",Material.ROCK);
 	public static final Block ORIGIN_ORE = new OreBase1("origin_ore",Material.ROCK, ItemRegister.ORIGIN_ELEMENT, Reference.ENDERCHEST_HARDNESS, Reference.ENDERCHEST_RESISTANCE, 3, 0.64f, 1,4);
 	public static final Block COMMON_ORE = new OreBase1("common_ore",Material.ROCK, ItemRegister.COMMON_ELEMENT, Reference.ENDERCHEST_HARDNESS, Reference.ENDERCHEST_RESISTANCE, 3, 0.64f, 1,4);

@@ -99,7 +99,7 @@ public class EntityTreeMan extends EntityTrader{
 
 	@Override
 	protected void getTradesList(NonNullList<EntityTraderRecipe> newTradesList) {
-		newTradesList.add(new EntityTraderRecipe(new ItemStack(ItemRegister.ALUMINUM_INGOT, 64), new ItemStack(ItemRegister.BARRIER_HELMET, 1)));
+//		newTradesList.add(new EntityTraderRecipe(new ItemStack(ItemRegister.ALUMINUM_INGOT, 64), new ItemStack(ItemRegister.BARRIER_HELMET, 1)));
 		
 	}
 

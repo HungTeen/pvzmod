@@ -1,0 +1,31 @@
+{
+  "display": {
+    "icon": {
+      "item": "pvz:car_key"
+    },
+    "title": {
+      "translate": "advancement.pvz.car_key"
+    },
+    "description": {
+      "translate": "advancement.pvz.car_key.desc"
+    },
+	"frame":"goal",
+    "announce_to_chat": true
+  },
+  "parent":"pvz:root",
+  "criteria": {
+    "get_key": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items":[
+		  {
+		    "item":"pvz:car_key"
+		  }
+		]
+      }
+    }
+  },
+  "requirements": [[
+    "get_key"
+  ]]
+}

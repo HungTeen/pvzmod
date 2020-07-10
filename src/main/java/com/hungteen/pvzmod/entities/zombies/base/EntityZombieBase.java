@@ -131,23 +131,17 @@ public abstract class EntityZombieBase extends EntityMob implements IZombie{
 
 	@Override
 	public IEntityLivingData onInitialSpawn(DifficultyInstance difficulty, IEntityLivingData livingdata) {
+		zombieSpawnInit();
+		return super.onInitialSpawn(difficulty, livingdata);
+	}
+	
+	/**
+	 * 代替鸡肋的onInitialSpawn
+	 * 利于代码层面的召唤僵尸
+	 */
+	public void zombieSpawnInit() {
 		OverworldData data = OverworldData.getGlobalData(world);
-//		if(data.hasEvent(SpecialEvents.INVISZOMBIE_DAY)) {
-//			if(this.getCanBeInvis()) {
-//			    this.setIsInvis(true);
-//			    this.addPotionEffect(new PotionEffect(MobEffects.INVISIBILITY, 9999999, 0,false,false));//可随难度而调
-//			}
-//		}
-//		
-//		if(data.hasEvent(SpecialEvents.SMALLZOMBIE_DAY)) {
-//			if(this.getCanBeSmall()) {
-//			    this.setIsSmall(true);
-//			    this.setSize(0.2f, 0.3f);
-//			    //PacketHandler.CHANNEL.sendToAll(new PacketSetEntitySize(this.getEntityId(),0.2f,0.3f));
-//			    this.addPotionEffect(new PotionEffect(MobEffects.SPEED, 9999999, 0,false,false));//可随难度而调
-//			    this.addPotionEffect(new PotionEffect(PotionRegister.SMALL_LIFE_EFFECT, 9999999, 4,false,false));//可随难度而调
-//			}
-//		}
+
 		if (this.getRNG().nextInt(ConfigurationUtil.MainConfig.eventSettings.invisZombieDayChance) == 0) {
 			if (this.getCanBeInvis()) {
 				this.setIsInvis(true);
@@ -164,7 +158,7 @@ public abstract class EntityZombieBase extends EntityMob implements IZombie{
 				this.addPotionEffect(new PotionEffect(PotionRegister.SMALL_LIFE_EFFECT, 9999999, 4, false, false));// 可随难度而调
 			}
 		}
-		return super.onInitialSpawn(difficulty, livingdata);
+		
 	}
 
 	@Override

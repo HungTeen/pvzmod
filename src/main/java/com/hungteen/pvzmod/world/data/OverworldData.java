@@ -15,9 +15,30 @@ import net.minecraft.world.storage.WorldSavedData;
 public class OverworldData extends WorldSavedData{
 	
 	private HashSet<SpecialEvents> events = new HashSet<SpecialEvents>(SpecialEvents.values().length);
+	private boolean attack_now=false;
+	private boolean changed=false;
+	private boolean is_zomboss_defeated=false;
 	
 	public OverworldData(String name) {
 		super(name);
+	}
+	
+	public void setAttack(boolean is)
+	{
+		attack_now=is;
+		this.markDirty();
+	}
+	
+	public void setChanged(boolean is)
+	{
+		changed=is;
+		this.markDirty();
+	}
+	
+	public void setZombossDefeated(boolean is)
+	{
+		is_zomboss_defeated=is;
+		this.markDirty();
 	}
 	
 	public void add(SpecialEvents event)
@@ -36,6 +57,21 @@ public class OverworldData extends WorldSavedData{
 	{
 		return events.contains(event);
 	}
+	
+	public boolean hasChanged()
+	{
+		return changed;
+	}
+	
+	public boolean isAttack()
+	{
+		return attack_now;
+	}
+	
+	public boolean isZombossDefeated()
+	{
+		return is_zomboss_defeated;
+	}
 
 	@Override
 	public void readFromNBT(NBTTagCompound nbt) {
@@ -49,6 +85,9 @@ public class OverworldData extends WorldSavedData{
 			events.add(SpecialEvents.values()[compound.getInteger("id")]);
 			//System.out.println("read_"+compound.getInteger("id"));
 		}
+		attack_now=nbt.getBoolean("attack_now");
+		changed=nbt.getBoolean("has_changed");
+		is_zomboss_defeated=nbt.getBoolean("is_zomboss_defeated");
 	}
 
 	@Override
@@ -59,9 +98,11 @@ public class OverworldData extends WorldSavedData{
 			//System.out.println("write_"+event.getId());
 			compound.setInteger("id", event.ordinal());
 			list.appendTag(compound);
-			
 		}
 		nbt.setTag("pvzEvents", list);
+		nbt.setBoolean("attack_now", attack_now);
+		nbt.setBoolean("has_changed", changed);
+		nbt.setBoolean("is_zomboss_defeated", is_zomboss_defeated);
 		return nbt;
 	}
 	
