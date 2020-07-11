@@ -112,7 +112,7 @@ public class OverworldData extends WorldSavedData{
         if (data == null)
         {
             data = new OverworldData("SpecialDay");
-            world.getMapStorage().setData("SpecialDay", data);
+            world.getPerWorldStorage().setData("SpecialDay", data);
         }
         return (OverworldData) data;
 	}

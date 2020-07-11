@@ -5,6 +5,7 @@
 //gui
 //msg
 //config
+//advancement
 //death msg
 //creativetabs
 //keyboard
@@ -364,8 +365,24 @@ pvzgui.panney_shop_buy.name=Buy
 
 //config
 
+//advancement
+advancement.pvz.root=Plants vs Zombies
+advancement.pvz.root.desc=join in the world
+advancement.pvz.origin=Plant Element
+advancement.pvz.origin.desc=get origin element
+advancement.pvz.car_key=Old Car
+advancement.pvz.car_key=get car key
+advancement.pvz.card_table=Card Table
+advancement.pvz.card_table.desc=get card table
+
 //message
 message.huge_wave=A huge wave of Zombies are coming !
+message.event.start.plantZombieEvent=Plant-Zombie-Event start !
+message.event.end.plantZombieEvent=Plant-Zombie-Event end .
+message.event.start.miniZombieEvent=Mini-Zombie-Event start !
+message.event.end.miniZombieEvent=Mini-Zombie-Event end .
+message.event.start.invisZombieEvent=Invis-Zombie-Event start !
+message.event.end.invisZombieEvent=Invis-Zombie-Event end .
 
 //deathMsg
 death.attack.pvz_weak=Weak to death

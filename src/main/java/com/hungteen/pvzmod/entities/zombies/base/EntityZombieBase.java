@@ -19,6 +19,7 @@ import com.hungteen.pvzmod.util.SoundsHandler;
 import com.hungteen.pvzmod.util.ZombieUtil;
 import com.hungteen.pvzmod.util.enums.Plants;
 import com.hungteen.pvzmod.util.enums.Ranks;
+import com.hungteen.pvzmod.util.enums.SpecialEvents;
 import com.hungteen.pvzmod.util.interfaces.IZombie;
 import com.hungteen.pvzmod.world.data.OverworldData;
 
@@ -141,14 +142,13 @@ public abstract class EntityZombieBase extends EntityMob implements IZombie{
 	 */
 	public void zombieSpawnInit() {
 		OverworldData data = OverworldData.getGlobalData(world);
-
-		if (this.getRNG().nextInt(ConfigurationUtil.MainConfig.eventSettings.invisZombieDayChance) == 0) {
+		if (data.hasEvent(SpecialEvents.INVIS_ZOMBIE)) {
 			if (this.getCanBeInvis()) {
 				this.setIsInvis(true);
 				this.addPotionEffect(new PotionEffect(MobEffects.INVISIBILITY, 9999999, 0, false, false));// 可随难度而调
 			}
 		}
-		if (this.getRNG().nextInt(ConfigurationUtil.MainConfig.eventSettings.smallZombieDayChance) == 0) {
+		if (data.hasEvent(SpecialEvents.MINI_ZOMBIE)) {
 			if (this.getCanBeSmall()) {
 				this.setIsSmall(true);
 				this.setSize(0.2f, 0.3f);

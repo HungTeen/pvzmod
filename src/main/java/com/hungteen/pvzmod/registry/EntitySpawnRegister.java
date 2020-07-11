@@ -2,6 +2,8 @@ package com.hungteen.pvzmod.registry;
 
 import java.util.ArrayList;
 
+import org.lwjgl.Sys;
+
 import com.hungteen.pvzmod.entities.drops.EntitySun;
 import com.hungteen.pvzmod.entities.zombies.grassday.EntityBucketHeadZombie;
 import com.hungteen.pvzmod.entities.zombies.grassday.EntityConeHeadZombie;
@@ -35,6 +37,7 @@ import com.hungteen.pvzmod.entities.zombies.special.EntityBalloon;
 import com.hungteen.pvzmod.entities.zombies.special.EntityDolphin;
 import com.hungteen.pvzmod.util.BiomeUtil;
 import com.hungteen.pvzmod.util.enums.SpecialEvents;
+import com.hungteen.pvzmod.world.data.OverworldData;
 
 import net.minecraft.entity.EntityLiving;
 import net.minecraft.entity.EnumCreatureType;
@@ -97,36 +100,38 @@ public class EntitySpawnRegister {
 	public static void updateEntitySpawn(World world)
 	{
 		if(world.isRemote) return ;
-		
+		OverworldData data = OverworldData.getGlobalData(world);
+		for(SpecialEvents event:SpecialEvents.values()) {
+			System.out.println(event);
+			if(data.hasEvent(event)) {
+				System.out.println("add");
+				addEventSpawns(event);
+			}
+		}
+	}
+	
+	public static ArrayList<SpawnEntry> getSpawnList(SpecialEvents event)
+	{
+		switch (event) {
+        case NORMAL_ZOMBIE:return commonSpawns;
+        case DAY_ZOMBIE:return dayTimeSpawns;
+        case NIGHT_ZOMBIE:return nightTimeSpawns;
+        case PLANT_ZOMBIE:return plantZombieEventSpawns;
+		default: return null;
+        }
 	}
 	
 	public static void addEventSpawns(SpecialEvents event) {
-        ArrayList<SpawnEntry> spawnList = null;
-
-        switch (event) {
-            case PLANTZOMBIE_DAY:
-                spawnList = plantZombieEventSpawns;
-                break;
-		default:
-			break;
-        }
-        
+        ArrayList<SpawnEntry> spawnList = getSpawnList(event);
+        if(spawnList==null) return ;
         for (SpawnEntry entry : spawnList) {
             EntityRegistry.addSpawn(entry.entityClass, entry.weight, entry.minGroupSize, entry.maxGroupSize, entry.creatureType, entry.biomes);
         }
     }
 
     public static void removeEventSpawns(SpecialEvents event) {
-        ArrayList<SpawnEntry> spawnList = null;
-
-        switch (event) {
-            case PLANTZOMBIE_DAY:
-                spawnList = plantZombieEventSpawns;
-                break;
-		default:
-			break;
-        }
-
+    	ArrayList<SpawnEntry> spawnList = getSpawnList(event);
+    	if(spawnList==null) return ;
         for (SpawnEntry entry : spawnList) {
             EntityRegistry.removeSpawn(entry.entityClass, entry.creatureType, entry.biomes);
         }

@@ -5,6 +5,7 @@
 //gui
 //msg
 //config
+//advancement
 //death msg
 //creativetabs
 //keyboard
@@ -364,6 +365,12 @@ pvzgui.panney_shop_buy.name=购买
 
 //message
 message.huge_wave=一大波僵尸正在来袭 ！
+message.event.start.plantZombieEvent=植物僵尸事件开始！
+message.event.end.plantZombieEvent=植物僵尸事件结束.
+message.event.start.miniZombieEvent=迷你僵尸事件开始！
+message.event.end.miniZombieEvent=迷你僵尸事件结束.
+message.event.start.invisZombieEvent=隐形僵尸事件开始！
+message.event.end.invisZombieEvent=隐形僵尸事件结束.
 
 //config
 gui.pvzconfig.title=植物大战僵尸mod配置
@@ -380,6 +387,16 @@ gui.pvzconfig.invisZombieEventChance=隐形僵尸事件的概率
 gui.pvzconfig.showSun=显示阳光数
 gui.pvzconfig.showEnergy=显示能量豆数
 gui.pvzconfig.showMoney=显示金钱数
+
+//advancement
+advancement.pvz.root=植物大战僵尸
+advancement.pvz.root.desc=进入世界
+advancement.pvz.origin=植物精华
+advancement.pvz.origin.desc=获得原始精华
+advancement.pvz.car_key=尘封的车
+advancement.pvz.car_key=获得戴夫的车钥匙
+advancement.pvz.card_table=植物卡工作台
+advancement.pvz.card_table.desc=获得植物卡工作台
 
 //deathMsg
 death.attack.pvz_weak=%s虚弱致死

@@ -44,16 +44,27 @@ public class OverworldEvents{
 	public static void doTickCheck(TickEvent.WorldTickEvent ev)
 	{
 		long totalTime = ev.world.getTotalWorldTime();
-		if(totalTime<=24000l*getSafeDayLength()) return ; //世界安全时间
+		if(totalTime<=24000l*getSafeDayLength()) {
+//			System.out.println(getSafeDayLength()+" "+totalTime);
+			return ; //世界安全时间
+		}
 		int time = (int)(totalTime % 24000L);//当天的时间
 		switch(time) {
-		case 10:{//10tick：开始生成特殊事件
+		case 399:{
 			OverworldData data=OverworldData.getGlobalData(ev.world);
+			data.setChanged(false);
+			break;
+		}
+		case 400:{//400tick：开始生成特殊事件
+			OverworldData data=OverworldData.getGlobalData(ev.world);
+//			System.out.println("10 tick now");
 			if(!data.hasChanged()) {//还没改变，防止世界时间停止，而不停刷新
 				data.setChanged(true);
+//				System.out.println("changed");
 				rand.setSeed(ev.world.getSeed() + totalTime);
 				if(data.isZombossDefeated()||rand.nextInt(100)<getAttackChance(totalTime)) {//可以攻击
 					data.setAttack(true);
+					System.out.println("start attack!");
 					activateEvent(ev.world, SpecialEvents.NORMAL_ZOMBIE);
 					activateEvent(ev.world, SpecialEvents.DAY_ZOMBIE);
 					if (rand.nextInt(ConfigurationUtil.MainConfig.eventSettings.plantZombieEventChance)==0) {
@@ -65,33 +76,61 @@ public class OverworldEvents{
 			        if (rand.nextInt(ConfigurationUtil.MainConfig.eventSettings.invisZombieEventChance)==0) {
 				        activateEvent(ev.world, SpecialEvents.INVIS_ZOMBIE);
 			        }
+			        for(EntityPlayer pl:ev.world.playerEntities) {
+			        	ev.world.playSound(null, pl.posX, pl.posY, pl.posZ, SoundsHandler.HUGE_WAVE, SoundCategory.AMBIENT, 1.0f, 1.0f);
+			        }
 				}
 			}
 			break;
 		}
-		case 11800:{//11800 tick:白天结束 白天僵尸消失
+		case 11599:{
 			OverworldData data=OverworldData.getGlobalData(ev.world);
 			data.setChanged(false);
-			deactivateEvent(ev.world, SpecialEvents.DAY_ZOMBIE);
 			break;
 		}
-		case 12020:{//12020 tick:夜晚开始 夜晚僵尸生成
+		case 11600:{//11800 tick:白天结束 白天僵尸消失
 			OverworldData data=OverworldData.getGlobalData(ev.world);
+//			System.out.println("day");
+			if(!data.hasChanged()) {
+			    data.setChanged(true);
+//			    System.out.println("day!");
+			    deactivateEvent(ev.world, SpecialEvents.DAY_ZOMBIE);
+			}
+			break;
+		}
+		case 12399:{
+			OverworldData data=OverworldData.getGlobalData(ev.world);
+			data.setChanged(false);
+			break;
+		}
+		case 12400:{//12020 tick:夜晚开始 夜晚僵尸生成
+			OverworldData data=OverworldData.getGlobalData(ev.world);
+//			System.out.println("night");
 			if(!data.hasChanged()) {
 				data.setChanged(true);
 				if(data.isAttack()) {
+//					System.out.println("night!");
 					activateEvent(ev.world, SpecialEvents.NIGHT_ZOMBIE);
 				}
 			}
+			break;
 		}
-		case 23800:{//23800 tick:一天结束，取消所有生成
+		case 23599:{
 			OverworldData data=OverworldData.getGlobalData(ev.world);
 			data.setChanged(false);
-			deactivateEvent(ev.world, SpecialEvents.NORMAL_ZOMBIE);
-			deactivateEvent(ev.world, SpecialEvents.NIGHT_ZOMBIE);
-			deactivateEvent(ev.world, SpecialEvents.PLANT_ZOMBIE);
-			deactivateEvent(ev.world, SpecialEvents.MINI_ZOMBIE);
-			deactivateEvent(ev.world, SpecialEvents.INVIS_ZOMBIE);
+			break;
+		}
+		case 23600:{//23800 tick:一天结束，取消所有生成
+			OverworldData data=OverworldData.getGlobalData(ev.world);
+			if(!data.hasChanged()) {
+			    data.setChanged(false);
+			    deactivateEvent(ev.world, SpecialEvents.NORMAL_ZOMBIE);
+			    deactivateEvent(ev.world, SpecialEvents.NIGHT_ZOMBIE);
+			    deactivateEvent(ev.world, SpecialEvents.PLANT_ZOMBIE);
+			    deactivateEvent(ev.world, SpecialEvents.MINI_ZOMBIE);
+			    deactivateEvent(ev.world, SpecialEvents.INVIS_ZOMBIE);
+			    data.setAttack(false);
+			}
 			break;
 		}
 		}
@@ -111,11 +150,17 @@ public class OverworldEvents{
 			}
 			default:break;
 			}
-			
-			ITextComponent message = getEventMessage(event, false);
-			for (EntityPlayer pl : world.playerEntities) {
-				pl.sendMessage(message);
-				world.playSound(null, pl.posX, pl.posY, pl.posZ, SoundsHandler.HUGE_WAVE, SoundCategory.AMBIENT, 1.0f, 1.0f);
+			switch(event) {
+			case PLANT_ZOMBIE:
+			case MINI_ZOMBIE:
+			case INVIS_ZOMBIE:{
+				ITextComponent message = getEventMessage(event, false);
+				for (EntityPlayer pl : world.playerEntities) {
+					pl.sendMessage(message);
+				}
+				break;
+			}
+			default:break;
 			}
 		}
 	}
@@ -135,9 +180,17 @@ public class OverworldEvents{
 			}
 			default:break;
 			}
-			ITextComponent message = getEventMessage(event, true);
-			for (EntityPlayer pl : world.playerEntities) {
-				pl.sendMessage(message);
+			switch(event) {
+			case PLANT_ZOMBIE:
+			case MINI_ZOMBIE:
+			case INVIS_ZOMBIE:{
+				ITextComponent message = getEventMessage(event, true);
+				for (EntityPlayer pl : world.playerEntities) {
+				   pl.sendMessage(message);
+			    }
+				break;
+			}
+			default:break;
 			}
 		}
 	}
@@ -145,11 +198,11 @@ public class OverworldEvents{
 	private static ITextComponent getEventMessage(SpecialEvents event, boolean isEnding) {
 		switch (event) {
 			case PLANT_ZOMBIE:
-				return StringUtil.getColourLocale("message.event." + (isEnding ? "end" : "start") + ".plantZombieDay", TextFormatting.DARK_GREEN);
+				return StringUtil.getColourLocale("message.event." + (isEnding ? "end" : "start") + ".plantZombieEvent", TextFormatting.DARK_GREEN);
 			case MINI_ZOMBIE:
-			    return StringUtil.getColourLocale("message.event." + (isEnding ? "end" : "start") + ".smallZombieDay", TextFormatting.DARK_GRAY);
+			    return StringUtil.getColourLocale("message.event." + (isEnding ? "end" : "start") + ".miniZombieEvent", TextFormatting.DARK_GRAY);
 			case INVIS_ZOMBIE:
-			    return StringUtil.getColourLocale("message.event." + (isEnding ? "end" : "start") + ".invisZombieDay", TextFormatting.DARK_BLUE);
+			    return StringUtil.getColourLocale("message.event." + (isEnding ? "end" : "start") + ".invisZombieEvent", TextFormatting.DARK_BLUE);
 			default:
 				return null;
 		}
@@ -214,7 +267,7 @@ public class OverworldEvents{
 	public static int getAttackChance(long time)
 	{
 		int dif=ConfigurationUtil.getPVZDifficulty();
-		int chance=10+dif*10;
+		int chance=20+dif*20;
 		return chance;
 	}
 	
