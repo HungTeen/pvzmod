@@ -137,7 +137,7 @@ public class CraftUtil {
 		case TALL_NUT:return new ItemStack[][]{
 			{DEF,new ItemStack(ItemRegister.NUT_WALL_CARD),DEF},
 			{DEF,new ItemStack(ItemRegister.NUT_WALL_CARD),DEF},
-			{DEF,WHITE,DEF}
+			{DEF,BLUE,DEF}
 	    };
 		case SPLIT_PEA:return new ItemStack[][]{
 			{COM,COM,COM},

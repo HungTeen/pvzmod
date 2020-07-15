@@ -1,0 +1,23 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "OOO",
+    "BBB",
+    "OAO"
+  ],
+  "key": {
+    "O": {
+      "item": "pvz:common_element"
+    },
+    "B": {
+      "item": "pvz:pea_shooter_card"
+    },
+    "A": {
+      "item": "pvz:blue_card"
+    }
+  },
+  "result": {
+    "item": "pvz:three_peater_card",
+    "count": 1
+  }
+}

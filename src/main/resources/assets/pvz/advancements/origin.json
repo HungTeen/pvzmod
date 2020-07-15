@@ -31,7 +31,25 @@
   "rewards":{
     "recipes":[
 	    "pvz:the_origin",
-	    "pvz:card_table"
+	    "pvz:card_table",
+		"pvz:pea_shooter_card",
+		"pvz:sun_flower_card",
+		"pvz:nut_wall_card",
+		"pvz:potato_mine_card",
+		"pvz:snow_pea_card",
+		"pvz:double_shooter_card",
+		"pvz:hypno_shroom_card",
+		"pvz:ice_shroom_card",
+		"pvz:lily_pad_card",
+		"pvz:three_peater_card",
+		"pvz:spike_weed_card",
+		"pvz:tall_nut_card",
+		"pvz:split_pea_card",
+		"pvz:cabbage_pult_card",
+		"pvz:flower_pot_card",
+		"pvz:coffee_bean_card",
+		"pvz:marigold_card",
+		"pvz:melon_pult_card"
     ]
   }
 }

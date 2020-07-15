@@ -28,7 +28,7 @@ public class WorldGenNutTree extends WorldGenAbstractTree {
 	}
 
 	@Override
-	public boolean generate(World world, Random rand, BlockPos pos) 
+	public boolean generate(World world, Random rand, BlockPos pos)
 	{
 		int height = this.minHeight + rand.nextInt(3);
 		boolean flag = true;

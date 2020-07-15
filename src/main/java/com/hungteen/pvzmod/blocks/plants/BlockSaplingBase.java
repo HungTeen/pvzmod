@@ -132,15 +132,16 @@ public class BlockSaplingBase extends BlockBush implements IGrowable, IHasModel
 	public void generateTree(World world, Random rand, BlockPos pos, IBlockState state)
 	{
 		if(!TerrainGen.saplingGrowTree(world, rand, pos)) return;
-		WorldGenerator gen = (WorldGenerator)(rand.nextInt(10) == 0 ? new WorldGenBigTree(false) : new WorldGenTrees(false));
+		WorldGenerator gen = null;
 		boolean flag = false;
 		int i = 0, j = 0;
 		
 		switch(type)
 		{
-		case "nut":
+		case "nut":{
 			gen = new WorldGenNutTree();
 			break;
+		}
 		}
 		
 		IBlockState iblockstate = Blocks.AIR.getDefaultState();
@@ -187,7 +188,6 @@ public class BlockSaplingBase extends BlockBush implements IGrowable, IHasModel
 	@Override
 	protected boolean canSustainBush(IBlockState state) 
 	{
-		return state.getMaterial() == Material.GROUND || state.getMaterial() == Material.GRASS || state.getMaterial() == Material.PLANTS;
-				
+		return state.getMaterial() == Material.GROUND || state.getMaterial() == Material.GRASS || state.getMaterial() == Material.PLANTS;		
 	}
 }

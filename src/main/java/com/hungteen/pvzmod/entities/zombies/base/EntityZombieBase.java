@@ -482,6 +482,13 @@ public abstract class EntityZombieBase extends EntityMob implements IZombie{
 					}
 				}
 			}
+			else if(entity instanceof EntityPlayer) {
+				PlayerUtil.addPlayerXp((EntityPlayer) entity, 1);
+			}
+		}else {
+		    if(cause.getTrueSource() instanceof EntityPlayer) {
+		    	PlayerUtil.addPlayerXp((EntityPlayer) cause.getTrueSource(), 1);
+		    }
 		}
 	}
 

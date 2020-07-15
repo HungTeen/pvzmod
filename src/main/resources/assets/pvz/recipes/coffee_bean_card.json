@@ -1,0 +1,27 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "XXX",
+    "OBO",
+    "OAO"
+  ],
+  "key": {
+    "X": {
+      "item": "pvz:origin_element"
+    },
+    "O": {
+      "item": "pvz:magic_element"
+    },
+    "B": {
+      "item": "minecraft:dye",
+      "data": 3
+    },
+    "A": {
+      "item": "pvz:green_card"
+    }
+  },
+  "result": {
+    "item": "pvz:coffee_bean_card",
+    "count": 1
+  }
+}

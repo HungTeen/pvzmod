@@ -1,0 +1,26 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "OOO",
+    "BOC",
+    "OAO"
+  ],
+  "key": {
+    "O": {
+      "item": "pvz:common_element"
+    },
+    "B": {
+      "item": "pvz:double_shooter_card"
+    },
+    "C": {
+      "item": "pvz:pea_shooter_card"
+    },
+    "A": {
+      "item": "pvz:white_card"
+    }
+  },
+  "result": {
+    "item": "pvz:split_pea_card",
+    "count": 1
+  }
+}

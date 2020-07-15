@@ -1,0 +1,26 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "XXX",
+    "OBO",
+    "OAO"
+  ],
+  "key": {
+    "X": {
+      "item": "pvz:origin_element"
+    },
+    "O": {
+      "item": "pvz:common_element"
+    },
+    "B": {
+      "item": "minecraft:melon_seeds"
+    },
+    "A": {
+      "item": "pvz:purple_card"
+    }
+  },
+  "result": {
+    "item": "pvz:melon_pult_card",
+    "count": 1
+  }
+}

@@ -57,31 +57,31 @@ public class EntitySpawnRegister {
 	{
 		//ÆÕÍ¨½©Ê¬
 		commonSpawns.add(new SpawnEntry(EntityNormalZombie.class, 80, 1, 3, EnumCreatureType.MONSTER, BiomeUtil.overworldLand));
-		commonSpawns.add(new SpawnEntry(EntityFlagZombie.class, 5, 1, 3, EnumCreatureType.MONSTER, BiomeUtil.overworldLand));
-		commonSpawns.add(new SpawnEntry(EntityConeHeadZombie.class, 30, 1, 2, EnumCreatureType.MONSTER, BiomeUtil.overworldLand));
+		commonSpawns.add(new SpawnEntry(EntityFlagZombie.class, 5, 1, 1, EnumCreatureType.MONSTER, BiomeUtil.overworldLand));
+		commonSpawns.add(new SpawnEntry(EntityConeHeadZombie.class, 20, 1, 2, EnumCreatureType.MONSTER, BiomeUtil.overworldLand));
 		commonSpawns.add(new SpawnEntry(EntityBucketHeadZombie.class, 10, 1, 1, EnumCreatureType.MONSTER, BiomeUtil.overworldLand));
-		commonSpawns.add(new SpawnEntry(EntitySnorkelZombie.class, 50, 1, 1, EnumCreatureType.MONSTER, BiomeUtil.sea));
+//		commonSpawns.add(new SpawnEntry(EntitySnorkelZombie.class, 50, 1, 1, EnumCreatureType.MONSTER, BiomeUtil.sea));
 		commonSpawns.add(new SpawnEntry(EntityJackInBoxZombie.class, 15, 1, 1, EnumCreatureType.MONSTER, BiomeUtil.overworldLand));
 
 		//°×Ìì½©Ê¬
-		dayTimeSpawns.add(new SpawnEntry(EntityPoleZombie.class, 20, 1, 2, EnumCreatureType.MONSTER, BiomeUtil.overworldLand));
+		dayTimeSpawns.add(new SpawnEntry(EntityPoleZombie.class, 20, 1, 1, EnumCreatureType.MONSTER, BiomeUtil.overworldLand));
 		dayTimeSpawns.add(new SpawnEntry(EntityBobsle.class, 10, 1, 1, EnumCreatureType.MONSTER, BiomeUtil.snowLand));
-		dayTimeSpawns.add(new SpawnEntry(EntityZomboni.class, 40, 1, 1, EnumCreatureType.MONSTER, BiomeUtil.snowLand));
-		dayTimeSpawns.add(new SpawnEntry(EntityCataPultZombie.class, 20, 1, 2, EnumCreatureType.MONSTER, BiomeUtil.overworldLand));
-		dayTimeSpawns.add(new SpawnEntry(EntityGargantuar.class, 5, 1, 1, EnumCreatureType.MONSTER, BiomeUtil.desert));
+		dayTimeSpawns.add(new SpawnEntry(EntityZomboni.class, 30, 1, 1, EnumCreatureType.MONSTER, BiomeUtil.snowLand));
+		dayTimeSpawns.add(new SpawnEntry(EntityCataPultZombie.class, 20, 1, 1, EnumCreatureType.MONSTER, BiomeUtil.overworldLand));
+		dayTimeSpawns.add(new SpawnEntry(EntityGargantuar.class, 2, 1, 1, EnumCreatureType.MONSTER, BiomeUtil.desert));
 		dayTimeSpawns.add(new SpawnEntry(EntitySadGargantuar.class, 1, 1, 1, EnumCreatureType.MONSTER, BiomeUtil.mesa));
-		dayTimeSpawns.add(new SpawnEntry(EntityDolphin.class, 20, 1, 1, EnumCreatureType.MONSTER, BiomeUtil.sea));
-		dayTimeSpawns.add(new SpawnEntry(EntitySun.class, 100, 1, 1, EnumCreatureType.CREATURE, BiomeUtil.overworldLand));
+//		dayTimeSpawns.add(new SpawnEntry(EntityDolphin.class, 20, 1, 1, EnumCreatureType.MONSTER, BiomeUtil.sea));
+		dayTimeSpawns.add(new SpawnEntry(EntitySun.class, 100, 1, 2, EnumCreatureType.CREATURE, BiomeUtil.overworldLand));
 		
 		//Ò¹Íí½©Ê¬
-		nightTimeSpawns.add(new SpawnEntry(EntityPaperZombie.class, 50, 1, 1, EnumCreatureType.MONSTER, BiomeUtil.overworldLand));
+		nightTimeSpawns.add(new SpawnEntry(EntityPaperZombie.class, 35, 1, 2, EnumCreatureType.MONSTER, BiomeUtil.overworldLand));
 		nightTimeSpawns.add(new SpawnEntry(EntityOldZombie.class, 5, 1, 1, EnumCreatureType.MONSTER, BiomeUtil.overworldLand));
-		nightTimeSpawns.add(new SpawnEntry(EntityTombStone.class, 5, 1, 2, EnumCreatureType.MONSTER, BiomeUtil.overworldLand));
+//		nightTimeSpawns.add(new SpawnEntry(EntityTombStone.class, 5, 1, 2, EnumCreatureType.MONSTER, BiomeUtil.overworldLand));
 		nightTimeSpawns.add(new SpawnEntry(EntityScreenDoorZombie.class, 10, 1, 1, EnumCreatureType.MONSTER, BiomeUtil.overworldLand));
-		nightTimeSpawns.add(new SpawnEntry(EntityDiggerZombie.class, 15, 1, 1, EnumCreatureType.MONSTER, BiomeUtil.mountain));
+//		nightTimeSpawns.add(new SpawnEntry(EntityDiggerZombie.class, 15, 1, 1, EnumCreatureType.MONSTER, BiomeUtil.mountain));
 		nightTimeSpawns.add(new SpawnEntry(EntityPogoZombie.class, 20, 1, 2, EnumCreatureType.MONSTER, BiomeUtil.mountain));
-		nightTimeSpawns.add(new SpawnEntry(EntityBalloon.class, 20, 1, 2, EnumCreatureType.MONSTER, BiomeUtil.sky));
-		nightTimeSpawns.add(new SpawnEntry(EntityYetiZombie.class, 1, 1, 1, EnumCreatureType.MONSTER, BiomeUtil.snowLand));
+//		nightTimeSpawns.add(new SpawnEntry(EntityBalloon.class, 20, 1, 2, EnumCreatureType.MONSTER, BiomeUtil.sky));
+//		nightTimeSpawns.add(new SpawnEntry(EntityYetiZombie.class, 1, 1, 1, EnumCreatureType.MONSTER, BiomeUtil.snowLand));
 		nightTimeSpawns.add(new SpawnEntry(EntityFootballZombie.class, 8, 1, 1, EnumCreatureType.MONSTER, BiomeUtil.overworldLand));
 		nightTimeSpawns.add(new SpawnEntry(EntityGigaFootballZombie.class, 1, 1, 1, EnumCreatureType.MONSTER, BiomeUtil.swampland));
 		

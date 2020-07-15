@@ -77,6 +77,7 @@ public class OverworldEvents{
 				        activateEvent(ev.world, SpecialEvents.INVIS_ZOMBIE);
 			        }
 			        for(EntityPlayer pl:ev.world.playerEntities) {
+			        	pl.sendMessage(StringUtil.getColourLocale("message.huge_wave", TextFormatting.DARK_RED));
 			        	ev.world.playSound(null, pl.posX, pl.posY, pl.posZ, SoundsHandler.HUGE_WAVE, SoundCategory.AMBIENT, 1.0f, 1.0f);
 			        }
 				}
