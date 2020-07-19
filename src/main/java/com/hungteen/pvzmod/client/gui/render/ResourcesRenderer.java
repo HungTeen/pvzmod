@@ -2,6 +2,7 @@ package com.hungteen.pvzmod.client.gui.render;
 
 import com.hungteen.pvzmod.client.gui.mainwindow.PVZGuiTabPlayerData;
 import com.hungteen.pvzmod.event.KeyBind;
+import com.hungteen.pvzmod.util.ConfigurationUtil;
 import com.hungteen.pvzmod.util.PlayerUtil;
 import com.hungteen.pvzmod.util.Reference;
 import com.hungteen.pvzmod.util.RenderUtil;
@@ -62,7 +63,7 @@ public class ResourcesRenderer extends Gui {
 	public void onrenderSun(RenderGameOverlayEvent event) {
 		if (event.getType() == RenderGameOverlayEvent.ElementType.TEXT && mc.currentScreen == null
 				&& !mc.gameSettings.hideGUI && !mc.player.isSpectator()) {
-			if (KeyBind.statusPlayerStats) {
+			if (KeyBind.statusPlayerStats&&ConfigurationUtil.MainConfig.displaySettings.showSunNum) {
 				mc.getTextureManager().bindTexture(SUN_ENERGY);
 				// System.out.println(mc.displayHeight);
 				int w = event.getResolution().getScaledWidth();
@@ -76,7 +77,7 @@ public class ResourcesRenderer extends Gui {
 	public void onrenderEnergy(RenderGameOverlayEvent event) {
 		if (event.getType() == RenderGameOverlayEvent.ElementType.TEXT && mc.currentScreen == null
 				&& !mc.gameSettings.hideGUI && !mc.player.isSpectator()) {
-			if (KeyBind.statusPlayerStats) {
+			if (KeyBind.statusPlayerStats&&ConfigurationUtil.MainConfig.displaySettings.showEnergyNum) {
 				mc.getTextureManager().bindTexture(SUN_ENERGY);
 				// System.out.println(mc.displayHeight);
 				int w = event.getResolution().getScaledWidth();
@@ -90,7 +91,7 @@ public class ResourcesRenderer extends Gui {
 	public void onrenderMoney(RenderGameOverlayEvent event) {
 		if (event.getType() == RenderGameOverlayEvent.ElementType.TEXT && mc.currentScreen == null
 				&& !mc.gameSettings.hideGUI && !mc.player.isSpectator()) {
-			if (KeyBind.statusPlayerStats) {
+			if (KeyBind.statusPlayerStats&&ConfigurationUtil.MainConfig.displaySettings.showMoneyNum) {
 				mc.getTextureManager().bindTexture(SUN_ENERGY);
 				// System.out.println(mc.displayHeight);
 				int w = event.getResolution().getScaledWidth();
