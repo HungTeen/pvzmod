@@ -1,0 +1,20 @@
+{
+    "forge_marker":1,
+    "defaults":{
+        "transform":"forge:default-block",
+        "custom":{"flip-v",true},
+        "model":"pvz:pea_shooter.obj"
+    },
+    "variants":{
+        "normal":[{}],
+        "inventory":[{
+            "transform":{
+                "firstperson":{
+                    "transition":{0.1,0,-0.3},
+                    "rotation":[{"y",130},{"x",0},{"z",0}],
+                    "scale":1.0
+                }
+            }
+        }]
+    }
+}

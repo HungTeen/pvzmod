@@ -1,0 +1,9 @@
+{
+    "variants":
+    {
+        "check_decay=true,decayable=true": { "model": "pvz:nut_leaves" },
+        "check_decay=true,decayable=false": { "model": "pvz:nut_leaves" },
+        "check_decay=false,decayable=true": { "model": "pvz:nut_leaves" },
+        "check_decay=false,decayable=false": { "model": "pvz:nut_leaves" }
+    }
+}

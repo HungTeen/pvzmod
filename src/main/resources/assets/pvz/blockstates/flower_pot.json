@@ -1,0 +1,8 @@
+{
+    "variants": {
+        "facing=north":{"model":"pvz:flower_pot"},
+        "facing=east":{"model":"pvz:flower_pot","y":90},
+        "facing=south":{"model":"pvz:flower_pot","y":180},
+        "facing=west":{"model":"pvz:flower_pot","y":270}
+    }
+}
