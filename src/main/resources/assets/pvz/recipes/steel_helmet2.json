@@ -1,0 +1,17 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "XXX",
+    "X X",
+    "   "
+  ],
+  "key": {
+    "X": {
+      "item": "pvz:steel_ingot"
+    }
+  },
+  "result": {
+    "item": "pvz:steel_helmet",
+    "count": 1
+  }
+}

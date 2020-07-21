@@ -1,0 +1,18 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "XXX",
+    "XXX",
+    "XXX"
+  ],
+  "key": {
+    "X": {
+      "item": "pvz:origin_element",
+      "data": 0
+    }
+  },
+  "result": {
+    "item": "pvz:the_origin",
+    "count": 1
+  }
+}

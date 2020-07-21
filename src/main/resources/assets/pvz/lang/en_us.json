@@ -1,3 +1,19 @@
 {
-    "item.pvz.pea":"Pea"
+    "item.pvz.pea":"Pea",
+    "item.pvz.amethyst_ingot":"Amethyst Ingot",
+    "item.pvz.origin_essence":"Origin Essence",
+    "item.pvz.appease_essence":"Appease Essence",
+    "item.pvz.light_essence":"Light Essence",
+    "item.pvz.explosion_essence":"Explosion Essence",
+    "item.pvz.defence_essence":"Defence Essence",
+    "item.pvz.ice_essence":"Ice Essence",
+    "item.pvz.enforce_essence":"Enforce Essence",
+    "item.pvz.toxic_essence":"Toxic Essence",
+    "item.pvz.assist_essence":"Assist Essence",
+    "item.pvz.magic_essence":"Magic Essence",
+    "item.pvz.flame_essence":"Flame Essence",
+    "item.pvz.spear_essence":"Spear Essence",
+    "item.pvz.arma_essence":"Arma Essence",
+    "item.pvz.electric_essence":"Electric Essence",
+    "item.pvz.shadow_essence":"Shadow Essence"
 }

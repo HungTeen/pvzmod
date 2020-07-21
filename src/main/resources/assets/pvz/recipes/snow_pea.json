@@ -1,0 +1,20 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "XXX",
+    "XBX",
+    "XXX"
+  ],
+  "key": {
+    "X": {
+      "item": "pvz:pea"
+    },
+    "B": {
+      "item": "pvz:ice_element"
+    }
+  },
+  "result": {
+    "item": "pvz:snow_pea",
+    "count": 8
+  }
+}

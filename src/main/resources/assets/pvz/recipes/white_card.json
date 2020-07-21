@@ -1,0 +1,20 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "XXX",
+    "XBX",
+    "XXX"
+  ],
+  "key": {
+    "X": {
+      "item": "minecraft:iron_ingot"
+    },
+    "B": {
+      "item": "pvz:origin_element"
+    }
+  },
+  "result": {
+    "item": "pvz:white_card",
+    "count": 1
+  }
+}
