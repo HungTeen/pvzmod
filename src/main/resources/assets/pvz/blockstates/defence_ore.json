@@ -1,5 +1,5 @@
 {
     "variants": {
-        "normal": { "model": "pvz:defence_ore" }
+        "": { "model": "pvz:block/defence_ore" }
     }
 }

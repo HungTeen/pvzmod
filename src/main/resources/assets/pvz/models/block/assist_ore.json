@@ -1,6 +1,6 @@
 {
     "parent": "block/cube_all",
     "textures": {
-        "all": "pvz:blocks/common_ore"
+        "all": "pvz:blocks/assist_ore"
     }
 }

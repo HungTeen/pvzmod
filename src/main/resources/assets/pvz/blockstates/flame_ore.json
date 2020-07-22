@@ -1,5 +1,5 @@
 {
     "variants": {
-        "normal": { "model": "pvz:flame_ore" }
+        "": { "model": "pvz:block/flame_ore" }
     }
 }

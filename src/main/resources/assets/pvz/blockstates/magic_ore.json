@@ -1,5 +1,5 @@
 {
     "variants": {
-        "normal": { "model": "pvz:magic_ore" }
+        "": { "model": "pvz:block/magic_ore" }
     }
 }

@@ -1,5 +1,5 @@
 {
     "variants": {
-        "normal": { "model": "pvz:origin_ore" }
+        "": { "model": "pvz:block/origin_ore" }
     }
 }

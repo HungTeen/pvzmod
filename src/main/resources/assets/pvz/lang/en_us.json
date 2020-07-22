@@ -1,6 +1,4 @@
 {
-    "item.pvz.pea":"Pea",
-    "item.pvz.amethyst_ingot":"Amethyst Ingot",
     "item.pvz.origin_essence":"Origin Essence",
     "item.pvz.appease_essence":"Appease Essence",
     "item.pvz.light_essence":"Light Essence",
@@ -15,5 +13,25 @@
     "item.pvz.spear_essence":"Spear Essence",
     "item.pvz.arma_essence":"Arma Essence",
     "item.pvz.electric_essence":"Electric Essence",
-    "item.pvz.shadow_essence":"Shadow Essence"
+    "item.pvz.shadow_essence":"Shadow Essence",
+    "item.pvz.amethyst_ingot":"Amethyst Ingot",
+    
+    "item.pvz.pea":"Pea",
+    
+    "block.pvz.origin_ore":"Origin Ore",
+    "block.pvz.appease_ore":"Appease Ore",
+    "block.pvz.light_ore":"Light Ore",
+    "block.pvz.explosion_ore":"Explosion Ore",
+    "block.pvz.defence_ore":"Defence Ore",
+    "block.pvz.ice_ore":"Ice Ore",
+    "block.pvz.enforce_ore":"Enforce Ore",
+    "block.pvz.toxic_ore":"Toxic Ore",
+    "block.pvz.assist_ore":"Assist Ore",
+    "block.pvz.magic_ore":"Magic Ore",
+    "block.pvz.flame_ore":"Flame Ore",
+    "block.pvz.spear_ore":"Spear Ore",
+    "block.pvz.arma_ore":"Arma Ore",
+    "block.pvz.electric_ore":"Electric Ore",
+    "block.pvz.shadow_ore":"Shadow Ore",
+    "block.pvz.amethyst_ore":"Amethyst Ore"
 }

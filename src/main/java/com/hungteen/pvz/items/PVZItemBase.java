@@ -7,8 +7,7 @@ import net.minecraft.item.Item;
 public class PVZItemBase extends Item{
 
 	public PVZItemBase() {
-		super(new Item.Properties().group(GroupRegister.GROUP_MATERIALS));
-		
+		super(new Properties().group(GroupRegister.PVZ_GROUP));
 	}
 
 }

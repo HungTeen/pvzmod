@@ -1,5 +1,5 @@
 {
     "variants": {
-        "normal": { "model": "pvz:light_ore" }
+        "": { "model": "pvz:block/light_ore" }
     }
 }

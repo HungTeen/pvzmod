@@ -1,6 +1,6 @@
 {
     "parent": "block/cube_all",
     "textures": {
-        "all": "pvz:blocks/darkness_ore"
+        "all": "pvz:blocks/toxic_ore"
     }
 }
