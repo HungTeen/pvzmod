@@ -14,7 +14,16 @@
     "item.pvz.arma_essence":"投掷精华",
     "item.pvz.electric_essence":"闪电精华",
     "item.pvz.shadow_essence":"暗影精华",
+    "item.pvz.steel_ingot":"钢锭",
     "item.pvz.amethyst_ingot":"紫晶锭",
+    
+    "item.pvz.gray_card":"灰卡模板",
+    "item.pvz.white_card":"白卡模板",
+    "item.pvz.green_card":"绿卡模板",
+    "item.pvz.blue_card":"蓝卡模板",
+    "item.pvz.purple_card":"紫卡模板",
+    "item.pvz.gold_card":"金卡模板",
+    "item.pvz.red_card":"红卡模板",
     
     "item.pvz.pea":"豌豆",
     
@@ -33,5 +42,7 @@
     "block.pvz.arma_ore":"投掷精华矿",
     "block.pvz.electric_ore":"闪电精华矿",
     "block.pvz.shadow_ore":"暗影精华矿",
-    "block.pvz.amethyst_ore":"紫晶矿"
+    "block.pvz.amethyst_ore":"紫晶矿",
+    
+    "block.pvz.steel_block":"钢块"
 }

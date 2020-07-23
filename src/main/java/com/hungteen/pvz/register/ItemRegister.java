@@ -28,7 +28,21 @@ public class ItemRegister {
     public static final RegistryObject<Item> ArmaEssence = ITEMS.register("arma_essence", PVZItemBase::new);
     public static final RegistryObject<Item> ElectricEssence = ITEMS.register("electric_essence", PVZItemBase::new);
     public static final RegistryObject<Item> ShadowEssence = ITEMS.register("shadow_essence", PVZItemBase::new);
+    public static final RegistryObject<Item> SteelIngot = ITEMS.register("steel_ingot", PVZItemBase::new);
     public static final RegistryObject<Item> AmethystIngot = ITEMS.register("amethyst_ingot", PVZItemBase::new);
     
+    //card model
+    public static final RegistryObject<Item> GrayCard = ITEMS.register("gray_card", PVZItemBase::new);
+    public static final RegistryObject<Item> WhiteCard = ITEMS.register("white_card", PVZItemBase::new);
+    public static final RegistryObject<Item> GreenCard = ITEMS.register("green_card", PVZItemBase::new);
+    public static final RegistryObject<Item> BlueCard = ITEMS.register("blue_card", PVZItemBase::new);
+    public static final RegistryObject<Item> PurpleCard = ITEMS.register("purple_card", PVZItemBase::new);
+    public static final RegistryObject<Item> GoldCard = ITEMS.register("gold_card", PVZItemBase::new);
+    public static final RegistryObject<Item> RedCard = ITEMS.register("red_card", PVZItemBase::new);
+    
+    //plant card
+    
+    
+    //plants
 	public static final RegistryObject<Item> Pea = ITEMS.register("pea", PVZItemBase::new);
 }

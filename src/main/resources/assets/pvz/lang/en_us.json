@@ -14,7 +14,16 @@
     "item.pvz.arma_essence":"Arma Essence",
     "item.pvz.electric_essence":"Electric Essence",
     "item.pvz.shadow_essence":"Shadow Essence",
+    "item.pvz.steel_ingot":"Steel Ingot",
     "item.pvz.amethyst_ingot":"Amethyst Ingot",
+    
+    "item.pvz.gray_card":"Gray Card",
+    "item.pvz.white_card":"White Card",
+    "item.pvz.green_card":"Grenn Card",
+    "item.pvz.blue_card":"Blue Card",
+    "item.pvz.purple_card":"Purple Card",
+    "item.pvz.gold_card":"Gold Card",
+    "item.pvz.red_card":"Red Card",
     
     "item.pvz.pea":"Pea",
     
@@ -33,5 +42,7 @@
     "block.pvz.arma_ore":"Arma Ore",
     "block.pvz.electric_ore":"Electric Ore",
     "block.pvz.shadow_ore":"Shadow Ore",
-    "block.pvz.amethyst_ore":"Amethyst Ore"
+    "block.pvz.amethyst_ore":"Amethyst Ore",
+    
+    "block.pvz.steel_block":"Steel Block"
 }
