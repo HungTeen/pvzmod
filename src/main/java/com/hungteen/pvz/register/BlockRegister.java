@@ -4,11 +4,10 @@ import java.util.Arrays;
 import java.util.List;
 
 import com.hungteen.pvz.PVZMod;
+import com.hungteen.pvz.blocks.BlockOrigin;
 
 import net.minecraft.block.Block;
 import net.minecraft.block.Blocks;
-import net.minecraft.block.SoundType;
-import net.minecraft.block.material.Material;
 import net.minecraft.item.BlockItem;
 import net.minecraft.item.Item;
 import net.minecraftforge.event.RegistryEvent;
@@ -48,10 +47,12 @@ public class BlockRegister {
 	public static final RegistryObject<Block> ArmaOre = BLOCKS.register("arma_ore",() -> new Block(getEssenceOreProperties()));
 	public static final RegistryObject<Block> ElectricOre = BLOCKS.register("electric_ore",() -> new Block(getEssenceOreProperties()));
 	public static final RegistryObject<Block> ShadowOre = BLOCKS.register("shadow_ore",() -> new Block(getEssenceOreProperties()));
-	public static final RegistryObject<Block> AmethystOre = BLOCKS.register("amethyst_ore",() -> new Block(Block.Properties.from(Blocks.DIAMOND_BLOCK)));
+	public static final RegistryObject<Block> AmethystOre = BLOCKS.register("amethyst_ore",() -> new Block(Block.Properties.from(Blocks.DIAMOND_ORE)));
 	
-	public static final RegistryObject<Block> STEEL_BLOCK = BLOCKS.register("steel_block",() -> new Block(Block.Properties.create(Material.IRON).hardnessAndResistance(5,6).sound(SoundType.METAL)));
-	
+	//block
+	public static final RegistryObject<Block> SteelBlock = BLOCKS.register("steel_block",() -> new Block(Block.Properties.from(Blocks.IRON_BLOCK).hardnessAndResistance(8,8)));
+	public static final RegistryObject<Block> AmethystBlock =BLOCKS.register("amethyst_block", ()->new Block(Block.Properties.from(Blocks.EMERALD_BLOCK).hardnessAndResistance(9, 9))); 
+	public static final RegistryObject<Block> OriginBlock = BLOCKS.register("origin_block", BlockOrigin::new);
 	
 	/**
 	 * 注册itemblock
@@ -62,7 +63,7 @@ public class BlockRegister {
 		IForgeRegistry<Item> items = ev.getRegistry();
 		List<RegistryObject<? extends Block>> blocks = Arrays.asList(
 				OriginOre,AppeaseOre,LightOre,ExplosionOre,DefenceOre,IceOre,EnforceOre,ToxicOre,AssistOre,MagicOre,FlameOre,SpearOre,ArmaOre,ElectricOre,ShadowOre,AmethystOre,
-				STEEL_BLOCK
+				SteelBlock,AmethystBlock,OriginBlock
 		);
 		for(RegistryObject<? extends Block> block:blocks) {
 			items.register(new BlockItem(block.get(),new Item.Properties().group(GroupRegister.PVZ_GROUP)).setRegistryName(block.get().getRegistryName()));
@@ -71,6 +72,6 @@ public class BlockRegister {
 	
 	public static Block.Properties getEssenceOreProperties()
 	{
-		return Block.Properties.from(Blocks.DIAMOND_ORE).hardnessAndResistance(6,9).lightValue(10);
+		return Block.Properties.from(Blocks.DIAMOND_ORE).hardnessAndResistance(9,9).lightValue(10).harvestLevel(3);
 	}
 }
