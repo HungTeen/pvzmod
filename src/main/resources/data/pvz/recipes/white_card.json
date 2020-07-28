@@ -6,16 +6,15 @@
     "XXX"
   ],
   "key": {
-    "B": {
-      "item": "minecraft:coal",
-      "data": 0
-    },
     "X": {
-      "item": "minecraft:iron_block"
+      "item": "minecraft:iron_ingot"
+    },
+    "B": {
+      "item": "pvz:origin_essence"
     }
   },
   "result": {
-    "item": "pvz:steel_block",
+    "item": "pvz:white_card",
     "count": 1
   }
 }

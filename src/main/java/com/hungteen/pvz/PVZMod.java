@@ -3,10 +3,14 @@ package com.hungteen.pvz;
 import org.apache.commons.lang3.tuple.Pair;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+
+import com.hungteen.pvz.capabilities.CapabilityHandler;
+import com.hungteen.pvz.network.PVZPacketHandler;
 import com.hungteen.pvz.register.RegistryHandler;
 
 import net.minecraftforge.common.ForgeConfigSpec;
 import net.minecraftforge.common.MinecraftForge;
+import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.ModLoadingContext;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.config.ModConfig.Type;
@@ -15,6 +19,7 @@ import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 
 // The value here should match an entry in the META-INF/mods.toml file
 @Mod(PVZMod.MOD_ID)
+@Mod.EventBusSubscriber(bus = Mod.EventBusSubscriber.Bus.MOD)
 public class PVZMod
 {
     // Directly reference a log4j logger.
@@ -33,15 +38,14 @@ public class PVZMod
     		ModLoadingContext.get().registerConfig(Type.CLIENT, specPair.getRight());
     		PVZConfig.CLIENT_CONFIG=specPair.getLeft();
     	}
-    	FMLJavaModLoadingContext.get().getModEventBus().addListener(this::setup);
-    	
     	RegistryHandler.init();
-        MinecraftForge.EVENT_BUS.register(this);
     }
 
-    private void setup(final FMLCommonSetupEvent event)
+    @SubscribeEvent
+    public static void setup(FMLCommonSetupEvent ev)
     {
-    	
+    	CapabilityHandler.registerCapabilities();
+    	PVZPacketHandler.init();
     }
     
     

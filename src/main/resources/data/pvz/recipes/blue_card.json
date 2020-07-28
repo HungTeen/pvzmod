@@ -7,14 +7,14 @@
   ],
   "key": {
     "X": {
-      "item": "minecraft:iron_ingot"
+      "item": "minecraft:diamond"
     },
     "B": {
-      "item": "pvz:origin_element"
+      "item": "pvz:origin_essence"
     }
   },
   "result": {
-    "item": "pvz:white_card",
+    "item": "pvz:blue_card",
     "count": 1
   }
 }

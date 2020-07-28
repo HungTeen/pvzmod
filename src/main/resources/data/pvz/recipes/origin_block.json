@@ -2,19 +2,21 @@
   "type": "minecraft:crafting_shaped",
   "pattern": [
     "XXX",
-    "XBX",
+    "XYX",
     "XXX"
   ],
   "key": {
     "X": {
-      "item": "minecraft:gold_block"
+      "item": "pvz:origin_essence",
+      "data": 0
     },
-    "B": {
-      "item": "pvz:origin_element"
+    "Y": {
+      "item": "minecraft:glass",
+      "data": 0
     }
   },
   "result": {
-    "item": "pvz:gold_card",
+    "item": "pvz:origin_block",
     "count": 1
   }
 }

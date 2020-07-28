@@ -7,14 +7,14 @@
   ],
   "key": {
     "X": {
-      "item": "minecraft:obsidian"
+      "item": "minecraft:emerald"
     },
     "B": {
-      "item": "pvz:origin_element"
+      "item": "pvz:origin_essence"
     }
   },
   "result": {
-    "item": "pvz:purple_card",
+    "item": "pvz:green_card",
     "count": 1
   }
 }

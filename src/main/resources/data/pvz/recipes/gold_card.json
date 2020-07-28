@@ -7,14 +7,14 @@
   ],
   "key": {
     "X": {
-      "item": "minecraft:emerald"
+      "item": "minecraft:gold_block"
     },
     "B": {
-      "item": "pvz:origin_element"
+      "item": "pvz:origin_essence"
     }
   },
   "result": {
-    "item": "pvz:green_card",
+    "item": "pvz:gold_card",
     "count": 1
   }
 }

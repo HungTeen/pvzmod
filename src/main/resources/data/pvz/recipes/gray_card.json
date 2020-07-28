@@ -6,15 +6,16 @@
     "XXX"
   ],
   "key": {
-    "B": {
-      "item": "pvz:coal_nugget"
-    },
     "X": {
-      "item": "minecraft:iron_ingot"
+      "item": "minecraft:stone",
+      "data": 0
+    },
+    "B": {
+      "item": "pvz:origin_essence"
     }
   },
   "result": {
-    "item": "pvz:steel_ingot",
+    "item": "pvz:gray_card",
     "count": 1
   }
 }
