@@ -1,4 +1,4 @@
-package com.hungteen.pvz.items;
+package com.hungteen.pvz.item;
 
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;

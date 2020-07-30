@@ -12,22 +12,59 @@ public class PVZConfig {
 	public static class Common
 	{
 		public Common(ForgeConfigSpec.Builder builder) {
-			builder.comment("Settings that affect the whole mod.")
-			.push("Global Settings");
+			builder.comment("Settings about blocks.")
+			.push("Block Settings");
 			{
-				GLOBALSETTINGS.pvzDifficulty = builder
-						.translation(CONFIG_TRANSLATE+"difficulty")
-						.comment("set the difficulty of pvzmod(1=easy,2=normal,3=hard,4=crazy).")
+				BLOCK_SETTINGS.originBlockEffectChance = builder
+						.translation(CONFIG_TRANSLATE+"origin_block")
+						.comment("About the chance you got essence_ore from origin_block.the bigger the value is,the lower chance you get.(more specificly 1/x)")
 						.worldRestart()
-						.defineInRange("difficulty", 2, 1, 4);
+						.defineInRange("origin_chacne", 5, 1, 100);
 			}
+			builder.pop();
+			builder.comment("Settings about entities.").push("Entity Settings");
+			{
+				builder.comment("The Max live time for drops like sun.").push("DropLiveTime");
+				{
+					ENTITY_SETTINGS.dropLiveTick.sunLiveTick = builder
+							.translation(CONFIG_TRANSLATE+"sun_live_tick")
+							.comment("how many ticks can the sun entity live")
+						    .worldRestart()
+							.defineInRange("sunLiveTick", 300, 1, 1200);
+					ENTITY_SETTINGS.dropLiveTick.coinLiveTick = builder
+							.translation(CONFIG_TRANSLATE+"coin_live_tick")
+							.comment("how many ticks can the coin entity live")
+						    .worldRestart()
+							.defineInRange("coinLiveTick", 300, 1, 1200);
+					ENTITY_SETTINGS.dropLiveTick.energyLiveTick = builder
+							.translation(CONFIG_TRANSLATE+"energy_live_tick")
+							.comment("how many ticks can the energy entity live")
+						    .worldRestart()
+							.defineInRange("energyLiveTick", 400, 1, 1200);
+				}
+				builder.pop();
+			}
+			builder.pop();
 		}
 		
-		public GlobalSettings GLOBALSETTINGS = new GlobalSettings();
+		public BlockSettings BLOCK_SETTINGS = new BlockSettings();
 		
-		public static class GlobalSettings
+		public static class BlockSettings
 		{
-			public ForgeConfigSpec.IntValue pvzDifficulty;
+			public ForgeConfigSpec.IntValue originBlockEffectChance;
+		}
+		
+		public EntitySettings ENTITY_SETTINGS = new EntitySettings();
+		
+		public static class EntitySettings
+		{
+			public DropLiveTick dropLiveTick = new DropLiveTick();
+			public static class DropLiveTick
+			{
+				public ForgeConfigSpec.IntValue sunLiveTick;
+				public ForgeConfigSpec.IntValue coinLiveTick;
+				public ForgeConfigSpec.IntValue energyLiveTick;
+			}
 		}
 	}
 	
@@ -35,10 +72,5 @@ public class PVZConfig {
 	{
 		public Client(ForgeConfigSpec.Builder builder) {
 		}
-	}
-	
-	public static int getPVZDifficulty()
-	{
-		return COMMON_CONFIG.GLOBALSETTINGS.pvzDifficulty.get().intValue();
 	}
 }

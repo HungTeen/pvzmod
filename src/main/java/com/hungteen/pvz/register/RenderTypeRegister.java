@@ -14,6 +14,6 @@ public class RenderTypeRegister {
 	@SubscribeEvent
 	public static void reigsterRenderType(FMLCommonSetupEvent ev)
 	{
-		RenderTypeLookup.setRenderLayer(BlockRegister.OriginBlock.get(), RenderType.getTranslucent());
+		RenderTypeLookup.setRenderLayer(BlockRegister.ORIGIN_BLOCK.get(), RenderType.getTranslucent());
 	}
 }

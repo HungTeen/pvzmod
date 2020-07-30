@@ -32,7 +32,7 @@ public class GenOres {
 	private static void addEndOres()
 	{
 		Biomes.THE_END.addFeature(GenerationStage.Decoration.UNDERGROUND_DECORATION, Feature.EMERALD_ORE.withConfiguration(
-    			new ReplaceBlockConfig(Blocks.END_STONE.getDefaultState(), BlockRegister.AmethystOre.get().getDefaultState())).withPlacement(Placement.COUNT_RANGE.configure(
+    			new ReplaceBlockConfig(Blocks.END_STONE.getDefaultState(), BlockRegister.AMETHYST_ORE.get().getDefaultState())).withPlacement(Placement.COUNT_RANGE.configure(
     			new CountRangeConfig(10, 0, 0, 70))));
 	}
 }

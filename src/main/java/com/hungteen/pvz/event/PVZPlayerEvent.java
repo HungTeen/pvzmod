@@ -52,22 +52,13 @@ public class PVZPlayerEvent {
 	}
 	
 	@SubscribeEvent
-    public static void pickupItem(EntityItemPickupEvent event) {
-//        PVZMod.LOGGER.debug("112");
-        event.getPlayer().sendMessage(new StringTextComponent("lvl:"+PVZGuiTabPlayerData.getPlayerStats(Resources.TREE_LVL)));
-    }
-	
-	@SubscribeEvent
 	public static void rightClick(PlayerInteractEvent.RightClickBlock ev)
 	{
 //		PVZMod.LOGGER.debug("112");
 		PlayerEntity player=ev.getPlayer();
 		if(!player.world.isRemote) {
 			if(player.getHeldItemMainhand().getItem()==Items.DIAMOND_SWORD) {
-				PlayerUtil.addPlayerStats(player, Resources.TREE_LVL, 1);
-			}
-			else {
-				player.sendMessage(new StringTextComponent("lvl:"+PVZGuiTabPlayerData.getPlayerStats(Resources.TREE_LVL)));
+				player.sendMessage(new StringTextComponent("lvl:"+PVZGuiTabPlayerData.getPlayerStats(Resources.SUN_NUM)));
 			}
 		}
 	}

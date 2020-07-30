@@ -9,7 +9,7 @@ public class GroupRegister {
 	public static final ItemGroup PVZ_GROUP = new ItemGroup("pvz_group") {
 		@Override
 		public ItemStack createIcon() {
-			return new ItemStack(ItemRegister.Pea.get());
+			return new ItemStack(ItemRegister.PEA.get());
 		}
 	};
 //	//方块
