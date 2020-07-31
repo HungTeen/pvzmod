@@ -1,7 +1,11 @@
 package com.hungteen.pvz.register;
 
 import com.hungteen.pvz.PVZMod;
+import com.hungteen.pvz.entity.drop.CoinEntity;
+import com.hungteen.pvz.entity.drop.EnergyEntity;
 import com.hungteen.pvz.entity.drop.SunEntity;
+import com.hungteen.pvz.render.drop.CoinRender;
+import com.hungteen.pvz.render.drop.EnergyRender;
 import com.hungteen.pvz.render.drop.SunRender;
 import com.hungteen.pvz.utils.StringUtil;
 
@@ -24,10 +28,14 @@ public class EntityRegister {
     
 	//entitytype
 	public static final RegistryObject<EntityType<SunEntity>> SUN = registerEntityType(SunEntity::new, "sun", EntityClassification.MISC);
+	public static final RegistryObject<EntityType<CoinEntity>> COIN = registerEntityType(CoinEntity::new, "coin", EntityClassification.MISC);
+	public static final RegistryObject<EntityType<EnergyEntity>> ENERGY = registerEntityType(EnergyEntity::new, "energy", EntityClassification.MISC,0.9f,2f);
 	
 	@SubscribeEvent
     public static void onClientSetUpEvent(FMLClientSetupEvent event) {
         RenderingRegistry.registerEntityRenderingHandler(SUN.get(), SunRender::new);
+        RenderingRegistry.registerEntityRenderingHandler(COIN.get(), CoinRender::new);
+        RenderingRegistry.registerEntityRenderingHandler(ENERGY.get(), EnergyRender::new);
     }
 
 	private static <T extends Entity> RegistryObject<EntityType<T>> registerEntityType(IFactory<T> factory,String name,EntityClassification classification)
