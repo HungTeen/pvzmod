@@ -48,11 +48,15 @@ public class ItemRegister {
     //plants
 	public static final RegistryObject<Item> PEA = ITEMS.register("pea", PVZItemBase::new);
 	
-    //spawnegg
+    //spawn egg
 	public static final RegistryObject<PVZSpawnEggItem> SUN_SPAWN_EGG = registerSpawnEgg("sun", EntityRegister.SUN, Colors.YELLOW, Colors.WHITE);
     
+	
+	/**
+	 * register spawn eggs
+	 */
     private static RegistryObject<PVZSpawnEggItem> registerSpawnEgg(String name,RegistryObject<? extends EntityType<?>> entityType,int color1,int color2)
     {
-    	return ITEMS.register(name+"_spwan_egg", () -> new PVZSpawnEggItem(entityType, color1, color2, new Item.Properties().group(GroupRegister.PVZ_GROUP)));
+    	return ITEMS.register(name+"_spawn_egg", () -> new PVZSpawnEggItem(entityType, color1, color2, new Item.Properties().group(GroupRegister.PVZ_GROUP)));
     }
 }

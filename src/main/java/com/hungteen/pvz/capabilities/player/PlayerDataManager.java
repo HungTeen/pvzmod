@@ -5,6 +5,7 @@ import java.util.HashMap;
 
 import com.hungteen.pvz.network.PVZPacketHandler;
 import com.hungteen.pvz.network.PacketPlayerStats;
+import com.hungteen.pvz.utils.PlayerUtil;
 import com.hungteen.pvz.utils.enums.Resources;
 
 import net.minecraft.entity.player.PlayerEntity;
@@ -72,21 +73,34 @@ public class PlayerDataManager {
 		public void addPlayerStats(Resources res,int num)
 		{
 			switch (res) {
-			case TREE_LVL:
+			case TREE_LVL:{
 				addTreeLvl(num);
 				break;
-
+			}
+			case SUN_NUM:{
+				addSunNum(num);
+				break;
+			}
 			default:
 				break;
 			}
 			this.sendPacket(player,res);
 		}
 		
+		private void addSunNum(int num)
+		{
+			int now=resources.get(Resources.SUN_NUM);
+			int lvl=resources.get(Resources.TREE_LVL);
+			if(num>0) now=Math.min(PlayerUtil.getPlayerMaxSunNum(lvl),now+num);
+			else now=Math.max(0, now+num);
+			resources.put(Resources.SUN_NUM, now);
+		}
+		
 		private void addTreeLvl(int num)
 		{
-			int now;
-			if(num>0) now=Math.min(100, resources.get(Resources.TREE_LVL)+num);
-			else now=Math.max(0, resources.get(Resources.TREE_LVL)+num);
+			int now=resources.get(Resources.TREE_LVL);
+			if(num>0) now=Math.min(PlayerUtil.MAX_TREE_LVL, now+num);
+			else now=Math.max(1, now+num);
 			resources.put(Resources.TREE_LVL, now);
 		}
 		

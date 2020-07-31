@@ -13,6 +13,7 @@ public class SunEntity extends DropEntity{
 	
 	public SunEntity(EntityType<? extends Entity> type, World worldIn) {
 		super(type, worldIn);
+		this.setAmount(25);//default sun amount (nature spawn)
 	}
 
 	@Override
