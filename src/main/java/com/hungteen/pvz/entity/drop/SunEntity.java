@@ -1,6 +1,7 @@
 package com.hungteen.pvz.entity.drop;
 
 import com.hungteen.pvz.PVZConfig;
+import com.hungteen.pvz.register.SoundRegister;
 import com.hungteen.pvz.utils.PlayerUtil;
 import com.hungteen.pvz.utils.enums.Resources;
 
@@ -9,6 +10,7 @@ import net.minecraft.entity.EntitySize;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.Pose;
 import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.util.SoundCategory;
 import net.minecraft.world.World;
 
 public class SunEntity extends DropEntity{
@@ -41,6 +43,13 @@ public class SunEntity extends DropEntity{
 	public void onCollideWithPlayer(PlayerEntity entityIn) {
 		if(!this.world.isRemote) {
 			PlayerUtil.addPlayerStats(entityIn, Resources.SUN_NUM, this.getAmount());
+//			this.world.playSound(null, getPosition(), SoundRegister.SUN_PICK.get(), SoundCategory.NEUTRAL, 1f,1f);
+//			this.playSound(SoundRegister.SUN_PICK.get(), 1f, 1f);
+//			ChickenEntity
+		}else {
+//			System.out.println(this.isSilent());
+			this.world.playSound(entityIn, getPosition(), SoundRegister.SUN_PICK.get(), SoundCategory.NEUTRAL, 1f,1f);
+//			this.playSound(SoundRegister.SUN_PICK.get(), 1f, 1f);
 		}
 		this.remove();
 	}

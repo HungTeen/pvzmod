@@ -1,0 +1,7 @@
+{
+    "sun_pick":{"sounds":[{"name":"pvz:entity/drop/sun/sun_pick1"},{"name":"pvz:entity/drop/sun/sun_pick2"}]},
+    "coin_drop":{"sounds":[{"name":"pvz:entity/drop/coin/coin_drop"}]},
+    "coin_pick":{"sounds":[{"name":"pvz:entity/drop/coin/coin_pick"}]},
+    "jewel_drop":{"sounds":[{"name":"pvz:entity/drop/jewel/jewel_drop"}]},
+    "jewel_pick":{"sounds":[{"name":"pvz:entity/drop/jewel/jewel_pick"}]}
+}

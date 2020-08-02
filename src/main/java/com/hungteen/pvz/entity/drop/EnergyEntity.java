@@ -1,12 +1,14 @@
 package com.hungteen.pvz.entity.drop;
 
 import com.hungteen.pvz.PVZConfig;
+import com.hungteen.pvz.register.SoundRegister;
 import com.hungteen.pvz.utils.PlayerUtil;
 import com.hungteen.pvz.utils.enums.Resources;
 
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.util.SoundCategory;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
 
@@ -23,6 +25,8 @@ public class EnergyEntity extends DropEntity{
 	public void onCollideWithPlayer(PlayerEntity entityIn) {
 		if(!this.world.isRemote) {
 			PlayerUtil.addPlayerStats(entityIn, Resources.ENERGY_NUM, this.getAmount());
+		}else {
+			this.world.playSound(entityIn, getPosition(), SoundRegister.JEWEL_PICK.get(), SoundCategory.NEUTRAL, 1f,1f);
 		}
 		this.remove();
 	}

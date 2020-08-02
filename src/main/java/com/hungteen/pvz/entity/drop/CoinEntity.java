@@ -2,6 +2,7 @@ package com.hungteen.pvz.entity.drop;
 
 import com.hungteen.pvz.PVZConfig;
 import com.hungteen.pvz.PVZMod;
+import com.hungteen.pvz.register.SoundRegister;
 import com.hungteen.pvz.utils.PlayerUtil;
 import com.hungteen.pvz.utils.enums.Resources;
 
@@ -10,6 +11,7 @@ import net.minecraft.entity.EntitySize;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.Pose;
 import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.util.SoundCategory;
 import net.minecraft.world.World;
 
 public class CoinEntity extends DropEntity{
@@ -23,6 +25,13 @@ public class CoinEntity extends DropEntity{
 	public void onCollideWithPlayer(PlayerEntity entityIn) {
 		if(!this.world.isRemote) {
 			PlayerUtil.addPlayerStats(entityIn, Resources.MONEY, this.getAmount());
+		}
+		else {
+			if(this.getAmount()==1000) {
+				this.world.playSound(entityIn, getPosition(), SoundRegister.JEWEL_PICK.get(), SoundCategory.NEUTRAL, 1f,1f);
+			}else {
+				this.world.playSound(entityIn, getPosition(), SoundRegister.COIN_PICK.get(), SoundCategory.NEUTRAL, 1f,1f);
+			}
 		}
 		this.remove();
 	}
