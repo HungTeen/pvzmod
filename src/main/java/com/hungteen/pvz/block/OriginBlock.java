@@ -16,10 +16,10 @@ import net.minecraft.world.World;
 import net.minecraft.world.server.ServerWorld;
 import net.minecraftforge.common.ToolType;
 
-public class BlockOrigin extends Block
+public class OriginBlock extends Block
 {
 
-	public BlockOrigin() {
+	public OriginBlock() {
 		super(Block.Properties.create(Material.ROCK, MaterialColor.GREEN).hardnessAndResistance(15, 50).harvestLevel(3).harvestTool(ToolType.PICKAXE)
 				.lightValue(15).tickRandomly().sound(SoundType.GLASS).notSolid());
 	}

@@ -1,20 +1,25 @@
 package com.hungteen.pvz.event;
 
+import java.util.Random;
+
+import com.hungteen.pvz.PVZConfig;
 import com.hungteen.pvz.PVZMod;
 import com.hungteen.pvz.capabilities.CapabilityHandler;
-import com.hungteen.pvz.capabilities.player.PVZGuiTabPlayerData;
 import com.hungteen.pvz.capabilities.player.PlayerDataManager;
-import com.hungteen.pvz.capabilities.player.PlayerDataProvider;
+import com.hungteen.pvz.register.ItemRegister;
 import com.hungteen.pvz.utils.PlayerUtil;
 import com.hungteen.pvz.utils.enums.Resources;
 
+import net.minecraft.block.BlockState;
+import net.minecraft.block.Blocks;
+import net.minecraft.entity.item.ItemEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.ServerPlayerEntity;
-import net.minecraft.item.Items;
+import net.minecraft.item.ItemStack;
+import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.text.StringTextComponent;
-import net.minecraftforge.event.entity.player.EntityItemPickupEvent;
 import net.minecraftforge.event.entity.player.PlayerEvent;
-import net.minecraftforge.event.entity.player.PlayerInteractEvent;
+import net.minecraftforge.event.world.BlockEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 
@@ -52,13 +57,19 @@ public class PVZPlayerEvent {
 	}
 	
 	@SubscribeEvent
-	public static void rightClick(PlayerInteractEvent.RightClickBlock ev)
-	{
-//		PVZMod.LOGGER.debug("112");
+	public static void onPlayerBreakBlock(BlockEvent.BreakEvent ev) {
 		PlayerEntity player=ev.getPlayer();
+		BlockState state = ev.getState();
+		BlockPos pos = ev.getPos();
+//		System.out.println("event start");
 		if(!player.world.isRemote) {
-			if(player.getHeldItemMainhand().getItem()==Items.DIAMOND_SWORD) {
-				player.sendMessage(new StringTextComponent("lvl:"+PVZGuiTabPlayerData.getPlayerStats(Resources.SUN_NUM)));
+			if(state.getBlock()==Blocks.GRASS||state.getBlock()==Blocks.TALL_GRASS) {//break grass
+				Random rand = new Random();
+//				System.out.println(PVZConfig.COMMON_CONFIG.BLOCK_SETTINGS.breakBlock.peaDropChance.get());
+				if(rand.nextInt(PVZConfig.COMMON_CONFIG.BLOCK_SETTINGS.breakBlock.peaDropChance.get())==0) {//drop pea 
+//					System.out.println("chance right");
+					player.world.addEntity(new ItemEntity(player.world,pos.getX(), pos.getY(), pos.getZ(), new ItemStack(ItemRegister.PEA.get(),1)));
+				}
 			}
 		}
 	}

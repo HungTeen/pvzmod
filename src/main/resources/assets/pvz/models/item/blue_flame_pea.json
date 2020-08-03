@@ -1,6 +1,6 @@
 {
     "parent": "item/generated",
     "textures": {
-        "layer0": "pvz:items/fire_pea"
+        "layer0": "pvz:items/blue_flame_pea"
     }
 }

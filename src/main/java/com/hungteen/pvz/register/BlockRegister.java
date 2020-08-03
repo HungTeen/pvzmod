@@ -4,7 +4,8 @@ import java.util.Arrays;
 import java.util.List;
 
 import com.hungteen.pvz.PVZMod;
-import com.hungteen.pvz.block.BlockOrigin;
+import com.hungteen.pvz.block.OriginBlock;
+import com.hungteen.pvz.block.PeaBlock;
 
 import net.minecraft.block.Block;
 import net.minecraft.block.Blocks;
@@ -52,7 +53,10 @@ public class BlockRegister {
 	//block
 	public static final RegistryObject<Block> STEEL_BLOCK = BLOCKS.register("steel_block",() -> new Block(Block.Properties.from(Blocks.IRON_BLOCK).hardnessAndResistance(8,8)));
 	public static final RegistryObject<Block> AMETHYST_BLOCK =BLOCKS.register("amethyst_block", ()->new Block(Block.Properties.from(Blocks.EMERALD_BLOCK).hardnessAndResistance(9, 9))); 
-	public static final RegistryObject<Block> ORIGIN_BLOCK = BLOCKS.register("origin_block", BlockOrigin::new);
+	public static final RegistryObject<Block> ORIGIN_BLOCK = BLOCKS.register("origin_block", OriginBlock::new);
+	
+	//crops
+	public static final RegistryObject<Block> PEA_PLANT = BLOCKS.register("pea_plant", ()->new PeaBlock(Block.Properties.from(Blocks.WHEAT)));
 	
 	/**
 	 * 注册itemblock

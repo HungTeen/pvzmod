@@ -15,5 +15,6 @@ public class RenderTypeRegister {
 	public static void reigsterRenderType(FMLCommonSetupEvent ev)
 	{
 		RenderTypeLookup.setRenderLayer(BlockRegister.ORIGIN_BLOCK.get(), RenderType.getTranslucent());
+		RenderTypeLookup.setRenderLayer(BlockRegister.PEA_PLANT.get(), RenderType.getCutout());
 	}
 }
