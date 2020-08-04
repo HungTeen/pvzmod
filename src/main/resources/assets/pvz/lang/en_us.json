@@ -1,4 +1,5 @@
 {
+//essence
     "item.pvz.origin_essence":"Origin Essence",
     "item.pvz.appease_essence":"Appease Essence",
     "item.pvz.light_essence":"Light Essence",
@@ -16,7 +17,7 @@
     "item.pvz.shadow_essence":"Shadow Essence",
     "item.pvz.steel_ingot":"Steel Ingot",
     "item.pvz.amethyst_ingot":"Amethyst Ingot",
-    
+//card
     "item.pvz.gray_card":"Gray Card",
     "item.pvz.white_card":"White Card",
     "item.pvz.green_card":"Grenn Card",
@@ -24,9 +25,15 @@
     "item.pvz.purple_card":"Purple Card",
     "item.pvz.gold_card":"Gold Card",
     "item.pvz.red_card":"Red Card",
-    
-    "item.pvz.pea":"Pea",
-    
+//spawn egg
+    "item.pvz.sun_spawn_egg":"Sun Spawn Egg",
+    "item.pvz.coin_spawn_egg":"Coin Spawn Egg",
+    "item.pvz.energy_spawn_egg":"Energy Spawn Egg",
+//misc
+    "item.pvz.snow_pea":"Snow Pea",
+    "item.pvz.flame_pea":"Flame Pea",
+    "item.pvz.blue_flame_pea":"Blue Flame Pea",
+//ore
     "block.pvz.origin_ore":"Origin Ore",
     "block.pvz.appease_ore":"Appease Ore",
     "block.pvz.light_ore":"Light Ore",
@@ -43,6 +50,10 @@
     "block.pvz.electric_ore":"Electric Ore",
     "block.pvz.shadow_ore":"Shadow Ore",
     "block.pvz.amethyst_ore":"Amethyst Ore",
-    
-    "block.pvz.steel_block":"Steel Block"
+//block
+    "block.pvz.steel_block":"Steel Block",
+    "block.pvz.amethyst_block":"Amethyst Block",
+    "block.pvz.origin_block":"Origin Block",
+//crop
+    "block.pvz.pea_plant":"Pea"
 }

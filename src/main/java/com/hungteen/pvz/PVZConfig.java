@@ -18,14 +18,14 @@ public class PVZConfig {
 						.translation(CONFIG_TRANSLATE+"origin_block")
 						.comment("About the chance you got essence_ore from origin_block.the bigger the value is,the lower chance you get.(more specificly 1/x)")
 						.worldRestart()
-						.defineInRange("origin_chance", 5, 1, 100);
+						.defineInRange("originChance", 5, 1, 100);
 				builder.comment("Setting about break blocks.").push("Break Block Setting");
 				{
 					BLOCK_SETTINGS.breakBlock.peaDropChance = builder
 						.translation(CONFIG_TRANSLATE+"pea_drop_chance")
 						.comment("the drop chance of pea when you break grass.the bigger the value is,the lower chance you get.(more specificly 1/x)")
 						.worldRestart()
-						.defineInRange("drop_pea_chance", 16, 1, 1000);
+						.defineInRange("dropPeaChance", 16, 1, 1000);
 				}
 				builder.pop();
 			}
@@ -33,23 +33,34 @@ public class PVZConfig {
 			
 			builder.comment("Settings about entities.").push("Entity Settings");
 			{
-				builder.comment("The Max live time for drops like sun.").push("DropLiveTime");
+				ENTITY_SETTINGS.canPlantAttackOtherTeam = builder
+						.translation(CONFIG_TRANSLATE+"plant_attack_team")
+                        .comment("if true,when plant's owner is in a team,the plant will attack the entity from other team(include player)")
+                        .worldRestart()
+                        .define("plantAttackTeam", false);
+				
+				builder.comment("The Max live time for Entity like sun.").push("EntityLiveTime");
 				{
-					ENTITY_SETTINGS.dropLiveTick.sunLiveTick = builder
+					ENTITY_SETTINGS.entityLiveTick.sunLiveTick = builder
 							.translation(CONFIG_TRANSLATE+"sun_live_tick")
 							.comment("how many ticks can the sun entity live")
 						    .worldRestart()
 							.defineInRange("sunLiveTick", 300, 1, 1200);
-					ENTITY_SETTINGS.dropLiveTick.coinLiveTick = builder
+					ENTITY_SETTINGS.entityLiveTick.coinLiveTick = builder
 							.translation(CONFIG_TRANSLATE+"coin_live_tick")
 							.comment("how many ticks can the coin entity live")
 						    .worldRestart()
 							.defineInRange("coinLiveTick", 300, 1, 1200);
-					ENTITY_SETTINGS.dropLiveTick.energyLiveTick = builder
+					ENTITY_SETTINGS.entityLiveTick.energyLiveTick = builder
 							.translation(CONFIG_TRANSLATE+"energy_live_tick")
 							.comment("how many ticks can the energy entity live")
 						    .worldRestart()
 							.defineInRange("energyLiveTick", 400, 1, 1200);
+					ENTITY_SETTINGS.entityLiveTick.bulletLiveTick = builder
+							.translation(CONFIG_TRANSLATE+"bullet_live_tick")
+							.comment("how many ticks can bullet entity live.(don't be so small or so big)")
+							.worldRestart()
+							.defineInRange("bulletLiveTick", 150, 100, 1000);
 				}
 				builder.pop();
 			}
@@ -72,13 +83,17 @@ public class PVZConfig {
 		
 		public static class EntitySettings
 		{
-			public DropLiveTick dropLiveTick = new DropLiveTick();
-			public static class DropLiveTick
+			public ForgeConfigSpec.BooleanValue canPlantAttackOtherTeam;
+			
+			public EntityLiveTick entityLiveTick = new EntityLiveTick();
+			public static class EntityLiveTick
 			{
 				public ForgeConfigSpec.IntValue sunLiveTick;
 				public ForgeConfigSpec.IntValue coinLiveTick;
 				public ForgeConfigSpec.IntValue energyLiveTick;
+				public ForgeConfigSpec.IntValue bulletLiveTick;
 			}
+			
 		}
 	}
 	

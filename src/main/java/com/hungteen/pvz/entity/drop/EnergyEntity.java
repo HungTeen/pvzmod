@@ -44,7 +44,7 @@ public class EnergyEntity extends DropEntity{
 	
 	@Override
 	protected int getMaxLiveTick() {
-		return PVZConfig.COMMON_CONFIG.ENTITY_SETTINGS.dropLiveTick.energyLiveTick.get();
+		return PVZConfig.COMMON_CONFIG.ENTITY_SETTINGS.entityLiveTick.energyLiveTick.get();
 	}
 
 }

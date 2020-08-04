@@ -1,12 +1,16 @@
 package com.hungteen.pvz.register;
 
 import com.hungteen.pvz.PVZMod;
+import com.hungteen.pvz.entity.bullet.PeaEntity;
 import com.hungteen.pvz.entity.drop.CoinEntity;
 import com.hungteen.pvz.entity.drop.EnergyEntity;
 import com.hungteen.pvz.entity.drop.SunEntity;
-import com.hungteen.pvz.render.drop.CoinRender;
-import com.hungteen.pvz.render.drop.EnergyRender;
-import com.hungteen.pvz.render.drop.SunRender;
+import com.hungteen.pvz.entity.plant.appease.PeaShooterEntity;
+import com.hungteen.pvz.render.entity.bullet.PeaRender;
+import com.hungteen.pvz.render.entity.drop.CoinRender;
+import com.hungteen.pvz.render.entity.drop.EnergyRender;
+import com.hungteen.pvz.render.entity.drop.SunRender;
+import com.hungteen.pvz.render.entity.plant.appease.PeaShooterRender;
 import com.hungteen.pvz.utils.StringUtil;
 
 import net.minecraft.entity.Entity;
@@ -27,15 +31,29 @@ public class EntityRegister {
 	public static final DeferredRegister<EntityType<?>> ENTITY_TYPES = new DeferredRegister<>(ForgeRegistries.ENTITIES, PVZMod.MOD_ID);
     
 	//entitytype
+	//drop
 	public static final RegistryObject<EntityType<SunEntity>> SUN = registerEntityType(SunEntity::new, "sun", EntityClassification.MISC);
 	public static final RegistryObject<EntityType<CoinEntity>> COIN = registerEntityType(CoinEntity::new, "coin", EntityClassification.MISC);
 	public static final RegistryObject<EntityType<EnergyEntity>> ENERGY = registerEntityType(EnergyEntity::new, "energy", EntityClassification.MISC,0.9f,2f);
 	
+	//bullet
+	public static final RegistryObject<EntityType<PeaEntity>> PEA = registerEntityType(PeaEntity::new, "pea", EntityClassification.MISC);
+	
+	//plant
+	public static final RegistryObject<EntityType<PeaShooterEntity>> PEA_SHOOTER = registerEntityType(PeaShooterEntity::new, "pea_shooter", EntityClassification.CREATURE);
+	
 	@SubscribeEvent
     public static void onClientSetUpEvent(FMLClientSetupEvent event) {
+		//drop
         RenderingRegistry.registerEntityRenderingHandler(SUN.get(), SunRender::new);
         RenderingRegistry.registerEntityRenderingHandler(COIN.get(), CoinRender::new);
         RenderingRegistry.registerEntityRenderingHandler(ENERGY.get(), EnergyRender::new);
+        
+        //bullet
+        RenderingRegistry.registerEntityRenderingHandler(PEA.get(), PeaRender::new);
+        
+        //plant
+        RenderingRegistry.registerEntityRenderingHandler(PEA_SHOOTER.get(), PeaShooterRender::new);
     }
 
 	private static <T extends Entity> RegistryObject<EntityType<T>> registerEntityType(IFactory<T> factory,String name,EntityClassification classification)

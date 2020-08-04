@@ -1,0 +1,59 @@
+package com.hungteen.pvz.misc.damage;
+
+import net.minecraft.entity.Entity;
+import net.minecraft.entity.LivingEntity;
+import net.minecraft.util.DamageSource;
+import net.minecraft.util.text.ITextComponent;
+import net.minecraft.util.text.TranslationTextComponent;
+
+public class PVZDamageSource extends DamageSource{
+
+	private Entity attackOwner = null;
+	private Entity attacker = null;
+	private PVZDamageType damageType;
+	
+	public PVZDamageSource(String name, Entity damagingEntity, Entity attacker, PVZDamageType damageType) {
+		super(name);
+		this.attacker=damagingEntity;
+		this.attackOwner=attacker;
+		this.damageType=damageType;
+	}
+	
+	public static PVZDamageSource causeNormalDamage(Entity projectile, Entity shooter) {
+		return new PVZDamageSource("pvz_normal",projectile, shooter, PVZDamageType.NORMAL);
+	}
+	
+	public static PVZDamageSource causeWeakDamage(Entity projectile, Entity shooter){	
+		return new PVZDamageSource("pvz_weak",projectile, shooter, PVZDamageType.WEAK);
+	}
+	
+	public static PVZDamageSource causeAppeaseDamage(Entity projectile, Entity shooter){	
+		return new PVZDamageSource("pvz_appease",projectile, shooter, PVZDamageType.APPEASE);
+	}
+	
+	@Override
+	public ITextComponent getDeathMessage(LivingEntity entityLivingBaseIn) {
+        String s = "death.attack." + this.getDamageType();
+        return new TranslationTextComponent(s, entityLivingBaseIn.getDisplayName());
+	}
+
+	public static PVZDamageSource copyWithNewEnt(PVZDamageSource other, Entity damagingEntity, Entity attacker) {
+		PVZDamageSource newSrc = new PVZDamageSource(other.getDamageType(), damagingEntity, attacker, other.damageType);
+		return newSrc;
+	}
+	
+	public PVZDamageType getPVZDamageType()
+	{
+		return this.damageType;
+	}
+	
+	@Override
+	public Entity getTrueSource() {
+		return this.attackOwner;
+	}
+
+	@Override
+	public Entity getImmediateSource() {
+		return this.attacker;
+	}
+}

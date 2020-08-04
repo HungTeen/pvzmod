@@ -1,4 +1,4 @@
-package com.hungteen.pvz.render.drop;
+package com.hungteen.pvz.render.entity.drop;
 
 import com.hungteen.pvz.entity.drop.DropEntity;
 import com.mojang.blaze3d.matrix.MatrixStack;
@@ -10,7 +10,10 @@ import net.minecraft.client.renderer.entity.EntityRendererManager;
 import net.minecraft.client.renderer.entity.model.EntityModel;
 import net.minecraft.client.renderer.texture.OverlayTexture;
 import net.minecraft.entity.Entity;
+import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.api.distmarker.OnlyIn;
 
+@OnlyIn(Dist.CLIENT)
 public abstract class DropRender<T extends DropEntity> extends EntityRenderer<T>{
 
 	private EntityModel<Entity> model;

@@ -1,4 +1,4 @@
-package com.hungteen.pvz.model.drop;
+package com.hungteen.pvz.model.entity.drop;
 // Made with Blockbench 3.5.2
 // Exported for Minecraft version 1.15
 // Paste this class into your mod and generate all required imports

@@ -1,4 +1,4 @@
-package com.hungteen.pvz.model.drop;
+package com.hungteen.pvz.model.entity.drop;
 
 import com.mojang.blaze3d.matrix.MatrixStack;
 import com.mojang.blaze3d.vertex.IVertexBuilder;

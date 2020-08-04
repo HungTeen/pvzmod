@@ -56,7 +56,7 @@ public class SunEntity extends DropEntity{
 	
 	@Override
 	protected int getMaxLiveTick() {
-		return PVZConfig.COMMON_CONFIG.ENTITY_SETTINGS.dropLiveTick.sunLiveTick.get();
+		return PVZConfig.COMMON_CONFIG.ENTITY_SETTINGS.entityLiveTick.sunLiveTick.get();
 	}
 	
 	

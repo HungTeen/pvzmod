@@ -73,7 +73,7 @@ public class CoinEntity extends DropEntity{
 	
 	@Override
 	protected int getMaxLiveTick() {
-		return PVZConfig.COMMON_CONFIG.ENTITY_SETTINGS.dropLiveTick.coinLiveTick.get();
+		return PVZConfig.COMMON_CONFIG.ENTITY_SETTINGS.entityLiveTick.coinLiveTick.get();
 	}
 
 }
