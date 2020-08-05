@@ -38,6 +38,11 @@ public class PVZConfig {
                         .comment("if true,when plant's owner is in a team,the plant will attack the entity from other team(include player)")
                         .worldRestart()
                         .define("plantAttackTeam", false);
+				ENTITY_SETTINGS.zombieSuperChance = builder
+						.translation(CONFIG_TRANSLATE+"zombie_super_chance")
+						.comment("the spawn chance of zombie with plant energy.(the bigger,the more chance it spawn)")
+						.worldRestart()
+						.defineInRange("zombieSuperChance", 1, 0, 5);
 				
 				builder.comment("The Max live time for Entity like sun.").push("EntityLiveTime");
 				{
@@ -84,6 +89,7 @@ public class PVZConfig {
 		public static class EntitySettings
 		{
 			public ForgeConfigSpec.BooleanValue canPlantAttackOtherTeam;
+			public ForgeConfigSpec.IntValue zombieSuperChance;
 			
 			public EntityLiveTick entityLiveTick = new EntityLiveTick();
 			public static class EntityLiveTick

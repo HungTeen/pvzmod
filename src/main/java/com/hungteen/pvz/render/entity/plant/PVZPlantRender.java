@@ -1,6 +1,6 @@
 package com.hungteen.pvz.render.entity.plant;
 
-import com.hungteen.pvz.entity.plant.PlantEntity;
+import com.hungteen.pvz.entity.plant.PVZPlantEntity;
 import com.mojang.blaze3d.matrix.MatrixStack;
 
 import net.minecraft.client.renderer.entity.EntityRendererManager;
@@ -10,9 +10,9 @@ import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 
 @OnlyIn(Dist.CLIENT)
-public abstract class PlantRender<T extends PlantEntity> extends MobRenderer<T, EntityModel<T>>{
+public abstract class PVZPlantRender<T extends PVZPlantEntity> extends MobRenderer<T, EntityModel<T>>{
 
-	public PlantRender(EntityRendererManager rendererManager, EntityModel<T> entityModelIn, float shadowSizeIn) {
+	public PVZPlantRender(EntityRendererManager rendererManager, EntityModel<T> entityModelIn, float shadowSizeIn) {
 		super(rendererManager, entityModelIn, shadowSizeIn);
 		this.addPlantLayers();
 	}

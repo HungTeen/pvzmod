@@ -25,23 +25,23 @@ import net.minecraft.util.DamageSource;
 import net.minecraft.util.Hand;
 import net.minecraft.world.World;
 
-public abstract class PlantEntity extends CreatureEntity implements IPVZPlant{
+public abstract class PVZPlantEntity extends CreatureEntity implements IPVZPlant{
 
 	protected int weakTime;
 	protected boolean isImmuneToWeak;
 	private final int weakCD = 10;
 	private final int weakDamage = 15;
-	private static final DataParameter<Integer> SUPER_TIME = EntityDataManager.createKey(PlantEntity.class, DataSerializers.VARINT);
-	private static final DataParameter<Integer> PLANT_LVL = EntityDataManager.createKey(PlantEntity.class, DataSerializers.VARINT);
-	private static final DataParameter<Optional<UUID>> OWNER_UUID = EntityDataManager.createKey(PlantEntity.class, DataSerializers.OPTIONAL_UNIQUE_ID);
-	private static final DataParameter<Boolean> IS_SUPER_OUT = EntityDataManager.createKey(PlantEntity.class,DataSerializers.BOOLEAN);
-	private static final DataParameter<Integer> ATTACK_TIME = EntityDataManager.createKey(PlantEntity.class, DataSerializers.VARINT);
-	private static final DataParameter<Integer> GOLD_TIME = EntityDataManager.createKey(PlantEntity.class, DataSerializers.VARINT);
-	private static final DataParameter<Integer> BOOST_TIME = EntityDataManager.createKey(PlantEntity.class, DataSerializers.VARINT);
-	private static final DataParameter<Boolean> IS_CHARMED = EntityDataManager.createKey(PlantEntity.class, DataSerializers.BOOLEAN);
-	private static final DataParameter<Boolean> IS_GARDEN_PLANT = EntityDataManager.createKey(PlantEntity.class, DataSerializers.BOOLEAN);
+	private static final DataParameter<Integer> SUPER_TIME = EntityDataManager.createKey(PVZPlantEntity.class, DataSerializers.VARINT);
+	private static final DataParameter<Integer> PLANT_LVL = EntityDataManager.createKey(PVZPlantEntity.class, DataSerializers.VARINT);
+	private static final DataParameter<Optional<UUID>> OWNER_UUID = EntityDataManager.createKey(PVZPlantEntity.class, DataSerializers.OPTIONAL_UNIQUE_ID);
+	private static final DataParameter<Boolean> IS_SUPER_OUT = EntityDataManager.createKey(PVZPlantEntity.class,DataSerializers.BOOLEAN);
+	private static final DataParameter<Integer> ATTACK_TIME = EntityDataManager.createKey(PVZPlantEntity.class, DataSerializers.VARINT);
+	private static final DataParameter<Integer> GOLD_TIME = EntityDataManager.createKey(PVZPlantEntity.class, DataSerializers.VARINT);
+	private static final DataParameter<Integer> BOOST_TIME = EntityDataManager.createKey(PVZPlantEntity.class, DataSerializers.VARINT);
+	private static final DataParameter<Boolean> IS_CHARMED = EntityDataManager.createKey(PVZPlantEntity.class, DataSerializers.BOOLEAN);
+	private static final DataParameter<Boolean> IS_GARDEN_PLANT = EntityDataManager.createKey(PVZPlantEntity.class, DataSerializers.BOOLEAN);
 	
-	public PlantEntity(EntityType<? extends CreatureEntity> type, World worldIn) {
+	public PVZPlantEntity(EntityType<? extends CreatureEntity> type, World worldIn) {
 		super(type, worldIn);
 		this.weakTime=0;
 		this.isImmuneToWeak=false;

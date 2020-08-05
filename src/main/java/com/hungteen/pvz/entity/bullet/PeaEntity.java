@@ -1,6 +1,6 @@
 package com.hungteen.pvz.entity.bullet;
 
-import com.hungteen.pvz.entity.plant.PlantEntity;
+import com.hungteen.pvz.entity.plant.PVZPlantEntity;
 import com.hungteen.pvz.misc.damage.PVZDamageSource;
 import com.hungteen.pvz.register.ItemRegister;
 
@@ -118,8 +118,8 @@ public class PeaEntity extends PVZThrowableEntity{
 		float damage=0;
 		
 		//伤害先看主人
-		if(this.getThrower() instanceof PlantEntity) {
-			damage=((PlantEntity) this.getThrower()).getAttackDamage();
+		if(this.getThrower() instanceof PVZPlantEntity) {
+			damage=((PVZPlantEntity) this.getThrower()).getAttackDamage();
 		}
 //		else if(this.shooter instanceof EntityZombieBase) {//植物僵尸的攻击，后期要增加！
 //			damage=3;

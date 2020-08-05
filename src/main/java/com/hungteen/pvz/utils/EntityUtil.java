@@ -1,7 +1,8 @@
 package com.hungteen.pvz.utils;
 
 import com.hungteen.pvz.PVZConfig;
-import com.hungteen.pvz.entity.plant.PlantEntity;
+import com.hungteen.pvz.entity.plant.PVZPlantEntity;
+import com.hungteen.pvz.entity.zombie.PVZZombieEntity;
 
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.monster.MonsterEntity;
@@ -41,10 +42,13 @@ public class EntityUtil {
 	{
 		int group=0;
 		if(entity instanceof PlayerEntity) return 2;
-		if(entity instanceof PlantEntity) {
-			group=((PlantEntity) entity).getIsCharmed()?-1:1;
+		if(entity instanceof PVZPlantEntity) {
+			group=((PVZPlantEntity) entity).getIsCharmed()?-1:1;
 		}else if(entity instanceof MonsterEntity) {
 			group=-1;
+			if(entity instanceof PVZZombieEntity) {
+				group=((PVZZombieEntity) entity).getIsCharmed()?1:-1;
+			}
 		}
 		return group;
 	}
@@ -54,8 +58,13 @@ public class EntityUtil {
 		if(entity instanceof PlayerEntity) {
 			return entity.getTeam();
 		}
-		if(entity instanceof PlantEntity) {
-			PlayerEntity player = world.getPlayerByUuid(((PlantEntity) entity).getOwnerUUID());
+		if(entity instanceof PVZPlantEntity) {
+			PlayerEntity player = world.getPlayerByUuid(((PVZPlantEntity) entity).getOwnerUUID());
+			if(player==null) return null;
+			return player.getTeam();
+		}
+		if(entity instanceof PVZZombieEntity) {
+			PlayerEntity player = world.getPlayerByUuid(((PVZZombieEntity) entity).getOwnerUUID());
 			if(player==null) return null;
 			return player.getTeam();
 		}
@@ -64,7 +73,8 @@ public class EntityUtil {
 	
 	public static boolean getIsEntityCharmed(Entity entity)
 	{
-		if(entity instanceof PlantEntity) return ((PlantEntity) entity).getIsCharmed();
+		if(entity instanceof PVZPlantEntity) return ((PVZPlantEntity) entity).getIsCharmed();
+		if(entity instanceof PVZZombieEntity) return ((PVZZombieEntity) entity).getIsCharmed();
 		return false;
 	}
 }

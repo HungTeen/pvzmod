@@ -2,7 +2,7 @@ package com.hungteen.pvz.render.entity.plant.light;
 
 import com.hungteen.pvz.entity.plant.light.SunFlowerEntity;
 import com.hungteen.pvz.model.entity.plant.light.SunFlowerModel;
-import com.hungteen.pvz.render.entity.plant.PlantRender;
+import com.hungteen.pvz.render.entity.plant.PVZPlantRender;
 import com.hungteen.pvz.utils.StringUtil;
 
 import net.minecraft.client.renderer.entity.EntityRendererManager;
@@ -11,7 +11,7 @@ import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 
 @OnlyIn(Dist.CLIENT)
-public class SunFlowerRender extends PlantRender<SunFlowerEntity>{
+public class SunFlowerRender extends PVZPlantRender<SunFlowerEntity>{
 
 	
 	public SunFlowerRender(EntityRendererManager rendererManager) {

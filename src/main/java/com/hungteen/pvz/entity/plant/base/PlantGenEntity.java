@@ -1,7 +1,7 @@
 package com.hungteen.pvz.entity.plant.base;
 
 import com.hungteen.pvz.entity.ai.ProducerGenGoal;
-import com.hungteen.pvz.entity.plant.PlantEntity;
+import com.hungteen.pvz.entity.plant.PVZPlantEntity;
 import com.hungteen.pvz.utils.interfaces.IProducer;
 
 import net.minecraft.entity.CreatureEntity;
@@ -13,7 +13,7 @@ import net.minecraft.network.datasync.DataSerializers;
 import net.minecraft.network.datasync.EntityDataManager;
 import net.minecraft.world.World;
 
-public abstract class PlantGenEntity extends PlantEntity implements IProducer{
+public abstract class PlantGenEntity extends PVZPlantEntity implements IProducer{
 
 	private static final DataParameter<Boolean> IS_GEN_TIME = EntityDataManager.createKey(PlantGenEntity.class, DataSerializers.BOOLEAN);
 	public int genCD;

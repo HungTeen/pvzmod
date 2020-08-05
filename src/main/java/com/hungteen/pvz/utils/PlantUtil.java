@@ -1,7 +1,7 @@
 package com.hungteen.pvz.utils;
 
 import com.hungteen.pvz.PVZMod;
-import com.hungteen.pvz.entity.plant.PlantEntity;
+import com.hungteen.pvz.entity.plant.PVZPlantEntity;
 import com.hungteen.pvz.utils.enums.Plants;
 import com.hungteen.pvz.utils.enums.Ranks;
 
@@ -11,7 +11,7 @@ import net.minecraft.util.math.BlockPos;
 
 public class PlantUtil {
 
-	public static boolean checkCanPlantLiveHere(PlantEntity plant)
+	public static boolean checkCanPlantLiveHere(PVZPlantEntity plant)
 	{
 		BlockPos pos=plant.getPosition().add(0, -1, 0);
 		Block block = plant.world.getBlockState(pos).getBlock();

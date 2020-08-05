@@ -2,7 +2,7 @@ package com.hungteen.pvz.entity.plant.base;
 
 import com.hungteen.pvz.entity.ai.PVZNearestTargetGoal;
 import com.hungteen.pvz.entity.ai.ShooterAttackGoal;
-import com.hungteen.pvz.entity.plant.PlantEntity;
+import com.hungteen.pvz.entity.plant.PVZPlantEntity;
 import com.hungteen.pvz.utils.interfaces.IShooter;
 
 import net.minecraft.entity.CreatureEntity;
@@ -11,7 +11,7 @@ import net.minecraft.entity.SharedMonsterAttributes;
 import net.minecraft.entity.ai.goal.LookRandomlyGoal;
 import net.minecraft.world.World;
 
-public abstract class PlantShooterEntity extends PlantEntity implements IShooter{
+public abstract class PlantShooterEntity extends PVZPlantEntity implements IShooter{
 
 	public PlantShooterEntity(EntityType<? extends CreatureEntity> type, World worldIn) {
 		super(type, worldIn);
