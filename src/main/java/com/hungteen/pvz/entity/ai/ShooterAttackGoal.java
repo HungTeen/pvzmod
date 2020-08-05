@@ -23,6 +23,7 @@ public class ShooterAttackGoal extends Goal{
 		}
 		this.shooter=shooter;
 		this.attacker=(MobEntity) shooter;
+		this.attackTime=0;
 		this.setMutexFlags(EnumSet.of(Goal.Flag.MOVE, Goal.Flag.LOOK));
 	}
 	
@@ -52,7 +53,7 @@ public class ShooterAttackGoal extends Goal{
 		this.attackTime++;
 		if(this.attackTime>=this.shooter.getShootCD()) {
 			this.attackTime=0;
-			this.shooter.startShootAttack();;
+			this.shooter.startShootAttack();
 		}
 		this.attacker.getLookController().setLookPositionWithEntity(this.target, 30.0F, 30.0F);
 	}

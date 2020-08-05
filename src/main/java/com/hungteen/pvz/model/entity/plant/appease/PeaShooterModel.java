@@ -1,4 +1,4 @@
-package com.hungteen.pvz.model.entity.plant;
+package com.hungteen.pvz.model.entity.plant.appease;
 
 import com.hungteen.pvz.entity.plant.appease.PeaShooterEntity;
 import com.mojang.blaze3d.matrix.MatrixStack;

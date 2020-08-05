@@ -42,12 +42,21 @@ public class PeaEntity extends PVZThrowableEntity{
 		dataManager.register(PEA_TYPE, Type.NORMAL.ordinal());
 	}
 
+	public void shootPea(double dx,double dz,double speed)
+	{
+		double dv=Math.sqrt(dx*dx+dz*dz);
+		double vx=dx/dv*speed;
+		double vz=dz/dv*speed;
+		this.setMotion(vx, this.getMotion().y, vz);
+	}
+	
 	@Override
 	protected void onImpact(RayTraceResult result) {
         if (result.getType()==RayTraceResult.Type.ENTITY)
         {
         	Entity target = ((EntityRayTraceResult)result).getEntity();
         	if(checkCanAttack(target)) {
+        		target.hurtResistantTime=0;
         		if(this.getPeaState()==State.NORMAL) {
         		    //System.out.println(this.getThrower());
                     target.attackEntityFrom(PVZDamageSource.causeAppeaseDamage(this, this.getThrower()), this.getAttackDamage());//damage
@@ -157,6 +166,11 @@ public class PeaEntity extends PVZThrowableEntity{
 		super.readAdditional(compound);
 		this.setPeaState(State.values()[compound.getInt("peaState")]);
         this.setPeaType(Type.values()[compound.getInt("peaType")]);
+	}
+	
+	@Override
+	protected float getGravityVelocity() {
+		return 0.002f;
 	}
 	
 	public State getPeaState()

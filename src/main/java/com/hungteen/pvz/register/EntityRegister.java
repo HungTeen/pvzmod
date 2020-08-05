@@ -6,11 +6,13 @@ import com.hungteen.pvz.entity.drop.CoinEntity;
 import com.hungteen.pvz.entity.drop.EnergyEntity;
 import com.hungteen.pvz.entity.drop.SunEntity;
 import com.hungteen.pvz.entity.plant.appease.PeaShooterEntity;
+import com.hungteen.pvz.entity.plant.light.SunFlowerEntity;
 import com.hungteen.pvz.render.entity.bullet.PeaRender;
 import com.hungteen.pvz.render.entity.drop.CoinRender;
 import com.hungteen.pvz.render.entity.drop.EnergyRender;
 import com.hungteen.pvz.render.entity.drop.SunRender;
 import com.hungteen.pvz.render.entity.plant.appease.PeaShooterRender;
+import com.hungteen.pvz.render.entity.plant.light.SunFlowerRender;
 import com.hungteen.pvz.utils.StringUtil;
 
 import net.minecraft.entity.Entity;
@@ -41,6 +43,7 @@ public class EntityRegister {
 	
 	//plant
 	public static final RegistryObject<EntityType<PeaShooterEntity>> PEA_SHOOTER = registerEntityType(PeaShooterEntity::new, "pea_shooter", EntityClassification.CREATURE);
+	public static final RegistryObject<EntityType<SunFlowerEntity>> SUN_FLOWER = registerEntityType(SunFlowerEntity::new, "sun_flower", EntityClassification.CREATURE);
 	
 	@SubscribeEvent
     public static void onClientSetUpEvent(FMLClientSetupEvent event) {
@@ -54,6 +57,7 @@ public class EntityRegister {
         
         //plant
         RenderingRegistry.registerEntityRenderingHandler(PEA_SHOOTER.get(), PeaShooterRender::new);
+        RenderingRegistry.registerEntityRenderingHandler(SUN_FLOWER.get(), SunFlowerRender::new);
     }
 
 	private static <T extends Entity> RegistryObject<EntityType<T>> registerEntityType(IFactory<T> factory,String name,EntityClassification classification)

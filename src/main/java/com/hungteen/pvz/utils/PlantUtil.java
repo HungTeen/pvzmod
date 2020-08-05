@@ -34,6 +34,7 @@ public class PlantUtil {
 	public static int getPlantSunCost(Plants plant)
 	{
 		switch(plant) {
+		case SUN_FLOWER:return 50;
 		case PEA_SHOOTER:return 100;
 		default:return 0;
 		}
@@ -46,6 +47,7 @@ public class PlantUtil {
 	{
 		switch(plant) {
 		case PEA_SHOOTER:return getPlantCoolDownTimeVeryFast(lvl);
+		case SUN_FLOWER:return getPlantCoolDownTimeFast(lvl);
 		default:return 0;
 		}
 	}
@@ -65,7 +67,8 @@ public class PlantUtil {
 	public static Ranks getPlantRankByName(Plants plant)
 	{
 		switch(plant) {
-		case PEA_SHOOTER:return Ranks.GRAY;
+		case PEA_SHOOTER:
+		case SUN_FLOWER:return Ranks.GRAY;
 		default:return null;
 		}
 	}

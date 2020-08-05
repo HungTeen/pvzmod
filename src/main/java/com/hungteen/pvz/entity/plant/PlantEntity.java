@@ -12,6 +12,7 @@ import com.hungteen.pvz.utils.enums.Ranks;
 import com.hungteen.pvz.utils.interfaces.IPVZPlant;
 
 import net.minecraft.entity.CreatureEntity;
+import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.SharedMonsterAttributes;
 import net.minecraft.entity.player.PlayerEntity;
@@ -158,6 +159,12 @@ public abstract class PlantEntity extends CreatureEntity implements IPVZPlant{
 	}
 
 	@Override
+	public boolean attackEntityAsMob(Entity entityIn) {
+		entityIn.hurtResistantTime=0;
+		return super.attackEntityAsMob(entityIn);
+	}
+	
+	@Override
 	public void writeAdditional(CompoundNBT compound) {
 		super.writeAdditional(compound);
 		compound.putInt("plant_weak_time", this.weakTime);
@@ -234,7 +241,7 @@ public abstract class PlantEntity extends CreatureEntity implements IPVZPlant{
 	
 	public boolean canStartSuperMode()
 	{
-		return !this.isPlantInSuperMode();
+		return this.hasSuperMode()&&!this.isPlantInSuperMode();
 	}
 	
 	public boolean isPlantInBoost()

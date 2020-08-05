@@ -6,8 +6,10 @@ import com.hungteen.pvz.register.EntityRegister;
 import com.hungteen.pvz.utils.enums.Plants;
 
 import net.minecraft.entity.CreatureEntity;
+import net.minecraft.entity.EntitySize;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.LivingEntity;
+import net.minecraft.entity.Pose;
 import net.minecraft.util.SoundEvents;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.World;
@@ -34,14 +36,25 @@ public class PeaShooterEntity extends PlantShooterEntity{
         double deltaX=tmp*dx;
         double deltaZ=tmp*dz;
         PeaEntity pea = new PeaEntity(EntityRegister.PEA.get(),this.world,this,this.getShootType(),this.getShootState());
-        pea.setPosition(this.getPosX()+deltaX,this.getPosY()+getEyeHeight(),this.getPosZ()+deltaZ);
-        double d0 = target.getPosY() + (double)target.getEyeHeight() ;
-        double d1 = target.getPosX() - this.getPosX();
-        double d2 = d0 - pea.getPosY();
-        double d3 = target.getPosZ() - this.getPosZ();
-        pea.shoot(d1, d2, d3, this.getBulletSpeed(), 1.0F);      
+        pea.setPosition(this.getPosX()+deltaX,this.getPosY()+this.getSize(getPose()).height*0.8f,this.getPosZ()+deltaZ);
+        pea.shootPea(dx, dz, this.getBulletSpeed());      
         this.playSound(SoundEvents.ENTITY_SNOW_GOLEM_SHOOT, 1.0F, 1.0F);
         this.world.addEntity(pea);
+	}
+	
+	@Override
+	public float getAttackDamage() {
+		int lvl=this.getPlantLvl();
+		if(lvl<=20) {
+			int now=(lvl-1)/4;
+			return 2+0.5f*now;
+		}
+		return 2;
+	}
+	
+	@Override
+	public EntitySize getSize(Pose poseIn) {
+		return new EntitySize(0.8f, 1.5f, false);
 	}
 
 	protected PeaEntity.Type getShootType()

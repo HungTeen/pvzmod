@@ -1,7 +1,7 @@
 package com.hungteen.pvz.render.entity.plant.appease;
 
 import com.hungteen.pvz.entity.plant.appease.PeaShooterEntity;
-import com.hungteen.pvz.model.entity.plant.PeaShooterModel;
+import com.hungteen.pvz.model.entity.plant.appease.PeaShooterModel;
 import com.hungteen.pvz.render.entity.plant.PlantRender;
 import com.hungteen.pvz.utils.StringUtil;
 
@@ -14,7 +14,7 @@ import net.minecraftforge.api.distmarker.OnlyIn;
 public class PeaShooterRender extends PlantRender<PeaShooterEntity>{
 
 	public PeaShooterRender(EntityRendererManager rendererManager) {
-		super(rendererManager, new PeaShooterModel(),0.8f);
+		super(rendererManager, new PeaShooterModel(),0.4f);
 	}
 
 	@Override
