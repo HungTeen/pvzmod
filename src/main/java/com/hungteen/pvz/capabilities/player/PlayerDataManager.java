@@ -70,6 +70,11 @@ public class PlayerDataManager {
 			}
 		}
 		
+		public int getPlayerStats(Resources res)
+		{
+			return resources.get(res);
+		}
+		
 		public void addPlayerStats(Resources res,int num)
 		{
 			switch (res) {

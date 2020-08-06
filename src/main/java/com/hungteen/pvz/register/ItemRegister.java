@@ -3,6 +3,7 @@ package com.hungteen.pvz.register;
 import com.hungteen.pvz.PVZMod;
 import com.hungteen.pvz.item.PVZItemBase;
 import com.hungteen.pvz.item.PVZSpawnEggItem;
+import com.hungteen.pvz.item.ZombieFlagItem;
 import com.hungteen.pvz.utils.enums.Colors;
 
 import net.minecraft.entity.EntityType;
@@ -53,6 +54,9 @@ public class ItemRegister {
 	public static final RegistryObject<Item> SNOW_PEA = ITEMS.register("snow_pea", PVZItemBase::new);
 	public static final RegistryObject<Item> FLAME_PEA = ITEMS.register("flame_pea", PVZItemBase::new);
 	public static final RegistryObject<Item> BLUE_FLAME_PEA = ITEMS.register("blue_flame_pea", PVZItemBase::new);
+	
+	//tool
+	public static final RegistryObject<Item> ZOMBIE_FLAG = ITEMS.register("zombie_flag", ()->new ZombieFlagItem());
 	
     //spawn egg
 	//drop

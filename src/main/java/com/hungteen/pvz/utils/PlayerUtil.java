@@ -49,36 +49,7 @@ public class PlayerUtil {
 			l.getPlayerData().getPlayerStats().addPlayerStats(res, num);
 		});
 	}
-//	
-//	public static int getPlayerSunNum(EntityPlayer player) {
-//		return getPVZPlayer(player).getPlayerStats().getPlayerSunNum();
-//	}
-//	
-//	public static int getPlayerEnergyNum(EntityPlayer player) {
-//		return getPVZPlayer(player).getPlayerStats().getPlayerEnergyNum();
-//	}
-//	
-//	public static void addPlantCardNum(EntityPlayer player, Plants plant, int xp) {
-//		int lvl=getPlantLvl(player, plant);
-//		getPVZPlayer(player).getPlantStats().addPlantXp(plant, xp);
-//	}
-//
-//	public static void addPlayerXp(EntityPlayer player, int xp) {
-//		getPVZPlayer(player).getPlayerStats().addPlayerXp(xp);
-//	}
-//
-//	public static void addPlayerSunNum(EntityPlayer player, int num) {
-//		getPVZPlayer(player).getPlayerStats().addPlayerSunNum(num);
-//	}
-//
-//	public static void addPlayerMoney(EntityPlayer player, int num) {
-//		getPVZPlayer(player).getPlayerStats().addPlayerMoney(num);
-//	}
-//
-//	public static void addPlayerEnergyNum(EntityPlayer player, int num) {
-//		getPVZPlayer(player).getPlayerStats().addPlayerEnergyNum(num);
-//	}
-//
+	
 	public static void clonePlayerData(PlayerEntity oldPlayer, PlayerEntity newPlayer) {
 		LazyOptional<IPlayerDataCapability> oldCap = oldPlayer.getCapability(CapabilityHandler.PLAYER_DATA_CAPABILITY);
 		LazyOptional<IPlayerDataCapability> newCap = newPlayer.getCapability(CapabilityHandler.PLAYER_DATA_CAPABILITY);
