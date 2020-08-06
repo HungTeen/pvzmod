@@ -1,6 +1,6 @@
 {
     "parent": "block/cube_all",
     "textures": {
-        "all": "pvz:blocks/spear_ore"
+        "all": "pvz:block/spear_ore"
     }
 }

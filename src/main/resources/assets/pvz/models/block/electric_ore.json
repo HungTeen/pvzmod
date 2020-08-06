@@ -1,6 +1,6 @@
 {
     "parent": "block/cube_all",
     "textures": {
-        "all": "pvz:blocks/electric_ore"
+        "all": "pvz:block/electric_ore"
     }
 }

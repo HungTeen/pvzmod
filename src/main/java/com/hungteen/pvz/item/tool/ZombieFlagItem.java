@@ -1,10 +1,9 @@
-package com.hungteen.pvz.item;
+package com.hungteen.pvz.item.tool;
 
 import java.util.List;
 
 import com.hungteen.pvz.capabilities.CapabilityHandler;
 import com.hungteen.pvz.register.GroupRegister;
-import com.hungteen.pvz.utils.PlayerUtil;
 import com.hungteen.pvz.utils.enums.Resources;
 
 import net.minecraft.client.util.ITooltipFlag;
@@ -24,7 +23,8 @@ import net.minecraftforge.api.distmarker.OnlyIn;
 
 public class ZombieFlagItem extends Item{
 
-	private final int sunCost = 15;
+	private static final int sunCost = 15;
+	private static final int effectCD = 600;
 	
 	public ZombieFlagItem() {
 		super(new Item.Properties().maxStackSize(1).group(GroupRegister.PVZ_GROUP));
@@ -42,8 +42,9 @@ public class ZombieFlagItem extends Item{
 			playerIn.getCapability(CapabilityHandler.PLAYER_DATA_CAPABILITY).ifPresent((l)->{
 				int num=l.getPlayerData().getPlayerStats().getPlayerStats(Resources.SUN_NUM);
 				if(num>=sunCost) {
-					l.getPlayerData().getPlayerStats().addPlayerStats(Resources.SUN_NUM, -15);
-					playerIn.addPotionEffect(new EffectInstance(Effects.SPEED, 600, 1));
+					l.getPlayerData().getPlayerStats().addPlayerStats(Resources.SUN_NUM, -sunCost);
+					playerIn.addPotionEffect(new EffectInstance(Effects.SPEED, effectCD, 1));
+					playerIn.getCooldownTracker().setCooldown(playerIn.getHeldItem(handIn).getItem(), effectCD);
 				}
 			});
 		}

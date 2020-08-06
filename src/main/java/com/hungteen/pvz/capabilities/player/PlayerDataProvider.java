@@ -1,7 +1,5 @@
 package com.hungteen.pvz.capabilities.player;
 
-import javax.annotation.Nonnull;
-
 import com.hungteen.pvz.capabilities.CapabilityHandler;
 
 import net.minecraft.entity.player.PlayerEntity;

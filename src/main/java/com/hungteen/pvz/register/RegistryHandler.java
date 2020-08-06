@@ -6,6 +6,7 @@ import com.hungteen.pvz.item.PVZSpawnEggItem;
 import net.minecraft.entity.EntityType;
 import net.minecraftforge.event.RegistryEvent;
 import net.minecraftforge.eventbus.api.EventPriority;
+import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod.EventBusSubscriber;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
@@ -15,10 +16,12 @@ public class RegistryHandler {
 
 	public static void init()
 	{
-		ItemRegister.ITEMS.register(FMLJavaModLoadingContext.get().getModEventBus());
-		BlockRegister.BLOCKS.register(FMLJavaModLoadingContext.get().getModEventBus());
-		EntityRegister.ENTITY_TYPES.register(FMLJavaModLoadingContext.get().getModEventBus());
-		SoundRegister.SOUNDS.register(FMLJavaModLoadingContext.get().getModEventBus());
+		IEventBus bus = FMLJavaModLoadingContext.get().getModEventBus();
+		ItemRegister.ITEMS.register(bus);
+		BlockRegister.BLOCKS.register(bus);
+		EntityRegister.ENTITY_TYPES.register(bus);
+		SoundRegister.SOUNDS.register(bus);
+		ParticleRegister.PARTICLE_TYPES.register(bus);
 	}
 	
 	/**

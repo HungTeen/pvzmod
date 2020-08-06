@@ -1,6 +1,6 @@
 {
     "parent": "item/generated",
     "textures": {
-        "layer0": "pvz:items/electric_essence"
+        "layer0": "pvz:item/electric_essence"
     }
 }

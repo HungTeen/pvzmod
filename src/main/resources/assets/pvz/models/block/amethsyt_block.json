@@ -1,6 +1,6 @@
 {
     "parent": "block/cube_all",
     "textures": {
-        "all": "pvz:blocks/amethyst_block"
+        "all": "pvz:block/amethyst_block"
     }
 }

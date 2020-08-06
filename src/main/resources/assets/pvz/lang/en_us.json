@@ -1,4 +1,5 @@
 {
+//item
 //essence
     "item.pvz.origin_essence":"Origin Essence",
     "item.pvz.appease_essence":"Appease Essence",
@@ -26,13 +27,23 @@
     "item.pvz.gold_card":"Gold Card",
     "item.pvz.red_card":"Red Card",
 //spawn egg
-    "item.pvz.sun_spawn_egg":"Sun Spawn Egg",
-    "item.pvz.coin_spawn_egg":"Coin Spawn Egg",
-    "item.pvz.energy_spawn_egg":"Energy Spawn Egg",
+//drop
+    "entity.pvz.sun_spawn_egg":"Sun Spawn Egg",
+    "entity.pvz.coin_spawn_egg":"Coin Spawn Egg",
+    "entity.pvz.energy_spawn_egg":"Energy Spawn Egg",
+//zombie
+    "entity.pvz.normal_zombie_spawn_egg":"Normal Zombie Spawn Egg",
+    "entity.pvz.flag_zombie_spawn_egg":"Flag Zombie Spawn Egg",
+//plant
+    "entity.pvz.pea_shooter_spawn_egg":"Pea Shooter Spawn Egg",
+    "entity.pvz.sun_flower_spawn_egg":"Sun Flower Spawn Egg",
 //misc
     "item.pvz.snow_pea":"Snow Pea",
     "item.pvz.flame_pea":"Flame Pea",
     "item.pvz.blue_flame_pea":"Blue Flame Pea",
+//tool
+    "item.pvz.zombie_flag":"Zombie Flag",
+//block
 //ore
     "block.pvz.origin_ore":"Origin Ore",
     "block.pvz.appease_ore":"Appease Ore",
@@ -55,5 +66,16 @@
     "block.pvz.amethyst_block":"Amethyst Block",
     "block.pvz.origin_block":"Origin Block",
 //crop
-    "block.pvz.pea_plant":"Pea"
+    "block.pvz.pea_plant":"Pea",
+//entity
+//drop
+    "entity.pvz.sun":"Sun",
+    "entity.pvz.coin":"Coin",
+    "entity.pvz.energy":"Energy",
+//zombie
+    "entity.pvz.normal_zombie":"Normal Zombie",
+    "entity.pvz.flag_zombie":"Flag Zombie",
+//plant
+    "entity.pvz.pea_shooter":"Pea Shooter",
+    "entity.pvz.sun_flower":"Sun Flower"
 }

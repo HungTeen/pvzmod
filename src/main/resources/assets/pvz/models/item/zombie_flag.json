@@ -2,8 +2,8 @@
 	"credit": "Made with Blockbench",
 	"texture_size": [32, 32],
 	"textures": {
-		"0": "pvz:items/zombie_flag",
-		"particle": "pvz:items/zombie_flag"
+		"0": "pvz:item/zombie_flag",
+		"particle": "pvz:item/zombie_flag"
 	},
 	"elements": [
 		{

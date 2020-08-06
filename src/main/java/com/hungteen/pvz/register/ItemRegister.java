@@ -3,7 +3,7 @@ package com.hungteen.pvz.register;
 import com.hungteen.pvz.PVZMod;
 import com.hungteen.pvz.item.PVZItemBase;
 import com.hungteen.pvz.item.PVZSpawnEggItem;
-import com.hungteen.pvz.item.ZombieFlagItem;
+import com.hungteen.pvz.item.tool.ZombieFlagItem;
 import com.hungteen.pvz.utils.enums.Colors;
 
 import net.minecraft.entity.EntityType;

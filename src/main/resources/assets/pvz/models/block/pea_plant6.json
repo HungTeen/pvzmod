@@ -1,6 +1,6 @@
 {
     "parent": "block/crop",
     "textures": {
-        "crop": "pvz:blocks/pea_plant6"
+        "crop": "pvz:block/pea_plant6"
     }
 }

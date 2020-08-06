@@ -1,6 +1,6 @@
 {
     "parent": "item/generated",
     "textures": {
-        "layer0": "pvz:items/arma_essence"
+        "layer0": "pvz:item/arma_essence"
     }
 }

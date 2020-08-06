@@ -1,4 +1,5 @@
 {
+//item
 //essence
     "item.pvz.origin_essence":"原始精华",
     "item.pvz.appease_essence":"喷射精华",
@@ -26,15 +27,24 @@
     "item.pvz.gold_card":"金卡模板",
     "item.pvz.red_card":"红卡模板",
 //spawn egg
-    "item.pvz.sun_spawn_egg":"阳光刷怪蛋",
-    "item.pvz.coin_spawn_egg":"钱币刷怪蛋",
-    "item.pvz.energy_spawn_egg":"能量豆刷怪蛋",
+//drop
+    "entity.pvz.sun_spawn_egg":"阳光刷怪蛋",
+    "entity.pvz.coin_spawn_egg":"钱币刷怪蛋",
+    "entity.pvz.energy_spawn_egg":"能量豆刷怪蛋",
+//zombie
+    "entity.pvz.normal_zombie_spawn_egg":"普通僵尸刷怪蛋",
+    "entity.pvz.flag_zombie_spawn_egg":"旗帜僵尸刷怪蛋",
+//plant
+    "entity.pvz.pea_shooter_spawn_egg":"豌豆射手刷怪蛋",
+    "entity.pvz.sun_flower_spawn_egg":"向日葵刷怪蛋",
 //misc
     "item.pvz.snow_pea":"寒冰豌豆",
     "item.pvz.flame_pea":"烈焰豌豆",
     "item.pvz.blue_flame_pea":"蓝焰豌豆",
+//tool
+    "item.pvz.zombie_flag":"僵尸旗帜",
+//block
 //ore
-    
     "block.pvz.origin_ore":"原始精华矿",
     "block.pvz.appease_ore":"喷射精华矿",
     "block.pvz.light_ore":"阳光精华矿",
@@ -56,5 +66,16 @@
     "block.pvz.amethyst_block":"紫晶块",
     "block.pvz.origin_block":"原始精华块",
 //crop
-    "block.pvz.pea_plant":"豌豆"
+    "block.pvz.pea_plant":"豌豆",
+//entity
+//drop
+    "entity.pvz.sun":"阳光",
+    "entity.pvz.coin":"钱币",
+    "entity.pvz.energy":"能量豆",
+//zombie
+    "entity.pvz.normal_zombie":"普通僵尸",
+    "entity.pvz.flag_zombie":"旗帜僵尸",
+//plant
+    "entity.pvz.pea_shooter":"豌豆射手",
+    "entity.pvz.sun_flower":"向日葵"
 }

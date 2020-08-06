@@ -1,6 +1,6 @@
 {
     "parent": "item/generated",
     "textures": {
-        "layer0": "pvz:items/blue_card"
+        "layer0": "pvz:item/blue_card"
     }
 }
