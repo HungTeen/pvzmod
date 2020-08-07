@@ -2,6 +2,7 @@ package com.hungteen.pvz.register;
 
 import com.hungteen.pvz.PVZMod;
 import com.hungteen.pvz.item.PVZSpawnEggItem;
+import com.hungteen.pvz.item.armor.ConeArmorItem;
 
 import net.minecraft.entity.EntityType;
 import net.minecraftforge.event.RegistryEvent;
@@ -9,6 +10,7 @@ import net.minecraftforge.eventbus.api.EventPriority;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod.EventBusSubscriber;
+import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 
 @EventBusSubscriber(modid = PVZMod.MOD_ID, bus = EventBusSubscriber.Bus.MOD)
@@ -22,6 +24,11 @@ public class RegistryHandler {
 		EntityRegister.ENTITY_TYPES.register(bus);
 		SoundRegister.SOUNDS.register(bus);
 		ParticleRegister.PARTICLE_TYPES.register(bus);
+	}
+	
+	@SubscribeEvent
+	public static void clientSetup(FMLClientSetupEvent evt) {
+		ConeArmorItem.initArmorModel();
 	}
 	
 	/**

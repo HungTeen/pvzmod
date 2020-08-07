@@ -66,6 +66,7 @@ public class PlayerDataManager {
 			this.playerDataManager = dataManager;
 			for(Resources res:Resources.values()) {
 				if(res==Resources.TREE_LVL) resources.put(res, 1);
+				else if(res==Resources.SUN_NUM) resources.put(res, 50);
 				else resources.put(res,0);
 			}
 		}

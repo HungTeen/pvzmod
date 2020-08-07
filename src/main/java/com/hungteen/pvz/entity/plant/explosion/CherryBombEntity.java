@@ -28,9 +28,11 @@ public class CherryBombEntity extends PlantBombEntity{
 			}
 //			this.playSound(SoundsHandler.CHERRY_BOMB, 4, 1);
 		}
-		this.world.addParticle(ParticleRegister.BOMB_PARTICLE.get(), this.getPosX(),this.getPosY(),this.getPosZ(), 0,0,0);
+		for(int i=1;i<=5;i++) {
+		    this.world.addParticle(ParticleRegister.BOMB_PARTICLE.get(), this.getPosX(),this.getPosY(),this.getPosZ(), 0,0,0);
+		}
 	}
-
+	
 	@Override
 	public float getAttackDamage() {
 		int lvl=this.getPlantLvl();
