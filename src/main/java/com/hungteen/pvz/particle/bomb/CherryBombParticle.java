@@ -1,7 +1,5 @@
 package com.hungteen.pvz.particle.bomb;
 
-import java.awt.Color;
-
 import net.minecraft.client.particle.IAnimatedSprite;
 import net.minecraft.client.particle.IParticleFactory;
 import net.minecraft.client.particle.IParticleRenderType;
@@ -22,7 +20,7 @@ public class CherryBombParticle extends SpriteTexturedParticle {
 		super(world, x, y, z, xSpeed, ySpeed, zSpeed);
 		this.maxAge = 6 + this.rand.nextInt(4);
 		this.setColor(1,0,0);
-		this.particleScale = 2;
+		this.particleScale = 4;
 		this.sprite = sprite;
 		this.canCollide = false;
 		this.selectSpriteWithAge(this.sprite);

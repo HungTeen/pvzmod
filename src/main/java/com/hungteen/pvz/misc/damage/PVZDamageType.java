@@ -7,8 +7,9 @@ import net.minecraft.client.resources.I18n;
 public enum PVZDamageType {
 	NORMAL, 
 	WEAK,
-	APPEASE;
-//	EXPLOSION,
+	APPEASE,
+	EAT,
+	EXPLOSION;
 //	SNOW, 
 //	ICE,
 //	FIRE, 
@@ -23,10 +24,10 @@ public enum PVZDamageType {
 	@Override
 	public String toString() {
 		switch(this) {
-		case WEAK:return ChatFormatting.GRAY+I18n.format("pvz.damageType.weak",new Object[0]);
-		case APPEASE:return ChatFormatting.GREEN+I18n.format("pvz.damageType.appease",new Object[0]);
-//			case EXPLOSION:
-//				return ChatFormatting.DARK_RED+I18n.format("pvz.DamageType.EXPLOSION",new Object[0]);
+		case WEAK:return ChatFormatting.GRAY+I18n.format("pvz.damage_type.weak",new Object[0]);
+		case APPEASE:return ChatFormatting.GREEN+I18n.format("pvz.damage_type.appease",new Object[0]);
+		case EAT:return ChatFormatting.DARK_GRAY+I18n.format("pvz.damage_type.eat",new Object[0]);
+		case EXPLOSION:return ChatFormatting.DARK_RED+I18n.format("pvz.damage_type.explosion",new Object[0]);
 //			case SNOW:
 //				return ChatFormatting.WHITE+I18n.format("pvz.DamageType.SNOW",new Object[0]);
 //			case ICE:
@@ -41,8 +42,7 @@ public enum PVZDamageType {
 //				return ChatFormatting.LIGHT_PURPLE+I18n.format("pvz.DamageType.MAGIC",new Object[0]);
 //			case SUN:
 //			    return ChatFormatting.YELLOW+I18n.format("pvz.DamageType.SUN",new Object[0]);
-//			case EAT:
-//			    return ChatFormatting.DARK_GREEN+I18n.format("pvz.DamageType.EAT",new Object[0]);
+			
 //			case DEAD:
 //			    return ChatFormatting.DARK_RED+I18n.format("pvz.DamageType.DEAD",new Object[0]);
 //			case MOTAL:

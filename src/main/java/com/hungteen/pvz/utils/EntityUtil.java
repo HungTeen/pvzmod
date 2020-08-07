@@ -1,13 +1,18 @@
 package com.hungteen.pvz.utils;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import com.hungteen.pvz.PVZConfig;
 import com.hungteen.pvz.entity.plant.PVZPlantEntity;
 import com.hungteen.pvz.entity.zombie.PVZZombieEntity;
 
 import net.minecraft.entity.Entity;
+import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.monster.MonsterEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.scoreboard.Team;
+import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.world.World;
 
 public class EntityUtil {
@@ -76,5 +81,22 @@ public class EntityUtil {
 		if(entity instanceof PVZPlantEntity) return ((PVZPlantEntity) entity).getIsCharmed();
 		if(entity instanceof PVZZombieEntity) return ((PVZZombieEntity) entity).getIsCharmed();
 		return false;
+	}
+	
+	public static List<LivingEntity> getEntityAttackableTarget(LivingEntity attacker,AxisAlignedBB aabb)
+	{
+		World world=attacker.world;
+		List<LivingEntity> list=new ArrayList<>();
+		for(LivingEntity entity:world.getEntitiesWithinAABB(LivingEntity.class, aabb)) {
+			if(checkCanEntityAttack(attacker, entity)) {
+				list.add(entity);
+			}
+		}
+		return list;
+	}
+	
+	public static AxisAlignedBB getEntityAABB(Entity entity,double w,double h)
+	{
+		return new AxisAlignedBB(entity.getPosX()-w, entity.getPosY()-h, entity.getPosZ()-w, entity.getPosX()+w, entity.getPosY()+h, entity.getPosZ()+w);
 	}
 }

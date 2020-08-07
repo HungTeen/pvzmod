@@ -13,9 +13,11 @@ import com.hungteen.pvz.utils.ZombieUtil;
 import com.hungteen.pvz.utils.enums.Ranks;
 import com.hungteen.pvz.utils.interfaces.IPVZZombie;
 
+import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.ILivingEntityData;
+import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.SharedMonsterAttributes;
 import net.minecraft.entity.SpawnReason;
 import net.minecraft.entity.ai.goal.LookAtGoal;
@@ -24,46 +26,56 @@ import net.minecraft.entity.ai.goal.SwimGoal;
 import net.minecraft.entity.ai.goal.WaterAvoidingRandomWalkingGoal;
 import net.minecraft.entity.monster.MonsterEntity;
 import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.network.datasync.DataParameter;
 import net.minecraft.network.datasync.DataSerializers;
 import net.minecraft.network.datasync.EntityDataManager;
 import net.minecraft.server.management.PreYggdrasilConverter;
 import net.minecraft.util.DamageSource;
+import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.DifficultyInstance;
 import net.minecraft.world.IWorld;
 import net.minecraft.world.World;
 
-public abstract class PVZZombieEntity extends MonsterEntity implements IPVZZombie{
+public abstract class PVZZombieEntity extends MonsterEntity implements IPVZZombie {
 
-	private static final DataParameter<Integer> ZOMBIE_TYPE = EntityDataManager.createKey(PVZZombieEntity.class,DataSerializers.VARINT);
+	private static final DataParameter<Integer> ZOMBIE_TYPE = EntityDataManager.createKey(PVZZombieEntity.class,
+			DataSerializers.VARINT);
 	// 主人ID
-	private static final DataParameter<Optional<UUID>> OWNER_UUID = EntityDataManager.createKey(PVZZombieEntity.class, DataSerializers.OPTIONAL_UNIQUE_ID);
+	private static final DataParameter<Optional<UUID>> OWNER_UUID = EntityDataManager.createKey(PVZZombieEntity.class,
+			DataSerializers.OPTIONAL_UNIQUE_ID);
 	// 以下均为僵尸状态
-	private static final DataParameter<Boolean> IS_FROZEN = EntityDataManager.createKey(PVZZombieEntity.class,DataSerializers.BOOLEAN);
-	private static final DataParameter<Boolean> IS_COLD = EntityDataManager.createKey(PVZZombieEntity.class,DataSerializers.BOOLEAN);
-	private static final DataParameter<Boolean> IS_CHARMED = EntityDataManager.createKey(PVZZombieEntity.class,DataSerializers.BOOLEAN);
-	private static final DataParameter<Boolean> IS_SMALL = EntityDataManager.createKey(PVZZombieEntity.class,DataSerializers.BOOLEAN);
-	private static final DataParameter<Boolean> IS_INVIS = EntityDataManager.createKey(PVZZombieEntity.class,DataSerializers.BOOLEAN);
-	private static final DataParameter<Boolean> IS_BUTTER = EntityDataManager.createKey(PVZZombieEntity.class,DataSerializers.BOOLEAN);
-	
+	private static final DataParameter<Boolean> IS_FROZEN = EntityDataManager.createKey(PVZZombieEntity.class,
+			DataSerializers.BOOLEAN);
+	private static final DataParameter<Boolean> IS_COLD = EntityDataManager.createKey(PVZZombieEntity.class,
+			DataSerializers.BOOLEAN);
+	private static final DataParameter<Boolean> IS_CHARMED = EntityDataManager.createKey(PVZZombieEntity.class,
+			DataSerializers.BOOLEAN);
+	private static final DataParameter<Boolean> IS_SMALL = EntityDataManager.createKey(PVZZombieEntity.class,
+			DataSerializers.BOOLEAN);
+	private static final DataParameter<Boolean> IS_INVIS = EntityDataManager.createKey(PVZZombieEntity.class,
+			DataSerializers.BOOLEAN);
+	private static final DataParameter<Boolean> IS_BUTTER = EntityDataManager.createKey(PVZZombieEntity.class,
+			DataSerializers.BOOLEAN);
+
 	public PVZZombieEntity(EntityType<? extends MonsterEntity> type, World worldIn) {
 		super(type, worldIn);
 		this.setZombieAttributes();
 		this.isImmuneToFire();
 	}
-	
+
 	/**
 	 * get zombie type : super normal beard
 	 */
 	protected Type getSpawnType() {
 		int t = this.getRNG().nextInt(100);
-		if (t <= PVZConfig.COMMON_CONFIG.ENTITY_SETTINGS.zombieSuperChance.get()) return Type.SUPER;
+		if (t <= PVZConfig.COMMON_CONFIG.ENTITY_SETTINGS.zombieSuperChance.get())
+			return Type.SUPER;
 		return Type.NORMAL;
 	}
-	
-	protected void setZombieAttributes()
-	{
+
+	protected void setZombieAttributes() {
 		this.setZombieMaxHealth(this.getLife());
 	}
 
@@ -73,10 +85,9 @@ public abstract class PVZZombieEntity extends MonsterEntity implements IPVZZombi
 		zombieSpawnInit();
 		return super.onInitialSpawn(worldIn, difficultyIn, reason, spawnDataIn, dataTag);
 	}
-	
+
 	/**
-	 * 代替鸡肋的onInitialSpawn
-	 * 利于代码层面的召唤僵尸
+	 * 代替鸡肋的onInitialSpawn 利于代码层面的召唤僵尸
 	 */
 	public void zombieSpawnInit() {
 //		OverworldData data = OverworldData.getGlobalData(world);
@@ -97,7 +108,7 @@ public abstract class PVZZombieEntity extends MonsterEntity implements IPVZZombi
 //			}
 //		}
 	}
-	
+
 	@Override
 	protected void registerData() {
 		super.registerData();
@@ -110,7 +121,7 @@ public abstract class PVZZombieEntity extends MonsterEntity implements IPVZZombi
 		dataManager.register(IS_INVIS, false);
 		dataManager.register(IS_BUTTER, false);
 	}
-	
+
 	@Override
 	protected void registerAttributes() {
 		super.registerAttributes();
@@ -119,20 +130,19 @@ public abstract class PVZZombieEntity extends MonsterEntity implements IPVZZombi
 		this.getAttribute(SharedMonsterAttributes.MOVEMENT_SPEED).setBaseValue(ZombieUtil.NORMAL_SPEED);
 		this.getAttribute(SharedMonsterAttributes.KNOCKBACK_RESISTANCE).setBaseValue(1D);
 	}
-	
+
 	@Override
 	protected void registerGoals() {
 		this.goalSelector.addGoal(8, new LookAtGoal(this, PlayerEntity.class, 8.0F));
-	    this.goalSelector.addGoal(8, new LookRandomlyGoal(this));
+		this.goalSelector.addGoal(8, new LookRandomlyGoal(this));
 		this.goalSelector.addGoal(7, new WaterAvoidingRandomWalkingGoal(this, 1.0D));
 		this.goalSelector.addGoal(7, new SwimGoal(this));
 		this.goalSelector.addGoal(1, new ZombieMeleeAttackGoal(this, 1.0, false));
 		this.targetSelector.addGoal(0, new PVZNearestTargetGoal(this, true, 80, 60));
 	}
-	
+
 	/**
-	 * 给僵尸设置最大生命值
-	 * 并回血
+	 * 给僵尸设置最大生命值 并回血
 	 */
 	public void setZombieMaxHealth(float health) {
 		this.getAttribute(SharedMonsterAttributes.MAX_HEALTH).setBaseValue(health);
@@ -149,17 +159,64 @@ public abstract class PVZZombieEntity extends MonsterEntity implements IPVZZombi
 
 	@Override
 	public boolean attackEntityFrom(DamageSource source, float amount) {
-		if(source instanceof PVZDamageSource) {
-		    this.hurtResistantTime=0;
+		if (source instanceof PVZDamageSource) {
+			this.hurtResistantTime = 0;
 		}
 		return super.attackEntityFrom(source, amount);
 	}
-	
+
 	@Override
 	public boolean attackEntityAsMob(Entity entityIn) {
-		entityIn.hurtResistantTime=0;
-		return super.attackEntityAsMob(entityIn);
+		entityIn.hurtResistantTime = 0;
+		//add
+		float f = (float) this.getAttribute(SharedMonsterAttributes.ATTACK_DAMAGE).getValue();
+		float f1 = (float) this.getAttribute(SharedMonsterAttributes.ATTACK_KNOCKBACK).getValue();
+		if (entityIn instanceof LivingEntity) {
+			f += EnchantmentHelper.getModifierForCreature(this.getHeldItemMainhand(),
+					((LivingEntity) entityIn).getCreatureAttribute());
+			f1 += (float) EnchantmentHelper.getKnockbackModifier(this);
+		}
+
+		int i = EnchantmentHelper.getFireAspectModifier(this);
+		if (i > 0) {
+			entityIn.setFire(i * 4);
+		}
+
+		boolean flag = entityIn.attackEntityFrom(getZombieAttackDamageSource(), f);
+		if (flag) {
+			if (f1 > 0.0F && entityIn instanceof LivingEntity) {
+				((LivingEntity) entityIn).knockBack(this, f1 * 0.5F,
+						(double) MathHelper.sin(this.rotationYaw * ((float) Math.PI / 180F)),
+						(double) (-MathHelper.cos(this.rotationYaw * ((float) Math.PI / 180F))));
+				this.setMotion(this.getMotion().mul(0.6D, 1.0D, 0.6D));
+			}
+
+			if (entityIn instanceof PlayerEntity) {
+				PlayerEntity playerentity = (PlayerEntity) entityIn;
+				ItemStack itemstack = this.getHeldItemMainhand();
+				ItemStack itemstack1 = playerentity.isHandActive() ? playerentity.getActiveItemStack()
+						: ItemStack.EMPTY;
+				if (!itemstack.isEmpty() && !itemstack1.isEmpty()
+						&& itemstack.canDisableShield(itemstack1, playerentity, this)
+						&& itemstack1.isShield(playerentity)) {
+					float f2 = 0.25F + (float) EnchantmentHelper.getEfficiencyModifier(this) * 0.05F;
+					if (this.rand.nextFloat() < f2) {
+						playerentity.getCooldownTracker().setCooldown(itemstack.getItem(), 100);
+						this.world.setEntityState(playerentity, (byte) 30);
+					}
+				}
+			}
+
+			this.applyEnchantments(this, entityIn);
+			this.setLastAttackedEntity(entityIn);
+		}
+		return flag;
 	}
+
+	protected PVZDamageSource getZombieAttackDamageSource() {
+		return PVZDamageSource.causeEatDamage(this, this);
+	}
+
 	/**
 	 * 能否被黄油黏住
 	 */
@@ -188,11 +245,10 @@ public abstract class PVZZombieEntity extends MonsterEntity implements IPVZZombi
 		return true;
 	}
 
-	public Ranks getZombieRank()
-	{
+	public Ranks getZombieRank() {
 		return ZombieUtil.getZombieRank(getZombieEnumName());
 	}
-	
+
 	@Override
 	public int getZombieXp() {
 		return ZombieUtil.getZombieXp(getZombieEnumName());
@@ -203,10 +259,10 @@ public abstract class PVZZombieEntity extends MonsterEntity implements IPVZZombi
 		super.writeAdditional(compound);
 		compound.putInt("zombie_type", this.getZombieType().ordinal());
 		if (this.getOwnerUUID() == null) {
-	         compound.putString("OwnerUUID", "");
-	      } else {
-	         compound.putString("OwnerUUID", this.getOwnerUUID().toString());
-	      }
+			compound.putString("OwnerUUID", "");
+		} else {
+			compound.putString("OwnerUUID", this.getOwnerUUID().toString());
+		}
 		compound.putBoolean("is_zombie_cold", this.getIsCold());
 		compound.putBoolean("is_zombie_frozen", this.getIsFrozen());
 		compound.putBoolean("is_zombie_butter", this.getIsButter());
@@ -220,18 +276,18 @@ public abstract class PVZZombieEntity extends MonsterEntity implements IPVZZombi
 		super.readAdditional(compound);
 		this.setZombieType(Type.values()[compound.getInt("zombie_type")]);
 		String s;
-	      if (compound.contains("OwnerUUID", 8)) {
-	         s = compound.getString("OwnerUUID");
-	      } else {
-	         String s1 = compound.getString("Owner");
-	         s = PreYggdrasilConverter.convertMobOwnerIfNeeded(this.getServer(), s1);
-	      }
-	      if (!s.isEmpty()) {
-	         try {
-	            this.setOwnerUUID(UUID.fromString(s));
-	         } catch (Throwable var4) {
-	         }
-	      }
+		if (compound.contains("OwnerUUID", 8)) {
+			s = compound.getString("OwnerUUID");
+		} else {
+			String s1 = compound.getString("Owner");
+			s = PreYggdrasilConverter.convertMobOwnerIfNeeded(this.getServer(), s1);
+		}
+		if (!s.isEmpty()) {
+			try {
+				this.setOwnerUUID(UUID.fromString(s));
+			} catch (Throwable var4) {
+			}
+		}
 		this.setIsCold(compound.getBoolean("is_zombie_cold"));
 		this.setIsFrozen(compound.getBoolean("is_zombie_frozen"));
 		this.setIsButter(compound.getBoolean("is_zombie_butter"));
@@ -241,15 +297,13 @@ public abstract class PVZZombieEntity extends MonsterEntity implements IPVZZombi
 	}
 
 	@Nullable
-    public UUID getOwnerUUID()
-    {
-        return dataManager.get(OWNER_UUID).orElse((UUID)null);
-    }
+	public UUID getOwnerUUID() {
+		return dataManager.get(OWNER_UUID).orElse((UUID) null);
+	}
 
-    public void setOwnerUUID(UUID uuid)
-    {
-        this.dataManager.set(OWNER_UUID, Optional.ofNullable(uuid));
-    }
+	public void setOwnerUUID(UUID uuid) {
+		this.dataManager.set(OWNER_UUID, Optional.ofNullable(uuid));
+	}
 
 	public void setIsCharmed(boolean is) {
 		dataManager.set(IS_CHARMED, is);
@@ -321,7 +375,7 @@ public abstract class PVZZombieEntity extends MonsterEntity implements IPVZZombi
 //	protected SoundEvent getDeathSound() {
 //		return SoundEvents.ENTITY_ZOMBIE_DEATH;
 //	}
-	
+
 	public enum Type {
 		NORMAL, // 普通
 		SUPER, // 能量豆
