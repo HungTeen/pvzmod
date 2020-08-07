@@ -1,8 +1,0 @@
-{
-    "variants": {
-        "facing=north":{"model":"pvz:pole"},
-        "facing=east":{"model":"pvz:pole","y":90},
-        "facing=south":{"model":"pvz:pole","y":180},
-        "facing=west":{"model":"pvz:pole","y":270}
-    }
-}

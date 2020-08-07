@@ -1,4 +1,4 @@
-package com.hungteen.pvz.block;
+package com.hungteen.pvz.block.plants;
 
 import com.hungteen.pvz.register.ItemRegister;
 

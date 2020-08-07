@@ -1,8 +1,0 @@
-{
-    "variants": {
-        "facing=north":{"model":"pvz:lily_pad"},
-        "facing=east":{"model":"pvz:lily_pad","y":90},
-        "facing=south":{"model":"pvz:lily_pad","y":180},
-        "facing=west":{"model":"pvz:lily_pad","y":270}
-    }
-}

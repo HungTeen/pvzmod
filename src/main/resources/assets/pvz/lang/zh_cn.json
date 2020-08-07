@@ -28,21 +28,25 @@
     "item.pvz.red_card":"红卡模板",
 //spawn egg
 //drop
-    "entity.pvz.sun_spawn_egg":"阳光刷怪蛋",
-    "entity.pvz.coin_spawn_egg":"钱币刷怪蛋",
-    "entity.pvz.energy_spawn_egg":"能量豆刷怪蛋",
+    "item.pvz.sun_spawn_egg":"阳光刷怪蛋",
+    "item.pvz.coin_spawn_egg":"钱币刷怪蛋",
+    "item.pvz.energy_spawn_egg":"能量豆刷怪蛋",
 //zombie
-    "entity.pvz.normal_zombie_spawn_egg":"普通僵尸刷怪蛋",
-    "entity.pvz.flag_zombie_spawn_egg":"旗帜僵尸刷怪蛋",
+    "item.pvz.normal_zombie_spawn_egg":"普通僵尸刷怪蛋",
+    "item.pvz.flag_zombie_spawn_egg":"旗帜僵尸刷怪蛋",
+    "item.pvz.conehead_zombie_spawn_egg":"路障僵尸刷怪蛋",
 //plant
-    "entity.pvz.pea_shooter_spawn_egg":"豌豆射手刷怪蛋",
-    "entity.pvz.sun_flower_spawn_egg":"向日葵刷怪蛋",
+    "item.pvz.pea_shooter_spawn_egg":"豌豆射手刷怪蛋",
+    "item.pvz.sun_flower_spawn_egg":"向日葵刷怪蛋",
+    "item.pvz.cherry_bomb_spawn_edd":"樱桃炸弹刷怪蛋",
 //misc
     "item.pvz.snow_pea":"寒冰豌豆",
     "item.pvz.flame_pea":"烈焰豌豆",
     "item.pvz.blue_flame_pea":"蓝焰豌豆",
 //tool
     "item.pvz.zombie_flag":"僵尸旗帜",
+//armor
+    "item.pvz.cone_head":"路障头盔",
 //block
 //ore
     "block.pvz.origin_ore":"原始精华矿",
@@ -75,7 +79,9 @@
 //zombie
     "entity.pvz.normal_zombie":"普通僵尸",
     "entity.pvz.flag_zombie":"旗帜僵尸",
+    "entity.pvz.conehead_zombie":"路障僵尸",
 //plant
     "entity.pvz.pea_shooter":"豌豆射手",
-    "entity.pvz.sun_flower":"向日葵"
+    "entity.pvz.sun_flower":"向日葵",
+    "entity.pvz.cherry_bomb":"樱桃炸弹"
 }
