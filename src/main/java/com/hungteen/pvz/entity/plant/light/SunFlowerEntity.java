@@ -1,7 +1,7 @@
 package com.hungteen.pvz.entity.plant.light;
 
 import com.hungteen.pvz.entity.drop.SunEntity;
-import com.hungteen.pvz.entity.plant.base.PlantGenEntity;
+import com.hungteen.pvz.entity.plant.base.PlantProducerEntity;
 import com.hungteen.pvz.register.EntityRegister;
 import com.hungteen.pvz.utils.enums.Plants;
 
@@ -10,7 +10,7 @@ import net.minecraft.entity.EntityType;
 import net.minecraft.util.SoundEvents;
 import net.minecraft.world.World;
 
-public class SunFlowerEntity extends PlantGenEntity{
+public class SunFlowerEntity extends PlantProducerEntity{
 
 	public SunFlowerEntity(EntityType<? extends CreatureEntity> type, World worldIn) {
 		super(type, worldIn);

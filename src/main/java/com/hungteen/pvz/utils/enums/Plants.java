@@ -6,7 +6,7 @@ public enum Plants {
 		PEA_SHOOTER("pea_shooter"),
 		SUN_FLOWER("sun_flower"),
 		CHERRY_BOMB("cherry_bomb"),
-	    NUT_WALL("nut_wall"),
+	    WALL_NUT("wall_nut"),
 	    POTATO_MINE("potato_mine"),
 	    SNOW_PEA("snow_pea"),
 	    CHOMPER("chomper"),//���
@@ -71,7 +71,7 @@ public enum Plants {
 		if(name.equals("pea_shooter")) return PEA_SHOOTER;
 		else if(name.equals("sun_flower")) return SUN_FLOWER;
 		else if(name.equals("cherry_bomb")) return CHERRY_BOMB;
-		else if(name.equals("nut_wall")) return NUT_WALL;
+		else if(name.equals("wall_nut")) return WALL_NUT;
 		else if(name.equals("potato_mine")) return POTATO_MINE;
 		else if(name.equals("snow_pea")) return SNOW_PEA;
 		else if(name.equals("double_shooter")) return DOUBLE_SHOOTER;

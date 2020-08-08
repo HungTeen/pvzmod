@@ -1,6 +1,6 @@
 package com.hungteen.pvz.entity.plant.explosion;
 
-import com.hungteen.pvz.entity.plant.base.PlantBombEntity;
+import com.hungteen.pvz.entity.plant.base.PlantBomberEntity;
 import com.hungteen.pvz.misc.damage.PVZDamageSource;
 import com.hungteen.pvz.register.ParticleRegister;
 import com.hungteen.pvz.utils.EntityUtil;
@@ -12,7 +12,7 @@ import net.minecraft.entity.LivingEntity;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.world.World;
 
-public class CherryBombEntity extends PlantBombEntity{
+public class CherryBombEntity extends PlantBomberEntity{
 
 	public CherryBombEntity(EntityType<? extends CreatureEntity> type, World worldIn) {
 		super(type, worldIn);

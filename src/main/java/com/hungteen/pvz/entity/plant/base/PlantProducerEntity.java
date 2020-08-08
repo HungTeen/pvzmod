@@ -13,12 +13,12 @@ import net.minecraft.network.datasync.DataSerializers;
 import net.minecraft.network.datasync.EntityDataManager;
 import net.minecraft.world.World;
 
-public abstract class PlantGenEntity extends PVZPlantEntity implements IProducer{
+public abstract class PlantProducerEntity extends PVZPlantEntity implements IProducer{
 
-	private static final DataParameter<Boolean> IS_GEN_TIME = EntityDataManager.createKey(PlantGenEntity.class, DataSerializers.BOOLEAN);
+	private static final DataParameter<Boolean> IS_GEN_TIME = EntityDataManager.createKey(PlantProducerEntity.class, DataSerializers.BOOLEAN);
 	public int genCD;
 	
-	public PlantGenEntity(EntityType<? extends CreatureEntity> type, World worldIn) {
+	public PlantProducerEntity(EntityType<? extends CreatureEntity> type, World worldIn) {
 		super(type, worldIn);
 		this.genCD=this.getGenCD();
 	}

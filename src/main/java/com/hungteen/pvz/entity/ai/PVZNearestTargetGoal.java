@@ -22,11 +22,11 @@ public class PVZNearestTargetGoal extends TargetGoal{
     private final float height;
     private final float width;
     
-    public PVZNearestTargetGoal(MobEntity mobIn, boolean checkSight,int w,int h) {
+    public PVZNearestTargetGoal(MobEntity mobIn, boolean checkSight,float w,float h) {
 		this(mobIn, checkSight, 5, w, h);
 	}
     
-	public PVZNearestTargetGoal(MobEntity mobIn, boolean checkSight,int chance,int w,int h) {
+	public PVZNearestTargetGoal(MobEntity mobIn, boolean checkSight,int chance,float w,float h) {
 		super(mobIn, checkSight);
 		this.targetChance=chance;
 		this.width=w;

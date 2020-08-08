@@ -11,9 +11,9 @@ import net.minecraft.entity.ai.goal.LookRandomlyGoal;
 import net.minecraft.util.DamageSource;
 import net.minecraft.world.World;
 
-public abstract class PlantBombEntity extends PVZPlantEntity implements IBomber{
+public abstract class PlantBomberEntity extends PVZPlantEntity implements IBomber{
 
-	public PlantBombEntity(EntityType<? extends CreatureEntity> type, World worldIn) {
+	public PlantBomberEntity(EntityType<? extends CreatureEntity> type, World worldIn) {
 		super(type, worldIn);
 	}
 

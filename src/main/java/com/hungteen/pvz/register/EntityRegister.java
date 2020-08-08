@@ -6,6 +6,7 @@ import com.hungteen.pvz.entity.drop.CoinEntity;
 import com.hungteen.pvz.entity.drop.EnergyEntity;
 import com.hungteen.pvz.entity.drop.SunEntity;
 import com.hungteen.pvz.entity.plant.appease.PeaShooterEntity;
+import com.hungteen.pvz.entity.plant.defence.WallNutEntity;
 import com.hungteen.pvz.entity.plant.explosion.CherryBombEntity;
 import com.hungteen.pvz.entity.plant.light.SunFlowerEntity;
 import com.hungteen.pvz.entity.zombie.grassday.ConeHeadZombieEntity;
@@ -16,6 +17,7 @@ import com.hungteen.pvz.render.entity.drop.CoinRender;
 import com.hungteen.pvz.render.entity.drop.EnergyRender;
 import com.hungteen.pvz.render.entity.drop.SunRender;
 import com.hungteen.pvz.render.entity.plant.appease.PeaShooterRender;
+import com.hungteen.pvz.render.entity.plant.defence.WallNutRender;
 import com.hungteen.pvz.render.entity.plant.explosion.CherryBombRender;
 import com.hungteen.pvz.render.entity.plant.light.SunFlowerRender;
 import com.hungteen.pvz.render.entity.zombie.grassday.ConeHeadZombieRender;
@@ -58,6 +60,7 @@ public class EntityRegister {
 	public static final RegistryObject<EntityType<PeaShooterEntity>> PEA_SHOOTER = registerEntityType(PeaShooterEntity::new, "pea_shooter", EntityClassification.CREATURE);
 	public static final RegistryObject<EntityType<SunFlowerEntity>> SUN_FLOWER = registerEntityType(SunFlowerEntity::new, "sun_flower", EntityClassification.CREATURE);
 	public static final RegistryObject<EntityType<CherryBombEntity>> CHERRY_BOMB = registerEntityType(CherryBombEntity::new, "cherry_bomb", EntityClassification.CREATURE);
+	public static final RegistryObject<EntityType<WallNutEntity>> WALL_NUT = registerEntityType(WallNutEntity::new, "wall_nut", EntityClassification.CREATURE);
 	
 	@SubscribeEvent
     public static void onClientSetUpEvent(FMLClientSetupEvent event) {
@@ -78,6 +81,7 @@ public class EntityRegister {
         RenderingRegistry.registerEntityRenderingHandler(PEA_SHOOTER.get(), PeaShooterRender::new);
         RenderingRegistry.registerEntityRenderingHandler(SUN_FLOWER.get(), SunFlowerRender::new);
         RenderingRegistry.registerEntityRenderingHandler(CHERRY_BOMB.get(), CherryBombRender::new);
+        RenderingRegistry.registerEntityRenderingHandler(WALL_NUT.get(), WallNutRender::new);
     }
 
 	private static <T extends Entity> RegistryObject<EntityType<T>> registerEntityType(IFactory<T> factory,String name,EntityClassification classification)

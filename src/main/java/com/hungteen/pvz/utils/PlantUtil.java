@@ -34,8 +34,10 @@ public class PlantUtil {
 	public static int getPlantSunCost(Plants plant)
 	{
 		switch(plant) {
-		case SUN_FLOWER:return 50;
+		case SUN_FLOWER:
+		case WALL_NUT:return 50;
 		case PEA_SHOOTER:return 100;
+		case CHERRY_BOMB:return 150;
 		default:return 0;
 		}
 	}
@@ -48,6 +50,8 @@ public class PlantUtil {
 		switch(plant) {
 		case PEA_SHOOTER:return getPlantCoolDownTimeVeryFast(lvl);
 		case SUN_FLOWER:return getPlantCoolDownTimeFast(lvl);
+		case WALL_NUT:return getPlantCoolDownTimeSlow(lvl);
+		case CHERRY_BOMB:return getPlantCoolDownTimeHugeSlow(lvl);
 		default:return 0;
 		}
 	}
@@ -55,6 +59,10 @@ public class PlantUtil {
 	public static int getPlantMaxHealth(Plants plant,int lvl)
 	{
 		switch(plant) {
+		case WALL_NUT:{
+			if(lvl<=19) return 390+10*lvl;
+			else if(lvl<=20) return 600;
+		}
 		default:{
 			if(lvl<=14) return 30+(lvl-1)/2*5;
 			else if(lvl<=20) return 60+(lvl-14)*5;
@@ -69,6 +77,8 @@ public class PlantUtil {
 		switch(plant) {
 		case PEA_SHOOTER:
 		case SUN_FLOWER:return Ranks.GRAY;
+		case WALL_NUT:return Ranks.WHITE;
+		case CHERRY_BOMB:return Ranks.BLUE;
 		default:return null;
 		}
 	}

@@ -2,22 +2,22 @@ package com.hungteen.pvz.entity.ai;
 
 import java.util.EnumSet;
 
-import com.hungteen.pvz.entity.plant.base.PlantGenEntity;
+import com.hungteen.pvz.entity.plant.base.PlantProducerEntity;
 import com.hungteen.pvz.utils.interfaces.IProducer;
 
 import net.minecraft.entity.ai.goal.Goal;
 
 public class ProducerGenGoal extends Goal{
 
-	PlantGenEntity plant;
-	IProducer producer;
+	private PlantProducerEntity plant;
+	private IProducer producer;
 	
 	public ProducerGenGoal(IProducer entity) {
-		if(!(entity instanceof PlantGenEntity)) {
+		if(!(entity instanceof PlantProducerEntity)) {
 			throw new IllegalArgumentException("ERROR TASK OWNER");
 		}
 		this.producer=entity;
-		this.plant=(PlantGenEntity) entity;
+		this.plant=(PlantProducerEntity) entity;
 		this.setMutexFlags(EnumSet.of(Goal.Flag.MOVE));
 	}
 	

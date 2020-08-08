@@ -52,6 +52,7 @@ public class ItemRegister {
     
     //plants
 	public static final RegistryObject<Item> PEA = ITEMS.register("pea",()-> new BlockItem(BlockRegister.PEA_PLANT.get(),new Item.Properties().group(GroupRegister.PVZ_GROUP)));
+	public static final RegistryObject<Item> NUT = ITEMS.register("nut", PVZItemBase::new);
 	
 	//material
 	public static final RegistryObject<Item> SNOW_PEA = ITEMS.register("snow_pea", PVZItemBase::new);
@@ -76,7 +77,8 @@ public class ItemRegister {
 	//plant
 	public static final RegistryObject<PVZSpawnEggItem> PEA_SHOOTER_SPAWN_EGG = registerSpawnEgg("pea_shooter", EntityRegister.PEA_SHOOTER, Colors.PEA_GREEN, Colors.GREEN);
 	public static final RegistryObject<PVZSpawnEggItem> SUN_FLOWER_SPAWN_EGG = registerSpawnEgg("sun_flower", EntityRegister.SUN_FLOWER, Colors.YELLOW, Colors.LITTLE_YELLOW1);
-	public static final RegistryObject<PVZSpawnEggItem> CHERRY_BOMB_SPAWN_EGG = registerSpawnEgg("cherry_bomb", EntityRegister.CHERRY_BOMB, Colors.DARK_RED, Colors.BROWN);
+	public static final RegistryObject<PVZSpawnEggItem> CHERRY_BOMB_SPAWN_EGG = registerSpawnEgg("cherry_bomb", EntityRegister.CHERRY_BOMB, Colors.DARK_RED, Colors.ORANGE_YELLOW);
+	public static final RegistryObject<PVZSpawnEggItem> WALL_NUT_SPAWN_EGG = registerSpawnEgg("wall_nut", EntityRegister.WALL_NUT, Colors.ORANGE, Colors.BROWN);
 	
 	/**
 	 * register spawn eggs
