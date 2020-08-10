@@ -17,6 +17,33 @@ import net.minecraft.world.World;
 
 public class EntityUtil {
 
+	/**
+	 * use to update collision about plants and zombies
+	 */
+	public static boolean checkShouldApplyCollision(LivingEntity base,LivingEntity target)
+	{
+		if(base instanceof PVZPlantEntity) {//base is a plant
+			if(target instanceof PVZPlantEntity) {//plants collide with plants include itself. Be careful,if add pumpkin,improve here
+				return true;
+			}
+			if(checkCanEntityAttack(base, target)) {//collide with enemy.
+				return true;
+			}
+		}
+		if(base instanceof PVZZombieEntity) {//base is a zombie
+			if(target instanceof PVZZombieEntity) {//zombie
+				return false;
+			}
+			if(checkCanEntityAttack(base, target)) {//collide with enemy
+				return true;
+			}
+		}
+		return true;
+	}
+	
+	/**
+	 * use to check can the attacker attack the current target
+	 */
 	public static boolean checkCanEntityAttack(Entity attacker,Entity target)
 	{
 		if(attacker==null||target==null) {//prevent crash

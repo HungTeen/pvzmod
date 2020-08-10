@@ -1,11 +1,14 @@
 package com.hungteen.pvz.entity.plant;
 
+import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
 import javax.annotation.Nullable;
 
+import com.hungteen.pvz.entity.zombie.PVZZombieEntity;
 import com.hungteen.pvz.misc.damage.PVZDamageSource;
+import com.hungteen.pvz.utils.EntityUtil;
 import com.hungteen.pvz.utils.PlantUtil;
 import com.hungteen.pvz.utils.enums.Plants;
 import com.hungteen.pvz.utils.enums.Ranks;
@@ -14,6 +17,7 @@ import com.hungteen.pvz.utils.interfaces.IPVZPlant;
 import net.minecraft.entity.CreatureEntity;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
+import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.SharedMonsterAttributes;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.nbt.CompoundNBT;
@@ -23,6 +27,8 @@ import net.minecraft.network.datasync.EntityDataManager;
 import net.minecraft.server.management.PreYggdrasilConverter;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.Hand;
+import net.minecraft.util.math.MathHelper;
+import net.minecraft.world.GameRules;
 import net.minecraft.world.World;
 
 public abstract class PVZPlantEntity extends CreatureEntity implements IPVZPlant{
@@ -162,6 +168,70 @@ public abstract class PVZPlantEntity extends CreatureEntity implements IPVZPlant
 	public boolean attackEntityAsMob(Entity entityIn) {
 		entityIn.hurtResistantTime=0;
 		return super.attackEntityAsMob(entityIn);
+	}
+	
+	@Override
+	public void applyEntityCollision(Entity entityIn) {
+		if(this.isSleeping()) return;
+		if (!this.isRidingSameEntity(entityIn)){
+            if (!entityIn.noClip && !this.noClip){
+                double d0 = entityIn.getPosX() - this.getPosX();
+                double d1 = entityIn.getPosZ() - this.getPosZ();
+                double d2 = MathHelper.absMax(d0, d1);
+                if (d2 >= 0.009999999776482582D){//collide from out to in,add velocity to out
+                    d2 = (double)MathHelper.sqrt(d2);
+                    d0 = d0 / d2;
+                    d1 = d1 / d2;
+                    double d3 = 1.0D / d2;
+                    if (d3 > 1.0D){
+                        d3 = 1.0D;
+                    }
+                    d0 = d0 * d3;
+                    d1 = d1 * d3;
+                    d0 = d0 * 0.05000000074505806D;
+                    d1 = d1 * 0.05000000074505806D;
+                    d0 = d0 * (double)(1.0F - this.entityCollisionReduction);
+                    d1 = d1 * (double)(1.0F - this.entityCollisionReduction);
+                    if (!this.isBeingRidden()){
+                    	if(!(entityIn instanceof PVZZombieEntity)) {
+                            this.addVelocity(-d0, 0.0D, -d1);
+                    	}
+                    }
+                    if (!entityIn.isBeingRidden()){
+                        entityIn.addVelocity(d0, 0.0D, d1);
+                    }
+                }
+                else {//collide in body,both add velocity
+                	this.addVelocity(this.getRNG().nextFloat()-0.5f, 0, this.getRNG().nextFloat()-0.5f);
+                	entityIn.addVelocity(this.getRNG().nextFloat()-0.5f, 0, this.getRNG().nextFloat()-0.5f);
+                }
+            }
+        }
+	}
+	
+	@Override
+	protected void collideWithNearbyEntities() {
+		List<LivingEntity> list = this.world.getEntitiesWithinAABB(LivingEntity.class, this.getBoundingBox());
+		if (!list.isEmpty()){
+            int i = this.world.getGameRules().getInt(GameRules.MAX_ENTITY_CRAMMING);
+            if (i > 0 && list.size() > i - 1 && this.rand.nextInt(4) == 0){
+                int j = 0;
+                for (int k = 0; k < list.size(); ++k){
+                    if (!((Entity)list.get(k)).isPassenger()){
+                        ++j;
+                    }
+                }
+                if (j > i - 1){
+                    this.attackEntityFrom(DamageSource.CRAMMING, 6.0F);
+                }
+            }
+            for (int l = 0; l < list.size(); ++l){
+                LivingEntity target = list.get(l);
+                if(EntityUtil.checkShouldApplyCollision(this, target)) {//can collide with
+                    this.collideWithEntity(target);
+                }
+            }
+        }
 	}
 	
 	@Override

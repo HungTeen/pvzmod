@@ -1,5 +1,6 @@
 package com.hungteen.pvz.entity.zombie;
 
+import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -8,7 +9,9 @@ import javax.annotation.Nullable;
 import com.hungteen.pvz.PVZConfig;
 import com.hungteen.pvz.entity.ai.PVZNearestTargetGoal;
 import com.hungteen.pvz.entity.ai.ZombieMeleeAttackGoal;
+import com.hungteen.pvz.entity.plant.PVZPlantEntity;
 import com.hungteen.pvz.misc.damage.PVZDamageSource;
+import com.hungteen.pvz.utils.EntityUtil;
 import com.hungteen.pvz.utils.ZombieUtil;
 import com.hungteen.pvz.utils.enums.Ranks;
 import com.hungteen.pvz.utils.interfaces.IPVZZombie;
@@ -35,6 +38,7 @@ import net.minecraft.server.management.PreYggdrasilConverter;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.DifficultyInstance;
+import net.minecraft.world.GameRules;
 import net.minecraft.world.IWorld;
 import net.minecraft.world.World;
 
@@ -137,7 +141,7 @@ public abstract class PVZZombieEntity extends MonsterEntity implements IPVZZombi
 		this.goalSelector.addGoal(8, new LookRandomlyGoal(this));
 		this.goalSelector.addGoal(7, new WaterAvoidingRandomWalkingGoal(this, 1.0D));
 		this.goalSelector.addGoal(7, new SwimGoal(this));
-		this.goalSelector.addGoal(1, new ZombieMeleeAttackGoal(this, 1.0, false));
+		this.goalSelector.addGoal(0, new ZombieMeleeAttackGoal(this, 1.0, false));
 		this.targetSelector.addGoal(0, new PVZNearestTargetGoal(this, true, 80, 60));
 	}
 
@@ -252,6 +256,72 @@ public abstract class PVZZombieEntity extends MonsterEntity implements IPVZZombi
 	@Override
 	public int getZombieXp() {
 		return ZombieUtil.getZombieXp(getZombieEnumName());
+	}
+	
+	@Override
+	public void applyEntityCollision(Entity entityIn) {
+		if(this.isSleeping()) return;
+		if (!this.isRidingSameEntity(entityIn)){
+            if (!entityIn.noClip && !this.noClip){
+                double d0 = entityIn.getPosX() - this.getPosX();
+                double d1 = entityIn.getPosZ() - this.getPosZ();
+                double d2 = MathHelper.absMax(d0, d1);
+                if (d2 >= 0.009999999776482582D){//collide from out to in,add velocity to out
+                    d2 = (double)MathHelper.sqrt(d2);
+                    d0 = d0 / d2;
+                    d1 = d1 / d2;
+                    double d3 = 1.0D / d2;
+                    if (d3 > 1.0D){
+                        d3 = 1.0D;
+                    }
+                    d0 = d0 * d3;
+                    d1 = d1 * d3;
+                    d0 = d0 * 0.05000000074505806D;
+                    d1 = d1 * 0.05000000074505806D;
+                    d0 = d0 * (double)(1.0F - this.entityCollisionReduction);
+                    d1 = d1 * (double)(1.0F - this.entityCollisionReduction);
+                    if (!this.isBeingRidden()){
+                    	if(!(entityIn instanceof PVZZombieEntity)) {
+                            this.addVelocity(-d0, 0.0D, -d1);
+                    	}
+                    }
+                    if (!entityIn.isBeingRidden()){
+                    	if(!(entityIn instanceof PVZPlantEntity)) {
+                            entityIn.addVelocity(d0, 0.0D, d1);
+                    	}
+                    }
+                }
+                else {//collide in body,both add velocity
+                	this.addVelocity(this.getRNG().nextFloat()-0.5f, 0, this.getRNG().nextFloat()-0.5f);
+                	entityIn.addVelocity(this.getRNG().nextFloat()-0.5f, 0, this.getRNG().nextFloat()-0.5f);
+                }
+            }
+        }
+	}
+	
+	@Override
+	protected void collideWithNearbyEntities() {
+		List<LivingEntity> list = this.world.getEntitiesWithinAABB(LivingEntity.class, this.getBoundingBox());
+		if (!list.isEmpty()){
+            int i = this.world.getGameRules().getInt(GameRules.MAX_ENTITY_CRAMMING);
+            if (i > 0 && list.size() > i - 1 && this.rand.nextInt(4) == 0){
+                int j = 0;
+                for (int k = 0; k < list.size(); ++k){
+                    if (!((Entity)list.get(k)).isPassenger()){
+                        ++j;
+                    }
+                }
+                if (j > i - 1){
+                    this.attackEntityFrom(DamageSource.CRAMMING, 6.0F);
+                }
+            }
+            for (int l = 0; l < list.size(); ++l){
+                LivingEntity target = list.get(l);
+                if(EntityUtil.checkShouldApplyCollision(this, target)) {//can collide with
+                    this.collideWithEntity(target);
+                }
+            }
+        }
 	}
 
 	@Override

@@ -19,7 +19,7 @@ public class PeaShooterRender extends PVZPlantRender<PeaShooterEntity>{
 
 	@Override
 	protected float getScaleByEntity(PeaShooterEntity entity) {
-		return 0.5f;
+		return 1f;
 	}
 
 	@Override
