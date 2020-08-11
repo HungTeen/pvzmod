@@ -3,6 +3,7 @@ package com.hungteen.pvz.entity.plant.explosion;
 import com.hungteen.pvz.entity.plant.base.PlantBomberEntity;
 import com.hungteen.pvz.misc.damage.PVZDamageSource;
 import com.hungteen.pvz.register.ParticleRegister;
+import com.hungteen.pvz.register.SoundRegister;
 import com.hungteen.pvz.utils.EntityUtil;
 import com.hungteen.pvz.utils.enums.Plants;
 
@@ -27,7 +28,7 @@ public class CherryBombEntity extends PlantBomberEntity{
 			for(LivingEntity entity:EntityUtil.getEntityAttackableTarget(this, aabb)) {
 				 entity.attackEntityFrom(PVZDamageSource.causeExplosionDamage(this, this), this.getAttackDamage());
 			}
-//			this.playSound(SoundsHandler.CHERRY_BOMB, 4, 1);
+			this.playSound(SoundRegister.CHERRY_BOMB.get(), 1, 1);
 		}
 		for(int i=1;i<=5;i++) {
 //			System.out.println("222");

@@ -35,10 +35,13 @@
     "item.pvz.normal_zombie_spawn_egg":"Normal Zombie Spawn Egg",
     "item.pvz.flag_zombie_spawn_egg":"Flag Zombie Spawn Egg",
     "item.pvz.conehead_zombie_spawn_egg":"ConeHead Zombie Spawn Egg",
+    "item.pvz.pole_zombie_spawn_egg":"Pole Zombie Spawn Egg",
 //plant
     "item.pvz.pea_shooter_spawn_egg":"Pea Shooter Spawn Egg",
     "item.pvz.sun_flower_spawn_egg":"Sun Flower Spawn Egg",
     "item.pvz.cherry_bomb_spawn_egg":"Cherry Bomb Spawn Egg",
+    "item.pvz.wall_nut_spawn_egg":"Wall Nut Spawn Egg",
+    "item.pvz.potato_mine_spawn_egg":"Potato Mine Spawn Egg",
 //misc
     "item.pvz.snow_pea":"Snow Pea",
     "item.pvz.flame_pea":"Flame Pea",
@@ -80,8 +83,11 @@
     "entity.pvz.normal_zombie":"Normal Zombie",
     "entity.pvz.flag_zombie":"Flag Zombie",
     "entity.pvz.conehead_zombie":"ConeHead Zombie",
+    "entity.pvz.pole_zombie":"Pole Zombie",
 //plant
     "entity.pvz.pea_shooter":"Pea Shooter",
     "entity.pvz.sun_flower":"Sun Flower",
-    "entity.pvz.cherry_bomb":"Cherry Bomb"
+    "entity.pvz.cherry_bomb":"Cherry Bomb",
+    "entity.pvz.wall_nut":"Wall Nut",
+    "entity.pvz.potato_mine":"Potato Mine"
 }

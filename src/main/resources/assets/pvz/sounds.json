@@ -3,5 +3,10 @@
     "coin_drop":{"sounds":[{"name":"pvz:entity/drop/coin/coin_drop"}]},
     "coin_pick":{"sounds":[{"name":"pvz:entity/drop/coin/coin_pick"}]},
     "jewel_drop":{"sounds":[{"name":"pvz:entity/drop/jewel/jewel_drop"}]},
-    "jewel_pick":{"sounds":[{"name":"pvz:entity/drop/jewel/jewel_pick"}]}
+    "jewel_pick":{"sounds":[{"name":"pvz:entity/drop/jewel/jewel_pick"}]},
+    "plant_hurt":{"sounds":[{"name":"pvz:entity/plant/hurt/hurt1"},{"name":"pvz:entity/plant/hurt/hurt2"}]},
+    "zombie_say":{"sounds":[{"name":"pvz:entity/zombie/say/say1"},{"name":"pvz:entity/zombie/say/say2"},{"name":"pvz:entity/zombie/say/say3"},{"name":"pvz:entity/zombie/say/say4"}]},
+    "cherry_bomb":{"sounds":[{"name":"pvz:entity/plant/bomb/cherry_bomb"}]},
+    "plastic_hit":{"sounds":[{"name":"pvz:entity/zombie/hit/plastic1"},{"name":"pvz:entity/zombie/hit/plastic2"}]},
+    "potato_mine":{"sounds":[{"name":"pvz:entity/plant/bomb/potato_mine"}]}
 }

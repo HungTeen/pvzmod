@@ -18,6 +18,11 @@ public class SoundRegister {
 	public static final RegistryObject<SoundEvent> COIN_PICK = registerSound("coin_pick");
 	public static final RegistryObject<SoundEvent> JEWEL_DROP = registerSound("jewel_drop");
 	public static final RegistryObject<SoundEvent> JEWEL_PICK = registerSound("jewel_pick");
+	public static final RegistryObject<SoundEvent> PLANT_HURT = registerSound("plant_hurt");
+	public static final RegistryObject<SoundEvent> ZOMBIE_SAY = registerSound("zombie_say");
+	public static final RegistryObject<SoundEvent> CHERRY_BOMB = registerSound("cherry_bomb");
+	public static final RegistryObject<SoundEvent> PLASTIC_HIT = registerSound("plastic_hit");
+	public static final RegistryObject<SoundEvent> POTATO_MINE = registerSound("potato_mine");
 	
 	private static RegistryObject<SoundEvent> registerSound(String name)
 	{

@@ -1,8 +1,12 @@
 package com.hungteen.pvz.entity.plant.explosion;
 
+import java.util.Random;
+
 import com.hungteen.pvz.entity.plant.base.PlantCloserEntity;
 import com.hungteen.pvz.misc.damage.PVZDamageSource;
+import com.hungteen.pvz.misc.damage.PVZDamageType;
 import com.hungteen.pvz.register.ParticleRegister;
+import com.hungteen.pvz.register.SoundRegister;
 import com.hungteen.pvz.utils.EntityUtil;
 import com.hungteen.pvz.utils.enums.Plants;
 
@@ -15,31 +19,32 @@ import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.network.datasync.DataParameter;
 import net.minecraft.network.datasync.DataSerializers;
 import net.minecraft.network.datasync.EntityDataManager;
+import net.minecraft.util.DamageSource;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.world.World;
 
 public class PotatoMineEntity extends PlantCloserEntity{
 
 	private static final DataParameter<Boolean> MINE_READY = EntityDataManager.createKey(PotatoMineEntity.class, DataSerializers.BOOLEAN);
-	private static final DataParameter<Boolean> SIGN_STATE = EntityDataManager.createKey(PotatoMineEntity.class, DataSerializers.BOOLEAN);
+	public boolean sign_red;
 	private final float bombRange=1.5f;
 	
 	public PotatoMineEntity(EntityType<? extends CreatureEntity> type, World worldIn) {
 		super(type, worldIn);
+		this.sign_red=true;
 	}
 	
 	@Override
 	protected void registerData() {
 		super.registerData();
 		this.dataManager.register(MINE_READY, false);
-		this.dataManager.register(SIGN_STATE, false);
 	}
 
 	@Override
 	protected void normalPlantTick() {
 		super.normalPlantTick();
 		if(this.getAttackTime()%this.getSignChangeTime()==0) {
-			this.setSignState(!this.getSignState());
+			this.sign_red=!this.sign_red;
 		}
 		this.setAttackTime(this.getAttackTime()+1);
 		if(this.getAttackTime()>=this.getReadyTime()&&!this.getIsMineReady()) {
@@ -48,24 +53,25 @@ public class PotatoMineEntity extends PlantCloserEntity{
 	}
 	
 	@Override
-	public void performAttack() {
-		if(!this.getIsMineReady()) return ;//not ready
+	public boolean performAttack() {
+		if(!this.getIsMineReady()) return false;//not ready
 		if(!this.world.isRemote) {
 			AxisAlignedBB aabb= EntityUtil.getEntityAABB(this, bombRange,bombRange);
 			for(LivingEntity target:EntityUtil.getEntityAttackableTarget(this, aabb)) {
 				target.attackEntityFrom(PVZDamageSource.causeExplosionDamage(this, this), this.getAttackDamage());
 			}
-//			this.playSound(SoundsHandler.POTATOMINE_EXPLODE, 1f, 1f);
+			this.playSound(SoundRegister.POTATO_MINE.get(), 1f, 1f);
 		}
+		return true;
 	}
 	
 	@Override
 	public void spawnParticle() {
 		for(int i=1;i<=5;i++) {
 //			System.out.println("111");
-//			Main.proxy.spawnParticle(PVZParticleType.DIRT_BURSTOUT, this.posX, this.posY, this.posZ, (rand.nextFloat()-0.5)/4,0.4d,(rand.nextFloat()-0.5)/4);
+			this.world.addParticle(ParticleRegister.DIRT_BURST_OUT.get(), this.getPosX(), this.getPosY(), this.getPosZ(), (rand.nextFloat()-0.5)/4,0.4d,(rand.nextFloat()-0.5)/4);
 		    this.world.addParticle(ParticleRegister.YELLOW_BOMB.get(), this.getPosX(), this.getPosY(), this.getPosZ(), 0, 0, 0);
-//		    Main.proxy.spawnParticle(PVZParticleType.DIRT_BURSTOUT, this.posX, this.posY, this.posZ, (rand.nextFloat()-0.5)/4,0.4d,(rand.nextFloat()-0.5)/4);
+		    this.world.addParticle(ParticleRegister.DIRT_BURST_OUT.get(), this.getPosX(), this.getPosY(), this.getPosZ(), (rand.nextFloat()-0.5)/4,0.4d,(rand.nextFloat()-0.5)/4);
 		}
 	}
 	
@@ -75,13 +81,21 @@ public class PotatoMineEntity extends PlantCloserEntity{
 	protected void outDirt()
 	{
 		this.setIsMineReady(true);
-		for(int i=0;i<5;i++) {
-//			Random rand=new Random();
-//	  	    Main.proxy.spawnParticle(PVZParticleType.DIRT_BURSTOUT, this.posX+0.5d, this.posY, this.posZ+0.5d, (rand.nextFloat()-0.5)/10,0.05d,(rand.nextFloat()-0.5)/10);
-//		    Main.proxy.spawnParticle(PVZParticleType.DIRT_BURSTOUT, this.posX+0.5d, this.posY, this.posZ-0.5d, (rand.nextFloat()-0.5)/10,0.05d,(rand.nextFloat()-0.5)/10);
-//		    Main.proxy.spawnParticle(PVZParticleType.DIRT_BURSTOUT, this.posX-0.5d, this.posY, this.posZ+0.5d, (rand.nextFloat()-0.5)/10,0.05d,(rand.nextFloat()-0.5)/10);
-//		    Main.proxy.spawnParticle(PVZParticleType.DIRT_BURSTOUT, this.posX-0.5d, this.posY, this.posZ-0.5d, (rand.nextFloat()-0.5)/10,0.05d,(rand.nextFloat()-0.5)/10);
+		for(int i=0;i<10;i++) {
+			Random rand=this.getRNG();
+			this.world.addParticle(ParticleRegister.DIRT_BURST_OUT.get(), this.getPosX()+0.5d, this.getPosY(), this.getPosZ()+0.5d, (rand.nextFloat()-0.5)/10,0.05d,(rand.nextFloat()-0.5)/10);
+			this.world.addParticle(ParticleRegister.DIRT_BURST_OUT.get(), this.getPosX()+0.5d, this.getPosY(), this.getPosZ()-0.5d, (rand.nextFloat()-0.5)/10,0.05d,(rand.nextFloat()-0.5)/10);
+			this.world.addParticle(ParticleRegister.DIRT_BURST_OUT.get(), this.getPosX()-0.5d, this.getPosY(), this.getPosZ()+0.5d, (rand.nextFloat()-0.5)/10,0.05d,(rand.nextFloat()-0.5)/10);
+			this.world.addParticle(ParticleRegister.DIRT_BURST_OUT.get(), this.getPosX()-0.5d, this.getPosY(), this.getPosZ()-0.5d, (rand.nextFloat()-0.5)/10,0.05d,(rand.nextFloat()-0.5)/10);
 		}
+	}
+	
+	@Override
+	public boolean isInvulnerableTo(DamageSource source) {
+		if(this.getIsMineReady()&&source instanceof PVZDamageSource) {
+			if(((PVZDamageSource) source).getPVZDamageType()==PVZDamageType.EAT) return true;
+		}
+		return super.isInvulnerableTo(source);
 	}
 	
 	/**
@@ -127,14 +141,14 @@ public class PotatoMineEntity extends PlantCloserEntity{
 	public void readAdditional(CompoundNBT compound) {
 		super.readAdditional(compound);
 		this.setIsMineReady(compound.getBoolean("is_mine_ready"));
-		this.setSignState(compound.getBoolean("sign_state"));
+		this.sign_red=compound.getBoolean("sign_red");
 	}
 	
 	@Override
 	public void writeAdditional(CompoundNBT compound) {
 		super.writeAdditional(compound);
 		compound.putBoolean("is_mine_ready", this.getIsMineReady());
-		compound.putBoolean("sign_state", this.getSignState());
+		compound.putBoolean("sign_red", this.sign_red);
 	}
 	
 	public void setIsMineReady(boolean is)
@@ -145,16 +159,6 @@ public class PotatoMineEntity extends PlantCloserEntity{
     public boolean getIsMineReady()
     {
     	return this.dataManager.get(MINE_READY);
-    }
-    
-    public void setSignState(boolean state)
-    {
-    	this.dataManager.set(SIGN_STATE, state);
-    }
-    
-    public boolean getSignState()
-    {
-    	return this.dataManager.get(SIGN_STATE);
     }
     
 	@Override

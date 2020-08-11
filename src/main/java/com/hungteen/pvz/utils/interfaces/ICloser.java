@@ -9,7 +9,7 @@ public interface ICloser {
 	/**
 	 * perform attack when target is close
 	 */
-	void performAttack();
+	boolean performAttack();
 	
 	/**
 	 * spawnParticle when death

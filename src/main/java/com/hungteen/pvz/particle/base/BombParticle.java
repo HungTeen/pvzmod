@@ -1,4 +1,4 @@
-package com.hungteen.pvz.particle.bomb;
+package com.hungteen.pvz.particle.base;
 
 import net.minecraft.client.particle.IAnimatedSprite;
 import net.minecraft.client.particle.IParticleRenderType;
@@ -23,6 +23,7 @@ public class BombParticle extends SpriteTexturedParticle {
 		this.selectSpriteWithAge(this.sprite);
 	}
 
+	@Override
 	public void tick() {
 		this.prevPosX = this.posX;
 		this.prevPosY = this.posY;

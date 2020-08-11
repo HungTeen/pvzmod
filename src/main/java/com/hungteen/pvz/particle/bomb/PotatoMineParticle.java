@@ -1,5 +1,7 @@
 package com.hungteen.pvz.particle.bomb;
 
+import com.hungteen.pvz.particle.base.BombParticle;
+
 import net.minecraft.client.particle.IAnimatedSprite;
 import net.minecraft.client.particle.IParticleFactory;
 import net.minecraft.client.particle.Particle;

@@ -11,6 +11,7 @@ import com.hungteen.pvz.entity.ai.PVZNearestTargetGoal;
 import com.hungteen.pvz.entity.ai.ZombieMeleeAttackGoal;
 import com.hungteen.pvz.entity.plant.PVZPlantEntity;
 import com.hungteen.pvz.misc.damage.PVZDamageSource;
+import com.hungteen.pvz.register.SoundRegister;
 import com.hungteen.pvz.utils.EntityUtil;
 import com.hungteen.pvz.utils.ZombieUtil;
 import com.hungteen.pvz.utils.enums.Ranks;
@@ -36,6 +37,7 @@ import net.minecraft.network.datasync.DataSerializers;
 import net.minecraft.network.datasync.EntityDataManager;
 import net.minecraft.server.management.PreYggdrasilConverter;
 import net.minecraft.util.DamageSource;
+import net.minecraft.util.SoundEvent;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.DifficultyInstance;
 import net.minecraft.world.GameRules;
@@ -431,20 +433,10 @@ public abstract class PVZZombieEntity extends MonsterEntity implements IPVZZombi
 		return Type.values()[dataManager.get(ZOMBIE_TYPE)];
 	}
 
-//	@Override
-//	protected SoundEvent getAmbientSound() {
-//		return SoundsHandler.ZOMBIE_AMBIENT;
-//	}
-//
-//	@Override
-//	protected SoundEvent getHurtSound(DamageSource damageSourceIn) {
-//		return SoundEvents.ENTITY_ZOMBIE_HURT;
-//	}
-//
-//	@Override
-//	protected SoundEvent getDeathSound() {
-//		return SoundEvents.ENTITY_ZOMBIE_DEATH;
-//	}
+	@Override
+	protected SoundEvent getAmbientSound() {
+		return SoundRegister.ZOMBIE_SAY.get();
+	}
 
 	public enum Type {
 		NORMAL, // 普通

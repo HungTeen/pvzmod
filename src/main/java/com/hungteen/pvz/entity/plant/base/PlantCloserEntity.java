@@ -2,11 +2,14 @@ package com.hungteen.pvz.entity.plant.base;
 
 import com.hungteen.pvz.entity.ai.PVZNearestTargetGoal;
 import com.hungteen.pvz.entity.plant.PVZPlantEntity;
+import com.hungteen.pvz.misc.damage.PVZDamageSource;
+import com.hungteen.pvz.misc.damage.PVZDamageType;
 import com.hungteen.pvz.utils.interfaces.ICloser;
 
 import net.minecraft.entity.CreatureEntity;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.ai.goal.LookRandomlyGoal;
+import net.minecraft.util.DamageSource;
 import net.minecraft.world.World;
 
 public abstract class PlantCloserEntity extends PVZPlantEntity implements ICloser{
@@ -26,8 +29,9 @@ public abstract class PlantCloserEntity extends PVZPlantEntity implements IClose
 	protected void normalPlantTick() {
 		super.normalPlantTick();
 		if(this.getAttackTarget()!=null) {
-			this.performAttack();
-			this.setHealth(0);//go to on death update
+			if(this.performAttack()) {
+			    this.setHealth(0);//go to on death update
+			}
 		}
 	}
 	
@@ -35,6 +39,14 @@ public abstract class PlantCloserEntity extends PVZPlantEntity implements IClose
 	protected void onDeathUpdate() {
 		this.spawnParticle();
 		this.remove();
+	}
+	
+	@Override
+	public boolean isInvulnerableTo(DamageSource source) {
+		if(source instanceof PVZDamageSource) {
+			if(((PVZDamageSource) source).getPVZDamageType()==PVZDamageType.EAT) return true;
+		}
+		return super.isInvulnerableTo(source);
 	}
 	
 	@Override

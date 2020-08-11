@@ -30,8 +30,8 @@ public class PotatoMineRender extends PVZPlantRender<PotatoMineEntity>{
 	
 	@Override
 	public ResourceLocation getEntityTexture(PotatoMineEntity entity) {
-		if(entity.getSignState()) return StringUtil.prefix("textures/entity/plant/explosion/potato_mine1.png");
-		return StringUtil.prefix("textures/entity/plant/explosion/potato_mine2.png");
+		if(entity.sign_red) return StringUtil.prefix("textures/entity/plant/explosion/potato_mine2.png");
+		return StringUtil.prefix("textures/entity/plant/explosion/potato_mine1.png");
 	}
 
 	@Override
