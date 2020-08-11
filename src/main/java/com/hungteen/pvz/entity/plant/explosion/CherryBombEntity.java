@@ -20,6 +20,7 @@ public class CherryBombEntity extends PlantBomberEntity{
 
 	@Override
 	public void startBomb() {
+//		System.out.println(this.world.isRemote);
 		if(!this.world.isRemote) {
 			float len=(this.getPlantLvl()<=10)?2f:2.5f;
 			AxisAlignedBB aabb=EntityUtil.getEntityAABB(this, len, len);
@@ -29,7 +30,8 @@ public class CherryBombEntity extends PlantBomberEntity{
 //			this.playSound(SoundsHandler.CHERRY_BOMB, 4, 1);
 		}
 		for(int i=1;i<=5;i++) {
-		    this.world.addParticle(ParticleRegister.BOMB_PARTICLE.get(), this.getPosX(),this.getPosY(),this.getPosZ(), 0,0,0);
+//			System.out.println("222");
+		    this.world.addParticle(ParticleRegister.RED_BOMB.get(), this.getPosX(),this.getPosY(),this.getPosZ(), 0,0,0);
 		}
 	}
 	

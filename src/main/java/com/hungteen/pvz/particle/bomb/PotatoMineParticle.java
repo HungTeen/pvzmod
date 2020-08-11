@@ -9,16 +9,16 @@ import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 
 @OnlyIn(Dist.CLIENT)
-public class CherryBombParticle extends BombParticle {
+public class PotatoMineParticle extends BombParticle {
 
 	protected final IAnimatedSprite sprite;
 
-	public CherryBombParticle(World world, double x, double y, double z, double xSpeed, double ySpeed, double zSpeed,
+	public PotatoMineParticle(World world, double x, double y, double z, double xSpeed, double ySpeed, double zSpeed,
 			IAnimatedSprite sprite) {
 		super(world, x, y, z, xSpeed, ySpeed, zSpeed,sprite);
 		this.maxAge = 6 + this.rand.nextInt(4);
-		this.setColor(1,0,0);
-		this.particleScale = 4;
+		this.setColor(1,1,0.5f);
+		this.particleScale = 3;
 		this.sprite = sprite;
 		this.canCollide = false;
 		this.selectSpriteWithAge(this.sprite);
@@ -35,7 +35,7 @@ public class CherryBombParticle extends BombParticle {
 		@Override
 		public Particle makeParticle(BasicParticleType typeIn, World worldIn, double x, double y, double z,
 				double xSpeed, double ySpeed, double zSpeed) {
-			return new CherryBombParticle(worldIn, x, y, z, xSpeed, ySpeed, zSpeed, this.sprite);
+			return new PotatoMineParticle(worldIn, x, y, z, xSpeed, ySpeed, zSpeed, this.sprite);
 		}
 
 		@SuppressWarnings("unused")

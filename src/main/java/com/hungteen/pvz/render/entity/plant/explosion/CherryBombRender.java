@@ -7,7 +7,10 @@ import com.hungteen.pvz.utils.StringUtil;
 
 import net.minecraft.client.renderer.entity.EntityRendererManager;
 import net.minecraft.util.ResourceLocation;
+import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.api.distmarker.OnlyIn;
 
+@OnlyIn(Dist.CLIENT)
 public class CherryBombRender extends PVZPlantRender<CherryBombEntity>{
 
 	public CherryBombRender(EntityRendererManager rendererManager){
