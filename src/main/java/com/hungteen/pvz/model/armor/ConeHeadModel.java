@@ -13,8 +13,6 @@ public class ConeHeadModel extends BipedModel<LivingEntity> {
 
 	public ConeHeadModel(float scale) {
 		super(scale,0,64,64);
-		textureWidth = 64;
-		textureHeight = 64;
 
 		ModelRenderer body = new ModelRenderer(this);
 		body.setRotationPoint(0.0F, -8F, 0.0F);

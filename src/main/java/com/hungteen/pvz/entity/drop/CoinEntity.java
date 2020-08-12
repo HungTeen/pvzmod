@@ -44,7 +44,7 @@ public class CoinEntity extends DropEntity{
 		return new EntitySize(w, w, false); //max (0.4w,0.4h) min(0.9w,0.9h)
 	}
 	
-	protected void setTypeAmount(int type)
+	public void setTypeAmount(int type)
 	{
 		this.setAmount(this.getAmountByType(type));
 	}

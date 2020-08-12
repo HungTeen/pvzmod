@@ -29,14 +29,13 @@ public class EntityUtil {
 			if(checkCanEntityAttack(base, target)) {//collide with enemy.
 				return true;
 			}
+			return false;
 		}
 		if(base instanceof PVZZombieEntity) {//base is a zombie
-			if(target instanceof PVZZombieEntity) {//zombie
-				return false;
-			}
 			if(checkCanEntityAttack(base, target)) {//collide with enemy
 				return true;
 			}
+			return false;
 		}
 		return true;
 	}

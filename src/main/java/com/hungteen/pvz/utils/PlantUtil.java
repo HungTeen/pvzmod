@@ -22,7 +22,7 @@ public class PlantUtil {
 		}else {
 			switch(p) {
 			default:{
-				if(block==Blocks.GRASS_BLOCK) return true;
+				if(block==Blocks.GRASS_BLOCK||block==Blocks.AIR) return true;
 			}
 			}
 		}

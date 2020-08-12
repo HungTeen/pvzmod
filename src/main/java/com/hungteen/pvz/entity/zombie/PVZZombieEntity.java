@@ -9,8 +9,12 @@ import javax.annotation.Nullable;
 import com.hungteen.pvz.PVZConfig;
 import com.hungteen.pvz.entity.ai.PVZNearestTargetGoal;
 import com.hungteen.pvz.entity.ai.ZombieMeleeAttackGoal;
+import com.hungteen.pvz.entity.drop.CoinEntity;
+import com.hungteen.pvz.entity.drop.EnergyEntity;
 import com.hungteen.pvz.entity.plant.PVZPlantEntity;
 import com.hungteen.pvz.misc.damage.PVZDamageSource;
+import com.hungteen.pvz.misc.damage.PVZDamageType;
+import com.hungteen.pvz.register.EntityRegister;
 import com.hungteen.pvz.register.PotionRegister;
 import com.hungteen.pvz.register.SoundRegister;
 import com.hungteen.pvz.utils.EntityUtil;
@@ -185,11 +189,55 @@ public abstract class PVZZombieEntity extends MonsterEntity implements IPVZZombi
 		}
 		return now;
 	}
+	
+	@Override
+	protected void onDeathUpdate() {
+		super.onDeathUpdate();
+		if(this.deathTime==19) {
+			if(!world.isRemote) {
+				if(getZombieType()==Type.SUPER) {
+					EnergyEntity energy = EntityRegister.ENERGY.get().create(world);
+					energy.setPosition(getPosX(),getPosY(),getPosZ());
+					world.addEntity(energy);
+				}
+				else if(getZombieType()==Type.BEARD) {
+					//finish achievement
+				}
+				this.dropCoin();
+			}
+		}
+	}
 
+	/**
+	 * zombies have chance to drop coin when died
+	 */
+	protected void dropCoin()
+	{
+		int num=this.getRNG().nextInt(10000);
+		int amount=0;
+		if(num<1000) amount=1;
+		else if(num<1100) amount=10;
+		else if(num<1110) amount=100;
+		else if(num<1111) amount=1000;
+		if(amount!=0) {
+			CoinEntity coin = EntityRegister.COIN.get().create(world);
+			coin.setPosition(getPosX(),getPosY(),getPosZ());
+			coin.setAmount(amount);
+			if(amount==1000) coin.playSound(SoundRegister.COIN_DROP.get(), 1f,1f);
+			else coin.playSound(SoundRegister.JEWEL_DROP.get(), 1f,1f);
+			this.world.addEntity(coin);
+		}
+	}
+	
 	@Override
 	public boolean attackEntityFrom(DamageSource source, float amount) {
 		if (source instanceof PVZDamageSource) {
 			this.hurtResistantTime = 0;
+			if(((PVZDamageSource) source).getPVZDamageType()==PVZDamageType.ICE) {
+				if(!this.getIsCold()&&!this.world.isRemote) {
+					this.playSound(SoundRegister.ZOMBIE_FROZEN.get(), 1f,1f);
+				}
+			}
 		}
 		return super.attackEntityFrom(source, amount);
 	}

@@ -38,7 +38,8 @@ public class EnergyEntity extends DropEntity{
 			double mult=0.2f;
 //			System.out.println(this.getMotion().y);
 			Vec3d v=new Vec3d(this.rand.nextInt(1000),this.rand.nextInt(1000),this.rand.nextInt(1000)).normalize();
-			this.setMotion(v.scale(mult));
+			v=v.scale(mult);
+			this.setMotion(v.x,v.y/20,v.z);
 		}
 	}
 	

@@ -3,6 +3,7 @@ package com.hungteen.pvz.register;
 import com.hungteen.pvz.PVZMod;
 import com.hungteen.pvz.item.PVZItemBase;
 import com.hungteen.pvz.item.PVZSpawnEggItem;
+import com.hungteen.pvz.item.armor.BucketArmorItem;
 import com.hungteen.pvz.item.armor.ConeArmorItem;
 import com.hungteen.pvz.item.tool.ZombieFlagItem;
 import com.hungteen.pvz.utils.enums.Colors;
@@ -64,6 +65,7 @@ public class ItemRegister {
 	
 	//armor
 	public static final RegistryObject<Item> CONE_HEAD = ITEMS.register("cone_head", ()->new ConeArmorItem(ArmorMaterial.LEATHER, EquipmentSlotType.HEAD));
+	public static final RegistryObject<Item> BUCKET_HEAD = ITEMS.register("bucket_head", ()->new BucketArmorItem(ArmorMaterial.IRON, EquipmentSlotType.HEAD));
     
 	//spawn egg
 	//drop
@@ -75,6 +77,7 @@ public class ItemRegister {
 	public static final RegistryObject<PVZSpawnEggItem> FLAG_ZOMBIE_SPAWN_EGG = registerSpawnEgg("flag_zombie", EntityRegister.FLAG_ZOMBIE, Colors.ZOMBIE_SKIN, Colors.BLACK);
 	public static final RegistryObject<PVZSpawnEggItem> CONEHEAD_ZOMBIE_SPAWN_EGG = registerSpawnEgg("conehead_zombie", EntityRegister.CONEHEAD_ZOMBIE, Colors.ZOMBIE_SKIN, Colors.BLACK);
 	public static final RegistryObject<PVZSpawnEggItem> POLE_ZOMBIE_SPAWN_EGG = registerSpawnEgg("pole_zombie", EntityRegister.POLE_ZOMBIE, Colors.ZOMBIE_SKIN, Colors.BLACK);
+	public static final RegistryObject<PVZSpawnEggItem> BUCKETHEAD_ZOMBIE_SPAWN_EGG = registerSpawnEgg("buckethead_zombie", EntityRegister.BUCKETHEAD_ZOMBIE, Colors.ZOMBIE_SKIN, Colors.BLACK);
 	//plant
 	public static final RegistryObject<PVZSpawnEggItem> PEA_SHOOTER_SPAWN_EGG = registerSpawnEgg("pea_shooter", EntityRegister.PEA_SHOOTER, Colors.PEA_GREEN, Colors.GREEN);
 	public static final RegistryObject<PVZSpawnEggItem> SUN_FLOWER_SPAWN_EGG = registerSpawnEgg("sun_flower", EntityRegister.SUN_FLOWER, Colors.YELLOW, Colors.LITTLE_YELLOW1);

@@ -23,6 +23,8 @@ public class SoundRegister {
 	public static final RegistryObject<SoundEvent> CHERRY_BOMB = registerSound("cherry_bomb");
 	public static final RegistryObject<SoundEvent> PLASTIC_HIT = registerSound("plastic_hit");
 	public static final RegistryObject<SoundEvent> POTATO_MINE = registerSound("potato_mine");
+	public static final RegistryObject<SoundEvent> ZOMBIE_FROZEN = registerSound("zombie_frozen");
+	public static final RegistryObject<SoundEvent> METAL_HIT = registerSound("metal_hit");
 	
 	private static RegistryObject<SoundEvent> registerSound(String name)
 	{

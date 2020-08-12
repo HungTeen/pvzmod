@@ -2,6 +2,7 @@ package com.hungteen.pvz.register;
 
 import com.hungteen.pvz.PVZMod;
 import com.hungteen.pvz.item.PVZSpawnEggItem;
+import com.hungteen.pvz.item.armor.BucketArmorItem;
 import com.hungteen.pvz.item.armor.ConeArmorItem;
 
 import net.minecraft.entity.EntityType;
@@ -30,6 +31,7 @@ public class RegistryHandler {
 	@SubscribeEvent
 	public static void clientSetup(FMLClientSetupEvent evt) {
 		ConeArmorItem.initArmorModel();
+		BucketArmorItem.initArmorModel();
 	}
 	
 	/**
