@@ -15,7 +15,7 @@ import net.minecraftforge.common.IPlantable;
 
 public class NutTree extends Tree{
 
-	private static final TreeFeatureConfig NUT_TREE_CONFIG = (new TreeFeatureConfig.Builder(
+	public static final TreeFeatureConfig NUT_TREE_CONFIG = (new TreeFeatureConfig.Builder(
 			new SimpleBlockStateProvider(Blocks.OAK_LOG.getDefaultState()), 
 			new SimpleBlockStateProvider(BlockRegister.NUT_LEAVES.get().getDefaultState()), 
 			new BlobFoliagePlacer(2,0)).baseHeight(5).heightRandA(5).foliageHeight(4).ignoreVines()

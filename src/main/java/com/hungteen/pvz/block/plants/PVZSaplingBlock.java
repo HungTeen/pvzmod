@@ -34,6 +34,7 @@ public class PVZSaplingBlock extends BushBlock implements IGrowable {
 		return SHAPE;
 	}
 
+	@SuppressWarnings("deprecation")
 	public void tick(BlockState state, ServerWorld worldIn, BlockPos pos, Random rand) {
 		super.tick(state, worldIn, pos, rand);
 		if (!worldIn.isAreaLoaded(pos, 1))

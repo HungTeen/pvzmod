@@ -6,6 +6,7 @@ import org.apache.logging.log4j.Logger;
 
 import com.hungteen.pvz.capabilities.CapabilityHandler;
 import com.hungteen.pvz.network.PVZPacketHandler;
+import com.hungteen.pvz.register.BiomeRegister;
 import com.hungteen.pvz.register.RegistryHandler;
 
 import net.minecraftforge.common.ForgeConfigSpec;
@@ -44,6 +45,8 @@ public class PVZMod
     {
     	CapabilityHandler.registerCapabilities();
     	PVZPacketHandler.init();
+    	BiomeRegister.addBiomes();
+    	BiomeRegister.addBiomeFeatures();
     }
     
     

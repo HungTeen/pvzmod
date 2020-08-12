@@ -26,6 +26,7 @@ public class RegistryHandler {
 		SoundRegister.SOUNDS.register(bus);
 		ParticleRegister.PARTICLE_TYPES.register(bus);
 		PotionRegister.EFFECTS.register(bus);
+		BiomeRegister.BIOMES.register(bus);
 	}
 	
 	@SubscribeEvent
