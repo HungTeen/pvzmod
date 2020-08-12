@@ -2,6 +2,7 @@ package com.hungteen.pvz.utils;
 
 import com.hungteen.pvz.PVZMod;
 import com.hungteen.pvz.entity.plant.PVZPlantEntity;
+import com.hungteen.pvz.utils.enums.Essences;
 import com.hungteen.pvz.utils.enums.Plants;
 import com.hungteen.pvz.utils.enums.Ranks;
 
@@ -34,11 +35,16 @@ public class PlantUtil {
 	public static int getPlantSunCost(Plants plant)
 	{
 		switch(plant) {
+		case POTATO_MINE:return 25;
 		case SUN_FLOWER:
 		case WALL_NUT:return 50;
 		case PEA_SHOOTER:return 100;
 		case CHERRY_BOMB:return 150;
-		default:return 0;
+		case SNOW_PEA:return 175;
+		default:{
+			PVZMod.LOGGER.debug("plant get sun cost error!");
+			return 0;
+		}
 		}
 	}
 	
@@ -49,10 +55,15 @@ public class PlantUtil {
 	{
 		switch(plant) {
 		case PEA_SHOOTER:return getPlantCoolDownTimeVeryFast(lvl);
-		case SUN_FLOWER:return getPlantCoolDownTimeFast(lvl);
+		case SUN_FLOWER:
+		case SNOW_PEA:return getPlantCoolDownTimeFast(lvl);
+		case POTATO_MINE:return getPlantCoolDownTimeLittleSlow(lvl);
 		case WALL_NUT:return getPlantCoolDownTimeSlow(lvl);
 		case CHERRY_BOMB:return getPlantCoolDownTimeHugeSlow(lvl);
-		default:return 0;
+		default:{
+			PVZMod.LOGGER.debug("plant get cooldown time error!");
+			return 0;
+		}
 		}
 	}
 	
@@ -77,9 +88,30 @@ public class PlantUtil {
 		switch(plant) {
 		case PEA_SHOOTER:
 		case SUN_FLOWER:return Ranks.GRAY;
-		case WALL_NUT:return Ranks.WHITE;
+		case WALL_NUT:
+		case POTATO_MINE:return Ranks.WHITE;
+		case SNOW_PEA:return Ranks.GREEN;
 		case CHERRY_BOMB:return Ranks.BLUE;
-		default:return null;
+		default:{
+			PVZMod.LOGGER.debug("plant get rank error!");
+			return null;
+		}
+		}
+	}
+	
+	public static Essences getPlantEssenceType(Plants plant)
+	{
+		switch (plant) {
+		case PEA_SHOOTER:return Essences.APPEASE;
+		case SUN_FLOWER:return Essences.LIGHT;
+		case CHERRY_BOMB:
+		case POTATO_MINE:return Essences.EXPLOSION;
+		case WALL_NUT:return Essences.DEFENCE;
+		case SNOW_PEA:return Essences.ICE;
+		default:{
+			PVZMod.LOGGER.debug("plant get essence type error!");
+			return null;
+		}
 		}
 	}
 	

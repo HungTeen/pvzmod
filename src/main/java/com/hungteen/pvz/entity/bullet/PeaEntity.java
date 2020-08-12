@@ -1,6 +1,7 @@
 package com.hungteen.pvz.entity.bullet;
 
 import com.hungteen.pvz.entity.plant.PVZPlantEntity;
+import com.hungteen.pvz.entity.plant.interfaces.IIcePlant;
 import com.hungteen.pvz.misc.damage.PVZDamageSource;
 import com.hungteen.pvz.register.ItemRegister;
 
@@ -61,6 +62,14 @@ public class PeaEntity extends PVZThrowableEntity{
         		    //System.out.println(this.getThrower());
                     target.attackEntityFrom(PVZDamageSource.causeAppeaseDamage(this, this.getThrower()), this.getAttackDamage());//damage
         	    }
+        		else if(this.getPeaState()==State.ICE) {
+        			target.attackEntityFrom(PVZDamageSource.causeIceDamage(this, this.getThrower()), this.getAttackDamage());
+        			LivingEntity owner = this.getThrower();
+        			if(owner instanceof IIcePlant&&target instanceof LivingEntity) {
+        				((LivingEntity)target).addPotionEffect(((IIcePlant) owner).getColdEffect());
+        				((LivingEntity)target).addPotionEffect(((IIcePlant) owner).getFrozenEffect());
+        			}
+        		}
         	}
         	
 //        	else if(this.getPeaState()==State.SNOW) {
@@ -196,7 +205,7 @@ public class PeaEntity extends PVZThrowableEntity{
 	@Override
 	public ItemStack getItem() {
 		if(this.getPeaState()==State.NORMAL) return new ItemStack(ItemRegister.PEA.get());
-		if(this.getPeaState()==State.SNOW) return new ItemStack(ItemRegister.SNOW_PEA.get());
+		if(this.getPeaState()==State.ICE) return new ItemStack(ItemRegister.SNOW_PEA.get());
 		if(this.getPeaState()==State.FIRE) return new ItemStack(ItemRegister.FLAME_PEA.get());
 		return new ItemStack(ItemRegister.PEA.get());
 	}
@@ -208,7 +217,7 @@ public class PeaEntity extends PVZThrowableEntity{
 	}
 	
 	public enum State{
-		SNOW,//冰豌豆
+		ICE,//冰豌豆
 		NORMAL,//一般豌豆
 		FIRE,//火豌豆
 		BLUE_FIRE,//蓝火豌豆

@@ -11,6 +11,7 @@ import com.hungteen.pvz.entity.ai.PVZNearestTargetGoal;
 import com.hungteen.pvz.entity.ai.ZombieMeleeAttackGoal;
 import com.hungteen.pvz.entity.plant.PVZPlantEntity;
 import com.hungteen.pvz.misc.damage.PVZDamageSource;
+import com.hungteen.pvz.register.PotionRegister;
 import com.hungteen.pvz.register.SoundRegister;
 import com.hungteen.pvz.utils.EntityUtil;
 import com.hungteen.pvz.utils.ZombieUtil;
@@ -52,9 +53,9 @@ public abstract class PVZZombieEntity extends MonsterEntity implements IPVZZombi
 	private static final DataParameter<Optional<UUID>> OWNER_UUID = EntityDataManager.createKey(PVZZombieEntity.class,
 			DataSerializers.OPTIONAL_UNIQUE_ID);
 	// 以下均为僵尸状态
-	private static final DataParameter<Boolean> IS_FROZEN = EntityDataManager.createKey(PVZZombieEntity.class,
-			DataSerializers.BOOLEAN);
 	private static final DataParameter<Boolean> IS_COLD = EntityDataManager.createKey(PVZZombieEntity.class,
+			DataSerializers.BOOLEAN);
+	private static final DataParameter<Boolean> IS_FROZEN = EntityDataManager.createKey(PVZZombieEntity.class,
 			DataSerializers.BOOLEAN);
 	private static final DataParameter<Boolean> IS_CHARMED = EntityDataManager.createKey(PVZZombieEntity.class,
 			DataSerializers.BOOLEAN);
@@ -147,6 +148,24 @@ public abstract class PVZZombieEntity extends MonsterEntity implements IPVZZombi
 		this.targetSelector.addGoal(0, new PVZNearestTargetGoal(this, true, 80, 60));
 	}
 
+	@Override
+	public void livingTick() {
+		super.livingTick();
+		if(!this.world.isRemote) {
+			if(this.isPotionActive(PotionRegister.COLD_EFFECT.get())&&this.canBeCold()) this.setIsCold(true);
+			else this.setIsCold(false);
+			if(this.isPotionActive(PotionRegister.FROZEN_EFFECT.get())&&this.canBeFrozen()) this.setIsFrozen(true);
+			else this.setIsFrozen(false);
+		}
+		if(!this.isAlive()||this.getIsFrozen()) return ;
+		this.normalZombieTick();
+	}
+	
+	public void normalZombieTick()
+	{
+		
+	}
+	
 	/**
 	 * 给僵尸设置最大生命值 并回血
 	 */
@@ -156,11 +175,15 @@ public abstract class PVZZombieEntity extends MonsterEntity implements IPVZZombi
 	}
 
 	public int getAttackCD() {
-//		if (this.isPotionActive(PotionRegister.COLD_EFFECT)) {
-//			int lvl = this.getActivePotionEffect(PotionRegister.COLD_EFFECT).getAmplifier();
-//			return 4 * lvl + 10;
-//		}
-		return 15;
+		if(this.getIsFrozen()) {
+			return 10000000;
+		}
+		int now=15;
+		if(this.getIsCold()) {
+			int lvl=this.getActivePotionEffect(PotionRegister.COLD_EFFECT.get()).getAmplifier();
+			now+=3*lvl;
+		}
+		return now;
 	}
 
 	@Override
@@ -226,28 +249,32 @@ public abstract class PVZZombieEntity extends MonsterEntity implements IPVZZombi
 	/**
 	 * 能否被黄油黏住
 	 */
-	public boolean getCanBeButter() {
+	public boolean canBeButter() {
 		return true;
 	}
 
 	/**
 	 * 能否被冰封
 	 */
-	public boolean getCanBeFrozen() {
+	public boolean canBeFrozen() {
 		return true;
 	}
 
 	/**
 	 * 能否变小
 	 */
-	public boolean getCanBeSmall() {
+	public boolean canBeSmall() {
 		return true;
 	}
 
 	/**
 	 * 能否隐身
 	 */
-	public boolean getCanBeInvis() {
+	public boolean canBeInvis() {
+		return true;
+	}
+	
+	public boolean canBeCold() {
 		return true;
 	}
 

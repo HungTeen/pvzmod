@@ -81,6 +81,7 @@ public class ItemRegister {
 	public static final RegistryObject<PVZSpawnEggItem> CHERRY_BOMB_SPAWN_EGG = registerSpawnEgg("cherry_bomb", EntityRegister.CHERRY_BOMB, Colors.DARK_RED, Colors.RED);
 	public static final RegistryObject<PVZSpawnEggItem> WALL_NUT_SPAWN_EGG = registerSpawnEgg("wall_nut", EntityRegister.WALL_NUT, Colors.NUT, Colors.ORANGE);
 	public static final RegistryObject<PVZSpawnEggItem> POTATO_MINE_SPAWN_EGG = registerSpawnEgg("potato_mine", EntityRegister.POTATO_MINE, Colors.DARK_RED, Colors.RED);
+	public static final RegistryObject<PVZSpawnEggItem> SNOW_PEA_SPAWN_EGG = registerSpawnEgg("snow_pea", EntityRegister.SNOW_PEA, Colors.LITTLE_AQUA, Colors.BLUE);
 	
 	/**
 	 * register spawn eggs
@@ -89,4 +90,5 @@ public class ItemRegister {
     {
     	return ITEMS.register(name+"_spawn_egg", () -> new PVZSpawnEggItem(entityType, color1, color2, new Item.Properties().group(GroupRegister.PVZ_GROUP)));
     }
+
 }

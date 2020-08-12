@@ -9,9 +9,8 @@ public enum PVZDamageType {
 	WEAK,
 	APPEASE,
 	EAT,
-	EXPLOSION;
-//	SNOW, 
-//	ICE,
+	EXPLOSION,
+	ICE;
 //	FIRE, 
 //	BUTTER, 
 //	LIGHTNING,
@@ -28,10 +27,7 @@ public enum PVZDamageType {
 		case APPEASE:return ChatFormatting.GREEN+I18n.format("pvz.damage_type.appease",new Object[0]);
 		case EAT:return ChatFormatting.DARK_GRAY+I18n.format("pvz.damage_type.eat",new Object[0]);
 		case EXPLOSION:return ChatFormatting.DARK_RED+I18n.format("pvz.damage_type.explosion",new Object[0]);
-//			case SNOW:
-//				return ChatFormatting.WHITE+I18n.format("pvz.DamageType.SNOW",new Object[0]);
-//			case ICE:
-//				return ChatFormatting.AQUA+I18n.format("pvz.DamageType.ICE",new Object[0]);
+		case ICE:return ChatFormatting.BLUE+I18n.format("pvz.damage_type.ice",new Object[0]);
 //			case FIRE:
 //				return ChatFormatting.RED+I18n.format("pvz.DamageType.FIRE",new Object[0]);
 //			case BUTTER:
@@ -47,7 +43,7 @@ public enum PVZDamageType {
 //			    return ChatFormatting.DARK_RED+I18n.format("pvz.DamageType.DEAD",new Object[0]);
 //			case MOTAL:
 //			    return ChatFormatting.BLACK+I18n.format("pvz.DamageType.MOTAL",new Object[0]);
-		default:return ChatFormatting.WHITE+I18n.format("pvz.damageType.normal",new Object[0]);
+		default:return ChatFormatting.WHITE+I18n.format("pvz.damage_type.normal",new Object[0]);
 		}
 	}
 	

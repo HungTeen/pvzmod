@@ -11,6 +11,7 @@ import com.hungteen.pvz.misc.damage.PVZDamageSource;
 import com.hungteen.pvz.register.SoundRegister;
 import com.hungteen.pvz.utils.EntityUtil;
 import com.hungteen.pvz.utils.PlantUtil;
+import com.hungteen.pvz.utils.enums.Essences;
 import com.hungteen.pvz.utils.enums.Plants;
 import com.hungteen.pvz.utils.enums.Ranks;
 import com.hungteen.pvz.utils.interfaces.IPVZPlant;
@@ -85,6 +86,7 @@ public abstract class PVZPlantEntity extends CreatureEntity implements IPVZPlant
 	@Override
 	public void livingTick() {
 		super.livingTick();
+		if(!this.isAlive()) return ;
 		if(this.getIsGardenPlant()) {
 			this.gardenPlantTick();
 		}else {
@@ -334,6 +336,11 @@ public abstract class PVZPlantEntity extends CreatureEntity implements IPVZPlant
 	public float getLife()
 	{
 		return PlantUtil.getPlantMaxHealth(getPlantEnumName(),getPlantLvl());
+	}
+	
+	@Override
+	public Essences getPlantEssenceType() {
+		return PlantUtil.getPlantEssenceType(getPlantEnumName());
 	}
 	
 	@Override
