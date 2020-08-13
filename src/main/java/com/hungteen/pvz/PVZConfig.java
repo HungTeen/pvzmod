@@ -19,6 +19,11 @@ public class PVZConfig {
 						.comment("About the chance you got essence_ore from origin_block.the bigger the value is,the lower chance you get.(more specificly 1/x)")
 						.worldRestart()
 						.defineInRange("originChance", 5, 1, 100);
+				BLOCK_SETTINGS.chomperGrowChance = builder
+						.translation(CONFIG_TRANSLATE+"chomper_grow")
+						.comment("The chance when you use bone meal to grow chomper,the bigger the less chance.")
+						.worldRestart()
+						.defineInRange("chomperGrow", 20, 5, 100);
 				builder.comment("Setting about break blocks.").push("Break Block Setting");
 				{
 					BLOCK_SETTINGS.breakBlock.peaDropChance = builder
@@ -77,6 +82,7 @@ public class PVZConfig {
 		public static class BlockSettings
 		{
 			public ForgeConfigSpec.IntValue originBlockEffectChance;
+			public ForgeConfigSpec.IntValue chomperGrowChance;
 			public BreakBlock breakBlock = new BreakBlock();
 			public static class BreakBlock
 			{

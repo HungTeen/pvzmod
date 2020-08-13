@@ -5,6 +5,7 @@ import java.util.List;
 
 import com.hungteen.pvz.PVZMod;
 import com.hungteen.pvz.block.OriginBlock;
+import com.hungteen.pvz.block.plants.ChomperBlock;
 import com.hungteen.pvz.block.plants.PVZSaplingBlock;
 import com.hungteen.pvz.block.plants.PeaBlock;
 import com.hungteen.pvz.world.feature.tree.NutTree;
@@ -64,6 +65,7 @@ public class BlockRegister {
 	//plants
 	public static final RegistryObject<Block> NUT_LEAVES = BLOCKS.register("nut_leaves", ()->new LeavesBlock(Block.Properties.from(Blocks.OAK_LEAVES)));
 	public static final RegistryObject<Block> NUT_SAPLING = BLOCKS.register("nut_sapling", ()->new PVZSaplingBlock(NutTree::new));
+	public static final RegistryObject<Block> CHOMPER = BLOCKS.register("chomper", ChomperBlock::new);
 	
 	/**
 	 * 注册itemblock
@@ -75,7 +77,7 @@ public class BlockRegister {
 		List<RegistryObject<? extends Block>> blocks = Arrays.asList(
 				ORIGIN_ORE,APPEASE_ORE,LIGHT_ORE,EXPLOSION_ORE,DEFENCE_ORE,ICE_ORE,ENFORCE_ORE,TOXIC_ORE,ASSIST_ORE,MAGIC_ORE,FLAME_ORE,SPEAR_ORE,ARMA_ORE,ELECTRIC_ORE,SHADOW_ORE,AMETHYST_ORE,
 				STEEL_BLOCK,AMETHYST_BLOCK,ORIGIN_BLOCK,
-				NUT_LEAVES,NUT_SAPLING
+				NUT_LEAVES,NUT_SAPLING,CHOMPER
 		);
 		for(RegistryObject<? extends Block> block:blocks) {
 			items.register(new BlockItem(block.get(),new Item.Properties().group(GroupRegister.PVZ_GROUP)).setRegistryName(block.get().getRegistryName()));
