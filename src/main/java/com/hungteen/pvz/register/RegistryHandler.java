@@ -1,9 +1,11 @@
 package com.hungteen.pvz.register;
 
 import com.hungteen.pvz.PVZMod;
+import com.hungteen.pvz.capabilities.CapabilityHandler;
 import com.hungteen.pvz.item.PVZSpawnEggItem;
 import com.hungteen.pvz.item.armor.BucketArmorItem;
 import com.hungteen.pvz.item.armor.ConeArmorItem;
+import com.hungteen.pvz.network.PVZPacketHandler;
 
 import net.minecraft.entity.EntityType;
 import net.minecraftforge.event.RegistryEvent;
@@ -12,6 +14,7 @@ import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod.EventBusSubscriber;
 import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
+import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 
 @EventBusSubscriber(modid = PVZMod.MOD_ID, bus = EventBusSubscriber.Bus.MOD)
@@ -27,7 +30,18 @@ public class RegistryHandler {
 		ParticleRegister.PARTICLE_TYPES.register(bus);
 		PotionRegister.EFFECTS.register(bus);
 		BiomeRegister.BIOMES.register(bus);
+		FeatureRegister.FEATURES.register(bus);
 	}
+	
+	@SubscribeEvent
+    public static void setup(FMLCommonSetupEvent ev)
+    {
+    	CapabilityHandler.registerCapabilities();
+    	PVZPacketHandler.init();
+    	BiomeRegister.addBiomes();
+    	BiomeRegister.addBiomeFeatures();
+    	StructureRegister.registerStructureType();
+    }
 	
 	@SubscribeEvent
 	public static void clientSetup(FMLClientSetupEvent evt) {

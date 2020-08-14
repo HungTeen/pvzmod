@@ -10,7 +10,7 @@ public enum Plants {
 	    POTATO_MINE("potato_mine"),
 	    SNOW_PEA("snow_pea"),
 	    CHOMPER("chomper"),//���
-	    DOUBLE_SHOOTER("double_shooter"),
+	    REPEATER("repeater"),
 	    //2-1 ~ 2-10
 	    PULF_SHROOM("pulf_shroom"),//��Ԩ
 	    SUN_SHROOM("sun_shroom"),//��Ԩ
@@ -74,7 +74,7 @@ public enum Plants {
 		else if(name.equals("wall_nut")) return WALL_NUT;
 		else if(name.equals("potato_mine")) return POTATO_MINE;
 		else if(name.equals("snow_pea")) return SNOW_PEA;
-		else if(name.equals("double_shooter")) return DOUBLE_SHOOTER;
+		else if(name.equals("repeater")) return REPEATER;
 		else if(name.equals("hypno_shroom")) return HYPNO_SHROOM;
 		else if(name.equals("ice_shroom")) return ICE_SHROOM;
 		else if(name.equals("lily_pad")) return LILY_PAD;

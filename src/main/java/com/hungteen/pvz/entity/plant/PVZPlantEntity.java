@@ -43,7 +43,7 @@ public abstract class PVZPlantEntity extends CreatureEntity implements IPVZPlant
 	private static final DataParameter<Integer> SUPER_TIME = EntityDataManager.createKey(PVZPlantEntity.class, DataSerializers.VARINT);
 	private static final DataParameter<Integer> PLANT_LVL = EntityDataManager.createKey(PVZPlantEntity.class, DataSerializers.VARINT);
 	private static final DataParameter<Optional<UUID>> OWNER_UUID = EntityDataManager.createKey(PVZPlantEntity.class, DataSerializers.OPTIONAL_UNIQUE_ID);
-	private static final DataParameter<Boolean> IS_SUPER_OUT = EntityDataManager.createKey(PVZPlantEntity.class,DataSerializers.BOOLEAN);
+//	private static final DataParameter<Boolean> IS_SUPER_OUT = EntityDataManager.createKey(PVZPlantEntity.class,DataSerializers.BOOLEAN);
 	private static final DataParameter<Integer> ATTACK_TIME = EntityDataManager.createKey(PVZPlantEntity.class, DataSerializers.VARINT);
 	private static final DataParameter<Integer> GOLD_TIME = EntityDataManager.createKey(PVZPlantEntity.class, DataSerializers.VARINT);
 	private static final DataParameter<Integer> BOOST_TIME = EntityDataManager.createKey(PVZPlantEntity.class, DataSerializers.VARINT);
@@ -62,7 +62,7 @@ public abstract class PVZPlantEntity extends CreatureEntity implements IPVZPlant
 		dataManager.register(SUPER_TIME, 0);
 		dataManager.register(PLANT_LVL, 1);
 		dataManager.register(OWNER_UUID, Optional.empty());
-		dataManager.register(IS_SUPER_OUT, false);
+//		dataManager.register(IS_SUPER_OUT, false);
 		dataManager.register(ATTACK_TIME, 0);
 		dataManager.register(GOLD_TIME, 0);
 		dataManager.register(BOOST_TIME, 0);
@@ -123,7 +123,7 @@ public abstract class PVZPlantEntity extends CreatureEntity implements IPVZPlant
 			    this.setSuperTime(this.getSuperTime()-1);
 		    }
 		    else{
-		    	this.setIsSuperOut(true);
+//		    	this.setIsSuperOut(true);
 		    }
 		    //boost
 		    if(this.getBoostTime()>0) {
@@ -253,7 +253,7 @@ public abstract class PVZPlantEntity extends CreatureEntity implements IPVZPlant
 	      } else {
 	         compound.putString("OwnerUUID", this.getOwnerUUID().toString());
 	      }
-        compound.putBoolean("is_super_out", this.getIsSuperOut());
+//        compound.putBoolean("is_super_out", this.getIsSuperOut());
         compound.putInt("plant_attack_time", this.getAttackTime());
         compound.putInt("plant_gold_time", this.getGoldTime());
         compound.putInt("plant_boost_time", this.getBoostTime());
@@ -286,7 +286,7 @@ public abstract class PVZPlantEntity extends CreatureEntity implements IPVZPlant
 	         } catch (Throwable var4) {
 	         }
 	      }
-		this.setIsSuperOut(compound.getBoolean("is_super_out"));
+//		this.setIsSuperOut(compound.getBoolean("is_super_out"));
 		this.setAttackTime(compound.getInt("plant_attack_time"));
         this.setGoldTime(compound.getInt("plant_gold_time"));
         this.setBoostTime(compound.getInt("plant_boost_time"));
@@ -302,7 +302,7 @@ public abstract class PVZPlantEntity extends CreatureEntity implements IPVZPlant
 	
 	public void startSuperMode() {
 		this.setSuperTime(this.getSuperTimeLength());
-		this.setIsSuperOut(false);
+//		this.setIsSuperOut(false);
 //		for(int i=1;i<=10;i++) {
 //		    Main.proxy.spawnParticle(PVZParticleType.SUPER_PLANT_FOOD, posX, posY, posZ, (this.rand.nextFloat()-0.5f)/4, 0.15f, (this.rand.nextFloat()-0.5f)/4);
 //		}
@@ -418,15 +418,15 @@ public abstract class PVZPlantEntity extends CreatureEntity implements IPVZPlant
     	dataManager.set(ATTACK_TIME, cd);
     }
     
-	public boolean getIsSuperOut()
-	{
-		return dataManager.get(IS_SUPER_OUT);
-	}
-	
-	public void setIsSuperOut(boolean is)
-	{
-		dataManager.set(IS_SUPER_OUT, is);
-	}
+//	public boolean getIsSuperOut()
+//	{
+//		return dataManager.get(IS_SUPER_OUT);
+//	}
+//	
+//	public void setIsSuperOut(boolean is)
+//	{
+//		dataManager.set(IS_SUPER_OUT, is);
+//	}
 	
 	public void setPlantLvl(int lvl)
 	{

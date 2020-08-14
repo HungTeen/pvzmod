@@ -1,5 +1,7 @@
 package com.hungteen.pvz.utils.enums;
 
+import com.mojang.datafixers.util.Pair;
+
 public class Colors {
 	//red
 	public static final int RED = 16711680;
@@ -78,4 +80,10 @@ public class Colors {
 	public static final int TOXIC_GREEN = 3368448;
 	public static final int TYRIAN_PURPLE = 7012434;
 	public static final int WHITE = 16777215;
+	
+	public static final Pair<Integer,Integer> APPEASE_COLOR = new Pair<>(PEA_GREEN, GREEN);
+	public static final Pair<Integer,Integer> LIGHT_COLOR = new Pair<>(YELLOW, LITTLE_YELLOW1);
+	public static final Pair<Integer,Integer> EXPLOSION_COLOR = new Pair<>(DARK_RED, RED);
+	public static final Pair<Integer,Integer> DEFENCE_COLOR = new Pair<>(NUT, ORANGE);
+	public static final Pair<Integer,Integer> ICE_COLOR = new Pair<>(LITTLE_AQUA, BLUE);
 }

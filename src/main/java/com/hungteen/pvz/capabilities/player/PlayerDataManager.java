@@ -59,6 +59,7 @@ public class PlayerDataManager {
 	}
 
 	public final class PlayerStats{
+		@SuppressWarnings("unused")
 		private final PlayerDataManager playerDataManager;
 		private HashMap<Resources, Integer> resources = new HashMap<>(Resources.values().length);
 		

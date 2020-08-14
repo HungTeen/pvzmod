@@ -2,7 +2,6 @@ package com.hungteen.pvz.utils;
 
 import com.hungteen.pvz.capabilities.CapabilityHandler;
 import com.hungteen.pvz.capabilities.player.IPlayerDataCapability;
-import com.hungteen.pvz.capabilities.player.PlayerDataProvider;
 import com.hungteen.pvz.utils.enums.Resources;
 
 import net.minecraft.entity.player.PlayerEntity;

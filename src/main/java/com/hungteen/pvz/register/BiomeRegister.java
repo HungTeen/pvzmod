@@ -5,6 +5,11 @@ import com.hungteen.pvz.biome.PVZBiome;
 import com.hungteen.pvz.biome.ZenGardenBiome;
 
 import net.minecraft.world.biome.Biome;
+import net.minecraft.world.biome.PlainsBiome;
+import net.minecraft.world.gen.GenerationStage;
+import net.minecraft.world.gen.feature.IFeatureConfig;
+import net.minecraft.world.gen.placement.IPlacementConfig;
+import net.minecraft.world.gen.placement.Placement;
 import net.minecraftforge.common.BiomeManager;
 import net.minecraftforge.fml.RegistryObject;
 import net.minecraftforge.registries.DeferredRegister;
@@ -26,6 +31,10 @@ public class BiomeRegister {
 				((PVZBiome) biome).addFeatures();
 				((PVZBiome) biome).addSpawns();
 			}
+			if(biome instanceof PlainsBiome) {
+				biome.addStructure(FeatureRegister.DAVE_VILLA.get().withConfiguration(IFeatureConfig.NO_FEATURE_CONFIG));
+			}
+			biome.addFeature(GenerationStage.Decoration.SURFACE_STRUCTURES, FeatureRegister.DAVE_VILLA.get().withConfiguration(IFeatureConfig.NO_FEATURE_CONFIG).withPlacement(Placement.NOPE.configure(IPlacementConfig.NO_PLACEMENT_CONFIG)));
 		}
 	}
 }

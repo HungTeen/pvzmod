@@ -41,6 +41,7 @@ public class PlantUtil {
 		case PEA_SHOOTER:return 100;
 		case CHERRY_BOMB:return 150;
 		case SNOW_PEA:return 175;
+		case REPEATER:return 200;
 		default:{
 			PVZMod.LOGGER.debug("plant get sun cost error!");
 			return 0;
@@ -56,7 +57,8 @@ public class PlantUtil {
 		switch(plant) {
 		case PEA_SHOOTER:return getPlantCoolDownTimeVeryFast(lvl);
 		case SUN_FLOWER:
-		case SNOW_PEA:return getPlantCoolDownTimeFast(lvl);
+		case SNOW_PEA:
+		case REPEATER:return getPlantCoolDownTimeFast(lvl);
 		case POTATO_MINE:return getPlantCoolDownTimeLittleSlow(lvl);
 		case WALL_NUT:return getPlantCoolDownTimeSlow(lvl);
 		case CHERRY_BOMB:return getPlantCoolDownTimeHugeSlow(lvl);
@@ -90,7 +92,8 @@ public class PlantUtil {
 		case SUN_FLOWER:return Ranks.GRAY;
 		case WALL_NUT:
 		case POTATO_MINE:return Ranks.WHITE;
-		case SNOW_PEA:return Ranks.GREEN;
+		case SNOW_PEA:
+		case REPEATER:return Ranks.GREEN;
 		case CHERRY_BOMB:return Ranks.BLUE;
 		default:{
 			PVZMod.LOGGER.debug("plant get rank error!");
@@ -102,7 +105,8 @@ public class PlantUtil {
 	public static Essences getPlantEssenceType(Plants plant)
 	{
 		switch (plant) {
-		case PEA_SHOOTER:return Essences.APPEASE;
+		case PEA_SHOOTER:
+		case REPEATER:return Essences.APPEASE;
 		case SUN_FLOWER:return Essences.LIGHT;
 		case CHERRY_BOMB:
 		case POTATO_MINE:return Essences.EXPLOSION;

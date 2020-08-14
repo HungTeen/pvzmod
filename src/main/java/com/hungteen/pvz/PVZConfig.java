@@ -75,6 +75,18 @@ public class PVZConfig {
 				builder.pop();
 			}
 			builder.pop();
+			
+			builder.comment("Settings about world gen.").push("World Settings");
+			{
+				builder.comment("Settings about the overworld gen.").push("OverWorld Settings");
+				{
+					WORLD_SETTINGS.overWorldSettings.DaveVillaGenChance = builder
+							.translation(CONFIG_TRANSLATE+"dave_villa_gen_chance")
+							.comment("maybe about the chance to gen dave villa. the bigger the more chance it has.")
+							.worldRestart()
+							.defineInRange("DaveVillaDistance", 8, 1, 100);
+				}
+			}
 		}
 		
 		public BlockSettings BLOCK_SETTINGS = new BlockSettings();
@@ -106,6 +118,17 @@ public class PVZConfig {
 				public ForgeConfigSpec.IntValue bulletLiveTick;
 			}
 			
+		}
+		
+		public WorldSettings WORLD_SETTINGS = new WorldSettings();
+		
+		public static class WorldSettings
+		{
+			public OverWorldSettings overWorldSettings = new OverWorldSettings();
+			public static class OverWorldSettings
+			{
+				public ForgeConfigSpec.IntValue DaveVillaGenChance;
+			}
 		}
 	}
 	

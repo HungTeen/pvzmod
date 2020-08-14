@@ -18,6 +18,7 @@ import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.math.BlockPos;
 import net.minecraftforge.event.entity.player.PlayerEvent;
+import net.minecraftforge.event.entity.player.PlayerInteractEvent.RightClickEmpty;
 import net.minecraftforge.event.world.BlockEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
@@ -71,5 +72,11 @@ public class PVZPlayerEvent {
 				}
 			}
 		}
+	}
+	
+	@SubscribeEvent
+	public static void onPlayerRightClick(RightClickEmpty ev)
+	{
+		
 	}
 }
