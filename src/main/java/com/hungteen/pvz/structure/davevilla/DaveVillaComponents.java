@@ -17,7 +17,6 @@ import net.minecraft.util.math.ChunkPos;
 import net.minecraft.util.math.MutableBoundingBox;
 import net.minecraft.world.IWorld;
 import net.minecraft.world.gen.ChunkGenerator;
-import net.minecraft.world.gen.feature.structure.IStructurePieceType;
 import net.minecraft.world.gen.feature.structure.StructurePiece;
 import net.minecraft.world.gen.feature.structure.TemplateStructurePiece;
 import net.minecraft.world.gen.feature.template.BlockIgnoreStructureProcessor;
@@ -29,12 +28,12 @@ public class DaveVillaComponents {
 	
 	private static final BlockPos STRUCTURE_OFFSET = new BlockPos(0, 0, 0);
 	public static final BlockState BASE_BLOCK = Blocks.DIRT.getDefaultState();
+	public static final ResourceLocation res1 = StringUtil.prefix("dave_villa/davevilla1");
+	public static final ResourceLocation res2 = StringUtil.prefix("dave_villa/davevilla2");
+	public static final ResourceLocation res3 = StringUtil.prefix("dave_villa/davevilla3");
+	public static final ResourceLocation res4 = StringUtil.prefix("dave_villa/davevilla4");
 	
 	public static void generate(TemplateManager manager, BlockPos pos1, Rotation rotation, List<StructurePiece> list, Random rand) {
-	      ResourceLocation res1 = StringUtil.prefix("dave_villa/davevilla1");
-	      ResourceLocation res2 = StringUtil.prefix("dave_villa/davevilla2");
-	      ResourceLocation res3 = StringUtil.prefix("dave_villa/davevilla3");
-	      ResourceLocation res4 = StringUtil.prefix("dave_villa/davevilla4");
 	      BlockPos pos2,pos3,pos4;
 //	      System.out.println(rotation);
 	      switch (rotation) {
@@ -76,7 +75,7 @@ public class DaveVillaComponents {
 //		protected final BlockPos midPos;
 
 		public DaveVillaComponent(TemplateManager manager, ResourceLocation res,BlockPos pos, Rotation rotation) {
-			super(IStructurePieceType.SHIPWRECK, 0);
+			super(StructureRegister.DAVE_VILLA, 0);
 			this.templatePosition = pos;
 			this.rotation = rotation;
 			this.res=res;
@@ -123,17 +122,34 @@ public class DaveVillaComponents {
 		@Override
 		public boolean create(IWorld worldIn, ChunkGenerator<?> chunkGeneratorIn, Random randomIn,
 				MutableBoundingBox mutableBoundingBoxIn, ChunkPos chunkPosIn) {
-//			BlockPos pos = this.templatePosition;
-//			int flagX = (rotation==Rotation.NONE||rotation==Rotation.COUNTERCLOCKWISE_90)?1:-1;
-//			int flagZ = (rotation==Rotation.NONE||rotation==Rotation.CLOCKWISE_90)?1:-1;
-//			BlockPos sz = this.template.getSize();
-//			BlockPos to = pos.add(sz.getX()*flagX, sz.getY(), sz.getZ()*flagZ);
-//			BlockPos min = new BlockPos(Math.min(pos.getX(), to.getX()),Math.min(pos.getY(), to.getY()),Math.min(pos.getZ(), to.getZ()));
-//			BlockPos max = new BlockPos(Math.max(pos.getX(), to.getX()),Math.max(pos.getY(), to.getY()),Math.max(pos.getZ(), to.getZ()));
-//			this.fillWithAir(worldIn, mutableBoundingBoxIn, min.getX(), min.getY(), min.getZ(), max.getX(), max.getY(), max.getZ());
+			BlockPos pos = this.templatePosition;
+			int flagX = (rotation==Rotation.NONE||rotation==Rotation.COUNTERCLOCKWISE_90)?1:-1;
+			int flagZ = (rotation==Rotation.NONE||rotation==Rotation.CLOCKWISE_90)?1:-1;
+			BlockPos sz = this.template.getSize();
+			BlockPos to = pos.add(sz.getX()*flagX, sz.getY(), sz.getZ()*flagZ);
+			BlockPos min = new BlockPos(Math.min(pos.getX(), to.getX()),Math.min(pos.getY(), to.getY()),Math.min(pos.getZ(), to.getZ()));
+			BlockPos max = new BlockPos(Math.max(pos.getX(), to.getX()),Math.max(pos.getY(), to.getY()),Math.max(pos.getZ(), to.getZ()));
+			this.fillWithAir(worldIn, mutableBoundingBoxIn, min.getX(), min.getY(), min.getZ(), max.getX(), max.getY(), max.getZ());
+//			this.fillWithBlocks(worldIn, boundingboxIn, xMin, yMin, zMin, xMax, yMax, zMax, boundaryBlockState, insideBlockState, existingOnly);
 //			System.out.println(min.getX()+" "+min.getY()+" "+min.getZ()+" "+max.getX()+" "+max.getY()+" "+max.getZ());
-			return super.create(worldIn, chunkGeneratorIn, randomIn, mutableBoundingBoxIn, chunkPosIn);
+			super.create(worldIn, chunkGeneratorIn, randomIn, mutableBoundingBoxIn, chunkPosIn);
+			for(int i=min.getX();i<=max.getX();i++) {
+				for(int j=min.getZ();j<=max.getZ();j++) {
+					int y=min.getY()-1;
+					while(y-->=50) {
+						BlockPos tmp = new BlockPos(i,y,j);
+						if(worldIn.getBlockState(tmp).isSolid()) {
+							break;
+						}
+						else {
+							worldIn.setBlockState(tmp, BASE_BLOCK, 3);
+						}
+					}
+				}
+			}
+			return true;
 		}
+		
 		
 	}
 }

@@ -73,7 +73,7 @@ public class DaveVillaStructure extends ScatteredStructure<NoFeatureConfig>{
 		public void init(ChunkGenerator<?> generator, TemplateManager templateManagerIn, int chunkX, int chunkZ,
 				Biome biomeIn) {
 			Rotation rotation = Rotation.values()[this.rand.nextInt(Rotation.values().length)];
-	        BlockPos blockpos = new BlockPos(chunkX * 16, 30, chunkZ * 16);
+	        BlockPos blockpos = new BlockPos(chunkX * 16, 73+this.rand.nextInt(10), chunkZ * 16);
 	        DaveVillaComponents.generate(templateManagerIn, blockpos, rotation, this.components, this.rand);
 //	        for(StructurePiece piece:this.components) {
 //	        	if(piece instanceof DaveVillaComponent) {
