@@ -15,7 +15,7 @@ import com.hungteen.pvz.entity.plant.PVZPlantEntity;
 import com.hungteen.pvz.misc.damage.PVZDamageSource;
 import com.hungteen.pvz.misc.damage.PVZDamageType;
 import com.hungteen.pvz.register.EntityRegister;
-import com.hungteen.pvz.register.PotionRegister;
+import com.hungteen.pvz.register.EffectRegister;
 import com.hungteen.pvz.register.SoundRegister;
 import com.hungteen.pvz.utils.EntityUtil;
 import com.hungteen.pvz.utils.ZombieUtil;
@@ -156,9 +156,9 @@ public abstract class PVZZombieEntity extends MonsterEntity implements IPVZZombi
 	public void livingTick() {
 		super.livingTick();
 		if(!this.world.isRemote) {
-			if(this.isPotionActive(PotionRegister.COLD_EFFECT.get())&&this.canBeCold()) this.setIsCold(true);
+			if(this.isPotionActive(EffectRegister.COLD_EFFECT.get())&&this.canBeCold()) this.setIsCold(true);
 			else this.setIsCold(false);
-			if(this.isPotionActive(PotionRegister.FROZEN_EFFECT.get())&&this.canBeFrozen()) this.setIsFrozen(true);
+			if(this.isPotionActive(EffectRegister.FROZEN_EFFECT.get())&&this.canBeFrozen()) this.setIsFrozen(true);
 			else this.setIsFrozen(false);
 		}
 		if(!this.isAlive()||this.getIsFrozen()) return ;
@@ -184,7 +184,7 @@ public abstract class PVZZombieEntity extends MonsterEntity implements IPVZZombi
 		}
 		int now=15;
 		if(this.getIsCold()) {
-			int lvl=this.getActivePotionEffect(PotionRegister.COLD_EFFECT.get()).getAmplifier();
+			int lvl=this.getActivePotionEffect(EffectRegister.COLD_EFFECT.get()).getAmplifier();
 			now+=3*lvl;
 		}
 		return now;

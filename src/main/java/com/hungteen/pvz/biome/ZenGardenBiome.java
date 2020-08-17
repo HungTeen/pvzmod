@@ -1,9 +1,8 @@
 package com.hungteen.pvz.biome;
 
-import com.hungteen.pvz.register.EntityRegister;
+import com.hungteen.pvz.world.feature.PVZFeatureConfig;
 import com.hungteen.pvz.world.feature.tree.NutTree;
 
-import net.minecraft.entity.EntityClassification;
 import net.minecraft.world.biome.Biome;
 import net.minecraft.world.biome.DefaultBiomeFeatures;
 import net.minecraft.world.gen.GenerationStage;
@@ -48,7 +47,7 @@ public class ZenGardenBiome extends PVZBiome {
 		DefaultBiomeFeatures.addLakes(this);
 		DefaultBiomeFeatures.addMonsterRooms(this);
 		DefaultBiomeFeatures.addPlainsTallGrass(this);
-		this.addFeature(GenerationStage.Decoration.VEGETAL_DECORATION,Feature.RANDOM_PATCH.withConfiguration(DefaultBiomeFeatures.SUNFLOWER_CONFIG).withPlacement(Placement.COUNT_HEIGHTMAP_32.configure(new FrequencyConfig(10))));
+		this.addFeature(GenerationStage.Decoration.VEGETAL_DECORATION,Feature.RANDOM_PATCH.withConfiguration(DefaultBiomeFeatures.SUNFLOWER_CONFIG).withPlacement(Placement.COUNT_HEIGHTMAP_32.configure(new FrequencyConfig(5))));
 		DefaultBiomeFeatures.addStoneVariants(this);
 		DefaultBiomeFeatures.addOres(this);
 		DefaultBiomeFeatures.addSedimentDisks(this);
@@ -58,12 +57,14 @@ public class ZenGardenBiome extends PVZBiome {
 		this.addFeature(GenerationStage.Decoration.VEGETAL_DECORATION,Feature.RANDOM_PATCH.withConfiguration(DefaultBiomeFeatures.PUMPKIN_PATCH_CONFIG).withPlacement(Placement.CHANCE_HEIGHTMAP_DOUBLE.configure(new ChanceConfig(32))));
 		DefaultBiomeFeatures.addSprings(this);
 		DefaultBiomeFeatures.addFreezeTopLayer(this);
-		this.addFeature(GenerationStage.Decoration.VEGETAL_DECORATION, Feature.NORMAL_TREE.withConfiguration(NutTree.NUT_TREE_CONFIG).withPlacement(Placement.COUNT_EXTRA_HEIGHTMAP.configure(new AtSurfaceWithExtraConfig(1, 0.1F, 1))));
+		//pvz
+		this.addFeature(GenerationStage.Decoration.VEGETAL_DECORATION, Feature.NORMAL_TREE.withConfiguration(NutTree.NUT_TREE_CONFIG).withPlacement(Placement.COUNT_EXTRA_HEIGHTMAP.configure(new AtSurfaceWithExtraConfig(1, 0.05F, 1))));
+		this.addFeature(GenerationStage.Decoration.VEGETAL_DECORATION,Feature.RANDOM_PATCH.withConfiguration(PVZFeatureConfig.CHOMPER_CONFIG).withPlacement(Placement.CHANCE_HEIGHTMAP_DOUBLE.configure(new ChanceConfig(64))));
 	}
 	
 	@Override
 	public void addSpawns() {
-		this.addSpawn(EntityClassification.CREATURE, new Biome.SpawnListEntry(EntityRegister.SUN_FLOWER.get(),2,1,1));
+//		this.addSpawn(EntityClassification.CREATURE, new Biome.SpawnListEntry(EntityRegister.SUN_FLOWER.get(),2,1,1));
 	}
 
 }

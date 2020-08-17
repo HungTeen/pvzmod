@@ -28,9 +28,10 @@ public class RegistryHandler {
 		EntityRegister.ENTITY_TYPES.register(bus);
 		SoundRegister.SOUNDS.register(bus);
 		ParticleRegister.PARTICLE_TYPES.register(bus);
-		PotionRegister.EFFECTS.register(bus);
+		EffectRegister.EFFECTS.register(bus);
 		BiomeRegister.BIOMES.register(bus);
 		FeatureRegister.FEATURES.register(bus);
+		TileEntityRegister.TILE_ENTITY_TYPES.register(bus);
 	}
 	
 	@SubscribeEvent

@@ -15,9 +15,6 @@ public class FeatureRegister {
 	public static final DeferredRegister<Feature<?>> FEATURES = new DeferredRegister<>(ForgeRegistries.FEATURES, PVZMod.MOD_ID);
 	
 	//structure
-	public static final RegistryObject<Structure<NoFeatureConfig>> DAVE_VILLA = FEATURES.register("dave_villa", () -> {
-        return new DaveVillaStructure(Dynamic -> {
-            return NoFeatureConfig.deserialize(Dynamic);
-        });
-    });
+	public static final RegistryObject<Structure<NoFeatureConfig>> DAVE_VILLA = FEATURES.register("dave_villa", () -> {return new DaveVillaStructure(NoFeatureConfig::deserialize);});
+	
 }

@@ -3,7 +3,7 @@ package com.hungteen.pvz.entity.plant.ice;
 import com.hungteen.pvz.entity.bullet.PeaEntity.State;
 import com.hungteen.pvz.entity.plant.appease.PeaShooterEntity;
 import com.hungteen.pvz.entity.plant.interfaces.IIcePlant;
-import com.hungteen.pvz.register.PotionRegister;
+import com.hungteen.pvz.register.EffectRegister;
 import com.hungteen.pvz.utils.enums.Plants;
 
 import net.minecraft.entity.CreatureEntity;
@@ -26,12 +26,12 @@ public class SnowPeaEntity extends PeaShooterEntity implements IIcePlant{
 			duration+=now*20;
 			amount+=now;
 		}
-		return new EffectInstance(PotionRegister.COLD_EFFECT.get(), duration, amount,false,false);
+		return new EffectInstance(EffectRegister.COLD_EFFECT.get(), duration, amount,false,false);
 	}
 
 	@Override
 	public EffectInstance getFrozenEffect() {
-		return new EffectInstance(PotionRegister.FROZEN_EFFECT.get(), 0, 0, false, false);
+		return new EffectInstance(EffectRegister.FROZEN_EFFECT.get(), 0, 0, false, false);
 	}
 	
 	@Override

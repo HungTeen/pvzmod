@@ -13,7 +13,7 @@ import net.minecraftforge.fml.RegistryObject;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
 
-public class PotionRegister {
+public class EffectRegister {
 
 	public static final DeferredRegister<Effect> EFFECTS = new DeferredRegister<>(ForgeRegistries.POTIONS, PVZMod.MOD_ID);
 	
@@ -28,4 +28,10 @@ public class PotionRegister {
 		.addAttributesModifier(SharedMonsterAttributes.MOVEMENT_SPEED,
 		MathHelper.getRandomUUID().toString(), -1f, Operation.MULTIPLY_TOTAL);
 	});
+	
+//	public static final RegistryObject<Effect> BUCKET_OMEN = EFFECTS.register("bucket_omen", ()->{
+//		return new PVZEffect(EffectType.HARMFUL, Colors.BLACK) {
+//		
+//		}
+//	})
 }

@@ -123,20 +123,37 @@ public class DaveVillaComponents {
 		public boolean create(IWorld worldIn, ChunkGenerator<?> chunkGeneratorIn, Random randomIn,
 				MutableBoundingBox mutableBoundingBoxIn, ChunkPos chunkPosIn) {
 			BlockPos pos = this.templatePosition;
-			int flagX = (rotation==Rotation.NONE||rotation==Rotation.COUNTERCLOCKWISE_90)?1:-1;
-			int flagZ = (rotation==Rotation.NONE||rotation==Rotation.CLOCKWISE_90)?1:-1;
-			BlockPos sz = this.template.getSize();
-			BlockPos to = pos.add(sz.getX()*flagX, sz.getY(), sz.getZ()*flagZ);
+			BlockPos size = this.template.getSize();
+			BlockPos ab = new BlockPos(0, size.getY(), 0);
+			switch(rotation) {
+			case CLOCKWISE_90:{
+				ab=ab.add(-size.getZ(), 0, size.getX());
+				break;
+			}
+			case CLOCKWISE_180:{
+				ab=ab.add(-size.getX(), 0, -size.getZ());
+				break;
+			}
+			case COUNTERCLOCKWISE_90:{
+				ab=ab.add(size.getZ(), 0, -size.getX());
+				break;
+			}
+			default:{
+				ab=ab.add(size.getX(), 0, size.getZ());
+				break;
+			}
+			}
+			BlockPos to = pos.add(ab.getX(), ab.getY(), ab.getZ());
 			BlockPos min = new BlockPos(Math.min(pos.getX(), to.getX()),Math.min(pos.getY(), to.getY()),Math.min(pos.getZ(), to.getZ()));
 			BlockPos max = new BlockPos(Math.max(pos.getX(), to.getX()),Math.max(pos.getY(), to.getY()),Math.max(pos.getZ(), to.getZ()));
-			this.fillWithAir(worldIn, mutableBoundingBoxIn, min.getX(), min.getY(), min.getZ(), max.getX(), max.getY(), max.getZ());
+//			this.fillWithAir(worldIn, mutableBoundingBoxIn, min.getX(), min.getY(), min.getZ(), max.getX(), max.getY(), max.getZ());
 //			this.fillWithBlocks(worldIn, boundingboxIn, xMin, yMin, zMin, xMax, yMax, zMax, boundaryBlockState, insideBlockState, existingOnly);
 //			System.out.println(min.getX()+" "+min.getY()+" "+min.getZ()+" "+max.getX()+" "+max.getY()+" "+max.getZ());
 			super.create(worldIn, chunkGeneratorIn, randomIn, mutableBoundingBoxIn, chunkPosIn);
 			for(int i=min.getX();i<=max.getX();i++) {
 				for(int j=min.getZ();j<=max.getZ();j++) {
 					int y=min.getY()-1;
-					while(y-->=50) {
+					while(y>=50) {
 						BlockPos tmp = new BlockPos(i,y,j);
 						if(worldIn.getBlockState(tmp).isSolid()) {
 							break;
@@ -144,6 +161,7 @@ public class DaveVillaComponents {
 						else {
 							worldIn.setBlockState(tmp, BASE_BLOCK, 3);
 						}
+						y--;
 					}
 				}
 			}
