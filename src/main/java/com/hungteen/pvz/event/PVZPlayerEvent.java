@@ -8,6 +8,7 @@ import com.hungteen.pvz.capabilities.CapabilityHandler;
 import com.hungteen.pvz.capabilities.player.PlayerDataManager;
 import com.hungteen.pvz.register.ItemRegister;
 import com.hungteen.pvz.utils.PlayerUtil;
+import com.hungteen.pvz.utils.enums.Plants;
 import com.hungteen.pvz.utils.enums.Resources;
 
 import net.minecraft.block.BlockState;
@@ -40,10 +41,10 @@ public class PVZPlayerEvent {
 				for(Resources res:Resources.values()) {
 					playerStats.sendPacket(player, res);
 				}
-//			    PlayerDataManager.PlantStats plantStats = plData.getPlantStats();
-//				for (Plants plant : Plants.values()) {
-//				    PacketHandler.CHANNEL.sendTo(new PacketPlantLvlData(plant,plantStats.getPlantLevel(plant),plantStats.getPlantXp(plant),plantStats.getIsPlantLocked(plant)), (EntityPlayerMP) ev.player);
-//			    }
+			    PlayerDataManager.PlantStats plantStats = plData.getPlantStats();
+				for (Plants plant : Plants.values()) {
+				   plantStats.sendPlantPacket(player, plant);
+			    }
 			});
 		}
 	}

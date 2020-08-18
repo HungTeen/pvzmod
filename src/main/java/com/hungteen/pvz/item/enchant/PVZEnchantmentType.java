@@ -2,8 +2,8 @@ package com.hungteen.pvz.item.enchant;
 
 import java.util.function.Predicate;
 
-import com.hungteen.pvz.item.tool.PlantCardItem;
-import com.hungteen.pvz.item.tool.SummonCardItem;
+import com.hungteen.pvz.item.tool.card.PlantCardItem;
+import com.hungteen.pvz.item.tool.card.SummonCardItem;
 
 import net.minecraft.enchantment.EnchantmentType;
 import net.minecraft.item.Item;

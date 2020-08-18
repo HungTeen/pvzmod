@@ -4,8 +4,11 @@ package com.hungteen.pvz.capabilities.player;
 import java.util.HashMap;
 
 import com.hungteen.pvz.network.PVZPacketHandler;
-import com.hungteen.pvz.network.PacketPlayerStats;
+import com.hungteen.pvz.network.PlantStatsPacket;
+import com.hungteen.pvz.network.PlayerStatsPacket;
+import com.hungteen.pvz.utils.PlantUtil;
 import com.hungteen.pvz.utils.PlayerUtil;
+import com.hungteen.pvz.utils.enums.Plants;
 import com.hungteen.pvz.utils.enums.Resources;
 
 import net.minecraft.entity.player.PlayerEntity;
@@ -18,12 +21,12 @@ public class PlayerDataManager {
 
 	private final PlayerEntity player;
 	private final PlayerStats playerStats;
-//	private final PlantStats plantStats;
+	private final PlantStats plantStats;
 	
 	public PlayerDataManager(PlayerEntity player) {
 		this.player = player;
 		this.playerStats = new PlayerStats(this);
-//		this.plantStats=new PlantStats(this);
+		this.plantStats=new PlantStats(this);
 	}
 	
 //	public void tickPlayer()
@@ -37,13 +40,13 @@ public class PlayerDataManager {
 	public CompoundNBT saveToNBT() {
 		CompoundNBT baseTag = new CompoundNBT();
 		playerStats.saveToNBT(baseTag);
-//		plantStats.saveToNBT(baseTag);
+		plantStats.saveToNBT(baseTag);
 		return baseTag;
 	}
 
 	public void loadFromNBT(CompoundNBT baseTag) {
 		playerStats.loadFromNBT(baseTag);
-//		plantStats.loadFromNBT(baseTag);
+		plantStats.loadFromNBT(baseTag);
 	}
 //	
 	public void cloneFromExistingPlayerData(PlayerDataManager data) {
@@ -51,11 +54,11 @@ public class PlayerDataManager {
 		for(Resources res:Resources.values()) {
 			this.playerStats.resources.put(res,data.playerStats.resources.get(res));
 		}
-//		for (Plants plant : Plants.values()) {
-//			this.plantStats.plantLevel.put(plant, sourcePlayerData.plantStats.plantLevel.get(plant));
-//			this.plantStats.plantXp.put(plant, sourcePlayerData.plantStats.plantXp.get(plant));
+		for (Plants plant : Plants.values()) {
+			this.plantStats.plantLevel.put(plant, data.plantStats.plantLevel.get(plant));
+			this.plantStats.plantXp.put(plant, data.plantStats.plantXp.get(plant));
 //			this.plantStats.isPlantLocked.put(plant,sourcePlayerData.plantStats.getIsPlantLocked(plant));
-//		}
+		}
 	}
 
 	public final class PlayerStats{
@@ -173,7 +176,7 @@ public class PlayerDataManager {
 					PacketDistributor.PLAYER.with(()->{
 						return (ServerPlayerEntity) player;
 					}),
-					new PacketPlayerStats(res.ordinal(),resources.get(res))
+					new PlayerStatsPacket(res.ordinal(),resources.get(res))
 				);
 			}
 		}
@@ -194,123 +197,126 @@ public class PlayerDataManager {
 		}
 	}
 	
-//	public final class PlantStats
-//	{
-//		private final PlayerDataManager playerDataManager;
-//		private HashMap<Plants, Integer> plantXp= new HashMap<Plants, Integer>(Plants.values().length);
-//		private HashMap<Plants, Integer> plantLevel = new HashMap<Plants, Integer>(Plants.values().length);
+	public final class PlantStats
+	{
+		@SuppressWarnings("unused")
+		private final PlayerDataManager playerDataManager;
+		private HashMap<Plants, Integer> plantXp= new HashMap<Plants, Integer>(Plants.values().length);
+		private HashMap<Plants, Integer> plantLevel = new HashMap<Plants, Integer>(Plants.values().length);
 //		private HashMap<Plants, Boolean> isPlantLocked = new HashMap<Plants, Boolean>(Plants.values().length);
-//		
-//		private PlantStats(PlayerDataManager dataManager) {
-//			this.playerDataManager=dataManager;
-//			for (Plants plant : Plants.values()) {
-//				plantXp.put(plant, 0);
-//				plantLevel.put(plant, 1);
+		
+		private PlantStats(PlayerDataManager dataManager) {
+			this.playerDataManager=dataManager;
+			for (Plants plant : Plants.values()) {
+				plantXp.put(plant, 0);
+				plantLevel.put(plant, 1);
 //				isPlantLocked.put(plant, true);
-//			}
-//		}
-//		
-//		//get		
-//		public int getPlantLevel(Plants plant)
-//		{
-//			return this.plantLevel.get(plant);
-//		}
-//		
-//		public int getPlantXp(Plants plant)
-//		{
-//			return this.plantXp.get(plant);
-//		}
-//		
+			}
+		}
+		
+		//get		
+		public int getPlantLevel(Plants plant)
+		{
+			return this.plantLevel.get(plant);
+		}
+		
+		public int getPlantXp(Plants plant)
+		{
+			return this.plantXp.get(plant);
+		}
+		
 //		public boolean getIsPlantLocked(Plants plant)
 //		{
 //			return this.isPlantLocked.get(plant);
 //		}
-//		
-//		//add
-//		public void addPlantLevel(Plants plant,int lvl)
-//		{
-//			int now=this.getPlantLevel(plant)+lvl;
-//			int maxLvl=PlantsUtil.getPlantMaxLvl(plant);
-//			if(now>maxLvl) now=maxLvl;
-//			else if(now<1) now=1;
-//			this.plantLevel.put(plant, now);
-//			this.sendPlantPacket(player, plant);
-//		}
-//		
-//		public void addPlantXp(Plants plant,int num)
-//		{
-//			int lvl=this.getPlantLevel(plant);
-//			int xp=this.getPlantXp(plant)+num;
-//			if(num>0) {
-//				int needXp=PlantsUtil.getPlantLvlUpXp(lvl);
-//				while(xp>=needXp) {
-//					xp-=needXp;
-//					this.addPlantLevel(plant, 1);
-//					lvl=this.getPlantLevel(plant);
-//					needXp=PlantsUtil.getPlantLvlUpXp(lvl);
-//				}
-//			}
-//			else {
-//				while(xp<0) {
-//					if(lvl==1) {
-//						xp=0;
-//						break;
-//					}
-//					this.addPlantLevel(plant, -1);
-//					lvl=this.getPlantLevel(plant);
-//					int needXp=PlantsUtil.getPlantLvlUpXp(lvl);
-//					xp+=needXp;
-//				}
-//			}
-//			this.plantXp.put(plant, xp);
-//			this.sendPlantPacket(player, plant);
-//		}
-//		
+		
+		//add
+		public void addPlantLevel(Plants plant,int lvl){
+			int now=this.getPlantLevel(plant)+lvl;
+			int maxLvl=PlantUtil.getPlantMaxLvl(plant);
+			if(now>maxLvl) now=maxLvl;
+			else if(now<1) now=1;
+			this.plantLevel.put(plant, now);
+			this.sendPlantPacket(player, plant);
+		}
+		
+		public void addPlantXp(Plants plant,int num){
+			int lvl=this.getPlantLevel(plant);
+			int xp=this.getPlantXp(plant)+num;
+			if(num>0) {
+				int needXp=PlantUtil.getPlantLevelUpXp(plant,lvl);
+				int maxLvl=PlantUtil.getPlantMaxLvl(plant);
+				while(lvl<maxLvl&&xp>=needXp) {
+					xp-=needXp;
+					this.addPlantLevel(plant, 1);
+					lvl=this.getPlantLevel(plant);
+					needXp=PlantUtil.getPlantLevelUpXp(plant,lvl);
+				}
+				if(lvl==maxLvl) {
+					xp=0;
+				}
+			}
+			else {
+				while(lvl>1&&xp<0) {
+					this.addPlantLevel(plant, -1);
+					lvl=this.getPlantLevel(plant);
+					int needXp=PlantUtil.getPlantLevelUpXp(plant,lvl);
+					xp+=needXp;
+				}
+				if(lvl==1&&xp<0) xp=0;
+			}
+			this.plantXp.put(plant, xp);
+			this.sendPlantPacket(player, plant);
+		}
+		
 //		public void setIsPlantLocked(Plants plant ,boolean is)
 //		{
 //			this.isPlantLocked.put(plant, is);
 //			this.sendPlantPacket(player, plant);
 //		}
-//		
-//		private void sendPlantPacket(EntityPlayer player,Plants plant)
-//		{
-//			if (player instanceof EntityPlayerMP) 
-//				PacketHandler.CHANNEL.sendTo(new PacketPlantLvlData(plant, this.getPlantLevel(plant), this.getPlantXp(plant),this.getIsPlantLocked(plant)),(EntityPlayerMP) player);
-//		}
-//		
-//		private void saveToNBT(NBTTagCompound baseTag) {
-//			for (Plants plant : Plants.values()) {
-//				NBTTagCompound plantNBT = new NBTTagCompound();
-//
-//				plantNBT.setInteger("PlantLevelxx", this.getPlantLevel(plant));
-//				plantNBT.setInteger("PlantExpxx", this.getPlantXp(plant));
+		
+		public void sendPlantPacket(PlayerEntity player,Plants plant){
+			if (player instanceof ServerPlayerEntity) {
+//				System.out.println(res.toString()+" "+resources.get(res));
+				PVZPacketHandler.CHANNEL.send(
+					PacketDistributor.PLAYER.with(()->{
+						return (ServerPlayerEntity) player;
+					}),
+					new PlantStatsPacket(plant.ordinal(),plantLevel.get(plant),plantXp.get(plant))
+				);
+			}
+		}
+		
+		private void saveToNBT(CompoundNBT baseTag) {
+			for (Plants plant : Plants.values()) {
+				CompoundNBT plantNBT = new CompoundNBT();
+
+				plantNBT.putInt("plant_lvl", this.getPlantLevel(plant));
+				plantNBT.putInt("plant_exp", this.getPlantXp(plant));
 //				plantNBT.setBoolean("PlantLockedxx", this.getIsPlantLocked(plant));
-//
-//				baseTag.setTag(plant.toString(), plantNBT);
-//			}
-//		}
-//
-//		private void loadFromNBT(NBTTagCompound baseTag) {
-//			for (Plants plant : Plants.values()) {
-//				NBTTagCompound plantTag = baseTag.getCompoundTag(plant.toString());
-//
-//				this.plantLevel.put(plant, plantTag.getInteger("PlantLevelxx"));
-//				this.plantXp.put(plant, plantTag.getInteger("PlantExpxx"));
+				
+				baseTag.put(plant.toString(), plantNBT);
+			}
+		}
+
+		private void loadFromNBT(CompoundNBT baseTag) {
+			for (Plants plant : Plants.values()) {
+				CompoundNBT plantTag = (CompoundNBT) baseTag.get(plant.toString());
+				if(plantTag==null) {
+					continue;
+				}
+				this.plantLevel.put(plant, plantTag.getInt("plant_lvl"));
+				this.plantXp.put(plant, plantTag.getInt("plant_exp"));
 //				this.isPlantLocked.put(plant,plantTag.getBoolean("PlantLockedxx"));
-//			}
-//		}
-//	}
-//	
-//	public EntityPlayer getPlayer() {
-//		return this.player;
-//	}
-//	
+			}
+		}
+	}
+	
 	public PlayerStats getPlayerStats() {
 		return this.playerStats;
 	}
 	
-//	public PlantStats getPlantStats()
-//	{
-//		return this.plantStats;
-//	}
+	public PlantStats getPlantStats(){
+		return this.plantStats;
+	}
 }

@@ -20,10 +20,8 @@ public class PVZPacketHandler {
 
 	public static void init() {
 		int id = 0;
-		CHANNEL.registerMessage(id++,PacketPlayerStats.class, PacketPlayerStats::encode,PacketPlayerStats::new,PacketPlayerStats.Handler::onMessage);
-//		CHANNEL.registerMessage(PacketSpawnEntityParticles.Handler.class, PacketSpawnEntityParticles.class, id++, Side.CLIENT);	
-//		CHANNEL.registerMessage(PacketPlayerStats.Handler.class, PacketPlayerStats.class, id++, Side.CLIENT);
-//		CHANNEL.registerMessage(PacketPlantLvlData.Handler.class, PacketPlantLvlData.class, id++, Side.CLIENT);
+		CHANNEL.registerMessage(id++,PlayerStatsPacket.class, PlayerStatsPacket::encode,PlayerStatsPacket::new,PlayerStatsPacket.Handler::onMessage);
+		CHANNEL.registerMessage(id++,PlantStatsPacket.class,PlantStatsPacket::encode,PlantStatsPacket::new,PlantStatsPacket.Handler::onMessage);
 //		CHANNEL.registerMessage(PacketGuiButton.Handler.class, PacketGuiButton.class, id++, Side.SERVER);
 //		CHANNEL.registerMessage(PacketUncraftingGui.Handler.class, PacketUncraftingGui.class, id++, Side.SERVER);
 	}

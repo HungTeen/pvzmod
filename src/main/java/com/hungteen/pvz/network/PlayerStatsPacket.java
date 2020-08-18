@@ -7,18 +7,18 @@ import com.hungteen.pvz.capabilities.player.PVZGuiTabPlayerData;
 import net.minecraft.network.PacketBuffer;
 import net.minecraftforge.fml.network.NetworkEvent;
 
-public class PacketPlayerStats{
+public class PlayerStatsPacket{
 
 	private int type;
 	private int data;
 	
-	public PacketPlayerStats(int x,int y) {
+	public PlayerStatsPacket(int x,int y) {
 		this.type=x;
 		this.data=y;
 //		PVZMod.LOGGER.debug(type+" x "+data);
 	}
 	
-	public PacketPlayerStats(PacketBuffer buffer) {
+	public PlayerStatsPacket(PacketBuffer buffer) {
 		this.type=buffer.readInt();
 		this.data=buffer.readInt();
 	}
@@ -29,7 +29,7 @@ public class PacketPlayerStats{
 	}
 
 	public static class Handler {
-		public static void onMessage(PacketPlayerStats message, Supplier<NetworkEvent.Context> ctx) {
+		public static void onMessage(PlayerStatsPacket message, Supplier<NetworkEvent.Context> ctx) {
 //			PVZMod.LOGGER.debug(message.type+" y "+message.data);
 		    ctx.get().enqueueWork(()->{
 			    PVZGuiTabPlayerData.setPlayerData(message.type,message.data);
