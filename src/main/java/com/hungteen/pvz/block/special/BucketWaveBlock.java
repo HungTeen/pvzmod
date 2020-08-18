@@ -12,7 +12,6 @@ import net.minecraft.util.ActionResultType;
 import net.minecraft.util.Hand;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.BlockRayTraceResult;
-import net.minecraft.util.text.StringTextComponent;
 import net.minecraft.world.IBlockReader;
 import net.minecraft.world.World;
 
@@ -35,11 +34,10 @@ public class BucketWaveBlock extends Block{
 	@Override
 	public ActionResultType onBlockActivated(BlockState state, World worldIn, BlockPos pos, PlayerEntity player,
 			Hand handIn, BlockRayTraceResult hit) {
-		if(!worldIn.isRemote&&player.getHeldItem(handIn).getItem()==ItemRegister.ZOMBIE_FLAG.get()) {
+		if(player.getHeldItem(handIn).getItem()==ItemRegister.ZOMBIE_FLAG.get()) {
 			WaveSpawnerTileEntity te = (WaveSpawnerTileEntity) worldIn.getTileEntity(pos);
-//			te.nextWave();
-//			player.sendMessage(new StringTextComponent(te.getCurrentWave()+""));
-			
+			if(!te.checkCanStart()) return ActionResultType.PASS;
+			te.startChallenge(player);
 			player.getHeldItem(handIn).shrink(1);
 		}
 		return ActionResultType.SUCCESS;

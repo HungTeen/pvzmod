@@ -5,8 +5,10 @@ import com.hungteen.pvz.item.PVZItemBase;
 import com.hungteen.pvz.item.PVZSpawnEggItem;
 import com.hungteen.pvz.item.armor.BucketArmorItem;
 import com.hungteen.pvz.item.armor.ConeArmorItem;
+import com.hungteen.pvz.item.tool.PlantCardItem;
 import com.hungteen.pvz.item.tool.ZombieFlagItem;
 import com.hungteen.pvz.utils.enums.Colors;
+import com.hungteen.pvz.utils.enums.Plants;
 import com.mojang.datafixers.util.Pair;
 
 import net.minecraft.entity.EntityType;
@@ -51,7 +53,8 @@ public class ItemRegister {
     public static final RegistryObject<Item> RED_CARD = ITEMS.register("red_card", PVZItemBase::new);
     
     //plant card
-    
+    public static final RegistryObject<Item> PEA_SHOOTER_CARD = ITEMS.register("pea_shooter_card", ()->{return new PlantCardItem(Plants.PEA_SHOOTER);});
+   
     //plants
 	public static final RegistryObject<Item> PEA = ITEMS.register("pea",()-> new BlockItem(BlockRegister.PEA_PLANT.get(),new Item.Properties().group(GroupRegister.PVZ_GROUP)));
 	public static final RegistryObject<Item> NUT = ITEMS.register("nut", PVZItemBase::new);
@@ -103,4 +106,5 @@ public class ItemRegister {
     {
     	return ITEMS.register(name+"_spawn_egg", () -> new PVZSpawnEggItem(entityType, color.getFirst(), color.getSecond(), new Item.Properties().group(GroupRegister.PVZ_GROUP)));
     }
+    
 }
