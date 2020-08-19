@@ -26,30 +26,73 @@
     "item.pvz.purple_card":"Purple Card",
     "item.pvz.gold_card":"Gold Card",
     "item.pvz.red_card":"Red Card",
-//spawn egg
+//entity & spawn egg & card
 //drop
+    "entity.pvz.sun":"Sun",
     "item.pvz.sun_spawn_egg":"Sun Spawn Egg",
+    "entity.pvz.coin":"Coin",
     "item.pvz.coin_spawn_egg":"Coin Spawn Egg",
+    "entity.pvz.energy":"Energy",
     "item.pvz.energy_spawn_egg":"Energy Spawn Egg",
 //zombie
-    "item.pvz.normal_zombie_spawn_egg":"Normal Zombie Spawn Egg",
-    "item.pvz.flag_zombie_spawn_egg":"Flag Zombie Spawn Egg",
-    "item.pvz.conehead_zombie_spawn_egg":"ConeHead Zombie Spawn Egg",
-    "item.pvz.pole_zombie_spawn_egg":"Pole Zombie Spawn Egg",
+    "entity.pvz.normal_zombie":"NormalZombie",
+    "item.pvz.normal_zombie_spawn_egg":"NormalZombie Spawn Egg", 
+    "entity.pvz.flag_zombie":"FlagZombie",
+    "item.pvz.flag_zombie_spawn_egg":"FlagZombie Spawn Egg",
+    "entity.pvz.conehead_zombie":"ConeHeadZombie",
+    "item.pvz.conehead_zombie_spawn_egg":"ConeHeadZombie Spawn Egg",
+    "entity.pvz.pole_zombie":"PoleZombie",
+    "item.pvz.pole_zombie_spawn_egg":"PoleZombie Spawn Egg",
+    "entity.pvz.buckethead_zombie":"BucketHeadZombie",
+    "item.pvz.buckethead_zombie_spawn_egg":"BucketHead Zombie Spawn Egg",
 //plant
-    "item.pvz.pea_shooter_spawn_egg":"Pea Shooter Spawn Egg",
-    "item.pvz.sun_flower_spawn_egg":"Sun Flower Spawn Egg",
-    "item.pvz.cherry_bomb_spawn_egg":"Cherry Bomb Spawn Egg",
-    "item.pvz.wall_nut_spawn_egg":"Wall Nut Spawn Egg",
-    "item.pvz.potato_mine_spawn_egg":"Potato Mine Spawn Egg",
+//PeaShooter
+    "entity.pvz.pea_shooter":"PeaShooter",
+    "item.pvz.pea_shooter_spawn_egg":"PeaShooter Spawn Egg",
+    "item.pvz.pea_shooter_card":"PeaShooter Card",
+    "item.pvz.pea_shooter_card_fragment":"PeaShooter Card Fragment",
+//SunFlower
+    "entity.pvz.sun_flower":"SunFlower",
+    "item.pvz.sun_flower_spawn_egg":"SunFlower Spawn Egg",
+    "item.pvz.sun_flower_card":"SunFlower Card",
+    "item.pvz.sun_flower_card_fragment":"SunFlower Card Fragment",
+//CherryBomb
+    "entity.pvz.cherry_bomb":"CherryBomb",
+    "item.pvz.cherry_bomb_spawn_egg":"CherryBomb Spawn Egg",
+    "item.pvz.cherry_bomb_card":"CherryBomb Card",
+    "item.pvz.cherry_bomb_card_fragment":"CherryBomb Card Fragment",
+//WallNut
+    "entity.pvz.wall_nut":"WallNut",
+    "item.pvz.wall_nut_spawn_egg":"WallNut Spawn Egg",
+    "item.pvz.wall_nut_card":"WallNut Card",
+    "item.pvz.wall_nut_card_fragment":"WallNut Card Fragment",
+//PotatoMine
+    "entity.pvz.potato_mine":"PotatoMine",
+    "item.pvz.potato_mine_spawn_egg":"PotatoMine Spawn Egg",
+    "item.pvz.potato_mine_card":"PotatoMine Card",
+    "item.pvz.potato_mine_card_fragment":"PotatoMine Card Fragment",
+//SnowPea
+    "entity.pvz.snow_pea":"SnowPea",
+    "item.pvz.snow_pea_spawn_egg":"SnowPea Spawn Egg",
+    "item.pvz.snow_pea_card":"SnowPea Card",
+    "item.pvz.snow_pea_card_fragment":"SnowPea Card Fragment",
+//Repeater
+    "entity.pvz.repeater":"Repeater",
+    "item.pvz.repeater_spawn_egg":"Repeater Spawn Egg",
+    "item.pvz.repeater_card":"Repeater Card",
+    "item.pvz.repeater_card_fragment":"Repeater Card Fragment",
 //misc
     "item.pvz.snow_pea":"Snow Pea",
     "item.pvz.flame_pea":"Flame Pea",
     "item.pvz.blue_flame_pea":"Blue Flame Pea",
-//tool
+//tool & tooltip
     "item.pvz.zombie_flag":"Zombie Flag",
+    "tooltip.pvz.zombie_flag":"Right Click to get a speed effect",
+    "tooltip.pvz.summon_card":"Right Click to Summon Plant or Zombie",
+    "tooltip.pvz.sun_cost":"Sun Cost",
 //armor
     "item.pvz.cone_head":"Cone Head",
+    "item.pvz.bucket_head":"Bucket Head",
 //block
 //ore
     "block.pvz.origin_ore":"Origin Ore",
@@ -74,20 +117,10 @@
     "block.pvz.origin_block":"Origin Block",
 //crop
     "block.pvz.pea_plant":"Pea",
-//entity
-//drop
-    "entity.pvz.sun":"Sun",
-    "entity.pvz.coin":"Coin",
-    "entity.pvz.energy":"Energy",
-//zombie
-    "entity.pvz.normal_zombie":"Normal Zombie",
-    "entity.pvz.flag_zombie":"Flag Zombie",
-    "entity.pvz.conehead_zombie":"ConeHead Zombie",
-    "entity.pvz.pole_zombie":"Pole Zombie",
 //plant
-    "entity.pvz.pea_shooter":"Pea Shooter",
-    "entity.pvz.sun_flower":"Sun Flower",
-    "entity.pvz.cherry_bomb":"Cherry Bomb",
-    "entity.pvz.wall_nut":"Wall Nut",
-    "entity.pvz.potato_mine":"Potato Mine"
+    "block.pvz.nut_sapling":"Nut Sapling",
+    "block.pvz.nut_leaves":"Nut Leaves",
+    "block.pvz.chomper":"Chomper",
+//enchantment
+    "enchantment.pvz.sun_cost_reduce":"Sun Reduce"
 }

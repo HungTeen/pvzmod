@@ -12,6 +12,7 @@ import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.server.management.PreYggdrasilConverter;
 import net.minecraft.tileentity.ITickableTileEntity;
 import net.minecraft.tileentity.TileEntity;
+import net.minecraft.tileentity.TileEntityType;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.text.TextFormatting;
@@ -22,6 +23,11 @@ import net.minecraft.world.server.ServerBossInfo;
 
 public class WaveSpawnerTileEntity extends TileEntity implements ITickableTileEntity{
 
+	public WaveSpawnerTileEntity(TileEntityType<?> tileEntityTypeIn) {
+		super(tileEntityTypeIn);
+		// TODO Auto-generated constructor stub
+	}
+
 	private static final TranslationTextComponent CHANLLENGE = new TranslationTextComponent("event.minecraft.chanllenge");
 	private final ServerBossInfo waveInfo = new ServerBossInfo(CHANLLENGE, BossInfo.Color.RED, BossInfo.Overlay.NOTCHED_10);
 	protected int currentWave;
@@ -31,14 +37,14 @@ public class WaveSpawnerTileEntity extends TileEntity implements ITickableTileEn
 	public int tickTime;
 	protected final int MAX_CHANLLENGE_TIME = 48000;
 	
-	public WaveSpawnerTileEntity() {
-		super(TileEntityRegister.WAVE_SPAWNER.get());
-		this.waveInfo.setPercent(0.0F);
-		this.currentWave=0;
-		this.isStarted=false;
-		attackerUUID=Optional.empty();
-		this.tickTime=0;
-	}
+//	public WaveSpawnerTileEntity() {
+//		super(TileEntityRegister.WAVE_SPAWNER.get());
+//		this.waveInfo.setPercent(0.0F);
+//		this.currentWave=0;
+//		this.isStarted=false;
+//		attackerUUID=Optional.empty();
+//		this.tickTime=0;
+//	}
 	
 //	public void nextWave()
 //	{

@@ -23,7 +23,7 @@ import net.minecraftforge.api.distmarker.OnlyIn;
 
 public class ZombieFlagItem extends Item{
 
-	private static final int sunCost = 15;
+	private static final int sunCost = 25;
 	private static final int effectCD = 600;
 	
 	public ZombieFlagItem() {
@@ -33,7 +33,8 @@ public class ZombieFlagItem extends Item{
 	@Override
 	@OnlyIn(Dist.CLIENT)
 	public void addInformation(ItemStack stack, World worldIn, List<ITextComponent> tooltip, ITooltipFlag flagIn) {
-		tooltip.add(new TranslationTextComponent("tooltip.zombie_flag").applyTextStyle(TextFormatting.YELLOW));
+		tooltip.add(new TranslationTextComponent("tooltip.pvz.zombie_flag").applyTextStyle(TextFormatting.AQUA));
+		tooltip.add(new TranslationTextComponent("tooltip.pvz.sun_cost").appendText(":"+sunCost).applyTextStyle(TextFormatting.YELLOW));
 	}
 	
 	@Override

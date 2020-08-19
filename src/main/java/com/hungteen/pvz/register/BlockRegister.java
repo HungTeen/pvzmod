@@ -8,7 +8,6 @@ import com.hungteen.pvz.block.OriginBlock;
 import com.hungteen.pvz.block.plants.ChomperBlock;
 import com.hungteen.pvz.block.plants.PVZSaplingBlock;
 import com.hungteen.pvz.block.plants.PeaBlock;
-import com.hungteen.pvz.block.special.BucketWaveBlock;
 import com.hungteen.pvz.world.feature.tree.NutTree;
 
 import net.minecraft.block.Block;
@@ -69,7 +68,7 @@ public class BlockRegister {
 	public static final RegistryObject<Block> CHOMPER = BLOCKS.register("chomper", ChomperBlock::new);
 	
 	//tileentity block
-	public static final RegistryObject<Block> BUCKET_WAVE = BLOCKS.register("bucket_wave", BucketWaveBlock::new);
+//	public static final RegistryObject<Block> BUCKET_WAVE = BLOCKS.register("bucket_wave", BucketWaveBlock::new);
 	/**
 	 * 注册itemblock
 	 */
@@ -80,8 +79,8 @@ public class BlockRegister {
 		List<RegistryObject<? extends Block>> blocks = Arrays.asList(
 				ORIGIN_ORE,APPEASE_ORE,LIGHT_ORE,EXPLOSION_ORE,DEFENCE_ORE,ICE_ORE,ENFORCE_ORE,TOXIC_ORE,ASSIST_ORE,MAGIC_ORE,FLAME_ORE,SPEAR_ORE,ARMA_ORE,ELECTRIC_ORE,SHADOW_ORE,AMETHYST_ORE,
 				STEEL_BLOCK,AMETHYST_BLOCK,ORIGIN_BLOCK,
-				NUT_LEAVES,NUT_SAPLING,CHOMPER,
-				BUCKET_WAVE
+				NUT_LEAVES,NUT_SAPLING,CHOMPER
+//				BUCKET_WAVE
 		);
 		for(RegistryObject<? extends Block> block:blocks) {
 			items.register(new BlockItem(block.get(),new Item.Properties().group(GroupRegister.PVZ_GROUP)).setRegistryName(block.get().getRegistryName()));

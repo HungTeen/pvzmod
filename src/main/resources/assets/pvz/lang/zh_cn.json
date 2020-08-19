@@ -26,30 +26,73 @@
     "item.pvz.purple_card":"紫卡模板",
     "item.pvz.gold_card":"金卡模板",
     "item.pvz.red_card":"红卡模板",
-//spawn egg
+//entity & spawn egg & card  
 //drop
+    "entity.pvz.sun":"阳光",
     "item.pvz.sun_spawn_egg":"阳光刷怪蛋",
+    "entity.pvz.coin":"钱币",
     "item.pvz.coin_spawn_egg":"钱币刷怪蛋",
+    "entity.pvz.energy":"能量豆",
     "item.pvz.energy_spawn_egg":"能量豆刷怪蛋",
 //zombie
+    "entity.pvz.normal_zombie":"普通僵尸",
     "item.pvz.normal_zombie_spawn_egg":"普通僵尸刷怪蛋",
+    "entity.pvz.flag_zombie":"旗帜僵尸",
     "item.pvz.flag_zombie_spawn_egg":"旗帜僵尸刷怪蛋",
-    "item.pvz.conehead_zombie_spawn_egg":"路障僵尸刷怪蛋",
+    "entity.pvz.conehead_zombie":"路障僵尸",
+    "item.pvz.conehead_zombie_spawn_egg":"路障僵尸刷怪蛋", 
+    "entity.pvz.pole_zombie":"撑杆僵尸",
     "item.pvz.pole_zombie_spawn_egg":"撑杆僵尸刷怪蛋",
+    "entity.pvz.buckethead_zombie":"铁桶僵尸",
+    "item.pvz.buckethead_zombie_spawn_egg":"铁桶僵尸刷怪蛋",
 //plant
+//PeaShooter
+    "entity.pvz.pea_shooter":"豌豆射手",
     "item.pvz.pea_shooter_spawn_egg":"豌豆射手刷怪蛋",
+    "item.pvz.pea_shooter_card":"豌豆射手卡",
+    "item.pvz.pea_shooter_card_fragment":"豌豆射手卡(碎片)",
+//SunFlower
+    "entity.pvz.sun_flower":"向日葵",
     "item.pvz.sun_flower_spawn_egg":"向日葵刷怪蛋",
+    "item.pvz.sun_flower_card":"向日葵卡",
+    "item.pvz.sun_flower_card_fragment":"向日葵卡(碎片)",
+//CherryBomb
+    "entity.pvz.cherry_bomb":"樱桃炸弹",
     "item.pvz.cherry_bomb_spawn_edd":"樱桃炸弹刷怪蛋",
+    "item.pvz.cherry_bomb_card":"樱桃炸弹卡",
+    "item.pvz.cherry_bomb_card_fragment":"樱桃炸弹卡(碎片)",
+//WallNut
+    "entity.pvz.wall_nut":"坚果墙",
     "item.pvz.wall_nut_spawn_egg":"坚果墙刷怪蛋",
+    "item.pvz.wall_nut_card":"坚果墙卡",
+    "item.pvz.wall_nut_card_fragment":"坚果墙卡(碎片)",
+//PotatoMine
+    "entity.pvz.potato_mine":"土豆雷",
     "item.pvz.potato_mine_spawn_egg":"土豆雷刷怪蛋",
+    "item.pvz.potato_mine_card":"土豆雷卡",
+    "item.pvz.potato_mine_card_fragment":"土豆雷卡(碎片)",
+//SnowPea
+    "entity.pvz.snow_pea":"寒冰射手",
+    "item.pvz.snow_pea_spawn_egg":"寒冰射手刷怪蛋",
+    "item.pvz.snow_pea_card":"寒冰射手卡",
+    "item.pvz.snow_pea_card_fragment":"寒冰射手卡(碎片)",
+//Repeater
+    "entity.pvz.repeater":"双枪射手",
+    "item.pvz.repeater_spawn_egg":"双枪射手刷怪蛋",
+    "item.pvz.repeater_card":"双枪射手卡",
+    "item.pvz.repeater_card_fragment":"双枪射手卡(碎片)",
 //misc
     "item.pvz.snow_pea":"寒冰豌豆",
     "item.pvz.flame_pea":"烈焰豌豆",
     "item.pvz.blue_flame_pea":"蓝焰豌豆",
-//tool
+//tool & tooltip
     "item.pvz.zombie_flag":"僵尸旗帜",
+    "tooltip.pvz.zombie_flag":"右键会获得加速效果",
+    "tooltip.pvz.summon_card":"右键方块召唤植物或僵尸",
+    "tooltip.pvz.sun_cost":"阳光消耗",
 //armor
     "item.pvz.cone_head":"路障头盔",
+    "item.pvz.bucket_head":"铁桶头盔",
 //block
 //ore
     "block.pvz.origin_ore":"原始精华矿",
@@ -74,20 +117,10 @@
     "block.pvz.origin_block":"原始精华块",
 //crop
     "block.pvz.pea_plant":"豌豆",
-//entity
-//drop
-    "entity.pvz.sun":"阳光",
-    "entity.pvz.coin":"钱币",
-    "entity.pvz.energy":"能量豆",
-//zombie
-    "entity.pvz.normal_zombie":"普通僵尸",
-    "entity.pvz.flag_zombie":"旗帜僵尸",
-    "entity.pvz.conehead_zombie":"路障僵尸",
-    "entity.pvz.pole_zombie":"撑杆僵尸",
 //plant
-    "entity.pvz.pea_shooter":"豌豆射手",
-    "entity.pvz.sun_flower":"向日葵",
-    "entity.pvz.cherry_bomb":"樱桃炸弹",
-    "entity.pvz.wall_nut":"坚果墙",
-    "entity.pvz.potato_mine":"土豆雷"
+    "block.pvz.nut_sapling":"坚果树苗",
+    "block.pvz.nut_leaves":"坚果树叶",
+    "block.pvz.chomper":"食人花",
+//enchantment
+    "enchantment.pvz.sun_cost_reduce":"节能"
 }

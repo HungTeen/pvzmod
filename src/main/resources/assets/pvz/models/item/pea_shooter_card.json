@@ -1,3 +1,6 @@
 {
-    "parent": "pvz:item/pea_shooter_card"
+    "parent": "item/generated",
+    "textures": {
+        "layer0": "pvz:item/pea_shooter_card"
+    }
 }

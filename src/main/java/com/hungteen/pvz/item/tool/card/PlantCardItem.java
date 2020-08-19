@@ -70,16 +70,17 @@ public class PlantCardItem extends SummonCardItem{
 			player.getCapability(CapabilityHandler.PLAYER_DATA_CAPABILITY).ifPresent((l)->{
 				PlayerDataManager manager = l.getPlayerData();
 				int num=manager.getPlayerStats().getPlayerStats(Resources.SUN_NUM);
-				int sunCost=PlantUtil.getPlantSunCost(plant);
-				int reduce=this.getSunReduceNum(stack);
-				sunCost=Math.max(sunCost-reduce,0);
 				PVZPlantEntity plantEntity = getPlantEntity(world);
 				if(plantEntity==null) {//no such plant
 					return;
 				}
+				int sunCost=getSunCost(stack);
 				if(num>=sunCost) {//sun is enough
 					l.getPlayerData().getPlayerStats().addPlayerStats(Resources.SUN_NUM, -sunCost);
 					int lvl=manager.getPlantStats().getPlantLevel(plant);
+					if(this.isFragment) {
+						stack.shrink(1);
+					}
 					player.getCooldownTracker().setCooldown(stack.getItem(), PlantUtil.getPlantCoolDownTime(plant, lvl));
 					plantEntity.setPlantLvl(lvl);
 					plantEntity.setOwnerUUID(player.getUniqueID());
@@ -89,9 +90,7 @@ public class PlantCardItem extends SummonCardItem{
 //					}
 					plantEntity.onInitialSpawn(world, world.getDifficultyForLocation(pos), SpawnReason.SPAWN_EGG, null, null);
 					world.addEntity(plantEntity);
-					if(this.isFragment) {
-						stack.shrink(1);
-					}
+					
 				}
 			});
 		}
@@ -104,6 +103,7 @@ public class PlantCardItem extends SummonCardItem{
 		case SUN_FLOWER:return EntityRegister.SUN_FLOWER.get().create(world);
 		case CHERRY_BOMB:return EntityRegister.CHERRY_BOMB.get().create(world);
 		case WALL_NUT:return EntityRegister.WALL_NUT.get().create(world);
+		case POTATO_MINE:return EntityRegister.POTATO_MINE.get().create(world);
 		case SNOW_PEA:return EntityRegister.SNOW_PEA.get().create(world);
 		case REPEATER:return EntityRegister.REPEATER.get().create(world);
 		default:{
@@ -111,5 +111,11 @@ public class PlantCardItem extends SummonCardItem{
 			return null;
 		}
 		}
+	}
+	
+	@Override
+	protected int getSunCost(ItemStack stack) {
+		int cost=PlantUtil.getPlantSunCost(plant);
+		return Math.max(cost-getSunReduceNum(stack), 0);
 	}
 }
