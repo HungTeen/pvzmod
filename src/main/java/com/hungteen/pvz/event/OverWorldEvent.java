@@ -25,6 +25,7 @@ public class OverWorldEvent {
 		case 99:{
 			WorldEventData data = WorldEventData.getOverWorldEventData(world);
 			data.setChanged(false);
+			break;
 		}
 		case 100:{
 			WorldEventData data = WorldEventData.getOverWorldEventData(world);
@@ -34,10 +35,12 @@ public class OverWorldEvent {
 					activateZombieAttackEvents(world);
 				}
 			}
+			break;
 		}
 		case 23899:{
 			WorldEventData data = WorldEventData.getOverWorldEventData(world);
 			data.setChanged(false);
+			break;
 		}
 		case 23900:{
 			WorldEventData data = WorldEventData.getOverWorldEventData(world);
@@ -45,6 +48,7 @@ public class OverWorldEvent {
 				data.setChanged(true);
 				deactivateZombieAttackEvents(world);
 			}
+			break;
 		}
 		}
 	}
@@ -59,10 +63,8 @@ public class OverWorldEvent {
 	
 	public static void activateEvent(World world, @Nonnull Events event) {
 		WorldEventData data = WorldEventData.getOverWorldEventData(world);
-//		System.out.println("i am here");
 		if(!data.hasEvent(event)) {
 			data.addEvent(event);
-//			System.out.println("add ");
 			EntitySpawnHandler.addEventSpawns(event);
 		}
 	}

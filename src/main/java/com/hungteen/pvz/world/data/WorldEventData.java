@@ -26,13 +26,16 @@ public class WorldEventData extends WorldSavedData{
 		super(DATA_NAME);
 	}
 	
+	public WorldEventData(String name) {
+		super(name);
+	}
+	
 	public boolean hasEvent(Events ev) {
 		return events.contains(ev);
 	}
 	
 	public void addEvent(Events ev) {
 		events.add(ev);
-//		System.out.println(events.contains(ev));
 		this.markDirty();
 	}
 	
@@ -46,17 +49,9 @@ public class WorldEventData extends WorldSavedData{
 		this.markDirty();
 	}
 	
-	public boolean getChanged() {
-		return this.changed;
-	}
-	
 	public void setIsZomBossDefeated(boolean is) {
 		this.isZomBossDefeated=is;
 		this.markDirty();
-	}
-	
-	public boolean getIsZomBossDefeated() {
-		return this.isZomBossDefeated;
 	}
 	
 	public void setMustStartNextDay(boolean is) {
@@ -64,13 +59,21 @@ public class WorldEventData extends WorldSavedData{
 		this.markDirty();
 	}
 	
-	public boolean getMustStartNextDay() {
-		return this.mustStartNextDay;
-	}
-	
 	public void setMustNotStartNextDay(boolean is) {
 		this.mustNotStartNextDay=is;
 		this.markDirty();
+	}
+	
+	public boolean getChanged() {
+		return this.changed;
+	}
+	
+	public boolean getIsZomBossDefeated() {
+		return this.isZomBossDefeated;
+	}
+	
+	public boolean getMustStartNextDay() {
+		return this.mustStartNextDay;
 	}
 	
 	public boolean getMustNotStartNextDay() {
@@ -80,7 +83,6 @@ public class WorldEventData extends WorldSavedData{
 	@Override
 	public void read(CompoundNBT nbt) {
 		events.clear();
-		System.out.println("1");
 		ListNBT list = (ListNBT) nbt.get("event");
 		if(list!=null) {
 			for(INBT tmp:list) {
@@ -97,9 +99,9 @@ public class WorldEventData extends WorldSavedData{
 	@Override
 	public CompoundNBT write(CompoundNBT nbt) {
 		ListNBT list = new ListNBT();
-//		System.out.println("1");
 		events.stream().forEach((event)->{
 			CompoundNBT tag = new CompoundNBT();
+			System.out.println(event);
 			tag.putInt("id", event.ordinal());;
 			list.add(tag);
 		});
@@ -113,14 +115,10 @@ public class WorldEventData extends WorldSavedData{
 	
 	public static WorldEventData getOverWorldEventData(World worldIn) {
 		if (!(worldIn instanceof ServerWorld)) {
-//			System.out.println("pp");
             throw new RuntimeException("Attempted to get the data from a client world. This is wrong.");
         }
 		ServerWorld world = worldIn.getServer().getWorld(DimensionType.OVERWORLD);
 		DimensionSavedDataManager storage = world.getSavedData();
-//		if(storage.get(WorldEventData::new,DATA_NAME)==null) {
-//			System.out.println("null");
-//		}
 		return storage.getOrCreate(WorldEventData::new,DATA_NAME);
 	}
 

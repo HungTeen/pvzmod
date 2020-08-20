@@ -8,10 +8,8 @@ import com.hungteen.pvz.capabilities.CapabilityHandler;
 import com.hungteen.pvz.capabilities.player.PlayerDataManager;
 import com.hungteen.pvz.register.ItemRegister;
 import com.hungteen.pvz.utils.PlayerUtil;
-import com.hungteen.pvz.utils.enums.Events;
 import com.hungteen.pvz.utils.enums.Plants;
 import com.hungteen.pvz.utils.enums.Resources;
-import com.hungteen.pvz.world.data.WorldEventData;
 
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
@@ -20,9 +18,7 @@ import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.math.BlockPos;
-import net.minecraft.world.server.ServerWorld;
 import net.minecraftforge.event.entity.player.PlayerEvent;
-import net.minecraftforge.event.entity.player.PlayerInteractEvent.RightClickItem;
 import net.minecraftforge.event.world.BlockEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
@@ -78,15 +74,16 @@ public class PVZPlayerEvent {
 		}
 	}
 	
-	@SuppressWarnings("resource")
-	@SubscribeEvent
-	public static void onPlayerRightClick(RightClickItem ev){
-//	    System.out.println(ev.getWorld().getDayTime());
-		if(!ev.getWorld().isRemote) {
-		    WorldEventData data = WorldEventData.getOverWorldEventData(ev.getWorld());
-		    for(Events event:Events.values()) {
-			    System.out.println(data.hasEvent(event));
-		    }
-		}
-	}
+//	@SubscribeEvent
+//	public static void onPlayerRightClick(RightClickItem ev){
+////	    System.out.println(ev.getWorld().getDayTime());
+//		World world = ev.getWorld();
+//		if(!world.isRemote) {
+//		    WorldEventData data = WorldEventData.getOverWorldEventData(world);
+//		    for(Events event:Events.values()) {
+//			    System.out.println(data.hasEvent(event));
+//			    System.out.println(world.getDimension().getDimension().getType());
+//		    }
+//		}
+//	}
 }
