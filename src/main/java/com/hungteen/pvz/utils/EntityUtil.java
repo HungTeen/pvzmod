@@ -6,9 +6,11 @@ import java.util.List;
 import com.hungteen.pvz.PVZConfig;
 import com.hungteen.pvz.entity.plant.PVZPlantEntity;
 import com.hungteen.pvz.entity.zombie.PVZZombieEntity;
+import com.hungteen.pvz.register.EffectRegister;
 
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.LivingEntity;
+import net.minecraft.entity.SharedMonsterAttributes;
 import net.minecraft.entity.monster.MonsterEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.scoreboard.Team;
@@ -121,8 +123,15 @@ public class EntityUtil {
 		return list;
 	}
 	
-	public static AxisAlignedBB getEntityAABB(Entity entity,double w,double h)
-	{
+	public static boolean isEntityCold(LivingEntity entity) {
+		return entity.getAttribute(SharedMonsterAttributes.MOVEMENT_SPEED).getModifier(EffectRegister.COLD_EFFECT_UUID)!=null;
+	}
+	
+	public static boolean isEntityFrozen(LivingEntity entity) {
+		return entity.getAttribute(SharedMonsterAttributes.MOVEMENT_SPEED).getModifier(EffectRegister.FROZEN_EFFECT_UUID)!=null;
+	}
+	
+	public static AxisAlignedBB getEntityAABB(Entity entity,double w,double h){
 		return new AxisAlignedBB(entity.getPosX()-w, entity.getPosY()-h, entity.getPosZ()-w, entity.getPosX()+w, entity.getPosY()+h, entity.getPosZ()+w);
 	}
 }

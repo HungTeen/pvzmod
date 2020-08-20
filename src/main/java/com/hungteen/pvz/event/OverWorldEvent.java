@@ -1,5 +1,16 @@
 package com.hungteen.pvz.event;
 
+import javax.annotation.Nonnull;
+
+import com.hungteen.pvz.PVZConfig;
+import com.hungteen.pvz.entity.EntitySpawnHandler;
+import com.hungteen.pvz.utils.enums.Events;
+import com.hungteen.pvz.world.data.WorldEventData;
+
+import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.util.text.TextFormatting;
+import net.minecraft.util.text.TranslationTextComponent;
+import net.minecraft.world.Difficulty;
 import net.minecraft.world.World;
 import net.minecraftforge.event.TickEvent;
 
@@ -11,12 +22,66 @@ public class OverWorldEvent {
 		long totalTime = world.getDayTime();
 		int time=(int) (totalTime%24000);
 		switch(time) {
-		case 1000:{
-			
+		case 99:{
+			WorldEventData data = WorldEventData.getOverWorldEventData(world);
+			data.setChanged(false);
+		}
+		case 100:{
+			WorldEventData data = WorldEventData.getOverWorldEventData(world);
+			if(!data.getChanged()) {
+				data.setChanged(true);
+				if(world.getDifficulty()!=Difficulty.PEACEFUL&&(data.getIsZomBossDefeated()||world.rand.nextInt(100)<getZombieAttackChance())) {//attack chance
+					activateZombieAttackEvents(world);
+				}
+			}
+		}
+		case 23899:{
+			WorldEventData data = WorldEventData.getOverWorldEventData(world);
+			data.setChanged(false);
 		}
 		case 23900:{
-			
+			WorldEventData data = WorldEventData.getOverWorldEventData(world);
+			if(!data.getChanged()) {
+				data.setChanged(true);
+				deactivateZombieAttackEvents(world);
+			}
 		}
 		}
+	}
+	
+	public static void activateZombieAttackEvents(World world) {
+		for (PlayerEntity pl : world.getPlayers()) {
+			pl.sendMessage(new TranslationTextComponent("event.pvz.zombie_attack").applyTextStyle(TextFormatting.DARK_RED));
+//			world.playSound(null, pl.getPosition(), soundIn, category, 1f, 1f);
+		}
+		activateEvent(world, Events.BUCKET);
+	}
+	
+	public static void activateEvent(World world, @Nonnull Events event) {
+		WorldEventData data = WorldEventData.getOverWorldEventData(world);
+//		System.out.println("i am here");
+		if(!data.hasEvent(event)) {
+			data.addEvent(event);
+//			System.out.println("add ");
+			EntitySpawnHandler.addEventSpawns(event);
+		}
+	}
+	
+	public static void deactivateZombieAttackEvents(World world) {
+		for(Events ev:Events.values()) {
+			deactivateEvent(world, ev);
+		}
+	}
+	
+	public static void deactivateEvent(World world,@Nonnull Events event) {
+		WorldEventData data = WorldEventData.getOverWorldEventData(world);
+		if(data.hasEvent(event)) {
+			data.removeEvent(event);
+			EntitySpawnHandler.removeEventSpawns(event);
+		}
+	}
+	
+	public static int getZombieAttackChance() {
+		return PVZConfig.COMMON_CONFIG.WORLD_SETTINGS.overWorldSettings.ZombieWaveChance.get();
 	}
 }

@@ -15,12 +15,12 @@ import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 
 @OnlyIn(Dist.CLIENT)
-public abstract class PVZFullSkinLayer<T extends LivingEntity> extends LayerRenderer<T, EntityModel<T>> {
+public abstract class PVZFullSkinLayer<T extends LivingEntity, M extends EntityModel<T>> extends LayerRenderer<T, M> {
 
-	protected IEntityRenderer<T, EntityModel<T>> entityRender;
+	protected IEntityRenderer<T, M> entityRender;
 	protected EntityModel<T> entityModel;
 	
-	public PVZFullSkinLayer(IEntityRenderer<T, EntityModel<T>> entityRendererIn) {
+	public PVZFullSkinLayer(IEntityRenderer<T, M> entityRendererIn) {
 		super(entityRendererIn);
 		this.entityRender=entityRendererIn;
 		this.entityModel=this.entityRender.getEntityModel();

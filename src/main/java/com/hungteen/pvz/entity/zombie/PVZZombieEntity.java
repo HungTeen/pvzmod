@@ -400,6 +400,12 @@ public abstract class PVZZombieEntity extends MonsterEntity implements IPVZZombi
             }
         }
 	}
+	
+	@Override
+	public boolean canSpawn(IWorld worldIn, SpawnReason spawnReasonIn) {
+		// TODO Auto-generated method stub
+		return super.canSpawn(worldIn, spawnReasonIn);
+	}
 
 	@Override
 	public void writeAdditional(CompoundNBT compound) {

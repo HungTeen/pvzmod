@@ -1,6 +1,6 @@
 package com.hungteen.pvz.render.layer;
 
-import com.hungteen.pvz.entity.zombie.PVZZombieEntity;
+import com.hungteen.pvz.utils.EntityUtil;
 import com.hungteen.pvz.utils.StringUtil;
 
 import net.minecraft.client.renderer.entity.IEntityRenderer;
@@ -11,25 +11,22 @@ import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 
 @OnlyIn(Dist.CLIENT)
-public class ColdLayer<T extends LivingEntity> extends PVZFullSkinLayer<T>{
+public class ColdLayer<T extends LivingEntity, M extends EntityModel<T>> extends PVZFullSkinLayer<T,M>{
 
 
-	public ColdLayer(IEntityRenderer<T, EntityModel<T>> entityRendererIn) {
+	public ColdLayer(IEntityRenderer<T, M> entityRendererIn) {
 		super(entityRendererIn);
 	}
 
 	@Override
-	protected boolean canRender(LivingEntity entity) {
-		if(entity instanceof PVZZombieEntity) {
-			PVZZombieEntity zombie = (PVZZombieEntity) entity;
-			if(zombie.getIsFrozen()||zombie.getIsInivs()) return false;//frozen or invis not render
-			if(zombie.getIsCold()) return true;
-		}
-		return false;
+	protected boolean canRender(T entity) {
+		if(entity.isInvisible()) return false;
+		if(EntityUtil.isEntityFrozen(entity)) return false;
+		return EntityUtil.isEntityCold(entity);
 	}
 
 	@Override
-	protected ResourceLocation getResourceLocation(LivingEntity entity) {
+	protected ResourceLocation getResourceLocation(T entity) {
 		return StringUtil.prefix("textures/entity/layer/cold_layer.png");
 	}
 

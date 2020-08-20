@@ -85,33 +85,35 @@ public class PVZConfig {
 							.comment("maybe about the chance to gen dave villa. the bigger the more chance it has.")
 							.worldRestart()
 							.defineInRange("DaveVillaDistance", 8, 1, 100);
+					
+					WORLD_SETTINGS.overWorldSettings.ZombieWaveChance = builder
+							.translation(CONFIG_TRANSLATE+"zombie_attack_chance")
+							.comment("The chance related to zombie wave event. the bigger the more chance it has.(chance/100)")
+							.worldRestart()
+							.defineInRange("ZombieAttackChance", 20, 0, 100);
 				}
 			}
 		}
 		
 		public BlockSettings BLOCK_SETTINGS = new BlockSettings();
 		
-		public static class BlockSettings
-		{
+		public static class BlockSettings{
 			public ForgeConfigSpec.IntValue originBlockEffectChance;
 			public ForgeConfigSpec.IntValue chomperGrowChance;
 			public BreakBlock breakBlock = new BreakBlock();
-			public static class BreakBlock
-			{
+			public static class BreakBlock{
 				public ForgeConfigSpec.IntValue peaDropChance;
 			}
 		}
 		
 		public EntitySettings ENTITY_SETTINGS = new EntitySettings();
 		
-		public static class EntitySettings
-		{
+		public static class EntitySettings{
 			public ForgeConfigSpec.BooleanValue canPlantAttackOtherTeam;
 			public ForgeConfigSpec.IntValue zombieSuperChance;
 			
 			public EntityLiveTick entityLiveTick = new EntityLiveTick();
-			public static class EntityLiveTick
-			{
+			public static class EntityLiveTick{
 				public ForgeConfigSpec.IntValue sunLiveTick;
 				public ForgeConfigSpec.IntValue coinLiveTick;
 				public ForgeConfigSpec.IntValue energyLiveTick;
@@ -122,12 +124,11 @@ public class PVZConfig {
 		
 		public WorldSettings WORLD_SETTINGS = new WorldSettings();
 		
-		public static class WorldSettings
-		{
+		public static class WorldSettings{
 			public OverWorldSettings overWorldSettings = new OverWorldSettings();
-			public static class OverWorldSettings
-			{
+			public static class OverWorldSettings{
 				public ForgeConfigSpec.IntValue DaveVillaGenChance;
+				public ForgeConfigSpec.IntValue ZombieWaveChance;
 			}
 		}
 	}

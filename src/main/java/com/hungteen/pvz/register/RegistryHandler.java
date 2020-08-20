@@ -2,6 +2,7 @@ package com.hungteen.pvz.register;
 
 import com.hungteen.pvz.PVZMod;
 import com.hungteen.pvz.capabilities.CapabilityHandler;
+import com.hungteen.pvz.entity.EntitySpawnHandler;
 import com.hungteen.pvz.item.PVZSpawnEggItem;
 import com.hungteen.pvz.item.armor.BucketArmorItem;
 import com.hungteen.pvz.item.armor.ConeArmorItem;
@@ -20,8 +21,7 @@ import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 @EventBusSubscriber(modid = PVZMod.MOD_ID, bus = EventBusSubscriber.Bus.MOD)
 public class RegistryHandler {
 
-	public static void init()
-	{
+	public static void init(){
 		IEventBus bus = FMLJavaModLoadingContext.get().getModEventBus();
 		ItemRegister.ITEMS.register(bus);
 		BlockRegister.BLOCKS.register(bus);
@@ -36,13 +36,13 @@ public class RegistryHandler {
 	}
 	
 	@SubscribeEvent
-    public static void setup(FMLCommonSetupEvent ev)
-    {
+    public static void setup(FMLCommonSetupEvent ev){
     	CapabilityHandler.registerCapabilities();
     	PVZPacketHandler.init();
     	BiomeRegister.addBiomes();
     	BiomeRegister.addBiomeFeatures();
     	StructureRegister.registerStructureType();
+    	EntitySpawnHandler.registerEntitySpawn();
     }
 	
 	@SubscribeEvent
