@@ -16,7 +16,7 @@ public class ZombieMeleeAttackGoal extends MeleeAttackGoal {
 	@Override
 	public void tick() {
 		if (this.attacker instanceof PVZZombieEntity) {
-			if (((PVZZombieEntity) this.attacker).getIsButter() || ((PVZZombieEntity) this.attacker).getIsFrozen()) {
+			if (((PVZZombieEntity) this.attacker).isZombieCantMove()) {
 				return;
 			}
 		}

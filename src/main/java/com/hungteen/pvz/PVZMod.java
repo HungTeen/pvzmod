@@ -4,7 +4,7 @@ import org.apache.commons.lang3.tuple.Pair;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-import com.hungteen.pvz.entity.EntitySpawnHandler;
+import com.hungteen.pvz.register.EntitySpawnRegister;
 import com.hungteen.pvz.register.RegistryHandler;
 import net.minecraft.world.dimension.DimensionType;
 import net.minecraft.world.server.ServerWorld;
@@ -46,7 +46,7 @@ public class PVZMod
     @SubscribeEvent
     public static void serverInit(FMLServerStartingEvent ev) {
     	ServerWorld world = ev.getServer().getWorld(DimensionType.OVERWORLD);
-    	EntitySpawnHandler.updateEventSpawns(world);
+    	EntitySpawnRegister.updateEventSpawns(world);
     }
     
     @SubscribeEvent

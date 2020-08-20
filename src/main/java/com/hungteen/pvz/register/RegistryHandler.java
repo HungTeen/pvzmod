@@ -2,7 +2,6 @@ package com.hungteen.pvz.register;
 
 import com.hungteen.pvz.PVZMod;
 import com.hungteen.pvz.capabilities.CapabilityHandler;
-import com.hungteen.pvz.entity.EntitySpawnHandler;
 import com.hungteen.pvz.item.PVZSpawnEggItem;
 import com.hungteen.pvz.item.armor.BucketArmorItem;
 import com.hungteen.pvz.item.armor.ConeArmorItem;
@@ -42,7 +41,7 @@ public class RegistryHandler {
     	BiomeRegister.addBiomes();
     	BiomeRegister.addBiomeFeatures();
     	StructureRegister.registerStructureType();
-    	EntitySpawnHandler.registerEntitySpawn();
+    	EntitySpawnRegister.registerEntitySpawn();
     }
 	
 	@SubscribeEvent

@@ -2,6 +2,7 @@ package com.hungteen.pvz.render.entity.zombie;
 
 import com.hungteen.pvz.entity.zombie.PVZZombieEntity;
 import com.hungteen.pvz.render.layer.ColdLayer;
+import com.hungteen.pvz.render.layer.EnergyLayer;
 import com.mojang.blaze3d.matrix.MatrixStack;
 
 import net.minecraft.client.renderer.entity.EntityRendererManager;
@@ -24,10 +25,9 @@ public abstract class PVZZombieRender<T extends PVZZombieEntity> extends MobRend
 		matrixStackIn.scale(sz,sz,sz);
 	}
 	
-	@SuppressWarnings({ "rawtypes", "unchecked" })
-	protected void addZombieLayers()
-	{
-		this.addLayer(new ColdLayer(this));
+	protected void addZombieLayers(){
+		this.addLayer(new ColdLayer<>(this));
+		this.addLayer(new EnergyLayer<>(this));
 	}
 	
 	protected abstract float getScaleByEntity(T entity);

@@ -3,6 +3,7 @@ package com.hungteen.pvz.render.entity.zombie.grassday;
 import com.hungteen.pvz.entity.zombie.grassday.BucketHeadZombieEntity;
 import com.hungteen.pvz.model.entity.zombie.grassday.BucketHeadZombieModel;
 import com.hungteen.pvz.render.entity.zombie.PVZZombieRender;
+import com.hungteen.pvz.render.layer.ZombieBeardLayer;
 import com.hungteen.pvz.utils.StringUtil;
 
 import net.minecraft.client.renderer.entity.EntityRendererManager;
@@ -17,6 +18,12 @@ public class BucketHeadZombieRender extends PVZZombieRender<BucketHeadZombieEnti
 		super(rendererManager, new BucketHeadZombieModel() ,0.5f);
 	}
 
+	@Override
+	protected void addZombieLayers() {
+		super.addZombieLayers();
+		this.addLayer(new ZombieBeardLayer<>(this));
+	}
+	
 	@Override
 	protected float getScaleByEntity(BucketHeadZombieEntity entity) {
 		return 0.5f;

@@ -16,7 +16,7 @@ import net.minecraft.world.World;
 
 public class PeaShooterEntity extends PlantShooterEntity{
 
-	protected final double LENTH=0.5d;//豌豆生成位置参数
+	protected final double LENTH=0.1d;//豌豆生成位置参数
 	
 	public PeaShooterEntity(EntityType<? extends CreatureEntity> type, World worldIn) {
 		super(type, worldIn);

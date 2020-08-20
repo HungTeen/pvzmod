@@ -3,7 +3,7 @@ package com.hungteen.pvz.event;
 import javax.annotation.Nonnull;
 
 import com.hungteen.pvz.PVZConfig;
-import com.hungteen.pvz.entity.EntitySpawnHandler;
+import com.hungteen.pvz.register.EntitySpawnRegister;
 import com.hungteen.pvz.utils.enums.Events;
 import com.hungteen.pvz.world.data.WorldEventData;
 
@@ -65,7 +65,7 @@ public class OverWorldEvent {
 		WorldEventData data = WorldEventData.getOverWorldEventData(world);
 		if(!data.hasEvent(event)) {
 			data.addEvent(event);
-			EntitySpawnHandler.addEventSpawns(event);
+			EntitySpawnRegister.addEventSpawns(event);
 		}
 	}
 	
@@ -79,7 +79,7 @@ public class OverWorldEvent {
 		WorldEventData data = WorldEventData.getOverWorldEventData(world);
 		if(data.hasEvent(event)) {
 			data.removeEvent(event);
-			EntitySpawnHandler.removeEventSpawns(event);
+			EntitySpawnRegister.removeEventSpawns(event);
 		}
 	}
 	
