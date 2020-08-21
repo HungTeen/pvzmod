@@ -37,7 +37,8 @@ public class ZombieMeleeAttackGoal extends MeleeAttackGoal {
 
 	@Override
 	protected double getAttackReachSqr(LivingEntity attackTarget) {
-		double dis = (this.attacker.getWidth() / 2 + attackTarget.getWidth() / 2 + 0.5f);
+		double two = Math.sqrt(2);
+		double dis = (this.attacker.getWidth() / two + attackTarget.getWidth() / two + 0.1f);
 		return dis * dis;
 	}
 }

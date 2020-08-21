@@ -46,10 +46,10 @@ public class ProducerGenGoal extends Goal{
 			return ;
         }
 		this.plant.setAttackTime(this.plant.getAttackTime()+1);
-		if(this.plant.getAttackTime()+5>=this.plant.genCD) {
+		if(this.plant.getAttackTime()+10>=this.plant.genCD) {
 		    this.plant.setIsGenTime(true);
 	    }
-	    else{
+	    else if(!this.plant.isPlantInSuperMode()){
 		    this.plant.setIsGenTime(false);
 	    }
 		if(this.plant.getAttackTime()>=this.plant.genCD) {

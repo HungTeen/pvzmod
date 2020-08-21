@@ -43,7 +43,7 @@ public abstract class PlantProducerEntity extends PVZPlantEntity implements IPro
 
 	@Override
 	public int getSuperTimeLength() {
-		return 10;
+		return 20;
 	}
 
 	@Override

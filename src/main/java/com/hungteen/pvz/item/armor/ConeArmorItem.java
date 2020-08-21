@@ -24,7 +24,7 @@ public class ConeArmorItem extends ArmorItem{
 	private static final Map<EquipmentSlotType,BipedModel> modelMap = new EnumMap<>(EquipmentSlotType.class);
 	
 	public ConeArmorItem(IArmorMaterial materialIn, EquipmentSlotType slot) {
-		super(materialIn, slot, new Item.Properties().group(GroupRegister.PVZ_GROUP));
+		super(materialIn, slot, new Item.Properties().group(GroupRegister.PVZ_MISC));
 	}
 
 	@Override

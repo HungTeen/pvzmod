@@ -4,12 +4,15 @@ import com.hungteen.pvz.PVZMod;
 import com.hungteen.pvz.capabilities.CapabilityHandler;
 import com.hungteen.pvz.capabilities.player.PlayerDataManager;
 import com.hungteen.pvz.entity.plant.PVZPlantEntity;
+import com.hungteen.pvz.register.EnchantmentRegister;
 import com.hungteen.pvz.register.EntityRegister;
 import com.hungteen.pvz.utils.PlantUtil;
 import com.hungteen.pvz.utils.enums.Plants;
+import com.hungteen.pvz.utils.enums.Ranks;
 import com.hungteen.pvz.utils.enums.Resources;
 
 import net.minecraft.enchantment.Enchantment;
+import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.entity.SpawnReason;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
@@ -29,8 +32,14 @@ public class PlantCardItem extends SummonCardItem{
 	}
 	
 	@Override
+	public int getItemEnchantability() {
+		Ranks rank = PlantUtil.getPlantRankByName(plant);
+		return 18-rank.ordinal();
+	}
+	
+	@Override
 	public boolean canApplyAtEnchantingTable(ItemStack stack, Enchantment enchantment) {
-		if(this.isFragment) return false;
+		if(this.isEnjoyCard) return false;
 		return super.canApplyAtEnchantingTable(stack, enchantment);
 	}
 	
@@ -70,16 +79,19 @@ public class PlantCardItem extends SummonCardItem{
 			player.getCapability(CapabilityHandler.PLAYER_DATA_CAPABILITY).ifPresent((l)->{
 				PlayerDataManager manager = l.getPlayerData();
 				int num=manager.getPlayerStats().getPlayerStats(Resources.SUN_NUM);
-				PVZPlantEntity plantEntity = getPlantEntity(world);
-				if(plantEntity==null) {//no such plant
-					return;
-				}
 				int sunCost=getSunCost(stack);
 				if(num>=sunCost) {//sun is enough
+					PVZPlantEntity plantEntity = getPlantEntity(world);
+				    if(plantEntity==null) {//no such plant
+					    return;
+				    }
 					l.getPlayerData().getPlayerStats().addPlayerStats(Resources.SUN_NUM, -sunCost);
 					int lvl=manager.getPlantStats().getPlantLevel(plant);
-					if(this.isFragment) {
+					if(this.isEnjoyCard) {
+						lvl=1;
 						stack.shrink(1);
+					}else {
+						
 					}
 					player.getCooldownTracker().setCooldown(stack.getItem(), PlantUtil.getPlantCoolDownTime(plant, lvl));
 					plantEntity.setPlantLvl(lvl);
@@ -90,7 +102,11 @@ public class PlantCardItem extends SummonCardItem{
 //					}
 					plantEntity.onInitialSpawn(world, world.getDifficultyForLocation(pos), SpawnReason.SPAWN_EGG, null, null);
 					world.addEntity(plantEntity);
-					
+					if(this.canPlantBreakOut(stack)) {
+						if(plantEntity.canStartSuperMode()) {
+							plantEntity.startSuperMode();
+						}
+					}
 				}
 			});
 		}
@@ -113,9 +129,17 @@ public class PlantCardItem extends SummonCardItem{
 		}
 	}
 	
+	protected boolean canPlantBreakOut(ItemStack stack) {
+		int lvl=EnchantmentHelper.getEnchantmentLevel(EnchantmentRegister.BREAK_OUT.get(), stack);
+		int num=lvl*3+7;
+		if(lvl==4) num++;
+		return random.nextInt(100)<num;
+	}
+	
 	@Override
 	protected int getSunCost(ItemStack stack) {
 		int cost=PlantUtil.getPlantSunCost(plant);
 		return Math.max(cost-getSunReduceNum(stack), 0);
 	}
+	
 }

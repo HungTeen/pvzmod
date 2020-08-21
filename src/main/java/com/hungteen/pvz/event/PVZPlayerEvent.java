@@ -6,8 +6,9 @@ import com.hungteen.pvz.PVZConfig;
 import com.hungteen.pvz.PVZMod;
 import com.hungteen.pvz.capabilities.CapabilityHandler;
 import com.hungteen.pvz.capabilities.player.PlayerDataManager;
-import com.hungteen.pvz.entity.zombie.PVZZombieEntity;
-import com.hungteen.pvz.entity.zombie.grassday.NormalZombieEntity;
+import com.hungteen.pvz.capabilities.player.PlayerDataManager.PlayerStats;
+import com.hungteen.pvz.entity.plant.PVZPlantEntity;
+import com.hungteen.pvz.register.EnchantmentRegister;
 import com.hungteen.pvz.register.ItemRegister;
 import com.hungteen.pvz.utils.PlayerUtil;
 import com.hungteen.pvz.utils.enums.Plants;
@@ -15,12 +16,13 @@ import com.hungteen.pvz.utils.enums.Resources;
 
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
+import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.entity.Entity;
-import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.item.ItemEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.item.ItemStack;
+import net.minecraft.item.SwordItem;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraftforge.event.entity.player.PlayerEvent;
@@ -81,13 +83,27 @@ public class PVZPlayerEvent {
 	}
 	
 	@SubscribeEvent
-	public static void onTest(PlayerInteractEvent.EntityInteractSpecific ev){
+	public static void onPlayerInteract(PlayerInteractEvent.EntityInteractSpecific ev){
 		World world = ev.getWorld();
+		PlayerEntity player = ev.getPlayer();
 		if(!world.isRemote) {
 			Entity entity = ev.getTarget();
-			System.out.println("has");
-			if(entity instanceof NormalZombieEntity) {
-				((PVZZombieEntity) entity).setZombieType(PVZZombieEntity.Type.values()[world.rand.nextInt(3)]);
+			if(entity instanceof PVZPlantEntity) {
+				PVZPlantEntity plant = (PVZPlantEntity) entity;
+				ItemStack stack = player.getHeldItemMainhand();
+				if(stack.getItem() instanceof SwordItem) {
+					if(EnchantmentHelper.getEnchantmentLevel(EnchantmentRegister.ENERGY_TRANSFER.get(), stack)>0) {
+						if(plant.canStartSuperMode()){
+							player.getCapability(CapabilityHandler.PLAYER_DATA_CAPABILITY).ifPresent((l)->{
+								PlayerStats stats = l.getPlayerData().getPlayerStats();
+								if(stats.getPlayerStats(Resources.ENERGY_NUM)>=1) {
+									stats.addPlayerStats(Resources.ENERGY_NUM, -1);
+								    plant.startSuperMode();
+								}
+							});
+						}
+					}
+				}
 			}
 		}
 	}

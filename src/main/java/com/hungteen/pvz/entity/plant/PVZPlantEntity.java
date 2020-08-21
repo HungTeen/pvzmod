@@ -102,16 +102,14 @@ public abstract class PVZPlantEntity extends CreatureEntity implements IPVZPlant
 	/**
 	 * tick for garden plant
 	 */
-	protected void gardenPlantTick()
-	{
+	protected void gardenPlantTick(){
 		
 	}
 	
 	/**
 	 * tick for normal plant
 	 */
-	protected void normalPlantTick()
-	{
+	protected void normalPlantTick(){
 		//when plant stand on wrong block
 		if(!this.world.isRemote&&!this.isImmuneToWeak) {
 			if(this.checkWeak()&&this.weakTime==0) {
@@ -160,8 +158,7 @@ public abstract class PVZPlantEntity extends CreatureEntity implements IPVZPlant
 	}
 	
 	@Override
-	public ILivingEntityData onInitialSpawn(IWorld worldIn, DifficultyInstance difficultyIn, SpawnReason reason,
-			ILivingEntityData spawnDataIn, CompoundNBT dataTag) {
+	public ILivingEntityData onInitialSpawn(IWorld worldIn, DifficultyInstance difficultyIn, SpawnReason reason,ILivingEntityData spawnDataIn, CompoundNBT dataTag) {
 		updateAttributes();
 		if(!worldIn.isRemote()) {
 			this.playSound(SoundEvents.BLOCK_GRASS_PLACE, 1f,1f);
@@ -169,8 +166,7 @@ public abstract class PVZPlantEntity extends CreatureEntity implements IPVZPlant
 		return super.onInitialSpawn(worldIn, difficultyIn, reason, spawnDataIn, dataTag);
 	}
 	
-	protected boolean checkWeak()
-	{
+	protected boolean checkWeak(){
 		if(this.isImmuneToWeak) return false;
         return !PlantUtil.checkCanPlantLiveHere(this);
 	}
@@ -226,6 +222,11 @@ public abstract class PVZPlantEntity extends CreatureEntity implements IPVZPlant
                 }
             }
         }
+	}
+	
+	@Override
+	public boolean canBePushed() {
+		return false;
 	}
 	
 	@Override
@@ -309,8 +310,7 @@ public abstract class PVZPlantEntity extends CreatureEntity implements IPVZPlant
         this.setIsGardenPlant(compound.getBoolean("is_garden_plant"));
     }
 	
-	public void updateAttributes()
-	{
+	public void updateAttributes(){
 		this.getAttribute(SharedMonsterAttributes.MAX_HEALTH).setBaseValue(this.getLife());
 		this.heal(this.getMaxHealth());
 	}
@@ -318,38 +318,29 @@ public abstract class PVZPlantEntity extends CreatureEntity implements IPVZPlant
 	public void startSuperMode() {
 		this.setSuperTime(this.getSuperTimeLength());
 //		this.setIsSuperOut(false);
-//		for(int i=1;i<=10;i++) {
-//		    Main.proxy.spawnParticle(PVZParticleType.SUPER_PLANT_FOOD, posX, posY, posZ, (this.rand.nextFloat()-0.5f)/4, 0.15f, (this.rand.nextFloat()-0.5f)/4);
-//		}
 	}
 	
-	public boolean isPlantInSuperMode()
-	{
+	public boolean isPlantInSuperMode(){
 		return this.getSuperTime()>0;
 	}
 	
-	public boolean canStartSuperMode()
-	{
+	public boolean canStartSuperMode(){
 		return this.hasSuperMode()&&!this.isPlantInSuperMode();
 	}
 	
-	public boolean isPlantInBoost()
-	{
+	public boolean isPlantInBoost(){
 		return this.getBoostTime()>0;
 	}
 	
-	public int getCoolDownTime()
-	{
+	public int getCoolDownTime(){
 		return PlantUtil.getPlantCoolDownTime(getPlantEnumName(),getPlantLvl());
 	}
 	
-	public int getSunCost()
-	{
+	public int getSunCost(){
 		return PlantUtil.getPlantSunCost(getPlantEnumName());
 	}
 	
-	public float getLife()
-	{
+	public float getLife(){
 		return PlantUtil.getPlantMaxHealth(getPlantEnumName(),getPlantLvl());
 	}
 	
@@ -383,53 +374,43 @@ public abstract class PVZPlantEntity extends CreatureEntity implements IPVZPlant
 		return true;
 	}
     
-	public int getBoostTime()
-    {
+	public int getBoostTime(){
     	return dataManager.get(BOOST_TIME);
     }
     
-    public void setBoostTime(int time)
-    {
+    public void setBoostTime(int time){
     	dataManager.set(BOOST_TIME, time);
     }
     
-    public boolean getIsCharmed()
-    {
+    public boolean getIsCharmed(){
     	return dataManager.get(IS_CHARMED);
     }
     
-    public void setIsCharmed(boolean is)
-    {
+    public void setIsCharmed(boolean is){
     	dataManager.set(IS_CHARMED,is);
     }
     
-    public boolean getIsGardenPlant()
-    {
+    public boolean getIsGardenPlant(){
     	return dataManager.get(IS_GARDEN_PLANT);
     }
     
-    public void setIsGardenPlant(boolean is)
-    {
+    public void setIsGardenPlant(boolean is){
     	dataManager.set(IS_GARDEN_PLANT, is);
     }
     
-    public int getGoldTime()
-    {
+    public int getGoldTime(){
     	return dataManager.get(GOLD_TIME);
     }
     
-    public void setGoldTime(int cd)
-    {
+    public void setGoldTime(int cd){
     	dataManager.set(GOLD_TIME, cd);
     }
     
-    public int getAttackTime()
-    {
+    public int getAttackTime(){
     	return dataManager.get(ATTACK_TIME);
     }
     
-    public void setAttackTime(int cd)
-    {
+    public void setAttackTime(int cd){
     	dataManager.set(ATTACK_TIME, cd);
     }
     
@@ -443,34 +424,28 @@ public abstract class PVZPlantEntity extends CreatureEntity implements IPVZPlant
 //		dataManager.set(IS_SUPER_OUT, is);
 //	}
 	
-	public void setPlantLvl(int lvl)
-	{
+	public void setPlantLvl(int lvl){
 		dataManager.set(PLANT_LVL, lvl);
 	}
 	
-	public int getPlantLvl()
-	{
+	public int getPlantLvl(){
 		return dataManager.get(PLANT_LVL);
 	}
 	
 	@Nullable
-    public UUID getOwnerUUID()
-    {
+    public UUID getOwnerUUID(){
         return dataManager.get(OWNER_UUID).orElse((UUID)null);
     }
 
-    public void setOwnerUUID(UUID uuid)
-    {
+    public void setOwnerUUID(UUID uuid){
         this.dataManager.set(OWNER_UUID, Optional.ofNullable(uuid));
     }
 	
-    public void setSuperTime(int time)
-	{
+    public void setSuperTime(int time){
 		dataManager.set(SUPER_TIME, time);
 	}
 	
-	public int getSuperTime()
-	{
+	public int getSuperTime(){
 		return dataManager.get(SUPER_TIME);
 	}
 	

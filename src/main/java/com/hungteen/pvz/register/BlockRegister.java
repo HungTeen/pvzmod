@@ -83,7 +83,7 @@ public class BlockRegister {
 //				BUCKET_WAVE
 		);
 		for(RegistryObject<? extends Block> block:blocks) {
-			items.register(new BlockItem(block.get(),new Item.Properties().group(GroupRegister.PVZ_GROUP)).setRegistryName(block.get().getRegistryName()));
+			items.register(new BlockItem(block.get(),new Item.Properties().group(GroupRegister.PVZ_MISC)).setRegistryName(block.get().getRegistryName()));
 		}
 	}
 	

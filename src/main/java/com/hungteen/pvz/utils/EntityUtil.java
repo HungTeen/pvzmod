@@ -22,8 +22,7 @@ public class EntityUtil {
 	/**
 	 * use to update collision about plants and zombies
 	 */
-	public static boolean checkShouldApplyCollision(LivingEntity base,LivingEntity target)
-	{
+	public static boolean checkShouldApplyCollision(LivingEntity base,LivingEntity target){
 		if(base instanceof PVZPlantEntity) {//base is a plant
 			if(target instanceof PVZPlantEntity) {//plants collide with plants include itself. Be careful,if add pumpkin,improve here
 				return true;

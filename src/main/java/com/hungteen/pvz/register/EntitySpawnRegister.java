@@ -53,10 +53,10 @@ public class EntitySpawnRegister {
 	
 	public static void updateEventSpawns(World world){
 		WorldEventData data = WorldEventData.getOverWorldEventData(world);
-		System.out.println("update data");
+//		System.out.println("update data");
 		for(Events event:Events.values()) {
 			if(data.hasEvent(event)) {
-				System.out.println(event);
+//				System.out.println(event);
 				addEventSpawns(event);
 			}
 		}

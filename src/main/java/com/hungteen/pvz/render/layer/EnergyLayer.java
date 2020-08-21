@@ -1,5 +1,6 @@
 package com.hungteen.pvz.render.layer;
 
+import com.hungteen.pvz.entity.plant.PVZPlantEntity;
 import com.hungteen.pvz.entity.zombie.PVZZombieEntity;
 import com.hungteen.pvz.entity.zombie.PVZZombieEntity.Type;
 import com.hungteen.pvz.utils.StringUtil;
@@ -22,6 +23,9 @@ public class EnergyLayer <T extends LivingEntity, M extends EntityModel<T>> exte
 	protected boolean canRender(T entity) {
 		if(entity instanceof PVZZombieEntity) {
 			return ((PVZZombieEntity) entity).getZombieType()==Type.SUPER;
+		}
+		if(entity instanceof PVZPlantEntity) {
+			return ((PVZPlantEntity) entity).isPlantInSuperMode();
 		}
 		return false;
 	}

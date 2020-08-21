@@ -58,7 +58,7 @@
     "item.pvz.sun_flower_card_fragment":"向日葵卡(碎片)",
 //CherryBomb
     "entity.pvz.cherry_bomb":"樱桃炸弹",
-    "item.pvz.cherry_bomb_spawn_edd":"樱桃炸弹刷怪蛋",
+    "item.pvz.cherry_bomb_spawn_egg":"樱桃炸弹刷怪蛋",
     "item.pvz.cherry_bomb_card":"樱桃炸弹卡",
     "item.pvz.cherry_bomb_card_fragment":"樱桃炸弹卡(碎片)",
 //WallNut
@@ -117,10 +117,20 @@
     "block.pvz.origin_block":"原始精华块",
 //crop
     "block.pvz.pea_plant":"豌豆",
+    "item.pvz.nut":"坚果",
 //plant
     "block.pvz.nut_sapling":"坚果树苗",
     "block.pvz.nut_leaves":"坚果树叶",
     "block.pvz.chomper":"食人花",
 //enchantment
-    "enchantment.pvz.sun_cost_reduce":"节能"
+    "enchantment.pvz.sun_cost_reduce":"节能",
+    "enchantment.pvz.break_out":"爆发",
+    "enchantment.pvz.energy_transfer":"充能",
+//event
+    "event.pvz.zombie_attack":"僵尸即将到来 !",
+//death
+    "death.attack.pvz_eat":"僵尸吃了%s的脑子",
+//itemGroup
+    "itemGroup.pvz.pvz_misc":"PVZ杂项",
+    "itemGroup.pvz.pvz_card":"PVZ召唤卡"
 }

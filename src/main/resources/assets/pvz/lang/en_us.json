@@ -50,37 +50,37 @@
     "entity.pvz.pea_shooter":"PeaShooter",
     "item.pvz.pea_shooter_spawn_egg":"PeaShooter Spawn Egg",
     "item.pvz.pea_shooter_card":"PeaShooter Card",
-    "item.pvz.pea_shooter_card_fragment":"PeaShooter Card Fragment",
+    "item.pvz.pea_shooter_enjoy_card":"PeaShooter Enjoy Card",
 //SunFlower
     "entity.pvz.sun_flower":"SunFlower",
     "item.pvz.sun_flower_spawn_egg":"SunFlower Spawn Egg",
     "item.pvz.sun_flower_card":"SunFlower Card",
-    "item.pvz.sun_flower_card_fragment":"SunFlower Card Fragment",
+    "item.pvz.sun_flower_enjoy_card":"SunFlower Enjoy Card",
 //CherryBomb
     "entity.pvz.cherry_bomb":"CherryBomb",
     "item.pvz.cherry_bomb_spawn_egg":"CherryBomb Spawn Egg",
     "item.pvz.cherry_bomb_card":"CherryBomb Card",
-    "item.pvz.cherry_bomb_card_fragment":"CherryBomb Card Fragment",
+    "item.pvz.cherry_bomb_enjoy_card":"CherryBomb Enjoy Card",
 //WallNut
     "entity.pvz.wall_nut":"WallNut",
     "item.pvz.wall_nut_spawn_egg":"WallNut Spawn Egg",
     "item.pvz.wall_nut_card":"WallNut Card",
-    "item.pvz.wall_nut_card_fragment":"WallNut Card Fragment",
+    "item.pvz.wall_nut_enjoy_card":"WallNut Enjoy Card",
 //PotatoMine
     "entity.pvz.potato_mine":"PotatoMine",
     "item.pvz.potato_mine_spawn_egg":"PotatoMine Spawn Egg",
     "item.pvz.potato_mine_card":"PotatoMine Card",
-    "item.pvz.potato_mine_card_fragment":"PotatoMine Card Fragment",
+    "item.pvz.potato_mine_enjoy_card":"PotatoMine Enjoy Card",
 //SnowPea
     "entity.pvz.snow_pea":"SnowPea",
     "item.pvz.snow_pea_spawn_egg":"SnowPea Spawn Egg",
     "item.pvz.snow_pea_card":"SnowPea Card",
-    "item.pvz.snow_pea_card_fragment":"SnowPea Card Fragment",
+    "item.pvz.snow_pea_enjoy_card":"SnowPea Enjoy Card",
 //Repeater
     "entity.pvz.repeater":"Repeater",
     "item.pvz.repeater_spawn_egg":"Repeater Spawn Egg",
     "item.pvz.repeater_card":"Repeater Card",
-    "item.pvz.repeater_card_fragment":"Repeater Card Fragment",
+    "item.pvz.repeater_enjoy_card":"Repeater Enjoy Card",
 //misc
     "item.pvz.snow_pea":"Snow Pea",
     "item.pvz.flame_pea":"Flame Pea",
@@ -117,10 +117,20 @@
     "block.pvz.origin_block":"Origin Block",
 //crop
     "block.pvz.pea_plant":"Pea",
+    "item.pvz.nut":"Nut",
 //plant
     "block.pvz.nut_sapling":"Nut Sapling",
     "block.pvz.nut_leaves":"Nut Leaves",
     "block.pvz.chomper":"Chomper",
 //enchantment
-    "enchantment.pvz.sun_cost_reduce":"Sun Reduce"
+    "enchantment.pvz.sun_cost_reduce":"Sun Reduce",
+    "enchantment.pvz.break_out":"Break Out",
+    "enchantment.pvz.energy_transfer":"Energy Transfer",
+//event
+    "event.pvz.zombie_attack":"Zombies are Coming!",
+//death
+    "death.attack.pvz_eat":"Zombie eat %s's brain",
+//itemGroup
+    "itemGroup.pvz.pvz_misc":"PVZ Misc",
+    "itemGroup.pvz.misc":"PVZ Card"
 }

@@ -12,6 +12,6 @@ public class PVZItemBase extends Item{
 	
 	public static Properties getNewProperties()
 	{
-		return new Properties().group(GroupRegister.PVZ_GROUP);
+		return new Properties().group(GroupRegister.PVZ_MISC);
 	}
 }

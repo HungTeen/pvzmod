@@ -63,7 +63,7 @@ public abstract class PlantDefenderEntity extends PVZPlantEntity implements IDef
 
 	@Override
 	public int getSuperTimeLength() {
-		return 2;
+		return 20;
 	}
 
 }

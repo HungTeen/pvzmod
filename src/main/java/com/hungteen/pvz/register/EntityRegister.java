@@ -2,6 +2,7 @@ package com.hungteen.pvz.register;
 
 import com.hungteen.pvz.PVZMod;
 import com.hungteen.pvz.entity.bullet.PeaEntity;
+import com.hungteen.pvz.entity.bullet.PotatoEntity;
 import com.hungteen.pvz.entity.drop.CoinEntity;
 import com.hungteen.pvz.entity.drop.EnergyEntity;
 import com.hungteen.pvz.entity.drop.SunEntity;
@@ -18,6 +19,7 @@ import com.hungteen.pvz.entity.zombie.grassday.FlagZombieEntity;
 import com.hungteen.pvz.entity.zombie.grassday.NormalZombieEntity;
 import com.hungteen.pvz.entity.zombie.grassday.PoleZombieEntity;
 import com.hungteen.pvz.render.entity.bullet.PeaRender;
+import com.hungteen.pvz.render.entity.bullet.PotatoRender;
 import com.hungteen.pvz.render.entity.drop.CoinRender;
 import com.hungteen.pvz.render.entity.drop.EnergyRender;
 import com.hungteen.pvz.render.entity.drop.SunRender;
@@ -60,6 +62,7 @@ public class EntityRegister {
 	
 	//bullet
 	public static final RegistryObject<EntityType<PeaEntity>> PEA = registerEntityType(PeaEntity::new, "pea", EntityClassification.MISC);
+	public static final RegistryObject<EntityType<PotatoEntity>> POTATO = registerEntityType(PotatoEntity::new, "potato", EntityClassification.MISC);
 	
 	//zombie 
 	public static final RegistryObject<EntityType<NormalZombieEntity>> NORMAL_ZOMBIE = registerEntityType(NormalZombieEntity::new, "normal_zombie", EntityClassification.MONSTER);
@@ -87,6 +90,7 @@ public class EntityRegister {
         
         //bullet
         RenderingRegistry.registerEntityRenderingHandler(PEA.get(), PeaRender::new);
+        RenderingRegistry.registerEntityRenderingHandler(POTATO.get(), PotatoRender::new);
         
         //zombie
         RenderingRegistry.registerEntityRenderingHandler(NORMAL_ZOMBIE.get(), NormalZombieRender::new);

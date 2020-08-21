@@ -7,7 +7,7 @@ public class PVZConfig {
 
 	public static Common COMMON_CONFIG;
 	public static Client CLIENT_CONFIG;
-	private static final String CONFIG_TRANSLATE = PVZMod.MOD_ID+".config.";
+	private static final String CONFIG_TRANSLATE = "config."+PVZMod.MOD_ID+".";
 	
 	public static class Common
 	{
@@ -76,8 +76,23 @@ public class PVZConfig {
 			}
 			builder.pop();
 			
-			builder.comment("Settings about world gen.").push("World Settings");
+			builder.comment("Settings about world.").push("World Settings");
 			{
+				builder.comment("Settings about world event.").push("WorldEvent Settings");
+				{
+					WORLD_SETTINGS.worldEventSettings.SafeDayLength = builder
+						    .translation(CONFIG_TRANSLATE+"safe_day_length")
+						    .comment("If you set to x,then the first x day of the world will not have any zombie attack event.")
+						    .worldRestart()
+						    .defineInRange("SafeDayLength", 3, 0, 100);
+					
+					WORLD_SETTINGS.worldEventSettings.ZombieWaveChance = builder
+						    .translation(CONFIG_TRANSLATE+"zombie_attack_chance")
+						    .comment("The chance related to zombie wave event. the bigger the more chance it has.(chance/100)")
+						    .worldRestart()
+						    .defineInRange("ZombieAttackChance", 40, 0, 100);
+				}
+				builder.pop();
 				builder.comment("Settings about the overworld gen.").push("OverWorld Settings");
 				{
 					WORLD_SETTINGS.overWorldSettings.DaveVillaGenChance = builder
@@ -85,14 +100,10 @@ public class PVZConfig {
 							.comment("maybe about the chance to gen dave villa. the bigger the more chance it has.")
 							.worldRestart()
 							.defineInRange("DaveVillaDistance", 8, 1, 100);
-					
-					WORLD_SETTINGS.overWorldSettings.ZombieWaveChance = builder
-							.translation(CONFIG_TRANSLATE+"zombie_attack_chance")
-							.comment("The chance related to zombie wave event. the bigger the more chance it has.(chance/100)")
-							.worldRestart()
-							.defineInRange("ZombieAttackChance", 20, 0, 100);
 				}
+				builder.pop();
 			}
+			builder.pop();
 		}
 		
 		public BlockSettings BLOCK_SETTINGS = new BlockSettings();
@@ -125,10 +136,17 @@ public class PVZConfig {
 		public WorldSettings WORLD_SETTINGS = new WorldSettings();
 		
 		public static class WorldSettings{
+			public WorldEventSettings worldEventSettings = new WorldEventSettings();
 			public OverWorldSettings overWorldSettings = new OverWorldSettings();
+				
+			public static class WorldEventSettings{
+				public ForgeConfigSpec.IntValue SafeDayLength;
+			    public ForgeConfigSpec.IntValue ZombieWaveChance;
+			}
+			
 			public static class OverWorldSettings{
 				public ForgeConfigSpec.IntValue DaveVillaGenChance;
-				public ForgeConfigSpec.IntValue ZombieWaveChance;
+				
 			}
 		}
 	}

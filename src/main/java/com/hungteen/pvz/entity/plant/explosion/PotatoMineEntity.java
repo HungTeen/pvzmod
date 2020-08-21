@@ -2,9 +2,11 @@ package com.hungteen.pvz.entity.plant.explosion;
 
 import java.util.Random;
 
+import com.hungteen.pvz.entity.bullet.PotatoEntity;
 import com.hungteen.pvz.entity.plant.base.PlantCloserEntity;
 import com.hungteen.pvz.misc.damage.PVZDamageSource;
 import com.hungteen.pvz.misc.damage.PVZDamageType;
+import com.hungteen.pvz.register.EntityRegister;
 import com.hungteen.pvz.register.ParticleRegister;
 import com.hungteen.pvz.register.SoundRegister;
 import com.hungteen.pvz.utils.EntityUtil;
@@ -50,6 +52,30 @@ public class PotatoMineEntity extends PlantCloserEntity{
 		if(this.getAttackTime()>=this.getReadyTime()&&!this.getIsMineReady()) {
 			this.outDirt();
 		}
+		if(this.isPlantInSuperMode()) {
+			if(!this.getIsMineReady()) {
+				this.outDirt();
+			}
+			if(!world.isRemote) {
+				this.shootPotatos();
+			}
+		}
+	}
+	
+	protected void shootPotatos() {
+		int lvl=this.getPlantLvl();
+		int min=lvl<=13?1:2;
+		int max=lvl<=6?2:3;
+		int num=this.getRNG().nextInt(max-min)+min;
+		for(int i=1;i<=num;i++) {
+			PotatoEntity potato = new PotatoEntity(EntityRegister.POTATO.get(), world, this);
+			potato.setPosition(this.getPosX(), this.getPosY()+1, this.getPosZ());
+		    float dx=(this.getRNG().nextFloat()-0.5f)*i/3;
+		    float dy=1;
+		    float dz=(this.getRNG().nextFloat()-0.5f)*i/3;
+		    potato.shoot(dx, dy, dz);
+		    this.world.addEntity(potato);
+		}
 	}
 	
 	@Override
@@ -78,8 +104,7 @@ public class PotatoMineEntity extends PlantCloserEntity{
 	/**
 	 * potato mine get ready now
 	 */
-	protected void outDirt()
-	{
+	protected void outDirt(){
 		this.setIsMineReady(true);
 		for(int i=0;i<10;i++) {
 			Random rand=this.getRNG();

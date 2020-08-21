@@ -6,7 +6,7 @@ import net.minecraft.item.ItemStack;
 public class GroupRegister {
 
 	//材料
-	public static final ItemGroup PVZ_GROUP = new ItemGroup("pvz_group") {
+	public static final ItemGroup PVZ_MISC = new ItemGroup("pvz_misc") {
 		@Override
 		public ItemStack createIcon() {
 			return new ItemStack(ItemRegister.PEA.get());
@@ -17,7 +17,7 @@ public class GroupRegister {
 //	//工具
 //	public static final ItemGroup GROUP_TOOLS = new PVZGroup("pvz_tools", new ItemStack(ItemRegister.Pea.get()));
 	//植物卡
-	public static final ItemGroup CARD_GROUP = new ItemGroup("card_group") {
+	public static final ItemGroup PVZ_CARD = new ItemGroup("pvz_card") {
 		@Override
 		public ItemStack createIcon() {
 			return new ItemStack(ItemRegister.PEA_SHOOTER_CARD.get());

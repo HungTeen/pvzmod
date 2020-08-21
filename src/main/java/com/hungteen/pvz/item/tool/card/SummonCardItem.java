@@ -2,7 +2,7 @@ package com.hungteen.pvz.item.tool.card;
 
 import java.util.List;
 
-import com.hungteen.pvz.item.enchant.SunReduceEnchantment;
+import com.hungteen.pvz.enchantment.SunReduceEnchantment;
 import com.hungteen.pvz.register.EnchantmentRegister;
 import com.hungteen.pvz.register.GroupRegister;
 
@@ -18,16 +18,16 @@ import net.minecraft.world.World;
 
 public abstract class SummonCardItem extends Item{
 
-	protected final boolean isFragment;//是不是碎片
+	protected final boolean isEnjoyCard;
 	
-	public SummonCardItem(boolean isFragment) {
-		super(new Properties().group(GroupRegister.CARD_GROUP).maxStackSize(isFragment?64:1));
-		this.isFragment=isFragment;
+	public SummonCardItem(boolean isEnjoyCard) {
+		super(new Properties().group(GroupRegister.PVZ_CARD).maxStackSize(isEnjoyCard?16:1));
+		this.isEnjoyCard=isEnjoyCard;
 	}
 
 	@Override
 	public boolean canApplyAtEnchantingTable(ItemStack stack, Enchantment enchantment) {
-		if(this.isFragment) return false;//碎片没有附魔
+		if(this.isEnjoyCard) return false;//碎片没有附魔
 		if(enchantment instanceof SunReduceEnchantment) return true;
 		return super.canApplyAtEnchantingTable(stack, enchantment);
 	}
@@ -48,7 +48,7 @@ public abstract class SummonCardItem extends Item{
 	
 	@Override
 	public boolean isEnchantable(ItemStack stack) {
-		return !this.isFragment;
+		return this.getItemStackLimit(stack) == 1&&!this.isEnjoyCard;
 	}
 	
 	@Override

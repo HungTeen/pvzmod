@@ -1,6 +1,7 @@
 package com.hungteen.pvz.render.entity.plant;
 
 import com.hungteen.pvz.entity.plant.PVZPlantEntity;
+import com.hungteen.pvz.render.layer.EnergyLayer;
 import com.mojang.blaze3d.matrix.MatrixStack;
 
 import net.minecraft.client.renderer.entity.EntityRendererManager;
@@ -23,9 +24,8 @@ public abstract class PVZPlantRender<T extends PVZPlantEntity> extends MobRender
 		matrixStackIn.scale(sz,sz,sz);
 	}
 	
-	protected void addPlantLayers()
-	{
-		
+	protected void addPlantLayers(){
+		this.addLayer(new EnergyLayer<>(this));
 	}
 	
 	protected abstract float getScaleByEntity(T entity);

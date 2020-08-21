@@ -54,22 +54,22 @@ public class ItemRegister {
     
     //plant card & card fragment
     public static final RegistryObject<PlantCardItem> PEA_SHOOTER_CARD = registerCard(Plants.PEA_SHOOTER, false);
-    public static final RegistryObject<PlantCardItem> PEA_SHOOTER_CARD_FRAGMENT = registerCard(Plants.PEA_SHOOTER, true);
+    public static final RegistryObject<PlantCardItem> PEA_SHOOTER_ENJOY_CARD = registerCard(Plants.PEA_SHOOTER, true);
     public static final RegistryObject<PlantCardItem> SUN_FLOWER_CARD = registerCard(Plants.SUN_FLOWER, false);
-    public static final RegistryObject<PlantCardItem> SUN_FLOWER_CARD_FRAGMENT = registerCard(Plants.SUN_FLOWER, true);
+    public static final RegistryObject<PlantCardItem> SUN_FLOWER_ENJOY_CARD = registerCard(Plants.SUN_FLOWER, true);
     public static final RegistryObject<PlantCardItem> CHERRY_BOMB_CARD = registerCard(Plants.CHERRY_BOMB, false);
-    public static final RegistryObject<PlantCardItem> CHERRY_BOMB_CARD_FRAGMENT = registerCard(Plants.CHERRY_BOMB, true);
+    public static final RegistryObject<PlantCardItem> CHERRY_BOMB_ENJOY_CARD = registerCard(Plants.CHERRY_BOMB, true);
     public static final RegistryObject<PlantCardItem> WALL_NUT_CARD = registerCard(Plants.WALL_NUT, false);
-    public static final RegistryObject<PlantCardItem> WALL_NUT_CARD_FRAGMENT = registerCard(Plants.WALL_NUT, true);
+    public static final RegistryObject<PlantCardItem> WALL_NUT_ENJOY_CARD = registerCard(Plants.WALL_NUT, true);
     public static final RegistryObject<PlantCardItem> POTATO_MINE_CARD = registerCard(Plants.POTATO_MINE, false);
-    public static final RegistryObject<PlantCardItem> POTATO_MINE_CARD_FRAGMENT = registerCard(Plants.POTATO_MINE, true);
+    public static final RegistryObject<PlantCardItem> POTATO_MINE_ENJOY_CARD = registerCard(Plants.POTATO_MINE, true);
     public static final RegistryObject<PlantCardItem> SNOW_PEA_CARD = registerCard(Plants.SNOW_PEA, false);
-    public static final RegistryObject<PlantCardItem> SNOW_PEA_CARD_FRAGMENT = registerCard(Plants.SNOW_PEA, true);
+    public static final RegistryObject<PlantCardItem> SNOW_PEA_ENJOY_CARD = registerCard(Plants.SNOW_PEA, true);
     public static final RegistryObject<PlantCardItem> REPEATER_CARD = registerCard(Plants.REPEATER, false);
-    public static final RegistryObject<PlantCardItem> REPEATER_CARD_FRAGMENT = registerCard(Plants.REPEATER, true);
+    public static final RegistryObject<PlantCardItem> REPEATER_ENJOY_CARD = registerCard(Plants.REPEATER, true);
     
     //plants
-	public static final RegistryObject<Item> PEA = ITEMS.register("pea",()-> new BlockItem(BlockRegister.PEA_PLANT.get(),new Item.Properties().group(GroupRegister.PVZ_GROUP)));
+	public static final RegistryObject<Item> PEA = ITEMS.register("pea",()-> new BlockItem(BlockRegister.PEA_PLANT.get(),new Item.Properties().group(GroupRegister.PVZ_MISC)));
 	public static final RegistryObject<Item> NUT = ITEMS.register("nut", PVZItemBase::new);
 	
 	//material
@@ -107,23 +107,21 @@ public class ItemRegister {
 	/**
 	 * register spawn eggs
 	 */
-    private static RegistryObject<PVZSpawnEggItem> registerSpawnEgg(String name,RegistryObject<? extends EntityType<?>> entityType,int color1,int color2)
-    {
-    	return ITEMS.register(name+"_spawn_egg", () -> new PVZSpawnEggItem(entityType, color1, color2, new Item.Properties().group(GroupRegister.PVZ_GROUP)));
+    private static RegistryObject<PVZSpawnEggItem> registerSpawnEgg(String name,RegistryObject<? extends EntityType<?>> entityType,int color1,int color2){
+    	return ITEMS.register(name+"_spawn_egg", () -> new PVZSpawnEggItem(entityType, color1, color2, new Item.Properties().group(GroupRegister.PVZ_MISC)));
     }
 
     /**
 	 * register spawn eggs
 	 */
-    private static RegistryObject<PVZSpawnEggItem> registerSpawnEgg(String name,RegistryObject<? extends EntityType<?>> entityType,Pair<Integer,Integer> color)
-    {
-    	return ITEMS.register(name+"_spawn_egg", () -> new PVZSpawnEggItem(entityType, color.getFirst(), color.getSecond(), new Item.Properties().group(GroupRegister.PVZ_GROUP)));
+    private static RegistryObject<PVZSpawnEggItem> registerSpawnEgg(String name,RegistryObject<? extends EntityType<?>> entityType,Pair<Integer,Integer> color){
+    	return ITEMS.register(name+"_spawn_egg", () -> new PVZSpawnEggItem(entityType, color.getFirst(), color.getSecond(), new Item.Properties().group(GroupRegister.PVZ_MISC)));
     }
     
-    private static RegistryObject<PlantCardItem> registerCard(Plants plant,boolean is)
-    {
-    	String name=plant.toString()+"_card";
-    	if(is) name=name+"_fragment";
+    private static RegistryObject<PlantCardItem> registerCard(Plants plant,boolean is){
+    	String name=plant.toString();
+    	if(is) name+=name+"_enjoy";
+    	name=name+"_card";
     	return ITEMS.register(name, ()->{return new PlantCardItem(plant,is);});
     }
 }

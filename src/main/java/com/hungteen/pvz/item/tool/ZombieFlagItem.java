@@ -27,7 +27,7 @@ public class ZombieFlagItem extends Item{
 	private static final int effectCD = 600;
 	
 	public ZombieFlagItem() {
-		super(new Item.Properties().maxStackSize(1).group(GroupRegister.PVZ_GROUP));
+		super(new Item.Properties().maxStackSize(1).group(GroupRegister.PVZ_MISC));
 	}
 
 	@Override
