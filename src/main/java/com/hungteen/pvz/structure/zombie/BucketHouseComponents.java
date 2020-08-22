@@ -3,10 +3,16 @@ package com.hungteen.pvz.structure.zombie;
 import java.util.List;
 import java.util.Random;
 
+import com.hungteen.pvz.misc.loot.PVZLoot;
+import com.hungteen.pvz.register.EntityRegister;
 import com.hungteen.pvz.register.StructureRegister;
 import com.hungteen.pvz.utils.StringUtil;
 
+import net.minecraft.block.Blocks;
+import net.minecraft.entity.EntityType;
 import net.minecraft.nbt.CompoundNBT;
+import net.minecraft.tileentity.MobSpawnerTileEntity;
+import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.Mirror;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.Rotation;
@@ -27,7 +33,6 @@ public class BucketHouseComponents {
 
 	private static final BlockPos STRUCTURE_OFFSET = new BlockPos(0, 0, 0);
 	public static final ResourceLocation res1 = StringUtil.prefix("zombie_house/bucket_house");
-	public static final ResourceLocation LOOT_CHEST = StringUtil.prefix("chests/bucket_house");
 	
 	public static void generate(TemplateManager manager, BlockPos pos1, Rotation rotation, List<StructurePiece> list, Random rand) {
 	      list.add(new BucketHouseComponent(manager, res1, pos1, rotation));
@@ -83,13 +88,29 @@ public class BucketHouseComponents {
 			this.templatePosition=new BlockPos(this.templatePosition.getX(),height+1,this.templatePosition.getZ());
 			mid = new BlockPos(mid.getX(),this.templatePosition.getY()+dy,mid.getZ());
 			super.create(worldIn, chunkGeneratorIn, randomIn, mutableBoundingBoxIn, chunkPosIn);
-			this.generateChest(worldIn, mutableBoundingBoxIn, worldIn.getRandom(), mid, LOOT_CHEST, null);
+			//chests
+			this.generateChest(worldIn, mutableBoundingBoxIn, worldIn.getRandom(), mid, PVZLoot.BUCKET_HOUSE, null);
 			if(randomIn.nextInt(2)==0) {
-				this.generateChest(worldIn, mutableBoundingBoxIn, worldIn.getRandom(), mid.add(randomIn.nextInt(2)+1, 0, randomIn.nextInt(2)+1), LOOT_CHEST, null);
+				this.generateChest(worldIn, mutableBoundingBoxIn, worldIn.getRandom(), mid.add(randomIn.nextInt(2)+1, 0, randomIn.nextInt(2)+1), PVZLoot.BUCKET_HOUSE, null);
+			}
+			//spawner
+			worldIn.setBlockState(mid.add(1, -2, 1), Blocks.SPAWNER.getDefaultState(), 2);
+			TileEntity te = worldIn.getTileEntity(mid.add(0, -dy, 0));
+			if(te instanceof MobSpawnerTileEntity) {
+				((MobSpawnerTileEntity)te).getSpawnerBaseLogic().setEntityType(getRandomEntityType(randomIn));
 			}
 			return true;
 		}
 
+		protected EntityType<?> getRandomEntityType(Random rand){
+			int num=rand.nextInt(4);
+			if(num==0) return EntityRegister.NORMAL_ZOMBIE.get();
+			else if(num==1) return EntityRegister.CONEHEAD_ZOMBIE.get();
+			else if(num==2) return EntityRegister.POLE_ZOMBIE.get();
+			else if(num==3) return EntityRegister.BUCKETHEAD_ZOMBIE.get();
+			return null;
+		}
+		
 		@Override
 		protected void handleDataMarker(String function, BlockPos pos, IWorld worldIn, Random rand,
 				MutableBoundingBox sbb) {

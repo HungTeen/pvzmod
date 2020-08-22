@@ -15,6 +15,7 @@ import com.hungteen.pvz.entity.drop.EnergyEntity;
 import com.hungteen.pvz.entity.plant.PVZPlantEntity;
 import com.hungteen.pvz.misc.damage.PVZDamageSource;
 import com.hungteen.pvz.misc.damage.PVZDamageType;
+import com.hungteen.pvz.misc.loot.PVZLoot;
 import com.hungteen.pvz.register.EntityRegister;
 import com.hungteen.pvz.register.EffectRegister;
 import com.hungteen.pvz.register.SoundRegister;
@@ -42,6 +43,7 @@ import net.minecraft.network.datasync.DataSerializers;
 import net.minecraft.network.datasync.EntityDataManager;
 import net.minecraft.server.management.PreYggdrasilConverter;
 import net.minecraft.util.DamageSource;
+import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.SoundEvent;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
@@ -495,6 +497,11 @@ public abstract class PVZZombieEntity extends MonsterEntity implements IPVZZombi
 		return SoundRegister.ZOMBIE_SAY.get();
 	}
 
+	@Override
+	protected ResourceLocation getLootTable() {
+		return PVZLoot.NORMAL_ZOMBIE;
+	}
+	
 	public enum Type {
 		NORMAL, // 普通
 		SUPER, // 能量豆

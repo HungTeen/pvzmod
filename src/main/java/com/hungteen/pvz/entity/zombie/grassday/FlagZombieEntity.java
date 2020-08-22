@@ -1,11 +1,13 @@
 package com.hungteen.pvz.entity.zombie.grassday;
 
+import com.hungteen.pvz.misc.loot.PVZLoot;
 import com.hungteen.pvz.utils.ZombieUtil;
 import com.hungteen.pvz.utils.enums.Zombies;
 
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.SharedMonsterAttributes;
 import net.minecraft.entity.monster.MonsterEntity;
+import net.minecraft.util.ResourceLocation;
 import net.minecraft.world.World;
 
 public class FlagZombieEntity extends NormalZombieEntity{
@@ -23,6 +25,11 @@ public class FlagZombieEntity extends NormalZombieEntity{
 	@Override
 	public float getLife() {
 		return 19;
+	}
+	
+	@Override
+	protected ResourceLocation getLootTable() {
+		return PVZLoot.FLAG_ZOMBIE;
 	}
 	
 	@Override
