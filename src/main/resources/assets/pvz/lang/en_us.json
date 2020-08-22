@@ -34,6 +34,9 @@
     "item.pvz.coin_spawn_egg":"Coin Spawn Egg",
     "entity.pvz.energy":"Energy",
     "item.pvz.energy_spawn_egg":"Energy Spawn Egg",
+//bullet
+    "entity.pvz.pea":"Pea",
+    "entity.pvz.potato":"Potato",
 //zombie
     "entity.pvz.normal_zombie":"NormalZombie",
     "item.pvz.normal_zombie_spawn_egg":"NormalZombie Spawn Egg", 

@@ -3,6 +3,7 @@ package com.hungteen.pvz.register;
 import com.hungteen.pvz.PVZMod;
 import com.hungteen.pvz.biome.PVZBiome;
 import com.hungteen.pvz.biome.ZenGardenBiome;
+import com.hungteen.pvz.utils.BiomeUtil;
 
 import net.minecraft.world.biome.Biome;
 import net.minecraft.world.biome.PlainsBiome;
@@ -34,7 +35,12 @@ public class BiomeRegister {
 			if(biome instanceof PlainsBiome) {
 				biome.addStructure(FeatureRegister.DAVE_VILLA.get().withConfiguration(IFeatureConfig.NO_FEATURE_CONFIG));
 			}
-			biome.addFeature(GenerationStage.Decoration.SURFACE_STRUCTURES, FeatureRegister.DAVE_VILLA.get().withConfiguration(IFeatureConfig.NO_FEATURE_CONFIG).withPlacement(Placement.NOPE.configure(IPlacementConfig.NO_PLACEMENT_CONFIG)));
+			biome.addFeature(GenerationStage.Decoration.SURFACE_STRUCTURES, FeatureRegister.DAVE_VILLA.get().withConfiguration(IFeatureConfig.NO_FEATURE_CONFIG).withPlacement(Placement.NOPE.configure(IPlacementConfig.NO_PLACEMENT_CONFIG))); 
+		    biome.addFeature(GenerationStage.Decoration.SURFACE_STRUCTURES, FeatureRegister.BUCKET_HOUSE.get().withConfiguration(IFeatureConfig.NO_FEATURE_CONFIG).withPlacement(Placement.NOPE.configure(IPlacementConfig.NO_PLACEMENT_CONFIG))); 
+		}
+		for(Biome biome:BiomeUtil.OVER_LAND) {
+			biome.addStructure(FeatureRegister.BUCKET_HOUSE.get().withConfiguration(IFeatureConfig.NO_FEATURE_CONFIG));
+			
 		}
 	}
 }

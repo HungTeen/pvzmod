@@ -95,11 +95,17 @@ public class PVZConfig {
 				builder.pop();
 				builder.comment("Settings about the overworld gen.").push("OverWorld Settings");
 				{
-					WORLD_SETTINGS.overWorldSettings.DaveVillaGenChance = builder
-							.translation(CONFIG_TRANSLATE+"dave_villa_gen_chance")
-							.comment("maybe about the chance to gen dave villa. the bigger the more chance it has.")
+					WORLD_SETTINGS.overWorldSettings.DaveVillaDistance = builder
+							.translation(CONFIG_TRANSLATE+"dave_villa_distance")
+							.comment("the distance value between dave villa.")
 							.worldRestart()
-							.defineInRange("DaveVillaDistance", 8, 1, 100);
+							.defineInRange("DaveVillaDistance", 32, 1, 100);
+					
+					WORLD_SETTINGS.overWorldSettings.BucketHouseDistance = builder
+							.translation(CONFIG_TRANSLATE+"bucket_house_distance")
+							.comment("the distance value between bucket house.")
+							.worldRestart()
+							.defineInRange("BucketHouseDistance", 28, 1, 100);
 				}
 				builder.pop();
 			}
@@ -145,8 +151,8 @@ public class PVZConfig {
 			}
 			
 			public static class OverWorldSettings{
-				public ForgeConfigSpec.IntValue DaveVillaGenChance;
-				
+				public ForgeConfigSpec.IntValue DaveVillaDistance;
+			    public ForgeConfigSpec.IntValue BucketHouseDistance;
 			}
 		}
 	}

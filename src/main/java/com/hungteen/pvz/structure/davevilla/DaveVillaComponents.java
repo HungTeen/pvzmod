@@ -109,9 +109,6 @@ public class DaveVillaComponents {
 			super.readAdditional(tagCompound);
 			tagCompound.putString("Template", this.res.toString());
 	        tagCompound.putString("Rot", this.rotation.name());
-//	        tagCompound.putInt("midX", this.midPos.getX());
-//	        tagCompound.putInt("midY", this.midPos.getY());
-//	        tagCompound.putInt("midZ", this.midPos.getZ());
 		}
 
 		@Override

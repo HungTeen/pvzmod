@@ -2,6 +2,7 @@ package com.hungteen.pvz.entity.zombie;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.Random;
 import java.util.UUID;
 
 import javax.annotation.Nullable;
@@ -25,7 +26,6 @@ import com.hungteen.pvz.utils.interfaces.IPVZZombie;
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
-import net.minecraft.entity.ILivingEntityData;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.SharedMonsterAttributes;
 import net.minecraft.entity.SpawnReason;
@@ -43,10 +43,12 @@ import net.minecraft.network.datasync.EntityDataManager;
 import net.minecraft.server.management.PreYggdrasilConverter;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.SoundEvent;
+import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
-import net.minecraft.world.DifficultyInstance;
 import net.minecraft.world.GameRules;
 import net.minecraft.world.IWorld;
+import net.minecraft.world.IWorldReader;
+import net.minecraft.world.LightType;
 import net.minecraft.world.World;
 
 public abstract class PVZZombieEntity extends MonsterEntity implements IPVZZombie {
@@ -88,36 +90,6 @@ public abstract class PVZZombieEntity extends MonsterEntity implements IPVZZombi
 
 	protected void setZombieAttributes() {
 		this.setZombieMaxHealth(this.getLife());
-	}
-
-	@Override
-	public ILivingEntityData onInitialSpawn(IWorld worldIn, DifficultyInstance difficultyIn, SpawnReason reason,
-			ILivingEntityData spawnDataIn, CompoundNBT dataTag) {
-		zombieSpawnInit();
-		return super.onInitialSpawn(worldIn, difficultyIn, reason, spawnDataIn, dataTag);
-	}
-
-	/**
-	 * 代替鸡肋的onInitialSpawn 利于代码层面的召唤僵尸
-	 */
-	public void zombieSpawnInit() {
-//		OverworldData data = OverworldData.getGlobalData(world);
-//		if (data.hasEvent(SpecialEvents.INVIS_ZOMBIE)) {
-//			if (this.getCanBeInvis()) {
-//				this.setIsInvis(true);
-//				this.addPotionEffect(new PotionEffect(MobEffects.INVISIBILITY, 9999999, 0, false, false));// 可随难度而调
-//			}
-//		}
-//		if (data.hasEvent(SpecialEvents.MINI_ZOMBIE)) {
-//			if (this.getCanBeSmall()) {
-//				this.setIsSmall(true);
-//				this.setSize(0.2f, 0.3f);
-//				// PacketHandler.CHANNEL.sendToAll(new
-//				// PacketSetEntitySize(this.getEntityId(),0.2f,0.3f));
-//				this.addPotionEffect(new PotionEffect(MobEffects.SPEED, 9999999, 0, false, false));// 可随难度而调
-//				this.addPotionEffect(new PotionEffect(PotionRegister.SMALL_LIFE_EFFECT, 9999999, 4, false, false));// 可随难度而调
-//			}
-//		}
 	}
 
 	@Override
@@ -283,6 +255,15 @@ public abstract class PVZZombieEntity extends MonsterEntity implements IPVZZombi
 		return flag;
 	}
 
+	public static boolean canZombieSpawn(EntityType<? extends PVZZombieEntity> zombieType, IWorld worldIn, SpawnReason reason, BlockPos pos, Random rand) {
+		 return worldIn.getLightFor(LightType.BLOCK, pos) > 8 ? false : canMonsterSpawn(zombieType, worldIn, reason, pos, rand);
+    }
+	
+	@Override
+	public float getBlockPathWeight(BlockPos pos, IWorldReader worldIn) {
+		return 9-worldIn.getLightFor(LightType.BLOCK, pos);
+	}
+	
 	protected PVZDamageSource getZombieAttackDamageSource() {
 		return PVZDamageSource.causeEatDamage(this, this);
 	}

@@ -101,7 +101,7 @@ public class WorldEventData extends WorldSavedData{
 		ListNBT list = new ListNBT();
 		events.stream().forEach((event)->{
 			CompoundNBT tag = new CompoundNBT();
-			System.out.println(event);
+//			System.out.println(event);
 			tag.putInt("id", event.ordinal());;
 			list.add(tag);
 		});

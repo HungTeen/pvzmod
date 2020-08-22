@@ -34,6 +34,9 @@
     "item.pvz.coin_spawn_egg":"钱币刷怪蛋",
     "entity.pvz.energy":"能量豆",
     "item.pvz.energy_spawn_egg":"能量豆刷怪蛋",
+//bullet
+    "entity.pvz.pea":"豌豆",
+    "entity.pvz.potato":"土豆",
 //zombie
     "entity.pvz.normal_zombie":"普通僵尸",
     "item.pvz.normal_zombie_spawn_egg":"普通僵尸刷怪蛋",
@@ -50,37 +53,37 @@
     "entity.pvz.pea_shooter":"豌豆射手",
     "item.pvz.pea_shooter_spawn_egg":"豌豆射手刷怪蛋",
     "item.pvz.pea_shooter_card":"豌豆射手卡",
-    "item.pvz.pea_shooter_card_fragment":"豌豆射手卡(碎片)",
+    "item.pvz.pea_shooter_enjoy_card":"豌豆射手体验卡",
 //SunFlower
     "entity.pvz.sun_flower":"向日葵",
     "item.pvz.sun_flower_spawn_egg":"向日葵刷怪蛋",
     "item.pvz.sun_flower_card":"向日葵卡",
-    "item.pvz.sun_flower_card_fragment":"向日葵卡(碎片)",
+    "item.pvz.sun_flower_enjoy_card":"向日葵体验卡",
 //CherryBomb
     "entity.pvz.cherry_bomb":"樱桃炸弹",
     "item.pvz.cherry_bomb_spawn_egg":"樱桃炸弹刷怪蛋",
     "item.pvz.cherry_bomb_card":"樱桃炸弹卡",
-    "item.pvz.cherry_bomb_card_fragment":"樱桃炸弹卡(碎片)",
+    "item.pvz.cherry_bomb_enjoy_card":"樱桃炸弹体验卡",
 //WallNut
     "entity.pvz.wall_nut":"坚果墙",
     "item.pvz.wall_nut_spawn_egg":"坚果墙刷怪蛋",
     "item.pvz.wall_nut_card":"坚果墙卡",
-    "item.pvz.wall_nut_card_fragment":"坚果墙卡(碎片)",
+    "item.pvz.wall_nut_enjoy_card":"坚果墙体验卡",
 //PotatoMine
     "entity.pvz.potato_mine":"土豆雷",
     "item.pvz.potato_mine_spawn_egg":"土豆雷刷怪蛋",
     "item.pvz.potato_mine_card":"土豆雷卡",
-    "item.pvz.potato_mine_card_fragment":"土豆雷卡(碎片)",
+    "item.pvz.potato_mine_enjoy_card":"土豆雷体验卡",
 //SnowPea
     "entity.pvz.snow_pea":"寒冰射手",
     "item.pvz.snow_pea_spawn_egg":"寒冰射手刷怪蛋",
     "item.pvz.snow_pea_card":"寒冰射手卡",
-    "item.pvz.snow_pea_card_fragment":"寒冰射手卡(碎片)",
+    "item.pvz.snow_pea_enjoy_card":"寒冰射手体验卡",
 //Repeater
     "entity.pvz.repeater":"双枪射手",
     "item.pvz.repeater_spawn_egg":"双枪射手刷怪蛋",
     "item.pvz.repeater_card":"双枪射手卡",
-    "item.pvz.repeater_card_fragment":"双枪射手卡(碎片)",
+    "item.pvz.repeater_enjoy_card":"双枪射手体验卡",
 //misc
     "item.pvz.snow_pea":"寒冰豌豆",
     "item.pvz.flame_pea":"烈焰豌豆",

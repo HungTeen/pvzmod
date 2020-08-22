@@ -120,7 +120,7 @@ public class ItemRegister {
     
     private static RegistryObject<PlantCardItem> registerCard(Plants plant,boolean is){
     	String name=plant.toString();
-    	if(is) name+=name+"_enjoy";
+    	if(is) name=name+"_enjoy";
     	name=name+"_card";
     	return ITEMS.register(name, ()->{return new PlantCardItem(plant,is);});
     }

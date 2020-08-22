@@ -27,7 +27,7 @@ public abstract class SummonCardItem extends Item{
 
 	@Override
 	public boolean canApplyAtEnchantingTable(ItemStack stack, Enchantment enchantment) {
-		if(this.isEnjoyCard) return false;//碎片没有附魔
+		if(this.isEnjoyCard) return false;//enjoy card have no enchant
 		if(enchantment instanceof SunReduceEnchantment) return true;
 		return super.canApplyAtEnchantingTable(stack, enchantment);
 	}
