@@ -3,12 +3,12 @@ package com.hungteen.pvz.utils.interfaces;
 public interface IBomber {
 
 	/**
-	 * 开始爆炸
+	 * start explosion
 	 */
     void startBomb();
 	
     /**
-     * 准备爆炸的时间
+     * explosion pre time
      */
 	int getReadyTime();
 }

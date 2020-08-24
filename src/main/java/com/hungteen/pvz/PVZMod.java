@@ -33,14 +33,15 @@ public class PVZMod
     	{
     		final Pair<PVZConfig.Common, ForgeConfigSpec> specPair = new ForgeConfigSpec.Builder().configure(PVZConfig.Common::new);
     		ModLoadingContext.get().registerConfig(Type.COMMON, specPair.getRight());
-    		PVZConfig.COMMON_CONFIG=specPair.getLeft();
+    		PVZConfig.COMMON_CONFIG = specPair.getLeft();
     	}
     	{
     		final Pair<PVZConfig.Client, ForgeConfigSpec> specPair = new ForgeConfigSpec.Builder().configure(PVZConfig.Client::new);
     		ModLoadingContext.get().registerConfig(Type.CLIENT, specPair.getRight());
-    		PVZConfig.CLIENT_CONFIG=specPair.getLeft();
+    		PVZConfig.CLIENT_CONFIG = specPair.getLeft();
     	}
-    	RegistryHandler.init();
+    	PROXY.init();
+    	RegistryHandler.register();
     }
 
     @SubscribeEvent
@@ -50,7 +51,10 @@ public class PVZMod
     }
     
     @SubscribeEvent
-    public void setupComplete(FMLLoadCompleteEvent event) {
+    public static void setupComplete(FMLLoadCompleteEvent event) {
         PROXY.postInit();
     }
+    
+    @SubscribeEvent
+    public static void 
 }

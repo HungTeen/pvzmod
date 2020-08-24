@@ -10,7 +10,6 @@ import net.minecraftforge.common.util.LazyOptional;
 public class PlayerUtil {
 
 	public static final int MAX_TREE_LVL = 100;
-//	public static final int MAX_SUN_TICK = 600;
 	
 	public static int getPlayerMaxSunNum(int lvl){
 		if(lvl<=10) return 100*lvl;   //100 200 ...1000

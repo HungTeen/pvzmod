@@ -1,7 +1,9 @@
 package com.hungteen.pvz.gui;
 
+import com.hungteen.pvz.PVZConfig;
 import com.hungteen.pvz.PVZMod;
 import com.hungteen.pvz.capabilities.player.PVZGuiTabPlayerData;
+import com.hungteen.pvz.register.KeyBindRegister;
 import com.hungteen.pvz.utils.PlayerUtil;
 import com.hungteen.pvz.utils.StringUtil;
 import com.hungteen.pvz.utils.enums.Colors;
@@ -25,7 +27,7 @@ public class ResourceGui{
 	
 	@SubscribeEvent
 	public static void onRenderSunNumBar(RenderGameOverlayEvent ev){
-		if(ev.getType()!=RenderGameOverlayEvent.ElementType.ALL) {
+		if(!KeyBindRegister.showPlayerResources||ev.getType()!=RenderGameOverlayEvent.ElementType.ALL||!PVZConfig.CLIENT_CONFIG.ResourceRender.RenderSunNumBar.get()) {
 			return ;
 		}
 		PlayerEntity player = mc.player;
@@ -40,7 +42,7 @@ public class ResourceGui{
 	
 	@SubscribeEvent
 	public static void onRenderMoneyBar(RenderGameOverlayEvent ev){
-		if(ev.getType()!=RenderGameOverlayEvent.ElementType.ALL) {
+		if(!KeyBindRegister.showPlayerResources||ev.getType()!=RenderGameOverlayEvent.ElementType.ALL||!PVZConfig.CLIENT_CONFIG.ResourceRender.RenderMoneyBar.get()) {
 			return ;
 		}
 		PlayerEntity player = mc.player;
@@ -55,7 +57,7 @@ public class ResourceGui{
 	
 	@SubscribeEvent
 	public static void onRenderEnergyNumBar(RenderGameOverlayEvent ev){
-		if(ev.getType()!=RenderGameOverlayEvent.ElementType.ALL) {
+		if(!KeyBindRegister.showPlayerResources||ev.getType()!=RenderGameOverlayEvent.ElementType.ALL||!PVZConfig.CLIENT_CONFIG.ResourceRender.RenderEnergyNumBar.get()) {
 			return ;
 		}
 		PlayerEntity player = mc.player;

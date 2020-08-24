@@ -1,17 +1,22 @@
 package com.hungteen.pvz.event;
 
+import com.hungteen.pvz.PVZMod;
+import com.hungteen.pvz.gui.PVZMainMenu;
+
+import net.minecraft.client.gui.screen.MainMenuScreen;
+import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.client.event.GuiOpenEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 
-@Mod.EventBusSubscriber(bus = Mod.EventBusSubscriber.Bus.MOD)
+@Mod.EventBusSubscriber(modid=PVZMod.MOD_ID,value = Dist.CLIENT)
 public class PVZClientEvent {
 
 	@SubscribeEvent
-	public void onGuiOpened(GuiOpenEvent event) {
-//		if (IafConfig.customMainMenu && event.getGui() instanceof MainMenuScreen
-//				&& !(event.getGui() instanceof IceAndFireMainMenu)) {
-//			event.setGui(new IceAndFireMainMenu());
-//		}
+	public static void onGuiOpened(GuiOpenEvent event) {
+//		System.out.println("open gui");
+		if (event.getGui() instanceof MainMenuScreen&& !(event.getGui() instanceof PVZMainMenu)) {
+			event.setGui(new PVZMainMenu());
+		}
 	}
 }

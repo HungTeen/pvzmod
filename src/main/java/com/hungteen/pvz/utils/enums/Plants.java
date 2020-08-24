@@ -9,17 +9,17 @@ public enum Plants {
 	    WALL_NUT("wall_nut"),
 	    POTATO_MINE("potato_mine"),
 	    SNOW_PEA("snow_pea"),
-	    CHOMPER("chomper"),//���
+	    CHOMPER("chomper"),
 	    REPEATER("repeater"),
 	    //2-1 ~ 2-10
-	    PULF_SHROOM("pulf_shroom"),//��Ԩ
-	    SUN_SHROOM("sun_shroom"),//��Ԩ
-	    FUME_SHROOM("fume_shroom"),//��Ԩ
-	    GRAVE_VINE("grave_vine"),//��Ԩ
+	    PULF_SHROOM("pulf_shroom"),
+	    SUN_SHROOM("sun_shroom"),
+	    FUME_SHROOM("fume_shroom"),
+	    GRAVE_VINE("grave_vine"),
 	    HYPNO_SHROOM("hypno_shroom"),
-	    SCAREDY_SHROOM("scaredy_shroom"),//��Ԩ
+	    SCAREDY_SHROOM("scaredy_shroom"),
 	    ICE_SHROOM("ice_shroom"),
-	    DOOM_SHROOM("doom_shroom"),//��Ԩ
+	    DOOM_SHROOM("doom_shroom"),
 	    //3-1 ~ 3-10
 	    LILY_PAD("lily_pad"),
 	    SQUASH("squash"),
@@ -30,30 +30,30 @@ public enum Plants {
 	    TORCH_WOOD("torch_wood"),
 	    TALL_NUT("tall_nut"),
 	    //4-1 ~ 4-10
-	    SEA_SHROOM("sea_shroom"),//��Ԩ
-	    PLANTERN("plantern"),//��Ԩ
-	    CACTUS("cactus"),//���
-	    BLOVER("blover"),//��Ԩ
+	    SEA_SHROOM("sea_shroom"),
+	    PLANTERN("plantern"),
+	    CACTUS("cactus"),
+	    BLOVER("blover"),
 	    SPLIT_PEA("split_pea"),
-	    STAR_FRUIT("star_fruit"),//δ֪
+	    STAR_FRUIT("star_fruit"),
 	    PUMPKIN("pumpkin"),
-	    MAGNET_SHROOM("magnet_shroom"),//��Ԩ
+	    MAGNET_SHROOM("magnet_shroom"),
 	    //5-1 5-10
 	    CABBAGE_PULT("cabbage_pult"),
 	    FLOWER_POT("flower_pot"),
 	    KERNEL_PULT("kernel_pult"),
 	    COFFEE_BEAN("coffee_bean"),
-	    GARLIC("garlic"),//��������ˣ��ѱ����
-	    UMBRELLA_LEAF("umbrella_leaf"),//��Ԩ
+	    GARLIC("garlic"),
+	    UMBRELLA_LEAF("umbrella_leaf"),
 	    MARIGOLD("marigold"),
 	    MELON_PULT("melon_pult"),
 	    //upgrate
 	    GATLING_PEA("gatling_pea"),
 	    TWIN_SUNFLOWER("twin_sunflower"),
-	    GLOOM_SHROOM("gloom_shroom"),//��Ԩ
+	    GLOOM_SHROOM("gloom_shroom"),
 	    CAT_TAIL("cat_tail"),
 	    WINTER_MELON("winter_melon"),
-	    GOLD_MAGNET("gold_magnet"),//��Ԩ
+	    GOLD_MAGNET("gold_magnet"),
 	    SPIKE_ROCK("spike_rock"),
 	    COB_CANNON("cob_cannon"),
 	    IMITATER("imitater"),

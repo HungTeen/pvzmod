@@ -3,17 +3,17 @@ package com.hungteen.pvz.utils.interfaces;
 public interface IProducer {
 
 	/**
-	 * 制造什么东西，比如向日葵生产阳光
+	 * produce something ,like sunflower produce sun
 	 */
 	void genSomething();
 	
 	/**
-	 * 大招制造啥，比如向日葵制造很多阳光
+	 * super produce
 	 */
 	void genSuper();
 	
 	/**
-	 * 制造的冷却时间
+	 * produce CD
 	 */
 	int getGenCD();
 }

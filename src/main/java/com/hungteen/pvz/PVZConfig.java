@@ -9,8 +9,8 @@ public class PVZConfig {
 	public static Client CLIENT_CONFIG;
 	private static final String CONFIG_TRANSLATE = "config."+PVZMod.MOD_ID+".";
 	
-	public static class Common
-	{
+	public static class Common{
+		
 		public Common(ForgeConfigSpec.Builder builder) {
 			//World Settings
 			builder.comment("Settings about world.").push("World Settings");
@@ -236,9 +236,48 @@ public class PVZConfig {
 		
 	}
 	
-	public static class Client
-	{
+	public static class Client{
+		
 		public Client(ForgeConfigSpec.Builder builder) {
+			builder.comment("Player Resource Bar Settings").push("Resource Render Settings");
+			{
+				CLIENT_CONFIG.ResourceRender.RenderSunNumBar = builder
+						.translation(CONFIG_TRANSLATE+"render_sun_num_bar")
+						.comment("Should Render SunNumBar")
+						.worldRestart()
+						.define("RenderSunNumBar", true);
+				CLIENT_CONFIG.ResourceRender.RenderEnergyNumBar = builder
+						.translation(CONFIG_TRANSLATE+"render_energy_num_bar")
+						.comment("Should Render EnergyNumBar")
+						.worldRestart()
+						.define("RenderEnergyNumBar", true);
+				CLIENT_CONFIG.ResourceRender.RenderMoneyBar = builder
+						.translation(CONFIG_TRANSLATE+"render_money_bar")
+						.comment("Should Render MoneyBar")
+						.worldRestart()
+						.define("RenderMoneyBar", true);
+			}
+			builder.pop();
+			builder.comment("Other Render Settings").push("Other Render Settings");
+			{
+				CLIENT_CONFIG.OtherSettings.ShowPVZMainMenu = builder
+						.translation(CONFIG_TRANSLATE+"show_pvz_main_menu")
+						.comment("show pvz main menu")
+						.worldRestart()
+						.define("ShowPVZMainMenu", true);
+			}
+		}
+		
+		public OtherSettings OtherSettings = new OtherSettings();
+		public ResourceRender ResourceRender = new ResourceRender();
+		public static class ResourceRender{
+			public ForgeConfigSpec.BooleanValue RenderSunNumBar;
+			public ForgeConfigSpec.BooleanValue RenderEnergyNumBar;
+			public ForgeConfigSpec.BooleanValue RenderMoneyBar;
+		}
+		
+		public static class OtherSettings{
+			public ForgeConfigSpec.BooleanValue ShowPVZMainMenu;
 		}
 	}
 }

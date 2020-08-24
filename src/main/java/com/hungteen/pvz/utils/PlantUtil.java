@@ -174,7 +174,7 @@ public class PlantUtil {
 	}
 	
 	/**
-	 * 8s-5s配置
+	 * 8s-5s
 	 */
 	public static int getPlantCoolDownTimeHugeFast(int lvl)
 	{
@@ -187,7 +187,7 @@ public class PlantUtil {
 	}
 	
 	/**
-	 * 豌豆射手 卷心菜10s-8s配置
+	 * peashooter 10s-8s
 	 */
 	public static int getPlantCoolDownTimeVeryFast(int lvl)
 	{
@@ -199,7 +199,7 @@ public class PlantUtil {
 	}
 	
 	/**
-	 * 向日葵 双枪射手15s-12s配置
+	 * sunflower 15s-12s
 	 */
 	public static int getPlantCoolDownTimeFast(int lvl)
 	{
@@ -211,7 +211,7 @@ public class PlantUtil {
 	}
 	
 	/**
-	 * 西瓜投手 三线20s-16s配置
+	 * threepeater 20s-16s
 	 */
 	public static int getPlantCoolDownTimeLittleFast(int lvl)
 	{
@@ -223,7 +223,7 @@ public class PlantUtil {
 	}
 	
 	/**
-	 * 火炬树桩 25s-21s配置
+	 * torch wood 25s-21s
 	 */
 	public static int getPlantCoolDownTimeNormal(int lvl)
 	{
@@ -235,7 +235,7 @@ public class PlantUtil {
 	}
 	
 	/**
-	 * 火爆辣椒 寒冰菇 32s-28s配置
+	 * jalapeno 32s-28s
 	 */
 	public static int getPlantCoolDownTimeLittleSlow(int lvl)
 	{
@@ -247,7 +247,7 @@ public class PlantUtil {
 	}
 	
 	/**
-	 * 坚果墙 土豆雷 海草40s-32s配置
+	 * wall nut 40s-32s
 	 */
 	public static int getPlantCoolDownTimeSlow(int lvl)
 	{
@@ -259,7 +259,7 @@ public class PlantUtil {
 	}
 	
 	/**
-	 * 高级植物 60s-50s配置
+	 * advance plant 60s-50s
 	 */
 	public static int getPlantCoolDownTimeVerySlow(int lvl)
 	{
@@ -272,7 +272,7 @@ public class PlantUtil {
 	}
 	
 	/**
-	 * 爆炸植物 120s-100s配置
+	 * explosion plant 120s-100s 
 	 */
 	public static int getPlantCoolDownTimeHugeSlow(int lvl)
 	{
