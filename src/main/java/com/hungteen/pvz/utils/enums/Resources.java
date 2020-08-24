@@ -7,5 +7,5 @@ public enum Resources {
 	MONEY,
 	GEM_NUM,
 	SUN_NUM,
-	ENERGY_NUM
+	ENERGY_NUM,
 }

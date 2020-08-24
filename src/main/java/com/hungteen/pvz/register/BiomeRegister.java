@@ -1,10 +1,12 @@
 package com.hungteen.pvz.register;
 
+import com.hungteen.pvz.PVZConfig;
 import com.hungteen.pvz.PVZMod;
 import com.hungteen.pvz.biome.PVZBiome;
 import com.hungteen.pvz.biome.ZenGardenBiome;
 import com.hungteen.pvz.utils.BiomeUtil;
 
+import net.minecraft.entity.EntityClassification;
 import net.minecraft.world.biome.Biome;
 import net.minecraft.world.biome.PlainsBiome;
 import net.minecraft.world.gen.GenerationStage;
@@ -23,7 +25,7 @@ public class BiomeRegister {
 	public static final RegistryObject<Biome> ZEN_GARDEN = BIOMES.register("zen_garden", ZenGardenBiome::new);
 	
     public static void addBiomes() {
-        BiomeManager.addBiome(BiomeManager.BiomeType.COOL, new BiomeManager.BiomeEntry(ZEN_GARDEN.get(), 1000));
+        BiomeManager.addBiome(BiomeManager.BiomeType.COOL, new BiomeManager.BiomeEntry(ZEN_GARDEN.get(), 100));
     }
 	
 	public static void addBiomeFeatures(){
@@ -40,7 +42,7 @@ public class BiomeRegister {
 		}
 		for(Biome biome:BiomeUtil.OVER_LAND) {
 			biome.addStructure(FeatureRegister.BUCKET_HOUSE.get().withConfiguration(IFeatureConfig.NO_FEATURE_CONFIG));
-			
+			biome.getSpawns(EntityClassification.AMBIENT).add(new Biome.SpawnListEntry(EntityRegister.SUN.get(),2*PVZConfig.COMMON_CONFIG.EntitySettings.EntitySpawnWeight.SunSpawnWeight.get(),1,1));
 		}
 	}
 }

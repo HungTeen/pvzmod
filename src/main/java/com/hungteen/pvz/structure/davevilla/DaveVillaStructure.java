@@ -39,12 +39,12 @@ public class DaveVillaStructure extends ScatteredStructure<NoFeatureConfig>{
 	
 	@Override
 	protected int getBiomeFeatureDistance(ChunkGenerator<?> chunkGenerator) {
-		return PVZConfig.COMMON_CONFIG.WORLD_SETTINGS.overWorldSettings.DaveVillaDistance.get();
+		return PVZConfig.COMMON_CONFIG.WorldSettings.OverWorldSettings.DaveVillaDistance.get();
 	}
 	
 	@Override
 	protected int getBiomeFeatureSeparation(ChunkGenerator<?> chunkGenerator) {
-		return PVZConfig.COMMON_CONFIG.WORLD_SETTINGS.overWorldSettings.DaveVillaDistance.get()/3;
+		return PVZConfig.COMMON_CONFIG.WorldSettings.OverWorldSettings.DaveVillaDistance.get()/3;
 	}
 	
 	@Override
@@ -62,7 +62,7 @@ public class DaveVillaStructure extends ScatteredStructure<NoFeatureConfig>{
 		public void init(ChunkGenerator<?> generator, TemplateManager templateManagerIn, int chunkX, int chunkZ,
 				Biome biomeIn) {
 			Rotation rotation = Rotation.values()[this.rand.nextInt(Rotation.values().length)];
-	        BlockPos blockpos = new BlockPos(chunkX * 16, 73+this.rand.nextInt(10), chunkZ * 16);
+	        BlockPos blockpos = new BlockPos(chunkX * 16, 65+this.rand.nextInt(10), chunkZ * 16);
 	        DaveVillaComponents.generate(templateManagerIn, blockpos, rotation, this.components, this.rand);
 //	        for(StructurePiece piece:this.components) {
 //	        	if(piece instanceof DaveVillaComponent) {

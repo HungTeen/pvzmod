@@ -1,23 +1,29 @@
 package com.hungteen.pvz.entity.drop;
 
+import java.util.Random;
+
 import com.hungteen.pvz.PVZConfig;
 import com.hungteen.pvz.register.SoundRegister;
 import com.hungteen.pvz.utils.PlayerUtil;
 import com.hungteen.pvz.utils.enums.Resources;
 
-import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntitySize;
 import net.minecraft.entity.EntityType;
+import net.minecraft.entity.MobEntity;
 import net.minecraft.entity.Pose;
+import net.minecraft.entity.SpawnReason;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.util.SoundCategory;
+import net.minecraft.util.math.BlockPos;
+import net.minecraft.world.IWorld;
+import net.minecraft.world.LightType;
 import net.minecraft.world.World;
 
 public class SunEntity extends DropEntity{
 	
 	private float fall_speed = 0.03f;
 	
-	public SunEntity(EntityType<? extends Entity> type, World worldIn) {
+	public SunEntity(EntityType<? extends MobEntity> type, World worldIn) {
 		super(type, worldIn);
 		this.setAmount(25);//default sun amount (nature spawn)
 		this.setNoGravity(true);
@@ -27,7 +33,7 @@ public class SunEntity extends DropEntity{
 	public void tick() {
 		super.tick();
 		if(!this.onGround) {
-			this.setMotion(0, -fall_speed, 0);
+			this.setMotion(this.getMotion().getX(), -fall_speed, this.getMotion().getZ());
 		}
 	}
 	
@@ -43,21 +49,27 @@ public class SunEntity extends DropEntity{
 	public void onCollideWithPlayer(PlayerEntity entityIn) {
 		if(!this.world.isRemote) {
 			PlayerUtil.addPlayerStats(entityIn, Resources.SUN_NUM, this.getAmount());
-//			this.world.playSound(null, getPosition(), SoundRegister.SUN_PICK.get(), SoundCategory.NEUTRAL, 1f,1f);
-//			this.playSound(SoundRegister.SUN_PICK.get(), 1f, 1f);
-//			ChickenEntity
 		}else {
-//			System.out.println(this.isSilent());
 			this.world.playSound(entityIn, getPosition(), SoundRegister.SUN_PICK.get(), SoundCategory.NEUTRAL, 1f,1f);
-//			this.playSound(SoundRegister.SUN_PICK.get(), 1f, 1f);
 		}
 		this.remove();
 	}
 	
 	@Override
-	protected int getMaxLiveTick() {
-		return PVZConfig.COMMON_CONFIG.ENTITY_SETTINGS.entityLiveTick.sunLiveTick.get();
+	public int getMaxSpawnedInChunk() {
+		return 1;
 	}
 	
+	public static boolean canSunSpawn(EntityType<? extends SunEntity> zombieType, IWorld worldIn, SpawnReason reason, BlockPos pos, Random rand) {
+		if(worldIn instanceof World) {
+			return !((World)worldIn).isRainingAt(pos)&&worldIn.getLightFor(LightType.SKY, pos)>=15;
+		}
+		return worldIn.getLightFor(LightType.SKY, pos)>=15;
+	}
+	
+	@Override
+	protected int getMaxLiveTick() {
+		return PVZConfig.COMMON_CONFIG.EntitySettings.EntityLiveTick.SunLiveTick.get();
+	}
 	
 }

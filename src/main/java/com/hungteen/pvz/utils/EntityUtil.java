@@ -44,16 +44,16 @@ public class EntityUtil {
 	/**
 	 * use to check can the attacker attack the current target
 	 */
-	public static boolean checkCanEntityAttack(Entity attacker,Entity target)
-	{
+	public static boolean checkCanEntityAttack(Entity attacker,Entity target){
 		if(attacker==null||target==null) {//prevent crash
 			return false;
 		}
+		if(!target.isAlive()) return false;
 		World world=attacker.world;
 		if(target instanceof PlayerEntity) {
 			if(((PlayerEntity) target).isCreative()||target.isSpectator()) return false;
 		}
-		if(PVZConfig.COMMON_CONFIG.ENTITY_SETTINGS.canPlantAttackOtherTeam.get()) {
+		if(PVZConfig.COMMON_CONFIG.EntitySettings.CanPlantAttackOtherTeam.get()) {
 			Team team1=getEntityTeam(world,attacker);
 			Team team2=getEntityTeam(world,target);
 			if(team1!=null&&team2!=null) {
@@ -70,8 +70,7 @@ public class EntityUtil {
 		return false;
 	}
 	
-	public static int getEntityGroup(Entity entity)
-	{
+	public static int getEntityGroup(Entity entity){
 		int group=0;
 		if(entity instanceof PlayerEntity) return 2;
 		if(entity instanceof PVZPlantEntity) {

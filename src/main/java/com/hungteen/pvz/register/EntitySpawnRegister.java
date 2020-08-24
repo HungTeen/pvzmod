@@ -3,7 +3,9 @@ package com.hungteen.pvz.register;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.hungteen.pvz.PVZConfig;
 import com.hungteen.pvz.PVZMod;
+import com.hungteen.pvz.entity.drop.SunEntity;
 import com.hungteen.pvz.entity.zombie.PVZZombieEntity;
 import com.hungteen.pvz.utils.BiomeUtil;
 import com.hungteen.pvz.utils.enums.Events;
@@ -23,6 +25,10 @@ import net.minecraftforge.fml.common.Mod;
 @Mod.EventBusSubscriber(modid=PVZMod.MOD_ID,bus=Mod.EventBusSubscriber.Bus.MOD)
 public class EntitySpawnRegister {
 
+	public static final PlacementType IN_SKY = PlacementType.create("pvz_in_sky", (world, pos, type)->{
+		return world.canSeeSky(pos)&&world.canBlockSeeSky(pos.add(0, -5, 0));
+	});
+	
 	public static final List<SpawnEntry> BUCKET_SPAWN = new ArrayList<>();
 	
 	@SubscribeEvent
@@ -32,13 +38,16 @@ public class EntitySpawnRegister {
 		EntitySpawnPlacementRegistry.register(EntityRegister.CONEHEAD_ZOMBIE.get(), PlacementType.ON_GROUND, Heightmap.Type.MOTION_BLOCKING_NO_LEAVES, PVZZombieEntity::canZombieSpawn);
 		EntitySpawnPlacementRegistry.register(EntityRegister.POLE_ZOMBIE.get(), PlacementType.ON_GROUND, Heightmap.Type.MOTION_BLOCKING_NO_LEAVES, PVZZombieEntity::canZombieSpawn);
 		EntitySpawnPlacementRegistry.register(EntityRegister.BUCKETHEAD_ZOMBIE.get(), PlacementType.ON_GROUND, Heightmap.Type.MOTION_BLOCKING_NO_LEAVES, PVZZombieEntity::canZombieSpawn);
+		EntitySpawnPlacementRegistry.register(EntityRegister.SUN.get(), IN_SKY, Heightmap.Type.MOTION_BLOCKING_NO_LEAVES, SunEntity::canSunSpawn);
+
 	}
 	
 	public static void registerEntitySpawn() {
-		BUCKET_SPAWN.add(new SpawnEntry(EntityRegister.NORMAL_ZOMBIE.get(), 60, 1, 3, BiomeUtil.OVER_LAND));
-		BUCKET_SPAWN.add(new SpawnEntry(EntityRegister.CONEHEAD_ZOMBIE.get(), 20, 1, 2, BiomeUtil.OVER_LAND));
-		BUCKET_SPAWN.add(new SpawnEntry(EntityRegister.POLE_ZOMBIE.get(), 20, 1, 1, BiomeUtil.OVER_LAND));
-		BUCKET_SPAWN.add(new SpawnEntry(EntityRegister.BUCKETHEAD_ZOMBIE.get(), 4, 1, 1, BiomeUtil.OVER_LAND));
+		BUCKET_SPAWN.add(new SpawnEntry(EntityRegister.NORMAL_ZOMBIE.get(), PVZConfig.COMMON_CONFIG.EntitySettings.EntitySpawnWeight.NormalZombieSpawnWeight.get(), 1, 3, BiomeUtil.OVER_LAND));
+		BUCKET_SPAWN.add(new SpawnEntry(EntityRegister.CONEHEAD_ZOMBIE.get(), PVZConfig.COMMON_CONFIG.EntitySettings.EntitySpawnWeight.ConeHeadZombieSpawnWeight.get(), 1, 2, BiomeUtil.OVER_LAND));
+		BUCKET_SPAWN.add(new SpawnEntry(EntityRegister.POLE_ZOMBIE.get(), PVZConfig.COMMON_CONFIG.EntitySettings.EntitySpawnWeight.PoleZombieSpawnWeight.get(), 1, 1, BiomeUtil.OVER_LAND));
+		BUCKET_SPAWN.add(new SpawnEntry(EntityRegister.BUCKETHEAD_ZOMBIE.get(), PVZConfig.COMMON_CONFIG.EntitySettings.EntitySpawnWeight.BucketHeadZombieSpawnWeight.get(), 1, 1, BiomeUtil.OVER_LAND));
+		addFlagZombie(BUCKET_SPAWN);
 	}
 	
 	public static List<SpawnEntry> getEventSpawnList(Events ev){
@@ -82,6 +91,10 @@ public class EntitySpawnRegister {
         }
     }
     
+    public static void addFlagZombie(List<SpawnEntry> list) {
+    	list.add(new SpawnEntry(EntityRegister.FLAG_ZOMBIE.get(), PVZConfig.COMMON_CONFIG.EntitySettings.EntitySpawnWeight.FlagZombieSpawnWeight.get(), 1, 1, BiomeUtil.OVER_LAND));
+    }
+    
 	private static class SpawnEntry {
 		private final EntityType<? extends Entity> entityType;
 		private final int weight;
@@ -98,4 +111,5 @@ public class EntitySpawnRegister {
 			this.biomes = biomes;
 		}
 	}
+	
 }

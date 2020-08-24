@@ -35,7 +35,7 @@ public abstract class PVZThrowableEntity extends ThrowableEntity implements IRen
 	@Override
 	public void tick() {
 		super.tick();
-		if(this.ticksExisted>=PVZConfig.COMMON_CONFIG.ENTITY_SETTINGS.entityLiveTick.bulletLiveTick.get()) {
+		if(this.ticksExisted>=PVZConfig.COMMON_CONFIG.EntitySettings.EntityLiveTick.BulletLiveTick.get()) {
 			this.remove();
 		}
 	}

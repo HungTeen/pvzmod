@@ -8,11 +8,11 @@ import com.hungteen.pvz.utils.enums.Colors;
 import com.hungteen.pvz.utils.enums.Resources;
 
 import net.minecraft.client.Minecraft;
+import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.MathHelper;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.client.event.RenderGameOverlayEvent;
-import net.minecraftforge.client.event.RenderGameOverlayEvent.ElementType;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 
@@ -24,34 +24,51 @@ public class ResourceGui{
 	private static final int tex_width = 89, tex_height = 28;
 	
 	@SubscribeEvent
-	public static void onRenderSunNumBar(RenderGameOverlayEvent ev)
-	{
-		if(ev.getType()==ElementType.TEXT&&mc.currentScreen==null&&!mc.gameSettings.hideGUI&&!mc.player.isSpectator()) {
+	public static void onRenderSunNumBar(RenderGameOverlayEvent ev){
+		if(ev.getType()!=RenderGameOverlayEvent.ElementType.ALL) {
+			return ;
+		}
+		PlayerEntity player = mc.player;
+		if(player==null||mc.gameSettings.hideGUI||player.isSpectator()) {
+			return ;
+		}
+		if(mc.currentScreen==null) {
 			mc.getTextureManager().bindTexture(RESOURCE_BAR);
 			drawSunNumBar();
 		}
 	}
 	
 	@SubscribeEvent
-	public static void onRenderMoneyBar(RenderGameOverlayEvent ev)
-	{
-		if(ev.getType()==ElementType.TEXT&&mc.currentScreen==null&&!mc.gameSettings.hideGUI&&!mc.player.isSpectator()) {
+	public static void onRenderMoneyBar(RenderGameOverlayEvent ev){
+		if(ev.getType()!=RenderGameOverlayEvent.ElementType.ALL) {
+			return ;
+		}
+		PlayerEntity player = mc.player;
+		if(player==null||mc.gameSettings.hideGUI||player.isSpectator()) {
+			return ;
+		}
+		if(mc.currentScreen==null) {
 			mc.getTextureManager().bindTexture(RESOURCE_BAR);
 			drawMoneyBar(ev.getWindow().getScaledWidth(),ev.getWindow().getScaledHeight());
 		}
 	}
 	
 	@SubscribeEvent
-	public static void onRenderEnergyNumBar(RenderGameOverlayEvent ev)
-	{
-		if(ev.getType()==ElementType.TEXT&&mc.currentScreen==null&&!mc.gameSettings.hideGUI&&!mc.player.isSpectator()) {
+	public static void onRenderEnergyNumBar(RenderGameOverlayEvent ev){
+		if(ev.getType()!=RenderGameOverlayEvent.ElementType.ALL) {
+			return ;
+		}
+		PlayerEntity player = mc.player;
+		if(player==null||mc.gameSettings.hideGUI||player.isSpectator()) {
+			return ;
+		}
+		if(mc.currentScreen==null) {
 			mc.getTextureManager().bindTexture(RESOURCE_BAR);
 			drawEnergyNumBar(ev.getWindow().getScaledWidth(),ev.getWindow().getScaledHeight());
 		}
 	}
 	
-	protected static void drawSunNumBar()
-	{
+	protected static void drawSunNumBar(){
 		int lvl = PVZGuiTabPlayerData.getPlayerStats(Resources.TREE_LVL);
 		int maxNum = PlayerUtil.getPlayerMaxSunNum(lvl);
 		int num = PVZGuiTabPlayerData.getPlayerStats(Resources.SUN_NUM);
@@ -72,8 +89,7 @@ public class ResourceGui{
 		StringUtil.drawCenteredScaledString(mc.fontRenderer, num + "", 0+55, 0+8, Colors.WHITE,1.5f);
 	}
 	
-	protected static void drawMoneyBar(int w,int h)
-	{
+	protected static void drawMoneyBar(int w,int h){
 		mc.ingameGUI.blit(w - tex_width - 1, h - tex_height - 1, 0, 200, tex_width, tex_height);
 		StringUtil.drawCenteredScaledString(mc.fontRenderer, PVZGuiTabPlayerData.getPlayerStats(Resources.MONEY) + "",w - tex_width - 1+35,
 				h - tex_height - 1 +8, Colors.WHITE, 1.5f);
@@ -83,8 +99,7 @@ public class ResourceGui{
 //				h - tex_height - 1 +8, 1.5f, Enums.RGBIntegers.WHITE, RenderUtil.StringRenderType.OUTLINED);
 	}
 	
-	protected static void drawEnergyNumBar(int w,int h)
-	{
+	protected static void drawEnergyNumBar(int w,int h){
 		int lvl=PVZGuiTabPlayerData.getPlayerStats(Resources.TREE_LVL);
 		int maxNum = PlayerUtil.getPlayerMaxEnergyNum(lvl);
 		int num = PVZGuiTabPlayerData.getPlayerStats(Resources.ENERGY_NUM);

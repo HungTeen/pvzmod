@@ -23,7 +23,7 @@ public class PotatoMineRender extends PVZPlantRender<PotatoMineEntity>{
 			float partialTickTime) {
 		float sz = this.getScaleByEntity(entitylivingbaseIn);
 		matrixStackIn.scale(sz,sz,sz);
-		if(!entitylivingbaseIn.getIsMineReady()) {
+		if(!entitylivingbaseIn.isMineReady()) {
 			matrixStackIn.translate(0, 0.6f, 0);
 		}
 	}

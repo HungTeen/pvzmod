@@ -10,9 +10,9 @@ import net.minecraftforge.common.util.LazyOptional;
 public class PlayerUtil {
 
 	public static final int MAX_TREE_LVL = 100;
+//	public static final int MAX_SUN_TICK = 600;
 	
-	public static int getPlayerMaxSunNum(int lvl)
-	{
+	public static int getPlayerMaxSunNum(int lvl){
 		if(lvl<=10) return 100*lvl;   //100 200 ...1000
 		if(lvl<=20) return 150*(lvl-10)+1000; //1150 1300 ...2500
 		else if(lvl<=40) return 125*(lvl-20)+2500; //2625 2750 ...5000
@@ -22,13 +22,11 @@ public class PlayerUtil {
 		return 99999;
 	}
 	
-	public static int getPlayerMaxEnergyNum(int lvl)
-	{
+	public static int getPlayerMaxEnergyNum(int lvl){
 		return 1+lvl/20;
 	}
 	
-	public static int getPlayerLevelUpXp(int lvl)
-	{
+	public static int getPlayerLevelUpXp(int lvl){
 		if(lvl<=10) return 5*lvl;   //5 10 15 ...50
 		else if(lvl<=20) return 50+(lvl-10)*10; //60 70 .... 150
 		else if(lvl<=30) return 150+(lvl-20)*30; //180 210 240...450

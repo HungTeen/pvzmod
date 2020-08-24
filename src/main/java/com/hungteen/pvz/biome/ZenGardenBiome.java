@@ -1,8 +1,11 @@
 package com.hungteen.pvz.biome;
 
+import com.hungteen.pvz.PVZConfig;
+import com.hungteen.pvz.register.EntityRegister;
 import com.hungteen.pvz.world.feature.PVZFeatureConfig;
 import com.hungteen.pvz.world.feature.tree.NutTree;
 
+import net.minecraft.entity.EntityClassification;
 import net.minecraft.world.biome.Biome;
 import net.minecraft.world.biome.DefaultBiomeFeatures;
 import net.minecraft.world.gen.GenerationStage;
@@ -64,7 +67,9 @@ public class ZenGardenBiome extends PVZBiome {
 	
 	@Override
 	public void addSpawns() {
-//		this.addSpawn(EntityClassification.CREATURE, new Biome.SpawnListEntry(EntityRegister.SUN_FLOWER.get(),2,1,1));
+//		WorldEntitySpawner
+		this.addSpawn(EntityClassification.AMBIENT, new Biome.SpawnListEntry(EntityRegister.SUN.get(),PVZConfig.COMMON_CONFIG.EntitySettings.EntitySpawnWeight.SunSpawnWeight.get(),1,1));
+//		this.addSpawn(EntityClassification.CREATURE, new Biome.SpawnListEntry(EntityRegister.SUN_FLOWER.get(),20,1,1));
 	}
 
 }

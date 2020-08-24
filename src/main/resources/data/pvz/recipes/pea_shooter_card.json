@@ -1,0 +1,26 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "XXX",
+    "OBO",
+    "OAO"
+  ],
+  "key": {
+    "X": {
+      "item": "pvz:origin_essence"
+    },
+    "O": {
+      "item": "pvz:appease_essence"
+    },
+    "B": {
+      "item": "pvz:pea"
+    },
+    "A": {
+      "item": "pvz:gray_card"
+    }
+  },
+  "result": {
+    "item": "pvz:pea_shooter_card",
+    "count": 1
+  }
+}

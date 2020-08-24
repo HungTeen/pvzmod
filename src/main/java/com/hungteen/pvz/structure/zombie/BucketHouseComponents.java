@@ -94,7 +94,7 @@ public class BucketHouseComponents {
 				this.generateChest(worldIn, mutableBoundingBoxIn, worldIn.getRandom(), mid.add(randomIn.nextInt(2)+1, 0, randomIn.nextInt(2)+1), PVZLoot.BUCKET_HOUSE, null);
 			}
 			//spawner
-			worldIn.setBlockState(mid.add(1, -2, 1), Blocks.SPAWNER.getDefaultState(), 2);
+			worldIn.setBlockState(mid.add(0, -dy, 0), Blocks.SPAWNER.getDefaultState(), 2);
 			TileEntity te = worldIn.getTileEntity(mid.add(0, -dy, 0));
 			if(te instanceof MobSpawnerTileEntity) {
 				((MobSpawnerTileEntity)te).getSpawnerBaseLogic().setEntityType(getRandomEntityType(randomIn));

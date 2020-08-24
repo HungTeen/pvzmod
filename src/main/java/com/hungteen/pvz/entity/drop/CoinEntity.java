@@ -6,9 +6,9 @@ import com.hungteen.pvz.register.SoundRegister;
 import com.hungteen.pvz.utils.PlayerUtil;
 import com.hungteen.pvz.utils.enums.Resources;
 
-import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntitySize;
 import net.minecraft.entity.EntityType;
+import net.minecraft.entity.MobEntity;
 import net.minecraft.entity.Pose;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.util.SoundCategory;
@@ -16,7 +16,7 @@ import net.minecraft.world.World;
 
 public class CoinEntity extends DropEntity{
 
-	public CoinEntity(EntityType<? extends Entity> type, World worldIn) {
+	public CoinEntity(EntityType<? extends MobEntity> type, World worldIn) {
 		super(type, worldIn);
 		this.setAmount(this.getRandomAmount());
 	}
@@ -73,7 +73,7 @@ public class CoinEntity extends DropEntity{
 	
 	@Override
 	protected int getMaxLiveTick() {
-		return PVZConfig.COMMON_CONFIG.ENTITY_SETTINGS.entityLiveTick.coinLiveTick.get();
+		return PVZConfig.COMMON_CONFIG.EntitySettings.EntityLiveTick.CoinLiveTick.get();
 	}
 
 }

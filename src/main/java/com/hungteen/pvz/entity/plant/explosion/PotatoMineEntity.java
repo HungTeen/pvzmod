@@ -49,11 +49,11 @@ public class PotatoMineEntity extends PlantCloserEntity{
 			this.sign_red=!this.sign_red;
 		}
 		this.setAttackTime(this.getAttackTime()+1);
-		if(this.getAttackTime()>=this.getReadyTime()&&!this.getIsMineReady()) {
+		if(this.getAttackTime()>=this.getReadyTime()&&!this.isMineReady()) {
 			this.outDirt();
 		}
 		if(this.isPlantInSuperMode()) {
-			if(!this.getIsMineReady()) {
+			if(!this.isMineReady()) {
 				this.outDirt();
 			}
 			if(!world.isRemote) {
@@ -80,7 +80,7 @@ public class PotatoMineEntity extends PlantCloserEntity{
 	
 	@Override
 	public boolean performAttack() {
-		if(!this.getIsMineReady()) return false;//not ready
+		if(!this.isMineReady()) return false;//not ready
 		if(!this.world.isRemote) {
 			AxisAlignedBB aabb= EntityUtil.getEntityAABB(this, bombRange,bombRange);
 			for(LivingEntity target:EntityUtil.getEntityAttackableTarget(this, aabb)) {
@@ -93,6 +93,9 @@ public class PotatoMineEntity extends PlantCloserEntity{
 	
 	@Override
 	public void spawnParticle() {
+		if(!this.isMineReady()) {
+			return ;
+		}
 		for(int i=1;i<=5;i++) {
 //			System.out.println("111");
 			this.world.addParticle(ParticleRegister.DIRT_BURST_OUT.get(), this.getPosX(), this.getPosY(), this.getPosZ(), (rand.nextFloat()-0.5)/4,0.4d,(rand.nextFloat()-0.5)/4);
@@ -105,7 +108,7 @@ public class PotatoMineEntity extends PlantCloserEntity{
 	 * potato mine get ready now
 	 */
 	protected void outDirt(){
-		this.setIsMineReady(true);
+		this.setMineReady(true);
 		for(int i=0;i<10;i++) {
 			Random rand=this.getRNG();
 			this.world.addParticle(ParticleRegister.DIRT_BURST_OUT.get(), this.getPosX()+0.5d, this.getPosY(), this.getPosZ()+0.5d, (rand.nextFloat()-0.5)/10,0.05d,(rand.nextFloat()-0.5)/10);
@@ -117,7 +120,7 @@ public class PotatoMineEntity extends PlantCloserEntity{
 	
 	@Override
 	public boolean isInvulnerableTo(DamageSource source) {
-		if(this.getIsMineReady()&&source instanceof PVZDamageSource) {
+		if(this.isMineReady()&&source instanceof PVZDamageSource) {
 			if(((PVZDamageSource) source).getPVZDamageType()==PVZDamageType.EAT) return true;
 		}
 		return super.isInvulnerableTo(source);
@@ -148,7 +151,7 @@ public class PotatoMineEntity extends PlantCloserEntity{
 	
 	protected int getSignChangeTime()
 	{
-		if(this.getIsMineReady()) return 10;
+		if(this.isMineReady()) return 10;
 		return 20;
 	}
 	
@@ -165,23 +168,23 @@ public class PotatoMineEntity extends PlantCloserEntity{
 	@Override
 	public void readAdditional(CompoundNBT compound) {
 		super.readAdditional(compound);
-		this.setIsMineReady(compound.getBoolean("is_mine_ready"));
+		this.setMineReady(compound.getBoolean("mine_ready"));
 		this.sign_red=compound.getBoolean("sign_red");
 	}
 	
 	@Override
 	public void writeAdditional(CompoundNBT compound) {
 		super.writeAdditional(compound);
-		compound.putBoolean("is_mine_ready", this.getIsMineReady());
+		compound.putBoolean("mine_ready", this.isMineReady());
 		compound.putBoolean("sign_red", this.sign_red);
 	}
 	
-	public void setIsMineReady(boolean is)
+	public void setMineReady(boolean is)
     {
     	this.dataManager.set(MINE_READY, is);
     }
     
-    public boolean getIsMineReady()
+    public boolean isMineReady()
     {
     	return this.dataManager.get(MINE_READY);
     }

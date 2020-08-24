@@ -15,7 +15,6 @@ import com.hungteen.pvz.entity.drop.EnergyEntity;
 import com.hungteen.pvz.entity.plant.PVZPlantEntity;
 import com.hungteen.pvz.misc.damage.PVZDamageSource;
 import com.hungteen.pvz.misc.damage.PVZDamageType;
-import com.hungteen.pvz.misc.loot.PVZLoot;
 import com.hungteen.pvz.register.EntityRegister;
 import com.hungteen.pvz.register.EffectRegister;
 import com.hungteen.pvz.register.SoundRegister;
@@ -52,6 +51,7 @@ import net.minecraft.world.IWorld;
 import net.minecraft.world.IWorldReader;
 import net.minecraft.world.LightType;
 import net.minecraft.world.World;
+import net.minecraft.world.storage.loot.LootTables;
 
 public abstract class PVZZombieEntity extends MonsterEntity implements IPVZZombie {
 
@@ -85,7 +85,7 @@ public abstract class PVZZombieEntity extends MonsterEntity implements IPVZZombi
 	 */
 	protected Type getSpawnType() {
 		int t = this.getRNG().nextInt(100);
-		if (t <= PVZConfig.COMMON_CONFIG.ENTITY_SETTINGS.zombieSuperChance.get())
+		if (t <= PVZConfig.COMMON_CONFIG.EntitySettings.ZombieSuperChance.get())
 			return Type.SUPER;
 		return Type.NORMAL;
 	}
@@ -171,6 +171,7 @@ public abstract class PVZZombieEntity extends MonsterEntity implements IPVZZombi
 					//finish achievement
 				}
 				this.dropCoin();
+				this.zombieDropItem();
 			}
 		}
 	}
@@ -178,8 +179,7 @@ public abstract class PVZZombieEntity extends MonsterEntity implements IPVZZombi
 	/**
 	 * zombies have chance to drop coin when died
 	 */
-	protected void dropCoin()
-	{
+	protected void dropCoin(){
 		int num=this.getRNG().nextInt(10000);
 		int amount=0;
 		if(num<1000) amount=1;
@@ -190,10 +190,17 @@ public abstract class PVZZombieEntity extends MonsterEntity implements IPVZZombi
 			CoinEntity coin = EntityRegister.COIN.get().create(world);
 			coin.setPosition(getPosX(),getPosY(),getPosZ());
 			coin.setAmount(amount);
-			if(amount==1000) coin.playSound(SoundRegister.COIN_DROP.get(), 1f,1f);
-			else coin.playSound(SoundRegister.JEWEL_DROP.get(), 1f,1f);
+			if(amount==1000) coin.playSound(SoundRegister.JEWEL_DROP.get(), 1f,1f);
+			else coin.playSound(SoundRegister.COIN_DROP.get(), 1f,1f);
 			this.world.addEntity(coin);
 		}
+	}
+	
+	/**
+	 * zombie loottable is different from default mc.
+	 * only in server side
+	 */
+	protected void zombieDropItem() {
 	}
 	
 	@Override
@@ -499,7 +506,7 @@ public abstract class PVZZombieEntity extends MonsterEntity implements IPVZZombi
 
 	@Override
 	protected ResourceLocation getLootTable() {
-		return PVZLoot.NORMAL_ZOMBIE;
+		return LootTables.EMPTY;
 	}
 	
 	public enum Type {

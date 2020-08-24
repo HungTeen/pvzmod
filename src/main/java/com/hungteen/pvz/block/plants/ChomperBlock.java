@@ -57,7 +57,7 @@ public class ChomperBlock extends BushBlock{
 						BlockPos tmp = pos.add(i, j, k);
 						if(isValidGround(worldIn.getBlockState(tmp), worldIn, tmp)) {
 							if(worldIn.isAirBlock(tmp.up())){
-								int chance=PVZConfig.COMMON_CONFIG.BLOCK_SETTINGS.chomperGrowChance.get();
+								int chance=PVZConfig.COMMON_CONFIG.BlockSettings.ChomperGrowChance.get();
 								if(this.RANDOM.nextInt(chance)==0) {
 									worldIn.setBlockState(tmp.up(), BlockRegister.CHOMPER.get().getDefaultState());
 								}

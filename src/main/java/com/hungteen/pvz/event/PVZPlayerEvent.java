@@ -34,6 +34,7 @@ import net.minecraftforge.fml.common.Mod;
 @Mod.EventBusSubscriber(modid=PVZMod.MOD_ID)
 public class PVZPlayerEvent {
 
+	
 	@SubscribeEvent
 	public static void onPlayerLogin(PlayerEvent.PlayerLoggedInEvent ev) {
 //		PVZMod.LOGGER.debug("player logged!");
@@ -74,7 +75,7 @@ public class PVZPlayerEvent {
 			if(state.getBlock()==Blocks.GRASS||state.getBlock()==Blocks.TALL_GRASS) {//break grass
 				Random rand = new Random();
 //				System.out.println(PVZConfig.COMMON_CONFIG.BLOCK_SETTINGS.breakBlock.peaDropChance.get());
-				if(rand.nextInt(PVZConfig.COMMON_CONFIG.BLOCK_SETTINGS.breakBlock.peaDropChance.get())==0) {//drop pea 
+				if(rand.nextInt(PVZConfig.COMMON_CONFIG.BlockSettings.BreakBlock.PeaDropChance.get())==0) {//drop pea 
 //					System.out.println("chance right");
 					player.world.addEntity(new ItemEntity(player.world,pos.getX(), pos.getY(), pos.getZ(), new ItemStack(ItemRegister.PEA.get(),1)));
 				}

@@ -24,7 +24,7 @@ public class NormalZombieEntity extends PVZZombieEntity{
 	@Override
 	protected Type getSpawnType() {
 		int t = this.getRNG().nextInt(100);
-		if (t <= PVZConfig.COMMON_CONFIG.ENTITY_SETTINGS.zombieSuperChance.get()) return Type.SUPER;
+		if (t <= PVZConfig.COMMON_CONFIG.EntitySettings.ZombieSuperChance.get()) return Type.SUPER;
 		if(t==99) return Type.BEARD;
 	    return Type.NORMAL;
 	}

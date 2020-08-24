@@ -35,7 +35,7 @@ public class OriginBlock extends Block
 				for(int j=-1;j<=1;j++) {
 					for(int k=-1;k<=1;k++) {
 						if(i==k&&k==j&&i==0) return ;
-						if(rand.nextInt(PVZConfig.COMMON_CONFIG.BLOCK_SETTINGS.originBlockEffectChance.get())==0) {
+						if(rand.nextInt(PVZConfig.COMMON_CONFIG.BlockSettings.OriginBlockEffectChance.get())==0) {
 						    checkAndGrow(worldIn,pos.getX()+i,pos.getY()+j,pos.getZ()+k);
 						}
 					}

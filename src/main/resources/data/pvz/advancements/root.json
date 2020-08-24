@@ -1,0 +1,32 @@
+{
+  "display": {
+    "icon": {
+      "item": "pvz:pea_shooter_card"
+    },
+    "title": {
+      "translate": "advancement.pvz.root"
+    },
+    "description": {
+      "translate": "advancement.pvz.root.desc"
+    },
+	"frame":"task",
+    "background": "pvz:textures/block/origin_block.png",
+    "announce_to_chat": true
+  },
+  "criteria": {
+    "in_world": {
+      "trigger": "minecraft:location",
+      "conditions": {
+        "dimension": "overworld"
+      }
+    }
+  },
+  "requirements": [[
+    "in_world"
+  ]],
+  "rewards":{
+    "recipes":[
+	    
+    ]
+  }
+}

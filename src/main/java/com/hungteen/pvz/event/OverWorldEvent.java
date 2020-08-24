@@ -20,7 +20,7 @@ public class OverWorldEvent {
 	public static void tick(TickEvent.WorldTickEvent ev) {
 		World world = ev.world;
 		long totalTime = world.getDayTime();
-		if(world.getGameTime()<PVZConfig.COMMON_CONFIG.WORLD_SETTINGS.worldEventSettings.SafeDayLength.get()*24000) {
+		if(world.getGameTime()<PVZConfig.COMMON_CONFIG.WorldSettings.WorldEventSettings.SafeDayLength.get()*24000) {
 			return ;
 		}
 		int time=(int) (totalTime%24000);
@@ -88,6 +88,6 @@ public class OverWorldEvent {
 	}
 	
 	public static int getZombieAttackChance() {
-		return PVZConfig.COMMON_CONFIG.WORLD_SETTINGS.worldEventSettings.ZombieWaveChance.get();
+		return PVZConfig.COMMON_CONFIG.WorldSettings.WorldEventSettings.ZombieAttackChance.get();
 	}
 }

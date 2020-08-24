@@ -18,7 +18,7 @@ public class BreakOutEnchantment extends Enchantment{
 	
 	@Override
 	public int getMaxEnchantability(int enchantmentLevel) {
-		return getMaxEnchantability(enchantmentLevel)+5;
+		return getMinEnchantability(enchantmentLevel)+5;
 	}
 	
 	@Override

@@ -75,13 +75,11 @@ public class PlayerDataManager {
 			}
 		}
 		
-		public int getPlayerStats(Resources res)
-		{
+		public int getPlayerStats(Resources res){
 			return resources.get(res);
 		}
 		
-		public void addPlayerStats(Resources res,int num)
-		{
+		public void addPlayerStats(Resources res,int num){
 			switch (res) {
 			case TREE_LVL:{
 				addTreeLvl(num);
@@ -109,8 +107,7 @@ public class PlayerDataManager {
 			this.sendPacket(player,res);
 		}
 		
-		private void addEnergyNum(int num)
-		{
+		private void addEnergyNum(int num){
 			int now=resources.get(Resources.ENERGY_NUM);
 			int lvl=resources.get(Resources.TREE_LVL);
 			if(num>0) now=Math.min(PlayerUtil.getPlayerMaxEnergyNum(lvl),now+num);
@@ -118,16 +115,14 @@ public class PlayerDataManager {
 			resources.put(Resources.ENERGY_NUM, now);
 		}
 		
-		private void addMoney(int num)
-		{
+		private void addMoney(int num){
 			int now=resources.get(Resources.MONEY);
 			if(num>0) now=now+num;
 			else now=Math.max(0, now+num);
 			resources.put(Resources.MONEY, now);
 		}
 		
-		private void addTreeXp(int num)
-		{
+		private void addTreeXp(int num){
 			int lvl=resources.get(Resources.TREE_LVL);
 			int now=resources.get(Resources.TREE_XP);
 			if(num>0) {
@@ -151,8 +146,7 @@ public class PlayerDataManager {
 			}
 		}
 		
-		private void addSunNum(int num)
-		{
+		private void addSunNum(int num){
 			int now=resources.get(Resources.SUN_NUM);
 			int lvl=resources.get(Resources.TREE_LVL);
 			if(num>0) now=Math.min(PlayerUtil.getPlayerMaxSunNum(lvl),now+num);
@@ -160,16 +154,14 @@ public class PlayerDataManager {
 			resources.put(Resources.SUN_NUM, now);
 		}
 		
-		private void addTreeLvl(int num)
-		{
+		private void addTreeLvl(int num){
 			int now=resources.get(Resources.TREE_LVL);
 			if(num>0) now=Math.min(PlayerUtil.MAX_TREE_LVL, now+num);
 			else now=Math.max(1, now+num);
 			resources.put(Resources.TREE_LVL, now);
 		}
 		
-		public void sendPacket(PlayerEntity player,Resources res)
-		{
+		public void sendPacket(PlayerEntity player,Resources res){
 			if (player instanceof ServerPlayerEntity) {
 //				System.out.println(res.toString()+" "+resources.get(res));
 				PVZPacketHandler.CHANNEL.send(
@@ -197,8 +189,7 @@ public class PlayerDataManager {
 		}
 	}
 	
-	public final class PlantStats
-	{
+	public final class PlantStats{
 		@SuppressWarnings("unused")
 		private final PlayerDataManager playerDataManager;
 		private HashMap<Plants, Integer> plantXp= new HashMap<Plants, Integer>(Plants.values().length);
