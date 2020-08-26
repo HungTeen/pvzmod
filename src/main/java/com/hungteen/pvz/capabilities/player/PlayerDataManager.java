@@ -70,6 +70,8 @@ public class PlayerDataManager {
 			this.playerDataManager = dataManager;
 			for(Resources res:Resources.values()) {
 				if(res==Resources.TREE_LVL) resources.put(res, 1);
+				else if(res==Resources.MAX_ENERGY_NUM) resources.put(res, 1);
+				else if(res==Resources.MAX_CARD_SLOT) resources.put(res, 9);
 				else if(res==Resources.SUN_NUM) resources.put(res, 50);
 				else resources.put(res,0);
 			}
@@ -109,8 +111,8 @@ public class PlayerDataManager {
 		
 		private void addEnergyNum(int num){
 			int now=resources.get(Resources.ENERGY_NUM);
-			int lvl=resources.get(Resources.TREE_LVL);
-			if(num>0) now=Math.min(PlayerUtil.getPlayerMaxEnergyNum(lvl),now+num);
+			int max=resources.get(Resources.MAX_ENERGY_NUM);
+			if(num>0) now=Math.min(max,now+num);
 			else now=Math.max(0, now+num);
 			resources.put(Resources.ENERGY_NUM, now);
 		}

@@ -1,5 +1,6 @@
 package com.hungteen.pvz.event;
 
+import com.hungteen.pvz.PVZConfig;
 import com.hungteen.pvz.PVZMod;
 import com.hungteen.pvz.gui.PVZMainMenu;
 
@@ -15,8 +16,10 @@ public class PVZClientEvent {
 	@SubscribeEvent
 	public static void onGuiOpened(GuiOpenEvent event) {
 //		System.out.println("open gui");
-		if (event.getGui() instanceof MainMenuScreen&& !(event.getGui() instanceof PVZMainMenu)) {
-			event.setGui(new PVZMainMenu());
+		if(PVZConfig.CLIENT_CONFIG.OtherSettings.ShowPVZMainMenu.get()) {//show pvz menu
+		    if (event.getGui() instanceof MainMenuScreen&& !(event.getGui() instanceof PVZMainMenu)) {
+			    event.setGui(new PVZMainMenu());
+		    }
 		}
 	}
 }

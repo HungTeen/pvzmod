@@ -55,6 +55,4 @@ public class PVZMod
         PROXY.postInit();
     }
     
-    @SubscribeEvent
-    public static void 
 }

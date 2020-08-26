@@ -1,0 +1,24 @@
+Summon-Card can be used to summon 
+its corresponding entity,The most 
+typical is Plant-Card,facing the
+top of the block and right click
+on the plant card to summon plant.
+In addition,there is a special kind
+of card -- Plant experience card,
+the difference will be showed below.
+
+
+
+[left is Plant-Card,right is another]
+By appearance,the background of left 
+is transparent,while right has color.
+The former has 1 maxStackSize,can be 
+used unlimitedly,can be enchanted,while 
+another is 16 maxStackSize and can be 
+use only once,can't be enchanted.left
+can be obtained by craft or purchase,
+right can get with chest or lottery.
+The enchantment of Plant-Card:
+Sun Reduce,Reduce consumption of sun.
+Break Out,plant can be super when spawn.
+[pls wait to update]

@@ -37,11 +37,7 @@ public class PVZPlayerEvent {
 	
 	@SubscribeEvent
 	public static void onPlayerLogin(PlayerEvent.PlayerLoggedInEvent ev) {
-//		PVZMod.LOGGER.debug("player logged!");
 		PlayerEntity player = ev.getPlayer();
-		if(!player.world.isRemote) {
-//		    player.sendMessage(new StringTextComponent("welcome"));
-		}
 		if (player instanceof ServerPlayerEntity && !player.world.isRemote) {
 			player.getCapability(CapabilityHandler.PLAYER_DATA_CAPABILITY).ifPresent((l)->{
 				PlayerDataManager plData = l.getPlayerData();

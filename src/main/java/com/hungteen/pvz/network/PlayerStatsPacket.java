@@ -2,7 +2,7 @@ package com.hungteen.pvz.network;
 
 import java.util.function.Supplier;
 
-import com.hungteen.pvz.capabilities.player.PVZGuiTabPlayerData;
+import com.hungteen.pvz.capabilities.player.ClientPlayerResources;
 
 import net.minecraft.network.PacketBuffer;
 import net.minecraftforge.fml.network.NetworkEvent;
@@ -32,7 +32,7 @@ public class PlayerStatsPacket{
 		public static void onMessage(PlayerStatsPacket message, Supplier<NetworkEvent.Context> ctx) {
 //			PVZMod.LOGGER.debug(message.type+" y "+message.data);
 		    ctx.get().enqueueWork(()->{
-			    PVZGuiTabPlayerData.setPlayerData(message.type,message.data);
+			    ClientPlayerResources.setPlayerData(message.type,message.data);
 //			    PVZMod.LOGGER.debug(message.type+" z "+message.data);
 		    });
 		    ctx.get().setPacketHandled(true);

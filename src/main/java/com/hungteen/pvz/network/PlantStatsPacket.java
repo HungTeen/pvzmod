@@ -2,7 +2,7 @@ package com.hungteen.pvz.network;
 
 import java.util.function.Supplier;
 
-import com.hungteen.pvz.capabilities.player.PVZGuiTabPlayerData;
+import com.hungteen.pvz.capabilities.player.ClientPlayerResources;
 
 import net.minecraft.network.PacketBuffer;
 import net.minecraftforge.fml.network.NetworkEvent;
@@ -34,7 +34,7 @@ public class PlantStatsPacket {
 	public static class Handler {
 		public static void onMessage(PlantStatsPacket message, Supplier<NetworkEvent.Context> ctx) {
 		    ctx.get().enqueueWork(()->{
-			    PVZGuiTabPlayerData.setPlantData(message.type,message.lvl,message.xp);
+			    ClientPlayerResources.setPlantData(message.type,message.lvl,message.xp);
 		    });
 		    ctx.get().setPacketHandled(true);
 	    }

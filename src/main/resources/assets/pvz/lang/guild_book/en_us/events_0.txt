@@ -1,0 +1,23 @@
+It has been several days, why is 
+there still no zombie?
+It maybe because the wisdom-tree 
+in your body hides your breath,but
+this is not permanent protection. 
+3 days later,This protection will 
+disappear,and overworld will have 
+a certain probability of being 
+invaded by zombies!
+Zombie invasion is called an event,
+and the type of event determines
+Type and number of zombies invaded.
+[SafeDay&InvadeChance can edit in
+PVZ Config File]
+
+
+
+
+
+
+Current event list:
+Bucket(Normal&Flag&ConeHead&Pole
+&BucketHead Zombies)

@@ -26,6 +26,9 @@
     "item.pvz.purple_card":"紫卡模板",
     "item.pvz.gold_card":"金卡模板",
     "item.pvz.red_card":"红卡模板",
+//misc
+    "item.pvz.strange_help":"奇怪的帮助",
+    "item.pvz.guild_book":"PVZ指导书",
 //entity & spawn egg & card  
 //drop
     "entity.pvz.sun":"阳光",
@@ -125,6 +128,19 @@
     "block.pvz.nut_sapling":"坚果树苗",
     "block.pvz.nut_leaves":"坚果树叶",
     "block.pvz.chomper":"食人花",
+//gui
+    "gui.pvz.strange_help":"<<植物大战僵尸mod帮助>>",
+    "gui.pvz.strange_help1":"当僵尸出现的时候,",
+    "gui.pvz.strange_help2":"你只需要站在那儿，啥都不要做,",
+    "gui.pvz.strange_help3":"僵尸吃掉了你的脑子时，你就赢了!",
+    "gui.pvz.strange_help4":"--这部分帮助是僵尸送给你的--",
+    "gui.pvz.guild_book0":"玩家属性",
+    "gui.pvz.guild_book1":"事件",
+    "gui.pvz.guild_book2":"植物精华",
+    "gui.pvz.guild_book3":"召唤卡",
+    "gui.pvz.guild_book4":"禅境花园",
+    "gui.pvz.guild_book5":"僵尸小屋",
+    "gui.pvz.guild_book6":"植物获取",
 //enchantment
     "enchantment.pvz.sun_cost_reduce":"节能",
     "enchantment.pvz.break_out":"爆发",

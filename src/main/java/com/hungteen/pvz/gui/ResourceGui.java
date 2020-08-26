@@ -2,7 +2,7 @@ package com.hungteen.pvz.gui;
 
 import com.hungteen.pvz.PVZConfig;
 import com.hungteen.pvz.PVZMod;
-import com.hungteen.pvz.capabilities.player.PVZGuiTabPlayerData;
+import com.hungteen.pvz.capabilities.player.ClientPlayerResources;
 import com.hungteen.pvz.register.KeyBindRegister;
 import com.hungteen.pvz.utils.PlayerUtil;
 import com.hungteen.pvz.utils.StringUtil;
@@ -71,9 +71,9 @@ public class ResourceGui{
 	}
 	
 	protected static void drawSunNumBar(){
-		int lvl = PVZGuiTabPlayerData.getPlayerStats(Resources.TREE_LVL);
+		int lvl = ClientPlayerResources.getPlayerStats(Resources.TREE_LVL);
 		int maxNum = PlayerUtil.getPlayerMaxSunNum(lvl);
-		int num = PVZGuiTabPlayerData.getPlayerStats(Resources.SUN_NUM);
+		int num = ClientPlayerResources.getPlayerStats(Resources.SUN_NUM);
 		double percent = Math.min(num * 1.0d / maxNum, 1.0d);
 
 		int len = MathHelper.floor(percent * 61);
@@ -93,7 +93,7 @@ public class ResourceGui{
 	
 	protected static void drawMoneyBar(int w,int h){
 		mc.ingameGUI.blit(w - tex_width - 1, h - tex_height - 1, 0, 200, tex_width, tex_height);
-		StringUtil.drawCenteredScaledString(mc.fontRenderer, PVZGuiTabPlayerData.getPlayerStats(Resources.MONEY) + "",w - tex_width - 1+35,
+		StringUtil.drawCenteredScaledString(mc.fontRenderer, ClientPlayerResources.getPlayerStats(Resources.MONEY) + "",w - tex_width - 1+35,
 				h - tex_height - 1 +8, Colors.WHITE, 1.5f);
 //		drawTexturedModalRect(w - tex_width - 1, h - tex_height - 1, 0, 200, tex_width, tex_height);
 ////		System.out.println(PVZGuiTabPlayerData.money);
@@ -102,9 +102,8 @@ public class ResourceGui{
 	}
 	
 	protected static void drawEnergyNumBar(int w,int h){
-		int lvl=PVZGuiTabPlayerData.getPlayerStats(Resources.TREE_LVL);
-		int maxNum = PlayerUtil.getPlayerMaxEnergyNum(lvl);
-		int num = PVZGuiTabPlayerData.getPlayerStats(Resources.ENERGY_NUM);
+		int maxNum = ClientPlayerResources.getPlayerStats(Resources.MAX_ENERGY_NUM);
+		int num = ClientPlayerResources.getPlayerStats(Resources.ENERGY_NUM);
 		double percent = Math.min(num * 1.0d / maxNum, 1.0d);
 		int len = MathHelper.floor(percent * 61);
 		if (num != 0 && len == 0)

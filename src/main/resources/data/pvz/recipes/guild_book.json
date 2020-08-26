@@ -1,0 +1,17 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "ingredients":
+    [
+        {
+             "item": "minecraft:book"
+        },
+        {
+             "item": "minecraft:oak_sapling"
+        }
+    ],
+
+     "result": {
+          "item": "pvz:guild_book",
+          "count": 1
+      }
+}

@@ -26,6 +26,9 @@
     "item.pvz.purple_card":"Purple Card",
     "item.pvz.gold_card":"Gold Card",
     "item.pvz.red_card":"Red Card",
+//misc
+    "item.pvz.strange_help":"Strange Help",
+    "item.pvz.guild_book":"PVZ Guild Book",
 //entity & spawn egg & card
 //drop
     "entity.pvz.sun":"Sun",
@@ -125,6 +128,19 @@
     "block.pvz.nut_sapling":"Nut Sapling",
     "block.pvz.nut_leaves":"Nut Leaves",
     "block.pvz.chomper":"Chomper",
+//gui
+    "gui.pvz.strange_help":"Help for Plants vs Zombies mod",
+    "gui.pvz.strange_help1":"When the Zombies show up,just",
+    "gui.pvz.strange_help2":"stand there and do nothing.",
+    "gui.pvz.strange_help3":"You win when they eat your brain!",
+    "gui.pvz.strange_help4":"-this help brought to you by the Zombies",
+    "gui.pvz.guild_book0":"Player Stats",
+    "gui.pvz.guild_book1":"Events",
+    "gui.pvz.guild_book2":"Essences",
+    "gui.pvz.guild_book3":"Summon Card",
+    "gui.pvz.guild_book4":"Zen Garden",
+    "gui.pvz.guild_book5":"Zombie House",
+    "gui.pvz.guild_book6":"Plant obtain",
 //enchantment
     "enchantment.pvz.sun_cost_reduce":"Sun Reduce",
     "enchantment.pvz.break_out":"Break Out",

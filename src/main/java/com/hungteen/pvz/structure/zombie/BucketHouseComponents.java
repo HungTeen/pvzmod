@@ -103,11 +103,10 @@ public class BucketHouseComponents {
 		}
 
 		protected EntityType<?> getRandomEntityType(Random rand){
-			int num=rand.nextInt(4);
-			if(num==0) return EntityRegister.NORMAL_ZOMBIE.get();
-			else if(num==1) return EntityRegister.CONEHEAD_ZOMBIE.get();
-			else if(num==2) return EntityRegister.POLE_ZOMBIE.get();
-			else if(num==3) return EntityRegister.BUCKETHEAD_ZOMBIE.get();
+			int num=rand.nextInt(3);
+			if(num==0) return EntityRegister.CONEHEAD_ZOMBIE.get();
+			else if(num==1) return EntityRegister.POLE_ZOMBIE.get();
+			else if(num==2) return EntityRegister.BUCKETHEAD_ZOMBIE.get();
 			return null;
 		}
 		

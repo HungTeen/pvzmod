@@ -4,6 +4,7 @@ import java.util.Arrays;
 import java.util.List;
 
 import com.hungteen.pvz.PVZMod;
+import com.hungteen.pvz.block.EssenceOreBlock;
 import com.hungteen.pvz.block.OriginBlock;
 import com.hungteen.pvz.block.plants.ChomperBlock;
 import com.hungteen.pvz.block.plants.PVZSaplingBlock;
@@ -37,21 +38,21 @@ public class BlockRegister {
 	public static final DeferredRegister<Block> BLOCKS = new DeferredRegister<>(ForgeRegistries.BLOCKS, PVZMod.MOD_ID);
 
 	//ore
-	public static final RegistryObject<Block> ORIGIN_ORE = BLOCKS.register("origin_ore",() -> new Block(getEssenceOreProperties()));
-	public static final RegistryObject<Block> APPEASE_ORE = BLOCKS.register("appease_ore",() -> new Block(getEssenceOreProperties()));
-	public static final RegistryObject<Block> LIGHT_ORE = BLOCKS.register("light_ore",() -> new Block(getEssenceOreProperties()));
-	public static final RegistryObject<Block> EXPLOSION_ORE = BLOCKS.register("explosion_ore",() -> new Block(getEssenceOreProperties()));
-	public static final RegistryObject<Block> DEFENCE_ORE = BLOCKS.register("defence_ore",() -> new Block(getEssenceOreProperties()));
-	public static final RegistryObject<Block> ICE_ORE = BLOCKS.register("ice_ore",() -> new Block(getEssenceOreProperties()));
-	public static final RegistryObject<Block> ENFORCE_ORE = BLOCKS.register("enforce_ore",() -> new Block(getEssenceOreProperties()));
-	public static final RegistryObject<Block> TOXIC_ORE = BLOCKS.register("toxic_ore",() -> new Block(getEssenceOreProperties()));
-	public static final RegistryObject<Block> ASSIST_ORE = BLOCKS.register("assist_ore",() -> new Block(getEssenceOreProperties()));
-	public static final RegistryObject<Block> MAGIC_ORE = BLOCKS.register("magic_ore",() -> new Block(getEssenceOreProperties()));
-	public static final RegistryObject<Block> FLAME_ORE = BLOCKS.register("flame_ore",() -> new Block(getEssenceOreProperties()));
-	public static final RegistryObject<Block> SPEAR_ORE = BLOCKS.register("spear_ore",() -> new Block(getEssenceOreProperties()));
-	public static final RegistryObject<Block> ARMA_ORE = BLOCKS.register("arma_ore",() -> new Block(getEssenceOreProperties()));
-	public static final RegistryObject<Block> ELECTRIC_ORE = BLOCKS.register("electric_ore",() -> new Block(getEssenceOreProperties()));
-	public static final RegistryObject<Block> SHADOW_ORE = BLOCKS.register("shadow_ore",() -> new Block(getEssenceOreProperties()));
+	public static final RegistryObject<Block> ORIGIN_ORE = BLOCKS.register("origin_ore",EssenceOreBlock::new);
+	public static final RegistryObject<Block> APPEASE_ORE = BLOCKS.register("appease_ore",EssenceOreBlock::new);
+	public static final RegistryObject<Block> LIGHT_ORE = BLOCKS.register("light_ore",EssenceOreBlock::new);
+	public static final RegistryObject<Block> EXPLOSION_ORE = BLOCKS.register("explosion_ore",EssenceOreBlock::new);
+	public static final RegistryObject<Block> DEFENCE_ORE = BLOCKS.register("defence_ore",EssenceOreBlock::new);
+	public static final RegistryObject<Block> ICE_ORE = BLOCKS.register("ice_ore",EssenceOreBlock::new);
+	public static final RegistryObject<Block> ENFORCE_ORE = BLOCKS.register("enforce_ore",EssenceOreBlock::new);
+	public static final RegistryObject<Block> TOXIC_ORE = BLOCKS.register("toxic_ore",EssenceOreBlock::new);
+	public static final RegistryObject<Block> ASSIST_ORE = BLOCKS.register("assist_ore",EssenceOreBlock::new);
+	public static final RegistryObject<Block> MAGIC_ORE = BLOCKS.register("magic_ore",EssenceOreBlock::new);
+	public static final RegistryObject<Block> FLAME_ORE = BLOCKS.register("flame_ore",EssenceOreBlock::new);
+	public static final RegistryObject<Block> SPEAR_ORE = BLOCKS.register("spear_ore",EssenceOreBlock::new);
+	public static final RegistryObject<Block> ARMA_ORE = BLOCKS.register("arma_ore",EssenceOreBlock::new);
+	public static final RegistryObject<Block> ELECTRIC_ORE = BLOCKS.register("electric_ore",EssenceOreBlock::new);
+	public static final RegistryObject<Block> SHADOW_ORE = BLOCKS.register("shadow_ore",EssenceOreBlock::new);
 	public static final RegistryObject<Block> AMETHYST_ORE = BLOCKS.register("amethyst_ore",() -> new Block(Block.Properties.from(Blocks.DIAMOND_ORE)));
 	
 	//block
@@ -68,27 +69,21 @@ public class BlockRegister {
 	public static final RegistryObject<Block> CHOMPER = BLOCKS.register("chomper", ChomperBlock::new);
 	
 	//tileentity block
-//	public static final RegistryObject<Block> BUCKET_WAVE = BLOCKS.register("bucket_wave", BucketWaveBlock::new);
+	
 	/**
 	 * 注册itemblock
 	 */
 	@SubscribeEvent
-	public static void registerBlockItem(RegistryEvent.Register<Item> ev)
-	{
+	public static void registerBlockItem(RegistryEvent.Register<Item> ev){
 		IForgeRegistry<Item> items = ev.getRegistry();
 		List<RegistryObject<? extends Block>> blocks = Arrays.asList(
 				ORIGIN_ORE,APPEASE_ORE,LIGHT_ORE,EXPLOSION_ORE,DEFENCE_ORE,ICE_ORE,ENFORCE_ORE,TOXIC_ORE,ASSIST_ORE,MAGIC_ORE,FLAME_ORE,SPEAR_ORE,ARMA_ORE,ELECTRIC_ORE,SHADOW_ORE,AMETHYST_ORE,
 				STEEL_BLOCK,AMETHYST_BLOCK,ORIGIN_BLOCK,
 				NUT_LEAVES,NUT_SAPLING,CHOMPER
-//				BUCKET_WAVE
 		);
 		for(RegistryObject<? extends Block> block:blocks) {
 			items.register(new BlockItem(block.get(),new Item.Properties().group(GroupRegister.PVZ_MISC)).setRegistryName(block.get().getRegistryName()));
 		}
 	}
 	
-	public static Block.Properties getEssenceOreProperties()
-	{
-		return Block.Properties.from(Blocks.DIAMOND_ORE).hardnessAndResistance(9,9).lightValue(10).harvestLevel(3);
-	}
 }

@@ -26,7 +26,10 @@
   ]],
   "rewards":{
     "recipes":[
-	    
+	    "pvz:guild_book"
+    ],
+    "loot":[
+        "pvz:rewards/join_overworld"
     ]
   }
 }

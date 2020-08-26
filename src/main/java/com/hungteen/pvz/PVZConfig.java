@@ -241,17 +241,17 @@ public class PVZConfig {
 		public Client(ForgeConfigSpec.Builder builder) {
 			builder.comment("Player Resource Bar Settings").push("Resource Render Settings");
 			{
-				CLIENT_CONFIG.ResourceRender.RenderSunNumBar = builder
+				ResourceRender.RenderSunNumBar = builder
 						.translation(CONFIG_TRANSLATE+"render_sun_num_bar")
 						.comment("Should Render SunNumBar")
 						.worldRestart()
 						.define("RenderSunNumBar", true);
-				CLIENT_CONFIG.ResourceRender.RenderEnergyNumBar = builder
+				ResourceRender.RenderEnergyNumBar = builder
 						.translation(CONFIG_TRANSLATE+"render_energy_num_bar")
 						.comment("Should Render EnergyNumBar")
 						.worldRestart()
 						.define("RenderEnergyNumBar", true);
-				CLIENT_CONFIG.ResourceRender.RenderMoneyBar = builder
+				ResourceRender.RenderMoneyBar = builder
 						.translation(CONFIG_TRANSLATE+"render_money_bar")
 						.comment("Should Render MoneyBar")
 						.worldRestart()
@@ -260,12 +260,13 @@ public class PVZConfig {
 			builder.pop();
 			builder.comment("Other Render Settings").push("Other Render Settings");
 			{
-				CLIENT_CONFIG.OtherSettings.ShowPVZMainMenu = builder
+				OtherSettings.ShowPVZMainMenu = builder
 						.translation(CONFIG_TRANSLATE+"show_pvz_main_menu")
 						.comment("show pvz main menu")
 						.worldRestart()
 						.define("ShowPVZMainMenu", true);
 			}
+			builder.pop();
 		}
 		
 		public OtherSettings OtherSettings = new OtherSettings();

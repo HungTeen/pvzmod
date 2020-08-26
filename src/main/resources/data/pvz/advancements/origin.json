@@ -1,0 +1,42 @@
+{
+  "display": {
+    "icon": {
+      "item": "pvz:origin_essence"
+    },
+    "title": {
+      "translate": "advancement.pvz.origin"
+    },
+    "description": {
+      "translate": "advancement.pvz.origin.desc"
+    },
+	"frame":"task",
+    "announce_to_chat": true
+  },
+  "parent":"pvz:start",
+  "criteria": {
+    "get_origin": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items":[
+		  {
+		    "item":"pvz:origin_essence"
+		  }
+		]
+      }
+    }
+  },
+  "requirements": [[
+    "get_origin"
+  ]],
+  "rewards":{
+    "recipes":[
+        "pvz:origin_block",
+	    "pvz:gray_card",
+	    "pvz:white_card",
+	    "pvz:green_card",
+	    "pvz:blue_card",
+	    "pvz:purple_card",
+	    "pvz:gold_card"
+    ]
+  }
+}

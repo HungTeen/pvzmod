@@ -1,0 +1,14 @@
+Tree-lvl(Player-lvl):It affects the
+Money:The basic currency of world.
+you can exchange rare items and 
+useful tools with some NPCs
+(No NPC yet)
+Obtain:zombies will drop randomly 
+when died.
+
+
+GemNum:Special currency of world.
+You can exchange mysterious items 
+and props with some special NPCs
+(No NPC yet)
+Obtain: No way for now

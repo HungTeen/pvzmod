@@ -9,20 +9,11 @@ import net.minecraftforge.common.util.LazyOptional;
 
 public class PlayerUtil {
 
-	public static final int MAX_TREE_LVL = 100;
+	public static final int MAX_TREE_LVL = 10;
 	
 	public static int getPlayerMaxSunNum(int lvl){
-		if(lvl<=10) return 100*lvl;   //100 200 ...1000
-		if(lvl<=20) return 150*(lvl-10)+1000; //1150 1300 ...2500
-		else if(lvl<=40) return 125*(lvl-20)+2500; //2625 2750 ...5000
-		else if(lvl<=60) return 250*(lvl-40)+5000; //5250 5500 ...10000
-		else if(lvl<=80) return 2000*(lvl-60)+10000; //14000 18000 ... 50000
-		else if(lvl<=99) return 2500*(lvl-80)+50000;
-		return 99999;
-	}
-	
-	public static int getPlayerMaxEnergyNum(int lvl){
-		return 1+lvl/20;
+		int now=lvl/10+1;
+		return now*1000;
 	}
 	
 	public static int getPlayerLevelUpXp(int lvl){
