@@ -82,6 +82,13 @@
     "item.pvz.snow_pea_spawn_egg":"SnowPea Spawn Egg",
     "item.pvz.snow_pea_card":"SnowPea Card",
     "item.pvz.snow_pea_enjoy_card":"SnowPea Enjoy Card",
+//Chomper
+    "entity.pvz.chomper":"Chomper",
+    "item.pvz.chomper_spawn_egg":"Chomper Spawn Egg",
+    "item.pvz.chomper_card":"Chomper Card",
+    "item.pvz.chomper_enjoy_card":"Chomper Enjoy Card",
+    "entity.pvz.small_chomper":"Ground Chomper",
+    "item.pvz.small_chomper_spawn_egg":"Ground Chomper Spawn Egg(Test)",
 //Repeater
     "entity.pvz.repeater":"Repeater",
     "item.pvz.repeater_spawn_egg":"Repeater Spawn Egg",

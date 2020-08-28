@@ -7,17 +7,17 @@
   ],
   "key": {
     "O": {
-      "item": "pvz:defence_essence"
+      "item": "pvz:enforce_essence"
     },
     "B": {
-      "item": "pvz:nut"
+      "item": "pvz:chomper"
     },
     "A": {
-      "item": "pvz:white_card"
+      "item": "pvz:blue_card"
     }
   },
   "result": {
-    "item": "pvz:wall_nut_card",
+    "item": "pvz:chomper_card",
     "count": 1
   }
 }

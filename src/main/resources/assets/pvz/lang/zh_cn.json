@@ -82,6 +82,13 @@
     "item.pvz.snow_pea_spawn_egg":"寒冰射手刷怪蛋",
     "item.pvz.snow_pea_card":"寒冰射手卡",
     "item.pvz.snow_pea_enjoy_card":"寒冰射手体验卡",
+//Chomper
+    "entity.pvz.chomper":"食人花",
+    "item.pvz.chomper_spawn_egg":"食人花刷怪蛋",
+    "item.pvz.chomper_card":"食人花卡",
+    "item.pvz.chomper_enjoy_card":"食人花体验卡",
+    "entity.pvz.small_chomper":"地下食人花",
+    "item.pvz.small_chomper_spawn_egg":"地下食人花刷怪蛋(测试)",
 //Repeater
     "entity.pvz.repeater":"双枪射手",
     "item.pvz.repeater_spawn_egg":"双枪射手刷怪蛋",

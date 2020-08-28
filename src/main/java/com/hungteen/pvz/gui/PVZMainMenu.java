@@ -30,7 +30,7 @@ import net.minecraftforge.fml.BrandingControl;
 @OnlyIn(Dist.CLIENT)
 public class PVZMainMenu extends MainMenuScreen {
 
-	public static final RenderSkyboxCube PANORAMA_RESOURCES = new RenderSkyboxCube(new ResourceLocation("textures/gui/title/background/panorama"));
+	public static final RenderSkyboxCube PANORAMA_RESOURCES = new RenderSkyboxCube(StringUtil.prefix("textures/gui/mainmenu/panorama"));
 	private static final ResourceLocation MINECRAFT_TITLE_TEXTURES = new ResourceLocation("textures/gui/title/minecraft.png");
 	public static final ResourceLocation SPLASHES = StringUtil.prefix("splashes.txt");
 	private String splashText;

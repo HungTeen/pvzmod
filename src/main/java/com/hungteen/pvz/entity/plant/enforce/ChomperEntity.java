@@ -72,7 +72,7 @@ public class ChomperEntity extends PVZPlantEntity{
 				if(this.getAttackTarget()==null) {//no target 
 					return ;
 				}
-				if(this.getDistanceSq(this.getAttackTarget())>9) {//target too far away !
+				if(!this.getAttackTarget().isAlive()||this.getDistanceSq(this.getAttackTarget())>9) {//target too far away !
 					this.setAttackTarget(null);
 					this.setAttackTime(0);
 					return ;

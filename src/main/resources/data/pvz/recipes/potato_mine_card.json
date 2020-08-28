@@ -1,14 +1,11 @@
 {
   "type": "minecraft:crafting_shaped",
   "pattern": [
-    "XXX",
+    "OOO",
     "OBO",
     "OAO"
   ],
   "key": {
-    "X": {
-      "item": "pvz:origin_essence"
-    },
     "O": {
       "item": "pvz:explosion_essence"
     },
