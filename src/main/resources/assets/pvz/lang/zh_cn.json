@@ -141,6 +141,15 @@
     "gui.pvz.guild_book4":"禅境花园",
     "gui.pvz.guild_book5":"僵尸小屋",
     "gui.pvz.guild_book6":"植物获取",
+//advancement
+    "advancement.pvz.root":"植物大战僵尸",
+    "advancement.pvz.root.desc":"安装植物大战僵尸mod并进入主世界",
+    "advancement.pvz.start":"开始了!",
+    "advancement.pvz.start.desc":"合成植物大战僵尸指南书",
+    "advancement.pvz.origin":"起源",
+    "advancement.pvz.origin.desc":"合成原始精华",
+    "advancement.pvz.zen_garden":"禅境花园",
+    "advancement.pvz.zen_garden.desc":"到达禅境花园生物群系",
 //enchantment
     "enchantment.pvz.sun_cost_reduce":"节能",
     "enchantment.pvz.break_out":"爆发",
@@ -149,6 +158,7 @@
     "event.pvz.zombie_attack":"僵尸即将到来 !",
 //death
     "death.attack.pvz_eat":"僵尸吃了%s的脑子",
+    "death.attack.chomper_plant":"%s被食人花咬死了",
 //itemGroup
     "itemGroup.pvz.pvz_misc":"PVZ杂项",
     "itemGroup.pvz.pvz_card":"PVZ召唤卡"

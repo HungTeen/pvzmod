@@ -1,0 +1,33 @@
+{
+  "display": {
+    "icon": {
+      "item": "pvz:pea"
+    },
+    "title": {
+      "translate": "advancement.pvz.zen_garden"
+    },
+    "description": {
+      "translate": "advancement.pvz.zen_garden.desc"
+    },
+	"frame":"task",
+    "announce_to_chat": true
+  },
+  "parent":"pvz:root",
+  "criteria": {
+    "reach": {
+      "trigger": "minecraft:location",
+      "conditions": {
+        "biome":"pvz:zen_garden",
+        "dimension": "overworld"
+      }
+    }
+  },
+  "requirements": [[
+    "reach"
+  ]],
+  "rewards":{
+    "recipes":[
+     
+    ]
+  }
+}

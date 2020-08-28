@@ -2,6 +2,7 @@ package com.hungteen.pvz.utils;
 
 import com.hungteen.pvz.capabilities.CapabilityHandler;
 import com.hungteen.pvz.capabilities.player.IPlayerDataCapability;
+import com.hungteen.pvz.utils.enums.Plants;
 import com.hungteen.pvz.utils.enums.Resources;
 
 import net.minecraft.entity.player.PlayerEntity;
@@ -9,31 +10,31 @@ import net.minecraftforge.common.util.LazyOptional;
 
 public class PlayerUtil {
 
-	public static final int MAX_TREE_LVL = 10;
-	
+	public static final int MAX_TREE_LVL = 100;
+	public static final int[] TREE_LVL_XP = new int[] {10,25,45,75,120,180,250,350,480,600,750,900,1080,1300,1600,2000,2500,3200,4000,5000}; 
 	public static int getPlayerMaxSunNum(int lvl){
 		int now=lvl/10+1;
 		return now*1000;
 	}
 	
 	public static int getPlayerLevelUpXp(int lvl){
-		if(lvl<=10) return 5*lvl;   //5 10 15 ...50
-		else if(lvl<=20) return 50+(lvl-10)*10; //60 70 .... 150
-		else if(lvl<=30) return 150+(lvl-20)*30; //180 210 240...450
-		else if(lvl<=40) return 450+(lvl-30)*75; //525 600 675...1200
-		else if(lvl<=50) return 1200+(lvl-40)*150; //1350 1500 1650...2700
-		else if(lvl<=60) return 2700+(lvl-50)*300; //3000 3300 3600...5700
-		else if(lvl<=70) return 5700+(lvl-60)*500; //6200 6700 7200...10700
-		else if(lvl<=80) return 10700+(lvl-70)*1000; //11700 12700 ...20700
-		else if(lvl<=90) return 20700+(lvl-80)*2000; //22700 24700 ...40700
-		else if(lvl<=100) return 40700+(lvl-90)*4000; //44700 48700 ...80700
-		else return 100000;
+		int pos = lvl/5;
+		if(lvl>=MAX_TREE_LVL) {
+			return 1000000000;
+		}
+		return TREE_LVL_XP[pos];
 	}
 	
 	
 	public static void addPlayerStats(PlayerEntity player ,Resources res,int num){
 		player.getCapability(CapabilityHandler.PLAYER_DATA_CAPABILITY).ifPresent((l)->{
 			l.getPlayerData().getPlayerStats().addPlayerStats(res, num);
+		});
+	}
+	
+	public static void addPlantXp(PlayerEntity player, Plants plant, int num) {
+		player.getCapability(CapabilityHandler.PLAYER_DATA_CAPABILITY).ifPresent((l)->{
+			l.getPlayerData().getPlantStats().addPlantXp(plant, num);
 		});
 	}
 	

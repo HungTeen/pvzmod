@@ -18,6 +18,7 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IWorld;
 import net.minecraft.world.LightType;
 import net.minecraft.world.World;
+import net.minecraft.world.server.ServerWorld;
 
 public class SunEntity extends DropEntity{
 	
@@ -61,8 +62,8 @@ public class SunEntity extends DropEntity{
 	}
 	
 	public static boolean canSunSpawn(EntityType<? extends SunEntity> zombieType, IWorld worldIn, SpawnReason reason, BlockPos pos, Random rand) {
-		if(worldIn instanceof World) {
-			return !((World)worldIn).isRainingAt(pos)&&worldIn.getLightFor(LightType.SKY, pos)>=15;
+		if(worldIn instanceof ServerWorld) {
+			return !((ServerWorld)worldIn).isRainingAt(pos)&&!((ServerWorld)worldIn).isDaytime()&&worldIn.getLightFor(LightType.SKY, pos)>=15;
 		}
 		return worldIn.getLightFor(LightType.SKY, pos)>=15;
 	}

@@ -88,6 +88,11 @@ public class PVZConfig {
 							.comment("how many ticks can bullet entity live.(don't be so small or so big)")
 							.worldRestart()
 							.defineInRange("BulletLiveTick", 150, 100, 1000);
+					EntitySettings.EntityLiveTick.PlantLiveTick = builder
+							.translation(CONFIG_TRANSLATE+"plant_live_tick")
+							.comment("how many ticks can plant entity live.")
+							.worldRestart()
+							.defineInRange("PlantLiveTick", 24000, 1, 1000000);
 				}
 				builder.pop();
 				builder.comment("The Spawn Weight of entity").push("EntitySpawnWeight");
@@ -221,6 +226,7 @@ public class PVZConfig {
 				public ForgeConfigSpec.IntValue CoinLiveTick;
 				public ForgeConfigSpec.IntValue EnergyLiveTick;
 				public ForgeConfigSpec.IntValue BulletLiveTick;
+				public ForgeConfigSpec.IntValue PlantLiveTick;
 			}
 			
 		}

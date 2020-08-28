@@ -6,6 +6,7 @@ import java.util.UUID;
 
 import javax.annotation.Nullable;
 
+import com.hungteen.pvz.PVZConfig;
 import com.hungteen.pvz.entity.zombie.PVZZombieEntity;
 import com.hungteen.pvz.misc.damage.PVZDamageSource;
 import com.hungteen.pvz.register.SoundRegister;
@@ -45,6 +46,7 @@ public abstract class PVZPlantEntity extends CreatureEntity implements IPVZPlant
 	protected boolean isImmuneToWeak;
 	private final int weakCD = 10;
 	private final int weakDamage = 15;
+	private int live_tick;
 	private static final DataParameter<Integer> SUPER_TIME = EntityDataManager.createKey(PVZPlantEntity.class, DataSerializers.VARINT);
 	private static final DataParameter<Integer> PLANT_LVL = EntityDataManager.createKey(PVZPlantEntity.class, DataSerializers.VARINT);
 	private static final DataParameter<Optional<UUID>> OWNER_UUID = EntityDataManager.createKey(PVZPlantEntity.class, DataSerializers.OPTIONAL_UNIQUE_ID);
@@ -55,10 +57,12 @@ public abstract class PVZPlantEntity extends CreatureEntity implements IPVZPlant
 	private static final DataParameter<Boolean> IS_CHARMED = EntityDataManager.createKey(PVZPlantEntity.class, DataSerializers.BOOLEAN);
 	private static final DataParameter<Boolean> IS_GARDEN_PLANT = EntityDataManager.createKey(PVZPlantEntity.class, DataSerializers.BOOLEAN);
 	
+	
 	public PVZPlantEntity(EntityType<? extends CreatureEntity> type, World worldIn) {
 		super(type, worldIn);
 		this.weakTime=0;
 		this.isImmuneToWeak=false;
+		this.live_tick=0;
 	}
 	
 	@Override
@@ -103,7 +107,6 @@ public abstract class PVZPlantEntity extends CreatureEntity implements IPVZPlant
 	 * tick for garden plant
 	 */
 	protected void gardenPlantTick(){
-		
 	}
 	
 	/**
@@ -133,6 +136,10 @@ public abstract class PVZPlantEntity extends CreatureEntity implements IPVZPlant
 		    	this.setBoostTime(this.getBoostTime()-1);
 		    }
 		}
+		if(live_tick>=PVZConfig.COMMON_CONFIG.EntitySettings.EntityLiveTick.PlantLiveTick.get()) {
+			this.remove();
+		}
+		live_tick++;
 //		if(!this.world.isRemote&&this.getGoldTime()>0) {
 //			Block block =this.world.getBlockState(new BlockPos(posX,posY-1,posZ)).getBlock();
 //			int amount=0;
@@ -183,6 +190,11 @@ public abstract class PVZPlantEntity extends CreatureEntity implements IPVZPlant
 	public boolean attackEntityAsMob(Entity entityIn) {
 		entityIn.hurtResistantTime=0;
 		return super.attackEntityAsMob(entityIn);
+	}
+	
+	@Override
+	public boolean isInvulnerable() {
+		return this.isPlantInSuperMode();
 	}
 	
 	@Override

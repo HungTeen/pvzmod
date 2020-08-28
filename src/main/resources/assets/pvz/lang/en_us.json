@@ -141,6 +141,15 @@
     "gui.pvz.guild_book4":"Zen Garden",
     "gui.pvz.guild_book5":"Zombie House",
     "gui.pvz.guild_book6":"Plant obtain",
+//advancement
+    "advancement.pvz.root":"Plants vs Zombies",
+    "advancement.pvz.root.desc":"install Plants vs Zombies mod and join in world",
+    "advancement.pvz.start":"Start!",
+    "advancement.pvz.start.desc":"Craft a pvz guild book",
+    "advancement.pvz.origin":"Origin",
+    "advancement.pvz.origin.desc":"Obtain origin essence",
+    "advancement.pvz.zen_garden":"Zen Garden",
+    "advancement.pvz.zen_garden.desc":"Go to Zen Garden biome",
 //enchantment
     "enchantment.pvz.sun_cost_reduce":"Sun Reduce",
     "enchantment.pvz.break_out":"Break Out",
@@ -149,6 +158,7 @@
     "event.pvz.zombie_attack":"Zombies are Coming!",
 //death
     "death.attack.pvz_eat":"Zombie eat %s's brain",
+    "death.attack.chomper_plant":"%s was eat by chomper",
 //itemGroup
     "itemGroup.pvz.pvz_misc":"PVZ Misc",
     "itemGroup.pvz.misc":"PVZ Card"

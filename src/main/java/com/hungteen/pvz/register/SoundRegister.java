@@ -26,6 +26,9 @@ public class SoundRegister {
 	public static final RegistryObject<SoundEvent> ZOMBIE_FROZEN = registerSound("zombie_frozen");
 	public static final RegistryObject<SoundEvent> METAL_HIT = registerSound("metal_hit");
 	public static final RegistryObject<SoundEvent> HUGE_WAVE = registerSound("huge_wave");
+	public static final RegistryObject<SoundEvent> CHOMP = registerSound("chomp");
+	public static final RegistryObject<SoundEvent> SNOW_SHOOT = registerSound("snow_shoot");
+	public static final RegistryObject<SoundEvent> DIRT_RISE = registerSound("dirt_rise");
 	
 	private static RegistryObject<SoundEvent> registerSound(String name){
 		return SOUNDS.register(name, ()->{

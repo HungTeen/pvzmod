@@ -19,7 +19,7 @@ public class SnowPeaRender extends PVZPlantRender<SnowPeaEntity>{
 
 	@Override
 	protected float getScaleByEntity(SnowPeaEntity entity) {
-		return 0.5f;
+		return 1f;
 	}
 
 	@Override

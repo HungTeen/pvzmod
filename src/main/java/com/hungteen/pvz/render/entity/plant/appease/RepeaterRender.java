@@ -16,7 +16,7 @@ public class RepeaterRender extends PVZPlantRender<RepeaterEntity>{
 
 	@Override
 	protected float getScaleByEntity(RepeaterEntity entity) {
-		return 0.5f;
+		return 1f;
 	}
 
 	@Override

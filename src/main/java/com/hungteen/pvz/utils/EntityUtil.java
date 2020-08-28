@@ -2,6 +2,7 @@ package com.hungteen.pvz.utils;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
 import com.hungteen.pvz.PVZConfig;
 import com.hungteen.pvz.entity.plant.PVZPlantEntity;
@@ -19,6 +20,17 @@ import net.minecraft.world.World;
 
 public class EntityUtil {
 
+	public static PlayerEntity getEntityOwner(World world, Entity entity) {
+		if(entity==null) return null;
+		UUID uuid = null;
+		if(entity instanceof PVZPlantEntity) {
+			uuid = ((PVZPlantEntity) entity).getOwnerUUID();
+		}else if(entity instanceof PVZZombieEntity) {
+			uuid = ((PVZZombieEntity) entity).getOwnerUUID();
+		}
+		return uuid == null ? null : world.getPlayerByUuid(uuid);
+	}
+	
 	/**
 	 * use to update collision about plants and zombies
 	 */

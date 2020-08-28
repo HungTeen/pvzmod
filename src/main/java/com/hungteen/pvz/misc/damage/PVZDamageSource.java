@@ -12,6 +12,8 @@ public class PVZDamageSource extends DamageSource{
 	private Entity attacker = null;
 	private PVZDamageType damageType;
 	
+	public static final DamageSource CHOMPER_PLANT = new DamageSource("chomper_plant");
+	
 	public PVZDamageSource(String name, Entity damagingEntity, Entity attacker, PVZDamageType damageType) {
 		super(name);
 		this.attacker=damagingEntity;

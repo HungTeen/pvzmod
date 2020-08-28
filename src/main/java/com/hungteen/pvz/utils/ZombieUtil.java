@@ -35,7 +35,10 @@ public class ZombieUtil {
 	{
 		switch(zombie) {
 		case NORMAL_ZOMBIE:
-		case FLAG_ZOMBIE:return Ranks.GRAY;
+		case FLAG_ZOMBIE:return Ranks.WHITE;
+		case CONEHEAD_ZOMBIE:
+		case POLE_ZOMBIE:return Ranks.GREEN;
+		case BUCKETHEAD_ZOMBIE:return Ranks.BLUE;
 		default:{
 			PVZMod.LOGGER.debug("Zombie get rank error");
 			return null;
@@ -52,7 +55,7 @@ public class ZombieUtil {
 		case GREEN:return 3;
 		case BLUE:return 5;
 		case PURPLE:return 8;
-		case GOLD:return 13;
+		case GOLD:return 15;
 		case MEGA:return 50;
 		default:return 0;
 		}

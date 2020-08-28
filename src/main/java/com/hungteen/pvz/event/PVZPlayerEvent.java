@@ -8,6 +8,7 @@ import com.hungteen.pvz.capabilities.CapabilityHandler;
 import com.hungteen.pvz.capabilities.player.PlayerDataManager;
 import com.hungteen.pvz.capabilities.player.PlayerDataManager.PlayerStats;
 import com.hungteen.pvz.entity.plant.PVZPlantEntity;
+import com.hungteen.pvz.event.events.SummonCardUseEvent;
 import com.hungteen.pvz.register.EnchantmentRegister;
 import com.hungteen.pvz.register.ItemRegister;
 import com.hungteen.pvz.utils.PlayerUtil;
@@ -104,4 +105,10 @@ public class PVZPlayerEvent {
 			}
 		}
 	}
+	
+	@SubscribeEvent
+	public static void onSummonCardUse(SummonCardUseEvent ev) {
+//		System.out.println(ev.getItemStack().getItem());
+	}
+	
 }

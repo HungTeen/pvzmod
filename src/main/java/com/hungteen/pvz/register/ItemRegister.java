@@ -67,6 +67,8 @@ public class ItemRegister {
     public static final RegistryObject<PlantCardItem> POTATO_MINE_ENJOY_CARD = registerCard(Plants.POTATO_MINE, true);
     public static final RegistryObject<PlantCardItem> SNOW_PEA_CARD = registerCard(Plants.SNOW_PEA, false);
     public static final RegistryObject<PlantCardItem> SNOW_PEA_ENJOY_CARD = registerCard(Plants.SNOW_PEA, true);
+    public static final RegistryObject<PlantCardItem> CHOMPER_CARD = registerCard(Plants.CHOMPER, false);
+    public static final RegistryObject<PlantCardItem> CHOMPER_ENJOY_CARD = registerCard(Plants.CHOMPER, true);
     public static final RegistryObject<PlantCardItem> REPEATER_CARD = registerCard(Plants.REPEATER, false);
     public static final RegistryObject<PlantCardItem> REPEATER_ENJOY_CARD = registerCard(Plants.REPEATER, true);
     
@@ -95,6 +97,8 @@ public class ItemRegister {
 	public static final RegistryObject<PVZSpawnEggItem> SUN_SPAWN_EGG = registerSpawnEgg("sun", EntityRegister.SUN, Colors.YELLOW, Colors.WHITE);
 	public static final RegistryObject<PVZSpawnEggItem> COIN_SPAWN_EGG = registerSpawnEgg("coin", EntityRegister.COIN, Colors.ORANGE, Colors.GOLD);
 	public static final RegistryObject<PVZSpawnEggItem> ENERGY_SPAWN_EGG = registerSpawnEgg("energy", EntityRegister.ENERGY, Colors.GREEN, Colors.DARK_GREEN);
+	//misc
+	public static final RegistryObject<PVZSpawnEggItem> SMALL_CHOMPER_SPAWN_EGG = registerSpawnEgg("small_chomper", EntityRegister.SMALL_CHOMPER, Colors.PEA_GREEN, Colors.PURPLE);
 	//zombie
 	public static final RegistryObject<PVZSpawnEggItem> NORMAL_ZOMBIE_SPAWN_EGG = registerSpawnEgg("normal_zombie", EntityRegister.NORMAL_ZOMBIE, Colors.ZOMBIE_SKIN, Colors.BLACK);
 	public static final RegistryObject<PVZSpawnEggItem> FLAG_ZOMBIE_SPAWN_EGG = registerSpawnEgg("flag_zombie", EntityRegister.FLAG_ZOMBIE, Colors.ZOMBIE_SKIN, Colors.BLACK);
@@ -108,6 +112,7 @@ public class ItemRegister {
 	public static final RegistryObject<PVZSpawnEggItem> WALL_NUT_SPAWN_EGG = registerSpawnEgg("wall_nut", EntityRegister.WALL_NUT, Colors.DEFENCE_COLOR);
 	public static final RegistryObject<PVZSpawnEggItem> POTATO_MINE_SPAWN_EGG = registerSpawnEgg("potato_mine", EntityRegister.POTATO_MINE, Colors.EXPLOSION_COLOR);
 	public static final RegistryObject<PVZSpawnEggItem> SNOW_PEA_SPAWN_EGG = registerSpawnEgg("snow_pea", EntityRegister.SNOW_PEA, Colors.ICE_COLOR);
+	public static final RegistryObject<PVZSpawnEggItem> CHOMPER_SPAWN_EGG = registerSpawnEgg("chomper", EntityRegister.CHOMPER, Colors.ENFORCE_COLOR);
 	public static final RegistryObject<PVZSpawnEggItem> REPEATER_SPAWN_EGG = registerSpawnEgg("repeater", EntityRegister.REPEATER, Colors.APPEASE_COLOR);
 	
 	/**

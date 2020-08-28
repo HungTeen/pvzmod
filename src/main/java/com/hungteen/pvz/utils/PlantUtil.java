@@ -55,13 +55,11 @@ public class PlantUtil {
 		}
 	}
 	
-	public static int getPlantMaxLvl(Plants plant)
-	{
+	public static int getPlantMaxLvl(Plants plant){
 		return 20;
 	}
 	
-	public static boolean checkCanPlantLiveHere(PVZPlantEntity plant)
-	{
+	public static boolean checkCanPlantLiveHere(PVZPlantEntity plant){
 		BlockPos pos=plant.getPosition().add(0, -1, 0);
 		Block block = plant.world.getBlockState(pos).getBlock();
 		Plants p = plant.getPlantEnumName();
@@ -80,14 +78,14 @@ public class PlantUtil {
 	/**
 	 * get plant card sun cost
 	 */
-	public static int getPlantSunCost(Plants plant)
-	{
+	public static int getPlantSunCost(Plants plant){
 		switch(plant) {
 		case POTATO_MINE:return 25;
 		case SUN_FLOWER:
 		case WALL_NUT:return 50;
 		case PEA_SHOOTER:return 100;
-		case CHERRY_BOMB:return 150;
+		case CHERRY_BOMB:
+		case CHOMPER:return 150;
 		case SNOW_PEA:return 175;
 		case REPEATER:return 200;
 		default:{
@@ -100,13 +98,13 @@ public class PlantUtil {
 	/**
 	 * get plant card CD
 	 */
-	public static int getPlantCoolDownTime(Plants plant,int lvl)
-	{
+	public static int getPlantCoolDownTime(Plants plant,int lvl){
 		switch(plant) {
 		case PEA_SHOOTER:return getPlantCoolDownTimeVeryFast(lvl);
 		case SUN_FLOWER:
 		case SNOW_PEA:
 		case REPEATER:return getPlantCoolDownTimeFast(lvl);
+		case CHOMPER:return getPlantCoolDownTimeNormal(lvl);
 		case POTATO_MINE:return getPlantCoolDownTimeLittleSlow(lvl);
 		case WALL_NUT:return getPlantCoolDownTimeSlow(lvl);
 		case CHERRY_BOMB:return getPlantCoolDownTimeHugeSlow(lvl);
@@ -117,8 +115,7 @@ public class PlantUtil {
 		}
 	}
 	
-	public static int getPlantMaxHealth(Plants plant,int lvl)
-	{
+	public static int getPlantMaxHealth(Plants plant,int lvl){
 		switch(plant) {
 		case WALL_NUT:{
 			if(lvl<=19) return 390+10*lvl;
@@ -133,14 +130,14 @@ public class PlantUtil {
 		return 20;
 	}
 	
-	public static Ranks getPlantRankByName(Plants plant)
-	{
+	public static Ranks getPlantRankByName(Plants plant){
 		switch(plant) {
 		case PEA_SHOOTER:
 		case SUN_FLOWER:return Ranks.GRAY;
 		case WALL_NUT:
 		case POTATO_MINE:return Ranks.WHITE;
 		case SNOW_PEA:
+		case CHOMPER:
 		case REPEATER:return Ranks.GREEN;
 		case CHERRY_BOMB:return Ranks.BLUE;
 		default:{
@@ -150,8 +147,7 @@ public class PlantUtil {
 		}
 	}
 	
-	public static Essences getPlantEssenceType(Plants plant)
-	{
+	public static Essences getPlantEssenceType(Plants plant){
 		switch (plant) {
 		case PEA_SHOOTER:
 		case REPEATER:return Essences.APPEASE;
@@ -160,6 +156,7 @@ public class PlantUtil {
 		case POTATO_MINE:return Essences.EXPLOSION;
 		case WALL_NUT:return Essences.DEFENCE;
 		case SNOW_PEA:return Essences.ICE;
+		case CHOMPER:return Essences.ENFORCE;
 		default:{
 			PVZMod.LOGGER.debug("plant get essence type error!");
 			return null;
@@ -176,8 +173,7 @@ public class PlantUtil {
 	/**
 	 * 8s-5s
 	 */
-	public static int getPlantCoolDownTimeHugeFast(int lvl)
-	{
+	public static int getPlantCoolDownTimeHugeFast(int lvl){
 		//8 7 6 5
 		if(lvl<=20) {
 			int now=(lvl-1)/5;
@@ -189,8 +185,7 @@ public class PlantUtil {
 	/**
 	 * peashooter 10s-8s
 	 */
-	public static int getPlantCoolDownTimeVeryFast(int lvl)
-	{
+	public static int getPlantCoolDownTimeVeryFast(int lvl){
 		if(lvl<=20) {
 			int now=(lvl-1)/4;
 			return 200-10*now;
@@ -201,8 +196,7 @@ public class PlantUtil {
 	/**
 	 * sunflower 15s-12s
 	 */
-	public static int getPlantCoolDownTimeFast(int lvl)
-	{
+	public static int getPlantCoolDownTimeFast(int lvl){
 		if(lvl<=20) {
 			int now=(lvl-1)/5;
 			return 300-20*now;
@@ -213,8 +207,7 @@ public class PlantUtil {
 	/**
 	 * threepeater 20s-16s
 	 */
-	public static int getPlantCoolDownTimeLittleFast(int lvl)
-	{
+	public static int getPlantCoolDownTimeLittleFast(int lvl){
 		if(lvl<=20) {
 			int now=(lvl-1)/4;
 			return 400-20*now;
@@ -225,8 +218,7 @@ public class PlantUtil {
 	/**
 	 * torch wood 25s-21s
 	 */
-	public static int getPlantCoolDownTimeNormal(int lvl)
-	{
+	public static int getPlantCoolDownTimeNormal(int lvl){
 		if(lvl<=20) {
 			int now=(lvl-1)/4;
 			return 500-20*now;
@@ -237,8 +229,7 @@ public class PlantUtil {
 	/**
 	 * jalapeno 32s-28s
 	 */
-	public static int getPlantCoolDownTimeLittleSlow(int lvl)
-	{
+	public static int getPlantCoolDownTimeLittleSlow(int lvl){
 		if(lvl<=20) {
 			int now=(lvl-1)/4;
 			return 640-20*now;
@@ -249,8 +240,7 @@ public class PlantUtil {
 	/**
 	 * wall nut 40s-32s
 	 */
-	public static int getPlantCoolDownTimeSlow(int lvl)
-	{
+	public static int getPlantCoolDownTimeSlow(int lvl){
 		if(lvl<=20) {
 			int now=(lvl-1)/4;
 			return 800-40*now;
@@ -261,8 +251,7 @@ public class PlantUtil {
 	/**
 	 * advance plant 60s-50s
 	 */
-	public static int getPlantCoolDownTimeVerySlow(int lvl)
-	{
+	public static int getPlantCoolDownTimeVerySlow(int lvl){
 		if(lvl<=18) {
 			int now=(lvl-1)/2;
 			return 1200-20*now;
@@ -274,12 +263,12 @@ public class PlantUtil {
 	/**
 	 * explosion plant 120s-100s 
 	 */
-	public static int getPlantCoolDownTimeHugeSlow(int lvl)
-	{
+	public static int getPlantCoolDownTimeHugeSlow(int lvl){
 		if(lvl<=20) {
 			int now=(lvl-1)/4;
 			return 2400-100*now;
 		}
 		return 2400;
 	}
+	
 }

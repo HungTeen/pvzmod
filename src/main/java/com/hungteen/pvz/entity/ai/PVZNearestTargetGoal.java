@@ -77,7 +77,7 @@ public class PVZNearestTargetGoal extends TargetGoal{
 	
 	private AxisAlignedBB getAABB()
 	{
-		return new AxisAlignedBB(this.goalOwner.getPosX()+width, this.goalOwner.getPosY()-height, this.goalOwner.getPosZ()+width, this.goalOwner.getPosX()-width, this.goalOwner.getPosY()+height, this.goalOwner.getPosZ()-width);
+		return new AxisAlignedBB(this.goalOwner.getPosX()+width, this.goalOwner.getPosY()-height/2, this.goalOwner.getPosZ()+width, this.goalOwner.getPosX()-width, this.goalOwner.getPosY()+height, this.goalOwner.getPosZ()-width);
 	}
 	
 	public static class Sorter implements Comparator<Entity>

@@ -26,6 +26,7 @@ public abstract class PlantCloserEntity extends PVZPlantEntity implements IClose
 	protected void normalPlantTick() {
 		super.normalPlantTick();
 		if(this.getAttackTarget()!=null) {
+			this.getLookController().setLookPositionWithEntity(getAttackTarget(), 30f, 30f);
 			if(this.performAttack()) {
 			    this.setHealth(0);//go to on death update
 			}

@@ -4,6 +4,7 @@ import com.hungteen.pvz.PVZMod;
 import com.hungteen.pvz.capabilities.CapabilityHandler;
 import com.hungteen.pvz.capabilities.player.PlayerDataManager;
 import com.hungteen.pvz.entity.plant.PVZPlantEntity;
+import com.hungteen.pvz.event.events.SummonCardUseEvent;
 import com.hungteen.pvz.register.EnchantmentRegister;
 import com.hungteen.pvz.register.EntityRegister;
 import com.hungteen.pvz.utils.PlantUtil;
@@ -22,6 +23,7 @@ import net.minecraft.util.Direction;
 import net.minecraft.util.Hand;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
+import net.minecraftforge.common.MinecraftForge;
 
 public class PlantCardItem extends SummonCardItem{
 
@@ -85,6 +87,7 @@ public class PlantCardItem extends SummonCardItem{
 				    if(plantEntity==null) {//no such plant
 					    return;
 				    }
+				    MinecraftForge.EVENT_BUS.post(new SummonCardUseEvent(player, stack));
 					l.getPlayerData().getPlayerStats().addPlayerStats(Resources.SUN_NUM, -sunCost);
 					int lvl=manager.getPlantStats().getPlantLevel(plant);
 					if(this.isEnjoyCard) {

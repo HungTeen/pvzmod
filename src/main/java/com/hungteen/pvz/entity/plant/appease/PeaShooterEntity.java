@@ -10,6 +10,7 @@ import net.minecraft.entity.EntitySize;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.Pose;
+import net.minecraft.util.SoundEvent;
 import net.minecraft.util.SoundEvents;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.World;
@@ -38,8 +39,12 @@ public class PeaShooterEntity extends PlantShooterEntity{
         PeaEntity pea = new PeaEntity(EntityRegister.PEA.get(),this.world,this,this.getShootType(),this.getShootState());
         pea.setPosition(this.getPosX()+deltaX,this.getPosY()+this.getSize(getPose()).height*0.7f,this.getPosZ()+deltaZ);
         pea.shootPea(dx, dz, this.getBulletSpeed());      
-        this.playSound(SoundEvents.ENTITY_SNOW_GOLEM_SHOOT, 1.0F, 1.0F);
+        this.playSound(getShootSound(), 1.0F, 1.0F);
         this.world.addEntity(pea);
+	}
+	
+	protected SoundEvent getShootSound() {
+		return SoundEvents.ENTITY_SNOW_GOLEM_SHOOT;
 	}
 	
 	@Override

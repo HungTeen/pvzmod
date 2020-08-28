@@ -58,8 +58,7 @@ public class ShooterAttackGoal extends Goal{
 		this.attacker.getLookController().setLookPositionWithEntity(this.target, 30.0F, 30.0F);
 	}
 	
-	private boolean checkTarget()
-	{
+	private boolean checkTarget(){
 		if(EntityUtil.checkCanEntityAttack(this.attacker,target)) {
 			double dy=target.getPosY()-this.attacker.getPosY();
 			if(PlantShooterEntity.checkY(dy)) {

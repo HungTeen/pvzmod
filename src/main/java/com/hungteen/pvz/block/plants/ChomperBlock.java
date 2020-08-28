@@ -40,7 +40,7 @@ public class ChomperBlock extends BushBlock{
 		if(entityIn instanceof AnimalEntity||entityIn instanceof PlayerEntity) {
 			if(!worldIn.isRemote) {
 				if(this.RANDOM.nextInt(50)==0) {
-					entityIn.attackEntityFrom(PVZDamageSource.causeEatDamage(null, null), 10);
+					entityIn.attackEntityFrom(PVZDamageSource.CHOMPER_PLANT, 12);
 				}
 			}
 		}
