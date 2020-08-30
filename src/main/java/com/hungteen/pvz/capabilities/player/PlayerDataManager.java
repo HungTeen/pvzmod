@@ -14,6 +14,7 @@ import com.hungteen.pvz.utils.enums.Resources;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.nbt.CompoundNBT;
+import net.minecraft.util.math.MathHelper;
 import net.minecraftforge.fml.network.PacketDistributor;
 
 
@@ -102,6 +103,10 @@ public class PlayerDataManager {
 			case ENERGY_NUM:{
 				addEnergyNum(num);
 				break;
+			}
+			case MAX_ENERGY_NUM:{
+				int now = MathHelper.clamp(resources.get(Resources.MAX_ENERGY_NUM)+num, 1, PlayerUtil.MAX_ENERGY_NUM);
+				resources.put(Resources.MAX_ENERGY_NUM, now);
 			}
 			default:
 				break;

@@ -124,6 +124,7 @@ public class PlantCardItem extends SummonCardItem{
 		case WALL_NUT:return EntityRegister.WALL_NUT.get().create(world);
 		case POTATO_MINE:return EntityRegister.POTATO_MINE.get().create(world);
 		case SNOW_PEA:return EntityRegister.SNOW_PEA.get().create(world);
+		case CHOMPER:return EntityRegister.CHOMPER.get().create(world);
 		case REPEATER:return EntityRegister.REPEATER.get().create(world);
 		default:{
 			PVZMod.LOGGER.debug("No such plant entity!");

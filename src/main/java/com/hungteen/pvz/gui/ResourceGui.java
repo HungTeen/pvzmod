@@ -5,14 +5,15 @@ import com.hungteen.pvz.PVZMod;
 import com.hungteen.pvz.capabilities.player.ClientPlayerResources;
 import com.hungteen.pvz.register.KeyBindRegister;
 import com.hungteen.pvz.utils.PlayerUtil;
+import com.hungteen.pvz.utils.RenderUtil;
 import com.hungteen.pvz.utils.StringUtil;
 import com.hungteen.pvz.utils.enums.Colors;
 import com.hungteen.pvz.utils.enums.Resources;
+import com.mojang.blaze3d.systems.RenderSystem;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.util.ResourceLocation;
-import net.minecraft.util.math.MathHelper;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.client.event.RenderGameOverlayEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
@@ -22,8 +23,13 @@ import net.minecraftforge.fml.common.Mod;
 public class ResourceGui{
 
 	private static Minecraft mc = Minecraft.getInstance();
-	private static final ResourceLocation RESOURCE_BAR = StringUtil.prefix("textures/gui/overlay/resource_bar.png");
+//	private static final ResourceLocation RESOURCE_BAR = StringUtil.prefix("textures/gui/overlay/resource_bar.png");
+	private static final ResourceLocation RESOURCE = StringUtil.prefix("textures/gui/overlay/resource.png");
 	private static final int tex_width = 89, tex_height = 28;
+	private static final int W = 160;
+	private static final int H = 32;
+	private static final int BAR_LEN = 123;
+	private static final int BAR_H = 26;
 	
 	@SubscribeEvent
 	public static void onRenderSunNumBar(RenderGameOverlayEvent ev){
@@ -35,7 +41,7 @@ public class ResourceGui{
 			return ;
 		}
 		if(mc.currentScreen==null) {
-			mc.getTextureManager().bindTexture(RESOURCE_BAR);
+			mc.getTextureManager().bindTexture(RESOURCE);
 			drawSunNumBar();
 		}
 	}
@@ -50,7 +56,7 @@ public class ResourceGui{
 			return ;
 		}
 		if(mc.currentScreen==null) {
-			mc.getTextureManager().bindTexture(RESOURCE_BAR);
+			mc.getTextureManager().bindTexture(RESOURCE);
 			drawMoneyBar(ev.getWindow().getScaledWidth(),ev.getWindow().getScaledHeight());
 		}
 	}
@@ -65,7 +71,7 @@ public class ResourceGui{
 			return ;
 		}
 		if(mc.currentScreen==null) {
-			mc.getTextureManager().bindTexture(RESOURCE_BAR);
+			mc.getTextureManager().bindTexture(RESOURCE);
 			drawEnergyNumBar(ev.getWindow().getScaledWidth(),ev.getWindow().getScaledHeight());
 		}
 	}
@@ -74,48 +80,49 @@ public class ResourceGui{
 		int lvl = ClientPlayerResources.getPlayerStats(Resources.TREE_LVL);
 		int maxNum = PlayerUtil.getPlayerMaxSunNum(lvl);
 		int num = ClientPlayerResources.getPlayerStats(Resources.SUN_NUM);
-		double percent = Math.min(num * 1.0d / maxNum, 1.0d);
-
-		int len = MathHelper.floor(percent * 61);
-		if (num != 0 && len == 0)
-			len = 1;
-		if (len == 61 && num < maxNum)
-			len = 60;
-		mc.ingameGUI.blit(0, 0, 0, 140, tex_width, tex_height);
-		mc.ingameGUI.blit(26, 7, 0, 174, len, 14);
-//		drawTexturedModalRect(0, 0, 0, 140, tex_width, tex_height);
-//		drawTexturedModalRect(26, 7, 0, 174, len, 14);
-//		RenderUtil.drawCenteredScaledString(mc.fontRenderer, PVZGuiTabPlayerData.sunNum + "", 0+55, 0+8, 1.5f,
-//				Enums.RGBIntegers.WHITE, RenderUtil.StringRenderType.OUTLINED);
-//		StringUtil.drawCenteredString(mc.fontRenderer, num + "", 0+55, 0+8, Colors.WHITE);
-		StringUtil.drawCenteredScaledString(mc.fontRenderer, num + "", 0+55, 0+8, Colors.WHITE,1.5f);
+		int len = RenderUtil.getRenderBarLen(num, maxNum, BAR_LEN);
+		RenderSystem.pushMatrix();
+		RenderSystem.enableBlend();
+		RenderSystem.scalef(0.6f, 0.6f, 0.6f);
+		mc.ingameGUI.blit(0, 0, 0, 0, W, H);
+		mc.ingameGUI.blit(0, 3, 0, 35, 34+len, BAR_H);
+		StringUtil.drawCenteredScaledString(mc.fontRenderer, num + "", 95, 5, Colors.WHITE,3f);
+		RenderSystem.popMatrix();
+//		mc.ingameGUI.blit(0, 0, 0, 140, tex_width, tex_height);
+//		mc.ingameGUI.blit(26, 7, 0, 174, len, 14);
+		
 	}
 	
 	protected static void drawMoneyBar(int w,int h){
-		mc.ingameGUI.blit(w - tex_width - 1, h - tex_height - 1, 0, 200, tex_width, tex_height);
-		StringUtil.drawCenteredScaledString(mc.fontRenderer, ClientPlayerResources.getPlayerStats(Resources.MONEY) + "",w - tex_width - 1+35,
-				h - tex_height - 1 +8, Colors.WHITE, 1.5f);
-//		drawTexturedModalRect(w - tex_width - 1, h - tex_height - 1, 0, 200, tex_width, tex_height);
-////		System.out.println(PVZGuiTabPlayerData.money);
-//		RenderUtil.drawCenteredScaledString(mc.fontRenderer, PVZGuiTabPlayerData.money + "", w - tex_width - 1+35,
-//				h - tex_height - 1 +8, 1.5f, Enums.RGBIntegers.WHITE, RenderUtil.StringRenderType.OUTLINED);
+		RenderSystem.pushMatrix();
+		RenderSystem.enableBlend();
+		RenderSystem.scalef(0.5f, 0.5f, 0.5f);
+		mc.ingameGUI.blit(2*w - W, 2*h - H, 0, 96, W, H);
+		StringUtil.drawCenteredScaledString(mc.fontRenderer, ClientPlayerResources.getPlayerStats(Resources.MONEY) + "",2*w - 95,
+				2*h - H + 5, Colors.WHITE, 3f);
+		RenderSystem.popMatrix();
 	}
 	
 	protected static void drawEnergyNumBar(int w,int h){
 		int maxNum = ClientPlayerResources.getPlayerStats(Resources.MAX_ENERGY_NUM);
 		int num = ClientPlayerResources.getPlayerStats(Resources.ENERGY_NUM);
-		double percent = Math.min(num * 1.0d / maxNum, 1.0d);
-		int len = MathHelper.floor(percent * 61);
-		if (num != 0 && len == 0)
-			len = 1;
-		if (len == 61 && num < maxNum)
-			len = 60;
-		mc.ingameGUI.blit(0, h - tex_height - 1, 0, 0, tex_width, tex_height);
-		mc.ingameGUI.blit(26, h - tex_height + 6, 0, 60, len, 14);
-		StringUtil.drawCenteredScaledString(mc.fontRenderer, num + "", 0+55, h - tex_height - 1+8, Colors.WHITE,1.5f);
-//		drawTexturedModalRect(0, h - tex_height - 1, 0, 0, tex_width, tex_height);
-//		drawTexturedModalRect(26, h - tex_height + 6, 0, 60, len, 14);
-//		RenderUtil.drawCenteredScaledString(mc.fontRenderer, PVZGuiTabPlayerData.energyNum + "", 0+55, h - tex_height - 1+8,
-//				1.5f, Enums.RGBIntegers.WHITE, RenderUtil.StringRenderType.OUTLINED);
+//		mc.ingameGUI.blit(0, h - tex_height - 1, 0, 0, tex_width, tex_height);
+//		mc.ingameGUI.blit(26, h - tex_height + 6, 0, 60, len, 14);
+		RenderSystem.pushMatrix();
+		RenderSystem.enableBlend();
+		RenderSystem.scalef(0.5f, 0.5f, 0.5f);
+		mc.ingameGUI.blit(0, 2*h-H, 0, 64, 35, H);//render head
+		int currentX = 35;
+		for(int i=0;i<maxNum;i++) {
+			if(num>0) {
+				num--;
+				mc.ingameGUI.blit(currentX, 2*h-H, 35, 64, 26, H);
+			}else {
+				mc.ingameGUI.blit(currentX, 2*h-H, 61, 64, 26, H);
+			}
+			currentX+=26;
+		}
+		mc.ingameGUI.blit(currentX, 2*h-H, 156, 64, 4, H);//render tail
+		RenderSystem.popMatrix();
 	}
 }

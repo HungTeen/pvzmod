@@ -36,7 +36,7 @@ public class StrangeHelpScreen extends Screen{
         int textureHeight = 160;
         this.blit((this.width-textureWidth)/2, (this.height-textureHeight)/2, 0, 0, textureWidth, textureHeight);
         int midX = this.width/2;
-        int midY = 60;
+        int midY = 70;
         for(int i=0;i<STRINGS.length;i++) {
         	StringUtil.drawCenteredScaledString(this.font, STRINGS[i], midX, midY, Colors.BLACK, 1.5f);
         	midY+=30;
