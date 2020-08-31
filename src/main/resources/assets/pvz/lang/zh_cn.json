@@ -94,6 +94,10 @@
     "item.pvz.repeater_spawn_egg":"双枪射手刷怪蛋",
     "item.pvz.repeater_card":"双枪射手卡",
     "item.pvz.repeater_enjoy_card":"双枪射手体验卡",
+//LilyPad
+    "block.pvz.lily_pad":"睡莲",
+    "item.pvz.lily_pad_card":"睡莲卡",
+    "item.pvz.lily_pad_enjoy_card":"睡莲体验卡",
 //misc
     "item.pvz.snow_pea":"寒冰豌豆",
     "item.pvz.flame_pea":"烈焰豌豆",
@@ -167,6 +171,6 @@
     "death.attack.pvz_eat":"僵尸吃了%s的脑子",
     "death.attack.chomper_plant":"%s被食人花咬死了",
 //itemGroup
-    "itemGroup.pvz.pvz_misc":"PVZ杂项",
-    "itemGroup.pvz.pvz_card":"PVZ召唤卡"
+    "itemGroup.pvz_misc":"PVZ杂项",
+    "itemGroup.pvz_card":"PVZ召唤卡"
 }

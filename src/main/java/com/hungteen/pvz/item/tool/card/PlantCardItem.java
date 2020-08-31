@@ -18,6 +18,7 @@ import net.minecraft.entity.SpawnReason;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.ItemUseContext;
+import net.minecraft.stats.Stats;
 import net.minecraft.util.ActionResultType;
 import net.minecraft.util.Direction;
 import net.minecraft.util.Hand;
@@ -28,6 +29,7 @@ import net.minecraftforge.common.MinecraftForge;
 public class PlantCardItem extends SummonCardItem{
 
 	protected final Plants plant;
+	
 	public PlantCardItem(Plants plant,boolean isFragment) {
 		super(isFragment);
 		this.plant = plant;
@@ -110,6 +112,7 @@ public class PlantCardItem extends SummonCardItem{
 							plantEntity.startSuperMode();
 						}
 					}
+					player.addStat(Stats.ITEM_USED.get(this));
 				}
 			});
 		}

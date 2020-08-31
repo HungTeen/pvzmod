@@ -63,8 +63,13 @@ public class SunEntity extends DropEntity{
 	
 	public static boolean canSunSpawn(EntityType<? extends SunEntity> zombieType, IWorld worldIn, SpawnReason reason, BlockPos pos, Random rand) {
 		if(worldIn instanceof ServerWorld) {
-			return !((ServerWorld)worldIn).isRainingAt(pos)&&!((ServerWorld)worldIn).isDaytime()&&worldIn.getLightFor(LightType.SKY, pos)>=15;
+//			System.out.println(((ServerWorld)worldIn).isDaytime());
+			return !((ServerWorld)worldIn).isRainingAt(pos)&&((ServerWorld)worldIn).isDaytime()&&worldIn.getLightFor(LightType.SKY, pos)>=15;
 		}
+//		else if(worldIn instanceof World) {
+//			System.out.println("world");
+//			return !((World)worldIn).isRainingAt(pos)&&((World)worldIn).isDaytime()&&worldIn.getLightFor(LightType.SKY, pos)>=15;
+//		}
 		return worldIn.getLightFor(LightType.SKY, pos)>=15;
 	}
 	

@@ -1,4 +1,4 @@
-package com.hungteen.pvz.item;
+package com.hungteen.pvz.item.blockitem;
 
 import com.hungteen.pvz.register.GroupRegister;
 

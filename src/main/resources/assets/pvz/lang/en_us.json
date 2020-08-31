@@ -94,6 +94,10 @@
     "item.pvz.repeater_spawn_egg":"Repeater Spawn Egg",
     "item.pvz.repeater_card":"Repeater Card",
     "item.pvz.repeater_enjoy_card":"Repeater Enjoy Card",
+//LilyPad
+    "block.pvz.lily_pad":"LilyPad",
+    "item.pvz.lily_pad_card":"LilyPad Card",
+    "item.pvz.lily_pad_enjoy_card":"LilyPad Enjoy Card",
 //misc
     "item.pvz.snow_pea":"Snow Pea",
     "item.pvz.flame_pea":"Flame Pea",
@@ -167,6 +171,6 @@
     "death.attack.pvz_eat":"Zombie eat %s's brain",
     "death.attack.chomper_plant":"%s was eat by chomper",
 //itemGroup
-    "itemGroup.pvz.pvz_misc":"PVZ Misc",
-    "itemGroup.pvz.misc":"PVZ Card"
+    "itemGroup.pvz_misc":"PVZ Misc",
+    "itemGroup.misc":"PVZ Card"
 }

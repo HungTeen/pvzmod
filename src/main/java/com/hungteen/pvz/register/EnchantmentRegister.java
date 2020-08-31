@@ -4,6 +4,7 @@ import com.hungteen.pvz.PVZMod;
 import com.hungteen.pvz.enchantment.BreakOutEnchantment;
 import com.hungteen.pvz.enchantment.EnergyTransferEnchantment;
 import com.hungteen.pvz.enchantment.SunReduceEnchantment;
+import com.hungteen.pvz.item.tool.card.BlockPlantCardItem;
 import com.hungteen.pvz.item.tool.card.PlantCardItem;
 import com.hungteen.pvz.item.tool.card.SummonCardItem;
 
@@ -26,6 +27,6 @@ public class EnchantmentRegister {
 	});
 
 	public static final EnchantmentType PLANT_CARD = EnchantmentType.create("plant_card", (item) -> {
-		return item instanceof PlantCardItem;
+		return item instanceof PlantCardItem&&!(item instanceof BlockPlantCardItem);
 	});
 }

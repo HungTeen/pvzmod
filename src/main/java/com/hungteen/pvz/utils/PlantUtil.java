@@ -2,6 +2,7 @@ package com.hungteen.pvz.utils;
 
 import com.hungteen.pvz.PVZMod;
 import com.hungteen.pvz.entity.plant.PVZPlantEntity;
+import com.hungteen.pvz.register.BlockRegister;
 import com.hungteen.pvz.utils.enums.Essences;
 import com.hungteen.pvz.utils.enums.Plants;
 import com.hungteen.pvz.utils.enums.Ranks;
@@ -56,7 +57,10 @@ public class PlantUtil {
 	}
 	
 	public static int getPlantMaxLvl(Plants plant){
-		return 20;
+		switch(plant) {
+		case LILY_PAD:return 1;
+		default:return 20;
+		}
 	}
 	
 	public static boolean checkCanPlantLiveHere(PVZPlantEntity plant){
@@ -68,7 +72,7 @@ public class PlantUtil {
 		}else {
 			switch(p) {
 			default:{
-				if(block==Blocks.GRASS_BLOCK||block==Blocks.AIR) return true;
+				if(block==Blocks.GRASS_BLOCK||block==Blocks.AIR||block==BlockRegister.LILY_PAD.get()) return true;
 			}
 			}
 		}
@@ -80,7 +84,8 @@ public class PlantUtil {
 	 */
 	public static int getPlantSunCost(Plants plant){
 		switch(plant) {
-		case POTATO_MINE:return 25;
+		case POTATO_MINE:
+		case LILY_PAD:return 25;
 		case SUN_FLOWER:
 		case WALL_NUT:return 50;
 		case PEA_SHOOTER:return 100;
@@ -108,6 +113,7 @@ public class PlantUtil {
 		case POTATO_MINE:return getPlantCoolDownTimeLittleSlow(lvl);
 		case WALL_NUT:return getPlantCoolDownTimeSlow(lvl);
 		case CHERRY_BOMB:return getPlantCoolDownTimeHugeSlow(lvl);
+		case LILY_PAD:return 100;
 		default:{
 			PVZMod.LOGGER.debug("plant get cooldown time error!");
 			return 0;
@@ -133,7 +139,8 @@ public class PlantUtil {
 	public static Ranks getPlantRankByName(Plants plant){
 		switch(plant) {
 		case PEA_SHOOTER:
-		case SUN_FLOWER:return Ranks.GRAY;
+		case SUN_FLOWER:
+		case LILY_PAD:return Ranks.GRAY;
 		case WALL_NUT:
 		case POTATO_MINE:return Ranks.WHITE;
 		case SNOW_PEA:
@@ -157,6 +164,7 @@ public class PlantUtil {
 		case WALL_NUT:return Essences.DEFENCE;
 		case SNOW_PEA:return Essences.ICE;
 		case CHOMPER:return Essences.ENFORCE;
+		case LILY_PAD:return Essences.ASSIST;
 		default:{
 			PVZMod.LOGGER.debug("plant get essence type error!");
 			return null;

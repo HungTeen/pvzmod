@@ -20,6 +20,7 @@ import com.hungteen.pvz.entity.zombie.grassday.ConeHeadZombieEntity;
 import com.hungteen.pvz.entity.zombie.grassday.FlagZombieEntity;
 import com.hungteen.pvz.entity.zombie.grassday.NormalZombieEntity;
 import com.hungteen.pvz.entity.zombie.grassday.PoleZombieEntity;
+import com.hungteen.pvz.entity.zombie.poolday.DuckyTubeEntity;
 import com.hungteen.pvz.render.entity.bullet.PeaRender;
 import com.hungteen.pvz.render.entity.bullet.PotatoRender;
 import com.hungteen.pvz.render.entity.drop.CoinRender;
@@ -39,6 +40,7 @@ import com.hungteen.pvz.render.entity.zombie.grassday.ConeHeadZombieRender;
 import com.hungteen.pvz.render.entity.zombie.grassday.FlagZombieRender;
 import com.hungteen.pvz.render.entity.zombie.grassday.NormalZombieRender;
 import com.hungteen.pvz.render.entity.zombie.grassday.PoleZombieRender;
+import com.hungteen.pvz.render.entity.zombie.poolday.DuckyTubeRender;
 import com.hungteen.pvz.utils.StringUtil;
 
 import net.minecraft.entity.Entity;
@@ -72,7 +74,7 @@ public class EntityRegister {
 	
 	//misc 
 	public static final RegistryObject<EntityType<SmallChomperEntity>> SMALL_CHOMPER = registerEntityType(SmallChomperEntity::new, "small_chomper", EntityClassification.MISC);
-	
+	public static final RegistryObject<EntityType<DuckyTubeEntity>> DUCKY_TUBE = registerEntityType(DuckyTubeEntity::new, "duck_tube", EntityClassification.MISC);
 	//zombie 
 	public static final RegistryObject<EntityType<NormalZombieEntity>> NORMAL_ZOMBIE = registerEntityType(NormalZombieEntity::new, "normal_zombie", EntityClassification.MONSTER);
 	public static final RegistryObject<EntityType<FlagZombieEntity>> FLAG_ZOMBIE = registerEntityType(FlagZombieEntity::new, "flag_zombie", EntityClassification.MONSTER);
@@ -104,6 +106,7 @@ public class EntityRegister {
         
         //misc
         RenderingRegistry.registerEntityRenderingHandler(SMALL_CHOMPER.get(), SmallChomperRender::new);
+        RenderingRegistry.registerEntityRenderingHandler(DUCKY_TUBE.get(), DuckyTubeRender::new);
         
         //zombie
         RenderingRegistry.registerEntityRenderingHandler(NORMAL_ZOMBIE.get(), NormalZombieRender::new);

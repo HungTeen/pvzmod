@@ -7,6 +7,7 @@ import com.hungteen.pvz.PVZMod;
 import com.hungteen.pvz.block.EssenceOreBlock;
 import com.hungteen.pvz.block.OriginBlock;
 import com.hungteen.pvz.block.plants.ChomperBlock;
+import com.hungteen.pvz.block.plants.LilyPadBlock;
 import com.hungteen.pvz.block.plants.PVZSaplingBlock;
 import com.hungteen.pvz.block.plants.PeaBlock;
 import com.hungteen.pvz.world.feature.tree.NutTree;
@@ -16,6 +17,7 @@ import net.minecraft.block.Blocks;
 import net.minecraft.block.LeavesBlock;
 import net.minecraft.item.BlockItem;
 import net.minecraft.item.Item;
+import net.minecraft.item.LilyPadItem;
 import net.minecraftforge.event.RegistryEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.RegistryObject;
@@ -67,6 +69,7 @@ public class BlockRegister {
 	public static final RegistryObject<Block> NUT_LEAVES = BLOCKS.register("nut_leaves", ()->new LeavesBlock(Block.Properties.from(Blocks.OAK_LEAVES)));
 	public static final RegistryObject<Block> NUT_SAPLING = BLOCKS.register("nut_sapling", ()->new PVZSaplingBlock(NutTree::new));
 	public static final RegistryObject<Block> CHOMPER = BLOCKS.register("chomper", ChomperBlock::new);
+	public static final RegistryObject<Block> LILY_PAD = BLOCKS.register("lily_pad", LilyPadBlock::new);
 	
 	//tileentity block
 	
@@ -79,10 +82,14 @@ public class BlockRegister {
 		List<RegistryObject<? extends Block>> blocks = Arrays.asList(
 				ORIGIN_ORE,APPEASE_ORE,LIGHT_ORE,EXPLOSION_ORE,DEFENCE_ORE,ICE_ORE,ENFORCE_ORE,TOXIC_ORE,ASSIST_ORE,MAGIC_ORE,FLAME_ORE,SPEAR_ORE,ARMA_ORE,ELECTRIC_ORE,SHADOW_ORE,AMETHYST_ORE,
 				STEEL_BLOCK,AMETHYST_BLOCK,ORIGIN_BLOCK,
-				NUT_LEAVES,NUT_SAPLING,CHOMPER
+				NUT_LEAVES,NUT_SAPLING,CHOMPER,LILY_PAD
 		);
 		for(RegistryObject<? extends Block> block:blocks) {
-			items.register(new BlockItem(block.get(),new Item.Properties().group(GroupRegister.PVZ_MISC)).setRegistryName(block.get().getRegistryName()));
+			if(block==LILY_PAD) {
+				items.register(new LilyPadItem(block.get(), new Item.Properties().group(GroupRegister.PVZ_MISC)).setRegistryName(block.get().getRegistryName()));
+			}else {
+				items.register(new BlockItem(block.get(),new Item.Properties().group(GroupRegister.PVZ_MISC)).setRegistryName(block.get().getRegistryName()));
+			}
 		}
 	}
 	

@@ -8,6 +8,7 @@ import com.hungteen.pvz.item.armor.ConeArmorItem;
 import com.hungteen.pvz.item.misc.GuildBookItem;
 import com.hungteen.pvz.item.misc.StrangeHelpItem;
 import com.hungteen.pvz.item.tool.ZombieFlagItem;
+import com.hungteen.pvz.item.tool.card.BlockPlantCardItem;
 import com.hungteen.pvz.item.tool.card.PlantCardItem;
 import com.hungteen.pvz.utils.enums.Colors;
 import com.hungteen.pvz.utils.enums.Plants;
@@ -71,6 +72,8 @@ public class ItemRegister {
     public static final RegistryObject<PlantCardItem> CHOMPER_ENJOY_CARD = registerCard(Plants.CHOMPER, true);
     public static final RegistryObject<PlantCardItem> REPEATER_CARD = registerCard(Plants.REPEATER, false);
     public static final RegistryObject<PlantCardItem> REPEATER_ENJOY_CARD = registerCard(Plants.REPEATER, true);
+    public static final RegistryObject<PlantCardItem> LILY_PAD_CARD = ITEMS.register("lily_pad_card", ()->{return new BlockPlantCardItem(Plants.LILY_PAD,false);});
+    public static final RegistryObject<PlantCardItem> LILY_PAD_ENJOY_CARD = ITEMS.register("lily_pad_enjoy_card", ()->{return new BlockPlantCardItem(Plants.LILY_PAD,true);});
     
     //plants
 	public static final RegistryObject<Item> PEA = ITEMS.register("pea",()-> new BlockItem(BlockRegister.PEA_PLANT.get(),new Item.Properties().group(GroupRegister.PVZ_MISC)));

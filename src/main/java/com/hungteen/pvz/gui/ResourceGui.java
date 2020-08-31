@@ -25,7 +25,7 @@ public class ResourceGui{
 	private static Minecraft mc = Minecraft.getInstance();
 //	private static final ResourceLocation RESOURCE_BAR = StringUtil.prefix("textures/gui/overlay/resource_bar.png");
 	private static final ResourceLocation RESOURCE = StringUtil.prefix("textures/gui/overlay/resource.png");
-	private static final int tex_width = 89, tex_height = 28;
+//	private static final int tex_width = 89, tex_height = 28;
 	private static final int W = 160;
 	private static final int H = 32;
 	private static final int BAR_LEN = 123;
