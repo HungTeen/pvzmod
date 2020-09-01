@@ -2,15 +2,13 @@ package com.hungteen.pvz.entity.zombie.poolday;
 
 import com.hungteen.pvz.entity.zombie.PVZZombieToolBase;
 
-import net.minecraft.block.Block;
-import net.minecraft.block.Blocks;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntitySize;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.MobEntity;
 import net.minecraft.entity.Pose;
+import net.minecraft.entity.SharedMonsterAttributes;
 import net.minecraft.entity.ai.goal.SwimGoal;
-import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 
 public class DuckyTubeEntity extends PVZZombieToolBase{
@@ -26,23 +24,14 @@ public class DuckyTubeEntity extends PVZZombieToolBase{
 	}
 	
 	@Override
-	public void baseTick() {
-		super.baseTick();
+	protected void registerAttributes() {
+		super.registerAttributes();
+		this.getAttribute(SharedMonsterAttributes.MOVEMENT_SPEED).setBaseValue(0.3);
 	}
 	
 	@Override
-	public void livingTick() {
-		super.livingTick();
-		if(!this.world.isRemote) {
-			Block block1=this.world.getBlockState(new BlockPos(this).down()).getBlock();
-			Block block2=this.world.getBlockState(new BlockPos(this)).getBlock();
-			if(block1!=Blocks.WATER&&block2!=Blocks.WATER) {
-			    for(Entity entity:this.getPassengers()) {
-//			    	System.out.println("go out!");
-			    	entity.stopRiding();
-			    }
-			}
-		}
+	public void baseTick() {
+		super.baseTick();
 	}
 	
 	@Override

@@ -63,7 +63,7 @@ public class LilyPadItem extends BlockItem {
 					// special case for handling block placement with water lilies
 					net.minecraftforge.common.util.BlockSnapshot blocksnapshot = net.minecraftforge.common.util.BlockSnapshot
 							.getBlockSnapshot(worldIn, blockpos1);
-					worldIn.setBlockState(blockpos1, BlockRegister.LILY_PAD.get().getDefaultState(), 11);
+					worldIn.setBlockState(blockpos1, BlockRegister.LILY_PAD.get().getStateForPlacement(playerIn), 11);
 					if (net.minecraftforge.event.ForgeEventFactory.onBlockPlace(playerIn, blocksnapshot,
 							net.minecraft.util.Direction.UP)) {
 						blocksnapshot.restore(true, false);

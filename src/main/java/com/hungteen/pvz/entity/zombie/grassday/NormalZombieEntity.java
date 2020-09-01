@@ -12,6 +12,9 @@ import net.minecraft.entity.EntityType;
 import net.minecraft.entity.Pose;
 import net.minecraft.entity.SharedMonsterAttributes;
 import net.minecraft.entity.monster.MonsterEntity;
+import net.minecraft.pathfinding.GroundPathNavigator;
+import net.minecraft.pathfinding.PathNavigator;
+import net.minecraft.pathfinding.SwimmerPathNavigator;
 import net.minecraft.world.World;
 
 public class NormalZombieEntity extends PVZZombieEntity {
@@ -26,15 +29,27 @@ public class NormalZombieEntity extends PVZZombieEntity {
 	@Override
 	public void normalZombieTick() {
 		super.normalZombieTick();
-		if (!this.world.isRemote && this.getRidingEntity() == null && this.isAlive() && this.isInWater()) {
-			DuckyTubeEntity duck = EntityRegister.DUCKY_TUBE.get().create(world);
-			duck.setLocationAndAngles(this.getPosX(), this.getPosY(), this.getPosZ(), this.rotationYaw, 0.0F);
-			world.addEntity(duck);
-			this.startRiding(duck);
+		if(!this.world.isRemote && this.isAlive()) {
+			if(this.getRidingEntity()==null && this.isInWater()) {
+			    DuckyTubeEntity duck = EntityRegister.DUCKY_TUBE.get().create(world);
+			    duck.setLocationAndAngles(this.getPosX(), this.getPosY(), this.getPosZ(), this.rotationYaw, 0.0F);
+			    world.addEntity(duck);
+			    this.startRiding(duck,true);
+		    }
+			if(this.getRidingEntity()!=null&&!this.isInWater()) {
+				this.stopRiding();
+			}
 		}
 	}
 
-
+	@Override
+	protected PathNavigator createNavigator(World worldIn) {
+		if(this.isInWater()) {
+			return new SwimmerPathNavigator(this, worldIn);
+		}
+		return new GroundPathNavigator(this, worldIn);
+	}
+	
 	@Override
 	protected Type getSpawnType() {
 		int t = this.getRNG().nextInt(100);

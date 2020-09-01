@@ -71,7 +71,7 @@ public class BlockPlantCardItem extends PlantCardItem{
 						int num=manager.getPlayerStats().getPlayerStats(Resources.SUN_NUM);
 						int sunCost=getSunCost(itemstack);
 						if(num>=sunCost) {//sun is enough
-						    BlockState state = getBlockState();
+						    BlockState state = getBlockState(player);
 						    if(state==null) {
 						    	return;
 						    }
@@ -106,9 +106,9 @@ public class BlockPlantCardItem extends PlantCardItem{
 		return ActionResultType.PASS;
 	}
 	
-	public BlockState getBlockState() {
+	public BlockState getBlockState(PlayerEntity player) {
 		switch(plant) {
-		case LILY_PAD:return BlockRegister.LILY_PAD.get().getDefaultState();
+		case LILY_PAD:return BlockRegister.LILY_PAD.get().getStateForPlacement(player);
 		default:{
 			PVZMod.LOGGER.debug("No such block plant!");
 			return null;

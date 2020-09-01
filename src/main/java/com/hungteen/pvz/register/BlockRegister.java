@@ -69,7 +69,7 @@ public class BlockRegister {
 	public static final RegistryObject<Block> NUT_LEAVES = BLOCKS.register("nut_leaves", ()->new LeavesBlock(Block.Properties.from(Blocks.OAK_LEAVES)));
 	public static final RegistryObject<Block> NUT_SAPLING = BLOCKS.register("nut_sapling", ()->new PVZSaplingBlock(NutTree::new));
 	public static final RegistryObject<Block> CHOMPER = BLOCKS.register("chomper", ChomperBlock::new);
-	public static final RegistryObject<Block> LILY_PAD = BLOCKS.register("lily_pad", LilyPadBlock::new);
+	public static final RegistryObject<LilyPadBlock> LILY_PAD = BLOCKS.register("lily_pad", LilyPadBlock::new);
 	
 	//tileentity block
 	
