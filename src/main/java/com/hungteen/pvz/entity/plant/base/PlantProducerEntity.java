@@ -6,7 +6,6 @@ import com.hungteen.pvz.utils.interfaces.IProducer;
 
 import net.minecraft.entity.CreatureEntity;
 import net.minecraft.entity.EntityType;
-import net.minecraft.entity.ai.goal.LookRandomlyGoal;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.network.datasync.DataParameter;
 import net.minecraft.network.datasync.DataSerializers;
@@ -32,7 +31,6 @@ public abstract class PlantProducerEntity extends PVZPlantEntity implements IPro
 	@Override
 	protected void registerGoals() {
 		super.registerGoals();
-		this.goalSelector.addGoal(2, new LookRandomlyGoal(this));
 		this.goalSelector.addGoal(0, new ProducerGenGoal(this));
 	}
 	

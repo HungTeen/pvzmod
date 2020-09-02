@@ -1,6 +1,5 @@
 package com.hungteen.pvz.entity.plant.enforce;
 
-import com.hungteen.pvz.entity.ai.PVZLookAroundGoal;
 import com.hungteen.pvz.entity.ai.PVZNearestTargetGoal;
 import com.hungteen.pvz.entity.misc.SmallChomperEntity;
 import com.hungteen.pvz.entity.plant.PVZPlantEntity;
@@ -38,7 +37,6 @@ public class ChomperEntity extends PVZPlantEntity{
 	@Override
 	protected void registerGoals() {
 		super.registerGoals();
-		this.goalSelector.addGoal(2, new PVZLookAroundGoal(this));
 		this.targetSelector.addGoal(0, new PVZNearestTargetGoal(this, true, 5, 2));
 	}
 

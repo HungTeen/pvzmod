@@ -12,7 +12,6 @@ import net.minecraft.entity.EntityType;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.MobEntity;
 import net.minecraft.entity.SharedMonsterAttributes;
-import net.minecraft.entity.ai.goal.LookRandomlyGoal;
 import net.minecraft.world.World;
 
 public abstract class PlantDefenderEntity extends PVZPlantEntity implements IDefender{
@@ -24,7 +23,6 @@ public abstract class PlantDefenderEntity extends PVZPlantEntity implements IDef
 	@Override
 	protected void registerGoals() {
 		super.registerGoals();
-		this.goalSelector.addGoal(2, new LookRandomlyGoal(this));
 		this.goalSelector.addGoal(0, new DefenderAttractGoal(this, 20));
 		this.targetSelector.addGoal(0, new PVZNearestTargetGoal(this, true, 2.5f, 2f) {
 			@Override

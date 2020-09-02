@@ -4,22 +4,43 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
+import javax.annotation.Nonnull;
+
 import com.hungteen.pvz.PVZConfig;
 import com.hungteen.pvz.entity.plant.PVZPlantEntity;
+import com.hungteen.pvz.entity.plant.enforce.SquashEntity;
 import com.hungteen.pvz.entity.zombie.PVZZombieEntity;
 import com.hungteen.pvz.register.EffectRegister;
 
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.LivingEntity;
+import net.minecraft.entity.MobEntity;
 import net.minecraft.entity.SharedMonsterAttributes;
 import net.minecraft.entity.monster.MonsterEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.scoreboard.Team;
 import net.minecraft.util.math.AxisAlignedBB;
+import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 
 public class EntityUtil {
 
+	public static boolean isOnGround(Entity entity){
+		BlockPos pos=new BlockPos(entity).down();
+		if(!entity.world.isAirBlock(pos)&&(entity.getPosY()-pos.getY())<=1.01) {
+			return true;
+		}
+		return false;
+	}
+	
+	public static boolean isSuitableTarget(MobEntity entity,@Nonnull LivingEntity target,double range) {
+		return entity.getDistanceSq(target)>getAttackRange(entity, target, range)&&checkCanEntityAttack(entity, target);
+	}
+	
+	public static double getAttackRange(Entity a,Entity b,double r){
+		return (a.getWidth()/2+b.getWidth()+r)*(a.getWidth()/2+b.getWidth()+r);
+	}
+	
 	public static PlayerEntity getEntityOwner(World world, Entity entity) {
 		if(entity==null) return null;
 		UUID uuid = null;
@@ -39,12 +60,18 @@ public class EntityUtil {
 			if(target instanceof PVZPlantEntity) {//plants collide with plants include itself. Be careful,if add pumpkin,improve here
 				return true;
 			}
+			if(base instanceof SquashEntity) {
+				return false;
+			}
 			if(checkCanEntityAttack(base, target)) {//collide with enemy.
 				return true;
 			}
 			return false;
 		}
 		if(base instanceof PVZZombieEntity) {//base is a zombie
+			if(target instanceof SquashEntity) {
+				return false;
+			}
 			if(checkCanEntityAttack(base, target)) {//collide with enemy
 				return true;
 			}

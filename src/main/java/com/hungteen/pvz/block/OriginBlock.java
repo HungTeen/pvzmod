@@ -44,36 +44,35 @@ public class OriginBlock extends Block
 		}
 	}
 
-	private void checkAndGrow(World world,int x,int y,int z)
-	{
+	private void checkAndGrow(World world,int x,int y,int z){
 		BlockPos pos=new BlockPos(x,y,z);
 		BlockState blockstate = world.getBlockState(pos);
 		Block block=blockstate.getBlock();
-		if(block==Blocks.GRASS_BLOCK) {//草方块 - > 喷射精华矿
+		if(block==Blocks.GRASS_BLOCK) {
 			world.setBlockState(pos, BlockRegister.APPEASE_ORE.get().getDefaultState());
-		}else if(block==Blocks.GLOWSTONE) {//萤石 -> 阳光精华矿
+		}else if(block==Blocks.GLOWSTONE) {
 			world.setBlockState(pos, BlockRegister.LIGHT_ORE.get().getDefaultState());
-		}else if(block==Blocks.REDSTONE_BLOCK) {//红石块 -> 爆炸精华矿
+		}else if(block==Blocks.REDSTONE_BLOCK) {
 			world.setBlockState(pos, BlockRegister.EXPLOSION_ORE.get().getDefaultState());
-		}else if(block==Blocks.GRANITE) {//花岗岩 -> 防御精华矿
+		}else if(block==Blocks.GRANITE) {
 			world.setBlockState(pos, BlockRegister.DEFENCE_ORE.get().getDefaultState());
-		}else if(block==Blocks.BLUE_ICE) {//蓝冰 - > 寒冰精华矿
+		}else if(block==Blocks.BLUE_ICE) {
 			world.setBlockState(pos, BlockRegister.ICE_ORE.get().getDefaultState());
-		}else if(block==Blocks.ANDESITE) {//安山岩 - > 近战精华矿
+		}else if(block==Blocks.ANDESITE) {
 			world.setBlockState(pos, BlockRegister.ENFORCE_ORE.get().getDefaultState());
-		}else if(block==Blocks.MYCELIUM) {//菌土 -> 剧毒精华矿
+		}else if(block==Blocks.MYCELIUM) {
 			world.setBlockState(pos, BlockRegister.TOXIC_ORE.get().getDefaultState());
-		}else if(block==Blocks.DIORITE) {//闪长岩 - > 辅助精华矿
+		}else if(block==Blocks.DIORITE) {
 			world.setBlockState(pos, BlockRegister.ASSIST_ORE.get().getDefaultState());
-		}else if(block==Blocks.SOUL_SAND) {//灵魂沙 - > 魔法精华矿
+		}else if(block==Blocks.SOUL_SAND) {
 			world.setBlockState(pos, BlockRegister.MAGIC_ORE.get().getDefaultState());
-		}else if(block==Blocks.MAGMA_BLOCK) {//熔浆块 -> 烈焰精华矿
+		}else if(block==Blocks.MAGMA_BLOCK) {
 			world.setBlockState(pos, BlockRegister.FLAME_ORE.get().getDefaultState());
-		}else if(block==Blocks.GRAVEL) {//砂砾 - > 穿透精华矿
+		}else if(block==Blocks.GRAVEL) {
 			world.setBlockState(pos, BlockRegister.SPEAR_ORE.get().getDefaultState());
-		}else if(block==Blocks.SANDSTONE) {//沙石 - > 投掷精华矿 
+		}else if(block==Blocks.SANDSTONE) {
 			world.setBlockState(pos, BlockRegister.ARMA_ORE.get().getDefaultState());
-		}else if(block==Blocks.OBSIDIAN) {//黑曜石 -> 暗影精华矿
+		}else if(block==Blocks.OBSIDIAN) {
 			world.setBlockState(pos, BlockRegister.SHADOW_ORE.get().getDefaultState());
 		}
 	}

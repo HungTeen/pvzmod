@@ -6,7 +6,6 @@ import com.hungteen.pvz.utils.interfaces.ICloser;
 
 import net.minecraft.entity.CreatureEntity;
 import net.minecraft.entity.EntityType;
-import net.minecraft.entity.ai.goal.LookRandomlyGoal;
 import net.minecraft.world.World;
 
 public abstract class PlantCloserEntity extends PVZPlantEntity implements ICloser{
@@ -18,7 +17,6 @@ public abstract class PlantCloserEntity extends PVZPlantEntity implements IClose
 	@Override
 	protected void registerGoals() {
 		super.registerGoals();
-		this.goalSelector.addGoal(2, new LookRandomlyGoal(this));
 		this.targetSelector.addGoal(0, new PVZNearestTargetGoal(this, true, this.getCloseWidth(), this.getCloseHeight()));
 	}
 	

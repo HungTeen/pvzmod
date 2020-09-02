@@ -7,7 +7,6 @@ import com.hungteen.pvz.utils.interfaces.IBomber;
 
 import net.minecraft.entity.CreatureEntity;
 import net.minecraft.entity.EntityType;
-import net.minecraft.entity.ai.goal.LookRandomlyGoal;
 import net.minecraft.util.DamageSource;
 import net.minecraft.world.World;
 
@@ -26,12 +25,6 @@ public abstract class PlantBomberEntity extends PVZPlantEntity implements IBombe
 			this.remove();
 			this.setAttackTime(0);
 		}
-	}
-	
-	@Override
-	protected void registerGoals() {
-		super.registerGoals();
-		this.goalSelector.addGoal(2, new LookRandomlyGoal(this));
 	}
 	
 	@Override

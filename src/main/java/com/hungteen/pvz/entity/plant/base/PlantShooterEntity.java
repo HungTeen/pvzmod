@@ -8,7 +8,6 @@ import com.hungteen.pvz.utils.interfaces.IShooter;
 import net.minecraft.entity.CreatureEntity;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.SharedMonsterAttributes;
-import net.minecraft.entity.ai.goal.LookRandomlyGoal;
 import net.minecraft.world.World;
 
 public abstract class PlantShooterEntity extends PVZPlantEntity implements IShooter{
@@ -26,7 +25,6 @@ public abstract class PlantShooterEntity extends PVZPlantEntity implements IShoo
 	@Override
 	protected void registerGoals() {
 //		this.goalSelector.addGoal(8, new LookAtGoal(this, PlayerEntity.class, 8.0F));
-	    this.goalSelector.addGoal(8, new LookRandomlyGoal(this));
 	    this.goalSelector.addGoal(0, new ShooterAttackGoal(this));
 	    this.targetSelector.addGoal(0, new PVZNearestTargetGoal(this, true, 40, 2));
 	}
