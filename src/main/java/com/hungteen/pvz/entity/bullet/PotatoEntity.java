@@ -43,7 +43,7 @@ public class PotatoEntity extends PVZThrowableEntity{
             		return ;
             	}
             	PotatoMineEntity mine= EntityRegister.POTATO_MINE.get().create(world);
-                PlantUtil.copyPlantData((PVZPlantEntity) getThrower(), mine);
+                PlantUtil.copyPlantData(mine, (PVZPlantEntity) getThrower());
                 mine.setMineReady(true);
             	mine.setPosition(this.getPosX(), this.getPosY(), this.getPosZ());
             	this.world.addEntity(mine);

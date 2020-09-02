@@ -9,9 +9,11 @@ import com.hungteen.pvz.entity.drop.SunEntity;
 import com.hungteen.pvz.entity.misc.SmallChomperEntity;
 import com.hungteen.pvz.entity.plant.appease.PeaShooterEntity;
 import com.hungteen.pvz.entity.plant.appease.RepeaterEntity;
+import com.hungteen.pvz.entity.plant.appease.ThreePeaterEntity;
 import com.hungteen.pvz.entity.plant.defence.WallNutEntity;
 import com.hungteen.pvz.entity.plant.enforce.ChomperEntity;
 import com.hungteen.pvz.entity.plant.enforce.SquashEntity;
+import com.hungteen.pvz.entity.plant.enforce.TangleKelpEntity;
 import com.hungteen.pvz.entity.plant.explosion.CherryBombEntity;
 import com.hungteen.pvz.entity.plant.explosion.PotatoMineEntity;
 import com.hungteen.pvz.entity.plant.ice.SnowPeaEntity;
@@ -30,9 +32,11 @@ import com.hungteen.pvz.render.entity.drop.SunRender;
 import com.hungteen.pvz.render.entity.misc.SmallChomperRender;
 import com.hungteen.pvz.render.entity.plant.appease.PeaShooterRender;
 import com.hungteen.pvz.render.entity.plant.appease.RepeaterRender;
+import com.hungteen.pvz.render.entity.plant.appease.ThreePeaterRender;
 import com.hungteen.pvz.render.entity.plant.defence.WallNutRender;
 import com.hungteen.pvz.render.entity.plant.enforce.ChomperRender;
 import com.hungteen.pvz.render.entity.plant.enforce.SquashRender;
+import com.hungteen.pvz.render.entity.plant.enforce.TangleKelpRender;
 import com.hungteen.pvz.render.entity.plant.explosion.CherryBombRender;
 import com.hungteen.pvz.render.entity.plant.explosion.PotatoMineRender;
 import com.hungteen.pvz.render.entity.plant.ice.SnowPeaRender;
@@ -94,6 +98,8 @@ public class EntityRegister {
 	public static final RegistryObject<EntityType<ChomperEntity>> CHOMPER = registerEntityType(ChomperEntity::new, "chomper", EntityClassification.CREATURE);
 	public static final RegistryObject<EntityType<RepeaterEntity>> REPEATER = registerEntityType(RepeaterEntity::new, "repeater", EntityClassification.CREATURE);
 	public static final RegistryObject<EntityType<SquashEntity>> SQUASH = registerEntityType(SquashEntity::new, "squash", EntityClassification.CREATURE);
+	public static final RegistryObject<EntityType<ThreePeaterEntity>> THREE_PEATER = registerEntityType(ThreePeaterEntity::new, "three_peater", EntityClassification.CREATURE);
+	public static final RegistryObject<EntityType<TangleKelpEntity>> TANGLE_KELP = registerEntityType(TangleKelpEntity::new, "tangle_kelp", EntityClassification.CREATURE);
 	
 	@OnlyIn(Dist.CLIENT)
 	@SubscribeEvent
@@ -128,6 +134,8 @@ public class EntityRegister {
         RenderingRegistry.registerEntityRenderingHandler(CHOMPER.get(), ChomperRender::new);
         RenderingRegistry.registerEntityRenderingHandler(REPEATER.get(), RepeaterRender::new);
         RenderingRegistry.registerEntityRenderingHandler(SQUASH.get(), SquashRender::new);
+        RenderingRegistry.registerEntityRenderingHandler(THREE_PEATER.get(), ThreePeaterRender::new);
+        RenderingRegistry.registerEntityRenderingHandler(TANGLE_KELP.get(), TangleKelpRender::new);
     }
 
 	private static <T extends Entity> RegistryObject<EntityType<T>> registerEntityType(IFactory<T> factory,String name,EntityClassification classification)

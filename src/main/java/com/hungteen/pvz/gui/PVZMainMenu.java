@@ -51,8 +51,8 @@ public class PVZMainMenu extends MainMenuScreen {
 		//render main title
 		this.minecraft.getTextureManager().bindTexture(MINECRAFT_TITLE_TEXTURES);
         RenderSystem.color4f(1.0F, 1.0F, 1.0F, 1.0F);
-        this.blit(this.width / 2 - 274 / 2, 10, 0, 0, 155, 44);
-        this.blit(this.width / 2 - 274 / 2 + 155, 10, 0, 45, 155, 44);
+        this.blit(this.width / 2 - 274 / 2, 30, 0, 0, 155, 44);
+        this.blit(this.width / 2 - 274 / 2 + 155, 30, 0, 45, 155, 44);
 		// splash render
 		if (this.splashText != null) {
 			RenderSystem.pushMatrix();

@@ -27,7 +27,7 @@ public class EntityUtil {
 
 	public static boolean isOnGround(Entity entity){
 		BlockPos pos=new BlockPos(entity).down();
-		if(!entity.world.isAirBlock(pos)&&(entity.getPosY()-pos.getY())<=1.01) {
+		if(!entity.world.isAirBlock(pos)&&(entity.getPosY()-pos.getY())<=1.00001) {
 			return true;
 		}
 		return false;

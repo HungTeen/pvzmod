@@ -1,0 +1,6 @@
+{
+    "parent": "item/generated",
+    "textures": {
+        "layer0": "pvz:item/three_peater_enjoy_card"
+    }
+}

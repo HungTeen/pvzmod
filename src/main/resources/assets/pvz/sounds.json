@@ -14,5 +14,8 @@
     "huge_wave":{"sounds":[{"name":"pvz:ambient/huge_wave"}]},
     "chomp":{"sounds":[{"name":"pvz:entity/plant/attack/chomp"}]},
     "snow_shoot":{"sounds":[{"name":"pvz:entity/plant/attack/snow_shoot"}]},
-    "dirt_rise":{"sounds":[{"name":"pvz:ambient/dirt_rise"}]}
+    "dirt_rise":{"sounds":[{"name":"pvz:ambient/dirt_rise"}]},
+    "squash_hmm":{"sounds":[{"name":"pvz:entity/plant/say/squash_hmm"},{"name":"pvz:entity/plant/say/squash_hmm2"}]},
+    "ground_shake":{"sounds":[{"name":"pvz:ambient/ground_shake"}]},
+    "drag":{"sounds":[{"name":"pvz:entity/plant/attack/drag"}]}
 }

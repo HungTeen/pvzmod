@@ -4,6 +4,7 @@ import com.hungteen.pvz.entity.ai.PVZNearestTargetGoal;
 import com.hungteen.pvz.entity.plant.PVZPlantEntity;
 import com.hungteen.pvz.misc.damage.PVZDamageSource;
 import com.hungteen.pvz.misc.damage.PVZDamageType;
+import com.hungteen.pvz.register.SoundRegister;
 import com.hungteen.pvz.utils.EntityUtil;
 import com.hungteen.pvz.utils.enums.Plants;
 
@@ -36,9 +37,6 @@ public class SquashEntity extends PVZPlantEntity{
 	protected void normalPlantTick() {
 		super.normalPlantTick();
 		if(!world.isRemote) {
-			if(this.isPlantInSuperMode()&&this.getSuperTime()==2) {
-				this.extraChance=getSuperBonusChance();
-			}
 			if(restTick>0) {
 				--restTick;
 				return ;
@@ -53,7 +51,7 @@ public class SquashEntity extends PVZPlantEntity{
 			if(this.getAttackTime()>0) {
 				if(EntityUtil.isOnGround(this)) {
 //					System.out.println("on ground!");
-					//this.playSound(SoundsHandler.GROUND_SHAKE, 1f, 1f);
+					this.playSound(SoundRegister.GROUND_SHAKE.get(), 1f, 1f);
 					this.dealDamage();
 					if(this.extraChance>0) {
 						--this.extraChance;
@@ -67,10 +65,18 @@ public class SquashEntity extends PVZPlantEntity{
 				}
 			}else {
 				if(this.getAttackTarget()!=null) {
-					//this.playSound(SoundsHandler.SQUASH_HMM,4f, 1f);
+					this.playSound(SoundRegister.SQUASH_HMM.get(), 1f, 1f);
 					this.jumpToTarget(this.getAttackTarget());
 				}
 			}
+		}
+	}
+	
+	@Override
+	public void startSuperMode() {
+		super.startSuperMode();
+		if(!world.isRemote) {
+		    this.extraChance = this.getSuperBonusChance();
 		}
 	}
 	

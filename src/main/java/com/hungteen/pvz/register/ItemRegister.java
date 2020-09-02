@@ -76,6 +76,10 @@ public class ItemRegister {
     public static final RegistryObject<PlantCardItem> LILY_PAD_ENJOY_CARD = ITEMS.register("lily_pad_enjoy_card", ()->{return new BlockPlantCardItem(Plants.LILY_PAD,true);});
     public static final RegistryObject<PlantCardItem> SQUASH_CARD = registerCard(Plants.SQUASH, false);
     public static final RegistryObject<PlantCardItem> SQUASH_ENJOY_CARD = registerCard(Plants.SQUASH, true);
+    public static final RegistryObject<PlantCardItem> THREE_PEATER_CARD = registerCard(Plants.THREE_PEATER, false);
+    public static final RegistryObject<PlantCardItem> THREE_PEATER_ENJOY_CARD = registerCard(Plants.THREE_PEATER, true);
+    public static final RegistryObject<PlantCardItem> TANGLE_KELP_CARD = registerCard(Plants.TANGLE_KELP, false);
+    public static final RegistryObject<PlantCardItem> TANGLE_KELP_ENJOY_CARD = registerCard(Plants.TANGLE_KELP, true);
     
     //plants
 	public static final RegistryObject<Item> PEA = ITEMS.register("pea",()-> new BlockItem(BlockRegister.PEA_PLANT.get(),new Item.Properties().group(GroupRegister.PVZ_MISC)));
@@ -120,6 +124,8 @@ public class ItemRegister {
 	public static final RegistryObject<PVZSpawnEggItem> CHOMPER_SPAWN_EGG = registerSpawnEgg("chomper", EntityRegister.CHOMPER, Colors.ENFORCE_COLOR);
 	public static final RegistryObject<PVZSpawnEggItem> REPEATER_SPAWN_EGG = registerSpawnEgg("repeater", EntityRegister.REPEATER, Colors.APPEASE_COLOR);
 	public static final RegistryObject<PVZSpawnEggItem> SQUASH_SPAWN_EGG = registerSpawnEgg("squash", EntityRegister.SQUASH, Colors.ENFORCE_COLOR);
+	public static final RegistryObject<PVZSpawnEggItem> THREE_PEATER_SPAWN_EGG = registerSpawnEgg("three_peater", EntityRegister.THREE_PEATER, Colors.APPEASE_COLOR);
+	public static final RegistryObject<PVZSpawnEggItem> TANGLE_KELP_SPAWN_EGG = registerSpawnEgg("tangle_kelp", EntityRegister.TANGLE_KELP, Colors.ENFORCE_COLOR);
 	
 	/**
 	 * register spawn eggs

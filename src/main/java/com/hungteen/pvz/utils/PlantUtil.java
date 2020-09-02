@@ -85,14 +85,17 @@ public class PlantUtil {
 	public static int getPlantSunCost(Plants plant){
 		switch(plant) {
 		case POTATO_MINE:
-		case LILY_PAD:return 25;
+		case LILY_PAD:
+		case TANGLE_KELP:return 25;
 		case SUN_FLOWER:
-		case WALL_NUT:return 50;
+		case WALL_NUT:
+		case SQUASH:return 50;
 		case PEA_SHOOTER:return 100;
 		case CHERRY_BOMB:
 		case CHOMPER:return 150;
 		case SNOW_PEA:return 175;
 		case REPEATER:return 200;
+		case THREE_PEATER:return 325;
 		default:{
 			PVZMod.LOGGER.debug("plant get sun cost error!");
 			return 0;
@@ -109,9 +112,12 @@ public class PlantUtil {
 		case SUN_FLOWER:
 		case SNOW_PEA:
 		case REPEATER:return getPlantCoolDownTimeFast(lvl);
+		case THREE_PEATER:return getPlantCoolDownTimeLittleFast(lvl);
 		case CHOMPER:return getPlantCoolDownTimeNormal(lvl);
-		case POTATO_MINE:return getPlantCoolDownTimeLittleSlow(lvl);
-		case WALL_NUT:return getPlantCoolDownTimeSlow(lvl);
+		case POTATO_MINE:
+		case SQUASH:return getPlantCoolDownTimeLittleSlow(lvl);
+		case WALL_NUT:
+		case TANGLE_KELP:return getPlantCoolDownTimeSlow(lvl);
 		case CHERRY_BOMB:return getPlantCoolDownTimeHugeSlow(lvl);
 		case LILY_PAD:return 100;
 		default:{
@@ -142,11 +148,14 @@ public class PlantUtil {
 		case SUN_FLOWER:
 		case LILY_PAD:return Ranks.GRAY;
 		case WALL_NUT:
-		case POTATO_MINE:return Ranks.WHITE;
+		case POTATO_MINE:
+		case TANGLE_KELP:return Ranks.WHITE;
 		case SNOW_PEA:
 		case CHOMPER:
-		case REPEATER:return Ranks.GREEN;
-		case CHERRY_BOMB:return Ranks.BLUE;
+		case REPEATER:
+		case SQUASH:return Ranks.GREEN;
+		case CHERRY_BOMB:
+		case THREE_PEATER:return Ranks.BLUE;
 		default:{
 			PVZMod.LOGGER.debug("plant get rank error!");
 			return null;
@@ -157,13 +166,16 @@ public class PlantUtil {
 	public static Essences getPlantEssenceType(Plants plant){
 		switch (plant) {
 		case PEA_SHOOTER:
-		case REPEATER:return Essences.APPEASE;
+		case REPEATER:
+		case THREE_PEATER:return Essences.APPEASE;
 		case SUN_FLOWER:return Essences.LIGHT;
 		case CHERRY_BOMB:
 		case POTATO_MINE:return Essences.EXPLOSION;
 		case WALL_NUT:return Essences.DEFENCE;
 		case SNOW_PEA:return Essences.ICE;
-		case CHOMPER:return Essences.ENFORCE;
+		case CHOMPER:
+		case SQUASH:
+		case TANGLE_KELP:return Essences.ENFORCE;
 		case LILY_PAD:return Essences.ASSIST;
 		default:{
 			PVZMod.LOGGER.debug("plant get essence type error!");
@@ -172,7 +184,10 @@ public class PlantUtil {
 		}
 	}
 	
-	public static void copyPlantData(PVZPlantEntity p1,PVZPlantEntity p2) {
+	/**
+	 * copy data from p1 to p2
+	 */
+	public static void copyPlantData(PVZPlantEntity p2,PVZPlantEntity p1) {
 		p2.setPlantLvl(p1.getPlantLvl());
 		p2.setIsCharmed(p1.getIsCharmed());
 		p2.setOwnerUUID(p1.getOwnerUUID());

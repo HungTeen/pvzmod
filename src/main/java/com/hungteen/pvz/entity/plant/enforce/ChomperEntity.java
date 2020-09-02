@@ -10,8 +10,10 @@ import com.hungteen.pvz.utils.EntityUtil;
 import com.hungteen.pvz.utils.enums.Plants;
 
 import net.minecraft.entity.CreatureEntity;
+import net.minecraft.entity.EntitySize;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.LivingEntity;
+import net.minecraft.entity.Pose;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.network.datasync.DataParameter;
 import net.minecraft.network.datasync.DataSerializers;
@@ -40,6 +42,11 @@ public class ChomperEntity extends PVZPlantEntity{
 		this.targetSelector.addGoal(0, new PVZNearestTargetGoal(this, true, 5, 2));
 	}
 
+	@Override
+	public EntitySize getSize(Pose poseIn) {
+		return new EntitySize(0.9f, 1.9f, false);
+	}
+	
 	@Override
 	protected void normalPlantTick() {
 		super.normalPlantTick();

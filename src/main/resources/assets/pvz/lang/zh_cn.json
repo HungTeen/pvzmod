@@ -98,6 +98,16 @@
     "block.pvz.lily_pad":"睡莲",
     "item.pvz.lily_pad_card":"睡莲卡",
     "item.pvz.lily_pad_enjoy_card":"睡莲体验卡",
+//Squash
+    "entity.pvz.squash":"窝瓜",
+    "item.pvz.squash_spawn_egg":"窝瓜刷怪蛋",
+    "item.pvz.squash_card":"窝瓜卡",
+    "item.pvz.squash_enjoy_card":"窝瓜体验卡",
+//ThreePeater
+    "entity.pvz.three_peater":"三线射手",
+    "item.pvz.three_peater_spawn_egg":"三线射手刷怪蛋",
+    "item.pvz.three_peater_card":"三线射手卡",
+    "item.pvz.three_peater_enjoy_card":"三线射手体验卡",
 //misc
     "item.pvz.snow_pea":"寒冰豌豆",
     "item.pvz.flame_pea":"烈焰豌豆",
