@@ -108,6 +108,21 @@
     "item.pvz.three_peater_spawn_egg":"三线射手刷怪蛋",
     "item.pvz.three_peater_card":"三线射手卡",
     "item.pvz.three_peater_enjoy_card":"三线射手体验卡",
+//TangleKelp
+    "entity.pvz.tangle_kelp":"缠绕水草",
+    "item.pvz.tangle_kelp_spawn_egg":"缠绕水草刷怪蛋",
+    "item.pvz.tangle_kelp_card":"缠绕水草卡",
+    "item.pvz.tangle_kelp_enjoy_card":"缠绕水草体验卡",
+//Jalapeno
+    "entity.pvz.jalapeno":"火爆辣椒",
+    "item.pvz.jalapeno_spawn_egg":"火爆辣椒刷怪蛋",
+    "item.pvz.jalapeno_card":"火爆辣椒卡",
+    "item.pvz.jalapeno_enjoy_card":"火爆辣椒体验卡",
+//SpikeWeed
+    "entity.pvz.spike_weed":"地刺",
+    "item.pvz.spike_weed_spawn_egg":"地刺刷怪蛋",
+    "item.pvz.spike_weed_card":"地刺卡",
+    "item.pvz.spike_weed_enjoy_card":"地刺体验卡",
 //misc
     "item.pvz.snow_pea":"寒冰豌豆",
     "item.pvz.flame_pea":"烈焰豌豆",

@@ -52,7 +52,7 @@ public class PotatoMineEntity extends PlantCloserEntity{
 		if(this.getAttackTime()>=this.getReadyTime()&&!this.isMineReady()) {
 			this.outDirt();
 		}
-		if(this.isPlantInSuperMode()) {
+		if(this.isPlantInSuperMode()&&this.getSuperTime()==2) {
 			if(!this.isMineReady()) {
 				this.outDirt();
 			}

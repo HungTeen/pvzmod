@@ -37,11 +37,6 @@ public abstract class PlantBomberEntity extends PVZPlantEntity implements IBombe
 	}
 	
 	@Override
-	public boolean hasSuperMode() {
-		return false;
-	}
-
-	@Override
 	public int getSuperTimeLength() {
 		return 0;
 	}

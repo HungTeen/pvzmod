@@ -9,6 +9,7 @@ import javax.annotation.Nonnull;
 import com.hungteen.pvz.PVZConfig;
 import com.hungteen.pvz.entity.plant.PVZPlantEntity;
 import com.hungteen.pvz.entity.plant.enforce.SquashEntity;
+import com.hungteen.pvz.entity.plant.spear.SpikeWeedEntity;
 import com.hungteen.pvz.entity.zombie.PVZZombieEntity;
 import com.hungteen.pvz.register.EffectRegister;
 
@@ -60,16 +61,13 @@ public class EntityUtil {
 			if(target instanceof PVZPlantEntity) {//plants collide with plants include itself. Be careful,if add pumpkin,improve here
 				return true;
 			}
-			if(base instanceof SquashEntity) {
-				return false;
-			}
 			if(checkCanEntityAttack(base, target)) {//collide with enemy.
 				return true;
 			}
 			return false;
 		}
 		if(base instanceof PVZZombieEntity) {//base is a zombie
-			if(target instanceof SquashEntity) {
+			if(target instanceof SquashEntity||target instanceof SpikeWeedEntity) {
 				return false;
 			}
 			if(checkCanEntityAttack(base, target)) {//collide with enemy
@@ -104,6 +102,9 @@ public class EntityUtil {
 		int attackerGroup=getEntityGroup(attacker);
 		int targetGroup=getEntityGroup(target);
 		if(attackerGroup*targetGroup<0) {
+			if(target instanceof SpikeWeedEntity&&attacker instanceof PVZZombieEntity) {
+				return ((PVZZombieEntity)attacker).canAttackSpike();
+			}
 			return true;
 		}
 		return false;

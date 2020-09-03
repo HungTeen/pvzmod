@@ -146,6 +146,8 @@ public class PlantCardItem extends SummonCardItem{
 		case SQUASH:return EntityRegister.SQUASH.get().create(world);
 		case THREE_PEATER:return EntityRegister.THREE_PEATER.get().create(world);
 		case TANGLE_KELP:return EntityRegister.TANGLE_KELP.get().create(world);
+		case JALAPENO:return EntityRegister.JALAPENO.get().create(world);
+		case SPIKE_WEED:return EntityRegister.SPIKE_WEED.get().create(world);
 		default:{
 			PVZMod.LOGGER.debug("No such plant entity!");
 			return null;

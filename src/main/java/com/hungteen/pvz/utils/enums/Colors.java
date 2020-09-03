@@ -88,4 +88,6 @@ public class Colors {
 	public static final Pair<Integer,Integer> ICE_COLOR = new Pair<>(LITTLE_AQUA, BLUE);
 	public static final Pair<Integer,Integer> ENFORCE_COLOR = new Pair<>(DARK_GREEN, CREEPER_GREEN);
 	public static final Pair<Integer,Integer> FLAME_COLOR = new Pair<>(RED, DARK_RED);
+	public static final Pair<Integer,Integer> SPEAR_COLOR = new Pair<>(BLACK, SILVER);
+	
 }

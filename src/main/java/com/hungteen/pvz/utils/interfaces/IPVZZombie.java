@@ -7,6 +7,11 @@ public interface IPVZZombie {
     
 	float getLife();
 	
+	/**
+	 * use to check target of zombies
+	 */
+	boolean canAttackSpike();
+	
 	Zombies getZombieEnumName();
 	
 	Ranks getZombieRank();

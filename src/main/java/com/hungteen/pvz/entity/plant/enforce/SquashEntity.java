@@ -11,6 +11,7 @@ import com.hungteen.pvz.utils.enums.Plants;
 import net.minecraft.entity.CreatureEntity;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.LivingEntity;
+import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.math.Vec3d;
@@ -73,6 +74,11 @@ public class SquashEntity extends PVZPlantEntity{
 	}
 	
 	@Override
+	protected boolean shouldCollideWithEntity(LivingEntity target) {
+		return !(target instanceof PlayerEntity)&&!EntityUtil.checkCanEntityAttack(this, target);
+	}
+	
+	@Override
 	public void startSuperMode() {
 		super.startSuperMode();
 		if(!world.isRemote) {
@@ -125,6 +131,7 @@ public class SquashEntity extends PVZPlantEntity{
 	
 	@Override
 	public boolean isInvulnerableTo(DamageSource source) {
+		if(source==DamageSource.FALL) return true;
 		if(source instanceof PVZDamageSource) {
 			if(((PVZDamageSource) source).getPVZDamageType()==PVZDamageType.EAT) return true;
 		}
@@ -134,11 +141,6 @@ public class SquashEntity extends PVZPlantEntity{
 	@Override
 	public Plants getPlantEnumName() {
 		return Plants.SQUASH;
-	}
-
-	@Override
-	public boolean hasSuperMode() {
-		return true;
 	}
 
 	@Override

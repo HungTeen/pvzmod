@@ -19,6 +19,7 @@ import com.hungteen.pvz.entity.plant.explosion.PotatoMineEntity;
 import com.hungteen.pvz.entity.plant.flame.JalapenoEntity;
 import com.hungteen.pvz.entity.plant.ice.SnowPeaEntity;
 import com.hungteen.pvz.entity.plant.light.SunFlowerEntity;
+import com.hungteen.pvz.entity.plant.spear.SpikeWeedEntity;
 import com.hungteen.pvz.entity.zombie.grassday.BucketHeadZombieEntity;
 import com.hungteen.pvz.entity.zombie.grassday.ConeHeadZombieEntity;
 import com.hungteen.pvz.entity.zombie.grassday.FlagZombieEntity;
@@ -43,6 +44,7 @@ import com.hungteen.pvz.render.entity.plant.explosion.PotatoMineRender;
 import com.hungteen.pvz.render.entity.plant.flame.JalapenoRender;
 import com.hungteen.pvz.render.entity.plant.ice.SnowPeaRender;
 import com.hungteen.pvz.render.entity.plant.light.SunFlowerRender;
+import com.hungteen.pvz.render.entity.plant.spear.SpikeWeedRender;
 import com.hungteen.pvz.render.entity.zombie.grassday.BucketHeadZombieRender;
 import com.hungteen.pvz.render.entity.zombie.grassday.ConeHeadZombieRender;
 import com.hungteen.pvz.render.entity.zombie.grassday.FlagZombieRender;
@@ -103,6 +105,7 @@ public class EntityRegister {
 	public static final RegistryObject<EntityType<ThreePeaterEntity>> THREE_PEATER = registerEntityType(ThreePeaterEntity::new, "three_peater", EntityClassification.CREATURE);
 	public static final RegistryObject<EntityType<TangleKelpEntity>> TANGLE_KELP = registerEntityType(TangleKelpEntity::new, "tangle_kelp", EntityClassification.CREATURE);
 	public static final RegistryObject<EntityType<JalapenoEntity>> JALAPENO = registerEntityType(JalapenoEntity::new, "jalapeno", EntityClassification.CREATURE);
+	public static final RegistryObject<EntityType<SpikeWeedEntity>> SPIKE_WEED = registerEntityType(SpikeWeedEntity::new, "spike_weed", EntityClassification.CREATURE);
 	
 	@OnlyIn(Dist.CLIENT)
 	@SubscribeEvent
@@ -140,6 +143,7 @@ public class EntityRegister {
         RenderingRegistry.registerEntityRenderingHandler(THREE_PEATER.get(), ThreePeaterRender::new);
         RenderingRegistry.registerEntityRenderingHandler(TANGLE_KELP.get(), TangleKelpRender::new);
         RenderingRegistry.registerEntityRenderingHandler(JALAPENO.get(), JalapenoRender::new);
+        RenderingRegistry.registerEntityRenderingHandler(SPIKE_WEED.get(), SpikeWeedRender::new);
     }
 
 	private static <T extends Entity> RegistryObject<EntityType<T>> registerEntityType(IFactory<T> factory,String name,EntityClassification classification)

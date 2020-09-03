@@ -42,13 +42,8 @@ public abstract class PlantCloserEntity extends PVZPlantEntity implements IClose
 	}
 	
 	@Override
-	public boolean hasSuperMode() {
-		return true;
-	}
-
-	@Override
 	public int getSuperTimeLength() {
-		return 2;
+		return 20;
 	}
 
 	@Override

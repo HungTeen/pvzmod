@@ -158,11 +158,6 @@ public class TangleKelpEntity extends PVZPlantEntity{
 	}
 
 	@Override
-	public boolean hasSuperMode() {
-		return true;
-	}
-
-	@Override
 	public int getSuperTimeLength() {
 		return 20;
 	}

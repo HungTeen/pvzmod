@@ -176,6 +176,7 @@ public abstract class PVZPlantEntity extends CreatureEntity implements IPVZPlant
 	
 	protected boolean checkWeak(){
 		if(this.isImmuneToWeak) return false;
+		if(!EntityUtil.isOnGround(this)) return false;
         return !PlantUtil.checkCanPlantLiveHere(this);
 	}
 	
@@ -260,11 +261,15 @@ public abstract class PVZPlantEntity extends CreatureEntity implements IPVZPlant
             }
             for (int l = 0; l < list.size(); ++l){
                 LivingEntity target = list.get(l);
-                if(EntityUtil.checkShouldApplyCollision(this, target)) {//can collide with
+                if(shouldCollideWithEntity(target)) {//can collide with
                     this.collideWithEntity(target);
                 }
             }
         }
+	}
+	
+	protected boolean shouldCollideWithEntity(LivingEntity target) {
+		return EntityUtil.checkShouldApplyCollision(this, target);
 	}
 	
 	@Override
@@ -339,6 +344,10 @@ public abstract class PVZPlantEntity extends CreatureEntity implements IPVZPlant
 	
 	public boolean canStartSuperMode(){
 		return this.hasSuperMode()&&!this.isPlantInSuperMode();
+	}
+	
+	private boolean hasSuperMode() {
+		return this.getSuperTimeLength()>0;
 	}
 	
 	public boolean isPlantInBoost(){

@@ -35,11 +35,6 @@ public abstract class PlantProducerEntity extends PVZPlantEntity implements IPro
 	}
 	
 	@Override
-	public boolean hasSuperMode() {
-		return true;
-	}
-
-	@Override
 	public int getSuperTimeLength() {
 		return 20;
 	}

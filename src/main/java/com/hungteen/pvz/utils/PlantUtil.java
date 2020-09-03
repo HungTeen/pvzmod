@@ -90,10 +90,12 @@ public class PlantUtil {
 		case SUN_FLOWER:
 		case WALL_NUT:
 		case SQUASH:return 50;
-		case PEA_SHOOTER:return 100;
+		case PEA_SHOOTER:
+		case SPIKE_WEED:return 100;
 		case CHERRY_BOMB:
 		case CHOMPER:return 150;
-		case SNOW_PEA:return 175;
+		case SNOW_PEA:
+		case JALAPENO:return 175;
 		case REPEATER:return 200;
 		case THREE_PEATER:return 325;
 		default:{
@@ -111,13 +113,15 @@ public class PlantUtil {
 		case PEA_SHOOTER:return getPlantCoolDownTimeVeryFast(lvl);
 		case SUN_FLOWER:
 		case SNOW_PEA:
-		case REPEATER:return getPlantCoolDownTimeFast(lvl);
+		case REPEATER:
+		case SPIKE_WEED:return getPlantCoolDownTimeFast(lvl);
 		case THREE_PEATER:return getPlantCoolDownTimeLittleFast(lvl);
 		case CHOMPER:return getPlantCoolDownTimeNormal(lvl);
 		case POTATO_MINE:
 		case SQUASH:return getPlantCoolDownTimeLittleSlow(lvl);
 		case WALL_NUT:
 		case TANGLE_KELP:return getPlantCoolDownTimeSlow(lvl);
+		case JALAPENO:return getPlantCoolDownTimeVerySlow(lvl);
 		case CHERRY_BOMB:return getPlantCoolDownTimeHugeSlow(lvl);
 		case LILY_PAD:return 100;
 		default:{
@@ -149,13 +153,15 @@ public class PlantUtil {
 		case LILY_PAD:return Ranks.GRAY;
 		case WALL_NUT:
 		case POTATO_MINE:
-		case TANGLE_KELP:return Ranks.WHITE;
+		case TANGLE_KELP:
+		case SPIKE_WEED:return Ranks.WHITE;
 		case SNOW_PEA:
 		case CHOMPER:
 		case REPEATER:
 		case SQUASH:return Ranks.GREEN;
 		case CHERRY_BOMB:
-		case THREE_PEATER:return Ranks.BLUE;
+		case THREE_PEATER:
+		case JALAPENO:return Ranks.BLUE;
 		default:{
 			PVZMod.LOGGER.debug("plant get rank error!");
 			return null;
@@ -177,6 +183,8 @@ public class PlantUtil {
 		case SQUASH:
 		case TANGLE_KELP:return Essences.ENFORCE;
 		case LILY_PAD:return Essences.ASSIST;
+		case JALAPENO:return Essences.FLAME;
+		case SPIKE_WEED:return Essences.SPEAR;
 		default:{
 			PVZMod.LOGGER.debug("plant get essence type error!");
 			return null;

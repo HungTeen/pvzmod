@@ -149,7 +149,7 @@ public abstract class PVZZombieEntity extends MonsterEntity implements IPVZZombi
 		if(this.isZombieCantMove()) {
 			return 10000000;
 		}
-		int now=15;
+		int now=20;
 		if(this.isPotionActive(EffectRegister.COLD_EFFECT.get())) {
 			int lvl=this.getActivePotionEffect(EffectRegister.COLD_EFFECT.get()).getAmplifier();
 			now+=3*lvl;
@@ -263,7 +263,7 @@ public abstract class PVZZombieEntity extends MonsterEntity implements IPVZZombi
 		}
 		return flag;
 	}
-
+	
 	public static boolean canZombieSpawn(EntityType<? extends PVZZombieEntity> zombieType, IWorld worldIn, SpawnReason reason, BlockPos pos, Random rand) {
 		 return worldIn.getLightFor(LightType.BLOCK, pos) > 8 ? false : canMonsterSpawn(zombieType, worldIn, reason, pos, rand);
     }
@@ -350,6 +350,11 @@ public abstract class PVZZombieEntity extends MonsterEntity implements IPVZZombi
                 }
             }
         }
+	}
+	
+	@Override
+	public boolean canAttackSpike() {
+		return false;
 	}
 	
 	@Override

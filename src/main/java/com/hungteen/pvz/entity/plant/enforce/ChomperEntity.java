@@ -153,11 +153,6 @@ public class ChomperEntity extends PVZPlantEntity{
 	}
 	
 	@Override
-	public boolean hasSuperMode() {
-		return true;
-	}
-
-	@Override
 	public int getSuperTimeLength() {
 		return 20;
 	}

@@ -108,6 +108,21 @@
     "item.pvz.three_peater_spawn_egg":"ThreePeater Spawn Egg",
     "item.pvz.three_peater_card":"ThreePeater Card",
     "item.pvz.three_peater_enjoy_card":"ThreePeater Enjoy Card",
+//TangleKelp
+    "entity.pvz.tangle_kelp":"TangleKelp",
+    "item.pvz.tangle_kelp_spawn_egg":"TangleKelp Spawn Egg",
+    "item.pvz.tangle_kelp_card":"TangleKelp Card",
+    "item.pvz.tangle_kelp_enjoy_card":"TangleKelp Enjoy Card",
+//Jalapeno
+    "entity.pvz.jalapeno":"Jalapeno",
+    "item.pvz.jalapeno_spawn_egg":"Jalapeno Spawn Egg",
+    "item.pvz.jalapeno_card":"Jalapeno Card",
+    "item.pvz.jalapeno_enjoy_card":"Jalapeno Enjoy Card",
+//SpikeWeed
+    "entity.pvz.spike_weed":"SpikeWeed",
+    "item.pvz.spike_weed_spawn_egg":"SpikeWeed Spawn Egg",
+    "item.pvz.spike_weed_card":"SpikeWeed Card",
+    "item.pvz.spike_weed_enjoy_card":"SpikeWeed Enjoy Card",
 //misc
     "item.pvz.snow_pea":"Snow Pea",
     "item.pvz.flame_pea":"Flame Pea",

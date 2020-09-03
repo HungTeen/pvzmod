@@ -40,11 +40,6 @@ public abstract class PlantShooterEntity extends PVZPlantEntity implements IShoo
 		}
 	}
 	
-	@Override
-	public boolean hasSuperMode() {
-		return true;
-	}
-
 	public static boolean checkY(double dy)
 	{
 		return dy>=-1&&dy<=1.5;

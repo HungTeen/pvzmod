@@ -18,8 +18,6 @@ public interface IPVZPlant {
 	
 	float getLife();
 	
-	boolean hasSuperMode();
-	
 	int getSuperTimeLength();
 	
 	

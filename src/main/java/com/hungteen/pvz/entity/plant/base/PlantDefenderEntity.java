@@ -55,11 +55,6 @@ public abstract class PlantDefenderEntity extends PVZPlantEntity implements IDef
 	}
 	
 	@Override
-	public boolean hasSuperMode() {
-		return true;
-	}
-
-	@Override
 	public int getSuperTimeLength() {
 		return 20;
 	}
