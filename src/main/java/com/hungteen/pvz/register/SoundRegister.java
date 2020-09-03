@@ -32,6 +32,7 @@ public class SoundRegister {
 	public static final RegistryObject<SoundEvent> SQUASH_HMM = registerSound("squash_hmm");
 	public static final RegistryObject<SoundEvent> GROUND_SHAKE = registerSound("ground_shake");
 	public static final RegistryObject<SoundEvent> DRAG = registerSound("drag");
+	public static final RegistryObject<SoundEvent> JALAPENO = registerSound("jalapeno");
 	
 	private static RegistryObject<SoundEvent> registerSound(String name){
 		return SOUNDS.register(name, ()->{

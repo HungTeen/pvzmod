@@ -10,8 +10,8 @@ public enum PVZDamageType {
 	APPEASE,
 	EAT,
 	EXPLOSION,
-	ICE;
-//	FIRE, 
+	ICE,
+	FIRE; 
 //	BUTTER, 
 //	LIGHTNING,
 //	MAGIC, 
@@ -28,8 +28,7 @@ public enum PVZDamageType {
 		case EAT:return ChatFormatting.DARK_GRAY+I18n.format("pvz.damage_type.eat",new Object[0]);
 		case EXPLOSION:return ChatFormatting.DARK_RED+I18n.format("pvz.damage_type.explosion",new Object[0]);
 		case ICE:return ChatFormatting.BLUE+I18n.format("pvz.damage_type.ice",new Object[0]);
-//			case FIRE:
-//				return ChatFormatting.RED+I18n.format("pvz.DamageType.FIRE",new Object[0]);
+		case FIRE:return ChatFormatting.RED+I18n.format("pvz.damage_type.fire",new Object[0]);
 //			case BUTTER:
 //				return ChatFormatting.YELLOW+I18n.format("pvz.DamageType.BUTTER",new Object[0]);
 //			case LIGHTNING:

@@ -5,6 +5,7 @@ import com.hungteen.pvz.entity.plant.PVZPlantEntity;
 import com.hungteen.pvz.misc.damage.PVZDamageSource;
 import com.hungteen.pvz.misc.damage.PVZDamageType;
 import com.hungteen.pvz.register.EntityRegister;
+import com.hungteen.pvz.register.SoundRegister;
 import com.hungteen.pvz.utils.EntityUtil;
 import com.hungteen.pvz.utils.PlantUtil;
 import com.hungteen.pvz.utils.enums.Plants;
@@ -59,6 +60,7 @@ public class TangleKelpEntity extends PVZPlantEntity{
 						this.getAttackTarget().stopRiding();
 					}
 					this.getAttackTarget().startRiding(this, true);
+					this.playSound(SoundRegister.DRAG.get(), 1f, 1f);
 				}
 			}
 		}
