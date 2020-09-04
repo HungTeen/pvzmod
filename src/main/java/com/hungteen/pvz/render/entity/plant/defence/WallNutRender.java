@@ -7,7 +7,10 @@ import com.hungteen.pvz.utils.StringUtil;
 
 import net.minecraft.client.renderer.entity.EntityRendererManager;
 import net.minecraft.util.ResourceLocation;
+import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.api.distmarker.OnlyIn;
 
+@OnlyIn(Dist.CLIENT)
 public class WallNutRender extends PVZPlantRender<WallNutEntity>{
 
 	public WallNutRender(EntityRendererManager rendererManager) {
@@ -22,17 +25,17 @@ public class WallNutRender extends PVZPlantRender<WallNutEntity>{
 	@Override
 	public ResourceLocation getEntityTexture(WallNutEntity entity) {
 		float life=entity.getHealth();
-    	float normalLife=entity.getLife();
-    	float superLife=entity.getSuperLife();
-    	if(life>normalLife) {
-    		life-=normalLife;
-    		if(life>2*superLife/3) return StringUtil.prefix("textures/entity/plant/defence/wall_nut4.png");
-    		else if(life>superLife/3) return StringUtil.prefix("textures/entity/plant/defence/wall_nut5.png");
+		float maxLife = entity.getMaxHealth();
+		float defLife = entity.getDefenceLife();
+		float maxDefLife = entity.getSuperLife();
+    	if(defLife>0) {
+    		if(defLife>2*maxDefLife/3) return StringUtil.prefix("textures/entity/plant/defence/wall_nut4.png");
+    		else if(defLife>maxDefLife/3) return StringUtil.prefix("textures/entity/plant/defence/wall_nut5.png");
     		return StringUtil.prefix("textures/entity/plant/defence/wall_nut6.png");
     	}
     	else {
-    		if(life>2*normalLife/3) return StringUtil.prefix("textures/entity/plant/defence/wall_nut1.png");
-    		else if(life>normalLife/3) return StringUtil.prefix("textures/entity/plant/defence/wall_nut2.png");
+    		if(life>2*maxLife/3) return StringUtil.prefix("textures/entity/plant/defence/wall_nut1.png");
+    		else if(life>maxLife/3) return StringUtil.prefix("textures/entity/plant/defence/wall_nut2.png");
     		return StringUtil.prefix("textures/entity/plant/defence/wall_nut3.png");
     	}
 	}

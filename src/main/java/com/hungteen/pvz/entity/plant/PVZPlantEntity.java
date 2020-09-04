@@ -176,7 +176,6 @@ public abstract class PVZPlantEntity extends CreatureEntity implements IPVZPlant
 	
 	protected boolean checkWeak(){
 		if(this.isImmuneToWeak) return false;
-		if(!EntityUtil.isOnGround(this)) return false;
         return !PlantUtil.checkCanPlantLiveHere(this);
 	}
 	
@@ -335,6 +334,7 @@ public abstract class PVZPlantEntity extends CreatureEntity implements IPVZPlant
 	
 	public void startSuperMode() {
 		this.setSuperTime(this.getSuperTimeLength());
+		this.heal(this.getMaxHealth());
 //		this.setIsSuperOut(false);
 	}
 	

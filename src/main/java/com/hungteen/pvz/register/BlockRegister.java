@@ -10,6 +10,7 @@ import com.hungteen.pvz.block.plants.ChomperBlock;
 import com.hungteen.pvz.block.plants.LilyPadBlock;
 import com.hungteen.pvz.block.plants.PVZSaplingBlock;
 import com.hungteen.pvz.block.plants.PeaBlock;
+import com.hungteen.pvz.item.blockitem.LilyPadItem;
 import com.hungteen.pvz.world.feature.tree.NutTree;
 
 import net.minecraft.block.Block;
@@ -17,7 +18,6 @@ import net.minecraft.block.Blocks;
 import net.minecraft.block.LeavesBlock;
 import net.minecraft.item.BlockItem;
 import net.minecraft.item.Item;
-import net.minecraft.item.LilyPadItem;
 import net.minecraftforge.event.RegistryEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.RegistryObject;
@@ -86,7 +86,7 @@ public class BlockRegister {
 		);
 		for(RegistryObject<? extends Block> block:blocks) {
 			if(block==LILY_PAD) {
-				items.register(new LilyPadItem(block.get(), new Item.Properties().group(GroupRegister.PVZ_MISC)).setRegistryName(block.get().getRegistryName()));
+				items.register(new LilyPadItem().setRegistryName(block.get().getRegistryName()));
 			}else {
 				items.register(new BlockItem(block.get(),new Item.Properties().group(GroupRegister.PVZ_MISC)).setRegistryName(block.get().getRegistryName()));
 			}

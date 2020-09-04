@@ -123,6 +123,16 @@
     "item.pvz.spike_weed_spawn_egg":"SpikeWeed Spawn Egg",
     "item.pvz.spike_weed_card":"SpikeWeed Card",
     "item.pvz.spike_weed_enjoy_card":"SpikeWeed Enjoy Card",
+//TorchWood
+    "entity.pvz.torch_wood":"TorchWood",
+    "item.pvz.torch_wood_spawn_egg":"TorchWood Spawn Egg",
+    "item.pvz.torch_wood_card":"TorchWood Card",
+    "item.pvz.torch_wood_enjoy_card":"TorchWood Enjoy Card",
+//TallNut
+    "entity.pvz.tall_nut":"TallNut",
+    "item.pvz.tall_nut_spawn_egg":"TallNut Spawn Egg",
+    "item.pvz.tall_nut_card":"TallNut Card",
+    "item.pvz.tall_nut_enjoy_card":"TallNut Enjoy Card",
 //misc
     "item.pvz.snow_pea":"Snow Pea",
     "item.pvz.flame_pea":"Flame Pea",

@@ -1,13 +1,13 @@
 package com.hungteen.pvz.particle;
 
+import net.minecraft.client.particle.IParticleRenderType;
 import net.minecraft.client.particle.SpriteTexturedParticle;
 import net.minecraft.world.World;
 
 public abstract class PVZNormalParticle extends SpriteTexturedParticle{
 
-	protected PVZNormalParticle(World p_i50999_1_, double p_i50999_2_, double p_i50999_4_, double p_i50999_6_,
-			double p_i50999_8_, double p_i50999_10_, double p_i50999_12_) {
-		super(p_i50999_1_, p_i50999_2_, p_i50999_4_, p_i50999_6_, p_i50999_8_, p_i50999_10_, p_i50999_12_);
+	public PVZNormalParticle(World world, double x, double y, double z, double xSpeed, double ySpeed, double zSpeed) {
+		super(world, x, y, z, xSpeed, ySpeed, zSpeed);
 	}
 
 	@Override
@@ -25,5 +25,10 @@ public abstract class PVZNormalParticle extends SpriteTexturedParticle{
             motionZ *= 0.0D;
         }
     }
+	
+	@Override
+	public IParticleRenderType getRenderType() {
+		return IParticleRenderType.PARTICLE_SHEET_OPAQUE;
+	}
 
 }

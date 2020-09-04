@@ -8,16 +8,12 @@ import net.minecraft.world.World;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 
-public class DirtBurstOutParticle extends PVZNormalParticle{
+public class BlueFlameParticle extends YellowFlameParticle{
 
-	public DirtBurstOutParticle(World world, double x, double y, double z, double xSpeed, double ySpeed, double zSpeed) {
+	public BlueFlameParticle(World world, double x, double y, double z, double xSpeed, double ySpeed, double zSpeed) {
 		super(world, x, y, z, xSpeed, ySpeed, zSpeed);
-		this.particleScale=0.1f;
-		this.maxAge=30+this.rand.nextInt(30);
-		this.canCollide=true;
-		this.particleGravity=0.02f;
 	}
-	
+
 	@OnlyIn(Dist.CLIENT)
 	public static class Factory implements IParticleFactory<BasicParticleType> {
 
@@ -30,7 +26,7 @@ public class DirtBurstOutParticle extends PVZNormalParticle{
 		@Override
 		public Particle makeParticle(BasicParticleType typeIn, World worldIn, double x, double y, double z,
 				double xSpeed, double ySpeed, double zSpeed) {
-			DirtBurstOutParticle particle = new DirtBurstOutParticle(worldIn, x, y, z, xSpeed, ySpeed, zSpeed);
+			BlueFlameParticle particle = new BlueFlameParticle(worldIn, x, y, z, xSpeed, ySpeed, zSpeed);
 			particle.selectSpriteRandomly(this.sprite);
 			return particle;
 		}
@@ -40,5 +36,5 @@ public class DirtBurstOutParticle extends PVZNormalParticle{
 			throw new UnsupportedOperationException("Use the Factory(IAnimatedSprite sprite) constructor");
 		}
 	}
-
+	
 }

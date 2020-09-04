@@ -64,15 +64,17 @@ public class PlantUtil {
 	}
 	
 	public static boolean checkCanPlantLiveHere(PVZPlantEntity plant){
-		BlockPos pos=plant.getPosition().add(0, -1, 0);
-		Block block = plant.world.getBlockState(pos).getBlock();
+		BlockPos pos=plant.getPosition();
+		Block upBlock = plant.world.getBlockState(pos).getBlock();
+		Block downBlock = plant.world.getBlockState(pos.down()).getBlock();
 		Plants p = plant.getPlantEnumName();
 		if(plant.getIsGardenPlant()) {
 			
 		}else {
 			switch(p) {
 			default:{
-				if(block==Blocks.GRASS_BLOCK||block==Blocks.AIR||block==BlockRegister.LILY_PAD.get()) return true;
+				if(upBlock==BlockRegister.LILY_PAD.get()) return true;
+				if(downBlock==Blocks.GRASS_BLOCK||downBlock==Blocks.AIR||downBlock==BlockRegister.LILY_PAD.get()) return true;
 			}
 			}
 		}
@@ -92,10 +94,12 @@ public class PlantUtil {
 		case SQUASH:return 50;
 		case PEA_SHOOTER:
 		case SPIKE_WEED:return 100;
+		case TALL_NUT:return 125;
 		case CHERRY_BOMB:
 		case CHOMPER:return 150;
 		case SNOW_PEA:
-		case JALAPENO:return 175;
+		case JALAPENO:
+		case TORCH_WOOD:return 175;
 		case REPEATER:return 200;
 		case THREE_PEATER:return 325;
 		default:{
@@ -113,16 +117,18 @@ public class PlantUtil {
 		case PEA_SHOOTER:return getPlantCoolDownTimeVeryFast(lvl);
 		case SUN_FLOWER:
 		case SNOW_PEA:
-		case REPEATER:
-		case SPIKE_WEED:return getPlantCoolDownTimeFast(lvl);
-		case THREE_PEATER:return getPlantCoolDownTimeLittleFast(lvl);
-		case CHOMPER:return getPlantCoolDownTimeNormal(lvl);
+		case REPEATER:return getPlantCoolDownTimeFast(lvl);
+		case THREE_PEATER:
+		case SPIKE_WEED:return getPlantCoolDownTimeLittleFast(lvl);
+		case CHOMPER:
+		case TORCH_WOOD:return getPlantCoolDownTimeNormal(lvl);
 		case POTATO_MINE:
 		case SQUASH:return getPlantCoolDownTimeLittleSlow(lvl);
 		case WALL_NUT:
 		case TANGLE_KELP:return getPlantCoolDownTimeSlow(lvl);
-		case JALAPENO:return getPlantCoolDownTimeVerySlow(lvl);
-		case CHERRY_BOMB:return getPlantCoolDownTimeHugeSlow(lvl);
+		case TALL_NUT:return getPlantCoolDownTimeVerySlow(lvl);
+		case CHERRY_BOMB:
+		case JALAPENO:return getPlantCoolDownTimeHugeSlow(lvl);
 		case LILY_PAD:return 100;
 		default:{
 			PVZMod.LOGGER.debug("plant get cooldown time error!");
@@ -135,11 +141,15 @@ public class PlantUtil {
 		switch(plant) {
 		case WALL_NUT:{
 			if(lvl<=19) return 390+10*lvl;
-			else if(lvl<=20) return 600;
+			if(lvl<=20) return 600;
+		}
+		case TALL_NUT:{
+			if(lvl<=19) return 790+10*lvl;
+			if(lvl<=20) return 1000;
 		}
 		default:{
 			if(lvl<=14) return 30+(lvl-1)/2*5;
-			else if(lvl<=20) return 60+(lvl-14)*5;
+			if(lvl<=20) return 60+(lvl-14)*5;
 		}
 		}
 		PVZMod.LOGGER.debug("plant get max health error!");
@@ -158,10 +168,12 @@ public class PlantUtil {
 		case SNOW_PEA:
 		case CHOMPER:
 		case REPEATER:
-		case SQUASH:return Ranks.GREEN;
+		case SQUASH:
+		case TORCH_WOOD:return Ranks.GREEN;
 		case CHERRY_BOMB:
 		case THREE_PEATER:
-		case JALAPENO:return Ranks.BLUE;
+		case JALAPENO:
+		case TALL_NUT:return Ranks.BLUE;
 		default:{
 			PVZMod.LOGGER.debug("plant get rank error!");
 			return null;
@@ -177,13 +189,15 @@ public class PlantUtil {
 		case SUN_FLOWER:return Essences.LIGHT;
 		case CHERRY_BOMB:
 		case POTATO_MINE:return Essences.EXPLOSION;
-		case WALL_NUT:return Essences.DEFENCE;
+		case WALL_NUT:
+		case TALL_NUT:return Essences.DEFENCE;
 		case SNOW_PEA:return Essences.ICE;
 		case CHOMPER:
 		case SQUASH:
 		case TANGLE_KELP:return Essences.ENFORCE;
 		case LILY_PAD:return Essences.ASSIST;
-		case JALAPENO:return Essences.FLAME;
+		case JALAPENO:
+		case TORCH_WOOD:return Essences.FLAME;
 		case SPIKE_WEED:return Essences.SPEAR;
 		default:{
 			PVZMod.LOGGER.debug("plant get essence type error!");

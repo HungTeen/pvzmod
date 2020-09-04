@@ -123,6 +123,16 @@
     "item.pvz.spike_weed_spawn_egg":"地刺刷怪蛋",
     "item.pvz.spike_weed_card":"地刺卡",
     "item.pvz.spike_weed_enjoy_card":"地刺体验卡",
+//TorchWood
+    "entity.pvz.torch_wood":"火炬树桩",
+    "item.pvz.torch_wood_spawn_egg":"火炬树桩刷怪蛋",
+    "item.pvz.torch_wood_card":"火炬树桩卡",
+    "item.pvz.torch_wood_enjoy_card":"火炬树桩体验卡",
+//TallNut
+    "entity.pvz.tall_nut":"高坚果",
+    "item.pvz.tall_nut_spawn_egg":"高坚果刷怪蛋",
+    "item.pvz.tall_nut_card":"高坚果卡",
+    "item.pvz.tall_nut_enjoy_card":"高坚果体验卡",
 //misc
     "item.pvz.snow_pea":"寒冰豌豆",
     "item.pvz.flame_pea":"烈焰豌豆",

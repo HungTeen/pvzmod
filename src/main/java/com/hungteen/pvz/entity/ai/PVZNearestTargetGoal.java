@@ -45,7 +45,7 @@ public class PVZNearestTargetGoal extends TargetGoal{
 		List<Entity> list1 =new ArrayList<Entity>();
 		for(Entity entity:list) {
 			if(EntityUtil.checkCanEntityAttack(this.goalOwner,entity)) {
-				if(this.shouldCheckSight&&checkSenses(entity)) {
+				if(!this.shouldCheckSight||checkSenses(entity)) {
 					if(checkPlant(entity)) {
 				        list1.add(entity);
 					}
