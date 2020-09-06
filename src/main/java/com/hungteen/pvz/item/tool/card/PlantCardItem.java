@@ -5,6 +5,7 @@ import com.hungteen.pvz.capabilities.CapabilityHandler;
 import com.hungteen.pvz.capabilities.player.PlayerDataManager;
 import com.hungteen.pvz.entity.plant.PVZPlantEntity;
 import com.hungteen.pvz.event.events.SummonCardUseEvent;
+import com.hungteen.pvz.register.BlockRegister;
 import com.hungteen.pvz.register.EnchantmentRegister;
 import com.hungteen.pvz.register.EntityRegister;
 import com.hungteen.pvz.utils.PlantUtil;
@@ -85,8 +86,8 @@ public class PlantCardItem extends SummonCardItem{
 		if(hand==Hand.OFF_HAND) {//only use right hand can plant 
 			return ActionResultType.FAIL;
 		}
-		if(plant == Plants.TANGLE_KELP) {
-			return ActionResultType.PASS;
+		for(Plants p:PlantUtil.WATER_PLANTS) {
+			if(this.plant==p) return ActionResultType.PASS;
 		}
 		if(!world.isRemote&&context.getFace()==Direction.UP&&world.isAirBlock(pos.up())) {//can plant here
 			checkSunAndPlant(world, player, stack, pos);
@@ -117,7 +118,9 @@ public class PlantCardItem extends SummonCardItem{
 				player.getCooldownTracker().setCooldown(stack.getItem(), PlantUtil.getPlantCoolDownTime(plant, lvl));
 				plantEntity.setPlantLvl(lvl);
 				plantEntity.setOwnerUUID(player.getUniqueID());
-				plantEntity.setPosition(pos.getX()+0.5D,pos.getY()+1D,pos.getZ()+0.5D);
+				double dy = 1;
+				if(world.getBlockState(pos).getBlock()==BlockRegister.LILY_PAD.get()) dy=0.1d;
+				plantEntity.setPosition(pos.getX()+0.5D,pos.getY()+dy,pos.getZ()+0.5D);
 //				if(EnchantmentHelper.getEnchantmentLevel(En, stack)) {// hypno
 //					
 //				}
@@ -148,6 +151,9 @@ public class PlantCardItem extends SummonCardItem{
 		case TANGLE_KELP:return EntityRegister.TANGLE_KELP.get().create(world);
 		case JALAPENO:return EntityRegister.JALAPENO.get().create(world);
 		case SPIKE_WEED:return EntityRegister.SPIKE_WEED.get().create(world);
+		case TORCH_WOOD:return EntityRegister.TORCH_WOOD.get().create(world);
+		case TALL_NUT:return EntityRegister.TALL_NUT.get().create(world);
+		case WATER_GUARD:return EntityRegister.WATER_GUARD.get().create(world);
 		default:{
 			PVZMod.LOGGER.debug("No such plant entity!");
 			return null;

@@ -57,10 +57,8 @@ public abstract class PVZZombieEntity extends MonsterEntity implements IPVZZombi
 
 	private static final DataParameter<Integer> ZOMBIE_TYPE = EntityDataManager.createKey(PVZZombieEntity.class,
 			DataSerializers.VARINT);
-	// 主人ID
 	private static final DataParameter<Optional<UUID>> OWNER_UUID = EntityDataManager.createKey(PVZZombieEntity.class,
 			DataSerializers.OPTIONAL_UNIQUE_ID);
-	// 以下均为僵尸状态
 //	private static final DataParameter<Boolean> IS_COLD = EntityDataManager.createKey(PVZZombieEntity.class,
 //			DataSerializers.BOOLEAN);
 //	private static final DataParameter<Boolean> IS_FROZEN = EntityDataManager.createKey(PVZZombieEntity.class,
@@ -137,9 +135,6 @@ public abstract class PVZZombieEntity extends MonsterEntity implements IPVZZombi
 		
 	}
 	
-	/**
-	 * 给僵尸设置最大生命值 并回血
-	 */
 	public void setZombieMaxHealth(float health) {
 		this.getAttribute(SharedMonsterAttributes.MAX_HEALTH).setBaseValue(health);
 		this.heal(health);
@@ -262,6 +257,11 @@ public abstract class PVZZombieEntity extends MonsterEntity implements IPVZZombi
 			this.setLastAttackedEntity(entityIn);
 		}
 		return flag;
+	}
+	
+	@Override
+	public boolean canBreatheUnderwater() {
+		return true;
 	}
 	
 	public static boolean canZombieSpawn(EntityType<? extends PVZZombieEntity> zombieType, IWorld worldIn, SpawnReason reason, BlockPos pos, Random rand) {
@@ -399,30 +399,18 @@ public abstract class PVZZombieEntity extends MonsterEntity implements IPVZZombi
 		this.setIsCharmed(compound.getBoolean("is_zombie_charmed"));
 	}
 
-	/**
-	 * 能否被黄油黏住
-	 */
 	public boolean canBeButter() {
 		return true;
 	}
 
-	/**
-	 * 能否被冰封
-	 */
 	public boolean canBeFrozen() {
 		return true;
 	}
 
-	/**
-	 * 能否变小
-	 */
 	public boolean canBeSmall() {
 		return true;
 	}
 
-	/**
-	 * 能否隐身
-	 */
 	public boolean canBeInvis() {
 		return true;
 	}
@@ -515,8 +503,8 @@ public abstract class PVZZombieEntity extends MonsterEntity implements IPVZZombi
 	}
 	
 	public enum Type {
-		NORMAL, // 普通
-		SUPER, // 能量豆
-		BEARD // 胡子
+		NORMAL, 
+		SUPER, 
+		BEARD
 	}
 }

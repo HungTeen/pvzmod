@@ -60,9 +60,13 @@ public enum Plants {
 	    //pvz2
 	    ICEBERG_LETTUCE("iceberg_lettuce"),
 	    GOLD_LEAF("gold_leaf"),
+	    //other
+	    WATER_GUARD("water_guard"),
 	    LIGHTLING_ROD("lightning_rod"),
 	    STRANGE_CAT("strange_cat");
+	
 	String name;
+	
 	Plants(String name){
 		this.name=name;
 	}

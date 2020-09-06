@@ -20,6 +20,10 @@ public class PlantUtil {
 	public static final int[] PURPLE_XP = new int[] {0,30,60,80,105,150,225,300,400,520,700,960,1300,2100,3000,4200,5600,7200,9600,12500,999999999};
 	public static final int[] GOLD_XP = new int[] {0,35,60,90,120,175,255,350,450,600,800,1080,1500,2500,3600,5000,6400,8100,10800,14000,999999999};
 	public static final int[] MEGA_XP = new int[] {0,40,70,100,150,210,300,400,520,700,960,1300,1800,3000,4200,6000,7800,9600,12500,16000,999999999};
+	public static final Plants [] WATER_PLANTS = new Plants[] {
+			Plants.TANGLE_KELP,
+			Plants.WATER_GUARD,
+	};
 	
 	public static int getPlantLevelUpXp(Plants plant,int lvl){
 		Ranks rank=getPlantRankByName(plant);
@@ -92,6 +96,7 @@ public class PlantUtil {
 		case SUN_FLOWER:
 		case WALL_NUT:
 		case SQUASH:return 50;
+		case WATER_GUARD:return 75;
 		case PEA_SHOOTER:
 		case SPIKE_WEED:return 100;
 		case TALL_NUT:return 125;
@@ -123,7 +128,8 @@ public class PlantUtil {
 		case CHOMPER:
 		case TORCH_WOOD:return getPlantCoolDownTimeNormal(lvl);
 		case POTATO_MINE:
-		case SQUASH:return getPlantCoolDownTimeLittleSlow(lvl);
+		case SQUASH:
+		case WATER_GUARD:return getPlantCoolDownTimeLittleSlow(lvl);
 		case WALL_NUT:
 		case TANGLE_KELP:return getPlantCoolDownTimeSlow(lvl);
 		case TALL_NUT:return getPlantCoolDownTimeVerySlow(lvl);
@@ -146,6 +152,10 @@ public class PlantUtil {
 		case TALL_NUT:{
 			if(lvl<=19) return 790+10*lvl;
 			if(lvl<=20) return 1000;
+		}
+		case WATER_GUARD:{
+			if(lvl<=19) return 290+10*lvl;
+			if(lvl<=20) return 500;
 		}
 		default:{
 			if(lvl<=14) return 30+(lvl-1)/2*5;

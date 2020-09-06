@@ -133,6 +133,11 @@
     "item.pvz.tall_nut_spawn_egg":"TallNut Spawn Egg",
     "item.pvz.tall_nut_card":"TallNut Card",
     "item.pvz.tall_nut_enjoy_card":"TallNut Enjoy Card",
+//WaterGuard
+    "entity.pvz.water_guard":"Water Guard",
+    "item.pvz.water_guard_spawn_egg":"WaterGuard Spawn Egg",
+    "item.pvz.water_guard_card":"WaterGuard Card",
+    "item.pvz.water_guard_enjoy_card":"WaterGuard Enjoy Card",
 //misc
     "item.pvz.snow_pea":"Snow Pea",
     "item.pvz.flame_pea":"Flame Pea",

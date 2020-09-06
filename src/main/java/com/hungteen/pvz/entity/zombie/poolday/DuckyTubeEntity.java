@@ -1,6 +1,7 @@
 package com.hungteen.pvz.entity.zombie.poolday;
 
 import com.hungteen.pvz.entity.zombie.PVZZombieToolBase;
+import com.hungteen.pvz.utils.ZombieUtil;
 
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntitySize;
@@ -9,6 +10,9 @@ import net.minecraft.entity.MobEntity;
 import net.minecraft.entity.Pose;
 import net.minecraft.entity.SharedMonsterAttributes;
 import net.minecraft.entity.ai.goal.SwimGoal;
+import net.minecraft.pathfinding.GroundPathNavigator;
+import net.minecraft.pathfinding.PathNavigator;
+import net.minecraft.pathfinding.SwimmerPathNavigator;
 import net.minecraft.world.World;
 
 public class DuckyTubeEntity extends PVZZombieToolBase{
@@ -26,7 +30,15 @@ public class DuckyTubeEntity extends PVZZombieToolBase{
 	@Override
 	protected void registerAttributes() {
 		super.registerAttributes();
-		this.getAttribute(SharedMonsterAttributes.MOVEMENT_SPEED).setBaseValue(0.3);
+		this.getAttribute(SharedMonsterAttributes.MOVEMENT_SPEED).setBaseValue(ZombieUtil.LITTLE_FAST);
+	}
+	
+	@Override
+	protected PathNavigator createNavigator(World worldIn) {
+		if(this.isInWater()) {
+			return new SwimmerPathNavigator(this, worldIn);
+		}
+		return new GroundPathNavigator(this, worldIn);
 	}
 	
 	@Override
@@ -41,12 +53,12 @@ public class DuckyTubeEntity extends PVZZombieToolBase{
 	
 	@Override
 	public double getMountedYOffset() {
-		return -0.8f;
+		return -0.7f;
 	}
 	
 	@Override
 	protected float getWaterSlowDown() {
-		return 0.9f;
+		return 0.95f;
 	}
 	
 	@Override

@@ -133,6 +133,11 @@
     "item.pvz.tall_nut_spawn_egg":"高坚果刷怪蛋",
     "item.pvz.tall_nut_card":"高坚果卡",
     "item.pvz.tall_nut_enjoy_card":"高坚果体验卡",
+//WaterGuard
+    "entity.pvz.water_guard":"睡莲护卫",
+    "item.pvz.water_guard_spawn_egg":"睡莲护卫刷怪蛋",
+    "item.pvz.water_guard_card":"睡莲护卫卡",
+    "item.pvz.water_guard_enjoy_card":"睡莲护卫体验卡",
 //misc
     "item.pvz.snow_pea":"寒冰豌豆",
     "item.pvz.flame_pea":"烈焰豌豆",

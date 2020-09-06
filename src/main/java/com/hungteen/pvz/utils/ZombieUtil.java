@@ -34,11 +34,16 @@ public class ZombieUtil {
 	public static Ranks getZombieRank(Zombies zombie)
 	{
 		switch(zombie) {
+		case ZOMBIE_DOLPHIN:return Ranks.GRAY;
 		case NORMAL_ZOMBIE:
-		case FLAG_ZOMBIE:return Ranks.WHITE;
+		case FLAG_ZOMBIE:
+		case SNORKEL_ZOMBIE:
+		case BOBSLE_ZOMBIE:return Ranks.WHITE;
 		case CONEHEAD_ZOMBIE:
-		case POLE_ZOMBIE:return Ranks.GREEN;
-		case BUCKETHEAD_ZOMBIE:return Ranks.BLUE;
+		case POLE_ZOMBIE:
+		case BOBSLE:return Ranks.GREEN;
+		case BUCKETHEAD_ZOMBIE:
+		case ZOMBONI:return Ranks.BLUE;
 		default:{
 			PVZMod.LOGGER.debug("Zombie get rank error");
 			return null;

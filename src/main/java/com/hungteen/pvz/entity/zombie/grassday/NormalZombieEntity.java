@@ -25,7 +25,7 @@ public class NormalZombieEntity extends PVZZombieEntity {
 			this.getAttribute(SharedMonsterAttributes.ATTACK_DAMAGE).setBaseValue(ZombieUtil.NORMAL_DAMAGE);
 		}
 	}
-
+	
 	@Override
 	public void normalZombieTick() {
 		super.normalZombieTick();
@@ -69,7 +69,7 @@ public class NormalZombieEntity extends PVZZombieEntity {
 
 	@Override
 	public EntitySize getSize(Pose poseIn) {
-		return new EntitySize(0.8f, 2.0f, false);
+		return new EntitySize(0.8f, 1.98f, false);
 	}
 
 	@Override

@@ -18,6 +18,7 @@ import net.minecraft.network.datasync.DataParameter;
 import net.minecraft.network.datasync.DataSerializers;
 import net.minecraft.network.datasync.EntityDataManager;
 import net.minecraft.util.math.EntityRayTraceResult;
+import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.RayTraceResult;
 import net.minecraft.world.World;
 
@@ -47,11 +48,15 @@ public class PeaEntity extends PVZThrowableEntity {
 		dataManager.register(PEA_TYPE, Type.NORMAL.ordinal());
 	}
 
-	public void shootPea(double dx, double dz, double speed) {
-		double dv = Math.sqrt(dx * dx + dz * dz);
-		double vx = dx / dv * speed;
-		double vz = dz / dv * speed;
-		this.setMotion(vx, this.getMotion().y, vz);
+	public void shootPea(double dx, double dy, double dz, double speed) {
+		double down = 20;
+		double dxz = Math.sqrt(dx * dx + dz * dz);
+		dy = MathHelper.clamp(dy, -dxz/down, dxz/down);
+		double dis = Math.sqrt(dx * dx + dy* dy + dz * dz);
+		double vx = dx / dis * speed;
+		double vy = dy / dis * speed;
+		double vz = dz / dis * speed;
+		this.setMotion(vx, vy, vz);
 	}
 
 	@Override

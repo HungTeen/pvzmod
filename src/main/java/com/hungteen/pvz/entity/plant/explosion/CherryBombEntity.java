@@ -8,8 +8,10 @@ import com.hungteen.pvz.utils.EntityUtil;
 import com.hungteen.pvz.utils.enums.Plants;
 
 import net.minecraft.entity.CreatureEntity;
+import net.minecraft.entity.EntitySize;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.LivingEntity;
+import net.minecraft.entity.Pose;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.world.World;
 
@@ -44,6 +46,11 @@ public class CherryBombEntity extends PlantBomberEntity{
 			return 150+now*25;
 		}
 		return 150;
+	}
+	
+	@Override
+	public EntitySize getSize(Pose poseIn) {
+		return new EntitySize(0.9f, 1f, false);
 	}
 	
 	@Override

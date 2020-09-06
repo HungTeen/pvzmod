@@ -18,7 +18,7 @@ public enum Zombies {
 	DANCING_ZOMBIE,       //boss 3
 	BACKUP_DANCER,
 	//3
-	TOOL,
+	ZOMBIE_DOLPHIN,
 	SNORKEL_ZOMBIE,
 	ZOMBONI,
 	BOBSLE,

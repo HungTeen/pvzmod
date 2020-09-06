@@ -34,14 +34,15 @@ public class ThreePeaterEntity extends PeaShooterEntity {
 		}
 		double dx = target.getPosX() - this.getPosX();
         double dz = target.getPosZ() - this.getPosZ();
+        double y = this.getPosY()+this.getSize(getPose()).height*0.7f;
         double dis = MathHelper.sqrt(dx * dx + dz * dz);
         double tmp= this.LENTH / dis;
         double deltaX = tmp * dx;
         double deltaZ = tmp * dz;
         //shoot mid pea
         PeaEntity pea = new PeaEntity(EntityRegister.PEA.get(), this.world, this, this.getShootType(), this.getShootState());
-        pea.setPosition(this.getPosX() + deltaX, this.getPosY() + this.getSize(getPose()).height * 0.7f, this.getPosZ() + deltaZ);
-        pea.shootPea(dx, dz, this.getBulletSpeed());      
+        pea.setPosition(this.getPosX() + deltaX, y, this.getPosZ() + deltaZ);
+        pea.shootPea(dx, target.getPosY()+target.getHeight()-y, dz, this.getBulletSpeed());      
         this.playSound(getShootSound(), 1.0F, 1.0F);
         this.world.addEntity(pea);
         //shoot left pea
@@ -50,12 +51,12 @@ public class ThreePeaterEntity extends PeaShooterEntity {
         double deltaZZ = -now * dx;
         pea = new PeaEntity(EntityRegister.PEA.get(), this.world, this, this.getShootType(), this.getShootState());
         pea.setPosition(this.getPosX() + deltaX + deltaXX, this.getPosY() + this.getSize(getPose()).height * 0.5f, this.getPosZ() + deltaZ + deltaZZ);
-        pea.shootPea(dx, dz, this.getBulletSpeed());     
+        pea.shootPea(dx, target.getPosY()+target.getHeight()-y, dz, this.getBulletSpeed());     
         this.world.addEntity(pea);
         //shoot right pea
         pea = new PeaEntity(EntityRegister.PEA.get(), this.world, this, this.getShootType(), this.getShootState());
         pea.setPosition(this.getPosX() + deltaX - deltaXX, this.getPosY() + this.getSize(getPose()).height * 0.5f, this.getPosZ() + deltaZ - deltaZZ);
-        pea.shootPea(dx, dz, this.getBulletSpeed());     
+        pea.shootPea(dx, target.getPosY()+target.getHeight()-y, dz, this.getBulletSpeed());     
         this.world.addEntity(pea);
 	}
 	

@@ -8,7 +8,7 @@ import net.minecraft.world.World;
 public abstract class PVZZombieToolBase extends MobEntity{
 
 	protected int liveTick = 0;
-	private final int maxLiveTick = 5;
+	private final int maxLiveTick = 3;
 	
 	public PVZZombieToolBase(EntityType<? extends MobEntity> type, World worldIn) {
 		super(type, worldIn);

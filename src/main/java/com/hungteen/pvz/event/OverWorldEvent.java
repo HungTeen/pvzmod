@@ -4,10 +4,12 @@ import javax.annotation.Nonnull;
 
 import com.hungteen.pvz.PVZConfig;
 import com.hungteen.pvz.register.EntitySpawnRegister;
+import com.hungteen.pvz.register.SoundRegister;
 import com.hungteen.pvz.utils.enums.Events;
 import com.hungteen.pvz.world.data.WorldEventData;
 
 import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.util.SoundCategory;
 import net.minecraft.util.text.TextFormatting;
 import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraft.world.Difficulty;
@@ -60,7 +62,7 @@ public class OverWorldEvent {
 	public static void activateZombieAttackEvents(World world) {
 		for (PlayerEntity pl : world.getPlayers()) {
 			pl.sendMessage(new TranslationTextComponent("event.pvz.zombie_attack").applyTextStyle(TextFormatting.DARK_RED));
-//			world.playSound(null, pl.getPosition(), soundIn, category, 1f, 1f);
+			world.playSound(null, pl.getPosition(), SoundRegister.HUGE_WAVE.get(), SoundCategory.AMBIENT, 1f, 1f);
 		}
 		activateEvent(world, Events.BUCKET);
 	}

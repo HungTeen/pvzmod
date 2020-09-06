@@ -10,7 +10,6 @@ import com.hungteen.pvz.utils.EntityUtil;
 import com.hungteen.pvz.utils.PlantUtil;
 import com.hungteen.pvz.utils.enums.Plants;
 
-import net.minecraft.block.BlockState;
 import net.minecraft.entity.CreatureEntity;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntitySize;
@@ -18,7 +17,6 @@ import net.minecraft.entity.EntityType;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.Pose;
 import net.minecraft.util.DamageSource;
-import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 
 public class TangleKelpEntity extends PVZPlantEntity{
@@ -117,11 +115,7 @@ public class TangleKelpEntity extends PVZPlantEntity{
 	@Override
 	protected boolean checkWeak() {//check if it leave water
 		if(this.isImmuneToWeak) return false;
-    	BlockState state =this.world.getBlockState(new BlockPos(this).down());
-        if(state.isSolid()&&world.isAirBlock(new BlockPos(this))) {
-        	return true;
-        }
-        return false;
+        return !this.isInWater();
 	}
 	
 	@Override
