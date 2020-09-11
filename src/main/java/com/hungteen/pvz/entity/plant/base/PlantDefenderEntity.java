@@ -1,6 +1,5 @@
 package com.hungteen.pvz.entity.plant.base;
 
-import com.hungteen.pvz.entity.ai.DefenderAttractGoal;
 import com.hungteen.pvz.entity.ai.PVZNearestTargetGoal;
 import com.hungteen.pvz.entity.plant.PVZPlantEntity;
 import com.hungteen.pvz.utils.EntityUtil;
@@ -35,7 +34,6 @@ public abstract class PlantDefenderEntity extends PVZPlantEntity implements IDef
 	@Override
 	protected void registerGoals() {
 		super.registerGoals();
-		this.goalSelector.addGoal(0, new DefenderAttractGoal(this, 20));
 		this.targetSelector.addGoal(0, new PVZNearestTargetGoal(this, true, getAttractRange(), 3f) {
 			@Override
 			protected boolean checkPlant(Entity entity) {
@@ -48,6 +46,7 @@ public abstract class PlantDefenderEntity extends PVZPlantEntity implements IDef
 	public void startSuperMode() {
 		super.startSuperMode();
 		this.setDefenceLife(this.getSuperLife());
+		this.attract();
 	}
 	
 	@Override

@@ -164,6 +164,7 @@ public class EntityRegister {
         RenderingRegistry.registerEntityRenderingHandler(TORCH_WOOD.get(), TorchWoodRender::new);
         RenderingRegistry.registerEntityRenderingHandler(TALL_NUT.get(), TallNutRender::new);
         RenderingRegistry.registerEntityRenderingHandler(WATER_GUARD.get(),WaterGuardRender::new);
+        
     }
 
 	private static <T extends Entity> RegistryObject<EntityType<T>> registerEntityType(IFactory<T> factory,String name,EntityClassification classification)

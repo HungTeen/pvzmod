@@ -228,7 +228,7 @@ public abstract class PVZZombieEntity extends MonsterEntity implements IPVZZombi
 			entityIn.setFire(i * 4);
 		}
 
-		boolean flag = entityIn.attackEntityFrom(getZombieAttackDamageSource(), f);
+		boolean flag = entityIn.attackEntityFrom(getZombieAttackDamageSource(), getModifyAttackDamage(entityIn,f));
 		if (flag) {
 			if (f1 > 0.0F && entityIn instanceof LivingEntity) {
 				((LivingEntity) entityIn).knockBack(this, f1 * 0.5F,
@@ -275,6 +275,10 @@ public abstract class PVZZombieEntity extends MonsterEntity implements IPVZZombi
 	
 	protected PVZDamageSource getZombieAttackDamageSource() {
 		return PVZDamageSource.causeEatDamage(this, this);
+	}
+	
+	protected float getModifyAttackDamage(Entity entity,float f) {
+		return f;
 	}
 	
 	public Ranks getZombieRank() {

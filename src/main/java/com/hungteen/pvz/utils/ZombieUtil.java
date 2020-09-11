@@ -31,8 +31,7 @@ public class ZombieUtil {
 	// follow range
 	public static final float ZOMBIE_FOLLOW_RANGE = 100;
 
-	public static Ranks getZombieRank(Zombies zombie)
-	{
+	public static Ranks getZombieRank(Zombies zombie){
 		switch(zombie) {
 		case ZOMBIE_DOLPHIN:return Ranks.GRAY;
 		case NORMAL_ZOMBIE:
@@ -51,8 +50,7 @@ public class ZombieUtil {
 		}
 	}
 	
-	public static int getZombieXp(Zombies zombie)
-	{
+	public static int getZombieXp(Zombies zombie){
 		Ranks rank=getZombieRank(zombie);
 		switch(rank) {
 		case GRAY:return 1;
@@ -65,4 +63,5 @@ public class ZombieUtil {
 		default:return 0;
 		}
 	}
+	
 }

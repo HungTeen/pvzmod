@@ -35,6 +35,7 @@ import net.minecraft.util.DamageSource;
 import net.minecraft.util.Hand;
 import net.minecraft.util.SoundEvent;
 import net.minecraft.util.SoundEvents;
+import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.DifficultyInstance;
 import net.minecraft.world.GameRules;
@@ -137,10 +138,14 @@ public abstract class PVZPlantEntity extends CreatureEntity implements IPVZPlant
 		    	this.setBoostTime(this.getBoostTime()-1);
 		    }
 		}
+		//max live tick
 		if(live_tick>=PVZConfig.COMMON_CONFIG.EntitySettings.EntityLiveTick.PlantLiveTick.get()) {
 			this.remove();
 		}
 		live_tick++;
+		//lock the x and z of plant
+		BlockPos pos=this.getPosition();
+		this.setPosition(pos.getX()+0.5, this.getPosY(), pos.getZ()+0.5);
 //		if(!this.world.isRemote&&this.getGoldTime()>0) {
 //			Block block =this.world.getBlockState(new BlockPos(posX,posY-1,posZ)).getBlock();
 //			int amount=0;
@@ -203,6 +208,10 @@ public abstract class PVZPlantEntity extends CreatureEntity implements IPVZPlant
 		if(this.isSleeping()) return;
 		if (!this.isRidingSameEntity(entityIn)){
             if (!entityIn.noClip && !this.noClip){
+            	if(entityIn instanceof PVZPlantEntity&&!EntityUtil.checkCanEntityAttack(this, entityIn)) {
+            		this.attackEntityFrom(DamageSource.CRAMMING, 6.0F);
+            		entityIn.attackEntityFrom(DamageSource.CRAMMING, 6.0F);
+            	}
                 double d0 = entityIn.getPosX() - this.getPosX();
                 double d1 = entityIn.getPosZ() - this.getPosZ();
                 double d2 = MathHelper.absMax(d0, d1);
