@@ -35,6 +35,7 @@ public class SoundRegister {
 	public static final RegistryObject<SoundEvent> JALAPENO = registerSound("jalapeno");
 	public static final RegistryObject<SoundEvent> CAR_SPAWN = registerSound("car_spawn");
 	public static final RegistryObject<SoundEvent> CAR_EXPLOSION = registerSound("car_explosion");
+	public static final RegistryObject<SoundEvent> ZOMBIE_FIRE = registerSound("zombie_fire");
 	
 	private static RegistryObject<SoundEvent> registerSound(String name){
 		return SOUNDS.register(name, ()->{

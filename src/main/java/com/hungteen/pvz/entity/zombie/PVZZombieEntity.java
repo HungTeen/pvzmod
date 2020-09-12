@@ -206,6 +206,12 @@ public abstract class PVZZombieEntity extends MonsterEntity implements IPVZZombi
 				if(!this.isZombieColdOrForzen()&&!this.world.isRemote) {
 					this.playSound(SoundRegister.ZOMBIE_FROZEN.get(), 1f,1f);
 				}
+			}else if(((PVZDamageSource) source).getPVZDamageType()==PVZDamageType.FIRE) {
+				if(this.isZombieColdOrForzen()&&!this.world.isRemote) {
+					this.playSound(SoundRegister.ZOMBIE_FIRE.get(), 1f,1f);
+					this.removePotionEffect(EffectRegister.COLD_EFFECT.get());
+					this.removeActivePotionEffect(EffectRegister.FROZEN_EFFECT.get());
+				}
 			}
 		}
 		return super.attackEntityFrom(source, amount);

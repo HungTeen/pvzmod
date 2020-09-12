@@ -20,5 +20,6 @@
     "drag":{"sounds":[{"name":"pvz:entity/plant/attack/drag"}]},
     "jalapeno":{"sounds":[{"name":"pvz:entity/plant/bomb/jalapeno"}]},
     "car_spawn":{"sounds":[{"name":"pvz:entity/zombie/spawn/car_spawn"}]},
-    "car_explosion":{"sounds":[{"name":"pvz:entity/zombie/death/car_explosion"}]}
+    "car_explosion":{"sounds":[{"name":"pvz:entity/zombie/death/car_explosion"}]},
+    "zombie_fire":{"sounds":[{"name":"pvz:entity/zombie/hit/fire"}]}
 }
