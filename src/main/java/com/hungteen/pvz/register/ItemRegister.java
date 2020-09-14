@@ -7,6 +7,7 @@ import com.hungteen.pvz.item.armor.BucketArmorItem;
 import com.hungteen.pvz.item.armor.ConeArmorItem;
 import com.hungteen.pvz.item.misc.GuildBookItem;
 import com.hungteen.pvz.item.misc.StrangeHelpItem;
+import com.hungteen.pvz.item.tool.BobsleCarItem;
 import com.hungteen.pvz.item.tool.ZombieFlagItem;
 import com.hungteen.pvz.item.tool.card.BlockPlantCardItem;
 import com.hungteen.pvz.item.tool.card.PlantCardItem;
@@ -102,6 +103,7 @@ public class ItemRegister {
 	
 	//tool
 	public static final RegistryObject<Item> ZOMBIE_FLAG = ITEMS.register("zombie_flag", ZombieFlagItem::new);
+	public static final RegistryObject<Item> BOBSLE_CAR = ITEMS.register("bobsle_car", BobsleCarItem::new);
 	
 	//armor
 	public static final RegistryObject<Item> CONE_HEAD = ITEMS.register("cone_head", ()->new ConeArmorItem(ArmorMaterial.LEATHER, EquipmentSlotType.HEAD));

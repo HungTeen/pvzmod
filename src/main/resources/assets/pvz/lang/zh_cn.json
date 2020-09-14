@@ -40,6 +40,9 @@
 //bullet
     "entity.pvz.pea":"豌豆",
     "entity.pvz.potato":"土豆",
+//misc
+    "entity.pvz.ducky_tube":"鸭子救生圈",
+    "entity.pvz.bobsle_car":"雪橇车",
 //zombie
     "entity.pvz.normal_zombie":"普通僵尸",
     "item.pvz.normal_zombie_spawn_egg":"普通僵尸刷怪蛋",
@@ -51,6 +54,10 @@
     "item.pvz.pole_zombie_spawn_egg":"撑杆僵尸刷怪蛋",
     "entity.pvz.buckethead_zombie":"铁桶僵尸",
     "item.pvz.buckethead_zombie_spawn_egg":"铁桶僵尸刷怪蛋",
+    "entity.pvz.snorkel_zombie":"潜水僵尸",
+    "item.pvz.snorkel_zombie_spawn_egg":"潜水僵尸刷怪蛋",
+    "entity.pvz.zomboni":"冰车僵尸",
+    "item.pvz.zomboni_spawn_egg":"冰车僵尸刷怪蛋",
 //plant
 //PeaShooter
     "entity.pvz.pea_shooter":"豌豆射手",

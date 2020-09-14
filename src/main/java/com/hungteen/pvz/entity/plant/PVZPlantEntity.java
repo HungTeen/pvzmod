@@ -116,7 +116,7 @@ public abstract class PVZPlantEntity extends CreatureEntity implements IPVZPlant
 	 */
 	protected void normalPlantTick(){
 		//when plant stand on wrong block
-		if(!this.world.isRemote&&!this.isImmuneToWeak) {
+		if(!this.world.isRemote&&!this.isImmuneToWeak&&this.getRidingEntity()==null) {
 			if(this.checkWeak()&&this.weakTime==0) {
 				this.weakTime=this.weakCD;
 				this.attackEntityFrom(PVZDamageSource.causeWeakDamage(this, this), this.weakDamage);
@@ -144,8 +144,13 @@ public abstract class PVZPlantEntity extends CreatureEntity implements IPVZPlant
 		}
 		live_tick++;
 		//lock the x and z of plant
-		BlockPos pos=this.getPosition();
-		this.setPosition(pos.getX()+0.5, this.getPosY(), pos.getZ()+0.5);
+		if(this.getRidingEntity()!=null) {
+			
+		}else {
+			BlockPos pos=this.getPosition();
+		    this.setPosition(pos.getX()+0.5, this.getPosY(), pos.getZ()+0.5);
+		}
+		
 //		if(!this.world.isRemote&&this.getGoldTime()>0) {
 //			Block block =this.world.getBlockState(new BlockPos(posX,posY-1,posZ)).getBlock();
 //			int amount=0;

@@ -1,5 +1,6 @@
 package com.hungteen.pvz.entity.zombie.poolday;
 
+import com.hungteen.pvz.entity.AmphibiousPathNavigator;
 import com.hungteen.pvz.entity.zombie.PVZZombieEntity;
 import com.hungteen.pvz.utils.ZombieUtil;
 import com.hungteen.pvz.utils.enums.Zombies;
@@ -9,9 +10,7 @@ import net.minecraft.entity.EntityType;
 import net.minecraft.entity.Pose;
 import net.minecraft.entity.SharedMonsterAttributes;
 import net.minecraft.entity.monster.MonsterEntity;
-import net.minecraft.pathfinding.GroundPathNavigator;
 import net.minecraft.pathfinding.PathNavigator;
-import net.minecraft.pathfinding.SwimmerPathNavigator;
 import net.minecraft.world.World;
 
 public class SnorkelZombieEntity extends PVZZombieEntity{
@@ -46,8 +45,7 @@ public class SnorkelZombieEntity extends PVZZombieEntity{
 	
 	@Override
 	protected PathNavigator createNavigator(World worldIn) {
-		if(this.isInWater()) return new SwimmerPathNavigator(this, worldIn);
-		return new GroundPathNavigator(this, worldIn);
+		return new AmphibiousPathNavigator(this, worldIn);
 	}
 	
 	@Override

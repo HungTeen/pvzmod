@@ -40,6 +40,9 @@
 //bullet
     "entity.pvz.pea":"Pea",
     "entity.pvz.potato":"Potato",
+//misc
+    "entity.pvz.ducky_tube":"Ducky Tube",
+    "entity.pvz.bobsle_car":"Bobsle Car",
 //zombie
     "entity.pvz.normal_zombie":"NormalZombie",
     "item.pvz.normal_zombie_spawn_egg":"NormalZombie Spawn Egg", 
@@ -51,6 +54,10 @@
     "item.pvz.pole_zombie_spawn_egg":"PoleZombie Spawn Egg",
     "entity.pvz.buckethead_zombie":"BucketHeadZombie",
     "item.pvz.buckethead_zombie_spawn_egg":"BucketHead Zombie Spawn Egg",
+    "entity.pvz.snorkel_zombie":"SnorkelZombie",
+    "item.pvz.snorkel_zombie_spawn_egg":"Snorkel Zombie Spawn Egg",
+    "entity.pvz.zomboni":"Zomboni",
+    "item.pvz.zomboni_spawn_egg":"Zomboni Spawn Egg",
 //plant
 //PeaShooter
     "entity.pvz.pea_shooter":"PeaShooter",
