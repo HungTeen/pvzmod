@@ -49,6 +49,8 @@ public class BobsleCarEntity extends Entity {
 			DataSerializers.FLOAT);
 	private static final int MAX_PASSENGER_SIZE = 4;
 	private static final float SNOW_SMOOTH = 0.991f;
+	private static final float MAX_MOVE_SPEED = 0.042f;
+	private static final float MAX_ROTATION = 1f;
 	private Status status;
 	private float momentum;
 	private float deltaRotation;
@@ -146,23 +148,23 @@ public class BobsleCarEntity extends Entity {
 			boolean forward = mc.gameSettings.keyBindForward.isKeyDown();
 			boolean back = mc.gameSettings.keyBindBack.isKeyDown();
 			if(left) {
-				this.deltaRotation-=1f;
+				this.deltaRotation-=MAX_ROTATION;
 			}
 			if(right) {
-	            this.deltaRotation+=1f;
+	            this.deltaRotation+=MAX_ROTATION;
 	        }
 			if(!right&&!left) {
 				this.deltaRotation=0;
 			}
 			this.rotationYaw += this.deltaRotation;
 			if(right!=left&&!forward&&!back) {
-				f+=0.005f;
+				f+=MAX_MOVE_SPEED/10f;
 			}
 			if(forward) {
-				f+=0.05f;
+				f+=MAX_MOVE_SPEED;
 		    }
 			if(back) {
-				f-=0.01f;
+				f-=MAX_MOVE_SPEED/3;
 			}
 			this.setMotion(this.getMotion().add((double)(MathHelper.sin(-this.rotationYaw * ((float)Math.PI / 180F)) * f), 0.0D, (double)(MathHelper.cos(this.rotationYaw * ((float)Math.PI / 180F)) * f)));
 		}

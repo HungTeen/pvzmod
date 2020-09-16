@@ -31,11 +31,9 @@ public class BlockRegister {
 	
 	// hardness
 	//https://minecraft.gamepedia.com/Breaking#Blocks_by_hardness
-	//黑曜石 50//末影箱 22//硬化玻璃 10//钻石块 5//蜘蛛网 4//信标 3//圆石 2//西瓜 1//石英 0.8//泥土 0.5
 
 	// resistance
 	//https://minecraft.gamepedia.com/Explosion#Blast_resistance
-	//黑曜石 1200//末影箱 600//末地石 9//钻石块 6//蜘蛛网 4//矿石 3//木头 2//沙石 0.8
 
 	public static final DeferredRegister<Block> BLOCKS = new DeferredRegister<>(ForgeRegistries.BLOCKS, PVZMod.MOD_ID);
 

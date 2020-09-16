@@ -9,10 +9,6 @@ import net.minecraft.entity.EntityType;
 import net.minecraft.entity.MobEntity;
 import net.minecraft.entity.Pose;
 import net.minecraft.entity.SharedMonsterAttributes;
-import net.minecraft.entity.ai.goal.SwimGoal;
-import net.minecraft.pathfinding.GroundPathNavigator;
-import net.minecraft.pathfinding.PathNavigator;
-import net.minecraft.pathfinding.SwimmerPathNavigator;
 import net.minecraft.world.World;
 
 public class DuckyTubeEntity extends PVZZombieToolBase{
@@ -22,28 +18,22 @@ public class DuckyTubeEntity extends PVZZombieToolBase{
 	}
 	
 	@Override
-	protected void registerGoals() {
-		super.registerGoals();
-		this.goalSelector.addGoal(0, new SwimGoal(this));
-	}
-	
-	@Override
 	protected void registerAttributes() {
 		super.registerAttributes();
 		this.getAttribute(SharedMonsterAttributes.MOVEMENT_SPEED).setBaseValue(ZombieUtil.LITTLE_FAST);
 	}
 	
 	@Override
-	protected PathNavigator createNavigator(World worldIn) {
-		if(this.isInWater()) {
-			return new SwimmerPathNavigator(this, worldIn);
+	public void baseTick() {
+		super.baseTick();
+		if(!world.isRemote&&this.isInWater()) {
+			this.setMotion(this.getMotion().getX(),0.05f,this.getMotion().getZ());
 		}
-		return new GroundPathNavigator(this, worldIn);
 	}
 	
 	@Override
-	public void baseTick() {
-		super.baseTick();
+	public boolean hasNoGravity() {
+		return this.isInWater();
 	}
 	
 	@Override
@@ -58,7 +48,7 @@ public class DuckyTubeEntity extends PVZZombieToolBase{
 	
 	@Override
 	protected float getWaterSlowDown() {
-		return 0.95f;
+		return 0.91f;
 	}
 	
 	@Override

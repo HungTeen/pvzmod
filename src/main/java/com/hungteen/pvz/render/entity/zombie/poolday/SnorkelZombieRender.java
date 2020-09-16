@@ -7,7 +7,6 @@ import com.hungteen.pvz.utils.StringUtil;
 import com.mojang.blaze3d.matrix.MatrixStack;
 
 import net.minecraft.client.renderer.entity.EntityRendererManager;
-import net.minecraft.entity.Pose;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
@@ -23,11 +22,7 @@ public class SnorkelZombieRender extends PVZZombieRender<SnorkelZombieEntity>{
 	protected void preRenderCallback(SnorkelZombieEntity entitylivingbaseIn, MatrixStack matrixStackIn,
 			float partialTickTime) {
 		super.preRenderCallback(entitylivingbaseIn, matrixStackIn, partialTickTime);
-		if(entitylivingbaseIn.getPose()==Pose.SWIMMING) {
-			
-		}else {
-			matrixStackIn.translate(0, -2f, 0);
-		}
+		matrixStackIn.translate(0, -2f, 0);
 	}
 	
 	@Override

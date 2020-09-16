@@ -1,6 +1,6 @@
-package com.hungteen.pvz.model.entity.zombie.poolday;
+package com.hungteen.pvz.model.entity.animal;
 
-import com.hungteen.pvz.entity.zombie.poolday.SnorkelZombieEntity;
+import com.hungteen.pvz.entity.animal.FoodieZombieEntity;
 import com.mojang.blaze3d.matrix.MatrixStack;
 import com.mojang.blaze3d.vertex.IVertexBuilder;
 
@@ -12,7 +12,7 @@ import net.minecraft.util.math.MathHelper;
 // Exported for Minecraft version 1.15
 // Paste this class into your mod and generate all required imports
 
-public class SnorkelZombieModel extends EntityModel<SnorkelZombieEntity> {
+public class FoodieZombieModel extends EntityModel<FoodieZombieEntity> {
 	private final ModelRenderer total;
 	private final ModelRenderer head;
 	private final ModelRenderer bone6;
@@ -31,7 +31,7 @@ public class SnorkelZombieModel extends EntityModel<SnorkelZombieEntity> {
 	private final ModelRenderer left_leg;
 	private final ModelRenderer left_foot;
 
-	public SnorkelZombieModel() {
+	public FoodieZombieModel() {
 		textureWidth = 128;
 		textureHeight = 128;
 
@@ -137,14 +137,17 @@ public class SnorkelZombieModel extends EntityModel<SnorkelZombieEntity> {
 	}
 
 	@Override
-	public void setRotationAngles(SnorkelZombieEntity entity, float limbSwing, float limbSwingAmount, float ageInTicks,
+	public void setRotationAngles(FoodieZombieEntity entity, float limbSwing, float limbSwingAmount, float ageInTicks,
 			float netHeadYaw, float headPitch) {
-		this.head.rotateAngleY = netHeadYaw / (180F / (float) Math.PI);
-		this.head.rotateAngleX = headPitch / (180F / (float) Math.PI);
+		this.total.rotateAngleX = 3.14159f / 2;
+		this.head.rotateAngleX = -3.14159f / 2;
+		this.head.rotateAngleY = 0;
+		this.right_hand.rotateAngleX = 0;
+		this.left_hand.rotateAngleX = 0;
 		this.right_leg.rotateAngleX = MathHelper.cos(limbSwing * 0.6662F) * 1.4F * limbSwingAmount;
 		this.left_leg.rotateAngleX = MathHelper.cos(limbSwing * 0.6662F + (float) Math.PI) * 1.4F * limbSwingAmount;
-		this.right_hand.rotateAngleX = MathHelper.cos(limbSwing * 0.6662F) * 1.4F * limbSwingAmount;
-		this.left_hand.rotateAngleX = MathHelper.cos(limbSwing * 0.6662F + (float) Math.PI) * 1.4F * limbSwingAmount;
+		this.right_foot.rotateAngleX = MathHelper.cos(limbSwing * 0.6662F) * 1.4F * limbSwingAmount;
+		this.left_foot.rotateAngleX = MathHelper.cos(limbSwing * 0.6662F + (float) Math.PI) * 1.4F * limbSwingAmount;
 	}
 
 	@Override

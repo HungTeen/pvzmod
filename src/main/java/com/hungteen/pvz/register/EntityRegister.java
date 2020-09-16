@@ -1,6 +1,7 @@
 package com.hungteen.pvz.register;
 
 import com.hungteen.pvz.PVZMod;
+import com.hungteen.pvz.entity.animal.FoodieZombieEntity;
 import com.hungteen.pvz.entity.bullet.PeaEntity;
 import com.hungteen.pvz.entity.bullet.PotatoEntity;
 import com.hungteen.pvz.entity.drop.CoinEntity;
@@ -34,6 +35,7 @@ import com.hungteen.pvz.entity.zombie.poolday.SnorkelZombieEntity;
 import com.hungteen.pvz.entity.zombie.poolday.ZomboniEntity;
 import com.hungteen.pvz.render.entity.bullet.PeaRender;
 import com.hungteen.pvz.render.entity.bullet.PotatoRender;
+import com.hungteen.pvz.render.entity.creature.FoodieZombieRender;
 import com.hungteen.pvz.render.entity.drop.CoinRender;
 import com.hungteen.pvz.render.entity.drop.EnergyRender;
 import com.hungteen.pvz.render.entity.drop.SunRender;
@@ -99,6 +101,8 @@ public class EntityRegister {
 	public static final RegistryObject<EntityType<DuckyTubeEntity>> DUCKY_TUBE = registerEntityType(DuckyTubeEntity::new, "duck_tube", EntityClassification.MISC);
 	public static final RegistryObject<EntityType<BobsleCarEntity>> BOBSLE_CAR = registerEntityType(BobsleCarEntity::new, "bobsle_car", EntityClassification.MISC);
 	
+	//animal
+	public static final RegistryObject<EntityType<FoodieZombieEntity>> FOODIE_ZOMBIE = registerEntityType(FoodieZombieEntity::new, "foodie_zombie", EntityClassification.WATER_CREATURE);
 	//zombie 
 	public static final RegistryObject<EntityType<NormalZombieEntity>> NORMAL_ZOMBIE = registerEntityType(NormalZombieEntity::new, "normal_zombie", EntityClassification.MONSTER);
 	public static final RegistryObject<EntityType<FlagZombieEntity>> FLAG_ZOMBIE = registerEntityType(FlagZombieEntity::new, "flag_zombie", EntityClassification.MONSTER);
@@ -143,6 +147,9 @@ public class EntityRegister {
         RenderingRegistry.registerEntityRenderingHandler(DUCKY_TUBE.get(), DuckyTubeRender::new);
         RenderingRegistry.registerEntityRenderingHandler(BOBSLE_CAR.get(), BobsleCarRender::new);
         
+        //animal 
+        RenderingRegistry.registerEntityRenderingHandler(FOODIE_ZOMBIE.get(), FoodieZombieRender::new);
+        
         //zombie
         RenderingRegistry.registerEntityRenderingHandler(NORMAL_ZOMBIE.get(), NormalZombieRender::new);
         RenderingRegistry.registerEntityRenderingHandler(FLAG_ZOMBIE.get(), FlagZombieRender::new);
@@ -172,13 +179,11 @@ public class EntityRegister {
         
     }
 
-	private static <T extends Entity> RegistryObject<EntityType<T>> registerEntityType(IFactory<T> factory,String name,EntityClassification classification)
-	{
+	private static <T extends Entity> RegistryObject<EntityType<T>> registerEntityType(IFactory<T> factory,String name,EntityClassification classification){
 		return ENTITY_TYPES.register(name, () -> {return EntityType.Builder.create(factory, classification).build(StringUtil.prefix(name).toString());});
 	}
 	
-	private static <T extends Entity> RegistryObject<EntityType<T>> registerEntityType(IFactory<T> factory,String name,EntityClassification classification,float w,float h)
-	{
+	private static <T extends Entity> RegistryObject<EntityType<T>> registerEntityType(IFactory<T> factory,String name,EntityClassification classification,float w,float h){
 		return ENTITY_TYPES.register(name, () -> {return EntityType.Builder.create(factory, classification).size(w, h).build(StringUtil.prefix(name).toString());});
 	}
 }
