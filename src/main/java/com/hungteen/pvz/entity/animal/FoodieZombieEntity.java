@@ -1,6 +1,5 @@
 package com.hungteen.pvz.entity.animal;
 
-
 import com.hungteen.pvz.entity.ai.WaterTemptGoal;
 import com.hungteen.pvz.entity.zombie.poolday.SnorkelZombieEntity;
 import com.hungteen.pvz.register.EntityRegister;
@@ -23,6 +22,7 @@ import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
 import net.minecraft.item.crafting.Ingredient;
+import net.minecraft.particles.ParticleTypes;
 import net.minecraft.pathfinding.PathNavigator;
 import net.minecraft.pathfinding.PathNodeType;
 import net.minecraft.pathfinding.SwimmerPathNavigator;
@@ -56,8 +56,9 @@ public class FoodieZombieEntity extends AnimalEntity {
 
 	@Override
 	public EntitySize getSize(Pose poseIn) {
-		if (this.isChild())
+		if (this.isChild()) {
 			return EntitySize.flexible(0.3f, 0.3f);
+		}
 		return EntitySize.flexible(0.7f, 0.5f);
 	}
 
@@ -97,9 +98,24 @@ public class FoodieZombieEntity extends AnimalEntity {
 		this.updateAir(i);
 	}
 
-	@Override
-	public void onDeath(DamageSource cause) {
-		super.onDeath(cause);
+	protected void onDeathUpdate() {
+		++this.deathTime;
+		if (this.deathTime == 20) {
+			this.remove();
+
+			for (int i = 0; i < 20; ++i) {
+				double d0 = this.rand.nextGaussian() * 0.02D;
+				double d1 = this.rand.nextGaussian() * 0.02D;
+				double d2 = this.rand.nextGaussian() * 0.02D;
+				this.world.addParticle(ParticleTypes.POOF, this.getPosXRandom(1.0D), this.getPosYRandom(),
+						this.getPosZRandom(1.0D), d0, d1, d2);
+			}
+
+			this.doDeathSpawn();
+		}
+	};
+
+	private void doDeathSpawn() {
 		if (!world.isRemote) {
 			SnorkelZombieEntity snorkel = EntityRegister.SNORKEL_ZOMBIE.get().create(world);
 			snorkel.setPosition(this.getPosX(), this.getPosY(), this.getPosZ());

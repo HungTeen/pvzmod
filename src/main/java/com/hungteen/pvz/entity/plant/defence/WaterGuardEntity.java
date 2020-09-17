@@ -6,6 +6,7 @@ import com.hungteen.pvz.utils.PlantUtil;
 import com.hungteen.pvz.utils.enums.Plants;
 
 import net.minecraft.entity.CreatureEntity;
+import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntitySize;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.Pose;
@@ -62,6 +63,10 @@ public class WaterGuardEntity extends PlantDefenderEntity{
 	@Override
 	public boolean canBreatheUnderwater() {
 		return true;
+	}
+	
+	@Override
+	protected void collideWithEntity(Entity entityIn) {
 	}
 	
 	@Override
