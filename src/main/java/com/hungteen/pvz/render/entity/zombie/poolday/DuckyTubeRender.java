@@ -1,6 +1,6 @@
 package com.hungteen.pvz.render.entity.zombie.poolday;
 
-import com.hungteen.pvz.entity.zombie.poolday.DuckyTubeEntity;
+import com.hungteen.pvz.entity.misc.DuckyTubeEntity;
 import com.hungteen.pvz.model.entity.zombie.poolday.DuckyTubeModel;
 import com.hungteen.pvz.render.entity.zombie.PVZZombieToolRender;
 import com.hungteen.pvz.utils.StringUtil;

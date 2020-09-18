@@ -8,7 +8,6 @@ import javax.annotation.Nonnull;
 
 import com.hungteen.pvz.PVZConfig;
 import com.hungteen.pvz.entity.plant.PVZPlantEntity;
-import com.hungteen.pvz.entity.plant.enforce.SquashEntity;
 import com.hungteen.pvz.entity.plant.spear.SpikeWeedEntity;
 import com.hungteen.pvz.entity.zombie.PVZZombieEntity;
 import com.hungteen.pvz.register.EffectRegister;
@@ -53,29 +52,30 @@ public class EntityUtil {
 		return uuid == null ? null : world.getPlayerByUuid(uuid);
 	}
 	
+//	/**
+//	 * use to update collision about plants and zombies
+//	 */
+//	public static boolean checkShouldApplyCollision(LivingEntity base,LivingEntity target){
+//		if(base instanceof PVZPlantEntity) {//base is a plant
+//			if(target instanceof PVZPlantEntity) {//plants collide with plants include itself. Be careful,if add pumpkin,improve here
+//				return true;
+//			}
+//			if(checkCanEntityAttack(base, target)) {//collide with enemy.
+//				return true;
+//			}
+//			return false;
+//		}
+//		return true;
+//	}
+	
 	/**
-	 * use to update collision about plants and zombies
+	 * check if attacker can set target as AttackTarget
 	 */
-	public static boolean checkShouldApplyCollision(LivingEntity base,LivingEntity target){
-		if(base instanceof PVZPlantEntity) {//base is a plant
-			if(target instanceof PVZPlantEntity) {//plants collide with plants include itself. Be careful,if add pumpkin,improve here
-				return true;
-			}
-			if(checkCanEntityAttack(base, target)) {//collide with enemy.
-				return true;
-			}
-			return false;
+	public static boolean checkCanEntityTarget(Entity attacker,Entity target) {
+		if(attacker instanceof PVZZombieEntity) {
+			return ((PVZZombieEntity) attacker).checkCanZombieTarget(target);
 		}
-		if(base instanceof PVZZombieEntity) {//base is a zombie
-			if(target instanceof SquashEntity||target instanceof SpikeWeedEntity) {
-				return false;
-			}
-			if(checkCanEntityAttack(base, target)) {//collide with enemy
-				return true;
-			}
-			return false;
-		}
-		return true;
+		return checkCanEntityAttack(attacker, target);
 	}
 	
 	/**
@@ -85,7 +85,9 @@ public class EntityUtil {
 		if(attacker==null||target==null) {//prevent crash
 			return false;
 		}
-		if(!target.isAlive()) return false;
+		if(!target.isAlive()) {
+			return false;
+		}
 		World world=attacker.world;
 		if(target instanceof PlayerEntity) {
 			if(((PlayerEntity) target).isCreative()||target.isSpectator()) return false;

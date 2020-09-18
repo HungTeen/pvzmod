@@ -1,23 +1,18 @@
 package com.hungteen.pvz.entity.ai;
 
-import java.util.Random;
-
 import javax.annotation.Nullable;
 
 import net.minecraft.block.Block;
 import net.minecraft.entity.CreatureEntity;
 import net.minecraft.entity.MobEntity;
 import net.minecraft.entity.ai.goal.MoveToBlockGoal;
-import net.minecraft.particles.ParticleTypes;
 import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.IBlockReader;
 import net.minecraft.world.IWorld;
 import net.minecraft.world.IWorldReader;
 import net.minecraft.world.World;
 import net.minecraft.world.chunk.ChunkStatus;
 import net.minecraft.world.chunk.IChunk;
-import net.minecraft.world.server.ServerWorld;
 
 public class BreakLilyPadGoal extends MoveToBlockGoal {
 	
@@ -36,6 +31,9 @@ public class BreakLilyPadGoal extends MoveToBlockGoal {
 	 * necessary for execution in this method as well.
 	 */
 	public boolean shouldExecute() {
+		if(entity.getAttackTarget()!=null) {
+			return false;
+		}
 		if (!net.minecraftforge.common.ForgeHooks.canEntityDestroy(this.entity.world, this.destinationBlock,this.entity)) {
 			return false;
 		} else if (this.runDelay > 0) {
@@ -82,42 +80,29 @@ public class BreakLilyPadGoal extends MoveToBlockGoal {
 	public void playBrokenSound(World worldIn, BlockPos pos) {
 	}
 
+	@Override
+	public boolean shouldContinueExecuting() {
+		return entity.getAttackTarget()==null;
+	}
+	
 	/**
 	 * Keep ticking a continuous task that has already been started
 	 */
 	public void tick() {
 		super.tick();
 		World world = this.entity.world;
-		BlockPos blockpos = new BlockPos(this.entity);
-		BlockPos blockpos1 = this.findTarget(blockpos, world);
-		Random random = this.entity.getRNG();
-		if (this.isEntityNearBy() && blockpos1 != null) {
-			if (this.breakingTime > 0) {
-				Vec3d vec3d = this.entity.getMotion();
-				this.entity.setMotion(vec3d.x, 0.3D, vec3d.z);
-			}
-
+		if (this.isEntityNearBy() && this.destinationBlock != null) {
+//            System.out.println(this.breakingTime);
 			if (this.breakingTime % 2 == 0) {
-				Vec3d vec3d1 = this.entity.getMotion();
-				this.entity.setMotion(vec3d1.x, -0.3D, vec3d1.z);
 				if (this.breakingTime % 6 == 0) {
 					this.playBreakingSound(world, this.destinationBlock);
 				}
 			}
 
 			if (this.breakingTime > this.getBreakTime(entity)) {
-				world.removeBlock(blockpos1, false);
+				world.removeBlock(this.destinationBlock, false);
 				if (!world.isRemote) {
-					for (int i = 0; i < 20; ++i) {
-						double d3 = random.nextGaussian() * 0.02D;
-						double d1 = random.nextGaussian() * 0.02D;
-						double d2 = random.nextGaussian() * 0.02D;
-						((ServerWorld) world).spawnParticle(ParticleTypes.POOF, (double) blockpos1.getX() + 0.5D,
-								(double) blockpos1.getY(), (double) blockpos1.getZ() + 0.5D, 1, d3, d1, d2,
-								(double) 0.15F);
-					}
-
-					this.playBrokenSound(world, blockpos1);
+					this.playBrokenSound(world, this.destinationBlock);
 				}
 			}
 

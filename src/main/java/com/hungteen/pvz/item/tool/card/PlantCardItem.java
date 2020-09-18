@@ -153,7 +153,7 @@ public class PlantCardItem extends SummonCardItem{
 		case SPIKE_WEED:return EntityRegister.SPIKE_WEED.get().create(world);
 		case TORCH_WOOD:return EntityRegister.TORCH_WOOD.get().create(world);
 		case TALL_NUT:return EntityRegister.TALL_NUT.get().create(world);
-		case WATER_GUARD:return EntityRegister.WATER_GUARD.get().create(world);
+//		case WATER_GUARD:return EntityRegister.WATER_GUARD.get().create(world);
 		default:{
 			PVZMod.LOGGER.debug("No such plant entity!");
 			return null;

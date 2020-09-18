@@ -7,7 +7,8 @@ import java.util.UUID;
 import javax.annotation.Nullable;
 
 import com.hungteen.pvz.PVZConfig;
-import com.hungteen.pvz.entity.zombie.PVZZombieEntity;
+import com.hungteen.pvz.entity.plant.enforce.SquashEntity;
+import com.hungteen.pvz.entity.plant.spear.SpikeWeedEntity;
 import com.hungteen.pvz.misc.damage.PVZDamageSource;
 import com.hungteen.pvz.register.SoundRegister;
 import com.hungteen.pvz.utils.EntityUtil;
@@ -143,12 +144,12 @@ public abstract class PVZPlantEntity extends CreatureEntity implements IPVZPlant
 			this.remove();
 		}
 		live_tick++;
-		//lock the x and z of plant
-		if(this.getRidingEntity()!=null) {
-			
-		}else {
-			BlockPos pos=this.getPosition();
-		    this.setPosition(pos.getX()+0.5, this.getPosY(), pos.getZ()+0.5);
+		if(this.shouldLockXZ()) {//lock the x and z of plant
+		    if(this.getRidingEntity()!=null) {
+		    }else {
+			    BlockPos pos=this.getPosition();
+		        this.setPosition(pos.getX()+0.5, this.getPosY(), pos.getZ()+0.5);
+		    }
 		}
 		
 //		if(!this.world.isRemote&&this.getGoldTime()>0) {
@@ -203,6 +204,10 @@ public abstract class PVZPlantEntity extends CreatureEntity implements IPVZPlant
 		return super.attackEntityAsMob(entityIn);
 	}
 	
+	protected boolean shouldLockXZ() {
+		return true;
+	}
+	
 	@Override
 	public boolean isInvulnerable() {
 		return this.isPlantInSuperMode();
@@ -210,7 +215,9 @@ public abstract class PVZPlantEntity extends CreatureEntity implements IPVZPlant
 	
 	@Override
 	public void applyEntityCollision(Entity entityIn) {
-		if(this.isSleeping()) return;
+		if(this.isSleeping()) {
+			return;
+		}
 		if (!this.isRidingSameEntity(entityIn)){
             if (!entityIn.noClip && !this.noClip){
             	if(entityIn instanceof PVZPlantEntity&&!EntityUtil.checkCanEntityAttack(this, entityIn)) {
@@ -234,18 +241,9 @@ public abstract class PVZPlantEntity extends CreatureEntity implements IPVZPlant
                     d1 = d1 * 0.05000000074505806D;
                     d0 = d0 * (double)(1.0F - this.entityCollisionReduction);
                     d1 = d1 * (double)(1.0F - this.entityCollisionReduction);
-                    if (!this.isBeingRidden()){
-                    	if(!(entityIn instanceof PVZZombieEntity)) {
-                            this.addVelocity(-d0, 0.0D, -d1);
-                    	}
-                    }
                     if (!entityIn.isBeingRidden()){
                         entityIn.addVelocity(d0, 0.0D, d1);
                     }
-                }
-                else {//collide in body,both add velocity
-                	this.addVelocity(this.getRNG().nextFloat()-0.5f, 0, this.getRNG().nextFloat()-0.5f);
-                	entityIn.addVelocity(this.getRNG().nextFloat()-0.5f, 0, this.getRNG().nextFloat()-0.5f);
                 }
             }
         }
@@ -282,7 +280,10 @@ public abstract class PVZPlantEntity extends CreatureEntity implements IPVZPlant
 	}
 	
 	protected boolean shouldCollideWithEntity(LivingEntity target) {
-		return EntityUtil.checkShouldApplyCollision(this, target);
+		if(target instanceof SquashEntity||target instanceof SpikeWeedEntity) {
+			return false;
+		}
+		return EntityUtil.checkCanEntityAttack(this, target);
 	}
 	
 	@Override

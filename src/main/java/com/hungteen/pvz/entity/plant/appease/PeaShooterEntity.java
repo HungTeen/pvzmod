@@ -1,11 +1,13 @@
 package com.hungteen.pvz.entity.plant.appease;
 
+import com.hungteen.pvz.entity.ai.PVZNearestTargetGoal;
 import com.hungteen.pvz.entity.bullet.PeaEntity;
 import com.hungteen.pvz.entity.plant.base.PlantShooterEntity;
 import com.hungteen.pvz.register.EntityRegister;
 import com.hungteen.pvz.utils.enums.Plants;
 
 import net.minecraft.entity.CreatureEntity;
+import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntitySize;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.LivingEntity;
@@ -17,12 +19,19 @@ import net.minecraft.world.World;
 
 public class PeaShooterEntity extends PlantShooterEntity{
 
-	protected final double LENTH=0.1d;//豌豆生成位置参数
+	protected final double LENTH=0.2d;//豌豆生成位置参数
+	public static final float MAX_SHOOT_ANGLE = 20;
 	
 	public PeaShooterEntity(EntityType<? extends CreatureEntity> type, World worldIn) {
 		super(type, worldIn);
 	}
 
+	@Override
+	protected void registerGoals() {
+		super.registerGoals();
+		this.targetSelector.addGoal(0, new PVZNearestTargetGoal(this, true, 40, 2));
+	}
+	
 	@Override
 	public void shootBullet() {
 		LivingEntity target=this.getAttackTarget();
@@ -46,6 +55,17 @@ public class PeaShooterEntity extends PlantShooterEntity{
 	
 	protected SoundEvent getShootSound() {
 		return SoundEvents.ENTITY_SNOW_GOLEM_SHOOT;
+	}
+	
+	@Override
+	public boolean checkY(Entity target) {
+		double dx=target.getPosX()-this.getPosX();
+		double ly=target.getPosY()-this.getPosY();
+		double ry=ly+target.getHeight();
+		double dz=target.getPosZ()-this.getPosZ();
+		double dis = Math.sqrt(dx*dx+dz*dz);
+		double y=dis/MAX_SHOOT_ANGLE;
+		return ly<=y&&ry>=-y;
 	}
 	
 	@Override
@@ -108,4 +128,5 @@ public class PeaShooterEntity extends PlantShooterEntity{
 	public Plants getPlantEnumName() {
 		return Plants.PEA_SHOOTER;
 	}
+
 }

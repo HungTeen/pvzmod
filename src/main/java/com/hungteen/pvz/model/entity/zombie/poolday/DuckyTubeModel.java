@@ -1,6 +1,6 @@
 package com.hungteen.pvz.model.entity.zombie.poolday;
 
-import com.hungteen.pvz.entity.zombie.poolday.DuckyTubeEntity;
+import com.hungteen.pvz.entity.misc.DuckyTubeEntity;
 import com.mojang.blaze3d.matrix.MatrixStack;
 import com.mojang.blaze3d.vertex.IVertexBuilder;
 

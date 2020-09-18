@@ -5,6 +5,7 @@ import com.hungteen.pvz.entity.ai.PVZNearestTargetGoal;
 import com.hungteen.pvz.entity.ai.ZombieMeleeAttackGoal;
 import com.hungteen.pvz.register.BlockRegister;
 
+import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.ai.goal.LookAtGoal;
 import net.minecraft.entity.ai.goal.LookRandomlyGoal;
@@ -13,6 +14,7 @@ import net.minecraft.entity.monster.MonsterEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.pathfinding.GroundPathNavigator;
 import net.minecraft.pathfinding.PathNavigator;
+import net.minecraft.pathfinding.PathNodeType;
 import net.minecraft.pathfinding.SwimmerPathNavigator;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
@@ -25,6 +27,7 @@ public abstract class PVZWaterZombieEntity extends PVZZombieEntity{
 
 	public PVZWaterZombieEntity(EntityType<? extends MonsterEntity> type, World worldIn) {
 		super(type, worldIn);
+		setPathPriority(PathNodeType.WATER, 0);
 		this.waterNavigator = new SwimmerPathNavigator(this, worldIn);
 		this.groundNavigator = new GroundPathNavigator(this, worldIn);
 	}
@@ -42,12 +45,23 @@ public abstract class PVZWaterZombieEntity extends PVZZombieEntity{
 	@Override
 	public void livingTick() {
 		super.livingTick();
+		if(this.ticksExisted%20==0) {
+//		    System.out.println(this.navigator.getPath());
+		}
 		if(!world.isRemote) {//swim up
 			if(this.isInWater() && this.getSubmergedHeight() > this.getEyeHeight()){
 				Vec3d v = this.getMotion();
 				this.setMotion(v.getX(), UP_SPEED, v.getZ());
 			}
 		}
+	}
+	
+	@Override
+	public boolean checkCanZombieTarget(Entity target) {
+		if(super.checkCanZombieTarget(target)) {
+			return !this.isInWater()||target.isInWater();
+		}
+		return false;
 	}
 	
 	@Override

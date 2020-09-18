@@ -2,7 +2,6 @@ package com.hungteen.pvz.entity.ai;
 
 import java.util.EnumSet;
 
-import com.hungteen.pvz.entity.plant.base.PlantShooterEntity;
 import com.hungteen.pvz.utils.EntityUtil;
 import com.hungteen.pvz.utils.interfaces.IShooter;
 
@@ -46,6 +45,7 @@ public class ShooterAttackGoal extends Goal{
 	public void resetTask() {
 //		this.attackTime=0;
 		this.target=null;
+		this.attacker.setAttackTarget(null);
 	}
 
 	@Override
@@ -60,12 +60,7 @@ public class ShooterAttackGoal extends Goal{
 	
 	private boolean checkTarget(){
 		if(EntityUtil.checkCanEntityAttack(this.attacker,target)) {
-			double dy=target.getPosY()-this.attacker.getPosY();
-			if(PlantShooterEntity.checkY(dy)) {
-				if(this.attacker.getEntitySenses().canSee(target)) {
-					return true;
-				}
-			}
+			return this.attacker.getEntitySenses().canSee(target) && this.shooter.checkY(target);
 		}
 		return false;
 	}

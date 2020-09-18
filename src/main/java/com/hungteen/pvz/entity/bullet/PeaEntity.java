@@ -1,6 +1,7 @@
 package com.hungteen.pvz.entity.bullet;
 
 import com.hungteen.pvz.entity.plant.PVZPlantEntity;
+import com.hungteen.pvz.entity.plant.appease.PeaShooterEntity;
 import com.hungteen.pvz.entity.plant.flame.TorchWoodEntity;
 import com.hungteen.pvz.entity.plant.interfaces.IIcePlant;
 import com.hungteen.pvz.misc.damage.PVZDamageSource;
@@ -49,7 +50,7 @@ public class PeaEntity extends PVZThrowableEntity {
 	}
 
 	public void shootPea(double dx, double dy, double dz, double speed) {
-		double down = 20;
+		double down = PeaShooterEntity.MAX_SHOOT_ANGLE;
 		double dxz = Math.sqrt(dx * dx + dz * dz);
 		dy = MathHelper.clamp(dy, -dxz/down, dxz/down);
 		double dis = Math.sqrt(dx * dx + dy* dy + dz * dz);

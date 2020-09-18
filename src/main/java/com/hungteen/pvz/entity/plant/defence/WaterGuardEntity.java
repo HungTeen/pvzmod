@@ -1,8 +1,6 @@
 package com.hungteen.pvz.entity.plant.defence;
 
 import com.hungteen.pvz.entity.plant.base.PlantDefenderEntity;
-import com.hungteen.pvz.register.EntityRegister;
-import com.hungteen.pvz.utils.PlantUtil;
 import com.hungteen.pvz.utils.enums.Plants;
 
 import net.minecraft.entity.CreatureEntity;
@@ -38,16 +36,16 @@ public class WaterGuardEntity extends PlantDefenderEntity{
 	}
 	
 	private void spawnGuard() {
-		if(!world.isRemote) {
-			int [] dx = new int[] {1, -1, 0, 0};
-			int [] dz = new int[] {0, 0, 1, -1};
-			for(int i=0;i<4;i++) {
-				WaterGuardEntity guard = EntityRegister.WATER_GUARD.get().create(world);
-				guard.setPosition(this.getPosX()+dx[i], this.getPosY(), this.getPosZ()+dz[i]);
-				PlantUtil.copyPlantData(guard, this);
-				world.addEntity(guard);
-			}
-		}
+//		if(!world.isRemote) {
+//			int [] dx = new int[] {1, -1, 0, 0};
+//			int [] dz = new int[] {0, 0, 1, -1};
+//			for(int i=0;i<4;i++) {
+//				WaterGuardEntity guard = EntityRegister.WATER_GUARD.get().create(world);
+//				guard.setPosition(this.getPosX()+dx[i], this.getPosY(), this.getPosZ()+dz[i]);
+//				PlantUtil.copyPlantData(guard, this);
+//				world.addEntity(guard);
+//			}
+//		}
 	}
 	
 	@Override

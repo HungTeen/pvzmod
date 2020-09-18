@@ -35,6 +35,11 @@ public class SquashEntity extends PVZPlantEntity{
 	}
 
 	@Override
+	protected boolean shouldLockXZ() {
+		return false;
+	}
+	
+	@Override
 	protected void normalPlantTick() {
 		super.normalPlantTick();
 		if(!world.isRemote) {

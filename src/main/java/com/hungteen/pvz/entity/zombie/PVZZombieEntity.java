@@ -13,6 +13,8 @@ import com.hungteen.pvz.entity.ai.ZombieMeleeAttackGoal;
 import com.hungteen.pvz.entity.drop.CoinEntity;
 import com.hungteen.pvz.entity.drop.EnergyEntity;
 import com.hungteen.pvz.entity.plant.PVZPlantEntity;
+import com.hungteen.pvz.entity.plant.enforce.SquashEntity;
+import com.hungteen.pvz.entity.plant.spear.SpikeWeedEntity;
 import com.hungteen.pvz.misc.damage.PVZDamageSource;
 import com.hungteen.pvz.misc.damage.PVZDamageType;
 import com.hungteen.pvz.register.EntityRegister;
@@ -40,6 +42,7 @@ import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.network.datasync.DataParameter;
 import net.minecraft.network.datasync.DataSerializers;
 import net.minecraft.network.datasync.EntityDataManager;
+import net.minecraft.particles.ParticleTypes;
 import net.minecraft.server.management.PreYggdrasilConverter;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.ResourceLocation;
@@ -127,88 +130,120 @@ public abstract class PVZZombieEntity extends MonsterEntity implements IPVZZombi
 	@Override
 	public void livingTick() {
 		super.livingTick();
-		if(!this.isAlive()||this.isZombieCantMove()) return ;
+		if (!this.isAlive() || this.isZombieCantMove())
+			return;
 		this.normalZombieTick();
 	}
-	
-	public void normalZombieTick(){
-		
+
+	public void normalZombieTick() {
+
 	}
-	
+
 	public void setZombieMaxHealth(float health) {
 		this.getAttribute(SharedMonsterAttributes.MAX_HEALTH).setBaseValue(health);
 		this.heal(health);
 	}
 
 	public int getAttackCD() {
-		if(this.isZombieCantMove()) {
+		if (this.isZombieCantMove()) {
 			return 10000000;
 		}
-		int now=20;
-		if(this.isPotionActive(EffectRegister.COLD_EFFECT.get())) {
-			int lvl=this.getActivePotionEffect(EffectRegister.COLD_EFFECT.get()).getAmplifier();
-			now+=3*lvl;
+		int now = 20;
+		if (this.isPotionActive(EffectRegister.COLD_EFFECT.get())) {
+			int lvl = this.getActivePotionEffect(EffectRegister.COLD_EFFECT.get()).getAmplifier();
+			now += 3 * lvl;
 		}
 		return now;
 	}
-	
+
+	@Override
+	public void onDeath(DamageSource cause) {
+		super.onDeath(cause);
+	}
+
 	@Override
 	protected void onDeathUpdate() {
-		super.onDeathUpdate();
-		if(this.deathTime==19) {
-			if(!world.isRemote) {
-				if(getZombieType()==Type.SUPER) {
-					EnergyEntity energy = EntityRegister.ENERGY.get().create(world);
-					energy.setPosition(getPosX(),getPosY(),getPosZ());
-					world.addEntity(energy);
-				}
-				else if(getZombieType()==Type.BEARD) {
-					//finish achievement
-				}
-				this.dropCoin();
-				this.zombieDropItem();
+		++this.deathTime;
+		if (this.deathTime == 20) {
+			this.remove();
+			for (int i = 0; i < 20; ++i) {
+				double d0 = this.rand.nextGaussian() * 0.02D;
+				double d1 = this.rand.nextGaussian() * 0.02D;
+				double d2 = this.rand.nextGaussian() * 0.02D;
+				this.world.addParticle(ParticleTypes.POOF, this.getPosXRandom(1.0D), this.getPosYRandom(),
+						this.getPosZRandom(1.0D), d0, d1, d2);
 			}
+			this.onZombieRemove();
 		}
 	}
 
 	/**
-	 * zombies have chance to drop coin when died
+	 * the last tick of zombies.
+	 * for drop item and coin.
 	 */
-	protected void dropCoin(){
-		int num=this.getRNG().nextInt(10000);
-		int amount=0;
-		if(num<1000) amount=1;
-		else if(num<1100) amount=10;
-		else if(num<1110) amount=100;
-		else if(num<1111) amount=1000;
-		if(amount!=0) {
+	protected void onZombieRemove() {
+		if (!world.isRemote) {
+			if (getZombieType() == Type.SUPER) {//drop energy
+				EnergyEntity energy = EntityRegister.ENERGY.get().create(world);
+				energy.setPosition(getPosX(), getPosY() + 1, getPosZ());
+				world.addEntity(energy);
+			} else if (getZombieType() == Type.BEARD) {// finish achievement
+			}
+			this.dropCoin();
+			this.zombieDropItem();
+		}
+	}
+
+	/**
+	 * zombies have chance to drop coin when died.
+	 */
+	protected void dropCoin() {
+		int num = this.getRNG().nextInt(10000);
+		int amount = 0;
+		if (num < 1000)
+			amount = 1;
+		else if (num < 1100)
+			amount = 10;
+		else if (num < 1110)
+			amount = 100;
+		else if (num < 1111)
+			amount = 1000;
+		if (amount != 0) {
 			CoinEntity coin = EntityRegister.COIN.get().create(world);
-			coin.setPosition(getPosX(),getPosY(),getPosZ());
+			coin.setPosition(getPosX(), getPosY(), getPosZ());
 			coin.setAmount(amount);
-			if(amount==1000) coin.playSound(SoundRegister.JEWEL_DROP.get(), 1f,1f);
-			else coin.playSound(SoundRegister.COIN_DROP.get(), 1f,1f);
+			if (amount == 1000)
+				coin.playSound(SoundRegister.JEWEL_DROP.get(), 1f, 1f);
+			else
+				coin.playSound(SoundRegister.COIN_DROP.get(), 1f, 1f);
 			this.world.addEntity(coin);
 		}
 	}
-	
+
 	/**
-	 * zombie loottable is different from default mc.
-	 * only in server side
+	 * zombie loottable is different from default mc. only in server side
 	 */
 	protected void zombieDropItem() {
 	}
 	
+	/**
+	 * can zombie set target as attackTarget
+	 */
+	public boolean checkCanZombieTarget(Entity target) {
+		return EntityUtil.checkCanEntityAttack(this, target);
+	}
+
 	@Override
 	public boolean attackEntityFrom(DamageSource source, float amount) {
 		if (source instanceof PVZDamageSource) {
 			this.hurtResistantTime = 0;
-			if(((PVZDamageSource) source).getPVZDamageType()==PVZDamageType.ICE) {
-				if(!this.isZombieColdOrForzen()&&!this.world.isRemote) {
-					this.playSound(SoundRegister.ZOMBIE_FROZEN.get(), 1f,1f);
+			if (((PVZDamageSource) source).getPVZDamageType() == PVZDamageType.ICE) {
+				if (!this.isZombieColdOrForzen() && !this.world.isRemote) {
+					this.playSound(SoundRegister.ZOMBIE_FROZEN.get(), 1f, 1f);
 				}
-			}else if(((PVZDamageSource) source).getPVZDamageType()==PVZDamageType.FIRE) {
-				if(this.isZombieColdOrForzen()&&!this.world.isRemote) {
-					this.playSound(SoundRegister.ZOMBIE_FIRE.get(), 1f,1f);
+			} else if (((PVZDamageSource) source).getPVZDamageType() == PVZDamageType.FIRE) {
+				if (this.isZombieColdOrForzen() && !this.world.isRemote) {
+					this.playSound(SoundRegister.ZOMBIE_FIRE.get(), 1f, 1f);
 					this.removePotionEffect(EffectRegister.COLD_EFFECT.get());
 					this.removeActivePotionEffect(EffectRegister.FROZEN_EFFECT.get());
 				}
@@ -220,7 +255,7 @@ public abstract class PVZZombieEntity extends MonsterEntity implements IPVZZombi
 	@Override
 	public boolean attackEntityAsMob(Entity entityIn) {
 		entityIn.hurtResistantTime = 0;
-		//add
+		// add
 		float f = (float) this.getAttribute(SharedMonsterAttributes.ATTACK_DAMAGE).getValue();
 		float f1 = (float) this.getAttribute(SharedMonsterAttributes.ATTACK_KNOCKBACK).getValue();
 		if (entityIn instanceof LivingEntity) {
@@ -234,7 +269,7 @@ public abstract class PVZZombieEntity extends MonsterEntity implements IPVZZombi
 			entityIn.setFire(i * 4);
 		}
 
-		boolean flag = entityIn.attackEntityFrom(getZombieAttackDamageSource(), getModifyAttackDamage(entityIn,f));
+		boolean flag = entityIn.attackEntityFrom(getZombieAttackDamageSource(), getModifyAttackDamage(entityIn, f));
 		if (flag) {
 			if (f1 > 0.0F && entityIn instanceof LivingEntity) {
 				((LivingEntity) entityIn).knockBack(this, f1 * 0.5F,
@@ -264,29 +299,31 @@ public abstract class PVZZombieEntity extends MonsterEntity implements IPVZZombi
 		}
 		return flag;
 	}
-	
+
 	@Override
 	public boolean canBreatheUnderwater() {
 		return true;
 	}
-	
-	public static boolean canZombieSpawn(EntityType<? extends PVZZombieEntity> zombieType, IWorld worldIn, SpawnReason reason, BlockPos pos, Random rand) {
-		 return worldIn.getLightFor(LightType.BLOCK, pos) > 8 ? false : canMonsterSpawn(zombieType, worldIn, reason, pos, rand);
-    }
-	
+
+	public static boolean canZombieSpawn(EntityType<? extends PVZZombieEntity> zombieType, IWorld worldIn,
+			SpawnReason reason, BlockPos pos, Random rand) {
+		return worldIn.getLightFor(LightType.BLOCK, pos) > 8 ? false
+				: canMonsterSpawn(zombieType, worldIn, reason, pos, rand);
+	}
+
 	@Override
 	public float getBlockPathWeight(BlockPos pos, IWorldReader worldIn) {
-		return 9-worldIn.getLightFor(LightType.BLOCK, pos);
+		return 9 - worldIn.getLightFor(LightType.BLOCK, pos);
 	}
-	
+
 	protected PVZDamageSource getZombieAttackDamageSource() {
 		return PVZDamageSource.causeEatDamage(this, this);
 	}
-	
-	protected float getModifyAttackDamage(Entity entity,float f) {
+
+	protected float getModifyAttackDamage(Entity entity, float f) {
 		return f;
 	}
-	
+
 	public Ranks getZombieRank() {
 		return ZombieUtil.getZombieRank(getZombieEnumName());
 	}
@@ -295,78 +332,96 @@ public abstract class PVZZombieEntity extends MonsterEntity implements IPVZZombi
 	public int getZombieXp() {
 		return ZombieUtil.getZombieXp(getZombieEnumName());
 	}
-	
+
 	@Override
 	public void applyEntityCollision(Entity entityIn) {
-		if(this.isSleeping()) return;
-		if (!this.isRidingSameEntity(entityIn)){
-            if (!entityIn.noClip && !this.noClip){
-                double d0 = entityIn.getPosX() - this.getPosX();
-                double d1 = entityIn.getPosZ() - this.getPosZ();
-                double d2 = MathHelper.absMax(d0, d1);
-                if (d2 >= 0.009999999776482582D){//collide from out to in,add velocity to out
-                    d2 = (double)MathHelper.sqrt(d2);
-                    d0 = d0 / d2;
-                    d1 = d1 / d2;
-                    double d3 = 1.0D / d2;
-                    if (d3 > 1.0D){
-                        d3 = 1.0D;
-                    }
-                    d0 = d0 * d3;
-                    d1 = d1 * d3;
-                    d0 = d0 * 0.05000000074505806D;
-                    d1 = d1 * 0.05000000074505806D;
-                    d0 = d0 * (double)(1.0F - this.entityCollisionReduction);
-                    d1 = d1 * (double)(1.0F - this.entityCollisionReduction);
-                    if (!this.isBeingRidden()){
-                    	if(!(entityIn instanceof PVZZombieEntity)) {
-                            this.addVelocity(-d0, 0.0D, -d1);
-                    	}
-                    }
-                    if (!entityIn.isBeingRidden()){
-                    	if(!(entityIn instanceof PVZPlantEntity)) {
-                            entityIn.addVelocity(d0, 0.0D, d1);
-                    	}
-                    }
-                }
-                else {//collide in body,both add velocity
-                	this.addVelocity(this.getRNG().nextFloat()-0.5f, 0, this.getRNG().nextFloat()-0.5f);
-                	entityIn.addVelocity(this.getRNG().nextFloat()-0.5f, 0, this.getRNG().nextFloat()-0.5f);
-                }
-            }
-        }
+		if (this.isSleeping()) {
+			return;
+		}
+		if (!this.isRidingSameEntity(entityIn)) {
+			if (!entityIn.noClip && !this.noClip) {
+				double d0 = entityIn.getPosX() - this.getPosX();
+				double d1 = entityIn.getPosZ() - this.getPosZ();
+				double d2 = MathHelper.absMax(d0, d1);
+				if (d2 >= 0.009999999776482582D) {// collide from out to in,add velocity to out
+					d2 = (double) MathHelper.sqrt(d2);
+					d0 = d0 / d2;
+					d1 = d1 / d2;
+					double d3 = 1.0D / d2;
+					if (d3 > 1.0D) {
+						d3 = 1.0D;
+					}
+					d0 = d0 * d3;
+					d1 = d1 * d3;
+					d0 = d0 * 0.05000000074505806D;
+					d1 = d1 * 0.05000000074505806D;
+					d0 = d0 * (double) (1.0F - this.entityCollisionReduction);
+					d1 = d1 * (double) (1.0F - this.entityCollisionReduction);
+					if (!this.isBeingRidden()) {
+						this.addVelocity(-d0, 0.0D, -d1);
+					}
+					if (!entityIn.isBeingRidden()) {
+						if (!(entityIn instanceof PVZPlantEntity)) {
+							entityIn.addVelocity(d0, 0.0D, d1);
+						}
+					}
+				}
+			}
+		}
 	}
-	
+
 	@Override
 	protected void collideWithNearbyEntities() {
-		List<LivingEntity> list = this.world.getEntitiesWithinAABB(LivingEntity.class, this.getBoundingBox());
-		if (!list.isEmpty()){
-            int i = this.world.getGameRules().getInt(GameRules.MAX_ENTITY_CRAMMING);
-            if (i > 0 && list.size() > i - 1 && this.rand.nextInt(4) == 0){
-                int j = 0;
-                for (int k = 0; k < list.size(); ++k){
-                    if (!((Entity)list.get(k)).isPassenger()){
-                        ++j;
-                    }
-                }
-                if (j > i - 1){
-                    this.attackEntityFrom(DamageSource.CRAMMING, 6.0F);
-                }
-            }
-            for (int l = 0; l < list.size(); ++l){
-                LivingEntity target = list.get(l);
-                if(EntityUtil.checkShouldApplyCollision(this, target)) {//can collide with
-                    this.collideWithEntity(target);
-                }
-            }
-        }
+		List<Entity> list = this.world.getEntitiesWithinAABB(Entity.class, this.getBoundingBox());
+		if (!list.isEmpty()) {
+			int i = this.world.getGameRules().getInt(GameRules.MAX_ENTITY_CRAMMING);
+			if (i > 0 && list.size() > i - 1 && this.rand.nextInt(4) == 0) {
+				int j = 0;
+				for (int k = 0; k < list.size(); ++k) {
+					if (!((Entity) list.get(k)).isPassenger()) {
+						++j;
+					}
+				}
+				if (j > i - 1) {
+					this.attackEntityFrom(DamageSource.CRAMMING, 6.0F);
+				}
+			}
+			for (int l = 0; l < list.size(); ++l) {
+				Entity target = list.get(l);
+				if (this.shouldCollideWithEntity(target)) {// can collide with
+					this.collideWithEntity(target);
+				}
+			}
+		}
+	}
+	
+	/**
+	 * can zombie collide with target
+	 */
+	protected boolean shouldCollideWithEntity(Entity target) {
+		if(target instanceof SquashEntity||target instanceof SpikeWeedEntity) {
+			return false;
+		}
+		return EntityUtil.checkCanEntityAttack(this, target);
+	}
+	
+	/**
+	 * can zombie push target
+	 */
+	protected boolean checkCanPushEntity(Entity target) {
+		return !(target instanceof PVZPlantEntity);
+	}
+
+	@Override
+	protected float getWaterSlowDown() {
+		return 0.75f;
 	}
 	
 	@Override
 	public boolean canAttackSpike() {
 		return false;
 	}
-	
+
 	@Override
 	public void writeAdditional(CompoundNBT compound) {
 		super.writeAdditional(compound);
@@ -424,11 +479,11 @@ public abstract class PVZZombieEntity extends MonsterEntity implements IPVZZombi
 	public boolean canBeInvis() {
 		return true;
 	}
-	
+
 	public boolean canBeCold() {
 		return true;
 	}
-	
+
 	@Nullable
 	public UUID getOwnerUUID() {
 		return dataManager.get(OWNER_UUID).orElse((UUID) null);
@@ -489,11 +544,11 @@ public abstract class PVZZombieEntity extends MonsterEntity implements IPVZZombi
 //	public boolean getIsFrozen() {
 //		return dataManager.get(IS_FROZEN);
 //	}
-	
+
 	public boolean isZombieColdOrForzen() {
-		return EntityUtil.isEntityCold(this)||EntityUtil.isEntityFrozen(this);
+		return EntityUtil.isEntityCold(this) || EntityUtil.isEntityFrozen(this);
 	}
-	
+
 	public boolean isZombieCantMove() {
 		return EntityUtil.isEntityFrozen(this);
 	}
@@ -511,10 +566,8 @@ public abstract class PVZZombieEntity extends MonsterEntity implements IPVZZombi
 	protected ResourceLocation getLootTable() {
 		return LootTables.EMPTY;
 	}
-	
+
 	public enum Type {
-		NORMAL, 
-		SUPER, 
-		BEARD
+		NORMAL, SUPER, BEARD
 	}
 }
