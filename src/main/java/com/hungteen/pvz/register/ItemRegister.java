@@ -100,6 +100,9 @@ public class ItemRegister {
 	public static final RegistryObject<Item> SNOW_PEA = ITEMS.register("snow_pea", PVZItemBase::new);
 	public static final RegistryObject<Item> FLAME_PEA = ITEMS.register("flame_pea", PVZItemBase::new);
 	public static final RegistryObject<Item> BLUE_FLAME_PEA = ITEMS.register("blue_flame_pea", PVZItemBase::new);
+	public static final RegistryObject<Item> SMALL_MEAT = ITEMS.register("small_meat", PVZItemBase::new);
+	public static final RegistryObject<Item> FAKE_BRAIN = ITEMS.register("fake_brain", PVZItemBase::new);
+	public static final RegistryObject<Item> REAL_BRAIN = ITEMS.register("real_brain", PVZItemBase::new);
 	
 	//tool
 	public static final RegistryObject<Item> ZOMBIE_FLAG = ITEMS.register("zombie_flag", ZombieFlagItem::new);

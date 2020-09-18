@@ -1,5 +1,6 @@
 package com.hungteen.pvz.render.layer;
 
+import com.hungteen.pvz.entity.animal.FoodieZombieEntity;
 import com.hungteen.pvz.entity.plant.light.SunFlowerEntity;
 import com.hungteen.pvz.utils.StringUtil;
 
@@ -21,6 +22,9 @@ public class SunLightLayer<T extends LivingEntity, M extends EntityModel<T>> ext
 	protected boolean canRender(T entity) {
 		if(entity instanceof SunFlowerEntity) {
 			return ((SunFlowerEntity) entity).getIsGenTime();
+		}else if(entity instanceof FoodieZombieEntity) {
+			int tick = ((FoodieZombieEntity) entity).getGenTick();
+			return tick>0&&tick<=60;
 		}
 		return false;
 	}

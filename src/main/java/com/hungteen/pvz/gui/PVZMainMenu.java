@@ -94,7 +94,7 @@ public class PVZMainMenu extends MainMenuScreen {
 	}
 
 	protected List<String> getSplashTexts() {
-		try (IResource iresource = Minecraft.getInstance().getResourceManager().getResource(SPLASHES);
+		try (IResource iresource = getSplashResource();
 				BufferedReader bufferedreader = new BufferedReader(
 						new InputStreamReader(iresource.getInputStream(), StandardCharsets.UTF_8));) {
 			List<String> list = bufferedreader.lines().map(String::trim).filter((p_215277_0_) -> {
@@ -104,5 +104,22 @@ public class PVZMainMenu extends MainMenuScreen {
 		} catch (IOException var36) {
 			return Collections.emptyList();
 		}
+	}
+	
+	@SuppressWarnings("resource")
+	private IResource getSplashResource() {
+		ResourceLocation fileLoc = StringUtil.prefix("lang/splashes/"+Minecraft.getInstance().gameSettings.language);
+        ResourceLocation backupLoc = StringUtil.prefix("lang/splashes/en_us");
+        IResource resource = null;
+        try {
+            resource = Minecraft.getInstance().getResourceManager().getResource(fileLoc);
+        } catch (IOException e) {
+            try {
+                resource = Minecraft.getInstance().getResourceManager().getResource(backupLoc);
+            } catch (IOException e1) {
+                e1.printStackTrace();
+            }
+        }
+        return resource;
 	}
 }

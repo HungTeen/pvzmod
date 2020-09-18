@@ -1,8 +1,10 @@
 package com.hungteen.pvz.entity.animal;
 
 import com.hungteen.pvz.entity.ai.WaterTemptGoal;
+import com.hungteen.pvz.entity.drop.SunEntity;
 import com.hungteen.pvz.entity.zombie.poolday.SnorkelZombieEntity;
 import com.hungteen.pvz.register.EntityRegister;
+import com.hungteen.pvz.register.ItemRegister;
 
 import net.minecraft.entity.AgeableEntity;
 import net.minecraft.entity.CreatureAttribute;
@@ -20,26 +22,40 @@ import net.minecraft.entity.ai.goal.RandomSwimmingGoal;
 import net.minecraft.entity.passive.AnimalEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
-import net.minecraft.item.Items;
 import net.minecraft.item.crafting.Ingredient;
+import net.minecraft.network.datasync.DataParameter;
+import net.minecraft.network.datasync.DataSerializers;
+import net.minecraft.network.datasync.EntityDataManager;
 import net.minecraft.particles.ParticleTypes;
 import net.minecraft.pathfinding.PathNavigator;
 import net.minecraft.pathfinding.PathNodeType;
 import net.minecraft.pathfinding.SwimmerPathNavigator;
-import net.minecraft.util.DamageSource;
+import net.minecraft.util.Hand;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.IWorldReader;
 import net.minecraft.world.World;
 
 public class FoodieZombieEntity extends AnimalEntity {
 
-	private static final Ingredient TEMPTATION_ITEMS = Ingredient.fromItems(Items.PORKCHOP);
+	private static final Ingredient TEMPTATION_ITEMS = Ingredient.fromItems(ItemRegister.FAKE_BRAIN.get(),
+			ItemRegister.REAL_BRAIN.get());
+	private static final DataParameter<Integer> GEN_TICK = EntityDataManager.createKey(FoodieZombieEntity.class,
+			DataSerializers.VARINT);
+	protected int lvl;
+	protected static final int MAX_LVL = 10;
 
 	public FoodieZombieEntity(EntityType<? extends AnimalEntity> type, World worldIn) {
 		super(type, worldIn);
 		this.moveController = new MoveHelperController(this);
 		this.setPathPriority(PathNodeType.WATER, 0.0F);
 		this.recalculateSize();
+		this.lvl = 1;
+	}
+
+	@Override
+	protected void registerData() {
+		super.registerData();
+		this.dataManager.register(GEN_TICK, -1);
 	}
 
 	@Override
@@ -52,6 +68,60 @@ public class FoodieZombieEntity extends AnimalEntity {
 		this.goalSelector.addGoal(4, new FollowParentGoal(this, 1.1D));
 		this.goalSelector.addGoal(6, new LookAtGoal(this, PlayerEntity.class, 6.0F));
 		this.goalSelector.addGoal(7, new LookRandomlyGoal(this));
+	}
+
+	@Override
+	public void livingTick() {
+		super.livingTick();
+		if(!world.isRemote&&this.getGenTick()>=0) {
+			this.setGenTick(this.getGenTick()-1);
+			if(this.getGenTick()==0) {
+				this.produceSun();
+			}
+		}
+	}
+	
+	protected void produceSun() {
+		SunEntity sun = EntityRegister.SUN.get().create(world);
+		sun.setPosition(this.getPosX(), this.getPosY()+1, this.getPosZ());
+		sun.setAmount(this.getSunAmount());
+		this.world.addEntity(sun);
+	}
+	
+	protected int getSunAmount() {
+		return 25+this.lvl*5;
+	}
+	
+	@Override
+	public boolean processInteract(PlayerEntity player, Hand hand) {
+		ItemStack itemstack = player.getHeldItem(hand);
+		if (this.isBreedingItem(itemstack)) {
+			if (!this.world.isRemote && this.getGrowingAge() == 0 && this.canBreed()) {
+				this.consumeItemFromStack(player, itemstack);
+				this.setInLove(player);
+				player.swing(hand, true);
+				return true;
+			}
+
+			if (this.isChild()) {
+				this.consumeItemFromStack(player, itemstack);
+				this.ageUp((int) ((float) (-this.getGrowingAge() / 20) * 0.1F), true);
+				return true;
+			}else {
+				if(itemstack.getItem()==ItemRegister.REAL_BRAIN.get()&&this.lvl<=MAX_LVL) {
+					this.lvl++;
+				}
+				if(!world.isRemote) {
+					this.setGenTick(this.getGenCD());
+				}
+			}
+		}
+
+		return super.processInteract(player, hand);
+	}
+	
+	private int getGenCD() {
+		return 400-this.lvl*20;
 	}
 
 	@Override
@@ -89,15 +159,6 @@ public class FoodieZombieEntity extends AnimalEntity {
 		return new SwimmerPathNavigator(this, worldIn);
 	}
 
-	/**
-	 * Gets called every tick from main Entity class
-	 */
-	public void baseTick() {
-		int i = this.getAir();
-		super.baseTick();
-		this.updateAir(i);
-	}
-
 	protected void onDeathUpdate() {
 		++this.deathTime;
 		if (this.deathTime == 20) {
@@ -123,25 +184,20 @@ public class FoodieZombieEntity extends AnimalEntity {
 		}
 	}
 
-	protected void updateAir(int p_209207_1_) {
-		if (this.isAlive() && !this.isInWaterOrBubbleColumn()) {
-			this.setAir(p_209207_1_ - 1);
-			if (this.getAir() == -20) {
-				this.setAir(0);
-				this.attackEntityFrom(DamageSource.DROWN, 2.0F);
-			}
-		} else {
-			this.setAir(300);
-		}
-
-	}
-
 	public boolean isPushedByWater() {
 		return false;
 	}
 
 	public boolean canBeLeashedTo(PlayerEntity player) {
 		return true;
+	}
+	
+	public int getGenTick() {
+		return this.dataManager.get(GEN_TICK);
+	}
+	
+	public void setGenTick(int tick) {
+		this.dataManager.set(GEN_TICK, tick);
 	}
 
 	static class MoveHelperController extends MovementController {

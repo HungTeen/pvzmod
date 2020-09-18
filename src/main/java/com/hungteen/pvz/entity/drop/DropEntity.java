@@ -3,6 +3,7 @@ package com.hungteen.pvz.entity.drop;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.MobEntity;
+import net.minecraft.entity.ai.goal.SwimGoal;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.network.datasync.DataParameter;
 import net.minecraft.network.datasync.DataSerializers;
@@ -24,6 +25,11 @@ public abstract class DropEntity extends MobEntity{
 	protected void registerData() {
 		super.registerData();
 		this.dataManager.register(AMOUNT, 0);
+	}
+	
+	@Override
+	protected void registerGoals() {
+		this.goalSelector.addGoal(4, new SwimGoal(this));
 	}
 	
 	@Override

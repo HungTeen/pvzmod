@@ -2,6 +2,7 @@ package com.hungteen.pvz.render.entity.creature;
 
 import com.hungteen.pvz.entity.animal.FoodieZombieEntity;
 import com.hungteen.pvz.model.entity.animal.FoodieZombieModel;
+import com.hungteen.pvz.render.layer.SunLightLayer;
 import com.hungteen.pvz.utils.StringUtil;
 
 import net.minecraft.client.renderer.entity.EntityRendererManager;
@@ -14,6 +15,7 @@ public class FoodieZombieRender extends PVZCreatureRender<FoodieZombieEntity>{
 
 	public FoodieZombieRender(EntityRendererManager renderManagerIn) {
 		super(renderManagerIn, new FoodieZombieModel(), 0f);
+		this.addLayer(new SunLightLayer<>(this));
 	}
 	
 	@Override
