@@ -23,6 +23,7 @@ import net.minecraft.entity.passive.AnimalEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.Ingredient;
+import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.network.datasync.DataParameter;
 import net.minecraft.network.datasync.DataSerializers;
 import net.minecraft.network.datasync.EntityDataManager;
@@ -73,6 +74,9 @@ public class FoodieZombieEntity extends AnimalEntity {
 	@Override
 	public void livingTick() {
 		super.livingTick();
+//		if(this.ticksExisted%50==0) {
+//			System.out.println(this.getGenTick());
+//		}
 		if(!world.isRemote&&this.getGenTick()>=0) {
 			this.setGenTick(this.getGenTick()-1);
 			if(this.getGenTick()==0) {
@@ -89,16 +93,17 @@ public class FoodieZombieEntity extends AnimalEntity {
 	}
 	
 	protected int getSunAmount() {
-		return 25+this.lvl*5;
+		return 20+this.lvl*5;
 	}
 	
 	@Override
 	public boolean processInteract(PlayerEntity player, Hand hand) {
 		ItemStack itemstack = player.getHeldItem(hand);
 		if (this.isBreedingItem(itemstack)) {
-			if (!this.world.isRemote && this.getGrowingAge() == 0 && this.canBreed()) {
+			if (!this.world.isRemote && this.getGrowingAge() == 0 && this.getGenTick()==-1 && this.canBreed()) {
 				this.consumeItemFromStack(player, itemstack);
 				this.setInLove(player);
+				this.setGenTick(this.getGenCD());//start gen tick
 				player.swing(hand, true);
 				return true;
 			}
@@ -111,17 +116,13 @@ public class FoodieZombieEntity extends AnimalEntity {
 				if(itemstack.getItem()==ItemRegister.REAL_BRAIN.get()&&this.lvl<=MAX_LVL) {
 					this.lvl++;
 				}
-				if(!world.isRemote) {
-					this.setGenTick(this.getGenCD());
-				}
 			}
 		}
-
 		return super.processInteract(player, hand);
 	}
 	
 	private int getGenCD() {
-		return 400-this.lvl*20;
+		return 600-this.lvl*20;
 	}
 
 	@Override
@@ -250,4 +251,19 @@ public class FoodieZombieEntity extends AnimalEntity {
 			}
 		}
 	}
+	
+	@Override
+	public void readAdditional(CompoundNBT compound) {
+		super.readAdditional(compound);
+		this.lvl=compound.getInt("zombie_lvl");
+		this.setGenTick(compound.getInt("gen_tick"));
+	}
+	
+	@Override
+	public void writeAdditional(CompoundNBT compound) {
+		super.writeAdditional(compound);
+		compound.putInt("zombie_lvl", this.lvl);
+		compound.putInt("gen_tick", this.getGenTick());
+	}
+	
 }

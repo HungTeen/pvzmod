@@ -108,8 +108,8 @@ public class PVZMainMenu extends MainMenuScreen {
 	
 	@SuppressWarnings("resource")
 	private IResource getSplashResource() {
-		ResourceLocation fileLoc = StringUtil.prefix("lang/splashes/"+Minecraft.getInstance().gameSettings.language);
-        ResourceLocation backupLoc = StringUtil.prefix("lang/splashes/en_us");
+		ResourceLocation fileLoc = StringUtil.prefix("lang/splashes/"+Minecraft.getInstance().gameSettings.language+".txt");
+        ResourceLocation backupLoc = StringUtil.prefix("lang/splashes/en_us.txt");
         IResource resource = null;
         try {
             resource = Minecraft.getInstance().getResourceManager().getResource(fileLoc);
