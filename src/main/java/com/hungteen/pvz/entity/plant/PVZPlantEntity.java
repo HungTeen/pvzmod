@@ -244,6 +244,11 @@ public abstract class PVZPlantEntity extends CreatureEntity implements IPVZPlant
                     if (!entityIn.isBeingRidden()){
                         entityIn.addVelocity(d0, 0.0D, d1);
                     }
+                }else {
+                	if(this instanceof PVZPlantEntity && entityIn instanceof PVZPlantEntity) {
+                	    this.attackEntityFrom(DamageSource.CRAMMING, 10);
+                	    entityIn.attackEntityFrom(DamageSource.CRAMMING, 10);
+                	}
                 }
             }
         }

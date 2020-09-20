@@ -9,9 +9,7 @@ import com.hungteen.pvz.register.EntityRegister;
 import com.hungteen.pvz.utils.ZombieUtil;
 import com.hungteen.pvz.utils.enums.Zombies;
 
-import net.minecraft.entity.EntitySize;
 import net.minecraft.entity.EntityType;
-import net.minecraft.entity.Pose;
 import net.minecraft.entity.SharedMonsterAttributes;
 import net.minecraft.entity.ai.goal.LookAtGoal;
 import net.minecraft.entity.ai.goal.LookRandomlyGoal;
@@ -69,11 +67,6 @@ public class NormalZombieEntity extends PVZZombieEntity {
 	@Override
 	public float getLife() {
 		return 20;
-	}
-
-	@Override
-	public EntitySize getSize(Pose poseIn) {
-		return new EntitySize(0.8f, 1.98f, false);
 	}
 
 	@Override

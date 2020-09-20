@@ -266,7 +266,7 @@ public class BobsleCarEntity extends Entity {
 				boolean flag = source.getTrueSource() instanceof PlayerEntity
 						&& ((PlayerEntity) source.getTrueSource()).abilities.isCreativeMode;
 				if (flag || this.getDamageTaken() > 40.0F) {
-					if (!flag && this.world.getGameRules().getBoolean(GameRules.DO_ENTITY_DROPS)) {
+					if (!flag && !this.getIsZombieType() && this.world.getGameRules().getBoolean(GameRules.DO_ENTITY_DROPS)) {
 						this.entityDropItem(ItemRegister.BOBSLE_CAR.get());
 					}
 

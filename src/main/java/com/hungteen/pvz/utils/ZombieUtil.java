@@ -40,7 +40,6 @@ public class ZombieUtil {
 		case BOBSLE_ZOMBIE:return Ranks.WHITE;
 		case CONEHEAD_ZOMBIE:
 		case POLE_ZOMBIE:
-		case BOBSLE:return Ranks.GREEN;
 		case BUCKETHEAD_ZOMBIE:
 		case ZOMBONI:return Ranks.BLUE;
 		default:{

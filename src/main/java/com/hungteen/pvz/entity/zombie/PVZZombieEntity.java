@@ -27,8 +27,10 @@ import com.hungteen.pvz.utils.interfaces.IPVZZombie;
 
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.entity.Entity;
+import net.minecraft.entity.EntitySize;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.LivingEntity;
+import net.minecraft.entity.Pose;
 import net.minecraft.entity.SharedMonsterAttributes;
 import net.minecraft.entity.SpawnReason;
 import net.minecraft.entity.ai.goal.LookAtGoal;
@@ -156,6 +158,11 @@ public abstract class PVZZombieEntity extends MonsterEntity implements IPVZZombi
 		return now;
 	}
 
+	@Override
+	public EntitySize getSize(Pose poseIn) {
+		return new EntitySize(0.8f, 1.98f, false);
+	}
+	
 	@Override
 	public void onDeath(DamageSource cause) {
 		super.onDeath(cause);

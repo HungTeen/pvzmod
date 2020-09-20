@@ -12,6 +12,7 @@ import com.hungteen.pvz.entity.plant.spear.SpikeWeedEntity;
 import com.hungteen.pvz.entity.zombie.PVZZombieEntity;
 import com.hungteen.pvz.register.EffectRegister;
 
+import net.minecraft.block.Blocks;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.MobEntity;
@@ -31,6 +32,11 @@ public class EntityUtil {
 			return true;
 		}
 		return false;
+	}
+	
+	public static boolean isOnSnow(Entity entity) {
+		BlockPos pos = entity.getPosition();
+		return entity.world.getBlockState(pos).getBlock()==Blocks.SNOW||entity.world.getBlockState(pos.down()).getBlock()==Blocks.SNOW_BLOCK;
 	}
 	
 	public static boolean isSuitableTarget(MobEntity entity,@Nonnull LivingEntity target,double range) {
