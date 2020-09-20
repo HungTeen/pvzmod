@@ -35,7 +35,6 @@ public class BobsleCarItem extends Item{
 			BobsleCarEntity car = EntityRegister.BOBSLE_CAR.get().create(world);
 			car.rotationYaw = player.rotationYaw;
 			car.setPosition(pos.getX()+0.5D,pos.getY()+1,pos.getZ()+0.5D);
-			car.setIsZombieType(false);
 			world.addEntity(car);
 			player.addStat(Stats.ITEM_USED.get(this));
 		}

@@ -47,8 +47,6 @@ public class BobsleCarEntity extends Entity {
 			DataSerializers.VARINT);
 	private static final DataParameter<Float> DAMAGE_TAKEN = EntityDataManager.createKey(BobsleCarEntity.class,
 			DataSerializers.FLOAT);
-	private static final DataParameter<Boolean> IS_ZOMBIE_TYPE = EntityDataManager.createKey(BobsleCarEntity.class,
-			DataSerializers.BOOLEAN);
 	private static final int MAX_PASSENGER_SIZE = 4;
 	private static final float SNOW_SMOOTH = 0.991f;
 	private static final float MAX_MOVE_SPEED = 0.042f;
@@ -72,15 +70,11 @@ public class BobsleCarEntity extends Entity {
 	protected void registerData() {
 		this.dataManager.register(TIME_SINCE_HIT, 0);
 		this.dataManager.register(DAMAGE_TAKEN, 0.0F);
-		this.dataManager.register(IS_ZOMBIE_TYPE, true);
 	}
 
 	public void tick() {
 		super.tick();
 		this.status = this.getCarStatus();
-		if (this.getIsZombieType() && this.getPassengers().size() == 0) {
-			this.remove();
-		}
 		if (this.status == Status.IN_WATER) {
 			this.removePassengers();
 			this.remove();
@@ -111,19 +105,15 @@ public class BobsleCarEntity extends Entity {
 		this.doBlockCollisions();
 
 		if (!world.isRemote) {// check collide or passenger
-			if (this.getIsZombieType()) {
- 
-			} else {
-				for (Entity entity : this.world.getEntitiesInAABBexcluding(this,
-						this.getBoundingBox().grow((double) 0.2F, (double) -0.01F, (double) 0.2F),
-						EntityPredicates.pushableBy(this))) {
-					if (!entity.isPassenger()) {
+			for (Entity entity : this.world.getEntitiesInAABBexcluding(this,
+					this.getBoundingBox().grow((double) 0.2F, (double) -0.01F, (double) 0.2F),
+					EntityPredicates.pushableBy(this))) {
+				if (!entity.isPassenger()) {
 //					System.out.println("has entity");
-						if (checkCanRideOn(entity)) {
-							entity.startRiding(this);
-						} else {
-							this.applyEntityCollision(entity);
-						}
+					if (checkCanRideOn(entity)) {
+						entity.startRiding(this);
+					} else {
+						this.applyEntityCollision(entity);
 					}
 				}
 			}
@@ -140,9 +130,6 @@ public class BobsleCarEntity extends Entity {
 
 	@Override
 	public boolean processInitialInteract(PlayerEntity player, Hand hand) {
-		if (this.getIsZombieType()) {
-			return false;
-		}
 //		System.out.println("click!");
 		if (player.isSecondaryUseActive()) {
 			return false;
@@ -266,7 +253,7 @@ public class BobsleCarEntity extends Entity {
 				boolean flag = source.getTrueSource() instanceof PlayerEntity
 						&& ((PlayerEntity) source.getTrueSource()).abilities.isCreativeMode;
 				if (flag || this.getDamageTaken() > 40.0F) {
-					if (!flag && !this.getIsZombieType() && this.world.getGameRules().getBoolean(GameRules.DO_ENTITY_DROPS)) {
+					if (!flag && this.world.getGameRules().getBoolean(GameRules.DO_ENTITY_DROPS)) {
 						this.entityDropItem(ItemRegister.BOBSLE_CAR.get());
 					}
 
@@ -534,14 +521,6 @@ public class BobsleCarEntity extends Entity {
 	 */
 	public int getTimeSinceHit() {
 		return this.dataManager.get(TIME_SINCE_HIT);
-	}
-
-	public boolean getIsZombieType() {
-		return this.dataManager.get(IS_ZOMBIE_TYPE);
-	}
-
-	public void setIsZombieType(boolean is) {
-		this.dataManager.set(IS_ZOMBIE_TYPE, is);
 	}
 
 	// Forge: Fix MC-119811 by instantly completing lerp on board

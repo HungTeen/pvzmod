@@ -29,7 +29,7 @@
 //misc
     "item.pvz.strange_help":"奇怪的帮助",
     "item.pvz.guild_book":"PVZ指导书",
-//entity & spawn egg & card  
+//entity &刷怪蛋 & card  
 //drop
     "entity.pvz.sun":"阳光",
     "item.pvz.sun_spawn_egg":"阳光刷怪蛋",
@@ -43,6 +43,10 @@
 //misc
     "entity.pvz.ducky_tube":"鸭子救生圈",
     "entity.pvz.bobsle_car":"雪橇车",
+    "item.pvz.bobsle_car":"雪橇车", 
+//animal
+    "entity.pvz.foodie_zombie":"吃货僵尸",
+    "item.pvz.foodie_zombie_spawn_egg":"吃货僵尸刷怪蛋", 
 //zombie
     "entity.pvz.normal_zombie":"普通僵尸",
     "item.pvz.normal_zombie_spawn_egg":"普通僵尸刷怪蛋",
@@ -58,6 +62,10 @@
     "item.pvz.snorkel_zombie_spawn_egg":"潜水僵尸刷怪蛋",
     "entity.pvz.zomboni":"冰车僵尸",
     "item.pvz.zomboni_spawn_egg":"冰车僵尸刷怪蛋",
+    "entity.pvz.bobsle_team":"僵尸雪橇队",
+    "item.pvz.bobsle_team_spawn_egg":"僵尸雪橇队刷怪蛋",
+    "entity.pvz.bobsle_zombie":"雪橇僵尸",
+    "item.pvz.bobsle_zombie_spawn_egg":"雪橇僵尸刷怪蛋",
 //plant
 //PeaShooter
     "entity.pvz.pea_shooter":"豌豆射手",
@@ -149,6 +157,9 @@
     "item.pvz.snow_pea":"寒冰豌豆",
     "item.pvz.flame_pea":"烈焰豌豆",
     "item.pvz.blue_flame_pea":"蓝焰豌豆",
+    "item.pvz.small_meat":"小肉块",
+    "item.pvz.fake_brain":"仿制脑子",
+    "item.pvz.real_brain":"真*脑子",
 //tool & tooltip
     "item.pvz.zombie_flag":"僵尸旗帜",
     "tooltip.pvz.zombie_flag":"右键会获得加速效果",

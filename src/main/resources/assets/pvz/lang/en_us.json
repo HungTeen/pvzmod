@@ -43,6 +43,10 @@
 //misc
     "entity.pvz.ducky_tube":"Ducky Tube",
     "entity.pvz.bobsle_car":"Bobsle Car",
+    "item.pvz.bobsle_car":"Bobsle Car", 
+//animal
+    "entity.pvz.foodie_zombie":"FoodieZombie",
+    "item.pvz.foodie_zombie_spawn_egg":"FoodieZombie Spawn Egg", 
 //zombie
     "entity.pvz.normal_zombie":"NormalZombie",
     "item.pvz.normal_zombie_spawn_egg":"NormalZombie Spawn Egg", 
@@ -58,6 +62,10 @@
     "item.pvz.snorkel_zombie_spawn_egg":"Snorkel Zombie Spawn Egg",
     "entity.pvz.zomboni":"Zomboni",
     "item.pvz.zomboni_spawn_egg":"Zomboni Spawn Egg",
+    "entity.pvz.bobsle_team":"Bobsle Team",
+    "item.pvz.bobsle_team_spawn_egg":"Bobsle Team Spawn Egg",
+    "entity.pvz.bobsle_zombie":"BobsleZombie Team",
+    "item.pvz.bobsle_zombie_spawn_egg":"BobsleZombie Team Spawn Egg",
 //plant
 //PeaShooter
     "entity.pvz.pea_shooter":"PeaShooter",
@@ -149,6 +157,9 @@
     "item.pvz.snow_pea":"Snow Pea",
     "item.pvz.flame_pea":"Flame Pea",
     "item.pvz.blue_flame_pea":"Blue Flame Pea",
+    "item.pvz.small_meat":"Small Meat",
+    "item.pvz.fake_brain":"Fake Brain",
+    "item.pvz.real_brain":"Real Brain",
 //tool & tooltip
     "item.pvz.zombie_flag":"Zombie Flag",
     "tooltip.pvz.zombie_flag":"Right Click to get a speed effect",

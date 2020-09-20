@@ -41,7 +41,8 @@ public class ZombieUtil {
 		case CONEHEAD_ZOMBIE:
 		case POLE_ZOMBIE:
 		case BUCKETHEAD_ZOMBIE:
-		case ZOMBONI:return Ranks.BLUE;
+		case ZOMBONI:
+		case BOBSLE_TEAM:return Ranks.BLUE;
 		default:{
 			PVZMod.LOGGER.debug("Zombie get rank error");
 			return null;
