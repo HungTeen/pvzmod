@@ -1,4 +1,4 @@
-package com.hungteen.pvz.entity.animal;
+package com.hungteen.pvz.entity.creature;
 
 import com.hungteen.pvz.entity.ai.WaterTemptGoal;
 import com.hungteen.pvz.entity.drop.SunEntity;

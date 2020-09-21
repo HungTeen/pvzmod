@@ -1,6 +1,6 @@
 package com.hungteen.pvz.model.entity.animal;
 
-import com.hungteen.pvz.entity.animal.FoodieZombieEntity;
+import com.hungteen.pvz.entity.creature.FoodieZombieEntity;
 import com.mojang.blaze3d.matrix.MatrixStack;
 import com.mojang.blaze3d.vertex.IVertexBuilder;
 

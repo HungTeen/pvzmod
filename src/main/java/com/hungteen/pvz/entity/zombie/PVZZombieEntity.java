@@ -471,6 +471,11 @@ public abstract class PVZZombieEntity extends MonsterEntity implements IPVZZombi
 		this.setIsCharmed(compound.getBoolean("is_zombie_charmed"));
 	}
 
+	@Override
+	public boolean canBeLeashedTo(PlayerEntity player) {
+		return false;
+	}
+	
 	public boolean canBeButter() {
 		return true;
 	}

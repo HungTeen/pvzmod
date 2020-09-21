@@ -1,6 +1,6 @@
 package com.hungteen.pvz.render.layer;
 
-import com.hungteen.pvz.entity.animal.FoodieZombieEntity;
+import com.hungteen.pvz.entity.creature.FoodieZombieEntity;
 import com.hungteen.pvz.entity.plant.light.SunFlowerEntity;
 import com.hungteen.pvz.utils.StringUtil;
 
