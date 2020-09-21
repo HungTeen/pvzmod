@@ -48,12 +48,16 @@ public abstract class PVZWaterZombieEntity extends PVZZombieEntity{
 		if(this.ticksExisted%20==0) {
 //		    System.out.println(this.navigator.getPath());
 		}
-		if(!world.isRemote) {//swim up
-			if(this.isInWater() && this.getSubmergedHeight() > this.getEyeHeight()){
+		if(!world.isRemote&&this.getRidingEntity()==null) {//swim up
+			if(this.isInWater() && this.shouldUp()){
 				Vec3d v = this.getMotion();
 				this.setMotion(v.getX(), UP_SPEED, v.getZ());
 			}
 		}
+	}
+	
+	protected boolean shouldUp() {
+		return this.getSubmergedHeight() > this.getEyeHeight();
 	}
 	
 	@Override
@@ -82,11 +86,6 @@ public abstract class PVZWaterZombieEntity extends PVZZombieEntity{
 		return false;
 	}
 	
-	@Override
-	public boolean canBeFrozen() {
-		return false;
-	}
-
 	@Override
 	protected float getWaterSlowDown() {
 		return 0.93f;

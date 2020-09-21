@@ -15,6 +15,7 @@ public class ZombieUtil {
 	public static final float FAST = 0.24f; 
 	public static final float VERY_FAST = 0.27f; 
 	public static final float HUGE_FAST = 0.28f; 
+	public static final float WATER_FAST = 1f;
 
 	// zombies attackDamage
 	public static final float VERY_LOW = 4; 
@@ -37,12 +38,14 @@ public class ZombieUtil {
 		case NORMAL_ZOMBIE:
 		case FLAG_ZOMBIE:
 		case SNORKEL_ZOMBIE:
-		case BOBSLE_ZOMBIE:return Ranks.WHITE;
+		case BOBSLE_ZOMBIE:
+		case DOLPHIN_RIDER_ZOMBIE:return Ranks.WHITE;
 		case CONEHEAD_ZOMBIE:
-		case POLE_ZOMBIE:
+		case POLE_ZOMBIE:return Ranks.GREEN;
 		case BUCKETHEAD_ZOMBIE:
 		case ZOMBONI:
-		case BOBSLE_TEAM:return Ranks.BLUE;
+		case BOBSLE_TEAM:
+		case DOLPHIN_RIDER:return Ranks.BLUE;
 		default:{
 			PVZMod.LOGGER.debug("Zombie get rank error");
 			return null;

@@ -32,6 +32,8 @@ import com.hungteen.pvz.entity.zombie.grassday.NormalZombieEntity;
 import com.hungteen.pvz.entity.zombie.grassday.PoleZombieEntity;
 import com.hungteen.pvz.entity.zombie.poolday.BobsleTeamEntity;
 import com.hungteen.pvz.entity.zombie.poolday.BobsleZombieEntity;
+import com.hungteen.pvz.entity.zombie.poolday.DolphinRiderEntity;
+import com.hungteen.pvz.entity.zombie.poolday.DolphinRiderZombieEntity;
 import com.hungteen.pvz.entity.zombie.poolday.SnorkelZombieEntity;
 import com.hungteen.pvz.entity.zombie.poolday.ZombieDolphinEntity;
 import com.hungteen.pvz.entity.zombie.poolday.ZomboniEntity;
@@ -65,6 +67,8 @@ import com.hungteen.pvz.render.entity.zombie.grassday.NormalZombieRender;
 import com.hungteen.pvz.render.entity.zombie.grassday.PoleZombieRender;
 import com.hungteen.pvz.render.entity.zombie.poolday.BobsleTeamRender;
 import com.hungteen.pvz.render.entity.zombie.poolday.BobsleZombieRender;
+import com.hungteen.pvz.render.entity.zombie.poolday.DolphinRiderRender;
+import com.hungteen.pvz.render.entity.zombie.poolday.DolphinRiderZombieRender;
 import com.hungteen.pvz.render.entity.zombie.poolday.DuckyTubeRender;
 import com.hungteen.pvz.render.entity.zombie.poolday.SnorkelZombieRender;
 import com.hungteen.pvz.render.entity.zombie.poolday.ZombieDolphinRender;
@@ -118,6 +122,8 @@ public class EntityRegister {
 	public static final RegistryObject<EntityType<BobsleTeamEntity>> BOBSLE_TEAM = registerEntityType(BobsleTeamEntity::new, "bobsle_team", EntityClassification.MONSTER);
 	public static final RegistryObject<EntityType<BobsleZombieEntity>> BOBSLE_ZOMBIE = registerEntityType(BobsleZombieEntity::new, "bobsle_zombie", EntityClassification.MONSTER);
 	public static final RegistryObject<EntityType<ZombieDolphinEntity>> ZOMBIE_DOLPHIN = registerEntityType(ZombieDolphinEntity::new, "zombie_dolphin", EntityClassification.MONSTER);
+	public static final RegistryObject<EntityType<DolphinRiderEntity>> DOLPHIN_RIDER = registerEntityType(DolphinRiderEntity::new, "dolphin_rider", EntityClassification.MONSTER);
+	public static final RegistryObject<EntityType<DolphinRiderZombieEntity>> DOLPHIN_RIDER_ZOMBIE = registerEntityType(DolphinRiderZombieEntity::new, "dolphin_rider_zombie", EntityClassification.MONSTER);
 	
 	//plant
 	public static final RegistryObject<EntityType<PeaShooterEntity>> PEA_SHOOTER = registerEntityType(PeaShooterEntity::new, "pea_shooter", EntityClassification.CREATURE);
@@ -168,6 +174,8 @@ public class EntityRegister {
         RenderingRegistry.registerEntityRenderingHandler(BOBSLE_TEAM.get(), BobsleTeamRender::new);
         RenderingRegistry.registerEntityRenderingHandler(BOBSLE_ZOMBIE.get(), BobsleZombieRender::new);
         RenderingRegistry.registerEntityRenderingHandler(ZOMBIE_DOLPHIN.get(), ZombieDolphinRender::new);
+        RenderingRegistry.registerEntityRenderingHandler(DOLPHIN_RIDER.get(), DolphinRiderRender::new);
+        RenderingRegistry.registerEntityRenderingHandler(DOLPHIN_RIDER_ZOMBIE.get(), DolphinRiderZombieRender::new);
         
         //plant
         RenderingRegistry.registerEntityRenderingHandler(PEA_SHOOTER.get(), PeaShooterRender::new);

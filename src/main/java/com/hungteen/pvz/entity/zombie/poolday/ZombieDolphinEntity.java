@@ -9,8 +9,11 @@ import com.hungteen.pvz.utils.enums.Zombies;
 
 import net.minecraft.entity.CreatureAttribute;
 import net.minecraft.entity.Entity;
+import net.minecraft.entity.EntitySize;
 import net.minecraft.entity.EntityType;
+import net.minecraft.entity.Pose;
 import net.minecraft.entity.SharedMonsterAttributes;
+import net.minecraft.entity.ai.controller.DolphinLookController;
 import net.minecraft.entity.ai.controller.MovementController;
 import net.minecraft.entity.ai.goal.BreatheAirGoal;
 import net.minecraft.entity.ai.goal.FindWaterGoal;
@@ -43,7 +46,7 @@ public class ZombieDolphinEntity extends PVZZombieEntity {
 		super(type, worldIn);
 		this.setPathPriority(PathNodeType.WATER, 0.0F);
 		this.moveController = new MoveHelperController(this);
-//		this.lookController = new DolphinLookController(this, 10);
+		this.lookController = new DolphinLookController(this, 10);
 	}
 
 	protected void registerGoals() {
@@ -62,10 +65,15 @@ public class ZombieDolphinEntity extends PVZZombieEntity {
 	@Override
 	protected void registerAttributes() {
 		super.registerAttributes();
-		this.getAttribute(SharedMonsterAttributes.MOVEMENT_SPEED).setBaseValue((double)1.2F);
+		this.getAttribute(SharedMonsterAttributes.MOVEMENT_SPEED).setBaseValue(1.2F);
 		this.getAttribute(SharedMonsterAttributes.ATTACK_DAMAGE).setBaseValue(ZombieUtil.VERY_LOW);
 	}
 
+	@Override
+	public EntitySize getSize(Pose poseIn) {
+		return EntitySize.flexible(1f, 0.7f);
+	}
+	
 	@Override
 	public float getLife() {
 		return 12;
@@ -73,13 +81,28 @@ public class ZombieDolphinEntity extends PVZZombieEntity {
 	
 	@Override
 	protected float getWaterSlowDown() {
-		return 0.8f;
+		return 0.85f;
+	}
+	
+	@Override
+	public double getMountedYOffset() {
+		return -0.5f;
 	}
 
 	public boolean isNotColliding(IWorldReader worldIn) {
 		return worldIn.checkNoEntityCollision(this);
 	}
 
+	@Override
+	public boolean canBeRiddenInWater() {
+		return true;
+	}
+
+	@Override
+	public boolean canBeRiddenInWater(Entity rider) {
+		return true;
+	}
+	
 	@Override
 	public int getTalkInterval() {
 		return 120;

@@ -481,7 +481,7 @@ public abstract class PVZZombieEntity extends MonsterEntity implements IPVZZombi
 	}
 
 	public boolean canBeFrozen() {
-		return true;
+		return !this.isInWater();
 	}
 
 	public boolean canBeSmall() {
