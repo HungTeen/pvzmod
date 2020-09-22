@@ -66,6 +66,14 @@
     "item.pvz.bobsle_team_spawn_egg":"僵尸雪橇队刷怪蛋",
     "entity.pvz.bobsle_zombie":"雪橇僵尸",
     "item.pvz.bobsle_zombie_spawn_egg":"雪橇僵尸刷怪蛋",
+    "entity.pvz.zombie_dolphin":"僵尸海豚",
+    "item.pvz.zombie_dolphin_spawn_egg":"僵尸海豚刷怪蛋",
+    "entity.pvz.dolphin_rider":"海豚龙骑手",
+    "item.pvz.dolphin_rider_spawn_egg":"海豚龙骑手刷怪蛋",
+    "entity.pvz.dolphin_rider_zombie":"海豚龙骑手僵尸",
+    "item.pvz.dolphin_rider_zombie_spawn_egg":"海豚龙骑手僵尸刷怪蛋",
+    "entity.pvz.lava_zombie":"潜岩浆僵尸",
+    "item.pvz.lava_zombie_spawn_egg":"潜岩浆僵尸刷怪蛋",
 //plant
 //PeaShooter
     "entity.pvz.pea_shooter":"豌豆射手",

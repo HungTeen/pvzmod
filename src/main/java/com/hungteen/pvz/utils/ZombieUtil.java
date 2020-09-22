@@ -46,6 +46,7 @@ public class ZombieUtil {
 		case ZOMBONI:
 		case BOBSLE_TEAM:
 		case DOLPHIN_RIDER:return Ranks.BLUE;
+		case LAVA_ZOMBIE:return Ranks.PURPLE;
 		default:{
 			PVZMod.LOGGER.debug("Zombie get rank error");
 			return null;

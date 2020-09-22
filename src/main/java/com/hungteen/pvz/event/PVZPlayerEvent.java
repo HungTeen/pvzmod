@@ -11,6 +11,7 @@ import com.hungteen.pvz.entity.plant.PVZPlantEntity;
 import com.hungteen.pvz.event.events.SummonCardUseEvent;
 import com.hungteen.pvz.register.EnchantmentRegister;
 import com.hungteen.pvz.register.ItemRegister;
+import com.hungteen.pvz.utils.EntityUtil;
 import com.hungteen.pvz.utils.PlayerUtil;
 import com.hungteen.pvz.utils.enums.Plants;
 import com.hungteen.pvz.utils.enums.Resources;
@@ -23,7 +24,9 @@ import net.minecraft.entity.item.ItemEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.item.ItemStack;
+import net.minecraft.item.ShovelItem;
 import net.minecraft.item.SwordItem;
+import net.minecraft.util.SoundEvents;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraftforge.event.entity.player.PlayerEvent;
@@ -100,6 +103,12 @@ public class PVZPlayerEvent {
 								}
 							});
 						}
+					}
+				}else if(stack.getItem() instanceof ShovelItem) {
+					if(player.abilities.isCreativeMode||player.getUniqueID().equals(plant.getOwnerUUID())||!EntityUtil.checkCanEntityAttack(plant, player)) {
+						plant.playSound(SoundEvents.BLOCK_GRASS_BREAK, 1f, 1f);
+						plant.remove();
+						stack.damageItem(3, player, (p) -> {p.sendBreakAnimation(ev.getHand());});
 					}
 				}
 			}
