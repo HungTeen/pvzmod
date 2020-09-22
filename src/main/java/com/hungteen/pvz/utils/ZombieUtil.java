@@ -15,7 +15,7 @@ public class ZombieUtil {
 	public static final float FAST = 0.24f; 
 	public static final float VERY_FAST = 0.27f; 
 	public static final float HUGE_FAST = 0.28f; 
-	public static final float WATER_FAST = 1f;
+	public static final float WATER_FAST = 0.8f;
 
 	// zombies attackDamage
 	public static final float VERY_LOW = 4; 

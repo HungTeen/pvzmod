@@ -82,7 +82,7 @@ public class BreakLilyPadGoal extends MoveToBlockGoal {
 
 	@Override
 	public boolean shouldContinueExecuting() {
-		return entity.getAttackTarget()==null;
+		return entity.getAttackTarget()==null&&super.shouldContinueExecuting();
 	}
 	
 	/**
@@ -100,7 +100,7 @@ public class BreakLilyPadGoal extends MoveToBlockGoal {
 			}
 
 			if (this.breakingTime > this.getBreakTime(entity)) {
-				world.removeBlock(this.destinationBlock, false);
+				world.destroyBlock(this.destinationBlock, false);
 				if (!world.isRemote) {
 					this.playBrokenSound(world, this.destinationBlock);
 				}
