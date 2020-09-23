@@ -39,10 +39,14 @@ public class BiomeRegister {
 			}
 			biome.addFeature(GenerationStage.Decoration.SURFACE_STRUCTURES, FeatureRegister.DAVE_VILLA.get().withConfiguration(IFeatureConfig.NO_FEATURE_CONFIG).withPlacement(Placement.NOPE.configure(IPlacementConfig.NO_PLACEMENT_CONFIG))); 
 		    biome.addFeature(GenerationStage.Decoration.SURFACE_STRUCTURES, FeatureRegister.BUCKET_HOUSE.get().withConfiguration(IFeatureConfig.NO_FEATURE_CONFIG).withPlacement(Placement.NOPE.configure(IPlacementConfig.NO_PLACEMENT_CONFIG))); 
+		    biome.addFeature(GenerationStage.Decoration.SURFACE_STRUCTURES, FeatureRegister.DOLPHIN_HOUSE.get().withConfiguration(IFeatureConfig.NO_FEATURE_CONFIG).withPlacement(Placement.NOPE.configure(IPlacementConfig.NO_PLACEMENT_CONFIG))); 
 		}
 		for(Biome biome:BiomeUtil.OVER_LAND) {
 			biome.addStructure(FeatureRegister.BUCKET_HOUSE.get().withConfiguration(IFeatureConfig.NO_FEATURE_CONFIG));
 			biome.getSpawns(EntityClassification.AMBIENT).add(new Biome.SpawnListEntry(EntityRegister.SUN.get(),2*PVZConfig.COMMON_CONFIG.EntitySettings.EntitySpawnWeight.SunSpawnWeight.get(),1,1));
+		}
+		for(Biome biome:BiomeUtil.OCEAN) {
+			biome.addStructure(FeatureRegister.DOLPHIN_HOUSE.get().withConfiguration(IFeatureConfig.NO_FEATURE_CONFIG));
 		}
 	}
 }

@@ -16,7 +16,6 @@ import net.minecraft.entity.SharedMonsterAttributes;
 import net.minecraft.entity.ai.controller.DolphinLookController;
 import net.minecraft.entity.ai.controller.MovementController;
 import net.minecraft.entity.ai.goal.BreatheAirGoal;
-import net.minecraft.entity.ai.goal.FindWaterGoal;
 import net.minecraft.entity.ai.goal.FollowBoatGoal;
 import net.minecraft.entity.ai.goal.HurtByTargetGoal;
 import net.minecraft.entity.ai.goal.JumpGoal;
@@ -51,7 +50,6 @@ public class ZombieDolphinEntity extends PVZZombieEntity {
 
 	protected void registerGoals() {
 		this.goalSelector.addGoal(0, new BreatheAirGoal(this));
-		this.goalSelector.addGoal(0, new FindWaterGoal(this));
 		this.goalSelector.addGoal(4, new RandomSwimmingGoal(this, 1.0D, 10));
 		this.goalSelector.addGoal(4, new LookRandomlyGoal(this));
 		this.goalSelector.addGoal(5, new LookAtGoal(this, PlayerEntity.class, 6.0F));

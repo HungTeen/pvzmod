@@ -8,6 +8,7 @@ public class PVZLoot {
 
 	//chest
 	public static final ResourceLocation BUCKET_HOUSE = getChestLootTable("bucket_house");
+	public static final ResourceLocation DOLPHIN_HOUSE = getChestLootTable("dolphin_house");
 	
 	//entity
 //	public static final ResourceLocation NORMAL_ZOMBIE = getEntityLootTable("normal_zombie");

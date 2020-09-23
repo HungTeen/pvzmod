@@ -43,6 +43,12 @@ public class PVZConfig {
 							.comment("the distance value between bucket house.")
 							.worldRestart()
 							.defineInRange("BucketHouseDistance", 32, 1, 100);
+					
+					WorldSettings.OverWorldSettings.DolphinHouseDistance = builder
+							.translation(CONFIG_TRANSLATE+"dolphin_house_distance")
+							.comment("the distance value between dolphin house.")
+							.worldRestart()
+							.defineInRange("DolphinHouseDistance", 32, 1, 100);
 				}
 				builder.pop();
 			}
@@ -193,6 +199,7 @@ public class PVZConfig {
 			public static class OverWorldSettings{
 				public ForgeConfigSpec.IntValue DaveVillaDistance;
 			    public ForgeConfigSpec.IntValue BucketHouseDistance;
+			    public ForgeConfigSpec.IntValue DolphinHouseDistance;
 			}
 		}
 		
