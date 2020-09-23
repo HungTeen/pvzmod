@@ -22,8 +22,8 @@ public class PVZPacketHandler {
 		int id = 0;
 		CHANNEL.registerMessage(id++,PlayerStatsPacket.class, PlayerStatsPacket::encode,PlayerStatsPacket::new,PlayerStatsPacket.Handler::onMessage);
 		CHANNEL.registerMessage(id++,PlantStatsPacket.class,PlantStatsPacket::encode,PlantStatsPacket::new,PlantStatsPacket.Handler::onMessage);
-//		CHANNEL.registerMessage(PacketGuiButton.Handler.class, PacketGuiButton.class, id++, Side.SERVER);
-//		CHANNEL.registerMessage(PacketUncraftingGui.Handler.class, PacketUncraftingGui.class, id++, Side.SERVER);
+		CHANNEL.registerMessage(id++,OpenGuiPacket.class,OpenGuiPacket::encode,OpenGuiPacket::new,OpenGuiPacket.Handler::onMessage);
+		CHANNEL.registerMessage(id++,ClickButtonPacket.class,ClickButtonPacket::encode,ClickButtonPacket::new,ClickButtonPacket.Handler::onMessage);
 	}
 	
 }

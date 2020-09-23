@@ -32,6 +32,7 @@ public class RegistryHandler {
 		FeatureRegister.FEATURES.register(bus);
 		TileEntityRegister.TILE_ENTITY_TYPES.register(bus);
 		EnchantmentRegister.ENCHANTMENTS.register(bus);
+		ContainerRegister.CONTAINER_TYPES.register(bus);
 	}
 	
 	@SubscribeEvent

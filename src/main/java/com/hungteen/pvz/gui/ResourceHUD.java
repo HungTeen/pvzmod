@@ -20,7 +20,7 @@ import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 
 @Mod.EventBusSubscriber(modid=PVZMod.MOD_ID,value = Dist.CLIENT)
-public class ResourceGui{
+public class ResourceHUD{
 
 	private static Minecraft mc = Minecraft.getInstance();
 //	private static final ResourceLocation RESOURCE_BAR = StringUtil.prefix("textures/gui/overlay/resource_bar.png");

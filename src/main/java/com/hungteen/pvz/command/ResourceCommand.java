@@ -38,9 +38,6 @@ public class ResourceCommand {
     		  .then(Commands.literal("gem").then(Commands.argument("amount", IntegerArgumentType.integer()).executes((command)->{
       			return addPlayerResource(command.getSource(),EntityArgument.getPlayers(command, "targets"),Resources.GEM_NUM,IntegerArgumentType.getInteger(command, "amount"));
       		  })))
-    		  .then(Commands.literal("slot").then(Commands.argument("amount", IntegerArgumentType.integer()).executes((command)->{
-      			return addPlayerResource(command.getSource(),EntityArgument.getPlayers(command, "targets"),Resources.MAX_CARD_SLOT,IntegerArgumentType.getInteger(command, "amount"));
-      		  })))
     		  )));
     }
 	

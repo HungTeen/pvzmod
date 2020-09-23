@@ -9,5 +9,4 @@ public enum Resources {
 	SUN_NUM,
 	ENERGY_NUM,
 	MAX_ENERGY_NUM,
-	MAX_CARD_SLOT,
 }
