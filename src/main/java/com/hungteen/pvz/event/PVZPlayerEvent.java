@@ -13,6 +13,7 @@ import com.hungteen.pvz.register.EnchantmentRegister;
 import com.hungteen.pvz.register.ItemRegister;
 import com.hungteen.pvz.utils.EntityUtil;
 import com.hungteen.pvz.utils.PlayerUtil;
+import com.hungteen.pvz.utils.enums.Almanacs;
 import com.hungteen.pvz.utils.enums.Plants;
 import com.hungteen.pvz.utils.enums.Resources;
 
@@ -45,14 +46,21 @@ public class PVZPlayerEvent {
 		if (player instanceof ServerPlayerEntity && !player.world.isRemote) {
 			player.getCapability(CapabilityHandler.PLAYER_DATA_CAPABILITY).ifPresent((l)->{
 				PlayerDataManager plData = l.getPlayerData();
+				//resources
 				PlayerDataManager.PlayerStats playerStats = plData.getPlayerStats();
 				for(Resources res:Resources.values()) {
 					playerStats.sendPacket(player, res);
 				}
+				//plants
 			    PlayerDataManager.PlantStats plantStats = plData.getPlantStats();
 				for (Plants plant : Plants.values()) {
 				   plantStats.sendPlantPacket(player, plant);
 			    }
+				//almanacs
+				PlayerDataManager.AlmanacStats almanacStats = plData.getAlmanacStats();
+				for(Almanacs a: Almanacs.values()) {
+					almanacStats.sendAlmanacPacket(player, a);
+				}
 			});
 		}
 	}

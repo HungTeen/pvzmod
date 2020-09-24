@@ -1,11 +1,14 @@
 package com.hungteen.pvz.gui;
 
 import com.hungteen.pvz.gui.container.PlayerInventoryContainer;
+import com.hungteen.pvz.gui.widget.PVZButton;
 import com.hungteen.pvz.network.ClickButtonPacket;
 import com.hungteen.pvz.network.PVZPacketHandler;
 import com.hungteen.pvz.utils.PlayerUtil;
 import com.hungteen.pvz.utils.StringUtil;
+import com.hungteen.pvz.utils.enums.Colors;
 import com.mojang.blaze3d.systems.RenderSystem;
+import com.mojang.datafixers.util.Pair;
 
 import net.minecraft.client.gui.screen.inventory.ContainerScreen;
 import net.minecraft.client.gui.widget.button.Button;
@@ -20,8 +23,9 @@ import net.minecraftforge.api.distmarker.OnlyIn;
 public class PlayerInventoryScreen extends ContainerScreen<PlayerInventoryContainer>{
 
 	private static final ResourceLocation TEXTURE = StringUtil.prefix("textures/gui/container/player_inventory.png");
-	private Button leftButton;
-	private Button rightButton;
+	private static final String TITLE = new TranslationTextComponent("gui.pvz.player_inventory.title").getFormattedText();
+	protected Button leftButton;
+	protected Button rightButton;
 	
 	public PlayerInventoryScreen(PlayerInventoryContainer screenContainer, PlayerInventory inv, ITextComponent titleIn) {
 		super(screenContainer, inv, titleIn);
@@ -32,16 +36,14 @@ public class PlayerInventoryScreen extends ContainerScreen<PlayerInventoryContai
 	@Override
 	protected void init() {
 		super.init();
-		String left=new TranslationTextComponent("gui.pvz.player_inventory.left").getFormattedText();
-		leftButton=this.addButton(new Button(this.guiLeft+6,this.guiTop+136,20,22,left,(button)-> {
+		leftButton=this.addButton(new ChangeButton(TEXTURE,this.guiLeft+6,this.guiTop+136,false,(button)-> {
 			if(this.container.currentPage>1) {
 				this.container.currentPage--;
 			    PVZPacketHandler.CHANNEL.sendToServer(new ClickButtonPacket(1,-1));
 			}
 		}));
 		
-		String right=new TranslationTextComponent("gui.pvz.player_inventory.right").getFormattedText();
-		rightButton=this.addButton(new Button(this.guiLeft+188,this.guiTop+136,20,22,right,(button)-> {
+		rightButton=this.addButton(new ChangeButton(TEXTURE, this.guiLeft+188, this.guiTop+136, true,(button)-> {
 			if(this.container.currentPage<PlayerUtil.MAX_SLOT_NUM/54) {
 				this.container.currentPage++;
 				PVZPacketHandler.CHANNEL.sendToServer(new ClickButtonPacket(1,1));
@@ -59,6 +61,8 @@ public class PlayerInventoryScreen extends ContainerScreen<PlayerInventoryContai
         		blit(this.guiLeft+24+18*j, this.guiTop+119-18*i, 208, 0, 16, 16);
         	}
         }
+        StringUtil.drawCenteredScaledString(this.font, TITLE, this.width / 2, this.guiTop + 6, Colors.BLACK, 1.6f);
+		StringUtil.drawCenteredScaledString(this.font, this.container.currentPage + "/" + PlayerUtil.MAX_SLOT_NUM / 54, this.width / 2, this.guiTop + 141, Colors.BLACK, 1.5f);
 	}
 	
 	@Override
@@ -70,6 +74,22 @@ public class PlayerInventoryScreen extends ContainerScreen<PlayerInventoryContai
 	@Override
 	public boolean isPauseScreen() {
 		return false;
+	}
+	
+	static class ChangeButton extends PVZButton{
+
+		public ChangeButton(ResourceLocation location, int x, int y, boolean right,
+				IPressable onPress) {
+			super(location, x, y, 14, 22, right, onPress);
+		}
+
+		@Override
+		protected Pair<Integer, Integer> getButtonUV() {
+			int x = this.right?224:242;
+			int y = this.isHovered?32:0;
+			return new Pair<Integer, Integer>(x,y);
+		}
+		
 	}
 	
 }

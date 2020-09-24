@@ -5,6 +5,7 @@ import com.hungteen.pvz.item.PVZItemBase;
 import com.hungteen.pvz.item.PVZSpawnEggItem;
 import com.hungteen.pvz.item.armor.BucketArmorItem;
 import com.hungteen.pvz.item.armor.ConeArmorItem;
+import com.hungteen.pvz.item.misc.AlmanacItem;
 import com.hungteen.pvz.item.misc.GuildBookItem;
 import com.hungteen.pvz.item.misc.StrangeHelpItem;
 import com.hungteen.pvz.item.tool.BobsleCarItem;
@@ -115,6 +116,7 @@ public class ItemRegister {
 	//misc
 	public static final RegistryObject<Item> STRANGE_HELP = ITEMS.register("strange_help", StrangeHelpItem::new);
 	public static final RegistryObject<Item> GUILD_BOOK = ITEMS.register("guild_book", GuildBookItem::new);
+	public static final RegistryObject<Item> ALMANAC = ITEMS.register("almanac", AlmanacItem::new);
 	
 	//spawn egg
 	//drop
@@ -173,7 +175,7 @@ public class ItemRegister {
     }
     
     private static RegistryObject<PlantCardItem> registerCard(Plants plant,boolean is){
-    	String name=plant.toString();
+    	String name=plant.toString().toLowerCase();
     	if(is) name=name+"_enjoy";
     	name=name+"_card";
     	return ITEMS.register(name, ()->{return new PlantCardItem(plant,is);});

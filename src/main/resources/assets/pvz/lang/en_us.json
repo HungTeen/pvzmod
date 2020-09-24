@@ -218,6 +218,7 @@
     "gui.pvz.guild_book4":"Zen Garden",
     "gui.pvz.guild_book5":"Zombie House",
     "gui.pvz.guild_book6":"Plant obtain",
+    "gui.pvz.player_inventory.title":"Card Inventory",
 //advancement
     "advancement.pvz.root":"Plants vs Zombies",
     "advancement.pvz.root.desc":"install Plants vs Zombies mod and join in world",

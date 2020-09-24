@@ -21,6 +21,8 @@ public class StrangeHelpScreen extends Screen{
 			new TranslationTextComponent("gui.pvz.strange_help3").getFormattedText(),
 			new TranslationTextComponent("gui.pvz.strange_help4").getFormattedText(),
 	};
+	private final int xSize = 256;
+	private final int ySize = 160;
 	
 	public StrangeHelpScreen() {
 		super(new TranslationTextComponent("gui.pvz.strange_help"));
@@ -32,11 +34,11 @@ public class StrangeHelpScreen extends Screen{
 		this.renderBackground();
 		RenderSystem.color4f(1.0F, 1.0F, 1.0F, 1.0F);
         this.minecraft.getTextureManager().bindTexture(TEXTURE);
-        int textureWidth = 256;
-        int textureHeight = 160;
-        this.blit((this.width-textureWidth)/2, (this.height-textureHeight)/2, 0, 0, textureWidth, textureHeight);
-        int midX = this.width/2;
-        int midY = 70;
+        int cornerX = (this.width - this.xSize) / 2;
+        int cornerY = (this.width - this.ySize) / 2;
+        this.blit(cornerX, cornerY, 0, 0, this.xSize, this.ySize);
+        int midX = this.width / 2;
+        int midY = cornerY + 20;
         for(int i=0;i<STRINGS.length;i++) {
         	StringUtil.drawCenteredScaledString(this.font, STRINGS[i], midX, midY, Colors.BLACK, 1.5f);
         	midY+=30;

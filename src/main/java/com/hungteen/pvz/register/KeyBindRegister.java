@@ -3,6 +3,7 @@ package com.hungteen.pvz.register;
 import com.hungteen.pvz.PVZMod;
 import com.hungteen.pvz.network.OpenGuiPacket;
 import com.hungteen.pvz.network.PVZPacketHandler;
+import com.hungteen.pvz.utils.enums.Guis;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.settings.KeyBinding;
@@ -35,7 +36,7 @@ public class KeyBindRegister {
 //				DistExecutor.runWhenOn(Dist.CLIENT, ()->()->{
 //					Minecraft.getInstance().displayGuiScreen(new PVZPlayerInventoryGui());
 //				});
-				PVZPacketHandler.CHANNEL.sendToServer(new OpenGuiPacket(1));
+				PVZPacketHandler.CHANNEL.sendToServer(new OpenGuiPacket(Guis.PLAYER_INVENTORY.ordinal()));
 			}
 		}
 	}

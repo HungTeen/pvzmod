@@ -3,11 +3,13 @@ package com.hungteen.pvz.capabilities.player;
 
 import java.util.HashMap;
 
+import com.hungteen.pvz.network.AlmanacUnLockPacket;
 import com.hungteen.pvz.network.PVZPacketHandler;
 import com.hungteen.pvz.network.PlantStatsPacket;
 import com.hungteen.pvz.network.PlayerStatsPacket;
 import com.hungteen.pvz.utils.PlantUtil;
 import com.hungteen.pvz.utils.PlayerUtil;
+import com.hungteen.pvz.utils.enums.Almanacs;
 import com.hungteen.pvz.utils.enums.Plants;
 import com.hungteen.pvz.utils.enums.Resources;
 
@@ -27,12 +29,14 @@ public class PlayerDataManager {
 	private final PlayerStats playerStats;
 	private final PlantStats plantStats;
 	private final InventoryStats inventoryStats;
+	private final AlmanacStats almanacStats;
 	
 	public PlayerDataManager(PlayerEntity player) {
 		this.player = player;
 		this.playerStats = new PlayerStats(this);
 		this.plantStats = new PlantStats(this);
 		this.inventoryStats = new InventoryStats(this);
+		this.almanacStats = new AlmanacStats(this);
 	}
 	
 //	public void tickPlayer()
@@ -48,6 +52,7 @@ public class PlayerDataManager {
 		playerStats.saveToNBT(baseTag);
 		plantStats.saveToNBT(baseTag);
 		inventoryStats.saveToNBT(baseTag);
+		almanacStats.saveToNBT(baseTag);
 		return baseTag;
 	}
 
@@ -55,6 +60,7 @@ public class PlayerDataManager {
 		playerStats.loadFromNBT(baseTag);
 		plantStats.loadFromNBT(baseTag);
 		inventoryStats.loadFromNBT(baseTag);
+		almanacStats.loadFromNBT(baseTag);
 	}
 //	
 	public void cloneFromExistingPlayerData(PlayerDataManager data) {
@@ -71,6 +77,11 @@ public class PlayerDataManager {
 		this.inventoryStats.currentSlotNum = data.inventoryStats.currentSlotNum;
 		for(int i=0;i<PlayerUtil.MAX_SLOT_NUM;i++) {
 			this.inventoryStats.setItemStack(i, data.inventoryStats.getItemStack(i));
+		}
+		
+		//Almanac
+		for(Almanacs a:Almanacs.values()) {
+			this.almanacStats.setAlmanacUnLocked(a, data.almanacStats.isAlmanacUnLocked(a));
 		}
 	}
 
@@ -383,6 +394,58 @@ public class PlayerDataManager {
 		}
 	}
 	
+	public final class AlmanacStats {
+		@SuppressWarnings("unused")
+		private final PlayerDataManager manager;
+		private HashMap<Almanacs, Boolean> unLock = new HashMap<>(Almanacs.values().length);
+		
+		public AlmanacStats(PlayerDataManager manager) {
+			this.manager = manager;
+			for(Almanacs a:Almanacs.values()) {
+				unLock.put(a, false);
+			}
+		}
+		
+		public boolean isAlmanacUnLocked(Almanacs a) {
+			return this.unLock.get(a);
+		}
+		
+		public void setAlmanacUnLocked(Almanacs a, boolean is) {
+			this.unLock.put(a, is);
+		}
+		
+		public void sendAlmanacPacket(PlayerEntity player,Almanacs a){
+			if (player instanceof ServerPlayerEntity) {
+				PVZPacketHandler.CHANNEL.send(
+					PacketDistributor.PLAYER.with(()->{
+						return (ServerPlayerEntity) player;
+					}),
+					new AlmanacUnLockPacket(a.ordinal(), this.isAlmanacUnLocked(a))
+				);
+			}
+		}
+		
+		private void saveToNBT(CompoundNBT baseTag) {
+			CompoundNBT statsNBT = new CompoundNBT();
+			for(Almanacs a:Almanacs.values()) {
+				statsNBT.putBoolean("lock_"+a.toString().toLowerCase(), unLock.get(a));
+			}
+			baseTag.put("almanacs_lock", statsNBT);
+		}
+
+		private void loadFromNBT(CompoundNBT baseTag) {
+			if(baseTag.contains("almanacs_lock")) {
+			    CompoundNBT statsTag = baseTag.getCompound("almanacs_lock");
+			    for(Almanacs a:Almanacs.values()) {
+			    	if(statsTag.contains("lock_"+a.toString().toLowerCase())) {
+				        unLock.put(a, statsTag.getBoolean("lock_"+a.toString().toLowerCase()));
+			    	}
+			    }
+			}
+		}
+		
+	}
+	
 	public PlayerStats getPlayerStats() {
 		return this.playerStats;
 	}
@@ -393,6 +456,10 @@ public class PlayerDataManager {
 	
 	public InventoryStats getInventoryStats() {
 		return this.inventoryStats;
+	}
+	
+	public AlmanacStats getAlmanacStats() {
+		return this.almanacStats;
 	}
 	
 }

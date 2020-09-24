@@ -218,6 +218,7 @@
     "gui.pvz.guild_book4":"禅境花园",
     "gui.pvz.guild_book5":"僵尸小屋",
     "gui.pvz.guild_book6":"植物获取",
+    "gui.pvz.player_inventory.title":"召唤卡背包",
 //advancement
     "advancement.pvz.root":"植物大战僵尸",
     "advancement.pvz.root.desc":"安装植物大战僵尸mod并进入主世界",

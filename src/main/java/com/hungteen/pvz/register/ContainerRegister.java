@@ -1,7 +1,9 @@
 package com.hungteen.pvz.register;
 
 import com.hungteen.pvz.PVZMod;
+import com.hungteen.pvz.gui.AlmanacScreen;
 import com.hungteen.pvz.gui.PlayerInventoryScreen;
+import com.hungteen.pvz.gui.container.AlmanacContainer;
 import com.hungteen.pvz.gui.container.PlayerInventoryContainer;
 
 import net.minecraft.client.gui.ScreenManager;
@@ -25,10 +27,21 @@ public class ContainerRegister {
         });
 	});
 	
+	public static final RegistryObject<ContainerType<AlmanacContainer>> ALMANAC = CONTAINER_TYPES.register("almanac", ()->{
+		return IForgeContainerType.create((windowId, inv, data) -> {
+            return new AlmanacContainer(windowId, inv.player);
+        });
+	});
+	
 	@SubscribeEvent
     public static void onClientSetupEvent(FMLClientSetupEvent event) {
         ScreenManager.registerFactory(PLAYER_INVENTORY.get(), (screenContainer, inv, titleIn) -> {
             return new PlayerInventoryScreen(screenContainer, inv, titleIn);
         });
+        
+        ScreenManager.registerFactory(ALMANAC.get(), (screenContainer, inv, titleIn) -> {
+            return new AlmanacScreen(screenContainer, inv, titleIn);
+        });
     }
+	
 }

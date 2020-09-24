@@ -24,6 +24,7 @@ public class PVZPacketHandler {
 		CHANNEL.registerMessage(id++,PlantStatsPacket.class,PlantStatsPacket::encode,PlantStatsPacket::new,PlantStatsPacket.Handler::onMessage);
 		CHANNEL.registerMessage(id++,OpenGuiPacket.class,OpenGuiPacket::encode,OpenGuiPacket::new,OpenGuiPacket.Handler::onMessage);
 		CHANNEL.registerMessage(id++,ClickButtonPacket.class,ClickButtonPacket::encode,ClickButtonPacket::new,ClickButtonPacket.Handler::onMessage);
+		CHANNEL.registerMessage(id++,AlmanacUnLockPacket.class,AlmanacUnLockPacket::encode,AlmanacUnLockPacket::new,AlmanacUnLockPacket.Handler::onMessage);
 	}
 	
 }
