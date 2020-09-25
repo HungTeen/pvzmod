@@ -55,6 +55,15 @@ public enum Almanacs {
 	    return new TranslationTextComponent("entity.pvz."+a.toString().toLowerCase()).getFormattedText();
 	}
 	
+	public static Almanacs getAlmanacByName(String name) {
+		for (Almanacs a : Almanacs.values()) {
+			if (name.equals(a.toString().toLowerCase())) {
+				return a;
+			}
+		}
+		return null;
+	}
+	
 	public static enum Categories{
 		ALL, PLANTS, ZOMBIES;
 	}

@@ -24,12 +24,14 @@ public class AlmanacPage {
 	private final int yOffset = 30;
 	private final int size = 25;
 	private final List<CardWidget> buttons = Lists.newArrayListWithCapacity(MAX_NUM_PER_PAGE);
+	 private CardWidget hoveredButton;
 	private List<Almanacs> cardList;
 	private Minecraft mc;
 	private ToggleWidget forwardButton;
 	private ToggleWidget backButton;
 	private int totalPages;
 	private int currentPage;
+	private Almanacs lastClickedButton;
 
 	public AlmanacPage() {
 		for (int i = 0; i < MAX_NUM_PER_PAGE; ++i) {
@@ -59,16 +61,43 @@ public class AlmanacPage {
 			String s = this.currentPage + 1 + "/" + this.totalPages;
 			StringUtil.drawCenteredScaledString(this.mc.fontRenderer, s, x + 75, y + 175, Colors.WHITE, 1.5f);
 		}
-//	      this.hoveredButton = null;
+		this.hoveredButton = null;
 		for (CardWidget card : this.buttons) {
 			card.render(mouseX, mouseY, partialTicks);
-//	         if (card.visible && card.isHovered()) {
-//	            this.hoveredButton = card;
-//	         }
+			if (card.visible && card.isHovered()) {
+	            this.hoveredButton = card;
+	         }
 		}
 		this.backButton.render(mouseX, mouseY, partialTicks);
 		this.forwardButton.render(mouseX, mouseY, partialTicks);
-//	      this.overlay.render(mouseX, mouseY, partialTicks);
+	}
+
+	public boolean mouseClicked(double p_198955_1_, double p_198955_3_, int p_198955_5_) {
+		if (this.forwardButton.mouseClicked(p_198955_1_, p_198955_3_, p_198955_5_)) {
+			++this.currentPage;
+			this.updateButtonsForPage();
+			return true;
+		} else if (this.backButton.mouseClicked(p_198955_1_, p_198955_3_, p_198955_5_)) {
+			--this.currentPage;
+			this.updateButtonsForPage();
+			return true;
+		} else {
+			for (CardWidget card : this.buttons) {
+				if (card.mouseClicked(p_198955_1_, p_198955_3_, p_198955_5_)) {
+					this.lastClickedButton = card.getAlmanac();
+					return true;
+				}
+			}
+			return false;
+		}
+	}
+
+	public void renderTooltip(int mouseX, int mouseY) {
+		if (this.mc.currentScreen != null && this.hoveredButton != null) {
+			this.mc.currentScreen.renderTooltip(this.hoveredButton.getToolTipText(this.mc.currentScreen),
+					mouseX, mouseY);
+		}
+
 	}
 
 	public void updateLists(List<Almanacs> list, boolean flag) {
@@ -100,20 +129,25 @@ public class AlmanacPage {
 		this.forwardButton.visible = this.totalPages > 1 && this.currentPage < this.totalPages - 1;
 		this.backButton.visible = this.totalPages > 1 && this.currentPage > 0;
 	}
-	
-	public List<Almanacs> getCurrentList(Almanacs.Categories category){
+
+	public List<Almanacs> getCurrentList(Almanacs.Categories category) {
 		List<Almanacs> list = new ArrayList<>();
-		for(Almanacs a : Almanacs.values()) {
-			if(Almanacs.isPlant(a)) {
-				if(category != Almanacs.Categories.ZOMBIES) {
+		for (Almanacs a : Almanacs.values()) {
+			if (Almanacs.isPlant(a)) {
+				if (category != Almanacs.Categories.ZOMBIES) {
 					list.add(a);
 				}
-			}else {
-				if(category != Almanacs.Categories.PLANTS) {
+			} else {
+				if (category != Almanacs.Categories.PLANTS) {
 					list.add(a);
 				}
 			}
 		}
 		return list;
 	}
+
+	public Almanacs getCurrentAlmanacs() {
+		return this.lastClickedButton;
+	}
+
 }

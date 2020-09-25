@@ -8,7 +8,7 @@ import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 
 @Mod.EventBusSubscriber(modid=PVZMod.MOD_ID)
-public class PVZWorldEvent {
+public class PVZWorldEvents {
 
 	@SubscribeEvent
 	public static void onWorldTick(TickEvent.WorldTickEvent ev) {
@@ -17,7 +17,7 @@ public class PVZWorldEvent {
 		}
 		DimensionType type = ev.world.getDimension().getDimension().getType();
 		if(type==DimensionType.OVERWORLD) {
-			OverWorldEvent.tick(ev);
+			OverWorldEvents.tick(ev);
 		}
 	}
 	

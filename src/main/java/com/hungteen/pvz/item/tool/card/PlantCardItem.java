@@ -175,4 +175,8 @@ public class PlantCardItem extends SummonCardItem{
 		return Math.max(cost-getSunReduceNum(stack), 0);
 	}
 	
+	public Plants getPlant() {
+		return this.plant;
+	}
+	
 }

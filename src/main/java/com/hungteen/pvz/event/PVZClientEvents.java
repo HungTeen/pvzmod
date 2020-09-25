@@ -11,7 +11,7 @@ import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 
 @Mod.EventBusSubscriber(modid=PVZMod.MOD_ID,value = Dist.CLIENT)
-public class PVZClientEvent {
+public class PVZClientEvents {
 
 	@SubscribeEvent
 	public static void onGuiOpened(GuiOpenEvent event) {

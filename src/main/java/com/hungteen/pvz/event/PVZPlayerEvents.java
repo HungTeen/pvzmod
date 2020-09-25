@@ -9,6 +9,7 @@ import com.hungteen.pvz.capabilities.player.PlayerDataManager;
 import com.hungteen.pvz.capabilities.player.PlayerDataManager.PlayerStats;
 import com.hungteen.pvz.entity.plant.PVZPlantEntity;
 import com.hungteen.pvz.event.events.SummonCardUseEvent;
+import com.hungteen.pvz.item.tool.card.PlantCardItem;
 import com.hungteen.pvz.register.EnchantmentRegister;
 import com.hungteen.pvz.register.ItemRegister;
 import com.hungteen.pvz.utils.EntityUtil;
@@ -37,7 +38,7 @@ import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 
 @Mod.EventBusSubscriber(modid=PVZMod.MOD_ID)
-public class PVZPlayerEvent {
+public class PVZPlayerEvents {
 
 	
 	@SubscribeEvent
@@ -126,6 +127,17 @@ public class PVZPlayerEvent {
 	@SubscribeEvent
 	public static void onSummonCardUse(SummonCardUseEvent ev) {
 //		System.out.println(ev.getItemStack().getItem());
+		PlayerEntity player = ev.getPlayer();
+		Almanacs a = null;
+		if(!player.world.isRemote) {
+			if(ev.getItemStack().getItem() instanceof PlantCardItem) {// unlock plant card
+			    Plants plant = ((PlantCardItem) ev.getItemStack().getItem()).getPlant();
+			    a = Almanacs.getAlmanacByName(plant.toString().toLowerCase());
+			}
+		}
+		if(!player.world.isRemote && a != null) {//unlock almanac
+			PlayerUtil.unLockAlmanac(player, a);
+		}
 	}
 	
 }

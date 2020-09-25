@@ -412,6 +412,7 @@ public class PlayerDataManager {
 		
 		public void setAlmanacUnLocked(Almanacs a, boolean is) {
 			this.unLock.put(a, is);
+			this.sendAlmanacPacket(player, a);
 		}
 		
 		public void sendAlmanacPacket(PlayerEntity player,Almanacs a){

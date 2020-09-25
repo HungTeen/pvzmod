@@ -2,6 +2,8 @@ package com.hungteen.pvz.utils;
 
 import com.hungteen.pvz.capabilities.CapabilityHandler;
 import com.hungteen.pvz.capabilities.player.IPlayerDataCapability;
+import com.hungteen.pvz.capabilities.player.PlayerDataManager;
+import com.hungteen.pvz.utils.enums.Almanacs;
 import com.hungteen.pvz.utils.enums.Plants;
 import com.hungteen.pvz.utils.enums.Resources;
 
@@ -50,6 +52,15 @@ public class PlayerUtil {
 				});
 			});
 		}
+	}
+	
+	public static void unLockAlmanac(PlayerEntity player, Almanacs a) {
+		player.getCapability(CapabilityHandler.PLAYER_DATA_CAPABILITY).ifPresent((l)->{
+		    PlayerDataManager.AlmanacStats stats = l.getPlayerData().getAlmanacStats();
+		    if(!stats.isAlmanacUnLocked(a)) {
+			    stats.setAlmanacUnLocked(a, true);
+		    }
+	    });
 	}
 
 }

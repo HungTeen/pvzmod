@@ -17,7 +17,7 @@ import net.minecraft.world.World;
 import net.minecraftforge.event.TickEvent;
 
 
-public class OverWorldEvent {
+public class OverWorldEvents {
 
 	public static void tick(TickEvent.WorldTickEvent ev) {
 		World world = ev.world;

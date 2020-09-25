@@ -27,7 +27,6 @@ import net.minecraftforge.api.distmarker.OnlyIn;
 public class AlmanacSearchGui extends AbstractGui implements IRenderable, IGuiEventListener {
 
 	public static final ResourceLocation TEXTURE = StringUtil.prefix("textures/gui/container/almanac_search.png");
-//	public static final SearchTreeManager.Key<Almanacs> ALMANACS = new SearchTreeManager.Key<>();
 	private Minecraft mc;
 	protected AlmanacContainer container;
 	private TextFieldWidget searchBar;
@@ -42,27 +41,6 @@ public class AlmanacSearchGui extends AbstractGui implements IRenderable, IGuiEv
 	private final int xSize = 150;
 	private final int ySize = 200;
 	private boolean canType;
-
-//	static {
-//		List<Almanacs> list = new ArrayList<>();
-//		for (Almanacs a : Almanacs.values()) {
-//			list.add(a);
-//		}
-//		SearchTree<Almanacs> tree = new SearchTree<>((a) -> {
-//			return list.stream().flatMap((b) -> {
-//				return new TranslationTextComponent("gui.pvz." + b.toString().toLowerCase()).stream();
-//			}).map((text) -> {
-//				return TextFormatting.getTextWithoutFormattingCodes(text.getString()).trim();
-//			}).filter((p_213238_0_) -> {
-//				return !p_213238_0_.isEmpty();
-//			});
-//		}, (p_213258_0_) -> {
-//			return list.stream().map((a) -> {
-//				return null;
-//			});
-//		});
-//		Minecraft.getInstance().getSearchTreeManager().add(ALMANACS, tree);
-//	}
 
 	public void init(Minecraft mc, AlmanacContainer container, int widthIn, int heightIn) {
 		this.mc = mc;
@@ -98,21 +76,11 @@ public class AlmanacSearchGui extends AbstractGui implements IRenderable, IGuiEv
 		List<Almanacs> list = this.page.getCurrentList(this.currentTab.getCategory());
 		String s = this.searchBar.getText();
 		if (!s.isEmpty()) {
-//			ObjectSet<Almanacs> objectset = new ObjectLinkedOpenHashSet<>(
-//					this.mc.getSearchTree(ALMANACS).search(s.toLowerCase(Locale.ROOT)));
 			list.removeIf((a) -> {
 				String now = Almanacs.getAlmanacName(a);
-//				if(now.length()<s.length()) {
-//					return true;
-//				}
-//				for(int i=0;i<=now.length()-s.length();i++) {
-//					if(now.substring(i, s.length()+i).equals(s)) {
-//						return false;
-//					}
-//				}
 				return !StringUtil.KMP.kmp(now, s);
 			});
-			
+
 		}
 		this.page.updateLists(list, p_193003_1_);
 	}
@@ -185,7 +153,7 @@ public class AlmanacSearchGui extends AbstractGui implements IRenderable, IGuiEv
 			return false;
 		} else if (!this.mc.player.isSpectator()) {
 			if (this.searchBar.charTyped(p_charTyped_1_, p_charTyped_2_)) {
-	            this.updateSearch();
+				this.updateSearch();
 				return true;
 			} else {
 				return IGuiEventListener.super.charTyped(p_charTyped_1_, p_charTyped_2_);
@@ -198,26 +166,9 @@ public class AlmanacSearchGui extends AbstractGui implements IRenderable, IGuiEv
 	@Override
 	public boolean mouseClicked(double p_mouseClicked_1_, double p_mouseClicked_3_, int p_mouseClicked_5_) {
 		if (!this.mc.player.isSpectator()) {
-//			if (this.recipeBookPage.func_198955_a(p_mouseClicked_1_, p_mouseClicked_3_, p_mouseClicked_5_,
-//					(this.width - 147) / 2 - this.xOffset, (this.height - 166) / 2, 147, 166)) {
-//				IRecipe<?> irecipe = this.recipeBookPage.getLastClickedRecipe();
-//				RecipeList recipelist = this.recipeBookPage.getLastClickedRecipeList();
-//				if (irecipe != null && recipelist != null) {
-//					if (!recipelist.isCraftable(irecipe) && this.ghostRecipe.getRecipe() == irecipe) {
-//						return false;
-//					}
-//
-//					this.ghostRecipe.clear();
-//					this.mc.playerController.sendPlaceRecipePacket(this.mc.player.openContainer.windowId, irecipe,
-//							Screen.hasShiftDown());
-//					if (!this.isOffsetNextToMainGUI()) {
-//						this.setVisible(false);
-//					}
-//				}
-//
-//				return true;
-//			} else 
-			if (this.searchBar.mouseClicked(p_mouseClicked_1_, p_mouseClicked_3_, p_mouseClicked_5_)) {
+			if (this.page.mouseClicked(p_mouseClicked_1_, p_mouseClicked_3_, p_mouseClicked_5_)) {
+				return true;
+			} else if (this.searchBar.mouseClicked(p_mouseClicked_1_, p_mouseClicked_3_, p_mouseClicked_5_)) {
 				return true;
 			} else {
 				for (AlmanacToggleWidget toggle : this.toggleTabs) {
@@ -257,6 +208,10 @@ public class AlmanacSearchGui extends AbstractGui implements IRenderable, IGuiEv
 		RenderSystem.popMatrix();
 	}
 
+	public void renderTooltip(int mouseX, int mouseY) {
+		this.page.renderTooltip(mouseX, mouseY);
+	}
+
 	public void removed() {
 		this.searchBar = null;
 		this.currentTab = null;
@@ -268,6 +223,10 @@ public class AlmanacSearchGui extends AbstractGui implements IRenderable, IGuiEv
 		return flag && !this.currentTab.isHovered();
 	}
 
+	public Almanacs getCurrentAlmanac() {
+		return this.page.getCurrentAlmanacs();
+	}
+	
 	private void updateTabs() {
 		int x = this.guiLeft - 30;
 		int y = this.guiTop + 10;
@@ -279,7 +238,6 @@ public class AlmanacSearchGui extends AbstractGui implements IRenderable, IGuiEv
 //			System.out.println(x + "," + (y + h * i));
 //			toggle.setA
 		}
-
 	}
 
 	public int updateScreenPosition(int x, int y) {

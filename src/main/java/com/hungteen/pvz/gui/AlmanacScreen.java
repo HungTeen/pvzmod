@@ -1,13 +1,21 @@
 package com.hungteen.pvz.gui;
 
+import com.hungteen.pvz.capabilities.player.ClientPlayerResources;
 import com.hungteen.pvz.gui.container.AlmanacContainer;
+import com.hungteen.pvz.utils.ItemUtil;
+import com.hungteen.pvz.utils.PlantUtil;
+import com.hungteen.pvz.utils.RenderUtil;
 import com.hungteen.pvz.utils.StringUtil;
+import com.hungteen.pvz.utils.enums.Almanacs;
+import com.hungteen.pvz.utils.enums.Colors;
+import com.hungteen.pvz.utils.enums.Plants;
 import com.mojang.blaze3d.systems.RenderSystem;
 
 import net.minecraft.client.gui.screen.inventory.ContainerScreen;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.text.ITextComponent;
+import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 
@@ -44,6 +52,76 @@ public class AlmanacScreen extends ContainerScreen<AlmanacContainer> {
 		this.searchGui.render(mouseX, mouseY, partialTicks);
 		super.render(mouseX, mouseY, partialTicks);
 		this.renderHoveredToolTip(mouseX, mouseY);
+		this.renderAlmanac();
+		this.searchGui.renderTooltip(mouseX, mouseY);
+	}
+	
+	protected void renderAlmanac(){
+		Almanacs current = this.searchGui.getCurrentAlmanac();
+		if(this.searchGui.getCurrentAlmanac()==null) {
+			current = Almanacs.PEA_SHOOTER;
+		}
+		this.renderTitle(current);
+		if(!ClientPlayerResources.isAlmanacUnLocked(current)) {
+			return ;
+		}
+		this.renderLogo(current);
+		this.renderXpBar(current);
+		this.renderShortInfo(current);
+	}
+	
+	protected void renderShortInfo(Almanacs a) {
+		RenderSystem.pushMatrix();
+		int posX = this.guiLeft + 82 + 150 / 2;
+		int posY = this.guiTop + 26 + 2;
+		for(int i=0;i<4;i++) {
+			StringUtil.drawCenteredScaledString(font, new TranslationTextComponent("gui.pvz."+a.toString().toLowerCase()+i).getFormattedText(), posX, posY, Colors.BLACK, 0.8f);
+			posY += 12;
+		}
+		RenderSystem.popMatrix();
+	}
+	
+	protected void renderXpBar(Almanacs a) {
+		RenderSystem.pushMatrix();
+		int maxLvl = 1, lvl = 1;
+		Plants p = null;
+		if(Almanacs.isPlant(a)) {
+			p = Plants.getPlantByName(a.toString().toLowerCase());
+			maxLvl = PlantUtil.getPlantMaxLvl(p);
+			lvl = ClientPlayerResources.getPlayerPlantCardLvl(p);
+		}
+		String lvlInfo = "LVL:"+maxLvl+"[MAX]";
+		int barWidth = 62, barHeight = 9;
+		int len = barWidth;
+		if(maxLvl != lvl && p != null) { 
+			lvlInfo = "LVL:"+lvl;
+			int xp = ClientPlayerResources.getPlayerPlantCardXp(p);
+			int maxXp = PlantUtil.getPlantLevelUpXp(p, lvl);
+			len = RenderUtil.getRenderBarLen(xp, maxXp, barWidth);
+		}
+		int texX = 0;
+		int texY = maxLvl == lvl ? 210 : 200;
+		this.minecraft.getTextureManager().bindTexture(TEXTURE);
+		blit(this.guiLeft + 9, this.guiTop + 66, texX, texY, len, barHeight);
+		StringUtil.drawCenteredScaledString(this.font, lvlInfo, this.guiLeft + 9 + barWidth / 2, this.guiTop + 66 + 1, Colors.BLACK, 1f);
+		RenderSystem.popMatrix();
+	}
+	
+	protected void renderTitle(Almanacs a) {
+		RenderSystem.pushMatrix();
+		int dx = this.guiLeft + 82 + 150 / 2, dy = this.guiTop + 10 + 2;
+		StringUtil.drawCenteredScaledString(this.font, Almanacs.getAlmanacName(a), dx, dy, Colors.BLACK, 1.6f);
+		RenderSystem.popMatrix();
+	}
+	
+	protected void renderLogo(Almanacs a) {
+		int dx = this.guiLeft + 16, dy = this.guiTop + 14;
+		int scale = 3;
+		RenderSystem.pushMatrix();
+		RenderSystem.scaled(scale, scale, scale);
+		RenderSystem.translated((dx % scale) * 1.0d / scale , (dy % scale) * 1.0d / scale, 0);
+		this.itemRenderer.renderItemIntoGUI(ItemUtil.getItemStackByAlmanac(a), dx / scale, dy / scale);
+		RenderSystem.popMatrix();
 	}
 
 	@Override
