@@ -20,10 +20,12 @@ public class PlantUtil {
 	public static final int[] PURPLE_XP = new int[] {0,30,60,80,105,150,225,300,400,520,700,960,1300,2100,3000,4200,5600,7200,9600,12500,999999999};
 	public static final int[] GOLD_XP = new int[] {0,35,60,90,120,175,255,350,450,600,800,1080,1500,2500,3600,5000,6400,8100,10800,14000,999999999};
 	public static final int[] MEGA_XP = new int[] {0,40,70,100,150,210,300,400,520,700,960,1300,1800,3000,4200,6000,7800,9600,12500,16000,999999999};
+	public static final int CURRENT_PLANT_NUM = 16;
 	public static final Plants [] WATER_PLANTS = new Plants[] {
 			Plants.TANGLE_KELP,
 			Plants.WATER_GUARD,
 	};
+	
 	
 	public static int getPlantLevelUpXp(Plants plant,int lvl){
 		Ranks rank=getPlantRankByName(plant);
