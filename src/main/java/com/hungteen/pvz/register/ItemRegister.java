@@ -1,6 +1,7 @@
 package com.hungteen.pvz.register;
 
 import com.hungteen.pvz.PVZMod;
+import com.hungteen.pvz.item.PVZFoods;
 import com.hungteen.pvz.item.PVZItemBase;
 import com.hungteen.pvz.item.PVZSpawnEggItem;
 import com.hungteen.pvz.item.armor.BucketArmorItem;
@@ -21,6 +22,7 @@ import net.minecraft.inventory.EquipmentSlotType;
 import net.minecraft.item.ArmorMaterial;
 import net.minecraft.item.BlockItem;
 import net.minecraft.item.Item;
+import net.minecraft.item.ItemGroup;
 import net.minecraftforge.fml.RegistryObject;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
@@ -102,8 +104,7 @@ public class ItemRegister {
 	public static final RegistryObject<Item> FLAME_PEA = ITEMS.register("flame_pea", PVZItemBase::new);
 	public static final RegistryObject<Item> BLUE_FLAME_PEA = ITEMS.register("blue_flame_pea", PVZItemBase::new);
 	public static final RegistryObject<Item> SMALL_MEAT = ITEMS.register("small_meat", PVZItemBase::new);
-	public static final RegistryObject<Item> FAKE_BRAIN = ITEMS.register("fake_brain", PVZItemBase::new);
-	public static final RegistryObject<Item> REAL_BRAIN = ITEMS.register("real_brain", PVZItemBase::new);
+	public static final RegistryObject<Item> PEPPER = ITEMS.register("pepper", PVZItemBase::new);
 	
 	//tool
 	public static final RegistryObject<Item> ZOMBIE_FLAG = ITEMS.register("zombie_flag", ZombieFlagItem::new);
@@ -117,6 +118,10 @@ public class ItemRegister {
 	public static final RegistryObject<Item> STRANGE_HELP = ITEMS.register("strange_help", StrangeHelpItem::new);
 	public static final RegistryObject<Item> GUILD_BOOK = ITEMS.register("guild_book", GuildBookItem::new);
 	public static final RegistryObject<Item> ALMANAC = ITEMS.register("almanac", AlmanacItem::new);
+	
+	//food 
+	public static final RegistryObject<Item> FAKE_BRAIN = ITEMS.register("fake_brain", ()->new Item(new Item.Properties().group(ItemGroup.FOOD).food(PVZFoods.FAKE_BRAIN)));
+	public static final RegistryObject<Item> REAL_BRAIN = ITEMS.register("real_brain", ()->new Item(new Item.Properties().group(ItemGroup.FOOD).food(PVZFoods.REAL_BRAIN)));
 	
 	//spawn egg
 	//drop

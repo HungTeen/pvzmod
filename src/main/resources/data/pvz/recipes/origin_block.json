@@ -10,8 +10,7 @@
       "item": "pvz:origin_essence"
     },
     "Y": {
-      "item": "minecraft:glass",
-      "data": 0
+      "tag": "forge:glass"
     }
   },
   "result": {

@@ -35,13 +35,9 @@ public class ContainerRegister {
 	
 	@SubscribeEvent
     public static void onClientSetupEvent(FMLClientSetupEvent event) {
-        ScreenManager.registerFactory(PLAYER_INVENTORY.get(), (screenContainer, inv, titleIn) -> {
-            return new PlayerInventoryScreen(screenContainer, inv, titleIn);
-        });
+        ScreenManager.registerFactory(PLAYER_INVENTORY.get(), PlayerInventoryScreen::new);
         
-        ScreenManager.registerFactory(ALMANAC.get(), (screenContainer, inv, titleIn) -> {
-            return new AlmanacScreen(screenContainer, inv, titleIn);
-        });
+        ScreenManager.registerFactory(ALMANAC.get(), AlmanacScreen::new);
     }
 	
 }

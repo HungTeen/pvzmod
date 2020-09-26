@@ -10,7 +10,7 @@
       "item": "pvz:appease_essence"
     },
     "B": {
-      "item": "pvz:pea"
+      "tag": "forge:crops/pea"
     },
     "A": {
       "item": "pvz:gray_card"

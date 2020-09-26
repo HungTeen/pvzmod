@@ -10,7 +10,7 @@
       "item": "pvz:defence_essence"
     },
     "B": {
-      "item": "pvz:nut"
+      "tag": "forge:crops/nut"
     },
     "A": {
       "item": "pvz:white_card"
