@@ -31,8 +31,7 @@ public class SunFlowerEntity extends PlantProducerEntity{
 		}
 	}
 
-	protected void genSun(int num)
-	{
+	protected void genSun(int num){
 		SunEntity sun=EntityRegister.SUN.get().create(this.world);
 		sun.setAmount(num);
 		sun.setPosition(this.getPosX()+this.rand.nextInt(10)-5,this.getPosY()+this.rand.nextInt(3)+1,this.getPosZ()+this.rand.nextInt(10)-5);
@@ -40,8 +39,7 @@ public class SunFlowerEntity extends PlantProducerEntity{
         this.world.addEntity(sun);
 	}
 	
-	protected int getSunAmount()
-	{
+	protected int getSunAmount(){
 		int lvl=this.getPlantLvl();
 		if(lvl<=6) return 25;
 		if(lvl<=13) return 35;
@@ -51,8 +49,13 @@ public class SunFlowerEntity extends PlantProducerEntity{
 	
 	@Override
 	public int getGenCD() {
-		if(this.world.isDaytime()) return 500;
-		return 2000;
+		int time = this.getAttackCD();
+		if(this.world.isDaytime()) return time;
+		return time * 4;
+	}
+	
+	public static int getAttackCD(int lvl) {
+		return 500;
 	}
 
 	@Override

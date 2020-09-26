@@ -114,15 +114,13 @@ public class SquashEntity extends PVZPlantEntity{
 		return 2;
 	}
 	
-	@Override
-	public float getAttackDamage() {
-		int lvl=this.getPlantLvl();
-		if(lvl<=20) {
-			int now=(lvl-1)/5;
-			return 140+now*20;
-		}
-		return 140;
-	}
+//	public static float getAttackDamage(int lvl){
+//		if(lvl<=20) {
+//			int now=(lvl-1)/5;
+//			return 140+now*20;
+//		}
+//		return 140;
+//	}
 	
 	protected int getDeathChance()
 	{

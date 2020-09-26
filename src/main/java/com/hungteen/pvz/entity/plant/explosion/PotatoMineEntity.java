@@ -129,9 +129,11 @@ public class PotatoMineEntity extends PlantCloserEntity{
 	/**
 	 * potato mine prepare time
 	 */
-	protected int getReadyTime()
-	{
-		int lvl=this.getPlantLvl();
+	protected int getReadyTime(){
+		return this.getAttackCD();
+	}
+	
+	public static int getAttackCD(int lvl) {
 		if(lvl<=20) {
 			int now=(lvl-1)/4;
 			return 240-now*20;
@@ -139,9 +141,7 @@ public class PotatoMineEntity extends PlantCloserEntity{
 		return 240;
 	}
 	
-	@Override
-	public float getAttackDamage() {
-		int lvl=this.getPlantLvl();
+	public static float getAttackDamage(int lvl){
 		if(lvl<=20) {
 			int now=(lvl-1)/5;
 			return 140+now*20;
@@ -149,8 +149,7 @@ public class PotatoMineEntity extends PlantCloserEntity{
 		return 140;
 	}
 	
-	protected int getSignChangeTime()
-	{
+	protected int getSignChangeTime(){
 		if(this.isMineReady()) return 10;
 		return 20;
 	}
@@ -179,13 +178,11 @@ public class PotatoMineEntity extends PlantCloserEntity{
 		compound.putBoolean("sign_red", this.sign_red);
 	}
 	
-	public void setMineReady(boolean is)
-    {
+	public void setMineReady(boolean is){
     	this.dataManager.set(MINE_READY, is);
     }
     
-    public boolean isMineReady()
-    {
+    public boolean isMineReady(){
     	return this.dataManager.get(MINE_READY);
     }
     

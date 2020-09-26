@@ -1,10 +1,9 @@
-package com.hungteen.pvz.gui.widget;
+package com.hungteen.pvz.gui.almanac;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import com.hungteen.pvz.capabilities.player.ClientPlayerResources;
-import com.hungteen.pvz.gui.AlmanacSearchGui;
 import com.hungteen.pvz.utils.ItemUtil;
 import com.hungteen.pvz.utils.enums.Almanacs;
 import com.mojang.blaze3d.systems.RenderSystem;

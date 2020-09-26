@@ -1,7 +1,9 @@
-package com.hungteen.pvz.gui;
+package com.hungteen.pvz.gui.almanac;
 
+import com.hungteen.pvz.PVZMod;
 import com.hungteen.pvz.capabilities.player.ClientPlayerResources;
-import com.hungteen.pvz.gui.container.AlmanacContainer;
+import com.hungteen.pvz.entity.plant.defence.TallNutEntity;
+import com.hungteen.pvz.entity.plant.defence.WallNutEntity;
 import com.hungteen.pvz.utils.ItemUtil;
 import com.hungteen.pvz.utils.PlantUtil;
 import com.hungteen.pvz.utils.RenderUtil;
@@ -14,6 +16,7 @@ import com.mojang.blaze3d.systems.RenderSystem;
 import net.minecraft.client.gui.screen.inventory.ContainerScreen;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.util.ResourceLocation;
+import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraftforge.api.distmarker.Dist;
@@ -24,7 +27,8 @@ public class AlmanacScreen extends ContainerScreen<AlmanacContainer> {
 
 	public static final ResourceLocation TEXTURE = StringUtil.prefix("textures/gui/container/almanac.png");
 	private final AlmanacSearchGui searchGui = new AlmanacSearchGui();
-
+	private int propertyCnt;
+	
 	public AlmanacScreen(AlmanacContainer screenContainer, PlayerInventory inv, ITextComponent titleIn) {
 		super(screenContainer, inv, titleIn);
 		this.xSize = 240;
@@ -68,6 +72,105 @@ public class AlmanacScreen extends ContainerScreen<AlmanacContainer> {
 		this.renderLogo(current);
 		this.renderXpBar(current);
 		this.renderShortInfo(current);
+		if(Almanacs.isPlant(current)) {
+			Plants plant = Plants.getPlantByName(current.toString().toLowerCase());
+			int lvl = ClientPlayerResources.getPlayerPlantCardLvl(plant);
+//			int maxLvl = PlantUtil.getPlantMaxLvl(plant);
+			this.propertyCnt = 0;
+			this.drawProperty(Properties.SUN_COST, PlantUtil.getPlantSunCost(plant));
+			this.drawProperty(Properties.COOL_DOWN, PlantUtil.getPlantCoolDownTime(plant, lvl));
+			this.drawProperty(Properties.HEALTH, PlantUtil.getPlantMaxHealth(plant, lvl));
+			switch(plant) {
+			case PEA_SHOOTER:{
+				this.drawProperty(Properties.ATTACK_DAMAGE, PlantUtil.getPlantAttackDamage(plant, lvl));
+				this.drawProperty(Properties.ATTACK_CD, PlantUtil.getPlantAttackCD(plant, lvl));
+				break;
+			}
+			case SUN_FLOWER:{
+				this.drawProperty(Properties.GEN_TIME, PlantUtil.getPlantAttackCD(plant, lvl));
+				break;
+			}
+			case CHERRY_BOMB:{
+				this.drawProperty(Properties.ATTACK_DAMAGE, PlantUtil.getPlantAttackDamage(plant, lvl));
+				break;
+			}
+			case WALL_NUT:{
+				this.drawProperty(Properties.ARMOR_HEALTH, WallNutEntity.getArmorLife(lvl));
+				break;
+			}
+			case POTATO_MINE:{
+				this.drawProperty(Properties.ATTACK_DAMAGE, PlantUtil.getPlantAttackDamage(plant, lvl));
+				this.drawProperty(Properties.PRE_TIME, PlantUtil.getPlantAttackCD(plant, lvl));
+				break;
+			}
+			case SNOW_PEA:{
+				this.drawProperty(Properties.ATTACK_DAMAGE, PlantUtil.getPlantAttackDamage(plant, lvl));
+				this.drawProperty(Properties.ATTACK_CD, PlantUtil.getPlantAttackCD(plant, lvl));
+				break;
+			}
+			case CHOMPER:{
+				this.drawProperty(Properties.ATTACK_DAMAGE, PlantUtil.getPlantAttackDamage(plant, lvl));
+				this.drawProperty(Properties.ATTACK_CD, PlantUtil.getPlantAttackCD(plant, lvl));
+				break;
+			}
+			case REPEATER:{
+				this.drawProperty(Properties.ATTACK_DAMAGE, PlantUtil.getPlantAttackDamage(plant, lvl));
+				this.drawProperty(Properties.ATTACK_CD, PlantUtil.getPlantAttackCD(plant, lvl));
+				break;
+			}
+			case LILY_PAD:{
+				break;
+			}
+			case SQUASH:{
+				this.drawProperty(Properties.ATTACK_DAMAGE, PlantUtil.getPlantAttackDamage(plant, lvl));
+				break;
+			}
+			case THREE_PEATER:{
+				this.drawProperty(Properties.ATTACK_DAMAGE, PlantUtil.getPlantAttackDamage(plant, lvl));
+				this.drawProperty(Properties.ATTACK_CD, PlantUtil.getPlantAttackCD(plant, lvl));
+				break;
+			}
+			case TANGLE_KELP:{
+				this.drawProperty(Properties.ATTACK_DAMAGE, PlantUtil.getPlantAttackDamage(plant, lvl));
+				break;
+			}
+			case JALAPENO:{
+				this.drawProperty(Properties.ATTACK_DAMAGE, PlantUtil.getPlantAttackDamage(plant, lvl));
+				break;
+			}
+			case SPIKE_WEED:{
+				this.drawProperty(Properties.ATTACK_DAMAGE, PlantUtil.getPlantAttackDamage(plant, lvl));
+				this.drawProperty(Properties.ATTACK_CD, PlantUtil.getPlantAttackCD(plant, lvl));
+				break;
+			}
+			case TORCH_WOOD:{
+				break;
+			}
+			case TALL_NUT:{
+				this.drawProperty(Properties.ARMOR_HEALTH, TallNutEntity.getArmorLife(lvl));
+				break;
+			}
+			default:{
+				PVZMod.LOGGER.debug("error plant enum type");
+				break;
+			}
+			}
+		}else {//for zombies, but nothing for now
+			
+		}
+	}
+	
+	protected void drawProperty(Properties prop, float num) {
+		this.propertyCnt ++;
+		int posX = this.guiLeft + 9 + 2 + ((this.propertyCnt & 1) == 1 ? 0 : 110);
+		int posY = this.guiTop + 92 + 2 + ((this.propertyCnt - 1) / 2) * 18;
+		String string = prop.getName()+": ";
+		if(prop == Properties.ATTACK_DAMAGE) {
+			string += num;
+		}else {
+			string += MathHelper.fastFloor(num);
+		}
+		StringUtil.drawScaledString(font, string, posX, posY, prop.getColor(), 1f);
 	}
 	
 	protected void renderShortInfo(Almanacs a) {
@@ -75,7 +178,7 @@ public class AlmanacScreen extends ContainerScreen<AlmanacContainer> {
 		int posX = this.guiLeft + 82 + 150 / 2;
 		int posY = this.guiTop + 26 + 2;
 		for(int i=0;i<4;i++) {
-			StringUtil.drawCenteredScaledString(font, new TranslationTextComponent("gui.pvz."+a.toString().toLowerCase()+i).getFormattedText(), posX, posY, Colors.BLACK, 0.8f);
+			StringUtil.drawCenteredScaledString(font, new TranslationTextComponent("gui.pvz.almanac."+a.toString().toLowerCase()+(i+1)).getFormattedText(), posX, posY, Colors.DARK_BLUE, 0.7f);
 			posY += 12;
 		}
 		RenderSystem.popMatrix();
@@ -90,11 +193,10 @@ public class AlmanacScreen extends ContainerScreen<AlmanacContainer> {
 			maxLvl = PlantUtil.getPlantMaxLvl(p);
 			lvl = ClientPlayerResources.getPlayerPlantCardLvl(p);
 		}
-		String lvlInfo = "LVL:"+maxLvl+"[MAX]";
+		String lvlInfo = Properties.LVL.getName()+":"+lvl;
 		int barWidth = 62, barHeight = 9;
 		int len = barWidth;
 		if(maxLvl != lvl && p != null) { 
-			lvlInfo = "LVL:"+lvl;
 			int xp = ClientPlayerResources.getPlayerPlantCardXp(p);
 			int maxXp = PlantUtil.getPlantLevelUpXp(p, lvl);
 			len = RenderUtil.getRenderBarLen(xp, maxXp, barWidth);
@@ -110,7 +212,7 @@ public class AlmanacScreen extends ContainerScreen<AlmanacContainer> {
 	protected void renderTitle(Almanacs a) {
 		RenderSystem.pushMatrix();
 		int dx = this.guiLeft + 82 + 150 / 2, dy = this.guiTop + 10 + 2;
-		StringUtil.drawCenteredScaledString(this.font, Almanacs.getAlmanacName(a), dx, dy, Colors.BLACK, 1.6f);
+		StringUtil.drawCenteredScaledString(this.font, Almanacs.getAlmanacName(a), dx, dy, Colors.GREEN, 1.6f);
 		RenderSystem.popMatrix();
 	}
 	
@@ -150,6 +252,31 @@ public class AlmanacScreen extends ContainerScreen<AlmanacContainer> {
 	public void removed() {
 		this.searchGui.removed();
 		super.removed();
+	}
+	
+	private enum Properties{
+		LVL,
+		HEALTH,
+		SUN_COST,
+		COOL_DOWN,
+		ATTACK_DAMAGE,
+		GEN_TIME,
+		ATTACK_CD,
+		PRE_TIME,
+		ARMOR_HEALTH;
+		
+		public String getName() {
+			return new TranslationTextComponent("gui.pvz.almanac."+this.toString().toLowerCase()).getFormattedText();
+		}
+		
+		public int getColor() {
+			switch (this) {
+//			case SUN_COST: return Colors.YELLOW;
+//			case HEALTH:
+//			case ATTACK_DAMAGE: return Colors.RED;
+			default:return Colors.BLACK;
+			}
+		}
 	}
 
 }

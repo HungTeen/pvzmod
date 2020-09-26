@@ -1,12 +1,9 @@
-package com.hungteen.pvz.gui;
+package com.hungteen.pvz.gui.almanac;
 
 import java.util.List;
 import java.util.Locale;
 
 import com.google.common.collect.Lists;
-import com.hungteen.pvz.gui.almanac.AlmanacPage;
-import com.hungteen.pvz.gui.container.AlmanacContainer;
-import com.hungteen.pvz.gui.widget.AlmanacToggleWidget;
 import com.hungteen.pvz.utils.StringUtil;
 import com.hungteen.pvz.utils.enums.Almanacs;
 import com.mojang.blaze3d.systems.RenderSystem;
@@ -77,8 +74,8 @@ public class AlmanacSearchGui extends AbstractGui implements IRenderable, IGuiEv
 		String s = this.searchBar.getText();
 		if (!s.isEmpty()) {
 			list.removeIf((a) -> {
-				String now = Almanacs.getAlmanacName(a);
-				return !StringUtil.KMP.kmp(now, s);
+				String now = Almanacs.getAlmanacName(a).toLowerCase();
+				return !StringUtil.KMP.kmp(now, s.toLowerCase());
 			});
 
 		}

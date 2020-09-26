@@ -29,7 +29,7 @@ public class PVZNearestTargetGoal extends TargetGoal{
 	}
     
 	public PVZNearestTargetGoal(MobEntity mobIn, boolean checkSight, int chance, float w, float h) {
-		this(mobIn, checkSight, 5, w, h, h);
+		this(mobIn, checkSight, chance, w, h, h);
 	}
 	
 	public PVZNearestTargetGoal(MobEntity mobIn, boolean checkSight, int chance, float w, float h1, float h2) {

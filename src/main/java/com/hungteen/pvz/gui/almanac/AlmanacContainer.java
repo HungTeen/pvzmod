@@ -1,4 +1,4 @@
-package com.hungteen.pvz.gui.container;
+package com.hungteen.pvz.gui.almanac;
 
 import com.hungteen.pvz.register.ContainerRegister;
 import com.hungteen.pvz.register.ItemRegister;
@@ -8,6 +8,7 @@ import net.minecraft.inventory.container.Container;
 
 public class AlmanacContainer extends Container{
 
+	@SuppressWarnings("unused")
 	private final PlayerEntity player;
 	
 	public AlmanacContainer(int id, PlayerEntity player) {

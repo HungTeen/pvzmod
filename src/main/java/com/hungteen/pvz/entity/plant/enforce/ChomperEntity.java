@@ -102,7 +102,7 @@ public class ChomperEntity extends PVZPlantEntity{
 	
 	private void performAttack() {
 		LivingEntity target = this.getAttackTarget();
-		if(target.getHealth()<=this.getMaxEatDamage()) {//eat to death need rest
+		if(target.getHealth()<=this.getAttackDamage()) {//eat to death need rest
 			this.setRestTick(this.getRestCD());
 		}
 		this.playSound(SoundRegister.CHOMP.get(), 1, 1);
@@ -110,15 +110,14 @@ public class ChomperEntity extends PVZPlantEntity{
 	}
 	
 	public float getAttackDamage(LivingEntity target) {
-		if(target.getHealth()<=this.getMaxEatDamage()) {//eat to death
-			return this.getMaxEatDamage();
+		if(target.getHealth()<=this.getAttackDamage()) {//eat to death
+			return this.getAttackDamage();
 		}else {
-			return this.getNormalDamage();
+			return this.getAttackDamage()/5;
 		}
 	}
 	
-	public int getMaxEatDamage() {
-		int lvl=this.getPlantLvl();
+	public static float getAttackDamage(int lvl){
 		if(lvl<=20) {
 			int now=(lvl-1)/4;
 			return 200+now*20;
@@ -126,17 +125,11 @@ public class ChomperEntity extends PVZPlantEntity{
 		return 200;
 	}
 	
-	public int getNormalDamage() {
-		int lvl=this.getPlantLvl();
-		if(lvl<=20) {
-			int now=(lvl-1)/4;
-			return now*5+40;
-		}
-		return 40;
+	public int getRestCD() {
+		return this.getAttackCD();
 	}
 	
-	public int getRestCD() {
-		int lvl=this.getPlantLvl();
+	public static int getAttackCD(int lvl) {
 		if(lvl<=20) {
 			int now = (lvl-1)/5;
 			return 840-40*now;

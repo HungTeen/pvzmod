@@ -85,6 +85,8 @@ public abstract class PVZPlantEntity extends CreatureEntity implements IPVZPlant
 	@Override
 	protected void registerAttributes() {
 		super.registerAttributes();
+		this.getAttributes().registerAttribute(SharedMonsterAttributes.ATTACK_DAMAGE).setBaseValue(0);
+		this.getAttributes().registerAttribute(SharedMonsterAttributes.ATTACK_SPEED).setBaseValue(0);
 		this.getAttribute(SharedMonsterAttributes.MAX_HEALTH).setBaseValue(this.getLife());
         this.getAttribute(SharedMonsterAttributes.MOVEMENT_SPEED).setBaseValue(0d);
         this.getAttribute(SharedMonsterAttributes.KNOCKBACK_RESISTANCE).setBaseValue(1d);
@@ -94,6 +96,7 @@ public abstract class PVZPlantEntity extends CreatureEntity implements IPVZPlant
 	protected void registerGoals() {
 		this.goalSelector.addGoal(2, new LookRandomlyGoal(this));
 	}
+	
 	
 	@Override
 	public void livingTick() {
@@ -347,8 +350,13 @@ public abstract class PVZPlantEntity extends CreatureEntity implements IPVZPlant
         this.setIsGardenPlant(compound.getBoolean("is_garden_plant"));
     }
 	
+	/**
+	 * 
+	 */
 	public void updateAttributes(){
 		this.getAttribute(SharedMonsterAttributes.MAX_HEALTH).setBaseValue(this.getLife());
+		this.getAttribute(SharedMonsterAttributes.ATTACK_DAMAGE).setBaseValue(PlantUtil.getPlantAttackDamage(getPlantEnumName(), getPlantLvl()));
+		this.getAttribute(SharedMonsterAttributes.ATTACK_SPEED).setBaseValue(PlantUtil.getPlantAttackCD(getPlantEnumName(), getPlantLvl()));
 		this.heal(this.getMaxHealth());
 	}
 	
@@ -397,14 +405,12 @@ public abstract class PVZPlantEntity extends CreatureEntity implements IPVZPlant
 	}
 	
 	public float getAttackDamage() {
-		return 0;
+		return (float) this.getAttribute(SharedMonsterAttributes.ATTACK_DAMAGE).getBaseValue();
 	}
 	
-//	@Nullable
-//    protected SoundEvent getHurtSound(DamageSource damageSourceIn)
-//    {
-//        return SoundsHandler.PLANT_HURT;
-//    }
+	public int getAttackCD() {
+		return (int) this.getAttribute(SharedMonsterAttributes.ATTACK_SPEED).getBaseValue();
+	}
 	
 	@Override
 	public boolean canDespawn(double distanceToClosestPlayer) {

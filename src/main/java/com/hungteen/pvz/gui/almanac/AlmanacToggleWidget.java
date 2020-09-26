@@ -1,7 +1,6 @@
-package com.hungteen.pvz.gui.widget;
+package com.hungteen.pvz.gui.almanac;
 
 import com.hungteen.pvz.PVZMod;
-import com.hungteen.pvz.gui.AlmanacSearchGui;
 import com.hungteen.pvz.register.ItemRegister;
 import com.hungteen.pvz.utils.enums.Almanacs;
 import com.mojang.blaze3d.systems.RenderSystem;

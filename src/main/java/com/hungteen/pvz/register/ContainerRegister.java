@@ -1,9 +1,9 @@
 package com.hungteen.pvz.register;
 
 import com.hungteen.pvz.PVZMod;
-import com.hungteen.pvz.gui.AlmanacScreen;
 import com.hungteen.pvz.gui.PlayerInventoryScreen;
-import com.hungteen.pvz.gui.container.AlmanacContainer;
+import com.hungteen.pvz.gui.almanac.AlmanacContainer;
+import com.hungteen.pvz.gui.almanac.AlmanacScreen;
 import com.hungteen.pvz.gui.container.PlayerInventoryContainer;
 
 import net.minecraft.client.gui.ScreenManager;

@@ -67,9 +67,7 @@ public class JalapenoEntity extends PlantBomberEntity{
 		}
 	}
 
-	@Override
-	public float getAttackDamage() {
-		int lvl = this.getPlantLvl();
+	public static float getAttackDamage(int lvl){
 		if(lvl<=20) {
 			int now = (lvl-1)/4;
 			return 130 + now * 5;

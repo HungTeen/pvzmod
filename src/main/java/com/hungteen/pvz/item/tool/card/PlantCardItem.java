@@ -7,7 +7,6 @@ import com.hungteen.pvz.entity.plant.PVZPlantEntity;
 import com.hungteen.pvz.event.events.SummonCardUseEvent;
 import com.hungteen.pvz.register.BlockRegister;
 import com.hungteen.pvz.register.EnchantmentRegister;
-import com.hungteen.pvz.register.EntityRegister;
 import com.hungteen.pvz.utils.PlantUtil;
 import com.hungteen.pvz.utils.enums.Plants;
 import com.hungteen.pvz.utils.enums.Ranks;
@@ -101,7 +100,7 @@ public class PlantCardItem extends SummonCardItem{
 			int num=manager.getPlayerStats().getPlayerStats(Resources.SUN_NUM);
 			int sunCost=getSunCost(stack);
 			if(num>=sunCost) {//sun is enough
-				PVZPlantEntity plantEntity = getPlantEntity(world);
+				PVZPlantEntity plantEntity = PlantUtil.getPlantEntity(world, this.plant);
 			    if(plantEntity==null) {//no such plant
 			    	PVZMod.LOGGER.debug("no such plant");
 				    return;
@@ -134,31 +133,6 @@ public class PlantCardItem extends SummonCardItem{
 				player.addStat(Stats.ITEM_USED.get(this));
 			}
 		});
-	}
-	
-	public PVZPlantEntity getPlantEntity(World world){
-		switch(this.plant) {
-		case PEA_SHOOTER:return EntityRegister.PEA_SHOOTER.get().create(world);
-		case SUN_FLOWER:return EntityRegister.SUN_FLOWER.get().create(world);
-		case CHERRY_BOMB:return EntityRegister.CHERRY_BOMB.get().create(world);
-		case WALL_NUT:return EntityRegister.WALL_NUT.get().create(world);
-		case POTATO_MINE:return EntityRegister.POTATO_MINE.get().create(world);
-		case SNOW_PEA:return EntityRegister.SNOW_PEA.get().create(world);
-		case CHOMPER:return EntityRegister.CHOMPER.get().create(world);
-		case REPEATER:return EntityRegister.REPEATER.get().create(world);
-		case SQUASH:return EntityRegister.SQUASH.get().create(world);
-		case THREE_PEATER:return EntityRegister.THREE_PEATER.get().create(world);
-		case TANGLE_KELP:return EntityRegister.TANGLE_KELP.get().create(world);
-		case JALAPENO:return EntityRegister.JALAPENO.get().create(world);
-		case SPIKE_WEED:return EntityRegister.SPIKE_WEED.get().create(world);
-		case TORCH_WOOD:return EntityRegister.TORCH_WOOD.get().create(world);
-		case TALL_NUT:return EntityRegister.TALL_NUT.get().create(world);
-//		case WATER_GUARD:return EntityRegister.WATER_GUARD.get().create(world);
-		default:{
-			PVZMod.LOGGER.debug("No such plant entity!");
-			return null;
-		}
-		}
 	}
 	
 	protected boolean canPlantBreakOut(ItemStack stack) {

@@ -29,7 +29,7 @@ public class PeaShooterEntity extends PlantShooterEntity{
 	@Override
 	protected void registerGoals() {
 		super.registerGoals();
-		this.targetSelector.addGoal(0, new PVZNearestTargetGoal(this, true, 40, 2));
+		this.targetSelector.addGoal(0, new PVZNearestTargetGoal(this, true, 5, 40, 2, 0));
 	}
 	
 	@Override
@@ -59,18 +59,16 @@ public class PeaShooterEntity extends PlantShooterEntity{
 	
 	@Override
 	public boolean checkY(Entity target) {
-		double dx=target.getPosX()-this.getPosX();
-		double ly=target.getPosY()-this.getPosY();
-		double ry=ly+target.getHeight();
-		double dz=target.getPosZ()-this.getPosZ();
-		double dis = Math.sqrt(dx*dx+dz*dz);
-		double y=dis/MAX_SHOOT_ANGLE;
-		return ly<=y&&ry>=-y;
+		double dx = target.getPosX() - this.getPosX();
+		double ly = target.getPosY() - this.getPosY();
+		double ry = ly + target.getHeight();
+		double dz = target.getPosZ() - this.getPosZ();
+		double dis = Math.sqrt(dx * dx + dz * dz);
+		double y=dis / MAX_SHOOT_ANGLE;
+		return ly <= y && ry >= -y;
 	}
 	
-	@Override
-	public float getAttackDamage() {
-		int lvl=this.getPlantLvl();
+	public static float getAttackDamage(int lvl) {
 		if(lvl<=20) {
 			int now=(lvl-1)/4;
 			return 2+0.5f*now;
@@ -83,13 +81,11 @@ public class PeaShooterEntity extends PlantShooterEntity{
 		return new EntitySize(0.8f, 1.5f, false);
 	}
 
-	protected PeaEntity.Type getShootType()
-	{
+	protected PeaEntity.Type getShootType(){
 		return PeaEntity.Type.NORMAL;
 	}
 	
-	protected PeaEntity.State getShootState()
-	{
+	protected PeaEntity.State getShootState(){
 		return PeaEntity.State.NORMAL;
 	}
 	
@@ -98,6 +94,10 @@ public class PeaShooterEntity extends PlantShooterEntity{
 		if(this.isPlantInSuperMode()) {
 			return 1;
 		}
+		return getAttackCD();
+	}
+	
+	public static int getAttackCD(int lvl) {
 		return 30;
 	}
 

@@ -84,9 +84,7 @@ public class TangleKelpEntity extends PVZPlantEntity{
 		}
 	}
 	
-	@Override
-	public float getAttackDamage() {
-		int lvl=this.getPlantLvl();
+	public static float getAttackDamage(int lvl){
 		if(lvl<=20) {
 			int now = (lvl-1)/5;
 			return now*2+13;

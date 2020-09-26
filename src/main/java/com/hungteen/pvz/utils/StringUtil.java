@@ -14,6 +14,13 @@ public class StringUtil {
 		return new ResourceLocation(PVZMod.MOD_ID, a);
 	}
 
+	public static void drawScaledString(FontRenderer render, String string, int x, int y, int color, float scale) {
+		RenderSystem.pushMatrix();
+		RenderSystem.scaled(scale, scale, scale);
+		render.drawString(string, x / scale, y / scale, color);
+		RenderSystem.popMatrix();
+	}
+	
 	public static void drawCenteredString(FontRenderer render, String string, int x, int y, int color) {
 		int width = render.getStringWidth(string);
 		render.drawString(string, x - width / 2, y, color);

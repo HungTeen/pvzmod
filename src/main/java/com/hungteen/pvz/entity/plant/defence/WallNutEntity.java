@@ -15,13 +15,16 @@ public class WallNutEntity extends PlantDefenderEntity{
 
 	@Override
 	public float getSuperLife() {
-		int lvl=getPlantLvl();
+		return getArmorLife(this.getPlantLvl());
+	}
+
+	public static int getArmorLife(int lvl) {
 		if(lvl<=6) return 400;
 		else if(lvl<=13) return 500;
 		else if(lvl<=20) return 600;
 		return 400;
 	}
-
+	
 	@Override
 	public Plants getPlantEnumName() {
 		return Plants.WALL_NUT;

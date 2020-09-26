@@ -2,7 +2,16 @@ package com.hungteen.pvz.utils;
 
 import com.hungteen.pvz.PVZMod;
 import com.hungteen.pvz.entity.plant.PVZPlantEntity;
+import com.hungteen.pvz.entity.plant.appease.PeaShooterEntity;
+import com.hungteen.pvz.entity.plant.enforce.ChomperEntity;
+import com.hungteen.pvz.entity.plant.enforce.TangleKelpEntity;
+import com.hungteen.pvz.entity.plant.explosion.CherryBombEntity;
+import com.hungteen.pvz.entity.plant.explosion.PotatoMineEntity;
+import com.hungteen.pvz.entity.plant.flame.JalapenoEntity;
+import com.hungteen.pvz.entity.plant.light.SunFlowerEntity;
+import com.hungteen.pvz.entity.plant.spear.SpikeWeedEntity;
 import com.hungteen.pvz.register.BlockRegister;
+import com.hungteen.pvz.register.EntityRegister;
 import com.hungteen.pvz.utils.enums.Essences;
 import com.hungteen.pvz.utils.enums.Plants;
 import com.hungteen.pvz.utils.enums.Ranks;
@@ -10,6 +19,7 @@ import com.hungteen.pvz.utils.enums.Ranks;
 import net.minecraft.block.Block;
 import net.minecraft.block.Blocks;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.world.World;
 
 public class PlantUtil {
                                                    //1  2  3  4  5  6   7   8   9   10  11  12  13   14   15   16   17   18   19   20
@@ -69,6 +79,63 @@ public class PlantUtil {
 		}
 	}
 	
+	public static float getPlantAttackDamage(Plants plant, int lvl) {
+		switch (plant) {
+		case PEA_SHOOTER:
+		case SNOW_PEA:
+		case REPEATER:
+		case THREE_PEATER:{
+			return PeaShooterEntity.getAttackDamage(lvl);
+		}
+		case CHERRY_BOMB:{
+			return CherryBombEntity.getAttackDamage(lvl);
+		}
+		case POTATO_MINE:
+		case SQUASH:{
+			return PotatoMineEntity.getAttackDamage(lvl);
+		}
+		case CHOMPER:{
+			return ChomperEntity.getAttackDamage(lvl);
+		}
+		case TANGLE_KELP:{
+			return TangleKelpEntity.getAttackDamage(lvl);
+		}
+		case JALAPENO:{
+			return JalapenoEntity.getAttackDamage(lvl);
+		}
+		case SPIKE_WEED:{
+			return SpikeWeedEntity.getAttackDamage(lvl);
+		}
+		default:
+			return 0;
+		}
+	}
+	
+	public static float getPlantAttackCD(Plants plant, int lvl) {
+		switch (plant) {
+		case PEA_SHOOTER:
+		case SNOW_PEA:
+		case REPEATER:
+		case THREE_PEATER:{
+			return PeaShooterEntity.getAttackCD(lvl);
+		}
+		case SUN_FLOWER:{
+			return SunFlowerEntity.getAttackCD(lvl);
+		}
+		case POTATO_MINE:{
+			return PotatoMineEntity.getAttackCD(lvl);
+		}
+		case CHOMPER:{
+			return ChomperEntity.getAttackCD(lvl);
+		}
+		case SPIKE_WEED:{
+			return SpikeWeedEntity.getAttackCD(lvl);
+		}
+		default:
+			return 0;
+		}
+	}
+	
 	public static boolean checkCanPlantLiveHere(PVZPlantEntity plant){
 		BlockPos pos=plant.getPosition();
 		Block upBlock = plant.world.getBlockState(pos).getBlock();
@@ -85,6 +152,34 @@ public class PlantUtil {
 			}
 		}
 		return false;
+	}
+	
+	/**
+	 * create plant entity by given plant 
+	 */
+	public static PVZPlantEntity getPlantEntity(World world, Plants plant){
+		switch(plant) {
+		case PEA_SHOOTER:return EntityRegister.PEA_SHOOTER.get().create(world);
+		case SUN_FLOWER:return EntityRegister.SUN_FLOWER.get().create(world);
+		case CHERRY_BOMB:return EntityRegister.CHERRY_BOMB.get().create(world);
+		case WALL_NUT:return EntityRegister.WALL_NUT.get().create(world);
+		case POTATO_MINE:return EntityRegister.POTATO_MINE.get().create(world);
+		case SNOW_PEA:return EntityRegister.SNOW_PEA.get().create(world);
+		case CHOMPER:return EntityRegister.CHOMPER.get().create(world);
+		case REPEATER:return EntityRegister.REPEATER.get().create(world);
+		case SQUASH:return EntityRegister.SQUASH.get().create(world);
+		case THREE_PEATER:return EntityRegister.THREE_PEATER.get().create(world);
+		case TANGLE_KELP:return EntityRegister.TANGLE_KELP.get().create(world);
+		case JALAPENO:return EntityRegister.JALAPENO.get().create(world);
+		case SPIKE_WEED:return EntityRegister.SPIKE_WEED.get().create(world);
+		case TORCH_WOOD:return EntityRegister.TORCH_WOOD.get().create(world);
+		case TALL_NUT:return EntityRegister.TALL_NUT.get().create(world);
+//		case WATER_GUARD:return EntityRegister.WATER_GUARD.get().create(world);
+		default:{
+			PVZMod.LOGGER.debug("No such plant entity!");
+			return null;
+		}
+		}
 	}
 	
 	/**
@@ -147,6 +242,10 @@ public class PlantUtil {
 	
 	public static int getPlantMaxHealth(Plants plant,int lvl){
 		switch(plant) {
+		case LILY_PAD:
+		case FLOWER_POT:{
+			return 0;
+		}
 		case WALL_NUT:{
 			if(lvl<=19) return 390+10*lvl;
 			if(lvl<=20) return 600;

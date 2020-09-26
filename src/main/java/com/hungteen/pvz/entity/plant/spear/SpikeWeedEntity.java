@@ -36,7 +36,7 @@ public class SpikeWeedEntity extends PVZPlantEntity{
 		if(this.getSuperTime()%10==5) {
 			for(LivingEntity target:EntityUtil.getEntityAttackableTarget(this, EntityUtil.getEntityAABB(this, 10, 2))) {
 				if(!world.isRemote) {
-					target.attackEntityFrom(PVZDamageSource.causeSpikeDamage(this, this), this.getAttackDamage());
+					target.attackEntityFrom(PVZDamageSource.causeSpikeDamage(this, this), this.getAttackDamage() * 2);
 				}else {
 					for(int i=0;i<5;i++) {
 						Random rand=this.getRNG();
@@ -100,9 +100,7 @@ public class SpikeWeedEntity extends PVZPlantEntity{
 		return new EntitySize(0.8f, 0.4f, false);
 	}
 	
-	@Override
-	public float getAttackDamage() {
-		int lvl=this.getPlantLvl();
+	public static float getAttackDamage(int lvl){
 		if(lvl<=20) {
 			int now = (lvl - 1) / 4;
 			return 2 + 0.25f*now;
@@ -110,8 +108,7 @@ public class SpikeWeedEntity extends PVZPlantEntity{
 		return 2;
 	}
 	
-	protected int getAttackCD() {
-		int lvl=this.getPlantLvl();
+	public static int getAttackCD(int lvl) {
 		if(lvl<=20) {
 			int now = (lvl - 1) / 4;
 			return 20 - now;
