@@ -13,7 +13,6 @@ import com.hungteen.pvz.utils.enums.Ranks;
 import com.hungteen.pvz.utils.enums.Resources;
 
 import net.minecraft.block.FlowingFluidBlock;
-import net.minecraft.enchantment.Enchantment;
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.entity.SpawnReason;
 import net.minecraft.entity.player.PlayerEntity;
@@ -44,12 +43,6 @@ public class PlantCardItem extends SummonCardItem{
 	public int getItemEnchantability() {
 		Ranks rank = PlantUtil.getPlantRankByName(plant);
 		return 18-rank.ordinal();
-	}
-	
-	@Override
-	public boolean canApplyAtEnchantingTable(ItemStack stack, Enchantment enchantment) {
-		if(this.isEnjoyCard) return false;
-		return super.canApplyAtEnchantingTable(stack, enchantment);
 	}
 	
 	@Override

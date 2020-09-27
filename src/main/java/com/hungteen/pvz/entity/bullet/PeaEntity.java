@@ -30,6 +30,8 @@ public class PeaEntity extends PVZThrowableEntity {
 			DataSerializers.VARINT);
 	private static final DataParameter<Integer> PEA_TYPE = EntityDataManager.createKey(PeaEntity.class,
 			DataSerializers.VARINT);
+	
+	private int power = 0;
 	private TorchWoodEntity torchWood = null;
 
 	public PeaEntity(EntityType<? extends ThrowableEntity> type, World worldIn) {
@@ -134,6 +136,8 @@ public class PeaEntity extends PVZThrowableEntity {
 			damage = 2;
 		}
 
+		damage *= (1 + this.power * 1.0f / 5);
+		
 		// size
 		if (this.getPeaType() == Type.BIG) {
 			damage += 20f;
@@ -211,6 +215,10 @@ public class PeaEntity extends PVZThrowableEntity {
 			return new ItemStack(ItemRegister.BLUE_FLAME_PEA.get());
 		}
 		return new ItemStack(ItemRegister.PEA.get());
+	}
+	
+	public void setPower(int lvl) {
+		this.power = lvl;
 	}
 
 	public enum Type {

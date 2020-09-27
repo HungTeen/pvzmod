@@ -2,7 +2,6 @@ package com.hungteen.pvz.item.tool.card;
 
 import java.util.List;
 
-import com.hungteen.pvz.enchantment.SunReduceEnchantment;
 import com.hungteen.pvz.register.EnchantmentRegister;
 import com.hungteen.pvz.register.GroupRegister;
 
@@ -28,7 +27,6 @@ public abstract class SummonCardItem extends Item{
 	@Override
 	public boolean canApplyAtEnchantingTable(ItemStack stack, Enchantment enchantment) {
 		if(this.isEnjoyCard) return false;//enjoy card have no enchant
-		if(enchantment instanceof SunReduceEnchantment) return true;
 		return super.canApplyAtEnchantingTable(stack, enchantment);
 	}
 	

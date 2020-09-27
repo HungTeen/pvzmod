@@ -9,6 +9,7 @@ import com.hungteen.pvz.capabilities.player.PlayerDataManager;
 import com.hungteen.pvz.capabilities.player.PlayerDataManager.PlayerStats;
 import com.hungteen.pvz.entity.plant.PVZPlantEntity;
 import com.hungteen.pvz.event.events.SummonCardUseEvent;
+import com.hungteen.pvz.item.tool.PeaGunItem;
 import com.hungteen.pvz.item.tool.card.PlantCardItem;
 import com.hungteen.pvz.register.EnchantmentRegister;
 import com.hungteen.pvz.register.ItemRegister;
@@ -25,12 +26,14 @@ import net.minecraft.entity.Entity;
 import net.minecraft.entity.item.ItemEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.ServerPlayerEntity;
+import net.minecraft.inventory.EquipmentSlotType;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.ShovelItem;
 import net.minecraft.item.SwordItem;
 import net.minecraft.util.SoundEvents;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
+import net.minecraftforge.event.TickEvent;
 import net.minecraftforge.event.entity.player.PlayerEvent;
 import net.minecraftforge.event.entity.player.PlayerInteractEvent;
 import net.minecraftforge.event.world.BlockEvent;
@@ -41,6 +44,15 @@ import net.minecraftforge.fml.common.Mod;
 @Mod.EventBusSubscriber(modid=PVZMod.MOD_ID)
 public class PVZPlayerEvents {
 
+	@SubscribeEvent
+	public static void tickPlayer(TickEvent.PlayerTickEvent ev) {
+		if(!ev.player.world.isRemote) {
+			ItemStack stack = ev.player.getItemStackFromSlot(EquipmentSlotType.HEAD);
+			if(stack.getItem() instanceof PeaGunItem && !ev.player.getCooldownTracker().hasCooldown(stack.getItem())) {
+			    ((PeaGunItem)stack.getItem()).checkAndShootPea(ev.player.world, ev.player, stack);
+			}
+		}
+	}
 	
 	@SubscribeEvent(priority = EventPriority.HIGHEST)
 	public static void onPlayerLogin(PlayerEvent.PlayerLoggedInEvent ev) {

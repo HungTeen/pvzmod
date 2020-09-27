@@ -14,12 +14,17 @@ import com.hungteen.pvz.utils.enums.Plants;
 import com.hungteen.pvz.utils.enums.Resources;
 
 import net.minecraft.client.util.ITooltipFlag;
+import net.minecraft.enchantment.Enchantment;
+import net.minecraft.enchantment.EnchantmentHelper;
+import net.minecraft.enchantment.Enchantments;
+import net.minecraft.enchantment.PowerEnchantment;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.inventory.EquipmentSlotType;
 import net.minecraft.inventory.Inventory;
+import net.minecraft.inventory.InventoryHelper;
 import net.minecraft.inventory.container.Container;
 import net.minecraft.inventory.container.INamedContainerProvider;
 import net.minecraft.item.Item;
@@ -44,6 +49,29 @@ public class PeaGunItem extends Item{
 	
 	public PeaGunItem() {
 		super(new Properties().group(GroupRegister.PVZ_MISC).maxStackSize(1));
+	}
+	
+	@Override
+	public boolean canApplyAtEnchantingTable(ItemStack stack, Enchantment enchantment) {
+		if(enchantment instanceof PowerEnchantment) {
+			return true;
+		}
+		return super.canApplyAtEnchantingTable(stack, enchantment);
+	}
+	
+	@Override
+	public boolean isEnchantable(ItemStack stack) {
+		return true;
+	}
+	
+	@Override
+	public int getItemEnchantability() {
+		return 1;
+	}
+	
+	@Override
+	public int getItemEnchantability(ItemStack stack) {
+		return super.getItemEnchantability(stack);
 	}
 	
 	@Override
@@ -72,7 +100,7 @@ public class PeaGunItem extends Item{
 		return ActionResult.resultPass(playerIn.getHeldItem(handIn));
 	}
 	
-	protected void checkAndShootPea(World world, PlayerEntity player, ItemStack itemStack) {
+	public void checkAndShootPea(World world, PlayerEntity player, ItemStack itemStack) {
 		ItemUtil.restoreFromItemStack(itemStack, this.backpack);
 		ItemStack special =this.backpack.getStackInSlot(0);
 		if(special.getItem() instanceof PlantCardItem) {
@@ -82,10 +110,14 @@ public class PeaGunItem extends Item{
 				if(stack.isEmpty()) {
 					continue;
 				}
-				if(this.canShoot(player, plant, stack.getItem())) {
-					stack.shrink(1);
+				if(this.canShoot(player, plant, stack)) {
+					shrinkItemStack(player, stack);
 					player.playSound(SoundEvents.ENTITY_SNOW_GOLEM_SHOOT, 0.8f, 0.8f);
 					setPlayerCoolDownTick(player);
+					stack.damageItem(1, player, (p) -> {
+					    InventoryHelper.dropInventoryItems(world, p, backpack);
+//						p.sendBreakAnimation(Hand.MAIN_HAND)
+					;});
 				}
 				break;
 			}
@@ -93,22 +125,33 @@ public class PeaGunItem extends Item{
 		ItemUtil.convertToItemStack(itemStack, this.backpack);
 	}
 	
-	protected boolean canShoot(PlayerEntity player, Plants plant, Item item) {
+	private void shrinkItemStack(PlayerEntity player, ItemStack stack) {
+		player.getCapability(CapabilityHandler.PLAYER_DATA_CAPABILITY).ifPresent((l)->{
+			boolean flag = EnchantmentHelper.getEnchantmentLevel(Enchantments.INFINITY, stack) > 0;
+			int lvl = l.getPlayerData().getPlayerStats().getPlayerStats(Resources.TREE_LVL);
+			int cnt = (lvl - 1) / 10 * 5 + 5;
+			if(!flag || random.nextInt(100) >= cnt) {
+				stack.shrink(1);
+			} 
+		});
+	}
+	
+	protected boolean canShoot(PlayerEntity player, Plants plant, ItemStack stack) {
 		switch (plant) {
 		case PEA_SHOOTER:
 		case SNOW_PEA:{
-			this.performShoot(player, plant, item, 0); //normal shoot
+			this.performShoot(player, plant, stack, 0); //normal shoot
 			return true;
 		}
 		case REPEATER:{
-			this.performShoot(player, plant, item, 0);
-			this.performShoot(player, plant, item, 1);
+			this.performShoot(player, plant, stack, 0);
+			this.performShoot(player, plant, stack, 1);
 			return true;
 		}
 		case THREE_PEATER:{
-			this.performShoot(player, plant, item, 0);
-			this.performShoot(player, plant, item, 1);
-			this.performShoot(player, plant, item, 2);
+			this.performShoot(player, plant, stack, 0);
+			this.performShoot(player, plant, stack, 1);
+			this.performShoot(player, plant, stack, 2);
 			return true;
 		}
 		default:{
@@ -117,19 +160,20 @@ public class PeaGunItem extends Item{
 		}
 	}
 	
-	private void performShoot(PlayerEntity player, Plants plant, Item item, int type) {
+	private void performShoot(PlayerEntity player, Plants plant, ItemStack stack, int type) {
 		player.getCapability(CapabilityHandler.PLAYER_DATA_CAPABILITY).ifPresent((l)->{
 			int plantLvl = l.getPlayerData().getPlantStats().getPlantLevel(plant);
-			PeaEntity pea = new PeaEntity(EntityRegister.PEA.get(), player.world, player, getPeaType(plantLvl), getPeaState(plant, item));
-		    Vec3d vec = player.getLookVec();
+			PeaEntity pea = new PeaEntity(EntityRegister.PEA.get(), player.world, player, getPeaType(plantLvl), getPeaState(plant, stack.getItem()));
+		    pea.setPower(EnchantmentHelper.getEnchantmentLevel(Enchantments.POWER, stack));// Power Enchantment can affect pea gun.
+			Vec3d vec = player.getLookVec();
 		    Vec3d offset = vec.scale(SHOOT_OFFSET);
 		    pea.setPosition(player.getPosX() + offset.x, player.getPosY() + player.getEyeHeight() + offset.y, player.getPosZ() + offset.z);
 		    if(plant == Plants.REPEATER) {
 		    	if(type == 1) {
-		    		offset = offset.scale(0.5);
 		    		pea.setPosition(player.getPosX() + offset.x, player.getPosY() + player.getEyeHeight() + offset.y, player.getPosZ() + offset.z);
 		    	}
 		    }else if(plant == Plants.THREE_PEATER) {
+		    	offset = offset.scale(2);
 		    	if(type == 1) {
 		    		pea.setPosition(player.getPosX() + offset.x + offset.z, player.getPosY() + player.getEyeHeight() + offset.y, player.getPosZ() + offset.z - offset.x);
 		    	}else if(type == 2) {

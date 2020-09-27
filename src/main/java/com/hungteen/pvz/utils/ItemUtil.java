@@ -77,8 +77,8 @@ public class ItemUtil {
 	 * restore item from stack to backpack
 	 */
 	public static void restoreFromItemStack(ItemStack stack,Inventory backpack){
-		final CompoundNBT tag=stack.getTag();
-		if(tag!=null) {
+		final CompoundNBT tag = stack.getTag();
+		if(tag != null && tag.contains("backpack")) {
 			final ListNBT list=(ListNBT) tag.get("backpack");
 			backpack.clear();
 			for(int i=0;i<list.size();i++) {
@@ -98,18 +98,18 @@ public class ItemUtil {
 	 * 
 	 */
 	public static void convertToItemStack(ItemStack stack,Inventory backpack){
-		CompoundNBT tag=new CompoundNBT();
-		ListNBT list=new ListNBT();
-		for(int i=0;i<backpack.getSizeInventory();i++) {
-			final ItemStack itemstack=backpack.getStackInSlot(i);
+		ListNBT list = new ListNBT();
+		for(int i = 0;i < backpack.getSizeInventory();i ++) {
+			final ItemStack itemstack = backpack.getStackInSlot(i);
 			if(!itemstack.isEmpty()) {
-				CompoundNBT stackTag=new CompoundNBT();
+				CompoundNBT stackTag = new CompoundNBT();
 				itemstack.write(stackTag);
 				stackTag.putInt("slot", i);
 				list.add(stackTag);
 			}
 		}
-		tag.put("backpack", list);
-		stack.setTag(tag);
+		CompoundNBT old = stack.getOrCreateTag();
+		old.put("backpack", list);
+		stack.write(old);
 	}
 }

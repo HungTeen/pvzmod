@@ -35,7 +35,7 @@ public class StrangeHelpScreen extends Screen{
 		RenderSystem.color4f(1.0F, 1.0F, 1.0F, 1.0F);
         this.minecraft.getTextureManager().bindTexture(TEXTURE);
         int cornerX = (this.width - this.xSize) / 2;
-        int cornerY = (this.width - this.ySize) / 2;
+        int cornerY = (this.height - this.ySize) / 2;
         this.blit(cornerX, cornerY, 0, 0, this.xSize, this.ySize);
         int midX = this.width / 2;
         int midY = cornerY + 20;
