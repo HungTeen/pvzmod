@@ -4,9 +4,12 @@ import com.hungteen.pvz.PVZMod;
 import com.hungteen.pvz.register.ItemRegister;
 import com.hungteen.pvz.utils.enums.Almanacs;
 
+import net.minecraft.inventory.Inventory;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
+import net.minecraft.nbt.CompoundNBT;
+import net.minecraft.nbt.ListNBT;
 
 public class ItemUtil {
 
@@ -68,5 +71,45 @@ public class ItemUtil {
 				return Items.AIR;
 			}
 			}
+	}
+	
+	/**
+	 * restore item from stack to backpack
+	 */
+	public static void restoreFromItemStack(ItemStack stack,Inventory backpack){
+		final CompoundNBT tag=stack.getTag();
+		if(tag!=null) {
+			final ListNBT list=(ListNBT) tag.get("backpack");
+			backpack.clear();
+			for(int i=0;i<list.size();i++) {
+				CompoundNBT stackTag=list.getCompound(i);
+				int id=stackTag.getInt("slot");
+				if(id>=0&&id<backpack.getSizeInventory()) {
+					final ItemStack itemstack=ItemStack.read(stackTag);
+					if(!itemstack.isEmpty()) {
+						backpack.setInventorySlotContents(id, itemstack);
+					}
+				}
+			}
+		}
+	}
+	
+	/**
+	 * 
+	 */
+	public static void convertToItemStack(ItemStack stack,Inventory backpack){
+		CompoundNBT tag=new CompoundNBT();
+		ListNBT list=new ListNBT();
+		for(int i=0;i<backpack.getSizeInventory();i++) {
+			final ItemStack itemstack=backpack.getStackInSlot(i);
+			if(!itemstack.isEmpty()) {
+				CompoundNBT stackTag=new CompoundNBT();
+				itemstack.write(stackTag);
+				stackTag.putInt("slot", i);
+				list.add(stackTag);
+			}
+		}
+		tag.put("backpack", list);
+		stack.setTag(tag);
 	}
 }

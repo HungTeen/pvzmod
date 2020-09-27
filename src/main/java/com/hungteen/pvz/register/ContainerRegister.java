@@ -1,9 +1,11 @@
 package com.hungteen.pvz.register;
 
 import com.hungteen.pvz.PVZMod;
+import com.hungteen.pvz.gui.PeaGunScreen;
 import com.hungteen.pvz.gui.PlayerInventoryScreen;
 import com.hungteen.pvz.gui.almanac.AlmanacContainer;
 import com.hungteen.pvz.gui.almanac.AlmanacScreen;
+import com.hungteen.pvz.gui.container.PeaGunContainer;
 import com.hungteen.pvz.gui.container.PlayerInventoryContainer;
 
 import net.minecraft.client.gui.ScreenManager;
@@ -33,11 +35,17 @@ public class ContainerRegister {
         });
 	});
 	
+	public static final RegistryObject<ContainerType<PeaGunContainer>> PEA_GUN = CONTAINER_TYPES.register("pea_gun", ()->{
+		return IForgeContainerType.create((windowId, inv, data) -> {
+            return new PeaGunContainer(windowId, inv.player);
+        });
+	});
+	
 	@SubscribeEvent
     public static void onClientSetupEvent(FMLClientSetupEvent event) {
         ScreenManager.registerFactory(PLAYER_INVENTORY.get(), PlayerInventoryScreen::new);
-        
         ScreenManager.registerFactory(ALMANAC.get(), AlmanacScreen::new);
+        ScreenManager.registerFactory(PEA_GUN.get(), PeaGunScreen::new);
     }
 	
 }

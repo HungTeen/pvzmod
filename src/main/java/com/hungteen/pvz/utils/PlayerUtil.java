@@ -36,6 +36,12 @@ public class PlayerUtil {
 		});
 	}
 	
+	public static void addPlantLvl(PlayerEntity player, Plants plant, int num) {
+		player.getCapability(CapabilityHandler.PLAYER_DATA_CAPABILITY).ifPresent((l)->{
+			l.getPlayerData().getPlantStats().addPlantLevel(plant, num);
+		});
+	}
+	
 	public static void addPlantXp(PlayerEntity player, Plants plant, int num) {
 		player.getCapability(CapabilityHandler.PLAYER_DATA_CAPABILITY).ifPresent((l)->{
 			l.getPlayerData().getPlantStats().addPlantXp(plant, num);

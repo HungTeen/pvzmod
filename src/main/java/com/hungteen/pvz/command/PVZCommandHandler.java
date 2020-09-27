@@ -15,5 +15,6 @@ public class PVZCommandHandler {
     public static void onServerStaring(FMLServerStartingEvent event) {
         CommandDispatcher<CommandSource> dispatcher = event.getCommandDispatcher();
         ResourceCommand.register(dispatcher);
+        PlantLvlCommand.register(dispatcher);
     }
 }

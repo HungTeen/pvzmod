@@ -34,6 +34,7 @@ import net.minecraft.world.World;
 import net.minecraftforge.event.entity.player.PlayerEvent;
 import net.minecraftforge.event.entity.player.PlayerInteractEvent;
 import net.minecraftforge.event.world.BlockEvent;
+import net.minecraftforge.eventbus.api.EventPriority;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 
@@ -41,7 +42,7 @@ import net.minecraftforge.fml.common.Mod;
 public class PVZPlayerEvents {
 
 	
-	@SubscribeEvent
+	@SubscribeEvent(priority = EventPriority.HIGHEST)
 	public static void onPlayerLogin(PlayerEvent.PlayerLoggedInEvent ev) {
 		PlayerEntity player = ev.getPlayer();
 		if (player instanceof ServerPlayerEntity && !player.world.isRemote) {

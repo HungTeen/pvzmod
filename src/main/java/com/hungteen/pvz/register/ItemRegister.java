@@ -10,6 +10,7 @@ import com.hungteen.pvz.item.misc.AlmanacItem;
 import com.hungteen.pvz.item.misc.GuildBookItem;
 import com.hungteen.pvz.item.misc.StrangeHelpItem;
 import com.hungteen.pvz.item.tool.BobsleCarItem;
+import com.hungteen.pvz.item.tool.PeaGunItem;
 import com.hungteen.pvz.item.tool.ZombieFlagItem;
 import com.hungteen.pvz.item.tool.card.BlockPlantCardItem;
 import com.hungteen.pvz.item.tool.card.PlantCardItem;
@@ -109,6 +110,7 @@ public class ItemRegister {
 	//tool
 	public static final RegistryObject<Item> ZOMBIE_FLAG = ITEMS.register("zombie_flag", ZombieFlagItem::new);
 	public static final RegistryObject<Item> BOBSLE_CAR = ITEMS.register("bobsle_car", BobsleCarItem::new);
+	public static final RegistryObject<Item> PEA_GUN = ITEMS.register("pea_gun", PeaGunItem::new);
 	
 	//armor
 	public static final RegistryObject<Item> CONE_HEAD = ITEMS.register("cone_head", ()->new ConeArmorItem(ArmorMaterial.LEATHER, EquipmentSlotType.HEAD));

@@ -12,6 +12,7 @@ import net.minecraft.entity.EntitySize;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.Pose;
+import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.projectile.ThrowableEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.CompoundNBT;
@@ -129,9 +130,9 @@ public class PeaEntity extends PVZThrowableEntity {
 //		else if(this.shooter instanceof EntityZombieBase) {//
 //			damage=3;
 //		}
-//		else if(this.shooter instanceof EntityPlayer) {
-//			damage=4;
-//		}
+		else if(this.getThrower() instanceof PlayerEntity) {
+			damage = 2;
+		}
 
 		// size
 		if (this.getPeaType() == Type.BIG) {

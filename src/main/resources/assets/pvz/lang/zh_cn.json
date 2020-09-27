@@ -173,6 +173,8 @@
     "tooltip.pvz.zombie_flag":"右键会获得加速效果",
     "tooltip.pvz.summon_card":"右键方块召唤植物或僵尸",
     "tooltip.pvz.sun_cost":"阳光消耗",
+    "item.pvz.pea_gun":"豌豆枪",
+    "tooltip.pvz.pea_gun":"主手右键发射豌豆,副手右键打开界面",
 //armor
     "item.pvz.cone_head":"路障头盔",
     "item.pvz.bucket_head":"铁桶头盔",

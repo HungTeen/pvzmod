@@ -16,6 +16,7 @@ import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.client.event.RenderGameOverlayEvent;
+import net.minecraftforge.eventbus.api.EventPriority;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 
@@ -31,7 +32,7 @@ public class ResourceHUD{
 	private static final int BAR_LEN = 123;
 	private static final int BAR_H = 26;
 	
-	@SubscribeEvent
+	@SubscribeEvent(priority = EventPriority.LOWEST)
 	public static void onRenderSunNumBar(RenderGameOverlayEvent ev){
 		if(!KeyBindRegister.showPlayerResources||ev.getType()!=RenderGameOverlayEvent.ElementType.ALL||!PVZConfig.CLIENT_CONFIG.ResourceRender.RenderSunNumBar.get()) {
 			return ;
