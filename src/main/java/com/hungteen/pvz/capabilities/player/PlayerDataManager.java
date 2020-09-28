@@ -28,14 +28,12 @@ public class PlayerDataManager {
 	private final PlayerEntity player;
 	private final PlayerStats playerStats;
 	private final PlantStats plantStats;
-	private final InventoryStats inventoryStats;
 	private final AlmanacStats almanacStats;
 	
 	public PlayerDataManager(PlayerEntity player) {
 		this.player = player;
 		this.playerStats = new PlayerStats(this);
 		this.plantStats = new PlantStats(this);
-		this.inventoryStats = new InventoryStats(this);
 		this.almanacStats = new AlmanacStats(this);
 	}
 	
@@ -51,7 +49,6 @@ public class PlayerDataManager {
 		CompoundNBT baseTag = new CompoundNBT();
 		playerStats.saveToNBT(baseTag);
 		plantStats.saveToNBT(baseTag);
-		inventoryStats.saveToNBT(baseTag);
 		almanacStats.saveToNBT(baseTag);
 		return baseTag;
 	}
@@ -59,7 +56,6 @@ public class PlayerDataManager {
 	public void loadFromNBT(CompoundNBT baseTag) {
 		playerStats.loadFromNBT(baseTag);
 		plantStats.loadFromNBT(baseTag);
-		inventoryStats.loadFromNBT(baseTag);
 		almanacStats.loadFromNBT(baseTag);
 	}
 //	
@@ -74,11 +70,9 @@ public class PlayerDataManager {
 			this.plantStats.plantXp.put(plant, data.plantStats.plantXp.get(plant));
 		}
 		//Inventory
-		this.inventoryStats.currentSlotNum = data.inventoryStats.currentSlotNum;
 		for(int i=0;i<PlayerUtil.MAX_SLOT_NUM;i++) {
-			this.inventoryStats.setItemStack(i, data.inventoryStats.getItemStack(i));
+			this.playerStats.setItemStack(i, data.playerStats.getItemStack(i));
 		}
-		
 		//Almanac
 		for(Almanacs a:Almanacs.values()) {
 			this.almanacStats.setAlmanacUnLocked(a, data.almanacStats.isAlmanacUnLocked(a));
@@ -89,6 +83,7 @@ public class PlayerDataManager {
 		@SuppressWarnings("unused")
 		private final PlayerDataManager playerDataManager;
 		private HashMap<Resources, Integer> resources = new HashMap<>(Resources.values().length);
+		private final Inventory inventory = new Inventory(PlayerUtil.MAX_SLOT_NUM);
 		
 		private PlayerStats(PlayerDataManager dataManager) {
 			this.playerDataManager = dataManager;
@@ -96,12 +91,25 @@ public class PlayerDataManager {
 				if(res==Resources.TREE_LVL) resources.put(res, 1);
 				else if(res==Resources.MAX_ENERGY_NUM) resources.put(res, 1);
 				else if(res==Resources.SUN_NUM) resources.put(res, 50);
+				else if(res==Resources.SLOT_NUM) resources.put(res, 18);
 				else resources.put(res,0);
 			}
 		}
 		
 		public int getPlayerStats(Resources res){
 			return resources.get(res);
+		}
+		
+		public ItemStack getItemStack(int pos) {
+			return this.inventory.getStackInSlot(pos);
+		}
+		
+		public Inventory getInventory() {
+			return this.inventory;
+		}
+		
+		public void setItemStack(int pos, ItemStack stack) {
+			this.inventory.setInventorySlotContents(pos, stack);
 		}
 		
 		public void addPlayerStats(Resources res,int num){
@@ -129,6 +137,10 @@ public class PlayerDataManager {
 			case MAX_ENERGY_NUM:{
 				int now = MathHelper.clamp(resources.get(Resources.MAX_ENERGY_NUM)+num, 1, PlayerUtil.MAX_ENERGY_NUM);
 				resources.put(Resources.MAX_ENERGY_NUM, now);
+			}
+			case SLOT_NUM:{
+				int now = MathHelper.clamp(resources.get(Resources.SLOT_NUM)+num, 18, PlayerUtil.MAX_SLOT_NUM);
+				resources.put(Resources.SLOT_NUM, now);
 			}
 			default:
 				break;
@@ -208,14 +220,40 @@ public class PlayerDataManager {
 				statsNBT.putInt("player_"+res.toString(), resources.get(res));
 			}
 			baseTag.put("player_stats", statsNBT);
+			ListNBT list = new ListNBT();
+			for(int i=0;i<PlayerUtil.MAX_SLOT_NUM;i++) {
+				if(!this.inventory.getStackInSlot(i).isEmpty()) {
+					CompoundNBT nbt = new CompoundNBT();
+					nbt.putInt("Slot", i);
+					this.inventory.getStackInSlot(i).write(nbt);
+					list.add(nbt);
+				}
+			}
+			baseTag.put("Inventory", list);
 		}
 
 		private void loadFromNBT(CompoundNBT baseTag) {
-			CompoundNBT statsTag = baseTag.getCompound("player_stats");
-			for(Resources res:Resources.values()) {
-				resources.put(res, statsTag.getInt("player_"+res.toString()));
+			if(baseTag.contains("player_stats")) {
+				CompoundNBT statsTag = baseTag.getCompound("player_stats");
+			    for(Resources res:Resources.values()) {
+			    	if(statsTag.contains("player_"+res.toString())) {
+				        resources.put(res, statsTag.getInt("player_"+res.toString()));
+			    	}
+			    }
+			}
+			if(baseTag.contains("Inventory")) {
+				ListNBT list = (ListNBT) baseTag.get("Inventory");
+				for(int i=0;i<list.size();i++) {
+					CompoundNBT nbt = list.getCompound(i);
+					int pos = nbt.getInt("Slot");
+					ItemStack stack = ItemStack.read(nbt);
+					if(!stack.isEmpty()) {
+						this.inventory.setInventorySlotContents(pos, stack);
+					}
+				}
 			}
 		}
+		
 	}
 	
 	public final class PlantStats{
@@ -332,68 +370,6 @@ public class PlayerDataManager {
 		}
 	}
 	
-	public final class InventoryStats{
-		@SuppressWarnings("unused")
-		private final PlayerDataManager manager;
-		private final Inventory inventory = new Inventory(PlayerUtil.MAX_SLOT_NUM);
-		private int currentSlotNum = 18;
-		
-		public InventoryStats(PlayerDataManager manager) {
-			this.manager = manager;
-		}
-		
-		public int getSlotNum() {
-			return this.currentSlotNum;
-		}
-		
-		public ItemStack getItemStack(int pos) {
-			return this.inventory.getStackInSlot(pos);
-		}
-		
-		public Inventory getInventory() {
-			return this.inventory;
-		}
-		
-		public void setSlotNum(int num) {
-			this.currentSlotNum = num;
-		}
-		
-		public void setItemStack(int pos, ItemStack stack) {
-			this.inventory.setInventorySlotContents(pos, stack);
-		}
-		
-		private void saveToNBT(CompoundNBT baseTag) {
-			baseTag.putInt("currentSlotNum", this.currentSlotNum);
-			ListNBT list = new ListNBT();
-			for(int i=0;i<PlayerUtil.MAX_SLOT_NUM;i++) {
-				if(!this.inventory.getStackInSlot(i).isEmpty()) {
-					CompoundNBT nbt = new CompoundNBT();
-					nbt.putInt("Slot", i);
-					this.inventory.getStackInSlot(i).write(nbt);
-					list.add(nbt);
-				}
-			}
-			baseTag.put("Inventory", list);
-		}
-
-		private void loadFromNBT(CompoundNBT baseTag) {
-			if(baseTag.contains("currentSlotNum")) {
-			    this.currentSlotNum = baseTag.getInt("currentSlotNum");
-			}
-			if(baseTag.contains("Inventory")) {
-				ListNBT list = (ListNBT) baseTag.get("Inventory");
-				for(int i=0;i<list.size();i++) {
-					CompoundNBT nbt = list.getCompound(i);
-					int pos = nbt.getInt("Slot");
-					ItemStack stack = ItemStack.read(nbt);
-					if(!stack.isEmpty()) {
-						this.inventory.setInventorySlotContents(pos, stack);
-					}
-				}
-			}
-		}
-	}
-	
 	public final class AlmanacStats {
 		@SuppressWarnings("unused")
 		private final PlayerDataManager manager;
@@ -453,10 +429,6 @@ public class PlayerDataManager {
 	
 	public PlantStats getPlantStats(){
 		return this.plantStats;
-	}
-	
-	public InventoryStats getInventoryStats() {
-		return this.inventoryStats;
 	}
 	
 	public AlmanacStats getAlmanacStats() {

@@ -1,4 +1,4 @@
-package com.hungteen.pvz.render.entity.creature;
+package com.hungteen.pvz.render.entity;
 
 import com.mojang.blaze3d.matrix.MatrixStack;
 

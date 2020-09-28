@@ -17,6 +17,19 @@ public class ClientPlayerResources{
 	private static HashMap<Plants, Integer> plantCardLevel = new HashMap<Plants, Integer>(Plants.values().length);
 	private static HashMap<Almanacs, Boolean> unLocked = new HashMap<Almanacs, Boolean>(Almanacs.values().length);
 	
+	static { //init to avoid unexpected error !
+		for(Resources res:Resources.values()) {
+			resources.put(res, 0);
+		}
+		for(Plants p:Plants.values()) {
+			plantCardLevel.put(p, 0);
+			plantCardXp.put(p, 0);
+		}
+		for(Almanacs a:Almanacs.values()) {
+			unLocked.put(a, false);
+		}
+	}
+	
 	public static void setPlayerData(int type,int data){
 		resources.put(Resources.values()[type], data);
 	}

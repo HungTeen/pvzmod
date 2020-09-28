@@ -4,6 +4,7 @@ import com.hungteen.pvz.capabilities.CapabilityHandler;
 import com.hungteen.pvz.capabilities.player.PlayerDataManager;
 import com.hungteen.pvz.item.tool.card.SummonCardItem;
 import com.hungteen.pvz.register.ContainerRegister;
+import com.hungteen.pvz.utils.enums.Resources;
 
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.inventory.IInventory;
@@ -28,18 +29,18 @@ public class PlayerInventoryContainer extends Container {
 		this.currentPage = 1;
 
 		this.player.getCapability(CapabilityHandler.PLAYER_DATA_CAPABILITY).ifPresent((l) -> {
-			PlayerDataManager.InventoryStats inv = l.getPlayerData().getInventoryStats();
+			PlayerDataManager.PlayerStats stats = l.getPlayerData().getPlayerStats();
 			for (int i = 0; i < 6; i++) {
 				for (int j = 0; j < 9; j++) {
 					int cnt = i * 9 + j;
-					if (inv.getSlotNum() < cnt)
-						this.addSlot(new LockedSlot(inv.getInventory(), i * 9 + j, 24 + j * 18, 29 + i * 18));
+					if (stats.getPlayerStats(Resources.SLOT_NUM) < cnt)
+						this.addSlot(new LockedSlot(stats.getInventory(), i * 9 + j, 24 + j * 18, 29 + i * 18));
 					else
-						this.addSlot(new CardSlot(inv.getInventory(), i * 9 + j, 24 + j * 18, 29 + i * 18));
+						this.addSlot(new CardSlot(stats.getInventory(), i * 9 + j, 24 + j * 18, 29 + i * 18));
 				}
 			}
-			if (inv.getSlotNum() < SLOT_NUM_PER_PAGE) {
-				int left = SLOT_NUM_PER_PAGE - inv.getSlotNum();
+			if (stats.getPlayerStats(Resources.SLOT_NUM) < SLOT_NUM_PER_PAGE) {
+				int left = SLOT_NUM_PER_PAGE - stats.getPlayerStats(Resources.SLOT_NUM);
 				this.inventoryData.set(0, left / 9);
 			}
 		});
@@ -67,20 +68,20 @@ public class PlayerInventoryContainer extends Container {
 
 	private void updateSlots() {
 		this.player.getCapability(CapabilityHandler.PLAYER_DATA_CAPABILITY).ifPresent((l) -> {
-			PlayerDataManager.InventoryStats inv = l.getPlayerData().getInventoryStats();
+			PlayerDataManager.PlayerStats stats = l.getPlayerData().getPlayerStats();
 			for (int i = 0; i < 6; i++) {
 				for (int j = 0; j < 9; j++) {
 					int pos = (this.currentPage - 1) * SLOT_NUM_PER_PAGE + 9 * i + j;
-					if (inv.getSlotNum() < pos)
+					if (stats.getPlayerStats(Resources.SLOT_NUM) < pos)
 						this.inventorySlots.set(i * 9 + j,
-								new LockedSlot(inv.getInventory(), pos, 24 + j * 18, 29 + i * 18));
+								new LockedSlot(stats.getInventory(), pos, 24 + j * 18, 29 + i * 18));
 					else
 						this.inventorySlots.set(i * 9 + j,
-								new CardSlot(inv.getInventory(), pos, 24 + j * 18, 29 + i * 18));
+								new CardSlot(stats.getInventory(), pos, 24 + j * 18, 29 + i * 18));
 				}
 			}
-			if (inv.getSlotNum() < SLOT_NUM_PER_PAGE * this.currentPage) {
-				int left = SLOT_NUM_PER_PAGE * this.currentPage - inv.getSlotNum();
+			if (stats.getPlayerStats(Resources.SLOT_NUM) < SLOT_NUM_PER_PAGE * this.currentPage) {
+				int left = SLOT_NUM_PER_PAGE * this.currentPage - stats.getPlayerStats(Resources.SLOT_NUM);
 				this.inventoryData.set(0, MathHelper.clamp(left / 9, 0, 6));
 			}
 		});

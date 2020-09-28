@@ -39,14 +39,14 @@ public class PlayerInventoryScreen extends ContainerScreen<PlayerInventoryContai
 		leftButton=this.addButton(new ChangeButton(TEXTURE,this.guiLeft+6,this.guiTop+136,false,(button)-> {
 			if(this.container.currentPage>1) {
 				this.container.currentPage--;
-			    PVZPacketHandler.CHANNEL.sendToServer(new ClickButtonPacket(1,-1));
+			    PVZPacketHandler.CHANNEL.sendToServer(new ClickButtonPacket(GuiHandler.PLAYER_INVENTORY,-1));
 			}
 		}));
 		
 		rightButton=this.addButton(new ChangeButton(TEXTURE, this.guiLeft+188, this.guiTop+136, true,(button)-> {
 			if(this.container.currentPage<PlayerUtil.MAX_SLOT_NUM/54) {
 				this.container.currentPage++;
-				PVZPacketHandler.CHANNEL.sendToServer(new ClickButtonPacket(1,1));
+				PVZPacketHandler.CHANNEL.sendToServer(new ClickButtonPacket(GuiHandler.PLAYER_INVENTORY,1));
 			}
 		}));
 	}

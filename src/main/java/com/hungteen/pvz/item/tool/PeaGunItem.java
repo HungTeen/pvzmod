@@ -17,6 +17,7 @@ import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.enchantment.Enchantment;
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.enchantment.Enchantments;
+import net.minecraft.enchantment.InfinityEnchantment;
 import net.minecraft.enchantment.PowerEnchantment;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.PlayerEntity;
@@ -53,7 +54,7 @@ public class PeaGunItem extends Item{
 	
 	@Override
 	public boolean canApplyAtEnchantingTable(ItemStack stack, Enchantment enchantment) {
-		if(enchantment instanceof PowerEnchantment) {
+		if(enchantment instanceof PowerEnchantment || enchantment instanceof InfinityEnchantment) {
 			return true;
 		}
 		return super.canApplyAtEnchantingTable(stack, enchantment);
