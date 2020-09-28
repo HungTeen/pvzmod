@@ -15,10 +15,7 @@ import com.hungteen.pvz.utils.enums.Resources;
 
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.ServerPlayerEntity;
-import net.minecraft.inventory.Inventory;
-import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.CompoundNBT;
-import net.minecraft.nbt.ListNBT;
 import net.minecraft.util.math.MathHelper;
 import net.minecraftforge.fml.network.PacketDistributor;
 
@@ -69,10 +66,10 @@ public class PlayerDataManager {
 			this.plantStats.plantLevel.put(plant, data.plantStats.plantLevel.get(plant));
 			this.plantStats.plantXp.put(plant, data.plantStats.plantXp.get(plant));
 		}
-		//Inventory
-		for(int i=0;i<PlayerUtil.MAX_SLOT_NUM;i++) {
-			this.playerStats.setItemStack(i, data.playerStats.getItemStack(i));
-		}
+//		//Inventory
+//		for(int i=0;i<PlayerUtil.MAX_SLOT_NUM;i++) {
+//			this.playerStats.setItemStack(i, data.playerStats.getItemStack(i));
+//		}
 		//Almanac
 		for(Almanacs a:Almanacs.values()) {
 			this.almanacStats.setAlmanacUnLocked(a, data.almanacStats.isAlmanacUnLocked(a));
@@ -83,7 +80,7 @@ public class PlayerDataManager {
 		@SuppressWarnings("unused")
 		private final PlayerDataManager playerDataManager;
 		private HashMap<Resources, Integer> resources = new HashMap<>(Resources.values().length);
-		private final Inventory inventory = new Inventory(PlayerUtil.MAX_SLOT_NUM);
+//		private final Inventory inventory = new Inventory(PlayerUtil.MAX_SLOT_NUM);
 		
 		private PlayerStats(PlayerDataManager dataManager) {
 			this.playerDataManager = dataManager;
@@ -100,17 +97,17 @@ public class PlayerDataManager {
 			return resources.get(res);
 		}
 		
-		public ItemStack getItemStack(int pos) {
-			return this.inventory.getStackInSlot(pos);
-		}
-		
-		public Inventory getInventory() {
-			return this.inventory;
-		}
-		
-		public void setItemStack(int pos, ItemStack stack) {
-			this.inventory.setInventorySlotContents(pos, stack);
-		}
+//		public ItemStack getItemStack(int pos) {
+//			return this.inventory.getStackInSlot(pos);
+//		}
+//		
+//		public Inventory getInventory() {
+//			return this.inventory;
+//		}
+//		
+//		public void setItemStack(int pos, ItemStack stack) {
+//			this.inventory.setInventorySlotContents(pos, stack);
+//		}
 		
 		public void addPlayerStats(Resources res,int num){
 			switch (res) {
@@ -220,16 +217,16 @@ public class PlayerDataManager {
 				statsNBT.putInt("player_"+res.toString(), resources.get(res));
 			}
 			baseTag.put("player_stats", statsNBT);
-			ListNBT list = new ListNBT();
-			for(int i=0;i<PlayerUtil.MAX_SLOT_NUM;i++) {
-				if(!this.inventory.getStackInSlot(i).isEmpty()) {
-					CompoundNBT nbt = new CompoundNBT();
-					nbt.putInt("Slot", i);
-					this.inventory.getStackInSlot(i).write(nbt);
-					list.add(nbt);
-				}
-			}
-			baseTag.put("Inventory", list);
+//			ListNBT list = new ListNBT();
+//			for(int i=0;i<PlayerUtil.MAX_SLOT_NUM;i++) {
+//				if(!this.inventory.getStackInSlot(i).isEmpty()) {
+//					CompoundNBT nbt = new CompoundNBT();
+//					nbt.putInt("Slot", i);
+//					this.inventory.getStackInSlot(i).write(nbt);
+//					list.add(nbt);
+//				}
+//			}
+//			baseTag.put("Inventory", list);
 		}
 
 		private void loadFromNBT(CompoundNBT baseTag) {
@@ -241,17 +238,17 @@ public class PlayerDataManager {
 			    	}
 			    }
 			}
-			if(baseTag.contains("Inventory")) {
-				ListNBT list = (ListNBT) baseTag.get("Inventory");
-				for(int i=0;i<list.size();i++) {
-					CompoundNBT nbt = list.getCompound(i);
-					int pos = nbt.getInt("Slot");
-					ItemStack stack = ItemStack.read(nbt);
-					if(!stack.isEmpty()) {
-						this.inventory.setInventorySlotContents(pos, stack);
-					}
-				}
-			}
+//			if(baseTag.contains("Inventory")) {
+//				ListNBT list = (ListNBT) baseTag.get("Inventory");
+//				for(int i=0;i<list.size();i++) {
+//					CompoundNBT nbt = list.getCompound(i);
+//					int pos = nbt.getInt("Slot");
+//					ItemStack stack = ItemStack.read(nbt);
+//					if(!stack.isEmpty()) {
+//						this.inventory.setInventorySlotContents(pos, stack);
+//					}
+//				}
+//			}
 		}
 		
 	}

@@ -4,6 +4,7 @@ import com.hungteen.pvz.entity.ai.PVZNearestTargetGoal;
 import com.hungteen.pvz.entity.ai.ZombieMeleeAttackGoal;
 import com.hungteen.pvz.entity.creature.FoodieZombieEntity;
 import com.hungteen.pvz.entity.zombie.PVZZombieEntity;
+import com.hungteen.pvz.register.SoundRegister;
 import com.hungteen.pvz.utils.ZombieUtil;
 import com.hungteen.pvz.utils.enums.Zombies;
 
@@ -32,6 +33,7 @@ import net.minecraft.pathfinding.PathNodeType;
 import net.minecraft.pathfinding.SwimmerPathNavigator;
 import net.minecraft.tags.FluidTags;
 import net.minecraft.util.Direction;
+import net.minecraft.util.SoundEvent;
 import net.minecraft.util.SoundEvents;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
@@ -103,7 +105,12 @@ public class ZombieDolphinEntity extends PVZZombieEntity {
 	
 	@Override
 	public int getTalkInterval() {
-		return 120;
+		return 200;
+	}
+	
+	@Override
+	protected SoundEvent getAmbientSound() {
+		return SoundRegister.DOLPHIN_SAY.get();
 	}
 
 	@Override
@@ -131,7 +138,7 @@ public class ZombieDolphinEntity extends PVZZombieEntity {
 		return target instanceof DolphinEntity || target instanceof PlayerEntity
 				|| target instanceof FoodieZombieEntity;
 	}
-
+	
 	static class MoveHelperController extends MovementController {
 		private final ZombieDolphinEntity dolphin;
 

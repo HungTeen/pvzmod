@@ -5,6 +5,7 @@ import com.hungteen.pvz.entity.ai.PVZNearestTargetGoal;
 import com.hungteen.pvz.entity.ai.ZombieMeleeAttackGoal;
 import com.hungteen.pvz.entity.zombie.PVZZombieEntity;
 import com.hungteen.pvz.register.BlockRegister;
+import com.hungteen.pvz.register.SoundRegister;
 import com.hungteen.pvz.utils.ZombieUtil;
 import com.hungteen.pvz.utils.enums.Zombies;
 
@@ -59,6 +60,7 @@ public class DolphinRiderEntity extends PVZZombieEntity{
 		if(!world.isRemote) {
 			if(this.jumpTick>0) this.jumpTick--;
 			if(this.jumpTick==0&&this.rand.nextInt(JUMP_CHANCE)==0) {//jump
+				this.playSound(SoundRegister.DOLPHIN_JUMP.get(), 1f, 1f);
 				double dxz=2,dyy=0.5d;
 				this.setMotion((this.rand.nextFloat()-0.5)/dxz,dyy,(this.rand.nextFloat()-0.5)/dxz);
 				this.setPosition(this.getPosX(), this.getPosY()+1, this.getPosZ());

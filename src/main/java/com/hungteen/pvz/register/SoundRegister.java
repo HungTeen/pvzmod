@@ -36,6 +36,12 @@ public class SoundRegister {
 	public static final RegistryObject<SoundEvent> CAR_SPAWN = registerSound("car_spawn");
 	public static final RegistryObject<SoundEvent> CAR_EXPLOSION = registerSound("car_explosion");
 	public static final RegistryObject<SoundEvent> ZOMBIE_FIRE = registerSound("zombie_fire");
+	public static final RegistryObject<SoundEvent> DAVE_SAY = registerSound("dave_say");
+	public static final RegistryObject<SoundEvent> DAVE_HURT = registerSound("dave_hurt");
+	public static final RegistryObject<SoundEvent> DAVE_BUY = registerSound("dave_buy");
+	public static final RegistryObject<SoundEvent> DAVE_DIE = registerSound("dave_die");
+	public static final RegistryObject<SoundEvent> DOLPHIN_SAY = registerSound("dolphin_say");
+	public static final RegistryObject<SoundEvent> DOLPHIN_JUMP = registerSound("dolphin_jump");
 	
 	private static RegistryObject<SoundEvent> registerSound(String name){
 		return SOUNDS.register(name, ()->{

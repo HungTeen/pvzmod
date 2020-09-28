@@ -5,7 +5,6 @@ import java.util.List;
 
 import com.hungteen.pvz.capabilities.player.ClientPlayerResources;
 import com.hungteen.pvz.gui.container.DaveShopContainer;
-import com.hungteen.pvz.gui.widget.PVZButton;
 import com.hungteen.pvz.network.ClickButtonPacket;
 import com.hungteen.pvz.network.PVZPacketHandler;
 import com.hungteen.pvz.register.ItemRegister;
@@ -58,7 +57,7 @@ public class DaveShopScreen extends ContainerScreen<DaveShopContainer> {
 				}
 			}));
 		}
-		this.buyButton = this.addButton(new Button(this.guiLeft +206, this.guiTop + 85, 18, 18, new TranslationTextComponent("gui.pvz.dave_shop").getFormattedText(), (button) -> {
+		this.buyButton = this.addButton(new Button(this.guiLeft +206, this.guiTop + 85, 18, 18, new TranslationTextComponent("gui.pvz.dave_shop.buy").getFormattedText(), (button) -> {
 			if(this.buyButton.visible) {
 			    PVZPacketHandler.CHANNEL.sendToServer(new ClickButtonPacket(GuiHandler.DAVE_SHOP, this.selectedGood.ordinal()));
 			}
@@ -117,7 +116,16 @@ public class DaveShopScreen extends ContainerScreen<DaveShopContainer> {
 			this.selectedGood = null;
 		}
 		this.buyButton.visible = this.selectedGood != null && this.selectedTrade != null && ClientPlayerResources.getPlayerStats(Resources.MONEY) >= this.selectedTrade.money && this.container.canClickBuyButton();
+		if(this.selectedGood != null && this.selectedTrade != null) {
+			this.renderDetails();
+		}
 		this.renderHoveredToolTip(mouseX, mouseY);
+	}
+	
+	private void renderDetails() {
+		for(int i = 0;i < 2;i ++) {
+		    StringUtil.drawCenteredScaledString(font, new TranslationTextComponent("gui.pvz.dave_shop."+this.selectedGood.toString().toLowerCase()+(i+1)).getFormattedText(), this.guiLeft + 117 + 80, this.guiTop + 28 + 10 + 20 * i, Colors.BLACK, 1.2f);
+		}
 	}
 	
 	private void renderTrade(TradeType trade,int posX, int posY) {
@@ -127,9 +135,9 @@ public class DaveShopScreen extends ContainerScreen<DaveShopContainer> {
 		if(trade.good == Goods.ENERGY) {
 			this.minecraft.getTextureManager().bindTexture(TEXTURE);
 			blit(offsetX, offsetY, this.getBlitOffset(), 112, 195, 16, 16, 256, 512);
-		}else if(trade.good == Goods.SLOT) {
-			this.minecraft.getTextureManager().bindTexture(TEXTURE);
-			blit(offsetX, offsetY, this.getBlitOffset(), 128, 195, 16, 16, 256, 512);
+//		}else if(trade.good == Goods.SLOT) {
+//			this.minecraft.getTextureManager().bindTexture(TEXTURE);
+//			blit(offsetX, offsetY, this.getBlitOffset(), 128, 195, 16, 16, 256, 512);
 		}else if(trade.good == Goods.ALMANAC) {
 			this.itemRenderer.renderItemIntoGUI(new ItemStack(ItemRegister.ALMANAC.get()), offsetX, offsetY);
 		}
@@ -155,13 +163,13 @@ public class DaveShopScreen extends ContainerScreen<DaveShopContainer> {
 				}
 				int cost = TradeUtil.getEnergyCost(num);
 				list.add(new TradeType(cost, good));
-			}else if(good == Goods.SLOT) {
-				int num = ClientPlayerResources.getPlayerStats(Resources.SLOT_NUM);
-				if(num == PlayerUtil.MAX_SLOT_NUM) {
-					continue;
-				}
-				int cost = TradeUtil.getSlotCost(num);
-				list.add(new TradeType(cost, good));
+//			}else if(good == Goods.SLOT) {
+//				int num = ClientPlayerResources.getPlayerStats(Resources.SLOT_NUM);
+//				if(num == PlayerUtil.MAX_SLOT_NUM) {
+//					continue;
+//				}
+//				int cost = TradeUtil.getSlotCost(num);
+//				list.add(new TradeType(cost, good));
 			}else if(good == Goods.ALMANAC) {
 				list.add(new TradeType(TradeUtil.ALMANAC_COST, good));
 			}
@@ -228,7 +236,7 @@ public class DaveShopScreen extends ContainerScreen<DaveShopContainer> {
 	
 	public enum Goods{
 		ENERGY,
-		SLOT,
+//		SLOT,
 		ALMANAC
 	}
 }

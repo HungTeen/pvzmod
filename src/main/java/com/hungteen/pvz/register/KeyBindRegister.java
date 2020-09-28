@@ -1,9 +1,6 @@
 package com.hungteen.pvz.register;
 
 import com.hungteen.pvz.PVZMod;
-import com.hungteen.pvz.network.OpenGuiPacket;
-import com.hungteen.pvz.network.PVZPacketHandler;
-import com.hungteen.pvz.utils.enums.Guis;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.settings.KeyBinding;
@@ -18,11 +15,11 @@ public class KeyBindRegister {
 
 	public static KeyBinding ShowPlayerResources;
 	public static boolean showPlayerResources = true;
-	public static KeyBinding ShowPlayerInventory;
+//	public static KeyBinding ShowPlayerInventory;
 	
 	public static void init() {
 		ClientRegistry.registerKeyBinding(ShowPlayerResources = new KeyBinding("key.pvz.show_resources", 261, "key.categories.pvz"));
-		ClientRegistry.registerKeyBinding(ShowPlayerInventory = new KeyBinding("key.pvz.show_inventory", 80, "key.categories.pvz"));
+//		ClientRegistry.registerKeyBinding(ShowPlayerInventory = new KeyBinding("key.pvz.show_inventory", 80, "key.categories.pvz"));
 	}
 	
 	@SubscribeEvent
@@ -32,12 +29,12 @@ public class KeyBindRegister {
 			if(ShowPlayerResources.isPressed()) {
 				showPlayerResources = !showPlayerResources;
 			}
-			if(ShowPlayerInventory.isPressed()) {
-//				DistExecutor.runWhenOn(Dist.CLIENT, ()->()->{
-//					Minecraft.getInstance().displayGuiScreen(new PVZPlayerInventoryGui());
-//				});
-				PVZPacketHandler.CHANNEL.sendToServer(new OpenGuiPacket(Guis.PLAYER_INVENTORY.ordinal()));
-			}
+//			if(ShowPlayerInventory.isPressed()) {
+////				DistExecutor.runWhenOn(Dist.CLIENT, ()->()->{
+////					Minecraft.getInstance().displayGuiScreen(new PVZPlayerInventoryGui());
+////				});
+//				PVZPacketHandler.CHANNEL.sendToServer(new OpenGuiPacket(Guis.PLAYER_INVENTORY.ordinal()));
+//			}
 		}
 	}
 }

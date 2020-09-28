@@ -21,5 +21,11 @@
     "jalapeno":{"sounds":[{"name":"pvz:entity/plant/bomb/jalapeno"}]},
     "car_spawn":{"sounds":[{"name":"pvz:entity/zombie/spawn/car_spawn"}]},
     "car_explosion":{"sounds":[{"name":"pvz:entity/zombie/death/car_explosion"}]},
-    "zombie_fire":{"sounds":[{"name":"pvz:entity/zombie/hit/fire"}]}
+    "zombie_fire":{"sounds":[{"name":"pvz:entity/zombie/hit/fire"}]},
+    "dave_say":{"sounds":[{"name":"pvz:entity/npc/crazy_dave/dave_say1"},{"name":"pvz:entity/npc/crazy_dave/dave_say2"},{"name":"pvz:entity/npc/crazy_dave/dave_say3"}]},
+    "dave_hurt":{"sounds":[{"name":"pvz:entity/npc/crazy_dave/dave_hurt1"},{"name":"pvz:entity/npc/crazy_dave/dave_hurt2"},{"name":"pvz:entity/npc/crazy_dave/dave_hurt3"}]},
+    "dave_buy":{"sounds":[{"name":"pvz:entity/npc/crazy_dave/dave_buy"}]},
+    "dave_die":{"sounds":[{"name":"pvz:entity/npc/crazy_dave/dave_die"}]},
+    "dolphin_say":{"sounds":[{"name":"pvz:entity/zombie/say/dolphin_say"}]},
+    "dolphin_jump":{"sounds":[{"name":"pvz:entity/zombie/say/dolphin_jump"}]}
 }

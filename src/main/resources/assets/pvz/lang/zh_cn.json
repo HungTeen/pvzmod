@@ -208,11 +208,13 @@
     "block.pvz.nut_leaves":"坚果树叶",
     "block.pvz.chomper":"食人花",
 //gui
+//strange help
     "gui.pvz.strange_help":"<<植物大战僵尸mod帮助>>",
     "gui.pvz.strange_help1":"当僵尸出现的时候,",
     "gui.pvz.strange_help2":"你只需要站在那儿，啥都不要做,",
     "gui.pvz.strange_help3":"僵尸吃掉了你的脑子时，你就赢了!",
     "gui.pvz.strange_help4":"--这部分帮助是僵尸送给你的--",
+//guild book
     "gui.pvz.guild_book0":"玩家属性",
     "gui.pvz.guild_book1":"事件",
     "gui.pvz.guild_book2":"植物精华",
@@ -220,7 +222,17 @@
     "gui.pvz.guild_book4":"禅境花园",
     "gui.pvz.guild_book5":"僵尸小屋",
     "gui.pvz.guild_book6":"植物获取",
+//player inventory
     "gui.pvz.player_inventory.title":"召唤卡背包",
+//dave shop
+    "gui.pvz.dave_shop":"戴夫的商店",
+    "gui.pvz.dave_shop.title":"戴夫的商店",
+    "gui.pvz.dave_shop.buy":"购买",
+    "gui.pvz.dave_shop.energy1":"能量豆上限",
+    "gui.pvz.dave_shop.energy2":"购买可以增加一个能量豆槽",
+    "gui.pvz.dave_shop.almanac1":"图鉴",
+    "gui.pvz.dave_shop.almanac2":"右键查阅关于植物和僵尸的属性",
+//almanac
     "gui.pvz.almanac.lvl":"等级",
     "gui.pvz.almanac.health":"血量",
     "gui.pvz.almanac.sun_cost":"阳光消耗",

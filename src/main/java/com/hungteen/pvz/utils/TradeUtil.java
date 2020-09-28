@@ -25,7 +25,7 @@ public class TradeUtil {
 	}
 	
 	public static int getSlotCost(int num) {
-		num /= 9;
+		num /= 18;
 		if(num == 1) return 100;
 		if(num == 2) return 500;
 		if(num == 3) return 2000;

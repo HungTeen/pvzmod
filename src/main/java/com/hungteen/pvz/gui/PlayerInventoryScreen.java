@@ -1,5 +1,6 @@
 package com.hungteen.pvz.gui;
 
+import com.hungteen.pvz.capabilities.player.ClientPlayerResources;
 import com.hungteen.pvz.gui.container.PlayerInventoryContainer;
 import com.hungteen.pvz.gui.widget.PVZButton;
 import com.hungteen.pvz.network.ClickButtonPacket;
@@ -7,6 +8,7 @@ import com.hungteen.pvz.network.PVZPacketHandler;
 import com.hungteen.pvz.utils.PlayerUtil;
 import com.hungteen.pvz.utils.StringUtil;
 import com.hungteen.pvz.utils.enums.Colors;
+import com.hungteen.pvz.utils.enums.Resources;
 import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.datafixers.util.Pair;
 
@@ -14,6 +16,7 @@ import net.minecraft.client.gui.screen.inventory.ContainerScreen;
 import net.minecraft.client.gui.widget.button.Button;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.util.ResourceLocation;
+import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraftforge.api.distmarker.Dist;
@@ -56,9 +59,11 @@ public class PlayerInventoryScreen extends ContainerScreen<PlayerInventoryContai
 		RenderSystem.color4f(1.0F, 1.0F, 1.0F, 1.0F);
         this.minecraft.getTextureManager().bindTexture(TEXTURE);
         blit(this.guiLeft, this.guiTop, 0, 0, this.xSize, this.ySize);
-        for(int i=0;i<this.container.getLockRow();i++) {
-        	for(int j=0;j<9;j++) {
-        		blit(this.guiLeft+24+18*j, this.guiTop+119-18*i, 208, 0, 16, 16);
+        int lock = this.container.currentPage * 54 - ClientPlayerResources.getPlayerStats(Resources.SLOT_NUM);
+        int num = MathHelper.clamp(lock / 9, 0, 6);
+        for(int i = 0;i < num;i ++) {
+        	for(int j = 0;j < 9;j ++) {
+        		blit(this.guiLeft + 24 + 18 * j, this.guiTop + 119 - 18 * i, 208, 0, 16, 16);
         	}
         }
         StringUtil.drawCenteredScaledString(this.font, TITLE, this.width / 2, this.guiTop + 6, Colors.BLACK, 1.6f);

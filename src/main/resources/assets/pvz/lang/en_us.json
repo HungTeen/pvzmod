@@ -206,11 +206,13 @@
     "block.pvz.nut_leaves":"Nut Leaves",
     "block.pvz.chomper":"Chomper",
 //gui
+//strange help
     "gui.pvz.strange_help":"Help for Plants vs Zombies mod",
     "gui.pvz.strange_help1":"When the Zombies show up,just",
     "gui.pvz.strange_help2":"stand there and do nothing.",
     "gui.pvz.strange_help3":"You win when they eat your brain!",
     "gui.pvz.strange_help4":"-this help brought to you by the Zombies",
+//guild book
     "gui.pvz.guild_book0":"Player Stats",
     "gui.pvz.guild_book1":"Events",
     "gui.pvz.guild_book2":"Essences",
@@ -218,7 +220,17 @@
     "gui.pvz.guild_book4":"Zen Garden",
     "gui.pvz.guild_book5":"Zombie House",
     "gui.pvz.guild_book6":"Plant obtain",
+//player inventory
     "gui.pvz.player_inventory.title":"Card Inventory",
+//dave shop
+    "gui.pvz.dave_shop":"Dave Shop",
+    "gui.pvz.dave_shop.title":"Dave Shop",
+    "gui.pvz.dave_shop.buy":"Buy",
+    "gui.pvz.dave_shop.energy1":"Max Energy Limit",
+    "gui.pvz.dave_shop.energy2":"Can add one slot for energy num",
+    "gui.pvz.dave_shop.almanac1":"Almanac",
+    "gui.pvz.dave_shop.almanac2":"right click to read information",
+//almanac
     "gui.pvz.almanac.lvl":"Level",
     "gui.pvz.almanac.health":"Health",
     "gui.pvz.almanac.sun_cost":"Sun Cost",
