@@ -49,6 +49,10 @@ public abstract class SummonCardItem extends Item{
 		return this.getItemStackLimit(stack) == 1&&!this.isEnjoyCard;
 	}
 	
+	public boolean isEnjoyCard() {
+		return this.isEnjoyCard;
+	}
+	
 	@Override
 	public int getItemEnchantability(ItemStack stack) {
 		return 20;

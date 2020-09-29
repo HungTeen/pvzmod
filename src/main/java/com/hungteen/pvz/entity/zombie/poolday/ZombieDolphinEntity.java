@@ -4,6 +4,7 @@ import com.hungteen.pvz.entity.ai.PVZNearestTargetGoal;
 import com.hungteen.pvz.entity.ai.ZombieMeleeAttackGoal;
 import com.hungteen.pvz.entity.creature.FoodieZombieEntity;
 import com.hungteen.pvz.entity.zombie.PVZZombieEntity;
+import com.hungteen.pvz.misc.loot.PVZLoot;
 import com.hungteen.pvz.register.SoundRegister;
 import com.hungteen.pvz.utils.ZombieUtil;
 import com.hungteen.pvz.utils.enums.Zombies;
@@ -33,6 +34,7 @@ import net.minecraft.pathfinding.PathNodeType;
 import net.minecraft.pathfinding.SwimmerPathNavigator;
 import net.minecraft.tags.FluidTags;
 import net.minecraft.util.Direction;
+import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.SoundEvent;
 import net.minecraft.util.SoundEvents;
 import net.minecraft.util.math.BlockPos;
@@ -126,6 +128,11 @@ public class ZombieDolphinEntity extends PVZZombieEntity {
 	@Override
 	protected PathNavigator createNavigator(World worldIn) {
 		return new SwimmerPathNavigator(this, worldIn);
+	}
+	
+	@Override
+	protected ResourceLocation getLootTable() {
+		return PVZLoot.ZOMBIE_DOLPHIN;
 	}
 	
 	@Override

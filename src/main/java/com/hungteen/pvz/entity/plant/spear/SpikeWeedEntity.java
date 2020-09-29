@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Random;
 
 import com.hungteen.pvz.entity.plant.PVZPlantEntity;
+import com.hungteen.pvz.entity.zombie.poolday.BobsleTeamEntity;
 import com.hungteen.pvz.entity.zombie.poolday.ZomboniEntity;
 import com.hungteen.pvz.misc.damage.PVZDamageSource;
 import com.hungteen.pvz.register.ParticleRegister;
@@ -83,7 +84,7 @@ public class SpikeWeedEntity extends PVZPlantEntity{
 	
 	protected void spikeNormalAttack(LivingEntity target) {
 		this.setAttackTime(this.getAttackCD());
-		if(target instanceof ZomboniEntity) {
+		if(target instanceof ZomboniEntity || target instanceof BobsleTeamEntity) {
 			target.attackEntityFrom(PVZDamageSource.causeSpikeDamage(this, this), target.getMaxHealth());
 			this.remove();
 		}

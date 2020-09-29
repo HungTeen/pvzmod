@@ -44,6 +44,10 @@ public class BiomeUtil {
 			BiomeRegister.ZEN_GARDEN.get(),
 	};
 	
+	public static final Biome[] NETHER = new Biome[] {
+			Biomes.NETHER
+	};
+	
 	public static final Biome[] THE_END = new Biome[] {
 			Biomes.THE_END, Biomes.SMALL_END_ISLANDS, Biomes.END_MIDLANDS, Biomes.END_HIGHLANDS, Biomes.END_BARRENS,
 	};

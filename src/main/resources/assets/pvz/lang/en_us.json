@@ -29,6 +29,15 @@
 //misc
     "item.pvz.strange_help":"Strange Help",
     "item.pvz.guild_book":"PVZ Guild Book",
+    "item.pvz.bobsle_car":"Bobsle Car", 
+    "item.pvz.snow_pea":"Snow Pea",
+    "item.pvz.flame_pea":"Flame Pea",
+    "item.pvz.blue_flame_pea":"Blue Flame Pea",
+    "item.pvz.small_meat":"Small Meat",
+    "item.pvz.fake_brain":"Fake Brain",
+    "item.pvz.real_brain":"Real Brain",
+    "item.pvz.pepper":"Pepper",
+    "item.pvz.almanac":"Almanac",
 //entity & spawn egg & card
 //drop
     "entity.pvz.sun":"Sun",
@@ -43,10 +52,12 @@
 //misc
     "entity.pvz.ducky_tube":"Ducky Tube",
     "entity.pvz.bobsle_car":"Bobsle Car",
-    "item.pvz.bobsle_car":"Bobsle Car", 
 //animal
     "entity.pvz.foodie_zombie":"FoodieZombie",
     "item.pvz.foodie_zombie_spawn_egg":"FoodieZombie Spawn Egg", 
+//npc
+    "entity.pvz.crazy_dave":"Crazy Dave",
+    "item.pvz.crazy_dave_spawn_egg":"Crazy Dave Spawn Egg", 
 //zombie
     "entity.pvz.normal_zombie":"Normal Zombie",
     "item.pvz.normal_zombie_spawn_egg":"Normal Zombie Spawn Egg", 
@@ -161,13 +172,6 @@
     "item.pvz.water_guard_spawn_egg":"WaterGuard Spawn Egg",
     "item.pvz.water_guard_card":"WaterGuard Card",
     "item.pvz.water_guard_enjoy_card":"WaterGuard Enjoy Card",
-//misc
-    "item.pvz.snow_pea":"Snow Pea",
-    "item.pvz.flame_pea":"Flame Pea",
-    "item.pvz.blue_flame_pea":"Blue Flame Pea",
-    "item.pvz.small_meat":"Small Meat",
-    "item.pvz.fake_brain":"Fake Brain",
-    "item.pvz.real_brain":"Real Brain",
 //tool & tooltip
     "item.pvz.zombie_flag":"Zombie Flag",
     "tooltip.pvz.zombie_flag":"Right Click to get a speed effect",
@@ -329,6 +333,12 @@
     "advancement.pvz.origin.desc":"Obtain origin essence",
     "advancement.pvz.zen_garden":"Zen Garden",
     "advancement.pvz.zen_garden.desc":"Go to Zen Garden biome",
+    "advancement.pvz.pea_holiday":"Pea's Holiday",
+    "advancement.pvz.pea_holiday.desc":"Use pea-gun to kill a mob",
+    "advancement.pvz.dave_villa":"Free Villa",
+    "advancement.pvz.dave_villa.desc":"reach Dave's villa",
+    "advancement.pvz.almanac":"Almanac",
+    "advancement.pvz.almanac.desc":"Obtain almanac",
 //enchantment
     "enchantment.pvz.sun_cost_reduce":"Sun Reduce",
     "enchantment.pvz.break_out":"Break Out",

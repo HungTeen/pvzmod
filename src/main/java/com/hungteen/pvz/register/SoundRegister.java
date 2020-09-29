@@ -42,6 +42,7 @@ public class SoundRegister {
 	public static final RegistryObject<SoundEvent> DAVE_DIE = registerSound("dave_die");
 	public static final RegistryObject<SoundEvent> DOLPHIN_SAY = registerSound("dolphin_say");
 	public static final RegistryObject<SoundEvent> DOLPHIN_JUMP = registerSound("dolphin_jump");
+	public static final RegistryObject<SoundEvent> SLURP = registerSound("slurp");
 	
 	private static RegistryObject<SoundEvent> registerSound(String name){
 		return SOUNDS.register(name, ()->{

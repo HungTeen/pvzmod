@@ -1,6 +1,7 @@
 package com.hungteen.pvz.entity.zombie.poolday;
 
 import com.hungteen.pvz.entity.zombie.PVZZombieEntity;
+import com.hungteen.pvz.misc.loot.PVZLoot;
 import com.hungteen.pvz.register.EntityRegister;
 import com.hungteen.pvz.utils.EntityUtil;
 import com.hungteen.pvz.utils.ZombieUtil;
@@ -12,6 +13,7 @@ import net.minecraft.entity.Pose;
 import net.minecraft.entity.SharedMonsterAttributes;
 import net.minecraft.entity.monster.MonsterEntity;
 import net.minecraft.util.DamageSource;
+import net.minecraft.util.ResourceLocation;
 import net.minecraft.world.World;
 
 public class BobsleTeamEntity extends PVZZombieEntity{
@@ -62,6 +64,11 @@ public class BobsleTeamEntity extends PVZZombieEntity{
 	@Override
 	public float getLife() {
 		return 60;
+	}
+	
+	@Override
+	protected ResourceLocation getLootTable() {
+		return PVZLoot.BOBSLE_TEAM;
 	}
 
 	@Override

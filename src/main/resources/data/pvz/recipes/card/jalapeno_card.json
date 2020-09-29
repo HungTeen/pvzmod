@@ -1,0 +1,23 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "OOO",
+    "OBO",
+    "OAO"
+  ],
+  "key": {
+    "O": {
+      "item": "pvz:flame_essence"
+    },
+    "B": {
+      "tag": "forge:crops/chilipepper"
+    },
+    "A": {
+      "item": "pvz:blue_card"
+    }
+  },
+  "result": {
+    "item": "pvz:jalapeno_card",
+    "count": 1
+  }
+}

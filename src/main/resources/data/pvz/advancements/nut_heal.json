@@ -1,0 +1,51 @@
+{
+  "parent": "pvz:origin",
+  "display": {
+    "icon": {
+      "item": "pvz:wall_nut_card"
+    },
+    "title": {
+      "translate": "advancements.adventure.nut_heal.title"
+    },
+    "description": {
+      "translate": "advancements.adventure.nut_heal.description"
+    },
+    "frame": "task",
+    "show_toast": true,
+    "announce_to_chat": true,
+    "hidden": false
+  },
+  "criteria": {
+    "heal_wall_nut": {
+      "trigger": "minecraft:player_interacted_with_entity",
+      "conditions": {
+        "item": [{
+            "item": "pvz:wall_nut_card"
+        }],
+        "entity": [{
+            "type": "pvz:wall_nut"
+        }]
+      }
+    },
+    "heal_tall_nut": {
+      "trigger": "minecraft:player_interacted_with_entity",
+      "conditions": {
+        "item": [
+        {
+            "item": "pvz:tall_nut_card"
+        }],
+        "entity": [
+         {
+            "type": "pvz:tall_nut"
+         }
+        ]
+      }
+    }
+  },
+  "requirements": [
+    [
+      "heal_wall_nut",
+      "heal_tall_nut"
+    ]
+  ]
+}

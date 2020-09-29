@@ -27,5 +27,6 @@
     "dave_buy":{"sounds":[{"name":"pvz:entity/npc/crazy_dave/dave_buy"}]},
     "dave_die":{"sounds":[{"name":"pvz:entity/npc/crazy_dave/dave_die"}]},
     "dolphin_say":{"sounds":[{"name":"pvz:entity/zombie/say/dolphin_say"}]},
-    "dolphin_jump":{"sounds":[{"name":"pvz:entity/zombie/say/dolphin_jump"}]}
+    "dolphin_jump":{"sounds":[{"name":"pvz:entity/zombie/say/dolphin_jump"}]},
+    "slurp":{"sounds":[{"name":"pvz:entity/slurp"}]}
 }

@@ -112,7 +112,8 @@ public class PlayerDataManager {
 		public void addPlayerStats(Resources res,int num){
 			switch (res) {
 			case TREE_LVL:{
-				addTreeLvl(num);
+				int now=MathHelper.clamp(resources.get(Resources.TREE_LVL)+num, 1, PlayerUtil.MAX_TREE_LVL);
+				resources.put(Resources.TREE_LVL, now);
 				break;
 			}
 			case TREE_XP:{
@@ -120,44 +121,34 @@ public class PlayerDataManager {
 				break;
 			}
 			case MONEY:{
-				addMoney(num);
+				int now=MathHelper.clamp(resources.get(Resources.MONEY)+num, 0, PlayerUtil.MAX_MONEY);
+				resources.put(Resources.MONEY, now);
 				break;
 			}
 			case SUN_NUM:{
-				addSunNum(num);
+				int now=MathHelper.clamp(resources.get(Resources.SUN_NUM)+num, 0, PlayerUtil.getPlayerMaxSunNum(resources.get(Resources.TREE_LVL)));
+				resources.put(Resources.SUN_NUM, now);
 				break;
 			}
 			case ENERGY_NUM:{
-				addEnergyNum(num);
+				int now=MathHelper.clamp(resources.get(Resources.ENERGY_NUM)+num, 0, resources.get(Resources.MAX_ENERGY_NUM));
+				resources.put(Resources.ENERGY_NUM, now);
 				break;
 			}
 			case MAX_ENERGY_NUM:{
 				int now = MathHelper.clamp(resources.get(Resources.MAX_ENERGY_NUM)+num, 1, PlayerUtil.MAX_ENERGY_NUM);
 				resources.put(Resources.MAX_ENERGY_NUM, now);
+				break;
 			}
 			case SLOT_NUM:{
 				int now = MathHelper.clamp(resources.get(Resources.SLOT_NUM)+num, 18, PlayerUtil.MAX_SLOT_NUM);
 				resources.put(Resources.SLOT_NUM, now);
+				break;
 			}
 			default:
 				break;
 			}
 			this.sendPacket(player,res);
-		}
-		
-		private void addEnergyNum(int num){
-			int now=resources.get(Resources.ENERGY_NUM);
-			int max=resources.get(Resources.MAX_ENERGY_NUM);
-			if(num>0) now=Math.min(max,now+num);
-			else now=Math.max(0, now+num);
-			resources.put(Resources.ENERGY_NUM, now);
-		}
-		
-		private void addMoney(int num){
-			int now=resources.get(Resources.MONEY);
-			if(num>0) now=now+num;
-			else now=Math.max(0, now+num);
-			resources.put(Resources.MONEY, now);
 		}
 		
 		private void addTreeXp(int num){
@@ -167,36 +158,22 @@ public class PlayerDataManager {
 				int req=PlayerUtil.getPlayerLevelUpXp(lvl);
 				while(lvl<PlayerUtil.MAX_TREE_LVL&&num+now>=req) {
 					num-=req-now;
-					addTreeLvl(1);
+					this.addPlayerStats(Resources.TREE_LVL, 1);
 					lvl++;
 					now=0;
 					req=PlayerUtil.getPlayerLevelUpXp(lvl);
 				}
 				resources.put(Resources.TREE_XP, num+now);
 			}else {
+				num = -num;
 				while(lvl>1&&num>now) {
 					num-=now;
 					lvl--;
 					now=PlayerUtil.getPlayerLevelUpXp(lvl);
-					addTreeLvl(-1);
+					this.addPlayerStats(Resources.TREE_LVL, -1);
 				}
 				resources.put(Resources.TREE_XP, now-num);
 			}
-		}
-		
-		private void addSunNum(int num){
-			int now=resources.get(Resources.SUN_NUM);
-			int lvl=resources.get(Resources.TREE_LVL);
-			if(num>0) now=Math.min(PlayerUtil.getPlayerMaxSunNum(lvl),now+num);
-			else now=Math.max(0, now+num);
-			resources.put(Resources.SUN_NUM, now);
-		}
-		
-		private void addTreeLvl(int num){
-			int now=resources.get(Resources.TREE_LVL);
-			if(num>0) now=Math.min(PlayerUtil.MAX_TREE_LVL, now+num);
-			else now=Math.max(1, now+num);
-			resources.put(Resources.TREE_LVL, now);
 		}
 		
 		public void sendPacket(PlayerEntity player,Resources res){

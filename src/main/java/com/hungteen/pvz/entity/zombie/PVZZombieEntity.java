@@ -17,6 +17,7 @@ import com.hungteen.pvz.entity.plant.enforce.SquashEntity;
 import com.hungteen.pvz.entity.plant.spear.SpikeWeedEntity;
 import com.hungteen.pvz.misc.damage.PVZDamageSource;
 import com.hungteen.pvz.misc.damage.PVZDamageType;
+import com.hungteen.pvz.misc.loot.PVZLoot;
 import com.hungteen.pvz.register.EntityRegister;
 import com.hungteen.pvz.register.EffectRegister;
 import com.hungteen.pvz.register.SoundRegister;
@@ -56,7 +57,6 @@ import net.minecraft.world.IWorld;
 import net.minecraft.world.IWorldReader;
 import net.minecraft.world.LightType;
 import net.minecraft.world.World;
-import net.minecraft.world.storage.loot.LootTables;
 
 public abstract class PVZZombieEntity extends MonsterEntity implements IPVZZombie {
 
@@ -576,7 +576,7 @@ public abstract class PVZZombieEntity extends MonsterEntity implements IPVZZombi
 
 	@Override
 	protected ResourceLocation getLootTable() {
-		return LootTables.EMPTY;
+		return PVZLoot.NORMAL_ZOMBIE;
 	}
 
 	public enum Type {

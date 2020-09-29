@@ -2,6 +2,7 @@ package com.hungteen.pvz.entity.plant.base;
 
 import com.hungteen.pvz.entity.ai.PVZNearestTargetGoal;
 import com.hungteen.pvz.entity.plant.PVZPlantEntity;
+import com.hungteen.pvz.item.tool.card.PlantCardItem;
 import com.hungteen.pvz.utils.EntityUtil;
 import com.hungteen.pvz.utils.interfaces.IDefender;
 
@@ -10,11 +11,14 @@ import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.MobEntity;
+import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.network.datasync.DataParameter;
 import net.minecraft.network.datasync.DataSerializers;
 import net.minecraft.network.datasync.EntityDataManager;
+import net.minecraft.particles.ParticleTypes;
 import net.minecraft.util.DamageSource;
+import net.minecraft.util.Hand;
 import net.minecraft.world.World;
 
 public abstract class PlantDefenderEntity extends PVZPlantEntity implements IDefender{
@@ -59,6 +63,25 @@ public abstract class PlantDefenderEntity extends PVZPlantEntity implements IDef
 				}
 			}
 		}
+	}
+	
+	@Override
+	protected boolean processInteract(PlayerEntity player, Hand hand) {
+		if(player.getHeldItem(hand).getItem() instanceof PlantCardItem && this.getHealth() != this.getMaxHealth()) {
+			PlantCardItem item = (PlantCardItem) player.getHeldItem(hand).getItem();
+			if(!item.isEnjoyCard()&&item.getPlant() == this.getPlantEnumName()) {
+				if(!world.isRemote) {
+					player.getCooldownTracker().setCooldown(item, this.getCoolDownTime());
+				    this.heal(this.getMaxHealth());
+				}else {
+					for(int i=0;i<4;i++) {
+						this.world.addParticle(ParticleTypes.HEART, this.getPosX(), this.getPosY()+this.getEyeHeight(), this.getPosZ(), (this.getRNG().nextFloat()-0.5f)/8, 0.05f, (this.getRNG().nextFloat()-0.5f)/8);
+					}
+				}
+				return true;
+			}
+		}
+		return false;
 	}
 	
 	@Override

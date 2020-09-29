@@ -1,0 +1,35 @@
+{
+  "display": {
+    "icon": {
+      "item": "pvz:almanac"
+    },
+    "title": {
+      "translate": "advancement.pvz.almanac"
+    },
+    "description": {
+      "translate": "advancement.pvz.almanac.desc"
+    },
+	"frame":"task",
+    "announce_to_chat": true
+  },
+  "parent":"pvz:dave_villa",
+  "criteria": {
+    "get_almanac": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items":[
+		  {
+		    "item":"pvz:almanac"
+		  }
+		]
+      }
+    }
+  },
+  "requirements": [[
+    "get_almanac"
+  ]],
+  "rewards":{
+    "recipes":[
+    ]
+  }
+}

@@ -29,6 +29,15 @@
 //misc
     "item.pvz.strange_help":"奇怪的帮助",
     "item.pvz.guild_book":"PVZ指导书",
+    "item.pvz.bobsle_car":"雪橇车", 
+    "item.pvz.snow_pea":"寒冰豌豆",
+    "item.pvz.flame_pea":"烈焰豌豆",
+    "item.pvz.blue_flame_pea":"蓝焰豌豆",
+    "item.pvz.small_meat":"小肉块",
+    "item.pvz.fake_brain":"仿制脑子",
+    "item.pvz.real_brain":"真*脑子",
+    "item.pvz.pepper":"辣椒",
+    "item.pvz.almanac":"图鉴",
 //entity &刷怪蛋 & card  
 //drop
     "entity.pvz.sun":"阳光",
@@ -43,10 +52,12 @@
 //misc
     "entity.pvz.ducky_tube":"鸭子救生圈",
     "entity.pvz.bobsle_car":"雪橇车",
-    "item.pvz.bobsle_car":"雪橇车", 
 //animal
     "entity.pvz.foodie_zombie":"吃货僵尸",
     "item.pvz.foodie_zombie_spawn_egg":"吃货僵尸刷怪蛋", 
+//npc
+    "entity.pvz.crazy_dave":"疯狂戴夫",
+    "item.pvz.crazy_dave_spawn_egg":"疯狂戴夫刷怪蛋", 
 //zombie
     "entity.pvz.normal_zombie":"普通僵尸",
     "item.pvz.normal_zombie_spawn_egg":"普通僵尸刷怪蛋",
@@ -161,13 +172,6 @@
     "item.pvz.water_guard_spawn_egg":"睡莲护卫刷怪蛋",
     "item.pvz.water_guard_card":"睡莲护卫卡",
     "item.pvz.water_guard_enjoy_card":"睡莲护卫体验卡",
-//misc
-    "item.pvz.snow_pea":"寒冰豌豆",
-    "item.pvz.flame_pea":"烈焰豌豆",
-    "item.pvz.blue_flame_pea":"蓝焰豌豆",
-    "item.pvz.small_meat":"小肉块",
-    "item.pvz.fake_brain":"仿制脑子",
-    "item.pvz.real_brain":"真*脑子",
 //tool & tooltip
     "item.pvz.zombie_flag":"僵尸旗帜",
     "tooltip.pvz.zombie_flag":"右键会获得加速效果",
@@ -328,9 +332,15 @@
     "advancement.pvz.start":"开始了!",
     "advancement.pvz.start.desc":"合成植物大战僵尸指南书",
     "advancement.pvz.origin":"起源",
-    "advancement.pvz.origin.desc":"合成原始精华",
+    "advancement.pvz.origin.desc":"获得原始精华",
     "advancement.pvz.zen_garden":"禅境花园",
     "advancement.pvz.zen_garden.desc":"到达禅境花园生物群系",
+    "advancement.pvz.pea_holiday":"豌豆先生的假期",
+    "advancement.pvz.pea_holiday.desc":"用豌豆枪杀死一个怪物",
+    "advancement.pvz.dave_villa":"开局一套房",
+    "advancement.pvz.dave_villa.desc":"到达戴夫的别墅",
+    "advancement.pvz.almanac":"图鉴",
+    "advancement.pvz.almanac.desc":"获得植物图鉴",
 //enchantment
     "enchantment.pvz.sun_cost_reduce":"节能",
     "enchantment.pvz.break_out":"爆发",

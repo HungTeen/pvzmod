@@ -1,0 +1,35 @@
+{
+  "parent": "pvz:origin",
+  "display": {
+    "icon": {
+      "item": "pvz:pea_gun"
+    },
+    "title": {
+      "translate": "advancements.adventure.pea_holiday.title"
+    },
+    "description": {
+      "translate": "advancements.adventure.pea_holiday.description"
+    },
+    "frame": "task",
+    "show_toast": true,
+    "announce_to_chat": true,
+    "hidden": false
+  },
+  "criteria": {
+    "shot_arrow": {
+      "trigger": "minecraft:player_killed_entity",
+      "conditions": {
+        "killing_blow": {
+            "direct_entity": {
+              "type": "pvz:pea"
+            }
+        }
+      }
+    }
+  },
+  "requirements": [
+    [
+      "shot_arrow"
+    ]
+  ]
+}

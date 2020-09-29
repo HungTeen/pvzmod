@@ -1,0 +1,32 @@
+{
+  "display": {
+    "icon": {
+      "item": "minecraft:bricks"
+    },
+    "title": {
+      "translate": "advancement.pvz.dave_villa"
+    },
+    "description": {
+      "translate": "advancement.pvz.dave_villa.desc"
+    },
+	"frame":"task",
+    "announce_to_chat": true
+  },
+  "parent":"pvz:root",
+  "criteria": {
+    "reach": {
+      "trigger": "minecraft:location",
+      "conditions": {
+        "feature":"pvz:dave_villa"
+      }
+    }
+  },
+  "requirements": [[
+    "reach"
+  ]],
+  "rewards":{
+    "recipes":[
+     
+    ]
+  }
+}

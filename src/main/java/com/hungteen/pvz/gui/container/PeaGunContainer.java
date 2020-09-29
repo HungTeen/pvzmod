@@ -4,7 +4,6 @@ import com.hungteen.pvz.PVZMod;
 import com.hungteen.pvz.item.tool.PeaGunItem;
 import com.hungteen.pvz.register.ContainerRegister;
 import com.hungteen.pvz.register.ItemRegister;
-import com.hungteen.pvz.utils.ItemUtil;
 
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.inventory.Inventory;
@@ -26,8 +25,7 @@ public class PeaGunContainer extends Container{
 			PVZMod.LOGGER.debug("ERROR OFFHAND ITEM !");
 			return ;
 		}
-		backpack = new Inventory(PeaGunItem.PEA_GUN_SLOT_NUM);
-		ItemUtil.restoreFromItemStack(stack, backpack);
+		backpack = PeaGunItem.getInventory(stack);
 		
 		this.addSlot(new Slot(backpack,0,80,21));//special slots
 		
@@ -87,13 +85,13 @@ public class PeaGunContainer extends Container{
 	@Override
 	public void onContainerClosed(PlayerEntity playerIn) {
 		super.onContainerClosed(playerIn);
-		ItemUtil.convertToItemStack(this.stack,this.backpack);
+//		ItemUtil.convertToItemStack(this.stack,this.backpack);
 	}
 
 	@Override
 	public boolean canInteractWith(PlayerEntity playerIn) {
 		if(playerIn.getHeldItemOffhand().getItem() != ItemRegister.PEA_GUN.get()) {
-			ItemUtil.convertToItemStack(this.stack,this.backpack);
+//			ItemUtil.convertToItemStack(this.stack,this.backpack);
 			return false;
 		}
 		return true;

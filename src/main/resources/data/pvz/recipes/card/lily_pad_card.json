@@ -1,0 +1,23 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "OOO",
+    "OBO",
+    "OAO"
+  ],
+  "key": {
+    "O": {
+      "item": "pvz:defence_essence"
+    },
+    "B": {
+      "item": "minecraft:lily_pad"
+    },
+    "A": {
+      "item": "pvz:gray_card"
+    }
+  },
+  "result": {
+    "item": "pvz:lily_pad_card",
+    "count": 1
+  }
+}

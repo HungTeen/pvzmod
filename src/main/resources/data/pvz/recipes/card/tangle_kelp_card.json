@@ -1,0 +1,23 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "OOO",
+    "OBO",
+    "OAO"
+  ],
+  "key": {
+    "O": {
+      "item": "pvz:enforce_essence"
+    },
+    "B": {
+      "item": "minecraft:seagrass"
+    },
+    "A": {
+      "item": "pvz:white_card"
+    }
+  },
+  "result": {
+    "item": "pvz:tangle_kelp_card",
+    "count": 1
+  }
+}

@@ -108,52 +108,42 @@ public class PVZConfig {
 							.comment("spawn weight of Sun")
 							.worldRestart()
 							.defineInRange("SunSpawnWeight", 50, 1, 200);
-					EntitySettings.EntitySpawnWeight.NormalZombieSpawnWeight = builder
-							.translation(CONFIG_TRANSLATE+"normal_zombie_spawn_weight")
-							.comment("spawn weight of NormalZombie")
+					EntitySettings.EntitySpawnWeight.ZombieDolphinSpawnWeight = builder
+							.translation(CONFIG_TRANSLATE+"zombie_dolphin_spawn_weight")
+							.comment("spawn weight of ZombieDolphin")
 							.worldRestart()
-							.defineInRange("NormalZombieSpawnWeight", 60, 1, 200);
-					EntitySettings.EntitySpawnWeight.FlagZombieSpawnWeight = builder
-							.translation(CONFIG_TRANSLATE+"flag_zombie_spawn_weight")
-							.comment("spawn weight of FlagZombie")
+							.defineInRange("ZombieDolphinSpawnWeight", 1, 1, 200);
+					EntitySettings.EntitySpawnWeight.FoodieZombieSpawnWeight = builder
+							.translation(CONFIG_TRANSLATE+"foodie_zombie_spawn_weight")
+							.comment("spawn weight of FoodieZombie")
 							.worldRestart()
-							.defineInRange("FlagZombieSpawnWeight", 2, 1, 200);
-					EntitySettings.EntitySpawnWeight.ConeHeadZombieSpawnWeight = builder
-							.translation(CONFIG_TRANSLATE+"conehead_zombie_spawn_weight")
-							.comment("spawn weight of ConeHeadZombie")
+							.defineInRange("FoodieZombieSpawnWeight", 1, 1, 200);
+					EntitySettings.EntitySpawnWeight.LavaZombieSpawnWeight = builder
+							.translation(CONFIG_TRANSLATE+"lava_zombie_spawn_weight")
+							.comment("spawn weight of LavaZombie at nether")
 							.worldRestart()
-							.defineInRange("ConeHeadZombieSpawnWeight", 20, 1, 200);
-					EntitySettings.EntitySpawnWeight.PoleZombieSpawnWeight = builder
-							.translation(CONFIG_TRANSLATE+"pole_zombie_spawn_weight")
-							.comment("spawn weight of PoleZombie")
-							.worldRestart()
-							.defineInRange("PoleZombieSpawnWeight", 20, 1, 200);
-					EntitySettings.EntitySpawnWeight.BucketHeadZombieSpawnWeight = builder
-							.translation(CONFIG_TRANSLATE+"buckethead_zombie_spawn_weight")
-							.comment("spawn weight of BucketHeadZombie")
-							.worldRestart()
-							.defineInRange("BucketHeadZombieSpawnWeight", 4, 1, 200);
+							.defineInRange("LavaZombieSpawnWeight", 15, 1, 200);
 				}
 				builder.pop();
-				builder.comment("The chance of special item drop").push("ItemDropChance");
-				{
-					EntitySettings.EntityDropItem.ZombieFlagDropChance = builder
-							.translation(CONFIG_TRANSLATE+"zombie_flag_drop_chance")
-                            .comment("Zombie Flag Drop Chance,the bigger the less chance,(1/x)")
-                            .worldRestart()
-                            .defineInRange("ZombieFlagDropChance", 50, 1, 1000);
-					EntitySettings.EntityDropItem.ConeHeadDropChance = builder
-							.translation(CONFIG_TRANSLATE+"conehead_drop_chance")
-                            .comment("ConeHead Drop Chance,the bigger the less chance,(1/x)")
-                            .worldRestart()
-                            .defineInRange("ConeHeadDropChance", 30, 1, 1000);
-					EntitySettings.EntityDropItem.BucketHeadDropChance = builder
-							.translation(CONFIG_TRANSLATE+"buckethead_drop_chance")
-                            .comment("BucketHead Drop Chance,the bigger the less chance,(1/x)")
-                            .worldRestart()
-                            .defineInRange("BucketHeadDropChance", 40, 1, 1000);
-				}
-				builder.pop();
+//				builder.comment("The chance of special item drop").push("ItemDropChance");
+//				{
+//					EntitySettings.EntityDropItem.ZombieFlagDropChance = builder
+//							.translation(CONFIG_TRANSLATE+"zombie_flag_drop_chance")
+//                            .comment("Zombie Flag Drop Chance,the bigger the less chance,(1/x)")
+//                            .worldRestart()
+//                            .defineInRange("ZombieFlagDropChance", 50, 1, 1000);
+//					EntitySettings.EntityDropItem.ConeHeadDropChance = builder
+//							.translation(CONFIG_TRANSLATE+"conehead_drop_chance")
+//                            .comment("ConeHead Drop Chance,the bigger the less chance,(1/x)")
+//                            .worldRestart()
+//                            .defineInRange("ConeHeadDropChance", 30, 1, 1000);
+//					EntitySettings.EntityDropItem.BucketHeadDropChance = builder
+//							.translation(CONFIG_TRANSLATE+"buckethead_drop_chance")
+//                            .comment("BucketHead Drop Chance,the bigger the less chance,(1/x)")
+//                            .worldRestart()
+//                            .defineInRange("BucketHeadDropChance", 40, 1, 1000);
+//				}
+//				builder.pop();
 			}
 			builder.pop();
 			//Block Settings 
@@ -210,22 +200,19 @@ public class PVZConfig {
 			
 			public EntityLiveTick EntityLiveTick = new EntityLiveTick();
 			public EntitySpawnWeight EntitySpawnWeight = new EntitySpawnWeight();
-			public EntityDropItem EntityDropItem = new EntityDropItem();
+//			public EntityDropItem EntityDropItem = new EntityDropItem();
 			
-			public static class EntityDropItem{
-				public ForgeConfigSpec.IntValue ZombieFlagDropChance;
-				public ForgeConfigSpec.IntValue ConeHeadDropChance;
-				public ForgeConfigSpec.IntValue BucketHeadDropChance;
-			}
+//			public static class EntityDropItem{
+//				public ForgeConfigSpec.IntValue ZombieFlagDropChance;
+//				public ForgeConfigSpec.IntValue ConeHeadDropChance;
+//				public ForgeConfigSpec.IntValue BucketHeadDropChance;
+//			}
 			
 			public static class EntitySpawnWeight{
 				public ForgeConfigSpec.IntValue SunSpawnWeight;
-				//zombie
-				public ForgeConfigSpec.IntValue NormalZombieSpawnWeight;
-				public ForgeConfigSpec.IntValue FlagZombieSpawnWeight;
-				public ForgeConfigSpec.IntValue ConeHeadZombieSpawnWeight;
-				public ForgeConfigSpec.IntValue PoleZombieSpawnWeight;
-				public ForgeConfigSpec.IntValue BucketHeadZombieSpawnWeight;
+				public ForgeConfigSpec.IntValue ZombieDolphinSpawnWeight;
+				public ForgeConfigSpec.IntValue FoodieZombieSpawnWeight;
+				public ForgeConfigSpec.IntValue LavaZombieSpawnWeight;
 			}
 			
 			public static class EntityLiveTick{

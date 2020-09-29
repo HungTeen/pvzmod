@@ -1,0 +1,23 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "OOO",
+    "OBO",
+    "OAO"
+  ],
+  "key": {
+    "O": {
+      "item": "pvz:flame_essence"
+    },
+    "B": {
+      "tag": "minecraft:logs"
+    },
+    "A": {
+      "item": "pvz:green_card"
+    }
+  },
+  "result": {
+    "item": "pvz:torch_wood_card",
+    "count": 1
+  }
+}

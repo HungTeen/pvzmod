@@ -1,17 +1,24 @@
 package com.hungteen.pvz.entity.creature;
 
+import java.util.Random;
+
 import com.hungteen.pvz.entity.ai.WaterTemptGoal;
 import com.hungteen.pvz.entity.drop.SunEntity;
 import com.hungteen.pvz.entity.zombie.poolday.SnorkelZombieEntity;
+import com.hungteen.pvz.misc.loot.PVZLoot;
 import com.hungteen.pvz.register.EntityRegister;
 import com.hungteen.pvz.register.ItemRegister;
+import com.hungteen.pvz.register.SoundRegister;
 
+import net.minecraft.block.Blocks;
 import net.minecraft.entity.AgeableEntity;
 import net.minecraft.entity.CreatureAttribute;
 import net.minecraft.entity.EntitySize;
 import net.minecraft.entity.EntityType;
+import net.minecraft.entity.MobEntity;
 import net.minecraft.entity.Pose;
 import net.minecraft.entity.SharedMonsterAttributes;
+import net.minecraft.entity.SpawnReason;
 import net.minecraft.entity.ai.controller.MovementController;
 import net.minecraft.entity.ai.goal.BreatheAirGoal;
 import net.minecraft.entity.ai.goal.BreedGoal;
@@ -32,7 +39,10 @@ import net.minecraft.pathfinding.PathNavigator;
 import net.minecraft.pathfinding.PathNodeType;
 import net.minecraft.pathfinding.SwimmerPathNavigator;
 import net.minecraft.util.Hand;
+import net.minecraft.util.ResourceLocation;
+import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
+import net.minecraft.world.IWorld;
 import net.minecraft.world.IWorldReader;
 import net.minecraft.world.World;
 
@@ -77,33 +87,34 @@ public class FoodieZombieEntity extends AnimalEntity {
 //		if(this.ticksExisted%50==0) {
 //			System.out.println(this.getGenTick());
 //		}
-		if(!world.isRemote&&this.getGenTick()>=0) {
-			this.setGenTick(this.getGenTick()-1);
-			if(this.getGenTick()==0) {
+		if (!world.isRemote && this.getGenTick() >= 0) {
+			this.setGenTick(this.getGenTick() - 1);
+			if (this.getGenTick() == 0) {
 				this.produceSun();
 			}
 		}
 	}
-	
+
 	protected void produceSun() {
 		SunEntity sun = EntityRegister.SUN.get().create(world);
-		sun.setPosition(this.getPosX(), this.getPosY()+1, this.getPosZ());
+		sun.setPosition(this.getPosX(), this.getPosY() + 1, this.getPosZ());
 		sun.setAmount(this.getSunAmount());
 		this.world.addEntity(sun);
 	}
-	
+
 	protected int getSunAmount() {
-		return 20+this.lvl*5;
+		return 20 + this.lvl * 5;
 	}
-	
+
 	@Override
 	public boolean processInteract(PlayerEntity player, Hand hand) {
 		ItemStack itemstack = player.getHeldItem(hand);
 		if (this.isBreedingItem(itemstack)) {
-			if (!this.world.isRemote && this.getGrowingAge() == 0 && this.getGenTick()==-1 && this.canBreed()) {
+			if (!this.world.isRemote && this.getGrowingAge() == 0 && this.getGenTick() == -1 && this.canBreed()) {
 				this.consumeItemFromStack(player, itemstack);
+				this.playSound(SoundRegister.SLURP.get(), 1f, 1f);
 				this.setInLove(player);
-				this.setGenTick(this.getGenCD());//start gen tick
+				this.setGenTick(this.getGenCD());// start gen tick
 				player.swing(hand, true);
 				return true;
 			}
@@ -112,17 +123,17 @@ public class FoodieZombieEntity extends AnimalEntity {
 				this.consumeItemFromStack(player, itemstack);
 				this.ageUp((int) ((float) (-this.getGrowingAge() / 20) * 0.1F), true);
 				return true;
-			}else {
-				if(itemstack.getItem()==ItemRegister.REAL_BRAIN.get()&&this.lvl<=MAX_LVL) {
+			} else {
+				if (itemstack.getItem() == ItemRegister.REAL_BRAIN.get() && this.lvl <= MAX_LVL) {
 					this.lvl++;
 				}
 			}
 		}
 		return super.processInteract(player, hand);
 	}
-	
+
 	private int getGenCD() {
-		return 600-this.lvl*20;
+		return 600 - this.lvl * 20;
 	}
 
 	@Override
@@ -192,13 +203,18 @@ public class FoodieZombieEntity extends AnimalEntity {
 	public boolean canBeLeashedTo(PlayerEntity player) {
 		return true;
 	}
-	
+
 	public int getGenTick() {
 		return this.dataManager.get(GEN_TICK);
 	}
-	
+
 	public void setGenTick(int tick) {
 		this.dataManager.set(GEN_TICK, tick);
+	}
+	
+	@Override
+	protected ResourceLocation getLootTable() {
+		return PVZLoot.FOODIE_ZOMBIE;
 	}
 
 	static class MoveHelperController extends MovementController {
@@ -251,19 +267,23 @@ public class FoodieZombieEntity extends AnimalEntity {
 			}
 		}
 	}
-	
+
+	public static boolean canSpawn(EntityType<? extends MobEntity> type, IWorld worldIn, SpawnReason reason,BlockPos pos, Random randomIn) {
+		return worldIn.getBlockState(pos).getBlock() == Blocks.WATER && worldIn.getBlockState(pos.up()).getBlock() == Blocks.WATER;
+	}
+
 	@Override
 	public void readAdditional(CompoundNBT compound) {
 		super.readAdditional(compound);
-		this.lvl=compound.getInt("zombie_lvl");
+		this.lvl = compound.getInt("zombie_lvl");
 		this.setGenTick(compound.getInt("gen_tick"));
 	}
-	
+
 	@Override
 	public void writeAdditional(CompoundNBT compound) {
 		super.writeAdditional(compound);
 		compound.putInt("zombie_lvl", this.lvl);
 		compound.putInt("gen_tick", this.getGenTick());
 	}
-	
+
 }

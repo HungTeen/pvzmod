@@ -11,7 +11,7 @@
               "function": "minecraft:set_count",
               "count": {
                 "min": 0.0,
-                "max": 1.0,
+                "max": 2.0,
                 "type": "minecraft:uniform"
               }
             },
@@ -32,20 +32,21 @@
       "entries": [
         {
           "type": "minecraft:item",
-          "name": "pvz:bucket_head"
+          "name": "minecraft:iron_ingot"
         },
         {
           "type": "minecraft:item",
-          "name": "minecraft:emerld"
+          "name": "pvz:pea"
+        },
+        {
+          "type": "minecraft:item",
+          "name": "pvz:cone_head"
         }
       ],
       "conditions": [
         {
-          "condition": "minecraft:killed_by_player"
-        },
-        {
           "condition": "minecraft:random_chance_with_looting",
-          "chance": 0.025,
+          "chance": 0.02,
           "looting_multiplier": 0.01
         }
       ]

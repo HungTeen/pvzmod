@@ -50,6 +50,9 @@ public class PVZPlayerEvents {
 			ItemStack stack = ev.player.getItemStackFromSlot(EquipmentSlotType.HEAD);
 			if(stack.getItem() instanceof PeaGunItem && !ev.player.getCooldownTracker().hasCooldown(stack.getItem())) {
 			    ((PeaGunItem)stack.getItem()).checkAndShootPea(ev.player.world, ev.player, stack);
+			    if(!ev.player.getCooldownTracker().hasCooldown(stack.getItem())) {
+			    	ev.player.getCooldownTracker().setCooldown(stack.getItem(), 200);//cool down for no pea
+			    }
 			}
 		}
 	}

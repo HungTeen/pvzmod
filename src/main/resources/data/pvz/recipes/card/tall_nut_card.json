@@ -1,0 +1,23 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "OBO",
+    "OBO",
+    "OAO"
+  ],
+  "key": {
+    "O": {
+      "item": "pvz:defence_essence"
+    },
+    "B": {
+      "item": "pvz:wall_nut_card"
+    },
+    "A": {
+      "item": "pvz:blue_card"
+    }
+  },
+  "result": {
+    "item": "pvz:tall_nut_card",
+    "count": 1
+  }
+}

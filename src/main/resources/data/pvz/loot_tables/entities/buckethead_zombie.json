@@ -36,16 +36,17 @@
         },
         {
           "type": "minecraft:item",
-          "name": "minecraft:emerld"
+          "name": "pvz:pea"
+        },
+        {
+          "type": "minecraft:item",
+          "name": "pvz:bucket_head"
         }
       ],
       "conditions": [
         {
-          "condition": "minecraft:killed_by_player"
-        },
-        {
           "condition": "minecraft:random_chance_with_looting",
-          "chance": 0.025,
+          "chance": 0.02,
           "looting_multiplier": 0.01
         }
       ]
