@@ -11,6 +11,7 @@ import com.hungteen.pvz.entity.misc.BobsleCarEntity;
 import com.hungteen.pvz.entity.misc.DuckyTubeEntity;
 import com.hungteen.pvz.entity.misc.SmallChomperEntity;
 import com.hungteen.pvz.entity.npc.CrazyDaveEntity;
+import com.hungteen.pvz.entity.npc.PanneyEntity;
 import com.hungteen.pvz.entity.plant.appease.PeaShooterEntity;
 import com.hungteen.pvz.entity.plant.appease.RepeaterEntity;
 import com.hungteen.pvz.entity.plant.appease.ThreePeaterEntity;
@@ -48,6 +49,7 @@ import com.hungteen.pvz.render.entity.drop.SunRender;
 import com.hungteen.pvz.render.entity.misc.BobsleCarRender;
 import com.hungteen.pvz.render.entity.misc.SmallChomperRender;
 import com.hungteen.pvz.render.entity.npc.CrazyDaveRender;
+import com.hungteen.pvz.render.entity.npc.PanneyRender;
 import com.hungteen.pvz.render.entity.plant.appease.PeaShooterRender;
 import com.hungteen.pvz.render.entity.plant.appease.RepeaterRender;
 import com.hungteen.pvz.render.entity.plant.appease.ThreePeaterRender;
@@ -118,6 +120,7 @@ public class EntityRegister {
 	
 	//npc
 	public static final RegistryObject<EntityType<CrazyDaveEntity>> CRAZY_DAVE = registerEntityType(CrazyDaveEntity::new, "crazy_dave", EntityClassification.CREATURE);
+	public static final RegistryObject<EntityType<PanneyEntity>> PANNEY = registerEntityType(PanneyEntity::new, "panney", EntityClassification.CREATURE);
 	
 	//zombie 
 	public static final RegistryObject<EntityType<NormalZombieEntity>> NORMAL_ZOMBIE = registerEntityType(NormalZombieEntity::new, "normal_zombie", EntityClassification.MONSTER);
@@ -174,6 +177,7 @@ public class EntityRegister {
         
         //npc
         RenderingRegistry.registerEntityRenderingHandler(CRAZY_DAVE.get(), CrazyDaveRender::new);
+        RenderingRegistry.registerEntityRenderingHandler(PANNEY.get(), PanneyRender::new);
         
         //zombie
         RenderingRegistry.registerEntityRenderingHandler(NORMAL_ZOMBIE.get(), NormalZombieRender::new);

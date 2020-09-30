@@ -24,7 +24,7 @@
   ]],
   "rewards":{
     "recipes":[
-	    "pvz:wall_nut_card"
+	    "pvz:card/wall_nut_card"
     ]
   }
 }

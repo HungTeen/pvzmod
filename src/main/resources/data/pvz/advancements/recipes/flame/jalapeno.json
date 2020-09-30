@@ -24,7 +24,7 @@
   ]],
   "rewards":{
     "recipes":[
-	    "pvz:jalapeno_card"
+	    "pvz:card/jalapeno_card"
     ]
   }
 }

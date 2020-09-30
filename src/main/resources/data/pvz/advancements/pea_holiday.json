@@ -5,10 +5,10 @@
       "item": "pvz:pea_gun"
     },
     "title": {
-      "translate": "advancements.adventure.pea_holiday.title"
+      "translate": "advancement.pvz.pea_holiday"
     },
     "description": {
-      "translate": "advancements.adventure.pea_holiday.description"
+      "translate": "advancement.pvz.pea_holiday.desc"
     },
     "frame": "task",
     "show_toast": true,
@@ -17,12 +17,14 @@
   },
   "criteria": {
     "shot_arrow": {
-      "trigger": "minecraft:player_killed_entity",
+      "trigger": "minecraft:player_hurt_entity",
       "conditions": {
-        "killing_blow": {
+        "damage": {
+          "type": {
             "direct_entity": {
               "type": "pvz:pea"
             }
+          }
         }
       }
     }

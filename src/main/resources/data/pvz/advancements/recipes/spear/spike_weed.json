@@ -24,7 +24,7 @@
   ]],
   "rewards":{
     "recipes":[
-	    "pvz:spike_weed_card"
+	    "pvz:card/spike_weed_card"
     ]
   }
 }

@@ -24,7 +24,7 @@
   ]],
   "rewards":{
     "recipes":[
-	    "pvz:sun_flower_card"
+	    "pvz:card/sun_flower_card"
     ]
   }
 }

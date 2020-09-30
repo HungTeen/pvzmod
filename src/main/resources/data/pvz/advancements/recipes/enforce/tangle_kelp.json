@@ -24,7 +24,7 @@
   ]],
   "rewards":{
     "recipes":[
-	    "pvz:tangle_kelp_card"
+	    "pvz:card/tangle_kelp_card"
     ]
   }
 }

@@ -117,6 +117,11 @@ public class CrazyDaveEntity extends CreatureEntity {
 		return super.changeDimension(destination, teleporter);
 	}
 
+	@Override
+	public boolean canDespawn(double distanceToClosestPlayer) {
+		return false;
+	}
+	
 	protected void resetCustomer() {
 		this.setCustomer((PlayerEntity) null);
 	}

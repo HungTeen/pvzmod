@@ -24,7 +24,7 @@
   ]],
   "rewards":{
     "recipes":[
-	    "pvz:repeater_card"
+	    "pvz:card/repeater_card"
     ]
   }
 }

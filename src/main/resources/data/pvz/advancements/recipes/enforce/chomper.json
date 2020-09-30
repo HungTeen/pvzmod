@@ -24,7 +24,7 @@
   ]],
   "rewards":{
     "recipes":[
-	    "pvz:chomper_card"
+	    "pvz:card/chomper_card"
     ]
   }
 }

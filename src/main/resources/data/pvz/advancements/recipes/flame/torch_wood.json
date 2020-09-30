@@ -24,7 +24,7 @@
   ]],
   "rewards":{
     "recipes":[
-	    "pvz:torch_wood_card"
+	    "pvz:card/torch_wood_card"
     ]
   }
 }

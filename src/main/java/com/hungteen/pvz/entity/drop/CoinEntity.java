@@ -44,13 +44,11 @@ public class CoinEntity extends DropEntity{
 		return new EntitySize(w, w, false); //max (0.4w,0.4h) min(0.9w,0.9h)
 	}
 	
-	public void setTypeAmount(int type)
-	{
+	public void setTypeAmount(int type){
 		this.setAmount(this.getAmountByType(type));
 	}
 	
-	protected int getRandomAmount()
-	{
+	protected int getRandomAmount(){
 		int type=this.rand.nextInt(4);
 		return this.getAmountByType(type);
 	}
@@ -61,8 +59,7 @@ public class CoinEntity extends DropEntity{
 	 * Gold Coin = 100
 	 * Jewel = 1000
 	 */
-	private int getAmountByType(int type)
-	{
+	private int getAmountByType(int type){
 		if(type==0) return 1;
 		else if(type==1) return 10;
 		else if(type==2) return 100;

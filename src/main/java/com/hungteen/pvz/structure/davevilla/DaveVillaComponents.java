@@ -3,7 +3,14 @@ package com.hungteen.pvz.structure.davevilla;
 import java.util.List;
 import java.util.Random;
 
+import com.hungteen.pvz.entity.npc.CrazyDaveEntity;
+import com.hungteen.pvz.entity.npc.PanneyEntity;
+import com.hungteen.pvz.entity.plant.appease.PeaShooterEntity;
+import com.hungteen.pvz.entity.plant.defence.WallNutEntity;
+import com.hungteen.pvz.entity.plant.light.SunFlowerEntity;
+import com.hungteen.pvz.register.EntityRegister;
 import com.hungteen.pvz.register.StructureRegister;
+import com.hungteen.pvz.utils.EntityUtil;
 import com.hungteen.pvz.utils.StringUtil;
 
 import net.minecraft.block.BlockState;
@@ -114,6 +121,43 @@ public class DaveVillaComponents {
 		@Override
 		protected void handleDataMarker(String function, BlockPos pos, IWorld worldIn, Random rand,
 				MutableBoundingBox sbb) {
+			if(function.equals("dave")) {
+				CrazyDaveEntity dave = EntityRegister.CRAZY_DAVE.get().create(worldIn.getWorld());
+				EntityUtil.onMobEntitySpawn(worldIn, dave, pos);
+			}else if(function.equals("panney")){
+				PanneyEntity panney = EntityRegister.PANNEY.get().create(worldIn.getWorld());
+				EntityUtil.onMobEntitySpawn(worldIn, panney, pos);
+			}else if(function.equals("plant_pos1")){
+				if(rand.nextInt(3)==0) {
+					PeaShooterEntity nut = EntityRegister.PEA_SHOOTER.get().create(worldIn.getWorld());
+					worldIn.setBlockState(pos.down(), Blocks.GRASS_BLOCK.getDefaultState(), 3);
+					EntityUtil.onMobEntitySpawn(worldIn, nut, pos);
+				}
+			}else if(function.equals("plant_pos2")){
+				if(rand.nextInt(3)==0) {
+					SunFlowerEntity nut = EntityRegister.SUN_FLOWER.get().create(worldIn.getWorld());
+					worldIn.setBlockState(pos.down(), Blocks.GRASS_BLOCK.getDefaultState(), 3);
+					EntityUtil.onMobEntitySpawn(worldIn, nut, pos);
+				}
+			}else if(function.equals("plant_pos3")){
+				if(rand.nextInt(3)==0) {
+					PeaShooterEntity nut = EntityRegister.PEA_SHOOTER.get().create(worldIn.getWorld());
+					worldIn.setBlockState(pos.down(), Blocks.GRASS_BLOCK.getDefaultState(), 3);
+					EntityUtil.onMobEntitySpawn(worldIn, nut, pos);
+				}
+			}else if(function.equals("plant_pos4")){
+				if(rand.nextInt(3)==0) {
+					WallNutEntity nut = EntityRegister.WALL_NUT.get().create(worldIn.getWorld());
+					worldIn.setBlockState(pos.down(), Blocks.GRASS_BLOCK.getDefaultState(), 3);
+					EntityUtil.onMobEntitySpawn(worldIn, nut, pos);
+				}
+			}else if(function.equals("plant_pos5")){
+				if(rand.nextInt(2)==0) {
+					SunFlowerEntity nut = EntityRegister.SUN_FLOWER.get().create(worldIn.getWorld());
+					worldIn.setBlockState(pos.down(), Blocks.GRASS_BLOCK.getDefaultState(), 3);
+					EntityUtil.onMobEntitySpawn(worldIn, nut, pos);
+				}
+			}
 		}
 		
 		@Override
@@ -164,7 +208,6 @@ public class DaveVillaComponents {
 			}
 			return true;
 		}
-		
-		
 	}
+	
 }

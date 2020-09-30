@@ -14,7 +14,7 @@
     "has_the_recipe": {
       "trigger": "minecraft:recipe_unlocked",
       "conditions": {
-        "recipe": "pvz:three_peater_card"
+        "recipe": "pvz:pea_gun"
       }
     }
   },
@@ -24,7 +24,7 @@
   ]],
   "rewards":{
     "recipes":[
-	    "pvz:card/three_peater_card"
+	    "pvz:pea_gun"
     ]
   }
 }

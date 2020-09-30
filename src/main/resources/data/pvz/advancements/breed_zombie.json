@@ -1,0 +1,32 @@
+{
+  "parent": "pvz:root",
+  "display": {
+    "icon": {
+      "item": "pvz:fake_brain"
+    },
+    "title": {
+      "translate": "advancement.pvz.breed_zombie"
+    },
+    "description": {
+      "translate": "advancement.pvz.breed_zombie.desc"
+    },
+    "frame": "task",
+    "show_toast": true,
+    "announce_to_chat": true,
+    "hidden": false
+  },
+  "criteria": {
+    "bred": {
+      "trigger": "minecraft:bred_animals",
+      "conditions": {
+      "child": {
+          "type": "pvz:foodie_zombie"
+        }}
+    }
+  },
+  "requirements": [
+    [
+      "bred"
+    ]
+  ]
+}

@@ -17,15 +17,23 @@ import net.minecraft.entity.Entity;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.MobEntity;
 import net.minecraft.entity.SharedMonsterAttributes;
+import net.minecraft.entity.SpawnReason;
 import net.minecraft.entity.monster.MonsterEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.scoreboard.Team;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.world.IWorld;
 import net.minecraft.world.World;
 
 public class EntityUtil {
 
+	public static void onMobEntitySpawn(IWorld world, MobEntity entity, BlockPos pos) {
+		entity.setPosition(pos.getX(), pos.getY(), pos.getZ());
+		entity.onInitialSpawn(world, world.getDifficultyForLocation(pos), SpawnReason.SPAWNER, null, null);
+		world.addEntity(entity);
+	}
+	
 	public static boolean isOnGround(Entity entity){
 		BlockPos pos=new BlockPos(entity).down();
 		if(!entity.world.isAirBlock(pos)&&(entity.getPosY()-pos.getY())<=1.00001) {

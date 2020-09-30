@@ -24,7 +24,7 @@
   ]],
   "rewards":{
     "recipes":[
-	    "pvz:pea_shooter_card"
+	    "pvz:card/pea_shooter_card"
     ]
   }
 }

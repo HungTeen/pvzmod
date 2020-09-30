@@ -5,10 +5,10 @@
       "item": "pvz:wall_nut_card"
     },
     "title": {
-      "translate": "advancements.adventure.nut_heal.title"
+      "translate": "advancement.adventure.nut_heal.title"
     },
     "description": {
-      "translate": "advancements.adventure.nut_heal.description"
+      "translate": "advancement.adventure.nut_heal.description"
     },
     "frame": "task",
     "show_toast": true,

@@ -24,7 +24,7 @@ public abstract class DropEntity extends MobEntity{
 	@Override
 	protected void registerData() {
 		super.registerData();
-		this.dataManager.register(AMOUNT, 0);
+		this.dataManager.register(AMOUNT, 1);
 	}
 	
 	@Override
