@@ -19,18 +19,16 @@
 
 
 Tree-lvl(Player-lvl):It affects the
-maxNum of sun (no other uses yet)
+maxNum of sun and plant-weapons
 Upgrade:player kills zombies
 
 SunNum:Sun is the resource that 
 players consume when using plant
-cards and plant weapons. 
-MaxSunNum is affected by Tree-lvl
-Obtain:The land of overworld which
-is sunny and light>=15 will spawn
-sun with amount of 25.can also be
+cards and plant weapons.MaxSunNum is
+affected by Tree-lvl
+Obtain:Overworld will spawn some 
+with amount of 25.it can also be
 produced by plants(like SunFlower)
-
 EnergyNum:Energy is food for plants.
 If your sword has a Energy-Transfer
 enchantment, you can right-click one

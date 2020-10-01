@@ -62,10 +62,10 @@ public class EntitySpawnRegister {
 		BUCKET_SPAWN.add(new SpawnEntry(EntityRegister.POLE_ZOMBIE.get(), 20, 1, 1, BiomeUtil.OVER_LAND));
 		BUCKET_SPAWN.add(new SpawnEntry(EntityRegister.BUCKETHEAD_ZOMBIE.get(), 4, 1, 1, BiomeUtil.OVER_LAND));
 		addFlagZombie(BUCKET_SPAWN);
-		BUCKET_SPAWN.add(new SpawnEntry(EntityRegister.NORMAL_ZOMBIE.get(), 60, 1, 3, BiomeUtil.OVER_LAND));
-		WATER_SPAWN.add(new SpawnEntry(EntityRegister.SNORKEL_ZOMBIE.get(), 30, 1, 2, BiomeUtil.OCEAN));
+		WATER_SPAWN.add(new SpawnEntry(EntityRegister.SNORKEL_ZOMBIE.get(), 60, 1, 2, BiomeUtil.OVER_LAND));
 		WATER_SPAWN.add(new SpawnEntry(EntityRegister.ZOMBONI.get(), 20, 1, 1, BiomeUtil.OVER_LAND));
 		WATER_SPAWN.add(new SpawnEntry(EntityRegister.BOBSLE_TEAM.get(), 10, 1, 1, BiomeUtil.OVER_LAND));
+		WATER_SPAWN.add(new SpawnEntry(EntityRegister.DOLPHIN_RIDER.get(), 3, 1, 1, BiomeUtil.OCEAN));
 		WATER_SPAWN.add(new SpawnEntry(EntityRegister.LAVA_ZOMBIE.get(), 2, 1, 1, BiomeUtil.OVER_LAND));
 		addFlagZombie(WATER_SPAWN);
 	}

@@ -7,6 +7,7 @@ import java.util.UUID;
 import javax.annotation.Nonnull;
 
 import com.hungteen.pvz.PVZConfig;
+import com.hungteen.pvz.entity.npc.CrazyDaveEntity;
 import com.hungteen.pvz.entity.plant.PVZPlantEntity;
 import com.hungteen.pvz.entity.plant.spear.SpikeWeedEntity;
 import com.hungteen.pvz.entity.zombie.PVZZombieEntity;
@@ -131,6 +132,8 @@ public class EntityUtil {
 		if(entity instanceof PlayerEntity) return 2;
 		if(entity instanceof PVZPlantEntity) {
 			group=((PVZPlantEntity) entity).getIsCharmed()?-1:1;
+		}else if(entity instanceof CrazyDaveEntity){
+			group = 1;
 		}else if(entity instanceof MonsterEntity) {
 			group=-1;
 			if(entity instanceof PVZZombieEntity) {

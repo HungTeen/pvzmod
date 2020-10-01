@@ -1,6 +1,5 @@
 package com.hungteen.pvz.render.entity.drop;
 
-import com.hungteen.pvz.PVZMod;
 import com.hungteen.pvz.entity.drop.CoinEntity;
 import com.hungteen.pvz.model.entity.drop.CoinModel;
 import com.hungteen.pvz.utils.StringUtil;
@@ -23,8 +22,8 @@ public class CoinRender extends DropRender<CoinEntity>{
 		if(entity.getAmount()==10) return 0.18f;
 		if(entity.getAmount()==100) return 0.23f;
 		if(entity.getAmount()==1000) return 0.3f;
-		PVZMod.LOGGER.debug("Coin Type Error!!!");
-		return 0.1f;
+//		PVZMod.LOGGER.debug("Coin Type Error!!!");
+		return 0.15f;
 	}
 
 	@Override
@@ -33,8 +32,8 @@ public class CoinRender extends DropRender<CoinEntity>{
 		if(entity.getAmount()==10) return StringUtil.prefix("textures/entity/drop/silver_coin.png");
 		if(entity.getAmount()==100) return StringUtil.prefix("textures/entity/drop/gold_coin.png");
 		if(entity.getAmount()==1000) return StringUtil.prefix("textures/entity/drop/jewel.png");
-		PVZMod.LOGGER.debug("Coin Type Error!!!");
-		return null;
+//		PVZMod.LOGGER.debug("Coin Type Error!!!");
+		return StringUtil.prefix("textures/entity/drop/copper_coin.png");
 	}
 
 }

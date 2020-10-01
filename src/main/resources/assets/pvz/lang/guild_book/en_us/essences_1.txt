@@ -19,14 +19,15 @@
 
 
 The list on the left doesn't contain 
-all the essence,the rest has special 
-obtain methods,like electric-essence.
-Including it,there are some essences 
-that are temporarily useless
+all Essences,the rests have special 
+obtain methods,like ElectricEssence.
+There are some essences that are 
+temporarily useless
 [pls wait for update]
-Plant essence is mainly used to craft
-plant cards and plant weapons,After
-players obtain plant-essence,it will 
+PlantEssence is mainly used to craft 
+plant cards and plant weapons,after 
+players obtain PlantEssences,it will 
 automatically unlock its corresponding
-recipes of plant cards,here is no longer wordy
+recipes of plant cards,here is no 
+longer wordy
 

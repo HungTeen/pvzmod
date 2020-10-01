@@ -1,18 +1,18 @@
-It has been several days, why is 
-there still no zombie?
-It maybe because the wisdom-tree 
-in your body hides your breath,but
-this is not permanent protection. 
+So many days passed,why is there
+still no zombie?Is strange help 
+fake?No,It's just because you are
+in SafeDay,which lasts 3 game day.
 3 days later,This protection will 
-disappear,and overworld will have 
+disappear,and Overworld will have 
 a certain probability of being 
-invaded by zombies!
-Zombie invasion is called an event,
-and the type of event determines
-Type and number of zombies invaded.
-[SafeDay&InvadeChance can edit in
-PVZ Config File]
-
+invaded by zombies !
+Zombie invasion last a whole day.
+it starts with "A huge wave of 
+zombies are coming".Different
+invasion determines different
+types of zombies invaded.
+[SafeDay&InvadeChance can edit
+in PVZ Config File]
 
 
 
@@ -21,3 +21,5 @@ PVZ Config File]
 Current event list:
 Bucket(Normal&Flag&ConeHead&Pole
 &BucketHead Zombies)
+Water(Snorkel&Zomboni&Bobsle&
+DolphinRider&Lava Zombies)

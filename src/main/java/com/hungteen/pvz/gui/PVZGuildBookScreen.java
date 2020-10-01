@@ -239,8 +239,8 @@ public class PVZGuildBookScreen extends Screen{
     	case SUMMON_CARDS:{
     		if(this.bookPages==0) {
     			RenderSystem.pushMatrix();
-    			drawItem(ItemRegister.PEA_SHOOTER_CARD.get(), midX+60, midY+100, 1f);
-    			drawItem(ItemRegister.PEA_SHOOTER_ENJOY_CARD.get(), midX+115, midY+100, 1f);
+    			drawItem(ItemRegister.JALAPENO_CARD.get(), midX+60, midY+100, 1f);
+    			drawItem(ItemRegister.JALAPENO_ENJOY_CARD.get(), midX+115, midY+100, 1f);
     			RenderSystem.popMatrix();
     		}else if(this.bookPages==1) {
     		}

@@ -336,7 +336,7 @@
     "advancement.pvz.zen_garden":"禅境花园",
     "advancement.pvz.zen_garden.desc":"到达禅境花园生物群系",
     "advancement.pvz.pea_holiday":"豌豆先生的假期",
-    "advancement.pvz.pea_holiday.desc":"用豌豆枪杀死一个怪物",
+    "advancement.pvz.pea_holiday.desc":"用豌豆枪攻击一个怪物",
     "advancement.pvz.dave_villa":"开局一套房",
     "advancement.pvz.dave_villa.desc":"到达戴夫的别墅",
     "advancement.pvz.almanac":"图鉴",
@@ -348,7 +348,7 @@
     "enchantment.pvz.break_out":"爆发",
     "enchantment.pvz.energy_transfer":"充能",
 //event
-    "event.pvz.zombie_attack":"僵尸即将到来 !",
+    "event.pvz.zombie_attack":"一大波僵尸正在来袭 !",
 //death
     "death.attack.pvz_eat":"僵尸吃了%s的脑子",
     "death.attack.chomper_plant":"%s被食人花咬死了",

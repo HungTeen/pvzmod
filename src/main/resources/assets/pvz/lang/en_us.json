@@ -336,7 +336,7 @@
     "advancement.pvz.zen_garden":"Zen Garden",
     "advancement.pvz.zen_garden.desc":"Go to Zen Garden biome",
     "advancement.pvz.pea_holiday":"Pea's Holiday",
-    "advancement.pvz.pea_holiday.desc":"Use pea-gun to kill a mob",
+    "advancement.pvz.pea_holiday.desc":"Use pea-gun to hurt a mob",
     "advancement.pvz.dave_villa":"Free Villa",
     "advancement.pvz.dave_villa.desc":"reach Dave's villa",
     "advancement.pvz.almanac":"Almanac",
@@ -348,7 +348,7 @@
     "enchantment.pvz.break_out":"Break Out",
     "enchantment.pvz.energy_transfer":"Energy Transfer",
 //event
-    "event.pvz.zombie_attack":"Zombies are Coming!",
+    "event.pvz.zombie_attack":"A huge wave of zombies are coming !",
 //death
     "death.attack.pvz_eat":"Zombie eat %s's brain",
     "death.attack.chomper_plant":"%s was eat by chomper",

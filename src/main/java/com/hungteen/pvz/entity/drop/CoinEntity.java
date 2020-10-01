@@ -65,7 +65,7 @@ public class CoinEntity extends DropEntity{
 		else if(type==2) return 100;
 		else if(type==3) return 1000;
 		PVZMod.LOGGER.debug("Coin Type Error!!!");
-		return 0;
+		return 1;
 	}
 	
 	@Override

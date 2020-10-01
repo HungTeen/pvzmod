@@ -2,7 +2,7 @@ Tree-lvl(Player-lvl):It affects the
 Money:The basic currency of world.
 you can exchange rare items and 
 useful tools with some NPCs
-(No NPC yet)
+such as Crazy Dave.
 Obtain:zombies will drop randomly 
 when died.
 
