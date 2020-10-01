@@ -179,6 +179,8 @@
     "tooltip.pvz.zombie_flag":"Right Click to get a speed effect",
     "tooltip.pvz.summon_card":"Right Click to Summon Plant or Zombie",
     "tooltip.pvz.sun_cost":"Sun Cost",
+    "item.pvz.pea_gun":"Pea Gun",
+    "tooltip.pvz.pea_gun":"Main hand right click to shoot,off hand to open gui",
 //armor
     "item.pvz.cone_head":"Cone Head",
     "item.pvz.bucket_head":"Bucket Head",

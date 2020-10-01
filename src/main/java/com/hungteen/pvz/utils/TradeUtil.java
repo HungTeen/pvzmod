@@ -4,7 +4,7 @@ import com.hungteen.pvz.gui.DaveShopScreen.Goods;
 
 public class TradeUtil {
 
-	public static final int ALMANAC_COST = 500;
+	public static final int ALMANAC_COST = 100;
 	
 	public static int getGoodCost(Goods good) {
 		if(good==Goods.ALMANAC) return ALMANAC_COST;

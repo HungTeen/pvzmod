@@ -1,3 +1,12 @@
+// define the properties file
+ext.configFile = file "gradle.properties"
+configFile.withReader {
+    // read config.  it shall from now on be referenced as simply config or as project.config
+    def prop = new Properties()
+    prop.load(it)
+    project.ext.config = new ConfigSlurper().parse prop
+}
+
 buildscript {
     repositories {
         maven { url = 'http://gradle.otakusaikou.com/releases' }
@@ -16,9 +25,9 @@ apply plugin: 'net.minecraftforge.gradle'
 apply plugin: 'eclipse'
 apply plugin: 'maven-publish'
 
-version = '1.0'
-group = 'com.yourname.modid' // http://maven.apache.org/guides/mini/guide-naming-conventions.html
-archivesBaseName = 'modid'
+version = config.mod_version
+group = 'com.hungteen.pvz' // http://maven.apache.org/guides/mini/guide-naming-conventions.html
+archivesBaseName = 'pvz'
 
 sourceCompatibility = targetCompatibility = compileJava.sourceCompatibility = compileJava.targetCompatibility = '1.8' // Need this here so eclipse task generates correctly.
 
@@ -88,6 +97,10 @@ minecraft {
     }
 }
 
+repositories {
+    //maven { url 'https://maven.blamejared.com' }
+}
+
 dependencies {
     // Specify the version of Minecraft to use, If this is any group other then 'net.minecraft' it is assumed
     // that the dep is a ForgeGradle 'patcher' dependency. And it's patches will be applied.
@@ -101,7 +114,10 @@ dependencies {
     // Real examples
     // compile 'com.mod-buildcraft:buildcraft:6.0.8:dev'  // adds buildcraft to the dev env
     // compile 'com.googlecode.efficient-java-matrix-library:ejml:0.24' // adds ejml to the dev env
-
+    
+    //compileOnly fg.deobf("vazkii.patchouli:Patchouli:config.patchouli_version:api")
+    //runtimeOnly fg.deobf("vazkii.patchouli:Patchouli:config.patchouli_version")
+    
     // The 'provided' configuration is for optional dependencies that exist at compile-time but might not at runtime.
     // provided 'com.mod-buildcraft:buildcraft:6.0.8:dev'
 

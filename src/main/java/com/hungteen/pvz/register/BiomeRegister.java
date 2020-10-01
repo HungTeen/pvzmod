@@ -48,7 +48,7 @@ public class BiomeRegister {
 		for(Biome biome:BiomeUtil.OCEAN) {
 			biome.addStructure(FeatureRegister.DOLPHIN_HOUSE.get().withConfiguration(IFeatureConfig.NO_FEATURE_CONFIG));
 			biome.getSpawns(EntityClassification.CREATURE).add(new Biome.SpawnListEntry(EntityRegister.FOODIE_ZOMBIE.get(),PVZConfig.COMMON_CONFIG.EntitySettings.EntitySpawnWeight.FoodieZombieSpawnWeight.get(),1,2));
-			biome.getSpawns(EntityClassification.MONSTER).add(new Biome.SpawnListEntry(EntityRegister.ZOMBIE_DOLPHIN.get(),PVZConfig.COMMON_CONFIG.EntitySettings.EntitySpawnWeight.ZombieDolphinSpawnWeight.get(),1,2));
+//			biome.getSpawns(EntityClassification.MONSTER).add(new Biome.SpawnListEntry(EntityRegister.ZOMBIE_DOLPHIN.get(),PVZConfig.COMMON_CONFIG.EntitySettings.EntitySpawnWeight.ZombieDolphinSpawnWeight.get(),1,2));
 		}
 		for(Biome biome:BiomeUtil.NETHER) {
 			biome.getSpawns(EntityClassification.MONSTER).add(new Biome.SpawnListEntry(EntityRegister.LAVA_ZOMBIE.get(),PVZConfig.COMMON_CONFIG.EntitySettings.EntitySpawnWeight.LavaZombieSpawnWeight.get(),1,1));
