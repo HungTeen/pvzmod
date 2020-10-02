@@ -1,0 +1,7 @@
+{
+	"name": "PVZ Intro",
+	"description": "Here will introduce some basic information of the Plants vs Zombies mod, so that players can better understand this mod.",
+	"icon": "pvz:nut_sapling",
+	"sortnum":0
+	//"parent":""
+}

@@ -356,5 +356,5 @@
     "death.attack.chomper_plant":"%s was eat by chomper",
 //itemGroup
     "itemGroup.pvz_misc":"PVZ Misc",
-    "itemGroup.misc":"PVZ Card"
+    "itemGroup.pvz_card":"PVZ Card"
 }
