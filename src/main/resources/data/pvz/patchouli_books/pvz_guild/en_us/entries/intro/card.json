@@ -1,0 +1,33 @@
+{
+    "name": "Summon Card",
+    "icon": "pvz:pea_shooter_card",
+    "category": "pvz:intro",
+    "pages": [
+        {
+            "type": "text",
+            "text": "$(l)Summon Card$() is the link between players and creatures. Players can summon the corresponding creature by $(l)right-clicking Summon Card on the ground$() while consuming SunNum (a small part is right-clicking the water surface). Currently, the only kind that can be summoned by Summon Card is plant type $(m)(zombies may be added in later updates)$()."
+        },
+        {
+            "type": "text",
+            "text": "After player summons a creature, $(l)the creature will treat the player as its owner$(), and the creature's level is the same as the creature's level when its owner planted the creature.If the creature can attack, it will gain experience of the creature level for its owner after killing the enemy."
+        },
+        {
+            "type": "spotlight",
+            "item": "pvz:jalapeno_card",
+            "title": "Common Card",
+            "text": "$(l)Maximum stack size: 1$(br)Can enchant$(br)Unlimited use$(br)$()The background has a lighter color"
+        },
+        {
+            "type": "spotlight",
+            "item": "pvz:jalapeno_enjoy_card",
+            "title": "Enjoy Card",
+            "text": "$(l)Maximum stack size: 16$(br)Can't enchant$(br)Can only be used once$(br)$()Background is transparent"
+        },
+        {
+            "type": "text",
+            "text": "The previous two pages introduced the difference between $(l)Common Summon Cards and Enjoy Cards$(), and their acquisition is actually different. Common Cards are generally obtained by $(l)$(#ff0000)crafting or purchase$(), while Enjoy Cards are often obtained by opening $(l)$(#ff0000)treasure chests or lottery$(). At present, players can get Common Cards of most plants , but $(l)there are still a few plants that can only get their Enjoy Cards$(), such as CherryBombs."
+        }
+    ],
+    "advancement": "pvz:root",
+    "sortnum": 2
+}

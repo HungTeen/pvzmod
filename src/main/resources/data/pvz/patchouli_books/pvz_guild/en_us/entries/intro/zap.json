@@ -1,0 +1,29 @@
+{
+    "name": "Zombies and Plants",
+    "icon": "minecraft:zombie_head",
+    "category": "pvz:intro",
+    "pages": [
+        {
+            "type": "text",
+            "text": "$(l)Zombies$() are crazy creatures that feed on brains. $(l)They are enemies with plants. They also attack players and Crazy Dave$().There are many types of zombies, some can walk on the road; some can drive a car; some can dive in the sea; there are even zombies that can ride a dolphin."
+        },
+        {   
+            "type": "text",
+            "text": "Players can get $(#ff0000)TreeXp$() by killing zombies, and players can get $(#ff0000)PlantXp$() when their plants killed zombies. Zombies has a chance to drop coins $(#ff0000)(copper coins, silver coins, gold coins, gems)$(). If you kill a zombie surrounded by $(l)green light$(), it will definitely drop $(#ff0000)Energy$()."
+        },
+        {   
+            "type": "text",
+            "text": "$(l)Plants$() are creatures that $(l)are hostile to zombies. They are also hostile to $(#ff0000)all monsters$().Different plants have different usages. Some can produce sun, such as SunFlowers; some can attack enemies, such as PeaShooters; and some can defend, such as NutWalls."
+        },
+        {   
+            "type": "text",
+            "text": "Plants are relatively fragile. For now, terrestrial plants can only survive on $(l)grass blocks and Water lilies$(), while aquatic plants can only survive $(l)in water$(). In addition, $(l)the plant can only survive up to 24000 ticks$(), which can be changed in the config file."
+        },
+        {   
+            "type": "text",
+            "text": "Both plants and zombies have $(l)qualities$(). The qualities are $(#ff0000)$(l)gray, white, green, blue, purple, gold, and red$(), which become higher from left to right. The higher the quality, the stronger the corresponding plants or zombies. $(l)More experience gained from killing high-quality zombies$(). For plants, $(l)the higher the quality, the more difficult it is to upgrade$()."
+        }
+    ],
+    "advancement": "pvz:root",
+    "sortnum": 1
+}

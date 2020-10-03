@@ -1,0 +1,21 @@
+{
+    "name": "Zombie Invade",
+    "icon": "minecraft:iron_sword",
+    "category": "pvz:intro",
+    "pages": [
+        {
+            "type": "text",
+            "text": "Maybe you haven't encountered zombies yet, but it doesn't mean that there are no zombies. $(#ff0000)Strange help$() didn't lie to you, there are zombies here, $(m)you just need to let the zombies kill you to win$(). From the beginning of the creation of the world, there will be a $(#ff0000)SafeDayLength$(). The default SafeDayLength is $(l)3 game days$(), after which there will be $(l)a chance of zombie invasion in OverWorld$()!"
+        },
+        {
+            "type": "text",
+            "text": "$(l)Zombie invasions$() are based on days. If there is a sign $(#ff0000)<A huge wave of zombies are coming>$() in the morning, it means that the invasion has begun and it will continue until the end of the day. There are different types of zombie invasion, and different types have different zombies, as follows:$(br)SafeDayLength and InvadeChance can be modified in the config file"
+        },
+        {
+            "type": "text",
+            "text": "Current Invasion list:$(br)$(l)Bucket invasion$()(Normal, Conehead, Pole, Bucket Zombies)$(br)$(l)Water invasion$() (Snorkel, Zomboni, Bobsle Teams, Dolphin Rider, Lava Zombies)"
+        }
+    ],
+    "advancement": "pvz:root",
+    "sortnum": 3
+}
