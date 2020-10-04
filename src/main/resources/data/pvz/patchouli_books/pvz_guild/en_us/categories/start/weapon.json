@@ -1,0 +1,7 @@
+{
+	"name": "Plant Weapons and Tools",
+	"description": "Plants and Players progress together. Players train plants to upgrade. Plants will also give players the ability to use $(#ff0000)Plant weapons and tools$(). And the higher the plant level, the stronger the plant weapons and tools.",
+	"icon": "pvz:pea_gun",
+	"sortnum": 0,
+	"parent": "pvz:start"
+}

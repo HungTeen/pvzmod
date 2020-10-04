@@ -51,6 +51,10 @@ public class BiomeUtil {
 	public static final Biome[] THE_END = new Biome[] {
 			Biomes.THE_END, Biomes.SMALL_END_ISLANDS, Biomes.END_MIDLANDS, Biomes.END_HIGHLANDS, Biomes.END_BARRENS,
 	};
+	
+	public static final Biome[] PLAINS = new Biome[] {
+			Biomes.PLAINS, Biomes.SUNFLOWER_PLAINS
+	};
 
 	public static final Biome[] OVER_LAND = new Biome[] { Biomes.PLAINS, Biomes.SUNFLOWER_PLAINS, Biomes.DESERT,
 			Biomes.DESERT_HILLS, Biomes.MOUNTAINS, Biomes.MOUNTAIN_EDGE, Biomes.FOREST, Biomes.FLOWER_FOREST,

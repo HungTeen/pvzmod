@@ -1,0 +1,30 @@
+{
+    "name": "Zombie House",
+    "icon": "minecraft:stone",
+    "category": "pvz:start",
+    "pages": [
+        {
+            "type": "text",
+            "text": "$(l)Zombie House$() is a structure generated in the world. There are currently 2 types: Bucket and Dolphin. There are usually chests for $(#ff0000)Enjoy Cards$(), but the reward is accompanied by danger. There is also a $(l)spawner for zombies$() ,which is also a form of zombie spawning."
+        },
+        {
+            "type": "image",
+            "images": [
+                "pvz:textures/gui/patchouli/bucket_house.png",
+                "pvz:textures/gui/patchouli/dolphin_house.png"
+            ],
+            "title": "Zombie Houses",
+            "text": "Here are all Zombie Houses currently."
+        },
+        {
+            "type": "text",
+            "text": "$(l)BucketHouse$():generated in $(l)Overworld lands$().$(br)The spawner may spawn one of $(#ff0000)Pole, ConeHead, and Buckethead zombies$()$(br)There are $(l)1-2 chests$(), which may contain Enjoy Cards of $(l)[PeaShooter, SunFlower, CherryBomb, NutWall, PotatoMine, SnowPea, Chomper, Repeater]$()$(br)Among them, $(#ff0000)CherryBomb Enjoy Card$() has the highest probability"
+        },
+        {
+            "type": "text",
+            "text": "$(l)DolphinHouse$():generated in $(l)Overworld oceans$().$(br)The spawner may spawn one of $(#ff0000)Snorkel, DolphinRider, and Lava Zombies$()$(br)There are $(l)2 chests$(), which may contain Enjoy Cards of $(l)[LilyPad, Squash, Threepeater, TangleKelp, Jalapeno, SpikeWeed, TorchWood, TallNut]$()$(br)Among them, $(#ff0000)Squash Enjoy Card$() has the highest probability"
+        }
+    ],
+    "advancement": "pvz:root",
+    "sortnum": 3
+}

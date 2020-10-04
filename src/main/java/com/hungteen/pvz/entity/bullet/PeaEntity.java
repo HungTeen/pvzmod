@@ -1,11 +1,14 @@
 package com.hungteen.pvz.entity.bullet;
 
+import com.hungteen.pvz.capabilities.CapabilityHandler;
 import com.hungteen.pvz.entity.plant.PVZPlantEntity;
 import com.hungteen.pvz.entity.plant.appease.PeaShooterEntity;
 import com.hungteen.pvz.entity.plant.flame.TorchWoodEntity;
+import com.hungteen.pvz.entity.plant.ice.SnowPeaEntity;
 import com.hungteen.pvz.entity.plant.interfaces.IIcePlant;
 import com.hungteen.pvz.misc.damage.PVZDamageSource;
 import com.hungteen.pvz.register.ItemRegister;
+import com.hungteen.pvz.utils.enums.Plants;
 
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntitySize;
@@ -65,29 +68,13 @@ public class PeaEntity extends PVZThrowableEntity {
 
 	@Override
 	protected void onImpact(RayTraceResult result) {
+		boolean flag = false;
 		if (result.getType() == RayTraceResult.Type.ENTITY) {
 			Entity target = ((EntityRayTraceResult) result).getEntity();
 			if (checkCanAttack(target)) {
 				target.hurtResistantTime = 0;
-				if (this.getPeaState() == State.NORMAL) {
-					// System.out.println(this.getThrower());
-					target.attackEntityFrom(PVZDamageSource.causeAppeaseDamage(this, this.getThrower()),
-							this.getAttackDamage());// damage
-				} else if (this.getPeaState() == State.ICE) {
-					target.attackEntityFrom(PVZDamageSource.causeIceDamage(this, this.getThrower()),
-							this.getAttackDamage());
-					LivingEntity owner = this.getThrower();
-					if (owner instanceof IIcePlant && target instanceof LivingEntity) {
-						((LivingEntity) target).addPotionEffect(((IIcePlant) owner).getColdEffect());
-						((LivingEntity) target).addPotionEffect(((IIcePlant) owner).getFrozenEffect());
-					}
-				} else if (this.getPeaState() == State.FIRE || this.getPeaState() == State.BLUE_FIRE) {
-					if (!this.world.isRemote) {
-//					this.playSound(SoundsHandler.FIRE_PEA, 4, 1);
-					}
-					target.attackEntityFrom(PVZDamageSource.causeFireDamage(this, this.getThrower()),
-							this.getAttackDamage());// damage
-				}
+				this.dealPeaDamage(target); // attack 
+				flag = true;
 			}
 			if (!this.world.isRemote && target instanceof TorchWoodEntity) {// pea interact with torchwood
 				TorchWoodEntity tmp = (TorchWoodEntity) target;
@@ -109,17 +96,38 @@ public class PeaEntity extends PVZThrowableEntity {
 				}
 			}
 		}
-
 		if (!this.world.isRemote) {
 //        	if(result.entityHit instanceof Entity) {
 //        		System.out.println(result.entityHit);
 //        	}
 			this.world.setEntityState(this, (byte) 3);
-			if (!this.checkLive(result))
+			if (flag || !this.checkLive(result)) {
 				this.remove();
+			}
 		}
 	}
 
+	private void dealPeaDamage(Entity target) {
+		if (this.getPeaState() == State.NORMAL) {// normal pea attack
+			// System.out.println(this.getThrower());
+			target.attackEntityFrom(PVZDamageSource.causeAppeaseDamage(this, this.getThrower()),this.getAttackDamage());
+		} else if (this.getPeaState() == State.ICE) {// snow pea attack
+			target.attackEntityFrom(PVZDamageSource.causeIceDamage(this, this.getThrower()),this.getAttackDamage());
+			LivingEntity owner = this.getThrower();
+			if (owner instanceof IIcePlant && target instanceof LivingEntity) {
+				((LivingEntity) target).addPotionEffect(((IIcePlant) owner).getColdEffect());
+				((LivingEntity) target).addPotionEffect(((IIcePlant) owner).getFrozenEffect());
+			}else if(owner instanceof PlayerEntity) {
+				((PlayerEntity)owner).getCapability(CapabilityHandler.PLAYER_DATA_CAPABILITY).ifPresent((l)->{
+					int lvl = l.getPlayerData().getPlantStats().getPlantLevel(Plants.SNOW_PEA);
+					((LivingEntity) target).addPotionEffect(SnowPeaEntity.getPeaColdEffect(lvl));
+				});
+			}
+		} else if (this.getPeaState() == State.FIRE || this.getPeaState() == State.BLUE_FIRE) {
+			target.attackEntityFrom(PVZDamageSource.causeFireDamage(this, this.getThrower()),this.getAttackDamage());
+		}
+	}
+	
 	private float getAttackDamage() {
 		float damage = 0;
 
@@ -137,6 +145,8 @@ public class PeaEntity extends PVZThrowableEntity {
 		}
 
 		damage *= (1 + this.power * 1.0f / 5);
+		
+//		System.out.println(this.power);
 		
 		// size
 		if (this.getPeaType() == Type.BIG) {
@@ -218,6 +228,7 @@ public class PeaEntity extends PVZThrowableEntity {
 	}
 	
 	public void setPower(int lvl) {
+//		System.out.println(lvl);
 		this.power = lvl;
 	}
 

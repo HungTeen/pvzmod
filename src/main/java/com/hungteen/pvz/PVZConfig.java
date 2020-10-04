@@ -78,12 +78,12 @@ public class PVZConfig {
 							.translation(CONFIG_TRANSLATE+"sun_live_tick")
 							.comment("how many ticks can the sun entity live")
 						    .worldRestart()
-							.defineInRange("SunLiveTick", 300, 1, 1200);
+							.defineInRange("SunLiveTick", 400, 1, 1200);
 					EntitySettings.EntityLiveTick.CoinLiveTick = builder
 							.translation(CONFIG_TRANSLATE+"coin_live_tick")
 							.comment("how many ticks can the coin entity live")
 						    .worldRestart()
-							.defineInRange("CoinLiveTick", 300, 1, 1200);
+							.defineInRange("CoinLiveTick", 400, 1, 1200);
 					EntitySettings.EntityLiveTick.EnergyLiveTick = builder
 							.translation(CONFIG_TRANSLATE+"energy_live_tick")
 							.comment("how many ticks can the energy entity live")

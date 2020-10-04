@@ -354,6 +354,7 @@
 //death
     "death.attack.pvz_eat":"Zombie eat %s's brain",
     "death.attack.chomper_plant":"%s was eat by chomper",
+    "death.attack.pvz_crush":"%s was crushed",
 //itemGroup
     "itemGroup.pvz_misc":"PVZ Misc",
     "itemGroup.pvz_card":"PVZ Card"

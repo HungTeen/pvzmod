@@ -1,0 +1,31 @@
+{
+    "name": "戴夫别墅",
+    "icon": "minecraft:bricks",
+    "category": "pvz:start",
+    "pages": [
+        {
+            "type": "text",
+            "text": "$(l)戴夫别墅$()是$(l)主世界平原$()生成的结构，这里会生成一个$(#ff0000)疯狂戴夫和潘妮$()。同时别墅的草坪有可能会自带一些植物。"
+        },
+        {
+            "type": "image",
+            "images":[
+                "pvz:textures/gui/patchouli/dave_villa.png"
+            ],
+            "title": "戴夫别墅"
+        },
+        {
+            "type": "text",
+            "text": "玩家可以用$(#ff0000)钱币$()与戴夫交易，目前戴夫出售$(l)能量豆上限和图鉴$()。$(br)潘妮现在没有AI，即将更新。"
+        },
+        {
+            "type": "entity",
+            "entity": "pvz:crazy_dave",
+            "scale": 0.5,
+            "offset": 0.5,
+            "name": "疯狂戴夫"
+        }
+    ],
+    "advancement": "pvz:root",
+    "sortnum": 4
+}

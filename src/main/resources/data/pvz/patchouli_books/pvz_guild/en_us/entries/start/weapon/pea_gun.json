@@ -1,0 +1,51 @@
+{
+    "name": "Pea Gun",
+    "icon": "pvz:pea_gun",
+    "category": "pvz:start/weapon",
+    "pages": [
+        {
+            "type": "text",
+            "text": "$(l)Pea Gun$() is a range-attack plant weapon that can fire peas. Right-click it in the $(l)off hand$() to open the backpack, in the $(l)main hand$() to fire peas, and $(l)it can also be worn on the head and fired automatically$().It comes with a $(#ff0000)27-cell ammunition backpack for peas and a card slot$(), which is used to put plant cards to $(l)control the shooting mode$() of Pea Gun."
+        },
+        {
+            "type": "text",
+            "text": "The level of the plant card on the card slot determines the type of peas that can be fired $(l)(normal peas, big peas, huge peas)$(). The final fire type is related to the player’s $(#ff0000)Tree Level$(). $(l)The higher the level, the higher the probability of the big peas and huge peas$(). At the same time, $(l)the higher the tree Level, the shorter the cooldown of Pea Gun$()."
+        },
+        {
+            "type": "text",
+            "text": "$(l)Pea Gun$() can be enchanted, currently it can enchant $(#ff0000)power and infinity$(). For power enchantment, it will $(l)slightly increase the initial damage$() of Pea. For infinite enchantment, it does not like bows, but there is a $(l)probability that it will not consume peas$(). This probability is also affected by the $(#ff0000)Tree Level$()."
+        },
+        {
+            "type": "crafting",
+            "recipe": "pvz:pea_gun",
+            "title": "Pea Gun Recipe",
+            "text": "The recipe of Pea Gun is relatively easy, only $(l)four peas, a dispenser and four Appease Essences$() are needed."
+        },
+        {
+            "type": "spotlight",
+            "item": "pvz:pea_shooter_card",
+            "title": "PeaShooter Mode",
+            "text": "normal shoot style, shoot forward one pea at a time"
+        },
+        {
+            "type": "spotlight",
+            "item": "pvz:snow_pea_card",
+            "title": "SnowPea Mode",
+            "text": "normal shoot style, $(l)no matter what kind of pea is in the ammunition backpack, the final shot out is $(#ff0000)snow peas$()."
+        },
+        {
+            "type": "spotlight",
+            "item": "pvz:repeater_card",
+            "title": "Repeater Mode",
+            "text": "shoot forward two peas at a time"
+        },
+        {
+            "type": "spotlight",
+            "item": "pvz:three_peater_card",
+            "title": "ThreePeater Mode",
+            "text": "shoot three parallel peas forward at a time"
+        }
+    ],
+    "advancement": "pvz:root",
+    "sortnum": 0
+}

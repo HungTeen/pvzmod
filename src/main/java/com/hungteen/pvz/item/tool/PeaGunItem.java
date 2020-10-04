@@ -36,6 +36,7 @@ import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.Direction;
 import net.minecraft.util.Hand;
+import net.minecraft.util.SoundCategory;
 import net.minecraft.util.SoundEvents;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.util.text.ITextComponent;
@@ -140,9 +141,9 @@ public class PeaGunItem extends Item {
 				if (stack.isEmpty()) {
 					continue;
 				}
-				if (this.canShoot(player, plant, stack)) {
+				if (this.canShoot(player, plant, stack, itemStack)) {
 					shrinkItemStack(player, backpack, i, itemStack);
-					player.playSound(SoundEvents.ENTITY_SNOW_GOLEM_SHOOT, 0.8f, 0.8f);
+					world.playSound(player, player.getPosition(), SoundEvents.ENTITY_SNOW_GOLEM_SHOOT, SoundCategory.PLAYERS, 0.8f, 0.8f);
 					setPlayerCoolDownTick(player);
 //					stack.damageItem(1, player, (p) -> {
 //						InventoryHelper.dropInventoryItems(world, p, backpack);
@@ -168,22 +169,22 @@ public class PeaGunItem extends Item {
 		});
 	}
 
-	protected boolean canShoot(PlayerEntity player, Plants plant, ItemStack stack) {
+	protected boolean canShoot(PlayerEntity player, Plants plant, ItemStack stack, ItemStack peaGun) {
 		switch (plant) {
 		case PEA_SHOOTER:
 		case SNOW_PEA: {
-			this.performShoot(player, plant, stack, 0); // normal shoot
+			this.performShoot(player, plant, stack, peaGun, 0); // normal shoot
 			return true;
 		}
 		case REPEATER: {
-			this.performShoot(player, plant, stack, 0);
-			this.performShoot(player, plant, stack, 1);
+			this.performShoot(player, plant, stack, peaGun, 0);
+			this.performShoot(player, plant, stack, peaGun, 1);
 			return true;
 		}
 		case THREE_PEATER: {
-			this.performShoot(player, plant, stack, 0);
-			this.performShoot(player, plant, stack, 1);
-			this.performShoot(player, plant, stack, 2);
+			this.performShoot(player, plant, stack, peaGun, 0);
+			this.performShoot(player, plant, stack, peaGun, 1);
+			this.performShoot(player, plant, stack, peaGun, 2);
 			return true;
 		}
 		default: {
@@ -192,13 +193,24 @@ public class PeaGunItem extends Item {
 		}
 	}
 
-	private void performShoot(PlayerEntity player, Plants plant, ItemStack stack, int type) {
+	private void performShoot(PlayerEntity player, Plants plant, ItemStack stack, ItemStack peaGun, int type) {
 		player.getCapability(CapabilityHandler.PLAYER_DATA_CAPABILITY).ifPresent((l) -> {
 			int plantLvl = l.getPlayerData().getPlantStats().getPlantLevel(plant);
-			PeaEntity pea = new PeaEntity(EntityRegister.PEA.get(), player.world, player, getPeaType(plantLvl),
-					getPeaState(plant, stack.getItem()));
-			pea.setPower(EnchantmentHelper.getEnchantmentLevel(Enchantments.POWER, stack));// Power Enchantment can
-																							// affect pea gun.
+			int lvl = l.getPlayerData().getPlayerStats().getPlayerStats(Resources.TREE_LVL);
+			PeaEntity.Type peaType = PeaEntity.Type.NORMAL;
+			if(plantLvl > 6) {
+				int now = (lvl + 19) / 20;
+				int bigChance = now * 5;
+				int hugeChance = bigChance + ((plantLvl > 13) ? now : 0);
+				int tmp = random.nextInt(100);
+				if(tmp < bigChance) {
+					peaType = PeaEntity.Type.BIG;
+				}else if(tmp < hugeChance) {
+					peaType = PeaEntity.Type.HUGE;
+				}
+			}
+			PeaEntity pea = new PeaEntity(EntityRegister.PEA.get(), player.world, player, peaType, getPeaState(plant, stack.getItem()));
+			pea.setPower(EnchantmentHelper.getEnchantmentLevel(Enchantments.POWER, peaGun));// Power Enchantment can affect pea gun.
 			Vec3d vec = player.getLookVec();
 			Vec3d offset = vec.scale(SHOOT_OFFSET);
 			pea.setPosition(player.getPosX() + offset.x, player.getPosY() + player.getEyeHeight() + offset.y,
@@ -225,24 +237,21 @@ public class PeaGunItem extends Item {
 		});
 	}
 
+	/**
+	 * get Shoot Pea State
+	 */
 	private PeaEntity.State getPeaState(Plants plant, Item item) {
-		if (plant == Plants.SNOW_PEA)
+		if (plant == Plants.SNOW_PEA) {
 			return PeaEntity.State.ICE;
-		if (item == ItemRegister.SNOW_PEA.get())
+		}else if (item == ItemRegister.SNOW_PEA.get()) {
 			return PeaEntity.State.ICE;
-		if (item == ItemRegister.FLAME_PEA.get())
+		}else if (item == ItemRegister.FLAME_PEA.get()) {
 			return PeaEntity.State.FIRE;
-		if (item == ItemRegister.BLUE_FLAME_PEA.get())
+		}else if (item == ItemRegister.BLUE_FLAME_PEA.get()) {
 			return PeaEntity.State.BLUE_FIRE;
-		return PeaEntity.State.NORMAL;
-	}
-
-	private PeaEntity.Type getPeaType(int lvl) {
-		if (lvl <= 6)
-			return PeaEntity.Type.NORMAL;
-		else if (lvl <= 13)
-			return PeaEntity.Type.BIG;
-		return PeaEntity.Type.HUGE;
+		}else {
+			return PeaEntity.State.NORMAL;
+		}
 	}
 
 	protected void setPlayerCoolDownTick(PlayerEntity player) {

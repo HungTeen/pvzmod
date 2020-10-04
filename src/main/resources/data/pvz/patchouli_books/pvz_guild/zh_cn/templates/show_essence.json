@@ -1,0 +1,102 @@
+{
+	"components": [
+	    {
+	        "type": "text",
+	        "text": "$(l)#text#$()"
+	    },
+	    {
+	        "type": "image",
+	        "image": "pvz:textures/gui/widgets.png",
+	        "width": 22,
+	        "height": 15,
+	        "u": 44,
+	        "v": 64,
+	        "x": 48,
+	        "y": 75
+	    },
+		{
+			"type": "item",
+			"item": "#input_item1#",
+			"framed": true,
+			"x": 10,
+			"y": 30
+		},
+		{
+			"type": "item",
+			"item": "#input_item2#",
+			"framed": true,
+			"x": 10,
+			"y": 50
+		},
+		{
+			"type": "item",
+			"item": "#input_item3#",
+			"framed": true,
+			"x": 10,
+			"y": 70
+		},
+		{
+			"type": "item",
+			"item": "#input_item4#",
+			"framed": true,
+			"x": 10,
+			"y": 90
+		},
+		{
+			"type": "item",
+			"item": "#input_item5#",
+			"framed": true,
+			"x": 10,
+			"y": 110
+		},
+		{
+			"type": "item",
+			"item": "#input_item6#",
+			"framed": true,
+			"x": 10,
+			"y": 130
+		},
+		{
+			"type": "item",
+			"item": "#output_item1#",
+			"framed": true,
+			"x": 90,
+			"y": 30
+		},
+		{
+			"type": "item",
+			"item": "#output_item2#",
+			"framed": true,
+			"x": 90,
+			"y": 50
+		},
+		{
+			"type": "item",
+			"item": "#output_item3#",
+			"framed": true,
+			"x": 90,
+			"y": 70
+		},
+		{
+			"type": "item",
+			"item": "#output_item4#",
+			"framed": true,
+			"x": 90,
+			"y": 90
+		},
+		{
+			"type": "item",
+			"item": "#output_item5#",
+			"framed": true,
+			"x": 90,
+			"y": 110
+		},
+		{
+			"type": "item",
+			"item": "#output_item6#",
+			"framed": true,
+			"x": 90,
+			"y": 130
+		}
+	]
+}

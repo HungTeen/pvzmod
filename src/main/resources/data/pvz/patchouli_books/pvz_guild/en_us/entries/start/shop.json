@@ -1,0 +1,31 @@
+{
+    "name": "Dave Villa",
+    "icon": "minecraft:bricks",
+    "category": "pvz:start",
+    "pages": [
+        {
+            "type": "text",
+            "text": "$(l)Dave Villa$() is a structure generated in $(l)Overworld plains$(), where a $(#ff0000)crazy Dave and Penny$() will be spawned. At the same time, the lawn of the villa may spawn some plants."
+        },
+        {
+            "type": "image",
+            "images":[
+                "pvz:textures/gui/patchouli/dave_villa.png"
+            ],
+            "title": "Dave Villa"
+        },
+        {
+            "type": "text",
+            "text": "Players can trade with Dave with $(#ff0000)Money$(), and Dave currently sells $(l)Energy limits and almanac$().$(br)Penny currently does not have AI and will be updated soon."
+        },
+        {
+            "type": "entity",
+            "entity": "pvz:crazy_dave",
+            "scale": 0.5,
+            "offset": 0.5,
+            "name": "Crazy Dave"
+        }
+    ],
+    "advancement": "pvz:root",
+    "sortnum": 4
+}

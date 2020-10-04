@@ -71,8 +71,8 @@
     "item.pvz.buckethead_zombie_spawn_egg":"铁桶僵尸刷怪蛋",
     "entity.pvz.snorkel_zombie":"潜水僵尸",
     "item.pvz.snorkel_zombie_spawn_egg":"潜水僵尸刷怪蛋",
-    "entity.pvz.zomboni":"冰车僵尸",
-    "item.pvz.zomboni_spawn_egg":"冰车僵尸刷怪蛋",
+    "entity.pvz.zomboni":"造雪车僵尸",
+    "item.pvz.zomboni_spawn_egg":"造雪车僵尸刷怪蛋",
     "entity.pvz.bobsle_team":"僵尸雪橇队",
     "item.pvz.bobsle_team_spawn_egg":"僵尸雪橇队刷怪蛋",
     "entity.pvz.bobsle_zombie":"雪橇僵尸",
@@ -352,6 +352,7 @@
 //death
     "death.attack.pvz_eat":"僵尸吃了%s的脑子",
     "death.attack.chomper_plant":"%s被食人花咬死了",
+    "death.attack.pvz_crush":"%s被压扁了",
 //itemGroup
     "itemGroup.pvz_misc":"PVZ杂项",
     "itemGroup.pvz_card":"PVZ召唤卡"
