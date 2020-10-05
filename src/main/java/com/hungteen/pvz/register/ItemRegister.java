@@ -7,7 +7,6 @@ import com.hungteen.pvz.item.PVZSpawnEggItem;
 import com.hungteen.pvz.item.armor.BucketArmorItem;
 import com.hungteen.pvz.item.armor.ConeArmorItem;
 import com.hungteen.pvz.item.misc.AlmanacItem;
-import com.hungteen.pvz.item.misc.GuildBookItem;
 import com.hungteen.pvz.item.misc.StrangeHelpItem;
 import com.hungteen.pvz.item.tool.BobsleCarItem;
 import com.hungteen.pvz.item.tool.PeaGunItem;
@@ -118,7 +117,7 @@ public class ItemRegister {
     
 	//misc
 	public static final RegistryObject<Item> STRANGE_HELP = ITEMS.register("strange_help", StrangeHelpItem::new);
-	public static final RegistryObject<Item> GUILD_BOOK = ITEMS.register("guild_book", GuildBookItem::new);
+//	public static final RegistryObject<Item> GUILD_BOOK = ITEMS.register("guild_book", GuildBookItem::new);
 	public static final RegistryObject<Item> ALMANAC = ITEMS.register("almanac", AlmanacItem::new);
 	
 	//food 

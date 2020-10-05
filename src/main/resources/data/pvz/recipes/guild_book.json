@@ -11,7 +11,10 @@
     ],
 
      "result": {
-          "item": "pvz:guild_book",
+          "item": "patchouli:guide_book",
+          "nbt": {
+              "patchouli:book": "pvz:pvz_guild"
+          },
           "count": 1
       }
 }

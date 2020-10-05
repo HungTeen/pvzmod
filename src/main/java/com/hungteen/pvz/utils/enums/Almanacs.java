@@ -6,6 +6,7 @@ import net.minecraft.util.text.TranslationTextComponent;
 
 public enum Almanacs {
 
+	PLAYER,
 	/**
 	 * Plants
 	 */
@@ -47,11 +48,12 @@ public enum Almanacs {
 	;
 	
 	public static boolean isPlant(Almanacs a) {
-		return a.ordinal()<PlantUtil.CURRENT_PLANT_NUM;
+		return a.ordinal() <= PlantUtil.CURRENT_PLANT_NUM && a!=PLAYER;
 	}
 	
 	public static String getAlmanacName(Almanacs a) {
 		if(a==LILY_PAD) return new TranslationTextComponent("block.pvz."+a.toString().toLowerCase()).getFormattedText();
+		if(a==PLAYER) return "Player";
 	    return new TranslationTextComponent("entity.pvz."+a.toString().toLowerCase()).getFormattedText();
 	}
 	

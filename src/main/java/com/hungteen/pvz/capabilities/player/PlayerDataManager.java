@@ -354,6 +354,7 @@ public class PlayerDataManager {
 			for(Almanacs a:Almanacs.values()) {
 				unLock.put(a, false);
 			}
+			unLock.put(Almanacs.PLAYER, true);
 		}
 		
 		public boolean isAlmanacUnLocked(Almanacs a) {

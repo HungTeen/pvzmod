@@ -12,7 +12,7 @@
 	"frame":"task",
     "announce_to_chat": true
   },
-  "parent":"pvz:start",
+  "parent":"pvz:root",
   "criteria": {
     "get_almanac": {
       "trigger": "minecraft:inventory_changed",

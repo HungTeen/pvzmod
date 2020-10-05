@@ -31,6 +31,7 @@ public class ItemUtil {
 	
 	public static Item getItemByAlmanac(Almanacs a) {
 			switch(a) {
+			case PLAYER: return Items.PLAYER_HEAD;
 			case PEA_SHOOTER: return ItemRegister.PEA_SHOOTER_CARD.get();
 			case SUN_FLOWER: return ItemRegister.SUN_FLOWER_CARD.get();
 			case CHERRY_BOMB: return ItemRegister.CHERRY_BOMB_CARD.get();

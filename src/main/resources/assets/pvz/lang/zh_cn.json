@@ -28,7 +28,7 @@
     "item.pvz.red_card":"红卡模板",
 //misc
     "item.pvz.strange_help":"奇怪的帮助",
-    "item.pvz.guild_book":"PVZ指导书",
+    //"item.pvz.guild_book":"PVZ指导书",
     "item.pvz.bobsle_car":"雪橇车", 
     "item.pvz.snow_pea":"寒冰豌豆",
     "item.pvz.flame_pea":"烈焰豌豆",
@@ -219,13 +219,15 @@
     "gui.pvz.strange_help3":"僵尸吃掉了你的脑子时，你就赢了!",
     "gui.pvz.strange_help4":"--这部分帮助是僵尸送给你的--",
 //guild book
-    "gui.pvz.guild_book0":"玩家属性",
-    "gui.pvz.guild_book1":"事件",
-    "gui.pvz.guild_book2":"植物精华",
-    "gui.pvz.guild_book3":"召唤卡",
-    "gui.pvz.guild_book4":"禅境花园",
-    "gui.pvz.guild_book5":"僵尸小屋",
-    "gui.pvz.guild_book6":"植物获取",
+    //"gui.pvz.guild_book0":"玩家属性",
+    //"gui.pvz.guild_book1":"事件",
+    //"gui.pvz.guild_book2":"植物精华",
+    //"gui.pvz.guild_book3":"召唤卡",
+    //"gui.pvz.guild_book4":"禅境花园",
+    //"gui.pvz.guild_book5":"僵尸小屋",
+    //"gui.pvz.guild_book6":"植物获取",
+    "gui.pvz.pvz_guild":"植物大战僵尸指南",
+    "gui.pvz.guild_info":"欢迎来到植物大战僵尸的世界，这本书将带你游玩这个模组。",
 //player inventory
     "gui.pvz.player_inventory.title":"召唤卡背包",
 //dave shop
@@ -246,6 +248,10 @@
     "gui.pvz.almanac.attack_cd":"攻击间隔",
     "gui.pvz.almanac.pre_time":"准备时间",
     "gui.pvz.almanac.armor_health":"护甲血量",
+    "gui.pvz.almanac.sun_num":"阳光数",
+    "gui.pvz.almanac.energy_num":"能量豆数",
+    "gui.pvz.almanac.money":"金钱",
+    "gui.pvz.almanac.gem_num":"宝石数",
     //PeaShooter
     "gui.pvz.almanac.pea_shooter1":"豌豆射手发射豌豆攻击敌人",
     "gui.pvz.almanac.pea_shooter2":"一次发射一个豌豆",

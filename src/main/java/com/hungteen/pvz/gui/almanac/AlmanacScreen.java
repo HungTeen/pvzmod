@@ -6,11 +6,13 @@ import com.hungteen.pvz.entity.plant.defence.TallNutEntity;
 import com.hungteen.pvz.entity.plant.defence.WallNutEntity;
 import com.hungteen.pvz.utils.ItemUtil;
 import com.hungteen.pvz.utils.PlantUtil;
+import com.hungteen.pvz.utils.PlayerUtil;
 import com.hungteen.pvz.utils.RenderUtil;
 import com.hungteen.pvz.utils.StringUtil;
 import com.hungteen.pvz.utils.enums.Almanacs;
 import com.hungteen.pvz.utils.enums.Colors;
 import com.hungteen.pvz.utils.enums.Plants;
+import com.hungteen.pvz.utils.enums.Resources;
 import com.mojang.blaze3d.systems.RenderSystem;
 
 import net.minecraft.client.gui.screen.inventory.ContainerScreen;
@@ -63,7 +65,7 @@ public class AlmanacScreen extends ContainerScreen<AlmanacContainer> {
 	protected void renderAlmanac(){
 		Almanacs current = this.searchGui.getCurrentAlmanac();
 		if(this.searchGui.getCurrentAlmanac()==null) {
-			current = Almanacs.PEA_SHOOTER;
+			current = Almanacs.PLAYER;
 		}
 		this.renderTitle(current);
 		if(!ClientPlayerResources.isAlmanacUnLocked(current)) {
@@ -155,8 +157,16 @@ public class AlmanacScreen extends ContainerScreen<AlmanacContainer> {
 				break;
 			}
 			}
-		}else {//for zombies, but nothing for now
-			
+		}else if(current == Almanacs.PLAYER){//for player
+    		int sunNum = ClientPlayerResources.getPlayerStats(Resources.SUN_NUM);
+    		int energyNum = ClientPlayerResources.getPlayerStats(Resources.ENERGY_NUM);
+    		int money = ClientPlayerResources.getPlayerStats(Resources.MONEY);
+    		int gemNum = ClientPlayerResources.getPlayerStats(Resources.GEM_NUM);
+    		this.propertyCnt = 0;
+    		this.drawProperty(Properties.SUN_NUM, sunNum);
+    		this.drawProperty(Properties.ENERGY_NUM, energyNum);
+    		this.drawProperty(Properties.MONEY, money);
+    		this.drawProperty(Properties.GEM_NUM, gemNum);
 		}
 	}
 	
@@ -174,6 +184,9 @@ public class AlmanacScreen extends ContainerScreen<AlmanacContainer> {
 	}
 	
 	protected void renderShortInfo(Almanacs a) {
+		if(a==Almanacs.PLAYER) {
+			return ;
+		}
 		RenderSystem.pushMatrix();
 		int posX = this.guiLeft + 82 + 150 / 2;
 		int posY = this.guiTop + 26 + 2;
@@ -192,6 +205,9 @@ public class AlmanacScreen extends ContainerScreen<AlmanacContainer> {
 			p = Plants.getPlantByName(a.toString().toLowerCase());
 			maxLvl = PlantUtil.getPlantMaxLvl(p);
 			lvl = ClientPlayerResources.getPlayerPlantCardLvl(p);
+		}else if(a==Almanacs.PLAYER) {
+			maxLvl = PlayerUtil.MAX_TREE_LVL;
+			lvl = ClientPlayerResources.getPlayerStats(Resources.TREE_LVL);
 		}
 		String lvlInfo = Properties.LVL.getName()+":"+lvl;
 		int barWidth = 62, barHeight = 9;
@@ -199,6 +215,10 @@ public class AlmanacScreen extends ContainerScreen<AlmanacContainer> {
 		if(maxLvl != lvl && p != null) { 
 			int xp = ClientPlayerResources.getPlayerPlantCardXp(p);
 			int maxXp = PlantUtil.getPlantLevelUpXp(p, lvl);
+			len = RenderUtil.getRenderBarLen(xp, maxXp, barWidth);
+		}else if(a == Almanacs.PLAYER) {
+			int xp = ClientPlayerResources.getPlayerStats(Resources.TREE_XP);
+			int maxXp = PlayerUtil.getPlayerLevelUpXp(lvl);
 			len = RenderUtil.getRenderBarLen(xp, maxXp, barWidth);
 		}
 		int texX = 0;
@@ -212,7 +232,7 @@ public class AlmanacScreen extends ContainerScreen<AlmanacContainer> {
 	protected void renderTitle(Almanacs a) {
 		RenderSystem.pushMatrix();
 		int dx = this.guiLeft + 82 + 150 / 2, dy = this.guiTop + 10 + 2;
-		StringUtil.drawCenteredScaledString(this.font, Almanacs.getAlmanacName(a), dx, dy, Colors.GREEN, 1.6f);
+		StringUtil.drawCenteredScaledString(this.font, Almanacs.getAlmanacName(a), dx, dy, Colors.DARK_GREEN, 1.6f);
 		RenderSystem.popMatrix();
 	}
 	
@@ -263,7 +283,11 @@ public class AlmanacScreen extends ContainerScreen<AlmanacContainer> {
 		GEN_TIME,
 		ATTACK_CD,
 		PRE_TIME,
-		ARMOR_HEALTH;
+		ARMOR_HEALTH,
+		SUN_NUM,
+		ENERGY_NUM,
+		MONEY,
+		GEM_NUM;
 		
 		public String getName() {
 			return new TranslationTextComponent("gui.pvz.almanac."+this.toString().toLowerCase()).getFormattedText();

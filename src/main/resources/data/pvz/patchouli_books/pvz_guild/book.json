@@ -1,10 +1,11 @@
 {
-	"name": "PVZ Guild",
-	"landing_text": "A guild for Plants vs Zombies mod",
+	"name": "gui.pvz.pvz_guild",
+	"landing_text": "gui.pvz.guild_info",
 	"version": 1,
 	"book_texture":"patchouli:textures/gui/book_green.png",
 	"subtitle":"Set version to equal 0 to view",
 	"model":"patchouli:book_green"
+	//"creative_tab":"pvz_misc"
 	//https://github.com/Vazkii/Patchouli/wiki/Getting-Started
 	
 	//"text_color":"000000",
@@ -15,7 +16,7 @@
 	//"progress_bar_color":"FFFF55",s
 	//"progress_bar_background":"DDDDDD",
 	//"show_progress":true,
-	//"creative_tab":"misc",
+	
 	//"pause_game":true,
 	//"show_toasts":true,
 	//"use_blocky_font":false
