@@ -2,7 +2,7 @@ package com.hungteen.pvz.item.tool;
 
 import java.util.List;
 
-import com.hungteen.pvz.capabilities.CapabilityHandler;
+import com.hungteen.pvz.capability.CapabilityHandler;
 import com.hungteen.pvz.register.GroupRegister;
 import com.hungteen.pvz.utils.enums.Resources;
 

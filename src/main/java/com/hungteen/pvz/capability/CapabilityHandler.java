@@ -1,4 +1,4 @@
-package com.hungteen.pvz.capabilities;
+package com.hungteen.pvz.capability;
 
 
 import com.hungteen.pvz.PVZMod;

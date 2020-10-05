@@ -1,0 +1,39 @@
+{
+    "name": "Seed",
+    "icon": "pvz:pea",
+    "category": "pvz:start",
+    "pages": [
+        {
+            "type": "spotlight",
+            "item": "pvz:pea",
+            "title": "Pea",
+            "text": "Peas may drop when you $(l)break grass$(). Peas can be planted like crops,and right click to harvest them when matured."
+        },
+        {
+            "type": "crafting",
+            "recipe": "pvz:snow_pea",
+            "recipe2": "pvz:flame_pea",
+            "title": "Snow Pea & Flame Pea"
+        },
+        {
+            "type": "spotlight",
+            "item": "pvz:nut",
+            "title": "Nut",
+            "text": "Nut trees grow in the Zen garden, and the nuts fall through the nut leaves."
+        },
+        {
+            "type": "spotlight",
+            "item": "pvz:chomper",
+            "title": "Chomper",
+            "text": "Chompers grow in Zen Garden and are $(l)very rare$(). Fortunately, bone meal can make them grow."
+        },
+        {
+            "type": "spotlight",
+            "item": "pvz:pepper",
+            "title": "Pepper",
+            "text": "Killing $(#ff0000)Lava zombies$() has a chance to drop peppers, you can find them in $(#ff0000)Nether$()."
+        }
+    ],
+    "advancement": "pvz:root",
+    "sortnum": 5
+}

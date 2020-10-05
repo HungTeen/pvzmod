@@ -1,6 +1,6 @@
 package com.hungteen.pvz.entity.bullet;
 
-import com.hungteen.pvz.capabilities.CapabilityHandler;
+import com.hungteen.pvz.capability.CapabilityHandler;
 import com.hungteen.pvz.entity.plant.PVZPlantEntity;
 import com.hungteen.pvz.entity.plant.appease.PeaShooterEntity;
 import com.hungteen.pvz.entity.plant.flame.TorchWoodEntity;

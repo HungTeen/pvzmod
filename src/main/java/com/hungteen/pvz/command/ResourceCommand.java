@@ -2,7 +2,7 @@ package com.hungteen.pvz.command;
 
 import java.util.Collection;
 
-import com.hungteen.pvz.capabilities.CapabilityHandler;
+import com.hungteen.pvz.capability.CapabilityHandler;
 import com.hungteen.pvz.utils.PlayerUtil;
 import com.hungteen.pvz.utils.enums.Resources;
 import com.mojang.brigadier.CommandDispatcher;

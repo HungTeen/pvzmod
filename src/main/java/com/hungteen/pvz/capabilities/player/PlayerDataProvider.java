@@ -1,6 +1,6 @@
 package com.hungteen.pvz.capabilities.player;
 
-import com.hungteen.pvz.capabilities.CapabilityHandler;
+import com.hungteen.pvz.capability.CapabilityHandler;
 
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.nbt.CompoundNBT;

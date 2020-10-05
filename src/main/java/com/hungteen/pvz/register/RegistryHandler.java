@@ -1,7 +1,7 @@
 package com.hungteen.pvz.register;
 
 import com.hungteen.pvz.PVZMod;
-import com.hungteen.pvz.capabilities.CapabilityHandler;
+import com.hungteen.pvz.capability.CapabilityHandler;
 import com.hungteen.pvz.item.PVZSpawnEggItem;
 import com.hungteen.pvz.item.armor.BucketArmorItem;
 import com.hungteen.pvz.item.armor.ConeArmorItem;
