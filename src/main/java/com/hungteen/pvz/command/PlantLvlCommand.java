@@ -2,6 +2,7 @@ package com.hungteen.pvz.command;
 
 import java.util.Collection;
 
+import com.hungteen.pvz.capabilities.CapabilityHandler;
 import com.hungteen.pvz.utils.PlayerUtil;
 import com.hungteen.pvz.utils.enums.Plants;
 import com.mojang.brigadier.CommandDispatcher;
@@ -12,6 +13,7 @@ import net.minecraft.command.CommandSource;
 import net.minecraft.command.Commands;
 import net.minecraft.command.arguments.EntityArgument;
 import net.minecraft.entity.player.ServerPlayerEntity;
+import net.minecraft.util.text.StringTextComponent;
 
 public class PlantLvlCommand {
 
@@ -26,6 +28,14 @@ public class PlantLvlCommand {
     			return addPlantLvl(command.getSource(), EntityArgument.getPlayers(command, "targets"), p, IntegerArgumentType.getInteger(command, "amount"));
     		})))
         	)));
+        	builder.then(Commands.argument("targets", EntityArgument.players()).then(Commands.literal("query").then(Commands.literal(p.toString().toLowerCase())
+                .then(Commands.literal("xp").executes((command)->{
+            		return queryPlantXp(command.getSource(), EntityArgument.getPlayers(command, "targets"), p);
+           		}))
+               	.then(Commands.literal("lvl").executes((command)->{
+           			return queryPlantLvl(command.getSource(), EntityArgument.getPlayers(command, "targets"), p);
+           		}))
+            )));
         }
         dispatcher.register(builder);
     }
@@ -40,6 +50,24 @@ public class PlantLvlCommand {
 	public static int addPlantXp(CommandSource source,Collection<? extends ServerPlayerEntity> targets,Plants plant,int num) {
 		for(ServerPlayerEntity player:targets) {
 		    PlayerUtil.addPlantXp(player, plant, num);
+		}
+		return targets.size();
+	}
+	
+	public static int queryPlantLvl(CommandSource source,Collection<? extends ServerPlayerEntity> targets,Plants plant) {
+		for(ServerPlayerEntity player:targets) {
+		    player.getCapability(CapabilityHandler.PLAYER_DATA_CAPABILITY).ifPresent((l)->{
+		    	source.sendFeedback(new StringTextComponent(""+l.getPlayerData().getPlantStats().getPlantLevel(plant)), true);
+		    });
+		}
+		return targets.size();
+	}
+	
+	public static int queryPlantXp(CommandSource source,Collection<? extends ServerPlayerEntity> targets,Plants plant) {
+		for(ServerPlayerEntity player:targets) {
+		    player.getCapability(CapabilityHandler.PLAYER_DATA_CAPABILITY).ifPresent((l)->{
+		    	source.sendFeedback(new StringTextComponent(""+l.getPlayerData().getPlantStats().getPlantXp(plant)), true);
+		    });
 		}
 		return targets.size();
 	}
