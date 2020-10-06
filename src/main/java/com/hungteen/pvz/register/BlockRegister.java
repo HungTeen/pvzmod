@@ -10,6 +10,7 @@ import com.hungteen.pvz.block.plants.ChomperBlock;
 import com.hungteen.pvz.block.plants.LilyPadBlock;
 import com.hungteen.pvz.block.plants.PVZSaplingBlock;
 import com.hungteen.pvz.block.plants.PeaBlock;
+import com.hungteen.pvz.block.plants.ToxicShroomBlock;
 import com.hungteen.pvz.item.blockitem.LilyPadItem;
 import com.hungteen.pvz.world.feature.tree.NutTree;
 
@@ -62,6 +63,7 @@ public class BlockRegister {
 	
 	//crops
 	public static final RegistryObject<Block> PEA_PLANT = BLOCKS.register("pea_plant", ()->new PeaBlock(Block.Properties.from(Blocks.WHEAT)));
+	public static final RegistryObject<Block> TOXIC_SHROOM = BLOCKS.register("toxic_shroom", ()->new ToxicShroomBlock(Block.Properties.from(Blocks.SWEET_BERRY_BUSH)));
 	
 	//plants
 	public static final RegistryObject<Block> NUT_LEAVES = BLOCKS.register("nut_leaves", ()->new LeavesBlock(Block.Properties.from(Blocks.OAK_LEAVES)));

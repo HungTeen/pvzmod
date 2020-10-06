@@ -1,0 +1,6 @@
+{
+    "parent": "minecraft:block/cross",
+    "textures": {
+        "cross": "pvz:block/toxic_shroom_2"
+    }
+}

@@ -8,8 +8,10 @@ import javax.annotation.Nullable;
 
 import com.hungteen.pvz.PVZConfig;
 import com.hungteen.pvz.entity.plant.enforce.SquashEntity;
+import com.hungteen.pvz.entity.plant.interfaces.IShroomPlant;
 import com.hungteen.pvz.entity.plant.spear.SpikeWeedEntity;
 import com.hungteen.pvz.misc.damage.PVZDamageSource;
+import com.hungteen.pvz.register.ParticleRegister;
 import com.hungteen.pvz.register.SoundRegister;
 import com.hungteen.pvz.utils.EntityUtil;
 import com.hungteen.pvz.utils.PlantUtil;
@@ -50,6 +52,7 @@ public abstract class PVZPlantEntity extends CreatureEntity implements IPVZPlant
 	private final int weakCD = 10;
 	private final int weakDamage = 15;
 	private int live_tick;
+	private int extraSleepTime = 0;
 	private static final DataParameter<Integer> SUPER_TIME = EntityDataManager.createKey(PVZPlantEntity.class, DataSerializers.VARINT);
 	private static final DataParameter<Integer> PLANT_LVL = EntityDataManager.createKey(PVZPlantEntity.class, DataSerializers.VARINT);
 	private static final DataParameter<Optional<UUID>> OWNER_UUID = EntityDataManager.createKey(PVZPlantEntity.class, DataSerializers.OPTIONAL_UNIQUE_ID);
@@ -59,7 +62,7 @@ public abstract class PVZPlantEntity extends CreatureEntity implements IPVZPlant
 	private static final DataParameter<Integer> BOOST_TIME = EntityDataManager.createKey(PVZPlantEntity.class, DataSerializers.VARINT);
 	private static final DataParameter<Boolean> IS_CHARMED = EntityDataManager.createKey(PVZPlantEntity.class, DataSerializers.BOOLEAN);
 	private static final DataParameter<Boolean> IS_GARDEN_PLANT = EntityDataManager.createKey(PVZPlantEntity.class, DataSerializers.BOOLEAN);
-	
+	private static final DataParameter<Integer> SLEEP_TIME = EntityDataManager.createKey(PVZPlantEntity.class, DataSerializers.VARINT);
 	
 	public PVZPlantEntity(EntityType<? extends CreatureEntity> type, World worldIn) {
 		super(type, worldIn);
@@ -80,6 +83,7 @@ public abstract class PVZPlantEntity extends CreatureEntity implements IPVZPlant
 		dataManager.register(BOOST_TIME, 0);
 		dataManager.register(IS_CHARMED, false);
 		dataManager.register(IS_GARDEN_PLANT, false);
+		dataManager.register(SLEEP_TIME, 0);
 	}
 	
 	@Override
@@ -129,6 +133,7 @@ public abstract class PVZPlantEntity extends CreatureEntity implements IPVZPlant
 				this.weakTime--;
 			}
 		}
+		//super mode or boost time or sleep time
 		if(!this.world.isRemote) {
 			//super 
 		    if(this.getSuperTime()>0) {
@@ -141,6 +146,19 @@ public abstract class PVZPlantEntity extends CreatureEntity implements IPVZPlant
 		    if(this.getBoostTime()>0) {
 		    	this.setBoostTime(this.getBoostTime()-1);
 		    }
+		    if(this.shouldPlantSleep()) {
+		    	this.setSleepTime(1);
+		    }else {
+		    	if(this.extraSleepTime != 0) {
+		    		this.setSleepTime(this.extraSleepTime);
+		    	}
+		    	if(this.getSleepTime() > 0) {
+		    		this.setSleepTime(this.getSleepTime() - 1);
+		    	}
+		    }
+		}
+		if(world.isRemote&&this.getSleepTime()>0&&this.ticksExisted%15==0) {
+			world.addParticle(ParticleRegister.SLEEP.get(), this.getPosX(), this.getPosY() + this.getEyeHeight(), this.getPosZ(), 0.05, 0.05, 0.05);
 		}
 		//max live tick
 		if(live_tick>=PVZConfig.COMMON_CONFIG.EntitySettings.EntityLiveTick.PlantLiveTick.get()) {
@@ -191,6 +209,16 @@ public abstract class PVZPlantEntity extends CreatureEntity implements IPVZPlant
 	protected boolean checkWeak(){
 		if(this.isImmuneToWeak) return false;
         return !PlantUtil.checkCanPlantLiveHere(this);
+	}
+	
+	/**
+	 * use for shroom's sleep
+	 */
+	protected boolean shouldPlantSleep() {
+		if(this instanceof IShroomPlant) {
+			return world.isDaytime();
+		}
+		return false;
 	}
 	
 	@Override
@@ -460,6 +488,14 @@ public abstract class PVZPlantEntity extends CreatureEntity implements IPVZPlant
     
     public void setAttackTime(int cd){
     	dataManager.set(ATTACK_TIME, cd);
+    }
+    
+    public int getSleepTime(){
+    	return dataManager.get(SLEEP_TIME);
+    }
+    
+    public void setSleepTime(int cd){
+    	dataManager.set(SLEEP_TIME, cd);
     }
     
 //	public boolean getIsSuperOut()

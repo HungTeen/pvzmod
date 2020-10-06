@@ -90,5 +90,6 @@ public class Colors {
 	public static final Pair<Integer,Integer> FLAME_COLOR = new Pair<>(RED, DARK_RED);
 	public static final Pair<Integer,Integer> SPEAR_COLOR = new Pair<>(BLACK, SILVER);
 	public static final Pair<Integer,Integer> ZOMBIE_COLOR = new Pair<>(ZOMBIE_SKIN, BLACK);
+	public static final Pair<Integer,Integer> TOXIC_COLOR = new Pair<>(PURPLE, WHITE);
 	
 }
