@@ -29,6 +29,11 @@ public class ShooterAttackGoal extends Goal{
 	
 	@Override
 	public boolean shouldExecute() {
+		if(this.attacker instanceof PVZPlantEntity) {
+			if(((PVZPlantEntity) this.attacker).isPlantSleeping()) {
+				return false;
+			}
+		}
 		LivingEntity attackTarget=this.attacker.getAttackTarget();
 		if(attackTarget==null) {
 			return false;

@@ -56,8 +56,8 @@ public class TorchWoodEntity extends PVZPlantEntity{
 	}
 	
 	@Override
-	public void startSuperMode() {
-		super.startSuperMode();
+	public void startSuperMode(boolean first) {
+		super.startSuperMode(first);
 		this.setSuperFlame(true);
 	}
 	

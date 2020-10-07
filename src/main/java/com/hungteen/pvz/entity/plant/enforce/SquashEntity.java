@@ -84,8 +84,8 @@ public class SquashEntity extends PVZPlantEntity{
 	}
 	
 	@Override
-	public void startSuperMode() {
-		super.startSuperMode();
+	public void startSuperMode(boolean first) {
+		super.startSuperMode(first);
 		if(!world.isRemote) {
 		    this.extraChance = this.getSuperBonusChance();
 		}

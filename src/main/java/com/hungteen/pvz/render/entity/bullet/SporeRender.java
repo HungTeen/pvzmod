@@ -15,7 +15,7 @@ public class SporeRender extends BulletRender<SporeEntity>{
 
 	@Override
 	protected float getScaleByEntity(SporeEntity entity) {
-		return 0.5f;
+		return 1f;
 	}
 
 }

@@ -88,7 +88,7 @@ public abstract class PlantShooterEntity extends PVZPlantEntity implements IShoo
 	
 	@Override
 	public float getBulletSpeed() {
-		return 1.5f;
+		return 1f;
 	}
 	
 }

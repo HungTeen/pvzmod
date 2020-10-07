@@ -33,8 +33,8 @@ public class WaterGuardEntity extends PlantDefenderEntity{
 	}
 	
 	@Override
-	public void startSuperMode() {
-		super.startSuperMode();
+	public void startSuperMode(boolean first) {
+		super.startSuperMode(first);
 		this.spawnGuard();
 	}
 	

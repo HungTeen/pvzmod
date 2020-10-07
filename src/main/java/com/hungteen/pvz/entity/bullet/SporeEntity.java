@@ -3,6 +3,7 @@ package com.hungteen.pvz.entity.bullet;
 import com.hungteen.pvz.entity.plant.base.PlantShooterEntity;
 import com.hungteen.pvz.misc.damage.PVZDamageSource;
 import com.hungteen.pvz.register.ItemRegister;
+import com.hungteen.pvz.register.ParticleRegister;
 
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntitySize;
@@ -11,7 +12,6 @@ import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.Pose;
 import net.minecraft.entity.projectile.ThrowableEntity;
 import net.minecraft.item.ItemStack;
-import net.minecraft.particles.ParticleTypes;
 import net.minecraft.util.math.EntityRayTraceResult;
 import net.minecraft.util.math.RayTraceResult;
 import net.minecraft.world.World;
@@ -32,21 +32,13 @@ public class SporeEntity extends PVZThrowableEntity{
 	public void tick() {
 		super.tick();
 		if(world.isRemote) {
-			for(int i = 0; i < 2; ++i) {
-	            this.world.addParticle(ParticleTypes.PORTAL, this.getPosX(), this.getPosY(), this.getPosZ(), 0.0D, 0.0D, 0.0D);
+			for(int i = 0; i < 3; ++i) {
+	            this.world.addParticle(ParticleRegister.SPORE.get(), this.getPosX(), this.getPosY(), this.getPosZ(), 0.0D, 0.0D, 0.0D);
 	        }
 		}
 		if(this.ticksExisted >= MAX_LIVE_TICK) {
 			this.remove();
 		}
-	}
-	
-	@Override
-	public void handleStatusUpdate(byte id) {
-		super.handleStatusUpdate(id);
-		for(int i = 0; i < 2; ++i) {
-            this.world.addParticle(ParticleTypes.PORTAL, this.getPosX(), this.getPosY(), this.getPosZ(), 0.0D, 0.0D, 0.0D);
-        }
 	}
 	
 	@Override
@@ -86,7 +78,7 @@ public class SporeEntity extends PVZThrowableEntity{
 	
 	@Override
 	public EntitySize getSize(Pose poseIn) {
-		return EntitySize.flexible(0.2f, 0.2f);
+		return EntitySize.flexible(0.25f, 0.25f);
 	}
 	
 	@Override

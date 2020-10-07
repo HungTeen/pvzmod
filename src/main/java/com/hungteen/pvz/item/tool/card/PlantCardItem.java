@@ -120,7 +120,7 @@ public class PlantCardItem extends SummonCardItem{
 				world.addEntity(plantEntity);
 				if(this.canPlantBreakOut(stack)) {
 					if(plantEntity.canStartSuperMode()) {
-						plantEntity.startSuperMode();
+						plantEntity.startSuperMode(false);
 					}
 				}
 				player.addStat(Stats.ITEM_USED.get(this));

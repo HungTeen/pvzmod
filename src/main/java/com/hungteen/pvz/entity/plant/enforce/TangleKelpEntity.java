@@ -65,8 +65,8 @@ public class TangleKelpEntity extends PVZPlantEntity{
 	}
 	
 	@Override
-	public void startSuperMode() {
-		super.startSuperMode();
+	public void startSuperMode(boolean first) {
+		super.startSuperMode(first);
 		if(!world.isRemote) {
 			int cnt = this.getCount();
 			for(LivingEntity target:EntityUtil.getEntityAttackableTarget(this, EntityUtil.getEntityAABB(this, 25, 3))) {

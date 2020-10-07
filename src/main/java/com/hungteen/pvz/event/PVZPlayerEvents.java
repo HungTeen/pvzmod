@@ -124,7 +124,7 @@ public class PVZPlayerEvents {
 								PlayerStats stats = l.getPlayerData().getPlayerStats();
 								if(stats.getPlayerStats(Resources.ENERGY_NUM)>=1) {
 									stats.addPlayerStats(Resources.ENERGY_NUM, -1);
-								    plant.startSuperMode();
+								    plant.startSuperMode(true);
 								}
 							});
 						}

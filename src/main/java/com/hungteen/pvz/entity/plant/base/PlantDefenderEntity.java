@@ -47,8 +47,8 @@ public abstract class PlantDefenderEntity extends PVZPlantEntity implements IDef
 	}
 
 	@Override
-	public void startSuperMode() {
-		super.startSuperMode();
+	public void startSuperMode(boolean first) {
+		super.startSuperMode(first);
 		this.setDefenceLife(this.getSuperLife());
 		this.attract();
 	}

@@ -7,6 +7,7 @@ import com.hungteen.pvz.utils.StringUtil;
 
 import net.minecraft.client.renderer.entity.EntityRendererManager;
 import net.minecraft.util.ResourceLocation;
+import net.minecraft.util.math.MathHelper;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 
@@ -19,7 +20,11 @@ public class PuffShroomRender extends PVZPlantRender<PuffShroomEntity>{
 
 	@Override
 	protected float getScaleByEntity(PuffShroomEntity entity) {
-		return 0.6f;
+		int tick = entity.getLiveTick();
+		int max = entity.getMaxLiveTick();
+		float change = 0.3f;
+		float small = MathHelper.clamp(tick*change/max, 0, change);
+		return 0.6f - small;
 	}
 
 	@Override

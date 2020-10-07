@@ -8,14 +8,18 @@ import net.minecraft.world.World;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 
-public class SleepParticle extends PVZNormalParticle{
+public class SporeParticle extends PVZNormalParticle {
 
-	public SleepParticle(World world, double x, double y, double z, double xSpeed, double ySpeed, double zSpeed) {
+	public SporeParticle(World world, double x, double y, double z, double xSpeed, double ySpeed, double zSpeed) {
 		super(world, x, y, z, xSpeed, ySpeed, zSpeed);
-		this.particleScale = 0.3f;
-		this.maxAge = this.rand.nextInt(10) + 10;
+		this.particleScale = 0.2f;
+		this.maxAge = this.rand.nextInt(2) + 1;
 		this.canCollide = false;
 		this.particleGravity = 0f;
+		float f = this.rand.nextFloat() * 0.6F + 0.4F;
+		this.particleRed = f * 0.9F;
+		this.particleGreen = f * 0.3F;
+		this.particleBlue = f;
 	}
 
 	@OnlyIn(Dist.CLIENT)
@@ -26,11 +30,11 @@ public class SleepParticle extends PVZNormalParticle{
 		public Factory(IAnimatedSprite sprite) {
 			this.sprite = sprite;
 		}
-		
+
 		@Override
 		public Particle makeParticle(BasicParticleType typeIn, World worldIn, double x, double y, double z,
 				double xSpeed, double ySpeed, double zSpeed) {
-			SleepParticle particle = new SleepParticle(worldIn, x, y, z, xSpeed, ySpeed, zSpeed);
+			SporeParticle particle = new SporeParticle(worldIn, x, y, z, xSpeed, ySpeed, zSpeed);
 			particle.selectSpriteRandomly(this.sprite);
 			return particle;
 		}
@@ -40,5 +44,5 @@ public class SleepParticle extends PVZNormalParticle{
 			throw new UnsupportedOperationException("Use the Factory(IAnimatedSprite sprite) constructor");
 		}
 	}
-	
+
 }

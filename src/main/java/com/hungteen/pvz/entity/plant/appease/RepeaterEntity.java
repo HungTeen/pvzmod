@@ -36,8 +36,8 @@ public class RepeaterEntity extends PeaShooterEntity{
 	}
 	
 	@Override
-	public void startSuperMode() {
-		super.startSuperMode();
+	public void startSuperMode(boolean first) {
+		super.startSuperMode(first);
 		if(!world.isRemote) {
 			this.bigPeaNum += this.getPlantLvl() <= 13 ? 1 : 2;//can shoot extra big pea
 		}
