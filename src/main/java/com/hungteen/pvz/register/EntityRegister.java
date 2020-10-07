@@ -3,6 +3,7 @@ package com.hungteen.pvz.register;
 import com.hungteen.pvz.PVZMod;
 import com.hungteen.pvz.entity.bullet.PeaEntity;
 import com.hungteen.pvz.entity.bullet.PotatoEntity;
+import com.hungteen.pvz.entity.bullet.SporeEntity;
 import com.hungteen.pvz.entity.creature.FoodieZombieEntity;
 import com.hungteen.pvz.entity.drop.CoinEntity;
 import com.hungteen.pvz.entity.drop.EnergyEntity;
@@ -43,6 +44,7 @@ import com.hungteen.pvz.entity.zombie.poolday.ZombieDolphinEntity;
 import com.hungteen.pvz.entity.zombie.poolday.ZomboniEntity;
 import com.hungteen.pvz.render.entity.bullet.PeaRender;
 import com.hungteen.pvz.render.entity.bullet.PotatoRender;
+import com.hungteen.pvz.render.entity.bullet.SporeRender;
 import com.hungteen.pvz.render.entity.creature.FoodieZombieRender;
 import com.hungteen.pvz.render.entity.drop.CoinRender;
 import com.hungteen.pvz.render.entity.drop.EnergyRender;
@@ -111,6 +113,7 @@ public class EntityRegister {
 	//bullet
 	public static final RegistryObject<EntityType<PeaEntity>> PEA = registerEntityType(PeaEntity::new, "pea", EntityClassification.MISC);
 	public static final RegistryObject<EntityType<PotatoEntity>> POTATO = registerEntityType(PotatoEntity::new, "potato", EntityClassification.MISC);
+	public static final RegistryObject<EntityType<SporeEntity>> SPORE = registerEntityType(SporeEntity::new, "spore", EntityClassification.MISC);
 	
 	//misc 
 	public static final RegistryObject<EntityType<SmallChomperEntity>> SMALL_CHOMPER = registerEntityType(SmallChomperEntity::new, "small_chomper", EntityClassification.MISC);
@@ -169,6 +172,7 @@ public class EntityRegister {
         //bullet
         RenderingRegistry.registerEntityRenderingHandler(PEA.get(), PeaRender::new);
         RenderingRegistry.registerEntityRenderingHandler(POTATO.get(), PotatoRender::new);
+        RenderingRegistry.registerEntityRenderingHandler(SPORE.get(), SporeRender::new);
         
         //misc
         RenderingRegistry.registerEntityRenderingHandler(SMALL_CHOMPER.get(), SmallChomperRender::new);

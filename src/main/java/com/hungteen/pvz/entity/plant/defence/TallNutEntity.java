@@ -21,16 +21,13 @@ public class TallNutEntity extends WallNutEntity{
 	
 	@Override
 	public float getSuperLife() {
-		return getArmorLife(this.getPlantLvl());
-	}
-	
-	public static int getArmorLife(int lvl) {
+		int lvl = this.getPlantLvl();
 		if(lvl<=6) return 800;
 		if(lvl<=13) return 1000;
 		if(lvl<=20) return 1200;
 		return 800;
 	}
-
+	
 	@Override
 	protected float getAttractRange() {
 		return 8;

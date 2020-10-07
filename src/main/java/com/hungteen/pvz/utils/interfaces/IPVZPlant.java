@@ -16,10 +16,8 @@ public interface IPVZPlant {
 	
 	int getCoolDownTime();
 	
-	float getLife();
+	float getPlantHealth(int lvl);
 	
 	int getSuperTimeLength();
-	
-	
 	
 }

@@ -1,9 +1,6 @@
 package com.hungteen.pvz.gui.almanac;
 
-import com.hungteen.pvz.PVZMod;
 import com.hungteen.pvz.capabilities.player.ClientPlayerResources;
-import com.hungteen.pvz.entity.plant.defence.TallNutEntity;
-import com.hungteen.pvz.entity.plant.defence.WallNutEntity;
 import com.hungteen.pvz.utils.ItemUtil;
 import com.hungteen.pvz.utils.PlantUtil;
 import com.hungteen.pvz.utils.PlayerUtil;
@@ -82,81 +79,81 @@ public class AlmanacScreen extends ContainerScreen<AlmanacContainer> {
 			this.drawProperty(Properties.SUN_COST, PlantUtil.getPlantSunCost(plant));
 			this.drawProperty(Properties.COOL_DOWN, PlantUtil.getPlantCoolDownTime(plant, lvl));
 			this.drawProperty(Properties.HEALTH, PlantUtil.getPlantMaxHealth(plant, lvl));
-			switch(plant) {
-			case PEA_SHOOTER:{
-				this.drawProperty(Properties.ATTACK_DAMAGE, PlantUtil.getPlantAttackDamage(plant, lvl));
-				this.drawProperty(Properties.ATTACK_CD, PlantUtil.getPlantAttackCD(plant, lvl));
-				break;
-			}
-			case SUN_FLOWER:{
-				this.drawProperty(Properties.GEN_TIME, PlantUtil.getPlantAttackCD(plant, lvl));
-				break;
-			}
-			case CHERRY_BOMB:{
-				this.drawProperty(Properties.ATTACK_DAMAGE, PlantUtil.getPlantAttackDamage(plant, lvl));
-				break;
-			}
-			case WALL_NUT:{
-				this.drawProperty(Properties.ARMOR_HEALTH, WallNutEntity.getArmorLife(lvl));
-				break;
-			}
-			case POTATO_MINE:{
-				this.drawProperty(Properties.ATTACK_DAMAGE, PlantUtil.getPlantAttackDamage(plant, lvl));
-				this.drawProperty(Properties.PRE_TIME, PlantUtil.getPlantAttackCD(plant, lvl));
-				break;
-			}
-			case SNOW_PEA:{
-				this.drawProperty(Properties.ATTACK_DAMAGE, PlantUtil.getPlantAttackDamage(plant, lvl));
-				this.drawProperty(Properties.ATTACK_CD, PlantUtil.getPlantAttackCD(plant, lvl));
-				break;
-			}
-			case CHOMPER:{
-				this.drawProperty(Properties.ATTACK_DAMAGE, PlantUtil.getPlantAttackDamage(plant, lvl));
-				this.drawProperty(Properties.ATTACK_CD, PlantUtil.getPlantAttackCD(plant, lvl));
-				break;
-			}
-			case REPEATER:{
-				this.drawProperty(Properties.ATTACK_DAMAGE, PlantUtil.getPlantAttackDamage(plant, lvl));
-				this.drawProperty(Properties.ATTACK_CD, PlantUtil.getPlantAttackCD(plant, lvl));
-				break;
-			}
-			case LILY_PAD:{
-				break;
-			}
-			case SQUASH:{
-				this.drawProperty(Properties.ATTACK_DAMAGE, PlantUtil.getPlantAttackDamage(plant, lvl));
-				break;
-			}
-			case THREE_PEATER:{
-				this.drawProperty(Properties.ATTACK_DAMAGE, PlantUtil.getPlantAttackDamage(plant, lvl));
-				this.drawProperty(Properties.ATTACK_CD, PlantUtil.getPlantAttackCD(plant, lvl));
-				break;
-			}
-			case TANGLE_KELP:{
-				this.drawProperty(Properties.ATTACK_DAMAGE, PlantUtil.getPlantAttackDamage(plant, lvl));
-				break;
-			}
-			case JALAPENO:{
-				this.drawProperty(Properties.ATTACK_DAMAGE, PlantUtil.getPlantAttackDamage(plant, lvl));
-				break;
-			}
-			case SPIKE_WEED:{
-				this.drawProperty(Properties.ATTACK_DAMAGE, PlantUtil.getPlantAttackDamage(plant, lvl));
-				this.drawProperty(Properties.ATTACK_CD, PlantUtil.getPlantAttackCD(plant, lvl));
-				break;
-			}
-			case TORCH_WOOD:{
-				break;
-			}
-			case TALL_NUT:{
-				this.drawProperty(Properties.ARMOR_HEALTH, TallNutEntity.getArmorLife(lvl));
-				break;
-			}
-			default:{
-				PVZMod.LOGGER.debug("error plant enum type");
-				break;
-			}
-			}
+//			switch(plant) {
+//			case PEA_SHOOTER:{
+//				this.drawProperty(Properties.ATTACK_DAMAGE, PlantUtil.getPlantAttackDamage(plant, lvl));
+//				this.drawProperty(Properties.ATTACK_CD, PlantUtil.getPlantAttackCD(plant, lvl));
+//				break;
+//			}
+//			case SUN_FLOWER:{
+//				this.drawProperty(Properties.GEN_TIME, PlantUtil.getPlantAttackCD(plant, lvl));
+//				break;
+//			}
+//			case CHERRY_BOMB:{
+//				this.drawProperty(Properties.ATTACK_DAMAGE, PlantUtil.getPlantAttackDamage(plant, lvl));
+//				break;
+//			}
+//			case WALL_NUT:{
+//				this.drawProperty(Properties.ARMOR_HEALTH, WallNutEntity.getArmorLife(lvl));
+//				break;
+//			}
+//			case POTATO_MINE:{
+//				this.drawProperty(Properties.ATTACK_DAMAGE, PlantUtil.getPlantAttackDamage(plant, lvl));
+//				this.drawProperty(Properties.PRE_TIME, PlantUtil.getPlantAttackCD(plant, lvl));
+//				break;
+//			}
+//			case SNOW_PEA:{
+//				this.drawProperty(Properties.ATTACK_DAMAGE, PlantUtil.getPlantAttackDamage(plant, lvl));
+//				this.drawProperty(Properties.ATTACK_CD, PlantUtil.getPlantAttackCD(plant, lvl));
+//				break;
+//			}
+//			case CHOMPER:{
+//				this.drawProperty(Properties.ATTACK_DAMAGE, PlantUtil.getPlantAttackDamage(plant, lvl));
+//				this.drawProperty(Properties.ATTACK_CD, PlantUtil.getPlantAttackCD(plant, lvl));
+//				break;
+//			}
+//			case REPEATER:{
+//				this.drawProperty(Properties.ATTACK_DAMAGE, PlantUtil.getPlantAttackDamage(plant, lvl));
+//				this.drawProperty(Properties.ATTACK_CD, PlantUtil.getPlantAttackCD(plant, lvl));
+//				break;
+//			}
+//			case LILY_PAD:{
+//				break;
+//			}
+//			case SQUASH:{
+//				this.drawProperty(Properties.ATTACK_DAMAGE, PlantUtil.getPlantAttackDamage(plant, lvl));
+//				break;
+//			}
+//			case THREE_PEATER:{
+//				this.drawProperty(Properties.ATTACK_DAMAGE, PlantUtil.getPlantAttackDamage(plant, lvl));
+//				this.drawProperty(Properties.ATTACK_CD, PlantUtil.getPlantAttackCD(plant, lvl));
+//				break;
+//			}
+//			case TANGLE_KELP:{
+//				this.drawProperty(Properties.ATTACK_DAMAGE, PlantUtil.getPlantAttackDamage(plant, lvl));
+//				break;
+//			}
+//			case JALAPENO:{
+//				this.drawProperty(Properties.ATTACK_DAMAGE, PlantUtil.getPlantAttackDamage(plant, lvl));
+//				break;
+//			}
+//			case SPIKE_WEED:{
+//				this.drawProperty(Properties.ATTACK_DAMAGE, PlantUtil.getPlantAttackDamage(plant, lvl));
+//				this.drawProperty(Properties.ATTACK_CD, PlantUtil.getPlantAttackCD(plant, lvl));
+//				break;
+//			}
+//			case TORCH_WOOD:{
+//				break;
+//			}
+//			case TALL_NUT:{
+//				this.drawProperty(Properties.ARMOR_HEALTH, TallNutEntity.getArmorLife(lvl));
+//				break;
+//			}
+//			default:{
+//				PVZMod.LOGGER.debug("error plant enum type");
+//				break;
+//			}
+//			}
 		}else if(current == Almanacs.PLAYER){//for player
     		int sunNum = ClientPlayerResources.getPlayerStats(Resources.SUN_NUM);
     		int energyNum = ClientPlayerResources.getPlayerStats(Resources.ENERGY_NUM);

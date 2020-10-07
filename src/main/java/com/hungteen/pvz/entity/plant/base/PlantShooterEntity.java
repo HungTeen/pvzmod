@@ -5,6 +5,7 @@ import com.hungteen.pvz.entity.plant.PVZPlantEntity;
 import com.hungteen.pvz.utils.interfaces.IShooter;
 
 import net.minecraft.entity.CreatureEntity;
+import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.SharedMonsterAttributes;
 import net.minecraft.world.World;
@@ -18,7 +19,7 @@ public abstract class PlantShooterEntity extends PVZPlantEntity implements IShoo
 	@Override
 	protected void registerAttributes() {
 		super.registerAttributes();
-		this.getAttribute(SharedMonsterAttributes.FOLLOW_RANGE).setBaseValue(40.0D);
+		this.getAttribute(SharedMonsterAttributes.FOLLOW_RANGE).setBaseValue(getShootRange());
 	}
 	
 	@Override
@@ -30,11 +31,64 @@ public abstract class PlantShooterEntity extends PVZPlantEntity implements IShoo
 	public void normalPlantTick() {
 		super.normalPlantTick();
 		if(!this.world.isRemote) {
-		    if(this.getAttackTime()>0) {
+		    if(this.getAttackTime() > 0) {
 			    this.shootBullet();
-			    this.setAttackTime(this.getAttackTime()-1);
+			    this.setAttackTime(this.getAttackTime() - 1);
 			}
 		}
+	}
+	
+	/**
+	 * get shooter bullet attack damage
+	 */
+	public float getAttackDamage() {
+		int lvl = this.getPlantLvl();
+		if(lvl<=20) {
+			int now=(lvl-1)/4;
+			return 2+0.5f*now;
+		}
+		return 2;
+	}
+	
+	@Override
+	public boolean checkY(Entity target) {
+		double dx = target.getPosX() - this.getPosX();
+		double ly = target.getPosY() - this.getPosY();
+		double ry = ly + target.getHeight();
+		double dz = target.getPosZ() - this.getPosZ();
+		double dis = Math.sqrt(dx * dx + dz * dz);
+		double y=dis / getMaxShootAngle();
+		return ly <= y && ry >= -y;
+	}
+	
+	@Override
+	public double getMaxShootAngle() {
+		return 20;
+	}
+	
+	@Override
+	public float getShootRange() {
+		return 40;
+	}
+	
+	@Override
+	public int getShootCD() {
+		if(this.isPlantInSuperMode()) {
+			return 1;
+		}
+		return getNormalAttackCD();
+	}
+	
+	/**
+	 * get normal attack CD
+	 */
+	public int getNormalAttackCD() {
+		return 30;
+	}
+	
+	@Override
+	public float getBulletSpeed() {
+		return 1.5f;
 	}
 	
 }

@@ -21,10 +21,7 @@ public class SnowPeaEntity extends PeaShooterEntity implements IIcePlant{
 
 	@Override
 	public EffectInstance getColdEffect() {
-		return getPeaColdEffect(this.getPlantLvl());
-	}
-	
-	public static EffectInstance getPeaColdEffect(int lvl) {
+		int lvl = this.getPlantLvl();
 		int duration=80,amount=5;
 		if(lvl<=20) {
 			int now=(lvl-1)/4;
@@ -33,15 +30,15 @@ public class SnowPeaEntity extends PeaShooterEntity implements IIcePlant{
 		}
 		return new EffectInstance(EffectRegister.COLD_EFFECT.get(), duration, amount,false,false);
 	}
-
-	@Override
-	protected SoundEvent getShootSound() {
-		return SoundRegister.SNOW_SHOOT.get();
-	}
 	
 	@Override
 	public EffectInstance getFrozenEffect() {
 		return new EffectInstance(EffectRegister.FROZEN_EFFECT.get(), 0, 0, false, false);
+	}
+	
+	@Override
+	protected SoundEvent getShootSound() {
+		return SoundRegister.SNOW_SHOOT.get();
 	}
 	
 	@Override

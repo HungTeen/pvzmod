@@ -38,7 +38,8 @@ public class CherryBombEntity extends PlantBomberEntity{
 		}
 	}
 	
-	public static float getAttackDamage(int lvl){
+	public float getAttackDamage(){
+		int lvl = this.getPlantLvl();
 		if(lvl<=20) {
 			int now=(lvl-1)/5;
 			return 150+now*25;

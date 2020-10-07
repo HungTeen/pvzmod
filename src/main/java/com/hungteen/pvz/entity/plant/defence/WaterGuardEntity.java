@@ -11,6 +11,9 @@ import net.minecraft.entity.Pose;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 
+/**
+ * removed in 1.15.2 - 0.2
+ */
 public class WaterGuardEntity extends PlantDefenderEntity{
 
 	public WaterGuardEntity(EntityType<? extends CreatureEntity> type, World worldIn) {
@@ -68,7 +71,7 @@ public class WaterGuardEntity extends PlantDefenderEntity{
 	}
 	
 	@Override
-	protected boolean checkWeak() {//check if it leave water
+	protected boolean checkNormalPlantWeak() {//check if it leave water
 		if(this.isImmuneToWeak) return false;
 		return !this.isInWater();
 	}

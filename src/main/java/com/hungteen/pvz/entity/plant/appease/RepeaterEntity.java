@@ -9,29 +9,27 @@ import net.minecraft.world.World;
 
 public class RepeaterEntity extends PeaShooterEntity{
 
-	protected int bigPeaNum;
-	protected int shootBigTick;
+	protected int bigPeaNum = 0;
+	protected int shootBigTick = 0;
 	protected final int SHOOT_BIG_CD = 100;
 	
 	public RepeaterEntity(EntityType<? extends CreatureEntity> type, World worldIn) {
 		super(type, worldIn);
-		this.bigPeaNum=0;
-		this.shootBigTick=0;
 	}
 
 	@Override
 	public void normalPlantTick() {
 		super.normalPlantTick();
 		if(!this.world.isRemote) {
-			this.shootBigTick++;
+			this.shootBigTick ++;
 		}
 	}
 	
 	@Override
 	protected Type getShootType() {
-		if(this.bigPeaNum>0&&this.shootBigTick>=SHOOT_BIG_CD) {
-			this.shootBigTick=0;
-			--this.bigPeaNum;
+		if(this.bigPeaNum > 0 && this.shootBigTick >= SHOOT_BIG_CD) {
+			this.shootBigTick = 0;
+			-- this.bigPeaNum;
 			return Type.BIG;
 		}
 		return Type.NORMAL;
@@ -41,7 +39,7 @@ public class RepeaterEntity extends PeaShooterEntity{
 	public void startSuperMode() {
 		super.startSuperMode();
 		if(!world.isRemote) {
-			this.bigPeaNum+=this.getPlantLvl()<=13?1:2;//can shoot extra big pea
+			this.bigPeaNum += this.getPlantLvl() <= 13 ? 1 : 2;//can shoot extra big pea
 		}
 	}
 	

@@ -80,7 +80,7 @@ public class SquashEntity extends PVZPlantEntity{
 	
 	@Override
 	protected boolean shouldCollideWithEntity(LivingEntity target) {
-		return !(target instanceof PlayerEntity)&&!EntityUtil.checkCanEntityAttack(this, target);
+		return !(target instanceof PlayerEntity) && !EntityUtil.checkCanEntityAttack(this, target);
 	}
 	
 	@Override
@@ -98,6 +98,9 @@ public class SquashEntity extends PVZPlantEntity{
 		}
 	}
 	
+	/**
+	 * jump to the top of the target
+	 */
 	private void jumpToTarget(LivingEntity target) {
 		int tick=10;
 		Vec3d pos = target.getPositionVec().add(target.getMotion().mul(tick, tick, tick));
@@ -106,6 +109,9 @@ public class SquashEntity extends PVZPlantEntity{
 		this.setAttackTime(1);
 	}
 	
+	/**
+	 * extra smash times
+	 */
 	protected int getSuperBonusChance(){
 		int lvl=this.getPlantLvl();
 		if(lvl<=6) return 2;
@@ -114,16 +120,19 @@ public class SquashEntity extends PVZPlantEntity{
 		return 2;
 	}
 	
-//	public static float getAttackDamage(int lvl){
-//		if(lvl<=20) {
-//			int now=(lvl-1)/5;
-//			return 140+now*20;
-//		}
-//		return 140;
-//	}
+	public float getAttackDamage(){
+		int lvl = this.getPlantLvl();
+		if(lvl<=20) {
+			int now=(lvl-1)/5;
+			return 140+now*20;
+		}
+		return 140;
+	}
 	
-	protected int getDeathChance()
-	{
+	/**
+	 * die chance for each smash
+	 */
+	protected int getDeathChance(){
 		int lvl=this.getPlantLvl();
 		if(lvl<=20) {
 			int now=(lvl-1)/4;

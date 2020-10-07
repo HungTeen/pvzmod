@@ -49,15 +49,11 @@ public class SunFlowerEntity extends PlantProducerEntity{
 	
 	@Override
 	public int getGenCD() {
-		int time = this.getAttackCD();
+		int time = 500;
 		if(this.world.isDaytime()) return time;
 		return time * 4;
 	}
 	
-	public static int getAttackCD(int lvl) {
-		return 500;
-	}
-
 	@Override
 	public Plants getPlantEnumName() {
 		return Plants.SUN_FLOWER;

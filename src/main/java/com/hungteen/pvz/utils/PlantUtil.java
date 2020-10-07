@@ -2,23 +2,11 @@ package com.hungteen.pvz.utils;
 
 import com.hungteen.pvz.PVZMod;
 import com.hungteen.pvz.entity.plant.PVZPlantEntity;
-import com.hungteen.pvz.entity.plant.appease.PeaShooterEntity;
-import com.hungteen.pvz.entity.plant.enforce.ChomperEntity;
-import com.hungteen.pvz.entity.plant.enforce.TangleKelpEntity;
-import com.hungteen.pvz.entity.plant.explosion.CherryBombEntity;
-import com.hungteen.pvz.entity.plant.explosion.PotatoMineEntity;
-import com.hungteen.pvz.entity.plant.flame.JalapenoEntity;
-import com.hungteen.pvz.entity.plant.light.SunFlowerEntity;
-import com.hungteen.pvz.entity.plant.spear.SpikeWeedEntity;
-import com.hungteen.pvz.register.BlockRegister;
 import com.hungteen.pvz.register.EntityRegister;
 import com.hungteen.pvz.utils.enums.Essences;
 import com.hungteen.pvz.utils.enums.Plants;
 import com.hungteen.pvz.utils.enums.Ranks;
 
-import net.minecraft.block.Block;
-import net.minecraft.block.Blocks;
-import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 
 public class PlantUtil {
@@ -77,81 +65,6 @@ public class PlantUtil {
 		case LILY_PAD:return 1;
 		default:return 20;
 		}
-	}
-	
-	public static float getPlantAttackDamage(Plants plant, int lvl) {
-		switch (plant) {
-		case PEA_SHOOTER:
-		case SNOW_PEA:
-		case REPEATER:
-		case THREE_PEATER:{
-			return PeaShooterEntity.getAttackDamage(lvl);
-		}
-		case CHERRY_BOMB:{
-			return CherryBombEntity.getAttackDamage(lvl);
-		}
-		case POTATO_MINE:
-		case SQUASH:{
-			return PotatoMineEntity.getAttackDamage(lvl);
-		}
-		case CHOMPER:{
-			return ChomperEntity.getAttackDamage(lvl);
-		}
-		case TANGLE_KELP:{
-			return TangleKelpEntity.getAttackDamage(lvl);
-		}
-		case JALAPENO:{
-			return JalapenoEntity.getAttackDamage(lvl);
-		}
-		case SPIKE_WEED:{
-			return SpikeWeedEntity.getAttackDamage(lvl);
-		}
-		default:
-			return 0;
-		}
-	}
-	
-	public static float getPlantAttackCD(Plants plant, int lvl) {
-		switch (plant) {
-		case PEA_SHOOTER:
-		case SNOW_PEA:
-		case REPEATER:
-		case THREE_PEATER:{
-			return PeaShooterEntity.getAttackCD(lvl);
-		}
-		case SUN_FLOWER:{
-			return SunFlowerEntity.getAttackCD(lvl);
-		}
-		case POTATO_MINE:{
-			return PotatoMineEntity.getAttackCD(lvl);
-		}
-		case CHOMPER:{
-			return ChomperEntity.getAttackCD(lvl);
-		}
-		case SPIKE_WEED:{
-			return SpikeWeedEntity.getAttackCD(lvl);
-		}
-		default:
-			return 0;
-		}
-	}
-	
-	public static boolean checkCanPlantLiveHere(PVZPlantEntity plant){
-		BlockPos pos=plant.getPosition();
-		Block upBlock = plant.world.getBlockState(pos).getBlock();
-		Block downBlock = plant.world.getBlockState(pos.down()).getBlock();
-		Plants p = plant.getPlantEnumName();
-		if(plant.getIsGardenPlant()) {
-			
-		}else {
-			switch(p) {
-			default:{
-				if(upBlock==BlockRegister.LILY_PAD.get()) return true;
-				if(downBlock==Blocks.GRASS_BLOCK||downBlock==Blocks.AIR||downBlock==BlockRegister.LILY_PAD.get()) return true;
-			}
-			}
-		}
-		return false;
 	}
 	
 	/**

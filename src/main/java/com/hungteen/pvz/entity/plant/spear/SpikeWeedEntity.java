@@ -101,7 +101,8 @@ public class SpikeWeedEntity extends PVZPlantEntity{
 		return new EntitySize(0.8f, 0.4f, false);
 	}
 	
-	public static float getAttackDamage(int lvl){
+	public float getAttackDamage(){
+		int lvl = this.getPlantLvl();
 		if(lvl<=20) {
 			int now = (lvl - 1) / 4;
 			return 2 + 0.25f*now;
@@ -109,7 +110,8 @@ public class SpikeWeedEntity extends PVZPlantEntity{
 		return 2;
 	}
 	
-	public static int getAttackCD(int lvl) {
+	public int getAttackCD() {
+		int lvl = this.getPlantLvl();
 		if(lvl<=20) {
 			int now = (lvl - 1) / 4;
 			return 20 - now;

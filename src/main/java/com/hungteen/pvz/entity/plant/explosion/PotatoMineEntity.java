@@ -62,6 +62,9 @@ public class PotatoMineEntity extends PlantCloserEntity{
 		}
 	}
 	
+	/**
+	 * shoot some potato to the sky
+	 */
 	protected void shootPotatos() {
 		int lvl=this.getPlantLvl();
 		int min=lvl<=13?1:2;
@@ -130,10 +133,7 @@ public class PotatoMineEntity extends PlantCloserEntity{
 	 * potato mine prepare time
 	 */
 	protected int getReadyTime(){
-		return this.getAttackCD();
-	}
-	
-	public static int getAttackCD(int lvl) {
+		int lvl = this.getPlantLvl();
 		if(lvl<=20) {
 			int now=(lvl-1)/4;
 			return 240-now*20;
@@ -141,7 +141,8 @@ public class PotatoMineEntity extends PlantCloserEntity{
 		return 240;
 	}
 	
-	public static float getAttackDamage(int lvl){
+	public float getAttackDamage(){
+		int lvl = this.getPlantLvl();
 		if(lvl<=20) {
 			int now=(lvl-1)/5;
 			return 140+now*20;

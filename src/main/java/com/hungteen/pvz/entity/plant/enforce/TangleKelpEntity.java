@@ -84,7 +84,8 @@ public class TangleKelpEntity extends PVZPlantEntity{
 		}
 	}
 	
-	public static float getAttackDamage(int lvl){
+	public float getAttackDamage(){
+		int lvl = this.getPlantLvl();
 		if(lvl<=20) {
 			int now = (lvl-1)/5;
 			return now*2+13;
@@ -111,7 +112,7 @@ public class TangleKelpEntity extends PVZPlantEntity{
 	}
 	
 	@Override
-	protected boolean checkWeak() {//check if it leave water
+	protected boolean checkNormalPlantWeak() {//check if it leave water
 		if(this.isImmuneToWeak) return false;
         return !this.isInWater();
 	}

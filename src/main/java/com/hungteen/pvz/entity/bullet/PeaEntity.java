@@ -1,13 +1,12 @@
 package com.hungteen.pvz.entity.bullet;
 
 import com.hungteen.pvz.capability.CapabilityHandler;
-import com.hungteen.pvz.entity.plant.PVZPlantEntity;
-import com.hungteen.pvz.entity.plant.appease.PeaShooterEntity;
+import com.hungteen.pvz.entity.plant.base.PlantShooterEntity;
 import com.hungteen.pvz.entity.plant.flame.TorchWoodEntity;
-import com.hungteen.pvz.entity.plant.ice.SnowPeaEntity;
 import com.hungteen.pvz.entity.plant.interfaces.IIcePlant;
 import com.hungteen.pvz.misc.damage.PVZDamageSource;
 import com.hungteen.pvz.register.ItemRegister;
+import com.hungteen.pvz.utils.WeaponUtil;
 import com.hungteen.pvz.utils.enums.Plants;
 
 import net.minecraft.entity.Entity;
@@ -23,7 +22,6 @@ import net.minecraft.network.datasync.DataParameter;
 import net.minecraft.network.datasync.DataSerializers;
 import net.minecraft.network.datasync.EntityDataManager;
 import net.minecraft.util.math.EntityRayTraceResult;
-import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.RayTraceResult;
 import net.minecraft.world.World;
 
@@ -53,17 +51,6 @@ public class PeaEntity extends PVZThrowableEntity {
 	protected void registerData() {
 		dataManager.register(PEA_STATE, State.NORMAL.ordinal());
 		dataManager.register(PEA_TYPE, Type.NORMAL.ordinal());
-	}
-
-	public void shootPea(double dx, double dy, double dz, double speed) {
-		double down = PeaShooterEntity.MAX_SHOOT_ANGLE;
-		double dxz = Math.sqrt(dx * dx + dz * dz);
-		dy = MathHelper.clamp(dy, -dxz/down, dxz/down);
-		double dis = Math.sqrt(dx * dx + dy* dy + dz * dz);
-		double vx = dx / dis * speed;
-		double vy = dy / dis * speed;
-		double vz = dz / dis * speed;
-		this.setMotion(vx, vy, vz);
 	}
 
 	@Override
@@ -120,7 +107,7 @@ public class PeaEntity extends PVZThrowableEntity {
 			}else if(owner instanceof PlayerEntity) {
 				((PlayerEntity)owner).getCapability(CapabilityHandler.PLAYER_DATA_CAPABILITY).ifPresent((l)->{
 					int lvl = l.getPlayerData().getPlantStats().getPlantLevel(Plants.SNOW_PEA);
-					((LivingEntity) target).addPotionEffect(SnowPeaEntity.getPeaColdEffect(lvl));
+					((LivingEntity) target).addPotionEffect(WeaponUtil.getPeaGunColdEffect(lvl));
 				});
 			}
 		} else if (this.getPeaState() == State.FIRE || this.getPeaState() == State.BLUE_FIRE) {
@@ -131,11 +118,11 @@ public class PeaEntity extends PVZThrowableEntity {
 	private float getAttackDamage() {
 		float damage = 0;
 
-		// 伤害先看主人
-		if (this.getThrower() instanceof PVZPlantEntity) {
-			damage = ((PVZPlantEntity) this.getThrower()).getAttackDamage();
-		}else if(this.getThrower() instanceof TorchWoodEntity) {
+		// look at the thrower first
+		if(this.getThrower() instanceof TorchWoodEntity) {
 			damage = 2;
+		}else if (this.getThrower() instanceof PlantShooterEntity) {
+			damage = ((PlantShooterEntity) this.getThrower()).getAttackDamage();
 		}
 //		else if(this.shooter instanceof EntityZombieBase) {//
 //			damage=3;

@@ -96,10 +96,18 @@ public class ChomperEntity extends PVZPlantEntity{
 	}
 	
 	@Override
+	public boolean isPlantSleeping() {
+		return super.isPlantSleeping() || this.getRestTick() > 0;
+	}
+	
+	@Override
 	public boolean isInvulnerable() {
 		return this.getAttackTime()>0;
 	}
 	
+	/**
+	 * deal damage
+	 */
 	private void performAttack() {
 		LivingEntity target = this.getAttackTarget();
 		if(target.getHealth()<=this.getAttackDamage()) {//eat to death need rest
@@ -109,6 +117,9 @@ public class ChomperEntity extends PVZPlantEntity{
 		target.attackEntityFrom(PVZDamageSource.causeEatDamage(this, this), this.getAttackDamage(target));
 	}
 	
+	/**
+	 * real damage to target
+	 */
 	public float getAttackDamage(LivingEntity target) {
 		if(target.getHealth()<=this.getAttackDamage()) {//eat to death
 			return this.getAttackDamage();
@@ -117,7 +128,11 @@ public class ChomperEntity extends PVZPlantEntity{
 		}
 	}
 	
-	public static float getAttackDamage(int lvl){
+	/**
+	 * max damage to target
+	 */
+	public float getAttackDamage(){
+		int lvl = this.getPlantLvl();
 		if(lvl<=20) {
 			int now=(lvl-1)/4;
 			return 200+now*20;
@@ -125,11 +140,11 @@ public class ChomperEntity extends PVZPlantEntity{
 		return 200;
 	}
 	
+	/**
+	 * rest time after each kill
+	 */
 	public int getRestCD() {
-		return this.getAttackCD();
-	}
-	
-	public static int getAttackCD(int lvl) {
+		int lvl = this.getPlantLvl();
 		if(lvl<=20) {
 			int now = (lvl-1)/5;
 			return 840-40*now;
@@ -137,6 +152,9 @@ public class ChomperEntity extends PVZPlantEntity{
 		return 840;
 	}
 	
+	/**
+	 * how many ground chomper to summon
+	 */
 	public int getSuperAttackCnt() {
 		int lvl=this.getPlantLvl();
 		if(lvl<=6) return 3;

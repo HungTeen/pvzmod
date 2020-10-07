@@ -2,6 +2,7 @@ package com.hungteen.pvz.entity.ai;
 
 import java.util.EnumSet;
 
+import com.hungteen.pvz.entity.plant.PVZPlantEntity;
 import com.hungteen.pvz.utils.EntityUtil;
 import com.hungteen.pvz.utils.interfaces.IShooter;
 
@@ -17,19 +18,21 @@ public class ShooterAttackGoal extends Goal{
 	private int attackTime;
 	
 	public ShooterAttackGoal(IShooter shooter) {
-		if(!(shooter instanceof LivingEntity)) {
+		if(!(shooter instanceof MobEntity)) {
 			throw new IllegalArgumentException("ERROR TASK OWNER");
 		}
-		this.shooter=shooter;
-		this.attacker=(MobEntity) shooter;
-		this.attackTime=0;
+		this.shooter = shooter;
+		this.attacker = (MobEntity) shooter;
+		this.attackTime = 0;
 		this.setMutexFlags(EnumSet.of(Goal.Flag.MOVE, Goal.Flag.LOOK));
 	}
 	
 	@Override
 	public boolean shouldExecute() {
 		LivingEntity attackTarget=this.attacker.getAttackTarget();
-		if(attackTarget==null) return false;
+		if(attackTarget==null) {
+			return false;
+		}
 		else {
 			this.target=attackTarget;
 		    return true;
@@ -38,7 +41,12 @@ public class ShooterAttackGoal extends Goal{
 	
 	@Override
 	public boolean shouldContinueExecuting() {
-		return this.shouldExecute()&&this.checkTarget();
+		if(this.attacker instanceof PVZPlantEntity) {
+			if(((PVZPlantEntity) this.attacker).isPlantSleeping()) {
+				return false;
+			}
+		}
+		return this.shouldExecute() && this.checkTarget();
 	}
 	
 	@Override
@@ -50,9 +58,9 @@ public class ShooterAttackGoal extends Goal{
 
 	@Override
 	public void tick() {
-		this.attackTime++;
-		if(this.attackTime>=this.shooter.getShootCD()) {
-			this.attackTime=0;
+		this.attackTime ++;
+		if(this.attackTime >= this.shooter.getShootCD()) {
+			this.attackTime = 0;
 			this.shooter.startShootAttack();
 		}
 		this.attacker.getLookController().setLookPositionWithEntity(this.target, 30.0F, 30.0F);
