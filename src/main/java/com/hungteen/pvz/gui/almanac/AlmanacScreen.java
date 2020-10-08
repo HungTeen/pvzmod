@@ -78,7 +78,7 @@ public class AlmanacScreen extends ContainerScreen<AlmanacContainer> {
 			this.propertyCnt = 0;
 			this.drawProperty(Properties.SUN_COST, PlantUtil.getPlantSunCost(plant));
 			this.drawProperty(Properties.COOL_DOWN, PlantUtil.getPlantCoolDownTime(plant, lvl));
-			this.drawProperty(Properties.HEALTH, PlantUtil.getPlantMaxHealth(plant, lvl));
+//			this.drawProperty(Properties.HEALTH, PlantUtil.getPlantMaxHealth(plant, lvl));
 //			switch(plant) {
 //			case PEA_SHOOTER:{
 //				this.drawProperty(Properties.ATTACK_DAMAGE, PlantUtil.getPlantAttackDamage(plant, lvl));

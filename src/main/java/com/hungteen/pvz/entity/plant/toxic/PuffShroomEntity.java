@@ -5,6 +5,7 @@ import com.hungteen.pvz.entity.bullet.SporeEntity;
 import com.hungteen.pvz.entity.plant.base.PlantShooterEntity;
 import com.hungteen.pvz.entity.plant.interfaces.IShroomPlant;
 import com.hungteen.pvz.register.EntityRegister;
+import com.hungteen.pvz.register.SoundRegister;
 import com.hungteen.pvz.utils.EntityUtil;
 import com.hungteen.pvz.utils.enums.Plants;
 
@@ -13,42 +14,21 @@ import net.minecraft.entity.EntitySize;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.Pose;
-import net.minecraft.nbt.CompoundNBT;
-import net.minecraft.network.datasync.DataParameter;
-import net.minecraft.network.datasync.DataSerializers;
-import net.minecraft.network.datasync.EntityDataManager;
-import net.minecraft.util.SoundEvents;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.World;
 
 public class PuffShroomEntity extends PlantShooterEntity implements IShroomPlant{
 
 	protected final double LENTH=0.2d;
-	private static final DataParameter<Integer> LIVE_TICK = EntityDataManager.createKey(PuffShroomEntity.class, DataSerializers.VARINT);
 	
 	public PuffShroomEntity(EntityType<? extends CreatureEntity> type, World worldIn) {
 		super(type, worldIn);
 	}
 	
 	@Override
-	protected void registerData() {
-		super.registerData();
-		this.dataManager.register(LIVE_TICK, 0);
-	}
-	
-	@Override
 	protected void registerGoals() {
 		super.registerGoals();
 		this.targetSelector.addGoal(0, new PVZNearestTargetGoal(this, true, 5, getShootRange(), 2, 0));
-	}
-	
-	@Override
-	protected void plantBaseTick() {
-		super.plantBaseTick();
-		this.setLiveTick(this.getLiveTick() + 1);
-		if(this.getLiveTick() >= this.getMaxLiveTick()) {//it's time to disappear 
-			this.remove();
-		}
 	}
 	
 	@Override
@@ -68,7 +48,7 @@ public class PuffShroomEntity extends PlantShooterEntity implements IShroomPlant
         SporeEntity spore = new SporeEntity(EntityRegister.SPORE.get(), this.world, this);
         spore.setPosition(this.getPosX()+deltaX,y,this.getPosZ()+deltaZ);
         spore.shootPea(dx, target.getPosY()+target.getHeight()-y, dz, this.getBulletSpeed());      
-        this.playSound(SoundEvents.ENTITY_SNOW_GOLEM_SHOOT, 1.0F, 1.0F);
+        this.playSound(SoundRegister.PUFF.get(), 1.0F, 1.0F);
         this.world.addEntity(spore);
 	}
 
@@ -98,6 +78,7 @@ public class PuffShroomEntity extends PlantShooterEntity implements IShroomPlant
 		return EntitySize.flexible(0.5f, 0.5f);
 	}
 	
+	@Override
 	public int getMaxLiveTick() {
 		int lvl = this.getPlantLvl();
 		if(lvl <= 20) {
@@ -145,26 +126,6 @@ public class PuffShroomEntity extends PlantShooterEntity implements IShroomPlant
 	@Override
 	public float getShootRange() {
 		return 10;
-	}
-	
-	public int getLiveTick() {
-		return this.dataManager.get(LIVE_TICK);
-	}
-	
-	public void setLiveTick(int tick) {
-		this.dataManager.set(LIVE_TICK, tick);
-	}
-	
-	@Override
-	public void writeAdditional(CompoundNBT compound) {
-		super.writeAdditional(compound);
-		compound.putInt("plant_live_tick", this.getLiveTick());
-	}
-	
-	@Override
-	public void readAdditional(CompoundNBT compound) {
-		super.readAdditional(compound);
-		this.setLiveTick(compound.getInt("plant_live_tick"));
 	}
 	
 	@Override

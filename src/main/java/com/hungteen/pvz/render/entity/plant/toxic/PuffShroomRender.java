@@ -22,7 +22,7 @@ public class PuffShroomRender extends PVZPlantRender<PuffShroomEntity>{
 	protected float getScaleByEntity(PuffShroomEntity entity) {
 		int tick = entity.getLiveTick();
 		int max = entity.getMaxLiveTick();
-		float change = 0.3f;
+		float change = 0.2f;
 		float small = MathHelper.clamp(tick*change/max, 0, change);
 		return 0.6f - small;
 	}

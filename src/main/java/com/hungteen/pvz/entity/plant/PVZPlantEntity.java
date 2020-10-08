@@ -54,7 +54,6 @@ public abstract class PVZPlantEntity extends CreatureEntity implements IPVZPlant
 	protected boolean isImmuneToWeak = false;
 	private final int weakCD = 10;
 	private final int weakDamage = 15;
-	private int live_tick = 0;
 	private int extraSleepTime = 0;
 	private static final DataParameter<Integer> SUPER_TIME = EntityDataManager.createKey(PVZPlantEntity.class, DataSerializers.VARINT);
 	private static final DataParameter<Integer> PLANT_LVL = EntityDataManager.createKey(PVZPlantEntity.class, DataSerializers.VARINT);
@@ -66,6 +65,7 @@ public abstract class PVZPlantEntity extends CreatureEntity implements IPVZPlant
 	private static final DataParameter<Boolean> IS_CHARMED = EntityDataManager.createKey(PVZPlantEntity.class, DataSerializers.BOOLEAN);
 	private static final DataParameter<Boolean> IS_GARDEN_PLANT = EntityDataManager.createKey(PVZPlantEntity.class, DataSerializers.BOOLEAN);
 	private static final DataParameter<Integer> SLEEP_TIME = EntityDataManager.createKey(PVZPlantEntity.class, DataSerializers.VARINT);
+	private static final DataParameter<Integer> LIVE_TICK = EntityDataManager.createKey(PVZPlantEntity.class, DataSerializers.VARINT);
 	
 	public PVZPlantEntity(EntityType<? extends CreatureEntity> type, World worldIn) {
 		super(type, worldIn);
@@ -84,6 +84,7 @@ public abstract class PVZPlantEntity extends CreatureEntity implements IPVZPlant
 		dataManager.register(IS_CHARMED, false);
 		dataManager.register(IS_GARDEN_PLANT, false);
 		dataManager.register(SLEEP_TIME, 0);
+		this.dataManager.register(LIVE_TICK, 0);
 	}
 	
 	@Override
@@ -178,10 +179,10 @@ public abstract class PVZPlantEntity extends CreatureEntity implements IPVZPlant
 			world.addParticle(ParticleRegister.SLEEP.get(), this.getPosX(), this.getPosY() + this.getEyeHeight(), this.getPosZ(), 0.05, 0.05, 0.05);
 		}
 		//max live tick
-		if(live_tick>=PVZConfig.COMMON_CONFIG.EntitySettings.EntityLiveTick.PlantLiveTick.get()) {
+		this.setLiveTick(this.getLiveTick() + 1);
+		if(this.getLiveTick() >= this.getMaxLiveTick()) {//it's time to disappear 
 			this.remove();
 		}
-		live_tick++;
 		//lock the x and z of plant
 		if(this.shouldLockXZ()) {
 		    if(this.getRidingEntity()!=null) {
@@ -398,6 +399,7 @@ public abstract class PVZPlantEntity extends CreatureEntity implements IPVZPlant
         compound.putBoolean("is_garden_plant", this.getIsGardenPlant());
         compound.putInt("extra_sleep_time", this.extraSleepTime);
         compound.putInt("plant_sleep_time", this.getSleepTime());
+        compound.putInt("plant_live_tick", this.getLiveTick());
 	}
 	
 	@Override
@@ -433,6 +435,7 @@ public abstract class PVZPlantEntity extends CreatureEntity implements IPVZPlant
         this.setIsGardenPlant(compound.getBoolean("is_garden_plant"));
         this.extraSleepTime = compound.getInt("extra_sleep_time");
         this.setSleepTime(compound.getInt("plant_sleep_time"));
+        this.setLiveTick(compound.getInt("plant_live_tick"));
     }
 	
 	/**
@@ -441,6 +444,14 @@ public abstract class PVZPlantEntity extends CreatureEntity implements IPVZPlant
 	public void startSuperMode(boolean first) {
 		this.setSuperTime(this.getSuperTimeLength());
 		this.heal(this.getMaxHealth());
+		this.setLiveTick(0);
+	}
+	
+	/**
+	 * how many tick can plant live
+	 */
+	public int getMaxLiveTick() {
+		return PVZConfig.COMMON_CONFIG.EntitySettings.EntityLiveTick.PlantLiveTick.get();
 	}
 	
 	public boolean isPlantInSuperMode(){
@@ -451,7 +462,7 @@ public abstract class PVZPlantEntity extends CreatureEntity implements IPVZPlant
 	 * check can start super mode currently
 	 */
 	public boolean canStartSuperMode(){
-		return this.hasSuperMode()&&!this.isPlantInSuperMode();
+		return !this.isPlantSleeping() && this.hasSuperMode() && !this.isPlantInSuperMode();
 	}
 	
 	private boolean hasSuperMode() {
@@ -568,6 +579,14 @@ public abstract class PVZPlantEntity extends CreatureEntity implements IPVZPlant
 	
 	public int getSuperTime(){
 		return dataManager.get(SUPER_TIME);
+	}
+	
+	public int getLiveTick() {
+		return this.dataManager.get(LIVE_TICK);
+	}
+	
+	public void setLiveTick(int tick) {
+		this.dataManager.set(LIVE_TICK, tick);
 	}
 	
 	@Override

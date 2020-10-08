@@ -23,6 +23,9 @@ public class ProducerGenGoal extends Goal{
 	
 	@Override
 	public boolean shouldExecute() {
+		if(this.plant.isPlantSleeping()) {
+			return false;
+		}
 		return true;
 	}
 

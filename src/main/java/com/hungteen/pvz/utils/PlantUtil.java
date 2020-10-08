@@ -88,6 +88,7 @@ public class PlantUtil {
 		case TORCH_WOOD:return EntityRegister.TORCH_WOOD.get().create(world);
 		case TALL_NUT:return EntityRegister.TALL_NUT.get().create(world);
 //		case WATER_GUARD:return EntityRegister.WATER_GUARD.get().create(world);
+		case PUFF_SHROOM:return EntityRegister.PUFF_SHROOM.get().create(world);
 		default:{
 			PVZMod.LOGGER.debug("No such plant entity!");
 			return null;
@@ -100,6 +101,7 @@ public class PlantUtil {
 	 */
 	public static int getPlantSunCost(Plants plant){
 		switch(plant) {
+		case PUFF_SHROOM:return 0;
 		case POTATO_MINE:
 		case LILY_PAD:
 		case TANGLE_KELP:return 25;
@@ -129,6 +131,7 @@ public class PlantUtil {
 	 */
 	public static int getPlantCoolDownTime(Plants plant,int lvl){
 		switch(plant) {
+		case PUFF_SHROOM:return getPlantCoolDownTimeHugeFast(lvl);
 		case PEA_SHOOTER:return getPlantCoolDownTimeVeryFast(lvl);
 		case SUN_FLOWER:
 		case SNOW_PEA:
@@ -153,33 +156,6 @@ public class PlantUtil {
 		}
 	}
 	
-	public static int getPlantMaxHealth(Plants plant,int lvl){
-		switch(plant) {
-		case LILY_PAD:
-		case FLOWER_POT:{
-			return 0;
-		}
-		case WALL_NUT:{
-			if(lvl<=19) return 390+10*lvl;
-			if(lvl<=20) return 600;
-		}
-		case TALL_NUT:{
-			if(lvl<=19) return 790+10*lvl;
-			if(lvl<=20) return 1000;
-		}
-		case WATER_GUARD:{
-			if(lvl<=19) return 290+10*lvl;
-			if(lvl<=20) return 500;
-		}
-		default:{
-			if(lvl<=14) return 30+(lvl-1)/2*5;
-			if(lvl<=20) return 60+(lvl-14)*5;
-		}
-		}
-		PVZMod.LOGGER.debug("plant get max health error!");
-		return 20;
-	}
-	
 	public static Ranks getPlantRankByName(Plants plant){
 		switch(plant) {
 		case PEA_SHOOTER:
@@ -188,7 +164,8 @@ public class PlantUtil {
 		case WALL_NUT:
 		case POTATO_MINE:
 		case TANGLE_KELP:
-		case SPIKE_WEED:return Ranks.WHITE;
+		case SPIKE_WEED:
+		case PUFF_SHROOM:return Ranks.WHITE;
 		case SNOW_PEA:
 		case CHOMPER:
 		case REPEATER:
@@ -223,6 +200,7 @@ public class PlantUtil {
 		case JALAPENO:
 		case TORCH_WOOD:return Essences.FLAME;
 		case SPIKE_WEED:return Essences.SPEAR;
+		case PUFF_SHROOM:return Essences.TOXIC;
 		default:{
 			PVZMod.LOGGER.debug("plant get essence type error!");
 			return null;

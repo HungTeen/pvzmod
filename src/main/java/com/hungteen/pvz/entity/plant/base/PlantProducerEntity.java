@@ -1,7 +1,9 @@
 package com.hungteen.pvz.entity.plant.base;
 
 import com.hungteen.pvz.entity.ai.ProducerGenGoal;
+import com.hungteen.pvz.entity.drop.SunEntity;
 import com.hungteen.pvz.entity.plant.PVZPlantEntity;
+import com.hungteen.pvz.register.EntityRegister;
 import com.hungteen.pvz.utils.interfaces.IProducer;
 
 import net.minecraft.entity.CreatureEntity;
@@ -10,6 +12,7 @@ import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.network.datasync.DataParameter;
 import net.minecraft.network.datasync.DataSerializers;
 import net.minecraft.network.datasync.EntityDataManager;
+import net.minecraft.util.SoundEvents;
 import net.minecraft.world.World;
 
 public abstract class PlantProducerEntity extends PVZPlantEntity implements IProducer{
@@ -39,6 +42,18 @@ public abstract class PlantProducerEntity extends PVZPlantEntity implements IPro
 		return 20;
 	}
 
+	/**
+	 * sun produce plant gen sun
+	 * such as sunflower or sunshroom
+	 */
+	protected void genSun(int num){
+		SunEntity sun=EntityRegister.SUN.get().create(this.world);
+		sun.setAmount(num);
+		sun.setPosition(this.getPosX() + this.rand.nextInt(10) - 5, this.getPosY() + this.rand.nextInt(3) + 1, this.getPosZ() + this.rand.nextInt(10) - 5);
+		this.playSound(SoundEvents.ENTITY_EXPERIENCE_ORB_PICKUP, 1.0F, 1.0F);
+        this.world.addEntity(sun);
+	}
+	
 	@Override
 	public void readAdditional(CompoundNBT compound) {
 		super.readAdditional(compound);
