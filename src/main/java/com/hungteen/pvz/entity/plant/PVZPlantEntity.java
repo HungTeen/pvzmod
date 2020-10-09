@@ -229,6 +229,7 @@ public abstract class PVZPlantEntity extends CreatureEntity implements IPVZPlant
 	
 	@Override
 	public ILivingEntityData onInitialSpawn(IWorld worldIn, DifficultyInstance difficultyIn, SpawnReason reason,ILivingEntityData spawnDataIn, CompoundNBT dataTag) {
+		initAttributes(this.getPlantLvl());
 		if(!worldIn.isRemote()) {
 			this.playSound(SoundEvents.BLOCK_GRASS_PLACE, 1f,1f);
 		}

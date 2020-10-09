@@ -1,6 +1,7 @@
 package com.hungteen.pvz.entity.zombie.poolday;
 
 import com.hungteen.pvz.entity.zombie.PVZZombieEntity;
+import com.hungteen.pvz.entity.zombie.ZomboniPartEntity;
 import com.hungteen.pvz.misc.damage.PVZDamageSource;
 import com.hungteen.pvz.register.SoundRegister;
 import com.hungteen.pvz.utils.ZombieUtil;
@@ -28,9 +29,13 @@ import net.minecraft.world.World;
 
 public class ZomboniEntity extends PVZZombieEntity{
 	
+	private ZomboniPartEntity part;
+	
 	public ZomboniEntity(EntityType<? extends MonsterEntity> type, World worldIn) {
 		super(type, worldIn);
+		resetParts();
 	}
+	
 	
 	@Override
 	protected void registerAttributes() {
@@ -56,12 +61,40 @@ public class ZomboniEntity extends PVZZombieEntity{
 	}
 	
 	@Override
+	public void tick() {
+		super.tick();
+		updateParts();
+	}
+	
+	@Override
 	public ILivingEntityData onInitialSpawn(IWorld worldIn, DifficultyInstance difficultyIn, SpawnReason reason,
 			ILivingEntityData spawnDataIn, CompoundNBT dataTag) {
 		if(!world.isRemote) {
 			this.playSound(SoundRegister.CAR_SPAWN.get(), 1f, 1f);
 		}
 		return super.onInitialSpawn(worldIn, difficultyIn, reason, spawnDataIn, dataTag);
+	}
+	
+	private void resetParts() {
+		removeParts();
+		part = new ZomboniPartEntity(this, 1f, 1f);
+		part.setOwner(this);
+	}
+	
+	private void removeParts() {
+		if(part != null) {
+			part.remove();
+			part = null;
+		}
+	}
+	
+	private void updateParts() {
+		if(part != null) {
+			if(!part.shouldContinuePersisting()) {
+				world.addEntity(part);
+			}
+			part.setOwner(this);
+		}
 	}
 	
 	@Override
@@ -79,6 +112,12 @@ public class ZomboniEntity extends PVZZombieEntity{
 				}
 			}
 		}
+	}
+	
+	@Override
+	public void remove() {
+		removeParts();
+		super.remove();
 	}
 	
 	@Override
