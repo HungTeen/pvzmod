@@ -10,7 +10,6 @@ import net.minecraft.entity.EntitySize;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.Pose;
-import net.minecraft.entity.projectile.ThrowableEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.math.EntityRayTraceResult;
 import net.minecraft.util.math.RayTraceResult;
@@ -18,13 +17,13 @@ import net.minecraft.world.World;
 
 public class SporeEntity extends PVZThrowableEntity{
 
-	private static final int MAX_LIVE_TICK = 50;
+	private static final int MAX_LIVE_TICK = 20;
 	
-	public SporeEntity(EntityType<? extends ThrowableEntity> type, World worldIn) {
+	public SporeEntity(EntityType<?> type, World worldIn) {
 		super(type, worldIn);
 	}
 	
-	public SporeEntity(EntityType<? extends ThrowableEntity> type, World worldIn, LivingEntity living) {
+	public SporeEntity(EntityType<?> type, World worldIn, LivingEntity living) {
 		super(type, worldIn, living);
 	}
 
@@ -32,13 +31,16 @@ public class SporeEntity extends PVZThrowableEntity{
 	public void tick() {
 		super.tick();
 		if(world.isRemote) {
-			for(int i = 0; i < 3; ++i) {
+			int cnt = this.ticksExisted < MAX_LIVE_TICK / 2 ? 3 : 2;
+			for(int i = 0; i < cnt; ++i) {
 	            this.world.addParticle(ParticleRegister.SPORE.get(), this.getPosX(), this.getPosY(), this.getPosZ(), 0.0D, 0.0D, 0.0D);
 	        }
 		}
-		if(this.ticksExisted >= MAX_LIVE_TICK) {
-			this.remove();
-		}
+	}
+	
+	@Override
+	protected int getMaxLiveTick() {
+		return MAX_LIVE_TICK;
 	}
 	
 	@Override

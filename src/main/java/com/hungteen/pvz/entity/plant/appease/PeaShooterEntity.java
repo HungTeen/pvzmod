@@ -18,7 +18,7 @@ import net.minecraft.world.World;
 
 public class PeaShooterEntity extends PlantShooterEntity{
 
-	protected final double LENTH=0.2d;//pea position offset
+	protected final double LENTH = 0.1d;//pea position offset
 	
 	public PeaShooterEntity(EntityType<? extends CreatureEntity> type, World worldIn) {
 		super(type, worldIn);

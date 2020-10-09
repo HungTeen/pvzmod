@@ -6,11 +6,9 @@ import com.hungteen.pvz.utils.EntityUtil;
 
 import net.minecraft.block.Block;
 import net.minecraft.block.BushBlock;
-import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.IRendersAsItem;
 import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.projectile.ThrowableEntity;
 import net.minecraft.network.IPacket;
 import net.minecraft.util.math.BlockRayTraceResult;
 import net.minecraft.util.math.EntityRayTraceResult;
@@ -19,14 +17,14 @@ import net.minecraft.util.math.RayTraceResult;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.network.NetworkHooks;
 
-public abstract class PVZThrowableEntity extends ThrowableEntity implements IRendersAsItem{
+public abstract class PVZThrowableEntity extends AbstractBulletEntity implements IRendersAsItem{
 
-	public PVZThrowableEntity(EntityType<? extends ThrowableEntity> type, World worldIn) {
+	public PVZThrowableEntity(EntityType<?> type, World worldIn) {
 		super(type, worldIn);
 	}
 	
-	public PVZThrowableEntity(EntityType<? extends ThrowableEntity> type, World worldIn,LivingEntity shooter) {
-		super(type, shooter, worldIn);
+	public PVZThrowableEntity(EntityType<?> type, World worldIn, LivingEntity shooter) {
+		super(type, worldIn, shooter);
 	}
 
 	@Override
@@ -37,13 +35,17 @@ public abstract class PVZThrowableEntity extends ThrowableEntity implements IRen
 	@Override
 	public void tick() {
 		super.tick();
-		if(this.ticksExisted>=PVZConfig.COMMON_CONFIG.EntitySettings.EntityLiveTick.BulletLiveTick.get()) {
+		if(this.ticksExisted >= this.getMaxLiveTick()) {
 			this.remove();
 		}
 	}
 	
+	protected int getMaxLiveTick() {
+		return PVZConfig.COMMON_CONFIG.EntitySettings.EntityLiveTick.BulletLiveTick.get();
+	}
+	
 	protected boolean checkLive(RayTraceResult result){
-    	if(result.getType()==RayTraceResult.Type.ENTITY) {//打到实体
+    	if(result.getType()==RayTraceResult.Type.ENTITY) {//attack entity
         	if(EntityUtil.checkCanEntityAttack(getThrower(), ((EntityRayTraceResult)result).getEntity())){
         		return false;
         	}
@@ -51,11 +53,17 @@ public abstract class PVZThrowableEntity extends ThrowableEntity implements IRen
         }
     	else if(result.getType()==RayTraceResult.Type.BLOCK) {
     		Block block = world.getBlockState(((BlockRayTraceResult)result).getPos()).getBlock();
-    		if(block instanceof BushBlock) return true;
+    		if(block instanceof BushBlock) {
+    			return true;
+    		}
     	}
     	return false;
     }
 
+	@Override
+	public void shoot(double x, double y, double z, float velocity, float inaccuracy) {
+	}
+	
 	/**
 	 * shoot bullet such as pea or spore
 	 */
@@ -80,10 +88,6 @@ public abstract class PVZThrowableEntity extends ThrowableEntity implements IRen
 		return 10;
 	}
 	
-	protected boolean checkCanAttack(Entity target){
-		return EntityUtil.checkCanEntityAttack(getThrower(), target);
-	}
-
 	@Override
 	public IPacket<?> createSpawnPacket() {
 		return NetworkHooks.getEntitySpawningPacket(this);

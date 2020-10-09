@@ -15,7 +15,6 @@ import net.minecraft.entity.EntityType;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.Pose;
 import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.entity.projectile.ThrowableEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.network.datasync.DataParameter;
@@ -35,11 +34,11 @@ public class PeaEntity extends PVZThrowableEntity {
 	private int power = 0;
 	private TorchWoodEntity torchWood = null;
 
-	public PeaEntity(EntityType<? extends ThrowableEntity> type, World worldIn) {
+	public PeaEntity(EntityType<?> type, World worldIn) {
 		super(type, worldIn);
 	}
 
-	public PeaEntity(EntityType<? extends ThrowableEntity> type, World worldIn, LivingEntity shooter, Type peaType,
+	public PeaEntity(EntityType<?> type, World worldIn, LivingEntity shooter, Type peaType,
 			State peaState) {
 		super(type, worldIn, shooter);
 		this.setPeaState(peaState);
@@ -113,6 +112,11 @@ public class PeaEntity extends PVZThrowableEntity {
 		} else if (this.getPeaState() == State.FIRE || this.getPeaState() == State.BLUE_FIRE) {
 			target.attackEntityFrom(PVZDamageSource.causeFireDamage(this, this.getThrower()),this.getAttackDamage());
 		}
+	}
+	
+	@Override
+	protected boolean shouldHit(Entity target) {
+		return super.shouldHit(target) || target instanceof TorchWoodEntity;
 	}
 	
 	private float getAttackDamage() {

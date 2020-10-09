@@ -7,7 +7,6 @@ import com.hungteen.pvz.utils.PlantUtil;
 
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.projectile.ThrowableEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
 import net.minecraft.util.math.RayTraceResult;
@@ -15,11 +14,11 @@ import net.minecraft.world.World;
 
 public class PotatoEntity extends PVZThrowableEntity{
 
-	public PotatoEntity(EntityType<? extends ThrowableEntity> type, World worldIn) {
+	public PotatoEntity(EntityType<?> type, World worldIn) {
 		super(type, worldIn);
 	}
 	
-	public PotatoEntity(EntityType<? extends ThrowableEntity> type, World worldIn, LivingEntity thrower) {
+	public PotatoEntity(EntityType<?> type, World worldIn, LivingEntity thrower) {
 		super(type, worldIn, thrower);
 	}
 	

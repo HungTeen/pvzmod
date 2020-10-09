@@ -106,6 +106,7 @@ public class ItemRegister {
 	public static final RegistryObject<Item> BLUE_FLAME_PEA = ITEMS.register("blue_flame_pea", PVZItemBase::new);
 	public static final RegistryObject<Item> SMALL_MEAT = ITEMS.register("small_meat", PVZItemBase::new);
 	public static final RegistryObject<Item> PEPPER = ITEMS.register("pepper", PVZItemBase::new);
+	public static final RegistryObject<Item> FUME = ITEMS.register("fume", PVZItemBase::new);
 	
 	//tool
 	public static final RegistryObject<Item> ZOMBIE_FLAG = ITEMS.register("zombie_flag", ZombieFlagItem::new);
