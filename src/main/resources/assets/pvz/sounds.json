@@ -30,5 +30,6 @@
     "dolphin_jump":{"sounds":[{"name":"pvz:entity/zombie/jump/dolphin_jump"}]},
     "slurp":{"sounds":[{"name":"pvz:entity/slurp"}]},
     "puff":{"sounds":[{"name":"pvz:entity/plant/attack/puff"}]},
-    "plant_grow":{"sounds":[{"name":"pvz:entity/plant/plant_grow"}]}
+    "plant_grow":{"sounds":[{"name":"pvz:entity/plant/plant_grow"}]},
+    "fume":{"sounds":[{"name":"pvz:entity/plant/attack/fume"}]}
 }

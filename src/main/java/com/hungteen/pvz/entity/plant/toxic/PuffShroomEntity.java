@@ -19,7 +19,7 @@ import net.minecraft.world.World;
 
 public class PuffShroomEntity extends PlantShooterEntity implements IShroomPlant{
 
-	protected final double LENTH=0.2d;
+	protected final double LENTH = 0.1d;
 	
 	public PuffShroomEntity(EntityType<? extends CreatureEntity> type, World worldIn) {
 		super(type, worldIn);

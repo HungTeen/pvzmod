@@ -57,6 +57,10 @@ public class PVZDamageSource extends DamageSource{
 		return new PVZDamageSource("pvz_crush",projectile, shooter, PVZDamageType.CRUSH);
 	}
 	
+	public static PVZDamageSource causeThroughDamage(Entity projectile, Entity shooter){	
+		return new PVZDamageSource("pvz_through",projectile, shooter, PVZDamageType.THROUGH);
+	}
+	
 	@Override
 	public ITextComponent getDeathMessage(LivingEntity entityLivingBaseIn) {
         String s = "death.attack." + this.getDamageType();

@@ -20,6 +20,6 @@ public class PlantLookRandomlyGoal extends LookRandomlyGoal{
 	
 	@Override
 	public boolean shouldContinueExecuting() {
-		return !this.plant.isSleeping() && super.shouldContinueExecuting();
+		return !this.plant.isPlantSleeping() && super.shouldContinueExecuting();
 	}
 }

@@ -6,6 +6,7 @@ import javax.annotation.Nullable;
 
 import com.hungteen.pvz.utils.EntityUtil;
 
+import it.unimi.dsi.fastutil.ints.IntOpenHashSet;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.IProjectile;
@@ -30,7 +31,8 @@ public abstract class AbstractBulletEntity extends Entity implements IProjectile
 
 	protected LivingEntity owner;
 	private UUID ownerId;
-
+	protected IntOpenHashSet hitEntities;
+	
 	protected AbstractBulletEntity(EntityType<?> type, World worldIn) {
 		super(type, worldIn);
 	}
@@ -148,10 +150,8 @@ public abstract class AbstractBulletEntity extends Entity implements IProjectile
 	protected EntityRayTraceResult rayTraceEntities(Vec3d startVec, Vec3d endVec) {
 		return ProjectileHelper.rayTraceEntities(this.world, this, startVec, endVec, 
 				this.getBoundingBox().expand(this.getMotion()).grow(1.0D), (entity) -> {
-			return entity.canBeCollidedWith() && shouldHit(entity);
-//							&& (this.piercedEntities == null
-//									|| !this.piercedEntities.contains(entity.getEntityId())
-//									);
+			return entity.canBeCollidedWith() && shouldHit(entity)
+							&& (this.hitEntities == null|| !this.hitEntities.contains(entity.getEntityId()));
 		});
 	}
 
@@ -171,7 +171,6 @@ public abstract class AbstractBulletEntity extends Entity implements IProjectile
 		if (this.ownerId != null) {
 			compound.put("owner", NBTUtil.writeUniqueId(this.ownerId));
 		}
-
 	}
 
 	/**
@@ -182,7 +181,6 @@ public abstract class AbstractBulletEntity extends Entity implements IProjectile
 		if (compound.contains("owner", 10)) {
 			this.ownerId = NBTUtil.readUniqueId(compound.getCompound("owner"));
 		}
-
 	}
 
 	@SuppressWarnings("deprecation")
@@ -196,8 +194,12 @@ public abstract class AbstractBulletEntity extends Entity implements IProjectile
 				this.owner = null;
 			}
 		}
-
 		return this.owner;
+	}
+	
+	@Override
+	public boolean canBeAttackedWithItem() {
+		return false;
 	}
 
 	public IPacket<?> createSpawnPacket() {

@@ -3,6 +3,7 @@ package com.hungteen.pvz.register;
 import com.hungteen.pvz.PVZMod;
 import com.hungteen.pvz.particle.BlueFlameParticle;
 import com.hungteen.pvz.particle.DirtBurstOutParticle;
+import com.hungteen.pvz.particle.FumeParticle;
 import com.hungteen.pvz.particle.SleepParticle;
 import com.hungteen.pvz.particle.SporeParticle;
 import com.hungteen.pvz.particle.YellowFlameParticle;
@@ -32,6 +33,7 @@ public class ParticleRegister {
 	public static final RegistryObject<BasicParticleType> BLUE_FLAME = PARTICLE_TYPES.register("blue_flame", ()->{return new BasicParticleType(false);});
 	public static final RegistryObject<BasicParticleType> SLEEP = PARTICLE_TYPES.register("sleep", ()->{return new BasicParticleType(false);});
 	public static final RegistryObject<BasicParticleType> SPORE = PARTICLE_TYPES.register("spore", ()->{return new BasicParticleType(false);});
+	public static final RegistryObject<BasicParticleType> FUME = PARTICLE_TYPES.register("fume", ()->{return new BasicParticleType(false);});
 
 	@SubscribeEvent
     public static void registerFactories(ParticleFactoryRegisterEvent event) {
@@ -44,6 +46,7 @@ public class ParticleRegister {
         manager.registerFactory(ParticleRegister.BLUE_FLAME.get(), (sprite) -> {return new BlueFlameParticle.Factory(sprite);});
         manager.registerFactory(ParticleRegister.SLEEP.get(), (sprite) -> {return new SleepParticle.Factory(sprite);});
         manager.registerFactory(ParticleRegister.SPORE.get(), (sprite) -> {return new SporeParticle.Factory(sprite);});
+        manager.registerFactory(ParticleRegister.FUME.get(), (sprite) -> {return new FumeParticle.Factory(sprite);});
         
 	}
 }
