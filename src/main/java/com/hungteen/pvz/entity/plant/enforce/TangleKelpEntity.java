@@ -14,7 +14,6 @@ import net.minecraft.entity.CreatureEntity;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntitySize;
 import net.minecraft.entity.EntityType;
-import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.Pose;
 import net.minecraft.util.DamageSource;
 import net.minecraft.world.World;
@@ -69,7 +68,7 @@ public class TangleKelpEntity extends PVZPlantEntity{
 		super.startSuperMode(first);
 		if(!world.isRemote) {
 			int cnt = this.getCount();
-			for(LivingEntity target:EntityUtil.getEntityAttackableTarget(this, EntityUtil.getEntityAABB(this, 25, 3))) {
+			for(Entity target:EntityUtil.getEntityTargetableEntity(this, EntityUtil.getEntityAABB(this, 25, 3))) {
 				if(target.isInWater()) {
 					--cnt;
 					TangleKelpEntity entity = EntityRegister.TANGLE_KELP.get().create(world);

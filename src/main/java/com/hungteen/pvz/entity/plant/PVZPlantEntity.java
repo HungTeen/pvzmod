@@ -7,6 +7,7 @@ import java.util.UUID;
 import javax.annotation.Nullable;
 
 import com.hungteen.pvz.PVZConfig;
+import com.hungteen.pvz.entity.PVZMultiPartEntity;
 import com.hungteen.pvz.entity.ai.PlantLookRandomlyGoal;
 import com.hungteen.pvz.entity.plant.enforce.SquashEntity;
 import com.hungteen.pvz.entity.plant.interfaces.IShroomPlant;
@@ -128,7 +129,7 @@ public abstract class PVZPlantEntity extends CreatureEntity implements IPVZPlant
 		if(!this.isAlive()) {
 			return ;
 		}
-		if(this.getIsGardenPlant()) {
+		if(this.isGardenPlant()) {
 			this.gardenPlantTick();
 		}else {
 			this.plantBaseTick();
@@ -258,6 +259,13 @@ public abstract class PVZPlantEntity extends CreatureEntity implements IPVZPlant
 			}
 		}
 		return true;
+	}
+	
+	public boolean checkCanPlantTarget(Entity entity){
+		if(entity instanceof PVZMultiPartEntity) {
+			return false;
+		}
+		return EntityUtil.checkCanEntityAttack(this, entity);
 	}
 	
 	/**
@@ -396,8 +404,8 @@ public abstract class PVZPlantEntity extends CreatureEntity implements IPVZPlant
         compound.putInt("plant_attack_time", this.getAttackTime());
         compound.putInt("plant_gold_time", this.getGoldTime());
         compound.putInt("plant_boost_time", this.getBoostTime());
-        compound.putBoolean("is_plant_charmed", this.getIsCharmed());
-        compound.putBoolean("is_garden_plant", this.getIsGardenPlant());
+        compound.putBoolean("is_plant_charmed", this.isCharmed());
+        compound.putBoolean("is_garden_plant", this.isGardenPlant());
         compound.putInt("extra_sleep_time", this.extraSleepTime);
         compound.putInt("plant_sleep_time", this.getSleepTime());
         compound.putInt("plant_live_tick", this.getLiveTick());
@@ -432,8 +440,8 @@ public abstract class PVZPlantEntity extends CreatureEntity implements IPVZPlant
 		this.setAttackTime(compound.getInt("plant_attack_time"));
         this.setGoldTime(compound.getInt("plant_gold_time"));
         this.setBoostTime(compound.getInt("plant_boost_time"));
-        this.setIsCharmed(compound.getBoolean("is_plant_charmed"));
-        this.setIsGardenPlant(compound.getBoolean("is_garden_plant"));
+        this.setCharmed(compound.getBoolean("is_plant_charmed"));
+        this.setGardenPlant(compound.getBoolean("is_garden_plant"));
         this.extraSleepTime = compound.getInt("extra_sleep_time");
         this.setSleepTime(compound.getInt("plant_sleep_time"));
         this.setLiveTick(compound.getInt("plant_live_tick"));
@@ -517,19 +525,19 @@ public abstract class PVZPlantEntity extends CreatureEntity implements IPVZPlant
     	dataManager.set(BOOST_TIME, time);
     }
     
-    public boolean getIsCharmed(){
+    public boolean isCharmed(){
     	return dataManager.get(IS_CHARMED);
     }
     
-    public void setIsCharmed(boolean is){
+    public void setCharmed(boolean is){
     	dataManager.set(IS_CHARMED,is);
     }
     
-    public boolean getIsGardenPlant(){
+    public boolean isGardenPlant(){
     	return dataManager.get(IS_GARDEN_PLANT);
     }
     
-    public void setIsGardenPlant(boolean is){
+    public void setGardenPlant(boolean is){
     	dataManager.set(IS_GARDEN_PLANT, is);
     }
     

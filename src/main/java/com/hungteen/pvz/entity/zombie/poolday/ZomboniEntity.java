@@ -48,7 +48,7 @@ public class ZomboniEntity extends PVZZombieEntity{
 		super.normalZombieTick();
 		if(world.isRemote&&this.getHealth()<=this.getMaxHealth()/4) {
 			for(int i=1;i<=3;i++) {
-			    this.world.addParticle(ParticleTypes.SMOKE, this.getPosX(), this.getPosY(), this.getPosZ(), (this.getRNG().nextFloat()-0.5)/10,0.05,(this.getRNG().nextFloat()-0.5)/10);
+			    this.world.addParticle(ParticleTypes.SMOKE, this.getPosX(), this.getPosY(), this.getPosZ(), (this.getRNG().nextFloat()-0.5)/10, 0.05, (this.getRNG().nextFloat()-0.5) / 10);
 			}
 		}
 		if(!world.isRemote) {//produce snow layer block
@@ -77,7 +77,7 @@ public class ZomboniEntity extends PVZZombieEntity{
 	
 	private void resetParts() {
 		removeParts();
-		part = new ZomboniPartEntity(this, 1f, 1f);
+		part = new ZomboniPartEntity(this, 1.2f, 1.5f);
 		part.setOwner(this);
 	}
 	
@@ -123,6 +123,10 @@ public class ZomboniEntity extends PVZZombieEntity{
 	@Override
 	protected PVZDamageSource getZombieAttackDamageSource() {
 		return PVZDamageSource.causeCrushDamage(this, this);
+	}
+	
+	public float getPartOffset() {
+		return 1.4f;
 	}
 	
 	@Override

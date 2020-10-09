@@ -9,7 +9,6 @@ import com.hungteen.pvz.utils.interfaces.IDefender;
 import net.minecraft.entity.CreatureEntity;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
-import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.MobEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.nbt.CompoundNBT;
@@ -56,7 +55,7 @@ public abstract class PlantDefenderEntity extends PVZPlantEntity implements IDef
 	@Override
 	public void attract() {
 		float range = getAttractRange();
-		for(LivingEntity target:EntityUtil.getEntityAttackableTarget(this, EntityUtil.getEntityAABB(this, range, range))) {
+		for(Entity target:EntityUtil.getEntityTargetableEntity(this, EntityUtil.getEntityAABB(this, range, range))) {
 			if(target instanceof MobEntity) {
 				if(!(((MobEntity) target).getAttackTarget() instanceof PlantDefenderEntity)) {
 					((MobEntity) target).setAttackTarget(this);

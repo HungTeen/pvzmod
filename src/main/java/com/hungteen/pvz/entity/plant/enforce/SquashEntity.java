@@ -9,6 +9,7 @@ import com.hungteen.pvz.utils.EntityUtil;
 import com.hungteen.pvz.utils.enums.Plants;
 
 import net.minecraft.entity.CreatureEntity;
+import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
@@ -48,7 +49,7 @@ public class SquashEntity extends PVZPlantEntity{
 				return ;
 			}
 			LivingEntity target = this.getAttackTarget();
-			if(target != null && EntityUtil.isSuitableTarget(this, target, range)) {
+			if(target != null && EntityUtil.isSuitableTargetInRange(this, target, range)) {
 				this.setAttackTarget(null);
 			}
 			if(this.getAttackTarget()!=null) {
@@ -93,7 +94,7 @@ public class SquashEntity extends PVZPlantEntity{
 	
 	protected void dealDamage(){
 		this.setAttackTime(0);
-		for(LivingEntity entity : EntityUtil.getEntityAttackableTarget(this, EntityUtil.getEntityAABB(this, 0.5f, 0.5f))) {
+		for(Entity entity : EntityUtil.getEntityAttackableTarget(this, EntityUtil.getEntityAABB(this, 0.5f, 0.5f))) {
 			entity.attackEntityFrom(PVZDamageSource.causeNormalDamage(this, this), this.getAttackDamage());
 		}
 	}

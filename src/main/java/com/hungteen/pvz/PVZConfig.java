@@ -56,8 +56,8 @@ public class PVZConfig {
 			//Entity Settings
 			builder.comment("Settings about entities.").push("Entity Settings");
 			{
-				EntitySettings.CanPlantAttackOtherTeam = builder
-						.translation(CONFIG_TRANSLATE+"plant_attack_team")
+				EntitySettings.TeamAttack = builder
+						.translation(CONFIG_TRANSLATE+"team_attack")
                         .comment("if true,when plant's owner is in a team,the plant will attack the entity from other team(include player)")
                         .worldRestart()
                         .define("PlantAttackTeam", false);
@@ -194,7 +194,7 @@ public class PVZConfig {
 		}
 		
 		public static class EntitySettings{
-			public ForgeConfigSpec.BooleanValue CanPlantAttackOtherTeam;
+			public ForgeConfigSpec.BooleanValue TeamAttack;
 			public ForgeConfigSpec.IntValue ZombieSuperChance;
 			public ForgeConfigSpec.BooleanValue CanSpawnDefaultMonster;
 			

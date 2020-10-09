@@ -13,9 +13,9 @@ import com.hungteen.pvz.utils.EntityUtil;
 import com.hungteen.pvz.utils.enums.Plants;
 
 import net.minecraft.entity.CreatureEntity;
+import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntitySize;
 import net.minecraft.entity.EntityType;
-import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.Pose;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.network.datasync.DataParameter;
@@ -86,7 +86,7 @@ public class PotatoMineEntity extends PlantCloserEntity{
 		if(!this.isMineReady()) return false;//not ready
 		if(!this.world.isRemote) {
 			AxisAlignedBB aabb= EntityUtil.getEntityAABB(this, bombRange,bombRange);
-			for(LivingEntity target:EntityUtil.getEntityAttackableTarget(this, aabb)) {
+			for(Entity target:EntityUtil.getEntityAttackableTarget(this, aabb)) {
 				target.attackEntityFrom(PVZDamageSource.causeExplosionDamage(this, this), this.getAttackDamage());
 			}
 			this.playSound(SoundRegister.POTATO_MINE.get(), 1f, 1f);

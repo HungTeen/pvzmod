@@ -22,7 +22,7 @@ import net.minecraft.world.World;
 
 public class FumeEntity extends PVZThrowableEntity{
 
-	private static final int MAX_LIVE_TICK = 40;
+	private static final int MAX_LIVE_TICK = 25;
 	private int knockback = 0;
 	
 	public FumeEntity(EntityType<?> type, World worldIn) {
@@ -90,7 +90,7 @@ public class FumeEntity extends PVZThrowableEntity{
 	
 	private void dealFumeDamage(Entity target) {
 		target.attackEntityFrom(PVZDamageSource.causeThroughDamage(this, this.getThrower()), this.getFumeDamage());
-		if(!world.isRemote) {
+		if(!world.isRemote && this.knockback > 0) {
 			Vec3d speed = target.getMotion();
 			Vec3d now = this.getMotion();
 			int lvl = this.knockback;

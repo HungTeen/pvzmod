@@ -91,7 +91,7 @@ public abstract class AbstractBulletEntity extends Entity implements IProjectile
 			result = entityRay;
 		}
 		if(result != null && result.getType() != RayTraceResult.Type.MISS && !net.minecraftforge.event.ForgeEventFactory.onProjectileImpact(this, result)) {//on hit 
-			System.out.println(result.getType());
+//			System.out.println(result.getType());
 			this.onImpact(result);
 		}
 		//move

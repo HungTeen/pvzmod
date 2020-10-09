@@ -237,6 +237,9 @@ public abstract class PVZZombieEntity extends MonsterEntity implements IPVZZombi
 	 * can zombie set target as attackTarget
 	 */
 	public boolean checkCanZombieTarget(Entity target) {
+		if(target instanceof SpikeWeedEntity) {
+			return false;
+		}
 		return EntityUtil.checkCanEntityAttack(this, target);
 	}
 
@@ -441,9 +444,9 @@ public abstract class PVZZombieEntity extends MonsterEntity implements IPVZZombi
 //		compound.putBoolean("is_zombie_cold", this.getIsCold());
 //		compound.putBoolean("is_zombie_frozen", this.getIsFrozen());
 //		compound.putBoolean("is_zombie_butter", this.getIsButter());
-		compound.putBoolean("is_zombie_small", this.getIsSmall());
+		compound.putBoolean("is_zombie_small", this.isSmall());
 //		compound.putBoolean("is_zombie_invis", this.getIsInivs());
-		compound.putBoolean("is_zombie_charmed", this.getIsCharmed());
+		compound.putBoolean("is_zombie_charmed", this.isCharmed());
 	}
 
 	@Override
@@ -466,9 +469,9 @@ public abstract class PVZZombieEntity extends MonsterEntity implements IPVZZombi
 //		this.setIsCold(compound.getBoolean("is_zombie_cold"));
 //		this.setIsFrozen(compound.getBoolean("is_zombie_frozen"));
 //		this.setIsButter(compound.getBoolean("is_zombie_butter"));
-		this.setIsSmall(compound.getBoolean("is_zombie_small"));
+		this.setSmall(compound.getBoolean("is_zombie_small"));
 //		this.setIsInvis(compound.getBoolean("is_zombie_invis"));
-		this.setIsCharmed(compound.getBoolean("is_zombie_charmed"));
+		this.setCharmed(compound.getBoolean("is_zombie_charmed"));
 	}
 
 	@Override
@@ -505,7 +508,7 @@ public abstract class PVZZombieEntity extends MonsterEntity implements IPVZZombi
 		this.dataManager.set(OWNER_UUID, Optional.ofNullable(uuid));
 	}
 
-	public void setIsCharmed(boolean is) {
+	public void setCharmed(boolean is) {
 		dataManager.set(IS_CHARMED, is);
 	}
 
@@ -513,7 +516,7 @@ public abstract class PVZZombieEntity extends MonsterEntity implements IPVZZombi
 //		dataManager.set(IS_INVIS, is);
 //	}
 
-	public void setIsSmall(boolean is) {
+	public void setSmall(boolean is) {
 		dataManager.set(IS_SMALL, is);
 	}
 
@@ -533,7 +536,7 @@ public abstract class PVZZombieEntity extends MonsterEntity implements IPVZZombi
 		dataManager.set(ZOMBIE_TYPE, type.ordinal());
 	}
 
-	public boolean getIsCharmed() {
+	public boolean isCharmed() {
 		return dataManager.get(IS_CHARMED);
 	}
 
@@ -541,7 +544,7 @@ public abstract class PVZZombieEntity extends MonsterEntity implements IPVZZombi
 //		return dataManager.get(IS_INVIS);
 //	}
 
-	public boolean getIsSmall() {
+	public boolean isSmall() {
 		return dataManager.get(IS_SMALL);
 	}
 

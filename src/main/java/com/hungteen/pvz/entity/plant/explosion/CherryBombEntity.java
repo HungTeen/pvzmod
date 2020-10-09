@@ -8,9 +8,9 @@ import com.hungteen.pvz.utils.EntityUtil;
 import com.hungteen.pvz.utils.enums.Plants;
 
 import net.minecraft.entity.CreatureEntity;
+import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntitySize;
 import net.minecraft.entity.EntityType;
-import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.Pose;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.world.World;
@@ -27,7 +27,7 @@ public class CherryBombEntity extends PlantBomberEntity{
 		if(!this.world.isRemote) {
 			float len=(this.getPlantLvl()<=10)?2f:2.5f;
 			AxisAlignedBB aabb=EntityUtil.getEntityAABB(this, len, len);
-			for(LivingEntity entity:EntityUtil.getEntityAttackableTarget(this, aabb)) {
+			for(Entity entity:EntityUtil.getEntityAttackableTarget(this, aabb)) {
 				 entity.attackEntityFrom(PVZDamageSource.causeExplosionDamage(this, this), this.getAttackDamage());
 			}
 			this.playSound(SoundRegister.CHERRY_BOMB.get(), 1, 1);

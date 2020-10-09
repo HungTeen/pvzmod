@@ -49,8 +49,10 @@ public class SmallChomperEntity extends MobEntity {
 		if(this.owner==null) {
 			return ;
 		}
-		for(LivingEntity target:EntityUtil.getEntityAttackableTarget(this.owner, EntityUtil.getEntityAABB(this, 0.5f, 1f))) {
-			target.attackEntityFrom(PVZDamageSource.causeEatDamage(this, this.owner), getAttackDamage(target));
+		for(Entity target:EntityUtil.getEntityAttackableTarget(this.owner, EntityUtil.getEntityAABB(this, 0.5f, 1f))) {
+			if(target instanceof LivingEntity) {
+			    target.attackEntityFrom(PVZDamageSource.causeEatDamage(this, this.owner), getAttackDamage((LivingEntity) target));
+			}
 		}
 		this.playSound(SoundRegister.CHOMP.get(), 1, 1);
 	}

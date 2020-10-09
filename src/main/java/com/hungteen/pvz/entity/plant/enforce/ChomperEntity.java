@@ -10,6 +10,7 @@ import com.hungteen.pvz.utils.EntityUtil;
 import com.hungteen.pvz.utils.enums.Plants;
 
 import net.minecraft.entity.CreatureEntity;
+import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntitySize;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.LivingEntity;
@@ -53,7 +54,7 @@ public class ChomperEntity extends PVZPlantEntity{
 		if(!world.isRemote&&this.isPlantInSuperMode()) {//super
 			if(this.getSuperTime()==1) {
 				int cnt=this.getSuperAttackCnt();
-				for(LivingEntity target:EntityUtil.getEntityAttackableTarget(this, EntityUtil.getEntityAABB(this, this.SUPER_RANGE, this.SUPER_RANGE))) {
+				for(Entity target : EntityUtil.getEntityTargetableEntity(this, EntityUtil.getEntityAABB(this, this.SUPER_RANGE, this.SUPER_RANGE))) {
 					SmallChomperEntity chomper = EntityRegister.SMALL_CHOMPER.get().create(world);
 					chomper.setPosition(target.getPosX(), target.getPosY(), target.getPosZ());
 					chomper.setOwner(this);
