@@ -1,5 +1,8 @@
 package com.hungteen.pvz.entity;
 
+import com.hungteen.pvz.PVZMod;
+import com.hungteen.pvz.utils.interfaces.IMultiPartEntity;
+
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntitySize;
 import net.minecraft.entity.EntityType;
@@ -24,6 +27,7 @@ public abstract class PVZMultiPartEntity extends Entity {
 			DataSerializers.FLOAT);
 	private static final DataParameter<Float> HEIGHT = EntityDataManager.createKey(PVZMultiPartEntity.class,
 			DataSerializers.FLOAT);
+	private IMultiPartEntity parent;
 
 	public PVZMultiPartEntity(EntityType<?> entityTypeIn, World worldIn) {
 		super(entityTypeIn, worldIn);
@@ -31,6 +35,11 @@ public abstract class PVZMultiPartEntity extends Entity {
 
 	public PVZMultiPartEntity(EntityType<?> entityTypeIn, LivingEntity owner, float sizeX, float sizeY) {
 		super(entityTypeIn, owner.world);
+		if(owner instanceof IMultiPartEntity) {
+			this.parent = (IMultiPartEntity) owner;
+		}else {
+			PVZMod.LOGGER.debug("error multipart owner");
+		}
 		this.setOwner(owner);
 		this.setScaleX(sizeX);
 		this.setScaleY(sizeY);
@@ -71,6 +80,10 @@ public abstract class PVZMultiPartEntity extends Entity {
 		int id = getOwnerId();
 		Entity entity = world.getEntityByID(id);
 		return entity instanceof LivingEntity ? (LivingEntity) entity : null;
+	}
+	
+	public IMultiPartEntity getParent() {
+		return this.parent;
 	}
 
 	public void setOwner(LivingEntity entity) {

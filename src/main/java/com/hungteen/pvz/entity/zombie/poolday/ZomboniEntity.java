@@ -1,11 +1,13 @@
 package com.hungteen.pvz.entity.zombie.poolday;
 
+import com.hungteen.pvz.entity.PVZMultiPartEntity;
 import com.hungteen.pvz.entity.zombie.PVZZombieEntity;
-import com.hungteen.pvz.entity.zombie.ZomboniPartEntity;
+import com.hungteen.pvz.entity.zombie.part.PVZZombiePartEntity;
 import com.hungteen.pvz.misc.damage.PVZDamageSource;
 import com.hungteen.pvz.register.SoundRegister;
 import com.hungteen.pvz.utils.ZombieUtil;
 import com.hungteen.pvz.utils.enums.Zombies;
+import com.hungteen.pvz.utils.interfaces.IMultiPartEntity;
 
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
@@ -23,13 +25,14 @@ import net.minecraft.particles.ParticleTypes;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.SoundEvent;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.DifficultyInstance;
 import net.minecraft.world.IWorld;
 import net.minecraft.world.World;
 
-public class ZomboniEntity extends PVZZombieEntity{
+public class ZomboniEntity extends PVZZombieEntity implements IMultiPartEntity{
 	
-	private ZomboniPartEntity part;
+	private PVZZombiePartEntity part;
 	
 	public ZomboniEntity(EntityType<? extends MonsterEntity> type, World worldIn) {
 		super(type, worldIn);
@@ -75,26 +78,39 @@ public class ZomboniEntity extends PVZZombieEntity{
 		return super.onInitialSpawn(worldIn, difficultyIn, reason, spawnDataIn, dataTag);
 	}
 	
-	private void resetParts() {
+	@Override
+	public void resetParts() {
 		removeParts();
-		part = new ZomboniPartEntity(this, 1.2f, 1.5f);
-		part.setOwner(this);
+		this.part = new PVZZombiePartEntity(this, 1.2f, 1.5f);
+		this.part.setOwner(this);
 	}
 	
-	private void removeParts() {
-		if(part != null) {
-			part.remove();
-			part = null;
+	@Override
+	public void removeParts() {
+		if(this.part != null) {
+			this.part.remove();
+			this.part = null;
 		}
 	}
 	
-	private void updateParts() {
-		if(part != null) {
-			if(!part.shouldContinuePersisting()) {
-				world.addEntity(part);
+	@Override
+	public void updateParts() {
+		if(this.part != null) {
+			if(!this.part.shouldContinuePersisting()) {
+				this.world.addEntity(this.part);
 			}
-			part.setOwner(this);
+			float j = 2 * 3.14159f * this.rotationYawHead / 360;
+			float dis = this.getPartOffset();
+			Vec3d pos = this.getPositionVec();
+			this.part.prevRotationYaw = this.rotationYaw;
+			this.part.prevRotationPitch = this.rotationPitch;
+			this.part.setLocationAndAngles(pos.getX() - Math.sin(j) * dis, pos.getY() + 0.05f, pos.getZ() + Math.cos(j) * dis, this.rotationYaw, this.rotationPitch);
+			this.part.setOwner(this);
 		}
+	}
+	
+	public PVZMultiPartEntity[] getParts() {
+		return new PVZMultiPartEntity[] {this.part};
 	}
 	
 	@Override

@@ -2,7 +2,6 @@ package com.hungteen.pvz.entity.plant.base;
 
 import com.hungteen.pvz.entity.plant.PVZPlantEntity;
 import com.hungteen.pvz.misc.damage.PVZDamageSource;
-import com.hungteen.pvz.misc.damage.PVZDamageType;
 import com.hungteen.pvz.utils.interfaces.IBomber;
 
 import net.minecraft.entity.CreatureEntity;
@@ -29,11 +28,7 @@ public abstract class PlantBomberEntity extends PVZPlantEntity implements IBombe
 	
 	@Override
 	public boolean isInvulnerableTo(DamageSource source) {
-		if(source instanceof PVZDamageSource) {
-			if(((PVZDamageSource) source).getPVZDamageType()==PVZDamageType.WEAK) return false;
-			return true;
-		}
-		return super.isInvulnerableTo(source);
+		return PVZDamageSource.isEnforceDamage(source) || super.isInvulnerableTo(source);
 	}
 	
 	@Override

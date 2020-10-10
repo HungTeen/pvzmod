@@ -65,7 +65,7 @@ public class FumeEntity extends PVZThrowableEntity{
 				if(this.hitEntities == null) {
 					this.hitEntities = new IntOpenHashSet();
 				}
-				this.hitEntities.add(target.getEntityId());
+				this.addHitEntity(target);
 			}
 		}
 		if (!this.world.isRemote) {

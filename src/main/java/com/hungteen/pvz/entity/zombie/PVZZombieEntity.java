@@ -247,11 +247,11 @@ public abstract class PVZZombieEntity extends MonsterEntity implements IPVZZombi
 	public boolean attackEntityFrom(DamageSource source, float amount) {
 		if (source instanceof PVZDamageSource) {
 			this.hurtResistantTime = 0;
-			if (((PVZDamageSource) source).getPVZDamageType() == PVZDamageType.ICE) {
+			if (((PVZDamageSource) source).getPVZDamageType() == PVZDamageType.ICE && !((PVZDamageSource) source).isDefended()) {
 				if (!this.isZombieColdOrForzen() && !this.world.isRemote) {
 					this.playSound(SoundRegister.ZOMBIE_FROZEN.get(), 1f, 1f);
 				}
-			} else if (((PVZDamageSource) source).getPVZDamageType() == PVZDamageType.FIRE) {
+			} else if (((PVZDamageSource) source).getPVZDamageType() == PVZDamageType.FIRE && !((PVZDamageSource) source).isDefended()) {
 				if (this.isZombieColdOrForzen() && !this.world.isRemote) {
 					this.playSound(SoundRegister.ZOMBIE_FIRE.get(), 1f, 1f);
 					this.removePotionEffect(EffectRegister.COLD_EFFECT.get());

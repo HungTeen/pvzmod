@@ -1,11 +1,15 @@
 package com.hungteen.pvz.utils;
 
+import java.util.HashMap;
+
 import com.hungteen.pvz.PVZMod;
 import com.hungteen.pvz.utils.enums.Ranks;
 import com.hungteen.pvz.utils.enums.Zombies;
 
 public class ZombieUtil {
 
+	public static final HashMap<Zombies, Ranks> ZOMBIE_RANK = new HashMap<>();
+	
 	// zombies speed
 	public static final float VERY_SLOW = 0.16f; 
 	public static final float SLOW = 0.18f;
@@ -31,31 +35,42 @@ public class ZombieUtil {
 
 	// follow range
 	public static final float ZOMBIE_FOLLOW_RANGE = 100;
+	
+	static{
+		//init zombie - > rank 
+		//gray
+		ZOMBIE_RANK.put(Zombies.ZOMBIE_DOLPHIN, Ranks.GRAY);
+		//white
+		ZOMBIE_RANK.put(Zombies.NORMAL_ZOMBIE, Ranks.WHITE);
+		ZOMBIE_RANK.put(Zombies.FLAG_ZOMBIE, Ranks.WHITE);
+		ZOMBIE_RANK.put(Zombies.SNORKEL_ZOMBIE, Ranks.WHITE);
+		ZOMBIE_RANK.put(Zombies.BOBSLE_ZOMBIE, Ranks.WHITE);
+		ZOMBIE_RANK.put(Zombies.DOLPHIN_RIDER_ZOMBIE, Ranks.WHITE);
+		ZOMBIE_RANK.put(Zombies.NEWSPAPER_ZOMBIE, Ranks.WHITE);
+		//green
+		ZOMBIE_RANK.put(Zombies.CONEHEAD_ZOMBIE, Ranks.GREEN);
+		ZOMBIE_RANK.put(Zombies.POLE_ZOMBIE, Ranks.GREEN);
+		//blue
+		ZOMBIE_RANK.put(Zombies.BUCKETHEAD_ZOMBIE, Ranks.BLUE);
+		ZOMBIE_RANK.put(Zombies.ZOMBONI, Ranks.BLUE);
+		ZOMBIE_RANK.put(Zombies.BOBSLE_TEAM, Ranks.BLUE);
+		ZOMBIE_RANK.put(Zombies.DOLPHIN_RIDER, Ranks.BLUE);
+		//purple
+		ZOMBIE_RANK.put(Zombies.LAVA_ZOMBIE, Ranks.PURPLE);
+		//gold
+		//boss
+	}
 
 	public static Ranks getZombieRank(Zombies zombie){
-		switch(zombie) {
-		case ZOMBIE_DOLPHIN:return Ranks.GRAY;
-		case NORMAL_ZOMBIE:
-		case FLAG_ZOMBIE:
-		case SNORKEL_ZOMBIE:
-		case BOBSLE_ZOMBIE:
-		case DOLPHIN_RIDER_ZOMBIE:return Ranks.WHITE;
-		case CONEHEAD_ZOMBIE:
-		case POLE_ZOMBIE:return Ranks.GREEN;
-		case BUCKETHEAD_ZOMBIE:
-		case ZOMBONI:
-		case BOBSLE_TEAM:
-		case DOLPHIN_RIDER:return Ranks.BLUE;
-		case LAVA_ZOMBIE:return Ranks.PURPLE;
-		default:{
-			PVZMod.LOGGER.debug("Zombie get rank error");
-			return null;
+		if(ZOMBIE_RANK.containsKey(zombie)) {
+			return ZOMBIE_RANK.get(zombie);
 		}
-		}
+		PVZMod.LOGGER.debug("Zombie get rank error");
+		return null;
 	}
 	
 	public static int getZombieXp(Zombies zombie){
-		Ranks rank=getZombieRank(zombie);
+		Ranks rank = getZombieRank(zombie);
 		switch(rank) {
 		case GRAY:return 1;
 		case WHITE:return 2;

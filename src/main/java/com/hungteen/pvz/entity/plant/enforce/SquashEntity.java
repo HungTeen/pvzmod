@@ -3,7 +3,6 @@ package com.hungteen.pvz.entity.plant.enforce;
 import com.hungteen.pvz.entity.ai.PVZNearestTargetGoal;
 import com.hungteen.pvz.entity.plant.PVZPlantEntity;
 import com.hungteen.pvz.misc.damage.PVZDamageSource;
-import com.hungteen.pvz.misc.damage.PVZDamageType;
 import com.hungteen.pvz.register.SoundRegister;
 import com.hungteen.pvz.utils.EntityUtil;
 import com.hungteen.pvz.utils.enums.Plants;
@@ -144,11 +143,10 @@ public class SquashEntity extends PVZPlantEntity{
 	
 	@Override
 	public boolean isInvulnerableTo(DamageSource source) {
-		if(source==DamageSource.FALL) return true;
-		if(source instanceof PVZDamageSource) {
-			if(((PVZDamageSource) source).getPVZDamageType()==PVZDamageType.EAT) return true;
-		}
-		return super.isInvulnerableTo(source);
+		if(source==DamageSource.FALL) {
+		    return true;
+	    }
+		return PVZDamageSource.isEnforceDamage(source) || super.isInvulnerableTo(source);
 	}
 	
 	@Override

@@ -103,7 +103,7 @@ public class ChomperEntity extends PVZPlantEntity{
 	
 	@Override
 	public boolean isInvulnerable() {
-		return this.getAttackTime()>0;
+		return this.getAttackTime() > 0;
 	}
 	
 	/**

@@ -11,6 +11,7 @@ public class PVZDamageSource extends DamageSource{
 	private Entity attackOwner = null;
 	private Entity attacker = null;
 	private PVZDamageType damageType;
+	private boolean isDefended = false;//is defended by some defence
 	
 	public static final DamageSource CHOMPER_PLANT = new DamageSource("chomper_plant");
 	
@@ -61,6 +62,19 @@ public class PVZDamageSource extends DamageSource{
 		return new PVZDamageSource("pvz_through",projectile, shooter, PVZDamageType.THROUGH);
 	}
 	
+	public static boolean isEnforceDamage(DamageSource source) {
+		if(source.damageType.equals("mob")) {
+			return true;
+		}
+		if(source instanceof PVZDamageSource) {
+			PVZDamageType type = ((PVZDamageSource) source).getPVZDamageType();
+			if(type == PVZDamageType.EAT || type == PVZDamageType.CRUSH || type == PVZDamageType.SPIKE) {
+				return true;
+			}
+		}
+		return false;
+	}
+	
 	@Override
 	public ITextComponent getDeathMessage(LivingEntity entityLivingBaseIn) {
         String s = "death.attack." + this.getDamageType();
@@ -86,4 +100,13 @@ public class PVZDamageSource extends DamageSource{
 	public Entity getImmediateSource() {
 		return this.attacker;
 	}
+	
+	public void setDefended(boolean is) {
+		this.isDefended = is;
+	}
+	
+	public boolean isDefended() {
+		return this.isDefended;
+	}
+	
 }

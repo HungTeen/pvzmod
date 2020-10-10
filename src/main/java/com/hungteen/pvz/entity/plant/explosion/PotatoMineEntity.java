@@ -5,7 +5,6 @@ import java.util.Random;
 import com.hungteen.pvz.entity.bullet.PotatoEntity;
 import com.hungteen.pvz.entity.plant.base.PlantCloserEntity;
 import com.hungteen.pvz.misc.damage.PVZDamageSource;
-import com.hungteen.pvz.misc.damage.PVZDamageType;
 import com.hungteen.pvz.register.EntityRegister;
 import com.hungteen.pvz.register.ParticleRegister;
 import com.hungteen.pvz.register.SoundRegister;
@@ -28,12 +27,11 @@ import net.minecraft.world.World;
 public class PotatoMineEntity extends PlantCloserEntity{
 
 	private static final DataParameter<Boolean> MINE_READY = EntityDataManager.createKey(PotatoMineEntity.class, DataSerializers.BOOLEAN);
-	public boolean sign_red;
-	private final float bombRange=1.5f;
+	public boolean sign_red = true;
+	private final float bombRange = 1.5f;
 	
 	public PotatoMineEntity(EntityType<? extends CreatureEntity> type, World worldIn) {
 		super(type, worldIn);
-		this.sign_red=true;
 	}
 	
 	@Override
@@ -45,37 +43,38 @@ public class PotatoMineEntity extends PlantCloserEntity{
 	@Override
 	protected void normalPlantTick() {
 		super.normalPlantTick();
-		if(this.getAttackTime()%this.getSignChangeTime()==0) {
-			this.sign_red=!this.sign_red;
+		if(this.getAttackTime() % this.getSignChangeTime() == 0) {
+			this.sign_red = !this.sign_red;
 		}
-		this.setAttackTime(this.getAttackTime()+1);
-		if(this.getAttackTime()>=this.getReadyTime()&&!this.isMineReady()) {
+		this.setAttackTime(this.getAttackTime() + 1);
+		if(this.getAttackTime() >= this.getReadyTime() && !this.isMineReady()) {
 			this.outDirt();
 		}
-		if(this.isPlantInSuperMode()&&this.getSuperTime()==2) {
-			if(!this.isMineReady()) {
-				this.outDirt();
-			}
-			if(!world.isRemote) {
-				this.shootPotatos();
-			}
+		if(this.isPlantInSuperMode() && !this.isMineReady()) {
+			this.outDirt();
 		}
+	}
+	
+	@Override
+	public void startSuperMode(boolean first) {
+		super.startSuperMode(first);
+		shootPotatos();
 	}
 	
 	/**
 	 * shoot some potato to the sky
 	 */
 	protected void shootPotatos() {
-		int lvl=this.getPlantLvl();
-		int min=lvl<=13?1:2;
-		int max=lvl<=6?2:3;
-		int num=this.getRNG().nextInt(max-min)+min;
-		for(int i=1;i<=num;i++) {
+		int lvl = this.getPlantLvl();
+		int min = lvl<=13?1:2;
+		int max = lvl<=6?2:3;
+		int num = this.getRNG().nextInt(max-min)+min;
+		for(int i = 1;i <= num;i++) {
 			PotatoEntity potato = new PotatoEntity(EntityRegister.POTATO.get(), world, this);
-			potato.setPosition(this.getPosX(), this.getPosY()+1, this.getPosZ());
-		    float dx=(this.getRNG().nextFloat()-0.5f)*i/3;
-		    float dy=1;
-		    float dz=(this.getRNG().nextFloat()-0.5f)*i/3;
+			potato.setPosition(this.getPosX(), this.getPosY() + 1, this.getPosZ());
+		    float dx = (this.getRNG().nextFloat() - 0.5f) * i / 3;
+		    float dy = 1;
+		    float dz = (this.getRNG().nextFloat() - 0.5f) * i / 3;
 		    potato.shoot(dx, dy, dz);
 		    this.world.addEntity(potato);
 		}
@@ -83,7 +82,9 @@ public class PotatoMineEntity extends PlantCloserEntity{
 	
 	@Override
 	public boolean performAttack() {
-		if(!this.isMineReady()) return false;//not ready
+		if(!this.isMineReady()) {//not ready
+			return false;
+		}
 		if(!this.world.isRemote) {
 			AxisAlignedBB aabb= EntityUtil.getEntityAABB(this, bombRange,bombRange);
 			for(Entity target:EntityUtil.getEntityAttackableTarget(this, aabb)) {
@@ -123,8 +124,8 @@ public class PotatoMineEntity extends PlantCloserEntity{
 	
 	@Override
 	public boolean isInvulnerableTo(DamageSource source) {
-		if(this.isMineReady()&&source instanceof PVZDamageSource) {
-			if(((PVZDamageSource) source).getPVZDamageType()==PVZDamageType.EAT) return true;
+		if(this.isMineReady()) {
+			return PVZDamageSource.isEnforceDamage(source) || super.isInvulnerableTo(source);
 		}
 		return super.isInvulnerableTo(source);
 	}
