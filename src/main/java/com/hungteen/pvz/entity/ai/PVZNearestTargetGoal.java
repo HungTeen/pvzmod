@@ -48,9 +48,9 @@ public class PVZNearestTargetGoal extends TargetGoal{
             return false;
         }
 		List<Entity> list = this.goalOwner.world.getEntitiesWithinAABB(Entity.class, this.getAABB());
-		List<Entity> list1 =new ArrayList<Entity>();
+		List<Entity> list1 = new ArrayList<Entity>();
 		for(Entity entity:list) {
-			if(EntityUtil.checkCanEntityTarget(this.goalOwner,entity)) {
+			if(EntityUtil.checkCanEntityTarget(this.goalOwner, entity)) {
 				if(!this.shouldCheckSight||checkSenses(entity)) {
 					if(checkPlant(entity)) {
 				        list1.add(entity);

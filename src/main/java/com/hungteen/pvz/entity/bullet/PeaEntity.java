@@ -6,6 +6,7 @@ import com.hungteen.pvz.entity.plant.flame.TorchWoodEntity;
 import com.hungteen.pvz.entity.plant.interfaces.IIcePlant;
 import com.hungteen.pvz.misc.damage.PVZDamageSource;
 import com.hungteen.pvz.register.ItemRegister;
+import com.hungteen.pvz.utils.EntityUtil;
 import com.hungteen.pvz.utils.WeaponUtil;
 import com.hungteen.pvz.utils.enums.Plants;
 
@@ -100,13 +101,13 @@ public class PeaEntity extends PVZThrowableEntity {
 		} else if (this.getPeaState() == State.ICE) {// snow pea attack
 			target.attackEntityFrom(PVZDamageSource.causeIceDamage(this, this.getThrower()),this.getAttackDamage());
 			LivingEntity owner = this.getThrower();
-			if (owner instanceof IIcePlant && target instanceof LivingEntity) {
-				((LivingEntity) target).addPotionEffect(((IIcePlant) owner).getColdEffect());
-				((LivingEntity) target).addPotionEffect(((IIcePlant) owner).getFrozenEffect());
+			if (owner instanceof IIcePlant) {
+				EntityUtil.setEntityPotionEffect(target, ((IIcePlant) owner).getColdEffect());
+				EntityUtil.setEntityPotionEffect(target, ((IIcePlant) owner).getFrozenEffect());
 			}else if(owner instanceof PlayerEntity) {
 				((PlayerEntity)owner).getCapability(CapabilityHandler.PLAYER_DATA_CAPABILITY).ifPresent((l)->{
 					int lvl = l.getPlayerData().getPlantStats().getPlantLevel(Plants.SNOW_PEA);
-					((LivingEntity) target).addPotionEffect(WeaponUtil.getPeaGunColdEffect(lvl));
+					EntityUtil.setEntityPotionEffect(target, WeaponUtil.getPeaGunColdEffect(lvl));
 				});
 			}
 		} else if (this.getPeaState() == State.FIRE || this.getPeaState() == State.BLUE_FIRE) {

@@ -18,8 +18,8 @@ import com.hungteen.pvz.entity.plant.spear.SpikeWeedEntity;
 import com.hungteen.pvz.misc.damage.PVZDamageSource;
 import com.hungteen.pvz.misc.damage.PVZDamageType;
 import com.hungteen.pvz.misc.loot.PVZLoot;
-import com.hungteen.pvz.register.EntityRegister;
 import com.hungteen.pvz.register.EffectRegister;
+import com.hungteen.pvz.register.EntityRegister;
 import com.hungteen.pvz.register.SoundRegister;
 import com.hungteen.pvz.utils.EntityUtil;
 import com.hungteen.pvz.utils.ZombieUtil;
@@ -46,6 +46,7 @@ import net.minecraft.network.datasync.DataParameter;
 import net.minecraft.network.datasync.DataSerializers;
 import net.minecraft.network.datasync.EntityDataManager;
 import net.minecraft.particles.ParticleTypes;
+import net.minecraft.potion.EffectInstance;
 import net.minecraft.server.management.PreYggdrasilConverter;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.ResourceLocation;
@@ -477,6 +478,19 @@ public abstract class PVZZombieEntity extends MonsterEntity implements IPVZZombi
 	@Override
 	public boolean canBeLeashedTo(PlayerEntity player) {
 		return false;
+	}
+	
+	/**
+	 * check can zombie add effect
+	 */
+	public void checkAndAddPotionEffect(EffectInstance effect) {
+		if(effect.getPotion() == EffectRegister.COLD_EFFECT.get() && !this.canBeCold()) {
+			return;
+		}
+		if(effect.getPotion() == EffectRegister.FROZEN_EFFECT.get() && !this.canBeFrozen()) {
+			return;
+		}
+		this.addPotionEffect(effect);
 	}
 	
 	public boolean canBeButter() {

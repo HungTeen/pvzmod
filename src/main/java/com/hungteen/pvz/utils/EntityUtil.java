@@ -22,6 +22,7 @@ import net.minecraft.entity.SharedMonsterAttributes;
 import net.minecraft.entity.SpawnReason;
 import net.minecraft.entity.monster.MonsterEntity;
 import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.potion.EffectInstance;
 import net.minecraft.scoreboard.Team;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
@@ -92,7 +93,7 @@ public class EntityUtil {
 	/**
 	 * check if attacker can set target as AttackTarget
 	 */
-	public static boolean checkCanEntityTarget(Entity attacker,Entity target) {
+	public static boolean checkCanEntityTarget(Entity attacker, Entity target) {
 		if(attacker instanceof PVZZombieEntity) {
 			return ((PVZZombieEntity) attacker).checkCanZombieTarget(target);
 		}
@@ -218,6 +219,19 @@ public class EntityUtil {
 			}
 		}
 		return list;
+	}
+	
+	/**
+	 * add entity cold effect 
+	 */
+	public static void setEntityPotionEffect(Entity entity, EffectInstance effect) {
+		if(entity instanceof PVZMultiPartEntity) {
+			setEntityPotionEffect(((PVZMultiPartEntity) entity).getOwner(), effect);
+		}else if(entity instanceof PVZZombieEntity) {
+			((PVZZombieEntity) entity).checkAndAddPotionEffect(effect);
+		}else if(entity instanceof LivingEntity) {
+			((LivingEntity) entity).addPotionEffect(effect);
+		}
 	}
 	
 	/**
