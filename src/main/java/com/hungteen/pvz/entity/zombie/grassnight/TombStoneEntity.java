@@ -2,9 +2,12 @@ package com.hungteen.pvz.entity.zombie.grassnight;
 
 import java.util.Random;
 
+import com.hungteen.pvz.entity.drop.CoinEntity;
 import com.hungteen.pvz.entity.zombie.PVZZombieEntity;
+import com.hungteen.pvz.register.EntityRegister;
 import com.hungteen.pvz.register.ParticleRegister;
 import com.hungteen.pvz.register.SoundRegister;
+import com.hungteen.pvz.utils.EntityUtil;
 import com.hungteen.pvz.utils.enums.Zombies;
 
 import net.minecraft.entity.EntitySize;
@@ -52,7 +55,7 @@ public class TombStoneEntity extends PVZZombieEntity{
 		if(this.spawnTick < SPAWN_TIME) {
 			this.spawnTick ++;
 			if(world.isRemote) {
-				for(int i = 0;i < 5;i ++) {
+				for(int i = 0;i < 3;i ++) {
 					Random rand=this.getRNG();
 					this.world.addParticle(ParticleRegister.DIRT_BURST_OUT.get(), this.getPosX()+0.5d, this.getPosY(), this.getPosZ()+0.5d, (rand.nextFloat()-0.5)/10,0.05d,(rand.nextFloat()-0.5)/10);
 					this.world.addParticle(ParticleRegister.DIRT_BURST_OUT.get(), this.getPosX()+0.5d, this.getPosY(), this.getPosZ()-0.5d, (rand.nextFloat()-0.5)/10,0.05d,(rand.nextFloat()-0.5)/10);
@@ -60,6 +63,26 @@ public class TombStoneEntity extends PVZZombieEntity{
 					this.world.addParticle(ParticleRegister.DIRT_BURST_OUT.get(), this.getPosX()-0.5d, this.getPosY(), this.getPosZ()-0.5d, (rand.nextFloat()-0.5)/10,0.05d,(rand.nextFloat()-0.5)/10);
 				}
 			}
+		}
+	}
+	
+	@Override
+	protected void dropCoin() {
+		int num = this.getRNG().nextInt(1000);
+		int amount = 0;
+		if (num < 1) {
+			amount = 1000;
+		}else if (num < 11) {
+			amount = 100;
+		}else if (num < 111) {
+			amount = 10;
+		}else{
+			amount = 1;
+		}
+		if (amount != 0) {
+			CoinEntity coin = EntityRegister.COIN.get().create(world);
+			coin.setAmount(amount);
+			EntityUtil.onMobEntitySpawn(world, coin, getPosition());
 		}
 	}
 	

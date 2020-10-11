@@ -208,23 +208,19 @@ public abstract class PVZZombieEntity extends MonsterEntity implements IPVZZombi
 	protected void dropCoin() {
 		int num = this.getRNG().nextInt(10000);
 		int amount = 0;
-		if (num < 1000)
+		if (num < 1000) {
 			amount = 1;
-		else if (num < 1100)
+		}else if (num < 1100) {
 			amount = 10;
-		else if (num < 1110)
+		}else if (num < 1110) {
 			amount = 100;
-		else if (num < 1111)
+		}else if(num < 1111) {
 			amount = 1000;
+		}
 		if (amount != 0) {
 			CoinEntity coin = EntityRegister.COIN.get().create(world);
-			coin.setPosition(getPosX(), getPosY(), getPosZ());
 			coin.setAmount(amount);
-			if (amount == 1000)
-				coin.playSound(SoundRegister.JEWEL_DROP.get(), 1f, 1f);
-			else
-				coin.playSound(SoundRegister.COIN_DROP.get(), 1f, 1f);
-			this.world.addEntity(coin);
+			EntityUtil.onMobEntitySpawn(world, coin, getPosition());
 		}
 	}
 

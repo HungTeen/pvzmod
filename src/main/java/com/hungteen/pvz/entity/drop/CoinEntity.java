@@ -8,10 +8,15 @@ import com.hungteen.pvz.utils.enums.Resources;
 
 import net.minecraft.entity.EntitySize;
 import net.minecraft.entity.EntityType;
+import net.minecraft.entity.ILivingEntityData;
 import net.minecraft.entity.MobEntity;
 import net.minecraft.entity.Pose;
+import net.minecraft.entity.SpawnReason;
 import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.util.SoundCategory;
+import net.minecraft.world.DifficultyInstance;
+import net.minecraft.world.IWorld;
 import net.minecraft.world.World;
 
 public class CoinEntity extends DropEntity{
@@ -19,6 +24,19 @@ public class CoinEntity extends DropEntity{
 	public CoinEntity(EntityType<? extends MobEntity> type, World worldIn) {
 		super(type, worldIn);
 		this.setAmount(this.getRandomAmount());
+	}
+	
+	@Override
+	public ILivingEntityData onInitialSpawn(IWorld worldIn, DifficultyInstance difficultyIn, SpawnReason reason,
+			ILivingEntityData spawnDataIn, CompoundNBT dataTag) {
+		if(!world.isRemote) {
+			if (this.getAmount() == 1000) {
+				this.playSound(SoundRegister.JEWEL_DROP.get(), 1f, 1f);
+			}else{
+				this.playSound(SoundRegister.COIN_DROP.get(), 1f, 1f);
+			}
+		}
+		return super.onInitialSpawn(worldIn, difficultyIn, reason, spawnDataIn, dataTag);
 	}
 
 	@Override

@@ -10,8 +10,6 @@ import net.minecraft.world.World;
 
 public abstract class PlantCloserEntity extends PVZPlantEntity implements ICloser{
 	
-	private static final int SPAWN_TICK = 20;
-	
 	public PlantCloserEntity(EntityType<? extends CreatureEntity> type, World worldIn) {
 		super(type, worldIn);
 	}
@@ -25,9 +23,6 @@ public abstract class PlantCloserEntity extends PVZPlantEntity implements IClose
 	@Override
 	protected void normalPlantTick() {
 		super.normalPlantTick();
-		if(this.getLiveTick() <= SPAWN_TICK) {
-			return ;
-		}
 		if(this.getAttackTarget()!=null) {
 			this.getLookController().setLookPositionWithEntity(getAttackTarget(), 30f, 30f);
 			if(this.performAttack()) {
