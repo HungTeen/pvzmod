@@ -7,7 +7,6 @@ import java.util.UUID;
 import javax.annotation.Nullable;
 
 import com.hungteen.pvz.PVZConfig;
-import com.hungteen.pvz.entity.PVZMultiPartEntity;
 import com.hungteen.pvz.entity.ai.PlantLookRandomlyGoal;
 import com.hungteen.pvz.entity.plant.enforce.SquashEntity;
 import com.hungteen.pvz.entity.plant.interfaces.IShroomPlant;
@@ -261,10 +260,7 @@ public abstract class PVZPlantEntity extends CreatureEntity implements IPVZPlant
 		return true;
 	}
 	
-	public boolean checkCanPlantTarget(Entity entity){
-		if(entity instanceof PVZMultiPartEntity) {
-			return false;
-		}
+	public boolean checkCanPlantTarget(LivingEntity entity){
 		return EntityUtil.checkCanEntityAttack(this, entity);
 	}
 	

@@ -13,6 +13,7 @@ import net.minecraft.entity.CreatureAttribute;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntitySize;
 import net.minecraft.entity.EntityType;
+import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.Pose;
 import net.minecraft.entity.SharedMonsterAttributes;
 import net.minecraft.entity.ai.controller.DolphinLookController;
@@ -141,7 +142,7 @@ public class ZombieDolphinEntity extends PVZZombieEntity {
 	}
 
 	@Override
-	public boolean checkCanZombieTarget(Entity target) {
+	public boolean checkCanZombieTarget(LivingEntity target) {
 		return target instanceof DolphinEntity || target instanceof PlayerEntity
 				|| target instanceof FoodieZombieEntity;
 	}

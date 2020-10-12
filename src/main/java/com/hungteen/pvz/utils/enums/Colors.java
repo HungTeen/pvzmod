@@ -80,6 +80,7 @@ public class Colors {
 	public static final int TOXIC_GREEN = 3368448;
 	public static final int TYRIAN_PURPLE = 7012434;
 	public static final int WHITE = 16777215;
+	public static final int SILVER_FISH = 7237230;
 	
 	public static final Pair<Integer,Integer> APPEASE_COLOR = new Pair<>(PEA_GREEN, GREEN);
 	public static final Pair<Integer,Integer> LIGHT_COLOR = new Pair<>(YELLOW, LITTLE_YELLOW1);
@@ -91,6 +92,7 @@ public class Colors {
 	public static final Pair<Integer,Integer> SPEAR_COLOR = new Pair<>(BLACK, SILVER);
 	public static final Pair<Integer,Integer> ZOMBIE_COLOR = new Pair<>(ZOMBIE_SKIN, BLACK);
 	public static final Pair<Integer,Integer> TOXIC_COLOR = new Pair<>(PURPLE, WHITE);
-	public static final Pair<Integer,Integer> ASSIST_COLOR = new Pair<>(SILVER, DARK_GRAY);
+	public static final Pair<Integer,Integer> ASSIST_COLOR = new Pair<>(SILVER_FISH, DARK_GRAY);
+	public static final Pair<Integer,Integer> MAGIC_COLOR = new Pair<>(PINK, PURPLE);
 	
 }

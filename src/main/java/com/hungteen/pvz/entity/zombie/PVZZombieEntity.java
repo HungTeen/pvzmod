@@ -192,9 +192,7 @@ public abstract class PVZZombieEntity extends MonsterEntity implements IPVZZombi
 	protected void onZombieRemove() {
 		if (!world.isRemote) {
 			if (getZombieType() == Type.SUPER) {//drop energy
-				EnergyEntity energy = EntityRegister.ENERGY.get().create(world);
-				energy.setPosition(getPosX(), getPosY() + 1, getPosZ());
-				world.addEntity(energy);
+				this.dropEnergy();
 			} else if (getZombieType() == Type.BEARD) {// finish achievement
 			}
 			this.dropCoin();
@@ -202,6 +200,14 @@ public abstract class PVZZombieEntity extends MonsterEntity implements IPVZZombi
 		}
 	}
 
+	/**
+	 * super mode type zombie can drop energy after death
+	 */
+	protected void dropEnergy() {
+		EnergyEntity energy = EntityRegister.ENERGY.get().create(world);
+		EntityUtil.onMobEntitySpawn(world, energy, this.getPosition().up());
+	}
+	
 	/**
 	 * zombies have chance to drop coin when died.
 	 */
@@ -233,7 +239,7 @@ public abstract class PVZZombieEntity extends MonsterEntity implements IPVZZombi
 	/**
 	 * can zombie set target as attackTarget
 	 */
-	public boolean checkCanZombieTarget(Entity target) {
+	public boolean checkCanZombieTarget(LivingEntity target) {
 		if(target instanceof SpikeWeedEntity) {
 			return false;
 		}
@@ -489,7 +495,26 @@ public abstract class PVZZombieEntity extends MonsterEntity implements IPVZZombi
 		this.addPotionEffect(effect);
 	}
 	
+	/**
+	 * when zombie turn to oppsite charm state
+	 * charm -> uncharm
+	 * uncharm -> charm
+	 */
+	public void onCharmed() {
+		if(this.canBeCharmed()) {
+			this.setCharmed(!this.isCharmed());
+			if(this.getZombieType() == Type.SUPER) {
+				this.setZombieType(Type.NORMAL);
+				this.dropEnergy();
+			}
+		}
+	}
+	
 	public boolean canBeButter() {
+		return true;
+	}
+	
+	public boolean canBeCharmed() {
 		return true;
 	}
 

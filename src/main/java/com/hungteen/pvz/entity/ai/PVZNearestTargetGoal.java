@@ -47,11 +47,11 @@ public class PVZNearestTargetGoal extends TargetGoal{
 		if (this.targetChance > 0 && this.goalOwner.getRNG().nextInt(this.targetChance) != 0){
             return false;
         }
-		List<Entity> list = this.goalOwner.world.getEntitiesWithinAABB(Entity.class, this.getAABB());
-		List<Entity> list1 = new ArrayList<Entity>();
-		for(Entity entity:list) {
+		List<LivingEntity> list = this.goalOwner.world.getEntitiesWithinAABB(LivingEntity.class, this.getAABB());
+		List<LivingEntity> list1 = new ArrayList<LivingEntity>();
+		for(LivingEntity entity:list) {
 			if(EntityUtil.checkCanEntityTarget(this.goalOwner, entity)) {
-				if(!this.shouldCheckSight||checkSenses(entity)) {
+				if(!this.shouldCheckSight || checkSenses(entity)) {
 					if(checkPlant(entity)) {
 				        list1.add(entity);
 					}
@@ -62,7 +62,7 @@ public class PVZNearestTargetGoal extends TargetGoal{
 			return false;
 		}
 		Collections.sort(list1, this.sorter);
-        this.target= (LivingEntity) list1.get(0);
+        this.target = list1.get(0);
         return true;
 	}
 	

@@ -5,8 +5,8 @@ import com.hungteen.pvz.entity.ai.PVZNearestTargetGoal;
 import com.hungteen.pvz.entity.ai.ZombieMeleeAttackGoal;
 import com.hungteen.pvz.register.BlockRegister;
 
-import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
+import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.ai.goal.LookAtGoal;
 import net.minecraft.entity.ai.goal.LookRandomlyGoal;
 import net.minecraft.entity.ai.goal.RandomWalkingGoal;
@@ -61,7 +61,7 @@ public abstract class PVZWaterZombieEntity extends PVZZombieEntity{
 	}
 	
 	@Override
-	public boolean checkCanZombieTarget(Entity target) {
+	public boolean checkCanZombieTarget(LivingEntity target) {
 		if(super.checkCanZombieTarget(target)) {
 			return !this.isInWater()||target.isInWater();
 		}

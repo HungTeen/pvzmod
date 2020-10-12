@@ -1,6 +1,7 @@
 package com.hungteen.pvz.render.entity.plant;
 
 import com.hungteen.pvz.entity.plant.PVZPlantEntity;
+import com.hungteen.pvz.render.layer.CharmLayer;
 import com.hungteen.pvz.render.layer.EnergyLayer;
 import com.mojang.blaze3d.matrix.MatrixStack;
 
@@ -26,6 +27,7 @@ public abstract class PVZPlantRender<T extends PVZPlantEntity> extends MobRender
 	
 	protected void addPlantLayers(){
 		this.addLayer(new EnergyLayer<>(this));
+		this.addLayer(new CharmLayer<>(this));
 	}
 	
 	protected abstract float getScaleByEntity(T entity);

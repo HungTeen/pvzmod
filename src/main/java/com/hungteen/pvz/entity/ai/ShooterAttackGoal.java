@@ -34,30 +34,29 @@ public class ShooterAttackGoal extends Goal{
 				return false;
 			}
 		}
-		LivingEntity attackTarget=this.attacker.getAttackTarget();
-		if(attackTarget==null) {
+		LivingEntity attackTarget = this.attacker.getAttackTarget();
+		if(attackTarget == null) {
 			return false;
-		}
-		else {
-			this.target=attackTarget;
-		    return true;
+		}else {
+			this.target = attackTarget;
+//			if(this.attacker.getRNG().nextInt(10)==0) System.out.println("1");
+			if(this.checkTarget()) {
+				return true;
+			}
+			this.resetTask();
+			return false;
 		}
 	}
 	
 	@Override
 	public boolean shouldContinueExecuting() {
-		if(this.attacker instanceof PVZPlantEntity) {
-			if(((PVZPlantEntity) this.attacker).isPlantSleeping()) {
-				return false;
-			}
-		}
-		return this.shouldExecute() && this.checkTarget();
+		return this.shouldExecute();
 	}
 	
 	@Override
 	public void resetTask() {
 //		this.attackTime=0;
-		this.target=null;
+		this.target = null;
 		this.attacker.setAttackTarget(null);
 	}
 
@@ -72,8 +71,8 @@ public class ShooterAttackGoal extends Goal{
 	}
 	
 	private boolean checkTarget(){
-		if(EntityUtil.checkCanEntityAttack(this.attacker,target)) {
-			return this.attacker.getEntitySenses().canSee(target) && this.shooter.checkY(target);
+		if(EntityUtil.checkCanEntityAttack(this.attacker, this.target)) {
+			return this.attacker.getEntitySenses().canSee(this.target) && this.shooter.checkY(this.target);
 		}
 		return false;
 	}

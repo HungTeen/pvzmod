@@ -8,9 +8,9 @@ import com.hungteen.pvz.register.SoundRegister;
 import com.hungteen.pvz.utils.enums.Plants;
 
 import net.minecraft.entity.CreatureEntity;
-import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntitySize;
 import net.minecraft.entity.EntityType;
+import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.Pose;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.network.datasync.DataParameter;
@@ -100,7 +100,7 @@ public class GraveBusterEntity extends PVZPlantEntity{
 	}
 	
 	@Override
-	public boolean checkCanPlantTarget(Entity entity) {
+	public boolean checkCanPlantTarget(LivingEntity entity) {
 		return entity instanceof TombStoneEntity && entity.isAlive() && entity.getPassengers().isEmpty();
 	}
 	

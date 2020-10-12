@@ -1,6 +1,7 @@
 package com.hungteen.pvz.entity.ai;
 
 import com.hungteen.pvz.entity.zombie.PVZZombieEntity;
+import com.hungteen.pvz.utils.EntityUtil;
 
 import net.minecraft.entity.CreatureEntity;
 import net.minecraft.entity.LivingEntity;
@@ -21,6 +22,11 @@ public class ZombieMeleeAttackGoal extends MeleeAttackGoal {
 			}
 		}
 		super.tick();
+	}
+	
+	@Override
+	public boolean shouldContinueExecuting() {
+		return super.shouldContinueExecuting() && EntityUtil.checkCanEntityTarget(this.attacker, this.attacker.getAttackTarget());
 	}
 
 	@Override

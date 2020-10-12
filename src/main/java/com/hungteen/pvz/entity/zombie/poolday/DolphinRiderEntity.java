@@ -9,9 +9,9 @@ import com.hungteen.pvz.register.SoundRegister;
 import com.hungteen.pvz.utils.ZombieUtil;
 import com.hungteen.pvz.utils.enums.Zombies;
 
-import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntitySize;
 import net.minecraft.entity.EntityType;
+import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.Pose;
 import net.minecraft.entity.SharedMonsterAttributes;
 import net.minecraft.entity.ai.goal.LookAtGoal;
@@ -86,7 +86,7 @@ public class DolphinRiderEntity extends PVZZombieEntity{
 	}
 	
 	@Override
-	public boolean checkCanZombieTarget(Entity target) {
+	public boolean checkCanZombieTarget(LivingEntity target) {
 		if(super.checkCanZombieTarget(target)) {
 			return !this.isInWater()||target.isInWater();
 		}

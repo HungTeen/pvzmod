@@ -1,6 +1,7 @@
 package com.hungteen.pvz.render.entity.zombie;
 
 import com.hungteen.pvz.entity.zombie.PVZZombieEntity;
+import com.hungteen.pvz.render.layer.CharmLayer;
 import com.hungteen.pvz.render.layer.ColdLayer;
 import com.hungteen.pvz.render.layer.EnergyLayer;
 import com.mojang.blaze3d.matrix.MatrixStack;
@@ -28,6 +29,7 @@ public abstract class PVZZombieRender<T extends PVZZombieEntity> extends MobRend
 	protected void addZombieLayers(){
 		this.addLayer(new ColdLayer<>(this));
 		this.addLayer(new EnergyLayer<>(this));
+		this.addLayer(new CharmLayer<>(this));
 	}
 	
 	protected abstract float getScaleByEntity(T entity);

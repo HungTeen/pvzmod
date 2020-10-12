@@ -93,7 +93,7 @@ public class EntityUtil {
 	/**
 	 * check if attacker can set target as AttackTarget
 	 */
-	public static boolean checkCanEntityTarget(Entity attacker, Entity target) {
+	public static boolean checkCanEntityTarget(Entity attacker, LivingEntity target) {
 		if(attacker instanceof PVZZombieEntity) {
 			return ((PVZZombieEntity) attacker).checkCanZombieTarget(target);
 		}
@@ -198,9 +198,9 @@ public class EntityUtil {
 	/**
 	 * get targetable entity
 	 */
-	public static List<Entity> getEntityTargetableEntity(LivingEntity attacker, AxisAlignedBB aabb){
-		List<Entity> list = new ArrayList<>();
-		for(Entity entity : attacker.world.getEntitiesWithinAABB(Entity.class, aabb)) {
+	public static List<LivingEntity> getEntityTargetableEntity(LivingEntity attacker, AxisAlignedBB aabb){
+		List<LivingEntity> list = new ArrayList<>();
+		for(LivingEntity entity : attacker.world.getEntitiesWithinAABB(LivingEntity.class, aabb)) {
 			if(checkCanEntityTarget(attacker, entity)) {
 				list.add(entity);
 			}
