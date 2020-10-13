@@ -51,6 +51,11 @@ public class RegistryHandler {
 		BucketArmorItem.initArmorModel();
 	}
 	
+//	@SubscribeEvent
+//	public static void gatherData(GatherDataEvent ev) {
+//		ev.getGenerator().addProvider(new ItemModelGenerator(ev.getGenerator(), ev.getExistingFileHelper()));
+//	}
+	
 	/**
 	 * Exists to work around a limitation with Spawn Eggs:
 	 * Spawn Eggs require an EntityType, but EntityTypes are created AFTER Items.

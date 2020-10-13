@@ -1,8 +1,11 @@
 package com.hungteen.pvz.utils;
 
+import java.util.HashMap;
+
 import com.hungteen.pvz.PVZMod;
 import com.hungteen.pvz.entity.plant.PVZPlantEntity;
 import com.hungteen.pvz.register.EntityRegister;
+import com.hungteen.pvz.utils.enums.CDs;
 import com.hungteen.pvz.utils.enums.Essences;
 import com.hungteen.pvz.utils.enums.Plants;
 import com.hungteen.pvz.utils.enums.Ranks;
@@ -10,6 +13,11 @@ import com.hungteen.pvz.utils.enums.Ranks;
 import net.minecraft.world.World;
 
 public class PlantUtil {
+	
+	public static final HashMap<Plants, Integer> PLANT_SUN_COST = new HashMap<>();
+	public static final HashMap<Plants, CDs> PLANT_CD = new HashMap<>();
+	public static final HashMap<Plants, Essences> PLANT_ESSENCE = new HashMap<>();
+	public static final HashMap<Plants, Ranks> PLANT_RANK = new HashMap<>();
                                                    //1  2  3  4  5  6   7   8   9   10  11  12  13   14   15   16   17   18   19   20
 	public static final int[] GRAY_XP = new int[] {0,10,15,25,40,60,100,140,200,280,400,560,800,1250,1700,2250,3000,4000,5400,7500,999999999};
 	public static final int[] WHITE_XP = new int[] {0,15,25,40,60,80,130,180,240,325,450,620,880,1400,1920,2500,3400,4500,6000,8400,999999999};
@@ -19,17 +27,137 @@ public class PlantUtil {
 	public static final int[] GOLD_XP = new int[] {0,35,60,90,120,175,255,350,450,600,800,1080,1500,2500,3600,5000,6400,8100,10800,14000,999999999};
 	public static final int[] MEGA_XP = new int[] {0,40,70,100,150,210,300,400,520,700,960,1300,1800,3000,4200,6000,7800,9600,12500,16000,999999999};
 	public static final int CURRENT_PLANT_NUM = 16;
+	
 	public static final Plants [] WATER_PLANTS = new Plants[] {
 			Plants.TANGLE_KELP,
 			Plants.WATER_GUARD,
 	};
 	
+	static {
+		//Plant sun Cost 
+		PLANT_SUN_COST.put(Plants.PUFF_SHROOM, 0);
+		PLANT_SUN_COST.put(Plants.POTATO_MINE, 25);
+		PLANT_SUN_COST.put(Plants.LILY_PAD, 25);
+		PLANT_SUN_COST.put(Plants.TANGLE_KELP, 25);
+		PLANT_SUN_COST.put(Plants.SUN_SHROOM, 25);
+		PLANT_SUN_COST.put(Plants.SCAREDY_SHROOM, 25);
+		PLANT_SUN_COST.put(Plants.SUN_FLOWER, 50);
+		PLANT_SUN_COST.put(Plants.WALL_NUT, 50);
+		PLANT_SUN_COST.put(Plants.SQUASH, 50);
+		PLANT_SUN_COST.put(Plants.GRAVE_BUSTER, 75);
+		PLANT_SUN_COST.put(Plants.HYPNO_SHROOM, 75);
+		PLANT_SUN_COST.put(Plants.ICE_SHROOM, 75);
+		PLANT_SUN_COST.put(Plants.PEA_SHOOTER, 100);
+		PLANT_SUN_COST.put(Plants.SPIKE_WEED, 100);
+		PLANT_SUN_COST.put(Plants.FUME_SHROOM, 100);
+		PLANT_SUN_COST.put(Plants.TALL_NUT, 125);
+		PLANT_SUN_COST.put(Plants.DOOM_SHROOM, 125);
+		PLANT_SUN_COST.put(Plants.CHERRY_BOMB, 150);
+		PLANT_SUN_COST.put(Plants.CHOMPER, 150);
+		PLANT_SUN_COST.put(Plants.SNOW_PEA, 175);
+		PLANT_SUN_COST.put(Plants.JALAPENO, 175);
+		PLANT_SUN_COST.put(Plants.TORCH_WOOD, 175);
+		PLANT_SUN_COST.put(Plants.REPEATER, 200);
+		PLANT_SUN_COST.put(Plants.THREE_PEATER, 300);
+		
+		//Plant CD
+		PLANT_CD.put(Plants.PUFF_SHROOM, CDs.HUGE_FAST);
+		
+		PLANT_CD.put(Plants.PEA_SHOOTER, CDs.VERY_FAST);
+		PLANT_CD.put(Plants.GRAVE_BUSTER, CDs.VERY_FAST);
+		PLANT_CD.put(Plants.SCAREDY_SHROOM, CDs.VERY_FAST);
+		
+		PLANT_CD.put(Plants.SUN_FLOWER, CDs.FAST);
+		PLANT_CD.put(Plants.SNOW_PEA, CDs.FAST);
+		PLANT_CD.put(Plants.REPEATER, CDs.FAST);
+		PLANT_CD.put(Plants.SUN_SHROOM, CDs.FAST);
+		
+		PLANT_CD.put(Plants.THREE_PEATER, CDs.LITTLE_FAST);
+		PLANT_CD.put(Plants.SPIKE_WEED, CDs.LITTLE_FAST);
+		PLANT_CD.put(Plants.FUME_SHROOM, CDs.LITTLE_FAST);
+		
+		PLANT_CD.put(Plants.CHOMPER, CDs.NORMAL);
+		PLANT_CD.put(Plants.TORCH_WOOD, CDs.NORMAL);
+		
+		PLANT_CD.put(Plants.POTATO_MINE, CDs.LITTLE_SLOW);
+		PLANT_CD.put(Plants.SQUASH, CDs.LITTLE_SLOW);
+		PLANT_CD.put(Plants.HYPNO_SHROOM, CDs.LITTLE_SLOW);
+		
+		PLANT_CD.put(Plants.WALL_NUT, CDs.SLOW);
+		PLANT_CD.put(Plants.TANGLE_KELP, CDs.SLOW);
+		PLANT_CD.put(Plants.ICE_SHROOM, CDs.SLOW);
+		
+		PLANT_CD.put(Plants.TALL_NUT, CDs.VERY_SLOW);
+		
+		PLANT_CD.put(Plants.CHERRY_BOMB, CDs.HUGE_SLOW);
+		PLANT_CD.put(Plants.JALAPENO, CDs.HUGE_SLOW);
+		
+		PLANT_CD.put(Plants.DOOM_SHROOM, CDs.SUPER_SLOW);
+		
+		//Plant rank
+		PLANT_RANK.put(Plants.PEA_SHOOTER, Ranks.GRAY);
+		PLANT_RANK.put(Plants.SUN_FLOWER, Ranks.GRAY);
+		PLANT_RANK.put(Plants.LILY_PAD, Ranks.GRAY);
+		PLANT_RANK.put(Plants.SCAREDY_SHROOM, Ranks.GRAY);
+		
+		PLANT_RANK.put(Plants.WALL_NUT, Ranks.WHITE);
+		PLANT_RANK.put(Plants.POTATO_MINE, Ranks.WHITE);
+		PLANT_RANK.put(Plants.TANGLE_KELP, Ranks.WHITE);
+		PLANT_RANK.put(Plants.SPIKE_WEED, Ranks.WHITE);
+		PLANT_RANK.put(Plants.PUFF_SHROOM, Ranks.WHITE);
+		PLANT_RANK.put(Plants.SUN_SHROOM, Ranks.WHITE);
+		PLANT_RANK.put(Plants.GRAVE_BUSTER, Ranks.WHITE);
+		
+		PLANT_RANK.put(Plants.SNOW_PEA, Ranks.GREEN);
+		PLANT_RANK.put(Plants.REPEATER, Ranks.GREEN);
+		PLANT_RANK.put(Plants.SQUASH, Ranks.GREEN);
+		PLANT_RANK.put(Plants.TORCH_WOOD, Ranks.GREEN);
+		PLANT_RANK.put(Plants.FUME_SHROOM, Ranks.GREEN);
+//		PLANT_RANK.put(Plants.COFFEE_BEAN, Ranks.GREEN);
+		
+		PLANT_RANK.put(Plants.CHERRY_BOMB, Ranks.BLUE);
+		PLANT_RANK.put(Plants.CHOMPER, Ranks.BLUE);
+		PLANT_RANK.put(Plants.THREE_PEATER, Ranks.BLUE);
+		PLANT_RANK.put(Plants.JALAPENO, Ranks.BLUE);
+		PLANT_RANK.put(Plants.TALL_NUT, Ranks.BLUE);
+		PLANT_RANK.put(Plants.HYPNO_SHROOM, Ranks.BLUE);
+		PLANT_RANK.put(Plants.ICE_SHROOM, Ranks.BLUE);
+		
+		PLANT_RANK.put(Plants.GATLING_PEA, Ranks.PURPLE);
+		
+		PLANT_RANK.put(Plants.DOOM_SHROOM, Ranks.GOLD);
+		
+		//Plant essence
+		PLANT_ESSENCE.put(Plants.PEA_SHOOTER, Essences.APPEASE);
+		PLANT_ESSENCE.put(Plants.REPEATER, Essences.APPEASE);
+		PLANT_ESSENCE.put(Plants.THREE_PEATER, Essences.APPEASE);
+		PLANT_ESSENCE.put(Plants.SUN_FLOWER, Essences.LIGHT);
+		PLANT_ESSENCE.put(Plants.SUN_SHROOM, Essences.LIGHT);
+		PLANT_ESSENCE.put(Plants.CHERRY_BOMB, Essences.EXPLOSION);
+		PLANT_ESSENCE.put(Plants.POTATO_MINE, Essences.EXPLOSION);
+		PLANT_ESSENCE.put(Plants.WALL_NUT, Essences.DEFENCE);
+		PLANT_ESSENCE.put(Plants.TALL_NUT, Essences.DEFENCE);
+		PLANT_ESSENCE.put(Plants.SNOW_PEA, Essences.ICE);
+		PLANT_ESSENCE.put(Plants.ICE_SHROOM, Essences.ICE);
+		PLANT_ESSENCE.put(Plants.CHOMPER, Essences.ENFORCE);
+		PLANT_ESSENCE.put(Plants.SQUASH, Essences.ENFORCE);
+		PLANT_ESSENCE.put(Plants.TANGLE_KELP, Essences.ENFORCE);
+		PLANT_ESSENCE.put(Plants.PUFF_SHROOM, Essences.TOXIC);
+		PLANT_ESSENCE.put(Plants.FUME_SHROOM, Essences.TOXIC);
+		PLANT_ESSENCE.put(Plants.SCAREDY_SHROOM, Essences.TOXIC);
+		PLANT_ESSENCE.put(Plants.GRAVE_BUSTER, Essences.ASSIST);
+		PLANT_ESSENCE.put(Plants.LILY_PAD, Essences.ASSIST);
+		PLANT_ESSENCE.put(Plants.HYPNO_SHROOM, Essences.MAGIC);
+		PLANT_ESSENCE.put(Plants.JALAPENO, Essences.FLAME);
+		PLANT_ESSENCE.put(Plants.TORCH_WOOD, Essences.FLAME);
+		PLANT_ESSENCE.put(Plants.SPIKE_WEED, Essences.SPEAR);
+	}
 	
 	public static int getPlantLevelUpXp(Plants plant,int lvl){
 		Ranks rank=getPlantRankByName(plant);
 		if(lvl==getPlantMaxLvl(plant)) return 999999999;
 		switch(rank) {
-		case GRAY:{               
+		case GRAY:{
 			if(lvl>=GRAY_XP.length) return 999999999;
 			return GRAY_XP[lvl];
 		}
@@ -89,6 +217,12 @@ public class PlantUtil {
 		case TALL_NUT:return EntityRegister.TALL_NUT.get().create(world);
 //		case WATER_GUARD:return EntityRegister.WATER_GUARD.get().create(world);
 		case PUFF_SHROOM:return EntityRegister.PUFF_SHROOM.get().create(world);
+		case SUN_SHROOM:return EntityRegister.SUN_SHROOM.get().create(world);
+		case FUME_SHROOM:return EntityRegister.FUME_SHROOM.get().create(world);
+		case GRAVE_BUSTER:return EntityRegister.GRAVE_BUSTER.get().create(world);
+		case HYPNO_SHROOM:return EntityRegister.HYPNO_SHROOM.get().create(world);
+		case SCAREDY_SHROOM:return EntityRegister.SCAREDY_SHROOM.get().create(world);
+		case ICE_SHROOM:return EntityRegister.ICE_SHROOM.get().create(world);
 		default:{
 			PVZMod.LOGGER.debug("No such plant entity!");
 			return null;
@@ -100,112 +234,59 @@ public class PlantUtil {
 	 * get plant card sun cost
 	 */
 	public static int getPlantSunCost(Plants plant){
-		switch(plant) {
-		case PUFF_SHROOM:return 0;
-		case POTATO_MINE:
-		case LILY_PAD:
-		case TANGLE_KELP:return 25;
-		case SUN_FLOWER:
-		case WALL_NUT:
-		case SQUASH:return 50;
-		case WATER_GUARD:return 75;
-		case PEA_SHOOTER:
-		case SPIKE_WEED:return 100;
-		case TALL_NUT:return 125;
-		case CHERRY_BOMB:
-		case CHOMPER:return 150;
-		case SNOW_PEA:
-		case JALAPENO:
-		case TORCH_WOOD:return 175;
-		case REPEATER:return 200;
-		case THREE_PEATER:return 325;
-		default:{
-			PVZMod.LOGGER.debug("plant get sun cost error!");
-			return 0;
+		if(PLANT_SUN_COST.containsKey(plant)) {
+			return PLANT_SUN_COST.get(plant);
 		}
-		}
+		PVZMod.LOGGER.debug("plant get sun cost error!");
+		return 9999;
 	}
 	
 	/**
 	 * get plant card CD
 	 */
 	public static int getPlantCoolDownTime(Plants plant,int lvl){
-		switch(plant) {
-		case PUFF_SHROOM:return getPlantCoolDownTimeHugeFast(lvl);
-		case PEA_SHOOTER:return getPlantCoolDownTimeVeryFast(lvl);
-		case SUN_FLOWER:
-		case SNOW_PEA:
-		case REPEATER:return getPlantCoolDownTimeFast(lvl);
-		case THREE_PEATER:
-		case SPIKE_WEED:return getPlantCoolDownTimeLittleFast(lvl);
-		case CHOMPER:
-		case TORCH_WOOD:return getPlantCoolDownTimeNormal(lvl);
-		case POTATO_MINE:
-		case SQUASH:
-		case WATER_GUARD:return getPlantCoolDownTimeLittleSlow(lvl);
-		case WALL_NUT:
-		case TANGLE_KELP:return getPlantCoolDownTimeSlow(lvl);
-		case TALL_NUT:return getPlantCoolDownTimeVerySlow(lvl);
-		case CHERRY_BOMB:
-		case JALAPENO:return getPlantCoolDownTimeHugeSlow(lvl);
-		case LILY_PAD:return 100;
-		default:{
-			PVZMod.LOGGER.debug("plant get cooldown time error!");
-			return 0;
+		if(PLANT_CD.containsKey(plant)) {
+			CDs cd = PLANT_CD.get(plant);
+			switch(cd) {
+			case HUGE_FAST:return getPlantCoolDownTimeHugeFast(lvl);
+			case VERY_FAST:return getPlantCoolDownTimeVeryFast(lvl);
+			case FAST:return getPlantCoolDownTimeFast(lvl);
+			case LITTLE_FAST:return getPlantCoolDownTimeLittleFast(lvl);
+			case NORMAL:return getPlantCoolDownTimeNormal(lvl);
+			case LITTLE_SLOW:return getPlantCoolDownTimeLittleSlow(lvl);
+			case SLOW:return getPlantCoolDownTimeSlow(lvl);
+			case VERY_SLOW:return getPlantCoolDownTimeVerySlow(lvl);
+			case HUGE_SLOW:return getPlantCoolDownTimeHugeSlow(lvl);
+			case SUPER_SLOW:return getPlantCoolDownTimeSuperSlow(lvl);
+			case OTHER:{// 8s 
+				return 160;
+			}
+			}
 		}
-		}
+		PVZMod.LOGGER.debug("plant get cooldown time error!");
+		return 0;
 	}
 	
+	/**
+	 * get the rank of plant
+	 */
 	public static Ranks getPlantRankByName(Plants plant){
-		switch(plant) {
-		case PEA_SHOOTER:
-		case SUN_FLOWER:
-		case LILY_PAD:return Ranks.GRAY;
-		case WALL_NUT:
-		case POTATO_MINE:
-		case TANGLE_KELP:
-		case SPIKE_WEED:
-		case PUFF_SHROOM:return Ranks.WHITE;
-		case SNOW_PEA:
-		case CHOMPER:
-		case REPEATER:
-		case SQUASH:
-		case TORCH_WOOD:return Ranks.GREEN;
-		case CHERRY_BOMB:
-		case THREE_PEATER:
-		case JALAPENO:
-		case TALL_NUT:return Ranks.BLUE;
-		default:{
-			PVZMod.LOGGER.debug("plant get rank error!");
-			return null;
+		if(PLANT_RANK.containsKey(plant)) {
+			return PLANT_RANK.get(plant);
 		}
-		}
+		PVZMod.LOGGER.debug("plant get rank error!");
+		return Ranks.GRAY;
 	}
 	
+	/**
+	 * get the essence type of plant
+	 */
 	public static Essences getPlantEssenceType(Plants plant){
-		switch (plant) {
-		case PEA_SHOOTER:
-		case REPEATER:
-		case THREE_PEATER:return Essences.APPEASE;
-		case SUN_FLOWER:return Essences.LIGHT;
-		case CHERRY_BOMB:
-		case POTATO_MINE:return Essences.EXPLOSION;
-		case WALL_NUT:
-		case TALL_NUT:return Essences.DEFENCE;
-		case SNOW_PEA:return Essences.ICE;
-		case CHOMPER:
-		case SQUASH:
-		case TANGLE_KELP:return Essences.ENFORCE;
-		case LILY_PAD:return Essences.ASSIST;
-		case JALAPENO:
-		case TORCH_WOOD:return Essences.FLAME;
-		case SPIKE_WEED:return Essences.SPEAR;
-		case PUFF_SHROOM:return Essences.TOXIC;
-		default:{
-			PVZMod.LOGGER.debug("plant get essence type error!");
-			return null;
+		if(PLANT_ESSENCE.containsKey(plant)) {
+			return PLANT_ESSENCE.get(plant);
 		}
-		}
+		PVZMod.LOGGER.debug("plant get essence type error!");
+		return Essences.APPEASE;
 	}
 	
 	/**
@@ -311,11 +392,22 @@ public class PlantUtil {
 	 * explosion plant 120s-100s 
 	 */
 	public static int getPlantCoolDownTimeHugeSlow(int lvl){
-		if(lvl<=20) {
-			int now=(lvl-1)/4;
-			return 2400-100*now;
+		if(lvl <= 20) {
+			int now = (lvl - 1) / 4;
+			return 2400 - 100*now;
 		}
 		return 2400;
+	}
+	
+	/**
+	 * doom shroom 300s - 240s
+	 */
+	public static int getPlantCoolDownTimeSuperSlow(int lvl){
+		if(lvl <= 20) {
+			int now = (lvl - 1) / 4;
+			return 6000 - 300 * now;
+		}
+		return 6000;
 	}
 	
 }
