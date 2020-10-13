@@ -8,8 +8,8 @@ import com.hungteen.pvz.utils.enums.Plants;
 
 import net.minecraft.block.Blocks;
 import net.minecraft.entity.CreatureEntity;
-import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
+import net.minecraft.entity.LivingEntity;
 import net.minecraft.particles.ParticleTypes;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
@@ -49,7 +49,7 @@ public class JalapenoEntity extends PlantBomberEntity{
 		double y = pos.getY() + 0.5f;
 		double z = pos.getZ() + 0.5f;
 		AxisAlignedBB aabb = new AxisAlignedBB(x+dx, y+1, z+dz, x-dx, y-1, z-dz);
-		for(Entity target:EntityUtil.getEntityAttackableTarget(this, aabb)) {
+		for(LivingEntity target:EntityUtil.getEntityTargetableEntity(this, aabb)) {
 			target.attackEntityFrom(PVZDamageSource.causeFireDamage(this, this), this.getAttackDamage());
 		}
 	}

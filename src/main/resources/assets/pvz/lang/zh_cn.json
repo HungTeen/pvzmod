@@ -85,6 +85,10 @@
     "item.pvz.dolphin_rider_zombie_spawn_egg":"海豚龙骑手僵尸刷怪蛋",
     "entity.pvz.lava_zombie":"潜岩浆僵尸",
     "item.pvz.lava_zombie_spawn_egg":"潜岩浆僵尸刷怪蛋",
+    "entity.pvz.tomb_stone":"墓碑",
+    "item.pvz.tomb_stone_spawn_egg":"墓碑刷怪蛋",
+    "entity.pvz.newspaper_zombie":"读报僵尸",
+    "item.pvz.newspaper_zombie_spawn_egg":"读报僵尸刷怪蛋",
 //plant
 //PeaShooter
     "entity.pvz.pea_shooter":"豌豆射手",
@@ -172,6 +176,41 @@
     "item.pvz.water_guard_spawn_egg":"睡莲护卫刷怪蛋",
     "item.pvz.water_guard_card":"睡莲护卫卡",
     "item.pvz.water_guard_enjoy_card":"睡莲护卫体验卡",
+//PuffShroom
+    "entity.pvz.puff_shroom":"小喷菇",
+    "item.pvz.puff_shroom_spawn_egg":"小喷菇刷怪蛋",
+    "item.pvz.puff_shroom_card":"小喷菇卡",
+    "item.pvz.puff_shroom_enjoy_card":"小喷菇体验卡",
+//SunShroom
+    "entity.pvz.sun_shroom":"阳光菇",
+    "item.pvz.sun_shroom_spawn_egg":"阳光菇刷怪蛋",
+    "item.pvz.sun_shroom_card":"阳光菇卡",
+    "item.pvz.sun_shroom_enjoy_card":"阳光菇体验卡",
+//FumeShroom
+    "entity.pvz.fume_shroom":"大喷菇",
+    "item.pvz.fume_shroom_spawn_egg":"大喷菇刷怪蛋",
+    "item.pvz.fume_shroom_card":"大喷菇卡",
+    "item.pvz.fume_shroom_enjoy_card":"大喷菇体验卡",
+//GraveBuster
+    "entity.pvz.grave_buster":"墓碑吞噬者",
+    "item.pvz.grave_buster_spawn_egg":"墓碑吞噬者刷怪蛋",
+    "item.pvz.grave_buster_card":"墓碑吞噬者卡",
+    "item.pvz.grave_buster_enjoy_card":"墓碑吞噬者体验卡",
+//HypnoShroom
+    "entity.pvz.hypno_shroom":"魅惑菇",
+    "item.pvz.hypno_shroom_spawn_egg":"魅惑菇刷怪蛋",
+    "item.pvz.hypno_shroom_card":"魅惑菇卡",
+    "item.pvz.hypno_shroom_enjoy_card":"魅惑菇体验卡",
+//ScaredyShroom
+    "entity.pvz.scaredy_shroom":"胆小菇",
+    "item.pvz.scaredy_shroom_spawn_egg":"胆小菇刷怪蛋",
+    "item.pvz.scaredy_shroom_card":"胆小菇卡",
+    "item.pvz.scaredy_shroom_enjoy_card":"胆小菇体验卡",
+//IceShroom
+    "entity.pvz.ice_shroom":"寒冰菇",
+    "item.pvz.ice_shroom_spawn_egg":"寒冰菇刷怪蛋",
+    "item.pvz.ice_shroom_card":"寒冰菇卡",
+    "item.pvz.ice_shroom_enjoy_card":"寒冰菇体验卡",
 //tool & tooltip
     "item.pvz.zombie_flag":"僵尸旗帜",
     "tooltip.pvz.zombie_flag":"右键会获得加速效果",
@@ -207,6 +246,7 @@
 //crop
     "block.pvz.pea_plant":"豌豆",
     "item.pvz.nut":"坚果",
+    "block.pvz.toxic_shroom":"孢子",
 //plant
     "block.pvz.nut_sapling":"坚果树苗",
     "block.pvz.nut_leaves":"坚果树叶",

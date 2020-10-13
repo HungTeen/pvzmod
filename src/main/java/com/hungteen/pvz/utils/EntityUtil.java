@@ -224,9 +224,9 @@ public class EntityUtil {
 	/**
 	 * add entity cold effect 
 	 */
-	public static void setEntityPotionEffect(Entity entity, EffectInstance effect) {
+	public static void addEntityPotionEffect(Entity entity, EffectInstance effect) {
 		if(entity instanceof PVZMultiPartEntity) {
-			setEntityPotionEffect(((PVZMultiPartEntity) entity).getOwner(), effect);
+			addEntityPotionEffect(((PVZMultiPartEntity) entity).getOwner(), effect);
 		}else if(entity instanceof PVZZombieEntity) {
 			((PVZZombieEntity) entity).checkAndAddPotionEffect(effect);
 		}else if(entity instanceof LivingEntity) {

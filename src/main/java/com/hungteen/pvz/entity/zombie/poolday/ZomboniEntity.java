@@ -164,6 +164,11 @@ public class ZomboniEntity extends PVZZombieEntity implements IMultiPartEntity{
 	}
 	
 	@Override
+	public boolean canBeFrozen() {
+		return false;
+	}
+	
+	@Override
 	public float getLife() {
 		return 120;
 	}

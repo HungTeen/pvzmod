@@ -15,17 +15,10 @@ public class ZombieMeleeAttackGoal extends MeleeAttackGoal {
 	}
 
 	@Override
-	public void tick() {
-		if (this.attacker instanceof PVZZombieEntity) {
-			if (((PVZZombieEntity) this.attacker).isZombieCantMove()) {
-				return;
-			}
-		}
-		super.tick();
-	}
-	
-	@Override
 	public boolean shouldContinueExecuting() {
+		if (this.attacker instanceof PVZZombieEntity && !((PVZZombieEntity) this.attacker).canZombieNormalUpdate()) {
+			return false;
+		}
 		return super.shouldContinueExecuting() && EntityUtil.checkCanEntityTarget(this.attacker, this.attacker.getAttackTarget());
 	}
 

@@ -97,17 +97,17 @@ public class PeaEntity extends PVZThrowableEntity {
 	private void dealPeaDamage(Entity target) {
 		if (this.getPeaState() == State.NORMAL) {// normal pea attack
 			// System.out.println(this.getThrower());
-			target.attackEntityFrom(PVZDamageSource.causeAppeaseDamage(this, this.getThrower()),this.getAttackDamage());
+			target.attackEntityFrom(PVZDamageSource.causeAppeaseDamage(this, this.getThrower()), this.getAttackDamage());
 		} else if (this.getPeaState() == State.ICE) {// snow pea attack
-			target.attackEntityFrom(PVZDamageSource.causeIceDamage(this, this.getThrower()),this.getAttackDamage());
+			target.attackEntityFrom(PVZDamageSource.causeIceDamage(this, this.getThrower()), this.getAttackDamage());
 			LivingEntity owner = this.getThrower();
 			if (owner instanceof IIcePlant) {
-				EntityUtil.setEntityPotionEffect(target, ((IIcePlant) owner).getColdEffect());
-				EntityUtil.setEntityPotionEffect(target, ((IIcePlant) owner).getFrozenEffect());
+				EntityUtil.addEntityPotionEffect(target, ((IIcePlant) owner).getColdEffect());
+				EntityUtil.addEntityPotionEffect(target, ((IIcePlant) owner).getFrozenEffect());
 			}else if(owner instanceof PlayerEntity) {
 				((PlayerEntity)owner).getCapability(CapabilityHandler.PLAYER_DATA_CAPABILITY).ifPresent((l)->{
 					int lvl = l.getPlayerData().getPlantStats().getPlantLevel(Plants.SNOW_PEA);
-					EntityUtil.setEntityPotionEffect(target, WeaponUtil.getPeaGunColdEffect(lvl));
+					EntityUtil.addEntityPotionEffect(target, WeaponUtil.getPeaGunColdEffect(lvl));
 				});
 			}
 		} else if (this.getPeaState() == State.FIRE || this.getPeaState() == State.BLUE_FIRE) {

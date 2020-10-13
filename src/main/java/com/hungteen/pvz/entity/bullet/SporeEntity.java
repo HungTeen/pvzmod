@@ -93,7 +93,7 @@ public class SporeEntity extends PVZThrowableEntity{
 	
 	@Override
 	protected float getGravityVelocity() {
-		return 0.002f;
+		return 0.0012f;
 	}
 
 }

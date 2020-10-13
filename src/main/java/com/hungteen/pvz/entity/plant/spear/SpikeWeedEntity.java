@@ -35,7 +35,7 @@ public class SpikeWeedEntity extends PVZPlantEntity{
 			this.setAttackTime(this.getAttackTime()-1);
 		}
 		if(this.getSuperTime()%10==5) {
-			for(Entity target:EntityUtil.getEntityAttackableTarget(this, EntityUtil.getEntityAABB(this, 10, 2))) {
+			for(LivingEntity target : EntityUtil.getEntityTargetableEntity(this, EntityUtil.getEntityAABB(this, 10, 2))) {
 				if(!world.isRemote) {
 					target.attackEntityFrom(PVZDamageSource.causeSpikeDamage(this, this), this.getAttackDamage() * 2);
 				}else {

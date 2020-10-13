@@ -94,7 +94,20 @@ public class ItemRegister {
     public static final RegistryObject<PlantCardItem> TALL_NUT_ENJOY_CARD = registerCard(Plants.TALL_NUT, true);
 //    public static final RegistryObject<PlantCardItem> WATER_GUARD_CARD = registerCard(Plants.WATER_GUARD, false);
 //    public static final RegistryObject<PlantCardItem> WATER_GUARD_ENJOY_CARD = registerCard(Plants.WATER_GUARD, true);
-
+    public static final RegistryObject<PlantCardItem> PUFF_SHROOM_CARD = registerCard(Plants.PUFF_SHROOM, false);
+    public static final RegistryObject<PlantCardItem> PUFF_SHROOM_ENJOY_CARD = registerCard(Plants.PUFF_SHROOM, true);
+    public static final RegistryObject<PlantCardItem> SUN_SHROOM_CARD = registerCard(Plants.SUN_SHROOM, false);
+    public static final RegistryObject<PlantCardItem> SUN_SHROOM_ENJOY_CARD = registerCard(Plants.SUN_SHROOM, true);
+    public static final RegistryObject<PlantCardItem> FUME_SHROOM_CARD = registerCard(Plants.FUME_SHROOM, false);
+    public static final RegistryObject<PlantCardItem> FUME_SHROOM_ENJOY_CARD = registerCard(Plants.FUME_SHROOM, true);
+    public static final RegistryObject<PlantCardItem> GRAVE_BUSTER_CARD = registerCard(Plants.GRAVE_BUSTER, false);
+    public static final RegistryObject<PlantCardItem> GRAVE_BUSTER_ENJOY_CARD = registerCard(Plants.GRAVE_BUSTER, true);
+    public static final RegistryObject<PlantCardItem> HYPNO_SHROOM_CARD = registerCard(Plants.HYPNO_SHROOM, false);
+    public static final RegistryObject<PlantCardItem> HYPNO_SHROOM_ENJOY_CARD = registerCard(Plants.HYPNO_SHROOM, true);
+    public static final RegistryObject<PlantCardItem> SCAREDY_SHROOM_CARD = registerCard(Plants.SCAREDY_SHROOM, false);
+    public static final RegistryObject<PlantCardItem> SCAREDY_SHROOM_ENJOY_CARD = registerCard(Plants.SCAREDY_SHROOM, true);
+    public static final RegistryObject<PlantCardItem> ICE_SHROOM_CARD = registerCard(Plants.ICE_SHROOM, false);
+    public static final RegistryObject<PlantCardItem> ICE_SHROOM_ENJOY_CARD = registerCard(Plants.ICE_SHROOM, true);
     //plants
 	public static final RegistryObject<Item> PEA = ITEMS.register("pea",()-> new BlockItem(BlockRegister.PEA_PLANT.get(),new Item.Properties().group(GroupRegister.PVZ_MISC)));
 	public static final RegistryObject<Item> NUT = ITEMS.register("nut", PVZItemBase::new);
@@ -106,7 +119,7 @@ public class ItemRegister {
 	public static final RegistryObject<Item> BLUE_FLAME_PEA = ITEMS.register("blue_flame_pea", PVZItemBase::new);
 	public static final RegistryObject<Item> SMALL_MEAT = ITEMS.register("small_meat", PVZItemBase::new);
 	public static final RegistryObject<Item> PEPPER = ITEMS.register("pepper", PVZItemBase::new);
-	public static final RegistryObject<Item> FUME = ITEMS.register("fume", PVZItemBase::new);
+//	public static final RegistryObject<Item> FUME = ITEMS.register("fume", PVZItemBase::new);
 	
 	//tool
 	public static final RegistryObject<Item> ZOMBIE_FLAG = ITEMS.register("zombie_flag", ZombieFlagItem::new);
@@ -182,6 +195,7 @@ public class ItemRegister {
 	public static final RegistryObject<PVZSpawnEggItem> GRAVE_BUSTER_SPAWN_EGG = registerSpawnEgg("grave_buster", EntityRegister.GRAVE_BUSTER, Colors.ASSIST_COLOR);
 	public static final RegistryObject<PVZSpawnEggItem> HYPNO_SHROOM_SPAWN_EGG = registerSpawnEgg("hypno_shroom", EntityRegister.HYPNO_SHROOM, Colors.MAGIC_COLOR);
 	public static final RegistryObject<PVZSpawnEggItem> SCAREDY_SHROOM_SPAWN_EGG = registerSpawnEgg("scaredy_shroom", EntityRegister.SCAREDY_SHROOM, Colors.TOXIC_COLOR);
+	public static final RegistryObject<PVZSpawnEggItem> ICE_SHROOM_SPAWN_EGG = registerSpawnEgg("ice_shroom", EntityRegister.ICE_SHROOM, Colors.ICE_COLOR);
 	
 	/**
 	 * register spawn eggs

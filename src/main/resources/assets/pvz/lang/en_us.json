@@ -87,6 +87,10 @@
     "item.pvz.dolphin_rider_zombie_spawn_egg":"Dolphin Rider Zombie Spawn Egg",
     "entity.pvz.lava_zombie":"Lava Zombie",
     "item.pvz.lava_zombie_spawn_egg":"Lava Zombie Spawn Egg",
+    "entity.pvz.tomb_stone":"Tomb Stone",
+    "item.pvz.tomb_stone_spawn_egg":"Tomb Stone Spawn Egg",
+    "entity.pvz.newspaper_zombie":"Newspaper Zombie",
+    "item.pvz.newspaper_zombie_spawn_egg":"Newspaper Zombie Spawn Egg",
 //plant
 //PeaShooter
     "entity.pvz.pea_shooter":"PeaShooter",
@@ -174,6 +178,41 @@
     "item.pvz.water_guard_spawn_egg":"WaterGuard Spawn Egg",
     "item.pvz.water_guard_card":"WaterGuard Card",
     "item.pvz.water_guard_enjoy_card":"WaterGuard Enjoy Card",
+//PuffShroom
+    "entity.pvz.puff_shroom":"PuffShroom",
+    "item.pvz.puff_shroom_spawn_egg":"PuffShroom Spawn Egg",
+    "item.pvz.puff_shroom_card":"PuffShroom Card",
+    "item.pvz.puff_shroom_enjoy_card":"PuffShroom Enjoy Card",
+//SunShroom
+    "entity.pvz.sun_shroom":"SunShroom",
+    "item.pvz.sun_shroom_spawn_egg":"SunShroom Spawn Egg",
+    "item.pvz.sun_shroom_card":"SunShroom Card",
+    "item.pvz.sun_shroom_enjoy_card":"SunShroom Enjoy Card",
+//FumeShroom
+    "entity.pvz.fume_shroom":"FumeShroom",
+    "item.pvz.fume_shroom_spawn_egg":"FumeShroom Spawn Egg",
+    "item.pvz.fume_shroom_card":"FumeShroom Card",
+    "item.pvz.fume_shroom_enjoy_card":"FumeShroom Enjoy Card",
+//GraveBuster
+    "entity.pvz.grave_buster":"GraveBuster",
+    "item.pvz.grave_buster_spawn_egg":"GraveBuster Spawn Egg",
+    "item.pvz.grave_buster_card":"GraveBuster Card",
+    "item.pvz.grave_buster_enjoy_card":"GraveBuster Enjoy Card",
+//HypnoShroom
+    "entity.pvz.hypno_shroom":"HypnoShroom",
+    "item.pvz.hypno_shroom_spawn_egg":"HypnoShroom Spawn Egg",
+    "item.pvz.hypno_shroom_card":"HypnoShroom Card",
+    "item.pvz.hypno_shroom_enjoy_card":"HypnoShroom Enjoy Card",
+//ScaredyShroom
+    "entity.pvz.scaredy_shroom":"ScaredyShroom",
+    "item.pvz.scaredy_shroom_spawn_egg":"ScaredyShroom Spawn Egg",
+    "item.pvz.scaredy_shroom_card":"ScaredyShroom Card",
+    "item.pvz.scaredy_shroom_enjoy_card":"ScaredyShroom Enjoy Card",
+//IceShroom
+    "entity.pvz.ice_shroom":"IceShroom",
+    "item.pvz.ice_shroom_spawn_egg":"IceShroom Spawn Egg",
+    "item.pvz.ice_shroom_card":"IceShroom Card",
+    "item.pvz.ice_shroom_enjoy_card":"IceShroom Enjoy Card",
 //tool & tooltip
     "item.pvz.zombie_flag":"Zombie Flag",
     "tooltip.pvz.zombie_flag":"Right Click to get a speed effect",
@@ -209,6 +248,7 @@
 //crop
     "block.pvz.pea_plant":"Pea",
     "item.pvz.nut":"Nut",
+    "block.pvz.toxic_shroom":"Spore",
 //plant
     "block.pvz.nut_sapling":"Nut Sapling",
     "block.pvz.nut_leaves":"Nut Leaves",

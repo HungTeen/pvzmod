@@ -8,6 +8,7 @@ import java.util.UUID;
 import javax.annotation.Nullable;
 
 import com.hungteen.pvz.PVZConfig;
+import com.hungteen.pvz.entity.ai.PVZLookRandomlyGoal;
 import com.hungteen.pvz.entity.ai.PVZNearestTargetGoal;
 import com.hungteen.pvz.entity.ai.ZombieMeleeAttackGoal;
 import com.hungteen.pvz.entity.drop.CoinEntity;
@@ -34,8 +35,6 @@ import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.Pose;
 import net.minecraft.entity.SharedMonsterAttributes;
 import net.minecraft.entity.SpawnReason;
-import net.minecraft.entity.ai.goal.LookAtGoal;
-import net.minecraft.entity.ai.goal.LookRandomlyGoal;
 import net.minecraft.entity.ai.goal.SwimGoal;
 import net.minecraft.entity.ai.goal.WaterAvoidingRandomWalkingGoal;
 import net.minecraft.entity.monster.MonsterEntity;
@@ -122,8 +121,7 @@ public abstract class PVZZombieEntity extends MonsterEntity implements IPVZZombi
 
 	@Override
 	protected void registerGoals() {
-		this.goalSelector.addGoal(8, new LookAtGoal(this, PlayerEntity.class, 8.0F));
-		this.goalSelector.addGoal(8, new LookRandomlyGoal(this));
+		this.goalSelector.addGoal(8, new PVZLookRandomlyGoal(this));
 		this.goalSelector.addGoal(7, new WaterAvoidingRandomWalkingGoal(this, 1.0D));
 		this.goalSelector.addGoal(7, new SwimGoal(this));
 		this.goalSelector.addGoal(0, new ZombieMeleeAttackGoal(this, 1.0, false));
@@ -133,8 +131,9 @@ public abstract class PVZZombieEntity extends MonsterEntity implements IPVZZombi
 	@Override
 	public void livingTick() {
 		super.livingTick();
-		if (!this.isAlive() || this.isZombieCantMove())
+		if (!this.isAlive() || this.canZombieNormalUpdate()) {
 			return;
+		}
 		this.normalZombieTick();
 	}
 
@@ -148,7 +147,7 @@ public abstract class PVZZombieEntity extends MonsterEntity implements IPVZZombi
 	}
 
 	public int getAttackCD() {
-		if (this.isZombieCantMove()) {
+		if (!this.canZombieNormalUpdate()) {
 			return 10000000;
 		}
 		int now = 20;
@@ -599,8 +598,8 @@ public abstract class PVZZombieEntity extends MonsterEntity implements IPVZZombi
 		return EntityUtil.isEntityCold(this) || EntityUtil.isEntityFrozen(this);
 	}
 
-	public boolean isZombieCantMove() {
-		return EntityUtil.isEntityFrozen(this);
+	public boolean canZombieNormalUpdate() {
+		return !EntityUtil.isEntityFrozen(this);
 	}
 
 	public Type getZombieType() {

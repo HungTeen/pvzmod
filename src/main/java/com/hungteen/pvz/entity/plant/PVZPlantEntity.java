@@ -7,7 +7,7 @@ import java.util.UUID;
 import javax.annotation.Nullable;
 
 import com.hungteen.pvz.PVZConfig;
-import com.hungteen.pvz.entity.ai.PlantLookRandomlyGoal;
+import com.hungteen.pvz.entity.ai.PVZLookRandomlyGoal;
 import com.hungteen.pvz.entity.plant.enforce.SquashEntity;
 import com.hungteen.pvz.entity.plant.interfaces.IShroomPlant;
 import com.hungteen.pvz.entity.plant.spear.SpikeWeedEntity;
@@ -98,7 +98,7 @@ public abstract class PVZPlantEntity extends CreatureEntity implements IPVZPlant
 	
 	@Override
 	protected void registerGoals() {
-		this.goalSelector.addGoal(2, new PlantLookRandomlyGoal(this));
+		this.goalSelector.addGoal(2, new PVZLookRandomlyGoal(this));
 	}
 	
 	/**
@@ -132,10 +132,14 @@ public abstract class PVZPlantEntity extends CreatureEntity implements IPVZPlant
 			this.gardenPlantTick();
 		}else {
 			this.plantBaseTick();
-			if(!this.isPlantSleeping()) {
+			if(this.canPlantNormalUpdate()) {
 			    this.normalPlantTick();
 			}
 		}
+	}
+	
+	public boolean canPlantNormalUpdate() {
+		return !this.isPlantSleeping();
 	}
 	
 	/**

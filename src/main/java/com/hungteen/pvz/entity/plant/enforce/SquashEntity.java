@@ -93,7 +93,7 @@ public class SquashEntity extends PVZPlantEntity{
 	
 	protected void dealDamage(){
 		this.setAttackTime(0);
-		for(Entity entity : EntityUtil.getEntityAttackableTarget(this, EntityUtil.getEntityAABB(this, 0.5f, 0.5f))) {
+		for(Entity entity : EntityUtil.getEntityTargetableEntity(this, EntityUtil.getEntityAABB(this, 0.5f, 0.5f))) {
 			entity.attackEntityFrom(PVZDamageSource.causeNormalDamage(this, this), this.getAttackDamage());
 		}
 	}

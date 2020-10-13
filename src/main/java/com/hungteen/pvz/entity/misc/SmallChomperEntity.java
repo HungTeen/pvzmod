@@ -49,7 +49,7 @@ public class SmallChomperEntity extends MobEntity {
 		if(this.owner==null) {
 			return ;
 		}
-		for(Entity target:EntityUtil.getEntityAttackableTarget(this.owner, EntityUtil.getEntityAABB(this, 0.5f, 1f))) {
+		for(Entity target:EntityUtil.getEntityTargetableEntity(this.owner, EntityUtil.getEntityAABB(this, 0.5f, 1f))) {
 			if(target instanceof LivingEntity) {
 			    target.attackEntityFrom(PVZDamageSource.causeEatDamage(this, this.owner), getAttackDamage((LivingEntity) target));
 			}

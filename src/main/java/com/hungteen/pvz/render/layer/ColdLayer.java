@@ -21,7 +21,6 @@ public class ColdLayer<T extends LivingEntity, M extends EntityModel<T>> extends
 	@Override
 	protected boolean canRender(T entity) {
 		if(entity.isInvisible()) return false;
-		if(EntityUtil.isEntityFrozen(entity)) return false;
 		return EntityUtil.isEntityCold(entity);
 	}
 
