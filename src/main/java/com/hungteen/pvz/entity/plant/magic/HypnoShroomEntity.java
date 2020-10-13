@@ -41,6 +41,11 @@ public class HypnoShroomEntity extends PVZPlantEntity implements IShroomPlant{
 		}
 	}
 	
+	@Override
+	public float getPlantHealth() {
+		return 30;
+	}
+	
 	public float getHealHealth() {
 		int lvl = this.getPlantLvl();
 		if(lvl <= 20) {

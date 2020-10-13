@@ -21,7 +21,7 @@ public abstract class PVZPlantRender<T extends PVZPlantEntity> extends MobRender
 
 	@Override
 	protected void preRenderCallback(T entitylivingbaseIn, MatrixStack matrixStackIn, float partialTickTime) {
-		float sz=getScaleByEntity(entitylivingbaseIn);
+		float sz = getScaleByEntity(entitylivingbaseIn);
 		matrixStackIn.scale(sz,sz,sz);
 	}
 	

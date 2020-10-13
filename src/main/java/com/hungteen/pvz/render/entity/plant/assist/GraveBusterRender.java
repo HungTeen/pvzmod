@@ -22,7 +22,7 @@ public class GraveBusterRender extends PVZPlantRender<GraveBusterEntity>{
 	protected void preRenderCallback(GraveBusterEntity entity, MatrixStack matrixStackIn,
 			float partialTickTime) {
 		float sz = this.getScaleByEntity(entity);
-		matrixStackIn.scale(sz,sz,sz);
+		matrixStackIn.scale(sz, sz, sz);
 		if(entity.isEating()) {
 			float height = 1.5f;
 			float downOffset = (1 - entity.getAttackTime() * 1.0f / entity.getAttackCD()) * height;

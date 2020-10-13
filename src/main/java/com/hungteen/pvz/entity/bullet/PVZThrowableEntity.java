@@ -35,7 +35,7 @@ public abstract class PVZThrowableEntity extends AbstractBulletEntity implements
 	@Override
 	public void tick() {
 		super.tick();
-		if(this.ticksExisted >= this.getMaxLiveTick()) {
+		if(!world.isRemote && this.ticksExisted >= this.getMaxLiveTick()) {
 			this.remove();
 		}
 	}

@@ -159,6 +159,11 @@ public class PVZConfig {
 						.comment("The chance when you use bone meal to grow chomper,the bigger the less chance.")
 						.worldRestart()
 						.defineInRange("ChomperGrow", 20, 5, 100);
+				BlockSettings.SaplingTurnOriginChance = builder
+						.translation(CONFIG_TRANSLATE+"sapling_turn_origin")
+						.comment("The chance when sapling turn to origin block")
+						.worldRestart()
+						.defineInRange("SaplingTurnOrigin", 16, 2, 100);
 				builder.comment("Setting about break blocks.").push("Break Block Setting");
 				{
 					BlockSettings.BreakBlock.PeaDropChance = builder
@@ -180,7 +185,7 @@ public class PVZConfig {
 		public static class WorldSettings{
 			public WorldEventSettings WorldEventSettings = new WorldEventSettings();
 			public OverWorldSettings OverWorldSettings = new OverWorldSettings();
-				
+
 			public static class WorldEventSettings{
 				public ForgeConfigSpec.IntValue SafeDayLength;
 			    public ForgeConfigSpec.IntValue ZombieAttackChance;
@@ -228,6 +233,8 @@ public class PVZConfig {
 		public static class BlockSettings{
 			public ForgeConfigSpec.IntValue OriginBlockEffectChance;
 			public ForgeConfigSpec.IntValue ChomperGrowChance;
+			public ForgeConfigSpec.IntValue SaplingTurnOriginChance;
+			
 			public BreakBlock BreakBlock = new BreakBlock();
 			public static class BreakBlock{
 				public ForgeConfigSpec.IntValue PeaDropChance;

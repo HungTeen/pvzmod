@@ -1,6 +1,8 @@
 package com.hungteen.pvz.entity.bullet;
 
 import com.hungteen.pvz.entity.plant.base.PlantShooterEntity;
+import com.hungteen.pvz.entity.plant.toxic.PuffShroomEntity;
+import com.hungteen.pvz.entity.plant.toxic.ScaredyShroomEntity;
 import com.hungteen.pvz.misc.damage.PVZDamageSource;
 import com.hungteen.pvz.register.ItemRegister;
 import com.hungteen.pvz.register.ParticleRegister;
@@ -17,7 +19,7 @@ import net.minecraft.world.World;
 
 public class SporeEntity extends PVZThrowableEntity{
 
-	private static final int MAX_LIVE_TICK = 20;
+	private static final int SHORT_LIVE_TICK = 20;
 	
 	public SporeEntity(EntityType<?> type, World worldIn) {
 		super(type, worldIn);
@@ -31,7 +33,8 @@ public class SporeEntity extends PVZThrowableEntity{
 	public void tick() {
 		super.tick();
 		if(world.isRemote) {
-			int cnt = this.ticksExisted < MAX_LIVE_TICK / 2 ? 3 : 2;
+			int cnt = 3;
+//			System.out.println("yes");
 			for(int i = 0; i < cnt; ++i) {
 	            this.world.addParticle(ParticleRegister.SPORE.get(), this.getPosX(), this.getPosY(), this.getPosZ(), 0.0D, 0.0D, 0.0D);
 	        }
@@ -40,7 +43,12 @@ public class SporeEntity extends PVZThrowableEntity{
 	
 	@Override
 	protected int getMaxLiveTick() {
-		return MAX_LIVE_TICK;
+		if(this.getThrower() instanceof PuffShroomEntity) {
+			return SHORT_LIVE_TICK;
+		}else if(this.getThrower() instanceof ScaredyShroomEntity) {
+			return super.getMaxLiveTick();
+		}
+		return SHORT_LIVE_TICK;
 	}
 	
 	@Override

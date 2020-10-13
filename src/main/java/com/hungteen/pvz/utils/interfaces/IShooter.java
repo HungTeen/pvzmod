@@ -38,4 +38,9 @@ public interface IShooter {
 	 * is suitable angle
 	 */
 	boolean checkY(Entity target);
+	
+	/**
+	 * check weather the shooter can shoot currently
+	 */
+	boolean canShoot();
 }

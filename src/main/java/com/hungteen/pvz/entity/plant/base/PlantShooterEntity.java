@@ -24,6 +24,7 @@ public abstract class PlantShooterEntity extends PVZPlantEntity implements IShoo
 	
 	@Override
 	protected void registerGoals() {
+		super.registerGoals();
 	    this.goalSelector.addGoal(0, new ShooterAttackGoal(this));
 	}
 
@@ -77,6 +78,11 @@ public abstract class PlantShooterEntity extends PVZPlantEntity implements IShoo
 			return 1;
 		}
 		return getNormalAttackCD();
+	}
+	
+	@Override
+	public boolean canShoot() {
+		return !this.isPlantSleeping();
 	}
 	
 	/**

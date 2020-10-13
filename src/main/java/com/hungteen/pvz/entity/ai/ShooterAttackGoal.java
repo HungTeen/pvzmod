@@ -2,7 +2,6 @@ package com.hungteen.pvz.entity.ai;
 
 import java.util.EnumSet;
 
-import com.hungteen.pvz.entity.plant.PVZPlantEntity;
 import com.hungteen.pvz.utils.EntityUtil;
 import com.hungteen.pvz.utils.interfaces.IShooter;
 
@@ -29,10 +28,8 @@ public class ShooterAttackGoal extends Goal{
 	
 	@Override
 	public boolean shouldExecute() {
-		if(this.attacker instanceof PVZPlantEntity) {
-			if(((PVZPlantEntity) this.attacker).isPlantSleeping()) {
-				return false;
-			}
+		if(!this.shooter.canShoot()) {
+			return false;
 		}
 		LivingEntity attackTarget = this.attacker.getAttackTarget();
 		if(attackTarget == null) {
