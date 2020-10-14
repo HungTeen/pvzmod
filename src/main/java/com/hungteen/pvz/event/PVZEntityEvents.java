@@ -17,7 +17,7 @@ public class PVZEntityEvents {
 
 	@SubscribeEvent
 	public static void onEntityJoinOverWorld(EntityJoinWorldEvent ev) {
-		if(PVZConfig.COMMON_CONFIG.EntitySettings.CanSpawnDefaultMonster.get()) {
+		if(PVZConfig.COMMON_CONFIG.WorldSettings.CanSpawnDefaultMonster.get()) {
 			return;
 		}
 		World world = ev.getWorld();

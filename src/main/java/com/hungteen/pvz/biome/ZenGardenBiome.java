@@ -68,7 +68,7 @@ public class ZenGardenBiome extends PVZBiome {
 	@Override
 	public void addSpawns() {
 //		WorldEntitySpawner
-		this.addSpawn(EntityClassification.AMBIENT, new Biome.SpawnListEntry(EntityRegister.SUN.get(),PVZConfig.COMMON_CONFIG.EntitySettings.EntitySpawnWeight.SunSpawnWeight.get(),1,1));
+		this.addSpawn(EntityClassification.AMBIENT, new Biome.SpawnListEntry(EntityRegister.SUN.get(),PVZConfig.COMMON_CONFIG.WorldSettings.EntitySpawnSettings.SunSpawnWeight.get(),1,1));
 //		this.addSpawn(EntityClassification.CREATURE, new Biome.SpawnListEntry(EntityRegister.SUN_FLOWER.get(),20,1,1));
 	}
 

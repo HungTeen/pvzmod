@@ -42,15 +42,15 @@ public class BiomeRegister {
 		}
 		for(Biome biome:BiomeUtil.OVER_LAND) {
 			biome.addStructure(FeatureRegister.BUCKET_HOUSE.get().withConfiguration(IFeatureConfig.NO_FEATURE_CONFIG));
-			biome.getSpawns(EntityClassification.AMBIENT).add(new Biome.SpawnListEntry(EntityRegister.SUN.get(),2*PVZConfig.COMMON_CONFIG.EntitySettings.EntitySpawnWeight.SunSpawnWeight.get(),1,1));
+			biome.getSpawns(EntityClassification.AMBIENT).add(new Biome.SpawnListEntry(EntityRegister.SUN.get(),2*PVZConfig.COMMON_CONFIG.WorldSettings.EntitySpawnSettings.SunSpawnWeight.get(),1,1));
 		}
 		for(Biome biome:BiomeUtil.OCEAN) {
 			biome.addStructure(FeatureRegister.DOLPHIN_HOUSE.get().withConfiguration(IFeatureConfig.NO_FEATURE_CONFIG));
-			biome.getSpawns(EntityClassification.CREATURE).add(new Biome.SpawnListEntry(EntityRegister.FOODIE_ZOMBIE.get(),PVZConfig.COMMON_CONFIG.EntitySettings.EntitySpawnWeight.FoodieZombieSpawnWeight.get(),1,2));
-//			biome.getSpawns(EntityClassification.MONSTER).add(new Biome.SpawnListEntry(EntityRegister.ZOMBIE_DOLPHIN.get(),PVZConfig.COMMON_CONFIG.EntitySettings.EntitySpawnWeight.ZombieDolphinSpawnWeight.get(),1,2));
+			biome.getSpawns(EntityClassification.CREATURE).add(new Biome.SpawnListEntry(EntityRegister.FOODIE_ZOMBIE.get(),PVZConfig.COMMON_CONFIG.WorldSettings.EntitySpawnSettings.FoodieZombieSpawnWeight.get(),1,2));
+//			biome.getSpawns(EntityClassification.MONSTER).add(new Biome.SpawnListEntry(EntityRegister.ZOMBIE_DOLPHIN.get(),PVZConfig.COMMON_CONFIG.WorldSettings.EntitySpawnSettings.ZombieDolphinSpawnWeight.get(),1,2));
 		}
 		for(Biome biome:BiomeUtil.NETHER) {
-			biome.getSpawns(EntityClassification.MONSTER).add(new Biome.SpawnListEntry(EntityRegister.LAVA_ZOMBIE.get(),PVZConfig.COMMON_CONFIG.EntitySettings.EntitySpawnWeight.LavaZombieSpawnWeight.get(),1,1));
+			biome.getSpawns(EntityClassification.MONSTER).add(new Biome.SpawnListEntry(EntityRegister.LAVA_ZOMBIE.get(),PVZConfig.COMMON_CONFIG.WorldSettings.EntitySpawnSettings.LavaZombieSpawnWeight.get(),1,1));
 		}
 	}
 }

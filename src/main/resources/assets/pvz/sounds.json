@@ -32,5 +32,6 @@
     "puff":{"sounds":[{"name":"pvz:entity/plant/attack/puff"}]},
     "plant_grow":{"sounds":[{"name":"pvz:entity/plant/plant_grow"}]},
     "fume":{"sounds":[{"name":"pvz:entity/plant/attack/fume"}]},
-    "angry":{"sounds":[{"name":"pvz:entity/zombie/act/angry"},{"name":"pvz:entity/zombie/act/angry2"}]}
+    "angry":{"sounds":[{"name":"pvz:entity/zombie/act/angry"},{"name":"pvz:entity/zombie/act/angry2"}]},
+    "doom":{"sounds":[{"name":"pvz:entity/plant/bomb/doom"}]}
 }

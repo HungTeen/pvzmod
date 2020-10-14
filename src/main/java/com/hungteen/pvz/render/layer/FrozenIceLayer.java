@@ -13,7 +13,7 @@ import net.minecraft.client.renderer.entity.model.EntityModel;
 import net.minecraft.client.renderer.texture.OverlayTexture;
 import net.minecraft.entity.LivingEntity;
 
-public class FrozenIceLayer<T extends LivingEntity, M extends EntityModel<T>> extends LayerRenderer<T, EntityModel<T>>{
+public class FrozenIceLayer<T extends LivingEntity> extends LayerRenderer<T, EntityModel<T>>{
 
 	public static final BlockState ICE_BLOCK = Blocks.FROSTED_ICE.getDefaultState();
 	

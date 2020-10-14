@@ -24,6 +24,7 @@ import com.hungteen.pvz.entity.plant.enforce.ChomperEntity;
 import com.hungteen.pvz.entity.plant.enforce.SquashEntity;
 import com.hungteen.pvz.entity.plant.enforce.TangleKelpEntity;
 import com.hungteen.pvz.entity.plant.explosion.CherryBombEntity;
+import com.hungteen.pvz.entity.plant.explosion.DoomShroomEntity;
 import com.hungteen.pvz.entity.plant.explosion.PotatoMineEntity;
 import com.hungteen.pvz.entity.plant.flame.JalapenoEntity;
 import com.hungteen.pvz.entity.plant.flame.TorchWoodEntity;
@@ -75,6 +76,7 @@ import com.hungteen.pvz.render.entity.plant.enforce.ChomperRender;
 import com.hungteen.pvz.render.entity.plant.enforce.SquashRender;
 import com.hungteen.pvz.render.entity.plant.enforce.TangleKelpRender;
 import com.hungteen.pvz.render.entity.plant.explosion.CherryBombRender;
+import com.hungteen.pvz.render.entity.plant.explosion.DoomShroomRender;
 import com.hungteen.pvz.render.entity.plant.explosion.PotatoMineRender;
 import com.hungteen.pvz.render.entity.plant.flame.JalapenoRender;
 import com.hungteen.pvz.render.entity.plant.flame.TorchWoodRender;
@@ -190,6 +192,7 @@ public class EntityRegister {
 	public static final RegistryObject<EntityType<HypnoShroomEntity>> HYPNO_SHROOM = registerEntityType(HypnoShroomEntity::new, "hypno_shroom", EntityClassification.CREATURE);
 	public static final RegistryObject<EntityType<ScaredyShroomEntity>> SCAREDY_SHROOM = registerEntityType(ScaredyShroomEntity::new, "scaredy_shroom", EntityClassification.CREATURE);
 	public static final RegistryObject<EntityType<IceShroomEntity>> ICE_SHROOM = registerEntityType(IceShroomEntity::new, "ice_shroom", EntityClassification.CREATURE);
+	public static final RegistryObject<EntityType<DoomShroomEntity>> DOOM_SHROOM = registerEntityType(DoomShroomEntity::new, "doom_shroom", EntityClassification.CREATURE);
 	
 	@OnlyIn(Dist.CLIENT)
 	@SubscribeEvent
@@ -259,6 +262,7 @@ public class EntityRegister {
         RenderingRegistry.registerEntityRenderingHandler(HYPNO_SHROOM.get(), HypnoShroomRender::new);
         RenderingRegistry.registerEntityRenderingHandler(SCAREDY_SHROOM.get(), ScaredyShroomRender::new);
         RenderingRegistry.registerEntityRenderingHandler(ICE_SHROOM.get(), IceShroomRender::new);
+        RenderingRegistry.registerEntityRenderingHandler(DOOM_SHROOM.get(), DoomShroomRender::new);
     }
 
 	private static <T extends Entity> RegistryObject<EntityType<T>> registerEntityType(IFactory<T> factory,String name,EntityClassification classification){

@@ -39,12 +39,12 @@ public class BucketHouseStructure extends ScatteredStructure<NoFeatureConfig>{
 	
 	@Override
 	protected int getBiomeFeatureDistance(ChunkGenerator<?> chunkGenerator) {
-		return PVZConfig.COMMON_CONFIG.WorldSettings.OverWorldSettings.BucketHouseDistance.get();
+		return PVZConfig.COMMON_CONFIG.WorldSettings.StructureSettings.BucketHouseDistance.get();
 	}
 	
 	@Override
 	protected int getBiomeFeatureSeparation(ChunkGenerator<?> chunkGenerator) {
-		return PVZConfig.COMMON_CONFIG.WorldSettings.OverWorldSettings.BucketHouseDistance.get()/4;
+		return PVZConfig.COMMON_CONFIG.WorldSettings.StructureSettings.BucketHouseDistance.get()/4;
 	}
 	
 	@Override

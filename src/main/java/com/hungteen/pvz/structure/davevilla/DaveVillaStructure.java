@@ -39,12 +39,12 @@ public class DaveVillaStructure extends ScatteredStructure<NoFeatureConfig> {
 
 	@Override
 	protected int getBiomeFeatureDistance(ChunkGenerator<?> chunkGenerator) {
-		return PVZConfig.COMMON_CONFIG.WorldSettings.OverWorldSettings.DaveVillaDistance.get();
+		return PVZConfig.COMMON_CONFIG.WorldSettings.StructureSettings.DaveVillaDistance.get();
 	}
 
 	@Override
 	protected int getBiomeFeatureSeparation(ChunkGenerator<?> chunkGenerator) {
-		return PVZConfig.COMMON_CONFIG.WorldSettings.OverWorldSettings.DaveVillaDistance.get() / 3;
+		return PVZConfig.COMMON_CONFIG.WorldSettings.StructureSettings.DaveVillaDistance.get() / 3;
 	}
 
 	@Override

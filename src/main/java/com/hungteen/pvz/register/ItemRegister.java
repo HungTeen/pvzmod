@@ -196,6 +196,7 @@ public class ItemRegister {
 	public static final RegistryObject<PVZSpawnEggItem> HYPNO_SHROOM_SPAWN_EGG = registerSpawnEgg("hypno_shroom", EntityRegister.HYPNO_SHROOM, Colors.MAGIC_COLOR);
 	public static final RegistryObject<PVZSpawnEggItem> SCAREDY_SHROOM_SPAWN_EGG = registerSpawnEgg("scaredy_shroom", EntityRegister.SCAREDY_SHROOM, Colors.TOXIC_COLOR);
 	public static final RegistryObject<PVZSpawnEggItem> ICE_SHROOM_SPAWN_EGG = registerSpawnEgg("ice_shroom", EntityRegister.ICE_SHROOM, Colors.ICE_COLOR);
+	public static final RegistryObject<PVZSpawnEggItem> DOOM_SHROOM_SPAWN_EGG = registerSpawnEgg("doom_shroom", EntityRegister.DOOM_SHROOM, Colors.EXPLOSION_COLOR);
 	
 	/**
 	 * register spawn eggs

@@ -39,12 +39,12 @@ public class DolphinHouseStructure extends ScatteredStructure<NoFeatureConfig>{
 	
 	@Override
 	protected int getBiomeFeatureDistance(ChunkGenerator<?> chunkGenerator) {
-		return PVZConfig.COMMON_CONFIG.WorldSettings.OverWorldSettings.DolphinHouseDistance.get();
+		return PVZConfig.COMMON_CONFIG.WorldSettings.StructureSettings.DolphinHouseDistance.get();
 	}
 	
 	@Override
 	protected int getBiomeFeatureSeparation(ChunkGenerator<?> chunkGenerator) {
-		return PVZConfig.COMMON_CONFIG.WorldSettings.OverWorldSettings.DolphinHouseDistance.get()/4;
+		return PVZConfig.COMMON_CONFIG.WorldSettings.StructureSettings.DolphinHouseDistance.get()/4;
 	}
 	
 	@Override
