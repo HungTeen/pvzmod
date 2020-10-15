@@ -2,6 +2,8 @@ package com.hungteen.pvz.register;
 
 import com.hungteen.pvz.PVZMod;
 import com.hungteen.pvz.capability.CapabilityHandler;
+import com.hungteen.pvz.data.PVZItemModelGenerator;
+import com.hungteen.pvz.data.PVZRecipeGenerator;
 import com.hungteen.pvz.item.PVZSpawnEggItem;
 import com.hungteen.pvz.item.armor.BucketArmorItem;
 import com.hungteen.pvz.item.armor.ConeArmorItem;
@@ -15,6 +17,7 @@ import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod.EventBusSubscriber;
 import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
 import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
+import net.minecraftforge.fml.event.lifecycle.GatherDataEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 
 @EventBusSubscriber(modid = PVZMod.MOD_ID, bus = EventBusSubscriber.Bus.MOD)
@@ -49,12 +52,14 @@ public class RegistryHandler {
 	public static void clientSetup(FMLClientSetupEvent evt) {
 		ConeArmorItem.initArmorModel();
 		BucketArmorItem.initArmorModel();
+		KeyBindRegister.init();
 	}
 	
-//	@SubscribeEvent
-//	public static void gatherData(GatherDataEvent ev) {
-//		ev.getGenerator().addProvider(new ItemModelGenerator(ev.getGenerator(), ev.getExistingFileHelper()));
-//	}
+	@SubscribeEvent
+	public static void gatherData(GatherDataEvent ev) {
+		ev.getGenerator().addProvider(new PVZItemModelGenerator(ev.getGenerator(), ev.getExistingFileHelper()));
+		ev.getGenerator().addProvider(new PVZRecipeGenerator(ev.getGenerator()));
+	}
 	
 	/**
 	 * Exists to work around a limitation with Spawn Eggs:

@@ -70,6 +70,11 @@ public class HypnoShroomEntity extends PVZPlantEntity implements IShroomPlant{
 		return 0.5f;
 	}
 	
+	@Override
+	public boolean isPlantImmuneTo(DamageSource source) {
+		return false;
+	}
+	
 	/**
 	 * HypnoShoorm has no super mode now.
 	 */

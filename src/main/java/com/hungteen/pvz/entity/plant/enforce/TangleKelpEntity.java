@@ -116,8 +116,8 @@ public class TangleKelpEntity extends PVZPlantEntity{
 	}
 	
 	@Override
-	public boolean isInvulnerableTo(DamageSource source) {
-		return PVZDamageSource.isEnforceDamage(source) || super.isInvulnerableTo(source);
+	public boolean isPlantImmuneTo(DamageSource source) {
+		return super.isPlantImmuneTo(source) || PVZDamageSource.isEnforceDamage(source);
 	}
 	
 	@Override

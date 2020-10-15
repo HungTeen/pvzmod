@@ -13,12 +13,12 @@ import net.minecraftforge.fml.common.Mod;
 @Mod.EventBusSubscriber(modid=PVZMod.MOD_ID,value = Dist.CLIENT)
 public class KeyBindRegister {
 
-	public static KeyBinding ShowPlayerResources;
+	public static KeyBinding ShowPlayerResources = new KeyBinding("key.pvz.show_resources", 261, "key.categories.pvz");
 	public static boolean showPlayerResources = true;
 //	public static KeyBinding ShowPlayerInventory;
 	
 	public static void init() {
-		ClientRegistry.registerKeyBinding(ShowPlayerResources = new KeyBinding("key.pvz.show_resources", 261, "key.categories.pvz"));
+		ClientRegistry.registerKeyBinding(ShowPlayerResources);
 //		ClientRegistry.registerKeyBinding(ShowPlayerInventory = new KeyBinding("key.pvz.show_inventory", 80, "key.categories.pvz"));
 	}
 	

@@ -127,11 +127,11 @@ public class PotatoMineEntity extends PlantCloserEntity{
 	}
 	
 	@Override
-	public boolean isInvulnerableTo(DamageSource source) {
+	public boolean isPlantImmuneTo(DamageSource source) {
 		if(this.isMineReady()) {
-			return PVZDamageSource.isEnforceDamage(source) || super.isInvulnerableTo(source);
+			return super.isPlantImmuneTo(source) || PVZDamageSource.isEnforceDamage(source);
 		}
-		return super.isInvulnerableTo(source);
+		return super.isPlantImmuneTo(source);
 	}
 	
 	/**

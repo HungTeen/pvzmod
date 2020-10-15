@@ -142,11 +142,8 @@ public class SquashEntity extends PVZPlantEntity{
 	}
 	
 	@Override
-	public boolean isInvulnerableTo(DamageSource source) {
-		if(source==DamageSource.FALL) {
-		    return true;
-	    }
-		return PVZDamageSource.isEnforceDamage(source) || super.isInvulnerableTo(source);
+	public boolean isPlantImmuneTo(DamageSource source) {
+		return super.isPlantImmuneTo(source) || PVZDamageSource.isEnforceDamage(source) || source == DamageSource.FALL;
 	}
 	
 	@Override

@@ -83,7 +83,6 @@ public class DoomShroomEntity extends PlantBomberEntity implements IShroomPlant{
 		}
 	}
 	
-	
 	private int getDestroyBlockRange() {
 		return PVZConfig.COMMON_CONFIG.EntitySettings.DoomRange.get();
 	}

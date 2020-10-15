@@ -300,11 +300,6 @@ public abstract class PVZPlantEntity extends CreatureEntity implements IPVZPlant
 	}
 	
 	@Override
-	public boolean isInvulnerable() {
-		return this.isPlantInSuperMode();
-	}
-	
-	@Override
 	public void applyEntityCollision(Entity entityIn) {
 		if (!this.isRidingSameEntity(entityIn)){
             if (!entityIn.noClip && !this.noClip){
@@ -383,6 +378,21 @@ public abstract class PVZPlantEntity extends CreatureEntity implements IPVZPlant
 			return true;
 		}
 		return EntityUtil.checkCanEntityAttack(this, target);
+	}
+	
+	@Override
+	public boolean isInvulnerableTo(DamageSource source) {
+		return this.isPlantImmuneTo(source) && source != DamageSource.OUT_OF_WORLD && !source.isCreativePlayer();
+	}
+	
+	/**
+	 * a function that replace isinvulnerable
+	 */
+	public boolean isPlantImmuneTo(DamageSource source) {
+		if(this.isPlantInSuperMode()) {
+			return true;
+		}
+		return false;
 	}
 	
 	@Override

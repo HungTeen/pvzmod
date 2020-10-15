@@ -100,7 +100,7 @@ public class AlmanacPage {
 
 	public void updateLists(List<Almanacs> list, boolean flag) {
 		this.cardList = list;
-		this.totalPages = (int) Math.ceil((double) list.size() / 20.0D);
+		this.totalPages = (int) Math.ceil((double) list.size() / MAX_NUM_PER_PAGE);
 		if (this.totalPages <= this.currentPage || flag) {
 			this.currentPage = 0;
 		}

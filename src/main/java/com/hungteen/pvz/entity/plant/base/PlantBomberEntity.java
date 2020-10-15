@@ -27,8 +27,8 @@ public abstract class PlantBomberEntity extends PVZPlantEntity implements IBombe
 	}
 	
 	@Override
-	public boolean isInvulnerableTo(DamageSource source) {
-		return PVZDamageSource.isEnforceDamage(source) || super.isInvulnerableTo(source);
+	public boolean isPlantImmuneTo(DamageSource source) {
+		return super.isPlantImmuneTo(source) || PVZDamageSource.isEnforceDamage(source);
 	}
 	
 	@Override

@@ -2,6 +2,7 @@ package com.hungteen.pvz.utils.enums;
 
 import com.hungteen.pvz.utils.PlantUtil;
 
+import net.minecraft.client.Minecraft;
 import net.minecraft.util.text.TranslationTextComponent;
 
 public enum Almanacs {
@@ -54,9 +55,10 @@ public enum Almanacs {
 		return a.ordinal() <= PlantUtil.CURRENT_PLANT_NUM && a != PLAYER;
 	}
 	
+	@SuppressWarnings("resource")
 	public static String getAlmanacName(Almanacs a) {
 		if(a==LILY_PAD) return new TranslationTextComponent("block.pvz."+a.toString().toLowerCase()).getFormattedText();
-		if(a==PLAYER) return "Player";
+		if(a==PLAYER) return Minecraft.getInstance().player.getName().getFormattedText();
 	    return new TranslationTextComponent("entity.pvz."+a.toString().toLowerCase()).getFormattedText();
 	}
 	

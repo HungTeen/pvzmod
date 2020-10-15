@@ -97,11 +97,6 @@ public class ChomperEntity extends PVZPlantEntity{
 	}
 	
 	@Override
-	public boolean isPlantSleeping() {
-		return super.isPlantSleeping() || this.getRestTick() > 0;
-	}
-	
-	@Override
 	public boolean isInvulnerable() {
 		return this.getAttackTime() > 0;
 	}
