@@ -1,7 +1,7 @@
 package com.hungteen.pvz.render.layer;
 
 import com.hungteen.pvz.entity.creature.FoodieZombieEntity;
-import com.hungteen.pvz.entity.plant.light.SunFlowerEntity;
+import com.hungteen.pvz.entity.plant.base.PlantProducerEntity;
 import com.hungteen.pvz.utils.StringUtil;
 
 import net.minecraft.client.renderer.entity.IEntityRenderer;
@@ -20,8 +20,8 @@ public class SunLightLayer<T extends LivingEntity, M extends EntityModel<T>> ext
 
 	@Override
 	protected boolean canRender(T entity) {
-		if(entity instanceof SunFlowerEntity) {
-			return ((SunFlowerEntity) entity).getIsGenTime();
+		if(entity instanceof PlantProducerEntity) {
+			return ((PlantProducerEntity) entity).getIsGenTime();
 		}else if(entity instanceof FoodieZombieEntity) {
 			int tick = ((FoodieZombieEntity) entity).getGenTick();
 			return tick>0&&tick<=60;

@@ -211,6 +211,11 @@
     "item.pvz.ice_shroom_spawn_egg":"寒冰菇刷怪蛋",
     "item.pvz.ice_shroom_card":"寒冰菇卡",
     "item.pvz.ice_shroom_enjoy_card":"寒冰菇体验卡",
+//DoomShroom
+    "entity.pvz.doom_shroom":"毁灭菇",
+    "item.pvz.doom_shroom_spawn_egg":"毁灭菇刷怪蛋",
+    "item.pvz.doom_shroom_card":"毁灭菇卡",
+    "item.pvz.doom_shroom_enjoy_card":"毁灭菇体验卡",
 //tool & tooltip
     "item.pvz.zombie_flag":"僵尸旗帜",
     "tooltip.pvz.zombie_flag":"右键会获得加速效果",
@@ -292,6 +297,17 @@
     "gui.pvz.almanac.energy_num":"能量豆数",
     "gui.pvz.almanac.money":"金钱",
     "gui.pvz.almanac.gem_num":"宝石数",
+    "gui.pvz.almanac.bullet_speed":"子弹速度",
+    "gui.pvz.almanac.cold_effect":"冷冻级别",
+    "gui.pvz.almanac.cold_effect_time":"冷冻时间",
+    "gui.pvz.almanac.frozen_effect_time":"冰封时间",
+    "gui.pvz.almanac.death_chance":"死亡概率",
+    "gui.pvz.almanac.attack_range":"攻击范围",
+    "gui.pvz.almanac.live_tick":"存活时间",
+    "gui.pvz.almanac.kill_count":"击杀数量",
+    "gui.pvz.almanac.heal_health":"治愈血量",
+    "gui.pvz.almanac.scare_range":"惊吓距离",
+    
     //PeaShooter
     "gui.pvz.almanac.pea_shooter1":"豌豆射手发射豌豆攻击敌人",
     "gui.pvz.almanac.pea_shooter2":"一次发射一个豌豆",
@@ -372,6 +388,11 @@
     "gui.pvz.almanac.tall_nut2":"",
     "gui.pvz.almanac.tall_nut3":"",
     "gui.pvz.almanac.tall_nut4":"大招时会获得护甲",
+    //PuffShroom
+    "gui.pvz.almanac.puff_shroom1":"胆小菇会发射孢子攻击",
+    "gui.pvz.almanac.puff_shroom2":"攻击范围较近",
+    "gui.pvz.almanac.puff_shroom3":"过一段时间会消失",
+    "gui.pvz.almanac.puff_shroom4":"大招时会获得护甲",
 //advancement
     "advancement.pvz.root":"植物大战僵尸",
     "advancement.pvz.root.desc":"安装植物大战僵尸mod并进入主世界",

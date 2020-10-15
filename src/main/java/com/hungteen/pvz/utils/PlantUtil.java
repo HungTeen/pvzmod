@@ -26,11 +26,11 @@ public class PlantUtil {
 	public static final int[] PURPLE_XP = new int[] {0,30,60,80,105,150,225,300,400,520,700,960,1300,2100,3000,4200,5600,7200,9600,12500,999999999};
 	public static final int[] GOLD_XP = new int[] {0,35,60,90,120,175,255,350,450,600,800,1080,1500,2500,3600,5000,6400,8100,10800,14000,999999999};
 	public static final int[] MEGA_XP = new int[] {0,40,70,100,150,210,300,400,520,700,960,1300,1800,3000,4200,6000,7800,9600,12500,16000,999999999};
-	public static final int CURRENT_PLANT_NUM = 16;
+	public static final int CURRENT_PLANT_NUM = 24;
 	
 	public static final Plants [] WATER_PLANTS = new Plants[] {
 			Plants.TANGLE_KELP,
-			Plants.WATER_GUARD,
+//			Plants.WATER_GUARD,
 	};
 	
 	static {
@@ -93,6 +93,8 @@ public class PlantUtil {
 		PLANT_CD.put(Plants.JALAPENO, CDs.HUGE_SLOW);
 		
 		PLANT_CD.put(Plants.DOOM_SHROOM, CDs.SUPER_SLOW);
+		
+		PLANT_CD.put(Plants.LILY_PAD, CDs.OTHER);
 		
 		//Plant rank
 		PLANT_RANK.put(Plants.PEA_SHOOTER, Ranks.GRAY);
@@ -223,6 +225,7 @@ public class PlantUtil {
 		case HYPNO_SHROOM:return EntityRegister.HYPNO_SHROOM.get().create(world);
 		case SCAREDY_SHROOM:return EntityRegister.SCAREDY_SHROOM.get().create(world);
 		case ICE_SHROOM:return EntityRegister.ICE_SHROOM.get().create(world);
+		case DOOM_SHROOM:return EntityRegister.DOOM_SHROOM.get().create(world);
 		default:{
 			PVZMod.LOGGER.debug("No such plant entity!");
 			return null;

@@ -28,7 +28,7 @@ import net.minecraft.world.storage.loot.LootParameters;
 
 public class DoomShroomEntity extends PlantBomberEntity implements IShroomPlant{
 
-	private final int destroyBlockHeight = 3;
+	private final int destroyBlockHeight = 4;
 	public static final float MAX_EXPLOSION_LEVEL = 500;
 	
 	public DoomShroomEntity(EntityType<? extends CreatureEntity> type, World worldIn) {

@@ -108,6 +108,9 @@ public class ItemRegister {
     public static final RegistryObject<PlantCardItem> SCAREDY_SHROOM_ENJOY_CARD = registerCard(Plants.SCAREDY_SHROOM, true);
     public static final RegistryObject<PlantCardItem> ICE_SHROOM_CARD = registerCard(Plants.ICE_SHROOM, false);
     public static final RegistryObject<PlantCardItem> ICE_SHROOM_ENJOY_CARD = registerCard(Plants.ICE_SHROOM, true);
+    public static final RegistryObject<PlantCardItem> DOOM_SHROOM_CARD = registerCard(Plants.DOOM_SHROOM, false);
+    public static final RegistryObject<PlantCardItem> DOOM_SHROOM_ENJOY_CARD = registerCard(Plants.DOOM_SHROOM, true);
+    
     //plants
 	public static final RegistryObject<Item> PEA = ITEMS.register("pea",()-> new BlockItem(BlockRegister.PEA_PLANT.get(),new Item.Properties().group(GroupRegister.PVZ_MISC)));
 	public static final RegistryObject<Item> NUT = ITEMS.register("nut", PVZItemBase::new);

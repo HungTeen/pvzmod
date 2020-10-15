@@ -137,7 +137,7 @@ public class PotatoMineEntity extends PlantCloserEntity{
 	/**
 	 * potato mine prepare time
 	 */
-	protected int getReadyTime(){
+	public int getReadyTime(){
 		int lvl = this.getPlantLvl();
 		if(lvl<=20) {
 			int now=(lvl-1)/4;

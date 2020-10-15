@@ -132,7 +132,7 @@ public class SquashEntity extends PVZPlantEntity{
 	/**
 	 * die chance for each smash
 	 */
-	protected int getDeathChance(){
+	public int getDeathChance(){
 		int lvl=this.getPlantLvl();
 		if(lvl<=20) {
 			int now=(lvl-1)/4;

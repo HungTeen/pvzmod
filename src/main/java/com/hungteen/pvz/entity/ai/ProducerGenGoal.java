@@ -18,7 +18,7 @@ public class ProducerGenGoal extends Goal{
 		}
 		this.producer=entity;
 		this.plant=(PlantProducerEntity) entity;
-		this.setMutexFlags(EnumSet.of(Goal.Flag.MOVE));
+		this.setMutexFlags(EnumSet.of(Goal.Flag.TARGET));
 	}
 	
 	@Override

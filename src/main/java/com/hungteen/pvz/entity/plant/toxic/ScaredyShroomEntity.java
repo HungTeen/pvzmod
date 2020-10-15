@@ -24,7 +24,7 @@ public class ScaredyShroomEntity extends PlantShooterEntity implements IShroomPl
 
 	protected final double LENTH = 0.2d; //pea position offset
 	private static final DataParameter<Integer> SCARE_TIME = EntityDataManager.createKey(ScaredyShroomEntity.class, DataSerializers.VARINT);
-	public static final int ANIM_TIME = 20;
+	public static final int ANIM_TIME = 15;
 	
 	public ScaredyShroomEntity(EntityType<? extends CreatureEntity> type, World worldIn) {
 		super(type, worldIn);

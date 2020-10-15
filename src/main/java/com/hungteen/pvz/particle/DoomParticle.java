@@ -19,7 +19,7 @@ public class DoomParticle extends BombParticle {
 		super(world, x, y, z, xSpeed, ySpeed, zSpeed,sprite);
 		this.maxAge = 40 + this.rand.nextInt(20);
 		this.setColor(1, 1, 1);
-		this.particleScale = 5;
+		this.particleScale = 4.5f;
 		this.sprite = sprite;
 		this.canCollide = false;
 		this.selectSpriteWithAge(this.sprite);

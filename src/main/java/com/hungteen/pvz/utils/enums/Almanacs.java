@@ -6,6 +6,9 @@ import net.minecraft.util.text.TranslationTextComponent;
 
 public enum Almanacs {
 
+	/**
+	 * Player
+	 */
 	PLAYER,
 	/**
 	 * Plants
@@ -13,7 +16,7 @@ public enum Almanacs {
 	// 1-1 ~ 1-10
 	PEA_SHOOTER, SUN_FLOWER, CHERRY_BOMB, WALL_NUT, POTATO_MINE, SNOW_PEA, CHOMPER, REPEATER,
 	// 2-1 ~ 2-10
-//	PULF_SHROOM, SUN_SHROOM, FUME_SHROOM, GRAVE_VINE, HYPNO_SHROOM, SCAREDY_SHROOM, ICE_SHROOM, DOOM_SHROOM,
+	PUFF_SHROOM, SUN_SHROOM, FUME_SHROOM, GRAVE_BUSTER, HYPNO_SHROOM, SCAREDY_SHROOM, ICE_SHROOM, DOOM_SHROOM,
 	// 3-1 ~ 3-10
 	LILY_PAD, SQUASH, THREE_PEATER, TANGLE_KELP, JALAPENO, SPIKE_WEED, TORCH_WOOD, TALL_NUT,
 	// 4-1 ~ 4-10
@@ -48,7 +51,7 @@ public enum Almanacs {
 	;
 	
 	public static boolean isPlant(Almanacs a) {
-		return a.ordinal() <= PlantUtil.CURRENT_PLANT_NUM && a!=PLAYER;
+		return a.ordinal() <= PlantUtil.CURRENT_PLANT_NUM && a != PLAYER;
 	}
 	
 	public static String getAlmanacName(Almanacs a) {
