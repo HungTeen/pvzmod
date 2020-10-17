@@ -1,8 +1,8 @@
 package com.hungteen.pvz.entity.zombie.poolday;
 
 import com.hungteen.pvz.entity.ai.BreakLilyPadGoal;
+import com.hungteen.pvz.entity.ai.PVZMeleeAttackGoal;
 import com.hungteen.pvz.entity.ai.PVZNearestTargetGoal;
-import com.hungteen.pvz.entity.ai.ZombieMeleeAttackGoal;
 import com.hungteen.pvz.entity.zombie.PVZZombieEntity;
 import com.hungteen.pvz.register.BlockRegister;
 import com.hungteen.pvz.register.SoundRegister;
@@ -49,7 +49,7 @@ public class DolphinRiderEntity extends PVZZombieEntity{
 		this.goalSelector.addGoal(8, new LookAtGoal(this, PlayerEntity.class, 8.0F));
 		this.goalSelector.addGoal(8, new LookRandomlyGoal(this));
 		this.goalSelector.addGoal(7, new RandomWalkingGoal(this, 1.0D));
-		this.goalSelector.addGoal(0, new ZombieMeleeAttackGoal(this, 1.0, false));
+		this.goalSelector.addGoal(0, new PVZMeleeAttackGoal(this));
 		this.goalSelector.addGoal(2, new BreakLilyPadGoal(BlockRegister.LILY_PAD.get(), this, 1, 3));
 		this.targetSelector.addGoal(0, new PVZNearestTargetGoal(this, true, 80, 60));
 	}
