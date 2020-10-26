@@ -62,7 +62,7 @@ public class ZenGardenBiome extends PVZBiome {
 		DefaultBiomeFeatures.addFreezeTopLayer(this);
 		//pvz
 		this.addFeature(GenerationStage.Decoration.VEGETAL_DECORATION, Feature.NORMAL_TREE.withConfiguration(NutTree.NUT_TREE_CONFIG).withPlacement(Placement.COUNT_EXTRA_HEIGHTMAP.configure(new AtSurfaceWithExtraConfig(1, 0.05F, 1))));
-		this.addFeature(GenerationStage.Decoration.VEGETAL_DECORATION,Feature.RANDOM_PATCH.withConfiguration(PVZFeatureConfig.CHOMPER_CONFIG).withPlacement(Placement.CHANCE_HEIGHTMAP_DOUBLE.configure(new ChanceConfig(64))));
+		this.addFeature(GenerationStage.Decoration.VEGETAL_DECORATION,Feature.RANDOM_PATCH.withConfiguration(PVZFeatureConfig.CHOMPER_CONFIG).withPlacement(Placement.CHANCE_HEIGHTMAP_DOUBLE.configure(new ChanceConfig(12))));
 	}
 	
 	@Override

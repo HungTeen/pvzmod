@@ -3,6 +3,7 @@ package com.hungteen.pvz.render.entity.zombie.grassday;
 import com.hungteen.pvz.entity.zombie.grassday.BucketHeadZombieEntity;
 import com.hungteen.pvz.model.entity.zombie.grassday.BucketHeadZombieModel;
 import com.hungteen.pvz.render.entity.zombie.PVZZombieRender;
+import com.hungteen.pvz.render.layer.DuckyTubeLayer;
 import com.hungteen.pvz.render.layer.ZombieBeardLayer;
 import com.hungteen.pvz.utils.StringUtil;
 
@@ -22,6 +23,7 @@ public class BucketHeadZombieRender extends PVZZombieRender<BucketHeadZombieEnti
 	protected void addZombieLayers() {
 		super.addZombieLayers();
 		this.addLayer(new ZombieBeardLayer<>(this));
+		this.addLayer(new DuckyTubeLayer<BucketHeadZombieEntity>(this));
 	}
 	
 	@Override

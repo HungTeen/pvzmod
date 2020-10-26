@@ -14,18 +14,18 @@ import net.minecraft.client.renderer.entity.model.EntityModel;
 import net.minecraft.client.renderer.texture.OverlayTexture;
 import net.minecraft.util.ResourceLocation;
 
-public class DuckyTubeLayer extends LayerRenderer<NormalZombieEntity, EntityModel<NormalZombieEntity>>{
+public class DuckyTubeLayer<T extends NormalZombieEntity> extends LayerRenderer<T, EntityModel<T>>{
 
 	public static final ResourceLocation TEXTURE = StringUtil.prefix("textures/entity/zombie/poolday/ducky_tube.png");
 	private DuckyTubeModel model = new DuckyTubeModel();
 	
-	public DuckyTubeLayer(IEntityRenderer<NormalZombieEntity, EntityModel<NormalZombieEntity>> entityRendererIn) {
+	public DuckyTubeLayer(IEntityRenderer<T, EntityModel<T>> entityRendererIn) {
 		super(entityRendererIn);
 	}
 
 	@Override
 	public void render(MatrixStack matrixStackIn, IRenderTypeBuffer bufferIn, int packedLightIn,
-			NormalZombieEntity zombie, float limbSwing, float limbSwingAmount, float partialTicks,
+			T zombie, float limbSwing, float limbSwingAmount, float partialTicks,
 			float ageInTicks, float netHeadYaw, float headPitch) {
 		if(!zombie.isInWater()) {
 			return ;

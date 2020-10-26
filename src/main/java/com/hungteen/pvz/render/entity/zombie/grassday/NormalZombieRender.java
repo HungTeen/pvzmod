@@ -23,7 +23,7 @@ public class NormalZombieRender extends PVZZombieRender<NormalZombieEntity>{
 	protected void addZombieLayers() {
 		super.addZombieLayers();
 		this.addLayer(new ZombieBeardLayer<>(this));
-		this.addLayer(new DuckyTubeLayer(this));
+		this.addLayer(new DuckyTubeLayer<NormalZombieEntity>(this));
 	}
 	
 	@Override
