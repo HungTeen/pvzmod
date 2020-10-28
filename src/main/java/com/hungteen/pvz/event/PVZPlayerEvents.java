@@ -8,6 +8,7 @@ import com.hungteen.pvz.capabilities.player.PlayerDataManager;
 import com.hungteen.pvz.capabilities.player.PlayerDataManager.PlayerStats;
 import com.hungteen.pvz.capability.CapabilityHandler;
 import com.hungteen.pvz.entity.plant.PVZPlantEntity;
+import com.hungteen.pvz.entity.zombie.PVZZombieEntity;
 import com.hungteen.pvz.event.events.SummonCardUseEvent;
 import com.hungteen.pvz.item.tool.PeaGunItem;
 import com.hungteen.pvz.item.tool.card.PlantCardItem;
@@ -135,6 +136,12 @@ public class PVZPlayerEvents {
 						plant.remove();
 						stack.damageItem(3, player, (p) -> {p.sendBreakAnimation(ev.getHand());});
 					}
+				}
+			}else if(entity instanceof PVZZombieEntity) {
+				PVZZombieEntity zombie = (PVZZombieEntity) entity;
+				ItemStack stack = player.getHeldItemMainhand();
+				if(stack.getItem() instanceof SwordItem) {
+					zombie.setZombieType(PVZZombieEntity.Type.SUPER);
 				}
 			}
 		}

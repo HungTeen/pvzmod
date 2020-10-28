@@ -66,30 +66,30 @@ public class ChomperEntity extends PVZPlantEntity{
 				}
 			}
 		}
-		if(!world.isRemote&&this.getAttackTarget()!=null) {
+		if(!world.isRemote&&this.getAttackTarget() != null) {
 			this.lookController.setLookPositionWithEntity(this.getAttackTarget(), 30f, 30f);
 		}
 		if(!world.isRemote) {
-			if(this.getAttackTime()<this.ATTACK_CD/2) {//attack stage
-				if(this.getRestTick()>0) {//rest time cannot attack
-					this.setRestTick(this.getRestTick()-1);
+			if(this.getAttackTime() < this.ATTACK_CD / 2) {//attack stage
+				if(this.getRestTick() > 0) {//rest time cannot attack
+					this.setRestTick(this.getRestTick() - 1);
 					return ;
 				}
-				if(this.getAttackTarget()==null) {//no target 
+				if(this.getAttackTarget() == null) {//no target 
 					return ;
 				}
-				if(!this.getAttackTarget().isAlive()||this.getDistanceSq(this.getAttackTarget())>9) {//target too far away !
+				if(!this.getAttackTarget().isAlive() || this.getDistanceSq(this.getAttackTarget()) > 9) {//target too far away !
 					this.setAttackTarget(null);
 					this.setAttackTime(0);
 					return ;
 				}
-				this.setAttackTime(this.getAttackTime()+1);
-				if(this.getAttackTime()==this.ATTACK_CD/2) {//attack
+				this.setAttackTime(this.getAttackTime() + 1);
+				if(this.getAttackTime() == this.ATTACK_CD / 2) {//attack
 					this.performAttack();
 				}
 			}else {
-				this.setAttackTime(this.getAttackTime()+1);
-				if(this.getAttackTime()>this.ATTACK_CD) {
+				this.setAttackTime(this.getAttackTime() + 1);
+				if(this.getAttackTime() > this.ATTACK_CD) {
 					this.setAttackTime(0);
 				}
 			}
@@ -106,7 +106,7 @@ public class ChomperEntity extends PVZPlantEntity{
 	 */
 	private void performAttack() {
 		LivingEntity target = this.getAttackTarget();
-		if(target.getHealth()<=this.getAttackDamage()) {//eat to death need rest
+		if(target.getHealth() <= this.getAttackDamage()) {//eat to death need rest
 			this.setRestTick(this.getRestCD());
 		}
 		this.playSound(SoundRegister.CHOMP.get(), 1, 1);

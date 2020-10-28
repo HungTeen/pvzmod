@@ -1,6 +1,7 @@
 package com.hungteen.pvz.render.entity.zombie;
 
 import com.hungteen.pvz.entity.zombie.PVZZombieEntity;
+import com.hungteen.pvz.model.entity.IHasDefence;
 import com.hungteen.pvz.render.layer.CharmLayer;
 import com.hungteen.pvz.render.layer.ColdLayer;
 import com.hungteen.pvz.render.layer.EnergyLayer;
@@ -22,8 +23,11 @@ public abstract class PVZZombieRender<T extends PVZZombieEntity> extends MobRend
 	}
 
 	@Override
-	protected void preRenderCallback(T entitylivingbaseIn, MatrixStack matrixStackIn, float partialTickTime) {
-		float sz=getScaleByEntity(entitylivingbaseIn);
+	protected void preRenderCallback(T entity, MatrixStack matrixStackIn, float partialTickTime) {
+		float sz=getScaleByEntity(entity);
+		if(this.getEntityModel() instanceof IHasDefence) {
+			((IHasDefence) this.getEntityModel()).setDestroyed(entity.getHealth() / entity.getMaxHealth());
+		}
 		matrixStackIn.scale(sz,sz,sz);
 	}
 	

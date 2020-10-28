@@ -272,38 +272,39 @@ public class ChomperModel extends EntityModel<ChomperEntity> {
 //		if(tick>0) {
 //			if(tick%5==0) System.out.println(entity.getEntityId());
 //		}
-		if(tick>0&&tick<=entity.ATTACK_CD/2) {//1 - 10
-			this.body.rotateAngleX = 0.05f*tick;//0.5
-			this.head.rotateAngleX = 0.25f-0.075f*tick;//0.25 - -0.5
-			if(tick<=entity.ATTACK_CD/3) {//1 - 6
-				this.up_mouse.rotateAngleX = -0.52f-0.05f*tick;
-				this.down_mouse.rotateAngleX= 0.52f+0.05f*tick;
+		if(tick > 0 && tick <= entity.ATTACK_CD / 2) {//1 - 10
+			this.body.rotateAngleX = 0.05f * tick;//0.5
+			this.head.rotateAngleX = 0.25f - 0.075f * tick;//0.25 - -0.5
+			if(tick <= entity.ATTACK_CD / 3) {//1 - 6
+				this.up_mouse.rotateAngleX = - 0.52f - 0.05f*tick;
+				this.down_mouse.rotateAngleX = 0.52f + 0.05f*tick;
 			}else {// 7 - 10 ( 1 - 4)
-				int tmp=tick-entity.ATTACK_CD*2/3;
-				this.up_mouse.rotateAngleX = -0.82f+0.2f*tmp;
-				this.down_mouse.rotateAngleX= 0.82f-0.2f*tmp;
+				float tmp = tick - entity.ATTACK_CD * 2f / 3;
+				this.up_mouse.rotateAngleX = - 0.82f + 0.2f * tmp;
+				this.down_mouse.rotateAngleX = 0.82f - 0.2f * tmp;
 			}
-		}else if(tick>entity.ATTACK_CD/2){// 11 - 20 (1 - 10)
-			int tmp = tick - entity.ATTACK_CD/2;
-			this.body.rotateAngleX = 0.5f - 0.05f*tmp;
-			this.head.rotateAngleX = -0.5f + 0.075f*tmp;
-			this.up_mouse.rotateAngleX = -0.05f*tmp;
-			this.down_mouse.rotateAngleX = 0.05f*tmp;
+		}else if(tick > entity.ATTACK_CD / 2){// 11 - 20 (1 - 10)
+			int tmp = tick - entity.ATTACK_CD / 2;
+			this.body.rotateAngleX = 0.5f - 0.05f * tmp;
+			this.head.rotateAngleX = - 0.5f + 0.075f * tmp;
+			this.up_mouse.rotateAngleX = -0.05f * tmp;
+			this.down_mouse.rotateAngleX = 0.05f * tmp;
 		}else {
-			if(entity.getRestTick()>1) {
-				this.tongue.rotateAngleX=entity.getRNG().nextFloat()-0.5f;
-				this.tongue2.rotateAngleX=entity.getRNG().nextFloat()-0.5f;
-				this.head.rotateAngleX=1.04f;
-				this.up_mouse.rotateAngleX=-0.15f;
-				this.down_mouse.rotateAngleX=0.15f;
-				this.leaf.rotateAngleZ=0.52f;
+			this.body.rotateAngleX = 0;
+			if(entity.getRestTick() >= 1) {
+				this.tongue.rotateAngleX = entity.getRNG().nextFloat() - 0.5f;
+				this.tongue2.rotateAngleX = entity.getRNG().nextFloat() - 0.5f;
+				this.head.rotateAngleX = 1.04f;
+				this.up_mouse.rotateAngleX = - 0.15f;
+				this.down_mouse.rotateAngleX = 0.15f;
+				this.leaf.rotateAngleZ = 0.52f;
 			}else {
-				this.tongue.rotateAngleX=0;
-				this.tongue2.rotateAngleX=0;
-				this.head.rotateAngleX=0.25f;
-				this.up_mouse.rotateAngleX=-0.52f;
-				this.down_mouse.rotateAngleX=0.52f;
-				this.leaf.rotateAngleZ=0;
+				this.tongue.rotateAngleX = 0;
+				this.tongue2.rotateAngleX = 0;
+				this.head.rotateAngleX = 0.25f;
+				this.up_mouse.rotateAngleX = -0.52f;
+				this.down_mouse.rotateAngleX = 0.52f;
+				this.leaf.rotateAngleZ = 0;
 			}
 		}
 	}
