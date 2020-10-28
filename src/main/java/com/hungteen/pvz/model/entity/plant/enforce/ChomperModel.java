@@ -291,7 +291,7 @@ public class ChomperModel extends EntityModel<ChomperEntity> {
 			this.down_mouse.rotateAngleX = 0.05f * tmp;
 		}else {
 			this.body.rotateAngleX = 0;
-			if(entity.getRestTick() >= 1) {
+			if(entity.getRestTick() > 0) {
 				this.tongue.rotateAngleX = entity.getRNG().nextFloat() - 0.5f;
 				this.tongue2.rotateAngleX = entity.getRNG().nextFloat() - 0.5f;
 				this.head.rotateAngleX = 1.04f;

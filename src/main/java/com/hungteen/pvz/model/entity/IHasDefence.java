@@ -1,6 +1,8 @@
 package com.hungteen.pvz.model.entity;
 
+import net.minecraft.entity.LivingEntity;
+
 public interface IHasDefence {
 
-	void setDestroyed(float percent);
+	void setDestroyed(LivingEntity entity);
 }

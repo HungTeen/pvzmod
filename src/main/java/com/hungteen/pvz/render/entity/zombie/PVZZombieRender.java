@@ -26,7 +26,7 @@ public abstract class PVZZombieRender<T extends PVZZombieEntity> extends MobRend
 	protected void preRenderCallback(T entity, MatrixStack matrixStackIn, float partialTickTime) {
 		float sz=getScaleByEntity(entity);
 		if(this.getEntityModel() instanceof IHasDefence) {
-			((IHasDefence) this.getEntityModel()).setDestroyed(entity.getHealth() / entity.getMaxHealth());
+			((IHasDefence) this.getEntityModel()).setDestroyed(entity);
 		}
 		matrixStackIn.scale(sz,sz,sz);
 	}

@@ -7,6 +7,7 @@ import com.mojang.blaze3d.vertex.IVertexBuilder;
 
 import net.minecraft.client.renderer.entity.model.EntityModel;
 import net.minecraft.client.renderer.model.ModelRenderer;
+import net.minecraft.entity.LivingEntity;
 import net.minecraft.util.math.MathHelper;
 
 // Made with Blockbench 3.7.1
@@ -109,7 +110,8 @@ public class ConeHeadZombieModel extends EntityModel<ConeHeadZombieEntity> imple
 	}
 
 	@Override
-	public void setDestroyed(float percent) {
+	public void setDestroyed(LivingEntity entity) {
+		float percent = entity.getHealth() / entity.getMaxHealth();
 		this.defence3.showModel = percent > 3.0f/4;
 		this.defence2.showModel = percent > 2.0f/4;
 		this.defence1.showModel = percent > 1.0f/4;

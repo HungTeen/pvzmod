@@ -1,22 +1,30 @@
 package com.hungteen.pvz.model.entity.zombie.grassday;
 
 import com.hungteen.pvz.entity.zombie.grassday.BucketHeadZombieEntity;
+import com.hungteen.pvz.model.entity.IHasDefence;
 import com.mojang.blaze3d.matrix.MatrixStack;
 import com.mojang.blaze3d.vertex.IVertexBuilder;
 
 import net.minecraft.client.renderer.entity.model.EntityModel;
 import net.minecraft.client.renderer.model.ModelRenderer;
+import net.minecraft.entity.LivingEntity;
 import net.minecraft.util.math.MathHelper;
 
-// Made with Blockbench 3.6.5
+// Made with Blockbench 3.7.1
 // Exported for Minecraft version 1.15
 // Paste this class into your mod and generate all required imports
 
 
-public class BucketHeadZombieModel extends EntityModel<BucketHeadZombieEntity> {
+public class BucketHeadZombieModel extends EntityModel<BucketHeadZombieEntity> implements IHasDefence{
 	private final ModelRenderer total;
 	private final ModelRenderer head;
+	private final ModelRenderer bucket_r1;
+	private final ModelRenderer bucket;
+	private final ModelRenderer defence1;
+	private final ModelRenderer bar_r1;
 	private final ModelRenderer bar;
+	private final ModelRenderer defence2;
+	private final ModelRenderer defence3;
 	private final ModelRenderer right_hand;
 	private final ModelRenderer left_hand;
 	private final ModelRenderer body;
@@ -35,19 +43,53 @@ public class BucketHeadZombieModel extends EntityModel<BucketHeadZombieEntity> {
 		head.setRotationPoint(0.0F, -49.0F, 0.0F);
 		total.addChild(head);
 		head.setTextureOffset(16, 96).addBox(-8.0F, -15.0F, -8.0F, 16.0F, 16.0F, 16.0F, 0.0F, false);
-		head.setTextureOffset(208, 244).addBox(-9.0F, -15.0F, -9.0F, 18.0F, 2.0F, 1.0F, 0.0F, false);
-		head.setTextureOffset(208, 224).addBox(-9.0F, -15.0F, 8.0F, 18.0F, 2.0F, 1.0F, 0.0F, false);
-		head.setTextureOffset(217, 185).addBox(-9.0F, -15.0F, -8.0F, 1.0F, 2.0F, 16.0F, 0.0F, true);
-		head.setTextureOffset(214, 156).addBox(8.0F, -15.0F, -8.0F, 1.0F, 2.0F, 16.0F, 0.0F, false);
-		head.setTextureOffset(174, 105).addBox(-9.0F, -31.0F, -9.0F, 18.0F, 16.0F, 18.0F, 0.0F, false);
+
+		bucket_r1 = new ModelRenderer(this);
+		bucket_r1.setRotationPoint(0.0F, -13.0F, 0.0F);
+		head.addChild(bucket_r1);
+		setRotationAngle(bucket_r1, -0.0873F, 0.0F, 0.0F);
+		
+
+		bucket = new ModelRenderer(this);
+		bucket.setRotationPoint(0.0F, -13.0F, 0.0F);
+		head.addChild(bucket);
+		setRotationAngle(bucket, -0.0873F, 0.0F, 0.0F);
+		
+
+		defence1 = new ModelRenderer(this);
+		defence1.setRotationPoint(0.0F, 0.0F, 0.0F);
+		bucket.addChild(defence1);
+		defence1.setTextureOffset(137, 2).addBox(-9.0F, -2.0F, -9.0F, 18.0F, 2.0F, 1.0F, 0.0F, false);
+		defence1.setTextureOffset(138, 8).addBox(-9.0F, -2.0F, 8.0F, 18.0F, 2.0F, 1.0F, 0.0F, false);
+		defence1.setTextureOffset(138, 15).addBox(-9.0F, -2.0F, -8.0F, 1.0F, 2.0F, 16.0F, 0.0F, true);
+		defence1.setTextureOffset(138, 38).addBox(8.0F, -2.0F, -8.0F, 1.0F, 2.0F, 16.0F, 0.0F, false);
+		defence1.setTextureOffset(184, 2).addBox(-9.0F, -7.0F, -9.0F, 18.0F, 5.0F, 18.0F, 0.0F, false);
+
+		bar_r1 = new ModelRenderer(this);
+		bar_r1.setRotationPoint(0.0F, -2.0F, -1.0F);
+		defence1.addChild(bar_r1);
+		setRotationAngle(bar_r1, 0.7854F, 0.0F, 0.0F);
+		
 
 		bar = new ModelRenderer(this);
-		bar.setRotationPoint(0.0F, -14.0F, 0.0F);
-		head.addChild(bar);
-		setRotationAngle(bar, 0.5236F, 0.0F, 0.0F);
-		bar.setTextureOffset(10, 174).addBox(-10.0F, -1.0F, -15.0F, 20.0F, 1.0F, 1.0F, 0.0F, false);
-		bar.setTextureOffset(28, 203).addBox(-10.0F, -1.0F, -14.0F, 1.0F, 1.0F, 14.0F, 0.0F, false);
-		bar.setTextureOffset(116, 131).addBox(9.0F, -1.0F, -14.0F, 1.0F, 1.0F, 14.0F, 0.0F, false);
+		bar.setRotationPoint(0.0F, -2.0F, -1.0F);
+		defence1.addChild(bar);
+		setRotationAngle(bar, 0.7854F, 0.0F, 0.0F);
+		bar.setTextureOffset(182, 31).addBox(-11.0F, -1.0F, -15.0F, 22.0F, 1.0F, 1.0F, 0.0F, false);
+		bar.setTextureOffset(138, 60).addBox(-11.0F, -1.0F, -14.0F, 1.0F, 1.0F, 16.0F, 0.0F, false);
+		bar.setTextureOffset(137, 82).addBox(10.0F, -1.0F, -14.0F, 1.0F, 1.0F, 16.0F, 0.0F, false);
+		bar.setTextureOffset(181, 38).addBox(9.0F, -2.0F, 0.0F, 1.0F, 3.0F, 3.0F, 0.0F, false);
+		bar.setTextureOffset(195, 38).addBox(-10.0F, -2.0F, 0.0F, 1.0F, 3.0F, 3.0F, 0.0F, false);
+
+		defence2 = new ModelRenderer(this);
+		defence2.setRotationPoint(0.0F, 0.0F, 0.0F);
+		bucket.addChild(defence2);
+		defence2.setTextureOffset(181, 48).addBox(-9.0F, -14.0F, -9.0F, 18.0F, 7.0F, 18.0F, 0.0F, false);
+
+		defence3 = new ModelRenderer(this);
+		defence3.setRotationPoint(0.0F, 0.0F, 0.0F);
+		bucket.addChild(defence3);
+		defence3.setTextureOffset(182, 76).addBox(-9.0F, -20.0F, -9.0F, 18.0F, 6.0F, 18.0F, 0.0F, false);
 
 		right_hand = new ModelRenderer(this);
 		right_hand.setRotationPoint(8.0F, -48.0F, 0.0F);
@@ -95,4 +137,13 @@ public class BucketHeadZombieModel extends EntityModel<BucketHeadZombieEntity> {
 		modelRenderer.rotateAngleY = y;
 		modelRenderer.rotateAngleZ = z;
 	}
+
+	@Override
+	public void setDestroyed(LivingEntity entity) {
+		float percent = entity.getHealth() / entity.getMaxHealth();
+		this.defence3.showModel = percent > 3.0f/4;
+		this.defence2.showModel = percent > 2.0f/4;
+		this.defence1.showModel = percent > 1.0f/4;
+	}
+
 }

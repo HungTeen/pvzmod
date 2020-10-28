@@ -33,12 +33,12 @@ public class BucketHeadZombieRender extends PVZZombieRender<BucketHeadZombieEnti
 
 	@Override
 	public ResourceLocation getEntityTexture(BucketHeadZombieEntity entity) {
-		double hp=entity.getHealth();
-		double max=entity.getMaxHealth();
-		if(hp<=max/4) return StringUtil.prefix("textures/entity/zombie/grassday/buckethead_zombie4.png");
-		if(hp<=max/2) return StringUtil.prefix("textures/entity/zombie/grassday/buckethead_zombie3.png");
-		if(hp<=max*3/4) return StringUtil.prefix("textures/entity/zombie/grassday/buckethead_zombie2.png");
-		return StringUtil.prefix("textures/entity/zombie/grassday/buckethead_zombie1.png");
+//		double hp=entity.getHealth();
+//		double max=entity.getMaxHealth();
+//		if(hp<=max/4) return StringUtil.prefix("textures/entity/zombie/grassday/buckethead_zombie4.png");
+//		if(hp<=max/2) return StringUtil.prefix("textures/entity/zombie/grassday/buckethead_zombie3.png");
+//		if(hp<=max*3/4) return StringUtil.prefix("textures/entity/zombie/grassday/buckethead_zombie2.png");
+		return StringUtil.prefix("textures/entity/zombie/grassday/buckethead_zombie.png");
 	}
 
 }
