@@ -18,7 +18,7 @@ public class ChomperRender extends PVZPlantRender<ChomperEntity>{
 	}
 
 	@Override
-	protected float getScaleByEntity(ChomperEntity entity) {
+	public float getScaleByEntity(ChomperEntity entity) {
 		return 0.9f;
 	}
 

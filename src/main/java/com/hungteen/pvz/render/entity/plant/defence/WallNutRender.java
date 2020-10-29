@@ -18,7 +18,7 @@ public class WallNutRender extends PVZPlantRender<WallNutEntity>{
 	}
 
 	@Override
-	protected float getScaleByEntity(WallNutEntity entity) {
+	public float getScaleByEntity(WallNutEntity entity) {
 		return 0.4f;
 	}
 

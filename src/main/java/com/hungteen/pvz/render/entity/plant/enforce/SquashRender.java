@@ -18,7 +18,7 @@ public class SquashRender extends PVZPlantRender<SquashEntity>{
 	}
 
 	@Override
-	protected float getScaleByEntity(SquashEntity entity) {
+	public float getScaleByEntity(SquashEntity entity) {
 		return 0.5f;
 	}
 

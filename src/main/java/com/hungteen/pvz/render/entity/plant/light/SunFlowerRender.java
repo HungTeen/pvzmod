@@ -25,7 +25,7 @@ public class SunFlowerRender extends PVZPlantRender<SunFlowerEntity>{
 	}
 	
 	@Override
-	protected float getScaleByEntity(SunFlowerEntity entity) {
+	public float getScaleByEntity(SunFlowerEntity entity) {
 		return 0.5f;
 	}
 

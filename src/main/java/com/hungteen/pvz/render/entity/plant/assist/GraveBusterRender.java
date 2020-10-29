@@ -8,6 +8,7 @@ import com.mojang.blaze3d.matrix.MatrixStack;
 
 import net.minecraft.client.renderer.entity.EntityRendererManager;
 import net.minecraft.util.ResourceLocation;
+import net.minecraft.util.math.Vec3d;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 
@@ -31,7 +32,17 @@ public class GraveBusterRender extends PVZPlantRender<GraveBusterEntity>{
 	}
 	
 	@Override
-	protected float getScaleByEntity(GraveBusterEntity entity) {
+	public Vec3d getTranslateVec(GraveBusterEntity entity) {
+		if(entity.isEating()) {
+			float height = 1.5f;
+			float downOffset = (1 - entity.getAttackTime() * 1.0f / entity.getAttackCD()) * height;
+		    return new Vec3d(0, - downOffset, 0);
+		}
+		return super.getTranslateVec(entity);
+	}
+	
+	@Override
+	public float getScaleByEntity(GraveBusterEntity entity) {
 		return 1f;
 	}
 

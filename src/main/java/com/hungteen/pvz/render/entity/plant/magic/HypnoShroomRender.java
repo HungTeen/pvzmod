@@ -16,7 +16,7 @@ public class HypnoShroomRender extends PVZPlantRender<HypnoShroomEntity>{
 	}
 
 	@Override
-	protected float getScaleByEntity(HypnoShroomEntity entity) {
+	public float getScaleByEntity(HypnoShroomEntity entity) {
 		return 0.6f;
 	}
 

@@ -19,7 +19,7 @@ public class PuffShroomRender extends PVZPlantRender<PuffShroomEntity>{
 	}
 
 	@Override
-	protected float getScaleByEntity(PuffShroomEntity entity) {
+	public float getScaleByEntity(PuffShroomEntity entity) {
 		int tick = entity.getLiveTick();
 		int max = entity.getMaxLiveTick();
 		float change = 0.2f;

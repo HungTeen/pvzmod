@@ -18,7 +18,7 @@ public class TorchWoodRender extends PVZPlantRender<TorchWoodEntity>{
 	}
 
 	@Override
-	protected float getScaleByEntity(TorchWoodEntity entity) {
+	public float getScaleByEntity(TorchWoodEntity entity) {
 		return 0.5f;
 	}
 

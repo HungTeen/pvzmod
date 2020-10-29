@@ -42,7 +42,7 @@ public abstract class SummonCardItem extends Item{
 		tooltip.add(new TranslationTextComponent("tooltip.pvz.sun_cost").appendText(":"+getSunCost(stack)).applyTextStyle(TextFormatting.YELLOW));
 	}
 	
-	protected abstract int getSunCost(ItemStack stack);
+	public abstract int getSunCost(ItemStack stack);
 	
 	@Override
 	public boolean isEnchantable(ItemStack stack) {

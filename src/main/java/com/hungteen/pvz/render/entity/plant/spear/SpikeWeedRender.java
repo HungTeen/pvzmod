@@ -18,7 +18,7 @@ public class SpikeWeedRender extends PVZPlantRender<SpikeWeedEntity>{
 	}
 
 	@Override
-	protected float getScaleByEntity(SpikeWeedEntity entity) {
+	public float getScaleByEntity(SpikeWeedEntity entity) {
 		return 0.5f;
 	}
 

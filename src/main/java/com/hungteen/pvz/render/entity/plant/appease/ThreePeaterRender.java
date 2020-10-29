@@ -18,7 +18,7 @@ public class ThreePeaterRender extends PVZPlantRender<ThreePeaterEntity>{
 	}
 
 	@Override
-	protected float getScaleByEntity(ThreePeaterEntity entity) {
+	public float getScaleByEntity(ThreePeaterEntity entity) {
 		return 1;
 	}
 

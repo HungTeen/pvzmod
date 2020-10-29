@@ -18,7 +18,7 @@ public class WaterGuardRender extends PVZPlantRender<WaterGuardEntity>{
 	}
 
 	@Override
-	protected float getScaleByEntity(WaterGuardEntity entity) {
+	public float getScaleByEntity(WaterGuardEntity entity) {
 		return 0.8f;
 	}
 

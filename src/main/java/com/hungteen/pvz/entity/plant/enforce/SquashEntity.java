@@ -9,8 +9,10 @@ import com.hungteen.pvz.utils.enums.Plants;
 
 import net.minecraft.entity.CreatureEntity;
 import net.minecraft.entity.Entity;
+import net.minecraft.entity.EntitySize;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.LivingEntity;
+import net.minecraft.entity.Pose;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.util.DamageSource;
@@ -154,6 +156,11 @@ public class SquashEntity extends PVZPlantEntity{
 	@Override
 	public int getSuperTimeLength() {
 		return 20;
+	}
+	
+	@Override
+	public EntitySize getSize(Pose poseIn) {
+		return EntitySize.flexible(0.9f, 1.2f);
 	}
 	
 	@Override

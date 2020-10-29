@@ -18,7 +18,7 @@ public class DoomShroomRender extends PVZPlantRender<DoomShroomEntity>{
 	}
 
 	@Override
-	protected float getScaleByEntity(DoomShroomEntity entity) {
+	public float getScaleByEntity(DoomShroomEntity entity) {
 		float plus = entity.getAttackTime() * 1f / entity.getReadyTime();
 		return 1f + plus * plus * 0.5f;
 	}

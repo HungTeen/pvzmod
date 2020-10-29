@@ -18,7 +18,7 @@ public class TangleKelpRender extends PVZPlantRender<TangleKelpEntity>{
 	}
 
 	@Override
-	protected float getScaleByEntity(TangleKelpEntity entity) {
+	public float getScaleByEntity(TangleKelpEntity entity) {
 		return 0.6f;
 	}
 

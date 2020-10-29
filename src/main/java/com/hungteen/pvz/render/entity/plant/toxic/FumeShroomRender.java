@@ -18,7 +18,7 @@ public class FumeShroomRender extends PVZPlantRender<FumeShroomEntity>{
 	}
 
 	@Override
-	protected float getScaleByEntity(FumeShroomEntity entity) {
+	public float getScaleByEntity(FumeShroomEntity entity) {
 		return 0.9f;
 	}
 

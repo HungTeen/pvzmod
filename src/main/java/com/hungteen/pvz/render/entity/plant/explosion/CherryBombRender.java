@@ -18,7 +18,7 @@ public class CherryBombRender extends PVZPlantRender<CherryBombEntity>{
 	}
 
 	@Override
-	protected float getScaleByEntity(CherryBombEntity entity) {
+	public float getScaleByEntity(CherryBombEntity entity) {
 		float plus = entity.getAttackTime() * 1f / entity.getReadyTime();
 		return 0.5f + plus * 0.05f;
 	}

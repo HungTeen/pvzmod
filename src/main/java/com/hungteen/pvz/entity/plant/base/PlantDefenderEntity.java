@@ -66,9 +66,10 @@ public abstract class PlantDefenderEntity extends PVZPlantEntity implements IDef
 	
 	@Override
 	protected boolean processInteract(PlayerEntity player, Hand hand) {
+		super.processInteract(player, hand);
 		if(player.getHeldItem(hand).getItem() instanceof PlantCardItem && this.getHealth() != this.getMaxHealth()) {
 			PlantCardItem item = (PlantCardItem) player.getHeldItem(hand).getItem();
-			if(!item.isEnjoyCard()&&item.getPlant() == this.getPlantEnumName()) { // nut heal 
+			if(!item.isEnjoyCard() && item.getPlant() == this.getPlantEnumName()) { // nut heal 
 				if(!world.isRemote) {
 					player.getCooldownTracker().setCooldown(item, this.getCoolDownTime());
 				    this.heal(this.getMaxHealth());
@@ -85,6 +86,7 @@ public abstract class PlantDefenderEntity extends PVZPlantEntity implements IDef
 	
 	@Override
 	public boolean attackEntityFrom(DamageSource source, float amount) {
+		amount = this.pumpkinReduceDamage(source, amount);
 		if(!world.isRemote) {
 			if(this.getDefenceLife()>amount) { // damage armor health first
 				this.setDefenceLife(this.getDefenceLife()-amount);

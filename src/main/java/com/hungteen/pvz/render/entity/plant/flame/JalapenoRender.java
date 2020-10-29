@@ -18,7 +18,7 @@ public class JalapenoRender extends PVZPlantRender<JalapenoEntity>{
 	}
 
 	@Override
-	protected float getScaleByEntity(JalapenoEntity entity) {
+	public float getScaleByEntity(JalapenoEntity entity) {
 		float plus = entity.getAttackTime()*1f/entity.getReadyTime();
 		return 0.5f+plus/20f;
 	}

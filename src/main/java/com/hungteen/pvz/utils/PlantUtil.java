@@ -27,11 +27,8 @@ public class PlantUtil {
 	public static final int[] GOLD_XP = new int[] {0,35,60,90,120,175,255,350,450,600,800,1080,1500,2500,3600,5000,6400,8100,10800,14000,999999999};
 	public static final int[] MEGA_XP = new int[] {0,40,70,100,150,210,300,400,520,700,960,1300,1800,3000,4200,6000,7800,9600,12500,16000,999999999};
 	public static final int CURRENT_PLANT_NUM = 24;
-	
-	public static final Plants [] WATER_PLANTS = new Plants[] {
-			Plants.TANGLE_KELP,
-//			Plants.WATER_GUARD,
-	};
+	public static final float PUMPKIN_LIFE = 400;
+	public static final float PUMPKIN_SUPER_LIFE = 400;
 	
 	static {
 		//Plant sun Cost 
@@ -52,6 +49,7 @@ public class PlantUtil {
 		PLANT_SUN_COST.put(Plants.FUME_SHROOM, 100);
 		PLANT_SUN_COST.put(Plants.TALL_NUT, 125);
 		PLANT_SUN_COST.put(Plants.DOOM_SHROOM, 125);
+		PLANT_SUN_COST.put(Plants.PUMPKIN, 125);
 		PLANT_SUN_COST.put(Plants.CHERRY_BOMB, 150);
 		PLANT_SUN_COST.put(Plants.CHOMPER, 150);
 		PLANT_SUN_COST.put(Plants.SNOW_PEA, 175);
@@ -86,6 +84,7 @@ public class PlantUtil {
 		PLANT_CD.put(Plants.WALL_NUT, CDs.SLOW);
 		PLANT_CD.put(Plants.TANGLE_KELP, CDs.SLOW);
 		PLANT_CD.put(Plants.ICE_SHROOM, CDs.SLOW);
+		PLANT_CD.put(Plants.PUMPKIN, CDs.SLOW);
 		
 		PLANT_CD.put(Plants.TALL_NUT, CDs.VERY_SLOW);
 		
@@ -115,6 +114,7 @@ public class PlantUtil {
 		PLANT_RANK.put(Plants.SQUASH, Ranks.GREEN);
 		PLANT_RANK.put(Plants.TORCH_WOOD, Ranks.GREEN);
 		PLANT_RANK.put(Plants.FUME_SHROOM, Ranks.GREEN);
+		PLANT_RANK.put(Plants.PUMPKIN, Ranks.GREEN);
 //		PLANT_RANK.put(Plants.COFFEE_BEAN, Ranks.GREEN);
 		
 		PLANT_RANK.put(Plants.CHERRY_BOMB, Ranks.BLUE);
@@ -139,6 +139,7 @@ public class PlantUtil {
 		PLANT_ESSENCE.put(Plants.POTATO_MINE, Essences.EXPLOSION);
 		PLANT_ESSENCE.put(Plants.WALL_NUT, Essences.DEFENCE);
 		PLANT_ESSENCE.put(Plants.TALL_NUT, Essences.DEFENCE);
+		PLANT_ESSENCE.put(Plants.PUMPKIN, Essences.DEFENCE);
 		PLANT_ESSENCE.put(Plants.SNOW_PEA, Essences.ICE);
 		PLANT_ESSENCE.put(Plants.ICE_SHROOM, Essences.ICE);
 		PLANT_ESSENCE.put(Plants.CHOMPER, Essences.ENFORCE);
@@ -193,6 +194,7 @@ public class PlantUtil {
 	public static int getPlantMaxLvl(Plants plant){
 		switch(plant) {
 		case LILY_PAD:return 1;
+		case PUMPKIN:return 1;
 		default:return 20;
 		}
 	}

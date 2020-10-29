@@ -72,6 +72,7 @@ public class ChomperEntity extends PVZPlantEntity{
 		if(!world.isRemote) {
 			if(this.getAttackTime() < this.ATTACK_CD / 2) {//attack stage
 				if(this.getRestTick() > 0) {//rest time cannot attack
+					this.setAttackTime(0);
 					this.setRestTick(this.getRestTick() - 1);
 					return ;
 				}
