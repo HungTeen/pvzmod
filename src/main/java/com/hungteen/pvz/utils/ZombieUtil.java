@@ -58,6 +58,7 @@ public class ZombieUtil {
 		ZOMBIE_RANK.put(Zombies.DOLPHIN_RIDER, Ranks.BLUE);
 		//purple
 		ZOMBIE_RANK.put(Zombies.LAVA_ZOMBIE, Ranks.PURPLE);
+		ZOMBIE_RANK.put(Zombies.PUMPKIN_ZOMBIE, Ranks.PURPLE);
 		//gold
 		//boss
 	}

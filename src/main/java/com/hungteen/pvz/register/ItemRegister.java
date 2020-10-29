@@ -143,6 +143,8 @@ public class ItemRegister {
 	//food 
 	public static final RegistryObject<Item> FAKE_BRAIN = ITEMS.register("fake_brain", ()->new Item(new Item.Properties().group(ItemGroup.FOOD).food(PVZFoods.FAKE_BRAIN)));
 	public static final RegistryObject<Item> REAL_BRAIN = ITEMS.register("real_brain", ()->new Item(new Item.Properties().group(ItemGroup.FOOD).food(PVZFoods.REAL_BRAIN)));
+	public static final RegistryObject<Item> CANDY = ITEMS.register("candy", ()->new Item(new Item.Properties().group(ItemGroup.FOOD).food(PVZFoods.CANDY)));
+	public static final RegistryObject<Item> CHOCOLATE = ITEMS.register("chocolate", ()->new Item(new Item.Properties().group(ItemGroup.FOOD).food(PVZFoods.CHOCOLATE)));
 	
 	//spawn egg
 	//drop
@@ -176,6 +178,7 @@ public class ItemRegister {
 	public static final RegistryObject<PVZSpawnEggItem> LAVA_ZOMBIE_SPAWN_EGG = registerSpawnEgg("lava_zombie", EntityRegister.LAVA_ZOMBIE, Colors.ZOMBIE_COLOR);
 	public static final RegistryObject<PVZSpawnEggItem> NEWSPAPER_ZOMBIE_SPAWN_EGG = registerSpawnEgg("newspaper_zombie", EntityRegister.NEWSPAPER_ZOMBIE, Colors.ZOMBIE_COLOR);
 	public static final RegistryObject<PVZSpawnEggItem> TOMB_STONE_SPAWN_EGG = registerSpawnEgg("tomb_stone", EntityRegister.TOMB_STONE, Colors.ZOMBIE_COLOR);
+	public static final RegistryObject<PVZSpawnEggItem> PUMPKIN_ZOMBIE_SPAWN_EGG = registerSpawnEgg("pumpkin_zombie", EntityRegister.PUMPKIN_ZOMBIE, Colors.ZOMBIE_COLOR);
 	
 	//plant
 	public static final RegistryObject<PVZSpawnEggItem> PEA_SHOOTER_SPAWN_EGG = registerSpawnEgg("pea_shooter", EntityRegister.PEA_SHOOTER, Colors.APPEASE_COLOR);

@@ -19,8 +19,8 @@ public class EffectRegister {
 	public static final DeferredRegister<Effect> EFFECTS = new DeferredRegister<>(ForgeRegistries.POTIONS, PVZMod.MOD_ID);
 
 	public static final UUID COLD_EFFECT_UUID = UUID.fromString("968019bc-e212-11ea-87d0-0242ac130003");
-	
 	public static final UUID FROZEN_EFFECT_UUID = UUID.fromString("293e07aa-e213-11ea-87d0-0242ac130003");
+	public static final UUID EXCITE_EFFECT_UUID = UUID.fromString("a211dbca-19f9-11eb-adc1-0242ac120002");
 			
 	public static final RegistryObject<Effect> COLD_EFFECT = EFFECTS.register("cold", ()->{
 		return new PVZEffect(EffectType.HARMFUL, Colors.IRIS_BLUE)
@@ -32,6 +32,10 @@ public class EffectRegister {
 		return new PVZEffect(EffectType.HARMFUL, Colors.ELECTRIC_BLUE)
 		.addAttributesModifier(SharedMonsterAttributes.MOVEMENT_SPEED,
 		FROZEN_EFFECT_UUID.toString(), -1f, Operation.MULTIPLY_TOTAL);
+	});
+	
+	public static final RegistryObject<Effect> EXCITE_EFFECT = EFFECTS.register("excite", ()->{
+		return new PVZEffect(EffectType.BENEFICIAL, Colors.GOLD_YELLOW);
 	});
 	
 //	public static final RegistryObject<Effect> BUCKET_OMEN = EFFECTS.register("bucket_omen", ()->{

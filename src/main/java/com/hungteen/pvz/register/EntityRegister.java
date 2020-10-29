@@ -44,6 +44,7 @@ import com.hungteen.pvz.entity.zombie.grassday.PoleZombieEntity;
 import com.hungteen.pvz.entity.zombie.grassnight.NewspaperZombieEntity;
 import com.hungteen.pvz.entity.zombie.grassnight.TombStoneEntity;
 import com.hungteen.pvz.entity.zombie.part.PVZZombiePartEntity;
+import com.hungteen.pvz.entity.zombie.plantzombie.PumpkinZombieEntity;
 import com.hungteen.pvz.entity.zombie.poolday.BobsleTeamEntity;
 import com.hungteen.pvz.entity.zombie.poolday.BobsleZombieEntity;
 import com.hungteen.pvz.entity.zombie.poolday.DolphinRiderEntity;
@@ -95,6 +96,7 @@ import com.hungteen.pvz.render.entity.zombie.grassday.NormalZombieRender;
 import com.hungteen.pvz.render.entity.zombie.grassday.PoleZombieRender;
 import com.hungteen.pvz.render.entity.zombie.grassnight.NewspaperZombieRender;
 import com.hungteen.pvz.render.entity.zombie.grassnight.TombStoneRender;
+import com.hungteen.pvz.render.entity.zombie.plantzombie.PumpkinZombieRender;
 import com.hungteen.pvz.render.entity.zombie.poolday.BobsleTeamRender;
 import com.hungteen.pvz.render.entity.zombie.poolday.BobsleZombieRender;
 import com.hungteen.pvz.render.entity.zombie.poolday.DolphinRiderRender;
@@ -165,6 +167,7 @@ public class EntityRegister {
 	public static final RegistryObject<EntityType<LavaZombieEntity>> LAVA_ZOMBIE = registerImmuneFireEntityType(LavaZombieEntity::new, "lava_zombie", EntityClassification.MONSTER);
 	public static final RegistryObject<EntityType<NewspaperZombieEntity>> NEWSPAPER_ZOMBIE = registerImmuneFireEntityType(NewspaperZombieEntity::new, "newspaper_zombie", EntityClassification.MONSTER);
 	public static final RegistryObject<EntityType<TombStoneEntity>> TOMB_STONE = registerImmuneFireEntityType(TombStoneEntity::new, "tomb_stone", EntityClassification.MONSTER);
+	public static final RegistryObject<EntityType<PumpkinZombieEntity>> PUMPKIN_ZOMBIE = registerImmuneFireEntityType(PumpkinZombieEntity::new, "pumpkin_zombie", EntityClassification.MONSTER);
 	
 	//plant
 	public static final RegistryObject<EntityType<PeaShooterEntity>> PEA_SHOOTER = registerEntityType(PeaShooterEntity::new, "pea_shooter", EntityClassification.CREATURE);
@@ -235,6 +238,7 @@ public class EntityRegister {
         RenderingRegistry.registerEntityRenderingHandler(LAVA_ZOMBIE.get(), LavaZombieRender::new);
         RenderingRegistry.registerEntityRenderingHandler(NEWSPAPER_ZOMBIE.get(), NewspaperZombieRender::new);
         RenderingRegistry.registerEntityRenderingHandler(TOMB_STONE.get(), TombStoneRender::new);
+        RenderingRegistry.registerEntityRenderingHandler(PUMPKIN_ZOMBIE.get(), PumpkinZombieRender::new);
         
         //plant
         RenderingRegistry.registerEntityRenderingHandler(PEA_SHOOTER.get(), PeaShooterRender::new);
