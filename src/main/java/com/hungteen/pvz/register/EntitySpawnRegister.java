@@ -92,6 +92,15 @@ public class EntitySpawnRegister {
 		}
 	}
 	
+	public static void removeEventSpawns(World world) {
+		WorldEventData data = WorldEventData.getOverWorldEventData(world);
+		for(Events event:Events.values()) {
+			if(data.hasEvent(event)) {
+				removeEventSpawns(event);
+			}
+		}
+	}
+	
 	public static void addEventSpawns(Events event) {
         List<SpawnEntry> spawnList = getEventSpawnList(event);
         if(spawnList==null) {

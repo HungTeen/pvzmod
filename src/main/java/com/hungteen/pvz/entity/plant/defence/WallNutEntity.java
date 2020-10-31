@@ -4,7 +4,9 @@ import com.hungteen.pvz.entity.plant.base.PlantDefenderEntity;
 import com.hungteen.pvz.utils.enums.Plants;
 
 import net.minecraft.entity.CreatureEntity;
+import net.minecraft.entity.EntitySize;
 import net.minecraft.entity.EntityType;
+import net.minecraft.entity.Pose;
 import net.minecraft.world.World;
 
 public class WallNutEntity extends PlantDefenderEntity{
@@ -30,6 +32,11 @@ public class WallNutEntity extends PlantDefenderEntity{
 		return 400;
 	}
 
+	@Override
+	public EntitySize getSize(Pose poseIn) {
+		return EntitySize.flexible(0.8f, 1.3f);
+	}
+	
 	@Override
 	public Plants getPlantEnumName() {
 		return Plants.WALL_NUT;

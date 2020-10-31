@@ -41,6 +41,7 @@ public class ZombieUtil {
 		//gray
 		ZOMBIE_RANK.put(Zombies.ZOMBIE_DOLPHIN, Ranks.GRAY);
 		ZOMBIE_RANK.put(Zombies.TOMB_STONE, Ranks.GRAY);
+		ZOMBIE_RANK.put(Zombies.TRICK_ZOMBIE, Ranks.GRAY);
 		//white
 		ZOMBIE_RANK.put(Zombies.NORMAL_ZOMBIE, Ranks.WHITE);
 		ZOMBIE_RANK.put(Zombies.FLAG_ZOMBIE, Ranks.WHITE);

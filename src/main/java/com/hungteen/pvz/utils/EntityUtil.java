@@ -201,7 +201,7 @@ public class EntityUtil {
 	public static List<LivingEntity> getEntityTargetableEntity(LivingEntity attacker, AxisAlignedBB aabb){
 		List<LivingEntity> list = new ArrayList<>();
 		for(LivingEntity entity : attacker.world.getEntitiesWithinAABB(LivingEntity.class, aabb)) {
-			if(checkCanEntityTarget(attacker, entity)) {
+			if(attacker != entity && checkCanEntityTarget(attacker, entity)) {
 				list.add(entity);
 			}
 		}
@@ -214,7 +214,7 @@ public class EntityUtil {
 	public static List<Entity> getEntityAttackableTarget(LivingEntity attacker, AxisAlignedBB aabb){
 		List<Entity> list = new ArrayList<>();
 		for(Entity entity : attacker.world.getEntitiesWithinAABB(Entity.class, aabb)) {
-			if(checkCanEntityAttack(attacker, entity)) {
+			if(attacker != entity && checkCanEntityAttack(attacker, entity)) {
 				list.add(entity);
 			}
 		}

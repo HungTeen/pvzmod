@@ -9,7 +9,6 @@ import net.minecraft.entity.CreatureEntity;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.ai.goal.Goal;
 import net.minecraft.pathfinding.Path;
-import net.minecraft.util.EntityPredicates;
 import net.minecraft.util.Hand;
 
 public class PVZMeleeAttackGoal extends Goal {
@@ -18,6 +17,7 @@ public class PVZMeleeAttackGoal extends Goal {
 	protected int attackTick;
 	private Path path;
 	protected float speed = 1.0f;
+	private int delayCounter;
 
 	public PVZMeleeAttackGoal(CreatureEntity creature) {
 		this.attacker = creature;
@@ -27,6 +27,7 @@ public class PVZMeleeAttackGoal extends Goal {
 	@Override
 	public boolean shouldExecute() {
 		LivingEntity target = this.attacker.getAttackTarget();
+//		System.out.println(target);
 		if (target == null || !target.isAlive()) {
 			return false;
 		}
@@ -44,10 +45,13 @@ public class PVZMeleeAttackGoal extends Goal {
 		if (target == null || !target.isAlive()) {
 			return false;
 		}
-		if (this.getAttackReachSqr(target) < this.attacker.getDistanceSq(target)
-				&& this.attacker.getNavigator().noPath()) {
-			return false;
-		}
+//		if (this.getAttackReachSqr(target) < this.attacker.getDistanceSq(target)
+//				&& this.attacker.getNavigator().noPath()) {
+//			return false;
+//		}
+//		if(this.attacker instanceof TrickZombieEntity) {
+//			System.out.println(EntityUtil.checkCanEntityTarget(this.attacker, target));
+//		}
 		return EntityUtil.checkCanEntityTarget(this.attacker, target);
 	}
 
@@ -55,21 +59,27 @@ public class PVZMeleeAttackGoal extends Goal {
 	public void startExecuting() {
 		this.attacker.getNavigator().setPath(this.path, this.speed);
 		this.attacker.setAggroed(true);
+		this.delayCounter = 0;
 	}
 
+	@Override
 	public void resetTask() {
-		LivingEntity livingentity = this.attacker.getAttackTarget();
-		if (!EntityPredicates.CAN_AI_TARGET.test(livingentity)) {
-			this.attacker.setAttackTarget((LivingEntity) null);
-		}
+		this.attacker.setAttackTarget(null);
 		this.attacker.setAggroed(false);
 		this.attacker.getNavigator().clearPath();
 	}
 
+	@Override
 	public void tick() {
 		LivingEntity target = this.attacker.getAttackTarget();
 		this.attacker.getLookController().setLookPositionWithEntity(target, 30.0F, 30.0F);
-		this.attacker.getNavigator().tryMoveToEntityLiving(target, this.speed);
+		--this.delayCounter;
+		if(this.delayCounter <=0 && this.attacker.getRNG().nextFloat() < 0.05f) {
+			this.delayCounter = 5 + this.attacker.getRNG().nextInt(10);
+			if(!this.attacker.getNavigator().tryMoveToEntityLiving(target, this.speed)) {
+			    this.delayCounter += 20;
+		    }
+		}
 		this.attackTick = Math.max(this.attackTick - 1, 0);
 		this.checkAndPerformAttack(target);
 	}

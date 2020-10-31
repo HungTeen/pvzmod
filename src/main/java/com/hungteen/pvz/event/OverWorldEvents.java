@@ -22,7 +22,7 @@ public class OverWorldEvents {
 	public static void tick(TickEvent.WorldTickEvent ev) {
 		World world = ev.world;
 		long totalTime = world.getDayTime();
-		if(world.getGameTime()<PVZConfig.COMMON_CONFIG.WorldSettings.WorldEventSettings.SafeDayLength.get()*24000) {
+		if(world.getGameTime() < PVZConfig.COMMON_CONFIG.WorldSettings.WorldEventSettings.SafeDayLength.get()*24000) {
 			return ;
 		}
 		int time=(int) (totalTime%24000);

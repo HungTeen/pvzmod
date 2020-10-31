@@ -4,4 +4,6 @@ public enum Events {
 
 	BUCKET,
 	WATER,
+	HALLOWEEN,
+	
 }

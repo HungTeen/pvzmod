@@ -6,6 +6,7 @@ import com.hungteen.pvz.capability.CapabilityHandler;
 import com.hungteen.pvz.entity.plant.PVZPlantEntity;
 import com.hungteen.pvz.event.events.SummonCardUseEvent;
 import com.hungteen.pvz.register.BlockRegister;
+import com.hungteen.pvz.register.EffectRegister;
 import com.hungteen.pvz.register.EnchantmentRegister;
 import com.hungteen.pvz.utils.PlantUtil;
 import com.hungteen.pvz.utils.enums.Plants;
@@ -101,21 +102,16 @@ public class PlantCardItem extends SummonCardItem{
 			    	PVZMod.LOGGER.debug("no such plant");
 				    return;
 			    }
-			    MinecraftForge.EVENT_BUS.post(new SummonCardUseEvent(player, stack));
 				l.getPlayerData().getPlayerStats().addPlayerStats(Resources.SUN_NUM, - sunCost);
 				int lvl = manager.getPlantStats().getPlantLevel(plant);
-				if(this.isEnjoyCard) {//enjoy card can only use once
-					lvl = 1;
-					stack.shrink(1);
-				}else {
-					
-				}
-				player.getCooldownTracker().setCooldown(stack.getItem(), PlantUtil.getPlantCoolDownTime(plant, lvl));
+				onUsePlantCard(player, stack, this, lvl);
 				plantEntity.setPlantLvl(lvl);
 				plantEntity.setOwnerUUID(player.getUniqueID());
 				double dy = 1;
-				if(world.getBlockState(pos).getBlock()==BlockRegister.LILY_PAD.get()) dy=0.1d;
-				plantEntity.setPosition(pos.getX()+0.5D,pos.getY()+dy,pos.getZ()+0.5D);
+				if(world.getBlockState(pos).getBlock() == BlockRegister.LILY_PAD.get()) {
+					dy = 0.1;
+				}
+				plantEntity.setPosition(pos.getX() + 0.5D, pos.getY() + dy, pos.getZ() + 0.5D);
 //				if(EnchantmentHelper.getEnchantmentLevel(En, stack)) {// hypno
 //					
 //				}
@@ -126,9 +122,17 @@ public class PlantCardItem extends SummonCardItem{
 						plantEntity.startSuperMode(false);
 					}
 				}
-				player.addStat(Stats.ITEM_USED.get(this));
 			}
 		});
+	}
+	
+	public static void onUsePlantCard(PlayerEntity player, ItemStack stack, PlantCardItem item, int plantLvl) {
+		MinecraftForge.EVENT_BUS.post(new SummonCardUseEvent(player, stack));
+		if(item.isEnjoyCard) {
+			stack.shrink(1);
+		}
+		handlePlantCardCoolDown(player, stack, item, plantLvl);
+		player.addStat(Stats.ITEM_USED.get(item));
 	}
 	
 	public static void plantPumpkin(PlayerEntity player, PVZPlantEntity plantEntity, PlantCardItem item, ItemStack stack) {
@@ -137,25 +141,29 @@ public class PlantCardItem extends SummonCardItem{
 			int num = manager.getPlayerStats().getPlayerStats(Resources.SUN_NUM);
 			int sunCost = item.getSunCost(stack);
 			if(num >= sunCost) {//sun is enough
-			    MinecraftForge.EVENT_BUS.post(new SummonCardUseEvent(player, stack));
 				l.getPlayerData().getPlayerStats().addPlayerStats(Resources.SUN_NUM, - sunCost);
-				int lvl = manager.getPlantStats().getPlantLevel(item.getPlant());
+				onUsePlantCard(player, stack, item, manager.getPlantStats().getPlantLevel(item.getPlant()));
 				float life = PlantUtil.PUMPKIN_LIFE;
-				if(item.isEnjoyCard) {//enjoy card can only use once
-					lvl = 1;
-					stack.shrink(1);
-				}else {
-					
-				}
-				player.getCooldownTracker().setCooldown(stack.getItem(), PlantUtil.getPlantCoolDownTime(item.getPlant(), lvl));
 				if(item.canPlantBreakOut(stack)) {//break out enchantment
 					life += PlantUtil.PUMPKIN_SUPER_LIFE;
 				}
 				plantEntity.setPumpkinLife(life);
 				plantEntity.setOuterPlantType(Plants.PUMPKIN);
-				player.addStat(Stats.ITEM_USED.get(item));
 			}
 		});
+	}
+	
+	/**
+	 * set player-item cool down
+	 */
+	public static void handlePlantCardCoolDown(PlayerEntity player, ItemStack stack, PlantCardItem item, int plantLvl) {
+		int cd = PlantUtil.getPlantCoolDownTime(item.getPlant(), plantLvl);
+		if(player.isPotionActive(EffectRegister.EXCITE_EFFECT.get())) {
+			int lvl = player.getActivePotionEffect(EffectRegister.EXCITE_EFFECT.get()).getAmplifier();
+			float mult = Math.max(0, 0.9f - 0.1f * lvl);
+			cd = (int) Math.floor(cd * mult);
+		}
+		player.getCooldownTracker().setCooldown(stack.getItem(), cd);
 	}
 	
 	public boolean canPlantBreakOut(ItemStack stack) {

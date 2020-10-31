@@ -1,9 +1,11 @@
 package com.hungteen.pvz.entity.plant.base;
 
+import com.hungteen.pvz.capability.CapabilityHandler;
 import com.hungteen.pvz.entity.ai.PVZNearestTargetGoal;
 import com.hungteen.pvz.entity.plant.PVZPlantEntity;
 import com.hungteen.pvz.item.tool.card.PlantCardItem;
 import com.hungteen.pvz.utils.EntityUtil;
+import com.hungteen.pvz.utils.enums.Resources;
 import com.hungteen.pvz.utils.interfaces.IDefender;
 
 import net.minecraft.entity.CreatureEntity;
@@ -11,6 +13,7 @@ import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.MobEntity;
 import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.network.datasync.DataParameter;
 import net.minecraft.network.datasync.DataSerializers;
@@ -39,7 +42,7 @@ public abstract class PlantDefenderEntity extends PVZPlantEntity implements IDef
 		super.registerGoals();
 		this.targetSelector.addGoal(0, new PVZNearestTargetGoal(this, true, getAttractRange(), 3f) {
 			@Override
-			protected boolean checkPlant(Entity entity) {
+			protected boolean checkOther(Entity entity) {
 				return entity instanceof MobEntity;
 			}
 		});
@@ -67,15 +70,23 @@ public abstract class PlantDefenderEntity extends PVZPlantEntity implements IDef
 	@Override
 	protected boolean processInteract(PlayerEntity player, Hand hand) {
 		super.processInteract(player, hand);
-		if(player.getHeldItem(hand).getItem() instanceof PlantCardItem && this.getHealth() != this.getMaxHealth()) {
-			PlantCardItem item = (PlantCardItem) player.getHeldItem(hand).getItem();
-			if(!item.isEnjoyCard() && item.getPlant() == this.getPlantEnumName()) { // nut heal 
+		ItemStack stack = player.getHeldItem(hand);
+		if(stack.getItem() instanceof PlantCardItem && this.getHealth() != this.getMaxHealth()) {
+			PlantCardItem item = (PlantCardItem) stack.getItem();
+			if(item.getPlant() == this.getPlantEnumName()) { // nut heal 
 				if(!world.isRemote) {
-					player.getCooldownTracker().setCooldown(item, this.getCoolDownTime());
-				    this.heal(this.getMaxHealth());
+					player.getCapability(CapabilityHandler.PLAYER_DATA_CAPABILITY).ifPresent((l)->{
+						int cost = item.getSunCost(stack);
+						int sun = l.getPlayerData().getPlayerStats().getPlayerStats(Resources.SUN_NUM);
+						if(sun >= cost) {
+							l.getPlayerData().getPlayerStats().addPlayerStats(Resources.SUN_NUM, - cost);
+							PlantCardItem.onUsePlantCard(player, stack, item, l.getPlayerData().getPlantStats().getPlantLevel(getPlantEnumName()));
+						    this.heal(this.getMaxHealth());
+						}
+					});
 				}else {
 					for(int i=0;i<4;i++) {
-						this.world.addParticle(ParticleTypes.HEART, this.getPosX(), this.getPosY()+this.getEyeHeight(), this.getPosZ(), (this.getRNG().nextFloat()-0.5f)/8, 0.05f, (this.getRNG().nextFloat()-0.5f)/8);
+						this.world.addParticle(ParticleTypes.HEART, this.getPosX(), this.getPosY() + this.getEyeHeight(), this.getPosZ(), (this.getRNG().nextFloat()-0.5f)/8, 0.05f, (this.getRNG().nextFloat()-0.5f)/8);
 					}
 				}
 				return true;

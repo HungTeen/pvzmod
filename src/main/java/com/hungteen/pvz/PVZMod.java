@@ -16,6 +16,7 @@ import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.config.ModConfig.Type;
 import net.minecraftforge.fml.event.lifecycle.FMLLoadCompleteEvent;
 import net.minecraftforge.fml.event.server.FMLServerStartingEvent;
+import net.minecraftforge.fml.event.server.FMLServerStoppingEvent;
 
 // The value here should match an entry in the META-INF/mods.toml file
 @Mod(PVZMod.MOD_ID)
@@ -48,6 +49,13 @@ public class PVZMod
     public static void serverInit(FMLServerStartingEvent ev) {
     	ServerWorld world = ev.getServer().getWorld(DimensionType.OVERWORLD);
     	EntitySpawnRegister.updateEventSpawns(world);
+    }
+    
+    @SubscribeEvent
+    public static void serverShutDown(FMLServerStoppingEvent ev) {
+//    	System.out.println("shut down!!!");
+    	ServerWorld world = ev.getServer().getWorld(DimensionType.OVERWORLD);
+    	EntitySpawnRegister.removeEventSpawns(world);
     }
     
     @SubscribeEvent

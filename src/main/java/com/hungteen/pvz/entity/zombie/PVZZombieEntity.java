@@ -80,7 +80,6 @@ public abstract class PVZZombieEntity extends MonsterEntity implements IPVZZombi
 	public PVZZombieEntity(EntityType<? extends MonsterEntity> type, World worldIn) {
 		super(type, worldIn);
 		this.setZombieAttributes();
-		this.isImmuneToFire();
 	}
 
 	/**
@@ -126,6 +125,7 @@ public abstract class PVZZombieEntity extends MonsterEntity implements IPVZZombi
 		this.goalSelector.addGoal(7, new SwimGoal(this));
 		this.goalSelector.addGoal(0, new PVZMeleeAttackGoal(this));
 		this.targetSelector.addGoal(0, new PVZNearestTargetGoal(this, true, 80, 60));
+//		this.goalSelector.addGoal(0, new NearestAttackableTargetGoal<>(this, WallNutEntity.class, true));
 	}
 
 	@Override
