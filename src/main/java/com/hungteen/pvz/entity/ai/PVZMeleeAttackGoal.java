@@ -16,8 +16,12 @@ public class PVZMeleeAttackGoal extends Goal {
 	protected final CreatureEntity attacker;
 	protected int attackTick;
 	private Path path;
+	private double targetX;
+	private double targetY;
+	private double targetZ;
 	protected float speed = 1.0f;
 	private int delayCounter;
+	private int delayCnt = 1;
 
 	public PVZMeleeAttackGoal(CreatureEntity creature) {
 		this.attacker = creature;
@@ -60,6 +64,7 @@ public class PVZMeleeAttackGoal extends Goal {
 		this.attacker.getNavigator().setPath(this.path, this.speed);
 		this.attacker.setAggroed(true);
 		this.delayCounter = 0;
+		this.delayCnt = 1;
 	}
 
 	@Override
@@ -74,10 +79,17 @@ public class PVZMeleeAttackGoal extends Goal {
 		LivingEntity target = this.attacker.getAttackTarget();
 		this.attacker.getLookController().setLookPositionWithEntity(target, 30.0F, 30.0F);
 		--this.delayCounter;
-		if(this.delayCounter <=0 && this.attacker.getRNG().nextFloat() < 0.05f) {
+		if(this.delayCounter <= 0 && (this.targetX == 0.0D && this.targetY == 0.0D && this.targetZ == 0.0D || target.getDistanceSq(this.targetX, this.targetY, this.targetZ) >= 1.0D || this.attacker.getRNG().nextFloat() < 0.05F)) {
+			this.targetX = target.getPosX();
+	        this.targetY = target.getPosY();
+	        this.targetZ = target.getPosZ();
 			this.delayCounter = 5 + this.attacker.getRNG().nextInt(10);
+//			System.out.println("find path");
 			if(!this.attacker.getNavigator().tryMoveToEntityLiving(target, this.speed)) {
-			    this.delayCounter += 20;
+			    this.delayCounter += 20 * this.delayCnt;
+			    this.delayCnt = Math.min(10, this.delayCnt + 1);
+		    }else {
+		    	this.delayCnt = 1;
 		    }
 		}
 		this.attackTick = Math.max(this.attackTick - 1, 0);

@@ -10,7 +10,7 @@ import javax.annotation.Nullable;
 import com.hungteen.pvz.PVZConfig;
 import com.hungteen.pvz.entity.ai.PVZLookRandomlyGoal;
 import com.hungteen.pvz.entity.ai.PVZMeleeAttackGoal;
-import com.hungteen.pvz.entity.ai.PVZNearestTargetGoal;
+import com.hungteen.pvz.entity.ai.ZombieNearestTargetGoal;
 import com.hungteen.pvz.entity.drop.CoinEntity;
 import com.hungteen.pvz.entity.drop.EnergyEntity;
 import com.hungteen.pvz.entity.plant.PVZPlantEntity;
@@ -124,7 +124,7 @@ public abstract class PVZZombieEntity extends MonsterEntity implements IPVZZombi
 		this.goalSelector.addGoal(7, new WaterAvoidingRandomWalkingGoal(this, 1.0D));
 		this.goalSelector.addGoal(7, new SwimGoal(this));
 		this.goalSelector.addGoal(0, new PVZMeleeAttackGoal(this));
-		this.targetSelector.addGoal(0, new PVZNearestTargetGoal(this, true, 80, 60));
+		this.targetSelector.addGoal(0, new ZombieNearestTargetGoal(this, true, 80, 60));
 //		this.goalSelector.addGoal(0, new NearestAttackableTargetGoal<>(this, WallNutEntity.class, true));
 	}
 

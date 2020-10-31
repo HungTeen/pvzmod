@@ -92,7 +92,7 @@ public class PVZNearestTargetGoal extends TargetGoal {
 		return this.goalOwner.getEntitySenses().canSee(entity);
 	}
 
-	protected boolean checkOther(Entity entity) {
+	protected boolean checkOther(LivingEntity entity) {
 		if (this.goalOwner instanceof IShooter) {
 			return ((IShooter) this.goalOwner).checkY(entity);
 		}

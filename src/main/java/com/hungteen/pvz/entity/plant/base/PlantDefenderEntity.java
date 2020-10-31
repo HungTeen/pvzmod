@@ -11,6 +11,7 @@ import com.hungteen.pvz.utils.interfaces.IDefender;
 import net.minecraft.entity.CreatureEntity;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
+import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.MobEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
@@ -42,7 +43,7 @@ public abstract class PlantDefenderEntity extends PVZPlantEntity implements IDef
 		super.registerGoals();
 		this.targetSelector.addGoal(0, new PVZNearestTargetGoal(this, true, getAttractRange(), 3f) {
 			@Override
-			protected boolean checkOther(Entity entity) {
+			protected boolean checkOther(LivingEntity entity) {
 				return entity instanceof MobEntity;
 			}
 		});
