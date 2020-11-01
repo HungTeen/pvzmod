@@ -38,6 +38,8 @@
     "item.pvz.real_brain":"真*脑子",
     "item.pvz.pepper":"辣椒",
     "item.pvz.almanac":"图鉴",
+    "item.pvz.candy":"糖果",
+    "item.pvz.chocolate":"巧克力",
 //entity &刷怪蛋 & card  
 //drop
     "entity.pvz.sun":"阳光",
@@ -89,6 +91,10 @@
     "item.pvz.tomb_stone_spawn_egg":"墓碑刷怪蛋",
     "entity.pvz.newspaper_zombie":"读报僵尸",
     "item.pvz.newspaper_zombie_spawn_egg":"读报僵尸刷怪蛋",
+    "entity.pvz.pumpkin_zombie":"南瓜头僵尸",
+    "item.pvz.pumpkin_zombie_spawn_egg":"南瓜头僵尸刷怪蛋",
+    "entity.pvz.trick_zombie":"捣蛋鬼僵尸",
+    "item.pvz.trick_zombie_spawn_egg":"捣蛋鬼僵尸刷怪蛋",
 //plant
 //PeaShooter
     "entity.pvz.pea_shooter":"豌豆射手",
@@ -216,6 +222,9 @@
     "item.pvz.doom_shroom_spawn_egg":"毁灭菇刷怪蛋",
     "item.pvz.doom_shroom_card":"毁灭菇卡",
     "item.pvz.doom_shroom_enjoy_card":"毁灭菇体验卡",
+//Pumpkin
+    "item.pvz.pumpkin_card":"南瓜头卡",
+    "item.pvz.pumpkin_enjoy_card":"南瓜头体验卡",
 //tool & tooltip
     "item.pvz.zombie_flag":"僵尸旗帜",
     "tooltip.pvz.zombie_flag":"右键会获得加速效果",
@@ -414,6 +423,19 @@
     "enchantment.pvz.sun_cost_reduce":"节能",
     "enchantment.pvz.break_out":"爆发",
     "enchantment.pvz.energy_transfer":"充能",
+//effect
+    "effect.pvz.cold":"寒冷",
+    "effect.pvz.frozen":"冰封",
+    "effect.pvz.excite":"兴奋",
+    "item.minecraft.potion.effect.excite_potion_1":"兴奋药水",
+    "item.minecraft.potion.effect.excite_potion_2":"兴奋药水",
+    "item.minecraft.potion.effect.excite_potion_3":"兴奋药水",
+    "item.minecraft.splash_potion.effect.excite_potion_1":"喷溅型兴奋药水",
+    "item.minecraft.splash_potion.effect.excite_potion_2":"喷溅型兴奋药水",
+    "item.minecraft.splash_potion.effect.excite_potion_3":"喷溅型兴奋药水",
+    "item.minecraft.lingering_potion.effect.excite_potion_1":"滞留型兴奋药水",
+    "item.minecraft.lingering_potion.effect.excite_potion_2":"滞留型兴奋药水",
+    "item.minecraft.lingering_potion.effect.excite_potion_3":"滞留型兴奋药水",
 //event
     "event.pvz.zombie_attack":"一大波僵尸正在来袭 !",
 //death

@@ -322,7 +322,7 @@ public abstract class PVZZombieEntity extends MonsterEntity implements IPVZZombi
 		return worldIn.getLightFor(LightType.BLOCK, pos) > 8 ? false
 				: canMonsterSpawn(zombieType, worldIn, reason, pos, rand);
 	}
-
+	
 	@Override
 	public float getBlockPathWeight(BlockPos pos, IWorldReader worldIn) {
 		return 9 - worldIn.getLightFor(LightType.BLOCK, pos);

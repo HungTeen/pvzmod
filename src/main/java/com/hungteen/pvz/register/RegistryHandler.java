@@ -8,6 +8,7 @@ import com.hungteen.pvz.item.PVZSpawnEggItem;
 import com.hungteen.pvz.item.armor.BucketArmorItem;
 import com.hungteen.pvz.item.armor.ConeArmorItem;
 import com.hungteen.pvz.network.PVZPacketHandler;
+import com.hungteen.pvz.potion.PotionRecipeHandler;
 
 import net.minecraft.entity.EntityType;
 import net.minecraftforge.event.RegistryEvent;
@@ -36,6 +37,7 @@ public class RegistryHandler {
 		TileEntityRegister.TILE_ENTITY_TYPES.register(bus);
 		EnchantmentRegister.ENCHANTMENTS.register(bus);
 		ContainerRegister.CONTAINER_TYPES.register(bus);
+		PotionRegister.POTIONS.register(bus);
 	}
 	
 	@SubscribeEvent
@@ -46,6 +48,7 @@ public class RegistryHandler {
     	BiomeRegister.addBiomeFeatures();
     	StructureRegister.registerStructureType();
     	EntitySpawnRegister.registerEntitySpawn();
+    	PotionRecipeHandler.init();
     }
 	
 	@SubscribeEvent

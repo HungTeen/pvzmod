@@ -38,6 +38,8 @@
     "item.pvz.real_brain":"Real Brain",
     "item.pvz.pepper":"Pepper",
     "item.pvz.almanac":"Almanac",
+    "item.pvz.candy":"Candy",
+    "item.pvz.chocolate":"Chocolate",
 //entity & spawn egg & card
 //drop
     "entity.pvz.sun":"Sun",
@@ -91,6 +93,10 @@
     "item.pvz.tomb_stone_spawn_egg":"Tomb Stone Spawn Egg",
     "entity.pvz.newspaper_zombie":"Newspaper Zombie",
     "item.pvz.newspaper_zombie_spawn_egg":"Newspaper Zombie Spawn Egg",
+    "entity.pvz.pumpkin_zombie":"Pumpkin Zombie",
+    "item.pvz.pumpkin_zombie_spawn_egg":"Pumpkin Zombie Spawn Egg",
+    "entity.pvz.trick_zombie":"Trick Zombie",
+    "item.pvz.trick_zombie_spawn_egg":"Trick Zombie Spawn Egg",
 //plant
 //PeaShooter
     "entity.pvz.pea_shooter":"PeaShooter",
@@ -218,6 +224,9 @@
     "item.pvz.doom_shroom_spawn_egg":"DoomShroom Spawn Egg",
     "item.pvz.doom_shroom_card":"DoomShroom Card",
     "item.pvz.doom_shroom_enjoy_card":"DoomShroom Enjoy Card",
+//Pumpkin
+    "item.pvz.pumpkin_card":"Pumpkin Card",
+    "item.pvz.pumpkin_enjoy_card":"Pumpkin Enjoy Card",
 //tool & tooltip
     "item.pvz.zombie_flag":"Zombie Flag",
     "tooltip.pvz.zombie_flag":"Right Click to get a speed effect",
@@ -410,6 +419,19 @@
     "enchantment.pvz.sun_cost_reduce":"Sun Reduce",
     "enchantment.pvz.break_out":"Break Out",
     "enchantment.pvz.energy_transfer":"Energy Transfer",
+//effect
+    "effect.pvz.cold":"Cold",
+    "effect.pvz.frozen":"Frozen",
+    "effect.pvz.excite":"Excite",
+    "item.minecraft.potion.effect.excite_potion_1":"Excite Potion",
+    "item.minecraft.potion.effect.excite_potion_2":"Excite Potion",
+    "item.minecraft.potion.effect.excite_potion_3":"Excite Potion",
+    "item.minecraft.splash_potion.effect.excite_potion_1":"Splash Excite Potion",
+    "item.minecraft.splash_potion.effect.excite_potion_2":"Splash Excite Potion",
+    "item.minecraft.splash_potion.effect.excite_potion_3":"Splash Excite Potion",
+    "item.minecraft.lingering_potion.effect.excite_potion_1":"Lingering Excite Potion",
+    "item.minecraft.lingering_potion.effect.excite_potion_2":"Lingering Excite Potion",
+    "item.minecraft.lingering_potion.effect.excite_potion_3":"Lingering Excite Potion",
 //event
     "event.pvz.zombie_attack":"A huge wave of zombies are coming !",
 //death

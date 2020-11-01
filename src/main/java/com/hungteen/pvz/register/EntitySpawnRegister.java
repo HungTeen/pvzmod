@@ -37,6 +37,7 @@ public class EntitySpawnRegister {
 	
 	public static final List<SpawnEntry> BUCKET_SPAWN = new ArrayList<>();
 	public static final List<SpawnEntry> WATER_SPAWN = new ArrayList<>();
+	public static final List<SpawnEntry> HALLOWEEN_SPAWN = new ArrayList<>();
 	
 	@SubscribeEvent
 	public static void registerEntities(RegistryEvent.Register<EntityType<?>> evt) {
@@ -54,6 +55,9 @@ public class EntitySpawnRegister {
 		EntitySpawnPlacementRegistry.register(EntityRegister.FOODIE_ZOMBIE.get(), PlacementType.IN_WATER, Heightmap.Type.MOTION_BLOCKING_NO_LEAVES, FoodieZombieEntity::canSpawn);
 		EntitySpawnPlacementRegistry.register(EntityRegister.LAVA_ZOMBIE.get(), PlacementType.NO_RESTRICTIONS, Heightmap.Type.MOTION_BLOCKING_NO_LEAVES, PVZZombieEntity::canZombieSpawn);
 		EntitySpawnPlacementRegistry.register(EntityRegister.CRAZY_DAVE.get(), PlacementType.ON_GROUND, Heightmap.Type.MOTION_BLOCKING_NO_LEAVES, MobEntity::canSpawnOn);
+		EntitySpawnPlacementRegistry.register(EntityRegister.PUMPKIN_ZOMBIE.get(), PlacementType.ON_GROUND, Heightmap.Type.MOTION_BLOCKING_NO_LEAVES, PVZZombieEntity::canZombieSpawn);
+		EntitySpawnPlacementRegistry.register(EntityRegister.TRICK_ZOMBIE.get(), PlacementType.ON_GROUND, Heightmap.Type.MOTION_BLOCKING_NO_LEAVES, PVZZombieEntity::canZombieSpawn);
+		
 	}
 	
 	public static void registerEntitySpawn() {
@@ -68,12 +72,16 @@ public class EntitySpawnRegister {
 		WATER_SPAWN.add(new SpawnEntry(EntityRegister.DOLPHIN_RIDER.get(), 3, 1, 1, BiomeUtil.OCEAN));
 		WATER_SPAWN.add(new SpawnEntry(EntityRegister.LAVA_ZOMBIE.get(), 2, 1, 1, BiomeUtil.OVER_LAND));
 		addFlagZombie(WATER_SPAWN);
+		HALLOWEEN_SPAWN.add(new SpawnEntry(EntityRegister.PUMPKIN_ZOMBIE.get(), 25, 1, 1, BiomeUtil.OVER_LAND));
+		HALLOWEEN_SPAWN.add(new SpawnEntry(EntityRegister.TRICK_ZOMBIE.get(), 40, 1, 2, BiomeUtil.OVER_LAND));
+		addFlagZombie(HALLOWEEN_SPAWN);
 	}
 	
 	public static List<SpawnEntry> getEventSpawnList(Events ev){
 		switch(ev) {
 		case BUCKET:return BUCKET_SPAWN;
 		case WATER:return WATER_SPAWN;
+		case HALLOWEEN:return HALLOWEEN_SPAWN;
 		default:{
 			PVZMod.LOGGER.debug("No Event Spawn Error!");
 			return null;

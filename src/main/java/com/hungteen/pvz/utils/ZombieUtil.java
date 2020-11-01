@@ -34,7 +34,7 @@ public class ZombieUtil {
 	public static final float BOSS_HIT = 2000; 
 
 	// follow range
-	public static final float ZOMBIE_FOLLOW_RANGE = 100;
+	public static final float ZOMBIE_FOLLOW_RANGE = 80;
 	
 	static{
 		//init zombie - > rank 

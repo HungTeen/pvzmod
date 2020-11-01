@@ -22,10 +22,11 @@ public class OverWorldEvents {
 	public static void tick(TickEvent.WorldTickEvent ev) {
 		World world = ev.world;
 		long totalTime = world.getDayTime();
-		if(world.getGameTime() < PVZConfig.COMMON_CONFIG.WorldSettings.WorldEventSettings.SafeDayLength.get()*24000) {
+//		world.rand.setSeed(totalTime);
+		if(world.getGameTime() < PVZConfig.COMMON_CONFIG.WorldSettings.WorldEventSettings.SafeDayLength.get() * 24000) {
 			return ;
 		}
-		int time=(int) (totalTime%24000);
+		int time=(int) (totalTime % 24000);
 		switch(time) {
 		case 99:{
 			WorldEventData data = WorldEventData.getOverWorldEventData(world);
@@ -37,7 +38,7 @@ public class OverWorldEvents {
 			if(!data.getChanged()) {
 				data.setChanged(true);
 //				System.out.println(getZombieAttackChance());
-				if(world.getDifficulty()!=Difficulty.PEACEFUL&&(data.getIsZomBossDefeated()||world.rand.nextInt(100)<getZombieAttackChance())) {//attack chance
+				if(world.getDifficulty() != Difficulty.PEACEFUL && (data.getIsZomBossDefeated() || world.rand.nextInt(100) < getZombieAttackChance())) {//attack chance
 					activateZombieAttackEvents(world);
 				}
 			}
@@ -64,11 +65,14 @@ public class OverWorldEvents {
 			pl.sendMessage(new TranslationTextComponent("event.pvz.zombie_attack").applyTextStyle(TextFormatting.DARK_RED));
 			world.playSound(null, pl.getPosition(), SoundRegister.HUGE_WAVE.get(), SoundCategory.AMBIENT, 1f, 1f);
 		}
-		activateEvent(world, Events.BUCKET);
+		int type = world.rand.nextInt(Events.values().length);
+//		System.out.println(type);
+		activateEvent(world, Events.values()[type]);
 	}
 	
 	public static void activateEvent(World world, @Nonnull Events event) {
 		WorldEventData data = WorldEventData.getOverWorldEventData(world);
+//		System.out.println(event);
 		if(!data.hasEvent(event)) {
 			data.addEvent(event);
 			EntitySpawnRegister.addEventSpawns(event);

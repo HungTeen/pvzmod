@@ -1,0 +1,30 @@
+{
+  "parent":"pvz:recipes/root",
+  "criteria": {
+    "get_item": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items":[
+		  {
+		    "item":"pvz:defence_essence"
+		  }
+		]
+      }
+    },
+    "has_the_recipe": {
+      "trigger": "minecraft:recipe_unlocked",
+      "conditions": {
+        "recipe": "pvz:pumpkin_card"
+      }
+    }
+  },
+  "requirements": [[
+    "get_item",
+    "has_the_recipe"
+  ]],
+  "rewards":{
+    "recipes":[
+	    "pvz:card/pumpkin_card"
+    ]
+  }
+}

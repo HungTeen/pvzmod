@@ -1,6 +1,7 @@
 package com.hungteen.pvz.entity.zombie.plantzombie;
 
 import com.hungteen.pvz.entity.zombie.PVZZombieEntity;
+import com.hungteen.pvz.misc.loot.PVZLoot;
 import com.hungteen.pvz.utils.ZombieUtil;
 import com.hungteen.pvz.utils.enums.Zombies;
 
@@ -8,6 +9,7 @@ import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.SharedMonsterAttributes;
 import net.minecraft.entity.monster.MonsterEntity;
+import net.minecraft.util.ResourceLocation;
 import net.minecraft.world.World;
 
 public class PumpkinZombieEntity extends PVZZombieEntity{
@@ -38,6 +40,11 @@ public class PumpkinZombieEntity extends PVZZombieEntity{
 	@Override
 	public Zombies getZombieEnumName() {
 		return Zombies.PUMPKIN_ZOMBIE;
+	}
+	
+	@Override
+	protected ResourceLocation getLootTable() {
+		return PVZLoot.PUMPKIN_ZOMBIE;
 	}
 
 }
