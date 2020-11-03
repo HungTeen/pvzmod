@@ -63,11 +63,11 @@ public abstract class PVZMultiPartEntity extends Entity {
 				if (!this.world.isRemote) {
 					this.collideWithNearbyEntities();
 				}
-				if (owner.removed && !world.isRemote) {
+				if (!world.isRemote && owner.removed) {
 					this.remove();
 				}
 			} else {
-				remove();
+				this.remove();
 			}
 		}
 		super.tick();

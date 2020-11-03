@@ -3,7 +3,7 @@ package com.hungteen.pvz.gui;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.hungteen.pvz.capabilities.player.ClientPlayerResources;
+import com.hungteen.pvz.capability.player.ClientPlayerResources;
 import com.hungteen.pvz.gui.container.DaveShopContainer;
 import com.hungteen.pvz.network.ClickButtonPacket;
 import com.hungteen.pvz.network.PVZPacketHandler;

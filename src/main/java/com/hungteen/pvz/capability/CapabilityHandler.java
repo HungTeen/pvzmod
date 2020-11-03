@@ -2,10 +2,10 @@ package com.hungteen.pvz.capability;
 
 
 import com.hungteen.pvz.PVZMod;
-import com.hungteen.pvz.capabilities.player.IPlayerDataCapability;
-import com.hungteen.pvz.capabilities.player.PlayerDataCapability;
-import com.hungteen.pvz.capabilities.player.PlayerDataProvider;
-import com.hungteen.pvz.capabilities.player.PlayerDataStorage;
+import com.hungteen.pvz.capability.player.IPlayerDataCapability;
+import com.hungteen.pvz.capability.player.PlayerDataCapability;
+import com.hungteen.pvz.capability.player.PlayerDataProvider;
+import com.hungteen.pvz.capability.player.PlayerDataStorage;
 
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.PlayerEntity;

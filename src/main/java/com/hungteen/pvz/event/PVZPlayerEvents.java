@@ -4,9 +4,9 @@ import java.util.Random;
 
 import com.hungteen.pvz.PVZConfig;
 import com.hungteen.pvz.PVZMod;
-import com.hungteen.pvz.capabilities.player.PlayerDataManager;
-import com.hungteen.pvz.capabilities.player.PlayerDataManager.PlayerStats;
 import com.hungteen.pvz.capability.CapabilityHandler;
+import com.hungteen.pvz.capability.player.PlayerDataManager;
+import com.hungteen.pvz.capability.player.PlayerDataManager.PlayerStats;
 import com.hungteen.pvz.entity.plant.PVZPlantEntity;
 import com.hungteen.pvz.event.events.SummonCardUseEvent;
 import com.hungteen.pvz.item.tool.PeaGunItem;

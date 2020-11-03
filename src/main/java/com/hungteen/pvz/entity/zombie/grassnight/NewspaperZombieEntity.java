@@ -7,24 +7,27 @@ import com.hungteen.pvz.misc.damage.PVZDamageSource;
 import com.hungteen.pvz.register.SoundRegister;
 import com.hungteen.pvz.utils.ZombieUtil;
 import com.hungteen.pvz.utils.enums.Zombies;
-import com.hungteen.pvz.utils.interfaces.IMultiPartEntity;
+import com.hungteen.pvz.utils.interfaces.IMultiPartZombie;
 
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.SharedMonsterAttributes;
 import net.minecraft.entity.monster.MonsterEntity;
-import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
 
-public class NewspaperZombieEntity extends PVZZombieEntity implements IMultiPartEntity{
+public class NewspaperZombieEntity extends PVZZombieEntity implements IMultiPartZombie{
 
 	private PVZZombiePartEntity part;
-	private boolean isZombieAngry = false;
 	
 	public NewspaperZombieEntity(EntityType<? extends MonsterEntity> type, World worldIn) {
 		super(type, worldIn);
 		resetParts();
+	}
+	
+	@Override
+	public boolean canPartsBeRemoved() {
+		return this.getHealth() <= this.getMaxHealth() / 2;
 	}
 
 	@Override
@@ -63,6 +66,15 @@ public class NewspaperZombieEntity extends PVZZombieEntity implements IMultiPart
 			this.part.prevRotationPitch = this.rotationPitch;
 			this.part.setLocationAndAngles(pos.getX() - Math.sin(j) * dis, pos.getY() + 0.3f, pos.getZ() + Math.cos(j) * dis, this.rotationYaw, this.rotationPitch);
 			this.part.setOwner(this);
+			if(this.canPartsBeRemoved()) {
+				this.removeParts();
+				this.updateAngry(true);
+			}
+		} else {
+			if(!this.canPartsBeRemoved()) {
+				this.resetParts();
+				this.updateAngry(false);
+			}
 		}
 	}
 	
@@ -80,20 +92,7 @@ public class NewspaperZombieEntity extends PVZZombieEntity implements IMultiPart
 		updateParts();
 	}
 	
-	@Override
-	public void normalZombieTick() {
-		super.normalZombieTick();
-		if(!this.world.isRemote) {
-			if(!this.isZombieAngry && this.shouldAngry()) {
-				this.updateAngry(true);
-		    }else if(this.isZombieAngry && !this.shouldAngry()) {
-				this.updateAngry(false);
-			}
-		}
-	}
-	
 	protected void updateAngry(boolean is) {
-		this.isZombieAngry = is;
 		if(is) {
 			this.playSound(SoundRegister.ANGRY.get(), 1f, 1f);
 		}
@@ -101,27 +100,11 @@ public class NewspaperZombieEntity extends PVZZombieEntity implements IMultiPart
 		this.getAttribute(SharedMonsterAttributes.ATTACK_DAMAGE).setBaseValue(is ? ZombieUtil.LOW : ZombieUtil.LITTLE_LOW);
 	}
 	
-	public boolean shouldAngry() {
-		return this.getHealth() <= this.getMaxHealth() / 2;
-	}
-	
 	@Override
 	public float getLife() {
 		return 36;
 	}
 	
-	@Override
-	public void writeAdditional(CompoundNBT compound) {
-		super.writeAdditional(compound);
-		compound.putBoolean("is_zombie_angry", this.isZombieAngry);
-	}
-	
-	@Override
-	public void readAdditional(CompoundNBT compound) {
-		super.readAdditional(compound);
-		this.isZombieAngry = compound.getBoolean("is_zombie_angry");
-	}
-
 	@Override
 	public Zombies getZombieEnumName() {
 		return Zombies.NEWSPAPER_ZOMBIE;

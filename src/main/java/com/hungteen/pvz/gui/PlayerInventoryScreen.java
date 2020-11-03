@@ -1,6 +1,6 @@
 package com.hungteen.pvz.gui;
 
-import com.hungteen.pvz.capabilities.player.ClientPlayerResources;
+import com.hungteen.pvz.capability.player.ClientPlayerResources;
 import com.hungteen.pvz.gui.container.PlayerInventoryContainer;
 import com.hungteen.pvz.gui.widget.PVZButton;
 import com.hungteen.pvz.network.ClickButtonPacket;

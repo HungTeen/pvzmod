@@ -1,8 +1,8 @@
 package com.hungteen.pvz.utils;
 
-import com.hungteen.pvz.capabilities.player.IPlayerDataCapability;
-import com.hungteen.pvz.capabilities.player.PlayerDataManager;
 import com.hungteen.pvz.capability.CapabilityHandler;
+import com.hungteen.pvz.capability.player.IPlayerDataCapability;
+import com.hungteen.pvz.capability.player.PlayerDataManager;
 import com.hungteen.pvz.utils.enums.Almanacs;
 import com.hungteen.pvz.utils.enums.Plants;
 import com.hungteen.pvz.utils.enums.Resources;

@@ -1,7 +1,7 @@
 package com.hungteen.pvz.gui.almanac;
 
 import com.hungteen.pvz.PVZMod;
-import com.hungteen.pvz.capabilities.player.ClientPlayerResources;
+import com.hungteen.pvz.capability.player.ClientPlayerResources;
 import com.hungteen.pvz.entity.plant.PVZPlantEntity;
 import com.hungteen.pvz.entity.plant.appease.PeaShooterEntity;
 import com.hungteen.pvz.entity.plant.appease.RepeaterEntity;

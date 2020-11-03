@@ -10,7 +10,7 @@ import net.minecraft.world.World;
 
 public class PVZZombiePartEntity extends PVZMultiPartEntity{
 
-	private PVZZombieEntity zombie;
+	protected PVZZombieEntity zombie;
 	
 	public PVZZombiePartEntity(EntityType<?> entityTypeIn, World worldIn) {
 		super(entityTypeIn, worldIn);
@@ -37,4 +37,5 @@ public class PVZZombiePartEntity extends PVZMultiPartEntity{
 	public boolean shouldNotExist() {
 		return this.zombie == null || !this.zombie.isAlive();
 	}
+	
 }

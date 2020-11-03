@@ -2,7 +2,7 @@ package com.hungteen.pvz.gui;
 
 import com.hungteen.pvz.PVZConfig;
 import com.hungteen.pvz.PVZMod;
-import com.hungteen.pvz.capabilities.player.ClientPlayerResources;
+import com.hungteen.pvz.capability.player.ClientPlayerResources;
 import com.hungteen.pvz.register.KeyBindRegister;
 import com.hungteen.pvz.utils.PlayerUtil;
 import com.hungteen.pvz.utils.RenderUtil;

@@ -24,7 +24,7 @@ public class NewspaperZombieRender extends PVZZombieRender<NewspaperZombieEntity
 
 	@Override
 	public ResourceLocation getEntityTexture(NewspaperZombieEntity entity) {
-		if(entity.shouldAngry()) {
+		if(entity.canPartsBeRemoved()) {
 			return StringUtil.prefix("textures/entity/zombie/grassnight/newspaper_zombie2.png");
 		}else {
 			return StringUtil.prefix("textures/entity/zombie/grassnight/newspaper_zombie1.png");

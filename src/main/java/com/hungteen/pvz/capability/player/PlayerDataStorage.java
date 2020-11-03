@@ -1,4 +1,4 @@
-package com.hungteen.pvz.capabilities.player;
+package com.hungteen.pvz.capability.player;
 
 
 import net.minecraft.nbt.CompoundNBT;

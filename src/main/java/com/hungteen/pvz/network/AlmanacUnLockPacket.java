@@ -2,7 +2,8 @@ package com.hungteen.pvz.network;
 
 import java.util.function.Supplier;
 
-import com.hungteen.pvz.capabilities.player.ClientPlayerResources;
+import com.hungteen.pvz.capability.player.ClientPlayerResources;
+
 import net.minecraft.network.PacketBuffer;
 import net.minecraftforge.fml.network.NetworkEvent;
 
