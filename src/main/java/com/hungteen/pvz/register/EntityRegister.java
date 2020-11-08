@@ -11,6 +11,7 @@ import com.hungteen.pvz.entity.drop.EnergyEntity;
 import com.hungteen.pvz.entity.drop.SunEntity;
 import com.hungteen.pvz.entity.misc.BobsleCarEntity;
 import com.hungteen.pvz.entity.misc.SmallChomperEntity;
+import com.hungteen.pvz.entity.misc.ZombieHandEntity;
 import com.hungteen.pvz.entity.npc.CrazyDaveEntity;
 import com.hungteen.pvz.entity.npc.PanneyEntity;
 import com.hungteen.pvz.entity.plant.appease.PeaShooterEntity;
@@ -31,6 +32,7 @@ import com.hungteen.pvz.entity.plant.ice.IceShroomEntity;
 import com.hungteen.pvz.entity.plant.ice.SnowPeaEntity;
 import com.hungteen.pvz.entity.plant.light.SunFlowerEntity;
 import com.hungteen.pvz.entity.plant.light.SunShroomEntity;
+import com.hungteen.pvz.entity.plant.magic.CoffeeBeanEntity;
 import com.hungteen.pvz.entity.plant.magic.HypnoShroomEntity;
 import com.hungteen.pvz.entity.plant.spear.SpikeWeedEntity;
 import com.hungteen.pvz.entity.plant.toxic.FumeShroomEntity;
@@ -45,6 +47,7 @@ import com.hungteen.pvz.entity.zombie.grassnight.NewspaperZombieEntity;
 import com.hungteen.pvz.entity.zombie.grassnight.TombStoneEntity;
 import com.hungteen.pvz.entity.zombie.other.CoffinEntity;
 import com.hungteen.pvz.entity.zombie.other.MournerZombieEntity;
+import com.hungteen.pvz.entity.zombie.other.NobleZombieEntity;
 import com.hungteen.pvz.entity.zombie.other.TrickZombieEntity;
 import com.hungteen.pvz.entity.zombie.part.PVZZombiePartEntity;
 import com.hungteen.pvz.entity.zombie.plantzombie.PumpkinZombieEntity;
@@ -67,6 +70,7 @@ import com.hungteen.pvz.render.entity.drop.SunRender;
 import com.hungteen.pvz.render.entity.misc.BobsleCarRender;
 import com.hungteen.pvz.render.entity.misc.EmptyRender;
 import com.hungteen.pvz.render.entity.misc.SmallChomperRender;
+import com.hungteen.pvz.render.entity.misc.ZombieHandRender;
 import com.hungteen.pvz.render.entity.npc.CrazyDaveRender;
 import com.hungteen.pvz.render.entity.npc.PanneyRender;
 import com.hungteen.pvz.render.entity.plant.appease.PeaShooterRender;
@@ -87,6 +91,7 @@ import com.hungteen.pvz.render.entity.plant.ice.IceShroomRender;
 import com.hungteen.pvz.render.entity.plant.ice.SnowPeaRender;
 import com.hungteen.pvz.render.entity.plant.light.SunFlowerRender;
 import com.hungteen.pvz.render.entity.plant.light.SunShroomRender;
+import com.hungteen.pvz.render.entity.plant.magic.CoffeeBeanRender;
 import com.hungteen.pvz.render.entity.plant.magic.HypnoShroomRender;
 import com.hungteen.pvz.render.entity.plant.spear.SpikeWeedRender;
 import com.hungteen.pvz.render.entity.plant.toxic.FumeShroomRender;
@@ -101,6 +106,7 @@ import com.hungteen.pvz.render.entity.zombie.grassnight.NewspaperZombieRender;
 import com.hungteen.pvz.render.entity.zombie.grassnight.TombStoneRender;
 import com.hungteen.pvz.render.entity.zombie.other.CoffinRender;
 import com.hungteen.pvz.render.entity.zombie.other.MournerZombieRender;
+import com.hungteen.pvz.render.entity.zombie.other.NobleZombieRender;
 import com.hungteen.pvz.render.entity.zombie.other.TrickZombieRender;
 import com.hungteen.pvz.render.entity.zombie.plantzombie.PumpkinZombieRender;
 import com.hungteen.pvz.render.entity.zombie.poolday.BobsleTeamRender;
@@ -149,6 +155,7 @@ public class EntityRegister {
 //	public static final RegistryObject<EntityType<DuckyTubeEntity>> DUCKY_TUBE = registerEntityType(DuckyTubeEntity::new, "duck_tube", EntityClassification.MISC);
 	public static final RegistryObject<EntityType<BobsleCarEntity>> BOBSLE_CAR = registerEntityType(BobsleCarEntity::new, "bobsle_car", EntityClassification.MISC);
 	public static final RegistryObject<EntityType<PVZZombiePartEntity>> ZOMBIE_PART = registerEntityType(PVZZombiePartEntity::new, "zombie_part", EntityClassification.MISC);
+	public static final RegistryObject<EntityType<ZombieHandEntity>> ZOMBIE_HAND = registerEntityType(ZombieHandEntity::new, "zombie_hand", EntityClassification.MISC);
 	
 	//animal
 	public static final RegistryObject<EntityType<FoodieZombieEntity>> FOODIE_ZOMBIE = registerEntityType(FoodieZombieEntity::new, "foodie_zombie", EntityClassification.WATER_CREATURE);
@@ -177,6 +184,7 @@ public class EntityRegister {
 	public static final RegistryObject<EntityType<TrickZombieEntity>> TRICK_ZOMBIE = registerImmuneFireEntityType(TrickZombieEntity::new, "trick_zombie", EntityClassification.MONSTER);
 	public static final RegistryObject<EntityType<CoffinEntity>> COFFIN = registerImmuneFireEntityType(CoffinEntity::new, "coffin_zombie", EntityClassification.MONSTER);
 	public static final RegistryObject<EntityType<MournerZombieEntity>> MOURNER_ZOMBIE = registerImmuneFireEntityType(MournerZombieEntity::new, "mourner_zombie", EntityClassification.MONSTER);
+	public static final RegistryObject<EntityType<NobleZombieEntity>> NOBLE_ZOMBIE = registerImmuneFireEntityType(NobleZombieEntity::new, "noble_zombie", EntityClassification.MONSTER);
 	
 	//plant
 	public static final RegistryObject<EntityType<PeaShooterEntity>> PEA_SHOOTER = registerEntityType(PeaShooterEntity::new, "pea_shooter", EntityClassification.CREATURE);
@@ -203,6 +211,7 @@ public class EntityRegister {
 	public static final RegistryObject<EntityType<ScaredyShroomEntity>> SCAREDY_SHROOM = registerEntityType(ScaredyShroomEntity::new, "scaredy_shroom", EntityClassification.CREATURE);
 	public static final RegistryObject<EntityType<IceShroomEntity>> ICE_SHROOM = registerEntityType(IceShroomEntity::new, "ice_shroom", EntityClassification.CREATURE);
 	public static final RegistryObject<EntityType<DoomShroomEntity>> DOOM_SHROOM = registerEntityType(DoomShroomEntity::new, "doom_shroom", EntityClassification.CREATURE);
+	public static final RegistryObject<EntityType<CoffeeBeanEntity>> COFFEE_BEAN = registerEntityType(CoffeeBeanEntity::new, "coffee_bean", EntityClassification.CREATURE);
 	
 	@OnlyIn(Dist.CLIENT)
 	@SubscribeEvent
@@ -223,6 +232,7 @@ public class EntityRegister {
 //        RenderingRegistry.registerEntityRenderingHandler(DUCKY_TUBE.get(), DuckyTubeRender::new);
         RenderingRegistry.registerEntityRenderingHandler(BOBSLE_CAR.get(), BobsleCarRender::new);
         RenderingRegistry.registerEntityRenderingHandler(ZOMBIE_PART.get(), EmptyRender::new);
+        RenderingRegistry.registerEntityRenderingHandler(ZOMBIE_HAND.get(), ZombieHandRender::new);
         
         //animal 
         RenderingRegistry.registerEntityRenderingHandler(FOODIE_ZOMBIE.get(), FoodieZombieRender::new);
@@ -251,6 +261,7 @@ public class EntityRegister {
         RenderingRegistry.registerEntityRenderingHandler(TRICK_ZOMBIE.get(), TrickZombieRender::new);
         RenderingRegistry.registerEntityRenderingHandler(COFFIN.get(), CoffinRender::new);
         RenderingRegistry.registerEntityRenderingHandler(MOURNER_ZOMBIE.get(), MournerZombieRender::new);
+        RenderingRegistry.registerEntityRenderingHandler(NOBLE_ZOMBIE.get(), NobleZombieRender::new);
         
         //plant
         RenderingRegistry.registerEntityRenderingHandler(PEA_SHOOTER.get(), PeaShooterRender::new);
@@ -277,6 +288,7 @@ public class EntityRegister {
         RenderingRegistry.registerEntityRenderingHandler(SCAREDY_SHROOM.get(), ScaredyShroomRender::new);
         RenderingRegistry.registerEntityRenderingHandler(ICE_SHROOM.get(), IceShroomRender::new);
         RenderingRegistry.registerEntityRenderingHandler(DOOM_SHROOM.get(), DoomShroomRender::new);
+        RenderingRegistry.registerEntityRenderingHandler(COFFEE_BEAN.get(), CoffeeBeanRender::new);
     }
 
 	private static <T extends Entity> RegistryObject<EntityType<T>> registerEntityType(IFactory<T> factory,String name,EntityClassification classification){

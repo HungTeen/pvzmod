@@ -18,7 +18,7 @@ public enum Zombies {
 	// plant_zombie
 	PEASHOOTER_ZOMBIE, NUTWALL_ZOMBIE, GATLINGPEA_ZOMBIE, TALLNUT_ZOMBIE, SQUASH_ZOMBIE, JALAPENO_ZOMBIE, PUMPKIN_ZOMBIE,
 	//other
-	TRICK_ZOMBIE,COFFIN,MOURNER_ZOMBIE;
+	TRICK_ZOMBIE,COFFIN,MOURNER_ZOMBIE,NOBLE_ZOMBIE;
 
 	public static Zombies getZombieByName(String name) {
 		for (Zombies zombie : Zombies.values()) {

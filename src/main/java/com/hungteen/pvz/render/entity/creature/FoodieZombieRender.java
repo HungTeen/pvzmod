@@ -20,12 +20,12 @@ public class FoodieZombieRender extends PVZCreatureRender<FoodieZombieEntity>{
 	}
 	
 	@Override
-	protected float getRenderSize(FoodieZombieEntity entity) {
+	protected float getScaleByEntity(FoodieZombieEntity entity) {
 		float sz=0.5f;
 		if(entity.isChild()) sz*=0.5f;
 		return sz;
 	}
-
+	
 	@Override
 	public ResourceLocation getEntityTexture(FoodieZombieEntity entity) {
 		return StringUtil.prefix("textures/entity/zombie/poolday/snorkel_zombie.png");

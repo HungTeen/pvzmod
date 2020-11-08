@@ -129,6 +129,13 @@ public class CoffinEntity extends PVZZombieEntity {
             }
          }
 	}
+	
+	@Override
+	protected void onDeathUpdate() {
+		this.remove();
+		NobleZombieEntity boss = EntityRegister.NOBLE_ZOMBIE.get().create(world);
+		EntityUtil.onMobEntitySpawn(world, boss, getPosition());
+	}
 
 	@Override
 	protected boolean shouldCollideWithEntity(Entity target) {

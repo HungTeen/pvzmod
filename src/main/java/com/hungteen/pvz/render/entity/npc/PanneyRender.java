@@ -18,7 +18,7 @@ public class PanneyRender extends PVZCreatureRender<PanneyEntity>{
 	}
 
 	@Override
-	protected float getRenderSize(PanneyEntity entity) {
+	protected float getScaleByEntity(PanneyEntity entity) {
 		return 1.5f;
 	}
 

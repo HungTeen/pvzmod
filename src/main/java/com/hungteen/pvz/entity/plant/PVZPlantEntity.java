@@ -68,7 +68,6 @@ public abstract class PVZPlantEntity extends CreatureEntity implements IPVZPlant
 	protected boolean isImmuneToWeak = false;
 	private final int weakCD = 10;
 	private final int weakDamage = 15;
-	private int extraSleepTime = 0;
 	protected Plants outerPlant = null;
 	
 	public PVZPlantEntity(EntityType<? extends CreatureEntity> type, World worldIn) {
@@ -173,11 +172,12 @@ public abstract class PVZPlantEntity extends CreatureEntity implements IPVZPlant
 		    }
 		    //sleep
 		    if(this.shouldPlantRegularSleep()) {
-		    	this.setSleepTime(1);
-		    }else {
-		    	if(this.extraSleepTime != 0) {
-		    		this.setSleepTime(this.extraSleepTime);
+		    	if(this.getSleepTime() < 0) {
+		    		this.setSleepTime(this.getSleepTime() + 1);
+		    	}else {
+		    		this.setSleepTime(Math.max(1, this.getSleepTime()));
 		    	}
+		    }else {
 		    	if(this.getSleepTime() > 0) {
 		    		this.setSleepTime(this.getSleepTime() - 1);
 		    	}
@@ -422,7 +422,6 @@ public abstract class PVZPlantEntity extends CreatureEntity implements IPVZPlant
         compound.putInt("plant_boost_time", this.getBoostTime());
         compound.putBoolean("is_plant_charmed", this.isCharmed());
         compound.putBoolean("is_garden_plant", this.isGardenPlant());
-        compound.putInt("extra_sleep_time", this.extraSleepTime);
         compound.putInt("plant_sleep_time", this.getSleepTime());
         compound.putInt("plant_live_tick", this.getLiveTick());
         if(this.outerPlant!=null) {
@@ -462,7 +461,6 @@ public abstract class PVZPlantEntity extends CreatureEntity implements IPVZPlant
         this.setBoostTime(compound.getInt("plant_boost_time"));
         this.setCharmed(compound.getBoolean("is_plant_charmed"));
         this.setGardenPlant(compound.getBoolean("is_garden_plant"));
-        this.extraSleepTime = compound.getInt("extra_sleep_time");
         this.setSleepTime(compound.getInt("plant_sleep_time"));
         this.setLiveTick(compound.getInt("plant_live_tick"));
         if(compound.contains("outer_plant_type")) {

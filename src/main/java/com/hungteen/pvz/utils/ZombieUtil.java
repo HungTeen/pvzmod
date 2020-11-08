@@ -64,6 +64,7 @@ public class ZombieUtil {
 		//gold
 		ZOMBIE_RANK.put(Zombies.COFFIN, Ranks.GOLD);
 		//boss
+		ZOMBIE_RANK.put(Zombies.NOBLE_ZOMBIE, Ranks.MEGA);
 	}
 
 	public static Ranks getZombieRank(Zombies zombie){

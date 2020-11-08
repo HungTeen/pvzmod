@@ -4,9 +4,7 @@ import java.util.UUID;
 
 import javax.annotation.Nullable;
 
-import com.hungteen.pvz.entity.plant.enforce.ChomperEntity;
 import com.hungteen.pvz.misc.damage.PVZDamageSource;
-import com.hungteen.pvz.register.SoundRegister;
 import com.hungteen.pvz.utils.EntityUtil;
 
 import net.minecraft.entity.Entity;
@@ -19,14 +17,14 @@ import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.world.World;
 import net.minecraft.world.server.ServerWorld;
 
-public class SmallChomperEntity extends MobEntity {
+public class ZombieHandEntity extends MobEntity {
 
 	private LivingEntity owner;
 	private UUID ownerUuid;
 	private int lifeTick;
-	private final int maxLifeTick = 20;
+	private final int maxLifeTick = 40;
 
-	public SmallChomperEntity(EntityType<? extends MobEntity> entityTypeIn, World worldIn) {
+	public ZombieHandEntity(EntityType<? extends MobEntity> entityTypeIn, World worldIn) {
 		super(entityTypeIn, worldIn);
 		this.setInvulnerable(true);
 		this.noClip = true;
@@ -46,23 +44,20 @@ public class SmallChomperEntity extends MobEntity {
 	}
 	
 	protected void performAttack() {
-		this.owner=this.getOwner();
-		if(this.owner==null) {
+		this.owner = this.getOwner();
+		if(this.owner == null) {
 			return ;
 		}
 		for(Entity target:EntityUtil.getEntityTargetableEntity(this.owner, EntityUtil.getEntityAABB(this, 0.5f, 1f))) {
 			if(target instanceof LivingEntity) {
-			    target.attackEntityFrom(PVZDamageSource.causeEatDamage(this, this.owner), getAttackDamage((LivingEntity) target));
+			    target.attackEntityFrom(PVZDamageSource.causeNormalDamage(this, this.owner), getAttackDamage((LivingEntity) target));
+			    target.setPosition(target.getPosX(), target.getPosY() - 3, target.getPosZ());
 			}
 		}
-		this.playSound(SoundRegister.CHOMP.get(), 1, 1);
 	}
 	
 	private float getAttackDamage(LivingEntity target) {
-		if(this.owner instanceof ChomperEntity) {
-			return ((ChomperEntity) this.owner).getAttackDamage(target);
-		}
-		return 40;
+		return 5;
 	}
 	
 	public int getTick() {
@@ -80,11 +75,6 @@ public class SmallChomperEntity extends MobEntity {
 	@Override
 	public boolean canBeCollidedWith() {
 		return false;
-	}
-	
-	@Override
-	public boolean hasNoGravity() {
-		return true;
 	}
 	
 	@Override
@@ -108,18 +98,21 @@ public class SmallChomperEntity extends MobEntity {
 		return this.owner;
 	}
 
+	@Override
+	public boolean hasNoGravity() {
+		return true;
+	}
+	
 	public void readAdditional(CompoundNBT compound) {
 		if (compound.hasUniqueId("OwnerUUID")) {
 			this.ownerUuid = compound.getUniqueId("OwnerUUID");
 		}
-
 	}
 
 	public void writeAdditional(CompoundNBT compound) {
 		if (this.ownerUuid != null) {
 			compound.putUniqueId("OwnerUUID", this.ownerUuid);
 		}
-
 	}
 
 }

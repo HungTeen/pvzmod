@@ -184,6 +184,7 @@ public class ItemRegister {
 	public static final RegistryObject<PVZSpawnEggItem> TRICK_ZOMBIE_SPAWN_EGG = registerSpawnEgg("trick_zombie", EntityRegister.TRICK_ZOMBIE, Colors.ZOMBIE_COLOR);
 	public static final RegistryObject<PVZSpawnEggItem> COFFIN_SPAWN_EGG = registerSpawnEgg("coffin", EntityRegister.COFFIN, Colors.ZOMBIE_COLOR);
 	public static final RegistryObject<PVZSpawnEggItem> MOURNER_ZOMBIE_SPAWN_EGG = registerSpawnEgg("mourner_zombie", EntityRegister.MOURNER_ZOMBIE, Colors.ZOMBIE_COLOR);
+	public static final RegistryObject<PVZSpawnEggItem> NOBLE_ZOMBIE_SPAWN_EGG = registerSpawnEgg("noble_zombie", EntityRegister.NOBLE_ZOMBIE, Colors.ZOMBIE_COLOR);
 	
 	//plant
 	public static final RegistryObject<PVZSpawnEggItem> PEA_SHOOTER_SPAWN_EGG = registerSpawnEgg("pea_shooter", EntityRegister.PEA_SHOOTER, Colors.APPEASE_COLOR);
@@ -210,6 +211,7 @@ public class ItemRegister {
 	public static final RegistryObject<PVZSpawnEggItem> SCAREDY_SHROOM_SPAWN_EGG = registerSpawnEgg("scaredy_shroom", EntityRegister.SCAREDY_SHROOM, Colors.TOXIC_COLOR);
 	public static final RegistryObject<PVZSpawnEggItem> ICE_SHROOM_SPAWN_EGG = registerSpawnEgg("ice_shroom", EntityRegister.ICE_SHROOM, Colors.ICE_COLOR);
 	public static final RegistryObject<PVZSpawnEggItem> DOOM_SHROOM_SPAWN_EGG = registerSpawnEgg("doom_shroom", EntityRegister.DOOM_SHROOM, Colors.EXPLOSION_COLOR);
+	public static final RegistryObject<PVZSpawnEggItem> COFFEE_BEAN_SPAWN_EGG = registerSpawnEgg("coffee_bean", EntityRegister.COFFEE_BEAN, Colors.MAGIC_COLOR);
 	
 	/**
 	 * register spawn eggs
