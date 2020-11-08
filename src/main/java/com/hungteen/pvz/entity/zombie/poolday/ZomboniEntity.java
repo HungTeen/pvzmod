@@ -49,9 +49,9 @@ public class ZomboniEntity extends PVZZombieEntity implements IMultiPartEntity{
 	@Override
 	public void normalZombieTick() {
 		super.normalZombieTick();
-		if(world.isRemote&&this.getHealth()<=this.getMaxHealth()/4) {
-			for(int i=1;i<=3;i++) {
-			    this.world.addParticle(ParticleTypes.SMOKE, this.getPosX(), this.getPosY(), this.getPosZ(), (this.getRNG().nextFloat()-0.5)/10, 0.05, (this.getRNG().nextFloat()-0.5) / 10);
+		if(world.isRemote && this.getHealth() <= this.getMaxHealth() / 4) {
+			for(int i = 1; i <= 3; i ++) {
+			    this.world.addParticle(ParticleTypes.SMOKE, this.getPosX(), this.getPosY(), this.getPosZ(), (this.getRNG().nextFloat() - 0.5) / 10, 0.05, (this.getRNG().nextFloat() - 0.5) / 10);
 			}
 		}
 		if(!world.isRemote) {//produce snow layer block
@@ -99,7 +99,7 @@ public class ZomboniEntity extends PVZZombieEntity implements IMultiPartEntity{
 			if(!this.part.shouldContinuePersisting()) {
 				this.world.addEntity(this.part);
 			}
-			float j = 2 * 3.14159f * this.rotationYawHead / 360;
+			float j = 2 * 3.14159f * this.rotationYaw / 360;
 			float dis = this.getPartOffset();
 			Vec3d pos = this.getPositionVec();
 			this.part.prevRotationYaw = this.rotationYaw;
@@ -118,9 +118,7 @@ public class ZomboniEntity extends PVZZombieEntity implements IMultiPartEntity{
 		super.onDeathUpdate();
 		if(this.deathTime==1) {
 			if(!world.isRemote) {
-//				float tmp = 4f;
 			    this.playSound(SoundRegister.CAR_EXPLOSION.get(), 1f, 1f);
-//			    this.setMotion((getRNG().nextFloat()-0.5)/tmp, getRNG().nextFloat()/tmp, (getRNG().nextFloat()-0.5)/tmp);
 			}
 			else {
 				for(int i=0;i<4;i++) {
@@ -142,7 +140,7 @@ public class ZomboniEntity extends PVZZombieEntity implements IMultiPartEntity{
 	}
 	
 	public float getPartOffset() {
-		return 1.4f;
+		return 1.2f;
 	}
 	
 	@Override

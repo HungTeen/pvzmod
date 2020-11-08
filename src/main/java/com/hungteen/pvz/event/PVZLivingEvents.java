@@ -37,7 +37,6 @@ public class PVZLivingEvents {
 		}
 	}
 	
-	@SubscribeEvent
 	private static void onPlayerKillZombie(PlayerEntity player, Zombies zombie) {
 //		Almanacs a = Almanacs.getAlmanacByName(zombie.toString().toLowerCase());
 	}

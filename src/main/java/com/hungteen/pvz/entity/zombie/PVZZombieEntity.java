@@ -384,7 +384,8 @@ public abstract class PVZZombieEntity extends MonsterEntity implements IPVZZombi
 
 	@Override
 	protected void collideWithNearbyEntities() {
-		List<Entity> list = this.world.getEntitiesWithinAABB(Entity.class, this.getBoundingBox());
+		double dd = this.getCollideWidthOffset();
+		List<Entity> list = this.world.getEntitiesWithinAABB(Entity.class, this.getBoundingBox().grow(dd, 0, dd));
 		if (!list.isEmpty()) {
 			int i = this.world.getGameRules().getInt(GameRules.MAX_ENTITY_CRAMMING);
 			if (i > 0 && list.size() > i - 1 && this.rand.nextInt(4) == 0) {
@@ -405,6 +406,10 @@ public abstract class PVZZombieEntity extends MonsterEntity implements IPVZZombi
 				}
 			}
 		}
+	}
+	
+	protected double getCollideWidthOffset() {
+		return 0.1f;
 	}
 	
 	/**

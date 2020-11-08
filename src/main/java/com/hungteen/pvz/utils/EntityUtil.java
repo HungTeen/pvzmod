@@ -14,6 +14,7 @@ import com.hungteen.pvz.entity.plant.PVZPlantEntity;
 import com.hungteen.pvz.entity.zombie.PVZZombieEntity;
 import com.hungteen.pvz.register.EffectRegister;
 
+import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.LivingEntity;
@@ -28,9 +29,21 @@ import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IWorld;
 import net.minecraft.world.World;
+import net.minecraftforge.event.ForgeEventFactory;
 
 public class EntityUtil {
 
+	public static boolean canDestroyBlock(World world, BlockPos pos, Entity entity) {
+		return canDestroyBlock(world, pos, world.getBlockState(pos), entity);
+	}
+
+	public static boolean canDestroyBlock(World world, BlockPos pos, BlockState state, Entity entity) {
+		float hardness = state.getBlockHardness(world, pos);
+		return hardness >= 0f && hardness < 50f && !state.getBlock().isAir(state, world, pos)
+				&& state.getBlock().canEntityDestroy(state, world, pos, entity) && (!(entity instanceof LivingEntity) 
+				|| ForgeEventFactory.onEntityDestroyBlock((LivingEntity) entity, pos, state));
+	}
+	
 	/**
 	 * use to spawn mob in world
 	 */

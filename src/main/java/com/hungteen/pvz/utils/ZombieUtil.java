@@ -49,6 +49,7 @@ public class ZombieUtil {
 		ZOMBIE_RANK.put(Zombies.BOBSLE_ZOMBIE, Ranks.WHITE);
 		ZOMBIE_RANK.put(Zombies.DOLPHIN_RIDER_ZOMBIE, Ranks.WHITE);
 		ZOMBIE_RANK.put(Zombies.NEWSPAPER_ZOMBIE, Ranks.WHITE);
+		ZOMBIE_RANK.put(Zombies.MOURNER_ZOMBIE, Ranks.WHITE);
 		//green
 		ZOMBIE_RANK.put(Zombies.CONEHEAD_ZOMBIE, Ranks.GREEN);
 		ZOMBIE_RANK.put(Zombies.POLE_ZOMBIE, Ranks.GREEN);
@@ -61,6 +62,7 @@ public class ZombieUtil {
 		ZOMBIE_RANK.put(Zombies.LAVA_ZOMBIE, Ranks.PURPLE);
 		ZOMBIE_RANK.put(Zombies.PUMPKIN_ZOMBIE, Ranks.PURPLE);
 		//gold
+		ZOMBIE_RANK.put(Zombies.COFFIN, Ranks.GOLD);
 		//boss
 	}
 

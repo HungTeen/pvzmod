@@ -4,10 +4,10 @@ import com.hungteen.pvz.entity.zombie.grassnight.TombStoneEntity;
 import com.hungteen.pvz.model.entity.zombie.grassnight.TombStoneModel;
 import com.hungteen.pvz.render.entity.zombie.PVZZombieRender;
 import com.hungteen.pvz.utils.StringUtil;
-import com.mojang.blaze3d.matrix.MatrixStack;
 
 import net.minecraft.client.renderer.entity.EntityRendererManager;
 import net.minecraft.util.ResourceLocation;
+import net.minecraft.util.math.Vec3d;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 
@@ -19,18 +19,15 @@ public class TombStoneRender extends PVZZombieRender<TombStoneEntity>{
 	}
 
 	@Override
-	protected void preRenderCallback(TombStoneEntity entity, MatrixStack matrixStackIn,
-			float partialTickTime) {
-		float sz = this.getScaleByEntity(entity);
-		matrixStackIn.scale(sz,sz,sz);
-		float height = 1f;
-		float downOffset = (1 - entity.spawnTick * 1.0f / TombStoneEntity.SPAWN_TIME) * height;
-		matrixStackIn.translate(0, downOffset, 0);
+	protected float getScaleByEntity(TombStoneEntity entity) {
+		return 0.6f;
 	}
 	
 	@Override
-	protected float getScaleByEntity(TombStoneEntity entity) {
-		return 0.6f;
+	public Vec3d getTranslateVec(TombStoneEntity entity) {
+		float height = 1f;
+		float downOffset = (1 - entity.getSpawnTick() * 1.0f / TombStoneEntity.SPAWN_TIME) * height;
+		return new Vec3d(0, downOffset, 0);
 	}
 
 	@Override

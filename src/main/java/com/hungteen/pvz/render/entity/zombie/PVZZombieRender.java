@@ -11,6 +11,7 @@ import com.mojang.blaze3d.matrix.MatrixStack;
 import net.minecraft.client.renderer.entity.EntityRendererManager;
 import net.minecraft.client.renderer.entity.MobRenderer;
 import net.minecraft.client.renderer.entity.model.EntityModel;
+import net.minecraft.util.math.Vec3d;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 
@@ -29,6 +30,8 @@ public abstract class PVZZombieRender<T extends PVZZombieEntity> extends MobRend
 			((IHasDefence) this.getEntityModel()).setDestroyed(entity);
 		}
 		matrixStackIn.scale(sz,sz,sz);
+		Vec3d vec = getTranslateVec(entity);
+		matrixStackIn.translate(vec.x, vec.y, vec.z);
 	}
 	
 	protected void addZombieLayers(){
@@ -39,5 +42,9 @@ public abstract class PVZZombieRender<T extends PVZZombieEntity> extends MobRend
 	}
 	
 	protected abstract float getScaleByEntity(T entity);
+	
+	public Vec3d getTranslateVec(T entity) {
+		return new Vec3d(0, 0, 0);
+	}
 	
 }

@@ -18,6 +18,9 @@ import net.minecraft.entity.SharedMonsterAttributes;
 import net.minecraft.entity.SpawnReason;
 import net.minecraft.entity.monster.MonsterEntity;
 import net.minecraft.nbt.CompoundNBT;
+import net.minecraft.network.datasync.DataParameter;
+import net.minecraft.network.datasync.DataSerializers;
+import net.minecraft.network.datasync.EntityDataManager;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.SoundEvent;
 import net.minecraft.world.DifficultyInstance;
@@ -26,11 +29,17 @@ import net.minecraft.world.World;
 
 public class TombStoneEntity extends PVZZombieEntity{
 
-	public int spawnTick = 0;
+	private static final DataParameter<Integer> SPAWN_TICK = EntityDataManager.createKey(TombStoneEntity.class, DataSerializers.VARINT);
 	public static final int SPAWN_TIME = 20;
 	
 	public TombStoneEntity(EntityType<? extends MonsterEntity> type, World worldIn) {
 		super(type, worldIn);
+	}
+	
+	@Override
+	protected void registerData() {
+		super.registerData();
+		this.dataManager.register(SPAWN_TICK, 0);
 	}
 
 	@Override
@@ -52,10 +61,10 @@ public class TombStoneEntity extends PVZZombieEntity{
 	@Override
 	public void livingTick() {
 		super.livingTick();
-		if(this.spawnTick < SPAWN_TIME) {
-			this.spawnTick ++;
+		if (this.getSpawnTick() < SPAWN_TIME) {
+			this.setSpawnTick(this.getSpawnTick() + 1);
 			if(world.isRemote) {
-				for(int i = 0;i < 3;i ++) {
+				for(int i = 0;i < 2;i ++) {
 					Random rand=this.getRNG();
 					this.world.addParticle(ParticleRegister.DIRT_BURST_OUT.get(), this.getPosX()+0.5d, this.getPosY(), this.getPosZ()+0.5d, (rand.nextFloat()-0.5)/10,0.05d,(rand.nextFloat()-0.5)/10);
 					this.world.addParticle(ParticleRegister.DIRT_BURST_OUT.get(), this.getPosX()+0.5d, this.getPosY(), this.getPosZ()-0.5d, (rand.nextFloat()-0.5)/10,0.05d,(rand.nextFloat()-0.5)/10);
@@ -99,6 +108,26 @@ public class TombStoneEntity extends PVZZombieEntity{
 	@Override
 	public EntitySize getSize(Pose poseIn) {
 		return EntitySize.flexible(0.8f, 1.6f);
+	}
+	
+	@Override
+	public void readAdditional(CompoundNBT compound) {
+		super.readAdditional(compound);
+		this.setSpawnTick(compound.getInt("spawn_tick_time"));
+	}
+
+	@Override
+	public void writeAdditional(CompoundNBT compound) {
+		super.writeAdditional(compound);
+		compound.putInt("spawn_tick_time", this.getSpawnTick());
+	}
+	
+	public int getSpawnTick() {
+		return this.dataManager.get(SPAWN_TICK);
+	}
+	
+	public void setSpawnTick(int tick) {
+		this.dataManager.set(SPAWN_TICK, tick);
 	}
 	
 	@Override
