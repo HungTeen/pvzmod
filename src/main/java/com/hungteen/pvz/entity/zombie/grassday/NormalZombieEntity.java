@@ -18,22 +18,6 @@ public class NormalZombieEntity extends PVZZombieEntity {
 			this.getAttribute(SharedMonsterAttributes.ATTACK_DAMAGE).setBaseValue(ZombieUtil.NORMAL_DAMAGE);
 		}
 	}
-		
-	@Override
-	public void normalZombieTick() {
-		super.normalZombieTick();
-//		if(!this.world.isRemote && this.isAlive()) {
-//			if(this.getRidingEntity()==null && this.isInWater()) {
-//			    DuckyTubeEntity duck = EntityRegister.DUCKY_TUBE.get().create(world);
-//			    duck.setLocationAndAngles(this.getPosX(), this.getPosY(), this.getPosZ(), this.rotationYaw, 0.0F);
-//			    world.addEntity(duck);
-//			    this.startRiding(duck,true);
-//		    }
-//			if(this.getRidingEntity()!=null&&!this.isInWater()) {
-//				this.stopRiding();
-//			}
-//		}
-	}
 	
 	@Override
 	protected float getWaterSlowDown() {

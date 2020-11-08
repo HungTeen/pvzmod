@@ -6,6 +6,7 @@ import com.mojang.blaze3d.vertex.IVertexBuilder;
 
 import net.minecraft.client.renderer.entity.model.EntityModel;
 import net.minecraft.client.renderer.model.ModelRenderer;
+import net.minecraft.util.math.MathHelper;
 
 // Made with Blockbench 3.7.2
 // Exported for Minecraft version 1.15
@@ -74,7 +75,20 @@ public class MournerZombieModel extends EntityModel<MournerZombieEntity> {
 
 	@Override
 	public void setRotationAngles(MournerZombieEntity entity, float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch){
-		//previously the render function, render code was moved to a method below
+		this.head.rotateAngleY = netHeadYaw / (180F / (float)Math.PI);
+        this.head.rotateAngleX = headPitch / (180F / (float)Math.PI);
+        float tmp = MathHelper.abs(MathHelper.sin(ageInTicks * 0.5f));
+        this.head.rotateAngleZ = entity.isRightShake() ? tmp : - tmp;
+        this.right_leg.rotateAngleX = MathHelper.cos(limbSwing * 0.6662F) * 1.4F * limbSwingAmount;
+        this.left_leg.rotateAngleX = MathHelper.cos(limbSwing * 0.6662F + (float)Math.PI) * 1.4F * limbSwingAmount;
+        this.right_hand.rotateAngleX = MathHelper.cos(limbSwing * 0.6662F) * 1.4F * limbSwingAmount;
+        this.left_hand.rotateAngleX = MathHelper.cos(limbSwing * 0.6662F + (float)Math.PI) * 1.4F * limbSwingAmount;
+        if(entity.getAttackTime() > 0) {
+        	int max = MournerZombieEntity.SHAKE_CD;
+        	int now = max - entity.getAttackTime();
+        	this.left_hand.rotateAngleX = - 2 * MathHelper.sin(3.14159f * now / max);
+        	this.right_hand.rotateAngleX = - 2 * MathHelper.sin(3.14159f * now / max);
+        }
 	}
 
 	@Override

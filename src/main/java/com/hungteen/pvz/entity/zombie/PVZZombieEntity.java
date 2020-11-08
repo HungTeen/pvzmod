@@ -138,7 +138,6 @@ public abstract class PVZZombieEntity extends MonsterEntity implements IPVZZombi
 	}
 
 	public void normalZombieTick() {
-
 	}
 
 	public void setZombieMaxHealth(float health) {

@@ -6,11 +6,15 @@ import com.hungteen.pvz.entity.plant.PVZPlantEntity;
 import com.hungteen.pvz.entity.plant.enforce.SquashEntity;
 import com.hungteen.pvz.entity.zombie.PVZZombieEntity;
 import com.hungteen.pvz.misc.damage.PVZDamageSource;
+import com.hungteen.pvz.register.EntityRegister;
 import com.hungteen.pvz.register.ParticleRegister;
 import com.hungteen.pvz.register.SoundRegister;
 import com.hungteen.pvz.utils.EntityUtil;
 import com.hungteen.pvz.utils.enums.Zombies;
 
+import net.minecraft.block.Block;
+import net.minecraft.block.BlockState;
+import net.minecraft.block.LeavesBlock;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntitySize;
 import net.minecraft.entity.EntityType;
@@ -25,6 +29,9 @@ import net.minecraft.network.datasync.DataSerializers;
 import net.minecraft.network.datasync.EntityDataManager;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.SoundEvent;
+import net.minecraft.util.math.AxisAlignedBB;
+import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.BossInfo;
 import net.minecraft.world.DifficultyInstance;
 import net.minecraft.world.IWorld;
@@ -33,10 +40,13 @@ import net.minecraft.world.server.ServerBossInfo;
 
 public class CoffinEntity extends PVZZombieEntity {
 
-	private static final DataParameter<Integer> SPAWN_TICK = EntityDataManager.createKey(CoffinEntity.class, DataSerializers.VARINT);
-	private final ServerBossInfo bossInfo = (ServerBossInfo) (new ServerBossInfo(this.getDisplayName(), BossInfo.Color.WHITE, BossInfo.Overlay.NOTCHED_6)).setDarkenSky(true);
+	private static final DataParameter<Integer> SPAWN_TICK = EntityDataManager.createKey(CoffinEntity.class,
+			DataSerializers.VARINT);
+	private static final DataParameter<Integer> GUARD_STATE = EntityDataManager.createKey(CoffinEntity.class, DataSerializers.VARINT);
+	private final ServerBossInfo bossInfo = (ServerBossInfo) (new ServerBossInfo(this.getDisplayName(),
+			BossInfo.Color.WHITE, BossInfo.Overlay.NOTCHED_6)).setDarkenSky(true);
 	public static final int SPAWN_TIME = 50;
-	
+
 	public CoffinEntity(EntityType<? extends MonsterEntity> type, World worldIn) {
 		super(type, worldIn);
 	}
@@ -45,8 +55,9 @@ public class CoffinEntity extends PVZZombieEntity {
 	protected void registerData() {
 		super.registerData();
 		this.dataManager.register(SPAWN_TICK, 0);
+		this.dataManager.register(GUARD_STATE, 0);
 	}
-	
+
 	@Override
 	protected void registerGoals() {
 		super.registerGoals();
@@ -64,7 +75,22 @@ public class CoffinEntity extends PVZZombieEntity {
 	@Override
 	public void tick() {
 		super.tick();
-		this.bossInfo.setPercent(this.getHealth() / this.getMaxHealth());
+		float percent = this.getHealth() / this.getMaxHealth();
+		this.bossInfo.setPercent(percent);
+		if(this.isAlive()) {
+			for(int i = 0; i < 4; i ++) {
+				if(this.isGuardGone(i)) {
+					continue;
+				}
+				if(percent < (5 - i) * 1.0f / 6f) {
+					this.setGuardStateById(i, 1);
+					MournerZombieEntity zombie = EntityRegister.MOURNER_ZOMBIE.get().create(world);
+					zombie.setRightShake((i & 1) == 0);
+					EntityUtil.onMobEntitySpawn(world, zombie, this.getAttackTarget() == null ? this.getPosition() : this.getAttackTarget().getPosition());
+				}
+			}
+			
+		}
 	}
 
 	@Override
@@ -86,36 +112,52 @@ public class CoffinEntity extends PVZZombieEntity {
 				}
 			}
 		}
+		if (this.collidedHorizontally && net.minecraftforge.event.ForgeEventFactory.getMobGriefingEvent(this.world, this)) {
+            boolean flag = false;
+            AxisAlignedBB axisalignedbb = this.getBoundingBox().grow(0.2D);
+
+            for(BlockPos blockpos : BlockPos.getAllInBoxMutable(MathHelper.floor(axisalignedbb.minX), MathHelper.floor(axisalignedbb.minY), MathHelper.floor(axisalignedbb.minZ), MathHelper.floor(axisalignedbb.maxX), MathHelper.floor(axisalignedbb.maxY), MathHelper.floor(axisalignedbb.maxZ))) {
+               BlockState blockstate = this.world.getBlockState(blockpos);
+               Block block = blockstate.getBlock();
+               if (block instanceof LeavesBlock) {
+                  flag = this.world.destroyBlock(blockpos, true, this) || flag;
+               }
+            }
+
+            if (!flag && this.onGround) {
+               this.jump();
+            }
+         }
 	}
-	 
+
 	@Override
 	protected boolean shouldCollideWithEntity(Entity target) {
-		if(target instanceof PVZPlantEntity) {
-			if(target instanceof SquashEntity) {
-			    return false;
-		    }
+		if (target instanceof PVZPlantEntity) {
+			if (target instanceof SquashEntity) {
+				return false;
+			}
 			return EntityUtil.checkCanEntityAttack(this, target);
 		}
 		return EntityUtil.checkCanEntityAttack(this, target);
 	}
-	
+
 	@Override
 	protected void collideWithEntity(Entity entityIn) {
 		super.collideWithEntity(entityIn);
-		if(entityIn instanceof PVZPlantEntity) {
+		if (entityIn instanceof PVZPlantEntity) {
 			PVZPlantEntity plant = (PVZPlantEntity) entityIn;
 			plant.attackEntityFrom(PVZDamageSource.causeCrushDamage(this, this), plant.getMaxHealth());
 		}
 	}
-
+	
 	@Override
 	protected double getCollideWidthOffset() {
 		return 0.8;
 	}
-	
+
 	@Override
 	public EntitySize getSize(Pose poseIn) {
-		return EntitySize.flexible(3f, 2.8f);
+		return EntitySize.flexible(2f, 2f);
 	}
 
 	@Override
@@ -147,13 +189,33 @@ public class CoffinEntity extends PVZZombieEntity {
 		super.removeTrackingPlayer(player);
 		this.bossInfo.removePlayer(player);
 	}
-	
+
 	public int getSpawnTick() {
 		return this.dataManager.get(SPAWN_TICK);
 	}
-	
+
 	public void setSpawnTick(int tick) {
 		this.dataManager.set(SPAWN_TICK, tick);
+	}
+	
+	public int getGuardState() {
+		return this.dataManager.get(GUARD_STATE);
+	}
+	
+	public void setGuardState(int state) {
+		this.dataManager.set(GUARD_STATE, state);
+	}
+	
+	public boolean isGuardGone(int id) {
+		return ((this.getGuardState() >> id) & 1) == 1;
+	}
+	
+	public void setGuardStateById(int id, int is) {
+		int state = this.getGuardState();
+		if((is ^ (state >> id) & 1) == 1) {
+			state ^= (1 << id);
+		}
+		this.dataManager.set(GUARD_STATE, state);
 	}
 
 	@Override
@@ -190,12 +252,12 @@ public class CoffinEntity extends PVZZombieEntity {
 	public boolean canDespawn(double distanceToClosestPlayer) {
 		return false;
 	}
-	
+
 	@Override
 	public boolean isNonBoss() {
 		return false;
 	}
-	
+
 	@Override
 	protected SoundEvent getAmbientSound() {
 		return null;

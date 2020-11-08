@@ -37,10 +37,13 @@ public class EntityUtil {
 		return canDestroyBlock(world, pos, world.getBlockState(pos), entity);
 	}
 
+	/**
+	 * check can entity destroy the specific block.
+	 */
 	public static boolean canDestroyBlock(World world, BlockPos pos, BlockState state, Entity entity) {
 		float hardness = state.getBlockHardness(world, pos);
 		return hardness >= 0f && hardness < 50f && !state.getBlock().isAir(state, world, pos)
-				&& state.getBlock().canEntityDestroy(state, world, pos, entity) && (!(entity instanceof LivingEntity) 
+				&& state.getBlock().canEntityDestroy(state, world, pos, entity) && (!(entity instanceof LivingEntity)
 				|| ForgeEventFactory.onEntityDestroyBlock((LivingEntity) entity, pos, state));
 	}
 	
