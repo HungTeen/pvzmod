@@ -113,6 +113,8 @@ public class ItemRegister {
     public static final RegistryObject<PlantCardItem> DOOM_SHROOM_ENJOY_CARD = registerCard(Plants.DOOM_SHROOM, true);
     public static final RegistryObject<PlantCardItem> PUMPKIN_CARD = registerCard(Plants.PUMPKIN, false);
     public static final RegistryObject<PlantCardItem> PUMPKIN_ENJOY_CARD = registerCard(Plants.PUMPKIN, true);
+    public static final RegistryObject<PlantCardItem> COFFEE_BEAN_CARD = registerCard(Plants.COFFEE_BEAN, false);
+    public static final RegistryObject<PlantCardItem> COFFEE_BEAN_ENJOY_CARD = registerCard(Plants.COFFEE_BEAN, true);
     
     //plants
 	public static final RegistryObject<Item> PEA = ITEMS.register("pea",()-> new BlockItem(BlockRegister.PEA_PLANT.get(),new Item.Properties().group(GroupRegister.PVZ_MISC)));

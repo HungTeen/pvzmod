@@ -23,9 +23,6 @@ public class ProducerGenGoal extends Goal{
 	
 	@Override
 	public boolean shouldExecute() {
-		if(this.plant.isPlantSleeping()) {
-			return false;
-		}
 		return true;
 	}
 
@@ -41,6 +38,9 @@ public class ProducerGenGoal extends Goal{
 	
 	@Override
 	public void tick() {
+		if(!this.plant.canPlantNormalUpdate()) {
+			return ;
+		}
 		if(this.plant.isPlantInSuperMode()){//放大招 
 			if(this.plant.getSuperTime()==1) {
 			    this.producer.genSuper();

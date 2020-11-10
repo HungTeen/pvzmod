@@ -7,13 +7,17 @@ import java.util.UUID;
 import javax.annotation.Nullable;
 
 import com.hungteen.pvz.PVZConfig;
+import com.hungteen.pvz.capability.CapabilityHandler;
+import com.hungteen.pvz.capability.player.PlayerDataManager;
 import com.hungteen.pvz.entity.ai.PVZLookRandomlyGoal;
 import com.hungteen.pvz.entity.plant.enforce.SquashEntity;
 import com.hungteen.pvz.entity.plant.interfaces.IShroomPlant;
+import com.hungteen.pvz.entity.plant.magic.CoffeeBeanEntity;
 import com.hungteen.pvz.entity.plant.spear.SpikeWeedEntity;
 import com.hungteen.pvz.item.tool.card.PlantCardItem;
 import com.hungteen.pvz.misc.damage.PVZDamageSource;
 import com.hungteen.pvz.register.BlockRegister;
+import com.hungteen.pvz.register.EntityRegister;
 import com.hungteen.pvz.register.ParticleRegister;
 import com.hungteen.pvz.register.SoundRegister;
 import com.hungteen.pvz.utils.EntityUtil;
@@ -21,6 +25,7 @@ import com.hungteen.pvz.utils.PlantUtil;
 import com.hungteen.pvz.utils.enums.Essences;
 import com.hungteen.pvz.utils.enums.Plants;
 import com.hungteen.pvz.utils.enums.Ranks;
+import com.hungteen.pvz.utils.enums.Resources;
 import com.hungteen.pvz.utils.interfaces.IPVZPlant;
 
 import net.minecraft.block.Block;
@@ -69,6 +74,7 @@ public abstract class PVZPlantEntity extends CreatureEntity implements IPVZPlant
 	private final int weakCD = 10;
 	private final int weakDamage = 15;
 	protected Plants outerPlant = null;
+	public boolean canCollideWithPlant = true;
 	
 	public PVZPlantEntity(EntityType<? extends CreatureEntity> type, World worldIn) {
 		super(type, worldIn);
@@ -375,6 +381,9 @@ public abstract class PVZPlantEntity extends CreatureEntity implements IPVZPlant
 	
 	protected boolean shouldCollideWithEntity(LivingEntity target) {
 		if(target instanceof PVZPlantEntity) {
+			if(!((PVZPlantEntity) target).canCollideWithPlant) {
+				return false;
+			}
 			if(target instanceof SquashEntity) {
 				return !EntityUtil.checkCanEntityAttack(this, target);
 			}
@@ -580,6 +589,21 @@ public abstract class PVZPlantEntity extends CreatureEntity implements IPVZPlant
 //							System.out.println("1");
 							PlantCardItem.plantPumpkin(player, this, item, itemstack);
 						}
+					}else if(item.getPlant() == Plants.COFFEE_BEAN) {
+						player.getCapability(CapabilityHandler.PLAYER_DATA_CAPABILITY).ifPresent((l)->{
+							PlayerDataManager manager = l.getPlayerData();
+							int num = manager.getPlayerStats().getPlayerStats(Resources.SUN_NUM);
+							int sunCost = item.getSunCost(player.getHeldItem(hand));
+							if(num >= sunCost) {//sun is enough
+								CoffeeBeanEntity bean = EntityRegister.COFFEE_BEAN.get().create(world);
+								l.getPlayerData().getPlayerStats().addPlayerStats(Resources.SUN_NUM, - sunCost);
+								int lvl = manager.getPlantStats().getPlantLevel(Plants.COFFEE_BEAN);
+								PlantCardItem.onUsePlantCard(player, player.getHeldItem(hand), item, lvl);
+								bean.setPlantLvl(lvl);
+								bean.setOwnerUUID(player.getUniqueID());
+								EntityUtil.onMobEntitySpawn(world, bean, getPosition().add(0, this.getEyeHeight() + 0.5f, 0));
+							}
+						});
 					}
 				}
 			}

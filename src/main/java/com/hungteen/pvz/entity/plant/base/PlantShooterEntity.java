@@ -82,7 +82,7 @@ public abstract class PlantShooterEntity extends PVZPlantEntity implements IShoo
 	
 	@Override
 	public boolean canShoot() {
-		return !this.isPlantSleeping();
+		return this.canPlantNormalUpdate();
 	}
 	
 	/**

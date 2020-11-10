@@ -21,9 +21,9 @@ public class NobleZombieModel extends EntityModel<NobleZombieEntity> {
 	private final ModelRenderer body;
 	private final ModelRenderer left_hand;
 	private final ModelRenderer right_hand;
+	private final ModelRenderer stick;
 	private final ModelRenderer head;
 	private final ModelRenderer bone;
-	private final ModelRenderer stick;
 
 	public NobleZombieModel() {
 		textureWidth = 256;
@@ -63,6 +63,13 @@ public class NobleZombieModel extends EntityModel<NobleZombieEntity> {
 		up.addChild(right_hand);
 		right_hand.setTextureOffset(96, 0).addBox(-4.0F, -4.0F, -4.0F, 8.0F, 24.0F, 8.0F, 0.0F, false);
 
+		stick = new ModelRenderer(this);
+		stick.setRotationPoint(0.0F, 18.0F, 0.0F);
+		right_hand.addChild(stick);
+		stick.setTextureOffset(59, 105).addBox(0.0F, -1.0F, -32.0F, 1.0F, 1.0F, 26.0F, 0.0F, false);
+		stick.setTextureOffset(20, 102).addBox(-0.5F, -1.5F, -34.0F, 2.0F, 2.0F, 2.0F, 0.0F, false);
+		stick.setTextureOffset(75, 84).addBox(-1.0F, -2.0F, -6.0F, 3.0F, 3.0F, 12.0F, 0.0F, false);
+
 		head = new ModelRenderer(this);
 		head.setRotationPoint(0.0F, -24.0F, 0.0F);
 		up.addChild(head);
@@ -73,13 +80,6 @@ public class NobleZombieModel extends EntityModel<NobleZombieEntity> {
 		head.addChild(bone);
 		bone.setTextureOffset(0, 74).addBox(-11.0F, -1.0F, -10.0F, 22.0F, 1.0F, 20.0F, 0.0F, false);
 		bone.setTextureOffset(56, 37).addBox(-7.0F, -6.0F, -7.0F, 14.0F, 5.0F, 14.0F, 0.0F, false);
-
-		stick = new ModelRenderer(this);
-		stick.setRotationPoint(-12.0F, -2.0F, 0.0F);
-		up.addChild(stick);
-		stick.setTextureOffset(59, 105).addBox(0.0F, -1.0F, -32.0F, 1.0F, 1.0F, 26.0F, 0.0F, false);
-		stick.setTextureOffset(20, 102).addBox(-0.5F, -1.5F, -34.0F, 2.0F, 2.0F, 2.0F, 0.0F, false);
-		stick.setTextureOffset(75, 84).addBox(-1.0F, -2.0F, -6.0F, 3.0F, 3.0F, 12.0F, 0.0F, false);
 	}
 
 	@Override
@@ -90,6 +90,9 @@ public class NobleZombieModel extends EntityModel<NobleZombieEntity> {
         this.left_leg.rotateAngleX = MathHelper.cos(limbSwing * 0.6662F + (float)Math.PI) * 1.4F * limbSwingAmount;
         this.right_hand.rotateAngleX = MathHelper.cos(limbSwing * 0.6662F) * 1.4F * limbSwingAmount;
         this.left_hand.rotateAngleX = MathHelper.cos(limbSwing * 0.6662F + (float)Math.PI) * 1.4F * limbSwingAmount;
+        if(entity.getAttackTime() < 20) {
+        	this.right_hand.rotateAngleX = - 1f;
+        }
 	}
 
 	@Override

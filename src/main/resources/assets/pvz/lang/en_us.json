@@ -93,6 +93,12 @@
     "item.pvz.tomb_stone_spawn_egg":"Tomb Stone Spawn Egg",
     "entity.pvz.newspaper_zombie":"Newspaper Zombie",
     "item.pvz.newspaper_zombie_spawn_egg":"Newspaper Zombie Spawn Egg",
+    "entity.pvz.coffin":"Coffin Team",
+    "item.pvz.coffin_spawn_egg":"Coffin Team Spawn Egg",
+    "entity.pvz.mourner_zombie":"Mourner Zombie",
+    "item.pvz.mourner_zombie_spawn_egg":"Mourner Zombie Spawn Egg",
+    "entity.pvz.noble_zombie":"Noble Zombie",
+    "item.pvz.noble_zombie_spawn_egg":"Noble Zombie Spawn Egg",
     "entity.pvz.pumpkin_zombie":"Pumpkin Zombie",
     "item.pvz.pumpkin_zombie_spawn_egg":"Pumpkin Zombie Spawn Egg",
     "entity.pvz.trick_zombie":"Trick Zombie",
@@ -227,6 +233,11 @@
 //Pumpkin
     "item.pvz.pumpkin_card":"Pumpkin Card",
     "item.pvz.pumpkin_enjoy_card":"Pumpkin Enjoy Card",
+//CoffeeBean
+    "entity.pvz.coffee_bean":"CoffeeBean",
+    "item.pvz.coffee_bean_spawn_egg":"CoffeeBean Spawn Egg",
+    "item.pvz.coffee_bean_card":"CoffeeBean Card",
+    "item.pvz.coffee_bean_enjoy_card":"CoffeeBean Enjoy Card",
 //tool & tooltip
     "item.pvz.zombie_flag":"Zombie Flag",
     "tooltip.pvz.zombie_flag":"Right Click to get a speed effect",

@@ -83,6 +83,9 @@ public class SpikeWeedEntity extends PVZPlantEntity{
 	}
 	
 	protected void spikeNormalAttack(LivingEntity target) {
+		if(!this.canPlantNormalUpdate()) {
+			return ;
+		}
 		this.setAttackTime(this.getAttackCD());
 		if(target instanceof ZomboniEntity || target instanceof BobsleTeamEntity) {
 			target.attackEntityFrom(PVZDamageSource.causeSpikeDamage(this, this), target.getMaxHealth());

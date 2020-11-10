@@ -20,7 +20,7 @@ public class CoffeeBeanEntity extends PlantBomberEntity{
 	public void startBomb() {
 		if(!this.world.isRemote) {
 			float len = this.getAwakeRange();
-			AxisAlignedBB aabb=EntityUtil.getEntityAABB(this, len, len);
+			AxisAlignedBB aabb=EntityUtil.getEntityAABB(this, len, len + 2);
 			for(PVZPlantEntity plant : world.getEntitiesWithinAABB(PVZPlantEntity.class, aabb)) {
 				if(!EntityUtil.checkCanEntityAttack(this, plant)) {
 					plant.setSleepTime(- this.getAwakeTime());
@@ -43,6 +43,11 @@ public class CoffeeBeanEntity extends PlantBomberEntity{
 			return 48000;
 		}
 		return 24000;
+	}
+	
+	@Override
+	public boolean hasNoGravity() {
+		return true;
 	}
 
 	@Override

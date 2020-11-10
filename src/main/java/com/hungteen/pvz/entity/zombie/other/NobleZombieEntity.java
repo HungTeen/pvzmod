@@ -15,9 +15,11 @@ import net.minecraft.block.BlockState;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntitySize;
 import net.minecraft.entity.EntityType;
+import net.minecraft.entity.ILivingEntityData;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.Pose;
 import net.minecraft.entity.SharedMonsterAttributes;
+import net.minecraft.entity.SpawnReason;
 import net.minecraft.entity.monster.MonsterEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.ServerPlayerEntity;
@@ -32,33 +34,37 @@ import net.minecraft.util.SoundEvents;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.BossInfo;
+import net.minecraft.world.DifficultyInstance;
+import net.minecraft.world.IWorld;
 import net.minecraft.world.World;
 import net.minecraft.world.server.ServerBossInfo;
 
 public class NobleZombieEntity extends PVZZombieEntity {
 
-	private static final DataParameter<Integer> SPAWN_TICK = EntityDataManager.createKey(NobleZombieEntity.class,
-			DataSerializers.VARINT);
 	private static final DataParameter<Integer> TP_TICK = EntityDataManager.createKey(NobleZombieEntity.class,
 			DataSerializers.VARINT);
 	private final ServerBossInfo bossInfo = (ServerBossInfo) (new ServerBossInfo(this.getDisplayName(),
 			BossInfo.Color.WHITE, BossInfo.Overlay.NOTCHED_6)).setDarkenSky(true);
-	public static final int SPAWN_TIME = 100;
-	private int summonTick = 0;
+	private int summonTick;
 	private final int minSummonTick = 300;
 	private final int maxSummonTick = 600;
 	private final int maxSummonedCnt = 8;
 	private final int minTpCD = 400;
 	private final int maxTpCD = 800;
-
+	private final int minSleepAttackCD = 600;
+	private final int maxSleepAttackCD = 1000;
+	
 	public NobleZombieEntity(EntityType<? extends MonsterEntity> type, World worldIn) {
 		super(type, worldIn);
+		this.setAttackTime(this.maxSleepAttackCD);
+		this.summonTick = this.getRNG().nextInt(this.maxSummonTick - this.minSummonTick) + this.minSummonTick;
+		this.setTpTick(-this.getRNG().nextInt(this.maxTpCD - this.minTpCD + 1) - this.minTpCD);
+		this.experienceValue = 1000;
 	}
 
 	@Override
 	protected void registerData() {
 		super.registerData();
-		this.dataManager.register(SPAWN_TICK, 0);
 		this.dataManager.register(TP_TICK, 0);
 	}
 
@@ -70,23 +76,26 @@ public class NobleZombieEntity extends PVZZombieEntity {
 	}
 
 	@Override
+	public ILivingEntityData onInitialSpawn(IWorld worldIn, DifficultyInstance difficultyIn, SpawnReason reason,
+			ILivingEntityData spawnDataIn, CompoundNBT dataTag) {
+		if(!world.isRemote) {
+			for (Entity target : EntityUtil.getEntityAttackableTarget(this,
+					EntityUtil.getEntityAABB(this, 50, 50))) {
+				if(this.getRNG().nextInt(4) == 0) {
+					ZombieHandEntity hand = EntityRegister.ZOMBIE_HAND.get().create(world);
+				    hand.setOwner(this);
+				    EntityUtil.onMobEntitySpawn(world, hand, target.getPosition());
+				}
+			}
+		}
+		return super.onInitialSpawn(worldIn, difficultyIn, reason, spawnDataIn, dataTag);
+	}
+	
+	@Override
 	public void tick() {
 		super.tick();
 		float percent = this.getHealth() / this.getMaxHealth();
 		this.bossInfo.setPercent(percent);
-		if (!world.isRemote && this.getSpawnTick() < SPAWN_TIME) {
-			if (this.getSpawnTick() == 0) {
-				for (Entity target : EntityUtil.getEntityAttackableTarget(this,
-						EntityUtil.getEntityAABB(this, 50, 50))) {
-					if(this.getRNG().nextInt(4) == 0) {
-						ZombieHandEntity hand = EntityRegister.ZOMBIE_HAND.get().create(world);
-					    hand.setOwner(this);
-					    EntityUtil.onMobEntitySpawn(world, hand, target.getPosition());
-					}
-				}
-			}
-			this.setSpawnTick(this.getSpawnTick() + 1);
-		}
 		if(!this.canZombieNormalUpdate()) {
 			this.setTpTick(- this.maxTpCD);
 		}
@@ -103,6 +112,11 @@ public class NobleZombieEntity extends PVZZombieEntity {
 				this.summonTick = this.getRNG().nextInt(this.maxSummonTick - this.minSummonTick) + this.minSummonTick;
 				this.checkAndSummonMournerZombie();
 			}
+			if(this.getAttackTime() > 0) {
+				this.setAttackTime(this.getAttackTime() - 1);
+			} else {
+				this.checkAndSleepPlant();
+			}
 		}
 		this.checkAndHeal();
 		if (this.getTpTick() < 0) {
@@ -116,8 +130,8 @@ public class NobleZombieEntity extends PVZZombieEntity {
 				this.checkAndTeleport();
 			}
 			if(world.isRemote) {
-				for(int i = 0; i < 10; ++ i) {
-					world.addParticle(ParticleTypes.PORTAL, this.getPosX() + (this.getRNG().nextInt(7) - 3), this.getPosY() + (this.getRNG().nextInt(3)), this.getPosZ() + (this.getRNG().nextInt(7) - 3), 0, 0, 0);
+				for(int i = 0; i < 9; ++ i) {
+					world.addParticle(ParticleTypes.PORTAL, this.getPosX() + (this.getRNG().nextInt(5) - 2), this.getPosY() + (this.getRNG().nextInt(3)), this.getPosZ() + (this.getRNG().nextInt(5) - 2), 0, 0, 0);
 				}
 			}
 			this.setTpTick(this.getTpTick() + 1);
@@ -180,6 +194,29 @@ public class NobleZombieEntity extends PVZZombieEntity {
 	}
 	
 	/**
+	 * Skill 3 : Sleep plants in a specific area.
+	 */
+	private void checkAndSleepPlant() {
+		List<PVZPlantEntity> list = this.world.getEntitiesWithinAABB(PVZPlantEntity.class, EntityUtil.getEntityAABB(this, 50, 50), (plant)->{
+			return !plant.isCharmed();
+		});
+		int len = list.size();
+		if(len == 0) {
+			this.setAttackTime(this.getRNG().nextInt(this.maxSleepAttackCD - this.minSleepAttackCD + 1) + this.minSleepAttackCD);
+			return ;
+		}
+		int pos = this.getRNG().nextInt(len);
+		PVZPlantEntity plant = list.get(pos);
+		float range = this.getSleepRange();
+		for(PVZPlantEntity target : this.world.getEntitiesWithinAABB(PVZPlantEntity.class, EntityUtil.getEntityAABB(plant, range, range), (p)->{
+			return !p.isCharmed();
+		})) {
+			target.setSleepTime(2400);
+		}
+		this.setAttackTime(this.getRNG().nextInt(this.maxSleepAttackCD - this.minSleepAttackCD + 1) + this.minSleepAttackCD);
+	}
+	
+	/**
 	 * Skill 4 : Summon Zombie's Hands.
 	 */
 	private void checkAndSummonZombieHand() {
@@ -199,14 +236,19 @@ public class NobleZombieEntity extends PVZZombieEntity {
 	}
 	
 	/**
-	 * Skill 5 : Heal for 5 per second.
+	 * Skill 5 : Heal itself.
 	 */
 	private void checkAndHeal() {
-		if(!world.isRemote && this.getAttackTarget() == null) {
-			this.heal(0.25f);
+		float percent = this.getHealth() / this.getMaxHealth();
+		if(!world.isRemote) {
+			if(this.getAttackTarget() == null) {
+			    this.heal(0.3f);
+			}else if(percent < 1f / 2) {
+				this.heal(0.2f);
+			}
 		}
 	}
-
+	
 	private boolean teleportTo(double x, double y, double z) {
 		BlockPos.Mutable blockpos$mutable = new BlockPos.Mutable(x, y, z);
 		while (blockpos$mutable.getY() > 0
@@ -226,6 +268,11 @@ public class NobleZombieEntity extends PVZZombieEntity {
 		} else {
 			return false;
 		}
+	}
+	
+	@Override
+	protected void onDeathUpdate() {
+		super.onDeathUpdate();
 	}
 
 	@Override
@@ -266,6 +313,16 @@ public class NobleZombieEntity extends PVZZombieEntity {
 		return 1.5f;
 	}
 	
+	protected float getSleepRange() {
+		float percent = this.getHealth() / this.getMaxHealth();
+		if (percent < 1f / 3) {
+			return 3;
+		} else if (percent < 2f / 3) {
+			return 2.5f;
+		}
+		return 1.5f;
+	}
+	
 	protected int getHandSummonNum() {
 		float percent = this.getHealth() / this.getMaxHealth();
 		if (percent < 1f / 3) {
@@ -284,7 +341,6 @@ public class NobleZombieEntity extends PVZZombieEntity {
 	@Override
 	public void readAdditional(CompoundNBT compound) {
 		super.readAdditional(compound);
-		this.setSpawnTick(compound.getInt("spawn_tick_time"));
 		this.summonTick = compound.getInt("summon_zombie_tick");
 		this.setTpTick(compound.getInt("zombie_tp_tick"));
 		if (this.hasCustomName()) {
@@ -295,7 +351,6 @@ public class NobleZombieEntity extends PVZZombieEntity {
 	@Override
 	public void writeAdditional(CompoundNBT compound) {
 		super.writeAdditional(compound);
-		compound.putInt("spawn_tick_time", this.getSpawnTick());
 		compound.putInt("summon_zombie_tick", this.summonTick);
 		compound.putInt("zombie_tp_tick", this.getTpTick());
 	}
@@ -309,15 +364,7 @@ public class NobleZombieEntity extends PVZZombieEntity {
 		super.removeTrackingPlayer(player);
 		this.bossInfo.removePlayer(player);
 	}
-
-	public int getSpawnTick() {
-		return this.dataManager.get(SPAWN_TICK);
-	}
-
-	public void setSpawnTick(int tick) {
-		this.dataManager.set(SPAWN_TICK, tick);
-	}
-
+	
 	public int getTpTick() {
 		return this.dataManager.get(TP_TICK);
 	}

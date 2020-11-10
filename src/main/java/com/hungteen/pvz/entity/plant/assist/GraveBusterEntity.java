@@ -174,6 +174,9 @@ public class GraveBusterEntity extends PVZPlantEntity{
 		
 		@Override
 		public void tick() {
+			if(!this.buster.canPlantNormalUpdate()) {
+				return ;
+			}
 			this.buster.setAttackTime(this.buster.getAttackTime() + 1);
 			if(this.buster.getAttackTime() >= this.buster.getAttackCD()) {
 				this.buster.setAttackTime(0);
@@ -186,5 +189,4 @@ public class GraveBusterEntity extends PVZPlantEntity{
 			}
 		}
 	}
-
 }

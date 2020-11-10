@@ -94,7 +94,7 @@ public class TombStoneEntity extends UnderGroundZombieEntity{
 						if(num >= sunCost) {//sun is enough
 							GraveBusterEntity buster = EntityRegister.GRAVE_BUSTER.get().create(world);
 							l.getPlayerData().getPlayerStats().addPlayerStats(Resources.SUN_NUM, - sunCost);
-							int lvl = manager.getPlantStats().getPlantLevel(plantCard.getPlant());
+							int lvl = manager.getPlantStats().getPlantLevel(Plants.GRAVE_BUSTER);
 							PlantCardItem.onUsePlantCard(player, player.getHeldItem(hand), plantCard, lvl);
 							buster.setPlantLvl(lvl);
 							buster.setOwnerUUID(player.getUniqueID());

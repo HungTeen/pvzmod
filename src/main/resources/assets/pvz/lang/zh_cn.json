@@ -60,6 +60,8 @@
 //npc
     "entity.pvz.crazy_dave":"疯狂戴夫",
     "item.pvz.crazy_dave_spawn_egg":"疯狂戴夫刷怪蛋", 
+    "entity.pvz.panney":"潘妮",
+    "item.pvz.panney_spawn_egg":"潘妮刷怪蛋", 
 //zombie
     "entity.pvz.normal_zombie":"普通僵尸",
     "item.pvz.normal_zombie_spawn_egg":"普通僵尸刷怪蛋",
@@ -91,6 +93,12 @@
     "item.pvz.tomb_stone_spawn_egg":"墓碑刷怪蛋",
     "entity.pvz.newspaper_zombie":"读报僵尸",
     "item.pvz.newspaper_zombie_spawn_egg":"读报僵尸刷怪蛋",
+    "entity.pvz.coffin":"抬棺小队",
+    "item.pvz.coffin_spawn_egg":"抬棺小队刷怪蛋",
+    "entity.pvz.mourner_zombie":"抬棺僵尸",
+    "item.pvz.mourner_zombie_spawn_egg":"抬棺僵尸刷怪蛋",
+    "entity.pvz.noble_zombie":"贵族僵尸",
+    "item.pvz.noble_zombie_spawn_egg":"贵族僵尸刷怪蛋",
     "entity.pvz.pumpkin_zombie":"南瓜头僵尸",
     "item.pvz.pumpkin_zombie_spawn_egg":"南瓜头僵尸刷怪蛋",
     "entity.pvz.trick_zombie":"捣蛋鬼僵尸",
@@ -225,6 +233,11 @@
 //Pumpkin
     "item.pvz.pumpkin_card":"南瓜头卡",
     "item.pvz.pumpkin_enjoy_card":"南瓜头体验卡",
+//CoffeeBean
+    "entity.pvz.coffee_bean":"咖啡豆",
+    "item.pvz.coffee_bean_spawn_egg":"咖啡豆刷怪蛋",
+    "item.pvz.coffee_bean_card":"咖啡豆卡",
+    "item.pvz.coffee_bean_enjoy_card":"咖啡豆体验卡",
 //tool & tooltip
     "item.pvz.zombie_flag":"僵尸旗帜",
     "tooltip.pvz.zombie_flag":"右键会获得加速效果",

@@ -73,4 +73,5 @@ public class ShooterAttackGoal extends Goal{
 		}
 		return false;
 	}
+	
 }
