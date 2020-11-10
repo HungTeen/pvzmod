@@ -2,17 +2,16 @@ package com.hungteen.pvz.render.entity.zombie.grassnight;
 
 import com.hungteen.pvz.entity.zombie.grassnight.TombStoneEntity;
 import com.hungteen.pvz.model.entity.zombie.grassnight.TombStoneModel;
-import com.hungteen.pvz.render.entity.zombie.PVZZombieRender;
+import com.hungteen.pvz.render.entity.zombie.UnderGroundZombieRender;
 import com.hungteen.pvz.utils.StringUtil;
 
 import net.minecraft.client.renderer.entity.EntityRendererManager;
 import net.minecraft.util.ResourceLocation;
-import net.minecraft.util.math.Vec3d;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 
 @OnlyIn(Dist.CLIENT)
-public class TombStoneRender extends PVZZombieRender<TombStoneEntity>{
+public class TombStoneRender extends UnderGroundZombieRender<TombStoneEntity>{
 
 	public TombStoneRender(EntityRendererManager rendererManager) {
 		super(rendererManager, new TombStoneModel(), 0.4f);
@@ -24,10 +23,8 @@ public class TombStoneRender extends PVZZombieRender<TombStoneEntity>{
 	}
 	
 	@Override
-	public Vec3d getTranslateVec(TombStoneEntity entity) {
-		float height = 1f;
-		float downOffset = (1 - entity.getSpawnTick() * 1.0f / TombStoneEntity.SPAWN_TIME) * height;
-		return new Vec3d(0, downOffset, 0);
+	protected float getOffsetHeight() {
+		return 1f;
 	}
 
 	@Override

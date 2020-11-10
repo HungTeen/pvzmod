@@ -254,14 +254,14 @@ public class EntityUtil {
 	 * get is entity cold
 	 */
 	public static boolean isEntityCold(LivingEntity entity) {
-		return entity.getAttribute(SharedMonsterAttributes.MOVEMENT_SPEED).getModifier(EffectRegister.COLD_EFFECT_UUID)!=null;
+		return entity.getAttribute(SharedMonsterAttributes.MOVEMENT_SPEED).getModifier(EffectRegister.COLD_EFFECT_UUID) != null;
 	}
 	
 	/**
 	 * get is entity frozen
 	 */
 	public static boolean isEntityFrozen(LivingEntity entity) {
-		return entity.getAttribute(SharedMonsterAttributes.MOVEMENT_SPEED).getModifier(EffectRegister.FROZEN_EFFECT_UUID)!=null;
+		return entity.getAttribute(SharedMonsterAttributes.MOVEMENT_SPEED).getModifier(EffectRegister.FROZEN_EFFECT_UUID) != null;
 	}
 	
 	/**

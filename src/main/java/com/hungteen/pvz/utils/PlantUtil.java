@@ -10,7 +10,9 @@ import com.hungteen.pvz.utils.enums.Essences;
 import com.hungteen.pvz.utils.enums.Plants;
 import com.hungteen.pvz.utils.enums.Ranks;
 
+import net.minecraft.entity.EntityType;
 import net.minecraft.world.World;
+import net.minecraftforge.fml.RegistryObject;
 
 public class PlantUtil {
 	
@@ -18,6 +20,7 @@ public class PlantUtil {
 	public static final HashMap<Plants, CDs> PLANT_CD = new HashMap<>();
 	public static final HashMap<Plants, Essences> PLANT_ESSENCE = new HashMap<>();
 	public static final HashMap<Plants, Ranks> PLANT_RANK = new HashMap<>();
+	public static final HashMap<Plants, RegistryObject<? extends EntityType<? extends PVZPlantEntity>>> PLANT_ENTITY = new HashMap<>();
                                                    //1  2  3  4  5  6   7   8   9   10  11  12  13   14   15   16   17   18   19   20
 	public static final int[] GRAY_XP = new int[] {0,10,15,25,40,60,100,140,200,280,400,560,800,1250,1700,2250,3000,4000,5400,7500,999999999};
 	public static final int[] WHITE_XP = new int[] {0,15,25,40,60,80,130,180,240,325,450,620,880,1400,1920,2500,3400,4500,6000,8400,999999999};
@@ -154,6 +157,32 @@ public class PlantUtil {
 		PLANT_ESSENCE.put(Plants.JALAPENO, Essences.FLAME);
 		PLANT_ESSENCE.put(Plants.TORCH_WOOD, Essences.FLAME);
 		PLANT_ESSENCE.put(Plants.SPIKE_WEED, Essences.SPEAR);
+		
+		//plant entity
+		PLANT_ENTITY.put(Plants.PEA_SHOOTER, EntityRegister.PEA_SHOOTER);
+		PLANT_ENTITY.put(Plants.SUN_FLOWER, EntityRegister.SUN_FLOWER);
+		PLANT_ENTITY.put(Plants.CHERRY_BOMB, EntityRegister.CHERRY_BOMB);
+		PLANT_ENTITY.put(Plants.WALL_NUT, EntityRegister.WALL_NUT);
+		PLANT_ENTITY.put(Plants.POTATO_MINE, EntityRegister.POTATO_MINE);
+		PLANT_ENTITY.put(Plants.SNOW_PEA, EntityRegister.SNOW_PEA);
+		PLANT_ENTITY.put(Plants.CHOMPER, EntityRegister.CHOMPER);
+		PLANT_ENTITY.put(Plants.REPEATER, EntityRegister.REPEATER);
+		PLANT_ENTITY.put(Plants.PUFF_SHROOM, EntityRegister.PUFF_SHROOM);
+		PLANT_ENTITY.put(Plants.SUN_SHROOM, EntityRegister.SUN_SHROOM);
+		PLANT_ENTITY.put(Plants.FUME_SHROOM, EntityRegister.FUME_SHROOM);
+		PLANT_ENTITY.put(Plants.GRAVE_BUSTER, EntityRegister.GRAVE_BUSTER);
+		PLANT_ENTITY.put(Plants.HYPNO_SHROOM, EntityRegister.HYPNO_SHROOM);
+		PLANT_ENTITY.put(Plants.SCAREDY_SHROOM, EntityRegister.SCAREDY_SHROOM);
+		PLANT_ENTITY.put(Plants.ICE_SHROOM, EntityRegister.ICE_SHROOM);
+		PLANT_ENTITY.put(Plants.DOOM_SHROOM, EntityRegister.DOOM_SHROOM);
+		PLANT_ENTITY.put(Plants.SQUASH, EntityRegister.SQUASH);
+		PLANT_ENTITY.put(Plants.THREE_PEATER, EntityRegister.THREE_PEATER);
+		PLANT_ENTITY.put(Plants.TANGLE_KELP, EntityRegister.TANGLE_KELP);
+		PLANT_ENTITY.put(Plants.JALAPENO, EntityRegister.JALAPENO);
+		PLANT_ENTITY.put(Plants.SPIKE_WEED, EntityRegister.SPIKE_WEED);
+		PLANT_ENTITY.put(Plants.TORCH_WOOD, EntityRegister.TORCH_WOOD);
+		PLANT_ENTITY.put(Plants.TALL_NUT, EntityRegister.TALL_NUT);
+		PLANT_ENTITY.put(Plants.COFFEE_BEAN, EntityRegister.COFFEE_BEAN);
 	}
 	
 	public static int getPlantLevelUpXp(Plants plant,int lvl){
@@ -203,36 +232,41 @@ public class PlantUtil {
 	 * create plant entity by given plant 
 	 */
 	public static PVZPlantEntity getPlantEntity(World world, Plants plant){
-		switch(plant) {
-		case PEA_SHOOTER:return EntityRegister.PEA_SHOOTER.get().create(world);
-		case SUN_FLOWER:return EntityRegister.SUN_FLOWER.get().create(world);
-		case CHERRY_BOMB:return EntityRegister.CHERRY_BOMB.get().create(world);
-		case WALL_NUT:return EntityRegister.WALL_NUT.get().create(world);
-		case POTATO_MINE:return EntityRegister.POTATO_MINE.get().create(world);
-		case SNOW_PEA:return EntityRegister.SNOW_PEA.get().create(world);
-		case CHOMPER:return EntityRegister.CHOMPER.get().create(world);
-		case REPEATER:return EntityRegister.REPEATER.get().create(world);
-		case SQUASH:return EntityRegister.SQUASH.get().create(world);
-		case THREE_PEATER:return EntityRegister.THREE_PEATER.get().create(world);
-		case TANGLE_KELP:return EntityRegister.TANGLE_KELP.get().create(world);
-		case JALAPENO:return EntityRegister.JALAPENO.get().create(world);
-		case SPIKE_WEED:return EntityRegister.SPIKE_WEED.get().create(world);
-		case TORCH_WOOD:return EntityRegister.TORCH_WOOD.get().create(world);
-		case TALL_NUT:return EntityRegister.TALL_NUT.get().create(world);
-//		case WATER_GUARD:return EntityRegister.WATER_GUARD.get().create(world);
-		case PUFF_SHROOM:return EntityRegister.PUFF_SHROOM.get().create(world);
-		case SUN_SHROOM:return EntityRegister.SUN_SHROOM.get().create(world);
-		case FUME_SHROOM:return EntityRegister.FUME_SHROOM.get().create(world);
-		case GRAVE_BUSTER:return EntityRegister.GRAVE_BUSTER.get().create(world);
-		case HYPNO_SHROOM:return EntityRegister.HYPNO_SHROOM.get().create(world);
-		case SCAREDY_SHROOM:return EntityRegister.SCAREDY_SHROOM.get().create(world);
-		case ICE_SHROOM:return EntityRegister.ICE_SHROOM.get().create(world);
-		case DOOM_SHROOM:return EntityRegister.DOOM_SHROOM.get().create(world);
-		default:{
-			PVZMod.LOGGER.debug("No such plant entity!");
-			return null;
+//		switch(plant) {
+//		case PEA_SHOOTER:return EntityRegister.PEA_SHOOTER.get().create(world);
+//		case SUN_FLOWER:return EntityRegister.SUN_FLOWER.get().create(world);
+//		case CHERRY_BOMB:return EntityRegister.CHERRY_BOMB.get().create(world);
+//		case WALL_NUT:return EntityRegister.WALL_NUT.get().create(world);
+//		case POTATO_MINE:return EntityRegister.POTATO_MINE.get().create(world);
+//		case SNOW_PEA:return EntityRegister.SNOW_PEA.get().create(world);
+//		case CHOMPER:return EntityRegister.CHOMPER.get().create(world);
+//		case REPEATER:return EntityRegister.REPEATER.get().create(world);
+//		case SQUASH:return EntityRegister.SQUASH.get().create(world);
+//		case THREE_PEATER:return EntityRegister.THREE_PEATER.get().create(world);
+//		case TANGLE_KELP:return EntityRegister.TANGLE_KELP.get().create(world);
+//		case JALAPENO:return EntityRegister.JALAPENO.get().create(world);
+//		case SPIKE_WEED:return EntityRegister.SPIKE_WEED.get().create(world);
+//		case TORCH_WOOD:return EntityRegister.TORCH_WOOD.get().create(world);
+//		case TALL_NUT:return EntityRegister.TALL_NUT.get().create(world);
+////		case WATER_GUARD:return EntityRegister.WATER_GUARD.get().create(world);
+//		case PUFF_SHROOM:return EntityRegister.PUFF_SHROOM.get().create(world);
+//		case SUN_SHROOM:return EntityRegister.SUN_SHROOM.get().create(world);
+//		case FUME_SHROOM:return EntityRegister.FUME_SHROOM.get().create(world);
+//		case GRAVE_BUSTER:return EntityRegister.GRAVE_BUSTER.get().create(world);
+//		case HYPNO_SHROOM:return EntityRegister.HYPNO_SHROOM.get().create(world);
+//		case SCAREDY_SHROOM:return EntityRegister.SCAREDY_SHROOM.get().create(world);
+//		case ICE_SHROOM:return EntityRegister.ICE_SHROOM.get().create(world);
+//		case DOOM_SHROOM:return EntityRegister.DOOM_SHROOM.get().create(world);
+//		default:{
+//			PVZMod.LOGGER.debug("No such plant entity!");
+//			return null;
+//		}
+//		}
+		if(PLANT_ENTITY.containsKey(plant)) {
+			return PLANT_ENTITY.get(plant).get().create(world);
 		}
-		}
+		PVZMod.LOGGER.debug("plant get entity error");
+		return null;
 	}
 	
 	/**

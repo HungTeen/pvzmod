@@ -64,18 +64,11 @@ public abstract class PVZZombieEntity extends MonsterEntity implements IPVZZombi
 			DataSerializers.VARINT);
 	private static final DataParameter<Optional<UUID>> OWNER_UUID = EntityDataManager.createKey(PVZZombieEntity.class,
 			DataSerializers.OPTIONAL_UNIQUE_ID);
-//	private static final DataParameter<Boolean> IS_COLD = EntityDataManager.createKey(PVZZombieEntity.class,
-//			DataSerializers.BOOLEAN);
-//	private static final DataParameter<Boolean> IS_FROZEN = EntityDataManager.createKey(PVZZombieEntity.class,
-//			DataSerializers.BOOLEAN);
 	private static final DataParameter<Boolean> IS_CHARMED = EntityDataManager.createKey(PVZZombieEntity.class,
 			DataSerializers.BOOLEAN);
 	private static final DataParameter<Boolean> IS_SMALL = EntityDataManager.createKey(PVZZombieEntity.class,
 			DataSerializers.BOOLEAN);
-//	private static final DataParameter<Boolean> IS_INVIS = EntityDataManager.createKey(PVZZombieEntity.class,
-//			DataSerializers.BOOLEAN);
-//	private static final DataParameter<Boolean> IS_BUTTER = EntityDataManager.createKey(PVZZombieEntity.class,
-//			DataSerializers.BOOLEAN);
+	private static final DataParameter<Integer> ATTACK_TIME = EntityDataManager.createKey(PVZZombieEntity.class, DataSerializers.VARINT);
 
 	public PVZZombieEntity(EntityType<? extends MonsterEntity> type, World worldIn) {
 		super(type, worldIn);
@@ -101,12 +94,9 @@ public abstract class PVZZombieEntity extends MonsterEntity implements IPVZZombi
 		super.registerData();
 		dataManager.register(ZOMBIE_TYPE, this.getSpawnType().ordinal());
 		dataManager.register(OWNER_UUID, Optional.empty());
-//		dataManager.register(IS_FROZEN, false);
-//		dataManager.register(IS_COLD, false);
 		dataManager.register(IS_CHARMED, false);
 		dataManager.register(IS_SMALL, false);
-//		dataManager.register(IS_INVIS, false);
-//		dataManager.register(IS_BUTTER, false);
+		this.dataManager.register(ATTACK_TIME, 0);
 	}
 
 	@Override
@@ -125,13 +115,12 @@ public abstract class PVZZombieEntity extends MonsterEntity implements IPVZZombi
 		this.goalSelector.addGoal(7, new SwimGoal(this));
 		this.goalSelector.addGoal(0, new PVZMeleeAttackGoal(this));
 		this.targetSelector.addGoal(0, new ZombieNearestTargetGoal(this, true, 80, 60));
-//		this.goalSelector.addGoal(0, new NearestAttackableTargetGoal<>(this, WallNutEntity.class, true));
 	}
 
 	@Override
 	public void livingTick() {
 		super.livingTick();
-		if (!this.isAlive() || this.canZombieNormalUpdate()) {
+		if (!this.isAlive() || !this.canZombieNormalUpdate()) {
 			return;
 		}
 		this.normalZombieTick();
@@ -408,7 +397,7 @@ public abstract class PVZZombieEntity extends MonsterEntity implements IPVZZombi
 	}
 	
 	protected double getCollideWidthOffset() {
-		return 0.1f;
+		return 0f;
 	}
 	
 	/**
@@ -450,12 +439,9 @@ public abstract class PVZZombieEntity extends MonsterEntity implements IPVZZombi
 		} else {
 			compound.putString("OwnerUUID", this.getOwnerUUID().toString());
 		}
-//		compound.putBoolean("is_zombie_cold", this.getIsCold());
-//		compound.putBoolean("is_zombie_frozen", this.getIsFrozen());
-//		compound.putBoolean("is_zombie_butter", this.getIsButter());
 		compound.putBoolean("is_zombie_small", this.isSmall());
-//		compound.putBoolean("is_zombie_invis", this.getIsInivs());
 		compound.putBoolean("is_zombie_charmed", this.isCharmed());
+		compound.putInt("zombie_attack_time", this.getAttackTime());
 	}
 
 	@Override
@@ -475,12 +461,10 @@ public abstract class PVZZombieEntity extends MonsterEntity implements IPVZZombi
 			} catch (Throwable var4) {
 			}
 		}
-//		this.setIsCold(compound.getBoolean("is_zombie_cold"));
-//		this.setIsFrozen(compound.getBoolean("is_zombie_frozen"));
-//		this.setIsButter(compound.getBoolean("is_zombie_butter"));
 		this.setSmall(compound.getBoolean("is_zombie_small"));
-//		this.setIsInvis(compound.getBoolean("is_zombie_invis"));
 		this.setCharmed(compound.getBoolean("is_zombie_charmed"));
+		this.setAttackTime(compound.getInt("zombie_attack_time"));
+		
 	}
 
 	@Override
@@ -553,25 +537,9 @@ public abstract class PVZZombieEntity extends MonsterEntity implements IPVZZombi
 		dataManager.set(IS_CHARMED, is);
 	}
 
-//	public void setIsInvis(boolean is) {
-//		dataManager.set(IS_INVIS, is);
-//	}
-
 	public void setSmall(boolean is) {
 		dataManager.set(IS_SMALL, is);
 	}
-
-//	public void setIsCold(boolean is) {
-//		dataManager.set(IS_COLD, is);
-//	}
-//
-//	public void setIsFrozen(boolean is) {
-//		dataManager.set(IS_FROZEN, is);
-//	}
-//
-//	public void setIsButter(boolean is) {
-//		dataManager.set(IS_BUTTER, is);
-//	}
 
 	public void setZombieType(Type type) {
 		dataManager.set(ZOMBIE_TYPE, type.ordinal());
@@ -581,25 +549,17 @@ public abstract class PVZZombieEntity extends MonsterEntity implements IPVZZombi
 		return dataManager.get(IS_CHARMED);
 	}
 
-//	public boolean getIsInivs() {
-//		return dataManager.get(IS_INVIS);
-//	}
-
 	public boolean isSmall() {
 		return dataManager.get(IS_SMALL);
 	}
-
-//	public boolean getIsButter() {
-//		return dataManager.get(IS_BUTTER);
-//	}
-//
-//	public boolean getIsCold() {
-//		return dataManager.get(IS_COLD);
-//	}
-//
-//	public boolean getIsFrozen() {
-//		return dataManager.get(IS_FROZEN);
-//	}
+	
+	public int getAttackTime(){
+    	return dataManager.get(ATTACK_TIME);
+    }
+    
+    public void setAttackTime(int cd){
+    	dataManager.set(ATTACK_TIME, cd);
+    }
 
 	public boolean isZombieColdOrForzen() {
 		return EntityUtil.isEntityCold(this) || EntityUtil.isEntityFrozen(this);

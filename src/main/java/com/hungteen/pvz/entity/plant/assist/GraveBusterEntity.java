@@ -1,6 +1,5 @@
 package com.hungteen.pvz.entity.plant.assist;
 
-import com.hungteen.pvz.entity.ai.PVZNearestTargetGoal;
 import com.hungteen.pvz.entity.plant.PVZPlantEntity;
 import com.hungteen.pvz.entity.zombie.grassnight.TombStoneEntity;
 import com.hungteen.pvz.misc.damage.PVZDamageSource;
@@ -12,6 +11,9 @@ import net.minecraft.entity.EntitySize;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.Pose;
+import net.minecraft.entity.SharedMonsterAttributes;
+import net.minecraft.entity.ai.goal.Goal;
+import net.minecraft.entity.ai.goal.NearestAttackableTargetGoal;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.network.datasync.DataParameter;
 import net.minecraft.network.datasync.DataSerializers;
@@ -37,38 +39,26 @@ public class GraveBusterEntity extends PVZPlantEntity{
 	@Override
 	protected void registerGoals() {
 		super.registerGoals();
-		this.targetSelector.addGoal(0, new PVZNearestTargetGoal(this, true, 5, 3, 2, 0));
+//		this.targetSelector.addGoal(0, new PVZNearestTargetGoal(this, true, 5, 3, 2, 0));
+		this.targetSelector.addGoal(0, new NearestAttackableTargetGoal<TombStoneEntity>(this, TombStoneEntity.class, 5, true, true, (tomb)-> {
+			return tomb.getPassengers().isEmpty();
+		}));
+		this.targetSelector.addGoal(0, new EatTombStoneGoal(this));
+	}
+	
+	@Override
+	protected void registerAttributes() {
+		super.registerAttributes();
+		this.getAttribute(SharedMonsterAttributes.FOLLOW_RANGE).setBaseValue(5);
 	}
 	
 	@Override
 	protected void normalPlantTick() {
 		super.normalPlantTick();
-		if(!world.isRemote) {
-			if(this.getAttackTarget() != null && this.getAttackTarget().isAlive()) {//has target
-				if(this.getAttackTime() == 0) {// start attack
-					if(!this.getAttackTarget().getPassengers().isEmpty()) {//target has passenger
-					    return ;
-				    }
-					this.setEating(true);
-					this.startRiding(this.getAttackTarget(), true);
-				}
-				this.setLiveTick(0);//reset live tick to avoid death
-				this.setAttackTime(this.getAttackTime() + 1);
-				if(this.getAttackTime() >= this.getAttackCD()) {//deal damage
-					this.setAttackTime(0);
-					this.killCount ++;
-					this.setEating(false);
-					if(this.killCount >= this.getMaxKillCnt()) {
-						this.remove();
-					}
-					this.getAttackTarget().attackEntityFrom(PVZDamageSource.causeEatDamage(this, this), this.getAttackTarget().getHealth() * 2);
-				}
-			}else {
-				this.setEating(false);
-				this.setAttackTime(0);
-			}
-			if(this.isEating() && this.getAttackTime() % 20 == 0) {
-				this.playSound(SoundRegister.PLANT_HURT.get(), 1f, 1f);
+		if(this.isEating()) {
+			this.setLiveTick(0);
+			if(this.getAttackTime() % 20 == 0) {
+			    this.playSound(SoundRegister.PLANT_HURT.get(), 1f, 1f);
 			}
 		}
 	}
@@ -139,6 +129,62 @@ public class GraveBusterEntity extends PVZPlantEntity{
 	@Override
 	public int getSuperTimeLength() {
 		return 0;
+	}
+	
+	static class EatTombStoneGoal extends Goal{
+		
+		private GraveBusterEntity buster;
+		private LivingEntity target;
+		
+		public EatTombStoneGoal(GraveBusterEntity buster) {
+			this.buster = buster;
+		}
+		
+		@Override
+		public boolean shouldExecute() {
+			LivingEntity target = this.buster.getAttackTarget();
+			if(target == null || !target.isAlive()) {
+				return false;
+			}
+			if(!target.getPassengers().isEmpty()) {
+				this.buster.setAttackTarget(null);
+				this.target = null;
+				return false;
+			}
+			this.target = target;
+			return true;
+		}
+		
+		@Override
+		public void startExecuting() {
+			this.buster.setEating(true);
+			this.buster.startRiding(this.target, true);
+		}
+		
+		@Override
+		public void resetTask() {
+			this.buster.setEating(false);
+			this.target = null;
+		}
+		
+		@Override
+		public boolean shouldContinueExecuting() {
+			return this.target !=null && this.target instanceof TombStoneEntity;
+		}
+		
+		@Override
+		public void tick() {
+			this.buster.setAttackTime(this.buster.getAttackTime() + 1);
+			if(this.buster.getAttackTime() >= this.buster.getAttackCD()) {
+				this.buster.setAttackTime(0);
+				this.buster.killCount ++;
+				this.buster.setEating(false);
+				this.target.attackEntityFrom(PVZDamageSource.causeEatDamage(this.buster, this.buster), this.target.getMaxHealth() * 1.5f);
+				if(this.buster.killCount >= this.buster.getMaxKillCnt()) {
+					this.buster.remove();
+				}
+			}
+		}
 	}
 
 }

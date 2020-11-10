@@ -1,15 +1,14 @@
 package com.hungteen.pvz.entity.zombie.other;
 
-import java.util.Random;
-
+import com.hungteen.pvz.entity.misc.ZombieHandEntity;
 import com.hungteen.pvz.entity.plant.PVZPlantEntity;
 import com.hungteen.pvz.entity.plant.enforce.SquashEntity;
-import com.hungteen.pvz.entity.zombie.PVZZombieEntity;
+import com.hungteen.pvz.entity.zombie.base.UnderGroundZombieEntity;
 import com.hungteen.pvz.misc.damage.PVZDamageSource;
 import com.hungteen.pvz.register.EntityRegister;
-import com.hungteen.pvz.register.ParticleRegister;
 import com.hungteen.pvz.register.SoundRegister;
 import com.hungteen.pvz.utils.EntityUtil;
+import com.hungteen.pvz.utils.ZombieUtil;
 import com.hungteen.pvz.utils.enums.Zombies;
 
 import net.minecraft.block.Block;
@@ -20,6 +19,7 @@ import net.minecraft.entity.EntitySize;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.ILivingEntityData;
 import net.minecraft.entity.Pose;
+import net.minecraft.entity.SharedMonsterAttributes;
 import net.minecraft.entity.SpawnReason;
 import net.minecraft.entity.monster.MonsterEntity;
 import net.minecraft.entity.player.ServerPlayerEntity;
@@ -38,24 +38,27 @@ import net.minecraft.world.IWorld;
 import net.minecraft.world.World;
 import net.minecraft.world.server.ServerBossInfo;
 
-public class CoffinEntity extends PVZZombieEntity {
+public class CoffinEntity extends UnderGroundZombieEntity {
 
-	private static final DataParameter<Integer> SPAWN_TICK = EntityDataManager.createKey(CoffinEntity.class,
-			DataSerializers.VARINT);
 	private static final DataParameter<Integer> GUARD_STATE = EntityDataManager.createKey(CoffinEntity.class, DataSerializers.VARINT);
 	private final ServerBossInfo bossInfo = (ServerBossInfo) (new ServerBossInfo(this.getDisplayName(),
 			BossInfo.Color.WHITE, BossInfo.Overlay.NOTCHED_6)).setDarkenSky(true);
-	public static final int SPAWN_TIME = 50;
 
 	public CoffinEntity(EntityType<? extends MonsterEntity> type, World worldIn) {
 		super(type, worldIn);
+		this.particleNum = 3;
 	}
 
 	@Override
 	protected void registerData() {
 		super.registerData();
-		this.dataManager.register(SPAWN_TICK, 0);
 		this.dataManager.register(GUARD_STATE, 0);
+	}
+	
+	@Override
+	protected void registerAttributes() {
+		super.registerAttributes();
+		this.getAttribute(SharedMonsterAttributes.MOVEMENT_SPEED).setBaseValue(ZombieUtil.SLOW);
 	}
 
 	@Override
@@ -68,6 +71,12 @@ public class CoffinEntity extends PVZZombieEntity {
 			ILivingEntityData spawnDataIn, CompoundNBT dataTag) {
 		if (!world.isRemote) {
 			this.playSound(SoundRegister.DIRT_RISE.get(), 1f, 1f);
+			for (Entity target : EntityUtil.getEntityAttackableTarget(this,
+					EntityUtil.getEntityAABB(this, 50, 50))) {
+				ZombieHandEntity hand = EntityRegister.ZOMBIE_HAND.get().create(world);
+				hand.setOwner(this);
+				EntityUtil.onMobEntitySpawn(world, hand, target.getPosition());
+			}
 		}
 		return super.onInitialSpawn(worldIn, difficultyIn, reason, spawnDataIn, dataTag);
 	}
@@ -96,22 +105,6 @@ public class CoffinEntity extends PVZZombieEntity {
 	@Override
 	public void livingTick() {
 		super.livingTick();
-		if (this.getSpawnTick() < SPAWN_TIME) {
-			this.setSpawnTick(this.getSpawnTick() + 1);
-			if (world.isRemote) {
-				for (int i = 0; i < 3; i++) {
-					Random rand = this.getRNG();
-					this.world.addParticle(ParticleRegister.DIRT_BURST_OUT.get(), this.getPosX() + 0.5d, this.getPosY(),
-							this.getPosZ() + 0.5d, (rand.nextFloat() - 0.5) / 10, 0.05d, (rand.nextFloat() - 0.5) / 10);
-					this.world.addParticle(ParticleRegister.DIRT_BURST_OUT.get(), this.getPosX() + 0.5d, this.getPosY(),
-							this.getPosZ() - 0.5d, (rand.nextFloat() - 0.5) / 10, 0.05d, (rand.nextFloat() - 0.5) / 10);
-					this.world.addParticle(ParticleRegister.DIRT_BURST_OUT.get(), this.getPosX() - 0.5d, this.getPosY(),
-							this.getPosZ() + 0.5d, (rand.nextFloat() - 0.5) / 10, 0.05d, (rand.nextFloat() - 0.5) / 10);
-					this.world.addParticle(ParticleRegister.DIRT_BURST_OUT.get(), this.getPosX() - 0.5d, this.getPosY(),
-							this.getPosZ() - 0.5d, (rand.nextFloat() - 0.5) / 10, 0.05d, (rand.nextFloat() - 0.5) / 10);
-				}
-			}
-		}
 		if (this.collidedHorizontally && net.minecraftforge.event.ForgeEventFactory.getMobGriefingEvent(this.world, this)) {
             boolean flag = false;
             AxisAlignedBB axisalignedbb = this.getBoundingBox().grow(0.2D);
@@ -171,11 +164,16 @@ public class CoffinEntity extends PVZZombieEntity {
 	protected Type getSpawnType() {
 		return Type.NORMAL;
 	}
+	
+	@Override
+	public int getSpawnTime() {
+		return 40;
+	}
 
 	@Override
 	public void readAdditional(CompoundNBT compound) {
 		super.readAdditional(compound);
-		this.setSpawnTick(compound.getInt("spawn_tick_time"));
+		this.setGuardState(compound.getInt("guard_state"));
 		if (this.hasCustomName()) {
 			this.bossInfo.setName(this.getDisplayName());
 		}
@@ -184,7 +182,7 @@ public class CoffinEntity extends PVZZombieEntity {
 	@Override
 	public void writeAdditional(CompoundNBT compound) {
 		super.writeAdditional(compound);
-		compound.putInt("spawn_tick_time", this.getSpawnTick());
+		compound.putInt("guard_state", this.getGuardState());
 	}
 
 	public void addTrackingPlayer(ServerPlayerEntity player) {
@@ -197,14 +195,6 @@ public class CoffinEntity extends PVZZombieEntity {
 		this.bossInfo.removePlayer(player);
 	}
 
-	public int getSpawnTick() {
-		return this.dataManager.get(SPAWN_TICK);
-	}
-
-	public void setSpawnTick(int tick) {
-		this.dataManager.set(SPAWN_TICK, tick);
-	}
-	
 	public int getGuardState() {
 		return this.dataManager.get(GUARD_STATE);
 	}

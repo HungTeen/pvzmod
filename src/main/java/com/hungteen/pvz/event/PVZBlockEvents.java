@@ -1,6 +1,9 @@
 package com.hungteen.pvz.event;
 
 import com.hungteen.pvz.PVZMod;
+import com.hungteen.pvz.entity.zombie.other.CoffinEntity;
+import com.hungteen.pvz.register.EntityRegister;
+import com.hungteen.pvz.utils.EntityUtil;
 
 import net.minecraft.advancements.CriteriaTriggers;
 import net.minecraft.block.Block;
@@ -10,8 +13,6 @@ import net.minecraft.block.pattern.BlockMaterialMatcher;
 import net.minecraft.block.pattern.BlockPattern;
 import net.minecraft.block.pattern.BlockPatternBuilder;
 import net.minecraft.block.pattern.BlockStateMatcher;
-import net.minecraft.entity.EntityType;
-import net.minecraft.entity.boss.WitherEntity;
 import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.util.CachedBlockInfo;
 import net.minecraft.util.Direction;
@@ -43,19 +44,14 @@ public class PVZBlockEvents {
 	                     worldIn.playEvent(2001, cachedblockinfo.getPos(), Block.getStateId(cachedblockinfo.getBlockState()));
 	                  }
 	               }
-
-	               WitherEntity witherentity = EntityType.WITHER.create(worldIn);
-	               BlockPos blockpos = blockpattern$patternhelper.translateOffset(1, 2, 0).getPos();
-	               witherentity.setLocationAndAngles((double)blockpos.getX() + 0.5D, (double)blockpos.getY() + 0.55D, (double)blockpos.getZ() + 0.5D, blockpattern$patternhelper.getForwards().getAxis() == Direction.Axis.X ? 0.0F : 90.0F, 0.0F);
-	               witherentity.renderYawOffset = blockpattern$patternhelper.getForwards().getAxis() == Direction.Axis.X ? 0.0F : 90.0F;
-	               witherentity.ignite();
-
-	               for(ServerPlayerEntity serverplayerentity : worldIn.getEntitiesWithinAABB(ServerPlayerEntity.class, witherentity.getBoundingBox().grow(50.0D))) {
-	                  CriteriaTriggers.SUMMONED_ENTITY.trigger(serverplayerentity, witherentity);
+	               CoffinEntity coffin = EntityRegister.COFFIN.get().create(worldIn);
+	               BlockPos spawnPos = blockpattern$patternhelper.translateOffset(1, 2, 0).getPos();
+	               EntityUtil.onMobEntitySpawn(worldIn, coffin, spawnPos);
+	               coffin.setLocationAndAngles(spawnPos.getX() + 0.5, spawnPos.getY() + 0.55, spawnPos.getZ() + 0.5, blockpattern$patternhelper.getForwards().getAxis() == Direction.Axis.X ? 0.0F : 90.0F, 0.0F);
+	               coffin.renderYawOffset = blockpattern$patternhelper.getForwards().getAxis() == Direction.Axis.X ? 0.0F : 90.0F;
+	               for(ServerPlayerEntity serverplayerentity : worldIn.getEntitiesWithinAABB(ServerPlayerEntity.class, coffin.getBoundingBox().grow(50.0D))) {
+	                  CriteriaTriggers.SUMMONED_ENTITY.trigger(serverplayerentity, coffin);
 	               }
-
-	               worldIn.addEntity(witherentity);
-
 	               for(int k = 0; k < blockpattern.getPalmLength(); ++k) {
 	                  for(int l = 0; l < blockpattern.getThumbLength(); ++l) {
 	                     worldIn.notifyNeighbors(blockpattern$patternhelper.translateOffset(k, l, 0).getPos(), Blocks.AIR);
