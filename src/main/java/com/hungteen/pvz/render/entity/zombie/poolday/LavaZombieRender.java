@@ -2,7 +2,6 @@ package com.hungteen.pvz.render.entity.zombie.poolday;
 
 import com.hungteen.pvz.entity.zombie.poolday.LavaZombieEntity;
 import com.hungteen.pvz.model.entity.zombie.poolday.LavaZombieModel;
-import com.hungteen.pvz.render.entity.zombie.PVZZombieRender;
 import com.hungteen.pvz.utils.StringUtil;
 
 import net.minecraft.client.renderer.entity.EntityRendererManager;
@@ -11,15 +10,10 @@ import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 
 @OnlyIn(Dist.CLIENT)
-public class LavaZombieRender extends PVZZombieRender<LavaZombieEntity>{
+public class LavaZombieRender extends AbstractSwimmerRender<LavaZombieEntity>{
 
 	public LavaZombieRender(EntityRendererManager rendererManager) {
 		super(rendererManager, new LavaZombieModel(), 0.5f);
-	}
-
-	@Override
-	protected float getScaleByEntity(LavaZombieEntity entity) {
-		return 0.5f;
 	}
 
 	@Override

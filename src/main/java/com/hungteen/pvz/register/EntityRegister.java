@@ -44,6 +44,7 @@ import com.hungteen.pvz.entity.zombie.grassday.FlagZombieEntity;
 import com.hungteen.pvz.entity.zombie.grassday.NormalZombieEntity;
 import com.hungteen.pvz.entity.zombie.grassday.PoleZombieEntity;
 import com.hungteen.pvz.entity.zombie.grassnight.NewspaperZombieEntity;
+import com.hungteen.pvz.entity.zombie.grassnight.ScreenDoorZombieEntity;
 import com.hungteen.pvz.entity.zombie.grassnight.TombStoneEntity;
 import com.hungteen.pvz.entity.zombie.other.CoffinEntity;
 import com.hungteen.pvz.entity.zombie.other.MournerZombieEntity;
@@ -103,6 +104,7 @@ import com.hungteen.pvz.render.entity.zombie.grassday.FlagZombieRender;
 import com.hungteen.pvz.render.entity.zombie.grassday.NormalZombieRender;
 import com.hungteen.pvz.render.entity.zombie.grassday.PoleZombieRender;
 import com.hungteen.pvz.render.entity.zombie.grassnight.NewspaperZombieRender;
+import com.hungteen.pvz.render.entity.zombie.grassnight.ScreenDoorZombieRender;
 import com.hungteen.pvz.render.entity.zombie.grassnight.TombStoneRender;
 import com.hungteen.pvz.render.entity.zombie.other.CoffinRender;
 import com.hungteen.pvz.render.entity.zombie.other.MournerZombieRender;
@@ -178,12 +180,13 @@ public class EntityRegister {
 	public static final RegistryObject<EntityType<DolphinRiderEntity>> DOLPHIN_RIDER = registerEntityType(DolphinRiderEntity::new, "dolphin_rider", EntityClassification.MONSTER);
 	public static final RegistryObject<EntityType<DolphinRiderZombieEntity>> DOLPHIN_RIDER_ZOMBIE = registerEntityType(DolphinRiderZombieEntity::new, "dolphin_rider_zombie", EntityClassification.MONSTER);
 	public static final RegistryObject<EntityType<LavaZombieEntity>> LAVA_ZOMBIE = registerImmuneFireEntityType(LavaZombieEntity::new, "lava_zombie", EntityClassification.MONSTER);
-	public static final RegistryObject<EntityType<NewspaperZombieEntity>> NEWSPAPER_ZOMBIE = registerImmuneFireEntityType(NewspaperZombieEntity::new, "newspaper_zombie", EntityClassification.MONSTER);
+	public static final RegistryObject<EntityType<NewspaperZombieEntity>> NEWSPAPER_ZOMBIE = registerEntityType(NewspaperZombieEntity::new, "newspaper_zombie", EntityClassification.MONSTER);
 	public static final RegistryObject<EntityType<TombStoneEntity>> TOMB_STONE = registerImmuneFireEntityType(TombStoneEntity::new, "tomb_stone", EntityClassification.MONSTER);
-	public static final RegistryObject<EntityType<PumpkinZombieEntity>> PUMPKIN_ZOMBIE = registerImmuneFireEntityType(PumpkinZombieEntity::new, "pumpkin_zombie", EntityClassification.MONSTER);
-	public static final RegistryObject<EntityType<TrickZombieEntity>> TRICK_ZOMBIE = registerImmuneFireEntityType(TrickZombieEntity::new, "trick_zombie", EntityClassification.MONSTER);
-	public static final RegistryObject<EntityType<CoffinEntity>> COFFIN = registerImmuneFireEntityType(CoffinEntity::new, "coffin_zombie", EntityClassification.MONSTER);
-	public static final RegistryObject<EntityType<MournerZombieEntity>> MOURNER_ZOMBIE = registerImmuneFireEntityType(MournerZombieEntity::new, "mourner_zombie", EntityClassification.MONSTER);
+	public static final RegistryObject<EntityType<ScreenDoorZombieEntity>> SCREENDOOR_ZOMBIE = registerEntityType(ScreenDoorZombieEntity::new, "screendoor_zombie", EntityClassification.MONSTER);
+	public static final RegistryObject<EntityType<PumpkinZombieEntity>> PUMPKIN_ZOMBIE = registerEntityType(PumpkinZombieEntity::new, "pumpkin_zombie", EntityClassification.MONSTER);
+	public static final RegistryObject<EntityType<TrickZombieEntity>> TRICK_ZOMBIE = registerEntityType(TrickZombieEntity::new, "trick_zombie", EntityClassification.MONSTER);
+	public static final RegistryObject<EntityType<CoffinEntity>> COFFIN = registerImmuneFireEntityType(CoffinEntity::new, "coffin", EntityClassification.MONSTER);
+	public static final RegistryObject<EntityType<MournerZombieEntity>> MOURNER_ZOMBIE = registerEntityType(MournerZombieEntity::new, "mourner_zombie", EntityClassification.MONSTER);
 	public static final RegistryObject<EntityType<NobleZombieEntity>> NOBLE_ZOMBIE = registerImmuneFireEntityType(NobleZombieEntity::new, "noble_zombie", EntityClassification.MONSTER);
 	
 	//plant
@@ -257,6 +260,7 @@ public class EntityRegister {
         RenderingRegistry.registerEntityRenderingHandler(LAVA_ZOMBIE.get(), LavaZombieRender::new);
         RenderingRegistry.registerEntityRenderingHandler(NEWSPAPER_ZOMBIE.get(), NewspaperZombieRender::new);
         RenderingRegistry.registerEntityRenderingHandler(TOMB_STONE.get(), TombStoneRender::new);
+        RenderingRegistry.registerEntityRenderingHandler(SCREENDOOR_ZOMBIE.get(), ScreenDoorZombieRender::new);
         RenderingRegistry.registerEntityRenderingHandler(PUMPKIN_ZOMBIE.get(), PumpkinZombieRender::new);
         RenderingRegistry.registerEntityRenderingHandler(TRICK_ZOMBIE.get(), TrickZombieRender::new);
         RenderingRegistry.registerEntityRenderingHandler(COFFIN.get(), CoffinRender::new);

@@ -17,6 +17,7 @@ import com.hungteen.pvz.utils.enums.Zombies;
 
 import net.minecraft.entity.EntitySize;
 import net.minecraft.entity.EntityType;
+import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.Pose;
 import net.minecraft.entity.SharedMonsterAttributes;
 import net.minecraft.entity.ai.goal.NearestAttackableTargetGoal;
@@ -66,6 +67,14 @@ public class TombStoneEntity extends UnderGroundZombieEntity{
 		}
 	}
 	
+	@Override
+	protected boolean shouldCollideWithEntity(LivingEntity target) {
+		if(target instanceof TombStoneEntity) {
+			return true;
+		}
+		return super.shouldCollideWithEntity(target);
+	}
+	
 	protected void summonZombie() {
 		int pos = this.getRNG().nextInt(GROUND_ZOMBIES.length);
 		PVZZombieEntity zombie = ZombieUtil.getZombieEntity(world, GROUND_ZOMBIES[pos]);
@@ -86,7 +95,7 @@ public class TombStoneEntity extends UnderGroundZombieEntity{
 		if(!world.isRemote) {
 			if(this.getPassengers().isEmpty() && player.getHeldItem(hand).getItem() instanceof PlantCardItem) {
 				PlantCardItem plantCard = (PlantCardItem) player.getHeldItem(hand).getItem();
-				if(plantCard.getPlant() == Plants.GRAVE_BUSTER) {
+				if(plantCard.getPlant() == Plants.GRAVE_BUSTER && !player.getCooldownTracker().hasCooldown(plantCard)) {
 					player.getCapability(CapabilityHandler.PLAYER_DATA_CAPABILITY).ifPresent((l)->{
 						PlayerDataManager manager = l.getPlayerData();
 						int num = manager.getPlayerStats().getPlayerStats(Resources.SUN_NUM);

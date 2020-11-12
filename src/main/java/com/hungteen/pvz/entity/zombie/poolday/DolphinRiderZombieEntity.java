@@ -1,6 +1,6 @@
 package com.hungteen.pvz.entity.zombie.poolday;
 
-import com.hungteen.pvz.entity.zombie.PVZWaterZombieEntity;
+import com.hungteen.pvz.entity.zombie.base.SwimmerZombieEntity;
 import com.hungteen.pvz.utils.ZombieUtil;
 import com.hungteen.pvz.utils.enums.Zombies;
 
@@ -9,7 +9,7 @@ import net.minecraft.entity.SharedMonsterAttributes;
 import net.minecraft.entity.monster.MonsterEntity;
 import net.minecraft.world.World;
 
-public class DolphinRiderZombieEntity extends PVZWaterZombieEntity{
+public class DolphinRiderZombieEntity extends SwimmerZombieEntity{
 
 	public DolphinRiderZombieEntity(EntityType<? extends MonsterEntity> type, World worldIn) {
 		super(type, worldIn);

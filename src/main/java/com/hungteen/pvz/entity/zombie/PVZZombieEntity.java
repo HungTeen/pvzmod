@@ -9,7 +9,7 @@ import javax.annotation.Nullable;
 
 import com.hungteen.pvz.PVZConfig;
 import com.hungteen.pvz.entity.ai.PVZLookRandomlyGoal;
-import com.hungteen.pvz.entity.ai.PVZMeleeAttackGoal;
+import com.hungteen.pvz.entity.ai.ZombieMeleeAttackGoal;
 import com.hungteen.pvz.entity.ai.ZombieNearestTargetGoal;
 import com.hungteen.pvz.entity.drop.CoinEntity;
 import com.hungteen.pvz.entity.drop.EnergyEntity;
@@ -72,6 +72,7 @@ public abstract class PVZZombieEntity extends MonsterEntity implements IPVZZombi
 
 	public PVZZombieEntity(EntityType<? extends MonsterEntity> type, World worldIn) {
 		super(type, worldIn);
+		this.recalculateSize();
 		this.setZombieAttributes();
 	}
 
@@ -113,7 +114,7 @@ public abstract class PVZZombieEntity extends MonsterEntity implements IPVZZombi
 		this.goalSelector.addGoal(8, new PVZLookRandomlyGoal(this));
 		this.goalSelector.addGoal(7, new WaterAvoidingRandomWalkingGoal(this, 1.0D));
 		this.goalSelector.addGoal(7, new SwimGoal(this));
-		this.goalSelector.addGoal(0, new PVZMeleeAttackGoal(this));
+		this.goalSelector.addGoal(0, new ZombieMeleeAttackGoal(this));
 		this.targetSelector.addGoal(0, new ZombieNearestTargetGoal(this, true, 80, 60));
 	}
 
@@ -237,6 +238,7 @@ public abstract class PVZZombieEntity extends MonsterEntity implements IPVZZombi
 	public boolean attackEntityFrom(DamageSource source, float amount) {
 		if (source instanceof PVZDamageSource) {
 			this.hurtResistantTime = 0;
+			
 			if (((PVZDamageSource) source).getPVZDamageType() == PVZDamageType.ICE && !((PVZDamageSource) source).isDefended()) {
 				if (!this.isZombieColdOrForzen() && !this.world.isRemote) {
 					this.playSound(SoundRegister.ZOMBIE_FROZEN.get(), 1f, 1f);
@@ -250,6 +252,15 @@ public abstract class PVZZombieEntity extends MonsterEntity implements IPVZZombi
 			}
 		}
 		return super.attackEntityFrom(source, amount);
+	}
+	
+	protected void dealDamageEffectToZombie(PVZDamageSource source) {
+		if(source.isDefended()) {
+			return ;
+		}
+		for(EffectInstance effect : source.getEffects()) {
+			EntityUtil.addEntityPotionEffect(this, effect);
+		}
 	}
 
 	@Override
@@ -373,7 +384,7 @@ public abstract class PVZZombieEntity extends MonsterEntity implements IPVZZombi
 	@Override
 	protected void collideWithNearbyEntities() {
 		double dd = this.getCollideWidthOffset();
-		List<Entity> list = this.world.getEntitiesWithinAABB(Entity.class, this.getBoundingBox().grow(dd, 0, dd));
+		List<LivingEntity> list = this.world.getEntitiesWithinAABB(LivingEntity.class, this.getBoundingBox().grow(dd, 0, dd));
 		if (!list.isEmpty()) {
 			int i = this.world.getGameRules().getInt(GameRules.MAX_ENTITY_CRAMMING);
 			if (i > 0 && list.size() > i - 1 && this.rand.nextInt(4) == 0) {
@@ -388,8 +399,8 @@ public abstract class PVZZombieEntity extends MonsterEntity implements IPVZZombi
 				}
 			}
 			for (int l = 0; l < list.size(); ++l) {
-				Entity target = list.get(l);
-				if (this.shouldCollideWithEntity(target)) {// can collide with
+				LivingEntity target = list.get(l);
+				if (target != this && this.shouldCollideWithEntity(target)) {// can collide with
 					this.collideWithEntity(target);
 				}
 			}
@@ -403,14 +414,15 @@ public abstract class PVZZombieEntity extends MonsterEntity implements IPVZZombi
 	/**
 	 * can zombie collide with target
 	 */
-	protected boolean shouldCollideWithEntity(Entity target) {
-		if(target instanceof PVZPlantEntity) {
-			if(target instanceof SquashEntity||target instanceof SpikeWeedEntity) {
+	protected boolean shouldCollideWithEntity(LivingEntity target) {
+//		System.out.println("1");
+		if(this.getAttackTarget() == target) {
+			if(target instanceof SquashEntity || target instanceof SpikeWeedEntity) {
 			    return false;
 		    }
-			return EntityUtil.checkCanEntityAttack(this, target);
+			return true;
 		}
-		return EntityUtil.checkCanEntityAttack(this, target);
+		return false;
 	}
 	
 	/**
@@ -422,7 +434,7 @@ public abstract class PVZZombieEntity extends MonsterEntity implements IPVZZombi
 
 	@Override
 	protected float getWaterSlowDown() {
-		return 0.75f;
+		return 0.85f;
 	}
 	
 	@Override

@@ -17,14 +17,10 @@ public class PVZZombiePartEntity extends PVZMultiPartEntity{
 	}
 	
 	public PVZZombiePartEntity(PVZZombieEntity owner, float sizeX, float sizeY) {
-		this(EntityRegister.ZOMBIE_PART.get(), owner, sizeX, sizeY);
-	}
-
-	public PVZZombiePartEntity(EntityType<?> entityTypeIn, PVZZombieEntity owner, float sizeX, float sizeY) {
-		super(entityTypeIn, owner, sizeX, sizeY);
+		super(EntityRegister.ZOMBIE_PART.get(), owner, sizeX, sizeY);
 		this.zombie = owner;
 	}
-	
+
 	@Override
 	public boolean attackEntityFrom(DamageSource source, float damage) {
 		if(zombie != null) {

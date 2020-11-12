@@ -13,7 +13,6 @@ import net.minecraft.entity.EntitySize;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.Pose;
-import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.math.Vec3d;
@@ -45,34 +44,31 @@ public class SquashEntity extends PVZPlantEntity{
 	protected void normalPlantTick() {
 		super.normalPlantTick();
 		if(!world.isRemote) {
-			if(restTick>0) {
-				--restTick;
+			if(restTick > 0) {
+				-- restTick;
 				return ;
 			}
 			LivingEntity target = this.getAttackTarget();
 			if(target != null && EntityUtil.isSuitableTargetInRange(this, target, range)) {
 				this.setAttackTarget(null);
 			}
-			if(this.getAttackTarget()!=null) {
+			if(this.getAttackTarget() != null) {
 				this.getLookController().setLookPositionWithEntity(getAttackTarget(), 30f, 30f);
 			}
-			if(this.getAttackTime()>0) {
+			if(this.getAttackTime() > 0) {
 				if(EntityUtil.isOnGround(this)) {
 //					System.out.println("on ground!");
-					this.playSound(SoundRegister.GROUND_SHAKE.get(), 1f, 1f);
 					this.dealDamage();
-					if(this.extraChance>0) {
-						--this.extraChance;
+					if(this.extraChance > 0) {
+						-- this.extraChance;
 					}else {
-						if(this.getRNG().nextInt(100)<this.getDeathChance()) {
+						if(this.getRNG().nextInt(100) < this.getDeathChance()) {
 							this.remove();
 						}
 					}
-					this.setAttackTime(0);
-					this.restTick = CD;
 				}
 			}else {
-				if(this.getAttackTarget()!=null) {
+				if(this.getAttackTarget() != null) {
 					this.playSound(SoundRegister.SQUASH_HMM.get(), 1f, 1f);
 					this.jumpToTarget(this.getAttackTarget());
 				}
@@ -82,7 +78,10 @@ public class SquashEntity extends PVZPlantEntity{
 	
 	@Override
 	protected boolean shouldCollideWithEntity(LivingEntity target) {
-		return !(target instanceof PlayerEntity) && !EntityUtil.checkCanEntityAttack(this, target);
+		if(EntityUtil.checkCanEntityAttack(this, target)) {
+			return false;
+		}
+		return super.shouldCollideWithEntity(target);
 	}
 	
 	@Override
@@ -95,6 +94,9 @@ public class SquashEntity extends PVZPlantEntity{
 	
 	protected void dealDamage(){
 		this.setAttackTime(0);
+		this.canCollideWithPlant = true;
+		this.restTick = CD;
+		this.playSound(SoundRegister.GROUND_SHAKE.get(), 1f, 1f);
 		for(Entity entity : EntityUtil.getEntityTargetableEntity(this, EntityUtil.getEntityAABB(this, 0.5f, 0.5f))) {
 			entity.attackEntityFrom(PVZDamageSource.causeNormalDamage(this, this), this.getAttackDamage());
 		}
@@ -104,10 +106,11 @@ public class SquashEntity extends PVZPlantEntity{
 	 * jump to the top of the target
 	 */
 	private void jumpToTarget(LivingEntity target) {
-		int tick=10;
+		int tick = 10;
+		this.canCollideWithPlant = false;
 		Vec3d pos = target.getPositionVec().add(target.getMotion().mul(tick, tick, tick));
-		this.setPosition(pos.getX(),pos.getY()+target.getHeight()+1,pos.getZ());
-		this.setMotion(this.getMotion().getX(),0,this.getMotion().getZ());
+		this.setPosition(pos.getX(), pos.getY() + target.getHeight() + 1, pos.getZ());
+		this.setMotion(this.getMotion().getX(), 0, this.getMotion().getZ());
 		this.setAttackTime(1);
 	}
 	

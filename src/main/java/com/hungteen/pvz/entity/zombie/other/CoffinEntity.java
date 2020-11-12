@@ -2,7 +2,6 @@ package com.hungteen.pvz.entity.zombie.other;
 
 import com.hungteen.pvz.entity.misc.ZombieHandEntity;
 import com.hungteen.pvz.entity.plant.PVZPlantEntity;
-import com.hungteen.pvz.entity.plant.enforce.SquashEntity;
 import com.hungteen.pvz.entity.zombie.base.UnderGroundZombieEntity;
 import com.hungteen.pvz.misc.damage.PVZDamageSource;
 import com.hungteen.pvz.register.EntityRegister;
@@ -18,6 +17,7 @@ import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntitySize;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.ILivingEntityData;
+import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.Pose;
 import net.minecraft.entity.SharedMonsterAttributes;
 import net.minecraft.entity.SpawnReason;
@@ -131,13 +131,7 @@ public class CoffinEntity extends UnderGroundZombieEntity {
 	}
 
 	@Override
-	protected boolean shouldCollideWithEntity(Entity target) {
-		if (target instanceof PVZPlantEntity) {
-			if (target instanceof SquashEntity) {
-				return false;
-			}
-			return EntityUtil.checkCanEntityAttack(this, target);
-		}
+	protected boolean shouldCollideWithEntity(LivingEntity target) {
 		return EntityUtil.checkCanEntityAttack(this, target);
 	}
 

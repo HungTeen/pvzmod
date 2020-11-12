@@ -74,7 +74,7 @@ public abstract class PlantDefenderEntity extends PVZPlantEntity implements IDef
 		ItemStack stack = player.getHeldItem(hand);
 		if(stack.getItem() instanceof PlantCardItem && this.getHealth() != this.getMaxHealth()) {
 			PlantCardItem item = (PlantCardItem) stack.getItem();
-			if(item.getPlant() == this.getPlantEnumName()) { // nut heal 
+			if(item.getPlant() == this.getPlantEnumName() && !player.getCooldownTracker().hasCooldown(item)) { // nut heal 
 				if(!world.isRemote) {
 					player.getCapability(CapabilityHandler.PLAYER_DATA_CAPABILITY).ifPresent((l)->{
 						int cost = item.getSunCost(stack);

@@ -6,7 +6,6 @@ import com.hungteen.pvz.entity.plant.flame.TorchWoodEntity;
 import com.hungteen.pvz.entity.plant.interfaces.IIcePlant;
 import com.hungteen.pvz.misc.damage.PVZDamageSource;
 import com.hungteen.pvz.register.ItemRegister;
-import com.hungteen.pvz.utils.EntityUtil;
 import com.hungteen.pvz.utils.WeaponUtil;
 import com.hungteen.pvz.utils.enums.Plants;
 
@@ -99,19 +98,20 @@ public class PeaEntity extends PVZThrowableEntity {
 			// System.out.println(this.getThrower());
 			target.attackEntityFrom(PVZDamageSource.causeAppeaseDamage(this, this.getThrower()), this.getAttackDamage());
 		} else if (this.getPeaState() == State.ICE) {// snow pea attack
-			target.attackEntityFrom(PVZDamageSource.causeIceDamage(this, this.getThrower()), this.getAttackDamage());
+			PVZDamageSource source = PVZDamageSource.causeIceDamage(this, this.getThrower());
 			LivingEntity owner = this.getThrower();
 			if (owner instanceof IIcePlant) {
-				EntityUtil.addEntityPotionEffect(target, ((IIcePlant) owner).getColdEffect());
-				EntityUtil.addEntityPotionEffect(target, ((IIcePlant) owner).getFrozenEffect());
+				source.addEffect(((IIcePlant) owner).getColdEffect());
+				source.addEffect(((IIcePlant) owner).getFrozenEffect());
 			}else if(owner instanceof PlayerEntity) {
 				((PlayerEntity)owner).getCapability(CapabilityHandler.PLAYER_DATA_CAPABILITY).ifPresent((l)->{
 					int lvl = l.getPlayerData().getPlantStats().getPlantLevel(Plants.SNOW_PEA);
-					EntityUtil.addEntityPotionEffect(target, WeaponUtil.getPeaGunColdEffect(lvl));
+					source.addEffect(WeaponUtil.getPeaGunColdEffect(lvl));
 				});
 			}
+			target.attackEntityFrom(source, this.getAttackDamage());
 		} else if (this.getPeaState() == State.FIRE || this.getPeaState() == State.BLUE_FIRE) {
-			target.attackEntityFrom(PVZDamageSource.causeFireDamage(this, this.getThrower()),this.getAttackDamage());
+			target.attackEntityFrom(PVZDamageSource.causeFireDamage(this, this.getThrower()), this.getAttackDamage());
 		}
 	}
 	
@@ -225,17 +225,17 @@ public class PeaEntity extends PVZThrowableEntity {
 	}
 
 	public enum Type {
-		NORMAL, // 一般
-		BIG, // 大豌豆
-		HUGE,// 巨大豌豆
+		NORMAL,
+		BIG,
+		HUGE,
 	}
 
 	public enum State {
-		ICE, // 冰豌豆
-		NORMAL, // 一般豌豆
-		FIRE, // 火豌豆
-		BLUE_FIRE, // 蓝火豌豆
-		ELECTRICITY,// 电豌豆
+		ICE,
+		NORMAL,
+		FIRE,
+		BLUE_FIRE,
+		ELECTRICITY,
 	}
 
 }

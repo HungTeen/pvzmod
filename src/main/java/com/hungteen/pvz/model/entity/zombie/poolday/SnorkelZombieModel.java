@@ -8,9 +8,10 @@ import net.minecraft.client.renderer.entity.model.EntityModel;
 import net.minecraft.client.renderer.model.ModelRenderer;
 import net.minecraft.util.math.MathHelper;
 
-// Made with Blockbench 3.6.6
+// Made with Blockbench 3.7.2
 // Exported for Minecraft version 1.15
 // Paste this class into your mod and generate all required imports
+
 
 public class SnorkelZombieModel extends EntityModel<SnorkelZombieEntity> {
 	private final ModelRenderer total;
@@ -36,11 +37,11 @@ public class SnorkelZombieModel extends EntityModel<SnorkelZombieEntity> {
 		textureHeight = 128;
 
 		total = new ModelRenderer(this);
-		total.setRotationPoint(0.0F, 24.0F, 0.0F);
-		setRotationAngle(total, 0.0F, 0.0F, 0.0F);
+		total.setRotationPoint(0.0F, 22.0F, 0.0F);
+		
 
 		head = new ModelRenderer(this);
-		head.setRotationPoint(0.0F, -20.0F, 0.0F);
+		head.setRotationPoint(0.0F, -48.0F, 0.0F);
 		total.addChild(head);
 		head.setTextureOffset(80, 104).addBox(-6.0F, -12.0F, -6.0F, 12.0F, 12.0F, 12.0F, 0.0F, false);
 		head.setTextureOffset(102, 89).addBox(6.0F, -8.0F, -6.0F, 1.0F, 2.0F, 12.0F, 0.0F, false);
@@ -63,7 +64,7 @@ public class SnorkelZombieModel extends EntityModel<SnorkelZombieEntity> {
 		bone7.setTextureOffset(40, 109).addBox(-1.6428F, -1.6943F, -0.3237F, 2.0F, 2.0F, 17.0F, 0.0F, false);
 
 		right_hand = new ModelRenderer(this);
-		right_hand.setRotationPoint(-8.0F, -20.0F, 0.0F);
+		right_hand.setRotationPoint(-8.0F, -48.0F, 0.0F);
 		total.addChild(right_hand);
 		right_hand.setTextureOffset(112, 1).addBox(-4.0F, 0.0F, -2.0F, 4.0F, 25.0F, 4.0F, 0.0F, false);
 
@@ -85,7 +86,7 @@ public class SnorkelZombieModel extends EntityModel<SnorkelZombieEntity> {
 		bone5.setTextureOffset(96, 47).addBox(-1.0F, -2.0F, 0.0F, 1.0F, 5.0F, 4.0F, 0.0F, false);
 
 		left_hand = new ModelRenderer(this);
-		left_hand.setRotationPoint(9.0F, -20.0F, 0.0F);
+		left_hand.setRotationPoint(9.0F, -48.0F, 0.0F);
 		total.addChild(left_hand);
 		left_hand.setTextureOffset(94, 0).addBox(-1.0F, 0.0F, -2.0F, 4.0F, 25.0F, 4.0F, 0.0F, false);
 
@@ -107,12 +108,12 @@ public class SnorkelZombieModel extends EntityModel<SnorkelZombieEntity> {
 		bone2.setTextureOffset(80, 35).addBox(0.0F, -3.0F, -4.0F, 1.0F, 5.0F, 4.0F, 0.0F, false);
 
 		body = new ModelRenderer(this);
-		body.setRotationPoint(0.0F, -3.0F, 0.0F);
+		body.setRotationPoint(0.0F, -31.0F, 0.0F);
 		total.addChild(body);
 		body.setTextureOffset(1, 93).addBox(-8.0F, -17.0F, -3.0F, 16.0F, 25.0F, 6.0F, 0.0F, false);
 
 		right_leg = new ModelRenderer(this);
-		right_leg.setRotationPoint(-4.0F, 5.0F, 0.0F);
+		right_leg.setRotationPoint(-4.0F, -23.0F, 0.0F);
 		total.addChild(right_leg);
 		right_leg.setTextureOffset(1, 64).addBox(-2.0F, 0.0F, -2.0F, 4.0F, 23.0F, 4.0F, 0.0F, false);
 
@@ -124,7 +125,7 @@ public class SnorkelZombieModel extends EntityModel<SnorkelZombieEntity> {
 		right_foot.setTextureOffset(65, 81).addBox(-3.0F, -1.0F, -10.0F, 1.0F, 2.0F, 6.0F, 0.0F, false);
 
 		left_leg = new ModelRenderer(this);
-		left_leg.setRotationPoint(4.0F, 5.0F, 0.0F);
+		left_leg.setRotationPoint(4.0F, -23.0F, 0.0F);
 		total.addChild(left_leg);
 		left_leg.setTextureOffset(57, 2).addBox(-2.0F, 0.0F, -2.0F, 4.0F, 23.0F, 4.0F, 0.0F, false);
 
@@ -137,8 +138,7 @@ public class SnorkelZombieModel extends EntityModel<SnorkelZombieEntity> {
 	}
 
 	@Override
-	public void setRotationAngles(SnorkelZombieEntity entity, float limbSwing, float limbSwingAmount, float ageInTicks,
-			float netHeadYaw, float headPitch) {
+	public void setRotationAngles(SnorkelZombieEntity entity, float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch){
 		this.head.rotateAngleY = netHeadYaw / (180F / (float) Math.PI);
 		this.head.rotateAngleX = headPitch / (180F / (float) Math.PI);
 		this.right_leg.rotateAngleX = MathHelper.cos(limbSwing * 0.6662F) * 1.4F * limbSwingAmount;
@@ -148,8 +148,7 @@ public class SnorkelZombieModel extends EntityModel<SnorkelZombieEntity> {
 	}
 
 	@Override
-	public void render(MatrixStack matrixStack, IVertexBuilder buffer, int packedLight, int packedOverlay, float red,
-			float green, float blue, float alpha) {
+	public void render(MatrixStack matrixStack, IVertexBuilder buffer, int packedLight, int packedOverlay, float red, float green, float blue, float alpha){
 		total.render(matrixStack, buffer, packedLight, packedOverlay);
 	}
 

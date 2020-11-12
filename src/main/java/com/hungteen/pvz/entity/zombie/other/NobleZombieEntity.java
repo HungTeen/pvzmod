@@ -51,8 +51,8 @@ public class NobleZombieEntity extends PVZZombieEntity {
 	private final int maxSummonedCnt = 8;
 	private final int minTpCD = 400;
 	private final int maxTpCD = 800;
-	private final int minSleepAttackCD = 600;
-	private final int maxSleepAttackCD = 1000;
+	private final int minSleepAttackCD = 700;
+	private final int maxSleepAttackCD = 1200;
 	
 	public NobleZombieEntity(EntityType<? extends MonsterEntity> type, World worldIn) {
 		super(type, worldIn);
@@ -207,7 +207,7 @@ public class NobleZombieEntity extends PVZZombieEntity {
 		}
 		int pos = this.getRNG().nextInt(len);
 		PVZPlantEntity plant = list.get(pos);
-		float range = this.getSleepRange();
+		final float range = 1.5f;
 		for(PVZPlantEntity target : this.world.getEntitiesWithinAABB(PVZPlantEntity.class, EntityUtil.getEntityAABB(plant, range, range), (p)->{
 			return !p.isCharmed();
 		})) {
@@ -308,16 +308,6 @@ public class NobleZombieEntity extends PVZZombieEntity {
 	protected float getExpRange() {
 		float percent = this.getHealth() / this.getMaxHealth();
 		if (percent < 1f / 2) {
-			return 2.5f;
-		}
-		return 1.5f;
-	}
-	
-	protected float getSleepRange() {
-		float percent = this.getHealth() / this.getMaxHealth();
-		if (percent < 1f / 3) {
-			return 3;
-		} else if (percent < 2f / 3) {
 			return 2.5f;
 		}
 		return 1.5f;

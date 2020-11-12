@@ -22,7 +22,7 @@ public class NormalZombieEntity extends UnderGroundZombieEntity {
 	
 	@Override
 	protected float getWaterSlowDown() {
-		return 0.85f;
+		return 0.91f;
 	}
 
 	@Override

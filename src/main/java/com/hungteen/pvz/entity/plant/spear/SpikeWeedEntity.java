@@ -17,7 +17,6 @@ import net.minecraft.entity.EntitySize;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.Pose;
-import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.util.DamageSource;
 import net.minecraft.world.GameRules;
 import net.minecraft.world.World;
@@ -69,14 +68,16 @@ public class SpikeWeedEntity extends PVZPlantEntity{
             }
             for (int l = 0; l < list.size(); ++l){
                 LivingEntity target = list.get(l);
-                if(shouldCollideWithEntity(target)) {//can collide with
+                if(target != this && shouldCollideWithEntity(target)) {//can collide with
                     this.collideWithEntity(target);
-                }else if(target != this){
-                	if(!world.isRemote&&this.getAttackTime()==0) {
-                		if(EntityUtil.checkCanEntityAttack(this, target)) {
-                		    spikeNormalAttack(target);
-                		}
-                	}
+                }
+            }
+            if(!this.world.isRemote && this.getAttackTime() == 0) {
+            	for (int l = 0; l < list.size(); ++l) {
+            	    LivingEntity target = list.get(l);
+            	    if(target != this && EntityUtil.checkCanEntityAttack(this, target)) {
+            		    this.spikeNormalAttack(target);
+            	    }
                 }
             }
         }
@@ -96,7 +97,10 @@ public class SpikeWeedEntity extends PVZPlantEntity{
 	
 	@Override
 	protected boolean shouldCollideWithEntity(LivingEntity target) {
-		return !(target instanceof PlayerEntity)&&!EntityUtil.checkCanEntityAttack(this, target);
+		if(EntityUtil.checkCanEntityAttack(this, target)) {
+			return false;
+		}
+		return super.shouldCollideWithEntity(target);
 	}
 	
 	@Override

@@ -69,6 +69,9 @@ public abstract class PVZMultiPartEntity extends Entity {
 			} else {
 				this.remove();
 			}
+			if(this.shouldNotExist()) {
+				this.remove();
+			}
 		}
 		super.tick();
 	}

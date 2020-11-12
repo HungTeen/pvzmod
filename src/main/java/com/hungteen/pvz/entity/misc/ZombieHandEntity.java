@@ -48,7 +48,7 @@ public class ZombieHandEntity extends MobEntity {
 		if(this.owner == null) {
 			return ;
 		}
-		for(Entity target:EntityUtil.getEntityTargetableEntity(this.owner, EntityUtil.getEntityAABB(this, 0.5f, 1f))) {
+		for(Entity target:EntityUtil.getEntityAttackableTarget(this.owner, EntityUtil.getEntityAABB(this, 0.5f, 1f))) {
 			if(target instanceof LivingEntity) {
 			    target.attackEntityFrom(PVZDamageSource.causeNormalDamage(this, this.owner), getAttackDamage((LivingEntity) target));
 			    target.setPosition(target.getPosX(), target.getPosY() - 3, target.getPosZ());

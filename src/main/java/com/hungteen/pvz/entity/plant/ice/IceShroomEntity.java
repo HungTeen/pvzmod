@@ -32,9 +32,10 @@ public class IceShroomEntity extends PlantBomberEntity implements IShroomPlant, 
 			float len = getAttackRange();
 			AxisAlignedBB aabb=EntityUtil.getEntityAABB(this, len, len);
 			for(LivingEntity entity : EntityUtil.getEntityTargetableEntity(this, aabb)) {
-				 entity.attackEntityFrom(PVZDamageSource.causeIceDamage(this, this), this.getAttackDamage());
-				 EntityUtil.addEntityPotionEffect(entity, getColdEffect());
-				 EntityUtil.addEntityPotionEffect(entity, getFrozenEffect());
+				 PVZDamageSource source = PVZDamageSource.causeIceDamage(this, this);
+				 source.addEffect(getColdEffect());
+				 source.addEffect(getFrozenEffect());
+				 entity.attackEntityFrom(source, this.getAttackDamage());
 			}
 			this.playSound(SoundRegister.ZOMBIE_FROZEN.get(), 1, 1);
 		}

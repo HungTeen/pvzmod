@@ -14,6 +14,7 @@ import com.hungteen.pvz.entity.plant.enforce.SquashEntity;
 import com.hungteen.pvz.entity.plant.interfaces.IShroomPlant;
 import com.hungteen.pvz.entity.plant.magic.CoffeeBeanEntity;
 import com.hungteen.pvz.entity.plant.spear.SpikeWeedEntity;
+import com.hungteen.pvz.entity.zombie.grassnight.TombStoneEntity;
 import com.hungteen.pvz.item.tool.card.PlantCardItem;
 import com.hungteen.pvz.misc.damage.PVZDamageSource;
 import com.hungteen.pvz.register.BlockRegister;
@@ -35,6 +36,7 @@ import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.ILivingEntityData;
 import net.minecraft.entity.LivingEntity;
+import net.minecraft.entity.MobEntity;
 import net.minecraft.entity.SharedMonsterAttributes;
 import net.minecraft.entity.SpawnReason;
 import net.minecraft.entity.player.PlayerEntity;
@@ -78,6 +80,7 @@ public abstract class PVZPlantEntity extends CreatureEntity implements IPVZPlant
 	
 	public PVZPlantEntity(EntityType<? extends CreatureEntity> type, World worldIn) {
 		super(type, worldIn);
+		this.recalculateSize();
 	}
 	
 	@Override
@@ -372,13 +375,17 @@ public abstract class PVZPlantEntity extends CreatureEntity implements IPVZPlant
             }
             for (int l = 0; l < list.size(); ++l){
                 LivingEntity target = list.get(l);
-                if(shouldCollideWithEntity(target)) {//can collide with
+                if(target != this && shouldCollideWithEntity(target)) {//can collide with
                     this.collideWithEntity(target);
                 }
             }
         }
 	}
 	
+	/**
+	 * common plants collide with common plants,
+	 * mobs who target them,tombstone.
+	 */
 	protected boolean shouldCollideWithEntity(LivingEntity target) {
 		if(target instanceof PVZPlantEntity) {
 			if(!((PVZPlantEntity) target).canCollideWithPlant) {
@@ -392,7 +399,15 @@ public abstract class PVZPlantEntity extends CreatureEntity implements IPVZPlant
 			}
 			return true;
 		}
-		return EntityUtil.checkCanEntityAttack(this, target);
+		if(target instanceof MobEntity) {
+			if(((MobEntity) target).getAttackTarget() == this) {
+				return true;
+			}
+			if(target instanceof TombStoneEntity) {
+				return true;
+			}
+		}
+		return false;
 	}
 	
 	@Override
@@ -580,7 +595,7 @@ public abstract class PVZPlantEntity extends CreatureEntity implements IPVZPlant
 				ItemStack itemstack = player.getHeldItemMainhand();
 				if(itemstack.getItem() instanceof PlantCardItem) {
 					PlantCardItem item = (PlantCardItem) itemstack.getItem();
-					if(item.getPlant() == Plants.PUMPKIN) {
+					if(item.getPlant() == Plants.PUMPKIN && !player.getCooldownTracker().hasCooldown(item)) {
 						if(this.outerPlant != null) {
 							if(this.outerPlant == Plants.PUMPKIN && this.getPumpkinLife() < PlantUtil.PUMPKIN_LIFE) {
 								PlantCardItem.plantPumpkin(player, this, item, itemstack);
@@ -589,7 +604,7 @@ public abstract class PVZPlantEntity extends CreatureEntity implements IPVZPlant
 //							System.out.println("1");
 							PlantCardItem.plantPumpkin(player, this, item, itemstack);
 						}
-					}else if(item.getPlant() == Plants.COFFEE_BEAN) {
+					}else if(item.getPlant() == Plants.COFFEE_BEAN && !player.getCooldownTracker().hasCooldown(item)) {
 						player.getCapability(CapabilityHandler.PLAYER_DATA_CAPABILITY).ifPresent((l)->{
 							PlayerDataManager manager = l.getPlayerData();
 							int num = manager.getPlayerStats().getPlayerStats(Resources.SUN_NUM);

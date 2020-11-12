@@ -21,8 +21,8 @@ public abstract class PVZCreatureRender<T extends MobEntity> extends MobRenderer
 	@Override
 	protected void preRenderCallback(T entity, MatrixStack matrixStackIn, float partialTickTime) {
 		float sz = getScaleByEntity(entity);
-		matrixStackIn.scale(sz,sz,sz);
-		Vec3d vec = getTranslateVec(entity);
+		matrixStackIn.scale(sz, sz, sz);
+		Vec3d vec = this.getTranslateVec(entity);
 		matrixStackIn.translate(vec.x, vec.y, vec.z);
 	}
 	

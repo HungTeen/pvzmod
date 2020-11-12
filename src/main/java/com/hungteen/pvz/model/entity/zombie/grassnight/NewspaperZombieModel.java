@@ -159,9 +159,9 @@ public class NewspaperZombieModel extends EntityModel<NewspaperZombieEntity> imp
 
 	@Override
 	public void setDestroyed(LivingEntity entity) {
-		float now = entity.getHealth();
-		float max = entity.getMaxHealth();
-		this.paper.showModel = now >= max / 2;
+		if(entity instanceof NewspaperZombieEntity) {
+			this.paper.showModel = ((NewspaperZombieEntity) entity).canPartsBeRemoved();
+		}
 	}
 	
 }

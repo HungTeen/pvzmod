@@ -1,9 +1,13 @@
 package com.hungteen.pvz.misc.damage;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import javax.annotation.Nullable;
 
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.LivingEntity;
+import net.minecraft.potion.EffectInstance;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.util.text.ITextComponent;
@@ -15,6 +19,7 @@ public class PVZDamageSource extends DamageSource {
 	private Entity attacker = null;
 	private PVZDamageType damageType;
 	private boolean isDefended = false;// is defended by some defence
+	private List<EffectInstance> effects = new ArrayList<>();
 
 	public static final DamageSource CHOMPER_PLANT = new DamageSource("chomper_plant");
 
@@ -114,6 +119,14 @@ public class PVZDamageSource extends DamageSource {
 	@Override
 	public boolean isUnblockable() {
 		return this.getPVZDamageType() == PVZDamageType.THROUGH;
+	}
+	
+	public void addEffect(EffectInstance instance) {
+		this.effects.add(instance);
+	}
+	
+	public List<EffectInstance> getEffects(){
+		return this.effects;
 	}
 	
 	/**
