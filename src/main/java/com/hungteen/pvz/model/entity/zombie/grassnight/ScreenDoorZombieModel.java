@@ -116,7 +116,7 @@ public class ScreenDoorZombieModel extends EntityModel<ScreenDoorZombieEntity> i
 	@Override
 	public void setDestroyed(LivingEntity entity) {
 		if(entity instanceof ScreenDoorZombieEntity) {
-			this.door.showModel = ((ScreenDoorZombieEntity) entity).canPartsBeRemoved();
+			this.door.showModel = !((ScreenDoorZombieEntity) entity).canPartsBeRemoved();
 		}
 	}
 	

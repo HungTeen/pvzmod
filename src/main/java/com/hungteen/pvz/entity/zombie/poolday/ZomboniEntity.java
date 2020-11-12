@@ -39,7 +39,6 @@ public class ZomboniEntity extends PVZZombieEntity implements IMultiPartEntity{
 		resetParts();
 	}
 	
-	
 	@Override
 	protected void registerAttributes() {
 		super.registerAttributes();

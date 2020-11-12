@@ -62,11 +62,6 @@ public class CoffinEntity extends UnderGroundZombieEntity {
 	}
 
 	@Override
-	protected void registerGoals() {
-		super.registerGoals();
-	}
-
-	@Override
 	public ILivingEntityData onInitialSpawn(IWorld worldIn, DifficultyInstance difficultyIn, SpawnReason reason,
 			ILivingEntityData spawnDataIn, CompoundNBT dataTag) {
 		if (!world.isRemote) {

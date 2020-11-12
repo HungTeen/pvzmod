@@ -14,12 +14,13 @@ public class ScreenDoorZombieEntity extends DefenceZombieEntity{
 	
 	public ScreenDoorZombieEntity(EntityType<? extends MonsterEntity> type, World worldIn) {
 		super(type, worldIn);
+		this.setDefenceLife(DEFENCE_HEALTH);
 	}
 
 	@Override
 	public void resetParts() {
 		removeParts();
-		this.part = new PVZHealthPartEntity(this, 1f, 1.5f, DEFENCE_HEALTH);
+		this.part = new PVZHealthPartEntity(this, 1f, 1.5f);
 		this.part.setOwner(this);
 	}
 	

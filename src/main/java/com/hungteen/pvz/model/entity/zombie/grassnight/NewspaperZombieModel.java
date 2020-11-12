@@ -160,7 +160,7 @@ public class NewspaperZombieModel extends EntityModel<NewspaperZombieEntity> imp
 	@Override
 	public void setDestroyed(LivingEntity entity) {
 		if(entity instanceof NewspaperZombieEntity) {
-			this.paper.showModel = ((NewspaperZombieEntity) entity).canPartsBeRemoved();
+			this.paper.showModel = !((NewspaperZombieEntity) entity).canPartsBeRemoved();
 		}
 	}
 	

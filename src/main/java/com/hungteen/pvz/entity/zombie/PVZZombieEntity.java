@@ -9,6 +9,7 @@ import javax.annotation.Nullable;
 
 import com.hungteen.pvz.PVZConfig;
 import com.hungteen.pvz.entity.ai.PVZLookRandomlyGoal;
+import com.hungteen.pvz.entity.ai.PVZSwimGoal;
 import com.hungteen.pvz.entity.ai.ZombieMeleeAttackGoal;
 import com.hungteen.pvz.entity.ai.ZombieNearestTargetGoal;
 import com.hungteen.pvz.entity.drop.CoinEntity;
@@ -35,7 +36,6 @@ import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.Pose;
 import net.minecraft.entity.SharedMonsterAttributes;
 import net.minecraft.entity.SpawnReason;
-import net.minecraft.entity.ai.goal.SwimGoal;
 import net.minecraft.entity.ai.goal.WaterAvoidingRandomWalkingGoal;
 import net.minecraft.entity.monster.MonsterEntity;
 import net.minecraft.entity.player.PlayerEntity;
@@ -113,7 +113,7 @@ public abstract class PVZZombieEntity extends MonsterEntity implements IPVZZombi
 	protected void registerGoals() {
 		this.goalSelector.addGoal(8, new PVZLookRandomlyGoal(this));
 		this.goalSelector.addGoal(7, new WaterAvoidingRandomWalkingGoal(this, 1.0D));
-		this.goalSelector.addGoal(7, new SwimGoal(this));
+		this.goalSelector.addGoal(7, new PVZSwimGoal(this));
 		this.goalSelector.addGoal(0, new ZombieMeleeAttackGoal(this));
 		this.targetSelector.addGoal(0, new ZombieNearestTargetGoal(this, true, 80, 60));
 	}

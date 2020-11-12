@@ -1,37 +1,41 @@
 package com.hungteen.pvz.entity.zombie.part;
 
-import com.hungteen.pvz.entity.zombie.PVZZombieEntity;
+import com.hungteen.pvz.entity.zombie.base.DefenceZombieEntity;
+import com.hungteen.pvz.misc.damage.PVZDamageSource;
+import com.hungteen.pvz.misc.damage.PVZDamageType;
 
 import net.minecraft.entity.EntityType;
-import net.minecraft.nbt.CompoundNBT;
-import net.minecraft.network.datasync.DataParameter;
-import net.minecraft.network.datasync.DataSerializers;
-import net.minecraft.network.datasync.EntityDataManager;
 import net.minecraft.util.DamageSource;
 import net.minecraft.world.World;
 
 public class PVZHealthPartEntity extends PVZZombiePartEntity{
 
-	private static final DataParameter<Float> HEALTH = EntityDataManager.createKey(PVZHealthPartEntity.class, DataSerializers.FLOAT);
+	protected DefenceZombieEntity zombie;
 	
 	public PVZHealthPartEntity(EntityType<?> entityTypeIn, World worldIn) {
 		super(entityTypeIn, worldIn);
 	}
 	
-	public PVZHealthPartEntity(PVZZombieEntity owner, float sizeX, float sizeY, float life) {
+	public PVZHealthPartEntity(DefenceZombieEntity owner, float sizeX, float sizeY) {
 		super(owner, sizeX, sizeY);
-		this.setHealth(life);
+		this.zombie = owner;
 	}
-
+	
 	@Override
 	public boolean attackEntityFrom(DamageSource source, float damage) {
+		if(source instanceof PVZDamageSource) {
+			if(((PVZDamageSource) source).getPVZDamageType() == PVZDamageType.THROUGH) {
+				return super.attackEntityFrom(source, damage);
+			}
+			((PVZDamageSource) source).setDefended(true);
+		}
 		if(!world.isRemote) {
-			if(this.getHealth() >= damage) {
-				this.setHealth(this.getHealth() - damage);
+			if(this.zombie.getDefenceLife() >= damage) {
+				this.zombie.setDefenceLife(this.zombie.getDefenceLife() - damage);
 				return true;
-			} else if(this.getHealth() > 0){
-				damage -= this.getHealth();
-				this.setHealth(0);
+			} else if(this.zombie.getDefenceLife() > 0){
+				damage -= this.zombie.getDefenceLife();
+				this.zombie.setDefenceLife(0);
 			}
 		}
 		return super.attackEntityFrom(source, damage);
@@ -39,33 +43,7 @@ public class PVZHealthPartEntity extends PVZZombiePartEntity{
 	
 	@Override
 	public boolean shouldNotExist() {
-		return super.shouldNotExist() || this.getHealth() == 0;
+		return super.shouldNotExist() || this.zombie.getDefenceLife() == 0;
 	}
 	
-	@Override
-	protected void registerData() {
-		super.registerData();
-		this.dataManager.register(HEALTH, 0f);
-	}
-	
-	@Override
-	protected void readAdditional(CompoundNBT compound) {
-		super.readAdditional(compound);
-		this.setHealth(compound.getFloat("part_health"));
-	}
-	
-	@Override
-	protected void writeAdditional(CompoundNBT compound) {
-		super.writeAdditional(compound);
-		compound.getFloat("part_health");
-	}
-	
-	public void setHealth(float life) {
-		this.dataManager.set(HEALTH, life);
-	}
-	
-	public float getHealth() {
-		return this.dataManager.get(HEALTH);
-	}
-
 }
