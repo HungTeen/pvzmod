@@ -23,7 +23,7 @@ public class SundayEditionZombieEntity extends NewspaperZombieEntity{
 	
 	@Override
 	public float getLife() {
-		return 250;
+		return 350;
 	}
 	
 	@Override

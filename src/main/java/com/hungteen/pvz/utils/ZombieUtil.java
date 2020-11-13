@@ -35,6 +35,7 @@ public class ZombieUtil {
 	public static final float HIGH = 30; 
 	public static final float VERY_HIGH = 50;
 	public static final float HUGE_HIGH = 100; 
+	public static final float SUPER_HIGH = 200; 
 	public static final float GIANT_HIT = 1000; 
 	public static final float BOSS_HIT = 2000; 
 
@@ -55,6 +56,10 @@ public class ZombieUtil {
 		putZombieInfoToMap(Zombies.NEWSPAPER_ZOMBIE, Ranks.WHITE, EntityRegister.NEWSPAPER_ZOMBIE);
 		putZombieInfoToMap(Zombies.TOMB_STONE, Ranks.GRAY, EntityRegister.TOMB_STONE);
 		putZombieInfoToMap(Zombies.SCREENDOOR_ZOMBIE, Ranks.WHITE, EntityRegister.SCREENDOOR_ZOMBIE);
+		putZombieInfoToMap(Zombies.FOOTBALL_ZOMBIE, Ranks.BLUE, EntityRegister.FOOTBALL_ZOMBIE);
+//		putZombieInfoToMap(Zombies.DANCING_ZOMBIE, Ranks.GREEN, EntityRegister.SCREENDOOR_ZOMBIE);
+//		putZombieInfoToMap(Zombies.BACKUP_DANCER, Ranks.WHITE, EntityRegister.SCREENDOOR_ZOMBIE);
+		putZombieInfoToMap(Zombies.GIGA_FOOTBALL_ZOMBIE, Ranks.GOLD, EntityRegister.GIGA_FOOTBALL_ZOMBIE);
 		putZombieInfoToMap(Zombies.OLD_ZOMBIE, Ranks.BLUE, EntityRegister.NEWSPAPER_ZOMBIE);
 		putZombieInfoToMap(Zombies.SUNDAY_EDITION_ZOMBIE, Ranks.GOLD, EntityRegister.SUNDAY_EDITION_ZOMBIE);
 		putZombieInfoToMap(Zombies.COFFIN, Ranks.GOLD, EntityRegister.COFFIN);
