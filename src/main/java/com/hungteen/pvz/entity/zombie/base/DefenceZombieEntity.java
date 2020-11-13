@@ -11,6 +11,7 @@ import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.network.datasync.DataParameter;
 import net.minecraft.network.datasync.DataSerializers;
 import net.minecraft.network.datasync.EntityDataManager;
+import net.minecraft.util.SoundEvent;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
 
@@ -22,6 +23,7 @@ public abstract class DefenceZombieEntity extends PVZZombieEntity implements IMu
 	public DefenceZombieEntity(EntityType<? extends MonsterEntity> type, World worldIn) {
 		super(type, worldIn);
 		resetParts();
+		this.setDefenceLife(this.getPartLife());
 	}
 	
 	@Override
@@ -49,9 +51,23 @@ public abstract class DefenceZombieEntity extends PVZZombieEntity implements IMu
 			Vec3d pos = this.getPositionVec();
 			this.part.prevRotationYaw = this.rotationYaw;
 			this.part.prevRotationPitch = this.rotationPitch;
-			this.part.setLocationAndAngles(pos.getX() - Math.sin(j) * dis, pos.getY() + 0.3f, pos.getZ() + Math.cos(j) * dis, this.rotationYaw, this.rotationPitch);
+			this.part.setLocationAndAngles(pos.getX() - Math.sin(j) * dis, pos.getY() + this.getPartHeightOffset(), pos.getZ() + Math.cos(j) * dis, this.rotationYaw, this.rotationPitch);
 			this.part.setOwner(this);
 		}
+	}
+	
+	public abstract float getPartLife();
+	
+	public SoundEvent getPartHurtSound() {
+		return null;
+	}
+	
+	public SoundEvent getPartDeathSound() {
+		return null;
+	}
+	
+	protected float getPartHeightOffset() {
+		return 0.2f;
 	}
 	
 	public PVZMultiPartEntity[] getParts() {

@@ -6,6 +6,7 @@ import com.hungteen.pvz.misc.damage.PVZDamageType;
 
 import net.minecraft.entity.EntityType;
 import net.minecraft.util.DamageSource;
+import net.minecraft.util.SoundEvent;
 import net.minecraft.world.World;
 
 public class PVZHealthPartEntity extends PVZZombiePartEntity{
@@ -29,14 +30,20 @@ public class PVZHealthPartEntity extends PVZZombiePartEntity{
 			}
 			((PVZDamageSource) source).setDefended(true);
 		}
-		if(!world.isRemote) {
-			if(this.zombie.getDefenceLife() >= damage) {
-				this.zombie.setDefenceLife(this.zombie.getDefenceLife() - damage);
-				return true;
-			} else if(this.zombie.getDefenceLife() > 0){
-				damage -= this.zombie.getDefenceLife();
-				this.zombie.setDefenceLife(0);
+		if(this.zombie.getDefenceLife() > 0) {
+			SoundEvent sound = null;
+			if(this.zombie.getDefenceLife() > damage) {
+			    this.zombie.setDefenceLife(this.zombie.getDefenceLife() - damage);
+			    sound = this.zombie.getPartHurtSound();
+		    } else {
+			    damage -= this.zombie.getDefenceLife();
+			    this.zombie.setDefenceLife(0);
+			    sound = this.zombie.getPartDeathSound();
+		    }
+			if(sound != null) {
+				this.playSound(sound, 0.8f + this.rand.nextFloat() * 0.2f, 0.8f + this.rand.nextFloat() * 0.2f);
 			}
+			return true;
 		}
 		return super.attackEntityFrom(source, damage);
 	}
