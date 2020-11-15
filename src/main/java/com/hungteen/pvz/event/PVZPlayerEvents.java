@@ -60,7 +60,7 @@ public class PVZPlayerEvents {
 	@SubscribeEvent(priority = EventPriority.HIGHEST)
 	public static void onPlayerLogin(PlayerEvent.PlayerLoggedInEvent ev) {
 		PlayerEntity player = ev.getPlayer();
-		if (player instanceof ServerPlayerEntity && !player.world.isRemote) {
+		if (! player.world.isRemote && player instanceof ServerPlayerEntity) {
 			player.getCapability(CapabilityHandler.PLAYER_DATA_CAPABILITY).ifPresent((l)->{
 				PlayerDataManager plData = l.getPlayerData();
 				//resources
@@ -78,9 +78,34 @@ public class PVZPlayerEvents {
 				for(Almanacs a: Almanacs.values()) {
 					almanacStats.sendAlmanacPacket(player, a);
 				}
+				//item cd
+//				PlayerDataManager.ItemCDStats itemCDStats = plData.getItemCDStats();
+//				for(Plants p : Plants.values()) {
+////					System.out.println(p.toString() + p.summonCard);
+//					player.getCooldownTracker().setCooldown(PlantUtil.getPlantSummonCard(p), itemCDStats.getCardCD(p, false));
+//					player.getCooldownTracker().setCooldown(PlantUtil.getPlantEnjoyCard(p), itemCDStats.getCardCD(p, true));
+//				}
 			});
 		}
 	}
+	
+//	@SubscribeEvent
+//	public static void onPlayerLogout(PlayerEvent.PlayerLoggedOutEvent ev) {
+//		PlayerEntity player = ev.getPlayer();
+//		if (! player.world.isRemote && player instanceof ServerPlayerEntity) {
+//			player.getCapability(CapabilityHandler.PLAYER_DATA_CAPABILITY).ifPresent((l)->{
+//				PlayerDataManager plData = l.getPlayerData();
+//				//item cd
+//				PlayerDataManager.ItemCDStats itemCDStats = plData.getItemCDStats();
+//				for(Plants p : Plants.values()) {
+//					int cd = (int) player.getCooldownTracker().getCooldown(PlantUtil.getPlantSummonCard(p), 0f);
+//					if(p==Plants.DOOM_SHROOM) System.out.println(cd);
+//					itemCDStats.setCardCD(p, (int) player.getCooldownTracker().getCooldown(PlantUtil.getPlantSummonCard(p), 0f), false);
+//					itemCDStats.setCardCD(p, (int) player.getCooldownTracker().getCooldown(PlantUtil.getPlantEnjoyCard(p), 0f), true);
+//				}
+//			});
+//		}
+//	}
 
 	@SubscribeEvent
 	public static void onPlayerClone(PlayerEvent.Clone ev) {

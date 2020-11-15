@@ -1,10 +1,12 @@
 package com.hungteen.pvz.utils;
 
-import java.util.HashMap;
+import java.util.EnumMap;
 
 import com.hungteen.pvz.PVZMod;
 import com.hungteen.pvz.entity.plant.PVZPlantEntity;
+import com.hungteen.pvz.item.tool.card.PlantCardItem;
 import com.hungteen.pvz.register.EntityRegister;
+import com.hungteen.pvz.register.ItemRegister;
 import com.hungteen.pvz.utils.enums.CDs;
 import com.hungteen.pvz.utils.enums.Essences;
 import com.hungteen.pvz.utils.enums.Plants;
@@ -16,11 +18,13 @@ import net.minecraftforge.fml.RegistryObject;
 
 public class PlantUtil {
 	
-	public static final HashMap<Plants, Integer> PLANT_SUN_COST = new HashMap<>();
-	public static final HashMap<Plants, CDs> PLANT_CD = new HashMap<>();
-	public static final HashMap<Plants, Essences> PLANT_ESSENCE = new HashMap<>();
-	public static final HashMap<Plants, Ranks> PLANT_RANK = new HashMap<>();
-	public static final HashMap<Plants, RegistryObject<? extends EntityType<? extends PVZPlantEntity>>> PLANT_ENTITY = new HashMap<>();
+	public static final EnumMap<Plants, Integer> PLANT_SUN_COST = new EnumMap<>(Plants.class);
+	public static final EnumMap<Plants, CDs> PLANT_CD = new EnumMap<>(Plants.class);
+	public static final EnumMap<Plants, Essences> PLANT_ESSENCE = new EnumMap<>(Plants.class);
+	public static final EnumMap<Plants, Ranks> PLANT_RANK = new EnumMap<>(Plants.class);
+	public static final EnumMap<Plants, RegistryObject<? extends EntityType<? extends PVZPlantEntity>>> PLANT_ENTITY = new EnumMap<>(Plants.class);
+	public static final EnumMap<Plants, RegistryObject<? extends PlantCardItem>> PLANT_SUMMON_CARD = new EnumMap<>(Plants.class);
+	public static final EnumMap<Plants, RegistryObject<? extends PlantCardItem>> PLANT_ENJOY_CARD = new EnumMap<>(Plants.class);
                                                    //1  2  3  4  5  6   7   8   9   10  11  12  13   14   15   16   17   18   19   20
 	public static final int[] GRAY_XP = new int[] {0,10,15,25,40,60,100,140,200,280,400,560,800,1250,1700,2250,3000,4000,5400,7500,999999999};
 	public static final int[] WHITE_XP = new int[] {0,15,25,40,60,80,130,180,240,325,450,620,880,1400,1920,2500,3400,4500,6000,8400,999999999};
@@ -34,35 +38,72 @@ public class PlantUtil {
 	public static final float PUMPKIN_SUPER_LIFE = 400;
 	
 	static {
-		putPlantInfoToMap(Plants.PEA_SHOOTER, 100, CDs.VERY_FAST, Ranks.GRAY, Essences.APPEASE, EntityRegister.PEA_SHOOTER);
-		putPlantInfoToMap(Plants.SUN_FLOWER, 50, CDs.FAST, Ranks.GRAY, Essences.LIGHT, EntityRegister.SUN_FLOWER);
-		putPlantInfoToMap(Plants.CHERRY_BOMB, 150, CDs.HUGE_SLOW, Ranks.BLUE, Essences.EXPLOSION, EntityRegister.CHERRY_BOMB);
-		putPlantInfoToMap(Plants.WALL_NUT, 50, CDs.SLOW, Ranks.WHITE, Essences.DEFENCE, EntityRegister.WALL_NUT);
-		putPlantInfoToMap(Plants.POTATO_MINE, 25, CDs.LITTLE_SLOW, Ranks.WHITE, Essences.EXPLOSION, EntityRegister.POTATO_MINE);
-		putPlantInfoToMap(Plants.SNOW_PEA, 175, CDs.FAST, Ranks.GREEN, Essences.ICE, EntityRegister.SNOW_PEA);
-		putPlantInfoToMap(Plants.CHOMPER, 150, CDs.NORMAL, Ranks.BLUE, Essences.ENFORCE, EntityRegister.CHOMPER);
-		putPlantInfoToMap(Plants.REPEATER, 200, CDs.FAST, Ranks.GREEN, Essences.APPEASE, EntityRegister.REPEATER);
-		putPlantInfoToMap(Plants.PUFF_SHROOM, 0, CDs.HUGE_FAST, Ranks.WHITE, Essences.TOXIC, EntityRegister.PUFF_SHROOM);
-		putPlantInfoToMap(Plants.SUN_SHROOM, 25, CDs.FAST, Ranks.WHITE, Essences.LIGHT, EntityRegister.SUN_SHROOM);
-		putPlantInfoToMap(Plants.FUME_SHROOM, 100, CDs.LITTLE_FAST, Ranks.GREEN, Essences.TOXIC, EntityRegister.FUME_SHROOM);
-		putPlantInfoToMap(Plants.GRAVE_BUSTER, 75, CDs.VERY_FAST, Ranks.WHITE, Essences.ASSIST, EntityRegister.GRAVE_BUSTER);
-		putPlantInfoToMap(Plants.HYPNO_SHROOM, 75, CDs.LITTLE_SLOW, Ranks.BLUE, Essences.MAGIC, EntityRegister.HYPNO_SHROOM);
-		putPlantInfoToMap(Plants.SCAREDY_SHROOM, 25, CDs.VERY_FAST, Ranks.GRAY, Essences.TOXIC, EntityRegister.SCAREDY_SHROOM);
-		putPlantInfoToMap(Plants.ICE_SHROOM, 75, CDs.SLOW, Ranks.BLUE, Essences.ICE, EntityRegister.ICE_SHROOM);
-		putPlantInfoToMap(Plants.DOOM_SHROOM, 125, CDs.SUPER_SLOW, Ranks.GOLD, Essences.EXPLOSION, EntityRegister.DOOM_SHROOM);
-		putPlantInfoToMap(Plants.LILY_PAD, 25, CDs.OTHER, Ranks.GRAY, Essences.ASSIST, null);
-		putPlantInfoToMap(Plants.SQUASH, 50, CDs.LITTLE_SLOW, Ranks.GREEN, Essences.ENFORCE, EntityRegister.SQUASH);
-		putPlantInfoToMap(Plants.THREE_PEATER, 300, CDs.LITTLE_FAST, Ranks.BLUE, Essences.APPEASE, EntityRegister.THREE_PEATER);
-		putPlantInfoToMap(Plants.TANGLE_KELP, 25, CDs.SLOW, Ranks.WHITE, Essences.ENFORCE, EntityRegister.TANGLE_KELP);
-		putPlantInfoToMap(Plants.JALAPENO, 175, CDs.HUGE_SLOW, Ranks.BLUE, Essences.FLAME, EntityRegister.JALAPENO);
-		putPlantInfoToMap(Plants.SPIKE_WEED, 100, CDs.LITTLE_FAST, Ranks.WHITE, Essences.SPEAR, EntityRegister.SPIKE_WEED);
-		putPlantInfoToMap(Plants.TORCH_WOOD, 175, CDs.NORMAL, Ranks.GREEN, Essences.FLAME, EntityRegister.TORCH_WOOD);
-		putPlantInfoToMap(Plants.TALL_NUT, 125, CDs.VERY_SLOW, Ranks.BLUE, Essences.DEFENCE, EntityRegister.TALL_NUT);
-		putPlantInfoToMap(Plants.PUMPKIN, 125, CDs.SLOW, Ranks.GREEN, Essences.DEFENCE, null);
-		putPlantInfoToMap(Plants.COFFEE_BEAN, 75, CDs.FAST, Ranks.GREEN, Essences.MAGIC, EntityRegister.COFFEE_BEAN);
+		putPlantInfoToMap(Plants.PEA_SHOOTER,100, CDs.VERY_FAST, Ranks.GRAY, Essences.APPEASE, EntityRegister.PEA_SHOOTER, ItemRegister.PEA_SHOOTER_CARD, ItemRegister.PEA_SHOOTER_ENJOY_CARD);
+		putPlantInfoToMap(Plants.SUN_FLOWER,50, CDs.FAST, Ranks.GRAY, Essences.LIGHT, EntityRegister.SUN_FLOWER, ItemRegister.SUN_FLOWER_CARD, ItemRegister.SUN_FLOWER_ENJOY_CARD);
+		putPlantInfoToMap(Plants.CHERRY_BOMB,150, CDs.HUGE_SLOW, Ranks.BLUE, Essences.EXPLOSION, EntityRegister.CHERRY_BOMB, ItemRegister.CHERRY_BOMB_CARD, ItemRegister.CHERRY_BOMB_ENJOY_CARD);
+		putPlantInfoToMap(Plants.WALL_NUT,50, CDs.SLOW, Ranks.WHITE, Essences.DEFENCE, EntityRegister.WALL_NUT, ItemRegister.WALL_NUT_CARD, ItemRegister.WALL_NUT_ENJOY_CARD);
+		putPlantInfoToMap(Plants.POTATO_MINE,25, CDs.LITTLE_SLOW, Ranks.WHITE, Essences.EXPLOSION, EntityRegister.POTATO_MINE, ItemRegister.POTATO_MINE_CARD, ItemRegister.POTATO_MINE_ENJOY_CARD);
+		putPlantInfoToMap(Plants.SNOW_PEA,175, CDs.FAST, Ranks.GREEN, Essences.ICE, EntityRegister.SNOW_PEA, ItemRegister.SNOW_PEA_CARD, ItemRegister.SNOW_PEA_ENJOY_CARD);
+		putPlantInfoToMap(Plants.CHOMPER,150, CDs.NORMAL, Ranks.BLUE, Essences.ENFORCE, EntityRegister.CHOMPER, ItemRegister.CHOMPER_CARD, ItemRegister.CHOMPER_ENJOY_CARD);
+		putPlantInfoToMap(Plants.REPEATER,200, CDs.FAST, Ranks.GREEN, Essences.APPEASE, EntityRegister.REPEATER, ItemRegister.REPEATER_CARD, ItemRegister.REPEATER_ENJOY_CARD);
+		putPlantInfoToMap(Plants.PUFF_SHROOM,0, CDs.HUGE_FAST, Ranks.WHITE, Essences.TOXIC, EntityRegister.PUFF_SHROOM, ItemRegister.PUFF_SHROOM_CARD, ItemRegister.PUFF_SHROOM_ENJOY_CARD);
+		putPlantInfoToMap(Plants.SUN_SHROOM,25, CDs.FAST, Ranks.WHITE, Essences.LIGHT, EntityRegister.SUN_SHROOM, ItemRegister.SUN_SHROOM_CARD, ItemRegister.SUN_SHROOM_ENJOY_CARD);
+		putPlantInfoToMap(Plants.FUME_SHROOM,100, CDs.LITTLE_FAST, Ranks.GREEN, Essences.TOXIC, EntityRegister.FUME_SHROOM, ItemRegister.FUME_SHROOM_CARD, ItemRegister.FUME_SHROOM_ENJOY_CARD);
+		putPlantInfoToMap(Plants.GRAVE_BUSTER,75, CDs.VERY_FAST, Ranks.WHITE, Essences.ASSIST, EntityRegister.GRAVE_BUSTER, ItemRegister.GRAVE_BUSTER_CARD, ItemRegister.GRAVE_BUSTER_ENJOY_CARD);
+		putPlantInfoToMap(Plants.HYPNO_SHROOM,75, CDs.LITTLE_SLOW, Ranks.BLUE, Essences.MAGIC, EntityRegister.HYPNO_SHROOM, ItemRegister.HYPNO_SHROOM_CARD, ItemRegister.HYPNO_SHROOM_ENJOY_CARD);
+		putPlantInfoToMap(Plants.SCAREDY_SHROOM,25, CDs.VERY_FAST, Ranks.GRAY, Essences.TOXIC, EntityRegister.SCAREDY_SHROOM, ItemRegister.SCAREDY_SHROOM_CARD, ItemRegister.SCAREDY_SHROOM_ENJOY_CARD);
+		putPlantInfoToMap(Plants.ICE_SHROOM,75, CDs.SLOW, Ranks.BLUE, Essences.ICE, EntityRegister.ICE_SHROOM, ItemRegister.ICE_SHROOM_CARD, ItemRegister.ICE_SHROOM_ENJOY_CARD);
+		putPlantInfoToMap(Plants.DOOM_SHROOM,125, CDs.SUPER_SLOW, Ranks.GOLD, Essences.EXPLOSION, EntityRegister.DOOM_SHROOM, ItemRegister.DOOM_SHROOM_CARD, ItemRegister.DOOM_SHROOM_ENJOY_CARD);
+		putPlantInfoToMap(Plants.LILY_PAD,25, CDs.OTHER, Ranks.GRAY, Essences.ASSIST, null, ItemRegister.LILY_PAD_CARD, ItemRegister.LILY_PAD_ENJOY_CARD);
+		putPlantInfoToMap(Plants.SQUASH,50, CDs.LITTLE_SLOW, Ranks.GREEN, Essences.ENFORCE, EntityRegister.SQUASH, ItemRegister.SQUASH_CARD, ItemRegister.SQUASH_ENJOY_CARD);
+		putPlantInfoToMap(Plants.THREE_PEATER,300, CDs.LITTLE_FAST, Ranks.BLUE, Essences.APPEASE, EntityRegister.THREE_PEATER, ItemRegister.THREE_PEATER_CARD, ItemRegister.THREE_PEATER_ENJOY_CARD);
+		putPlantInfoToMap(Plants.TANGLE_KELP,25, CDs.SLOW, Ranks.WHITE, Essences.ENFORCE, EntityRegister.TANGLE_KELP, ItemRegister.TANGLE_KELP_CARD, ItemRegister.TANGLE_KELP_ENJOY_CARD);
+		putPlantInfoToMap(Plants.JALAPENO,175, CDs.HUGE_SLOW, Ranks.BLUE, Essences.FLAME, EntityRegister.JALAPENO, ItemRegister.JALAPENO_CARD, ItemRegister.JALAPENO_ENJOY_CARD);
+		putPlantInfoToMap(Plants.SPIKE_WEED,100, CDs.LITTLE_FAST, Ranks.WHITE, Essences.SPEAR, EntityRegister.SPIKE_WEED, ItemRegister.SPIKE_WEED_CARD, ItemRegister.SPIKE_WEED_ENJOY_CARD);
+		putPlantInfoToMap(Plants.TORCH_WOOD,175, CDs.NORMAL, Ranks.GREEN, Essences.FLAME, EntityRegister.TORCH_WOOD, ItemRegister.TORCH_WOOD_CARD, ItemRegister.TORCH_WOOD_ENJOY_CARD);
+		putPlantInfoToMap(Plants.TALL_NUT,125, CDs.VERY_SLOW, Ranks.BLUE, Essences.DEFENCE, EntityRegister.TALL_NUT, ItemRegister.TALL_NUT_CARD, ItemRegister.TALL_NUT_ENJOY_CARD);
+		putPlantInfoToMap(Plants.PUMPKIN,125, CDs.SLOW, Ranks.GREEN, Essences.DEFENCE, null, ItemRegister.PUMPKIN_CARD, ItemRegister.PUMPKIN_ENJOY_CARD);
+		putPlantInfoToMap(Plants.COFFEE_BEAN,75, CDs.FAST, Ranks.GREEN, Essences.MAGIC, EntityRegister.COFFEE_BEAN, ItemRegister.COFFEE_BEAN_CARD, ItemRegister.COFFEE_BEAN_ENJOY_CARD);
+//		putPlantInfoToMap(Plants.PEA_SHOOTER, 100, CDs.VERY_FAST, Ranks.GRAY, Essences.APPEASE, EntityRegister.PEA_SHOOTER);
+//		putPlantInfoToMap(Plants.SUN_FLOWER, 50, CDs.FAST, Ranks.GRAY, Essences.LIGHT, EntityRegister.SUN_FLOWER);
+//		putPlantInfoToMap(Plants.CHERRY_BOMB, 150, CDs.HUGE_SLOW, Ranks.BLUE, Essences.EXPLOSION, EntityRegister.CHERRY_BOMB);
+//		putPlantInfoToMap(Plants.WALL_NUT, 50, CDs.SLOW, Ranks.WHITE, Essences.DEFENCE, EntityRegister.WALL_NUT);
+//		putPlantInfoToMap(Plants.POTATO_MINE, 25, CDs.LITTLE_SLOW, Ranks.WHITE, Essences.EXPLOSION, EntityRegister.POTATO_MINE);
+//		putPlantInfoToMap(Plants.SNOW_PEA, 175, CDs.FAST, Ranks.GREEN, Essences.ICE, EntityRegister.SNOW_PEA);
+//		putPlantInfoToMap(Plants.CHOMPER, 150, CDs.NORMAL, Ranks.BLUE, Essences.ENFORCE, EntityRegister.CHOMPER);
+//		putPlantInfoToMap(Plants.REPEATER, 200, CDs.FAST, Ranks.GREEN, Essences.APPEASE, EntityRegister.REPEATER);
+//		putPlantInfoToMap(Plants.PUFF_SHROOM, 0, CDs.HUGE_FAST, Ranks.WHITE, Essences.TOXIC, EntityRegister.PUFF_SHROOM);
+//		putPlantInfoToMap(Plants.SUN_SHROOM, 25, CDs.FAST, Ranks.WHITE, Essences.LIGHT, EntityRegister.SUN_SHROOM);
+//		putPlantInfoToMap(Plants.FUME_SHROOM, 100, CDs.LITTLE_FAST, Ranks.GREEN, Essences.TOXIC, EntityRegister.FUME_SHROOM);
+//		putPlantInfoToMap(Plants.GRAVE_BUSTER, 75, CDs.VERY_FAST, Ranks.WHITE, Essences.ASSIST, EntityRegister.GRAVE_BUSTER);
+//		putPlantInfoToMap(Plants.HYPNO_SHROOM, 75, CDs.LITTLE_SLOW, Ranks.BLUE, Essences.MAGIC, EntityRegister.HYPNO_SHROOM);
+//		putPlantInfoToMap(Plants.SCAREDY_SHROOM, 25, CDs.VERY_FAST, Ranks.GRAY, Essences.TOXIC, EntityRegister.SCAREDY_SHROOM);
+//		putPlantInfoToMap(Plants.ICE_SHROOM, 75, CDs.SLOW, Ranks.BLUE, Essences.ICE, EntityRegister.ICE_SHROOM);
+//		putPlantInfoToMap(Plants.DOOM_SHROOM, 125, CDs.SUPER_SLOW, Ranks.GOLD, Essences.EXPLOSION, EntityRegister.DOOM_SHROOM);
+//		putPlantInfoToMap(Plants.LILY_PAD, 25, CDs.OTHER, Ranks.GRAY, Essences.ASSIST, null);
+//		putPlantInfoToMap(Plants.SQUASH, 50, CDs.LITTLE_SLOW, Ranks.GREEN, Essences.ENFORCE, EntityRegister.SQUASH);
+//		putPlantInfoToMap(Plants.THREE_PEATER, 300, CDs.LITTLE_FAST, Ranks.BLUE, Essences.APPEASE, EntityRegister.THREE_PEATER);
+//		putPlantInfoToMap(Plants.TANGLE_KELP, 25, CDs.SLOW, Ranks.WHITE, Essences.ENFORCE, EntityRegister.TANGLE_KELP);
+//		putPlantInfoToMap(Plants.JALAPENO, 175, CDs.HUGE_SLOW, Ranks.BLUE, Essences.FLAME, EntityRegister.JALAPENO);
+//		putPlantInfoToMap(Plants.SPIKE_WEED, 100, CDs.LITTLE_FAST, Ranks.WHITE, Essences.SPEAR, EntityRegister.SPIKE_WEED);
+//		putPlantInfoToMap(Plants.TORCH_WOOD, 175, CDs.NORMAL, Ranks.GREEN, Essences.FLAME, EntityRegister.TORCH_WOOD);
+//		putPlantInfoToMap(Plants.TALL_NUT, 125, CDs.VERY_SLOW, Ranks.BLUE, Essences.DEFENCE, EntityRegister.TALL_NUT);
+//		putPlantInfoToMap(Plants.PUMPKIN, 125, CDs.SLOW, Ranks.GREEN, Essences.DEFENCE, null);
+//		putPlantInfoToMap(Plants.COFFEE_BEAN, 75, CDs.FAST, Ranks.GREEN, Essences.MAGIC, EntityRegister.COFFEE_BEAN);
 	}
 	
-	public static void putPlantInfoToMap(Plants plant,final int cost, CDs cd, Ranks rank, Essences essence, RegistryObject<? extends EntityType<? extends PVZPlantEntity>> type) {
+	public static void putPlantInfoToMap(Plants plant,final int cost, CDs cd, Ranks rank, Essences essence, RegistryObject<? extends EntityType<? extends PVZPlantEntity>> type, RegistryObject<? extends PlantCardItem> summonCard, RegistryObject<? extends PlantCardItem> enjoyCard) {
+		PLANT_SUN_COST.put(plant, cost);
+		PLANT_CD.put(plant, cd);
+		PLANT_RANK.put(plant, rank);
+		PLANT_ESSENCE.put(plant, essence);
+		PLANT_ENTITY.put(plant, type);
+		PLANT_SUMMON_CARD.put(plant, summonCard);
+		PLANT_ENJOY_CARD.put(plant, enjoyCard);
+		++ CURRENT_PLANT_NUM;
+	}
+	
+	public static void putPlantInfoToMap1(Plants plant,final int cost, CDs cd, Ranks rank, Essences essence, RegistryObject<? extends EntityType<? extends PVZPlantEntity>> type) {
 		PLANT_SUN_COST.put(plant, cost);
 		PLANT_CD.put(plant, cd);
 		PLANT_RANK.put(plant, rank);
@@ -118,36 +159,6 @@ public class PlantUtil {
 	 * create plant entity by given plant 
 	 */
 	public static PVZPlantEntity getPlantEntity(World world, Plants plant){
-//		switch(plant) {
-//		case PEA_SHOOTER:return EntityRegister.PEA_SHOOTER.get().create(world);
-//		case SUN_FLOWER:return EntityRegister.SUN_FLOWER.get().create(world);
-//		case CHERRY_BOMB:return EntityRegister.CHERRY_BOMB.get().create(world);
-//		case WALL_NUT:return EntityRegister.WALL_NUT.get().create(world);
-//		case POTATO_MINE:return EntityRegister.POTATO_MINE.get().create(world);
-//		case SNOW_PEA:return EntityRegister.SNOW_PEA.get().create(world);
-//		case CHOMPER:return EntityRegister.CHOMPER.get().create(world);
-//		case REPEATER:return EntityRegister.REPEATER.get().create(world);
-//		case SQUASH:return EntityRegister.SQUASH.get().create(world);
-//		case THREE_PEATER:return EntityRegister.THREE_PEATER.get().create(world);
-//		case TANGLE_KELP:return EntityRegister.TANGLE_KELP.get().create(world);
-//		case JALAPENO:return EntityRegister.JALAPENO.get().create(world);
-//		case SPIKE_WEED:return EntityRegister.SPIKE_WEED.get().create(world);
-//		case TORCH_WOOD:return EntityRegister.TORCH_WOOD.get().create(world);
-//		case TALL_NUT:return EntityRegister.TALL_NUT.get().create(world);
-////		case WATER_GUARD:return EntityRegister.WATER_GUARD.get().create(world);
-//		case PUFF_SHROOM:return EntityRegister.PUFF_SHROOM.get().create(world);
-//		case SUN_SHROOM:return EntityRegister.SUN_SHROOM.get().create(world);
-//		case FUME_SHROOM:return EntityRegister.FUME_SHROOM.get().create(world);
-//		case GRAVE_BUSTER:return EntityRegister.GRAVE_BUSTER.get().create(world);
-//		case HYPNO_SHROOM:return EntityRegister.HYPNO_SHROOM.get().create(world);
-//		case SCAREDY_SHROOM:return EntityRegister.SCAREDY_SHROOM.get().create(world);
-//		case ICE_SHROOM:return EntityRegister.ICE_SHROOM.get().create(world);
-//		case DOOM_SHROOM:return EntityRegister.DOOM_SHROOM.get().create(world);
-//		default:{
-//			PVZMod.LOGGER.debug("No such plant entity!");
-//			return null;
-//		}
-//		}
 		if(PLANT_ENTITY.containsKey(plant) && PLANT_ENTITY.get(plant) != null) {
 			return PLANT_ENTITY.get(plant).get().create(world);
 		}
@@ -212,6 +223,22 @@ public class PlantUtil {
 		}
 		PVZMod.LOGGER.debug("plant get essence type error!");
 		return Essences.APPEASE;
+	}
+	
+	public static PlantCardItem getPlantSummonCard(Plants plant) {
+		if(PLANT_SUMMON_CARD.containsKey(plant)) {
+			return PLANT_SUMMON_CARD.get(plant).get();
+		}
+		PVZMod.LOGGER.debug("plant get summon card error!");
+		return null;
+	}
+	
+	public static PlantCardItem getPlantEnjoyCard(Plants plant) {
+		if(PLANT_ENJOY_CARD.containsKey(plant)) {
+			return PLANT_ENJOY_CARD.get(plant).get();
+		}
+		PVZMod.LOGGER.debug("plant get enjoy card error!");
+		return null;
 	}
 	
 	/**

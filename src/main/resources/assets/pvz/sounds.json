@@ -33,5 +33,11 @@
     "plant_grow":{"sounds":[{"name":"pvz:entity/plant/plant_grow"}]},
     "fume":{"sounds":[{"name":"pvz:entity/plant/attack/fume"}]},
     "angry":{"sounds":[{"name":"pvz:entity/zombie/act/angry"},{"name":"pvz:entity/zombie/act/angry2"}]},
-    "doom":{"sounds":[{"name":"pvz:entity/plant/bomb/doom"}]}
+    "doom":{"sounds":[{"name":"pvz:entity/plant/bomb/doom"}]},
+    "wake_up":{"sounds":[{"name":"pvz:entity/plant/wake_up"}]},
+    "pea_hit":{"sounds":[{"name":"pvz:entity/zombie/hit/splat1"},{"name":"pvz:entity/zombie/hit/splat2"},{"name":"pvz:entity/zombie/hit/splat3"}]},
+    "plant_on_ground":{"sounds":[{"name":"pvz:entity/plant/plant_ground1"},{"name":"pvz:entity/plant/plant_ground2"}]},
+    "plant_in_water":{"sounds":[{"name":"pvz:entity/plant/plant_water"}]},
+    "paper_gone":{"sounds":[{"name":"pvz:entity/zombie/death/paper_gone"}]},
+    "charm":{"sounds":[{"name":"pvz:entity/plant/attack/charm"}]}
 }

@@ -118,7 +118,7 @@ public class TombStoneEntity extends UnderGroundZombieEntity{
 	}
 	
 	@Override
-	protected void dropCoin() {
+	protected void dropCoinOrSpecial() {
 		int num = this.getRNG().nextInt(1000);
 		int amount = 0;
 		if (num < 1) {

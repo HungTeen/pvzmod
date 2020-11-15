@@ -13,6 +13,7 @@ import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.network.datasync.DataParameter;
 import net.minecraft.network.datasync.DataSerializers;
 import net.minecraft.network.datasync.EntityDataManager;
+import net.minecraft.util.SoundEvent;
 import net.minecraft.world.World;
 
 public class NewspaperZombieEntity extends DefenceZombieEntity {
@@ -62,6 +63,11 @@ public class NewspaperZombieEntity extends DefenceZombieEntity {
 		this.setAngry(is);
 		this.getAttribute(SharedMonsterAttributes.MOVEMENT_SPEED).setBaseValue(is ? ZombieUtil.LITTLE_FAST : ZombieUtil.LITTLE_SLOW);
 		this.getAttribute(SharedMonsterAttributes.ATTACK_DAMAGE).setBaseValue(is ? ZombieUtil.LOW : ZombieUtil.LITTLE_LOW);
+	}
+	
+	@Override
+	public SoundEvent getPartDeathSound() {
+		return SoundRegister.PAPER_GONE.get();
 	}
 	
 	@Override

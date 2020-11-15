@@ -3,6 +3,7 @@ package com.hungteen.pvz.entity.zombie.part;
 import com.hungteen.pvz.entity.zombie.base.DefenceZombieEntity;
 import com.hungteen.pvz.misc.damage.PVZDamageSource;
 import com.hungteen.pvz.misc.damage.PVZDamageType;
+import com.hungteen.pvz.utils.EntityUtil;
 
 import net.minecraft.entity.EntityType;
 import net.minecraft.util.DamageSource;
@@ -41,7 +42,7 @@ public class PVZHealthPartEntity extends PVZZombiePartEntity{
 			    sound = this.zombie.getPartDeathSound();
 		    }
 			if(sound != null) {
-				this.playSound(sound, 0.8f + this.rand.nextFloat() * 0.2f, 0.8f + this.rand.nextFloat() * 0.2f);
+				EntityUtil.playSound(this, sound);
 			}
 			return true;
 		}

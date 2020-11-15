@@ -1,7 +1,6 @@
 package com.hungteen.pvz.entity.plant.defence;
 
 import com.hungteen.pvz.entity.plant.base.PlantDefenderEntity;
-import com.hungteen.pvz.utils.enums.Plants;
 
 import net.minecraft.entity.CreatureEntity;
 import net.minecraft.entity.Entity;
@@ -14,7 +13,7 @@ import net.minecraft.world.World;
 /**
  * removed in 1.15.2 - 0.2
  */
-public class WaterGuardEntity extends PlantDefenderEntity{
+public abstract class WaterGuardEntity extends PlantDefenderEntity{
 
 	public WaterGuardEntity(EntityType<? extends CreatureEntity> type, World worldIn) {
 		super(type, worldIn);
@@ -96,11 +95,6 @@ public class WaterGuardEntity extends PlantDefenderEntity{
 	@Override
 	public int getSuperTimeLength() {
 		return 20;
-	}
-
-	@Override
-	public Plants getPlantEnumName() {
-		return Plants.WATER_GUARD;
 	}
 
 }

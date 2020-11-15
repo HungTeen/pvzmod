@@ -5,6 +5,8 @@ import com.hungteen.pvz.entity.plant.interfaces.IShroomPlant;
 import com.hungteen.pvz.entity.zombie.PVZZombieEntity;
 import com.hungteen.pvz.misc.damage.PVZDamageSource;
 import com.hungteen.pvz.misc.damage.PVZDamageType;
+import com.hungteen.pvz.register.SoundRegister;
+import com.hungteen.pvz.utils.EntityUtil;
 import com.hungteen.pvz.utils.enums.Plants;
 
 import net.minecraft.entity.CreatureEntity;
@@ -30,6 +32,7 @@ public class HypnoShroomEntity extends PVZPlantEntity implements IShroomPlant{
 					if(cause.getTrueSource() instanceof PVZZombieEntity) {
 					    PVZZombieEntity zombie = (PVZZombieEntity) cause.getTrueSource();
 					    zombie.onCharmed();
+					    EntityUtil.playSound(this, SoundRegister.CHARM.get());
 					    float life = zombie.getHealth();
 					    float max = zombie.getMaxHealth();
 					    float std = max * this.getHealHealth();

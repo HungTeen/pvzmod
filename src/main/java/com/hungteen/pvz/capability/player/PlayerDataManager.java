@@ -26,12 +26,14 @@ public class PlayerDataManager {
 	private final PlayerStats playerStats;
 	private final PlantStats plantStats;
 	private final AlmanacStats almanacStats;
+	private final ItemCDStats itemCDStats;
 	
 	public PlayerDataManager(PlayerEntity player) {
 		this.player = player;
 		this.playerStats = new PlayerStats(this);
 		this.plantStats = new PlantStats(this);
 		this.almanacStats = new AlmanacStats(this);
+		this.itemCDStats = new ItemCDStats(this);
 	}
 	
 //	public void tickPlayer()
@@ -47,6 +49,7 @@ public class PlayerDataManager {
 		playerStats.saveToNBT(baseTag);
 		plantStats.saveToNBT(baseTag);
 		almanacStats.saveToNBT(baseTag);
+		itemCDStats.saveToNBT(baseTag);
 		return baseTag;
 	}
 
@@ -54,6 +57,7 @@ public class PlayerDataManager {
 		playerStats.loadFromNBT(baseTag);
 		plantStats.loadFromNBT(baseTag);
 		almanacStats.loadFromNBT(baseTag);
+		itemCDStats.loadFromNBT(baseTag);
 	}
 //	
 	public void cloneFromExistingPlayerData(PlayerDataManager data) {
@@ -73,6 +77,10 @@ public class PlayerDataManager {
 		//Almanac
 		for(Almanacs a:Almanacs.values()) {
 			this.almanacStats.setAlmanacUnLocked(a, data.almanacStats.isAlmanacUnLocked(a));
+		}
+		for(Plants p : Plants.values()) {
+			this.itemCDStats.setCardCD(p, data.itemCDStats.getCardCD(p, true), true);
+			this.itemCDStats.setCardCD(p, data.itemCDStats.getCardCD(p, false), false);
 		}
 	}
 
@@ -395,7 +403,56 @@ public class PlayerDataManager {
 			    }
 			}
 		}
+	}
+	
+	public final class ItemCDStats{
+		@SuppressWarnings("unused")
+		private final PlayerDataManager manager;
+		private HashMap<Plants, Integer> summonCardCD = new HashMap<>(Plants.values().length);
+		private HashMap<Plants, Integer> enjoyCardCD = new HashMap<>(Plants.values().length);
 		
+		public ItemCDStats(PlayerDataManager manager) {
+			this.manager = manager;
+			for(Plants plant : Plants.values()) {
+				summonCardCD.put(plant, 0);
+				enjoyCardCD.put(plant, 0);
+			}
+		}
+		
+		public void setCardCD(Plants plant, int tick, boolean isEnjoy) {
+			if(isEnjoy) {
+				this.enjoyCardCD.put(plant, tick);
+			}else {
+				this.summonCardCD.put(plant, tick);
+			}
+		}
+		
+		public int getCardCD(Plants plant, boolean isEnjoy) {
+			return isEnjoy ? this.enjoyCardCD.get(plant) : this.summonCardCD.get(plant);
+		}
+		
+		private void saveToNBT(CompoundNBT baseTag) {
+			CompoundNBT statsNBT = new CompoundNBT();
+			for(Plants p : Plants.values()) {
+				statsNBT.putInt(p.toString().toLowerCase() + "_summon_card_cd", this.getCardCD(p, false));
+				statsNBT.putInt(p.toString().toLowerCase() + "_enjoy_card_cd", this.getCardCD(p, true));
+			}
+			baseTag.put("card_item_cd", statsNBT);
+		}
+
+		private void loadFromNBT(CompoundNBT baseTag) {
+			if(baseTag.contains("card_item_cd")) {
+			    CompoundNBT statsTag = baseTag.getCompound("card_item_cd");
+			    for(Plants p : Plants.values()) {
+			    	if(statsTag.contains(p.toString().toLowerCase() + "_summon_card_cd")) {
+				        this.setCardCD(p, statsTag.getInt(p.toString().toLowerCase() + "_summon_card_cd"), false);
+			    	}
+			    	if(statsTag.contains(p.toString().toLowerCase() + "_enjoy_card_cd")) {
+				        this.setCardCD(p, statsTag.getInt(p.toString().toLowerCase() + "_enjoy_card_cd"), true);
+			    	}
+			    }
+			}
+		}
 	}
 	
 	public PlayerStats getPlayerStats() {
@@ -410,4 +467,7 @@ public class PlayerDataManager {
 		return this.almanacStats;
 	}
 	
+	public ItemCDStats getItemCDStats() {
+		return this.itemCDStats;
+	}
 }

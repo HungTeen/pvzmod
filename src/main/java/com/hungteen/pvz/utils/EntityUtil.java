@@ -2,6 +2,7 @@ package com.hungteen.pvz.utils;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 import java.util.UUID;
 
 import javax.annotation.Nonnull;
@@ -25,6 +26,7 @@ import net.minecraft.entity.monster.MonsterEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.potion.EffectInstance;
 import net.minecraft.scoreboard.Team;
+import net.minecraft.util.SoundEvent;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IWorld;
@@ -33,8 +35,14 @@ import net.minecraftforge.event.ForgeEventFactory;
 
 public class EntityUtil {
 
+	public static final Random RAND = new Random();
+	
 	public static boolean canDestroyBlock(World world, BlockPos pos, Entity entity) {
 		return canDestroyBlock(world, pos, world.getBlockState(pos), entity);
+	}
+	
+	public static void playSound(Entity entity, SoundEvent ev) {
+		entity.playSound(ev, 1.0F, 1.0F / (RAND.nextFloat() * 0.4F + 0.8F));
 	}
 
 	/**

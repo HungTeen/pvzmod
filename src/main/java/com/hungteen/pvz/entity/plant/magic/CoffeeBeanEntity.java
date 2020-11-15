@@ -2,6 +2,7 @@ package com.hungteen.pvz.entity.plant.magic;
 
 import com.hungteen.pvz.entity.plant.PVZPlantEntity;
 import com.hungteen.pvz.entity.plant.base.PlantBomberEntity;
+import com.hungteen.pvz.register.SoundRegister;
 import com.hungteen.pvz.utils.EntityUtil;
 import com.hungteen.pvz.utils.enums.Plants;
 
@@ -21,10 +22,15 @@ public class CoffeeBeanEntity extends PlantBomberEntity{
 		if(!this.world.isRemote) {
 			float len = this.getAwakeRange();
 			AxisAlignedBB aabb=EntityUtil.getEntityAABB(this, len, len + 2);
+			boolean hasEffect = false;
 			for(PVZPlantEntity plant : world.getEntitiesWithinAABB(PVZPlantEntity.class, aabb)) {
 				if(!EntityUtil.checkCanEntityAttack(this, plant)) {
 					plant.setSleepTime(- this.getAwakeTime());
+					hasEffect = true;
 				}
+			}
+			if(hasEffect) {
+				EntityUtil.playSound(this, SoundRegister.WAKE_UP.get());
 			}
 		}
 	}

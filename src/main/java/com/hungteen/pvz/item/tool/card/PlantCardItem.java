@@ -31,21 +31,21 @@ import net.minecraft.util.math.RayTraceResult;
 import net.minecraft.world.World;
 import net.minecraftforge.common.MinecraftForge;
 
-public class PlantCardItem extends SummonCardItem{
+public class PlantCardItem extends SummonCardItem {
 
 	protected final Plants plant;
-	
-	public PlantCardItem(Plants plant,boolean isFragment) {
+
+	public PlantCardItem(Plants plant, boolean isFragment) {
 		super(isFragment);
 		this.plant = plant;
 	}
-	
+
 	@Override
 	public int getItemEnchantability() {
 		Ranks rank = PlantUtil.getPlantRankByName(plant);
-		return 18-rank.ordinal();
+		return 18 - rank.ordinal();
 	}
-	
+
 	@Override
 	public ActionResult<ItemStack> onItemRightClick(World world, PlayerEntity player, Hand handIn) {
 		ItemStack stack = player.getHeldItem(handIn);
@@ -60,91 +60,101 @@ public class PlantCardItem extends SummonCardItem{
 			if (!(world.getBlockState(pos).getBlock() instanceof FlowingFluidBlock)) {
 				return ActionResult.resultPass(stack);
 			}
-            if (world.isBlockModifiable(player, pos) && player.canPlayerEdit(pos, blockraytraceresult.getFace(), stack)) {
-            	checkSunAndPlant(world, player, stack, pos);
-            	return ActionResult.resultSuccess(stack);
+			if (world.isBlockModifiable(player, pos)
+					&& player.canPlayerEdit(pos, blockraytraceresult.getFace(), stack)) {
+				checkSunAndPlant(world, player, stack, pos);
+				return ActionResult.resultSuccess(stack);
 			} else {
 				return ActionResult.resultFail(stack);
 			}
 		}
 	}
-	
+
 	@Override
 	public ActionResultType onItemUse(ItemUseContext context) {
-		Hand hand = context.getHand();
+		World world = context.getWorld();
+		if (world.isRemote) {
+			return ActionResultType.SUCCESS;
+		}
 		PlayerEntity player = context.getPlayer();
+		Hand hand = context.getHand();
 		ItemStack stack = player.getHeldItem(hand);
 		BlockPos pos = context.getPos();
-		World world = context.getWorld();
-		if(hand == Hand.OFF_HAND) {//only use right hand can plant 
+		if (hand == Hand.OFF_HAND) {// only use right hand to plant.
 			return ActionResultType.FAIL;
 		}
-		if(this.plant == Plants.PUMPKIN) {
+		if (Plants.isOuterPlant(this.plant)) {// can not place on blocks, like pumpkin.
 			return ActionResultType.FAIL;
 		}
-		if(this.plant == Plants.TANGLE_KELP) {// plant in water
+		if (Plants.isWaterPlant(this.plant)) {// can only plant in water.
 			return ActionResultType.PASS;
 		}
-		if(!world.isRemote && context.getFace() == Direction.UP && world.isAirBlock(pos.up())) {//can plant here
-			checkSunAndPlant(world, player, stack, pos);
+		BlockPos spawnPos = pos;
+		if(!world.getBlockState(pos).getCollisionShape(world, pos).isEmpty()) {
+			spawnPos = pos.offset(context.getFace());
+		}
+		if (context.getFace() == Direction.UP && world.isAirBlock(pos.up())) {// can plant here
+			checkSunAndPlant(world, player, stack, spawnPos);
 		}
 		return ActionResultType.SUCCESS;
 	}
-	
+
 	protected void checkSunAndPlant(World world, PlayerEntity player, ItemStack stack, BlockPos pos) {
-		player.getCapability(CapabilityHandler.PLAYER_DATA_CAPABILITY).ifPresent((l)->{
+		player.getCapability(CapabilityHandler.PLAYER_DATA_CAPABILITY).ifPresent((l) -> {
 			PlayerDataManager manager = l.getPlayerData();
 			int num = manager.getPlayerStats().getPlayerStats(Resources.SUN_NUM);
 			int sunCost = getSunCost(stack);
-			if(num >= sunCost) {//sun is enough
+			if (num >= sunCost) {// sun is enough
 				PVZPlantEntity plantEntity = PlantUtil.getPlantEntity(world, this.plant);
-			    if(plantEntity == null) {//no such plant
-			    	PVZMod.LOGGER.debug("no such plant");
-				    return;
-			    }
-				l.getPlayerData().getPlayerStats().addPlayerStats(Resources.SUN_NUM, - sunCost);
+				if (plantEntity == null) {// no such plant
+					PVZMod.LOGGER.debug("no such plant");
+					return;
+				}
+				l.getPlayerData().getPlayerStats().addPlayerStats(Resources.SUN_NUM, -sunCost);
 				int lvl = manager.getPlantStats().getPlantLevel(plant);
 				onUsePlantCard(player, stack, this, lvl);
 				plantEntity.setPlantLvl(lvl);
 				plantEntity.setOwnerUUID(player.getUniqueID());
 				double dy = 1;
-				if(world.getBlockState(pos).getBlock() == BlockRegister.LILY_PAD.get()) {
+				if (world.getBlockState(pos).getBlock() == BlockRegister.LILY_PAD.get()) {
 					dy = 0.1;
 				}
 				plantEntity.setPosition(pos.getX() + 0.5D, pos.getY() + dy, pos.getZ() + 0.5D);
 //				if(EnchantmentHelper.getEnchantmentLevel(En, stack)) {// hypno
 //					
 //				}
-				plantEntity.onInitialSpawn(world, world.getDifficultyForLocation(pos), SpawnReason.SPAWN_EGG, null, null);
+				plantEntity.onInitialSpawn(world, world.getDifficultyForLocation(pos), SpawnReason.SPAWN_EGG, null,
+						null);
 				world.addEntity(plantEntity);
-				if(this.canPlantBreakOut(stack)) {//break out enchantment
-					if(plantEntity.canStartSuperMode()) {
+				if (this.canPlantBreakOut(stack)) {// break out enchantment
+					if (plantEntity.canStartSuperMode()) {
 						plantEntity.startSuperMode(false);
 					}
 				}
 			}
 		});
 	}
-	
+
 	public static void onUsePlantCard(PlayerEntity player, ItemStack stack, PlantCardItem item, int plantLvl) {
 		MinecraftForge.EVENT_BUS.post(new SummonCardUseEvent(player, stack));
-		if(item.isEnjoyCard) {
+		if (item.isEnjoyCard) {
 			stack.shrink(1);
 		}
 		handlePlantCardCoolDown(player, stack, item, plantLvl);
 		player.addStat(Stats.ITEM_USED.get(item));
 	}
-	
-	public static void plantPumpkin(PlayerEntity player, PVZPlantEntity plantEntity, PlantCardItem item, ItemStack stack) {
-		player.getCapability(CapabilityHandler.PLAYER_DATA_CAPABILITY).ifPresent((l)->{
+
+	public static void plantPumpkin(PlayerEntity player, PVZPlantEntity plantEntity, PlantCardItem item,
+			ItemStack stack) {
+		player.getCapability(CapabilityHandler.PLAYER_DATA_CAPABILITY).ifPresent((l) -> {
 			PlayerDataManager manager = l.getPlayerData();
 			int num = manager.getPlayerStats().getPlayerStats(Resources.SUN_NUM);
 			int sunCost = item.getSunCost(stack);
-			if(num >= sunCost) {//sun is enough
-				l.getPlayerData().getPlayerStats().addPlayerStats(Resources.SUN_NUM, - sunCost);
+			if (num >= sunCost) {// sun is enough
+				l.getPlayerData().getPlayerStats().addPlayerStats(Resources.SUN_NUM, -sunCost);
 				onUsePlantCard(player, stack, item, manager.getPlantStats().getPlantLevel(item.getPlant()));
 				float life = PlantUtil.PUMPKIN_LIFE;
-				if(item.canPlantBreakOut(stack)) {//break out enchantment
+				if (item.canPlantBreakOut(stack)) {// break out enchantment
 					life += PlantUtil.PUMPKIN_SUPER_LIFE;
 				}
 				plantEntity.setPumpkinLife(life);
@@ -152,36 +162,38 @@ public class PlantCardItem extends SummonCardItem{
 			}
 		});
 	}
-	
+
 	/**
 	 * set player-item cool down
 	 */
 	public static void handlePlantCardCoolDown(PlayerEntity player, ItemStack stack, PlantCardItem item, int plantLvl) {
 		int cd = PlantUtil.getPlantCoolDownTime(item.getPlant(), plantLvl);
-		if(player.isPotionActive(EffectRegister.EXCITE_EFFECT.get())) {
+		if (player.isPotionActive(EffectRegister.EXCITE_EFFECT.get())) {
 			int lvl = player.getActivePotionEffect(EffectRegister.EXCITE_EFFECT.get()).getAmplifier();
 			float mult = Math.max(0, 0.9f - 0.1f * lvl);
 			cd = (int) Math.floor(cd * mult);
 		}
 		player.getCooldownTracker().setCooldown(stack.getItem(), cd);
 	}
-	
+
 	public boolean canPlantBreakOut(ItemStack stack) {
 		int lvl = EnchantmentHelper.getEnchantmentLevel(EnchantmentRegister.BREAK_OUT.get(), stack);
 		int num = lvl * 3 + 7;
-		if(lvl == 4) num ++;
-		else if(lvl == 0) num = 0;
+		if (lvl == 4)
+			num++;
+		else if (lvl == 0)
+			num = 0;
 		return random.nextInt(100) < num;
 	}
-	
+
 	@Override
 	public int getSunCost(ItemStack stack) {
-		int cost=PlantUtil.getPlantSunCost(plant);
-		return Math.max(cost-getSunReduceNum(stack), 0);
+		int cost = PlantUtil.getPlantSunCost(plant);
+		return Math.max(cost - getSunReduceNum(stack), 0);
 	}
-	
+
 	public Plants getPlant() {
 		return this.plant;
 	}
-	
+
 }

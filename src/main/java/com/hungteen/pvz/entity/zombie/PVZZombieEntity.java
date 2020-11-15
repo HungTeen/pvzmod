@@ -12,6 +12,7 @@ import com.hungteen.pvz.entity.ai.PVZLookRandomlyGoal;
 import com.hungteen.pvz.entity.ai.PVZSwimGoal;
 import com.hungteen.pvz.entity.ai.ZombieMeleeAttackGoal;
 import com.hungteen.pvz.entity.ai.ZombieNearestTargetGoal;
+import com.hungteen.pvz.entity.bullet.PVZThrowableEntity;
 import com.hungteen.pvz.entity.drop.CoinEntity;
 import com.hungteen.pvz.entity.drop.EnergyEntity;
 import com.hungteen.pvz.entity.plant.PVZPlantEntity;
@@ -22,6 +23,7 @@ import com.hungteen.pvz.misc.damage.PVZDamageType;
 import com.hungteen.pvz.misc.loot.PVZLoot;
 import com.hungteen.pvz.register.EffectRegister;
 import com.hungteen.pvz.register.EntityRegister;
+import com.hungteen.pvz.register.ItemRegister;
 import com.hungteen.pvz.register.SoundRegister;
 import com.hungteen.pvz.utils.EntityUtil;
 import com.hungteen.pvz.utils.ZombieUtil;
@@ -32,11 +34,13 @@ import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntitySize;
 import net.minecraft.entity.EntityType;
+import net.minecraft.entity.ILivingEntityData;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.Pose;
 import net.minecraft.entity.SharedMonsterAttributes;
 import net.minecraft.entity.SpawnReason;
 import net.minecraft.entity.ai.goal.WaterAvoidingRandomWalkingGoal;
+import net.minecraft.entity.item.ItemEntity;
 import net.minecraft.entity.monster.MonsterEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
@@ -52,6 +56,7 @@ import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.SoundEvent;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
+import net.minecraft.world.DifficultyInstance;
 import net.minecraft.world.GameRules;
 import net.minecraft.world.IWorld;
 import net.minecraft.world.IWorldReader;
@@ -76,13 +81,23 @@ public abstract class PVZZombieEntity extends MonsterEntity implements IPVZZombi
 		this.setZombieAttributes();
 	}
 
+	@Override
+	public ILivingEntityData onInitialSpawn(IWorld worldIn, DifficultyInstance difficultyIn, SpawnReason reason,
+			ILivingEntityData spawnDataIn, CompoundNBT dataTag) {
+		if(!world.isRemote) {
+			this.setZombieType(this.getSpawnType());
+		}
+		return super.onInitialSpawn(worldIn, difficultyIn, reason, spawnDataIn, dataTag);
+	}
+	
 	/**
 	 * get zombie type : super normal beard
 	 */
 	protected Type getSpawnType() {
 		int t = this.getRNG().nextInt(100);
-		if (t <= PVZConfig.COMMON_CONFIG.EntitySettings.ZombieSuperChance.get())
+		if (t <= PVZConfig.COMMON_CONFIG.EntitySettings.ZombieSuperChance.get()) {
 			return Type.SUPER;
+		}
 		return Type.NORMAL;
 	}
 
@@ -93,7 +108,7 @@ public abstract class PVZZombieEntity extends MonsterEntity implements IPVZZombi
 	@Override
 	protected void registerData() {
 		super.registerData();
-		dataManager.register(ZOMBIE_TYPE, this.getSpawnType().ordinal());
+		dataManager.register(ZOMBIE_TYPE, Type.NORMAL.ordinal());
 		dataManager.register(OWNER_UUID, Optional.empty());
 		dataManager.register(IS_CHARMED, false);
 		dataManager.register(IS_SMALL, false);
@@ -183,7 +198,7 @@ public abstract class PVZZombieEntity extends MonsterEntity implements IPVZZombi
 				this.dropEnergy();
 			} else if (getZombieType() == Type.BEARD) {// finish achievement
 			}
-			this.dropCoin();
+			this.dropCoinOrSpecial();
 			this.zombieDropItem();
 		}
 	}
@@ -199,22 +214,26 @@ public abstract class PVZZombieEntity extends MonsterEntity implements IPVZZombi
 	/**
 	 * zombies have chance to drop coin when died.
 	 */
-	protected void dropCoin() {
+	protected void dropCoinOrSpecial() {
 		int num = this.getRNG().nextInt(10000);
 		int amount = 0;
 		if (num < 1000) {
 			amount = 1;
-		}else if (num < 1100) {
+		} else if (num < 1100) {
 			amount = 10;
-		}else if (num < 1110) {
+		} else if (num < 1110) {
 			amount = 100;
-		}else if(num < 1111) {
+		} else if(num < 1111) {
 			amount = 1000;
 		}
 		if (amount != 0) {
 			CoinEntity coin = EntityRegister.COIN.get().create(world);
 			coin.setAmount(amount);
 			EntityUtil.onMobEntitySpawn(world, coin, getPosition());
+		} else if(num < 1112){
+			this.playSound(SoundRegister.JEWEL_DROP.get(), 1f, 1f);
+			ItemEntity chocolate = new ItemEntity(world, getPosX(), getPosY(), getPosZ(), new ItemStack(ItemRegister.CHOCOLATE.get()));
+			world.addEntity(chocolate);
 		}
 	}
 
@@ -588,6 +607,14 @@ public abstract class PVZZombieEntity extends MonsterEntity implements IPVZZombi
 	@Override
 	protected SoundEvent getAmbientSound() {
 		return SoundRegister.ZOMBIE_SAY.get();
+	}
+	
+	@Override
+	protected SoundEvent getHurtSound(DamageSource damageSourceIn) {
+		if(damageSourceIn.getImmediateSource() instanceof PVZThrowableEntity) {
+			return SoundRegister.PEA_HIT.get();
+		}
+		return super.getHurtSound(damageSourceIn);
 	}
 
 	@Override
