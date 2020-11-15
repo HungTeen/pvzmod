@@ -1,15 +1,24 @@
 package com.hungteen.pvz.utils;
 
+import java.util.Collections;
+import java.util.stream.Stream;
+
+import net.minecraft.entity.Entity;
 import net.minecraft.item.ItemStack;
+import net.minecraft.util.Direction;
+import net.minecraft.util.math.AxisAlignedBB;
+import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
+import net.minecraft.util.math.shapes.VoxelShape;
+import net.minecraft.util.math.shapes.VoxelShapes;
+import net.minecraft.world.IWorldReader;
 import net.minecraftforge.items.IItemHandler;
 
 public class BlockUtil {
 	/**
 	 * Calculate the redstone current from a item stack handler
 	 * 
-	 * @param handler
-	 *            The handler
+	 * @param handler The handler
 	 * @return The redstone power
 	 */
 	public static int calculateRedstone(IItemHandler handler) {
@@ -24,6 +33,13 @@ public class BlockUtil {
 		}
 		f = f / (float) handler.getSlots();
 		return MathHelper.floor(f * 14.0F) + (i > 0 ? 1 : 0);
+	}
+
+	public static double getBlockPosOffset(IWorldReader worldReader, BlockPos pos, AxisAlignedBB aabb) {
+		AxisAlignedBB axisalignedbb = new AxisAlignedBB(pos);
+		Stream<VoxelShape> stream = worldReader.getCollisionShapes((Entity) null, axisalignedbb,
+				Collections.emptySet());
+		return 1.0D + VoxelShapes.getAllowedOffset(Direction.Axis.Y, aabb, stream, -1.0D);
 	}
 
 }

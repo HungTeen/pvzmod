@@ -5,7 +5,6 @@ import com.hungteen.pvz.capability.CapabilityHandler;
 import com.hungteen.pvz.capability.player.PlayerDataManager;
 import com.hungteen.pvz.entity.plant.PVZPlantEntity;
 import com.hungteen.pvz.event.events.SummonCardUseEvent;
-import com.hungteen.pvz.register.BlockRegister;
 import com.hungteen.pvz.register.EffectRegister;
 import com.hungteen.pvz.register.EnchantmentRegister;
 import com.hungteen.pvz.utils.PlantUtil;
@@ -15,6 +14,7 @@ import com.hungteen.pvz.utils.enums.Resources;
 
 import net.minecraft.block.FlowingFluidBlock;
 import net.minecraft.enchantment.EnchantmentHelper;
+import net.minecraft.entity.EntityType;
 import net.minecraft.entity.SpawnReason;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
@@ -99,33 +99,29 @@ public class PlantCardItem extends SummonCardItem {
 		return ActionResultType.SUCCESS;
 	}
 
+	/**
+	 * check sunCost and plant plantEntity
+	 */
 	protected void checkSunAndPlant(World world, PlayerEntity player, ItemStack stack, BlockPos pos) {
 		player.getCapability(CapabilityHandler.PLAYER_DATA_CAPABILITY).ifPresent((l) -> {
 			PlayerDataManager manager = l.getPlayerData();
 			int num = manager.getPlayerStats().getPlayerStats(Resources.SUN_NUM);
 			int sunCost = getSunCost(stack);
 			if (num >= sunCost) {// sun is enough
-				PVZPlantEntity plantEntity = PlantUtil.getPlantEntity(world, this.plant);
-				if (plantEntity == null) {// no such plant
+				EntityType<? extends PVZPlantEntity> entityType = PlantUtil.getPlantEntityType(plant);
+				PVZPlantEntity plantEntity = (PVZPlantEntity) entityType.spawn(world, stack, player, pos, SpawnReason.SPAWN_EGG, true, true);
+				if (plantEntity == null) {
 					PVZMod.LOGGER.debug("no such plant");
 					return;
 				}
-				l.getPlayerData().getPlayerStats().addPlayerStats(Resources.SUN_NUM, -sunCost);
+				l.getPlayerData().getPlayerStats().addPlayerStats(Resources.SUN_NUM, - sunCost);
 				int lvl = manager.getPlantStats().getPlantLevel(plant);
-				onUsePlantCard(player, stack, this, lvl);
 				plantEntity.setPlantLvl(lvl);
 				plantEntity.setOwnerUUID(player.getUniqueID());
-				double dy = 1;
-				if (world.getBlockState(pos).getBlock() == BlockRegister.LILY_PAD.get()) {
-					dy = 0.1;
-				}
-				plantEntity.setPosition(pos.getX() + 0.5D, pos.getY() + dy, pos.getZ() + 0.5D);
+				onUsePlantCard(player, stack, this, lvl);
 //				if(EnchantmentHelper.getEnchantmentLevel(En, stack)) {// hypno
 //					
 //				}
-				plantEntity.onInitialSpawn(world, world.getDifficultyForLocation(pos), SpawnReason.SPAWN_EGG, null,
-						null);
-				world.addEntity(plantEntity);
 				if (this.canPlantBreakOut(stack)) {// break out enchantment
 					if (plantEntity.canStartSuperMode()) {
 						plantEntity.startSuperMode(false);
@@ -139,8 +135,9 @@ public class PlantCardItem extends SummonCardItem {
 		MinecraftForge.EVENT_BUS.post(new SummonCardUseEvent(player, stack));
 		if (item.isEnjoyCard) {
 			stack.shrink(1);
+		} else {
+			handlePlantCardCoolDown(player, stack, item, plantLvl);
 		}
-		handlePlantCardCoolDown(player, stack, item, plantLvl);
 		player.addStat(Stats.ITEM_USED.get(item));
 	}
 
@@ -167,13 +164,24 @@ public class PlantCardItem extends SummonCardItem {
 	 * set player-item cool down
 	 */
 	public static void handlePlantCardCoolDown(PlayerEntity player, ItemStack stack, PlantCardItem item, int plantLvl) {
+		final int cd = getPlantCardCD(player, stack, item, plantLvl);
+		player.getCapability(CapabilityHandler.PLAYER_DATA_CAPABILITY).ifPresent((l)->{
+			l.getPlayerData().getItemCDStats().setPlantCardCD(item.getPlant(), cd);
+		});
+		player.getCooldownTracker().setCooldown(stack.getItem(), cd);
+	}
+	
+	/**
+	 * get cooldown for current plant
+	 */
+	public static int getPlantCardCD(PlayerEntity player, ItemStack stack, PlantCardItem item, int plantLvl) {
 		int cd = PlantUtil.getPlantCoolDownTime(item.getPlant(), plantLvl);
 		if (player.isPotionActive(EffectRegister.EXCITE_EFFECT.get())) {
 			int lvl = player.getActivePotionEffect(EffectRegister.EXCITE_EFFECT.get()).getAmplifier();
 			float mult = Math.max(0, 0.9f - 0.1f * lvl);
 			cd = (int) Math.floor(cd * mult);
 		}
-		player.getCooldownTracker().setCooldown(stack.getItem(), cd);
+		return cd;
 	}
 
 	public boolean canPlantBreakOut(ItemStack stack) {

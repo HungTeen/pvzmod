@@ -167,6 +167,17 @@ public class PlantUtil {
 	}
 	
 	/**
+	 * get plant entityType by given plant 
+	 */
+	public static EntityType<? extends PVZPlantEntity> getPlantEntityType(Plants plant){
+		if(PLANT_ENTITY.containsKey(plant) && PLANT_ENTITY.get(plant) != null) {
+			return PLANT_ENTITY.get(plant).get();
+		}
+		PVZMod.LOGGER.debug("plant get entityType error");
+		return null;
+	}
+	
+	/**
 	 * get plant card sun cost
 	 */
 	public static int getPlantSunCost(Plants plant){

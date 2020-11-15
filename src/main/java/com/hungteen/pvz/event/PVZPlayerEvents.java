@@ -14,6 +14,7 @@ import com.hungteen.pvz.item.tool.card.PlantCardItem;
 import com.hungteen.pvz.register.EnchantmentRegister;
 import com.hungteen.pvz.register.ItemRegister;
 import com.hungteen.pvz.utils.EntityUtil;
+import com.hungteen.pvz.utils.PlantUtil;
 import com.hungteen.pvz.utils.PlayerUtil;
 import com.hungteen.pvz.utils.enums.Almanacs;
 import com.hungteen.pvz.utils.enums.Plants;
@@ -79,33 +80,29 @@ public class PVZPlayerEvents {
 					almanacStats.sendAlmanacPacket(player, a);
 				}
 				//item cd
-//				PlayerDataManager.ItemCDStats itemCDStats = plData.getItemCDStats();
-//				for(Plants p : Plants.values()) {
-////					System.out.println(p.toString() + p.summonCard);
-//					player.getCooldownTracker().setCooldown(PlantUtil.getPlantSummonCard(p), itemCDStats.getCardCD(p, false));
-//					player.getCooldownTracker().setCooldown(PlantUtil.getPlantEnjoyCard(p), itemCDStats.getCardCD(p, true));
-//				}
+				PlayerDataManager.ItemCDStats itemCDStats = plData.getItemCDStats();
+				for(Plants p : Plants.values()) {
+//					System.out.println(p.toString() + p.summonCard);
+					player.getCooldownTracker().setCooldown(PlantUtil.getPlantSummonCard(p), itemCDStats.getPlantCardCD(p));
+				}
 			});
 		}
 	}
 	
-//	@SubscribeEvent
-//	public static void onPlayerLogout(PlayerEvent.PlayerLoggedOutEvent ev) {
-//		PlayerEntity player = ev.getPlayer();
-//		if (! player.world.isRemote && player instanceof ServerPlayerEntity) {
-//			player.getCapability(CapabilityHandler.PLAYER_DATA_CAPABILITY).ifPresent((l)->{
-//				PlayerDataManager plData = l.getPlayerData();
-//				//item cd
-//				PlayerDataManager.ItemCDStats itemCDStats = plData.getItemCDStats();
-//				for(Plants p : Plants.values()) {
-//					int cd = (int) player.getCooldownTracker().getCooldown(PlantUtil.getPlantSummonCard(p), 0f);
-//					if(p==Plants.DOOM_SHROOM) System.out.println(cd);
-//					itemCDStats.setCardCD(p, (int) player.getCooldownTracker().getCooldown(PlantUtil.getPlantSummonCard(p), 0f), false);
-//					itemCDStats.setCardCD(p, (int) player.getCooldownTracker().getCooldown(PlantUtil.getPlantEnjoyCard(p), 0f), true);
-//				}
-//			});
-//		}
-//	}
+	@SubscribeEvent
+	public static void onPlayerLogout(PlayerEvent.PlayerLoggedOutEvent ev) {
+		PlayerEntity player = ev.getPlayer();
+		if (! player.world.isRemote && player instanceof ServerPlayerEntity) {
+			player.getCapability(CapabilityHandler.PLAYER_DATA_CAPABILITY).ifPresent((l)->{
+				PlayerDataManager plData = l.getPlayerData();
+				//item cd
+				PlayerDataManager.ItemCDStats itemCDStats = plData.getItemCDStats();
+				for(Plants p : Plants.values()) {
+					itemCDStats.setPlantCardBar(p, player.getCooldownTracker().getCooldown(PlantUtil.getPlantSummonCard(p), 0f));
+				}
+			});
+		}
+	}
 
 	@SubscribeEvent
 	public static void onPlayerClone(PlayerEvent.Clone ev) {
