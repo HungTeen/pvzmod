@@ -49,7 +49,6 @@ import net.minecraft.server.management.PreYggdrasilConverter;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.Hand;
 import net.minecraft.util.SoundEvent;
-import net.minecraft.util.SoundEvents;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.DifficultyInstance;
@@ -249,7 +248,7 @@ public abstract class PVZPlantEntity extends CreatureEntity implements IPVZPlant
 	public ILivingEntityData onInitialSpawn(IWorld worldIn, DifficultyInstance difficultyIn, SpawnReason reason,ILivingEntityData spawnDataIn, CompoundNBT dataTag) {
 		initAttributes(this.getPlantLvl());
 		if(!worldIn.isRemote()) {
-			this.playSound(SoundEvents.BLOCK_GRASS_PLACE, 1f,1f);
+			EntityUtil.playSound(this, this.getSpawnSound());
 		}
 		return super.onInitialSpawn(worldIn, difficultyIn, reason, spawnDataIn, dataTag);
 	}
@@ -721,4 +720,9 @@ public abstract class PVZPlantEntity extends CreatureEntity implements IPVZPlant
 	protected SoundEvent getHurtSound(DamageSource damageSourceIn) {
 		return SoundRegister.PLANT_HURT.get();
 	}
+	
+	protected SoundEvent getSpawnSound() {
+		return SoundRegister.PLANT_ON_GROUND.get();
+	}
+	
 }
