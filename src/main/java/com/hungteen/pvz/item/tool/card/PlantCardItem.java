@@ -60,8 +60,7 @@ public class PlantCardItem extends SummonCardItem {
 			if (!(world.getBlockState(pos).getBlock() instanceof FlowingFluidBlock)) {
 				return ActionResult.resultPass(stack);
 			}
-			if (world.isBlockModifiable(player, pos)
-					&& player.canPlayerEdit(pos, blockraytraceresult.getFace(), stack)) {
+			if (world.isBlockModifiable(player, pos) && player.canPlayerEdit(pos, blockraytraceresult.getFace(), stack)) {
 				checkSunAndPlant(world, player, stack, pos);
 				return ActionResult.resultSuccess(stack);
 			} else {
@@ -73,9 +72,6 @@ public class PlantCardItem extends SummonCardItem {
 	@Override
 	public ActionResultType onItemUse(ItemUseContext context) {
 		World world = context.getWorld();
-		if (world.isRemote) {
-			return ActionResultType.SUCCESS;
-		}
 		PlayerEntity player = context.getPlayer();
 		Hand hand = context.getHand();
 		ItemStack stack = player.getHeldItem(hand);
@@ -88,6 +84,9 @@ public class PlantCardItem extends SummonCardItem {
 		}
 		if (Plants.isWaterPlant(this.plant)) {// can only plant in water.
 			return ActionResultType.PASS;
+		}
+		if (world.isRemote) {
+			return ActionResultType.SUCCESS;
 		}
 		BlockPos spawnPos = pos;
 		if(!world.getBlockState(pos).getCollisionShape(world, pos).isEmpty()) {

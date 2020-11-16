@@ -8,7 +8,7 @@
         "sounds":[{"name":"pvz:entity/drop/coin/coin_drop"}]
     },
     "coin_pick":{
-        "subtitle": "sound.pvz.coin_drop",
+        "subtitle": "sound.pvz.coin_pick",
         "sounds":[{"name":"pvz:entity/drop/coin/coin_pick"}]
     },
     "jewel_drop":{

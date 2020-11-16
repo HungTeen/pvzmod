@@ -59,9 +59,7 @@ public class EntityUtil {
 	 * use to spawn mob in world
 	 */
 	public static void onMobEntitySpawn(IWorld world, MobEntity entity, BlockPos pos) {
-		entity.setPosition(pos.getX() + 0.5, pos.getY() + 1, pos.getZ() + 0.5);
-		double dy = BlockUtil.getBlockPosOffset(world, pos, entity.getBoundingBox());
-		entity.setPosition(pos.getX() + 0.5, pos.getY() + dy, pos.getZ() + 0.5);
+		entity.setPosition(pos.getX() + 0.5, pos.getY(), pos.getZ() + 0.5);
 		entity.onInitialSpawn(world, world.getDifficultyForLocation(entity.getPosition()), SpawnReason.SPAWNER, null, null);
 		world.addEntity(entity);
 	}
