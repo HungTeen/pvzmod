@@ -91,7 +91,7 @@ public class NobleZombieModel extends EntityModel<NobleZombieEntity> {
         this.right_hand.rotateAngleX = MathHelper.cos(limbSwing * 0.6662F) * 1.4F * limbSwingAmount;
         this.left_hand.rotateAngleX = MathHelper.cos(limbSwing * 0.6662F + (float)Math.PI) * 1.4F * limbSwingAmount;
         if(entity.getAttackTime() < 20) {
-        	this.right_hand.rotateAngleX = - 1f;
+        	this.right_hand.rotateAngleX = - 2f;
         }
 	}
 

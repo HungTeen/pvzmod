@@ -117,6 +117,10 @@ public class NobleZombieEntity extends PVZZombieEntity {
 			} else {
 				this.checkAndSleepPlant();
 			}
+		} else {
+			if(this.getAttackTime() < 20) {
+				this.world.addParticle(ParticleTypes.NOTE, getPosX(), getPosY() + 2f, getPosZ(), 0, 0, 0);
+			}
 		}
 		this.checkAndHeal();
 		if (this.getTpTick() < 0) {
@@ -245,6 +249,8 @@ public class NobleZombieEntity extends PVZZombieEntity {
 			    this.heal(0.3f);
 			}else if(percent < 1f / 2) {
 				this.heal(0.2f);
+			}else if(percent < 1f / 6) {
+				this.heal(0.5f);
 			}
 		}
 	}
