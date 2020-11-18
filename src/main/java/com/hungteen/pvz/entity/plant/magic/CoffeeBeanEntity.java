@@ -7,7 +7,9 @@ import com.hungteen.pvz.utils.EntityUtil;
 import com.hungteen.pvz.utils.enums.Plants;
 
 import net.minecraft.entity.CreatureEntity;
+import net.minecraft.entity.EntitySize;
 import net.minecraft.entity.EntityType;
+import net.minecraft.entity.Pose;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.world.World;
 
@@ -49,6 +51,11 @@ public class CoffeeBeanEntity extends PlantBomberEntity{
 			return 48000;
 		}
 		return 24000;
+	}
+	
+	@Override
+	public EntitySize getSize(Pose poseIn) {
+		return EntitySize.flexible(0.6f, 0.8f);
 	}
 	
 	@Override

@@ -125,11 +125,10 @@ public abstract class PVZPlantEntity extends CreatureEntity implements IPVZPlant
 	@Override
 	public float getPlantHealth() {
 		int lvl = this.getPlantLvl();
-		if(lvl<=14) {
-			return 30+(lvl-1)/2*5;
-		}
-		if(lvl<=20) {
-			return 60+(lvl-14)*5;
+		if(lvl <= 14) {
+			return 27.5f + 2.5f * lvl;
+		} else if(lvl<=20) {
+			return 5 * lvl - 10;
 		}
 		return 30;
 	}

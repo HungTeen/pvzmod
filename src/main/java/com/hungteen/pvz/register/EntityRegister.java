@@ -14,6 +14,7 @@ import com.hungteen.pvz.entity.misc.SmallChomperEntity;
 import com.hungteen.pvz.entity.misc.ZombieHandEntity;
 import com.hungteen.pvz.entity.npc.CrazyDaveEntity;
 import com.hungteen.pvz.entity.npc.PanneyEntity;
+import com.hungteen.pvz.entity.plant.appease.GatlingPeaEntity;
 import com.hungteen.pvz.entity.plant.appease.PeaShooterEntity;
 import com.hungteen.pvz.entity.plant.appease.RepeaterEntity;
 import com.hungteen.pvz.entity.plant.appease.ThreePeaterEntity;
@@ -80,6 +81,7 @@ import com.hungteen.pvz.render.entity.misc.SmallChomperRender;
 import com.hungteen.pvz.render.entity.misc.ZombieHandRender;
 import com.hungteen.pvz.render.entity.npc.CrazyDaveRender;
 import com.hungteen.pvz.render.entity.npc.PanneyRender;
+import com.hungteen.pvz.render.entity.plant.appease.GatlingPeaRender;
 import com.hungteen.pvz.render.entity.plant.appease.PeaShooterRender;
 import com.hungteen.pvz.render.entity.plant.appease.RepeaterRender;
 import com.hungteen.pvz.render.entity.plant.appease.ThreePeaterRender;
@@ -233,6 +235,7 @@ public class EntityRegister {
 	public static final RegistryObject<EntityType<IceShroomEntity>> ICE_SHROOM = registerEntityType(IceShroomEntity::new, "ice_shroom", EntityClassification.CREATURE);
 	public static final RegistryObject<EntityType<DoomShroomEntity>> DOOM_SHROOM = registerEntityType(DoomShroomEntity::new, "doom_shroom", EntityClassification.CREATURE);
 	public static final RegistryObject<EntityType<CoffeeBeanEntity>> COFFEE_BEAN = registerEntityType(CoffeeBeanEntity::new, "coffee_bean", EntityClassification.CREATURE);
+	public static final RegistryObject<EntityType<GatlingPeaEntity>> GATLING_PEA = registerEntityType(GatlingPeaEntity::new, "gatling_pea", EntityClassification.CREATURE);
 	
 	@OnlyIn(Dist.CLIENT)
 	@SubscribeEvent
@@ -317,6 +320,7 @@ public class EntityRegister {
         RenderingRegistry.registerEntityRenderingHandler(ICE_SHROOM.get(), IceShroomRender::new);
         RenderingRegistry.registerEntityRenderingHandler(DOOM_SHROOM.get(), DoomShroomRender::new);
         RenderingRegistry.registerEntityRenderingHandler(COFFEE_BEAN.get(), CoffeeBeanRender::new);
+        RenderingRegistry.registerEntityRenderingHandler(GATLING_PEA.get(), GatlingPeaRender::new);
     }
 
 	private static <T extends Entity> RegistryObject<EntityType<T>> registerEntityType(IFactory<T> factory,String name,EntityClassification classification){
