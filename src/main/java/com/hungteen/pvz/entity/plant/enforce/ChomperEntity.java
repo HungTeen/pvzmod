@@ -23,7 +23,7 @@ import net.minecraft.world.World;
 
 public class ChomperEntity extends PVZPlantEntity {
 
-	public final int ATTACK_CD = 20;
+	public final int ATTACK_CD = 30;
 	private final int SUPER_RANGE = 20;
 	private static final DataParameter<Integer> REST_TICK = EntityDataManager.createKey(ChomperEntity.class,
 			DataSerializers.VARINT);
@@ -112,7 +112,7 @@ public class ChomperEntity extends PVZPlantEntity {
 		if (target.getHealth() <= this.getAttackDamage()) {// eat to death need rest
 			this.setRestTick(this.getRestCD());
 		}
-		this.playSound(SoundRegister.CHOMP.get(), 1, 1);
+		EntityUtil.playSound(this, SoundRegister.CHOMP.get());
 		target.attackEntityFrom(PVZDamageSource.causeEatDamage(this, this), this.getAttackDamage(target));
 	}
 
@@ -123,7 +123,7 @@ public class ChomperEntity extends PVZPlantEntity {
 		if (target.getHealth() <= this.getAttackDamage()) {// eat to death
 			return this.getAttackDamage();
 		} else {
-			return this.getAttackDamage() / 5;
+			return this.getAttackDamage() / 30;
 		}
 	}
 
@@ -132,11 +132,8 @@ public class ChomperEntity extends PVZPlantEntity {
 	 */
 	public float getAttackDamage() {
 		int lvl = this.getPlantLvl();
-		if (lvl <= 20) {
-			int now = (lvl - 1) / 4;
-			return 200 + now * 20;
-		}
-		return 200;
+		if (lvl <= 19) return 147 + 3 * lvl;
+		return 210;
 	}
 
 	/**
@@ -144,25 +141,17 @@ public class ChomperEntity extends PVZPlantEntity {
 	 */
 	public int getRestCD() {
 		int lvl = this.getPlantLvl();
-		if (lvl <= 20) {
-			int now = (lvl - 1) / 5;
-			return 840 - 40 * now;
-		}
-		return 840;
+		if (lvl <= 19) return 850 - 10 * lvl;
+		return 640;
 	}
 
 	/**
 	 * how many ground chomper to summon
 	 */
 	public int getSuperAttackCnt() {
-		int lvl = this.getPlantLvl();
-		if (lvl <= 6)
-			return 3;
-		else if (lvl <= 13)
-			return 4;
-		else if (lvl <= 20)
-			return 5;
-		return 3;
+		if(this.isPlantInStage(1)) return 3;
+		if(this.isPlantInStage(2)) return 4;
+		return 5;
 	}
 
 	@Override

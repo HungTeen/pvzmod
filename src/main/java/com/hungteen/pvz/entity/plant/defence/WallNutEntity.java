@@ -18,18 +18,15 @@ public class WallNutEntity extends PlantDefenderEntity{
 	@Override
 	public float getPlantHealth() {
 		int lvl = this.getPlantLvl();
-		if(lvl<=19) return 390+10*lvl;
-		if(lvl<=20) return 600;
-		return 400;
+		if(lvl <= 19) return 390 + 10 * lvl;
+	    return 600;
 	}
 	
 	@Override
 	public float getSuperLife() {
-		int lvl = this.getPlantLvl();
-		if(lvl<=6) return 400;
-		else if(lvl<=13) return 500;
-		else if(lvl<=20) return 600;
-		return 400;
+		if(this.isPlantInStage(1)) return 400;
+		if(this.isPlantInStage(2)) return 500;
+		return 600;
 	}
 
 	@Override

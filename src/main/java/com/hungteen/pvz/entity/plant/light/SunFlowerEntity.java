@@ -4,7 +4,9 @@ import com.hungteen.pvz.entity.plant.base.PlantProducerEntity;
 import com.hungteen.pvz.utils.enums.Plants;
 
 import net.minecraft.entity.CreatureEntity;
+import net.minecraft.entity.EntitySize;
 import net.minecraft.entity.EntityType;
+import net.minecraft.entity.Pose;
 import net.minecraft.world.World;
 
 public class SunFlowerEntity extends PlantProducerEntity{
@@ -20,20 +22,22 @@ public class SunFlowerEntity extends PlantProducerEntity{
 
 	@Override
 	public void genSuper() {
-		int lvl=this.getPlantLvl();
-		int ge=(lvl<=13)?3:4;
-		int amount=(lvl<=6)?35:50;
-		for(int i=1;i<=ge;i++) {
+		int ge = this.isPlantInStage(2) ? 3 : 4;
+		int amount = this.isPlantInStage(1) ? 35 : 50;
+		for(int i = 1; i <= ge; ++ i) {
 		    this.genSun(amount);
 		}
 	}
 
 	public int getSunAmount(){
-		int lvl=this.getPlantLvl();
-		if(lvl<=6) return 25;
-		if(lvl<=13) return 35;
-		if(lvl<=20) return 50;
-		return 25;
+		if(this.isPlantInStage(1)) return 25;
+		if(this.isPlantInStage(2)) return 35;
+		return 50;
+	}
+	
+	@Override
+	public EntitySize getSize(Pose poseIn) {
+		return EntitySize.flexible(0.8f, 1.65f);
 	}
 	
 	@Override

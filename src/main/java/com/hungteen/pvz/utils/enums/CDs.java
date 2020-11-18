@@ -2,6 +2,7 @@ package com.hungteen.pvz.utils.enums;
 
 public enum CDs {
 
+	SUPER_FAST,
 	HUGE_FAST,
 	VERY_FAST,
 	FAST,

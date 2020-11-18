@@ -44,13 +44,13 @@ public class PotatoMineEntity extends PlantCloserEntity{
 	protected void normalPlantTick() {
 		super.normalPlantTick();
 		if(this.getAttackTime() % this.getSignChangeTime() == 0) {
-			this.sign_red = !this.sign_red;
+			this.sign_red = ! this.sign_red;
 		}
 		this.setAttackTime(this.getAttackTime() + 1);
-		if(this.getAttackTime() >= this.getReadyTime() && !this.isMineReady()) {
+		if(this.getAttackTime() >= this.getReadyTime() && ! this.isMineReady()) {
 			this.outDirt();
 		}
-		if(this.isPlantInSuperMode() && !this.isMineReady()) {
+		if(this.isPlantInSuperMode() && ! this.isMineReady()) {
 			this.outDirt();
 		}
 	}
@@ -65,11 +65,8 @@ public class PotatoMineEntity extends PlantCloserEntity{
 	 * shoot some potato to the sky
 	 */
 	protected void shootPotatos() {
-		int lvl = this.getPlantLvl();
-		int min = lvl<=13?1:2;
-		int max = lvl<=6?2:3;
-		int num = this.getRNG().nextInt(max-min)+min;
-		for(int i = 1;i <= num;i++) {
+		int num = this.getShootNum();
+		for(int i = 1; i <= num; ++ i) {
 			PotatoEntity potato = new PotatoEntity(EntityRegister.POTATO.get(), world, this);
 			potato.setPosition(this.getPosX(), this.getPosY() + 1, this.getPosZ());
 		    float dx = (this.getRNG().nextFloat() - 0.5f) * i / 3;
@@ -80,17 +77,23 @@ public class PotatoMineEntity extends PlantCloserEntity{
 		}
 	}
 	
+	public int getShootNum() {
+		if(this.isPlantInStage(1)) return 1;
+		if(this.isPlantInStage(2)) return 2;
+		return 3;
+	}
+	
 	@Override
 	public boolean performAttack() {
 		if(!this.isMineReady()) {//not ready
 			return false;
 		}
 		if(!this.world.isRemote) {
-			AxisAlignedBB aabb= EntityUtil.getEntityAABB(this, bombRange,bombRange);
-			for(LivingEntity target:EntityUtil.getEntityTargetableEntity(this, aabb)) {
+			AxisAlignedBB aabb= EntityUtil.getEntityAABB(this, bombRange, bombRange);
+			for(LivingEntity target : EntityUtil.getEntityTargetableEntity(this, aabb)) {
 				target.attackEntityFrom(PVZDamageSource.causeExplosionDamage(this, this), this.getAttackDamage());
 			}
-			this.playSound(SoundRegister.POTATO_MINE.get(), 1f, 1f);
+			EntityUtil.playSound(this, SoundRegister.POTATO_MINE.get());
 		}
 		return true;
 	}
@@ -101,7 +104,6 @@ public class PotatoMineEntity extends PlantCloserEntity{
 			return ;
 		}
 		for(int i=1;i<=5;i++) {
-//			System.out.println("111");
 			this.world.addParticle(ParticleRegister.DIRT_BURST_OUT.get(), this.getPosX(), this.getPosY(), this.getPosZ(), (rand.nextFloat()-0.5)/4,0.4d,(rand.nextFloat()-0.5)/4);
 		    this.world.addParticle(ParticleRegister.YELLOW_BOMB.get(), this.getPosX(), this.getPosY(), this.getPosZ(), 0, 0, 0);
 		    this.world.addParticle(ParticleRegister.DIRT_BURST_OUT.get(), this.getPosX(), this.getPosY(), this.getPosZ(), (rand.nextFloat()-0.5)/4,0.4d,(rand.nextFloat()-0.5)/4);
@@ -114,15 +116,15 @@ public class PotatoMineEntity extends PlantCloserEntity{
 	protected void outDirt(){
 		this.setMineReady(true);
 		if(world.isRemote) {
-			for(int i=0;i<10;i++) {
-			    Random rand=this.getRNG();
-			    this.world.addParticle(ParticleRegister.DIRT_BURST_OUT.get(), this.getPosX()+0.5d, this.getPosY(), this.getPosZ()+0.5d, (rand.nextFloat()-0.5)/10,0.05d,(rand.nextFloat()-0.5)/10);
-			    this.world.addParticle(ParticleRegister.DIRT_BURST_OUT.get(), this.getPosX()+0.5d, this.getPosY(), this.getPosZ()-0.5d, (rand.nextFloat()-0.5)/10,0.05d,(rand.nextFloat()-0.5)/10);
-			    this.world.addParticle(ParticleRegister.DIRT_BURST_OUT.get(), this.getPosX()-0.5d, this.getPosY(), this.getPosZ()+0.5d, (rand.nextFloat()-0.5)/10,0.05d,(rand.nextFloat()-0.5)/10);
-			    this.world.addParticle(ParticleRegister.DIRT_BURST_OUT.get(), this.getPosX()-0.5d, this.getPosY(), this.getPosZ()-0.5d, (rand.nextFloat()-0.5)/10,0.05d,(rand.nextFloat()-0.5)/10);
+			for(int i = 0; i < 10; ++ i) {
+			    Random rand = this.getRNG();
+			    this.world.addParticle(ParticleRegister.DIRT_BURST_OUT.get(), this.getPosX() + 0.5d, this.getPosY(), this.getPosZ() + 0.5d, (rand.nextFloat() - 0.5) / 10, 0.05d, (rand.nextFloat() - 0.5) / 10);
+			    this.world.addParticle(ParticleRegister.DIRT_BURST_OUT.get(), this.getPosX() + 0.5d, this.getPosY(), this.getPosZ() - 0.5d, (rand.nextFloat() - 0.5) / 10, 0.05d, (rand.nextFloat() - 0.5) / 10);
+			    this.world.addParticle(ParticleRegister.DIRT_BURST_OUT.get(), this.getPosX() - 0.5d, this.getPosY(), this.getPosZ() + 0.5d, (rand.nextFloat() - 0.5) / 10, 0.05d, (rand.nextFloat() - 0.5) / 10);
+			    this.world.addParticle(ParticleRegister.DIRT_BURST_OUT.get(), this.getPosX() - 0.5d, this.getPosY(), this.getPosZ() - 0.5d, (rand.nextFloat() - 0.5) / 10, 0.05d, (rand.nextFloat() - 0.5) / 10);
 		    }
 		}else {
-			this.playSound(SoundRegister.DIRT_RISE.get(), 1f, 1f);
+			EntityUtil.playSound(this, SoundRegister.DIRT_RISE.get());
 		}
 	}
 	
@@ -139,20 +141,19 @@ public class PotatoMineEntity extends PlantCloserEntity{
 	 */
 	public int getReadyTime(){
 		int lvl = this.getPlantLvl();
-		if(lvl<=20) {
-			int now=(lvl-1)/4;
-			return 240-now*20;
+		if(lvl <= 20) {
+			int now = (lvl - 1) / 2;
+			return 240 - now * 10;
 		}
-		return 240;
+		return 150;
 	}
 	
 	public float getAttackDamage(){
 		int lvl = this.getPlantLvl();
-		if(lvl<=20) {
-			int now=(lvl-1)/5;
-			return 140+now*20;
+		if(lvl <= 19) {
+			return 135 + 5 * lvl;
 		}
-		return 140;
+		return 240;
 	}
 	
 	protected int getSignChangeTime(){

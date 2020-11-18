@@ -4,6 +4,7 @@ import com.hungteen.pvz.entity.plant.PVZPlantEntity;
 import com.hungteen.pvz.entity.zombie.grassnight.TombStoneEntity;
 import com.hungteen.pvz.misc.damage.PVZDamageSource;
 import com.hungteen.pvz.register.SoundRegister;
+import com.hungteen.pvz.utils.EntityUtil;
 import com.hungteen.pvz.utils.enums.Plants;
 
 import net.minecraft.entity.CreatureEntity;
@@ -39,7 +40,6 @@ public class GraveBusterEntity extends PVZPlantEntity{
 	@Override
 	protected void registerGoals() {
 		super.registerGoals();
-//		this.targetSelector.addGoal(0, new PVZNearestTargetGoal(this, true, 5, 3, 2, 0));
 		this.targetSelector.addGoal(0, new NearestAttackableTargetGoal<TombStoneEntity>(this, TombStoneEntity.class, 5, true, true, (tomb)-> {
 			return tomb.getPassengers().isEmpty();
 		}));
@@ -58,30 +58,23 @@ public class GraveBusterEntity extends PVZPlantEntity{
 		if(this.isEating()) {
 			this.setLiveTick(0);
 			if(this.getAttackTime() % 20 == 0) {
-			    this.playSound(SoundRegister.PLANT_HURT.get(), 1f, 1f);
+				EntityUtil.playSound(this, SoundRegister.PLANT_HURT.get());
 			}
 		}
 	}
 	
 	public int getAttackCD() {
 		int lvl = this.getPlantLvl();
-		if(lvl <= 20) {
-			int now = (lvl - 1) / 4;
-			return 100 - now * 10;
+		if(lvl <= 19) {
+			return 102 - 2 * lvl;
 		}
-		return 100;
+		return 60;
 	}
 	
 	public int getMaxKillCnt() {
-		int lvl = this.getPlantLvl();
-		if(lvl <= 6) {
-			return 1;
-		}else if(lvl <= 13) {
-			return 2;
-		}else if(lvl <= 20) {
-			return 3;
-		}
-		return 1;
+		if(this.isPlantInStage(1)) return 1;
+		if(this.isPlantInStage(2)) return 2;
+		return 3;
 	}
 	
 	@Override

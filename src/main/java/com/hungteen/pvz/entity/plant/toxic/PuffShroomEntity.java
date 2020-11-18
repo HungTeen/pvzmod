@@ -42,13 +42,13 @@ public class PuffShroomEntity extends PlantShooterEntity implements IShroomPlant
         double dz = target.getPosZ() - this.getPosZ();
         double y = this.getPosY()+this.getSize(getPose()).height*0.7f;
         double dis =MathHelper.sqrt(dx * dx + dz * dz);
-        double tmp=this.LENTH/dis;
-        double deltaX=tmp*dx;
-        double deltaZ=tmp*dz;
+        double tmp=this.LENTH / dis;
+        double deltaX = tmp * dx;
+        double deltaZ = tmp * dz;
         SporeEntity spore = new SporeEntity(EntityRegister.SPORE.get(), this.world, this);
-        spore.setPosition(this.getPosX()+deltaX,y,this.getPosZ()+deltaZ);
-        spore.shootPea(dx, target.getPosY()+target.getHeight()-y, dz, this.getBulletSpeed());      
-        this.playSound(SoundRegister.PUFF.get(), 1.0F, 1.0F);
+        spore.setPosition(this.getPosX() + deltaX, y, this.getPosZ() + deltaZ);
+        spore.shootPea(dx, target.getPosY() + target.getHeight() - y, dz, this.getBulletSpeed());      
+        EntityUtil.playSound(this, SoundRegister.PUFF.get());
         this.world.addEntity(spore);
 	}
 
@@ -81,46 +81,32 @@ public class PuffShroomEntity extends PlantShooterEntity implements IShroomPlant
 	@Override
 	public int getMaxLiveTick() {
 		int lvl = this.getPlantLvl();
-		if(lvl <= 20) {
-			int now = (lvl - 1) / 5;
-			return 1500 + 100 * now;
+		if(lvl <= 19) {
+			return 1485 + 15 * lvl;
 		}
-		return 1500;
+		return 1800;
 	}
 	
 	public int getHelpRange() {
-		int lvl = this.getPlantLvl();
-		if(lvl <= 6) {
-			return 5;
-		}else if(lvl <= 13) {
-			return 8;
-		}else if(lvl <= 20) {
-			return 12;
-		}
-		return 5;
+		if(this.isPlantInStage(1)) return 3;
+		if(this.isPlantInStage(2)) return 4;
+		return 6;
 	}
 
 	@Override
 	public int getSuperTimeLength() {
-		int lvl = this.getPlantLvl();
-		if(lvl <= 6) {
-			return 50;
-		}else if(lvl <= 13) {
-			return 60;
-		}else if(lvl <= 20) {
-			return 80;
-		}
-		return 50;
+		if(this.isPlantInStage(1)) return 40;
+		if(this.isPlantInStage(2)) return 50;
+		return 60;
 	}
 	
 	@Override
 	public float getPlantHealth() {
 		int lvl = this.getPlantLvl();
-		if(lvl <= 20) {
-			int now = (lvl - 1) / 4;
-			return 30 + now * 5;
+		if(lvl <= 19) {
+			return 29 + lvl;
 		}
-		return 30;
+		return 50;
 	}
 	
 	@Override

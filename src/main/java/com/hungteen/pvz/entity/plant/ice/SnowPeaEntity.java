@@ -21,14 +21,24 @@ public class SnowPeaEntity extends PeaShooterEntity implements IIcePlant{
 
 	@Override
 	public EffectInstance getColdEffect() {
+		return new EffectInstance(EffectRegister.COLD_EFFECT.get(), this.getColdTick(), this.getColdLvl(), false, false);
+	}
+	
+	public int getColdLvl() {
 		int lvl = this.getPlantLvl();
-		int duration = 80, amount = 5;
 		if(lvl <= 20) {
 			int now = (lvl - 1) / 4;
-			duration += now * 20;
-			amount += now;
+			return 5 + now;
 		}
-		return new EffectInstance(EffectRegister.COLD_EFFECT.get(), duration, amount, false, false);
+		return 9;
+	}
+	
+	public int getColdTick() {
+		int lvl = this.getPlantLvl();
+		if(lvl <= 19) {
+			return 76 + 4 * lvl;
+		}
+		return 160;
 	}
 	
 	@Override

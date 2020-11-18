@@ -22,23 +22,20 @@ public class TallNutEntity extends WallNutEntity{
 	@Override
 	public float getPlantHealth() {
 		int lvl = this.getPlantLvl();
-		if(lvl<=19) return 790+10*lvl;
-		if(lvl<=20) return 1000;
-		return 800;
+		if(lvl <= 19) return 790 + 10 * lvl;
+		return 1000;
 	}
 	
 	@Override
 	public float getSuperLife() {
-		int lvl = this.getPlantLvl();
-		if(lvl<=6) return 800;
-		if(lvl<=13) return 1000;
-		if(lvl<=20) return 1200;
-		return 800;
+		if(this.isPlantInStage(1)) return 800;
+		if(this.isPlantInStage(2)) return 1000;
+		return 1200;
 	}
 	
 	@Override
 	protected float getAttractRange() {
-		return 8;
+		return 6;
 	}
 	
 	@Override

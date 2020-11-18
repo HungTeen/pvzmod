@@ -2,6 +2,7 @@ package com.hungteen.pvz.entity.plant.appease;
 
 import com.hungteen.pvz.entity.bullet.PeaEntity;
 import com.hungteen.pvz.register.EntityRegister;
+import com.hungteen.pvz.utils.EntityUtil;
 import com.hungteen.pvz.utils.enums.Plants;
 
 import net.minecraft.entity.CreatureEntity;
@@ -34,7 +35,7 @@ public class ThreePeaterEntity extends PeaShooterEntity {
 		}
 		double dx = target.getPosX() - this.getPosX();
         double dz = target.getPosZ() - this.getPosZ();
-        double y = this.getPosY()+this.getSize(getPose()).height*0.7f;
+        double y = this.getPosY() + this.getSize(getPose()).height * 0.7f;
         double dis = MathHelper.sqrt(dx * dx + dz * dz);
         double tmp= this.LENTH / dis;
         double deltaX = tmp * dx;
@@ -42,8 +43,7 @@ public class ThreePeaterEntity extends PeaShooterEntity {
         //shoot mid pea
         PeaEntity pea = new PeaEntity(EntityRegister.PEA.get(), this.world, this, this.getShootType(), this.getShootState());
         pea.setPosition(this.getPosX() + deltaX, y, this.getPosZ() + deltaZ);
-        pea.shootPea(dx, target.getPosY()+target.getHeight()-y, dz, this.getBulletSpeed());      
-        this.playSound(getShootSound(), 1.0F, 1.0F);
+        pea.shootPea(dx, target.getPosY() + target.getHeight() - y, dz, this.getBulletSpeed());      
         this.world.addEntity(pea);
         //shoot left pea
         double now = DIS / dis;
@@ -51,13 +51,14 @@ public class ThreePeaterEntity extends PeaShooterEntity {
         double deltaZZ = -now * dx;
         pea = new PeaEntity(EntityRegister.PEA.get(), this.world, this, this.getShootType(), this.getShootState());
         pea.setPosition(this.getPosX() + deltaX + deltaXX, this.getPosY() + this.getSize(getPose()).height * 0.5f, this.getPosZ() + deltaZ + deltaZZ);
-        pea.shootPea(dx, target.getPosY()+target.getHeight()-y, dz, this.getBulletSpeed());     
+        pea.shootPea(dx, target.getPosY() + target.getHeight() - y, dz, this.getBulletSpeed());     
         this.world.addEntity(pea);
         //shoot right pea
         pea = new PeaEntity(EntityRegister.PEA.get(), this.world, this, this.getShootType(), this.getShootState());
         pea.setPosition(this.getPosX() + deltaX - deltaXX, this.getPosY() + this.getSize(getPose()).height * 0.5f, this.getPosZ() + deltaZ - deltaZZ);
-        pea.shootPea(dx, target.getPosY()+target.getHeight()-y, dz, this.getBulletSpeed());     
+        pea.shootPea(dx, target.getPosY() + target.getHeight() - y, dz, this.getBulletSpeed());     
         this.world.addEntity(pea);
+        EntityUtil.playSound(this, this.getShootSound());
 	}
 	
 	@Override

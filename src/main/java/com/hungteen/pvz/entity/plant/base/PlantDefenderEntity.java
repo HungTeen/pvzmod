@@ -4,12 +4,10 @@ import com.hungteen.pvz.capability.CapabilityHandler;
 import com.hungteen.pvz.entity.ai.PVZNearestTargetGoal;
 import com.hungteen.pvz.entity.plant.PVZPlantEntity;
 import com.hungteen.pvz.item.tool.card.PlantCardItem;
-import com.hungteen.pvz.utils.EntityUtil;
 import com.hungteen.pvz.utils.enums.Resources;
 import com.hungteen.pvz.utils.interfaces.IDefender;
 
 import net.minecraft.entity.CreatureEntity;
-import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.MobEntity;
@@ -41,10 +39,13 @@ public abstract class PlantDefenderEntity extends PVZPlantEntity implements IDef
 	@Override
 	protected void registerGoals() {
 		super.registerGoals();
-		this.targetSelector.addGoal(0, new PVZNearestTargetGoal(this, true, getAttractRange(), 3f) {
+		this.targetSelector.addGoal(0, new PVZNearestTargetGoal(this, true, getAttractRange(), this.getAttractRange()) {
 			@Override
 			protected boolean checkOther(LivingEntity entity) {
-				return entity instanceof MobEntity;
+				if(entity instanceof MobEntity) {
+					return ! (((MobEntity) entity).getAttackTarget() instanceof PlantDefenderEntity);
+				}
+				return false;
 			}
 		});
 	}
@@ -58,14 +59,18 @@ public abstract class PlantDefenderEntity extends PVZPlantEntity implements IDef
 	
 	@Override
 	public void attract() {
-		float range = getAttractRange();
-		for(Entity target:EntityUtil.getEntityTargetableEntity(this, EntityUtil.getEntityAABB(this, range, range))) {
-			if(target instanceof MobEntity) {
-				if(!(((MobEntity) target).getAttackTarget() instanceof PlantDefenderEntity)) {
-					((MobEntity) target).setAttackTarget(this);
-				}
-			}
-		}
+//		float range = getAttractRange();
+//		for(LivingEntity target:EntityUtil.getEntityTargetableEntity(this, EntityUtil.getEntityAABB(this, range, range))) {
+//			this.attract(target);
+//		}
+	}
+	
+	public void attract(LivingEntity target) {
+//		if(target instanceof MobEntity) {
+//			if(!(((MobEntity) target).getAttackTarget() instanceof PlantDefenderEntity)) {
+//				((MobEntity) target).setAttackTarget(this);
+//			}
+//		}
 	}
 	
 	@Override

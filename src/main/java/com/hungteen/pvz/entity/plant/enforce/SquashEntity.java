@@ -69,7 +69,7 @@ public class SquashEntity extends PVZPlantEntity{
 				}
 			}else {
 				if(this.getAttackTarget() != null) {
-					this.playSound(SoundRegister.SQUASH_HMM.get(), 1f, 1f);
+					EntityUtil.playSound(this, SoundRegister.SQUASH_HMM.get());
 					this.jumpToTarget(this.getAttackTarget());
 				}
 			}
@@ -96,7 +96,7 @@ public class SquashEntity extends PVZPlantEntity{
 		this.setAttackTime(0);
 		this.canCollideWithPlant = true;
 		this.restTick = CD;
-		this.playSound(SoundRegister.GROUND_SHAKE.get(), 1f, 1f);
+		EntityUtil.playSound(this, SoundRegister.GROUND_SHAKE.get());
 		for(Entity entity : EntityUtil.getEntityTargetableEntity(this, EntityUtil.getEntityAABB(this, 0.5f, 0.5f))) {
 			entity.attackEntityFrom(PVZDamageSource.causeNormalDamage(this, this), this.getAttackDamage());
 		}
@@ -118,32 +118,29 @@ public class SquashEntity extends PVZPlantEntity{
 	 * extra smash times
 	 */
 	protected int getSuperBonusChance(){
-		int lvl=this.getPlantLvl();
-		if(lvl<=6) return 2;
-		else if(lvl<=13) return 3;
-		else if(lvl<=20) return 4;
-		return 2;
+		if(this.isPlantInStage(1)) return 2;
+		if(this.isPlantInStage(2)) return 3;
+		return 4;
 	}
 	
 	public float getAttackDamage(){
 		int lvl = this.getPlantLvl();
-		if(lvl<=20) {
-			int now=(lvl-1)/5;
-			return 140+now*20;
+		if(lvl <= 19) {
+			return 135 + 5 * lvl;
 		}
-		return 140;
+		return 240;
 	}
 	
 	/**
 	 * die chance for each smash
 	 */
 	public int getDeathChance(){
-		int lvl=this.getPlantLvl();
-		if(lvl<=20) {
-			int now=(lvl-1)/4;
-			return 90-5*now;
+		int lvl = this.getPlantLvl();
+		if(lvl <= 20) {
+			int now = (lvl - 1) / 4;
+			return 90 - 5 * now;
 		}
-		return 90;
+		return 70;
 	}
 	
 	@Override

@@ -46,12 +46,12 @@ public class TorchWoodEntity extends PVZPlantEntity{
 	}
 	
 	private void fireballRain() {
-		double dx = (this.getRNG().nextFloat()-0.5f)*6;
-		double dz = (this.getRNG().nextFloat()-0.5f)*6;
+		double dx = (this.getRNG().nextFloat() - 0.5f) * 6;
+		double dz = (this.getRNG().nextFloat() - 0.5f) * 6;
 		double dy = 10;
 		PeaEntity pea = new PeaEntity(EntityRegister.PEA.get(), world, this, PeaEntity.Type.NORMAL, PeaEntity.State.FIRE);
-		pea.setPosition(this.getPosX()+dx, this.getPosY()+dy, this.getPosZ()+dz);
-		pea.setMotion(0, -0.4, 0);
+		pea.setPosition(this.getPosX() + dx, this.getPosY() + dy, this.getPosZ() + dz);
+		pea.setMotion(0, - 0.4, 0);
 		world.addEntity(pea);
 	}
 	
@@ -73,11 +73,9 @@ public class TorchWoodEntity extends PVZPlantEntity{
 
 	@Override
 	public int getSuperTimeLength() {
-		int lvl=this.getPlantLvl();
-		if(lvl<=6) return 30;
-		if(lvl<=13) return 50;
-		if(lvl<=20) return 80;
-		return 30;
+		if(this.isPlantInStage(1)) return 30;
+		if(this.isPlantInStage(2)) return 50;
+		return 80;
 	}
 	
 	public boolean IsSuperFlame() {

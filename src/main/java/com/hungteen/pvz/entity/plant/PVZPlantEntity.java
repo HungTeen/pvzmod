@@ -127,10 +127,8 @@ public abstract class PVZPlantEntity extends CreatureEntity implements IPVZPlant
 		int lvl = this.getPlantLvl();
 		if(lvl <= 14) {
 			return 27.5f + 2.5f * lvl;
-		} else if(lvl<=20) {
-			return 5 * lvl - 10;
-		}
-		return 30;
+		} 
+		return 5 * lvl - 10;
 	}
 	
 	@Override
@@ -530,14 +528,14 @@ public abstract class PVZPlantEntity extends CreatureEntity implements IPVZPlant
 	}
 	
 	public boolean isPlantInSuperMode(){
-		return this.getSuperTime()>0;
+		return this.getSuperTime() > 0;
 	}
 	
 	/**
 	 * check can start super mode currently
 	 */
 	public boolean canStartSuperMode(){
-		return !this.isPlantSleeping() && this.hasSuperMode() && !this.isPlantInSuperMode();
+		return ! this.isPlantSleeping() && this.hasSuperMode() && ! this.isPlantInSuperMode();
 	}
 	
 	private boolean hasSuperMode() {
@@ -622,6 +620,13 @@ public abstract class PVZPlantEntity extends CreatureEntity implements IPVZPlant
 			}
 		}
 		return true;
+	}
+	
+	protected boolean isPlantInStage(int stage) {
+		if(stage == 1) return this.getPlantLvl() <= 6;
+		if(stage == 2) return this.getPlantLvl() <= 13;
+		if(stage == 3) return this.getPlantLvl() <= 20;
+		return false;
 	}
 	
 	public int getBoostTime(){

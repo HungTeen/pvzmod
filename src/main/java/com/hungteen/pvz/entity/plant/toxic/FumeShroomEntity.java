@@ -6,6 +6,7 @@ import com.hungteen.pvz.entity.plant.base.PlantShooterEntity;
 import com.hungteen.pvz.entity.plant.interfaces.IShroomPlant;
 import com.hungteen.pvz.register.EntityRegister;
 import com.hungteen.pvz.register.SoundRegister;
+import com.hungteen.pvz.utils.EntityUtil;
 import com.hungteen.pvz.utils.enums.Plants;
 
 import net.minecraft.entity.CreatureEntity;
@@ -32,7 +33,7 @@ public class FumeShroomEntity extends PlantShooterEntity implements IShroomPlant
 	
 	@Override
 	public void shootBullet() {
-		LivingEntity target=this.getAttackTarget();
+		LivingEntity target = this.getAttackTarget();
 		if(target==null) {
 			return ;
 		}
@@ -41,15 +42,15 @@ public class FumeShroomEntity extends PlantShooterEntity implements IShroomPlant
         double y = this.getPosY() + this.getSize(getPose()).height * 0.7f;
         double dis = MathHelper.sqrt(dx * dx + dz * dz);
         double tmp = this.LENTH / dis;
-        double deltaX = tmp*dx;
-        double deltaZ = tmp*dz;
+        double deltaX = tmp * dx;
+        double deltaZ = tmp * dz;
         FumeEntity fume = new FumeEntity(EntityRegister.FUME.get(), this.world, this);
         if(this.isPlantInSuperMode()) {
         	fume.setKnockback(this.getKnockback());
         }
         fume.setPosition(this.getPosX() + deltaX, y, this.getPosZ() + deltaZ);
-        fume.shootPea(dx, target.getPosY() + target.getHeight()-y, dz, this.getBulletSpeed());      
-        this.playSound(SoundRegister.FUME.get(), 1.0F, 1.0F);
+        fume.shootPea(dx, target.getPosY() + target.getHeight() - y, dz, this.getBulletSpeed());
+        EntityUtil.playSound(this, SoundRegister.FUME.get());
         this.world.addEntity(fume);
 	}
 
@@ -60,30 +61,18 @@ public class FumeShroomEntity extends PlantShooterEntity implements IShroomPlant
 	
 	@Override
 	public int getSuperTimeLength() {
-		int lvl = this.getPlantLvl();
-		if(lvl <= 6) {
-			return 40;
-		}else if(lvl <= 13) {
-			return 50;
-		}else if(lvl <= 20) {
-			return 60;
-		}
-		return 40;
+		if(this.isPlantInStage(1)) return 40;
+		if(this.isPlantInStage(2)) return 50;
+		return 60;
 	}
 	
 	/**
 	 * get bullet knockback lvl in super mode
 	 */
 	public int getKnockback() {
-		int lvl = this.getPlantLvl();
-		if(lvl <= 6) {
-			return 1;
-		}else if(lvl <= 13) {
-			return 2;
-		}else if(lvl <= 20) {
-			return 3;
-		}
-		return 1;
+		if(this.isPlantInStage(1)) return 1;
+		if(this.isPlantInStage(2)) return 2;
+		return 3;
 	}
     
 	@Override

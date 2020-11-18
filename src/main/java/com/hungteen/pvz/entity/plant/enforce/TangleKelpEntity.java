@@ -39,7 +39,7 @@ public class TangleKelpEntity extends PVZPlantEntity{
 					this.remove();
 					return ;
 				}
-				this.setMotion(0, -0.03f, 0);
+				this.setMotion(0, - 0.03f, 0);
 				if(this.getAttackTime()%100==0) {
 					for(Entity target:this.getPassengers()) {
 						target.attackEntityFrom(PVZDamageSource.causeNormalDamage(this, this), this.getAttackDamage());
@@ -56,7 +56,7 @@ public class TangleKelpEntity extends PVZPlantEntity{
 						this.getAttackTarget().stopRiding();
 					}
 					this.getAttackTarget().startRiding(this, true);
-					this.playSound(SoundRegister.DRAG.get(), 1f, 1f);
+					EntityUtil.playSound(this, SoundRegister.DRAG.get());
 				}
 			}
 		}
@@ -69,7 +69,7 @@ public class TangleKelpEntity extends PVZPlantEntity{
 			int cnt = this.getCount();
 			for(Entity target:EntityUtil.getEntityTargetableEntity(this, EntityUtil.getEntityAABB(this, 25, 3))) {
 				if(target.isInWater()) {
-					--cnt;
+					-- cnt;
 					TangleKelpEntity entity = EntityRegister.TANGLE_KELP.get().create(world);
 					entity.setPosition(target.getPosX(), target.getPosY(), target.getPosZ());
 					PlantUtil.copyPlantData(entity, this);
@@ -84,11 +84,10 @@ public class TangleKelpEntity extends PVZPlantEntity{
 	
 	public float getAttackDamage(){
 		int lvl = this.getPlantLvl();
-		if(lvl<=20) {
-			int now = (lvl-1)/5;
-			return now*2+13;
+		if(lvl <= 19) {
+			return 13.75f + 0.25f * lvl;
 		}
-		return 13;
+		return 19;
 	}
 	
 	@Override
@@ -97,11 +96,9 @@ public class TangleKelpEntity extends PVZPlantEntity{
 	}
 	
 	private int getCount(){
-		int lvl=this.getPlantLvl();
-		if(lvl<=6) return 3;
-		else if(lvl<=13) return 4;
-		else if(lvl<=20) return 5;
-		return 3;
+		if(this.isPlantInStage(1)) return 3;
+		if(this.isPlantInStage(2)) return 4;
+		return 5;
 	}
 	
 	@Override

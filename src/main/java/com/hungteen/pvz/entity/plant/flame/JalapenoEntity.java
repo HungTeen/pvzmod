@@ -24,15 +24,15 @@ public class JalapenoEntity extends PlantBomberEntity{
 	@Override
 	public void startBomb() {
 		int range = this.getFireRange();
-		for(int i=-range;i<=range;i++) {
+		for(int i = - range; i <= range; ++ i) {
 			clearSnowAndSpawnFlame(i, 0);
 			clearSnowAndSpawnFlame(0, i);
 		}
 		if(!world.isRemote) {
-			this.playSound(SoundRegister.JALAPENO.get(), 1f, 1f);
+			EntityUtil.playSound(this, SoundRegister.JALAPENO.get());
 		}
-		fireMob(range,0.5f);
-		fireMob(0.5f,range);
+		fireMob(range, 0.5f);
+		fireMob(0.5f, range);
 		killFireBall();
 	}
 	
@@ -48,7 +48,7 @@ public class JalapenoEntity extends PlantBomberEntity{
 		double x = pos.getX() + 0.5f;
 		double y = pos.getY() + 0.5f;
 		double z = pos.getZ() + 0.5f;
-		AxisAlignedBB aabb = new AxisAlignedBB(x+dx, y+1, z+dz, x-dx, y-1, z-dz);
+		AxisAlignedBB aabb = new AxisAlignedBB(x + dx, y + 1, z + dz, x - dx, y - 1, z - dz);
 		for(LivingEntity target:EntityUtil.getEntityTargetableEntity(this, aabb)) {
 			target.attackEntityFrom(PVZDamageSource.causeFireDamage(this, this), this.getAttackDamage());
 		}
@@ -60,7 +60,7 @@ public class JalapenoEntity extends PlantBomberEntity{
 			world.setBlockState(pos, Blocks.AIR.getDefaultState());
 		}
 		if(world.isRemote) {
-			for(int i=0;i<30;i++) {
+			for(int i = 0; i < 30; ++ i) {
 				world.addParticle(ParticleTypes.FLAME, pos.getX() + 0.5, pos.getY(), pos.getZ() + 0.5, 
 						(this.getRNG().nextFloat() - 0.5) / 10, this.getRNG().nextFloat() / 8, (this.getRNG().nextFloat() - 0.5) / 10);
 			}
@@ -69,22 +69,18 @@ public class JalapenoEntity extends PlantBomberEntity{
 
 	public float getAttackDamage(){
 		int lvl = this.getPlantLvl();
-		if(lvl<=20) {
-			int now = (lvl-1)/4;
-			return 130 + now * 5;
+		if(lvl <= 19) {
+			return 139.5f + 0.5f * lvl;
 		}
-		return 130;
+		return 150;
 	}
 	
 	public int getFireRange() {
-		int lvl = this.getPlantLvl();
-		if(lvl<=6) return 10;
-		if(lvl<=13) return 15;
-		if(lvl<=20) return 20;
-		return 10;
+		if(this.isPlantInStage(1)) return 10;
+		if(this.isPlantInStage(2)) return 15;
+		return 20;
 	}
 
-	
 	@Override
 	public int getReadyTime() {
 		return 30;

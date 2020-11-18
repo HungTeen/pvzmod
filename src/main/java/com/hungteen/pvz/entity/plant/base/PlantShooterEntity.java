@@ -44,11 +44,12 @@ public abstract class PlantShooterEntity extends PVZPlantEntity implements IShoo
 	 */
 	public float getAttackDamage() {
 		int lvl = this.getPlantLvl();
-		if(lvl<=20) {
-			int now=(lvl-1)/4;
-			return 2+0.5f*now;
+		if(lvl <= 18) {
+			int now = (lvl -1) / 2;
+			return 2 + 0.25f * now;
 		}
-		return 2;
+		if(lvl <= 19) return 4.25f;
+		return 4.5f;
 	}
 	
 	@Override

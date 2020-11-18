@@ -32,21 +32,21 @@ public class PeaShooterEntity extends PlantShooterEntity{
 	
 	@Override
 	public void shootBullet() {
-		LivingEntity target=this.getAttackTarget();
+		LivingEntity target = this.getAttackTarget();
 		if(target==null) {
 			//System.out.println("no target at all!");
 			return ;
 		}
 		double dx = target.getPosX() - this.getPosX();
         double dz = target.getPosZ() - this.getPosZ();
-        double y = this.getPosY()+this.getSize(getPose()).height*0.7f;
+        double y = this.getPosY() + this.getSize(getPose()).height * 0.7f;
         double dis =MathHelper.sqrt(dx * dx + dz * dz);
-        double tmp=this.LENTH/dis;
-        double deltaX=tmp*dx;
-        double deltaZ=tmp*dz;
-        PeaEntity pea = new PeaEntity(EntityRegister.PEA.get(),this.world,this,this.getShootType(),this.getShootState());
-        pea.setPosition(this.getPosX()+deltaX,y,this.getPosZ()+deltaZ);
-        pea.shootPea(dx, target.getPosY()+target.getHeight()-y, dz, this.getBulletSpeed());      
+        double tmp = this.LENTH / dis;
+        double deltaX = tmp * dx;
+        double deltaZ = tmp * dz;
+        PeaEntity pea = new PeaEntity(EntityRegister.PEA.get(), this.world, this, this.getShootType(), this.getShootState());
+        pea.setPosition(this.getPosX() + deltaX, y, this.getPosZ() + deltaZ);
+        pea.shootPea(dx, target.getPosY() + target.getHeight() - y, dz, this.getBulletSpeed());      
         this.playSound(getShootSound(), 1.0F, 1.0F);
         this.world.addEntity(pea);
 	}
@@ -70,11 +70,11 @@ public class PeaShooterEntity extends PlantShooterEntity{
 	
 	@Override
 	public float getBulletSpeed() {
-		int lvl=this.getPlantLvl();
-		if(lvl<=6) return 1.2f;
-		else if(lvl<=13) return 1.6f;
-		else if(lvl<=20) return 2.2f;
-		return 1.2f;
+		int lvl = this.getPlantLvl();
+		if(lvl <= 19) {
+			return 1.15f + 0.5f * lvl;
+		}
+		return 2.2f;
 	}
 
 	@Override
@@ -84,11 +84,9 @@ public class PeaShooterEntity extends PlantShooterEntity{
 
 	@Override
 	public int getSuperTimeLength() {
-		int lvl=this.getPlantLvl();
-		if(lvl<=6) return 100;
-		else if(lvl<=13) return 120;
-		else if(lvl<=20) return 150;
-		return 100;
+		if(this.isPlantInStage(1)) return 100;
+		if(this.isPlantInStage(2)) return 120;
+		return 150;
 	}
 
 	@Override

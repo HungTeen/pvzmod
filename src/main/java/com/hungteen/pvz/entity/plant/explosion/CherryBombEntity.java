@@ -25,26 +25,28 @@ public class CherryBombEntity extends PlantBomberEntity{
 	public void startBomb() {
 //		System.out.println(this.world.isRemote);
 		if(!this.world.isRemote) {
-			float len=(this.getPlantLvl()<=10)?2f:2.5f;
+			float len = this.getExpRange();
 			AxisAlignedBB aabb=EntityUtil.getEntityAABB(this, len, len);
-			for(LivingEntity entity:EntityUtil.getEntityTargetableEntity(this, aabb)) {
+			for(LivingEntity entity : EntityUtil.getEntityTargetableEntity(this, aabb)) {
 				 entity.attackEntityFrom(PVZDamageSource.causeExplosionDamage(this, this), this.getAttackDamage());
 			}
-			this.playSound(SoundRegister.CHERRY_BOMB.get(), 1, 1);
+			EntityUtil.playSound(this, SoundRegister.CHERRY_BOMB.get());
 		}
-		for(int i=1;i<=5;i++) {
-//			System.out.println("222");
-		    this.world.addParticle(ParticleRegister.RED_BOMB.get(), this.getPosX(),this.getPosY(),this.getPosZ(), 0, 0, 0);
+		for(int i = 0; i < 5; ++ i) {
+		    this.world.addParticle(ParticleRegister.RED_BOMB.get(), this.getPosX(), this.getPosY(), this.getPosZ(), 0, 0, 0);
 		}
+	}
+	
+	public float getExpRange() {
+		return this.getPlantLvl() <= 10 ? 2f : 2.5f;
 	}
 	
 	public float getAttackDamage(){
 		int lvl = this.getPlantLvl();
-		if(lvl<=20) {
-			int now=(lvl-1)/5;
-			return 150+now*25;
+		if(lvl <= 19) {
+			return 145 + 5 * lvl;
 		}
-		return 150;
+		return 250;
 	}
 	
 	@Override

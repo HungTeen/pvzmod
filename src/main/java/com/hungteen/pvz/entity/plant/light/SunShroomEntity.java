@@ -3,6 +3,7 @@ package com.hungteen.pvz.entity.plant.light;
 import com.hungteen.pvz.entity.plant.base.PlantProducerEntity;
 import com.hungteen.pvz.entity.plant.interfaces.IShroomPlant;
 import com.hungteen.pvz.register.SoundRegister;
+import com.hungteen.pvz.utils.EntityUtil;
 import com.hungteen.pvz.utils.enums.Plants;
 
 import net.minecraft.entity.CreatureEntity;
@@ -61,7 +62,7 @@ public class SunShroomEntity extends PlantProducerEntity implements IShroomPlant
 	private void grow() {
 		this.setGrowAnim(1);
 		if(!world.isRemote) {
-			this.playSound(SoundRegister.PLANT_GROW.get(), 1f, 1f);
+			EntityUtil.playSound(this, SoundRegister.PLANT_GROW.get());
 		}
 	}
 	
@@ -95,11 +96,9 @@ public class SunShroomEntity extends PlantProducerEntity implements IShroomPlant
 	 * get sun amount when grow up
 	 */
 	public int getSunAmount(){
-		int lvl=this.getPlantLvl();
-		if(lvl<=6) return 25;
-		if(lvl<=13) return 35;
-		if(lvl<=20) return 50;
-		return 25;
+		if(this.isPlantInStage(1)) return 25;
+		if(this.isPlantInStage(2)) return 35;
+		return 50;
 	}
 
 	@Override

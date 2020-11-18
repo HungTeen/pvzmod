@@ -10,7 +10,9 @@ import com.hungteen.pvz.utils.EntityUtil;
 import com.hungteen.pvz.utils.enums.Plants;
 
 import net.minecraft.entity.CreatureEntity;
+import net.minecraft.entity.EntitySize;
 import net.minecraft.entity.EntityType;
+import net.minecraft.entity.Pose;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.World;
@@ -51,31 +53,29 @@ public class HypnoShroomEntity extends PVZPlantEntity implements IShroomPlant{
 	
 	public float getHealHealth() {
 		int lvl = this.getPlantLvl();
-		if(lvl <= 20) {
-			int now = (lvl - 1) / 4;
-			return 0.6f + 0.1f * now;
+		if(lvl <= 19) {
+			return 0.58f + 0.02f * lvl;
 		}
-		return 0.6f;
+		return 1f;
 	}
 	
 	/**
 	 * the current health of gargangtuar when summoning 
 	 */
 	public float getSummonHealth() {
-		int lvl = this.getPlantLvl();
-		if(lvl <= 6) {
-			return 0.5f;
-		}else if(lvl <= 13) {
-			return 0.75f;
-		}else if(lvl <= 20) {
-			return 1f;
-		}
-		return 0.5f;
+		if(this.isPlantInStage(1)) return 0.5f;
+		if(this.isPlantInStage(2)) return 0.75f;
+		return 1f;
 	}
 	
 	@Override
 	public boolean isPlantImmuneTo(DamageSource source) {
 		return false;
+	}
+	
+	@Override
+	public EntitySize getSize(Pose poseIn) {
+		return EntitySize.flexible(0.6f, 1.6f);
 	}
 	
 	/**

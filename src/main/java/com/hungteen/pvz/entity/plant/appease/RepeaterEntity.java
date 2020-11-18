@@ -27,7 +27,7 @@ public class RepeaterEntity extends PeaShooterEntity{
 	
 	@Override
 	protected Type getShootType() {
-		if(this.bigPeaNum > 0 && this.shootBigTick >= SHOOT_BIG_CD) {
+		if(! this.isPlantInSuperMode() && this.bigPeaNum > 0 && this.shootBigTick >= SHOOT_BIG_CD) {
 			this.shootBigTick = 0;
 			-- this.bigPeaNum;
 			return Type.BIG;
@@ -39,7 +39,7 @@ public class RepeaterEntity extends PeaShooterEntity{
 	public void startSuperMode(boolean first) {
 		super.startSuperMode(first);
 		if(!world.isRemote) {
-			this.bigPeaNum += this.getPlantLvl() <= 13 ? 1 : 2;//can shoot extra big pea
+			this.bigPeaNum += this.isPlantInStage(2) ? 1 : 2;//can shoot extra big pea
 		}
 	}
 	
@@ -50,11 +50,9 @@ public class RepeaterEntity extends PeaShooterEntity{
 	
 	@Override
 	public int getSuperTimeLength() {
-		int lvl=this.getPlantLvl();
-		if(lvl<=6) return 120;
-		else if(lvl<=13) return 150;
-		else if(lvl<=20) return 200;
-		return 120;
+		if(this.isPlantInStage(1)) return 150;
+		if(this.isPlantInStage(2)) return 175;
+		return 200;
 	}
 	
 	@Override
