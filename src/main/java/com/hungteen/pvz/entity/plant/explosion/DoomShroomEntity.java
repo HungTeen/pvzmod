@@ -15,8 +15,10 @@ import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
 import net.minecraft.entity.CreatureEntity;
+import net.minecraft.entity.EntitySize;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.LivingEntity;
+import net.minecraft.entity.Pose;
 import net.minecraft.entity.item.ItemEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
@@ -38,16 +40,19 @@ public class DoomShroomEntity extends PlantBomberEntity implements IShroomPlant{
 	@SuppressWarnings("deprecation")
 	@Override
 	public void startBomb() {
-		world.addParticle(ParticleRegister.DOOM.get(), this.getPosX(), this.getPosY() + 3, this.getPosZ(), 0, 0, 0);
-//		world.createExplosion(this, PVZDamageSource.causeExplosionDamage(this, this), this.getPosX(), this.getPosY(), this.getPosZ(), 10, false, Mode.DESTROY);
 		if(!world.isRemote) {
 			for(LivingEntity entity : EntityUtil.getEntityTargetableEntity(this, EntityUtil.getEntityAABB(this, this.getAttackRange(), this.getAttackRange()))) {
 				entity.attackEntityFrom(PVZDamageSource.causeExplosionDamage(this, this), this.getAttackDamage());
 			}
-			this.playSound(SoundRegister.DOOM.get(), 1f, 1f);
+			EntityUtil.playSound(this, SoundRegister.DOOM.get());
 			//destroy block and spawn drops
 			ObjectArrayList<Pair<ItemStack, BlockPos>> list = new ObjectArrayList<>();
 			int len = getDestroyBlockRange();
+			if(len == 0) {
+				return ;
+			} else {
+				-- len;
+			}
 			for(int i = - len;i <= len;i ++) {
 				for(int j = - len;j <= len;j ++) {
 					for(int k = - destroyBlockHeight;k <= len;k ++) {
@@ -80,6 +85,8 @@ public class DoomShroomEntity extends PlantBomberEntity implements IShroomPlant{
 			for(Pair<ItemStack, BlockPos> pair : list) {
 	            Block.spawnAsEntity(this.world, pair.getSecond(), pair.getFirst());
 	        }
+		} else {
+			world.addParticle(ParticleRegister.DOOM.get(), this.getPosX(), this.getPosY() + 3, this.getPosZ(), 0, 0, 0);
 		}
 	}
 	
@@ -88,23 +95,22 @@ public class DoomShroomEntity extends PlantBomberEntity implements IShroomPlant{
 	}
 
 	public float getAttackRange() {
-		int lvl = this.getPlantLvl();
-		if(lvl <= 6) {
-			return 5;
-		}else if(lvl <= 13) {
-			return 6;
-		}else if(lvl <= 20) {
-			return 7;
-		}
-		return 5;
+		if(this.isPlantInStage(1)) return 5;
+		if(this.isPlantInStage(2)) return 6;
+		return 7;
 	}
+	
 	public float getAttackDamage() {
 		int lvl = this.getPlantLvl();
 		if(lvl <= 20) {
-			int now = (lvl - 1) / 5;
-			return 250 + 50 * now;
+			return 232 + 8 * lvl;
 		}
-		return 250;
+		return 400;
+	}
+	
+	@Override
+	public EntitySize getSize(Pose poseIn) {
+		return EntitySize.flexible(0.8f, 1.5f);
 	}
 	
 	@Override

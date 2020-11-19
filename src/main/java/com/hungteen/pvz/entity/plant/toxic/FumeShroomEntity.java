@@ -34,7 +34,7 @@ public class FumeShroomEntity extends PlantShooterEntity implements IShroomPlant
 	@Override
 	public void shootBullet() {
 		LivingEntity target = this.getAttackTarget();
-		if(target==null) {
+		if(target == null) {
 			return ;
 		}
 		double dx = target.getPosX() - this.getPosX();
@@ -77,7 +77,7 @@ public class FumeShroomEntity extends PlantShooterEntity implements IShroomPlant
     
 	@Override
 	public EntitySize getSize(Pose poseIn) {
-		return EntitySize.flexible(0.8f, 1.4f);
+		return EntitySize.flexible(0.8f, 1.25f);
 	}
 	
     @Override

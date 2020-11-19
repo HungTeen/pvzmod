@@ -16,7 +16,7 @@ public class TallNutEntity extends WallNutEntity{
 	
 	@Override
 	public EntitySize getSize(Pose poseIn) {
-		return new EntitySize(0.9f, 2f, false);
+		return new EntitySize(0.9f, 1.9f, false);
 	}
 	
 	@Override

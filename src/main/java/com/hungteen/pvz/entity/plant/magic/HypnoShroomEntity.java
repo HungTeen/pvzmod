@@ -75,7 +75,7 @@ public class HypnoShroomEntity extends PVZPlantEntity implements IShroomPlant{
 	
 	@Override
 	public EntitySize getSize(Pose poseIn) {
-		return EntitySize.flexible(0.6f, 1.6f);
+		return EntitySize.flexible(0.7f, 1.9f);
 	}
 	
 	/**

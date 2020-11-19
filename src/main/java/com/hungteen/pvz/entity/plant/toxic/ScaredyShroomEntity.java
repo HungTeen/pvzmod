@@ -6,6 +6,7 @@ import com.hungteen.pvz.entity.plant.base.PlantShooterEntity;
 import com.hungteen.pvz.entity.plant.interfaces.IShroomPlant;
 import com.hungteen.pvz.register.EntityRegister;
 import com.hungteen.pvz.register.SoundRegister;
+import com.hungteen.pvz.utils.EntityUtil;
 import com.hungteen.pvz.utils.enums.Plants;
 
 import net.minecraft.entity.CreatureEntity;
@@ -64,12 +65,12 @@ public class ScaredyShroomEntity extends PlantShooterEntity implements IShroomPl
 			int now = (lvl - 1) / 5;
 			return 5 - now;
 		}
-		return 5;
+		return 2;
 	}
 	
 	@Override
 	public EntitySize getSize(Pose poseIn) {
-		return EntitySize.flexible(0.6f, 1.5f - this.getScareTime() * 1.0f / ANIM_TIME);
+		return EntitySize.flexible(0.6f, 1.6f - this.getScareTime() * 1.0f / ANIM_TIME);
 	}
 
 	@Override
@@ -87,8 +88,8 @@ public class ScaredyShroomEntity extends PlantShooterEntity implements IShroomPl
         double deltaZ = tmp * dz;
         SporeEntity spore = new SporeEntity(EntityRegister.SPORE.get(), this.world, this); 
         spore.setPosition(this.getPosX() + deltaX, y, this.getPosZ() + deltaZ);
-        spore.shootPea(dx, target.getPosY() + target.getHeight() - y, dz, this.getBulletSpeed());      
-        this.playSound(SoundRegister.PUFF.get(), 1.0F, 1.0F);
+        spore.shootPea(dx, target.getPosY() + target.getHeight() - y, dz, this.getBulletSpeed());
+        EntityUtil.playSound(this, SoundRegister.PUFF.get());
         this.world.addEntity(spore);
 	}
 
@@ -99,16 +100,14 @@ public class ScaredyShroomEntity extends PlantShooterEntity implements IShroomPl
 	
 	@Override
 	public float getBulletSpeed() {
-		return 1.1f;
+		return 1.2f;
 	}
 	
 	@Override
 	public int getSuperTimeLength() {
-		int lvl=this.getPlantLvl();
-		if(lvl<=6) return 100;
-		else if(lvl<=13) return 120;
-		else if(lvl<=20) return 140;
-		return 100;
+		if(this.isPlantInStage(1)) return 100;
+		if(this.isPlantInStage(2)) return 120;
+		return 140;
 	}
     
     public int getScareTime() {

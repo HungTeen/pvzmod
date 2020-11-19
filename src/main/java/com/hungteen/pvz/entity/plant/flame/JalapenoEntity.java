@@ -8,8 +8,10 @@ import com.hungteen.pvz.utils.enums.Plants;
 
 import net.minecraft.block.Blocks;
 import net.minecraft.entity.CreatureEntity;
+import net.minecraft.entity.EntitySize;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.LivingEntity;
+import net.minecraft.entity.Pose;
 import net.minecraft.particles.ParticleTypes;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
@@ -79,6 +81,11 @@ public class JalapenoEntity extends PlantBomberEntity{
 		if(this.isPlantInStage(1)) return 10;
 		if(this.isPlantInStage(2)) return 15;
 		return 20;
+	}
+	
+	@Override
+	public EntitySize getSize(Pose poseIn) {
+		return EntitySize.flexible(0.7f, 1.5f);
 	}
 
 	@Override

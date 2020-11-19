@@ -17,6 +17,7 @@ public class CoffeeBeanEntity extends PlantBomberEntity{
 
 	public CoffeeBeanEntity(EntityType<? extends CreatureEntity> type, World worldIn) {
 		super(type, worldIn);
+		this.canCollideWithPlant = false;
 	}
 
 	@Override
@@ -26,7 +27,7 @@ public class CoffeeBeanEntity extends PlantBomberEntity{
 			AxisAlignedBB aabb=EntityUtil.getEntityAABB(this, len, len + 2);
 			boolean hasEffect = false;
 			for(PVZPlantEntity plant : world.getEntitiesWithinAABB(PVZPlantEntity.class, aabb)) {
-				if(!EntityUtil.checkCanEntityAttack(this, plant)) {
+				if(! EntityUtil.checkCanEntityAttack(this, plant)) {
 					plant.setSleepTime(- this.getAwakeTime());
 					hasEffect = true;
 				}
@@ -43,14 +44,10 @@ public class CoffeeBeanEntity extends PlantBomberEntity{
 	
 	public int getAwakeTime() {
 		int lvl = this.getPlantLvl();
-		if(lvl <= 6) {
-			return 24000;
-		}else if(lvl <= 13) {
-			return 36000;
-		}else if(lvl <= 20) {
-			return 48000;
+		if(lvl <= 20) {
+			return 22800 + 1200 * lvl;
 		}
-		return 24000;
+		return 48000;
 	}
 	
 	@Override

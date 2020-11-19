@@ -12,6 +12,6 @@ public enum CDs {
 	SLOW,
 	VERY_SLOW,
 	HUGE_SLOW,
-	SUPER_SLOW,
-	OTHER
+	SUPER_SLOW
+	
 }

@@ -384,7 +384,7 @@ public abstract class PVZPlantEntity extends CreatureEntity implements IPVZPlant
 	 */
 	protected boolean shouldCollideWithEntity(LivingEntity target) {
 		if(target instanceof PVZPlantEntity) {
-			if(!((PVZPlantEntity) target).canCollideWithPlant) {
+			if(! this.canCollideWithPlant || ! ((PVZPlantEntity) target).canCollideWithPlant) {
 				return false;
 			}
 			if(target instanceof SquashEntity) {
@@ -623,9 +623,10 @@ public abstract class PVZPlantEntity extends CreatureEntity implements IPVZPlant
 	}
 	
 	protected boolean isPlantInStage(int stage) {
-		if(stage == 1) return this.getPlantLvl() <= 6;
-		if(stage == 2) return this.getPlantLvl() <= 13;
-		if(stage == 3) return this.getPlantLvl() <= 20;
+		int lvl = this.getPlantLvl();
+		if(stage == 1) return lvl <= 6;
+		if(stage == 2) return 7 <= lvl && lvl <= 13;
+		if(stage == 3) return 14 <= lvl && lvl <= 20;
 		return false;
 	}
 	

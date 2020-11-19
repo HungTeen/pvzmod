@@ -37,19 +37,20 @@ public class IceShroomEntity extends PlantBomberEntity implements IShroomPlant, 
 				 source.addEffect(getFrozenEffect());
 				 entity.attackEntityFrom(source, this.getAttackDamage());
 			}
-			this.playSound(SoundRegister.ZOMBIE_FROZEN.get(), 1, 1);
-		}
-		for(int i = 0;i < 3;i ++) {
-		    this.world.addParticle(ParticleTypes.EXPLOSION, this.getPosX(), this.getPosY(), this.getPosZ(), 0, 0, 0);
-		}
-		for(int i = 0; i < 15;i ++) {
-			this.world.addParticle(ParticleRegister.SNOW_FLOWER.get(), this.getPosX(), this.getPosY(), this.getPosZ(), (this.getRNG().nextFloat() - 0.5f) / 4, this.getRNG().nextFloat() / 5, (this.getRNG().nextFloat() - 0.5f) / 4);
+			EntityUtil.playSound(this, SoundRegister.ZOMBIE_FROZEN.get());
+		} else {
+			for(int i = 0;i < 3;i ++) {
+		        this.world.addParticle(ParticleTypes.EXPLOSION, this.getPosX(), this.getPosY(), this.getPosZ(), 0, 0, 0);
+	 	    }
+		    for(int i = 0; i < 15;i ++) {
+			    this.world.addParticle(ParticleRegister.SNOW_FLOWER.get(), this.getPosX(), this.getPosY(), this.getPosZ(), (this.getRNG().nextFloat() - 0.5f) / 4, this.getRNG().nextFloat() / 5, (this.getRNG().nextFloat() - 0.5f) / 4);
+		    }
 		}
 	}
 
 	@Override
 	public int getReadyTime() {
-		return 20;
+		return 30;
 	}
 	
 	public float getAttackDamage() {
@@ -57,20 +58,18 @@ public class IceShroomEntity extends PlantBomberEntity implements IShroomPlant, 
 		if(lvl <= 20) {
 			return 0.5f * lvl;
 		}
-		return 0.5f;
+		return 10f;
 	}
 	
 	public float getAttackRange() {
-		int lvl = this.getPlantLvl();
-		if(lvl<=6) return 10;
-		if(lvl<=13) return 15;
-		if(lvl<=20) return 20;
-		return 10;
+		if(this.isPlantInStage(1)) return 10;
+		if(this.isPlantInStage(2)) return 15;
+		return 20;
 	}
 	
 	@Override
 	public EntitySize getSize(Pose poseIn) {
-		return EntitySize.flexible(0.8f, 1.5f);
+		return EntitySize.flexible(0.85f, 1.35f);
 	}
 
 	@Override
@@ -82,6 +81,32 @@ public class IceShroomEntity extends PlantBomberEntity implements IShroomPlant, 
 			amount = (lvl <= 8 ? 5 : (lvl <= 16 ? 6 : 7));
 		}
 		return new EffectInstance(EffectRegister.COLD_EFFECT.get(), duration, amount, false, false);
+	}
+	
+	public int getColdLvl() {
+		int lvl = this.getPlantLvl();
+		if(lvl <= 20) {
+			int now = (lvl - 1) / 4;
+			return 3 + now;
+		}
+		return 7;
+	}
+	
+	public int getColdTick() {
+		int lvl = this.getPlantLvl();
+		if(lvl <= 20) {
+			return 5 * lvl;
+		}
+		return 100;
+	}
+	
+	public int getFrozenTick() {
+		int lvl = this.getPlantLvl();
+		int time = 240;
+		if(lvl <= 20) {
+			time = 93 + 7 * lvl;
+		}
+		return this.getColdTick() + time;
 	}
 
 	@Override

@@ -160,7 +160,7 @@ public class SquashEntity extends PVZPlantEntity{
 	
 	@Override
 	public EntitySize getSize(Pose poseIn) {
-		return EntitySize.flexible(0.9f, 1.2f);
+		return EntitySize.flexible(0.9f, 1.5f);
 	}
 	
 	@Override
