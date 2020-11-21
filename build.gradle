@@ -87,7 +87,10 @@ minecraft {
             // Recommended logging level for the console
             property 'forge.logging.console.level', 'debug'
 
-            args '--mod', 'pvz', '--all', '--output', file('src/generated/resources/')
+            args '--mod', 'pvz',
+                    '--existing', file('src/main/resources/'),
+                    '--existing', file('src/generated/resources/'),
+                    '--output', file('src/generated/resources/')
 
             mods {
                 pvz {
@@ -96,6 +99,10 @@ minecraft {
             }
         }
     }
+}
+
+sourceSets.main.resources {
+    srcDir 'src/generated/resources'
 }
 
 repositories {

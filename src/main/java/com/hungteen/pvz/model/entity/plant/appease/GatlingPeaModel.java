@@ -124,9 +124,9 @@ public class GatlingPeaModel extends EntityModel<GatlingPeaEntity> {
 	@Override
 	public void setRotationAngles(GatlingPeaEntity entity, float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch){
 		if(entity.animTime > 0) {
-			this.gar.rotateAngleZ = ageInTicks % 10;
+			this.gar.rotateAngleZ = ageInTicks / 5.0f % 100;
 		} else {
-			this.gar.rotateAngleZ = ageInTicks % 100;
+			this.gar.rotateAngleZ = ageInTicks / 20.0f % 100;
 		}
 	}
 

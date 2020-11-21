@@ -29,39 +29,40 @@ public enum Plants {
 	TORCH_WOOD,
 	TALL_NUT,
 	//pool night
-	SEA_SHROOM,
-	PLANTERN, 
-	CACTUS,
-	BLOVER,
-	SPLIT_PEA,
-	STAR_FRUIT,
+//	SEA_SHROOM,
+//	PLANTERN, 
+//	CACTUS,
+//	BLOVER,
+//	SPLIT_PEA,
+//	STAR_FRUIT,
 	PUMPKIN,
-	MAGNET_SHROOM,
+//	MAGNET_SHROOM,
 	//roof 
-	CABBAGE_PULT,
-	FLOWER_POT, 
-	KERNEL_PULT,
+//	CABBAGE_PULT,
+//	FLOWER_POT, 
+//	KERNEL_PULT,
 	COFFEE_BEAN,
-	GARLIC, 
-	UMBRELLA_LEAF, 
-	MARIGOLD, 
-	MELON_PULT,
+//	GARLIC, 
+//	UMBRELLA_LEAF, 
+//	MARIGOLD, 
+//	MELON_PULT,
 	//upgrade
 	GATLING_PEA,
-	TWIN_SUNFLOWER,
-	GLOOM_SHROOM,
-	CAT_TAIL,
-	WINTER_MELON,
-	GOLD_MAGNET, 
-	SPIKE_ROCK,
-	COB_CANNON,
-	IMITATER,
+//	TWIN_SUNFLOWER,
+//	GLOOM_SHROOM,
+//	CAT_TAIL,
+//	WINTER_MELON,
+//	GOLD_MAGNET, 
+//	SPIKE_ROCK,
+//	COB_CANNON,
+//	IMITATER,
 	// other
 	WATER_GUARD;
 
 	public static final Plants[] BLOCK_PLANTS = new Plants[] {LILY_PAD};
 	public static final Plants[] WATER_PLANTS = new Plants[] {TANGLE_KELP};
 	public static final Plants[] OUTER_PLANTS = new Plants[] {PUMPKIN};
+	public static final Plants[] UPGRADE_PLANTS = new Plants[] {GATLING_PEA};
 	
 	public static Plants getPlantByName(String name) {
 		for (Plants plant : Plants.values()) {
@@ -92,6 +93,15 @@ public enum Plants {
 	
 	public static boolean isOuterPlant(Plants p) {
 		for(Plants plant : OUTER_PLANTS) {
+			if(p == plant) {
+				return true;
+			}
+		}
+		return false;
+	}
+	
+	public static boolean isUpgradePlant(Plants p) {
+		for(Plants plant : UPGRADE_PLANTS) {
 			if(p == plant) {
 				return true;
 			}

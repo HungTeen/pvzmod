@@ -64,6 +64,8 @@ public class PlantUtil {
 		putPlantInfoToMap(Plants.TALL_NUT, 125, CDs.VERY_SLOW, Ranks.BLUE, Essences.DEFENCE, EntityRegister.TALL_NUT, ItemRegister.TALL_NUT_CARD, ItemRegister.TALL_NUT_ENJOY_CARD);
 		putPlantInfoToMap(Plants.PUMPKIN, 125, CDs.SLOW, Ranks.GREEN, Essences.DEFENCE, null, ItemRegister.PUMPKIN_CARD, ItemRegister.PUMPKIN_ENJOY_CARD);
 		putPlantInfoToMap(Plants.COFFEE_BEAN, 75, CDs.FAST, Ranks.GREEN, Essences.MAGIC, EntityRegister.COFFEE_BEAN, ItemRegister.COFFEE_BEAN_CARD, ItemRegister.COFFEE_BEAN_ENJOY_CARD);
+		putPlantInfoToMap(Plants.GATLING_PEA, 250, CDs.VERY_SLOW, Ranks.PURPLE, Essences.APPEASE, EntityRegister.GATLING_PEA, ItemRegister.GATLING_PEA_CARD, ItemRegister.GATLING_PEA_ENJOY_CARD);
+		
 	}
 	
 	public static void putPlantInfoToMap(Plants plant,final int cost, CDs cd, Ranks rank, Essences essence, RegistryObject<? extends EntityType<? extends PVZPlantEntity>> type, RegistryObject<? extends PlantCardItem> summonCard, RegistryObject<? extends PlantCardItem> enjoyCard) {
@@ -77,16 +79,16 @@ public class PlantUtil {
 		++ CURRENT_PLANT_NUM;
 	}
 	
-	public static void putPlantInfoToMap1(Plants plant,final int cost, CDs cd, Ranks rank, Essences essence, RegistryObject<? extends EntityType<? extends PVZPlantEntity>> type) {
-		PLANT_SUN_COST.put(plant, cost);
-		PLANT_CD.put(plant, cd);
-		PLANT_RANK.put(plant, rank);
-		PLANT_ESSENCE.put(plant, essence);
-		PLANT_ENTITY.put(plant, type);
-		++ CURRENT_PLANT_NUM;
-	}
-	
-	public static int getPlantLevelUpXp(Plants plant,int lvl){
+//	public static void putPlantInfoToMap1(Plants plant, final int cost, CDs cd, Ranks rank, Essences essence, RegistryObject<? extends EntityType<? extends PVZPlantEntity>> type) {
+//		PLANT_SUN_COST.put(plant, cost);
+//		PLANT_CD.put(plant, cd);
+//		PLANT_RANK.put(plant, rank);
+//		PLANT_ESSENCE.put(plant, essence);
+//		PLANT_ENTITY.put(plant, type);
+//		++ CURRENT_PLANT_NUM;
+//	}
+//	
+	public static int getPlantLevelUpXp(Plants plant, int lvl){
 		Ranks rank=getPlantRankByName(plant);
 		if(lvl==getPlantMaxLvl(plant)) return 999999999;
 		switch(rank) {
@@ -225,17 +227,15 @@ public class PlantUtil {
 				min = 4800;
 				break;
 			}
-			default:{
-				if(min == -1 || max == -1 || max < min) {
-					PVZMod.LOGGER.debug("ERROR CD value.");
-					return 100;
-				}
-				if(lvl <= 19) {
-					return max - (max - min) / 20 * (lvl - 1);
-				}
-				return min;
 			}
+			if(min == -1 || max == -1 || max < min) {
+				PVZMod.LOGGER.debug("ERROR CD value.");
+				return 100;
 			}
+			if(lvl <= 19) {
+				return max - (max - min) / 20 * (lvl - 1);
+			}
+			return min;
 		}
 		PVZMod.LOGGER.debug("plant get cooldown time error!");
 		return 0;

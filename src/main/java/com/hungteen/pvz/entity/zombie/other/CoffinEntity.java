@@ -58,6 +58,7 @@ public class CoffinEntity extends UnderGroundZombieEntity {
 	@Override
 	protected void registerAttributes() {
 		super.registerAttributes();
+		this.getAttribute(SharedMonsterAttributes.ATTACK_DAMAGE).setBaseValue(ZombieUtil.LITTLE_LOW);
 		this.getAttribute(SharedMonsterAttributes.MOVEMENT_SPEED).setBaseValue(ZombieUtil.SLOW);
 	}
 
@@ -65,7 +66,7 @@ public class CoffinEntity extends UnderGroundZombieEntity {
 	public ILivingEntityData onInitialSpawn(IWorld worldIn, DifficultyInstance difficultyIn, SpawnReason reason,
 			ILivingEntityData spawnDataIn, CompoundNBT dataTag) {
 		if (!world.isRemote) {
-			this.playSound(SoundRegister.DIRT_RISE.get(), 1f, 1f);
+			EntityUtil.playSound(this, SoundRegister.DIRT_RISE.get());
 			for (Entity target : EntityUtil.getEntityAttackableTarget(this,
 					EntityUtil.getEntityAABB(this, 50, 50))) {
 				ZombieHandEntity hand = EntityRegister.ZOMBIE_HAND.get().create(world);

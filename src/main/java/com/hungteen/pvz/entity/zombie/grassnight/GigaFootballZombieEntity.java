@@ -28,6 +28,12 @@ public class GigaFootballZombieEntity extends FootballZombieEntity{
 	}
 	
 	@Override
+	protected void registerAttributes() {
+		super.registerAttributes();
+		this.getAttribute(SharedMonsterAttributes.ATTACK_DAMAGE).setBaseValue(ZombieUtil.NORMAL_DAMAGE);
+	}
+	
+	@Override
 	public void normalZombieTick() {
 		super.normalZombieTick();
 		if(!this.world.isRemote) {

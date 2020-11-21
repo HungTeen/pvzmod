@@ -9,7 +9,6 @@ import net.minecraft.entity.monster.MonsterEntity;
 import net.minecraft.world.World;
 
 public class OldZombieEntity extends NewspaperZombieEntity{
-
 	
 	public OldZombieEntity(EntityType<? extends MonsterEntity> type, World worldIn) {
 		super(type, worldIn);

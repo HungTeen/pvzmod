@@ -1,12 +1,13 @@
 package com.hungteen.pvz.entity.plant.appease;
 
 import com.hungteen.pvz.utils.enums.Plants;
+import com.hungteen.pvz.utils.interfaces.IUpgradePlant;
 
 import net.minecraft.entity.CreatureEntity;
 import net.minecraft.entity.EntityType;
 import net.minecraft.world.World;
 
-public class GatlingPeaEntity extends PeaShooterEntity{
+public class GatlingPeaEntity extends RepeaterEntity implements IUpgradePlant{
 
 	public int animTime = 0;
 	
@@ -19,13 +20,27 @@ public class GatlingPeaEntity extends PeaShooterEntity{
 		super.tick();
 		if(world.isRemote) {
 			if(this.getAttackTime() > 0) {
-				this.animTime = 10;
+				this.animTime = 15;
 			} else {
 				if(this.getAttackTime() == 0 && this.animTime > 0) {
 					-- this.animTime;
 				}
 			}
 		}
+	}
+	
+	@Override
+	protected int getBigPeaNum() {
+		if(this.isPlantInStage(1)) return 2;
+		if(this.isPlantInStage(2)) return 3;
+		return 4;
+	}
+	
+	@Override
+	public int getSuperTimeLength() {
+		if(this.isPlantInStage(1)) return 200;
+		if(this.isPlantInStage(2)) return 250;
+		return 300;
 	}
 	
 	@Override
@@ -36,6 +51,11 @@ public class GatlingPeaEntity extends PeaShooterEntity{
 	@Override
 	public Plants getPlantEnumName() {
 		return Plants.GATLING_PEA;
+	}
+
+	@Override
+	public Plants canUpgradedPlant() {
+		return Plants.REPEATER;
 	}
 	
 }

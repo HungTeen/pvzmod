@@ -28,6 +28,7 @@ import com.hungteen.pvz.utils.enums.Plants;
 import com.hungteen.pvz.utils.enums.Ranks;
 import com.hungteen.pvz.utils.enums.Resources;
 import com.hungteen.pvz.utils.interfaces.IPVZPlant;
+import com.hungteen.pvz.utils.interfaces.IUpgradePlant;
 
 import net.minecraft.block.Block;
 import net.minecraft.block.Blocks;
@@ -524,7 +525,11 @@ public abstract class PVZPlantEntity extends CreatureEntity implements IPVZPlant
 	 * how many tick can plant live
 	 */
 	public int getMaxLiveTick() {
-		return PVZConfig.COMMON_CONFIG.EntitySettings.EntityLiveTick.PlantLiveTick.get();
+		int tick = PVZConfig.COMMON_CONFIG.EntitySettings.EntityLiveTick.PlantLiveTick.get();
+		if(this instanceof IUpgradePlant) {
+			return tick * 2;
+		}
+		return tick;
 	}
 	
 	public boolean isPlantInSuperMode(){

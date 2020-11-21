@@ -39,8 +39,12 @@ public class RepeaterEntity extends PeaShooterEntity{
 	public void startSuperMode(boolean first) {
 		super.startSuperMode(first);
 		if(!world.isRemote) {
-			this.bigPeaNum += this.isPlantInStage(2) ? 1 : 2;//can shoot extra big pea
+			this.bigPeaNum += this.getBigPeaNum();//can shoot extra big pea
 		}
+	}
+	
+	protected int getBigPeaNum() {
+		return this.isPlantInStage(2) ? 1 : 2;
 	}
 	
 	@Override

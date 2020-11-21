@@ -3,6 +3,7 @@ package com.hungteen.pvz.entity.zombie.grassnight;
 import com.hungteen.pvz.entity.zombie.base.DefenceZombieEntity;
 import com.hungteen.pvz.entity.zombie.part.PVZHealthPartEntity;
 import com.hungteen.pvz.register.SoundRegister;
+import com.hungteen.pvz.utils.EntityUtil;
 import com.hungteen.pvz.utils.ZombieUtil;
 import com.hungteen.pvz.utils.enums.Zombies;
 
@@ -53,7 +54,7 @@ public class NewspaperZombieEntity extends DefenceZombieEntity {
 		super.tick();
 		if(!world.isRemote) {
 			if(this.canPartsBeRemoved() && !this.isAngry()) {
-				this.playSound(SoundRegister.ANGRY.get(), 1f, 1f);
+				EntityUtil.playSound(this, SoundRegister.ANGRY.get());
 				this.updateAngry(true);
 			}
 		}
@@ -72,7 +73,7 @@ public class NewspaperZombieEntity extends DefenceZombieEntity {
 	
 	@Override
 	public float getLife() {
-		return 30;
+		return 22;
 	}
 	
 	@Override
