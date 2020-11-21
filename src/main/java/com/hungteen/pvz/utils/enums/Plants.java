@@ -48,7 +48,7 @@ public enum Plants {
 //	MELON_PULT,
 	//upgrade
 	GATLING_PEA,
-//	TWIN_SUNFLOWER,
+	TWIN_SUNFLOWER,
 //	GLOOM_SHROOM,
 //	CAT_TAIL,
 //	WINTER_MELON,
@@ -60,9 +60,9 @@ public enum Plants {
 	WATER_GUARD;
 
 	public static final Plants[] BLOCK_PLANTS = new Plants[] {LILY_PAD};
-	public static final Plants[] WATER_PLANTS = new Plants[] {TANGLE_KELP};
+	public static final Plants[] WATER_PLANTS = new Plants[] {TANGLE_KELP, WATER_GUARD};
 	public static final Plants[] OUTER_PLANTS = new Plants[] {PUMPKIN};
-	public static final Plants[] UPGRADE_PLANTS = new Plants[] {GATLING_PEA};
+	public static final Plants[] UPGRADE_PLANTS = new Plants[] {GATLING_PEA, TWIN_SUNFLOWER};
 	
 	public static Plants getPlantByName(String name) {
 		for (Plants plant : Plants.values()) {

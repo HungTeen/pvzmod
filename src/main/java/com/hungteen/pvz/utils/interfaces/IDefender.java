@@ -7,6 +7,8 @@ public interface IDefender {
 	 */
 	float getSuperLife();
 
+	float getAttractRange();
+	
 	/**
 	 * attract the attacker's target
 	 */

@@ -1,18 +1,18 @@
 package com.hungteen.pvz.entity.plant.appease;
 
 import com.hungteen.pvz.utils.enums.Plants;
-import com.hungteen.pvz.utils.interfaces.IUpgradePlant;
 
 import net.minecraft.entity.CreatureEntity;
 import net.minecraft.entity.EntityType;
 import net.minecraft.world.World;
 
-public class GatlingPeaEntity extends RepeaterEntity implements IUpgradePlant{
+public class GatlingPeaEntity extends RepeaterEntity{
 
 	public int animTime = 0;
 	
 	public GatlingPeaEntity(EntityType<? extends CreatureEntity> type, World worldIn) {
 		super(type, worldIn);
+		this.isUpgradePlant = true;
 	}
 
 	@Override
@@ -52,10 +52,10 @@ public class GatlingPeaEntity extends RepeaterEntity implements IUpgradePlant{
 	public Plants getPlantEnumName() {
 		return Plants.GATLING_PEA;
 	}
-
-	@Override
-	public Plants canUpgradedPlant() {
-		return Plants.REPEATER;
-	}
 	
+	@Override
+	public Plants getUpgradePlantType() {
+		return null;
+	}
+
 }

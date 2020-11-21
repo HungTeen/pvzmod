@@ -28,7 +28,6 @@ import com.hungteen.pvz.utils.enums.Plants;
 import com.hungteen.pvz.utils.enums.Ranks;
 import com.hungteen.pvz.utils.enums.Resources;
 import com.hungteen.pvz.utils.interfaces.IPVZPlant;
-import com.hungteen.pvz.utils.interfaces.IUpgradePlant;
 
 import net.minecraft.block.Block;
 import net.minecraft.block.Blocks;
@@ -77,6 +76,7 @@ public abstract class PVZPlantEntity extends CreatureEntity implements IPVZPlant
 	private final int weakDamage = 15;
 	protected Plants outerPlant = null;
 	public boolean canCollideWithPlant = true;
+	protected boolean isUpgradePlant = false;
 	
 	public PVZPlantEntity(EntityType<? extends CreatureEntity> type, World worldIn) {
 		super(type, worldIn);
@@ -422,6 +422,11 @@ public abstract class PVZPlantEntity extends CreatureEntity implements IPVZPlant
 		return false;
 	}
 	
+	@Nullable
+	public Plants getUpgradePlantType() {
+		return null;
+	}
+	
 	@Override
 	public void writeAdditional(CompoundNBT compound) {
 		super.writeAdditional(compound);
@@ -526,10 +531,7 @@ public abstract class PVZPlantEntity extends CreatureEntity implements IPVZPlant
 	 */
 	public int getMaxLiveTick() {
 		int tick = PVZConfig.COMMON_CONFIG.EntitySettings.EntityLiveTick.PlantLiveTick.get();
-		if(this instanceof IUpgradePlant) {
-			return tick * 2;
-		}
-		return tick;
+		return this.isUpgradePlant ? 2 * tick : tick;
 	}
 	
 	public boolean isPlantInSuperMode(){
@@ -594,9 +596,9 @@ public abstract class PVZPlantEntity extends CreatureEntity implements IPVZPlant
 		if(!world.isRemote) {
 			if(hand == Hand.MAIN_HAND) {
 				ItemStack itemstack = player.getHeldItemMainhand();
-				if(itemstack.getItem() instanceof PlantCardItem) {
+				if(itemstack.getItem() instanceof PlantCardItem && ! player.getCooldownTracker().hasCooldown(itemstack.getItem())) {
 					PlantCardItem item = (PlantCardItem) itemstack.getItem();
-					if(item.getPlant() == Plants.PUMPKIN && !player.getCooldownTracker().hasCooldown(item)) {
+					if(item.getPlant() == Plants.PUMPKIN) {
 						if(this.outerPlant != null) {
 							if(this.outerPlant == Plants.PUMPKIN && this.getPumpkinLife() < PlantUtil.PUMPKIN_LIFE) {
 								PlantCardItem.plantPumpkin(player, this, item, itemstack);
@@ -605,7 +607,7 @@ public abstract class PVZPlantEntity extends CreatureEntity implements IPVZPlant
 //							System.out.println("1");
 							PlantCardItem.plantPumpkin(player, this, item, itemstack);
 						}
-					}else if(item.getPlant() == Plants.COFFEE_BEAN && !player.getCooldownTracker().hasCooldown(item)) {
+					}else if(item.getPlant() == Plants.COFFEE_BEAN) {
 						player.getCapability(CapabilityHandler.PLAYER_DATA_CAPABILITY).ifPresent((l)->{
 							PlayerDataManager manager = l.getPlayerData();
 							int num = manager.getPlayerStats().getPlayerStats(Resources.SUN_NUM);
@@ -618,6 +620,22 @@ public abstract class PVZPlantEntity extends CreatureEntity implements IPVZPlant
 								bean.setPlantLvl(lvl);
 								bean.setOwnerUUID(player.getUniqueID());
 								EntityUtil.onMobEntitySpawn(world, bean, getPosition().add(0, this.getEyeHeight() + 0.5f, 0));
+							}
+						});
+					}else if(this.getUpgradePlantType() == item.getPlant()) {
+						player.getCapability(CapabilityHandler.PLAYER_DATA_CAPABILITY).ifPresent((l)->{
+							PlayerDataManager manager = l.getPlayerData();
+							int num = manager.getPlayerStats().getPlayerStats(Resources.SUN_NUM);
+							int sunCost = item.getSunCost(player.getHeldItem(hand));
+							if(num >= sunCost) {//sun is enough
+								PVZPlantEntity plant = PlantUtil.getPlantEntityType(item.getPlant()).create(world);
+								l.getPlayerData().getPlayerStats().addPlayerStats(Resources.SUN_NUM, - sunCost);
+								int lvl = manager.getPlantStats().getPlantLevel(item.getPlant());
+								PlantCardItem.onUsePlantCard(player, player.getHeldItem(hand), item, lvl);
+								plant.setPlantLvl(lvl);
+								plant.setOwnerUUID(player.getUniqueID());
+								EntityUtil.onMobEntitySpawn(world, plant, getPosition());
+								this.remove();
 							}
 						});
 					}

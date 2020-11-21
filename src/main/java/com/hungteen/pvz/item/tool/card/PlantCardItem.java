@@ -79,7 +79,7 @@ public class PlantCardItem extends SummonCardItem {
 		if (hand == Hand.OFF_HAND) {// only use right hand to plant.
 			return ActionResultType.FAIL;
 		}
-		if (Plants.isOuterPlant(this.plant)) {// can not place on blocks, like pumpkin.
+		if (Plants.isOuterPlant(this.plant) || Plants.isUpgradePlant(this.plant)) {// can not place on blocks, like pumpkin.
 			return ActionResultType.FAIL;
 		}
 		if (Plants.isWaterPlant(this.plant)) {// can only plant in water.

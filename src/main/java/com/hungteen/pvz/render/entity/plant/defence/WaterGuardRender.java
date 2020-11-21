@@ -14,7 +14,7 @@ import net.minecraftforge.api.distmarker.OnlyIn;
 public class WaterGuardRender extends PVZPlantRender<WaterGuardEntity>{
 
 	public WaterGuardRender(EntityRendererManager rendererManager) {
-		super(rendererManager, new WaterGuardModel(), 0.3f);
+		super(rendererManager, new WaterGuardModel(), 0f);
 	}
 
 	@Override
@@ -24,6 +24,7 @@ public class WaterGuardRender extends PVZPlantRender<WaterGuardEntity>{
 
 	@Override
 	public ResourceLocation getEntityTexture(WaterGuardEntity entity) {
+		if(entity.getDefenceLife() > 0) return StringUtil.prefix("textures/entity/plant/defence/water_guard2.png");
 		return StringUtil.prefix("textures/entity/plant/defence/water_guard.png");
 	}
 

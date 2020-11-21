@@ -63,4 +63,9 @@ public class RepeaterEntity extends PeaShooterEntity{
 	public Plants getPlantEnumName() {
 		return Plants.REPEATER;
 	}
+
+	@Override
+	public Plants getUpgradePlantType() {
+		return Plants.GATLING_PEA;
+	}
 }

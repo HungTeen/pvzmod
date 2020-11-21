@@ -34,8 +34,8 @@ public class TallNutEntity extends WallNutEntity{
 	}
 	
 	@Override
-	protected float getAttractRange() {
-		return 6;
+	public float getAttractRange() {
+		return 5;
 	}
 	
 	@Override

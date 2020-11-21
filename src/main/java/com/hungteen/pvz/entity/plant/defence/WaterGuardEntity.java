@@ -1,53 +1,25 @@
 package com.hungteen.pvz.entity.plant.defence;
 
 import com.hungteen.pvz.entity.plant.base.PlantDefenderEntity;
+import com.hungteen.pvz.utils.enums.Plants;
 
 import net.minecraft.entity.CreatureEntity;
-import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntitySize;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.Pose;
-import net.minecraft.util.math.BlockPos;
+import net.minecraft.entity.ai.goal.SwimGoal;
 import net.minecraft.world.World;
 
-/**
- * removed in 1.15.2 - 0.2
- */
-public abstract class WaterGuardEntity extends PlantDefenderEntity{
+public class WaterGuardEntity extends PlantDefenderEntity{
 
 	public WaterGuardEntity(EntityType<? extends CreatureEntity> type, World worldIn) {
 		super(type, worldIn);
 	}
 
 	@Override
-	protected void normalPlantTick() {
-		super.normalPlantTick();
-		if(!world.isRemote) {
-			if(!this.world.isAirBlock(new BlockPos(this).up())) {
-				this.setMotion(this.getMotion().getX(), 0.05f, this.getMotion().getZ());
-			}else {
-				this.setMotion(this.getMotion().getX(), 0, this.getMotion().getZ());
-			}
-		}
-	}
-	
-	@Override
-	public void startSuperMode(boolean first) {
-		super.startSuperMode(first);
-		this.spawnGuard();
-	}
-	
-	private void spawnGuard() {
-//		if(!world.isRemote) {
-//			int [] dx = new int[] {1, -1, 0, 0};
-//			int [] dz = new int[] {0, 0, 1, -1};
-//			for(int i=0;i<4;i++) {
-//				WaterGuardEntity guard = EntityRegister.WATER_GUARD.get().create(world);
-//				guard.setPosition(this.getPosX()+dx[i], this.getPosY(), this.getPosZ()+dz[i]);
-//				PlantUtil.copyPlantData(guard, this);
-//				world.addEntity(guard);
-//			}
-//		}
+	protected void registerGoals() {
+		super.registerGoals();
+		this.goalSelector.addGoal(2, new SwimGoal(this));
 	}
 	
 	@Override
@@ -56,45 +28,32 @@ public abstract class WaterGuardEntity extends PlantDefenderEntity{
 	}
 	
 	@Override
-	public boolean hasNoGravity() {
-		return this.isInWater();
-	}
-	
-	@Override
-	public boolean canBreatheUnderwater() {
-		return true;
-	}
-	
-	@Override
-	protected void collideWithEntity(Entity entityIn) {
-	}
-	
-	@Override
 	protected boolean checkNormalPlantWeak() {//check if it leave water
-		if(this.isImmuneToWeak) return false;
-		return !this.isInWater();
+		return ! this.isInWater();
 	}
 	
 	@Override
 	public float getPlantHealth() {
 		int lvl = this.getPlantLvl();
-		if(lvl<=19) return 290+10*lvl;
-		if(lvl<=20) return 500;
-		return 300;
+		if(lvl <= 19) return 190 + lvl * 10;
+		return 400;
 	}
 	
 	@Override
 	public float getSuperLife() {
-		int lvl=this.getPlantLvl();
-		if(lvl<=6) return 300;
-		if(lvl<=13) return 400;
-		if(lvl<=20) return 500;
-		return 300;
+		if(this.isPlantInStage(1)) return 200;
+		if(this.isPlantInStage(2)) return 300;
+		return 400;
 	}
 	
 	@Override
 	public int getSuperTimeLength() {
 		return 20;
+	}
+
+	@Override
+	public Plants getPlantEnumName() {
+		return Plants.WATER_GUARD;
 	}
 
 }

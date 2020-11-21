@@ -4,6 +4,7 @@ import com.hungteen.pvz.capability.CapabilityHandler;
 import com.hungteen.pvz.entity.ai.PVZNearestTargetGoal;
 import com.hungteen.pvz.entity.plant.PVZPlantEntity;
 import com.hungteen.pvz.item.tool.card.PlantCardItem;
+import com.hungteen.pvz.utils.EntityUtil;
 import com.hungteen.pvz.utils.enums.Resources;
 import com.hungteen.pvz.utils.interfaces.IDefender;
 
@@ -51,6 +52,17 @@ public abstract class PlantDefenderEntity extends PVZPlantEntity implements IDef
 	}
 
 	@Override
+	protected void normalPlantTick() {
+		super.normalPlantTick();
+		if(! world.isRemote) {
+			if(this.getAttackTarget() != null) {
+				this.attract();
+				this.setAttackTarget(null);
+			}
+		}
+	}
+	
+	@Override
 	public void startSuperMode(boolean first) {
 		super.startSuperMode(first);
 		this.setDefenceLife(this.getSuperLife());
@@ -59,18 +71,18 @@ public abstract class PlantDefenderEntity extends PVZPlantEntity implements IDef
 	
 	@Override
 	public void attract() {
-//		float range = getAttractRange();
-//		for(LivingEntity target:EntityUtil.getEntityTargetableEntity(this, EntityUtil.getEntityAABB(this, range, range))) {
-//			this.attract(target);
-//		}
+		float range = getAttractRange();
+		for(LivingEntity target:EntityUtil.getEntityTargetableEntity(this, EntityUtil.getEntityAABB(this, range, range))) {
+			this.attract(target);
+		}
 	}
 	
 	public void attract(LivingEntity target) {
-//		if(target instanceof MobEntity) {
-//			if(!(((MobEntity) target).getAttackTarget() instanceof PlantDefenderEntity)) {
-//				((MobEntity) target).setAttackTarget(this);
-//			}
-//		}
+		if(target instanceof MobEntity) {
+			if(!(((MobEntity) target).getAttackTarget() instanceof PlantDefenderEntity)) {
+				((MobEntity) target).setAttackTarget(this);
+			}
+		}
 	}
 	
 	@Override
@@ -91,7 +103,7 @@ public abstract class PlantDefenderEntity extends PVZPlantEntity implements IDef
 						}
 					});
 				}else {
-					for(int i=0;i<4;i++) {
+					for(int i = 0;i < 4; ++ i) {
 						this.world.addParticle(ParticleTypes.HEART, this.getPosX(), this.getPosY() + this.getEyeHeight(), this.getPosZ(), (this.getRNG().nextFloat()-0.5f)/8, 0.05f, (this.getRNG().nextFloat()-0.5f)/8);
 					}
 				}
@@ -105,18 +117,18 @@ public abstract class PlantDefenderEntity extends PVZPlantEntity implements IDef
 	public boolean attackEntityFrom(DamageSource source, float amount) {
 		amount = this.pumpkinReduceDamage(source, amount);
 		if(!world.isRemote) {
-			if(this.getDefenceLife()>amount) { // damage armor health first
-				this.setDefenceLife(this.getDefenceLife()-amount);
-				amount=0;
+			if(this.getDefenceLife() > amount) { // damage armor health first
+				this.setDefenceLife(this.getDefenceLife() - amount);
+				amount = 0;
 			}else {
-				amount-=this.getDefenceLife();
+				amount -= this.getDefenceLife();
 				this.setDefenceLife(0f);
 			}
 		}
 		return super.attackEntityFrom(source, amount);
 	}
 	
-	protected float getAttractRange() {
+	public float getAttractRange() {
 		return 3;
 	}
 	

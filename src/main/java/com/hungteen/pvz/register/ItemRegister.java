@@ -115,8 +115,10 @@ public class ItemRegister {
     public static final RegistryObject<PlantCardItem> COFFEE_BEAN_ENJOY_CARD = registerCard(Plants.COFFEE_BEAN, true);
     public static final RegistryObject<PlantCardItem> GATLING_PEA_CARD = registerCard(Plants.GATLING_PEA, false);
     public static final RegistryObject<PlantCardItem> GATLING_PEA_ENJOY_CARD = registerCard(Plants.GATLING_PEA, true);
-    //    public static final RegistryObject<PlantCardItem> WATER_GUARD_CARD = registerCard(Plants.WATER_GUARD, false);
-    //    public static final RegistryObject<PlantCardItem> WATER_GUARD_ENJOY_CARD = registerCard(Plants.WATER_GUARD, true);
+    public static final RegistryObject<PlantCardItem> TWIN_SUNFLOWER_CARD = registerCard(Plants.TWIN_SUNFLOWER, false);
+    public static final RegistryObject<PlantCardItem> TWIN_SUNFLOWER_ENJOY_CARD = registerCard(Plants.TWIN_SUNFLOWER, true);
+    public static final RegistryObject<PlantCardItem> WATER_GUARD_CARD = registerCard(Plants.WATER_GUARD, false);
+    public static final RegistryObject<PlantCardItem> WATER_GUARD_ENJOY_CARD = registerCard(Plants.WATER_GUARD, true);
     
     //plants
 	public static final RegistryObject<Item> PEA = ITEMS.register("pea",()-> new BlockItem(BlockRegister.PEA_PLANT.get(),new Item.Properties().group(GroupRegister.PVZ_MISC)));
@@ -221,9 +223,10 @@ public class ItemRegister {
 	public static final RegistryObject<PVZSpawnEggItem> SPIKE_WEED_SPAWN_EGG = registerSpawnEgg("spike_weed", EntityRegister.SPIKE_WEED, Colors.SPEAR_COLOR);
 	public static final RegistryObject<PVZSpawnEggItem> TORCH_WOOD_SPAWN_EGG = registerSpawnEgg("torch_wood", EntityRegister.TORCH_WOOD, Colors.FLAME_COLOR);
 	public static final RegistryObject<PVZSpawnEggItem> TALL_NUT_SPAWN_EGG = registerSpawnEgg("tall_nut", EntityRegister.TALL_NUT, Colors.DEFENCE_COLOR);
-//	public static final RegistryObject<PVZSpawnEggItem> WATER_GUARD_SPAWN_EGG = registerSpawnEgg("water_guard", EntityRegister.WATER_GUARD, Colors.DEFENCE_COLOR);
 	public static final RegistryObject<PVZSpawnEggItem> COFFEE_BEAN_SPAWN_EGG = registerSpawnEgg("coffee_bean", EntityRegister.COFFEE_BEAN, Colors.MAGIC_COLOR);
 	public static final RegistryObject<PVZSpawnEggItem> GATLING_PEA_SPAWN_EGG = registerSpawnEgg("gatling_pea", EntityRegister.GATLING_PEA, Colors.APPEASE_COLOR);
+	public static final RegistryObject<PVZSpawnEggItem> TWIN_SUNFLOWER_SPAWN_EGG = registerSpawnEgg("twin_sunflower", EntityRegister.TWIN_SUNFLOWER, Colors.LIGHT_COLOR);
+	public static final RegistryObject<PVZSpawnEggItem> WATER_GUARD_SPAWN_EGG = registerSpawnEgg("water_guard", EntityRegister.WATER_GUARD, Colors.DEFENCE_COLOR);
 	
 	/**
 	 * register spawn eggs
