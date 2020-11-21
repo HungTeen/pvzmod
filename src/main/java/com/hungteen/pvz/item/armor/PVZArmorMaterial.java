@@ -2,16 +2,22 @@ package com.hungteen.pvz.item.armor;
 
 import java.util.function.Supplier;
 
+import com.hungteen.pvz.register.ItemRegister;
+
 import net.minecraft.inventory.EquipmentSlotType;
 import net.minecraft.item.IArmorMaterial;
 import net.minecraft.item.crafting.Ingredient;
 import net.minecraft.util.LazyValue;
 import net.minecraft.util.SoundEvent;
+import net.minecraft.util.SoundEvents;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 
 public enum PVZArmorMaterial implements IArmorMaterial {
-	;
+	
+	FOOTBALL("football", 33, new int[] {3, 6, 8 ,3}, 15, SoundEvents.ITEM_ARMOR_EQUIP_IRON, 1.0F, () -> {
+	      return Ingredient.fromItems(ItemRegister.STEEL_INGOT.get());
+	});
 
 	private static final int[] MAX_DAMAGE_ARRAY = new int[] { 13, 15, 16, 11 };
 	private final String name;

@@ -6,6 +6,8 @@ import com.hungteen.pvz.item.PVZItemBase;
 import com.hungteen.pvz.item.PVZSpawnEggItem;
 import com.hungteen.pvz.item.armor.BucketArmorItem;
 import com.hungteen.pvz.item.armor.ConeArmorItem;
+import com.hungteen.pvz.item.armor.FootballArmorItem;
+import com.hungteen.pvz.item.armor.PVZArmorMaterial;
 import com.hungteen.pvz.item.misc.AlmanacItem;
 import com.hungteen.pvz.item.misc.StrangeHelpItem;
 import com.hungteen.pvz.item.tool.BobsleCarItem;
@@ -142,8 +144,9 @@ public class ItemRegister {
 	//armor
 	public static final RegistryObject<Item> CONE_HEAD = ITEMS.register("cone_head", ()->new ConeArmorItem(ArmorMaterial.LEATHER, EquipmentSlotType.HEAD));
 	public static final RegistryObject<Item> BUCKET_HEAD = ITEMS.register("bucket_head", ()->new BucketArmorItem(ArmorMaterial.IRON, EquipmentSlotType.HEAD));
-    
-	//misc
+    public static final RegistryObject<Item> FOOTBALL_HEAD = ITEMS.register("football_head", ()->new FootballArmorItem(PVZArmorMaterial.FOOTBALL, EquipmentSlotType.HEAD));
+	
+    //misc
 	public static final RegistryObject<Item> STRANGE_HELP = ITEMS.register("strange_help", StrangeHelpItem::new);
 //	public static final RegistryObject<Item> GUILD_BOOK = ITEMS.register("guild_book", GuildBookItem::new);
 	public static final RegistryObject<Item> ALMANAC = ITEMS.register("almanac", AlmanacItem::new);

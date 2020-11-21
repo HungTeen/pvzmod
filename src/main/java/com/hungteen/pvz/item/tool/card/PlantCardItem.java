@@ -1,5 +1,6 @@
 package com.hungteen.pvz.item.tool.card;
 
+import com.hungteen.pvz.PVZEventHandler;
 import com.hungteen.pvz.PVZMod;
 import com.hungteen.pvz.capability.CapabilityHandler;
 import com.hungteen.pvz.capability.player.PlayerDataManager;
@@ -115,12 +116,7 @@ public class PlantCardItem extends SummonCardItem {
 				}
 				l.getPlayerData().getPlayerStats().addPlayerStats(Resources.SUN_NUM, - sunCost);
 				int lvl = manager.getPlantStats().getPlantLevel(plant);
-				plantEntity.setPlantLvl(lvl);
-				plantEntity.setOwnerUUID(player.getUniqueID());
-				onUsePlantCard(player, stack, this, lvl);
-//				if(EnchantmentHelper.getEnchantmentLevel(En, stack)) {// hypno
-//					
-//				}
+				PVZEventHandler.onPlantEntitySummonByPlayer(player, plantEntity, this, stack, lvl);
 				if (this.canPlantBreakOut(stack)) {// break out enchantment
 					if (plantEntity.canStartSuperMode()) {
 						plantEntity.startSuperMode(false);

@@ -117,8 +117,10 @@ public abstract class PVZPlantEntity extends CreatureEntity implements IPVZPlant
 	/**
 	 * init attributes with plant lvl
 	 */
-	public void initAttributes(int lvl){
+	public void onSpawnedByPlayer(PlayerEntity player, int lvl){
 		this.setPlantLvl(lvl);
+		this.setOwnerUUID(player.getUniqueID());
+//		System.out.println(lvl);
 		this.getAttribute(SharedMonsterAttributes.MAX_HEALTH).setBaseValue(this.getPlantHealth());
 		this.heal(this.getMaxHealth());
 	}
@@ -244,12 +246,12 @@ public abstract class PVZPlantEntity extends CreatureEntity implements IPVZPlant
 	
 	@Override
 	public ILivingEntityData onInitialSpawn(IWorld worldIn, DifficultyInstance difficultyIn, SpawnReason reason,ILivingEntityData spawnDataIn, CompoundNBT dataTag) {
-		initAttributes(this.getPlantLvl());
 		if(!worldIn.isRemote()) {
 			EntityUtil.playSound(this, this.getSpawnSound());
 		}
 		return super.onInitialSpawn(worldIn, difficultyIn, reason, spawnDataIn, dataTag);
 	}
+	
 	
 	/**
 	 * check if the plant can stand on the current position

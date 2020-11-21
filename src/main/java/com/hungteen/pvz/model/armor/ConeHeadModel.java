@@ -12,10 +12,10 @@ import net.minecraft.entity.LivingEntity;
 public class ConeHeadModel extends BipedModel<LivingEntity> {
 
 	public ConeHeadModel(float scale) {
-		super(scale,0,64,64);
+		super(scale, 0, 64, 64);
 
 		ModelRenderer body = new ModelRenderer(this);
-		body.setRotationPoint(0.0F, -8F, 0.0F);
+		body.setRotationPoint(0.0F, - 8F, 0.0F);
 		body.setTextureOffset(1, 33).addBox(-5.0F, -3.0F, -5.0F, 10.0F, 3.0F, 10.0F, 0.0F, false);
 		body.setTextureOffset(2, 47).addBox(-6.0F, 0.0F, -6.0F, 12.0F, 1.0F, 2.0F, 0.0F, false);
 		body.setTextureOffset(1, 51).addBox(-6.0F, 0.0F, 4.0F, 12.0F, 1.0F, 2.0F, 0.0F, false);
