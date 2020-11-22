@@ -7,6 +7,7 @@ import com.hungteen.pvz.item.PVZSpawnEggItem;
 import com.hungteen.pvz.item.armor.BucketArmorItem;
 import com.hungteen.pvz.item.armor.ConeArmorItem;
 import com.hungteen.pvz.item.armor.FootballArmorItem;
+import com.hungteen.pvz.item.armor.GigaArmorItem;
 import com.hungteen.pvz.item.armor.PVZArmorMaterial;
 import com.hungteen.pvz.item.misc.AlmanacItem;
 import com.hungteen.pvz.item.misc.StrangeHelpItem;
@@ -148,6 +149,10 @@ public class ItemRegister {
     public static final RegistryObject<Item> FOOTBALL_CHESTPLATE = ITEMS.register("football_chestplate", ()->new FootballArmorItem(PVZArmorMaterial.FOOTBALL, EquipmentSlotType.CHEST));
     public static final RegistryObject<Item> FOOTBALL_LEGGINGS = ITEMS.register("football_leggings", ()->new FootballArmorItem(PVZArmorMaterial.FOOTBALL, EquipmentSlotType.LEGS));
     public static final RegistryObject<Item> FOOTBALL_BOOTS = ITEMS.register("football_boots", ()->new FootballArmorItem(PVZArmorMaterial.FOOTBALL, EquipmentSlotType.FEET));
+    public static final RegistryObject<Item> GIGA_HELMET = ITEMS.register("giga_helmet", ()->new GigaArmorItem(PVZArmorMaterial.GIGA, EquipmentSlotType.HEAD));
+    public static final RegistryObject<Item> GIGA_CHESTPLATE = ITEMS.register("giga_chestplate", ()->new GigaArmorItem(PVZArmorMaterial.GIGA, EquipmentSlotType.CHEST));
+    public static final RegistryObject<Item> GIGA_LEGGINGS = ITEMS.register("giga_leggings", ()->new GigaArmorItem(PVZArmorMaterial.GIGA, EquipmentSlotType.LEGS));
+    public static final RegistryObject<Item> GIGA_BOOTS = ITEMS.register("giga_boots", ()->new GigaArmorItem(PVZArmorMaterial.GIGA, EquipmentSlotType.FEET));
     
     //misc
 	public static final RegistryObject<Item> STRANGE_HELP = ITEMS.register("strange_help", StrangeHelpItem::new);

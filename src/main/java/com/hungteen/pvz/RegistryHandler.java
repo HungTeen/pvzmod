@@ -5,6 +5,7 @@ import com.hungteen.pvz.item.PVZSpawnEggItem;
 import com.hungteen.pvz.item.armor.BucketArmorItem;
 import com.hungteen.pvz.item.armor.ConeArmorItem;
 import com.hungteen.pvz.item.armor.FootballArmorItem;
+import com.hungteen.pvz.item.armor.GigaArmorItem;
 import com.hungteen.pvz.network.PVZPacketHandler;
 import com.hungteen.pvz.potion.PotionRecipeHandler;
 import com.hungteen.pvz.register.BiomeRegister;
@@ -68,6 +69,7 @@ public class RegistryHandler {
 		ConeArmorItem.initArmorModel();
 		BucketArmorItem.initArmorModel();
 		FootballArmorItem.initArmorModel();
+		GigaArmorItem.initArmorModel();
 		KeyBindRegister.init();
 	}
 	

@@ -15,7 +15,10 @@ import net.minecraftforge.api.distmarker.OnlyIn;
 
 public enum PVZArmorMaterial implements IArmorMaterial {
 	
-	FOOTBALL("football", 33, new int[] {3, 6, 8 ,3}, 15, SoundEvents.ITEM_ARMOR_EQUIP_IRON, 1.0F, () -> {
+	FOOTBALL("football", 50, new int[] {3, 6, 8 ,3}, 15, SoundEvents.ITEM_ARMOR_EQUIP_IRON, 0.5F, () -> {
+	      return Ingredient.fromItems(ItemRegister.STEEL_INGOT.get());
+	}),
+	GIGA("giga", 80, new int[] {3, 6, 8 ,3}, 20, SoundEvents.ITEM_ARMOR_EQUIP_IRON, 2F, () -> {
 	      return Ingredient.fromItems(ItemRegister.STEEL_INGOT.get());
 	});
 

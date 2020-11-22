@@ -2,6 +2,8 @@ package com.hungteen.pvz.data;
 
 import com.hungteen.pvz.PVZMod;
 import com.hungteen.pvz.item.PVZSpawnEggItem;
+import com.hungteen.pvz.item.armor.FootballArmorItem;
+import com.hungteen.pvz.item.armor.GigaArmorItem;
 import com.hungteen.pvz.item.tool.card.PlantCardItem;
 import com.hungteen.pvz.utils.PlantUtil;
 import com.hungteen.pvz.utils.StringUtil;
@@ -41,6 +43,8 @@ public class PVZItemModelGenerator extends ItemModelProvider{
 					ResourceLocation r = StringUtil.prefix("item/"+PlantUtil.getPlantRankByName(plant).toString().toLowerCase()+"_card");
 					generated(i.getRegistryName().getPath(), r, plantResource);
 				}
+			} else if(i instanceof FootballArmorItem || i instanceof GigaArmorItem) {
+				generated(i.getRegistryName().getPath(), StringUtil.prefix("item/" + i.getRegistryName().getPath()));
 			}
 		}
 	}
