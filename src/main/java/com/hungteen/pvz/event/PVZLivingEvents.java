@@ -3,14 +3,17 @@ package com.hungteen.pvz.event;
 import com.hungteen.pvz.PVZMod;
 import com.hungteen.pvz.entity.plant.PVZPlantEntity;
 import com.hungteen.pvz.entity.zombie.PVZZombieEntity;
+import com.hungteen.pvz.register.EnchantmentRegister;
 import com.hungteen.pvz.utils.EntityUtil;
 import com.hungteen.pvz.utils.PlayerUtil;
 import com.hungteen.pvz.utils.ZombieUtil;
 import com.hungteen.pvz.utils.enums.Resources;
 import com.hungteen.pvz.utils.enums.Zombies;
 
+import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraftforge.event.entity.living.LivingDeathEvent;
+import net.minecraftforge.event.entity.living.LivingHurtEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 
@@ -34,6 +37,20 @@ public class PVZLivingEvents {
 					onPlayerKillZombie(player, zombie.getZombieEnumName());
 				}
 			}
+		}
+	}
+	
+	@SubscribeEvent
+	public static void onLivingHurt(LivingHurtEvent ev) {
+		if(! ev.getEntityLiving().world.isRemote) {
+			ev.getEntityLiving().getArmorInventoryList().forEach((stack)->{
+				if(EnchantmentHelper.getEnchantmentLevel(EnchantmentRegister.TREE_PROTECTION.get(), stack) > 0){
+					float amount = ev.getAmount();
+					amount = Math.min(amount, ev.getEntityLiving().getMaxHealth());
+					ev.setAmount(amount);
+					return ;
+				}
+		    });
 		}
 	}
 	

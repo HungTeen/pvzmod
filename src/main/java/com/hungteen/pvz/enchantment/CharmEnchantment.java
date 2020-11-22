@@ -5,25 +5,25 @@ import com.hungteen.pvz.register.EnchantmentRegister;
 import net.minecraft.enchantment.Enchantment;
 import net.minecraft.inventory.EquipmentSlotType;
 
-public class BreakOutEnchantment extends Enchantment{
+public class CharmEnchantment extends Enchantment{
 
-	public BreakOutEnchantment() {
-		super(Rarity.RARE, EnchantmentRegister.PLANT_CARD, new EquipmentSlotType[] {EquipmentSlotType.MAINHAND});
+	public CharmEnchantment() {
+		super(Rarity.VERY_RARE, EnchantmentRegister.PLANT_CARD, new EquipmentSlotType[] {EquipmentSlotType.MAINHAND});
 	}
 
 	@Override
 	public int getMinEnchantability(int enchantmentLevel) {
-		return enchantmentLevel * 10;
+		return 30;
 	}
 	
 	@Override
 	public int getMaxEnchantability(int enchantmentLevel) {
-		return getMinEnchantability(enchantmentLevel) + 5;
+		return 100;
 	}
 	
 	@Override
 	public int getMaxLevel() {
-		return 4;
+		return 1;
 	}
 	
 }

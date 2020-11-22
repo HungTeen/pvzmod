@@ -122,6 +122,9 @@ public class PlantCardItem extends SummonCardItem {
 						plantEntity.startSuperMode(false);
 					}
 				}
+				if(EnchantmentHelper.getEnchantmentLevel(EnchantmentRegister.CHARM.get(), stack) > 0) {
+					plantEntity.onPlantBeCharmed();
+				}
 			}
 		});
 	}
@@ -143,7 +146,7 @@ public class PlantCardItem extends SummonCardItem {
 			int num = manager.getPlayerStats().getPlayerStats(Resources.SUN_NUM);
 			int sunCost = item.getSunCost(stack);
 			if (num >= sunCost) {// sun is enough
-				l.getPlayerData().getPlayerStats().addPlayerStats(Resources.SUN_NUM, -sunCost);
+				l.getPlayerData().getPlayerStats().addPlayerStats(Resources.SUN_NUM, - sunCost);
 				onUsePlantCard(player, stack, item, manager.getPlantStats().getPlantLevel(item.getPlant()));
 				float life = PlantUtil.PUMPKIN_LIFE;
 				if (item.canPlantBreakOut(stack)) {// break out enchantment

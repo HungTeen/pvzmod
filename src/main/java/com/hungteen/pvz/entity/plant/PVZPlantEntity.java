@@ -77,6 +77,7 @@ public abstract class PVZPlantEntity extends CreatureEntity implements IPVZPlant
 	protected Plants outerPlant = null;
 	public boolean canCollideWithPlant = true;
 	protected boolean isUpgradePlant = false;
+	protected boolean canBeCharmed = true;
 	
 	public PVZPlantEntity(EntityType<? extends CreatureEntity> type, World worldIn) {
 		super(type, worldIn);
@@ -427,6 +428,11 @@ public abstract class PVZPlantEntity extends CreatureEntity implements IPVZPlant
 	@Nullable
 	public Plants getUpgradePlantType() {
 		return null;
+	}
+	
+	public void onPlantBeCharmed() {
+		if(! this.canBeCharmed) return ;
+		this.setCharmed(! this.isCharmed());
 	}
 	
 	@Override

@@ -22,7 +22,8 @@ public abstract class PlantProducerEntity extends PVZPlantEntity implements IPro
 	
 	public PlantProducerEntity(EntityType<? extends CreatureEntity> type, World worldIn) {
 		super(type, worldIn);
-		this.genCD=this.getGenCD();
+		this.canBeCharmed = false;
+		this.genCD = this.getGenCD();
 	}
 
 	@Override

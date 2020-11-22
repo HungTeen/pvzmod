@@ -22,6 +22,7 @@ public class TorchWoodEntity extends PVZPlantEntity{
 	
 	public TorchWoodEntity(EntityType<? extends CreatureEntity> type, World worldIn) {
 		super(type, worldIn);
+		this.canBeCharmed = false;
 	}
 	
 	@Override

@@ -21,6 +21,7 @@ public class HypnoShroomEntity extends PVZPlantEntity implements IShroomPlant{
 
 	public HypnoShroomEntity(EntityType<? extends CreatureEntity> type, World worldIn) {
 		super(type, worldIn);
+		this.canBeCharmed = false;
 	}
 
 	@Override
