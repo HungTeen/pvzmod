@@ -29,7 +29,10 @@ public class FootballArmorItem extends ArmorItem{
 	
 	@Override
 	public String getArmorTexture(ItemStack stack, Entity entity, EquipmentSlotType slot, String type) {
-		return StringUtil.ARMOR_PREFIX + "football_head.png";
+		if(slot == EquipmentSlotType.HEAD) return StringUtil.ARMOR_PREFIX + "football_helmet.png";
+		if(slot == EquipmentSlotType.CHEST) return StringUtil.ARMOR_PREFIX + "football_chestplate.png";
+		if(slot == EquipmentSlotType.LEGS) return StringUtil.ARMOR_PREFIX + "football_layer_2.png";
+		return StringUtil.ARMOR_PREFIX + "football_layer_1.png";
 	}
 	
 	@SuppressWarnings("unchecked")
@@ -42,7 +45,8 @@ public class FootballArmorItem extends ArmorItem{
 	
 	@OnlyIn(Dist.CLIENT)
 	public static void initArmorModel(){
-		modelMap.put(EquipmentSlotType.HEAD, new FootballArmorModel(1f));
+		modelMap.put(EquipmentSlotType.HEAD, new FootballArmorModel(EquipmentSlotType.HEAD, 1f));
+		modelMap.put(EquipmentSlotType.CHEST, new FootballArmorModel(EquipmentSlotType.CHEST, 1f));
 	}
 
 }

@@ -14,7 +14,7 @@ public class BucketHeadModel extends BipedModel<LivingEntity> {
 	private final ModelRenderer pole;
 
 	public BucketHeadModel(float scale) {
-		super(scale,0,64,64);
+		super(scale, 0, 64, 64);
 
 		total = new ModelRenderer(this);
 		total.setRotationPoint(0.0F, -8.0F, 0.0F);

@@ -1,12 +1,27 @@
-package com.hungteen.pvz.register;
+package com.hungteen.pvz;
 
-import com.hungteen.pvz.PVZMod;
 import com.hungteen.pvz.capability.CapabilityHandler;
 import com.hungteen.pvz.item.PVZSpawnEggItem;
 import com.hungteen.pvz.item.armor.BucketArmorItem;
 import com.hungteen.pvz.item.armor.ConeArmorItem;
+import com.hungteen.pvz.item.armor.FootballArmorItem;
 import com.hungteen.pvz.network.PVZPacketHandler;
 import com.hungteen.pvz.potion.PotionRecipeHandler;
+import com.hungteen.pvz.register.BiomeRegister;
+import com.hungteen.pvz.register.BlockRegister;
+import com.hungteen.pvz.register.ContainerRegister;
+import com.hungteen.pvz.register.EffectRegister;
+import com.hungteen.pvz.register.EnchantmentRegister;
+import com.hungteen.pvz.register.EntityRegister;
+import com.hungteen.pvz.register.EntitySpawnRegister;
+import com.hungteen.pvz.register.FeatureRegister;
+import com.hungteen.pvz.register.ItemRegister;
+import com.hungteen.pvz.register.KeyBindRegister;
+import com.hungteen.pvz.register.ParticleRegister;
+import com.hungteen.pvz.register.PotionRegister;
+import com.hungteen.pvz.register.SoundRegister;
+import com.hungteen.pvz.register.StructureRegister;
+import com.hungteen.pvz.register.TileEntityRegister;
 
 import net.minecraft.entity.EntityType;
 import net.minecraftforge.event.RegistryEvent;
@@ -38,7 +53,7 @@ public class RegistryHandler {
 	}
 	
 	@SubscribeEvent
-    public static void setup(FMLCommonSetupEvent ev){
+    public static void commonSetup(FMLCommonSetupEvent ev){
     	CapabilityHandler.registerCapabilities();
     	PVZPacketHandler.init();
     	BiomeRegister.addBiomes();
@@ -52,6 +67,7 @@ public class RegistryHandler {
 	public static void clientSetup(FMLClientSetupEvent evt) {
 		ConeArmorItem.initArmorModel();
 		BucketArmorItem.initArmorModel();
+		FootballArmorItem.initArmorModel();
 		KeyBindRegister.init();
 	}
 	

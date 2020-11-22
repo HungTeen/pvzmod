@@ -72,7 +72,7 @@ public class PeaShooterEntity extends PlantShooterEntity{
 	public float getBulletSpeed() {
 		int lvl = this.getPlantLvl();
 		if(lvl <= 19) {
-			return 1.15f + 0.5f * lvl;
+			return 1.15f + 0.05f * lvl;
 		}
 		return 2.2f;
 	}

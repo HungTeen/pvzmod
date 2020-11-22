@@ -29,7 +29,7 @@ public class BucketArmorItem extends ArmorItem{
 
 	@Override
 	public String getArmorTexture(ItemStack stack, Entity entity, EquipmentSlotType slot, String type) {
-		return StringUtil.ARMOR_PREFIX+"bucket_head.png";
+		return StringUtil.ARMOR_PREFIX + "bucket_head.png";
 	}
 	
 	@SuppressWarnings("unchecked")
@@ -41,8 +41,7 @@ public class BucketArmorItem extends ArmorItem{
 	}
 	
 	@OnlyIn(Dist.CLIENT)
-	public static void initArmorModel()
-	{
+	public static void initArmorModel() {
 		modelMap.put(EquipmentSlotType.HEAD, new BucketHeadModel(1f));
 	}
 }
