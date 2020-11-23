@@ -4,6 +4,7 @@ import com.hungteen.pvz.PVZMod;
 import com.hungteen.pvz.structure.davevilla.DaveVillaStructure;
 import com.hungteen.pvz.structure.zombie.BucketHouseStructure;
 import com.hungteen.pvz.structure.zombie.DolphinHouseStructure;
+import com.hungteen.pvz.structure.zombie.GraveHouseStructure;
 
 import net.minecraft.world.gen.feature.Feature;
 import net.minecraft.world.gen.feature.NoFeatureConfig;
@@ -20,5 +21,6 @@ public class FeatureRegister {
 	public static final RegistryObject<Structure<NoFeatureConfig>> DAVE_VILLA = FEATURES.register("dave_villa", () -> {return new DaveVillaStructure(NoFeatureConfig::deserialize);});
 	public static final RegistryObject<Structure<NoFeatureConfig>> BUCKET_HOUSE = FEATURES.register("bucket_house", () -> {return new BucketHouseStructure(NoFeatureConfig::deserialize);});
 	public static final RegistryObject<Structure<NoFeatureConfig>> DOLPHIN_HOUSE = FEATURES.register("dolphin_house", () -> {return new DolphinHouseStructure(NoFeatureConfig::deserialize);});
+	public static final RegistryObject<Structure<NoFeatureConfig>> GRAVE_HOUSE = FEATURES.register("grave_house", () -> {return new GraveHouseStructure(NoFeatureConfig::deserialize);});
 	
 }

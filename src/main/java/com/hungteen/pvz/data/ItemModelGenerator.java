@@ -17,9 +17,9 @@ import net.minecraftforge.client.model.generators.ItemModelBuilder;
 import net.minecraftforge.client.model.generators.ItemModelProvider;
 import net.minecraftforge.registries.ForgeRegistries;
 
-public class PVZItemModelGenerator extends ItemModelProvider{
+public class ItemModelGenerator extends ItemModelProvider{
 
-	public PVZItemModelGenerator(DataGenerator generator, ExistingFileHelper existingFileHelper) {
+	public ItemModelGenerator(DataGenerator generator, ExistingFileHelper existingFileHelper) {
 		super(generator, PVZMod.MOD_ID, existingFileHelper);
 	}
 

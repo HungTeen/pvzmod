@@ -28,14 +28,12 @@ public class BiomeRegister {
     }
 	
 	public static void addBiomeFeatures(){
-		for(Biome biome:ForgeRegistries.BIOMES.getValues()) {
+		for(Biome biome : ForgeRegistries.BIOMES.getValues()) {
 			if(biome instanceof PVZBiome) {
 				((PVZBiome) biome).addFeatures();
 				((PVZBiome) biome).addSpawns();
 			}
-			biome.addFeature(GenerationStage.Decoration.SURFACE_STRUCTURES, FeatureRegister.DAVE_VILLA.get().withConfiguration(IFeatureConfig.NO_FEATURE_CONFIG).withPlacement(Placement.NOPE.configure(IPlacementConfig.NO_PLACEMENT_CONFIG))); 
-		    biome.addFeature(GenerationStage.Decoration.SURFACE_STRUCTURES, FeatureRegister.BUCKET_HOUSE.get().withConfiguration(IFeatureConfig.NO_FEATURE_CONFIG).withPlacement(Placement.NOPE.configure(IPlacementConfig.NO_PLACEMENT_CONFIG))); 
-		    biome.addFeature(GenerationStage.Decoration.SURFACE_STRUCTURES, FeatureRegister.DOLPHIN_HOUSE.get().withConfiguration(IFeatureConfig.NO_FEATURE_CONFIG).withPlacement(Placement.NOPE.configure(IPlacementConfig.NO_PLACEMENT_CONFIG))); 
+			addStructureToBiome(biome);
 		}
 		for(Biome biome:BiomeUtil.PLAINS) {
 			biome.addStructure(FeatureRegister.DAVE_VILLA.get().withConfiguration(IFeatureConfig.NO_FEATURE_CONFIG));
@@ -52,5 +50,16 @@ public class BiomeRegister {
 		for(Biome biome:BiomeUtil.NETHER) {
 			biome.getSpawns(EntityClassification.MONSTER).add(new Biome.SpawnListEntry(EntityRegister.LAVA_ZOMBIE.get(),PVZConfig.COMMON_CONFIG.WorldSettings.EntitySpawnSettings.LavaZombieSpawnWeight.get(),1,1));
 		}
+		for(Biome biome : BiomeUtil.TAIGA) {
+			biome.addStructure(FeatureRegister.GRAVE_HOUSE.get().withConfiguration(IFeatureConfig.NO_FEATURE_CONFIG));
+		}
 	}
+	
+	public static void addStructureToBiome(Biome biome) {
+		biome.addFeature(GenerationStage.Decoration.SURFACE_STRUCTURES, FeatureRegister.DAVE_VILLA.get().withConfiguration(IFeatureConfig.NO_FEATURE_CONFIG).withPlacement(Placement.NOPE.configure(IPlacementConfig.NO_PLACEMENT_CONFIG))); 
+	    biome.addFeature(GenerationStage.Decoration.SURFACE_STRUCTURES, FeatureRegister.BUCKET_HOUSE.get().withConfiguration(IFeatureConfig.NO_FEATURE_CONFIG).withPlacement(Placement.NOPE.configure(IPlacementConfig.NO_PLACEMENT_CONFIG))); 
+	    biome.addFeature(GenerationStage.Decoration.SURFACE_STRUCTURES, FeatureRegister.DOLPHIN_HOUSE.get().withConfiguration(IFeatureConfig.NO_FEATURE_CONFIG).withPlacement(Placement.NOPE.configure(IPlacementConfig.NO_PLACEMENT_CONFIG)));
+	    biome.addFeature(GenerationStage.Decoration.SURFACE_STRUCTURES, FeatureRegister.GRAVE_HOUSE.get().withConfiguration(IFeatureConfig.NO_FEATURE_CONFIG).withPlacement(Placement.NOPE.configure(IPlacementConfig.NO_PLACEMENT_CONFIG))); 
+	}
+	
 }

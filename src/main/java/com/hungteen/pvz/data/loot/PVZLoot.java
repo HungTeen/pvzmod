@@ -1,4 +1,4 @@
-package com.hungteen.pvz.misc.loot;
+package com.hungteen.pvz.data.loot;
 
 import com.hungteen.pvz.utils.StringUtil;
 
@@ -7,8 +7,10 @@ import net.minecraft.util.ResourceLocation;
 public class PVZLoot {
 
 	//chest
-	public static final ResourceLocation BUCKET_HOUSE = getChestLootTable("bucket_house");
-	public static final ResourceLocation DOLPHIN_HOUSE = getChestLootTable("dolphin_house");
+	public static final ResourceLocation DAVE_VILLA_CHEST = getChestLootTable("dave_villa_chest");
+	public static final ResourceLocation BUCKET_HOUSE_CHEST = getChestLootTable("bucket_house_chest");
+	public static final ResourceLocation DOLPHIN_HOUSE_CHEST = getChestLootTable("dolphin_house_chest");
+	public static final ResourceLocation GRAVE_YARD_CHEST = getChestLootTable("grave_yard_chest");
 	
 	//entity
 	public static final ResourceLocation NORMAL_ZOMBIE = getEntityLootTable("normal_zombie");

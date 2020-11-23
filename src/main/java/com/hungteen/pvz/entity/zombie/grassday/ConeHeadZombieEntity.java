@@ -1,6 +1,6 @@
 package com.hungteen.pvz.entity.zombie.grassday;
 
-import com.hungteen.pvz.misc.loot.PVZLoot;
+import com.hungteen.pvz.data.loot.PVZLoot;
 import com.hungteen.pvz.register.SoundRegister;
 import com.hungteen.pvz.utils.enums.Zombies;
 

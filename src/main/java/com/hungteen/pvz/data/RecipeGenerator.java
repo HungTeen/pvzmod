@@ -11,9 +11,9 @@ import net.minecraft.data.ShapedRecipeBuilder;
 import net.minecraft.item.Items;
 import net.minecraftforge.common.data.ForgeRecipeProvider;
 
-public class PVZRecipeGenerator extends ForgeRecipeProvider{
+public class RecipeGenerator extends ForgeRecipeProvider{
 
-	public PVZRecipeGenerator(DataGenerator generatorIn) {
+	public RecipeGenerator(DataGenerator generatorIn) {
 		super(generatorIn);
 	}
 

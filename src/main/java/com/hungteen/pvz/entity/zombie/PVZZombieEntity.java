@@ -8,6 +8,7 @@ import java.util.UUID;
 import javax.annotation.Nullable;
 
 import com.hungteen.pvz.PVZConfig;
+import com.hungteen.pvz.data.loot.PVZLoot;
 import com.hungteen.pvz.entity.ai.PVZLookRandomlyGoal;
 import com.hungteen.pvz.entity.ai.PVZSwimGoal;
 import com.hungteen.pvz.entity.ai.ZombieMeleeAttackGoal;
@@ -20,7 +21,6 @@ import com.hungteen.pvz.entity.plant.enforce.SquashEntity;
 import com.hungteen.pvz.entity.plant.spear.SpikeWeedEntity;
 import com.hungteen.pvz.misc.damage.PVZDamageSource;
 import com.hungteen.pvz.misc.damage.PVZDamageType;
-import com.hungteen.pvz.misc.loot.PVZLoot;
 import com.hungteen.pvz.register.EffectRegister;
 import com.hungteen.pvz.register.EntityRegister;
 import com.hungteen.pvz.register.ItemRegister;

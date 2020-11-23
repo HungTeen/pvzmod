@@ -77,6 +77,11 @@ public class BiomeUtil {
 			Biomes.WARM_OCEAN, Biomes.LUKEWARM_OCEAN, Biomes.COLD_OCEAN, Biomes.DEEP_WARM_OCEAN, Biomes.DEEP_LUKEWARM_OCEAN,
 	};
 	
+	public static final Biome[] TAIGA = new Biome[] {
+			Biomes.TAIGA, Biomes.TAIGA_HILLS, Biomes.GIANT_TREE_TAIGA, Biomes.GIANT_TREE_TAIGA_HILLS, Biomes.TAIGA_MOUNTAINS,
+			Biomes.GIANT_SPRUCE_TAIGA, Biomes.GIANT_SPRUCE_TAIGA_HILLS,
+	};
+	
 	/**
 	 * add spawn to the biomes
 	 */

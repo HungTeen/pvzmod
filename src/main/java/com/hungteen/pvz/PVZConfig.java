@@ -39,6 +39,10 @@ public class PVZConfig {
 					WorldSettings.StructureSettings.DolphinHouseDistance = builder
 							.comment("the distance value between dolphin house.")
 							.defineInRange("DolphinHouseDistance", 32, 1, 1000);
+					
+					WorldSettings.StructureSettings.GraveHouseDistance = builder
+							.comment("the distance value between grave house.")
+							.defineInRange("GraveHouseDistance", 28, 1, 1000);
 				}
 				builder.pop();
 				builder.comment("The Spawn Weight of entity.").push("EntitySpawnWeight");
@@ -144,6 +148,7 @@ public class PVZConfig {
 				public ForgeConfigSpec.IntValue DaveVillaDistance;
 			    public ForgeConfigSpec.IntValue BucketHouseDistance;
 			    public ForgeConfigSpec.IntValue DolphinHouseDistance;
+			    public ForgeConfigSpec.IntValue GraveHouseDistance;
 			}
 			
 			public static class EntitySpawnSettings{

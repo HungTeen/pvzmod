@@ -2,10 +2,10 @@ package com.hungteen.pvz.entity.creature;
 
 import java.util.Random;
 
+import com.hungteen.pvz.data.loot.PVZLoot;
 import com.hungteen.pvz.entity.ai.WaterTemptGoal;
 import com.hungteen.pvz.entity.drop.SunEntity;
 import com.hungteen.pvz.entity.zombie.poolday.SnorkelZombieEntity;
-import com.hungteen.pvz.misc.loot.PVZLoot;
 import com.hungteen.pvz.register.EntityRegister;
 import com.hungteen.pvz.register.ItemRegister;
 import com.hungteen.pvz.register.SoundRegister;

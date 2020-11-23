@@ -1,6 +1,7 @@
 package com.hungteen.pvz.data;
 
 import com.hungteen.pvz.PVZMod;
+import com.hungteen.pvz.data.loot.LootTableGenerator;
 
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod.EventBusSubscriber;
@@ -11,7 +12,8 @@ public class DataGeneratorHandler {
 
 	@SubscribeEvent
 	public static void gatherData(GatherDataEvent ev) {
-		ev.getGenerator().addProvider(new PVZItemModelGenerator(ev.getGenerator(), ev.getExistingFileHelper()));
-		ev.getGenerator().addProvider(new PVZRecipeGenerator(ev.getGenerator()));
+		ev.getGenerator().addProvider(new ItemModelGenerator(ev.getGenerator(), ev.getExistingFileHelper()));
+		ev.getGenerator().addProvider(new RecipeGenerator(ev.getGenerator()));
+		ev.getGenerator().addProvider(new LootTableGenerator(ev.getGenerator()));
 	}
 }

@@ -1,7 +1,7 @@
 package com.hungteen.pvz.entity.zombie.plantzombie;
 
+import com.hungteen.pvz.data.loot.PVZLoot;
 import com.hungteen.pvz.entity.zombie.PVZZombieEntity;
-import com.hungteen.pvz.misc.loot.PVZLoot;
 import com.hungteen.pvz.utils.ZombieUtil;
 import com.hungteen.pvz.utils.enums.Zombies;
 
