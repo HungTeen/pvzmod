@@ -23,7 +23,6 @@ import com.hungteen.pvz.entity.plant.spear.SpikeWeedEntity;
 import com.hungteen.pvz.entity.plant.toxic.FumeShroomEntity;
 import com.hungteen.pvz.entity.plant.toxic.PuffShroomEntity;
 import com.hungteen.pvz.entity.plant.toxic.ScaredyShroomEntity;
-import com.hungteen.pvz.utils.ItemUtil;
 import com.hungteen.pvz.utils.PlantUtil;
 import com.hungteen.pvz.utils.PlayerUtil;
 import com.hungteen.pvz.utils.RenderUtil;
@@ -95,8 +94,8 @@ public class AlmanacScreen extends ContainerScreen<AlmanacContainer> {
 		this.renderLogo(current);
 		this.renderXpBar(current);
 		this.renderShortInfo(current);
-		if(Almanacs.isPlant(current)) {
-			Plants plant = Plants.getPlantByName(current.toString().toLowerCase());
+		if(current.isPlant()) {
+			Plants plant = current.getPlant();
 			int lvl = ClientPlayerResources.getPlayerPlantCardLvl(plant);
 //			int maxLvl = PlantUtil.getPlantMaxLvl(plant);
 			this.propertyCnt = 0;
@@ -243,7 +242,7 @@ public class AlmanacScreen extends ContainerScreen<AlmanacContainer> {
 				break;
 			}
 			default:{
-				PVZMod.LOGGER.debug("error plant enum type");
+				System.out.println("Warning: forget to fill the almanac info");
 				break;
 			}
 			}
@@ -291,15 +290,15 @@ public class AlmanacScreen extends ContainerScreen<AlmanacContainer> {
 		RenderSystem.pushMatrix();
 		int maxLvl = 1, lvl = 1;
 		Plants p = null;
-		if(Almanacs.isPlant(a)) {
-			p = Plants.getPlantByName(a.toString().toLowerCase());
+		if(a.isPlant()) {
+			p = a.getPlant();
 			maxLvl = PlantUtil.getPlantMaxLvl(p);
 			lvl = ClientPlayerResources.getPlayerPlantCardLvl(p);
-		}else if(a==Almanacs.PLAYER) {
+		} else if(a == Almanacs.PLAYER) {
 			maxLvl = PlayerUtil.MAX_TREE_LVL;
 			lvl = ClientPlayerResources.getPlayerStats(Resources.TREE_LVL);
 		}
-		String lvlInfo = Properties.LVL.getName()+":"+lvl;
+		String lvlInfo = Properties.LVL.getName() + ":" + lvl;
 		int barWidth = 62, barHeight = 9;
 		int len = barWidth;
 		if(maxLvl != lvl && p != null) { 
@@ -332,7 +331,7 @@ public class AlmanacScreen extends ContainerScreen<AlmanacContainer> {
 		RenderSystem.pushMatrix();
 		RenderSystem.scaled(scale, scale, scale);
 		RenderSystem.translated((dx % scale) * 1.0d / scale , (dy % scale) * 1.0d / scale, 0);
-		this.itemRenderer.renderItemIntoGUI(ItemUtil.getItemStackByAlmanac(a), dx / scale, dy / scale);
+		this.itemRenderer.renderItemIntoGUI(Almanacs.getItemStackByAlmanac(a), dx / scale, dy / scale);
 		RenderSystem.popMatrix();
 	}
 

@@ -232,8 +232,6 @@ public class AlmanacSearchGui extends AbstractGui implements IRenderable, IGuiEv
 			AlmanacToggleWidget toggle = this.toggleTabs.get(i);
 			toggle.visible = true;
 			toggle.setPosition(x, y + h * i);
-//			System.out.println(x + "," + (y + h * i));
-//			toggle.setA
 		}
 	}
 
@@ -241,7 +239,6 @@ public class AlmanacSearchGui extends AbstractGui implements IRenderable, IGuiEv
 		int totWidth = this.xSize + x;
 		this.guiLeft = (this.width - totWidth) / 2;
 		this.guiTop = (this.height - this.ySize) / 2;
-//		System.out.println(this.guiLeft +","+ this.guiTop);
 		return this.guiLeft + this.xSize;
 	}
 }

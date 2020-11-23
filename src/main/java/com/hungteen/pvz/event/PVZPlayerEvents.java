@@ -177,7 +177,7 @@ public class PVZPlayerEvents {
 		if(!player.world.isRemote) {
 			if(ev.getItemStack().getItem() instanceof PlantCardItem) {// unlock plant card
 			    Plants plant = ((PlantCardItem) ev.getItemStack().getItem()).getPlant();
-			    a = Almanacs.getAlmanacByName(plant.toString().toLowerCase());
+			    a = Enum.valueOf(Almanacs.class, plant.toString());
 			}
 		}
 		if(!player.world.isRemote && a != null) {//unlock almanac

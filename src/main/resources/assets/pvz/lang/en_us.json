@@ -161,6 +161,7 @@
     "item.pvz.repeater_card":"Repeater Card",
     "item.pvz.repeater_enjoy_card":"Repeater Enjoy Card",
 //LilyPad
+    "entity.pvz.lily_pad":"LilyPad",
     "block.pvz.lily_pad":"LilyPad",
     "item.pvz.lily_pad_card":"LilyPad Card",
     "item.pvz.lily_pad_enjoy_card":"LilyPad Enjoy Card",
@@ -244,7 +245,8 @@
     "item.pvz.doom_shroom_spawn_egg":"DoomShroom Spawn Egg",
     "item.pvz.doom_shroom_card":"DoomShroom Card",
     "item.pvz.doom_shroom_enjoy_card":"DoomShroom Enjoy Card",
-//Pumpkin
+//Pumpkin 
+    "entity.pvz.pumpkin":"Pumpkin",
     "item.pvz.pumpkin_card":"Pumpkin Card",
     "item.pvz.pumpkin_enjoy_card":"Pumpkin Enjoy Card",
 //CoffeeBean

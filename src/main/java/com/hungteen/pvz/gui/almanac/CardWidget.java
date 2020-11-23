@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.hungteen.pvz.capability.player.ClientPlayerResources;
-import com.hungteen.pvz.utils.ItemUtil;
 import com.hungteen.pvz.utils.enums.Almanacs;
 import com.mojang.blaze3d.systems.RenderSystem;
 
@@ -34,7 +33,7 @@ public class CardWidget extends Widget {
 		int posX = ClientPlayerResources.isAlmanacUnLocked(this.card) ? 29 : 29 + 25;
 		int posY = 206;
 		this.blit(this.x, this.y, posX, posY, this.width, this.height);
-		minecraft.getItemRenderer().renderItemAndEffectIntoGUI(ItemUtil.getItemStackByAlmanac(this.card), this.x + 4,
+		minecraft.getItemRenderer().renderItemAndEffectIntoGUI(Almanacs.getItemStackByAlmanac(this.card), this.x + 4,
 				this.y + 4);
 		RenderSystem.popMatrix();
 	}

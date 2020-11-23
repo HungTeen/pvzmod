@@ -3,32 +3,37 @@ package com.hungteen.pvz.utils.enums;
 import com.hungteen.pvz.utils.PlantUtil;
 
 import net.minecraft.client.Minecraft;
+import net.minecraft.item.Item;
+import net.minecraft.item.ItemStack;
+import net.minecraft.item.Items;
 import net.minecraft.util.text.TranslationTextComponent;
 
 public enum Almanacs {
-
-	/**
-	 * Player
-	 */
+    //player
 	PLAYER,
-	/**
-	 * Plants
-	 */
-	// 1-1 ~ 1-10
-	PEA_SHOOTER, SUN_FLOWER, CHERRY_BOMB, WALL_NUT, POTATO_MINE, SNOW_PEA, CHOMPER, REPEATER,
-	// 2-1 ~ 2-10
-	PUFF_SHROOM, SUN_SHROOM, FUME_SHROOM, GRAVE_BUSTER, HYPNO_SHROOM, SCAREDY_SHROOM, ICE_SHROOM, DOOM_SHROOM,
-	// 3-1 ~ 3-10
-	LILY_PAD, SQUASH, THREE_PEATER, TANGLE_KELP, JALAPENO, SPIKE_WEED, TORCH_WOOD, TALL_NUT,
-	// 4-1 ~ 4-10
+	//grass day
+	PEA_SHOOTER(Plants.PEA_SHOOTER), SUN_FLOWER(Plants.SUN_FLOWER), CHERRY_BOMB(Plants.CHERRY_BOMB), WALL_NUT(Plants.WALL_NUT),
+	POTATO_MINE(Plants.POTATO_MINE), SNOW_PEA(Plants.SNOW_PEA), CHOMPER(Plants.CHOMPER), REPEATER(Plants.REPEATER),
+	//grass night
+	PUFF_SHROOM(Plants.PUFF_SHROOM), SUN_SHROOM(Plants.SUN_SHROOM), FUME_SHROOM(Plants.FUME_SHROOM), 
+	GRAVE_BUSTER(Plants.GRAVE_BUSTER), HYPNO_SHROOM(Plants.HYPNO_SHROOM), SCAREDY_SHROOM(Plants.SCAREDY_SHROOM), 
+	ICE_SHROOM(Plants.ICE_SHROOM), DOOM_SHROOM(Plants.DOOM_SHROOM),
+	//pool day
+	LILY_PAD(Plants.LILY_PAD), SQUASH(Plants.SQUASH), THREE_PEATER(Plants.THREE_PEATER), TANGLE_KELP(Plants.TANGLE_KELP),
+	JALAPENO(Plants.JALAPENO), SPIKE_WEED(Plants.SPIKE_WEED), TORCH_WOOD(Plants.TORCH_WOOD), TALL_NUT(Plants.TALL_NUT),
+	//pool night
+	PUMPKIN(Plants.PUMPKIN),
 //	SEA_SHROOM, PLANTERN, CACTUS, BLOVER, SPLIT_PEA, STAR_FRUIT, PUMPKIN, MAGNET_SHROOM,
-	// 5-1 5-10
+	//roof
+	COFFEE_BEAN(Plants.COFFEE_BEAN),
 //	CABBAGE_PULT, FLOWER_POT, KERNEL_PULT, COFFEE_BEAN, GARLIC, UMBRELLA_LEAF, MARIGOLD, MELON_PULT,
-	// upgrate
+	//upgrade
+	GATLING_PEA(Plants.GATLING_PEA), TWIN_SUNFLOWER(Plants.TWIN_SUNFLOWER),
 //	GATLING_PEA, TWIN_SUNFLOWER, GLOOM_SHROOM, CAT_TAIL, WINTER_MELON, GOLD_MAGNET, SPIKE_ROCK, COB_CANNON, IMITATER,
 	// pvz2
 //	ICEBERG_LETTUCE, GOLD_LEAF,
-	// other
+	//other
+	WATER_GUARD(Plants.WATER_GUARD);
 //	WATER_GUARD, LIGHTLING_ROD, STRANGE_CAT,
 
 	/**
@@ -51,24 +56,46 @@ public enum Almanacs {
 //	PEASHOOTER_ZOMBIE, NUTWALL_ZOMBIE, GATLINGPEA_ZOMBIE, TALLNUT_ZOMBIE, SQUASH_ZOMBIE, JALAPENO_ZOMBIE
 	;
 	
-	public static boolean isPlant(Almanacs a) {
-		return a.ordinal() <= PlantUtil.CURRENT_PLANT_NUM && a != PLAYER;
+	private Plants plant = null;
+	@SuppressWarnings("unused")
+	private Zombies zombie = null;
+	
+	private Almanacs() {
+	}
+	
+	private Almanacs(Plants p) {
+		this.plant = p;
+	}
+	
+	private Almanacs(Zombies z) {
+		this.zombie = z;
+	}
+	
+	public Plants getPlant() {
+		return this.plant;
+	}
+	
+	public boolean isPlant() {
+		return this.plant != null;
 	}
 	
 	@SuppressWarnings("resource")
 	public static String getAlmanacName(Almanacs a) {
-		if(a==LILY_PAD) return new TranslationTextComponent("block.pvz."+a.toString().toLowerCase()).getFormattedText();
-		if(a==PLAYER) return Minecraft.getInstance().player.getName().getFormattedText();
-	    return new TranslationTextComponent("entity.pvz."+a.toString().toLowerCase()).getFormattedText();
+		if(a == PLAYER) return Minecraft.getInstance().player.getName().getFormattedText();
+		if(a.isPlant()) {
+			Plants plant = a.getPlant();
+			return new TranslationTextComponent("entity.pvz." + plant.toString().toLowerCase()).getFormattedText();
+		}
+	    return new TranslationTextComponent("entity.pvz." + a.toString().toLowerCase()).getFormattedText();
 	}
 	
-	public static Almanacs getAlmanacByName(String name) {
-		for (Almanacs a : Almanacs.values()) {
-			if (name.equals(a.toString().toLowerCase())) {
-				return a;
-			}
+	public static ItemStack getItemStackByAlmanac(Almanacs a) {
+		Item item = null;
+		if(a == Almanacs.PLAYER) item = Items.PLAYER_HEAD;
+		if(a.isPlant()) {
+			item = PlantUtil.getPlantSummonCard(a.getPlant());
 		}
-		return null;
+		return new ItemStack(item);
 	}
 	
 	public static enum Categories{

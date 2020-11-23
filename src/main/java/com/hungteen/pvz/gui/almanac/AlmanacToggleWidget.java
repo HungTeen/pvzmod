@@ -17,7 +17,6 @@ import net.minecraftforge.api.distmarker.OnlyIn;
 public class AlmanacToggleWidget extends ToggleWidget {
 
 	protected Almanacs.Categories category;
-//	private float animationTime;
 	
 	public AlmanacToggleWidget(Almanacs.Categories category) {
 		super(0, 0, 35, 26, false);
@@ -26,19 +25,9 @@ public class AlmanacToggleWidget extends ToggleWidget {
 	}
 
 	public void startAnimation(Minecraft mc) {
-//		ClientRecipeBook clientrecipebook = mc.player.getRecipeBook();
-//		List<RecipeList> list = clientrecipebook.getRecipes(this.category);
-//		this.animationTime = 15.0F;
 	}
 
 	public void renderButton(int mouseX, int mouseY, float partialTicks) {
-//		if (this.animationTime > 0.0F) {
-//			float f = 1.0F + 0.1F * (float) Math.sin((double) (this.animationTime / 15.0F * (float) Math.PI));
-//			
-//			RenderSystem.translatef((float) (this.x + 8), (float) (this.y + 12), 0.0F);
-//			RenderSystem.scalef(1.0F, f, 1.0F);
-//			RenderSystem.translatef((float) (-(this.x + 8)), (float) (-(this.y + 12)), 0.0F);
-//		}
         RenderSystem.pushMatrix();
         RenderSystem.color4f(1.0F, 1.0F, 1.0F, 1.0F);
 		Minecraft minecraft = Minecraft.getInstance();
@@ -50,17 +39,9 @@ public class AlmanacToggleWidget extends ToggleWidget {
 		int texX = this.stateTriggered ? this.xTexStart + this.xDiffTex : this.xTexStart;
 		int texY = this.stateTriggered ? this.yTexStart + this.yDiffTex : this.yTexStart;
 		this.blit(posX, posY, texX, texY, this.width, this.height);
-//		if(this.category == Almanacs.Categories.ALL) {
-//			System.out.println(posX+","+posY);
-//		}
 		RenderSystem.enableDepthTest();
 		this.renderIcon(minecraft.getItemRenderer());
 		RenderSystem.popMatrix();
-//		if (this.animationTime > 0.0F) {
-//			
-//			this.animationTime -= partialTicks;
-//		}
-
 	}
 
 	private void renderIcon(ItemRenderer renderer) {

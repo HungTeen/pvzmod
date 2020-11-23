@@ -45,18 +45,20 @@ public class AlmanacPage {
 			this.buttons.get(i).setPosition(xx, yy);
 		}
 		int width = 150;
-		int height = 175;
-		int dis = 90;
+		int height = 170;
+		int dis = 90;  
 		int side = (width - dis) / 2;
-		this.forwardButton = new ToggleWidget(x + width + side, y + height, 12, 17, false);
+		this.forwardButton = new ToggleWidget(x + width /2 + side, y + height, 12, 17, false);
 		this.forwardButton.initTextureValues(1, 208, 13, 18, AlmanacSearchGui.TEXTURE);
-		this.backButton = new ToggleWidget(x + width - side - 13, y + height, 12, 17, true);
+		this.backButton = new ToggleWidget(x + width / 2 - side - 13, y + height, 12, 17, true);
 		this.backButton.initTextureValues(1, 208, 13, 18, AlmanacSearchGui.TEXTURE);
+		this.forwardButton.visible = true;
+		this.backButton.visible = true;
 	}
 
 	public void render(int x, int y, int mouseX, int mouseY, float partialTicks) {
 		if (this.totalPages > 1) {
-			String s = this.currentPage + 1 + "/" + this.totalPages;
+			String s = (this.currentPage + 1) + "/" + this.totalPages;
 			StringUtil.drawCenteredScaledString(this.mc.fontRenderer, s, x + 75, y + 175, Colors.WHITE, 1.5f);
 		}
 		this.hoveredButton = null;
@@ -66,6 +68,8 @@ public class AlmanacPage {
 	            this.hoveredButton = card;
 	         }
 		}
+//		System.out.println(mouseX + " " + mouseY);
+//		System.out.println(this.backButton.x + " " + this.backButton.y);
 		this.backButton.render(mouseX, mouseY, partialTicks);
 		this.forwardButton.render(mouseX, mouseY, partialTicks);
 	}
@@ -126,12 +130,13 @@ public class AlmanacPage {
 	private void updateArrowButtons() {
 		this.forwardButton.visible = this.totalPages > 1 && this.currentPage < this.totalPages - 1;
 		this.backButton.visible = this.totalPages > 1 && this.currentPage > 0;
+//		System.out.println(this.forwardButton.visible + " " + this.totalPages + " " + this.currentPage);
 	}
 
 	public List<Almanacs> getCurrentList(Almanacs.Categories category) {
 		List<Almanacs> list = new ArrayList<>();
 		for (Almanacs a : Almanacs.values()) {
-			if (Almanacs.isPlant(a)) {
+			if (a.isPlant()) {
 				if (category != Almanacs.Categories.ZOMBIES) {
 					list.add(a);
 				}
