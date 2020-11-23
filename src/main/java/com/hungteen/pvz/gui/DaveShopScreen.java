@@ -7,10 +7,10 @@ import com.hungteen.pvz.capability.player.ClientPlayerResources;
 import com.hungteen.pvz.gui.container.DaveShopContainer;
 import com.hungteen.pvz.network.ClickButtonPacket;
 import com.hungteen.pvz.network.PVZPacketHandler;
-import com.hungteen.pvz.register.ItemRegister;
 import com.hungteen.pvz.utils.PlayerUtil;
 import com.hungteen.pvz.utils.StringUtil;
 import com.hungteen.pvz.utils.TradeUtil;
+import com.hungteen.pvz.utils.TradeUtil.DaveGoods;
 import com.hungteen.pvz.utils.enums.Colors;
 import com.hungteen.pvz.utils.enums.Resources;
 import com.mojang.blaze3d.systems.RenderSystem;
@@ -35,7 +35,7 @@ public class DaveShopScreen extends ContainerScreen<DaveShopContainer> {
 	private List<TradeType> tradeTypes;
 	private Button buyButton;
 	private int downHeight;
-	private Goods selectedGood;
+	private DaveGoods selectedGood;
 	private TradeType selectedTrade;
 	
 	public DaveShopScreen(DaveShopContainer screenContainer, PlayerInventory inv, ITextComponent titleIn) {
@@ -123,24 +123,26 @@ public class DaveShopScreen extends ContainerScreen<DaveShopContainer> {
 	}
 	
 	private void renderDetails() {
-		for(int i = 0;i < 2;i ++) {
-		    StringUtil.drawCenteredScaledString(font, new TranslationTextComponent("gui.pvz.dave_shop."+this.selectedGood.toString().toLowerCase()+(i+1)).getFormattedText(), this.guiLeft + 117 + 80, this.guiTop + 28 + 10 + 20 * i, Colors.BLACK, 1.2f);
-		}
+		StringUtil.drawCenteredScaledString(font, new TranslationTextComponent("gui.pvz.dave_shop." + this.selectedGood.toString().toLowerCase()).getFormattedText(), this.guiLeft + 117 + 80, this.guiTop + 28 + 20, Colors.BLACK, 1.5f);
 	}
 	
-	private void renderTrade(TradeType trade,int posX, int posY) {
+	private void renderTrade(TradeType trade, int posX, int posY) {
 		StringUtil.drawCenteredScaledString(font, trade.money + "", posX + 31, posY + 4, Colors.ORANGE, 1.2f);
 		int offsetX = posX + 81;
 		int offsetY = posY + 1;
-		if(trade.good == Goods.ENERGY) {
+		if(trade.good == DaveGoods.ENERGY) {
 			this.minecraft.getTextureManager().bindTexture(TEXTURE);
 			blit(offsetX, offsetY, this.getBlitOffset(), 112, 195, 16, 16, 256, 512);
-//		}else if(trade.good == Goods.SLOT) {
-//			this.minecraft.getTextureManager().bindTexture(TEXTURE);
-//			blit(offsetX, offsetY, this.getBlitOffset(), 128, 195, 16, 16, 256, 512);
-		}else if(trade.good == Goods.ALMANAC) {
-			this.itemRenderer.renderItemIntoGUI(new ItemStack(ItemRegister.ALMANAC.get()), offsetX, offsetY);
+		} else {
+			this.itemRenderer.renderItemIntoGUI(new ItemStack(TradeUtil.getGoodItem(trade.good)), offsetX, offsetY);
 		}
+//		else if(trade.good == Goods.ALMANAC) {
+//			this.itemRenderer.renderItemIntoGUI(new ItemStack(ItemRegister.ALMANAC.get()), offsetX, offsetY);
+//		}else if(trade.good == Goods.GATLING_PEA_CARD) {
+//			this.itemRenderer.renderItemIntoGUI(new ItemStack(ItemRegister.GATLING_PEA_CARD.get()), offsetX, offsetY);
+//		}else if(trade.good == Goods.TWIN_SUNFLOWER_CARD) {
+//			this.itemRenderer.renderItemIntoGUI(new ItemStack(ItemRegister.TWIN_SUNFLOWER_CARD.get()), offsetX, offsetY);
+//		}
 	}
 	
 	@Override
@@ -153,32 +155,36 @@ public class DaveShopScreen extends ContainerScreen<DaveShopContainer> {
 		return true;
 	}
 	
+	private List<String> getToolTips(TradeType type) {
+		DaveGoods good = type.good;
+		int num = 1;
+//		if(good == DaveGoods.ENERGY || good == DaveGoods.ALMANAC) num = 1;
+		List<String> list = new ArrayList<>();
+		for(int i = 1; i <= num; ++ i) {
+			TranslationTextComponent text = new TranslationTextComponent("gui.pvz.dave_shop." + good.toString().toLowerCase() + i);
+			list.add(text.getFormattedText());
+		}
+		return list;
+	}
+	
 	private List<TradeType> getTradeTypes() {
 		List<TradeType> list = new ArrayList<>();
-		for(Goods good:Goods.values()) {
-			if(good == Goods.ENERGY) {
+		for(DaveGoods good : DaveGoods.values()) {
+			if(good == DaveGoods.ENERGY) {
 				int num = ClientPlayerResources.getPlayerStats(Resources.MAX_ENERGY_NUM);
-				if(num == PlayerUtil.MAX_ENERGY_NUM) {
-					continue;
+				if(num < PlayerUtil.MAX_ENERGY_NUM) {
+				    int cost = TradeUtil.getEnergyCost(num);
+				    list.add(new TradeType(cost, good));
 				}
-				int cost = TradeUtil.getEnergyCost(num);
-				list.add(new TradeType(cost, good));
-//			}else if(good == Goods.SLOT) {
-//				int num = ClientPlayerResources.getPlayerStats(Resources.SLOT_NUM);
-//				if(num == PlayerUtil.MAX_SLOT_NUM) {
-//					continue;
-//				}
-//				int cost = TradeUtil.getSlotCost(num);
-//				list.add(new TradeType(cost, good));
-			}else if(good == Goods.ALMANAC) {
-				list.add(new TradeType(TradeUtil.ALMANAC_COST, good));
+			}else { 
+				list.add(new TradeType(TradeUtil.getGoodCost(good), good));
 			}
 		}
 		return list;
 	}
 
 	@OnlyIn(Dist.CLIENT)
-	public static class TradeButton extends Button {
+	public class TradeButton extends Button {
 		final int id;
 
 		public TradeButton(int x, int y, int id, Button.IPressable press) {
@@ -192,51 +198,20 @@ public class DaveShopScreen extends ContainerScreen<DaveShopContainer> {
 		}
 		
 		public void renderToolTip(int mouseX, int mouseY) {
-//			if (this.isHovered && MerchantScreen.this.container.getOffers().size() > this.id
-//					+ MerchantScreen.this.field_214139_n) {
-//				if (mouseX < this.x + 20) {
-//					ItemStack itemstack = MerchantScreen.this.container.getOffers()
-//							.get(this.id + MerchantScreen.this.field_214139_n).func_222205_b();
-//					MerchantScreen.this.renderTooltip(itemstack, mouseX, mouseY);
-//				} else if (mouseX < this.x + 50 && mouseX > this.x + 30) {
-//					ItemStack itemstack2 = MerchantScreen.this.container.getOffers()
-//							.get(this.id + MerchantScreen.this.field_214139_n).getBuyingStackSecond();
-//					if (!itemstack2.isEmpty()) {
-//						MerchantScreen.this.renderTooltip(itemstack2, mouseX, mouseY);
-//					}
-//				} else if (mouseX > this.x + 65) {
-//					ItemStack itemstack1 = MerchantScreen.this.container.getOffers()
-//							.get(this.id + MerchantScreen.this.field_214139_n).getSellingStack();
-//					MerchantScreen.this.renderTooltip(itemstack1, mouseX, mouseY);
-//				}
-//			}
+			List<String> list = getToolTips(tradeTypes.get(this.id));
+			DaveShopScreen.this.renderTooltip(list, mouseX, mouseY);
 		}
 	}
 	
-//	@OnlyIn(Dist.CLIENT)
-//	public static class BuyButton extends PVZButton{
-//
-//		public BuyButton(ResourceLocation location, int x, int y, int width, int height, String text,
-//				IPressable onPress) {
-//			super(location, x, y, width, height, text, false, onPress);
-//		}
-//		
-//	}
-
 	public static class TradeType{
-		public Goods good;
+		public DaveGoods good;
 		public int money;
 		public int exp;
 		
-		public TradeType(int money, Goods good) {
+		public TradeType(int money, DaveGoods good) {
 			this.good = good;
 			this.money = money;
 		}
 	}
 	
-	public enum Goods{
-		ENERGY,
-//		SLOT,
-		ALMANAC
-	}
 }

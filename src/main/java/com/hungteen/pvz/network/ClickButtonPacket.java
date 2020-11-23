@@ -2,10 +2,10 @@ package com.hungteen.pvz.network;
 
 import java.util.function.Supplier;
 
-import com.hungteen.pvz.gui.DaveShopScreen.Goods;
 import com.hungteen.pvz.gui.GuiHandler;
 import com.hungteen.pvz.gui.container.DaveShopContainer;
 import com.hungteen.pvz.gui.container.PlayerInventoryContainer;
+import com.hungteen.pvz.utils.TradeUtil.DaveGoods;
 
 import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.network.PacketBuffer;
@@ -44,7 +44,7 @@ public class ClickButtonPacket {
 				}else if(message.type == GuiHandler.DAVE_SHOP) {
 					if(player.openContainer instanceof DaveShopContainer) {
 						DaveShopContainer container = (DaveShopContainer) player.openContainer;
-						container.buyGood(Goods.values()[message.num]);
+						container.buyGood(DaveGoods.values()[message.num]);
 					}
 				}
 			});

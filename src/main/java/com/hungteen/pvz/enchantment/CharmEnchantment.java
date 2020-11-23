@@ -10,6 +10,11 @@ public class CharmEnchantment extends Enchantment{
 	public CharmEnchantment() {
 		super(Rarity.VERY_RARE, EnchantmentRegister.PLANT_CARD, new EquipmentSlotType[] {EquipmentSlotType.MAINHAND});
 	}
+	
+	@Override
+	public boolean isCurse() {
+		return true;
+	}
 
 	@Override
 	public int getMinEnchantability(int enchantmentLevel) {

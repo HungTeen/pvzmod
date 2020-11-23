@@ -252,17 +252,36 @@
     "item.pvz.coffee_bean_spawn_egg":"CoffeeBean Spawn Egg",
     "item.pvz.coffee_bean_card":"CoffeeBean Card",
     "item.pvz.coffee_bean_enjoy_card":"CoffeeBean Enjoy Card",
+//GatlingPea
+    "entity.pvz.gatling_pea":"GatlingPea",
+    "item.pvz.gatling_pea_spawn_egg":"GatlingPea Spawn Egg",
+    "item.pvz.gatling_pea_card":"GatlingPea Card",
+    "item.pvz.gatling_pea_enjoy_card":"GatlingPea Enjoy Card",
+//TwinSunFlower
+    "entity.pvz.twin_sunflower":"Twin Sunflower",
+    "item.pvz.twin_sunflower_spawn_egg":"Twin Sunflower Spawn Egg",
+    "item.pvz.twin_sunflower_card":"Twin Sunflower Card",
+    "item.pvz.twin_sunflower_enjoy_card":"Twin Sunflower Enjoy Card",
 //tool & tooltip
-    "item.pvz.zombie_flag":"Zombie Flag",
     "tooltip.pvz.zombie_flag":"Right Click to get a speed effect",
     "tooltip.pvz.summon_card":"Right Click to Summon Plant or Zombie",
     "tooltip.pvz.sun_cost":"Sun Cost",
-    "item.pvz.pea_gun":"Pea Gun",
     "tooltip.pvz.pea_gun":"Main hand right click to shoot,off hand to open gui",
-    "item.pvz.screen_door":"ScreenDoor Shield",
 //armor
     "item.pvz.cone_head":"Cone Head",
     "item.pvz.bucket_head":"Bucket Head",
+    "item.pvz.football_helmet":"Football Helmet",
+    "item.pvz.football_chestplate":"Football Chestplate",
+    "item.pvz.football_leggings":"Football Leggings",
+    "item.pvz.football_boots":"Football Boots",
+    "item.pvz.giga_helmet":"Giga Football Helmet",
+    "item.pvz.giga_chestplate":"Giga Football Chestplate",
+    "item.pvz.giga_leggings":"Giga Football Leggings",
+    "item.pvz.giga_boots":"Giga Football Boots",
+//tool & weapon
+    "item.pvz.zombie_flag":"Zombie Flag",
+    "item.pvz.pea_gun":"Pea Gun",
+    "item.pvz.screen_door":"ScreenDoor Shield",
 //block
 //ore
     "block.pvz.origin_ore":"Origin Ore",
@@ -303,16 +322,18 @@
 //guild book
      "gui.pvz.pvz_guild":"PVZ Guild Book",
      "gui.pvz.guild_info":"Welcome to the world of Plants vs. Zombies, this book will take you through this mod.",
-//player inventory
-    "gui.pvz.player_inventory.title":"Card Inventory",
 //dave shop
     "gui.pvz.dave_shop":"Dave Shop",
     "gui.pvz.dave_shop.title":"Dave Shop",
     "gui.pvz.dave_shop.buy":"Buy",
-    "gui.pvz.dave_shop.energy1":"Max Energy Limit",
-    "gui.pvz.dave_shop.energy2":"Can add one slot for energy num",
-    "gui.pvz.dave_shop.almanac1":"Almanac",
-    "gui.pvz.dave_shop.almanac2":"right click to read information",
+    "gui.pvz.dave_shop.energy":"Max Energy Limit",
+    "gui.pvz.dave_shop.energy1":"Get one more slot for energy num",
+    "gui.pvz.dave_shop.almanac":"Almanac",
+    "gui.pvz.dave_shop.almanac1":"A useful tool to know about plant attributes",
+    "gui.pvz.dave_shop.gatling_pea_card":"Gatling Pea",
+    "gui.pvz.dave_shop.gatling_pea_card1":"Upgrade of Repeater, shoot 4 peas at a time.",
+    "gui.pvz.dave_shop.twin_sunflower_card":"Twin Sunflower",
+    "gui.pvz.dave_shop.twin_sunflower_card1":"Upgrade of Sunflower, gen double sun at a time",
 //almanac
     "gui.pvz.almanac.lvl":"Level",
     "gui.pvz.almanac.health":"Health",
@@ -480,6 +501,8 @@
     "enchantment.pvz.sun_cost_reduce":"Sun Reduce",
     "enchantment.pvz.break_out":"Break Out",
     "enchantment.pvz.energy_transfer":"Energy Transfer",
+    "enchantment.pvz.tree_protection":"Tree Protection",
+    "enchantment.pvz.charm":"Charm",
 //effect
     "effect.pvz.cold":"Cold",
     "effect.pvz.frozen":"Frozen",
@@ -501,5 +524,8 @@
     "death.attack.pvz_crush":"%s was crushed",
 //itemGroup
     "itemGroup.pvz_misc":"PVZ Misc",
-    "itemGroup.pvz_card":"PVZ Card"
+    "itemGroup.pvz_card":"PVZ Card",
+//KeyBind
+    "key.categories.pvz":"Plants vs Zombies mod",
+    "key.pvz.show_resources":"Turn on/off Player Resources UI"
 }

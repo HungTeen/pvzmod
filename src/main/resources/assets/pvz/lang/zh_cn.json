@@ -252,17 +252,36 @@
     "item.pvz.coffee_bean_spawn_egg":"咖啡豆刷怪蛋",
     "item.pvz.coffee_bean_card":"咖啡豆卡",
     "item.pvz.coffee_bean_enjoy_card":"咖啡豆体验卡",
+//GatlingPea
+    "entity.pvz.gatling_pea":"机枪射手",
+    "item.pvz.gatling_pea_spawn_egg":"机枪射手刷怪蛋",
+    "item.pvz.gatling_pea_card":"机枪射手卡",
+    "item.pvz.gatling_pea_enjoy_card":"机枪射手体验卡",
+//TwinSunFlower
+    "entity.pvz.twin_sunflower":"双向向日葵",
+    "item.pvz.twin_sunflower_spawn_egg":"双向向日葵刷怪蛋",
+    "item.pvz.twin_sunflower_card":"双向向日葵卡",
+    "item.pvz.twin_sunflower_enjoy_card":"双向向日葵体验卡",
 //tool & tooltip
-    "item.pvz.zombie_flag":"僵尸旗帜",
     "tooltip.pvz.zombie_flag":"右键会获得加速效果",
     "tooltip.pvz.summon_card":"右键方块召唤植物或僵尸",
     "tooltip.pvz.sun_cost":"阳光消耗",
-    "item.pvz.pea_gun":"豌豆枪",
     "tooltip.pvz.pea_gun":"主手右键发射豌豆,副手右键打开界面",
-    "item.pvz.screen_door":"铁门盾牌",
 //armor
     "item.pvz.cone_head":"路障头盔",
     "item.pvz.bucket_head":"铁桶头盔",
+    "item.pvz.football_helmet":"橄榄球头盔",
+    "item.pvz.football_chestplate":"橄榄球胸甲",
+    "item.pvz.football_leggings":"橄榄球护腿",
+    "item.pvz.football_boots":"橄榄球靴子",
+    "item.pvz.giga_helmet":"暗黑橄榄球头盔",
+    "item.pvz.giga_chestplate":"暗黑橄榄球胸甲",
+    "item.pvz.giga_leggings":"暗黑橄榄球护腿",
+    "item.pvz.giga_boots":"暗黑橄榄球靴子",
+//tool weapon
+    "item.pvz.zombie_flag":"僵尸旗帜",
+    "item.pvz.pea_gun":"豌豆枪",
+    "item.pvz.screen_door":"铁门盾牌",
 //block
 //ore
     "block.pvz.origin_ore":"原始精华矿",
@@ -303,16 +322,18 @@
 //guild book
     "gui.pvz.pvz_guild":"植物大战僵尸指南",
     "gui.pvz.guild_info":"欢迎来到植物大战僵尸的世界，这本书将带你游玩这个模组。",
-//player inventory
-    "gui.pvz.player_inventory.title":"召唤卡背包",
 //dave shop
     "gui.pvz.dave_shop":"戴夫的商店",
     "gui.pvz.dave_shop.title":"戴夫的商店",
     "gui.pvz.dave_shop.buy":"购买",
-    "gui.pvz.dave_shop.energy1":"能量豆上限",
-    "gui.pvz.dave_shop.energy2":"购买可以增加一个能量豆槽",
-    "gui.pvz.dave_shop.almanac1":"图鉴",
-    "gui.pvz.dave_shop.almanac2":"右键查阅关于植物和僵尸的属性",
+        "gui.pvz.dave_shop.energy":"能量豆上限",
+    "gui.pvz.dave_shop.energy1":"获得额外的能量豆卡槽",
+    "gui.pvz.dave_shop.almanac":"图鉴",
+    "gui.pvz.dave_shop.almanac1":"查阅植物属性的工具",
+    "gui.pvz.dave_shop.gatling_pea_card":"机枪射手",
+    "gui.pvz.dave_shop.gatling_pea_card1":"双枪射手的升级版，一次发射4个豌豆",
+    "gui.pvz.dave_shop.twin_sunflower_card":"双向向日葵",
+    "gui.pvz.dave_shop.twin_sunflower_card1":"向日葵的升级版，一次生产双倍阳光",
 //almanac
     "gui.pvz.almanac.lvl":"等级",
     "gui.pvz.almanac.health":"血量",
@@ -486,6 +507,8 @@
     "enchantment.pvz.sun_cost_reduce":"节能",
     "enchantment.pvz.break_out":"爆发",
     "enchantment.pvz.energy_transfer":"充能",
+    "enchantment.pvz.tree_protection":"树之庇护",
+    "enchantment.pvz.charm":"魅惑",
 //effect
     "effect.pvz.cold":"寒冷",
     "effect.pvz.frozen":"冰封",
@@ -507,5 +530,8 @@
     "death.attack.pvz_crush":"%s被压扁了",
 //itemGroup
     "itemGroup.pvz_misc":"PVZ杂项",
-    "itemGroup.pvz_card":"PVZ召唤卡"
+    "itemGroup.pvz_card":"PVZ召唤卡",
+//KeyBind
+    "key.categories.pvz":"植物大战僵尸mod",
+    "key.pvz.show_resources":"展示/隐藏玩家属性UI"
 }
