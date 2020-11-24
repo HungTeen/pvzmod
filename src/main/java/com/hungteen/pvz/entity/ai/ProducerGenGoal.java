@@ -41,7 +41,7 @@ public class ProducerGenGoal extends Goal{
 		if(!this.plant.canPlantNormalUpdate()) {
 			return ;
 		}
-		if(this.plant.isPlantInSuperMode()){//放大招 
+		if(this.plant.isPlantInSuperMode()){//Be Super Mode
 			if(this.plant.getSuperTime()==1) {
 			    this.producer.genSuper();
 			}

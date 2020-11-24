@@ -7,15 +7,12 @@ import com.hungteen.pvz.PVZMod;
 import com.hungteen.pvz.capability.CapabilityHandler;
 import com.hungteen.pvz.capability.player.PlayerDataManager;
 import com.hungteen.pvz.capability.player.PlayerDataManager.PlayerStats;
-import com.hungteen.pvz.entity.drop.SunEntity;
 import com.hungteen.pvz.entity.plant.PVZPlantEntity;
-import com.hungteen.pvz.event.events.PVZPlayerEvent;
 import com.hungteen.pvz.event.events.SummonCardUseEvent;
 import com.hungteen.pvz.item.tool.PeaGunItem;
 import com.hungteen.pvz.item.tool.card.PlantCardItem;
 import com.hungteen.pvz.register.EnchantmentRegister;
 import com.hungteen.pvz.register.ItemRegister;
-import com.hungteen.pvz.register.SoundRegister;
 import com.hungteen.pvz.utils.EntityUtil;
 import com.hungteen.pvz.utils.PlantUtil;
 import com.hungteen.pvz.utils.PlayerUtil;
@@ -185,16 +182,6 @@ public class PVZPlayerEvents {
 		}
 		if(!player.world.isRemote && a != null) {//unlock almanac
 			PlayerUtil.unLockAlmanac(player, a);
-		}
-	}
-	
-	@SubscribeEvent
-	public static void onPlayerCollectDrop(PVZPlayerEvent.PlayerCollectDropEvent ev) {
-		World world = ev.getPlayer().world;
-		if(world.isRemote) {
-			if(ev.getDropEntity() instanceof SunEntity) {
-				EntityUtil.playSound(ev.getPlayer(), SoundRegister.SUN_PICK.get());
-			}
 		}
 	}
 	

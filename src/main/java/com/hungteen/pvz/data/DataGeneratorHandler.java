@@ -15,5 +15,6 @@ public class DataGeneratorHandler {
 		ev.getGenerator().addProvider(new ItemModelGenerator(ev.getGenerator(), ev.getExistingFileHelper()));
 		ev.getGenerator().addProvider(new RecipeGenerator(ev.getGenerator()));
 		ev.getGenerator().addProvider(new LootTableGenerator(ev.getGenerator()));
+		ev.getGenerator().addProvider(new ItemTagGenerator(ev.getGenerator()));
 	}
 }
