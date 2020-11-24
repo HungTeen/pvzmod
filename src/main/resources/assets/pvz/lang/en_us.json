@@ -342,6 +342,7 @@
     "gui.pvz.almanac.sun_cost":"SunCost",
     "gui.pvz.almanac.cool_down":"CD",
     "gui.pvz.almanac.attack_damage":"Damage",
+    "gui.pvz.almanac.gen_amount":"GenAmount",
     "gui.pvz.almanac.gen_time":"GenCD",
     "gui.pvz.almanac.attack_cd":"AttackCD",
     "gui.pvz.almanac.pea_time":"ReadyCD",
@@ -360,6 +361,7 @@
     "gui.pvz.almanac.kill_count":"KillCount",
     "gui.pvz.almanac.heal_health":"Heal",
     "gui.pvz.almanac.scare_range":"ScareRange",
+    "gui.pvz.almanac.duration":"Duration",
     //PeaShooter
     "gui.pvz.almanac.pea_shooter1":"They shoot peas to attack enemies",
     "gui.pvz.almanac.pea_shooter2":"One pea per shoot",

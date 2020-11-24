@@ -73,6 +73,10 @@ public enum Plants {
 		return null;
 	}
 	
+	public static boolean isEntityPlant(Plants p) {
+		return ! isBlockPlant(p) && ! isOuterPlant(p);
+	}
+	
 	public static boolean isBlockPlant(Plants p) {
 		for(Plants plant : BLOCK_PLANTS) {
 			if(p == plant) {

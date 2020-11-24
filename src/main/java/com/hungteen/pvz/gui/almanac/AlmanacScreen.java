@@ -1,8 +1,8 @@
 package com.hungteen.pvz.gui.almanac;
 
-import com.hungteen.pvz.PVZMod;
 import com.hungteen.pvz.capability.player.ClientPlayerResources;
 import com.hungteen.pvz.entity.plant.PVZPlantEntity;
+import com.hungteen.pvz.entity.plant.appease.GatlingPeaEntity;
 import com.hungteen.pvz.entity.plant.appease.PeaShooterEntity;
 import com.hungteen.pvz.entity.plant.appease.RepeaterEntity;
 import com.hungteen.pvz.entity.plant.appease.ThreePeaterEntity;
@@ -18,6 +18,8 @@ import com.hungteen.pvz.entity.plant.ice.IceShroomEntity;
 import com.hungteen.pvz.entity.plant.ice.SnowPeaEntity;
 import com.hungteen.pvz.entity.plant.light.SunFlowerEntity;
 import com.hungteen.pvz.entity.plant.light.SunShroomEntity;
+import com.hungteen.pvz.entity.plant.light.TwinSunFlowerEntity;
+import com.hungteen.pvz.entity.plant.magic.CoffeeBeanEntity;
 import com.hungteen.pvz.entity.plant.magic.HypnoShroomEntity;
 import com.hungteen.pvz.entity.plant.spear.SpikeWeedEntity;
 import com.hungteen.pvz.entity.plant.toxic.FumeShroomEntity;
@@ -103,7 +105,10 @@ public class AlmanacScreen extends ContainerScreen<AlmanacContainer> {
 			World world = Minecraft.getInstance().player.world;
 			this.drawProperty(Properties.SUN_COST, PlantUtil.getPlantSunCost(plant));
 			this.drawProperty(Properties.COOL_DOWN, PlantUtil.getPlantCoolDownTime(plant, lvl));
-			if(plant == Plants.LILY_PAD) {
+			if(Plants.isBlockPlant(plant)) {
+				return ;
+			} else if(Plants.isOuterPlant(plant)) {
+				this.drawProperty(Properties.HEALTH, PlantUtil.PUMPKIN_LIFE);
 				return ;
 			}
 			PVZPlantEntity plantEntity =  PlantUtil.getPlantEntity(world, plant);
@@ -111,19 +116,21 @@ public class AlmanacScreen extends ContainerScreen<AlmanacContainer> {
 			this.drawProperty(Properties.HEALTH, plantEntity.getPlantHealth());
 			switch(plant) {
 			case PEA_SHOOTER:{
-				PeaShooterEntity peaShooter = (PeaShooterEntity)plantEntity;
+				PeaShooterEntity peaShooter = (PeaShooterEntity) plantEntity;
 				this.drawProperty(Properties.ATTACK_DAMAGE, peaShooter.getAttackDamage());
 				this.drawProperty(Properties.BULLET_SPEED, peaShooter.getBulletSpeed());
 				break;
 			}
 			case SUN_FLOWER:{
 				SunFlowerEntity sunFlower = (SunFlowerEntity) plantEntity;
-				this.drawProperty(Properties.GEN_TIME, sunFlower.getGenCD());
+				this.drawProperty(Properties.GEN_AMOUNT, sunFlower.getSunAmount());
+//				this.drawProperty(Properties.GEN_TIME, sunFlower.getGenCD());
 				break;
 			}
 			case CHERRY_BOMB:{
 				CherryBombEntity cherryBomb = (CherryBombEntity) plantEntity;
 				this.drawProperty(Properties.ATTACK_DAMAGE, cherryBomb.getAttackDamage());
+				this.drawProperty(Properties.ATTACK_RANGE, cherryBomb.getExpRange());
 				break;
 			}
 			case WALL_NUT:{
@@ -153,6 +160,55 @@ public class AlmanacScreen extends ContainerScreen<AlmanacContainer> {
 				RepeaterEntity repeater = (RepeaterEntity) plantEntity;
 				this.drawProperty(Properties.ATTACK_DAMAGE, repeater.getAttackDamage());
 				this.drawProperty(Properties.BULLET_SPEED, repeater.getBulletSpeed());
+				break;
+			}
+			case PUFF_SHROOM:{
+				PuffShroomEntity puffShroom = (PuffShroomEntity) plantEntity;
+				this.drawProperty(Properties.ATTACK_DAMAGE, puffShroom.getAttackDamage());
+				this.drawProperty(Properties.LIVE_TICK, puffShroom.getMaxLiveTick());
+				break;
+			}
+			case SUN_SHROOM:{
+				SunShroomEntity sunShroom = (SunShroomEntity) plantEntity;
+				this.drawProperty(Properties.GEN_AMOUNT, sunShroom.getSunAmount());
+//				this.drawProperty(Properties.GEN_TIME, sunShroom.getGenCD());
+				break;
+			}
+			case FUME_SHROOM:{
+				FumeShroomEntity fumeShroom = (FumeShroomEntity) plantEntity;
+				this.drawProperty(Properties.ATTACK_DAMAGE, fumeShroom.getAttackDamage());
+				break;
+			}
+			case GRAVE_BUSTER:{
+				GraveBusterEntity graveBuster = (GraveBusterEntity) plantEntity;
+				this.drawProperty(Properties.ATTACK_CD, graveBuster.getAttackCD());
+				this.drawProperty(Properties.KILL_COUNT, graveBuster.getMaxKillCnt());
+				break;
+			}
+			case HYPNO_SHROOM:{
+				HypnoShroomEntity hypnoShroom = (HypnoShroomEntity) plantEntity;
+				this.drawProperty(Properties.HEAL_HEALTH, hypnoShroom.getHealHealth());
+				break;
+			}
+			case SCAREDY_SHROOM:{
+				ScaredyShroomEntity scaredyShroom = (ScaredyShroomEntity) plantEntity;
+				this.drawProperty(Properties.ATTACK_DAMAGE, scaredyShroom.getAttackDamage());
+				this.drawProperty(Properties.SCARE_RANGE, scaredyShroom.getScareDistance());
+				break;
+			}
+			case ICE_SHROOM:{
+				IceShroomEntity iceShroom = (IceShroomEntity) plantEntity;
+				this.drawProperty(Properties.ATTACK_DAMAGE, iceShroom.getAttackDamage());
+				this.drawProperty(Properties.FROZEN_EFFECT_TIME, iceShroom.getFrozenEffect().getDuration());
+				this.drawProperty(Properties.COLD_EFFECT, iceShroom.getColdEffect().getAmplifier());
+				this.drawProperty(Properties.COLD_EFFECT_TIME, iceShroom.getColdEffect().getDuration());
+				this.drawProperty(Properties.ATTACK_RANGE, iceShroom.getAttackRange());
+				break;
+			}
+			case DOOM_SHROOM:{
+				DoomShroomEntity doomShroom = (DoomShroomEntity) plantEntity;
+				this.drawProperty(Properties.ATTACK_DAMAGE, doomShroom.getAttackDamage());
+				this.drawProperty(Properties.ATTACK_RANGE, doomShroom.getAttackRange());
 				break;
 			}
 			case LILY_PAD:{
@@ -193,52 +249,26 @@ public class AlmanacScreen extends ContainerScreen<AlmanacContainer> {
 			case TALL_NUT:{
 				break;
 			}
-			case PUFF_SHROOM:{
-				PuffShroomEntity puffShroom = (PuffShroomEntity) plantEntity;
-				this.drawProperty(Properties.ATTACK_DAMAGE, puffShroom.getAttackDamage());
-				this.drawProperty(Properties.LIVE_TICK, puffShroom.getMaxLiveTick());
+			case PUMPKIN:{
 				break;
 			}
-			case SUN_SHROOM:{
-				SunShroomEntity sunShroom = (SunShroomEntity) plantEntity;
-				this.drawProperty(Properties.GEN_TIME, sunShroom.getGenCD());
+			case COFFEE_BEAN:{
+				CoffeeBeanEntity coffeeBean = (CoffeeBeanEntity) plantEntity;
+				this.drawProperty(Properties.DURATION, coffeeBean.getAwakeTime());
 				break;
 			}
-			case FUME_SHROOM:{
-				FumeShroomEntity fumeShroom = (FumeShroomEntity) plantEntity;
-				this.drawProperty(Properties.ATTACK_DAMAGE, fumeShroom.getAttackDamage());
+			case GATLING_PEA:{
+				GatlingPeaEntity gatlingPea = (GatlingPeaEntity) plantEntity;
+				this.drawProperty(Properties.ATTACK_DAMAGE, gatlingPea.getAttackDamage());
+				this.drawProperty(Properties.BULLET_SPEED, gatlingPea.getBulletSpeed());
 				break;
 			}
-			case GRAVE_BUSTER:{
-				GraveBusterEntity graveBuster = (GraveBusterEntity) plantEntity;
-				this.drawProperty(Properties.ATTACK_CD, graveBuster.getAttackCD());
-				this.drawProperty(Properties.KILL_COUNT, graveBuster.getMaxKillCnt());
+			case TWIN_SUNFLOWER:{
+				TwinSunFlowerEntity twinSunflower = (TwinSunFlowerEntity) plantEntity;
+				this.drawProperty(Properties.GEN_AMOUNT, twinSunflower.getSunAmount() * 2);
 				break;
 			}
-			case HYPNO_SHROOM:{
-				HypnoShroomEntity hypnoShroom = (HypnoShroomEntity) plantEntity;
-				this.drawProperty(Properties.HEAL_HEALTH, hypnoShroom.getHealHealth());
-				break;
-			}
-			case SCAREDY_SHROOM:{
-				ScaredyShroomEntity scaredyShroom = (ScaredyShroomEntity) plantEntity;
-				this.drawProperty(Properties.ATTACK_DAMAGE, scaredyShroom.getAttackDamage());
-				this.drawProperty(Properties.SCARE_RANGE, scaredyShroom.getScareDistance());
-				break;
-			}
-			case ICE_SHROOM:{
-				IceShroomEntity iceShroom = (IceShroomEntity) plantEntity;
-				this.drawProperty(Properties.ATTACK_DAMAGE, iceShroom.getAttackDamage());
-				this.drawProperty(Properties.FROZEN_EFFECT_TIME, iceShroom.getFrozenEffect().getDuration());
-				this.drawProperty(Properties.COLD_EFFECT, iceShroom.getColdEffect().getAmplifier());
-				this.drawProperty(Properties.COLD_EFFECT_TIME, iceShroom.getColdEffect().getDuration());
-				this.drawProperty(Properties.ATTACK_RANGE, iceShroom.getAttackRange());
-				break;
-			}
-			case DOOM_SHROOM:{
-				DoomShroomEntity doomShroom = (DoomShroomEntity) plantEntity;
-				this.drawProperty(Properties.ATTACK_DAMAGE, doomShroom.getAttackDamage());
-				this.drawProperty(Properties.ATTACK_RANGE, doomShroom.getAttackRange());
+			case WATER_GUARD:{
 				break;
 			}
 			default:{
@@ -370,6 +400,7 @@ public class AlmanacScreen extends ContainerScreen<AlmanacContainer> {
 		COOL_DOWN,
 		ATTACK_DAMAGE,
 		GEN_TIME,
+		GEN_AMOUNT,
 		//cool down per attack
 		ATTACK_CD,
 		//prepare time e.g. potato mine
@@ -393,7 +424,8 @@ public class AlmanacScreen extends ContainerScreen<AlmanacContainer> {
 		LIVE_TICK,
 		KILL_COUNT,
 		HEAL_HEALTH,
-		SCARE_RANGE;
+		SCARE_RANGE,
+		DURATION;
 		
 		public String getName() {
 			return new TranslationTextComponent("gui.pvz.almanac."+this.toString().toLowerCase()).getFormattedText();

@@ -342,6 +342,7 @@
     "gui.pvz.almanac.sun_cost":"阳光消耗",
     "gui.pvz.almanac.cool_down":"冷却",
     "gui.pvz.almanac.attack_damage":"攻击力",
+    "gui.pvz.almanac.gen_amount":"产量",
     "gui.pvz.almanac.gen_time":"生产间隔",
     "gui.pvz.almanac.attack_cd":"攻击间隔",
     "gui.pvz.almanac.pre_time":"准备时间",
@@ -360,6 +361,7 @@
     "gui.pvz.almanac.kill_count":"击杀数量",
     "gui.pvz.almanac.heal_health":"治愈血量",
     "gui.pvz.almanac.scare_range":"惊吓距离",
+    "gui.pvz.almanac.duration":"作用时间",
     
     //PeaShooter
     "gui.pvz.almanac.pea_shooter1":"豌豆射手发射豌豆攻击敌人",
