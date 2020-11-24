@@ -44,7 +44,7 @@ public enum Plants {
 	COFFEE_BEAN,
 //	GARLIC, 
 //	UMBRELLA_LEAF, 
-//	MARIGOLD, 
+	MARIGOLD, 
 //	MELON_PULT,
 	//upgrade
 	GATLING_PEA,

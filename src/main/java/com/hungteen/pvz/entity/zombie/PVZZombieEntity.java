@@ -16,6 +16,8 @@ import com.hungteen.pvz.entity.ai.ZombieNearestTargetGoal;
 import com.hungteen.pvz.entity.bullet.PVZThrowableEntity;
 import com.hungteen.pvz.entity.drop.CoinEntity;
 import com.hungteen.pvz.entity.drop.EnergyEntity;
+import com.hungteen.pvz.entity.drop.JewelEntity;
+import com.hungteen.pvz.entity.drop.CoinEntity.CoinType;
 import com.hungteen.pvz.entity.plant.PVZPlantEntity;
 import com.hungteen.pvz.entity.plant.enforce.SquashEntity;
 import com.hungteen.pvz.entity.plant.spear.SpikeWeedEntity;
@@ -216,24 +218,25 @@ public abstract class PVZZombieEntity extends MonsterEntity implements IPVZZombi
 	 */
 	protected void dropCoinOrSpecial() {
 		int num = this.getRNG().nextInt(10000);
-		int amount = 0;
-		if (num < 1000) {
-			amount = 1;
-		} else if (num < 1100) {
-			amount = 10;
-		} else if (num < 1110) {
-			amount = 100;
-		} else if(num < 1111) {
-			amount = 1000;
-		}
-		if (amount != 0) {
+		if(num < 1110) {
+			int amount = CoinType.COPPER.money;
+			if(num < 1100) amount = CoinType.SILVER.money;
+			else if(num < 1110) amount = CoinType.GOLD.money;
 			CoinEntity coin = EntityRegister.COIN.get().create(world);
 			coin.setAmount(amount);
 			EntityUtil.onMobEntitySpawn(world, coin, getPosition());
-		} else if(num < 1112){
-			this.playSound(SoundRegister.JEWEL_DROP.get(), 1f, 1f);
+			return ;
+		}
+		if(num == 1110) {
+			JewelEntity jewel = EntityRegister.JEWEL.get().create(world);
+			EntityUtil.onMobEntitySpawn(world, jewel, getPosition());
+			return ;
+		}
+		if(num == 1111){
 			ItemEntity chocolate = new ItemEntity(world, getPosX(), getPosY(), getPosZ(), new ItemStack(ItemRegister.CHOCOLATE.get()));
+			EntityUtil.playSound(chocolate, SoundRegister.JEWEL_DROP.get());
 			world.addEntity(chocolate);
+			return ;
 		}
 	}
 

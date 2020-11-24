@@ -3,12 +3,16 @@ package com.hungteen.pvz.entity.zombie.grassnight;
 import com.hungteen.pvz.capability.CapabilityHandler;
 import com.hungteen.pvz.capability.player.PlayerDataManager;
 import com.hungteen.pvz.entity.drop.CoinEntity;
+import com.hungteen.pvz.entity.drop.JewelEntity;
+import com.hungteen.pvz.entity.drop.CoinEntity.CoinType;
 import com.hungteen.pvz.entity.plant.assist.GraveBusterEntity;
 import com.hungteen.pvz.entity.zombie.PVZZombieEntity;
 import com.hungteen.pvz.entity.zombie.base.UnderGroundZombieEntity;
 import com.hungteen.pvz.entity.zombie.other.NobleZombieEntity;
 import com.hungteen.pvz.item.tool.card.PlantCardItem;
 import com.hungteen.pvz.register.EntityRegister;
+import com.hungteen.pvz.register.ItemRegister;
+import com.hungteen.pvz.register.SoundRegister;
 import com.hungteen.pvz.utils.EntityUtil;
 import com.hungteen.pvz.utils.ZombieUtil;
 import com.hungteen.pvz.utils.enums.Plants;
@@ -21,8 +25,10 @@ import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.Pose;
 import net.minecraft.entity.SharedMonsterAttributes;
 import net.minecraft.entity.ai.goal.NearestAttackableTargetGoal;
+import net.minecraft.entity.item.ItemEntity;
 import net.minecraft.entity.monster.MonsterEntity;
 import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.item.ItemStack;
 import net.minecraft.util.Hand;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.SoundEvent;
@@ -120,20 +126,25 @@ public class TombStoneEntity extends UnderGroundZombieEntity{
 	@Override
 	protected void dropCoinOrSpecial() {
 		int num = this.getRNG().nextInt(1000);
-		int amount = 0;
-		if (num < 1) {
-			amount = 1000;
-		}else if (num < 11) {
-			amount = 100;
-		}else if (num < 111) {
-			amount = 10;
-		}else{
-			amount = 1;
+		if(num == 0) {
+			JewelEntity jewel = EntityRegister.JEWEL.get().create(world);
+			EntityUtil.onMobEntitySpawn(world, jewel, getPosition());
+			return ;
 		}
-		if (amount != 0) {
+		if(num == 1){
+			ItemEntity chocolate = new ItemEntity(world, getPosX(), getPosY(), getPosZ(), new ItemStack(ItemRegister.CHOCOLATE.get()));
+			EntityUtil.playSound(chocolate, SoundRegister.JEWEL_DROP.get());
+			world.addEntity(chocolate);
+			return ;
+		}
+		if(num < 1000) {
+			int amount = CoinType.COPPER.money;
+			if(num < 12) amount = CoinType.GOLD.money;
+			else if(num < 112) amount = CoinType.SILVER.money;
 			CoinEntity coin = EntityRegister.COIN.get().create(world);
 			coin.setAmount(amount);
 			EntityUtil.onMobEntitySpawn(world, coin, getPosition());
+			return ;
 		}
 	}
 	

@@ -64,6 +64,7 @@ public class PlantUtil {
 		putPlantInfoToMap(Plants.TALL_NUT, 125, CDs.VERY_SLOW, Ranks.BLUE, Essences.DEFENCE, EntityRegister.TALL_NUT, ItemRegister.TALL_NUT_CARD, ItemRegister.TALL_NUT_ENJOY_CARD);
 		putPlantInfoToMap(Plants.PUMPKIN, 125, CDs.SLOW, Ranks.GREEN, Essences.DEFENCE, null, ItemRegister.PUMPKIN_CARD, ItemRegister.PUMPKIN_ENJOY_CARD);
 		putPlantInfoToMap(Plants.COFFEE_BEAN, 75, CDs.FAST, Ranks.GREEN, Essences.MAGIC, EntityRegister.COFFEE_BEAN, ItemRegister.COFFEE_BEAN_CARD, ItemRegister.COFFEE_BEAN_ENJOY_CARD);
+		putPlantInfoToMap(Plants.MARIGOLD, 50, CDs.NORMAL, Ranks.PURPLE, Essences.MAGIC, EntityRegister.MARIGOLD, ItemRegister.MARIGOLD_CARD, ItemRegister.MARIGOLD_ENJOY_CARD);
 		putPlantInfoToMap(Plants.GATLING_PEA, 250, CDs.VERY_SLOW, Ranks.PURPLE, Essences.APPEASE, EntityRegister.GATLING_PEA, ItemRegister.GATLING_PEA_CARD, ItemRegister.GATLING_PEA_ENJOY_CARD);
 		putPlantInfoToMap(Plants.TWIN_SUNFLOWER, 150, CDs.VERY_SLOW, Ranks.BLUE, Essences.LIGHT, EntityRegister.TWIN_SUNFLOWER, ItemRegister.TWIN_SUNFLOWER_CARD, ItemRegister.TWIN_SUNFLOWER_ENJOY_CARD);
 		putPlantInfoToMap(Plants.WATER_GUARD, 50, CDs.LITTLE_SLOW, Ranks.GRAY, Essences.DEFENCE, EntityRegister.WATER_GUARD, ItemRegister.WATER_GUARD_CARD, ItemRegister.WATER_GUARD_ENJOY_CARD);

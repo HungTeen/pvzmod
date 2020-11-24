@@ -23,6 +23,7 @@ import com.hungteen.pvz.register.ParticleRegister;
 import com.hungteen.pvz.register.SoundRegister;
 import com.hungteen.pvz.utils.EntityUtil;
 import com.hungteen.pvz.utils.PlantUtil;
+import com.hungteen.pvz.utils.PlayerUtil;
 import com.hungteen.pvz.utils.enums.Essences;
 import com.hungteen.pvz.utils.enums.Plants;
 import com.hungteen.pvz.utils.enums.Ranks;
@@ -510,8 +511,14 @@ public abstract class PVZPlantEntity extends CreatureEntity implements IPVZPlant
 		this.setSuperTime(this.getSuperTimeLength());
 		this.heal(this.getMaxHealth());
 		this.setLiveTick(0);
-		if(this.outerPlant == Plants.PUMPKIN) {
-			this.setPumpkinLife(PlantUtil.PUMPKIN_LIFE + PlantUtil.PUMPKIN_SUPER_LIFE);
+		if(first) {
+			PlayerEntity player = this.world.getPlayerByUuid(this.getOwnerUUID());
+		    if(player != null) {
+		    	PlayerUtil.addPlantXp(player, this.getPlantEnumName(), 5);
+		    }
+		    if(this.outerPlant == Plants.PUMPKIN) {
+			    this.setPumpkinLife(PlantUtil.PUMPKIN_LIFE + PlantUtil.PUMPKIN_SUPER_LIFE);
+		    }
 		}
 	}
 	

@@ -29,6 +29,7 @@ import net.minecraft.scoreboard.Team;
 import net.minecraft.util.SoundEvent;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.IWorld;
 import net.minecraft.world.World;
 import net.minecraftforge.event.ForgeEventFactory;
@@ -62,6 +63,11 @@ public class EntityUtil {
 		entity.setPosition(pos.getX() + 0.5, pos.getY(), pos.getZ() + 0.5);
 		entity.onInitialSpawn(world, world.getDifficultyForLocation(entity.getPosition()), SpawnReason.SPAWNER, null, null);
 		world.addEntity(entity);
+	}
+	
+	public static void onMobEntityRandomPosSpawn(IWorld world, MobEntity entity, BlockPos pos, int dis) {
+		pos = pos.add(entity.getRNG().nextInt(dis * 2 + 1) - dis, entity.getRNG().nextInt(dis) + 1, entity.getRNG().nextInt(dis * 2 + 1) - dis);
+		onMobEntitySpawn(world, entity, pos);
 	}
 	
 	/**

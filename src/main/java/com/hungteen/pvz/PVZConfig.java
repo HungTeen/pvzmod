@@ -23,7 +23,7 @@ public class PVZConfig {
 					
 					WorldSettings.WorldEventSettings.ZombieAttackChance = builder
 						    .comment("The chance related to zombie attack event. the bigger the more chance it has(chance/100).")
-						    .defineInRange("ZombieAttackChance", 40, 0, 100);
+						    .defineInRange("ZombieAttackChance", 90, 0, 100);
 				}
 				builder.pop();
 				builder.comment("Settings about the structure gen.").push("Structure Settings");
@@ -88,8 +88,11 @@ public class PVZConfig {
 							.comment("how many ticks can the sun entity live.")
 							.defineInRange("SunLiveTick", 400, 1, 1200);
 					EntitySettings.EntityLiveTick.CoinLiveTick = builder
-							.comment("how many ticks can the coin entity live(include gem).")
+							.comment("how many ticks can the coin entity live.")
 							.defineInRange("CoinLiveTick", 400, 1, 1200);
+					EntitySettings.EntityLiveTick.JewelLiveTick = builder
+							.comment("how many ticks can the jewel entity live.")
+							.defineInRange("JewelLiveTick", 500, 1, 1200);
 					EntitySettings.EntityLiveTick.EnergyLiveTick = builder
 							.comment("how many ticks can the energy entity live.")
 							.defineInRange("EnergyLiveTick", 400, 1, 1200);
@@ -169,6 +172,7 @@ public class PVZConfig {
 			public static class EntityLiveTick{
 				public ForgeConfigSpec.IntValue SunLiveTick;
 				public ForgeConfigSpec.IntValue CoinLiveTick;
+				public ForgeConfigSpec.IntValue JewelLiveTick;
 				public ForgeConfigSpec.IntValue EnergyLiveTick;
 				public ForgeConfigSpec.IntValue BulletLiveTick;
 				public ForgeConfigSpec.IntValue PlantLiveTick;

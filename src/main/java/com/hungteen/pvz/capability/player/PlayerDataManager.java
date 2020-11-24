@@ -121,8 +121,9 @@ public class PlayerDataManager {
 		public void addPlayerStats(Resources res,int num){
 			switch (res) {
 			case TREE_LVL:{
-				int now=MathHelper.clamp(resources.get(Resources.TREE_LVL)+num, 1, PlayerUtil.MAX_TREE_LVL);
+				int now = MathHelper.clamp(resources.get(Resources.TREE_LVL) + num, 1, PlayerUtil.MAX_TREE_LVL);
 				resources.put(Resources.TREE_LVL, now);
+				this.addPlayerStats(Resources.SUN_NUM, 0);
 				break;
 			}
 			case TREE_XP:{
@@ -130,17 +131,17 @@ public class PlayerDataManager {
 				break;
 			}
 			case MONEY:{
-				int now=MathHelper.clamp(resources.get(Resources.MONEY)+num, 0, PlayerUtil.MAX_MONEY);
+				int now = MathHelper.clamp(resources.get(Resources.MONEY) + num, 0, PlayerUtil.MAX_MONEY);
 				resources.put(Resources.MONEY, now);
 				break;
 			}
 			case SUN_NUM:{
-				int now=MathHelper.clamp(resources.get(Resources.SUN_NUM)+num, 0, PlayerUtil.getPlayerMaxSunNum(resources.get(Resources.TREE_LVL)));
+				int now = MathHelper.clamp(resources.get(Resources.SUN_NUM) + num, 0, PlayerUtil.getPlayerMaxSunNum(resources.get(Resources.TREE_LVL)));
 				resources.put(Resources.SUN_NUM, now);
 				break;
 			}
 			case ENERGY_NUM:{
-				int now=MathHelper.clamp(resources.get(Resources.ENERGY_NUM)+num, 0, resources.get(Resources.MAX_ENERGY_NUM));
+				int now = MathHelper.clamp(resources.get(Resources.ENERGY_NUM) + num, 0, resources.get(Resources.MAX_ENERGY_NUM));
 				resources.put(Resources.ENERGY_NUM, now);
 				break;
 			}
