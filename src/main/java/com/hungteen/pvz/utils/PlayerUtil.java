@@ -17,14 +17,19 @@ public class PlayerUtil {
 	public static final int MAX_MONEY = 9999999;
 	public static final int MAX_SLOT_NUM = 162;
 	public static final int[] TREE_LVL_XP = new int[] {10,25,45,75,120,180,250,350,480,600,750,900,1080,1300,1600,2000,2500,3200,4000,5000}; 
+	
 	public static int getPlayerMaxSunNum(int lvl){
-		int now=lvl/10+1;
-		return now*1000;
+		if(lvl <= 40) {
+			return 900 + lvl * 100;
+		} else if(lvl <= 99) {
+			return lvl * 250 - 5100;
+		}
+		return 19999;
 	}
 	
 	public static int getPlayerLevelUpXp(int lvl){
-		int pos = lvl/5;
-		if(lvl>=MAX_TREE_LVL) {
+		int pos = lvl / 5;
+		if(lvl >= MAX_TREE_LVL) {
 			return 1000000000;
 		}
 		return TREE_LVL_XP[pos];

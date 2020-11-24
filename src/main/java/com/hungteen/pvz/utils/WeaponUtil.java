@@ -18,4 +18,5 @@ public class WeaponUtil {
 		}
 		return new EffectInstance(EffectRegister.COLD_EFFECT.get(), duration, amount,false,false);
 	}
+	 
 }
