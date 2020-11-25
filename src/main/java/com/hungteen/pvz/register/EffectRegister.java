@@ -38,9 +38,4 @@ public class EffectRegister {
 		return new PVZEffect(EffectType.BENEFICIAL, Colors.GOLD_YELLOW);
 	});
 	
-//	public static final RegistryObject<Effect> BUCKET_OMEN = EFFECTS.register("bucket_omen", ()->{
-//		return new PVZEffect(EffectType.HARMFUL, Colors.BLACK) {
-//		
-//		}
-//	})
 }

@@ -5,7 +5,7 @@
     "pages": [
         {
             "type": "text",
-            "text": "$(l)Pea Gun$() is a range-attack plant weapon that can fire peas. Right-click it in the $(l)off hand$() to open the backpack, in the $(l)main hand$() to fire peas, and $(l)it can also be worn on the head and fired automatically$().It comes with a $(#ff0000)27-cell ammunition backpack for peas and a card slot$(), which is used to put plant cards to $(l)control the shooting mode$() of Pea Gun."
+            "text": "$(bgreen)Pea Gun$() is a range-attack plant weapon that can fire peas. Right-click it in the $(l)off hand$() to open the backpack, in the $(l)main hand$() to fire peas, and $(l)it can also be worn on the head and fired automatically$().It comes with a $(#ff0000)27-cell ammunition backpack for peas and a card slot$(), which is used to put plant cards to $(l)control the shooting mode$() of Pea Gun."
         },
         {
             "type": "text",

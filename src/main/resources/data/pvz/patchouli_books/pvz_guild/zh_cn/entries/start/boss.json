@@ -1,0 +1,20 @@
+{
+    "name": "BOSS",
+    "icon": "minecraft:obsidian",
+    "category": "pvz:start",
+    "pages": [
+        {
+            "type": "text",
+            "text": "当前版本只有一个小BOSS($(bred)贵族僵尸$())，当搭建一个$(l)多方块结构$()时会生成。需要$(l)三个笔直连在一起的黑曜石，然后再两端各摆放2朵凋零玫瑰$()，如右图所示。"
+        },
+        {
+            "type": "image",
+            "images": [
+                "pvz:textures/gui/patchouli/mourner_coffin.png"
+            ],
+            "title": "哀悼之棺"
+        }
+    ],
+    "advancement": "pvz:root",
+    "sortnum": 9
+}

@@ -5,7 +5,7 @@
     "pages": [
         {
             "type": "text",
-            "text": "Everything has its origin, plants and zombies are no exception. Plants are derived from the special effects of $(l)plant seeds and special essences$(), and the special essences are derived from the $(#ff0000)Origin Essences$(). $(m)The source of zombies is currently unknown$(). The Origin Essence is $(l)the origin of most special essences$(). If you want to obtain it, you have to find the answer from the $(#ff0000)saplings$()."
+            "text": "Everything has its $(l)origin$(), plants and zombies are no exception. Plants are derived from the special effects of $(l)plant seeds and special essences$(), and the special essences are derived from the $(#ff0000)Origin Essences$(). $(m)The source of zombies is currently unknown$(). The Origin Essence is $(l)the origin of most special essences$(). If you want to obtain it, you have to find the answer from the $(#ff0000)saplings$()."
         },
         {
             "type": "spotlight",

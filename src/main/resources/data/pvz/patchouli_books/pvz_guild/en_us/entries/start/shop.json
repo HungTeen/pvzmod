@@ -16,7 +16,7 @@
         },
         {
             "type": "text",
-            "text": "Players can trade with Dave with $(#ff0000)Money$(), and Dave currently sells $(l)Energy limits and almanac$().$(br)Penny currently does not have AI and will be updated soon."
+            "text": "Players can trade with Dave with $(#ff0000)Money$(), and Dave currently sells $(l)Energy limits and almanac and some Upgrade Cards$().$(br)Penny currently does not have AI and will be updated soon."
         },
         {
             "type": "entity",

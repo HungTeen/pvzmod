@@ -1,0 +1,39 @@
+{
+    "name": "Enchantments",
+    "icon": "minecraft:enchanted_book",
+    "category": "pvz:start",
+    "pages": [
+        {
+            "type": "spotlight",
+            "item": "pvz:sun_flower_card{'Enchantments':[{'id':'pvz:break_out','lvl':2}]}",
+            "title": "Break Out",
+            "text": "When PlantCards have $(bred)Break Out$() Enchantment, every time the card summons a plant, it will give the plant a chance to be super mode.$()。Its max lvl is 4, $(l)10% for lvl 1, 13% for 2, 16% for 3, and 20% for lvl 4$()."
+        },
+        {
+            "type": "spotlight",
+            "item": "pvz:cherry_bomb_card{'Enchantments':[{'id':'pvz:sun_cost_reduce','lvl':10}]}",
+            "title": "SunCost Reduce",
+            "text": "When PlantCards have $(bred)SunCost Reduce$() Enchantment, The SunCost of using card will reduce. Its max lvl is 10, $(l)Each lvl will have a 5 point reduction$()."
+        },
+        {
+            "type": "spotlight",
+            "item": "minecraft:diamond_sword{'Enchantments':[{'id':'pvz:energy_transfer','lvl':1}]}",
+            "title": "Energy Transfer",
+            "text": "When Swords have $(bred)Energy Transfer$() Enchantment, Players can right click plants to cosume energy num and make plants in super mode. Its max lvl is 1."
+        },
+        {
+            "type": "spotlight",
+            "item": "pvz:football_chestplate{'Enchantments':[{'id':'pvz:tree_protection','lvl':1}]}",
+            "title": "Tree Protection",
+            "text": "When Armor have $(bred)Tree Protection$() Enchantment, damage to the player will not exceed player's max health. Its max lvl is 1."
+        },
+        {
+            "type": "spotlight",
+            "item": "pvz:wall_nut_card{'Enchantments':[{'id':'pvz:charm','lvl':1}]}",
+            "title": "Charm",
+            "text": "When PlantCards have $(bred)Charm$() Enchantment, The plant summoned will be charmed and attack its owner. Its max lvl is 1."
+        }
+    ],
+    "advancement": "pvz:root",
+    "sortnum": 6
+}

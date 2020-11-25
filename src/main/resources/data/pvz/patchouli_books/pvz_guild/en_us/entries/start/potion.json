@@ -1,0 +1,15 @@
+{
+    "name": "Potions",
+    "icon": "minecraft:potion",
+    "category": "pvz:start",
+    "pages": [
+        {
+            "type": "spotlight",
+            "item": "pvz:chocolate",
+            "title": "Excite Potion",
+            "text": "$(byellow)Excite potion$() can make the player in an excited state, thereby $(bred)reducing the cooldown of the plant card$(). $(l)Each level of excitement will reduce CD by 10%$(), and the tenth level of excitement can make plant cards have no CD. You can use $(borange)chocolate$() to make Excite potions at the $(l)brewing stand$()."
+        }
+    ],
+    "advancement": "pvz:root",
+    "sortnum": 7
+}

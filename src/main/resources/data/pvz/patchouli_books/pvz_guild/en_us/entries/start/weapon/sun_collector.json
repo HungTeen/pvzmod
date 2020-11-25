@@ -1,0 +1,16 @@
+{
+    "name": "Sun Collector",
+    "icon": "pvz:sun_collector",
+    "category": "pvz:start/weapon",
+    "pages": [
+        {
+            "type": "spotlight",
+            "item": "pvz:sun_collector",
+            "title": "Sun Collector",
+            "text": "$(byellow)Sun Collector$() is a tool used to collect sun.$(l)Normally aim at the sun and right click to collect it,or right click while shifting to collect a whole range of sun$()."
+        }
+        
+    ],
+    "advancement": "pvz:root",
+    "sortnum": 1
+}

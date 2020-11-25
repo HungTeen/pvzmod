@@ -5,31 +5,31 @@
     "pages": [
         {
             "type": "text",
-            "text": "If you didn't change the config file, you will see 3 strange gui on the corner of the screen when you join the world. They are related to $(l)player resources$(). Plants vs Zombies mod added some player resources, including $(#ff0000)TreeLevel$(), $(#ff0000)SunNum$(), $(#ff0000)EnergyNum$()..."
+            "text": "$(l)Plants vs Zombies mod$() added some $(bred)player resources$(), including $(bgreen)TreeLevel$(), $(byellow)SunNum$(), $(bgreen)EnergyNum$() and so on. If you didn't change the config file, you will see 3 strange gui on the corner of the screen in game. They are related to the player resources."
         },
         {
             "type": "text",
-            "text": "Before explaining them, you should understand $(l)the tree of wisdom$() first. The tree of wisdom is not an common tree. It is invisible and intangible. It is rooted in the player's soul and integrated with the player. In the world of PVZ, $(l)the tree of wisdom can help players collect and store resources such as sun and energy$()."
+            "text": "Before explaining them, you should understand $(bgreen)the tree of wisdom$() first. The tree of wisdom is not an common tree, it's invisible and intangible. It is rooted in player's soul and integrated with the player. In the world of PVZ, $(l)the tree of wisdom can help players collect and store resources such as sun and energy and fight side by side with players$()."
         },
         {
             "type": "text",
-            "text": "$(br)Tree Level$(): It is independent of the default mc level, can also be called the PVZ Level.$(br)Usage: Control the upper limit of SunNum, the higher the level, the stronger the plant weapon$(br)Display: You must pass the $(#ff0000)almanac$() or command to view.$(br)Upgrade method: player kills zombies (only zombies add by pvzmod)"
+            "text": "$(bgreen)Tree Level$(): It is independent of the default mc level, can also be called the PVZ Level.$(br)Usage: The higher the level is, $(byellow)the higher upper limit of SunNum$() and the stronger of some tools.$(br)Display: You must use the $(bred)Almanac$() or command to view.$(br)Upgrade method: player kills zombies($(red)Except for the zombies killed by player's plant or zombies not belong to pvzmod$())."
         },
         {
             "type": "text",
-            "text": "$(br)SunNum$(): $(l)The upper limit of the number of sunlight is increased every tenth TreeLevel$()$(br)Usage: Using summon cards and some tools will consume SunNum.$(br)Display: The upper left corner of the screen, can also be viewed through the $(#ff0000)almanac$() or command.$(br)Obtaining method: collide with $(#ff0000)Sun$() entity"
+            "text": "$(byellow)SunNum$(): $(l)The upper limit of SunNum will increase when TreeLevel increases$().$(br)Usage: Using $(bred)Summon Cards$() and some tools will consume SunNum.$(br)Display: The upper left corner of the screen, can also be viewed through the $(bread)Almanac$() or command.$(br)Obtaining method: collide with $(l)Sun$() entity or use $(byellow)Sun Collector$()."
         },
         {
             "type": "text",
-            "text": "$(br)EnergyNum$(): $(l)the upper limit of energy beans can be bought from $(#ff0000)Crazy Dave$()$()$(br)Usage: make plant in super mode will consume EnergyNum.$(br)Display: the lower left corner of the screen, can also be viewed through the $(#ff0000)almanac$() or command.$(br)Obtaining method: collide with $(#ff0000)Energy$() entity"
+            "text": "$(bgreen)EnergyNum$(): $(l)the upper limit of energy beans can be bought from $(red)Crazy Dave$().$(br)Usage: make plant $(bred)in super mode$() will consume EnergyNum.$(br)Display: the lower left corner of the screen, can also be viewed through the $(bred)Almanac$() or command.$(br)Obtaining method: collide with $(l)Energy$() entity."
         },
         {
             "type": "text",
-            "text": "$(br)Money$(): upper limit 9999999$(br)Usage: The general currency of the store, used to purchase plant cards or props$(br)Display: the lower right corner of the screen, can also be viewed through the $(#ff0000)almanac$() or command.$(br)Obtaining method: collide with $(#ff0000)Coin$() entity"
+            "text": "$(borange)Money$(): the upper limit is 9999999.$(br)Usage: The general currency of shops, used to purchase some $(bred)Upgrade Plant Cards$() and tools.$(br)Display: the lower right corner of the screen, can also be viewed through the $(bred)Almanac$() or command.$(br)Obtaining method: collide with $(l)Coin$() entity."
         },
         {
             "type": "text",
-            "text": "$(br)GemNum$(): Coming soon !"
+            "text": "$(bblue)GemNum$(): Coming soon in 1.15.2-0.4 !"
         }
     ],
     "advancement": "pvz:root",

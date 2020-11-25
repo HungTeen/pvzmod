@@ -1,0 +1,39 @@
+{
+    "name": "附魔",
+    "icon": "minecraft:enchanted_book",
+    "category": "pvz:start",
+    "pages": [
+        {
+            "type": "spotlight",
+            "item": "pvz:sun_flower_card{'Enchantments':[{'id':'pvz:break_out','lvl':2}]}",
+            "title": "爆发",
+            "text": "当植物卡拥有$(bred)爆发$()附魔时，植物卡每次召唤植物，都会$(l)使其有概率释放大招$()。该附魔最高4级，$(l)1级时概率为10%，2级为13%，3级为16%，4级时概率20%$()。"
+        },
+        {
+            "type": "spotlight",
+            "item": "pvz:cherry_bomb_card{'Enchantments':[{'id':'pvz:sun_cost_reduce','lvl':10}]}",
+            "title": "节能",
+            "text": "当植物卡拥有$(bred)节能$()附魔时，植物卡每次召唤植物所消耗的阳光会减少。该附魔最高10级，$(l)每级都会减少5点阳光消耗，直到减到0为止$()。"
+        },
+        {
+            "type": "spotlight",
+            "item": "minecraft:diamond_sword{'Enchantments':[{'id':'pvz:energy_transfer','lvl':1}]}",
+            "title": "充能",
+            "text": "当剑拥有$(bred)充能$()附魔时，玩家用剑右击植物可以消耗能量豆让植物放大招。该附魔最高1级。"
+        },
+        {
+            "type": "spotlight",
+            "item": "pvz:football_chestplate{'Enchantments':[{'id':'pvz:tree_protection','lvl':1}]}",
+            "title": "树之庇护",
+            "text": "当护甲拥有$(bred)树之庇护$()附魔时，玩家受到的伤害不会超过其最大血量。该附魔最高1级。"
+        },
+        {
+            "type": "spotlight",
+            "item": "pvz:wall_nut_card{'Enchantments':[{'id':'pvz:charm','lvl':1}]}",
+            "title": "魅惑",
+            "text": "当植物卡拥有$(bred)魅惑$()附魔时，种下的植物一定会被魅惑，从而攻击其主人。该附魔最高1级。"
+        }
+    ],
+    "advancement": "pvz:root",
+    "sortnum": 6
+}
