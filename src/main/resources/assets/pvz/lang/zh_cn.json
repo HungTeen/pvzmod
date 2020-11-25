@@ -46,6 +46,8 @@
     "item.pvz.sun_spawn_egg":"阳光刷怪蛋",
     "entity.pvz.coin":"钱币",
     "item.pvz.coin_spawn_egg":"钱币刷怪蛋",
+    "entity.pvz.jewel":"宝石",
+    "item.pvz.jewel_spawn_egg":"宝石刷怪蛋",
     "entity.pvz.energy":"能量豆",
     "item.pvz.energy_spawn_egg":"能量豆刷怪蛋",
 //bullet
@@ -254,6 +256,11 @@
     "item.pvz.coffee_bean_spawn_egg":"咖啡豆刷怪蛋",
     "item.pvz.coffee_bean_card":"咖啡豆卡",
     "item.pvz.coffee_bean_enjoy_card":"咖啡豆体验卡",
+//CoffeeBean
+    "entity.pvz.marigold":"金盏花",
+    "item.pvz.marigold_spawn_egg":"金盏花刷怪蛋",
+    "item.pvz.marigold_card":"金盏花卡",
+    "item.pvz.marigold_enjoy_card":"金盏花体验卡",
 //GatlingPea
     "entity.pvz.gatling_pea":"机枪射手",
     "item.pvz.gatling_pea_spawn_egg":"机枪射手刷怪蛋",
@@ -284,6 +291,7 @@
     "item.pvz.zombie_flag":"僵尸旗帜",
     "item.pvz.pea_gun":"豌豆枪",
     "item.pvz.screen_door":"铁门盾牌",
+    "item.pvz.sun_collector":"阳光收集器",
 //block
 //ore
     "block.pvz.origin_ore":"原始精华矿",
@@ -362,7 +370,7 @@
     "gui.pvz.almanac.heal_health":"治愈血量",
     "gui.pvz.almanac.scare_range":"惊吓距离",
     "gui.pvz.almanac.duration":"作用时间",
-    
+    "gui.pvz.almanac.ave_gen_amount":"平均产量",
     //PeaShooter
     "gui.pvz.almanac.pea_shooter1":"豌豆射手发射豌豆攻击敌人",
     "gui.pvz.almanac.pea_shooter2":"一次发射一个豌豆",

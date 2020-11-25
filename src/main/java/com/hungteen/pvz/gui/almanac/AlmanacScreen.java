@@ -21,6 +21,7 @@ import com.hungteen.pvz.entity.plant.light.SunShroomEntity;
 import com.hungteen.pvz.entity.plant.light.TwinSunFlowerEntity;
 import com.hungteen.pvz.entity.plant.magic.CoffeeBeanEntity;
 import com.hungteen.pvz.entity.plant.magic.HypnoShroomEntity;
+import com.hungteen.pvz.entity.plant.magic.MariGoldEntity;
 import com.hungteen.pvz.entity.plant.spear.SpikeWeedEntity;
 import com.hungteen.pvz.entity.plant.toxic.FumeShroomEntity;
 import com.hungteen.pvz.entity.plant.toxic.PuffShroomEntity;
@@ -124,7 +125,6 @@ public class AlmanacScreen extends ContainerScreen<AlmanacContainer> {
 			case SUN_FLOWER:{
 				SunFlowerEntity sunFlower = (SunFlowerEntity) plantEntity;
 				this.drawProperty(Properties.GEN_AMOUNT, sunFlower.getSunAmount());
-//				this.drawProperty(Properties.GEN_TIME, sunFlower.getGenCD());
 				break;
 			}
 			case CHERRY_BOMB:{
@@ -171,7 +171,6 @@ public class AlmanacScreen extends ContainerScreen<AlmanacContainer> {
 			case SUN_SHROOM:{
 				SunShroomEntity sunShroom = (SunShroomEntity) plantEntity;
 				this.drawProperty(Properties.GEN_AMOUNT, sunShroom.getSunAmount());
-//				this.drawProperty(Properties.GEN_TIME, sunShroom.getGenCD());
 				break;
 			}
 			case FUME_SHROOM:{
@@ -257,6 +256,11 @@ public class AlmanacScreen extends ContainerScreen<AlmanacContainer> {
 				this.drawProperty(Properties.DURATION, coffeeBean.getAwakeTime());
 				break;
 			}
+			case MARIGOLD:{
+				MariGoldEntity marigold = (MariGoldEntity) plantEntity;
+				this.drawProperty(Properties.AVE_GEN_AMOUNT, marigold.getAveGenAmount());
+				break;
+			}
 			case GATLING_PEA:{
 				GatlingPeaEntity gatlingPea = (GatlingPeaEntity) plantEntity;
 				this.drawProperty(Properties.ATTACK_DAMAGE, gatlingPea.getAttackDamage());
@@ -294,10 +298,11 @@ public class AlmanacScreen extends ContainerScreen<AlmanacContainer> {
 		int posX = this.guiLeft + 9 + 2 + ((this.propertyCnt & 1) == 1 ? 0 : 110);
 		int posY = this.guiTop + 92 + 2 + ((this.propertyCnt - 1) / 2) * 18;
 		String string = prop.getName()+": ";
-		if(prop == Properties.ATTACK_DAMAGE) {
+		int floorNum = MathHelper.fastFloor(num);
+		if(floorNum == num) {
+			string += floorNum;
+		} else {
 			string += num;
-		}else {
-			string += MathHelper.fastFloor(num);
 		}
 		StringUtil.drawScaledString(font, string, posX, posY, prop.getColor(), 1f);
 	}
@@ -401,6 +406,7 @@ public class AlmanacScreen extends ContainerScreen<AlmanacContainer> {
 		ATTACK_DAMAGE,
 		GEN_TIME,
 		GEN_AMOUNT,
+		AVE_GEN_AMOUNT,
 		//cool down per attack
 		ATTACK_CD,
 		//prepare time e.g. potato mine

@@ -39,13 +39,11 @@ public abstract class PVZFullSkinLayer<T extends LivingEntity, M extends EntityM
 
 	protected float getU(float f)
 	{
-//		return f*0.01f;
 		return 0f;
 	}
 	
 	protected float getV(float f)
 	{
-//		return f*0.01f;
 		return 0f;
 	}
 	

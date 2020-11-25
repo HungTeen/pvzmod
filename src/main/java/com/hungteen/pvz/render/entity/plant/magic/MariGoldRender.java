@@ -14,9 +14,9 @@ import net.minecraftforge.api.distmarker.OnlyIn;
 public class MariGoldRender extends PVZPlantRender<MariGoldEntity>{
 
 	public MariGoldRender(EntityRendererManager rendererManager) {
-		super(rendererManager, new MariGoldModel(), 0.45f);
+		super(rendererManager, new MariGoldModel<MariGoldEntity>(), 0.45f);
 	}
-
+	
 	@Override
 	public float getScaleByEntity(MariGoldEntity entity) {
 		return 0.5f;

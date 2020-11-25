@@ -46,6 +46,8 @@
     "item.pvz.sun_spawn_egg":"Sun Spawn Egg",
     "entity.pvz.coin":"Coin",
     "item.pvz.coin_spawn_egg":"Coin Spawn Egg",
+    "entity.pvz.jewel":"Jewel",
+    "item.pvz.jewel_spawn_egg":"Jewel Spawn Egg",
     "entity.pvz.energy":"Energy",
     "item.pvz.energy_spawn_egg":"Energy Spawn Egg",
 //bullet
@@ -254,6 +256,11 @@
     "item.pvz.coffee_bean_spawn_egg":"CoffeeBean Spawn Egg",
     "item.pvz.coffee_bean_card":"CoffeeBean Card",
     "item.pvz.coffee_bean_enjoy_card":"CoffeeBean Enjoy Card",
+//CoffeeBean
+    "entity.pvz.marigold":"MariGold",
+    "item.pvz.marigold_spawn_egg":"MariGold Spawn Egg",
+    "item.pvz.marigold_card":"MariGold Card",
+    "item.pvz.marigold_enjoy_card":"MariGold Enjoy Card",
 //GatlingPea
     "entity.pvz.gatling_pea":"GatlingPea",
     "item.pvz.gatling_pea_spawn_egg":"GatlingPea Spawn Egg",
@@ -284,6 +291,7 @@
     "item.pvz.zombie_flag":"Zombie Flag",
     "item.pvz.pea_gun":"Pea Gun",
     "item.pvz.screen_door":"ScreenDoor Shield",
+    "item.pvz.sun_collector":"Sun Collector",
 //block
 //ore
     "block.pvz.origin_ore":"Origin Ore",
@@ -362,6 +370,7 @@
     "gui.pvz.almanac.heal_health":"Heal",
     "gui.pvz.almanac.scare_range":"ScareRange",
     "gui.pvz.almanac.duration":"Duration",
+    "gui.pvz.almanac.ave_gen_amount":"AveGen",
     //PeaShooter
     "gui.pvz.almanac.pea_shooter1":"They shoot peas to attack enemies",
     "gui.pvz.almanac.pea_shooter2":"One pea per shoot",

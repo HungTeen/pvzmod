@@ -12,7 +12,7 @@ import net.minecraft.client.renderer.model.ModelRenderer;
 // Paste this class into your mod and generate all required imports
 
 
-public class MariGoldModel extends EntityModel<MariGoldEntity> {
+public class MariGoldModel<T extends MariGoldEntity> extends EntityModel<T> {
 	private final ModelRenderer total;
 	private final ModelRenderer head;
 	private final ModelRenderer cube_r1;

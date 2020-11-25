@@ -512,10 +512,12 @@ public abstract class PVZPlantEntity extends CreatureEntity implements IPVZPlant
 		this.heal(this.getMaxHealth());
 		this.setLiveTick(0);
 		if(first) {
-			PlayerEntity player = this.world.getPlayerByUuid(this.getOwnerUUID());
-		    if(player != null) {
-		    	PlayerUtil.addPlantXp(player, this.getPlantEnumName(), 5);
-		    }
+			if(this.getOwnerUUID() != null) {
+			    PlayerEntity player = this.world.getPlayerByUuid(this.getOwnerUUID());
+		        if(player != null) {
+		    	    PlayerUtil.addPlantXp(player, this.getPlantEnumName(), 5);
+		        }
+			}
 		    if(this.outerPlant == Plants.PUMPKIN) {
 			    this.setPumpkinLife(PlantUtil.PUMPKIN_LIFE + PlantUtil.PUMPKIN_SUPER_LIFE);
 		    }
