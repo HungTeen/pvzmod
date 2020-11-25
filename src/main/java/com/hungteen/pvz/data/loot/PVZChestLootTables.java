@@ -127,30 +127,6 @@ public class PVZChestLootTables implements Consumer<BiConsumer<ResourceLocation,
 						.addEntry(ItemLootEntry.builder(Items.STRING).weight(10).acceptFunction(SetCount.builder(RandomValueRange.of(1.0F, 8.0F))))
 						.addEntry(ItemLootEntry.builder(Blocks.GRAVEL).weight(10).acceptFunction(SetCount.builder(RandomValueRange.of(1.0F, 8.0F))))
 				));
-//		t.accept(PVZLoot.DAVE_VILLA_CHEST, LootTable.builder()
-//		.addLootPool(LootPool.builder().rolls(RandomValueRange.of(2.0F, 4.0F))
-//				.addEntry(ItemLootEntry.builder(Items.DIAMOND).weight(5).acceptFunction(SetCount.builder(RandomValueRange.of(1.0F, 3.0F))))
-//				.addEntry(ItemLootEntry.builder(Items.IRON_INGOT).weight(15).acceptFunction(SetCount.builder(RandomValueRange.of(1.0F, 5.0F))))
-//				.addEntry(ItemLootEntry.builder(Items.GOLD_INGOT).weight(15).acceptFunction(SetCount.builder(RandomValueRange.of(2.0F, 7.0F))))
-//				.addEntry(ItemLootEntry.builder(Items.EMERALD).weight(15).acceptFunction(SetCount.builder(RandomValueRange.of(1.0F, 3.0F))))
-//				.addEntry(ItemLootEntry.builder(Items.BONE).weight(25).acceptFunction(SetCount.builder(RandomValueRange.of(4.0F, 6.0F))))
-//				.addEntry(ItemLootEntry.builder(Items.SPIDER_EYE).weight(25).acceptFunction(SetCount.builder(RandomValueRange.of(1.0F, 3.0F))))
-//				.addEntry(ItemLootEntry.builder(Items.ROTTEN_FLESH).weight(25).acceptFunction(SetCount.builder(RandomValueRange.of(3.0F, 7.0F))))
-//				.addEntry(ItemLootEntry.builder(Items.SADDLE).weight(20))
-//				.addEntry(ItemLootEntry.builder(Items.IRON_HORSE_ARMOR).weight(15))
-//				.addEntry(ItemLootEntry.builder(Items.GOLDEN_HORSE_ARMOR).weight(10))
-//				.addEntry(ItemLootEntry.builder(Items.DIAMOND_HORSE_ARMOR).weight(5))
-//				.addEntry(ItemLootEntry.builder(Items.BOOK).weight(20).acceptFunction(EnchantRandomly.func_215900_c()))
-//				.addEntry(ItemLootEntry.builder(Items.GOLDEN_APPLE).weight(20))
-//				.addEntry(ItemLootEntry.builder(Items.ENCHANTED_GOLDEN_APPLE).weight(2))
-//				.addEntry(EmptyLootEntry.func_216167_a().weight(15)))
-//		.addLootPool(LootPool.builder().rolls(ConstantRange.of(4))
-//				.addEntry(ItemLootEntry.builder(Items.BONE).weight(10).acceptFunction(SetCount.builder(RandomValueRange.of(1.0F, 8.0F))))
-//				.addEntry(ItemLootEntry.builder(Items.GUNPOWDER).weight(10).acceptFunction(SetCount.builder(RandomValueRange.of(1.0F, 8.0F))))
-//				.addEntry(ItemLootEntry.builder(Items.ROTTEN_FLESH).weight(10).acceptFunction(SetCount.builder(RandomValueRange.of(1.0F, 8.0F))))
-//				.addEntry(ItemLootEntry.builder(Items.STRING).weight(10).acceptFunction(SetCount.builder(RandomValueRange.of(1.0F, 8.0F))))
-//				.addEntry(ItemLootEntry.builder(Blocks.SAND).weight(10).acceptFunction(SetCount.builder(RandomValueRange.of(1.0F, 8.0F)))))
-//		);
 	}
 
 }

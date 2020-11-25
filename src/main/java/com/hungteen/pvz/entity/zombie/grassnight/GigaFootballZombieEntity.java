@@ -2,6 +2,7 @@ package com.hungteen.pvz.entity.zombie.grassnight;
 
 import java.util.List;
 
+import com.hungteen.pvz.data.loot.PVZLoot;
 import com.hungteen.pvz.misc.damage.PVZDamageSource;
 import com.hungteen.pvz.utils.EntityUtil;
 import com.hungteen.pvz.utils.ZombieUtil;
@@ -14,6 +15,7 @@ import net.minecraft.entity.SharedMonsterAttributes;
 import net.minecraft.entity.monster.MonsterEntity;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.util.DamageSource;
+import net.minecraft.util.ResourceLocation;
 import net.minecraft.world.GameRules;
 import net.minecraft.world.World;
 
@@ -117,6 +119,11 @@ public class GigaFootballZombieEntity extends FootballZombieEntity{
 	public void writeAdditional(CompoundNBT compound) {
 		super.writeAdditional(compound);
 		compound.putBoolean("has_changed_speed", this.hasChanged);
+	}
+	
+	@Override
+	protected ResourceLocation getLootTable() {
+		return PVZLoot.GIGA_FOOTBALL_ZOMBIE;
 	}
 	
 	@Override

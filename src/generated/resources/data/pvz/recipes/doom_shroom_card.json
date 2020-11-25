@@ -1,0 +1,22 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "AAA",
+    "ABA",
+    "ACA"
+  ],
+  "key": {
+    "A": {
+      "item": "pvz:explosion_essence"
+    },
+    "B": {
+      "item": "minecraft:brown_mushroom"
+    },
+    "C": {
+      "item": "pvz:gold_card"
+    }
+  },
+  "result": {
+    "item": "pvz:doom_shroom_card"
+  }
+}

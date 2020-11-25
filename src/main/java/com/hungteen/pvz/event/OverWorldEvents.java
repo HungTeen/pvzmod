@@ -66,13 +66,11 @@ public class OverWorldEvents {
 			world.playSound(null, pl.getPosition(), SoundRegister.HUGE_WAVE.get(), SoundCategory.AMBIENT, 1f, 1f);
 		}
 		int type = world.rand.nextInt(Events.values().length);
-//		System.out.println(type);
 		activateEvent(world, Events.values()[type]);
 	}
 	
 	public static void activateEvent(World world, @Nonnull Events event) {
 		WorldEventData data = WorldEventData.getOverWorldEventData(world);
-//		System.out.println(event);
 		if(!data.hasEvent(event)) {
 			data.addEvent(event);
 			EntitySpawnRegister.addEventSpawns(event);

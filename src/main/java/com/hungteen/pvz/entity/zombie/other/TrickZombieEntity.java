@@ -1,5 +1,6 @@
 package com.hungteen.pvz.entity.zombie.other;
 
+import com.hungteen.pvz.data.loot.PVZLoot;
 import com.hungteen.pvz.entity.zombie.PVZZombieEntity;
 import com.hungteen.pvz.register.EffectRegister;
 import com.hungteen.pvz.register.EntityRegister;
@@ -16,6 +17,7 @@ import net.minecraft.entity.monster.MonsterEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.Hand;
+import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.Explosion.Mode;
 import net.minecraft.world.World;
@@ -87,6 +89,11 @@ public class TrickZombieEntity extends PVZZombieEntity{
 		return 10;
 	}
 
+	@Override
+	protected ResourceLocation getLootTable() {
+		return PVZLoot.PUMPKIN_ZOMBIE;
+	}
+	
 	@Override
 	public Zombies getZombieEnumName() {
 		return Zombies.TRICK_ZOMBIE;

@@ -219,9 +219,9 @@ public abstract class PVZZombieEntity extends MonsterEntity implements IPVZZombi
 	protected void dropCoinOrSpecial() {
 		int num = this.getRNG().nextInt(10000);
 		if(num < 1110) {
-			int amount = CoinType.COPPER.money;
-			if(num < 1100) amount = CoinType.SILVER.money;
-			else if(num < 1110) amount = CoinType.GOLD.money;
+			int amount = CoinType.GOLD.money;
+			if(num < 1000) amount = CoinType.SILVER.money;
+			else if(num < 1100) amount = CoinType.SILVER.money;
 			CoinEntity coin = EntityRegister.COIN.get().create(world);
 			coin.setAmount(amount);
 			EntityUtil.onMobEntitySpawn(world, coin, getPosition());

@@ -1,4 +1,4 @@
-package com.hungteen.pvz.misc.damage;
+package com.hungteen.pvz.misc.tag;
 
 import com.hungteen.pvz.PVZMod;
 
@@ -10,7 +10,12 @@ import net.minecraft.util.ResourceLocation;
 public class PVZItemTags {
 
 	//forge
-	
+	public static final Tag<Item> PEAS = forgeTag("crops/pea");
+	public static final Tag<Item> NUTS = forgeTag("crops/nut");
+	public static final Tag<Item> CHILIPEPPERS = forgeTag("crops/chilipepper");
+	public static final Tag<Item> AMETHYST_INGOTS = forgeTag("ingots/amethyst");
+	public static final Tag<Item> STEEL_INGOTS = forgeTag("ingots/steel");
+	public static final Tag<Item> AMETHYST_ORES = forgeTag("ores/amethyst");
 	
 	//pvz
 	public static final Tag<Item> PLANT_SUMMON_CARDS = pvzTag("cards/plant_summon_card");
@@ -22,7 +27,6 @@ public class PVZItemTags {
         return new ItemTags.Wrapper(new ResourceLocation(PVZMod.MOD_ID, name));
     }
 	
-	@SuppressWarnings("unused")
 	private static Tag<Item> forgeTag(String name){
         return new ItemTags.Wrapper(new ResourceLocation("forge", name));
     }

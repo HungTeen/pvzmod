@@ -1,5 +1,6 @@
 package com.hungteen.pvz.entity.zombie.grassnight;
 
+import com.hungteen.pvz.data.loot.PVZLoot;
 import com.hungteen.pvz.entity.zombie.base.DefenceZombieEntity;
 import com.hungteen.pvz.entity.zombie.part.PVZHealthPartEntity;
 import com.hungteen.pvz.register.SoundRegister;
@@ -7,6 +8,7 @@ import com.hungteen.pvz.utils.enums.Zombies;
 
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.monster.MonsterEntity;
+import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.SoundEvent;
 import net.minecraft.world.World;
 
@@ -36,6 +38,11 @@ public class ScreenDoorZombieEntity extends DefenceZombieEntity{
 	@Override
 	public float getPartLife() {
 		return 200;
+	}
+	
+	@Override
+	protected ResourceLocation getLootTable() {
+		return PVZLoot.SCREENDOOR_ZOMBIE;
 	}
 
 	@Override

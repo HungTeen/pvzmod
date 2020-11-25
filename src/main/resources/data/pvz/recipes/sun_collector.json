@@ -1,0 +1,23 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "AXA",
+    "XBX",
+    "AXA"
+  ],
+  "key": {
+    "X": {
+      "item":"minecraft:sunflower"
+    },
+    "A": {
+      "item":"pvz:light_essence"
+    },
+    "B": {
+      "item":"minecraft:daylight_detector"
+    }
+  },
+  "result": {
+    "item": "pvz:sun_collector",
+    "count": 1
+  }
+}

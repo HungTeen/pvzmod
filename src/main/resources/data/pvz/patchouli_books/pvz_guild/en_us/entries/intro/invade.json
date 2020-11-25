@@ -13,7 +13,7 @@
         },
         {
             "type": "text",
-            "text": "Current Invasion list:$(br)$(bred)Bucket invasion$()(Normal, Conehead, Pole, Bucket Zombies).$(br)$(bred)Water invasion$()(Snorkel, Zomboni, Bobsle Teams, Dolphin Rider, Lava Zombies).$(br)$(bred)Halloween invasion$()(Pumpkin, Trick Zombies).$(br)"
+            "text": "Current Invasion list:$(br)$(bred)Bucket invasion$()(Normal, Conehead, Pole, Bucket Zombies).$(br)$(bred)Water invasion$()(Snorkel, Zomboni, Bobsle Teams, Dolphin Rider, Lava Zombies).$(br)$(bred)Halloween invasion$()(Pumpkin, Trick Zombies)$(br)$(bred)Newspaper Invasion$()(Newspaper, ScreenDoor, Football, Dacing, Old, SundayEdition Zombies)$(br)"
         }
     ],
     "advancement": "pvz:root",

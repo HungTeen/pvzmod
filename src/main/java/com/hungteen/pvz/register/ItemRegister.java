@@ -137,7 +137,6 @@ public class ItemRegister {
 	public static final RegistryObject<Item> BLUE_FLAME_PEA = ITEMS.register("blue_flame_pea", PVZItemBase::new);
 	public static final RegistryObject<Item> SMALL_MEAT = ITEMS.register("small_meat", PVZItemBase::new);
 	public static final RegistryObject<Item> PEPPER = ITEMS.register("pepper", PVZItemBase::new);
-//	public static final RegistryObject<Item> FUME = ITEMS.register("fume", PVZItemBase::new);
 	
 	//tool
 	public static final RegistryObject<Item> ZOMBIE_FLAG = ITEMS.register("zombie_flag", ZombieFlagItem::new);
@@ -161,6 +160,7 @@ public class ItemRegister {
 	public static final RegistryObject<Item> STRANGE_HELP = ITEMS.register("strange_help", StrangeHelpItem::new);
 //	public static final RegistryObject<Item> GUILD_BOOK = ITEMS.register("guild_book", GuildBookItem::new);
 	public static final RegistryObject<Item> ALMANAC = ITEMS.register("almanac", AlmanacItem::new);
+	public static final RegistryObject<Item> TIME_KEY_TO_DEEP = ITEMS.register("time_key_to_deep", PVZItemBase::new);
 	
 	//food 
 	public static final RegistryObject<Item> FAKE_BRAIN = ITEMS.register("fake_brain", ()->new Item(new Item.Properties().group(ItemGroup.FOOD).food(PVZFoods.FAKE_BRAIN)));

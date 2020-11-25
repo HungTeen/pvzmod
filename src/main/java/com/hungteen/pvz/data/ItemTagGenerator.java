@@ -2,7 +2,9 @@ package com.hungteen.pvz.data;
 
 import com.hungteen.pvz.item.tool.card.PlantCardItem;
 import com.hungteen.pvz.item.tool.card.SummonCardItem;
-import com.hungteen.pvz.misc.damage.PVZItemTags;
+import com.hungteen.pvz.misc.tag.PVZBlockTags;
+import com.hungteen.pvz.misc.tag.PVZItemTags;
+import com.hungteen.pvz.register.BlockRegister;
 import com.hungteen.pvz.register.ItemRegister;
 
 import net.minecraft.data.DataGenerator;
@@ -28,7 +30,12 @@ public class ItemTagGenerator extends ItemTagsProvider{
 			}
 		}
 		this.getBuilder(PVZItemTags.TEMPLATE_CARDS).add(ItemRegister.GRAY_CARD.get(), ItemRegister.WHITE_CARD.get(), ItemRegister.GREEN_CARD.get(), ItemRegister.BLUE_CARD.get(), ItemRegister.PURPLE_CARD.get(), ItemRegister.GOLD_CARD.get(), ItemRegister.RED_CARD.get());
-		
+		this.getBuilder(PVZItemTags.PEAS).add(ItemRegister.PEA.get());
+		this.getBuilder(PVZItemTags.NUTS).add(ItemRegister.NUT.get());
+		this.getBuilder(PVZItemTags.CHILIPEPPERS).add(ItemRegister.PEPPER.get());
+		this.getBuilder(PVZItemTags.AMETHYST_INGOTS).add(ItemRegister.AMETHYST_INGOT.get());
+		this.getBuilder(PVZItemTags.STEEL_INGOTS).add(ItemRegister.STEEL_INGOT.get());
+		this.getBuilder(PVZItemTags.AMETHYST_ORES).add(BlockRegister.AMETHYST_ORE.get().asItem());
 	}
 	
 	@Override

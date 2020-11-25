@@ -17,6 +17,10 @@ public class PVZLoot {
 	public static final ResourceLocation FLAG_ZOMBIE = getEntityLootTable("flag_zombie");
 	public static final ResourceLocation CONEHEAD_ZOMBIE = getEntityLootTable("conehead_zombie");
 	public static final ResourceLocation BUCKETHEAD_ZOMBIE = getEntityLootTable("buckethead_zombie");
+	public static final ResourceLocation SCREENDOOR_ZOMBIE = getEntityLootTable("screendoor_zombie");
+	public static final ResourceLocation FOOTBALL_ZOMBIE = getEntityLootTable("football_zombie");
+	public static final ResourceLocation GIGA_FOOTBALL_ZOMBIE = getEntityLootTable("giga_football_zombie");
+	public static final ResourceLocation NOBLE_ZOMBIE = getEntityLootTable("noble_zombie");
 	public static final ResourceLocation BOBSLE_TEAM = getEntityLootTable("bobsle_team");
 	public static final ResourceLocation ZOMBIE_DOLPHIN = getEntityLootTable("zombie_dolphin");
 	public static final ResourceLocation FOODIE_ZOMBIE = getEntityLootTable("foodie_zombie");

@@ -2,6 +2,7 @@ package com.hungteen.pvz.entity.zombie.other;
 
 import java.util.List;
 
+import com.hungteen.pvz.data.loot.PVZLoot;
 import com.hungteen.pvz.entity.misc.ZombieHandEntity;
 import com.hungteen.pvz.entity.plant.PVZPlantEntity;
 import com.hungteen.pvz.entity.zombie.PVZZombieEntity;
@@ -30,6 +31,7 @@ import net.minecraft.network.datasync.EntityDataManager;
 import net.minecraft.particles.ParticleTypes;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.Direction;
+import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.SoundEvents;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
@@ -389,6 +391,11 @@ public class NobleZombieEntity extends PVZZombieEntity {
 		return false;
 	}
 
+	@Override
+	protected ResourceLocation getLootTable() {
+		return PVZLoot.NOBLE_ZOMBIE;
+	}
+	
 	@Override
 	public boolean isNonBoss() {
 		return false;

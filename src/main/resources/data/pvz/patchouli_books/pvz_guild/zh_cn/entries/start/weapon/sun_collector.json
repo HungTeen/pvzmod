@@ -8,8 +8,13 @@
             "item": "pvz:sun_collector",
             "title": "阳光收集器",
             "text": "$(byellow)阳光收集器$()是一个用来收集阳光的工具。$(l)对准阳光实体普通右击可以收集阳光，下蹲右键可以收集一整个范围的阳光$()。"
+        },
+        {
+            "type": "crafting",
+            "recipe": "pvz:sun_collector",
+            "title": "阳光收集器配方",
+            "text": "阳光收集器的合成需要$(l)向日葵、阳光感应器和阳光精华$()"
         }
-        
     ],
     "advancement": "pvz:root",
     "sortnum": 1

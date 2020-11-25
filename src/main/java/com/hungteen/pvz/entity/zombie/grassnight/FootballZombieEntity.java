@@ -1,5 +1,6 @@
 package com.hungteen.pvz.entity.zombie.grassnight;
 
+import com.hungteen.pvz.data.loot.PVZLoot;
 import com.hungteen.pvz.entity.zombie.PVZZombieEntity;
 import com.hungteen.pvz.utils.ZombieUtil;
 import com.hungteen.pvz.utils.enums.Zombies;
@@ -9,6 +10,7 @@ import net.minecraft.entity.EntityType;
 import net.minecraft.entity.Pose;
 import net.minecraft.entity.SharedMonsterAttributes;
 import net.minecraft.entity.monster.MonsterEntity;
+import net.minecraft.util.ResourceLocation;
 import net.minecraft.world.World;
 
 public class FootballZombieEntity extends PVZZombieEntity{
@@ -33,6 +35,11 @@ public class FootballZombieEntity extends PVZZombieEntity{
 		return 140;
 	}
 
+	@Override
+	protected ResourceLocation getLootTable() {
+		return PVZLoot.FOOTBALL_ZOMBIE;
+	}
+	
 	@Override
 	public Zombies getZombieEnumName() {
 		return Zombies.FOOTBALL_ZOMBIE;

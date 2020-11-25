@@ -1,23 +1,22 @@
 {
   "type": "minecraft:crafting_shaped",
   "pattern": [
-    "OOO",
-    "OBO",
-    "OAO"
+    "AAA",
+    "ABA",
+    "ACA"
   ],
   "key": {
-    "O": {
+    "A": {
       "item": "pvz:appease_essence"
     },
     "B": {
       "tag": "forge:crops/pea"
     },
-    "A": {
+    "C": {
       "item": "pvz:gray_card"
     }
   },
   "result": {
-    "item": "pvz:pea_shooter_card",
-    "count": 1
+    "item": "pvz:pea_shooter_card"
   }
 }
