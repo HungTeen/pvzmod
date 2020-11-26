@@ -89,10 +89,9 @@ public class GraveHouseComponents {
 		}
 		
 		protected EntityType<?> getRandomEntityType(Random rand){
-			int num = rand.nextInt(3);
-			if(num == 0) return EntityRegister.NEWSPAPER_ZOMBIE.get();
+			int num = rand.nextInt(2);
+			if(num == 0) return EntityRegister.GIGA_FOOTBALL_ZOMBIE.get();
 			else if(num == 1) return EntityRegister.FOOTBALL_ZOMBIE.get();
-			else if(num == 2) return EntityRegister.SCREENDOOR_ZOMBIE.get();
 			return null;
 		}
 		

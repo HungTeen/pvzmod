@@ -533,9 +533,17 @@
 //event
     "event.pvz.zombie_attack":"A huge wave of zombies are coming !",
 //death
-    "death.attack.pvz_eat":"Zombie eat %s's brain",
-    "death.attack.chomper_plant":"%s was eat by chomper",
+"death.attack.pvz_normal":"%s was killed",
+    "death.attack.pvz_weak":"%s weak to death",
+    "death.attack.pvz_appease":"%s was shooted by bullet",
+    "death.attack.pvz_eat":"%s's brain was eaten",
+    "death.attack.pvz_explosion":"%s was exploded",
+    "death.attack.pvz_ice":"%s was cold to death",
+    "death.attack.pvz_fire":"%s was hot to death",
+    "death.attack.pvz_spike":"%s was spiked to death",
     "death.attack.pvz_crush":"%s was crushed",
+    "death.attack.pvz_through":"%s was killed",
+    "death.attack.chomper_plant":"%s was eat by chomper",
 //itemGroup
     "itemGroup.pvz_misc":"PVZ Misc",
     "itemGroup.pvz_card":"PVZ Card",

@@ -538,9 +538,17 @@
 //event
     "event.pvz.zombie_attack":"一大波僵尸正在来袭 !",
 //death
-    "death.attack.pvz_eat":"僵尸吃了%s的脑子",
-    "death.attack.chomper_plant":"%s被食人花咬死了",
+    "death.attack.pvz_normal":"%s被打死了",
+    "death.attack.pvz_weak":"%s虚弱而亡",
+    "death.attack.pvz_appease":"%s被子弹射死",
+    "death.attack.pvz_eat":"%s的脑子被吃了",
+    "death.attack.pvz_explosion":"%s被炸得粉身碎骨",
+    "death.attack.pvz_ice":"%s被冷死了",
+    "death.attack.pvz_fire":"%s被烧死了",
+    "death.attack.pvz_spike":"%s被刺身亡",
     "death.attack.pvz_crush":"%s被压扁了",
+    "death.attack.pvz_through":"%s的身体被贯穿而亡",
+    "death.attack.chomper_plant":"%s被食人花咬死了",
 //itemGroup
     "itemGroup.pvz_misc":"PVZ杂项",
     "itemGroup.pvz_card":"PVZ召唤卡",

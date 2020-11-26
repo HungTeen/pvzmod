@@ -250,6 +250,8 @@ public abstract class PVZPlantEntity extends CreatureEntity implements IPVZPlant
 	public ILivingEntityData onInitialSpawn(IWorld worldIn, DifficultyInstance difficultyIn, SpawnReason reason,ILivingEntityData spawnDataIn, CompoundNBT dataTag) {
 		if(!worldIn.isRemote()) {
 			EntityUtil.playSound(this, this.getSpawnSound());
+			this.getAttribute(SharedMonsterAttributes.MAX_HEALTH).setBaseValue(this.getPlantHealth());
+			this.heal(this.getMaxHealth());
 		}
 		return super.onInitialSpawn(worldIn, difficultyIn, reason, spawnDataIn, dataTag);
 	}

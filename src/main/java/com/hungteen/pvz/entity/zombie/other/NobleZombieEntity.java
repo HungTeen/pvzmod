@@ -53,8 +53,8 @@ public class NobleZombieEntity extends PVZZombieEntity {
 	private final int maxSummonedCnt = 8;
 	private final int minTpCD = 400;
 	private final int maxTpCD = 800;
-	private final int minSleepAttackCD = 700;
-	private final int maxSleepAttackCD = 1200;
+	private final int minSleepAttackCD = 360;
+	private final int maxSleepAttackCD = 1000;
 	
 	public NobleZombieEntity(EntityType<? extends MonsterEntity> type, World worldIn) {
 		super(type, worldIn);

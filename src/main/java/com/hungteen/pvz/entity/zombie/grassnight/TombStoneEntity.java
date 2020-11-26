@@ -38,7 +38,7 @@ public class TombStoneEntity extends UnderGroundZombieEntity{
 
 	public static final Zombies[] GROUND_ZOMBIES = new Zombies[] {Zombies.NORMAL_ZOMBIE, Zombies.FLAG_ZOMBIE, Zombies.CONEHEAD_ZOMBIE, Zombies.BUCKETHEAD_ZOMBIE};
 	private int currentSummonCD;
-	private int minSummonCD = 400;
+	private int minSummonCD = 360;
 	private int maxSummonCD = 1200;
 	
 	public TombStoneEntity(EntityType<? extends MonsterEntity> type, World worldIn) {
@@ -75,10 +75,7 @@ public class TombStoneEntity extends UnderGroundZombieEntity{
 	
 	@Override
 	protected boolean shouldCollideWithEntity(LivingEntity target) {
-		if(target instanceof TombStoneEntity) {
-			return true;
-		}
-		return super.shouldCollideWithEntity(target);
+		return target instanceof TombStoneEntity;
 	}
 	
 	protected void summonZombie() {
