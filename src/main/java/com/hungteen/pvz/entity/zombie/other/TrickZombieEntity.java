@@ -19,7 +19,7 @@ import net.minecraft.util.DamageSource;
 import net.minecraft.util.Hand;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockPos;
-import net.minecraft.world.Explosion.Mode;
+import net.minecraft.world.Explosion;
 import net.minecraft.world.World;
 
 public class TrickZombieEntity extends PVZZombieEntity{
@@ -68,7 +68,9 @@ public class TrickZombieEntity extends PVZZombieEntity{
 	protected void spawnDrops(DamageSource damageSourceIn) {
 		if(!this.isPotionActive(EffectRegister.COLD_EFFECT.get()) && !this.isCharmed()) {
 			if(this.getRNG().nextInt(EXPLOSION_CHANCE) == 0) {
-				this.world.createExplosion(this, getPosX(), getPosY(), getPosZ(), 0.5f, Mode.DESTROY);
+				Explosion.Mode mode = net.minecraftforge.event.ForgeEventFactory.getMobGriefingEvent(this.world, this) ? Explosion.Mode.DESTROY : Explosion.Mode.NONE;
+//			    System.out.println(mode + " " + world.getGameRules().getBoolean(GameRules.MOB_GRIEFING));
+				this.world.createExplosion(this, getPosX(), getPosY(), getPosZ(), 0.5f, mode);
 			}
 		}
 		super.spawnDrops(damageSourceIn);

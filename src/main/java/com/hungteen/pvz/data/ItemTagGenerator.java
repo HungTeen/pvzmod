@@ -2,7 +2,6 @@ package com.hungteen.pvz.data;
 
 import com.hungteen.pvz.item.tool.card.PlantCardItem;
 import com.hungteen.pvz.item.tool.card.SummonCardItem;
-import com.hungteen.pvz.misc.tag.PVZBlockTags;
 import com.hungteen.pvz.misc.tag.PVZItemTags;
 import com.hungteen.pvz.register.BlockRegister;
 import com.hungteen.pvz.register.ItemRegister;

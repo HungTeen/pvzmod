@@ -10,6 +10,8 @@ import com.hungteen.pvz.entity.bullet.PeaEntity;
 import com.hungteen.pvz.gui.container.PeaGunContainer;
 import com.hungteen.pvz.gui.inventory.ItemInventory;
 import com.hungteen.pvz.item.tool.card.PlantCardItem;
+import com.hungteen.pvz.network.PVZPacketHandler;
+import com.hungteen.pvz.network.PlaySoundPacket;
 import com.hungteen.pvz.register.EntityRegister;
 import com.hungteen.pvz.register.GroupRegister;
 import com.hungteen.pvz.register.ItemRegister;
@@ -36,8 +38,6 @@ import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.Direction;
 import net.minecraft.util.Hand;
-import net.minecraft.util.SoundCategory;
-import net.minecraft.util.SoundEvents;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.TextFormatting;
@@ -47,6 +47,7 @@ import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.capabilities.ICapabilityProvider;
 import net.minecraftforge.common.util.LazyOptional;
 import net.minecraftforge.fml.network.NetworkHooks;
+import net.minecraftforge.fml.network.PacketDistributor;
 import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.IItemHandler;
 import net.minecraftforge.items.wrapper.InvWrapper;
@@ -143,7 +144,9 @@ public class PeaGunItem extends Item {
 				}
 				if (this.canShoot(player, plant, stack, itemStack)) {
 					shrinkItemStack(player, backpack, i, itemStack);
-					world.playSound(player, player.getPosition(), SoundEvents.ENTITY_SNOW_GOLEM_SHOOT, SoundCategory.PLAYERS, 0.8f, 0.8f);
+					PVZPacketHandler.CHANNEL.send(PacketDistributor.PLAYER.with(()->{
+						return (ServerPlayerEntity) player;
+					}), new PlaySoundPacket(1));
 					setPlayerCoolDownTick(player);
 //					stack.damageItem(1, player, (p) -> {
 //						InventoryHelper.dropInventoryItems(world, p, backpack);

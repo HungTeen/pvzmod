@@ -82,16 +82,10 @@ public class PeaGunContainer extends Container{
 		return itemstack;
 	}
 	
-	@Override
-	public void onContainerClosed(PlayerEntity playerIn) {
-		super.onContainerClosed(playerIn);
-//		ItemUtil.convertToItemStack(this.stack,this.backpack);
-	}
 
 	@Override
 	public boolean canInteractWith(PlayerEntity playerIn) {
 		if(playerIn.getHeldItemOffhand().getItem() != ItemRegister.PEA_GUN.get()) {
-//			ItemUtil.convertToItemStack(this.stack,this.backpack);
 			return false;
 		}
 		return true;

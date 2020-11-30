@@ -26,7 +26,6 @@ public class PotatoMineParticle extends BombParticle {
 		this.selectSpriteWithAge(this.sprite);
 	}
 
-	@OnlyIn(Dist.CLIENT)
 	public static class Factory implements IParticleFactory<BasicParticleType> {
 		private final IAnimatedSprite sprite;
 

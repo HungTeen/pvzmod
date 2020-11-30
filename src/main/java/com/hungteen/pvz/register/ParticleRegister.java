@@ -1,31 +1,16 @@
 package com.hungteen.pvz.register;
 
 import com.hungteen.pvz.PVZMod;
-import com.hungteen.pvz.particle.BlueFlameParticle;
-import com.hungteen.pvz.particle.DirtBurstOutParticle;
-import com.hungteen.pvz.particle.DoomParticle;
-import com.hungteen.pvz.particle.FumeParticle;
-import com.hungteen.pvz.particle.SleepParticle;
-import com.hungteen.pvz.particle.SnowFlowerParticle;
-import com.hungteen.pvz.particle.SporeParticle;
-import com.hungteen.pvz.particle.YellowFlameParticle;
-import com.hungteen.pvz.particle.bomb.CherryBombParticle;
-import com.hungteen.pvz.particle.bomb.PotatoMineParticle;
 
-import net.minecraft.client.Minecraft;
-import net.minecraft.client.particle.ParticleManager;
 import net.minecraft.particles.BasicParticleType;
 import net.minecraft.particles.ParticleType;
-import net.minecraftforge.client.event.ParticleFactoryRegisterEvent;
-import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.RegistryObject;
-import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
 
-@Mod.EventBusSubscriber(modid=PVZMod.MOD_ID,bus = Mod.EventBusSubscriber.Bus.MOD)
 public class ParticleRegister {
 
+	//dont forget register particle factory
 	public static final DeferredRegister<ParticleType<?>> PARTICLE_TYPES = new DeferredRegister<>(ForgeRegistries.PARTICLE_TYPES, PVZMod.MOD_ID);
 	
 	public static final RegistryObject<BasicParticleType> RED_BOMB = PARTICLE_TYPES.register("red_bomb", ()->{return new BasicParticleType(false);});
@@ -39,20 +24,4 @@ public class ParticleRegister {
 	public static final RegistryObject<BasicParticleType> SNOW_FLOWER = PARTICLE_TYPES.register("snow_flower", ()->{return new BasicParticleType(false);});
 	public static final RegistryObject<BasicParticleType> DOOM = PARTICLE_TYPES.register("doom", ()->{return new BasicParticleType(false);});
 
-	@SubscribeEvent
-    public static void registerFactories(ParticleFactoryRegisterEvent event) {
-		@SuppressWarnings("resource")
-		ParticleManager manager = Minecraft.getInstance().particles;
-        manager.registerFactory(ParticleRegister.RED_BOMB.get(), (sprite) -> {return new CherryBombParticle.Factory(sprite);});
-        manager.registerFactory(ParticleRegister.YELLOW_BOMB.get(), (sprite) -> {return new PotatoMineParticle.Factory(sprite);});
-        manager.registerFactory(ParticleRegister.DIRT_BURST_OUT.get(), (sprite) -> {return new DirtBurstOutParticle.Factory(sprite);});
-        manager.registerFactory(ParticleRegister.YELLOW_FLAME.get(), (sprite) -> {return new YellowFlameParticle.Factory(sprite);});
-        manager.registerFactory(ParticleRegister.BLUE_FLAME.get(), (sprite) -> {return new BlueFlameParticle.Factory(sprite);});
-        manager.registerFactory(ParticleRegister.SLEEP.get(), (sprite) -> {return new SleepParticle.Factory(sprite);});
-        manager.registerFactory(ParticleRegister.SPORE.get(), (sprite) -> {return new SporeParticle.Factory(sprite);});
-        manager.registerFactory(ParticleRegister.FUME.get(), (sprite) -> {return new FumeParticle.Factory(sprite);});
-        manager.registerFactory(ParticleRegister.SNOW_FLOWER.get(), (sprite) -> {return new SnowFlowerParticle.Factory(sprite);});
-        manager.registerFactory(ParticleRegister.DOOM.get(), (sprite) -> {return new DoomParticle.Factory(sprite);});
-        
-	}
 }

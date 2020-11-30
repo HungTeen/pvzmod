@@ -7,6 +7,7 @@ import com.hungteen.pvz.register.SoundRegister;
 import net.minecraft.client.Minecraft;
 import net.minecraft.network.PacketBuffer;
 import net.minecraft.util.SoundEvent;
+import net.minecraft.util.SoundEvents;
 import net.minecraftforge.fml.network.NetworkEvent;
 
 public class PlaySoundPacket {
@@ -33,6 +34,8 @@ public class PlaySoundPacket {
 		    	SoundEvent sound = null;
 		    	if(id == 0) {
 		    		sound = SoundRegister.SUN_PICK.get();
+		    	} else if(id == 1) {
+		    		sound = SoundEvents.ENTITY_SNOW_GOLEM_SHOOT;
 		    	}
 		    	if(sound != null) {
 		    		Minecraft.getInstance().player.playSound(sound, 1f, 1f);

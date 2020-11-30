@@ -5,8 +5,6 @@ import net.minecraft.client.particle.IParticleFactory;
 import net.minecraft.client.particle.Particle;
 import net.minecraft.particles.BasicParticleType;
 import net.minecraft.world.World;
-import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.api.distmarker.OnlyIn;
 
 public class BlueFlameParticle extends YellowFlameParticle{
 
@@ -14,7 +12,6 @@ public class BlueFlameParticle extends YellowFlameParticle{
 		super(world, x, y, z, xSpeed, ySpeed, zSpeed);
 	}
 
-	@OnlyIn(Dist.CLIENT)
 	public static class Factory implements IParticleFactory<BasicParticleType> {
 
 		private final IAnimatedSprite sprite;

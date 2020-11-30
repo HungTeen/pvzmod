@@ -5,8 +5,6 @@ import net.minecraft.client.particle.IParticleFactory;
 import net.minecraft.client.particle.Particle;
 import net.minecraft.particles.BasicParticleType;
 import net.minecraft.world.World;
-import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.api.distmarker.OnlyIn;
 
 public class DirtBurstOutParticle extends PVZNormalParticle{
 
@@ -18,7 +16,6 @@ public class DirtBurstOutParticle extends PVZNormalParticle{
 		this.particleGravity=0.02f;
 	}
 	
-	@OnlyIn(Dist.CLIENT)
 	public static class Factory implements IParticleFactory<BasicParticleType> {
 
 		private final IAnimatedSprite sprite;
