@@ -7,7 +7,6 @@ public class PVZConfig {
 
 	public static Common COMMON_CONFIG;
 	public static Client CLIENT_CONFIG;
-//	private static final String CONFIG_TRANSLATE = "config."+PVZMod.MOD_ID+".";
 	
 	public static class Common{
 		
@@ -66,6 +65,9 @@ public class PVZConfig {
 					WorldSettings.CanSpawnDefaultMonster = builder
 							.comment("if false,there will have no monster of default mc spawn in overworld.")
 							.define("CanSpawnDefaultMonster", true);
+					WorldSettings.GiveBeginnerReward = builder
+							.comment("If you set it true, you will get some basic plantcards when you first join world.")
+							.define("GiveBeginnerReward", false);
 				}
 				builder.pop();
 			}
@@ -102,7 +104,7 @@ public class PVZConfig {
 					EntitySettings.EntityLiveTick.PlantLiveTick = builder
 							.comment("how many ticks can plant entity live.")
 							.worldRestart()
-							.defineInRange("PlantLiveTick", 24000, 1, 1000000);
+							.defineInRange("PlantLiveTick", 48000, 1, 1000000);
 				}
 				builder.pop();
 			}
@@ -112,7 +114,7 @@ public class PVZConfig {
 			{
 				BlockSettings.OriginBlockEffectChance = builder
 						.comment("About the chance you got essence_ore from origin_block.the bigger the value is,the lower chance you get(more specificly 1/x).")
-						.defineInRange("OriginChance", 5, 1, 100);
+						.defineInRange("OriginChance", 4, 1, 100);
 				BlockSettings.ChomperGrowChance = builder
 						.comment("The chance when you use bone meal to grow chomper,the bigger the less chance.")
 						.defineInRange("ChomperGrow", 20, 5, 100);
@@ -141,10 +143,12 @@ public class PVZConfig {
 			public EntitySpawnSettings EntitySpawnSettings = new EntitySpawnSettings();
 			
 			public ForgeConfigSpec.BooleanValue CanSpawnDefaultMonster;
+			public ForgeConfigSpec.BooleanValue GiveBeginnerReward;
 			
 			public static class WorldEventSettings{
 				public ForgeConfigSpec.IntValue SafeDayLength;
 			    public ForgeConfigSpec.IntValue ZombieAttackChance;
+			    
 			}
 			
 			public static class StructureSettings{

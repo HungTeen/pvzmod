@@ -16,6 +16,7 @@ import com.hungteen.pvz.register.ItemRegister;
 import com.hungteen.pvz.utils.EntityUtil;
 import com.hungteen.pvz.utils.PlantUtil;
 import com.hungteen.pvz.utils.PlayerUtil;
+import com.hungteen.pvz.utils.StringUtil;
 import com.hungteen.pvz.utils.enums.Almanacs;
 import com.hungteen.pvz.utils.enums.Plants;
 import com.hungteen.pvz.utils.enums.Resources;
@@ -35,6 +36,7 @@ import net.minecraft.util.SoundEvents;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraftforge.event.TickEvent;
+import net.minecraftforge.event.entity.player.AdvancementEvent;
 import net.minecraftforge.event.entity.player.PlayerEvent;
 import net.minecraftforge.event.entity.player.PlayerInteractEvent;
 import net.minecraftforge.event.world.BlockEvent;
@@ -109,6 +111,18 @@ public class PVZPlayerEvents {
 		PlayerEntity player = ev.getPlayer();
 		if (!player.world.isRemote) {
 			PlayerUtil.clonePlayerData(ev.getOriginal(),player);
+		}
+	}
+	
+	@SubscribeEvent
+	public static void onPlayerGetAdvancement(AdvancementEvent ev) {
+		if(! ev.getPlayer().world.isRemote) {
+			if(PVZConfig.COMMON_CONFIG.WorldSettings.GiveBeginnerReward.get() && ev.getAdvancement().getId().equals(StringUtil.prefix("root"))) {
+				ev.getPlayer().addItemStackToInventory(new ItemStack(ItemRegister.PEA_SHOOTER_CARD.get()));
+				ev.getPlayer().addItemStackToInventory(new ItemStack(ItemRegister.SUN_FLOWER_CARD.get()));
+				ev.getPlayer().addItemStackToInventory(new ItemStack(ItemRegister.WALL_NUT_CARD.get()));
+				ev.getPlayer().addItemStackToInventory(new ItemStack(ItemRegister.POTATO_MINE_CARD.get()));
+			}
 		}
 	}
 	

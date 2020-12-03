@@ -81,6 +81,7 @@ public abstract class PVZZombieEntity extends MonsterEntity implements IPVZZombi
 		super(type, worldIn);
 		this.recalculateSize();
 		this.setZombieAttributes();
+		this.experienceValue = 0;
 	}
 
 	@Override
@@ -220,7 +221,7 @@ public abstract class PVZZombieEntity extends MonsterEntity implements IPVZZombi
 		int num = this.getRNG().nextInt(10000);
 		if(num < 1110) {
 			int amount = CoinType.GOLD.money;
-			if(num < 1000) amount = CoinType.SILVER.money;
+			if(num < 1000) amount = CoinType.COPPER.money;
 			else if(num < 1100) amount = CoinType.SILVER.money;
 			CoinEntity coin = EntityRegister.COIN.get().create(world);
 			coin.setAmount(amount);
