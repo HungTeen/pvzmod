@@ -23,8 +23,50 @@ public class PVZConfig {
 					WorldSettings.WorldEventSettings.ZombieAttackChance = builder
 						    .comment("The chance related to zombie attack event. the bigger the more chance it has(chance/100).")
 						    .defineInRange("ZombieAttackChance", 90, 0, 100);
+					
+					WorldSettings.WorldEventSettings.SpawnWeightIncDuration = builder
+							.comment("How many day will the spawn weight of zombie increase to max. If set to 0, then the initial spawn weight is max.")
+							.defineInRange("SpawnWeightIncDuration", 100, 0, 100000);
+					
+					WorldSettings.WorldEventSettings.MaxSpawnWeightMultiple = builder
+							.comment("How many times the final weight is increased to the initial spawn weight(If initial is 60, value is 3, then final is 3 * 60 = 180).")
+							.defineInRange("MaxSpawnWeightMultiple", 3, 1, 6);
+					
+					WorldSettings.WorldEventSettings.ShowEventMessages = builder
+							.comment("If true, you will receive detail message about each event when zombie invasion happened.")
+							.define("ShowEventMessages", true);
+					
+//					builder.comment("Settings about event chance.").push("EventChance Settings.");
+//					{
+						WorldSettings.WorldEventSettings.EventChanceSettings.BucketAttackChance = builder
+								.comment("The weight to happen Bucket Invasion when it's a zombie attack day.")
+								.defineInRange("BucketAttackChance", 100, 0, 100000);
+						
+						WorldSettings.WorldEventSettings.EventChanceSettings.WaterAttackChance = builder
+								.comment("The weight to happen Water Invasion when it's a zombie attack day.")
+								.defineInRange("WaterAttackChance", 100, 0, 100000);
+						
+						WorldSettings.WorldEventSettings.EventChanceSettings.HalloweenAttackChance = builder
+								.comment("The weight to happen Halloween Invasion when it's a zombie attack day.")
+								.defineInRange("HalloweenAttackChance", 40, 0, 100000);
+						
+						WorldSettings.WorldEventSettings.EventChanceSettings.NewspaperAttackChance = builder
+								.comment("The weight to happen Newspaper Invasion when it's a zombie attack day.")
+								.defineInRange("NewspaperAttackChance", 100, 0, 100000);
+						
+						WorldSettings.WorldEventSettings.EventChanceSettings.FootballAttackChance = builder
+								.comment("The weight to happen Football Invasion when it's a zombie attack day.")
+								.defineInRange("FootballAttackChance", 100, 0, 100000);
+						
+						WorldSettings.WorldEventSettings.EventChanceSettings.RandomAttackChance = builder
+								.comment("The weight to happen Random Invasion when it's a zombie attack day.")
+								.defineInRange("RandomAttackChance", 200, 0, 10000);
+//					}
+//					builder.pop();
+					
 				}
 				builder.pop();
+				
 				builder.comment("Settings about the structure gen.").push("Structure Settings");
 				{
 					WorldSettings.StructureSettings.DaveVillaDistance = builder
@@ -44,6 +86,7 @@ public class PVZConfig {
 							.defineInRange("GraveHouseDistance", 28, 1, 1000);
 				}
 				builder.pop();
+				
 				builder.comment("The Spawn Weight of entity.").push("EntitySpawnWeight");
 				{
 					WorldSettings.EntitySpawnSettings.SunSpawnWeight = builder
@@ -60,6 +103,7 @@ public class PVZConfig {
 							.defineInRange("LavaZombieSpawnWeight", 15, 1, 200);
 				}
 				builder.pop();
+				
 				builder.comment("Other World Settings").push("Other World Settings");
 				{
 					WorldSettings.CanSpawnDefaultMonster = builder
@@ -70,8 +114,10 @@ public class PVZConfig {
 							.define("GiveBeginnerReward", false);
 				}
 				builder.pop();
+				
 			}
 			builder.pop();
+			
 			//Entity Settings
 			builder.comment("Settings about entities.").push("Entity Settings");
 			{
@@ -146,9 +192,21 @@ public class PVZConfig {
 			public ForgeConfigSpec.BooleanValue GiveBeginnerReward;
 			
 			public static class WorldEventSettings{
+				public EventChanceSettings EventChanceSettings = new EventChanceSettings();
 				public ForgeConfigSpec.IntValue SafeDayLength;
 			    public ForgeConfigSpec.IntValue ZombieAttackChance;
+			    public ForgeConfigSpec.IntValue SpawnWeightIncDuration;
+			    public ForgeConfigSpec.IntValue MaxSpawnWeightMultiple;
+			    public ForgeConfigSpec.BooleanValue ShowEventMessages;
 			    
+			    public static class EventChanceSettings{
+			    	public ForgeConfigSpec.IntValue BucketAttackChance;
+			    	public ForgeConfigSpec.IntValue WaterAttackChance;
+			    	public ForgeConfigSpec.IntValue HalloweenAttackChance;
+			    	public ForgeConfigSpec.IntValue NewspaperAttackChance;
+			    	public ForgeConfigSpec.IntValue FootballAttackChance;
+			    	public ForgeConfigSpec.IntValue RandomAttackChance;
+			    }
 			}
 			
 			public static class StructureSettings{

@@ -4,12 +4,12 @@ import javax.annotation.Nonnull;
 
 import com.hungteen.pvz.PVZConfig;
 import com.hungteen.pvz.register.EntitySpawnRegister;
-import com.hungteen.pvz.register.SoundRegister;
+import com.hungteen.pvz.utils.PlayerUtil;
 import com.hungteen.pvz.utils.enums.Events;
 import com.hungteen.pvz.world.data.WorldEventData;
 
 import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.util.SoundCategory;
+import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.TextFormatting;
 import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraft.world.Difficulty;
@@ -19,14 +19,15 @@ import net.minecraftforge.event.TickEvent;
 
 public class OverWorldEvents {
 
+	private static final ITextComponent ZOMBIE_ATTACK = new TranslationTextComponent("event.pvz.zombie_attack").applyTextStyle(TextFormatting.DARK_RED);
+	
 	public static void tick(TickEvent.WorldTickEvent ev) {
 		World world = ev.world;
 		long totalTime = world.getDayTime();
-//		world.rand.setSeed(totalTime);
 		if(world.getGameTime() < PVZConfig.COMMON_CONFIG.WorldSettings.WorldEventSettings.SafeDayLength.get() * 24000) {
-			return ;
+			return ;// still in safe day, do not have any event. 
 		}
-		int time=(int) (totalTime % 24000);
+		int time = (int) (totalTime % 24000);
 		switch(time) {
 		case 99:{
 			WorldEventData data = WorldEventData.getOverWorldEventData(world);
@@ -35,12 +36,9 @@ public class OverWorldEvents {
 		}
 		case 100:{
 			WorldEventData data = WorldEventData.getOverWorldEventData(world);
-			if(!data.getChanged()) {
+			if(! data.hasChanged()) {
 				data.setChanged(true);
-//				System.out.println(getZombieAttackChance());
-				if(world.getDifficulty() != Difficulty.PEACEFUL && (data.getIsZomBossDefeated() || world.rand.nextInt(100) < getZombieAttackChance())) {//attack chance
-					activateZombieAttackEvents(world);
-				}
+				activateZombieAttackEvents(world);
 			}
 			break;
 		}
@@ -51,7 +49,7 @@ public class OverWorldEvents {
 		}
 		case 23900:{
 			WorldEventData data = WorldEventData.getOverWorldEventData(world);
-			if(!data.getChanged()) {
+			if(! data.hasChanged()) {
 				data.setChanged(true);
 				deactivateZombieAttackEvents(world);
 			}
@@ -60,38 +58,56 @@ public class OverWorldEvents {
 		}
 	}
 	
+	/**
+	 * check and activate attack event,
+	 * do not activate in peaceful mode.
+	 */
 	public static void activateZombieAttackEvents(World world) {
-		for (PlayerEntity pl : world.getPlayers()) {
-			pl.sendMessage(new TranslationTextComponent("event.pvz.zombie_attack").applyTextStyle(TextFormatting.DARK_RED));
-			world.playSound(null, pl.getPosition(), SoundRegister.HUGE_WAVE.get(), SoundCategory.AMBIENT, 1f, 1f);
+		if(world.getDifficulty() != Difficulty.PEACEFUL && world.rand.nextInt(100) < PVZConfig.COMMON_CONFIG.WorldSettings.WorldEventSettings.ZombieAttackChance.get()) {
+		    for(PlayerEntity pl : world.getPlayers()) {
+			    pl.sendMessage(ZOMBIE_ATTACK);
+			    PlayerUtil.playClientSound(pl, 2);
+		    }
+		    Events event = EntitySpawnRegister.getCurrentEventByRandom(world);
+		    activateEvent(world, event);//activate event
+		    if(PVZConfig.COMMON_CONFIG.WorldSettings.WorldEventSettings.ShowEventMessages.get()) {
+		    	for(PlayerEntity pl : world.getPlayers()) {
+		    		pl.sendMessage(Events.getEventText(event));
+		    	}
+		    }
 		}
-		int type = world.rand.nextInt(Events.values().length);
-		activateEvent(world, Events.values()[type]);
 	}
 	
-	public static void activateEvent(World world, @Nonnull Events event) {
+	/**
+	 * activate zombie attack event.
+	 */
+	private static void activateEvent(World world, @Nonnull Events event) {
 		WorldEventData data = WorldEventData.getOverWorldEventData(world);
-		if(!data.hasEvent(event)) {
+		if(! data.hasEvent(event)) {
 			data.addEvent(event);
-			EntitySpawnRegister.addEventSpawns(event);
+			EntitySpawnRegister.addEventSpawns(world, event);
 		}
 	}
 	
+	/**
+	 * deactivate all events and remove zombie spawn
+	 */
 	public static void deactivateZombieAttackEvents(World world) {
-		for(Events ev:Events.values()) {
+		for(Events ev : Events.values()) {
 			deactivateEvent(world, ev);
 		}
+		EntitySpawnRegister.removeEventSpawns(world);
 	}
 	
-	public static void deactivateEvent(World world,@Nonnull Events event) {
+	/**
+	 * deactivate all events
+	 */
+	private static void deactivateEvent(World world, @Nonnull Events event) {
 		WorldEventData data = WorldEventData.getOverWorldEventData(world);
 		if(data.hasEvent(event)) {
+//			System.out.println(event);
 			data.removeEvent(event);
-			EntitySpawnRegister.removeEventSpawns(event);
 		}
 	}
 	
-	public static int getZombieAttackChance() {
-		return PVZConfig.COMMON_CONFIG.WorldSettings.WorldEventSettings.ZombieAttackChance.get();
-	}
 }

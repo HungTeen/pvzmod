@@ -48,14 +48,14 @@ public class PVZMod
     @SubscribeEvent
     public static void serverInit(FMLServerStartingEvent ev) {
     	ServerWorld world = ev.getServer().getWorld(DimensionType.OVERWORLD);
-    	EntitySpawnRegister.updateEventSpawns(world);
+    	EntitySpawnRegister.addGameEventSpawns(world);
     }
     
     @SubscribeEvent
     public static void serverShutDown(FMLServerStoppingEvent ev) {
 //    	System.out.println("shut down!!!");
     	ServerWorld world = ev.getServer().getWorld(DimensionType.OVERWORLD);
-    	EntitySpawnRegister.removeEventSpawns(world);
+    	EntitySpawnRegister.removeGameEventSpawns(world);
     }
     
     @SubscribeEvent

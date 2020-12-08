@@ -3,6 +3,7 @@ package com.hungteen.pvz.world.data;
 import java.util.HashSet;
 
 import com.hungteen.pvz.utils.enums.Events;
+import com.hungteen.pvz.utils.enums.Zombies;
 
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.nbt.INBT;
@@ -17,6 +18,7 @@ public class WorldEventData extends WorldSavedData{
 
 	private static final String DATA_NAME = "WorldEventData";
 	private HashSet<Events> events = new HashSet<>(Events.values().length);
+	private HashSet<Zombies> zombies = new HashSet<>(Zombies.values().length);
 	private boolean changed = false;
 	private boolean isZomBossDefeated = false;//is zomboss defeated
 	private boolean mustStartNextDay = false;//nextDay must start a event
@@ -28,6 +30,20 @@ public class WorldEventData extends WorldSavedData{
 	
 	public WorldEventData(String name) {
 		super(name);
+	}
+	
+	public boolean hasZombieSpawnEntry(Zombies zombie) {
+		return zombies.contains(zombie);
+	}
+	
+	public void addZombieSpawnEntry(Zombies zombie) {
+		zombies.add(zombie);
+		this.markDirty();
+	}
+	
+	public void removeZombieSpawnEntry(Zombies zombie) {
+		zombies.remove(zombie);
+		this.markDirty();
 	}
 	
 	public boolean hasEvent(Events ev) {
@@ -64,7 +80,7 @@ public class WorldEventData extends WorldSavedData{
 		this.markDirty();
 	}
 	
-	public boolean getChanged() {
+	public boolean hasChanged() {
 		return this.changed;
 	}
 	
@@ -82,12 +98,23 @@ public class WorldEventData extends WorldSavedData{
 	
 	@Override
 	public void read(CompoundNBT nbt) {
+		//restore event.
 		events.clear();
 		ListNBT list = (ListNBT) nbt.get("event");
-		if(list!=null) {
+		if(list != null) {
 			for(INBT tmp:list) {
 				CompoundNBT tag = (CompoundNBT) tmp;
 				events.add(Events.values()[tag.getInt("id")]);
+			}
+		}
+		//restore zombie spawn entry.
+		zombies.clear();
+		if(nbt.contains("zombie_spawn_entries")) {
+			CompoundNBT list2 = nbt.getCompound("zombie_spawn_entries");
+			for(Zombies zombie : Zombies.values()) {
+				if(list2.contains("type_" + zombie.toString()) && list2.getBoolean("type_" + zombie.toString())) {
+					this.addZombieSpawnEntry(zombie);
+				}
 			}
 		}
 		this.changed=nbt.getBoolean("changed");
@@ -101,11 +128,15 @@ public class WorldEventData extends WorldSavedData{
 		ListNBT list = new ListNBT();
 		events.stream().forEach((event)->{
 			CompoundNBT tag = new CompoundNBT();
-//			System.out.println(event);
-			tag.putInt("id", event.ordinal());;
+			tag.putInt("id", event.ordinal());
 			list.add(tag);
 		});
 		nbt.put("event", list);
+		CompoundNBT list2 = new CompoundNBT();
+		for(Zombies zombie : Zombies.values()) {
+			list2.putBoolean("type_" + zombie.toString(), this.hasZombieSpawnEntry(zombie));
+		}
+		nbt.put("zombie_spawn_entries", list2);
 		nbt.putBoolean("changed", this.changed);
 		nbt.putBoolean("is_zomboss_defeated",this.isZomBossDefeated);
 		nbt.putBoolean("must_start_next_day",this.mustStartNextDay);
@@ -119,7 +150,7 @@ public class WorldEventData extends WorldSavedData{
         }
 		ServerWorld world = worldIn.getServer().getWorld(DimensionType.OVERWORLD);
 		DimensionSavedDataManager storage = world.getSavedData();
-		return storage.getOrCreate(WorldEventData::new,DATA_NAME);
+		return storage.getOrCreate(WorldEventData::new, DATA_NAME);
 	}
 
 }

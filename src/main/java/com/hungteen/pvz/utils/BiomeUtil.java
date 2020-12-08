@@ -1,14 +1,8 @@
 package com.hungteen.pvz.utils;
 
-import java.util.List;
-
 import com.hungteen.pvz.register.BiomeRegister;
 
-import net.minecraft.entity.Entity;
-import net.minecraft.entity.EntityClassification;
-import net.minecraft.entity.EntityType;
 import net.minecraft.world.biome.Biome;
-import net.minecraft.world.biome.Biome.SpawnListEntry;
 import net.minecraft.world.biome.Biomes;
 
 public class BiomeUtil {
@@ -82,34 +76,4 @@ public class BiomeUtil {
 			Biomes.GIANT_SPRUCE_TAIGA, Biomes.GIANT_SPRUCE_TAIGA_HILLS,
 	};
 	
-	/**
-	 * add spawn to the biomes
-	 */
-	public static void addSpawn(EntityType<? extends Entity> type, int weight, int min, int max, Biome... biomes) {
-		EntityClassification classification = type.getClassification();
-		for (Biome biome : biomes) {
-			List<SpawnListEntry> spawns = biome.getSpawns(classification);
-			boolean found = false;
-			for (SpawnListEntry entry : spawns) {
-				if (entry.entityType == type) {
-					found = true;
-					break;
-				}
-			}
-			if (!found) {
-//				System.out.println(biome.toString());
-				spawns.add(new SpawnListEntry(type, weight, min, max));
-			}
-		}
-	}
-
-	/**
-	 * remove spawn of the biomes
-	 */
-	public static void removeSpawn(EntityType<? extends Entity> type, Biome... biomes) {
-		EntityClassification classification = type.getClassification();
-		for (Biome biome : biomes) {
-			biome.getSpawns(classification).removeIf(entry -> entry.entityType == type);
-		}
-	}
 }

@@ -5,8 +5,7 @@ import net.minecraft.world.IWorld;
 
 public class WorldUtil {
 
-	public static int calculateGenHeight(IWorld worldIn, int x, int z)
-	{
+	public static int calculateGenHeight(IWorld worldIn, int x, int z){
 		int y = worldIn.getHeight();
 		boolean foundGround = false;
 		while(!foundGround && y-- >= worldIn.getSeaLevel()-1){

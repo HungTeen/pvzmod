@@ -92,6 +92,14 @@ public class ZombieUtil {
 		PVZMod.LOGGER.debug("Zombie get entity error");
 		return null;
 	}
+	
+	public static EntityType<? extends PVZZombieEntity> getZombieEntityType(Zombies zombie) {
+		if(ZOMBIE_ENTITY.containsKey(zombie)) {
+			return ZOMBIE_ENTITY.get(zombie).get();
+		}
+		PVZMod.LOGGER.debug("Zombie get entity error");
+		return null;
+	}
 
 	public static Ranks getZombieRank(Zombies zombie){
 		if(ZOMBIE_RANK.containsKey(zombie)) {

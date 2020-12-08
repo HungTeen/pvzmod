@@ -3,12 +3,16 @@ package com.hungteen.pvz.utils;
 import com.hungteen.pvz.capability.CapabilityHandler;
 import com.hungteen.pvz.capability.player.IPlayerDataCapability;
 import com.hungteen.pvz.capability.player.PlayerDataManager;
+import com.hungteen.pvz.network.PVZPacketHandler;
+import com.hungteen.pvz.network.PlaySoundPacket;
 import com.hungteen.pvz.utils.enums.Almanacs;
 import com.hungteen.pvz.utils.enums.Plants;
 import com.hungteen.pvz.utils.enums.Resources;
 
 import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraftforge.common.util.LazyOptional;
+import net.minecraftforge.fml.network.PacketDistributor;
 
 public class PlayerUtil {
 
@@ -34,7 +38,6 @@ public class PlayerUtil {
 		}
 		return TREE_LVL_XP[pos];
 	}
-	
 	
 	public static void addPlayerStats(PlayerEntity player ,Resources res,int num){
 		player.getCapability(CapabilityHandler.PLAYER_DATA_CAPABILITY).ifPresent((l)->{
@@ -73,6 +76,12 @@ public class PlayerUtil {
 			    stats.setAlmanacUnLocked(a, true);
 		    }
 	    });
+	}
+	
+	public static void playClientSound(PlayerEntity player, int id) {
+		PVZPacketHandler.CHANNEL.send(PacketDistributor.PLAYER.with(()->{
+			return (ServerPlayerEntity) player;
+		}), new PlaySoundPacket(id));
 	}
 
 }
