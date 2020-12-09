@@ -11,6 +11,9 @@ import com.hungteen.pvz.utils.enums.Resources;
 
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.ServerPlayerEntity;
+import net.minecraft.network.play.server.STitlePacket;
+import net.minecraft.util.text.ITextComponent;
+import net.minecraft.util.text.StringTextComponent;
 import net.minecraftforge.common.util.LazyOptional;
 import net.minecraftforge.fml.network.PacketDistributor;
 
@@ -29,6 +32,14 @@ public class PlayerUtil {
 			return lvl * 250 - 5100;
 		}
 		return 19999;
+	}
+	
+	public static int getPlayerWaveCount(int lvl) {
+		if(lvl <= 10) return 1;
+		if(lvl <= 25) return 2;
+		if(lvl <= 40) return 3;
+		if(lvl <= 60) return 4;
+		return 5;
 	}
 	
 	public static int getPlayerLevelUpXp(int lvl){
@@ -84,4 +95,17 @@ public class PlayerUtil {
 		}), new PlaySoundPacket(id));
 	}
 
+	public static void sendTitleToPlayer(PlayerEntity player, ITextComponent text) {
+		if(player instanceof ServerPlayerEntity) {
+	         ((ServerPlayerEntity) player).connection.sendPacket(new STitlePacket(STitlePacket.Type.TITLE, text));
+		}
+	}
+	
+	public static void sendSubTitleToPlayer(PlayerEntity player, ITextComponent text) {
+		if(player instanceof ServerPlayerEntity) {
+			 sendTitleToPlayer(player, new StringTextComponent(""));
+	         ((ServerPlayerEntity) player).connection.sendPacket(new STitlePacket(STitlePacket.Type.SUBTITLE, text));
+		}
+	}
+	
 }

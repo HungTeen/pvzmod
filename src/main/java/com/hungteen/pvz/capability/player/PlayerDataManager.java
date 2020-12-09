@@ -13,6 +13,7 @@ import com.hungteen.pvz.utils.PlayerUtil;
 import com.hungteen.pvz.utils.enums.Almanacs;
 import com.hungteen.pvz.utils.enums.Plants;
 import com.hungteen.pvz.utils.enums.Resources;
+import com.hungteen.pvz.world.WaveManager;
 
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.ServerPlayerEntity;
@@ -28,6 +29,7 @@ public class PlayerDataManager {
 	private final PlantStats plantStats;
 	private final AlmanacStats almanacStats;
 	private final ItemCDStats itemCDStats;
+	private final OtherStats otherStats;
 	
 	public PlayerDataManager(PlayerEntity player) {
 		this.player = player;
@@ -35,15 +37,8 @@ public class PlayerDataManager {
 		this.plantStats = new PlantStats(this);
 		this.almanacStats = new AlmanacStats(this);
 		this.itemCDStats = new ItemCDStats(this);
+		this.otherStats = new OtherStats(this);
 	}
-	
-//	public void tickPlayer()
-//	{
-//		if (player == null || player.isSpectator() || player.world.isRemote)
-//			return;
-//		if (player instanceof EntityPlayerMP) 
-//			PacketHandler.CHANNEL.sendTo(new PacketPlayerData(stats.getPlayerLevel(),stats.getPlayerXp(),stats.getPlayerSunNum(),stats.getPlayerEnergyNum(),stats.getPlayerMoney()),(EntityPlayerMP) player);
-//	}
 	
 	public CompoundNBT saveToNBT() {
 		CompoundNBT baseTag = new CompoundNBT();
@@ -51,6 +46,7 @@ public class PlayerDataManager {
 		plantStats.saveToNBT(baseTag);
 		almanacStats.saveToNBT(baseTag);
 		itemCDStats.saveToNBT(baseTag);
+		otherStats.saveToNBT(baseTag);
 		return baseTag;
 	}
 
@@ -59,6 +55,7 @@ public class PlayerDataManager {
 		plantStats.loadFromNBT(baseTag);
 		almanacStats.loadFromNBT(baseTag);
 		itemCDStats.loadFromNBT(baseTag);
+		otherStats.loadFromNBT(baseTag);
 	}
 //	
 	public void cloneFromExistingPlayerData(PlayerDataManager data) {
@@ -465,6 +462,37 @@ public class PlayerDataManager {
 		}
 	}
 	
+	public final class OtherStats{
+		
+		@SuppressWarnings("unused")
+		private final PlayerDataManager manager;
+		public int[] zombieWaveTime = new int[WaveManager.MAX_WAVE_NUM];
+		
+		public OtherStats(PlayerDataManager manager) {
+			this.manager = manager;
+			for(int i = 0; i < zombieWaveTime.length; ++ i) {
+				zombieWaveTime[i] = 0;
+			}
+		}
+		
+		private void saveToNBT(CompoundNBT baseTag) {
+			CompoundNBT statsNBT = new CompoundNBT();
+			for(int i = 0; i < zombieWaveTime.length; ++ i) {
+				statsNBT.putInt("zombieWaveTime_" + i, zombieWaveTime[i]);
+			}
+			baseTag.put("zombie_wave_time", statsNBT);
+		}
+
+		private void loadFromNBT(CompoundNBT baseTag) {
+			if(baseTag.contains("zombie_wave_time")) {
+				CompoundNBT nbt = baseTag.getCompound("zombie_wave_time");
+				for(int i = 0; i < zombieWaveTime.length; ++ i) {
+					zombieWaveTime[i] = nbt.getInt("zombieWaveTime_" + i);
+				}
+			}
+		}
+	}
+	
 	public PlayerStats getPlayerStats() {
 		return this.playerStats;
 	}
@@ -480,4 +508,9 @@ public class PlayerDataManager {
 	public ItemCDStats getItemCDStats() {
 		return this.itemCDStats;
 	}
+	
+	public OtherStats getOtherStats() {
+		return this.otherStats;
+	}
+	
 }

@@ -10,7 +10,7 @@ import net.minecraft.util.text.TranslationTextComponent;
 public enum Events {
 
 	BUCKET(true, Zombies.FLAG_ZOMBIE, Zombies.NORMAL_ZOMBIE, Zombies.CONEHEAD_ZOMBIE, Zombies.POLE_ZOMBIE, Zombies.BUCKETHEAD_ZOMBIE),
-	WATER(true, Zombies.FLAG_ZOMBIE, Zombies.SNORKEL_ZOMBIE, Zombies.DOLPHIN_RIDER, Zombies.ZOMBONI, Zombies.BOBSLE_TEAM), 
+	WATER(true, Zombies.FLAG_ZOMBIE, Zombies.SNORKEL_ZOMBIE, Zombies.ZOMBONI, Zombies.BOBSLE_TEAM, Zombies.LAVA_ZOMBIE), 
 	HALLOWEEN(true, Zombies.FLAG_ZOMBIE, Zombies.TRICK_ZOMBIE, Zombies.PUMPKIN_ZOMBIE),
 	NEWSPAPER(true, Zombies.FLAG_ZOMBIE, Zombies.NEWSPAPER_ZOMBIE, Zombies.OLD_ZOMBIE, Zombies.SUNDAY_EDITION_ZOMBIE),
 	FOOTBALL(true, Zombies.FLAG_ZOMBIE, Zombies.SCREENDOOR_ZOMBIE, Zombies.DANCING_ZOMBIE, Zombies.FOOTBALL_ZOMBIE, Zombies.GIGA_FOOTBALL_ZOMBIE),

@@ -162,5 +162,9 @@
     "charm":{
         "subtitle": "sound.pvz.charm",
         "sounds":[{"name":"pvz:entity/plant/attack/charm"}]
+    },
+    "warn":{
+        "subtitle": "sound.pvz.warn",
+        "sounds":[{"name":"pvz:ambient/warn1"},{"name":"pvz:ambient/warn2"}]
     }
 }

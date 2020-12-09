@@ -3,9 +3,12 @@ package com.hungteen.pvz.event;
 import javax.annotation.Nonnull;
 
 import com.hungteen.pvz.PVZConfig;
+import com.hungteen.pvz.capability.CapabilityHandler;
+import com.hungteen.pvz.capability.player.PlayerDataManager;
 import com.hungteen.pvz.register.EntitySpawnRegister;
 import com.hungteen.pvz.utils.PlayerUtil;
 import com.hungteen.pvz.utils.enums.Events;
+import com.hungteen.pvz.world.WaveManager;
 import com.hungteen.pvz.world.data.WorldEventData;
 
 import net.minecraft.entity.player.PlayerEntity;
@@ -27,8 +30,8 @@ public class OverWorldEvents {
 		if(world.getGameTime() < PVZConfig.COMMON_CONFIG.WorldSettings.WorldEventSettings.SafeDayLength.get() * 24000) {
 			return ;// still in safe day, do not have any event. 
 		}
-		int time = (int) (totalTime % 24000);
-		switch(time) {
+		int dayTime = (int) (totalTime % 24000);
+		switch(dayTime) {
 		case 99:{
 			WorldEventData data = WorldEventData.getOverWorldEventData(world);
 			data.setChanged(false);
@@ -56,6 +59,22 @@ public class OverWorldEvents {
 			break;
 		}
 		}
+		for(PlayerEntity player : world.getPlayers()) {
+		    player.getCapability(CapabilityHandler.PLAYER_DATA_CAPABILITY).ifPresent((l)->{
+			    PlayerDataManager.OtherStats stats = l.getPlayerData().getOtherStats();
+			    for(int i = 0 ; i < stats.zombieWaveTime.length; ++ i) {
+				    int time = stats.zombieWaveTime[i];
+				    if(time != 0 && time >= dayTime) {
+					    if(time == dayTime) {
+						    WaveManager manager = new WaveManager(player, i);
+						    manager.spawnWaveZombies();
+						    stats.zombieWaveTime[i] = 0;
+					    }
+					    break;
+				    }
+			    }
+		    });
+		}
 	}
 	
 	/**
@@ -66,7 +85,8 @@ public class OverWorldEvents {
 		if(world.getDifficulty() != Difficulty.PEACEFUL && world.rand.nextInt(100) < PVZConfig.COMMON_CONFIG.WorldSettings.WorldEventSettings.ZombieAttackChance.get()) {
 		    for(PlayerEntity pl : world.getPlayers()) {
 			    pl.sendMessage(ZOMBIE_ATTACK);
-			    PlayerUtil.playClientSound(pl, 2);
+			    PlayerUtil.playClientSound(pl, 3);
+			    WaveManager.resetPlayerWaveTime(pl);
 		    }
 		    Events event = EntitySpawnRegister.getCurrentEventByRandom(world);
 		    activateEvent(world, event);//activate event

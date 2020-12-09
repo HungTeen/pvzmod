@@ -36,6 +36,10 @@ public class PVZConfig {
 							.comment("If true, you will receive detail message about each event when zombie invasion happened.")
 							.define("ShowEventMessages", true);
 					
+					WorldSettings.WorldEventSettings.EnableHugeWave = builder
+							.comment("If true, players will be invaded by a huge wave of zombies in zombie invasion day")
+							.define("EnableHugeWave", true);
+					
 //					builder.comment("Settings about event chance.").push("EventChance Settings.");
 //					{
 						WorldSettings.WorldEventSettings.EventChanceSettings.BucketAttackChance = builder
@@ -198,6 +202,7 @@ public class PVZConfig {
 			    public ForgeConfigSpec.IntValue SpawnWeightIncDuration;
 			    public ForgeConfigSpec.IntValue MaxSpawnWeightMultiple;
 			    public ForgeConfigSpec.BooleanValue ShowEventMessages;
+			    public ForgeConfigSpec.BooleanValue EnableHugeWave;
 			    
 			    public static class EventChanceSettings{
 			    	public ForgeConfigSpec.IntValue BucketAttackChance;

@@ -50,6 +50,7 @@ public class PVZPlayerEvents {
 	@SubscribeEvent
 	public static void tickPlayer(TickEvent.PlayerTickEvent ev) {
 		if(!ev.player.world.isRemote) {
+			//for pea gun
 			ItemStack stack = ev.player.getItemStackFromSlot(EquipmentSlotType.HEAD);
 			if(stack.getItem() instanceof PeaGunItem && !ev.player.getCooldownTracker().hasCooldown(stack.getItem())) {
 			    ((PeaGunItem)stack.getItem()).checkAndShootPea(ev.player.world, ev.player, stack);
@@ -131,13 +132,10 @@ public class PVZPlayerEvents {
 		PlayerEntity player=ev.getPlayer();
 		BlockState state = ev.getState();
 		BlockPos pos = ev.getPos();
-//		System.out.println("event start");
 		if(!player.world.isRemote) {
 			if(state.getBlock()==Blocks.GRASS||state.getBlock()==Blocks.TALL_GRASS) {//break grass
 				Random rand = new Random();
-//				System.out.println(PVZConfig.COMMON_CONFIG.BLOCK_SETTINGS.breakBlock.peaDropChance.get());
 				if(rand.nextInt(PVZConfig.COMMON_CONFIG.BlockSettings.BreakBlock.PeaDropChance.get())==0) {//drop pea 
-//					System.out.println("chance right");
 					player.world.addEntity(new ItemEntity(player.world,pos.getX(), pos.getY(), pos.getZ(), new ItemStack(ItemRegister.PEA.get(),1)));
 				}
 			}

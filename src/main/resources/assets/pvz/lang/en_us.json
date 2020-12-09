@@ -531,7 +531,14 @@
     "item.minecraft.lingering_potion.effect.excite_potion_2":"Lingering Excite Potion",
     "item.minecraft.lingering_potion.effect.excite_potion_3":"Lingering Excite Potion",
 //event
-    "event.pvz.zombie_attack":"A huge wave of zombies are coming !",
+    "event.pvz.zombie_attack":"Zombies are coming.",
+    "event.pvz.huge_wave":"A huge wave of zombies are coming !",
+    "event.pvz.bucket":"Bucket Invasion",
+    "event.pvz.water":"Water Invasion",
+    "event.pvz.halloween":"Halloween Invasion",
+    "event.pvz.newspaper":"Newspaper Invasion",
+    "event.pvz.football":"Football Invasion",
+    "event.pvz.random":"Random Invasion",
 //death
 "death.attack.pvz_normal":"%s was killed",
     "death.attack.pvz_weak":"%s weak to death",

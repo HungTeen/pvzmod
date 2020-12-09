@@ -38,6 +38,8 @@ public class PlaySoundPacket {
 		    		sound = SoundEvents.ENTITY_SNOW_GOLEM_SHOOT;
 		    	} else if(id == 2) {
 		    		sound = SoundRegister.HUGE_WAVE.get();
+		    	} else if(id == 3) {
+		    		sound = SoundRegister.WARN.get();
 		    	}
 		    	if(sound != null) {
 		    		Minecraft.getInstance().player.playSound(sound, 1f, 1f);
