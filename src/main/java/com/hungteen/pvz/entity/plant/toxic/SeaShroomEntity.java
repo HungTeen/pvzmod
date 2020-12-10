@@ -13,21 +13,28 @@ import net.minecraft.entity.EntitySize;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.Pose;
+import net.minecraft.entity.ai.goal.SwimGoal;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.World;
 
-public class PuffShroomEntity extends PlantShooterEntity {
+public class SeaShroomEntity extends PlantShooterEntity {
 
-	protected final double LENTH = 0.1d;
+	protected final double LENTH = 0.15d;
 	
-	public PuffShroomEntity(EntityType<? extends CreatureEntity> type, World worldIn) {
+	public SeaShroomEntity(EntityType<? extends CreatureEntity> type, World worldIn) {
 		super(type, worldIn);
 	}
-	
+
 	@Override
 	protected void registerGoals() {
 		super.registerGoals();
+		this.goalSelector.addGoal(2, new SwimGoal(this));
 		this.targetSelector.addGoal(0, new PVZNearestTargetGoal(this, true, 5, getShootRange(), 2, 0));
+	}
+	
+	@Override
+	protected boolean checkNormalPlantWeak() {//check if it leave water
+		return ! this.isInWater();
 	}
 	
 	@Override
@@ -52,19 +59,8 @@ public class PuffShroomEntity extends PlantShooterEntity {
 	}
 
 	@Override
-	public void startSuperMode(boolean first) {
-		super.startSuperMode(first);
-		if(first) {
-			int x = this.getHelpRange();
-			for(PuffShroomEntity shroom : world.getEntitiesWithinAABB(EntityRegister.PUFF_SHROOM.get(), EntityUtil.getEntityAABB(this, x, x), (shroom)-> {
-				return !EntityUtil.checkCanEntityAttack(this, shroom);
-			})) {
-				if(shroom.canStartSuperMode()) {
-				    shroom.startSuperMode(false);	
-				}
-				shroom.setLiveTick(0);
-			}
-		}
+	public float getShootRange() {
+		return 10;
 	}
 	
 	@Override
@@ -74,48 +70,19 @@ public class PuffShroomEntity extends PlantShooterEntity {
 	
 	@Override
 	public EntitySize getSize(Pose poseIn) {
-		return EntitySize.flexible(0.5f, 0.5f);
+		return EntitySize.flexible(0.5f, 0.8f);
 	}
-	
+
 	@Override
-	public int getMaxLiveTick() {
-		int lvl = this.getPlantLvl();
-		if(lvl <= 19) {
-			return 1485 + 15 * lvl;
-		}
-		return 1800;
-	}
-	
-	public int getHelpRange() {
-		if(this.isPlantInStage(1)) return 3;
-		if(this.isPlantInStage(2)) return 4;
-		return 6;
+	public Plants getPlantEnumName() {
+		return Plants.SEA_SHROOM;
 	}
 
 	@Override
 	public int getSuperTimeLength() {
-		if(this.isPlantInStage(1)) return 40;
-		if(this.isPlantInStage(2)) return 50;
-		return 60;
-	}
-	
-	@Override
-	public float getPlantHealth() {
-		int lvl = this.getPlantLvl();
-		if(lvl <= 19) {
-			return 29 + lvl;
-		}
-		return 50;
-	}
-	
-	@Override
-	public float getShootRange() {
-		return 10;
-	}
-	
-	@Override
-	public Plants getPlantEnumName() {
-		return Plants.PUFF_SHROOM;
+		if(this.isPlantInStage(1)) return 100;
+		if(this.isPlantInStage(2)) return 120;
+		return 140;
 	}
 
 }

@@ -3,7 +3,6 @@ package com.hungteen.pvz.entity.plant.toxic;
 import com.hungteen.pvz.entity.ai.PVZNearestTargetGoal;
 import com.hungteen.pvz.entity.bullet.SporeEntity;
 import com.hungteen.pvz.entity.plant.base.PlantShooterEntity;
-import com.hungteen.pvz.entity.plant.interfaces.IShroomPlant;
 import com.hungteen.pvz.register.EntityRegister;
 import com.hungteen.pvz.register.SoundRegister;
 import com.hungteen.pvz.utils.EntityUtil;
@@ -21,7 +20,7 @@ import net.minecraft.network.datasync.EntityDataManager;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.World;
 
-public class ScaredyShroomEntity extends PlantShooterEntity implements IShroomPlant{
+public class ScaredyShroomEntity extends PlantShooterEntity {
 
 	protected final double LENTH = 0.2d; //pea position offset
 	private static final DataParameter<Integer> SCARE_TIME = EntityDataManager.createKey(ScaredyShroomEntity.class, DataSerializers.VARINT);

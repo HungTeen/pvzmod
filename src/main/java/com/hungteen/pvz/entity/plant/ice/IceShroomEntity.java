@@ -2,7 +2,6 @@ package com.hungteen.pvz.entity.plant.ice;
 
 import com.hungteen.pvz.entity.plant.base.PlantBomberEntity;
 import com.hungteen.pvz.entity.plant.interfaces.IIcePlant;
-import com.hungteen.pvz.entity.plant.interfaces.IShroomPlant;
 import com.hungteen.pvz.misc.damage.PVZDamageSource;
 import com.hungteen.pvz.register.EffectRegister;
 import com.hungteen.pvz.register.ParticleRegister;
@@ -20,7 +19,7 @@ import net.minecraft.potion.EffectInstance;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.world.World;
 
-public class IceShroomEntity extends PlantBomberEntity implements IShroomPlant, IIcePlant{
+public class IceShroomEntity extends PlantBomberEntity implements IIcePlant{
 
 	public IceShroomEntity(EntityType<? extends CreatureEntity> type, World worldIn) {
 		super(type, worldIn);

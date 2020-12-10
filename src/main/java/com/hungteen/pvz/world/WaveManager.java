@@ -125,13 +125,13 @@ public class WaveManager {
 	@SuppressWarnings("deprecation")
 	@Nullable
 	private BlockPos findRandomSpawnPos(int chance) {
-		int range = 32, distance = 48;
+		int range = 16, distance = 32;
 		for (int i = 0; i < chance; ++i) {
 			float f = this.world.rand.nextFloat() * ((float) Math.PI * 2F);
 			int dx = MathHelper.floor(MathHelper.cos(f) * distance);
 			int dz = MathHelper.floor(MathHelper.sin(f) * distance);
-			int x = this.center.getX() + dx > 0 ? dx + range : dx - range;
-			int z = this.center.getZ() + dz > 0 ? dz + range : dz - range;
+			int x = this.center.getX() + (dx > 0 ? dx + range : dx - range);
+			int z = this.center.getZ() + (dz > 0 ? dz + range : dz - range);
 			int y = this.world.getHeight(Heightmap.Type.WORLD_SURFACE, x, z);
 			BlockPos pos = new BlockPos(x, y, z);
 			if (this.world.isAreaLoaded(pos.add(-range, -range, -range), pos.add(range, range, range))

@@ -1,7 +1,6 @@
 package com.hungteen.pvz.entity.plant.magic;
 
 import com.hungteen.pvz.entity.plant.PVZPlantEntity;
-import com.hungteen.pvz.entity.plant.interfaces.IShroomPlant;
 import com.hungteen.pvz.entity.zombie.PVZZombieEntity;
 import com.hungteen.pvz.misc.damage.PVZDamageSource;
 import com.hungteen.pvz.misc.damage.PVZDamageType;
@@ -17,7 +16,7 @@ import net.minecraft.util.DamageSource;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.World;
 
-public class HypnoShroomEntity extends PVZPlantEntity implements IShroomPlant{
+public class HypnoShroomEntity extends PVZPlantEntity {
 
 	public HypnoShroomEntity(EntityType<? extends CreatureEntity> type, World worldIn) {
 		super(type, worldIn);

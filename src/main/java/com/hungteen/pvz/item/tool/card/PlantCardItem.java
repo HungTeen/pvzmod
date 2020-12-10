@@ -76,13 +76,13 @@ public class PlantCardItem extends SummonCardItem {
 		Hand hand = context.getHand();
 		ItemStack stack = player.getHeldItem(hand);
 		BlockPos pos = context.getPos();
-		if (hand == Hand.OFF_HAND) {// only use right hand to plant.
+//		if (hand == Hand.OFF_HAND) {// only use right hand to plant.
+//			return ActionResultType.FAIL;
+//		}
+		if (plant.isOuterPlant || plant.isUpgradePlant) {// can not place on blocks, like pumpkin.
 			return ActionResultType.FAIL;
 		}
-		if (Plants.isOuterPlant(this.plant) || Plants.isUpgradePlant(this.plant)) {// can not place on blocks, like pumpkin.
-			return ActionResultType.FAIL;
-		}
-		if (Plants.isWaterPlant(this.plant)) {// can only plant in water.
+		if (plant.isWaterPlant) {// can only plant in water.
 			return ActionResultType.PASS;
 		}
 		if (world.isRemote) {

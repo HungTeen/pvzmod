@@ -2,53 +2,53 @@ package com.hungteen.pvz.utils.enums;
 
 public enum Plants {
 	//grass day
-	PEA_SHOOTER,
-	SUN_FLOWER,
-	CHERRY_BOMB,
-	WALL_NUT,
-	POTATO_MINE,
-	SNOW_PEA,
-	CHOMPER,
-	REPEATER,
+	PEA_SHOOTER(0),
+	SUN_FLOWER(0),
+	CHERRY_BOMB(0),
+	WALL_NUT(0),
+	POTATO_MINE(0),
+	SNOW_PEA(0),
+	CHOMPER(0),
+	REPEATER(0),
 	//grass night
-	PUFF_SHROOM,
-	SUN_SHROOM,
-	FUME_SHROOM,
-	GRAVE_BUSTER,
-	HYPNO_SHROOM,
-	SCAREDY_SHROOM,
-	ICE_SHROOM,
-	DOOM_SHROOM,
+	PUFF_SHROOM(1),
+	SUN_SHROOM(1),
+	FUME_SHROOM(1),
+	GRAVE_BUSTER(0),
+	HYPNO_SHROOM(1),
+	SCAREDY_SHROOM(1),
+	ICE_SHROOM(1),
+	DOOM_SHROOM(1),
 	//pool day
-	LILY_PAD,
-	SQUASH,
-	THREE_PEATER,
-	TANGLE_KELP,
-	JALAPENO,
-	SPIKE_WEED,
-	TORCH_WOOD,
-	TALL_NUT,
+	LILY_PAD(2),
+	SQUASH(0),
+	THREE_PEATER(0),
+	TANGLE_KELP(4),
+	JALAPENO(0),
+	SPIKE_WEED(0),
+	TORCH_WOOD(0),
+	TALL_NUT(0),
 	//pool night
-//	SEA_SHROOM,
+	SEA_SHROOM(5),
 //	PLANTERN, 
 //	CACTUS,
 //	BLOVER,
 //	SPLIT_PEA,
 //	STAR_FRUIT,
-	PUMPKIN,
+	PUMPKIN(16),
 //	MAGNET_SHROOM,
 	//roof 
 //	CABBAGE_PULT,
 //	FLOWER_POT, 
 //	KERNEL_PULT,
-	COFFEE_BEAN,
+	COFFEE_BEAN(0),
 //	GARLIC, 
 //	UMBRELLA_LEAF, 
-	MARIGOLD, 
+	MARIGOLD(0), 
 //	MELON_PULT,
 	//upgrade
-	GATLING_PEA,
-	TWIN_SUNFLOWER,
+	GATLING_PEA(8),
+	TWIN_SUNFLOWER(8),
 //	GLOOM_SHROOM,
 //	CAT_TAIL,
 //	WINTER_MELON,
@@ -57,12 +57,28 @@ public enum Plants {
 //	COB_CANNON,
 //	IMITATER,
 	// other
-	WATER_GUARD;
+	WATER_GUARD(4);
 
-	public static final Plants[] BLOCK_PLANTS = new Plants[] {LILY_PAD};
-	public static final Plants[] WATER_PLANTS = new Plants[] {TANGLE_KELP, WATER_GUARD};
-	public static final Plants[] OUTER_PLANTS = new Plants[] {PUMPKIN};
-	public static final Plants[] UPGRADE_PLANTS = new Plants[] {GATLING_PEA, TWIN_SUNFLOWER};
+	/*
+	 * 1 means ShroomPlant like PuffShroom,
+	 * 2 means BlockPlant like LilyPad,
+	 * 4 means WaterPlant like SeaShroom,
+	 * 8 means UpgradePlant like GatlingPea,
+	 * 16 means OuterPlants like Pumpkin,
+	 */
+	public final boolean isShroomPlant;
+	public final boolean isBlockPlant;
+	public final boolean isWaterPlant;
+	public final boolean isUpgradePlant;
+	public final boolean isOuterPlant;
+	
+	private Plants(int status) {
+		this.isShroomPlant = (((status >> 0) & 1) == 1);
+		this.isBlockPlant = (((status >> 1) & 1) == 1);
+		this.isWaterPlant = (((status >> 2) & 1) == 1);
+		this.isUpgradePlant = (((status >> 3) & 1) == 1);
+		this.isOuterPlant = (((status >> 4) & 1) == 1);
+	}
 	
 	public static Plants getPlantByName(String name) {
 		for (Plants plant : Plants.values()) {
@@ -74,43 +90,7 @@ public enum Plants {
 	}
 	
 	public static boolean isEntityPlant(Plants p) {
-		return ! isBlockPlant(p) && ! isOuterPlant(p);
+		return ! p.isBlockPlant && ! p.isOuterPlant;
 	}
 	
-	public static boolean isBlockPlant(Plants p) {
-		for(Plants plant : BLOCK_PLANTS) {
-			if(p == plant) {
-				return true;
-			}
-		}
-		return false;
-	}
-	
-	public static boolean isWaterPlant(Plants p) {
-		for(Plants plant : WATER_PLANTS) {
-			if(p == plant) {
-				return true;
-			}
-		}
-		return false;
-	}
-	
-	public static boolean isOuterPlant(Plants p) {
-		for(Plants plant : OUTER_PLANTS) {
-			if(p == plant) {
-				return true;
-			}
-		}
-		return false;
-	}
-	
-	public static boolean isUpgradePlant(Plants p) {
-		for(Plants plant : UPGRADE_PLANTS) {
-			if(p == plant) {
-				return true;
-			}
-		}
-		return false;
-	}
-
 }

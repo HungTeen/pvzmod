@@ -106,9 +106,9 @@ public class AlmanacScreen extends ContainerScreen<AlmanacContainer> {
 			World world = Minecraft.getInstance().player.world;
 			this.drawProperty(Properties.SUN_COST, PlantUtil.getPlantSunCost(plant));
 			this.drawProperty(Properties.COOL_DOWN, PlantUtil.getPlantCoolDownTime(plant, lvl));
-			if(Plants.isBlockPlant(plant)) {
+			if(plant.isBlockPlant) {
 				return ;
-			} else if(Plants.isOuterPlant(plant)) {
+			} else if(plant.isOuterPlant) {
 				this.drawProperty(Properties.HEALTH, PlantUtil.PUMPKIN_LIFE);
 				return ;
 			}

@@ -2,7 +2,6 @@ package com.hungteen.pvz.entity.plant.explosion;
 
 import com.hungteen.pvz.PVZConfig;
 import com.hungteen.pvz.entity.plant.base.PlantBomberEntity;
-import com.hungteen.pvz.entity.plant.interfaces.IShroomPlant;
 import com.hungteen.pvz.misc.damage.PVZDamageSource;
 import com.hungteen.pvz.register.ParticleRegister;
 import com.hungteen.pvz.register.SoundRegister;
@@ -28,7 +27,7 @@ import net.minecraft.world.server.ServerWorld;
 import net.minecraft.world.storage.loot.LootContext;
 import net.minecraft.world.storage.loot.LootParameters;
 
-public class DoomShroomEntity extends PlantBomberEntity implements IShroomPlant{
+public class DoomShroomEntity extends PlantBomberEntity {
 
 	private final int destroyBlockHeight = 4;
 	public static final float MAX_EXPLOSION_LEVEL = 500;

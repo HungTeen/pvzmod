@@ -10,7 +10,7 @@ import net.minecraft.entity.EntityType;
 import net.minecraft.entity.SharedMonsterAttributes;
 import net.minecraft.world.World;
 
-public abstract class PlantShooterEntity extends PVZPlantEntity implements IShooter{
+public abstract class PlantShooterEntity extends PVZPlantEntity implements IShooter {
 
 	public PlantShooterEntity(EntityType<? extends CreatureEntity> type, World worldIn) {
 		super(type, worldIn);

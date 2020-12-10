@@ -3,7 +3,6 @@ package com.hungteen.pvz.entity.plant.toxic;
 import com.hungteen.pvz.entity.ai.PVZNearestTargetGoal;
 import com.hungteen.pvz.entity.bullet.FumeEntity;
 import com.hungteen.pvz.entity.plant.base.PlantShooterEntity;
-import com.hungteen.pvz.entity.plant.interfaces.IShroomPlant;
 import com.hungteen.pvz.register.EntityRegister;
 import com.hungteen.pvz.register.SoundRegister;
 import com.hungteen.pvz.utils.EntityUtil;
@@ -17,7 +16,7 @@ import net.minecraft.entity.Pose;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.World;
 
-public class FumeShroomEntity extends PlantShooterEntity implements IShroomPlant{
+public class FumeShroomEntity extends PlantShooterEntity {
 
 	protected final double LENTH = 0.2d;
 	

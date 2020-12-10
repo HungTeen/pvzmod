@@ -11,7 +11,6 @@ import com.hungteen.pvz.capability.CapabilityHandler;
 import com.hungteen.pvz.capability.player.PlayerDataManager;
 import com.hungteen.pvz.entity.ai.PVZLookRandomlyGoal;
 import com.hungteen.pvz.entity.plant.enforce.SquashEntity;
-import com.hungteen.pvz.entity.plant.interfaces.IShroomPlant;
 import com.hungteen.pvz.entity.plant.magic.CoffeeBeanEntity;
 import com.hungteen.pvz.entity.plant.spear.SpikeWeedEntity;
 import com.hungteen.pvz.entity.zombie.grassnight.TombStoneEntity;
@@ -273,7 +272,7 @@ public abstract class PVZPlantEntity extends CreatureEntity implements IPVZPlant
 		if(this.world.isAirBlock(pos.down()) || downBlock == Blocks.GRASS_BLOCK || downBlock == BlockRegister.LILY_PAD.get()) {
 			return false;
 		}
-		if(this instanceof IShroomPlant) {
+		if(this.getPlantEnumName().isShroomPlant) {
 			if(downBlock == Blocks.MYCELIUM) {
 				return false;
 			}
@@ -289,7 +288,7 @@ public abstract class PVZPlantEntity extends CreatureEntity implements IPVZPlant
 	 * use for shroom's sleep ,need check for later coffee bean update
 	 */
 	protected boolean shouldPlantRegularSleep() {
-		if(this instanceof IShroomPlant) {
+		if(this.getPlantEnumName().isShroomPlant) {
 			return world.isDaytime();
 		}
 		return false;

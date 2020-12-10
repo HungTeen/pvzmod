@@ -1,7 +1,6 @@
 package com.hungteen.pvz.entity.plant.light;
 
 import com.hungteen.pvz.entity.plant.base.PlantProducerEntity;
-import com.hungteen.pvz.entity.plant.interfaces.IShroomPlant;
 import com.hungteen.pvz.register.SoundRegister;
 import com.hungteen.pvz.utils.EntityUtil;
 import com.hungteen.pvz.utils.enums.Plants;
@@ -16,7 +15,7 @@ import net.minecraft.network.datasync.DataSerializers;
 import net.minecraft.network.datasync.EntityDataManager;
 import net.minecraft.world.World;
 
-public class SunShroomEntity extends PlantProducerEntity implements IShroomPlant{
+public class SunShroomEntity extends PlantProducerEntity {
 
 	protected static final int GROW_TICK = 1800;
 	private static final DataParameter<Integer> GROW_ANIM = EntityDataManager.createKey(SunShroomEntity.class, DataSerializers.VARINT);
