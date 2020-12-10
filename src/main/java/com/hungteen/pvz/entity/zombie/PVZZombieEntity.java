@@ -81,7 +81,7 @@ public abstract class PVZZombieEntity extends MonsterEntity implements IPVZZombi
 		super(type, worldIn);
 		this.recalculateSize();
 		this.setZombieAttributes();
-		this.experienceValue = 0;
+		this.experienceValue = this.getZombieRank().ordinal() * 2 + 5;
 	}
 
 	@Override

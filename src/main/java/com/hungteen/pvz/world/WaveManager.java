@@ -8,6 +8,7 @@ import javax.annotation.Nullable;
 import com.hungteen.pvz.capability.CapabilityHandler;
 import com.hungteen.pvz.capability.player.PlayerDataManager.OtherStats;
 import com.hungteen.pvz.entity.zombie.PVZZombieEntity;
+import com.hungteen.pvz.register.EntityRegister;
 import com.hungteen.pvz.utils.EntityUtil;
 import com.hungteen.pvz.utils.PlayerUtil;
 import com.hungteen.pvz.utils.ZombieUtil;
@@ -54,14 +55,14 @@ public class WaveManager {
 		}
 		PlayerUtil.playClientSound(player, 2);
 		PlayerUtil.sendSubTitleToPlayer(player, HUGE_WAVE);
-		System.out.println(mid);
+//		System.out.println(mid);
 		int cnt = this.getSpawnCount();
 		List<Integer> spawnChances = new ArrayList<>();
 		int now = 0;
 		for(int i = 0; i < this.spawns.size(); ++ i) {
 			Zombies zombie = this.spawns.get(i);
 			Ranks rank = ZombieUtil.getZombieRank(zombie);
-			now += Ranks.values().length - rank.ordinal();
+			now += (Ranks.values().length - rank.ordinal()) * (Ranks.values().length - rank.ordinal());
 			spawnChances.add(now);
 		}
 		for(int i = 0; i < cnt; ++ i) {
@@ -73,6 +74,8 @@ public class WaveManager {
 				}
 			}
 		}
+		PVZZombieEntity flagZombie = EntityRegister.FLAG_ZOMBIE.get().create(world);
+		EntityUtil.onMobEntitySpawn(world, flagZombie, mid.add(0, 1, 0));
 	}
 	
 	public static void resetPlayerWaveTime(PlayerEntity player) {
@@ -89,9 +92,9 @@ public class WaveManager {
 					stats.zombieWaveTime[i] = 0;
 				}
 			}
-			for(int i : stats.zombieWaveTime) {
-				System.out.println(i);
-			}
+//			for(int i : stats.zombieWaveTime) {
+//				System.out.println(i);
+//			}
 		});
 	}
 	
@@ -122,11 +125,13 @@ public class WaveManager {
 	@SuppressWarnings("deprecation")
 	@Nullable
 	private BlockPos findRandomSpawnPos(int chance) {
-		int range = 11, distance = 32;
+		int range = 32, distance = 48;
 		for (int i = 0; i < chance; ++i) {
 			float f = this.world.rand.nextFloat() * ((float) Math.PI * 2F);
-			int x = this.center.getX() + MathHelper.floor(MathHelper.cos(f) * distance) + this.world.rand.nextInt(range) - range / 2;
-			int z = this.center.getZ() + MathHelper.floor(MathHelper.sin(f) * distance) + this.world.rand.nextInt(range) - range / 2;
+			int dx = MathHelper.floor(MathHelper.cos(f) * distance);
+			int dz = MathHelper.floor(MathHelper.sin(f) * distance);
+			int x = this.center.getX() + dx > 0 ? dx + range : dx - range;
+			int z = this.center.getZ() + dz > 0 ? dz + range : dz - range;
 			int y = this.world.getHeight(Heightmap.Type.WORLD_SURFACE, x, z);
 			BlockPos pos = new BlockPos(x, y, z);
 			if (this.world.isAreaLoaded(pos.add(-range, -range, -range), pos.add(range, range, range))

@@ -14,6 +14,7 @@ import com.hungteen.pvz.entity.zombie.PVZZombieEntity;
 import com.hungteen.pvz.utils.BiomeUtil;
 import com.hungteen.pvz.utils.ZombieUtil;
 import com.hungteen.pvz.utils.enums.Events;
+import com.hungteen.pvz.utils.enums.Ranks;
 import com.hungteen.pvz.utils.enums.Zombies;
 import com.hungteen.pvz.world.data.WorldEventData;
 
@@ -45,6 +46,7 @@ public class EntitySpawnRegister {
 	
 	public static final EnumMap<Zombies, SpawnData> ZOMBIE_SPAWNS = new EnumMap<>(Zombies.class);
 	public static final EnumMap<Events, Integer> EVENT_CHANCE = new EnumMap<>(Events.class);
+	public static final List<Zombies> ZOMBIE_SPAWN_LIST = new ArrayList<>();
 	
 	@SubscribeEvent
 	public static void registerEntities(RegistryEvent.Register<EntityType<?>> evt) {
@@ -84,7 +86,6 @@ public class EntitySpawnRegister {
 		EVENT_CHANCE.put(Events.RANDOM, PVZConfig.COMMON_CONFIG.WorldSettings.WorldEventSettings.EventChanceSettings.RandomAttackChance.get());
 		
 		putSpawnData(Zombies.NORMAL_ZOMBIE, 40, 1, 3, BiomeUtil.OVER_LAND);
-		putSpawnData(Zombies.FLAG_ZOMBIE, 2, 1, 1, BiomeUtil.OVER_LAND);
 		putSpawnData(Zombies.CONEHEAD_ZOMBIE, 20, 1, 1, BiomeUtil.OVER_LAND);
 		putSpawnData(Zombies.POLE_ZOMBIE, 15, 1, 1, BiomeUtil.OVER_LAND);
 		putSpawnData(Zombies.BUCKETHEAD_ZOMBIE, 6, 1, 1, BiomeUtil.OVER_LAND);
@@ -92,7 +93,7 @@ public class EntitySpawnRegister {
 		putSpawnData(Zombies.SNORKEL_ZOMBIE, 36, 1, 2, BiomeUtil.OVER_LAND);
 		putSpawnData(Zombies.ZOMBONI, 16, 1, 1, BiomeUtil.OVER_LAND);
 		putSpawnData(Zombies.BOBSLE_TEAM, 20, 1, 1, BiomeUtil.OVER_LAND);
-		putSpawnData(Zombies.DOLPHIN_RIDER, 3, 1, 1, BiomeUtil.OCEAN);
+//		putSpawnData(Zombies.DOLPHIN_RIDER, 3, 1, 1, BiomeUtil.OCEAN);
 		putSpawnData(Zombies.LAVA_ZOMBIE, 4, 1, 1, BiomeUtil.OVER_LAND);
 		
 		putSpawnData(Zombies.PUMPKIN_ZOMBIE, 25, 1, 1, BiomeUtil.OVER_LAND);
@@ -112,20 +113,54 @@ public class EntitySpawnRegister {
 		List<ZombieSpawnEntry> list = new ArrayList<>();
 		if(ev.isZombieAttackEvent) {
 			if(ev == Events.RANDOM) {
-				
+				for(Zombies zombie : getRandomEventSpawnList(world)) {
+					getZombieSpawnEnrty(world, zombie).ifPresent((entry)->{
+			    		list.add(entry);
+			    	});
+				}
 			} else {
 				List<Zombies> zombieTypes = Arrays.asList(ev.zombies);
 			    for(Zombies zombie: zombieTypes) {
-				    list.add(getZombieSpawnEnrty(world, zombie));
+			    	getZombieSpawnEnrty(world, zombie).ifPresent((entry)->{
+			    		list.add(entry);
+			    	});
 			    }
 			}
 		}
 		return list;
 	}
 	
-	public static ZombieSpawnEntry getZombieSpawnEnrty(World world, Zombies zombie) {
+	public static List<Zombies> getRandomEventSpawnList(World world) {
+		List<Zombies> zombies = new ArrayList<>();
+		List<Integer> list = new ArrayList<>();
+		int sum = 0;
+		for(Zombies zombie : ZOMBIE_SPAWN_LIST) {
+			Ranks rank = ZombieUtil.getZombieRank(zombie);
+			int chance = (Ranks.values().length - rank.ordinal());
+			sum += chance * chance * 2;
+			list.add(sum);
+		}
+		for(int i = 0; i < 10; ++ i) {
+			if(zombies.size() >= 4) break;
+			int now = world.rand.nextInt(sum);
+			Zombies current = null;
+			for(int j = 0; j < list.size(); ++ j) {
+				if(now < list.get(j)) {
+					current = ZOMBIE_SPAWN_LIST.get(j);
+					break;
+				}
+			}
+			if(current != null && zombies.indexOf(current) == -1){
+				zombies.add(current);
+			}
+		}
+		return zombies;
+	}
+	
+	public static Optional<ZombieSpawnEntry> getZombieSpawnEnrty(World world, Zombies zombie) {
 		if(! ZOMBIE_SPAWNS.containsKey(zombie)) {
-			throw new NullPointerException("No Zombie Spawn Data");
+			System.out.println("No Zombie Spawn Data");
+			return Optional.empty();
 		}
 		int safeDuration = PVZConfig.COMMON_CONFIG.WorldSettings.WorldEventSettings.SafeDayLength.get();
 		int multiple = PVZConfig.COMMON_CONFIG.WorldSettings.WorldEventSettings.MaxSpawnWeightMultiple.get();
@@ -135,23 +170,24 @@ public class EntitySpawnRegister {
 		int min = now.weight;
 		double percent = MathHelper.clamp(1d * day / length, 0, 1) * (multiple - 1) + 1;
 		SpawnData newData = SpawnData.setNewWeight(now, MathHelper.floor(percent * min));
-		return new ZombieSpawnEntry(zombie, newData);
+		return Optional.of(new ZombieSpawnEntry(zombie, newData));
 	}
 	
 	public static Events getCurrentEventByRandom(World world) {
 		int sum = 0;
 		List<Integer> list = new ArrayList<>(Events.ATTACK_EVENTS.size());
 		for(Events ev : Events.ATTACK_EVENTS) {//get all attack events
-			list.add(sum);
 			if(EVENT_CHANCE.containsKey(ev)) {
 				sum += EVENT_CHANCE.get(ev);
 			}
+			list.add(sum);
 		}
 		int current = world.rand.nextInt(sum);
 		Events res = null;
 		for(int i = 0; i < list.size(); ++ i) {
-			if(current >= list.get(i)) {
+			if(current < list.get(i)) {
 				res = Events.ATTACK_EVENTS.get(i);
+				break;
 			}
 		}
 		return res;
@@ -164,8 +200,9 @@ public class EntitySpawnRegister {
 		WorldEventData data = WorldEventData.getOverWorldEventData(world);
 		for(Zombies zombie : Zombies.values()) {
 			if(data.hasZombieSpawnEntry(zombie)) {
-				ZombieSpawnEntry entry = getZombieSpawnEnrty(world, zombie);
-			    entry.addWorldZombieSpawn(world);
+				getZombieSpawnEnrty(world, zombie).ifPresent((entry)->{
+					entry.addWorldZombieSpawn(world);
+				});
 			}
 		}
 	}
@@ -177,8 +214,9 @@ public class EntitySpawnRegister {
 		WorldEventData data = WorldEventData.getOverWorldEventData(world);
 		for(Zombies zombie : Zombies.values()) {
 			if(data.hasZombieSpawnEntry(zombie)) {
-				ZombieSpawnEntry entry = getZombieSpawnEnrty(world, zombie);
-			    entry.removeWorldZombieSpawn(world);
+				getZombieSpawnEnrty(world, zombie).ifPresent((entry)->{
+					entry.removeWorldZombieSpawn(world);
+				});
 			}
 		}
 	}
@@ -206,14 +244,16 @@ public class EntitySpawnRegister {
     	for(Zombies zombie : Zombies.values()) {
     		if(data.hasZombieSpawnEntry(zombie)) {
     			data.removeZombieSpawnEntry(zombie);
-    			ZombieSpawnEntry entry = getZombieSpawnEnrty(world, zombie);
-    		    entry.removeWorldZombieSpawn(world);
+    			getZombieSpawnEnrty(world, zombie).ifPresent((entry)->{
+    				entry.removeWorldZombieSpawn(world);
+    			});
     		}
         }
     }
     
 	private static void putSpawnData(Zombies zombie, int weight, int minGroupSize, int maxGroupSize, Biome... biomes) {
 		ZOMBIE_SPAWNS.put(zombie, new SpawnData(weight, minGroupSize, maxGroupSize, biomes));
+		ZOMBIE_SPAWN_LIST.add(zombie);
 	}
 	
 	public static class ZombieSpawnEntry {

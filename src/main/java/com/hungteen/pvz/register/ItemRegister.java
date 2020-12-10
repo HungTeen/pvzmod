@@ -1,7 +1,7 @@
 package com.hungteen.pvz.register;
 
 import com.hungteen.pvz.PVZMod;
-import com.hungteen.pvz.item.PVZFoods;
+import com.hungteen.pvz.item.PVZFoodItem;
 import com.hungteen.pvz.item.PVZItemBase;
 import com.hungteen.pvz.item.PVZSpawnEggItem;
 import com.hungteen.pvz.item.armor.BucketArmorItem;
@@ -28,6 +28,7 @@ import net.minecraft.item.ArmorMaterial;
 import net.minecraft.item.BlockItem;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemGroup;
+import net.minecraft.item.SoupItem;
 import net.minecraftforge.fml.RegistryObject;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
@@ -163,10 +164,11 @@ public class ItemRegister {
 	public static final RegistryObject<Item> TIME_KEY_TO_DEEP = ITEMS.register("time_key_to_deep", PVZItemBase::new);
 	
 	//food 
-	public static final RegistryObject<Item> FAKE_BRAIN = ITEMS.register("fake_brain", ()->new Item(new Item.Properties().group(ItemGroup.FOOD).food(PVZFoods.FAKE_BRAIN)));
-	public static final RegistryObject<Item> REAL_BRAIN = ITEMS.register("real_brain", ()->new Item(new Item.Properties().group(ItemGroup.FOOD).food(PVZFoods.REAL_BRAIN)));
-	public static final RegistryObject<Item> CANDY = ITEMS.register("candy", ()->new Item(new Item.Properties().group(ItemGroup.FOOD).food(PVZFoods.CANDY)));
-	public static final RegistryObject<Item> CHOCOLATE = ITEMS.register("chocolate", ()->new Item(new Item.Properties().group(ItemGroup.FOOD).food(PVZFoods.CHOCOLATE)));
+	public static final RegistryObject<Item> FAKE_BRAIN = ITEMS.register("fake_brain", ()->new PVZFoodItem(PVZFoodItem.FAKE_BRAIN));
+	public static final RegistryObject<Item> REAL_BRAIN = ITEMS.register("real_brain", ()->new PVZFoodItem(PVZFoodItem.REAL_BRAIN));
+	public static final RegistryObject<Item> CANDY = ITEMS.register("candy", ()->new PVZFoodItem(PVZFoodItem.CANDY));
+	public static final RegistryObject<Item> CHOCOLATE = ITEMS.register("chocolate", ()->new PVZFoodItem(PVZFoodItem.CHOCOLATE));
+	public static final RegistryObject<Item> PEA_SOUP = ITEMS.register("pea_soup", ()->new SoupItem(new Item.Properties().group(ItemGroup.FOOD).food(PVZFoodItem.PEA_SOUP)));
 	
 	//spawn egg
 	//drop

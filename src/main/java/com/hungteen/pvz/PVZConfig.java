@@ -48,23 +48,23 @@ public class PVZConfig {
 						
 						WorldSettings.WorldEventSettings.EventChanceSettings.WaterAttackChance = builder
 								.comment("The weight to happen Water Invasion when it's a zombie attack day.")
-								.defineInRange("WaterAttackChance", 100, 0, 100000);
+								.defineInRange("WaterAttackChance", 80, 0, 100000);
 						
 						WorldSettings.WorldEventSettings.EventChanceSettings.HalloweenAttackChance = builder
 								.comment("The weight to happen Halloween Invasion when it's a zombie attack day.")
-								.defineInRange("HalloweenAttackChance", 40, 0, 100000);
+								.defineInRange("HalloweenAttackChance", 20, 0, 100000);
 						
 						WorldSettings.WorldEventSettings.EventChanceSettings.NewspaperAttackChance = builder
 								.comment("The weight to happen Newspaper Invasion when it's a zombie attack day.")
-								.defineInRange("NewspaperAttackChance", 100, 0, 100000);
+								.defineInRange("NewspaperAttackChance", 40, 0, 100000);
 						
 						WorldSettings.WorldEventSettings.EventChanceSettings.FootballAttackChance = builder
 								.comment("The weight to happen Football Invasion when it's a zombie attack day.")
-								.defineInRange("FootballAttackChance", 100, 0, 100000);
+								.defineInRange("FootballAttackChance", 50, 0, 100000);
 						
 						WorldSettings.WorldEventSettings.EventChanceSettings.RandomAttackChance = builder
 								.comment("The weight to happen Random Invasion when it's a zombie attack day.")
-								.defineInRange("RandomAttackChance", 200, 0, 10000);
+								.defineInRange("RandomAttackChance", 100, 0, 10000);
 //					}
 //					builder.pop();
 					
