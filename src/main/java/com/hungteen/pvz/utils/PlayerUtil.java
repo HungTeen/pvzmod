@@ -108,4 +108,8 @@ public class PlayerUtil {
 		}
 	}
 	
+	public static boolean isPlayerSurvival(PlayerEntity player) {
+		return ! player.isCreative() && ! player.isSpectator();
+	}
+	
 }

@@ -6,6 +6,7 @@ import java.util.List;
 import javax.annotation.Nullable;
 
 import com.hungteen.pvz.capability.CapabilityHandler;
+import com.hungteen.pvz.capability.player.PlayerDataManager;
 import com.hungteen.pvz.capability.player.PlayerDataManager.OtherStats;
 import com.hungteen.pvz.entity.zombie.PVZZombieEntity;
 import com.hungteen.pvz.register.EntityRegister;
@@ -24,6 +25,7 @@ import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.TextFormatting;
 import net.minecraft.util.text.TranslationTextComponent;
+import net.minecraft.world.Difficulty;
 import net.minecraft.world.World;
 import net.minecraft.world.gen.Heightmap;
 import net.minecraft.world.gen.Heightmap.Type;
@@ -46,6 +48,31 @@ public class WaveManager {
 		this.player = player;
 		this.center = player.getPosition();
 		this.updateSpawns();
+	}
+	
+	/**
+	 * check spawn huge wave of zombies for players.
+	 */
+	public static void tickWave(World world, int dayTime) {
+		if(world.getDifficulty() == Difficulty.PEACEFUL) return ;
+		world.getPlayers().forEach((player)->{
+			if(PlayerUtil.isPlayerSurvival(player)) {
+				player.getCapability(CapabilityHandler.PLAYER_DATA_CAPABILITY).ifPresent((l)->{
+			        PlayerDataManager.OtherStats stats = l.getPlayerData().getOtherStats();
+			        for(int i = 0 ; i < stats.zombieWaveTime.length; ++ i) {
+				        int time = stats.zombieWaveTime[i];
+				        if(time != 0 && time >= dayTime) {
+					        if(time == dayTime) {
+						        WaveManager manager = new WaveManager(player, i);
+						        manager.spawnWaveZombies();
+						        stats.zombieWaveTime[i] = 0;
+					        }
+					        break;
+				        }
+			        }
+		        });
+			}
+		});
 	}
 	
 	public void spawnWaveZombies() {
@@ -78,11 +105,16 @@ public class WaveManager {
 		EntityUtil.onMobEntitySpawn(world, flagZombie, mid.add(0, 1, 0));
 	}
 	
+	/**
+	 * reset the huge wave time of each player.
+	 */
 	public static void resetPlayerWaveTime(PlayerEntity player) {
 		player.getCapability(CapabilityHandler.PLAYER_DATA_CAPABILITY).ifPresent((l)->{
 			OtherStats stats = l.getPlayerData().getOtherStats();
 			int treeLvl = l.getPlayerData().getPlayerStats().getPlayerStats(Resources.TREE_LVL);
-			int cnt = PlayerUtil.getPlayerWaveCount(treeLvl);
+			int maxCnt = PlayerUtil.getPlayerWaveCount(treeLvl);
+			int minCnt = (maxCnt + 1) / 2;
+			int cnt = player.getRNG().nextInt(maxCnt - minCnt + 1) + minCnt;
 			int partTime = 24000 / cnt;
 			for(int i = 0; i < MAX_WAVE_NUM; ++ i) {
 				if(i < cnt) {
@@ -125,7 +157,7 @@ public class WaveManager {
 	@SuppressWarnings("deprecation")
 	@Nullable
 	private BlockPos findRandomSpawnPos(int chance) {
-		int range = 16, distance = 32;
+		int range = 16, distance = 48;
 		for (int i = 0; i < chance; ++i) {
 			float f = this.world.rand.nextFloat() * ((float) Math.PI * 2F);
 			int dx = MathHelper.floor(MathHelper.cos(f) * distance);

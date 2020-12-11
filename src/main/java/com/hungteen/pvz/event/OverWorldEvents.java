@@ -3,8 +3,6 @@ package com.hungteen.pvz.event;
 import javax.annotation.Nonnull;
 
 import com.hungteen.pvz.PVZConfig;
-import com.hungteen.pvz.capability.CapabilityHandler;
-import com.hungteen.pvz.capability.player.PlayerDataManager;
 import com.hungteen.pvz.register.EntitySpawnRegister;
 import com.hungteen.pvz.utils.PlayerUtil;
 import com.hungteen.pvz.utils.enums.Events;
@@ -59,22 +57,7 @@ public class OverWorldEvents {
 			break;
 		}
 		}
-		for(PlayerEntity player : world.getPlayers()) {
-		    player.getCapability(CapabilityHandler.PLAYER_DATA_CAPABILITY).ifPresent((l)->{
-			    PlayerDataManager.OtherStats stats = l.getPlayerData().getOtherStats();
-			    for(int i = 0 ; i < stats.zombieWaveTime.length; ++ i) {
-				    int time = stats.zombieWaveTime[i];
-				    if(time != 0 && time >= dayTime) {
-					    if(time == dayTime) {
-						    WaveManager manager = new WaveManager(player, i);
-						    manager.spawnWaveZombies();
-						    stats.zombieWaveTime[i] = 0;
-					    }
-					    break;
-				    }
-			    }
-		    });
-		}
+		WaveManager.tickWave(world, dayTime);
 	}
 	
 	/**

@@ -12,7 +12,6 @@ public class TwinSunFlowerEntity extends SunFlowerEntity{
 
 	public TwinSunFlowerEntity(EntityType<? extends CreatureEntity> type, World worldIn) {
 		super(type, worldIn);
-		this.isUpgradePlant = true;
 	}
 
 	@Override

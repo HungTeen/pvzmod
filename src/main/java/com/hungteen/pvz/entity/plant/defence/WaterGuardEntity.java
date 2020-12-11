@@ -28,11 +28,6 @@ public class WaterGuardEntity extends PlantDefenderEntity{
 	}
 	
 	@Override
-	protected boolean checkNormalPlantWeak() {//check if it leave water
-		return ! this.isInWater();
-	}
-	
-	@Override
 	public float getPlantHealth() {
 		int lvl = this.getPlantLvl();
 		if(lvl <= 19) return 190 + lvl * 10;

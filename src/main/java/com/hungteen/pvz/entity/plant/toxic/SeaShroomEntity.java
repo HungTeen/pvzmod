@@ -33,11 +33,6 @@ public class SeaShroomEntity extends PlantShooterEntity {
 	}
 	
 	@Override
-	protected boolean checkNormalPlantWeak() {//check if it leave water
-		return ! this.isInWater();
-	}
-	
-	@Override
 	public void shootBullet() {
 		LivingEntity target=this.getAttackTarget();
 		if(target==null) {

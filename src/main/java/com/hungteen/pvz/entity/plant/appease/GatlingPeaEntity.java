@@ -12,7 +12,6 @@ public class GatlingPeaEntity extends RepeaterEntity{
 	
 	public GatlingPeaEntity(EntityType<? extends CreatureEntity> type, World worldIn) {
 		super(type, worldIn);
-		this.isUpgradePlant = true;
 	}
 
 	@Override

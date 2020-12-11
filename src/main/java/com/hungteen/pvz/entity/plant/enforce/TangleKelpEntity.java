@@ -107,12 +107,6 @@ public class TangleKelpEntity extends PVZPlantEntity{
 	}
 	
 	@Override
-	protected boolean checkNormalPlantWeak() {//check if it leave water
-		if(this.isImmuneToWeak) return false;
-        return !this.isInWater();
-	}
-	
-	@Override
 	public boolean isPlantImmuneTo(DamageSource source) {
 		return super.isPlantImmuneTo(source) || PVZDamageSource.isEnforceDamage(source);
 	}
@@ -130,11 +124,6 @@ public class TangleKelpEntity extends PVZPlantEntity{
 	@Override
 	public boolean hasNoGravity() {
 		return this.isInWater();
-	}
-	
-	@Override
-	public boolean canBreatheUnderwater() {
-		return true;
 	}
 	
 	@Override

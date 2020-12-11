@@ -1,10 +1,13 @@
 package com.hungteen.pvz.utils;
 
+import java.util.Arrays;
 import java.util.EnumMap;
+import java.util.List;
 
 import com.hungteen.pvz.PVZMod;
 import com.hungteen.pvz.entity.plant.PVZPlantEntity;
 import com.hungteen.pvz.item.tool.card.PlantCardItem;
+import com.hungteen.pvz.register.BlockRegister;
 import com.hungteen.pvz.register.EntityRegister;
 import com.hungteen.pvz.register.ItemRegister;
 import com.hungteen.pvz.utils.enums.CDs;
@@ -12,6 +15,8 @@ import com.hungteen.pvz.utils.enums.Essences;
 import com.hungteen.pvz.utils.enums.Plants;
 import com.hungteen.pvz.utils.enums.Ranks;
 
+import net.minecraft.block.Block;
+import net.minecraft.block.Blocks;
 import net.minecraft.entity.EntityType;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.RegistryObject;
@@ -83,15 +88,14 @@ public class PlantUtil {
 		++ CURRENT_PLANT_NUM;
 	}
 	
-//	public static void putPlantInfoToMap1(Plants plant, final int cost, CDs cd, Ranks rank, Essences essence, RegistryObject<? extends EntityType<? extends PVZPlantEntity>> type) {
-//		PLANT_SUN_COST.put(plant, cost);
-//		PLANT_CD.put(plant, cd);
-//		PLANT_RANK.put(plant, rank);
-//		PLANT_ESSENCE.put(plant, essence);
-//		PLANT_ENTITY.put(plant, type);
-//		++ CURRENT_PLANT_NUM;
-//	}
-//	
+	public static List<Block> getPlantSuitBlock(Plants plant){
+		List<Block> list = Arrays.asList(Blocks.GRASS_BLOCK, BlockRegister.LILY_PAD.get());
+		if(plant.isShroomPlant) {
+			list.add(Blocks.MYCELIUM);
+		}
+		return list;
+	}
+	
 	public static int getPlantLevelUpXp(Plants plant, int lvl){
 		Ranks rank=getPlantRankByName(plant);
 		if(lvl==getPlantMaxLvl(plant)) return 999999999;

@@ -19,6 +19,7 @@ public class CoffeeBeanEntity extends PlantBomberEntity{
 		super(type, worldIn);
 		this.canCollideWithPlant = false;
 		this.canBeCharmed = false;
+		this.isImmuneToWeak = true;
 	}
 
 	@Override
