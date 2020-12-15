@@ -646,6 +646,7 @@ public abstract class PVZPlantEntity extends CreatureEntity implements IPVZPlant
 								plant.setPlantLvl(lvl);
 								plant.setOwnerUUID(player.getUniqueID());
 								plant.rotationYaw = this.rotationYaw;
+								plant.rotationYawHead = this.rotationYawHead;
 								plant.rotationPitch = this.rotationPitch;
 								EntityUtil.onMobEntitySpawn(world, plant, getPosition());
 								this.remove();

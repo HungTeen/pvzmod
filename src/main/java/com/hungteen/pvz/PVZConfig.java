@@ -40,33 +40,33 @@ public class PVZConfig {
 							.comment("If true, players will be invaded by a huge wave of zombies in zombie invasion day")
 							.define("EnableHugeWave", true);
 					
-//					builder.comment("Settings about event chance.").push("EventChance Settings.");
-//					{
-						WorldSettings.WorldEventSettings.EventChanceSettings.BucketAttackChance = builder
-								.comment("The weight to happen Bucket Invasion when it's a zombie attack day.")
-								.defineInRange("BucketAttackChance", 100, 0, 100000);
+					WorldSettings.WorldEventSettings.EventChanceSettings.BucketAttackChance = builder
+							.comment("The weight to happen Bucket Invasion when it's a zombie attack day.")
+							.defineInRange("BucketAttackChance", 100, 0, 100000);
 						
-						WorldSettings.WorldEventSettings.EventChanceSettings.WaterAttackChance = builder
-								.comment("The weight to happen Water Invasion when it's a zombie attack day.")
-								.defineInRange("WaterAttackChance", 80, 0, 100000);
+					WorldSettings.WorldEventSettings.EventChanceSettings.WaterAttackChance = builder
+							.comment("The weight to happen Water Invasion when it's a zombie attack day.")
+							.defineInRange("WaterAttackChance", 80, 0, 100000);
 						
-						WorldSettings.WorldEventSettings.EventChanceSettings.HalloweenAttackChance = builder
-								.comment("The weight to happen Halloween Invasion when it's a zombie attack day.")
-								.defineInRange("HalloweenAttackChance", 20, 0, 100000);
+					WorldSettings.WorldEventSettings.EventChanceSettings.HalloweenAttackChance = builder
+							.comment("The weight to happen Halloween Invasion when it's a zombie attack day.")
+							.defineInRange("HalloweenAttackChance", 20, 0, 100000);
 						
-						WorldSettings.WorldEventSettings.EventChanceSettings.NewspaperAttackChance = builder
-								.comment("The weight to happen Newspaper Invasion when it's a zombie attack day.")
-								.defineInRange("NewspaperAttackChance", 40, 0, 100000);
+					WorldSettings.WorldEventSettings.EventChanceSettings.NewspaperAttackChance = builder
+							.comment("The weight to happen Newspaper Invasion when it's a zombie attack day.")
+							.defineInRange("NewspaperAttackChance", 40, 0, 100000);
 						
-						WorldSettings.WorldEventSettings.EventChanceSettings.FootballAttackChance = builder
-								.comment("The weight to happen Football Invasion when it's a zombie attack day.")
-								.defineInRange("FootballAttackChance", 50, 0, 100000);
+					WorldSettings.WorldEventSettings.EventChanceSettings.FootballAttackChance = builder
+							.comment("The weight to happen Football Invasion when it's a zombie attack day.")
+							.defineInRange("FootballAttackChance", 50, 0, 100000);
 						
-						WorldSettings.WorldEventSettings.EventChanceSettings.RandomAttackChance = builder
-								.comment("The weight to happen Random Invasion when it's a zombie attack day.")
-								.defineInRange("RandomAttackChance", 100, 0, 10000);
-//					}
-//					builder.pop();
+					WorldSettings.WorldEventSettings.EventChanceSettings.RandomAttackChance = builder
+							.comment("The weight to happen Random Invasion when it's a zombie attack day.")
+							.defineInRange("RandomAttackChance", 100, 0, 10000);
+					
+					WorldSettings.WorldEventSettings.EventChanceSettings.FogEventChance = builder
+							.comment("The related value to happen Fog Event when it's a zombie attack day(If the value is x, then the chance is 1/x).")
+							.defineInRange("FogAttackChance", 12, 1, 10000);
 					
 				}
 				builder.pop();
@@ -134,6 +134,10 @@ public class PVZConfig {
 				EntitySettings.DoomRange = builder
 						.comment("The width range when doom shroom explosion will destroy,0 means no destroy.")
 						.defineInRange("DoomRange", 3, 0, 10);
+				EntitySettings.TrickZombieCharmChance = builder
+						.comment("The value related to the chance to use candy charm TrickZombie(if set to x, the chance is 1/x).")
+						.defineInRange("TrickZombieCharmChance", 3, 1, 100);
+				
 				builder.comment("The Max live time for Entity like sun.").push("EntityLiveTime");
 				{
 					EntitySettings.EntityLiveTick.SunLiveTick = builder
@@ -211,6 +215,7 @@ public class PVZConfig {
 			    	public ForgeConfigSpec.IntValue NewspaperAttackChance;
 			    	public ForgeConfigSpec.IntValue FootballAttackChance;
 			    	public ForgeConfigSpec.IntValue RandomAttackChance;
+			    	public ForgeConfigSpec.IntValue FogEventChance;
 			    }
 			}
 			
@@ -233,6 +238,7 @@ public class PVZConfig {
 			public ForgeConfigSpec.BooleanValue TeamAttack;
 			public ForgeConfigSpec.IntValue ZombieSuperChance;
 			public ForgeConfigSpec.IntValue DoomRange;
+			public ForgeConfigSpec.IntValue TrickZombieCharmChance;
 			
 			public EntityLiveTick EntityLiveTick = new EntityLiveTick();
 			
@@ -276,6 +282,15 @@ public class PVZConfig {
 						.define("RenderMoneyBar", true);
 			}
 			builder.pop();
+			
+			builder.comment("Render about Environment").push("Environment Render Settings");
+			{
+				EnvironmentRnder.RenderFog = builder
+						.comment("Should Render Fog Overlay")
+						.define("RenderFog", true);
+			}
+			builder.pop();
+			
 			builder.comment("Other Render Settings").push("Other Render Settings");
 			{
 				OtherSettings.ShowPVZMainMenu = builder
@@ -287,10 +302,16 @@ public class PVZConfig {
 		
 		public OtherSettings OtherSettings = new OtherSettings();
 		public ResourceRender ResourceRender = new ResourceRender();
+		public EnvironmentRender EnvironmentRnder = new EnvironmentRender();
+		
 		public static class ResourceRender{
 			public ForgeConfigSpec.BooleanValue RenderSunNumBar;
 			public ForgeConfigSpec.BooleanValue RenderEnergyNumBar;
 			public ForgeConfigSpec.BooleanValue RenderMoneyBar;
+		}
+		
+		public static class EnvironmentRender{
+			public ForgeConfigSpec.BooleanValue RenderFog;
 		}
 		
 		public static class OtherSettings{

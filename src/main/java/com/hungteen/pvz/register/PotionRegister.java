@@ -15,5 +15,7 @@ public class PotionRegister {
 	public static final RegistryObject<Potion> EXCITE_POTION_1 = POTIONS.register("excite_potion_1", () -> {return new Potion(new EffectInstance(EffectRegister.EXCITE_EFFECT.get(), 600, 0));});
 	public static final RegistryObject<Potion> EXCITE_POTION_2 = POTIONS.register("excite_potion_2", () -> {return new Potion(new EffectInstance(EffectRegister.EXCITE_EFFECT.get(), 1800, 1));});
 	public static final RegistryObject<Potion> EXCITE_POTION_3 = POTIONS.register("excite_potion_3", () -> {return new Potion(new EffectInstance(EffectRegister.EXCITE_EFFECT.get(), 3600, 0));});
+	public static final RegistryObject<Potion> LIGHT_EYE_POTION_1 = POTIONS.register("light_eye_potion_1", () -> {return new Potion(new EffectInstance(EffectRegister.LIGHT_EYE_EFFECT.get(), 1200, 1));});
+	public static final RegistryObject<Potion> LIGHT_EYE_POTION_2 = POTIONS.register("light_eye_potion_2", () -> {return new Potion(new EffectInstance(EffectRegister.LIGHT_EYE_EFFECT.get(), 9600, 1));});
 
 }

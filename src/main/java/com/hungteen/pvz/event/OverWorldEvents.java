@@ -6,6 +6,7 @@ import com.hungteen.pvz.PVZConfig;
 import com.hungteen.pvz.register.EntitySpawnRegister;
 import com.hungteen.pvz.utils.PlayerUtil;
 import com.hungteen.pvz.utils.enums.Events;
+import com.hungteen.pvz.world.FogManager;
 import com.hungteen.pvz.world.WaveManager;
 import com.hungteen.pvz.world.data.WorldEventData;
 
@@ -58,6 +59,7 @@ public class OverWorldEvents {
 		}
 		}
 		WaveManager.tickWave(world, dayTime);
+		FogManager.tickFog(world);
 	}
 	
 	/**
@@ -73,10 +75,17 @@ public class OverWorldEvents {
 		    }
 		    Events event = EntitySpawnRegister.getCurrentEventByRandom(world);
 		    activateEvent(world, event);//activate event
+		    if(world.rand.nextInt(PVZConfig.COMMON_CONFIG.WorldSettings.WorldEventSettings.EventChanceSettings.FogEventChance.get()) == 0) {
+		    	activateEvent(world, Events.FOG);
+		    }
 		    if(PVZConfig.COMMON_CONFIG.WorldSettings.WorldEventSettings.ShowEventMessages.get()) {
-		    	for(PlayerEntity pl : world.getPlayers()) {
-		    		pl.sendMessage(Events.getEventText(event));
-		    	}
+		    	world.getPlayers().forEach((player)->{
+			        WorldEventData data = WorldEventData.getOverWorldEventData(world);
+			        for(Events ev : Events.values()) {
+				        if(data.hasEvent(ev)) {
+					    player.sendMessage(Events.getEventText(ev));
+				    }
+			    }});
 		    }
 		}
 	}
@@ -84,7 +93,7 @@ public class OverWorldEvents {
 	/**
 	 * activate zombie attack event.
 	 */
-	private static void activateEvent(World world, @Nonnull Events event) {
+	public static void activateEvent(World world, @Nonnull Events event) {
 		WorldEventData data = WorldEventData.getOverWorldEventData(world);
 		if(! data.hasEvent(event)) {
 			data.addEvent(event);

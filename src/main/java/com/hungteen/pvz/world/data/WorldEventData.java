@@ -145,7 +145,7 @@ public class WorldEventData extends WorldSavedData{
 	}
 	
 	public static WorldEventData getOverWorldEventData(World worldIn) {
-		if (!(worldIn instanceof ServerWorld)) {
+		if (! (worldIn instanceof ServerWorld)) {
             throw new RuntimeException("Attempted to get the data from a client world. This is wrong.");
         }
 		ServerWorld world = worldIn.getServer().getWorld(DimensionType.OVERWORLD);

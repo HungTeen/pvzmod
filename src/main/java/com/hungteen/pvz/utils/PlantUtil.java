@@ -1,6 +1,6 @@
 package com.hungteen.pvz.utils;
 
-import java.util.Arrays;
+import java.util.ArrayList;
 import java.util.EnumMap;
 import java.util.List;
 
@@ -89,7 +89,9 @@ public class PlantUtil {
 	}
 	
 	public static List<Block> getPlantSuitBlock(Plants plant){
-		List<Block> list = Arrays.asList(Blocks.GRASS_BLOCK, BlockRegister.LILY_PAD.get());
+		List<Block> list = new ArrayList<>();
+		list.add(Blocks.GRASS_BLOCK);
+		list.add(BlockRegister.LILY_PAD.get());
 		if(plant.isShroomPlant) {
 			list.add(Blocks.MYCELIUM);
 		}

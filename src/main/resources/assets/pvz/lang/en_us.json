@@ -249,6 +249,11 @@
     "item.pvz.doom_shroom_spawn_egg":"DoomShroom Spawn Egg",
     "item.pvz.doom_shroom_card":"DoomShroom Card",
     "item.pvz.doom_shroom_enjoy_card":"DoomShroom Enjoy Card",
+//SeaShroom
+    "entity.pvz.sea_shroom":"SeaShroom",
+    "item.pvz.sea_shroom_spawn_egg":"SeaShroom Spawn Egg",
+    "item.pvz.sea_shroom_card":"SeaShroom Card",
+    "item.pvz.sea_shroom_enjoy_card":"SeaShroom Enjoy Card",
 //Pumpkin 
     "entity.pvz.pumpkin":"Pumpkin",
     "item.pvz.pumpkin_card":"Pumpkin Card",
@@ -258,7 +263,7 @@
     "item.pvz.coffee_bean_spawn_egg":"CoffeeBean Spawn Egg",
     "item.pvz.coffee_bean_card":"CoffeeBean Card",
     "item.pvz.coffee_bean_enjoy_card":"CoffeeBean Enjoy Card",
-//CoffeeBean
+//MariGold
     "entity.pvz.marigold":"MariGold",
     "item.pvz.marigold_spawn_egg":"MariGold Spawn Egg",
     "item.pvz.marigold_card":"MariGold Card",
@@ -522,6 +527,7 @@
     "effect.pvz.cold":"Cold",
     "effect.pvz.frozen":"Frozen",
     "effect.pvz.excite":"Excite",
+    "effect.pvz.light_eye":"Light Eye",
     "item.minecraft.potion.effect.excite_potion_1":"Excite Potion",
     "item.minecraft.potion.effect.excite_potion_2":"Excite Potion",
     "item.minecraft.potion.effect.excite_potion_3":"Excite Potion",
@@ -531,6 +537,12 @@
     "item.minecraft.lingering_potion.effect.excite_potion_1":"Lingering Excite Potion",
     "item.minecraft.lingering_potion.effect.excite_potion_2":"Lingering Excite Potion",
     "item.minecraft.lingering_potion.effect.excite_potion_3":"Lingering Excite Potion",
+    "item.minecraft.potion.effect.light_eye_potion_1":"Light Eyes Potion",
+    "item.minecraft.potion.effect.light_eye_potion_2":"Light Eyes Potion",
+    "item.minecraft.splash_potion.effect.light_eye_potion_1":"Splash Light Eyes Potion",
+    "item.minecraft.splash_potion.effect.light_eye_potion_2":"Splash Light Eyes Potion",
+    "item.minecraft.lingering_potion.effect.light_eye_potion_1":"Lingering Light Eyes Potion",
+    "item.minecraft.lingering_potion.effect.light_eye_potion_2":"Lingering Light Eyes Potion",
 //event
     "event.pvz.zombie_attack":"Zombies are coming.",
     "event.pvz.huge_wave":"A huge wave of zombies are coming !",
@@ -540,6 +552,7 @@
     "event.pvz.newspaper":"Newspaper Invasion",
     "event.pvz.football":"Football Invasion",
     "event.pvz.random":"Random Invasion",
+    "event.pvz.fog":"Fog Invasion",
 //death
 "death.attack.pvz_normal":"%s was killed",
     "death.attack.pvz_weak":"%s weak to death",

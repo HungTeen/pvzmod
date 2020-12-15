@@ -1,7 +1,7 @@
 {
 	"name": "gui.pvz.pvz_guild",
 	"landing_text": "gui.pvz.guild_info",
-	"version": 1,
+	"version": 2,
 	"book_texture":"patchouli:textures/gui/book_green.png",
 	"subtitle":"Set version to equal 0 to view",
 	"model":"patchouli:book_green",

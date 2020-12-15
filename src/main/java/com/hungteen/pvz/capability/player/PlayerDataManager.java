@@ -68,10 +68,6 @@ public class PlayerDataManager {
 			this.plantStats.plantLevel.put(plant, data.plantStats.plantLevel.get(plant));
 			this.plantStats.plantXp.put(plant, data.plantStats.plantXp.get(plant));
 		}
-//		//Inventory
-//		for(int i=0;i<PlayerUtil.MAX_SLOT_NUM;i++) {
-//			this.playerStats.setItemStack(i, data.playerStats.getItemStack(i));
-//		}
 		//Almanac
 		for(Almanacs a:Almanacs.values()) {
 			this.almanacStats.setAlmanacUnLocked(a, data.almanacStats.isAlmanacUnLocked(a));
@@ -86,15 +82,14 @@ public class PlayerDataManager {
 		@SuppressWarnings("unused")
 		private final PlayerDataManager playerDataManager;
 		private HashMap<Resources, Integer> resources = new HashMap<>(Resources.values().length);
-//		private final Inventory inventory = new Inventory(PlayerUtil.MAX_SLOT_NUM);
 		
 		private PlayerStats(PlayerDataManager dataManager) {
 			this.playerDataManager = dataManager;
-			for(Resources res:Resources.values()) {
-				if(res==Resources.TREE_LVL) resources.put(res, 1);
-				else if(res==Resources.MAX_ENERGY_NUM) resources.put(res, 1);
-				else if(res==Resources.SUN_NUM) resources.put(res, 50);
-				else if(res==Resources.SLOT_NUM) resources.put(res, 18);
+			for(Resources res : Resources.values()) {
+				if(res == Resources.TREE_LVL) resources.put(res, 1);
+				else if(res == Resources.MAX_ENERGY_NUM) resources.put(res, 1);
+				else if(res == Resources.SUN_NUM) resources.put(res, 50);
+				else if(res == Resources.SLOT_NUM) resources.put(res, 18);
 				else resources.put(res,0);
 			}
 		}
@@ -103,17 +98,10 @@ public class PlayerDataManager {
 			return resources.get(res);
 		}
 		
-//		public ItemStack getItemStack(int pos) {
-//			return this.inventory.getStackInSlot(pos);
-//		}
-//		
-//		public Inventory getInventory() {
-//			return this.inventory;
-//		}
-//		
-//		public void setItemStack(int pos, ItemStack stack) {
-//			this.inventory.setInventorySlotContents(pos, stack);
-//		}
+		public void setPlayerStats(Resources res, int num) {
+			resources.put(res, num);
+			this.sendPacket(player, res);
+		}
 		
 		public void addPlayerStats(Resources res,int num){
 			switch (res) {
@@ -152,65 +140,59 @@ public class PlayerDataManager {
 				resources.put(Resources.SLOT_NUM, now);
 				break;
 			}
+			case NO_FOG_TICK:{
+				int now = Math.min(resources.get(Resources.NO_FOG_TICK) + num, 1);
+				resources.put(Resources.NO_FOG_TICK, now);
+			}
 			default:
 				break;
 			}
-			this.sendPacket(player,res);
+			this.sendPacket(player, res);
 		}
 		
 		private void addTreeXp(int num){
-			int lvl=resources.get(Resources.TREE_LVL);
-			int now=resources.get(Resources.TREE_XP);
-			if(num>0) {
-				int req=PlayerUtil.getPlayerLevelUpXp(lvl);
-				while(lvl<PlayerUtil.MAX_TREE_LVL&&num+now>=req) {
-					num-=req-now;
+			int lvl = resources.get(Resources.TREE_LVL);
+			int now = resources.get(Resources.TREE_XP);
+			if(num > 0) {
+				int req = PlayerUtil.getPlayerLevelUpXp(lvl);
+				while(lvl < PlayerUtil.MAX_TREE_LVL && num + now >= req) {
+					num -= req - now;
 					this.addPlayerStats(Resources.TREE_LVL, 1);
-					lvl++;
-					now=0;
-					req=PlayerUtil.getPlayerLevelUpXp(lvl);
+					++ lvl;
+					now = 0;
+					req = PlayerUtil.getPlayerLevelUpXp(lvl);
 				}
-				resources.put(Resources.TREE_XP, num+now);
+				resources.put(Resources.TREE_XP, num + now);
 			}else {
-				num = -num;
-				while(lvl>1&&num>now) {
-					num-=now;
-					lvl--;
-					now=PlayerUtil.getPlayerLevelUpXp(lvl);
-					this.addPlayerStats(Resources.TREE_LVL, -1);
+				num = - num;
+				while(lvl > 1 && num > now) {
+					num -= now;
+					-- lvl;
+					now = PlayerUtil.getPlayerLevelUpXp(lvl);
+					this.addPlayerStats(Resources.TREE_LVL, - 1);
 				}
-				resources.put(Resources.TREE_XP, now-num);
+				resources.put(Resources.TREE_XP, now - num);
 			}
 		}
 		
-		public void sendPacket(PlayerEntity player,Resources res){
+		public void sendPacket(PlayerEntity player, Resources res){
 			if (player instanceof ServerPlayerEntity) {
 //				System.out.println(res.toString()+" "+resources.get(res));
 				PVZPacketHandler.CHANNEL.send(
 					PacketDistributor.PLAYER.with(()->{
 						return (ServerPlayerEntity) player;
 					}),
-					new PlayerStatsPacket(res.ordinal(),resources.get(res))
+					new PlayerStatsPacket(res.ordinal(), resources.get(res))
 				);
 			}
 		}
 		
 		private void saveToNBT(CompoundNBT baseTag) {
 			CompoundNBT statsNBT = new CompoundNBT();
-			for(Resources res:Resources.values()) {
-				statsNBT.putInt("player_"+res.toString(), resources.get(res));
+			for(Resources res : Resources.values()) {
+				statsNBT.putInt("player_" + res.toString(), resources.get(res));
 			}
 			baseTag.put("player_stats", statsNBT);
-//			ListNBT list = new ListNBT();
-//			for(int i=0;i<PlayerUtil.MAX_SLOT_NUM;i++) {
-//				if(!this.inventory.getStackInSlot(i).isEmpty()) {
-//					CompoundNBT nbt = new CompoundNBT();
-//					nbt.putInt("Slot", i);
-//					this.inventory.getStackInSlot(i).write(nbt);
-//					list.add(nbt);
-//				}
-//			}
-//			baseTag.put("Inventory", list);
 		}
 
 		private void loadFromNBT(CompoundNBT baseTag) {
@@ -222,17 +204,6 @@ public class PlayerDataManager {
 			    	}
 			    }
 			}
-//			if(baseTag.contains("Inventory")) {
-//				ListNBT list = (ListNBT) baseTag.get("Inventory");
-//				for(int i=0;i<list.size();i++) {
-//					CompoundNBT nbt = list.getCompound(i);
-//					int pos = nbt.getInt("Slot");
-//					ItemStack stack = ItemStack.read(nbt);
-//					if(!stack.isEmpty()) {
-//						this.inventory.setInventorySlotContents(pos, stack);
-//					}
-//				}
-//			}
 		}
 		
 	}
@@ -242,81 +213,63 @@ public class PlayerDataManager {
 		private final PlayerDataManager playerDataManager;
 		private HashMap<Plants, Integer> plantXp= new HashMap<Plants, Integer>(Plants.values().length);
 		private HashMap<Plants, Integer> plantLevel = new HashMap<Plants, Integer>(Plants.values().length);
-//		private HashMap<Plants, Boolean> isPlantLocked = new HashMap<Plants, Boolean>(Plants.values().length);
 		
 		private PlantStats(PlayerDataManager dataManager) {
 			this.playerDataManager=dataManager;
 			for (Plants plant : Plants.values()) {
 				plantXp.put(plant, 0);
 				plantLevel.put(plant, 1);
-//				isPlantLocked.put(plant, true);
 			}
 		}
 		
 		//get		
-		public int getPlantLevel(Plants plant)
-		{
+		public int getPlantLevel(Plants plant){
 			return this.plantLevel.get(plant);
 		}
 		
-		public int getPlantXp(Plants plant)
-		{
+		public int getPlantXp(Plants plant){
 			return this.plantXp.get(plant);
 		}
 		
-//		public boolean getIsPlantLocked(Plants plant)
-//		{
-//			return this.isPlantLocked.get(plant);
-//		}
-		
 		//add
-		public void addPlantLevel(Plants plant,int lvl){
-			int now=this.getPlantLevel(plant)+lvl;
-			int maxLvl=PlantUtil.getPlantMaxLvl(plant);
-			if(now>maxLvl) now=maxLvl;
-			else if(now<1) now=1;
+		public void addPlantLevel(Plants plant, int lvl){
+			int now = this.getPlantLevel(plant) + lvl;
+			int maxLvl = PlantUtil.getPlantMaxLvl(plant);
+			now = MathHelper.clamp(now, 1, maxLvl);
 			this.plantLevel.put(plant, now);
 			this.sendPlantPacket(player, plant);
 		}
 		
-		public void addPlantXp(Plants plant,int num){
-			int lvl=this.getPlantLevel(plant);
-			int xp=this.getPlantXp(plant)+num;
-			if(num>0) {
-				int needXp=PlantUtil.getPlantLevelUpXp(plant,lvl);
-				int maxLvl=PlantUtil.getPlantMaxLvl(plant);
-				while(lvl<maxLvl&&xp>=needXp) {
-					xp-=needXp;
+		public void addPlantXp(Plants plant, int num){
+			int lvl = this.getPlantLevel(plant);
+			int xp = this.getPlantXp(plant)+num;
+			if(num > 0) {
+				int needXp = PlantUtil.getPlantLevelUpXp(plant, lvl);
+				int maxLvl = PlantUtil.getPlantMaxLvl(plant);
+				while(lvl < maxLvl && xp >= needXp) {
+					xp -= needXp;
 					this.addPlantLevel(plant, 1);
-					lvl=this.getPlantLevel(plant);
-					needXp=PlantUtil.getPlantLevelUpXp(plant,lvl);
+					lvl = this.getPlantLevel(plant);
+					needXp = PlantUtil.getPlantLevelUpXp(plant, lvl);
 				}
-				if(lvl==maxLvl) {
+				if(lvl == maxLvl) {
 					xp=0;
 				}
-			}
-			else {
-				while(lvl>1&&xp<0) {
-					this.addPlantLevel(plant, -1);
-					lvl=this.getPlantLevel(plant);
-					int needXp=PlantUtil.getPlantLevelUpXp(plant,lvl);
-					xp+=needXp;
+			} else {
+				while(lvl > 1 && xp < 0) {
+					this.addPlantLevel(plant, - 1);
+					lvl = this.getPlantLevel(plant);
+					int needXp = PlantUtil.getPlantLevelUpXp(plant, lvl);
+					xp += needXp;
 				}
-				if(lvl==1&&xp<0) xp=0;
+				if(lvl == 1 && xp < 0) xp = 0;
 			}
 			this.plantXp.put(plant, xp);
 			this.sendPlantPacket(player, plant);
 		}
 		
-//		public void setIsPlantLocked(Plants plant ,boolean is)
-//		{
-//			this.isPlantLocked.put(plant, is);
-//			this.sendPlantPacket(player, plant);
-//		}
-		
 		public void sendPlantPacket(PlayerEntity player,Plants plant){
 			if (player instanceof ServerPlayerEntity) {
-//				System.out.println(res.toString()+" "+resources.get(res));
 				PVZPacketHandler.CHANNEL.send(
 					PacketDistributor.PLAYER.with(()->{
 						return (ServerPlayerEntity) player;
@@ -346,7 +299,6 @@ public class PlayerDataManager {
 				}
 				this.plantLevel.put(plant, plantTag.getInt("plant_lvl"));
 				this.plantXp.put(plant, plantTag.getInt("plant_exp"));
-//				this.isPlantLocked.put(plant,plantTag.getBoolean("PlantLockedxx"));
 			}
 		}
 	}
@@ -358,7 +310,7 @@ public class PlayerDataManager {
 		
 		public AlmanacStats(PlayerDataManager manager) {
 			this.manager = manager;
-			for(Almanacs a:Almanacs.values()) {
+			for(Almanacs a : Almanacs.values()) {
 				unLock.put(a, false);
 			}
 			unLock.put(Almanacs.PLAYER, true);
@@ -387,7 +339,7 @@ public class PlayerDataManager {
 		private void saveToNBT(CompoundNBT baseTag) {
 			CompoundNBT statsNBT = new CompoundNBT();
 			for(Almanacs a:Almanacs.values()) {
-				statsNBT.putBoolean("lock_"+a.toString().toLowerCase(), unLock.get(a));
+				statsNBT.putBoolean("lock_" + a.toString().toLowerCase(), unLock.get(a));
 			}
 			baseTag.put("almanacs_lock", statsNBT);
 		}
@@ -396,8 +348,8 @@ public class PlayerDataManager {
 			if(baseTag.contains("almanacs_lock")) {
 			    CompoundNBT statsTag = baseTag.getCompound("almanacs_lock");
 			    for(Almanacs a:Almanacs.values()) {
-			    	if(statsTag.contains("lock_"+a.toString().toLowerCase())) {
-				        unLock.put(a, statsTag.getBoolean("lock_"+a.toString().toLowerCase()));
+			    	if(statsTag.contains("lock_" + a.toString().toLowerCase())) {
+				        unLock.put(a, statsTag.getBoolean("lock_" + a.toString().toLowerCase()));
 			    	}
 			    }
 			}

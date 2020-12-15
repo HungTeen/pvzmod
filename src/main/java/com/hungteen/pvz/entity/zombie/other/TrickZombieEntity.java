@@ -1,5 +1,6 @@
 package com.hungteen.pvz.entity.zombie.other;
 
+import com.hungteen.pvz.PVZConfig;
 import com.hungteen.pvz.data.loot.PVZLoot;
 import com.hungteen.pvz.entity.zombie.PVZZombieEntity;
 import com.hungteen.pvz.register.EffectRegister;
@@ -56,10 +57,12 @@ public class TrickZombieEntity extends PVZZombieEntity{
 	
 	@Override
 	protected boolean processInteract(PlayerEntity player, Hand hand) {
-		if(!world.isRemote && player.getHeldItem(hand).getItem() == ItemRegister.CANDY.get() && !this.isCharmed()) {
-		    player.getHeldItem(hand).shrink(1);
-			this.setCharmed(true);
-			return true;
+		if(! world.isRemote && player.getHeldItem(hand).getItem() == ItemRegister.CANDY.get() && ! this.isCharmed()) {
+			if(this.getRNG().nextInt(PVZConfig.COMMON_CONFIG.EntitySettings.TrickZombieCharmChance.get()) == 0) {
+				player.getHeldItem(hand).shrink(1);
+			    this.setCharmed(true);
+			    return true;
+			}
 		}
 		return super.processInteract(player, hand);
 	}

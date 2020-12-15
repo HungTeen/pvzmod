@@ -249,6 +249,11 @@
     "item.pvz.doom_shroom_spawn_egg":"毁灭菇刷怪蛋",
     "item.pvz.doom_shroom_card":"毁灭菇卡",
     "item.pvz.doom_shroom_enjoy_card":"毁灭菇体验卡",
+//SeaShroom
+    "entity.pvz.sea_shroom":"水兵菇",
+    "item.pvz.sea_shroom_spawn_egg":"水兵菇刷怪蛋",
+    "item.pvz.sea_shroom_card":"水兵菇卡",
+    "item.pvz.sea_shroom_enjoy_card":"水兵菇体验卡",
 //Pumpkin
     "entity.pvz.pumpkin":"南瓜头",
     "item.pvz.pumpkin_card":"南瓜头卡",
@@ -258,7 +263,7 @@
     "item.pvz.coffee_bean_spawn_egg":"咖啡豆刷怪蛋",
     "item.pvz.coffee_bean_card":"咖啡豆卡",
     "item.pvz.coffee_bean_enjoy_card":"咖啡豆体验卡",
-//CoffeeBean
+//MariGold
     "entity.pvz.marigold":"金盏花",
     "item.pvz.marigold_spawn_egg":"金盏花刷怪蛋",
     "item.pvz.marigold_card":"金盏花卡",
@@ -527,6 +532,7 @@
     "effect.pvz.cold":"寒冷",
     "effect.pvz.frozen":"冰封",
     "effect.pvz.excite":"兴奋",
+    "effect.pvz.light_eye":"光眼",
     "item.minecraft.potion.effect.excite_potion_1":"兴奋药水",
     "item.minecraft.potion.effect.excite_potion_2":"兴奋药水",
     "item.minecraft.potion.effect.excite_potion_3":"兴奋药水",
@@ -536,6 +542,12 @@
     "item.minecraft.lingering_potion.effect.excite_potion_1":"滞留型兴奋药水",
     "item.minecraft.lingering_potion.effect.excite_potion_2":"滞留型兴奋药水",
     "item.minecraft.lingering_potion.effect.excite_potion_3":"滞留型兴奋药水",
+    "item.minecraft.potion.effect.light_eye_potion_1":"光眼药水",
+    "item.minecraft.potion.effect.light_eye_potion_2":"光眼药水",
+    "item.minecraft.splash_potion.effect.light_eye_potion_1":"喷溅型光眼药水",
+    "item.minecraft.splash_potion.effect.light_eye_potion_2":"喷溅型光眼药水",
+    "item.minecraft.lingering_potion.effect.light_eye_potion_1":"滞留型光眼药水",
+    "item.minecraft.lingering_potion.effect.light_eye_potion_2":"滞留型光眼药水",
 //event
     "event.pvz.zombie_attack":"僵尸即将到来",
     "event.pvz.huge_wave":"一大波僵尸正在来袭 !",
@@ -545,6 +557,7 @@
     "event.pvz.newspaper":"报纸入侵",
     "event.pvz.football":"橄榄球入侵",
     "event.pvz.random":"随机入侵",
+    "event.pvz.fog":"迷雾入侵",
 //death
     "death.attack.pvz_normal":"%s被打死了",
     "death.attack.pvz_weak":"%s虚弱而亡",

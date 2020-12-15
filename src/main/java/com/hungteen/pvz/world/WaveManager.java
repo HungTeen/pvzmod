@@ -41,6 +41,7 @@ public class WaveManager {
 	private final List<Zombies> spawns = new ArrayList<>(); 
 	private final int[] minSpawnCounts = new int[] {8, 12, 16, 21, 28};
 	private final int[] maxSpawnCounts = new int[] {15, 20, 25, 32, 40};
+	public int spawnCnt = 0;
 	
 	public WaveManager(PlayerEntity player, int waveNum) {
 		this.world = player.world;
@@ -140,6 +141,7 @@ public class WaveManager {
 	}
 	
 	private int getSpawnCount() {
+		if(this.spawnCnt != 0) return this.spawnCnt;
 		int minCnt = this.minSpawnCounts[this.currentWave];
 		int maxCnt = this.maxSpawnCounts[this.currentWave];
 		return this.world.rand.nextInt(maxCnt - minCnt + 1) + minCnt;
