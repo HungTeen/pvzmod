@@ -14,6 +14,7 @@ public class PVZFoodItem extends Item{
 	public static final Food CANDY = (new Food.Builder()).hunger(1).saturation(0.4F).build();
 	public static final Food CHOCOLATE = (new Food.Builder()).hunger(3).saturation(1F).build();
 	public static final Food PEA_SOUP = (new Food.Builder()).hunger(5).saturation(0.6f).build();
+	public static final Food COOKED_BRAIN = (new Food.Builder()).hunger(7).saturation(1.0f).build();
 	
 	public PVZFoodItem(Food food) {
 		super(new Item.Properties().group(ItemGroup.FOOD).food(food));

@@ -7,9 +7,10 @@ import com.hungteen.pvz.utils.enums.Events;
 import com.hungteen.pvz.utils.enums.Resources;
 import com.hungteen.pvz.world.data.WorldEventData;
 
-import net.minecraft.client.Minecraft;
 import net.minecraft.entity.Pose;
+import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.world.World;
+import net.minecraft.world.dimension.DimensionType;
 
 public class FogManager {
 
@@ -17,7 +18,7 @@ public class FogManager {
 		world.getPlayers().forEach((player)->{
 			player.getCapability(CapabilityHandler.PLAYER_DATA_CAPABILITY).ifPresent((l)->{
 				int now = l.getPlayerData().getPlayerStats().getPlayerStats(Resources.NO_FOG_TICK);
-				if(shouldFogOn(world)) {
+				if(shouldFogOn(world, player)) {
 					++ now;
 				} else {
 					now = Math.min(now, 0);
@@ -27,9 +28,8 @@ public class FogManager {
 		});
 	}
 	
-	private static boolean shouldFogOn(World world) {
-		Minecraft mc = Minecraft.getInstance();
-		return ! world.isDaytime() && WorldEventData.getOverWorldEventData(world).hasEvent(Events.FOG) && (mc.player != null && PlayerUtil.isPlayerSurvival(mc.player) && mc.player.getSubmergedHeight() < 1.2f 
-				&& mc.player.getPose() != Pose.SWIMMING && ! mc.player.isPotionActive(EffectRegister.LIGHT_EYE_EFFECT.get()));
+	private static boolean shouldFogOn(World world, PlayerEntity player) {
+		return world.getDimension().getType() == DimensionType.OVERWORLD && ! world.isDaytime() && WorldEventData.getOverWorldEventData(world).hasEvent(Events.FOG) && (player != null && PlayerUtil.isPlayerSurvival(player) && player.getSubmergedHeight() < 1.2f 
+				&& player.getPose() != Pose.SWIMMING && ! player.isPotionActive(EffectRegister.LIGHT_EYE_EFFECT.get()));
 	}
 }

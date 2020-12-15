@@ -27,6 +27,7 @@ import net.minecraft.util.text.TextFormatting;
 import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraft.world.Difficulty;
 import net.minecraft.world.World;
+import net.minecraft.world.dimension.DimensionType;
 import net.minecraft.world.gen.Heightmap;
 import net.minecraft.world.gen.Heightmap.Type;
 
@@ -77,6 +78,7 @@ public class WaveManager {
 	}
 	
 	public void spawnWaveZombies() {
+		if(world.getDimension().getType() != DimensionType.OVERWORLD) return ;
 		BlockPos mid = this.findRandomSpawnPos(20);
 		if(mid == null) {// no position do not spawn.
 			return ;
