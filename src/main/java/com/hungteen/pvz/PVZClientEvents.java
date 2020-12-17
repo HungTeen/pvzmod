@@ -50,6 +50,7 @@ public class PVZClientEvents {
 		RenderTypeLookup.setRenderLayer(BlockRegister.NUT_LEAVES.get(), RenderType.getCutout());
 		RenderTypeLookup.setRenderLayer(BlockRegister.NUT_SAPLING.get(), RenderType.getCutout());
 		RenderTypeLookup.setRenderLayer(BlockRegister.TOXIC_SHROOM.get(), RenderType.getCutout());
+		RenderTypeLookup.setRenderLayer(BlockRegister.LANTERN.get(), RenderType.getTranslucent());
 	}
 	
 	@SubscribeEvent

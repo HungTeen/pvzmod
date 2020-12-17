@@ -11,6 +11,7 @@ import com.hungteen.pvz.block.plants.LilyPadBlock;
 import com.hungteen.pvz.block.plants.PVZSaplingBlock;
 import com.hungteen.pvz.block.plants.PeaBlock;
 import com.hungteen.pvz.block.plants.ToxicShroomBlock;
+import com.hungteen.pvz.block.special.LanternBlock;
 import com.hungteen.pvz.item.blockitem.LilyPadItem;
 import com.hungteen.pvz.world.feature.tree.NutTree;
 
@@ -71,6 +72,9 @@ public class BlockRegister {
 	public static final RegistryObject<Block> CHOMPER = BLOCKS.register("chomper", ChomperBlock::new);
 	public static final RegistryObject<LilyPadBlock> LILY_PAD = BLOCKS.register("lily_pad", LilyPadBlock::new);
 	
+	//special
+	public static final RegistryObject<Block> LANTERN = BLOCKS.register("lantern", LanternBlock::new);
+	
 	//tileentity block
 	
 	/**
@@ -80,12 +84,13 @@ public class BlockRegister {
 	public static void registerBlockItem(RegistryEvent.Register<Item> ev){
 		IForgeRegistry<Item> items = ev.getRegistry();
 		List<RegistryObject<? extends Block>> blocks = Arrays.asList(
-				ORIGIN_ORE,APPEASE_ORE,LIGHT_ORE,EXPLOSION_ORE,DEFENCE_ORE,ICE_ORE,ENFORCE_ORE,TOXIC_ORE,ASSIST_ORE,MAGIC_ORE,FLAME_ORE,SPEAR_ORE,ARMA_ORE,ELECTRIC_ORE,SHADOW_ORE,AMETHYST_ORE,
-				STEEL_BLOCK,AMETHYST_BLOCK,ORIGIN_BLOCK,
-				NUT_LEAVES,NUT_SAPLING,CHOMPER,LILY_PAD
+				ORIGIN_ORE, APPEASE_ORE, LIGHT_ORE, EXPLOSION_ORE, DEFENCE_ORE, ICE_ORE, ENFORCE_ORE, TOXIC_ORE, ASSIST_ORE, MAGIC_ORE, FLAME_ORE, SPEAR_ORE, ARMA_ORE, ELECTRIC_ORE, SHADOW_ORE, AMETHYST_ORE,
+				STEEL_BLOCK, AMETHYST_BLOCK, ORIGIN_BLOCK,
+				NUT_LEAVES, NUT_SAPLING, CHOMPER, LILY_PAD,
+				LANTERN
 		);
 		for(RegistryObject<? extends Block> block:blocks) {
-			if(block==LILY_PAD) {
+			if(block == LILY_PAD) {
 				items.register(new LilyPadItem().setRegistryName(block.get().getRegistryName()));
 			}else {
 				items.register(new BlockItem(block.get(),new Item.Properties().group(GroupRegister.PVZ_MISC)).setRegistryName(block.get().getRegistryName()));
