@@ -116,6 +116,8 @@ public class ItemRegister {
     public static final RegistryObject<PlantCardItem> TALL_NUT_ENJOY_CARD = registerCard(Plants.TALL_NUT, true);
     public static final RegistryObject<PlantCardItem> SEA_SHROOM_CARD = registerCard(Plants.SEA_SHROOM, false);
     public static final RegistryObject<PlantCardItem> SEA_SHROOM_ENJOY_CARD = registerCard(Plants.SEA_SHROOM, true);
+    public static final RegistryObject<PlantCardItem> SPLIT_PEA_CARD = registerCard(Plants.SPLIT_PEA, false);
+    public static final RegistryObject<PlantCardItem> SPLIT_PEA_ENJOY_CARD = registerCard(Plants.SPLIT_PEA, true);
     public static final RegistryObject<PlantCardItem> PUMPKIN_CARD = registerCard(Plants.PUMPKIN, false);
     public static final RegistryObject<PlantCardItem> PUMPKIN_ENJOY_CARD = registerCard(Plants.PUMPKIN, true);
     public static final RegistryObject<PlantCardItem> COFFEE_BEAN_CARD = registerCard(Plants.COFFEE_BEAN, false);
@@ -244,6 +246,7 @@ public class ItemRegister {
 	public static final RegistryObject<PVZSpawnEggItem> TORCH_WOOD_SPAWN_EGG = registerSpawnEgg("torch_wood", EntityRegister.TORCH_WOOD, Colors.FLAME_COLOR);
 	public static final RegistryObject<PVZSpawnEggItem> TALL_NUT_SPAWN_EGG = registerSpawnEgg("tall_nut", EntityRegister.TALL_NUT, Colors.DEFENCE_COLOR);
 	public static final RegistryObject<PVZSpawnEggItem> SEA_SHROOM_SPAWN_EGG = registerSpawnEgg("sea_shroom", EntityRegister.SEA_SHROOM, Colors.TOXIC_COLOR);
+	public static final RegistryObject<PVZSpawnEggItem> SPLIT_PEA_SPAWN_EGG = registerSpawnEgg("split_pea", EntityRegister.SPLIT_PEA, Colors.APPEASE_COLOR);
 	public static final RegistryObject<PVZSpawnEggItem> COFFEE_BEAN_SPAWN_EGG = registerSpawnEgg("coffee_bean", EntityRegister.COFFEE_BEAN, Colors.MAGIC_COLOR);
 	public static final RegistryObject<PVZSpawnEggItem> MARIGOLD_SPAWN_EGG = registerSpawnEgg("marigold", EntityRegister.MARIGOLD, Colors.MAGIC_COLOR);
 	public static final RegistryObject<PVZSpawnEggItem> GATLING_PEA_SPAWN_EGG = registerSpawnEgg("gatling_pea", EntityRegister.GATLING_PEA, Colors.APPEASE_COLOR);

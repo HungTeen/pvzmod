@@ -18,6 +18,7 @@ import com.hungteen.pvz.entity.npc.PanneyEntity;
 import com.hungteen.pvz.entity.plant.appease.GatlingPeaEntity;
 import com.hungteen.pvz.entity.plant.appease.PeaShooterEntity;
 import com.hungteen.pvz.entity.plant.appease.RepeaterEntity;
+import com.hungteen.pvz.entity.plant.appease.SplitPeaEntity;
 import com.hungteen.pvz.entity.plant.appease.ThreePeaterEntity;
 import com.hungteen.pvz.entity.plant.assist.GraveBusterEntity;
 import com.hungteen.pvz.entity.plant.defence.TallNutEntity;
@@ -90,6 +91,7 @@ import com.hungteen.pvz.render.entity.npc.PanneyRender;
 import com.hungteen.pvz.render.entity.plant.appease.GatlingPeaRender;
 import com.hungteen.pvz.render.entity.plant.appease.PeaShooterRender;
 import com.hungteen.pvz.render.entity.plant.appease.RepeaterRender;
+import com.hungteen.pvz.render.entity.plant.appease.SplitPeaRender;
 import com.hungteen.pvz.render.entity.plant.appease.ThreePeaterRender;
 import com.hungteen.pvz.render.entity.plant.assist.GraveBusterRender;
 import com.hungteen.pvz.render.entity.plant.defence.TallNutRender;
@@ -244,6 +246,7 @@ public class EntityRegister {
 	public static final RegistryObject<EntityType<IceShroomEntity>> ICE_SHROOM = registerEntityType(IceShroomEntity::new, "ice_shroom", EntityClassification.CREATURE);
 	public static final RegistryObject<EntityType<DoomShroomEntity>> DOOM_SHROOM = registerEntityType(DoomShroomEntity::new, "doom_shroom", EntityClassification.CREATURE);
 	public static final RegistryObject<EntityType<SeaShroomEntity>> SEA_SHROOM = registerEntityType(SeaShroomEntity::new, "sea_shroom", EntityClassification.CREATURE);
+	public static final RegistryObject<EntityType<SplitPeaEntity>> SPLIT_PEA = registerEntityType(SplitPeaEntity::new, "split_pea", EntityClassification.CREATURE);
 	public static final RegistryObject<EntityType<CoffeeBeanEntity>> COFFEE_BEAN = registerEntityType(CoffeeBeanEntity::new, "coffee_bean", EntityClassification.CREATURE);
 	public static final RegistryObject<EntityType<MariGoldEntity>> MARIGOLD = registerEntityType(MariGoldEntity::new, "marigold", EntityClassification.CREATURE);
 	public static final RegistryObject<EntityType<GatlingPeaEntity>> GATLING_PEA = registerEntityType(GatlingPeaEntity::new, "gatling_pea", EntityClassification.CREATURE);
@@ -335,6 +338,7 @@ public class EntityRegister {
         RenderingRegistry.registerEntityRenderingHandler(DOOM_SHROOM.get(), DoomShroomRender::new);
         
         RenderingRegistry.registerEntityRenderingHandler(SEA_SHROOM.get(), SeaShroomRender::new);
+        RenderingRegistry.registerEntityRenderingHandler(SPLIT_PEA.get(), SplitPeaRender::new);
         
         RenderingRegistry.registerEntityRenderingHandler(COFFEE_BEAN.get(), CoffeeBeanRender::new);
         RenderingRegistry.registerEntityRenderingHandler(MARIGOLD.get(), MariGoldRender::new);
