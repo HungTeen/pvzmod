@@ -42,7 +42,7 @@ public class EntityUtil {
 	}
 	
 	public static void playSound(Entity entity, SoundEvent ev) {
-		entity.playSound(ev, 1.0F, 1.0F / (RAND.nextFloat() * 0.4F + 0.8F));
+		entity.playSound(ev, 1.0F, RAND.nextFloat() * 0.2F + 0.9F);
 	}
 
 	/**

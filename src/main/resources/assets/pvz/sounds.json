@@ -166,5 +166,13 @@
     "warn":{
         "subtitle": "sound.pvz.warn",
         "sounds":[{"name":"pvz:ambient/warn1"},{"name":"pvz:ambient/warn2"}]
+    },
+    "jack_say":{
+        "subtitle": "sound.pvz.jack_say",
+        "sounds":[{"name":"pvz:entity/zombie/say/jack_say"}]
+    },
+    "jack_surprise":{
+        "subtitle": "sound.pvz.jack_surprise",
+        "sounds":[{"name":"pvz:entity/zombie/act/jack_surprise1"},{"name":"pvz:entity/zombie/act/jack_surprise2"}]
     }
 }
