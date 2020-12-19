@@ -143,6 +143,12 @@ public class PlayerDataManager {
 			case NO_FOG_TICK:{
 				int now = Math.min(resources.get(Resources.NO_FOG_TICK) + num, 1);
 				resources.put(Resources.NO_FOG_TICK, now);
+				break;
+			}
+			case GEM_NUM:{
+				int now = Math.min(resources.get(Resources.GEM_NUM) + 1, 99999999);
+				resources.put(Resources.GEM_NUM, now);
+				break;
 			}
 			default:
 				break;

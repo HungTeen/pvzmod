@@ -26,7 +26,7 @@ public class CoinModel extends EntityModel<Entity> {
 
 	@Override
 	public void setRotationAngles(Entity entity, float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch){
-		this.coin.rotateAngleY=ageInTicks/50;
+		this.coin.rotateAngleY = ageInTicks / 10;
 	}
 
 	@Override

@@ -159,6 +159,10 @@ public class PVZConfig {
 							.comment("how many ticks can plant entity live.")
 							.worldRestart()
 							.defineInRange("PlantLiveTick", 48000, 1, 1000000);
+					EntitySettings.EntityLiveTick.YetiLiveTick = builder
+							.comment("how many ticks can yeti entity live(how long will it stay).")
+							.worldRestart()
+							.defineInRange("YetiLiveTick", 2400, 1, 1000000);
 				}
 				builder.pop();
 			}
@@ -249,6 +253,7 @@ public class PVZConfig {
 				public ForgeConfigSpec.IntValue EnergyLiveTick;
 				public ForgeConfigSpec.IntValue BulletLiveTick;
 				public ForgeConfigSpec.IntValue PlantLiveTick;
+				public ForgeConfigSpec.IntValue YetiLiveTick;
 			}
 			
 		}

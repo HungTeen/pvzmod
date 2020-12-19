@@ -22,7 +22,7 @@ public class JewelEntity extends DropEntity{
 
 	public JewelEntity(EntityType<? extends MobEntity> type, World worldIn) {
 		super(type, worldIn);
-		this.setAmount(1000);
+		this.setAmount(1);
 	}
 
 	@Override
@@ -37,7 +37,7 @@ public class JewelEntity extends DropEntity{
 	@Override
 	public void onCollideWithPlayer(PlayerEntity entityIn) {
 		if(!this.world.isRemote) {
-			PlayerUtil.addPlayerStats(entityIn, Resources.MONEY, this.getAmount());
+			PlayerUtil.addPlayerStats(entityIn, Resources.GEM_NUM, this.getAmount());
 		}
 		else {
 			EntityUtil.playSound(entityIn, SoundRegister.JEWEL_PICK.get());

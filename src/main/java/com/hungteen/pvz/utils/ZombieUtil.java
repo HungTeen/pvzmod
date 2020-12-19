@@ -77,6 +77,7 @@ public class ZombieUtil {
 		//pool night
 		putZombieInfoToMap(Zombies.JACK_IN_BOX_ZOMBIE, Ranks.GREEN, EntityRegister.JACK_IN_BOX_ZOMBIE);
 		putZombieInfoToMap(Zombies.POGO_ZOMBIE, Ranks.GREEN, EntityRegister.POGO_ZOMBIE);
+		putZombieInfoToMap(Zombies.YETI_ZOMBIE, Ranks.BLUE, EntityRegister.YETI_ZOMBIE);
 		//other
 		putZombieInfoToMap(Zombies.PUMPKIN_ZOMBIE, Ranks.PURPLE, EntityRegister.PUMPKIN_ZOMBIE);
 		putZombieInfoToMap(Zombies.TRICK_ZOMBIE, Ranks.GRAY, EntityRegister.TRICK_ZOMBIE);
