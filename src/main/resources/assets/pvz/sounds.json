@@ -174,5 +174,9 @@
     "jack_surprise":{
         "subtitle": "sound.pvz.jack_surprise",
         "sounds":[{"name":"pvz:entity/zombie/act/jack_surprise1"},{"name":"pvz:entity/zombie/act/jack_surprise2"}]
+    },
+    "pogo":{
+        "subtitle": "sound.pvz.pogo",
+        "sounds":[{"name":"pvz:ambient/pogo"}]
     }
 }
