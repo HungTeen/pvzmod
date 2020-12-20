@@ -4,9 +4,7 @@ import java.util.UUID;
 
 import javax.annotation.Nullable;
 
-import com.hungteen.pvz.entity.PVZMultiPartEntity;
 import com.hungteen.pvz.utils.EntityUtil;
-import com.hungteen.pvz.utils.interfaces.IMultiPartEntity;
 
 import it.unimi.dsi.fastutil.ints.IntOpenHashSet;
 import net.minecraft.entity.Entity;
@@ -138,22 +136,7 @@ public abstract class AbstractBulletEntity extends Entity implements IProjectile
 	}
 
 	protected void addHitEntity(Entity entity) {
-		if(entity instanceof PVZMultiPartEntity) {
-			LivingEntity owner = ((PVZMultiPartEntity) entity).getOwner();
-			if(owner == null) {
-				this.hitEntities.add(entity.getEntityId());
-			}else {
-				IMultiPartEntity parent = ((PVZMultiPartEntity) entity).getParent();
-				for(Entity target : parent.getParts()) {
-				    if(target != null) {
-				    	this.hitEntities.add(target.getEntityId());
-				    }
-				}
-				this.hitEntities.add(owner.getEntityId());
-			}
-		}else {
-			this.hitEntities.add(entity.getEntityId());
-		}
+		this.hitEntities.addAll(EntityUtil.getOwnerAndPartsID(entity));
 	}
 	
 	protected boolean checkCanAttack(Entity target){

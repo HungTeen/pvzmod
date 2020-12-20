@@ -14,6 +14,7 @@ import com.hungteen.pvz.entity.plant.enforce.SquashEntity;
 import com.hungteen.pvz.entity.plant.magic.CoffeeBeanEntity;
 import com.hungteen.pvz.entity.plant.spear.SpikeWeedEntity;
 import com.hungteen.pvz.entity.zombie.grassnight.TombStoneEntity;
+import com.hungteen.pvz.entity.zombie.poolnight.DiggerZombieEntity;
 import com.hungteen.pvz.item.tool.card.PlantCardItem;
 import com.hungteen.pvz.misc.damage.PVZDamageSource;
 import com.hungteen.pvz.register.EntityRegister;
@@ -271,11 +272,14 @@ public abstract class PVZPlantEntity extends CreatureEntity implements IPVZPlant
 			double y2 = MathHelper.floor(y1);
 			BlockPos pos = (Math.abs(y1 - y2) <= 0.01D ? this.getPosition().down() : this.getPosition());
 			Block current = world.getBlockState(pos).getBlock();
-			return ! PlantUtil.getPlantSuitBlock(getPlantEnumName()).stream().anyMatch((block)->{return block == current;});
+			return ! PlantUtil.getPlantSuitBlock(getPlantEnumName()).stream().anyMatch((block) -> {return block == current;});
 		}
 	}
 	
 	public boolean checkCanPlantTarget(LivingEntity entity){
+		if(entity instanceof DiggerZombieEntity) {
+			return ((DiggerZombieEntity) entity).getAnimTime() == DiggerZombieEntity.MAX_ANIM_TIME;
+		}
 		return EntityUtil.checkCanEntityAttack(this, entity);
 	}
 	

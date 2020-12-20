@@ -14,7 +14,9 @@ import com.hungteen.pvz.entity.npc.CrazyDaveEntity;
 import com.hungteen.pvz.entity.plant.PVZPlantEntity;
 import com.hungteen.pvz.entity.zombie.PVZZombieEntity;
 import com.hungteen.pvz.register.EffectRegister;
+import com.hungteen.pvz.utils.interfaces.IMultiPartEntity;
 
+import it.unimi.dsi.fastutil.ints.IntOpenHashSet;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
 import net.minecraft.entity.Entity;
@@ -139,10 +141,10 @@ public class EntityUtil {
 		if(target instanceof PVZMultiPartEntity) {//can attack its owner then can attack it
 			target = ((PVZMultiPartEntity) target).getOwner();
 		}
-		if(attacker==null || target==null) {//prevent crash
+		if(attacker == null || target == null) {//prevent crash
 			return false;
 		}
-		if(!target.isAlive() || !attacker.isAlive()) {//need be a alive entity
+		if(! target.isAlive() || ! attacker.isAlive()) {//need be a alive entity
 			return false;
 		}
 		World world = attacker.world;
@@ -154,9 +156,9 @@ public class EntityUtil {
 		if(PVZConfig.COMMON_CONFIG.EntitySettings.TeamAttack.get()) {//enable team attack
 			Team team1 = getEntityTeam(world, attacker);
 			Team team2 = getEntityTeam(world, target);
-			if(team1 != null && team2!=null) {
+			if(team1 != null && team2 != null) {
 				boolean change = isEntityCharmed(attacker) ^ isEntityCharmed(target);
-				return change ? team1.isSameTeam(team2) : !team1.isSameTeam(team2);
+				return change ? team1.isSameTeam(team2) : ! team1.isSameTeam(team2);
 			}
 		}
 		int attackerGroup = getEntityGroup(attacker);
@@ -182,9 +184,9 @@ public class EntityUtil {
 		}
 		if(entity instanceof PVZPlantEntity) {
 			group = ((PVZPlantEntity) entity).isCharmed() ? -1 : 1;
-		}else if(entity instanceof CrazyDaveEntity){
+		} else if(entity instanceof CrazyDaveEntity){
 			group = 1;
-		}else if(entity instanceof MonsterEntity) {
+		} else if(entity instanceof MonsterEntity) {
 			group = -1;
 			if(entity instanceof PVZZombieEntity) {
 				group = ((PVZZombieEntity) entity).isCharmed() ? 1 : -1;
@@ -246,6 +248,58 @@ public class EntityUtil {
 			if(attacker != entity && checkCanEntityAttack(attacker, entity)) {
 				list.add(entity);
 			}
+		}
+		return list;
+	}
+	
+	/**
+	 * get final attack entities for explosion or other range attack.
+	 */
+	public static List<Entity> getAttackEntities(LivingEntity attacker, AxisAlignedBB aabb) {
+		IntOpenHashSet set = new IntOpenHashSet();
+		List<Entity> list = new ArrayList<>();
+		List<Entity> targets = getEntityAttackableTarget(attacker, aabb);
+		targets.forEach((target) -> {//owner first.
+			if(! (target instanceof PVZMultiPartEntity)) {
+				if(! set.contains(target.getEntityId())) {
+					set.addAll(getOwnerAndPartsID(target));
+					list.add(target);
+				}
+			}
+		});
+		targets.forEach((target) -> {//deal with part.
+			if(! set.contains(target.getEntityId())) {
+				set.addAll(getOwnerAndPartsID(target));
+				list.add(target);
+			}
+		});
+		return list;
+	}
+	
+	public static List<Integer> getOwnerAndPartsID(Entity entity){
+		List<Integer> list = new ArrayList<>();
+		if(entity instanceof PVZMultiPartEntity) {//the entity is a part.
+			LivingEntity owner = ((PVZMultiPartEntity) entity).getOwner();
+			if(owner == null) {// no owner
+				list.add(entity.getEntityId());
+			}else {// get all id for owner's parts
+				IMultiPartEntity parent = ((PVZMultiPartEntity) entity).getParent();
+				for(Entity target : parent.getParts()) {
+				    if(target != null) {
+				    	list.add(target.getEntityId());
+				    }
+				}
+				list.add(owner.getEntityId());
+			}
+		} else if(entity instanceof IMultiPartEntity){
+			for(Entity target : ((IMultiPartEntity) entity).getParts()) {
+			    if(target != null) {
+			    	list.add(target.getEntityId());
+			    }
+			}
+			list.add(entity.getEntityId());
+		} else {
+			list.add(entity.getEntityId());
 		}
 		return list;
 	}

@@ -10,7 +10,6 @@ import com.hungteen.pvz.utils.enums.Plants;
 import net.minecraft.entity.CreatureEntity;
 import net.minecraft.entity.EntitySize;
 import net.minecraft.entity.EntityType;
-import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.Pose;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.world.World;
@@ -26,10 +25,10 @@ public class CherryBombEntity extends PlantBomberEntity{
 //		System.out.println(this.world.isRemote);
 		if(!this.world.isRemote) {
 			float len = this.getExpRange();
-			AxisAlignedBB aabb=EntityUtil.getEntityAABB(this, len, len);
-			for(LivingEntity entity : EntityUtil.getEntityTargetableEntity(this, aabb)) {
-				 entity.attackEntityFrom(PVZDamageSource.causeExplosionDamage(this, this), this.getAttackDamage());
-			}
+			AxisAlignedBB aabb = EntityUtil.getEntityAABB(this, len, len);
+			EntityUtil.getAttackEntities(this, aabb).forEach((target) -> {
+				target.attackEntityFrom(PVZDamageSource.causeExplosionDamage(this, this), this.getAttackDamage());
+			});
 			EntityUtil.playSound(this, SoundRegister.CHERRY_BOMB.get());
 		}
 		for(int i = 0; i < 5; ++ i) {

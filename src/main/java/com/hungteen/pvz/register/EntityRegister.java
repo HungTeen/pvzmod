@@ -73,6 +73,7 @@ import com.hungteen.pvz.entity.zombie.poolday.LavaZombieEntity;
 import com.hungteen.pvz.entity.zombie.poolday.SnorkelZombieEntity;
 import com.hungteen.pvz.entity.zombie.poolday.ZombieDolphinEntity;
 import com.hungteen.pvz.entity.zombie.poolday.ZomboniEntity;
+import com.hungteen.pvz.entity.zombie.poolnight.DiggerZombieEntity;
 import com.hungteen.pvz.entity.zombie.poolnight.JackInBoxZombieEntity;
 import com.hungteen.pvz.entity.zombie.poolnight.PogoZombieEntity;
 import com.hungteen.pvz.entity.zombie.poolnight.YetiZombieEntity;
@@ -148,6 +149,7 @@ import com.hungteen.pvz.render.entity.zombie.poolday.LavaZombieRender;
 import com.hungteen.pvz.render.entity.zombie.poolday.SnorkelZombieRender;
 import com.hungteen.pvz.render.entity.zombie.poolday.ZombieDolphinRender;
 import com.hungteen.pvz.render.entity.zombie.poolday.ZomboniRender;
+import com.hungteen.pvz.render.entity.zombie.poolnight.DiggerZombieRender;
 import com.hungteen.pvz.render.entity.zombie.poolnight.JackInBoxZombieRender;
 import com.hungteen.pvz.render.entity.zombie.poolnight.PogoZombieRender;
 import com.hungteen.pvz.render.entity.zombie.poolnight.YetiZombieRender;
@@ -229,6 +231,7 @@ public class EntityRegister {
 	public static final RegistryObject<EntityType<JackInBoxZombieEntity>> JACK_IN_BOX_ZOMBIE = registerEntityType(JackInBoxZombieEntity::new, "jack_in_box_zombie", EntityClassification.MONSTER);
 	public static final RegistryObject<EntityType<PogoZombieEntity>> POGO_ZOMBIE = registerEntityType(PogoZombieEntity::new, "pogo_zombie", EntityClassification.MONSTER);
 	public static final RegistryObject<EntityType<YetiZombieEntity>> YETI_ZOMBIE = registerEntityType(YetiZombieEntity::new, "yeti_zombie", EntityClassification.MONSTER);
+	public static final RegistryObject<EntityType<DiggerZombieEntity>> DIGGER_ZOMBIE = registerEntityType(DiggerZombieEntity::new, "digger_zombie", EntityClassification.MONSTER);
 	
 	//plant
 	public static final RegistryObject<EntityType<PeaShooterEntity>> PEA_SHOOTER = registerEntityType(PeaShooterEntity::new, "pea_shooter", EntityClassification.CREATURE);
@@ -322,6 +325,7 @@ public class EntityRegister {
         RenderingRegistry.registerEntityRenderingHandler(JACK_IN_BOX_ZOMBIE.get(), JackInBoxZombieRender::new);
         RenderingRegistry.registerEntityRenderingHandler(POGO_ZOMBIE.get(), PogoZombieRender::new);
         RenderingRegistry.registerEntityRenderingHandler(YETI_ZOMBIE.get(), YetiZombieRender::new);
+        RenderingRegistry.registerEntityRenderingHandler(DIGGER_ZOMBIE.get(), DiggerZombieRender::new);
         
         //plant
         RenderingRegistry.registerEntityRenderingHandler(PEA_SHOOTER.get(), PeaShooterRender::new);

@@ -16,7 +16,6 @@ import net.minecraft.block.Blocks;
 import net.minecraft.entity.CreatureEntity;
 import net.minecraft.entity.EntitySize;
 import net.minecraft.entity.EntityType;
-import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.Pose;
 import net.minecraft.entity.item.ItemEntity;
 import net.minecraft.item.ItemStack;
@@ -39,10 +38,10 @@ public class DoomShroomEntity extends PlantBomberEntity {
 	@SuppressWarnings("deprecation")
 	@Override
 	public void startBomb() {
-		if(!world.isRemote) {
-			for(LivingEntity entity : EntityUtil.getEntityTargetableEntity(this, EntityUtil.getEntityAABB(this, this.getAttackRange(), this.getAttackRange()))) {
-				entity.attackEntityFrom(PVZDamageSource.causeExplosionDamage(this, this), this.getAttackDamage());
-			}
+		if(! world.isRemote) {
+			EntityUtil.getAttackEntities(this, EntityUtil.getEntityAABB(this, this.getAttackRange(), this.getAttackRange())).forEach((target) -> {
+				target.attackEntityFrom(PVZDamageSource.causeExplosionDamage(this, this), this.getAttackDamage());
+			});
 			EntityUtil.playSound(this, SoundRegister.DOOM.get());
 			//destroy block and spawn drops
 			ObjectArrayList<Pair<ItemStack, BlockPos>> list = new ObjectArrayList<>();
