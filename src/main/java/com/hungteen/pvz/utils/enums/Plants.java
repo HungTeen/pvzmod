@@ -30,7 +30,7 @@ public enum Plants {
 	TALL_NUT(0),
 	//pool night
 	SEA_SHROOM(5),
-//	PLANTERN, 
+	PLANTERN(0), 
 //	CACTUS,
 //	BLOVER,
 	SPLIT_PEA(0),

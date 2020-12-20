@@ -32,12 +32,12 @@ public class EnergyLayer <T extends LivingEntity, M extends EntityModel<T>> exte
 	
 	@Override
 	protected float getU(float f) {
-		return 0.01f*f;
+		return 0.01f * f;
 	}
 	
 	@Override
 	protected float getV(float f) {
-		return 0.01f*f;
+		return 0.01f * f;
 	}
 
 	@Override

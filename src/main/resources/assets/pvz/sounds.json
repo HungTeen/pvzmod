@@ -178,5 +178,9 @@
     "pogo":{
         "subtitle": "sound.pvz.pogo",
         "sounds":[{"name":"pvz:ambient/pogo"}]
+    },
+    "plantern":{
+        "subtitle": "sound.pvz.plantern",
+        "sounds":[{"name":"pvz:entity/plant/effect/plantern"}]
     }
 }

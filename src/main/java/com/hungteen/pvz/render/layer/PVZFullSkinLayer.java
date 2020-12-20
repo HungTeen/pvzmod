@@ -22,8 +22,8 @@ public abstract class PVZFullSkinLayer<T extends LivingEntity, M extends EntityM
 	
 	public PVZFullSkinLayer(IEntityRenderer<T, M> entityRendererIn) {
 		super(entityRendererIn);
-		this.entityRender=entityRendererIn;
-		this.entityModel=this.entityRender.getEntityModel();
+		this.entityRender = entityRendererIn;
+		this.entityModel = this.entityRender.getEntityModel();
 	}
 
 	@Override
@@ -33,17 +33,15 @@ public abstract class PVZFullSkinLayer<T extends LivingEntity, M extends EntityM
 		if (this.canRender(entitylivingbaseIn)) {
 			float f = (float)entitylivingbaseIn.ticksExisted + partialTicks;
 	        IVertexBuilder ivertexbuilder = bufferIn.getBuffer(RenderType.getEnergySwirl(this.getResourceLocation(entitylivingbaseIn), this.getU(f), this.getV(f)));
-	        entityModel.render(matrixStackIn, ivertexbuilder, packedLightIn, OverlayTexture.NO_OVERLAY, 0.5F, 0.5F, 0.5F, 1.0F);
+			entityModel.render(matrixStackIn, ivertexbuilder, packedLightIn, OverlayTexture.NO_OVERLAY, 0.5F, 0.5F, 0.5F, 1.0F);
 		}
 	}
 
-	protected float getU(float f)
-	{
+	protected float getU(float f){
 		return 0f;
 	}
 	
-	protected float getV(float f)
-	{
+	protected float getV(float f){
 		return 0f;
 	}
 	
