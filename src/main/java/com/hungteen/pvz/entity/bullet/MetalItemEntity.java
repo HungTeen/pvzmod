@@ -23,7 +23,7 @@ import net.minecraft.util.math.RayTraceResult;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
 
-public class MetalItemEntity extends PVZThrowableEntity {
+public class MetalItemEntity extends PVZItemBulletEntity {
 
 	private static final DataParameter<Integer> METAL_TYPE = EntityDataManager.createKey(MetalItemEntity.class,
 			DataSerializers.VARINT);

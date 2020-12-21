@@ -49,7 +49,7 @@ public class PVZNearestTargetGoal extends TargetGoal {
 //		System.out.println("should");
 		List<LivingEntity> list1 = new ArrayList<LivingEntity>();
 		for (LivingEntity entity : EntityUtil.getEntityTargetableEntity(goalOwner, getAABB())) {
-			if (entity != this.goalOwner && !this.shouldCheckSight || this.checkSenses(entity)) {
+			if (entity != this.goalOwner && (!this.shouldCheckSight || this.checkSenses(entity))) {
 				if (this.checkOther(entity)) {
 					list1.add(entity);
 				}

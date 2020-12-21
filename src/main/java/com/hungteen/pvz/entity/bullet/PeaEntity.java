@@ -24,7 +24,7 @@ import net.minecraft.util.math.EntityRayTraceResult;
 import net.minecraft.util.math.RayTraceResult;
 import net.minecraft.world.World;
 
-public class PeaEntity extends PVZThrowableEntity {
+public class PeaEntity extends PVZItemBulletEntity {
 
 	private static final DataParameter<Integer> PEA_STATE = EntityDataManager.createKey(PeaEntity.class,
 			DataSerializers.VARINT);

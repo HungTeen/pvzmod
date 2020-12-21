@@ -20,7 +20,7 @@ import net.minecraft.util.math.RayTraceResult;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
 
-public class FumeEntity extends PVZThrowableEntity{
+public class FumeEntity extends PVZItemBulletEntity{
 
 	private static final int MAX_LIVE_TICK = 25;
 	private int knockback = 0;

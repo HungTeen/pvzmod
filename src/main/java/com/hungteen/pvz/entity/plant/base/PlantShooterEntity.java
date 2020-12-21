@@ -33,11 +33,17 @@ public abstract class PlantShooterEntity extends PVZPlantEntity implements IShoo
 	public void normalPlantTick() {
 		super.normalPlantTick();
 		if(!this.world.isRemote) {
+			if(this.canAttackNow()) {
+				this.shootBullet();
+			}
 		    if(this.getAttackTime() > 0) {
-			    this.shootBullet();
 			    this.setAttackTime(this.getAttackTime() - 1);
 			}
 		}
+	}
+	
+	protected boolean canAttackNow() {
+		return this.getAttackTime() > 0;
 	}
 	
 	/**
@@ -55,7 +61,7 @@ public abstract class PlantShooterEntity extends PVZPlantEntity implements IShoo
 	
 	@Override
 	protected boolean canPlantTarget(LivingEntity entity) {
-		return this.checkY(entity);
+		return this.checkY(entity) && super.canPlantTarget(entity);
 	}
 	
 	@Override

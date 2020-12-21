@@ -12,7 +12,7 @@ import net.minecraft.item.Items;
 import net.minecraft.util.math.RayTraceResult;
 import net.minecraft.world.World;
 
-public class PotatoEntity extends PVZThrowableEntity{
+public class PotatoEntity extends PVZItemBulletEntity{
 
 	public PotatoEntity(EntityType<?> type, World worldIn) {
 		super(type, worldIn);

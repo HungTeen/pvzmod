@@ -10,10 +10,10 @@ import javax.annotation.Nullable;
 import com.hungteen.pvz.PVZConfig;
 import com.hungteen.pvz.data.loot.PVZLoot;
 import com.hungteen.pvz.entity.ai.PVZLookRandomlyGoal;
+import com.hungteen.pvz.entity.ai.PVZNearestTargetGoal;
 import com.hungteen.pvz.entity.ai.PVZSwimGoal;
 import com.hungteen.pvz.entity.ai.ZombieMeleeAttackGoal;
-import com.hungteen.pvz.entity.ai.ZombieNearestTargetGoal;
-import com.hungteen.pvz.entity.bullet.PVZThrowableEntity;
+import com.hungteen.pvz.entity.bullet.PVZItemBulletEntity;
 import com.hungteen.pvz.entity.drop.CoinEntity;
 import com.hungteen.pvz.entity.drop.CoinEntity.CoinType;
 import com.hungteen.pvz.entity.drop.EnergyEntity;
@@ -136,7 +136,7 @@ public abstract class PVZZombieEntity extends MonsterEntity implements IPVZZombi
 		this.goalSelector.addGoal(7, new WaterAvoidingRandomWalkingGoal(this, 1.0D));
 		this.goalSelector.addGoal(7, new PVZSwimGoal(this));
 		this.goalSelector.addGoal(0, new ZombieMeleeAttackGoal(this));
-		this.targetSelector.addGoal(0, new ZombieNearestTargetGoal(this, true, 80, 60));
+		this.targetSelector.addGoal(0, new PVZNearestTargetGoal(this, true, 80, 60));
 	}
 
 	@Override
@@ -286,7 +286,7 @@ public abstract class PVZZombieEntity extends MonsterEntity implements IPVZZombi
 				    this.setDefenceLife(0);
 			    }
 				EntityUtil.playSound(this, getHurtSound(source));
-				return true;
+				if(amount == 0) return true;
 			}
 		}
 		return super.attackEntityFrom(source, amount);
@@ -639,7 +639,7 @@ public abstract class PVZZombieEntity extends MonsterEntity implements IPVZZombi
 	
 	@Override
 	protected SoundEvent getHurtSound(DamageSource damageSourceIn) {
-		if(damageSourceIn.getImmediateSource() instanceof PVZThrowableEntity) {
+		if(damageSourceIn.getImmediateSource() instanceof PVZItemBulletEntity) {
 			return SoundRegister.PEA_HIT.get();
 		}
 		return super.getHurtSound(damageSourceIn);

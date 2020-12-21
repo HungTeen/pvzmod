@@ -50,7 +50,7 @@ public enum Plants {
 	GATLING_PEA(8),
 	TWIN_SUNFLOWER(8),
 //	GLOOM_SHROOM,
-//	CAT_TAIL,
+	CAT_TAIL(12),
 //	WINTER_MELON,
 //	GOLD_MAGNET, 
 //	SPIKE_ROCK,

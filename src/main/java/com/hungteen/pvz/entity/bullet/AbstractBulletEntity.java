@@ -4,9 +4,12 @@ import java.util.UUID;
 
 import javax.annotation.Nullable;
 
+import com.hungteen.pvz.PVZConfig;
 import com.hungteen.pvz.utils.EntityUtil;
 
 import it.unimi.dsi.fastutil.ints.IntOpenHashSet;
+import net.minecraft.block.Block;
+import net.minecraft.block.BushBlock;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.IProjectile;
@@ -16,6 +19,7 @@ import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.nbt.NBTUtil;
 import net.minecraft.network.IPacket;
 import net.minecraft.particles.ParticleTypes;
+import net.minecraft.util.math.BlockRayTraceResult;
 import net.minecraft.util.math.EntityRayTraceResult;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.RayTraceContext;
@@ -41,6 +45,10 @@ public abstract class AbstractBulletEntity extends Entity implements IProjectile
 		this(type, worldIn);
 		this.owner = livingEntityIn;
 		this.ownerId = livingEntityIn.getUniqueID();
+	}
+	
+	@Override
+	protected void registerData() {
 	}
 
 	/**
@@ -79,6 +87,9 @@ public abstract class AbstractBulletEntity extends Entity implements IProjectile
 	 */
 	public void tick() {
 		super.tick();
+		if (! world.isRemote && this.ticksExisted >= this.getMaxLiveTick()) {
+			this.remove();
+		}
 		//on hit
 		Vec3d start = this.getPositionVec();
 		Vec3d end = start.add(this.getMotion());
@@ -199,6 +210,29 @@ public abstract class AbstractBulletEntity extends Entity implements IProjectile
 			}
 		}
 		return this.owner;
+	}
+	
+	protected int getMaxLiveTick() {
+		return PVZConfig.COMMON_CONFIG.EntitySettings.EntityLiveTick.BulletLiveTick.get();
+	}
+	
+	protected boolean checkLive(RayTraceResult result) {
+		if (result.getType() == RayTraceResult.Type.ENTITY) {// attack entity
+			if (EntityUtil.checkCanEntityAttack(getThrower(), ((EntityRayTraceResult) result).getEntity())) {
+				return false;
+			}
+			return true;
+		} else if (result.getType() == RayTraceResult.Type.BLOCK) {
+			Block block = world.getBlockState(((BlockRayTraceResult) result).getPos()).getBlock();
+			if (block instanceof BushBlock) {
+				return true;
+			}
+		}
+		return false;
+	}
+
+	@Override
+	public void shoot(double x, double y, double z, float velocity, float inaccuracy) {
 	}
 	
 	@Override

@@ -17,7 +17,7 @@ import net.minecraft.util.math.EntityRayTraceResult;
 import net.minecraft.util.math.RayTraceResult;
 import net.minecraft.world.World;
 
-public class SporeEntity extends PVZThrowableEntity{
+public class SporeEntity extends PVZItemBulletEntity{
 
 	private static final int SHORT_LIVE_TICK = 20;
 	

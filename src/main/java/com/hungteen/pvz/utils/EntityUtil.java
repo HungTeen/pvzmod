@@ -31,6 +31,9 @@ import net.minecraft.scoreboard.Team;
 import net.minecraft.util.SoundEvent;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.RayTraceContext;
+import net.minecraft.util.math.RayTraceResult;
+import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.IWorld;
 import net.minecraft.world.World;
 import net.minecraftforge.event.ForgeEventFactory;
@@ -47,6 +50,15 @@ public class EntityUtil {
 		entity.playSound(ev, 1.0F, RAND.nextFloat() * 0.2F + 0.9F);
 	}
 
+	public static boolean checkCanSeeEntity(Entity entity, Entity target) {
+		Vec3d start = entity.getPositionVec().add(0, entity.getEyeHeight(), 0);
+		Vec3d lowerEnd = target.getPositionVec();
+		Vec3d upperEnd = lowerEnd.add(0, target.getHeight(), 0);
+		RayTraceContext ray1 = new RayTraceContext(start, lowerEnd, RayTraceContext.BlockMode.COLLIDER, RayTraceContext.FluidMode.NONE, entity);
+		RayTraceContext ray2 = new RayTraceContext(start, upperEnd, RayTraceContext.BlockMode.COLLIDER, RayTraceContext.FluidMode.NONE, entity);
+		return entity.world.rayTraceBlocks(ray1).getType() != RayTraceResult.Type.BLOCK || entity.world.rayTraceBlocks(ray2).getType() != RayTraceResult.Type.BLOCK;
+	}
+	
 	/**
 	 * check can entity destroy the specific block.
 	 */
