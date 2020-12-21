@@ -28,7 +28,7 @@ public class ShooterAttackGoal extends Goal{
 	
 	@Override
 	public boolean shouldExecute() {
-		if(!this.shooter.canShoot()) {
+		if(! this.shooter.canShoot()) {
 			return false;
 		}
 		LivingEntity attackTarget = this.attacker.getAttackTarget();
@@ -36,7 +36,6 @@ public class ShooterAttackGoal extends Goal{
 			return false;
 		}else {
 			this.target = attackTarget;
-//			if(this.attacker.getRNG().nextInt(10)==0) System.out.println("1");
 			if(this.checkTarget()) {
 				return true;
 			}
@@ -52,14 +51,13 @@ public class ShooterAttackGoal extends Goal{
 	
 	@Override
 	public void resetTask() {
-//		this.attackTime=0;
 		this.target = null;
 		this.attacker.setAttackTarget(null);
 	}
 
 	@Override
 	public void tick() {
-		this.attackTime ++;
+		++ this.attackTime;
 		if(this.attackTime >= this.shooter.getShootCD()) {
 			this.attackTime = 0;
 			this.shooter.startShootAttack();

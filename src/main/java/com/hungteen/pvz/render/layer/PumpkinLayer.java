@@ -16,7 +16,6 @@ import net.minecraft.client.renderer.entity.layers.LayerRenderer;
 import net.minecraft.client.renderer.entity.model.EntityModel;
 import net.minecraft.client.renderer.texture.OverlayTexture;
 import net.minecraft.util.ResourceLocation;
-import net.minecraft.util.math.Vec3d;
 
 public class PumpkinLayer<T extends PVZPlantEntity> extends LayerRenderer<T, EntityModel<T>>{
 	
@@ -40,13 +39,11 @@ public class PumpkinLayer<T extends PVZPlantEntity> extends LayerRenderer<T, Ent
 		matrixStackIn.push();
 		IVertexBuilder builder = bufferIn.getBuffer(RenderType.getEntitySolid(this.getRenderTexture(plant)));
 		if(this.plantRender != null) {
+			float scale = 0.5f;
 			float plantScale = this.plantRender.getScaleByEntity(plant);
-		    Vec3d plantVec = this.plantRender.getTranslateVec(plant);
-		    matrixStackIn.scale(1f / plantScale, 1f, 1f / plantScale);
-		    matrixStackIn.translate(- plantVec.x, - plantVec.y, - plantVec.z);
-		    float scale = 0.5f;
-//		    matrixStackIn.translate(0.0D, - (double)1.501F * scale, 0.0D);
-		    matrixStackIn.scale(scale, 1, scale);
+		    matrixStackIn.scale(scale / plantScale, scale / plantScale, scale / plantScale);
+		    double offsetH = 1.501D;
+		    matrixStackIn.translate(0, plantScale / scale * offsetH - offsetH, 0);
 		} else {
 			PVZMod.LOGGER.debug("pumpkin render wrong !");
 		}

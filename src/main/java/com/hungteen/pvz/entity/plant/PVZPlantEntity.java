@@ -276,11 +276,22 @@ public abstract class PVZPlantEntity extends CreatureEntity implements IPVZPlant
 		}
 	}
 	
+	/**
+	 * some zombie can attack but can not target.
+	 * such as digger zombie.
+	 */
 	public boolean checkCanPlantTarget(LivingEntity entity){
+		return EntityUtil.checkCanEntityAttack(this, entity) && this.canPlantTarget(entity);
+	}
+	
+	/**
+	 * use to extends for specific plants.
+	 */
+	protected boolean canPlantTarget(LivingEntity entity) {
 		if(entity instanceof DiggerZombieEntity) {
 			return ((DiggerZombieEntity) entity).getAnimTime() == DiggerZombieEntity.MAX_ANIM_TIME;
 		}
-		return EntityUtil.checkCanEntityAttack(this, entity);
+		return true;
 	}
 	
 	/**

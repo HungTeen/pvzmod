@@ -2,6 +2,7 @@ package com.hungteen.pvz.entity.zombie.poolnight;
 
 import com.hungteen.pvz.entity.zombie.PVZZombieEntity;
 import com.hungteen.pvz.utils.ZombieUtil;
+import com.hungteen.pvz.utils.enums.MetalTypes;
 import com.hungteen.pvz.utils.enums.Zombies;
 import com.hungteen.pvz.utils.interfaces.IHasMetal;
 
@@ -18,7 +19,7 @@ import net.minecraft.network.datasync.EntityDataManager;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.World;
 
-public class DiggerZombieEntity extends PVZZombieEntity implements IHasMetal{
+public class DiggerZombieEntity extends PVZZombieEntity implements IHasMetal {
 
 	private static final DataParameter<Boolean> HAS_PICKAXE = EntityDataManager.createKey(DiggerZombieEntity.class, DataSerializers.BOOLEAN);
 	private static final DataParameter<Integer> ANIM_TIME = EntityDataManager.createKey(DiggerZombieEntity.class, DataSerializers.VARINT);
@@ -77,6 +78,11 @@ public class DiggerZombieEntity extends PVZZombieEntity implements IHasMetal{
 	@Override
 	public void increaseMetal() {
 		this.setPickaxe(true);
+	}
+	
+	@Override
+	public MetalTypes getMetalType() {
+		return MetalTypes.IRON_PICKAXE;
 	}
 	
 	@Override

@@ -15,9 +15,9 @@ import com.hungteen.pvz.entity.ai.ZombieMeleeAttackGoal;
 import com.hungteen.pvz.entity.ai.ZombieNearestTargetGoal;
 import com.hungteen.pvz.entity.bullet.PVZThrowableEntity;
 import com.hungteen.pvz.entity.drop.CoinEntity;
+import com.hungteen.pvz.entity.drop.CoinEntity.CoinType;
 import com.hungteen.pvz.entity.drop.EnergyEntity;
 import com.hungteen.pvz.entity.drop.JewelEntity;
-import com.hungteen.pvz.entity.drop.CoinEntity.CoinType;
 import com.hungteen.pvz.entity.plant.PVZPlantEntity;
 import com.hungteen.pvz.entity.plant.enforce.SquashEntity;
 import com.hungteen.pvz.entity.plant.spear.SpikeWeedEntity;
@@ -76,7 +76,9 @@ public abstract class PVZZombieEntity extends MonsterEntity implements IPVZZombi
 	private static final DataParameter<Boolean> IS_SMALL = EntityDataManager.createKey(PVZZombieEntity.class,
 			DataSerializers.BOOLEAN);
 	private static final DataParameter<Integer> ATTACK_TIME = EntityDataManager.createKey(PVZZombieEntity.class, DataSerializers.VARINT);
-
+	private static final DataParameter<Float> DEFENCE_LIFE = EntityDataManager.createKey(PVZZombieEntity.class, DataSerializers.FLOAT);
+	protected boolean hasDirectDefence = false;
+	
 	public PVZZombieEntity(EntityType<? extends MonsterEntity> type, World worldIn) {
 		super(type, worldIn);
 		this.recalculateSize();
@@ -115,7 +117,8 @@ public abstract class PVZZombieEntity extends MonsterEntity implements IPVZZombi
 		dataManager.register(OWNER_UUID, Optional.empty());
 		dataManager.register(IS_CHARMED, false);
 		dataManager.register(IS_SMALL, false);
-		this.dataManager.register(ATTACK_TIME, 0);
+		dataManager.register(ATTACK_TIME, 0);
+		dataManager.register(DEFENCE_LIFE, 0f);
 	}
 
 	@Override
@@ -272,6 +275,18 @@ public abstract class PVZZombieEntity extends MonsterEntity implements IPVZZombi
 					this.removePotionEffect(EffectRegister.COLD_EFFECT.get());
 					this.removeActivePotionEffect(EffectRegister.FROZEN_EFFECT.get());
 				}
+			}
+		}
+		if(! world.isRemote && this.hasDirectDefence) {
+			if(this.getDefenceLife() > 0) {
+				if(this.getDefenceLife() > amount) {
+				    this.setDefenceLife(this.getDefenceLife() - amount);
+			    } else {
+				    amount -= this.getDefenceLife();
+				    this.setDefenceLife(0);
+			    }
+				EntityUtil.playSound(this, getHurtSound(source));
+				return true;
 			}
 		}
 		return super.attackEntityFrom(source, amount);
@@ -477,8 +492,9 @@ public abstract class PVZZombieEntity extends MonsterEntity implements IPVZZombi
 		compound.putBoolean("is_zombie_small", this.isSmall());
 		compound.putBoolean("is_zombie_charmed", this.isCharmed());
 		compound.putInt("zombie_attack_time", this.getAttackTime());
+		compound.putFloat("defence_life", this.getDefenceLife());
 	}
-
+	
 	@Override
 	public void readAdditional(CompoundNBT compound) {
 		super.readAdditional(compound);
@@ -499,7 +515,7 @@ public abstract class PVZZombieEntity extends MonsterEntity implements IPVZZombi
 		this.setSmall(compound.getBoolean("is_zombie_small"));
 		this.setCharmed(compound.getBoolean("is_zombie_charmed"));
 		this.setAttackTime(compound.getInt("zombie_attack_time"));
-		
+		this.setDefenceLife(compound.getFloat("defence_life"));
 	}
 
 	@Override
@@ -558,7 +574,15 @@ public abstract class PVZZombieEntity extends MonsterEntity implements IPVZZombi
 	public boolean canBeCold() {
 		return true;
 	}
-
+	
+	public float getDefenceLife() {
+		return dataManager.get(DEFENCE_LIFE);
+	}
+	
+	public void setDefenceLife(float life) {
+		dataManager.set(DEFENCE_LIFE, life);
+	}
+	
 	@Nullable
 	public UUID getOwnerUUID() {
 		return dataManager.get(OWNER_UUID).orElse((UUID) null);

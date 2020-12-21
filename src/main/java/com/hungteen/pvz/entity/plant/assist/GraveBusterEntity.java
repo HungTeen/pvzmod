@@ -84,7 +84,7 @@ public class GraveBusterEntity extends PVZPlantEntity{
 	}
 	
 	@Override
-	public boolean checkCanPlantTarget(LivingEntity entity) {
+	protected boolean canPlantTarget(LivingEntity entity) {
 		return entity instanceof TombStoneEntity && entity.isAlive() && entity.getPassengers().isEmpty();
 	}
 	

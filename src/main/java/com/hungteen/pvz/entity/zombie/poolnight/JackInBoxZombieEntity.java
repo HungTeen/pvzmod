@@ -5,7 +5,9 @@ import com.hungteen.pvz.misc.damage.PVZDamageSource;
 import com.hungteen.pvz.register.SoundRegister;
 import com.hungteen.pvz.utils.EntityUtil;
 import com.hungteen.pvz.utils.ZombieUtil;
+import com.hungteen.pvz.utils.enums.MetalTypes;
 import com.hungteen.pvz.utils.enums.Zombies;
+import com.hungteen.pvz.utils.interfaces.IHasMetal;
 
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.LivingEntity;
@@ -19,8 +21,9 @@ import net.minecraft.particles.ParticleTypes;
 import net.minecraft.util.SoundEvent;
 import net.minecraft.world.World;
 
-public class JackInBoxZombieEntity extends PVZZombieEntity{
+public class JackInBoxZombieEntity extends PVZZombieEntity implements IHasMetal {
 
+	private static final DataParameter<Boolean> HAS_BOX = EntityDataManager.createKey(JackInBoxZombieEntity.class, DataSerializers.BOOLEAN);
 	private static final DataParameter<Integer> ANIM_TICK = EntityDataManager.createKey(JackInBoxZombieEntity.class, DataSerializers.VARINT);
 	public static final int MIN_ANIM_TICK = 20;
 	
@@ -34,6 +37,7 @@ public class JackInBoxZombieEntity extends PVZZombieEntity{
 	@Override
 	protected void registerData() {
 		super.registerData();
+		this.dataManager.register(HAS_BOX, true);
 		this.dataManager.register(ANIM_TICK, 0);
 	}
 
@@ -48,17 +52,19 @@ public class JackInBoxZombieEntity extends PVZZombieEntity{
 				this.setAnimTick(this.getAnimTick() - 1);
 			}
 		}
-		if(this.getAnimTick() == 1) {
-			if(world.isRemote) {
-				for(int i = 0; i < 2; ++ i) {
-					world.addParticle(ParticleTypes.EXPLOSION_EMITTER, this.getPosX(), this.getPosY(), this.getPosZ(), 0, 0, 0);
-				}
-			}
-		} else if(this.getAnimTick() == 0) {
-			if(! world.isRemote) {
-				this.doExplosion();
-			}
-			this.remove();
+		if(this.hasBox()) {
+			if(this.getAnimTick() == 1) {
+			    if(world.isRemote) {
+				    for(int i = 0; i < 2; ++ i) {
+					    world.addParticle(ParticleTypes.EXPLOSION_EMITTER, this.getPosX(), this.getPosY(), this.getPosZ(), 0, 0, 0);
+				    }
+			    }
+		    } else if(this.getAnimTick() == 0) {
+			    if(! world.isRemote) {
+				    this.doExplosion();
+			    }
+			    this.remove();
+		    }
 		}
 	}
 	
@@ -96,17 +102,47 @@ public class JackInBoxZombieEntity extends PVZZombieEntity{
 	public float getLife() {
 		return 40;
 	}
+	
+	@Override
+	public boolean hasMetal() {
+		return this.hasBox();
+	}
+
+	@Override
+	public void decreaseMetal() {
+		this.setBox(false);
+	}
+
+	@Override
+	public void increaseMetal() {
+		this.setBox(true);
+	}
+
+	@Override
+	public MetalTypes getMetalType() {
+		return MetalTypes.JACK_BOX;
+	}
 
 	@Override
 	public void readAdditional(CompoundNBT compound) {
 		super.readAdditional(compound);
+		this.setBox(compound.getBoolean("has_jack_box"));
 		this.setAnimTick(compound.getInt("jack_anim_tick"));
 	}
 	
 	@Override
 	public void writeAdditional(CompoundNBT compound) {
 		super.writeAdditional(compound);
+		compound.putBoolean("has_jack_box", this.hasBox());
 		compound.putInt("jack_anim_tick", this.getAnimTick());
+	}
+	
+	public void setBox(boolean has) {
+		this.dataManager.set(HAS_BOX, has);
+	}
+	
+	public boolean hasBox() {
+		return this.dataManager.get(HAS_BOX);
 	}
 	
 	public void setAnimTick(int tick) {

@@ -7,7 +7,6 @@ import java.util.EnumSet;
 import java.util.List;
 
 import com.hungteen.pvz.utils.EntityUtil;
-import com.hungteen.pvz.utils.interfaces.IShooter;
 
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.LivingEntity;
@@ -93,9 +92,6 @@ public class PVZNearestTargetGoal extends TargetGoal {
 	}
 
 	protected boolean checkOther(LivingEntity entity) {
-		if (this.goalOwner instanceof IShooter) {
-			return ((IShooter) this.goalOwner).checkY(entity);
-		}
 		return true;
 	}
 

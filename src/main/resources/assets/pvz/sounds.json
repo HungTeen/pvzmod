@@ -182,5 +182,9 @@
     "plantern":{
         "subtitle": "sound.pvz.plantern",
         "sounds":[{"name":"pvz:entity/plant/effect/plantern"}]
+    },
+    "magnet":{
+        "subtitle": "sound.pvz.magnet",
+        "sounds":[{"name":"pvz:ambient/magnet"}]
     }
 }

@@ -7,17 +7,12 @@ import com.hungteen.pvz.utils.interfaces.IMultiPartZombie;
 
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.monster.MonsterEntity;
-import net.minecraft.nbt.CompoundNBT;
-import net.minecraft.network.datasync.DataParameter;
-import net.minecraft.network.datasync.DataSerializers;
-import net.minecraft.network.datasync.EntityDataManager;
 import net.minecraft.util.SoundEvent;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
 
 public abstract class DefenceZombieEntity extends PVZZombieEntity implements IMultiPartZombie{
 
-	private static final DataParameter<Float> DEFENCE_LIFE = EntityDataManager.createKey(DefenceZombieEntity.class, DataSerializers.FLOAT);
 	protected PVZHealthPartEntity part;
 	
 	public DefenceZombieEntity(EntityType<? extends MonsterEntity> type, World worldIn) {
@@ -26,12 +21,6 @@ public abstract class DefenceZombieEntity extends PVZZombieEntity implements IMu
 		this.setDefenceLife(this.getPartLife());
 	}
 	
-	@Override
-	protected void registerData() {
-		super.registerData();
-		dataManager.register(DEFENCE_LIFE, 0f);
-	}
-
 	@Override
 	public void removeParts() {
 		if(this.part != null) {
@@ -43,7 +32,7 @@ public abstract class DefenceZombieEntity extends PVZZombieEntity implements IMu
 	@Override
 	public void updateParts() {
 		if(this.part != null) {
-			if(!this.part.shouldContinuePersisting()) {
+			if(! this.part.shouldContinuePersisting()) {
 				this.world.addEntity(this.part);
 			}
 			float j = 2 * 3.14159f * this.rotationYaw / 360;
@@ -87,26 +76,6 @@ public abstract class DefenceZombieEntity extends PVZZombieEntity implements IMu
 	public void tick() {
 		super.tick();
 		updateParts();
-	}
-	
-	public float getDefenceLife() {
-		return dataManager.get(DEFENCE_LIFE);
-	}
-	
-	public void setDefenceLife(float life) {
-		dataManager.set(DEFENCE_LIFE, life);
-	}
-	
-	@Override
-	public void readAdditional(CompoundNBT compound) {
-		super.readAdditional(compound);
-		this.setDefenceLife(compound.getFloat("defence_life"));
-	}
-	
-	@Override
-	public void writeAdditional(CompoundNBT compound) {
-		super.writeAdditional(compound);
-		compound.putFloat("defence_life", this.getDefenceLife());
 	}
 	
 }

@@ -2,6 +2,7 @@ package com.hungteen.pvz.register;
 
 import com.hungteen.pvz.PVZMod;
 import com.hungteen.pvz.entity.bullet.FumeEntity;
+import com.hungteen.pvz.entity.bullet.MetalItemEntity;
 import com.hungteen.pvz.entity.bullet.PeaEntity;
 import com.hungteen.pvz.entity.bullet.PotatoEntity;
 import com.hungteen.pvz.entity.bullet.SporeEntity;
@@ -21,6 +22,7 @@ import com.hungteen.pvz.entity.plant.appease.RepeaterEntity;
 import com.hungteen.pvz.entity.plant.appease.SplitPeaEntity;
 import com.hungteen.pvz.entity.plant.appease.ThreePeaterEntity;
 import com.hungteen.pvz.entity.plant.assist.GraveBusterEntity;
+import com.hungteen.pvz.entity.plant.assist.MagnetShroomEntity;
 import com.hungteen.pvz.entity.plant.defence.TallNutEntity;
 import com.hungteen.pvz.entity.plant.defence.WallNutEntity;
 import com.hungteen.pvz.entity.plant.defence.WaterGuardEntity;
@@ -79,6 +81,7 @@ import com.hungteen.pvz.entity.zombie.poolnight.JackInBoxZombieEntity;
 import com.hungteen.pvz.entity.zombie.poolnight.PogoZombieEntity;
 import com.hungteen.pvz.entity.zombie.poolnight.YetiZombieEntity;
 import com.hungteen.pvz.render.entity.bullet.FumeRender;
+import com.hungteen.pvz.render.entity.bullet.MetalItemRender;
 import com.hungteen.pvz.render.entity.bullet.PeaRender;
 import com.hungteen.pvz.render.entity.bullet.PotatoRender;
 import com.hungteen.pvz.render.entity.bullet.SporeRender;
@@ -99,6 +102,7 @@ import com.hungteen.pvz.render.entity.plant.appease.RepeaterRender;
 import com.hungteen.pvz.render.entity.plant.appease.SplitPeaRender;
 import com.hungteen.pvz.render.entity.plant.appease.ThreePeaterRender;
 import com.hungteen.pvz.render.entity.plant.assist.GraveBusterRender;
+import com.hungteen.pvz.render.entity.plant.assist.MagnetShroomRender;
 import com.hungteen.pvz.render.entity.plant.defence.TallNutRender;
 import com.hungteen.pvz.render.entity.plant.defence.WallNutRender;
 import com.hungteen.pvz.render.entity.plant.defence.WaterGuardRender;
@@ -188,6 +192,7 @@ public class EntityRegister {
 	public static final RegistryObject<EntityType<PotatoEntity>> POTATO = registerEntityType(PotatoEntity::new, "potato", EntityClassification.MISC);
 	public static final RegistryObject<EntityType<SporeEntity>> SPORE = registerEntityType(SporeEntity::new, "spore", EntityClassification.MISC);
 	public static final RegistryObject<EntityType<FumeEntity>> FUME = registerEntityType(FumeEntity::new, "fume", EntityClassification.MISC);
+	public static final RegistryObject<EntityType<MetalItemEntity>> METAL = registerEntityType(MetalItemEntity::new, "metal", EntityClassification.MISC);
 	
 	//misc 
 	public static final RegistryObject<EntityType<SmallChomperEntity>> SMALL_CHOMPER = registerEntityType(SmallChomperEntity::new, "small_chomper", EntityClassification.MISC);
@@ -267,6 +272,7 @@ public class EntityRegister {
 	public static final RegistryObject<EntityType<TwinSunFlowerEntity>> TWIN_SUNFLOWER = registerEntityType(TwinSunFlowerEntity::new, "twin_sunflower", EntityClassification.CREATURE);
 	public static final RegistryObject<EntityType<WaterGuardEntity>> WATER_GUARD = registerEntityType(WaterGuardEntity::new, "water_guard", EntityClassification.CREATURE);
 	public static final RegistryObject<EntityType<PlanternEntity>> PLANTERN = registerEntityType(PlanternEntity::new, "plantern", EntityClassification.CREATURE);
+	public static final RegistryObject<EntityType<MagnetShroomEntity>> MAGNET_SHROOM = registerEntityType(MagnetShroomEntity::new, "magnet_shroom", EntityClassification.CREATURE);
 	
 	@OnlyIn(Dist.CLIENT)
 	@SubscribeEvent
@@ -282,6 +288,7 @@ public class EntityRegister {
         RenderingRegistry.registerEntityRenderingHandler(POTATO.get(), PotatoRender::new);
         RenderingRegistry.registerEntityRenderingHandler(SPORE.get(), SporeRender::new);
         RenderingRegistry.registerEntityRenderingHandler(FUME.get(), FumeRender::new);
+        RenderingRegistry.registerEntityRenderingHandler(METAL.get(), MetalItemRender::new);
         
         //misc
         RenderingRegistry.registerEntityRenderingHandler(SMALL_CHOMPER.get(), SmallChomperRender::new);
@@ -359,6 +366,7 @@ public class EntityRegister {
         RenderingRegistry.registerEntityRenderingHandler(SEA_SHROOM.get(), SeaShroomRender::new);
         RenderingRegistry.registerEntityRenderingHandler(PLANTERN.get(), PlanternRender::new);
         RenderingRegistry.registerEntityRenderingHandler(SPLIT_PEA.get(), SplitPeaRender::new);
+        RenderingRegistry.registerEntityRenderingHandler(MAGNET_SHROOM.get(), MagnetShroomRender::new);
         
         RenderingRegistry.registerEntityRenderingHandler(COFFEE_BEAN.get(), CoffeeBeanRender::new);
         RenderingRegistry.registerEntityRenderingHandler(MARIGOLD.get(), MariGoldRender::new);

@@ -1,13 +1,11 @@
 package com.hungteen.pvz.model.entity.zombie.grassday;
 
 import com.hungteen.pvz.entity.zombie.grassday.BucketHeadZombieEntity;
-import com.hungteen.pvz.model.entity.IHasDefence;
 import com.mojang.blaze3d.matrix.MatrixStack;
 import com.mojang.blaze3d.vertex.IVertexBuilder;
 
 import net.minecraft.client.renderer.entity.model.EntityModel;
 import net.minecraft.client.renderer.model.ModelRenderer;
-import net.minecraft.entity.LivingEntity;
 import net.minecraft.util.math.MathHelper;
 
 // Made with Blockbench 3.7.1
@@ -15,7 +13,7 @@ import net.minecraft.util.math.MathHelper;
 // Paste this class into your mod and generate all required imports
 
 
-public class BucketHeadZombieModel extends EntityModel<BucketHeadZombieEntity> implements IHasDefence{
+public class BucketHeadZombieModel extends EntityModel<BucketHeadZombieEntity> {
 	private final ModelRenderer total;
 	private final ModelRenderer head;
 	private final ModelRenderer bucket_r1;
@@ -125,6 +123,10 @@ public class BucketHeadZombieModel extends EntityModel<BucketHeadZombieEntity> i
         this.left_leg.rotateAngleX = MathHelper.cos(limbSwing * 0.6662F + (float)Math.PI) * 1.4F * limbSwingAmount;
         this.right_hand.rotateAngleX = MathHelper.cos(limbSwing * 0.6662F) * 1.4F * limbSwingAmount;
         this.left_hand.rotateAngleX = MathHelper.cos(limbSwing * 0.6662F + (float)Math.PI) * 1.4F * limbSwingAmount;
+        float percent = entity.getDefenceLife() / BucketHeadZombieEntity.BUCKET_HEALTH;
+        this.defence3.showModel = percent > 2.0f / 3;
+		this.defence2.showModel = percent > 1.0f / 3;
+		this.defence1.showModel = percent > 0;
 	}
 
 	@Override
@@ -136,14 +138,6 @@ public class BucketHeadZombieModel extends EntityModel<BucketHeadZombieEntity> i
 		modelRenderer.rotateAngleX = x;
 		modelRenderer.rotateAngleY = y;
 		modelRenderer.rotateAngleZ = z;
-	}
-
-	@Override
-	public void setDestroyed(LivingEntity entity) {
-		float percent = entity.getHealth() / entity.getMaxHealth();
-		this.defence3.showModel = percent > 3.0f/4;
-		this.defence2.showModel = percent > 2.0f/4;
-		this.defence1.showModel = percent > 1.0f/4;
 	}
 
 }

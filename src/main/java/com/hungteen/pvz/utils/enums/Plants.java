@@ -36,7 +36,7 @@ public enum Plants {
 	SPLIT_PEA(0),
 //	STAR_FRUIT,
 	PUMPKIN(16),
-//	MAGNET_SHROOM,
+	MAGNET_SHROOM(1),
 	//roof 
 //	CABBAGE_PULT,
 //	FLOWER_POT, 

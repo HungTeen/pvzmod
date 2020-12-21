@@ -1,13 +1,11 @@
 package com.hungteen.pvz.model.entity.zombie.poolnight;
 
 import com.hungteen.pvz.entity.zombie.poolnight.JackInBoxZombieEntity;
-import com.hungteen.pvz.model.entity.IHasDefence;
 import com.mojang.blaze3d.matrix.MatrixStack;
 import com.mojang.blaze3d.vertex.IVertexBuilder;
 
 import net.minecraft.client.renderer.entity.model.EntityModel;
 import net.minecraft.client.renderer.model.ModelRenderer;
-import net.minecraft.entity.LivingEntity;
 import net.minecraft.util.math.MathHelper;
 
 // Made with Blockbench 3.7.4
@@ -15,7 +13,7 @@ import net.minecraft.util.math.MathHelper;
 // Paste this class into your mod and generate all required imports
 
 
-public class JackInBoxZombieModel extends EntityModel<JackInBoxZombieEntity> implements IHasDefence{
+public class JackInBoxZombieModel extends EntityModel<JackInBoxZombieEntity> {
 	private final ModelRenderer total;
 	private final ModelRenderer left_leg;
 	private final ModelRenderer right_leg;
@@ -146,6 +144,7 @@ public class JackInBoxZombieModel extends EntityModel<JackInBoxZombieEntity> imp
         this.right_leg.rotateAngleX = MathHelper.cos(limbSwing * 0.6662F) * 1.4F * limbSwingAmount;
         this.left_leg.rotateAngleX = MathHelper.cos(limbSwing * 0.6662F + (float)Math.PI) * 1.4F * limbSwingAmount;
 		this.jack.showModel = (entity.getAnimTick() < JackInBoxZombieEntity.MIN_ANIM_TICK / 4);
+		this.box.showModel = entity.hasMetal();
 	}
 
 	@Override
@@ -159,7 +158,4 @@ public class JackInBoxZombieModel extends EntityModel<JackInBoxZombieEntity> imp
 		modelRenderer.rotateAngleZ = z;
 	}
 
-	@Override
-	public void setDestroyed(LivingEntity entity) {
-	}
 }

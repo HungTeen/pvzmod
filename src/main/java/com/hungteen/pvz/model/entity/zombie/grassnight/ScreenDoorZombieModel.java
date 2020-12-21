@@ -1,13 +1,11 @@
 package com.hungteen.pvz.model.entity.zombie.grassnight;
 
 import com.hungteen.pvz.entity.zombie.grassnight.ScreenDoorZombieEntity;
-import com.hungteen.pvz.model.entity.IHasDefence;
 import com.mojang.blaze3d.matrix.MatrixStack;
 import com.mojang.blaze3d.vertex.IVertexBuilder;
 
 import net.minecraft.client.renderer.entity.model.EntityModel;
 import net.minecraft.client.renderer.model.ModelRenderer;
-import net.minecraft.entity.LivingEntity;
 import net.minecraft.util.math.MathHelper;
 
 // Made with Blockbench 3.7.2
@@ -15,7 +13,7 @@ import net.minecraft.util.math.MathHelper;
 // Paste this class into your mod and generate all required imports
 
 
-public class ScreenDoorZombieModel extends EntityModel<ScreenDoorZombieEntity> implements IHasDefence{
+public class ScreenDoorZombieModel extends EntityModel<ScreenDoorZombieEntity> {
 	private final ModelRenderer total;
 	private final ModelRenderer right_leg;
 	private final ModelRenderer left_leg;
@@ -100,6 +98,7 @@ public class ScreenDoorZombieModel extends EntityModel<ScreenDoorZombieEntity> i
 			this.right_hand.rotateAngleX = -0.8727F;
 			this.left_hand.rotateAngleX = -0.8727F;
 		}
+        this.door.showModel = ! entity.canPartsBeRemoved();
 	}
 
 	@Override
@@ -113,11 +112,4 @@ public class ScreenDoorZombieModel extends EntityModel<ScreenDoorZombieEntity> i
 		modelRenderer.rotateAngleZ = z;
 	}
 
-	@Override
-	public void setDestroyed(LivingEntity entity) {
-		if(entity instanceof ScreenDoorZombieEntity) {
-			this.door.showModel = !((ScreenDoorZombieEntity) entity).canPartsBeRemoved();
-		}
-	}
-	
 }

@@ -72,7 +72,7 @@ public abstract class PVZThrowableEntity extends AbstractBulletEntity implements
 	public void shootPea(double dx, double dy, double dz, double speed) {
 		double down = this.getShootPeaAngle();
 		double dxz = Math.sqrt(dx * dx + dz * dz);
-		dy = MathHelper.clamp(dy, -dxz / down, dxz / down);
+		dy = MathHelper.clamp(dy, - dxz / down, dxz / down);
 		double dis = Math.sqrt(dx * dx + dy * dy + dz * dz);
 		double vx = dx / dis * speed;
 		double vy = dy / dis * speed;

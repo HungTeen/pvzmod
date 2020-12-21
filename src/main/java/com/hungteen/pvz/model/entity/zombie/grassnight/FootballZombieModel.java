@@ -1,13 +1,11 @@
 package com.hungteen.pvz.model.entity.zombie.grassnight;
 
 import com.hungteen.pvz.entity.zombie.grassnight.FootballZombieEntity;
-import com.hungteen.pvz.model.entity.IHasDefence;
 import com.mojang.blaze3d.matrix.MatrixStack;
 import com.mojang.blaze3d.vertex.IVertexBuilder;
 
 import net.minecraft.client.renderer.entity.model.EntityModel;
 import net.minecraft.client.renderer.model.ModelRenderer;
-import net.minecraft.entity.LivingEntity;
 import net.minecraft.util.math.MathHelper;
 
 // Made with Blockbench 3.7.4
@@ -15,7 +13,7 @@ import net.minecraft.util.math.MathHelper;
 // Paste this class into your mod and generate all required imports
 
 
-public class FootballZombieModel extends EntityModel<FootballZombieEntity> implements IHasDefence {
+public class FootballZombieModel extends EntityModel<FootballZombieEntity> {
 	private final ModelRenderer total;
 	private final ModelRenderer left_leg;
 	private final ModelRenderer right_leg;
@@ -218,6 +216,7 @@ public class FootballZombieModel extends EntityModel<FootballZombieEntity> imple
         this.left_leg.rotateAngleX = MathHelper.cos(limbSwing * 0.6662F + (float)Math.PI) * 1.4F * limbSwingAmount * 1.5f;
         this.right_arm.rotateAngleX = MathHelper.cos(limbSwing * 0.6662F) * 1.4F * limbSwingAmount / 3;
         this.left_arm.rotateAngleX = MathHelper.cos(limbSwing * 0.6662F + (float)Math.PI) * 1.4F * limbSwingAmount / 3;
+        this.helmet.showModel = entity.hasMetal();
 	}
 
 	@Override
@@ -231,9 +230,4 @@ public class FootballZombieModel extends EntityModel<FootballZombieEntity> imple
 		modelRenderer.rotateAngleZ = z;
 	}
 
-	@Override
-	public void setDestroyed(LivingEntity entity) {
-		float percent = entity.getHealth() / entity.getMaxHealth();
-		this.helmet.showModel = percent > 1f/5;
-	}
 }

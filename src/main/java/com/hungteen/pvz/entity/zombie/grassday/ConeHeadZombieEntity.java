@@ -13,26 +13,23 @@ import net.minecraft.world.World;
 
 public class ConeHeadZombieEntity extends NormalZombieEntity{
 
+	public static final float CONE_HEALTH = 40;
+	
 	public ConeHeadZombieEntity(EntityType<? extends MonsterEntity> type, World worldIn) {
 		super(type, worldIn);
+		this.hasDirectDefence = true;
+		this.setDefenceLife(CONE_HEALTH);
 	}
 	
 	@Override
 	public float getLife() {
-		return 60;
+		return 20;
 	}
 	
 	@Override
 	protected SoundEvent getHurtSound(DamageSource damageSourceIn) {
-		return SoundRegister.PLASTIC_HIT.get();
+		return this.getDefenceLife() > 0 ? SoundRegister.PLASTIC_HIT.get() : super.getHurtSound(damageSourceIn);
 	}
-	
-//	@Override
-//	protected void zombieDropItem() {
-//		if(this.rand.nextInt(PVZConfig.COMMON_CONFIG.EntitySettings.EntityDropItem.ConeHeadDropChance.get())==0) {
-//			this.entityDropItem(ItemRegister.CONE_HEAD.get());
-//		}
-//	}
 	
 	@Override
 	protected ResourceLocation getLootTable() {
@@ -43,4 +40,5 @@ public class ConeHeadZombieEntity extends NormalZombieEntity{
 	public Zombies getZombieEnumName() {
 		return Zombies.CONEHEAD_ZOMBIE;
 	}
+	
 }

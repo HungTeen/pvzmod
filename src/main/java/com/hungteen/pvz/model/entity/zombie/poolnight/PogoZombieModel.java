@@ -127,7 +127,7 @@ public class PogoZombieModel extends EntityModel<PogoZombieEntity> {
 		}
 		this.head.rotateAngleY = netHeadYaw / (180F / (float)Math.PI);
         this.head.rotateAngleX = headPitch / (180F / (float)Math.PI);
-		this.pogo.showModel = entity.hasPogo();
+		this.pogo.showModel = entity.hasMetal();
 	}
 
 	@Override

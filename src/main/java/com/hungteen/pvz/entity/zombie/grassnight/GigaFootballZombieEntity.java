@@ -6,6 +6,7 @@ import com.hungteen.pvz.data.loot.PVZLoot;
 import com.hungteen.pvz.misc.damage.PVZDamageSource;
 import com.hungteen.pvz.utils.EntityUtil;
 import com.hungteen.pvz.utils.ZombieUtil;
+import com.hungteen.pvz.utils.enums.MetalTypes;
 import com.hungteen.pvz.utils.enums.Zombies;
 
 import net.minecraft.entity.Entity;
@@ -19,8 +20,9 @@ import net.minecraft.util.ResourceLocation;
 import net.minecraft.world.GameRules;
 import net.minecraft.world.World;
 
-public class GigaFootballZombieEntity extends FootballZombieEntity{
+public class GigaFootballZombieEntity extends FootballZombieEntity {
 
+	public static final float GIGA_HEALTH = 300;
 	public boolean hasChanged = false;
 	private final int minRushCD = 200;
 	private final int maxRushCD = 600;
@@ -33,6 +35,16 @@ public class GigaFootballZombieEntity extends FootballZombieEntity{
 	protected void registerAttributes() {
 		super.registerAttributes();
 		this.getAttribute(SharedMonsterAttributes.ATTACK_DAMAGE).setBaseValue(ZombieUtil.NORMAL_DAMAGE);
+	}
+	
+	@Override
+	public void increaseMetal() {
+		this.setDefenceLife(GIGA_HEALTH);
+	}
+	
+	@Override
+	public MetalTypes getMetalType() {
+		return MetalTypes.GIGA_HELMET;
 	}
 	
 	@Override
@@ -102,7 +114,7 @@ public class GigaFootballZombieEntity extends FootballZombieEntity{
 	
 	@Override
 	public float getLife() {
-		return 400;
+		return 100;
 	}
 	
 	protected void updateRush(boolean is) {

@@ -7,6 +7,7 @@ import com.hungteen.pvz.utils.interfaces.IShooter;
 import net.minecraft.entity.CreatureEntity;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
+import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.SharedMonsterAttributes;
 import net.minecraft.world.World;
 
@@ -50,6 +51,11 @@ public abstract class PlantShooterEntity extends PVZPlantEntity implements IShoo
 		}
 		if(lvl <= 19) return 4.25f;
 		return 4.5f;
+	}
+	
+	@Override
+	protected boolean canPlantTarget(LivingEntity entity) {
+		return this.checkY(entity);
 	}
 	
 	@Override

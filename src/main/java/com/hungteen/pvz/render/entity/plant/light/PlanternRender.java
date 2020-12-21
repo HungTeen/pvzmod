@@ -31,7 +31,6 @@ public class PlanternRender extends PVZPlantRender<PlanternEntity> {
 	protected RenderType func_230042_a_(PlanternEntity p_230042_1_, boolean p_230042_2_, boolean p_230042_3_) {
 		ResourceLocation resourcelocation = this.getEntityTexture(p_230042_1_);
 		return RenderType.getEntityTranslucentCull(resourcelocation);
-//		return RenderType.getEnergySwirl(resourcelocation, 0, 0);
 	}
 	
 	@Override

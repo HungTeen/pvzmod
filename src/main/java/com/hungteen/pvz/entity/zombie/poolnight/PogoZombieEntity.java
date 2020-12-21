@@ -3,6 +3,7 @@ package com.hungteen.pvz.entity.zombie.poolnight;
 import com.hungteen.pvz.entity.zombie.PVZZombieEntity;
 import com.hungteen.pvz.register.SoundRegister;
 import com.hungteen.pvz.utils.EntityUtil;
+import com.hungteen.pvz.utils.enums.MetalTypes;
 import com.hungteen.pvz.utils.enums.Zombies;
 import com.hungteen.pvz.utils.interfaces.IHasMetal;
 
@@ -61,6 +62,11 @@ public class PogoZombieEntity extends PVZZombieEntity implements IHasMetal {
 	@Override
 	public void increaseMetal() {
 		this.setPogo(true);
+	}
+
+	@Override
+	public MetalTypes getMetalType() {
+		return MetalTypes.POGO;
 	}
 	
 	@Override
