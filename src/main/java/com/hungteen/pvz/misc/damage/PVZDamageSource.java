@@ -19,6 +19,7 @@ public class PVZDamageSource extends DamageSource {
 	private Entity attacker = null;
 	private PVZDamageType damageType;
 	private boolean isDefended = false;// is defended by some defence
+	private boolean isCopyDamage = false;
 	private List<EffectInstance> effects = new ArrayList<>();
 
 	public static final DamageSource CHOMPER_PLANT = new DamageSource("chomper_plant");
@@ -114,6 +115,15 @@ public class PVZDamageSource extends DamageSource {
 
 	public void setDefended(boolean is) {
 		this.isDefended = is;
+	}
+	
+	public PVZDamageSource setCopyDamage() {
+		this.isCopyDamage = true;
+		return this;
+	}
+	
+	public boolean isCopyDamage() {
+		return this.isCopyDamage;
 	}
 
 	public boolean isDefended() {

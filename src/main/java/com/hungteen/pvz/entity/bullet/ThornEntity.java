@@ -87,7 +87,7 @@ public class ThornEntity extends AbstractBulletEntity {
 				}
 			}
 			if (this.getThornType() == ThornTypes.AUTO) {
-				if ((this.thornTarget == null || this.thornTarget.removed) && this.ticksExisted % 40 == 0) {
+				if ((this.thornTarget == null || ! this.isAlive() || this.thornTarget.removed) && this.ticksExisted % 20 == 0) {
 					this.thornTarget = this.getRandomAttackTarget();
 				}
 			}
@@ -132,6 +132,7 @@ public class ThornEntity extends AbstractBulletEntity {
 
 	public double getBulletSpeed() {
 		if (this.getThrower() instanceof CatTailEntity) {
+			if(this.getThornType() == ThornTypes.AUTO) return 1D;
 			return 0.4D;
 		}
 		return 0.1D;

@@ -194,5 +194,9 @@
     "balloon_pop":{
         "subtitle": "sound.pvz.balloon_pop",
         "sounds":[{"name":"pvz:ambient/balloon_pop"}]
+    },
+    "bruh":{
+        "subtitle": "sound.pvz.bruh",
+        "sounds":[{"name":"pvz:entity/plant/say/bruh"}]
     }
 }

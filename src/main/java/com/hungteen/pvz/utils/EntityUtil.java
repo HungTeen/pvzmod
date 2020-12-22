@@ -51,6 +51,29 @@ public class EntityUtil {
 			entity.playSound(ev, 1.0F, RAND.nextFloat() * 0.2F + 0.9F);
 		}
 	}
+	
+	public static List<LivingEntity> getRandomLivingInRange(World world, LivingEntity attacker, AxisAlignedBB aabb, int cnt){
+		List<LivingEntity> list = new ArrayList<>();
+		for(LivingEntity living : world.getEntitiesWithinAABB(LivingEntity.class, aabb, (target) -> {
+			return EntityUtil.checkCanEntityTarget(attacker, target);
+		})){
+			list.add(living);
+			if(-- cnt <= 0) break;
+		}
+		return list;
+	}
+	
+	/**
+	 * get how many health the target has currently.
+	 */
+	public static float getCurrentHealth(LivingEntity target) {
+		if(target instanceof PVZZombieEntity) {
+			return ((PVZZombieEntity) target).getCurrentHealth();
+		} else if(target instanceof PVZPlantEntity) {
+			return ((PVZPlantEntity) target).getCurrentHealth();
+		}
+		return target.getHealth();
+	}
 
 	public static boolean checkCanSeeEntity(Entity entity, Entity target) {
 		Vec3d start = entity.getPositionVec().add(0, entity.getEyeHeight(), 0);

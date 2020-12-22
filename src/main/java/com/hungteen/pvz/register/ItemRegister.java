@@ -136,6 +136,8 @@ public class ItemRegister {
     public static final RegistryObject<PlantCardItem> CAT_TAIL_ENJOY_CARD = registerCard(Plants.CAT_TAIL, true);
     public static final RegistryObject<PlantCardItem> WATER_GUARD_CARD = registerCard(Plants.WATER_GUARD, false);
     public static final RegistryObject<PlantCardItem> WATER_GUARD_ENJOY_CARD = registerCard(Plants.WATER_GUARD, true);
+    public static final RegistryObject<PlantCardItem> STRANGE_CAT_CARD = registerCard(Plants.STRANGE_CAT, false);
+    public static final RegistryObject<PlantCardItem> STRANGE_CAT_ENJOY_CARD = registerCard(Plants.STRANGE_CAT, true);
     
     //plants
 	public static final RegistryObject<Item> PEA = ITEMS.register("pea",()-> new BlockItem(BlockRegister.PEA_PLANT.get(),new Item.Properties().group(GroupRegister.PVZ_MISC)));
@@ -266,6 +268,7 @@ public class ItemRegister {
 	public static final RegistryObject<PVZSpawnEggItem> TWIN_SUNFLOWER_SPAWN_EGG = registerSpawnEgg("twin_sunflower", EntityRegister.TWIN_SUNFLOWER, Colors.LIGHT_COLOR);
 	public static final RegistryObject<PVZSpawnEggItem> CAT_TAIL_SPAWN_EGG = registerSpawnEgg("cat_tail", EntityRegister.CAT_TAIL, Colors.SPEAR_COLOR);
 	public static final RegistryObject<PVZSpawnEggItem> WATER_GUARD_SPAWN_EGG = registerSpawnEgg("water_guard", EntityRegister.WATER_GUARD, Colors.DEFENCE_COLOR);
+	public static final RegistryObject<PVZSpawnEggItem> STRANGE_CAT_SPAWN_EGG = registerSpawnEgg("strange_cat", EntityRegister.STRANGE_CAT, Colors.MAGIC_COLOR);
 	
 	/**
 	 * register spawn eggs

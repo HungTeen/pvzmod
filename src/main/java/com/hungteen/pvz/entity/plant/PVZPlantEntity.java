@@ -677,6 +677,10 @@ public abstract class PVZPlantEntity extends CreatureEntity implements IPVZPlant
 		return true;
 	}
 	
+	public float getCurrentHealth() {
+		return this.getHealth() + this.getPumpkinLife();
+	}
+	
 	protected boolean isPlantInStage(int stage) {
 		int lvl = this.getPlantLvl();
 		if(stage == 1) return lvl <= 6;

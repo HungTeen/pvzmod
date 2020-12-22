@@ -57,7 +57,8 @@ public enum Plants {
 //	COB_CANNON,
 //	IMITATER,
 	// other
-	WATER_GUARD(4);
+	WATER_GUARD(4),
+	STRANGE_CAT(0);
 
 	/*
 	 * 1 means ShroomPlant like PuffShroom,

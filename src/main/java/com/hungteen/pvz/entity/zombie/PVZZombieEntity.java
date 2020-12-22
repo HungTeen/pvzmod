@@ -156,6 +156,11 @@ public abstract class PVZZombieEntity extends MonsterEntity implements IPVZZombi
 		this.getAttribute(SharedMonsterAttributes.MAX_HEALTH).setBaseValue(health);
 		this.heal(health);
 	}
+	
+	public float getCurrentHealth() {
+		if(this.hasDirectDefence) return this.getDefenceLife() + this.getHealth();
+		return this.getHealth();
+	}
 
 	public int getAttackCD() {
 		if (!this.canZombieNormalUpdate()) {
@@ -174,11 +179,6 @@ public abstract class PVZZombieEntity extends MonsterEntity implements IPVZZombi
 		return new EntitySize(0.8f, 1.98f, false);
 	}
 	
-	@Override
-	public void onDeath(DamageSource cause) {
-		super.onDeath(cause);
-	}
-
 	@Override
 	protected void onDeathUpdate() {
 		++this.deathTime;
@@ -282,6 +282,7 @@ public abstract class PVZZombieEntity extends MonsterEntity implements IPVZZombi
 			if(this.getDefenceLife() > 0) {
 				if(this.getDefenceLife() > amount) {
 				    this.setDefenceLife(this.getDefenceLife() - amount);
+				    amount = 0;
 			    } else {
 				    amount -= this.getDefenceLife();
 				    this.setDefenceLife(0);

@@ -40,6 +40,7 @@ public class SoundRegister {
 	public static final RegistryObject<SoundEvent> DOLPHIN_SAY = registerSound("dolphin_say");
 	public static final RegistryObject<SoundEvent> JACK_SAY = registerSound("jack_say");
 	public static final RegistryObject<SoundEvent> JACK_SURPRISE = registerSound("jack_surprise");
+	public static final RegistryObject<SoundEvent> BRUH = registerSound("bruh");
 	//attack
 	public static final RegistryObject<SoundEvent> CHERRY_BOMB = registerSound("cherry_bomb");
 	public static final RegistryObject<SoundEvent> POTATO_MINE = registerSound("potato_mine");

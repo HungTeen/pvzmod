@@ -1,6 +1,6 @@
-package com.hungteen.pvz.model.entity.plant.spear;
+package com.hungteen.pvz.model.entity.plant.magic;
 
-import com.hungteen.pvz.entity.plant.spear.CatTailEntity;
+import com.hungteen.pvz.entity.plant.magic.StrangeCatEntity;
 import com.mojang.blaze3d.matrix.MatrixStack;
 import com.mojang.blaze3d.vertex.IVertexBuilder;
 
@@ -13,7 +13,7 @@ import net.minecraft.util.math.MathHelper;
 // Paste this class into your mod and generate all required imports
 
 
-public class CatTailModel extends EntityModel<CatTailEntity> {
+public class StrangeCatModel extends EntityModel<StrangeCatEntity> {
 	private final ModelRenderer total;
 	private final ModelRenderer body;
 	private final ModelRenderer bone4;
@@ -36,7 +36,7 @@ public class CatTailModel extends EntityModel<CatTailEntity> {
 	private final ModelRenderer bone11;
 	private final ModelRenderer tail6;
 
-	public CatTailModel() {
+	public StrangeCatModel() {
 		textureWidth = 512;
 		textureHeight = 512;
 
@@ -170,9 +170,9 @@ public class CatTailModel extends EntityModel<CatTailEntity> {
 	}
 
 	@Override
-	public void setRotationAngles(CatTailEntity entity, float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch){
-		int tick = entity.getAttackTime();
-		float v = 3.14159F / entity.getAnimCD();
+	public void setRotationAngles(StrangeCatEntity entity, float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch){
+		int tick = StrangeCatEntity.ANIM_CD - entity.getAttackTime();
+		float v = 3.14159F / StrangeCatEntity.ANIM_CD / 2;
 		this.tail.rotateAngleX = 0.8F - 0.8F * Math.abs(MathHelper.cos(v * tick));
 	}
 

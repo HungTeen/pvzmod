@@ -2,7 +2,9 @@ package com.hungteen.pvz.event;
 
 import com.hungteen.pvz.PVZMod;
 import com.hungteen.pvz.entity.plant.PVZPlantEntity;
+import com.hungteen.pvz.entity.plant.magic.StrangeCatEntity;
 import com.hungteen.pvz.entity.zombie.PVZZombieEntity;
+import com.hungteen.pvz.misc.damage.PVZDamageSource;
 import com.hungteen.pvz.register.EnchantmentRegister;
 import com.hungteen.pvz.utils.EntityUtil;
 import com.hungteen.pvz.utils.PlayerUtil;
@@ -26,7 +28,7 @@ public class PVZLivingEvents {
 			PVZZombieEntity zombie = (PVZZombieEntity) ev.getEntityLiving();
 			int xp = ZombieUtil.getZombieXp(zombie.getZombieEnumName());
 			PlayerEntity player = EntityUtil.getEntityOwner(zombie.world, ev.getSource().getTrueSource());
-			if(player==null) {//true source has no owner
+			if(player == null) {//true source has no owner
 				if(ev.getSource().getTrueSource() instanceof PlayerEntity) {
 					PlayerUtil.addPlayerStats((PlayerEntity) ev.getSource().getTrueSource(), Resources.TREE_XP, xp);
 					onPlayerKillZombie((PlayerEntity) ev.getSource().getTrueSource(), zombie.getZombieEnumName());
@@ -35,6 +37,14 @@ public class PVZLivingEvents {
 				if(ev.getSource().getTrueSource() instanceof PVZPlantEntity) {
 					PlayerUtil.addPlantXp(player, ((PVZPlantEntity)ev.getSource().getTrueSource()).getPlantEnumName(), xp);
 					onPlayerKillZombie(player, zombie.getZombieEnumName());
+				}
+			}
+		}
+		if(ev.getSource() instanceof PVZDamageSource) {
+			PVZDamageSource source = (PVZDamageSource) ev.getSource();
+			if(source.isCopyDamage()) {
+				if(source.getTrueSource() instanceof StrangeCatEntity) {
+					((StrangeCatEntity) source.getTrueSource()).onSelfCopy(ev.getEntityLiving());
 				}
 			}
 		}

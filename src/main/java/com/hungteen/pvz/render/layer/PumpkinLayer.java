@@ -39,7 +39,7 @@ public class PumpkinLayer<T extends PVZPlantEntity> extends LayerRenderer<T, Ent
 		matrixStackIn.push();
 		IVertexBuilder builder = bufferIn.getBuffer(RenderType.getEntitySolid(this.getRenderTexture(plant)));
 		if(this.plantRender != null) {
-			float scale = 0.5f;
+			float scale = 0.6f;
 			float plantScale = this.plantRender.getScaleByEntity(plant);
 		    matrixStackIn.scale(scale / plantScale, scale / plantScale, scale / plantScale);
 		    double offsetH = 1.501D;

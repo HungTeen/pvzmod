@@ -109,7 +109,7 @@ public class ChomperEntity extends PVZPlantEntity {
 	 */
 	private void performAttack() {
 		LivingEntity target = this.getAttackTarget();
-		if (target.getHealth() <= this.getAttackDamage()) {// eat to death need rest
+		if (EntityUtil.getCurrentHealth(target) <= this.getAttackDamage()) {// eat to death need rest
 			this.setRestTick(this.getRestCD());
 		}
 		EntityUtil.playSound(this, SoundRegister.CHOMP.get());
