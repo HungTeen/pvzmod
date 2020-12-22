@@ -186,5 +186,13 @@
     "magnet":{
         "subtitle": "sound.pvz.magnet",
         "sounds":[{"name":"pvz:ambient/magnet"}]
+    },
+    "balloon_full":{
+        "subtitle": "sound.pvz.balloon_full",
+        "sounds":[{"name":"pvz:ambient/balloon_full"}]
+    },
+    "balloon_pop":{
+        "subtitle": "sound.pvz.balloon_pop",
+        "sounds":[{"name":"pvz:ambient/balloon_pop"}]
     }
 }

@@ -14,6 +14,7 @@ import com.hungteen.pvz.entity.plant.enforce.SquashEntity;
 import com.hungteen.pvz.entity.plant.magic.CoffeeBeanEntity;
 import com.hungteen.pvz.entity.plant.spear.SpikeWeedEntity;
 import com.hungteen.pvz.entity.zombie.grassnight.TombStoneEntity;
+import com.hungteen.pvz.entity.zombie.poolnight.BalloonZombieEntity;
 import com.hungteen.pvz.entity.zombie.poolnight.DiggerZombieEntity;
 import com.hungteen.pvz.item.tool.card.PlantCardItem;
 import com.hungteen.pvz.misc.damage.PVZDamageSource;
@@ -290,6 +291,8 @@ public abstract class PVZPlantEntity extends CreatureEntity implements IPVZPlant
 	protected boolean canPlantTarget(LivingEntity entity) {
 		if(entity instanceof DiggerZombieEntity) {
 			return ((DiggerZombieEntity) entity).getAnimTime() == DiggerZombieEntity.MAX_ANIM_TIME;
+		} else if(entity instanceof BalloonZombieEntity) {
+			return ! ((BalloonZombieEntity) entity).hasBalloon();
 		}
 		return true;
 	}

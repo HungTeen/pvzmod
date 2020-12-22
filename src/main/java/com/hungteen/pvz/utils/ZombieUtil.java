@@ -25,6 +25,7 @@ public class ZombieUtil {
 	public static final float HUGE_FAST = 0.28f; 
 	public static final float SUPER_FAST = 0.3f; 
 	public static final float WATER_FAST = 0.8f;
+	public static final float FLY_FAST = 0.5f;
 
 	// zombies attackDamage
 	public static final float VERY_LOW = 4; 
@@ -76,6 +77,7 @@ public class ZombieUtil {
 		putZombieInfoToMap(Zombies.LAVA_ZOMBIE, Ranks.PURPLE, EntityRegister.LAVA_ZOMBIE);
 		//pool night
 		putZombieInfoToMap(Zombies.JACK_IN_BOX_ZOMBIE, Ranks.GREEN, EntityRegister.JACK_IN_BOX_ZOMBIE);
+		putZombieInfoToMap(Zombies.BALLOON_ZOMBIE, Ranks.WHITE, EntityRegister.BALLOON_ZOMBIE);
 		putZombieInfoToMap(Zombies.DIGGER_ZOMBIE, Ranks.GREEN, EntityRegister.DIGGER_ZOMBIE);
 		putZombieInfoToMap(Zombies.POGO_ZOMBIE, Ranks.GREEN, EntityRegister.POGO_ZOMBIE);
 		putZombieInfoToMap(Zombies.YETI_ZOMBIE, Ranks.BLUE, EntityRegister.YETI_ZOMBIE);

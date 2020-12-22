@@ -183,7 +183,7 @@ public class ThornEntity extends AbstractBulletEntity {
 	}
 
 	protected void dealThornDamage(Entity target) {
-		target.attackEntityFrom(PVZDamageSource.causeThrownDamage(this, this), this.getAttackDamage());
+		target.attackEntityFrom(PVZDamageSource.causeThornDamage(this, this), this.getAttackDamage());
 	}
 
 	protected float getAttackDamage() {

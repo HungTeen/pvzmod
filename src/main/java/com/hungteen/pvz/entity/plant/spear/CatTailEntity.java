@@ -7,6 +7,7 @@ import com.hungteen.pvz.entity.bullet.ThornEntity;
 import com.hungteen.pvz.entity.bullet.ThornEntity.ThornStates;
 import com.hungteen.pvz.entity.bullet.ThornEntity.ThornTypes;
 import com.hungteen.pvz.entity.plant.base.PlantShooterEntity;
+import com.hungteen.pvz.entity.zombie.poolnight.BalloonZombieEntity;
 import com.hungteen.pvz.register.EntityRegister;
 import com.hungteen.pvz.utils.enums.Plants;
 
@@ -54,6 +55,12 @@ public class CatTailEntity extends PlantShooterEntity {
 			this.thorns.clear();
 			this.thorns = tmp;
 		}
+	}
+	
+	@Override
+	protected boolean canPlantTarget(LivingEntity entity) {
+		if(entity instanceof BalloonZombieEntity) return true;
+		return super.canPlantTarget(entity);
 	}
 	
 	@Override

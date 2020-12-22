@@ -47,7 +47,9 @@ public class EntityUtil {
 	}
 	
 	public static void playSound(Entity entity, SoundEvent ev) {
-		entity.playSound(ev, 1.0F, RAND.nextFloat() * 0.2F + 0.9F);
+		if(ev != null) {
+			entity.playSound(ev, 1.0F, RAND.nextFloat() * 0.2F + 0.9F);
+		}
 	}
 
 	public static boolean checkCanSeeEntity(Entity entity, Entity target) {

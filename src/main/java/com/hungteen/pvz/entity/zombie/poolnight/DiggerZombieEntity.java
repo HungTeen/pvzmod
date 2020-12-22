@@ -35,7 +35,7 @@ public class DiggerZombieEntity extends PVZZombieEntity implements IHasMetal {
 		this.dataManager.register(HAS_PICKAXE, true);
 		this.dataManager.register(ANIM_TIME, 0);
 	}
-
+	
 	@Override
 	public void normalZombieTick() {
 		super.normalZombieTick();
@@ -51,13 +51,17 @@ public class DiggerZombieEntity extends PVZZombieEntity implements IHasMetal {
 			    } else {
 			    	this.setAnimTime(MathHelper.clamp(this.getAnimTime() - 1, 0, MAX_ANIM_TIME));
 			    }
-				this.getAttribute(SharedMonsterAttributes.ATTACK_DAMAGE).setBaseValue(ZombieUtil.NORMAL_DAMAGE);
 			} else {
 				this.setAnimTime(MathHelper.clamp(this.getAnimTime() + 1, 0, MAX_ANIM_TIME));
-				this.getAttribute(SharedMonsterAttributes.ATTACK_DAMAGE).setBaseValue(ZombieUtil.LOW);
 			}
+			this.updateAttributes(this.hasPickaxe());
 		}
 		this.recalculateSize();
+	}
+	
+	private void updateAttributes(boolean has){
+		this.getAttribute(SharedMonsterAttributes.ATTACK_DAMAGE).setBaseValue(has ? ZombieUtil.NORMAL_DAMAGE : ZombieUtil.LOW);
+		this.getAttribute(SharedMonsterAttributes.MOVEMENT_SPEED).setBaseValue(has ? ZombieUtil.LITTLE_FAST : ZombieUtil.LITTLE_SLOW);
 	}
 	
 	@Override

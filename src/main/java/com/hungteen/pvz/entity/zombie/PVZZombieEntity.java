@@ -89,8 +89,9 @@ public abstract class PVZZombieEntity extends MonsterEntity implements IPVZZombi
 	@Override
 	public ILivingEntityData onInitialSpawn(IWorld worldIn, DifficultyInstance difficultyIn, SpawnReason reason,
 			ILivingEntityData spawnDataIn, CompoundNBT dataTag) {
-		if(!world.isRemote) {
+		if(! world.isRemote) {
 			this.setZombieType(this.getSpawnType());
+			EntityUtil.playSound(this, getSpawnSound());
 		}
 		return super.onInitialSpawn(worldIn, difficultyIn, reason, spawnDataIn, dataTag);
 	}
@@ -573,6 +574,11 @@ public abstract class PVZZombieEntity extends MonsterEntity implements IPVZZombi
 
 	public boolean canBeCold() {
 		return true;
+	}
+	
+	@Nullable
+	protected SoundEvent getSpawnSound() {
+		return null;
 	}
 	
 	public float getDefenceLife() {
