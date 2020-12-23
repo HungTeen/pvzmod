@@ -2,7 +2,7 @@ package com.hungteen.pvz.event;
 
 import com.hungteen.pvz.PVZConfig;
 import com.hungteen.pvz.PVZMod;
-import com.hungteen.pvz.gui.PVZMainMenuScreen;
+import com.hungteen.pvz.gui.screen.PVZMainMenuScreen;
 
 import net.minecraft.client.gui.screen.MainMenuScreen;
 import net.minecraftforge.api.distmarker.Dist;

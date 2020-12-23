@@ -49,8 +49,16 @@
     "pvz:torch_wood_enjoy_card",
     "pvz:tall_nut_card",
     "pvz:tall_nut_enjoy_card",
+    "pvz:sea_shroom_card",
+    "pvz:sea_shroom_enjoy_card",
+    "pvz:plantern_card",
+    "pvz:plantern_enjoy_card",
+    "pvz:split_pea_card",
+    "pvz:split_pea_enjoy_card",
     "pvz:pumpkin_card",
     "pvz:pumpkin_enjoy_card",
+    "pvz:magnet_shroom_card",
+    "pvz:magnet_shroom_enjoy_card",
     "pvz:coffee_bean_card",
     "pvz:coffee_bean_enjoy_card",
     "pvz:marigold_card",
@@ -59,7 +67,11 @@
     "pvz:gatling_pea_enjoy_card",
     "pvz:twin_sunflower_card",
     "pvz:twin_sunflower_enjoy_card",
+    "pvz:cat_tail_card",
+    "pvz:cat_tail_enjoy_card",
     "pvz:water_guard_card",
-    "pvz:water_guard_enjoy_card"
+    "pvz:water_guard_enjoy_card",
+    "pvz:strange_cat_card",
+    "pvz:strange_cat_enjoy_card"
   ]
 }

@@ -17,6 +17,7 @@ import com.hungteen.pvz.entity.misc.SmallChomperEntity;
 import com.hungteen.pvz.entity.misc.ZombieHandEntity;
 import com.hungteen.pvz.entity.npc.CrazyDaveEntity;
 import com.hungteen.pvz.entity.npc.PanneyEntity;
+import com.hungteen.pvz.entity.npc.SunDaveEntity;
 import com.hungteen.pvz.entity.plant.appease.GatlingPeaEntity;
 import com.hungteen.pvz.entity.plant.appease.PeaShooterEntity;
 import com.hungteen.pvz.entity.plant.appease.RepeaterEntity;
@@ -101,6 +102,7 @@ import com.hungteen.pvz.render.entity.misc.SmallChomperRender;
 import com.hungteen.pvz.render.entity.misc.ZombieHandRender;
 import com.hungteen.pvz.render.entity.npc.CrazyDaveRender;
 import com.hungteen.pvz.render.entity.npc.PanneyRender;
+import com.hungteen.pvz.render.entity.npc.SunDaveRender;
 import com.hungteen.pvz.render.entity.plant.appease.GatlingPeaRender;
 import com.hungteen.pvz.render.entity.plant.appease.PeaShooterRender;
 import com.hungteen.pvz.render.entity.plant.appease.RepeaterRender;
@@ -215,6 +217,7 @@ public class EntityRegister {
 	//npc
 	public static final RegistryObject<EntityType<CrazyDaveEntity>> CRAZY_DAVE = registerEntityType(CrazyDaveEntity::new, "crazy_dave", EntityClassification.CREATURE);
 	public static final RegistryObject<EntityType<PanneyEntity>> PANNEY = registerEntityType(PanneyEntity::new, "panney", EntityClassification.CREATURE);
+	public static final RegistryObject<EntityType<SunDaveEntity>> SUN_DAVE = registerEntityType(SunDaveEntity::new, "sun_dave", EntityClassification.CREATURE);
 	
 	//zombie 
 	public static final RegistryObject<EntityType<NormalZombieEntity>> NORMAL_ZOMBIE = registerEntityType(NormalZombieEntity::new, "normal_zombie", EntityClassification.MONSTER);
@@ -316,6 +319,7 @@ public class EntityRegister {
         //npc
         RenderingRegistry.registerEntityRenderingHandler(CRAZY_DAVE.get(), CrazyDaveRender::new);
         RenderingRegistry.registerEntityRenderingHandler(PANNEY.get(), PanneyRender::new);
+        RenderingRegistry.registerEntityRenderingHandler(SUN_DAVE.get(), SunDaveRender::new);
         
         //zombie
         RenderingRegistry.registerEntityRenderingHandler(NORMAL_ZOMBIE.get(), NormalZombieRender::new);

@@ -1,4 +1,4 @@
-package com.hungteen.pvz.gui;
+package com.hungteen.pvz.gui.screen;
 
 import java.io.IOException;
 import java.util.ArrayList;

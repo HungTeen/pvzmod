@@ -1,6 +1,6 @@
 package com.hungteen.pvz.item.misc;
 
-import com.hungteen.pvz.gui.PVZGuildBookScreen;
+import com.hungteen.pvz.gui.screen.PVZGuildBookScreen;
 import com.hungteen.pvz.register.GroupRegister;
 
 import net.minecraft.client.Minecraft;

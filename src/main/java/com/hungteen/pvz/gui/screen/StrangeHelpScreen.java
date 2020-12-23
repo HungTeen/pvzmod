@@ -1,4 +1,4 @@
-package com.hungteen.pvz.gui;
+package com.hungteen.pvz.gui.screen;
 
 import com.hungteen.pvz.utils.StringUtil;
 import com.hungteen.pvz.utils.enums.Colors;

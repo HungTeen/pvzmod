@@ -23,6 +23,7 @@ import com.hungteen.pvz.register.PotionRegister;
 import com.hungteen.pvz.register.SoundRegister;
 import com.hungteen.pvz.register.StructureRegister;
 import com.hungteen.pvz.register.TileEntityRegister;
+import com.hungteen.pvz.utils.TradeUtil;
 
 import net.minecraft.entity.EntityType;
 import net.minecraftforge.event.RegistryEvent;
@@ -61,7 +62,8 @@ public class RegistryHandler {
     	BiomeRegister.addBiomeFeatures();
     	StructureRegister.registerStructureType();
     	EntitySpawnRegister.registerEntitySpawn();
-    	PotionRecipeHandler.init();
+    	PotionRecipeHandler.registerPotionRecipes();
+    	TradeUtil.initTrades();
     }
 	
 	@SubscribeEvent

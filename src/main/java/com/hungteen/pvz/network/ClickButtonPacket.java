@@ -5,6 +5,7 @@ import java.util.function.Supplier;
 import com.hungteen.pvz.gui.GuiHandler;
 import com.hungteen.pvz.gui.container.DaveShopContainer;
 import com.hungteen.pvz.gui.container.PlayerInventoryContainer;
+import com.hungteen.pvz.gui.container.SunShopContainer;
 import com.hungteen.pvz.utils.TradeUtil.DaveGoods;
 
 import net.minecraft.entity.player.ServerPlayerEntity;
@@ -41,9 +42,14 @@ public class ClickButtonPacket {
 						inv.currentPage+=message.num;
 						inv.onPageChange();
 					}
-				}else if(message.type == GuiHandler.DAVE_SHOP) {
+				} else if(message.type == GuiHandler.DAVE_SHOP) {
 					if(player.openContainer instanceof DaveShopContainer) {
 						DaveShopContainer container = (DaveShopContainer) player.openContainer;
+						container.buyGood(DaveGoods.values()[message.num]);
+					}
+				} else if(message.type == GuiHandler.SUN_SHOP) {
+					if(player.openContainer instanceof SunShopContainer) {
+						SunShopContainer container = (SunShopContainer) player.openContainer;
 						container.buyGood(DaveGoods.values()[message.num]);
 					}
 				}

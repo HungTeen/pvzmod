@@ -3,32 +3,39 @@ package com.hungteen.pvz.utils;
 import java.util.EnumMap;
 
 import com.hungteen.pvz.PVZMod;
+import com.hungteen.pvz.gui.GuiHandler;
+import com.hungteen.pvz.potion.PotionRecipeHandler;
+import com.hungteen.pvz.register.BlockRegister;
 import com.hungteen.pvz.register.ItemRegister;
 
-import net.minecraft.item.Item;
-import net.minecraftforge.fml.RegistryObject;
+import net.minecraft.item.ItemStack;
 
 public class TradeUtil {
 
 	public static final EnumMap<DaveGoods, Integer> DAVE_GOODS_COST = new EnumMap<>(DaveGoods.class);
-	public static final EnumMap<DaveGoods, RegistryObject<? extends Item>> DAVE_GOODS_ITEM = new EnumMap<>(DaveGoods.class);
-
-	static {
-		putInfoToDaveGoodsMap(DaveGoods.ALMANAC, 100, ItemRegister.ALMANAC);
-		putInfoToDaveGoodsMap(DaveGoods.GATLING_PEA_CARD, 5000, ItemRegister.GATLING_PEA_CARD);
-		putInfoToDaveGoodsMap(DaveGoods.TWIN_SUNFLOWER_CARD, 5000, ItemRegister.TWIN_SUNFLOWER_CARD);
+	public static final EnumMap<DaveGoods, ItemStack> DAVE_GOODS_ITEM = new EnumMap<>(DaveGoods.class);
+	
+	public static void initTrades() {
+		putInfoToDaveGoodsMap(DaveGoods.ALMANAC, 100, new ItemStack(ItemRegister.ALMANAC.get()));
+		putInfoToDaveGoodsMap(DaveGoods.GATLING_PEA_CARD, 5000, new ItemStack(ItemRegister.GATLING_PEA_CARD.get()));
+		putInfoToDaveGoodsMap(DaveGoods.TWIN_SUNFLOWER_CARD, 5000, new ItemStack(ItemRegister.TWIN_SUNFLOWER_CARD.get()));
+		putInfoToDaveGoodsMap(DaveGoods.CAT_TAIL_CARD, 12000, new ItemStack(ItemRegister.CAT_TAIL_CARD.get()));
+		putInfoToDaveGoodsMap(DaveGoods.LIGHT_EYE_POTION_1, 100, PotionRecipeHandler.LIGHT_EYE_POTION_1);
+		putInfoToDaveGoodsMap(DaveGoods.LIGHT_EYE_POTION_2, 800, PotionRecipeHandler.LIGHT_EYE_POTION_2);
+		putInfoToDaveGoodsMap(DaveGoods.LANTERN, 500, new ItemStack(BlockRegister.LANTERN.get()));
 	}
 	
-	public static void putInfoToDaveGoodsMap(DaveGoods good, int cost, RegistryObject<? extends Item> item) {
+	public static void putInfoToDaveGoodsMap(DaveGoods good, int cost, ItemStack item) {
 		DAVE_GOODS_COST.put(good, cost);
 		DAVE_GOODS_ITEM.put(good, item);
 	}
 	
-	public static Item getGoodItem(DaveGoods good) {
+	public static ItemStack getGoodItemStack(DaveGoods good) {
 		if(DAVE_GOODS_ITEM.containsKey(good)) {
-			return DAVE_GOODS_ITEM.get(good).get();
+			ItemStack stack = DAVE_GOODS_ITEM.get(good).copy();
+			return stack;
 		}
-		PVZMod.LOGGER.debug("ERROR: Get DaveGoods Item !");
+		PVZMod.LOGGER.debug("ERROR: Get DaveGoods ItemStack !");
 		return null;
 	}
 	
@@ -56,11 +63,23 @@ public class TradeUtil {
 		return 999999999;
 	}
 	
-	public enum DaveGoods{
-		ENERGY,
-		ALMANAC,
-		GATLING_PEA_CARD,
-		TWIN_SUNFLOWER_CARD
+	public enum DaveGoods {
+		
+		ENERGY(GuiHandler.DAVE_SHOP),
+		ALMANAC(GuiHandler.DAVE_SHOP),
+		GATLING_PEA_CARD(GuiHandler.DAVE_SHOP),
+		TWIN_SUNFLOWER_CARD(GuiHandler.DAVE_SHOP),
+		CAT_TAIL_CARD(GuiHandler.DAVE_SHOP),
+		LIGHT_EYE_POTION_1(GuiHandler.SUN_SHOP),
+		LIGHT_EYE_POTION_2(GuiHandler.SUN_SHOP),
+		LANTERN(GuiHandler.SUN_SHOP);
+		
+		public final int shopId;//0 means dave shop, 1 means sun shop.
+		
+		private DaveGoods(int id) {
+			this.shopId = id;
+		}
+		
 	}
 	
 }

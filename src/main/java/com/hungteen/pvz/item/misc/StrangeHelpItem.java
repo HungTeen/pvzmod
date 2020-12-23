@@ -1,6 +1,6 @@
 package com.hungteen.pvz.item.misc;
 
-import com.hungteen.pvz.gui.StrangeHelpScreen;
+import com.hungteen.pvz.gui.screen.StrangeHelpScreen;
 import com.hungteen.pvz.register.GroupRegister;
 
 import net.minecraft.client.Minecraft;
