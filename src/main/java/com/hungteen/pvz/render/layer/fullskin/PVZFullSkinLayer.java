@@ -1,4 +1,4 @@
-package com.hungteen.pvz.render.layer;
+package com.hungteen.pvz.render.layer.fullskin;
 
 import com.mojang.blaze3d.matrix.MatrixStack;
 import com.mojang.blaze3d.vertex.IVertexBuilder;

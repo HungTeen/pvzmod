@@ -90,6 +90,9 @@ public abstract class AbstractBulletEntity extends Entity implements IProjectile
 		if (! world.isRemote && this.ticksExisted >= this.getMaxLiveTick()) {
 			this.remove();
 		}
+		if(this.ticksExisted <= 10) {
+			this.recalculateSize();
+		}
 		//on hit
 		Vec3d start = this.getPositionVec();
 		Vec3d end = start.add(this.getMotion());

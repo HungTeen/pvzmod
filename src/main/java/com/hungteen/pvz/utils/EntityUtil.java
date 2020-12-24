@@ -146,9 +146,7 @@ public class EntityUtil {
 	 */
 	@Nullable
 	public static PlayerEntity getEntityOwner(World world, Entity entity) {
-		if(entity==null) {
-			return null;
-		}
+		if(entity == null) return null;
 		UUID uuid = null;
 		if(entity instanceof PVZPlantEntity) {
 			uuid = ((PVZPlantEntity) entity).getOwnerUUID();
@@ -208,7 +206,7 @@ public class EntityUtil {
 	
 	/**
 	 * get entity's group
-	 * players : 2
+	 * players : config file
 	 * plants & crazydave : 1
 	 * zombies & monsters : -1
 	 * multipart the same as its owner
@@ -217,7 +215,7 @@ public class EntityUtil {
 	public static int getEntityGroup(Entity entity){
 		int group = 0;
 		if(entity instanceof PlayerEntity) {
-			return 2;
+			return PVZConfig.COMMON_CONFIG.EntitySettings.PlayerOriginGroup.get();
 		}
 		if(entity instanceof PVZPlantEntity) {
 			group = ((PVZPlantEntity) entity).isCharmed() ? -1 : 1;

@@ -11,7 +11,7 @@ import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 
 @OnlyIn(Dist.CLIENT)
-public class TwinSunFlowerRender extends PVZPlantRender<TwinSunFlowerEntity>{
+public class TwinSunFlowerRender extends PVZPlantRender<TwinSunFlowerEntity> {
 
 	public TwinSunFlowerRender(EntityRendererManager rendererManager) {
 		super(rendererManager, new TwinSunFlowerModel(), 0.48f);

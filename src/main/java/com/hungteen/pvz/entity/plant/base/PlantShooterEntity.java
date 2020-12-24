@@ -32,13 +32,11 @@ public abstract class PlantShooterEntity extends PVZPlantEntity implements IShoo
 	@Override
 	public void normalPlantTick() {
 		super.normalPlantTick();
-		if(!this.world.isRemote) {
-			if(this.canAttackNow()) {
-				this.shootBullet();
-			}
-		    if(this.getAttackTime() > 0) {
-			    this.setAttackTime(this.getAttackTime() - 1);
-			}
+		if(! this.world.isRemote && this.canAttackNow()) {
+			this.shootBullet();
+		}
+	    if(this.getAttackTime() > 0) {
+		    this.setAttackTime(this.getAttackTime() - 1);
 		}
 	}
 	

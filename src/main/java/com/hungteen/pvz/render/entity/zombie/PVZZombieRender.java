@@ -3,10 +3,10 @@ package com.hungteen.pvz.render.entity.zombie;
 import com.hungteen.pvz.entity.zombie.PVZZombieEntity;
 import com.hungteen.pvz.model.entity.IHasDefence;
 import com.hungteen.pvz.render.entity.PVZCreatureRender;
-import com.hungteen.pvz.render.layer.CharmLayer;
-import com.hungteen.pvz.render.layer.ColdLayer;
-import com.hungteen.pvz.render.layer.EnergyLayer;
 import com.hungteen.pvz.render.layer.FrozenIceLayer;
+import com.hungteen.pvz.render.layer.fullskin.CharmLayer;
+import com.hungteen.pvz.render.layer.fullskin.ColdLayer;
+import com.hungteen.pvz.render.layer.fullskin.EnergyLayer;
 import com.mojang.blaze3d.matrix.MatrixStack;
 
 import net.minecraft.client.renderer.entity.EntityRendererManager;

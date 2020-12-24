@@ -1,9 +1,11 @@
 package com.hungteen.pvz.render.entity.plant;
 
 import com.hungteen.pvz.entity.plant.PVZPlantEntity;
-import com.hungteen.pvz.render.layer.CharmLayer;
-import com.hungteen.pvz.render.layer.EnergyLayer;
 import com.hungteen.pvz.render.layer.PumpkinLayer;
+import com.hungteen.pvz.render.layer.fullskin.CharmLayer;
+import com.hungteen.pvz.render.layer.fullskin.EnergyLayer;
+import com.hungteen.pvz.render.layer.fullskin.HealLightLayer;
+import com.hungteen.pvz.render.layer.fullskin.SunLightLayer;
 import com.mojang.blaze3d.matrix.MatrixStack;
 
 import net.minecraft.client.renderer.entity.EntityRendererManager;
@@ -33,6 +35,8 @@ public abstract class PVZPlantRender<T extends PVZPlantEntity> extends MobRender
 		this.addLayer(new EnergyLayer<>(this));
 		this.addLayer(new CharmLayer<>(this));
 		this.addLayer(new PumpkinLayer<>(this));
+		this.addLayer(new SunLightLayer<>(this));
+		this.addLayer(new HealLightLayer<>(this));
 	}
 	
 	public abstract float getScaleByEntity(T entity);

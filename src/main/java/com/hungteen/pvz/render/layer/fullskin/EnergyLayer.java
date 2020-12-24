@@ -1,4 +1,4 @@
-package com.hungteen.pvz.render.layer;
+package com.hungteen.pvz.render.layer.fullskin;
 
 import com.hungteen.pvz.entity.plant.PVZPlantEntity;
 import com.hungteen.pvz.entity.zombie.PVZZombieEntity;

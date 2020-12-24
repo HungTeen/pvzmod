@@ -3,7 +3,7 @@ package com.hungteen.pvz.render.entity.creature;
 import com.hungteen.pvz.entity.creature.FoodieZombieEntity;
 import com.hungteen.pvz.model.entity.animal.FoodieZombieModel;
 import com.hungteen.pvz.render.entity.PVZCreatureRender;
-import com.hungteen.pvz.render.layer.SunLightLayer;
+import com.hungteen.pvz.render.layer.fullskin.SunLightLayer;
 import com.hungteen.pvz.utils.StringUtil;
 
 import net.minecraft.client.renderer.entity.EntityRendererManager;

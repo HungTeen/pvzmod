@@ -16,7 +16,7 @@ public class StarFruitRender extends PVZPlantRender<StarFruitEntity> {
 	public StarFruitRender(EntityRendererManager rendererManager) {
 		super(rendererManager, new StarFruitModel(), 0.45F);
 	}
-
+	
 	@Override
 	public float getScaleByEntity(StarFruitEntity entity) {
 		return 0.82F;

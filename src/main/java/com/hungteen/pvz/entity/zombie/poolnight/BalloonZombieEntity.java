@@ -56,6 +56,12 @@ public class BalloonZombieEntity extends PVZZombieEntity {
 	}
 	
 	@Override
+	public boolean isInvulnerableTo(DamageSource source) {
+		if(source.getDamageType() == DamageSource.FALL.damageType) return true;
+		return super.isInvulnerableTo(source);
+	}
+	
+	@Override
 	public boolean attackEntityFrom(DamageSource source, float amount) {
 		if(source instanceof PVZDamageSource && ((PVZDamageSource) source).getPVZDamageType() == PVZDamageType.THORN && this.hasBalloon()) {
 			this.onBalloonExplode();

@@ -3,7 +3,7 @@ package com.hungteen.pvz.render.entity.plant.magic;
 import com.hungteen.pvz.entity.plant.magic.HypnoShroomEntity;
 import com.hungteen.pvz.model.entity.plant.magic.HypnoShroomModel;
 import com.hungteen.pvz.render.entity.plant.PVZPlantRender;
-import com.hungteen.pvz.render.layer.CharmLayer;
+import com.hungteen.pvz.render.layer.fullskin.CharmLayer;
 import com.hungteen.pvz.utils.StringUtil;
 
 import net.minecraft.client.renderer.entity.EntityRendererManager;

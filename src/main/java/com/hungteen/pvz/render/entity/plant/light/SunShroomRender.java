@@ -3,7 +3,6 @@ package com.hungteen.pvz.render.entity.plant.light;
 import com.hungteen.pvz.entity.plant.light.SunShroomEntity;
 import com.hungteen.pvz.model.entity.plant.light.SunShroomModel;
 import com.hungteen.pvz.render.entity.plant.PVZPlantRender;
-import com.hungteen.pvz.render.layer.SunLightLayer;
 import com.hungteen.pvz.utils.StringUtil;
 
 import net.minecraft.client.renderer.entity.EntityRendererManager;
@@ -18,12 +17,6 @@ public class SunShroomRender extends PVZPlantRender<SunShroomEntity>{
 		super(rendererManager, new SunShroomModel(), 0.3f);
 	}
 
-	@Override
-	protected void addPlantLayers() {
-		super.addPlantLayers();
-		this.addLayer(new SunLightLayer<>(this));
-	}
-	
 	@Override
 	public float getScaleByEntity(SunShroomEntity entity) {
 		float smallSize = 0.2f;

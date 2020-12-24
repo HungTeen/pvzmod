@@ -2,6 +2,7 @@ package com.hungteen.pvz.render.layer;
 
 import com.hungteen.pvz.entity.zombie.PVZZombieEntity;
 import com.hungteen.pvz.entity.zombie.PVZZombieEntity.Type;
+import com.hungteen.pvz.render.layer.fullskin.PVZFullSkinLayer;
 import com.hungteen.pvz.utils.StringUtil;
 
 import net.minecraft.client.renderer.entity.IEntityRenderer;

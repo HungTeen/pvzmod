@@ -1,5 +1,6 @@
 package com.hungteen.pvz.entity.bullet;
 
+import com.hungteen.pvz.entity.plant.appease.AngelStarFruitEntity;
 import com.hungteen.pvz.entity.plant.appease.StarFruitEntity;
 import com.hungteen.pvz.misc.damage.PVZDamageSource;
 
@@ -69,12 +70,18 @@ public class StarEntity extends AbstractBulletEntity {
 		float damage = 0;
 		if(this.getThrower() instanceof StarFruitEntity) {
 			damage = ((StarFruitEntity) this.getThrower()).getAttackDamage();
+		} else if(this.getThrower() instanceof AngelStarFruitEntity) {
+			damage = ((AngelStarFruitEntity) this.getThrower()).getAttackDamage();
 		}
+		if(this.getStarType() == StarTypes.BIG) damage += 5;
+		if(this.getStarType() == StarTypes.HUGE) damage += 10;
 		return damage;
 	}
 	
 	@Override
 	public EntitySize getSize(Pose poseIn) {
+		if(this.getStarType() == StarTypes.BIG) return EntitySize.flexible(0.5f, 0.2f);
+		if(this.getStarType() == StarTypes.HUGE) return EntitySize.flexible(0.8f, 0.2f);
 		return EntitySize.flexible(0.2f, 0.2f);
 	}
 

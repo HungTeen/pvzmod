@@ -12,7 +12,7 @@ import net.minecraft.entity.Entity;
 
 public abstract class PVZEntityRender <T extends Entity> extends EntityRenderer<T> {
 
-	private EntityModel<T> model;
+	protected EntityModel<T> model;
 	
 	public PVZEntityRender(EntityRendererManager renderManager, EntityModel<T> m) {
 		super(renderManager);
@@ -32,7 +32,7 @@ public abstract class PVZEntityRender <T extends Entity> extends EntityRenderer<
 		matrixStackIn.translate(0.0, -1.501, 0.0);
 //		matrixStackIn.rotate(Vector3f.XN.rotationDegrees(45));
         IVertexBuilder ivertexbuilder = bufferIn.getBuffer(this.model.getRenderType(this.getEntityTexture(entityIn)));
-        this.model.setRotationAngles(entityIn, 0, 0,entityIn.ticksExisted+partialTicks, 0, 0);
+        this.model.setRotationAngles(entityIn, 0, 0, entityIn.ticksExisted + partialTicks, 0, 0);
         this.model.render(matrixStackIn, ivertexbuilder, packedLightIn, OverlayTexture.NO_OVERLAY, 1.0F, 1.0F, 1.0F, 1.0F);
         matrixStackIn.pop();
 	}

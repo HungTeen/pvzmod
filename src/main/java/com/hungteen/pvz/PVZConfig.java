@@ -137,6 +137,9 @@ public class PVZConfig {
 				EntitySettings.TrickZombieCharmChance = builder
 						.comment("The value related to the chance to use candy charm TrickZombie(if set to x, the chance is 1/x).")
 						.defineInRange("TrickZombieCharmChance", 3, 1, 100);
+				EntitySettings.PlayerOriginGroup = builder
+						.comment("The Group of player, 1 means u are in plant group(zombie will attack u), 0 means u are mid(no plants and zombies attack u), -1 means u are in zombie group(plant will attack u).")
+						.defineInRange("PlayerOriginGroup", 1, -1, 1);
 				
 				builder.comment("The Max live time for Entity like sun.").push("EntityLiveTime");
 				{
@@ -239,10 +242,12 @@ public class PVZConfig {
 		}
 		
 		public static class EntitySettings{
+			
 			public ForgeConfigSpec.BooleanValue TeamAttack;
 			public ForgeConfigSpec.IntValue ZombieSuperChance;
 			public ForgeConfigSpec.IntValue DoomRange;
 			public ForgeConfigSpec.IntValue TrickZombieCharmChance;
+			public ForgeConfigSpec.IntValue PlayerOriginGroup;
 			
 			public EntityLiveTick EntityLiveTick = new EntityLiveTick();
 			

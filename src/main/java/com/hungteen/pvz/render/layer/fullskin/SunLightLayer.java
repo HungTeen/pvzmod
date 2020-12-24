@@ -1,6 +1,7 @@
-package com.hungteen.pvz.render.layer;
+package com.hungteen.pvz.render.layer.fullskin;
 
 import com.hungteen.pvz.entity.creature.FoodieZombieEntity;
+import com.hungteen.pvz.entity.plant.appease.StarFruitEntity;
 import com.hungteen.pvz.entity.plant.base.PlantProducerEntity;
 import com.hungteen.pvz.utils.StringUtil;
 
@@ -20,11 +21,14 @@ public class SunLightLayer<T extends LivingEntity, M extends EntityModel<T>> ext
 
 	@Override
 	protected boolean canRender(T entity) {
+		if(entity instanceof StarFruitEntity && ((StarFruitEntity) entity).lightTick > 0) {
+			return true;
+		}
 		if(entity instanceof PlantProducerEntity) {
 			return ((PlantProducerEntity) entity).getIsGenTime();
-		}else if(entity instanceof FoodieZombieEntity) {
+		} else if(entity instanceof FoodieZombieEntity) {
 			int tick = ((FoodieZombieEntity) entity).getGenTick();
-			return tick>0&&tick<=60;
+			return tick > 0&& tick <= 60;
 		}
 		return false;
 	}
