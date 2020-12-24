@@ -72,10 +72,9 @@ public abstract class PlantShooterEntity extends PVZPlantEntity implements IShoo
 		double dz = target.getPosZ() - this.getPosZ();
 		double dis = Math.sqrt(dx * dx + dz * dz);
 		double y=dis / getMaxShootAngle();
-		return ly <= y && ry >= -y;
+		return ly <= y && ry >= - y;
 	}
 	
-	@Override
 	public double getMaxShootAngle() {
 		return 20;
 	}

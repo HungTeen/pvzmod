@@ -2,6 +2,7 @@ package com.hungteen.pvz.entity.ai;
 
 import java.util.EnumSet;
 
+import com.hungteen.pvz.entity.plant.appease.StarFruitEntity;
 import com.hungteen.pvz.utils.EntityUtil;
 import com.hungteen.pvz.utils.interfaces.IShooter;
 
@@ -11,10 +12,10 @@ import net.minecraft.entity.ai.goal.Goal;
 
 public class ShooterAttackGoal extends Goal{
 
-	private IShooter shooter;
-	private MobEntity attacker;
-	private LivingEntity target;
-	private int attackTime;
+	protected IShooter shooter;
+	protected MobEntity attacker;
+	protected LivingEntity target;
+	protected int attackTime;
 	
 	public ShooterAttackGoal(IShooter shooter) {
 		if(!(shooter instanceof MobEntity)) {
@@ -62,12 +63,14 @@ public class ShooterAttackGoal extends Goal{
 			this.attackTime = 0;
 			this.shooter.startShootAttack();
 		}
-		this.attacker.getLookController().setLookPositionWithEntity(this.target, 30.0F, 30.0F);
+		if(! (this.attacker instanceof StarFruitEntity)) {
+			this.attacker.getLookController().setLookPositionWithEntity(this.target, 30.0F, 30.0F);
+		}
 	}
 	
 	private boolean checkTarget(){
-		if(EntityUtil.checkCanEntityAttack(this.attacker, this.target)) {
-			return this.attacker.getEntitySenses().canSee(this.target) && this.shooter.checkY(this.target);
+		if(EntityUtil.checkCanEntityTarget(this.attacker, this.target)) {
+			return this.attacker.getEntitySenses().canSee(this.target);
 		}
 		return false;
 	}

@@ -30,11 +30,6 @@ public interface IShooter {
 	float getShootRange();
 	
 	/**
-	 * get shoot angle offset
-	 */
-	double getMaxShootAngle();
-	
-	/**
 	 * is suitable angle
 	 */
 	boolean checkY(Entity target);

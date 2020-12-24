@@ -34,7 +34,7 @@ public enum Plants {
 //	CACTUS,
 //	BLOVER,
 	SPLIT_PEA(0),
-//	STAR_FRUIT,
+	STAR_FRUIT(0),
 	PUMPKIN(16),
 	MAGNET_SHROOM(1),
 	//roof 

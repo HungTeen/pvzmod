@@ -37,11 +37,11 @@ public abstract class AbstractBulletEntity extends Entity implements IProjectile
 	private UUID ownerId;
 	protected IntOpenHashSet hitEntities;
 	
-	protected AbstractBulletEntity(EntityType<?> type, World worldIn) {
+	public AbstractBulletEntity(EntityType<?> type, World worldIn) {
 		super(type, worldIn);
 	}
 
-	protected AbstractBulletEntity(EntityType<?> type, World worldIn, LivingEntity livingEntityIn) {
+	public AbstractBulletEntity(EntityType<?> type, World worldIn, LivingEntity livingEntityIn) {
 		this(type, worldIn);
 		this.owner = livingEntityIn;
 		this.ownerId = livingEntityIn.getUniqueID();

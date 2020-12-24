@@ -120,6 +120,8 @@ public class ItemRegister {
     public static final RegistryObject<PlantCardItem> PLANTERN_ENJOY_CARD = registerCard(Plants.PLANTERN, true);
     public static final RegistryObject<PlantCardItem> SPLIT_PEA_CARD = registerCard(Plants.SPLIT_PEA, false);
     public static final RegistryObject<PlantCardItem> SPLIT_PEA_ENJOY_CARD = registerCard(Plants.SPLIT_PEA, true);
+    public static final RegistryObject<PlantCardItem> STAR_FRUIT_CARD = registerCard(Plants.STAR_FRUIT, false);
+    public static final RegistryObject<PlantCardItem> STAR_FRUIT_ENJOY_CARD = registerCard(Plants.STAR_FRUIT, true);
     public static final RegistryObject<PlantCardItem> PUMPKIN_CARD = registerCard(Plants.PUMPKIN, false);
     public static final RegistryObject<PlantCardItem> PUMPKIN_ENJOY_CARD = registerCard(Plants.PUMPKIN, true);
     public static final RegistryObject<PlantCardItem> MAGNET_SHROOM_CARD = registerCard(Plants.MAGNET_SHROOM, false);
@@ -262,6 +264,7 @@ public class ItemRegister {
 	public static final RegistryObject<PVZSpawnEggItem> SEA_SHROOM_SPAWN_EGG = registerSpawnEgg("sea_shroom", EntityRegister.SEA_SHROOM, Colors.TOXIC_COLOR);
 	public static final RegistryObject<PVZSpawnEggItem> PLANTERN_SPAWN_EGG = registerSpawnEgg("plantern", EntityRegister.PLANTERN, Colors.LIGHT_COLOR);
 	public static final RegistryObject<PVZSpawnEggItem> SPLIT_PEA_SPAWN_EGG = registerSpawnEgg("split_pea", EntityRegister.SPLIT_PEA, Colors.APPEASE_COLOR);
+	public static final RegistryObject<PVZSpawnEggItem> STAR_FRUIT_SPAWN_EGG = registerSpawnEgg("star_fruit", EntityRegister.STAR_FRUIT, Colors.APPEASE_COLOR);
 	public static final RegistryObject<PVZSpawnEggItem> MAGNET_SHROOM_SPAWN_EGG = registerSpawnEgg("magnet_shroom", EntityRegister.MAGNET_SHROOM, Colors.ASSIST_COLOR);
 	public static final RegistryObject<PVZSpawnEggItem> COFFEE_BEAN_SPAWN_EGG = registerSpawnEgg("coffee_bean", EntityRegister.COFFEE_BEAN, Colors.MAGIC_COLOR);
 	public static final RegistryObject<PVZSpawnEggItem> MARIGOLD_SPAWN_EGG = registerSpawnEgg("marigold", EntityRegister.MARIGOLD, Colors.MAGIC_COLOR);
