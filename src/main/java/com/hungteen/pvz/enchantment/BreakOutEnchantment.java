@@ -8,12 +8,12 @@ import net.minecraft.inventory.EquipmentSlotType;
 public class BreakOutEnchantment extends Enchantment{
 
 	public BreakOutEnchantment() {
-		super(Rarity.RARE, EnchantmentRegister.PLANT_CARD, new EquipmentSlotType[] {EquipmentSlotType.MAINHAND});
+		super(Rarity.VERY_RARE, EnchantmentRegister.PLANT_CARD, new EquipmentSlotType[] {EquipmentSlotType.MAINHAND});
 	}
 
 	@Override
 	public int getMinEnchantability(int enchantmentLevel) {
-		return enchantmentLevel * 10;
+		return enchantmentLevel * 15;
 	}
 	
 	@Override

@@ -118,6 +118,8 @@ public class ItemRegister {
     public static final RegistryObject<PlantCardItem> SEA_SHROOM_ENJOY_CARD = registerCard(Plants.SEA_SHROOM, true);
     public static final RegistryObject<PlantCardItem> PLANTERN_CARD = registerCard(Plants.PLANTERN, false);
     public static final RegistryObject<PlantCardItem> PLANTERN_ENJOY_CARD = registerCard(Plants.PLANTERN, true);
+    public static final RegistryObject<PlantCardItem> CACTUS_CARD = registerCard(Plants.CACTUS, false);
+    public static final RegistryObject<PlantCardItem> CACTUS_ENJOY_CARD = registerCard(Plants.CACTUS, true);
     public static final RegistryObject<PlantCardItem> SPLIT_PEA_CARD = registerCard(Plants.SPLIT_PEA, false);
     public static final RegistryObject<PlantCardItem> SPLIT_PEA_ENJOY_CARD = registerCard(Plants.SPLIT_PEA, true);
     public static final RegistryObject<PlantCardItem> STAR_FRUIT_CARD = registerCard(Plants.STAR_FRUIT, false);
@@ -265,6 +267,7 @@ public class ItemRegister {
 	public static final RegistryObject<PVZSpawnEggItem> TALL_NUT_SPAWN_EGG = registerSpawnEgg("tall_nut", EntityRegister.TALL_NUT, Colors.DEFENCE_COLOR);
 	public static final RegistryObject<PVZSpawnEggItem> SEA_SHROOM_SPAWN_EGG = registerSpawnEgg("sea_shroom", EntityRegister.SEA_SHROOM, Colors.TOXIC_COLOR);
 	public static final RegistryObject<PVZSpawnEggItem> PLANTERN_SPAWN_EGG = registerSpawnEgg("plantern", EntityRegister.PLANTERN, Colors.LIGHT_COLOR);
+	public static final RegistryObject<PVZSpawnEggItem> CACTUS_SPAWN_EGG = registerSpawnEgg("cactus", EntityRegister.CACTUS, Colors.SPEAR_COLOR);
 	public static final RegistryObject<PVZSpawnEggItem> SPLIT_PEA_SPAWN_EGG = registerSpawnEgg("split_pea", EntityRegister.SPLIT_PEA, Colors.APPEASE_COLOR);
 	public static final RegistryObject<PVZSpawnEggItem> STAR_FRUIT_SPAWN_EGG = registerSpawnEgg("star_fruit", EntityRegister.STAR_FRUIT, Colors.APPEASE_COLOR);
 	public static final RegistryObject<PVZSpawnEggItem> MAGNET_SHROOM_SPAWN_EGG = registerSpawnEgg("magnet_shroom", EntityRegister.MAGNET_SHROOM, Colors.ASSIST_COLOR);

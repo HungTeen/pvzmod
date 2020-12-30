@@ -80,7 +80,7 @@ public class PlantUtil {
 		putPlantInfoToMap(Plants.CAT_TAIL, 275, CDs.VERY_SLOW, Ranks.GOLD, Essences.SPEAR, EntityRegister.CAT_TAIL, ItemRegister.CAT_TAIL_CARD, ItemRegister.CAT_TAIL_ENJOY_CARD);
 		putPlantInfoToMap(Plants.WATER_GUARD, 50, CDs.LITTLE_SLOW, Ranks.GRAY, Essences.DEFENCE, EntityRegister.WATER_GUARD, ItemRegister.WATER_GUARD_CARD, ItemRegister.WATER_GUARD_ENJOY_CARD);
 		putPlantInfoToMap(Plants.STRANGE_CAT, 325, CDs.HUGE_SLOW, Ranks.PURPLE, Essences.MAGIC, EntityRegister.STRANGE_CAT, ItemRegister.STRANGE_CAT_CARD, ItemRegister.STRANGE_CAT_ENJOY_CARD);
-		
+		putPlantInfoToMap(Plants.ANGEL_STAR_FRUIT, 225, CDs.VERY_SLOW, Ranks.PURPLE, Essences.APPEASE, EntityRegister.ANGEL_STAR_FRUIT, ItemRegister.ANGEL_STAR_FRUIT_CARD, ItemRegister.ANGEL_STAR_FRUIT_ENJOY_CARD);
 	}
 	
 	public static void putPlantInfoToMap(Plants plant,final int cost, CDs cd, Ranks rank, Essences essence, RegistryObject<? extends EntityType<? extends PVZPlantEntity>> type, RegistryObject<? extends PlantCardItem> summonCard, RegistryObject<? extends PlantCardItem> enjoyCard) {
@@ -101,6 +101,7 @@ public class PlantUtil {
 		if(plant.isShroomPlant) {
 			list.add(Blocks.MYCELIUM);
 		}
+		if(plant == Plants.CACTUS) list.add(Blocks.SAND);
 		return list;
 	}
 	

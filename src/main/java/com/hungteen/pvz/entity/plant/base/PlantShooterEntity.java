@@ -65,11 +65,11 @@ public abstract class PlantShooterEntity extends PVZPlantEntity implements IShoo
 	@Override
 	public boolean checkY(Entity target) {
 		double dx = target.getPosX() - this.getPosX();
-		double ly = target.getPosY() - this.getPosY();
+		double ly = target.getPosY() - this.getPosY() - this.getEyeHeight();
 		double ry = ly + target.getHeight();
 		double dz = target.getPosZ() - this.getPosZ();
 		double dis = Math.sqrt(dx * dx + dz * dz);
-		double y=dis / getMaxShootAngle();
+		double y = dis / getMaxShootAngle();
 		return ly <= y && ry >= - y;
 	}
 	

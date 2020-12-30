@@ -7,7 +7,7 @@ import net.minecraft.inventory.EquipmentSlotType;
 public class EnergyTransferEnchantment extends Enchantment{
 
 	public EnergyTransferEnchantment() {
-		super(Rarity.VERY_RARE, EnchantmentType.WEAPON, new EquipmentSlotType[] {EquipmentSlotType.MAINHAND});
+		super(Rarity.UNCOMMON, EnchantmentType.WEAPON, new EquipmentSlotType[] {EquipmentSlotType.MAINHAND});
 	}
 	
 	@Override

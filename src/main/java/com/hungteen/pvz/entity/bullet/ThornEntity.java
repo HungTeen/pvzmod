@@ -2,6 +2,7 @@ package com.hungteen.pvz.entity.bullet;
 
 import java.util.List;
 
+import com.hungteen.pvz.entity.plant.spear.CactusEntity;
 import com.hungteen.pvz.entity.plant.spear.CatTailEntity;
 import com.hungteen.pvz.misc.damage.PVZDamageSource;
 import com.hungteen.pvz.utils.EntityUtil;
@@ -161,12 +162,12 @@ public class ThornEntity extends AbstractBulletEntity {
 				this.thornTarget = this.getRandomAttackTarget();
 			} else {
 				set.add(target.getEntityId());
-				--this.extraHitCount;
+				-- this.extraHitCount;
 			}
 		}
 		if (!this.world.isRemote) {
 			this.world.setEntityState(this, (byte) 3);
-			if ((!(this.getThornType() == ThornTypes.AUTO) && this.extraHitCount == 0)) {
+			if ((! (this.getThornType() == ThornTypes.AUTO) && this.extraHitCount == 0)) {
 				this.remove();
 			}
 		}
@@ -179,7 +180,7 @@ public class ThornEntity extends AbstractBulletEntity {
 		if (this.getThornType() == ThornTypes.AUTO) {
 			return target.equals(this.thornTarget);
 		} else {
-			return !set.contains(target.getEntityId());
+			return ! set.contains(target.getEntityId());
 		}
 	}
 
@@ -191,9 +192,12 @@ public class ThornEntity extends AbstractBulletEntity {
 		float damage = 0;
 		if (this.getThrower() instanceof CatTailEntity) {
 			damage = ((CatTailEntity) this.getThrower()).getAttackDamage();
+		} else if(this.getThrower() instanceof CactusEntity) {
+			damage = ((CactusEntity) this.getThrower()).getAttackDamage();
 		}
-		if (this.getThornState() == ThornStates.POWER)
+		if (this.getThornType() == ThornTypes.GUILD) {
 			damage += 10;
+		}
 		return damage;
 	}
 

@@ -25,7 +25,7 @@ public class StrangeCatEntity extends PVZPlantEntity {
 	public StrangeCatEntity(EntityType<? extends CreatureEntity> type, World worldIn) {
 		super(type, worldIn);
 		this.isImmuneToWeak = true;
-//		this.restTick = this.getRestCD();
+		this.restTick = this.getRestCD();
 	}
 
 	@Override

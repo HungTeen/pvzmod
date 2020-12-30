@@ -22,7 +22,7 @@ public class TradeUtil {
 		putInfoToDaveGoodsMap(DaveGoods.CAT_TAIL_CARD, 12000, new ItemStack(ItemRegister.CAT_TAIL_CARD.get()));
 		putInfoToDaveGoodsMap(DaveGoods.LIGHT_EYE_POTION_1, 100, PotionRecipeHandler.LIGHT_EYE_POTION_1);
 		putInfoToDaveGoodsMap(DaveGoods.LIGHT_EYE_POTION_2, 800, PotionRecipeHandler.LIGHT_EYE_POTION_2);
-		putInfoToDaveGoodsMap(DaveGoods.LANTERN, 500, new ItemStack(BlockRegister.LANTERN.get()));
+		putInfoToDaveGoodsMap(DaveGoods.LANTERN, 500, new ItemStack(BlockRegister.LANTERN.get(), 8));
 	}
 	
 	public static void putInfoToDaveGoodsMap(DaveGoods good, int cost, ItemStack item) {

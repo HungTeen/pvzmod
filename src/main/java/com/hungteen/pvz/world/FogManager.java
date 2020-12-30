@@ -32,4 +32,5 @@ public class FogManager {
 		return world.getDimension().getType() == DimensionType.OVERWORLD && ! world.isDaytime() && WorldEventData.getOverWorldEventData(world).hasEvent(Events.FOG) && (player != null && PlayerUtil.isPlayerSurvival(player) && player.getSubmergedHeight() < 1.2f 
 				&& player.getPose() != Pose.SWIMMING && ! player.isPotionActive(EffectRegister.LIGHT_EYE_EFFECT.get()));
 	}
+	
 }

@@ -2,6 +2,7 @@ package com.hungteen.pvz.render.entity.bullet;
 
 import com.hungteen.pvz.entity.bullet.ThornEntity;
 import com.hungteen.pvz.entity.bullet.ThornEntity.ThornStates;
+import com.hungteen.pvz.entity.bullet.ThornEntity.ThornTypes;
 import com.hungteen.pvz.model.entity.bullet.ThornModel;
 import com.hungteen.pvz.render.entity.PVZEntityRender;
 import com.hungteen.pvz.utils.StringUtil;
@@ -33,12 +34,13 @@ public class ThornRender extends PVZEntityRender<ThornEntity> {
 
 	@Override
 	protected float getRenderSize(ThornEntity entity) {
-		if(entity.getThornState() == ThornStates.POWER) return 2.5F;
-		return 1F;
+		if(entity.getThornType() == ThornTypes.GUILD) return 2.5F;
+		return 1.2F;
 	}
 
 	@Override
 	public ResourceLocation getEntityTexture(ThornEntity entity) {
+		if(entity.getThornState() == ThornStates.POWER) return StringUtil.prefix("textures/entity/misc/power_thorn.png");
 		return StringUtil.prefix("textures/entity/misc/thorn.png");
 	}
 

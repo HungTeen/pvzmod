@@ -9,6 +9,7 @@ import com.hungteen.pvz.capability.player.PlayerDataManager;
 import com.hungteen.pvz.capability.player.PlayerDataManager.PlayerStats;
 import com.hungteen.pvz.entity.plant.PVZPlantEntity;
 import com.hungteen.pvz.event.events.SummonCardUseEvent;
+import com.hungteen.pvz.event.handler.PlayerEventHandler;
 import com.hungteen.pvz.item.tool.PeaGunItem;
 import com.hungteen.pvz.item.tool.card.PlantCardItem;
 import com.hungteen.pvz.register.EnchantmentRegister;
@@ -132,8 +133,8 @@ public class PVZPlayerEvents {
 		PlayerEntity player=ev.getPlayer();
 		BlockState state = ev.getState();
 		BlockPos pos = ev.getPos();
-		if(!player.world.isRemote) {
-			if(state.getBlock()==Blocks.GRASS||state.getBlock()==Blocks.TALL_GRASS) {//break grass
+		if(! player.world.isRemote) {
+			if(state.getBlock()==Blocks.GRASS || state.getBlock()==Blocks.TALL_GRASS) {//break grass
 				Random rand = new Random();
 				if(rand.nextInt(PVZConfig.COMMON_CONFIG.BlockSettings.BreakBlock.PeaDropChance.get())==0) {//drop pea 
 					player.world.addEntity(new ItemEntity(player.world,pos.getX(), pos.getY(), pos.getZ(), new ItemStack(ItemRegister.PEA.get(),1)));
@@ -146,29 +147,25 @@ public class PVZPlayerEvents {
 	public static void onPlayerInteract(PlayerInteractEvent.EntityInteractSpecific ev){
 		World world = ev.getWorld();
 		PlayerEntity player = ev.getPlayer();
-		if(!world.isRemote) {
+		if(! world.isRemote) {
 			Entity entity = ev.getTarget();
 			if(entity instanceof PVZPlantEntity) {
 				PVZPlantEntity plant = (PVZPlantEntity) entity;
 				ItemStack stack = player.getHeldItemMainhand();
-				if(stack.getItem() instanceof SwordItem) {
-					if(EnchantmentHelper.getEnchantmentLevel(EnchantmentRegister.ENERGY_TRANSFER.get(), stack)>0) {
+				if(stack.getItem() instanceof SwordItem && entity.isAlive()) {
+					if(EnchantmentHelper.getEnchantmentLevel(EnchantmentRegister.ENERGY_TRANSFER.get(), stack) > 0) {
 						if(plant.canStartSuperMode()){
-							player.getCapability(CapabilityHandler.PLAYER_DATA_CAPABILITY).ifPresent((l)->{
+							player.getCapability(CapabilityHandler.PLAYER_DATA_CAPABILITY).ifPresent((l) -> {
 								PlayerStats stats = l.getPlayerData().getPlayerStats();
-								if(stats.getPlayerStats(Resources.ENERGY_NUM)>=1) {
-									stats.addPlayerStats(Resources.ENERGY_NUM, -1);
+								if(stats.getPlayerStats(Resources.ENERGY_NUM) >= 1) {
+									stats.addPlayerStats(Resources.ENERGY_NUM, - 1);
 								    plant.startSuperMode(true);
 								}
 							});
 						}
 					}
-				}else if(stack.getItem() instanceof ShovelItem) {
-					if(player.abilities.isCreativeMode||player.getUniqueID().equals(plant.getOwnerUUID())||!EntityUtil.checkCanEntityAttack(plant, player)) {
-						plant.playSound(SoundEvents.BLOCK_GRASS_BREAK, 1f, 1f);
-						plant.remove();
-						stack.damageItem(3, player, (p) -> {p.sendBreakAnimation(ev.getHand());});
-					}
+				} else if(stack.getItem() instanceof ShovelItem) {
+					PlayerEventHandler.onPlantShovelByPlayer(player, plant, stack);
 				}
 			}
 //			else if(entity instanceof PVZZombieEntity) {

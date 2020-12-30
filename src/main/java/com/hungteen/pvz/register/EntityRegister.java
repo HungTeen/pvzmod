@@ -49,6 +49,7 @@ import com.hungteen.pvz.entity.plant.magic.CoffeeBeanEntity;
 import com.hungteen.pvz.entity.plant.magic.HypnoShroomEntity;
 import com.hungteen.pvz.entity.plant.magic.MariGoldEntity;
 import com.hungteen.pvz.entity.plant.magic.StrangeCatEntity;
+import com.hungteen.pvz.entity.plant.spear.CactusEntity;
 import com.hungteen.pvz.entity.plant.spear.CatTailEntity;
 import com.hungteen.pvz.entity.plant.spear.SpikeWeedEntity;
 import com.hungteen.pvz.entity.plant.toxic.FumeShroomEntity;
@@ -137,6 +138,7 @@ import com.hungteen.pvz.render.entity.plant.magic.CoffeeBeanRender;
 import com.hungteen.pvz.render.entity.plant.magic.HypnoShroomRender;
 import com.hungteen.pvz.render.entity.plant.magic.MariGoldRender;
 import com.hungteen.pvz.render.entity.plant.magic.StrangeCatRender;
+import com.hungteen.pvz.render.entity.plant.spear.CactusRender;
 import com.hungteen.pvz.render.entity.plant.spear.CatTailRender;
 import com.hungteen.pvz.render.entity.plant.spear.SpikeWeedRender;
 import com.hungteen.pvz.render.entity.plant.toxic.FumeShroomRender;
@@ -297,6 +299,7 @@ public class EntityRegister {
 	public static final RegistryObject<EntityType<StrangeCatEntity>> STRANGE_CAT = registerEntityType(StrangeCatEntity::new, "strange_cat", EntityClassification.CREATURE);
 	public static final RegistryObject<EntityType<StarFruitEntity>> STAR_FRUIT = registerEntityType(StarFruitEntity::new, "star_fruit", EntityClassification.CREATURE);
 	public static final RegistryObject<EntityType<AngelStarFruitEntity>> ANGEL_STAR_FRUIT = registerEntityType(AngelStarFruitEntity::new, "angel_star_fruit", EntityClassification.CREATURE);
+	public static final RegistryObject<EntityType<CactusEntity>> CACTUS = registerEntityType(CactusEntity::new, "cactus", EntityClassification.CREATURE);
 	
 	@OnlyIn(Dist.CLIENT)
 	@SubscribeEvent
@@ -393,6 +396,7 @@ public class EntityRegister {
         
         RenderingRegistry.registerEntityRenderingHandler(SEA_SHROOM.get(), SeaShroomRender::new);
         RenderingRegistry.registerEntityRenderingHandler(PLANTERN.get(), PlanternRender::new);
+        RenderingRegistry.registerEntityRenderingHandler(CACTUS.get(), CactusRender::new);
         RenderingRegistry.registerEntityRenderingHandler(SPLIT_PEA.get(), SplitPeaRender::new);
         RenderingRegistry.registerEntityRenderingHandler(STAR_FRUIT.get(), StarFruitRender::new);
         RenderingRegistry.registerEntityRenderingHandler(MAGNET_SHROOM.get(), MagnetShroomRender::new);
