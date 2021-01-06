@@ -193,9 +193,11 @@ public abstract class PVZPlantEntity extends CreatureEntity implements IPVZPlant
 			world.addParticle(ParticleRegister.SLEEP.get(), this.getPosX(), this.getPosY() + this.getEyeHeight(), this.getPosZ(), 0.05, 0.05, 0.05);
 		}
 		//max live tick
-		this.setLiveTick(this.getLiveTick() + 1);
-		if(this.getLiveTick() >= this.getMaxLiveTick()) {//it's time to disappear 
-			this.remove();
+		if(! world.isRemote) {
+			this.setLiveTick(this.getLiveTick() + 1);
+		    if(this.getLiveTick() >= this.getMaxLiveTick()) {//it's time to disappear 
+			    this.remove();
+		    }
 		}
 		//lock the x and z of plant
 		if(this.shouldLockXZ()) {
@@ -554,6 +556,7 @@ public abstract class PVZPlantEntity extends CreatureEntity implements IPVZPlant
 	 */
 	public int getMaxLiveTick() {
 		int tick = PVZConfig.COMMON_CONFIG.EntitySettings.EntityLiveTick.PlantLiveTick.get();
+//		System.out.println(tick);
 		return this.getPlantEnumName().isUpgradePlant ? 2 * tick : tick;
 	}
 	

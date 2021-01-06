@@ -32,11 +32,7 @@
       "entries": [
         {
           "type": "minecraft:item",
-          "name": "minecraft:iron_ingot"
-        },
-        {
-          "type": "minecraft:item",
-          "name": "pvz:pea"
+          "name": "pvz:origin_essence"
         },
         {
           "type": "minecraft:item",

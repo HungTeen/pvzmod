@@ -26,7 +26,7 @@ public class EnergyEntity extends DropEntity{
 		if(!this.world.isRemote) {
 			PlayerUtil.addPlayerStats(entityIn, Resources.ENERGY_NUM, this.getAmount());
 		}else {
-			this.world.playSound(entityIn, getPosition(), SoundRegister.JEWEL_PICK.get(), SoundCategory.NEUTRAL, 1f,1f);
+			this.world.playSound(entityIn, getPosition(), SoundRegister.JEWEL_PICK.get(), SoundCategory.NEUTRAL, 1f, 1f);
 		}
 		this.remove();
 	}
@@ -34,12 +34,12 @@ public class EnergyEntity extends DropEntity{
 	@Override
 	public void tick() {
 		super.tick();
-		if(this.liveTime%this.changeVTime==0) {
-			double mult=0.2f;
+		if(this.liveTime % this.changeVTime == 0) {
+			double mult = 0.2f;
 //			System.out.println(this.getMotion().y);
-			Vec3d v=new Vec3d(this.rand.nextInt(1000)-500,this.rand.nextInt(1000)-500,this.rand.nextInt(1000)-500).normalize();
-			v=v.scale(mult);
-			this.setMotion(v.x,v.y/5,v.z);
+			Vec3d v = new Vec3d(this.rand.nextInt(1000) - 500, this.rand.nextInt(1000) - 500, this.rand.nextInt(1000) - 500).normalize();
+			v = v.scale(mult);
+			this.setMotion(v.x ,v.y / 5, v.z);
 		}
 	}
 	

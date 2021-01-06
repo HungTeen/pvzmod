@@ -35,9 +35,11 @@ public abstract class DropEntity extends MobEntity{
 	@Override
 	public void tick() {
 		super.tick();
-		this.liveTime++;
-		if(this.liveTime>=this.getMaxLiveTick()) {
-			this.remove();
+		if(! world.isRemote) {
+			this.liveTime++;
+		    if(this.liveTime >= this.getMaxLiveTick()) {
+			    this.remove();
+		    }
 		}
 	}
 	
@@ -78,14 +80,14 @@ public abstract class DropEntity extends MobEntity{
 
 	@Override
 	public void readAdditional(CompoundNBT compound) {
-		this.liveTime=compound.getInt("live_time");
+		this.liveTime = compound.getInt("live_time");
 		this.setAmount(compound.getInt("drop_amount"));
 	}
 
 	@Override
 	public void writeAdditional(CompoundNBT compound) {
 		compound.putInt("live_time", this.liveTime);
-		compound.putInt("drop_amount",this.getAmount());
+		compound.putInt("drop_amount", this.getAmount());
 	}
 	
 	public int getAmount(){

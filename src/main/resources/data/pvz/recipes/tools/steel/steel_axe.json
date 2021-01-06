@@ -1,0 +1,20 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "XX ",
+    "XB ",
+    " B "
+  ],
+  "key": {
+    "B": {
+      "item": "minecraft:stick"
+    },
+    "X": {
+      "item": "pvz:steel_ingot"
+    }
+  },
+  "result": {
+    "item": "pvz:steel_axe",
+    "count": 1
+  }
+}
