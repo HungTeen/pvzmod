@@ -39,7 +39,7 @@ authors="_HungTeen_" #optional
 # The description text for the mod (multi line!) (#mandatory)
 description='''
 Take Plants vs Zombies to Minecraft
-So far,there are 25+ plants and 20+ zombies.
+So far,there are 39+ plants and 30+ zombies.
 '''
 # A dependency - use the . to indicate dependency for a specific modid. Dependencies are optional.
 [[dependencies.pvz]] #optional

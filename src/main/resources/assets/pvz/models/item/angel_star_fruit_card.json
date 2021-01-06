@@ -1,0 +1,7 @@
+{
+  "parent": "item/generated",
+  "textures": {
+    "layer0": "pvz:item/purple_card",
+    "layer1": "pvz:screenshot/plant/angel_star_fruit"
+  }
+}

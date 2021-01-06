@@ -20,7 +20,7 @@ import net.minecraft.world.DifficultyInstance;
 import net.minecraft.world.IWorld;
 import net.minecraft.world.World;
 
-public class PlanternEntity extends PVZPlantEntity implements ILightPlant{
+public class PlanternEntity extends PVZPlantEntity implements ILightPlant {
 
 	public PlanternEntity(EntityType<? extends CreatureEntity> type, World worldIn) {
 		super(type, worldIn);

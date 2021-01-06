@@ -53,8 +53,12 @@
     "pvz:sea_shroom_enjoy_card",
     "pvz:plantern_card",
     "pvz:plantern_enjoy_card",
+    "pvz:cactus_card",
+    "pvz:cactus_enjoy_card",
     "pvz:split_pea_card",
     "pvz:split_pea_enjoy_card",
+    "pvz:star_fruit_card",
+    "pvz:star_fruit_enjoy_card",
     "pvz:pumpkin_card",
     "pvz:pumpkin_enjoy_card",
     "pvz:magnet_shroom_card",
@@ -72,6 +76,8 @@
     "pvz:water_guard_card",
     "pvz:water_guard_enjoy_card",
     "pvz:strange_cat_card",
-    "pvz:strange_cat_enjoy_card"
+    "pvz:strange_cat_enjoy_card",
+    "pvz:angel_star_fruit_card",
+    "pvz:angel_star_fruit_enjoy_card"
   ]
 }

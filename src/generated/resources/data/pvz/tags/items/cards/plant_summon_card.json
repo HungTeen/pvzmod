@@ -27,7 +27,9 @@
     "pvz:tall_nut_card",
     "pvz:sea_shroom_card",
     "pvz:plantern_card",
+    "pvz:cactus_card",
     "pvz:split_pea_card",
+    "pvz:star_fruit_card",
     "pvz:pumpkin_card",
     "pvz:magnet_shroom_card",
     "pvz:coffee_bean_card",
@@ -36,6 +38,7 @@
     "pvz:twin_sunflower_card",
     "pvz:cat_tail_card",
     "pvz:water_guard_card",
-    "pvz:strange_cat_card"
+    "pvz:strange_cat_card",
+    "pvz:angel_star_fruit_card"
   ]
 }

@@ -195,7 +195,7 @@ public class ThornEntity extends AbstractBulletEntity {
 		} else if(this.getThrower() instanceof CactusEntity) {
 			damage = ((CactusEntity) this.getThrower()).getAttackDamage();
 		}
-		if (this.getThornType() == ThornTypes.GUILD) {
+		if (this.getThornType() == ThornTypes.AUTO) {
 			damage += 10;
 		}
 		return damage;

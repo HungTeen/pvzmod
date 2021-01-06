@@ -34,7 +34,7 @@ public class ThornRender extends PVZEntityRender<ThornEntity> {
 
 	@Override
 	protected float getRenderSize(ThornEntity entity) {
-		if(entity.getThornType() == ThornTypes.GUILD) return 2.5F;
+		if(entity.getThornType() == ThornTypes.AUTO) return 2.5F;
 		return 1.2F;
 	}
 

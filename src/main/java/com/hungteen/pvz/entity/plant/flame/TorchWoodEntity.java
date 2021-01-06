@@ -2,21 +2,26 @@ package com.hungteen.pvz.entity.plant.flame;
 
 import com.hungteen.pvz.entity.bullet.PeaEntity;
 import com.hungteen.pvz.entity.plant.PVZPlantEntity;
+import com.hungteen.pvz.entity.plant.interfaces.ILightPlant;
+import com.hungteen.pvz.register.EffectRegister;
 import com.hungteen.pvz.register.EntityRegister;
 import com.hungteen.pvz.register.ParticleRegister;
+import com.hungteen.pvz.utils.EntityUtil;
 import com.hungteen.pvz.utils.enums.Plants;
 
 import net.minecraft.entity.CreatureEntity;
 import net.minecraft.entity.EntitySize;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.Pose;
+import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.network.datasync.DataParameter;
 import net.minecraft.network.datasync.DataSerializers;
 import net.minecraft.network.datasync.EntityDataManager;
+import net.minecraft.potion.EffectInstance;
 import net.minecraft.world.World;
 
-public class TorchWoodEntity extends PVZPlantEntity{
+public class TorchWoodEntity extends PVZPlantEntity implements ILightPlant {
 
 	private static final DataParameter<Boolean> SUPER_FLAME = EntityDataManager.createKey(TorchWoodEntity.class, DataSerializers.BOOLEAN);
 	
@@ -41,9 +46,23 @@ public class TorchWoodEntity extends PVZPlantEntity{
 				this.world.addParticle(ParticleRegister.YELLOW_FLAME.get(), this.getPosX(), this.getPosY()+1.5, this.getPosZ(), 0, 0, 0);
 			}
 		}
+		if(! world.isRemote) {
+			if(this.ticksExisted % 40 == 0) {
+				int range = 15;
+				this.giveLightToPlayers(range);
+			}
+		}
 		if(this.isPlantInSuperMode()) {
 			fireballRain();
 		}
+	}
+	
+	private void giveLightToPlayers(float range) {
+		world.getEntitiesWithinAABB(PlayerEntity.class, EntityUtil.getEntityAABB(this, range, range), (player) -> {
+			return ! EntityUtil.checkCanEntityAttack(this, player);
+		}).forEach((player) -> {
+			player.addPotionEffect(getLightEyeEffect());
+		});
 	}
 	
 	private void fireballRain() {
@@ -54,6 +73,11 @@ public class TorchWoodEntity extends PVZPlantEntity{
 		pea.setPosition(this.getPosX() + dx, this.getPosY() + dy, this.getPosZ() + dz);
 		pea.setMotion(0, - 0.4, 0);
 		world.addEntity(pea);
+	}
+	
+	@Override
+	public EffectInstance getLightEyeEffect() {
+		return new EffectInstance(EffectRegister.LIGHT_EYE_EFFECT.get(), 100, 0, false, true);
 	}
 	
 	@Override
