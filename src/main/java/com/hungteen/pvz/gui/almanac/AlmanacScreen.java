@@ -30,7 +30,6 @@ import com.hungteen.pvz.utils.PlantUtil;
 import com.hungteen.pvz.utils.PlayerUtil;
 import com.hungteen.pvz.utils.RenderUtil;
 import com.hungteen.pvz.utils.StringUtil;
-import com.hungteen.pvz.utils.enums.Almanacs;
 import com.hungteen.pvz.utils.enums.Colors;
 import com.hungteen.pvz.utils.enums.Plants;
 import com.hungteen.pvz.utils.enums.Resources;
@@ -86,19 +85,18 @@ public class AlmanacScreen extends ContainerScreen<AlmanacContainer> {
 	}
 	
 	protected void renderAlmanac(){
-		Almanacs current = this.searchGui.getCurrentAlmanac();
-		if(this.searchGui.getCurrentAlmanac()==null) {
-			current = Almanacs.PLAYER;
+		Almanac current = this.searchGui.getCurrentAlmanac();
+		if(this.searchGui.getCurrentAlmanac() == null) {
+			current = Almanac.get();
 		}
 		this.renderTitle(current);
-		if(!ClientPlayerResources.isAlmanacUnLocked(current)) {
+		if(! ClientPlayerResources.isAlmanacUnLocked(current)) {
 			return ;
 		}
 		this.renderLogo(current);
 		this.renderXpBar(current);
 		this.renderShortInfo(current);
-		if(current.isPlant()) {
-			Plants plant = current.getPlant();
+		current.getPlant().ifPresent((plant) -> {
 			int lvl = ClientPlayerResources.getPlayerPlantCardLvl(plant);
 //			int maxLvl = PlantUtil.getPlantMaxLvl(plant);
 			this.propertyCnt = 0;
@@ -280,7 +278,11 @@ public class AlmanacScreen extends ContainerScreen<AlmanacContainer> {
 				break;
 			}
 			}
-		}else if(current == Almanacs.PLAYER){//for player
+		});
+		current.getZombie().ifPresent((zombie) -> {
+			
+		});
+		if(current.isPlayer()){//for player
     		int sunNum = ClientPlayerResources.getPlayerStats(Resources.SUN_NUM);
     		int energyNum = ClientPlayerResources.getPlayerStats(Resources.ENERGY_NUM);
     		int money = ClientPlayerResources.getPlayerStats(Resources.MONEY);
@@ -307,10 +309,8 @@ public class AlmanacScreen extends ContainerScreen<AlmanacContainer> {
 		StringUtil.drawScaledString(font, string, posX, posY, prop.getColor(), 1f);
 	}
 	
-	protected void renderShortInfo(Almanacs a) {
-		if(a==Almanacs.PLAYER) {
-			return ;
-		}
+	protected void renderShortInfo(Almanac a) {
+		if(a.isPlayer()) return ;
 		RenderSystem.pushMatrix();
 //		int posX = this.guiLeft + 82 + 150 / 2;
 //		int posY = this.guiTop + 26 + 2;
@@ -321,17 +321,19 @@ public class AlmanacScreen extends ContainerScreen<AlmanacContainer> {
 		RenderSystem.popMatrix();
 	}
 	
-	protected void renderXpBar(Almanacs a) {
+	protected void renderXpBar(Almanac a) {
 		RenderSystem.pushMatrix();
 		int maxLvl = 1, lvl = 1;
 		Plants p = null;
 		if(a.isPlant()) {
-			p = a.getPlant();
+			p = a.getPlant().get();
 			maxLvl = PlantUtil.getPlantMaxLvl(p);
 			lvl = ClientPlayerResources.getPlayerPlantCardLvl(p);
-		} else if(a == Almanacs.PLAYER) {
+		} else if(a.isPlayer()) {
 			maxLvl = PlayerUtil.MAX_TREE_LVL;
 			lvl = ClientPlayerResources.getPlayerStats(Resources.TREE_LVL);
+		} else {
+			
 		}
 		String lvlInfo = Properties.LVL.getName() + ":" + lvl;
 		int barWidth = 62, barHeight = 9;
@@ -340,7 +342,7 @@ public class AlmanacScreen extends ContainerScreen<AlmanacContainer> {
 			int xp = ClientPlayerResources.getPlayerPlantCardXp(p);
 			int maxXp = PlantUtil.getPlantLevelUpXp(p, lvl);
 			len = RenderUtil.getRenderBarLen(xp, maxXp, barWidth);
-		}else if(a == Almanacs.PLAYER) {
+		} else if(a.isPlayer()) {
 			int xp = ClientPlayerResources.getPlayerStats(Resources.TREE_XP);
 			int maxXp = PlayerUtil.getPlayerLevelUpXp(lvl);
 			len = RenderUtil.getRenderBarLen(xp, maxXp, barWidth);
@@ -353,20 +355,20 @@ public class AlmanacScreen extends ContainerScreen<AlmanacContainer> {
 		RenderSystem.popMatrix();
 	}
 	
-	protected void renderTitle(Almanacs a) {
+	protected void renderTitle(Almanac a) {
 		RenderSystem.pushMatrix();
 		int dx = this.guiLeft + 82 + 150 / 2, dy = this.guiTop + 10 + 2;
-		StringUtil.drawCenteredScaledString(this.font, Almanacs.getAlmanacName(a), dx, dy, Colors.DARK_GREEN, 1.6f);
+		StringUtil.drawCenteredScaledString(this.font, Almanac.getAlmanacName(a), dx, dy, Colors.DARK_GREEN, 1.6f);
 		RenderSystem.popMatrix();
 	}
 	
-	protected void renderLogo(Almanacs a) {
+	protected void renderLogo(Almanac a) {
 		int dx = this.guiLeft + 16, dy = this.guiTop + 14;
 		int scale = 3;
 		RenderSystem.pushMatrix();
 		RenderSystem.scaled(scale, scale, scale);
 		RenderSystem.translated((dx % scale) * 1.0d / scale , (dy % scale) * 1.0d / scale, 0);
-		this.itemRenderer.renderItemIntoGUI(Almanacs.getItemStackByAlmanac(a), dx / scale, dy / scale);
+		this.itemRenderer.renderItemIntoGUI(Almanac.getItemStackByAlmanac(a), dx / scale, dy / scale);
 		RenderSystem.popMatrix();
 	}
 

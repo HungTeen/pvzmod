@@ -5,7 +5,6 @@ import java.util.Locale;
 
 import com.google.common.collect.Lists;
 import com.hungteen.pvz.utils.StringUtil;
-import com.hungteen.pvz.utils.enums.Almanacs;
 import com.mojang.blaze3d.systems.RenderSystem;
 
 import net.minecraft.client.Minecraft;
@@ -58,7 +57,7 @@ public class AlmanacSearchGui extends AbstractGui implements IRenderable, IGuiEv
 		this.searchBar.setText(s);
 		this.page.init(this.mc, this.guiLeft, this.guiTop);
 		this.toggleTabs.clear();
-		for (Almanacs.Categories c : Almanacs.Categories.values()) {
+		for (Almanac.Categories c : Almanac.Categories.values()) {
 			this.toggleTabs.add(new AlmanacToggleWidget(c));
 		}
 		if (this.currentTab == null) {
@@ -70,11 +69,11 @@ public class AlmanacSearchGui extends AbstractGui implements IRenderable, IGuiEv
 	}
 
 	private void updateCollections(boolean p_193003_1_) {
-		List<Almanacs> list = this.page.getCurrentList(this.currentTab.getCategory());
+		List<Almanac> list = this.page.getCurrentList(this.currentTab.getCategory());
 		String s = this.searchBar.getText();
 		if (!s.isEmpty()) {
 			list.removeIf((a) -> {
-				String now = Almanacs.getAlmanacName(a).toLowerCase();
+				String now = Almanac.getAlmanacName(a).toLowerCase();
 				return !StringUtil.KMP.kmp(now, s.toLowerCase());
 			});
 
@@ -220,7 +219,7 @@ public class AlmanacSearchGui extends AbstractGui implements IRenderable, IGuiEv
 		return flag && !this.currentTab.isHovered();
 	}
 
-	public Almanacs getCurrentAlmanac() {
+	public Almanac getCurrentAlmanac() {
 		return this.page.getCurrentAlmanacs();
 	}
 	

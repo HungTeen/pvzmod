@@ -5,7 +5,6 @@ import java.util.List;
 
 import com.google.common.collect.Lists;
 import com.hungteen.pvz.utils.StringUtil;
-import com.hungteen.pvz.utils.enums.Almanacs;
 import com.hungteen.pvz.utils.enums.Colors;
 
 import net.minecraft.client.Minecraft;
@@ -23,13 +22,13 @@ public class AlmanacPage {
 	private final int size = 25;
 	private final List<CardWidget> buttons = Lists.newArrayListWithCapacity(MAX_NUM_PER_PAGE);
 	 private CardWidget hoveredButton;
-	private List<Almanacs> cardList;
+	private List<Almanac> cardList;
 	private Minecraft mc;
 	private ToggleWidget forwardButton;
 	private ToggleWidget backButton;
 	private int totalPages;
 	private int currentPage;
-	private Almanacs lastClickedButton;
+	private Almanac lastClickedButton;
 
 	public AlmanacPage() {
 		for (int i = 0; i < MAX_NUM_PER_PAGE; ++i) {
@@ -102,7 +101,7 @@ public class AlmanacPage {
 
 	}
 
-	public void updateLists(List<Almanacs> list, boolean flag) {
+	public void updateLists(List<Almanac> list, boolean flag) {
 		this.cardList = list;
 		this.totalPages = (int) Math.ceil((double) list.size() / MAX_NUM_PER_PAGE);
 		if (this.totalPages <= this.currentPage || flag) {
@@ -116,7 +115,7 @@ public class AlmanacPage {
 		for (int j = 0; j < this.buttons.size(); ++j) {
 			CardWidget card = this.buttons.get(j);
 			if (i + j < this.cardList.size()) {
-				Almanacs a = this.cardList.get(i + j);
+				Almanac a = this.cardList.get(i + j);
 				card.init(a);
 				card.visible = true;
 			} else {
@@ -133,23 +132,17 @@ public class AlmanacPage {
 //		System.out.println(this.forwardButton.visible + " " + this.totalPages + " " + this.currentPage);
 	}
 
-	public List<Almanacs> getCurrentList(Almanacs.Categories category) {
-		List<Almanacs> list = new ArrayList<>();
-		for (Almanacs a : Almanacs.values()) {
-			if (a.isPlant()) {
-				if (category != Almanacs.Categories.ZOMBIES) {
-					list.add(a);
-				}
-			} else {
-				if (category != Almanacs.Categories.PLANTS) {
-					list.add(a);
-				}
-			}
-		}
+	public List<Almanac> getCurrentList(Almanac.Categories category) {
+		List<Almanac> list = new ArrayList<>();
+		Almanac.ALMANACS.forEach((a) -> {
+			if(category == Almanac.Categories.ALL) list.add(a);
+			else if(a.isPlant() && category == Almanac.Categories.PLANTS) list.add(a);
+			else if(a.isZombie() && category == Almanac.Categories.ZOMBIES) list.add(a);
+		});
 		return list;
 	}
 
-	public Almanacs getCurrentAlmanacs() {
+	public Almanac getCurrentAlmanacs() {
 		return this.lastClickedButton;
 	}
 

@@ -2,7 +2,6 @@ package com.hungteen.pvz.gui.almanac;
 
 import com.hungteen.pvz.PVZMod;
 import com.hungteen.pvz.register.ItemRegister;
-import com.hungteen.pvz.utils.enums.Almanacs;
 import com.mojang.blaze3d.systems.RenderSystem;
 
 import net.minecraft.client.Minecraft;
@@ -16,9 +15,9 @@ import net.minecraftforge.api.distmarker.OnlyIn;
 @OnlyIn(Dist.CLIENT)
 public class AlmanacToggleWidget extends ToggleWidget {
 
-	protected Almanacs.Categories category;
+	protected Almanac.Categories category;
 	
-	public AlmanacToggleWidget(Almanacs.Categories category) {
+	public AlmanacToggleWidget(Almanac.Categories category) {
 		super(0, 0, 35, 26, false);
 		this.category = category;
 		this.initTextureValues(153, 2, 35, 0, AlmanacSearchGui.TEXTURE);
@@ -61,7 +60,7 @@ public class AlmanacToggleWidget extends ToggleWidget {
 		}
 	}
 
-	public Almanacs.Categories getCategory() {
+	public Almanac.Categories getCategory() {
 		return this.category;
 	}
 

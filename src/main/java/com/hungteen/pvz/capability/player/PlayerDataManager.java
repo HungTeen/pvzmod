@@ -4,13 +4,11 @@ package com.hungteen.pvz.capability.player;
 import java.util.EnumMap;
 import java.util.HashMap;
 
-import com.hungteen.pvz.network.AlmanacUnLockPacket;
 import com.hungteen.pvz.network.PVZPacketHandler;
 import com.hungteen.pvz.network.PlantStatsPacket;
 import com.hungteen.pvz.network.PlayerStatsPacket;
 import com.hungteen.pvz.utils.PlantUtil;
 import com.hungteen.pvz.utils.PlayerUtil;
-import com.hungteen.pvz.utils.enums.Almanacs;
 import com.hungteen.pvz.utils.enums.Plants;
 import com.hungteen.pvz.utils.enums.Resources;
 import com.hungteen.pvz.world.WaveManager;
@@ -27,7 +25,7 @@ public class PlayerDataManager {
 	private final PlayerEntity player;
 	private final PlayerStats playerStats;
 	private final PlantStats plantStats;
-	private final AlmanacStats almanacStats;
+//	private final AlmanacStats almanacStats;
 	private final ItemCDStats itemCDStats;
 	private final OtherStats otherStats;
 	
@@ -35,7 +33,7 @@ public class PlayerDataManager {
 		this.player = player;
 		this.playerStats = new PlayerStats(this);
 		this.plantStats = new PlantStats(this);
-		this.almanacStats = new AlmanacStats(this);
+//		this.almanacStats = new AlmanacStats(this);
 		this.itemCDStats = new ItemCDStats(this);
 		this.otherStats = new OtherStats(this);
 	}
@@ -44,7 +42,7 @@ public class PlayerDataManager {
 		CompoundNBT baseTag = new CompoundNBT();
 		playerStats.saveToNBT(baseTag);
 		plantStats.saveToNBT(baseTag);
-		almanacStats.saveToNBT(baseTag);
+//		almanacStats.saveToNBT(baseTag);
 		itemCDStats.saveToNBT(baseTag);
 		otherStats.saveToNBT(baseTag);
 		return baseTag;
@@ -53,7 +51,7 @@ public class PlayerDataManager {
 	public void loadFromNBT(CompoundNBT baseTag) {
 		playerStats.loadFromNBT(baseTag);
 		plantStats.loadFromNBT(baseTag);
-		almanacStats.loadFromNBT(baseTag);
+//		almanacStats.loadFromNBT(baseTag);
 		itemCDStats.loadFromNBT(baseTag);
 		otherStats.loadFromNBT(baseTag);
 	}
@@ -68,10 +66,10 @@ public class PlayerDataManager {
 			this.plantStats.plantLevel.put(plant, data.plantStats.plantLevel.get(plant));
 			this.plantStats.plantXp.put(plant, data.plantStats.plantXp.get(plant));
 		}
-		//Almanac
-		for(Almanacs a:Almanacs.values()) {
-			this.almanacStats.setAlmanacUnLocked(a, data.almanacStats.isAlmanacUnLocked(a));
-		}
+//		//Almanac
+//		for(Almanac a : Almanac.ALMANACS) {
+//			this.almanacStats.setAlmanacUnLocked(a, data.almanacStats.isAlmanacUnLocked(a));
+//		}
 		for(Plants p : Plants.values()) {
 			this.itemCDStats.setPlantCardCD(p, data.itemCDStats.getPlantCardCoolDown(p));
 			this.itemCDStats.setPlantCardBar(p, data.itemCDStats.getPlantCardBarLength(p));
@@ -309,58 +307,58 @@ public class PlayerDataManager {
 		}
 	}
 	
-	public final class AlmanacStats {
-		@SuppressWarnings("unused")
-		private final PlayerDataManager manager;
-		private HashMap<Almanacs, Boolean> unLock = new HashMap<>(Almanacs.values().length);
-		
-		public AlmanacStats(PlayerDataManager manager) {
-			this.manager = manager;
-			for(Almanacs a : Almanacs.values()) {
-				unLock.put(a, false);
-			}
-			unLock.put(Almanacs.PLAYER, true);
-		}
-		
-		public boolean isAlmanacUnLocked(Almanacs a) {
-			return this.unLock.get(a);
-		}
-		
-		public void setAlmanacUnLocked(Almanacs a, boolean is) {
-			this.unLock.put(a, is);
-			this.sendAlmanacPacket(player, a);
-		}
-		
-		public void sendAlmanacPacket(PlayerEntity player,Almanacs a){
-			if (player instanceof ServerPlayerEntity) {
-				PVZPacketHandler.CHANNEL.send(
-					PacketDistributor.PLAYER.with(()->{
-						return (ServerPlayerEntity) player;
-					}),
-					new AlmanacUnLockPacket(a.ordinal(), this.isAlmanacUnLocked(a))
-				);
-			}
-		}
-		
-		private void saveToNBT(CompoundNBT baseTag) {
-			CompoundNBT statsNBT = new CompoundNBT();
-			for(Almanacs a:Almanacs.values()) {
-				statsNBT.putBoolean("lock_" + a.toString().toLowerCase(), unLock.get(a));
-			}
-			baseTag.put("almanacs_lock", statsNBT);
-		}
-
-		private void loadFromNBT(CompoundNBT baseTag) {
-			if(baseTag.contains("almanacs_lock")) {
-			    CompoundNBT statsTag = baseTag.getCompound("almanacs_lock");
-			    for(Almanacs a:Almanacs.values()) {
-			    	if(statsTag.contains("lock_" + a.toString().toLowerCase())) {
-				        unLock.put(a, statsTag.getBoolean("lock_" + a.toString().toLowerCase()));
-			    	}
-			    }
-			}
-		}
-	}
+//	public final class AlmanacStats {
+//		@SuppressWarnings("unused")
+//		private final PlayerDataManager manager;
+//		private HashMap<Almanac, Boolean> unLock = new HashMap<>(Almanac.ALMANACS.size());
+//		
+//		public AlmanacStats(PlayerDataManager manager) {
+//			this.manager = manager;
+//			for(Almanac a : Almanac.values()) {
+//				unLock.put(a, false);
+//			}
+//			unLock.put(Almanac.PLAYER, true);
+//		}
+//		
+//		public boolean isAlmanacUnLocked(Almanac a) {
+//			return this.unLock.get(a);
+//		}
+//		
+//		public void setAlmanacUnLocked(Almanac a, boolean is) {
+//			this.unLock.put(a, is);
+//			this.sendAlmanacPacket(player, a);
+//		}
+//		
+//		public void sendAlmanacPacket(PlayerEntity player,Almanac a){
+//			if (player instanceof ServerPlayerEntity) {
+//				PVZPacketHandler.CHANNEL.send(
+//					PacketDistributor.PLAYER.with(()->{
+//						return (ServerPlayerEntity) player;
+//					}),
+//					new AlmanacUnLockPacket(a.ordinal(), this.isAlmanacUnLocked(a))
+//				);
+//			}
+//		}
+//		
+//		private void saveToNBT(CompoundNBT baseTag) {
+//			CompoundNBT statsNBT = new CompoundNBT();
+//			for(Almanac a:Almanac.values()) {
+//				statsNBT.putBoolean("lock_" + a.toString().toLowerCase(), unLock.get(a));
+//			}
+//			baseTag.put("almanacs_lock", statsNBT);
+//		}
+//
+//		private void loadFromNBT(CompoundNBT baseTag) {
+//			if(baseTag.contains("almanacs_lock")) {
+//			    CompoundNBT statsTag = baseTag.getCompound("almanacs_lock");
+//			    for(Almanac a:Almanac.values()) {
+//			    	if(statsTag.contains("lock_" + a.toString().toLowerCase())) {
+//				        unLock.put(a, statsTag.getBoolean("lock_" + a.toString().toLowerCase()));
+//			    	}
+//			    }
+//			}
+//		}
+//	}
 	
 	public final class ItemCDStats{
 		@SuppressWarnings("unused")
@@ -459,9 +457,9 @@ public class PlayerDataManager {
 		return this.plantStats;
 	}
 	
-	public AlmanacStats getAlmanacStats() {
-		return this.almanacStats;
-	}
+//	public AlmanacStats getAlmanacStats() {
+//		return this.almanacStats;
+//	}
 	
 	public ItemCDStats getItemCDStats() {
 		return this.itemCDStats;

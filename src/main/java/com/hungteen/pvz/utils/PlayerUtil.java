@@ -2,16 +2,17 @@ package com.hungteen.pvz.utils;
 
 import com.hungteen.pvz.capability.CapabilityHandler;
 import com.hungteen.pvz.capability.player.IPlayerDataCapability;
-import com.hungteen.pvz.capability.player.PlayerDataManager;
+import com.hungteen.pvz.gui.almanac.Almanac;
+import com.hungteen.pvz.network.AlmanacUnLockPacket;
 import com.hungteen.pvz.network.PVZPacketHandler;
 import com.hungteen.pvz.network.PlaySoundPacket;
-import com.hungteen.pvz.utils.enums.Almanacs;
 import com.hungteen.pvz.utils.enums.Plants;
 import com.hungteen.pvz.utils.enums.Resources;
 
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.network.play.server.STitlePacket;
+import net.minecraft.stats.Stats;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.StringTextComponent;
 import net.minecraftforge.common.util.LazyOptional;
@@ -80,13 +81,31 @@ public class PlayerUtil {
 		}
 	}
 	
-	public static void unLockAlmanac(PlayerEntity player, Almanacs a) {
-		player.getCapability(CapabilityHandler.PLAYER_DATA_CAPABILITY).ifPresent((l)->{
-		    PlayerDataManager.AlmanacStats stats = l.getPlayerData().getAlmanacStats();
-		    if(!stats.isAlmanacUnLocked(a)) {
-			    stats.setAlmanacUnLocked(a, true);
-		    }
-	    });
+	public static void unLockAlmanac(PlayerEntity player, Almanac a) {
+//		player.getCapability(CapabilityHandler.PLAYER_DATA_CAPABILITY).ifPresent((l)->{
+//		    PlayerDataManager.AlmanacStats stats = l.getPlayerData().getAlmanacStats();
+//		    if(!stats.isAlmanacUnLocked(a)) {
+//			    stats.setAlmanacUnLocked(a, true);
+//		    }
+//	    });
+		if (player instanceof ServerPlayerEntity) {
+			PVZPacketHandler.CHANNEL.send(
+				PacketDistributor.PLAYER.with(() -> {
+					return (ServerPlayerEntity) player;
+				}),
+				new AlmanacUnLockPacket(a.ordinal(), true)
+			);
+		}
+	}
+	
+	public static boolean isAlmanacUnlocked(ServerPlayerEntity player, Almanac a) {
+		if(a.isPlayer()) return true;
+		if(a.isPlant()) {
+			Plants plant = a.getPlant().get();
+			int amount = player.getStats().getValue(Stats.ITEM_USED.get(PlantUtil.getPlantSummonCard(plant)));
+			return amount > 0;
+		}
+		return false;
 	}
 	
 	public static void playClientSound(PlayerEntity player, int id) {

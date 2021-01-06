@@ -10,6 +10,7 @@ import com.hungteen.pvz.capability.player.PlayerDataManager.PlayerStats;
 import com.hungteen.pvz.entity.plant.PVZPlantEntity;
 import com.hungteen.pvz.event.events.SummonCardUseEvent;
 import com.hungteen.pvz.event.handler.PlayerEventHandler;
+import com.hungteen.pvz.gui.almanac.Almanac;
 import com.hungteen.pvz.item.tool.PeaGunItem;
 import com.hungteen.pvz.item.tool.card.PlantCardItem;
 import com.hungteen.pvz.register.EnchantmentRegister;
@@ -17,7 +18,6 @@ import com.hungteen.pvz.register.ItemRegister;
 import com.hungteen.pvz.utils.PlantUtil;
 import com.hungteen.pvz.utils.PlayerUtil;
 import com.hungteen.pvz.utils.StringUtil;
-import com.hungteen.pvz.utils.enums.Almanacs;
 import com.hungteen.pvz.utils.enums.Plants;
 import com.hungteen.pvz.utils.enums.Resources;
 
@@ -77,10 +77,14 @@ public class PVZPlayerEvents {
 				   plantStats.sendPlantPacket(player, plant);
 			    }
 				//almanacs
-				PlayerDataManager.AlmanacStats almanacStats = plData.getAlmanacStats();
-				for(Almanacs a: Almanacs.values()) {
-					almanacStats.sendAlmanacPacket(player, a);
-				}
+//				PlayerDataManager.AlmanacStats almanacStats = plData.getAlmanacStats();
+				Almanac.ALMANACS.forEach((a) -> {
+					ServerPlayerEntity serverplayer = (ServerPlayerEntity) player;
+					if(PlayerUtil.isAlmanacUnlocked(serverplayer, a)) {
+						PlayerUtil.unLockAlmanac(serverplayer, a);
+					}
+				});
+				
 				//item cd
 				PlayerDataManager.ItemCDStats itemCDStats = plData.getItemCDStats();
 				for(Plants p : Plants.values()) {
@@ -178,18 +182,15 @@ public class PVZPlayerEvents {
 	
 	@SubscribeEvent
 	public static void onSummonCardUse(SummonCardUseEvent ev) {
-//		System.out.println(ev.getItemStack().getItem());
 		PlayerEntity player = ev.getPlayer();
-//		Almanacs a = null;
-//		if(! player.world.isRemote) {
-//			if(ev.getItemStack().getItem() instanceof PlantCardItem) {// unlock plant card
-//			    Plants plant = ((PlantCardItem) ev.getItemStack().getItem()).plantType;
-//			    a = Enum.valueOf(Almanacs.class, plant.toString());
-//			}
-//		}
-//		if(! player.world.isRemote && a != null) {//unlock almanac
-//			PlayerUtil.unLockAlmanac(player, a);
-//		}
+		if(! player.world.isRemote) { //unlock almanac
+			Almanac a = null;
+			if(ev.getItemStack().getItem() instanceof PlantCardItem) {// unlock plant card
+			    Plants plant = ((PlantCardItem) ev.getItemStack().getItem()).plantType;
+			    a = Almanac.get(plant);
+			}
+			PlayerUtil.unLockAlmanac(player, a);
+		}
 	}
 	
 }
