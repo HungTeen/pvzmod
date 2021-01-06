@@ -14,7 +14,6 @@ import com.hungteen.pvz.item.tool.PeaGunItem;
 import com.hungteen.pvz.item.tool.card.PlantCardItem;
 import com.hungteen.pvz.register.EnchantmentRegister;
 import com.hungteen.pvz.register.ItemRegister;
-import com.hungteen.pvz.utils.EntityUtil;
 import com.hungteen.pvz.utils.PlantUtil;
 import com.hungteen.pvz.utils.PlayerUtil;
 import com.hungteen.pvz.utils.StringUtil;
@@ -33,7 +32,6 @@ import net.minecraft.inventory.EquipmentSlotType;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.ShovelItem;
 import net.minecraft.item.SwordItem;
-import net.minecraft.util.SoundEvents;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraftforge.event.TickEvent;
@@ -182,16 +180,16 @@ public class PVZPlayerEvents {
 	public static void onSummonCardUse(SummonCardUseEvent ev) {
 //		System.out.println(ev.getItemStack().getItem());
 		PlayerEntity player = ev.getPlayer();
-		Almanacs a = null;
-		if(!player.world.isRemote) {
-			if(ev.getItemStack().getItem() instanceof PlantCardItem) {// unlock plant card
-			    Plants plant = ((PlantCardItem) ev.getItemStack().getItem()).getPlant();
-			    a = Enum.valueOf(Almanacs.class, plant.toString());
-			}
-		}
-		if(!player.world.isRemote && a != null) {//unlock almanac
-			PlayerUtil.unLockAlmanac(player, a);
-		}
+//		Almanacs a = null;
+//		if(! player.world.isRemote) {
+//			if(ev.getItemStack().getItem() instanceof PlantCardItem) {// unlock plant card
+//			    Plants plant = ((PlantCardItem) ev.getItemStack().getItem()).plantType;
+//			    a = Enum.valueOf(Almanacs.class, plant.toString());
+//			}
+//		}
+//		if(! player.world.isRemote && a != null) {//unlock almanac
+//			PlayerUtil.unLockAlmanac(player, a);
+//		}
 	}
 	
 }

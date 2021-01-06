@@ -8,9 +8,9 @@ public class SummonCardUseEvent extends PlayerEvent{
 
 	protected ItemStack stack;
 	
-	public SummonCardUseEvent(PlayerEntity player,ItemStack stack) {
+	public SummonCardUseEvent(PlayerEntity player, ItemStack stack) {
 		super(player);
-		this.stack=stack;
+		this.stack = stack;
 	}
 
 	public ItemStack getItemStack() {

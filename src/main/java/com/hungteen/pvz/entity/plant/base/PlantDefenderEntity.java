@@ -1,11 +1,9 @@
 package com.hungteen.pvz.entity.plant.base;
 
-import com.hungteen.pvz.capability.CapabilityHandler;
 import com.hungteen.pvz.entity.ai.PVZNearestTargetGoal;
 import com.hungteen.pvz.entity.plant.PVZPlantEntity;
 import com.hungteen.pvz.item.tool.card.PlantCardItem;
 import com.hungteen.pvz.utils.EntityUtil;
-import com.hungteen.pvz.utils.enums.Resources;
 import com.hungteen.pvz.utils.interfaces.IDefender;
 
 import net.minecraft.entity.CreatureEntity;
@@ -90,21 +88,13 @@ public abstract class PlantDefenderEntity extends PVZPlantEntity implements IDef
 		super.processInteract(player, hand);
 		ItemStack stack = player.getHeldItem(hand);
 		if(stack.getItem() instanceof PlantCardItem && this.getHealth() != this.getMaxHealth()) {
-			PlantCardItem item = (PlantCardItem) stack.getItem();
-			if(item.getPlant() == this.getPlantEnumName() && !player.getCooldownTracker().hasCooldown(item)) { // nut heal 
-				if(!world.isRemote) {
-					player.getCapability(CapabilityHandler.PLAYER_DATA_CAPABILITY).ifPresent((l)->{
-						int cost = item.getSunCost(stack);
-						int sun = l.getPlayerData().getPlayerStats().getPlayerStats(Resources.SUN_NUM);
-						if(sun >= cost) {
-							l.getPlayerData().getPlayerStats().addPlayerStats(Resources.SUN_NUM, - cost);
-							PlantCardItem.onUsePlantCard(player, stack, item, l.getPlayerData().getPlantStats().getPlantLevel(getPlantEnumName()));
-						    this.heal(this.getMaxHealth());
-						}
-					});
+			PlantCardItem cardItem = (PlantCardItem) stack.getItem();
+			if(cardItem.plantType == this.getPlantEnumName()) { // nut heal 
+				if(! world.isRemote) {
+					PlantCardItem.checkSunAndHealPlant(player, this, cardItem, stack);
 				}else {
-					for(int i = 0;i < 4; ++ i) {
-						this.world.addParticle(ParticleTypes.HEART, this.getPosX(), this.getPosY() + this.getEyeHeight(), this.getPosZ(), (this.getRNG().nextFloat()-0.5f)/8, 0.05f, (this.getRNG().nextFloat()-0.5f)/8);
+					for(int i = 0; i < 4; ++ i) {
+						this.world.addParticle(ParticleTypes.HEART, this.getPosX(), this.getPosY() + this.getHeight(), this.getPosZ(), (this.getRNG().nextFloat()-0.5f)/8, 0.05f, (this.getRNG().nextFloat()-0.5f)/8);
 					}
 				}
 				return true;
@@ -116,7 +106,7 @@ public abstract class PlantDefenderEntity extends PVZPlantEntity implements IDef
 	@Override
 	public boolean attackEntityFrom(DamageSource source, float amount) {
 		amount = this.pumpkinReduceDamage(source, amount);
-		if(!world.isRemote) {
+		if(! world.isRemote) {
 			if(this.getDefenceLife() > amount) { // damage armor health first
 				this.setDefenceLife(this.getDefenceLife() - amount);
 				amount = 0;

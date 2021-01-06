@@ -7,18 +7,14 @@ import java.util.UUID;
 import javax.annotation.Nullable;
 
 import com.hungteen.pvz.PVZConfig;
-import com.hungteen.pvz.capability.CapabilityHandler;
-import com.hungteen.pvz.capability.player.PlayerDataManager;
 import com.hungteen.pvz.entity.ai.PVZLookRandomlyGoal;
 import com.hungteen.pvz.entity.plant.enforce.SquashEntity;
-import com.hungteen.pvz.entity.plant.magic.CoffeeBeanEntity;
 import com.hungteen.pvz.entity.plant.spear.SpikeWeedEntity;
 import com.hungteen.pvz.entity.zombie.grassnight.TombStoneEntity;
 import com.hungteen.pvz.entity.zombie.poolnight.BalloonZombieEntity;
 import com.hungteen.pvz.entity.zombie.poolnight.DiggerZombieEntity;
 import com.hungteen.pvz.item.tool.card.PlantCardItem;
 import com.hungteen.pvz.misc.damage.PVZDamageSource;
-import com.hungteen.pvz.register.EntityRegister;
 import com.hungteen.pvz.register.ParticleRegister;
 import com.hungteen.pvz.register.SoundRegister;
 import com.hungteen.pvz.utils.EntityUtil;
@@ -27,7 +23,6 @@ import com.hungteen.pvz.utils.PlayerUtil;
 import com.hungteen.pvz.utils.enums.Essences;
 import com.hungteen.pvz.utils.enums.Plants;
 import com.hungteen.pvz.utils.enums.Ranks;
-import com.hungteen.pvz.utils.enums.Resources;
 import com.hungteen.pvz.utils.interfaces.IPVZPlant;
 
 import net.minecraft.block.Block;
@@ -619,55 +614,29 @@ public abstract class PVZPlantEntity extends CreatureEntity implements IPVZPlant
 	
 	@Override
 	protected boolean processInteract(PlayerEntity player, Hand hand) {
-		if(!world.isRemote) {
-			if(hand == Hand.MAIN_HAND) {
-				ItemStack itemstack = player.getHeldItemMainhand();
-				if(itemstack.getItem() instanceof PlantCardItem && ! player.getCooldownTracker().hasCooldown(itemstack.getItem())) {
-					PlantCardItem item = (PlantCardItem) itemstack.getItem();
-					if(item.getPlant() == Plants.PUMPKIN) {
-						if(this.outerPlant.isPresent() && this.outerPlant.get() == Plants.PUMPKIN) {
-							if(this.getPumpkinLife() < PlantUtil.PUMPKIN_LIFE) {
-								PlantCardItem.plantPumpkin(player, this, item, itemstack);
-							}
-						}else {
-//							System.out.println("1");
-							PlantCardItem.plantPumpkin(player, this, item, itemstack);
+		if(! world.isRemote) {
+			ItemStack stack = player.getHeldItem(hand);
+			if(stack.getItem() instanceof PlantCardItem) {
+				PlantCardItem item = (PlantCardItem) stack.getItem();
+				if(item.plantType == Plants.PUMPKIN) {
+					if(this.outerPlant.isPresent() && this.outerPlant.get() == Plants.PUMPKIN) {
+						if(this.getPumpkinLife() < PlantUtil.PUMPKIN_LIFE) {
+							PlantCardItem.checkSunAndHealPlant(player, this, item, stack);
 						}
-					}else if(item.getPlant() == Plants.COFFEE_BEAN) {
-						player.getCapability(CapabilityHandler.PLAYER_DATA_CAPABILITY).ifPresent((l)->{
-							PlayerDataManager manager = l.getPlayerData();
-							int num = manager.getPlayerStats().getPlayerStats(Resources.SUN_NUM);
-							int sunCost = item.getSunCost(player.getHeldItem(hand));
-							if(num >= sunCost) {//sun is enough
-								CoffeeBeanEntity bean = EntityRegister.COFFEE_BEAN.get().create(world);
-								l.getPlayerData().getPlayerStats().addPlayerStats(Resources.SUN_NUM, - sunCost);
-								int lvl = manager.getPlantStats().getPlantLevel(Plants.COFFEE_BEAN);
-								PlantCardItem.onUsePlantCard(player, player.getHeldItem(hand), item, lvl);
-								bean.setPlantLvl(lvl);
-								bean.setOwnerUUID(player.getUniqueID());
-								EntityUtil.onMobEntitySpawn(world, bean, getPosition().add(0, this.getEyeHeight() + 0.5f, 0));
-							}
-						});
-					}else if(this.getUpgradePlantType() == item.getPlant()) {
-						player.getCapability(CapabilityHandler.PLAYER_DATA_CAPABILITY).ifPresent((l)->{
-							PlayerDataManager manager = l.getPlayerData();
-							int num = manager.getPlayerStats().getPlayerStats(Resources.SUN_NUM);
-							int sunCost = item.getSunCost(player.getHeldItem(hand));
-							if(num >= sunCost) {//sun is enough
-								PVZPlantEntity plant = PlantUtil.getPlantEntityType(item.getPlant()).create(world);
-								l.getPlayerData().getPlayerStats().addPlayerStats(Resources.SUN_NUM, - sunCost);
-								int lvl = manager.getPlantStats().getPlantLevel(item.getPlant());
-								PlantCardItem.onUsePlantCard(player, player.getHeldItem(hand), item, lvl);
-								plant.setPlantLvl(lvl);
-								plant.setOwnerUUID(player.getUniqueID());
-								plant.rotationYaw = this.rotationYaw;
-								plant.rotationYawHead = this.rotationYawHead;
-								plant.rotationPitch = this.rotationPitch;
-								EntityUtil.onMobEntitySpawn(world, plant, getPosition());
-								this.remove();
-							}
-						});
+					} else {
+						PlantCardItem.checkSunAndOuterPlant(player, this, item, stack);
 					}
+				} else if(item.plantType == Plants.COFFEE_BEAN) {
+					PlantCardItem.checkSunAndSummonPlant(player, stack, item, getPosition(), (plantEntity) -> {
+						plantEntity.startRiding(this);
+//						System.out.println(this.getPosY() + this.getHeight() + 0.5f);
+//						plantEntity.setLocationAndAngles(this.getPosX(), this.getPosY() + this.getEyeHeight() + 0.5f, this.getPosZ(), this.rotationYaw, this.rotationPitch);
+//						plantEntity.setPosition(this.getPosX(), this.getPosY() + this.getEyeHeight() + 0.5f, this.getPosZ());
+					});
+				} else if(this.getUpgradePlantType() == item.plantType) {
+					PlantCardItem.checkSunAndSummonPlant(player, stack, item, getPosition(), (plantEntity) -> {
+						this.remove();
+					});
 				}
 			}
 		}

@@ -8,7 +8,6 @@ import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
 import net.minecraft.block.BushBlock;
 import net.minecraft.block.HorizontalBlock;
-import net.minecraft.block.material.Material;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.fluid.Fluids;
@@ -47,7 +46,6 @@ public class LilyPadBlock extends BushBlock {
 
 	}
 	
-
 	@Override
 	public VoxelShape getShape(BlockState state, IBlockReader worldIn, BlockPos pos, ISelectionContext context) {
 		return LILY_PAD_AABB;
@@ -56,8 +54,7 @@ public class LilyPadBlock extends BushBlock {
 	@Override
 	protected boolean isValidGround(BlockState state, IBlockReader worldIn, BlockPos pos) {
 		IFluidState ifluidstate = worldIn.getFluidState(pos);
-//		System.out.println("1");
-		return ifluidstate.getFluid() == Fluids.WATER || state.getMaterial() == Material.ICE;
+		return ifluidstate.getFluid() == Fluids.WATER;
 	}
 
 	public BlockState getStateForPlacement(PlayerEntity player) {

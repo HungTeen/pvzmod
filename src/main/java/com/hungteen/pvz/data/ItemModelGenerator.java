@@ -34,9 +34,9 @@ public class ItemModelGenerator extends ItemModelProvider{
 			if (i instanceof PVZSpawnEggItem) {//for spawn eggs
 				getBuilder(i.getRegistryName().getPath()).parent(getExistingFile(new ResourceLocation("item/template_spawn_egg")));
 			} else if(i instanceof PlantCardItem) {//for plant cards
-				Plants plant = ((PlantCardItem) i).getPlant();
+				Plants plant = ((PlantCardItem) i).plantType;
 				ResourceLocation plantResource = StringUtil.prefix("screenshot/plant/"+plant.toString().toLowerCase());
-				if(((PlantCardItem) i).isEnjoyCard()) {
+				if(((PlantCardItem) i).isEnjoyCard) {
 					ResourceLocation r = StringUtil.prefix("item/red_card");
 					generated(i.getRegistryName().getPath(), r, plantResource);
 				}else {

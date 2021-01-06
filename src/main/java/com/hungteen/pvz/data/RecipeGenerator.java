@@ -37,15 +37,15 @@ public class RecipeGenerator extends ForgeRecipeProvider{
     }
 	
 	private void registerCommonCard(Consumer<IFinishedRecipe> consumer, PlantCardItem result, Item crop) {
-		Item essence = Essences.getEssenceItem(PlantUtil.getPlantEssenceType(result.getPlant()));
-		Item rankCard = Ranks.getRankCardItem(PlantUtil.getPlantRankByName(result.getPlant()));
+		Item essence = Essences.getEssenceItem(PlantUtil.getPlantEssenceType(result.plantType));
+		Item rankCard = Ranks.getRankCardItem(PlantUtil.getPlantRankByName(result.plantType));
 		ShapedRecipeBuilder.shapedRecipe(result).patternLine("AAA").patternLine("ABA").patternLine("ACA")
 		.key('A', essence).key('B', crop).key('C', rankCard).addCriterion("has_essence", this.hasItem(essence)).build(consumer);
 	}
 	
 	private void registerCommonCard(Consumer<IFinishedRecipe> consumer, PlantCardItem result, Tag<Item> crop) {
-		Item essence = Essences.getEssenceItem(PlantUtil.getPlantEssenceType(result.getPlant()));
-		Item rankCard = Ranks.getRankCardItem(PlantUtil.getPlantRankByName(result.getPlant()));
+		Item essence = Essences.getEssenceItem(PlantUtil.getPlantEssenceType(result.plantType));
+		Item rankCard = Ranks.getRankCardItem(PlantUtil.getPlantRankByName(result.plantType));
 		ShapedRecipeBuilder.shapedRecipe(result).patternLine("AAA").patternLine("ABA").patternLine("ACA")
 		.key('A', essence).key('B', crop).key('C', rankCard).addCriterion("has_essence", this.hasItem(essence)).build(consumer);
 	}

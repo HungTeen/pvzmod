@@ -1,11 +1,8 @@
 package com.hungteen.pvz.entity.zombie.grassnight;
 
-import com.hungteen.pvz.capability.CapabilityHandler;
-import com.hungteen.pvz.capability.player.PlayerDataManager;
 import com.hungteen.pvz.entity.drop.CoinEntity;
-import com.hungteen.pvz.entity.drop.JewelEntity;
 import com.hungteen.pvz.entity.drop.CoinEntity.CoinType;
-import com.hungteen.pvz.entity.plant.assist.GraveBusterEntity;
+import com.hungteen.pvz.entity.drop.JewelEntity;
 import com.hungteen.pvz.entity.zombie.PVZZombieEntity;
 import com.hungteen.pvz.entity.zombie.base.UnderGroundZombieEntity;
 import com.hungteen.pvz.entity.zombie.other.NobleZombieEntity;
@@ -16,7 +13,6 @@ import com.hungteen.pvz.register.SoundRegister;
 import com.hungteen.pvz.utils.EntityUtil;
 import com.hungteen.pvz.utils.ZombieUtil;
 import com.hungteen.pvz.utils.enums.Plants;
-import com.hungteen.pvz.utils.enums.Resources;
 import com.hungteen.pvz.utils.enums.Zombies;
 
 import net.minecraft.entity.EntitySize;
@@ -95,24 +91,13 @@ public class TombStoneEntity extends UnderGroundZombieEntity{
 	
 	@Override
 	protected boolean processInteract(PlayerEntity player, Hand hand) {
-		if(!world.isRemote) {
-			if(this.getPassengers().isEmpty() && player.getHeldItem(hand).getItem() instanceof PlantCardItem) {
-				PlantCardItem plantCard = (PlantCardItem) player.getHeldItem(hand).getItem();
-				if(plantCard.getPlant() == Plants.GRAVE_BUSTER && !player.getCooldownTracker().hasCooldown(plantCard)) {
-					player.getCapability(CapabilityHandler.PLAYER_DATA_CAPABILITY).ifPresent((l)->{
-						PlayerDataManager manager = l.getPlayerData();
-						int num = manager.getPlayerStats().getPlayerStats(Resources.SUN_NUM);
-						int sunCost = plantCard.getSunCost(player.getHeldItem(hand));
-						if(num >= sunCost) {//sun is enough
-							GraveBusterEntity buster = EntityRegister.GRAVE_BUSTER.get().create(world);
-							l.getPlayerData().getPlayerStats().addPlayerStats(Resources.SUN_NUM, - sunCost);
-							int lvl = manager.getPlantStats().getPlantLevel(Plants.GRAVE_BUSTER);
-							PlantCardItem.onUsePlantCard(player, player.getHeldItem(hand), plantCard, lvl);
-							buster.setPlantLvl(lvl);
-							buster.setOwnerUUID(player.getUniqueID());
-							EntityUtil.onMobEntitySpawn(world, buster, getPosition());
-							buster.setAttackTarget(this);
-						}
+		if(! world.isRemote) {
+			ItemStack stack = player.getHeldItem(hand);
+			if(this.getPassengers().isEmpty() && stack.getItem() instanceof PlantCardItem) {
+				PlantCardItem cardItem = (PlantCardItem) stack.getItem();
+				if(cardItem.plantType == Plants.GRAVE_BUSTER) {
+					PlantCardItem.checkSunAndSummonPlant(player, stack, cardItem, getPosition(), (plantEntity) -> {
+						plantEntity.setAttackTarget(this);
 					});
 				}
 			}

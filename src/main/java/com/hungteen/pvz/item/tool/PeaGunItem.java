@@ -136,7 +136,7 @@ public class PeaGunItem extends Item {
 		ItemStack special = backpack.getStackInSlot(0);
 //		System.out.println(itemStack);
 		if (special.getItem() instanceof PlantCardItem) {
-			Plants plant = ((PlantCardItem) special.getItem()).getPlant();
+			Plants plant = ((PlantCardItem) special.getItem()).plantType;
 			for (int i = 1; i < PEA_GUN_SLOT_NUM; i++) {
 				ItemStack stack = backpack.getStackInSlot(i);
 				if (stack.isEmpty()) {

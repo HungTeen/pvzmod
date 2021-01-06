@@ -23,7 +23,7 @@ public class ItemTagGenerator extends ItemTagsProvider{
 			if(item instanceof SummonCardItem) {
 				if(item instanceof PlantCardItem) {
 					this.getBuilder(PVZItemTags.PLANT_CARDS).add(item);
-					if(((SummonCardItem) item).isEnjoyCard()) this.getBuilder(PVZItemTags.PLANT_ENJOY_CARDS).add(item);
+					if(((SummonCardItem) item).isEnjoyCard) this.getBuilder(PVZItemTags.PLANT_ENJOY_CARDS).add(item);
 					else this.getBuilder(PVZItemTags.PLANT_SUMMON_CARDS).add(item);
 				}
 			}

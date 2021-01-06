@@ -1,9 +1,7 @@
 package com.hungteen.pvz.event.handler;
 
-import com.hungteen.pvz.capability.CapabilityHandler;
 import com.hungteen.pvz.entity.plant.PVZPlantEntity;
 import com.hungteen.pvz.utils.EntityUtil;
-import com.hungteen.pvz.utils.enums.Plants;
 
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
@@ -12,6 +10,17 @@ import net.minecraft.util.SoundEvents;
 
 public class PlayerEventHandler {
 
+	/**
+	 * player use plant card.
+	 * 1. ground use(peashooter).
+	 * 2. water use(seashroom).
+	 * 3. nut heal use(wallnut).
+	 * 4. pumpkin use(pumpkin).
+	 * 5. specific entity use(coffeebean).
+	 * 6. specific block use(lilypad).
+	 * 7. upgrade plant use(gatlingpea)
+	 */
+	
 	/**
 	 * run when player right click plantEntity with shovel.
 	 */

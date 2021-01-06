@@ -59,7 +59,7 @@ public enum Plants {
 	// other
 	WATER_GUARD(4),
 	STRANGE_CAT(0),
-	ANGEL_STAR_FRUIT(8);
+	ANGEL_STAR_FRUIT(1);
 
 	/*
 	 * 1 means ShroomPlant like PuffShroom,
