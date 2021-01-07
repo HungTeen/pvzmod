@@ -18,8 +18,8 @@ public abstract class PlantBomberEntity extends PVZPlantEntity implements IBombe
 	@Override
 	protected void normalPlantTick() {
 		super.normalPlantTick();
-		this.setAttackTime(this.getAttackTime()+1);
-		if(this.getAttackTime()>=this.getReadyTime()) {
+		this.setAttackTime(this.getAttackTime() + 1);
+		if(this.getAttackTime() >= this.getReadyTime()) {
 			this.startBomb();
 			this.remove();
 			this.setAttackTime(0);
@@ -28,7 +28,7 @@ public abstract class PlantBomberEntity extends PVZPlantEntity implements IBombe
 	
 	@Override
 	public boolean isPlantImmuneTo(DamageSource source) {
-		return super.isPlantImmuneTo(source) || (!this.isPlantSleeping() && PVZDamageSource.isEnforceDamage(source));
+		return super.isPlantImmuneTo(source) || (! this.isPlantSleeping() && PVZDamageSource.isEnforceDamage(source));
 	}
 	
 	@Override

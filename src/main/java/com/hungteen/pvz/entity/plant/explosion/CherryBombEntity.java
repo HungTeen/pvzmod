@@ -23,7 +23,7 @@ public class CherryBombEntity extends PlantBomberEntity{
 	@Override
 	public void startBomb() {
 //		System.out.println(this.world.isRemote);
-		if(!this.world.isRemote) {
+		if(! this.world.isRemote) {
 			float len = this.getExpRange();
 			AxisAlignedBB aabb = EntityUtil.getEntityAABB(this, len, len);
 			EntityUtil.getAttackEntities(this, aabb).forEach((target) -> {

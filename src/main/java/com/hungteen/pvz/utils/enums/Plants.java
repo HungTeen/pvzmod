@@ -32,7 +32,7 @@ public enum Plants {
 	SEA_SHROOM(5),
 	PLANTERN(0), 
 	CACTUS(0),
-//	BLOVER,
+	BLOVER(0),
 	SPLIT_PEA(0),
 	STAR_FRUIT(0),
 	PUMPKIN(16),
@@ -59,7 +59,7 @@ public enum Plants {
 	// other
 	WATER_GUARD(4),
 	STRANGE_CAT(0),
-	ANGEL_STAR_FRUIT(1);
+	ANGEL_STAR_FRUIT(0);
 
 	/*
 	 * 1 means ShroomPlant like PuffShroom,

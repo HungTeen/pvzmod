@@ -198,5 +198,9 @@
     "bruh":{
         "subtitle": "sound.pvz.bruh",
         "sounds":[{"name":"pvz:entity/plant/say/bruh"}]
+    },
+    "blover":{
+        "subtitle": "sound.pvz.blover",
+        "sounds":[{"name":"pvz:ambient/blover"}]
     }
 }

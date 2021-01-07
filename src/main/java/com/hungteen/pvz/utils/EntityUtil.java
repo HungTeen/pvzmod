@@ -13,6 +13,7 @@ import com.hungteen.pvz.entity.PVZMultiPartEntity;
 import com.hungteen.pvz.entity.npc.CrazyDaveEntity;
 import com.hungteen.pvz.entity.plant.PVZPlantEntity;
 import com.hungteen.pvz.entity.zombie.PVZZombieEntity;
+import com.hungteen.pvz.entity.zombie.poolnight.BalloonZombieEntity;
 import com.hungteen.pvz.register.EffectRegister;
 import com.hungteen.pvz.utils.interfaces.IMultiPartEntity;
 
@@ -20,11 +21,13 @@ import it.unimi.dsi.fastutil.ints.IntOpenHashSet;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
 import net.minecraft.entity.Entity;
+import net.minecraft.entity.FlyingEntity;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.MobEntity;
 import net.minecraft.entity.SharedMonsterAttributes;
 import net.minecraft.entity.SpawnReason;
-import net.minecraft.entity.monster.MonsterEntity;
+import net.minecraft.entity.monster.IMob;
+import net.minecraft.entity.passive.BatEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.potion.EffectInstance;
 import net.minecraft.scoreboard.Team;
@@ -221,7 +224,7 @@ public class EntityUtil {
 			group = ((PVZPlantEntity) entity).isCharmed() ? -1 : 1;
 		} else if(entity instanceof CrazyDaveEntity){
 			group = 1;
-		} else if(entity instanceof MonsterEntity) {
+		} else if(entity instanceof IMob) {
 			group = -1;
 			if(entity instanceof PVZZombieEntity) {
 				group = ((PVZZombieEntity) entity).isCharmed() ? 1 : -1;
@@ -364,6 +367,13 @@ public class EntityUtil {
 	 */
 	public static boolean isEntityFrozen(LivingEntity entity) {
 		return entity.getAttribute(SharedMonsterAttributes.MOVEMENT_SPEED).getModifier(EffectRegister.FROZEN_EFFECT_UUID) != null;
+	}
+	
+	public static boolean isEntityInSky(Entity entity) {
+		if(entity instanceof FlyingEntity || entity instanceof BatEntity || entity instanceof BalloonZombieEntity) {
+			return true;
+		}
+		return ! entity.onGround && ! entity.isInWater() && ! entity.isInLava();
 	}
 	
 	/**

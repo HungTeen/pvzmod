@@ -69,6 +69,7 @@ public class SoundRegister {
 	public static final RegistryObject<SoundEvent> PLANTERN = registerSound("plantern");
 	public static final RegistryObject<SoundEvent> BALLOON_FULL = registerSound("balloon_full");
 	public static final RegistryObject<SoundEvent> BALLOON_POP = registerSound("balloon_pop");
+	public static final RegistryObject<SoundEvent> BLOVER = registerSound("blover");
 	
 	private static RegistryObject<SoundEvent> registerSound(String name){
 		return SOUNDS.register(name, ()->{

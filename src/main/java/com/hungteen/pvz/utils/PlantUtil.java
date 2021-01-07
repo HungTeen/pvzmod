@@ -70,6 +70,7 @@ public class PlantUtil {
 		putPlantInfoToMap(Plants.SEA_SHROOM, 0, CDs.LITTLE_FAST, Ranks.GRAY, Essences.TOXIC, EntityRegister.SEA_SHROOM, ItemRegister.SEA_SHROOM_CARD, ItemRegister.SEA_SHROOM_ENJOY_CARD);
 		putPlantInfoToMap(Plants.PLANTERN, 75, CDs.FAST, Ranks.WHITE, Essences.LIGHT, EntityRegister.PLANTERN, ItemRegister.PLANTERN_CARD, ItemRegister.PLANTERN_ENJOY_CARD);
 		putPlantInfoToMap(Plants.CACTUS, 125, CDs.FAST, Ranks.GREEN, Essences.SPEAR, EntityRegister.CACTUS, ItemRegister.CACTUS_CARD, ItemRegister.CACTUS_ENJOY_CARD);
+		putPlantInfoToMap(Plants.BLOVER, 50, CDs.LITTLE_FAST, Ranks.GREEN, Essences.ASSIST, EntityRegister.BLOVER, ItemRegister.BLOVER_CARD, ItemRegister.BLOVER_ENJOY_CARD);
 		putPlantInfoToMap(Plants.SPLIT_PEA, 125, CDs.VERY_FAST, Ranks.WHITE, Essences.APPEASE, EntityRegister.SPLIT_PEA, ItemRegister.SPLIT_PEA_CARD, ItemRegister.SPLIT_PEA_ENJOY_CARD);
 		putPlantInfoToMap(Plants.STAR_FRUIT, 150, CDs.FAST, Ranks.GREEN, Essences.APPEASE, EntityRegister.STAR_FRUIT, ItemRegister.STAR_FRUIT_CARD, ItemRegister.STAR_FRUIT_ENJOY_CARD);
 		putPlantInfoToMap(Plants.PUMPKIN, 125, CDs.SLOW, Ranks.GREEN, Essences.DEFENCE, null, ItemRegister.PUMPKIN_CARD, ItemRegister.PUMPKIN_ENJOY_CARD);
