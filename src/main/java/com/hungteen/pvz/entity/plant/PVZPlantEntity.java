@@ -478,6 +478,7 @@ public abstract class PVZPlantEntity extends CreatureEntity implements IPVZPlant
         compound.putFloat("pumpkin_life", this.getPumpkinLife());
         compound.putInt("plant_sun_cost", this.plantSunCost);
         compound.putInt("outer_sun_cost", this.outerSunCost);
+        compound.putBoolean("immune_to_weak", this.isImmuneToWeak);
 	}
 	
 	@Override
@@ -511,6 +512,7 @@ public abstract class PVZPlantEntity extends CreatureEntity implements IPVZPlant
         this.setPumpkinLife(compound.getFloat("pumpkin_life"));
         this.plantSunCost = compound.getInt("plant_sun_cost");
         this.outerSunCost = compound.getInt("outer_sun_cost");
+        this.isImmuneToWeak = compound.getBoolean("immune_to_weak");
     }
 	
 	/**
@@ -618,6 +620,10 @@ public abstract class PVZPlantEntity extends CreatureEntity implements IPVZPlant
 	
 	public Optional<Plants> getOuterPlantType() {
 		return this.outerPlant;
+	}
+	
+	public void setImmunneToWeak(boolean is) {
+		this.isImmuneToWeak = is;
 	}
 	
 	public void removeOuterPlant() {
@@ -739,13 +745,11 @@ public abstract class PVZPlantEntity extends CreatureEntity implements IPVZPlant
 		this.dataManager.set(LIVE_TICK, tick);
 	}
 	
-	public float getPumpkinLife()
-	{
+	public float getPumpkinLife(){
 		return this.dataManager.get(PUMPKIN_LIFE);
 	}
 	
-	public void setPumpkinLife(float life)
-	{
+	public void setPumpkinLife(float life){
 		this.dataManager.set(PUMPKIN_LIFE, life);
 	}
 	

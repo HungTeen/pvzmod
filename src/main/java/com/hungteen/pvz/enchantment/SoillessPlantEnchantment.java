@@ -5,29 +5,25 @@ import com.hungteen.pvz.register.EnchantmentRegister;
 import net.minecraft.enchantment.Enchantment;
 import net.minecraft.inventory.EquipmentSlotType;
 
-public class SunShovelEnchantment extends Enchantment {
+public class SoillessPlantEnchantment extends Enchantment {
 
-	public SunShovelEnchantment() {
-		super(Rarity.RARE, EnchantmentRegister.SHOVEL, new EquipmentSlotType[] { EquipmentSlotType.OFFHAND, EquipmentSlotType.MAINHAND });
+	public SoillessPlantEnchantment() {
+		super(Rarity.VERY_RARE, EnchantmentRegister.PLANT_CARD, new EquipmentSlotType[] { EquipmentSlotType.OFFHAND, EquipmentSlotType.MAINHAND });
 	}
 
 	@Override
 	public int getMaxEnchantability(int enchantmentLevel) {
-		return 25;
+		return 40;
 	}
 
 	@Override
 	public int getMinEnchantability(int enchantmentLevel) {
-		return 50;
-	}
-
-	public boolean isTreasureEnchantment() {
-		return true;
+		return 100;
 	}
 
 	@Override
 	public int getMaxLevel() {
-		return 5;
+		return 1;
 	}
 
 }

@@ -1,15 +1,20 @@
 package com.hungteen.pvz.entity.drop;
 
+import java.util.Map.Entry;
 import java.util.Random;
 
 import com.hungteen.pvz.PVZConfig;
+import com.hungteen.pvz.enchantment.EnchantmentUtil;
+import com.hungteen.pvz.event.events.PlayerCollectDropEvent;
 import com.hungteen.pvz.network.PVZPacketHandler;
 import com.hungteen.pvz.network.PlaySoundPacket;
+import com.hungteen.pvz.register.EnchantmentRegister;
 import com.hungteen.pvz.register.EntityRegister;
 import com.hungteen.pvz.utils.EntityUtil;
 import com.hungteen.pvz.utils.PlayerUtil;
 import com.hungteen.pvz.utils.enums.Resources;
 
+import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.entity.EntitySize;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.MobEntity;
@@ -17,11 +22,14 @@ import net.minecraft.entity.Pose;
 import net.minecraft.entity.SpawnReason;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.ServerPlayerEntity;
+import net.minecraft.inventory.EquipmentSlotType;
+import net.minecraft.item.ItemStack;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IWorld;
 import net.minecraft.world.LightType;
 import net.minecraft.world.World;
 import net.minecraft.world.server.ServerWorld;
+import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.fml.network.PacketDistributor;
 
 public class SunEntity extends DropEntity {
@@ -57,9 +65,23 @@ public class SunEntity extends DropEntity {
 		}
 	}
 	
-	public void onCollectedByPlayer(PlayerEntity player){
-		PlayerUtil.addPlayerStats(player, Resources.SUN_NUM, this.getAmount());
-		PVZPacketHandler.CHANNEL.send(PacketDistributor.PLAYER.with(()->{
+	public void onCollectedByPlayer(PlayerEntity player) {
+		if(MinecraftForge.EVENT_BUS.post(new PlayerCollectDropEvent.PlayerCollectSunEvent(player, this))) {
+			return ;
+		}
+		Entry<EquipmentSlotType, ItemStack> entry = EnchantmentHelper.getRandomItemWithEnchantment(EnchantmentRegister.SUN_MENDING.get(), player);
+		if(entry != null) {
+			ItemStack stack = entry.getValue();
+            if (! stack.isEmpty() && stack.isDamaged()) {
+               int canRepair = Math.min(EnchantmentUtil.getRepairDamageByAmount(stack, this.getAmount()), stack.getDamage());
+               this.setAmount(this.getAmount() - EnchantmentUtil.getSunCostByDamage(stack, canRepair));
+               stack.setDamage(stack.getDamage() - canRepair);
+            }
+		}
+		if(this.getAmount() > 0) {
+			PlayerUtil.addPlayerStats(player, Resources.SUN_NUM, this.getAmount());
+		}
+		PVZPacketHandler.CHANNEL.send(PacketDistributor.PLAYER.with(() -> {
 			return (ServerPlayerEntity) player;
 		}), new PlaySoundPacket(0));
 		this.remove();

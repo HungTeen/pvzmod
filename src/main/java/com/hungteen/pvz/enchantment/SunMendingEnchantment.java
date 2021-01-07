@@ -1,14 +1,13 @@
 package com.hungteen.pvz.enchantment;
 
-import com.hungteen.pvz.register.EnchantmentRegister;
-
 import net.minecraft.enchantment.Enchantment;
+import net.minecraft.enchantment.EnchantmentType;
 import net.minecraft.inventory.EquipmentSlotType;
 
-public class SunShovelEnchantment extends Enchantment {
+public class SunMendingEnchantment extends Enchantment {
 
-	public SunShovelEnchantment() {
-		super(Rarity.RARE, EnchantmentRegister.SHOVEL, new EquipmentSlotType[] { EquipmentSlotType.OFFHAND, EquipmentSlotType.MAINHAND });
+	public SunMendingEnchantment() {
+		super(Rarity.VERY_RARE, EnchantmentType.BREAKABLE, EquipmentSlotType.values());
 	}
 
 	@Override
@@ -29,5 +28,5 @@ public class SunShovelEnchantment extends Enchantment {
 	public int getMaxLevel() {
 		return 5;
 	}
-
+	
 }
