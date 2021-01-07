@@ -11,6 +11,8 @@ import com.hungteen.pvz.event.events.SummonCardUseEvent;
 import com.hungteen.pvz.register.BlockRegister;
 import com.hungteen.pvz.register.EffectRegister;
 import com.hungteen.pvz.register.EnchantmentRegister;
+import com.hungteen.pvz.register.SoundRegister;
+import com.hungteen.pvz.utils.EntityUtil;
 import com.hungteen.pvz.utils.PlantUtil;
 import com.hungteen.pvz.utils.enums.Plants;
 import com.hungteen.pvz.utils.enums.Ranks;
@@ -132,6 +134,7 @@ public class PlantCardItem extends SummonCardItem {
 				l.getPlayerData().getPlayerStats().addPlayerStats(Resources.SUN_NUM, - sunCost);
 				int lvl = manager.getPlantStats().getPlantLevel(plantType);
 				plantEntity.onSpawnedByPlayer(player, lvl);//update level health and owner.
+				plantEntity.plantSunCost = sunCost;// use for sun shovel
 				PlantCardItem.onUsePlantCard(player, stack, cardItem, lvl);//handle CD.
 				if (canPlantBreakOut(stack)) {// break out enchantment
 					if (plantEntity.canStartSuperMode()) {
@@ -165,6 +168,7 @@ public class PlantCardItem extends SummonCardItem {
 			    if (player instanceof ServerPlayerEntity) {
 			        CriteriaTriggers.PLACED_BLOCK.trigger((ServerPlayerEntity) player, pos, stack);
 		        }
+			    EntityUtil.playSound(player, plantType.isWaterPlant ? SoundRegister.PLANT_IN_WATER.get() : SoundRegister.PLANT_ON_GROUND.get());
 			}
 		});
 	}
@@ -183,6 +187,7 @@ public class PlantCardItem extends SummonCardItem {
 			if (num >= sunCost) { // sun is enough
 				l.getPlayerData().getPlayerStats().addPlayerStats(Resources.SUN_NUM, - sunCost);
 				onUsePlantCard(player, stack, cardItem, manager.getPlantStats().getPlantLevel(plantType));
+				plantEntity.outerSunCost = sunCost;
 				if(plantType == Plants.PUMPKIN) {
 					float life = PlantUtil.PUMPKIN_LIFE;
 				    if (canPlantBreakOut(stack)) {// break out enchantment
@@ -191,6 +196,7 @@ public class PlantCardItem extends SummonCardItem {
 				    plantEntity.setPumpkinLife(life);
 				    plantEntity.setOuterPlantType(Plants.PUMPKIN);
 				}
+				EntityUtil.playSound(player, SoundRegister.PLANT_ON_GROUND.get());
 			}
 		});
 	}

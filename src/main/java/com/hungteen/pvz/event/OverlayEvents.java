@@ -58,8 +58,8 @@ public class OverlayEvents {
 		}
 		if (PVZConfig.CLIENT_CONFIG.EnvironmentRnder.RenderFog.get()) {
 			int tick = ClientPlayerResources.getPlayerStats(Resources.NO_FOG_TICK);
-			if(tick > 0) {
-				renderFog(ev.getWindow().getScaledWidth(), ev.getWindow().getScaledHeight(), Math.min(tick * 1f / 100, 1f));
+			if(tick < 0) {
+				renderFog(ev.getWindow().getScaledWidth(), ev.getWindow().getScaledHeight(), Math.min(- tick * 1f / 100, 1f));
 			}
 		}
 	}

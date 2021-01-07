@@ -5,13 +5,16 @@ import com.hungteen.pvz.entity.zombie.poolnight.BalloonZombieEntity;
 import com.hungteen.pvz.misc.damage.PVZDamageSource;
 import com.hungteen.pvz.register.SoundRegister;
 import com.hungteen.pvz.utils.EntityUtil;
+import com.hungteen.pvz.utils.PlayerUtil;
 import com.hungteen.pvz.utils.enums.Plants;
+import com.hungteen.pvz.utils.enums.Resources;
 
 import net.minecraft.entity.CreatureEntity;
 import net.minecraft.entity.EntitySize;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.Pose;
+import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.util.SoundEvent;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.MathHelper;
@@ -53,6 +56,11 @@ public class BloverEntity extends PlantBomberEntity {
 					target.setMotion(speed.x + speedX, speed.y, speed.z + speedZ);
 				}
 			});
+			world.getEntitiesWithinAABB(PlayerEntity.class, EntityUtil.getEntityAABB(this, len, len), (player) -> {
+				return ! EntityUtil.checkCanEntityAttack(this, player);
+			}).forEach((player) -> {
+				PlayerUtil.addPlayerStats(player, Resources.NO_FOG_TICK, 2400 * this.getForceLevel());
+			});
 		}
 	}
 	
@@ -73,7 +81,7 @@ public class BloverEntity extends PlantBomberEntity {
 		return 60;
 	}
 	
-	public float getForceLevel() {
+	public int getForceLevel() {
 		if(this.isPlantInStage(1)) return 1;
 		if(this.isPlantInStage(2)) return 2;
 		return 3;

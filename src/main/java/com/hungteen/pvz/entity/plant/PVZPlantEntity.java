@@ -47,6 +47,7 @@ import net.minecraft.util.Hand;
 import net.minecraft.util.SoundEvent;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
+import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.DifficultyInstance;
 import net.minecraft.world.GameRules;
 import net.minecraft.world.IWorld;
@@ -201,6 +202,13 @@ public abstract class PVZPlantEntity extends CreatureEntity implements IPVZPlant
 			    BlockPos pos = this.getPosition();
 		        this.setPosition(pos.getX() + 0.5, this.getPosY(), pos.getZ() + 0.5);
 		    }
+		}
+		if(! world.isRemote) {
+			if(this.getPlantEnumName().isWaterPlant && this.isInWater()) {
+				Vec3d vec = this.getMotion();
+				double speedY = Math.min(vec.y, 0.05D);
+				this.setMotion(vec.x, speedY, vec.z);
+			}
 		}
     }
 	
@@ -592,10 +600,6 @@ public abstract class PVZPlantEntity extends CreatureEntity implements IPVZPlant
 		return PlantUtil.getPlantRankByName(plant);
 	}
 	
-	public Optional<Plants> getOuterPlantType() {
-		return this.outerPlant;
-	}
-	
 	@Override
 	public boolean canDespawn(double distanceToClosestPlayer) {
 		return false;
@@ -610,6 +614,16 @@ public abstract class PVZPlantEntity extends CreatureEntity implements IPVZPlant
     
 	public void setOuterPlantType(Plants p) {
 		this.outerPlant = Optional.of(p);
+	}
+	
+	public Optional<Plants> getOuterPlantType() {
+		return this.outerPlant;
+	}
+	
+	public void removeOuterPlant() {
+		this.outerPlant = Optional.empty();
+		this.setPumpkinLife(0);
+		this.outerSunCost = 0;
 	}
 	
 	@Override
@@ -629,9 +643,6 @@ public abstract class PVZPlantEntity extends CreatureEntity implements IPVZPlant
 				} else if(item.plantType == Plants.COFFEE_BEAN) {
 					PlantCardItem.checkSunAndSummonPlant(player, stack, item, getPosition(), (plantEntity) -> {
 						plantEntity.startRiding(this);
-//						System.out.println(this.getPosY() + this.getHeight() + 0.5f);
-//						plantEntity.setLocationAndAngles(this.getPosX(), this.getPosY() + this.getEyeHeight() + 0.5f, this.getPosZ(), this.rotationYaw, this.rotationPitch);
-//						plantEntity.setPosition(this.getPosX(), this.getPosY() + this.getEyeHeight() + 0.5f, this.getPosZ());
 					});
 				} else if(this.getUpgradePlantType() == item.plantType) {
 					PlantCardItem.checkSunAndSummonPlant(player, stack, item, getPosition(), (plantEntity) -> {
@@ -744,7 +755,7 @@ public abstract class PVZPlantEntity extends CreatureEntity implements IPVZPlant
 	}
 	
 	protected SoundEvent getSpawnSound() {
-		return SoundRegister.PLANT_ON_GROUND.get();
+		return this.getPlantEnumName().isWaterPlant ? SoundRegister.PLANT_IN_WATER.get() : SoundRegister.PLANT_ON_GROUND.get();
 	}
 	
 }

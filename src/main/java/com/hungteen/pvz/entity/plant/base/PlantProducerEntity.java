@@ -4,6 +4,7 @@ import com.hungteen.pvz.entity.ai.ProducerGenGoal;
 import com.hungteen.pvz.entity.drop.SunEntity;
 import com.hungteen.pvz.entity.plant.PVZPlantEntity;
 import com.hungteen.pvz.register.EntityRegister;
+import com.hungteen.pvz.utils.EntityUtil;
 import com.hungteen.pvz.utils.interfaces.IProducer;
 
 import net.minecraft.entity.CreatureEntity;
@@ -48,11 +49,10 @@ public abstract class PlantProducerEntity extends PVZPlantEntity implements IPro
 	 * such as sunflower or sunshroom
 	 */
 	protected void genSun(int num){
-		SunEntity sun=EntityRegister.SUN.get().create(this.world);
+		SunEntity sun = EntityRegister.SUN.get().create(this.world);
 		sun.setAmount(num);
-		sun.setPosition(this.getPosX() + this.rand.nextInt(10) - 5, this.getPosY() + this.rand.nextInt(3) + 1, this.getPosZ() + this.rand.nextInt(10) - 5);
-		this.playSound(SoundEvents.ENTITY_EXPERIENCE_ORB_PICKUP, 1.0F, 1.0F);
-        this.world.addEntity(sun);
+		EntityUtil.onMobEntityRandomPosSpawn(world, sun, getPosition(), 3);
+		EntityUtil.playSound(this, SoundEvents.ENTITY_EXPERIENCE_ORB_PICKUP);
 	}
 	
 	@Override

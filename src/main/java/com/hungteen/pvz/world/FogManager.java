@@ -18,11 +18,11 @@ public class FogManager {
 		world.getPlayers().forEach((player)->{
 			player.getCapability(CapabilityHandler.PLAYER_DATA_CAPABILITY).ifPresent((l)->{
 				int now = l.getPlayerData().getPlayerStats().getPlayerStats(Resources.NO_FOG_TICK);
-				if(shouldFogOn(world, player)) {
-					++ now;
-				} else {
-					now = Math.min(now, 0);
+				-- now;
+				if(! shouldFogOn(world, player)) {
+					now = Math.max(now, 0);
 				}
+				if(now < 0) now = -1;
 				l.getPlayerData().getPlayerStats().setPlayerStats(Resources.NO_FOG_TICK, now);
 			});
 		});

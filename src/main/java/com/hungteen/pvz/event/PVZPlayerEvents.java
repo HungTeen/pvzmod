@@ -151,10 +151,10 @@ public class PVZPlayerEvents {
 		PlayerEntity player = ev.getPlayer();
 		if(! world.isRemote) {
 			Entity entity = ev.getTarget();
-			if(entity instanceof PVZPlantEntity) {
+			if(entity instanceof PVZPlantEntity && entity.isAlive()) {//still alive
 				PVZPlantEntity plant = (PVZPlantEntity) entity;
 				ItemStack stack = player.getHeldItemMainhand();
-				if(stack.getItem() instanceof SwordItem && entity.isAlive()) {
+				if(stack.getItem() instanceof SwordItem) {
 					if(EnchantmentHelper.getEnchantmentLevel(EnchantmentRegister.ENERGY_TRANSFER.get(), stack) > 0) {
 						if(plant.canStartSuperMode()){
 							player.getCapability(CapabilityHandler.PLAYER_DATA_CAPABILITY).ifPresent((l) -> {

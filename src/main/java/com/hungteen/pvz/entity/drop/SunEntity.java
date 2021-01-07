@@ -5,6 +5,8 @@ import java.util.Random;
 import com.hungteen.pvz.PVZConfig;
 import com.hungteen.pvz.network.PVZPacketHandler;
 import com.hungteen.pvz.network.PlaySoundPacket;
+import com.hungteen.pvz.register.EntityRegister;
+import com.hungteen.pvz.utils.EntityUtil;
 import com.hungteen.pvz.utils.PlayerUtil;
 import com.hungteen.pvz.utils.enums.Resources;
 
@@ -66,6 +68,23 @@ public class SunEntity extends DropEntity {
 	@Override
 	public int getMaxSpawnedInChunk() {
 		return 1;
+	}
+	
+	public static void spawnSunsByAmount(World world, BlockPos pos, int amount) {
+		while(amount >= 75) {
+			amount -= 75;
+			spawnSunRandomly(world, pos, 75);
+		}
+		if(amount != 0) {
+			spawnSunRandomly(world, pos, amount);
+			amount = 0;
+		}
+	}
+	
+	public static void spawnSunRandomly(World world, BlockPos pos, int amount) {
+		SunEntity sun = EntityRegister.SUN.get().create(world);
+		sun.setAmount(amount);
+		EntityUtil.onMobEntityRandomPosSpawn(world, sun, pos, 1);
 	}
 	
 	public static boolean canSunSpawn(EntityType<? extends SunEntity> zombieType, IWorld worldIn, SpawnReason reason, BlockPos pos, Random rand) {
