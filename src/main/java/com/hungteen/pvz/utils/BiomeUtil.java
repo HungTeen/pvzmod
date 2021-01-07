@@ -66,6 +66,11 @@ public class BiomeUtil {
 			Biomes.MODIFIED_GRAVELLY_MOUNTAINS, Biomes.ICE_SPIKES, Biomes.BAMBOO_JUNGLE, Biomes.BAMBOO_JUNGLE_HILLS, 
 	};
 	
+	public static final Biome[] DERSERT = new Biome[] {
+			Biomes.DESERT, Biomes.DESERT_HILLS, Biomes.DESERT_LAKES, Biomes.BADLANDS, Biomes.WOODED_BADLANDS_PLATEAU,
+			Biomes.BADLANDS_PLATEAU, Biomes.ERODED_BADLANDS, Biomes.MODIFIED_WOODED_BADLANDS_PLATEAU, Biomes.MODIFIED_BADLANDS_PLATEAU,
+	};
+	
 	public static final Biome[] OCEAN = new Biome[] {
 			Biomes.OCEAN, Biomes.FROZEN_OCEAN, Biomes.DEEP_OCEAN, Biomes.DEEP_COLD_OCEAN, Biomes.DEEP_FROZEN_OCEAN,
 			Biomes.WARM_OCEAN, Biomes.LUKEWARM_OCEAN, Biomes.COLD_OCEAN, Biomes.DEEP_WARM_OCEAN, Biomes.DEEP_LUKEWARM_OCEAN,

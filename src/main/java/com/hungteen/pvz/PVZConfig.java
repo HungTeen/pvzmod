@@ -88,6 +88,10 @@ public class PVZConfig {
 					WorldSettings.StructureSettings.GraveHouseDistance = builder
 							.comment("the distance value between grave house.")
 							.defineInRange("GraveHouseDistance", 28, 1, 1000);
+					
+					WorldSettings.StructureSettings.SunTempleDistance = builder
+							.comment("the distance value between sun temple.")
+							.defineInRange("SunTempleDistance", 40, 1, 1000);
 				}
 				builder.pop();
 				
@@ -231,6 +235,7 @@ public class PVZConfig {
 			    public ForgeConfigSpec.IntValue BucketHouseDistance;
 			    public ForgeConfigSpec.IntValue DolphinHouseDistance;
 			    public ForgeConfigSpec.IntValue GraveHouseDistance;
+			    public ForgeConfigSpec.IntValue SunTempleDistance;
 			}
 			
 			public static class EntitySpawnSettings{

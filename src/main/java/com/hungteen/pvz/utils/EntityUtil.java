@@ -10,7 +10,8 @@ import javax.annotation.Nullable;
 
 import com.hungteen.pvz.PVZConfig;
 import com.hungteen.pvz.entity.PVZMultiPartEntity;
-import com.hungteen.pvz.entity.npc.CrazyDaveEntity;
+import com.hungteen.pvz.entity.npc.AbstractDaveEntity;
+import com.hungteen.pvz.entity.npc.SunDaveEntity;
 import com.hungteen.pvz.entity.plant.PVZPlantEntity;
 import com.hungteen.pvz.entity.zombie.PVZZombieEntity;
 import com.hungteen.pvz.entity.zombie.poolnight.BalloonZombieEntity;
@@ -175,7 +176,7 @@ public class EntityUtil {
 	/**
 	 * use to check can the attacker attack the current target
 	 */
-	public static boolean checkCanEntityAttack(Entity attacker, Entity target){
+	public static boolean checkCanEntityAttack(Entity attacker, Entity target) {
 		if(target instanceof PVZMultiPartEntity) {//can attack its owner then can attack it
 			target = ((PVZMultiPartEntity) target).getOwner();
 		}
@@ -222,8 +223,8 @@ public class EntityUtil {
 		}
 		if(entity instanceof PVZPlantEntity) {
 			group = ((PVZPlantEntity) entity).isCharmed() ? -1 : 1;
-		} else if(entity instanceof CrazyDaveEntity){
-			group = 1;
+		} else if(entity instanceof AbstractDaveEntity){
+			group = (entity instanceof SunDaveEntity ? 0 : 1);
 		} else if(entity instanceof IMob) {
 			group = -1;
 			if(entity instanceof PVZZombieEntity) {

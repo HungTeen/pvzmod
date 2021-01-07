@@ -1,7 +1,8 @@
 package com.hungteen.pvz.register;
 
 import com.hungteen.pvz.PVZMod;
-import com.hungteen.pvz.structure.davevilla.DaveVillaStructure;
+import com.hungteen.pvz.structure.shop.DaveVillaStructure;
+import com.hungteen.pvz.structure.shop.SunTempleStructure;
 import com.hungteen.pvz.structure.zombie.BucketHouseStructure;
 import com.hungteen.pvz.structure.zombie.DolphinHouseStructure;
 import com.hungteen.pvz.structure.zombie.GraveHouseStructure;
@@ -22,5 +23,6 @@ public class FeatureRegister {
 	public static final RegistryObject<Structure<NoFeatureConfig>> BUCKET_HOUSE = FEATURES.register("bucket_house", () -> {return new BucketHouseStructure(NoFeatureConfig::deserialize);});
 	public static final RegistryObject<Structure<NoFeatureConfig>> DOLPHIN_HOUSE = FEATURES.register("dolphin_house", () -> {return new DolphinHouseStructure(NoFeatureConfig::deserialize);});
 	public static final RegistryObject<Structure<NoFeatureConfig>> GRAVE_HOUSE = FEATURES.register("grave_house", () -> {return new GraveHouseStructure(NoFeatureConfig::deserialize);});
+	public static final RegistryObject<Structure<NoFeatureConfig>> SUN_TEMPLE = FEATURES.register("sun_temple", () -> {return new SunTempleStructure(NoFeatureConfig::deserialize);});
 	
 }

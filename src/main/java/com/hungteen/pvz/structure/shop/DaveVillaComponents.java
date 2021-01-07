@@ -1,4 +1,4 @@
-package com.hungteen.pvz.structure.davevilla;
+package com.hungteen.pvz.structure.shop;
 
 import java.util.List;
 import java.util.Random;

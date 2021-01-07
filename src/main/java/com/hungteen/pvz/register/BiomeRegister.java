@@ -53,6 +53,9 @@ public class BiomeRegister {
 		for(Biome biome : BiomeUtil.TAIGA) {
 			biome.addStructure(FeatureRegister.GRAVE_HOUSE.get().withConfiguration(IFeatureConfig.NO_FEATURE_CONFIG));
 		}
+		for(Biome biome : BiomeUtil.DERSERT) {
+			biome.addStructure(FeatureRegister.SUN_TEMPLE.get().withConfiguration(IFeatureConfig.NO_FEATURE_CONFIG));
+		}
 	}
 	
 	public static void addStructureToBiome(Biome biome) {
@@ -60,6 +63,8 @@ public class BiomeRegister {
 	    biome.addFeature(GenerationStage.Decoration.SURFACE_STRUCTURES, FeatureRegister.BUCKET_HOUSE.get().withConfiguration(IFeatureConfig.NO_FEATURE_CONFIG).withPlacement(Placement.NOPE.configure(IPlacementConfig.NO_PLACEMENT_CONFIG))); 
 	    biome.addFeature(GenerationStage.Decoration.SURFACE_STRUCTURES, FeatureRegister.DOLPHIN_HOUSE.get().withConfiguration(IFeatureConfig.NO_FEATURE_CONFIG).withPlacement(Placement.NOPE.configure(IPlacementConfig.NO_PLACEMENT_CONFIG)));
 	    biome.addFeature(GenerationStage.Decoration.SURFACE_STRUCTURES, FeatureRegister.GRAVE_HOUSE.get().withConfiguration(IFeatureConfig.NO_FEATURE_CONFIG).withPlacement(Placement.NOPE.configure(IPlacementConfig.NO_PLACEMENT_CONFIG))); 
+	    biome.addFeature(GenerationStage.Decoration.SURFACE_STRUCTURES, FeatureRegister.SUN_TEMPLE.get().withConfiguration(IFeatureConfig.NO_FEATURE_CONFIG).withPlacement(Placement.NOPE.configure(IPlacementConfig.NO_PLACEMENT_CONFIG))); 
+		
 	}
 	
 }
