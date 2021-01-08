@@ -13,6 +13,7 @@ import net.minecraft.world.World;
 public abstract class DropEntity extends MobEntity{
 
 	private static final DataParameter<Integer> AMOUNT = EntityDataManager.createKey(DropEntity.class, DataSerializers.VARINT);
+	private static final DataParameter<Integer> STATE  = EntityDataManager.createKey(DropEntity.class, DataSerializers.VARINT);
 	protected int liveTime;
 	
 	public DropEntity(EntityType<? extends MobEntity> type, World worldIn) {
@@ -25,6 +26,7 @@ public abstract class DropEntity extends MobEntity{
 	protected void registerData() {
 		super.registerData();
 		this.dataManager.register(AMOUNT, 1);
+		this.dataManager.register(STATE, DropStates.NORMAL.ordinal());
 	}
 	
 	@Override
@@ -35,6 +37,7 @@ public abstract class DropEntity extends MobEntity{
 	@Override
 	public void tick() {
 		super.tick();
+		this.noClip = this.getDropState() != DropStates.NORMAL;
 		if(! world.isRemote) {
 			this.liveTime++;
 		    if(this.liveTime >= this.getMaxLiveTick()) {
@@ -82,12 +85,14 @@ public abstract class DropEntity extends MobEntity{
 	public void readAdditional(CompoundNBT compound) {
 		this.liveTime = compound.getInt("live_time");
 		this.setAmount(compound.getInt("drop_amount"));
+		this.setDropState(DropStates.values()[compound.getInt("drop_state")]);
 	}
 
 	@Override
 	public void writeAdditional(CompoundNBT compound) {
 		compound.putInt("live_time", this.liveTime);
 		compound.putInt("drop_amount", this.getAmount());
+		compound.putInt("drop_state", this.getDropState().ordinal());
 	}
 	
 	public int getAmount(){
@@ -96,6 +101,20 @@ public abstract class DropEntity extends MobEntity{
 	
 	public void setAmount(int num){
 		this.dataManager.set(AMOUNT, num);
+	}
+	
+	public DropStates getDropState(){
+		return DropStates.values()[this.dataManager.get(STATE)];
+	}
+	
+	public void setDropState(DropStates state){
+		this.dataManager.set(STATE, state.ordinal());
+	}
+	
+	public static enum DropStates {
+		NORMAL,
+		ABSORB,
+		STEAL
 	}
 	
 }

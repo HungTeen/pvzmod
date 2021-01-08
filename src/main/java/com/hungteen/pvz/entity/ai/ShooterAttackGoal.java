@@ -3,6 +3,7 @@ package com.hungteen.pvz.entity.ai;
 import java.util.EnumSet;
 
 import com.hungteen.pvz.entity.plant.appease.StarFruitEntity;
+import com.hungteen.pvz.entity.plant.spear.CatTailEntity;
 import com.hungteen.pvz.utils.EntityUtil;
 import com.hungteen.pvz.utils.interfaces.IShooter;
 
@@ -58,6 +59,7 @@ public class ShooterAttackGoal extends Goal{
 
 	@Override
 	public void tick() {
+//		System.out.println(this.checkTarget());
 		++ this.attackTime;
 		if(this.attackTime >= this.shooter.getShootCD()) {
 			this.attackTime = 0;
@@ -68,8 +70,12 @@ public class ShooterAttackGoal extends Goal{
 		}
 	}
 	
-	private boolean checkTarget(){
+	private boolean checkTarget() {
 		if(EntityUtil.checkCanEntityTarget(this.attacker, this.target)) {
+			if(this.attacker instanceof CatTailEntity) {
+//				System.out.println(EntityUtil.checkCanSeeEntity(this.attacker, this.target));
+				return EntityUtil.checkCanSeeEntity(this.attacker, this.target);
+			}
 			return this.attacker.getEntitySenses().canSee(this.target);
 		}
 		return false;

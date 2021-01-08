@@ -11,7 +11,9 @@ import com.hungteen.pvz.block.plants.LilyPadBlock;
 import com.hungteen.pvz.block.plants.PVZSaplingBlock;
 import com.hungteen.pvz.block.plants.PeaBlock;
 import com.hungteen.pvz.block.plants.ToxicShroomBlock;
+import com.hungteen.pvz.block.special.FlowerPotBlock;
 import com.hungteen.pvz.block.special.LanternBlock;
+import com.hungteen.pvz.block.special.SunConverterBlock;
 import com.hungteen.pvz.item.blockitem.LilyPadItem;
 import com.hungteen.pvz.world.feature.tree.NutTree;
 
@@ -59,23 +61,25 @@ public class BlockRegister {
 	
 	//block
 	public static final RegistryObject<Block> STEEL_BLOCK = BLOCKS.register("steel_block",() -> new Block(Block.Properties.from(Blocks.IRON_BLOCK).hardnessAndResistance(8,8)));
-	public static final RegistryObject<Block> AMETHYST_BLOCK =BLOCKS.register("amethyst_block", ()->new Block(Block.Properties.from(Blocks.EMERALD_BLOCK).hardnessAndResistance(9, 9))); 
+	public static final RegistryObject<Block> AMETHYST_BLOCK =BLOCKS.register("amethyst_block", () -> new Block(Block.Properties.from(Blocks.EMERALD_BLOCK).hardnessAndResistance(9, 9))); 
 	public static final RegistryObject<Block> ORIGIN_BLOCK = BLOCKS.register("origin_block", OriginBlock::new);
 	
 	//crops
-	public static final RegistryObject<Block> PEA_PLANT = BLOCKS.register("pea_plant", ()->new PeaBlock(Block.Properties.from(Blocks.WHEAT)));
-	public static final RegistryObject<Block> TOXIC_SHROOM = BLOCKS.register("toxic_shroom", ()->new ToxicShroomBlock(Block.Properties.from(Blocks.SWEET_BERRY_BUSH)));
+	public static final RegistryObject<Block> PEA_PLANT = BLOCKS.register("pea_plant", () -> new PeaBlock(Block.Properties.from(Blocks.WHEAT)));
+	public static final RegistryObject<Block> TOXIC_SHROOM = BLOCKS.register("toxic_shroom", () -> new ToxicShroomBlock(Block.Properties.from(Blocks.SWEET_BERRY_BUSH)));
 	
 	//plants
-	public static final RegistryObject<Block> NUT_LEAVES = BLOCKS.register("nut_leaves", ()->new LeavesBlock(Block.Properties.from(Blocks.OAK_LEAVES)));
-	public static final RegistryObject<Block> NUT_SAPLING = BLOCKS.register("nut_sapling", ()->new PVZSaplingBlock(NutTree::new));
+	public static final RegistryObject<Block> NUT_LEAVES = BLOCKS.register("nut_leaves", () -> new LeavesBlock(Block.Properties.from(Blocks.OAK_LEAVES)));
+	public static final RegistryObject<Block> NUT_SAPLING = BLOCKS.register("nut_sapling", () -> new PVZSaplingBlock(NutTree::new));
 	public static final RegistryObject<Block> CHOMPER = BLOCKS.register("chomper", ChomperBlock::new);
 	public static final RegistryObject<LilyPadBlock> LILY_PAD = BLOCKS.register("lily_pad", LilyPadBlock::new);
 	
 	//special
 	public static final RegistryObject<Block> LANTERN = BLOCKS.register("lantern", LanternBlock::new);
+	public static final RegistryObject<FlowerPotBlock> FLOWER_POT = BLOCKS.register("flower_pot", FlowerPotBlock::new);
 	
-	//tileentity block
+	//te block
+	public static final RegistryObject<SunConverterBlock> SUN_CONVERTER = BLOCKS.register("sun_converter", SunConverterBlock::new);
 	
 	/**
 	 * 注册itemblock
@@ -87,7 +91,8 @@ public class BlockRegister {
 				ORIGIN_ORE, APPEASE_ORE, LIGHT_ORE, EXPLOSION_ORE, DEFENCE_ORE, ICE_ORE, ENFORCE_ORE, TOXIC_ORE, ASSIST_ORE, MAGIC_ORE, FLAME_ORE, SPEAR_ORE, ARMA_ORE, ELECTRIC_ORE, SHADOW_ORE, AMETHYST_ORE,
 				STEEL_BLOCK, AMETHYST_BLOCK, ORIGIN_BLOCK,
 				NUT_LEAVES, NUT_SAPLING, CHOMPER, LILY_PAD,
-				LANTERN
+				LANTERN, FLOWER_POT,
+				SUN_CONVERTER
 		);
 		for(RegistryObject<? extends Block> block:blocks) {
 			if(block == LILY_PAD) {

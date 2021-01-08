@@ -65,8 +65,8 @@
 //npc
     "entity.pvz.crazy_dave":"Crazy Dave",
     "item.pvz.crazy_dave_spawn_egg":"Crazy Dave Spawn Egg", 
-    "entity.pvz.panney":"Panney",
-    "item.pvz.panney_spawn_egg":"Panney Spawn Egg", 
+    "entity.pvz.panney":"Penny",
+    "item.pvz.panney_spawn_egg":"Penny Spawn Egg", 
 //zombie
     "entity.pvz.normal_zombie":"Normal Zombie",
     "item.pvz.normal_zombie_spawn_egg":"Normal Zombie Spawn Egg", 

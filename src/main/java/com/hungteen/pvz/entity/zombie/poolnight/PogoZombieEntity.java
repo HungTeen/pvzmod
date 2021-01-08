@@ -44,6 +44,14 @@ public class PogoZombieEntity extends PVZZombieEntity implements IHasMetal {
 	}
 	
 	@Override
+	public boolean checkCanZombieBreakBlock() {
+		if(super.checkCanZombieBreakBlock()) {
+			return ! this.hasMetal();
+		}
+		return false;
+	}
+	
+	@Override
 	public boolean isInvulnerableTo(DamageSource source) {
 		if(source.getDamageType() == DamageSource.FALL.damageType) return true;
 		return super.isInvulnerableTo(source);

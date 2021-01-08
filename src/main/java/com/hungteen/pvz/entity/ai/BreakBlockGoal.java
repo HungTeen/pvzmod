@@ -2,6 +2,8 @@ package com.hungteen.pvz.entity.ai;
 
 import javax.annotation.Nullable;
 
+import com.hungteen.pvz.entity.zombie.PVZZombieEntity;
+
 import net.minecraft.block.Block;
 import net.minecraft.entity.CreatureEntity;
 import net.minecraft.entity.MobEntity;
@@ -14,13 +16,13 @@ import net.minecraft.world.World;
 import net.minecraft.world.chunk.ChunkStatus;
 import net.minecraft.world.chunk.IChunk;
 
-public class BreakLilyPadGoal extends MoveToBlockGoal {
+public class BreakBlockGoal extends MoveToBlockGoal {
 	
 	protected final Block block;
 	protected final MobEntity entity;
 	protected int breakingTime;
 
-	public BreakLilyPadGoal(Block blockIn, CreatureEntity creature, double speed, int yMax) {
+	public BreakBlockGoal(Block blockIn, CreatureEntity creature, double speed, int yMax) {
 		super(creature, speed, 24, yMax);
 		this.block = blockIn;
 		this.entity = creature;
@@ -31,8 +33,13 @@ public class BreakLilyPadGoal extends MoveToBlockGoal {
 	 * necessary for execution in this method as well.
 	 */
 	public boolean shouldExecute() {
-		if(entity.getAttackTarget()!=null) {
+		if(entity.getAttackTarget() != null) {
 			return false;
+		}
+		if(entity instanceof PVZZombieEntity) {
+			if(! ((PVZZombieEntity) entity).checkCanZombieBreakBlock()) {
+				return false;
+			}
 		}
 		if (!net.minecraftforge.common.ForgeHooks.canEntityDestroy(this.entity.world, this.destinationBlock,this.entity)) {
 			return false;
@@ -71,7 +78,7 @@ public class BreakLilyPadGoal extends MoveToBlockGoal {
 	}
 
 	protected int getBreakTime(MobEntity entity) {
-		return 40;
+		return 60;
 	}
 	
 	public void playBreakingSound(IWorld worldIn, BlockPos pos) {
@@ -82,7 +89,12 @@ public class BreakLilyPadGoal extends MoveToBlockGoal {
 
 	@Override
 	public boolean shouldContinueExecuting() {
-		return entity.getAttackTarget()==null&&super.shouldContinueExecuting();
+		if(entity instanceof PVZZombieEntity) {
+			if(! ((PVZZombieEntity) entity).checkCanZombieBreakBlock()) {
+				return false;
+			}
+		}
+		return super.shouldContinueExecuting();
 	}
 	
 	/**

@@ -1,6 +1,6 @@
 package com.hungteen.pvz.model.entity.npc;
 
-import com.hungteen.pvz.entity.npc.PanneyEntity;
+import com.hungteen.pvz.entity.npc.PennyEntity;
 import com.mojang.blaze3d.matrix.MatrixStack;
 import com.mojang.blaze3d.vertex.IVertexBuilder;
 
@@ -12,7 +12,7 @@ import net.minecraft.client.renderer.model.ModelRenderer;
 // Paste this class into your mod and generate all required imports
 
 
-public class PanneyModel extends EntityModel<PanneyEntity> {
+public class PanneyModel extends EntityModel<PennyEntity> {
 	private final ModelRenderer car;
 	private final ModelRenderer head;
 	private final ModelRenderer bone10;
@@ -314,7 +314,7 @@ public class PanneyModel extends EntityModel<PanneyEntity> {
 	}
 
 	@Override
-	public void setRotationAngles(PanneyEntity entity, float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch){
+	public void setRotationAngles(PennyEntity entity, float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch){
 		//previously the render function, render code was moved to a method below
 	}
 

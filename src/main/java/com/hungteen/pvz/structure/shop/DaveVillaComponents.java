@@ -5,7 +5,7 @@ import java.util.Random;
 
 import com.hungteen.pvz.data.loot.PVZLoot;
 import com.hungteen.pvz.entity.npc.CrazyDaveEntity;
-import com.hungteen.pvz.entity.npc.PanneyEntity;
+import com.hungteen.pvz.entity.npc.PennyEntity;
 import com.hungteen.pvz.entity.plant.appease.PeaShooterEntity;
 import com.hungteen.pvz.entity.plant.defence.WallNutEntity;
 import com.hungteen.pvz.entity.plant.light.SunFlowerEntity;
@@ -102,7 +102,7 @@ public class DaveVillaComponents {
 				EntityUtil.onMobEntitySpawn(worldIn, dave, pos);
 				worldIn.setBlockState(pos, Blocks.AIR.getDefaultState(), 2);
 			}else if(function.equals("panney")){
-				PanneyEntity panney = EntityRegister.PANNEY.get().create(worldIn.getWorld());
+				PennyEntity panney = EntityRegister.PANNEY.get().create(worldIn.getWorld());
 				EntityUtil.onMobEntitySpawn(worldIn, panney, pos);
 				worldIn.setBlockState(pos, Blocks.AIR.getDefaultState(), 2);
 			}else if(function.equals("plant_pos1")){

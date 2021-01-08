@@ -5,9 +5,9 @@ import net.minecraft.entity.EntityType;
 import net.minecraft.util.DamageSource;
 import net.minecraft.world.World;
 
-public class PanneyEntity extends CreatureEntity{
+public class PennyEntity extends CreatureEntity{
 
-	public PanneyEntity(EntityType<? extends CreatureEntity> type, World worldIn) {
+	public PennyEntity(EntityType<? extends CreatureEntity> type, World worldIn) {
 		super(type, worldIn);
 	}
 

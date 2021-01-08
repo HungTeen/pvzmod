@@ -16,6 +16,7 @@ import com.hungteen.pvz.item.tool.BobsleCarItem;
 import com.hungteen.pvz.item.tool.PeaGunItem;
 import com.hungteen.pvz.item.tool.ScreenDoorItem;
 import com.hungteen.pvz.item.tool.SunCollectorItem;
+import com.hungteen.pvz.item.tool.SunStorageSaplingItem;
 import com.hungteen.pvz.item.tool.ZombieFlagItem;
 import com.hungteen.pvz.item.tool.card.BlockPlantCardItem;
 import com.hungteen.pvz.item.tool.card.PlantCardItem;
@@ -136,6 +137,8 @@ public class ItemRegister {
     public static final RegistryObject<PlantCardItem> PUMPKIN_ENJOY_CARD = registerCard(Plants.PUMPKIN, true);
     public static final RegistryObject<PlantCardItem> MAGNET_SHROOM_CARD = registerCard(Plants.MAGNET_SHROOM, false);
     public static final RegistryObject<PlantCardItem> MAGNET_SHROOM_ENJOY_CARD = registerCard(Plants.MAGNET_SHROOM, true);
+    public static final RegistryObject<PlantCardItem> FLOWER_POT_CARD = ITEMS.register("flower_pot_card", () -> {return new BlockPlantCardItem(Plants.FLOWER_POT, false);});
+    public static final RegistryObject<PlantCardItem> FLOWER_POT_ENJOY_CARD = ITEMS.register("flower_pot_enjoy_card", () -> {return new BlockPlantCardItem(Plants.FLOWER_POT, true);});
     public static final RegistryObject<PlantCardItem> COFFEE_BEAN_CARD = registerCard(Plants.COFFEE_BEAN, false);
     public static final RegistryObject<PlantCardItem> COFFEE_BEAN_ENJOY_CARD = registerCard(Plants.COFFEE_BEAN, true);
     public static final RegistryObject<PlantCardItem> MARIGOLD_CARD = registerCard(Plants.MARIGOLD, false);
@@ -176,6 +179,7 @@ public class ItemRegister {
 	public static final RegistryObject<Item> PEA_GUN = ITEMS.register("pea_gun", PeaGunItem::new);
 	public static final RegistryObject<Item> SCREEN_DOOR = ITEMS.register("screen_door", ScreenDoorItem::new);
 	public static final RegistryObject<Item> SUN_COLLECTOR = ITEMS.register("sun_collector", SunCollectorItem::new);
+	public static final RegistryObject<Item> SUN_STORAGE_SAPLING = ITEMS.register("sun_storage_sapling", () -> new SunStorageSaplingItem(10000));
 	
 	//armor
 	public static final RegistryObject<Item> CONE_HEAD = ITEMS.register("cone_head", ()->new ConeArmorItem(ArmorMaterial.LEATHER, EquipmentSlotType.HEAD));
@@ -191,9 +195,9 @@ public class ItemRegister {
     
     //misc
 	public static final RegistryObject<Item> STRANGE_HELP = ITEMS.register("strange_help", StrangeHelpItem::new);
-//	public static final RegistryObject<Item> GUILD_BOOK = ITEMS.register("guild_book", GuildBookItem::new);
 	public static final RegistryObject<Item> ALMANAC = ITEMS.register("almanac", AlmanacItem::new);
 	public static final RegistryObject<Item> TIME_KEY_TO_DEEP = ITEMS.register("time_key_to_deep", PVZItemBase::new);
+	public static final RegistryObject<Item> CAR_KEY = ITEMS.register("car_key", PVZItemBase::new);
 	
 	//food 
 	public static final RegistryObject<Item> FAKE_BRAIN = ITEMS.register("fake_brain", ()->new PVZFoodItem(PVZFoodItem.FAKE_BRAIN));
@@ -209,9 +213,6 @@ public class ItemRegister {
 	public static final RegistryObject<PVZSpawnEggItem> COIN_SPAWN_EGG = registerSpawnEgg("coin", EntityRegister.COIN, Colors.ORANGE, Colors.GOLD);
 	public static final RegistryObject<PVZSpawnEggItem> JEWEL_SPAWN_EGG = registerSpawnEgg("jewel", EntityRegister.JEWEL, Colors.LITTLE_AQUA, Colors.BLUE);
 	public static final RegistryObject<PVZSpawnEggItem> ENERGY_SPAWN_EGG = registerSpawnEgg("energy", EntityRegister.ENERGY, Colors.GREEN, Colors.DARK_GREEN);
-	
-	//misc
-	public static final RegistryObject<PVZSpawnEggItem> SMALL_CHOMPER_SPAWN_EGG = registerSpawnEgg("small_chomper", EntityRegister.SMALL_CHOMPER, Colors.PEA_GREEN, Colors.PURPLE);
 	
 	//animal
 	public static final RegistryObject<PVZSpawnEggItem> FOODIE_ZOMBIE_SPAWN_EGG = registerSpawnEgg("foodie_zombie", EntityRegister.FOODIE_ZOMBIE, Colors.ZOMBIE_SKIN, Colors.WHITE);
@@ -299,21 +300,21 @@ public class ItemRegister {
 	/**
 	 * register spawn eggs
 	 */
-    private static RegistryObject<PVZSpawnEggItem> registerSpawnEgg(String name,RegistryObject<? extends EntityType<?>> entityType,int color1,int color2){
-    	return ITEMS.register(name+"_spawn_egg", () -> new PVZSpawnEggItem(entityType, color1, color2, new Item.Properties().group(GroupRegister.PVZ_MISC)));
+    private static RegistryObject<PVZSpawnEggItem> registerSpawnEgg(String name, RegistryObject<? extends EntityType<?>> entityType, int color1, int color2){
+    	return ITEMS.register(name + "_spawn_egg", () -> new PVZSpawnEggItem(entityType, color1, color2, new Item.Properties().group(GroupRegister.PVZ_MISC)));
     }
 
     /**
 	 * register spawn eggs
 	 */
-    private static RegistryObject<PVZSpawnEggItem> registerSpawnEgg(String name,RegistryObject<? extends EntityType<?>> entityType,Pair<Integer,Integer> color){
-    	return ITEMS.register(name+"_spawn_egg", () -> new PVZSpawnEggItem(entityType, color.getFirst(), color.getSecond(), new Item.Properties().group(GroupRegister.PVZ_MISC)));
+    private static RegistryObject<PVZSpawnEggItem> registerSpawnEgg(String name, RegistryObject<? extends EntityType<?>> entityType, Pair<Integer, Integer> color){
+    	return ITEMS.register(name + "_spawn_egg", () -> new PVZSpawnEggItem(entityType, color.getFirst(), color.getSecond(), new Item.Properties().group(GroupRegister.PVZ_MISC)));
     }
     
-    private static RegistryObject<PlantCardItem> registerCard(Plants plant,boolean is){
-    	String name=plant.toString().toLowerCase();
-    	if(is) name=name+"_enjoy";
-    	name=name+"_card";
-    	return ITEMS.register(name, ()->{return new PlantCardItem(plant,is);});
+    private static RegistryObject<PlantCardItem> registerCard(Plants plant, boolean is){
+    	String name = plant.toString().toLowerCase();
+    	if(is) name = name + "_enjoy";
+    	name = name + "_card";
+    	return ITEMS.register(name, () -> {return new PlantCardItem(plant, is);});
     }
 }

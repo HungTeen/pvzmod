@@ -63,12 +63,28 @@ public class BlockPlantCardItem extends PlantCardItem{
 	
 	@Override
 	public ActionResultType onItemUse(ItemUseContext context) {
-		return ActionResultType.PASS;
+		if(this.plantType != Plants.FLOWER_POT) {
+			return ActionResultType.PASS;
+		}
+		World world = context.getWorld();
+		PlayerEntity player = context.getPlayer();
+		Hand hand = context.getHand();
+		ItemStack stack = player.getHeldItem(hand);
+		BlockPos pos = context.getPos();
+		if (world.isRemote) {
+			return ActionResultType.SUCCESS;
+		}
+		if (context.getFace() == Direction.UP && world.isAirBlock(pos.up()) && world.getBlockState(pos).isSolid()) {// can plant here
+			checkSunAndPlaceBlock(player, this, stack, pos.up());
+			return ActionResultType.SUCCESS;
+		}
+		return ActionResultType.FAIL;
 	}
 	
 	public static BlockState getBlockState(PlayerEntity player, Plants plant) {
 		switch(plant) {
 		case LILY_PAD: return BlockRegister.LILY_PAD.get().getStateForPlacement(player);
+		case FLOWER_POT: return BlockRegister.FLOWER_POT.get().getStateForPlacement(player);
 		default:{
 			PVZMod.LOGGER.debug("No such block plant!");
 			return null;

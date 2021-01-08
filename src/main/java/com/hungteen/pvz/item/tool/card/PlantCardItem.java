@@ -110,8 +110,9 @@ public class PlantCardItem extends SummonCardItem {
 		}
 		if (context.getFace() == Direction.UP && world.isAirBlock(pos.up())) {// can plant here
 			checkSunAndSummonPlant(player, stack, this, spawnPos, (l)->{});
+			return ActionResultType.SUCCESS;
 		}
-		return ActionResultType.SUCCESS;
+		return ActionResultType.FAIL;
 	}
 
 	/**

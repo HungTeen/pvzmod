@@ -45,7 +45,7 @@ public class SunEntity extends DropEntity {
 	@Override
 	public void tick() {
 		super.tick();
-		if(!this.onGround&&!this.isInWater()) {
+		if(! this.onGround && ! this.isInWater()) {
 			this.setMotion(this.getMotion().getX(), - fall_speed, this.getMotion().getZ());
 		}
 	}

@@ -6,10 +6,12 @@ import com.hungteen.pvz.gui.almanac.AlmanacScreen;
 import com.hungteen.pvz.gui.container.DaveShopContainer;
 import com.hungteen.pvz.gui.container.PeaGunContainer;
 import com.hungteen.pvz.gui.container.PlayerInventoryContainer;
+import com.hungteen.pvz.gui.container.SunConverterContainer;
 import com.hungteen.pvz.gui.container.SunShopContainer;
 import com.hungteen.pvz.gui.screen.DaveShopScreen;
 import com.hungteen.pvz.gui.screen.PeaGunScreen;
 import com.hungteen.pvz.gui.screen.PlayerInventoryScreen;
+import com.hungteen.pvz.gui.screen.SunConverterScreen;
 import com.hungteen.pvz.gui.screen.SunShopScreen;
 
 import net.minecraft.client.gui.ScreenManager;
@@ -27,33 +29,39 @@ public class ContainerRegister {
 
 	public static final DeferredRegister<ContainerType<?>> CONTAINER_TYPES = new DeferredRegister<>(ForgeRegistries.CONTAINERS, PVZMod.MOD_ID);
 	
-	public static final RegistryObject<ContainerType<PlayerInventoryContainer>> PLAYER_INVENTORY = CONTAINER_TYPES.register("player_inventory", ()->{
+	public static final RegistryObject<ContainerType<PlayerInventoryContainer>> PLAYER_INVENTORY = CONTAINER_TYPES.register("player_inventory", () -> {
 		return IForgeContainerType.create((windowId, inv, data) -> {
             return new PlayerInventoryContainer(windowId, inv.player);
         });
 	});
 	
-	public static final RegistryObject<ContainerType<AlmanacContainer>> ALMANAC = CONTAINER_TYPES.register("almanac", ()->{
+	public static final RegistryObject<ContainerType<AlmanacContainer>> ALMANAC = CONTAINER_TYPES.register("almanac", () -> {
 		return IForgeContainerType.create((windowId, inv, data) -> {
             return new AlmanacContainer(windowId, inv.player);
         });
 	});
 	
-	public static final RegistryObject<ContainerType<PeaGunContainer>> PEA_GUN = CONTAINER_TYPES.register("pea_gun", ()->{
+	public static final RegistryObject<ContainerType<PeaGunContainer>> PEA_GUN = CONTAINER_TYPES.register("pea_gun", () -> {
 		return IForgeContainerType.create((windowId, inv, data) -> {
             return new PeaGunContainer(windowId, inv.player);
         });
 	});
 	
-	public static final RegistryObject<ContainerType<DaveShopContainer>> DAVE_SHOP = CONTAINER_TYPES.register("dave_shop", ()->{
+	public static final RegistryObject<ContainerType<DaveShopContainer>> DAVE_SHOP = CONTAINER_TYPES.register("dave_shop", () -> {
 		return IForgeContainerType.create((windowId, inv, data) -> {
             return new DaveShopContainer(windowId, inv.player);
         });
 	});
 	
-	public static final RegistryObject<ContainerType<SunShopContainer>> SUN_SHOP = CONTAINER_TYPES.register("sun_shop", ()->{
+	public static final RegistryObject<ContainerType<SunShopContainer>> SUN_SHOP = CONTAINER_TYPES.register("sun_shop", () -> {
 		return IForgeContainerType.create((windowId, inv, data) -> {
             return new SunShopContainer(windowId, inv.player);
+        });
+	});
+	
+	public static final RegistryObject<ContainerType<SunConverterContainer>> SUN_CONVERTER = CONTAINER_TYPES.register("sun_converter", () -> {
+		return IForgeContainerType.create((windowId, inv, data) -> {
+            return new SunConverterContainer(windowId, inv.player, data.readBlockPos());
         });
 	});
 	
@@ -64,6 +72,7 @@ public class ContainerRegister {
         ScreenManager.registerFactory(PEA_GUN.get(), PeaGunScreen::new);
         ScreenManager.registerFactory(DAVE_SHOP.get(), DaveShopScreen::new);
         ScreenManager.registerFactory(SUN_SHOP.get(), SunShopScreen::new);
+        ScreenManager.registerFactory(SUN_CONVERTER.get(), SunConverterScreen::new);
     }
 	
 }

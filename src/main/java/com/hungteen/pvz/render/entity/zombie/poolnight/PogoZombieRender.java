@@ -22,6 +22,7 @@ public class PogoZombieRender extends PVZZombieRender<PogoZombieEntity>{
 
 	@Override
 	public Vec3d getTranslateVec(PogoZombieEntity entity) {
+		if(! entity.hasMetal()) return new Vec3d(0, 0.4, 0);
 		return super.getTranslateVec(entity);
 	}
 	

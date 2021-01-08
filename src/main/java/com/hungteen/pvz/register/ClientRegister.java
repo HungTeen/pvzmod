@@ -1,4 +1,4 @@
-package com.hungteen.pvz;
+package com.hungteen.pvz.register;
 
 import com.hungteen.pvz.particle.BlueFlameParticle;
 import com.hungteen.pvz.particle.DirtBurstOutParticle;
@@ -10,23 +10,20 @@ import com.hungteen.pvz.particle.SporeParticle;
 import com.hungteen.pvz.particle.YellowFlameParticle;
 import com.hungteen.pvz.particle.bomb.CherryBombParticle;
 import com.hungteen.pvz.particle.bomb.PotatoMineParticle;
-import com.hungteen.pvz.register.BlockRegister;
-import com.hungteen.pvz.register.ParticleRegister;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.particle.ParticleManager;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.RenderTypeLookup;
 import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.client.event.ModelBakeEvent;
 import net.minecraftforge.client.event.ParticleFactoryRegisterEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
 
 @Mod.EventBusSubscriber(bus = Mod.EventBusSubscriber.Bus.MOD, value = Dist.CLIENT)
-public class PVZClientEvents {
-	
+public class ClientRegister {
+
 	@SubscribeEvent
     public static void registerFactories(ParticleFactoryRegisterEvent event) {
 		@SuppressWarnings("resource")
@@ -51,22 +48,9 @@ public class PVZClientEvents {
 		RenderTypeLookup.setRenderLayer(BlockRegister.NUT_SAPLING.get(), RenderType.getCutout());
 		RenderTypeLookup.setRenderLayer(BlockRegister.TOXIC_SHROOM.get(), RenderType.getCutout());
 		RenderTypeLookup.setRenderLayer(BlockRegister.LANTERN.get(), RenderType.getTranslucent());
-	}
-	
-	@SubscribeEvent
-	public static void onModelBaked(ModelBakeEvent ev) {
-//		Map<ResourceLocation, IBakedModel> modelRegistry = ev.getModelRegistry();
-//		ModelResourceLocation location = new ModelResourceLocation(ItemRegister.SCREEN_DOOR.get().getRegistryName(), "inventory");
-//		IBakedModel model = modelRegistry.get(location);
-//		if(model == null) {
-//			throw new RuntimeException("Did not find Obsidian Hidden in registry");
-//		}else if(model instanceof ScreenDoorBakedModel) {
-//			throw new RuntimeException("Tried to replaceObsidian Hidden twice");
-//		}else {
-//			ScreenDoorBakedModel tmp = new ScreenDoorBakedModel(model);
-//			modelRegistry.put(location, tmp);
-//		}
-//		
+		RenderTypeLookup.setRenderLayer(BlockRegister.FLOWER_POT.get(), RenderType.getCutout());
+		
+		TileEntityRegister.bindRenderers(ev);
 	}
 	
 }

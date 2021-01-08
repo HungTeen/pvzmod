@@ -20,7 +20,7 @@ public enum Plants {
 	ICE_SHROOM(1),
 	DOOM_SHROOM(1),
 	//pool day
-	LILY_PAD(2),
+	LILY_PAD(6),
 	SQUASH(0),
 	THREE_PEATER(0),
 	TANGLE_KELP(4),
@@ -39,7 +39,7 @@ public enum Plants {
 	MAGNET_SHROOM(1),
 	//roof 
 //	CABBAGE_PULT,
-//	FLOWER_POT, 
+	FLOWER_POT(2), 
 //	KERNEL_PULT,
 	COFFEE_BEAN(0),
 //	GARLIC, 

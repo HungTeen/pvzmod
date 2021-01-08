@@ -1,22 +1,24 @@
 package com.hungteen.pvz.gui.screen;
 
-import com.hungteen.pvz.gui.container.PeaGunContainer;
-import com.hungteen.pvz.utils.StringUtil;
+import com.hungteen.pvz.gui.container.SunConverterContainer;
 import com.mojang.blaze3d.systems.RenderSystem;
 
 import net.minecraft.client.gui.screen.inventory.ContainerScreen;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.text.ITextComponent;
+import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.api.distmarker.OnlyIn;
 
-public class PeaGunScreen extends ContainerScreen<PeaGunContainer>{
+@OnlyIn(Dist.CLIENT)
+public class SunConverterScreen extends ContainerScreen<SunConverterContainer> {
+
+	private static final ResourceLocation TEXTURE = new ResourceLocation("textures/gui/container/dispenser.png");
 	
-	private static final ResourceLocation TEXTURE = StringUtil.prefix("textures/gui/container/pea_gun.png");
-	
-	public PeaGunScreen(PeaGunContainer screenContainer, PlayerInventory inv, ITextComponent titleIn) {
+	public SunConverterScreen(SunConverterContainer screenContainer, PlayerInventory inv, ITextComponent titleIn) {
 		super(screenContainer, inv, titleIn);
 		this.xSize = 176;
-		this.ySize = 187;
+		this.ySize = 166;
 	}
 
 	@Override
@@ -33,5 +35,5 @@ public class PeaGunScreen extends ContainerScreen<PeaGunContainer>{
 		super.render(mouseX, mouseY, partialTicks);
 		renderHoveredToolTip(mouseX, mouseY);
 	}
-
+	
 }

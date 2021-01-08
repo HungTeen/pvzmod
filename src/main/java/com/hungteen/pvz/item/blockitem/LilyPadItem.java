@@ -4,8 +4,6 @@ import com.hungteen.pvz.register.BlockRegister;
 import com.hungteen.pvz.register.GroupRegister;
 
 import net.minecraft.advancements.CriteriaTriggers;
-import net.minecraft.block.BlockState;
-import net.minecraft.block.material.Material;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.fluid.Fluids;
@@ -52,14 +50,9 @@ public class LilyPadItem extends BlockItem {
 						|| !playerIn.canPlayerEdit(blockpos.offset(direction), direction, itemstack)) {
 					return ActionResult.resultFail(itemstack);
 				}
-
 				BlockPos blockpos1 = blockpos.up();
-				BlockState blockstate = worldIn.getBlockState(blockpos);
-				Material material = blockstate.getMaterial();
 				IFluidState ifluidstate = worldIn.getFluidState(blockpos);
-				if ((ifluidstate.getFluid() == Fluids.WATER || material == Material.ICE)
-						&& worldIn.isAirBlock(blockpos1)) {
-
+				if (ifluidstate.getFluid() == Fluids.WATER && worldIn.isAirBlock(blockpos1)) {
 					// special case for handling block placement with water lilies
 					net.minecraftforge.common.util.BlockSnapshot blocksnapshot = net.minecraftforge.common.util.BlockSnapshot
 							.getBlockSnapshot(worldIn, blockpos1);
