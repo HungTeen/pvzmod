@@ -1,6 +1,7 @@
 package com.hungteen.pvz.entity.bullet;
 
 import com.hungteen.pvz.entity.plant.base.PlantShooterEntity;
+import com.hungteen.pvz.entity.plant.toxic.GloomShroomEntity;
 import com.hungteen.pvz.misc.damage.PVZDamageSource;
 import com.hungteen.pvz.register.ItemRegister;
 import com.hungteen.pvz.register.ParticleRegister;
@@ -22,7 +23,6 @@ import net.minecraft.world.World;
 
 public class FumeEntity extends PVZItemBulletEntity{
 
-	private static final int MAX_LIVE_TICK = 25;
 	private int knockback = 0;
 	
 	public FumeEntity(EntityType<?> type, World worldIn) {
@@ -37,7 +37,7 @@ public class FumeEntity extends PVZItemBulletEntity{
 	public void tick() {
 		super.tick();
 		if(world.isRemote) {
-			int cnt = this.ticksExisted < MAX_LIVE_TICK / 2 ? 6 : 4;
+			int cnt = this.ticksExisted < getMaxLiveTick() / 2 ? 6 : 4;
 			for(int i = 0; i < cnt; ++i) {
 	            this.world.addParticle(ParticleRegister.FUME.get(), this.getPosX(), this.getPosY(), this.getPosZ(), 0.0D, 0.0D, 0.0D);
 	        }
@@ -46,7 +46,10 @@ public class FumeEntity extends PVZItemBulletEntity{
 	
 	@Override
 	protected int getMaxLiveTick() {
-		return MAX_LIVE_TICK;
+		if(this.getThrower() instanceof GloomShroomEntity) {
+			return 5;
+		}
+		return 25;
 	}
 
 	@Override

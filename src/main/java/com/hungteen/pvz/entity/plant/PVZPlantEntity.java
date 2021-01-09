@@ -117,7 +117,6 @@ public abstract class PVZPlantEntity extends CreatureEntity implements IPVZPlant
 	public void onSpawnedByPlayer(PlayerEntity player, int lvl){
 		this.setPlantLvl(lvl);
 		this.setOwnerUUID(player.getUniqueID());
-//		System.out.println(lvl);
 		this.getAttribute(SharedMonsterAttributes.MAX_HEALTH).setBaseValue(this.getPlantHealth());
 		this.heal(this.getMaxHealth());
 	}
@@ -461,11 +460,11 @@ public abstract class PVZPlantEntity extends CreatureEntity implements IPVZPlant
 		compound.putInt("plant_weak_time", this.weakTime);
 		compound.putInt("plant_super_time", this.getSuperTime());
 		compound.putInt("plant_lvl", this.getPlantLvl());
-		if (this.getOwnerUUID() == null) {
-	         compound.putString("OwnerUUID", "");
-	      } else {
+		if (this.getOwnerUUID().isPresent()) {
 	         compound.putString("OwnerUUID", this.getOwnerUUID().toString());
-	      }
+	    } else {
+	         compound.putString("OwnerUUID", "");
+	    }
         compound.putInt("plant_attack_time", this.getAttackTime());
         compound.putInt("plant_gold_time", this.getGoldTime());
         compound.putInt("plant_boost_time", this.getBoostTime());
@@ -523,8 +522,8 @@ public abstract class PVZPlantEntity extends CreatureEntity implements IPVZPlant
 		this.heal(this.getMaxHealth());
 		this.setLiveTick(0);
 		if(first) {
-			if(this.getOwnerUUID() != null) {
-			    PlayerEntity player = this.world.getPlayerByUuid(this.getOwnerUUID());
+			if(this.getOwnerUUID().isPresent()) {
+			    PlayerEntity player = this.world.getPlayerByUuid(this.getOwnerUUID().get());
 		        if(player != null) {
 		    	    PlayerUtil.addPlantXp(player, this.getPlantEnumName(), 5);
 		        }
@@ -720,9 +719,8 @@ public abstract class PVZPlantEntity extends CreatureEntity implements IPVZPlant
 		return dataManager.get(PLANT_LVL);
 	}
 	
-	@Nullable
-    public UUID getOwnerUUID(){
-        return dataManager.get(OWNER_UUID).orElse((UUID)null);
+    public Optional<UUID> getOwnerUUID(){
+        return dataManager.get(OWNER_UUID);
     }
 
     public void setOwnerUUID(UUID uuid){

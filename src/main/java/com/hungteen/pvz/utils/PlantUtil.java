@@ -80,6 +80,7 @@ public class PlantUtil {
 		putPlantInfoToMap(Plants.MARIGOLD, 50, CDs.NORMAL, Ranks.PURPLE, Essences.MAGIC, EntityRegister.MARIGOLD, ItemRegister.MARIGOLD_CARD, ItemRegister.MARIGOLD_ENJOY_CARD);
 		putPlantInfoToMap(Plants.GATLING_PEA, 250, CDs.VERY_SLOW, Ranks.PURPLE, Essences.APPEASE, EntityRegister.GATLING_PEA, ItemRegister.GATLING_PEA_CARD, ItemRegister.GATLING_PEA_ENJOY_CARD);
 		putPlantInfoToMap(Plants.TWIN_SUNFLOWER, 150, CDs.VERY_SLOW, Ranks.BLUE, Essences.LIGHT, EntityRegister.TWIN_SUNFLOWER, ItemRegister.TWIN_SUNFLOWER_CARD, ItemRegister.TWIN_SUNFLOWER_ENJOY_CARD);
+		putPlantInfoToMap(Plants.GLOOM_SHROOM, 175, CDs.VERY_SLOW, Ranks.PURPLE, Essences.TOXIC, EntityRegister.GLOOM_SHROOM, ItemRegister.GLOOM_SHROOM_CARD, ItemRegister.GLOOM_SHROOM_ENJOY_CARD);
 		putPlantInfoToMap(Plants.CAT_TAIL, 275, CDs.VERY_SLOW, Ranks.GOLD, Essences.SPEAR, EntityRegister.CAT_TAIL, ItemRegister.CAT_TAIL_CARD, ItemRegister.CAT_TAIL_ENJOY_CARD);
 		putPlantInfoToMap(Plants.WATER_GUARD, 50, CDs.LITTLE_SLOW, Ranks.GRAY, Essences.DEFENCE, EntityRegister.WATER_GUARD, ItemRegister.WATER_GUARD_CARD, ItemRegister.WATER_GUARD_ENJOY_CARD);
 		putPlantInfoToMap(Plants.STRANGE_CAT, 325, CDs.HUGE_SLOW, Ranks.PURPLE, Essences.MAGIC, EntityRegister.STRANGE_CAT, ItemRegister.STRANGE_CAT_CARD, ItemRegister.STRANGE_CAT_ENJOY_CARD);
@@ -306,7 +307,7 @@ public class PlantUtil {
 	public static void copyPlantData(PVZPlantEntity p2,PVZPlantEntity p1) {
 		p2.setPlantLvl(p1.getPlantLvl());
 		p2.setCharmed(p1.isCharmed());
-		p2.setOwnerUUID(p1.getOwnerUUID());
+		p2.setOwnerUUID(p1.getOwnerUUID().orElse(null));
 	}
 	
 }

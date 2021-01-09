@@ -493,10 +493,10 @@ public abstract class PVZZombieEntity extends MonsterEntity implements IPVZZombi
 	public void writeAdditional(CompoundNBT compound) {
 		super.writeAdditional(compound);
 		compound.putInt("zombie_type", this.getZombieType().ordinal());
-		if (this.getOwnerUUID() == null) {
-			compound.putString("OwnerUUID", "");
+		if (this.getOwnerUUID().isPresent()) {
+			compound.putString("OwnerUUID", this.getOwnerUUID().get().toString());
 		} else {
-			compound.putString("OwnerUUID", this.getOwnerUUID().toString());
+			compound.putString("OwnerUUID", "");
 		}
 		compound.putBoolean("is_zombie_small", this.isSmall());
 		compound.putBoolean("is_zombie_charmed", this.isCharmed());
@@ -597,9 +597,8 @@ public abstract class PVZZombieEntity extends MonsterEntity implements IPVZZombi
 		dataManager.set(DEFENCE_LIFE, life);
 	}
 	
-	@Nullable
-	public UUID getOwnerUUID() {
-		return dataManager.get(OWNER_UUID).orElse((UUID) null);
+	public Optional<UUID> getOwnerUUID() {
+		return dataManager.get(OWNER_UUID);
 	}
 
 	public void setOwnerUUID(UUID uuid) {

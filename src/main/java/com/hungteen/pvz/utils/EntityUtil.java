@@ -153,9 +153,9 @@ public class EntityUtil {
 		if(entity == null) return null;
 		UUID uuid = null;
 		if(entity instanceof PVZPlantEntity) {
-			uuid = ((PVZPlantEntity) entity).getOwnerUUID();
+			uuid = ((PVZPlantEntity) entity).getOwnerUUID().orElse(null);
 		}else if(entity instanceof PVZZombieEntity) {
-			uuid = ((PVZZombieEntity) entity).getOwnerUUID();
+			uuid = ((PVZZombieEntity) entity).getOwnerUUID().orElse(null);
 		}
 		return uuid == null ? null : world.getPlayerByUuid(uuid);
 	}
@@ -241,12 +241,12 @@ public class EntityUtil {
 		if(entity instanceof PlayerEntity) {
 			return entity.getTeam();
 		}
-		if(entity instanceof PVZPlantEntity) {
-			PlayerEntity player = world.getPlayerByUuid(((PVZPlantEntity) entity).getOwnerUUID());
+		if(entity instanceof PVZPlantEntity && ((PVZPlantEntity) entity).getOwnerUUID().isPresent()) {
+			PlayerEntity player = world.getPlayerByUuid(((PVZPlantEntity) entity).getOwnerUUID().get());
 			return player == null ? null : player.getTeam();
 		}
-		if(entity instanceof PVZZombieEntity) {
-			PlayerEntity player = world.getPlayerByUuid(((PVZZombieEntity) entity).getOwnerUUID());
+		if(entity instanceof PVZZombieEntity && ((PVZZombieEntity) entity).getOwnerUUID().isPresent()) {
+			PlayerEntity player = world.getPlayerByUuid(((PVZZombieEntity) entity).getOwnerUUID().get());
 			return player == null ? null : player.getTeam();
 		}
 	    return entity.getTeam();

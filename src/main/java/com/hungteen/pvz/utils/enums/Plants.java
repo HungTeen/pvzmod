@@ -49,7 +49,7 @@ public enum Plants {
 	//upgrade
 	GATLING_PEA(8),
 	TWIN_SUNFLOWER(8),
-//	GLOOM_SHROOM,
+	GLOOM_SHROOM(9),
 	CAT_TAIL(12),
 //	WINTER_MELON,
 //	GOLD_MAGNET, 

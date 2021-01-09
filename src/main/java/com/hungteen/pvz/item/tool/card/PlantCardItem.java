@@ -227,7 +227,9 @@ public class PlantCardItem extends SummonCardItem {
     public static void onUsePlantCard(PlayerEntity player, ItemStack stack, PlantCardItem item, int plantLvl) {
 		MinecraftForge.EVENT_BUS.post(new SummonCardUseEvent(player, stack));
 		if (item.isEnjoyCard) {
-			stack.shrink(1);
+			if(! player.abilities.isCreativeMode) {
+				stack.shrink(1);
+			}
 		} else {
 			handlePlantCardCoolDown(player, stack, item, plantLvl);
 		}

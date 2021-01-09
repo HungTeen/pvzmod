@@ -14,16 +14,18 @@ import net.minecraft.entity.EntityType;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.Pose;
 import net.minecraft.util.math.MathHelper;
+import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
 
-public class FumeShroomEntity extends PlantShooterEntity {
+public class GloomShroomEntity extends PlantShooterEntity {
 
 	protected final double LENTH = 0.2d;
+	private static final int SHOOT_NUM = 8;
 	
-	public FumeShroomEntity(EntityType<? extends CreatureEntity> type, World worldIn) {
+	public GloomShroomEntity(EntityType<? extends CreatureEntity> type, World worldIn) {
 		super(type, worldIn);
 	}
-	
+
 	@Override
 	protected void registerGoals() {
 		super.registerGoals();
@@ -36,33 +38,28 @@ public class FumeShroomEntity extends PlantShooterEntity {
 		if(target == null) {
 			return ;
 		}
-		double dx = target.getPosX() - this.getPosX();
-        double dz = target.getPosZ() - this.getPosZ();
-        double y = this.getPosY() + this.getSize(getPose()).height * 0.7f;
-        double dis = MathHelper.sqrt(dx * dx + dz * dz);
-        double tmp = this.LENTH / dis;
-        double deltaX = tmp * dx;
-        double deltaZ = tmp * dz;
-        FumeEntity fume = new FumeEntity(EntityRegister.FUME.get(), this.world, this);
-        if(this.isPlantInSuperMode()) {
-        	fume.setKnockback(this.getKnockback());
-        }
-        fume.setPosition(this.getPosX() + deltaX, y, this.getPosZ() + deltaZ);
-        fume.shootPea(dx, target.getPosY() + target.getHeight() - y, dz, this.getBulletSpeed());
+		float now = this.rotationYawHead;
+		boolean kb = (this.getRNG().nextInt(100) < this.getKBChance());
+		for(int i = 0; i < SHOOT_NUM; ++ i) {
+			this.shootFume(now, kb);
+			now += 360F / SHOOT_NUM;
+		}
         EntityUtil.playSound(this, SoundRegister.FUME.get());
-        this.world.addEntity(fume);
-	}
-
-	@Override
-	public void startShootAttack() {
-		this.setAttackTime(1);
 	}
 	
-	@Override
-	public int getSuperTimeLength() {
-		if(this.isPlantInStage(1)) return 40;
-		if(this.isPlantInStage(2)) return 50;
-		return 60;
+	private void shootFume(float angle, boolean kb) {
+		angle *= 3.14159F / 180F;
+		double vx = - MathHelper.sin(angle);
+		double vz = MathHelper.cos(angle);
+		FumeEntity fume = new FumeEntity(EntityRegister.FUME.get(), this.world, this);
+        if(this.isPlantInSuperMode()) {
+        	fume.setKnockback(this.getKnockback());
+        } else {
+        	if(kb) fume.setKnockback(1);
+        }
+        fume.setPosition(this.getPosX(), this.getPosY() + this.getEyeHeight() - 0.2, this.getPosZ());
+        fume.setMotion(new Vec3d(vx, 0, vz));
+        this.world.addEntity(fume);
 	}
 	
 	/**
@@ -73,25 +70,40 @@ public class FumeShroomEntity extends PlantShooterEntity {
 		if(this.isPlantInStage(2)) return 2;
 		return 3;
 	}
-    
+	
+	public int getKBChance() {
+		return 5;
+//		return this.getPlantLvl();
+	}
+	
 	@Override
-	public EntitySize getSize(Pose poseIn) {
-		return EntitySize.flexible(0.8f, 1.25f);
+	public void startShootAttack() {
+		this.setAttackTime(1);
 	}
 	
     @Override
-	public float getShootRange() {
-		return 20;
+	public int getSuperTimeLength() {
+		return 100;
 	}
-
+    
     @Override
-    public Plants getUpgradePlantType() {
-    	return Plants.GLOOM_SHROOM;
+    public int getNormalAttackCD() {
+    	return 8;
+    }
+    
+    @Override
+	public float getShootRange() {
+		return 4;
+	}
+    
+    @Override
+    public EntitySize getSize(Pose poseIn) {
+    	return EntitySize.flexible(0.9F, 0.8F);
     }
     
 	@Override
 	public Plants getPlantEnumName() {
-		return Plants.FUME_SHROOM;
+		return Plants.GLOOM_SHROOM;
 	}
-	
+
 }

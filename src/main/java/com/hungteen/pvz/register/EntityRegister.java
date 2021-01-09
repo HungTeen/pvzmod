@@ -54,6 +54,7 @@ import com.hungteen.pvz.entity.plant.spear.CactusEntity;
 import com.hungteen.pvz.entity.plant.spear.CatTailEntity;
 import com.hungteen.pvz.entity.plant.spear.SpikeWeedEntity;
 import com.hungteen.pvz.entity.plant.toxic.FumeShroomEntity;
+import com.hungteen.pvz.entity.plant.toxic.GloomShroomEntity;
 import com.hungteen.pvz.entity.plant.toxic.PuffShroomEntity;
 import com.hungteen.pvz.entity.plant.toxic.ScaredyShroomEntity;
 import com.hungteen.pvz.entity.plant.toxic.SeaShroomEntity;
@@ -144,6 +145,7 @@ import com.hungteen.pvz.render.entity.plant.spear.CactusRender;
 import com.hungteen.pvz.render.entity.plant.spear.CatTailRender;
 import com.hungteen.pvz.render.entity.plant.spear.SpikeWeedRender;
 import com.hungteen.pvz.render.entity.plant.toxic.FumeShroomRender;
+import com.hungteen.pvz.render.entity.plant.toxic.GloomShroomRender;
 import com.hungteen.pvz.render.entity.plant.toxic.PuffShroomRender;
 import com.hungteen.pvz.render.entity.plant.toxic.ScaredyShroomRender;
 import com.hungteen.pvz.render.entity.plant.toxic.SeaShroomRender;
@@ -303,6 +305,7 @@ public class EntityRegister {
 	public static final RegistryObject<EntityType<AngelStarFruitEntity>> ANGEL_STAR_FRUIT = registerEntityType(AngelStarFruitEntity::new, "angel_star_fruit", EntityClassification.CREATURE);
 	public static final RegistryObject<EntityType<CactusEntity>> CACTUS = registerEntityType(CactusEntity::new, "cactus", EntityClassification.CREATURE);
 	public static final RegistryObject<EntityType<BloverEntity>> BLOVER = registerEntityType(BloverEntity::new, "blover", EntityClassification.CREATURE);
+	public static final RegistryObject<EntityType<GloomShroomEntity>> GLOOM_SHROOM = registerEntityType(GloomShroomEntity::new, "gloom_shroom", EntityClassification.CREATURE);
 	
 	@OnlyIn(Dist.CLIENT)
 	@SubscribeEvent
@@ -410,6 +413,7 @@ public class EntityRegister {
         
         RenderingRegistry.registerEntityRenderingHandler(GATLING_PEA.get(), GatlingPeaRender::new);
         RenderingRegistry.registerEntityRenderingHandler(TWIN_SUNFLOWER.get(), TwinSunFlowerRender::new);
+        RenderingRegistry.registerEntityRenderingHandler(GLOOM_SHROOM.get(), GloomShroomRender::new);
         RenderingRegistry.registerEntityRenderingHandler(CAT_TAIL.get(), CatTailRender::new);
         
         RenderingRegistry.registerEntityRenderingHandler(WATER_GUARD.get(), WaterGuardRender::new);
