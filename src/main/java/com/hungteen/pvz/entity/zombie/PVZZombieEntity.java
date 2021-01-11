@@ -83,19 +83,23 @@ public abstract class PVZZombieEntity extends MonsterEntity implements IPVZZombi
 	
 	public PVZZombieEntity(EntityType<? extends MonsterEntity> type, World worldIn) {
 		super(type, worldIn);
-		this.recalculateSize();
-		this.setZombieAttributes();
-		this.experienceValue = this.getZombieRank().ordinal() * 2 + 5;
 	}
 
 	@Override
 	public ILivingEntityData onInitialSpawn(IWorld worldIn, DifficultyInstance difficultyIn, SpawnReason reason,
 			ILivingEntityData spawnDataIn, CompoundNBT dataTag) {
+		this.onZombieInitialSpawn();
+		return super.onInitialSpawn(worldIn, difficultyIn, reason, spawnDataIn, dataTag);
+	}
+	
+	protected void onZombieInitialSpawn() {
+		this.recalculateSize();
+		this.setZombieAttributes();
+		this.experienceValue = this.getZombieRank().ordinal() * 2 + 5;
 		if(! world.isRemote) {
 			this.setZombieType(this.getSpawnType());
 			EntityUtil.playSound(this, getSpawnSound());
 		}
-		return super.onInitialSpawn(worldIn, difficultyIn, reason, spawnDataIn, dataTag);
 	}
 	
 	/**
@@ -149,6 +153,9 @@ public abstract class PVZZombieEntity extends MonsterEntity implements IPVZZombi
 		if (!this.isAlive() || !this.canZombieNormalUpdate()) {
 			return;
 		}
+//		if(this.ticksExisted % 40 == 0) {
+//			System.out.println(this.getDefenceLife());
+//		}
 		this.normalZombieTick();
 	}
 

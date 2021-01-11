@@ -52,7 +52,7 @@ public abstract class AbstractDaveShopScreen extends ContainerScreen<AbstractDav
 		}
 		this.buyButton = this.addButton(new Button(this.guiLeft +206, this.guiTop + 85, 18, 18, new TranslationTextComponent("gui.pvz.dave_shop.buy").getFormattedText(), (button) -> {
 			if(this.buyButton.visible) {
-			    PVZPacketHandler.CHANNEL.sendToServer(new ClickButtonPacket(this.getShopID(), this.selectedGood.ordinal()));
+			    PVZPacketHandler.CHANNEL.sendToServer(new ClickButtonPacket(this.getShopID(), 0, this.selectedGood.ordinal()));
 			}
 		}));
 		this.buyButton.visible = false;

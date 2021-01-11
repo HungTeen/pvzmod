@@ -39,7 +39,7 @@ public class GloomShroomEntity extends PlantShooterEntity {
 			return ;
 		}
 		float now = this.rotationYawHead;
-		boolean kb = (this.getRNG().nextInt(100) < this.getKBChance());
+		boolean kb = (this.getRNG().nextInt(400) < this.getKBChance());
 		for(int i = 0; i < SHOOT_NUM; ++ i) {
 			this.shootFume(now, kb);
 			now += 360F / SHOOT_NUM;
@@ -72,8 +72,7 @@ public class GloomShroomEntity extends PlantShooterEntity {
 	}
 	
 	public int getKBChance() {
-		return 5;
-//		return this.getPlantLvl();
+		return this.getPlantLvl();
 	}
 	
 	@Override

@@ -12,6 +12,7 @@ import com.hungteen.pvz.block.plants.PVZSaplingBlock;
 import com.hungteen.pvz.block.plants.PeaBlock;
 import com.hungteen.pvz.block.plants.ToxicShroomBlock;
 import com.hungteen.pvz.block.special.FlowerPotBlock;
+import com.hungteen.pvz.block.special.FragmentSpliceBlock;
 import com.hungteen.pvz.block.special.LanternBlock;
 import com.hungteen.pvz.block.special.SunConverterBlock;
 import com.hungteen.pvz.item.blockitem.LilyPadItem;
@@ -78,8 +79,9 @@ public class BlockRegister {
 	public static final RegistryObject<Block> LANTERN = BLOCKS.register("lantern", LanternBlock::new);
 	public static final RegistryObject<FlowerPotBlock> FLOWER_POT = BLOCKS.register("flower_pot", FlowerPotBlock::new);
 	
-	//te block
+	//gui & te block
 	public static final RegistryObject<SunConverterBlock> SUN_CONVERTER = BLOCKS.register("sun_converter", SunConverterBlock::new);
+	public static final RegistryObject<FragmentSpliceBlock> FRAGMENT_SPLICE = BLOCKS.register("fragment_splice", FragmentSpliceBlock::new);
 	
 	/**
 	 * 注册itemblock
@@ -92,7 +94,7 @@ public class BlockRegister {
 				STEEL_BLOCK, AMETHYST_BLOCK, ORIGIN_BLOCK,
 				NUT_LEAVES, NUT_SAPLING, CHOMPER, LILY_PAD,
 				LANTERN, FLOWER_POT,
-				SUN_CONVERTER
+				SUN_CONVERTER, FRAGMENT_SPLICE
 		);
 		for(RegistryObject<? extends Block> block:blocks) {
 			if(block == LILY_PAD) {

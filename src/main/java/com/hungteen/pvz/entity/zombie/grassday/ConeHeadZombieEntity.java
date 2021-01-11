@@ -17,6 +17,11 @@ public class ConeHeadZombieEntity extends NormalZombieEntity{
 	
 	public ConeHeadZombieEntity(EntityType<? extends MonsterEntity> type, World worldIn) {
 		super(type, worldIn);
+	}
+	
+	@Override
+	protected void onZombieInitialSpawn() {
+		super.onZombieInitialSpawn();
 		this.hasDirectDefence = true;
 		this.setDefenceLife(CONE_HEALTH);
 	}

@@ -25,6 +25,11 @@ public class MournerZombieEntity extends PVZZombieEntity{
 	
 	public MournerZombieEntity(EntityType<? extends MonsterEntity> type, World worldIn) {
 		super(type, worldIn);
+	}
+	
+	@Override
+	protected void onZombieInitialSpawn() {
+		super.onZombieInitialSpawn();
 		this.setRightShake(this.getRNG().nextInt(2) == 0 ? true : false);
 	}
 	

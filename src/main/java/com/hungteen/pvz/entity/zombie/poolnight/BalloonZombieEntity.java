@@ -42,6 +42,12 @@ public class BalloonZombieEntity extends PVZZombieEntity {
 	}
 	
 	@Override
+	protected void onZombieInitialSpawn() {
+		super.onZombieInitialSpawn();
+		this.setBalloon(true);
+	}
+	
+	@Override
 	protected void registerGoals() {
 		this.FlyNavigator = new FlyingPathNavigator(this, world);
 		this.GroundNavigator = new GroundPathNavigator(this, world);

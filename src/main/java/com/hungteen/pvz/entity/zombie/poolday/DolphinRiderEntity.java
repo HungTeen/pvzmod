@@ -34,8 +34,13 @@ public class DolphinRiderEntity extends PVZZombieEntity{
 	
 	public DolphinRiderEntity(EntityType<? extends MonsterEntity> type, World worldIn) {
 		super(type, worldIn);
+	}
+	
+	@Override
+	protected void onZombieInitialSpawn() {
+		super.onZombieInitialSpawn();
 		setPathPriority(PathNodeType.WATER, 0);
-		this.jumpTick=100;
+		this.jumpTick = 100;
 	}
 	
 	@Override

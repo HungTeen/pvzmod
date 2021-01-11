@@ -39,6 +39,11 @@ public class TombStoneEntity extends UnderGroundZombieEntity{
 	
 	public TombStoneEntity(EntityType<? extends MonsterEntity> type, World worldIn) {
 		super(type, worldIn);
+	}
+	
+	@Override
+	protected void onZombieInitialSpawn() {
+		super.onZombieInitialSpawn();
 		this.currentSummonCD = this.getRNG().nextInt(this.maxSummonCD - this.minSummonCD + 1) + this.minSummonCD; 
 	}
 	

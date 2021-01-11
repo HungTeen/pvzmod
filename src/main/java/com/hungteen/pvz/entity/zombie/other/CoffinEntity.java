@@ -46,6 +46,11 @@ public class CoffinEntity extends UnderGroundZombieEntity {
 
 	public CoffinEntity(EntityType<? extends MonsterEntity> type, World worldIn) {
 		super(type, worldIn);
+	}
+	
+	@Override
+	protected void onZombieInitialSpawn() {
+		super.onZombieInitialSpawn();
 		this.particleNum = 3;
 	}
 

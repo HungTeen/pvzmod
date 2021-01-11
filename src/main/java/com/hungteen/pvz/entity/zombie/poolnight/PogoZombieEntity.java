@@ -30,6 +30,12 @@ public class PogoZombieEntity extends PVZZombieEntity implements IHasMetal {
 		super.registerData();
 		this.dataManager.register(HAS_POGO, true);
 	}
+	
+	@Override
+	protected void onZombieInitialSpawn() {
+		super.onZombieInitialSpawn();
+		this.setPogo(true);
+	}
 
 	@Override
 	public void normalZombieTick() {

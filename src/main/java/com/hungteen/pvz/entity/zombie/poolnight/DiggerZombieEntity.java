@@ -30,6 +30,12 @@ public class DiggerZombieEntity extends PVZZombieEntity implements IHasMetal {
 	}
 	
 	@Override
+	protected void onZombieInitialSpawn() {
+		super.onZombieInitialSpawn();
+		this.setPickaxe(true);
+	}
+	
+	@Override
 	protected void registerData() {
 		super.registerData();
 		this.dataManager.register(HAS_PICKAXE, true);

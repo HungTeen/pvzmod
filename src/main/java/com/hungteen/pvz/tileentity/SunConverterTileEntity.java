@@ -152,11 +152,6 @@ public class SunConverterTileEntity extends TileEntity implements ITickableTileE
 		return super.write(compound);
 	}
 
-//	@Override
-//	public <T> LazyOptional<T> getCapability(Capability<T> cap, Direction side) {
-//		return CapabilityItemHandler.ITEM_HANDLER_CAPABILITY.orEmpty(cap, LazyOptional.of(() -> this.handler));
-//	}
-	
 	@Override
 	public Container createMenu(int id, PlayerInventory inv, PlayerEntity player) {
 		return new SunConverterContainer(id, player, this.pos);

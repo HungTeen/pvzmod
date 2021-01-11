@@ -58,6 +58,11 @@ public class NobleZombieEntity extends PVZZombieEntity {
 	
 	public NobleZombieEntity(EntityType<? extends MonsterEntity> type, World worldIn) {
 		super(type, worldIn);
+	}
+	
+	@Override
+	protected void onZombieInitialSpawn() {
+		super.onZombieInitialSpawn();
 		this.setAttackTime(this.maxSleepAttackCD);
 		this.summonTick = this.getRNG().nextInt(this.maxSummonTick - this.minSummonTick) + this.minSummonTick;
 		this.setTpTick(-this.getRNG().nextInt(this.maxTpCD - this.minTpCD + 1) - this.minTpCD);

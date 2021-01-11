@@ -17,6 +17,11 @@ public abstract class DefenceZombieEntity extends PVZZombieEntity implements IMu
 	
 	public DefenceZombieEntity(EntityType<? extends MonsterEntity> type, World worldIn) {
 		super(type, worldIn);
+	}
+	
+	@Override
+	protected void onZombieInitialSpawn() {
+		super.onZombieInitialSpawn();
 		resetParts();
 		this.setDefenceLife(this.getPartLife());
 	}

@@ -1,5 +1,7 @@
 package com.hungteen.pvz.utils;
 
+import net.minecraft.item.ItemStack;
+
 public class ItemUtil {
 
 	public static final int MELON_AMOUNT = 2;
@@ -13,5 +15,11 @@ public class ItemUtil {
 	public static final float BREAD_SATURATION = 0.6f;
 	public static final float PIG_SATURATION = 0.8f;
 	public static final float GOLDEN_SATURATION = 1.2f;
+	
+	public static boolean canItemStackAddTo(ItemStack stack1, ItemStack stack2) {
+		if(! stack1.isItemEqual(stack2)) return false;
+		if(! ItemStack.areItemStackTagsEqual(stack1, stack2)) return false;
+		return true;
+	}
 	
 }

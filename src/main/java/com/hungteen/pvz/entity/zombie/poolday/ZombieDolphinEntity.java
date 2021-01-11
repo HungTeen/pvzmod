@@ -52,7 +52,7 @@ public class ZombieDolphinEntity extends PVZZombieEntity {
 		this.moveController = new MoveHelperController(this);
 		this.lookController = new DolphinLookController(this, 10);
 	}
-
+	
 	protected void registerGoals() {
 		this.goalSelector.addGoal(0, new BreatheAirGoal(this));
 		this.goalSelector.addGoal(4, new RandomSwimmingGoal(this, 1.0D, 10));

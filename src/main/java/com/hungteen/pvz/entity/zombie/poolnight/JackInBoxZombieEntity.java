@@ -29,9 +29,16 @@ public class JackInBoxZombieEntity extends PVZZombieEntity implements IHasMetal 
 	
 	public JackInBoxZombieEntity(EntityType<? extends MonsterEntity> type, World worldIn) {
 		super(type, worldIn);
+		
+	}
+	
+	@Override
+	protected void onZombieInitialSpawn() {
+		super.onZombieInitialSpawn();
 		if(! world.isRemote) {
 			this.setExplosionTime();
 		}
+		this.setBox(true);
 	}
 	
 	@Override

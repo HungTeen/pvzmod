@@ -4,11 +4,13 @@ import com.hungteen.pvz.PVZMod;
 import com.hungteen.pvz.gui.almanac.AlmanacContainer;
 import com.hungteen.pvz.gui.almanac.AlmanacScreen;
 import com.hungteen.pvz.gui.container.DaveShopContainer;
+import com.hungteen.pvz.gui.container.FragmentSpliceContainer;
 import com.hungteen.pvz.gui.container.PeaGunContainer;
 import com.hungteen.pvz.gui.container.PlayerInventoryContainer;
 import com.hungteen.pvz.gui.container.SunConverterContainer;
 import com.hungteen.pvz.gui.container.SunShopContainer;
 import com.hungteen.pvz.gui.screen.DaveShopScreen;
+import com.hungteen.pvz.gui.screen.FragmentSpliceScreen;
 import com.hungteen.pvz.gui.screen.PeaGunScreen;
 import com.hungteen.pvz.gui.screen.PlayerInventoryScreen;
 import com.hungteen.pvz.gui.screen.SunConverterScreen;
@@ -65,6 +67,12 @@ public class ContainerRegister {
         });
 	});
 	
+	public static final RegistryObject<ContainerType<FragmentSpliceContainer>> FRAGMENT_SPLICE = CONTAINER_TYPES.register("fragment_splice", () -> {
+		return IForgeContainerType.create((windowId, inv, data) -> {
+            return new FragmentSpliceContainer(windowId, inv.player, data.readBlockPos());
+        });
+	});
+	
 	@SubscribeEvent
     public static void onClientSetupEvent(FMLClientSetupEvent event) {
         ScreenManager.registerFactory(PLAYER_INVENTORY.get(), PlayerInventoryScreen::new);
@@ -73,6 +81,7 @@ public class ContainerRegister {
         ScreenManager.registerFactory(DAVE_SHOP.get(), DaveShopScreen::new);
         ScreenManager.registerFactory(SUN_SHOP.get(), SunShopScreen::new);
         ScreenManager.registerFactory(SUN_CONVERTER.get(), SunConverterScreen::new);
+        ScreenManager.registerFactory(FRAGMENT_SPLICE.get(), FragmentSpliceScreen::new);
     }
 	
 }

@@ -4,6 +4,7 @@ import java.util.function.Supplier;
 
 import com.hungteen.pvz.gui.GuiHandler;
 import com.hungteen.pvz.gui.container.DaveShopContainer;
+import com.hungteen.pvz.gui.container.FragmentSpliceContainer;
 import com.hungteen.pvz.gui.container.PlayerInventoryContainer;
 import com.hungteen.pvz.gui.container.SunShopContainer;
 import com.hungteen.pvz.utils.TradeUtil.DaveGoods;
@@ -14,21 +15,25 @@ import net.minecraftforge.fml.network.NetworkEvent;
 
 public class ClickButtonPacket {
 
-	private int type;
-	private int num;
+	private final int type;
+	private final int op;
+	private final int num;
 
-	public ClickButtonPacket(int type, int num) {
+	public ClickButtonPacket(int type, int op, int num) {
 		this.type = type;
+		this.op = op;
 		this.num = num;
 	}
 
 	public ClickButtonPacket(PacketBuffer buffer) {
 		this.type = buffer.readInt();
+		this.op = buffer.readInt();
 		this.num = buffer.readInt();
 	}
 
 	public void encode(PacketBuffer buffer) {
 		buffer.writeInt(this.type);
+		buffer.writeInt(this.op);
 		buffer.writeInt(this.num);
 	}
 
@@ -51,6 +56,15 @@ public class ClickButtonPacket {
 					if(player.openContainer instanceof SunShopContainer) {
 						SunShopContainer container = (SunShopContainer) player.openContainer;
 						container.buyGood(DaveGoods.values()[message.num]);
+					}
+				} else if(message.type == GuiHandler.FRAGMENT_SPLICE) {
+					if(player.openContainer instanceof FragmentSpliceContainer) {
+						FragmentSpliceContainer container = (FragmentSpliceContainer) player.openContainer;
+						if(message.op == 0) {
+							container.te.setResult(message.num);
+						} else if(message.op == 1) {
+							container.canPutStackBackToInventory();
+						}
 					}
 				}
 			});
