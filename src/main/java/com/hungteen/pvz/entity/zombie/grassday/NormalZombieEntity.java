@@ -15,9 +15,6 @@ public class NormalZombieEntity extends UnderGroundZombieEntity {
 	public NormalZombieEntity(EntityType<? extends MonsterEntity> type, World worldIn) {
 		super(type, worldIn);
 		this.isRiseType = false;
-		if (this.getZombieType() == Type.BEARD) {
-			this.getAttribute(SharedMonsterAttributes.ATTACK_DAMAGE).setBaseValue(ZombieUtil.NORMAL_DAMAGE);
-		}
 	}
 	
 	@Override
@@ -32,6 +29,7 @@ public class NormalZombieEntity extends UnderGroundZombieEntity {
 			return Type.SUPER;
 		}
 		if (t == 99) {
+			this.getAttribute(SharedMonsterAttributes.ATTACK_DAMAGE).setBaseValue(ZombieUtil.NORMAL_DAMAGE);
 			return Type.BEARD;
 		}
 		return Type.NORMAL;

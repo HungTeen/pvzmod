@@ -46,14 +46,9 @@ public class CoffinEntity extends UnderGroundZombieEntity {
 
 	public CoffinEntity(EntityType<? extends MonsterEntity> type, World worldIn) {
 		super(type, worldIn);
-	}
-	
-	@Override
-	protected void onZombieInitialSpawn() {
-		super.onZombieInitialSpawn();
 		this.particleNum = 3;
 	}
-
+	
 	@Override
 	protected void registerData() {
 		super.registerData();
@@ -168,7 +163,9 @@ public class CoffinEntity extends UnderGroundZombieEntity {
 	@Override
 	public void readAdditional(CompoundNBT compound) {
 		super.readAdditional(compound);
-		this.setGuardState(compound.getInt("guard_state"));
+		if(compound.contains("guard_state")) {
+			this.setGuardState(compound.getInt("guard_state"));
+		}
 		if (this.hasCustomName()) {
 			this.bossInfo.setName(this.getDisplayName());
 		}

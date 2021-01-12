@@ -27,13 +27,6 @@ public class FlagZombieEntity extends NormalZombieEntity{
 		return 19;
 	}
 	
-//	@Override
-//	protected void zombieDropItem() {
-//		if(this.rand.nextInt(PVZConfig.COMMON_CONFIG.EntitySettings.EntityDropItem.ZombieFlagDropChance.get())==0) {
-//			this.entityDropItem(ItemRegister.ZOMBIE_FLAG.get());
-//		}
-//	}
-	
 	@Override
 	protected ResourceLocation getLootTable() {
 		return PVZLoot.FLAG_ZOMBIE;

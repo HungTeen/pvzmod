@@ -28,7 +28,7 @@ import net.minecraftforge.items.ItemStackHandler;
 
 public class FragmentSpliceTileEntity extends TileEntity implements ITickableTileEntity, INamedContainerProvider{
 
-	public static final int MAX_SUN_AMOUNT = 10000;
+	public static final int MAX_SUN_AMOUNT = 1000;
 	public static final int CRAFT_COST = 1000;
 	private static final int [] FRAGMENT_ARRAY = new int[] {8, 9, 10, 13, 15, 18, 19, 20};
 	public final ItemStackHandler handler = new ItemStackHandler(1 + 25 + 1);

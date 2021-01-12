@@ -1,5 +1,6 @@
 package com.hungteen.pvz.entity.zombie.poolnight;
 
+import com.hungteen.pvz.capability.player.ClientPlayerResources;
 import com.hungteen.pvz.entity.zombie.PVZZombieEntity;
 import com.hungteen.pvz.misc.damage.PVZDamageSource;
 import com.hungteen.pvz.register.SoundRegister;
@@ -9,6 +10,7 @@ import com.hungteen.pvz.utils.enums.MetalTypes;
 import com.hungteen.pvz.utils.enums.Zombies;
 import com.hungteen.pvz.utils.interfaces.IHasMetal;
 
+import net.minecraft.client.Minecraft;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.SharedMonsterAttributes;
@@ -18,7 +20,6 @@ import net.minecraft.network.datasync.DataParameter;
 import net.minecraft.network.datasync.DataSerializers;
 import net.minecraft.network.datasync.EntityDataManager;
 import net.minecraft.particles.ParticleTypes;
-import net.minecraft.util.SoundEvent;
 import net.minecraft.world.World;
 
 public class JackInBoxZombieEntity extends PVZZombieEntity implements IHasMetal {
@@ -29,12 +30,6 @@ public class JackInBoxZombieEntity extends PVZZombieEntity implements IHasMetal 
 	
 	public JackInBoxZombieEntity(EntityType<? extends MonsterEntity> type, World worldIn) {
 		super(type, worldIn);
-		
-	}
-	
-	@Override
-	protected void onZombieInitialSpawn() {
-		super.onZombieInitialSpawn();
 		if(! world.isRemote) {
 			this.setExplosionTime();
 		}
@@ -58,6 +53,13 @@ public class JackInBoxZombieEntity extends PVZZombieEntity implements IHasMetal 
 				}
 				this.setAnimTick(this.getAnimTick() - 1);
 			}
+		} else {
+//			System.out.println(ClientPlayerResources.playSoundTick);
+			Minecraft mc = Minecraft.getInstance();
+			if(this.hasBox() && this.getDistanceSq(mc.player) <= 600 && ClientPlayerResources.playSoundTick == 0) {
+				mc.player.playSound(SoundRegister.JACK_SAY.get(), 1F, 1F);
+				ClientPlayerResources.playSoundTick = 300;
+			}
 		}
 		if(this.hasBox()) {
 			if(this.getAnimTick() == 1) {
@@ -78,11 +80,6 @@ public class JackInBoxZombieEntity extends PVZZombieEntity implements IHasMetal 
 	@Override
 	public int getTalkInterval() {
 		return 200;
-	}
-	
-	@Override
-	protected SoundEvent getAmbientSound() {
-		return SoundRegister.JACK_SAY.get();
 	}
 	
 	private void doExplosion() {
@@ -133,8 +130,12 @@ public class JackInBoxZombieEntity extends PVZZombieEntity implements IHasMetal 
 	@Override
 	public void readAdditional(CompoundNBT compound) {
 		super.readAdditional(compound);
-		this.setBox(compound.getBoolean("has_jack_box"));
-		this.setAnimTick(compound.getInt("jack_anim_tick"));
+		if(compound.contains("has_jack_box")) {
+			this.setBox(compound.getBoolean("has_jack_box"));
+		}
+		if(compound.contains("jack_anim_tick")) {
+			this.setAnimTick(compound.getInt("jack_anim_tick"));
+		}
 	}
 	
 	@Override

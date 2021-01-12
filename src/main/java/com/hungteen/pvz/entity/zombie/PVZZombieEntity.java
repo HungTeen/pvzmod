@@ -11,9 +11,9 @@ import com.hungteen.pvz.PVZConfig;
 import com.hungteen.pvz.data.loot.PVZLoot;
 import com.hungteen.pvz.entity.ai.BreakBlockGoal;
 import com.hungteen.pvz.entity.ai.PVZLookRandomlyGoal;
-import com.hungteen.pvz.entity.ai.PVZNearestTargetGoal;
 import com.hungteen.pvz.entity.ai.PVZSwimGoal;
 import com.hungteen.pvz.entity.ai.ZombieMeleeAttackGoal;
+import com.hungteen.pvz.entity.ai.ZombieNearestTargetGoal;
 import com.hungteen.pvz.entity.bullet.PVZItemBulletEntity;
 import com.hungteen.pvz.entity.drop.CoinEntity;
 import com.hungteen.pvz.entity.drop.CoinEntity.CoinType;
@@ -83,23 +83,19 @@ public abstract class PVZZombieEntity extends MonsterEntity implements IPVZZombi
 	
 	public PVZZombieEntity(EntityType<? extends MonsterEntity> type, World worldIn) {
 		super(type, worldIn);
+		this.recalculateSize();
+		this.setZombieAttributes();
+		this.experienceValue = this.getZombieRank().ordinal() * 2 + 5;
 	}
 
 	@Override
 	public ILivingEntityData onInitialSpawn(IWorld worldIn, DifficultyInstance difficultyIn, SpawnReason reason,
 			ILivingEntityData spawnDataIn, CompoundNBT dataTag) {
-		this.onZombieInitialSpawn();
-		return super.onInitialSpawn(worldIn, difficultyIn, reason, spawnDataIn, dataTag);
-	}
-	
-	protected void onZombieInitialSpawn() {
-		this.recalculateSize();
-		this.setZombieAttributes();
-		this.experienceValue = this.getZombieRank().ordinal() * 2 + 5;
 		if(! world.isRemote) {
 			this.setZombieType(this.getSpawnType());
 			EntityUtil.playSound(this, getSpawnSound());
 		}
+		return super.onInitialSpawn(worldIn, difficultyIn, reason, spawnDataIn, dataTag);
 	}
 	
 	/**
@@ -144,7 +140,7 @@ public abstract class PVZZombieEntity extends MonsterEntity implements IPVZZombi
 		this.goalSelector.addGoal(7, new PVZSwimGoal(this));
 		this.goalSelector.addGoal(0, new ZombieMeleeAttackGoal(this));
 		this.goalSelector.addGoal(6, new BreakBlockGoal(BlockRegister.FLOWER_POT.get(), this, 1F, 10));
-		this.targetSelector.addGoal(0, new PVZNearestTargetGoal(this, true, 80, 60));
+		this.targetSelector.addGoal(0, new ZombieNearestTargetGoal(this, true, 80, 60));
 	}
 
 	@Override
@@ -514,7 +510,10 @@ public abstract class PVZZombieEntity extends MonsterEntity implements IPVZZombi
 	@Override
 	public void readAdditional(CompoundNBT compound) {
 		super.readAdditional(compound);
-		this.setZombieType(Type.values()[compound.getInt("zombie_type")]);
+		if(compound.contains("zombie_type")) {
+			this.setZombieType(Type.values()[compound.getInt("zombie_type")]);
+		}
+		//owner UUID
 		String s;
 		if (compound.contains("OwnerUUID", 8)) {
 			s = compound.getString("OwnerUUID");
@@ -528,10 +527,17 @@ public abstract class PVZZombieEntity extends MonsterEntity implements IPVZZombi
 			} catch (Throwable var4) {
 			}
 		}
-		this.setSmall(compound.getBoolean("is_zombie_small"));
-		this.setCharmed(compound.getBoolean("is_zombie_charmed"));
-		this.setAttackTime(compound.getInt("zombie_attack_time"));
-		this.setDefenceLife(compound.getFloat("defence_life"));
+		if(compound.contains("is_zombie_small")) {
+			this.setSmall(compound.getBoolean("is_zombie_small"));
+		}
+		if(compound.contains("is_zombie_charmed")) {
+			this.setCharmed(compound.getBoolean("is_zombie_charmed"));
+		}
+		if(compound.contains("zombie_attack_time")) {
+			this.setAttackTime(compound.getInt("zombie_attack_time"));
+		}if(compound.contains("defence_life")) {
+			this.setDefenceLife(compound.getFloat("defence_life"));
+		}
 	}
 
 	@Override

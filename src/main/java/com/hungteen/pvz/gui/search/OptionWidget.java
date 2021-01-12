@@ -35,7 +35,7 @@ public class OptionWidget extends Widget {
 		int posX = this.isOptionUnLocked() ? 29 : 29 + 25;
 		int posY = 206;
 		this.blit(this.x, this.y, posX, posY, this.width, this.height);
-		minecraft.getItemRenderer().renderItemAndEffectIntoGUI(SearchOption.getItemStackBySearchOption(this.option), this.x + 4,
+		minecraft.getItemRenderer().renderItemAndEffectIntoGUI(SearchOption.getItemStackByOption(this.option), this.x + 4,
 				this.y + 4);
 		RenderSystem.popMatrix();
 	}

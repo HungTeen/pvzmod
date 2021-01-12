@@ -5,12 +5,13 @@ import java.util.Random;
 import com.hungteen.pvz.PVZConfig;
 import com.hungteen.pvz.PVZMod;
 import com.hungteen.pvz.capability.CapabilityHandler;
+import com.hungteen.pvz.capability.player.ClientPlayerResources;
 import com.hungteen.pvz.capability.player.PlayerDataManager;
 import com.hungteen.pvz.capability.player.PlayerDataManager.PlayerStats;
 import com.hungteen.pvz.entity.plant.PVZPlantEntity;
 import com.hungteen.pvz.event.events.SummonCardUseEvent;
 import com.hungteen.pvz.event.handler.PlayerEventHandler;
-import com.hungteen.pvz.gui.almanac.Almanac;
+import com.hungteen.pvz.gui.search.SearchOption;
 import com.hungteen.pvz.item.tool.PeaGunItem;
 import com.hungteen.pvz.item.tool.card.PlantCardItem;
 import com.hungteen.pvz.register.EnchantmentRegister;
@@ -48,7 +49,7 @@ public class PVZPlayerEvents {
 
 	@SubscribeEvent
 	public static void tickPlayer(TickEvent.PlayerTickEvent ev) {
-		if(!ev.player.world.isRemote) {
+		if(! ev.player.world.isRemote) {
 			//for pea gun
 			ItemStack stack = ev.player.getItemStackFromSlot(EquipmentSlotType.HEAD);
 			if(stack.getItem() instanceof PeaGunItem && !ev.player.getCooldownTracker().hasCooldown(stack.getItem())) {
@@ -57,6 +58,11 @@ public class PVZPlayerEvents {
 			    	ev.player.getCooldownTracker().setCooldown(stack.getItem(), 200);//cool down for no pea
 			    }
 			}
+		} else {
+			if(ClientPlayerResources.playSoundTick > 0) {
+//				System.out.println(ClientPlayerResources.playSoundTick);
+				-- ClientPlayerResources.playSoundTick;
+			}
 		}
 	}
 	
@@ -64,34 +70,7 @@ public class PVZPlayerEvents {
 	public static void onPlayerLogin(PlayerEvent.PlayerLoggedInEvent ev) {
 		PlayerEntity player = ev.getPlayer();
 		if (! player.world.isRemote && player instanceof ServerPlayerEntity) {
-			player.getCapability(CapabilityHandler.PLAYER_DATA_CAPABILITY).ifPresent((l)->{
-				PlayerDataManager plData = l.getPlayerData();
-				//resources
-				PlayerDataManager.PlayerStats playerStats = plData.getPlayerStats();
-				for(Resources res:Resources.values()) {
-					playerStats.sendPacket(player, res);
-				}
-				//plants
-			    PlayerDataManager.PlantStats plantStats = plData.getPlantStats();
-				for (Plants plant : Plants.values()) {
-				   plantStats.sendPlantPacket(player, plant);
-			    }
-				//almanacs
-//				PlayerDataManager.AlmanacStats almanacStats = plData.getAlmanacStats();
-				Almanac.ALMANACS.forEach((a) -> {
-					ServerPlayerEntity serverplayer = (ServerPlayerEntity) player;
-					if(PlayerUtil.isAlmanacUnlocked(serverplayer, a)) {
-						PlayerUtil.unLockAlmanac(serverplayer, a);
-					}
-				});
-				
-				//item cd
-				PlayerDataManager.ItemCDStats itemCDStats = plData.getItemCDStats();
-				for(Plants p : Plants.values()) {
-//					System.out.println(p.toString() + p.summonCard);
-					player.getCooldownTracker().setCooldown(PlantUtil.getPlantSummonCard(p), itemCDStats.getPlantCardCD(p));
-				}
-			});
+			PlayerEventHandler.onPlayerLogin(player);
 		}
 	}
 	
@@ -113,7 +92,7 @@ public class PVZPlayerEvents {
 	@SubscribeEvent
 	public static void onPlayerClone(PlayerEvent.Clone ev) {
 		PlayerEntity player = ev.getPlayer();
-		if (!player.world.isRemote) {
+		if (! player.world.isRemote) {
 			PlayerUtil.clonePlayerData(ev.getOriginal(),player);
 		}
 	}
@@ -170,13 +149,6 @@ public class PVZPlayerEvents {
 					PlayerEventHandler.onPlantShovelByPlayer(player, plant, stack);
 				}
 			}
-//			else if(entity instanceof PVZZombieEntity) {
-//				PVZZombieEntity zombie = (PVZZombieEntity) entity;
-//				ItemStack stack = player.getHeldItemMainhand();
-//				if(stack.getItem() instanceof SwordItem) {
-//					zombie.setZombieType(PVZZombieEntity.Type.SUPER);
-//				}
-//			}
 		}
 	}
 	
@@ -184,10 +156,10 @@ public class PVZPlayerEvents {
 	public static void onSummonCardUse(SummonCardUseEvent ev) {
 		PlayerEntity player = ev.getPlayer();
 		if(! player.world.isRemote) { //unlock almanac
-			Almanac a = null;
+			SearchOption a = null;
 			if(ev.getItemStack().getItem() instanceof PlantCardItem) {// unlock plant card
 			    Plants plant = ((PlantCardItem) ev.getItemStack().getItem()).plantType;
-			    a = Almanac.get(plant);
+			    a = SearchOption.get(plant);
 			}
 			PlayerUtil.unLockAlmanac(player, a);
 		}

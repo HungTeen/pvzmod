@@ -25,11 +25,6 @@ public class MournerZombieEntity extends PVZZombieEntity{
 	
 	public MournerZombieEntity(EntityType<? extends MonsterEntity> type, World worldIn) {
 		super(type, worldIn);
-	}
-	
-	@Override
-	protected void onZombieInitialSpawn() {
-		super.onZombieInitialSpawn();
 		this.setRightShake(this.getRNG().nextInt(2) == 0 ? true : false);
 	}
 	
@@ -84,7 +79,9 @@ public class MournerZombieEntity extends PVZZombieEntity{
 	@Override
 	public void readAdditional(CompoundNBT compound) {
 		super.readAdditional(compound);
-		this.setRightShake(compound.getBoolean("is_right_shake"));
+		if(compound.contains("is_right_shake")) {
+			this.setRightShake(compound.getBoolean("is_right_shake"));
+		}
 	}
 	
 	@Override

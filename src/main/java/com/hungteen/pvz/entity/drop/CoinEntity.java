@@ -30,7 +30,7 @@ public class CoinEntity extends DropEntity{
 	@Override
 	public ILivingEntityData onInitialSpawn(IWorld worldIn, DifficultyInstance difficultyIn, SpawnReason reason,
 			ILivingEntityData spawnDataIn, CompoundNBT dataTag) {
-		if(!world.isRemote) {
+		if(! world.isRemote) {
 			EntityUtil.playSound(this, SoundRegister.COIN_DROP.get());
 		}
 		return super.onInitialSpawn(worldIn, difficultyIn, reason, spawnDataIn, dataTag);
@@ -40,8 +40,7 @@ public class CoinEntity extends DropEntity{
 	public void onCollideWithPlayer(PlayerEntity entityIn) {
 		if(!this.world.isRemote) {
 			PlayerUtil.addPlayerStats(entityIn, Resources.MONEY, this.getAmount());
-		}
-		else {
+		} else {
 			EntityUtil.playSound(entityIn, SoundRegister.COIN_PICK.get());
 		}
 		this.remove();

@@ -1,8 +1,8 @@
 package com.hungteen.pvz.entity.zombie.poolday;
 
-import com.hungteen.pvz.entity.ai.ZombieMeleeAttackGoal;
 import com.hungteen.pvz.data.loot.PVZLoot;
-import com.hungteen.pvz.entity.ai.PVZNearestTargetGoal;
+import com.hungteen.pvz.entity.ai.ZombieMeleeAttackGoal;
+import com.hungteen.pvz.entity.ai.ZombieNearestTargetGoal;
 import com.hungteen.pvz.entity.creature.FoodieZombieEntity;
 import com.hungteen.pvz.entity.zombie.PVZZombieEntity;
 import com.hungteen.pvz.register.SoundRegister;
@@ -61,7 +61,7 @@ public class ZombieDolphinEntity extends PVZZombieEntity {
 		this.goalSelector.addGoal(5, new DolphinJumpGoal(this, 10));
 		this.goalSelector.addGoal(8, new FollowBoatGoal(this));
 		this.goalSelector.addGoal(0, new ZombieMeleeAttackGoal(this));
-		this.targetSelector.addGoal(0, new PVZNearestTargetGoal(this, true, 80, 60));
+		this.targetSelector.addGoal(0, new ZombieNearestTargetGoal(this, true, 80, 60));
 		this.targetSelector.addGoal(1, (new HurtByTargetGoal(this, GuardianEntity.class)).setCallsForHelp());
 	}
 	

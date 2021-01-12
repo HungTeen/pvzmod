@@ -168,7 +168,9 @@ public class ChomperEntity extends PVZPlantEntity {
 	@Override
 	public void readAdditional(CompoundNBT compound) {
 		super.readAdditional(compound);
-		this.setRestTick(compound.getInt("rest_tick"));
+		if(compound.contains("rest_tick")) {
+			this.setRestTick(compound.getInt("rest_tick"));
+		}
 	}
 
 	public int getRestTick() {

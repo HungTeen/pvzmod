@@ -108,7 +108,9 @@ public class SplitPeaEntity extends PeaShooterEntity{
 	@Override
 	public void readAdditional(CompoundNBT compound) {
 		super.readAdditional(compound);
-		this.setRoundTick(compound.getInt("round_tick"));
+		if(compound.contains("round_tick")) {
+			this.setRoundTick(compound.getInt("round_tick"));
+		}
 	}
 	
 	@Override

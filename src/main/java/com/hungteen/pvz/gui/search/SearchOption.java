@@ -66,7 +66,7 @@ public class SearchOption {
 	    return new TranslationTextComponent("entity.pvz." + a.toString().toLowerCase()).getFormattedText();
 	}
 	
-	public static ItemStack getItemStackBySearchOption(SearchOption a) {
+	public static ItemStack getItemStackByOption(SearchOption a) {
 		if(a.isPlayer()) return new ItemStack(Items.PLAYER_HEAD);
 		if(a.isPlant()) return new ItemStack(PlantUtil.getPlantSummonCard(a.getPlant().get()));
 		return ItemStack.EMPTY;

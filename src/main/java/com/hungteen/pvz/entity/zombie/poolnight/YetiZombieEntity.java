@@ -94,8 +94,12 @@ public class YetiZombieEntity extends PVZZombieEntity{
 	@Override
 	public void readAdditional(CompoundNBT compound) {
 		super.readAdditional(compound);
-		this.live_tick = compound.getInt("yeti_live_tick");
-		this.hasInvis = compound.getBoolean("yeti_invis");
+		if(compound.contains("yeti_live_tick")) {
+			this.live_tick = compound.getInt("yeti_live_tick");
+		}
+		if(compound.contains("yeti_invis")) {
+			this.hasInvis = compound.getBoolean("yeti_invis");
+		}
 	}
 	
 	@Override

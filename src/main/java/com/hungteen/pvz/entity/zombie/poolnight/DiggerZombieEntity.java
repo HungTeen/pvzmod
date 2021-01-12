@@ -27,11 +27,6 @@ public class DiggerZombieEntity extends PVZZombieEntity implements IHasMetal {
 	
 	public DiggerZombieEntity(EntityType<? extends MonsterEntity> type, World worldIn) {
 		super(type, worldIn);
-	}
-	
-	@Override
-	protected void onZombieInitialSpawn() {
-		super.onZombieInitialSpawn();
 		this.setPickaxe(true);
 	}
 	
@@ -103,8 +98,12 @@ public class DiggerZombieEntity extends PVZZombieEntity implements IHasMetal {
 	@Override
 	public void readAdditional(CompoundNBT compound) {
 		super.readAdditional(compound);
-		this.setPickaxe(compound.getBoolean("digger_has_pickaxe"));
-		this.setAnimTime(compound.getInt("digger_anim_time"));
+		if(compound.contains("digger_has_pickaxe")) {
+			this.setPickaxe(compound.getBoolean("digger_has_pickaxe"));
+		}
+		if(compound.contains("digger_anim_time")) {
+			this.setAnimTime(compound.getInt("digger_anim_time"));
+		}
 	}
 	
 	@Override

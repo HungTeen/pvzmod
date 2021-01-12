@@ -33,18 +33,13 @@ public class BalloonZombieEntity extends PVZZombieEntity {
 	public BalloonZombieEntity(EntityType<? extends MonsterEntity> type, World worldIn) {
 		super(type, worldIn);
 		this.moveController = new FlyingMovementController(this, 360, true);
+		this.setBalloon(true);
 	}
 	
 	@Override
 	protected void registerData() {
 		super.registerData();
 		this.dataManager.register(HAS_BALLOON, true);
-	}
-	
-	@Override
-	protected void onZombieInitialSpawn() {
-		super.onZombieInitialSpawn();
-		this.setBalloon(true);
 	}
 	
 	@Override
@@ -112,7 +107,9 @@ public class BalloonZombieEntity extends PVZZombieEntity {
 	@Override
 	public void readAdditional(CompoundNBT compound) {
 		super.readAdditional(compound);
-		this.setBalloon(compound.getBoolean("HAS_BALLOON"));
+		if(compound.contains("HAS_BALLOON")) {
+			this.setBalloon(compound.getBoolean("HAS_BALLOON"));
+		}
 	}
 	
 	@Override

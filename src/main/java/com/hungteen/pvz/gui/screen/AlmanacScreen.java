@@ -1,4 +1,7 @@
-package com.hungteen.pvz.gui.almanac;
+package com.hungteen.pvz.gui.screen;
+
+import java.util.Arrays;
+import java.util.List;
 
 import com.hungteen.pvz.capability.player.ClientPlayerResources;
 import com.hungteen.pvz.entity.plant.PVZPlantEntity;
@@ -26,6 +29,9 @@ import com.hungteen.pvz.entity.plant.spear.SpikeWeedEntity;
 import com.hungteen.pvz.entity.plant.toxic.FumeShroomEntity;
 import com.hungteen.pvz.entity.plant.toxic.PuffShroomEntity;
 import com.hungteen.pvz.entity.plant.toxic.ScaredyShroomEntity;
+import com.hungteen.pvz.gui.container.AlmanacContainer;
+import com.hungteen.pvz.gui.search.SearchCategories;
+import com.hungteen.pvz.gui.search.SearchOption;
 import com.hungteen.pvz.utils.PlantUtil;
 import com.hungteen.pvz.utils.PlayerUtil;
 import com.hungteen.pvz.utils.RenderUtil;
@@ -36,7 +42,6 @@ import com.hungteen.pvz.utils.enums.Resources;
 import com.mojang.blaze3d.systems.RenderSystem;
 
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.gui.screen.inventory.ContainerScreen;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.MathHelper;
@@ -47,10 +52,9 @@ import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 
 @OnlyIn(Dist.CLIENT)
-public class AlmanacScreen extends ContainerScreen<AlmanacContainer> {
+public class AlmanacScreen extends AbstractOptionScreen<AlmanacContainer> {
 
 	public static final ResourceLocation TEXTURE = StringUtil.prefix("textures/gui/container/almanac.png");
-	private final AlmanacSearchGui searchGui = new AlmanacSearchGui();
 	private int propertyCnt;
 	
 	public AlmanacScreen(AlmanacContainer screenContainer, PlayerInventory inv, ITextComponent titleIn) {
@@ -60,43 +64,21 @@ public class AlmanacScreen extends ContainerScreen<AlmanacContainer> {
 	}
 
 	@Override
-	protected void init() {
-		super.init();
-		this.searchGui.init(this.minecraft, this.container, this.width, this.height);
-		this.guiLeft = this.searchGui.updateScreenPosition(this.xSize, this.ySize);
-		this.searchGui.initSearchBar();
-		this.children.add(this.searchGui);
-		this.setFocusedDefault(this.searchGui);
-	}
-
-	@Override
-	public void tick() {
-		super.tick();
-		this.searchGui.tick();
-	}
-
-	@Override
 	public void render(int mouseX, int mouseY, float partialTicks) {
-		this.searchGui.render(mouseX, mouseY, partialTicks);
+		this.renderAlmanac();
 		super.render(mouseX, mouseY, partialTicks);
 		this.renderHoveredToolTip(mouseX, mouseY);
-		this.renderAlmanac();
-		this.searchGui.renderTooltip(mouseX, mouseY);
 	}
 	
 	protected void renderAlmanac(){
-		Almanac current = this.searchGui.getCurrentAlmanac();
-		if(this.searchGui.getCurrentAlmanac() == null) {
-			current = Almanac.get();
-		}
-		this.renderTitle(current);
-		if(! ClientPlayerResources.isAlmanacUnLocked(current)) {
-			return ;
-		}
-		this.renderLogo(current);
-		this.renderXpBar(current);
-		this.renderShortInfo(current);
-		current.getPlant().ifPresent((plant) -> {
+		if(! this.searchGui.getCurrentOption().isPresent()) return ;
+		SearchOption option = this.searchGui.getCurrentOption().get();
+		this.renderTitle(option);
+		if(! this.isOptionUnLocked(option)) return ;
+		this.renderLogo(option);
+		this.renderXpBar(option);
+		this.renderShortInfo(option);
+		option.getPlant().ifPresent((plant) -> {
 			int lvl = ClientPlayerResources.getPlayerPlantCardLvl(plant);
 //			int maxLvl = PlantUtil.getPlantMaxLvl(plant);
 			this.propertyCnt = 0;
@@ -279,10 +261,10 @@ public class AlmanacScreen extends ContainerScreen<AlmanacContainer> {
 			}
 			}
 		});
-		current.getZombie().ifPresent((zombie) -> {
+		option.getZombie().ifPresent((zombie) -> {
 			
 		});
-		if(current.isPlayer()){//for player
+		if(option.isPlayer()){//for player
     		int sunNum = ClientPlayerResources.getPlayerStats(Resources.SUN_NUM);
     		int energyNum = ClientPlayerResources.getPlayerStats(Resources.ENERGY_NUM);
     		int money = ClientPlayerResources.getPlayerStats(Resources.MONEY);
@@ -309,7 +291,7 @@ public class AlmanacScreen extends ContainerScreen<AlmanacContainer> {
 		StringUtil.drawScaledString(font, string, posX, posY, prop.getColor(), 1f);
 	}
 	
-	protected void renderShortInfo(Almanac a) {
+	protected void renderShortInfo(SearchOption a) {
 		if(a.isPlayer()) return ;
 		RenderSystem.pushMatrix();
 //		int posX = this.guiLeft + 82 + 150 / 2;
@@ -321,7 +303,7 @@ public class AlmanacScreen extends ContainerScreen<AlmanacContainer> {
 		RenderSystem.popMatrix();
 	}
 	
-	protected void renderXpBar(Almanac a) {
+	protected void renderXpBar(SearchOption a) {
 		RenderSystem.pushMatrix();
 		int maxLvl = 1, lvl = 1;
 		Plants p = null;
@@ -355,20 +337,20 @@ public class AlmanacScreen extends ContainerScreen<AlmanacContainer> {
 		RenderSystem.popMatrix();
 	}
 	
-	protected void renderTitle(Almanac a) {
+	protected void renderTitle(SearchOption a) {
 		RenderSystem.pushMatrix();
 		int dx = this.guiLeft + 82 + 150 / 2, dy = this.guiTop + 10 + 2;
-		StringUtil.drawCenteredScaledString(this.font, Almanac.getAlmanacName(a), dx, dy, Colors.DARK_GREEN, 1.6f);
+		StringUtil.drawCenteredScaledString(this.font, SearchOption.getOptionName(a), dx, dy, Colors.DARK_GREEN, 1.6f);
 		RenderSystem.popMatrix();
 	}
 	
-	protected void renderLogo(Almanac a) {
+	protected void renderLogo(SearchOption a) {
 		int dx = this.guiLeft + 16, dy = this.guiTop + 14;
 		int scale = 3;
 		RenderSystem.pushMatrix();
 		RenderSystem.scaled(scale, scale, scale);
 		RenderSystem.translated((dx % scale) * 1.0d / scale , (dy % scale) * 1.0d / scale, 0);
-		this.itemRenderer.renderItemIntoGUI(Almanac.getItemStackByAlmanac(a), dx / scale, dy / scale);
+		this.itemRenderer.renderItemIntoGUI(SearchOption.getItemStackByOption(a), dx / scale, dy / scale);
 		RenderSystem.popMatrix();
 	}
 
@@ -379,27 +361,6 @@ public class AlmanacScreen extends ContainerScreen<AlmanacContainer> {
 		blit(this.guiLeft, this.guiTop, 0, 0, this.xSize, this.ySize);
 	}
 
-	@Override
-	protected boolean hasClickedOutside(double mouseX, double mouseY, int guiLeftIn, int guiTopIn, int mouseButton) {
-		boolean flag = mouseX < guiLeftIn || mouseY < guiTopIn || mouseX >= guiLeftIn + this.xSize || mouseY >= guiTopIn + this.ySize;
-	    return this.searchGui.hasClickedOutside(mouseX, mouseY, this.guiLeft, this.guiTop, mouseButton) && flag;
-	}
-	
-	@Override
-	public boolean mouseClicked(double p_mouseClicked_1_, double p_mouseClicked_3_, int p_mouseClicked_5_) {
-		if (this.searchGui.mouseClicked(p_mouseClicked_1_, p_mouseClicked_3_, p_mouseClicked_5_)) {
-			return true;
-		} else {
-			return super.mouseClicked(p_mouseClicked_1_, p_mouseClicked_3_, p_mouseClicked_5_);
-		}
-	}
-
-	@Override
-	public void removed() {
-		this.searchGui.removed();
-		super.removed();
-	}
-	
 	private enum Properties{
 		LVL,
 		HEALTH,
@@ -447,6 +408,16 @@ public class AlmanacScreen extends ContainerScreen<AlmanacContainer> {
 			default:return Colors.BLACK;
 			}
 		}
+	}
+
+	@Override
+	public boolean isOptionUnLocked(SearchOption option) {
+		return ClientPlayerResources.isAlmanacUnLocked(option);
+	}
+
+	@Override
+	public List<SearchCategories> getSearchCategories() {
+		return Arrays.asList(SearchCategories.ALL, SearchCategories.PLANTS, SearchCategories.ZOMBIES);
 	}
 
 }

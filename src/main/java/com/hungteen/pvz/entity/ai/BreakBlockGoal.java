@@ -117,8 +117,8 @@ public class BreakBlockGoal extends MoveToBlockGoal {
 					this.playBrokenSound(world, this.destinationBlock);
 				}
 			}
-
-			++this.breakingTime;
+			this.entity.world.sendBlockBreakProgress(this.entity.getEntityId(), this.destinationBlock, breakingTime / 8);
+			++ this.breakingTime;
 		}
 
 	}

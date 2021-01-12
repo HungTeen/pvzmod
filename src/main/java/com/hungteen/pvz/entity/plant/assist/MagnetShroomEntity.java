@@ -133,7 +133,9 @@ public class MagnetShroomEntity extends PVZPlantEntity {
 	@Override
 	public void readAdditional(CompoundNBT compound) {
 		super.readAdditional(compound);
-		this.setMetalType(MetalTypes.values()[compound.getInt("metal_type")]);
+		if(compound.contains("metal_type")) {
+			this.setMetalType(MetalTypes.values()[compound.getInt("metal_type")]);
+		}
 	}
 
 	public MetalTypes getMetalType() {

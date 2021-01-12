@@ -66,13 +66,12 @@ public class PlayerDataManager {
 			this.plantStats.plantLevel.put(plant, data.plantStats.plantLevel.get(plant));
 			this.plantStats.plantXp.put(plant, data.plantStats.plantXp.get(plant));
 		}
-//		//Almanac
-//		for(Almanac a : Almanac.ALMANACS) {
-//			this.almanacStats.setAlmanacUnLocked(a, data.almanacStats.isAlmanacUnLocked(a));
-//		}
 		for(Plants p : Plants.values()) {
 			this.itemCDStats.setPlantCardCD(p, data.itemCDStats.getPlantCardCoolDown(p));
 			this.itemCDStats.setPlantCardBar(p, data.itemCDStats.getPlantCardBarLength(p));
+		}
+		for(int i = 0; i < WaveManager.MAX_WAVE_NUM; ++ i) {
+			this.otherStats.zombieWaveTime[i] = data.otherStats.zombieWaveTime[i];
 		}
 	}
 
@@ -101,7 +100,7 @@ public class PlayerDataManager {
 			this.sendPacket(player, res);
 		}
 		
-		public void addPlayerStats(Resources res,int num){
+		public void addPlayerStats(Resources res, int num){
 			switch (res) {
 			case TREE_LVL:{
 				int now = MathHelper.clamp(resources.get(Resources.TREE_LVL) + num, 1, PlayerUtil.MAX_TREE_LVL);
@@ -129,26 +128,18 @@ public class PlayerDataManager {
 				break;
 			}
 			case MAX_ENERGY_NUM:{
-				int now = MathHelper.clamp(resources.get(Resources.MAX_ENERGY_NUM)+num, 1, PlayerUtil.MAX_ENERGY_NUM);
+				int now = MathHelper.clamp(resources.get(Resources.MAX_ENERGY_NUM) + num, 1, PlayerUtil.MAX_ENERGY_NUM);
 				resources.put(Resources.MAX_ENERGY_NUM, now);
 				break;
 			}
 			case SLOT_NUM:{
-				int now = MathHelper.clamp(resources.get(Resources.SLOT_NUM)+num, 18, PlayerUtil.MAX_SLOT_NUM);
+				int now = MathHelper.clamp(resources.get(Resources.SLOT_NUM) + num, 18, PlayerUtil.MAX_SLOT_NUM);
 				resources.put(Resources.SLOT_NUM, now);
 				break;
 			}
-			case NO_FOG_TICK:{
-				int now = Math.min(resources.get(Resources.NO_FOG_TICK) + num, 10000000);
-				resources.put(Resources.NO_FOG_TICK, now);
-				break;
-			}
-			case GEM_NUM:{
-				int now = Math.min(resources.get(Resources.GEM_NUM) + 1, 99999999);
-				resources.put(Resources.GEM_NUM, now);
-				break;
-			}
 			default:
+				int now = Math.min(resources.get(res) + num, 99999999);
+				resources.put(res, now);
 				break;
 			}
 			this.sendPacket(player, res);
@@ -423,12 +414,14 @@ public class PlayerDataManager {
 		@SuppressWarnings("unused")
 		private final PlayerDataManager manager;
 		public int[] zombieWaveTime = new int[WaveManager.MAX_WAVE_NUM];
+		public int totalWaveCount;
 		
 		public OtherStats(PlayerDataManager manager) {
 			this.manager = manager;
 			for(int i = 0; i < zombieWaveTime.length; ++ i) {
 				zombieWaveTime[i] = 0;
 			}
+			this.totalWaveCount = 0;
 		}
 		
 		private void saveToNBT(CompoundNBT baseTag) {

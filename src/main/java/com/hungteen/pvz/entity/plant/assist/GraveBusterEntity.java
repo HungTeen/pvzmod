@@ -111,8 +111,12 @@ public class GraveBusterEntity extends PVZPlantEntity{
 	@Override
 	public void readAdditional(CompoundNBT compound) {
 		super.readAdditional(compound);
-		this.killCount = compound.getInt("kill_cnt");
-		this.setEating(compound.getBoolean("is_eating"));
+		if(compound.contains("kill_cnt")) {
+			this.killCount = compound.getInt("kill_cnt");
+		}
+		if(compound.contains("is_eating")) {
+			this.setEating(compound.getBoolean("is_eating"));
+		}
 	}
 
 	@Override

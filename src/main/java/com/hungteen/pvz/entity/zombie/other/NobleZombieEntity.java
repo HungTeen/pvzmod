@@ -58,17 +58,12 @@ public class NobleZombieEntity extends PVZZombieEntity {
 	
 	public NobleZombieEntity(EntityType<? extends MonsterEntity> type, World worldIn) {
 		super(type, worldIn);
-	}
-	
-	@Override
-	protected void onZombieInitialSpawn() {
-		super.onZombieInitialSpawn();
 		this.setAttackTime(this.maxSleepAttackCD);
 		this.summonTick = this.getRNG().nextInt(this.maxSummonTick - this.minSummonTick) + this.minSummonTick;
-		this.setTpTick(-this.getRNG().nextInt(this.maxTpCD - this.minTpCD + 1) - this.minTpCD);
+		this.setTpTick(- this.getRNG().nextInt(this.maxTpCD - this.minTpCD + 1) - this.minTpCD);
 		this.experienceValue = 1000;
 	}
-
+	
 	@Override
 	protected void registerData() {
 		super.registerData();
@@ -85,7 +80,7 @@ public class NobleZombieEntity extends PVZZombieEntity {
 	@Override
 	public ILivingEntityData onInitialSpawn(IWorld worldIn, DifficultyInstance difficultyIn, SpawnReason reason,
 			ILivingEntityData spawnDataIn, CompoundNBT dataTag) {
-		if(!world.isRemote) {
+		if(! world.isRemote) {
 			for (Entity target : EntityUtil.getEntityAttackableTarget(this,
 					EntityUtil.getEntityAABB(this, 50, 50))) {
 				if(this.getRNG().nextInt(4) == 0) {
@@ -254,9 +249,9 @@ public class NobleZombieEntity extends PVZZombieEntity {
 		if(!world.isRemote) {
 			if(this.getAttackTarget() == null) {
 			    this.heal(0.3f);
-			}else if(percent < 1f / 2) {
+			} else if(percent < 1f / 2) {
 				this.heal(0.2f);
-			}else if(percent < 1f / 6) {
+			} else if(percent < 1f / 6) {
 				this.heal(0.5f);
 			}
 		}
@@ -344,8 +339,12 @@ public class NobleZombieEntity extends PVZZombieEntity {
 	@Override
 	public void readAdditional(CompoundNBT compound) {
 		super.readAdditional(compound);
-		this.summonTick = compound.getInt("summon_zombie_tick");
-		this.setTpTick(compound.getInt("zombie_tp_tick"));
+		if(compound.contains("summon_zombie_tick")) {
+			this.summonTick = compound.getInt("summon_zombie_tick");
+		}
+		if(compound.contains("zombie_tp_tick")) {
+			this.setTpTick(compound.getInt("zombie_tp_tick"));
+		}
 		if (this.hasCustomName()) {
 			this.bossInfo.setName(this.getDisplayName());
 		}

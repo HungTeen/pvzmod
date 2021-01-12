@@ -1,7 +1,9 @@
 package com.hungteen.pvz.utils.enums;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
+import java.util.Optional;
 
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.TextFormatting;
@@ -9,17 +11,18 @@ import net.minecraft.util.text.TranslationTextComponent;
 
 public enum Events {
 
-	BUCKET(true, Zombies.NORMAL_ZOMBIE, Zombies.CONEHEAD_ZOMBIE, Zombies.POLE_ZOMBIE, Zombies.BUCKETHEAD_ZOMBIE),
-	WATER(true, Zombies.NORMAL_ZOMBIE, Zombies.SNORKEL_ZOMBIE, Zombies.ZOMBONI, Zombies.BOBSLE_TEAM, Zombies.LAVA_ZOMBIE), 
-	HALLOWEEN(true, Zombies.NORMAL_ZOMBIE, Zombies.TRICK_ZOMBIE, Zombies.PUMPKIN_ZOMBIE),
-	NEWSPAPER(true, Zombies.NORMAL_ZOMBIE, Zombies.NEWSPAPER_ZOMBIE, Zombies.OLD_ZOMBIE, Zombies.SUNDAY_EDITION_ZOMBIE),
-	FOOTBALL(true, Zombies.NORMAL_ZOMBIE, Zombies.SCREENDOOR_ZOMBIE, Zombies.DANCING_ZOMBIE, Zombies.FOOTBALL_ZOMBIE, Zombies.GIGA_FOOTBALL_ZOMBIE),
-	RANDOM(true),
+	BUCKET(true, Bundles.GRASS_DAY, Zombies.NORMAL_ZOMBIE, Zombies.CONEHEAD_ZOMBIE, Zombies.POLE_ZOMBIE, Zombies.BUCKETHEAD_ZOMBIE),
+	WATER(true, Bundles.POOL_DAY, Zombies.NORMAL_ZOMBIE, Zombies.SNORKEL_ZOMBIE, Zombies.ZOMBONI, Zombies.BOBSLE_TEAM, Zombies.LAVA_ZOMBIE), 
+	HALLOWEEN(true, Bundles.RANDOM, Zombies.NORMAL_ZOMBIE, Zombies.TRICK_ZOMBIE, Zombies.PUMPKIN_ZOMBIE),
+	NEWSPAPER(true, Bundles.GRASS_NIGHT, Zombies.NORMAL_ZOMBIE, Zombies.NEWSPAPER_ZOMBIE, Zombies.OLD_ZOMBIE, Zombies.SUNDAY_EDITION_ZOMBIE),
+	FOOTBALL(true, Bundles.GRASS_NIGHT, Zombies.NORMAL_ZOMBIE, Zombies.SCREENDOOR_ZOMBIE, Zombies.DANCING_ZOMBIE, Zombies.FOOTBALL_ZOMBIE, Zombies.GIGA_FOOTBALL_ZOMBIE),
+	RANDOM(true, Bundles.RANDOM),
 	FOG(false);
 	
-	public boolean isZombieAttackEvent;
-	public Zombies[] zombies;
 	public static final List<Events> ATTACK_EVENTS = new ArrayList<>();
+	public boolean isZombieAttackEvent;
+	public final List<Zombies> zombies;
+	public Optional<Bundles> bundle = Optional.empty();
 	
 	static {
 		for(Events ev : Events.values()) {
@@ -29,7 +32,7 @@ public enum Events {
 		}
 	}
 	
-	public static ITextComponent getEventText(Events ev){
+	public static ITextComponent getEventText(Events ev) {
 		ITextComponent text = new TranslationTextComponent("event.pvz." + ev.toString().toLowerCase());
 		switch (ev) {
 		case BUCKET:{text.applyTextStyles(TextFormatting.GRAY); break;}
@@ -44,9 +47,14 @@ public enum Events {
 		return text;
 	}
 	
-	private Events(boolean isAttackEvent, Zombies...zombies) {
+	private Events(boolean isAttackEvent) {
+		this.zombies = new ArrayList<>();
+	}
+	
+	private Events(boolean isAttackEvent, Bundles bundle, Zombies...zombies) {
 		this.isZombieAttackEvent = isAttackEvent;
-		this.zombies = zombies;
+		this.bundle = Optional.of(bundle);
+		this.zombies = Arrays.asList(zombies);
 	}
 	
 }

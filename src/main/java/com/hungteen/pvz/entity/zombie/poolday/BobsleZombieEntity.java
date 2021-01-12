@@ -19,7 +19,7 @@ public class BobsleZombieEntity extends PVZZombieEntity{
 	@Override
 	public void normalZombieTick() {
 		super.normalZombieTick();
-		if(!world.isRemote) {
+		if(! world.isRemote) {
 			if(EntityUtil.isOnSnow(this)) {
 				this.addPotionEffect(new EffectInstance(Effects.SPEED, 10, 0, false, false));
 			}

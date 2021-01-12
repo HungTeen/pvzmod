@@ -1,16 +1,17 @@
 package com.hungteen.pvz.event;
 
 import com.hungteen.pvz.PVZMod;
+import com.hungteen.pvz.capability.CapabilityHandler;
 import com.hungteen.pvz.entity.plant.PVZPlantEntity;
 import com.hungteen.pvz.entity.plant.magic.StrangeCatEntity;
 import com.hungteen.pvz.entity.zombie.PVZZombieEntity;
+import com.hungteen.pvz.event.handler.PlayerEventHandler;
 import com.hungteen.pvz.misc.damage.PVZDamageSource;
 import com.hungteen.pvz.register.EnchantmentRegister;
 import com.hungteen.pvz.utils.EntityUtil;
 import com.hungteen.pvz.utils.PlayerUtil;
 import com.hungteen.pvz.utils.ZombieUtil;
 import com.hungteen.pvz.utils.enums.Resources;
-import com.hungteen.pvz.utils.enums.Zombies;
 
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.entity.player.PlayerEntity;
@@ -24,23 +25,30 @@ public class PVZLivingEvents {
 
 	@SubscribeEvent
 	public static void onLivingDeath(LivingDeathEvent ev) {
-		if(ev.getEntityLiving() instanceof PVZZombieEntity) {
+		if(! ev.getEntity().world.isRemote && ev.getEntityLiving() instanceof PVZZombieEntity) {
 			PVZZombieEntity zombie = (PVZZombieEntity) ev.getEntityLiving();
 			int xp = ZombieUtil.getZombieXp(zombie.getZombieEnumName());
 			PlayerEntity player = EntityUtil.getEntityOwner(zombie.world, ev.getSource().getTrueSource());
 			if(player == null) {//true source has no owner
 				if(ev.getSource().getTrueSource() instanceof PlayerEntity) {
 					PlayerUtil.addPlayerStats((PlayerEntity) ev.getSource().getTrueSource(), Resources.TREE_XP, xp);
-					onPlayerKillZombie((PlayerEntity) ev.getSource().getTrueSource(), zombie.getZombieEnumName());
+					PlayerEventHandler.onPlayerKillZombie((PlayerEntity) ev.getSource().getTrueSource(), zombie.getZombieEnumName());
 			    }
-			}else {
+			} else {
 				if(ev.getSource().getTrueSource() instanceof PVZPlantEntity) {
 					PlayerUtil.addPlantXp(player, ((PVZPlantEntity)ev.getSource().getTrueSource()).getPlantEnumName(), xp);
-					onPlayerKillZombie(player, zombie.getZombieEnumName());
+					PlayerEventHandler.onPlayerKillZombie(player, zombie.getZombieEnumName());
 				}
 			}
 		}
-		if(ev.getSource() instanceof PVZDamageSource) {
+		if(! ev.getEntity().world.isRemote && ev.getEntityLiving() instanceof PlayerEntity) {
+			PlayerEntity player = (PlayerEntity) ev.getEntityLiving();
+			player.getCapability(CapabilityHandler.PLAYER_DATA_CAPABILITY).ifPresent((l) -> {
+				l.getPlayerData().getPlayerStats().setPlayerStats(Resources.NO_FOG_TICK, 0);
+				l.getPlayerData().getPlayerStats().setPlayerStats(Resources.KILL_COUNT, 0);
+			});
+		}
+		if(! ev.getEntity().world.isRemote && ev.getSource() instanceof PVZDamageSource) {
 			PVZDamageSource source = (PVZDamageSource) ev.getSource();
 			if(source.isCopyDamage()) {
 				if(source.getTrueSource() instanceof StrangeCatEntity) {
@@ -64,7 +72,4 @@ public class PVZLivingEvents {
 		}
 	}
 	
-	private static void onPlayerKillZombie(PlayerEntity player, Zombies zombie) {
-//		Almanacs a = Almanacs.getAlmanacByName(zombie.toString().toLowerCase());
-	}
 }

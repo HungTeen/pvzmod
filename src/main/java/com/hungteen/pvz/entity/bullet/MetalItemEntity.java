@@ -154,8 +154,12 @@ public class MetalItemEntity extends PVZItemBulletEntity {
 	@Override
 	public void readAdditional(CompoundNBT compound) {
 		super.readAdditional(compound);
-		this.setMetalType(MetalTypes.values()[compound.getInt("metal_type")]);
-		this.setMetalState(MetalStates.values()[compound.getInt("metal_state")]);
+		if(compound.contains("metal_type")) {
+			this.setMetalType(MetalTypes.values()[compound.getInt("metal_type")]);
+		}
+		if(compound.contains("metal_state")) {
+			this.setMetalState(MetalStates.values()[compound.getInt("metal_state")]);
+		}
 	}
 
 	public MetalTypes getMetalType() {

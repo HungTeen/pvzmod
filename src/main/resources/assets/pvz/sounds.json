@@ -202,5 +202,17 @@
     "blover":{
         "subtitle": "sound.pvz.blover",
         "sounds":[{"name":"pvz:ambient/blover"}]
+    },
+    "win_music":{
+        "subtitle": "sound.pvz.win_music",
+        "sounds":[{"name":"pvz:ambient/win_music"}]
+    },
+    "slot_machine":{
+        "subtitle": "sound.pvz.slot_machine",
+        "sounds":[{"name":"pvz:ambient/slot_machine"}]
+    },
+    "lose_music":{
+        "subtitle": "sound.pvz.lose_music",
+        "sounds":[{"name":"pvz:ambient/lose_music"}]
     }
 }

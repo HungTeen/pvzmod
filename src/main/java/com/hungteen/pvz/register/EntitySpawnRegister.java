@@ -1,7 +1,6 @@
 package com.hungteen.pvz.register;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.EnumMap;
 import java.util.List;
 import java.util.Optional;
@@ -85,22 +84,21 @@ public class EntitySpawnRegister {
 		EVENT_CHANCE.put(Events.FOOTBALL, PVZConfig.COMMON_CONFIG.WorldSettings.WorldEventSettings.EventChanceSettings.FootballAttackChance.get());
 		EVENT_CHANCE.put(Events.RANDOM, PVZConfig.COMMON_CONFIG.WorldSettings.WorldEventSettings.EventChanceSettings.RandomAttackChance.get());
 		
-		putSpawnData(Zombies.NORMAL_ZOMBIE, 40, 1, 3, BiomeUtil.OVER_LAND);
-		putSpawnData(Zombies.CONEHEAD_ZOMBIE, 20, 1, 1, BiomeUtil.OVER_LAND);
-		putSpawnData(Zombies.POLE_ZOMBIE, 15, 1, 1, BiomeUtil.OVER_LAND);
-		putSpawnData(Zombies.BUCKETHEAD_ZOMBIE, 6, 1, 1, BiomeUtil.OVER_LAND);
+		putSpawnData(Zombies.NORMAL_ZOMBIE, 35, 1, 2, BiomeUtil.OVER_LAND);
+		putSpawnData(Zombies.CONEHEAD_ZOMBIE, 15, 1, 1, BiomeUtil.OVER_LAND);
+		putSpawnData(Zombies.POLE_ZOMBIE, 10, 1, 1, BiomeUtil.OVER_LAND);
+		putSpawnData(Zombies.BUCKETHEAD_ZOMBIE, 2, 1, 1, BiomeUtil.OVER_LAND);
 
-		putSpawnData(Zombies.SNORKEL_ZOMBIE, 36, 1, 2, BiomeUtil.OVER_LAND);
-		putSpawnData(Zombies.ZOMBONI, 16, 1, 1, BiomeUtil.OVER_LAND);
+		putSpawnData(Zombies.SNORKEL_ZOMBIE, 30, 1, 2, BiomeUtil.OVER_LAND);
+		putSpawnData(Zombies.ZOMBONI, 10, 1, 1, BiomeUtil.OVER_LAND);
 		putSpawnData(Zombies.BOBSLE_TEAM, 20, 1, 1, BiomeUtil.OVER_LAND);
-//		putSpawnData(Zombies.DOLPHIN_RIDER, 3, 1, 1, BiomeUtil.OCEAN);
-		putSpawnData(Zombies.LAVA_ZOMBIE, 4, 1, 1, BiomeUtil.OVER_LAND);
+		putSpawnData(Zombies.LAVA_ZOMBIE, 2, 1, 1, BiomeUtil.OVER_LAND);
 		
-		putSpawnData(Zombies.PUMPKIN_ZOMBIE, 25, 1, 1, BiomeUtil.OVER_LAND);
-		putSpawnData(Zombies.TRICK_ZOMBIE, 40, 1, 2, BiomeUtil.OVER_LAND);
+		putSpawnData(Zombies.PUMPKIN_ZOMBIE, 20, 1, 1, BiomeUtil.OVER_LAND);
+		putSpawnData(Zombies.TRICK_ZOMBIE, 30, 1, 2, BiomeUtil.OVER_LAND);
 
-		putSpawnData(Zombies.NEWSPAPER_ZOMBIE, 32, 1, 1, BiomeUtil.OVER_LAND);
-		putSpawnData(Zombies.OLD_ZOMBIE, 12, 1, 1, BiomeUtil.OVER_LAND);
+		putSpawnData(Zombies.NEWSPAPER_ZOMBIE, 30, 1, 1, BiomeUtil.OVER_LAND);
+		putSpawnData(Zombies.OLD_ZOMBIE, 15, 1, 1, BiomeUtil.OVER_LAND);
 		putSpawnData(Zombies.SUNDAY_EDITION_ZOMBIE, 2, 1, 1, BiomeUtil.OVER_LAND);
 		
 		putSpawnData(Zombies.SCREENDOOR_ZOMBIE, 30, 1, 1, BiomeUtil.OVER_LAND);
@@ -119,8 +117,7 @@ public class EntitySpawnRegister {
 			    	});
 				}
 			} else {
-				List<Zombies> zombieTypes = Arrays.asList(ev.zombies);
-			    for(Zombies zombie: zombieTypes) {
+			    for(Zombies zombie: ev.zombies) {
 			    	getZombieSpawnEnrty(world, zombie).ifPresent((entry)->{
 			    		list.add(entry);
 			    	});

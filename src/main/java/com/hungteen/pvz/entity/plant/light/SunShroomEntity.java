@@ -114,7 +114,9 @@ public class SunShroomEntity extends PlantProducerEntity {
 	@Override
 	public void readAdditional(CompoundNBT compound) {
 		super.readAdditional(compound);
-		this.setGrowAnim(compound.getInt("grow_anim"));
+		if(compound.contains("grow_anim")) {
+			this.setGrowAnim(compound.getInt("grow_anim"));
+		}
 	}
 
 	public void setGrowAnim(int tick) {

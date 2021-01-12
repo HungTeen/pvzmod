@@ -483,9 +483,15 @@ public abstract class PVZPlantEntity extends CreatureEntity implements IPVZPlant
 	@Override
 	public void readAdditional(CompoundNBT compound) {
 		super.readAdditional(compound);
-		this.weakTime=compound.getInt("plant_weak_time");
-		this.setSuperTime(compound.getInt("plant_super_time"));
-		this.setPlantLvl(compound.getInt("plant_lvl"));
+		if(compound.contains("plant_weak_time")) {
+			this.weakTime = compound.getInt("plant_weak_time");
+		}
+		if(compound.contains("plant_super_time")) {
+			this.setSuperTime(compound.getInt("plant_super_time"));
+		}
+		if(compound.contains("plant_lvl")) {
+			this.setPlantLvl(compound.getInt("plant_lvl"));
+		}
 		String s;
 	    if (compound.contains("OwnerUUID", 8)) {
 	        s = compound.getString("OwnerUUID");
@@ -499,19 +505,39 @@ public abstract class PVZPlantEntity extends CreatureEntity implements IPVZPlant
 	        } catch (Throwable var4) {
 	        }
 	    }
-		this.setAttackTime(compound.getInt("plant_attack_time"));
-        this.setGoldTime(compound.getInt("plant_gold_time"));
-        this.setBoostTime(compound.getInt("plant_boost_time"));
-        this.setCharmed(compound.getBoolean("is_plant_charmed"));
-        this.setSleepTime(compound.getInt("plant_sleep_time"));
-        this.setLiveTick(compound.getInt("plant_live_tick"));
+	    if(compound.contains("plant_attack_time")) {
+			this.setAttackTime(compound.getInt("plant_attack_time"));
+		}
+	    if(compound.contains("plant_gold_time")) {
+			this.setGoldTime(compound.getInt("plant_gold_time"));
+		}
+	    if(compound.contains("plant_boost_time")) {
+			this.setBoostTime(compound.getInt("plant_boost_time"));
+		}
+	    if(compound.contains("is_plant_charmed")) {
+			this.setCharmed(compound.getBoolean("is_plant_charmed"));
+		}
+	    if(compound.contains("plant_sleep_time")) {
+			this.setSleepTime(compound.getInt("plant_sleep_time"));
+		}
+	    if(compound.contains("plant_live_tick")) {
+	    	this.setLiveTick(compound.getInt("plant_live_tick"));
+	    }
+	    if(compound.contains("pumpkin_life")) {
+	    	this.setPumpkinLife(compound.getFloat("pumpkin_life"));
+	    }
         if(compound.contains("outer_plant_type")) {
         	this.outerPlant = Optional.of(Plants.values()[compound.getInt("outer_plant_type")]);
         }
-        this.setPumpkinLife(compound.getFloat("pumpkin_life"));
-        this.plantSunCost = compound.getInt("plant_sun_cost");
-        this.outerSunCost = compound.getInt("outer_sun_cost");
-        this.isImmuneToWeak = compound.getBoolean("immune_to_weak");
+        if(compound.contains("plant_sun_cost")) {
+	    	this.plantSunCost = compound.getInt("plant_sun_cost");
+	    }
+        if(compound.contains("outer_sun_cost")) {
+	    	this.outerSunCost = compound.getInt("outer_sun_cost");
+	    }
+        if(compound.contains("immune_to_weak")) {
+	    	this.isImmuneToWeak = compound.getBoolean("immune_to_weak");
+	    }
     }
 	
 	/**

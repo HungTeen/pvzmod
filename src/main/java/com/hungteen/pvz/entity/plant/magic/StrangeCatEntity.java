@@ -134,7 +134,9 @@ public class StrangeCatEntity extends PVZPlantEntity {
 	@Override
 	public void readAdditional(CompoundNBT compound) {
 		super.readAdditional(compound);
-		this.restTick = compound.getInt("rest_tick");
+		if(compound.contains("rest_tick")) {
+			this.restTick = compound.getInt("rest_tick");
+		}
 	}
 	
 	@Override

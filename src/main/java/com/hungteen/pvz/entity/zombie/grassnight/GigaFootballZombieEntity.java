@@ -124,7 +124,9 @@ public class GigaFootballZombieEntity extends FootballZombieEntity {
 	@Override
 	public void readAdditional(CompoundNBT compound) {
 		super.readAdditional(compound);
-		this.hasChanged = compound.getBoolean("has_changed_speed");
+		if(compound.contains("has_changed_speed")) {
+			this.hasChanged = compound.getBoolean("has_changed_speed");
+		}
 	}
 	
 	@Override

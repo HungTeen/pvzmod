@@ -10,7 +10,7 @@ import net.minecraft.network.datasync.DataSerializers;
 import net.minecraft.network.datasync.EntityDataManager;
 import net.minecraft.world.World;
 
-public abstract class DropEntity extends MobEntity{
+public abstract class DropEntity extends MobEntity {
 
 	private static final DataParameter<Integer> AMOUNT = EntityDataManager.createKey(DropEntity.class, DataSerializers.VARINT);
 	private static final DataParameter<Integer> STATE  = EntityDataManager.createKey(DropEntity.class, DataSerializers.VARINT);
@@ -18,7 +18,7 @@ public abstract class DropEntity extends MobEntity{
 	
 	public DropEntity(EntityType<? extends MobEntity> type, World worldIn) {
 		super(type, worldIn);
-		this.liveTime=0;
+		this.liveTime = 0;
 		this.setInvulnerable(true);
 	}
 	
@@ -39,7 +39,7 @@ public abstract class DropEntity extends MobEntity{
 		super.tick();
 		this.noClip = this.getDropState() != DropStates.NORMAL;
 		if(! world.isRemote) {
-			this.liveTime++;
+			++ this.liveTime;
 		    if(this.liveTime >= this.getMaxLiveTick()) {
 			    this.remove();
 		    }
@@ -83,13 +83,21 @@ public abstract class DropEntity extends MobEntity{
 
 	@Override
 	public void readAdditional(CompoundNBT compound) {
-		this.liveTime = compound.getInt("live_time");
-		this.setAmount(compound.getInt("drop_amount"));
-		this.setDropState(DropStates.values()[compound.getInt("drop_state")]);
+		super.readAdditional(compound);
+		if(compound.contains("live_time")) {
+			this.liveTime = compound.getInt("live_time");
+		}
+		if(compound.contains("drop_amount")) {
+			this.setAmount(compound.getInt("drop_amount"));
+		}
+		if(compound.contains("drop_state")) {
+			this.setDropState(DropStates.values()[compound.getInt("drop_state")]);
+		}
 	}
 
 	@Override
 	public void writeAdditional(CompoundNBT compound) {
+		super.writeAdditional(compound);
 		compound.putInt("live_time", this.liveTime);
 		compound.putInt("drop_amount", this.getAmount());
 		compound.putInt("drop_state", this.getDropState().ordinal());

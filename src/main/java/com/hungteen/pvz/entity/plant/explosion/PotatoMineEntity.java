@@ -173,8 +173,12 @@ public class PotatoMineEntity extends PlantCloserEntity{
 	@Override
 	public void readAdditional(CompoundNBT compound) {
 		super.readAdditional(compound);
-		this.setMineReady(compound.getBoolean("mine_ready"));
-		this.sign_red=compound.getBoolean("sign_red");
+		if(compound.contains("mine_ready")) {
+			this.setMineReady(compound.getBoolean("mine_ready"));
+		}
+		if(compound.contains("sign_red")) {
+			this.sign_red = compound.getBoolean("sign_red");
+		}
 	}
 	
 	@Override

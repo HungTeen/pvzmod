@@ -3,7 +3,6 @@ package com.hungteen.pvz.command;
 import java.util.Collection;
 
 import com.hungteen.pvz.event.OverWorldEvents;
-import com.hungteen.pvz.utils.PlayerUtil;
 import com.hungteen.pvz.utils.enums.Events;
 import com.hungteen.pvz.world.WaveManager;
 import com.hungteen.pvz.world.data.WorldEventData;
@@ -43,11 +42,11 @@ public class InvasionCommand {
 	
 	private static int spawnHugeWave(Collection<? extends ServerPlayerEntity> targets, int num) {
 		targets.forEach((player)->{
-			if(PlayerUtil.isPlayerSurvival(player)) {
+//			if(PlayerUtil.isPlayerSurvival(player)) {
 				WaveManager manager = new WaveManager(player, 0);
 				if(num != 0) manager.spawnCnt = num;
 				manager.spawnWaveZombies();
-			}
+//			}
 		});
 		return targets.size();
 	}
@@ -58,7 +57,7 @@ public class InvasionCommand {
 	}
 	
 	private static int clearInvasionEvent(CommandSource source) {
-		OverWorldEvents.deactivateZombieAttackEvents(source.getWorld());
+		OverWorldEvents.deactivateZombieAttackEvents(source.getWorld(), false);
 		return 0;
 	}
 	

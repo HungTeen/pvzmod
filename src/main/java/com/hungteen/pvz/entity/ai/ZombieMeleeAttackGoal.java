@@ -45,7 +45,7 @@ public class ZombieMeleeAttackGoal extends Goal {
 	@Override
 	public boolean shouldContinueExecuting() {
 		LivingEntity target = this.attacker.getAttackTarget();
-		if (target == null || !target.isAlive()) {
+		if (target == null || ! target.isAlive()) {
 			return false;
 		}
 //		if (this.getAttackReachSqr(target) < this.attacker.getDistanceSq(target)

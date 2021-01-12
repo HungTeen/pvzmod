@@ -22,6 +22,7 @@ import net.minecraftforge.event.TickEvent;
 public class OverWorldEvents {
 
 	private static final ITextComponent ZOMBIE_ATTACK = new TranslationTextComponent("event.pvz.zombie_attack").applyTextStyle(TextFormatting.DARK_RED);
+	private static final ITextComponent ATTACK_FINISH = new TranslationTextComponent("event.pvz.attack_finish").applyTextStyle(TextFormatting.GREEN);
 	
 	public static void tick(TickEvent.WorldTickEvent ev) {
 		World world = ev.world;
@@ -53,7 +54,7 @@ public class OverWorldEvents {
 			WorldEventData data = WorldEventData.getOverWorldEventData(world);
 			if(! data.hasChanged()) {
 				data.setChanged(true);
-				deactivateZombieAttackEvents(world);
+				deactivateZombieAttackEvents(world, true);
 			}
 			break;
 		}
@@ -79,7 +80,7 @@ public class OverWorldEvents {
 		    	activateEvent(world, Events.FOG);
 		    }
 		    if(PVZConfig.COMMON_CONFIG.WorldSettings.WorldEventSettings.ShowEventMessages.get()) {
-		    	world.getPlayers().forEach((player)->{
+		    	world.getPlayers().forEach((player) -> {
 			        WorldEventData data = WorldEventData.getOverWorldEventData(world);
 			        for(Events ev : Events.values()) {
 				        if(data.hasEvent(ev)) {
@@ -104,7 +105,14 @@ public class OverWorldEvents {
 	/**
 	 * deactivate all events and remove zombie spawn
 	 */
-	public static void deactivateZombieAttackEvents(World world) {
+	public static void deactivateZombieAttackEvents(World world, boolean isNatural) {
+		if(isNatural) {
+			for(PlayerEntity pl : world.getPlayers()) {
+		        pl.sendMessage(ATTACK_FINISH);
+		        PlayerUtil.playClientSound(pl, 4);
+		        WaveManager.giveInvasionBonusToPlayer(world, pl);
+	        }
+		}
 		for(Events ev : Events.values()) {
 			deactivateEvent(world, ev);
 		}
@@ -117,7 +125,6 @@ public class OverWorldEvents {
 	private static void deactivateEvent(World world, @Nonnull Events event) {
 		WorldEventData data = WorldEventData.getOverWorldEventData(world);
 		if(data.hasEvent(event)) {
-//			System.out.println(event);
 			data.removeEvent(event);
 		}
 	}

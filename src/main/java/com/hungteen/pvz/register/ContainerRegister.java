@@ -1,14 +1,14 @@
 package com.hungteen.pvz.register;
 
 import com.hungteen.pvz.PVZMod;
-import com.hungteen.pvz.gui.almanac.AlmanacContainer;
-import com.hungteen.pvz.gui.almanac.AlmanacScreen;
+import com.hungteen.pvz.gui.container.AlmanacContainer;
 import com.hungteen.pvz.gui.container.DaveShopContainer;
 import com.hungteen.pvz.gui.container.FragmentSpliceContainer;
 import com.hungteen.pvz.gui.container.PeaGunContainer;
 import com.hungteen.pvz.gui.container.PlayerInventoryContainer;
 import com.hungteen.pvz.gui.container.SunConverterContainer;
 import com.hungteen.pvz.gui.container.SunShopContainer;
+import com.hungteen.pvz.gui.screen.AlmanacScreen;
 import com.hungteen.pvz.gui.screen.DaveShopScreen;
 import com.hungteen.pvz.gui.screen.FragmentSpliceScreen;
 import com.hungteen.pvz.gui.screen.PeaGunScreen;

@@ -58,8 +58,12 @@ public abstract class PlantProducerEntity extends PVZPlantEntity implements IPro
 	@Override
 	public void readAdditional(CompoundNBT compound) {
 		super.readAdditional(compound);
-		this.setIsGenTime(compound.getBoolean("is_gen_time"));
-		this.genCD=compound.getInt("gen_cd");
+		if(compound.contains("is_gen_time")) {
+			this.setIsGenTime(compound.getBoolean("is_gen_time"));
+		}
+		if(compound.contains("gen_cd")) {
+			this.genCD = compound.getInt("gen_cd");
+		}
 	}
 
 	@Override

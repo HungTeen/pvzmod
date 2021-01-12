@@ -82,14 +82,9 @@ public class OptionSearchGui extends AbstractGui implements IRenderable, IGuiEve
 	public void slotClicked(@Nullable Slot slotIn) {
 		if (this.container.isCraftSlot(slotIn)) {
 			this.recipeManager.clear();
-			this.updateStackedContents();
 		}
 	}
 	
-	private void updateStackedContents() {
-		this.container.clearCraftSlots();
-	}
-
 	private void updateCollections(boolean p_193003_1_) {
 		List<SearchOption> list = this.page.getCurrentList(this.currentTab.getCategory());
 		String s = this.searchBar.getText();

@@ -31,11 +31,6 @@ public class ZomboniEntity extends PVZZombieEntity implements IMultiPartEntity{
 	
 	public ZomboniEntity(EntityType<? extends MonsterEntity> type, World worldIn) {
 		super(type, worldIn);
-	}
-	
-	@Override
-	protected void onZombieInitialSpawn() {
-		super.onZombieInitialSpawn();
 		resetParts();
 	}
 	

@@ -84,7 +84,9 @@ public class NewspaperZombieEntity extends DefenceZombieEntity {
 	@Override
 	public void readAdditional(CompoundNBT compound) {
 		super.readAdditional(compound);
-		this.setAngry(compound.getBoolean("is_zombie_angry"));
+		if(compound.contains("is_zombie_angry")) {
+			this.setAngry(compound.getBoolean("is_zombie_angry"));
+		}
 	}
 	
 	@Override

@@ -15,11 +15,11 @@ public class PlaySoundPacket {
 	private int type;
 	
 	public PlaySoundPacket(int x) {
-		this.type=x;
+		this.type = x;
 	}
 	
 	public PlaySoundPacket(PacketBuffer buffer) {
-		this.type=buffer.readInt();
+		this.type = buffer.readInt();
 	}
 
 	public void encode(PacketBuffer buffer) {
@@ -40,11 +40,18 @@ public class PlaySoundPacket {
 		    		sound = SoundRegister.HUGE_WAVE.get();
 		    	} else if(id == 3) {
 		    		sound = SoundRegister.WARN.get();
-		    	}
+		    	} else if(id == 4) {
+		    		sound = SoundRegister.WIN_MUSIC.get();
+		    	} else if(id == 5) {
+		    		sound = SoundRegister.LOSE_MUSIC.get();
+		    	} else if(id == 6) {
+		    		sound = SoundRegister.COIN_PICK.get();
+		    	} else if(id == 7) {
+		    		sound = SoundRegister.JEWEL_PICK.get();
+		    	} 
 		    	if(sound != null) {
 		    		Minecraft.getInstance().player.playSound(sound, 1f, 1f);
 		    	}
-		    	
 		    });
 		    ctx.get().setPacketHandled(true);
 	    }

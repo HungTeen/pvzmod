@@ -135,7 +135,9 @@ public class ScaredyShroomEntity extends PlantShooterEntity {
 	@Override
 	public void readAdditional(CompoundNBT compound) {
 		super.readAdditional(compound);
-		this.setScareTime(compound.getInt("scare_time"));
+		if(compound.contains("scare_time")) {
+			this.setScareTime(compound.getInt("scare_time"));
+		}
 	}
 
 }

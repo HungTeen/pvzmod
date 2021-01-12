@@ -2,7 +2,7 @@ package com.hungteen.pvz.capability.player;
 
 import java.util.HashMap;
 
-import com.hungteen.pvz.gui.almanac.Almanac;
+import com.hungteen.pvz.gui.search.SearchOption;
 import com.hungteen.pvz.utils.enums.Plants;
 import com.hungteen.pvz.utils.enums.Resources;
 
@@ -15,7 +15,8 @@ public class ClientPlayerResources{
 	private static HashMap<Resources, Integer> resources = new HashMap<>(Resources.values().length);
 	private static HashMap<Plants, Integer> plantCardXp = new HashMap<Plants, Integer>(Plants.values().length);
 	private static HashMap<Plants, Integer> plantCardLevel = new HashMap<Plants, Integer>(Plants.values().length);
-	private static HashMap<Almanac, Boolean> unLocked = new HashMap<Almanac, Boolean>(Almanac.ALMANACS.size());
+	private static HashMap<SearchOption, Boolean> unLocked = new HashMap<SearchOption, Boolean>(SearchOption.OPTION.size());
+	public static int playSoundTick = 0;
 	
 	static { //init to avoid unexpected error !
 		for(Resources res : Resources.values()) {
@@ -25,7 +26,7 @@ public class ClientPlayerResources{
 			plantCardLevel.put(p, 0);
 			plantCardXp.put(p, 0);
 		}
-		for(Almanac a : Almanac.ALMANACS) {
+		for(SearchOption a : SearchOption.OPTION) {
 			unLocked.put(a, false);
 		}
 	}
@@ -40,7 +41,7 @@ public class ClientPlayerResources{
 	}
 	
 	public static void setAlmanacUnLocked(int type, boolean data){
-		unLocked.put(Almanac.ALMANACS.get(type), data);
+		unLocked.put(SearchOption.OPTION.get(type), data);
 	}
 	
 	public static int getPlayerStats(Resources res){
@@ -55,8 +56,8 @@ public class ClientPlayerResources{
 		return plantCardXp.get(plant);
 	}
 	
-	public static boolean isAlmanacUnLocked(Almanac a){
-		return unLocked.get(a);
+	public static boolean isAlmanacUnLocked(SearchOption option){
+		return unLocked.get(option);
 	}
 	
 }

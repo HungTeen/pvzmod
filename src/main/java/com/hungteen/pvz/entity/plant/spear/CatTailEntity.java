@@ -163,8 +163,12 @@ public class CatTailEntity extends PlantShooterEntity {
 	@Override
 	public void readAdditional(CompoundNBT compound) {
 		super.readAdditional(compound);
-		this.powerCount = compound.getInt("power_thorn_count");
-		this.powerTick = compound.getInt("power_shoot_tick");
+		if(compound.contains("power_thorn_count")){
+			this.powerCount = compound.getInt("power_thorn_count");
+		}
+		if(compound.contains("power_shoot_tick")){
+			this.powerTick = compound.getInt("power_shoot_tick");
+		}
 	}
 	
 	@Override

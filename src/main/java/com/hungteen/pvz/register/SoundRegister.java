@@ -70,6 +70,9 @@ public class SoundRegister {
 	public static final RegistryObject<SoundEvent> BALLOON_FULL = registerSound("balloon_full");
 	public static final RegistryObject<SoundEvent> BALLOON_POP = registerSound("balloon_pop");
 	public static final RegistryObject<SoundEvent> BLOVER = registerSound("blover");
+	public static final RegistryObject<SoundEvent> WIN_MUSIC = registerSound("win_music");
+	public static final RegistryObject<SoundEvent> LOSE_MUSIC = registerSound("lose_music");
+	public static final RegistryObject<SoundEvent> SLOT_MACHINE = registerSound("slot_machine");
 	
 	private static RegistryObject<SoundEvent> registerSound(String name){
 		return SOUNDS.register(name, ()->{

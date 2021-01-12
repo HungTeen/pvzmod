@@ -1,6 +1,6 @@
 package com.hungteen.pvz.item.misc;
 
-import com.hungteen.pvz.gui.almanac.AlmanacContainer;
+import com.hungteen.pvz.gui.container.AlmanacContainer;
 import com.hungteen.pvz.register.GroupRegister;
 
 import net.minecraft.entity.player.PlayerEntity;

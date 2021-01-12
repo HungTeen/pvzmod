@@ -166,7 +166,9 @@ public class SquashEntity extends PVZPlantEntity{
 	@Override
 	public void readAdditional(CompoundNBT compound) {
 		super.readAdditional(compound);
-		this.extraChance = compound.getInt("extra_chance");
+		if(compound.contains("extra_chance")) {
+			this.extraChance = compound.getInt("extra_chance");
+		}
 	}
 	
 	@Override

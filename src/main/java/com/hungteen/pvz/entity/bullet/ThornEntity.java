@@ -235,9 +235,15 @@ public class ThornEntity extends AbstractBulletEntity {
 		if (this.getThrower() != null && this.getThrower() instanceof CatTailEntity && this.isInControl()) {
 			((CatTailEntity) this.getThrower()).thorns.add(this);
 		}
-		this.setThornState(ThornStates.values()[compound.getInt("thorn_state")]);
-		this.setThornType(ThornTypes.values()[compound.getInt("thorn_type")]);
-		this.extraHitCount = compound.getInt("extra_hit_count");
+		if(compound.contains("thorn_state")) {
+			this.setThornState(ThornStates.values()[compound.getInt("thorn_state")]);
+		}
+		if(compound.contains("thorn_type")) {
+			this.setThornType(ThornTypes.values()[compound.getInt("thorn_type")]);
+		}
+		if(compound.contains("extra_hit_count")) {
+			this.extraHitCount = compound.getInt("extra_hit_count");
+		}
 	}
 
 	public ThornStates getThornState() {

@@ -10,5 +10,6 @@ public enum Resources {
 	ENERGY_NUM,
 	MAX_ENERGY_NUM,
 	SLOT_NUM,
-	NO_FOG_TICK
+	NO_FOG_TICK,
+	KILL_COUNT
 }

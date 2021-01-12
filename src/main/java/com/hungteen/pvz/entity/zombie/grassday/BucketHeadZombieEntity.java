@@ -19,15 +19,10 @@ public class BucketHeadZombieEntity extends NormalZombieEntity implements IHasMe
 	
 	public BucketHeadZombieEntity(EntityType<? extends MonsterEntity> type, World worldIn) {
 		super(type, worldIn);
-	}
-	
-	@Override
-	protected void onZombieInitialSpawn() {
-		super.onZombieInitialSpawn();
 		this.hasDirectDefence = true;
 		this.increaseMetal();
 	}
-
+	
 	@Override
 	public float getLife() {
 		return 20;

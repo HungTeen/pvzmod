@@ -2,7 +2,7 @@ package com.hungteen.pvz.utils;
 
 import com.hungteen.pvz.capability.CapabilityHandler;
 import com.hungteen.pvz.capability.player.IPlayerDataCapability;
-import com.hungteen.pvz.gui.almanac.Almanac;
+import com.hungteen.pvz.gui.search.SearchOption;
 import com.hungteen.pvz.network.AlmanacUnLockPacket;
 import com.hungteen.pvz.network.PVZPacketHandler;
 import com.hungteen.pvz.network.PlaySoundPacket;
@@ -81,13 +81,7 @@ public class PlayerUtil {
 		}
 	}
 	
-	public static void unLockAlmanac(PlayerEntity player, Almanac a) {
-//		player.getCapability(CapabilityHandler.PLAYER_DATA_CAPABILITY).ifPresent((l)->{
-//		    PlayerDataManager.AlmanacStats stats = l.getPlayerData().getAlmanacStats();
-//		    if(!stats.isAlmanacUnLocked(a)) {
-//			    stats.setAlmanacUnLocked(a, true);
-//		    }
-//	    });
+	public static void unLockAlmanac(PlayerEntity player, SearchOption a) {
 		if (player instanceof ServerPlayerEntity) {
 			PVZPacketHandler.CHANNEL.send(
 				PacketDistributor.PLAYER.with(() -> {
@@ -98,7 +92,7 @@ public class PlayerUtil {
 		}
 	}
 	
-	public static boolean isAlmanacUnlocked(ServerPlayerEntity player, Almanac a) {
+	public static boolean isAlmanacUnlocked(ServerPlayerEntity player, SearchOption a) {
 		if(a.isPlayer()) return true;
 		if(a.isPlant()) {
 			Plants plant = a.getPlant().get();

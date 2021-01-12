@@ -96,7 +96,7 @@ public class FragmentSpliceScreen extends AbstractOptionScreen<FragmentSpliceCon
 
 	@Override
 	public List<SearchCategories> getSearchCategories() {
-		return Arrays.asList(SearchCategories.ALL, SearchCategories.PLANTS);
+		return Arrays.asList(SearchCategories.PLANTS);
 	}
 	
 }

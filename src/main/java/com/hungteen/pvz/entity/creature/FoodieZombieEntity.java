@@ -275,8 +275,12 @@ public class FoodieZombieEntity extends AnimalEntity {
 	@Override
 	public void readAdditional(CompoundNBT compound) {
 		super.readAdditional(compound);
-		this.lvl = compound.getInt("zombie_lvl");
-		this.setGenTick(compound.getInt("gen_tick"));
+		if(compound.contains("zombie_lvl")) {
+			this.lvl = compound.getInt("zombie_lvl");
+		}
+		if(compound.contains("gen_tick")) {
+			this.setGenTick(compound.getInt("gen_tick"));
+		}
 	}
 
 	@Override

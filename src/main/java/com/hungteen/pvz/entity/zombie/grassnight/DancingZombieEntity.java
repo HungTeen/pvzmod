@@ -101,8 +101,12 @@ public class DancingZombieEntity extends PVZZombieEntity{
 	@Override
 	public void readAdditional(CompoundNBT compound) {
 		super.readAdditional(compound);
-		this.setSummonTime(compound.getInt("zombie_summon_tick"));
-		this.walkCD = compound.getInt("zombie_walk_cd");
+		if(compound.contains("zombie_summon_tick")) {
+			this.setSummonTime(compound.getInt("zombie_summon_tick"));
+		}
+		if(compound.contains("zombie_walk_cd")) {
+			this.walkCD = compound.getInt("zombie_walk_cd");
+		}
 	}
 	
 	@Override

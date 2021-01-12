@@ -140,12 +140,4 @@ public class FragmentSpliceContainer extends AbstractOptionContainer {
 		return slot != null && slot.slotNumber > 0 && slot.slotNumber < 2 + 25;
 	}
 
-	@Override
-	public boolean clearCraftSlots() {
-//		for(int i = 2; i < this.te.handler.getSlots(); ++ i) {
-//			this.te.handler.setStackInSlot(i, ItemStack.EMPTY);
-//		}
-		return false;
-	}
-	
 }

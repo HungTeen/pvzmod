@@ -67,5 +67,5 @@ public class SunConverterBlock extends Block {
 			super.onReplaced(state, worldIn, pos, newState, isMoving);
 		}
 	}
-
+	
 }

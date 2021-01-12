@@ -17,14 +17,9 @@ public class LavaZombieEntity extends SwimmerZombieEntity{
 
 	public LavaZombieEntity(EntityType<? extends MonsterEntity> type, World worldIn) {
 		super(type, worldIn);
-	}
-	
-	@Override
-	protected void onZombieInitialSpawn() {
-		super.onZombieInitialSpawn();
 		this.setPathPriority(PathNodeType.LAVA, 1);
 	}
-
+	
 	@Override
 	protected void registerAttributes() {
 		super.registerAttributes();

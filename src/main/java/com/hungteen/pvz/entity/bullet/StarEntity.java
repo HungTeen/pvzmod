@@ -106,8 +106,13 @@ public class StarEntity extends AbstractBulletEntity {
 	@Override
 	public void readAdditional(CompoundNBT compound) {
 		super.readAdditional(compound);
-		this.setStarState(StarStates.values()[compound.getInt("star_state")]);
-		this.setStarType(StarTypes.values()[compound.getInt("star_type")]);
+		if(compound.contains("star_state")) {
+		    this.setStarState(StarStates.values()[compound.getInt("star_state")]);
+		}
+		if(compound.contains("star_type")) {
+			this.setStarType(StarTypes.values()[compound.getInt("star_type")]);
+		}
+		
 	}
 	
 	@Override

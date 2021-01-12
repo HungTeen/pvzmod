@@ -138,7 +138,9 @@ public abstract class PlantDefenderEntity extends PVZPlantEntity implements IDef
 	@Override
 	public void readAdditional(CompoundNBT compound) {
 		super.readAdditional(compound);
-		this.setDefenceLife(compound.getFloat("defence_life"));
+		if(compound.contains("defence_life")) {
+			this.setDefenceLife(compound.getFloat("defence_life"));
+		}
 	}
 	
 	@Override

@@ -114,7 +114,9 @@ public class TorchWoodEntity extends PVZPlantEntity implements ILightPlant {
 	@Override
 	public void readAdditional(CompoundNBT compound) {
 		super.readAdditional(compound);
-		this.setSuperFlame(compound.getBoolean("is_super_fire"));
+		if(compound.contains("is_super_fire")) {
+			this.setSuperFlame(compound.getBoolean("is_super_fire"));
+		}
 	}
 	
 	@Override

@@ -12,6 +12,6 @@ public abstract class AbstractOptionContainer extends Container {
 
 	public abstract boolean isCraftSlot(Slot slot);
 	
-	public abstract boolean clearCraftSlots();
+//	public abstract boolean clearCraftSlots();
 	
 }

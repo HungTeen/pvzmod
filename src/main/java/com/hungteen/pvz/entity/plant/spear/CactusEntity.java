@@ -193,8 +193,12 @@ public class CactusEntity extends PlantShooterEntity {
 	@Override
 	public void readAdditional(CompoundNBT compound) {
 		super.readAdditional(compound);
-		this.setCactusPowered(compound.getBoolean("cactus_powered"));
-		this.setCactusHeight(compound.getFloat("cactus_height"));
+		if(compound.contains("cactus_powered")) {
+			this.setCactusPowered(compound.getBoolean("cactus_powered"));
+		}
+		if(compound.contains("cactus_height")) {
+			this.setCactusHeight(compound.getFloat("cactus_height"));
+		}
 	}
 	
 	@Override

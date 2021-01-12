@@ -177,8 +177,12 @@ public class PeaEntity extends PVZItemBulletEntity {
 	@Override
 	public void readAdditional(CompoundNBT compound) {
 		super.readAdditional(compound);
-		this.setPeaState(State.values()[compound.getInt("peaState")]);
-		this.setPeaType(Type.values()[compound.getInt("peaType")]);
+		if(compound.contains("peaState")) {
+			this.setPeaState(State.values()[compound.getInt("peaState")]);
+		}
+		if(compound.contains("peaType")) {
+			this.setPeaType(Type.values()[compound.getInt("peaType")]);
+		}
 	}
 
 	@Override

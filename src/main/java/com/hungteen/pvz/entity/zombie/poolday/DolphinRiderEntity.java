@@ -2,7 +2,7 @@ package com.hungteen.pvz.entity.zombie.poolday;
 
 import com.hungteen.pvz.entity.ai.BreakBlockGoal;
 import com.hungteen.pvz.entity.ai.ZombieMeleeAttackGoal;
-import com.hungteen.pvz.entity.ai.PVZNearestTargetGoal;
+import com.hungteen.pvz.entity.ai.ZombieNearestTargetGoal;
 import com.hungteen.pvz.entity.zombie.PVZZombieEntity;
 import com.hungteen.pvz.register.BlockRegister;
 import com.hungteen.pvz.register.SoundRegister;
@@ -34,11 +34,6 @@ public class DolphinRiderEntity extends PVZZombieEntity{
 	
 	public DolphinRiderEntity(EntityType<? extends MonsterEntity> type, World worldIn) {
 		super(type, worldIn);
-	}
-	
-	@Override
-	protected void onZombieInitialSpawn() {
-		super.onZombieInitialSpawn();
 		setPathPriority(PathNodeType.WATER, 0);
 		this.jumpTick = 100;
 	}
@@ -56,7 +51,7 @@ public class DolphinRiderEntity extends PVZZombieEntity{
 		this.goalSelector.addGoal(7, new RandomWalkingGoal(this, 1.0D));
 		this.goalSelector.addGoal(0, new ZombieMeleeAttackGoal(this));
 		this.goalSelector.addGoal(2, new BreakBlockGoal(BlockRegister.LILY_PAD.get(), this, 1, 3));
-		this.targetSelector.addGoal(0, new PVZNearestTargetGoal(this, true, 80, 60));
+		this.targetSelector.addGoal(0, new ZombieNearestTargetGoal(this, true, 80, 60));
 	}
 	
 	@Override

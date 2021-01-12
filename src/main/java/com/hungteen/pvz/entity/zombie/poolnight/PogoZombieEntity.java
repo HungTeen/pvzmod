@@ -23,18 +23,13 @@ public class PogoZombieEntity extends PVZZombieEntity implements IHasMetal {
 	
 	public PogoZombieEntity(EntityType<? extends MonsterEntity> type, World worldIn) {
 		super(type, worldIn);
+		this.setPogo(true);
 	}
 	
 	@Override
 	protected void registerData() {
 		super.registerData();
 		this.dataManager.register(HAS_POGO, true);
-	}
-	
-	@Override
-	protected void onZombieInitialSpawn() {
-		super.onZombieInitialSpawn();
-		this.setPogo(true);
 	}
 
 	@Override
@@ -99,7 +94,9 @@ public class PogoZombieEntity extends PVZZombieEntity implements IHasMetal {
 	@Override
 	public void readAdditional(CompoundNBT compound) {
 		super.readAdditional(compound);
-		this.setPogo(compound.getBoolean("has_pogo"));
+		if(compound.contains("has_pogo")) {
+			this.setPogo(compound.getBoolean("has_pogo"));
+		}
 	}
 	
 	@Override

@@ -13,12 +13,13 @@ import com.hungteen.pvz.register.EntityRegister;
 import com.hungteen.pvz.utils.EntityUtil;
 import com.hungteen.pvz.utils.PlayerUtil;
 import com.hungteen.pvz.utils.ZombieUtil;
-import com.hungteen.pvz.utils.enums.Ranks;
+import com.hungteen.pvz.utils.enums.Events;
 import com.hungteen.pvz.utils.enums.Resources;
 import com.hungteen.pvz.utils.enums.Zombies;
 import com.hungteen.pvz.world.data.WorldEventData;
 
 import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.item.ItemStack;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.ChunkPos;
 import net.minecraft.util.math.MathHelper;
@@ -26,6 +27,7 @@ import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.TextFormatting;
 import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraft.world.Difficulty;
+import net.minecraft.world.LightType;
 import net.minecraft.world.World;
 import net.minecraft.world.dimension.DimensionType;
 import net.minecraft.world.gen.Heightmap;
@@ -40,6 +42,7 @@ public class WaveManager {
 	private final PlayerEntity player;
 	private final BlockPos center;
 	private final List<Zombies> spawns = new ArrayList<>(); 
+	private final List<Integer> spawnWeights = new ArrayList<>();
 	private final int[] minSpawnCounts = new int[] {8, 12, 16, 21, 28};
 	private final int[] maxSpawnCounts = new int[] {15, 20, 25, 32, 40};
 	public int spawnCnt = 0;
@@ -57,9 +60,9 @@ public class WaveManager {
 	 */
 	public static void tickWave(World world, int dayTime) {
 		if(world.getDifficulty() == Difficulty.PEACEFUL) return ;
-		world.getPlayers().forEach((player)->{
+		world.getPlayers().forEach((player) -> {
 			if(PlayerUtil.isPlayerSurvival(player)) {
-				player.getCapability(CapabilityHandler.PLAYER_DATA_CAPABILITY).ifPresent((l)->{
+				player.getCapability(CapabilityHandler.PLAYER_DATA_CAPABILITY).ifPresent((l) -> {
 			        PlayerDataManager.OtherStats stats = l.getPlayerData().getOtherStats();
 			        for(int i = 0 ; i < stats.zombieWaveTime.length; ++ i) {
 				        int time = stats.zombieWaveTime[i];
@@ -79,33 +82,27 @@ public class WaveManager {
 	
 	public void spawnWaveZombies() {
 		if(world.getDimension().getType() != DimensionType.OVERWORLD) return ;
-		BlockPos mid = this.findRandomSpawnPos(20);
-		if(mid == null) {// no position do not spawn.
-			return ;
-		}
-		PlayerUtil.playClientSound(player, 2);
-		PlayerUtil.sendSubTitleToPlayer(player, HUGE_WAVE);
-//		System.out.println(mid);
-		int cnt = this.getSpawnCount();
-		List<Integer> spawnChances = new ArrayList<>();
 		int now = 0;
 		for(int i = 0; i < this.spawns.size(); ++ i) {
 			Zombies zombie = this.spawns.get(i);
-			Ranks rank = ZombieUtil.getZombieRank(zombie);
-			now += (Ranks.values().length - rank.ordinal()) * (Ranks.values().length - rank.ordinal());
-			spawnChances.add(now);
+			now += zombie.spawnWeight;
+			this.spawnWeights.add(now);
 		}
-		for(int i = 0; i < cnt; ++ i) {
-			int tmp = this.world.rand.nextInt(now);
-			for(int j = 0; j < spawnChances.size(); ++ j) {
-				if(tmp < spawnChances.get(j)) {
-					this.spawnZombie(this.spawns.get(j), mid);
-					break;
-				}
-			}
+		if(now == 0) return;
+		int cnt = this.getSpawnCount();
+		boolean spawned = false;
+		while(cnt >= 10) {
+			int teamCnt = (cnt < 15 ? cnt : 10);
+			spawned |= this.spawnZombieTeam(now, teamCnt);
+			cnt -= teamCnt;
 		}
-		PVZZombieEntity flagZombie = EntityRegister.FLAG_ZOMBIE.get().create(world);
-		EntityUtil.onMobEntitySpawn(world, flagZombie, mid.add(0, 1, 0));
+		if(cnt > 0) {
+			spawned |=this.spawnZombieTeam(now, cnt);
+		}
+		if(spawned) {
+			PlayerUtil.playClientSound(player, 2);
+		    PlayerUtil.sendSubTitleToPlayer(player, HUGE_WAVE);
+		}
 	}
 	
 	/**
@@ -133,11 +130,50 @@ public class WaveManager {
 		});
 	}
 	
+	public static void giveInvasionBonusToPlayer(World world, PlayerEntity player) {
+		player.getCapability(CapabilityHandler.PLAYER_DATA_CAPABILITY).ifPresent((l) -> {
+			PlayerUtil.playClientSound(player, 6);
+			PlayerUtil.addPlayerStats(player, Resources.MONEY, 50);
+			int cnt = l.getPlayerData().getPlayerStats().getPlayerStats(Resources.KILL_COUNT);
+			if(cnt >= 20) {
+				player.addItemStackToInventory(getRandomItemForPlayer(world));
+			}
+			l.getPlayerData().getPlayerStats().setPlayerStats(Resources.KILL_COUNT, 0);
+		});
+	}
+	
+	private static ItemStack getRandomItemForPlayer(World world) {
+		WorldEventData data = WorldEventData.getOverWorldEventData(world);
+		for(Events ev : Events.values()) {
+			if(data.hasEvent(ev) && ev.bundle.isPresent()) {
+				return ev.bundle.get().getRandomBundle();
+			}
+		}
+		return ItemStack.EMPTY;
+	}
+	
+	private boolean spawnZombieTeam(int sum, int cnt) {
+		BlockPos mid = this.findRandomSpawnPos(20);
+		if(mid == null) return false; // no position do not spawn.
+		for(int i = 0; i < cnt; ++ i) {
+			int tmp = this.world.rand.nextInt(sum);
+			for(int j = 0; j < this.spawnWeights.size(); ++ j) {
+				if(tmp < this.spawnWeights.get(j)) {
+					this.spawnZombie(this.spawns.get(j), mid);
+					break;
+				}
+			}
+		}
+		PVZZombieEntity flagZombie = EntityRegister.FLAG_ZOMBIE.get().create(world);
+		EntityUtil.onMobEntitySpawn(world, flagZombie, mid.add(0, 1, 0));
+		return true;
+	}
+	
 	private void spawnZombie(Zombies zombie, BlockPos pos) {
 		int range = 11;
 		int x = pos.getX() + this.world.rand.nextInt(range) - range / 2;
 		int z = pos.getZ() + this.world.rand.nextInt(range) - range / 2;
-		int y = this.world.getHeight(Type.WORLD_SURFACE, x, z);
+		int y = this.world.getHeight(Type.MOTION_BLOCKING_NO_LEAVES, x, z);
 		PVZZombieEntity zombieEntity = ZombieUtil.getZombieEntity(world, zombie);
 		EntityUtil.onMobEntitySpawn(world, zombieEntity, new BlockPos(x, y + 1, z));
 	}
@@ -172,7 +208,10 @@ public class WaveManager {
 			BlockPos pos = new BlockPos(x, y, z);
 			if (this.world.isAreaLoaded(pos.add(-range, -range, -range), pos.add(range, range, range))
 					&& this.world.getChunkProvider().isChunkLoaded(new ChunkPos(pos))) {
-				return pos;
+//				System.out.println(world.getBlockState(pos.down()));
+				if(world.getBlockState(pos.down()).getFluidState().isEmpty() && world.getLightFor(LightType.BLOCK, pos) < 7) {
+					return pos;
+				}
 			}
 		}
 		return null;

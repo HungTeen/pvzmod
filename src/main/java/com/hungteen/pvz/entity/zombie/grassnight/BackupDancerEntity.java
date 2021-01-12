@@ -82,8 +82,12 @@ public class BackupDancerEntity extends UnderGroundZombieEntity{
     @Override
     public void readAdditional(CompoundNBT compound) {
     	super.readAdditional(compound);
-    	this.ownerId = compound.getInt("dancer_owner_id");
-    	this.walkCD = compound.getInt("zombie_walk_cd");
+    	if(compound.contains("dancer_owner_id")) {
+    		this.ownerId = compound.getInt("dancer_owner_id");
+    	}
+    	if(compound.contains("zombie_walk_cd")) {
+    		this.walkCD = compound.getInt("zombie_walk_cd");
+    	}
     }
     
     @Override
