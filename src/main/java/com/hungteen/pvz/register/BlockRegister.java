@@ -14,6 +14,7 @@ import com.hungteen.pvz.block.plants.ToxicShroomBlock;
 import com.hungteen.pvz.block.special.FlowerPotBlock;
 import com.hungteen.pvz.block.special.FragmentSpliceBlock;
 import com.hungteen.pvz.block.special.LanternBlock;
+import com.hungteen.pvz.block.special.SlotMachineBlock;
 import com.hungteen.pvz.block.special.SunConverterBlock;
 import com.hungteen.pvz.item.blockitem.LilyPadItem;
 import com.hungteen.pvz.world.feature.tree.NutTree;
@@ -82,6 +83,7 @@ public class BlockRegister {
 	//gui & te block
 	public static final RegistryObject<SunConverterBlock> SUN_CONVERTER = BLOCKS.register("sun_converter", SunConverterBlock::new);
 	public static final RegistryObject<FragmentSpliceBlock> FRAGMENT_SPLICE = BLOCKS.register("fragment_splice", FragmentSpliceBlock::new);
+	public static final RegistryObject<SlotMachineBlock> SLOT_MACHINE = BLOCKS.register("slot_machine", SlotMachineBlock::new);
 	
 	/**
 	 * 注册itemblock
@@ -94,7 +96,7 @@ public class BlockRegister {
 				STEEL_BLOCK, AMETHYST_BLOCK, ORIGIN_BLOCK,
 				NUT_LEAVES, NUT_SAPLING, CHOMPER, LILY_PAD,
 				LANTERN, FLOWER_POT,
-				SUN_CONVERTER, FRAGMENT_SPLICE
+				SUN_CONVERTER, FRAGMENT_SPLICE, SLOT_MACHINE
 		);
 		for(RegistryObject<? extends Block> block:blocks) {
 			if(block == LILY_PAD) {

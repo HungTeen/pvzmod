@@ -43,6 +43,9 @@
     "item.pvz.chocolate":"巧克力",
     "item.pvz.pea_soup":"豌豆羹",
     "item.pvz.cooked_brain":"熟脑子",
+    "item.pvz.sun_storage_sapling":"储光树苗",
+    "item.pvz.sun_storage_sapling2":"小型储光树苗",
+    "item.pvz.car_key":"车钥匙",
 //entity &刷怪蛋 & card  
 //drop
     "entity.pvz.sun":"阳光",
@@ -67,6 +70,8 @@
     "item.pvz.crazy_dave_spawn_egg":"疯狂戴夫刷怪蛋", 
     "entity.pvz.panney":"潘妮",
     "item.pvz.panney_spawn_egg":"潘妮刷怪蛋", 
+    "entity.pvz.sun_dave":"阳光戴夫",
+    "item.pvz.sun_dave_spawn_egg":"阳光戴夫刷怪蛋", 
 //zombie
     "entity.pvz.normal_zombie":"普通僵尸",
     "item.pvz.normal_zombie_spawn_egg":"普通僵尸刷怪蛋",
@@ -329,11 +334,12 @@
     "item.pvz.strange_cat_spawn_egg":"奇怪猫刷怪蛋",
     "item.pvz.strange_cat_card":"奇怪猫卡",
     "item.pvz.strange_cat_enjoy_card":"奇怪猫体验卡",
-//tool & tooltip
+//tooltip
     "tooltip.pvz.zombie_flag":"右键会获得加速效果",
     "tooltip.pvz.summon_card":"右键方块召唤植物或僵尸",
     "tooltip.pvz.sun_cost":"阳光消耗",
     "tooltip.pvz.pea_gun":"主手右键发射豌豆,副手右键打开界面",
+    "tooltip.pvz.sun_storage_amount":"阳光储量",
 //armor
     "item.pvz.cone_head":"路障头盔",
     "item.pvz.bucket_head":"铁桶头盔",
@@ -350,6 +356,11 @@
     "item.pvz.pea_gun":"豌豆枪",
     "item.pvz.screen_door":"铁门盾牌",
     "item.pvz.sun_collector":"阳光收集器",
+    "item.pvz.steel_sword":"钢剑",
+    "item.pvz.steel_axe":"钢斧",
+    "item.pvz.steel_pickaxe":"钢镐",
+    "item.pvz.steel_shovel":"钢铲",
+    "item.pvz.steel_hoe":"钢锄",
 //block
 //ore
     "block.pvz.origin_ore":"原始精华矿",
@@ -380,6 +391,12 @@
     "block.pvz.nut_sapling":"坚果树苗",
     "block.pvz.nut_leaves":"坚果树叶",
     "block.pvz.chomper":"食人花",
+//special
+    "block.pvz.lantern":"路灯",
+    "block.pvz.flower_pot":"花盆",
+    "block.pvz.sun_converter":"阳光转化器",
+    "block.pvz.fragment_splice":"碎片合成器",
+    "block.pvz.slot_machine":"老虎机",
 //gui
 //strange help
     "gui.pvz.strange_help":"<<植物大战僵尸mod帮助>>",
@@ -402,6 +419,13 @@
     "gui.pvz.dave_shop.gatling_pea_card1":"双枪射手的升级版，一次发射4个豌豆",
     "gui.pvz.dave_shop.twin_sunflower_card":"双向向日葵",
     "gui.pvz.dave_shop.twin_sunflower_card1":"向日葵的升级版，一次生产双倍阳光",
+//fragment splice
+    "gui.pvz.fragment_splice":"合成",
+//slot machine
+    "gui.pvz.slot_machine":"抽奖",
+    "gui.pvz.slot_machine.left":"剩余次数",
+    "gui.pvz.slot_machine.cost":"抽奖花费",
+    "gui.pvz.slot_machine.sun":"阳光数",
 //almanac
     "gui.pvz.almanac.lvl":"等级",
     "gui.pvz.almanac.health":"血量",
@@ -556,6 +580,19 @@
     "sound.pvz.plant_in_water":"水中种植物",
     "sound.pvz.paper_gone":"报纸损坏",
     "sound.pvz.charm":"魅惑",
+    "sound.pvz.warn":"警报",
+    "sound.pvz.jack_say":"玩偶匣",
+    "sound.pvz.jack_surprise":"惊吓",
+    "sound.pvz.pogo":"弹簧",
+    "sound.pvz.plantern":"照明",
+    "sound.pvz.magnet":"磁力",
+    "sound.pvz.balloon_full":"充气",
+    "sound.pvz.balloon_pop":"气球扎破",
+    "sound.pvz.bruh":"猫猫叹气",
+    "sound.pvz.blover":"风",
+    "sound.pvz.win_music":"入侵结束",
+    "sound.pvz.slot_machine":"老虎机",
+    "sound.pvz.lose_music":"失败",
 //advancement
     "advancement.pvz.root":"植物大战僵尸",
     "advancement.pvz.root.desc":"安装植物大战僵尸mod并进入主世界",
@@ -573,12 +610,17 @@
     "advancement.pvz.almanac.desc":"获得植物图鉴",
     "advancement.pvz.breed_zombie":"僵尸饲养员",
     "advancement.pvz.breed_zombie.desc":"繁殖一只吃货僵尸",
+    "advancement.pvz.steel":"百炼成钢",
+    "advancement.pvz.steel.desc":"将铁锭烧成钢锭",
 //enchantment
     "enchantment.pvz.sun_cost_reduce":"节能",
     "enchantment.pvz.break_out":"爆发",
     "enchantment.pvz.energy_transfer":"充能",
     "enchantment.pvz.tree_protection":"树之庇护",
     "enchantment.pvz.charm":"魅惑",
+    "enchantment.pvz.sun_shovel":"阳光铲",
+    "enchantment.pvz.sun_mending":"阳光修补",
+    "enchantment.pvz.soilless_plant":"无土栽培",
 //effect
     "effect.pvz.cold":"寒冷",
     "effect.pvz.frozen":"冰封",
@@ -602,6 +644,7 @@
 //event
     "event.pvz.zombie_attack":"僵尸即将到来",
     "event.pvz.huge_wave":"一大波僵尸正在来袭 !",
+    "event.pvz.attack_finish":"僵尸入侵结束",
     "event.pvz.bucket":"铁桶入侵",
     "event.pvz.water":"水域入侵",
     "event.pvz.halloween":"万圣节入侵",
@@ -621,6 +664,7 @@
     "death.attack.pvz_crush":"%s被压扁了",
     "death.attack.pvz_through":"%s的身体被贯穿而亡",
     "death.attack.chomper_plant":"%s被食人花咬死了",
+    "death.attack.thorn":"%s被刺穿胸膛",
 //itemGroup
     "itemGroup.pvz_misc":"PVZ杂项",
     "itemGroup.pvz_card":"PVZ召唤卡",

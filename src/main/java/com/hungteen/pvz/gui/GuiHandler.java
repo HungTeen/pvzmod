@@ -7,5 +7,6 @@ public class GuiHandler {
 	public static final int SUN_SHOP = 3;
 	public static final int PENNY_SHOP = 4;
 	public static final int FRAGMENT_SPLICE = 5;
+	public static final int SLOT_MACHINE = 6;
 	
 }

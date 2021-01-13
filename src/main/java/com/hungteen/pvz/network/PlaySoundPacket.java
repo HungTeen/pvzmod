@@ -48,7 +48,11 @@ public class PlaySoundPacket {
 		    		sound = SoundRegister.COIN_PICK.get();
 		    	} else if(id == 7) {
 		    		sound = SoundRegister.JEWEL_PICK.get();
-		    	} 
+		    	} else if(id == 8) {
+		    		sound = SoundRegister.SLOT_MACHINE.get();
+		    	} else if(id == 9) {
+		    		sound = SoundRegister.PLANT_GROW.get();
+		    	}
 		    	if(sound != null) {
 		    		Minecraft.getInstance().player.playSound(sound, 1f, 1f);
 		    	}

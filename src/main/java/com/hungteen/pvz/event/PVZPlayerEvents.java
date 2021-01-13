@@ -9,6 +9,7 @@ import com.hungteen.pvz.capability.player.ClientPlayerResources;
 import com.hungteen.pvz.capability.player.PlayerDataManager;
 import com.hungteen.pvz.capability.player.PlayerDataManager.PlayerStats;
 import com.hungteen.pvz.entity.plant.PVZPlantEntity;
+import com.hungteen.pvz.event.events.PlayerLevelUpEvent;
 import com.hungteen.pvz.event.events.SummonCardUseEvent;
 import com.hungteen.pvz.event.handler.PlayerEventHandler;
 import com.hungteen.pvz.gui.search.SearchOption;
@@ -149,6 +150,14 @@ public class PVZPlayerEvents {
 					PlayerEventHandler.onPlantShovelByPlayer(player, plant, stack);
 				}
 			}
+		}
+	}
+	
+	@SubscribeEvent
+	public static void onPlayerLevelUp(PlayerLevelUpEvent ev) {
+		if(! ev.getPlayer().world.isRemote) {
+			PlayerUtil.playClientSound(ev.getPlayer(), 9);
+		    PlayerUtil.addPlayerStats(ev.getPlayer(), Resources.LOTTERY_CHANCE, 3);
 		}
 	}
 	

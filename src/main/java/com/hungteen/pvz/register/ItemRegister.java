@@ -151,6 +151,8 @@ public class ItemRegister {
     public static final RegistryObject<PlantCardItem> GLOOM_SHROOM_ENJOY_CARD = registerCard(Plants.GLOOM_SHROOM, true);
     public static final RegistryObject<PlantCardItem> CAT_TAIL_CARD = registerCard(Plants.CAT_TAIL, false);
     public static final RegistryObject<PlantCardItem> CAT_TAIL_ENJOY_CARD = registerCard(Plants.CAT_TAIL, true);
+    public static final RegistryObject<PlantCardItem> GOLD_MAGNET_CARD = registerCard(Plants.GOLD_MAGNET, false);
+    public static final RegistryObject<PlantCardItem> GOLD_MAGNET_ENJOY_CARD = registerCard(Plants.GOLD_MAGNET, true);
     public static final RegistryObject<PlantCardItem> WATER_GUARD_CARD = registerCard(Plants.WATER_GUARD, false);
     public static final RegistryObject<PlantCardItem> WATER_GUARD_ENJOY_CARD = registerCard(Plants.WATER_GUARD, true);
     public static final RegistryObject<PlantCardItem> STRANGE_CAT_CARD = registerCard(Plants.STRANGE_CAT, false);
@@ -182,6 +184,7 @@ public class ItemRegister {
 	public static final RegistryObject<Item> SCREEN_DOOR = ITEMS.register("screen_door", ScreenDoorItem::new);
 	public static final RegistryObject<Item> SUN_COLLECTOR = ITEMS.register("sun_collector", SunCollectorItem::new);
 	public static final RegistryObject<Item> SUN_STORAGE_SAPLING = ITEMS.register("sun_storage_sapling", () -> new SunStorageSaplingItem(10000));
+	public static final RegistryObject<Item> SUN_STORAGE_SAPLING2 = ITEMS.register("sun_storage_sapling2", () -> new SunStorageSaplingItem(1000));
 	
 	//armor
 	public static final RegistryObject<Item> CONE_HEAD = ITEMS.register("cone_head", ()->new ConeArmorItem(ArmorMaterial.LEATHER, EquipmentSlotType.HEAD));
@@ -295,6 +298,7 @@ public class ItemRegister {
 	public static final RegistryObject<PVZSpawnEggItem> TWIN_SUNFLOWER_SPAWN_EGG = registerSpawnEgg("twin_sunflower", EntityRegister.TWIN_SUNFLOWER, Colors.LIGHT_COLOR);
 	public static final RegistryObject<PVZSpawnEggItem> GLOOM_SHROOM_SPAWN_EGG = registerSpawnEgg("gloom_shroom", EntityRegister.GLOOM_SHROOM, Colors.TOXIC_COLOR);
 	public static final RegistryObject<PVZSpawnEggItem> CAT_TAIL_SPAWN_EGG = registerSpawnEgg("cat_tail", EntityRegister.CAT_TAIL, Colors.SPEAR_COLOR);
+	public static final RegistryObject<PVZSpawnEggItem> GOLD_MAGNET_SPAWN_EGG = registerSpawnEgg("gold_magnet", EntityRegister.GOLD_MAGNET, Colors.ASSIST_COLOR);
 	public static final RegistryObject<PVZSpawnEggItem> WATER_GUARD_SPAWN_EGG = registerSpawnEgg("water_guard", EntityRegister.WATER_GUARD, Colors.DEFENCE_COLOR);
 	public static final RegistryObject<PVZSpawnEggItem> STRANGE_CAT_SPAWN_EGG = registerSpawnEgg("strange_cat", EntityRegister.STRANGE_CAT, Colors.MAGIC_COLOR);
 	public static final RegistryObject<PVZSpawnEggItem> ANGEL_STAR_FRUIT_SPAWN_EGG = registerSpawnEgg("angel_star_fruit", EntityRegister.ANGEL_STAR_FRUIT, Colors.APPEASE_COLOR);

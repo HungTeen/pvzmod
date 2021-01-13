@@ -6,6 +6,7 @@ import com.hungteen.pvz.gui.GuiHandler;
 import com.hungteen.pvz.gui.container.DaveShopContainer;
 import com.hungteen.pvz.gui.container.FragmentSpliceContainer;
 import com.hungteen.pvz.gui.container.PlayerInventoryContainer;
+import com.hungteen.pvz.gui.container.SlotMachineContainer;
 import com.hungteen.pvz.gui.container.SunShopContainer;
 import com.hungteen.pvz.utils.TradeUtil.DaveGoods;
 
@@ -65,6 +66,11 @@ public class ClickButtonPacket {
 						} else if(message.op == 1) {
 							container.canPutStackBackToInventory();
 						}
+					}
+				} else if(message.type == GuiHandler.SLOT_MACHINE) {
+					if(player.openContainer instanceof SlotMachineContainer) {
+						SlotMachineContainer container = (SlotMachineContainer) player.openContainer;
+						container.te.startRun();
 					}
 				}
 			});

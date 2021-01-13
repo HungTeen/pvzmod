@@ -36,7 +36,7 @@ public class JewelEntity extends DropEntity{
 	
 	@Override
 	public void onCollideWithPlayer(PlayerEntity entityIn) {
-		if(!this.world.isRemote) {
+		if(! this.world.isRemote) {
 			PlayerUtil.addPlayerStats(entityIn, Resources.GEM_NUM, this.getAmount());
 		}
 		else {

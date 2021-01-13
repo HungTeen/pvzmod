@@ -43,6 +43,9 @@
     "item.pvz.chocolate":"Chocolate",
     "item.pvz.pea_soup":"Pea Soup",
     "item.pvz.cooked_brain":"Cooked Brain",
+    "item.pvz.sun_storage_sapling":"Sun Storage Sapling",
+    "item.pvz.sun_storage_sapling2":"Small Sun Storage Sapling",
+    "item.pvz.car_key":"Car Key",
 //entity & spawn egg & card
 //drop
     "entity.pvz.sun":"Sun",
@@ -66,7 +69,9 @@
     "entity.pvz.crazy_dave":"Crazy Dave",
     "item.pvz.crazy_dave_spawn_egg":"Crazy Dave Spawn Egg", 
     "entity.pvz.panney":"Penny",
-    "item.pvz.panney_spawn_egg":"Penny Spawn Egg", 
+    "item.pvz.panney_spawn_egg":"Penny Spawn Egg",
+    "entity.pvz.sun_dave":"Sun Dave",
+    "item.pvz.sun_dave_spawn_egg":"Sun Dave Spawn Egg",  
 //zombie
     "entity.pvz.normal_zombie":"Normal Zombie",
     "item.pvz.normal_zombie_spawn_egg":"Normal Zombie Spawn Egg", 
@@ -334,6 +339,7 @@
     "tooltip.pvz.summon_card":"Right Click to Summon Plant or Zombie",
     "tooltip.pvz.sun_cost":"Sun Cost",
     "tooltip.pvz.pea_gun":"Main hand right click to shoot,off hand to open gui",
+    "tooltip.pvz.sun_storage_amount":"Sun Amount",
 //armor
     "item.pvz.cone_head":"Cone Head",
     "item.pvz.bucket_head":"Bucket Head",
@@ -350,6 +356,11 @@
     "item.pvz.pea_gun":"Pea Gun",
     "item.pvz.screen_door":"ScreenDoor Shield",
     "item.pvz.sun_collector":"Sun Collector",
+    "item.pvz.steel_sword":"Steel Sword",
+    "item.pvz.steel_axe":"Steel Axe",
+    "item.pvz.steel_pickaxe":"Steel Pickaxe",
+    "item.pvz.steel_shovel":"Steel Shovel",
+    "item.pvz.steel_hoe":"Steel Hoe",
 //block
 //ore
     "block.pvz.origin_ore":"Origin Ore",
@@ -372,6 +383,12 @@
     "block.pvz.steel_block":"Steel Block",
     "block.pvz.amethyst_block":"Amethyst Block",
     "block.pvz.origin_block":"Origin Block",
+//special
+    "block.pvz.lantern":"Lantern",
+    "block.pvz.flower_pot":"Flower Pot",
+    "block.pvz.sun_converter":"Sun Converter",
+    "block.pvz.fragment_splice":"Fragment Splicer",
+    "block.pvz.slot_machine":"Slot Machine",
 //crop
     "block.pvz.pea_plant":"Pea",
     "item.pvz.nut":"Nut",
@@ -402,6 +419,13 @@
     "gui.pvz.dave_shop.gatling_pea_card1":"Upgrade of Repeater, shoot 4 peas at a time.",
     "gui.pvz.dave_shop.twin_sunflower_card":"Twin Sunflower",
     "gui.pvz.dave_shop.twin_sunflower_card1":"Upgrade of Sunflower, gen double sun at a time",
+//fragment splice
+    "gui.pvz.fragment_splice":"Craft",
+//slot machine
+    "gui.pvz.slot_machine":"Start",
+    "gui.pvz.slot_machine.left":"Left Chance",
+    "gui.pvz.slot_machine.cost":"Cost",
+    "gui.pvz.slot_machine.sun":"SunNum",
 //almanac
     "gui.pvz.almanac.lvl":"Level",
     "gui.pvz.almanac.health":"Health",
@@ -551,6 +575,19 @@
     "sound.pvz.plant_in_water":"Water Plant",
     "sound.pvz.paper_gone":"Papar Rip",
     "sound.pvz.charm":"Charm",
+    "sound.pvz.warn":"Warn",
+    "sound.pvz.jack_say":"Jack Box",
+    "sound.pvz.jack_surprise":"Surprise",
+    "sound.pvz.pogo":"Pogo",
+    "sound.pvz.plantern":"Lighten",
+    "sound.pvz.magnet":"Magnet",
+    "sound.pvz.balloon_full":"Balloon",
+    "sound.pvz.balloon_pop":"Balloon pop",
+    "sound.pvz.bruh":"Bruh",
+    "sound.pvz.blover":"Wind",
+    "sound.pvz.win_music":"Win",
+    "sound.pvz.slot_machine":"Slot Machine",
+    "sound.pvz.lose_music":"Lose",
 //advancement
     "advancement.pvz.root":"Plants vs Zombies",
     "advancement.pvz.root.desc":"install Plants vs Zombies mod and join in world",
@@ -568,12 +605,17 @@
     "advancement.pvz.almanac.desc":"Obtain almanac",
     "advancement.pvz.breed_zombie":"Zombie Breeder",
     "advancement.pvz.breed_zombie.desc":"Breed FoodieZombie",
+    "advancement.pvz.steel":"Tempered into a steel",
+    "advancement.pvz.steel.desc":"smelt iron ingot to steel ingot",
 //enchantment
     "enchantment.pvz.sun_cost_reduce":"Sun Reduce",
     "enchantment.pvz.break_out":"Break Out",
     "enchantment.pvz.energy_transfer":"Energy Transfer",
     "enchantment.pvz.tree_protection":"Tree Protection",
     "enchantment.pvz.charm":"Charm",
+    "enchantment.pvz.sun_shovel":"Sun Shovel",
+    "enchantment.pvz.sun_mending":"Sun Mending",
+    "enchantment.pvz.soilless_plant":"Soilless Plant",
 //effect
     "effect.pvz.cold":"Cold",
     "effect.pvz.frozen":"Frozen",
@@ -597,6 +639,7 @@
 //event
     "event.pvz.zombie_attack":"Zombies are coming.",
     "event.pvz.huge_wave":"A huge wave of zombies are coming !",
+    "event.pvz.attack_finish":"Zombie Invasion finished .",
     "event.pvz.bucket":"Bucket Invasion",
     "event.pvz.water":"Water Invasion",
     "event.pvz.halloween":"Halloween Invasion",
@@ -605,7 +648,7 @@
     "event.pvz.random":"Random Invasion",
     "event.pvz.fog":"Fog Invasion",
 //death
-"death.attack.pvz_normal":"%s was killed",
+    "death.attack.pvz_normal":"%s was killed",
     "death.attack.pvz_weak":"%s weak to death",
     "death.attack.pvz_appease":"%s was shooted by bullet",
     "death.attack.pvz_eat":"%s's brain was eaten",
@@ -616,6 +659,7 @@
     "death.attack.pvz_crush":"%s was crushed",
     "death.attack.pvz_through":"%s was killed",
     "death.attack.chomper_plant":"%s was eat by chomper",
+    "death.attack.thorn":"%s was killed by thorn",
 //itemGroup
     "itemGroup.pvz_misc":"PVZ Misc",
     "itemGroup.pvz_card":"PVZ Card",

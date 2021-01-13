@@ -132,10 +132,11 @@ public class WaveManager {
 	
 	public static void giveInvasionBonusToPlayer(World world, PlayerEntity player) {
 		player.getCapability(CapabilityHandler.PLAYER_DATA_CAPABILITY).ifPresent((l) -> {
-			PlayerUtil.playClientSound(player, 6);
-			PlayerUtil.addPlayerStats(player, Resources.MONEY, 50);
 			int cnt = l.getPlayerData().getPlayerStats().getPlayerStats(Resources.KILL_COUNT);
 			if(cnt >= 20) {
+				PlayerUtil.playClientSound(player, 6);
+				PlayerUtil.addPlayerStats(player, Resources.MONEY, 50);
+				PlayerUtil.addPlayerStats(player, Resources.LOTTERY_CHANCE, 2);
 				player.addItemStackToInventory(getRandomItemForPlayer(world));
 			}
 			l.getPlayerData().getPlayerStats().setPlayerStats(Resources.KILL_COUNT, 0);

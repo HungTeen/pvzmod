@@ -39,7 +39,9 @@ public abstract class DropEntity extends MobEntity {
 		super.tick();
 		this.noClip = this.getDropState() != DropStates.NORMAL;
 		if(! world.isRemote) {
-			++ this.liveTime;
+			if(this.getDropState() == DropStates.NORMAL) {
+				++ this.liveTime;
+			}
 		    if(this.liveTime >= this.getMaxLiveTick()) {
 			    this.remove();
 		    }

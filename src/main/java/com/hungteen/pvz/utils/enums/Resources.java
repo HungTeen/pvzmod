@@ -11,5 +11,6 @@ public enum Resources {
 	MAX_ENERGY_NUM,
 	SLOT_NUM,
 	NO_FOG_TICK,
-	KILL_COUNT
+	KILL_COUNT,
+	LOTTERY_CHANCE
 }

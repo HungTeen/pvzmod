@@ -4,6 +4,7 @@ package com.hungteen.pvz.capability.player;
 import java.util.EnumMap;
 import java.util.HashMap;
 
+import com.hungteen.pvz.event.events.PlayerLevelUpEvent;
 import com.hungteen.pvz.network.PVZPacketHandler;
 import com.hungteen.pvz.network.PlantStatsPacket;
 import com.hungteen.pvz.network.PlayerStatsPacket;
@@ -17,6 +18,7 @@ import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.util.math.MathHelper;
+import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.fml.network.PacketDistributor;
 
 
@@ -87,6 +89,7 @@ public class PlayerDataManager {
 				else if(res == Resources.MAX_ENERGY_NUM) resources.put(res, 1);
 				else if(res == Resources.SUN_NUM) resources.put(res, 50);
 				else if(res == Resources.SLOT_NUM) resources.put(res, 18);
+				else if(res == Resources.LOTTERY_CHANCE) resources.put(res, 10);
 				else resources.put(res,0);
 			}
 		}
@@ -145,7 +148,7 @@ public class PlayerDataManager {
 			this.sendPacket(player, res);
 		}
 		
-		private void addTreeXp(int num){
+		private void addTreeXp(int num) {
 			int lvl = resources.get(Resources.TREE_LVL);
 			int now = resources.get(Resources.TREE_XP);
 			if(num > 0) {
@@ -153,7 +156,7 @@ public class PlayerDataManager {
 				while(lvl < PlayerUtil.MAX_TREE_LVL && num + now >= req) {
 					num -= req - now;
 					this.addPlayerStats(Resources.TREE_LVL, 1);
-					++ lvl;
+					MinecraftForge.EVENT_BUS.post(new PlayerLevelUpEvent(player, ++ lvl));
 					now = 0;
 					req = PlayerUtil.getPlayerLevelUpXp(lvl);
 				}

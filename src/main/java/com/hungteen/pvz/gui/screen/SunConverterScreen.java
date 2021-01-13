@@ -1,12 +1,15 @@
 package com.hungteen.pvz.gui.screen;
 
 import com.hungteen.pvz.gui.container.SunConverterContainer;
+import com.hungteen.pvz.utils.StringUtil;
+import com.hungteen.pvz.utils.enums.Colors;
 import com.mojang.blaze3d.systems.RenderSystem;
 
 import net.minecraft.client.gui.screen.inventory.ContainerScreen;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.text.ITextComponent;
+import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 
@@ -33,6 +36,7 @@ public class SunConverterScreen extends ContainerScreen<SunConverterContainer> {
 	@Override
 	public void render(int mouseX, int mouseY, float partialTicks) {
 		super.render(mouseX, mouseY, partialTicks);
+		StringUtil.drawCenteredScaledString(font, new TranslationTextComponent("block.pvz.sun_converter").getFormattedText(), this.guiLeft + this.xSize / 2, this.guiTop + 4, Colors.BLACK, 1F);
 		renderHoveredToolTip(mouseX, mouseY);
 	}
 	

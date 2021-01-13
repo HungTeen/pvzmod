@@ -152,6 +152,11 @@ public class MagnetShroomEntity extends PVZPlantEntity {
 	}
 
 	@Override
+	public Plants getUpgradePlantType() {
+		return Plants.GOLD_MAGNET;
+	}
+	
+	@Override
 	public EntitySize getSize(Pose poseIn) {
 		return EntitySize.flexible(0.5f, 1.3f);
 	}

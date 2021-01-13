@@ -30,7 +30,7 @@ public class SunConverterTileEntity extends TileEntity implements ITickableTileE
 	public final ItemStackHandler handler = new ItemStackHandler(9);
 	public final IIntArray array = new IntArray(1);
 	private final Set<SunEntity> sunSet = new HashSet<>();
-	private final int MaxSearchTick = 50;
+	private final int MaxSearchTick = 60;
 	private final double MaxSearchRange = 10;
 	private int absorbPos = - 1;
 	public int tickExist = 0;
