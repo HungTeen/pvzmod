@@ -13,8 +13,8 @@
         },
         {
             "type": "crafting",
-            "recipe": "pvz:blue_card",
-            "title": "Card Example",
+            "recipe": "pvz:card/model/blue_card",
+            "title": "卡的模板",
             "text": "模板的合成就是中间一个原始精华，外面一圈特定材料"
         },
         {
@@ -36,7 +36,7 @@
         {
             "type": "crafting",
             "recipe": "pvz:card/pea_shooter_card",
-            "title": "PeaShooter Card",
+            "title": "豌豆射手卡",
             "text": "以$(#ff0000)豌豆射手卡$()为例，豌豆射手是$(l)灰色品质、喷射属性$()的生物。所以其合成需要$(l)豌豆、灰卡模板和喷射精华$()。"
         }
     ],

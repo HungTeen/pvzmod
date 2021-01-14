@@ -22,7 +22,7 @@ public class PVZConfig {
 					
 					WorldSettings.WorldEventSettings.ZombieAttackChance = builder
 						    .comment("The chance related to zombie attack event. the bigger the more chance it has(chance/100).")
-						    .defineInRange("ZombieAttackChance", 90, 0, 100);
+						    .defineInRange("ZombieAttackChance", 60, 0, 100);
 					
 					WorldSettings.WorldEventSettings.SpawnWeightIncDuration = builder
 							.comment("How many day will the spawn weight of zombie increase to max. If set to 0, then the initial spawn weight is max.")

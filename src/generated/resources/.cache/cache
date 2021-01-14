@@ -56,7 +56,7 @@ c19bad6cb160533c6834ef404129466eb03f1f99 assets\pvz\models\item\giga_chestplate.
 640fb723df4adaf9b0e055a7e45afa7756e5acb4 assets\pvz\models\item\giga_football_zombie_spawn_egg.json
 0acfa9e8d02608a3c6fe775ff0a1ba12b72ea093 assets\pvz\models\item\giga_helmet.json
 f5c65d45cc1a8d081630611984ea46850dae317d assets\pvz\models\item\giga_leggings.json
-98a838813934b4d56c6af4be366c7be2fa7f9483 assets\pvz\models\item\gloom_shroom_card.json
+fe0726ebf8aadf3f590947483fb791de63c3bab3 assets\pvz\models\item\gloom_shroom_card.json
 17957fa811d631d09f4a35ae7972eae8cbc2ed84 assets\pvz\models\item\gloom_shroom_enjoy_card.json
 640fb723df4adaf9b0e055a7e45afa7756e5acb4 assets\pvz\models\item\gloom_shroom_spawn_egg.json
 e1f50f187b1e36359812d613ed6e1137819f260a assets\pvz\models\item\gold_leaf_card.json
@@ -111,6 +111,7 @@ b05d5c1bea75454e18ff733558ee7e42f49e60ee assets\pvz\models\item\puff_shroom_card
 57bb068f1db080385fb13243d76d541bfd936439 assets\pvz\models\item\pumpkin_card.json
 5866d40e393bf64aba2b958c0810287328d77b7c assets\pvz\models\item\pumpkin_enjoy_card.json
 640fb723df4adaf9b0e055a7e45afa7756e5acb4 assets\pvz\models\item\pumpkin_zombie_spawn_egg.json
+640fb723df4adaf9b0e055a7e45afa7756e5acb4 assets\pvz\models\item\ra_zombie_spawn_egg.json
 8309ee88e78f17057970329f1c385935e284bfb3 assets\pvz\models\item\repeater_card.json
 af49be29f8a0b02b1623cc92102979d43dc3c1f8 assets\pvz\models\item\repeater_enjoy_card.json
 640fb723df4adaf9b0e055a7e45afa7756e5acb4 assets\pvz\models\item\repeater_spawn_egg.json
@@ -186,7 +187,7 @@ a63cfcf7eadd5ff34bf9e006495b86bd0894ed34 data\forge\tags\items\ingots\amethyst.j
 dbd471d8b14c194246a809f5f88dbbfe892e7047 data\pvz\loot_tables\chests\dave_villa_chest.json
 4908bce217c57c38f222258fdbf620ecbe28b281 data\pvz\loot_tables\chests\dolphin_house_chest.json
 276e8c2c946e006f1065d6ebf8b0443749d58cff data\pvz\loot_tables\chests\grave_yard_chest.json
-c4b24aa25aceda037c1b75cc18e89ae9e98ed7ad data\pvz\loot_tables\chests\yeti_house_chest.json
+62b3c30af39ff6e1817ece1fcdf09eb82f6de490 data\pvz\loot_tables\chests\yeti_house_chest.json
 c328c2923697df053534b842312d56393a12fab4 data\pvz\recipes\cactus_card.json
 d6ad57b8af82e0f8bcfb95dfd2155058a89d67c7 data\pvz\recipes\coffee_bean_card.json
 ef551e65fb3d82ffbf7dbb9f348e9c1560decbe7 data\pvz\recipes\doom_shroom_card.json

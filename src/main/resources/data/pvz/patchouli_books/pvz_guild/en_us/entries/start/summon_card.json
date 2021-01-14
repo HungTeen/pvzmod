@@ -13,8 +13,8 @@
         },
         {
             "type": "crafting",
-            "recipe": "pvz:blue_card",
-            "title": "Card Example",
+            "recipe": "pvz:card/model/blue_card",
+            "title": "Card Template",
             "text": "The recipe of card template is an $(l)Origin Essence in the middle$(), and a circle of $(l)specific materials outside$()"
         },
         {

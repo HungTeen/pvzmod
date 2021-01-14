@@ -133,6 +133,8 @@ public class PVZChestLootTables implements Consumer<BiConsumer<ResourceLocation,
 						.addEntry(ItemLootEntry.builder(Items.IRON_INGOT).weight(15).acceptFunction(SetCount.builder(RandomValueRange.of(1.0F, 5.0F))))
 						.addEntry(ItemLootEntry.builder(Items.GOLD_INGOT).weight(15).acceptFunction(SetCount.builder(RandomValueRange.of(2.0F, 7.0F))))
 						.addEntry(ItemLootEntry.builder(Items.BLUE_ICE).weight(15).acceptFunction(SetCount.builder(RandomValueRange.of(1.0F, 2.0F))))
+						.addEntry(ItemLootEntry.builder(Items.APPLE).weight(15).acceptFunction(SetCount.builder(RandomValueRange.of(1.0F, 4.0F))))
+						.addEntry(ItemLootEntry.builder(Items.SNOWBALL).weight(15).acceptFunction(SetCount.builder(RandomValueRange.of(4.0F, 8.0F))))
 						.addEntry(ItemLootEntry.builder(Items.BONE).weight(15).acceptFunction(SetCount.builder(RandomValueRange.of(4.0F, 6.0F))))
 						.addEntry(ItemLootEntry.builder(Items.SPIDER_EYE).weight(15).acceptFunction(SetCount.builder(RandomValueRange.of(1.0F, 3.0F))))
 						.addEntry(ItemLootEntry.builder(Items.ROTTEN_FLESH).weight(15).acceptFunction(SetCount.builder(RandomValueRange.of(3.0F, 7.0F))))

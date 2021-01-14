@@ -13,16 +13,12 @@ public class SunShovelEnchantment extends Enchantment {
 
 	@Override
 	public int getMaxEnchantability(int enchantmentLevel) {
-		return 25;
+		return this.getMinEnchantability(enchantmentLevel) + 10;
 	}
 
 	@Override
 	public int getMinEnchantability(int enchantmentLevel) {
-		return 50;
-	}
-
-	public boolean isTreasureEnchantment() {
-		return true;
+		return 10 * enchantmentLevel + 20;
 	}
 
 	@Override

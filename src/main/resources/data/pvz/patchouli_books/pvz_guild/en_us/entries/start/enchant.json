@@ -32,6 +32,24 @@
             "item": "pvz:wall_nut_card{'Enchantments':[{'id':'pvz:charm','lvl':1}]}",
             "title": "Charm",
             "text": "When PlantCards have $(bred)Charm$() Enchantment, The plant summoned will be charmed and attack its owner. Its max lvl is 1."
+        },
+        {
+            "type": "spotlight",
+            "item": "minecraft:iron_shovel{'Enchantments':[{'id':'pvz:sun_shovel','lvl':1}]}",
+            "title": "Sun Shovel",
+            "text": "When Shovels have $(bred)Sun Shovel$() Enchantment, the plants it shoveled will give some sun back. Its max lvl is 5."
+        },
+        {
+            "type": "spotlight",
+            "item": "minecraft:golden_axe{'Enchantments':[{'id':'pvz:sun_mending','lvl':1}]}",
+            "title": "Sun Mending",
+            "text": "Similar to Mending, when tools have $(bred)Sun Mending$() Enchantment, Player can fix their tools when collide with sun. Its max lvl is 5."
+        },
+        {
+            "type": "spotlight",
+            "item": "pvz:squash_card{'Enchantments':[{'id':'pvz:soilless_plant','lvl':1}]}",
+            "title": "Soilless Plant",
+            "text": "When PlantCards have $(bred)Soilless Plant$() Enchantment, the plants summoned are able to survive on every block. Its max lvl is 1."
         }
     ],
     "advancement": "pvz:root",

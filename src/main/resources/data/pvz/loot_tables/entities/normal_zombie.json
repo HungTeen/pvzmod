@@ -36,7 +36,7 @@
         },
         {
           "type": "minecraft:item",
-          "name": "pvz:pea"
+          "name": "minecraft:sunflower"
         }
       ],
       "conditions": [

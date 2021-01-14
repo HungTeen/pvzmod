@@ -115,11 +115,6 @@ public class PlayerDataManager {
 				addTreeXp(num);
 				break;
 			}
-			case MONEY:{
-				int now = MathHelper.clamp(resources.get(Resources.MONEY) + num, 0, PlayerUtil.MAX_MONEY);
-				resources.put(Resources.MONEY, now);
-				break;
-			}
 			case SUN_NUM:{
 				int now = MathHelper.clamp(resources.get(Resources.SUN_NUM) + num, 0, PlayerUtil.getPlayerMaxSunNum(resources.get(Resources.TREE_LVL)));
 				resources.put(Resources.SUN_NUM, now);
@@ -140,8 +135,13 @@ public class PlayerDataManager {
 				resources.put(Resources.SLOT_NUM, now);
 				break;
 			}
+			case NO_FOG_TICK:{
+				int now = Math.min(resources.get(res) + num,  PlayerUtil.MAX_MONEY);
+				resources.put(res, now);
+				break;
+			}
 			default:
-				int now = Math.min(resources.get(res) + num, 99999999);
+				int now = MathHelper.clamp(resources.get(res) + num, 0, PlayerUtil.MAX_MONEY);
 				resources.put(res, now);
 				break;
 			}

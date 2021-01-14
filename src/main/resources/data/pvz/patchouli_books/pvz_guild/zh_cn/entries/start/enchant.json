@@ -32,6 +32,24 @@
             "item": "pvz:wall_nut_card{'Enchantments':[{'id':'pvz:charm','lvl':1}]}",
             "title": "魅惑",
             "text": "当植物卡拥有$(bred)魅惑$()附魔时，种下的植物一定会被魅惑，从而攻击其主人。该附魔最高1级。"
+        },
+        {
+            "type": "spotlight",
+            "item": "minecraft:iron_shovel{'Enchantments':[{'id':'pvz:sun_shovel','lvl':1}]}",
+            "title": "阳光铲",
+            "text": "当铲子拥有$(bred)阳光铲$()附魔时，其铲除的植物会回收部分阳光。该附魔最高5级。"
+        },
+        {
+            "type": "spotlight",
+            "item": "minecraft:golden_axe{'Enchantments':[{'id':'pvz:sun_mending','lvl':1}]}",
+            "title": "阳光修补",
+            "text": "类似经验修补，当物品拥有$(bred)阳光修补$()附魔时，玩家消耗捡到的阳光修补物品耐久。该附魔最高5级。"
+        },
+        {
+            "type": "spotlight",
+            "item": "pvz:squash_card{'Enchantments':[{'id':'pvz:soilless_plant','lvl':1}]}",
+            "title": "无土栽培",
+            "text": "当植物卡拥有$(bred)无土栽培$()附魔时，种出来的植物可以在任意方块存活。该附魔最高1级。"
         }
     ],
     "advancement": "pvz:root",

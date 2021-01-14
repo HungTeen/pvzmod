@@ -73,7 +73,7 @@ public class SunTempleComponents {
 				worldIn.setBlockState(pos, Blocks.SPAWNER.getDefaultState(), 2);
 				TileEntity te = worldIn.getTileEntity(pos);
 				if(te instanceof MobSpawnerTileEntity) {
-					((MobSpawnerTileEntity)te).getSpawnerBaseLogic().setEntityType(EntityRegister.NORMAL_ZOMBIE.get());
+					((MobSpawnerTileEntity)te).getSpawnerBaseLogic().setEntityType(EntityRegister.RA_ZOMBIE.get());
 				}
 			}
 		}

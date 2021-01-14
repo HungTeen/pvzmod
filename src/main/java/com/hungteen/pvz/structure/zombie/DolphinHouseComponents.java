@@ -47,9 +47,9 @@ public class DolphinHouseComponents {
 		protected void handleDataMarker(String function, BlockPos pos, IWorld worldIn, Random rand,
 				MutableBoundingBox sbb) {
 			if(function.equals("bonus_chest1")){
-				this.generateChest(worldIn, sbb, rand, pos, PVZLoot.BUCKET_HOUSE_CHEST, null);
+				this.generateChest(worldIn, sbb, rand, pos, PVZLoot.DOLPHIN_HOUSE_CHEST, null);
 			} else if(function.equals("bonus_chest2")) {
-				this.generateChest(worldIn, sbb, rand, pos, PVZLoot.BUCKET_HOUSE_CHEST, null);
+				this.generateChest(worldIn, sbb, rand, pos, PVZLoot.DOLPHIN_HOUSE_CHEST, null);
 			} else if(function.equals("spawner")) {
 				worldIn.setBlockState(pos, Blocks.SPAWNER.getDefaultState(), 2);
 				TileEntity te = worldIn.getTileEntity(pos);

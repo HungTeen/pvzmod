@@ -56,11 +56,11 @@ public class YetiHouseComponents {
 		protected void handleDataMarker(String function, BlockPos pos, IWorld worldIn, Random rand,
 				MutableBoundingBox sbb) {
 			if(function.equals("chest1")){
-				this.generateChest(worldIn, sbb, rand, pos, PVZLoot.BUCKET_HOUSE_CHEST, null);
+				this.generateChest(worldIn, sbb, rand, pos, PVZLoot.YETI_HOUSE_CHEST, null);
 			} else if(function.equals("chest2")) {
-				this.generateChest(worldIn, sbb, rand, pos, PVZLoot.BUCKET_HOUSE_CHEST, null);
+				this.generateChest(worldIn, sbb, rand, pos, PVZLoot.YETI_HOUSE_CHEST, null);
 			} else if(function.equals("chest3")) {
-				this.generateChest(worldIn, sbb, rand, pos, PVZLoot.BUCKET_HOUSE_CHEST, null);
+				this.generateChest(worldIn, sbb, rand, pos, PVZLoot.YETI_HOUSE_CHEST, null);
 			} else if(function.equals("spawn")) {
 				if(rand.nextInt(3) == 0) {
 					YetiZombieEntity yeti = EntityRegister.YETI_ZOMBIE.get().create(worldIn.getWorld());

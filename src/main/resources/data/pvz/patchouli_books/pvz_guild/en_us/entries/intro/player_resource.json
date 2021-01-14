@@ -29,7 +29,7 @@
         },
         {
             "type": "text",
-            "text": "$(bblue)GemNum$(): Coming soon in 1.15.2-0.4 !"
+            "text": "$(bblue)GemNum$(): the upper limit is 9999999.$(br)Usage: The special currency of shops, no use currently.$(br)Display: can be viewed through the $(bred)Almanac$() or command.$(br)Obtaining method: collide with $(l)Jewel$() entity."
         }
     ],
     "advancement": "pvz:root",

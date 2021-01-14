@@ -9,7 +9,7 @@
         },
         {
             "type": "crafting",
-            "recipe": "pvz:chocolate",
+            "recipe": "pvz:food/chocolate",
             "title": "Chocolate Recipe",
             "text": "In general, $(borange)Chocolate$() is difficult to obtain, but if you have $(bpurple)Candy$(), you can directly craft it."
         }

@@ -1,29 +1,15 @@
 {
-    "name": "Dave Villa",
+    "name": "Shop",
     "icon": "minecraft:bricks",
     "category": "pvz:start",
     "pages": [
         {
             "type": "text",
-            "text": "$(l)Dave Villa$() is a structure generated in $(l)Overworld plains$(), where a $(#ff0000)crazy Dave and Penny$() will be spawned. At the same time, the lawn of the villa may spawn some plants."
-        },
-        {
-            "type": "image",
-            "images":[
-                "pvz:textures/gui/patchouli/dave_villa.png"
-            ],
-            "title": "Dave Villa"
+            "text": "$(bred)Dave Villa$() is a structure generated in $(l)Overworld plains$(), where a $(#ff0000)Crazy Dave and Penny$() will be spawned. At the same time, the lawn of the villa may spawn some plants.Players can trade with Dave with $(#ff0000)Money$(), and Dave currently sells $(l)Energy limits and almanac and some Upgrade Cards$().$(br)Penny currently does not have AI and will be updated soon."
         },
         {
             "type": "text",
-            "text": "Players can trade with Dave with $(#ff0000)Money$(), and Dave currently sells $(l)Energy limits and almanac and some Upgrade Cards$().$(br)Penny currently does not have AI and will be updated soon."
-        },
-        {
-            "type": "entity",
-            "entity": "pvz:crazy_dave",
-            "scale": 0.5,
-            "offset": 0.5,
-            "name": "Crazy Dave"
+            "text": "$(byellow)Sun Temple$() is a structure generated in $(l)Desert Sky$(), where a $(#ff0000)Sun Dave$() will spawned. Players can trade it with sun."
         }
     ],
     "advancement": "pvz:root",
