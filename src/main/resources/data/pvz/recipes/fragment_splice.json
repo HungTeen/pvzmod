@@ -1,0 +1,23 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "BBB",
+    "CYC",
+    "CCC"
+  ],
+  "key": {
+    "Y": {
+      "item": "pvz:light_essence"
+    },
+    "B": {
+      "item": "minecraft:crafting_table"
+    },
+    "C": {
+      "item": "pvz:steel_ingot"
+    }
+  },
+  "result": {
+    "item": "pvz:origin_block",
+    "count": 1
+  }
+}

@@ -17,6 +17,7 @@ import com.hungteen.pvz.entity.zombie.poolnight.BalloonZombieEntity;
 import com.hungteen.pvz.entity.zombie.poolnight.DiggerZombieEntity;
 import com.hungteen.pvz.item.tool.card.PlantCardItem;
 import com.hungteen.pvz.misc.damage.PVZDamageSource;
+import com.hungteen.pvz.misc.damage.PVZDamageType;
 import com.hungteen.pvz.register.EntityRegister;
 import com.hungteen.pvz.register.ParticleRegister;
 import com.hungteen.pvz.register.SoundRegister;
@@ -773,7 +774,8 @@ public abstract class PVZPlantEntity extends CreatureEntity implements IPVZPlant
 	
 	@Override
 	protected SoundEvent getHurtSound(DamageSource damageSourceIn) {
-		return SoundRegister.PLANT_HURT.get();
+		if(((PVZDamageSource)damageSourceIn).getPVZDamageType() == PVZDamageType.EAT) return SoundRegister.PLANT_HURT.get();
+		return super.getHurtSound(damageSourceIn);
 	}
 	
 	protected SoundEvent getSpawnSound() {

@@ -1,0 +1,22 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "AAA",
+    "ABA",
+    "ACA"
+  ],
+  "key": {
+    "A": {
+      "item": "pvz:spear_essence"
+    },
+    "B": {
+      "item": "minecraft:cactus"
+    },
+    "C": {
+      "item": "pvz:green_card"
+    }
+  },
+  "result": {
+    "item": "pvz:cactus_card"
+  }
+}

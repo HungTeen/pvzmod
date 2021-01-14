@@ -60,7 +60,7 @@ public class SunEntity extends DropEntity {
 	
 	@Override
 	public void onCollideWithPlayer(PlayerEntity entityIn) {
-		if(!this.world.isRemote && this.isAlive()) {
+		if(!this.world.isRemote && this.isAlive() && this.getDropState() != DropStates.STEAL) {
 			this.onCollectedByPlayer(entityIn);
 		}
 	}

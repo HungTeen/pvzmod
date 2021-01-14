@@ -1,0 +1,23 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "OOO",
+    "OBO",
+    "OAO"
+  ],
+  "key": {
+    "O": {
+      "item": "pvz:assist_essence"
+    },
+    "B": {
+      "item": "minecraft:grass"
+    },
+    "A": {
+      "item": "pvz:green_card"
+    }
+  },
+  "result": {
+    "item": "pvz:blover_card",
+    "count": 1
+  }
+}

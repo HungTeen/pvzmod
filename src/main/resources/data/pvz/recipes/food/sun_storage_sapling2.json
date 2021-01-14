@@ -1,0 +1,20 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "AAA",
+    "ABA",
+    "AAA"
+  ],
+  "key": {
+    "A": {
+      "item":"pvz:light_essence"
+    },
+    "B": {
+      "item": "pvz:sun_storage_sapling2"
+    }
+  },
+  "result": {
+    "item": "pvz:sun_storage_sapling",
+    "count": 1
+  }
+}

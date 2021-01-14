@@ -11,7 +11,7 @@ public class PVZLoot {
 	public static final ResourceLocation BUCKET_HOUSE_CHEST = getChestLootTable("bucket_house_chest");
 	public static final ResourceLocation DOLPHIN_HOUSE_CHEST = getChestLootTable("dolphin_house_chest");
 	public static final ResourceLocation GRAVE_YARD_CHEST = getChestLootTable("grave_yard_chest");
-	
+	public static final ResourceLocation YETI_HOUSE_CHEST = getChestLootTable("yeti_house_chest");
 	//entity
 	public static final ResourceLocation NORMAL_ZOMBIE = getEntityLootTable("normal_zombie");
 	public static final ResourceLocation FLAG_ZOMBIE = getEntityLootTable("flag_zombie");

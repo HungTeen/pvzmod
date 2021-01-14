@@ -4,6 +4,7 @@ import java.util.function.Consumer;
 
 import com.hungteen.pvz.item.tool.card.PlantCardItem;
 import com.hungteen.pvz.misc.tag.PVZItemTags;
+import com.hungteen.pvz.register.BlockRegister;
 import com.hungteen.pvz.register.ItemRegister;
 import com.hungteen.pvz.utils.PlantUtil;
 import com.hungteen.pvz.utils.enums.Essences;
@@ -34,6 +35,9 @@ public class RecipeGenerator extends ForgeRecipeProvider{
 		registerCommonCard(consumer, ItemRegister.COFFEE_BEAN_CARD.get(), Items.COCOA_BEANS);
 		registerCommonCard(consumer, ItemRegister.MARIGOLD_CARD.get(), Items.OXEYE_DAISY);
 		registerCommonCard(consumer, ItemRegister.WATER_GUARD_CARD.get(), Items.LILY_PAD);
+		registerCommonCard(consumer, ItemRegister.PLANTERN_CARD.get(), BlockRegister.LANTERN.get().asItem());
+		registerCommonCard(consumer, ItemRegister.CACTUS_CARD.get(), Items.CACTUS);
+		registerCommonCard(consumer, ItemRegister.FLOWER_POT_CARD.get(), BlockRegister.FLOWER_POT.get().asItem());
     }
 	
 	private void registerCommonCard(Consumer<IFinishedRecipe> consumer, PlantCardItem result, Item crop) {

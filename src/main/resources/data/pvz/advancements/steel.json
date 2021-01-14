@@ -34,7 +34,9 @@
         "pvz:tools/steel/steel_axe",
         "pvz:tools/steel/steel_pickaxe",
         "pvz:tools/steel/steel_shovel",
-        "pvz:tools/steel/steel_hoe"
+        "pvz:tools/steel/steel_hoe",
+        "pvz:sun_converter",
+        "pvz:fragment_splice"
     ]
   }
 }

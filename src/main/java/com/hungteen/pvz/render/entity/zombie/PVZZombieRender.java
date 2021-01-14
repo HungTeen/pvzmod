@@ -7,6 +7,7 @@ import com.hungteen.pvz.render.layer.FrozenIceLayer;
 import com.hungteen.pvz.render.layer.fullskin.CharmLayer;
 import com.hungteen.pvz.render.layer.fullskin.ColdLayer;
 import com.hungteen.pvz.render.layer.fullskin.EnergyLayer;
+import com.hungteen.pvz.render.layer.fullskin.SunLightLayer;
 import com.mojang.blaze3d.matrix.MatrixStack;
 
 import net.minecraft.client.renderer.entity.EntityRendererManager;
@@ -35,6 +36,7 @@ public abstract class PVZZombieRender<T extends PVZZombieEntity> extends PVZCrea
 		this.addLayer(new EnergyLayer<>(this));
 		this.addLayer(new CharmLayer<>(this));
 		this.addLayer(new FrozenIceLayer<>(this));
+		this.addLayer(new SunLightLayer<>(this));
 	}
 	
 }

@@ -84,6 +84,7 @@ public class ZombieUtil {
 		//other
 		putZombieInfoToMap(Zombies.PUMPKIN_ZOMBIE, Ranks.PURPLE, EntityRegister.PUMPKIN_ZOMBIE);
 		putZombieInfoToMap(Zombies.TRICK_ZOMBIE, Ranks.GRAY, EntityRegister.TRICK_ZOMBIE);
+		putZombieInfoToMap(Zombies.RA_ZOMBIE, Ranks.WHITE, EntityRegister.RA_ZOMBIE);
 	}
 	
 	public static void putZombieInfoToMap(Zombies zombie, Ranks rank, RegistryObject<? extends EntityType<? extends PVZZombieEntity>> type) {

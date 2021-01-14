@@ -137,6 +137,8 @@
     "item.pvz.pumpkin_zombie_spawn_egg":"Pumpkin Zombie Spawn Egg",
     "entity.pvz.trick_zombie":"Trick Zombie",
     "item.pvz.trick_zombie_spawn_egg":"Trick Zombie Spawn Egg",
+    "entity.pvz.ra_zombie":"Ra Zombie",
+    "item.pvz.ra_zombie_spawn_egg":"Ra Zombie Spawn Egg",
 //plant
 //PeaShooter
     "entity.pvz.pea_shooter":"PeaShooter",
@@ -280,6 +282,11 @@
     "item.pvz.cactus_spawn_egg":"Cactus Spawn Egg",
     "item.pvz.cactus_card":"Cactus Card",
     "item.pvz.cactus_enjoy_card":"Cactus Enjoy Card",
+//Blover
+    "entity.pvz.blover":"Blover",
+    "item.pvz.blover_spawn_egg":"Blover Spawn Egg",
+    "item.pvz.blover_card":"Blover Card",
+    "item.pvz.blover_enjoy_card":"Blover Enjoy Card",
 //StarFruit
     "entity.pvz.star_fruit":"StarFruit",
     "item.pvz.star_fruit_spawn_egg":"StarFruit Spawn Egg",
@@ -304,6 +311,9 @@
     "item.pvz.angel_star_fruit_spawn_egg":"AngelStarFruit Spawn Egg",
     "item.pvz.angel_star_fruit_card":"AngelStarFruit Card",
     "item.pvz.angel_star_fruit_enjoy_card":"AngelStarFruit Enjoy Card",
+//FlowerPot
+    "item.pvz.flower_pot_card":"FlowerPot Card",
+    "item.pvz.flower_pot_enjoy_card":"FlowerPot Enjoy Card",
 //CoffeeBean
     "entity.pvz.coffee_bean":"CoffeeBean",
     "item.pvz.coffee_bean_spawn_egg":"CoffeeBean Spawn Egg",
@@ -320,20 +330,35 @@
     "item.pvz.gatling_pea_card":"GatlingPea Card",
     "item.pvz.gatling_pea_enjoy_card":"GatlingPea Enjoy Card",
 //TwinSunFlower
-    "entity.pvz.twin_sunflower":"Twin Sunflower",
-    "item.pvz.twin_sunflower_spawn_egg":"Twin Sunflower Spawn Egg",
-    "item.pvz.twin_sunflower_card":"Twin Sunflower Card",
-    "item.pvz.twin_sunflower_enjoy_card":"Twin Sunflower Enjoy Card",
+    "entity.pvz.twin_sunflower":"TwinSunflower",
+    "item.pvz.twin_sunflower_spawn_egg":"TwinSunflower Spawn Egg",
+    "item.pvz.twin_sunflower_card":"TwinSunflower Card",
+    "item.pvz.twin_sunflower_enjoy_card":"TwinSunflower Enjoy Card",
+//GloomShroom
+    "entity.pvz.gloom_shroom":"GloomShroom",
+    "item.pvz.gloom_shroom_spawn_egg":"GloomShroom Spawn Egg",
+    "item.pvz.gloom_shroom_card":"GloomShroom Card",
+    "item.pvz.gloom_shroom_enjoy_card":"GloomShroom Enjoy Card",
 //CatTail
     "entity.pvz.cat_tail":"CatTail",
     "item.pvz.cat_tail_spawn_egg":"CatTail Spawn Egg",
     "item.pvz.cat_tail_card":"CatTail Card",
     "item.pvz.cat_tail_enjoy_card":"CatTail Enjoy Card",
+//GoldMagnet
+    "entity.pvz.gold_magnet":"GoldMagnet",
+    "item.pvz.gold_magnet_spawn_egg":"GoldMagnet Spawn Egg",
+    "item.pvz.gold_magnet_card":"GoldMagnet Card",
+    "item.pvz.gold_magnet_enjoy_card":"GoldMagnet Enjoy Card",
 //StrangeCat
     "entity.pvz.strange_cat":"StrangeCat",
     "item.pvz.strange_cat_spawn_egg":"StrangeCat Spawn Egg",
     "item.pvz.strange_cat_card":"StrangeCat Card",
     "item.pvz.strange_cat_enjoy_card":"StrangeCat Enjoy Card",
+//GoldLeaf
+    "entity.pvz.gold_leaf":"GoldLeaf",
+    "item.pvz.gold_leaf_spawn_egg":"GoldLeaf Spawn Egg",
+    "item.pvz.gold_leaf_card":"GoldLeaf Card",
+    "item.pvz.gold_leaf_enjoy_card":"GoldLeaf Enjoy Card",
 //tool & tooltip
     "tooltip.pvz.zombie_flag":"Right Click to get a speed effect",
     "tooltip.pvz.summon_card":"Right Click to Summon Plant or Zombie",
@@ -383,6 +408,9 @@
     "block.pvz.steel_block":"Steel Block",
     "block.pvz.amethyst_block":"Amethyst Block",
     "block.pvz.origin_block":"Origin Block",
+    "block.pvz.gold_tile1":"Gold Tile(level 1)",
+    "block.pvz.gold_tile2":"Gold Tile(level 2)",
+    "block.pvz.gold_tile3":"Gold Tile(level 3)",
 //special
     "block.pvz.lantern":"Lantern",
     "block.pvz.flower_pot":"Flower Pot",
@@ -419,6 +447,26 @@
     "gui.pvz.dave_shop.gatling_pea_card1":"Upgrade of Repeater, shoot 4 peas at a time.",
     "gui.pvz.dave_shop.twin_sunflower_card":"Twin Sunflower",
     "gui.pvz.dave_shop.twin_sunflower_card1":"Upgrade of Sunflower, gen double sun at a time",
+    "gui.pvz.dave_shop.gloom_shroom_card":"Gloom Shroom",
+    "gui.pvz.dave_shop.gloom_shroom_card1":"Upgrade of FumeShroom, fast fire in 8 directions in short range",
+    "gui.pvz.dave_shop.cat_tail_card":"Cat Tail",
+    "gui.pvz.dave_shop.cat_tail_card1":"Upgrade of LilyPad, shoot to 2 guided thorns at a time",
+    "gui.pvz.dave_shop.gold_magnet_card":"Gold Magnet",
+    "gui.pvz.dave_shop.gold_magnet_card1":"Upgrade of MagnetShroom, help player collect coin and jewel",
+    "gui.pvz.dave_shop.light_eye_potion_1":"Light Eye Potion",
+    "gui.pvz.dave_shop.light_eye_potion_11":"Potion that give you light eye effect for 60 minute",
+    "gui.pvz.dave_shop.light_eye_potion_2":"Light Eye Potion (long)",
+    "gui.pvz.dave_shop.light_eye_potion_21":"Potion that give you light eye effect for 8 minutes",
+    "gui.pvz.dave_shop.lantern":"Lantern",
+    "gui.pvz.dave_shop.lantern1":"8 Lantern blocks that can provide light",
+    "gui.pvz.dave_shop.slot_machine":"Slot Machine",
+    "gui.pvz.dave_shop.slot_machine1":"A Lottery block that can get Plant Enjoy Card",
+    "gui.pvz.dave_shop.sun_shovel":"Sun Shovel",
+    "gui.pvz.dave_shop.sun_shovel1":"An enchantment book with Sun Shovel I",
+    "gui.pvz.dave_shop.sun_mending":"Sun Mending",
+    "gui.pvz.dave_shop.sun_mending1":"An enchantment book with Sun Mending I",
+    "gui.pvz.dave_shop.gold_leaf_card":"Gold Leaf",
+    "gui.pvz.dave_shop.gold_leaf_card1":"it can change gold block into gold tile, which can make each plant gen sun for 20 seconds",
 //fragment splice
     "gui.pvz.fragment_splice":"Craft",
 //slot machine

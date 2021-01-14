@@ -97,7 +97,7 @@ public class YetiZombieEntity extends PVZZombieEntity{
 		if(canZombieSpawn(zombieType, worldIn, reason, pos, rand)) {
 			WorldEventData data = WorldEventData.getOverWorldEventData(worldIn.getWorld());
 			if(data.hasEvent(Events.YETI)) {
-				boolean res = rand.nextInt(3) == 0;
+				boolean res = rand.nextInt(4) == 0;
 //				if(res) System.out.println(pos);
 				return res;
 			} else {
@@ -106,7 +106,7 @@ public class YetiZombieEntity extends PVZZombieEntity{
 //				} else {
 //					System.out.println("no");
 //				}
-				return worldIn instanceof ServerWorld && ((ServerWorld) worldIn).isThundering() && ! ((ServerWorld) worldIn).isDaytime() && rand.nextInt(3) < 2;
+				return worldIn instanceof ServerWorld && ((ServerWorld) worldIn).isThundering() && ! ((ServerWorld) worldIn).isDaytime() && rand.nextInt(2) == 0;
 			}
 		}
 		return false;

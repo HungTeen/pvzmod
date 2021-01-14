@@ -1,0 +1,26 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "BAB",
+    "CYC",
+    "CCC"
+  ],
+  "key": {
+    "A": {
+      "item": "pvz:sun_collector"
+    },
+    "Y": {
+      "item": "minecraft:hopper"
+    },
+    "B": {
+      "item": "pvz:light_essence"
+    },
+    "C": {
+      "item": "pvz:steel_ingot"
+    }
+  },
+  "result": {
+    "item": "pvz:origin_block",
+    "count": 1
+  }
+}

@@ -206,7 +206,7 @@ public abstract class PVZZombieEntity extends MonsterEntity implements IPVZZombi
 	 * for drop item and coin.
 	 */
 	protected void onZombieRemove() {
-		if (!world.isRemote) {
+		if (! world.isRemote) {
 			if (getZombieType() == Type.SUPER) {//drop energy
 				this.dropEnergy();
 			} else if (getZombieType() == Type.BEARD) {// finish achievement
@@ -276,8 +276,8 @@ public abstract class PVZZombieEntity extends MonsterEntity implements IPVZZombi
 		if (source instanceof PVZDamageSource) {
 			this.hurtResistantTime = 0;
 			this.dealDamageEffectToZombie((PVZDamageSource) source);
-			if (((PVZDamageSource) source).getPVZDamageType() == PVZDamageType.ICE && !((PVZDamageSource) source).isDefended()) {
-				if (!this.isZombieColdOrForzen() && ! this.world.isRemote) {
+			if (this.canBeFrozen() && ((PVZDamageSource) source).getPVZDamageType() == PVZDamageType.ICE && !((PVZDamageSource) source).isDefended()) {
+				if (! this.isZombieColdOrForzen() && ! this.world.isRemote) {
 					this.playSound(SoundRegister.ZOMBIE_FROZEN.get(), 1f, 1f);
 				}
 			} else if (((PVZDamageSource) source).getPVZDamageType() == PVZDamageType.FIRE && !((PVZDamageSource) source).isDefended()) {

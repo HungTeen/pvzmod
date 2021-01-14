@@ -1,0 +1,22 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "AAA",
+    "ABA",
+    "ACA"
+  ],
+  "key": {
+    "A": {
+      "item": "pvz:assist_essence"
+    },
+    "B": {
+      "item": "pvz:flower_pot"
+    },
+    "C": {
+      "item": "pvz:gray_card"
+    }
+  },
+  "result": {
+    "item": "pvz:flower_pot_card"
+  }
+}

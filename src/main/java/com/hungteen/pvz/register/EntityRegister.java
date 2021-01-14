@@ -77,6 +77,7 @@ import com.hungteen.pvz.entity.zombie.grassnight.TombStoneEntity;
 import com.hungteen.pvz.entity.zombie.other.CoffinEntity;
 import com.hungteen.pvz.entity.zombie.other.MournerZombieEntity;
 import com.hungteen.pvz.entity.zombie.other.NobleZombieEntity;
+import com.hungteen.pvz.entity.zombie.other.RaZombieEntity;
 import com.hungteen.pvz.entity.zombie.other.TrickZombieEntity;
 import com.hungteen.pvz.entity.zombie.part.PVZZombiePartEntity;
 import com.hungteen.pvz.entity.zombie.plantzombie.PumpkinZombieEntity;
@@ -170,6 +171,7 @@ import com.hungteen.pvz.render.entity.zombie.grassnight.TombStoneRender;
 import com.hungteen.pvz.render.entity.zombie.other.CoffinRender;
 import com.hungteen.pvz.render.entity.zombie.other.MournerZombieRender;
 import com.hungteen.pvz.render.entity.zombie.other.NobleZombieRender;
+import com.hungteen.pvz.render.entity.zombie.other.RaZombieRender;
 import com.hungteen.pvz.render.entity.zombie.other.TrickZombieRender;
 import com.hungteen.pvz.render.entity.zombie.plantzombie.PumpkinZombieRender;
 import com.hungteen.pvz.render.entity.zombie.poolday.BobsleTeamRender;
@@ -269,6 +271,7 @@ public class EntityRegister {
 	public static final RegistryObject<EntityType<YetiZombieEntity>> YETI_ZOMBIE = registerEntityType(YetiZombieEntity::new, "yeti_zombie", EntityClassification.MONSTER);
 	public static final RegistryObject<EntityType<DiggerZombieEntity>> DIGGER_ZOMBIE = registerEntityType(DiggerZombieEntity::new, "digger_zombie", EntityClassification.MONSTER);
 	public static final RegistryObject<EntityType<BalloonZombieEntity>> BALLOON_ZOMBIE = registerEntityType(BalloonZombieEntity::new, "balloon_zombie", EntityClassification.MONSTER);
+	public static final RegistryObject<EntityType<RaZombieEntity>> RA_ZOMBIE = registerEntityType(RaZombieEntity::new, "ra_zombie", EntityClassification.MONSTER);
 	
 	//plant
 	public static final RegistryObject<EntityType<PeaShooterEntity>> PEA_SHOOTER = registerEntityType(PeaShooterEntity::new, "pea_shooter", EntityClassification.CREATURE);
@@ -379,6 +382,7 @@ public class EntityRegister {
         RenderingRegistry.registerEntityRenderingHandler(YETI_ZOMBIE.get(), YetiZombieRender::new);
         RenderingRegistry.registerEntityRenderingHandler(DIGGER_ZOMBIE.get(), DiggerZombieRender::new);
         RenderingRegistry.registerEntityRenderingHandler(BALLOON_ZOMBIE.get(), BalloonZombieRender::new);
+        RenderingRegistry.registerEntityRenderingHandler(RA_ZOMBIE.get(), RaZombieRender::new);
         
         //plant
         RenderingRegistry.registerEntityRenderingHandler(PEA_SHOOTER.get(), PeaShooterRender::new);

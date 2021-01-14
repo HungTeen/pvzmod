@@ -1,0 +1,23 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "CAC",
+    "ABA",
+    "CAC"
+  ],
+  "key": {
+    "A": {
+      "item":"pvz:light_essence"
+    },
+    "B": {
+      "tag": "minecraft:saplings"
+    },
+    "C": {
+      "item":"pvz:origin_essence"
+    }
+  },
+  "result": {
+    "item": "pvz:sun_storage_sapling2",
+    "count": 1
+  }
+}
