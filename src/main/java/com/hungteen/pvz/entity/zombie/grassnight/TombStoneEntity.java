@@ -1,5 +1,7 @@
 package com.hungteen.pvz.entity.zombie.grassnight;
 
+import java.util.Random;
+
 import com.hungteen.pvz.entity.drop.CoinEntity;
 import com.hungteen.pvz.entity.drop.CoinEntity.CoinType;
 import com.hungteen.pvz.entity.drop.JewelEntity;
@@ -20,6 +22,7 @@ import net.minecraft.entity.EntityType;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.Pose;
 import net.minecraft.entity.SharedMonsterAttributes;
+import net.minecraft.entity.SpawnReason;
 import net.minecraft.entity.ai.goal.NearestAttackableTargetGoal;
 import net.minecraft.entity.item.ItemEntity;
 import net.minecraft.entity.monster.MonsterEntity;
@@ -28,7 +31,10 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.util.Hand;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.SoundEvent;
+import net.minecraft.util.math.BlockPos;
+import net.minecraft.world.IWorld;
 import net.minecraft.world.World;
+import net.minecraft.world.server.ServerWorld;
 
 public class TombStoneEntity extends UnderGroundZombieEntity {
 
@@ -74,7 +80,7 @@ public class TombStoneEntity extends UnderGroundZombieEntity {
 		return target instanceof TombStoneEntity;
 	}
 	
-	protected void summonZombie() {
+	public void summonZombie() {
 		int pos = this.getRNG().nextInt(GROUND_ZOMBIES.length);
 		PVZZombieEntity zombie = ZombieUtil.getZombieEntity(world, GROUND_ZOMBIES[pos]);
 		if(zombie != null) {
@@ -87,6 +93,11 @@ public class TombStoneEntity extends UnderGroundZombieEntity {
 	
 	protected boolean canSummonZombie() {
 		return this.getAttackTarget() != null;
+	}
+	
+	public static boolean canTombSpawn(EntityType<? extends PVZZombieEntity> zombieType, IWorld worldIn,
+			SpawnReason reason, BlockPos pos, Random rand) {
+		return (worldIn instanceof ServerWorld && ! ((ServerWorld) worldIn).isDaytime()) ? canZombieSpawn(zombieType, worldIn, reason, pos, rand) : false;
 	}
 	
 	@Override

@@ -10,10 +10,11 @@ import com.hungteen.pvz.PVZMod;
 import com.hungteen.pvz.entity.creature.FoodieZombieEntity;
 import com.hungteen.pvz.entity.drop.SunEntity;
 import com.hungteen.pvz.entity.zombie.PVZZombieEntity;
+import com.hungteen.pvz.entity.zombie.grassnight.TombStoneEntity;
+import com.hungteen.pvz.entity.zombie.poolnight.YetiZombieEntity;
 import com.hungteen.pvz.utils.BiomeUtil;
 import com.hungteen.pvz.utils.ZombieUtil;
 import com.hungteen.pvz.utils.enums.Events;
-import com.hungteen.pvz.utils.enums.Ranks;
 import com.hungteen.pvz.utils.enums.Zombies;
 import com.hungteen.pvz.world.data.WorldEventData;
 
@@ -73,6 +74,12 @@ public class EntitySpawnRegister {
 		EntitySpawnPlacementRegistry.register(EntityRegister.CRAZY_DAVE.get(), PlacementType.ON_GROUND, Heightmap.Type.MOTION_BLOCKING_NO_LEAVES, MobEntity::canSpawnOn);
 		EntitySpawnPlacementRegistry.register(EntityRegister.PUMPKIN_ZOMBIE.get(), PlacementType.ON_GROUND, Heightmap.Type.MOTION_BLOCKING_NO_LEAVES, PVZZombieEntity::canZombieSpawn);
 		EntitySpawnPlacementRegistry.register(EntityRegister.TRICK_ZOMBIE.get(), PlacementType.ON_GROUND, Heightmap.Type.MOTION_BLOCKING_NO_LEAVES, PVZZombieEntity::canZombieSpawn);
+		EntitySpawnPlacementRegistry.register(EntityRegister.JACK_IN_BOX_ZOMBIE.get(), PlacementType.ON_GROUND, Heightmap.Type.MOTION_BLOCKING_NO_LEAVES, PVZZombieEntity::canZombieSpawn);
+		EntitySpawnPlacementRegistry.register(EntityRegister.BALLOON_ZOMBIE.get(), IN_SKY, Heightmap.Type.MOTION_BLOCKING_NO_LEAVES, PVZZombieEntity::canZombieSpawn);
+		EntitySpawnPlacementRegistry.register(EntityRegister.DIGGER_ZOMBIE.get(), PlacementType.ON_GROUND, Heightmap.Type.MOTION_BLOCKING_NO_LEAVES, PVZZombieEntity::canZombieSpawn);
+		EntitySpawnPlacementRegistry.register(EntityRegister.POGO_ZOMBIE.get(), PlacementType.ON_GROUND, Heightmap.Type.MOTION_BLOCKING_NO_LEAVES, PVZZombieEntity::canZombieSpawn);
+		EntitySpawnPlacementRegistry.register(EntityRegister.YETI_ZOMBIE.get(), PlacementType.ON_GROUND, Heightmap.Type.MOTION_BLOCKING_NO_LEAVES, YetiZombieEntity::canYetiSpawn);
+		EntitySpawnPlacementRegistry.register(EntityRegister.TOMB_STONE.get(), PlacementType.ON_GROUND, Heightmap.Type.MOTION_BLOCKING_NO_LEAVES, TombStoneEntity::canTombSpawn);
 		
 	}
 	
@@ -105,6 +112,11 @@ public class EntitySpawnRegister {
 		putSpawnData(Zombies.FOOTBALL_ZOMBIE, 12, 1, 1, BiomeUtil.OVER_LAND);
 		putSpawnData(Zombies.DANCING_ZOMBIE, 2, 1, 1, BiomeUtil.OVER_LAND);
 		putSpawnData(Zombies.GIGA_FOOTBALL_ZOMBIE, 2, 1, 1, BiomeUtil.OVER_LAND);
+		
+		putSpawnData(Zombies.JACK_IN_BOX_ZOMBIE, 15, 1, 1, BiomeUtil.OVER_LAND);
+		putSpawnData(Zombies.BALLOON_ZOMBIE, 10, 1, 1, BiomeUtil.OVER_LAND);
+		putSpawnData(Zombies.DIGGER_ZOMBIE, 4, 1, 1, BiomeUtil.OVER_LAND);
+		putSpawnData(Zombies.POGO_ZOMBIE, 6, 1, 1, BiomeUtil.OVER_LAND);
 	}
 	
 	public static List<ZombieSpawnEntry> getEventSpawnList(World world, Events ev){
@@ -132,9 +144,7 @@ public class EntitySpawnRegister {
 		List<Integer> list = new ArrayList<>();
 		int sum = 0;
 		for(Zombies zombie : ZOMBIE_SPAWN_LIST) {
-			Ranks rank = ZombieUtil.getZombieRank(zombie);
-			int chance = (Ranks.values().length - rank.ordinal());
-			sum += chance * chance * 2;
+			sum += zombie.chooseWeight;
 			list.add(sum);
 		}
 		for(int i = 0; i < 10; ++ i) {

@@ -45,7 +45,32 @@ public class SlotMachineContainer extends Container {
 
 	@Override
     public ItemStack transferStackInSlot(PlayerEntity playerIn, int index) {
-        return ItemStack.EMPTY;
+		ItemStack itemstack = ItemStack.EMPTY;
+		Slot slot = this.inventorySlots.get(index);
+		if (slot != null && slot.getHasStack()) {
+			ItemStack itemstack1 = slot.getStack();
+			itemstack = itemstack1.copy();
+			if (index < 3) {
+				if (!this.mergeItemStack(itemstack1, 3, this.inventorySlots.size(), true)) {
+					return ItemStack.EMPTY;
+				}
+			} else if (index < 3 + 27) {
+				if(!mergeItemStack(itemstack1, 0, 3, false)
+						&& !mergeItemStack(itemstack1, 3 + 27, this.inventorySlots.size(), false)) {
+					return ItemStack.EMPTY;
+				}
+			} else {
+				if (!this.mergeItemStack(itemstack1, 0, 3 + 27, false)) {
+					return ItemStack.EMPTY;
+				}
+			}
+			if (itemstack1.isEmpty()) {
+				slot.putStack(ItemStack.EMPTY);
+			} else {
+				slot.onSlotChanged();
+			}
+		}
+		return itemstack;
     }
 	
 	@Override

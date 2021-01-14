@@ -68,6 +68,10 @@ public class PVZConfig {
 							.comment("The related value to happen Fog Event when it's a zombie attack day(If the value is x, then the chance is 1/x).")
 							.defineInRange("FogAttackChance", 12, 1, 10000);
 					
+					WorldSettings.WorldEventSettings.EventChanceSettings.YetiEventChance = builder
+							.comment("The related value to happen Yeti Event when it's a zombie attack day(If the value is x, then the chance is 1/x).")
+							.defineInRange("YetiAttackChance", 5, 1, 10000);
+					
 				}
 				builder.pop();
 				
@@ -92,6 +96,10 @@ public class PVZConfig {
 					WorldSettings.StructureSettings.SunTempleDistance = builder
 							.comment("the distance value between sun temple.")
 							.defineInRange("SunTempleDistance", 40, 1, 1000);
+					
+					WorldSettings.StructureSettings.YetiHouseDistance = builder
+							.comment("the distance value between yeti house.")
+							.defineInRange("YetiHouseDistance", 28, 1, 1000);
 				}
 				builder.pop();
 				
@@ -109,6 +117,12 @@ public class PVZConfig {
 					WorldSettings.EntitySpawnSettings.LavaZombieSpawnWeight = builder
 							.comment("spawn weight of LavaZombie at nether.")
 							.defineInRange("LavaZombieSpawnWeight", 15, 1, 200);
+					WorldSettings.EntitySpawnSettings.TombStoneSpawnWeight = builder
+							.comment("spawn weight of TombStone at night in overworld when invasion.")
+							.defineInRange("TombStoneSpawnWeight", 5, 1, 200);
+					WorldSettings.EntitySpawnSettings.YetiZombieSpawnWeight = builder
+							.comment("spawn weight of YetiZombie in overworld.")
+							.defineInRange("YetiZombieSpawnWeight", 1, 1, 200);
 				}
 				builder.pop();
 				
@@ -227,6 +241,7 @@ public class PVZConfig {
 			    	public ForgeConfigSpec.IntValue FootballAttackChance;
 			    	public ForgeConfigSpec.IntValue RandomAttackChance;
 			    	public ForgeConfigSpec.IntValue FogEventChance;
+			    	public ForgeConfigSpec.IntValue YetiEventChance;
 			    }
 			}
 			
@@ -236,6 +251,7 @@ public class PVZConfig {
 			    public ForgeConfigSpec.IntValue DolphinHouseDistance;
 			    public ForgeConfigSpec.IntValue GraveHouseDistance;
 			    public ForgeConfigSpec.IntValue SunTempleDistance;
+			    public ForgeConfigSpec.IntValue YetiHouseDistance;
 			}
 			
 			public static class EntitySpawnSettings{
@@ -243,6 +259,8 @@ public class PVZConfig {
 				public ForgeConfigSpec.IntValue ZombieDolphinSpawnWeight;
 				public ForgeConfigSpec.IntValue FoodieZombieSpawnWeight;
 				public ForgeConfigSpec.IntValue LavaZombieSpawnWeight;
+				public ForgeConfigSpec.IntValue TombStoneSpawnWeight;
+				public ForgeConfigSpec.IntValue YetiZombieSpawnWeight;
 			}
 		}
 		

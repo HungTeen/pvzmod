@@ -17,7 +17,8 @@ public enum Events {
 	NEWSPAPER(true, Bundles.GRASS_NIGHT, Zombies.NORMAL_ZOMBIE, Zombies.NEWSPAPER_ZOMBIE, Zombies.OLD_ZOMBIE, Zombies.SUNDAY_EDITION_ZOMBIE),
 	FOOTBALL(true, Bundles.GRASS_NIGHT, Zombies.NORMAL_ZOMBIE, Zombies.SCREENDOOR_ZOMBIE, Zombies.DANCING_ZOMBIE, Zombies.FOOTBALL_ZOMBIE, Zombies.GIGA_FOOTBALL_ZOMBIE),
 	RANDOM(true, Bundles.RANDOM),
-	FOG(false);
+	FOG(false),
+	YETI(false);
 	
 	public static final List<Events> ATTACK_EVENTS = new ArrayList<>();
 	public boolean isZombieAttackEvent;

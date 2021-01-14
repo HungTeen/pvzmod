@@ -157,6 +157,8 @@ public class ItemRegister {
     public static final RegistryObject<PlantCardItem> WATER_GUARD_ENJOY_CARD = registerCard(Plants.WATER_GUARD, true);
     public static final RegistryObject<PlantCardItem> STRANGE_CAT_CARD = registerCard(Plants.STRANGE_CAT, false);
     public static final RegistryObject<PlantCardItem> STRANGE_CAT_ENJOY_CARD = registerCard(Plants.STRANGE_CAT, true);
+    public static final RegistryObject<PlantCardItem> GOLD_LEAF_CARD = registerCard(Plants.GOLD_LEAF, false);
+    public static final RegistryObject<PlantCardItem> GOLD_LEAF_ENJOY_CARD = registerCard(Plants.GOLD_LEAF, true);
     public static final RegistryObject<PlantCardItem> ANGEL_STAR_FRUIT_CARD = registerCard(Plants.ANGEL_STAR_FRUIT, false);
     public static final RegistryObject<PlantCardItem> ANGEL_STAR_FRUIT_ENJOY_CARD = registerCard(Plants.ANGEL_STAR_FRUIT, true);
     
@@ -301,6 +303,7 @@ public class ItemRegister {
 	public static final RegistryObject<PVZSpawnEggItem> GOLD_MAGNET_SPAWN_EGG = registerSpawnEgg("gold_magnet", EntityRegister.GOLD_MAGNET, Colors.ASSIST_COLOR);
 	public static final RegistryObject<PVZSpawnEggItem> WATER_GUARD_SPAWN_EGG = registerSpawnEgg("water_guard", EntityRegister.WATER_GUARD, Colors.DEFENCE_COLOR);
 	public static final RegistryObject<PVZSpawnEggItem> STRANGE_CAT_SPAWN_EGG = registerSpawnEgg("strange_cat", EntityRegister.STRANGE_CAT, Colors.MAGIC_COLOR);
+	public static final RegistryObject<PVZSpawnEggItem> GOLD_LEAF_SPAWN_EGG = registerSpawnEgg("gold_leaf", EntityRegister.GOLD_LEAF, Colors.LIGHT_COLOR);
 	public static final RegistryObject<PVZSpawnEggItem> ANGEL_STAR_FRUIT_SPAWN_EGG = registerSpawnEgg("angel_star_fruit", EntityRegister.ANGEL_STAR_FRUIT, Colors.APPEASE_COLOR);
 	
 	

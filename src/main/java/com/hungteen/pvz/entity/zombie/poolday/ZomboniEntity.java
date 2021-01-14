@@ -11,6 +11,7 @@ import com.hungteen.pvz.utils.interfaces.IMultiPartEntity;
 
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
+import net.minecraft.block.SnowBlock;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntitySize;
 import net.minecraft.entity.EntityType;
@@ -50,8 +51,8 @@ public class ZomboniEntity extends PVZZombieEntity implements IMultiPartEntity{
 		}
 		if(!world.isRemote) {//produce snow layer block
 			BlockPos blockpos = this.getPosition();
-			BlockState state = Blocks.SNOW.getDefaultState();
-            if (this.world.isAirBlock(blockpos) && state.isValidPosition(this.world, blockpos)) {
+			BlockState state = Blocks.SNOW.getDefaultState().with(SnowBlock.LAYERS, 2);
+            if ((this.world.isAirBlock(blockpos) || world.getBlockState(blockpos).getBlock() == Blocks.SNOW) && state.isValidPosition(this.world, blockpos)) {
                this.world.setBlockState(blockpos, state);
             }
 		}

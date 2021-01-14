@@ -13,6 +13,7 @@ import com.hungteen.pvz.block.plants.PeaBlock;
 import com.hungteen.pvz.block.plants.ToxicShroomBlock;
 import com.hungteen.pvz.block.special.FlowerPotBlock;
 import com.hungteen.pvz.block.special.FragmentSpliceBlock;
+import com.hungteen.pvz.block.special.GoldTileBlock;
 import com.hungteen.pvz.block.special.LanternBlock;
 import com.hungteen.pvz.block.special.SlotMachineBlock;
 import com.hungteen.pvz.block.special.SunConverterBlock;
@@ -79,6 +80,9 @@ public class BlockRegister {
 	//special
 	public static final RegistryObject<Block> LANTERN = BLOCKS.register("lantern", LanternBlock::new);
 	public static final RegistryObject<FlowerPotBlock> FLOWER_POT = BLOCKS.register("flower_pot", FlowerPotBlock::new);
+	public static final RegistryObject<GoldTileBlock> GOLD_TILE1 = BLOCKS.register("gold_tile1", () -> new GoldTileBlock(1));
+	public static final RegistryObject<GoldTileBlock> GOLD_TILE2 = BLOCKS.register("gold_tile2", () -> new GoldTileBlock(2));
+	public static final RegistryObject<GoldTileBlock> GOLD_TILE3 = BLOCKS.register("gold_tile3", () -> new GoldTileBlock(3));
 	
 	//gui & te block
 	public static final RegistryObject<SunConverterBlock> SUN_CONVERTER = BLOCKS.register("sun_converter", SunConverterBlock::new);
@@ -95,7 +99,7 @@ public class BlockRegister {
 				ORIGIN_ORE, APPEASE_ORE, LIGHT_ORE, EXPLOSION_ORE, DEFENCE_ORE, ICE_ORE, ENFORCE_ORE, TOXIC_ORE, ASSIST_ORE, MAGIC_ORE, FLAME_ORE, SPEAR_ORE, ARMA_ORE, ELECTRIC_ORE, SHADOW_ORE, AMETHYST_ORE,
 				STEEL_BLOCK, AMETHYST_BLOCK, ORIGIN_BLOCK,
 				NUT_LEAVES, NUT_SAPLING, CHOMPER, LILY_PAD,
-				LANTERN, FLOWER_POT,
+				LANTERN, FLOWER_POT, GOLD_TILE1, GOLD_TILE2, GOLD_TILE3,
 				SUN_CONVERTER, FRAGMENT_SPLICE, SLOT_MACHINE
 		);
 		for(RegistryObject<? extends Block> block:blocks) {

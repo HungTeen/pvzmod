@@ -651,7 +651,8 @@
     "event.pvz.newspaper":"报纸入侵",
     "event.pvz.football":"橄榄球入侵",
     "event.pvz.random":"随机入侵",
-    "event.pvz.fog":"迷雾入侵",
+    "event.pvz.fog":"迷雾来袭",
+    "event.pvz.yeti":"雪人来袭",
 //death
     "death.attack.pvz_normal":"%s被打死了",
     "death.attack.pvz_weak":"%s虚弱而亡",

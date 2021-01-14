@@ -9,6 +9,7 @@ import com.hungteen.pvz.capability.CapabilityHandler;
 import com.hungteen.pvz.capability.player.PlayerDataManager;
 import com.hungteen.pvz.capability.player.PlayerDataManager.OtherStats;
 import com.hungteen.pvz.entity.zombie.PVZZombieEntity;
+import com.hungteen.pvz.entity.zombie.grassnight.TombStoneEntity;
 import com.hungteen.pvz.register.EntityRegister;
 import com.hungteen.pvz.utils.EntityUtil;
 import com.hungteen.pvz.utils.PlayerUtil;
@@ -80,6 +81,16 @@ public class WaveManager {
 		});
 	}
 	
+	public void activateTombStone() {
+		if(world.getDimension().getType() != DimensionType.OVERWORLD) return ;
+		int len = 30;
+		world.getEntitiesWithinAABB(TombStoneEntity.class, EntityUtil.getEntityAABB(player, len, len), (tombstone) -> {
+			return true;
+		}).forEach((tomb) -> {
+			tomb.summonZombie();
+		});
+	}
+	
 	public void spawnWaveZombies() {
 		if(world.getDimension().getType() != DimensionType.OVERWORLD) return ;
 		int now = 0;
@@ -102,6 +113,7 @@ public class WaveManager {
 		if(spawned) {
 			PlayerUtil.playClientSound(player, 2);
 		    PlayerUtil.sendSubTitleToPlayer(player, HUGE_WAVE);
+		    this.activateTombStone();
 		}
 	}
 	

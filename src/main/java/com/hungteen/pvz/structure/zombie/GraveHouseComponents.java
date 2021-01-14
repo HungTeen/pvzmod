@@ -82,9 +82,11 @@ public class GraveHouseComponents {
 					((MobSpawnerTileEntity)te).getSpawnerBaseLogic().setEntityType(getRandomEntityType(rand));
 				}
 			} else if(function.startsWith("tomb")) {
-				TombStoneEntity tomb = EntityRegister.TOMB_STONE.get().create(worldIn.getWorld());
-				EntityUtil.onMobEntitySpawn(worldIn, tomb, pos);
-				worldIn.setBlockState(pos, Blocks.AIR.getDefaultState(), 2);
+				if(rand.nextInt(3) == 0) {
+					TombStoneEntity tomb = EntityRegister.TOMB_STONE.get().create(worldIn.getWorld());
+				    EntityUtil.onMobEntitySpawn(worldIn, tomb, pos);
+				    worldIn.setBlockState(pos, Blocks.AIR.getDefaultState(), 2);
+				}
 			}
 		}
 		

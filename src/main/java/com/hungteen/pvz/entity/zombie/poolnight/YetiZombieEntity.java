@@ -1,23 +1,31 @@
 package com.hungteen.pvz.entity.zombie.poolnight;
 
+import java.util.Random;
+
 import com.hungteen.pvz.PVZConfig;
 import com.hungteen.pvz.entity.drop.JewelEntity;
 import com.hungteen.pvz.entity.zombie.PVZZombieEntity;
 import com.hungteen.pvz.register.EntityRegister;
 import com.hungteen.pvz.utils.EntityUtil;
 import com.hungteen.pvz.utils.ZombieUtil;
+import com.hungteen.pvz.utils.enums.Events;
 import com.hungteen.pvz.utils.enums.Zombies;
+import com.hungteen.pvz.world.data.WorldEventData;
 
 import net.minecraft.entity.EntitySize;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.Pose;
 import net.minecraft.entity.SharedMonsterAttributes;
+import net.minecraft.entity.SpawnReason;
 import net.minecraft.entity.monster.MonsterEntity;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.potion.EffectInstance;
 import net.minecraft.potion.Effects;
 import net.minecraft.util.DamageSource;
+import net.minecraft.util.math.BlockPos;
+import net.minecraft.world.IWorld;
 import net.minecraft.world.World;
+import net.minecraft.world.server.ServerWorld;
 
 public class YetiZombieEntity extends PVZZombieEntity{
 
@@ -82,6 +90,26 @@ public class YetiZombieEntity extends PVZZombieEntity{
 
 	public int getYetiMaxLiveTick() {
 		return PVZConfig.COMMON_CONFIG.EntitySettings.EntityLiveTick.YetiLiveTick.get();
+	}
+	
+	public static boolean canYetiSpawn(EntityType<? extends PVZZombieEntity> zombieType, IWorld worldIn,
+			SpawnReason reason, BlockPos pos, Random rand) {
+		if(canZombieSpawn(zombieType, worldIn, reason, pos, rand)) {
+			WorldEventData data = WorldEventData.getOverWorldEventData(worldIn.getWorld());
+			if(data.hasEvent(Events.YETI)) {
+				boolean res = rand.nextInt(3) == 0;
+//				if(res) System.out.println(pos);
+				return res;
+			} else {
+//				if(worldIn instanceof ServerWorld && ((ServerWorld) worldIn).isThundering() && ! ((ServerWorld) worldIn).isDaytime()) {
+//					System.out.println(pos);
+//				} else {
+//					System.out.println("no");
+//				}
+				return worldIn instanceof ServerWorld && ((ServerWorld) worldIn).isThundering() && ! ((ServerWorld) worldIn).isDaytime() && rand.nextInt(3) < 2;
+			}
+		}
+		return false;
 	}
 	
 	@Override

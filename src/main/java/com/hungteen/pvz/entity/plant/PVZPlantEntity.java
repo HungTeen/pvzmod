@@ -8,13 +8,16 @@ import javax.annotation.Nullable;
 
 import com.hungteen.pvz.PVZConfig;
 import com.hungteen.pvz.entity.ai.PVZLookRandomlyGoal;
+import com.hungteen.pvz.entity.drop.SunEntity;
 import com.hungteen.pvz.entity.plant.enforce.SquashEntity;
+import com.hungteen.pvz.entity.plant.light.GoldLeafEntity;
 import com.hungteen.pvz.entity.plant.spear.SpikeWeedEntity;
 import com.hungteen.pvz.entity.zombie.grassnight.TombStoneEntity;
 import com.hungteen.pvz.entity.zombie.poolnight.BalloonZombieEntity;
 import com.hungteen.pvz.entity.zombie.poolnight.DiggerZombieEntity;
 import com.hungteen.pvz.item.tool.card.PlantCardItem;
 import com.hungteen.pvz.misc.damage.PVZDamageSource;
+import com.hungteen.pvz.register.EntityRegister;
 import com.hungteen.pvz.register.ParticleRegister;
 import com.hungteen.pvz.register.SoundRegister;
 import com.hungteen.pvz.utils.EntityUtil;
@@ -45,6 +48,7 @@ import net.minecraft.server.management.PreYggdrasilConverter;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.Hand;
 import net.minecraft.util.SoundEvent;
+import net.minecraft.util.SoundEvents;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.Vec3d;
@@ -66,7 +70,6 @@ public abstract class PVZPlantEntity extends CreatureEntity implements IPVZPlant
 	private static final DataParameter<Integer> SLEEP_TIME = EntityDataManager.createKey(PVZPlantEntity.class, DataSerializers.VARINT);
 	private static final DataParameter<Integer> LIVE_TICK = EntityDataManager.createKey(PVZPlantEntity.class, DataSerializers.VARINT);
 	private static final DataParameter<Float> PUMPKIN_LIFE = EntityDataManager.createKey(PVZPlantEntity.class, DataSerializers.FLOAT);
-	
 	protected int weakTime = 0;
 	protected boolean isImmuneToWeak = false;
 	private final int weakCD = 10;
@@ -114,7 +117,7 @@ public abstract class PVZPlantEntity extends CreatureEntity implements IPVZPlant
 	/**
 	 * init attributes with plant lvl
 	 */
-	public void onSpawnedByPlayer(PlayerEntity player, int lvl){
+	public void onSpawnedByPlayer(PlayerEntity player, int lvl) {
 		this.setPlantLvl(lvl);
 		this.setOwnerUUID(player.getUniqueID());
 		this.getAttribute(SharedMonsterAttributes.MAX_HEALTH).setBaseValue(this.getPlantHealth());
@@ -215,28 +218,19 @@ public abstract class PVZPlantEntity extends CreatureEntity implements IPVZPlant
 	 * tick for normal plant
 	 */
 	protected void normalPlantTick(){
-//		if(!this.world.isRemote&&this.getGoldTime()>0) {
-//			Block block =this.world.getBlockState(new BlockPos(posX,posY-1,posZ)).getBlock();
-//			int amount=0;
-//			if(block == BlockRegister.GOLDENTILE1) {
-//				this.setGoldTime(this.getGoldTime()-EntityGoldLeaf.MINUS1);
-//				amount=25;
-//			}
-//			else if(block == BlockRegister.GOLDENTILE2) {
-//				this.setGoldTime(this.getGoldTime()-EntityGoldLeaf.MINUS2);
-//				amount=35;
-//			}
-//			else if(block == BlockRegister.GOLDENTILE3) {
-//				this.setGoldTime(this.getGoldTime()-EntityGoldLeaf.MINUS3);
-//				amount=50;
-//			}
-//			if(this.getGoldTime()<=0) {
-//				this.setGoldTime(EntityGoldLeaf.CD);
-//				EntitySun sun=new EntitySun(world, posX, posY+3, posZ, amount);
-//				this.playSound(SoundEvents.ENTITY_EXPERIENCE_ORB_PICKUP, 1.0F, (this.rand.nextFloat() - this.rand.nextFloat()) * 0.2F + 1.0F);
-//				this.world.spawnEntity(sun);
-//			}
-//		}
+		if(! this.world.isRemote && this.getGoldTime() < GoldLeafEntity.GOLD_GEN_CD) {
+			Block block = this.world.getBlockState(this.getPosition().down()).getBlock();
+			int lvl = GoldLeafEntity.getBlockGoldLevel(block);
+			if(lvl <= 0) return ;
+			this.setGoldTime(this.getGoldTime() + 1);
+			if(this.getGoldTime() >= GoldLeafEntity.GOLD_GEN_CD) {
+				this.setGoldTime(0);
+				SunEntity sun = EntityRegister.SUN.get().create(world);
+				sun.setAmount(GoldLeafEntity.getGoldGenAmount(lvl));
+				EntityUtil.onMobEntityRandomPosSpawn(world, sun, getPosition(), 2);
+				EntityUtil.playSound(this, SoundEvents.ENTITY_EXPERIENCE_ORB_PICKUP);
+			}
+		}
 	}
 	
 	@Override

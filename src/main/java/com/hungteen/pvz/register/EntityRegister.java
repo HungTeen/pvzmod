@@ -43,6 +43,7 @@ import com.hungteen.pvz.entity.plant.flame.JalapenoEntity;
 import com.hungteen.pvz.entity.plant.flame.TorchWoodEntity;
 import com.hungteen.pvz.entity.plant.ice.IceShroomEntity;
 import com.hungteen.pvz.entity.plant.ice.SnowPeaEntity;
+import com.hungteen.pvz.entity.plant.light.GoldLeafEntity;
 import com.hungteen.pvz.entity.plant.light.PlanternEntity;
 import com.hungteen.pvz.entity.plant.light.SunFlowerEntity;
 import com.hungteen.pvz.entity.plant.light.SunShroomEntity;
@@ -135,6 +136,7 @@ import com.hungteen.pvz.render.entity.plant.flame.JalapenoRender;
 import com.hungteen.pvz.render.entity.plant.flame.TorchWoodRender;
 import com.hungteen.pvz.render.entity.plant.ice.IceShroomRender;
 import com.hungteen.pvz.render.entity.plant.ice.SnowPeaRender;
+import com.hungteen.pvz.render.entity.plant.light.GoldLeafRender;
 import com.hungteen.pvz.render.entity.plant.light.PlanternRender;
 import com.hungteen.pvz.render.entity.plant.light.SunFlowerRender;
 import com.hungteen.pvz.render.entity.plant.light.SunShroomRender;
@@ -309,6 +311,7 @@ public class EntityRegister {
 	public static final RegistryObject<EntityType<BloverEntity>> BLOVER = registerEntityType(BloverEntity::new, "blover", EntityClassification.CREATURE);
 	public static final RegistryObject<EntityType<GloomShroomEntity>> GLOOM_SHROOM = registerEntityType(GloomShroomEntity::new, "gloom_shroom", EntityClassification.CREATURE);
 	public static final RegistryObject<EntityType<GoldMagnetEntity>> GOLD_MAGNET = registerEntityType(GoldMagnetEntity::new, "gold_magnet", EntityClassification.CREATURE);
+	public static final RegistryObject<EntityType<GoldLeafEntity>> GOLD_LEAF = registerEntityType(GoldLeafEntity::new, "gold_leaf", EntityClassification.CREATURE);
 	
 	@OnlyIn(Dist.CLIENT)
 	@SubscribeEvent
@@ -424,6 +427,7 @@ public class EntityRegister {
         RenderingRegistry.registerEntityRenderingHandler(STRANGE_CAT.get(), StrangeCatRender::new);
         
         RenderingRegistry.registerEntityRenderingHandler(ANGEL_STAR_FRUIT.get(), AngelStarFruitRender::new);
+        RenderingRegistry.registerEntityRenderingHandler(GOLD_LEAF.get(), GoldLeafRender::new);
     }
 
 	private static <T extends Entity> RegistryObject<EntityType<T>> registerEntityType(IFactory<T> factory,String name,EntityClassification classification){

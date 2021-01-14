@@ -85,6 +85,7 @@ public class PlantUtil {
 		putPlantInfoToMap(Plants.GOLD_MAGNET, 100, CDs.VERY_SLOW, Ranks.WHITE, Essences.ASSIST, EntityRegister.GOLD_MAGNET, ItemRegister.GOLD_MAGNET_CARD, ItemRegister.GOLD_MAGNET_ENJOY_CARD);
 		putPlantInfoToMap(Plants.WATER_GUARD, 50, CDs.LITTLE_SLOW, Ranks.GRAY, Essences.DEFENCE, EntityRegister.WATER_GUARD, ItemRegister.WATER_GUARD_CARD, ItemRegister.WATER_GUARD_ENJOY_CARD);
 		putPlantInfoToMap(Plants.STRANGE_CAT, 325, CDs.HUGE_SLOW, Ranks.PURPLE, Essences.MAGIC, EntityRegister.STRANGE_CAT, ItemRegister.STRANGE_CAT_CARD, ItemRegister.STRANGE_CAT_ENJOY_CARD);
+		putPlantInfoToMap(Plants.GOLD_LEAF, 75, CDs.NORMAL, Ranks.PURPLE, Essences.LIGHT, EntityRegister.GOLD_LEAF, ItemRegister.GOLD_LEAF_CARD, ItemRegister.GOLD_LEAF_ENJOY_CARD);
 		putPlantInfoToMap(Plants.ANGEL_STAR_FRUIT, 225, CDs.LITTLE_FAST, Ranks.PURPLE, Essences.APPEASE, EntityRegister.ANGEL_STAR_FRUIT, ItemRegister.ANGEL_STAR_FRUIT_CARD, ItemRegister.ANGEL_STAR_FRUIT_ENJOY_CARD);
 	}
 	
@@ -101,6 +102,13 @@ public class PlantUtil {
 	
 	public static List<Block> getPlantSuitBlock(Plants plant){
 		List<Block> list = new ArrayList<>();
+		list.add(BlockRegister.GOLD_TILE1.get());
+		list.add(BlockRegister.GOLD_TILE2.get());
+		list.add(BlockRegister.GOLD_TILE3.get());
+		if(plant == Plants.GOLD_LEAF) {
+			list.add(Blocks.GOLD_BLOCK);
+			return list;
+		}
 		list.add(Blocks.GRASS_BLOCK);
 		list.add(BlockRegister.LILY_PAD.get());
 		list.add(BlockRegister.FLOWER_POT.get());

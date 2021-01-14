@@ -41,6 +41,7 @@ public class OverWorldEvents {
 			WorldEventData data = WorldEventData.getOverWorldEventData(world);
 			if(! data.hasChanged()) {
 				data.setChanged(true);
+				deactivateZombieAttackEvents(world, false);
 				activateZombieAttackEvents(world);
 			}
 			break;
@@ -78,6 +79,9 @@ public class OverWorldEvents {
 		    activateEvent(world, event);//activate event
 		    if(world.rand.nextInt(PVZConfig.COMMON_CONFIG.WorldSettings.WorldEventSettings.EventChanceSettings.FogEventChance.get()) == 0) {
 		    	activateEvent(world, Events.FOG);
+		    }
+		    if(world.rand.nextInt(PVZConfig.COMMON_CONFIG.WorldSettings.WorldEventSettings.EventChanceSettings.YetiEventChance.get()) == 0) {
+		    	activateEvent(world, Events.YETI);
 		    }
 		    if(PVZConfig.COMMON_CONFIG.WorldSettings.WorldEventSettings.ShowEventMessages.get()) {
 		    	world.getPlayers().forEach((player) -> {
