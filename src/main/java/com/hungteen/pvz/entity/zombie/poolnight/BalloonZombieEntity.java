@@ -1,5 +1,7 @@
 package com.hungteen.pvz.entity.zombie.poolnight;
 
+import java.util.Random;
+
 import com.hungteen.pvz.entity.zombie.PVZZombieEntity;
 import com.hungteen.pvz.misc.damage.PVZDamageSource;
 import com.hungteen.pvz.misc.damage.PVZDamageType;
@@ -10,6 +12,7 @@ import com.hungteen.pvz.utils.enums.Zombies;
 
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.SharedMonsterAttributes;
+import net.minecraft.entity.SpawnReason;
 import net.minecraft.entity.ai.controller.FlyingMovementController;
 import net.minecraft.entity.ai.controller.MovementController;
 import net.minecraft.entity.monster.MonsterEntity;
@@ -22,6 +25,10 @@ import net.minecraft.pathfinding.GroundPathNavigator;
 import net.minecraft.pathfinding.PathNavigator;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.SoundEvent;
+import net.minecraft.util.math.BlockPos;
+import net.minecraft.world.Difficulty;
+import net.minecraft.world.IWorld;
+import net.minecraft.world.LightType;
 import net.minecraft.world.World;
 
 public class BalloonZombieEntity extends PVZZombieEntity {
@@ -78,6 +85,12 @@ public class BalloonZombieEntity extends PVZZombieEntity {
 		this.setBalloon(false);
 		this.setNoGravity(false);
 		this.moveController = new MovementController(this);
+	}
+	
+	public static boolean canBalloonSpawn(EntityType<? extends PVZZombieEntity> zombieType, IWorld worldIn,
+			SpawnReason reason, BlockPos pos, Random rand) {
+//		System.out.println("1");
+		return worldIn.getLightFor(LightType.BLOCK, pos) < 8 && worldIn.getDifficulty() != Difficulty.PEACEFUL && (reason == SpawnReason.SPAWNER || worldIn.isAirBlock(pos));
 	}
 	
 	@Override

@@ -52,6 +52,8 @@ public class PlaySoundPacket {
 		    		sound = SoundRegister.SLOT_MACHINE.get();
 		    	} else if(id == 9) {
 		    		sound = SoundRegister.PLANT_GROW.get();
+		    	} else if(id == 10) {
+		    		sound = SoundRegister.JACK_SAY.get();
 		    	}
 		    	if(sound != null) {
 		    		Minecraft.getInstance().player.playSound(sound, 1f, 1f);

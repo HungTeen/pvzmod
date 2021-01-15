@@ -53,7 +53,6 @@ public class PVZMod
     
     @SubscribeEvent
     public static void serverShutDown(FMLServerStoppingEvent ev) {
-//    	System.out.println("shut down!!!");
     	ServerWorld world = ev.getServer().getWorld(DimensionType.OVERWORLD);
     	EntitySpawnRegister.removeGameEventSpawns(world);
     }

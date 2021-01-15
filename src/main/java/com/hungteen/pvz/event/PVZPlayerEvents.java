@@ -5,7 +5,6 @@ import java.util.Random;
 import com.hungteen.pvz.PVZConfig;
 import com.hungteen.pvz.PVZMod;
 import com.hungteen.pvz.capability.CapabilityHandler;
-import com.hungteen.pvz.capability.player.ClientPlayerResources;
 import com.hungteen.pvz.capability.player.PlayerDataManager;
 import com.hungteen.pvz.capability.player.PlayerDataManager.PlayerStats;
 import com.hungteen.pvz.entity.plant.PVZPlantEntity;
@@ -59,11 +58,11 @@ public class PVZPlayerEvents {
 			    	ev.player.getCooldownTracker().setCooldown(stack.getItem(), 200);//cool down for no pea
 			    }
 			}
-		} else {
-			if(ClientPlayerResources.playSoundTick > 0) {
-//				System.out.println(ClientPlayerResources.playSoundTick);
-				-- ClientPlayerResources.playSoundTick;
-			}
+			ev.player.getCapability(CapabilityHandler.PLAYER_DATA_CAPABILITY).ifPresent((l) -> {
+				if(l.getPlayerData().getOtherStats().playSoundTick > 0) {
+				    -- l.getPlayerData().getOtherStats().playSoundTick;
+				}
+			});
 		}
 	}
 	

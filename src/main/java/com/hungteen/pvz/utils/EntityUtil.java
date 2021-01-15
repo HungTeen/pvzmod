@@ -371,9 +371,8 @@ public class EntityUtil {
 	}
 	
 	public static boolean isEntityInSky(Entity entity) {
-		if(entity instanceof FlyingEntity || entity instanceof BatEntity || entity instanceof BalloonZombieEntity) {
-			return true;
-		}
+		if(entity instanceof FlyingEntity || entity instanceof BatEntity) return true;
+		if(entity instanceof BalloonZombieEntity && ((BalloonZombieEntity) entity).hasBalloon()) return true;
 		return ! entity.onGround && ! entity.isInWater() && ! entity.isInLava();
 	}
 	

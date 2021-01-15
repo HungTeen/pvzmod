@@ -418,6 +418,7 @@ public class PlayerDataManager {
 		private final PlayerDataManager manager;
 		public int[] zombieWaveTime = new int[WaveManager.MAX_WAVE_NUM];
 		public int totalWaveCount;
+		public int playSoundTick;
 		
 		public OtherStats(PlayerDataManager manager) {
 			this.manager = manager;
@@ -425,6 +426,7 @@ public class PlayerDataManager {
 				zombieWaveTime[i] = 0;
 			}
 			this.totalWaveCount = 0;
+			this.playSoundTick = 0;
 		}
 		
 		private void saveToNBT(CompoundNBT baseTag) {
@@ -433,6 +435,7 @@ public class PlayerDataManager {
 				statsNBT.putInt("zombieWaveTime_" + i, zombieWaveTime[i]);
 			}
 			baseTag.put("zombie_wave_time", statsNBT);
+			baseTag.putInt("base_sound_tick", this.playSoundTick);
 		}
 
 		private void loadFromNBT(CompoundNBT baseTag) {
@@ -441,6 +444,9 @@ public class PlayerDataManager {
 				for(int i = 0; i < zombieWaveTime.length; ++ i) {
 					zombieWaveTime[i] = nbt.getInt("zombieWaveTime_" + i);
 				}
+			}
+			if(baseTag.contains("base_sound_tick")) {
+				this.playSoundTick = baseTag.getInt("base_sound_tick");
 			}
 		}
 	}

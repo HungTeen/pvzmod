@@ -15,6 +15,7 @@ import com.hungteen.pvz.entity.drop.JewelEntity;
 import com.hungteen.pvz.entity.drop.SunEntity;
 import com.hungteen.pvz.entity.misc.BobsleCarEntity;
 import com.hungteen.pvz.entity.misc.SmallChomperEntity;
+import com.hungteen.pvz.entity.misc.WallNutBowlingEntity;
 import com.hungteen.pvz.entity.misc.ZombieHandEntity;
 import com.hungteen.pvz.entity.npc.CrazyDaveEntity;
 import com.hungteen.pvz.entity.npc.PennyEntity;
@@ -109,6 +110,7 @@ import com.hungteen.pvz.render.entity.drop.SunRender;
 import com.hungteen.pvz.render.entity.misc.BobsleCarRender;
 import com.hungteen.pvz.render.entity.misc.EmptyRender;
 import com.hungteen.pvz.render.entity.misc.SmallChomperRender;
+import com.hungteen.pvz.render.entity.misc.WallNutBowlingRender;
 import com.hungteen.pvz.render.entity.misc.ZombieHandRender;
 import com.hungteen.pvz.render.entity.npc.CrazyDaveRender;
 import com.hungteen.pvz.render.entity.npc.PanneyRender;
@@ -229,6 +231,7 @@ public class EntityRegister {
 	public static final RegistryObject<EntityType<BobsleCarEntity>> BOBSLE_CAR = registerEntityType(BobsleCarEntity::new, "bobsle_car", EntityClassification.MISC);
 	public static final RegistryObject<EntityType<PVZZombiePartEntity>> ZOMBIE_PART = registerEntityType(PVZZombiePartEntity::new, "zombie_part", EntityClassification.MISC);
 	public static final RegistryObject<EntityType<ZombieHandEntity>> ZOMBIE_HAND = registerEntityType(ZombieHandEntity::new, "zombie_hand", EntityClassification.MISC);
+	public static final RegistryObject<EntityType<WallNutBowlingEntity>> WALL_NUT_BOWLING = registerEntityType(WallNutBowlingEntity::new, "wall_nut_bowling", EntityClassification.MISC);
 	
 	//animal
 	public static final RegistryObject<EntityType<FoodieZombieEntity>> FOODIE_ZOMBIE = registerEntityType(FoodieZombieEntity::new, "foodie_zombie", EntityClassification.WATER_CREATURE);
@@ -339,6 +342,7 @@ public class EntityRegister {
         RenderingRegistry.registerEntityRenderingHandler(BOBSLE_CAR.get(), BobsleCarRender::new);
         RenderingRegistry.registerEntityRenderingHandler(ZOMBIE_PART.get(), EmptyRender::new);
         RenderingRegistry.registerEntityRenderingHandler(ZOMBIE_HAND.get(), ZombieHandRender::new);
+        RenderingRegistry.registerEntityRenderingHandler(WALL_NUT_BOWLING.get(), WallNutBowlingRender::new);
         
         //animal 
         RenderingRegistry.registerEntityRenderingHandler(FOODIE_ZOMBIE.get(), FoodieZombieRender::new);

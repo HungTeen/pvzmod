@@ -456,7 +456,7 @@ public abstract class PVZPlantEntity extends CreatureEntity implements IPVZPlant
 		compound.putInt("plant_super_time", this.getSuperTime());
 		compound.putInt("plant_lvl", this.getPlantLvl());
 		if (this.getOwnerUUID().isPresent()) {
-	         compound.putString("OwnerUUID", this.getOwnerUUID().toString());
+	         compound.putString("OwnerUUID", this.getOwnerUUID().get().toString());
 	    } else {
 	         compound.putString("OwnerUUID", "");
 	    }

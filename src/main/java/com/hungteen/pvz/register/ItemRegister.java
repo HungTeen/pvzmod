@@ -13,6 +13,7 @@ import com.hungteen.pvz.item.armor.PVZArmorMaterial;
 import com.hungteen.pvz.item.misc.AlmanacItem;
 import com.hungteen.pvz.item.misc.StrangeHelpItem;
 import com.hungteen.pvz.item.tool.BobsleCarItem;
+import com.hungteen.pvz.item.tool.BowlingGloveItem;
 import com.hungteen.pvz.item.tool.PeaGunItem;
 import com.hungteen.pvz.item.tool.ScreenDoorItem;
 import com.hungteen.pvz.item.tool.SunCollectorItem;
@@ -187,6 +188,7 @@ public class ItemRegister {
 	public static final RegistryObject<Item> SUN_COLLECTOR = ITEMS.register("sun_collector", SunCollectorItem::new);
 	public static final RegistryObject<Item> SUN_STORAGE_SAPLING = ITEMS.register("sun_storage_sapling", () -> new SunStorageSaplingItem(10000));
 	public static final RegistryObject<Item> SUN_STORAGE_SAPLING2 = ITEMS.register("sun_storage_sapling2", () -> new SunStorageSaplingItem(1000));
+	public static final RegistryObject<Item> BOWLING_GLOVE = ITEMS.register("bowling_glove", BowlingGloveItem::new);
 	
 	//armor
 	public static final RegistryObject<Item> CONE_HEAD = ITEMS.register("cone_head", ()->new ConeArmorItem(ArmorMaterial.LEATHER, EquipmentSlotType.HEAD));

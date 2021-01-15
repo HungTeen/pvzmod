@@ -1,16 +1,16 @@
 package com.hungteen.pvz.entity.zombie.poolnight;
 
-import com.hungteen.pvz.capability.player.ClientPlayerResources;
+import com.hungteen.pvz.capability.CapabilityHandler;
 import com.hungteen.pvz.entity.zombie.PVZZombieEntity;
 import com.hungteen.pvz.misc.damage.PVZDamageSource;
 import com.hungteen.pvz.register.SoundRegister;
 import com.hungteen.pvz.utils.EntityUtil;
+import com.hungteen.pvz.utils.PlayerUtil;
 import com.hungteen.pvz.utils.ZombieUtil;
 import com.hungteen.pvz.utils.enums.MetalTypes;
 import com.hungteen.pvz.utils.enums.Zombies;
 import com.hungteen.pvz.utils.interfaces.IHasMetal;
 
-import net.minecraft.client.Minecraft;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.SharedMonsterAttributes;
@@ -20,6 +20,7 @@ import net.minecraft.network.datasync.DataParameter;
 import net.minecraft.network.datasync.DataSerializers;
 import net.minecraft.network.datasync.EntityDataManager;
 import net.minecraft.particles.ParticleTypes;
+import net.minecraft.world.Explosion;
 import net.minecraft.world.World;
 
 public class JackInBoxZombieEntity extends PVZZombieEntity implements IHasMetal {
@@ -53,12 +54,17 @@ public class JackInBoxZombieEntity extends PVZZombieEntity implements IHasMetal 
 				}
 				this.setAnimTick(this.getAnimTick() - 1);
 			}
-		} else {
-//			System.out.println(ClientPlayerResources.playSoundTick);
-			Minecraft mc = Minecraft.getInstance();
-			if(this.hasBox() && this.getDistanceSq(mc.player) <= 600 && ClientPlayerResources.playSoundTick == 0) {
-				mc.player.playSound(SoundRegister.JACK_SAY.get(), 1F, 1F);
-				ClientPlayerResources.playSoundTick = 300;
+			if(this.hasBox() && this.ticksExisted % 40 == 0) {
+				world.getPlayers().forEach((player) -> {
+					if(this.getDistanceSq(player) <= 400) {
+						player.getCapability(CapabilityHandler.PLAYER_DATA_CAPABILITY).ifPresent((l) -> {
+							if(l.getPlayerData().getOtherStats().playSoundTick == 0) {
+								PlayerUtil.playClientSound(player, 10);
+								l.getPlayerData().getOtherStats().playSoundTick = 300;
+							}
+						});
+					}
+				});
 			}
 		}
 		if(this.hasBox()) {
@@ -71,6 +77,8 @@ public class JackInBoxZombieEntity extends PVZZombieEntity implements IHasMetal 
 		    } else if(this.getAnimTick() == 0) {
 			    if(! world.isRemote) {
 				    this.doExplosion();
+				    Explosion.Mode mode = net.minecraftforge.event.ForgeEventFactory.getMobGriefingEvent(this.world, this) ? Explosion.Mode.DESTROY : Explosion.Mode.NONE;
+					this.world.createExplosion(this, getPosX(), getPosY(), getPosZ(), 3f, mode);
 			    }
 			    this.remove();
 		    }

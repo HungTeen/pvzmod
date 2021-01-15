@@ -37,7 +37,7 @@ public class RecipeGenerator extends ForgeRecipeProvider{
 		registerCommonCard(consumer, ItemRegister.WATER_GUARD_CARD.get(), Items.LILY_PAD);
 		registerCommonCard(consumer, ItemRegister.PLANTERN_CARD.get(), BlockRegister.LANTERN.get().asItem());
 		registerCommonCard(consumer, ItemRegister.CACTUS_CARD.get(), Items.CACTUS);
-		registerCommonCard(consumer, ItemRegister.FLOWER_POT_CARD.get(), BlockRegister.FLOWER_POT.get().asItem());
+		registerCommonCard(consumer, ItemRegister.FLOWER_POT_CARD.get(), Items.FLOWER_POT);
     }
 	
 	private void registerCommonCard(Consumer<IFinishedRecipe> consumer, PlantCardItem result, Item crop) {

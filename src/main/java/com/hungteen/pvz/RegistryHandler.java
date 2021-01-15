@@ -38,7 +38,7 @@ import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 @EventBusSubscriber(modid = PVZMod.MOD_ID, bus = EventBusSubscriber.Bus.MOD)
 public class RegistryHandler {
 
-	public static void register(){
+	public static void register() {
 		IEventBus bus = FMLJavaModLoadingContext.get().getModEventBus();
 		ItemRegister.ITEMS.register(bus);
 		BlockRegister.BLOCKS.register(bus);
