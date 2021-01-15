@@ -138,7 +138,7 @@ public abstract class PVZZombieEntity extends MonsterEntity implements IPVZZombi
 		this.goalSelector.addGoal(8, new PVZLookRandomlyGoal(this));
 		this.goalSelector.addGoal(7, new WaterAvoidingRandomWalkingGoal(this, 1.0D));
 		this.goalSelector.addGoal(7, new PVZSwimGoal(this));
-		this.goalSelector.addGoal(0, new ZombieMeleeAttackGoal(this));
+		this.goalSelector.addGoal(2, new ZombieMeleeAttackGoal(this));
 		this.goalSelector.addGoal(6, new BreakBlockGoal(BlockRegister.FLOWER_POT.get(), this, 1F, 10));
 		this.targetSelector.addGoal(0, new ZombieNearestTargetGoal(this, true, 80, 60));
 	}

@@ -42,7 +42,7 @@ import net.minecraftforge.registries.ForgeRegistries;
 
 public class ItemRegister {
 
-    public static final DeferredRegister<Item> ITEMS =new DeferredRegister<>(ForgeRegistries.ITEMS, PVZMod.MOD_ID);
+    public static final DeferredRegister<Item> ITEMS = new DeferredRegister<>(ForgeRegistries.ITEMS, PVZMod.MOD_ID);
 	
     //ingot essence
     public static final RegistryObject<Item> ORIGIN_ESSENCE = ITEMS.register("origin_essence", PVZItemBase::new);

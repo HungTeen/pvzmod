@@ -8,7 +8,6 @@ import net.minecraft.client.gui.screen.MainMenuScreen;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.client.event.GuiOpenEvent;
 import net.minecraftforge.client.event.ModelBakeEvent;
-import net.minecraftforge.event.TickEvent.ClientTickEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 
@@ -22,14 +21,6 @@ public class PVZClientEvents {
 			    event.setGui(new PVZMainMenuScreen());
 		    }
 		}
-	}
-	
-	@SubscribeEvent
-	public static void tickClient(ClientTickEvent event) {
-//		if(ClientPlayerResources.playSoundTick > 0) {
-//			System.out.println(ClientPlayerResources.playSoundTick);
-//			-- ClientPlayerResources.playSoundTick;
-//		}
 	}
 	
 	@SubscribeEvent

@@ -774,7 +774,7 @@ public abstract class PVZPlantEntity extends CreatureEntity implements IPVZPlant
 	
 	@Override
 	protected SoundEvent getHurtSound(DamageSource damageSourceIn) {
-		if(((PVZDamageSource)damageSourceIn).getPVZDamageType() == PVZDamageType.EAT) return SoundRegister.PLANT_HURT.get();
+		if(damageSourceIn instanceof PVZDamageSource && ((PVZDamageSource)damageSourceIn).getPVZDamageType() == PVZDamageType.EAT) return SoundRegister.PLANT_HURT.get();
 		return super.getHurtSound(damageSourceIn);
 	}
 	

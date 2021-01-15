@@ -51,7 +51,7 @@ public abstract class PlantProducerEntity extends PVZPlantEntity implements IPro
 	protected void genSun(int num){
 		SunEntity sun = EntityRegister.SUN.get().create(this.world);
 		sun.setAmount(num);
-		EntityUtil.onMobEntityRandomPosSpawn(world, sun, getPosition(), 3);
+		EntityUtil.onMobEntityRandomPosSpawn(world, sun, getPosition(), 2);
 		EntityUtil.playSound(this, SoundEvents.ENTITY_EXPERIENCE_ORB_PICKUP);
 	}
 	

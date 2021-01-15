@@ -12,9 +12,8 @@ import net.minecraftforge.api.distmarker.OnlyIn;
 @OnlyIn(Dist.CLIENT)
 public class SunRender extends DropRender<SunEntity>{
 
-	
 	public SunRender(EntityRendererManager renderManager) {
-		super(renderManager,new SunModel());
+		super(renderManager, new SunModel());
 	}
 
 	@Override

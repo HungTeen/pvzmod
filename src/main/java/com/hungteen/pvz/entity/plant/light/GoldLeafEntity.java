@@ -19,6 +19,8 @@ public class GoldLeafEntity extends PlantBomberEntity {
 	
 	public GoldLeafEntity(EntityType<? extends CreatureEntity> type, World worldIn) {
 		super(type, worldIn);
+		this.canCollideWithPlant = false;
+		this.canBeCharmed = false;
 	}
 
 	@Override
@@ -41,8 +43,8 @@ public class GoldLeafEntity extends PlantBomberEntity {
 	
 	public static int getGoldGenAmount(int lvl) {
 		if(lvl == 1) return 25;
-		if(lvl == 2) return 35;
-		return 50;
+		if(lvl == 2) return 50;
+		return 75;
 	}
 	
 	private Block getGoldTileByLvl(int lvl) {

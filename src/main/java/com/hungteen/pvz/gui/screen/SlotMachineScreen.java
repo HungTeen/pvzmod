@@ -21,7 +21,10 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.TranslationTextComponent;
+import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.api.distmarker.OnlyIn;
 
+@OnlyIn(Dist.CLIENT)
 public class SlotMachineScreen extends ContainerScreen<SlotMachineContainer> {
 
 	private static final ResourceLocation TEXTURE = StringUtil.prefix("textures/gui/container/slot_machine.png");
