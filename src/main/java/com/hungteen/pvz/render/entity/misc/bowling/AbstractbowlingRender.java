@@ -1,9 +1,9 @@
-package com.hungteen.pvz.render.entity.misc;
+package com.hungteen.pvz.render.entity.misc.bowling;
 
-import com.hungteen.pvz.entity.misc.WallNutBowlingEntity;
+import com.hungteen.pvz.entity.misc.bowling.AbstractBowlingEntity;
 import com.hungteen.pvz.entity.plant.defence.WallNutEntity;
 import com.hungteen.pvz.model.entity.plant.defence.WallNutModel;
-import com.hungteen.pvz.utils.StringUtil;
+import com.hungteen.pvz.render.entity.plant.defence.WallNutRender;
 import com.mojang.blaze3d.matrix.MatrixStack;
 import com.mojang.blaze3d.vertex.IVertexBuilder;
 
@@ -15,17 +15,20 @@ import net.minecraft.client.renderer.entity.model.EntityModel;
 import net.minecraft.client.renderer.texture.OverlayTexture;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.MathHelper;
+import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.api.distmarker.OnlyIn;
 
-public class WallNutBowlingRender extends EntityRenderer<WallNutBowlingEntity> {
+@OnlyIn(Dist.CLIENT)
+public class AbstractbowlingRender<T extends AbstractBowlingEntity> extends EntityRenderer<T> {
 
-	protected final EntityModel<WallNutEntity> model = new WallNutModel();
+	protected final EntityModel<WallNutEntity> model = new WallNutModel<>();
 	
-	public WallNutBowlingRender(EntityRendererManager renderManager) {
+	public AbstractbowlingRender(EntityRendererManager renderManager) {
 		super(renderManager);
 	}
 	
 	@Override
-	public void render(WallNutBowlingEntity entityIn, float entityYaw, float partialTicks, MatrixStack matrixStackIn,
+	public void render(T entityIn, float entityYaw, float partialTicks, MatrixStack matrixStackIn,
 			IRenderTypeBuffer bufferIn, int packedLightIn) {
 		super.render(entityIn, entityYaw, partialTicks, matrixStackIn, bufferIn, packedLightIn);
 		matrixStackIn.push();
@@ -41,13 +44,13 @@ public class WallNutBowlingRender extends EntityRenderer<WallNutBowlingEntity> {
         matrixStackIn.pop();
 	}
 	
-	protected float getRenderSize(WallNutBowlingEntity entity) {
+	protected float getRenderSize(T entity) {
 		return 0.5F;
 	}
 	
 	@Override
-	public ResourceLocation getEntityTexture(WallNutBowlingEntity entity) {
-		return StringUtil.prefix("textures/entity/plant/defence/wall_nut1.png");
+	public ResourceLocation getEntityTexture(T entity) {
+		return WallNutRender.TEXTURE1;
 	}
 
 }

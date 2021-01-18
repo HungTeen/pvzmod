@@ -15,7 +15,8 @@ public enum PVZDamageType {
 	SPIKE,
 	CRUSH,
 	THROUGH,
-	THORN;
+	THORN,
+	BOWLING;
 //	BUTTER, 
 //	LIGHTNING,
 //	MAGIC, 
@@ -37,6 +38,7 @@ public enum PVZDamageType {
 		case CRUSH: return ChatFormatting.DARK_GREEN + I18n.format("pvz.damage_type.crush", new Object[0]);
 		case THROUGH: return ChatFormatting.DARK_PURPLE + I18n.format("pvz.damage_type.through", new Object[0]);
 		case THORN: return ChatFormatting.YELLOW + I18n.format("pvz.damage_type.thorn", new Object[0]);
+		case BOWLING: return ChatFormatting.YELLOW + I18n.format("pvz.damage_type.bowling", new Object[0]);
 //			case BUTTER:
 //				return ChatFormatting.YELLOW+I18n.format("pvz.DamageType.BUTTER",new Object[0]);
 //			case LIGHTNING:

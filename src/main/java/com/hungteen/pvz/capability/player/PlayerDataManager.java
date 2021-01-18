@@ -4,6 +4,7 @@ package com.hungteen.pvz.capability.player;
 import java.util.EnumMap;
 import java.util.HashMap;
 
+import com.hungteen.pvz.advancement.AdvancementHandler;
 import com.hungteen.pvz.event.events.PlayerLevelUpEvent;
 import com.hungteen.pvz.network.PVZPacketHandler;
 import com.hungteen.pvz.network.PlantStatsPacket;
@@ -118,6 +119,7 @@ public class PlayerDataManager {
 			case SUN_NUM:{
 				int now = MathHelper.clamp(resources.get(Resources.SUN_NUM) + num, 0, PlayerUtil.getPlayerMaxSunNum(resources.get(Resources.TREE_LVL)));
 				resources.put(Resources.SUN_NUM, now);
+				AdvancementHandler.SUN_AMOUNT.trigger((ServerPlayerEntity) player, now);
 				break;
 			}
 			case ENERGY_NUM:{

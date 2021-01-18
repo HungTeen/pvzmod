@@ -360,12 +360,26 @@
     "item.pvz.gold_leaf_spawn_egg":"黄金叶刷怪蛋",
     "item.pvz.gold_leaf_card":"黄金叶卡",
     "item.pvz.gold_leaf_enjoy_card":"黄金叶体验卡",
+//ExplodeONut
+    "entity.pvz.explode_o_nut":"爆炸坚果",
+    "item.pvz.explode_o_nut_spawn_egg":"爆炸坚果刷怪蛋",
+    "item.pvz.explode_o_nut_card":"爆炸坚果卡",
+    "item.pvz.explode_o_nut_enjoy_card":"爆炸坚果体验卡",
+//GiantWallNut
+    "entity.pvz.giant_wall_nut":"巨型坚果墙",
+    "item.pvz.giant_wall_nut_spawn_egg":"巨型坚果墙刷怪蛋",
+    "item.pvz.giant_wall_nut_card":"巨型坚果墙卡",
+    "item.pvz.giant_wall_nut_enjoy_card":"巨型坚果墙体验卡",
 //tooltip
     "tooltip.pvz.zombie_flag":"右键会获得加速效果",
     "tooltip.pvz.summon_card":"右键方块召唤植物或僵尸",
     "tooltip.pvz.sun_cost":"阳光消耗",
     "tooltip.pvz.pea_gun":"主手右键发射豌豆,副手右键打开界面",
     "tooltip.pvz.sun_storage_amount":"阳光储量",
+    "tooltip.pvz.bowling_glove.empty":"右击坚果墙或其他保龄球植物来使用",
+    "tooltip.pvz.bowling_glove.wall_nut":"右击地面来扔出坚果保龄球",
+    "tooltip.pvz.bowling_glove.explode_o_nut":"右击地面来扔出爆炸坚果保龄球",
+    "tooltip.pvz.bowling_glove.giant_wall_nut":"右击地面来扔出巨型坚果保龄球",
 //armor
     "item.pvz.cone_head":"路障头盔",
     "item.pvz.bucket_head":"铁桶头盔",
@@ -387,6 +401,7 @@
     "item.pvz.steel_pickaxe":"钢镐",
     "item.pvz.steel_shovel":"钢铲",
     "item.pvz.steel_hoe":"钢锄",
+    "item.pvz.bowling_glove":"保龄球手套",
 //block
 //ore
     "block.pvz.origin_ore":"原始精华矿",

@@ -12,7 +12,7 @@ import net.minecraft.client.renderer.model.ModelRenderer;
 // Paste this class into your mod and generate all required imports
 
 
-public class WallNutModel extends EntityModel<WallNutEntity> {
+public class WallNutModel<T extends WallNutEntity> extends EntityModel<T> {
 	private final ModelRenderer body;
 
 	public WallNutModel() {
@@ -38,7 +38,7 @@ public class WallNutModel extends EntityModel<WallNutEntity> {
 	}
 
 	@Override
-	public void setRotationAngles(WallNutEntity entity, float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch){
+	public void setRotationAngles(T entity, float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch){
 		//previously the render function, render code was moved to a method below
 	}
 

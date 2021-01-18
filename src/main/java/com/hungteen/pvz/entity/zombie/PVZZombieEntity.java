@@ -80,6 +80,7 @@ public abstract class PVZZombieEntity extends MonsterEntity implements IPVZZombi
 	private static final DataParameter<Integer> ATTACK_TIME = EntityDataManager.createKey(PVZZombieEntity.class, DataSerializers.VARINT);
 	private static final DataParameter<Float> DEFENCE_LIFE = EntityDataManager.createKey(PVZZombieEntity.class, DataSerializers.FLOAT);
 	protected boolean hasDirectDefence = false;
+	protected boolean canSpawnDrop = true;
 	
 	public PVZZombieEntity(EntityType<? extends MonsterEntity> type, World worldIn) {
 		super(type, worldIn);
@@ -186,6 +187,14 @@ public abstract class PVZZombieEntity extends MonsterEntity implements IPVZZombi
 	}
 	
 	@Override
+	public void onDeath(DamageSource cause) {
+		super.onDeath(cause);
+		if(cause instanceof PVZDamageSource && ((PVZDamageSource)cause).getPVZDamageType() == PVZDamageType.BOWLING && ((PVZDamageSource)cause).getDamageCount() > 0) {
+			this.canSpawnDrop = false;
+		}
+	}
+	
+	@Override
 	protected void onDeathUpdate() {
 		++this.deathTime;
 		if (this.deathTime == 20) {
@@ -211,8 +220,9 @@ public abstract class PVZZombieEntity extends MonsterEntity implements IPVZZombi
 				this.dropEnergy();
 			} else if (getZombieType() == Type.BEARD) {// finish achievement
 			}
-			this.dropCoinOrSpecial();
-			this.zombieDropItem();
+			if(this.canSpawnDrop) {
+				this.dropCoinOrSpecial();
+			}
 		}
 	}
 
@@ -251,12 +261,6 @@ public abstract class PVZZombieEntity extends MonsterEntity implements IPVZZombi
 		}
 	}
 
-	/**
-	 * zombie loottable is different from default mc. only in server side
-	 */
-	protected void zombieDropItem() {
-	}
-	
 	/**
 	 * can zombie set target as attackTarget
 	 */

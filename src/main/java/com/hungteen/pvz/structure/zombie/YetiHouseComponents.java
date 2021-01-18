@@ -11,6 +11,7 @@ import com.hungteen.pvz.structure.PVZTemplateComponent;
 import com.hungteen.pvz.utils.EntityUtil;
 import com.hungteen.pvz.utils.StringUtil;
 
+import net.minecraft.block.Blocks;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.Rotation;
@@ -64,7 +65,8 @@ public class YetiHouseComponents {
 			} else if(function.equals("spawn")) {
 				if(rand.nextInt(3) == 0) {
 					YetiZombieEntity yeti = EntityRegister.YETI_ZOMBIE.get().create(worldIn.getWorld());
-					EntityUtil.onMobEntitySpawn(worldIn.getWorld(), yeti, pos);
+					EntityUtil.onMobEntitySpawn(worldIn, yeti, pos);
+					worldIn.setBlockState(pos, Blocks.AIR.getDefaultState(), 2);
 				}
 			}
 		}

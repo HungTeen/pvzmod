@@ -46,8 +46,8 @@ public enum Zombies {
 	NOBLE_ZOMBIE(0, 0), 
 	RA_ZOMBIE(5, 0);
 
-	public final int spawnWeight;
-	public final int chooseWeight;
+	public final int spawnWeight;// wave spawn
+	public final int chooseWeight;//random invasion choose
 	
 	private Zombies(int weight, int choose) {
 		this.spawnWeight = weight;

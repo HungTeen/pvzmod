@@ -21,7 +21,7 @@
 //card
     "item.pvz.gray_card":"Gray Card",
     "item.pvz.white_card":"White Card",
-    "item.pvz.green_card":"Grenn Card",
+    "item.pvz.green_card":"Green Card",
     "item.pvz.blue_card":"Blue Card",
     "item.pvz.purple_card":"Purple Card",
     "item.pvz.gold_card":"Gold Card",
@@ -365,6 +365,10 @@
     "tooltip.pvz.sun_cost":"Sun Cost",
     "tooltip.pvz.pea_gun":"Main hand right click to shoot,off hand to open gui",
     "tooltip.pvz.sun_storage_amount":"Sun Amount",
+    "tooltip.pvz.bowling_glove.empty":"Right click WallNut or other Bowling Plants to use",
+    "tooltip.pvz.bowling_glove.wall_nut":"Right Click Ground to throw Wall Nut Bowling",
+    "tooltip.pvz.bowling_glove.explode_o_nut":"Right Click Ground to throw Explode-O-Nut Bowling",
+    "tooltip.pvz.bowling_glove.giant_wall_nut":"Right Click Ground to throw Giant Wall Nut Bowling",
 //armor
     "item.pvz.cone_head":"Cone Head",
     "item.pvz.bucket_head":"Bucket Head",
@@ -386,6 +390,7 @@
     "item.pvz.steel_pickaxe":"Steel Pickaxe",
     "item.pvz.steel_shovel":"Steel Shovel",
     "item.pvz.steel_hoe":"Steel Hoe",
+    "item.pvz.bowling_glove":"Bowling Glove",
 //block
 //ore
     "block.pvz.origin_ore":"Origin Ore",

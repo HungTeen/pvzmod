@@ -20,6 +20,7 @@ public class PVZDamageSource extends DamageSource {
 	private PVZDamageType damageType;
 	private boolean isDefended = false;// is defended by some defence
 	private boolean isCopyDamage = false;
+	private int damageCount = 0;
 	private List<EffectInstance> effects = new ArrayList<>();
 
 	public static final DamageSource CHOMPER_PLANT = new DamageSource("chomper_plant");
@@ -73,6 +74,10 @@ public class PVZDamageSource extends DamageSource {
 	
 	public static PVZDamageSource causeThornDamage(Entity projectile, Entity shooter) {
 		return new PVZDamageSource("pvz_thorn", projectile, shooter, PVZDamageType.THORN);
+	}
+	
+	public static PVZDamageSource causeBowlingDamage(Entity projectile, Entity shooter) {
+		return new PVZDamageSource("pvz_bowling", projectile, shooter, PVZDamageType.BOWLING);
 	}
 
 	public static boolean isEnforceDamage(DamageSource source) {
@@ -137,6 +142,15 @@ public class PVZDamageSource extends DamageSource {
 	
 	public void addEffect(EffectInstance instance) {
 		this.effects.add(instance);
+	}
+	
+	public PVZDamageSource setCount(int cnt) {
+		this.damageCount = cnt;
+		return this;
+	}
+	
+	public int getDamageCount() {
+		return this.damageCount;
 	}
 	
 	public List<EffectInstance> getEffects(){

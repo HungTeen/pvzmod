@@ -60,7 +60,9 @@ public enum Plants {
 	WATER_GUARD(4),
 	STRANGE_CAT(0),
 	ANGEL_STAR_FRUIT(0),
-	GOLD_LEAF(0);
+	GOLD_LEAF(0),
+	EXPLODE_O_NUT(0),
+	GIANT_WALL_NUT(40);
 
 	/*
 	 * 1 means ShroomPlant like PuffShroom,
@@ -68,6 +70,7 @@ public enum Plants {
 	 * 4 means WaterPlant like SeaShroom,
 	 * 8 means UpgradePlant like GatlingPea,
 	 * 16 means OuterPlants like Pumpkin,
+	 * 32 means BigPlants like giant wall nut,
 	 */
 	public final boolean isShroomPlant;
 	public final boolean isBlockPlant;

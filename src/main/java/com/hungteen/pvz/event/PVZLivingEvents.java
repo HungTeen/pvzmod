@@ -61,7 +61,7 @@ public class PVZLivingEvents {
 	@SubscribeEvent
 	public static void onLivingHurt(LivingHurtEvent ev) {
 		if(! ev.getEntityLiving().world.isRemote) {
-			ev.getEntityLiving().getArmorInventoryList().forEach((stack)->{
+			ev.getEntityLiving().getArmorInventoryList().forEach((stack) -> {
 				if(EnchantmentHelper.getEnchantmentLevel(EnchantmentRegister.TREE_PROTECTION.get(), stack) > 0){
 					float amount = ev.getAmount();
 					amount = Math.min(amount, ev.getEntityLiving().getMaxHealth());

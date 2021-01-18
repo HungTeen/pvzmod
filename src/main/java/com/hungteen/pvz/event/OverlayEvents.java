@@ -3,6 +3,7 @@ package com.hungteen.pvz.event;
 import com.hungteen.pvz.PVZConfig;
 import com.hungteen.pvz.PVZMod;
 import com.hungteen.pvz.capability.player.ClientPlayerResources;
+import com.hungteen.pvz.gui.screen.PVZMainMenuScreen;
 import com.hungteen.pvz.register.KeyBindRegister;
 import com.hungteen.pvz.utils.PlayerUtil;
 import com.hungteen.pvz.utils.RenderUtil;
@@ -12,11 +13,13 @@ import com.hungteen.pvz.utils.enums.Resources;
 import com.mojang.blaze3d.systems.RenderSystem;
 
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.gui.screen.MainMenuScreen;
 import net.minecraft.client.renderer.BufferBuilder;
 import net.minecraft.client.renderer.Tessellator;
 import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.client.event.GuiOpenEvent;
 import net.minecraftforge.client.event.RenderGameOverlayEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
@@ -32,6 +35,15 @@ public class OverlayEvents {
 	private static final int BAR_LEN = 123;
 	private static final int BAR_H = 26;
 
+	@SubscribeEvent
+	public static void onGuiOpened(GuiOpenEvent event) {
+		if(PVZConfig.CLIENT_CONFIG.OtherSettings.ShowPVZMainMenu.get()) {//show pvz menu
+		    if (event.getGui() instanceof MainMenuScreen && ! (event.getGui() instanceof PVZMainMenuScreen)) {
+			    event.setGui(new PVZMainMenuScreen());
+		    }
+		}
+	}
+	
 	@SubscribeEvent
 	public static void onRenderSunNumBar(RenderGameOverlayEvent.Post ev) {
 		if (!KeyBindRegister.showPlayerResources || ev.getType() != RenderGameOverlayEvent.ElementType.ALL

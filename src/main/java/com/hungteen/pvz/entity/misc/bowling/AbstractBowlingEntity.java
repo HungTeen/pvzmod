@@ -1,10 +1,11 @@
-package com.hungteen.pvz.entity.misc;
+package com.hungteen.pvz.entity.misc.bowling;
 
 import java.util.List;
 import java.util.UUID;
 
 import javax.annotation.Nullable;
 
+import com.hungteen.pvz.register.SoundRegister;
 import com.hungteen.pvz.utils.EntityUtil;
 
 import it.unimi.dsi.fastutil.ints.IntOpenHashSet;
@@ -23,15 +24,12 @@ import net.minecraft.network.datasync.DataParameter;
 import net.minecraft.network.datasync.DataSerializers;
 import net.minecraft.network.datasync.EntityDataManager;
 import net.minecraft.particles.ParticleTypes;
-import net.minecraft.util.DamageSource;
 import net.minecraft.util.Direction;
 import net.minecraft.util.math.EntityRayTraceResult;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.RayTraceContext;
 import net.minecraft.util.math.RayTraceResult;
 import net.minecraft.util.math.Vec3d;
-import net.minecraft.util.math.Vec3i;
-import net.minecraft.world.GameRules;
 import net.minecraft.world.World;
 import net.minecraft.world.server.ServerWorld;
 import net.minecraftforge.api.distmarker.Dist;
@@ -46,6 +44,8 @@ public abstract class AbstractBowlingEntity extends Entity {
 	private static final DataParameter<Integer> FACING = EntityDataManager.createKey(AbstractBowlingEntity.class, DataSerializers.VARINT);
 	private static final DataParameter<Integer> DIRECTION = EntityDataManager.createKey(AbstractBowlingEntity.class, DataSerializers.VARINT);
 	private int bowlingTick = 0;
+	private boolean playSpawnSound = false;
+	protected int hitCount = 0;
 	
 	public AbstractBowlingEntity(EntityType<?> type, World worldIn) {
 		super(type, worldIn);
@@ -69,8 +69,14 @@ public abstract class AbstractBowlingEntity extends Entity {
 	 */
 	public void tick() {
 		super.tick();
-		if (! world.isRemote && this.ticksExisted >= this.getMaxLiveTick()) {
-			this.remove();
+		if (! world.isRemote) {
+			if(this.ticksExisted <= 10 && ! this.playSpawnSound) {
+				EntityUtil.playSound(this, SoundRegister.BOWLING_SPAWN.get());
+				this.playSpawnSound = true;
+			}
+			if(this.ticksExisted >= this.getMaxLiveTick()) {
+				this.remove();
+			}
 		}
 		if(this.ticksExisted <= 10) {
 			this.recalculateSize();
@@ -91,7 +97,7 @@ public abstract class AbstractBowlingEntity extends Entity {
 		}
 	}
 	
-	private void tickCollision() {
+	protected void tickCollision() {
 		if(this.world.isRemote) return ;
 		if(this.bowlingTick > 0) return ;
 		List<Entity> list = this.world.getEntitiesWithinAABB(Entity.class, this.getBoundingBox(), (target) -> {
@@ -235,6 +241,7 @@ public abstract class AbstractBowlingEntity extends Entity {
 		compound.putInt("bowling_facings", this.getBowlingFacing().ordinal());
 		compound.putInt("bowling_directions", this.getDirection().ordinal());
 		compound.putInt("bowling_tick", this.bowlingTick);
+		compound.putInt("bowling_hit_count", this.hitCount);
 	}
 
 	/**
@@ -253,6 +260,9 @@ public abstract class AbstractBowlingEntity extends Entity {
 		}
 		if(compound.contains("bowling_tick")) {
 			this.bowlingTick = compound.getInt("bowling_tick");
+		}
+		if(compound.contains("bowling_hit_count")) {
+			this.hitCount = compound.getInt("bowling_hit_count");
 		}
 	}
 	
@@ -329,7 +339,8 @@ public abstract class AbstractBowlingEntity extends Entity {
 	public static enum BowlingFacings {
 		LEFT(- 45),
 		MID(0), 
-		RIGHT(45);
+		RIGHT(45),
+		BOMB(0);
 		public final float offset;
 		
 		private BowlingFacings(float offset) {

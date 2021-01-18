@@ -214,5 +214,17 @@
     "lose_music":{
         "subtitle": "sound.pvz.lose_music",
         "sounds":[{"name":"pvz:ambient/lose_music"}]
+    },
+    "bowling_spawn":{
+        "subtitle": "sound.pvz.bowling_spawn",
+        "sounds":[{"name":"pvz:entity/misc/bowling/bowling_spawn"}]
+    },
+    "bowling_hit":{
+        "subtitle": "sound.pvz.bowling_hit",
+        "sounds":[{"name":"pvz:entity/misc/bowling/bowling_hit"}]
+    },
+    "bowling_bomb":{
+        "subtitle": "sound.pvz.bowling_bomb",
+        "sounds":[{"name":"pvz:entity/misc/bowling/bowling_bomb"}]
     }
 }
