@@ -15,7 +15,7 @@
   "parent":"pvz:root",
   "criteria": {
     "get_almanac": {
-      "trigger": "pvz:has_advancement",
+      "trigger": "minecraft:sun_amount",
       "conditions": {
         "amount":[
 		  {
