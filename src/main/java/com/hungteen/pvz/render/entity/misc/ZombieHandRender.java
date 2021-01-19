@@ -2,7 +2,7 @@ package com.hungteen.pvz.render.entity.misc;
 
 import com.hungteen.pvz.entity.misc.ZombieHandEntity;
 import com.hungteen.pvz.model.entity.misc.ZombieHandModel;
-import com.hungteen.pvz.render.entity.PVZCreatureRender;
+import com.hungteen.pvz.render.entity.PVZEntityRender;
 import com.hungteen.pvz.utils.StringUtil;
 
 import net.minecraft.client.renderer.entity.EntityRendererManager;
@@ -12,10 +12,10 @@ import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 
 @OnlyIn(Dist.CLIENT)
-public class ZombieHandRender extends PVZCreatureRender<ZombieHandEntity>{
+public class ZombieHandRender extends PVZEntityRender<ZombieHandEntity>{
 
 	public ZombieHandRender(EntityRendererManager renderManagerIn) {
-		super(renderManagerIn, new ZombieHandModel(), 0f);
+		super(renderManagerIn, new ZombieHandModel());
 	}
 	
     @Override

@@ -23,7 +23,7 @@ public class GiantNutBowlingEntity extends AbstractBowlingEntity {
 
 	@Override
 	protected void dealDamageTo(Entity entity) {
-		entity.attackEntityFrom(PVZDamageSource.causeBowlingDamage(this, this.getThrower()), 200);
+		entity.attackEntityFrom(PVZDamageSource.causeBowlingDamage(this, this.getOwner()), 200);
 		EntityUtil.playSound(this, SoundRegister.BOWLING_HIT.get());
 	}
 	

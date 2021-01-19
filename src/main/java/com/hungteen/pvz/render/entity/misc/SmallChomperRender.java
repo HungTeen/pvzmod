@@ -2,7 +2,7 @@ package com.hungteen.pvz.render.entity.misc;
 
 import com.hungteen.pvz.entity.misc.SmallChomperEntity;
 import com.hungteen.pvz.model.entity.misc.SmallChomperModel;
-import com.hungteen.pvz.render.entity.PVZCreatureRender;
+import com.hungteen.pvz.render.entity.PVZEntityRender;
 import com.hungteen.pvz.utils.StringUtil;
 
 import net.minecraft.client.renderer.entity.EntityRendererManager;
@@ -12,10 +12,10 @@ import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 
 @OnlyIn(Dist.CLIENT)
-public class SmallChomperRender extends PVZCreatureRender<SmallChomperEntity>{
+public class SmallChomperRender extends PVZEntityRender<SmallChomperEntity>{
 
 	public SmallChomperRender(EntityRendererManager renderManagerIn) {
-		super(renderManagerIn, new SmallChomperModel(), 0.1f);
+		super(renderManagerIn, new SmallChomperModel());
 	}
 
 	@Override

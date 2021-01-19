@@ -1,10 +1,10 @@
-package com.hungteen.pvz.gui.screen;
+package com.hungteen.pvz.gui.screen.shop;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import com.hungteen.pvz.capability.player.ClientPlayerResources;
-import com.hungteen.pvz.gui.container.AbstractDaveShopContainer;
+import com.hungteen.pvz.gui.container.shop.AbstractDaveShopContainer;
 import com.hungteen.pvz.network.ClickButtonPacket;
 import com.hungteen.pvz.network.PVZPacketHandler;
 import com.hungteen.pvz.utils.StringUtil;

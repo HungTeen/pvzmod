@@ -91,7 +91,7 @@ public class ChomperEntity extends PVZPlantEntity {
 		for (Entity target : EntityUtil.getEntityTargetableEntity(this, EntityUtil.getEntityAABB(this, this.SUPER_RANGE, this.SUPER_RANGE))) {
 			SmallChomperEntity chomper = EntityRegister.SMALL_CHOMPER.get().create(world);
 			chomper.setOwner(this);
-			EntityUtil.onMobEntitySpawn(world, chomper, target.getPosition());
+			EntityUtil.onEntitySpawn(world, chomper, target.getPosition());
 			-- cnt;
 			if (cnt == 0) {
 				break;

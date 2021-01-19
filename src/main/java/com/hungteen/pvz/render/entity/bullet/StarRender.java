@@ -35,7 +35,7 @@ public class StarRender extends PVZEntityRender<StarEntity> {
 //		matrixStackIn.pop();
 //		matrixStackIn.push();
 		matrixStackIn.scale(-1, -1, 1);
-		float f = getRenderSize(entityIn);
+		float f = getScaleByEntity(entityIn);
 		matrixStackIn.scale(f, f, f);
 		matrixStackIn.translate(0.0, -1.501, 0.0);
 		ResourceLocation res = (entityIn.getStarState() == StarStates.PINK ? RES2 : RES1);
@@ -46,7 +46,7 @@ public class StarRender extends PVZEntityRender<StarEntity> {
 	}
 	
 	@Override
-	protected float getRenderSize(StarEntity entity) {
+	protected float getScaleByEntity(StarEntity entity) {
 		if(entity.getStarType() == StarTypes.BIG) return 1.5F;
 		if(entity.getStarType() == StarTypes.HUGE) return 2F;
 		return 0.8F;

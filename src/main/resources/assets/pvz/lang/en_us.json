@@ -700,7 +700,7 @@
     "event.pvz.football":"Football Invasion",
     "event.pvz.random":"Random Invasion",
     "event.pvz.fog":"Fog Event",
-    "event.pvz.yeti":"Yeti Event",
+    "event.pvz.yeti":"Yeti Invasion",
 //death
     "death.attack.pvz_normal":"%s was killed",
     "death.attack.pvz_weak":"%s weak to death",

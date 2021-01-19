@@ -1,6 +1,6 @@
 package com.hungteen.pvz.entity.npc;
 
-import com.hungteen.pvz.gui.container.SunShopContainer;
+import com.hungteen.pvz.gui.container.shop.SunShopContainer;
 
 import net.minecraft.entity.CreatureEntity;
 import net.minecraft.entity.EntitySize;

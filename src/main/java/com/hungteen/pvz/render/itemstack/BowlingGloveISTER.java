@@ -22,11 +22,8 @@ import net.minecraft.client.renderer.texture.OverlayTexture;
 import net.minecraft.client.renderer.tileentity.ItemStackTileEntityRenderer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
-import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.api.distmarker.OnlyIn;
 
 @SuppressWarnings("deprecation")
-@OnlyIn(Dist.CLIENT)
 public class BowlingGloveISTER extends ItemStackTileEntityRenderer {
 
 	private final EntityModel<WallNutEntity> model = new WallNutModel<WallNutEntity>();

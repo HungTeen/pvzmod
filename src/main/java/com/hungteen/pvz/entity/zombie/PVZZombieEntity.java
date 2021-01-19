@@ -275,6 +275,10 @@ public abstract class PVZZombieEntity extends MonsterEntity implements IPVZZombi
 		return ! this.isCharmed();
 	}
 	
+	public boolean canZombieBeRemoved() {
+		return true;
+	}
+	
 	@Override
 	public boolean attackEntityFrom(DamageSource source, float amount) {
 		if (source instanceof PVZDamageSource) {

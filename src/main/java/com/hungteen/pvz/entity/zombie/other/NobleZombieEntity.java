@@ -86,7 +86,7 @@ public class NobleZombieEntity extends PVZZombieEntity {
 				if(this.getRNG().nextInt(4) == 0) {
 					ZombieHandEntity hand = EntityRegister.ZOMBIE_HAND.get().create(world);
 				    hand.setOwner(this);
-				    EntityUtil.onMobEntitySpawn(world, hand, target.getPosition());
+				    EntityUtil.onEntitySpawn(world, hand, target.getPosition());
 				}
 			}
 		}
@@ -232,7 +232,7 @@ public class NobleZombieEntity extends PVZZombieEntity {
 			if(i + cnt >= list.size() || this.getRNG().nextInt(5) == 0) {
 				ZombieHandEntity hand = EntityRegister.ZOMBIE_HAND.get().create(world);
 				hand.setOwner(this);
-				EntityUtil.onMobEntitySpawn(world, hand, list.get(i).getPosition());
+				EntityUtil.onEntitySpawn(world, hand, list.get(i).getPosition());
 				-- cnt;
 				if(cnt == 0) {
 					break;
@@ -336,6 +336,11 @@ public class NobleZombieEntity extends PVZZombieEntity {
 		return Type.NORMAL;
 	}
 
+	@Override
+	public boolean canZombieBeRemoved() {
+		return false;
+	}
+	
 	@Override
 	public void readAdditional(CompoundNBT compound) {
 		super.readAdditional(compound);

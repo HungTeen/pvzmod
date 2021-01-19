@@ -8,9 +8,7 @@ import com.hungteen.pvz.entity.zombie.PVZZombieEntity;
 import com.hungteen.pvz.register.EntityRegister;
 import com.hungteen.pvz.utils.EntityUtil;
 import com.hungteen.pvz.utils.ZombieUtil;
-import com.hungteen.pvz.utils.enums.Events;
 import com.hungteen.pvz.utils.enums.Zombies;
-import com.hungteen.pvz.world.data.WorldEventData;
 
 import net.minecraft.entity.EntitySize;
 import net.minecraft.entity.EntityType;
@@ -95,19 +93,7 @@ public class YetiZombieEntity extends PVZZombieEntity{
 	public static boolean canYetiSpawn(EntityType<? extends PVZZombieEntity> zombieType, IWorld worldIn,
 			SpawnReason reason, BlockPos pos, Random rand) {
 		if(canZombieSpawn(zombieType, worldIn, reason, pos, rand)) {
-			WorldEventData data = WorldEventData.getOverWorldEventData(worldIn.getWorld());
-			if(data.hasEvent(Events.YETI)) {
-				boolean res = rand.nextInt(4) == 0;
-//				if(res) System.out.println(pos);
-				return res;
-			} else {
-//				if(worldIn instanceof ServerWorld && ((ServerWorld) worldIn).isThundering() && ! ((ServerWorld) worldIn).isDaytime()) {
-//					System.out.println(pos);
-//				} else {
-//					System.out.println("no");
-//				}
-				return worldIn instanceof ServerWorld && ((ServerWorld) worldIn).isThundering() && ! ((ServerWorld) worldIn).isDaytime() && rand.nextInt(2) == 0;
-			}
+			return worldIn instanceof ServerWorld && ((ServerWorld) worldIn).isThundering() && ! ((ServerWorld) worldIn).isDaytime() && rand.nextInt(2) == 0;
 		}
 		return false;
 	}

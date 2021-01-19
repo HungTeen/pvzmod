@@ -58,19 +58,21 @@ public class PVZConfig {
 						
 					WorldSettings.WorldEventSettings.EventChanceSettings.FootballAttackChance = builder
 							.comment("The weight to happen Football Invasion when it's a zombie attack day.")
-							.defineInRange("FootballAttackChance", 50, 0, 100000);
+							.defineInRange("FootballAttackChance", 40, 0, 100000);
 						
 					WorldSettings.WorldEventSettings.EventChanceSettings.RandomAttackChance = builder
 							.comment("The weight to happen Random Invasion when it's a zombie attack day.")
-							.defineInRange("RandomAttackChance", 100, 0, 10000);
+							.defineInRange("RandomAttackChance", 70, 0, 10000);
+					
+					WorldSettings.WorldEventSettings.EventChanceSettings.YetiEventChance = builder
+							.comment("The weight to happen Yeti Invasion when it's a zombie attack day.")
+							.defineInRange("YetiAttackChance", 20, 1, 10000);
 					
 					WorldSettings.WorldEventSettings.EventChanceSettings.FogEventChance = builder
 							.comment("The related value to happen Fog Event when it's a zombie attack day(If the value is x, then the chance is 1/x).")
 							.defineInRange("FogAttackChance", 12, 1, 10000);
 					
-					WorldSettings.WorldEventSettings.EventChanceSettings.YetiEventChance = builder
-							.comment("The related value to happen Yeti Event when it's a zombie attack day(If the value is x, then the chance is 1/x).")
-							.defineInRange("YetiAttackChance", 5, 1, 10000);
+					
 					
 				}
 				builder.pop();
@@ -184,6 +186,14 @@ public class PVZConfig {
 							.comment("how many ticks can yeti entity live(how long will it stay).")
 							.worldRestart()
 							.defineInRange("YetiLiveTick", 2400, 1, 1000000);
+					EntitySettings.EntityLiveTick.BowlingLiveTick = builder
+							.comment("how many ticks can bowling entity live.")
+							.worldRestart()
+							.defineInRange("BowlingLiveTick", 300, 1, 1000000);
+					EntitySettings.EntityLiveTick.LawnMowerLiveTick = builder
+							.comment("how many ticks can lawnmower entity live.")
+							.worldRestart()
+							.defineInRange("LawnMowerLiveTick", 200, 1, 1000000);
 				}
 				builder.pop();
 			}
@@ -282,6 +292,8 @@ public class PVZConfig {
 				public ForgeConfigSpec.IntValue BulletLiveTick;
 				public ForgeConfigSpec.IntValue PlantLiveTick;
 				public ForgeConfigSpec.IntValue YetiLiveTick;
+				public ForgeConfigSpec.IntValue BowlingLiveTick;
+				public ForgeConfigSpec.IntValue LawnMowerLiveTick;
 			}
 			
 		}

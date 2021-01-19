@@ -1,4 +1,4 @@
-package com.hungteen.pvz.gui.container;
+package com.hungteen.pvz.gui.container.shop;
 
 import com.hungteen.pvz.capability.CapabilityHandler;
 import com.hungteen.pvz.capability.player.PlayerDataManager;
@@ -11,12 +11,12 @@ import com.hungteen.pvz.utils.enums.Resources;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.util.SoundCategory;
 
-public class DaveShopContainer extends AbstractDaveShopContainer {
-	
-	public DaveShopContainer(int id, PlayerEntity player) {
-		super(ContainerRegister.DAVE_SHOP.get(), id, player);
+public class PennyShopContainer extends AbstractDaveShopContainer {
+
+	public PennyShopContainer(int id, PlayerEntity player) {
+		super(ContainerRegister.PENNY_SHOP.get(), id, player);
 	}
-	
+
 	public void buyGood(DaveGoods good) {
 		if(good == DaveGoods.ENERGY) {
 			player.getCapability(CapabilityHandler.PLAYER_DATA_CAPABILITY).ifPresent((l) -> {

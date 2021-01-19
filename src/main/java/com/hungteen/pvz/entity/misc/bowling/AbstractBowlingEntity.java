@@ -1,10 +1,11 @@
 package com.hungteen.pvz.entity.misc.bowling;
 
 import java.util.List;
-import java.util.UUID;
 
 import javax.annotation.Nullable;
 
+import com.hungteen.pvz.PVZConfig;
+import com.hungteen.pvz.entity.misc.AbstractOwnerEntity;
 import com.hungteen.pvz.register.SoundRegister;
 import com.hungteen.pvz.utils.EntityUtil;
 
@@ -12,18 +13,13 @@ import it.unimi.dsi.fastutil.ints.IntOpenHashSet;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntitySize;
 import net.minecraft.entity.EntityType;
-import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.MoverType;
 import net.minecraft.entity.Pose;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.projectile.ProjectileHelper;
 import net.minecraft.nbt.CompoundNBT;
-import net.minecraft.nbt.NBTUtil;
-import net.minecraft.network.IPacket;
 import net.minecraft.network.datasync.DataParameter;
 import net.minecraft.network.datasync.DataSerializers;
 import net.minecraft.network.datasync.EntityDataManager;
-import net.minecraft.particles.ParticleTypes;
 import net.minecraft.util.Direction;
 import net.minecraft.util.math.EntityRayTraceResult;
 import net.minecraft.util.math.MathHelper;
@@ -31,15 +27,11 @@ import net.minecraft.util.math.RayTraceContext;
 import net.minecraft.util.math.RayTraceResult;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
-import net.minecraft.world.server.ServerWorld;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
-import net.minecraftforge.fml.network.NetworkHooks;
 
-public abstract class AbstractBowlingEntity extends Entity {
+public abstract class AbstractBowlingEntity extends AbstractOwnerEntity {
 
-	protected LivingEntity owner;
-	private UUID ownerId;
 	protected IntOpenHashSet hitEntities;
 	private static final DataParameter<Integer> FACING = EntityDataManager.createKey(AbstractBowlingEntity.class, DataSerializers.VARINT);
 	private static final DataParameter<Integer> DIRECTION = EntityDataManager.createKey(AbstractBowlingEntity.class, DataSerializers.VARINT);
@@ -53,8 +45,6 @@ public abstract class AbstractBowlingEntity extends Entity {
 	
 	public AbstractBowlingEntity(EntityType<?> type, World worldIn, PlayerEntity livingEntityIn) {
 		this(type, worldIn);
-		this.owner = livingEntityIn;
-		this.ownerId = livingEntityIn.getUniqueID();
 		this.entityCollisionReduction = 1F;
 	}
 	
@@ -78,9 +68,6 @@ public abstract class AbstractBowlingEntity extends Entity {
 				this.remove();
 			}
 		}
-		if(this.ticksExisted <= 10) {
-			this.recalculateSize();
-		}
 		double angle = (this.getDirection().getHorizontalAngle() + this.getBowlingFacing().offset) * Math.PI / 180;
 		double dx = - Math.sin(angle);
 		double dz = Math.cos(angle);
@@ -101,7 +88,7 @@ public abstract class AbstractBowlingEntity extends Entity {
 		if(this.world.isRemote) return ;
 		if(this.bowlingTick > 0) return ;
 		List<Entity> list = this.world.getEntitiesWithinAABB(Entity.class, this.getBoundingBox(), (target) -> {
-			return EntityUtil.checkCanEntityAttack(this.getThrower(), target);
+			return EntityUtil.checkCanEntityAttack(this.getOwner() == null ? this : this.getOwner(), target);
 		});
 		if(! list.isEmpty()) {
 			this.dealDamageTo(list.get(0));
@@ -141,47 +128,6 @@ public abstract class AbstractBowlingEntity extends Entity {
 		this.bowlingTick = 10;
 	}
 	
-	private void tickMove() {
-		Vec3d vec3d = this.getMotion();
-		double d0 = this.getPosX() + vec3d.x;
-		double d1 = this.getPosY() + vec3d.y;
-		double d2 = this.getPosZ() + vec3d.z;
-		float f = MathHelper.sqrt(horizontalMag(vec3d));
-		this.rotationYaw = (float) (MathHelper.atan2(vec3d.x, vec3d.z) * (double) (180F / (float) Math.PI));
-		for (this.rotationPitch = (float) (MathHelper.atan2(vec3d.y, (double) f)
-				* (double) (180F / (float) Math.PI)); this.rotationPitch
-						- this.prevRotationPitch < -180.0F; this.prevRotationPitch -= 360.0F) {
-			;
-		}
-		while (this.rotationPitch - this.prevRotationPitch >= 180.0F) {
-			this.prevRotationPitch += 360.0F;
-		}
-		while (this.rotationYaw - this.prevRotationYaw < -180.0F) {
-			this.prevRotationYaw -= 360.0F;
-		}
-		while (this.rotationYaw - this.prevRotationYaw >= 180.0F) {
-			this.prevRotationYaw += 360.0F;
-		}
-		this.rotationPitch = MathHelper.lerp(0.2F, this.prevRotationPitch, this.rotationPitch);
-		this.rotationYaw = MathHelper.lerp(0.2F, this.prevRotationYaw, this.rotationYaw);
-		float f1;
-		if (this.isInWater()) {
-			for (int i = 0; i < 4; ++i) {
-				this.world.addParticle(ParticleTypes.BUBBLE, d0 - vec3d.x * 0.25D, d1 - vec3d.y * 0.25D,
-						d2 - vec3d.z * 0.25D, vec3d.x, vec3d.y, vec3d.z);
-			}
-			f1 = 0.8F;
-		} else {
-			f1 = 1F;
-		}
-		this.setMotion(vec3d.scale((double) f1));
-		if (! this.hasNoGravity()) {
-			Vec3d vec3d1 = this.getMotion();
-			this.setMotion(vec3d1.x, vec3d1.y - (double) this.getGravityVelocity(), vec3d1.z);
-		}
-		this.move(MoverType.SELF, this.getMotion());
-	}
-
 	protected abstract void dealDamageTo(Entity entity);
 	
 	public void shoot(PlayerEntity player) {
@@ -198,7 +144,7 @@ public abstract class AbstractBowlingEntity extends Entity {
 	}
 	
 	protected boolean shouldHit(Entity target) {
-		return EntityUtil.checkCanEntityAttack(getThrower(), target);
+		return EntityUtil.checkCanEntityAttack(this.getOwner(), target);
 	}
 	
 	/**
@@ -213,10 +159,6 @@ public abstract class AbstractBowlingEntity extends Entity {
 		});
 	}
 
-	protected float getGravityVelocity() {
-		return 0.05F;
-	}
-
 	protected void onImpact(RayTraceResult result) {
 		
 	}
@@ -227,17 +169,11 @@ public abstract class AbstractBowlingEntity extends Entity {
 	}
 
 	protected int getMaxLiveTick() {
-		return 400;
-	}
-	
-	public void setThrower(PlayerEntity player) {
-		this.owner = player;
+		return PVZConfig.COMMON_CONFIG.EntitySettings.EntityLiveTick.BowlingLiveTick.get();
 	}
 	
 	public void writeAdditional(CompoundNBT compound) {
-		if (this.ownerId != null) {
-			compound.put("owner", NBTUtil.writeUniqueId(this.ownerId));
-		}
+		super.writeAdditional(compound);
 		compound.putInt("bowling_facings", this.getBowlingFacing().ordinal());
 		compound.putInt("bowling_directions", this.getDirection().ordinal());
 		compound.putInt("bowling_tick", this.bowlingTick);
@@ -248,10 +184,7 @@ public abstract class AbstractBowlingEntity extends Entity {
 	 * (abstract) Protected helper method to read subclass entity data from NBT.
 	 */
 	public void readAdditional(CompoundNBT compound) {
-		this.owner = null;
-		if (compound.contains("owner", 10)) {
-			this.ownerId = NBTUtil.readUniqueId(compound.getCompound("owner"));
-		}
+		super.readAdditional(compound);
 		if(compound.contains("bowling_facings")) {
 			this.setBowlingFacing(BowlingFacings.values()[compound.getInt("bowling_facings")]);
 		}
@@ -282,20 +215,6 @@ public abstract class AbstractBowlingEntity extends Entity {
 		this.dataManager.set(FACING, facing.ordinal());
 	}
 
-	@SuppressWarnings("deprecation")
-	@Nullable
-	public LivingEntity getThrower() {
-		if ((this.owner == null || this.owner.removed) && this.ownerId != null && this.world instanceof ServerWorld) {
-			Entity entity = ((ServerWorld) this.world).getEntityByUuid(this.ownerId);
-			if (entity instanceof LivingEntity) {
-				this.owner = (LivingEntity) entity;
-			} else {
-				this.owner = null;
-			}
-		}
-		return this.owner;
-	}
-	
 	/**
 	 * Checks if the entity is in range to render.
 	 */
@@ -332,10 +251,6 @@ public abstract class AbstractBowlingEntity extends Entity {
 		return false;
 	}
 
-	public IPacket<?> createSpawnPacket() {
-		return NetworkHooks.getEntitySpawningPacket(this);
-	}
-	
 	public static enum BowlingFacings {
 		LEFT(- 45),
 		MID(0), 

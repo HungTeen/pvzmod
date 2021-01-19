@@ -102,13 +102,14 @@ public class WaveManager {
 		if(now == 0) return;
 		int cnt = this.getSpawnCount();
 		boolean spawned = false;
+		int groupNum = 0;
 		while(cnt >= 10) {
 			int teamCnt = (cnt < 15 ? cnt : 10);
-			spawned |= this.spawnZombieTeam(now, teamCnt);
+			spawned |= this.spawnZombieTeam(++groupNum, now, teamCnt);
 			cnt -= teamCnt;
 		}
 		if(cnt > 0) {
-			spawned |=this.spawnZombieTeam(now, cnt);
+			spawned |=this.spawnZombieTeam(++ groupNum, now, cnt);
 		}
 		if(spawned) {
 			PlayerUtil.playClientSound(player, 2);
@@ -165,7 +166,7 @@ public class WaveManager {
 		return ItemStack.EMPTY;
 	}
 	
-	private boolean spawnZombieTeam(int sum, int cnt) {
+	private boolean spawnZombieTeam(int groupNum, int sum, int cnt) {
 		BlockPos mid = this.findRandomSpawnPos(20);
 		if(mid == null) return false; // no position do not spawn.
 		for(int i = 0; i < cnt; ++ i) {
@@ -175,6 +176,13 @@ public class WaveManager {
 					this.spawnZombie(this.spawns.get(j), mid);
 					break;
 				}
+			}
+		}
+		if(groupNum == 1) {
+			WorldEventData data = WorldEventData.getOverWorldEventData(world);
+			if(data.hasEvent(Events.YETI) && world.rand.nextInt(3) == 0) {
+				PVZZombieEntity yeti = EntityRegister.YETI_ZOMBIE.get().create(world);
+			    EntityUtil.onMobEntitySpawn(world, yeti, mid.add(0, 1, 0));
 			}
 		}
 		PVZZombieEntity flagZombie = EntityRegister.FLAG_ZOMBIE.get().create(world);

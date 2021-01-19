@@ -106,11 +106,11 @@ public abstract class PlantDefenderEntity extends PVZPlantEntity implements IDef
 	@Override
 	public boolean attackEntityFrom(DamageSource source, float amount) {
 		amount = this.pumpkinReduceDamage(source, amount);
-		if(! world.isRemote) {
+		if(! world.isRemote && this.getDefenceLife() > 0) {
 			if(this.getDefenceLife() > amount) { // damage armor health first
 				this.setDefenceLife(this.getDefenceLife() - amount);
 				amount = 0;
-			}else {
+			} else {
 				amount -= this.getDefenceLife();
 				this.setDefenceLife(0f);
 			}

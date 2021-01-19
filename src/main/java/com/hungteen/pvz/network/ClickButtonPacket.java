@@ -3,11 +3,11 @@ package com.hungteen.pvz.network;
 import java.util.function.Supplier;
 
 import com.hungteen.pvz.gui.GuiHandler;
-import com.hungteen.pvz.gui.container.DaveShopContainer;
 import com.hungteen.pvz.gui.container.FragmentSpliceContainer;
 import com.hungteen.pvz.gui.container.PlayerInventoryContainer;
 import com.hungteen.pvz.gui.container.SlotMachineContainer;
-import com.hungteen.pvz.gui.container.SunShopContainer;
+import com.hungteen.pvz.gui.container.shop.DaveShopContainer;
+import com.hungteen.pvz.gui.container.shop.SunShopContainer;
 import com.hungteen.pvz.utils.TradeUtil.DaveGoods;
 
 import net.minecraft.entity.player.ServerPlayerEntity;

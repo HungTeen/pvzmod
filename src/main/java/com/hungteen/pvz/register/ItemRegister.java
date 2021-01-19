@@ -14,6 +14,7 @@ import com.hungteen.pvz.item.misc.AlmanacItem;
 import com.hungteen.pvz.item.misc.StrangeHelpItem;
 import com.hungteen.pvz.item.tool.BobsleCarItem;
 import com.hungteen.pvz.item.tool.BowlingGloveItem;
+import com.hungteen.pvz.item.tool.LawnMowerItem;
 import com.hungteen.pvz.item.tool.PeaGunItem;
 import com.hungteen.pvz.item.tool.ScreenDoorItem;
 import com.hungteen.pvz.item.tool.SunCollectorItem;
@@ -187,6 +188,7 @@ public class ItemRegister {
 	public static final RegistryObject<Item> STEEL_HOE = ITEMS.register("steel_hoe", () -> new HoeItem(PVZItemTier.STEEL, -1.0F, new Item.Properties().group(GroupRegister.PVZ_MISC)));
 	public static final RegistryObject<Item> ZOMBIE_FLAG = ITEMS.register("zombie_flag", ZombieFlagItem::new);
 	public static final RegistryObject<Item> BOBSLE_CAR = ITEMS.register("bobsle_car", BobsleCarItem::new);
+	public static final RegistryObject<Item> LAWN_MOWER = ITEMS.register("lawn_mower", LawnMowerItem::new);
 	public static final RegistryObject<Item> PEA_GUN = ITEMS.register("pea_gun", PeaGunItem::new);
 	public static final RegistryObject<Item> SCREEN_DOOR = ITEMS.register("screen_door", ScreenDoorItem::new);
 	public static final RegistryObject<Item> SUN_COLLECTOR = ITEMS.register("sun_collector", SunCollectorItem::new);

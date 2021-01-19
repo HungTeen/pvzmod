@@ -92,7 +92,8 @@ public class TradeUtil {
 		SLOT_MACHINE(GuiHandler.SUN_SHOP),
 		SUN_SHOVEL(GuiHandler.SUN_SHOP),
 		SUN_MENDING(GuiHandler.SUN_SHOP),
-		GOLD_LEAF_CARD(GuiHandler.SUN_SHOP);
+		GOLD_LEAF_CARD(GuiHandler.SUN_SHOP),
+		MONEY(GuiHandler.PENNY_SHOP);
 		
 		public final int shopId;//0 means dave shop, 1 means sun shop.
 		

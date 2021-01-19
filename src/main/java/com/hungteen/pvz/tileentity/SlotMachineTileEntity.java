@@ -203,10 +203,10 @@ public class SlotMachineTileEntity extends TileEntity implements ITickableTileEn
 	}
 	
 	public int getChangeTick() {
-		if(this.changeCnt <= 2) return 25;
-		if(this.changeCnt <= 5) return 16;
-		if(this.changeCnt <= 12) return 12;
-		return 6;
+		if(this.changeCnt <= 2) return 16;
+		if(this.changeCnt <= 5) return 12;
+		if(this.changeCnt <= 12) return 8;
+		return 4;
 	}
 	
 	private boolean canRun() {

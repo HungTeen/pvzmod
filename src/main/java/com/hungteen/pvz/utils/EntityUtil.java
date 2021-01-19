@@ -10,11 +10,13 @@ import javax.annotation.Nullable;
 
 import com.hungteen.pvz.PVZConfig;
 import com.hungteen.pvz.entity.PVZMultiPartEntity;
-import com.hungteen.pvz.entity.npc.AbstractDaveEntity;
-import com.hungteen.pvz.entity.npc.SunDaveEntity;
+import com.hungteen.pvz.entity.misc.AbstractOwnerEntity;
+import com.hungteen.pvz.entity.npc.CrazyDaveEntity;
 import com.hungteen.pvz.entity.plant.PVZPlantEntity;
 import com.hungteen.pvz.entity.zombie.PVZZombieEntity;
 import com.hungteen.pvz.entity.zombie.poolnight.BalloonZombieEntity;
+import com.hungteen.pvz.network.PVZPacketHandler;
+import com.hungteen.pvz.network.SpawnParticlePacket;
 import com.hungteen.pvz.register.EffectRegister;
 import com.hungteen.pvz.utils.interfaces.IMultiPartEntity;
 
@@ -41,10 +43,25 @@ import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.IWorld;
 import net.minecraft.world.World;
 import net.minecraftforge.event.ForgeEventFactory;
+import net.minecraftforge.fml.network.PacketDistributor;
+import net.minecraftforge.fml.network.PacketDistributor.TargetPoint;
 
 public class EntityUtil {
 
 	public static final Random RAND = new Random();
+	
+	public static boolean canEntityBeRemoved(Entity entity) {
+		if(entity instanceof PVZZombieEntity) {
+			return ((PVZZombieEntity) entity).canZombieBeRemoved();
+		}
+		return true;
+	}
+	
+	public static void spawnParticle(Entity entity, int type) {
+		PVZPacketHandler.CHANNEL.send(PacketDistributor.NEAR.with(() -> {
+			return new TargetPoint(entity.getPosX(), entity.getPosY(), entity.getPosZ(), 40, entity.world.getDimension().getType());
+		}), new SpawnParticlePacket(type, entity.getPosX(), entity.getPosY(), entity.getPosZ()));
+	}
 	
 	public static boolean canDestroyBlock(World world, BlockPos pos, Entity entity) {
 		return canDestroyBlock(world, pos, world.getBlockState(pos), entity);
@@ -104,6 +121,14 @@ public class EntityUtil {
 	public static void onMobEntitySpawn(IWorld world, MobEntity entity, BlockPos pos) {
 		entity.setPosition(pos.getX() + 0.5, pos.getY(), pos.getZ() + 0.5);
 		entity.onInitialSpawn(world, world.getDifficultyForLocation(entity.getPosition()), SpawnReason.SPAWNER, null, null);
+		world.addEntity(entity);
+	}
+	
+	/**
+	 * use to spawn entity in world
+	 */
+	public static void onEntitySpawn(IWorld world, Entity entity, BlockPos pos) {
+		entity.setPosition(pos.getX() + 0.5, pos.getY(), pos.getZ() + 0.5);
 		world.addEntity(entity);
 	}
 	
@@ -183,7 +208,7 @@ public class EntityUtil {
 		if(attacker == null || target == null) {//prevent crash
 			return false;
 		}
-		if(! target.isAlive() || ! attacker.isAlive()) {//need be a alive entity
+		if(! target.isAlive()) {//need be a alive entity
 			return false;
 		}
 		World world = attacker.world;
@@ -223,13 +248,15 @@ public class EntityUtil {
 		}
 		if(entity instanceof PVZPlantEntity) {
 			group = ((PVZPlantEntity) entity).isCharmed() ? -1 : 1;
-		} else if(entity instanceof AbstractDaveEntity){
-			group = (entity instanceof SunDaveEntity ? 0 : 1);
+		} else if(entity instanceof CrazyDaveEntity){
+			group = 1;
 		} else if(entity instanceof IMob) {
 			group = -1;
 			if(entity instanceof PVZZombieEntity) {
 				group = ((PVZZombieEntity) entity).isCharmed() ? 1 : -1;
 			}
+		} else if(entity instanceof AbstractOwnerEntity) {
+			return ((AbstractOwnerEntity) entity).getEntityGroup();
 		}
 		return group;
 	}
@@ -281,7 +308,7 @@ public class EntityUtil {
 	/**
 	 * get attackable entity
 	 */
-	public static List<Entity> getEntityAttackableTarget(LivingEntity attacker, AxisAlignedBB aabb){
+	public static List<Entity> getEntityAttackableTarget(Entity attacker, AxisAlignedBB aabb){
 		List<Entity> list = new ArrayList<>();
 		for(Entity entity : attacker.world.getEntitiesWithinAABB(Entity.class, aabb)) {
 			if(attacker != entity && checkCanEntityAttack(attacker, entity)) {
@@ -294,7 +321,7 @@ public class EntityUtil {
 	/**
 	 * get final attack entities for explosion or other range attack.
 	 */
-	public static List<Entity> getAttackEntities(LivingEntity attacker, AxisAlignedBB aabb) {
+	public static List<Entity> getAttackEntities(Entity attacker, AxisAlignedBB aabb) {
 		IntOpenHashSet set = new IntOpenHashSet();
 		List<Entity> list = new ArrayList<>();
 		List<Entity> targets = getEntityAttackableTarget(attacker, aabb);

@@ -1,4 +1,4 @@
-package com.hungteen.pvz.gui.container;
+package com.hungteen.pvz.gui.container.shop;
 
 import com.hungteen.pvz.capability.CapabilityHandler;
 import com.hungteen.pvz.capability.player.PlayerDataManager;

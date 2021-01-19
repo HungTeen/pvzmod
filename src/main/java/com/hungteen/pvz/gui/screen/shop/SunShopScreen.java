@@ -1,11 +1,11 @@
-package com.hungteen.pvz.gui.screen;
+package com.hungteen.pvz.gui.screen.shop;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import com.hungteen.pvz.capability.player.ClientPlayerResources;
 import com.hungteen.pvz.gui.GuiHandler;
-import com.hungteen.pvz.gui.container.AbstractDaveShopContainer;
+import com.hungteen.pvz.gui.container.shop.AbstractDaveShopContainer;
 import com.hungteen.pvz.utils.StringUtil;
 import com.hungteen.pvz.utils.TradeUtil;
 import com.hungteen.pvz.utils.enums.Colors;
@@ -30,7 +30,6 @@ public class SunShopScreen extends AbstractDaveShopScreen {
 	
 	@Override
 	protected boolean canBuyNow() {
-//		System.out.println(this.container.canClickBuyButton());
 		return this.selectedGood != null && this.selectedTrade != null && ClientPlayerResources.getPlayerStats(Resources.SUN_NUM) >= this.selectedTrade.money && this.container.canClickBuyButton();
 	}
 	

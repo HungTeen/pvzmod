@@ -71,7 +71,7 @@ public class CoffinEntity extends UnderGroundZombieEntity {
 					EntityUtil.getEntityAABB(this, 50, 50))) {
 				ZombieHandEntity hand = EntityRegister.ZOMBIE_HAND.get().create(world);
 				hand.setOwner(this);
-				EntityUtil.onMobEntitySpawn(world, hand, target.getPosition());
+				EntityUtil.onEntitySpawn(world, hand, target.getPosition());
 			}
 		}
 		return super.onInitialSpawn(worldIn, difficultyIn, reason, spawnDataIn, dataTag);
@@ -212,6 +212,11 @@ public class CoffinEntity extends UnderGroundZombieEntity {
 		return 1000;
 	}
 
+	@Override
+	public boolean canZombieBeRemoved() {
+		return false;
+	}
+	
 	@Override
 	public boolean canBeButter() {
 		return false;

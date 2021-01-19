@@ -2,21 +2,23 @@ package com.hungteen.pvz.register;
 
 import com.hungteen.pvz.PVZMod;
 import com.hungteen.pvz.gui.container.AlmanacContainer;
-import com.hungteen.pvz.gui.container.DaveShopContainer;
 import com.hungteen.pvz.gui.container.FragmentSpliceContainer;
 import com.hungteen.pvz.gui.container.PeaGunContainer;
 import com.hungteen.pvz.gui.container.PlayerInventoryContainer;
 import com.hungteen.pvz.gui.container.SlotMachineContainer;
 import com.hungteen.pvz.gui.container.SunConverterContainer;
-import com.hungteen.pvz.gui.container.SunShopContainer;
+import com.hungteen.pvz.gui.container.shop.DaveShopContainer;
+import com.hungteen.pvz.gui.container.shop.PennyShopContainer;
+import com.hungteen.pvz.gui.container.shop.SunShopContainer;
 import com.hungteen.pvz.gui.screen.AlmanacScreen;
-import com.hungteen.pvz.gui.screen.DaveShopScreen;
 import com.hungteen.pvz.gui.screen.FragmentSpliceScreen;
 import com.hungteen.pvz.gui.screen.PeaGunScreen;
 import com.hungteen.pvz.gui.screen.PlayerInventoryScreen;
 import com.hungteen.pvz.gui.screen.SlotMachineScreen;
 import com.hungteen.pvz.gui.screen.SunConverterScreen;
-import com.hungteen.pvz.gui.screen.SunShopScreen;
+import com.hungteen.pvz.gui.screen.shop.DaveShopScreen;
+import com.hungteen.pvz.gui.screen.shop.PennyShopScreen;
+import com.hungteen.pvz.gui.screen.shop.SunShopScreen;
 
 import net.minecraft.client.gui.ScreenManager;
 import net.minecraft.inventory.container.ContainerType;
@@ -73,6 +75,11 @@ public class ContainerRegister {
             return new SlotMachineContainer(windowId, inv.player, data.readBlockPos());
         });
 	});
+	public static final RegistryObject<ContainerType<PennyShopContainer>> PENNY_SHOP = CONTAINER_TYPES.register("penny_shop", () -> {
+		return IForgeContainerType.create((windowId, inv, data) -> {
+            return new PennyShopContainer(windowId, inv.player);
+        });
+	});
 	
 	@SubscribeEvent
     public static void onClientSetupEvent(FMLClientSetupEvent event) {
@@ -84,6 +91,7 @@ public class ContainerRegister {
         ScreenManager.registerFactory(SUN_CONVERTER.get(), SunConverterScreen::new);
         ScreenManager.registerFactory(FRAGMENT_SPLICE.get(), FragmentSpliceScreen::new);
         ScreenManager.registerFactory(SLOT_MACHINE.get(), SlotMachineScreen::new);
+        ScreenManager.registerFactory(PENNY_SHOP.get(), PennyShopScreen::new);
     }
 	
 }

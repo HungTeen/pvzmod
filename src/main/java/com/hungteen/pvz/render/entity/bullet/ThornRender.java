@@ -27,13 +27,12 @@ public class ThornRender extends PVZEntityRender<ThornEntity> {
 		matrixStackIn.push();
 		matrixStackIn.rotate(Vector3f.YP.rotationDegrees(MathHelper.lerp(partialTicks, entityIn.prevRotationYaw, entityIn.rotationYaw) + 180.0F));
 		matrixStackIn.rotate(Vector3f.ZP.rotationDegrees(MathHelper.lerp(partialTicks, entityIn.prevRotationPitch, entityIn.rotationPitch)));
-//		matrixStackIn.rotate(Vector3f.XP.rotationDegrees(45.0F));
 		super.render(entityIn, entityYaw, partialTicks, matrixStackIn, bufferIn, packedLightIn);
 		matrixStackIn.pop();
 	}
 
 	@Override
-	protected float getRenderSize(ThornEntity entity) {
+	protected float getScaleByEntity(ThornEntity entity) {
 		if(entity.getThornType() == ThornTypes.AUTO) return 2.5F;
 		return 1.2F;
 	}

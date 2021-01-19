@@ -45,7 +45,7 @@ public class AbstractDaveEntity extends CreatureEntity {
 	
 	@Override
 	public int getTalkInterval() {
-		return 150;
+		return 180;
 	}
 
 	@Override

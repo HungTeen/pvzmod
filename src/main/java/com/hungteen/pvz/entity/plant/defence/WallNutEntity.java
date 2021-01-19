@@ -51,6 +51,11 @@ public class WallNutEntity extends PlantDefenderEntity{
 	}
 	
 	@Override
+	public Plants getUpgradePlantType() {
+		return Plants.GIANT_WALL_NUT;
+	}
+	
+	@Override
 	public Plants getPlantEnumName() {
 		return Plants.WALL_NUT;
 	}

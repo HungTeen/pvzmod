@@ -125,7 +125,6 @@ public class EntitySpawnRegister {
 		if(ev.isZombieAttackEvent) {
 			if(ev == Events.RANDOM) {
 				for(Zombies zombie : getRandomEventSpawnList(world)) {
-//					System.out.println(zombie);
 					getZombieSpawnEnrty(world, zombie).ifPresent((entry)->{
 			    		list.add(entry);
 			    	});
@@ -238,7 +237,6 @@ public class EntitySpawnRegister {
         for (ZombieSpawnEntry entry : getEventSpawnList(world, event)) {
         	Zombies zombie = entry.zombie;
         	if(! data.hasZombieSpawnEntry(zombie)) {
-//        		System.out.println(zombie);
         		data.addZombieSpawnEntry(zombie);
         		entry.addWorldZombieSpawn(world);
         	}

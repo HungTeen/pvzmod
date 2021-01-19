@@ -226,5 +226,13 @@
     "bowling_bomb":{
         "subtitle": "sound.pvz.bowling_bomb",
         "sounds":[{"name":"pvz:entity/misc/bowling/bowling_bomb"}]
+    },
+    "penny_say":{
+        "subtitle": "sound.pvz.penny_say",
+        "sounds":[{"name":"pvz:entity/npc/penny/penny_say1"},{"name":"pvz:entity/npc/penny/penny_say2"},{"name":"pvz:entity/npc/penny/penny_say3"},{"name":"pvz:entity/npc/penny/penny_say4"}]
+    },
+    "lawn_mower":{
+        "subtitle": "sound.pvz.lawn_mower",
+        "sounds":[{"name":"pvz:entity/misc/other/lawn_mower"}]
     }
 }

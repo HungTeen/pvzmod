@@ -1,17 +1,22 @@
 package com.hungteen.pvz.event;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import javax.annotation.Nonnull;
 
 import com.hungteen.pvz.PVZConfig;
 import com.hungteen.pvz.register.EntitySpawnRegister;
 import com.hungteen.pvz.utils.PlayerUtil;
 import com.hungteen.pvz.utils.enums.Events;
+import com.hungteen.pvz.utils.enums.Zombies;
 import com.hungteen.pvz.world.FogManager;
 import com.hungteen.pvz.world.WaveManager;
 import com.hungteen.pvz.world.data.WorldEventData;
 
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.util.text.ITextComponent;
+import net.minecraft.util.text.StringTextComponent;
 import net.minecraft.util.text.TextFormatting;
 import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraft.world.Difficulty;
@@ -75,22 +80,34 @@ public class OverWorldEvents {
 			    PlayerUtil.playClientSound(pl, 3);
 			    WaveManager.resetPlayerWaveTime(pl);
 		    }
+		    //activate event
 		    Events event = EntitySpawnRegister.getCurrentEventByRandom(world);
 		    activateEvent(world, event);//activate event
 		    if(world.rand.nextInt(PVZConfig.COMMON_CONFIG.WorldSettings.WorldEventSettings.EventChanceSettings.FogEventChance.get()) == 0) {
 		    	activateEvent(world, Events.FOG);
 		    }
-		    if(world.rand.nextInt(PVZConfig.COMMON_CONFIG.WorldSettings.WorldEventSettings.EventChanceSettings.YetiEventChance.get()) == 0) {
-		    	activateEvent(world, Events.YETI);
+		    //get zombie spawn list
+		    WorldEventData data = WorldEventData.getOverWorldEventData(world);
+		    List<Zombies> zombieList = new ArrayList<>();
+		    for(Zombies zombie : Zombies.values()) {
+		    	if(data.hasZombieSpawnEntry(zombie)){
+		    		zombieList.add(zombie);
+		    	}
 		    }
 		    if(PVZConfig.COMMON_CONFIG.WorldSettings.WorldEventSettings.ShowEventMessages.get()) {
 		    	world.getPlayers().forEach((player) -> {
-			        WorldEventData data = WorldEventData.getOverWorldEventData(world);
 			        for(Events ev : Events.values()) {
 				        if(data.hasEvent(ev)) {
-					    player.sendMessage(Events.getEventText(ev));
-				    }
-			    }});
+					        player.sendMessage(Events.getEventText(ev));
+				        }
+			        }
+			        String zombieInfo = "";
+			        for(int i = 0; i < zombieList.size(); ++ i) {
+			        	zombieInfo += new TranslationTextComponent("entity.pvz." + zombieList.get(i).toString().toLowerCase()).getFormattedText()
+			        			+ (i == zombieList.size() - 1 ? "" : ",");
+			        }
+			        player.sendMessage(new StringTextComponent(zombieInfo));
+			    });
 		    }
 		}
 	}

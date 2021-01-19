@@ -33,11 +33,7 @@ public class BowlingGloveItem extends Item {
 	public static final String BOWLING_STRING = "bowling_type";
 
 	public BowlingGloveItem() {
-		super(new Item.Properties().group(GroupRegister.PVZ_MISC).maxStackSize(1).setISTER(() -> {
-			return () -> {
-				return new BowlingGloveISTER();
-			};
-		}));
+		super(new Item.Properties().group(GroupRegister.PVZ_MISC).maxStackSize(1).setISTER(() -> BowlingGloveISTER::new));
 	}
 
 	@Override
@@ -61,16 +57,18 @@ public class BowlingGloveItem extends Item {
 				System.out.println("Error : no such bowling entity !");
 				return ActionResultType.FAIL;
 			}
-			AbstractBowlingEntity entity = (AbstractBowlingEntity) entityType.spawn(player.world, stack, player,
+			if(! world.isRemote) {
+				AbstractBowlingEntity entity = (AbstractBowlingEntity) entityType.spawn(player.world, stack, player,
 					spawnPos, SpawnReason.SPAWN_EGG, true, true);
-			if (entity == null) {
-				System.out.println("Error : bowling entity spawn error!");
-				return ActionResultType.FAIL;
-			}
-			entity.setThrower(player);
-			entity.shoot(player);
-			if (!player.abilities.isCreativeMode) {// reset
-				setBowlingType(stack, Plants.PEA_SHOOTER);
+			    if (entity == null) {
+				    System.out.println("Error : bowling entity spawn error!");
+				    return ActionResultType.FAIL;
+			    }
+			    entity.setOwner(player);
+			    entity.shoot(player);
+			    if (!player.abilities.isCreativeMode) {// reset
+				    setBowlingType(stack, Plants.PEA_SHOOTER);
+			    }
 			}
 			return ActionResultType.SUCCESS;
 		}
