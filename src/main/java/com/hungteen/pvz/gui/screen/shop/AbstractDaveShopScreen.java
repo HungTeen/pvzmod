@@ -99,7 +99,7 @@ public abstract class AbstractDaveShopScreen extends ContainerScreen<AbstractDav
 		this.renderHoveredToolTip(mouseX, mouseY);
 	}
 	
-	private void renderDetails() {
+	protected void renderDetails() {
 		StringUtil.drawCenteredScaledString(font, new TranslationTextComponent("gui.pvz.dave_shop." + this.selectedGood.toString().toLowerCase()).getFormattedText(), this.guiLeft + 117 + 80, this.guiTop + 28 + 20, Colors.BLACK, 1.5f);
 	}
 	
@@ -123,7 +123,7 @@ public abstract class AbstractDaveShopScreen extends ContainerScreen<AbstractDav
 		return true;
 	}
 	
-	private List<String> getToolTips(TradeType type) {
+	protected List<String> getToolTips(TradeType type) {
 		DaveGoods good = type.good;
 		int num = 1;
 		List<String> list = new ArrayList<>();

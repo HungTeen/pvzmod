@@ -6,6 +6,7 @@ import java.util.HashMap;
 
 import com.hungteen.pvz.advancement.AdvancementHandler;
 import com.hungteen.pvz.event.events.PlayerLevelUpEvent;
+import com.hungteen.pvz.gui.container.shop.MysteryShopContainer;
 import com.hungteen.pvz.network.PVZPacketHandler;
 import com.hungteen.pvz.network.PlantStatsPacket;
 import com.hungteen.pvz.network.PlayerStatsPacket;
@@ -73,9 +74,15 @@ public class PlayerDataManager {
 			this.itemCDStats.setPlantCardCD(p, data.itemCDStats.getPlantCardCoolDown(p));
 			this.itemCDStats.setPlantCardBar(p, data.itemCDStats.getPlantCardBarLength(p));
 		}
+		//other
 		for(int i = 0; i < WaveManager.MAX_WAVE_NUM; ++ i) {
 			this.otherStats.zombieWaveTime[i] = data.otherStats.zombieWaveTime[i];
 		}
+		this.otherStats.playSoundTick = data.otherStats.playSoundTick;
+		for(int i = 0; i < MysteryShopContainer.MAX_MYSTERY_GOOD; ++ i) {
+			this.otherStats.mysteryGoods[i] = data.otherStats.mysteryGoods[i];
+		}
+		this.otherStats.updateGoodTick = data.otherStats.updateGoodTick;
 	}
 
 	public final class PlayerStats{
@@ -274,7 +281,7 @@ public class PlayerDataManager {
 					PacketDistributor.PLAYER.with(()->{
 						return (ServerPlayerEntity) player;
 					}),
-					new PlantStatsPacket(plant.ordinal(),plantLevel.get(plant),plantXp.get(plant))
+					new PlantStatsPacket(plant.ordinal(), plantLevel.get(plant), plantXp.get(plant))
 				);
 			}
 		}
@@ -302,59 +309,6 @@ public class PlayerDataManager {
 			}
 		}
 	}
-	
-//	public final class AlmanacStats {
-//		@SuppressWarnings("unused")
-//		private final PlayerDataManager manager;
-//		private HashMap<Almanac, Boolean> unLock = new HashMap<>(Almanac.ALMANACS.size());
-//		
-//		public AlmanacStats(PlayerDataManager manager) {
-//			this.manager = manager;
-//			for(Almanac a : Almanac.values()) {
-//				unLock.put(a, false);
-//			}
-//			unLock.put(Almanac.PLAYER, true);
-//		}
-//		
-//		public boolean isAlmanacUnLocked(Almanac a) {
-//			return this.unLock.get(a);
-//		}
-//		
-//		public void setAlmanacUnLocked(Almanac a, boolean is) {
-//			this.unLock.put(a, is);
-//			this.sendAlmanacPacket(player, a);
-//		}
-//		
-//		public void sendAlmanacPacket(PlayerEntity player,Almanac a){
-//			if (player instanceof ServerPlayerEntity) {
-//				PVZPacketHandler.CHANNEL.send(
-//					PacketDistributor.PLAYER.with(()->{
-//						return (ServerPlayerEntity) player;
-//					}),
-//					new AlmanacUnLockPacket(a.ordinal(), this.isAlmanacUnLocked(a))
-//				);
-//			}
-//		}
-//		
-//		private void saveToNBT(CompoundNBT baseTag) {
-//			CompoundNBT statsNBT = new CompoundNBT();
-//			for(Almanac a:Almanac.values()) {
-//				statsNBT.putBoolean("lock_" + a.toString().toLowerCase(), unLock.get(a));
-//			}
-//			baseTag.put("almanacs_lock", statsNBT);
-//		}
-//
-//		private void loadFromNBT(CompoundNBT baseTag) {
-//			if(baseTag.contains("almanacs_lock")) {
-//			    CompoundNBT statsTag = baseTag.getCompound("almanacs_lock");
-//			    for(Almanac a:Almanac.values()) {
-//			    	if(statsTag.contains("lock_" + a.toString().toLowerCase())) {
-//				        unLock.put(a, statsTag.getBoolean("lock_" + a.toString().toLowerCase()));
-//			    	}
-//			    }
-//			}
-//		}
-//	}
 	
 	public final class ItemCDStats{
 		@SuppressWarnings("unused")
@@ -419,8 +373,10 @@ public class PlayerDataManager {
 		@SuppressWarnings("unused")
 		private final PlayerDataManager manager;
 		public int[] zombieWaveTime = new int[WaveManager.MAX_WAVE_NUM];
+		public int[] mysteryGoods = new int[MysteryShopContainer.MAX_MYSTERY_GOOD];
 		public int totalWaveCount;
 		public int playSoundTick;
+		public int updateGoodTick;
 		
 		public OtherStats(PlayerDataManager manager) {
 			this.manager = manager;
@@ -429,6 +385,7 @@ public class PlayerDataManager {
 			}
 			this.totalWaveCount = 0;
 			this.playSoundTick = 0;
+			MysteryShopContainer.genNextGoods(player);
 		}
 		
 		private void saveToNBT(CompoundNBT baseTag) {
@@ -438,6 +395,12 @@ public class PlayerDataManager {
 			}
 			baseTag.put("zombie_wave_time", statsNBT);
 			baseTag.putInt("base_sound_tick", this.playSoundTick);
+			CompoundNBT tmp = new CompoundNBT();
+			for(int i = 0; i < mysteryGoods.length; ++ i) {
+				tmp.putInt("mystery_good_" + i, mysteryGoods[i]);
+			}
+			baseTag.put("mystery_goods", tmp);
+			baseTag.putInt("update_good_tick", this.updateGoodTick);
 		}
 
 		private void loadFromNBT(CompoundNBT baseTag) {
@@ -449,6 +412,15 @@ public class PlayerDataManager {
 			}
 			if(baseTag.contains("base_sound_tick")) {
 				this.playSoundTick = baseTag.getInt("base_sound_tick");
+			}
+			if(baseTag.contains("mystery_goods")) {
+				CompoundNBT nbt = baseTag.getCompound("mystery_goods");
+				for(int i = 0; i < mysteryGoods.length; ++ i) {
+					mysteryGoods[i] = nbt.getInt("mystery_good_" + i);
+				}
+			}
+			if(baseTag.contains("update_good_tick")) {
+				this.updateGoodTick = baseTag.getInt("update_good_tick");
 			}
 		}
 	}

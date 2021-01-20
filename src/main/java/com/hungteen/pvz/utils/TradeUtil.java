@@ -8,6 +8,7 @@ import com.hungteen.pvz.potion.PotionRecipeHandler;
 import com.hungteen.pvz.register.BlockRegister;
 import com.hungteen.pvz.register.EnchantmentRegister;
 import com.hungteen.pvz.register.ItemRegister;
+import com.hungteen.pvz.utils.enums.Plants;
 
 import net.minecraft.enchantment.EnchantmentData;
 import net.minecraft.item.EnchantedBookItem;
@@ -20,10 +21,12 @@ public class TradeUtil {
 	public static final EnumMap<DaveGoods, ItemStack> DAVE_GOODS_ITEM = new EnumMap<>(DaveGoods.class);
 	private static final ItemStack SUN_SHOVEL_BOOK = new ItemStack(Items.ENCHANTED_BOOK);
 	private static final ItemStack SUN_MENDING_BOOK = new ItemStack(Items.ENCHANTED_BOOK);
+	private static final ItemStack SOILLESS_PLANT_BOOK = new ItemStack(Items.ENCHANTED_BOOK);
 	
 	public static void initTrades() {
 		EnchantedBookItem.addEnchantment(SUN_SHOVEL_BOOK, new EnchantmentData(EnchantmentRegister.SUN_SHOVEL.get(), 1));
 		EnchantedBookItem.addEnchantment(SUN_MENDING_BOOK, new EnchantmentData(EnchantmentRegister.SUN_MENDING.get(), 1));
+		EnchantedBookItem.addEnchantment(SOILLESS_PLANT_BOOK, new EnchantmentData(EnchantmentRegister.SOILLESS_PLANT.get(), 1));
 		putInfoToDaveGoodsMap(DaveGoods.ALMANAC, 100, new ItemStack(ItemRegister.ALMANAC.get()));
 		putInfoToDaveGoodsMap(DaveGoods.GATLING_PEA_CARD, 5000, new ItemStack(ItemRegister.GATLING_PEA_CARD.get()));
 		putInfoToDaveGoodsMap(DaveGoods.TWIN_SUNFLOWER_CARD, 5000, new ItemStack(ItemRegister.TWIN_SUNFLOWER_CARD.get()));
@@ -39,6 +42,7 @@ public class TradeUtil {
 		putInfoToDaveGoodsMap(DaveGoods.SUN_MENDING, 5000, SUN_MENDING_BOOK);
 		putInfoToDaveGoodsMap(DaveGoods.GOLD_LEAF_CARD, 6000, new ItemStack(ItemRegister.GOLD_LEAF_CARD.get()));
 		putInfoToDaveGoodsMap(DaveGoods.LAWN_MOWER, 2, new ItemStack(ItemRegister.LAWN_MOWER.get()));
+		putInfoToDaveGoodsMap(DaveGoods.SOILLESS_PLANT, 5, SOILLESS_PLANT_BOOK);
 	}
 	
 	public static void putInfoToDaveGoodsMap(DaveGoods good, int cost, ItemStack item) {
@@ -47,6 +51,10 @@ public class TradeUtil {
 	}
 	
 	public static ItemStack getGoodItemStack(DaveGoods good) {
+		if(good.toString().toLowerCase().startsWith("enjoy_card")) {
+			Plants plant = Plants.values()[good.type];
+			return new ItemStack(PlantUtil.getPlantEnjoyCard(plant));
+		}
 		if(DAVE_GOODS_ITEM.containsKey(good)) {
 			ItemStack stack = DAVE_GOODS_ITEM.get(good).copy();
 			return stack;
@@ -56,8 +64,10 @@ public class TradeUtil {
 	}
 	
 	public static int getGoodCost(DaveGoods good) {
-		if(good == DaveGoods.MONEY) {
-			return 1;
+		if(good == DaveGoods.MONEY) return 1;
+		if(good.toString().toLowerCase().startsWith("enjoy_card")) {
+			Plants plant = Plants.values()[good.type];
+			return PlantUtil.getPlantRankByName(plant).ordinal() * 2 / 3 + 3;
 		}
 		if(DAVE_GOODS_COST.containsKey(good)) {
 			return DAVE_GOODS_COST.get(good);
@@ -96,12 +106,27 @@ public class TradeUtil {
 		SUN_MENDING(GuiHandler.SUN_SHOP),
 		GOLD_LEAF_CARD(GuiHandler.SUN_SHOP),
 		MONEY(GuiHandler.PENNY_SHOP),
-		LAWN_MOWER(GuiHandler.PENNY_SHOP);
+		LAWN_MOWER(GuiHandler.PENNY_SHOP),
+		SOILLESS_PLANT(GuiHandler.PENNY_SHOP),
+		ENJOY_CARD_0(GuiHandler.MYSTERY_SHOP),
+		ENJOY_CARD_1(GuiHandler.MYSTERY_SHOP),
+		ENJOY_CARD_2(GuiHandler.MYSTERY_SHOP),
+		ENJOY_CARD_3(GuiHandler.MYSTERY_SHOP),
+		ENJOY_CARD_4(GuiHandler.MYSTERY_SHOP),
+		ENJOY_CARD_5(GuiHandler.MYSTERY_SHOP),
+		ENJOY_CARD_6(GuiHandler.MYSTERY_SHOP),
+		ENJOY_CARD_7(GuiHandler.MYSTERY_SHOP);
 		
 		public final int shopId;//0 means dave shop, 1 means sun shop.
+		public int type;
 		
 		private DaveGoods(int id) {
 			this.shopId = id;
+		}
+		
+		public DaveGoods setType(int type) {
+			this.type = type;
+			return this;
 		}
 		
 	}

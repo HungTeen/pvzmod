@@ -20,7 +20,7 @@ import net.minecraft.util.text.TranslationTextComponent;
 
 public class PennyShopScreen extends AbstractDaveShopScreen {
 
-	private static final ResourceLocation TEXTURE = StringUtil.prefix("textures/gui/container/penny_shop.png");
+	public static final ResourceLocation TEXTURE = StringUtil.prefix("textures/gui/container/penny_shop.png");
 	
 	public PennyShopScreen(AbstractDaveShopContainer screenContainer, PlayerInventory inv, ITextComponent titleIn) {
 		super(screenContainer, inv, titleIn);

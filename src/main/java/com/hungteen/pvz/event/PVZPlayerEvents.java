@@ -11,6 +11,7 @@ import com.hungteen.pvz.entity.plant.PVZPlantEntity;
 import com.hungteen.pvz.event.events.PlayerLevelUpEvent;
 import com.hungteen.pvz.event.events.SummonCardUseEvent;
 import com.hungteen.pvz.event.handler.PlayerEventHandler;
+import com.hungteen.pvz.gui.container.shop.MysteryShopContainer;
 import com.hungteen.pvz.gui.search.SearchOption;
 import com.hungteen.pvz.item.tool.PeaGunItem;
 import com.hungteen.pvz.item.tool.card.PlantCardItem;
@@ -61,6 +62,11 @@ public class PVZPlayerEvents {
 			ev.player.getCapability(CapabilityHandler.PLAYER_DATA_CAPABILITY).ifPresent((l) -> {
 				if(l.getPlayerData().getOtherStats().playSoundTick > 0) {
 				    -- l.getPlayerData().getOtherStats().playSoundTick;
+				}
+				if(l.getPlayerData().getOtherStats().updateGoodTick > 0) {
+				    -- l.getPlayerData().getOtherStats().updateGoodTick;
+				} else {
+					MysteryShopContainer.genNextGoods(ev.player);
 				}
 			});
 		}

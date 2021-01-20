@@ -2,7 +2,9 @@ package com.hungteen.pvz.entity.npc;
 
 import javax.annotation.Nullable;
 
+import com.hungteen.pvz.gui.container.shop.MysteryShopContainer;
 import com.hungteen.pvz.gui.container.shop.PennyShopContainer;
+import com.hungteen.pvz.register.ItemRegister;
 import com.hungteen.pvz.register.SoundRegister;
 
 import net.minecraft.entity.CreatureEntity;
@@ -31,20 +33,32 @@ public class PennyEntity extends AbstractDaveEntity {
 
 	@Override
 	protected boolean processInteract(PlayerEntity player, Hand hand) {
-		if (!world.isRemote && player instanceof ServerPlayerEntity) {
-			NetworkHooks.openGui((ServerPlayerEntity) player, new INamedContainerProvider() {
+		if (! world.isRemote && player instanceof ServerPlayerEntity && hand == Hand.MAIN_HAND) {
+			if(player.getHeldItem(hand).getItem() == ItemRegister.CAR_KEY.get()) {
+				NetworkHooks.openGui((ServerPlayerEntity) player, new INamedContainerProvider() {
+				    @Override
+				    public Container createMenu(int p_createMenu_1_, PlayerInventory p_createMenu_2_, PlayerEntity p_createMenu_3_) {
+					    return new MysteryShopContainer(p_createMenu_1_, p_createMenu_3_);
+				    }
 
-				@Override
-				public Container createMenu(int p_createMenu_1_, PlayerInventory p_createMenu_2_,
-						PlayerEntity p_createMenu_3_) {
-					return new PennyShopContainer(p_createMenu_1_, p_createMenu_3_);
-				}
+				    @Override
+				    public ITextComponent getDisplayName() {
+					    return new TranslationTextComponent("gui.pvz.mystery_shop.show");
+				    }
+			    });
+			} else {
+				NetworkHooks.openGui((ServerPlayerEntity) player, new INamedContainerProvider() {
+				    @Override
+				    public Container createMenu(int p_createMenu_1_, PlayerInventory p_createMenu_2_, PlayerEntity p_createMenu_3_) {
+					    return new PennyShopContainer(p_createMenu_1_, p_createMenu_3_);
+				    }
 
-				@Override
-				public ITextComponent getDisplayName() {
-					return new TranslationTextComponent("gui.pvz.penny_shop.show");
-				}
-			});
+				    @Override
+				    public ITextComponent getDisplayName() {
+					    return new TranslationTextComponent("gui.pvz.penny_shop.show");
+				    }
+			    });
+			}
 			return true;
 		}
 		return false;

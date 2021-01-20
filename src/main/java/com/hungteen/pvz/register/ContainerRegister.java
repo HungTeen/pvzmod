@@ -8,6 +8,7 @@ import com.hungteen.pvz.gui.container.PlayerInventoryContainer;
 import com.hungteen.pvz.gui.container.SlotMachineContainer;
 import com.hungteen.pvz.gui.container.SunConverterContainer;
 import com.hungteen.pvz.gui.container.shop.DaveShopContainer;
+import com.hungteen.pvz.gui.container.shop.MysteryShopContainer;
 import com.hungteen.pvz.gui.container.shop.PennyShopContainer;
 import com.hungteen.pvz.gui.container.shop.SunShopContainer;
 import com.hungteen.pvz.gui.screen.AlmanacScreen;
@@ -17,6 +18,7 @@ import com.hungteen.pvz.gui.screen.PlayerInventoryScreen;
 import com.hungteen.pvz.gui.screen.SlotMachineScreen;
 import com.hungteen.pvz.gui.screen.SunConverterScreen;
 import com.hungteen.pvz.gui.screen.shop.DaveShopScreen;
+import com.hungteen.pvz.gui.screen.shop.MysteryShopScreen;
 import com.hungteen.pvz.gui.screen.shop.PennyShopScreen;
 import com.hungteen.pvz.gui.screen.shop.SunShopScreen;
 
@@ -80,6 +82,11 @@ public class ContainerRegister {
             return new PennyShopContainer(windowId, inv.player);
         });
 	});
+	public static final RegistryObject<ContainerType<MysteryShopContainer>> MYSTERY_SHOP = CONTAINER_TYPES.register("mystery_shop", () -> {
+		return IForgeContainerType.create((windowId, inv, data) -> {
+            return new MysteryShopContainer(windowId, inv.player);
+        });
+	});
 	
 	@SubscribeEvent
     public static void onClientSetupEvent(FMLClientSetupEvent event) {
@@ -92,6 +99,7 @@ public class ContainerRegister {
         ScreenManager.registerFactory(FRAGMENT_SPLICE.get(), FragmentSpliceScreen::new);
         ScreenManager.registerFactory(SLOT_MACHINE.get(), SlotMachineScreen::new);
         ScreenManager.registerFactory(PENNY_SHOP.get(), PennyShopScreen::new);
+        ScreenManager.registerFactory(MYSTERY_SHOP.get(), MysteryShopScreen::new);
     }
 	
 }

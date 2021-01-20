@@ -42,9 +42,9 @@ import net.minecraftforge.items.ItemStackHandler;
 public class SlotMachineTileEntity extends TileEntity implements ITickableTileEntity, INamedContainerProvider {
 
 	public static final List<SlotOptions> OPTION_LIST = new ArrayList<>();
-	private static final List<Integer> WEIGHT_LIST = new ArrayList<>();
+	public static final List<Integer> WEIGHT_LIST = new ArrayList<>();
 	public static final Map<SlotOptions, Integer> OPTION_MAP = new HashMap<>();
-	private static int sum;
+	public static int sum;
 	public static final int SUN_COST = 25;
 	private final List<SlotOptions> currentList = new ArrayList<>();
 	public final ItemStackHandler handler = new ItemStackHandler(3);

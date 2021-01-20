@@ -27,6 +27,7 @@ public class PVZPacketHandler {
 		CHANNEL.registerMessage(id ++, AlmanacUnLockPacket.class, AlmanacUnLockPacket::encode, AlmanacUnLockPacket::new, AlmanacUnLockPacket.Handler::onMessage);
 		CHANNEL.registerMessage(id ++, PlaySoundPacket.class, PlaySoundPacket::encode, PlaySoundPacket::new, PlaySoundPacket.Handler::onMessage);
 		CHANNEL.registerMessage(id ++, SpawnParticlePacket.class, SpawnParticlePacket::encode, SpawnParticlePacket::new, SpawnParticlePacket.Handler::onMessage);
+		CHANNEL.registerMessage(id ++, OtherStatsPacket.class, OtherStatsPacket::encode, OtherStatsPacket::new, OtherStatsPacket.Handler::onMessage);
 		
 	}
 	

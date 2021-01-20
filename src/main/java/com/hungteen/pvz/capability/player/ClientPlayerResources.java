@@ -2,6 +2,7 @@ package com.hungteen.pvz.capability.player;
 
 import java.util.HashMap;
 
+import com.hungteen.pvz.gui.container.shop.MysteryShopContainer;
 import com.hungteen.pvz.gui.search.SearchOption;
 import com.hungteen.pvz.utils.enums.Plants;
 import com.hungteen.pvz.utils.enums.Resources;
@@ -16,6 +17,7 @@ public class ClientPlayerResources{
 	private static HashMap<Plants, Integer> plantCardXp = new HashMap<Plants, Integer>(Plants.values().length);
 	private static HashMap<Plants, Integer> plantCardLevel = new HashMap<Plants, Integer>(Plants.values().length);
 	private static HashMap<SearchOption, Boolean> unLocked = new HashMap<SearchOption, Boolean>(SearchOption.OPTION.size());
+	public static final int[] mysteryGoods = new int[MysteryShopContainer.MAX_MYSTERY_GOOD];
 	
 	static { //init to avoid unexpected error !
 		for(Resources res : Resources.values()) {

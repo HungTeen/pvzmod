@@ -7,6 +7,7 @@ import com.hungteen.pvz.gui.container.FragmentSpliceContainer;
 import com.hungteen.pvz.gui.container.PlayerInventoryContainer;
 import com.hungteen.pvz.gui.container.SlotMachineContainer;
 import com.hungteen.pvz.gui.container.shop.DaveShopContainer;
+import com.hungteen.pvz.gui.container.shop.MysteryShopContainer;
 import com.hungteen.pvz.gui.container.shop.PennyShopContainer;
 import com.hungteen.pvz.gui.container.shop.SunShopContainer;
 import com.hungteen.pvz.utils.TradeUtil.DaveGoods;
@@ -77,6 +78,11 @@ public class ClickButtonPacket {
 					if(player.openContainer instanceof PennyShopContainer) {
 						PennyShopContainer container = (PennyShopContainer) player.openContainer;
 						container.buyGood(DaveGoods.values()[message.num]);
+					}
+				} else if(message.type == GuiHandler.MYSTERY_SHOP) {
+					if(player.openContainer instanceof MysteryShopContainer) {
+						MysteryShopContainer container = (MysteryShopContainer) player.openContainer;
+						container.buyGood(DaveGoods.values()[message.num], message.op);
 					}
 				}
 			});
