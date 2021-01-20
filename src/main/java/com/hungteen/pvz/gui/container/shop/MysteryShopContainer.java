@@ -68,18 +68,20 @@ public class MysteryShopContainer extends AbstractDaveShopContainer {
 	
 	public static void sendMysteryGoodsPacket(PlayerEntity player, int pos) {
 		player.getCapability(CapabilityHandler.PLAYER_DATA_CAPABILITY).ifPresent((l) -> {
-			if(pos == -1) {
+			if(pos == - 1) {
 				for(int i = 0; i < MAX_MYSTERY_GOOD; ++ i) {
 			        PVZPacketHandler.CHANNEL.send(PacketDistributor.PLAYER.with(() -> {
 				        return (ServerPlayerEntity) player;
 			        }), new OtherStatsPacket(0, i, l.getPlayerData().getOtherStats().mysteryGoods[i]));
 				}
+				PVZPacketHandler.CHANNEL.send(PacketDistributor.PLAYER.with(() -> {
+			        return (ServerPlayerEntity) player;
+		        }), new OtherStatsPacket(0, - 1, l.getPlayerData().getOtherStats().updateGoodTick));
 			} else {
 				PVZPacketHandler.CHANNEL.send(PacketDistributor.PLAYER.with(() -> {
 			        return (ServerPlayerEntity) player;
 		        }), new OtherStatsPacket(0, pos, l.getPlayerData().getOtherStats().mysteryGoods[pos]));
 			}
-		    
 		});
 	}
 

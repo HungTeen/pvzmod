@@ -22,7 +22,6 @@ import net.minecraft.network.datasync.DataSerializers;
 import net.minecraft.network.datasync.EntityDataManager;
 import net.minecraft.util.Direction;
 import net.minecraft.util.math.EntityRayTraceResult;
-import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.RayTraceContext;
 import net.minecraft.util.math.RayTraceResult;
 import net.minecraft.util.math.Vec3d;
@@ -36,16 +35,17 @@ public abstract class AbstractBowlingEntity extends AbstractOwnerEntity {
 	private static final DataParameter<Integer> FACING = EntityDataManager.createKey(AbstractBowlingEntity.class, DataSerializers.VARINT);
 	private static final DataParameter<Integer> DIRECTION = EntityDataManager.createKey(AbstractBowlingEntity.class, DataSerializers.VARINT);
 	private int bowlingTick = 0;
+	private int wallTick = 0;
 	private boolean playSpawnSound = false;
 	protected int hitCount = 0;
 	
 	public AbstractBowlingEntity(EntityType<?> type, World worldIn) {
 		super(type, worldIn);
+		this.entityCollisionReduction = 1F;
 	}
 	
 	public AbstractBowlingEntity(EntityType<?> type, World worldIn, PlayerEntity livingEntityIn) {
 		this(type, worldIn);
-		this.entityCollisionReduction = 1F;
 	}
 	
 	@Override
@@ -68,7 +68,9 @@ public abstract class AbstractBowlingEntity extends AbstractOwnerEntity {
 				this.remove();
 			}
 		}
-		double angle = (this.getDirection().getHorizontalAngle() + this.getBowlingFacing().offset) * Math.PI / 180;
+		this.prevRotationYaw = this.rotationYaw;
+		this.rotationYaw = this.getDirection().getHorizontalAngle() + this.getBowlingFacing().offset;
+		double angle = this.rotationYaw * Math.PI / 180;
 		double dx = - Math.sin(angle);
 		double dz = Math.cos(angle);
 		double speed = this.getBowlingSpeed();
@@ -78,8 +80,14 @@ public abstract class AbstractBowlingEntity extends AbstractOwnerEntity {
 		this.tickCollision();
 		if(! this.world.isRemote) {
 			if(this.bowlingTick > 0) -- this.bowlingTick;
-			if(this.bowlingTick == 0 && this.collidedHorizontally) {
-				this.changeDiretion();
+			if(this.wallTick > 0) -- this.wallTick;
+			if(this.bowlingTick == 0 && this.collidedHorizontally) {// collide with wall
+				if(this.wallTick > 0) {
+					this.remove();
+				} else {
+					this.wallTick = 15;
+					this.changeDiretion();
+				}
 			}
 		}
 	}
@@ -103,7 +111,6 @@ public abstract class AbstractBowlingEntity extends AbstractOwnerEntity {
 		double dz = - Math.cos(angle);
 		Vec3d start = this.getPositionVec();
 		Vec3d end = start.add(new Vec3d(dx * rayLen, 0, dz * rayLen));
-//		if(this.ticksExisted % 50 == 0) System.out.println(start + "," + end);
 		RayTraceResult result = this.world.rayTraceBlocks(new RayTraceContext(start, end, RayTraceContext.BlockMode.COLLIDER, RayTraceContext.FluidMode.NONE, this));
 		if(result.getType() != RayTraceResult.Type.MISS) {// hit something
 			end = result.getHitVec();
@@ -133,6 +140,7 @@ public abstract class AbstractBowlingEntity extends AbstractOwnerEntity {
 	public void shoot(PlayerEntity player) {
 		Direction direction = player.getHorizontalFacing();
 		this.setDirection(direction);
+		this.rotationYaw = direction.getHorizontalAngle();
 	}
 	
 	public double getBowlingSpeed() {
@@ -235,15 +243,15 @@ public abstract class AbstractBowlingEntity extends AbstractOwnerEntity {
 	@OnlyIn(Dist.CLIENT)
 	public void setVelocity(double x, double y, double z) {
 		this.setMotion(x, y, z);
-		if (this.prevRotationPitch == 0.0F && this.prevRotationYaw == 0.0F) {
-			float f = MathHelper.sqrt(x * x + z * z);
-			this.rotationYaw = (float) (MathHelper.atan2(x, z) * (double) (180F / (float) Math.PI));
-			this.rotationPitch = (float) (MathHelper.atan2(y, (double) f) * (double) (180F / (float) Math.PI));
-			this.prevRotationYaw = this.rotationYaw;
-			this.prevRotationPitch = this.rotationPitch;
-			this.setLocationAndAngles(this.getPosX(), this.getPosY(), this.getPosZ(), this.rotationYaw,
-					this.rotationPitch);
-		}
+//		if (this.prevRotationPitch == 0.0F && this.prevRotationYaw == 0.0F) {
+//			float f = MathHelper.sqrt(x * x + z * z);
+//			this.rotationYaw = (float) (MathHelper.atan2(x, z) * (double) (180F / (float) Math.PI));
+//			this.rotationPitch = (float) (MathHelper.atan2(y, (double) f) * (double) (180F / (float) Math.PI));
+//			this.prevRotationYaw = this.rotationYaw;
+//			this.prevRotationPitch = this.rotationPitch;
+//			this.setLocationAndAngles(this.getPosX(), this.getPosY(), this.getPosZ(), this.rotationYaw,
+//					this.rotationPitch);
+//		}
 	}
 
 	@Override

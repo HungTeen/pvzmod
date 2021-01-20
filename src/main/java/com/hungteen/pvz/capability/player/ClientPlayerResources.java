@@ -18,6 +18,7 @@ public class ClientPlayerResources{
 	private static HashMap<Plants, Integer> plantCardLevel = new HashMap<Plants, Integer>(Plants.values().length);
 	private static HashMap<SearchOption, Boolean> unLocked = new HashMap<SearchOption, Boolean>(SearchOption.OPTION.size());
 	public static final int[] mysteryGoods = new int[MysteryShopContainer.MAX_MYSTERY_GOOD];
+	public static int updateGoodTick;
 	
 	static { //init to avoid unexpected error !
 		for(Resources res : Resources.values()) {

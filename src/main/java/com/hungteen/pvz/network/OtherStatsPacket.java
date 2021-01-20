@@ -35,7 +35,11 @@ public class OtherStatsPacket{
 		public static void onMessage(OtherStatsPacket message, Supplier<NetworkEvent.Context> ctx) {
 		    ctx.get().enqueueWork(() -> {
 			    if(message.type == 0) {
-			    	ClientPlayerResources.mysteryGoods[message.pos] = message.data;
+			    	if(message.pos == -1) {
+			    		ClientPlayerResources.updateGoodTick = message.data;
+			    	} else {
+			    		ClientPlayerResources.mysteryGoods[message.pos] = message.data;
+			    	}
 			    }
 		    });
 		    ctx.get().setPacketHandled(true);

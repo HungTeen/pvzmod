@@ -39,7 +39,7 @@ public class MysteryShopScreen extends AbstractDaveShopScreen {
 	@Override
 	protected void init() {
 		super.init();
-		this.buyButton = this.addButton(new Button(this.guiLeft +206, this.guiTop + 85, 18, 18, new TranslationTextComponent("gui.pvz.dave_shop.buy").getFormattedText(), (button) -> {
+		this.buyButton = this.addButton(new Button(this.guiLeft + 206, this.guiTop + 85, 18, 18, new TranslationTextComponent("gui.pvz.dave_shop.buy").getFormattedText(), (button) -> {
 			if(this.buyButton.visible) {
 			    PVZPacketHandler.CHANNEL.sendToServer(new ClickButtonPacket(this.getShopID(), this.selectedGood.type, this.selectedGood.ordinal()));
 			}
@@ -58,6 +58,7 @@ public class MysteryShopScreen extends AbstractDaveShopScreen {
 		blit(this.guiLeft, this.guiTop, this.getBlitOffset(), 0.0F, 0.0F, this.xSize, this.ySize, 256, 512);
 		StringUtil.drawCenteredScaledString(font, ClientPlayerResources.getPlayerStats(Resources.GEM_NUM) + "", this.guiLeft + 25 + 44, this.guiTop + 9, Colors.WHITE, 1.4f);
 		StringUtil.drawCenteredScaledString(font, new TranslationTextComponent("gui.pvz.mystery_shop.title").getFormattedText(), this.guiLeft + 115 + 82, this.guiTop + 6, Colors.BLACK, 1.4f);
+		StringUtil.drawCenteredScaledString(font, new TranslationTextComponent("gui.pvz.dave_shop.time_left").appendText(":" + ClientPlayerResources.updateGoodTick).getFormattedText(), this.guiLeft + 115 + 130, this.guiTop + 20, Colors.BLACK, 0.8f);
 	}
 
 	@Override
@@ -70,7 +71,7 @@ public class MysteryShopScreen extends AbstractDaveShopScreen {
 	
 	@Override
 	protected void renderDetails() {
-		if(this.selectedGood.toString().toLowerCase().startsWith("ENJOY_CARD")) {
+		if(this.selectedGood.toString().startsWith("ENJOY_CARD")) {
 			Plants plant = Plants.values()[this.selectedGood.type];
 			StringUtil.drawCenteredScaledString(font, new TranslationTextComponent("item.pvz." + plant.toString().toLowerCase() + "_enjoy_card").getFormattedText(), this.guiLeft + 117 + 80, this.guiTop + 28 + 20, Colors.BLACK, 1.5f);
 		} else {
@@ -98,7 +99,7 @@ public class MysteryShopScreen extends AbstractDaveShopScreen {
 		List<String> list = new ArrayList<>();
 		for(int i = 1; i <= num; ++ i) {
 			TranslationTextComponent text = new TranslationTextComponent("gui.pvz.dave_shop." + good.toString().toLowerCase() + i);
-			if(good.toString().toLowerCase().startsWith("ENJOY_CARD")) {
+			if(good.toString().startsWith("ENJOY_CARD")) {
 				text = new TranslationTextComponent("gui.pvz.dave_shop.enjoy_card");
 			}
 			list.add(text.getFormattedText());
