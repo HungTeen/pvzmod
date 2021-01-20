@@ -1,9 +1,8 @@
 package com.hungteen.pvz.gui.container.shop;
 
-import com.hungteen.pvz.capability.CapabilityHandler;
-import com.hungteen.pvz.capability.player.PlayerDataManager;
 import com.hungteen.pvz.register.ContainerRegister;
 import com.hungteen.pvz.register.SoundRegister;
+import com.hungteen.pvz.utils.PlayerUtil;
 import com.hungteen.pvz.utils.TradeUtil;
 import com.hungteen.pvz.utils.TradeUtil.DaveGoods;
 import com.hungteen.pvz.utils.enums.Resources;
@@ -18,18 +17,12 @@ public class PennyShopContainer extends AbstractDaveShopContainer {
 	}
 
 	public void buyGood(DaveGoods good) {
-		if(good == DaveGoods.ENERGY) {
-			player.getCapability(CapabilityHandler.PLAYER_DATA_CAPABILITY).ifPresent((l) -> {
-				PlayerDataManager.PlayerStats stats = l.getPlayerData().getPlayerStats();
-				stats.addPlayerStats(Resources.MONEY, - TradeUtil.getEnergyCost(stats.getPlayerStats(Resources.MAX_ENERGY_NUM)));
-				stats.addPlayerStats(Resources.MAX_ENERGY_NUM, 1);
-			});
+		if(good == DaveGoods.MONEY) {
+			PlayerUtil.addPlayerStats(player, Resources.GEM_NUM, - TradeUtil.getGoodCost(good));
+			PlayerUtil.addPlayerStats(player, Resources.MONEY, 1000);
 		} else {
-			player.getCapability(CapabilityHandler.PLAYER_DATA_CAPABILITY).ifPresent((l) -> {
-				PlayerDataManager.PlayerStats stats = l.getPlayerData().getPlayerStats();
-				stats.addPlayerStats(Resources.MONEY, - TradeUtil.getGoodCost(good));
-				this.output.setInventorySlotContents(0, TradeUtil.getGoodItemStack(good));
-			});
+			PlayerUtil.addPlayerStats(player, Resources.GEM_NUM, - TradeUtil.getGoodCost(good));
+			this.output.setInventorySlotContents(0, TradeUtil.getGoodItemStack(good));
 		}
 		this.player.world.playSound(null, this.player.getPosition(), SoundRegister.DAVE_BUY.get(), SoundCategory.AMBIENT, 1f, 1f);
 	}

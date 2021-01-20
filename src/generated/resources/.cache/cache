@@ -36,6 +36,9 @@ de1725bb678271d9f7f2960e56a1a83bc6190ce9 assets\pvz\models\item\coffee_bean_enjo
 9b4353e4f8de8a03ea35676b0bcb1f34bdd81fc9 assets\pvz\models\item\doom_shroom_enjoy_card.json
 640fb723df4adaf9b0e055a7e45afa7756e5acb4 assets\pvz\models\item\doom_shroom_spawn_egg.json
 640fb723df4adaf9b0e055a7e45afa7756e5acb4 assets\pvz\models\item\energy_spawn_egg.json
+cb1fb8c84991eb23636258c695824fd5205ded04 assets\pvz\models\item\explode_o_nut_card.json
+1658e1a52b128595c463c50340a27ade2c166db3 assets\pvz\models\item\explode_o_nut_enjoy_card.json
+640fb723df4adaf9b0e055a7e45afa7756e5acb4 assets\pvz\models\item\explode_o_nut_spawn_egg.json
 640fb723df4adaf9b0e055a7e45afa7756e5acb4 assets\pvz\models\item\flag_zombie_spawn_egg.json
 e76753cc18dc153cf2b6ea0aacda3205974913ce assets\pvz\models\item\flower_pot_card.json
 f4a357ec89017b6370179edac3d759cd9bb50520 assets\pvz\models\item\flower_pot_enjoy_card.json
@@ -51,6 +54,9 @@ bdc8b246b2530ada62e309370a0effbf66e2900c assets\pvz\models\item\fume_shroom_card
 65a4e73d963b3672c1e25cc4aadf892c0050baeb assets\pvz\models\item\gatling_pea_card.json
 974bc13bf17d25f5415997307cea55dfd084a684 assets\pvz\models\item\gatling_pea_enjoy_card.json
 640fb723df4adaf9b0e055a7e45afa7756e5acb4 assets\pvz\models\item\gatling_pea_spawn_egg.json
+94fa7bbc88c6ea7f8e31c62f7c6bec174dcede57 assets\pvz\models\item\giant_wall_nut_card.json
+8a3c83eebb9e2ffb935474a5cd11a5d850b35832 assets\pvz\models\item\giant_wall_nut_enjoy_card.json
+640fb723df4adaf9b0e055a7e45afa7756e5acb4 assets\pvz\models\item\giant_wall_nut_spawn_egg.json
 5dd760a5c9c69f481f58cc9a9c092ebf1040979b assets\pvz\models\item\giga_boots.json
 c19bad6cb160533c6834ef404129466eb03f1f99 assets\pvz\models\item\giga_chestplate.json
 640fb723df4adaf9b0e055a7e45afa7756e5acb4 assets\pvz\models\item\giga_football_zombie_spawn_egg.json
@@ -191,7 +197,7 @@ dbd471d8b14c194246a809f5f88dbbfe892e7047 data\pvz\loot_tables\chests\dave_villa_
 c328c2923697df053534b842312d56393a12fab4 data\pvz\recipes\cactus_card.json
 d6ad57b8af82e0f8bcfb95dfd2155058a89d67c7 data\pvz\recipes\coffee_bean_card.json
 ef551e65fb3d82ffbf7dbb9f348e9c1560decbe7 data\pvz\recipes\doom_shroom_card.json
-f247505da60d37fb949259b48d738d88a5237c54 data\pvz\recipes\flower_pot_card.json
+c0cc2761c79220b5782f7d5fdacdacc9b6f0c1ad data\pvz\recipes\flower_pot_card.json
 22fff18a19d3583c0c4eb8546bec0d0d37d764a2 data\pvz\recipes\grave_buster_card.json
 1372395908a23149543e75df241e75f1ecb4c660 data\pvz\recipes\hypno_shroom_card.json
 54f6756d573b248dc8a38abd497fd9baca1dd353 data\pvz\recipes\ice_shroom_card.json
@@ -200,7 +206,7 @@ fa67674760dab538f028e2df995692149be2ef25 data\pvz\recipes\pea_shooter_card.json
 14948941848ab33c0e7f1367222c8b49a238b288 data\pvz\recipes\plantern_card.json
 6dce0888000d6768e1d619c32e13263c531eb5bc data\pvz\recipes\pumpkin_card.json
 37ca3f9610aac5d1016369670973a84237ba1087 data\pvz\recipes\water_guard_card.json
-8cfe13657993684eacb1cf9cf4008dd8f313de6d data\pvz\tags\items\cards\plant_card.json
-631ca23c603b2c55d4c5767b9a671991ae7048f2 data\pvz\tags\items\cards\plant_enjoy_card.json
-74eb04b2f230de898dd5ccf626e10cded2aa4c52 data\pvz\tags\items\cards\plant_summon_card.json
+8dddafbb5e4fe6b69b5faa7365d0b60d4bd3e889 data\pvz\tags\items\cards\plant_card.json
+b80877099c84060852fa7255a9b6fb78a9b2843c data\pvz\tags\items\cards\plant_enjoy_card.json
+34b568b7db6d9c37796ddce0226aabc564ac0328 data\pvz\tags\items\cards\plant_summon_card.json
 293c3c6119087956dfb83d72d897f82c1c248628 data\pvz\tags\items\cards\template_card.json

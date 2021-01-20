@@ -18,24 +18,16 @@ public class GiantWallNutRender extends PVZPlantRender<GiantWallNutEntity> {
 
 	@Override
 	public float getScaleByEntity(GiantWallNutEntity entity) {
-		return 1.2F;
+		return 1F;
 	}
 
 	@Override
 	public ResourceLocation getEntityTexture(GiantWallNutEntity entity) {
 		float life = entity.getHealth();
 		float maxLife = entity.getMaxHealth();
-		float defLife = entity.getDefenceLife();
-		float maxDefLife = entity.getSuperLife();
-    	if(defLife > 0) {
-    		if(defLife > 2 * maxDefLife / 3) return WallNutRender.TEXTURE4;
-    		else if(defLife > maxDefLife / 3) return WallNutRender.TEXTURE5;
-    		return WallNutRender.TEXTURE6;
-    	} else {
-    		if(life > 2 * maxLife / 3) return WallNutRender.TEXTURE1;
-    		else if(life > maxLife / 3) return WallNutRender.TEXTURE2;
-    		return WallNutRender.TEXTURE3;
-    	}
+    	if(life > 2 * maxLife / 3) return WallNutRender.TEXTURE1;
+    	else if(life > maxLife / 3) return WallNutRender.TEXTURE2;
+    	return WallNutRender.TEXTURE3;
 	}
 
 }

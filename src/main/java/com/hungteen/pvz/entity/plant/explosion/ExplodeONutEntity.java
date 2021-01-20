@@ -50,6 +50,7 @@ public class ExplodeONutEntity extends WallNutEntity {
 		EntityUtil.spawnParticle(this, 0);
 		if(this.getExtraAttackChance() > 0) {
 			List<Entity> list = EntityUtil.getAttackEntities(this, EntityUtil.getEntityAABB(this, 40, 40));
+			if(list.isEmpty()) return ;
 			for(int i = 0; i < this.getExtraAttackChance(); ++ i) {
 //				System.out.println(i);
 				Entity target = list.get(this.getRNG().nextInt(list.size()));

@@ -88,7 +88,7 @@ public class PlantUtil {
 		putPlantInfoToMap(Plants.GOLD_LEAF, 75, CDs.NORMAL, Ranks.PURPLE, Essences.LIGHT, EntityRegister.GOLD_LEAF, ItemRegister.GOLD_LEAF_CARD, ItemRegister.GOLD_LEAF_ENJOY_CARD);
 		putPlantInfoToMap(Plants.ANGEL_STAR_FRUIT, 225, CDs.LITTLE_FAST, Ranks.PURPLE, Essences.APPEASE, EntityRegister.ANGEL_STAR_FRUIT, ItemRegister.ANGEL_STAR_FRUIT_CARD, ItemRegister.ANGEL_STAR_FRUIT_ENJOY_CARD);
 		putPlantInfoToMap(Plants.EXPLODE_O_NUT, 150, CDs.HUGE_SLOW, Ranks.PURPLE, Essences.EXPLOSION, EntityRegister.EXPLODE_O_NUT, ItemRegister.EXPLODE_O_NUT_CARD, ItemRegister.EXPLODE_O_NUT_ENJOY_CARD);
-		putPlantInfoToMap(Plants.GIANT_WALL_NUT, 300, CDs.SUPER_SLOW, Ranks.GOLD, Essences.DEFENCE, EntityRegister.GIANT_WALL_NUT, ItemRegister.GIANT_WALL_NUT_CARD, ItemRegister.GIANT_WALL_NUT_ENJOY_CARD);
+		putPlantInfoToMap(Plants.GIANT_WALL_NUT, 200, CDs.SUPER_SLOW, Ranks.PURPLE, Essences.DEFENCE, EntityRegister.GIANT_WALL_NUT, ItemRegister.GIANT_WALL_NUT_CARD, ItemRegister.GIANT_WALL_NUT_ENJOY_CARD);
 	}
 	
 	public static void putPlantInfoToMap(Plants plant,final int cost, CDs cd, Ranks rank, Essences essence, RegistryObject<? extends EntityType<? extends PVZPlantEntity>> type, RegistryObject<? extends PlantCardItem> summonCard, RegistryObject<? extends PlantCardItem> enjoyCard) {

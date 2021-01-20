@@ -30,6 +30,7 @@ public class TradeUtil {
 		putInfoToDaveGoodsMap(DaveGoods.GLOOM_SHROOM_CARD, 7500, new ItemStack(ItemRegister.GLOOM_SHROOM_CARD.get()));
 		putInfoToDaveGoodsMap(DaveGoods.CAT_TAIL_CARD, 12000, new ItemStack(ItemRegister.CAT_TAIL_CARD.get()));
 		putInfoToDaveGoodsMap(DaveGoods.GOLD_MAGNET_CARD, 3000, new ItemStack(ItemRegister.GOLD_MAGNET_CARD.get()));
+		putInfoToDaveGoodsMap(DaveGoods.CAR_KEY, 500, new ItemStack(ItemRegister.CAR_KEY.get()));
 		putInfoToDaveGoodsMap(DaveGoods.LIGHT_EYE_POTION_1, 100, PotionRecipeHandler.LIGHT_EYE_POTION_1);
 		putInfoToDaveGoodsMap(DaveGoods.LIGHT_EYE_POTION_2, 800, PotionRecipeHandler.LIGHT_EYE_POTION_2);
 		putInfoToDaveGoodsMap(DaveGoods.LANTERN, 500, new ItemStack(BlockRegister.LANTERN.get(), 8));
@@ -37,6 +38,7 @@ public class TradeUtil {
 		putInfoToDaveGoodsMap(DaveGoods.SUN_SHOVEL, 3500, SUN_SHOVEL_BOOK);
 		putInfoToDaveGoodsMap(DaveGoods.SUN_MENDING, 5000, SUN_MENDING_BOOK);
 		putInfoToDaveGoodsMap(DaveGoods.GOLD_LEAF_CARD, 6000, new ItemStack(ItemRegister.GOLD_LEAF_CARD.get()));
+		putInfoToDaveGoodsMap(DaveGoods.LAWN_MOWER, 2, new ItemStack(ItemRegister.LAWN_MOWER.get()));
 	}
 	
 	public static void putInfoToDaveGoodsMap(DaveGoods good, int cost, ItemStack item) {
@@ -54,8 +56,8 @@ public class TradeUtil {
 	}
 	
 	public static int getGoodCost(DaveGoods good) {
-		if(good == DaveGoods.ENERGY) {
-			
+		if(good == DaveGoods.MONEY) {
+			return 1;
 		}
 		if(DAVE_GOODS_COST.containsKey(good)) {
 			return DAVE_GOODS_COST.get(good);
@@ -78,7 +80,6 @@ public class TradeUtil {
 	}
 	
 	public enum DaveGoods {
-		
 		ENERGY(GuiHandler.DAVE_SHOP),
 		ALMANAC(GuiHandler.DAVE_SHOP),
 		GATLING_PEA_CARD(GuiHandler.DAVE_SHOP),
@@ -86,6 +87,7 @@ public class TradeUtil {
 		GLOOM_SHROOM_CARD(GuiHandler.DAVE_SHOP),
 		CAT_TAIL_CARD(GuiHandler.DAVE_SHOP),
 		GOLD_MAGNET_CARD(GuiHandler.DAVE_SHOP),
+		CAR_KEY(GuiHandler.DAVE_SHOP),
 		LIGHT_EYE_POTION_1(GuiHandler.SUN_SHOP),
 		LIGHT_EYE_POTION_2(GuiHandler.SUN_SHOP),
 		LANTERN(GuiHandler.SUN_SHOP),
@@ -93,7 +95,8 @@ public class TradeUtil {
 		SUN_SHOVEL(GuiHandler.SUN_SHOP),
 		SUN_MENDING(GuiHandler.SUN_SHOP),
 		GOLD_LEAF_CARD(GuiHandler.SUN_SHOP),
-		MONEY(GuiHandler.PENNY_SHOP);
+		MONEY(GuiHandler.PENNY_SHOP),
+		LAWN_MOWER(GuiHandler.PENNY_SHOP);
 		
 		public final int shopId;//0 means dave shop, 1 means sun shop.
 		

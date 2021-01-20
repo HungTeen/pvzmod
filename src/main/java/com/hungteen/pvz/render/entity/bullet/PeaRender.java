@@ -7,7 +7,7 @@ import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 
 @OnlyIn(Dist.CLIENT)
-public class PeaRender extends BulletRender<PeaEntity>{
+public class PeaRender extends BulletRender<PeaEntity> {
 
 	public PeaRender(EntityRendererManager renderManagerIn) {
 		super(renderManagerIn);

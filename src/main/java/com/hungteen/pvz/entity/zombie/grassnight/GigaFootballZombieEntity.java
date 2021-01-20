@@ -87,7 +87,7 @@ public class GigaFootballZombieEntity extends FootballZombieEntity {
 				LivingEntity target = list.get(l);
 				if (target != this && this.shouldCollideWithEntity(target)) {// can collide with
 					if(this.getAttackTime() == 0) {
-						target.attackEntityFrom(PVZDamageSource.causeNormalDamage(this, this), ZombieUtil.SUPER_HIGH);
+						target.attackEntityFrom(PVZDamageSource.causeNormalDamage(this, this), target.getMaxHealth());
 						this.updateRushCD();
 					}
 					this.collideWithEntity(target);
