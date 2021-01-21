@@ -67,7 +67,8 @@ public class TradeUtil {
 		if(good == DaveGoods.MONEY) return 1;
 		if(good.toString().toLowerCase().startsWith("enjoy_card")) {
 			Plants plant = Plants.values()[good.type];
-			return PlantUtil.getPlantRankByName(plant).ordinal() * 2 / 3 + 3;
+			int x = PlantUtil.getPlantRankByName(plant).ordinal();
+			return x + 1;
 		}
 		if(DAVE_GOODS_COST.containsKey(good)) {
 			return DAVE_GOODS_COST.get(good);

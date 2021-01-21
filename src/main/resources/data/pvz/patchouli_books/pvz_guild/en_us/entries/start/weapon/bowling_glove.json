@@ -1,0 +1,21 @@
+{
+    "name": "Bowling Glove",
+    "icon": "pvz:bowling_glove",
+    "category": "pvz:start/weapon",
+    "pages": [
+        {
+            "type": "spotlight",
+            "item": "pvz:bowling_glove",
+            "title": "Bowling Glove",
+            "text": "$(byellow)Bowling Glove$() is a tool use to place bowling. Face and right click $(l)Wall Nut, Explode-o-nut, Giant Wall Nut$() with this item to pick bowling up, then right click the ground to launch bowling.$()"
+        },
+        {
+            "type": "crafting",
+            "recipe": "pvz:bowling_glove",
+            "title": "Bowling Glove Recipe",
+            "text": "The recipe of Bowling Glove need $(l)nut, leather, amethyst ingot, Defence Essences, Explosion Essences$()."
+        }
+    ],
+    "advancement": "pvz:root",
+    "sortnum": 2
+}

@@ -9,6 +9,10 @@
         },
         {
             "type": "text",
+            "text": "$(bred)Dave Villa$() has a car named [Penny], right click to trade with $(bblue)gem$(), you can get $(bred)Lawn Mower$()and so on from it. if you hold $(bred)Car Key$() to right click it, $(bpurple)Mystery Shop$() will open, which provide player with enjoy card, each trade once. The trade list will update every 20 minutes."
+        },
+        {
+            "type": "text",
             "text": "$(byellow)Sun Temple$() is a structure generated in $(l)Desert Sky$(), where a $(#ff0000)Sun Dave$() will spawned. Players can trade it with sun."
         }
     ],

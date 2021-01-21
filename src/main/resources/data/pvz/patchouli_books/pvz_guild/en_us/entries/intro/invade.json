@@ -25,7 +25,11 @@
         },
         {
             "type": "text",
-            "text": "Current Assist Event list:$(br)$(bred)Fog Invasion$()(Players' Screen will be blocked by fog that night)$(br)$(bred)Yeti Invasion$()(There will have very low chance to spawn Yeti Zombie in overworld land.)$(br)"
+            "text": "Current Spawn Event list:$(br)$(bred)Yeti Invasion$()(Normal, Jack-In-Box, Baloon, Digger, Pogo Zombies, $(bpurple)low chance to spawn Yeti Zombie When huge wave$().)"
+        },
+        {
+            "type": "text",
+            "text": "Current Assist Event list:$(br)$(bred)Fog Invasion$()(Players' Screen will be blocked by fog that night)$(br)"
         }
     ],
     "advancement": "pvz:root",

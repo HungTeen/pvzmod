@@ -16,7 +16,7 @@ issueTrackerURL="http://my.issue.tracker/" #optional
 modId="pvz" #mandatory
 
 # The version number of the mod - there's a few well known ${} variables useable here or just hardcode it
-version="1.15.2-0.3" #mandatory
+version="1.15.2-0.4" #mandatory
 
  # A display name for the mod
 displayName="Plants vs Zombies" #mandatory
@@ -31,7 +31,7 @@ displayURL="https://space.bilibili.com/362855464" #optional
 logoFile="logo.png" #optional
 
 # A text field displayed in the mod UI
-credits="_HungTeen_,Wolf__Crystal,Men_Tian_Bai" #optional
+credits="Model Helper : Wolf__Crystal, Men_Tian_Bai, InkyTheSheep, Chompy and so on." #optional
 
 # A text field displayed in the mod UI
 authors="_HungTeen_" #optional
@@ -39,7 +39,7 @@ authors="_HungTeen_" #optional
 # The description text for the mod (multi line!) (#mandatory)
 description='''
 Take Plants vs Zombies to Minecraft
-So far,there are 39+ plants and 30+ zombies.
+So far,there are 45+ plants and 30+ zombies.
 '''
 # A dependency - use the . to indicate dependency for a specific modid. Dependencies are optional.
 [[dependencies.pvz]] #optional

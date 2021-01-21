@@ -18,7 +18,7 @@ public class DaveShopContainer extends AbstractDaveShopContainer {
 	}
 	
 	public void buyGood(DaveGoods good) {
-		if(good == DaveGoods.MONEY) {
+		if(good == DaveGoods.ENERGY) {
 			player.getCapability(CapabilityHandler.PLAYER_DATA_CAPABILITY).ifPresent((l) -> {
 				PlayerDataManager.PlayerStats stats = l.getPlayerData().getPlayerStats();
 				stats.addPlayerStats(Resources.MONEY, - TradeUtil.getEnergyCost(stats.getPlayerStats(Resources.MAX_ENERGY_NUM)));
