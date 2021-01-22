@@ -21,6 +21,7 @@ public class ZombieMeleeAttackGoal extends Goal {
 	protected float speed = 1.0f;
 	private int delayCounter;
 	private int delayCnt = 1;
+	private long excuteTime = 0;
 
 	public ZombieMeleeAttackGoal(PVZZombieEntity creature) {
 		this.attacker = creature;
@@ -29,9 +30,12 @@ public class ZombieMeleeAttackGoal extends Goal {
 
 	@Override
 	public boolean shouldExecute() {
+		long currentTime = this.attacker.world.getGameTime();
+		if (currentTime - this.excuteTime < 20L) return false;//search each second.
+		this.excuteTime = currentTime;
 		LivingEntity target = this.attacker.getAttackTarget();
 //		System.out.println(target);
-		if (target == null || !target.isAlive()) {
+		if (target == null || ! target.isAlive()) {
 			return false;
 		}
 		this.path = this.attacker.getNavigator().getPathToEntity(target, 0);
@@ -87,7 +91,7 @@ public class ZombieMeleeAttackGoal extends Goal {
 			if(!this.attacker.getNavigator().tryMoveToEntityLiving(target, this.speed)) {
 			    this.delayCounter += 20 * this.delayCnt;
 			    this.delayCnt = Math.min(10, this.delayCnt + 1);
-		    }else {
+		    } else {
 		    	this.delayCnt = 1;
 		    }
 		}

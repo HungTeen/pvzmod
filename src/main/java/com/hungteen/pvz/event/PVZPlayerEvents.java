@@ -123,8 +123,11 @@ public class PVZPlayerEvents {
 		if(! player.world.isRemote) {
 			if(state.getBlock()==Blocks.GRASS || state.getBlock()==Blocks.TALL_GRASS) {//break grass
 				Random rand = new Random();
-				if(rand.nextInt(PVZConfig.COMMON_CONFIG.BlockSettings.BreakBlock.PeaDropChance.get())==0) {//drop pea 
-					player.world.addEntity(new ItemEntity(player.world,pos.getX(), pos.getY(), pos.getZ(), new ItemStack(ItemRegister.PEA.get(),1)));
+				if(rand.nextInt(PVZConfig.COMMON_CONFIG.BlockSettings.BreakBlock.PeaDropChance.get()) == 0) {//drop pea 
+					player.world.addEntity(new ItemEntity(player.world,pos.getX(), pos.getY(), pos.getZ(), new ItemStack(ItemRegister.PEA.get(), 1)));
+				}
+				if(rand.nextInt(PVZConfig.COMMON_CONFIG.BlockSettings.BreakBlock.CabbageDropChance.get()) == 0) {//drop cabbage
+					player.world.addEntity(new ItemEntity(player.world,pos.getX(), pos.getY(), pos.getZ(), new ItemStack(ItemRegister.CABBAGE_SEEDS.get(), 1)));
 				}
 			}
 		}

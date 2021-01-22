@@ -32,6 +32,8 @@ public class ItemTagGenerator extends ItemTagsProvider{
 		this.getBuilder(PVZItemTags.PEAS).add(ItemRegister.PEA.get());
 		this.getBuilder(PVZItemTags.NUTS).add(ItemRegister.NUT.get());
 		this.getBuilder(PVZItemTags.CHILIPEPPERS).add(ItemRegister.PEPPER.get());
+		this.getBuilder(PVZItemTags.CABBAGES).add(ItemRegister.CABBAGE.get());
+		this.getBuilder(PVZItemTags.CABBAGE_SEEDS).add(ItemRegister.CABBAGE_SEEDS.get());
 		this.getBuilder(PVZItemTags.AMETHYST_INGOTS).add(ItemRegister.AMETHYST_INGOT.get());
 		this.getBuilder(PVZItemTags.STEEL_INGOTS).add(ItemRegister.STEEL_INGOT.get());
 		this.getBuilder(PVZItemTags.AMETHYST_ORES).add(BlockRegister.AMETHYST_ORE.get().asItem());

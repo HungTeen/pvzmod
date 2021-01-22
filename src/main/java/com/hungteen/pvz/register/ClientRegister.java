@@ -49,7 +49,7 @@ public class ClientRegister {
 		RenderTypeLookup.setRenderLayer(BlockRegister.TOXIC_SHROOM.get(), RenderType.getCutout());
 		RenderTypeLookup.setRenderLayer(BlockRegister.LANTERN.get(), RenderType.getTranslucent());
 		RenderTypeLookup.setRenderLayer(BlockRegister.FLOWER_POT.get(), RenderType.getCutout());
-		
+		RenderTypeLookup.setRenderLayer(BlockRegister.CABBAGE.get(), RenderType.getCutout());
 		TileEntityRegister.bindRenderers(ev);
 	}
 	

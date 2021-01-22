@@ -12,7 +12,7 @@ import com.hungteen.pvz.data.loot.PVZLoot;
 import com.hungteen.pvz.entity.ai.BreakBlockGoal;
 import com.hungteen.pvz.entity.ai.PVZLookRandomlyGoal;
 import com.hungteen.pvz.entity.ai.PVZSwimGoal;
-import com.hungteen.pvz.entity.ai.ZombieMeleeAttackGoal;
+import com.hungteen.pvz.entity.ai.PVZZombieAttackGoal;
 import com.hungteen.pvz.entity.ai.ZombieNearestTargetGoal;
 import com.hungteen.pvz.entity.bullet.PVZItemBulletEntity;
 import com.hungteen.pvz.entity.drop.CoinEntity;
@@ -129,7 +129,7 @@ public abstract class PVZZombieEntity extends MonsterEntity implements IPVZZombi
 	protected void registerAttributes() {
 		super.registerAttributes();
 		this.getAttribute(SharedMonsterAttributes.ATTACK_DAMAGE).setBaseValue(ZombieUtil.LOW);
-		this.getAttribute(SharedMonsterAttributes.FOLLOW_RANGE).setBaseValue(ZombieUtil.ZOMBIE_FOLLOW_RANGE);
+		this.getAttribute(SharedMonsterAttributes.FOLLOW_RANGE).setBaseValue(30);
 		this.getAttribute(SharedMonsterAttributes.MOVEMENT_SPEED).setBaseValue(ZombieUtil.NORMAL_SPEED);
 		this.getAttribute(SharedMonsterAttributes.KNOCKBACK_RESISTANCE).setBaseValue(1D);
 	}
@@ -139,9 +139,9 @@ public abstract class PVZZombieEntity extends MonsterEntity implements IPVZZombi
 		this.goalSelector.addGoal(8, new PVZLookRandomlyGoal(this));
 		this.goalSelector.addGoal(7, new WaterAvoidingRandomWalkingGoal(this, 1.0D));
 		this.goalSelector.addGoal(7, new PVZSwimGoal(this));
-		this.goalSelector.addGoal(2, new ZombieMeleeAttackGoal(this));
+		this.goalSelector.addGoal(2, new PVZZombieAttackGoal(this, true));
 		this.goalSelector.addGoal(6, new BreakBlockGoal(BlockRegister.FLOWER_POT.get(), this, 1F, 10));
-		this.targetSelector.addGoal(0, new ZombieNearestTargetGoal(this, true, 80, 60));
+		this.targetSelector.addGoal(0, new ZombieNearestTargetGoal(this, true, 60, 30));
 	}
 
 	@Override
@@ -473,11 +473,13 @@ public abstract class PVZZombieEntity extends MonsterEntity implements IPVZZombi
 	 * can zombie collide with target
 	 */
 	protected boolean shouldCollideWithEntity(LivingEntity target) {
-//		System.out.println("1");
 		if(this.getAttackTarget() == target) {
 			if(target instanceof SquashEntity || target instanceof SpikeWeedEntity) {
 			    return false;
 		    }
+			return true;
+		}
+		if(target instanceof PVZZombieEntity) {
 			return true;
 		}
 		return false;

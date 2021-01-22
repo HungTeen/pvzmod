@@ -6,6 +6,7 @@ import java.util.List;
 import com.hungteen.pvz.PVZMod;
 import com.hungteen.pvz.block.EssenceOreBlock;
 import com.hungteen.pvz.block.OriginBlock;
+import com.hungteen.pvz.block.plants.CabbageBlock;
 import com.hungteen.pvz.block.plants.ChomperBlock;
 import com.hungteen.pvz.block.plants.LilyPadBlock;
 import com.hungteen.pvz.block.plants.PVZSaplingBlock;
@@ -70,6 +71,7 @@ public class BlockRegister {
 	//crops
 	public static final RegistryObject<Block> PEA_PLANT = BLOCKS.register("pea_plant", () -> new PeaBlock(Block.Properties.from(Blocks.WHEAT)));
 	public static final RegistryObject<Block> TOXIC_SHROOM = BLOCKS.register("toxic_shroom", () -> new ToxicShroomBlock(Block.Properties.from(Blocks.SWEET_BERRY_BUSH)));
+	public static final RegistryObject<Block> CABBAGE = BLOCKS.register("cabbage", () -> new CabbageBlock(Block.Properties.from(Blocks.WHEAT)));
 	
 	//plants
 	public static final RegistryObject<Block> NUT_LEAVES = BLOCKS.register("nut_leaves", () -> new LeavesBlock(Block.Properties.from(Blocks.OAK_LEAVES)));

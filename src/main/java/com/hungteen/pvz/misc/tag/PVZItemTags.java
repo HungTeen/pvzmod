@@ -13,6 +13,8 @@ public class PVZItemTags {
 	public static final Tag<Item> PEAS = forgeTag("crops/pea");
 	public static final Tag<Item> NUTS = forgeTag("crops/nut");
 	public static final Tag<Item> CHILIPEPPERS = forgeTag("crops/chilipepper");
+	public static final Tag<Item> CABBAGES = forgeTag("crops/cabbage");
+	public static final Tag<Item> CABBAGE_SEEDS = forgeTag("seeds/cabbage");
 	public static final Tag<Item> AMETHYST_INGOTS = forgeTag("ingots/amethyst");
 	public static final Tag<Item> STEEL_INGOTS = forgeTag("ingots/steel");
 	public static final Tag<Item> AMETHYST_ORES = forgeTag("ores/amethyst");

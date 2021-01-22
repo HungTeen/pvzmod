@@ -215,6 +215,9 @@ public class PVZConfig {
 					BlockSettings.BreakBlock.PeaDropChance = builder
 						.comment("the drop chance of pea when you break grass.the bigger the value is,the lower chance you get.(more specificly 1/x)")
 						.defineInRange("DropPeaChance", 16, 1, 1000);
+					BlockSettings.BreakBlock.CabbageDropChance = builder
+							.comment("the drop chance of cabbage when you break grass.the bigger the value is,the lower chance you get.(more specificly 1/x)")
+							.defineInRange("DropCabbageChance", 32, 1, 1000);
 				}
 				builder.pop();
 			}
@@ -306,6 +309,7 @@ public class PVZConfig {
 			public BreakBlock BreakBlock = new BreakBlock();
 			public static class BreakBlock{
 				public ForgeConfigSpec.IntValue PeaDropChance;
+				public ForgeConfigSpec.IntValue CabbageDropChance;
 			}
 		}
 		

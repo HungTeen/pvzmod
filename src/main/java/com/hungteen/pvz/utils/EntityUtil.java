@@ -73,6 +73,10 @@ public class EntityUtil {
 		}
 	}
 	
+	public static boolean isEntityValid(Entity target) {
+		return target != null && target.isAlive();
+	}
+	
 	public static List<LivingEntity> getRandomLivingInRange(World world, LivingEntity attacker, AxisAlignedBB aabb, int cnt){
 		List<LivingEntity> list = new ArrayList<>();
 		for(LivingEntity living : world.getEntitiesWithinAABB(LivingEntity.class, aabb, (target) -> {

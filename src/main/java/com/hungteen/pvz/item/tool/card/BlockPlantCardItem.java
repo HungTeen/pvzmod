@@ -8,6 +8,7 @@ import net.minecraft.block.BlockState;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.fluid.Fluids;
 import net.minecraft.fluid.IFluidState;
+import net.minecraft.item.BlockItemUseContext;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.ItemUseContext;
 import net.minecraft.util.ActionResult;
@@ -52,7 +53,9 @@ public class BlockPlantCardItem extends PlantCardItem{
 				BlockPos blockpos1 = blockpos.up();
 				IFluidState ifluidstate = worldIn.getFluidState(blockpos);
 				if (ifluidstate.getFluid() == Fluids.WATER && worldIn.isAirBlock(blockpos1)) {
-					PlantCardItem.checkSunAndPlaceBlock(player, this, itemstack, blockpos1);
+					if(! worldIn.isRemote) {
+						PlantCardItem.checkSunAndPlaceBlock(player, this, itemstack, blockpos1);
+					}
 					return ActionResult.resultSuccess(itemstack);
 				}
 			}
@@ -74,9 +77,14 @@ public class BlockPlantCardItem extends PlantCardItem{
 		if (world.isRemote) {
 			return ActionResultType.SUCCESS;
 		}
-		if (context.getFace() == Direction.UP && world.isAirBlock(pos.up()) && world.getBlockState(pos).isSolid()) {// can plant here
-			checkSunAndPlaceBlock(player, this, stack, pos.up());
-			return ActionResultType.SUCCESS;
+		if (context.getFace() == Direction.UP) {
+			if(world.getBlockState(pos).isReplaceable(new BlockItemUseContext(context))) {
+				checkSunAndPlaceBlock(player, this, stack, pos);
+				return ActionResultType.SUCCESS;
+			} else if(world.isAirBlock(pos.up()) && world.getBlockState(pos).isSolid()) {// can plant here
+			    checkSunAndPlaceBlock(player, this, stack, pos.up());
+			    return ActionResultType.SUCCESS;
+			}
 		}
 		return ActionResultType.FAIL;
 	}

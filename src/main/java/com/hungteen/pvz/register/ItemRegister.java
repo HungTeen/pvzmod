@@ -169,9 +169,11 @@ public class ItemRegister {
     public static final RegistryObject<PlantCardItem> GIANT_WALL_NUT_ENJOY_CARD = registerCard(Plants.GIANT_WALL_NUT, true);
     
     //plants
-	public static final RegistryObject<Item> PEA = ITEMS.register("pea",()-> new BlockItem(BlockRegister.PEA_PLANT.get(),new Item.Properties().group(GroupRegister.PVZ_MISC)));
+	public static final RegistryObject<Item> PEA = ITEMS.register("pea",() -> new BlockItem(BlockRegister.PEA_PLANT.get(), new Item.Properties().group(GroupRegister.PVZ_MISC)));
 	public static final RegistryObject<Item> NUT = ITEMS.register("nut", PVZItemBase::new);
 	public static final RegistryObject<Item> SPORE = ITEMS.register("spore",()-> new BlockItem(BlockRegister.TOXIC_SHROOM.get(),new Item.Properties().group(GroupRegister.PVZ_MISC)));
+	public static final RegistryObject<Item> CABBAGE_SEEDS = ITEMS.register("cabbage_seeds", () -> new BlockItem(BlockRegister.CABBAGE.get(), new Item.Properties().group(GroupRegister.PVZ_MISC)));
+	public static final RegistryObject<Item> CABBAGE = ITEMS.register("cabbage", PVZItemBase::new);
 	
 	//material
 	public static final RegistryObject<Item> SNOW_PEA = ITEMS.register("snow_pea", PVZItemBase::new);
