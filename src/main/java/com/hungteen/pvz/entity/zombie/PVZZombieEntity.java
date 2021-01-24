@@ -12,9 +12,9 @@ import com.hungteen.pvz.data.loot.PVZLoot;
 import com.hungteen.pvz.entity.ai.BreakBlockGoal;
 import com.hungteen.pvz.entity.ai.PVZLookRandomlyGoal;
 import com.hungteen.pvz.entity.ai.PVZSwimGoal;
-import com.hungteen.pvz.entity.ai.PVZZombieAttackGoal;
-import com.hungteen.pvz.entity.ai.ZombieNearestTargetGoal;
-import com.hungteen.pvz.entity.bullet.PVZItemBulletEntity;
+import com.hungteen.pvz.entity.ai.attack.PVZZombieAttackGoal;
+import com.hungteen.pvz.entity.ai.target.ZombieNearestTargetGoal;
+import com.hungteen.pvz.entity.bullet.AbstractBulletEntity;
 import com.hungteen.pvz.entity.drop.CoinEntity;
 import com.hungteen.pvz.entity.drop.CoinEntity.CoinType;
 import com.hungteen.pvz.entity.drop.EnergyEntity;
@@ -675,7 +675,7 @@ public abstract class PVZZombieEntity extends MonsterEntity implements IPVZZombi
 	
 	@Override
 	protected SoundEvent getHurtSound(DamageSource damageSourceIn) {
-		if(damageSourceIn.getImmediateSource() instanceof PVZItemBulletEntity) {
+		if(damageSourceIn.getImmediateSource() instanceof AbstractBulletEntity) {
 			return SoundRegister.PEA_HIT.get();
 		}
 		return super.getHurtSound(damageSourceIn);

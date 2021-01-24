@@ -1,6 +1,6 @@
 package com.hungteen.pvz.render.entity.bullet;
 
-import com.hungteen.pvz.entity.bullet.MetalItemEntity;
+import com.hungteen.pvz.entity.bullet.itembullet.MetalItemEntity;
 
 import net.minecraft.client.renderer.entity.EntityRendererManager;
 

@@ -1,6 +1,6 @@
 package com.hungteen.pvz.entity.plant.ice;
 
-import com.hungteen.pvz.entity.bullet.PeaEntity.State;
+import com.hungteen.pvz.entity.bullet.itembullet.PeaEntity.State;
 import com.hungteen.pvz.entity.plant.appease.PeaShooterEntity;
 import com.hungteen.pvz.entity.plant.interfaces.IIcePlant;
 import com.hungteen.pvz.register.EffectRegister;

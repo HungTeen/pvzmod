@@ -1,6 +1,6 @@
 package com.hungteen.pvz.render.entity.bullet;
 
-import com.hungteen.pvz.entity.bullet.NutEntity;
+import com.hungteen.pvz.entity.bullet.itembullet.NutEntity;
 
 import net.minecraft.client.renderer.entity.EntityRendererManager;
 

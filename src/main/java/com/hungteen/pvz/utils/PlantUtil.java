@@ -75,6 +75,7 @@ public class PlantUtil {
 		putPlantInfoToMap(Plants.STAR_FRUIT, 150, CDs.FAST, Ranks.GREEN, Essences.APPEASE, EntityRegister.STAR_FRUIT, ItemRegister.STAR_FRUIT_CARD, ItemRegister.STAR_FRUIT_ENJOY_CARD);
 		putPlantInfoToMap(Plants.PUMPKIN, 125, CDs.SLOW, Ranks.GREEN, Essences.DEFENCE, null, ItemRegister.PUMPKIN_CARD, ItemRegister.PUMPKIN_ENJOY_CARD);
 		putPlantInfoToMap(Plants.MAGNET_SHROOM, 100, CDs.LITTLE_FAST, Ranks.PURPLE, Essences.ASSIST, EntityRegister.MAGNET_SHROOM, ItemRegister.MAGNET_SHROOM_CARD, ItemRegister.MAGNET_SHROOM_ENJOY_CARD);
+		putPlantInfoToMap(Plants.CABBAGE_PULT, 100, CDs.HUGE_FAST, Ranks.GRAY, Essences.ARMA, EntityRegister.CABBAGE_PULT, ItemRegister.CABBAGE_PULT_CARD, ItemRegister.CABBAGE_PULT_ENJOY_CARD);
 		putPlantInfoToMap(Plants.FLOWER_POT, 25, CDs.HUGE_FAST, Ranks.GRAY, Essences.ASSIST, null, ItemRegister.FLOWER_POT_CARD, ItemRegister.FLOWER_POT_ENJOY_CARD);
 		putPlantInfoToMap(Plants.COFFEE_BEAN, 75, CDs.FAST, Ranks.GREEN, Essences.MAGIC, EntityRegister.COFFEE_BEAN, ItemRegister.COFFEE_BEAN_CARD, ItemRegister.COFFEE_BEAN_ENJOY_CARD);
 		putPlantInfoToMap(Plants.MARIGOLD, 50, CDs.NORMAL, Ranks.PURPLE, Essences.MAGIC, EntityRegister.MARIGOLD, ItemRegister.MARIGOLD_CARD, ItemRegister.MARIGOLD_ENJOY_CARD);

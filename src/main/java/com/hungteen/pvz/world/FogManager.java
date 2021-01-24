@@ -15,14 +15,15 @@ import net.minecraft.world.dimension.DimensionType;
 public class FogManager {
 
 	public static void tickFog(World world) {
-		world.getPlayers().forEach((player)->{
-			player.getCapability(CapabilityHandler.PLAYER_DATA_CAPABILITY).ifPresent((l)->{
+		world.getPlayers().forEach((player) -> {
+			player.getCapability(CapabilityHandler.PLAYER_DATA_CAPABILITY).ifPresent((l) -> {
 				int now = l.getPlayerData().getPlayerStats().getPlayerStats(Resources.NO_FOG_TICK);
 				-- now;
 				if(! shouldFogOn(world, player)) {
 					now = Math.max(now, 0);
 				}
-				if(now < 0) now = -1;
+				now = Math.max(now, - 100);
+//				System.out.println(now);
 				l.getPlayerData().getPlayerStats().setPlayerStats(Resources.NO_FOG_TICK, now);
 			});
 		});

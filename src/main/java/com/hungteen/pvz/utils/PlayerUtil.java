@@ -122,6 +122,7 @@ public class PlayerUtil {
 	}
 	
 	public static boolean isPlayerSurvival(PlayerEntity player) {
+//		System.out.println(player.isSpectator());
 		return ! player.isCreative() && ! player.isSpectator();
 	}
 	

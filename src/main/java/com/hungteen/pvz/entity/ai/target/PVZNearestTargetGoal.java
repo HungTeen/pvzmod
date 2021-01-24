@@ -1,4 +1,4 @@
-package com.hungteen.pvz.entity.ai;
+package com.hungteen.pvz.entity.ai.target;
 
 import java.util.ArrayList;
 import java.util.Collections;

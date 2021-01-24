@@ -1,8 +1,8 @@
 package com.hungteen.pvz.entity.plant.assist;
 
-import com.hungteen.pvz.entity.ai.PVZNearestTargetGoal;
-import com.hungteen.pvz.entity.bullet.MetalItemEntity;
-import com.hungteen.pvz.entity.bullet.MetalItemEntity.MetalStates;
+import com.hungteen.pvz.entity.ai.target.PVZNearestTargetGoal;
+import com.hungteen.pvz.entity.bullet.itembullet.MetalItemEntity;
+import com.hungteen.pvz.entity.bullet.itembullet.MetalItemEntity.MetalStates;
 import com.hungteen.pvz.entity.plant.PVZPlantEntity;
 import com.hungteen.pvz.register.EntityRegister;
 import com.hungteen.pvz.register.SoundRegister;

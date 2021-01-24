@@ -2,13 +2,15 @@ package com.hungteen.pvz.entity.plant.spear;
 
 import java.util.HashSet;
 
-import com.hungteen.pvz.entity.ai.PVZGlobalTargetGoal;
+import com.hungteen.pvz.entity.ai.target.PVZGlobalTargetGoal;
 import com.hungteen.pvz.entity.bullet.ThornEntity;
 import com.hungteen.pvz.entity.bullet.ThornEntity.ThornStates;
 import com.hungteen.pvz.entity.bullet.ThornEntity.ThornTypes;
 import com.hungteen.pvz.entity.plant.base.PlantShooterEntity;
 import com.hungteen.pvz.entity.zombie.poolnight.BalloonZombieEntity;
 import com.hungteen.pvz.register.EntityRegister;
+import com.hungteen.pvz.register.SoundRegister;
+import com.hungteen.pvz.utils.EntityUtil;
 import com.hungteen.pvz.utils.enums.Plants;
 
 import net.minecraft.entity.CreatureEntity;
@@ -89,6 +91,7 @@ public class CatTailEntity extends PlantShooterEntity {
 		thorn.setExtraHitCount(this.getExtraAttackCount());
 		thorn.setPosition(getPosX(), getPosY() + this.getHeight() + 0.2F, getPosZ());
 		this.thorns.add(thorn);
+		EntityUtil.playSound(this, SoundRegister.PLANT_THROW.get());
 		this.world.addEntity(thorn);
 	}
 	

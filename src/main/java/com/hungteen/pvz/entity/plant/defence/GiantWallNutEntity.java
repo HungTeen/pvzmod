@@ -1,6 +1,6 @@
 package com.hungteen.pvz.entity.plant.defence;
 
-import com.hungteen.pvz.entity.bullet.NutEntity;
+import com.hungteen.pvz.entity.bullet.itembullet.NutEntity;
 import com.hungteen.pvz.register.EntityRegister;
 import com.hungteen.pvz.utils.enums.Plants;
 

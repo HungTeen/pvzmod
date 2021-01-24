@@ -38,7 +38,7 @@ public enum Plants {
 	PUMPKIN(16),
 	MAGNET_SHROOM(1),
 	//roof 
-//	CABBAGE_PULT,
+	CABBAGE_PULT(0),
 	FLOWER_POT(2), 
 //	KERNEL_PULT,
 	COFFEE_BEAN(0),

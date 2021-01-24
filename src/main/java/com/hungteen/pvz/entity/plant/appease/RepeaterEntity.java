@@ -1,6 +1,6 @@
 package com.hungteen.pvz.entity.plant.appease;
 
-import com.hungteen.pvz.entity.bullet.PeaEntity.Type;
+import com.hungteen.pvz.entity.bullet.itembullet.PeaEntity.Type;
 import com.hungteen.pvz.utils.enums.Plants;
 
 import net.minecraft.entity.CreatureEntity;

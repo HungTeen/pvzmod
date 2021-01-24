@@ -1,6 +1,6 @@
 package com.hungteen.pvz.render.entity.bullet;
 
-import com.hungteen.pvz.entity.bullet.SporeEntity;
+import com.hungteen.pvz.entity.bullet.itembullet.SporeEntity;
 
 import net.minecraft.client.renderer.entity.EntityRendererManager;
 import net.minecraftforge.api.distmarker.Dist;

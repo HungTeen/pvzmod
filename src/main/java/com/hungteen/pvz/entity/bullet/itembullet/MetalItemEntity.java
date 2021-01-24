@@ -1,4 +1,4 @@
-package com.hungteen.pvz.entity.bullet;
+package com.hungteen.pvz.entity.bullet.itembullet;
 
 import java.util.List;
 

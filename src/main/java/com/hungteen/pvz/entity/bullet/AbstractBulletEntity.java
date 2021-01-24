@@ -37,6 +37,7 @@ public abstract class AbstractBulletEntity extends Entity implements IProjectile
 	protected LivingEntity owner;
 	private UUID ownerId;
 	protected IntOpenHashSet hitEntities;
+	protected float airSlowDown = 0.99F;
 	
 	public AbstractBulletEntity(EntityType<?> type, World worldIn) {
 		super(type, worldIn);
@@ -140,7 +141,7 @@ public abstract class AbstractBulletEntity extends Entity implements IProjectile
 			}
 			f1 = 0.8F;
 		} else {
-			f1 = 0.99F;
+			f1 = this.airSlowDown;
 		}
 		this.setMotion(vec3d.scale((double) f1));
 		if (!this.hasNoGravity()) {
@@ -186,7 +187,7 @@ public abstract class AbstractBulletEntity extends Entity implements IProjectile
 		double vz = dz / dis * speed;
 		this.setMotion(- vx, - vy, - vz);
 	}
-
+	
 	/**
 	 * get how much angle can shoot by thrower
 	 */

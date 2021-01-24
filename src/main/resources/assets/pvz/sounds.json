@@ -234,5 +234,9 @@
     "lawn_mower":{
         "subtitle": "sound.pvz.lawn_mower",
         "sounds":[{"name":"pvz:entity/misc/other/lawn_mower"}]
+    },
+    "plant_throw":{
+        "subtitle": "sound.pvz.plant_throw",
+        "sounds":[{"name":"pvz:entity/plant/attack/plant_throw"},{"name":"pvz:entity/plant/attack/plant_throw2"}]
     }
 }

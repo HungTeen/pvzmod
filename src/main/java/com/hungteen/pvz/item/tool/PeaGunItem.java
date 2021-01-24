@@ -6,7 +6,7 @@ import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
 import com.hungteen.pvz.capability.CapabilityHandler;
-import com.hungteen.pvz.entity.bullet.PeaEntity;
+import com.hungteen.pvz.entity.bullet.itembullet.PeaEntity;
 import com.hungteen.pvz.gui.container.PeaGunContainer;
 import com.hungteen.pvz.gui.inventory.ItemInventory;
 import com.hungteen.pvz.item.tool.card.PlantCardItem;

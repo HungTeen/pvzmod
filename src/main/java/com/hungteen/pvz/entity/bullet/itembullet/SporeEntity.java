@@ -1,4 +1,4 @@
-package com.hungteen.pvz.entity.bullet;
+package com.hungteen.pvz.entity.bullet.itembullet;
 
 import com.hungteen.pvz.entity.plant.base.PlantShooterEntity;
 import com.hungteen.pvz.entity.plant.toxic.PuffShroomEntity;

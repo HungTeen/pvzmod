@@ -2,13 +2,14 @@ package com.hungteen.pvz.register;
 
 import com.hungteen.pvz.PVZMod;
 import com.hungteen.pvz.entity.bullet.FumeEntity;
-import com.hungteen.pvz.entity.bullet.MetalItemEntity;
-import com.hungteen.pvz.entity.bullet.NutEntity;
-import com.hungteen.pvz.entity.bullet.PeaEntity;
-import com.hungteen.pvz.entity.bullet.PotatoEntity;
-import com.hungteen.pvz.entity.bullet.SporeEntity;
 import com.hungteen.pvz.entity.bullet.StarEntity;
 import com.hungteen.pvz.entity.bullet.ThornEntity;
+import com.hungteen.pvz.entity.bullet.itembullet.CabbageEntity;
+import com.hungteen.pvz.entity.bullet.itembullet.MetalItemEntity;
+import com.hungteen.pvz.entity.bullet.itembullet.NutEntity;
+import com.hungteen.pvz.entity.bullet.itembullet.PeaEntity;
+import com.hungteen.pvz.entity.bullet.itembullet.PotatoEntity;
+import com.hungteen.pvz.entity.bullet.itembullet.SporeEntity;
 import com.hungteen.pvz.entity.creature.FoodieZombieEntity;
 import com.hungteen.pvz.entity.drop.CoinEntity;
 import com.hungteen.pvz.entity.drop.EnergyEntity;
@@ -31,6 +32,7 @@ import com.hungteen.pvz.entity.plant.appease.RepeaterEntity;
 import com.hungteen.pvz.entity.plant.appease.SplitPeaEntity;
 import com.hungteen.pvz.entity.plant.appease.StarFruitEntity;
 import com.hungteen.pvz.entity.plant.appease.ThreePeaterEntity;
+import com.hungteen.pvz.entity.plant.arma.CabbagePultEntity;
 import com.hungteen.pvz.entity.plant.assist.BloverEntity;
 import com.hungteen.pvz.entity.plant.assist.GoldMagnetEntity;
 import com.hungteen.pvz.entity.plant.assist.GraveBusterEntity;
@@ -101,6 +103,7 @@ import com.hungteen.pvz.entity.zombie.poolnight.DiggerZombieEntity;
 import com.hungteen.pvz.entity.zombie.poolnight.JackInBoxZombieEntity;
 import com.hungteen.pvz.entity.zombie.poolnight.PogoZombieEntity;
 import com.hungteen.pvz.entity.zombie.poolnight.YetiZombieEntity;
+import com.hungteen.pvz.render.entity.bullet.CabbageRender;
 import com.hungteen.pvz.render.entity.bullet.FumeRender;
 import com.hungteen.pvz.render.entity.bullet.MetalItemRender;
 import com.hungteen.pvz.render.entity.bullet.NutRender;
@@ -132,6 +135,7 @@ import com.hungteen.pvz.render.entity.plant.appease.RepeaterRender;
 import com.hungteen.pvz.render.entity.plant.appease.SplitPeaRender;
 import com.hungteen.pvz.render.entity.plant.appease.StarFruitRender;
 import com.hungteen.pvz.render.entity.plant.appease.ThreePeaterRender;
+import com.hungteen.pvz.render.entity.plant.arma.CabbagePultRender;
 import com.hungteen.pvz.render.entity.plant.assist.BloverRender;
 import com.hungteen.pvz.render.entity.plant.assist.GoldMagnetRender;
 import com.hungteen.pvz.render.entity.plant.assist.GraveBusterRender;
@@ -238,6 +242,7 @@ public class EntityRegister {
 	public static final RegistryObject<EntityType<ThornEntity>> THORN = registerEntityType(ThornEntity::new, "thorn", EntityClassification.MISC);
 	public static final RegistryObject<EntityType<StarEntity>> STAR = registerEntityType(StarEntity::new, "star", EntityClassification.MISC);
 	public static final RegistryObject<EntityType<NutEntity>> NUT = registerEntityType(NutEntity::new, "nut", EntityClassification.MISC);
+	public static final RegistryObject<EntityType<CabbageEntity>> CABBAGE = registerEntityType(CabbageEntity::new, "cabbage", EntityClassification.MISC);
 	
 	//misc 
 	public static final RegistryObject<EntityType<SmallChomperEntity>> SMALL_CHOMPER = registerEntityType(SmallChomperEntity::new, "small_chomper", EntityClassification.MISC);
@@ -336,6 +341,7 @@ public class EntityRegister {
 	public static final RegistryObject<EntityType<GoldLeafEntity>> GOLD_LEAF = registerEntityType(GoldLeafEntity::new, "gold_leaf", EntityClassification.CREATURE);
 	public static final RegistryObject<EntityType<ExplodeONutEntity>> EXPLODE_O_NUT = registerEntityType(ExplodeONutEntity::new, "explode_o_nut", EntityClassification.CREATURE);
 	public static final RegistryObject<EntityType<GiantWallNutEntity>> GIANT_WALL_NUT = registerEntityType(GiantWallNutEntity::new, "giant_wall_nut", EntityClassification.CREATURE);
+	public static final RegistryObject<EntityType<CabbagePultEntity>> CABBAGE_PULT = registerEntityType(CabbagePultEntity::new, "cabbage_pult", EntityClassification.CREATURE);
 	
 	@OnlyIn(Dist.CLIENT)
 	@SubscribeEvent
@@ -355,6 +361,7 @@ public class EntityRegister {
         RenderingRegistry.registerEntityRenderingHandler(THORN.get(), ThornRender::new);
         RenderingRegistry.registerEntityRenderingHandler(STAR.get(), StarRender::new);
         RenderingRegistry.registerEntityRenderingHandler(NUT.get(), NutRender::new);
+        RenderingRegistry.registerEntityRenderingHandler(CABBAGE.get(), CabbageRender::new);
         
         //misc
         RenderingRegistry.registerEntityRenderingHandler(SMALL_CHOMPER.get(), SmallChomperRender::new);
@@ -443,6 +450,7 @@ public class EntityRegister {
         RenderingRegistry.registerEntityRenderingHandler(STAR_FRUIT.get(), StarFruitRender::new);
         RenderingRegistry.registerEntityRenderingHandler(MAGNET_SHROOM.get(), MagnetShroomRender::new);
         
+        RenderingRegistry.registerEntityRenderingHandler(CABBAGE_PULT.get(), CabbagePultRender::new);
         RenderingRegistry.registerEntityRenderingHandler(COFFEE_BEAN.get(), CoffeeBeanRender::new);
         RenderingRegistry.registerEntityRenderingHandler(MARIGOLD.get(), MariGoldRender::new);
         

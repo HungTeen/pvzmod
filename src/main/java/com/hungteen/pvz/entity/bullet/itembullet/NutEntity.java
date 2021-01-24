@@ -1,4 +1,4 @@
-package com.hungteen.pvz.entity.bullet;
+package com.hungteen.pvz.entity.bullet.itembullet;
 
 import com.hungteen.pvz.entity.plant.defence.WallNutEntity;
 import com.hungteen.pvz.misc.damage.PVZDamageSource;

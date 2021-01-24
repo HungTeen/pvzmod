@@ -2,7 +2,7 @@ package com.hungteen.pvz.entity.plant.explosion;
 
 import java.util.Random;
 
-import com.hungteen.pvz.entity.bullet.PotatoEntity;
+import com.hungteen.pvz.entity.bullet.itembullet.PotatoEntity;
 import com.hungteen.pvz.entity.plant.base.PlantCloserEntity;
 import com.hungteen.pvz.misc.damage.PVZDamageSource;
 import com.hungteen.pvz.register.EntityRegister;

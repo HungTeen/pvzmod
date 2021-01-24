@@ -1,4 +1,4 @@
-package com.hungteen.pvz.entity.ai;
+package com.hungteen.pvz.entity.ai.attack;
 
 import java.util.EnumSet;
 

@@ -1,8 +1,8 @@
 package com.hungteen.pvz.entity.zombie.poolday;
 
 import com.hungteen.pvz.entity.ai.BreakBlockGoal;
-import com.hungteen.pvz.entity.ai.ZombieMeleeAttackGoal;
-import com.hungteen.pvz.entity.ai.ZombieNearestTargetGoal;
+import com.hungteen.pvz.entity.ai.attack.ZombieMeleeAttackGoal;
+import com.hungteen.pvz.entity.ai.target.ZombieNearestTargetGoal;
 import com.hungteen.pvz.entity.zombie.PVZZombieEntity;
 import com.hungteen.pvz.register.BlockRegister;
 import com.hungteen.pvz.register.SoundRegister;

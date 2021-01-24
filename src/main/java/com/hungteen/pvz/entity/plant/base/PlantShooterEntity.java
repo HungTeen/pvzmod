@@ -1,6 +1,6 @@
 package com.hungteen.pvz.entity.plant.base;
 
-import com.hungteen.pvz.entity.ai.ShooterAttackGoal;
+import com.hungteen.pvz.entity.ai.attack.ShooterAttackGoal;
 import com.hungteen.pvz.entity.plant.PVZPlantEntity;
 import com.hungteen.pvz.utils.interfaces.IShooter;
 

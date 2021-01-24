@@ -139,6 +139,8 @@ public class ItemRegister {
     public static final RegistryObject<PlantCardItem> PUMPKIN_ENJOY_CARD = registerCard(Plants.PUMPKIN, true);
     public static final RegistryObject<PlantCardItem> MAGNET_SHROOM_CARD = registerCard(Plants.MAGNET_SHROOM, false);
     public static final RegistryObject<PlantCardItem> MAGNET_SHROOM_ENJOY_CARD = registerCard(Plants.MAGNET_SHROOM, true);
+    public static final RegistryObject<PlantCardItem> CABBAGE_PULT_CARD = registerCard(Plants.CABBAGE_PULT, false);
+    public static final RegistryObject<PlantCardItem> CABBAGE_PULT_ENJOY_CARD = registerCard(Plants.CABBAGE_PULT, true);
     public static final RegistryObject<PlantCardItem> FLOWER_POT_CARD = ITEMS.register("flower_pot_card", () -> {return new BlockPlantCardItem(Plants.FLOWER_POT, false);});
     public static final RegistryObject<PlantCardItem> FLOWER_POT_ENJOY_CARD = ITEMS.register("flower_pot_enjoy_card", () -> {return new BlockPlantCardItem(Plants.FLOWER_POT, true);});
     public static final RegistryObject<PlantCardItem> COFFEE_BEAN_CARD = registerCard(Plants.COFFEE_BEAN, false);
@@ -305,6 +307,7 @@ public class ItemRegister {
 	public static final RegistryObject<PVZSpawnEggItem> SPLIT_PEA_SPAWN_EGG = registerSpawnEgg("split_pea", EntityRegister.SPLIT_PEA, Colors.APPEASE_COLOR);
 	public static final RegistryObject<PVZSpawnEggItem> STAR_FRUIT_SPAWN_EGG = registerSpawnEgg("star_fruit", EntityRegister.STAR_FRUIT, Colors.APPEASE_COLOR);
 	public static final RegistryObject<PVZSpawnEggItem> MAGNET_SHROOM_SPAWN_EGG = registerSpawnEgg("magnet_shroom", EntityRegister.MAGNET_SHROOM, Colors.ASSIST_COLOR);
+	public static final RegistryObject<PVZSpawnEggItem> CABBAGE_PULT_SPAWN_EGG = registerSpawnEgg("cabbage_pult", EntityRegister.CABBAGE_PULT, Colors.ARMA_COLOR);
 	public static final RegistryObject<PVZSpawnEggItem> COFFEE_BEAN_SPAWN_EGG = registerSpawnEgg("coffee_bean", EntityRegister.COFFEE_BEAN, Colors.MAGIC_COLOR);
 	public static final RegistryObject<PVZSpawnEggItem> MARIGOLD_SPAWN_EGG = registerSpawnEgg("marigold", EntityRegister.MARIGOLD, Colors.MAGIC_COLOR);
 	public static final RegistryObject<PVZSpawnEggItem> GATLING_PEA_SPAWN_EGG = registerSpawnEgg("gatling_pea", EntityRegister.GATLING_PEA, Colors.APPEASE_COLOR);

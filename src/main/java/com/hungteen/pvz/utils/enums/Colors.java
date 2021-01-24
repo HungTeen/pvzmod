@@ -94,5 +94,6 @@ public class Colors {
 	public static final Pair<Integer,Integer> TOXIC_COLOR = new Pair<>(PURPLE, WHITE);
 	public static final Pair<Integer,Integer> ASSIST_COLOR = new Pair<>(SILVER_FISH, DARK_GRAY);
 	public static final Pair<Integer,Integer> MAGIC_COLOR = new Pair<>(PINK, PURPLE);
+	public static final Pair<Integer,Integer> ARMA_COLOR = new Pair<>(ORANGE_YELLOW, BROWN);
 	
 }

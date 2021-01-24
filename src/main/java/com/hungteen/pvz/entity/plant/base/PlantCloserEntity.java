@@ -1,6 +1,6 @@
 package com.hungteen.pvz.entity.plant.base;
 
-import com.hungteen.pvz.entity.ai.PVZNearestTargetGoal;
+import com.hungteen.pvz.entity.ai.target.PVZNearestTargetGoal;
 import com.hungteen.pvz.entity.plant.PVZPlantEntity;
 import com.hungteen.pvz.utils.interfaces.ICloser;
 

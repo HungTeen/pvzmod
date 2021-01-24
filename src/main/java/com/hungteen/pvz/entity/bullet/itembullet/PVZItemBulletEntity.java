@@ -1,4 +1,6 @@
-package com.hungteen.pvz.entity.bullet;
+package com.hungteen.pvz.entity.bullet.itembullet;
+
+import com.hungteen.pvz.entity.bullet.AbstractBulletEntity;
 
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.IRendersAsItem;
@@ -17,6 +19,5 @@ public abstract class PVZItemBulletEntity extends AbstractBulletEntity implement
 	public PVZItemBulletEntity(EntityType<?> type, World worldIn, LivingEntity shooter) {
 		super(type, worldIn, shooter);
 	}
-
-
+	
 }

@@ -1,6 +1,6 @@
 package com.hungteen.pvz.entity.plant.flame;
 
-import com.hungteen.pvz.entity.bullet.PeaEntity;
+import com.hungteen.pvz.entity.bullet.itembullet.PeaEntity;
 import com.hungteen.pvz.entity.plant.PVZPlantEntity;
 import com.hungteen.pvz.entity.plant.interfaces.ILightPlant;
 import com.hungteen.pvz.register.EffectRegister;

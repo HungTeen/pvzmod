@@ -1,5 +1,6 @@
 package com.hungteen.pvz.entity.bullet;
 
+import com.hungteen.pvz.entity.bullet.itembullet.PVZItemBulletEntity;
 import com.hungteen.pvz.entity.plant.base.PlantShooterEntity;
 import com.hungteen.pvz.entity.plant.toxic.GloomShroomEntity;
 import com.hungteen.pvz.misc.damage.PVZDamageSource;

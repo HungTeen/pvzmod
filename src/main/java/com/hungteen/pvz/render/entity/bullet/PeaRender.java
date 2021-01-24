@@ -1,6 +1,6 @@
 package com.hungteen.pvz.render.entity.bullet;
 
-import com.hungteen.pvz.entity.bullet.PeaEntity;
+import com.hungteen.pvz.entity.bullet.itembullet.PeaEntity;
 
 import net.minecraft.client.renderer.entity.EntityRendererManager;
 import net.minecraftforge.api.distmarker.Dist;

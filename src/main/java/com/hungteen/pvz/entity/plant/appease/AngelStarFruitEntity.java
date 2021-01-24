@@ -1,6 +1,6 @@
 package com.hungteen.pvz.entity.plant.appease;
 
-import com.hungteen.pvz.entity.ai.PVZNearestTargetGoal;
+import com.hungteen.pvz.entity.ai.target.PVZNearestTargetGoal;
 import com.hungteen.pvz.entity.bullet.StarEntity;
 import com.hungteen.pvz.entity.plant.base.PlantShooterEntity;
 import com.hungteen.pvz.register.EntityRegister;

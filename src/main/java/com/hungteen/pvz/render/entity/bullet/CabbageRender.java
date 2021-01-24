@@ -1,20 +1,21 @@
 package com.hungteen.pvz.render.entity.bullet;
 
-import com.hungteen.pvz.entity.bullet.itembullet.PotatoEntity;
+import com.hungteen.pvz.entity.bullet.itembullet.CabbageEntity;
 
 import net.minecraft.client.renderer.entity.EntityRendererManager;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 
 @OnlyIn(Dist.CLIENT)
-public class PotatoRender extends BulletRender<PotatoEntity>{
+public class CabbageRender extends BulletRender<CabbageEntity> {
 
-	public PotatoRender(EntityRendererManager renderManagerIn) {
+	public CabbageRender(EntityRendererManager renderManagerIn) {
 		super(renderManagerIn);
 	}
 
 	@Override
-	protected float getScaleByEntity(PotatoEntity entity) {
-		return 1f;
+	protected float getScaleByEntity(CabbageEntity entity) {
+		return 1.4F;
 	}
+
 }

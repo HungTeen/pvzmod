@@ -1,6 +1,6 @@
 package com.hungteen.pvz.entity.plant.appease;
 
-import com.hungteen.pvz.entity.bullet.PeaEntity;
+import com.hungteen.pvz.entity.bullet.itembullet.PeaEntity;
 import com.hungteen.pvz.register.EntityRegister;
 import com.hungteen.pvz.utils.EntityUtil;
 import com.hungteen.pvz.utils.enums.Plants;

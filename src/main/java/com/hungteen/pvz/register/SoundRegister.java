@@ -61,6 +61,8 @@ public class SoundRegister {
 	public static final RegistryObject<SoundEvent> DOOM = registerSound("doom");
 	public static final RegistryObject<SoundEvent> MAGNET = registerSound("magnet");
 	public static final RegistryObject<SoundEvent> LAWN_MOWER = registerSound("lawn_mower");
+	public static final RegistryObject<SoundEvent> PLANT_THROW = registerSound("plant_throw");
+	
 	//misc
 	public static final RegistryObject<SoundEvent> PLANT_ON_GROUND= registerSound("plant_on_ground");
 	public static final RegistryObject<SoundEvent> PLANT_IN_WATER = registerSound("plant_in_water");

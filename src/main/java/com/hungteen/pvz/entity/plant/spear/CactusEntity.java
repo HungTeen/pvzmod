@@ -1,6 +1,6 @@
 package com.hungteen.pvz.entity.plant.spear;
 
-import com.hungteen.pvz.entity.ai.PVZNearestTargetGoal;
+import com.hungteen.pvz.entity.ai.target.PVZNearestTargetGoal;
 import com.hungteen.pvz.entity.bullet.ThornEntity;
 import com.hungteen.pvz.entity.bullet.ThornEntity.ThornStates;
 import com.hungteen.pvz.entity.bullet.ThornEntity.ThornTypes;

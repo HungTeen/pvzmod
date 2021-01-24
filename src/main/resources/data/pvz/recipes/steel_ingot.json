@@ -1,19 +1,12 @@
 {
-  "type": "minecraft:crafting_shaped",
-  "pattern": [
-    "III",
-    " G ",
-    " G "
-  ],
-  "key": {
-    "I": {
-      "item": "minecraft:iron_ingot"
-    },
-    "G": {
-      "item": "minecraft:gold_ingot"
-    }
-  },
-  "result": {
-    "item": "pvz:steel_ingot"
-  }
+	"type": "minecraft:crafting_shapeless",
+	"ingredients": [
+		{
+			"item": "pvz:steel_block"
+		}
+	],
+	"result": {
+		"item": "pvz:steel_ingot",
+		"count": 9
+	}
 }
