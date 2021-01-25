@@ -13,6 +13,7 @@ import com.hungteen.pvz.utils.PlayerUtil;
 import com.hungteen.pvz.utils.enums.Plants;
 import com.hungteen.pvz.utils.enums.Resources;
 import com.hungteen.pvz.utils.enums.Zombies;
+import com.hungteen.pvz.world.WaveManager;
 
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.ServerPlayerEntity;
@@ -71,6 +72,7 @@ public class PlayerEventHandler {
 				player.getCooldownTracker().setCooldown(PlantUtil.getPlantSummonCard(p), itemCDStats.getPlantCardCD(p));
 			}
 		});
+		WaveManager.syncWaveTime(player);
 	}
 	
 }

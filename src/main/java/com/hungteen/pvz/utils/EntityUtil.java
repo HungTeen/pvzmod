@@ -380,9 +380,9 @@ public class EntityUtil {
 	public static void addEntityPotionEffect(Entity entity, EffectInstance effect) {
 		if(entity instanceof PVZMultiPartEntity) {
 			addEntityPotionEffect(((PVZMultiPartEntity) entity).getOwner(), effect);
-		}else if(entity instanceof PVZZombieEntity) {
+		} else if(entity instanceof PVZZombieEntity) {
 			((PVZZombieEntity) entity).checkAndAddPotionEffect(effect);
-		}else if(entity instanceof LivingEntity) {
+		} else if(entity instanceof LivingEntity) {
 			((LivingEntity) entity).addPotionEffect(effect);
 		}
 	}
@@ -399,6 +399,13 @@ public class EntityUtil {
 	 */
 	public static boolean isEntityFrozen(LivingEntity entity) {
 		return entity.getAttribute(SharedMonsterAttributes.MOVEMENT_SPEED).getModifier(EffectRegister.FROZEN_EFFECT_UUID) != null;
+	}
+	
+	/**
+	 * get is entity butter
+	 */
+	public static boolean isEntityButter(LivingEntity entity) {
+		return entity.getAttribute(SharedMonsterAttributes.MOVEMENT_SPEED).getModifier(EffectRegister.BUTTER_EFFECT_UUID) != null;
 	}
 	
 	public static boolean isEntityInSky(Entity entity) {

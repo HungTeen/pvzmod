@@ -36,6 +36,7 @@ public class PVZHealthPartEntity extends PVZZombiePartEntity{
 			if(this.zombie.getDefenceLife() > damage) {
 			    this.zombie.setDefenceLife(this.zombie.getDefenceLife() - damage);
 			    sound = this.zombie.getPartHurtSound();
+			    damage = 0;
 		    } else {
 			    damage -= this.zombie.getDefenceLife();
 			    this.zombie.setDefenceLife(0);
@@ -44,8 +45,8 @@ public class PVZHealthPartEntity extends PVZZombiePartEntity{
 			if(sound != null) {
 				EntityUtil.playSound(this, sound);
 			}
-			return true;
 		}
+		if(damage == 0) damage = 0.001F;
 		return super.attackEntityFrom(source, damage);
 	}
 	

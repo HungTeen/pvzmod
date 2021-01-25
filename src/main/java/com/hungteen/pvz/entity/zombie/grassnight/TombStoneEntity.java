@@ -46,6 +46,11 @@ public class TombStoneEntity extends UnderGroundZombieEntity {
 	public TombStoneEntity(EntityType<? extends MonsterEntity> type, World worldIn) {
 		super(type, worldIn);
 		this.currentSummonCD = this.getRNG().nextInt(this.maxSummonCD - this.minSummonCD + 1) + this.minSummonCD; 
+		this.canBeButter = false;
+		this.canBeCold = false;
+		this.canBeCharm = false;
+		this.canBeMini = false;
+		this.canBeFrozen = false;
 	}
 	
 	@Override
@@ -63,7 +68,7 @@ public class TombStoneEntity extends UnderGroundZombieEntity {
 	@Override
 	public void livingTick() {
 		super.livingTick();
-		if(!this.world.isRemote && this.getAttackTime() >= 0) {
+		if(! this.world.isRemote && this.getAttackTime() >= 0) {
 			if(this.canSummonZombie()) {
 				this.setAttackTime(this.getAttackTime() + 1);
 				if(this.getAttackTime() >= this.currentSummonCD) {
@@ -142,11 +147,6 @@ public class TombStoneEntity extends UnderGroundZombieEntity {
 	}
 	
 	@Override
-	protected Type getSpawnType() {
-		return Type.NORMAL;
-	}
-	
-	@Override
 	public EntitySize getSize(Pose poseIn) {
 		return EntitySize.flexible(0.8f, 1.6f);
 	}
@@ -159,31 +159,6 @@ public class TombStoneEntity extends UnderGroundZombieEntity {
 	@Override
 	public double getMountedYOffset() {
 		return 0;
-	}
-	
-	@Override
-	public boolean canBeButter() {
-		return false;
-	}
-	
-	@Override
-	public boolean canBeCold() {
-		return false;
-	}
-	
-	@Override
-	public boolean canBeFrozen() {
-		return false;
-	}
-	
-	@Override
-	public boolean canBeInvis() {
-		return false;
-	}
-	
-	@Override
-	public boolean canBeSmall() {
-		return false;
 	}
 	
 	@Override

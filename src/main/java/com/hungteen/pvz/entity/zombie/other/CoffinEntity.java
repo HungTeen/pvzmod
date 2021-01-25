@@ -47,6 +47,11 @@ public class CoffinEntity extends UnderGroundZombieEntity {
 	public CoffinEntity(EntityType<? extends MonsterEntity> type, World worldIn) {
 		super(type, worldIn);
 		this.particleNum = 3;
+		this.canBeButter = false;
+		this.canBeCold = false;
+		this.canBeCharm = false;
+		this.canBeMini = false;
+		this.canBeFrozen = false;
 	}
 	
 	@Override
@@ -65,7 +70,7 @@ public class CoffinEntity extends UnderGroundZombieEntity {
 	@Override
 	public ILivingEntityData onInitialSpawn(IWorld worldIn, DifficultyInstance difficultyIn, SpawnReason reason,
 			ILivingEntityData spawnDataIn, CompoundNBT dataTag) {
-		if (!world.isRemote) {
+		if (! world.isRemote) {
 			EntityUtil.playSound(this, SoundRegister.DIRT_RISE.get());
 			for (Entity target : EntityUtil.getEntityAttackableTarget(this,
 					EntityUtil.getEntityAABB(this, 50, 50))) {
@@ -94,7 +99,6 @@ public class CoffinEntity extends UnderGroundZombieEntity {
 					EntityUtil.onMobEntitySpawn(world, zombie, this.getAttackTarget() == null ? this.getPosition() : this.getAttackTarget().getPosition());
 				}
 			}
-			
 		}
 	}
 
@@ -214,31 +218,6 @@ public class CoffinEntity extends UnderGroundZombieEntity {
 
 	@Override
 	public boolean canZombieBeRemoved() {
-		return false;
-	}
-	
-	@Override
-	public boolean canBeButter() {
-		return false;
-	}
-
-	@Override
-	public boolean canBeCold() {
-		return false;
-	}
-
-	@Override
-	public boolean canBeFrozen() {
-		return false;
-	}
-
-	@Override
-	public boolean canBeInvis() {
-		return false;
-	}
-
-	@Override
-	public boolean canBeSmall() {
 		return false;
 	}
 

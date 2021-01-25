@@ -10,6 +10,8 @@ import com.hungteen.pvz.capability.player.PlayerDataManager;
 import com.hungteen.pvz.capability.player.PlayerDataManager.OtherStats;
 import com.hungteen.pvz.entity.zombie.PVZZombieEntity;
 import com.hungteen.pvz.entity.zombie.grassnight.TombStoneEntity;
+import com.hungteen.pvz.network.OtherStatsPacket;
+import com.hungteen.pvz.network.PVZPacketHandler;
 import com.hungteen.pvz.register.EntityRegister;
 import com.hungteen.pvz.utils.EntityUtil;
 import com.hungteen.pvz.utils.PlayerUtil;
@@ -20,6 +22,7 @@ import com.hungteen.pvz.utils.enums.Zombies;
 import com.hungteen.pvz.world.data.WorldEventData;
 
 import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.ChunkPos;
@@ -33,11 +36,13 @@ import net.minecraft.world.World;
 import net.minecraft.world.dimension.DimensionType;
 import net.minecraft.world.gen.Heightmap;
 import net.minecraft.world.gen.Heightmap.Type;
+import net.minecraftforge.fml.network.PacketDistributor;
 
 public class WaveManager {
 
 	private static final ITextComponent HUGE_WAVE = new TranslationTextComponent("event.pvz.huge_wave").applyTextStyle(TextFormatting.DARK_RED);
 	public static final int MAX_WAVE_NUM = 5;
+	public static final int FINISH_OFFSET = 30000;
 	private final World world;
 	private final int currentWave;
 	private final PlayerEntity player;
@@ -67,17 +72,30 @@ public class WaveManager {
 			        PlayerDataManager.OtherStats stats = l.getPlayerData().getOtherStats();
 			        for(int i = 0 ; i < stats.zombieWaveTime.length; ++ i) {
 				        int time = stats.zombieWaveTime[i];
-				        if(time != 0 && time >= dayTime) {
-					        if(time == dayTime) {
-						        WaveManager manager = new WaveManager(player, i);
-						        manager.spawnWaveZombies();
-						        stats.zombieWaveTime[i] = 0;
-					        }
+				        if(time != 0 && time == dayTime) {
+						    WaveManager manager = new WaveManager(player, i);
+						    manager.spawnWaveZombies();
+						    stats.zombieWaveTime[i] += FINISH_OFFSET;
+						    syncWaveTime(player);
 					        break;
 				        }
 			        }
 		        });
 			}
+		});
+	}
+	
+	public static void syncWaveTime(PlayerEntity player) {
+		player.getCapability(CapabilityHandler.PLAYER_DATA_CAPABILITY).ifPresent((l) -> {
+			PlayerDataManager.OtherStats stats = l.getPlayerData().getOtherStats();
+		    for(int i = 0; i < MAX_WAVE_NUM; ++ i) {
+			    PVZPacketHandler.CHANNEL.send(PacketDistributor.PLAYER.with(() -> {
+				    return (ServerPlayerEntity) player;
+			    }), new OtherStatsPacket(1, i, stats.zombieWaveTime[i]));
+		    }
+		    PVZPacketHandler.CHANNEL.send(PacketDistributor.PLAYER.with(() -> {
+			    return (ServerPlayerEntity) player;
+		    }), new OtherStatsPacket(1, - 1, stats.totalWaveCount));
 		});
 	}
 	
@@ -122,7 +140,7 @@ public class WaveManager {
 	 * reset the huge wave time of each player.
 	 */
 	public static void resetPlayerWaveTime(PlayerEntity player) {
-		player.getCapability(CapabilityHandler.PLAYER_DATA_CAPABILITY).ifPresent((l)->{
+		player.getCapability(CapabilityHandler.PLAYER_DATA_CAPABILITY).ifPresent((l) -> {
 			OtherStats stats = l.getPlayerData().getOtherStats();
 			int treeLvl = l.getPlayerData().getPlayerStats().getPlayerStats(Resources.TREE_LVL);
 			int maxCnt = PlayerUtil.getPlayerWaveCount(treeLvl);
@@ -131,12 +149,14 @@ public class WaveManager {
 			int partTime = 24000 / cnt;
 			for(int i = 0; i < MAX_WAVE_NUM; ++ i) {
 				if(i < cnt) {
-					int time = player.getRNG().nextInt(partTime - 500);
-					stats.zombieWaveTime[i] = time + i * partTime + 250;
+					int time = player.getRNG().nextInt(partTime - 2000);
+					stats.zombieWaveTime[i] = time + i * partTime + 1000;
 				} else {
 					stats.zombieWaveTime[i] = 0;
 				}
 			}
+			stats.totalWaveCount = cnt;
+			syncWaveTime(player);
 //			for(int i : stats.zombieWaveTime) {
 //				System.out.println(i);
 //			}
@@ -144,6 +164,7 @@ public class WaveManager {
 	}
 	
 	public static void giveInvasionBonusToPlayer(World world, PlayerEntity player) {
+		if(! PlayerUtil.isPlayerSurvival(player)) return ;
 		player.getCapability(CapabilityHandler.PLAYER_DATA_CAPABILITY).ifPresent((l) -> {
 			int cnt = l.getPlayerData().getPlayerStats().getPlayerStats(Resources.KILL_COUNT);
 			if(cnt >= 20) {

@@ -40,7 +40,7 @@ public enum Plants {
 	//roof 
 	CABBAGE_PULT(0),
 	FLOWER_POT(2), 
-//	KERNEL_PULT,
+	KERNEL_PULT(0),
 	COFFEE_BEAN(0),
 //	GARLIC, 
 //	UMBRELLA_LEAF, 
@@ -62,7 +62,8 @@ public enum Plants {
 	ANGEL_STAR_FRUIT(0),
 	GOLD_LEAF(0),
 	EXPLODE_O_NUT(0),
-	GIANT_WALL_NUT(40);
+	GIANT_WALL_NUT(40),
+	BUTTER_PULT(0);
 
 	/*
 	 * 1 means ShroomPlant like PuffShroom,

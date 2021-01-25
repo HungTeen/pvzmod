@@ -103,7 +103,7 @@ public class PeaEntity extends PVZItemBulletEntity {
 			if (owner instanceof IIcePlant) {
 				source.addEffect(((IIcePlant) owner).getColdEffect());
 //				source.addEffect(((IIcePlant) owner).getFrozenEffect());
-			}else if(owner instanceof PlayerEntity) {
+			} else if(owner instanceof PlayerEntity) {
 				((PlayerEntity)owner).getCapability(CapabilityHandler.PLAYER_DATA_CAPABILITY).ifPresent((l)->{
 					int lvl = l.getPlayerData().getPlantStats().getPlantLevel(Plants.SNOW_PEA);
 					source.addEffect(WeaponUtil.getPeaGunColdEffect(lvl));

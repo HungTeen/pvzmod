@@ -16,7 +16,10 @@ import net.minecraft.client.renderer.entity.EntityRendererManager;
 import net.minecraft.client.renderer.texture.OverlayTexture;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.MathHelper;
+import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.api.distmarker.OnlyIn;
 
+@OnlyIn(Dist.CLIENT)
 public class StarRender extends PVZEntityRender<StarEntity> {
 
 	private static final ResourceLocation RES1 = StringUtil.prefix("textures/entity/layer/sun_light.png");

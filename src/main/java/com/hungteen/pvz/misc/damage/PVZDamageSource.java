@@ -83,6 +83,10 @@ public class PVZDamageSource extends DamageSource {
 	public static PVZDamageSource causeThrowDamage(Entity projectile, Entity shooter) {
 		return new PVZDamageSource("pvz_throw", projectile, shooter, PVZDamageType.THROW);
 	}
+	
+	public static PVZDamageSource causeButterDamage(Entity projectile, Entity shooter) {
+		return new PVZDamageSource("pvz_butter", projectile, shooter, PVZDamageType.BUTTER);
+	}
 
 	public static boolean isEnforceDamage(DamageSource source) {
 		if (source.damageType.equals("mob")) {

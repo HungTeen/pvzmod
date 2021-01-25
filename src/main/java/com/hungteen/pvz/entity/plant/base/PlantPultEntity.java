@@ -14,7 +14,7 @@ import net.minecraft.world.World;
 
 public abstract class PlantPultEntity extends PVZPlantEntity implements IPult {
 
-	private boolean isSuperOut = false;
+	protected boolean isSuperOut = false;
 	
 	public PlantPultEntity(EntityType<? extends CreatureEntity> type, World worldIn) {
 		super(type, worldIn);
@@ -70,7 +70,7 @@ public abstract class PlantPultEntity extends PVZPlantEntity implements IPult {
 	
 	@Override
 	public float getPultRange() {
-		return 50;
+		return 40;
 	}
 	
 	@Override
@@ -82,6 +82,7 @@ public abstract class PlantPultEntity extends PVZPlantEntity implements IPult {
 	public void startSuperMode(boolean first) {
 		super.startSuperMode(first);
 		this.isSuperOut = false;
+		this.startPultAttack();
 	}
 	
 	public int getPultAnimTime() {

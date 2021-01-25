@@ -49,7 +49,7 @@ public class ZomboniEntity extends PVZZombieEntity implements IMultiPartEntity{
 			    this.world.addParticle(ParticleTypes.SMOKE, this.getPosX(), this.getPosY(), this.getPosZ(), (this.getRNG().nextFloat() - 0.5) / 10, 0.05, (this.getRNG().nextFloat() - 0.5) / 10);
 			}
 		}
-		if(!world.isRemote) {//produce snow layer block
+		if(! world.isRemote) {//produce snow layer block
 			BlockPos blockpos = this.getPosition();
 			BlockState state = Blocks.SNOW.getDefaultState().with(SnowBlock.LAYERS, 2);
             if ((this.world.isAirBlock(blockpos) || world.getBlockState(blockpos).getBlock() == Blocks.SNOW) && state.isValidPosition(this.world, blockpos)) {
@@ -149,7 +149,7 @@ public class ZomboniEntity extends PVZZombieEntity implements IMultiPartEntity{
 	
 	@Override
 	public EntitySize getSize(Pose poseIn) {
-		return EntitySize.flexible(1f, 2f);
+		return EntitySize.flexible(0.95f, 2.3f);
 	}
 	
 	@Override

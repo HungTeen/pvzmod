@@ -16,8 +16,6 @@ import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.network.datasync.DataParameter;
 import net.minecraft.network.datasync.DataSerializers;
 import net.minecraft.network.datasync.EntityDataManager;
-import net.minecraft.util.math.EntityRayTraceResult;
-import net.minecraft.util.math.RayTraceResult;
 import net.minecraft.world.World;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
@@ -46,26 +44,7 @@ public class CabbageEntity extends PultBulletEntity implements IRendersAsItem {
 		return new ItemStack(ItemRegister.CABBAGE.get());
 	}
 
-	@Override
-	protected void onImpact(RayTraceResult result) {
-		boolean flag = false;
-		if (result.getType() == RayTraceResult.Type.ENTITY) {
-			Entity target = ((EntityRayTraceResult) result).getEntity();
-			if (checkCanAttack(target)) {
-				target.hurtResistantTime = 0;
-				this.dealDamage(target); // attack 
-				flag = true;
-			}
-		}
-		if (! this.world.isRemote) {
-			this.world.setEntityState(this, (byte) 3);
-			if (flag || ! this.checkLive(result)) {
-				this.remove();
-			}
-		}
-	}
-	
-	private void dealDamage(Entity target) {
+	protected void dealDamage(Entity target) {
 		target.attackEntityFrom(PVZDamageSource.causeThrowDamage(this, this.getThrower()), this.getCabbageDamage());
 	}
 	

@@ -1,7 +1,9 @@
 package com.hungteen.pvz.register;
 
 import com.hungteen.pvz.PVZMod;
+import com.hungteen.pvz.entity.bullet.ButterEntity;
 import com.hungteen.pvz.entity.bullet.FumeEntity;
+import com.hungteen.pvz.entity.bullet.KernelEntity;
 import com.hungteen.pvz.entity.bullet.StarEntity;
 import com.hungteen.pvz.entity.bullet.ThornEntity;
 import com.hungteen.pvz.entity.bullet.itembullet.CabbageEntity;
@@ -32,7 +34,9 @@ import com.hungteen.pvz.entity.plant.appease.RepeaterEntity;
 import com.hungteen.pvz.entity.plant.appease.SplitPeaEntity;
 import com.hungteen.pvz.entity.plant.appease.StarFruitEntity;
 import com.hungteen.pvz.entity.plant.appease.ThreePeaterEntity;
+import com.hungteen.pvz.entity.plant.arma.ButterPultEntity;
 import com.hungteen.pvz.entity.plant.arma.CabbagePultEntity;
+import com.hungteen.pvz.entity.plant.arma.KernelPultEntity;
 import com.hungteen.pvz.entity.plant.assist.BloverEntity;
 import com.hungteen.pvz.entity.plant.assist.GoldMagnetEntity;
 import com.hungteen.pvz.entity.plant.assist.GraveBusterEntity;
@@ -103,8 +107,10 @@ import com.hungteen.pvz.entity.zombie.poolnight.DiggerZombieEntity;
 import com.hungteen.pvz.entity.zombie.poolnight.JackInBoxZombieEntity;
 import com.hungteen.pvz.entity.zombie.poolnight.PogoZombieEntity;
 import com.hungteen.pvz.entity.zombie.poolnight.YetiZombieEntity;
+import com.hungteen.pvz.render.entity.bullet.ButterRender;
 import com.hungteen.pvz.render.entity.bullet.CabbageRender;
 import com.hungteen.pvz.render.entity.bullet.FumeRender;
+import com.hungteen.pvz.render.entity.bullet.KernelRender;
 import com.hungteen.pvz.render.entity.bullet.MetalItemRender;
 import com.hungteen.pvz.render.entity.bullet.NutRender;
 import com.hungteen.pvz.render.entity.bullet.PeaRender;
@@ -135,7 +141,9 @@ import com.hungteen.pvz.render.entity.plant.appease.RepeaterRender;
 import com.hungteen.pvz.render.entity.plant.appease.SplitPeaRender;
 import com.hungteen.pvz.render.entity.plant.appease.StarFruitRender;
 import com.hungteen.pvz.render.entity.plant.appease.ThreePeaterRender;
+import com.hungteen.pvz.render.entity.plant.arma.ButterPultRender;
 import com.hungteen.pvz.render.entity.plant.arma.CabbagePultRender;
+import com.hungteen.pvz.render.entity.plant.arma.KernelPultRender;
 import com.hungteen.pvz.render.entity.plant.assist.BloverRender;
 import com.hungteen.pvz.render.entity.plant.assist.GoldMagnetRender;
 import com.hungteen.pvz.render.entity.plant.assist.GraveBusterRender;
@@ -243,6 +251,8 @@ public class EntityRegister {
 	public static final RegistryObject<EntityType<StarEntity>> STAR = registerEntityType(StarEntity::new, "star", EntityClassification.MISC);
 	public static final RegistryObject<EntityType<NutEntity>> NUT = registerEntityType(NutEntity::new, "nut", EntityClassification.MISC);
 	public static final RegistryObject<EntityType<CabbageEntity>> CABBAGE = registerEntityType(CabbageEntity::new, "cabbage", EntityClassification.MISC);
+	public static final RegistryObject<EntityType<KernelEntity>> KERNEL = registerEntityType(KernelEntity::new, "kernel", EntityClassification.MISC);
+	public static final RegistryObject<EntityType<ButterEntity>> BUTTER = registerEntityType(ButterEntity::new, "butter", EntityClassification.MISC);
 	
 	//misc 
 	public static final RegistryObject<EntityType<SmallChomperEntity>> SMALL_CHOMPER = registerEntityType(SmallChomperEntity::new, "small_chomper", EntityClassification.MISC);
@@ -342,6 +352,8 @@ public class EntityRegister {
 	public static final RegistryObject<EntityType<ExplodeONutEntity>> EXPLODE_O_NUT = registerEntityType(ExplodeONutEntity::new, "explode_o_nut", EntityClassification.CREATURE);
 	public static final RegistryObject<EntityType<GiantWallNutEntity>> GIANT_WALL_NUT = registerEntityType(GiantWallNutEntity::new, "giant_wall_nut", EntityClassification.CREATURE);
 	public static final RegistryObject<EntityType<CabbagePultEntity>> CABBAGE_PULT = registerEntityType(CabbagePultEntity::new, "cabbage_pult", EntityClassification.CREATURE);
+	public static final RegistryObject<EntityType<KernelPultEntity>> KERNEL_PULT = registerEntityType(KernelPultEntity::new, "kernel_pult", EntityClassification.CREATURE);
+	public static final RegistryObject<EntityType<ButterPultEntity>> BUTTER_PULT = registerEntityType(ButterPultEntity::new, "butter_pult", EntityClassification.CREATURE);
 	
 	@OnlyIn(Dist.CLIENT)
 	@SubscribeEvent
@@ -362,6 +374,8 @@ public class EntityRegister {
         RenderingRegistry.registerEntityRenderingHandler(STAR.get(), StarRender::new);
         RenderingRegistry.registerEntityRenderingHandler(NUT.get(), NutRender::new);
         RenderingRegistry.registerEntityRenderingHandler(CABBAGE.get(), CabbageRender::new);
+        RenderingRegistry.registerEntityRenderingHandler(KERNEL.get(), KernelRender::new);
+        RenderingRegistry.registerEntityRenderingHandler(BUTTER.get(), ButterRender::new);
         
         //misc
         RenderingRegistry.registerEntityRenderingHandler(SMALL_CHOMPER.get(), SmallChomperRender::new);
@@ -451,6 +465,7 @@ public class EntityRegister {
         RenderingRegistry.registerEntityRenderingHandler(MAGNET_SHROOM.get(), MagnetShroomRender::new);
         
         RenderingRegistry.registerEntityRenderingHandler(CABBAGE_PULT.get(), CabbagePultRender::new);
+        RenderingRegistry.registerEntityRenderingHandler(KERNEL_PULT.get(), KernelPultRender::new);
         RenderingRegistry.registerEntityRenderingHandler(COFFEE_BEAN.get(), CoffeeBeanRender::new);
         RenderingRegistry.registerEntityRenderingHandler(MARIGOLD.get(), MariGoldRender::new);
         
@@ -467,6 +482,7 @@ public class EntityRegister {
         RenderingRegistry.registerEntityRenderingHandler(GOLD_LEAF.get(), GoldLeafRender::new);
         RenderingRegistry.registerEntityRenderingHandler(EXPLODE_O_NUT.get(), ExplodeONutRender::new);
         RenderingRegistry.registerEntityRenderingHandler(GIANT_WALL_NUT.get(), GiantWallNutRender::new);
+        RenderingRegistry.registerEntityRenderingHandler(BUTTER_PULT.get(), ButterPultRender::new);
     }
 
 	private static <T extends Entity> RegistryObject<EntityType<T>> registerEntityType(IFactory<T> factory,String name,EntityClassification classification){

@@ -81,6 +81,12 @@ public abstract class PVZZombieEntity extends MonsterEntity implements IPVZZombi
 	private static final DataParameter<Float> DEFENCE_LIFE = EntityDataManager.createKey(PVZZombieEntity.class, DataSerializers.FLOAT);
 	protected boolean hasDirectDefence = false;
 	protected boolean canSpawnDrop = true;
+	protected boolean canBeCold = true;
+	protected boolean canBeFrozen = true;
+	protected boolean canBeCharm = true;
+	protected boolean canBeButter = true;
+	protected boolean canBeMini = true;
+	protected boolean canBeInvis = true;
 	
 	public PVZZombieEntity(EntityType<? extends MonsterEntity> type, World worldIn) {
 		super(type, worldIn);
@@ -281,9 +287,24 @@ public abstract class PVZZombieEntity extends MonsterEntity implements IPVZZombi
 	
 	@Override
 	public boolean attackEntityFrom(DamageSource source, float amount) {
+		if(! world.isRemote && this.hasDirectDefence) {
+			if(this.getDefenceLife() > 0) {
+				if(this.getDefenceLife() > amount) {
+				    this.setDefenceLife(this.getDefenceLife() - amount);
+				    amount = 0;
+			    } else {
+				    amount -= this.getDefenceLife();
+				    this.setDefenceLife(0);
+			    }
+				EntityUtil.playSound(this, getHurtSound(source));
+				if(amount == 0) {
+					amount = 0.001F;
+				}
+			}
+		}
+		boolean flag = super.attackEntityFrom(source, amount);
 		if (source instanceof PVZDamageSource) {
 			this.hurtResistantTime = 0;
-			this.dealDamageEffectToZombie((PVZDamageSource) source);
 			if (this.canBeFrozen() && ((PVZDamageSource) source).getPVZDamageType() == PVZDamageType.ICE && !((PVZDamageSource) source).isDefended()) {
 				if (! this.isZombieColdOrForzen() && ! this.world.isRemote) {
 					this.playSound(SoundRegister.ZOMBIE_FROZEN.get(), 1f, 1f);
@@ -296,20 +317,7 @@ public abstract class PVZZombieEntity extends MonsterEntity implements IPVZZombi
 				}
 			}
 		}
-		if(! world.isRemote && this.hasDirectDefence) {
-			if(this.getDefenceLife() > 0) {
-				if(this.getDefenceLife() > amount) {
-				    this.setDefenceLife(this.getDefenceLife() - amount);
-				    amount = 0;
-			    } else {
-				    amount -= this.getDefenceLife();
-				    this.setDefenceLife(0);
-			    }
-				EntityUtil.playSound(this, getHurtSound(source));
-				if(amount == 0) return true;
-			}
-		}
-		return super.attackEntityFrom(source, amount);
+		return flag;
 	}
 	
 	protected void dealDamageEffectToZombie(PVZDamageSource source) {
@@ -559,12 +567,9 @@ public abstract class PVZZombieEntity extends MonsterEntity implements IPVZZombi
 	 * check can zombie add effect
 	 */
 	public void checkAndAddPotionEffect(EffectInstance effect) {
-		if(effect.getPotion() == EffectRegister.COLD_EFFECT.get() && !this.canBeCold()) {
-			return;
-		}
-		if(effect.getPotion() == EffectRegister.FROZEN_EFFECT.get() && !this.canBeFrozen()) {
-			return;
-		}
+		if(effect.getPotion() == EffectRegister.COLD_EFFECT.get() && ! this.canBeCold()) return;
+		if(effect.getPotion() == EffectRegister.FROZEN_EFFECT.get() && ! this.canBeFrozen()) return;
+		if(effect.getPotion() == EffectRegister.BUTTER_EFFECT.get() && ! this.canBeButter()) return ;
 		this.addPotionEffect(effect);
 	}
 	
@@ -584,27 +589,27 @@ public abstract class PVZZombieEntity extends MonsterEntity implements IPVZZombi
 	}
 	
 	public boolean canBeButter() {
-		return true;
+		return this.canBeButter;
 	}
 	
 	public boolean canBeCharmed() {
-		return true;
+		return this.canBeCharm;
 	}
 
 	public boolean canBeFrozen() {
-		return !this.isInWater();
+		return this.canBeFrozen && ! this.isInWater() && ! this.isInLava();
 	}
 
-	public boolean canBeSmall() {
-		return true;
+	public boolean canBeMini() {
+		return this.canBeMini;
 	}
 
 	public boolean canBeInvis() {
-		return true;
+		return this.canBeInvis;
 	}
 
 	public boolean canBeCold() {
-		return true;
+		return this.canBeCold;
 	}
 	
 	@Nullable
@@ -661,7 +666,7 @@ public abstract class PVZZombieEntity extends MonsterEntity implements IPVZZombi
 	}
 
 	public boolean canZombieNormalUpdate() {
-		return !EntityUtil.isEntityFrozen(this);
+		return ! EntityUtil.isEntityFrozen(this) && ! EntityUtil.isEntityButter(this);
 	}
 
 	public Type getZombieType() {

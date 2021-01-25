@@ -50,7 +50,7 @@
       "conditions": [
         {
           "condition": "minecraft:block_state_property",
-          "block": "minecraft:wheat",
+          "block": "pvz:cabbage",
           "properties": {
             "age": "3"
           }

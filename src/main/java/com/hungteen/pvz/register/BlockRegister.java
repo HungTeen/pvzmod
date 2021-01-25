@@ -4,10 +4,12 @@ import java.util.Arrays;
 import java.util.List;
 
 import com.hungteen.pvz.PVZMod;
+import com.hungteen.pvz.block.ButterBlock;
 import com.hungteen.pvz.block.EssenceOreBlock;
 import com.hungteen.pvz.block.OriginBlock;
 import com.hungteen.pvz.block.plants.CabbageBlock;
 import com.hungteen.pvz.block.plants.ChomperBlock;
+import com.hungteen.pvz.block.plants.CornBlock;
 import com.hungteen.pvz.block.plants.LilyPadBlock;
 import com.hungteen.pvz.block.plants.PVZSaplingBlock;
 import com.hungteen.pvz.block.plants.PeaBlock;
@@ -67,11 +69,13 @@ public class BlockRegister {
 	public static final RegistryObject<Block> STEEL_BLOCK = BLOCKS.register("steel_block",() -> new Block(Block.Properties.from(Blocks.IRON_BLOCK).hardnessAndResistance(8,8)));
 	public static final RegistryObject<Block> AMETHYST_BLOCK =BLOCKS.register("amethyst_block", () -> new Block(Block.Properties.from(Blocks.EMERALD_BLOCK).hardnessAndResistance(9, 9))); 
 	public static final RegistryObject<Block> ORIGIN_BLOCK = BLOCKS.register("origin_block", OriginBlock::new);
+	public static final RegistryObject<Block> BUTTER_BLOCK = BLOCKS.register("butter_block", ButterBlock::new);
 	
 	//crops
 	public static final RegistryObject<Block> PEA_PLANT = BLOCKS.register("pea_plant", () -> new PeaBlock(Block.Properties.from(Blocks.WHEAT)));
 	public static final RegistryObject<Block> TOXIC_SHROOM = BLOCKS.register("toxic_shroom", () -> new ToxicShroomBlock(Block.Properties.from(Blocks.SWEET_BERRY_BUSH)));
 	public static final RegistryObject<Block> CABBAGE = BLOCKS.register("cabbage", () -> new CabbageBlock(Block.Properties.from(Blocks.WHEAT)));
+	public static final RegistryObject<Block> CORN = BLOCKS.register("corn", () -> new CornBlock(Block.Properties.from(Blocks.WHEAT)));
 	
 	//plants
 	public static final RegistryObject<Block> NUT_LEAVES = BLOCKS.register("nut_leaves", () -> new LeavesBlock(Block.Properties.from(Blocks.OAK_LEAVES)));
@@ -99,7 +103,7 @@ public class BlockRegister {
 		IForgeRegistry<Item> items = ev.getRegistry();
 		List<RegistryObject<? extends Block>> blocks = Arrays.asList(
 				ORIGIN_ORE, APPEASE_ORE, LIGHT_ORE, EXPLOSION_ORE, DEFENCE_ORE, ICE_ORE, ENFORCE_ORE, TOXIC_ORE, ASSIST_ORE, MAGIC_ORE, FLAME_ORE, SPEAR_ORE, ARMA_ORE, ELECTRIC_ORE, SHADOW_ORE, AMETHYST_ORE,
-				STEEL_BLOCK, AMETHYST_BLOCK, ORIGIN_BLOCK,
+				STEEL_BLOCK, AMETHYST_BLOCK, ORIGIN_BLOCK, BUTTER_BLOCK,
 				NUT_LEAVES, NUT_SAPLING, CHOMPER, LILY_PAD,
 				LANTERN, FLOWER_POT, GOLD_TILE1, GOLD_TILE2, GOLD_TILE3,
 				SUN_CONVERTER, FRAGMENT_SPLICE, SLOT_MACHINE

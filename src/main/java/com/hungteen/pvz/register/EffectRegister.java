@@ -22,6 +22,7 @@ public class EffectRegister {
 	public static final UUID FROZEN_EFFECT_UUID = UUID.fromString("293e07aa-e213-11ea-87d0-0242ac130003");
 	public static final UUID EXCITE_EFFECT_UUID = UUID.fromString("a211dbca-19f9-11eb-adc1-0242ac120002");
 	public static final UUID LIGHT_EYE_EFFECT_UUID = UUID.fromString("aa7a51c2-3e73-11eb-b378-0242ac130002");
+	public static final UUID BUTTER_EFFECT_UUID = UUID.fromString("01c75056-5e45-11eb-ae93-0242ac130002");
 			
 	public static final RegistryObject<Effect> COLD_EFFECT = EFFECTS.register("cold", ()->{
 		return new PVZEffect(EffectType.HARMFUL, Colors.IRIS_BLUE)
@@ -41,6 +42,12 @@ public class EffectRegister {
 	
 	public static final RegistryObject<Effect> LIGHT_EYE_EFFECT = EFFECTS.register("light_eye", ()->{
 		return new PVZEffect(EffectType.BENEFICIAL, Colors.LITTLE_YELLOW1);
+	});
+	
+	public static final RegistryObject<Effect> BUTTER_EFFECT = EFFECTS.register("butter", ()->{
+		return new PVZEffect(EffectType.HARMFUL, Colors.LITTLE_YELLOW1)
+		.addAttributesModifier(SharedMonsterAttributes.MOVEMENT_SPEED,
+		BUTTER_EFFECT_UUID.toString(), -1f, Operation.MULTIPLY_TOTAL);
 	});
 	
 }

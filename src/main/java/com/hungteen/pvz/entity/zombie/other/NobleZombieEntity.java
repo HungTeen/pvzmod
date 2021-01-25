@@ -62,6 +62,10 @@ public class NobleZombieEntity extends PVZZombieEntity {
 		this.summonTick = this.getRNG().nextInt(this.maxSummonTick - this.minSummonTick) + this.minSummonTick;
 		this.setTpTick(- this.getRNG().nextInt(this.maxTpCD - this.minTpCD + 1) - this.minTpCD);
 		this.experienceValue = 1000;
+		this.canBeButter = false;
+		this.canBeCold = false;
+		this.canBeCharm = false;
+		this.canBeMini = false;
 	}
 	
 	@Override
@@ -380,21 +384,6 @@ public class NobleZombieEntity extends PVZZombieEntity {
 		this.dataManager.set(TP_TICK, tick);
 	}
 	
-	@Override
-	public boolean canBeCold() {
-		return false;
-	}
-
-	@Override
-	public boolean canBeInvis() {
-		return false;
-	}
-
-	@Override
-	public boolean canBeSmall() {
-		return false;
-	}
-
 	@Override
 	public boolean canDespawn(double distanceToClosestPlayer) {
 		return false;

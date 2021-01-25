@@ -13,7 +13,10 @@ import net.minecraft.client.renderer.Vector3f;
 import net.minecraft.client.renderer.entity.EntityRendererManager;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.MathHelper;
+import net.minecraftforge.api.distmarker.OnlyIn;
+import net.minecraftforge.api.distmarker.Dist;
 
+@OnlyIn(Dist.CLIENT)
 public class ThornRender extends PVZEntityRender<ThornEntity> {
 
 	public ThornRender(EntityRendererManager renderManager) {

@@ -40,6 +40,12 @@ public class OtherStatsPacket{
 			    	} else {
 			    		ClientPlayerResources.mysteryGoods[message.pos] = message.data;
 			    	}
+			    } else if(message.type == 1) {
+			    	if(message.pos == -1) {
+			    		ClientPlayerResources.totalWaveCount = message.data;
+			    	} else {
+			    		ClientPlayerResources.zombieWaveTime[message.pos] = message.data;
+			    	}
 			    }
 		    });
 		    ctx.get().setPacketHandled(true);

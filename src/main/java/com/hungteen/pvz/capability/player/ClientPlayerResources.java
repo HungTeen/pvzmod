@@ -6,6 +6,7 @@ import com.hungteen.pvz.gui.container.shop.MysteryShopContainer;
 import com.hungteen.pvz.gui.search.SearchOption;
 import com.hungteen.pvz.utils.enums.Plants;
 import com.hungteen.pvz.utils.enums.Resources;
+import com.hungteen.pvz.world.WaveManager;
 
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
@@ -17,6 +18,8 @@ public class ClientPlayerResources{
 	private static HashMap<Plants, Integer> plantCardXp = new HashMap<Plants, Integer>(Plants.values().length);
 	private static HashMap<Plants, Integer> plantCardLevel = new HashMap<Plants, Integer>(Plants.values().length);
 	private static HashMap<SearchOption, Boolean> unLocked = new HashMap<SearchOption, Boolean>(SearchOption.OPTION.size());
+	public static final int[] zombieWaveTime = new int[WaveManager.MAX_WAVE_NUM];
+	public static int totalWaveCount;
 	public static final int[] mysteryGoods = new int[MysteryShopContainer.MAX_MYSTERY_GOOD];
 	public static int updateGoodTick;
 	

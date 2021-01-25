@@ -12,6 +12,7 @@ public class SundayEditionZombieEntity extends NewspaperZombieEntity{
 
 	public SundayEditionZombieEntity(EntityType<? extends MonsterEntity> type, World worldIn) {
 		super(type, worldIn);
+		this.canBeCold = false;
 	}
 
 	@Override
@@ -29,11 +30,6 @@ public class SundayEditionZombieEntity extends NewspaperZombieEntity{
 	@Override
 	public float getPartLife() {
 		return 100;
-	}
-	
-	@Override
-	public boolean canBeCold() {
-		return false;
 	}
 	
 	@Override

@@ -329,12 +329,23 @@ public class PVZConfig {
 				ResourceRender.RenderMoneyBar = builder
 						.comment("Should Render MoneyBar")
 						.define("RenderMoneyBar", true);
+				ResourceRender.RenderGemBar = builder
+						.comment("Should Render GemBar")
+						.define("RenderGemBar", true);
+			}
+			builder.pop();
+			
+			builder.comment("Render about Invasion").push("Invasion Render Settings");
+			{
+				InvasionRender.RenderInvasionProgress = builder
+						.comment("Should Render Invasion Progress")
+						.define("RenderInvasionProgress", true);
 			}
 			builder.pop();
 			
 			builder.comment("Render about Environment").push("Environment Render Settings");
 			{
-				EnvironmentRnder.RenderFog = builder
+				EnvironmentRender.RenderFog = builder
 						.comment("Should Render Fog Overlay")
 						.define("RenderFog", true);
 			}
@@ -351,12 +362,18 @@ public class PVZConfig {
 		
 		public OtherSettings OtherSettings = new OtherSettings();
 		public ResourceRender ResourceRender = new ResourceRender();
-		public EnvironmentRender EnvironmentRnder = new EnvironmentRender();
+		public EnvironmentRender EnvironmentRender = new EnvironmentRender();
+		public InvasionRender InvasionRender = new InvasionRender();
 		
 		public static class ResourceRender{
 			public ForgeConfigSpec.BooleanValue RenderSunNumBar;
 			public ForgeConfigSpec.BooleanValue RenderEnergyNumBar;
 			public ForgeConfigSpec.BooleanValue RenderMoneyBar;
+			public ForgeConfigSpec.BooleanValue RenderGemBar;
+		}
+		
+		public static class InvasionRender {
+			public ForgeConfigSpec.BooleanValue RenderInvasionProgress;
 		}
 		
 		public static class EnvironmentRender{

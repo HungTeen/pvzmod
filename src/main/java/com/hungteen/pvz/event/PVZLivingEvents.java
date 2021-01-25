@@ -5,6 +5,7 @@ import com.hungteen.pvz.capability.CapabilityHandler;
 import com.hungteen.pvz.entity.plant.PVZPlantEntity;
 import com.hungteen.pvz.entity.plant.magic.StrangeCatEntity;
 import com.hungteen.pvz.entity.zombie.PVZZombieEntity;
+import com.hungteen.pvz.event.handler.LivingEventHandler;
 import com.hungteen.pvz.event.handler.PlayerEventHandler;
 import com.hungteen.pvz.misc.damage.PVZDamageSource;
 import com.hungteen.pvz.register.EnchantmentRegister;
@@ -69,6 +70,10 @@ public class PVZLivingEvents {
 					return ;
 				}
 		    });
+			if(ev.getSource() instanceof PVZDamageSource) {
+				ev.getEntityLiving().hurtResistantTime = 0;
+				LivingEventHandler.handleHurtEffects(ev.getEntityLiving(), (PVZDamageSource) ev.getSource());
+			}
 		}
 	}
 	

@@ -143,6 +143,8 @@ public class ItemRegister {
     public static final RegistryObject<PlantCardItem> CABBAGE_PULT_ENJOY_CARD = registerCard(Plants.CABBAGE_PULT, true);
     public static final RegistryObject<PlantCardItem> FLOWER_POT_CARD = ITEMS.register("flower_pot_card", () -> {return new BlockPlantCardItem(Plants.FLOWER_POT, false);});
     public static final RegistryObject<PlantCardItem> FLOWER_POT_ENJOY_CARD = ITEMS.register("flower_pot_enjoy_card", () -> {return new BlockPlantCardItem(Plants.FLOWER_POT, true);});
+    public static final RegistryObject<PlantCardItem> KERNEL_PULT_CARD = registerCard(Plants.KERNEL_PULT, false);
+    public static final RegistryObject<PlantCardItem> KERNEL_PULT_ENJOY_CARD = registerCard(Plants.KERNEL_PULT, true);
     public static final RegistryObject<PlantCardItem> COFFEE_BEAN_CARD = registerCard(Plants.COFFEE_BEAN, false);
     public static final RegistryObject<PlantCardItem> COFFEE_BEAN_ENJOY_CARD = registerCard(Plants.COFFEE_BEAN, true);
     public static final RegistryObject<PlantCardItem> MARIGOLD_CARD = registerCard(Plants.MARIGOLD, false);
@@ -169,6 +171,8 @@ public class ItemRegister {
     public static final RegistryObject<PlantCardItem> EXPLODE_O_NUT_ENJOY_CARD = registerCard(Plants.EXPLODE_O_NUT, true);
     public static final RegistryObject<PlantCardItem> GIANT_WALL_NUT_CARD = registerCard(Plants.GIANT_WALL_NUT, false);
     public static final RegistryObject<PlantCardItem> GIANT_WALL_NUT_ENJOY_CARD = registerCard(Plants.GIANT_WALL_NUT, true);
+    public static final RegistryObject<PlantCardItem> BUTTER_PULT_CARD = registerCard(Plants.BUTTER_PULT, false);
+    public static final RegistryObject<PlantCardItem> BUTTER_PULT_ENJOY_CARD = registerCard(Plants.BUTTER_PULT, true);
     
     //plants
 	public static final RegistryObject<Item> PEA = ITEMS.register("pea",() -> new BlockItem(BlockRegister.PEA_PLANT.get(), new Item.Properties().group(GroupRegister.PVZ_MISC)));
@@ -176,6 +180,8 @@ public class ItemRegister {
 	public static final RegistryObject<Item> SPORE = ITEMS.register("spore",()-> new BlockItem(BlockRegister.TOXIC_SHROOM.get(),new Item.Properties().group(GroupRegister.PVZ_MISC)));
 	public static final RegistryObject<Item> CABBAGE_SEEDS = ITEMS.register("cabbage_seeds", () -> new BlockItem(BlockRegister.CABBAGE.get(), new Item.Properties().group(GroupRegister.PVZ_MISC)));
 	public static final RegistryObject<Item> CABBAGE = ITEMS.register("cabbage", PVZItemBase::new);
+	public static final RegistryObject<Item> CORN_SEEDS = ITEMS.register("corn_seeds", () -> new BlockItem(BlockRegister.CORN.get(), new Item.Properties().group(GroupRegister.PVZ_MISC)));
+	public static final RegistryObject<Item> CORN = ITEMS.register("corn", PVZItemBase::new);
 	
 	//material
 	public static final RegistryObject<Item> SNOW_PEA = ITEMS.register("snow_pea", PVZItemBase::new);
@@ -308,6 +314,7 @@ public class ItemRegister {
 	public static final RegistryObject<PVZSpawnEggItem> STAR_FRUIT_SPAWN_EGG = registerSpawnEgg("star_fruit", EntityRegister.STAR_FRUIT, Colors.APPEASE_COLOR);
 	public static final RegistryObject<PVZSpawnEggItem> MAGNET_SHROOM_SPAWN_EGG = registerSpawnEgg("magnet_shroom", EntityRegister.MAGNET_SHROOM, Colors.ASSIST_COLOR);
 	public static final RegistryObject<PVZSpawnEggItem> CABBAGE_PULT_SPAWN_EGG = registerSpawnEgg("cabbage_pult", EntityRegister.CABBAGE_PULT, Colors.ARMA_COLOR);
+	public static final RegistryObject<PVZSpawnEggItem> KERNEL_PULT_SPAWN_EGG = registerSpawnEgg("kernel_pult", EntityRegister.KERNEL_PULT, Colors.ARMA_COLOR);
 	public static final RegistryObject<PVZSpawnEggItem> COFFEE_BEAN_SPAWN_EGG = registerSpawnEgg("coffee_bean", EntityRegister.COFFEE_BEAN, Colors.MAGIC_COLOR);
 	public static final RegistryObject<PVZSpawnEggItem> MARIGOLD_SPAWN_EGG = registerSpawnEgg("marigold", EntityRegister.MARIGOLD, Colors.MAGIC_COLOR);
 	public static final RegistryObject<PVZSpawnEggItem> GATLING_PEA_SPAWN_EGG = registerSpawnEgg("gatling_pea", EntityRegister.GATLING_PEA, Colors.APPEASE_COLOR);
@@ -321,6 +328,7 @@ public class ItemRegister {
 	public static final RegistryObject<PVZSpawnEggItem> ANGEL_STAR_FRUIT_SPAWN_EGG = registerSpawnEgg("angel_star_fruit", EntityRegister.ANGEL_STAR_FRUIT, Colors.APPEASE_COLOR);
 	public static final RegistryObject<PVZSpawnEggItem> EXPLODE_O_NUT_SPAWN_EGG = registerSpawnEgg("explode_o_nut", EntityRegister.EXPLODE_O_NUT, Colors.EXPLOSION_COLOR);
 	public static final RegistryObject<PVZSpawnEggItem> GIANT_WALL_NUT_SPAWN_EGG = registerSpawnEgg("giant_wall_nut", EntityRegister.GIANT_WALL_NUT, Colors.DEFENCE_COLOR);
+	public static final RegistryObject<PVZSpawnEggItem> BUTTER_PULT_SPAWN_EGG = registerSpawnEgg("butter_pult", EntityRegister.BUTTER_PULT, Colors.ARMA_COLOR);
 	
 	
 	/**

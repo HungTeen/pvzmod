@@ -79,6 +79,16 @@ public class PogoZombieEntity extends PVZZombieEntity implements IHasMetal {
 	}
 	
 	@Override
+	public boolean canBeFrozen() {
+		return ! this.hasPogo();
+	}
+	
+	@Override
+	public boolean canBeButter() {
+		return ! this.hasPogo();
+	}
+	
+	@Override
 	public float getLife() {
 		return 48;
 	}

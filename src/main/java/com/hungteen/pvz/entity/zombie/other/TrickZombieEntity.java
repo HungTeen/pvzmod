@@ -43,7 +43,7 @@ public class TrickZombieEntity extends PVZZombieEntity{
 	
 	@Override
 	public boolean attackEntityFrom(DamageSource source, float amount) {
-		if(amount >= 2 && !world.isRemote && this.ticksExisted - this.lastSummonTick >= this.summonGap && this.getRNG().nextInt(SUMMON_CHACNE) == 0) {
+		if(amount >= 2 && ! world.isRemote && this.ticksExisted - this.lastSummonTick >= this.summonGap && this.getRNG().nextInt(SUMMON_CHACNE) == 0) {
 			this.lastSummonTick = this.ticksExisted;
 			TrickZombieEntity zombie = EntityRegister.TRICK_ZOMBIE.get().create(world);
 			BlockPos pos = getPosition().add(this.getRNG().nextInt(5) - 2, this.getRNG().nextInt(2), this.getRNG().nextInt(5) - 2);
@@ -69,10 +69,9 @@ public class TrickZombieEntity extends PVZZombieEntity{
 	
 	@Override
 	protected void spawnDrops(DamageSource damageSourceIn) {
-		if(!this.isPotionActive(EffectRegister.COLD_EFFECT.get()) && !this.isCharmed()) {
+		if(! this.isPotionActive(EffectRegister.COLD_EFFECT.get()) && ! this.isCharmed()) {
 			if(this.getRNG().nextInt(EXPLOSION_CHANCE) == 0) {
 				Explosion.Mode mode = net.minecraftforge.event.ForgeEventFactory.getMobGriefingEvent(this.world, this) ? Explosion.Mode.DESTROY : Explosion.Mode.NONE;
-//			    System.out.println(mode + " " + world.getGameRules().getBoolean(GameRules.MOB_GRIEFING));
 				this.world.createExplosion(this, getPosX(), getPosY(), getPosZ(), 0.5f, mode);
 			}
 		}

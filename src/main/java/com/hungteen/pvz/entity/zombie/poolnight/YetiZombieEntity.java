@@ -34,6 +34,7 @@ public class YetiZombieEntity extends PVZZombieEntity{
 	
 	public YetiZombieEntity(EntityType<? extends MonsterEntity> type, World worldIn) {
 		super(type, worldIn);
+		this.canBeFrozen = false;
 	}
 
 	@Override

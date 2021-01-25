@@ -2,10 +2,13 @@ package com.hungteen.pvz.entity.bullet;
 
 import com.hungteen.pvz.utils.EntityUtil;
 
+import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.nbt.CompoundNBT;
+import net.minecraft.util.math.EntityRayTraceResult;
 import net.minecraft.util.math.MathHelper;
+import net.minecraft.util.math.RayTraceResult;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
 
@@ -42,6 +45,27 @@ public abstract class PultBulletEntity extends AbstractBulletEntity {
 		}
 	}
 
+	@Override
+	protected void onImpact(RayTraceResult result) {
+		boolean flag = false;
+		if (result.getType() == RayTraceResult.Type.ENTITY) {
+			Entity target = ((EntityRayTraceResult) result).getEntity();
+			if (checkCanAttack(target)) {
+				target.hurtResistantTime = 0;
+				this.dealDamage(target); // attack 
+				flag = true;
+			}
+		}
+		if (! this.world.isRemote) {
+			this.world.setEntityState(this, (byte) 3);
+			if (flag || ! this.checkLive(result)) {
+				this.remove();
+			}
+		}
+	}
+	
+	protected abstract void dealDamage(Entity target);
+	
 	/**
      * Pult shoot
      */
