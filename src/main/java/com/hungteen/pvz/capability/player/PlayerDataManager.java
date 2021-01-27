@@ -5,7 +5,8 @@ import java.util.EnumMap;
 import java.util.HashMap;
 
 import com.hungteen.pvz.advancement.AdvancementHandler;
-import com.hungteen.pvz.event.events.PlayerLevelUpEvent;
+import com.hungteen.pvz.event.events.PlayerLevelUpEvent.PlantLevelUpEvent;
+import com.hungteen.pvz.event.events.PlayerLevelUpEvent.TreeLevelUpEvent;
 import com.hungteen.pvz.gui.container.shop.MysteryShopContainer;
 import com.hungteen.pvz.network.PVZPacketHandler;
 import com.hungteen.pvz.network.PlantStatsPacket;
@@ -29,7 +30,6 @@ public class PlayerDataManager {
 	private final PlayerEntity player;
 	private final PlayerStats playerStats;
 	private final PlantStats plantStats;
-//	private final AlmanacStats almanacStats;
 	private final ItemCDStats itemCDStats;
 	private final OtherStats otherStats;
 	
@@ -37,7 +37,6 @@ public class PlayerDataManager {
 		this.player = player;
 		this.playerStats = new PlayerStats(this);
 		this.plantStats = new PlantStats(this);
-//		this.almanacStats = new AlmanacStats(this);
 		this.itemCDStats = new ItemCDStats(this);
 		this.otherStats = new OtherStats(this);
 	}
@@ -46,7 +45,6 @@ public class PlayerDataManager {
 		CompoundNBT baseTag = new CompoundNBT();
 		playerStats.saveToNBT(baseTag);
 		plantStats.saveToNBT(baseTag);
-//		almanacStats.saveToNBT(baseTag);
 		itemCDStats.saveToNBT(baseTag);
 		otherStats.saveToNBT(baseTag);
 		return baseTag;
@@ -55,7 +53,6 @@ public class PlayerDataManager {
 	public void loadFromNBT(CompoundNBT baseTag) {
 		playerStats.loadFromNBT(baseTag);
 		plantStats.loadFromNBT(baseTag);
-//		almanacStats.loadFromNBT(baseTag);
 		itemCDStats.loadFromNBT(baseTag);
 		otherStats.loadFromNBT(baseTag);
 	}
@@ -166,12 +163,12 @@ public class PlayerDataManager {
 				while(lvl < PlayerUtil.MAX_TREE_LVL && num + now >= req) {
 					num -= req - now;
 					this.addPlayerStats(Resources.TREE_LVL, 1);
-					MinecraftForge.EVENT_BUS.post(new PlayerLevelUpEvent(player, ++ lvl));
+					MinecraftForge.EVENT_BUS.post(new TreeLevelUpEvent(player, ++ lvl));
 					now = 0;
 					req = PlayerUtil.getPlayerLevelUpXp(lvl);
 				}
 				resources.put(Resources.TREE_XP, num + now);
-			}else {
+			} else {
 				num = - num;
 				while(lvl > 1 && num > now) {
 					num -= now;
@@ -248,20 +245,20 @@ public class PlayerDataManager {
 			this.sendPlantPacket(player, plant);
 		}
 		
-		public void addPlantXp(Plants plant, int num){
+		public void addPlantXp(Plants plant, int num) {
 			int lvl = this.getPlantLevel(plant);
-			int xp = this.getPlantXp(plant)+num;
+			int xp = this.getPlantXp(plant) + num;
 			if(num > 0) {
 				int needXp = PlantUtil.getPlantLevelUpXp(plant, lvl);
 				int maxLvl = PlantUtil.getPlantMaxLvl(plant);
 				while(lvl < maxLvl && xp >= needXp) {
 					xp -= needXp;
 					this.addPlantLevel(plant, 1);
-					lvl = this.getPlantLevel(plant);
+					MinecraftForge.EVENT_BUS.post(new PlantLevelUpEvent(player, plant, ++ lvl));
 					needXp = PlantUtil.getPlantLevelUpXp(plant, lvl);
 				}
 				if(lvl == maxLvl) {
-					xp=0;
+					xp = 0;
 				}
 			} else {
 				while(lvl > 1 && xp < 0) {

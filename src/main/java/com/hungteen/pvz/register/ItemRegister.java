@@ -10,10 +10,12 @@ import com.hungteen.pvz.item.armor.ConeArmorItem;
 import com.hungteen.pvz.item.armor.FootballArmorItem;
 import com.hungteen.pvz.item.armor.GigaArmorItem;
 import com.hungteen.pvz.item.armor.PVZArmorMaterial;
+import com.hungteen.pvz.item.material.EssenceItem;
 import com.hungteen.pvz.item.misc.AlmanacItem;
 import com.hungteen.pvz.item.misc.StrangeHelpItem;
 import com.hungteen.pvz.item.tool.BobsleCarItem;
 import com.hungteen.pvz.item.tool.BowlingGloveItem;
+import com.hungteen.pvz.item.tool.JackBoxItem;
 import com.hungteen.pvz.item.tool.LawnMowerItem;
 import com.hungteen.pvz.item.tool.PeaGunItem;
 import com.hungteen.pvz.item.tool.ScreenDoorItem;
@@ -23,6 +25,7 @@ import com.hungteen.pvz.item.tool.ZombieFlagItem;
 import com.hungteen.pvz.item.tool.card.BlockPlantCardItem;
 import com.hungteen.pvz.item.tool.card.PlantCardItem;
 import com.hungteen.pvz.utils.enums.Colors;
+import com.hungteen.pvz.utils.enums.Essences;
 import com.hungteen.pvz.utils.enums.Plants;
 import com.mojang.datafixers.util.Pair;
 
@@ -47,21 +50,21 @@ public class ItemRegister {
     public static final DeferredRegister<Item> ITEMS = new DeferredRegister<>(ForgeRegistries.ITEMS, PVZMod.MOD_ID);
 	
     //ingot essence
-    public static final RegistryObject<Item> ORIGIN_ESSENCE = ITEMS.register("origin_essence", PVZItemBase::new);
-    public static final RegistryObject<Item> APPEASE_ESSENCE = ITEMS.register("appease_essence", PVZItemBase::new);
-    public static final RegistryObject<Item> LIGHT_ESSENCE = ITEMS.register("light_essence", PVZItemBase::new);
-    public static final RegistryObject<Item> EXPLOSION_ESSENCE = ITEMS.register("explosion_essence", PVZItemBase::new);
-    public static final RegistryObject<Item> DEFENCE_ESSENCE = ITEMS.register("defence_essence", PVZItemBase::new);
-    public static final RegistryObject<Item> ICE_ESSENCE = ITEMS.register("ice_essence", PVZItemBase::new);
-    public static final RegistryObject<Item> ENFORCE_ESSENCE = ITEMS.register("enforce_essence", PVZItemBase::new);
-    public static final RegistryObject<Item> TOXIC_ESSENCE = ITEMS.register("toxic_essence", PVZItemBase::new);
-    public static final RegistryObject<Item> ASSIST_ESSENCE = ITEMS.register("assist_essence", PVZItemBase::new);
-    public static final RegistryObject<Item> MAGIC_ESSENCE = ITEMS.register("magic_essence", PVZItemBase::new);
-    public static final RegistryObject<Item> FLAME_ESSENCE = ITEMS.register("flame_essence", PVZItemBase::new);
-    public static final RegistryObject<Item> SPEAR_ESSENCE = ITEMS.register("spear_essence", PVZItemBase::new);
-    public static final RegistryObject<Item> ARMA_ESSENCE = ITEMS.register("arma_essence", PVZItemBase::new);
-    public static final RegistryObject<Item> ELECTRIC_ESSENCE = ITEMS.register("electric_essence", PVZItemBase::new);
-    public static final RegistryObject<Item> SHADOW_ESSENCE = ITEMS.register("shadow_essence", PVZItemBase::new);
+    public static final RegistryObject<Item> ORIGIN_ESSENCE = ITEMS.register("origin_essence", () -> new EssenceItem(Essences.ORIGIN));
+    public static final RegistryObject<Item> APPEASE_ESSENCE = ITEMS.register("appease_essence", () -> new EssenceItem(Essences.APPEASE));
+    public static final RegistryObject<Item> LIGHT_ESSENCE = ITEMS.register("light_essence", () -> new EssenceItem(Essences.LIGHT));
+    public static final RegistryObject<Item> EXPLOSION_ESSENCE = ITEMS.register("explosion_essence", () -> new EssenceItem(Essences.EXPLOSION));
+    public static final RegistryObject<Item> DEFENCE_ESSENCE = ITEMS.register("defence_essence", () -> new EssenceItem(Essences.DEFENCE));
+    public static final RegistryObject<Item> ICE_ESSENCE = ITEMS.register("ice_essence", () -> new EssenceItem(Essences.ICE));
+    public static final RegistryObject<Item> ENFORCE_ESSENCE = ITEMS.register("enforce_essence", () -> new EssenceItem(Essences.ENFORCE));
+    public static final RegistryObject<Item> TOXIC_ESSENCE = ITEMS.register("toxic_essence", () -> new EssenceItem(Essences.TOXIC));
+    public static final RegistryObject<Item> ASSIST_ESSENCE = ITEMS.register("assist_essence", () -> new EssenceItem(Essences.ASSIST));
+    public static final RegistryObject<Item> MAGIC_ESSENCE = ITEMS.register("magic_essence", () -> new EssenceItem(Essences.MAGIC));
+    public static final RegistryObject<Item> FLAME_ESSENCE = ITEMS.register("flame_essence", () -> new EssenceItem(Essences.FLAME));
+    public static final RegistryObject<Item> SPEAR_ESSENCE = ITEMS.register("spear_essence", () -> new EssenceItem(Essences.SPEAR));
+    public static final RegistryObject<Item> ARMA_ESSENCE = ITEMS.register("arma_essence", () -> new EssenceItem(Essences.ARMA));
+    public static final RegistryObject<Item> ELECTRIC_ESSENCE = ITEMS.register("electric_essence", () -> new EssenceItem(Essences.ELECTRIC));
+    public static final RegistryObject<Item> SHADOW_ESSENCE = ITEMS.register("shadow_essence", () -> new EssenceItem(Essences.SHADOW));
     public static final RegistryObject<Item> STEEL_INGOT = ITEMS.register("steel_ingot", PVZItemBase::new);
     public static final RegistryObject<Item> AMETHYST_INGOT = ITEMS.register("amethyst_ingot", PVZItemBase::new);
     
@@ -147,6 +150,8 @@ public class ItemRegister {
     public static final RegistryObject<PlantCardItem> KERNEL_PULT_ENJOY_CARD = registerCard(Plants.KERNEL_PULT, true);
     public static final RegistryObject<PlantCardItem> COFFEE_BEAN_CARD = registerCard(Plants.COFFEE_BEAN, false);
     public static final RegistryObject<PlantCardItem> COFFEE_BEAN_ENJOY_CARD = registerCard(Plants.COFFEE_BEAN, true);
+    public static final RegistryObject<PlantCardItem> GARLIC_CARD = registerCard(Plants.GARLIC, false);
+    public static final RegistryObject<PlantCardItem> GARLIC_ENJOY_CARD = registerCard(Plants.GARLIC, true);
     public static final RegistryObject<PlantCardItem> MARIGOLD_CARD = registerCard(Plants.MARIGOLD, false);
     public static final RegistryObject<PlantCardItem> MARIGOLD_ENJOY_CARD = registerCard(Plants.MARIGOLD, true);
     public static final RegistryObject<PlantCardItem> GATLING_PEA_CARD = registerCard(Plants.GATLING_PEA, false);
@@ -205,6 +210,7 @@ public class ItemRegister {
 	public static final RegistryObject<Item> SUN_STORAGE_SAPLING = ITEMS.register("sun_storage_sapling", () -> new SunStorageSaplingItem(10000));
 	public static final RegistryObject<Item> SUN_STORAGE_SAPLING2 = ITEMS.register("sun_storage_sapling2", () -> new SunStorageSaplingItem(1000));
 	public static final RegistryObject<Item> BOWLING_GLOVE = ITEMS.register("bowling_glove", BowlingGloveItem::new);
+	public static final RegistryObject<Item> JACK_BOX = ITEMS.register("jack_box", JackBoxItem::new);
 	
 	//armor
 	public static final RegistryObject<Item> CONE_HEAD = ITEMS.register("cone_head", ()->new ConeArmorItem(ArmorMaterial.LEATHER, EquipmentSlotType.HEAD));
@@ -316,6 +322,7 @@ public class ItemRegister {
 	public static final RegistryObject<PVZSpawnEggItem> CABBAGE_PULT_SPAWN_EGG = registerSpawnEgg("cabbage_pult", EntityRegister.CABBAGE_PULT, Colors.ARMA_COLOR);
 	public static final RegistryObject<PVZSpawnEggItem> KERNEL_PULT_SPAWN_EGG = registerSpawnEgg("kernel_pult", EntityRegister.KERNEL_PULT, Colors.ARMA_COLOR);
 	public static final RegistryObject<PVZSpawnEggItem> COFFEE_BEAN_SPAWN_EGG = registerSpawnEgg("coffee_bean", EntityRegister.COFFEE_BEAN, Colors.MAGIC_COLOR);
+	public static final RegistryObject<PVZSpawnEggItem> GARLIC_SPAWN_EGG = registerSpawnEgg("garlic", EntityRegister.GARLIC, Colors.DEFENCE_COLOR);
 	public static final RegistryObject<PVZSpawnEggItem> MARIGOLD_SPAWN_EGG = registerSpawnEgg("marigold", EntityRegister.MARIGOLD, Colors.MAGIC_COLOR);
 	public static final RegistryObject<PVZSpawnEggItem> GATLING_PEA_SPAWN_EGG = registerSpawnEgg("gatling_pea", EntityRegister.GATLING_PEA, Colors.APPEASE_COLOR);
 	public static final RegistryObject<PVZSpawnEggItem> TWIN_SUNFLOWER_SPAWN_EGG = registerSpawnEgg("twin_sunflower", EntityRegister.TWIN_SUNFLOWER, Colors.LIGHT_COLOR);

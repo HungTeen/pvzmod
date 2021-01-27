@@ -1,6 +1,5 @@
 package com.hungteen.pvz.gui.search;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import com.google.common.collect.Lists;
@@ -131,13 +130,7 @@ public class OptionPage {
 	}
 
 	public List<SearchOption> getCurrentList(SearchCategories category) {
-		List<SearchOption> list = new ArrayList<>();
-		SearchOption.OPTION.forEach((a) -> {
-			if(category == SearchCategories.ALL) list.add(a);
-			else if(a.isPlant() && category == SearchCategories.PLANTS) list.add(a);
-			else if(a.isZombie() && category == SearchCategories.ZOMBIES) list.add(a);
-		});
-		return list;
+		return SearchOption.getSearchOptionsByCategory(category);
 	}
 
 	public SearchOption getCurrentOption() {

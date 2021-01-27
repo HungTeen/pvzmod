@@ -9,6 +9,7 @@ import javax.annotation.Nullable;
 import com.google.common.collect.Lists;
 import com.hungteen.pvz.gui.container.AbstractOptionContainer;
 import com.hungteen.pvz.gui.screen.AbstractOptionScreen;
+import com.hungteen.pvz.utils.AlgorithmUtil;
 import com.hungteen.pvz.utils.StringUtil;
 import com.mojang.blaze3d.systems.RenderSystem;
 
@@ -91,7 +92,7 @@ public class OptionSearchGui extends AbstractGui implements IRenderable, IGuiEve
 		if (! s.isEmpty()) {
 			list.removeIf((a) -> {
 				String now = SearchOption.getOptionName(a).toLowerCase();
-				return ! StringUtil.KMP.kmp(now, s.toLowerCase());
+				return ! AlgorithmUtil.KMP.kmp(now, s.toLowerCase());
 			});
 
 		}

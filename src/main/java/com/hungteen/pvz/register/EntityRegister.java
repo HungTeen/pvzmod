@@ -41,6 +41,7 @@ import com.hungteen.pvz.entity.plant.assist.BloverEntity;
 import com.hungteen.pvz.entity.plant.assist.GoldMagnetEntity;
 import com.hungteen.pvz.entity.plant.assist.GraveBusterEntity;
 import com.hungteen.pvz.entity.plant.assist.MagnetShroomEntity;
+import com.hungteen.pvz.entity.plant.defence.GarlicEntity;
 import com.hungteen.pvz.entity.plant.defence.GiantWallNutEntity;
 import com.hungteen.pvz.entity.plant.defence.TallNutEntity;
 import com.hungteen.pvz.entity.plant.defence.WallNutEntity;
@@ -148,6 +149,7 @@ import com.hungteen.pvz.render.entity.plant.assist.BloverRender;
 import com.hungteen.pvz.render.entity.plant.assist.GoldMagnetRender;
 import com.hungteen.pvz.render.entity.plant.assist.GraveBusterRender;
 import com.hungteen.pvz.render.entity.plant.assist.MagnetShroomRender;
+import com.hungteen.pvz.render.entity.plant.defence.GarlicRender;
 import com.hungteen.pvz.render.entity.plant.defence.GiantWallNutRender;
 import com.hungteen.pvz.render.entity.plant.defence.TallNutRender;
 import com.hungteen.pvz.render.entity.plant.defence.WallNutRender;
@@ -354,6 +356,7 @@ public class EntityRegister {
 	public static final RegistryObject<EntityType<CabbagePultEntity>> CABBAGE_PULT = registerEntityType(CabbagePultEntity::new, "cabbage_pult", EntityClassification.CREATURE);
 	public static final RegistryObject<EntityType<KernelPultEntity>> KERNEL_PULT = registerEntityType(KernelPultEntity::new, "kernel_pult", EntityClassification.CREATURE);
 	public static final RegistryObject<EntityType<ButterPultEntity>> BUTTER_PULT = registerEntityType(ButterPultEntity::new, "butter_pult", EntityClassification.CREATURE);
+	public static final RegistryObject<EntityType<GarlicEntity>> GARLIC = registerEntityType(GarlicEntity::new, "garlic", EntityClassification.CREATURE);
 	
 	@OnlyIn(Dist.CLIENT)
 	@SubscribeEvent
@@ -466,6 +469,7 @@ public class EntityRegister {
         
         RenderingRegistry.registerEntityRenderingHandler(CABBAGE_PULT.get(), CabbagePultRender::new);
         RenderingRegistry.registerEntityRenderingHandler(KERNEL_PULT.get(), KernelPultRender::new);
+        RenderingRegistry.registerEntityRenderingHandler(GARLIC.get(), GarlicRender::new);
         RenderingRegistry.registerEntityRenderingHandler(COFFEE_BEAN.get(), CoffeeBeanRender::new);
         RenderingRegistry.registerEntityRenderingHandler(MARIGOLD.get(), MariGoldRender::new);
         

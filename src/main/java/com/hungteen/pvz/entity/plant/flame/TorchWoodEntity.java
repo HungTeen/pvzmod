@@ -77,7 +77,7 @@ public class TorchWoodEntity extends PVZPlantEntity implements ILightPlant {
 	
 	@Override
 	public EffectInstance getLightEyeEffect() {
-		return new EffectInstance(EffectRegister.LIGHT_EYE_EFFECT.get(), 100, 0, false, true);
+		return new EffectInstance(EffectRegister.LIGHT_EYE_EFFECT.get(), 100, 0, false, false);
 	}
 	
 	@Override

@@ -6,7 +6,7 @@ import net.minecraft.inventory.container.Slot;
 
 public abstract class AbstractOptionContainer extends Container {
 
-	protected AbstractOptionContainer(ContainerType<?> type, int id) {
+	public AbstractOptionContainer(ContainerType<?> type, int id) {
 		super(type, id);
 	}
 

@@ -22,6 +22,7 @@ public enum MetalTypes {
 		case SCREEN_DOOR: return ItemRegister.SCREEN_DOOR.get();
 		case FOOTBALL_HELMET: return ItemRegister.FOOTBALL_HELMET.get();
 		case GIGA_HELMET: return ItemRegister.GIGA_HELMET.get();
+		case JACK_BOX: return ItemRegister.JACK_BOX.get();
 		case IRON_PICKAXE: return Items.IRON_PICKAXE;
 		default:
 			return ItemRegister.STEEL_INGOT.get();

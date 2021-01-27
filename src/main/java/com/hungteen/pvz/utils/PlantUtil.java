@@ -79,6 +79,7 @@ public class PlantUtil {
 		putPlantInfoToMap(Plants.FLOWER_POT, 25, CDs.HUGE_FAST, Ranks.GRAY, Essences.ASSIST, null, ItemRegister.FLOWER_POT_CARD, ItemRegister.FLOWER_POT_ENJOY_CARD);
 		putPlantInfoToMap(Plants.KERNEL_PULT, 100, CDs.FAST, Ranks.GREEN, Essences.ARMA, EntityRegister.KERNEL_PULT, ItemRegister.KERNEL_PULT_CARD, ItemRegister.KERNEL_PULT_ENJOY_CARD);
 		putPlantInfoToMap(Plants.COFFEE_BEAN, 75, CDs.FAST, Ranks.GREEN, Essences.MAGIC, EntityRegister.COFFEE_BEAN, ItemRegister.COFFEE_BEAN_CARD, ItemRegister.COFFEE_BEAN_ENJOY_CARD);
+		putPlantInfoToMap(Plants.GARLIC, 50, CDs.NORMAL, Ranks.WHITE, Essences.DEFENCE, EntityRegister.GARLIC, ItemRegister.GARLIC_CARD, ItemRegister.GARLIC_ENJOY_CARD);
 		putPlantInfoToMap(Plants.MARIGOLD, 50, CDs.NORMAL, Ranks.PURPLE, Essences.MAGIC, EntityRegister.MARIGOLD, ItemRegister.MARIGOLD_CARD, ItemRegister.MARIGOLD_ENJOY_CARD);
 		putPlantInfoToMap(Plants.GATLING_PEA, 250, CDs.VERY_SLOW, Ranks.PURPLE, Essences.APPEASE, EntityRegister.GATLING_PEA, ItemRegister.GATLING_PEA_CARD, ItemRegister.GATLING_PEA_ENJOY_CARD);
 		putPlantInfoToMap(Plants.TWIN_SUNFLOWER, 150, CDs.VERY_SLOW, Ranks.BLUE, Essences.LIGHT, EntityRegister.TWIN_SUNFLOWER, ItemRegister.TWIN_SUNFLOWER_CARD, ItemRegister.TWIN_SUNFLOWER_ENJOY_CARD);
@@ -91,6 +92,8 @@ public class PlantUtil {
 		putPlantInfoToMap(Plants.ANGEL_STAR_FRUIT, 225, CDs.LITTLE_FAST, Ranks.PURPLE, Essences.APPEASE, EntityRegister.ANGEL_STAR_FRUIT, ItemRegister.ANGEL_STAR_FRUIT_CARD, ItemRegister.ANGEL_STAR_FRUIT_ENJOY_CARD);
 		putPlantInfoToMap(Plants.EXPLODE_O_NUT, 150, CDs.HUGE_SLOW, Ranks.PURPLE, Essences.EXPLOSION, EntityRegister.EXPLODE_O_NUT, ItemRegister.EXPLODE_O_NUT_CARD, ItemRegister.EXPLODE_O_NUT_ENJOY_CARD);
 		putPlantInfoToMap(Plants.GIANT_WALL_NUT, 200, CDs.SUPER_SLOW, Ranks.PURPLE, Essences.DEFENCE, EntityRegister.GIANT_WALL_NUT, ItemRegister.GIANT_WALL_NUT_CARD, ItemRegister.GIANT_WALL_NUT_ENJOY_CARD);
+		putPlantInfoToMap(Plants.BUTTER_PULT, 275, CDs.NORMAL, Ranks.GOLD, Essences.ARMA, EntityRegister.BUTTER_PULT, ItemRegister.BUTTER_PULT_CARD, ItemRegister.BUTTER_PULT_ENJOY_CARD);
+		
 	}
 	
 	public static void putPlantInfoToMap(Plants plant,final int cost, CDs cd, Ranks rank, Essences essence, RegistryObject<? extends EntityType<? extends PVZPlantEntity>> type, RegistryObject<? extends PlantCardItem> summonCard, RegistryObject<? extends PlantCardItem> enjoyCard) {
@@ -124,31 +127,31 @@ public class PlantUtil {
 	}
 	
 	public static int getPlantLevelUpXp(Plants plant, int lvl){
-		Ranks rank=getPlantRankByName(plant);
-		if(lvl==getPlantMaxLvl(plant)) return 999999999;
+		Ranks rank = getPlantRankByName(plant);
+		if(lvl == getPlantMaxLvl(plant)) return 999999999;
 		switch(rank) {
 		case GRAY:{
-			if(lvl>=GRAY_XP.length) return 999999999;
+			if(lvl >= GRAY_XP.length) return 999999999;
 			return GRAY_XP[lvl];
 		}
 		case WHITE:{
-			if(lvl>=WHITE_XP.length) return 999999999;
+			if(lvl >= WHITE_XP.length) return 999999999;
 			return WHITE_XP[lvl];
 		}
 		case GREEN:{
-			if(lvl>=GREEN_XP.length) return 999999999;
+			if(lvl >= GREEN_XP.length) return 999999999;
 			return GREEN_XP[lvl];
 		}
 		case BLUE:{
-			if(lvl>=BLUE_XP.length) return 999999999;
+			if(lvl >= BLUE_XP.length) return 999999999;
 			return BLUE_XP[lvl];
 		}
 		case PURPLE:{
-			if(lvl>=PURPLE_XP.length) return 999999999;
+			if(lvl >= PURPLE_XP.length) return 999999999;
 			return PURPLE_XP[lvl];
 		}
 		case GOLD:{
-			if(lvl>=GOLD_XP.length) return 999999999;
+			if(lvl >= GOLD_XP.length) return 999999999;
 			return GOLD_XP[lvl];
 		}
 		default:{

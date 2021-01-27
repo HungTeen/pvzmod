@@ -24,9 +24,9 @@ public class PlayerUtil {
 	public static final int MAX_ENERGY_NUM = 10;
 	public static final int MAX_MONEY = 9999999;
 	public static final int MAX_SLOT_NUM = 162;
-	public static final int[] TREE_LVL_XP = new int[] {10,25,45,75,120,180,250,350,480,600,750,900,1080,1300,1600,2000,2500,3200,4000,5000}; 
+	public static final int[] TREE_LVL_XP = new int[] {10, 25, 50, 100, 200, 300, 500, 800, 1200, 2100, 3200, 5400, 7000, 8000, 9000, 10000, 12000, 15000, 18000, 20000}; 
 	
-	public static int getPlayerMaxSunNum(int lvl){
+	public static int getPlayerMaxSunNum(int lvl) {
 		if(lvl <= 40) {
 			return 900 + lvl * 100;
 		} else if(lvl <= 99) {

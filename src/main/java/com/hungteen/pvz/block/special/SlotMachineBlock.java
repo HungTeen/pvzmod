@@ -7,6 +7,7 @@ import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.ServerPlayerEntity;
+import net.minecraft.inventory.InventoryHelper;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.ActionResultType;
 import net.minecraft.util.Hand;
@@ -40,6 +41,22 @@ public class SlotMachineBlock extends AbstractFacingBlock {
 	@Override
 	public TileEntity createTileEntity(BlockState state, IBlockReader world) {
 		return new SlotMachineTileEntity();
+	}
+	
+	@SuppressWarnings("deprecation")
+	@Override
+	public void onReplaced(BlockState state, World worldIn, BlockPos pos, BlockState newState, boolean isMoving) {
+		if (state.getBlock() != newState.getBlock()) {
+			TileEntity tileentity = worldIn.getTileEntity(pos);
+			if (tileentity instanceof SlotMachineTileEntity) {
+				SlotMachineTileEntity te = (SlotMachineTileEntity) worldIn.getTileEntity(pos);
+				for (int i = 0; i < te.handler.getSlots(); ++i) {
+					InventoryHelper.spawnItemStack(worldIn, pos.getX(), pos.getY(), pos.getZ(),
+							te.handler.getStackInSlot(i));
+				}
+			}
+			super.onReplaced(state, worldIn, pos, newState, isMoving);
+		}
 	}
 
 }

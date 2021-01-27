@@ -95,7 +95,7 @@ public class TrickZombieEntity extends PVZZombieEntity{
 
 	@Override
 	protected ResourceLocation getLootTable() {
-		return PVZLoot.PUMPKIN_ZOMBIE;
+		return PVZLoot.TRICK_ZOMBIE;
 	}
 	
 	@Override

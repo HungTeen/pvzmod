@@ -222,12 +222,20 @@ public class PVZConfig {
 				builder.pop();
 			}
 			builder.pop();
-			
+			//Item Settings
+			builder.comment("Settings about items.").push("Item Settings");
+			{
+				ItemSettings.JackBoxSurpriseChance = builder
+						.comment("The chance when player got a surprise when use jack box.the bigger the value is,the lower chance you get.(more specificly 1/x)")
+						.defineInRange("JackBoxSurpriseChance", 10, 1, 1000000);
+			}
+			builder.pop();
 		}
 		
 		public WorldSettings WorldSettings = new WorldSettings();
 		public EntitySettings EntitySettings = new EntitySettings();
 		public BlockSettings BlockSettings = new BlockSettings();
+		public ItemSettings ItemSettings = new ItemSettings();
 		
 		public static class WorldSettings{
 			public WorldEventSettings WorldEventSettings = new WorldEventSettings();
@@ -311,6 +319,10 @@ public class PVZConfig {
 				public ForgeConfigSpec.IntValue PeaDropChance;
 				public ForgeConfigSpec.IntValue CabbageDropChance;
 			}
+		}
+		
+		public static class ItemSettings {
+			public ForgeConfigSpec.IntValue JackBoxSurpriseChance;
 		}
 		
 	}

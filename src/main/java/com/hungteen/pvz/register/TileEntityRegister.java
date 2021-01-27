@@ -2,6 +2,7 @@ package com.hungteen.pvz.register;
 
 import com.hungteen.pvz.PVZMod;
 import com.hungteen.pvz.render.tileentity.SunConverterTER;
+import com.hungteen.pvz.tileentity.CardFusionTileEntity;
 import com.hungteen.pvz.tileentity.FragmentSpliceTileEntity;
 import com.hungteen.pvz.tileentity.SlotMachineTileEntity;
 import com.hungteen.pvz.tileentity.SunConverterTileEntity;
@@ -27,6 +28,9 @@ public class TileEntityRegister {
 	});
 	public static final RegistryObject<TileEntityType<SlotMachineTileEntity>> SLOT_MACHINE = TILE_ENTITY_TYPES.register("slot_machine", () -> {
 		return TileEntityType.Builder.create(SlotMachineTileEntity::new , BlockRegister.SLOT_MACHINE.get()).build(null);
+	});
+	public static final RegistryObject<TileEntityType<CardFusionTileEntity>> CARD_FUSION = TILE_ENTITY_TYPES.register("card_fusion", () -> {
+		return TileEntityType.Builder.create(CardFusionTileEntity::new , BlockRegister.CARD_FUSION_TABLE.get()).build(null);
 	});
 	
 	@OnlyIn(Dist.CLIENT)

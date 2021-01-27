@@ -72,7 +72,7 @@ public class PlanternEntity extends PVZPlantEntity implements ILightPlant {
 	@Override
 	public EffectInstance getLightEyeEffect() {
 		if(this.isPlantInSuperMode()) return new EffectInstance(EffectRegister.LIGHT_EYE_EFFECT.get(), this.getLightEyeTime() * 2, this.getSuperLightLvl(), false, true);
-		return new EffectInstance(EffectRegister.LIGHT_EYE_EFFECT.get(), this.getLightEyeTime(), this.getLightEyeLvl(), false, true);
+		return new EffectInstance(EffectRegister.LIGHT_EYE_EFFECT.get(), this.getLightEyeTime(), this.getLightEyeLvl(), false, false);
 	}
 	
 	public int getLightEyeLvl() {

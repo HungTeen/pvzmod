@@ -3,6 +3,8 @@ package com.hungteen.pvz.network;
 import java.util.function.Supplier;
 
 import com.hungteen.pvz.gui.GuiHandler;
+import com.hungteen.pvz.gui.container.CardFusionContainer;
+import com.hungteen.pvz.gui.container.EssenceAltarContainer;
 import com.hungteen.pvz.gui.container.FragmentSpliceContainer;
 import com.hungteen.pvz.gui.container.PlayerInventoryContainer;
 import com.hungteen.pvz.gui.container.SlotMachineContainer;
@@ -83,6 +85,20 @@ public class ClickButtonPacket {
 					if(player.openContainer instanceof MysteryShopContainer) {
 						MysteryShopContainer container = (MysteryShopContainer) player.openContainer;
 						container.buyGood(DaveGoods.values()[message.num], message.op);
+					}
+				} else if(message.type == GuiHandler.ESSENCE_ALTAR) {
+					if(player.openContainer instanceof EssenceAltarContainer) {
+						EssenceAltarContainer container = (EssenceAltarContainer) player.openContainer;
+						container.destroyAllCards();
+					}
+				} else if(message.type == GuiHandler.CARD_FUSION) {
+					if(player.openContainer instanceof CardFusionContainer) {
+						CardFusionContainer container = (CardFusionContainer) player.openContainer;
+						if(message.op == 0) {
+							container.te.setResult(message.num);
+						} else if(message.op == 1) {
+							container.canPutStackBackToInventory();
+						}
 					}
 				}
 			});

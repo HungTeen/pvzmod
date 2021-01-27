@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 
+import com.hungteen.pvz.misc.recipe.FusionRecipes;
 import com.hungteen.pvz.utils.PlantUtil;
 import com.hungteen.pvz.utils.enums.Plants;
 import com.hungteen.pvz.utils.enums.Zombies;
@@ -70,6 +71,18 @@ public class SearchOption {
 		if(a.isPlayer()) return new ItemStack(Items.PLAYER_HEAD);
 		if(a.isPlant()) return new ItemStack(PlantUtil.getPlantSummonCard(a.getPlant().get()));
 		return ItemStack.EMPTY;
+	}
+	
+	public static List<SearchOption> getSearchOptionsByCategory(SearchCategories category) {
+		List<SearchOption> list = new ArrayList<>();
+		SearchOption.OPTION.forEach((a) -> {
+			if(category == SearchCategories.ALL) list.add(a);
+			if(category == SearchCategories.FUSION && FusionRecipes.isOptionHasFusionRecipe(a)) list.add(a);
+			else if(a.isPlant() && category == SearchCategories.PLANTS) list.add(a);
+			else if(a.isZombie() && category == SearchCategories.ZOMBIES) list.add(a);
+			
+		});
+		return list;
 	}
 	
 	public Optional<Plants> getPlant() {

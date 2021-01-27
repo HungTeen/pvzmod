@@ -115,6 +115,7 @@ public abstract class PlantDefenderEntity extends PVZPlantEntity implements IDef
 				this.setDefenceLife(0f);
 			}
 		}
+		if(amount == 0) amount = 0.001F;
 		return super.attackEntityFrom(source, amount);
 	}
 	

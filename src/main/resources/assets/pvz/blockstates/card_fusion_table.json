@@ -1,0 +1,8 @@
+{
+  "variants": {
+    "facing=north":{"model":"pvz:block/card_fusion_table"},
+    "facing=east":{"model":"pvz:block/card_fusion_table","y":90},
+    "facing=south":{"model":"pvz:block/card_fusion_table","y":180},
+    "facing=west":{"model":"pvz:block/card_fusion_table","y":270}
+  }
+}

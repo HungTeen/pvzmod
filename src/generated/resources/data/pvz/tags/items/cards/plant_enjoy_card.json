@@ -33,8 +33,11 @@
     "pvz:star_fruit_enjoy_card",
     "pvz:pumpkin_enjoy_card",
     "pvz:magnet_shroom_enjoy_card",
+    "pvz:cabbage_pult_enjoy_card",
     "pvz:flower_pot_enjoy_card",
+    "pvz:kernel_pult_enjoy_card",
     "pvz:coffee_bean_enjoy_card",
+    "pvz:garlic_enjoy_card",
     "pvz:marigold_enjoy_card",
     "pvz:gatling_pea_enjoy_card",
     "pvz:twin_sunflower_enjoy_card",
@@ -46,6 +49,7 @@
     "pvz:gold_leaf_enjoy_card",
     "pvz:angel_star_fruit_enjoy_card",
     "pvz:explode_o_nut_enjoy_card",
-    "pvz:giant_wall_nut_enjoy_card"
+    "pvz:giant_wall_nut_enjoy_card",
+    "pvz:butter_pult_enjoy_card"
   ]
 }

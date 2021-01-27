@@ -2,6 +2,8 @@ package com.hungteen.pvz.register;
 
 import com.hungteen.pvz.PVZMod;
 import com.hungteen.pvz.gui.container.AlmanacContainer;
+import com.hungteen.pvz.gui.container.CardFusionContainer;
+import com.hungteen.pvz.gui.container.EssenceAltarContainer;
 import com.hungteen.pvz.gui.container.FragmentSpliceContainer;
 import com.hungteen.pvz.gui.container.PeaGunContainer;
 import com.hungteen.pvz.gui.container.PlayerInventoryContainer;
@@ -12,6 +14,8 @@ import com.hungteen.pvz.gui.container.shop.MysteryShopContainer;
 import com.hungteen.pvz.gui.container.shop.PennyShopContainer;
 import com.hungteen.pvz.gui.container.shop.SunShopContainer;
 import com.hungteen.pvz.gui.screen.AlmanacScreen;
+import com.hungteen.pvz.gui.screen.CardFusionScreen;
+import com.hungteen.pvz.gui.screen.EssenceAltarScreen;
 import com.hungteen.pvz.gui.screen.FragmentSpliceScreen;
 import com.hungteen.pvz.gui.screen.PeaGunScreen;
 import com.hungteen.pvz.gui.screen.PlayerInventoryScreen;
@@ -24,6 +28,7 @@ import com.hungteen.pvz.gui.screen.shop.SunShopScreen;
 
 import net.minecraft.client.gui.ScreenManager;
 import net.minecraft.inventory.container.ContainerType;
+import net.minecraft.util.IWorldPosCallable;
 import net.minecraftforge.common.extensions.IForgeContainerType;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.RegistryObject;
@@ -87,6 +92,16 @@ public class ContainerRegister {
             return new MysteryShopContainer(windowId, inv.player);
         });
 	});
+	public static final RegistryObject<ContainerType<EssenceAltarContainer>> ESSENCE_ALTAR = CONTAINER_TYPES.register("essence_altar", () -> {
+		return IForgeContainerType.create((windowId, inv, data) -> {
+            return new EssenceAltarContainer(windowId, inv.player, IWorldPosCallable.of(inv.player.world, data.readBlockPos()));
+        });
+	});
+	public static final RegistryObject<ContainerType<CardFusionContainer>> CARD_FUSION = CONTAINER_TYPES.register("card_fusion", () -> {
+		return IForgeContainerType.create((windowId, inv, data) -> {
+            return new CardFusionContainer(windowId, inv.player, data.readBlockPos());
+        });
+	});
 	
 	@SubscribeEvent
     public static void onClientSetupEvent(FMLClientSetupEvent event) {
@@ -100,6 +115,8 @@ public class ContainerRegister {
         ScreenManager.registerFactory(SLOT_MACHINE.get(), SlotMachineScreen::new);
         ScreenManager.registerFactory(PENNY_SHOP.get(), PennyShopScreen::new);
         ScreenManager.registerFactory(MYSTERY_SHOP.get(), MysteryShopScreen::new);
+        ScreenManager.registerFactory(ESSENCE_ALTAR.get(), EssenceAltarScreen::new);
+        ScreenManager.registerFactory(CARD_FUSION.get(), CardFusionScreen::new);
     }
 	
 }

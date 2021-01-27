@@ -33,8 +33,11 @@
     "pvz:star_fruit_card",
     "pvz:pumpkin_card",
     "pvz:magnet_shroom_card",
+    "pvz:cabbage_pult_card",
     "pvz:flower_pot_card",
+    "pvz:kernel_pult_card",
     "pvz:coffee_bean_card",
+    "pvz:garlic_card",
     "pvz:marigold_card",
     "pvz:gatling_pea_card",
     "pvz:twin_sunflower_card",
@@ -46,6 +49,7 @@
     "pvz:gold_leaf_card",
     "pvz:angel_star_fruit_card",
     "pvz:explode_o_nut_card",
-    "pvz:giant_wall_nut_card"
+    "pvz:giant_wall_nut_card",
+    "pvz:butter_pult_card"
   ]
 }

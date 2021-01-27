@@ -1,5 +1,6 @@
 package com.hungteen.pvz.entity.zombie.poolnight;
 
+import com.hungteen.pvz.data.loot.PVZLoot;
 import com.hungteen.pvz.entity.zombie.PVZZombieEntity;
 import com.hungteen.pvz.utils.ZombieUtil;
 import com.hungteen.pvz.utils.enums.MetalTypes;
@@ -16,6 +17,7 @@ import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.network.datasync.DataParameter;
 import net.minecraft.network.datasync.DataSerializers;
 import net.minecraft.network.datasync.EntityDataManager;
+import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.World;
 
@@ -127,6 +129,11 @@ public class DiggerZombieEntity extends PVZZombieEntity implements IHasMetal {
 	
 	public int getAnimTime() {
 		return this.dataManager.get(ANIM_TIME);
+	}
+	
+	@Override
+	protected ResourceLocation getLootTable() {
+		return PVZLoot.DIGGER_ZOMBIE;
 	}
 	
 	@Override

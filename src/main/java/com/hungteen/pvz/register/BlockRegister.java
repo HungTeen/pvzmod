@@ -14,6 +14,8 @@ import com.hungteen.pvz.block.plants.LilyPadBlock;
 import com.hungteen.pvz.block.plants.PVZSaplingBlock;
 import com.hungteen.pvz.block.plants.PeaBlock;
 import com.hungteen.pvz.block.plants.ToxicShroomBlock;
+import com.hungteen.pvz.block.special.CardFusionBlock;
+import com.hungteen.pvz.block.special.EssenceAltarBlock;
 import com.hungteen.pvz.block.special.FlowerPotBlock;
 import com.hungteen.pvz.block.special.FragmentSpliceBlock;
 import com.hungteen.pvz.block.special.GoldTileBlock;
@@ -94,6 +96,8 @@ public class BlockRegister {
 	public static final RegistryObject<SunConverterBlock> SUN_CONVERTER = BLOCKS.register("sun_converter", SunConverterBlock::new);
 	public static final RegistryObject<FragmentSpliceBlock> FRAGMENT_SPLICE = BLOCKS.register("fragment_splice", FragmentSpliceBlock::new);
 	public static final RegistryObject<SlotMachineBlock> SLOT_MACHINE = BLOCKS.register("slot_machine", SlotMachineBlock::new);
+	public static final RegistryObject<EssenceAltarBlock> ESSENCE_ALTAR = BLOCKS.register("essence_altar", EssenceAltarBlock::new);
+	public static final RegistryObject<CardFusionBlock> CARD_FUSION_TABLE = BLOCKS.register("card_fusion_table", CardFusionBlock::new);
 	
 	/**
 	 * 注册itemblock
@@ -106,7 +110,7 @@ public class BlockRegister {
 				STEEL_BLOCK, AMETHYST_BLOCK, ORIGIN_BLOCK, BUTTER_BLOCK,
 				NUT_LEAVES, NUT_SAPLING, CHOMPER, LILY_PAD,
 				LANTERN, FLOWER_POT, GOLD_TILE1, GOLD_TILE2, GOLD_TILE3,
-				SUN_CONVERTER, FRAGMENT_SPLICE, SLOT_MACHINE
+				SUN_CONVERTER, FRAGMENT_SPLICE, SLOT_MACHINE, ESSENCE_ALTAR, CARD_FUSION_TABLE
 		);
 		for(RegistryObject<? extends Block> block:blocks) {
 			if(block == LILY_PAD) {

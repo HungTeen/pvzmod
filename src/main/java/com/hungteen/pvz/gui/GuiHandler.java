@@ -9,5 +9,7 @@ public class GuiHandler {
 	public static final int FRAGMENT_SPLICE = 5;
 	public static final int SLOT_MACHINE = 6;
 	public static final int MYSTERY_SHOP = 7;
+	public static final int ESSENCE_ALTAR = 8;
+	public static final int CARD_FUSION = 9;
 	
 }

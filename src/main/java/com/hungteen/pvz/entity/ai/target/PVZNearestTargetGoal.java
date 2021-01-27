@@ -2,10 +2,10 @@ package com.hungteen.pvz.entity.ai.target;
 
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.Comparator;
 import java.util.EnumSet;
 import java.util.List;
 
+import com.hungteen.pvz.utils.AlgorithmUtil;
 import com.hungteen.pvz.utils.EntityUtil;
 
 import net.minecraft.entity.Entity;
@@ -17,7 +17,7 @@ import net.minecraft.util.math.AxisAlignedBB;
 
 public class PVZNearestTargetGoal extends TargetGoal {
 
-	protected final PVZNearestTargetGoal.Sorter sorter;
+	protected final AlgorithmUtil.EntitySorter sorter;
 	private final int targetChance;
 	private final float upperHeight;
 	private final float lowerHeight;
@@ -37,7 +37,7 @@ public class PVZNearestTargetGoal extends TargetGoal {
 		this.width = w;
 		this.upperHeight = h1;
 		this.lowerHeight = h2;
-		this.sorter = new PVZNearestTargetGoal.Sorter(goalOwner);
+		this.sorter = new AlgorithmUtil.EntitySorter(goalOwner);
 		this.setMutexFlags(EnumSet.of(Goal.Flag.TARGET));
 	}
 
@@ -101,21 +101,4 @@ public class PVZNearestTargetGoal extends TargetGoal {
 				this.goalOwner.getPosY() - this.lowerHeight, this.goalOwner.getPosZ() - width);
 	}
 
-	public static class Sorter implements Comparator<Entity> {
-		private final Entity entity;
-
-		public Sorter(Entity entityIn) {
-			this.entity = entityIn;
-		}
-
-		public int compare(Entity p_compare_1_, Entity p_compare_2_) {
-			double d0 = this.entity.getDistanceSq(p_compare_1_);
-			double d1 = this.entity.getDistanceSq(p_compare_2_);
-			if (d0 < d1) {
-				return -1;
-			} else {
-				return d0 > d1 ? 1 : 0;
-			}
-		}
-	}
 }

@@ -1,5 +1,6 @@
 package com.hungteen.pvz.entity.zombie.other;
 
+import com.hungteen.pvz.data.loot.PVZLoot;
 import com.hungteen.pvz.entity.zombie.PVZZombieEntity;
 import com.hungteen.pvz.entity.zombie.grassnight.TombStoneEntity;
 import com.hungteen.pvz.misc.damage.PVZDamageSource;
@@ -16,6 +17,7 @@ import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.network.datasync.DataParameter;
 import net.minecraft.network.datasync.DataSerializers;
 import net.minecraft.network.datasync.EntityDataManager;
+import net.minecraft.util.ResourceLocation;
 import net.minecraft.world.World;
 
 public class MournerZombieEntity extends PVZZombieEntity{
@@ -96,6 +98,11 @@ public class MournerZombieEntity extends PVZZombieEntity{
 	
 	public void setRightShake(boolean is) {
 		this.dataManager.set(RIGHT_SHAKE, is);
+	}
+	
+	@Override
+	protected ResourceLocation getLootTable() {
+		return PVZLoot.MOURNER_ZOMBIE;
 	}
 	
 	@Override

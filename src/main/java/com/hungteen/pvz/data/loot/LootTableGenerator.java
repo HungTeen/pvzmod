@@ -22,7 +22,8 @@ import net.minecraft.world.storage.loot.LootTable.Builder;
 public class LootTableGenerator extends LootTableProvider{
 
 	private final List<Pair<Supplier<Consumer<BiConsumer<ResourceLocation, LootTable.Builder>>>, LootParameterSet>> tables = ImmutableList.of(
-			Pair.of(PVZChestLootTables::new, LootParameterSets.CHEST)
+			Pair.of(PVZChestLootTables::new, LootParameterSets.CHEST),
+			Pair.of(PVZEntityLootTables::new, LootParameterSets.ENTITY)
 			);
 	
 	public LootTableGenerator(DataGenerator dataGeneratorIn) {

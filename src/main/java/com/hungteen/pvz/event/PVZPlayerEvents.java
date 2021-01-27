@@ -162,10 +162,17 @@ public class PVZPlayerEvents {
 	}
 	
 	@SubscribeEvent
-	public static void onPlayerLevelUp(PlayerLevelUpEvent ev) {
+	public static void onPlayerTreeLevelUp(PlayerLevelUpEvent.TreeLevelUpEvent ev) {
 		if(! ev.getPlayer().world.isRemote) {
 			PlayerUtil.playClientSound(ev.getPlayer(), 9);
 		    PlayerUtil.addPlayerStats(ev.getPlayer(), Resources.LOTTERY_CHANCE, 3);
+		}
+	}
+	
+	@SubscribeEvent
+	public static void onPlayerPlantLevelUp(PlayerLevelUpEvent.PlantLevelUpEvent ev) {
+		if(! ev.getPlayer().world.isRemote) {
+			PlayerUtil.addPlantXp(ev.getPlayer(), ev.plant, ev.getCurrentLevel() * 2);
 		}
 	}
 	

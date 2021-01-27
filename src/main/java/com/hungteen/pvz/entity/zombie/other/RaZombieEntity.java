@@ -3,6 +3,7 @@ package com.hungteen.pvz.entity.zombie.other;
 import java.util.HashSet;
 import java.util.Set;
 
+import com.hungteen.pvz.data.loot.PVZLoot;
 import com.hungteen.pvz.entity.drop.DropEntity.DropStates;
 import com.hungteen.pvz.entity.drop.SunEntity;
 import com.hungteen.pvz.entity.zombie.PVZZombieEntity;
@@ -15,6 +16,7 @@ import net.minecraft.entity.EntityType;
 import net.minecraft.entity.SharedMonsterAttributes;
 import net.minecraft.entity.monster.MonsterEntity;
 import net.minecraft.nbt.CompoundNBT;
+import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.SoundEvents;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
@@ -137,6 +139,11 @@ public class RaZombieEntity extends PVZZombieEntity {
 		return 36;
 	}
 
+	@Override
+	protected ResourceLocation getLootTable() {
+		return PVZLoot.RA_ZOMBIE;
+	}
+	
 	@Override
 	public Zombies getZombieEnumName() {
 		return Zombies.RA_ZOMBIE;

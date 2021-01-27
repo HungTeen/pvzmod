@@ -1,14 +1,11 @@
 package com.hungteen.pvz.gui.search;
 
-import com.hungteen.pvz.PVZMod;
-import com.hungteen.pvz.register.ItemRegister;
 import com.mojang.blaze3d.systems.RenderSystem;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.widget.ToggleWidget;
 import net.minecraft.client.renderer.ItemRenderer;
 import net.minecraft.item.ItemStack;
-import net.minecraft.item.Items;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 
@@ -48,15 +45,7 @@ public class CategoryToggleWidget extends ToggleWidget {
 	}
 	
 	private ItemStack getRenderItemStack() {
-		switch (this.category) {
-		case ALL: return new ItemStack(Items.COMPASS);
-		case PLANTS: return new ItemStack(ItemRegister.PEA_SHOOTER_CARD.get());
-		case ZOMBIES: return new ItemStack(ItemRegister.BUCKET_HEAD.get());
-		default:{
-			PVZMod.LOGGER.debug("Category ERROR !");
-			return ItemStack.EMPTY;
-		}
-		}
+		return SearchCategories.getRenderItemStack(this.category);
 	}
 
 	public SearchCategories getCategory() {

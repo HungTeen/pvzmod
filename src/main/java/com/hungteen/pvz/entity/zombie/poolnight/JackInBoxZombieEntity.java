@@ -1,6 +1,7 @@
 package com.hungteen.pvz.entity.zombie.poolnight;
 
 import com.hungteen.pvz.capability.CapabilityHandler;
+import com.hungteen.pvz.data.loot.PVZLoot;
 import com.hungteen.pvz.entity.zombie.PVZZombieEntity;
 import com.hungteen.pvz.misc.damage.PVZDamageSource;
 import com.hungteen.pvz.register.SoundRegister;
@@ -20,6 +21,7 @@ import net.minecraft.network.datasync.DataParameter;
 import net.minecraft.network.datasync.DataSerializers;
 import net.minecraft.network.datasync.EntityDataManager;
 import net.minecraft.particles.ParticleTypes;
+import net.minecraft.util.ResourceLocation;
 import net.minecraft.world.Explosion;
 import net.minecraft.world.World;
 
@@ -75,14 +77,19 @@ public class JackInBoxZombieEntity extends PVZZombieEntity implements IHasMetal 
 				    }
 			    }
 		    } else if(this.getAnimTick() == 0) {
-			    if(! world.isRemote) {
+		    	if(! world.isRemote && this.canExplode()) {
 				    this.doExplosion();
 				    Explosion.Mode mode = net.minecraftforge.event.ForgeEventFactory.getMobGriefingEvent(this.world, this) ? Explosion.Mode.DESTROY : Explosion.Mode.NONE;
-					this.world.createExplosion(this, getPosX(), getPosY(), getPosZ(), 3f, mode);
-			    }
-			    this.remove();
+				    this.world.createExplosion(this, getPosX(), getPosY(), getPosZ(), 3f, mode);
+			        this.remove();
+		    	}
 		    }
 		}
+	}
+	
+	private boolean canExplode() {
+		if(this.getAttackTarget() == null) return false;
+		return this.getDistanceSq(this.getAttackTarget()) <= 300;
 	}
 	
 	@Override
@@ -167,6 +174,11 @@ public class JackInBoxZombieEntity extends PVZZombieEntity implements IHasMetal 
 	
 	public int getAnimTick() {
 		return this.dataManager.get(ANIM_TICK);
+	}
+	
+	@Override
+	protected ResourceLocation getLootTable() {
+		return PVZLoot.JACK_IN_BOX_ZOMBIE;
 	}
 	
 	@Override

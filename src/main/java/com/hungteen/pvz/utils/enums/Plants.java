@@ -42,7 +42,7 @@ public enum Plants {
 	FLOWER_POT(2), 
 	KERNEL_PULT(0),
 	COFFEE_BEAN(0),
-//	GARLIC, 
+	GARLIC(0),
 //	UMBRELLA_LEAF, 
 	MARIGOLD(0), 
 //	MELON_PULT,
