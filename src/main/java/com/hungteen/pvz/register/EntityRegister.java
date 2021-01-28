@@ -5,6 +5,7 @@ import com.hungteen.pvz.entity.bullet.ButterEntity;
 import com.hungteen.pvz.entity.bullet.FumeEntity;
 import com.hungteen.pvz.entity.bullet.KernelEntity;
 import com.hungteen.pvz.entity.bullet.StarEntity;
+import com.hungteen.pvz.entity.bullet.TargetArrowEntity;
 import com.hungteen.pvz.entity.bullet.ThornEntity;
 import com.hungteen.pvz.entity.bullet.itembullet.CabbageEntity;
 import com.hungteen.pvz.entity.bullet.itembullet.MetalItemEntity;
@@ -49,6 +50,7 @@ import com.hungteen.pvz.entity.plant.defence.WaterGuardEntity;
 import com.hungteen.pvz.entity.plant.enforce.ChomperEntity;
 import com.hungteen.pvz.entity.plant.enforce.SquashEntity;
 import com.hungteen.pvz.entity.plant.enforce.TangleKelpEntity;
+import com.hungteen.pvz.entity.plant.enforce.UmbrellaLeafEntity;
 import com.hungteen.pvz.entity.plant.explosion.CherryBombEntity;
 import com.hungteen.pvz.entity.plant.explosion.DoomShroomEntity;
 import com.hungteen.pvz.entity.plant.explosion.ExplodeONutEntity;
@@ -108,6 +110,7 @@ import com.hungteen.pvz.entity.zombie.poolnight.DiggerZombieEntity;
 import com.hungteen.pvz.entity.zombie.poolnight.JackInBoxZombieEntity;
 import com.hungteen.pvz.entity.zombie.poolnight.PogoZombieEntity;
 import com.hungteen.pvz.entity.zombie.poolnight.YetiZombieEntity;
+import com.hungteen.pvz.entity.zombie.roof.BungeeZombieEntity;
 import com.hungteen.pvz.render.entity.bullet.ButterRender;
 import com.hungteen.pvz.render.entity.bullet.CabbageRender;
 import com.hungteen.pvz.render.entity.bullet.FumeRender;
@@ -118,6 +121,7 @@ import com.hungteen.pvz.render.entity.bullet.PeaRender;
 import com.hungteen.pvz.render.entity.bullet.PotatoRender;
 import com.hungteen.pvz.render.entity.bullet.SporeRender;
 import com.hungteen.pvz.render.entity.bullet.StarRender;
+import com.hungteen.pvz.render.entity.bullet.TargetArrowRender;
 import com.hungteen.pvz.render.entity.bullet.ThornRender;
 import com.hungteen.pvz.render.entity.creature.FoodieZombieRender;
 import com.hungteen.pvz.render.entity.drop.CoinRender;
@@ -157,6 +161,7 @@ import com.hungteen.pvz.render.entity.plant.defence.WaterGuardRender;
 import com.hungteen.pvz.render.entity.plant.enforce.ChomperRender;
 import com.hungteen.pvz.render.entity.plant.enforce.SquashRender;
 import com.hungteen.pvz.render.entity.plant.enforce.TangleKelpRender;
+import com.hungteen.pvz.render.entity.plant.enforce.UmbrellaLeafRender;
 import com.hungteen.pvz.render.entity.plant.explosion.CherryBombRender;
 import com.hungteen.pvz.render.entity.plant.explosion.DoomShroomRender;
 import com.hungteen.pvz.render.entity.plant.explosion.ExplodeONutRender;
@@ -215,6 +220,7 @@ import com.hungteen.pvz.render.entity.zombie.poolnight.DiggerZombieRender;
 import com.hungteen.pvz.render.entity.zombie.poolnight.JackInBoxZombieRender;
 import com.hungteen.pvz.render.entity.zombie.poolnight.PogoZombieRender;
 import com.hungteen.pvz.render.entity.zombie.poolnight.YetiZombieRender;
+import com.hungteen.pvz.render.entity.zombie.roof.BungeeZombieRender;
 import com.hungteen.pvz.utils.StringUtil;
 
 import net.minecraft.entity.Entity;
@@ -255,6 +261,7 @@ public class EntityRegister {
 	public static final RegistryObject<EntityType<CabbageEntity>> CABBAGE = registerEntityType(CabbageEntity::new, "cabbage", EntityClassification.MISC);
 	public static final RegistryObject<EntityType<KernelEntity>> KERNEL = registerEntityType(KernelEntity::new, "kernel", EntityClassification.MISC);
 	public static final RegistryObject<EntityType<ButterEntity>> BUTTER = registerEntityType(ButterEntity::new, "butter", EntityClassification.MISC);
+	public static final RegistryObject<EntityType<TargetArrowEntity>> TARGET_ARROW = registerEntityType(TargetArrowEntity::new, "target_arrow", EntityClassification.MISC);
 	
 	//misc 
 	public static final RegistryObject<EntityType<SmallChomperEntity>> SMALL_CHOMPER = registerEntityType(SmallChomperEntity::new, "small_chomper", EntityClassification.MISC);
@@ -308,6 +315,7 @@ public class EntityRegister {
 	public static final RegistryObject<EntityType<DiggerZombieEntity>> DIGGER_ZOMBIE = registerEntityType(DiggerZombieEntity::new, "digger_zombie", EntityClassification.MONSTER);
 	public static final RegistryObject<EntityType<BalloonZombieEntity>> BALLOON_ZOMBIE = registerEntityType(BalloonZombieEntity::new, "balloon_zombie", EntityClassification.MONSTER);
 	public static final RegistryObject<EntityType<RaZombieEntity>> RA_ZOMBIE = registerEntityType(RaZombieEntity::new, "ra_zombie", EntityClassification.MONSTER);
+	public static final RegistryObject<EntityType<BungeeZombieEntity>> BUNGEE_ZOMBIE = registerEntityType(BungeeZombieEntity::new, "bungee_zombie", EntityClassification.MONSTER);
 	
 	//plant
 	public static final RegistryObject<EntityType<PeaShooterEntity>> PEA_SHOOTER = registerEntityType(PeaShooterEntity::new, "pea_shooter", EntityClassification.CREATURE);
@@ -357,6 +365,7 @@ public class EntityRegister {
 	public static final RegistryObject<EntityType<KernelPultEntity>> KERNEL_PULT = registerEntityType(KernelPultEntity::new, "kernel_pult", EntityClassification.CREATURE);
 	public static final RegistryObject<EntityType<ButterPultEntity>> BUTTER_PULT = registerEntityType(ButterPultEntity::new, "butter_pult", EntityClassification.CREATURE);
 	public static final RegistryObject<EntityType<GarlicEntity>> GARLIC = registerEntityType(GarlicEntity::new, "garlic", EntityClassification.CREATURE);
+	public static final RegistryObject<EntityType<UmbrellaLeafEntity>> UMBRELLA_LEAF = registerEntityType(UmbrellaLeafEntity::new, "umbrella_leaf", EntityClassification.CREATURE);
 	
 	@OnlyIn(Dist.CLIENT)
 	@SubscribeEvent
@@ -379,6 +388,7 @@ public class EntityRegister {
         RenderingRegistry.registerEntityRenderingHandler(CABBAGE.get(), CabbageRender::new);
         RenderingRegistry.registerEntityRenderingHandler(KERNEL.get(), KernelRender::new);
         RenderingRegistry.registerEntityRenderingHandler(BUTTER.get(), ButterRender::new);
+        RenderingRegistry.registerEntityRenderingHandler(TARGET_ARROW.get(), TargetArrowRender::new);
         
         //misc
         RenderingRegistry.registerEntityRenderingHandler(SMALL_CHOMPER.get(), SmallChomperRender::new);
@@ -432,6 +442,7 @@ public class EntityRegister {
         RenderingRegistry.registerEntityRenderingHandler(DIGGER_ZOMBIE.get(), DiggerZombieRender::new);
         RenderingRegistry.registerEntityRenderingHandler(BALLOON_ZOMBIE.get(), BalloonZombieRender::new);
         RenderingRegistry.registerEntityRenderingHandler(RA_ZOMBIE.get(), RaZombieRender::new);
+        RenderingRegistry.registerEntityRenderingHandler(BUNGEE_ZOMBIE.get(), BungeeZombieRender::new);
         
         //plant
         RenderingRegistry.registerEntityRenderingHandler(PEA_SHOOTER.get(), PeaShooterRender::new);
@@ -471,6 +482,7 @@ public class EntityRegister {
         RenderingRegistry.registerEntityRenderingHandler(KERNEL_PULT.get(), KernelPultRender::new);
         RenderingRegistry.registerEntityRenderingHandler(GARLIC.get(), GarlicRender::new);
         RenderingRegistry.registerEntityRenderingHandler(COFFEE_BEAN.get(), CoffeeBeanRender::new);
+        RenderingRegistry.registerEntityRenderingHandler(UMBRELLA_LEAF.get(), UmbrellaLeafRender::new);
         RenderingRegistry.registerEntityRenderingHandler(MARIGOLD.get(), MariGoldRender::new);
         
         RenderingRegistry.registerEntityRenderingHandler(GATLING_PEA.get(), GatlingPeaRender::new);

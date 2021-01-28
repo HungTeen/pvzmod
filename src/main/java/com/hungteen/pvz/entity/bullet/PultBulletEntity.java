@@ -16,6 +16,7 @@ public abstract class PultBulletEntity extends AbstractBulletEntity {
 
 	protected int targetChance = 5;
 	protected LivingEntity target = null;
+	protected float height = 10;
 	
 	public PultBulletEntity(EntityType<?> type, World worldIn) {
 		super(type, worldIn);
@@ -36,6 +37,7 @@ public abstract class PultBulletEntity extends AbstractBulletEntity {
 			double t1 = speed.y / g;
 			double height = speed.y * speed.y / 2 / g;
 			double downHeight = this.getPosY() + height - target.getPosY() - target.getHeight();
+			if(downHeight < 0) return ;
 			double t2 = Math.sqrt(2 * downHeight / g);
 			double dx = target.getPosX() + target.getMotion().getX() * (t1 + t2) - this.getPosX();
 	    	double dz = target.getPosZ() + target.getMotion().getZ() * (t1 + t2) - this.getPosZ();
@@ -75,10 +77,9 @@ public abstract class PultBulletEntity extends AbstractBulletEntity {
     		return ;
     	}
     	this.target = target;
-    	double h = 10;//max throw height
     	double g = this.getGravityVelocity();
-    	double t1 = MathHelper.sqrt(2 * h / g);//go up time
-    	double t2 = MathHelper.sqrt(2 * (this.getPosY() + h - target.getPosY() - target.getHeight()) / g);//go down time
+    	double t1 = MathHelper.sqrt(2 * height / g);//go up time
+    	double t2 = MathHelper.sqrt(2 * (this.getPosY() + height - target.getPosY() - target.getHeight()) / g);//go down time
     	double dx = target.getPosX() + target.getMotion().getX() * (t1 + t2) - this.getPosX();
     	double dz = target.getPosZ() + target.getMotion().getZ() * (t1 + t2) - this.getPosZ();
     	double dxz = MathHelper.sqrt(dx * dx + dz * dz);

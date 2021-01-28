@@ -2,6 +2,8 @@ package com.hungteen.pvz.event;
 
 import com.hungteen.pvz.PVZConfig;
 import com.hungteen.pvz.PVZMod;
+import com.hungteen.pvz.entity.plant.PVZPlantEntity;
+import com.hungteen.pvz.entity.zombie.roof.BungeeZombieEntity;
 import com.hungteen.pvz.gui.screen.PVZMainMenuScreen;
 import com.hungteen.pvz.register.BlockRegister;
 import com.hungteen.pvz.utils.EntityUtil;
@@ -32,6 +34,8 @@ public class PVZClientEvents {
 		MatrixStack stack = ev.getMatrixStack();
 		IRenderTypeBuffer buffer = ev.getBuffers();
 		int light = ev.getLight();
+//		ev.getMatrixStack().rotate(Vector3f.ZP.rotationDegrees(180F));
+		checkBungeeHandStand(ev.getEntity(), stack);
 		checkAndRenderFrozenIce(ev.getEntity(), stack, buffer, light);
 		checkAndRenderButter(ev.getRenderer(), ev.getEntity(), stack, buffer, light);
 	}
@@ -45,8 +49,15 @@ public class PVZClientEvents {
 		}
 	}
 	
+	private static void checkBungeeHandStand(LivingEntity entity, MatrixStack stack) {
+		if(entity instanceof PVZPlantEntity) return ;
+		if(entity.getRidingEntity() instanceof BungeeZombieEntity) {
+			stack.rotate(Vector3f.ZP.rotationDegrees(180F));
+		}
+	}
+	
 	@SuppressWarnings("deprecation")
-	public static void checkAndRenderFrozenIce(LivingEntity entity, MatrixStack matrixStackIn, IRenderTypeBuffer bufferIn, int packedLightIn) {
+	private static void checkAndRenderFrozenIce(LivingEntity entity, MatrixStack matrixStackIn, IRenderTypeBuffer bufferIn, int packedLightIn) {
 		if(! EntityUtil.isEntityValid(entity) || ! EntityUtil.isEntityFrozen(entity)) return ;
 		matrixStackIn.push();
 		float scale = 0.5F;
@@ -70,7 +81,7 @@ public class PVZClientEvents {
 	}
 	
 	@SuppressWarnings({ "deprecation", "rawtypes" })
-	public static void checkAndRenderButter(LivingRenderer r, LivingEntity entity, MatrixStack matrixStackIn, IRenderTypeBuffer bufferIn, int packedLightIn) {
+	private static void checkAndRenderButter(LivingRenderer r, LivingEntity entity, MatrixStack matrixStackIn, IRenderTypeBuffer bufferIn, int packedLightIn) {
 		if(! EntityUtil.isEntityValid(entity) || ! EntityUtil.isEntityButter(entity)) return ;
 		matrixStackIn.push();
 		float scale = 0.7F;

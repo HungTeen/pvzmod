@@ -33,6 +33,7 @@ public enum Zombies {
 	POGO_ZOMBIE(3, 3), 
 	YETI_ZOMBIE(0, 0),
 	// 5
+	BUNGEE_ZOMBIE(3, 3),
 //	CATAPULT_ZOMBIE, GARGANTUAR, IMP, SAD_GARGANTUAR,
 	// boss
 //	ZOMBOSS,

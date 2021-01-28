@@ -84,6 +84,11 @@ public abstract class PlantDefenderEntity extends PVZPlantEntity implements IDef
 	}
 	
 	@Override
+	public float getCurrentHealth() {
+		return super.getCurrentHealth() + this.getDefenceLife();
+	}
+	
+	@Override
 	protected boolean processInteract(PlayerEntity player, Hand hand) {
 		super.processInteract(player, hand);
 		ItemStack stack = player.getHeldItem(hand);

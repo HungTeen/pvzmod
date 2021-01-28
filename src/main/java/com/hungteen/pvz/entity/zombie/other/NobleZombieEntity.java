@@ -66,6 +66,7 @@ public class NobleZombieEntity extends PVZZombieEntity {
 		this.canBeCold = false;
 		this.canBeCharm = false;
 		this.canBeMini = false;
+		this.canBeStealByBungee = false;
 	}
 	
 	@Override

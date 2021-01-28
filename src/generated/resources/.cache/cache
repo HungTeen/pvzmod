@@ -9,6 +9,7 @@ aafe5126e21bb0c10b9adf89e8490d414196d029 assets\pvz\models\item\blover_enjoy_car
 640fb723df4adaf9b0e055a7e45afa7756e5acb4 assets\pvz\models\item\bobsle_team_spawn_egg.json
 640fb723df4adaf9b0e055a7e45afa7756e5acb4 assets\pvz\models\item\bobsle_zombie_spawn_egg.json
 640fb723df4adaf9b0e055a7e45afa7756e5acb4 assets\pvz\models\item\buckethead_zombie_spawn_egg.json
+640fb723df4adaf9b0e055a7e45afa7756e5acb4 assets\pvz\models\item\bungee_zombie_spawn_egg.json
 120952f0d3061d4963e31df9c49305ae69530605 assets\pvz\models\item\butter_pult_card.json
 943591665e4ad099fa295a8ae93e6bf84adee991 assets\pvz\models\item\butter_pult_enjoy_card.json
 640fb723df4adaf9b0e055a7e45afa7756e5acb4 assets\pvz\models\item\butter_pult_spawn_egg.json
@@ -185,6 +186,9 @@ c2b587d05c4bc143e32b1b107249a72916407a2d assets\pvz\models\item\three_peater_enj
 850561946ab6b0211e6dd4b55545c8b39609201a assets\pvz\models\item\twin_sunflower_card.json
 f7d9106e6b65b308f59fbef0a3c93e5412637499 assets\pvz\models\item\twin_sunflower_enjoy_card.json
 640fb723df4adaf9b0e055a7e45afa7756e5acb4 assets\pvz\models\item\twin_sunflower_spawn_egg.json
+47c42055593ff959a3286996120ba0e63e6a30e0 assets\pvz\models\item\umbrella_leaf_card.json
+7a205248428b5a7615c160fc53c3c0189d7edaee assets\pvz\models\item\umbrella_leaf_enjoy_card.json
+640fb723df4adaf9b0e055a7e45afa7756e5acb4 assets\pvz\models\item\umbrella_leaf_spawn_egg.json
 a9a92cd6325618d2dcf729a3a355509d1aa349d5 assets\pvz\models\item\wall_nut_card.json
 577110bfcaaf412c61657e186a4c62f98af520f4 assets\pvz\models\item\wall_nut_enjoy_card.json
 640fb723df4adaf9b0e055a7e45afa7756e5acb4 assets\pvz\models\item\wall_nut_spawn_egg.json
@@ -203,6 +207,7 @@ a63cfcf7eadd5ff34bf9e006495b86bd0894ed34 data\forge\tags\items\ingots\amethyst.j
 37b4821fb625198371ffcb099851bde3564c71f8 data\forge\tags\items\ingots\steel.json
 4f9eaea0cdab711996b9f61bd3b26e96010e416d data\forge\tags\items\ores\amethyst.json
 05fb482232b9aa0b3142ea10ff82447d995cc94c data\forge\tags\items\seeds\cabbage.json
+20992a32bf3980d890c7c4773d2c79344b6d23e8 data\minecraft\tags\items\arrows.json
 1c5a5dc87a91738d0ff8197bb2890371819cbeab data\pvz\loot_tables\chests\bucket_house_chest.json
 dbd471d8b14c194246a809f5f88dbbfe892e7047 data\pvz\loot_tables\chests\dave_villa_chest.json
 4908bce217c57c38f222258fdbf620ecbe28b281 data\pvz\loot_tables\chests\dolphin_house_chest.json
@@ -238,7 +243,7 @@ fa67674760dab538f028e2df995692149be2ef25 data\pvz\recipes\pea_shooter_card.json
 14948941848ab33c0e7f1367222c8b49a238b288 data\pvz\recipes\plantern_card.json
 6dce0888000d6768e1d619c32e13263c531eb5bc data\pvz\recipes\pumpkin_card.json
 37ca3f9610aac5d1016369670973a84237ba1087 data\pvz\recipes\water_guard_card.json
-708d57353d0d648e89740caebd3e1b7f527910d0 data\pvz\tags\items\cards\plant_card.json
-aa6839a92540731249d73b64026fbc8e69c50ce6 data\pvz\tags\items\cards\plant_enjoy_card.json
-7a23c6a32eb91a3aee3f7cb476ad364f099cf5f9 data\pvz\tags\items\cards\plant_summon_card.json
+2240e7c8acce931909f4d65878659b3acc774b8e data\pvz\tags\items\cards\plant_card.json
+c4ea46199ab97c5b800fe67a43d5cd07ec8df346 data\pvz\tags\items\cards\plant_enjoy_card.json
+81b074766677a4b0f5bac9580a277728ab915e06 data\pvz\tags\items\cards\plant_summon_card.json
 293c3c6119087956dfb83d72d897f82c1c248628 data\pvz\tags\items\cards\template_card.json

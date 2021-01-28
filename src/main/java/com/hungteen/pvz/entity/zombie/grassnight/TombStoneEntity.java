@@ -38,7 +38,7 @@ import net.minecraft.world.server.ServerWorld;
 
 public class TombStoneEntity extends UnderGroundZombieEntity {
 
-	public static final Zombies[] GROUND_ZOMBIES = new Zombies[] {Zombies.NORMAL_ZOMBIE, Zombies.FLAG_ZOMBIE, Zombies.CONEHEAD_ZOMBIE, Zombies.BUCKETHEAD_ZOMBIE};
+	public static final Zombies[] GROUND_ZOMBIES = new Zombies[] {Zombies.NORMAL_ZOMBIE, Zombies.CONEHEAD_ZOMBIE, Zombies.BUCKETHEAD_ZOMBIE};
 	private int currentSummonCD;
 	private int minSummonCD = 360;
 	private int maxSummonCD = 1200;
@@ -51,6 +51,7 @@ public class TombStoneEntity extends UnderGroundZombieEntity {
 		this.canBeCharm = false;
 		this.canBeMini = false;
 		this.canBeFrozen = false;
+		this.canBeStealByBungee = false;
 	}
 	
 	@Override

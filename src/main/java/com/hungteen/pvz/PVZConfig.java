@@ -54,19 +54,23 @@ public class PVZConfig {
 						
 					WorldSettings.WorldEventSettings.EventChanceSettings.NewspaperAttackChance = builder
 							.comment("The weight to happen Newspaper Invasion when it's a zombie attack day.")
-							.defineInRange("NewspaperAttackChance", 40, 0, 100000);
+							.defineInRange("NewspaperAttackChance", 50, 0, 100000);
 						
 					WorldSettings.WorldEventSettings.EventChanceSettings.FootballAttackChance = builder
 							.comment("The weight to happen Football Invasion when it's a zombie attack day.")
-							.defineInRange("FootballAttackChance", 40, 0, 100000);
+							.defineInRange("FootballAttackChance", 50, 0, 100000);
 						
 					WorldSettings.WorldEventSettings.EventChanceSettings.RandomAttackChance = builder
 							.comment("The weight to happen Random Invasion when it's a zombie attack day.")
 							.defineInRange("RandomAttackChance", 70, 0, 10000);
 					
-					WorldSettings.WorldEventSettings.EventChanceSettings.YetiEventChance = builder
+					WorldSettings.WorldEventSettings.EventChanceSettings.YetiAttackChance = builder
 							.comment("The weight to happen Yeti Invasion when it's a zombie attack day.")
 							.defineInRange("YetiAttackChance", 20, 1, 10000);
+					
+					WorldSettings.WorldEventSettings.EventChanceSettings.BungeeAttackChance = builder
+							.comment("The weight to happen Bungee Invasion when it's a zombie attack day.")
+							.defineInRange("BungeeAttackChance", 40, 1, 10000);
 					
 					WorldSettings.WorldEventSettings.EventChanceSettings.FogEventChance = builder
 							.comment("The related value to happen Fog Event when it's a zombie attack day(If the value is x, then the chance is 1/x).")
@@ -262,7 +266,8 @@ public class PVZConfig {
 			    	public ForgeConfigSpec.IntValue FootballAttackChance;
 			    	public ForgeConfigSpec.IntValue RandomAttackChance;
 			    	public ForgeConfigSpec.IntValue FogEventChance;
-			    	public ForgeConfigSpec.IntValue YetiEventChance;
+			    	public ForgeConfigSpec.IntValue YetiAttackChance;
+			    	public ForgeConfigSpec.IntValue BungeeAttackChance;
 			    }
 			}
 			

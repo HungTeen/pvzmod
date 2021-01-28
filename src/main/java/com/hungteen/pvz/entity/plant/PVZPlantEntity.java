@@ -15,6 +15,8 @@ import com.hungteen.pvz.entity.plant.spear.SpikeWeedEntity;
 import com.hungteen.pvz.entity.zombie.grassnight.TombStoneEntity;
 import com.hungteen.pvz.entity.zombie.poolnight.BalloonZombieEntity;
 import com.hungteen.pvz.entity.zombie.poolnight.DiggerZombieEntity;
+import com.hungteen.pvz.entity.zombie.roof.BungeeZombieEntity;
+import com.hungteen.pvz.entity.zombie.roof.BungeeZombieEntity.BungeeStates;
 import com.hungteen.pvz.item.tool.card.PlantCardItem;
 import com.hungteen.pvz.misc.damage.PVZDamageSource;
 import com.hungteen.pvz.misc.damage.PVZDamageType;
@@ -142,12 +144,13 @@ public abstract class PVZPlantEntity extends CreatureEntity implements IPVZPlant
 		}
 		this.plantBaseTick();
 		if(this.canPlantNormalUpdate()) {
-			   this.normalPlantTick();
+			this.normalPlantTick();
 		}
 	}
 	
 	public boolean canPlantNormalUpdate() {
-		return ! this.isPlantSleeping();
+		if(this.getRidingEntity() instanceof BungeeZombieEntity) return false;
+		return ! this.isPlantSleeping() && ! EntityUtil.isEntityFrozen(this) && ! EntityUtil.isEntityButter(this);
 	}
 	
 	/**
@@ -249,7 +252,7 @@ public abstract class PVZPlantEntity extends CreatureEntity implements IPVZPlant
 	 * check if the plant can stand on the current position
 	 */
 	protected boolean checkNormalPlantWeak(){
-		if(this.isImmuneToWeak) {
+		if(this.isImmuneToWeak || this.getRidingEntity() != null) {
 			return false;
 		}
 		if(this.getPlantEnumName().isWaterPlant) {
@@ -282,6 +285,8 @@ public abstract class PVZPlantEntity extends CreatureEntity implements IPVZPlant
 			return ((DiggerZombieEntity) entity).getAnimTime() == DiggerZombieEntity.MAX_ANIM_TIME;
 		} else if(entity instanceof BalloonZombieEntity) {
 			return ! ((BalloonZombieEntity) entity).hasBalloon();
+		} else if(entity instanceof BungeeZombieEntity) {
+			return ((BungeeZombieEntity) entity).getBungeeState() == BungeeStates.CATCH;
 		}
 		return true;
 	}

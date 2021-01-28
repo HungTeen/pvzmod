@@ -37,7 +37,7 @@ public class PVZLivingEvents {
 			    }
 			} else {
 				if(ev.getSource().getTrueSource() instanceof PVZPlantEntity) {
-					PlayerUtil.addPlantXp(player, ((PVZPlantEntity)ev.getSource().getTrueSource()).getPlantEnumName(), xp);
+//					PlayerUtil.addPlantXp(player, ((PVZPlantEntity)ev.getSource().getTrueSource()).getPlantEnumName(), xp);
 					PlayerEventHandler.onPlayerKillZombie(player, zombie.getZombieEnumName());
 				}
 			}

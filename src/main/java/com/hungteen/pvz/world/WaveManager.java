@@ -10,9 +10,12 @@ import com.hungteen.pvz.capability.player.PlayerDataManager;
 import com.hungteen.pvz.capability.player.PlayerDataManager.OtherStats;
 import com.hungteen.pvz.entity.zombie.PVZZombieEntity;
 import com.hungteen.pvz.entity.zombie.grassnight.TombStoneEntity;
+import com.hungteen.pvz.entity.zombie.roof.BungeeZombieEntity;
+import com.hungteen.pvz.entity.zombie.roof.BungeeZombieEntity.BungeeTypes;
 import com.hungteen.pvz.network.OtherStatsPacket;
 import com.hungteen.pvz.network.PVZPacketHandler;
 import com.hungteen.pvz.register.EntityRegister;
+import com.hungteen.pvz.register.SoundRegister;
 import com.hungteen.pvz.utils.EntityUtil;
 import com.hungteen.pvz.utils.PlayerUtil;
 import com.hungteen.pvz.utils.ZombieUtil;
@@ -133,6 +136,25 @@ public class WaveManager {
 			PlayerUtil.playClientSound(player, 2);
 		    PlayerUtil.sendSubTitleToPlayer(player, HUGE_WAVE);
 		    this.activateTombStone();
+		    this.checkAndSummonBungee();
+		}
+	}
+	
+	protected void checkAndSummonBungee() {
+		WorldEventData data = WorldEventData.getOverWorldEventData(world);
+		if(! data.hasZombieSpawnEntry(Zombies.BUNGEE_ZOMBIE)) return ;
+		int minCnt = 5 + this.currentWave;
+		int maxCnt = 5 + 3 * this.currentWave;
+		int cnt = world.rand.nextInt(maxCnt - minCnt + 1) + minCnt;
+		int height = world.getHeight(Type.WORLD_SURFACE, player.getPosition().getX(), player.getPosition().getZ());
+		for(int i = 0; i < cnt; ++ i) {
+			int posX = world.rand.nextInt(71) - 35;
+			int posZ = world.rand.nextInt(71) - 35;
+//			System.out.println(posX + " " + (height + 20) + " " + posZ);
+			BungeeZombieEntity bungee = EntityRegister.BUNGEE_ZOMBIE.get().create(world);
+			bungee.setBungeeType(BungeeTypes.SUMMON);
+			EntityUtil.onMobEntitySpawn(world, bungee, new BlockPos(player.getPosition().getX() + posX, height + 20, player.getPosition().getZ() + posZ));
+			EntityUtil.playSound(player, SoundRegister.BUNGEE_SCREAM.get());
 		}
 	}
 	

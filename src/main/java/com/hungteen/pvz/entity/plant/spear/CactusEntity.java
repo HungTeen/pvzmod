@@ -68,6 +68,8 @@ public class CactusEntity extends PlantShooterEntity {
 				    	this.setCactusHeight(Math.max(this.getCactusHeight() - dh, 0));
 				    }
 				}
+			} else {
+				this.setCactusHeight(0);
 			}
 		}
 	}

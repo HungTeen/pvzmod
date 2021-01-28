@@ -1,0 +1,102 @@
+package com.hungteen.pvz.entity.plant.enforce;
+
+import java.util.List;
+
+import com.hungteen.pvz.entity.plant.PVZPlantEntity;
+import com.hungteen.pvz.entity.zombie.roof.BungeeZombieEntity;
+import com.hungteen.pvz.register.SoundRegister;
+import com.hungteen.pvz.utils.EntityUtil;
+import com.hungteen.pvz.utils.enums.Plants;
+
+import net.minecraft.entity.CreatureEntity;
+import net.minecraft.entity.Entity;
+import net.minecraft.entity.EntitySize;
+import net.minecraft.entity.EntityType;
+import net.minecraft.entity.IProjectile;
+import net.minecraft.entity.Pose;
+import net.minecraft.nbt.CompoundNBT;
+import net.minecraft.util.math.AxisAlignedBB;
+import net.minecraft.util.math.MathHelper;
+import net.minecraft.world.World;
+
+public class UmbrellaLeafEntity extends PVZPlantEntity{
+
+	public static final int ANIM_TICK = 20;
+	private int inc = 0;
+	
+	public UmbrellaLeafEntity(EntityType<? extends CreatureEntity> type, World worldIn) {
+		super(type, worldIn);
+	}
+	
+	@Override
+	protected void normalPlantTick() {
+		super.normalPlantTick();
+		if(! world.isRemote) {
+			this.tickLeaf();
+			if(this.getAttackTime() == 0 && inc > 0) {
+				EntityUtil.playSound(this, SoundRegister.DRAG.get());
+			}
+			this.setAttackTime(MathHelper.clamp(this.getAttackTime() + inc, 0, ANIM_TICK));
+		}
+	}
+	
+	private void tickLeaf() {
+		float range = this.getProtectRange();
+		List<Entity> list = world.getEntitiesWithinAABB(Entity.class, EntityUtil.getEntityAABB(this, range, 1).offset(0, 2, 0), (target) -> {
+			if(target instanceof IProjectile || target instanceof BungeeZombieEntity) {
+				return EntityUtil.checkCanEntityAttack(this, target);
+			}
+			return false;
+		});
+		if(list.isEmpty()) {
+			if(this.inc != -1 && this.getAttackTime() != ANIM_TICK) {
+				
+			} else {
+				this.inc = - 1;
+			}
+			return ;
+		}
+		this.inc = 1;
+		list.forEach((target) -> {
+			if(target instanceof BungeeZombieEntity) {
+				((BungeeZombieEntity) target).pushBack();
+			} else {
+				target.setMotion((this.getRNG().nextFloat() - 0.5F) / 2, this.getRNG().nextFloat() / 3, (this.getRNG().nextFloat() - 0.5F) / 2);
+			}
+		});
+	}
+	
+	public float getProtectRange() {
+		return 5F;
+	}
+	
+	@Override
+	public EntitySize getSize(Pose poseIn) {
+		return EntitySize.flexible(0.6F, 1.2F);
+	}
+	
+	@Override
+	public Plants getPlantEnumName() {
+		return Plants.UMBRELLA_LEAF;
+	}
+	
+	@Override
+	public void readAdditional(CompoundNBT compound) {
+		super.readAdditional(compound);
+		if(compound.contains("anim_inc_num")) {
+			this.inc = compound.getInt("anim_inc_num");
+		}
+	}
+	
+	@Override
+	public void writeAdditional(CompoundNBT compound) {
+		super.writeAdditional(compound);
+		compound.putInt("anim_inc_num", this.inc);
+	}
+
+	@Override
+	public int getSuperTimeLength() {
+		return 0;
+	}
+	
+}

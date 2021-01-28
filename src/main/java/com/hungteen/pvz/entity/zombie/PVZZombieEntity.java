@@ -22,6 +22,7 @@ import com.hungteen.pvz.entity.drop.JewelEntity;
 import com.hungteen.pvz.entity.plant.PVZPlantEntity;
 import com.hungteen.pvz.entity.plant.enforce.SquashEntity;
 import com.hungteen.pvz.entity.plant.spear.SpikeWeedEntity;
+import com.hungteen.pvz.entity.zombie.roof.BungeeZombieEntity;
 import com.hungteen.pvz.misc.damage.PVZDamageSource;
 import com.hungteen.pvz.misc.damage.PVZDamageType;
 import com.hungteen.pvz.register.BlockRegister;
@@ -87,6 +88,7 @@ public abstract class PVZZombieEntity extends MonsterEntity implements IPVZZombi
 	protected boolean canBeButter = true;
 	protected boolean canBeMini = true;
 	protected boolean canBeInvis = true;
+	protected boolean canBeStealByBungee = true;
 	
 	public PVZZombieEntity(EntityType<? extends MonsterEntity> type, World worldIn) {
 		super(type, worldIn);
@@ -156,9 +158,6 @@ public abstract class PVZZombieEntity extends MonsterEntity implements IPVZZombi
 		if (!this.isAlive() || !this.canZombieNormalUpdate()) {
 			return;
 		}
-//		if(this.ticksExisted % 40 == 0) {
-//			System.out.println(this.getDefenceLife());
-//		}
 		this.normalZombieTick();
 	}
 
@@ -272,6 +271,9 @@ public abstract class PVZZombieEntity extends MonsterEntity implements IPVZZombi
 	 */
 	public boolean checkCanZombieTarget(LivingEntity target) {
 		if(target instanceof SpikeWeedEntity) {
+			return false;
+		}
+		if(target instanceof BungeeZombieEntity) {
 			return false;
 		}
 		return EntityUtil.checkCanEntityAttack(this, target);
@@ -612,6 +614,10 @@ public abstract class PVZZombieEntity extends MonsterEntity implements IPVZZombi
 		return this.canBeCold;
 	}
 	
+	public boolean canBeStealByBungee() {
+		return this.canBeStealByBungee;
+	}
+	
 	@Nullable
 	protected SoundEvent getSpawnSound() {
 		return null;
@@ -666,7 +672,8 @@ public abstract class PVZZombieEntity extends MonsterEntity implements IPVZZombi
 	}
 
 	public boolean canZombieNormalUpdate() {
-		return ! EntityUtil.isEntityFrozen(this) && ! EntityUtil.isEntityButter(this);
+		if(this.getRidingEntity() instanceof BungeeZombieEntity) return false;
+		return ! EntityUtil.isEntityFrozen(this) && ! EntityUtil.isEntityButter(this) ;
 	}
 
 	public Type getZombieType() {

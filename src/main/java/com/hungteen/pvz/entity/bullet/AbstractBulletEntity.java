@@ -280,6 +280,7 @@ public abstract class AbstractBulletEntity extends Entity implements IProjectile
 		return false;
 	}
 
+	@Override
 	public IPacket<?> createSpawnPacket() {
 		return NetworkHooks.getEntitySpawningPacket(this);
 	}

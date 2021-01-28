@@ -26,7 +26,7 @@ import net.minecraft.world.World;
 public class TrickZombieEntity extends PVZZombieEntity{
 
 	public static final int EXPLOSION_CHANCE = 8;
-	public static final int SUMMON_CHACNE = 3;
+	public static final int SUMMON_CHACNE = 5;
 	private int lastSummonTick = 0;
 	private final int summonGap = 40;
 	

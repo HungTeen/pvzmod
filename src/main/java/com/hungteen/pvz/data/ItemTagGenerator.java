@@ -37,6 +37,7 @@ public class ItemTagGenerator extends ItemTagsProvider{
 		this.getBuilder(PVZItemTags.AMETHYST_INGOTS).add(ItemRegister.AMETHYST_INGOT.get());
 		this.getBuilder(PVZItemTags.STEEL_INGOTS).add(ItemRegister.STEEL_INGOT.get());
 		this.getBuilder(PVZItemTags.AMETHYST_ORES).add(BlockRegister.AMETHYST_ORE.get().asItem());
+		this.getBuilder(PVZItemTags.ARROWS).add(ItemRegister.TARGET_ARROW.get());
 	}
 	
 	@Override

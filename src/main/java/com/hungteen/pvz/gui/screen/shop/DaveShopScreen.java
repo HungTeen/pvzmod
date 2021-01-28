@@ -6,7 +6,6 @@ import java.util.List;
 import com.hungteen.pvz.capability.player.ClientPlayerResources;
 import com.hungteen.pvz.gui.GuiHandler;
 import com.hungteen.pvz.gui.container.shop.AbstractDaveShopContainer;
-import com.hungteen.pvz.utils.PlayerUtil;
 import com.hungteen.pvz.utils.StringUtil;
 import com.hungteen.pvz.utils.TradeUtil;
 import com.hungteen.pvz.utils.TradeUtil.DaveGoods;
@@ -58,7 +57,7 @@ public class DaveShopScreen extends AbstractDaveShopScreen {
 		this.getAvailableGoods().forEach((good) -> {
 			if(good == DaveGoods.ENERGY) {
 				int num = ClientPlayerResources.getPlayerStats(Resources.MAX_ENERGY_NUM);
-				if(num < PlayerUtil.MAX_ENERGY_NUM) {
+				if(num < 5) {
 				    int cost = TradeUtil.getEnergyCost(num);
 				    list.add(new TradeType(cost, good));
 				}

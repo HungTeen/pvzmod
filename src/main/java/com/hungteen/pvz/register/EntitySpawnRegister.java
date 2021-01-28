@@ -38,7 +38,11 @@ import net.minecraftforge.fml.common.Mod;
 public class EntitySpawnRegister {
 
 	public static final PlacementType IN_SKY = PlacementType.create("pvz_in_sky", (world, pos, type) -> {
-		return world.canSeeSky(pos) && world.canBlockSeeSky(pos.add(0, -5, 0));
+		return world.canSeeSky(pos) && world.canBlockSeeSky(pos.add(0, - 5, 0));
+	});
+	
+	public static final PlacementType IN_HIGH_SKY = PlacementType.create("pvz_in_sky", (world, pos, type) -> {
+		return world.canSeeSky(pos) && world.canBlockSeeSky(pos.add(0, - 20, 0));
 	});
 	
 	public static final PlacementType ON_SNOW = PlacementType.create("pvz_on_snow", (world, pos, type) -> {
@@ -81,6 +85,7 @@ public class EntitySpawnRegister {
 		EntitySpawnPlacementRegistry.register(EntityRegister.POGO_ZOMBIE.get(), PlacementType.ON_GROUND, Heightmap.Type.MOTION_BLOCKING_NO_LEAVES, PVZZombieEntity::canZombieSpawn);
 		EntitySpawnPlacementRegistry.register(EntityRegister.YETI_ZOMBIE.get(), PlacementType.ON_GROUND, Heightmap.Type.MOTION_BLOCKING_NO_LEAVES, YetiZombieEntity::canYetiSpawn);
 		EntitySpawnPlacementRegistry.register(EntityRegister.TOMB_STONE.get(), PlacementType.ON_GROUND, Heightmap.Type.MOTION_BLOCKING_NO_LEAVES, TombStoneEntity::canTombSpawn);
+		EntitySpawnPlacementRegistry.register(EntityRegister.BUNGEE_ZOMBIE.get(), IN_SKY, Heightmap.Type.MOTION_BLOCKING_NO_LEAVES, BalloonZombieEntity::canBalloonSpawn);
 		
 	}
 	
@@ -91,6 +96,8 @@ public class EntitySpawnRegister {
 		EVENT_CHANCE.put(Events.NEWSPAPER, PVZConfig.COMMON_CONFIG.WorldSettings.WorldEventSettings.EventChanceSettings.NewspaperAttackChance.get());
 		EVENT_CHANCE.put(Events.FOOTBALL, PVZConfig.COMMON_CONFIG.WorldSettings.WorldEventSettings.EventChanceSettings.FootballAttackChance.get());
 		EVENT_CHANCE.put(Events.RANDOM, PVZConfig.COMMON_CONFIG.WorldSettings.WorldEventSettings.EventChanceSettings.RandomAttackChance.get());
+		EVENT_CHANCE.put(Events.YETI, PVZConfig.COMMON_CONFIG.WorldSettings.WorldEventSettings.EventChanceSettings.YetiAttackChance.get());
+		EVENT_CHANCE.put(Events.BUNGEE, PVZConfig.COMMON_CONFIG.WorldSettings.WorldEventSettings.EventChanceSettings.BungeeAttackChance.get());
 		
 		putSpawnData(Zombies.NORMAL_ZOMBIE, 35, 1, 2, BiomeUtil.OVER_LAND);
 		putSpawnData(Zombies.CONEHEAD_ZOMBIE, 15, 1, 1, BiomeUtil.OVER_LAND);
@@ -118,6 +125,8 @@ public class EntitySpawnRegister {
 		putSpawnData(Zombies.BALLOON_ZOMBIE, 15, 1, 1, BiomeUtil.OVER_LAND);
 		putSpawnData(Zombies.DIGGER_ZOMBIE, 6, 1, 1, BiomeUtil.OVER_LAND);
 		putSpawnData(Zombies.POGO_ZOMBIE, 8, 1, 1, BiomeUtil.OVER_LAND);
+		
+		putSpawnData(Zombies.BUNGEE_ZOMBIE, 16, 1, 1, BiomeUtil.OVER_LAND);
 	}
 	
 	public static List<ZombieSpawnEntry> getEventSpawnList(World world, Events ev){

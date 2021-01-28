@@ -52,6 +52,7 @@ public class CoffinEntity extends UnderGroundZombieEntity {
 		this.canBeCharm = false;
 		this.canBeMini = false;
 		this.canBeFrozen = false;
+		this.canBeStealByBungee = false;
 	}
 	
 	@Override

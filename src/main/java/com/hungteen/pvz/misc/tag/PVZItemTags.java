@@ -9,6 +9,8 @@ import net.minecraft.util.ResourceLocation;
 
 public class PVZItemTags {
 
+	//minecraft
+	public static final Tag<Item> ARROWS = mcTag("arrows");
 	//forge
 	public static final Tag<Item> PEAS = forgeTag("crops/pea");
 	public static final Tag<Item> NUTS = forgeTag("crops/nut");
@@ -34,4 +36,9 @@ public class PVZItemTags {
 	private static Tag<Item> forgeTag(String name){
         return new ItemTags.Wrapper(new ResourceLocation("forge", name));
     }
+	
+	private static Tag<Item> mcTag(String name){
+        return new ItemTags.Wrapper(new ResourceLocation(name));
+    }
+	
 }
