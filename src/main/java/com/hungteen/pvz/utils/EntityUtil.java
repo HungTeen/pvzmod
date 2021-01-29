@@ -314,6 +314,7 @@ public class EntityUtil {
 	 */
 	public static List<Entity> getEntityAttackableTarget(Entity attacker, AxisAlignedBB aabb){
 		List<Entity> list = new ArrayList<>();
+		if(attacker == null) return list;
 		for(Entity entity : attacker.world.getEntitiesWithinAABB(Entity.class, aabb)) {
 			if(attacker != entity && checkCanEntityAttack(attacker, entity)) {
 				list.add(entity);
@@ -328,6 +329,7 @@ public class EntityUtil {
 	public static List<Entity> getAttackEntities(Entity attacker, AxisAlignedBB aabb) {
 		IntOpenHashSet set = new IntOpenHashSet();
 		List<Entity> list = new ArrayList<>();
+		if(attacker == null) return list;
 		List<Entity> targets = getEntityAttackableTarget(attacker, aabb);
 		targets.forEach((target) -> {//owner first.
 			if(! (target instanceof PVZMultiPartEntity)) {

@@ -82,10 +82,12 @@ public class PlantUtil {
 		putPlantInfoToMap(Plants.GARLIC, 50, CDs.NORMAL, Ranks.WHITE, Essences.DEFENCE, EntityRegister.GARLIC, ItemRegister.GARLIC_CARD, ItemRegister.GARLIC_ENJOY_CARD);
 		putPlantInfoToMap(Plants.UMBRELLA_LEAF, 100, CDs.NORMAL, Ranks.GREEN, Essences.ENFORCE, EntityRegister.UMBRELLA_LEAF, ItemRegister.UMBRELLA_LEAF_CARD, ItemRegister.UMBRELLA_LEAF_ENJOY_CARD);
 		putPlantInfoToMap(Plants.MARIGOLD, 50, CDs.NORMAL, Ranks.PURPLE, Essences.MAGIC, EntityRegister.MARIGOLD, ItemRegister.MARIGOLD_CARD, ItemRegister.MARIGOLD_ENJOY_CARD);
+		putPlantInfoToMap(Plants.MELON_PULT, 325, CDs.FAST, Ranks.PURPLE, Essences.ARMA, EntityRegister.MELON_PULT, ItemRegister.MELON_PULT_CARD, ItemRegister.MELON_PULT_ENJOY_CARD);
 		putPlantInfoToMap(Plants.GATLING_PEA, 250, CDs.VERY_SLOW, Ranks.PURPLE, Essences.APPEASE, EntityRegister.GATLING_PEA, ItemRegister.GATLING_PEA_CARD, ItemRegister.GATLING_PEA_ENJOY_CARD);
 		putPlantInfoToMap(Plants.TWIN_SUNFLOWER, 150, CDs.VERY_SLOW, Ranks.BLUE, Essences.LIGHT, EntityRegister.TWIN_SUNFLOWER, ItemRegister.TWIN_SUNFLOWER_CARD, ItemRegister.TWIN_SUNFLOWER_ENJOY_CARD);
 		putPlantInfoToMap(Plants.GLOOM_SHROOM, 175, CDs.VERY_SLOW, Ranks.GOLD, Essences.TOXIC, EntityRegister.GLOOM_SHROOM, ItemRegister.GLOOM_SHROOM_CARD, ItemRegister.GLOOM_SHROOM_ENJOY_CARD);
 		putPlantInfoToMap(Plants.CAT_TAIL, 275, CDs.VERY_SLOW, Ranks.GOLD, Essences.SPEAR, EntityRegister.CAT_TAIL, ItemRegister.CAT_TAIL_CARD, ItemRegister.CAT_TAIL_ENJOY_CARD);
+		putPlantInfoToMap(Plants.WINTER_MELON, 225, CDs.VERY_SLOW, Ranks.GOLD, Essences.ICE, EntityRegister.WINTER_MELON, ItemRegister.WINTER_MELON_CARD, ItemRegister.WINTER_MELON_ENJOY_CARD);
 		putPlantInfoToMap(Plants.GOLD_MAGNET, 100, CDs.VERY_SLOW, Ranks.WHITE, Essences.ASSIST, EntityRegister.GOLD_MAGNET, ItemRegister.GOLD_MAGNET_CARD, ItemRegister.GOLD_MAGNET_ENJOY_CARD);
 		putPlantInfoToMap(Plants.WATER_GUARD, 50, CDs.LITTLE_SLOW, Ranks.GRAY, Essences.DEFENCE, EntityRegister.WATER_GUARD, ItemRegister.WATER_GUARD_CARD, ItemRegister.WATER_GUARD_ENJOY_CARD);
 		putPlantInfoToMap(Plants.STRANGE_CAT, 325, CDs.HUGE_SLOW, Ranks.PURPLE, Essences.MAGIC, EntityRegister.STRANGE_CAT, ItemRegister.STRANGE_CAT_CARD, ItemRegister.STRANGE_CAT_ENJOY_CARD);

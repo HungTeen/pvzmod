@@ -242,5 +242,17 @@
     "bungee_scream":{
         "subtitle": "sound.pvz.bungee_scream",
         "sounds":[{"name":"pvz:entity/zombie/act/bungee_scream1"},{"name":"pvz:entity/zombie/act/bungee_scream2"},{"name":"pvz:entity/zombie/act/bungee_scream3"}]
+    },
+    "yuck":{
+        "subtitle": "sound.pvz.yuck",
+        "sounds":[{"name":"pvz:entity/zombie/act/yuck1"},{"name":"pvz:entity/zombie/act/yuck2"}]
+    },
+    "melon_hit":{
+        "subtitle": "sound.pvz.melon_hit",
+        "sounds":[{"name":"pvz:entity/zombie/hit/melon_hit1"},{"name":"pvz:entity/zombie/hit/melon_hit2"}]
+    },
+    "butter":{
+        "subtitle": "sound.pvz.butter",
+        "sounds":[{"name":"pvz:entity/zombie/hit/butter"}]
     }
 }

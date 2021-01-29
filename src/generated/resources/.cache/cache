@@ -107,6 +107,9 @@ b976e7d8f9f4a4bc59c29019fb309da16dd3b632 assets\pvz\models\item\magnet_shroom_en
 818ed524c11e8a883dd767b0951806ff95a46285 assets\pvz\models\item\marigold_card.json
 e84bdf3448615fe8836f3a35ecf96aa8d154c89b assets\pvz\models\item\marigold_enjoy_card.json
 640fb723df4adaf9b0e055a7e45afa7756e5acb4 assets\pvz\models\item\marigold_spawn_egg.json
+12fa2b0d37af382c1a7d41f4e63c08253e8b0a0d assets\pvz\models\item\melon_pult_card.json
+2088b9d16f67204159211bb5e2898f592ede2c61 assets\pvz\models\item\melon_pult_enjoy_card.json
+640fb723df4adaf9b0e055a7e45afa7756e5acb4 assets\pvz\models\item\melon_pult_spawn_egg.json
 640fb723df4adaf9b0e055a7e45afa7756e5acb4 assets\pvz\models\item\mourner_zombie_spawn_egg.json
 640fb723df4adaf9b0e055a7e45afa7756e5acb4 assets\pvz\models\item\newspaper_zombie_spawn_egg.json
 640fb723df4adaf9b0e055a7e45afa7756e5acb4 assets\pvz\models\item\noble_zombie_spawn_egg.json
@@ -195,6 +198,9 @@ a9a92cd6325618d2dcf729a3a355509d1aa349d5 assets\pvz\models\item\wall_nut_card.js
 d4bd5ef79c6bacffd18cd8a16f384e81826e8a18 assets\pvz\models\item\water_guard_card.json
 9f99e17fe90e24bc18549cef792a6fcf387b0132 assets\pvz\models\item\water_guard_enjoy_card.json
 640fb723df4adaf9b0e055a7e45afa7756e5acb4 assets\pvz\models\item\water_guard_spawn_egg.json
+5b6bffde8d8c3153c02fa9d871e79c1bfe2910db assets\pvz\models\item\winter_melon_card.json
+267f22bf1caa6883d019c552c9723b3cfde7e71a assets\pvz\models\item\winter_melon_enjoy_card.json
+640fb723df4adaf9b0e055a7e45afa7756e5acb4 assets\pvz\models\item\winter_melon_spawn_egg.json
 640fb723df4adaf9b0e055a7e45afa7756e5acb4 assets\pvz\models\item\yeti_zombie_spawn_egg.json
 640fb723df4adaf9b0e055a7e45afa7756e5acb4 assets\pvz\models\item\zombie_dolphin_spawn_egg.json
 640fb723df4adaf9b0e055a7e45afa7756e5acb4 assets\pvz\models\item\zomboni_spawn_egg.json
@@ -243,7 +249,7 @@ fa67674760dab538f028e2df995692149be2ef25 data\pvz\recipes\pea_shooter_card.json
 14948941848ab33c0e7f1367222c8b49a238b288 data\pvz\recipes\plantern_card.json
 6dce0888000d6768e1d619c32e13263c531eb5bc data\pvz\recipes\pumpkin_card.json
 37ca3f9610aac5d1016369670973a84237ba1087 data\pvz\recipes\water_guard_card.json
-2240e7c8acce931909f4d65878659b3acc774b8e data\pvz\tags\items\cards\plant_card.json
-c4ea46199ab97c5b800fe67a43d5cd07ec8df346 data\pvz\tags\items\cards\plant_enjoy_card.json
-81b074766677a4b0f5bac9580a277728ab915e06 data\pvz\tags\items\cards\plant_summon_card.json
+55e3642b5f5fc305d86f22b2486e84335c4e3f78 data\pvz\tags\items\cards\plant_card.json
+9761b54c27e0701047d09cb4a88d6103d22aa53d data\pvz\tags\items\cards\plant_enjoy_card.json
+b58772319cb0b5e7fbfc5114b5cdf7437e41d157 data\pvz\tags\items\cards\plant_summon_card.json
 293c3c6119087956dfb83d72d897f82c1c248628 data\pvz\tags\items\cards\template_card.json

@@ -72,6 +72,7 @@ public class BlockRegister {
 	public static final RegistryObject<Block> AMETHYST_BLOCK =BLOCKS.register("amethyst_block", () -> new Block(Block.Properties.from(Blocks.EMERALD_BLOCK).hardnessAndResistance(9, 9))); 
 	public static final RegistryObject<Block> ORIGIN_BLOCK = BLOCKS.register("origin_block", OriginBlock::new);
 	public static final RegistryObject<Block> BUTTER_BLOCK = BLOCKS.register("butter_block", ButterBlock::new);
+	public static final RegistryObject<Block> FROZEN_MELON = BLOCKS.register("frozen_melon", () -> new Block(Block.Properties.from(Blocks.MELON)));
 	
 	//crops
 	public static final RegistryObject<Block> PEA_PLANT = BLOCKS.register("pea_plant", () -> new PeaBlock(Block.Properties.from(Blocks.WHEAT)));
@@ -107,7 +108,7 @@ public class BlockRegister {
 		IForgeRegistry<Item> items = ev.getRegistry();
 		List<RegistryObject<? extends Block>> blocks = Arrays.asList(
 				ORIGIN_ORE, APPEASE_ORE, LIGHT_ORE, EXPLOSION_ORE, DEFENCE_ORE, ICE_ORE, ENFORCE_ORE, TOXIC_ORE, ASSIST_ORE, MAGIC_ORE, FLAME_ORE, SPEAR_ORE, ARMA_ORE, ELECTRIC_ORE, SHADOW_ORE, AMETHYST_ORE,
-				STEEL_BLOCK, AMETHYST_BLOCK, ORIGIN_BLOCK, BUTTER_BLOCK,
+				STEEL_BLOCK, AMETHYST_BLOCK, ORIGIN_BLOCK, BUTTER_BLOCK, FROZEN_MELON,
 				NUT_LEAVES, NUT_SAPLING, CHOMPER, LILY_PAD,
 				LANTERN, FLOWER_POT, GOLD_TILE1, GOLD_TILE2, GOLD_TILE3,
 				SUN_CONVERTER, FRAGMENT_SPLICE, SLOT_MACHINE, ESSENCE_ALTAR, CARD_FUSION_TABLE

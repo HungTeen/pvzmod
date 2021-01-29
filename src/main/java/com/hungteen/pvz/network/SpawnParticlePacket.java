@@ -45,6 +45,10 @@ public class SpawnParticlePacket {
 		    	IParticleData particle = null;
 		    	if(id == 0) {
 		    		particle = ParticleRegister.RED_BOMB.get();
+		    	} else if(id == 1) {
+		    		particle = ParticleRegister.MELON_SLICE.get();
+		    	} else if(id == 2) {
+		    		particle = ParticleRegister.FROZEN_MELON_SLICE.get();
 		    	}
 		    	if(particle != null) {
 		    		Minecraft.getInstance().world.addParticle(particle, message.x, message.y, message.z, 0, 0, 0);

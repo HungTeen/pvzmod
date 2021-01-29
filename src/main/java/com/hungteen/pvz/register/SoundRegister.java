@@ -36,6 +36,8 @@ public class SoundRegister {
 	public static final RegistryObject<SoundEvent> PEA_HIT = registerSound("pea_hit");
 	public static final RegistryObject<SoundEvent> BOWLING_HIT = registerSound("bowling_hit");
 	public static final RegistryObject<SoundEvent> BOWLING_BOMB = registerSound("bowling_bomb");
+	public static final RegistryObject<SoundEvent> MELON_HIT = registerSound("melon_hit");
+	public static final RegistryObject<SoundEvent> BUTTER_HIT = registerSound("butter_hit");
 	//say
 	public static final RegistryObject<SoundEvent> ZOMBIE_SAY = registerSound("zombie_say");
 	public static final RegistryObject<SoundEvent> SQUASH_HMM = registerSound("squash_hmm");
@@ -46,6 +48,7 @@ public class SoundRegister {
 	public static final RegistryObject<SoundEvent> BRUH = registerSound("bruh");
 	public static final RegistryObject<SoundEvent> PENNY_SAY = registerSound("penny_say");
 	public static final RegistryObject<SoundEvent> BUNGEE_SCREAM = registerSound("bungee_scream");
+	public static final RegistryObject<SoundEvent> YUCK = registerSound("yuck");
 	//attack
 	public static final RegistryObject<SoundEvent> CHERRY_BOMB = registerSound("cherry_bomb");
 	public static final RegistryObject<SoundEvent> POTATO_MINE = registerSound("potato_mine");

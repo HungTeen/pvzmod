@@ -4,6 +4,7 @@ import com.hungteen.pvz.PVZMod;
 import com.hungteen.pvz.entity.bullet.ButterEntity;
 import com.hungteen.pvz.entity.bullet.FumeEntity;
 import com.hungteen.pvz.entity.bullet.KernelEntity;
+import com.hungteen.pvz.entity.bullet.MelonEntity;
 import com.hungteen.pvz.entity.bullet.StarEntity;
 import com.hungteen.pvz.entity.bullet.TargetArrowEntity;
 import com.hungteen.pvz.entity.bullet.ThornEntity;
@@ -38,6 +39,7 @@ import com.hungteen.pvz.entity.plant.appease.ThreePeaterEntity;
 import com.hungteen.pvz.entity.plant.arma.ButterPultEntity;
 import com.hungteen.pvz.entity.plant.arma.CabbagePultEntity;
 import com.hungteen.pvz.entity.plant.arma.KernelPultEntity;
+import com.hungteen.pvz.entity.plant.arma.MelonPultEntity;
 import com.hungteen.pvz.entity.plant.assist.BloverEntity;
 import com.hungteen.pvz.entity.plant.assist.GoldMagnetEntity;
 import com.hungteen.pvz.entity.plant.assist.GraveBusterEntity;
@@ -59,6 +61,7 @@ import com.hungteen.pvz.entity.plant.flame.JalapenoEntity;
 import com.hungteen.pvz.entity.plant.flame.TorchWoodEntity;
 import com.hungteen.pvz.entity.plant.ice.IceShroomEntity;
 import com.hungteen.pvz.entity.plant.ice.SnowPeaEntity;
+import com.hungteen.pvz.entity.plant.ice.WinterMelonEntity;
 import com.hungteen.pvz.entity.plant.light.GoldLeafEntity;
 import com.hungteen.pvz.entity.plant.light.PlanternEntity;
 import com.hungteen.pvz.entity.plant.light.SunFlowerEntity;
@@ -115,6 +118,7 @@ import com.hungteen.pvz.render.entity.bullet.ButterRender;
 import com.hungteen.pvz.render.entity.bullet.CabbageRender;
 import com.hungteen.pvz.render.entity.bullet.FumeRender;
 import com.hungteen.pvz.render.entity.bullet.KernelRender;
+import com.hungteen.pvz.render.entity.bullet.MelonRender;
 import com.hungteen.pvz.render.entity.bullet.MetalItemRender;
 import com.hungteen.pvz.render.entity.bullet.NutRender;
 import com.hungteen.pvz.render.entity.bullet.PeaRender;
@@ -149,6 +153,7 @@ import com.hungteen.pvz.render.entity.plant.appease.ThreePeaterRender;
 import com.hungteen.pvz.render.entity.plant.arma.ButterPultRender;
 import com.hungteen.pvz.render.entity.plant.arma.CabbagePultRender;
 import com.hungteen.pvz.render.entity.plant.arma.KernelPultRender;
+import com.hungteen.pvz.render.entity.plant.arma.MelonPultRender;
 import com.hungteen.pvz.render.entity.plant.assist.BloverRender;
 import com.hungteen.pvz.render.entity.plant.assist.GoldMagnetRender;
 import com.hungteen.pvz.render.entity.plant.assist.GraveBusterRender;
@@ -170,6 +175,7 @@ import com.hungteen.pvz.render.entity.plant.flame.JalapenoRender;
 import com.hungteen.pvz.render.entity.plant.flame.TorchWoodRender;
 import com.hungteen.pvz.render.entity.plant.ice.IceShroomRender;
 import com.hungteen.pvz.render.entity.plant.ice.SnowPeaRender;
+import com.hungteen.pvz.render.entity.plant.ice.WinterMelonRender;
 import com.hungteen.pvz.render.entity.plant.light.GoldLeafRender;
 import com.hungteen.pvz.render.entity.plant.light.PlanternRender;
 import com.hungteen.pvz.render.entity.plant.light.SunFlowerRender;
@@ -262,6 +268,7 @@ public class EntityRegister {
 	public static final RegistryObject<EntityType<KernelEntity>> KERNEL = registerEntityType(KernelEntity::new, "kernel", EntityClassification.MISC);
 	public static final RegistryObject<EntityType<ButterEntity>> BUTTER = registerEntityType(ButterEntity::new, "butter", EntityClassification.MISC);
 	public static final RegistryObject<EntityType<TargetArrowEntity>> TARGET_ARROW = registerEntityType(TargetArrowEntity::new, "target_arrow", EntityClassification.MISC);
+	public static final RegistryObject<EntityType<MelonEntity>> MELON = registerEntityType(MelonEntity::new, "melon", EntityClassification.MISC);
 	
 	//misc 
 	public static final RegistryObject<EntityType<SmallChomperEntity>> SMALL_CHOMPER = registerEntityType(SmallChomperEntity::new, "small_chomper", EntityClassification.MISC);
@@ -366,6 +373,8 @@ public class EntityRegister {
 	public static final RegistryObject<EntityType<ButterPultEntity>> BUTTER_PULT = registerEntityType(ButterPultEntity::new, "butter_pult", EntityClassification.CREATURE);
 	public static final RegistryObject<EntityType<GarlicEntity>> GARLIC = registerEntityType(GarlicEntity::new, "garlic", EntityClassification.CREATURE);
 	public static final RegistryObject<EntityType<UmbrellaLeafEntity>> UMBRELLA_LEAF = registerEntityType(UmbrellaLeafEntity::new, "umbrella_leaf", EntityClassification.CREATURE);
+	public static final RegistryObject<EntityType<MelonPultEntity>> MELON_PULT = registerEntityType(MelonPultEntity::new, "melon_pult", EntityClassification.CREATURE);
+	public static final RegistryObject<EntityType<WinterMelonEntity>> WINTER_MELON = registerEntityType(WinterMelonEntity::new, "winter_melon", EntityClassification.CREATURE);
 	
 	@OnlyIn(Dist.CLIENT)
 	@SubscribeEvent
@@ -389,6 +398,7 @@ public class EntityRegister {
         RenderingRegistry.registerEntityRenderingHandler(KERNEL.get(), KernelRender::new);
         RenderingRegistry.registerEntityRenderingHandler(BUTTER.get(), ButterRender::new);
         RenderingRegistry.registerEntityRenderingHandler(TARGET_ARROW.get(), TargetArrowRender::new);
+        RenderingRegistry.registerEntityRenderingHandler(MELON.get(), MelonRender::new);
         
         //misc
         RenderingRegistry.registerEntityRenderingHandler(SMALL_CHOMPER.get(), SmallChomperRender::new);
@@ -484,11 +494,13 @@ public class EntityRegister {
         RenderingRegistry.registerEntityRenderingHandler(COFFEE_BEAN.get(), CoffeeBeanRender::new);
         RenderingRegistry.registerEntityRenderingHandler(UMBRELLA_LEAF.get(), UmbrellaLeafRender::new);
         RenderingRegistry.registerEntityRenderingHandler(MARIGOLD.get(), MariGoldRender::new);
+        RenderingRegistry.registerEntityRenderingHandler(MELON_PULT.get(), MelonPultRender::new);
         
         RenderingRegistry.registerEntityRenderingHandler(GATLING_PEA.get(), GatlingPeaRender::new);
         RenderingRegistry.registerEntityRenderingHandler(TWIN_SUNFLOWER.get(), TwinSunFlowerRender::new);
         RenderingRegistry.registerEntityRenderingHandler(GLOOM_SHROOM.get(), GloomShroomRender::new);
         RenderingRegistry.registerEntityRenderingHandler(CAT_TAIL.get(), CatTailRender::new);
+        RenderingRegistry.registerEntityRenderingHandler(WINTER_MELON.get(), WinterMelonRender::new);
         RenderingRegistry.registerEntityRenderingHandler(GOLD_MAGNET.get(), GoldMagnetRender::new);
         
         RenderingRegistry.registerEntityRenderingHandler(WATER_GUARD.get(), WaterGuardRender::new);

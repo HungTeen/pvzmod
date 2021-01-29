@@ -61,10 +61,16 @@ public abstract class PultBulletEntity extends AbstractBulletEntity {
 		}
 		if (! this.world.isRemote) {
 			this.world.setEntityState(this, (byte) 3);
-			if (flag || ! this.checkLive(result)) {
+			if (flag) {
+				this.remove();
+			} else if(! this.checkLive(result)) {
+				this.onHitBlock();
 				this.remove();
 			}
 		}
+	}
+	
+	protected void onHitBlock() {
 	}
 	
 	public void pushBack() {
@@ -85,7 +91,10 @@ public abstract class PultBulletEntity extends AbstractBulletEntity {
     	this.target = target;
     	double g = this.getGravityVelocity();
     	double t1 = MathHelper.sqrt(2 * height / g);//go up time
-    	double t2 = MathHelper.sqrt(2 * (this.getPosY() + height - target.getPosY() - target.getHeight()) / g);//go down time
+    	double t2 = 0;
+    	if(this.getPosY() + height - target.getPosY() - target.getHeight() >= 0) {//random pult
+    		t2 = MathHelper.sqrt(2 * (this.getPosY() + height - target.getPosY() - target.getHeight()) / g);//go down time
+    	}
     	double dx = target.getPosX() + target.getMotion().getX() * (t1 + t2) - this.getPosX();
     	double dz = target.getPosZ() + target.getMotion().getZ() * (t1 + t2) - this.getPosZ();
     	double dxz = MathHelper.sqrt(dx * dx + dz * dz);

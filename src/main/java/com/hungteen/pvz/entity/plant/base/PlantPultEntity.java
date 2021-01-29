@@ -62,6 +62,15 @@ public abstract class PlantPultEntity extends PVZPlantEntity implements IPult {
 		return this.canPlantNormalUpdate();
 	}
 	
+	@Override
+	protected boolean canPlantTarget(LivingEntity entity) {
+		return this.checkY(entity) && super.canPlantTarget(entity);
+	}
+	
+	protected boolean checkY(LivingEntity target) {
+		return this.getPosY() + 9 >= target.getPosY() + target.getHeight();
+	}
+	
 	public float getSuperRange() {
 		if(this.isPlantInStage(1)) return 10;
 		if(this.isPlantInStage(2)) return 15;

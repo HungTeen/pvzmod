@@ -246,6 +246,7 @@ public class SlotMachineTileEntity extends TileEntity implements ITickableTileEn
 		}
 		return compoundNBT;
 	}
+	
 	@Override
 	public void read(CompoundNBT compound) {
 		super.read(compound);

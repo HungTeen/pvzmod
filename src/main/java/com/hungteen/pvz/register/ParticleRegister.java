@@ -10,7 +10,7 @@ import net.minecraftforge.registries.ForgeRegistries;
 
 public class ParticleRegister {
 
-	//dont forget register particle factory
+	//don't forget register particle factory in client register
 	public static final DeferredRegister<ParticleType<?>> PARTICLE_TYPES = new DeferredRegister<>(ForgeRegistries.PARTICLE_TYPES, PVZMod.MOD_ID);
 	
 	public static final RegistryObject<BasicParticleType> RED_BOMB = PARTICLE_TYPES.register("red_bomb", ()->{return new BasicParticleType(false);});
@@ -23,5 +23,7 @@ public class ParticleRegister {
 	public static final RegistryObject<BasicParticleType> FUME = PARTICLE_TYPES.register("fume", ()->{return new BasicParticleType(false);});
 	public static final RegistryObject<BasicParticleType> SNOW_FLOWER = PARTICLE_TYPES.register("snow_flower", ()->{return new BasicParticleType(false);});
 	public static final RegistryObject<BasicParticleType> DOOM = PARTICLE_TYPES.register("doom", ()->{return new BasicParticleType(false);});
+	public static final RegistryObject<BasicParticleType> MELON_SLICE = PARTICLE_TYPES.register("melon_slice", ()->{return new BasicParticleType(false);});
+	public static final RegistryObject<BasicParticleType> FROZEN_MELON_SLICE = PARTICLE_TYPES.register("frozen_melon_slice", ()->{return new BasicParticleType(false);});
 
 }

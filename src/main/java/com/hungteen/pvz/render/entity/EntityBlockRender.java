@@ -31,7 +31,7 @@ public abstract class EntityBlockRender<T extends Entity> extends EntityRenderer
 		float f = getScaleByEntity(entityIn);
 		matrixStackIn.scale(f, f, f);
 		matrixStackIn.translate(0.0, -1.501, 0.0);
-		matrixStackIn.rotate(Vector3f.XP.rotationDegrees(entityIn.ticksExisted * 15));
+		matrixStackIn.rotate(Vector3f.ZP.rotationDegrees(- entityIn.ticksExisted * 15));
         Minecraft.getInstance().getBlockRendererDispatcher().renderBlock(getBlockByEntity(entityIn), matrixStackIn, bufferIn, packedLightIn, OverlayTexture.NO_OVERLAY);
         matrixStackIn.pop();
 	}

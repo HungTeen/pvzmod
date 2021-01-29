@@ -6,7 +6,9 @@ import com.hungteen.pvz.model.baked.BowlingGloveBakedModel;
 import com.hungteen.pvz.particle.BlueFlameParticle;
 import com.hungteen.pvz.particle.DirtBurstOutParticle;
 import com.hungteen.pvz.particle.DoomParticle;
+import com.hungteen.pvz.particle.FrozenMelonSliceParticle;
 import com.hungteen.pvz.particle.FumeParticle;
+import com.hungteen.pvz.particle.MelonSliceParticle;
 import com.hungteen.pvz.particle.SleepParticle;
 import com.hungteen.pvz.particle.SnowFlowerParticle;
 import com.hungteen.pvz.particle.SporeParticle;
@@ -60,6 +62,8 @@ public class ClientRegister {
         manager.registerFactory(ParticleRegister.FUME.get(), (sprite) -> {return new FumeParticle.Factory(sprite);});
         manager.registerFactory(ParticleRegister.SNOW_FLOWER.get(), (sprite) -> {return new SnowFlowerParticle.Factory(sprite);});
         manager.registerFactory(ParticleRegister.DOOM.get(), (sprite) -> {return new DoomParticle.Factory(sprite);});
+        manager.registerFactory(ParticleRegister.MELON_SLICE.get(), (sprite) -> {return new MelonSliceParticle.Factory(sprite);});
+        manager.registerFactory(ParticleRegister.FROZEN_MELON_SLICE.get(), (sprite) -> {return new FrozenMelonSliceParticle.Factory(sprite);});
 	}
 	
 	@SubscribeEvent

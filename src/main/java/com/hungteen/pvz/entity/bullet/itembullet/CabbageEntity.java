@@ -36,7 +36,7 @@ public class CabbageEntity extends PultBulletEntity implements IRendersAsItem {
 	@Override
 	protected void registerData() {
 		super.registerData();
-		this.dataManager.register(CABBAGE_TYPE, 0);
+		this.dataManager.register(CABBAGE_TYPE, CabbageTypes.NORMAL.ordinal());
 	}
 
 	@Override
