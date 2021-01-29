@@ -3,6 +3,7 @@ package com.hungteen.pvz.event;
 import com.hungteen.pvz.PVZConfig;
 import com.hungteen.pvz.PVZMod;
 import com.hungteen.pvz.entity.plant.PVZPlantEntity;
+import com.hungteen.pvz.entity.zombie.PVZZombieEntity;
 import com.hungteen.pvz.entity.zombie.roof.BungeeZombieEntity;
 import com.hungteen.pvz.gui.screen.PVZMainMenuScreen;
 import com.hungteen.pvz.register.BlockRegister;
@@ -50,7 +51,7 @@ public class PVZClientEvents {
 	}
 	
 	private static void checkBungeeHandStand(LivingEntity entity, MatrixStack stack) {
-		if(entity instanceof PVZPlantEntity) return ;
+		if(entity instanceof PVZPlantEntity || entity instanceof PVZZombieEntity) return ;
 		if(entity.getRidingEntity() instanceof BungeeZombieEntity) {
 			stack.rotate(Vector3f.ZP.rotationDegrees(180F));
 		}

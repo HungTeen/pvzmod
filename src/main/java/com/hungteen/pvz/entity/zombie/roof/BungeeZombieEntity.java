@@ -68,7 +68,7 @@ public class BungeeZombieEntity extends PVZZombieEntity {
 	
 	@Override
 	protected void registerGoals() {
-		this.targetSelector.addGoal(0, new ZombieNearestTargetGoal(this, true, 30, 60));
+		this.targetSelector.addGoal(0, new ZombieNearestTargetGoal(this, true, 50, 60));
 	}
 	
 	@Override

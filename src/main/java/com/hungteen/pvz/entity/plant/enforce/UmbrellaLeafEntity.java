@@ -2,6 +2,7 @@ package com.hungteen.pvz.entity.plant.enforce;
 
 import java.util.List;
 
+import com.hungteen.pvz.entity.bullet.PultBulletEntity;
 import com.hungteen.pvz.entity.plant.PVZPlantEntity;
 import com.hungteen.pvz.entity.zombie.roof.BungeeZombieEntity;
 import com.hungteen.pvz.register.SoundRegister;
@@ -12,16 +13,14 @@ import net.minecraft.entity.CreatureEntity;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntitySize;
 import net.minecraft.entity.EntityType;
-import net.minecraft.entity.IProjectile;
 import net.minecraft.entity.Pose;
 import net.minecraft.nbt.CompoundNBT;
-import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.World;
 
 public class UmbrellaLeafEntity extends PVZPlantEntity{
 
-	public static final int ANIM_TICK = 20;
+	public static final int ANIM_TICK = 10;
 	private int inc = 0;
 	
 	public UmbrellaLeafEntity(EntityType<? extends CreatureEntity> type, World worldIn) {
@@ -42,15 +41,13 @@ public class UmbrellaLeafEntity extends PVZPlantEntity{
 	
 	private void tickLeaf() {
 		float range = this.getProtectRange();
-		List<Entity> list = world.getEntitiesWithinAABB(Entity.class, EntityUtil.getEntityAABB(this, range, 1).offset(0, 2, 0), (target) -> {
-			if(target instanceof IProjectile || target instanceof BungeeZombieEntity) {
-				return EntityUtil.checkCanEntityAttack(this, target);
-			}
+		List<Entity> list = world.getEntitiesWithinAABB(Entity.class, EntityUtil.getEntityAABB(this, range, 3), (target) -> {
+			if(target instanceof PultBulletEntity) return EntityUtil.checkCanEntityAttack(this, ((PultBulletEntity) target).getThrower());
+			if(target instanceof BungeeZombieEntity) return EntityUtil.checkCanEntityAttack(this, target);
 			return false;
 		});
 		if(list.isEmpty()) {
 			if(this.inc != -1 && this.getAttackTime() != ANIM_TICK) {
-				
 			} else {
 				this.inc = - 1;
 			}
@@ -60,19 +57,21 @@ public class UmbrellaLeafEntity extends PVZPlantEntity{
 		list.forEach((target) -> {
 			if(target instanceof BungeeZombieEntity) {
 				((BungeeZombieEntity) target).pushBack();
-			} else {
-				target.setMotion((this.getRNG().nextFloat() - 0.5F) / 2, this.getRNG().nextFloat() / 3, (this.getRNG().nextFloat() - 0.5F) / 2);
+			} else if(target instanceof PultBulletEntity){
+				((PultBulletEntity) target).pushBack();
 			}
 		});
 	}
 	
 	public float getProtectRange() {
+		if(this.isPlantInStage(1)) return 2.5F;
+		if(this.isPlantInStage(2)) return 3.5F;
 		return 5F;
 	}
 	
 	@Override
 	public EntitySize getSize(Pose poseIn) {
-		return EntitySize.flexible(0.6F, 1.2F);
+		return EntitySize.flexible(0.7F, 1.2F);
 	}
 	
 	@Override

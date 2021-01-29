@@ -17,6 +17,7 @@ public abstract class PultBulletEntity extends AbstractBulletEntity {
 	protected int targetChance = 5;
 	protected LivingEntity target = null;
 	protected float height = 10;
+	protected boolean isPushBack = false;
 	
 	public PultBulletEntity(EntityType<?> type, World worldIn) {
 		super(type, worldIn);
@@ -31,7 +32,7 @@ public abstract class PultBulletEntity extends AbstractBulletEntity {
 	@Override
 	public void tick() {
 		super.tick();
-		if(! this.world.isRemote && this.ticksExisted % this.targetChance == 0 && EntityUtil.isEntityValid(target)) {
+		if(! this.world.isRemote && ! this.isPushBack && this.ticksExisted % this.targetChance == 0 && EntityUtil.isEntityValid(target)) {
 			Vec3d speed = this.getMotion();
 			double g = this.getGravityVelocity();
 			double t1 = speed.y / g;
@@ -64,6 +65,11 @@ public abstract class PultBulletEntity extends AbstractBulletEntity {
 				this.remove();
 			}
 		}
+	}
+	
+	public void pushBack() {
+		this.isPushBack = true;
+		this.setMotion((this.rand.nextFloat() - 0.5F) * 2, this.rand.nextFloat() * 2, (this.rand.nextFloat() - 0.5F) * 2);
 	}
 	
 	protected abstract void dealDamage(Entity target);
@@ -99,6 +105,9 @@ public abstract class PultBulletEntity extends AbstractBulletEntity {
 		if(compound.contains("target_entity_id")) {
 			this.target = (LivingEntity) world.getEntityByID(compound.getInt("target_entity_id"));
 		}
+		if(compound.contains("is_target_push_back")) {
+			this.isPushBack = compound.getBoolean("is_target_push_back");
+		}
 	}
 	
 	@Override
@@ -107,6 +116,7 @@ public abstract class PultBulletEntity extends AbstractBulletEntity {
 		if(this.target != null) {
 			compound.putInt("target_entity_id", this.target.getEntityId());
 		}
+		compound.putBoolean("is_target_push_back", this.isPushBack);
 	}
 
 }

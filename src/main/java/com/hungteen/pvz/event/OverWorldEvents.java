@@ -127,27 +127,32 @@ public class OverWorldEvents {
 	 * deactivate all events and remove zombie spawn
 	 */
 	public static void deactivateZombieAttackEvents(World world, boolean isNatural) {
-		if(isNatural) {
+	    boolean flag = false;
+		for(Events ev : Events.values()) {
+			flag |= deactivateEvent(world, ev);
+		}
+		if(isNatural && flag) {
 			for(PlayerEntity pl : world.getPlayers()) {
 		        pl.sendMessage(ATTACK_FINISH);
 		        PlayerUtil.playClientSound(pl, 4);
 		        WaveManager.giveInvasionBonusToPlayer(world, pl);
 	        }
 		}
-		for(Events ev : Events.values()) {
-			deactivateEvent(world, ev);
-		}
+
 		EntitySpawnRegister.removeEventSpawns(world);
 	}
 	
 	/**
 	 * deactivate all events
 	 */
-	private static void deactivateEvent(World world, @Nonnull Events event) {
+	private static boolean deactivateEvent(World world, @Nonnull Events event) {
 		WorldEventData data = WorldEventData.getOverWorldEventData(world);
+		boolean flag = false;
 		if(data.hasEvent(event)) {
 			data.removeEvent(event);
+			flag = true;
 		}
+		return flag;
 	}
 	
 }
