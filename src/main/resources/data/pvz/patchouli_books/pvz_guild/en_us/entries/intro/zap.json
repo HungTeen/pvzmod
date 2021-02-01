@@ -9,7 +9,7 @@
         },
         {   
             "type": "text",
-            "text": "There are various rewards for killing zombies, players can get $(bgreen)TreeXp$() by killing zombies, and players can get $(bgreen)PlantXp$() when their plants killed zombies. Zombies have chances to drop $(borange)Coins(copper coins, silver coins, gold coins)$(), $(bblue)Gems$(), and $(borange)Chocolate$(). If you kill a zombie surrounded by $(bgreen)green light$(), it will definitely drop $(l)Energy$()."
+            "text": "There are various rewards for killing zombies, players can get $(bgreen)TreeXp$() by killing zombies, and players can get $(bgreen)PlantXp$() when their plants killed zombies. Zombies have chances to drop $(borange)Coins(copper coins, silver coins, gold coins)$(), $(bblue)Gems$(), $(borange)Chocolate$(), plant seeds, origin essence and so on. If you kill a zombie surrounded by $(bgreen)green light$(), it will definitely drop $(l)Energy$(). If you kill a zombie surrounded by $(byellow)yellow light$(), it will definitely drop $(byellow)Sun$()."
         },
         {   
             "type": "text",
@@ -21,7 +21,7 @@
         },
         {
             "type": "text",
-            "text": "Both $(l)plants and zombies$() have $(bred)qualities$(). The qualities are $(bred)gray, white, green, blue, purple, gold, and red$(), which become higher from left to right. The higher the quality, the stronger the corresponding plants or zombies. $(l)More experience gained from killing high-quality zombies$(). For plants, $(l)the higher the quality, the more difficult it is to upgrade$()."
+            "text": "Both $(l)plants and zombies$() have $(bred)qualities$(). The qualities are $(bred)gray, white, green, blue, purple, gold$(), which become higher from left to right. The higher the quality, the stronger the corresponding plants or zombies. $(l)More experience gained from killing high-quality zombies$(). For plants, $(l)the higher the quality, the more difficult it is to get$()."
         }
     ],
     "advancement": "pvz:root",

@@ -155,6 +155,9 @@ public class PVZConfig {
 				EntitySettings.ZombieSuperChance = builder
 						.comment("the spawn chance of zombie with plant energy(the bigger,the more chance it spawn).")
 						.defineInRange("ZombieSuperChance", 1, 0, 50);
+				EntitySettings.ZombieSunChance = builder
+						.comment("the spawn chance of zombie with sun layer(the bigger,the more chance it spawn).")
+						.defineInRange("ZombieSunChance", 1, 0, 30);
 				EntitySettings.DoomRange = builder
 						.comment("The width range when doom shroom explosion will destroy,0 means no destroy.")
 						.defineInRange("DoomRange", 3, 0, 10);
@@ -294,6 +297,7 @@ public class PVZConfig {
 			
 			public ForgeConfigSpec.BooleanValue TeamAttack;
 			public ForgeConfigSpec.IntValue ZombieSuperChance;
+			public ForgeConfigSpec.IntValue ZombieSunChance;
 			public ForgeConfigSpec.IntValue DoomRange;
 			public ForgeConfigSpec.IntValue TrickZombieCharmChance;
 			public ForgeConfigSpec.IntValue PlayerOriginGroup;

@@ -213,14 +213,14 @@ public class PlayerDataManager {
 		
 	}
 	
-	public final class PlantStats{
+	public final class PlantStats {
 		@SuppressWarnings("unused")
 		private final PlayerDataManager playerDataManager;
-		private HashMap<Plants, Integer> plantXp= new HashMap<Plants, Integer>(Plants.values().length);
+		private HashMap<Plants, Integer> plantXp = new HashMap<Plants, Integer>(Plants.values().length);
 		private HashMap<Plants, Integer> plantLevel = new HashMap<Plants, Integer>(Plants.values().length);
 		
 		private PlantStats(PlayerDataManager dataManager) {
-			this.playerDataManager=dataManager;
+			this.playerDataManager = dataManager;
 			for (Plants plant : Plants.values()) {
 				plantXp.put(plant, 0);
 				plantLevel.put(plant, 1);
@@ -257,9 +257,7 @@ public class PlayerDataManager {
 					MinecraftForge.EVENT_BUS.post(new PlantLevelUpEvent(player, plant, ++ lvl));
 					needXp = PlantUtil.getPlantLevelUpXp(plant, lvl);
 				}
-				if(lvl == maxLvl) {
-					xp = 0;
-				}
+				if(lvl == maxLvl) xp = 0;
 			} else {
 				while(lvl > 1 && xp < 0) {
 					this.addPlantLevel(plant, - 1);
@@ -273,7 +271,7 @@ public class PlayerDataManager {
 			this.sendPlantPacket(player, plant);
 		}
 		
-		public void sendPlantPacket(PlayerEntity player,Plants plant){
+		public void sendPlantPacket(PlayerEntity player, Plants plant){
 			if (player instanceof ServerPlayerEntity) {
 				PVZPacketHandler.CHANNEL.send(
 					PacketDistributor.PLAYER.with(()->{
@@ -287,11 +285,8 @@ public class PlayerDataManager {
 		private void saveToNBT(CompoundNBT baseTag) {
 			for (Plants plant : Plants.values()) {
 				CompoundNBT plantNBT = new CompoundNBT();
-
-				plantNBT.putInt("plant_lvl", this.getPlantLevel(plant));
-				plantNBT.putInt("plant_exp", this.getPlantXp(plant));
-//				plantNBT.setBoolean("PlantLockedxx", this.getIsPlantLocked(plant));
-				
+				plantNBT.putInt("player_plant_lvl", this.getPlantLevel(plant));
+				plantNBT.putInt("player_plant_exp", this.getPlantXp(plant));
 				baseTag.put(plant.toString(), plantNBT);
 			}
 		}
@@ -299,11 +294,13 @@ public class PlayerDataManager {
 		private void loadFromNBT(CompoundNBT baseTag) {
 			for (Plants plant : Plants.values()) {
 				CompoundNBT plantTag = (CompoundNBT) baseTag.get(plant.toString());
-				if(plantTag==null) {
-					continue;
+				if(plantTag == null) continue;
+				if(plantTag.contains("player_plant_lvl")) {
+					this.plantLevel.put(plant, plantTag.getInt("player_plant_lvl"));
 				}
-				this.plantLevel.put(plant, plantTag.getInt("plant_lvl"));
-				this.plantXp.put(plant, plantTag.getInt("plant_exp"));
+				if(plantTag.contains("player_plant_exp")) {
+					this.plantXp.put(plant, plantTag.getInt("player_plant_exp"));
+				}
 			}
 		}
 	}

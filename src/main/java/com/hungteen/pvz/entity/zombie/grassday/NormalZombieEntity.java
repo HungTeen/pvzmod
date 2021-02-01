@@ -1,6 +1,5 @@
 package com.hungteen.pvz.entity.zombie.grassday;
 
-import com.hungteen.pvz.PVZConfig;
 import com.hungteen.pvz.entity.zombie.base.UnderGroundZombieEntity;
 import com.hungteen.pvz.utils.ZombieUtil;
 import com.hungteen.pvz.utils.enums.Zombies;
@@ -24,15 +23,14 @@ public class NormalZombieEntity extends UnderGroundZombieEntity {
 
 	@Override
 	protected Type getSpawnType() {
-		int t = this.getRNG().nextInt(100);
-		if (t <= PVZConfig.COMMON_CONFIG.EntitySettings.ZombieSuperChance.get()) {
-			return Type.SUPER;
+		Type type = super.getSpawnType();
+		if(type == Type.NORMAL) {
+			if(this.getRNG().nextInt(200) == 0) {
+				this.getAttribute(SharedMonsterAttributes.ATTACK_DAMAGE).setBaseValue(ZombieUtil.NORMAL_DAMAGE);
+			    return Type.BEARD;
+			}
 		}
-		if (t == 99) {
-			this.getAttribute(SharedMonsterAttributes.ATTACK_DAMAGE).setBaseValue(ZombieUtil.NORMAL_DAMAGE);
-			return Type.BEARD;
-		}
-		return Type.NORMAL;
+		return type;
 	}
 
 	@Override

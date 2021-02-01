@@ -47,6 +47,10 @@
     "item.pvz.sun_storage_sapling2":"小型储光树苗",
     "item.pvz.car_key":"车钥匙",
     "item.pvz.lawn_mower":"小推车",
+    "item.pvz.frozen_melon_slice":"冰西瓜片",
+    "item.pvz.cabbage":"卷心菜",
+    "item.pvz.corn":"玉米",
+    "item.pvz.target_arrow":"带靶的箭",
 //entity &刷怪蛋 & card  
 //drop
     "entity.pvz.sun":"阳光",
@@ -128,6 +132,8 @@
     "item.pvz.pogo_zombie_spawn_egg":"跳跳僵尸刷怪蛋",
     "entity.pvz.yeti_zombie":"雪人僵尸",
     "item.pvz.yeti_zombie_spawn_egg":"雪人僵尸刷怪蛋",
+    "entity.pvz.bungee_zombie":"蹦极僵尸",
+    "item.pvz.bungee_zombie_spawn_egg":"蹦极僵尸刷怪蛋",
     "entity.pvz.coffin":"抬棺小队",
     "item.pvz.coffin_spawn_egg":"抬棺小队刷怪蛋",
     "entity.pvz.mourner_zombie":"抬棺僵尸",
@@ -140,7 +146,6 @@
     "item.pvz.trick_zombie_spawn_egg":"捣蛋鬼僵尸刷怪蛋",
     "entity.pvz.ra_zombie":"太阳神僵尸",
     "item.pvz.ra_zombie_spawn_egg":"太阳神僵尸刷怪蛋",
-    
 //plant
 //PeaShooter
     "entity.pvz.pea_shooter":"豌豆射手",
@@ -313,19 +318,49 @@
     "item.pvz.angel_star_fruit_spawn_egg":"天使星星果刷怪蛋",
     "item.pvz.angel_star_fruit_card":"天使星星果卡",
     "item.pvz.angel_star_fruit_enjoy_card":"天使星星果体验卡",
+//CabbagePult
+    "entity.pvz.cabbage_pult":"卷心菜投手",
+    "item.pvz.cabbage_pult_spawn_egg":"卷心菜投手刷怪蛋",
+    "item.pvz.cabbage_pult_card":"卷心菜投手卡",
+    "item.pvz.cabbage_pult_enjoy_card":"卷心菜投手体验卡",
 //FlowerPot
     "item.pvz.flower_pot_card":"花盆卡",
     "item.pvz.flower_pot_enjoy_card":"花盆体验卡",
+//KernelPult
+    "entity.pvz.kernel_pult":"玉米投手",
+    "item.pvz.kernel_pult_spawn_egg":"玉米投手刷怪蛋",
+    "item.pvz.kernel_pult_card":"玉米投手卡",
+    "item.pvz.kernel_pult_enjoy_card":"玉米投手体验卡",
+//ButterPult
+    "entity.pvz.butter_pult":"黄油投手",
+    "item.pvz.butter_pult_spawn_egg":"黄油投手刷怪蛋",
+    "item.pvz.butter_pult_card":"黄油投手卡",
+    "item.pvz.butter_pult_enjoy_card":"黄油投手体验卡",
 //CoffeeBean
     "entity.pvz.coffee_bean":"咖啡豆",
     "item.pvz.coffee_bean_spawn_egg":"咖啡豆刷怪蛋",
     "item.pvz.coffee_bean_card":"咖啡豆卡",
     "item.pvz.coffee_bean_enjoy_card":"咖啡豆体验卡",
+//Garlic
+    "entity.pvz.garlic":"大蒜",
+    "item.pvz.garlic_spawn_egg":"大蒜刷怪蛋",
+    "item.pvz.garlic_card":"大蒜卡",
+    "item.pvz.garlic_enjoy_card":"大蒜体验卡",
+//Umbrella Leaf
+    "entity.pvz.umbrella_leaf":"叶子保护伞",
+    "item.pvz.umbrella_leaf_spawn_egg":"叶子保护伞刷怪蛋",
+    "item.pvz.umbrella_leaf_card":"叶子保护伞卡",
+    "item.pvz.umbrella_leaf_enjoy_card":"叶子保护伞体验卡",
 //MariGold
     "entity.pvz.marigold":"金盏花",
     "item.pvz.marigold_spawn_egg":"金盏花刷怪蛋",
     "item.pvz.marigold_card":"金盏花卡",
     "item.pvz.marigold_enjoy_card":"金盏花体验卡",
+//MelonPult
+    "entity.pvz.melon_pult":"西瓜投手",
+    "item.pvz.melon_pult_spawn_egg":"西瓜投手刷怪蛋",
+    "item.pvz.melon_pult_card":"西瓜投手卡",
+    "item.pvz.melon_pult_enjoy_card":"西瓜投手体验卡",
 //GatlingPea
     "entity.pvz.gatling_pea":"机枪射手",
     "item.pvz.gatling_pea_spawn_egg":"机枪射手刷怪蛋",
@@ -346,6 +381,11 @@
     "item.pvz.cat_tail_spawn_egg":"猫尾草刷怪蛋",
     "item.pvz.cat_tail_card":"猫尾草卡",
     "item.pvz.cat_tail_enjoy_card":"猫尾草体验卡",
+//WinterMelon
+    "entity.pvz.winter_melon":"冰西瓜投手",
+    "item.pvz.winter_melon_spawn_egg":"冰西瓜投手刷怪蛋",
+    "item.pvz.winter_melon_card":"冰西瓜投手卡",
+    "item.pvz.winter_melon_enjoy_card":"冰西瓜投手体验卡",
 //GoldMagnet
     "entity.pvz.gold_magnet":"吸金磁",
     "item.pvz.gold_magnet_spawn_egg":"吸金磁刷怪蛋",
@@ -428,20 +468,26 @@
     "block.pvz.gold_tile1":"一级黄金瓷砖",
     "block.pvz.gold_tile2":"二级黄金瓷砖",
     "block.pvz.gold_tile3":"三级黄金瓷砖",
-//crop
-    "block.pvz.pea_plant":"豌豆",
-    "item.pvz.nut":"坚果",
-    "block.pvz.toxic_shroom":"孢子",
-//plant
-    "block.pvz.nut_sapling":"坚果树苗",
-    "block.pvz.nut_leaves":"坚果树叶",
-    "block.pvz.chomper":"食人花",
+    "block.pvz.butter_block":"黄油块",
+    "block.pvz.frozen_melon":"冰西瓜",
 //special
     "block.pvz.lantern":"路灯",
     "block.pvz.flower_pot":"花盆",
     "block.pvz.sun_converter":"阳光转化器",
     "block.pvz.fragment_splice":"碎片合成器",
     "block.pvz.slot_machine":"老虎机",
+    "block.pvz.essence_altar":"精华祭坛",
+    "block.pvz.card_fusion_table":"植物卡融合台",
+//crop
+    "block.pvz.pea_plant":"豌豆",
+    "item.pvz.nut":"坚果",
+    "block.pvz.toxic_shroom":"孢子",
+    "block.pvz.cabbage":"卷心菜种子",
+    "block.pvz.corn":"玉米种子",
+//plant
+    "block.pvz.nut_sapling":"坚果树苗",
+    "block.pvz.nut_leaves":"坚果树叶",
+    "block.pvz.chomper":"食人花",
 //gui
 //strange help
     "gui.pvz.strange_help":"<<植物大战僵尸mod帮助>>",
@@ -468,8 +514,12 @@
     "gui.pvz.dave_shop.gloom_shroom_card1":"大喷菇的升级版，一次向八个方向短距离快速发射烟幕",
     "gui.pvz.dave_shop.cat_tail_card":"猫尾草",
     "gui.pvz.dave_shop.cat_tail_card1":"睡莲的升级版，一次发射两个跟踪的穿透尖刺，攻击范围广",
+    "gui.pvz.dave_shop.winter_melon_card":"冰西瓜投手",
+    "gui.pvz.dave_shop.winter_melon_card1":"西瓜投手的升级版，一次发射一个使范围敌人减速的冰西瓜",
     "gui.pvz.dave_shop.gold_magnet_card":"吸金磁",
     "gui.pvz.dave_shop.gold_magnet_card1":"磁力菇的升级版，可以帮助玩家捡钱币和宝石",
+    "gui.pvz.dave_shop.car_key":"车钥匙",
+    "gui.pvz.dave_shop.car_key1":"右击潘妮打开神秘商店",
     "gui.pvz.sun_shop.title":"阳光商店",
     "gui.pvz.dave_shop.light_eye_potion_1":"光眼药水",
     "gui.pvz.dave_shop.light_eye_potion_11":"给予玩家1分钟的光眼效果",
@@ -492,6 +542,8 @@
     "gui.pvz.dave_shop.lawn_mower1":"将它放在地面上，当僵尸靠近时它会自动运转，将碰到的僵尸全部清除（BOSS无效）",
     "gui.pvz.dave_shop.soilless_plant":"无土栽培",
     "gui.pvz.dave_shop.soilless_plant1":"拥有此附魔的植物卡种出的植物可以在任意方块存活",
+    "gui.pvz.dave_shop.charm":"魅惑",
+    "gui.pvz.dave_shop.charm1":"拥有此附魔的植物卡种出的植物会被魅惑",
     "gui.pvz.mystery_shop.title":"神秘商店",
     "gui.pvz.dave_shop.enjoy_card":"植物体验卡",
     "gui.pvz.dave_shop.time_left":"剩余时间",
@@ -502,6 +554,8 @@
     "gui.pvz.slot_machine.left":"剩余次数",
     "gui.pvz.slot_machine.cost":"抽奖花费",
     "gui.pvz.slot_machine.sun":"阳光数",
+//essence altar
+    "gui.pvz.essence_altar.button":"吸收",
 //almanac
     "gui.pvz.almanac.lvl":"等级",
     "gui.pvz.almanac.health":"血量",
@@ -674,6 +728,11 @@
     "sound.pvz.bowling_bomb":"保龄球爆炸",
     "sound.pvz.penny_say":"潘妮说话",
     "sound.pvz.lawn_mower":"小推车发动",
+    "sound.pvz.plant_throw":"投掷",
+    "sound.pvz.bungee_scream":"尖叫",
+    "sound.pvz.yuck":"恶心",
+    "sound.pvz.butter":"黄油",
+    "sound.pvz.melon_hit":"西瓜击打",
 //advancement
     "advancement.pvz.root":"植物大战僵尸",
     "advancement.pvz.root.desc":"安装植物大战僵尸mod并进入主世界",
@@ -734,6 +793,7 @@
     "event.pvz.random":"随机入侵",
     "event.pvz.fog":"迷雾来袭",
     "event.pvz.yeti":"雪人入侵",
+    "event.pvz.bungee":"蹦极入侵",
 //death
     "death.attack.pvz_normal":"%s被打死了",
     "death.attack.pvz_weak":"%s虚弱而亡",
@@ -747,10 +807,16 @@
     "death.attack.pvz_through":"%s的身体被贯穿而亡",
     "death.attack.chomper_plant":"%s被食人花咬死了",
     "death.attack.thorn":"%s被刺穿胸膛",
+    "death.attack.bowling":"%s被保龄球撞死",
+    "death.attack.throw":"%s被投掷物砸死",
+    "death.attack.butter":"%s被黄油砸死",
 //itemGroup
     "itemGroup.pvz_misc":"PVZ杂项",
     "itemGroup.pvz_card":"PVZ召唤卡",
 //KeyBind
     "key.categories.pvz":"植物大战僵尸mod",
-    "key.pvz.show_resources":"展示/隐藏玩家属性UI"
+    "key.pvz.show_resources":"展示/隐藏玩家属性UI",
+    "key.pvz.show_progress":"展示/隐藏入侵进度",
+    "key.pvz.left_toggle":"向左切换资源展示",
+    "key.pvz.right_toggle":"向右切换资源展示"
 }

@@ -6,7 +6,7 @@
       "conditions": {
         "items":[
 		  {
-		    "item":"pvz:defence_essence"
+		    "item":"pvz:toxic_essence"
 		  }
 		]
       }
@@ -14,7 +14,7 @@
     "has_the_recipe": {
       "trigger": "minecraft:recipe_unlocked",
       "conditions": {
-        "recipe": "pvz:water_guard_card"
+        "recipe": "pvz:scaredy_shroom_card"
       }
     }
   },
@@ -24,7 +24,7 @@
   ]],
   "rewards":{
     "recipes":[
-	    "pvz:card/water_guard_card"
+	    "pvz:card/scaredy_shroom_card"
     ]
   }
 }

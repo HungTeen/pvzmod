@@ -1,0 +1,21 @@
+{
+    "name": "Plant Level Up",
+    "icon": "pvz:sun_flower_enjoy_card",
+    "category": "pvz:start",
+    "pages": [
+        {
+            "type": "spotlight",
+            "item": "pvz:essence_altar",
+            "title": "Essence Altar",
+            "text": "Plant level up need use $(bgreen)Essence Altar$(), it can transfer the xp of plant enjoy card to player, $(bred)each enjoy card has 5 xp$(). What's more, Plant use$(bgreen)Energy Bean$() can also gain 2 xp."
+        },
+        {
+            "type": "crafting",
+            "recipe": "pvz:essence_altar",
+            "title": "Essence Altar",
+            "text": "Essence Altar Recipe"
+        }
+    ],
+    "advancement": "pvz:root",
+    "sortnum": 10
+}

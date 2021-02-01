@@ -7,16 +7,16 @@
   ],
   "key": {
     "A": {
-      "item": "pvz:defence_essence"
+      "item": "pvz:explosion_essence"
     },
     "B": {
-      "item": "minecraft:lily_pad"
+      "item": "minecraft:potato"
     },
     "C": {
-      "item": "pvz:gray_card"
+      "item": "pvz:white_card"
     }
   },
   "result": {
-    "item": "pvz:water_guard_card"
+    "item": "pvz:potato_mine_card"
   }
 }

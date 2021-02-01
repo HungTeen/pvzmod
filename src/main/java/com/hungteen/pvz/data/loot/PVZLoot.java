@@ -30,6 +30,7 @@ public class PVZLoot {
 	public static final ResourceLocation TRICK_ZOMBIE = getEntityLootTable("trick_zombie");
 	public static final ResourceLocation JACK_IN_BOX_ZOMBIE = getEntityLootTable("jack_in_box_zombie");
 	public static final ResourceLocation DIGGER_ZOMBIE = getEntityLootTable("digger_zombie");
+	public static final ResourceLocation BUNGEE_ZOMBIE = getEntityLootTable("bungee_zombie");
 	public static final ResourceLocation RA_ZOMBIE = getEntityLootTable("ra_zombie");
 	
 	public static ResourceLocation getChestLootTable(String name) {

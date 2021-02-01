@@ -60,7 +60,6 @@ public class PVZNearestTargetGoal extends TargetGoal {
 		}
 		Collections.sort(list1, this.sorter);
 		this.target = list1.get(0);
-
 		return true;
 	}
 

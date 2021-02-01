@@ -1,6 +1,7 @@
 package com.hungteen.pvz.entity.zombie.roof;
 
-import com.hungteen.pvz.entity.ai.target.ZombieNearestTargetGoal;
+import com.hungteen.pvz.data.loot.PVZLoot;
+import com.hungteen.pvz.entity.ai.target.PVZRandomTargetGoal;
 import com.hungteen.pvz.entity.bullet.TargetArrowEntity;
 import com.hungteen.pvz.entity.zombie.PVZZombieEntity;
 import com.hungteen.pvz.misc.damage.PVZDamageSource;
@@ -15,6 +16,7 @@ import net.minecraft.entity.EntitySize;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.ILivingEntityData;
 import net.minecraft.entity.LivingEntity;
+import net.minecraft.entity.MobEntity;
 import net.minecraft.entity.Pose;
 import net.minecraft.entity.SpawnReason;
 import net.minecraft.entity.monster.MonsterEntity;
@@ -23,6 +25,7 @@ import net.minecraft.network.datasync.DataParameter;
 import net.minecraft.network.datasync.DataSerializers;
 import net.minecraft.network.datasync.EntityDataManager;
 import net.minecraft.util.DamageSource;
+import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.DifficultyInstance;
@@ -68,7 +71,7 @@ public class BungeeZombieEntity extends PVZZombieEntity {
 	
 	@Override
 	protected void registerGoals() {
-		this.targetSelector.addGoal(0, new ZombieNearestTargetGoal(this, true, 50, 60));
+		this.targetSelector.addGoal(0, new BungeeRandomTargetGoal(this, true, 50, 60));
 	}
 	
 	@Override
@@ -77,7 +80,7 @@ public class BungeeZombieEntity extends PVZZombieEntity {
 		if(! world.isRemote) {
 			if(this.getBungeeState() == BungeeStates.PUSH_BACK) {
 				this.setAttackTime(this.getAttackTime() - 1);
-				this.setMotion(new Vec3d(0, 1, 0));
+				this.setMotion(new Vec3d(0, 1.2, 0));
 				if(this.getAttackTime() <= - 60) {
 					this.remove();
 					if(this.getBungeeType() == BungeeTypes.SUMMON && EntityUtil.isEntityValid(this.getStealTarget())) {
@@ -381,6 +384,11 @@ public class BungeeZombieEntity extends PVZZombieEntity {
 		return true;
 	}
 	
+	@Override
+	protected ResourceLocation getLootTable() {
+		return PVZLoot.BUNGEE_ZOMBIE;
+	}
+	
 	public static enum BungeeStates {
 		WAIT,
 		BACK_WAIT,
@@ -394,6 +402,32 @@ public class BungeeZombieEntity extends PVZZombieEntity {
 		STEAL,//wait, shoot, down, up
 		HELP,//down, up
 		SUMMON//down, up
+	}
+	
+	public static class BungeeRandomTargetGoal extends PVZRandomTargetGoal {
+
+		public BungeeRandomTargetGoal(MobEntity mobIn, boolean checkSight, float w, float h) {
+			super(mobIn, checkSight, w, h);
+		}
+		
+		@Override
+		public boolean shouldContinueExecuting() {
+			LivingEntity entity = this.goalOwner.getAttackTarget();
+			if (entity == null) {
+				entity = this.target;
+			}
+			if (entity == null || ! entity.isAlive()) {
+				return false;
+			}
+			if (EntityUtil.checkCanEntityTarget(goalOwner, entity) && entity != this.goalOwner) {
+				if (this.checkOther(entity)) {
+					this.goalOwner.setAttackTarget(entity);
+					return true;
+				}
+			}
+			return false;
+		}
+		
 	}
 
 }

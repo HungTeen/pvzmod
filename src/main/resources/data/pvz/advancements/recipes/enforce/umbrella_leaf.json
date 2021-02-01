@@ -6,7 +6,7 @@
       "conditions": {
         "items":[
 		  {
-		    "item":"pvz:appease_essence"
+		    "item":"pvz:enforce_essence"
 		  }
 		]
       }
@@ -14,7 +14,7 @@
     "has_the_recipe": {
       "trigger": "minecraft:recipe_unlocked",
       "conditions": {
-        "recipe": "pvz:split_pea_card"
+        "recipe": "pvz:umbrella_leaf_card"
       }
     }
   },
@@ -24,7 +24,7 @@
   ]],
   "rewards":{
     "recipes":[
-	    "pvz:card/split_pea_card"
+	    "pvz:card/umbrella_leaf_card"
     ]
   }
 }

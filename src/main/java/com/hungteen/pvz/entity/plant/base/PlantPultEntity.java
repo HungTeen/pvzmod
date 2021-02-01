@@ -100,7 +100,7 @@ public abstract class PlantPultEntity extends PVZPlantEntity implements IPult {
 	
 	@Override
 	public int getPultCD() {
-		return 100;
+		return 60;
 	}
 	
 	@Override

@@ -9,7 +9,7 @@
         },
         {
             "type": "text",
-            "text": "After player $(l)use card$() to summon a creature, $(bred)the creature will treat the player as its owner$(), and the creature's level is the same as the creature's level when its owner planted the creature. If the creature can attack, it will gain experience of the creature level for its owner after killing the enemy."
+            "text": "After player $(l)use card$() to summon a creature, $(bred)the creature will treat the player as its owner$(), and the creature's level is the same as the creature's level when its owner planted the creature."
         },
         {
             "type": "spotlight",
@@ -25,7 +25,7 @@
         },
         {
             "type": "text",
-            "text": "The previous two pages introduced the difference between $(bred)Common Summon Cards and Enjoy Cards$(), and their acquisition is actually different. Common Cards are generally obtained by $(bred)crafting or purchase$(), while Enjoy Cards are often obtained by opening $(bred)treasure chests or lottery$(). At present, players can get Common Cards of most plants , but $(l)there are still a few plants that can only get their Enjoy Cards$(), such as $(bred)CherryBomb$()."
+            "text": "The previous two pages introduced the difference between $(bred)Common Summon Cards and Enjoy Cards$(), and their acquisition is actually different. Common Cards are generally obtained by $(bred)crafting or purchase$(), while Enjoy Cards are often obtained by opening $(bred)treasure chests or lottery or finish invasion$()."
         }
     ],
     "advancement": "pvz:root",

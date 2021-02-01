@@ -1,0 +1,26 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "DDD",
+    "ACB",
+    "DDD"
+  ],
+  "key": {
+    "B": {
+      "item": "pvz:origin_essence"
+    },
+    "D": {
+      "item": "pvz:steel_ingot"
+    },
+    "A": {
+      "item": "pvz:light_essence"
+    },
+    "C": {
+      "item": "minecraft:crafting_table"
+    }
+  },
+  "result": {
+    "item": "pvz:card_fusion_table",
+    "count": 1
+  }
+}

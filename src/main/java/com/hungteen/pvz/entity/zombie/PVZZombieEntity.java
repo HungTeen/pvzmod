@@ -19,6 +19,7 @@ import com.hungteen.pvz.entity.drop.CoinEntity;
 import com.hungteen.pvz.entity.drop.CoinEntity.CoinType;
 import com.hungteen.pvz.entity.drop.EnergyEntity;
 import com.hungteen.pvz.entity.drop.JewelEntity;
+import com.hungteen.pvz.entity.drop.SunEntity;
 import com.hungteen.pvz.entity.plant.PVZPlantEntity;
 import com.hungteen.pvz.entity.plant.enforce.SquashEntity;
 import com.hungteen.pvz.entity.plant.spear.SpikeWeedEntity;
@@ -112,9 +113,10 @@ public abstract class PVZZombieEntity extends MonsterEntity implements IPVZZombi
 	 */
 	protected Type getSpawnType() {
 		int t = this.getRNG().nextInt(100);
-		if (t <= PVZConfig.COMMON_CONFIG.EntitySettings.ZombieSuperChance.get()) {
-			return Type.SUPER;
-		}
+		int a = PVZConfig.COMMON_CONFIG.EntitySettings.ZombieSuperChance.get();
+		int b = PVZConfig.COMMON_CONFIG.EntitySettings.ZombieSunChance.get();
+		if (t < a) return Type.SUPER;
+		if (t < a + b) return Type.SUN;
 		return Type.NORMAL;
 	}
 
@@ -223,6 +225,8 @@ public abstract class PVZZombieEntity extends MonsterEntity implements IPVZZombi
 		if (! world.isRemote) {
 			if (getZombieType() == Type.SUPER) {//drop energy
 				this.dropEnergy();
+			} else if(getZombieType() == Type.SUN) {
+				this.dropSun();
 			} else if (getZombieType() == Type.BEARD) {// finish achievement
 			}
 			if(this.canSpawnDrop) {
@@ -237,6 +241,18 @@ public abstract class PVZZombieEntity extends MonsterEntity implements IPVZZombi
 	protected void dropEnergy() {
 		EnergyEntity energy = EntityRegister.ENERGY.get().create(world);
 		EntityUtil.onMobEntitySpawn(world, energy, this.getPosition().up());
+	}
+	
+	/**
+	 * sun type zombie can drop sun after death
+	 */
+	protected void dropSun() {
+		int num = this.getRNG().nextInt(8) + 3;
+		for(int i = 0; i < num; ++ i) {
+			SunEntity sun = EntityRegister.SUN.get().create(world);
+			sun.setAmount(25);
+			EntityUtil.onMobEntityRandomPosSpawn(world, sun, getPosition().up(), 2);
+		}
 	}
 	
 	/**
@@ -699,6 +715,7 @@ public abstract class PVZZombieEntity extends MonsterEntity implements IPVZZombi
 	}
 
 	public enum Type {
-		NORMAL, SUPER, BEARD
+		NORMAL, SUPER, BEARD, SUN
 	}
+	
 }

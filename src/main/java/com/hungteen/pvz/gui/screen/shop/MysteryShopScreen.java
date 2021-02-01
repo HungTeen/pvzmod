@@ -19,6 +19,7 @@ import com.mojang.blaze3d.systems.RenderSystem;
 
 import net.minecraft.client.gui.widget.button.Button;
 import net.minecraft.entity.player.PlayerInventory;
+import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraftforge.api.distmarker.Dist;
@@ -116,6 +117,11 @@ public class MysteryShopScreen extends AbstractDaveShopScreen {
 		return list;
 	}
 
+	@Override
+	protected ResourceLocation getTexture() {
+		return PennyShopScreen.TEXTURE;
+	}
+	
 	@Override
 	protected int getShopID() {
 		return GuiHandler.MYSTERY_SHOP;

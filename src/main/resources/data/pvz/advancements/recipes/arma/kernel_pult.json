@@ -6,7 +6,7 @@
       "conditions": {
         "items":[
 		  {
-		    "item":"pvz:appease_essence"
+		    "item":"pvz:arma_essence"
 		  }
 		]
       }
@@ -14,7 +14,7 @@
     "has_the_recipe": {
       "trigger": "minecraft:recipe_unlocked",
       "conditions": {
-        "recipe": "pvz:three_peater_card"
+        "recipe": "pvz:kernel_pult_card"
       }
     }
   },
@@ -24,7 +24,7 @@
   ]],
   "rewards":{
     "recipes":[
-	    "pvz:card/three_peater_card"
+	    "pvz:card/kernel_pult_card"
     ]
   }
 }

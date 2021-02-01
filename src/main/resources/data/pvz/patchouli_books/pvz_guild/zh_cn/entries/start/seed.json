@@ -32,6 +32,24 @@
             "item": "pvz:pepper",
             "title": "辣椒",
             "text": "击杀$(#ff0000)潜岩浆僵尸$()有概率掉落辣椒，你可以在$(#ff0000)地狱$()找到它们。"
+        },
+        {
+            "type": "spotlight",
+            "item": "pvz:cabbage",
+            "title": "卷心菜",
+            "text": "$(l)打草有概率掉落卷心菜种子$()。卷心菜可以像小麦一样种植。"
+        },
+        {
+            "type": "spotlight",
+            "item": "pvz:corn",
+            "title": "玉米",
+            "text": "击败僵尸有很低的概率掉落玉米种子，玉米也可以像小麦一样种植。"
+        },
+        {
+            "type": "spotlight",
+            "item": "pvz:spore",
+            "title": "孢子",
+            "text": "击败$(l)抬棺僵尸$()有概率掉落孢子，孢子要在$(bred)天空亮度为0$()的地方种植，右击收获。"
         }
     ],
     "advancement": "pvz:root",

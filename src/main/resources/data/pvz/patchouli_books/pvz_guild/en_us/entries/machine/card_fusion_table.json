@@ -1,0 +1,23 @@
+{
+    "name": "Card Fusion Table",
+    "icon": "pvz:card_fusion_table",
+    "category": "pvz:machine",
+    "pages": [
+        {
+            "type": "spotlight",
+            "item": "pvz:card_fusion_table",
+            "title": "Card Fusion Table",
+            "text": "$(bred)Card Fusion Table$() is a table that can use power of $(byellow)sun$() and $(bgreen)essence$() to fusion card, by using it players can get new cards. Like, PeaShooter Card and PeaShooter Card have chance to fusion to Repeater Card."
+        },
+        {
+            "type": "text",
+            "text": "but it's not always successful, each fusion have a $(bred)very low chance to fail that result are one of old cards$(). What's more, the same recipe may have multy results, such as puffshroom and seashroom are both got from fumeshroom and scaredyshroom."
+        },
+        {
+            "type": "text",
+            "text": "Each fusion need $(byellow)2000 Sun$() on the left sun slot, And $(bgreen)3 Random Essence$() on the right 3 essence slots."
+        }
+    ],
+    "advancement": "pvz:root",
+    "sortnum": 4
+}

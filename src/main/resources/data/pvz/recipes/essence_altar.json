@@ -1,0 +1,23 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "XAX",
+    "XBX",
+    "BBB"
+  ],
+  "key": {
+    "B": {
+      "item": "pvz:origin_essence"
+    },
+    "X": {
+      "tag": "forge:glass"
+    },
+    "A": {
+      "item": "pvz:origin_block"
+    }
+  },
+  "result": {
+    "item": "pvz:essence_altar",
+    "count": 1
+  }
+}

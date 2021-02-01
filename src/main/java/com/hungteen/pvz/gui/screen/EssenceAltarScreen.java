@@ -29,7 +29,7 @@ public class EssenceAltarScreen extends ContainerScreen<EssenceAltarContainer> {
 	@Override
 	protected void init() {
 		super.init();
-		this.craftButton = this.addButton(new Button(this.guiLeft + 79, this.guiTop + 120, 18, 18, new TranslationTextComponent("gui.pvz.essence_altar.button").getFormattedText(), (button) -> {
+		this.craftButton = this.addButton(new Button(this.guiLeft + 135, this.guiTop + 34, 18, 18, new TranslationTextComponent("gui.pvz.essence_altar.button").getFormattedText(), (button) -> {
 			if(this.craftButton.visible) {
 			    PVZPacketHandler.CHANNEL.sendToServer(new ClickButtonPacket(GuiHandler.ESSENCE_ALTAR, 0, 0));
 			}

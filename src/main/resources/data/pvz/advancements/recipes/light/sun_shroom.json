@@ -6,7 +6,7 @@
       "conditions": {
         "items":[
 		  {
-		    "item":"pvz:defence_essence"
+		    "item":"pvz:light_essence"
 		  }
 		]
       }
@@ -14,7 +14,7 @@
     "has_the_recipe": {
       "trigger": "minecraft:recipe_unlocked",
       "conditions": {
-        "recipe": "pvz:tall_nut_card"
+        "recipe": "pvz:sun_shroom_card"
       }
     }
   },
@@ -24,7 +24,7 @@
   ]],
   "rewards":{
     "recipes":[
-	    "pvz:card/tall_nut_card"
+	    "pvz:card/sun_shroom_card"
     ]
   }
 }

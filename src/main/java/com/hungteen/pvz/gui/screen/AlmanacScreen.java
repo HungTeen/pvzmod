@@ -315,7 +315,6 @@ public class AlmanacScreen extends AbstractOptionScreen<AlmanacContainer> {
 			maxLvl = PlayerUtil.MAX_TREE_LVL;
 			lvl = ClientPlayerResources.getPlayerStats(Resources.TREE_LVL);
 		} else {
-			
 		}
 		String lvlInfo = Properties.LVL.getName() + ":" + lvl;
 		int barWidth = 62, barHeight = 9;
@@ -330,10 +329,13 @@ public class AlmanacScreen extends AbstractOptionScreen<AlmanacContainer> {
 			len = RenderUtil.getRenderBarLen(xp, maxXp, barWidth);
 		}
 		int texX = 0;
-		int texY = maxLvl == lvl ? 210 : 200;
+		int texY = (maxLvl == lvl ? 210 : 200);
+		RenderSystem.pushMatrix();
+		RenderSystem.translated(0, 0, 100);
 		this.minecraft.getTextureManager().bindTexture(TEXTURE);
 		blit(this.guiLeft + 9, this.guiTop + 66, texX, texY, len, barHeight);
 		StringUtil.drawCenteredScaledString(this.font, lvlInfo, this.guiLeft + 9 + barWidth / 2, this.guiTop + 66 + 1, Colors.BLACK, 1f);
+		RenderSystem.popMatrix();
 		RenderSystem.popMatrix();
 	}
 	

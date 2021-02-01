@@ -62,6 +62,11 @@ public class PennyShopScreen extends AbstractDaveShopScreen {
 	}
 
 	@Override
+	protected ResourceLocation getTexture() {
+		return TEXTURE;
+	}
+	
+	@Override
 	protected int getShopID() {
 		return GuiHandler.PENNY_SHOP;
 	}

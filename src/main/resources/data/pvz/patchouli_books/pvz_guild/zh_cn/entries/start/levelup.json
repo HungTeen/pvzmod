@@ -1,0 +1,21 @@
+{
+    "name": "植物升级",
+    "icon": "pvz:sun_flower_enjoy_card",
+    "category": "pvz:start",
+    "pages": [
+        {
+            "type": "spotlight",
+            "item": "pvz:essence_altar",
+            "title": "精华祭坛",
+            "text": "植物升级需要使用$(bgreen)精华祭坛$()，他可以将植物体验卡的经验吸收转换给玩家，$(bred)每个体验卡有5点经验$()。另外植物使用$(bgreen)能量豆$()也可以加2点经验。"
+        },
+        {
+            "type": "crafting",
+            "recipe": "pvz:essence_altar",
+            "title": "精华祭坛",
+            "text": "精华祭坛的合成"
+        }
+    ],
+    "advancement": "pvz:root",
+    "sortnum": 10
+}

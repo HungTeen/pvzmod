@@ -6,7 +6,7 @@
       "conditions": {
         "items":[
 		  {
-		    "item":"pvz:appease_essence"
+		    "item":"pvz:arma_essence"
 		  }
 		]
       }
@@ -14,7 +14,7 @@
     "has_the_recipe": {
       "trigger": "minecraft:recipe_unlocked",
       "conditions": {
-        "recipe": "pvz:repeater_card"
+        "recipe": "pvz:melon_pult_card"
       }
     }
   },
@@ -24,7 +24,7 @@
   ]],
   "rewards":{
     "recipes":[
-	    "pvz:card/repeater_card"
+	    "pvz:card/melon_pult_card"
     ]
   }
 }

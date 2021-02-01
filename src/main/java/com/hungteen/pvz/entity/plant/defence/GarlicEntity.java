@@ -6,6 +6,7 @@ import java.util.List;
 import com.hungteen.pvz.entity.plant.base.PlantDefenderEntity;
 import com.hungteen.pvz.misc.damage.PVZDamageSource;
 import com.hungteen.pvz.misc.damage.PVZDamageType;
+import com.hungteen.pvz.register.SoundRegister;
 import com.hungteen.pvz.utils.AlgorithmUtil;
 import com.hungteen.pvz.utils.EntityUtil;
 import com.hungteen.pvz.utils.enums.Plants;
@@ -34,6 +35,7 @@ public class GarlicEntity extends PlantDefenderEntity {
 		if(source instanceof PVZDamageSource && ((PVZDamageSource) source).getPVZDamageType() == PVZDamageType.EAT && source.getTrueSource() instanceof MobEntity) {
 			this.updateGarlic();
 			if(this.garlic != null) {
+				EntityUtil.playSound(((MobEntity) source.getTrueSource()), SoundRegister.YUCK.get());
 				((MobEntity) source.getTrueSource()).setAttackTarget(this.garlic);
 			}
 		}

@@ -59,6 +59,11 @@ public class SunShopScreen extends AbstractDaveShopScreen {
 	}
 
 	@Override
+	protected ResourceLocation getTexture() {
+		return TEXTURE;
+	}
+	
+	@Override
 	protected int getShopID() {
 		return GuiHandler.SUN_SHOP;
 	}

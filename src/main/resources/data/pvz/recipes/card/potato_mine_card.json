@@ -1,23 +1,22 @@
 {
   "type": "minecraft:crafting_shaped",
   "pattern": [
-    "OOO",
-    "OBO",
-    "OAO"
+    "AAA",
+    "ABA",
+    "ACA"
   ],
   "key": {
-    "O": {
+    "A": {
       "item": "pvz:explosion_essence"
     },
     "B": {
       "item": "minecraft:potato"
     },
-    "A": {
+    "C": {
       "item": "pvz:white_card"
     }
   },
   "result": {
-    "item": "pvz:potato_mine_card",
-    "count": 1
+    "item": "pvz:potato_mine_card"
   }
 }

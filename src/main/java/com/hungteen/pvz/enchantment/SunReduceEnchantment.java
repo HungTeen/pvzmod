@@ -13,12 +13,12 @@ public class SunReduceEnchantment extends Enchantment{
 	
 	@Override
 	public int getMinEnchantability(int enchantmentLevel) {
-		return enchantmentLevel*5+1;
+		return enchantmentLevel * 8 + 1;
 	}
 	
 	@Override
 	public int getMaxEnchantability(int enchantmentLevel) {
-		return this.getMinEnchantability(enchantmentLevel)+5;
+		return this.getMinEnchantability(enchantmentLevel) + 8;
 	}
 	
 	@Override

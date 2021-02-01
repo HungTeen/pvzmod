@@ -27,6 +27,11 @@ public class CharmEnchantment extends Enchantment{
 	}
 	
 	@Override
+	public boolean isTreasureEnchantment() {
+		return true;
+	}
+	
+	@Override
 	public int getMaxLevel() {
 		return 1;
 	}

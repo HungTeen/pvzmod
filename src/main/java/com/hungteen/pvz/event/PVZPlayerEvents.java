@@ -134,7 +134,7 @@ public class PVZPlayerEvents {
 	}
 	
 	@SubscribeEvent
-	public static void onPlayerInteract(PlayerInteractEvent.EntityInteractSpecific ev){
+	public static void onPlayerInteract(PlayerInteractEvent.EntityInteractSpecific ev) {
 		World world = ev.getWorld();
 		PlayerEntity player = ev.getPlayer();
 		if(! world.isRemote) {
@@ -172,7 +172,7 @@ public class PVZPlayerEvents {
 	@SubscribeEvent
 	public static void onPlayerPlantLevelUp(PlayerLevelUpEvent.PlantLevelUpEvent ev) {
 		if(! ev.getPlayer().world.isRemote) {
-			PlayerUtil.addPlantXp(ev.getPlayer(), ev.plant, ev.getCurrentLevel() * 2);
+			PlayerUtil.addPlayerStats(ev.getPlayer(), Resources.TREE_XP, ev.getCurrentLevel() * 2);
 		}
 	}
 	

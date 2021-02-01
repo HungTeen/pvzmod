@@ -5,6 +5,7 @@ import com.hungteen.pvz.model.entity.IHasDefence;
 import com.hungteen.pvz.render.entity.PVZCreatureRender;
 import com.hungteen.pvz.render.layer.fullskin.CharmLayer;
 import com.hungteen.pvz.render.layer.fullskin.EnergyLayer;
+import com.hungteen.pvz.render.layer.fullskin.SunLayer;
 import com.hungteen.pvz.render.layer.fullskin.SunLightLayer;
 import com.mojang.blaze3d.matrix.MatrixStack;
 
@@ -33,6 +34,7 @@ public abstract class PVZZombieRender<T extends PVZZombieEntity> extends PVZCrea
 		this.addLayer(new EnergyLayer<>(this));
 		this.addLayer(new CharmLayer<>(this));
 		this.addLayer(new SunLightLayer<>(this));
+		this.addLayer(new SunLayer<>(this));
 	}
 	
 }

@@ -40,7 +40,7 @@ public class ClientPlayerResources{
 		resources.put(Resources.values()[type], data);
 	}
 	
-	public static void setPlantData(int type,int lvl,int xp){
+	public static void setPlantData(int type, int lvl, int xp){
 		plantCardLevel.put(Plants.values()[type], lvl);
 		plantCardXp.put(Plants.values()[type], xp);
 	}

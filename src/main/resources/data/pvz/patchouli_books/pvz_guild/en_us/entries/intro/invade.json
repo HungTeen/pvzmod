@@ -21,11 +21,16 @@
         },
         {
             "type": "text",
+            "text": "On $(l)0.4.1$() or higher, when invasion start, you will see a $(bred)invasion progress$() in the $(l)lower right corner$(), it will tip you when will wave start."
+        },
+        
+        {
+            "type": "text",
             "text": "Current Spawn Event list:$(br)$(bred)Bucket invasion$()(Normal, Conehead, Pole, Bucket Zombies).$(br)$(bred)Water invasion$()(Normal, Snorkel, Zomboni, Bobsle Teams, Lava Zombies).$(br)$(bred)Halloween invasion$()(Normal, Pumpkin, Trick Zombies)$(br)$(bred)Newspaper Invasion$()(Normal, Newspaper, Old, SundayEdition Zombies)$(br)$(bred)Football Invasion$()(Normal, ScreenDoor, Football, Dancing, GigaFootball Zombies)$(br)$(bred)Random Invasion$()(Random)$(br)"
         },
         {
             "type": "text",
-            "text": "Current Spawn Event list:$(br)$(bred)Yeti Invasion$()(Normal, Jack-In-Box, Baloon, Digger, Pogo Zombies, $(bpurple)low chance to spawn Yeti Zombie When huge wave$().)"
+            "text": "Current Spawn Event list:$(br)$(bred)Yeti Invasion$()(Normal, Jack-In-Box, Baloon, Digger, Pogo Zombies, $(bpurple)low chance to spawn Yeti Zombie When huge wave$().)$(br)$(bred)Bungee invasion$()(Bungee Zombies)."
         },
         {
             "type": "text",

@@ -22,16 +22,19 @@ public class TradeUtil {
 	private static final ItemStack SUN_SHOVEL_BOOK = new ItemStack(Items.ENCHANTED_BOOK);
 	private static final ItemStack SUN_MENDING_BOOK = new ItemStack(Items.ENCHANTED_BOOK);
 	private static final ItemStack SOILLESS_PLANT_BOOK = new ItemStack(Items.ENCHANTED_BOOK);
+	private static final ItemStack CHARM_BOOK = new ItemStack(Items.ENCHANTED_BOOK);
 	
 	public static void initTrades() {
 		EnchantedBookItem.addEnchantment(SUN_SHOVEL_BOOK, new EnchantmentData(EnchantmentRegister.SUN_SHOVEL.get(), 1));
 		EnchantedBookItem.addEnchantment(SUN_MENDING_BOOK, new EnchantmentData(EnchantmentRegister.SUN_MENDING.get(), 1));
 		EnchantedBookItem.addEnchantment(SOILLESS_PLANT_BOOK, new EnchantmentData(EnchantmentRegister.SOILLESS_PLANT.get(), 1));
+		EnchantedBookItem.addEnchantment(CHARM_BOOK, new EnchantmentData(EnchantmentRegister.CHARM.get(), 1));
 		putInfoToDaveGoodsMap(DaveGoods.ALMANAC, 100, new ItemStack(ItemRegister.ALMANAC.get()));
 		putInfoToDaveGoodsMap(DaveGoods.GATLING_PEA_CARD, 5000, new ItemStack(ItemRegister.GATLING_PEA_CARD.get()));
 		putInfoToDaveGoodsMap(DaveGoods.TWIN_SUNFLOWER_CARD, 5000, new ItemStack(ItemRegister.TWIN_SUNFLOWER_CARD.get()));
 		putInfoToDaveGoodsMap(DaveGoods.GLOOM_SHROOM_CARD, 7500, new ItemStack(ItemRegister.GLOOM_SHROOM_CARD.get()));
 		putInfoToDaveGoodsMap(DaveGoods.CAT_TAIL_CARD, 12000, new ItemStack(ItemRegister.CAT_TAIL_CARD.get()));
+		putInfoToDaveGoodsMap(DaveGoods.WINTER_MELON_CARD, 15000, new ItemStack(ItemRegister.WINTER_MELON_CARD.get()));
 		putInfoToDaveGoodsMap(DaveGoods.GOLD_MAGNET_CARD, 3000, new ItemStack(ItemRegister.GOLD_MAGNET_CARD.get()));
 		putInfoToDaveGoodsMap(DaveGoods.CAR_KEY, 500, new ItemStack(ItemRegister.CAR_KEY.get()));
 		putInfoToDaveGoodsMap(DaveGoods.LIGHT_EYE_POTION_1, 100, PotionRecipeHandler.LIGHT_EYE_POTION_1);
@@ -43,6 +46,7 @@ public class TradeUtil {
 		putInfoToDaveGoodsMap(DaveGoods.GOLD_LEAF_CARD, 6000, new ItemStack(ItemRegister.GOLD_LEAF_CARD.get()));
 		putInfoToDaveGoodsMap(DaveGoods.LAWN_MOWER, 2, new ItemStack(ItemRegister.LAWN_MOWER.get()));
 		putInfoToDaveGoodsMap(DaveGoods.SOILLESS_PLANT, 5, SOILLESS_PLANT_BOOK);
+		putInfoToDaveGoodsMap(DaveGoods.CHARM, 1, SOILLESS_PLANT_BOOK);
 	}
 	
 	public static void putInfoToDaveGoodsMap(DaveGoods good, int cost, ItemStack item) {
@@ -92,6 +96,7 @@ public class TradeUtil {
 		TWIN_SUNFLOWER_CARD(GuiHandler.DAVE_SHOP),
 		GLOOM_SHROOM_CARD(GuiHandler.DAVE_SHOP),
 		CAT_TAIL_CARD(GuiHandler.DAVE_SHOP),
+		WINTER_MELON_CARD(GuiHandler.DAVE_SHOP),
 		GOLD_MAGNET_CARD(GuiHandler.DAVE_SHOP),
 		CAR_KEY(GuiHandler.DAVE_SHOP),
 		LIGHT_EYE_POTION_1(GuiHandler.SUN_SHOP),
@@ -104,6 +109,7 @@ public class TradeUtil {
 		MONEY(GuiHandler.PENNY_SHOP),
 		LAWN_MOWER(GuiHandler.PENNY_SHOP),
 		SOILLESS_PLANT(GuiHandler.PENNY_SHOP),
+		CHARM(GuiHandler.PENNY_SHOP),
 		ENJOY_CARD_0(GuiHandler.MYSTERY_SHOP),
 		ENJOY_CARD_1(GuiHandler.MYSTERY_SHOP),
 		ENJOY_CARD_2(GuiHandler.MYSTERY_SHOP),

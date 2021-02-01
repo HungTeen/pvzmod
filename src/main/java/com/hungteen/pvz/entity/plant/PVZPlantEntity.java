@@ -551,7 +551,7 @@ public abstract class PVZPlantEntity extends CreatureEntity implements IPVZPlant
 			if(this.getOwnerUUID().isPresent()) {
 			    PlayerEntity player = this.world.getPlayerByUuid(this.getOwnerUUID().get());
 		        if(player != null) {
-		    	    PlayerUtil.addPlantXp(player, this.getPlantEnumName(), 5);
+		    	    PlayerUtil.addPlantXp(player, this.getPlantEnumName(), 2);
 		        }
 			}
 		    this.outerPlant.ifPresent((plant) -> {

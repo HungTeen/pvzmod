@@ -166,9 +166,9 @@ public class ItemRegister {
     public static final RegistryObject<PlantCardItem> GLOOM_SHROOM_CARD = registerCard(Plants.GLOOM_SHROOM, false);
     public static final RegistryObject<PlantCardItem> GLOOM_SHROOM_ENJOY_CARD = registerCard(Plants.GLOOM_SHROOM, true);
     public static final RegistryObject<PlantCardItem> CAT_TAIL_CARD = registerCard(Plants.CAT_TAIL, false);
-    public static final RegistryObject<PlantCardItem> CAT_TAIL_ENJOY_CARD = registerCard(Plants.WINTER_MELON, true);
+    public static final RegistryObject<PlantCardItem> CAT_TAIL_ENJOY_CARD = registerCard(Plants.CAT_TAIL, true);
     public static final RegistryObject<PlantCardItem> WINTER_MELON_CARD = registerCard(Plants.WINTER_MELON, false);
-    public static final RegistryObject<PlantCardItem> WINTER_MELON_ENJOY_CARD = registerCard(Plants.CAT_TAIL, true);
+    public static final RegistryObject<PlantCardItem> WINTER_MELON_ENJOY_CARD = registerCard(Plants.WINTER_MELON, true);
     public static final RegistryObject<PlantCardItem> GOLD_MAGNET_CARD = registerCard(Plants.GOLD_MAGNET, false);
     public static final RegistryObject<PlantCardItem> GOLD_MAGNET_ENJOY_CARD = registerCard(Plants.GOLD_MAGNET, true);
     public static final RegistryObject<PlantCardItem> WATER_GUARD_CARD = registerCard(Plants.WATER_GUARD, false);

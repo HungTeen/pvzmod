@@ -25,7 +25,7 @@ public class ZombieNearestTargetGoal extends PVZNearestTargetGoal {
 		if (entity == null) {
 			entity = this.target;
 		}
-		if (entity == null || !entity.isAlive()) {
+		if (entity == null || ! entity.isAlive()) {
 			return false;
 		}
 		if (EntityUtil.checkCanEntityTarget(goalOwner, entity) && entity != this.goalOwner) {

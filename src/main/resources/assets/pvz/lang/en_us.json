@@ -47,6 +47,10 @@
     "item.pvz.sun_storage_sapling2":"Small Sun Storage Sapling",
     "item.pvz.car_key":"Car Key",
     "item.pvz.lawn_mower":"Lawn Mower",
+    "item.pvz.frozen_melon_slice":"Frozen Melon Slice",
+    "item.pvz.cabbage":"Cabbage",
+    "item.pvz.corn":"Corn",
+    "item.pvz.target_arrow":"Target Arrow",
 //entity & spawn egg & card
 //drop
     "entity.pvz.sun":"Sun",
@@ -128,6 +132,8 @@
     "item.pvz.pogo_zombie_spawn_egg":"Pogo Zombie Spawn Egg",
     "entity.pvz.yeti_zombie":"Yeti Zombie",
     "item.pvz.yeti_zombie_spawn_egg":"Yeti Zombie Spawn Egg",
+    "entity.pvz.bungee_zombie":"Bungee Zombie",
+    "item.pvz.bungee_zombie_spawn_egg":"Bungee Zombie Spawn Egg",
     "entity.pvz.coffin":"Coffin Team",
     "item.pvz.coffin_spawn_egg":"Coffin Team Spawn Egg",
     "entity.pvz.mourner_zombie":"Mourner Zombie",
@@ -312,19 +318,49 @@
     "item.pvz.angel_star_fruit_spawn_egg":"AngelStarFruit Spawn Egg",
     "item.pvz.angel_star_fruit_card":"AngelStarFruit Card",
     "item.pvz.angel_star_fruit_enjoy_card":"AngelStarFruit Enjoy Card",
+//CabbagePult
+    "entity.pvz.cabbage_pult":"CabbagePult",
+    "item.pvz.cabbage_pult_spawn_egg":"CabbagePult Spawn Egg",
+    "item.pvz.cabbage_pult_card":"CabbagePult Card",
+    "item.pvz.cabbage_pult_enjoy_card":"CabbagePult Enjoy Card",
 //FlowerPot
     "item.pvz.flower_pot_card":"FlowerPot Card",
     "item.pvz.flower_pot_enjoy_card":"FlowerPot Enjoy Card",
+//KernelPult
+    "entity.pvz.kernel_pult":"KernelPult",
+    "item.pvz.kernel_pult_spawn_egg":"KernelPult Spawn Egg",
+    "item.pvz.kernel_pult_card":"KernelPult Card",
+    "item.pvz.kernel_pult_enjoy_card":"KernelPult Enjoy Card",
+//ButterPult
+    "entity.pvz.butter_pult":"ButterPult",
+    "item.pvz.butter_pult_spawn_egg":"ButterPult Spawn Egg",
+    "item.pvz.butter_pult_card":"ButterPult Card",
+    "item.pvz.butter_pult_enjoy_card":"ButterPult Enjoy Card",
 //CoffeeBean
     "entity.pvz.coffee_bean":"CoffeeBean",
     "item.pvz.coffee_bean_spawn_egg":"CoffeeBean Spawn Egg",
     "item.pvz.coffee_bean_card":"CoffeeBean Card",
     "item.pvz.coffee_bean_enjoy_card":"CoffeeBean Enjoy Card",
+//Garlic
+    "entity.pvz.garlic":"Garlic",
+    "item.pvz.garlic_spawn_egg":"Garlic Spawn Egg",
+    "item.pvz.garlic_card":"Garlic Card",
+    "item.pvz.garlic_enjoy_card":"Garlic Enjoy Card",
+//Umbrella Leaf
+    "entity.pvz.umbrella_leaf":"UmbrellaLeaf",
+    "item.pvz.umbrella_leaf_spawn_egg":"UmbrellaLeaf Spawn Egg",
+    "item.pvz.umbrella_leaf_card":"UmbrellaLeaf Card",
+    "item.pvz.umbrella_leaf_enjoy_card":"UmbrellaLeaf Enjoy Card",
 //MariGold
     "entity.pvz.marigold":"MariGold",
     "item.pvz.marigold_spawn_egg":"MariGold Spawn Egg",
     "item.pvz.marigold_card":"MariGold Card",
     "item.pvz.marigold_enjoy_card":"MariGold Enjoy Card",
+//MelonPult
+    "entity.pvz.melon_pult":"MelonPult",
+    "item.pvz.melon_pult_spawn_egg":"MelonPult Spawn Egg",
+    "item.pvz.melon_pult_card":"MelonPult Card",
+    "item.pvz.melon_pult_enjoy_card":"MelonPult Enjoy Card",
 //GatlingPea
     "entity.pvz.gatling_pea":"GatlingPea",
     "item.pvz.gatling_pea_spawn_egg":"GatlingPea Spawn Egg",
@@ -345,6 +381,11 @@
     "item.pvz.cat_tail_spawn_egg":"CatTail Spawn Egg",
     "item.pvz.cat_tail_card":"CatTail Card",
     "item.pvz.cat_tail_enjoy_card":"CatTail Enjoy Card",
+//WinterMelon
+    "entity.pvz.winter_melon":"WinterMelon",
+    "item.pvz.winter_melon_spawn_egg":"WinterMelon Spawn Egg",
+    "item.pvz.winter_melon_card":"WinterMelon Card",
+    "item.pvz.winter_melon_enjoy_card":"WinterMelon Enjoy Card",
 //GoldMagnet
     "entity.pvz.gold_magnet":"GoldMagnet",
     "item.pvz.gold_magnet_spawn_egg":"GoldMagnet Spawn Egg",
@@ -360,6 +401,16 @@
     "item.pvz.gold_leaf_spawn_egg":"GoldLeaf Spawn Egg",
     "item.pvz.gold_leaf_card":"GoldLeaf Card",
     "item.pvz.gold_leaf_enjoy_card":"GoldLeaf Enjoy Card",
+//ExplodeONut
+    "entity.pvz.explode_o_nut":"Explode-O-Nut",
+    "item.pvz.explode_o_nut_spawn_egg":"Explode-O-Nut Spawn Egg",
+    "item.pvz.explode_o_nut_card":"Explode-O-Nut Card",
+    "item.pvz.explode_o_nut_enjoy_card":"Explode-O-Nut Enjoy Card",
+//GiantWallNut
+    "entity.pvz.giant_wall_nut":"GiantWallNut",
+    "item.pvz.giant_wall_nut_spawn_egg":"GiantWallNut Spawn Egg",
+    "item.pvz.giant_wall_nut_card":"GiantWallNut Card",
+    "item.pvz.giant_wall_nut_enjoy_card":"GiantWallNut Enjoy Card",
 //tool & tooltip
     "tooltip.pvz.zombie_flag":"Right Click to get a speed effect",
     "tooltip.pvz.summon_card":"Right Click to Summon Plant or Zombie",
@@ -417,16 +468,22 @@
     "block.pvz.gold_tile1":"Gold Tile(level 1)",
     "block.pvz.gold_tile2":"Gold Tile(level 2)",
     "block.pvz.gold_tile3":"Gold Tile(level 3)",
+    "block.pvz.butter_block":"Butter Block",
+    "block.pvz.frozen_melon":"Frozen Melon",
 //special
     "block.pvz.lantern":"Lantern",
     "block.pvz.flower_pot":"Flower Pot",
     "block.pvz.sun_converter":"Sun Converter",
     "block.pvz.fragment_splice":"Fragment Splicer",
     "block.pvz.slot_machine":"Slot Machine",
+    "block.pvz.essence_altar":"Essence Altar",
+    "block.pvz.card_fusion_table":"Card Fusion Table",
 //crop
     "block.pvz.pea_plant":"Pea",
     "item.pvz.nut":"Nut",
     "block.pvz.toxic_shroom":"Spore",
+    "block.pvz.cabbage":"Cabbage Seeds",
+    "block.pvz.corn":"Corn Seeds",
 //plant
     "block.pvz.nut_sapling":"Nut Sapling",
     "block.pvz.nut_leaves":"Nut Leaves",
@@ -457,8 +514,12 @@
     "gui.pvz.dave_shop.gloom_shroom_card1":"Upgrade of FumeShroom, fast fire in 8 directions in short range",
     "gui.pvz.dave_shop.cat_tail_card":"Cat Tail",
     "gui.pvz.dave_shop.cat_tail_card1":"Upgrade of LilyPad, shoot to 2 guided thorns at a time",
+    "gui.pvz.dave_shop.winter_melon_card":"Winter Melon",
+    "gui.pvz.dave_shop.winter_melon_card1":"Upgrade of Melon Pult, pult a frozen melon that can cold down range enemies",
     "gui.pvz.dave_shop.gold_magnet_card":"Gold Magnet",
     "gui.pvz.dave_shop.gold_magnet_card1":"Upgrade of MagnetShroom, help player collect coin and jewel",
+    "gui.pvz.dave_shop.car_key":"Car Key",
+    "gui.pvz.dave_shop.car_key1":"Right Click Penny to open Mystery Shop",
     "gui.pvz.sun_shop.title":"Sun Shop",
     "gui.pvz.dave_shop.light_eye_potion_1":"Light Eye Potion",
     "gui.pvz.dave_shop.light_eye_potion_11":"Potion that give you light eye effect for 60 minute",
@@ -481,6 +542,8 @@
     "gui.pvz.dave_shop.lawn_mower1":"it can be placed on block and when zombie comes nearby it will start engine and remove all zombies collided",
     "gui.pvz.dave_shop.soilless_plant":"Soilless Plant",
     "gui.pvz.dave_shop.soilless_plant1":"The Plants summon by plant card , which contains this enchantment, are able to live on any block",
+    "gui.pvz.dave_shop.charm":"Charm",
+    "gui.pvz.dave_shop.charm1":"The Plants summon by plant card , which contains this enchantment, will be charmed",
     "gui.pvz.mystery_shop.title":"Mystery Shop",
     "gui.pvz.dave_shop.enjoy_card":"Plant Enjoy Card",
     "gui.pvz.dave_shop.time_left":"Time Left",
@@ -491,6 +554,8 @@
     "gui.pvz.slot_machine.left":"Left Chance",
     "gui.pvz.slot_machine.cost":"Cost",
     "gui.pvz.slot_machine.sun":"SunNum",
+//essence altar
+    "gui.pvz.essence_altar.button":"Absorb",
 //almanac
     "gui.pvz.almanac.lvl":"Level",
     "gui.pvz.almanac.health":"Health",
@@ -658,6 +723,11 @@
     "sound.pvz.bowling_bomb":"Bowling Bomb",
     "sound.pvz.penny_say":"Penny Say",
     "sound.pvz.lawn_mower":"Lawn Mower",
+    "sound.pvz.plant_throw":"Throw",
+    "sound.pvz.bungee_scream":"Scream",
+    "sound.pvz.yuck":"Yuck",
+    "sound.pvz.butter":"Butter",
+    "sound.pvz.melon_hit":"Melon Hit",
 //advancement
     "advancement.pvz.root":"Plants vs Zombies",
     "advancement.pvz.root.desc":"install Plants vs Zombies mod and join in world",
@@ -718,6 +788,7 @@
     "event.pvz.random":"Random Invasion",
     "event.pvz.fog":"Fog Event",
     "event.pvz.yeti":"Yeti Invasion",
+    "event.pvz.bungee":"Bungee Invasion",
 //death
     "death.attack.pvz_normal":"%s was killed",
     "death.attack.pvz_weak":"%s weak to death",
@@ -731,10 +802,16 @@
     "death.attack.pvz_through":"%s was killed",
     "death.attack.chomper_plant":"%s was eat by chomper",
     "death.attack.thorn":"%s was killed by thorn",
+    "death.attack.bowling":"%s was hit to death by bowling",
+    "death.attack.throw":"%s was killed by thowerable object",
+    "death.attack.butter":"%s was killed by butter",
 //itemGroup
     "itemGroup.pvz_misc":"PVZ Misc",
     "itemGroup.pvz_card":"PVZ Card",
 //KeyBind
     "key.categories.pvz":"Plants vs Zombies mod",
-    "key.pvz.show_resources":"Turn on/off Player Resources UI"
+    "key.pvz.show_resources":"Turn on/off Player Resources UI",
+    "key.pvz.show_progress":"Turn on/off Invasion Progress",
+    "key.pvz.left_toggle":"Left Toggle Resource UI",
+    "key.pvz.right_toggle":"Right Toggle Resource UI"
 }

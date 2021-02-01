@@ -1,8 +1,12 @@
 package com.hungteen.pvz.gui.container;
 
+import com.hungteen.pvz.item.tool.card.PlantCardItem;
 import com.hungteen.pvz.item.tool.card.SummonCardItem;
 import com.hungteen.pvz.register.BlockRegister;
 import com.hungteen.pvz.register.ContainerRegister;
+import com.hungteen.pvz.utils.EntityUtil;
+import com.hungteen.pvz.utils.PlayerUtil;
+import com.hungteen.pvz.utils.enums.Plants;
 
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.inventory.Inventory;
@@ -10,12 +14,12 @@ import net.minecraft.inventory.container.Container;
 import net.minecraft.inventory.container.Slot;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.IWorldPosCallable;
+import net.minecraft.util.SoundEvents;
 
 public class EssenceAltarContainer extends Container{
 
 	private final Inventory inv = new Inventory(9);
 	private final IWorldPosCallable worldPos;
-	@SuppressWarnings("unused")
 	private final PlayerEntity player;
 	
 	public EssenceAltarContainer(int id, PlayerEntity player, IWorldPosCallable worldPos) {
@@ -27,7 +31,8 @@ public class EssenceAltarContainer extends Container{
 				this.addSlot(new Slot(this.inv, i * 3 + j, 62 + 18 * j, 17 + 18 * i) {
 					@Override
 					public boolean isItemValid(ItemStack stack) {
-						return stack.getItem() instanceof SummonCardItem;
+						if(! (stack.getItem() instanceof SummonCardItem)) return false;
+						return ((SummonCardItem) stack.getItem()).isEnjoyCard;
 					}
 				});
 			}
@@ -43,7 +48,14 @@ public class EssenceAltarContainer extends Container{
 	}
 	
 	public void destroyAllCards() {
-		
+		for(int i = 0; i < inv.getSizeInventory(); ++ i) {
+			ItemStack stack = inv.getStackInSlot(i);
+			if(stack.isEmpty() || ! (stack.getItem() instanceof PlantCardItem)) continue;
+			Plants plant = ((PlantCardItem) stack.getItem()).plantType;
+			PlayerUtil.addPlantXp(player, plant, 5 * stack.getCount());
+			stack.shrink(stack.getCount());
+		}
+		EntityUtil.playSound(player, SoundEvents.BLOCK_ENCHANTMENT_TABLE_USE);
 	}
 	
 	

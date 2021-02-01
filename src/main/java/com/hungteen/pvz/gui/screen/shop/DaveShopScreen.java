@@ -67,6 +67,11 @@ public class DaveShopScreen extends AbstractDaveShopScreen {
 		});
 		return list;
 	}
+	
+	@Override
+	protected ResourceLocation getTexture() {
+		return TEXTURE;
+	}
 
 	@Override
 	protected int getShopID() {
