@@ -1,7 +1,6 @@
 package com.hungteen.pvz.entity.plant.defence;
 
 import com.hungteen.pvz.entity.bullet.itembullet.NutEntity;
-import com.hungteen.pvz.register.EntityRegister;
 import com.hungteen.pvz.utils.enums.Plants;
 
 import net.minecraft.entity.CreatureEntity;
@@ -33,7 +32,7 @@ public class GiantWallNutEntity extends WallNutEntity {
 		super.startSuperMode(first);
 		if(! world.isRemote) {
 			for(int i = 0; i < this.getNutCount(); ++ i) {
-				NutEntity nut = new NutEntity(EntityRegister.NUT.get(), world, this);
+				NutEntity nut = new NutEntity(world, this);
 				nut.setPosition(this.getPosX(), this.getPosY() + 1D, this.getPosZ());
 				nut.shoot((this.getRNG().nextFloat() - 0.5f) * 1.5D, 0.5D, (this.getRNG().nextFloat() - 0.5f) * 1.5D);
 				world.addEntity(nut);

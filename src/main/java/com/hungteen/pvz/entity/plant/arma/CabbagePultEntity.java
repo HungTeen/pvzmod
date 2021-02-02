@@ -6,7 +6,6 @@ import com.hungteen.pvz.entity.ai.target.PVZNearestTargetGoal;
 import com.hungteen.pvz.entity.bullet.itembullet.CabbageEntity;
 import com.hungteen.pvz.entity.bullet.itembullet.CabbageEntity.CabbageTypes;
 import com.hungteen.pvz.entity.plant.base.PlantPultEntity;
-import com.hungteen.pvz.register.EntityRegister;
 import com.hungteen.pvz.register.SoundRegister;
 import com.hungteen.pvz.utils.EntityUtil;
 import com.hungteen.pvz.utils.enums.Plants;
@@ -45,7 +44,7 @@ public class CabbagePultEntity extends PlantPultEntity {
 	
 	private Optional<CabbageEntity> pultCabbage(LivingEntity target){
 		if(target == null) return Optional.empty();
-		CabbageEntity cabbage = new CabbageEntity(EntityRegister.CABBAGE.get(), world, this);
+		CabbageEntity cabbage = new CabbageEntity(world, this);
         cabbage.setPosition(this.getPosX(), this.getPosY() + 1.7f, this.getPosZ());
         cabbage.shootPultBullet(target);
         EntityUtil.playSound(this, SoundRegister.PLANT_THROW.get());

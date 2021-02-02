@@ -4,7 +4,6 @@ import com.hungteen.pvz.entity.ai.target.PVZNearestTargetGoal;
 import com.hungteen.pvz.entity.bullet.itembullet.MetalItemEntity;
 import com.hungteen.pvz.entity.bullet.itembullet.MetalItemEntity.MetalStates;
 import com.hungteen.pvz.entity.plant.PVZPlantEntity;
-import com.hungteen.pvz.register.EntityRegister;
 import com.hungteen.pvz.register.SoundRegister;
 import com.hungteen.pvz.utils.EntityUtil;
 import com.hungteen.pvz.utils.enums.MetalTypes;
@@ -77,7 +76,7 @@ public class MagnetShroomEntity extends PVZPlantEntity {
 		})){
 			if(! (target instanceof IHasMetal)) continue;
 			((IHasMetal) target).decreaseMetal();
-			MetalItemEntity metal = new MetalItemEntity(EntityRegister.METAL.get(), world, this, ((IHasMetal) target).getMetalType());
+			MetalItemEntity metal = new MetalItemEntity(world, this, ((IHasMetal) target).getMetalType());
 			metal.setMetalState(MetalStates.BULLET);
 			metal.setPosition(target.getPosX(), target.getPosY() + target.getEyeHeight(), target.getPosZ());
 			world.addEntity(metal);
@@ -90,7 +89,7 @@ public class MagnetShroomEntity extends PVZPlantEntity {
 			EntityUtil.playSound(this, SoundRegister.MAGNET.get());
 			((IHasMetal) target).decreaseMetal();
 			this.setAttackTime(this.getAttackCD());
-			MetalItemEntity metal = new MetalItemEntity(EntityRegister.METAL.get(), world, this, ((IHasMetal) target).getMetalType());
+			MetalItemEntity metal = new MetalItemEntity(world, this, ((IHasMetal) target).getMetalType());
 			metal.setPosition(target.getPosX(), target.getPosY() + target.getEyeHeight(), target.getPosZ());
 			world.addEntity(metal);
 		} else {

@@ -10,10 +10,10 @@ public class DirtBurstOutParticle extends PVZNormalParticle{
 
 	public DirtBurstOutParticle(World world, double x, double y, double z, double xSpeed, double ySpeed, double zSpeed) {
 		super(world, x, y, z, xSpeed, ySpeed, zSpeed);
-		this.particleScale=0.1f;
-		this.maxAge=30+this.rand.nextInt(30);
-		this.canCollide=true;
-		this.particleGravity=0.02f;
+		this.particleScale = 0.1F;
+		this.maxAge = 30 + this.rand.nextInt(30);
+		this.canCollide = true;
+		this.particleGravity = 0.02F;
 	}
 	
 	public static class Factory implements IParticleFactory<BasicParticleType> {

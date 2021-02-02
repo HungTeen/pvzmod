@@ -1,12 +1,12 @@
 package com.hungteen.pvz.entity.bullet;
 
-import java.util.UUID;
-
 import javax.annotation.Nullable;
 
 import com.hungteen.pvz.PVZConfig;
+import com.hungteen.pvz.entity.misc.AbstractOwnerEntity;
 import com.hungteen.pvz.entity.plant.base.PlantShooterEntity;
 import com.hungteen.pvz.utils.EntityUtil;
+import com.hungteen.pvz.utils.interfaces.IGroupEntity;
 
 import it.unimi.dsi.fastutil.ints.IntOpenHashSet;
 import net.minecraft.block.Block;
@@ -17,7 +17,6 @@ import net.minecraft.entity.IProjectile;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.projectile.ProjectileHelper;
 import net.minecraft.nbt.CompoundNBT;
-import net.minecraft.nbt.NBTUtil;
 import net.minecraft.network.IPacket;
 import net.minecraft.particles.ParticleTypes;
 import net.minecraft.util.math.BlockRayTraceResult;
@@ -27,32 +26,25 @@ import net.minecraft.util.math.RayTraceContext;
 import net.minecraft.util.math.RayTraceResult;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
-import net.minecraft.world.server.ServerWorld;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.fml.network.NetworkHooks;
 
-public abstract class AbstractBulletEntity extends Entity implements IProjectile {
+public abstract class AbstractBulletEntity extends AbstractOwnerEntity implements IProjectile, IGroupEntity {
 
-	protected LivingEntity owner;
-	private UUID ownerId;
 	protected IntOpenHashSet hitEntities;
 	protected float airSlowDown = 0.99F;
+	protected float attackDamage = 0F;
 	
 	public AbstractBulletEntity(EntityType<?> type, World worldIn) {
 		super(type, worldIn);
 	}
 
 	public AbstractBulletEntity(EntityType<?> type, World worldIn, LivingEntity livingEntityIn) {
-		this(type, worldIn);
-		this.owner = livingEntityIn;
-		this.ownerId = livingEntityIn.getUniqueID();
+		super(type, worldIn, livingEntityIn);
+		this.attackDamage = this.getAttackDamage();
 	}
 	
-	@Override
-	protected void registerData() {
-	}
-
 	/**
 	 * Checks if the entity is in range to render.
 	 */
@@ -156,11 +148,11 @@ public abstract class AbstractBulletEntity extends Entity implements IProjectile
 	}
 	
 	protected boolean checkCanAttack(Entity target){
-		return EntityUtil.checkCanEntityAttack(getThrower(), target);
+		return EntityUtil.checkCanEntityAttack(this, target);
 	}
 	
 	protected boolean shouldHit(Entity target) {
-		return EntityUtil.checkCanEntityAttack(getThrower(), target);
+		return EntityUtil.checkCanEntityAttack(this, target);
 	}
 	
 	/**
@@ -222,34 +214,14 @@ public abstract class AbstractBulletEntity extends Entity implements IProjectile
 	 */
 	protected abstract void onImpact(RayTraceResult result);
 
-	public void writeAdditional(CompoundNBT compound) {
-		if (this.ownerId != null) {
-			compound.put("owner", NBTUtil.writeUniqueId(this.ownerId));
-		}
-	}
-
 	/**
-	 * (abstract) Protected helper method to read subclass entity data from NBT.
+	 * get the first initial damage for thrower.
 	 */
-	public void readAdditional(CompoundNBT compound) {
-		this.owner = null;
-		if (compound.contains("owner", 10)) {
-			this.ownerId = NBTUtil.readUniqueId(compound.getCompound("owner"));
-		}
-	}
-
-	@SuppressWarnings("deprecation")
+	protected abstract float getAttackDamage();
+	
 	@Nullable
 	public LivingEntity getThrower() {
-		if ((this.owner == null || this.owner.removed) && this.ownerId != null && this.world instanceof ServerWorld) {
-			Entity entity = ((ServerWorld) this.world).getEntityByUuid(this.ownerId);
-			if (entity instanceof LivingEntity) {
-				this.owner = (LivingEntity) entity;
-			} else {
-				this.owner = null;
-			}
-		}
-		return this.owner;
+		return this.getOwner();
 	}
 	
 	protected int getMaxLiveTick() {
@@ -269,6 +241,20 @@ public abstract class AbstractBulletEntity extends Entity implements IProjectile
 			}
 		}
 		return false;
+	}
+	
+	@Override
+	public void readAdditional(CompoundNBT compound) {
+		super.readAdditional(compound);
+		if(compound.contains("bullet_attack_damage")) {
+			this.attackDamage = compound.getFloat("bullet_attack_damage");
+		}
+	}
+	
+	@Override
+	public void writeAdditional(CompoundNBT compound) {
+		super.writeAdditional(compound);
+		compound.putFloat("bullet_attack_damage", this.attackDamage);
 	}
 
 	@Override

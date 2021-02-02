@@ -5,6 +5,7 @@ import com.hungteen.pvz.entity.plant.base.PlantShooterEntity;
 import com.hungteen.pvz.entity.plant.flame.TorchWoodEntity;
 import com.hungteen.pvz.entity.plant.interfaces.IIcePlant;
 import com.hungteen.pvz.misc.damage.PVZDamageSource;
+import com.hungteen.pvz.register.EntityRegister;
 import com.hungteen.pvz.register.ItemRegister;
 import com.hungteen.pvz.utils.WeaponUtil;
 import com.hungteen.pvz.utils.enums.Plants;
@@ -38,9 +39,9 @@ public class PeaEntity extends PVZItemBulletEntity {
 		super(type, worldIn);
 	}
 
-	public PeaEntity(EntityType<?> type, World worldIn, LivingEntity shooter, Type peaType,
+	public PeaEntity(World worldIn, LivingEntity shooter, Type peaType,
 			State peaState) {
-		super(type, worldIn, shooter);
+		super(EntityRegister.PEA.get(), worldIn, shooter);
 		this.setPeaState(peaState);
 		this.setPeaType(peaType);
 		this.recalculateSize();
@@ -94,9 +95,10 @@ public class PeaEntity extends PVZItemBulletEntity {
 	}
 
 	private void dealPeaDamage(Entity target) {
+		final float damage = this.getFixDamage();
 		if (this.getPeaState() == State.NORMAL) {// normal pea attack
 			// System.out.println(this.getThrower());
-			target.attackEntityFrom(PVZDamageSource.causeAppeaseDamage(this, this.getThrower()), this.getAttackDamage());
+			target.attackEntityFrom(PVZDamageSource.causeAppeaseDamage(this, this.getThrower()), damage);
 		} else if (this.getPeaState() == State.ICE) {// snow pea attack
 			PVZDamageSource source = PVZDamageSource.causeIceDamage(this, this.getThrower());
 			LivingEntity owner = this.getThrower();
@@ -109,9 +111,9 @@ public class PeaEntity extends PVZItemBulletEntity {
 					source.addEffect(WeaponUtil.getPeaGunColdEffect(lvl));
 				});
 			}
-			target.attackEntityFrom(source, this.getAttackDamage());
+			target.attackEntityFrom(source, damage);
 		} else if (this.getPeaState() == State.FIRE || this.getPeaState() == State.BLUE_FIRE) {
-			target.attackEntityFrom(PVZDamageSource.causeFireDamage(this, this.getThrower()), this.getAttackDamage());
+			target.attackEntityFrom(PVZDamageSource.causeFireDamage(this, this.getThrower()), damage);
 		}
 	}
 	
@@ -120,33 +122,15 @@ public class PeaEntity extends PVZItemBulletEntity {
 		return super.shouldHit(target) || target instanceof TorchWoodEntity;
 	}
 	
-	private float getAttackDamage() {
-		float damage = 0;
-
-		// look at the thrower first
-		if(this.getThrower() instanceof TorchWoodEntity) {
-			damage = 2;
-		}else if (this.getThrower() instanceof PlantShooterEntity) {
-			damage = ((PlantShooterEntity) this.getThrower()).getAttackDamage();
-		}
-//		else if(this.shooter instanceof EntityZombieBase) {//
-//			damage=3;
-//		}
-		else if(this.getThrower() instanceof PlayerEntity) {
-			damage = 2;
-		}
-
+	private float getFixDamage() {
+		float damage = this.attackDamage;
 		damage *= (1 + this.power * 1.0f / 5);
-		
-//		System.out.println(this.power);
-		
 		// size
 		if (this.getPeaType() == Type.BIG) {
 			damage += 20f;
 		} else if (this.getPeaType() == Type.HUGE) {
 			damage += 75f;
 		}
-
 		// fire 
 		if (this.getPeaState() == State.FIRE) {
 			damage *= 2;
@@ -154,6 +138,13 @@ public class PeaEntity extends PVZItemBulletEntity {
 			damage *= 3;
 		}
 		return damage;
+	}
+	
+	protected float getAttackDamage() {
+		if(this.getThrower() instanceof TorchWoodEntity) return 2;
+		if (this.getThrower() instanceof PlantShooterEntity) return ((PlantShooterEntity) this.getThrower()).getAttackDamage();
+		if(this.getThrower() instanceof PlayerEntity) return 2;
+		return 0;
 	}
 
 	@Override

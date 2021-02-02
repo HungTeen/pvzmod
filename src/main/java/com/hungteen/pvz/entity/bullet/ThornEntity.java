@@ -5,6 +5,7 @@ import java.util.List;
 import com.hungteen.pvz.entity.plant.spear.CactusEntity;
 import com.hungteen.pvz.entity.plant.spear.CatTailEntity;
 import com.hungteen.pvz.misc.damage.PVZDamageSource;
+import com.hungteen.pvz.register.EntityRegister;
 import com.hungteen.pvz.utils.EntityUtil;
 
 import it.unimi.dsi.fastutil.ints.IntOpenHashSet;
@@ -39,8 +40,8 @@ public class ThornEntity extends AbstractBulletEntity {
 		super(type, worldIn);
 	}
 
-	public ThornEntity(EntityType<?> type, World worldIn, LivingEntity shooter) {
-		super(type, worldIn, shooter);
+	public ThornEntity(World worldIn, LivingEntity shooter) {
+		super(EntityRegister.THORN.get(), worldIn, shooter);
 	}
 
 	@Override
@@ -185,20 +186,22 @@ public class ThornEntity extends AbstractBulletEntity {
 	}
 
 	protected void dealThornDamage(Entity target) {
-		target.attackEntityFrom(PVZDamageSource.causeThornDamage(this, this), this.getAttackDamage());
+		target.attackEntityFrom(PVZDamageSource.causeThornDamage(this, this), this.getFixDamage());
 	}
-
-	protected float getAttackDamage() {
-		float damage = 0;
-		if (this.getThrower() instanceof CatTailEntity) {
-			damage = ((CatTailEntity) this.getThrower()).getAttackDamage();
-		} else if(this.getThrower() instanceof CactusEntity) {
-			damage = ((CactusEntity) this.getThrower()).getAttackDamage();
-		}
+	
+	private float getFixDamage() {
+		float damage = this.attackDamage;
 		if (this.getThornType() == ThornTypes.AUTO) {
 			damage += 10;
 		}
 		return damage;
+	}
+
+	protected float getAttackDamage() {
+		if (this.getThrower() instanceof CatTailEntity) return ((CatTailEntity) this.getThrower()).getAttackDamage();
+		if(this.getThrower() instanceof CactusEntity) return ((CactusEntity) this.getThrower()).getAttackDamage();
+		return 0;
+		
 	}
 
 	@Override

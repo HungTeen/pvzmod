@@ -3,6 +3,7 @@ package com.hungteen.pvz.entity.bullet;
 import com.hungteen.pvz.entity.plant.appease.AngelStarFruitEntity;
 import com.hungteen.pvz.entity.plant.appease.StarFruitEntity;
 import com.hungteen.pvz.misc.damage.PVZDamageSource;
+import com.hungteen.pvz.register.EntityRegister;
 
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntitySize;
@@ -30,8 +31,8 @@ public class StarEntity extends AbstractBulletEntity {
 		super(type, worldIn);
 	}
 	
-	public StarEntity(EntityType<?> type, World worldIn, LivingEntity livingEntityIn, StarTypes starType, StarStates starState) {
-		super(type, worldIn, livingEntityIn);
+	public StarEntity(World worldIn, LivingEntity livingEntityIn, StarTypes starType, StarStates starState) {
+		super(EntityRegister.STAR.get(), worldIn, livingEntityIn);
 		this.setStarType(starType);
 		this.setStarState(starState);
 	}
@@ -63,19 +64,21 @@ public class StarEntity extends AbstractBulletEntity {
 	}
 	
 	private void dealStarDamage(Entity target) {
-		target.attackEntityFrom(PVZDamageSource.causeAppeaseDamage(this, this.getThrower()), this.getAttackDamage());
+		target.attackEntityFrom(PVZDamageSource.causeAppeaseDamage(this, this.getThrower()), this.getFixDamage());
 	}
 	
-	private float getAttackDamage() {
-		float damage = 0;
-		if(this.getThrower() instanceof StarFruitEntity) {
-			damage = ((StarFruitEntity) this.getThrower()).getAttackDamage();
-		} else if(this.getThrower() instanceof AngelStarFruitEntity) {
-			damage = ((AngelStarFruitEntity) this.getThrower()).getAttackDamage();
-		}
+	private float getFixDamage() {
+		float damage = this.attackDamage;
 		if(this.getStarType() == StarTypes.BIG) damage += 5;
 		if(this.getStarType() == StarTypes.HUGE) damage += 10;
 		return damage;
+	}
+	
+	protected float getAttackDamage() {
+		if(this.getThrower() instanceof StarFruitEntity) return ((StarFruitEntity) this.getThrower()).getAttackDamage();
+		if(this.getThrower() instanceof AngelStarFruitEntity) return ((AngelStarFruitEntity) this.getThrower()).getAttackDamage();
+		return 0;
+		
 	}
 	
 	@Override

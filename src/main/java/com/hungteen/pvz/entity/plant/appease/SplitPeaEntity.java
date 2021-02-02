@@ -1,7 +1,6 @@
 package com.hungteen.pvz.entity.plant.appease;
 
 import com.hungteen.pvz.entity.bullet.itembullet.PeaEntity;
-import com.hungteen.pvz.register.EntityRegister;
 import com.hungteen.pvz.utils.enums.Plants;
 
 import net.minecraft.entity.CreatureEntity;
@@ -55,14 +54,14 @@ public class SplitPeaEntity extends PeaShooterEntity{
         double deltaZ = tmp * dz * (this.isFacingFront() ? 1 : -1);
         //shoot front
         if(this.getAttackTime() >= (this.isFacingFront() ? 2 : 1)) {
-        	PeaEntity pea = new PeaEntity(EntityRegister.PEA.get(), this.world, this, this.getShootType(), this.getShootState());
+        	PeaEntity pea = new PeaEntity(this.world, this, this.getShootType(), this.getShootState());
             pea.setPosition(this.getPosX() + deltaX, y, this.getPosZ() + deltaZ);
             pea.shootPea(dx, target.getPosY() + target.getHeight() - y, dz, this.getBulletSpeed());      
             this.world.addEntity(pea);
         }
         //shoot back
         if(this.getAttackTime() >= (this.isFacingFront() ? 1 : 2)) {
-        	PeaEntity pea = new PeaEntity(EntityRegister.PEA.get(), this.world, this, this.getShootType(), this.getShootState());
+        	PeaEntity pea = new PeaEntity(this.world, this, this.getShootType(), this.getShootState());
             pea.setPosition(this.getPosX() - deltaX, y, this.getPosZ() - deltaZ);
             pea.shootPeaAnti(dx, target.getPosY() + target.getHeight() - y, dz, this.getBulletSpeed());      
             this.world.addEntity(pea);

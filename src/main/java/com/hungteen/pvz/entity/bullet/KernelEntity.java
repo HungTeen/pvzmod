@@ -2,6 +2,7 @@ package com.hungteen.pvz.entity.bullet;
 
 import com.hungteen.pvz.entity.plant.arma.KernelPultEntity;
 import com.hungteen.pvz.misc.damage.PVZDamageSource;
+import com.hungteen.pvz.register.EntityRegister;
 
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntitySize;
@@ -16,20 +17,18 @@ public class KernelEntity extends PultBulletEntity {
 		super(type, worldIn);
 	}
 	
-	public KernelEntity(EntityType<?> type, World worldIn, LivingEntity shooter) {
-		super(type, worldIn, shooter);
+	public KernelEntity(World worldIn, LivingEntity shooter) {
+		super(EntityRegister.KERNEL.get(), worldIn, shooter);
 	}
 
 	protected void dealDamage(Entity target) {
-		target.attackEntityFrom(PVZDamageSource.causeThrowDamage(this, this.getThrower()), this.getKernelDamage());
+		target.attackEntityFrom(PVZDamageSource.causeThrowDamage(this, this.getThrower()), this.attackDamage);
 	}
 	
-	private float getKernelDamage() {
-		float damage = 0;
-		if(this.getThrower() instanceof KernelPultEntity) {
-			damage += ((KernelPultEntity) this.getThrower()).getKernelDamage();
-		}
-		return damage;
+	@Override
+	protected float getAttackDamage() {
+		if(this.getThrower() instanceof KernelPultEntity) return ((KernelPultEntity) this.getThrower()).getKernelDamage();
+		return 0;
 	}
 	
 	@Override

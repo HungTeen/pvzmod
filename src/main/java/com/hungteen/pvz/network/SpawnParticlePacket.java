@@ -7,6 +7,7 @@ import com.hungteen.pvz.register.ParticleRegister;
 import net.minecraft.client.Minecraft;
 import net.minecraft.network.PacketBuffer;
 import net.minecraft.particles.IParticleData;
+import net.minecraft.particles.ParticleTypes;
 import net.minecraftforge.fml.network.NetworkEvent;
 
 public class SpawnParticlePacket {
@@ -49,6 +50,12 @@ public class SpawnParticlePacket {
 		    		particle = ParticleRegister.MELON_SLICE.get();
 		    	} else if(id == 2) {
 		    		particle = ParticleRegister.FROZEN_MELON_SLICE.get();
+		    	} else if(id == 3) {
+		    		particle = ParticleRegister.DIRT_BURST_OUT.get();
+		    	} else if(id == 4) {
+		    		particle = ParticleRegister.YELLOW_BOMB.get();
+		    	} else if(id == 5) {
+		    		particle = ParticleTypes.EXPLOSION;
 		    	}
 		    	if(particle != null) {
 		    		Minecraft.getInstance().world.addParticle(particle, message.x, message.y, message.z, 0, 0, 0);

@@ -96,7 +96,7 @@ public abstract class AbstractBowlingEntity extends AbstractOwnerEntity {
 		if(this.world.isRemote) return ;
 		if(this.bowlingTick > 0) return ;
 		List<Entity> list = this.world.getEntitiesWithinAABB(Entity.class, this.getBoundingBox(), (target) -> {
-			return EntityUtil.checkCanEntityAttack(this.getOwner() == null ? this : this.getOwner(), target);
+			return EntityUtil.checkCanEntityAttack(this, target);
 		});
 		if(! list.isEmpty()) {
 			this.dealDamageTo(list.get(0));

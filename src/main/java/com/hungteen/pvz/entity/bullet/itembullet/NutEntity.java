@@ -20,8 +20,8 @@ public class NutEntity extends PVZItemBulletEntity {
 		super(type, worldIn);
 	}
 	
-	public NutEntity(EntityType<?> type, World worldIn, LivingEntity thrower) {
-		super(type, worldIn, thrower);
+	public NutEntity(World worldIn, LivingEntity thrower) {
+		super(EntityRegister.NUT.get(), worldIn, thrower);
 	}
 	
 	public void shoot(double x, double y, double z) {
@@ -68,6 +68,11 @@ public class NutEntity extends PVZItemBulletEntity {
 	@Override
 	protected float getGravityVelocity() {
 		return 0.06f;
+	}
+
+	@Override
+	protected float getAttackDamage() {
+		return 0;
 	}
 
 }

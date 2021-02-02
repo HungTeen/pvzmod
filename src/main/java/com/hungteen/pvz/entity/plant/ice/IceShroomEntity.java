@@ -27,7 +27,7 @@ public class IceShroomEntity extends PlantBomberEntity implements IIcePlant{
 
 	@Override
 	public void startBomb() {
-		if(!this.world.isRemote) {
+		if(! this.world.isRemote) {
 			float len = getAttackRange();
 			AxisAlignedBB aabb=EntityUtil.getEntityAABB(this, len, len);
 			for(LivingEntity entity : EntityUtil.getEntityTargetableEntity(this, aabb)) {

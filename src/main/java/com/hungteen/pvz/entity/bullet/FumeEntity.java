@@ -4,6 +4,7 @@ import com.hungteen.pvz.entity.bullet.itembullet.PVZItemBulletEntity;
 import com.hungteen.pvz.entity.plant.base.PlantShooterEntity;
 import com.hungteen.pvz.entity.plant.toxic.GloomShroomEntity;
 import com.hungteen.pvz.misc.damage.PVZDamageSource;
+import com.hungteen.pvz.register.EntityRegister;
 import com.hungteen.pvz.register.ItemRegister;
 import com.hungteen.pvz.register.ParticleRegister;
 
@@ -30,8 +31,8 @@ public class FumeEntity extends PVZItemBulletEntity{
 		super(type, worldIn);
 	}
 	
-	public FumeEntity(EntityType<?> type, World worldIn, LivingEntity living) {
-		super(type, worldIn, living);
+	public FumeEntity(World worldIn, LivingEntity living) {
+		super(EntityRegister.FUME.get(), worldIn, living);
 	}
 	
 	@Override
@@ -93,7 +94,7 @@ public class FumeEntity extends PVZItemBulletEntity{
 	}
 	
 	private void dealFumeDamage(Entity target) {
-		target.attackEntityFrom(PVZDamageSource.causeThroughDamage(this, this.getThrower()), this.getFumeDamage());
+		target.attackEntityFrom(PVZDamageSource.causeThroughDamage(this, this.getThrower()), this.attackDamage);
 		if(!world.isRemote && this.knockback > 0) {
 			Vec3d speed = target.getMotion();
 			Vec3d now = this.getMotion();
@@ -102,10 +103,9 @@ public class FumeEntity extends PVZItemBulletEntity{
 		}
 	}
 	
-	private float getFumeDamage() {
-		if(this.getThrower() instanceof PlantShooterEntity) {
-			return ((PlantShooterEntity) this.getThrower()).getAttackDamage();
-		}
+	@Override
+	protected float getAttackDamage() {
+		if(this.getThrower() instanceof PlantShooterEntity) return ((PlantShooterEntity) this.getThrower()).getAttackDamage();
 		return 0;
 	}
 	

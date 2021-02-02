@@ -4,6 +4,7 @@ import java.util.List;
 
 import com.hungteen.pvz.entity.plant.assist.MagnetShroomEntity;
 import com.hungteen.pvz.misc.damage.PVZDamageSource;
+import com.hungteen.pvz.register.EntityRegister;
 import com.hungteen.pvz.register.SoundRegister;
 import com.hungteen.pvz.utils.EntityUtil;
 import com.hungteen.pvz.utils.enums.MetalTypes;
@@ -35,8 +36,8 @@ public class MetalItemEntity extends PVZItemBulletEntity {
 		super(type, worldIn);
 	}
 	
-	public MetalItemEntity(EntityType<?> type, World worldIn, LivingEntity shooter, MetalTypes metalType) {
-		super(type, worldIn, shooter);
+	public MetalItemEntity(World worldIn, LivingEntity shooter, MetalTypes metalType) {
+		super(EntityRegister.METAL.get(), worldIn, shooter);
 		this.setMetalType(metalType);
 	}
 	
@@ -98,7 +99,7 @@ public class MetalItemEntity extends PVZItemBulletEntity {
 			if (this.getMetalState() == MetalStates.SHOOT && checkCanAttack(target)) {
 				target.hurtResistantTime = 0;
 				if(! world.isRemote) {
-					target.attackEntityFrom(PVZDamageSource.causeAppeaseDamage(this, this.getThrower()), getMetalDamage());
+					target.attackEntityFrom(PVZDamageSource.causeAppeaseDamage(this, this.getThrower()), getAttackDamage());
 					EntityUtil.playSound(this, SoundRegister.METAL_HIT.get());
 				}
 				flag = true;
@@ -120,7 +121,7 @@ public class MetalItemEntity extends PVZItemBulletEntity {
 		return super.checkLive(result);
 	}
 	
-	public float getMetalDamage() {
+	protected float getAttackDamage() {
 		return 50;
 	}
 	

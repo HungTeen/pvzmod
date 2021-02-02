@@ -4,7 +4,6 @@ import java.util.Optional;
 
 import com.hungteen.pvz.entity.bullet.ButterEntity;
 import com.hungteen.pvz.entity.bullet.PultBulletEntity;
-import com.hungteen.pvz.register.EntityRegister;
 import com.hungteen.pvz.register.SoundRegister;
 import com.hungteen.pvz.utils.EntityUtil;
 import com.hungteen.pvz.utils.enums.Plants;
@@ -23,7 +22,7 @@ public class ButterPultEntity extends KernelPultEntity {
 	
 	protected Optional<PultBulletEntity> pultKernel(LivingEntity target, boolean isSuper) {
 		if(target == null) return Optional.empty();
-		PultBulletEntity bullet = new ButterEntity(EntityRegister.BUTTER.get(), world, this);
+		PultBulletEntity bullet = new ButterEntity(world, this);
 		bullet.setPosition(this.getPosX(), this.getPosY() + 1.7f, this.getPosZ());
 		bullet.shootPultBullet(target);
         this.world.addEntity(bullet);

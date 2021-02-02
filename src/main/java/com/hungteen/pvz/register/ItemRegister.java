@@ -15,6 +15,7 @@ import com.hungteen.pvz.item.misc.AlmanacItem;
 import com.hungteen.pvz.item.misc.StrangeHelpItem;
 import com.hungteen.pvz.item.tool.BobsleCarItem;
 import com.hungteen.pvz.item.tool.BowlingGloveItem;
+import com.hungteen.pvz.item.tool.FireCrackerItem;
 import com.hungteen.pvz.item.tool.JackBoxItem;
 import com.hungteen.pvz.item.tool.LawnMowerItem;
 import com.hungteen.pvz.item.tool.PeaGunItem;
@@ -185,6 +186,10 @@ public class ItemRegister {
     public static final RegistryObject<PlantCardItem> GIANT_WALL_NUT_ENJOY_CARD = registerCard(Plants.GIANT_WALL_NUT, true);
     public static final RegistryObject<PlantCardItem> BUTTER_PULT_CARD = registerCard(Plants.BUTTER_PULT, false);
     public static final RegistryObject<PlantCardItem> BUTTER_PULT_ENJOY_CARD = registerCard(Plants.BUTTER_PULT, true);
+    public static final RegistryObject<PlantCardItem> BAMBOO_LORD_CARD = registerCard(Plants.BAMBOO_LORD, false);
+    public static final RegistryObject<PlantCardItem> BAMBOO_LORD_ENJOY_CARD = registerCard(Plants.BAMBOO_LORD, true);
+    public static final RegistryObject<PlantCardItem> ICEBERG_LETTUCE_CARD = registerCard(Plants.ICEBERG_LETTUCE, false);
+    public static final RegistryObject<PlantCardItem> ICEBERG_LETTUCE_ENJOY_CARD = registerCard(Plants.ICEBERG_LETTUCE, true);
     
     //plants
 	public static final RegistryObject<Item> PEA = ITEMS.register("pea",() -> new BlockItem(BlockRegister.PEA_PLANT.get(), new Item.Properties().group(GroupRegister.PVZ_MISC)));
@@ -220,6 +225,7 @@ public class ItemRegister {
 	public static final RegistryObject<Item> BOWLING_GLOVE = ITEMS.register("bowling_glove", BowlingGloveItem::new);
 	public static final RegistryObject<Item> JACK_BOX = ITEMS.register("jack_box", JackBoxItem::new);
 	public static final RegistryObject<Item> TARGET_ARROW = ITEMS.register("target_arrow", TargetArrowItem::new);
+	public static final RegistryObject<Item> FIRE_CRACKER = ITEMS.register("fire_cracker", FireCrackerItem::new);
 	//armor
 	public static final RegistryObject<Item> CONE_HEAD = ITEMS.register("cone_head", ()->new ConeArmorItem(ArmorMaterial.LEATHER, EquipmentSlotType.HEAD));
 	public static final RegistryObject<Item> BUCKET_HEAD = ITEMS.register("bucket_head", ()->new BucketArmorItem(ArmorMaterial.IRON, EquipmentSlotType.HEAD));
@@ -348,6 +354,8 @@ public class ItemRegister {
 	public static final RegistryObject<PVZSpawnEggItem> EXPLODE_O_NUT_SPAWN_EGG = registerSpawnEgg("explode_o_nut", EntityRegister.EXPLODE_O_NUT, Colors.EXPLOSION_COLOR);
 	public static final RegistryObject<PVZSpawnEggItem> GIANT_WALL_NUT_SPAWN_EGG = registerSpawnEgg("giant_wall_nut", EntityRegister.GIANT_WALL_NUT, Colors.DEFENCE_COLOR);
 	public static final RegistryObject<PVZSpawnEggItem> BUTTER_PULT_SPAWN_EGG = registerSpawnEgg("butter_pult", EntityRegister.BUTTER_PULT, Colors.ARMA_COLOR);
+	public static final RegistryObject<PVZSpawnEggItem> BAMBOO_LORD_SPAWN_EGG = registerSpawnEgg("bamboo_lord", EntityRegister.BAMBOO_LORD, Colors.EXPLOSION_COLOR);
+	public static final RegistryObject<PVZSpawnEggItem> ICEBERG_LETTUCE_SPAWN_EGG = registerSpawnEgg("iceberg_lettuce", EntityRegister.ICEBERG_LETTUCE, Colors.ICE_COLOR);
 	
 	
 	/**

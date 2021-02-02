@@ -18,8 +18,8 @@ public class PotatoEntity extends PVZItemBulletEntity{
 		super(type, worldIn);
 	}
 	
-	public PotatoEntity(EntityType<?> type, World worldIn, LivingEntity thrower) {
-		super(type, worldIn, thrower);
+	public PotatoEntity(World worldIn, LivingEntity thrower) {
+		super(EntityRegister.POTATO.get(), worldIn, thrower);
 	}
 	
 	public void shoot(double x, double y, double z) {
@@ -33,19 +33,19 @@ public class PotatoEntity extends PVZItemBulletEntity{
 
 	@Override
 	protected void onImpact(RayTraceResult result) {
-		if(!this.world.isRemote) {
+		if(! this.world.isRemote) {
 			this.world.setEntityState(this, (byte)3);
-            if(!this.checkLive(result)) {
-            	this.remove();
-            	if(!(this.getThrower() instanceof PVZPlantEntity)) {
-            		System.out.println("who is shooting potato,there are some matter!");
+            if(! this.checkLive(result)) {
+            	if(! (this.getThrower() instanceof PVZPlantEntity)) {
+            		System.out.println("ERROR : Who is shooting potato, there are some matter !");
             		return ;
             	}
-            	PotatoMineEntity mine= EntityRegister.POTATO_MINE.get().create(world);
+            	PotatoMineEntity mine = EntityRegister.POTATO_MINE.get().create(world);
                 PlantUtil.copyPlantData(mine, (PVZPlantEntity) getThrower());
                 mine.setMineReady(true);
             	mine.setPosition(this.getPosX(), this.getPosY(), this.getPosZ());
             	this.world.addEntity(mine);
+            	this.remove();
             }
 		}
 	}
@@ -53,6 +53,11 @@ public class PotatoEntity extends PVZItemBulletEntity{
 	@Override
 	protected float getGravityVelocity() {
 		return 0.06f;
+	}
+
+	@Override
+	protected float getAttackDamage() {
+		return 0;
 	}
 	
 }

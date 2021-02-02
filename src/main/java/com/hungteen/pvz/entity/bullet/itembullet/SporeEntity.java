@@ -4,6 +4,7 @@ import com.hungteen.pvz.entity.plant.base.PlantShooterEntity;
 import com.hungteen.pvz.entity.plant.toxic.PuffShroomEntity;
 import com.hungteen.pvz.entity.plant.toxic.ScaredyShroomEntity;
 import com.hungteen.pvz.misc.damage.PVZDamageSource;
+import com.hungteen.pvz.register.EntityRegister;
 import com.hungteen.pvz.register.ItemRegister;
 import com.hungteen.pvz.register.ParticleRegister;
 
@@ -25,8 +26,8 @@ public class SporeEntity extends PVZItemBulletEntity{
 		super(type, worldIn);
 	}
 	
-	public SporeEntity(EntityType<?> type, World worldIn, LivingEntity living) {
-		super(type, worldIn, living);
+	public SporeEntity(World worldIn, LivingEntity living) {
+		super(EntityRegister.SPORE.get(), worldIn, living);
 	}
 
 	@Override
@@ -34,7 +35,6 @@ public class SporeEntity extends PVZItemBulletEntity{
 		super.tick();
 		if(world.isRemote) {
 			int cnt = 3;
-//			System.out.println("yes");
 			for(int i = 0; i < cnt; ++i) {
 	            this.world.addParticle(ParticleRegister.SPORE.get(), this.getPosX(), this.getPosY(), this.getPosZ(), 0.0D, 0.0D, 0.0D);
 	        }
@@ -76,13 +76,12 @@ public class SporeEntity extends PVZItemBulletEntity{
 	}
 	
 	private void dealSporeDamage(Entity target) {
-		target.attackEntityFrom(PVZDamageSource.causeAppeaseDamage(this, this.getThrower()), this.getSporeDamage());
+		target.attackEntityFrom(PVZDamageSource.causeAppeaseDamage(this, this.getThrower()), this.attackDamage);
 	}
 	
-	private float getSporeDamage() {
-		if(this.getThrower() instanceof PlantShooterEntity) {
-			return ((PlantShooterEntity) this.getThrower()).getAttackDamage();
-		}
+	@Override
+	protected float getAttackDamage() {
+		if(this.getThrower() instanceof PlantShooterEntity) return ((PlantShooterEntity) this.getThrower()).getAttackDamage();
 		return 0;
 	}
 	

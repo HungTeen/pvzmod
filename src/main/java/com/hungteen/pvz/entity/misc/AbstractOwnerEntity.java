@@ -4,11 +4,13 @@ import java.util.UUID;
 
 import javax.annotation.Nullable;
 
+import com.hungteen.pvz.utils.EntityUtil;
+import com.hungteen.pvz.utils.interfaces.IGroupEntity;
+
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.MoverType;
-import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.nbt.NBTUtil;
 import net.minecraft.network.IPacket;
@@ -18,19 +20,22 @@ import net.minecraft.world.World;
 import net.minecraft.world.server.ServerWorld;
 import net.minecraftforge.fml.network.NetworkHooks;
 
-public abstract class AbstractOwnerEntity extends Entity {
+public abstract class AbstractOwnerEntity extends Entity implements IGroupEntity {
 
 	protected LivingEntity owner;
-	private UUID ownerId;
+	protected UUID ownerId;
+	protected int groupType;
 	
 	public AbstractOwnerEntity(EntityType<?> entityTypeIn, World worldIn) {
 		super(entityTypeIn, worldIn);
+		this.groupType = this.getInitialEntityGroup();
 	}
 	
-	public AbstractOwnerEntity(EntityType<?> type, World worldIn, PlayerEntity livingEntityIn) {
-		this(type, worldIn);
+	public AbstractOwnerEntity(EntityType<?> type, World worldIn, LivingEntity livingEntityIn) {
+		super(type, worldIn);
 		this.owner = livingEntityIn;
 		this.ownerId = livingEntityIn.getUniqueID();
+		this.groupType = EntityUtil.getEntityGroup(owner);
 	}
 
 	@Override
@@ -94,15 +99,21 @@ public abstract class AbstractOwnerEntity extends Entity {
 		return this.owner;
 	}
 	
+	public int getInitialEntityGroup() {
+		return 1;
+	}
+	
+	@Override
+	public int getEntityGroupType() {
+		return this.groupType;
+	}
+	
 	public void writeAdditional(CompoundNBT compound) {
 		if (this.ownerId != null) {
 			compound.put("owner", NBTUtil.writeUniqueId(this.ownerId));
 		}
 		compound.putInt("entity_tick_exist", this.ticksExisted);
-	}
-	
-	public int getEntityGroup() {
-		return 1;
+		compound.putInt("group_owner_type", this.groupType);
 	}
 
 	/**
@@ -115,6 +126,9 @@ public abstract class AbstractOwnerEntity extends Entity {
 		}
 		if(compound.contains("entity_tick_exist")) {
 			this.ticksExisted = compound.getInt("entity_tick_exist");
+		}
+		if(compound.contains("group_owner_type")) {
+			this.groupType = compound.getInt("group_owner_type");
 		}
 	}
 

@@ -8,7 +8,6 @@ import com.hungteen.pvz.entity.bullet.KernelEntity;
 import com.hungteen.pvz.entity.bullet.PultBulletEntity;
 import com.hungteen.pvz.entity.plant.base.PlantPultEntity;
 import com.hungteen.pvz.register.EffectRegister;
-import com.hungteen.pvz.register.EntityRegister;
 import com.hungteen.pvz.register.SoundRegister;
 import com.hungteen.pvz.utils.EntityUtil;
 import com.hungteen.pvz.utils.enums.Plants;
@@ -75,9 +74,9 @@ public class KernelPultEntity extends PlantPultEntity {
 		if(target == null) return Optional.empty();
 		PultBulletEntity bullet = null;
 		if(isSuper || this.getCurrentBullet() == CornTypes.BUTTER) {
-			bullet = new ButterEntity(EntityRegister.BUTTER.get(), world, this);
+			bullet = new ButterEntity(world, this);
 		} else if(this.getCurrentBullet() == CornTypes.KERNEL) {
-			bullet = new KernelEntity(EntityRegister.KERNEL.get(), world, this);
+			bullet = new KernelEntity(world, this);
 		} 
 		if(bullet == null) {
 			System.out.println("ERROR : Wrong kernel Pult Throw Bullet Type !");

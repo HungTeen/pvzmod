@@ -1,5 +1,7 @@
 package com.hungteen.pvz.utils.interfaces;
 
+import net.minecraft.entity.LivingEntity;
+
 public interface ICloser {
 
 	float getCloseWidth();
@@ -9,10 +11,6 @@ public interface ICloser {
 	/**
 	 * perform attack when target is close
 	 */
-	boolean performAttack();
+	void performAttack(LivingEntity target);
 	
-	/**
-	 * spawnParticle when death
-	 */
-	void spawnParticle();
 }

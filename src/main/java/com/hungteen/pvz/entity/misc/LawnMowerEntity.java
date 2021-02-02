@@ -53,7 +53,7 @@ public class LawnMowerEntity extends AbstractOwnerEntity {
 			}
 			if(this.isStartRun()) {
 				this.world.getEntitiesWithinAABB(Entity.class, this.getBoundingBox().grow(0.5D), (target) -> {
-			        return EntityUtil.checkCanEntityAttack(this.getOwner() == null ? this : this.getOwner(), target);
+			        return EntityUtil.checkCanEntityAttack(this, target);
 		        }).forEach((target) -> {
 		        	if(EntityUtil.canEntityBeRemoved(target)) {
 		        		target.remove();// kill all entity pass by.
@@ -67,7 +67,7 @@ public class LawnMowerEntity extends AbstractOwnerEntity {
 			} else {
 				-- ticksExisted;
 				List<Entity> list = this.world.getEntitiesWithinAABB(Entity.class, this.getBoundingBox().grow(1), (target) -> {
-			        return EntityUtil.checkCanEntityAttack(this.getOwner() == null ? this : this.getOwner(), target);
+			        return EntityUtil.checkCanEntityAttack(this, target);
 		        });
 				if(! list.isEmpty()) {
 			       this.onStartRun(list.get(0));
@@ -153,5 +153,5 @@ public class LawnMowerEntity extends AbstractOwnerEntity {
 	public boolean isStartRun() {
 		return this.dataManager.get(START_RUN);
 	}
-	
+
 }

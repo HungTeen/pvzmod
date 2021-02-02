@@ -10,7 +10,6 @@ import javax.annotation.Nullable;
 
 import com.hungteen.pvz.PVZConfig;
 import com.hungteen.pvz.entity.PVZMultiPartEntity;
-import com.hungteen.pvz.entity.misc.AbstractOwnerEntity;
 import com.hungteen.pvz.entity.npc.CrazyDaveEntity;
 import com.hungteen.pvz.entity.plant.PVZPlantEntity;
 import com.hungteen.pvz.entity.zombie.PVZZombieEntity;
@@ -18,6 +17,7 @@ import com.hungteen.pvz.entity.zombie.poolnight.BalloonZombieEntity;
 import com.hungteen.pvz.network.PVZPacketHandler;
 import com.hungteen.pvz.network.SpawnParticlePacket;
 import com.hungteen.pvz.register.EffectRegister;
+import com.hungteen.pvz.utils.interfaces.IGroupEntity;
 import com.hungteen.pvz.utils.interfaces.IMultiPartEntity;
 
 import it.unimi.dsi.fastutil.ints.IntOpenHashSet;
@@ -259,8 +259,8 @@ public class EntityUtil {
 			if(entity instanceof PVZZombieEntity) {
 				group = ((PVZZombieEntity) entity).isCharmed() ? 1 : -1;
 			}
-		} else if(entity instanceof AbstractOwnerEntity) {
-			return ((AbstractOwnerEntity) entity).getEntityGroup();
+		} else if(entity instanceof IGroupEntity) {
+			return ((IGroupEntity) entity).getEntityGroupType();
 		}
 		return group;
 	}

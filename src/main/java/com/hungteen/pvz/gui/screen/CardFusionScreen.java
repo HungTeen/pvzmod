@@ -66,7 +66,7 @@ public class CardFusionScreen extends AbstractOptionScreen<CardFusionContainer> 
 	public void render(int mouseX, int mouseY, float partialTicks) {
 		this.craftButton.visible = this.canCraftNow();
 		this.renderHoveredToolTip(mouseX, mouseY);
-		StringUtil.drawCenteredScaledString(font, new TranslationTextComponent("block.pvz.card_fusion").getFormattedText(), this.guiLeft + this.xSize / 2, this.guiTop + 8, Colors.BLACK, 1F);
+		StringUtil.drawCenteredScaledString(font, new TranslationTextComponent("block.pvz.card_fusion_table").getFormattedText(), this.guiLeft + this.xSize / 2, this.guiTop + 8, Colors.BLACK, 1F);
 		StringUtil.drawCenteredScaledString(font, "" + this.container.te.array.get(0), this.guiLeft + 15, this.guiTop + 67, Colors.BLACK, 0.5F);
 	    super.render(mouseX, mouseY, partialTicks);
     }

@@ -7,7 +7,6 @@ import com.hungteen.pvz.entity.bullet.MelonEntity;
 import com.hungteen.pvz.entity.bullet.MelonEntity.MelonStates;
 import com.hungteen.pvz.entity.bullet.MelonEntity.MelonTypes;
 import com.hungteen.pvz.entity.plant.base.PlantPultEntity;
-import com.hungteen.pvz.register.EntityRegister;
 import com.hungteen.pvz.register.SoundRegister;
 import com.hungteen.pvz.utils.EntityUtil;
 import com.hungteen.pvz.utils.enums.Plants;
@@ -46,7 +45,7 @@ public class MelonPultEntity extends PlantPultEntity {
 	
 	private Optional<MelonEntity> pultMelon(LivingEntity target){
 		if(target == null) return Optional.empty();
-		MelonEntity melon = new MelonEntity(EntityRegister.MELON.get(), world, this);
+		MelonEntity melon = new MelonEntity(world, this);
         melon.setPosition(this.getPosX(), this.getPosY() + 1.5f, this.getPosZ());
         melon.shootPultBullet(target);
         melon.setMelonState(this.getThrowMelonState());

@@ -44,7 +44,7 @@ public class PuffShroomEntity extends PlantShooterEntity {
         double tmp=this.LENTH / dis;
         double deltaX = tmp * dx;
         double deltaZ = tmp * dz;
-        SporeEntity spore = new SporeEntity(EntityRegister.SPORE.get(), this.world, this);
+        SporeEntity spore = new SporeEntity(this.world, this);
         spore.setPosition(this.getPosX() + deltaX, y, this.getPosZ() + deltaZ);
         spore.shootPea(dx, target.getPosY() + target.getHeight() - y, dz, this.getBulletSpeed());      
         EntityUtil.playSound(this, SoundRegister.PUFF.get());

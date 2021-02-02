@@ -5,6 +5,7 @@ import java.util.Optional;
 import com.hungteen.pvz.entity.plant.arma.MelonPultEntity;
 import com.hungteen.pvz.entity.plant.ice.WinterMelonEntity;
 import com.hungteen.pvz.misc.damage.PVZDamageSource;
+import com.hungteen.pvz.register.EntityRegister;
 import com.hungteen.pvz.register.SoundRegister;
 import com.hungteen.pvz.utils.EntityUtil;
 
@@ -25,13 +26,15 @@ public class MelonEntity extends PultBulletEntity {
 	private static final DataParameter<Integer> MELON_TYPE = EntityDataManager.createKey(MelonEntity.class, DataSerializers.VARINT);
 	private static final DataParameter<Integer> MELON_STATE = EntityDataManager.createKey(MelonEntity.class, DataSerializers.VARINT);
 	private Entity attackEntity = null;
+	protected float splashDamage = 0F;
 	
 	public MelonEntity(EntityType<?> type, World worldIn) {
 		super(type, worldIn);
 	}
 
-	public MelonEntity(EntityType<?> type, World worldIn, LivingEntity shooter) {
-		super(type, worldIn, shooter);
+	public MelonEntity(World worldIn, LivingEntity shooter) {
+		super(EntityRegister.MELON.get(), worldIn, shooter);
+		this.splashDamage = this.getSplashDamage();
 	}
 	
 	@Override
@@ -46,9 +49,9 @@ public class MelonEntity extends PultBulletEntity {
 		if(this.getIcePotion().isPresent()) {
 			PVZDamageSource source = PVZDamageSource.causeIceDamage(this, this.getThrower());
 			source.addEffect(this.getIcePotion().get());
-			target.attackEntityFrom(source, this.getAttackDamage());
+			target.attackEntityFrom(source, this.getFixDamage());
 		} else{
-			target.attackEntityFrom(PVZDamageSource.causeThrowDamage(this, this.getThrower()), this.getAttackDamage());
+			target.attackEntityFrom(PVZDamageSource.causeThrowDamage(this, this.getThrower()), this.getFixDamage());
 		}
 		this.attackEntity = target;
 		this.dealSplashDamage();
@@ -68,7 +71,7 @@ public class MelonEntity extends PultBulletEntity {
 				this.getIcePotion().ifPresent((effect) -> {
 					source.addEffect(effect);
 				});
-				entity.attackEntityFrom(source, this.getSplashDamage());
+				entity.attackEntityFrom(source, this.splashDamage);
 			}
 		});
 		for(int i = 0; i < 10; ++ i) {
@@ -81,22 +84,21 @@ public class MelonEntity extends PultBulletEntity {
 		return Optional.of(((WinterMelonEntity)this.getThrower()).getColdEffect());
 	}
 	
-	private float getAttackDamage() {
-		float damage = 0;
-		if(this.getThrower() instanceof MelonPultEntity) {
-			damage = ((MelonPultEntity) this.getThrower()).getAttackDamage();
-		}
+	private float getFixDamage() {
+		float damage = this.attackDamage;
 		if(this.getMelonType() == MelonTypes.POWER) damage += 12;
 		return damage;
 	}
 	
+	protected float getAttackDamage() {
+		if(this.getThrower() instanceof MelonPultEntity) return ((MelonPultEntity) this.getThrower()).getAttackDamage();
+		return 0;
+	}
+	
 	private float getSplashDamage() {
-		float damage = 0;
 		if(this.getMelonType() == MelonTypes.POWER) return 3;
-		if(this.getThrower() instanceof MelonPultEntity) {
-			damage = ((MelonPultEntity) this.getThrower()).getSplashDamage();
-		}
-		return damage;
+		if(this.getThrower() instanceof MelonPultEntity) return ((MelonPultEntity) this.getThrower()).getSplashDamage();
+		return 0;
 	}
 	
 	@Override

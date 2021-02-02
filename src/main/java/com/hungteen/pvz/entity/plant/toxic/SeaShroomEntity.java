@@ -3,7 +3,6 @@ package com.hungteen.pvz.entity.plant.toxic;
 import com.hungteen.pvz.entity.ai.target.PVZNearestTargetGoal;
 import com.hungteen.pvz.entity.bullet.itembullet.SporeEntity;
 import com.hungteen.pvz.entity.plant.base.PlantShooterEntity;
-import com.hungteen.pvz.register.EntityRegister;
 import com.hungteen.pvz.register.SoundRegister;
 import com.hungteen.pvz.utils.EntityUtil;
 import com.hungteen.pvz.utils.enums.Plants;
@@ -46,7 +45,7 @@ public class SeaShroomEntity extends PlantShooterEntity {
         double tmp=this.LENTH / dis;
         double deltaX = tmp * dx;
         double deltaZ = tmp * dz;
-        SporeEntity spore = new SporeEntity(EntityRegister.SPORE.get(), this.world, this);
+        SporeEntity spore = new SporeEntity(this.world, this);
         spore.setPosition(this.getPosX() + deltaX, y, this.getPosZ() + deltaZ);
         spore.shootPea(dx, target.getPosY() + target.getHeight() - y, dz, this.getBulletSpeed());      
         EntityUtil.playSound(this, SoundRegister.PUFF.get());

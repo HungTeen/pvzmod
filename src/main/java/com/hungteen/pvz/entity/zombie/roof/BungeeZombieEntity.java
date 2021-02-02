@@ -3,6 +3,7 @@ package com.hungteen.pvz.entity.zombie.roof;
 import com.hungteen.pvz.data.loot.PVZLoot;
 import com.hungteen.pvz.entity.ai.target.PVZRandomTargetGoal;
 import com.hungteen.pvz.entity.bullet.TargetArrowEntity;
+import com.hungteen.pvz.entity.plant.PVZPlantEntity;
 import com.hungteen.pvz.entity.zombie.PVZZombieEntity;
 import com.hungteen.pvz.misc.damage.PVZDamageSource;
 import com.hungteen.pvz.register.SoundRegister;
@@ -377,11 +378,15 @@ public class BungeeZombieEntity extends PVZZombieEntity {
 	}
 	
 	public static boolean canBungeeSteal(Entity target) {
+		if(! target.isNonBoss()) return false;
 		if(! (target instanceof LivingEntity)) return false;
 		if(target instanceof PVZZombieEntity) {
 			return ((PVZZombieEntity) target).canBeStealByBungee();
 		}
-		return true;
+		if(target instanceof PVZPlantEntity) {
+			return true;
+		}
+		return ((LivingEntity) target).getMaxHealth() < 100;
 	}
 	
 	@Override

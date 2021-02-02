@@ -4,7 +4,6 @@ import com.hungteen.pvz.entity.ai.attack.ShooterAttackGoal;
 import com.hungteen.pvz.entity.ai.target.PVZNearestTargetGoal;
 import com.hungteen.pvz.entity.bullet.StarEntity;
 import com.hungteen.pvz.entity.plant.base.PlantShooterEntity;
-import com.hungteen.pvz.register.EntityRegister;
 import com.hungteen.pvz.register.SoundRegister;
 import com.hungteen.pvz.utils.EntityUtil;
 import com.hungteen.pvz.utils.enums.Plants;
@@ -73,7 +72,7 @@ public class StarFruitEntity extends PlantShooterEntity {
 		double vx = - MathHelper.sin(angle);
 		double vz = MathHelper.cos(angle);
 		StarEntity.StarTypes type = this.isPlantInSuperMode() ? StarEntity.StarTypes.HUGE : StarEntity.StarTypes.NORMAL;
-		StarEntity pea = new StarEntity(EntityRegister.STAR.get(), world, this, type, StarEntity.StarStates.YELLOW);
+		StarEntity pea = new StarEntity(world, this, type, StarEntity.StarStates.YELLOW);
 		pea.setPosition(getPosX(), getPosY() + 0.2F, getPosZ());
 		pea.setMotion(vx, 0, vz);
 		world.addEntity(pea);

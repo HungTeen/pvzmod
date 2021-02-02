@@ -3,7 +3,6 @@ package com.hungteen.pvz.entity.plant.appease;
 import com.hungteen.pvz.entity.ai.target.PVZNearestTargetGoal;
 import com.hungteen.pvz.entity.bullet.itembullet.PeaEntity;
 import com.hungteen.pvz.entity.plant.base.PlantShooterEntity;
-import com.hungteen.pvz.register.EntityRegister;
 import com.hungteen.pvz.utils.enums.Plants;
 
 import net.minecraft.entity.CreatureEntity;
@@ -44,7 +43,7 @@ public class PeaShooterEntity extends PlantShooterEntity{
         double tmp = this.LENTH / dis;
         double deltaX = tmp * dx;
         double deltaZ = tmp * dz;
-        PeaEntity pea = new PeaEntity(EntityRegister.PEA.get(), this.world, this, this.getShootType(), this.getShootState());
+        PeaEntity pea = new PeaEntity(this.world, this, this.getShootType(), this.getShootState());
         pea.setPosition(this.getPosX() + deltaX, y, this.getPosZ() + deltaZ);
         pea.shootPea(dx, target.getPosY() + target.getHeight() - y, dz, this.getBulletSpeed());      
         this.playSound(getShootSound(), 1.0F, 1.0F);

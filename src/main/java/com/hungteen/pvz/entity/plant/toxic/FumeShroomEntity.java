@@ -3,7 +3,6 @@ package com.hungteen.pvz.entity.plant.toxic;
 import com.hungteen.pvz.entity.ai.target.PVZNearestTargetGoal;
 import com.hungteen.pvz.entity.bullet.FumeEntity;
 import com.hungteen.pvz.entity.plant.base.PlantShooterEntity;
-import com.hungteen.pvz.register.EntityRegister;
 import com.hungteen.pvz.register.SoundRegister;
 import com.hungteen.pvz.utils.EntityUtil;
 import com.hungteen.pvz.utils.enums.Plants;
@@ -43,7 +42,7 @@ public class FumeShroomEntity extends PlantShooterEntity {
         double tmp = this.LENTH / dis;
         double deltaX = tmp * dx;
         double deltaZ = tmp * dz;
-        FumeEntity fume = new FumeEntity(EntityRegister.FUME.get(), this.world, this);
+        FumeEntity fume = new FumeEntity(this.world, this);
         if(this.isPlantInSuperMode()) {
         	fume.setKnockback(this.getKnockback());
         }

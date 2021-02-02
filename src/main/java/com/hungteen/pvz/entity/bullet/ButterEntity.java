@@ -2,6 +2,7 @@ package com.hungteen.pvz.entity.bullet;
 
 import com.hungteen.pvz.entity.plant.arma.KernelPultEntity;
 import com.hungteen.pvz.misc.damage.PVZDamageSource;
+import com.hungteen.pvz.register.EntityRegister;
 
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntitySize;
@@ -16,8 +17,8 @@ public class ButterEntity extends PultBulletEntity {
 		super(type, worldIn);
 	}
 	
-	public ButterEntity(EntityType<?> type, World worldIn, LivingEntity shooter) {
-		super(type, worldIn, shooter);
+	public ButterEntity(World worldIn, LivingEntity shooter) {
+		super(EntityRegister.BUTTER.get(), worldIn, shooter);
 	}
 
 	protected void dealDamage(Entity target) {
@@ -25,15 +26,12 @@ public class ButterEntity extends PultBulletEntity {
 		if(this.getThrower() instanceof KernelPultEntity) {
 			source.addEffect(((KernelPultEntity) this.getThrower()).getButterEffect());
 		}
-		target.attackEntityFrom(source, this.getButterDamage());
+		target.attackEntityFrom(source, this.attackDamage);
 	}
 	
-	private float getButterDamage() {
-		float damage = 0;
-		if(this.getThrower() instanceof KernelPultEntity) {
-			damage += ((KernelPultEntity) this.getThrower()).getButterDamage();
-		}
-		return damage;
+	protected float getAttackDamage() {
+		if(this.getThrower() instanceof KernelPultEntity) return ((KernelPultEntity) this.getThrower()).getButterDamage();
+		return 0;
 	}
 	
 	@Override

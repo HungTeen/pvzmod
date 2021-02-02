@@ -4,7 +4,6 @@ import com.hungteen.pvz.entity.bullet.itembullet.PeaEntity;
 import com.hungteen.pvz.entity.plant.PVZPlantEntity;
 import com.hungteen.pvz.entity.plant.interfaces.ILightPlant;
 import com.hungteen.pvz.register.EffectRegister;
-import com.hungteen.pvz.register.EntityRegister;
 import com.hungteen.pvz.register.ParticleRegister;
 import com.hungteen.pvz.utils.EntityUtil;
 import com.hungteen.pvz.utils.enums.Plants;
@@ -69,7 +68,7 @@ public class TorchWoodEntity extends PVZPlantEntity implements ILightPlant {
 		double dx = (this.getRNG().nextFloat() - 0.5f) * 6;
 		double dz = (this.getRNG().nextFloat() - 0.5f) * 6;
 		double dy = 10;
-		PeaEntity pea = new PeaEntity(EntityRegister.PEA.get(), world, this, PeaEntity.Type.NORMAL, PeaEntity.State.FIRE);
+		PeaEntity pea = new PeaEntity(world, this, PeaEntity.Type.NORMAL, PeaEntity.State.FIRE);
 		pea.setPosition(this.getPosX() + dx, this.getPosY() + dy, this.getPosZ() + dz);
 		pea.setMotion(0, - 0.4, 0);
 		world.addEntity(pea);

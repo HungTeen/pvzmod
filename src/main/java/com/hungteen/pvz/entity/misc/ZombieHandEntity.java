@@ -35,14 +35,14 @@ public class ZombieHandEntity extends AbstractOwnerEntity {
 	}
 	
 	protected void performAttack() {
-		for(Entity target : EntityUtil.getAttackEntities(this.getOwner() == null ? this : this.getOwner(), EntityUtil.getEntityAABB(this, 0.5f, 1f))) {
+		for(Entity target : EntityUtil.getAttackEntities(this, EntityUtil.getEntityAABB(this, 0.5f, 1f))) {
 			target.attackEntityFrom(PVZDamageSource.causeNormalDamage(this, this.owner), getAttackDamage((LivingEntity) target));
 			target.setPosition(target.getPosX(), target.getPosY() - 3, target.getPosZ());
 		}
 	}
 	
 	@Override
-	public int getEntityGroup() {
+	public int getInitialEntityGroup() {
 		return - 1;
 	}
 	

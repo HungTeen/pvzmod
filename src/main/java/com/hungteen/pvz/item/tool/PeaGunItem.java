@@ -12,7 +12,6 @@ import com.hungteen.pvz.gui.inventory.ItemInventory;
 import com.hungteen.pvz.item.tool.card.PlantCardItem;
 import com.hungteen.pvz.network.PVZPacketHandler;
 import com.hungteen.pvz.network.PlaySoundPacket;
-import com.hungteen.pvz.register.EntityRegister;
 import com.hungteen.pvz.register.GroupRegister;
 import com.hungteen.pvz.register.ItemRegister;
 import com.hungteen.pvz.utils.enums.Plants;
@@ -212,7 +211,7 @@ public class PeaGunItem extends Item {
 					peaType = PeaEntity.Type.HUGE;
 				}
 			}
-			PeaEntity pea = new PeaEntity(EntityRegister.PEA.get(), player.world, player, peaType, getPeaState(plant, stack.getItem()));
+			PeaEntity pea = new PeaEntity(player.world, player, peaType, getPeaState(plant, stack.getItem()));
 			pea.setPower(EnchantmentHelper.getEnchantmentLevel(Enchantments.POWER, peaGun));// Power Enchantment can affect pea gun.
 			Vec3d vec = player.getLookVec();
 			Vec3d offset = vec.scale(SHOOT_OFFSET);

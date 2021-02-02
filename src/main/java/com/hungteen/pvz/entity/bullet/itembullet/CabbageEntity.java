@@ -3,6 +3,7 @@ package com.hungteen.pvz.entity.bullet.itembullet;
 import com.hungteen.pvz.entity.bullet.PultBulletEntity;
 import com.hungteen.pvz.entity.plant.arma.CabbagePultEntity;
 import com.hungteen.pvz.misc.damage.PVZDamageSource;
+import com.hungteen.pvz.register.EntityRegister;
 import com.hungteen.pvz.register.ItemRegister;
 
 import net.minecraft.entity.Entity;
@@ -29,8 +30,8 @@ public class CabbageEntity extends PultBulletEntity implements IRendersAsItem {
 		super(type, worldIn);
 	}
 	
-	public CabbageEntity(EntityType<?> type, World worldIn, LivingEntity shooter) {
-		super(type, worldIn, shooter);
+	public CabbageEntity(World worldIn, LivingEntity shooter) {
+		super(EntityRegister.CABBAGE.get(), worldIn, shooter);
 	}
 	
 	@Override
@@ -45,18 +46,20 @@ public class CabbageEntity extends PultBulletEntity implements IRendersAsItem {
 	}
 
 	protected void dealDamage(Entity target) {
-		target.attackEntityFrom(PVZDamageSource.causeThrowDamage(this, this.getThrower()), this.getCabbageDamage());
+		target.attackEntityFrom(PVZDamageSource.causeThrowDamage(this, this.getThrower()), this.getFixDamage());
 	}
 	
-	private float getCabbageDamage() {
-		float damage = 0;
-		if(this.getThrower() instanceof CabbagePultEntity) {
-			damage += ((CabbagePultEntity) this.getThrower()).getAttackDamage();
-		}
+	private float getFixDamage() {
+		float damage = this.attackDamage;
 		if(this.getCabbageType() == CabbageTypes.POWER) {
 			damage += 20;
 		}
 		return damage;
+	}
+	
+	protected float getAttackDamage() {
+		if(this.getThrower() instanceof CabbagePultEntity) return ((CabbagePultEntity) this.getThrower()).getAttackDamage();
+		return 0;
 	}
 	
 	@Override

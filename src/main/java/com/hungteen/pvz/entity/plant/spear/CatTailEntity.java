@@ -8,7 +8,6 @@ import com.hungteen.pvz.entity.bullet.ThornEntity.ThornStates;
 import com.hungteen.pvz.entity.bullet.ThornEntity.ThornTypes;
 import com.hungteen.pvz.entity.plant.base.PlantShooterEntity;
 import com.hungteen.pvz.entity.zombie.poolnight.BalloonZombieEntity;
-import com.hungteen.pvz.register.EntityRegister;
 import com.hungteen.pvz.register.SoundRegister;
 import com.hungteen.pvz.utils.EntityUtil;
 import com.hungteen.pvz.utils.enums.Plants;
@@ -85,7 +84,7 @@ public class CatTailEntity extends PlantShooterEntity {
 	public void shootBullet() {
 		LivingEntity target = this.getAttackTarget();
 		if(target == null) return ;
-		ThornEntity thorn = new ThornEntity(EntityRegister.THORN.get(), world, this);
+		ThornEntity thorn = new ThornEntity(world, this);
 		thorn.setThornType(this.getThornShootType());
 		thorn.setThornState(thorn.getThornType() == ThornTypes.AUTO ? ThornStates.POWER : ThornStates.NORMAL);
 		thorn.setExtraHitCount(this.getExtraAttackCount());

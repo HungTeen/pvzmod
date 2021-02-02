@@ -63,7 +63,9 @@ public enum Plants {
 	GOLD_LEAF(0),
 	EXPLODE_O_NUT(0),
 	GIANT_WALL_NUT(40),
-	BUTTER_PULT(0);
+	BUTTER_PULT(0),
+	BAMBOO_LORD(0),
+	ICEBERG_LETTUCE(0);
 
 	/*
 	 * 1 means ShroomPlant like PuffShroom,

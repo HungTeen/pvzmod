@@ -7,7 +7,6 @@ import com.hungteen.pvz.entity.bullet.ThornEntity.ThornTypes;
 import com.hungteen.pvz.entity.plant.base.PlantShooterEntity;
 import com.hungteen.pvz.entity.zombie.poolnight.BalloonZombieEntity;
 import com.hungteen.pvz.misc.damage.PVZDamageSource;
-import com.hungteen.pvz.register.EntityRegister;
 import com.hungteen.pvz.utils.EntityUtil;
 import com.hungteen.pvz.utils.enums.Plants;
 
@@ -163,7 +162,7 @@ public class CactusEntity extends PlantShooterEntity {
         double tmp = this.LENTH / dis;
         double deltaX = tmp * dx;
         double deltaZ = tmp * dz;
-		ThornEntity thorn = new ThornEntity(EntityRegister.THORN.get(), world, this);
+		ThornEntity thorn = new ThornEntity(world, this);
 		thorn.setThornType(ThornTypes.NORMAL);
 		thorn.setThornState(this.isCactusPowered() ? ThornStates.POWER : ThornStates.NORMAL);
 		thorn.setExtraHitCount(this.isCactusPowered() ? this.getThornCount() : 1);

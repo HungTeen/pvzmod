@@ -1,7 +1,6 @@
 package com.hungteen.pvz.entity.plant.appease;
 
 import com.hungteen.pvz.entity.bullet.itembullet.PeaEntity;
-import com.hungteen.pvz.register.EntityRegister;
 import com.hungteen.pvz.utils.EntityUtil;
 import com.hungteen.pvz.utils.enums.Plants;
 
@@ -41,7 +40,7 @@ public class ThreePeaterEntity extends PeaShooterEntity {
         double deltaX = tmp * dx;
         double deltaZ = tmp * dz;
         //shoot mid pea
-        PeaEntity pea = new PeaEntity(EntityRegister.PEA.get(), this.world, this, this.getShootType(), this.getShootState());
+        PeaEntity pea = new PeaEntity(this.world, this, this.getShootType(), this.getShootState());
         pea.setPosition(this.getPosX() + deltaX, y, this.getPosZ() + deltaZ);
         pea.shootPea(dx, target.getPosY() + target.getHeight() - y, dz, this.getBulletSpeed());      
         this.world.addEntity(pea);
@@ -49,12 +48,12 @@ public class ThreePeaterEntity extends PeaShooterEntity {
         double now = DIS / dis;
         double deltaXX = now * dz;
         double deltaZZ = -now * dx;
-        pea = new PeaEntity(EntityRegister.PEA.get(), this.world, this, this.getShootType(), this.getShootState());
+        pea = new PeaEntity(this.world, this, this.getShootType(), this.getShootState());
         pea.setPosition(this.getPosX() + deltaX + deltaXX, this.getPosY() + this.getSize(getPose()).height * 0.5f, this.getPosZ() + deltaZ + deltaZZ);
         pea.shootPea(dx, target.getPosY() + target.getHeight() - y, dz, this.getBulletSpeed());     
         this.world.addEntity(pea);
         //shoot right pea
-        pea = new PeaEntity(EntityRegister.PEA.get(), this.world, this, this.getShootType(), this.getShootState());
+        pea = new PeaEntity(this.world, this, this.getShootType(), this.getShootState());
         pea.setPosition(this.getPosX() + deltaX - deltaXX, this.getPosY() + this.getSize(getPose()).height * 0.5f, this.getPosZ() + deltaZ - deltaZZ);
         pea.shootPea(dx, target.getPosY() + target.getHeight() - y, dz, this.getBulletSpeed());     
         this.world.addEntity(pea);

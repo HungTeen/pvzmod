@@ -3,7 +3,6 @@ package com.hungteen.pvz.entity.plant.toxic;
 import com.hungteen.pvz.entity.ai.target.PVZNearestTargetGoal;
 import com.hungteen.pvz.entity.bullet.FumeEntity;
 import com.hungteen.pvz.entity.plant.base.PlantShooterEntity;
-import com.hungteen.pvz.register.EntityRegister;
 import com.hungteen.pvz.register.SoundRegister;
 import com.hungteen.pvz.utils.EntityUtil;
 import com.hungteen.pvz.utils.enums.Plants;
@@ -51,7 +50,7 @@ public class GloomShroomEntity extends PlantShooterEntity {
 		angle *= 3.14159F / 180F;
 		double vx = - MathHelper.sin(angle);
 		double vz = MathHelper.cos(angle);
-		FumeEntity fume = new FumeEntity(EntityRegister.FUME.get(), this.world, this);
+		FumeEntity fume = new FumeEntity(this.world, this);
         if(this.isPlantInSuperMode()) {
         	fume.setKnockback(this.getKnockback());
         } else {

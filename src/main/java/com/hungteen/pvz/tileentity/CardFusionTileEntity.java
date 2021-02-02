@@ -85,6 +85,7 @@ public class CardFusionTileEntity extends TileEntity implements ITickableTileEnt
 			has.add(((PlantCardItem) this.handler.getStackInSlot(i).getItem()).plantType);
 		}
 		for(FusionRecipes recipe : FusionRecipes.values()) {
+			if(recipe.requirePlants.size() != has.size()) continue;
 			Set<Integer> set = new HashSet<>();
 			boolean match = true;
 			for(Plants p : recipe.requirePlants) {
