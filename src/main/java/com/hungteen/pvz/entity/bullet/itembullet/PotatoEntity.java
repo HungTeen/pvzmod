@@ -51,6 +51,11 @@ public class PotatoEntity extends PVZItemBulletEntity{
 	}
 
 	@Override
+	protected int getMaxLiveTick() {
+		return 120;
+	}
+	
+	@Override
 	protected float getGravityVelocity() {
 		return 0.06f;
 	}

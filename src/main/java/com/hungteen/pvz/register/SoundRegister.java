@@ -66,6 +66,7 @@ public class SoundRegister {
 	public static final RegistryObject<SoundEvent> MAGNET = registerSound("magnet");
 	public static final RegistryObject<SoundEvent> LAWN_MOWER = registerSound("lawn_mower");
 	public static final RegistryObject<SoundEvent> PLANT_THROW = registerSound("plant_throw");
+	public static final RegistryObject<SoundEvent> BASKETBALL = registerSound("basketball");
 	
 	//misc
 	public static final RegistryObject<SoundEvent> PLANT_ON_GROUND= registerSound("plant_on_ground");

@@ -146,6 +146,11 @@ public class PeaEntity extends PVZItemBulletEntity {
 		if(this.getThrower() instanceof PlayerEntity) return 2;
 		return 0;
 	}
+	
+	@Override
+	protected int getMaxLiveTick() {
+		return 40;
+	}
 
 	@Override
 	public EntitySize getSize(Pose poseIn) {

@@ -2,6 +2,7 @@ package com.hungteen.pvz.entity.zombie.poolnight;
 
 import java.util.Random;
 
+import com.hungteen.pvz.data.loot.PVZLoot;
 import com.hungteen.pvz.entity.zombie.PVZZombieEntity;
 import com.hungteen.pvz.misc.damage.PVZDamageSource;
 import com.hungteen.pvz.misc.damage.PVZDamageType;
@@ -24,6 +25,7 @@ import net.minecraft.pathfinding.FlyingPathNavigator;
 import net.minecraft.pathfinding.GroundPathNavigator;
 import net.minecraft.pathfinding.PathNavigator;
 import net.minecraft.util.DamageSource;
+import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.SoundEvent;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.Difficulty;
@@ -136,6 +138,11 @@ public class BalloonZombieEntity extends PVZZombieEntity {
 	
 	public boolean hasBalloon() {
 		return this.dataManager.get(HAS_BALLOON);
+	}
+	
+	@Override
+	protected ResourceLocation getLootTable() {
+		return PVZLoot.BALLOON_ZOMBIE;
 	}
 	
 	@Override

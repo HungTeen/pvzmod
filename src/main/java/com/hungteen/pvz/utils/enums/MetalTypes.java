@@ -1,5 +1,6 @@
 package com.hungteen.pvz.utils.enums;
 
+import com.hungteen.pvz.register.BlockRegister;
 import com.hungteen.pvz.register.ItemRegister;
 
 import net.minecraft.item.Item;
@@ -14,7 +15,8 @@ public enum MetalTypes {
 	GIGA_HELMET,
 	JACK_BOX,
 	IRON_PICKAXE,
-	POGO;
+	POGO,
+	LADDER;
 	
 	public static Item getMetalItem(MetalTypes type) {
 		switch (type) {
@@ -24,6 +26,7 @@ public enum MetalTypes {
 		case GIGA_HELMET: return ItemRegister.GIGA_HELMET.get();
 		case JACK_BOX: return ItemRegister.JACK_BOX.get();
 		case IRON_PICKAXE: return Items.IRON_PICKAXE;
+		case LADDER: return BlockRegister.STEEL_LADDER.get().asItem();
 		default:
 			return ItemRegister.STEEL_INGOT.get();
 		}

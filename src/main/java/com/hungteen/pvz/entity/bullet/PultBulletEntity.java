@@ -73,6 +73,11 @@ public abstract class PultBulletEntity extends AbstractBulletEntity {
 	protected void onHitBlock() {
 	}
 	
+	@Override
+	protected int getMaxLiveTick() {
+		return 200;
+	}
+	
 	public void pushBack() {
 		this.isPushBack = true;
 		this.setMotion((this.rand.nextFloat() - 0.5F) * 2, this.rand.nextFloat() * 2, (this.rand.nextFloat() - 0.5F) * 2);

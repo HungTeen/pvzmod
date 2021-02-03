@@ -20,7 +20,7 @@ public class PVZBlockLootTables extends BlockLootTables {
 		Arrays.asList(BlockRegister.AMETHYST_ORE, BlockRegister.STEEL_BLOCK, BlockRegister.AMETHYST_BLOCK,
 				BlockRegister.ORIGIN_BLOCK, BlockRegister.BUTTER_BLOCK, BlockRegister.CHOMPER, BlockRegister.LANTERN,
 				BlockRegister.SUN_CONVERTER, BlockRegister.FRAGMENT_SPLICE, BlockRegister.SLOT_MACHINE,
-				BlockRegister.ESSENCE_ALTAR, BlockRegister.CARD_FUSION_TABLE
+				BlockRegister.ESSENCE_ALTAR, BlockRegister.CARD_FUSION_TABLE, BlockRegister.STEEL_LADDER
 		).forEach((object) -> {
 			    this.registerDropSelfLootTable(object.get());
 		});

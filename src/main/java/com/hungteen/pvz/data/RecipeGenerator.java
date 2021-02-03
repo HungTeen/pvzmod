@@ -55,14 +55,16 @@ public class RecipeGenerator extends ForgeRecipeProvider{
 		registerCommonCard(consumer, ItemRegister.PUMPKIN_CARD.get(), Items.PUMPKIN);
 		registerCommonCard(consumer, ItemRegister.MAGNET_SHROOM_CARD.get(), ItemRegister.SPORE.get());
 		//5-1
-		registerCommonCard(consumer, ItemRegister.CABBAGE_PULT_CARD.get(), ItemRegister.CABBAGE.get());
+		registerCommonCard(consumer, ItemRegister.CABBAGE_PULT_CARD.get(), PVZItemTags.CABBAGES);
 		registerCommonCard(consumer, ItemRegister.FLOWER_POT_CARD.get(), Items.FLOWER_POT);
-		registerCommonCard(consumer, ItemRegister.KERNEL_PULT_CARD.get(), ItemRegister.CORN.get());
+		registerCommonCard(consumer, ItemRegister.KERNEL_PULT_CARD.get(), PVZItemTags.CORNS);
 		registerCommonCard(consumer, ItemRegister.COFFEE_BEAN_CARD.get(), Items.COCOA_BEANS);
 		registerCommonCard(consumer, ItemRegister.UMBRELLA_LEAF_CARD.get(), Items.CARROT);
 		registerCommonCard(consumer, ItemRegister.MARIGOLD_CARD.get(), Items.OXEYE_DAISY);
 		registerCommonCard(consumer, ItemRegister.MELON_PULT_CARD.get(), Items.MELON);
-		
+		//other
+		registerCommonCard(consumer, ItemRegister.BAMBOO_LORD_CARD.get(), Items.BAMBOO);
+		registerCommonCard(consumer, ItemRegister.ICEBERG_LETTUCE_CARD.get(), PVZItemTags.CABBAGES);
     }
 	
 	private void registerCommonCard(Consumer<IFinishedRecipe> consumer, PlantCardItem result, Item crop) {

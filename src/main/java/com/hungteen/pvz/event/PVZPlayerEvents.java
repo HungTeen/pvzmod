@@ -34,6 +34,7 @@ import net.minecraft.inventory.EquipmentSlotType;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.ShovelItem;
 import net.minecraft.item.SwordItem;
+import net.minecraft.util.Hand;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraftforge.event.TickEvent;
@@ -137,7 +138,7 @@ public class PVZPlayerEvents {
 	public static void onPlayerInteract(PlayerInteractEvent.EntityInteractSpecific ev) {
 		World world = ev.getWorld();
 		PlayerEntity player = ev.getPlayer();
-		if(! world.isRemote) {
+		if(! world.isRemote && ev.getHand() == Hand.MAIN_HAND) {
 			Entity entity = ev.getTarget();
 			if(entity instanceof PVZPlantEntity && entity.isAlive()) {//still alive
 				PVZPlantEntity plant = (PVZPlantEntity) entity;

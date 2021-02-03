@@ -64,6 +64,11 @@ public class NutEntity extends PVZItemBulletEntity {
 	private void dealNutDamage(Entity target) {
 		target.attackEntityFrom(PVZDamageSource.causeNormalDamage(this, this.getThrower()), 2);
 	}
+	
+	@Override
+	protected int getMaxLiveTick() {
+		return 80;
+	}
 
 	@Override
 	protected float getGravityVelocity() {

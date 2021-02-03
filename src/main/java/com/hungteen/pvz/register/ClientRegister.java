@@ -79,6 +79,7 @@ public class ClientRegister {
 		RenderTypeLookup.setRenderLayer(BlockRegister.BUTTER_BLOCK.get(), RenderType.getTranslucent());
 		RenderTypeLookup.setRenderLayer(BlockRegister.CORN.get(), RenderType.getCutout());
 		RenderTypeLookup.setRenderLayer(BlockRegister.ESSENCE_ALTAR.get(), RenderType.getTranslucent());
+		RenderTypeLookup.setRenderLayer(BlockRegister.STEEL_LADDER.get(), RenderType.getCutout());
 		TileEntityRegister.bindRenderers(ev);
 	}
 	

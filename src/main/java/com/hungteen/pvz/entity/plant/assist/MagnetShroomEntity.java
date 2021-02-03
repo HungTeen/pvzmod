@@ -1,25 +1,36 @@
 package com.hungteen.pvz.entity.plant.assist;
 
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.EnumSet;
+import java.util.List;
+
 import com.hungteen.pvz.entity.ai.target.PVZNearestTargetGoal;
 import com.hungteen.pvz.entity.bullet.itembullet.MetalItemEntity;
 import com.hungteen.pvz.entity.bullet.itembullet.MetalItemEntity.MetalStates;
 import com.hungteen.pvz.entity.plant.PVZPlantEntity;
 import com.hungteen.pvz.register.SoundRegister;
+import com.hungteen.pvz.utils.AlgorithmUtil;
 import com.hungteen.pvz.utils.EntityUtil;
 import com.hungteen.pvz.utils.enums.MetalTypes;
 import com.hungteen.pvz.utils.enums.Plants;
 import com.hungteen.pvz.utils.interfaces.IHasMetal;
 
 import net.minecraft.entity.CreatureEntity;
+import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntitySize;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.LivingEntity;
+import net.minecraft.entity.MobEntity;
 import net.minecraft.entity.Pose;
+import net.minecraft.entity.ai.goal.Goal;
+import net.minecraft.entity.ai.goal.TargetGoal;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.network.datasync.DataParameter;
 import net.minecraft.network.datasync.DataSerializers;
 import net.minecraft.network.datasync.EntityDataManager;
+import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.world.World;
 
 public class MagnetShroomEntity extends PVZPlantEntity {
@@ -41,6 +52,7 @@ public class MagnetShroomEntity extends PVZPlantEntity {
 	protected void registerGoals() {
 		super.registerGoals();
 		this.targetSelector.addGoal(0, new PVZNearestTargetGoal(this, true, 12, 12));
+		this.targetSelector.addGoal(1, new MagnetShroomTargetLadder(this, true, 20, 20));
 	}
 	
 	@Override
@@ -55,8 +67,12 @@ public class MagnetShroomEntity extends PVZPlantEntity {
 			LivingEntity target = this.getAttackTarget();
 			if(target != null) {
 				if(! this.checkCanPlantTarget(target)) {
-					this.setAttackTarget(null);
-					return ;
+					if(! EntityUtil.checkCanEntityAttack(this, target) && target instanceof PVZPlantEntity && ((PVZPlantEntity) target).hasMetal()) {
+						
+					} else {
+						this.setAttackTarget(null);
+					    return ;
+					}
 				}
 				if(this.isPlantActive()) {
 					this.dragMetal(target);
@@ -163,6 +179,77 @@ public class MagnetShroomEntity extends PVZPlantEntity {
 	@Override
 	public int getSuperTimeLength() {
 		return 60;
+	}
+	
+	private static class MagnetShroomTargetLadder extends TargetGoal {
+
+		protected final AlgorithmUtil.EntitySorter sorter;
+		private final int targetChance = 5;
+		private final float upperHeight;
+		private final float lowerHeight;
+		private final float width;
+
+		public MagnetShroomTargetLadder(MobEntity mobIn, boolean checkSight, float w, float h) {
+			super(mobIn, checkSight);
+			this.width = w;
+			this.upperHeight = h;
+			this.lowerHeight = h;
+			this.sorter = new AlgorithmUtil.EntitySorter(goalOwner);
+			this.setMutexFlags(EnumSet.of(Goal.Flag.TARGET));
+		}
+
+		@Override
+		public boolean shouldExecute() {
+			if (this.targetChance > 0 && this.goalOwner.getRNG().nextInt(this.targetChance) != 0) {
+				return false;
+			}
+			List<LivingEntity> list1 = new ArrayList<LivingEntity>();
+			this.goalOwner.world.getEntitiesWithinAABB(PVZPlantEntity.class, getAABB()).forEach((plant) -> {
+				if(! EntityUtil.checkCanEntityAttack(goalOwner, plant) && this.checkSenses(plant)) {
+					if(plant.hasMetal()) {
+						list1.add(plant);
+					}
+				}
+			});
+			if (list1.isEmpty()) {
+				return false;
+			}
+			Collections.sort(list1, this.sorter);
+			this.target = list1.get(0);
+			return true;
+		}
+
+		@Override
+		public void startExecuting() {
+			this.goalOwner.setAttackTarget(this.target);
+		}
+
+		@Override
+		public boolean shouldContinueExecuting() {
+			LivingEntity entity = this.goalOwner.getAttackTarget();
+			if (entity == null) {
+				entity = this.target;
+			}
+			if(entity == null || ! entity.isAlive()) {
+				return false;
+			}
+			if(! EntityUtil.checkCanEntityAttack(goalOwner, entity) && this.checkSenses(entity)) {
+				this.goalOwner.setAttackTarget(entity);
+				return true;
+			}
+			return false;
+		}
+
+		protected boolean checkSenses(Entity entity) {
+			return this.goalOwner.getEntitySenses().canSee(entity);
+		}
+
+		private AxisAlignedBB getAABB() {
+			return new AxisAlignedBB(this.goalOwner.getPosX() + width, this.goalOwner.getPosY() + this.upperHeight,
+					this.goalOwner.getPosZ() + width, this.goalOwner.getPosX() - width,
+					this.goalOwner.getPosY() - this.lowerHeight, this.goalOwner.getPosZ() - width);
+		}
+
 	}
 
 }

@@ -12,8 +12,8 @@ import net.minecraft.entity.ai.goal.Goal;
 public class PultAttackGoal extends Goal {
 
 	private final IPult pult;
-	private MobEntity attacker;
-	private LivingEntity target;
+	protected MobEntity attacker;
+	protected LivingEntity target;
 	protected int attackTime;
 	
 	public PultAttackGoal(IPult pult) {
@@ -60,7 +60,7 @@ public class PultAttackGoal extends Goal {
 		this.attacker.getLookController().setLookPositionWithEntity(this.target, 30.0F, 30.0F);
 	}
 	
-	private boolean checkTarget(LivingEntity target) {
+	protected boolean checkTarget(LivingEntity target) {
 		if(EntityUtil.checkCanEntityTarget(this.attacker, this.target)) {
 			return this.attacker.getEntitySenses().canSee(this.target);
 		}

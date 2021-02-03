@@ -72,6 +72,10 @@ public class PVZConfig {
 							.comment("The weight to happen Bungee Invasion when it's a zombie attack day.")
 							.defineInRange("BungeeAttackChance", 40, 1, 10000);
 					
+					WorldSettings.WorldEventSettings.EventChanceSettings.MetalAttackChance = builder
+							.comment("The weight to happen Metal Invasion when it's a zombie attack day.")
+							.defineInRange("MetalAttackChance", 25, 1, 10000);
+					
 					WorldSettings.WorldEventSettings.EventChanceSettings.FogEventChance = builder
 							.comment("The related value to happen Fog Event when it's a zombie attack day(If the value is x, then the chance is 1/x).")
 							.defineInRange("FogAttackChance", 12, 1, 10000);
@@ -182,9 +186,6 @@ public class PVZConfig {
 					EntitySettings.EntityLiveTick.EnergyLiveTick = builder
 							.comment("how many ticks can the energy entity live.")
 							.defineInRange("EnergyLiveTick", 400, 1, 1200);
-					EntitySettings.EntityLiveTick.BulletLiveTick = builder
-							.comment("how many ticks can bullet entity live.")
-							.defineInRange("BulletLiveTick", 150, 100, 1000);
 					EntitySettings.EntityLiveTick.PlantLiveTick = builder
 							.comment("how many ticks can plant entity live.")
 							.worldRestart()
@@ -271,6 +272,7 @@ public class PVZConfig {
 			    	public ForgeConfigSpec.IntValue FogEventChance;
 			    	public ForgeConfigSpec.IntValue YetiAttackChance;
 			    	public ForgeConfigSpec.IntValue BungeeAttackChance;
+			    	public ForgeConfigSpec.IntValue MetalAttackChance;
 			    }
 			}
 			
@@ -309,7 +311,6 @@ public class PVZConfig {
 				public ForgeConfigSpec.IntValue CoinLiveTick;
 				public ForgeConfigSpec.IntValue JewelLiveTick;
 				public ForgeConfigSpec.IntValue EnergyLiveTick;
-				public ForgeConfigSpec.IntValue BulletLiveTick;
 				public ForgeConfigSpec.IntValue PlantLiveTick;
 				public ForgeConfigSpec.IntValue YetiLiveTick;
 				public ForgeConfigSpec.IntValue BowlingLiveTick;

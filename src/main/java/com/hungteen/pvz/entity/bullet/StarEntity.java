@@ -67,6 +67,11 @@ public class StarEntity extends AbstractBulletEntity {
 		target.attackEntityFrom(PVZDamageSource.causeAppeaseDamage(this, this.getThrower()), this.getFixDamage());
 	}
 	
+	@Override
+	protected int getMaxLiveTick() {
+		return 60;
+	}
+	
 	private float getFixDamage() {
 		float damage = this.attackDamage;
 		if(this.getStarType() == StarTypes.BIG) damage += 5;

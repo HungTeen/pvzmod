@@ -94,6 +94,11 @@ public class FireCrackerEntity extends PVZItemBulletEntity{
 	}
 	
 	@Override
+	protected int getMaxLiveTick() {
+		return 50;
+	}
+	
+	@Override
 	public void readAdditional(CompoundNBT compound) {
 		super.readAdditional(compound);
 		if(compound.contains("target_entity_id")) {

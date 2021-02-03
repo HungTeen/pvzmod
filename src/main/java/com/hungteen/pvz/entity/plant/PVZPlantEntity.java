@@ -27,8 +27,10 @@ import com.hungteen.pvz.utils.EntityUtil;
 import com.hungteen.pvz.utils.PlantUtil;
 import com.hungteen.pvz.utils.PlayerUtil;
 import com.hungteen.pvz.utils.enums.Essences;
+import com.hungteen.pvz.utils.enums.MetalTypes;
 import com.hungteen.pvz.utils.enums.Plants;
 import com.hungteen.pvz.utils.enums.Ranks;
+import com.hungteen.pvz.utils.interfaces.IHasMetal;
 import com.hungteen.pvz.utils.interfaces.IPVZPlant;
 
 import net.minecraft.block.Block;
@@ -60,12 +62,12 @@ import net.minecraft.world.GameRules;
 import net.minecraft.world.IWorld;
 import net.minecraft.world.World;
 
-public abstract class PVZPlantEntity extends CreatureEntity implements IPVZPlant{
+public abstract class PVZPlantEntity extends CreatureEntity implements IPVZPlant, IHasMetal {
 
 	private static final DataParameter<Integer> SUPER_TIME = EntityDataManager.createKey(PVZPlantEntity.class, DataSerializers.VARINT);
 	private static final DataParameter<Integer> PLANT_LVL = EntityDataManager.createKey(PVZPlantEntity.class, DataSerializers.VARINT);
 	private static final DataParameter<Optional<UUID>> OWNER_UUID = EntityDataManager.createKey(PVZPlantEntity.class, DataSerializers.OPTIONAL_UNIQUE_ID);
-//	private static final DataParameter<Byte> PLANT_STATES = EntityDataManager.createKey(PVZPlantEntity.class, DataSerializers.BYTE);
+	private static final DataParameter<Integer> PLANT_STATES = EntityDataManager.createKey(PVZPlantEntity.class, DataSerializers.VARINT);
 	private static final DataParameter<Integer> ATTACK_TIME = EntityDataManager.createKey(PVZPlantEntity.class, DataSerializers.VARINT);
 	private static final DataParameter<Integer> GOLD_TIME = EntityDataManager.createKey(PVZPlantEntity.class, DataSerializers.VARINT);
 	private static final DataParameter<Integer> BOOST_TIME = EntityDataManager.createKey(PVZPlantEntity.class, DataSerializers.VARINT);
@@ -73,6 +75,7 @@ public abstract class PVZPlantEntity extends CreatureEntity implements IPVZPlant
 	private static final DataParameter<Integer> SLEEP_TIME = EntityDataManager.createKey(PVZPlantEntity.class, DataSerializers.VARINT);
 	private static final DataParameter<Integer> LIVE_TICK = EntityDataManager.createKey(PVZPlantEntity.class, DataSerializers.VARINT);
 	private static final DataParameter<Float> PUMPKIN_LIFE = EntityDataManager.createKey(PVZPlantEntity.class, DataSerializers.FLOAT);
+	private static final int LADDER_FLAG = 0;
 	protected int weakTime = 0;
 	protected boolean isImmuneToWeak = false;
 	private final int weakCD = 10;
@@ -99,8 +102,9 @@ public abstract class PVZPlantEntity extends CreatureEntity implements IPVZPlant
 		dataManager.register(BOOST_TIME, 0);
 		dataManager.register(IS_CHARMED, false);
 		dataManager.register(SLEEP_TIME, 0);
-		this.dataManager.register(LIVE_TICK, 0);
-		this.dataManager.register(PUMPKIN_LIFE, 0f);
+		dataManager.register(LIVE_TICK, 0);
+		dataManager.register(PUMPKIN_LIFE, 0f);
+		dataManager.register(PLANT_STATES, 0);
 	}
 	
 	@Override
@@ -149,7 +153,7 @@ public abstract class PVZPlantEntity extends CreatureEntity implements IPVZPlant
 	}
 	
 	public boolean canPlantNormalUpdate() {
-		if(this.getRidingEntity() instanceof BungeeZombieEntity) return false;
+		if(this.getRidingEntity() instanceof BungeeZombieEntity || this.hasMetal()) return false;
 		return ! this.isPlantSleeping() && ! EntityUtil.isEntityFrozen(this) && ! EntityUtil.isEntityButter(this);
 	}
 	
@@ -273,7 +277,7 @@ public abstract class PVZPlantEntity extends CreatureEntity implements IPVZPlant
 	 * some zombie can attack but can not target.
 	 * such as digger zombie.
 	 */
-	public boolean checkCanPlantTarget(LivingEntity entity){
+	public boolean checkCanPlantTarget(LivingEntity entity) {
 		return EntityUtil.checkCanEntityAttack(this, entity) && this.canPlantTarget(entity);
 	}
 	
@@ -478,6 +482,7 @@ public abstract class PVZPlantEntity extends CreatureEntity implements IPVZPlant
         compound.putInt("plant_sun_cost", this.plantSunCost);
         compound.putInt("outer_sun_cost", this.outerSunCost);
         compound.putBoolean("immune_to_weak", this.isImmuneToWeak);
+        compound.putInt("plant_state", this.getPlantState());
 	}
 	
 	@Override
@@ -538,6 +543,9 @@ public abstract class PVZPlantEntity extends CreatureEntity implements IPVZPlant
         if(compound.contains("immune_to_weak")) {
 	    	this.isImmuneToWeak = compound.getBoolean("immune_to_weak");
 	    }
+        if(compound.contains("plant_state")) {
+        	this.setPlantState(compound.getInt("plant_state"));
+        }
     }
 	
 	/**
@@ -655,6 +663,9 @@ public abstract class PVZPlantEntity extends CreatureEntity implements IPVZPlant
 		this.outerPlant = Optional.empty();
 		this.setPumpkinLife(0);
 		this.outerSunCost = 0;
+		if(this.hasMetal()) {
+			this.decreaseMetal();
+		}
 	}
 	
 	@Override
@@ -775,6 +786,39 @@ public abstract class PVZPlantEntity extends CreatureEntity implements IPVZPlant
 	
 	public void setPumpkinLife(float life){
 		this.dataManager.set(PUMPKIN_LIFE, life);
+	}
+	
+	public int getPlantState() {
+		return this.dataManager.get(PLANT_STATES);
+	}
+	
+	public void setPlantState(int state) {
+		this.dataManager.set(PLANT_STATES, state);
+	}
+	
+	@Override
+	public boolean hasMetal() {
+		return ((this.getPlantState() >> LADDER_FLAG) & 1) == 1;
+	}
+	
+	@Override
+	public void increaseMetal() {
+		int state = this.getPlantState();
+		this.setPlantState(state | (1 << LADDER_FLAG));
+	}
+	
+	@Override
+	public void decreaseMetal() {
+		int state = this.getPlantState();
+		if(this.hasMetal()) {
+			state -= (1 << LADDER_FLAG);
+		}
+		this.setPlantState(state);
+	}
+	
+	@Override
+	public MetalTypes getMetalType() {
+		return MetalTypes.LADDER;
 	}
 	
 	@Override

@@ -66,7 +66,7 @@ public class CabbageEntity extends PultBulletEntity implements IRendersAsItem {
 	public EntitySize getSize(Pose poseIn) {
 		return EntitySize.flexible(0.5F, 0.5F);
 	}
-	
+
 	@Override
 	public void readAdditional(CompoundNBT compound) {
 		super.readAdditional(compound);

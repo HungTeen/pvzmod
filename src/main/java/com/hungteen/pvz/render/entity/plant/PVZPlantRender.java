@@ -1,6 +1,7 @@
 package com.hungteen.pvz.render.entity.plant;
 
 import com.hungteen.pvz.entity.plant.PVZPlantEntity;
+import com.hungteen.pvz.render.layer.PlantLadderLayer;
 import com.hungteen.pvz.render.layer.PumpkinLayer;
 import com.hungteen.pvz.render.layer.fullskin.CharmLayer;
 import com.hungteen.pvz.render.layer.fullskin.EnergyLayer;
@@ -37,6 +38,7 @@ public abstract class PVZPlantRender<T extends PVZPlantEntity> extends MobRender
 		this.addLayer(new PumpkinLayer<>(this));
 		this.addLayer(new SunLightLayer<>(this));
 		this.addLayer(new HealLightLayer<>(this));
+		this.addLayer(new PlantLadderLayer<>(this));
 	}
 	
 	public abstract float getScaleByEntity(T entity);

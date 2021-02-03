@@ -254,5 +254,9 @@
     "butter":{
         "subtitle": "sound.pvz.butter",
         "sounds":[{"name":"pvz:entity/zombie/hit/butter"}]
+    },
+    "basketball":{
+        "subtitle": "sound.pvz.basketball",
+        "sounds":[{"name":"pvz:entity/zombie/act/basketball"}]
     }
 }

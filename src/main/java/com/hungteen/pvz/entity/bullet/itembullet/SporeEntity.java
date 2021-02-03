@@ -2,7 +2,6 @@ package com.hungteen.pvz.entity.bullet.itembullet;
 
 import com.hungteen.pvz.entity.plant.base.PlantShooterEntity;
 import com.hungteen.pvz.entity.plant.toxic.PuffShroomEntity;
-import com.hungteen.pvz.entity.plant.toxic.ScaredyShroomEntity;
 import com.hungteen.pvz.misc.damage.PVZDamageSource;
 import com.hungteen.pvz.register.EntityRegister;
 import com.hungteen.pvz.register.ItemRegister;
@@ -20,8 +19,6 @@ import net.minecraft.world.World;
 
 public class SporeEntity extends PVZItemBulletEntity{
 
-	private static final int SHORT_LIVE_TICK = 20;
-	
 	public SporeEntity(EntityType<?> type, World worldIn) {
 		super(type, worldIn);
 	}
@@ -43,12 +40,8 @@ public class SporeEntity extends PVZItemBulletEntity{
 	
 	@Override
 	protected int getMaxLiveTick() {
-		if(this.getThrower() instanceof PuffShroomEntity) {
-			return SHORT_LIVE_TICK;
-		}else if(this.getThrower() instanceof ScaredyShroomEntity) {
-			return super.getMaxLiveTick();
-		}
-		return SHORT_LIVE_TICK;
+		if(this.getThrower() instanceof PuffShroomEntity) return 20;
+		return 50;
 	}
 	
 	@Override

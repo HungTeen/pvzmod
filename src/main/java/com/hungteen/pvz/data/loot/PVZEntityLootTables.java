@@ -3,6 +3,7 @@ package com.hungteen.pvz.data.loot;
 import java.util.function.BiConsumer;
 import java.util.function.Consumer;
 
+import com.hungteen.pvz.register.BlockRegister;
 import com.hungteen.pvz.register.ItemRegister;
 
 import net.minecraft.item.Items;
@@ -82,6 +83,10 @@ public class PVZEntityLootTables implements Consumer<BiConsumer<ResourceLocation
 				.addEntry(ItemLootEntry.builder(ItemRegister.JACK_BOX.get()))
 				.acceptCondition(RandomChanceWithLooting.builder(0.02F, 0.01F))
 				));
+		t.accept(PVZLoot.JACK_IN_BOX_ZOMBIE, getLootTable().addLootPool(LootPool.builder().rolls(ConstantRange.of(1))
+				.addEntry(ItemLootEntry.builder(ItemRegister.BALLOON.get()))
+				.acceptCondition(RandomChanceWithLooting.builder(0.01F, 0.01F))
+				));
 		t.accept(PVZLoot.DIGGER_ZOMBIE, getLootTable().addLootPool(LootPool.builder().rolls(ConstantRange.of(1))
 				.addEntry(ItemLootEntry.builder(ItemRegister.STEEL_PICKAXE.get()))
 				.addEntry(ItemLootEntry.builder(Items.DIAMOND_PICKAXE))
@@ -93,6 +98,10 @@ public class PVZEntityLootTables implements Consumer<BiConsumer<ResourceLocation
 				));
 		t.accept(PVZLoot.BUNGEE_ZOMBIE, getLootTable().addLootPool(LootPool.builder().rolls(ConstantRange.of(1))
 				.addEntry(ItemLootEntry.builder(ItemRegister.TARGET_ARROW.get()))
+				.acceptCondition(RandomChanceWithLooting.builder(0.01F, 0.01F))
+				));
+		t.accept(PVZLoot.LADDER_ZOMBIE, getLootTable().addLootPool(LootPool.builder().rolls(ConstantRange.of(1))
+				.addEntry(ItemLootEntry.builder(BlockRegister.STEEL_LADDER.get()))
 				.acceptCondition(RandomChanceWithLooting.builder(0.01F, 0.01F))
 				));
 	}

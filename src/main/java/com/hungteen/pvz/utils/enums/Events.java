@@ -19,7 +19,8 @@ public enum Events {
 	RANDOM(true, Bundles.RANDOM),
 	FOG(false),
 	YETI(true, Bundles.POOL_NIGHT, Zombies.NORMAL_ZOMBIE, Zombies.JACK_IN_BOX_ZOMBIE, Zombies.BALLOON_ZOMBIE, Zombies.DIGGER_ZOMBIE, Zombies.POGO_ZOMBIE),
-	BUNGEE(true, Bundles.RANDOM, Zombies.BUNGEE_ZOMBIE);
+	BUNGEE(true, Bundles.RANDOM, Zombies.BUNGEE_ZOMBIE),
+	METAL(true, Bundles.RANDOM, Zombies.BUCKETHEAD_ZOMBIE, Zombies.SCREENDOOR_ZOMBIE, Zombies.FOOTBALL_ZOMBIE, Zombies.GIGA_FOOTBALL_ZOMBIE, Zombies.JACK_IN_BOX_ZOMBIE, Zombies.POGO_ZOMBIE, Zombies.DIGGER_ZOMBIE, Zombies.LADDER_ZOMBIE);
 	
 	public static final List<Events> ATTACK_EVENTS = new ArrayList<>();
 	public boolean isZombieAttackEvent;
@@ -46,6 +47,7 @@ public enum Events {
 		case FOG:{text.applyTextStyles(TextFormatting.GRAY); break;}
 		case RANDOM:{text.applyTextStyles(TextFormatting.GREEN); break;}
 		case BUNGEE:{text.applyTextStyles(TextFormatting.RED); break;}
+		case METAL:{text.applyTextStyles(TextFormatting.BLACK); break;}
 		default:
 			break;
 		}

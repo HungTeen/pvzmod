@@ -3,6 +3,7 @@ package com.hungteen.pvz.entity.zombie.grassnight;
 import java.util.List;
 
 import com.hungteen.pvz.data.loot.PVZLoot;
+import com.hungteen.pvz.entity.plant.spear.SpikeWeedEntity;
 import com.hungteen.pvz.misc.damage.PVZDamageSource;
 import com.hungteen.pvz.utils.EntityUtil;
 import com.hungteen.pvz.utils.ZombieUtil;
@@ -109,7 +110,8 @@ public class GigaFootballZombieEntity extends FootballZombieEntity {
 	
 	@Override
 	public boolean checkCanZombieTarget(LivingEntity target) {
-		return EntityUtil.checkCanEntityAttack(this, target);
+		if(target instanceof SpikeWeedEntity) return true;
+		return super.checkCanZombieTarget(target);
 	}
 	
 	@Override

@@ -2,7 +2,6 @@ package com.hungteen.pvz.entity.bullet;
 
 import javax.annotation.Nullable;
 
-import com.hungteen.pvz.PVZConfig;
 import com.hungteen.pvz.entity.misc.AbstractOwnerEntity;
 import com.hungteen.pvz.entity.plant.base.PlantShooterEntity;
 import com.hungteen.pvz.utils.EntityUtil;
@@ -224,9 +223,7 @@ public abstract class AbstractBulletEntity extends AbstractOwnerEntity implement
 		return this.getOwner();
 	}
 	
-	protected int getMaxLiveTick() {
-		return PVZConfig.COMMON_CONFIG.EntitySettings.EntityLiveTick.BulletLiveTick.get();
-	}
+	protected abstract int getMaxLiveTick(); 
 	
 	protected boolean checkLive(RayTraceResult result) {
 		if (result.getType() == RayTraceResult.Type.ENTITY) {// attack entity

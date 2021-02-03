@@ -5,6 +5,7 @@ import com.hungteen.pvz.entity.zombie.PVZZombieEntity;
 import com.hungteen.pvz.entity.zombie.part.PVZZombiePartEntity;
 import com.hungteen.pvz.misc.damage.PVZDamageSource;
 import com.hungteen.pvz.register.SoundRegister;
+import com.hungteen.pvz.utils.EntityUtil;
 import com.hungteen.pvz.utils.ZombieUtil;
 import com.hungteen.pvz.utils.enums.Zombies;
 import com.hungteen.pvz.utils.interfaces.IMultiPartEntity;
@@ -32,6 +33,8 @@ public class ZomboniEntity extends PVZZombieEntity implements IMultiPartEntity{
 	
 	public ZomboniEntity(EntityType<? extends MonsterEntity> type, World worldIn) {
 		super(type, worldIn);
+		this.canBeButter = false;
+		this.canBeFrozen = false;
 		resetParts();
 	}
 	
@@ -107,12 +110,12 @@ public class ZomboniEntity extends PVZZombieEntity implements IMultiPartEntity{
 	@Override
 	protected void onDeathUpdate() {
 		super.onDeathUpdate();
-		if(this.deathTime==1) {
-			if(!world.isRemote) {
-			    this.playSound(SoundRegister.CAR_EXPLOSION.get(), 1f, 1f);
+		if(this.deathTime == 1) {
+			if(! world.isRemote) {
+				EntityUtil.playSound(this, SoundRegister.CAR_EXPLOSION.get());
 			}
 			else {
-				for(int i=0;i<4;i++) {
+				for(int i = 0; i < 4; ++ i) {
 				    this.world.addParticle(ParticleTypes.EXPLOSION, this.getPosX(), this.getPosY(), this.getPosZ(), 0, 0, 0);
 				}
 			}
@@ -137,7 +140,7 @@ public class ZomboniEntity extends PVZZombieEntity implements IMultiPartEntity{
 	@Override
 	protected float getModifyAttackDamage(Entity entity, float f) {
 		if(entity instanceof LivingEntity) {
-			return ((LivingEntity) entity).getMaxHealth();
+			return EntityUtil.getCurrentHealth(((LivingEntity) entity));
 		}
 		return f;
 	}
@@ -150,11 +153,6 @@ public class ZomboniEntity extends PVZZombieEntity implements IMultiPartEntity{
 	@Override
 	public EntitySize getSize(Pose poseIn) {
 		return EntitySize.flexible(0.95f, 2.3f);
-	}
-	
-	@Override
-	public boolean canBeFrozen() {
-		return false;
 	}
 	
 	@Override

@@ -96,6 +96,8 @@ public class PlantUtil {
 		putPlantInfoToMap(Plants.EXPLODE_O_NUT, 150, CDs.HUGE_SLOW, Ranks.PURPLE, Essences.EXPLOSION, EntityRegister.EXPLODE_O_NUT, ItemRegister.EXPLODE_O_NUT_CARD, ItemRegister.EXPLODE_O_NUT_ENJOY_CARD);
 		putPlantInfoToMap(Plants.GIANT_WALL_NUT, 200, CDs.SUPER_SLOW, Ranks.PURPLE, Essences.DEFENCE, EntityRegister.GIANT_WALL_NUT, ItemRegister.GIANT_WALL_NUT_CARD, ItemRegister.GIANT_WALL_NUT_ENJOY_CARD);
 		putPlantInfoToMap(Plants.BUTTER_PULT, 275, CDs.NORMAL, Ranks.GOLD, Essences.ARMA, EntityRegister.BUTTER_PULT, ItemRegister.BUTTER_PULT_CARD, ItemRegister.BUTTER_PULT_ENJOY_CARD);
+		putPlantInfoToMap(Plants.BAMBOO_LORD, 75, CDs.NORMAL, Ranks.BLUE, Essences.EXPLOSION, EntityRegister.BAMBOO_LORD, ItemRegister.BAMBOO_LORD_CARD, ItemRegister.BAMBOO_LORD_ENJOY_CARD);
+		putPlantInfoToMap(Plants.ICEBERG_LETTUCE, 0, CDs.LITTLE_FAST, Ranks.WHITE, Essences.ICE, EntityRegister.ICEBERG_LETTUCE, ItemRegister.ICEBERG_LETTUCE_CARD, ItemRegister.ICEBERG_LETTUCE_ENJOY_CARD);
 		
 	}
 	

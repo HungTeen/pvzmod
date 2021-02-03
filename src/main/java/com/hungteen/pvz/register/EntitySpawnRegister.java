@@ -98,6 +98,7 @@ public class EntitySpawnRegister {
 		EVENT_CHANCE.put(Events.RANDOM, PVZConfig.COMMON_CONFIG.WorldSettings.WorldEventSettings.EventChanceSettings.RandomAttackChance.get());
 		EVENT_CHANCE.put(Events.YETI, PVZConfig.COMMON_CONFIG.WorldSettings.WorldEventSettings.EventChanceSettings.YetiAttackChance.get());
 		EVENT_CHANCE.put(Events.BUNGEE, PVZConfig.COMMON_CONFIG.WorldSettings.WorldEventSettings.EventChanceSettings.BungeeAttackChance.get());
+		EVENT_CHANCE.put(Events.METAL, PVZConfig.COMMON_CONFIG.WorldSettings.WorldEventSettings.EventChanceSettings.MetalAttackChance.get());
 		
 		putSpawnData(Zombies.NORMAL_ZOMBIE, 35, 1, 2, BiomeUtil.OVER_LAND);
 		putSpawnData(Zombies.CONEHEAD_ZOMBIE, 15, 1, 1, BiomeUtil.OVER_LAND);
@@ -126,7 +127,8 @@ public class EntitySpawnRegister {
 		putSpawnData(Zombies.DIGGER_ZOMBIE, 6, 1, 1, BiomeUtil.OVER_LAND);
 		putSpawnData(Zombies.POGO_ZOMBIE, 8, 1, 1, BiomeUtil.OVER_LAND);
 		
-		putSpawnData(Zombies.BUNGEE_ZOMBIE, 16, 1, 1, BiomeUtil.OVER_LAND);
+		putSpawnData(Zombies.BUNGEE_ZOMBIE, 15, 1, 1, BiomeUtil.OVER_LAND);
+		putSpawnData(Zombies.LADDER_ZOMBIE, 12, 1, 1, BiomeUtil.OVER_LAND);
 	}
 	
 	public static List<ZombieSpawnEntry> getEventSpawnList(World world, Events ev){

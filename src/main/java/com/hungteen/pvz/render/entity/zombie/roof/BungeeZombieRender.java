@@ -15,7 +15,10 @@ import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.LightType;
+import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.api.distmarker.OnlyIn;
 
+@OnlyIn(Dist.CLIENT)
 public class BungeeZombieRender extends PVZZombieRender<BungeeZombieEntity> {
 
 	private static final ResourceLocation BUNGEE_TEX = StringUtil.prefix("textures/entity/zombie/roof/bungee_zombie.png");
