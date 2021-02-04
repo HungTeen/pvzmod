@@ -47,12 +47,15 @@
     "pvz:cat_tail_card",
     "pvz:winter_melon_card",
     "pvz:gold_magnet_card",
+    "pvz:spike_rock_card",
     "pvz:water_guard_card",
     "pvz:strange_cat_card",
     "pvz:gold_leaf_card",
     "pvz:angel_star_fruit_card",
     "pvz:explode_o_nut_card",
     "pvz:giant_wall_nut_card",
-    "pvz:butter_pult_card"
+    "pvz:butter_pult_card",
+    "pvz:bamboo_lord_card",
+    "pvz:iceberg_lettuce_card"
   ]
 }

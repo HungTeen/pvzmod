@@ -53,7 +53,7 @@ public enum Plants {
 	CAT_TAIL(12),
 	WINTER_MELON(8),
 	GOLD_MAGNET(8), 
-//	SPIKE_ROCK,
+	SPIKE_ROCK(8),
 //	COB_CANNON,
 //	IMITATER,
 	// other

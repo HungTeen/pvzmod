@@ -7,16 +7,16 @@
   ],
   "key": {
     "A": {
-      "item": "pvz:arma_essence"
+      "item": "pvz:explosion_essence"
     },
     "B": {
-      "tag": "forge:crops/corn"
+      "item": "minecraft:bamboo"
     },
     "C": {
-      "item": "pvz:green_card"
+      "item": "pvz:blue_card"
     }
   },
   "result": {
-    "item": "pvz:kernel_pult_card"
+    "item": "pvz:bamboo_lord_card"
   }
 }

@@ -26,6 +26,7 @@ public class SoundRegister {
 	public static final RegistryObject<SoundEvent> CAR_EXPLOSION = registerSound("car_explosion");
 	public static final RegistryObject<SoundEvent> DAVE_DIE = registerSound("dave_die");
 	public static final RegistryObject<SoundEvent> PAPER_GONE = registerSound("paper_gone");
+	public static final RegistryObject<SoundEvent> GARGANTUAR_DEATH = registerSound("gargantuar_death");
 	//hit
 	public static final RegistryObject<SoundEvent> PLANT_HURT = registerSound("plant_hurt");
 	public static final RegistryObject<SoundEvent> PLASTIC_HIT = registerSound("plastic_hit");
@@ -49,6 +50,7 @@ public class SoundRegister {
 	public static final RegistryObject<SoundEvent> PENNY_SAY = registerSound("penny_say");
 	public static final RegistryObject<SoundEvent> BUNGEE_SCREAM = registerSound("bungee_scream");
 	public static final RegistryObject<SoundEvent> YUCK = registerSound("yuck");
+	public static final RegistryObject<SoundEvent> GARGANTUAR_SAY = registerSound("gargantuar_say");
 	//attack
 	public static final RegistryObject<SoundEvent> CHERRY_BOMB = registerSound("cherry_bomb");
 	public static final RegistryObject<SoundEvent> POTATO_MINE = registerSound("potato_mine");
@@ -67,7 +69,7 @@ public class SoundRegister {
 	public static final RegistryObject<SoundEvent> LAWN_MOWER = registerSound("lawn_mower");
 	public static final RegistryObject<SoundEvent> PLANT_THROW = registerSound("plant_throw");
 	public static final RegistryObject<SoundEvent> BASKETBALL = registerSound("basketball");
-	
+	public static final RegistryObject<SoundEvent> THROW_IMP = registerSound("throw_imp");
 	//misc
 	public static final RegistryObject<SoundEvent> PLANT_ON_GROUND= registerSound("plant_on_ground");
 	public static final RegistryObject<SoundEvent> PLANT_IN_WATER = registerSound("plant_in_water");

@@ -7,16 +7,16 @@
   ],
   "key": {
     "A": {
-      "item": "pvz:arma_essence"
+      "item": "pvz:ice_essence"
     },
     "B": {
-      "tag": "forge:crops/corn"
+      "tag": "forge:crops/cabbage"
     },
     "C": {
-      "item": "pvz:green_card"
+      "item": "pvz:white_card"
     }
   },
   "result": {
-    "item": "pvz:kernel_pult_card"
+    "item": "pvz:iceberg_lettuce_card"
   }
 }

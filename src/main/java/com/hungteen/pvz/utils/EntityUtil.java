@@ -174,6 +174,18 @@ public class EntityUtil {
 		return (a.getWidth() / 2 + b.getWidth() + r) * (a.getWidth() / 2 + b.getWidth() + r);
 	}
 	
+	public static double getNearestDistance(Entity a, Entity b) {
+		double dx = a.getPosX() - b.getPosX();
+		double dz = a.getPosZ() - b.getPosZ();
+		double dy = 0;
+		if(a.getPosY() > b.getPosY() + b.getHeight()) {
+			dy = a.getPosY() - b.getPosY() - b.getHeight();
+		} else if(b.getPosY() > a.getPosY() + a.getHeight()) {
+			dy = b.getPosY() - a.getPosY() - a.getHeight();
+		}
+		return dx * dx + dy * dy + dz * dz;
+	}
+	
 	/**
 	 * get the owner of entity
 	 */

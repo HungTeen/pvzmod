@@ -93,6 +93,8 @@
     "pvz:winter_melon_enjoy_card",
     "pvz:gold_magnet_card",
     "pvz:gold_magnet_enjoy_card",
+    "pvz:spike_rock_card",
+    "pvz:spike_rock_enjoy_card",
     "pvz:water_guard_card",
     "pvz:water_guard_enjoy_card",
     "pvz:strange_cat_card",
@@ -106,6 +108,10 @@
     "pvz:giant_wall_nut_card",
     "pvz:giant_wall_nut_enjoy_card",
     "pvz:butter_pult_card",
-    "pvz:butter_pult_enjoy_card"
+    "pvz:butter_pult_enjoy_card",
+    "pvz:bamboo_lord_card",
+    "pvz:bamboo_lord_enjoy_card",
+    "pvz:iceberg_lettuce_card",
+    "pvz:iceberg_lettuce_enjoy_card"
   ]
 }

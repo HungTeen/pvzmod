@@ -83,7 +83,7 @@ public class PVZEntityLootTables implements Consumer<BiConsumer<ResourceLocation
 				.addEntry(ItemLootEntry.builder(ItemRegister.JACK_BOX.get()))
 				.acceptCondition(RandomChanceWithLooting.builder(0.02F, 0.01F))
 				));
-		t.accept(PVZLoot.JACK_IN_BOX_ZOMBIE, getLootTable().addLootPool(LootPool.builder().rolls(ConstantRange.of(1))
+		t.accept(PVZLoot.BALLOON_ZOMBIE, getLootTable().addLootPool(LootPool.builder().rolls(ConstantRange.of(1))
 				.addEntry(ItemLootEntry.builder(ItemRegister.BALLOON.get()))
 				.acceptCondition(RandomChanceWithLooting.builder(0.01F, 0.01F))
 				));

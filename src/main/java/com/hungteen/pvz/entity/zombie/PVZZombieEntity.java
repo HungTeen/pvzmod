@@ -22,6 +22,7 @@ import com.hungteen.pvz.entity.drop.JewelEntity;
 import com.hungteen.pvz.entity.drop.SunEntity;
 import com.hungteen.pvz.entity.plant.PVZPlantEntity;
 import com.hungteen.pvz.entity.plant.enforce.SquashEntity;
+import com.hungteen.pvz.entity.plant.spear.SpikeRockEntity;
 import com.hungteen.pvz.entity.plant.spear.SpikeWeedEntity;
 import com.hungteen.pvz.entity.zombie.roof.BungeeZombieEntity;
 import com.hungteen.pvz.misc.damage.PVZDamageSource;
@@ -90,6 +91,7 @@ public abstract class PVZZombieEntity extends MonsterEntity implements IPVZZombi
 	protected boolean canBeMini = true;
 	protected boolean canBeInvis = true;
 	protected boolean canBeStealByBungee = true;
+	protected int maxDeathTime = 20;
 	
 	public PVZZombieEntity(EntityType<? extends MonsterEntity> type, World worldIn) {
 		super(type, worldIn);
@@ -204,7 +206,7 @@ public abstract class PVZZombieEntity extends MonsterEntity implements IPVZZombi
 	@Override
 	protected void onDeathUpdate() {
 		++this.deathTime;
-		if (this.deathTime == 20) {
+		if (this.deathTime == this.maxDeathTime) {
 			this.remove();
 			for (int i = 0; i < 20; ++i) {
 				double d0 = this.rand.nextGaussian() * 0.02D;
@@ -216,7 +218,7 @@ public abstract class PVZZombieEntity extends MonsterEntity implements IPVZZombi
 			this.onZombieRemove();
 		}
 	}
-
+	
 	/**
 	 * the last tick of zombies.
 	 * for drop item and coin.
@@ -282,14 +284,18 @@ public abstract class PVZZombieEntity extends MonsterEntity implements IPVZZombi
 		}
 	}
 
-	/**
+	/**p
 	 * can zombie set target as attackTarget
 	 */
 	public boolean checkCanZombieTarget(LivingEntity target) {
-		if(target instanceof SpikeWeedEntity) return false;
+		return EntityUtil.checkCanEntityAttack(this, target) && this.canZombieTarget(target);
+	}
+	
+	protected boolean canZombieTarget(LivingEntity target) {
+		if(target instanceof SpikeRockEntity) return false;
 		if(target instanceof BungeeZombieEntity) return false;
 		if(target instanceof PVZPlantEntity && ((PVZPlantEntity) target).hasMetal()) return false;
-		return EntityUtil.checkCanEntityAttack(this, target);
+		return true;
 	}
 
 	public boolean checkCanZombieBreakBlock() {

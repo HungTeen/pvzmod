@@ -10,7 +10,7 @@
       "item": "pvz:arma_essence"
     },
     "B": {
-      "item": "pvz:cabbage"
+      "tag": "forge:crops/cabbage"
     },
     "C": {
       "item": "pvz:gray_card"

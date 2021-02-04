@@ -5,13 +5,9 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import com.hungteen.pvz.register.EntitySpawnRegister;
-import com.hungteen.pvz.render.layer.fullskin.ColdLayer;
 
-import net.minecraft.client.Minecraft;
-import net.minecraft.client.renderer.entity.LivingRenderer;
 import net.minecraft.world.dimension.DimensionType;
 import net.minecraft.world.server.ServerWorld;
-import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.common.ForgeConfigSpec;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.DistExecutor;
@@ -62,17 +58,9 @@ public class PVZMod
     	EntitySpawnRegister.removeGameEventSpawns(world);
     }
     
-    @SuppressWarnings({ "unchecked", "rawtypes", "resource" })
 	@SubscribeEvent
     public static void setupComplete(FMLLoadCompleteEvent event) {
         PROXY.postInit();
-        DistExecutor.runWhenOn(Dist.CLIENT, () -> () -> {
-			Minecraft.getInstance().getRenderManager().renderers.values().forEach(r -> {
-				if (r instanceof LivingRenderer) {
-					((LivingRenderer) r).addLayer(new ColdLayer<>((LivingRenderer) r));
-				}
-			});
-		});
     }
     
 }

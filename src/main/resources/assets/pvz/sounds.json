@@ -258,5 +258,17 @@
     "basketball":{
         "subtitle": "sound.pvz.basketball",
         "sounds":[{"name":"pvz:entity/zombie/act/basketball"}]
+    },
+    "throw_imp":{
+        "subtitle": "sound.pvz.throw_imp",
+        "sounds":[{"name":"pvz:entity/zombie/act/throw_imp"},{"name":"pvz:entity/zombie/act/throw_imp2"}]
+    },
+    "gargantuar_death":{
+        "subtitle": "sound.pvz.gargantuar_death",
+        "sounds":[{"name":"pvz:entity/zombie/death/gargantuar_death"}]
+    },
+    "gargantuar_say":{
+        "subtitle": "sound.pvz.gargantuar_say",
+        "sounds":[{"name":"pvz:entity/zombie/say/lowgroan"},{"name":"pvz:entity/zombie/say/lowgroan2"}]
     }
 }
