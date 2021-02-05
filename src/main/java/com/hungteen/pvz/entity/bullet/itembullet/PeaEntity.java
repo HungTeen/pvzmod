@@ -63,7 +63,7 @@ public class PeaEntity extends PVZItemBulletEntity {
 				this.dealPeaDamage(target); // attack 
 				flag = true;
 			}
-			if (!this.world.isRemote && target instanceof TorchWoodEntity) {// pea interact with torchwood
+			if (target instanceof TorchWoodEntity) {// pea interact with torchwood
 				TorchWoodEntity tmp = (TorchWoodEntity) target;
 				if (this.torchWood == null || !this.torchWood.isEntityEqual(tmp)) {// don't fire twice by the same torchwood
 					this.torchWood = tmp;
@@ -83,14 +83,9 @@ public class PeaEntity extends PVZItemBulletEntity {
 				}
 			}
 		}
-		if (!this.world.isRemote) {
-//        	if(result.entityHit instanceof Entity) {
-//        		System.out.println(result.entityHit);
-//        	}
-			this.world.setEntityState(this, (byte) 3);
-			if (flag || !this.checkLive(result)) {
-				this.remove();
-			}
+		this.world.setEntityState(this, (byte) 3);
+		if (flag || !this.checkLive(result)) {
+			this.remove();
 		}
 	}
 

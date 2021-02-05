@@ -11,6 +11,9 @@ aafe5126e21bb0c10b9adf89e8490d414196d029 assets\pvz\models\item\blover_enjoy_car
 640fb723df4adaf9b0e055a7e45afa7756e5acb4 assets\pvz\models\item\blover_spawn_egg.json
 640fb723df4adaf9b0e055a7e45afa7756e5acb4 assets\pvz\models\item\bobsle_team_spawn_egg.json
 640fb723df4adaf9b0e055a7e45afa7756e5acb4 assets\pvz\models\item\bobsle_zombie_spawn_egg.json
+e39839120c03ae5eba78651eca3f61673ac99a2c assets\pvz\models\item\bonk_choy_card.json
+5f53d16aac50a0f637fb78dd41e31344200c9a7f assets\pvz\models\item\bonk_choy_enjoy_card.json
+640fb723df4adaf9b0e055a7e45afa7756e5acb4 assets\pvz\models\item\bonk_choy_spawn_egg.json
 640fb723df4adaf9b0e055a7e45afa7756e5acb4 assets\pvz\models\item\buckethead_zombie_spawn_egg.json
 640fb723df4adaf9b0e055a7e45afa7756e5acb4 assets\pvz\models\item\bungee_zombie_spawn_egg.json
 120952f0d3061d4963e31df9c49305ae69530605 assets\pvz\models\item\butter_pult_card.json
@@ -288,7 +291,7 @@ aa1199912fdd94ae7ed64a220d62a4b353977952 data\pvz\recipes\potato_mine_card.json
 fdcaf302b42a5615e8e05d55694a7cbee1ebdd6c data\pvz\recipes\torch_wood_card.json
 011d153de21a8b8dd7962cfdaf37cf6ed17559c1 data\pvz\recipes\umbrella_leaf_card.json
 7faec729d0d458fc9549c97348024c5138f2e11f data\pvz\recipes\wall_nut_card.json
-57b766fa96dda7813730f65569d3916843c28e16 data\pvz\tags\items\cards\plant_card.json
-74aa0b11be06f5f38ae25800701be5e050815dd6 data\pvz\tags\items\cards\plant_enjoy_card.json
-c1f3102d1a195c959fc367dd652e3a858eddff11 data\pvz\tags\items\cards\plant_summon_card.json
+737cc91c2f4a479a8299a3073002396c5d81a1d0 data\pvz\tags\items\cards\plant_card.json
+d169d500883409cc50a50096cb3fa902673ac685 data\pvz\tags\items\cards\plant_enjoy_card.json
+402bbf9082691156d36d1041669661e0ce0cf493 data\pvz\tags\items\cards\plant_summon_card.json
 293c3c6119087956dfb83d72d897f82c1c248628 data\pvz\tags\items\cards\template_card.json

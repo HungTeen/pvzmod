@@ -166,11 +166,9 @@ public class ThornEntity extends AbstractBulletEntity {
 				-- this.extraHitCount;
 			}
 		}
-		if (!this.world.isRemote) {
-			this.world.setEntityState(this, (byte) 3);
-			if ((! (this.getThornType() == ThornTypes.AUTO) && this.extraHitCount == 0)) {
-				this.remove();
-			}
+		this.world.setEntityState(this, (byte) 3);
+		if ((! (this.getThornType() == ThornTypes.AUTO) && this.extraHitCount == 0)) {
+			this.remove();
 		}
 	}
 

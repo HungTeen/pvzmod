@@ -99,6 +99,18 @@ public class EntityUtil {
 		}
 		return target.getHealth();
 	}
+	
+	/**
+	 * get the max health the target has currently.
+	 */
+	public static float getCurrentMaxHealth(LivingEntity target) {
+		if(target instanceof PVZZombieEntity) {
+			return ((PVZZombieEntity) target).getCurrentMaxHealth();
+		} else if(target instanceof PVZPlantEntity) {
+			return ((PVZPlantEntity) target).getCurrentMaxHealth();
+		}
+		return target.getMaxHealth();
+	}
 
 	public static boolean checkCanSeeEntity(Entity entity, Entity target) {
 		Vec3d start = entity.getPositionVec().add(0, entity.getEyeHeight(), 0);
@@ -170,8 +182,10 @@ public class EntityUtil {
 	/**
 	 * get entity attack range by width and r
 	 */
-	public static double getAttackRange(Entity a, Entity b, double r){
-		return (a.getWidth() / 2 + b.getWidth() + r) * (a.getWidth() / 2 + b.getWidth() + r);
+	public static double getAttackRange(Entity a, Entity b, double r) {
+		double two = Math.sqrt(2);
+		double dis = (a.getWidth() / two + b.getWidth() / two + r);
+		return dis * dis;
 	}
 	
 	public static double getNearestDistance(Entity a, Entity b) {
@@ -366,7 +380,7 @@ public class EntityUtil {
 			LivingEntity owner = ((PVZMultiPartEntity) entity).getOwner();
 			if(owner == null) {// no owner
 				list.add(entity.getEntityId());
-			}else {// get all id for owner's parts
+			} else {// get all id for owner's parts
 				IMultiPartEntity parent = ((PVZMultiPartEntity) entity).getParent();
 				for(Entity target : parent.getParts()) {
 				    if(target != null) {

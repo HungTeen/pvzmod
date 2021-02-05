@@ -177,6 +177,11 @@ public abstract class PVZZombieEntity extends MonsterEntity implements IPVZZombi
 		if(this.hasDirectDefence) return this.getDefenceLife() + this.getHealth();
 		return this.getHealth();
 	}
+	
+	public float getCurrentMaxHealth() {
+		if(this.hasDirectDefence) return this.getDefenceLife() + this.getMaxHealth();
+		return this.getMaxHealth();
+	}
 
 	public int getAttackCD() {
 		if (!this.canZombieNormalUpdate()) {

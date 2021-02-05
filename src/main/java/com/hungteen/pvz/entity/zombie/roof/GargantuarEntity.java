@@ -123,7 +123,7 @@ public class GargantuarEntity extends PVZZombieEntity {
 	@Override
 	protected float getModifyAttackDamage(Entity entity, float f) {
 		if(entity instanceof LivingEntity) {
-			return 2 * EntityUtil.getCurrentHealth(((LivingEntity) entity));
+			return 2 * EntityUtil.getCurrentMaxHealth(((LivingEntity) entity));
 		}
 		return f;
 	}

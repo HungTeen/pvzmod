@@ -139,15 +139,27 @@ public class SpikeRockEntity extends PVZPlantEntity {
 	}
 	
 	public int getAttackCD() {
+		int lvl = this.getPlantLvl();
+		if(lvl <= 19) return 41 - lvl;
 		return 20;
 	}
 	
 	public float getAttackDamage() {
-		return 3;
+		int lvl = this.getPlantLvl();
+		if(lvl <= 16) {
+			int now = (lvl - 1) / 2;
+			return 3.75F + 0.25F * now;
+		}
+		return 6;
 	}
 	
 	public int getSpikesCount() {
-		return 6;
+		int lvl = this.getPlantLvl();
+		if(lvl <= 20) {
+			int now = (lvl - 1) / 5;
+			return 3 * now + 6;
+		}
+		return 15;
 	}
 
 	@Override
@@ -162,7 +174,9 @@ public class SpikeRockEntity extends PVZPlantEntity {
 
 	@Override
 	public int getSuperTimeLength() {
-		return 0;
+		if(this.isPlantInStage(1)) return 100;
+		if(this.isPlantInStage(2)) return 150;
+		return 200;
 	}
 	
 	@Override

@@ -73,11 +73,9 @@ public class FumeEntity extends PVZItemBulletEntity{
 				this.addHitEntity(target);
 			}
 		}
-		if (!this.world.isRemote) {
-			this.world.setEntityState(this, (byte) 3);
-			if (flag || !this.checkLive(result)) {
-				this.remove();
-			}
+		this.world.setEntityState(this, (byte) 3);
+		if (flag || !this.checkLive(result)) {
+			this.remove();
 		}
 	}
 	

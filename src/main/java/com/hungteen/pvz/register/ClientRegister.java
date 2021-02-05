@@ -8,6 +8,7 @@ import com.hungteen.pvz.particle.DirtBurstOutParticle;
 import com.hungteen.pvz.particle.DoomParticle;
 import com.hungteen.pvz.particle.FrozenMelonSliceParticle;
 import com.hungteen.pvz.particle.FumeParticle;
+import com.hungteen.pvz.particle.GreenSweepParticle;
 import com.hungteen.pvz.particle.MelonSliceParticle;
 import com.hungteen.pvz.particle.SleepParticle;
 import com.hungteen.pvz.particle.SnowFlowerParticle;
@@ -64,6 +65,8 @@ public class ClientRegister {
         manager.registerFactory(ParticleRegister.DOOM.get(), (sprite) -> {return new DoomParticle.Factory(sprite);});
         manager.registerFactory(ParticleRegister.MELON_SLICE.get(), (sprite) -> {return new MelonSliceParticle.Factory(sprite);});
         manager.registerFactory(ParticleRegister.FROZEN_MELON_SLICE.get(), (sprite) -> {return new FrozenMelonSliceParticle.Factory(sprite);});
+        manager.registerFactory(ParticleRegister.GREEN_SWEEP.get(), (sprite) -> {return new GreenSweepParticle.Factory(sprite);});
+        
 	}
 	
 	@SubscribeEvent

@@ -140,7 +140,7 @@ public class ZomboniEntity extends PVZZombieEntity implements IMultiPartEntity{
 	@Override
 	protected float getModifyAttackDamage(Entity entity, float f) {
 		if(entity instanceof LivingEntity) {
-			return EntityUtil.getCurrentHealth(((LivingEntity) entity));
+			return EntityUtil.getCurrentMaxHealth(((LivingEntity) entity));
 		}
 		return f;
 	}

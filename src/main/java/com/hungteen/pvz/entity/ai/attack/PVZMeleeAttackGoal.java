@@ -51,7 +51,7 @@ public abstract class PVZMeleeAttackGoal extends Goal {
 		}
 		this.path = this.attacker.getNavigator().getPathToEntity(living, 0);
 		if (this.path != null) return true;//has walk path.
-		return this.getAttackReachSqr(living) >= this.attacker.getDistanceSq(living);// target is already in attack range
+		return this.getAttackReachSqr(living) >= EntityUtil.getNearestDistance(attacker, living);// target is already in attack range
 	}
 	
 	@Override
@@ -119,9 +119,7 @@ public abstract class PVZMeleeAttackGoal extends Goal {
 	protected abstract void checkAndPerformAttack(LivingEntity target);
 
 	protected double getAttackReachSqr(LivingEntity attackTarget) {
-		double two = Math.sqrt(2);
-		double dis = (this.attacker.getWidth() / two + attackTarget.getWidth() / two + 0.5f);
-		return dis * dis;
+		return EntityUtil.getAttackRange(attacker, attackTarget, 0.5F);
 	}
 	
 }

@@ -100,7 +100,7 @@ public class CatapultZombieEntity extends PVZZombieEntity implements IPult {
 	@Override
 	protected float getModifyAttackDamage(Entity entity, float f) {
 		if(entity instanceof LivingEntity) {
-			return EntityUtil.getCurrentHealth(((LivingEntity) entity));
+			return EntityUtil.getCurrentMaxHealth(((LivingEntity) entity));
 		}
 		return f;
 	}

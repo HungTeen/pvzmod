@@ -37,7 +37,7 @@ public abstract class PVZMultiPartEntity extends Entity {
 		super(entityTypeIn, owner.world);
 		if(owner instanceof IMultiPartEntity) {
 			this.parent = (IMultiPartEntity) owner;
-		}else {
+		} else {
 			PVZMod.LOGGER.debug("error multipart owner");
 		}
 		this.setOwner(owner);

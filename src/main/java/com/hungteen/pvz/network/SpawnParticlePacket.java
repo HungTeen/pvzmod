@@ -58,6 +58,8 @@ public class SpawnParticlePacket {
 		    		particle = ParticleTypes.EXPLOSION;
 		    	} else if(id == 6) {
 		    		particle = ParticleRegister.DIRT_BURST_OUT.get();
+		    	} else if(id == 7) {
+		    		particle = ParticleRegister.GREEN_SWEEP.get();
 		    	}
 		    	if(particle != null) {
 		    		Minecraft.getInstance().world.addParticle(particle, message.x, message.y, message.z, 0, 0, 0);

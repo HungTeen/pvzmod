@@ -95,23 +95,16 @@ public class MetalItemEntity extends PVZItemBulletEntity {
 		boolean flag = false;
 		if (result.getType() == RayTraceResult.Type.ENTITY) {
 			Entity target = ((EntityRayTraceResult) result).getEntity();
-//			System.out.println(target);
 			if (this.getMetalState() == MetalStates.SHOOT && checkCanAttack(target)) {
 				target.hurtResistantTime = 0;
-				if(! world.isRemote) {
-					target.attackEntityFrom(PVZDamageSource.causeAppeaseDamage(this, this.getThrower()), getAttackDamage());
-					EntityUtil.playSound(this, SoundRegister.METAL_HIT.get());
-				}
+				target.attackEntityFrom(PVZDamageSource.causeAppeaseDamage(this, this.getThrower()), getAttackDamage());
+				EntityUtil.playSound(this, SoundRegister.METAL_HIT.get());
 				flag = true;
 			}
-		} else if(result.getType() == RayTraceResult.Type.BLOCK) {
-//			System.out.println(((BlockRayTraceResult)result).getPos());
 		}
-		if (! this.world.isRemote) {
-			this.world.setEntityState(this, (byte) 3);
-			if (flag || ! this.checkLive(result)) {
-				this.remove();
-			}
+		this.world.setEntityState(this, (byte) 3);
+		if (flag || ! this.checkLive(result)) {
+			this.remove();
 		}
 	}
 	

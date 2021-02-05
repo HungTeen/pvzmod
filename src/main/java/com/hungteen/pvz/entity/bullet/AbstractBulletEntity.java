@@ -87,19 +87,20 @@ public abstract class AbstractBulletEntity extends AbstractOwnerEntity implement
 			this.recalculateSize();
 		}
 		//on hit
-		Vec3d start = this.getPositionVec();
-		Vec3d end = start.add(this.getMotion());
-		RayTraceResult result = this.world.rayTraceBlocks(new RayTraceContext(start, end, RayTraceContext.BlockMode.COLLIDER, RayTraceContext.FluidMode.NONE, this));
-		if(result.getType() != RayTraceResult.Type.MISS) {// hit something
-			end = result.getHitVec();
-		}
-		EntityRayTraceResult entityRay = this.rayTraceEntities(start, end);
-		if(entityRay != null) {
-			result = entityRay;
-		}
-		if(result != null && result.getType() != RayTraceResult.Type.MISS && !net.minecraftforge.event.ForgeEventFactory.onProjectileImpact(this, result)) {//on hit 
-//			System.out.println(result.getType());
-			this.onImpact(result);
+		if(! world.isRemote) {
+			Vec3d start = this.getPositionVec();
+		    Vec3d end = start.add(this.getMotion());
+		    RayTraceResult result = this.world.rayTraceBlocks(new RayTraceContext(start, end, RayTraceContext.BlockMode.COLLIDER, RayTraceContext.FluidMode.NONE, this));
+		    if(result.getType() != RayTraceResult.Type.MISS) {// hit something
+		    	end = result.getHitVec();
+		    }
+		    EntityRayTraceResult entityRay = this.rayTraceEntities(start, end);
+		    if(entityRay != null) {
+			    result = entityRay;
+		    }
+		    if(result != null && result.getType() != RayTraceResult.Type.MISS && !net.minecraftforge.event.ForgeEventFactory.onProjectileImpact(this, result)) {//on hit 
+			    this.onImpact(result);
+		    }
 		}
 		//move
 		Vec3d vec3d = this.getMotion();

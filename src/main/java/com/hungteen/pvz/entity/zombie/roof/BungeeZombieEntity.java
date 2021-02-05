@@ -259,7 +259,7 @@ public class BungeeZombieEntity extends PVZZombieEntity {
 	}
 	
 	private void dealDamage() {
-		this.getStealTarget().attackEntityFrom(PVZDamageSource.causeNormalDamage(this, this), EntityUtil.getCurrentHealth(this.getStealTarget()));
+		this.getStealTarget().attackEntityFrom(PVZDamageSource.causeNormalDamage(this, this), EntityUtil.getCurrentMaxHealth(this.getStealTarget()));
 		this.remove();
 	}
 	

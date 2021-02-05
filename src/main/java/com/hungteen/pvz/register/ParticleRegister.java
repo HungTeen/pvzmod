@@ -25,5 +25,6 @@ public class ParticleRegister {
 	public static final RegistryObject<BasicParticleType> DOOM = PARTICLE_TYPES.register("doom", ()->{return new BasicParticleType(false);});
 	public static final RegistryObject<BasicParticleType> MELON_SLICE = PARTICLE_TYPES.register("melon_slice", ()->{return new BasicParticleType(false);});
 	public static final RegistryObject<BasicParticleType> FROZEN_MELON_SLICE = PARTICLE_TYPES.register("frozen_melon_slice", ()->{return new BasicParticleType(false);});
+	public static final RegistryObject<BasicParticleType> GREEN_SWEEP = PARTICLE_TYPES.register("green_sweep", ()->{return new BasicParticleType(false);});
 
 }

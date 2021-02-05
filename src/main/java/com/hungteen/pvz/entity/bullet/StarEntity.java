@@ -55,11 +55,9 @@ public class StarEntity extends AbstractBulletEntity {
 				flag = true;
 			}
 		}
-		if (!this.world.isRemote) {
-			this.world.setEntityState(this, (byte) 3);
-			if (flag || !this.checkLive(result)) {
-				this.remove();
-			}
+		this.world.setEntityState(this, (byte) 3);
+		if (flag || !this.checkLive(result)) {
+			this.remove();
 		}
 	}
 	

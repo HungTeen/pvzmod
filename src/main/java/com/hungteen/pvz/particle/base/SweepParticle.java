@@ -8,22 +8,26 @@ import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 
 @OnlyIn(Dist.CLIENT)
-public class BombParticle extends SpriteTexturedParticle {
-
+public abstract class SweepParticle extends SpriteTexturedParticle {
+	
 	protected final IAnimatedSprite sprite;
 
-	protected BombParticle(World world, double x, double y, double z, double xSpeed, double ySpeed, double zSpeed,
-			IAnimatedSprite sprite) {
-		super(world, x, y, z, xSpeed, ySpeed, zSpeed);
-		this.maxAge = 6 + this.rand.nextInt(4);
-		this.setColor(1, 0, 0);
-		this.particleScale = 4;
-		this.sprite = sprite;
-		this.canCollide = false;
-		this.selectSpriteWithAge(this.sprite);
+	protected SweepParticle(World world, double x, double y, double z, double scale, IAnimatedSprite sprite) {
+	      super(world, x, y, z, 0.0D, 0.0D, 0.0D);
+	      this.sprite = sprite;
+	      this.maxAge = 4;
+	      float f = this.rand.nextFloat() * 0.6F + 0.4F;
+	      this.particleRed = f;
+	      this.particleGreen = f;
+	      this.particleBlue = f;
+	      this.particleScale = 1.0F - (float)scale * 0.5F;
+	      this.selectSpriteWithAge(sprite);
+	   }
+
+	public int getBrightnessForRender(float partialTick) {
+		return 15728880;
 	}
 
-	@Override
 	public void tick() {
 		this.prevPosX = this.posX;
 		this.prevPosY = this.posY;
@@ -35,12 +39,6 @@ public class BombParticle extends SpriteTexturedParticle {
 		}
 	}
 
-	@Override
-	public int getBrightnessForRender(float partialTick) {
-		return 15728880;
-	}
-
-	@Override
 	public IParticleRenderType getRenderType() {
 		return IParticleRenderType.PARTICLE_SHEET_LIT;
 	}

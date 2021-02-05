@@ -39,7 +39,7 @@ public class SadGargantuarEntity extends GargantuarEntity {
 		float range = 3;
 		EntityUtil.getEntityTargetableEntity(this, EntityUtil.getEntityAABB(this, range, range)).forEach((target) -> {
 			if(! target.isEntityEqual(entity)) {
-				target.attackEntityFrom(getZombieAttackDamageSource(), EntityUtil.getCurrentHealth(target));
+				target.attackEntityFrom(getZombieAttackDamageSource(), EntityUtil.getCurrentMaxHealth(target) / 2);
 				for(int i = 0; i < 5; ++ i) {
 					EntityUtil.spawnParticle(target, 6);
 				}
@@ -50,7 +50,7 @@ public class SadGargantuarEntity extends GargantuarEntity {
 	@Override
 	protected float getModifyAttackDamage(Entity entity, float f) {
 		if(entity instanceof LivingEntity) {
-			return 4 * EntityUtil.getCurrentHealth(((LivingEntity) entity));
+			return 4 * EntityUtil.getCurrentMaxHealth(((LivingEntity) entity));
 		}
 		return f;
 	}

@@ -62,14 +62,12 @@ public class FireCrackerEntity extends PVZItemBulletEntity{
 				flag = true;
 			}
 		}
-		if (! this.world.isRemote) {
-			this.world.setEntityState(this, (byte) 3);
-			if (flag) {
-				this.remove();
-			} else if(! this.checkLive(result)) {
-				this.dealDamage(null);
-				this.remove();
-			}
+		this.world.setEntityState(this, (byte) 3);
+		if (flag) {
+			this.remove();
+		} else if(! this.checkLive(result)) {
+			this.dealDamage(null);
+			this.remove();
 		}
 	}
 	

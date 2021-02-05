@@ -21,12 +21,6 @@ public class SpikeWeedEntity extends SpikeRockEntity {
 		return 3;
 	}
 	
-	public int getAttackCD() {
-		int lvl = this.getPlantLvl();
-		if(lvl <= 19) return 41 - lvl;
-		return 20;
-	}
-	
 	@Override
 	public int getSpikesCount() {
 		return 0;

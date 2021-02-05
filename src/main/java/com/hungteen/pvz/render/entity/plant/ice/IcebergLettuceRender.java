@@ -21,7 +21,7 @@ public class IcebergLettuceRender extends PVZPlantRender<IcebergLettuceEntity> {
 
 	@Override
 	public float getScaleByEntity(IcebergLettuceEntity entity) {
-		return 0.7F;
+		return 0.5F;
 	}
 
 	@Override

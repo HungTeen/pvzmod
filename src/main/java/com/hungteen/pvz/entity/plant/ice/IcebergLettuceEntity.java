@@ -88,7 +88,7 @@ public class IcebergLettuceEntity extends PlantCloserEntity implements IIcePlant
     
 	@Override
 	public EntitySize getSize(Pose poseIn) {
-		return EntitySize.fixed(0.8F, 0.9F);
+		return EntitySize.fixed(0.6F, 0.6F);
 	}
 	
 	@Override

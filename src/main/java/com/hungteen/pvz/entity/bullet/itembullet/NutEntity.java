@@ -37,9 +37,7 @@ public class NutEntity extends PVZItemBulletEntity {
 	protected void onImpact(RayTraceResult result) {
 		boolean flag = false;
 		if(result.getType() == RayTraceResult.Type.BLOCK) {
-//			System.out.println(this.getThrower());
-			if(! world.isRemote && this.getThrower() != null && world.isAirBlock(this.getPosition().up()) && this.rand.nextInt(12) == 0) {
-//				System.out.println("why");
+			if(this.getThrower() != null && world.isAirBlock(this.getPosition().up()) && this.rand.nextInt(12) == 0) {
 				WallNutEntity nut = EntityRegister.WALL_NUT.get().create(world);
 				nut.setOwnerUUID(this.getThrower().getUniqueID());
 				EntityUtil.onMobEntitySpawn(world, nut, this.getPosition().up());
@@ -53,11 +51,9 @@ public class NutEntity extends PVZItemBulletEntity {
 				flag = true;
 			}
 		}
-		if (! this.world.isRemote) {
-			this.world.setEntityState(this, (byte) 3);
-			if (flag) {
-				this.remove();
-			}
+		this.world.setEntityState(this, (byte) 3);
+		if (flag) {
+			this.remove();
 		}
 	}
 	
