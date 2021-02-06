@@ -76,11 +76,25 @@ public class PVZConfig {
 							.comment("The weight to happen Metal Invasion when it's a zombie attack day.")
 							.defineInRange("MetalAttackChance", 25, 1, 10000);
 					
+					WorldSettings.WorldEventSettings.EventChanceSettings.RoofAttackChance = builder
+							.comment("The weight to happen Roof Invasion when it's a zombie attack day.")
+							.defineInRange("RoofAttackChance", 50, 1, 10000);
+					
+					WorldSettings.WorldEventSettings.EventChanceSettings.GiantAttackChance = builder
+							.comment("The weight to happen Giant Invasion when it's a zombie attack day.")
+							.defineInRange("GiantAttackChance", 25, 1, 10000);
+					
 					WorldSettings.WorldEventSettings.EventChanceSettings.FogEventChance = builder
 							.comment("The related value to happen Fog Event when it's a zombie attack day(If the value is x, then the chance is 1/x).")
-							.defineInRange("FogAttackChance", 12, 1, 10000);
+							.defineInRange("FogEventChance", 12, 1, 10000);
 					
+					WorldSettings.WorldEventSettings.EventChanceSettings.MiniEventChance = builder
+							.comment("The related value to happen Mini Event when it's a zombie attack day(If the value is x, then the chance is 1/x).")
+							.defineInRange("MiniEventChance", 10, 1, 10000);
 					
+					WorldSettings.WorldEventSettings.EventChanceSettings.InvisEventChance = builder
+							.comment("The related value to happen Invis Event when it's a zombie attack day(If the value is x, then the chance is 1/x).")
+							.defineInRange("InvisEventChance", 15, 1, 10000);
 					
 				}
 				builder.pop();
@@ -171,6 +185,9 @@ public class PVZConfig {
 				EntitySettings.PlayerOriginGroup = builder
 						.comment("The Group of player, 1 means u are in plant group(zombie will attack u), 0 means u are mid(no plants and zombies attack u), -1 means u are in zombie group(plant will attack u).")
 						.defineInRange("PlayerOriginGroup", 1, -1, 1);
+				EntitySettings.StrangeCatNameChance = builder
+						.comment("The chance of strange cat to change its name.(1/x)")
+						.defineInRange("TrickZombieCharmChance", 3, 1, 1000000);
 				
 				builder.comment("The Max live time for Entity like sun.").push("EntityLiveTime");
 				{
@@ -273,6 +290,10 @@ public class PVZConfig {
 			    	public ForgeConfigSpec.IntValue YetiAttackChance;
 			    	public ForgeConfigSpec.IntValue BungeeAttackChance;
 			    	public ForgeConfigSpec.IntValue MetalAttackChance;
+			    	public ForgeConfigSpec.IntValue RoofAttackChance;
+			    	public ForgeConfigSpec.IntValue GiantAttackChance;
+			    	public ForgeConfigSpec.IntValue MiniEventChance;
+			    	public ForgeConfigSpec.IntValue InvisEventChance;
 			    }
 			}
 			
@@ -303,6 +324,7 @@ public class PVZConfig {
 			public ForgeConfigSpec.IntValue DoomRange;
 			public ForgeConfigSpec.IntValue TrickZombieCharmChance;
 			public ForgeConfigSpec.IntValue PlayerOriginGroup;
+			public ForgeConfigSpec.IntValue StrangeCatNameChance;
 			
 			public EntityLiveTick EntityLiveTick = new EntityLiveTick();
 			

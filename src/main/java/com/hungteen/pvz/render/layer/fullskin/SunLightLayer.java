@@ -24,6 +24,7 @@ public class SunLightLayer<T extends LivingEntity, M extends EntityModel<T>> ext
 
 	@Override
 	protected boolean canRender(T entity) {
+		if(entity.isInvisible()) return false;
 		if(entity instanceof StarFruitEntity && ((StarFruitEntity) entity).lightTick > 0) return true;
 		if(entity instanceof GoldLeafEntity && ((GoldLeafEntity) entity).getAttackTime() + 30 > ((GoldLeafEntity) entity).getReadyTime()) return true;
 		if(entity instanceof PlantProducerEntity) {

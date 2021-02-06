@@ -20,6 +20,7 @@ public class SunLayer <T extends LivingEntity, M extends EntityModel<T>> extends
 
 	@Override
 	protected boolean canRender(T entity) {
+		if(entity.isInvisible()) return false;
 		if(entity instanceof PVZZombieEntity) {
 			return ((PVZZombieEntity) entity).getZombieType() == Type.SUN;
 		}

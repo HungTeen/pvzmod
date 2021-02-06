@@ -21,6 +21,7 @@ public class EnergyLayer <T extends LivingEntity, M extends EntityModel<T>> exte
 
 	@Override
 	protected boolean canRender(T entity) {
+		if(entity.isInvisible()) return false;
 		if(entity instanceof PVZZombieEntity) {
 			return ((PVZZombieEntity) entity).getZombieType()==Type.SUPER;
 		}

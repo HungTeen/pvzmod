@@ -46,6 +46,10 @@ public class OtherStatsPacket{
 			    	} else {
 			    		ClientPlayerResources.zombieWaveTime[message.pos] = message.data;
 			    	}
+			    } else if(message.type == 2) {
+			    	if(message.pos == 0) {
+			    		ClientPlayerResources.lightLevel = message.data;
+			    	}
 			    }
 		    });
 		    ctx.get().setPacketHandled(true);

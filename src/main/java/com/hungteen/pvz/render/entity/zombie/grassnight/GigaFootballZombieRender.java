@@ -19,6 +19,7 @@ public class GigaFootballZombieRender extends PVZZombieRender<GigaFootballZombie
 
 	@Override
 	protected float getScaleByEntity(GigaFootballZombieEntity entity) {
+		if(entity.isMiniZombie()) return 0.17F;
 		return 0.5f;
 	}
 

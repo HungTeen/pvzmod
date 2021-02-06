@@ -32,7 +32,7 @@ public class MetalItemLayer <T extends MagnetShroomEntity> extends LayerRenderer
 	public void render(MatrixStack matrixStackIn, IRenderTypeBuffer bufferIn, int packedLightIn,
 			MagnetShroomEntity entityIn, float limbSwing, float limbSwingAmount, float partialTicks,
 			float ageInTicks, float netHeadYaw, float headPitch) {
-		if(entityIn.getMetalType() == MetalTypes.EMPTY) {
+		if(entityIn.getMetalType() == MetalTypes.EMPTY || entityIn.isInvisible()) {
 			return ;
 		}
 		matrixStackIn.push();

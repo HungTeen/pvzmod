@@ -372,6 +372,7 @@ public class PlayerDataManager {
 		public int totalWaveCount;
 		public int playSoundTick;
 		public int updateGoodTick;
+		public int lightLevel;
 		
 		public OtherStats(PlayerDataManager manager) {
 			this.manager = manager;
@@ -380,6 +381,7 @@ public class PlayerDataManager {
 			}
 			this.totalWaveCount = 0;
 			this.playSoundTick = 0;
+			this.lightLevel = 0;
 			MysteryShopContainer.genNextGoods(player);
 		}
 		

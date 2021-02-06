@@ -19,6 +19,7 @@ public class PoleZombieRender extends PVZZombieRender<PoleZombieEntity>{
 
 	@Override
 	protected float getScaleByEntity(PoleZombieEntity entity) {
+		if(entity.isMiniZombie()) return 0.15F;
 		return 0.5f;
 	}
 

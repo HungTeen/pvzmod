@@ -19,6 +19,7 @@ public class BackupDancerRender extends UnderGroundZombieRender<BackupDancerEnti
 
 	@Override
 	protected float getScaleByEntity(BackupDancerEntity entity) {
+		if(entity.isMiniZombie()) return 0.15F;
 		return 0.5f;
 	}
 

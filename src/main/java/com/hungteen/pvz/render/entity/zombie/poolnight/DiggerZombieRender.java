@@ -20,6 +20,7 @@ public class DiggerZombieRender extends PVZZombieRender<DiggerZombieEntity>{
 
 	@Override
 	protected float getScaleByEntity(DiggerZombieEntity entity) {
+		if(entity.isMiniZombie()) return 0.15F;
 		return 0.5f;
 	}
 

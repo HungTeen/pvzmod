@@ -45,6 +45,12 @@ public abstract class DefenceZombieEntity extends PVZZombieEntity implements IMu
 		}
 	}
 	
+	@Override
+	public void onZombieBeMini() {
+		super.onZombieBeMini();
+		this.setDefenceLife(this.getPartLife() * 0.6F);
+	}
+	
 	public abstract float getPartLife();
 	
 	public SoundEvent getPartHurtSound() {
@@ -56,6 +62,7 @@ public abstract class DefenceZombieEntity extends PVZZombieEntity implements IMu
 	}
 	
 	protected float getPartHeightOffset() {
+		if(this.isMiniZombie()) return 0.1F;
 		return 0.2f;
 	}
 	
@@ -69,6 +76,7 @@ public abstract class DefenceZombieEntity extends PVZZombieEntity implements IMu
 	}
 	
 	public float getPartOffset() {
+		if(this.isMiniZombie()) return 0.3F;
 		return 0.55f;
 	}
 	

@@ -331,10 +331,6 @@ public abstract class PVZPlantEntity extends CreatureEntity implements IPVZPlant
 	public void applyEntityCollision(Entity entityIn) {
 		if (!this.isRidingSameEntity(entityIn)){
             if (!entityIn.noClip && !this.noClip){
-            	if(entityIn instanceof PVZPlantEntity&&!EntityUtil.checkCanEntityAttack(this, entityIn)) {
-            		this.attackEntityFrom(DamageSource.CRAMMING, 6.0F);
-            		entityIn.attackEntityFrom(DamageSource.CRAMMING, 6.0F);
-            	}
                 double d0 = entityIn.getPosX() - this.getPosX();
                 double d1 = entityIn.getPosZ() - this.getPosZ();
                 double d2 = MathHelper.absMax(d0, d1);
@@ -356,9 +352,11 @@ public abstract class PVZPlantEntity extends CreatureEntity implements IPVZPlant
                         entityIn.addVelocity(d0, 0.0D, d1);
                     }
                 }else {
-                	if(this instanceof PVZPlantEntity && entityIn instanceof PVZPlantEntity) {
-                	    this.attackEntityFrom(DamageSource.CRAMMING, 10);
-                	    entityIn.attackEntityFrom(DamageSource.CRAMMING, 10);
+                	if(this instanceof PVZPlantEntity && entityIn instanceof PVZPlantEntity && ! EntityUtil.checkCanEntityAttack(this, entityIn)) {
+                		if(this.ticksExisted >= entityIn.ticksExisted) {
+                			this.attackEntityFrom(DamageSource.CRAMMING, 10);
+                		}
+//                	    entityIn.attackEntityFrom(DamageSource.CRAMMING, 10);
                 	}
                 }
             }

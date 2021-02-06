@@ -19,6 +19,7 @@ public class ScreenDoorZombieRender extends PVZZombieRender<ScreenDoorZombieEnti
 
 	@Override
 	protected float getScaleByEntity(ScreenDoorZombieEntity entity) {
+		if(entity.isMiniZombie()) return 0.15F;
 		return 0.5f;
 	}
 

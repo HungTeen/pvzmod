@@ -27,10 +27,14 @@ public abstract class PVZMultiPartEntity extends Entity {
 			DataSerializers.FLOAT);
 	private static final DataParameter<Float> HEIGHT = EntityDataManager.createKey(PVZMultiPartEntity.class,
 			DataSerializers.FLOAT);
+	protected final float MaxWidth;
+	protected final float MaxHeight;
 	private IMultiPartEntity parent;
 
 	public PVZMultiPartEntity(EntityType<?> entityTypeIn, World worldIn) {
 		super(entityTypeIn, worldIn);
+		this.MaxHeight = 0.5F;
+		this.MaxWidth = 0.5F;
 	}
 
 	public PVZMultiPartEntity(EntityType<?> entityTypeIn, LivingEntity owner, float sizeX, float sizeY) {
@@ -40,9 +44,11 @@ public abstract class PVZMultiPartEntity extends Entity {
 		} else {
 			PVZMod.LOGGER.debug("error multipart owner");
 		}
+		this.MaxHeight = sizeY;
+		this.MaxWidth = sizeX;
 		this.setOwner(owner);
-		this.setScaleX(sizeX);
-		this.setScaleY(sizeY);
+		this.setPartWidth(sizeX);
+		this.setPartHeight(sizeY);
 	}
 
 	@Override
@@ -52,18 +58,15 @@ public abstract class PVZMultiPartEntity extends Entity {
 		this.dataManager.register(HEIGHT, 0.5F);
 	}
 
-	@SuppressWarnings("deprecation")
 	@Override
 	public void tick() {
-		LivingEntity owner = this.getOwner();
 		recalculateSize();
-		if (!world.isRemote) {
+		if (! world.isRemote) {
+			LivingEntity owner = this.getOwner();
 			if (owner != null) {
 				this.markVelocityChanged();
-				if (!this.world.isRemote) {
-					this.collideWithNearbyEntities();
-				}
-				if (!world.isRemote && owner.removed) {
+				this.collideWithNearbyEntities();
+				if(! owner.isAlive()) {
 					this.remove();
 				}
 			} else {
@@ -140,7 +143,7 @@ public abstract class PVZMultiPartEntity extends Entity {
 
 	@Override
 	public EntitySize getSize(Pose poseIn) {
-		return EntitySize.flexible(getScaleX(), getScaleY());
+		return EntitySize.flexible(getPartWidth(), getPartHeight());
 	}
 
 	@Override
@@ -152,23 +155,23 @@ public abstract class PVZMultiPartEntity extends Entity {
 		return this.dataManager.get(OWNER_ID).intValue();
 	}
 
-	private void setOwnerId(int OwnerId) {
+	public void setOwnerId(int OwnerId) {
 		this.dataManager.set(OWNER_ID, OwnerId);
 	}
 
-	private float getScaleX() {
+	public float getPartWidth() {
 		return this.dataManager.get(WIDTH).floatValue();
 	}
 
-	private void setScaleX(float scale) {
+	public void setPartWidth(float scale) {
 		this.dataManager.set(WIDTH, scale);
 	}
 
-	private float getScaleY() {
+	public float getPartHeight() {
 		return this.dataManager.get(HEIGHT).floatValue();
 	}
 
-	private void setScaleY(float scale) {
+	public void setPartHeight(float scale) {
 		this.dataManager.set(HEIGHT, scale);
 	}
 	

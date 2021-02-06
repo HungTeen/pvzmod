@@ -21,6 +21,7 @@ public class CatapultZombieRender extends PVZZombieRender<CatapultZombieEntity> 
 
 	@Override
 	protected float getScaleByEntity(CatapultZombieEntity entity) {
+		if(entity.isMiniZombie()) return 0.25F;
 		return 0.5F;
 	}
 

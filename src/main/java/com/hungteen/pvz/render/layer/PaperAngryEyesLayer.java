@@ -16,6 +16,7 @@ public class PaperAngryEyesLayer<T extends NewspaperZombieEntity> extends PVZFul
 
 	@Override
 	protected boolean canRender(T entity) {
+		if(entity.isInvisible()) return false;
 		return entity.isAngry();
 	}
 

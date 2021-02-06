@@ -6,8 +6,10 @@ import com.hungteen.pvz.utils.ZombieUtil;
 import com.hungteen.pvz.utils.enums.Zombies;
 
 import net.minecraft.entity.Entity;
+import net.minecraft.entity.EntitySize;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.LivingEntity;
+import net.minecraft.entity.Pose;
 import net.minecraft.entity.SharedMonsterAttributes;
 import net.minecraft.entity.monster.MonsterEntity;
 import net.minecraft.world.World;
@@ -65,6 +67,12 @@ public class SadGargantuarEntity extends GargantuarEntity {
 	@Override
 	public float getLife() {
 		return 600;
+	}
+	
+	@Override
+	public EntitySize getSize(Pose poseIn) {
+		if(this.isMiniZombie()) return EntitySize.flexible(0.7F, 2F);
+		return super.getSize(poseIn);
 	}
 
 	@Override

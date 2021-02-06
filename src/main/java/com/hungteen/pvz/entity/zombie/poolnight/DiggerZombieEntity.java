@@ -94,6 +94,7 @@ public class DiggerZombieEntity extends PVZZombieEntity implements IHasMetal {
 	
 	@Override
 	public EntitySize getSize(Pose poseIn) {
+		if(this.isMiniZombie()) return EntitySize.flexible(0.4f, this.getAnimTime() * 0.02F + 0.1F);
 		return EntitySize.flexible(0.8f, this.getAnimTime() * 0.06F + 0.2F);
 	}
 

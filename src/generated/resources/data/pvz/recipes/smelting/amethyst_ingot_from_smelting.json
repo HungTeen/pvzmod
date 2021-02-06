@@ -1,0 +1,9 @@
+{
+  "type": "minecraft:smelting",
+  "ingredient": {
+    "item": "pvz:amethyst_ore"
+  },
+  "result": "pvz:amethyst_ingot",
+  "experience": 1.4,
+  "cookingtime": 250
+}

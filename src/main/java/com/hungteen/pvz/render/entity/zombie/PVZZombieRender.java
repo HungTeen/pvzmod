@@ -1,5 +1,6 @@
 package com.hungteen.pvz.render.entity.zombie;
 
+import com.hungteen.pvz.capability.player.ClientPlayerResources;
 import com.hungteen.pvz.entity.zombie.PVZZombieEntity;
 import com.hungteen.pvz.model.entity.IHasDefence;
 import com.hungteen.pvz.render.entity.PVZCreatureRender;
@@ -28,6 +29,11 @@ public abstract class PVZZombieRender<T extends PVZZombieEntity> extends PVZCrea
 			((IHasDefence) this.getEntityModel()).setDestroyed(entity);
 		}
 		super.preRenderCallback(entity, matrixStackIn, partialTickTime);
+	}
+	
+	@Override
+	protected boolean isVisible(T livingEntityIn) {
+		return super.isVisible(livingEntityIn) || ClientPlayerResources.lightLevel > 1;
 	}
 	
 	protected void addZombieLayers() {

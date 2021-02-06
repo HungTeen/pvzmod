@@ -33,7 +33,7 @@ public class PumpkinLayer<T extends PVZPlantEntity> extends LayerRenderer<T, Ent
 	public void render(MatrixStack matrixStackIn, IRenderTypeBuffer bufferIn, int packedLightIn,
 			T plant, float limbSwing, float limbSwingAmount, float partialTicks,
 			float ageInTicks, float netHeadYaw, float headPitch) {
-		if(plant.getPumpkinLife() == 0) {
+		if(plant.getPumpkinLife() == 0 || plant.isInvisible()) {
 			return ;
 		}
 		matrixStackIn.push();

@@ -59,7 +59,8 @@ public class FireCrackersEntity extends AbstractOwnerEntity {
 	}
 	
 	protected float getAttackDamage() {
-		return 15;
+		if(this.getOwner() instanceof BambooLordEntity) return ((BambooLordEntity) this.getOwner()).getAttackDamage();
+		return 0;
 	}
 
 	protected boolean canTriggerWalking() {

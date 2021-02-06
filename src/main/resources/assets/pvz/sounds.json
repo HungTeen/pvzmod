@@ -270,5 +270,9 @@
     "gargantuar_say":{
         "subtitle": "sound.pvz.gargantuar_say",
         "sounds":[{"name":"pvz:entity/zombie/say/lowgroan"},{"name":"pvz:entity/zombie/say/lowgroan2"}]
+    },
+    "swing":{
+        "subtitle": "sound.pvz.swing",
+        "sounds":[{"name":"pvz:entity/plant/attack/swing"}]
     }
 }

@@ -19,6 +19,7 @@ public class JackInBoxZombieRender extends PVZZombieRender<JackInBoxZombieEntity
 
 	@Override
 	protected float getScaleByEntity(JackInBoxZombieEntity entity) {
+		if(entity.isMiniZombie()) return 0.15F;
 		return 0.5f;
 	}
 

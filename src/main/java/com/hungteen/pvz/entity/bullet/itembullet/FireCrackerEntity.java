@@ -86,7 +86,7 @@ public class FireCrackerEntity extends PVZItemBulletEntity{
 	}
 	
 	protected float getAttackDamage() {
-		if(this.getThrower() instanceof BambooLordEntity) return ((BambooLordEntity) this.getThrower()).getExplodeDamage();
+		if(this.getThrower() instanceof BambooLordEntity) return ((BambooLordEntity) this.getThrower()).getAttackDamage() * 2;
 		if(this.getThrower() instanceof PlayerEntity) return 3;
 		return 0;
 	}

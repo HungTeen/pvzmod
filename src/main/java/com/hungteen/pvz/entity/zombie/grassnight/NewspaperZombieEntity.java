@@ -46,6 +46,7 @@ public class NewspaperZombieEntity extends DefenceZombieEntity {
 	
 	@Override
 	protected float getPartHeightOffset() {
+		if(this.isMiniZombie()) return 0.2F;
 		return 0.7f;
 	}
 	

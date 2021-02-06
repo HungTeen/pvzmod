@@ -19,6 +19,7 @@ public class YetiZombieRender extends PVZZombieRender<YetiZombieEntity>{
 
 	@Override
 	protected float getScaleByEntity(YetiZombieEntity entity) {
+		if(entity.isMiniZombie()) return 0.2F;
 		return 0.42f;
 	}
 

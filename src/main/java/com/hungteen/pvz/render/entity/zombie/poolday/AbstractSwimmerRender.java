@@ -20,16 +20,16 @@ public abstract class AbstractSwimmerRender<T extends SwimmerZombieEntity> exten
 	
 	@Override
 	public Vec3d getTranslateVec(T entity) {
-		if(entity.getPose() == Pose.SWIMMING) {
-			return new Vec3d(0, 2.5f, 0);
-		}else if(entity.getPose() == Pose.SPIN_ATTACK) {
-			return new Vec3d(0, 1.25f, 0);
+		if(! entity.isMiniZombie()) {
+			if(entity.getPose() == Pose.SWIMMING) return new Vec3d(0, 2.5f, 0);
+			if(entity.getPose() == Pose.SPIN_ATTACK) return new Vec3d(0, 1.25f, 0);
 		}
 		return super.getTranslateVec(entity);
 	}
 
 	@Override
 	protected float getScaleByEntity(T entity) {
+		if(entity.isMiniZombie()) return 0.15F;
 		return 0.5f;
 	}
 

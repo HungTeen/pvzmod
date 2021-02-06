@@ -85,6 +85,7 @@ public class TrickZombieEntity extends PVZZombieEntity{
 	
 	@Override
 	public EntitySize getSize(Pose poseIn) {
+		if(this.isMiniZombie()) return EntitySize.flexible(0.3F, 0.5F);
 		return EntitySize.flexible(0.6f, 1.2f);
 	}
 	

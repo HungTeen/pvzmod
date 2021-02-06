@@ -15,6 +15,9 @@ import com.hungteen.pvz.gui.container.shop.MysteryShopContainer;
 import com.hungteen.pvz.gui.search.SearchOption;
 import com.hungteen.pvz.item.tool.PeaGunItem;
 import com.hungteen.pvz.item.tool.card.PlantCardItem;
+import com.hungteen.pvz.network.OtherStatsPacket;
+import com.hungteen.pvz.network.PVZPacketHandler;
+import com.hungteen.pvz.register.EffectRegister;
 import com.hungteen.pvz.register.EnchantmentRegister;
 import com.hungteen.pvz.register.ItemRegister;
 import com.hungteen.pvz.utils.PlantUtil;
@@ -45,6 +48,7 @@ import net.minecraftforge.event.world.BlockEvent;
 import net.minecraftforge.eventbus.api.EventPriority;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
+import net.minecraftforge.fml.network.PacketDistributor;
 
 @Mod.EventBusSubscriber(modid=PVZMod.MOD_ID)
 public class PVZPlayerEvents {
@@ -68,6 +72,16 @@ public class PVZPlayerEvents {
 				    -- l.getPlayerData().getOtherStats().updateGoodTick;
 				} else {
 					MysteryShopContainer.genNextGoods(ev.player);
+				}
+				int lightLvl = 0;
+				if(ev.player.isPotionActive(EffectRegister.LIGHT_EYE_EFFECT.get())) {
+				     lightLvl = 1 + ev.player.getActivePotionEffect(EffectRegister.LIGHT_EYE_EFFECT.get()).getAmplifier();
+				}
+				if(lightLvl != l.getPlayerData().getOtherStats().lightLevel) {
+					PVZPacketHandler.CHANNEL.send(PacketDistributor.PLAYER.with(() -> {
+					    return (ServerPlayerEntity) ev.player;
+				    }), new OtherStatsPacket(2, 0, lightLvl));
+					l.getPlayerData().getOtherStats().lightLevel = lightLvl;
 				}
 			});
 		}

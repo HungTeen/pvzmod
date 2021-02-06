@@ -17,6 +17,7 @@ public class PogoZombieRender extends PVZZombieRender<PogoZombieEntity>{
 
 	@Override
 	protected float getScaleByEntity(PogoZombieEntity entity) {
+		if(entity.isMiniZombie()) return 0.15F;
 		return 0.5f;
 	}
 

@@ -86,6 +86,10 @@ public class EntitySpawnRegister {
 		EntitySpawnPlacementRegistry.register(EntityRegister.YETI_ZOMBIE.get(), PlacementType.ON_GROUND, Heightmap.Type.MOTION_BLOCKING_NO_LEAVES, YetiZombieEntity::canYetiSpawn);
 		EntitySpawnPlacementRegistry.register(EntityRegister.TOMB_STONE.get(), PlacementType.ON_GROUND, Heightmap.Type.MOTION_BLOCKING_NO_LEAVES, TombStoneEntity::canTombSpawn);
 		EntitySpawnPlacementRegistry.register(EntityRegister.BUNGEE_ZOMBIE.get(), IN_SKY, Heightmap.Type.MOTION_BLOCKING_NO_LEAVES, BalloonZombieEntity::canBalloonSpawn);
+		EntitySpawnPlacementRegistry.register(EntityRegister.LADDER_ZOMBIE.get(), PlacementType.ON_GROUND, Heightmap.Type.MOTION_BLOCKING_NO_LEAVES, PVZZombieEntity::canZombieSpawn);
+		EntitySpawnPlacementRegistry.register(EntityRegister.CATAPULT_ZOMBIE.get(), PlacementType.ON_GROUND, Heightmap.Type.MOTION_BLOCKING_NO_LEAVES, PVZZombieEntity::canZombieSpawn);
+		EntitySpawnPlacementRegistry.register(EntityRegister.GARGANTUAR.get(), PlacementType.ON_GROUND, Heightmap.Type.MOTION_BLOCKING_NO_LEAVES, PVZZombieEntity::canZombieSpawn);
+		EntitySpawnPlacementRegistry.register(EntityRegister.SAD_GARGANTUAR.get(), PlacementType.ON_GROUND, Heightmap.Type.MOTION_BLOCKING_NO_LEAVES, PVZZombieEntity::canZombieSpawn);
 		
 	}
 	
@@ -99,6 +103,8 @@ public class EntitySpawnRegister {
 		EVENT_CHANCE.put(Events.YETI, PVZConfig.COMMON_CONFIG.WorldSettings.WorldEventSettings.EventChanceSettings.YetiAttackChance.get());
 		EVENT_CHANCE.put(Events.BUNGEE, PVZConfig.COMMON_CONFIG.WorldSettings.WorldEventSettings.EventChanceSettings.BungeeAttackChance.get());
 		EVENT_CHANCE.put(Events.METAL, PVZConfig.COMMON_CONFIG.WorldSettings.WorldEventSettings.EventChanceSettings.MetalAttackChance.get());
+		EVENT_CHANCE.put(Events.ROOF, PVZConfig.COMMON_CONFIG.WorldSettings.WorldEventSettings.EventChanceSettings.RoofAttackChance.get());
+		EVENT_CHANCE.put(Events.GIANT, PVZConfig.COMMON_CONFIG.WorldSettings.WorldEventSettings.EventChanceSettings.GiantAttackChance.get());
 		
 		putSpawnData(Zombies.NORMAL_ZOMBIE, 35, 1, 2, BiomeUtil.OVER_LAND);
 		putSpawnData(Zombies.CONEHEAD_ZOMBIE, 15, 1, 1, BiomeUtil.OVER_LAND);
@@ -108,7 +114,7 @@ public class EntitySpawnRegister {
 		putSpawnData(Zombies.SNORKEL_ZOMBIE, 30, 1, 2, BiomeUtil.OVER_LAND);
 		putSpawnData(Zombies.ZOMBONI, 10, 1, 1, BiomeUtil.OVER_LAND);
 		putSpawnData(Zombies.BOBSLE_TEAM, 20, 1, 1, BiomeUtil.OVER_LAND);
-		putSpawnData(Zombies.LAVA_ZOMBIE, 2, 1, 1, BiomeUtil.OVER_LAND);
+		putSpawnData(Zombies.LAVA_ZOMBIE, 3, 1, 1, BiomeUtil.OVER_LAND);
 		
 		putSpawnData(Zombies.PUMPKIN_ZOMBIE, 20, 1, 1, BiomeUtil.OVER_LAND);
 		putSpawnData(Zombies.TRICK_ZOMBIE, 30, 1, 2, BiomeUtil.OVER_LAND);
@@ -129,6 +135,9 @@ public class EntitySpawnRegister {
 		
 		putSpawnData(Zombies.BUNGEE_ZOMBIE, 15, 1, 1, BiomeUtil.OVER_LAND);
 		putSpawnData(Zombies.LADDER_ZOMBIE, 12, 1, 1, BiomeUtil.OVER_LAND);
+		putSpawnData(Zombies.CATAPULT_ZOMBIE, 10, 1, 1, BiomeUtil.OVER_LAND);
+		putSpawnData(Zombies.GARGANTUAR, 3, 1, 1, BiomeUtil.OVER_LAND);
+		putSpawnData(Zombies.SAD_GARGANTUAR, 1, 1, 1, BiomeUtil.OVER_LAND);
 	}
 	
 	public static List<ZombieSpawnEntry> getEventSpawnList(World world, Events ev){

@@ -19,6 +19,7 @@ public class BobsleZombieRender extends PVZZombieRender<BobsleZombieEntity>{
 
 	@Override
 	protected float getScaleByEntity(BobsleZombieEntity entity) {
+		if(entity.isMiniZombie()) return 0.15F;
 		return 0.5f;
 	}
 

@@ -98,7 +98,7 @@ public class ZomboniEntity extends PVZZombieEntity implements IMultiPartEntity{
 			Vec3d pos = this.getPositionVec();
 			this.part.prevRotationYaw = this.rotationYaw;
 			this.part.prevRotationPitch = this.rotationPitch;
-			this.part.setLocationAndAngles(pos.getX() - Math.sin(j) * dis, pos.getY() + 0.05f, pos.getZ() + Math.cos(j) * dis, this.rotationYaw, this.rotationPitch);
+			this.part.setLocationAndAngles(pos.getX() - Math.sin(j) * dis, pos.getY() + 0.2f, pos.getZ() + Math.cos(j) * dis, this.rotationYaw, this.rotationPitch);
 			this.part.setOwner(this);
 		}
 	}
@@ -134,6 +134,7 @@ public class ZomboniEntity extends PVZZombieEntity implements IMultiPartEntity{
 	}
 	
 	public float getPartOffset() {
+		if(this.isMiniZombie()) return 0.4F;
 		return 1.2f;
 	}
 	
@@ -152,6 +153,7 @@ public class ZomboniEntity extends PVZZombieEntity implements IMultiPartEntity{
 	
 	@Override
 	public EntitySize getSize(Pose poseIn) {
+		if(this.isMiniZombie()) return EntitySize.flexible(0.7F, 1.2F);
 		return EntitySize.flexible(0.95f, 2.3f);
 	}
 	

@@ -1,0 +1,23 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "XAX",
+    "XBX",
+    "XBX"
+  ],
+  "key": {
+    "X": {
+      "item":"minecraft:bamboo"
+    },
+    "A": {
+      "item":"minecraft:string"
+    },
+    "B": {
+      "item":"minecraft:gunpowder"
+    }
+  },
+  "result": {
+    "item": "pvz:fire_cracker",
+    "count": 4
+  }
+}

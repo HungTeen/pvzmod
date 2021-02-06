@@ -102,11 +102,11 @@ public class BambooLordEntity extends PlantCloserEntity {
 	}
 	
 	public float getAttackDamage() {
-		return 20F;
-	}
-	
-	public float getExplodeDamage() {
-		return 140F;
+		int lvl = this.getPlantLvl();
+		if(lvl <= 20) {
+			return 57F + 3 * lvl;
+		}
+		return 120F;
 	}
 	
 	public int getSplitCount() {

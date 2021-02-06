@@ -27,7 +27,7 @@ public class DuckyTubeLayer<T extends NormalZombieEntity> extends LayerRenderer<
 	public void render(MatrixStack matrixStackIn, IRenderTypeBuffer bufferIn, int packedLightIn,
 			T zombie, float limbSwing, float limbSwingAmount, float partialTicks,
 			float ageInTicks, float netHeadYaw, float headPitch) {
-		if(!zombie.isInWater()) {
+		if(! zombie.isInWater() || zombie.isInvisible()) {
 			return ;
 		}
 		matrixStackIn.push();

@@ -70,6 +70,7 @@ public class SoundRegister {
 	public static final RegistryObject<SoundEvent> PLANT_THROW = registerSound("plant_throw");
 	public static final RegistryObject<SoundEvent> BASKETBALL = registerSound("basketball");
 	public static final RegistryObject<SoundEvent> THROW_IMP = registerSound("throw_imp");
+	public static final RegistryObject<SoundEvent> SWING = registerSound("swing");
 	//misc
 	public static final RegistryObject<SoundEvent> PLANT_ON_GROUND= registerSound("plant_on_ground");
 	public static final RegistryObject<SoundEvent> PLANT_IN_WATER = registerSound("plant_in_water");

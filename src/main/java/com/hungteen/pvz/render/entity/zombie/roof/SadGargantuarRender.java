@@ -18,6 +18,7 @@ public class SadGargantuarRender extends PVZZombieRender<SadGargantuarEntity> {
 
 	@Override
 	protected float getScaleByEntity(SadGargantuarEntity entity) {
+		if(entity.isMiniZombie()) return 0.4F;
 		return 0.8F;
 	}
 

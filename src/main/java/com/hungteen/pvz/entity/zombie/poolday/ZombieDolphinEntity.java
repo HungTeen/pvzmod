@@ -51,6 +51,7 @@ public class ZombieDolphinEntity extends PVZZombieEntity {
 		this.setPathPriority(PathNodeType.WATER, 0.0F);
 		this.moveController = new MoveHelperController(this);
 		this.lookController = new DolphinLookController(this, 10);
+		this.canBeMini = false;
 	}
 	
 	protected void registerGoals() {

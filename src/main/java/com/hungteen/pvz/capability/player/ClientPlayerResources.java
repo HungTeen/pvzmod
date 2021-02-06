@@ -22,6 +22,7 @@ public class ClientPlayerResources{
 	public static int totalWaveCount;
 	public static final int[] mysteryGoods = new int[MysteryShopContainer.MAX_MYSTERY_GOOD];
 	public static int updateGoodTick;
+	public static int lightLevel = 0;
 	
 	static { //init to avoid unexpected error !
 		for(Resources res : Resources.values()) {

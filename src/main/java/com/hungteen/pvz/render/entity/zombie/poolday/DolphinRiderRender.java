@@ -16,6 +16,7 @@ public class DolphinRiderRender extends PVZZombieRender<DolphinRiderEntity>{
 
 	@Override
 	protected float getScaleByEntity(DolphinRiderEntity entity) {
+		if(entity.isMiniZombie()) return 0.15F;
 		return 0.5f;
 	}
 

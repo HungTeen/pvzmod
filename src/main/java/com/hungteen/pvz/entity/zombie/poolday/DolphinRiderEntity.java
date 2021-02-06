@@ -36,6 +36,7 @@ public class DolphinRiderEntity extends PVZZombieEntity{
 		super(type, worldIn);
 		setPathPriority(PathNodeType.WATER, 0);
 		this.jumpTick = 100;
+		this.canBeMini = false;
 	}
 	
 	@Override

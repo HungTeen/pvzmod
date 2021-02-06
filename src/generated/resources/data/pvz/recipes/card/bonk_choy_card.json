@@ -1,0 +1,22 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "AAA",
+    "ABA",
+    "ACA"
+  ],
+  "key": {
+    "A": {
+      "item": "pvz:enforce_essence"
+    },
+    "B": {
+      "tag": "forge:crops/cabbage"
+    },
+    "C": {
+      "item": "pvz:blue_card"
+    }
+  },
+  "result": {
+    "item": "pvz:bonk_choy_card"
+  }
+}

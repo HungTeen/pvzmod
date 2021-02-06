@@ -24,7 +24,7 @@ public class DancerLightLayer<T extends Entity> extends LayerRenderer<T, EntityM
 	public void render(MatrixStack matrixStackIn, IRenderTypeBuffer bufferIn, int packedLightIn, T entitylivingbaseIn,
 			float limbSwing, float limbSwingAmount, float partialTicks, float ageInTicks, float netHeadYaw,
 			float headPitch) {
-		if(!entitylivingbaseIn.isAlive()) {
+		if(! entitylivingbaseIn.isAlive() || entitylivingbaseIn.isInvisible()) {
 			return ;
 		}
         IVertexBuilder ivertexbuilder2 = bufferIn.getBuffer(RenderType.getLightning());

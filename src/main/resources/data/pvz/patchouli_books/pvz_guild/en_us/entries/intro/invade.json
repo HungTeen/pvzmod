@@ -30,11 +30,11 @@
         },
         {
             "type": "text",
-            "text": "Current Spawn Event list:$(br)$(bred)Yeti Invasion$()(Normal, Jack-In-Box, Baloon, Digger, Pogo Zombies, $(bpurple)low chance to spawn Yeti Zombie When huge wave$().)$(br)$(bred)Bungee invasion$()(Bungee Zombies)."
+            "text": "Current Spawn Event list:$(br)$(bred)Yeti Invasion$()(Normal, Jack-In-Box, Baloon, Digger, Pogo Zombies, $(bpurple)low chance to spawn Yeti Zombie When huge wave$().)$(br)$(bred)Bungee invasion$()(Bungee Zombies)$(br)$(bred)Roof invasion$()(Normal, Bungee, Ladder, Catapult Zombies, Gargantuar)$(br)$(bred)Giant invasion$()(Gargantuar, Sad Gargantuar)$(br)$(bred)Metal invasion$()(Bucket, ScreenDoor, Football, Giga Football, Jack-in-box, Digger, Pogo, Ladder Zombies)"
         },
         {
             "type": "text",
-            "text": "Current Assist Event list:$(br)$(bred)Fog Invasion$()(Players' Screen will be blocked by fog that night)$(br)"
+            "text": "Current Assist Event list:$(br)$(bred)Fog Invasion$()(Players' Screen will be blocked by fog that night)$(br)$(bred)Invis Invasion$()(Zombies spawned in that day will be invisable)$(br)$(bred)Mini Invasion$()(Zombie spawned in that day will have small size and low health, but faster speed and higher damage)$(br)"
         }
     ],
     "advancement": "pvz:root",

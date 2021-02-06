@@ -14,7 +14,7 @@ public class PVZSwimGoal extends SwimGoal {
 
 	@Override
 	public boolean shouldExecute() {
-		double d0 = (double) this.entity.getEyeHeight() < 0.4D ? 0.2D : 0.4D;
+		double d0 = (double) this.entity.getEyeHeight() < 0.4D ? 0D : 0.4D;
 		return this.entity.getSubmergedHeight() > d0 && (this.entity.isInWater() || this.entity.isInLava());
 	}
 

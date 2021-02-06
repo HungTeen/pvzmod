@@ -24,6 +24,7 @@ public abstract class AbstractPaperZombieRender<T extends NewspaperZombieEntity>
 	
 	@Override
 	protected float getScaleByEntity(T entity) {
+		if(entity.isMiniZombie()) return 0.15F;
 		return 0.5f;
 	}
 

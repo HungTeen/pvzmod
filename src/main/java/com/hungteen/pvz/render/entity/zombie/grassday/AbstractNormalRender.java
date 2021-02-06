@@ -36,6 +36,7 @@ public abstract class AbstractNormalRender<T extends NormalZombieEntity> extends
 	
 	@Override
 	protected float getScaleByEntity(T entity) {
+		if(entity.isMiniZombie()) return 0.15F;
 		return 0.5f;
 	}
 

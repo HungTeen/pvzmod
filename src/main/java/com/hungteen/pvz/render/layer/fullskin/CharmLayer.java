@@ -18,6 +18,7 @@ public class CharmLayer <T extends LivingEntity, M extends EntityModel<T>> exten
 
 	@Override
 	protected boolean canRender(T entity) {
+		if(entity.isInvisible()) return false;
 		if(entity instanceof HypnoShroomEntity) {
 			return ((HypnoShroomEntity) entity).isPlantInSuperMode();
 		}

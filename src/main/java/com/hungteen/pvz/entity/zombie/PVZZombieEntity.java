@@ -34,8 +34,10 @@ import com.hungteen.pvz.register.ItemRegister;
 import com.hungteen.pvz.register.SoundRegister;
 import com.hungteen.pvz.utils.EntityUtil;
 import com.hungteen.pvz.utils.ZombieUtil;
+import com.hungteen.pvz.utils.enums.Events;
 import com.hungteen.pvz.utils.enums.Ranks;
 import com.hungteen.pvz.utils.interfaces.IPVZZombie;
+import com.hungteen.pvz.world.data.WorldEventData;
 
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.entity.Entity;
@@ -57,6 +59,7 @@ import net.minecraft.network.datasync.DataSerializers;
 import net.minecraft.network.datasync.EntityDataManager;
 import net.minecraft.particles.ParticleTypes;
 import net.minecraft.potion.EffectInstance;
+import net.minecraft.potion.Effects;
 import net.minecraft.server.management.PreYggdrasilConverter;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.ResourceLocation;
@@ -69,6 +72,7 @@ import net.minecraft.world.IWorld;
 import net.minecraft.world.IWorldReader;
 import net.minecraft.world.LightType;
 import net.minecraft.world.World;
+import net.minecraft.world.dimension.DimensionType;
 
 public abstract class PVZZombieEntity extends MonsterEntity implements IPVZZombie {
 
@@ -76,12 +80,11 @@ public abstract class PVZZombieEntity extends MonsterEntity implements IPVZZombi
 			DataSerializers.VARINT);
 	private static final DataParameter<Optional<UUID>> OWNER_UUID = EntityDataManager.createKey(PVZZombieEntity.class,
 			DataSerializers.OPTIONAL_UNIQUE_ID);
-	private static final DataParameter<Boolean> IS_CHARMED = EntityDataManager.createKey(PVZZombieEntity.class,
-			DataSerializers.BOOLEAN);
-	private static final DataParameter<Boolean> IS_SMALL = EntityDataManager.createKey(PVZZombieEntity.class,
-			DataSerializers.BOOLEAN);
+	private static final DataParameter<Integer> ZOMBIE_STATES = EntityDataManager.createKey(PVZZombieEntity.class, DataSerializers.VARINT);
 	private static final DataParameter<Integer> ATTACK_TIME = EntityDataManager.createKey(PVZZombieEntity.class, DataSerializers.VARINT);
 	private static final DataParameter<Float> DEFENCE_LIFE = EntityDataManager.createKey(PVZZombieEntity.class, DataSerializers.FLOAT);
+	private static final int CHARM_FLAG = 0;
+	private static final int MINI_FLAG = 1;
 	protected boolean hasDirectDefence = false;
 	protected boolean canSpawnDrop = true;
 	protected boolean canBeCold = true;
@@ -106,6 +109,15 @@ public abstract class PVZZombieEntity extends MonsterEntity implements IPVZZombi
 		if(! world.isRemote) {
 			this.setZombieType(this.getSpawnType());
 			EntityUtil.playSound(this, getSpawnSound());
+			if(worldIn.getDimension().getType() == DimensionType.OVERWORLD) {
+				WorldEventData data = WorldEventData.getOverWorldEventData(world);
+				if(this.canBeMini() && data.hasEvent(Events.MINI)) {
+					this.onZombieBeMini();
+				}
+				if(this.canBeInvis() && data.hasEvent(Events.INVIS)) {
+					this.addPotionEffect(new EffectInstance(Effects.INVISIBILITY, 1000000, 10, false, false));
+				}
+			}
 		}
 		return super.onInitialSpawn(worldIn, difficultyIn, reason, spawnDataIn, dataTag);
 	}
@@ -131,8 +143,7 @@ public abstract class PVZZombieEntity extends MonsterEntity implements IPVZZombi
 		super.registerData();
 		dataManager.register(ZOMBIE_TYPE, Type.NORMAL.ordinal());
 		dataManager.register(OWNER_UUID, Optional.empty());
-		dataManager.register(IS_CHARMED, false);
-		dataManager.register(IS_SMALL, false);
+		dataManager.register(ZOMBIE_STATES, 0);
 		dataManager.register(ATTACK_TIME, 0);
 		dataManager.register(DEFENCE_LIFE, 0f);
 	}
@@ -162,6 +173,9 @@ public abstract class PVZZombieEntity extends MonsterEntity implements IPVZZombi
 		if (!this.isAlive() || !this.canZombieNormalUpdate()) {
 			return;
 		}
+		if(this.ticksExisted <= 2) {
+			this.recalculateSize();
+		}
 		this.normalZombieTick();
 	}
 
@@ -182,6 +196,19 @@ public abstract class PVZZombieEntity extends MonsterEntity implements IPVZZombi
 		if(this.hasDirectDefence) return this.getDefenceLife() + this.getMaxHealth();
 		return this.getMaxHealth();
 	}
+	
+	/**
+	 * run when zombie be mini type.
+	 */
+	public void onZombieBeMini() {
+		this.setMiniZombie(true);
+		this.getAttribute(SharedMonsterAttributes.MAX_HEALTH).setBaseValue(this.getMaxHealth() * 0.6);
+		if(this.hasDirectDefence) {
+			this.setDefenceLife(this.getDefenceLife() * 0.6F);
+		}
+		this.addPotionEffect(new EffectInstance(Effects.SPEED, 1000000, 0, false, false));
+		this.addPotionEffect(new EffectInstance(Effects.STRENGTH, 1000000, 0, false, false));
+	}
 
 	public int getAttackCD() {
 		if (!this.canZombieNormalUpdate()) {
@@ -197,6 +224,7 @@ public abstract class PVZZombieEntity extends MonsterEntity implements IPVZZombi
 
 	@Override
 	public EntitySize getSize(Pose poseIn) {
+		if(this.isMiniZombie()) return EntitySize.flexible(0.3F, 0.6F);
 		return new EntitySize(0.8f, 1.98f, false);
 	}
 	
@@ -545,8 +573,7 @@ public abstract class PVZZombieEntity extends MonsterEntity implements IPVZZombi
 		} else {
 			compound.putString("OwnerUUID", "");
 		}
-		compound.putBoolean("is_zombie_small", this.isSmall());
-		compound.putBoolean("is_zombie_charmed", this.isCharmed());
+		compound.putInt("zombie_states_flag", this.getZombieStates());
 		compound.putInt("zombie_attack_time", this.getAttackTime());
 		compound.putFloat("defence_life", this.getDefenceLife());
 	}
@@ -571,11 +598,8 @@ public abstract class PVZZombieEntity extends MonsterEntity implements IPVZZombi
 			} catch (Throwable var4) {
 			}
 		}
-		if(compound.contains("is_zombie_small")) {
-			this.setSmall(compound.getBoolean("is_zombie_small"));
-		}
-		if(compound.contains("is_zombie_charmed")) {
-			this.setCharmed(compound.getBoolean("is_zombie_charmed"));
+		if(compound.contains("zombie_states_flag")) {
+			this.setZombieStates(compound.getInt("zombie_states_flag"));
 		}
 		if(compound.contains("zombie_attack_time")) {
 			this.setAttackTime(compound.getInt("zombie_attack_time"));
@@ -647,6 +671,14 @@ public abstract class PVZZombieEntity extends MonsterEntity implements IPVZZombi
 		return null;
 	}
 	
+	public int getZombieStates() {
+		return this.dataManager.get(ZOMBIE_STATES);
+	}
+	
+	public void setZombieStates(int state) {
+		this.dataManager.set(ZOMBIE_STATES, state);
+	}
+	
 	public float getDefenceLife() {
 		return dataManager.get(DEFENCE_LIFE);
 	}
@@ -664,11 +696,17 @@ public abstract class PVZZombieEntity extends MonsterEntity implements IPVZZombi
 	}
 
 	public void setCharmed(boolean is) {
-		dataManager.set(IS_CHARMED, is);
+		this.setStateByFlag(is, CHARM_FLAG);
 	}
 
-	public void setSmall(boolean is) {
-		dataManager.set(IS_SMALL, is);
+	public void setMiniZombie(boolean is) {
+		this.setStateByFlag(is, MINI_FLAG);
+	}
+	
+	private void setStateByFlag(boolean is, int flag) {
+		int state = this.getZombieStates();
+		if(is) this.setZombieStates(state | (1 << flag));
+		else this.setZombieStates(state & ~ (1 << flag));
 	}
 
 	public void setZombieType(Type type) {
@@ -676,11 +714,11 @@ public abstract class PVZZombieEntity extends MonsterEntity implements IPVZZombi
 	}
 
 	public boolean isCharmed() {
-		return dataManager.get(IS_CHARMED);
+		return ((this.getZombieStates() >> CHARM_FLAG) & 1) == 1;
 	}
 
-	public boolean isSmall() {
-		return dataManager.get(IS_SMALL);
+	public boolean isMiniZombie() {
+		return ((this.getZombieStates() >> MINI_FLAG) & 1) == 1;
 	}
 	
 	public int getAttackTime(){

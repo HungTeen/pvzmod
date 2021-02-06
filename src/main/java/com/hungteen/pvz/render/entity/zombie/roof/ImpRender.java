@@ -21,6 +21,7 @@ public class ImpRender extends PVZZombieRender<ImpEntity> {
 
 	@Override
 	protected float getScaleByEntity(ImpEntity entity) {
+		if(entity.isMiniZombie()) return 0.2F;
 		return 0.5F;
 	}
 

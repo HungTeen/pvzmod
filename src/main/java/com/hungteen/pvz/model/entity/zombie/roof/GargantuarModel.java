@@ -307,7 +307,7 @@ public class GargantuarModel<T extends GargantuarEntity> extends EntityModel<T> 
 		righthand_r1.setRotationPoint(31.0F, 17.0F, 0.0F);
 		right_hand.addChild(righthand_r1);
 		setRotationAngle(righthand_r1, 1.5708F, 0.0F, -1.5708F);
-		righthand_r1.setTextureOffset(358, 0).addBox(-16.0F, -48.0F, -4.0F, 8.0F, 24.0F, 8.0F, 0.0F, false);
+		righthand_r1.setTextureOffset(358, 1).addBox(-16.0F, -48.0F, -4.0F, 8.0F, 24.0F, 8.0F, 0.0F, false);
 
 		head2 = new ModelRenderer(this);
 		head2.setRotationPoint(0.0F, -24.0F, 0.0F);

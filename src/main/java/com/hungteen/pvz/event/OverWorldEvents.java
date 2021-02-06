@@ -86,6 +86,12 @@ public class OverWorldEvents {
 		    if(world.rand.nextInt(PVZConfig.COMMON_CONFIG.WorldSettings.WorldEventSettings.EventChanceSettings.FogEventChance.get()) == 0) {
 		    	activateEvent(world, Events.FOG);
 		    }
+		    if(world.rand.nextInt(PVZConfig.COMMON_CONFIG.WorldSettings.WorldEventSettings.EventChanceSettings.MiniEventChance.get()) == 0) {
+		    	activateEvent(world, Events.MINI);
+		    }
+		    if(world.rand.nextInt(PVZConfig.COMMON_CONFIG.WorldSettings.WorldEventSettings.EventChanceSettings.InvisEventChance.get()) == 0) {
+		    	activateEvent(world, Events.INVIS);
+		    }
 		    //get zombie spawn list
 		    WorldEventData data = WorldEventData.getOverWorldEventData(world);
 		    List<Zombies> zombieList = new ArrayList<>();
@@ -128,9 +134,10 @@ public class OverWorldEvents {
 	 */
 	public static void deactivateZombieAttackEvents(World world, boolean isNatural) {
 	    boolean flag = false;
-		for(Events ev : Events.values()) {
-			flag |= deactivateEvent(world, ev);
-		}
+	    WorldEventData data = WorldEventData.getOverWorldEventData(world);
+	    for(Events ev : Events.values()) {
+	    	flag |= data.hasEvent(ev);
+	    }
 		if(isNatural && flag) {
 			for(PlayerEntity pl : world.getPlayers()) {
 		        pl.sendMessage(ATTACK_FINISH);
@@ -138,21 +145,20 @@ public class OverWorldEvents {
 		        WaveManager.giveInvasionBonusToPlayer(world, pl);
 	        }
 		}
-
+		for(Events ev : Events.values()) {
+			deactivateEvent(world, ev);
+		}
 		EntitySpawnRegister.removeEventSpawns(world);
 	}
 	
 	/**
 	 * deactivate all events
 	 */
-	private static boolean deactivateEvent(World world, @Nonnull Events event) {
+	private static void deactivateEvent(World world, @Nonnull Events event) {
 		WorldEventData data = WorldEventData.getOverWorldEventData(world);
-		boolean flag = false;
 		if(data.hasEvent(event)) {
 			data.removeEvent(event);
-			flag = true;
 		}
-		return flag;
 	}
 	
 }

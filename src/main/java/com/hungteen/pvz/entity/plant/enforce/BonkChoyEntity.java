@@ -6,6 +6,7 @@ import com.hungteen.pvz.entity.ai.target.PVZNearestTargetGoal;
 import com.hungteen.pvz.entity.plant.PVZPlantEntity;
 import com.hungteen.pvz.entity.zombie.poolnight.BalloonZombieEntity;
 import com.hungteen.pvz.misc.damage.PVZDamageSource;
+import com.hungteen.pvz.register.SoundRegister;
 import com.hungteen.pvz.utils.EntityUtil;
 import com.hungteen.pvz.utils.enums.Plants;
 
@@ -34,6 +35,7 @@ public class BonkChoyEntity extends PVZPlantEntity {
 		if(! world.isRemote) {
 			if(this.isPlantInSuperMode() && this.getSuperTime() % 5 == 0) {
 				float range = 3F;
+				EntityUtil.playSound(this, SoundRegister.SWING.get());
 				EntityUtil.getAttackEntities(this, EntityUtil.getEntityAABB(this, range, range)).forEach((target) -> {
 					target.attackEntityFrom(PVZDamageSource.causeNormalDamage(this, this), this.getAttackDamage() * 5);
 					for(int i = 0; i < 2; ++ i) {
@@ -45,6 +47,7 @@ public class BonkChoyEntity extends PVZPlantEntity {
 	}
 	
 	public void attackTarget(LivingEntity target) {
+		EntityUtil.playSound(this, SoundRegister.SWING.get());
 		target.attackEntityFrom(PVZDamageSource.causeNormalDamage(this, this), this.getAttackDamage());
 	}
 	
@@ -92,14 +95,14 @@ public class BonkChoyEntity extends PVZPlantEntity {
 		public boolean shouldExecute() {
 			LivingEntity living = this.attacker.getAttackTarget();
 			if (! EntityUtil.isEntityValid(living)) return false;
-			return true;
+			return this.attacker.canEntityBeSeen(living) && EntityUtil.getAttackRange(attacker, living, 3F) >= EntityUtil.getNearestDistance(this.attacker, living);
 		}
 		
 		@Override
 		public boolean shouldContinueExecuting() {
 			LivingEntity living = this.attacker.getAttackTarget();
 			if (! EntityUtil.isEntityValid(living)) return false;
-			return this.attacker.canEntityBeSeen(living);
+			return this.attacker.canEntityBeSeen(living) && EntityUtil.getAttackRange(attacker, living, 3F) >= EntityUtil.getNearestDistance(this.attacker, living);
 		}
 		
 		@Override

@@ -68,6 +68,7 @@ public class YetiZombieEntity extends PVZZombieEntity{
 	
 	@Override
 	public EntitySize getSize(Pose poseIn) {
+		if(this.isMiniZombie()) return EntitySize.flexible(0.6F, 1.2F);
 		return EntitySize.flexible(1f, 2.6f);
 	}
 	

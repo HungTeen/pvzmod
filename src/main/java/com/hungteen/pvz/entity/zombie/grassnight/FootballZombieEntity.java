@@ -33,6 +33,7 @@ public class FootballZombieEntity extends PVZZombieEntity implements IHasMetal {
 	
 	@Override
 	public EntitySize getSize(Pose poseIn) {
+		if(this.isMiniZombie()) return EntitySize.flexible(0.5f, 0.75f);
 		return EntitySize.flexible(0.85f, 2.4f);
 	}
 	

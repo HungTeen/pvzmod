@@ -58,6 +58,7 @@ public class ImpEntity extends PVZZombieEntity {
 	
 	@Override
 	public EntitySize getSize(Pose poseIn) {
+		if(this.isMiniZombie()) return EntitySize.flexible(0.2F, 0.45F);
 		return EntitySize.flexible(0.6F, 1.2F);
 	}
 

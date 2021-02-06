@@ -29,6 +29,7 @@ public class BobsleTeamEntity extends PVZZombieEntity implements IMultiPartEntit
 		super(type, worldIn);
 		this.canBeFrozen = false;
 		this.canBeButter = false;
+		this.canBeMini = false;
 		resetParts();
 	}
 	
@@ -115,11 +116,10 @@ public class BobsleTeamEntity extends PVZZombieEntity implements IMultiPartEntit
 	@Override
 	protected void onZombieRemove() {
 		super.onZombieRemove();
-		if(!world.isRemote) {
-			for(int i=0;i<4;i++) {
+		if(! world.isRemote) {
+			for(int i = 0; i < 4; ++ i) {
 				BobsleZombieEntity zombie = EntityRegister.BOBSLE_ZOMBIE.get().create(world);
-				zombie.setPosition(this.getPosX()+(this.getRNG().nextFloat()-0.5)*4, this.getPosY()+0.5f, this.getPosZ()+(this.getRNG().nextFloat()-0.5)*4);
-				world.addEntity(zombie);
+				EntityUtil.onMobEntityRandomPosSpawn(world, zombie, this.getPosition(), 3);
 			}
 		}
 	}
