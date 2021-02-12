@@ -42,7 +42,9 @@ public class SmallChomperEntity extends AbstractOwnerEntity {
 			owner = this;
 		}
 		for(Entity target : EntityUtil.getAttackEntities(this, EntityUtil.getEntityAABB(this, 0.5f, 1f))) {
-			target.attackEntityFrom(PVZDamageSource.causeEatDamage(this, this.owner), getAttackDamage((LivingEntity) target));
+			if(target instanceof LivingEntity) {
+				target.attackEntityFrom(PVZDamageSource.causeEatDamage(this, this.owner), getAttackDamage((LivingEntity) target));
+			}
 		}
 		this.playSound(SoundRegister.CHOMP.get(), 1, 1);
 	}

@@ -44,9 +44,9 @@ public class PeaBlock extends CropsBlock{
 	@Override
 	public ActionResultType onBlockActivated(BlockState state, World worldIn, BlockPos pos, PlayerEntity player,
 			Hand handIn, BlockRayTraceResult hit) {
-		if(!worldIn.isRemote) {
+		if(! worldIn.isRemote) {
 			if(this.isMaxAge(state)) {
-				worldIn.addEntity(new ItemEntity(worldIn,pos.getX(),pos.getY(),pos.getZ(),new ItemStack(ItemRegister.PEA.get(),1)));
+				worldIn.addEntity(new ItemEntity(worldIn, pos.getX(), pos.getY(), pos.getZ(), new ItemStack(ItemRegister.PEA.get(), 1)));
 				worldIn.setBlockState(pos, this.withAge(0));
 				return ActionResultType.SUCCESS;
 			}

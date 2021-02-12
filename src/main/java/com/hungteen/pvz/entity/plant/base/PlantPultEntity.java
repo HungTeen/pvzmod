@@ -2,6 +2,7 @@ package com.hungteen.pvz.entity.plant.base;
 
 import com.hungteen.pvz.entity.ai.attack.PultAttackGoal;
 import com.hungteen.pvz.entity.plant.PVZPlantEntity;
+import com.hungteen.pvz.entity.zombie.poolnight.BalloonZombieEntity;
 import com.hungteen.pvz.utils.EntityUtil;
 import com.hungteen.pvz.utils.interfaces.IPult;
 
@@ -64,11 +65,12 @@ public abstract class PlantPultEntity extends PVZPlantEntity implements IPult {
 	
 	@Override
 	protected boolean canPlantTarget(LivingEntity entity) {
+		if(entity instanceof BalloonZombieEntity) return true;
 		return this.checkY(entity) && super.canPlantTarget(entity);
 	}
 	
 	protected boolean checkY(LivingEntity target) {
-		return this.getPosY() + 9 >= target.getPosY() + target.getHeight();
+		return this.getPosY() + 10 >= target.getPosY() + target.getHeight();
 	}
 	
 	public float getSuperRange() {

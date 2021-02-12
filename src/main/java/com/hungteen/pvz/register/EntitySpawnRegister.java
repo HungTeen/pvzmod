@@ -133,7 +133,7 @@ public class EntitySpawnRegister {
 		putSpawnData(Zombies.DIGGER_ZOMBIE, 6, 1, 1, BiomeUtil.OVER_LAND);
 		putSpawnData(Zombies.POGO_ZOMBIE, 8, 1, 1, BiomeUtil.OVER_LAND);
 		
-		putSpawnData(Zombies.BUNGEE_ZOMBIE, 15, 1, 1, BiomeUtil.OVER_LAND);
+		putSpawnData(Zombies.BUNGEE_ZOMBIE, 5, 1, 1, BiomeUtil.OVER_LAND);
 		putSpawnData(Zombies.LADDER_ZOMBIE, 12, 1, 1, BiomeUtil.OVER_LAND);
 		putSpawnData(Zombies.CATAPULT_ZOMBIE, 10, 1, 1, BiomeUtil.OVER_LAND);
 		putSpawnData(Zombies.GARGANTUAR, 3, 1, 1, BiomeUtil.OVER_LAND);

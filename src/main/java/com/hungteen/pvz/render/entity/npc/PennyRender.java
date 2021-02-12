@@ -1,7 +1,7 @@
 package com.hungteen.pvz.render.entity.npc;
 
 import com.hungteen.pvz.entity.npc.PennyEntity;
-import com.hungteen.pvz.model.entity.npc.PanneyModel;
+import com.hungteen.pvz.model.entity.npc.PennyModel;
 import com.hungteen.pvz.render.entity.PVZCreatureRender;
 import com.hungteen.pvz.utils.StringUtil;
 
@@ -11,10 +11,12 @@ import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 
 @OnlyIn(Dist.CLIENT)
-public class PanneyRender extends PVZCreatureRender<PennyEntity>{
+public class PennyRender extends PVZCreatureRender<PennyEntity>{
 
-	public PanneyRender(EntityRendererManager renderManagerIn) {
-		super(renderManagerIn, new PanneyModel(), 1f);
+	public static final ResourceLocation PENNY_TEX = StringUtil.prefix("textures/entity/npc/panney.png");
+	
+	public PennyRender(EntityRendererManager renderManagerIn) {
+		super(renderManagerIn, new PennyModel(), 1f);
 	}
 
 	@Override
@@ -24,7 +26,7 @@ public class PanneyRender extends PVZCreatureRender<PennyEntity>{
 
 	@Override
 	public ResourceLocation getEntityTexture(PennyEntity entity) {
-		return StringUtil.prefix("textures/entity/npc/panney.png");
+		return PENNY_TEX;
 	}
 
 }

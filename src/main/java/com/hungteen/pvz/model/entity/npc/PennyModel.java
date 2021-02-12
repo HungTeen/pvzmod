@@ -12,7 +12,7 @@ import net.minecraft.client.renderer.model.ModelRenderer;
 // Paste this class into your mod and generate all required imports
 
 
-public class PanneyModel extends EntityModel<PennyEntity> {
+public class PennyModel extends EntityModel<PennyEntity> {
 	private final ModelRenderer car;
 	private final ModelRenderer head;
 	private final ModelRenderer bone10;
@@ -57,7 +57,7 @@ public class PanneyModel extends EntityModel<PennyEntity> {
 	private final ModelRenderer bone32;
 	private final ModelRenderer bone33;
 
-	public PanneyModel() {
+	public PennyModel() {
 		textureWidth = 128;
 		textureHeight = 128;
 

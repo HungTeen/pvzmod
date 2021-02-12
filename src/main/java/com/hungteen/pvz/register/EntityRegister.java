@@ -22,6 +22,8 @@ import com.hungteen.pvz.entity.drop.EnergyEntity;
 import com.hungteen.pvz.entity.drop.JewelEntity;
 import com.hungteen.pvz.entity.drop.SunEntity;
 import com.hungteen.pvz.entity.misc.BobsleCarEntity;
+import com.hungteen.pvz.entity.misc.DestroyCarEntity;
+import com.hungteen.pvz.entity.misc.ElementBallEntity;
 import com.hungteen.pvz.entity.misc.FireCrackersEntity;
 import com.hungteen.pvz.entity.misc.LawnMowerEntity;
 import com.hungteen.pvz.entity.misc.SmallChomperEntity;
@@ -126,6 +128,7 @@ import com.hungteen.pvz.entity.zombie.roof.GargantuarEntity;
 import com.hungteen.pvz.entity.zombie.roof.ImpEntity;
 import com.hungteen.pvz.entity.zombie.roof.LadderZombieEntity;
 import com.hungteen.pvz.entity.zombie.roof.SadGargantuarEntity;
+import com.hungteen.pvz.entity.zombie.roof.ZomBossEntity;
 import com.hungteen.pvz.render.entity.bullet.BallRender;
 import com.hungteen.pvz.render.entity.bullet.ButterRender;
 import com.hungteen.pvz.render.entity.bullet.CabbageRender;
@@ -147,6 +150,8 @@ import com.hungteen.pvz.render.entity.drop.EnergyRender;
 import com.hungteen.pvz.render.entity.drop.JewelRender;
 import com.hungteen.pvz.render.entity.drop.SunRender;
 import com.hungteen.pvz.render.entity.misc.BobsleCarRender;
+import com.hungteen.pvz.render.entity.misc.DestroyCarRender;
+import com.hungteen.pvz.render.entity.misc.ElementBallRender;
 import com.hungteen.pvz.render.entity.misc.EmptyRender;
 import com.hungteen.pvz.render.entity.misc.FireCrackersRender;
 import com.hungteen.pvz.render.entity.misc.LawnMowerRender;
@@ -156,7 +161,7 @@ import com.hungteen.pvz.render.entity.misc.bowling.ExplosionBowlingRender;
 import com.hungteen.pvz.render.entity.misc.bowling.GiantNutBowlingRender;
 import com.hungteen.pvz.render.entity.misc.bowling.WallNutBowlingRender;
 import com.hungteen.pvz.render.entity.npc.CrazyDaveRender;
-import com.hungteen.pvz.render.entity.npc.PanneyRender;
+import com.hungteen.pvz.render.entity.npc.PennyRender;
 import com.hungteen.pvz.render.entity.npc.SunDaveRender;
 import com.hungteen.pvz.render.entity.plant.appease.AngelStarFruitRender;
 import com.hungteen.pvz.render.entity.plant.appease.GatlingPeaRender;
@@ -251,6 +256,7 @@ import com.hungteen.pvz.render.entity.zombie.roof.GargantuarRender;
 import com.hungteen.pvz.render.entity.zombie.roof.ImpRender;
 import com.hungteen.pvz.render.entity.zombie.roof.LadderZombieRender;
 import com.hungteen.pvz.render.entity.zombie.roof.SadGargantuarRender;
+import com.hungteen.pvz.render.entity.zombie.roof.ZomBossRender;
 import com.hungteen.pvz.utils.StringUtil;
 
 import net.minecraft.entity.Entity;
@@ -306,6 +312,8 @@ public class EntityRegister {
 	public static final RegistryObject<EntityType<GiantNutBowlingEntity>> GIANT_NUT_BOWLING = registerEntityType(GiantNutBowlingEntity::new, "giant_nut_bowling", EntityClassification.MISC);
 	public static final RegistryObject<EntityType<LawnMowerEntity>> LAWN_MOWER = registerEntityType(LawnMowerEntity::new, "lawn_mower", EntityClassification.MISC);
 	public static final RegistryObject<EntityType<FireCrackersEntity>> FIRE_CRACKERS = registerEntityType(FireCrackersEntity::new, "fire_crackers", EntityClassification.MISC);
+	public static final RegistryObject<EntityType<ElementBallEntity>> ELEMENT_BALL = registerEntityType(ElementBallEntity::new, "element_ball", EntityClassification.MISC);
+	public static final RegistryObject<EntityType<DestroyCarEntity>> DESTROY_CAR = registerEntityType(DestroyCarEntity::new, "destroy_car", EntityClassification.MISC);
 	
 	//animal
 	public static final RegistryObject<EntityType<FoodieZombieEntity>> FOODIE_ZOMBIE = registerEntityType(FoodieZombieEntity::new, "foodie_zombie", EntityClassification.WATER_CREATURE);
@@ -355,6 +363,7 @@ public class EntityRegister {
 	public static final RegistryObject<EntityType<GargantuarEntity>> GARGANTUAR = registerEntityType(GargantuarEntity::new, "gargantuar", EntityClassification.MONSTER);
 	public static final RegistryObject<EntityType<ImpEntity>> IMP = registerEntityType(ImpEntity::new, "imp", EntityClassification.MONSTER);
 	public static final RegistryObject<EntityType<SadGargantuarEntity>> SAD_GARGANTUAR = registerEntityType(SadGargantuarEntity::new, "sad_gargantuar", EntityClassification.MONSTER);
+	public static final RegistryObject<EntityType<ZomBossEntity>> ZOMBOSS = registerEntityType(ZomBossEntity::new, "zomboss", EntityClassification.MONSTER);
 	
 	//plant
 	public static final RegistryObject<EntityType<PeaShooterEntity>> PEA_SHOOTER = registerEntityType(PeaShooterEntity::new, "pea_shooter", EntityClassification.CREATURE);
@@ -448,13 +457,15 @@ public class EntityRegister {
         RenderingRegistry.registerEntityRenderingHandler(GIANT_NUT_BOWLING.get(), GiantNutBowlingRender::new);
         RenderingRegistry.registerEntityRenderingHandler(LAWN_MOWER.get(), LawnMowerRender::new);
         RenderingRegistry.registerEntityRenderingHandler(FIRE_CRACKERS.get(), FireCrackersRender::new);
+        RenderingRegistry.registerEntityRenderingHandler(ELEMENT_BALL.get(), ElementBallRender::new);
+        RenderingRegistry.registerEntityRenderingHandler(DESTROY_CAR.get(), DestroyCarRender::new);
         
         //animal 
         RenderingRegistry.registerEntityRenderingHandler(FOODIE_ZOMBIE.get(), FoodieZombieRender::new);
         
         //npc
         RenderingRegistry.registerEntityRenderingHandler(CRAZY_DAVE.get(), CrazyDaveRender::new);
-        RenderingRegistry.registerEntityRenderingHandler(PANNEY.get(), PanneyRender::new);
+        RenderingRegistry.registerEntityRenderingHandler(PANNEY.get(), PennyRender::new);
         RenderingRegistry.registerEntityRenderingHandler(SUN_DAVE.get(), SunDaveRender::new);
         
         //zombie
@@ -497,6 +508,7 @@ public class EntityRegister {
         RenderingRegistry.registerEntityRenderingHandler(GARGANTUAR.get(), GargantuarRender::new);
         RenderingRegistry.registerEntityRenderingHandler(IMP.get(), ImpRender::new);
         RenderingRegistry.registerEntityRenderingHandler(SAD_GARGANTUAR.get(), SadGargantuarRender::new);
+        RenderingRegistry.registerEntityRenderingHandler(ZOMBOSS.get(), ZomBossRender::new);
         
         //plant
         RenderingRegistry.registerEntityRenderingHandler(PEA_SHOOTER.get(), PeaShooterRender::new);

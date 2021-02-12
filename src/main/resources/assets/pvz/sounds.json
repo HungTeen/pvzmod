@@ -274,5 +274,17 @@
     "swing":{
         "subtitle": "sound.pvz.swing",
         "sounds":[{"name":"pvz:entity/plant/attack/swing"}]
+    },
+    "zomboss_death":{
+        "subtitle": "sound.pvz.zomboss_death",
+        "sounds":[{"name":"pvz:entity/zombie/death/zomboss_death"}]
+    },
+    "zomboss_shoot":{
+        "subtitle": "sound.pvz.zomboss_shoot",
+        "sounds":[{"name":"pvz:entity/zombie/act/zomboss_shoot"}]
+    },
+    "zomboss_laugh":{
+        "subtitle": "sound.pvz.zomboss_laugh",
+        "sounds":[{"name":"pvz:entity/zombie/spawn/zomboss_laugh"}]
     }
 }

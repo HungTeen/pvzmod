@@ -19,6 +19,7 @@ public class SoundRegister {
 	public static final RegistryObject<SoundEvent> DIRT_RISE = registerSound("dirt_rise");
 	public static final RegistryObject<SoundEvent> CAR_SPAWN = registerSound("car_spawn");
 	public static final RegistryObject<SoundEvent> BOWLING_SPAWN = registerSound("bowling_spawn");
+	public static final RegistryObject<SoundEvent> ZOMBOSS_LAUGH = registerSound("zomboss_laugh");
 	//death
 	public static final RegistryObject<SoundEvent> SUN_PICK = registerSound("sun_pick");
 	public static final RegistryObject<SoundEvent> COIN_PICK = registerSound("coin_pick");
@@ -27,6 +28,7 @@ public class SoundRegister {
 	public static final RegistryObject<SoundEvent> DAVE_DIE = registerSound("dave_die");
 	public static final RegistryObject<SoundEvent> PAPER_GONE = registerSound("paper_gone");
 	public static final RegistryObject<SoundEvent> GARGANTUAR_DEATH = registerSound("gargantuar_death");
+	public static final RegistryObject<SoundEvent> ZOMBOSS_DEATH = registerSound("zomboss_death");
 	//hit
 	public static final RegistryObject<SoundEvent> PLANT_HURT = registerSound("plant_hurt");
 	public static final RegistryObject<SoundEvent> PLASTIC_HIT = registerSound("plastic_hit");
@@ -71,6 +73,7 @@ public class SoundRegister {
 	public static final RegistryObject<SoundEvent> BASKETBALL = registerSound("basketball");
 	public static final RegistryObject<SoundEvent> THROW_IMP = registerSound("throw_imp");
 	public static final RegistryObject<SoundEvent> SWING = registerSound("swing");
+	public static final RegistryObject<SoundEvent> ZOMBOSS_SHOOT = registerSound("zomboss_shoot");
 	//misc
 	public static final RegistryObject<SoundEvent> PLANT_ON_GROUND= registerSound("plant_on_ground");
 	public static final RegistryObject<SoundEvent> PLANT_IN_WATER = registerSound("plant_in_water");
@@ -88,7 +91,8 @@ public class SoundRegister {
 	public static final RegistryObject<SoundEvent> WIN_MUSIC = registerSound("win_music");
 	public static final RegistryObject<SoundEvent> LOSE_MUSIC = registerSound("lose_music");
 	public static final RegistryObject<SoundEvent> SLOT_MACHINE = registerSound("slot_machine");
-	
+	//disc
+//	public static final RegistryObject<SoundEvent> ZOMBIE_ON_YOUR_LAWN = registerSound("zombie_on_your_lawn");
 	private static RegistryObject<SoundEvent> registerSound(String name){
 		return SOUNDS.register(name, ()->{
 			return new SoundEvent(StringUtil.prefix(name));

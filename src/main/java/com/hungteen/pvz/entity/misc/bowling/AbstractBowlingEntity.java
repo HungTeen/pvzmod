@@ -163,7 +163,7 @@ public abstract class AbstractBowlingEntity extends AbstractOwnerEntity {
 		return ProjectileHelper.rayTraceEntities(this.world, this, startVec, endVec, 
 				this.getBoundingBox().expand(this.getMotion()).grow(1.0D), (entity) -> {
 			return entity.canBeCollidedWith() && shouldHit(entity)
-							&& (this.hitEntities == null|| !this.hitEntities.contains(entity.getEntityId()));
+							&& (this.hitEntities == null|| ! this.hitEntities.contains(entity.getEntityId()));
 		});
 	}
 

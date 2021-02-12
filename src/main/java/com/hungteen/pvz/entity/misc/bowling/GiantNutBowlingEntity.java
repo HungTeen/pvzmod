@@ -4,6 +4,7 @@ import com.hungteen.pvz.misc.damage.PVZDamageSource;
 import com.hungteen.pvz.register.SoundRegister;
 import com.hungteen.pvz.utils.EntityUtil;
 
+import it.unimi.dsi.fastutil.ints.IntOpenHashSet;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntitySize;
 import net.minecraft.entity.EntityType;
@@ -23,8 +24,14 @@ public class GiantNutBowlingEntity extends AbstractBowlingEntity {
 
 	@Override
 	protected void dealDamageTo(Entity entity) {
-		entity.attackEntityFrom(PVZDamageSource.causeBowlingDamage(this, this.getOwner()), 200);
-		EntityUtil.playSound(this, SoundRegister.BOWLING_HIT.get());
+		if(this.hitEntities == null) {
+			this.hitEntities = new IntOpenHashSet();
+		}
+		if(this.hitEntities != null && ! this.hitEntities.contains(entity.getEntityId())) {
+			entity.attackEntityFrom(PVZDamageSource.causeBowlingDamage(this, this.getOwner()), 200);
+			this.hitEntities.add(entity.getEntityId());
+		    EntityUtil.playSound(this, SoundRegister.BOWLING_HIT.get());
+		}
 	}
 	
 	@Override

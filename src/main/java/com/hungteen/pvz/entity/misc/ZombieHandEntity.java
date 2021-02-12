@@ -36,8 +36,10 @@ public class ZombieHandEntity extends AbstractOwnerEntity {
 	
 	protected void performAttack() {
 		for(Entity target : EntityUtil.getAttackEntities(this, EntityUtil.getEntityAABB(this, 0.5f, 1f))) {
-			target.attackEntityFrom(PVZDamageSource.causeNormalDamage(this, this.owner), getAttackDamage((LivingEntity) target));
-			target.setPosition(target.getPosX(), target.getPosY() - 3, target.getPosZ());
+			if(target instanceof LivingEntity) {
+				target.attackEntityFrom(PVZDamageSource.causeNormalDamage(this, this.owner), getAttackDamage((LivingEntity) target));
+			    target.setPosition(target.getPosX(), target.getPosY() - 3, target.getPosZ());
+			}
 		}
 	}
 	

@@ -215,6 +215,7 @@ public class BungeeZombieEntity extends PVZZombieEntity {
 				this.setAttackTime(0);
 				this.setBungeeState(BungeeStates.UP);
 			} else {
+				this.getStealTarget().startRiding(this);
 				this.setMotion(new Vec3d(0, - 0.5D, 0));
 			}
 		} else if(this.getBungeeState() == BungeeStates.UP) {
@@ -305,6 +306,11 @@ public class BungeeZombieEntity extends PVZZombieEntity {
 	@Override
 	public Zombies getZombieEnumName() {
 		return Zombies.BUNGEE_ZOMBIE;
+	}
+	
+	@Override
+	public boolean canBeRiddenInWater() {
+		return true;
 	}
 	
 	@Override

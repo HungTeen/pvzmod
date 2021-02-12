@@ -219,6 +219,10 @@ public class PVZConfig {
 							.comment("how many ticks can lawnmower entity live.")
 							.worldRestart()
 							.defineInRange("LawnMowerLiveTick", 200, 1, 1000000);
+					EntitySettings.EntityLiveTick.ElementBallLiveTick = builder
+							.comment("how many ticks can element ball entity live.")
+							.worldRestart()
+							.defineInRange("ElementBallLiveTick", 600, 1, 1000000);
 				}
 				builder.pop();
 			}
@@ -337,6 +341,7 @@ public class PVZConfig {
 				public ForgeConfigSpec.IntValue YetiLiveTick;
 				public ForgeConfigSpec.IntValue BowlingLiveTick;
 				public ForgeConfigSpec.IntValue LawnMowerLiveTick;
+				public ForgeConfigSpec.IntValue ElementBallLiveTick;
 			}
 			
 		}

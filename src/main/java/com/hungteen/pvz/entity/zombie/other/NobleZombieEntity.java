@@ -116,7 +116,7 @@ public class NobleZombieEntity extends PVZZombieEntity {
 			if (this.summonTick > 0) {
 				--this.summonTick;
 			} else if (this.summonTick == 0) {
-				this.summonTick = this.getRNG().nextInt(this.maxSummonTick - this.minSummonTick) + this.minSummonTick;
+				this.summonTick = this.getRNG().nextInt(this.maxSummonTick - this.minSummonTick + 1) + this.minSummonTick;
 				this.checkAndSummonMournerZombie();
 			}
 			if(this.getAttackTime() > 0) {

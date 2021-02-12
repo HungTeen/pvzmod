@@ -1,5 +1,7 @@
 package com.hungteen.pvz.entity.plant.flame;
 
+import com.hungteen.pvz.entity.misc.ElementBallEntity;
+import com.hungteen.pvz.entity.misc.ElementBallEntity.ElementTypes;
 import com.hungteen.pvz.entity.plant.base.PlantBomberEntity;
 import com.hungteen.pvz.misc.damage.PVZDamageSource;
 import com.hungteen.pvz.register.SoundRegister;
@@ -35,14 +37,21 @@ public class JalapenoEntity extends PlantBomberEntity{
 		}
 		fireMob(range, 0.5f);
 		fireMob(0.5f, range);
-		killFireBall();
+		killIceBall();
 	}
 	
 	/**
-	 * kill zomboss fireball
+	 * kill zomboss iceball
 	 */
-	private void killFireBall() {
-		
+	private void killIceBall() {
+		if(! world.isRemote) {
+			float range = this.getFireRange() + 10F;
+			world.getEntitiesWithinAABB(ElementBallEntity.class, EntityUtil.getEntityAABB(this, range, range), (target) -> {
+				return target.getElementBallType() == ElementTypes.ICE;
+			}).forEach((target) -> {
+				target.onKilledByPlants(this);
+			});
+		}
 	}
 	
 	private void fireMob(float dx, float dz) {
@@ -58,7 +67,7 @@ public class JalapenoEntity extends PlantBomberEntity{
 	
 	private void clearSnowAndSpawnFlame(int dx, int dz) {
 		BlockPos pos = this.getPosition().add(dx, 0, dz);
-		if(world.getBlockState(pos).getBlock()==Blocks.SNOW||world.getBlockState(pos).getBlock()==Blocks.SNOW_BLOCK) {
+		if(world.getBlockState(pos).getBlock() == Blocks.SNOW||world.getBlockState(pos).getBlock()==Blocks.SNOW_BLOCK) {
 			world.setBlockState(pos, Blocks.AIR.getDefaultState());
 		}
 		if(world.isRemote) {

@@ -168,6 +168,7 @@ public class PVZPlayerEvents {
 								}
 							});
 						}
+						
 					}
 				} else if(stack.getItem() instanceof ShovelItem) {
 					PlayerEventHandler.onPlantShovelByPlayer(player, plant, stack);

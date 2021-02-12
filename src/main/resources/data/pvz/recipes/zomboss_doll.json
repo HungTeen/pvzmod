@@ -1,0 +1,35 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "AAA",
+    "BCD",
+    "EFG"
+  ],
+  "key": {
+    "A": {
+      "item": "pvz:real_brain"
+    },
+    "B": {
+      "item": "pvz:warning_sign"
+    },
+    "C": {
+      "item": "pvz:zombie_doll"
+    },
+    "D": {
+      "item": "pvz:pole"
+    },
+    "E": {
+      "item": "pvz:ice_essence"
+    },
+    "F": {
+      "item": "pvz:zombie_flag"
+    },
+    "G": {
+      "item": "pvz:flame_essence"
+    }
+  },
+  "result": {
+    "item": "pvz:zomboss_doll",
+    "count": 1
+  }
+}

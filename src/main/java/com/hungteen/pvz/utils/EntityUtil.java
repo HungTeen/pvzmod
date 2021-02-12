@@ -54,7 +54,7 @@ public class EntityUtil {
 		if(entity instanceof PVZZombieEntity) {
 			return ((PVZZombieEntity) entity).canZombieBeRemoved();
 		}
-		return true;
+		return entity.isNonBoss();
 	}
 	
 	public static void spawnParticle(Entity entity, int type) {
@@ -325,7 +325,7 @@ public class EntityUtil {
 	/**
 	 * get targetable entity
 	 */
-	public static List<LivingEntity> getEntityTargetableEntity(LivingEntity attacker, AxisAlignedBB aabb){
+	public static List<LivingEntity> getEntityTargetableEntity(Entity attacker, AxisAlignedBB aabb){
 		List<LivingEntity> list = new ArrayList<>();
 		for(LivingEntity entity : attacker.world.getEntitiesWithinAABB(LivingEntity.class, aabb)) {
 			if(attacker != entity && checkCanEntityTarget(attacker, entity)) {

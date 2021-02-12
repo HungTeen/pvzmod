@@ -5,6 +5,7 @@ import com.hungteen.pvz.item.PVZFoodItem;
 import com.hungteen.pvz.item.PVZItemBase;
 import com.hungteen.pvz.item.PVZItemTier;
 import com.hungteen.pvz.item.PVZSpawnEggItem;
+import com.hungteen.pvz.item.ZomBossDollItem;
 import com.hungteen.pvz.item.armor.BucketArmorItem;
 import com.hungteen.pvz.item.armor.ConeArmorItem;
 import com.hungteen.pvz.item.armor.FootballArmorItem;
@@ -13,6 +14,7 @@ import com.hungteen.pvz.item.armor.PVZArmorMaterial;
 import com.hungteen.pvz.item.material.EssenceItem;
 import com.hungteen.pvz.item.misc.AlmanacItem;
 import com.hungteen.pvz.item.misc.StrangeHelpItem;
+import com.hungteen.pvz.item.misc.ZombieDollItem;
 import com.hungteen.pvz.item.tool.BalloonItem;
 import com.hungteen.pvz.item.tool.BobsleCarItem;
 import com.hungteen.pvz.item.tool.BowlingGloveItem;
@@ -232,6 +234,9 @@ public class ItemRegister {
 	public static final RegistryObject<Item> BALLOON = ITEMS.register("balloon", BalloonItem::new);
 	public static final RegistryObject<Item> TARGET_ARROW = ITEMS.register("target_arrow", TargetArrowItem::new);
 	public static final RegistryObject<Item> FIRE_CRACKER = ITEMS.register("fire_cracker", FireCrackerItem::new);
+	public static final RegistryObject<Item> WARNING_SIGN = ITEMS.register("warning_sign", () -> new SwordItem(PVZItemTier.STEEL, 5, - 2.4F, new Item.Properties().group(GroupRegister.PVZ_MISC).maxStackSize(1)));
+	public static final RegistryObject<Item> POLE = ITEMS.register("pole", () -> new AxeItem(PVZItemTier.STEEL, 8, - 3F, new Item.Properties().group(GroupRegister.PVZ_MISC).maxStackSize(1)));
+	
 	//armor
 	public static final RegistryObject<Item> CONE_HEAD = ITEMS.register("cone_head", ()->new ConeArmorItem(ArmorMaterial.LEATHER, EquipmentSlotType.HEAD));
 	public static final RegistryObject<Item> BUCKET_HEAD = ITEMS.register("bucket_head", ()->new BucketArmorItem(ArmorMaterial.IRON, EquipmentSlotType.HEAD));
@@ -249,6 +254,14 @@ public class ItemRegister {
 	public static final RegistryObject<Item> ALMANAC = ITEMS.register("almanac", AlmanacItem::new);
 	public static final RegistryObject<Item> TIME_KEY_TO_DEEP = ITEMS.register("time_key_to_deep", PVZItemBase::new);
 	public static final RegistryObject<Item> CAR_KEY = ITEMS.register("car_key", PVZItemBase::new);
+	public static final RegistryObject<Item> ZOMBIE_DOLL = ITEMS.register("zombie_doll", ZombieDollItem::new);
+	public static final RegistryObject<Item> ZOMBOSS_DOLL = ITEMS.register("zomboss_doll", ZomBossDollItem::new);
+	
+//	public static final RegistryObject<Item> ZOMBIE_ON_YOUR_LAWN = ITEMS.register("zombie_on_your_lawn", () -> {return 
+//			new MusicDiscItem(0, () -> {
+//				return SoundRegister.ZOMBIE_ON_YOUR_LAWN.get();
+//				}, new Item.Properties().maxStackSize(1).group(GroupRegister.PVZ_MISC).rarity(Rarity.RARE));
+//			});
 	
 	//food 
 	public static final RegistryObject<Item> FAKE_BRAIN = ITEMS.register("fake_brain", ()->new PVZFoodItem(PVZFoodItem.FAKE_BRAIN));
@@ -313,6 +326,7 @@ public class ItemRegister {
 	public static final RegistryObject<PVZSpawnEggItem> GARGANTUAR_SPAWN_EGG = registerSpawnEgg("gargantuar", EntityRegister.GARGANTUAR, Colors.ZOMBIE_COLOR);
 	public static final RegistryObject<PVZSpawnEggItem> IMP_SPAWN_EGG = registerSpawnEgg("imp", EntityRegister.IMP, Colors.ZOMBIE_COLOR);
 	public static final RegistryObject<PVZSpawnEggItem> SAD_GARGANTUAR_SPAWN_EGG = registerSpawnEgg("sad_gargantuar", EntityRegister.SAD_GARGANTUAR, Colors.ZOMBIE_COLOR);
+	public static final RegistryObject<PVZSpawnEggItem> ZOMBOSS_SPAWN_EGG = registerSpawnEgg("zomboss", EntityRegister.ZOMBOSS, Colors.ZOMBIE_COLOR);
 	
 	//plant
 	public static final RegistryObject<PVZSpawnEggItem> PEA_SHOOTER_SPAWN_EGG = registerSpawnEgg("pea_shooter", EntityRegister.PEA_SHOOTER, Colors.APPEASE_COLOR);
