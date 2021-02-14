@@ -43,7 +43,9 @@ import net.minecraft.item.BlockItem;
 import net.minecraft.item.HoeItem;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemGroup;
+import net.minecraft.item.MusicDiscItem;
 import net.minecraft.item.PickaxeItem;
+import net.minecraft.item.Rarity;
 import net.minecraft.item.ShovelItem;
 import net.minecraft.item.SoupItem;
 import net.minecraft.item.SwordItem;
@@ -259,12 +261,13 @@ public class ItemRegister {
 	public static final RegistryObject<Item> CAR_KEY = ITEMS.register("car_key", PVZItemBase::new);
 	public static final RegistryObject<Item> ZOMBIE_DOLL = ITEMS.register("zombie_doll", ZombieDollItem::new);
 	public static final RegistryObject<Item> ZOMBOSS_DOLL = ITEMS.register("zomboss_doll", ZomBossDollItem::new);
+	public static final RegistryObject<Item> TIME_SOURCE = ITEMS.register("time_source", PVZItemBase::new);
 	
-//	public static final RegistryObject<Item> ZOMBIE_ON_YOUR_LAWN = ITEMS.register("zombie_on_your_lawn", () -> {return 
-//			new MusicDiscItem(0, () -> {
-//				return SoundRegister.ZOMBIE_ON_YOUR_LAWN.get();
-//				}, new Item.Properties().maxStackSize(1).group(GroupRegister.PVZ_MISC).rarity(Rarity.RARE));
-//			});
+	public static final RegistryObject<Item> ZOMBIE_ON_YOUR_LAWN = ITEMS.register("zombie_on_your_lawn", () -> {return 
+			new MusicDiscItem(0, () -> {
+				return SoundRegister.ZOMBIE_ON_YOUR_LAWN.get();
+				}, new Item.Properties().maxStackSize(1).group(GroupRegister.PVZ_MISC).rarity(Rarity.RARE));
+			});
 	
 	//food 
 	public static final RegistryObject<Item> FAKE_BRAIN = ITEMS.register("fake_brain", ()->new PVZFoodItem(PVZFoodItem.FAKE_BRAIN));

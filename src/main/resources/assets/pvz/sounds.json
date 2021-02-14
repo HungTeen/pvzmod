@@ -286,5 +286,8 @@
     "zomboss_laugh":{
         "subtitle": "sound.pvz.zomboss_laugh",
         "sounds":[{"name":"pvz:entity/zombie/spawn/zomboss_laugh"}]
+    },
+    "zombie_on_your_lawn":{
+        "sounds":[{"name":"pvz:music/zombie_on_your_lawn", "stream":true}]
     }
 }

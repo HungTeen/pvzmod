@@ -2,10 +2,12 @@ package com.hungteen.pvz.register;
 
 import com.hungteen.pvz.PVZMod;
 import com.hungteen.pvz.render.tileentity.SunConverterTER;
+import com.hungteen.pvz.render.tileentity.SunFlowerTrophyTER;
 import com.hungteen.pvz.tileentity.CardFusionTileEntity;
 import com.hungteen.pvz.tileentity.FragmentSpliceTileEntity;
 import com.hungteen.pvz.tileentity.SlotMachineTileEntity;
 import com.hungteen.pvz.tileentity.SunConverterTileEntity;
+import com.hungteen.pvz.tileentity.SunFlowerTrophyTileEntity;
 
 import net.minecraft.tileentity.TileEntityType;
 import net.minecraftforge.api.distmarker.Dist;
@@ -32,11 +34,17 @@ public class TileEntityRegister {
 	public static final RegistryObject<TileEntityType<CardFusionTileEntity>> CARD_FUSION = TILE_ENTITY_TYPES.register("card_fusion", () -> {
 		return TileEntityType.Builder.create(CardFusionTileEntity::new , BlockRegister.CARD_FUSION_TABLE.get()).build(null);
 	});
+	public static final RegistryObject<TileEntityType<SunFlowerTrophyTileEntity>> SUNFLOWER_TROPHY = TILE_ENTITY_TYPES.register("sunflower_trophy", () -> {
+		return TileEntityType.Builder.create(SunFlowerTrophyTileEntity::new , BlockRegister.SILVER_SUNFLOWER_TROPHY.get(), BlockRegister.GOLD_SUNFLOWER_TROPHY.get(), BlockRegister.DIAMOND_SUNFLOWER_TROPHY.get()).build(null);
+	});
 	
 	@OnlyIn(Dist.CLIENT)
 	public static void bindRenderers(FMLClientSetupEvent ev) {
 		ev.getMinecraftSupplier().get().enqueue(() -> {
 			ClientRegistry.bindTileEntityRenderer(TileEntityRegister.SUN_CONVERTER.get(), SunConverterTER::new);
+		});
+		ev.getMinecraftSupplier().get().enqueue(() -> {
+			ClientRegistry.bindTileEntityRenderer(TileEntityRegister.SUNFLOWER_TROPHY.get(), SunFlowerTrophyTER::new);
 		});
 	}
 	

@@ -24,7 +24,8 @@ public enum Events {
 	ROOF(true, Bundles.ROOF, Zombies.NORMAL_ZOMBIE, Zombies.BUNGEE_ZOMBIE, Zombies.LADDER_ZOMBIE, Zombies.CATAPULT_ZOMBIE, Zombies.GARGANTUAR),
 	GIANT(true, Bundles.UPGRADE, Zombies.GARGANTUAR, Zombies.SAD_GARGANTUAR),
 	MINI(false),
-	INVIS(false);
+	INVIS(false),
+	ZOMBOTANY(true, Bundles.RANDOM, Zombies.PEASHOOTER_ZOMBIE, Zombies.WALLNUT_ZOMBIE, Zombies.GATLINGPEA_ZOMBIE, Zombies.TALLNUT_ZOMBIE, Zombies.SQUASH_ZOMBIE, Zombies.JALAPENO_ZOMBIE);
 	
 	public static final List<Events> ATTACK_EVENTS = new ArrayList<>();
 	public boolean isZombieAttackEvent;
@@ -56,6 +57,7 @@ public enum Events {
 		case GIANT:{text.applyTextStyles(TextFormatting.DARK_RED); break;}
 		case MINI:{text.applyTextStyles(TextFormatting.DARK_AQUA); break;}
 		case INVIS:{text.applyTextStyles(TextFormatting.DARK_GRAY); break;}
+		case ZOMBOTANY:{text.applyTextStyles(TextFormatting.DARK_GREEN); break;}
 		default:
 			break;
 		}

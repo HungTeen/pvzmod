@@ -2,6 +2,7 @@ package com.hungteen.pvz.entity.zombie.roof;
 
 import java.util.EnumSet;
 
+import com.hungteen.pvz.data.loot.PVZLoot;
 import com.hungteen.pvz.entity.ai.BreakBlockGoal;
 import com.hungteen.pvz.entity.ai.PVZLookRandomlyGoal;
 import com.hungteen.pvz.entity.ai.PVZSwimGoal;
@@ -33,6 +34,7 @@ import net.minecraft.network.datasync.DataParameter;
 import net.minecraft.network.datasync.DataSerializers;
 import net.minecraft.network.datasync.EntityDataManager;
 import net.minecraft.util.Hand;
+import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.SoundEvent;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.DifficultyInstance;
@@ -96,6 +98,7 @@ public class GargantuarEntity extends PVZZombieEntity {
 		}
 		ImpEntity imp = EntityRegister.IMP.get().create(world);
 		imp.setMotion(vec);
+		imp.setCharmed(this.isCharmed());
 		EntityUtil.onMobEntitySpawn(world, imp, getPosition().add(0, this.getHeight(), 0));
 		this.setHasImp(false);
 	}
@@ -203,6 +206,11 @@ public class GargantuarEntity extends PVZZombieEntity {
 	
 	public GargantuarType getToolType() {
 		return GargantuarType.values()[this.dataManager.get(TOOL_TYPE)];
+	}
+	
+	@Override
+	protected ResourceLocation getLootTable() {
+		return PVZLoot.GARGANTUAR;
 	}
 	
 	public static enum GargantuarType {

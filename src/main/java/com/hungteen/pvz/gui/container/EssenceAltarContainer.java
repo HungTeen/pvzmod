@@ -52,6 +52,7 @@ public class EssenceAltarContainer extends Container{
 			ItemStack stack = inv.getStackInSlot(i);
 			if(stack.isEmpty() || ! (stack.getItem() instanceof PlantCardItem)) continue;
 			Plants plant = ((PlantCardItem) stack.getItem()).plantType;
+			if(plant == Plants.IMITATER) plant = Plants.values()[player.getRNG().nextInt(Plants.values().length)];
 			PlayerUtil.addPlantXp(player, plant, 5 * stack.getCount());
 			stack.shrink(stack.getCount());
 		}

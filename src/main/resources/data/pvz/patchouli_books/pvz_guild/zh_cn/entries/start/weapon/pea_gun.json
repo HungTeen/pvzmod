@@ -44,6 +44,18 @@
             "item": "pvz:three_peater_card",
             "title": "三线射手模式",
             "text": "一次向前发射三个并排的豌豆"
+        },
+        {
+            "type": "spotlight",
+            "item": "pvz:split_pea_card",
+            "title": "裂荚射手模式",
+            "text": "一次向前发射一个豌豆，向后发射2个豌豆"
+        },
+        {
+            "type": "spotlight",
+            "item": "pvz:gatling_pea_card",
+            "title": "机枪射手模式",
+            "text": "一次向前发射四个豌豆"
         }
     ],
     "advancement": "pvz:root",

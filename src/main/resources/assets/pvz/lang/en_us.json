@@ -51,6 +51,7 @@
     "item.pvz.cabbage":"Cabbage",
     "item.pvz.corn":"Corn",
     "item.pvz.target_arrow":"Target Arrow",
+    "item.pvz.time_source":"Time Source",
 //entity & spawn egg & card
 //drop
     "entity.pvz.sun":"Sun",
@@ -142,8 +143,22 @@
     "item.pvz.gargantuar_spawn_egg":"Gargantuar Spawn Egg",
     "entity.pvz.imp":"Imp Zombie",
     "item.pvz.imp_spawn_egg":"Imp Zombie Spawn Egg",
-    "entity.pvz.sad_gargantuar":"Sad Gargantuar",
-    "item.pvz.sad_gargantuar_spawn_egg":"Sad Gargantuar Spawn Egg",
+    "entity.pvz.sad_gargantuar":"Giga Gargantuar",
+    "item.pvz.sad_gargantuar_spawn_egg":"Giga Gargantuar Spawn Egg",
+    "entity.pvz.zomboss":"Edgar-090505",
+    "item.pvz.zomboss_spawn_egg":"Edgar-090505 Spawn Egg",
+    "entity.pvz.peashooter_zombie":"PeaShooter Zombie",
+    "item.pvz.peashooter_zombie_spawn_egg":"PeaShooter Zombie Spawn Egg",
+    "entity.pvz.wallnut_zombie":"WallNut Zombie",
+    "item.pvz.wallnut_zombie_spawn_egg":"WallNut Zombie Spawn Egg",
+    "entity.pvz.gatlingpea_zombie":"GalingPea Zombie",
+    "item.pvz.gatlingpea_zombie_spawn_egg":"GatlingPea Zombie Spawn Egg",
+    "entity.pvz.tallnut_zombie":"TallNut Zombie",
+    "item.pvz.tallnut_zombie_spawn_egg":"TallNut Zombie Spawn Egg",
+    "entity.pvz.squash_zombie":"Squash Zombie",
+    "item.pvz.squash_zombie_spawn_egg":"Squash Zombie Spawn Egg",
+    "entity.pvz.jalapeno_zombie":"Jalapeno Zombie",
+    "item.pvz.jalapeno_zombie_spawn_egg":"Jalapeno Zombie Spawn Egg",
     "entity.pvz.coffin":"Coffin Team",
     "item.pvz.coffin_spawn_egg":"Coffin Team Spawn Egg",
     "entity.pvz.mourner_zombie":"Mourner Zombie",
@@ -334,6 +349,7 @@
     "item.pvz.cabbage_pult_card":"CabbagePult Card",
     "item.pvz.cabbage_pult_enjoy_card":"CabbagePult Enjoy Card",
 //FlowerPot
+    "entity.pvz.flower_pot":"FlowerPot",
     "item.pvz.flower_pot_card":"FlowerPot Card",
     "item.pvz.flower_pot_enjoy_card":"FlowerPot Enjoy Card",
 //KernelPult
@@ -406,6 +422,11 @@
     "item.pvz.spike_rock_spawn_egg":"SpikeRock Spawn Egg",
     "item.pvz.spike_rock_card":"SpikeRock Card",
     "item.pvz.spike_rock_enjoy_card":"SpikeRock Enjoy Card",
+//Imitater
+    "entity.pvz.imitater":"Imitater",
+    "item.pvz.imitater_spawn_egg":"Imitater Spawn Egg",
+    "item.pvz.imitater_card":"Imitater Card",
+    "item.pvz.imitater_enjoy_card":"Imitater Enjoy Card",
 //StrangeCat
     "entity.pvz.strange_cat":"StrangeCat",
     "item.pvz.strange_cat_spawn_egg":"StrangeCat Spawn Egg",
@@ -453,6 +474,10 @@
     "tooltip.pvz.bowling_glove.giant_wall_nut":"Right Click Ground to throw Giant Wall Nut Bowling",
     "tooltip.pvz.jack_box":"Right Click to get surprise",
     "tooltip.pvz.balloon":"Right Click to get a slow fall effect",
+    "tooltip.pvz.zomboss_doll":"Need 11 * 11 * 15 air block place to summon",
+    "tooltip.pvz.imitater_card.no":"Can not use to imitate, can level up for random plants on essence_altar.",
+    "tooltip.pvz.imitater_card.empty":"right click imitater card held in left hand to open imitate gui.",
+    "tooltip.pvz.imitater_card.yes":"Current Imitate Plants",
 //armor
     "item.pvz.cone_head":"Cone Head",
     "item.pvz.bucket_head":"Bucket Head",
@@ -478,6 +503,13 @@
     "item.pvz.jack_box":"Jack Box",
     "item.pvz.fire_cracker":"Fire Cracker",
     "item.pvz.balloon":"Balloon",
+    "item.pvz.pole":"Pole",
+    "item.pvz.warning_sign":"Warning Sign",
+    "item.pvz.zombie_doll":"Zombie Doll",
+    "item.pvz.zomboss_doll":"ZomBoss Doll",
+//special
+    "item.pvz.zombie_on_your_lawn":"PVZ Music Disk",
+    "item.pvz.zombie_on_your_lawn.desc":"Laura Shigihara - Zombies on your lawn",
 //block
 //ore
     "block.pvz.origin_ore":"Origin Ore",
@@ -514,6 +546,9 @@
     "block.pvz.slot_machine":"Slot Machine",
     "block.pvz.essence_altar":"Essence Altar",
     "block.pvz.card_fusion_table":"Card Fusion Table",
+    "block.pvz.silver_sunflower_trophy":"Silver Sunflower Trophy",
+    "block.pvz.gold_sunflower_trophy":"Gold Sunflower Trophy",
+    "block.pvz.diamond_sunflower_trophy":"Diamond Sunflower Trophy",
 //crop
     "block.pvz.pea_plant":"Pea",
     "item.pvz.nut":"Nut",
@@ -556,6 +591,8 @@
     "gui.pvz.dave_shop.gold_magnet_card1":"Upgrade of MagnetShroom, help player collect coin and jewel",
     "gui.pvz.dave_shop.spike_rock_card":"Spike Rock",
     "gui.pvz.dave_shop.spike_rock_card1":"Upgrade of SpikeWeed, can spike more wheels",
+    "gui.pvz.dave_shop.imitater_card":"Imitater",
+    "gui.pvz.dave_shop.imitater_card1":"it can imitate most plants to have independent cool down",
     "gui.pvz.dave_shop.car_key":"Car Key",
     "gui.pvz.dave_shop.car_key1":"Right Click Penny to open Mystery Shop",
     "gui.pvz.sun_shop.title":"Sun Shop",
@@ -771,6 +808,9 @@
     "sound.pvz.swing":"Swing",
     "sound.pvz.gargantuar_death":"Giant Death",
     "sound.pvz.gargantuar_say":"Giant Say",
+    "sound.pvz.zomboss_laugh":"Zomboss Laugh",
+    "sound.pvz.zomboss_shoot":"Shoot",
+    "sound.pvz.zomboss_death":"Robot Explosion",
 //advancement
     "advancement.pvz.root":"Plants vs Zombies",
     "advancement.pvz.root.desc":"install Plants vs Zombies mod and join in world",
@@ -790,6 +830,8 @@
     "advancement.pvz.breed_zombie.desc":"Breed FoodieZombie",
     "advancement.pvz.steel":"Tempered into a steel",
     "advancement.pvz.steel.desc":"smelt iron ingot to steel ingot",
+    "advancement.pvz.zomboss":"Start ? End ?",
+    "advancement.pvz.zomboss.desc":"Kill Adgar-090505",
 //enchantment
     "enchantment.pvz.sun_cost_reduce":"Sun Reduce",
     "enchantment.pvz.break_out":"Break Out",
@@ -837,6 +879,7 @@
     "event.pvz.giant":"Giant Invasion",
     "event.pvz.mini":"Mini Zombie Event",
     "event.pvz.invis":"Invis Zombie Event",
+    "event.pvz.zombotany":"Zombotany Invasion",
 //death
     "death.attack.pvz_normal":"%s was killed",
     "death.attack.pvz_weak":"%s weak to death",

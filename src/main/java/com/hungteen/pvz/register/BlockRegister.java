@@ -23,6 +23,7 @@ import com.hungteen.pvz.block.special.GoldTileBlock;
 import com.hungteen.pvz.block.special.LanternBlock;
 import com.hungteen.pvz.block.special.SlotMachineBlock;
 import com.hungteen.pvz.block.special.SunConverterBlock;
+import com.hungteen.pvz.block.special.SunFlowerTrophyBlock;
 import com.hungteen.pvz.item.blockitem.LilyPadItem;
 import com.hungteen.pvz.world.feature.tree.NutTree;
 
@@ -94,6 +95,9 @@ public class BlockRegister {
 	public static final RegistryObject<GoldTileBlock> GOLD_TILE1 = BLOCKS.register("gold_tile1", () -> new GoldTileBlock(1));
 	public static final RegistryObject<GoldTileBlock> GOLD_TILE2 = BLOCKS.register("gold_tile2", () -> new GoldTileBlock(2));
 	public static final RegistryObject<GoldTileBlock> GOLD_TILE3 = BLOCKS.register("gold_tile3", () -> new GoldTileBlock(3));
+	public static final RegistryObject<SunFlowerTrophyBlock> SILVER_SUNFLOWER_TROPHY = BLOCKS.register("silver_sunflower_trophy", () -> new SunFlowerTrophyBlock(Block.Properties.from(Blocks.IRON_BLOCK).notSolid(), 1));
+	public static final RegistryObject<SunFlowerTrophyBlock> GOLD_SUNFLOWER_TROPHY = BLOCKS.register("gold_sunflower_trophy", () -> new SunFlowerTrophyBlock(Block.Properties.from(Blocks.GOLD_BLOCK).notSolid(), 2));
+	public static final RegistryObject<SunFlowerTrophyBlock> DIAMOND_SUNFLOWER_TROPHY = BLOCKS.register("diamond_sunflower_trophy", () -> new SunFlowerTrophyBlock(Block.Properties.from(Blocks.DIAMOND_BLOCK).notSolid(), 3));
 	
 	//gui & te block
 	public static final RegistryObject<SunConverterBlock> SUN_CONVERTER = BLOCKS.register("sun_converter", SunConverterBlock::new);
@@ -112,7 +116,7 @@ public class BlockRegister {
 				ORIGIN_ORE, APPEASE_ORE, LIGHT_ORE, EXPLOSION_ORE, DEFENCE_ORE, ICE_ORE, ENFORCE_ORE, TOXIC_ORE, ASSIST_ORE, MAGIC_ORE, FLAME_ORE, SPEAR_ORE, ARMA_ORE, ELECTRIC_ORE, SHADOW_ORE, AMETHYST_ORE,
 				STEEL_BLOCK, AMETHYST_BLOCK, ORIGIN_BLOCK, BUTTER_BLOCK, FROZEN_MELON, STEEL_LADDER,
 				NUT_LEAVES, NUT_SAPLING, CHOMPER, LILY_PAD,
-				LANTERN, FLOWER_POT, GOLD_TILE1, GOLD_TILE2, GOLD_TILE3,
+				LANTERN, FLOWER_POT, GOLD_TILE1, GOLD_TILE2, GOLD_TILE3, SILVER_SUNFLOWER_TROPHY, GOLD_SUNFLOWER_TROPHY, DIAMOND_SUNFLOWER_TROPHY,
 				SUN_CONVERTER, FRAGMENT_SPLICE, SLOT_MACHINE, ESSENCE_ALTAR, CARD_FUSION_TABLE
 		);
 		for(RegistryObject<? extends Block> block:blocks) {

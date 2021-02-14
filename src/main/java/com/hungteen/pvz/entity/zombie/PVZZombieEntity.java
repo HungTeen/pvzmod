@@ -624,7 +624,7 @@ public abstract class PVZZombieEntity extends MonsterEntity implements IPVZZombi
 	 */
 	public void onCharmed() {
 		if(this.canBeCharmed()) {
-			this.setCharmed(!this.isCharmed());
+			this.setCharmed(! this.isCharmed());
 			if(this.getZombieType() == Type.SUPER) {
 				this.setZombieType(Type.NORMAL);
 				this.dropEnergy();

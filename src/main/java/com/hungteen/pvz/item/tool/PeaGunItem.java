@@ -189,6 +189,19 @@ public class PeaGunItem extends Item {
 			this.performShoot(player, plant, stack, peaGun, 2);
 			return true;
 		}
+		case SPLIT_PEA: {
+			this.performShoot(player, plant, stack, peaGun, 0);
+			this.performShoot(player, plant, stack, peaGun, 1);
+			this.performShoot(player, plant, stack, peaGun, 2);
+			return true;
+		}
+		case GATLING_PEA: {
+			this.performShoot(player, plant, stack, peaGun, 0);
+			this.performShoot(player, plant, stack, peaGun, 1);
+			this.performShoot(player, plant, stack, peaGun, 2);
+			this.performShoot(player, plant, stack, peaGun, 3);
+			return true;
+		}
 		default: {
 			return false;
 		}
@@ -217,12 +230,10 @@ public class PeaGunItem extends Item {
 			Vec3d offset = vec.scale(SHOOT_OFFSET);
 			pea.setPosition(player.getPosX() + offset.x, player.getPosY() + player.getEyeHeight() + offset.y,
 					player.getPosZ() + offset.z);
-			if (plant == Plants.REPEATER) {
-				if (type == 1) {
-					pea.setPosition(player.getPosX() + offset.x, player.getPosY() + player.getEyeHeight() + offset.y,
-							player.getPosZ() + offset.z);
-				}
-			} else if (plant == Plants.THREE_PEATER) {
+			float speed = PEA_SPEED;
+			if (plant == Plants.REPEATER || plant == Plants.GATLING_PEA) {
+				speed -= 0.2 * type;
+			} else if (plant == Plants.THREE_PEATER) { 
 				offset = offset.scale(2);
 				if (type == 1) {
 					pea.setPosition(player.getPosX() + offset.x + offset.z,
@@ -233,8 +244,13 @@ public class PeaGunItem extends Item {
 							player.getPosY() + player.getEyeHeight() + offset.y,
 							player.getPosZ() + offset.z + offset.x);
 				}
+			} else if(plant == Plants.SPLIT_PEA) {
+				if(type > 0) {
+					speed *= -1;
+					if(type == 2) speed += 0.2;
+				}
 			}
-			pea.setMotion(vec.scale(PEA_SPEED));
+			pea.setMotion(vec.scale(speed));
 			player.world.addEntity(pea);
 		});
 	}

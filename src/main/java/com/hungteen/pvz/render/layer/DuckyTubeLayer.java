@@ -1,6 +1,5 @@
 package com.hungteen.pvz.render.layer;
 
-import com.hungteen.pvz.entity.zombie.grassday.NormalZombieEntity;
 import com.hungteen.pvz.model.entity.zombie.poolday.DuckyTubeModel;
 import com.hungteen.pvz.utils.StringUtil;
 import com.mojang.blaze3d.matrix.MatrixStack;
@@ -12,9 +11,10 @@ import net.minecraft.client.renderer.entity.IEntityRenderer;
 import net.minecraft.client.renderer.entity.layers.LayerRenderer;
 import net.minecraft.client.renderer.entity.model.EntityModel;
 import net.minecraft.client.renderer.texture.OverlayTexture;
+import net.minecraft.entity.MobEntity;
 import net.minecraft.util.ResourceLocation;
 
-public class DuckyTubeLayer<T extends NormalZombieEntity> extends LayerRenderer<T, EntityModel<T>>{
+public class DuckyTubeLayer<T extends MobEntity> extends LayerRenderer<T, EntityModel<T>>{
 
 	public static final ResourceLocation TEXTURE = StringUtil.prefix("textures/entity/zombie/poolday/ducky_tube.png");
 	private DuckyTubeModel model = new DuckyTubeModel();

@@ -29,6 +29,7 @@ public class PennyEntity extends AbstractDaveEntity {
 
 	public PennyEntity(EntityType<? extends CreatureEntity> type, World worldIn) {
 		super(type, worldIn);
+		this.setInvulnerable(true);
 	}
 
 	@Override
@@ -82,11 +83,6 @@ public class PennyEntity extends AbstractDaveEntity {
 	@Nullable
 	protected SoundEvent getDeathSound() {
 		return SoundEvents.ENTITY_GENERIC_DEATH;
-	}
-
-	@Override
-	public boolean isInvulnerableTo(DamageSource source) {
-		return true;
 	}
 
 	@Override

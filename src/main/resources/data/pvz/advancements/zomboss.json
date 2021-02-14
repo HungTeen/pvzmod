@@ -1,0 +1,33 @@
+{
+  "display": {
+    "icon": {
+      "item": "pvz:zomboss_doll"
+    },
+    "title": {
+      "translate": "advancement.pvz.zomboss"
+    },
+    "description": {
+      "translate": "advancement.pvz.zomboss.desc"
+    },
+	"frame":"task",
+    "announce_to_chat": true
+  },
+  "parent":"pvz:origin",
+  "criteria": {
+    "get_origin": {
+      "trigger": "minecraft:player_killed_entity",
+      "conditions": {
+        "entity": {
+            "type": "pvz:zomboss"
+         }
+      }
+    }
+  },
+  "requirements": [[
+    "get_origin"
+  ]],
+  "rewards":{
+    "recipes":[
+    ]
+  }
+}

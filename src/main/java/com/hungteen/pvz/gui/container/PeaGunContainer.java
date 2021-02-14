@@ -59,17 +59,21 @@ public class PeaGunContainer extends Container {
 		if (slot != null && slot.getHasStack()) {
 			ItemStack itemstack1 = slot.getStack();
 			itemstack = itemstack1.copy();
-			if (index > 0 && index < PeaGunItem.PEA_GUN_SLOT_NUM) {
-				if (!this.mergeItemStack(itemstack1, PeaGunItem.PEA_GUN_SLOT_NUM, this.inventorySlots.size(), true)) {
+			if(index == 0) {
+				if (! this.mergeItemStack(itemstack1, 1, this.inventorySlots.size(), true)) {
 					return ItemStack.EMPTY;
 				}
-			} else if (index < PeaGunItem.PEA_GUN_SLOT_NUM + 27) {
-				if(!mergeItemStack(itemstack1, 0, PeaGunItem.PEA_GUN_SLOT_NUM, false)
-						&& !mergeItemStack(itemstack1, PeaGunItem.PEA_GUN_SLOT_NUM + 27, PeaGunItem.PEA_GUN_SLOT_NUM + 36, false)) {
+			} else if (index <= PeaGunItem.PEA_GUN_SLOT_NUM) {
+				if (! this.mergeItemStack(itemstack1, PeaGunItem.PEA_GUN_SLOT_NUM + 1, this.inventorySlots.size(), true)) {
 					return ItemStack.EMPTY;
 				}
-			} else if(index != 0){
-				if (!this.mergeItemStack(itemstack1, 0, PeaGunItem.PEA_GUN_SLOT_NUM + 27, false)) {
+			} else if (index <= PeaGunItem.PEA_GUN_SLOT_NUM + 27) {
+				if(! mergeItemStack(itemstack1, 0, PeaGunItem.PEA_GUN_SLOT_NUM + 1, false)
+						&& ! mergeItemStack(itemstack1, PeaGunItem.PEA_GUN_SLOT_NUM + 27 + 1, this.inventorySlots.size(), false)) {
+					return ItemStack.EMPTY;
+				}
+			} else {
+				if (! this.mergeItemStack(itemstack1, 0, PeaGunItem.PEA_GUN_SLOT_NUM + 27 + 1, false)) {
 					return ItemStack.EMPTY;
 				}
 			}

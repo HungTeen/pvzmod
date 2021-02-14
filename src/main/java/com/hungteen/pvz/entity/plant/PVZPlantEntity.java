@@ -433,9 +433,7 @@ public abstract class PVZPlantEntity extends CreatureEntity implements IPVZPlant
 	 * a function that replace isinvulnerable
 	 */
 	public boolean isPlantImmuneTo(DamageSource source) {
-		if(this.isPlantInSuperMode()) {
-			return true;
-		}
+		if(this.isPlantInSuperMode()) return true;
 		return false;
 	}
 	

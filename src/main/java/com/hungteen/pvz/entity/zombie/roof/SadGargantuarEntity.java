@@ -1,5 +1,6 @@
 package com.hungteen.pvz.entity.zombie.roof;
 
+import com.hungteen.pvz.data.loot.PVZLoot;
 import com.hungteen.pvz.register.SoundRegister;
 import com.hungteen.pvz.utils.EntityUtil;
 import com.hungteen.pvz.utils.ZombieUtil;
@@ -12,6 +13,7 @@ import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.Pose;
 import net.minecraft.entity.SharedMonsterAttributes;
 import net.minecraft.entity.monster.MonsterEntity;
+import net.minecraft.util.ResourceLocation;
 import net.minecraft.world.World;
 
 public class SadGargantuarEntity extends GargantuarEntity {
@@ -75,6 +77,11 @@ public class SadGargantuarEntity extends GargantuarEntity {
 		return super.getSize(poseIn);
 	}
 
+	@Override
+	protected ResourceLocation getLootTable() {
+		return PVZLoot.SAD_GARGANTUAR;
+	}
+	
 	@Override
 	public Zombies getZombieEnumName() {
 		return Zombies.SAD_GARGANTUAR;

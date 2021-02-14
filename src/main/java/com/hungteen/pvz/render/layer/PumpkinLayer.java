@@ -57,14 +57,14 @@ public class PumpkinLayer<T extends PVZPlantEntity> extends LayerRenderer<T, Ent
 			float tmp = life - PlantUtil.PUMPKIN_LIFE;
 			if(tmp > PlantUtil.PUMPKIN_SUPER_LIFE * 2 / 3) {
 				return StringUtil.prefix("textures/entity/plant/defence/pumpkin4.png");
-			}else if(tmp > PlantUtil.PUMPKIN_SUPER_LIFE / 3) {
+			} else if(tmp > PlantUtil.PUMPKIN_SUPER_LIFE / 3) {
 				return StringUtil.prefix("textures/entity/plant/defence/pumpkin5.png");
 			}
 			return StringUtil.prefix("textures/entity/plant/defence/pumpkin6.png");
 		}
 		if(life > PlantUtil.PUMPKIN_LIFE * 2 / 3) {
 			return StringUtil.prefix("textures/entity/plant/defence/pumpkin1.png");
-		}else if(life > PlantUtil.PUMPKIN_LIFE /3) {
+		} else if(life > PlantUtil.PUMPKIN_LIFE /3) {
 			return StringUtil.prefix("textures/entity/plant/defence/pumpkin2.png");
 		}
 		return StringUtil.prefix("textures/entity/plant/defence/pumpkin3.png");

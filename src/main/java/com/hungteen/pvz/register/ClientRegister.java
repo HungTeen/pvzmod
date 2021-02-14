@@ -87,6 +87,9 @@ public class ClientRegister {
 		RenderTypeLookup.setRenderLayer(BlockRegister.CORN.get(), RenderType.getCutout());
 		RenderTypeLookup.setRenderLayer(BlockRegister.ESSENCE_ALTAR.get(), RenderType.getTranslucent());
 		RenderTypeLookup.setRenderLayer(BlockRegister.STEEL_LADDER.get(), RenderType.getCutout());
+		RenderTypeLookup.setRenderLayer(BlockRegister.SILVER_SUNFLOWER_TROPHY.get(), RenderType.getCutout());
+		RenderTypeLookup.setRenderLayer(BlockRegister.GOLD_SUNFLOWER_TROPHY.get(), RenderType.getCutout());
+		RenderTypeLookup.setRenderLayer(BlockRegister.DIAMOND_SUNFLOWER_TROPHY.get(), RenderType.getCutout());
 		TileEntityRegister.bindRenderers(ev);
 	}
 	

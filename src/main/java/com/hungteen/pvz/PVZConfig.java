@@ -84,6 +84,10 @@ public class PVZConfig {
 							.comment("The weight to happen Giant Invasion when it's a zombie attack day.")
 							.defineInRange("GiantAttackChance", 25, 1, 10000);
 					
+					WorldSettings.WorldEventSettings.EventChanceSettings.ZombotanyAttackChance = builder
+							.comment("The weight to happen Zombotany Invasion when it's a zombie attack day.")
+							.defineInRange("ZombotanyAttackChance", 40, 1, 10000);
+					
 					WorldSettings.WorldEventSettings.EventChanceSettings.FogEventChance = builder
 							.comment("The related value to happen Fog Event when it's a zombie attack day(If the value is x, then the chance is 1/x).")
 							.defineInRange("FogEventChance", 12, 1, 10000);
@@ -298,6 +302,7 @@ public class PVZConfig {
 			    	public ForgeConfigSpec.IntValue GiantAttackChance;
 			    	public ForgeConfigSpec.IntValue MiniEventChance;
 			    	public ForgeConfigSpec.IntValue InvisEventChance;
+			    	public ForgeConfigSpec.IntValue ZombotanyAttackChance;
 			    }
 			}
 			

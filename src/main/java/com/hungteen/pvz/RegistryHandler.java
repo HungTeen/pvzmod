@@ -41,10 +41,10 @@ public class RegistryHandler {
 
 	public static void register() {
 		IEventBus bus = FMLJavaModLoadingContext.get().getModEventBus();
+		SoundRegister.SOUNDS.register(bus);
 		ItemRegister.ITEMS.register(bus);
 		BlockRegister.BLOCKS.register(bus);
 		EntityRegister.ENTITY_TYPES.register(bus);
-		SoundRegister.SOUNDS.register(bus);
 		ParticleRegister.PARTICLE_TYPES.register(bus);
 		EffectRegister.EFFECTS.register(bus);
 		BiomeRegister.BIOMES.register(bus);

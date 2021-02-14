@@ -44,6 +44,18 @@
             "item": "pvz:three_peater_card",
             "title": "ThreePeater Mode",
             "text": "shoot three parallel peas forward at a time"
+        },
+        {
+            "type": "spotlight",
+            "item": "pvz:split_pea_card",
+            "title": "SplitPea Mode",
+            "text": "shoot forward one peas and shoot backward two peas at a time"
+        },
+        {
+            "type": "spotlight",
+            "item": "pvz:gatling_pea_card",
+            "title": "GatlingPea Mode",
+            "text": "shoot forward four peas at a time"
         }
     ],
     "advancement": "pvz:root",

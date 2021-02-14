@@ -3,7 +3,7 @@ package com.hungteen.pvz.entity.plant.flame;
 import com.hungteen.pvz.entity.misc.ElementBallEntity;
 import com.hungteen.pvz.entity.misc.ElementBallEntity.ElementTypes;
 import com.hungteen.pvz.entity.plant.base.PlantBomberEntity;
-import com.hungteen.pvz.entity.zombie.plantzombie.JalapenoZombieEntity;
+import com.hungteen.pvz.entity.zombie.zombotany.JalapenoZombieEntity;
 import com.hungteen.pvz.misc.damage.PVZDamageSource;
 import com.hungteen.pvz.register.SoundRegister;
 import com.hungteen.pvz.utils.EntityUtil;

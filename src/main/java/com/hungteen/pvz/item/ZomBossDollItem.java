@@ -1,16 +1,23 @@
 package com.hungteen.pvz.item;
 
+import java.util.List;
+
 import com.hungteen.pvz.entity.zombie.roof.ZomBossEntity;
 import com.hungteen.pvz.register.EntityRegister;
 import com.hungteen.pvz.register.GroupRegister;
 import com.hungteen.pvz.utils.EntityUtil;
 
+import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.Item;
+import net.minecraft.item.ItemStack;
 import net.minecraft.item.ItemUseContext;
 import net.minecraft.util.ActionResultType;
 import net.minecraft.util.Direction;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.text.ITextComponent;
+import net.minecraft.util.text.TextFormatting;
+import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraft.world.World;
 
 public class ZomBossDollItem extends Item {
@@ -31,6 +38,11 @@ public class ZomBossDollItem extends Item {
 			}
 		}
 		return super.onItemUse(context);
+	}
+	
+	@Override
+	public void addInformation(ItemStack stack, World worldIn, List<ITextComponent> tooltip, ITooltipFlag flagIn) {
+		tooltip.add(new TranslationTextComponent("tooltip.pvz.zomboss_doll").applyTextStyle(TextFormatting.RED));
 	}
 	
 	private boolean canSpawnHere(World world, BlockPos pos) {

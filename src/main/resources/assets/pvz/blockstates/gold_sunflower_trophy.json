@@ -1,0 +1,8 @@
+{
+  "variants": {
+    "facing=north":{"model":"pvz:block/gold_sunflower_trophy"},
+    "facing=east":{"model":"pvz:block/gold_sunflower_trophy","y":90},
+    "facing=south":{"model":"pvz:block/gold_sunflower_trophy","y":180},
+    "facing=west":{"model":"pvz:block/gold_sunflower_trophy","y":270}
+  }
+}

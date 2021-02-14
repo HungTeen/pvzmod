@@ -51,6 +51,7 @@
     "item.pvz.cabbage":"卷心菜",
     "item.pvz.corn":"玉米",
     "item.pvz.target_arrow":"带靶的箭",
+    "item.pvz.time_source":"时空元",
 //entity &刷怪蛋 & card  
 //drop
     "entity.pvz.sun":"阳光",
@@ -144,6 +145,20 @@
     "item.pvz.imp_spawn_egg":"小鬼僵尸刷怪蛋",
     "entity.pvz.sad_gargantuar":"红眼伽刚特尔",
     "item.pvz.sad_gargantuar_spawn_egg":"红眼伽刚特尔刷怪蛋",
+    "entity.pvz.zomboss":"埃德加-090505",
+    "item.pvz.zomboss_spawn_egg":"埃德加-090505刷怪蛋",
+    "entity.pvz.peashooter_zombie":"豌豆射手僵尸",
+    "item.pvz.peashooter_zombie_spawn_egg":"豌豆射手僵尸刷怪蛋",
+    "entity.pvz.wallnut_zombie":"坚果墙僵尸",
+    "item.pvz.wallnut_zombie_spawn_egg":"坚果墙僵尸刷怪蛋",
+    "entity.pvz.gatlingpea_zombie":"机枪射手僵尸",
+    "item.pvz.gatlingpea_zombie_spawn_egg":"机枪射手僵尸刷怪蛋",
+    "entity.pvz.tallnut_zombie":"高坚果僵尸",
+    "item.pvz.tallnut_zombie_spawn_egg":"高坚果僵尸刷怪蛋",
+    "entity.pvz.squash_zombie":"窝瓜僵尸",
+    "item.pvz.squash_zombie_spawn_egg":"窝瓜僵尸刷怪蛋",
+    "entity.pvz.jalapeno_zombie":"火爆辣椒僵尸",
+    "item.pvz.jalapeno_zombie_spawn_egg":"火爆辣椒僵尸刷怪蛋",
     "entity.pvz.coffin":"抬棺小队",
     "item.pvz.coffin_spawn_egg":"抬棺小队刷怪蛋",
     "entity.pvz.mourner_zombie":"抬棺僵尸",
@@ -334,6 +349,7 @@
     "item.pvz.cabbage_pult_card":"卷心菜投手卡",
     "item.pvz.cabbage_pult_enjoy_card":"卷心菜投手体验卡",
 //FlowerPot
+    "entity.pvz.flower_pot":"花盆",
     "item.pvz.flower_pot_card":"花盆卡",
     "item.pvz.flower_pot_enjoy_card":"花盆体验卡",
 //KernelPult
@@ -406,6 +422,11 @@
     "item.pvz.spike_rock_spawn_egg":"钢地刺刷怪蛋",
     "item.pvz.spike_rock_card":"钢地刺卡",
     "item.pvz.spike_rock_enjoy_card":"钢地刺体验卡",
+//Imitater
+    "entity.pvz.imitater":"模仿者",
+    "item.pvz.imitater_spawn_egg":"模仿者刷怪蛋",
+    "item.pvz.imitater_card":"模仿者卡",
+    "item.pvz.imitater_enjoy_card":"模仿者体验卡",
 //StrangeCat
     "entity.pvz.strange_cat":"奇怪猫",
     "item.pvz.strange_cat_spawn_egg":"奇怪猫刷怪蛋",
@@ -453,6 +474,10 @@
     "tooltip.pvz.bowling_glove.giant_wall_nut":"右击地面来扔出巨型坚果保龄球",
     "tooltip.pvz.jack_box":"右击会有惊喜",
     "tooltip.pvz.balloon":"右键会获得缓降效果",
+    "tooltip.pvz.zomboss_doll":"需要11*11*15的空旷地面才能召唤",
+    "tooltip.pvz.imitater_card.no":"不能用于模仿种植，但是可以在精华祭坛随机给植物加经验",
+    "tooltip.pvz.imitater_card.empty":"左持该物品右击来打开模仿者界面",
+    "tooltip.pvz.imitater_card.yes":"当前模仿的植物",
 //armor
     "item.pvz.cone_head":"路障头盔",
     "item.pvz.bucket_head":"铁桶头盔",
@@ -478,6 +503,13 @@
     "item.pvz.jack_box":"玩偶匣",
     "item.pvz.fire_cracker":"爆竹",
     "item.pvz.balloon":"气球",
+    "item.pvz.pole":"电线杆",
+    "item.pvz.warning_sign":"警示牌",
+    "item.pvz.zombie_doll":"僵尸玩偶",
+    "item.pvz.zomboss_doll":"僵王玩偶",
+//special
+    "item.pvz.zombie_on_your_lawn":"植物大战僵尸mod唱片",
+    "item.pvz.zombie_on_your_lawn.desc":"Laura Shigihara - Zombies on your lawn",
 //block
 //ore
     "block.pvz.origin_ore":"原始精华矿",
@@ -514,6 +546,9 @@
     "block.pvz.slot_machine":"老虎机",
     "block.pvz.essence_altar":"精华祭坛",
     "block.pvz.card_fusion_table":"植物卡融合台",
+    "block.pvz.silver_sunflower_trophy":"白银向日葵雕像",
+    "block.pvz.gold_sunflower_trophy":"黄金向日葵雕像",
+    "block.pvz.diamond_sunflower_trophy":"钻石向日葵雕像",
 //crop
     "block.pvz.pea_plant":"豌豆",
     "item.pvz.nut":"坚果",
@@ -556,6 +591,8 @@
     "gui.pvz.dave_shop.gold_magnet_card1":"磁力菇的升级版，可以帮助玩家捡钱币和宝石",
     "gui.pvz.dave_shop.spike_rock_card":"钢地刺",
     "gui.pvz.dave_shop.spike_rock_card1":"地刺的升级版，能抵挡若干次致命攻击",
+    "gui.pvz.dave_shop.imitater_card":"模仿者",
+    "gui.pvz.dave_shop.imitater_card1":"它能模仿绝大多数植物，拥有独立的冷却",
     "gui.pvz.dave_shop.car_key":"车钥匙",
     "gui.pvz.dave_shop.car_key1":"右击潘妮打开神秘商店",
     "gui.pvz.sun_shop.title":"阳光商店",
@@ -701,11 +738,6 @@
     "gui.pvz.almanac.tall_nut2":"",
     "gui.pvz.almanac.tall_nut3":"",
     "gui.pvz.almanac.tall_nut4":"大招时会获得护甲",
-    //PuffShroom
-    "gui.pvz.almanac.puff_shroom1":"胆小菇会发射孢子攻击",
-    "gui.pvz.almanac.puff_shroom2":"攻击范围较近",
-    "gui.pvz.almanac.puff_shroom3":"过一段时间会消失",
-    "gui.pvz.almanac.puff_shroom4":"大招时会获得护甲",
 //sound
     "sound.pvz.sun_pick":"收集阳光",
     "sound.pvz.coin_drop":"钱币掉落",
@@ -776,6 +808,9 @@
     "sound.pvz.swing":"摆动",
     "sound.pvz.gargantuar_death":"巨人死亡",
     "sound.pvz.gargantuar_say":"巨人咆哮",
+    "sound.pvz.zomboss_laugh":"邪魅之笑",
+    "sound.pvz.zomboss_shoot":"发射",
+    "sound.pvz.zomboss_death":"机器爆炸",
 //advancement
     "advancement.pvz.root":"植物大战僵尸",
     "advancement.pvz.root.desc":"安装植物大战僵尸mod并进入主世界",
@@ -795,6 +830,8 @@
     "advancement.pvz.breed_zombie.desc":"繁殖一只吃货僵尸",
     "advancement.pvz.steel":"百炼成钢",
     "advancement.pvz.steel.desc":"将铁锭烧成钢锭",
+    "advancement.pvz.zomboss":"开始了？结束了？",
+    "advancement.pvz.zomboss.desc":"击败埃德加-090505",
 //enchantment
     "enchantment.pvz.sun_cost_reduce":"节能",
     "enchantment.pvz.break_out":"爆发",
@@ -842,6 +879,7 @@
     "event.pvz.giant":"巨人入侵",
     "event.pvz.mini":"迷你僵尸来袭",
     "event.pvz.invis":"隐形僵尸来袭",
+    "event.pvz.zombotany":"植物僵尸入侵",
 //death
     "death.attack.pvz_normal":"%s被打死了",
     "death.attack.pvz_weak":"%s虚弱而亡",

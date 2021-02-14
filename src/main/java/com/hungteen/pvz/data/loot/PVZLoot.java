@@ -33,6 +33,15 @@ public class PVZLoot {
 	public static final ResourceLocation DIGGER_ZOMBIE = getEntityLootTable("digger_zombie");
 	public static final ResourceLocation BUNGEE_ZOMBIE = getEntityLootTable("bungee_zombie");
 	public static final ResourceLocation LADDER_ZOMBIE = getEntityLootTable("ladder_zombie");
+	public static final ResourceLocation GARGANTUAR = getEntityLootTable("gargantuar");
+	public static final ResourceLocation SAD_GARGANTUAR = getEntityLootTable("sad_gargantuar");
+	public static final ResourceLocation ZOMBOSS = getEntityLootTable("zomboss");
+	public static final ResourceLocation PEASHOOTER_ZOMBIE = getEntityLootTable("peashooter_zombie");
+	public static final ResourceLocation WALLNUT_ZOMBIE = getEntityLootTable("wallnut_zombie");
+	public static final ResourceLocation GATLINGPEA_ZOMBIE = getEntityLootTable("gatlingpea_zombie");
+	public static final ResourceLocation TALLNUT_ZOMBIE = getEntityLootTable("tallnut_zombie");
+	public static final ResourceLocation SQUASH_ZOMBIE = getEntityLootTable("squash_zombie");
+	public static final ResourceLocation JALAPENO_ZOMBIE = getEntityLootTable("jalapeno_zombie");
 	public static final ResourceLocation RA_ZOMBIE = getEntityLootTable("ra_zombie");
 	
 	public static ResourceLocation getChestLootTable(String name) {

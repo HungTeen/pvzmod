@@ -7,6 +7,7 @@ import java.util.function.Consumer;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
+import com.hungteen.pvz.capability.CapabilityHandler;
 import com.hungteen.pvz.enchantment.EnchantmentUtil;
 import com.hungteen.pvz.entity.plant.magic.ImitaterEntity;
 import com.hungteen.pvz.gui.container.ImitaterContainer;
@@ -126,6 +127,12 @@ public class ImitaterCardItem extends PlantCardItem {
 			if(l instanceof ImitaterEntity) {
 				((ImitaterEntity) l).setImitateCard(stack.copy());
 				((ImitaterEntity) l).placeDirection = player.getHorizontalFacing().getOpposite();
+				Optional<Plants> opt = getImitatePlantType(stack);
+				if(opt.isPresent()) {
+					player.getCapability(CapabilityHandler.PLAYER_DATA_CAPABILITY).ifPresent((data) -> {
+						l.setPlantLvl(data.getPlayerData().getPlantStats().getPlantLevel(opt.get()));
+					});
+				}
 				consumer.accept((ImitaterEntity) l);
 			}
 		});
@@ -179,13 +186,17 @@ public class ImitaterCardItem extends PlantCardItem {
 	
 	@Override
 	public void addInformation(ItemStack stack, World worldIn, List<ITextComponent> tooltip, ITooltipFlag flagIn) {
+		if(this.isEnjoyCard) {
+			tooltip.add(new TranslationTextComponent("tooltip.pvz.imitater_card.no").applyTextStyle(TextFormatting.RED));
+			return ;
+		}
 		Optional<Plants> opt = getImitatePlantType(stack);
 		if(! opt.isPresent() || opt.get() == Plants.IMITATER) {
-			tooltip.add(new TranslationTextComponent("tooltip.pvz.imitater_card_no").applyTextStyle(TextFormatting.RED));
+			tooltip.add(new TranslationTextComponent("tooltip.pvz.imitater_card.empty").applyTextStyle(TextFormatting.RED));
 			return ;
 		}
 		super.addInformation(stack, worldIn, tooltip, flagIn);
-		tooltip.add(new TranslationTextComponent("tooltip.pvz.imitater_card_yes").appendText(":").appendSibling(new TranslationTextComponent("entity.pvz." + opt.get().toString().toLowerCase())).applyTextStyle(TextFormatting.LIGHT_PURPLE));
+		tooltip.add(new TranslationTextComponent("tooltip.pvz.imitater_card.yes").appendText(":").appendSibling(new TranslationTextComponent("entity.pvz." + opt.get().toString().toLowerCase())).applyTextStyle(TextFormatting.LIGHT_PURPLE));
 	}
 	
 	@Nonnull

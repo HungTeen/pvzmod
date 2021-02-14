@@ -4,7 +4,7 @@ import com.hungteen.pvz.capability.CapabilityHandler;
 import com.hungteen.pvz.entity.plant.base.PlantShooterEntity;
 import com.hungteen.pvz.entity.plant.flame.TorchWoodEntity;
 import com.hungteen.pvz.entity.plant.interfaces.IIcePlant;
-import com.hungteen.pvz.entity.zombie.plantzombie.PeaShooterZombieEntity;
+import com.hungteen.pvz.entity.zombie.zombotany.PeaShooterZombieEntity;
 import com.hungteen.pvz.misc.damage.PVZDamageSource;
 import com.hungteen.pvz.register.EntityRegister;
 import com.hungteen.pvz.register.ItemRegister;

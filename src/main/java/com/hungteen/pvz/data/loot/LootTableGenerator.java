@@ -23,7 +23,8 @@ public class LootTableGenerator extends LootTableProvider{
 
 	private final List<Pair<Supplier<Consumer<BiConsumer<ResourceLocation, LootTable.Builder>>>, LootParameterSet>> tables = ImmutableList.of(
 			Pair.of(PVZChestLootTables::new, LootParameterSets.CHEST),
-			Pair.of(PVZEntityLootTables::new, LootParameterSets.ENTITY)
+			Pair.of(PVZEntityLootTables::new, LootParameterSets.ENTITY),
+			Pair.of(PVZBlockLootTables::new, LootParameterSets.BLOCK)
 			);
 	
 	public LootTableGenerator(DataGenerator dataGeneratorIn) {

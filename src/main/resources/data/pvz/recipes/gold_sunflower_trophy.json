@@ -1,0 +1,20 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    " X ",
+    "XBX",
+    " X "
+  ],
+  "key": {
+    "B": {
+      "item": "minecraft:gold_ingot"
+    },
+    "X": {
+      "item": "pvz:silver_sunflower_trophy"
+    }
+  },
+  "result": {
+    "item": "pvz:gold_sunflower_trophy",
+    "count": 1
+  }
+}

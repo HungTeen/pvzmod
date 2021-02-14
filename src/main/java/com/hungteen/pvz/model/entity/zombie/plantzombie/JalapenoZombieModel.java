@@ -1,6 +1,6 @@
 package com.hungteen.pvz.model.entity.zombie.plantzombie;
 
-import com.hungteen.pvz.entity.zombie.plantzombie.JalapenoZombieEntity;
+import com.hungteen.pvz.entity.zombie.zombotany.JalapenoZombieEntity;
 import com.mojang.blaze3d.matrix.MatrixStack;
 import com.mojang.blaze3d.vertex.IVertexBuilder;
 

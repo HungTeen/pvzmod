@@ -5,7 +5,9 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 
+import com.hungteen.pvz.data.loot.PVZLoot;
 import com.hungteen.pvz.entity.ai.target.ZombieNearestTargetGoal;
+import com.hungteen.pvz.entity.drop.JewelEntity;
 import com.hungteen.pvz.entity.misc.DestroyCarEntity;
 import com.hungteen.pvz.entity.misc.ElementBallEntity;
 import com.hungteen.pvz.entity.misc.ElementBallEntity.ElementTypes;
@@ -17,9 +19,11 @@ import com.hungteen.pvz.misc.damage.PVZDamageSource;
 import com.hungteen.pvz.register.EntityRegister;
 import com.hungteen.pvz.register.SoundRegister;
 import com.hungteen.pvz.utils.EntityUtil;
+import com.hungteen.pvz.utils.PlayerUtil;
 import com.hungteen.pvz.utils.ZombieUtil;
 import com.hungteen.pvz.utils.enums.Zombies;
 
+import net.minecraft.advancements.CriteriaTriggers;
 import net.minecraft.entity.EntitySize;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.ILivingEntityData;
@@ -35,6 +39,10 @@ import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.network.datasync.DataParameter;
 import net.minecraft.network.datasync.DataSerializers;
 import net.minecraft.network.datasync.EntityDataManager;
+import net.minecraft.particles.ParticleTypes;
+import net.minecraft.util.DamageSource;
+import net.minecraft.util.ResourceLocation;
+import net.minecraft.util.SoundEvent;
 import net.minecraft.world.BossInfo;
 import net.minecraft.world.DifficultyInstance;
 import net.minecraft.world.IWorld;
@@ -67,6 +75,7 @@ public class ZomBossEntity extends PVZZombieEntity {
 		this.canBeInvis = false;
 		this.canBeStealByBungee = false;
 		this.hasDirectDefence = true;
+		this.maxDeathTime = 60;
 		this.resetShootBallCD();
 		this.resetStealCD();
 	}
@@ -225,15 +234,15 @@ public class ZomBossEntity extends PVZZombieEntity {
 	 * Skill 5 : Kick all enemies nearby zomboss
 	 */
 	public void kickEnemiesNearby() {
-		if(this.ticksExisted % 30 == 0) {
+		if(this.ticksExisted % 20 == 0) {
 			float range = 5;
 			world.getEntitiesWithinAABB(LivingEntity.class, EntityUtil.getEntityAABB(this, range, 15), (target) -> {
 				return EntityUtil.checkCanEntityAttack(target, this);
 			}).forEach((target) -> {
 				if(target instanceof PVZPlantEntity) target.setHealth(0);
 				else {
-					target.attackEntityFrom(PVZDamageSource.causeNormalDamage(this, this), 5F);
-					target.setMotion(target.getPositionVec().subtract(this.getPositionVec()).normalize().scale(1.5F));
+					target.attackEntityFrom(PVZDamageSource.causeNormalDamage(this, this), 12F);
+					target.setMotion(target.getPositionVec().add(0, target.getEyeHeight(), 0).subtract(this.getPositionVec()).normalize().scale(2F));
 				}
 			});
 		}
@@ -258,6 +267,39 @@ public class ZomBossEntity extends PVZZombieEntity {
 			zombie.setStealTarget(target);
 			zombie.setBungeeState(BungeeStates.DOWN);
 			EntityUtil.onMobEntitySpawn(world, zombie, getPosition().up(18));
+		}
+	}
+	
+	@Override
+	protected void onDeathUpdate() {
+		super.onDeathUpdate();
+		if(this.deathTime % 20 == 1) {
+			if(world.isRemote) {
+				world.addParticle(ParticleTypes.EXPLOSION_EMITTER, getPosX(), getPosY(), getPosZ(), 0, 0, 0);
+				world.addParticle(ParticleTypes.EXPLOSION_EMITTER, getPosX(), getPosY() + 5, getPosZ(), 0, 0, 0);
+			}
+		}
+	}
+	
+	@Override
+	public void onDeath(DamageSource cause) {
+		super.onDeath(cause);
+		if(! world.isRemote) {
+			this.bossInfo.getPlayers().forEach((player) -> {
+				CriteriaTriggers.PLAYER_KILLED_ENTITY.trigger(player, this, cause);
+			});
+		}
+	}
+	
+	@Override
+	protected void dropCoinOrSpecial() {
+		float range = 50;
+		int playerCnt = world.getEntitiesWithinAABB(PlayerEntity.class , EntityUtil.getEntityAABB(this, range, range), (player) -> {
+			return PlayerUtil.isPlayerSurvival(player);
+		}).size();
+		for(int i = 0; i < 3 + 2 * playerCnt; ++ i) {
+			JewelEntity jewel = EntityRegister.JEWEL.get().create(world);
+			EntityUtil.onMobEntityRandomPosSpawn(world, jewel, getPosition().up(5), 4);
 		}
 	}
 	
@@ -356,6 +398,11 @@ public class ZomBossEntity extends PVZZombieEntity {
 	}
 	
 	@Override
+	protected SoundEvent getDeathSound() {
+		return SoundRegister.ZOMBOSS_DEATH.get();
+	}
+	
+	@Override
 	public void addTrackingPlayer(ServerPlayerEntity player) {
 		super.addTrackingPlayer(player);
 		this.bossInfo.addPlayer(player);
@@ -412,6 +459,11 @@ public class ZomBossEntity extends PVZZombieEntity {
 	
 	public ZomBossStates getZomBossState() {
 		return ZomBossStates.values()[this.dataManager.get(STATES)];
+	}
+	
+	@Override
+	protected ResourceLocation getLootTable() {
+		return PVZLoot.ZOMBOSS;
 	}
 	
 	public static enum ZomBossStates {
