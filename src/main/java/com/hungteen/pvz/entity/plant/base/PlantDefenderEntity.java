@@ -2,6 +2,7 @@ package com.hungteen.pvz.entity.plant.base;
 
 import com.hungteen.pvz.entity.ai.target.PVZNearestTargetGoal;
 import com.hungteen.pvz.entity.plant.PVZPlantEntity;
+import com.hungteen.pvz.item.tool.card.ImitaterCardItem;
 import com.hungteen.pvz.item.tool.card.PlantCardItem;
 import com.hungteen.pvz.utils.EntityUtil;
 import com.hungteen.pvz.utils.interfaces.IDefender;
@@ -97,7 +98,16 @@ public abstract class PlantDefenderEntity extends PVZPlantEntity implements IDef
 			if(cardItem.plantType == this.getPlantEnumName()) { // nut heal 
 				if(! world.isRemote) {
 					PlantCardItem.checkSunAndHealPlant(player, this, cardItem, stack);
-				}else {
+				} else {
+					for(int i = 0; i < 4; ++ i) {
+						this.world.addParticle(ParticleTypes.HEART, this.getPosX(), this.getPosY() + this.getHeight(), this.getPosZ(), (this.getRNG().nextFloat()-0.5f)/8, 0.05f, (this.getRNG().nextFloat()-0.5f)/8);
+					}
+				}
+				return true;
+			} else if(cardItem instanceof ImitaterCardItem && ((ImitaterCardItem) cardItem).isPlantTypeEqual(stack, this.getPlantEnumName())) {
+				if(! world.isRemote) {
+					PlantCardItem.checkSunAndHealPlant(player, this, cardItem, stack);
+				} else {
 					for(int i = 0; i < 4; ++ i) {
 						this.world.addParticle(ParticleTypes.HEART, this.getPosX(), this.getPosY() + this.getHeight(), this.getPosZ(), (this.getRNG().nextFloat()-0.5f)/8, 0.05f, (this.getRNG().nextFloat()-0.5f)/8);
 					}

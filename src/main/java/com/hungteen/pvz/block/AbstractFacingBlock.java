@@ -21,7 +21,12 @@ public abstract class AbstractFacingBlock extends Block {
 	}
 	
 	public BlockState getStateForPlacement(PlayerEntity player) {
+		if(player == null) return this.getDefaultState();
 		return this.getDefaultState().with(FACING, player.getHorizontalFacing().getOpposite());
+	}
+	
+	public BlockState getStateForPlacement(Direction direction) {
+		return this.getDefaultState().with(FACING, direction);
 	}
 
 	@Override

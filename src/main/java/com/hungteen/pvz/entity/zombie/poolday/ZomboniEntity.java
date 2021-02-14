@@ -147,7 +147,7 @@ public class ZomboniEntity extends PVZZombieEntity implements IMultiPartEntity{
 	}
 	
 	@Override
-	protected SoundEvent getHurtSound(DamageSource damageSourceIn) {
+	public SoundEvent getHurtSound(DamageSource damageSourceIn) {
 		return SoundRegister.METAL_HIT.get();
 	}
 	

@@ -16,7 +16,7 @@ public abstract class PultBulletEntity extends AbstractBulletEntity {
 
 	protected int targetChance = 5;
 	protected LivingEntity target = null;
-	protected float height = 10;
+	protected float height = 12;
 	protected boolean isPushBack = false;
 	
 	public PultBulletEntity(EntityType<?> type, World worldIn) {

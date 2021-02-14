@@ -55,7 +55,7 @@ public enum Plants {
 	GOLD_MAGNET(8), 
 	SPIKE_ROCK(8),
 //	COB_CANNON,
-//	IMITATER,
+	IMITATER(0),
 	// other
 	WATER_GUARD(4),
 	STRANGE_CAT(0),

@@ -8,6 +8,7 @@ import com.hungteen.pvz.entity.drop.JewelEntity;
 import com.hungteen.pvz.entity.zombie.PVZZombieEntity;
 import com.hungteen.pvz.entity.zombie.base.UnderGroundZombieEntity;
 import com.hungteen.pvz.entity.zombie.other.NobleZombieEntity;
+import com.hungteen.pvz.item.tool.card.ImitaterCardItem;
 import com.hungteen.pvz.item.tool.card.PlantCardItem;
 import com.hungteen.pvz.register.EntityRegister;
 import com.hungteen.pvz.register.ItemRegister;
@@ -115,6 +116,10 @@ public class TombStoneEntity extends UnderGroundZombieEntity {
 				if(cardItem.plantType == Plants.GRAVE_BUSTER) {
 					PlantCardItem.checkSunAndSummonPlant(player, stack, cardItem, getPosition(), (plantEntity) -> {
 						plantEntity.setAttackTarget(this);
+					});
+				} else if(cardItem instanceof ImitaterCardItem && ((ImitaterCardItem) cardItem).isPlantTypeEqual(stack, Plants.GRAVE_BUSTER)) {
+					ImitaterCardItem.checkSunAndSummonImitater(player, stack, cardItem, getPosition(), (imitater) -> {
+						imitater.setAttackTarget(this);
 					});
 				}
 			}

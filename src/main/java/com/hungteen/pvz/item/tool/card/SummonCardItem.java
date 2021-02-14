@@ -21,10 +21,14 @@ public abstract class SummonCardItem extends Item{
 	public final boolean isEnjoyCard;
 	
 	public SummonCardItem(boolean isEnjoyCard) {
-		super(new Properties().group(GroupRegister.PVZ_CARD).maxStackSize(isEnjoyCard?16:1));
+		this(new Properties().group(GroupRegister.PVZ_CARD).maxStackSize(isEnjoyCard ? 16 : 1), isEnjoyCard);
+	}
+	
+	public SummonCardItem(Properties properties, boolean isEnjoyCard) {
+		super(properties);
 		this.isEnjoyCard = isEnjoyCard;
 	}
-
+	 
 	@Override
 	public boolean canApplyAtEnchantingTable(ItemStack stack, Enchantment enchantment) {
 		if(this.isEnjoyCard) return false;//enjoy card have no enchant
@@ -35,6 +39,9 @@ public abstract class SummonCardItem extends Item{
 	 * get final sun cost.
 	 */
 	public static int getItemStackSunCost(ItemStack stack) {
+		if(stack.getItem() instanceof ImitaterCardItem) {
+			return ((ImitaterCardItem) stack.getItem()).getImitateSunCost(stack);
+		}
 		if(stack.getItem() instanceof PlantCardItem) {
 			Plants plantType = ((PlantCardItem) stack.getItem()).plantType;
 			int cost = PlantUtil.getPlantSunCost(plantType);

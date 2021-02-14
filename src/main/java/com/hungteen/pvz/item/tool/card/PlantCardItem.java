@@ -7,6 +7,7 @@ import com.hungteen.pvz.capability.CapabilityHandler;
 import com.hungteen.pvz.capability.player.PlayerDataManager;
 import com.hungteen.pvz.enchantment.EnchantmentUtil;
 import com.hungteen.pvz.entity.plant.PVZPlantEntity;
+import com.hungteen.pvz.entity.plant.base.PlantDefenderEntity;
 import com.hungteen.pvz.event.events.SummonCardUseEvent;
 import com.hungteen.pvz.register.BlockRegister;
 import com.hungteen.pvz.register.EffectRegister;
@@ -41,12 +42,29 @@ import net.minecraft.util.math.RayTraceResult;
 import net.minecraft.world.World;
 import net.minecraftforge.common.MinecraftForge;
 
+/**
+ * Normal plant type : place on top face of block.
+ * Outer plant type : place on plant entity. 
+ * Pumpkin heal type : heal pumpkin outer plant. 
+ * Defender plant heal type : Heal Defender Plant. 
+ * Upgrade plant type : base plant upgrade. 
+ * CatTail upgrade type : cattail upgrade on lilypad. 
+ * CoffeeBean place type : coffee bean ride on plant entity. 
+ * GraveBuster place type : gravebuster ride on tombstone. 
+ * Place block in water type : lilypad place in water. 
+ * Place block on ground type : flower pot place on ground. 
+ */
 public class PlantCardItem extends SummonCardItem {
 
 	public final Plants plantType;
 
 	public PlantCardItem(Plants plant, boolean isFragment) {
 		super(isFragment);
+		this.plantType = plant;
+	}
+	
+	public PlantCardItem(Properties properties, Plants plant, boolean isFragment) {
+		super(properties, isFragment);
 		this.plantType = plant;
 	}
 
@@ -137,20 +155,24 @@ public class PlantCardItem extends SummonCardItem {
 				plantEntity.onSpawnedByPlayer(player, lvl);//update level health and owner.
 				plantEntity.plantSunCost = sunCost;// use for sun shovel
 				PlantCardItem.onUsePlantCard(player, stack, cardItem, lvl);//handle CD.
-				if (canPlantBreakOut(stack)) {// break out enchantment
-					if (plantEntity.canStartSuperMode()) {
-						plantEntity.startSuperMode(false);
-					}
-				}
-				if(EnchantmentHelper.getEnchantmentLevel(EnchantmentRegister.CHARM.get(), stack) > 0) {
-					plantEntity.onPlantBeCharmed();
-				}
-				if(EnchantmentHelper.getEnchantmentLevel(EnchantmentRegister.SOILLESS_PLANT.get(), stack) > 0) {
-					plantEntity.setImmunneToWeak(true);
-				}
+				summonPlantEntityByCard(plantEntity, stack);
 				consumer.accept(plantEntity);
 			}
 		});
+	}
+	
+	public static void summonPlantEntityByCard(PVZPlantEntity plantEntity, ItemStack stack) {
+		if (canPlantBreakOut(stack)) {// break out enchantment
+			if (plantEntity.canStartSuperMode()) {
+				plantEntity.startSuperMode(false);
+			}
+		}
+		if(EnchantmentHelper.getEnchantmentLevel(EnchantmentRegister.CHARM.get(), stack) > 0) {
+			plantEntity.onPlantBeCharmed();
+		}
+		if(EnchantmentHelper.getEnchantmentLevel(EnchantmentRegister.SOILLESS_PLANT.get(), stack) > 0) {
+			plantEntity.setImmunneToWeak(true);
+		}
 	}
 
 	/**
@@ -192,17 +214,21 @@ public class PlantCardItem extends SummonCardItem {
 				l.getPlayerData().getPlayerStats().addPlayerStats(Resources.SUN_NUM, - sunCost);
 				onUsePlantCard(player, stack, cardItem, manager.getPlantStats().getPlantLevel(plantType));
 				plantEntity.outerSunCost = sunCost;
-				if(plantType == Plants.PUMPKIN) {
-					float life = PlantUtil.PUMPKIN_LIFE;
-				    if (canPlantBreakOut(stack)) {// break out enchantment
-					    life += PlantUtil.PUMPKIN_SUPER_LIFE;
-				    }
-				    plantEntity.setPumpkinLife(life);
-				    plantEntity.setOuterPlantType(Plants.PUMPKIN);
-				}
-				EntityUtil.playSound(player, SoundRegister.PLANT_ON_GROUND.get());
+				placeOuterPlant(plantEntity, plantType, stack);
 			}
 		});
+	}
+	
+	public static void placeOuterPlant(PVZPlantEntity plantEntity, Plants plantType, ItemStack stack) {
+		if(plantType == Plants.PUMPKIN) {
+			float life = PlantUtil.PUMPKIN_LIFE;
+		    if (canPlantBreakOut(stack)) {// break out enchantment
+			    life += PlantUtil.PUMPKIN_SUPER_LIFE;
+		    }
+		    plantEntity.setPumpkinLife(life);
+		}
+		plantEntity.setOuterPlantType(plantType);
+		EntityUtil.playSound(plantEntity, SoundRegister.PLANT_ON_GROUND.get());
 	}
 	
 	/**
@@ -219,7 +245,21 @@ public class PlantCardItem extends SummonCardItem {
 			if (num >= sunCost) { // sun is enough
 				l.getPlayerData().getPlayerStats().addPlayerStats(Resources.SUN_NUM, - sunCost);
 				onUsePlantCard(player, stack, cardItem, manager.getPlantStats().getPlantLevel(plantType));
-				plantEntity.heal(plantEntity.getMaxHealth());
+				if(cardItem.plantType == Plants.PUMPKIN) {
+					float life = PlantUtil.PUMPKIN_LIFE;
+				    if (canPlantBreakOut(stack)) {// break out enchantment
+					    life += PlantUtil.PUMPKIN_SUPER_LIFE;
+				    }
+				    plantEntity.setPumpkinLife(life);
+				} else {
+					plantEntity.heal(plantEntity.getMaxHealth());
+					if(plantEntity instanceof PlantDefenderEntity) {
+						if (canPlantBreakOut(stack)) {// break out enchantment
+							((PlantDefenderEntity) plantEntity).setDefenceLife(((PlantDefenderEntity) plantEntity).getSuperLife());
+					    }
+					}
+				}
+				EntityUtil.playSound(plantEntity, SoundRegister.PLANT_ON_GROUND.get());
 			}
 		});
 	}
@@ -251,13 +291,17 @@ public class PlantCardItem extends SummonCardItem {
 	 * get cooldown for current plant
 	 */
 	public static int getPlantCardCD(PlayerEntity player, ItemStack stack, PlantCardItem item, int plantLvl) {
-		int cd = PlantUtil.getPlantCoolDownTime(item.plantType, plantLvl);
+		int cd = item.getPlantCardCD(player, stack, item.plantType, plantLvl);
 		if (player.isPotionActive(EffectRegister.EXCITE_EFFECT.get())) {
 			int lvl = player.getActivePotionEffect(EffectRegister.EXCITE_EFFECT.get()).getAmplifier();
 			float mult = Math.max(0, 0.9f - 0.1f * lvl);
 			cd = (int) Math.floor(cd * mult);
 		}
 		return cd;
+	}
+	
+	public int getPlantCardCD(PlayerEntity player, ItemStack stack, Plants plant, int lvl) {
+		return PlantUtil.getPlantCoolDownTime(plant, lvl);
 	}
 
 	public static boolean canPlantBreakOut(ItemStack stack) {

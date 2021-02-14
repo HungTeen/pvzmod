@@ -180,6 +180,10 @@ public abstract class AbstractBulletEntity extends AbstractOwnerEntity implement
 		this.setMotion(- vx, - vy, - vz);
 	}
 	
+	public void shootToTarget(LivingEntity target, double speed) {
+		this.setMotion(target.getPositionVec().add(0, target.getEyeHeight(), 0).subtract(this.getPositionVec()).normalize().scale(speed));
+	}
+	
 	/**
 	 * get how much angle can shoot by thrower
 	 */

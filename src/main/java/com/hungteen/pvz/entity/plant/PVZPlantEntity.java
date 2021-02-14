@@ -17,6 +17,7 @@ import com.hungteen.pvz.entity.zombie.poolnight.BalloonZombieEntity;
 import com.hungteen.pvz.entity.zombie.poolnight.DiggerZombieEntity;
 import com.hungteen.pvz.entity.zombie.roof.BungeeZombieEntity;
 import com.hungteen.pvz.entity.zombie.roof.BungeeZombieEntity.BungeeStates;
+import com.hungteen.pvz.item.tool.card.ImitaterCardItem;
 import com.hungteen.pvz.item.tool.card.PlantCardItem;
 import com.hungteen.pvz.misc.damage.PVZDamageSource;
 import com.hungteen.pvz.misc.damage.PVZDamageType;
@@ -256,15 +257,12 @@ public abstract class PVZPlantEntity extends CreatureEntity implements IPVZPlant
 	 * check if the plant can stand on the current position
 	 */
 	protected boolean checkNormalPlantWeak(){
-		if(this.isImmuneToWeak || this.getRidingEntity() != null) {
-			return false;
-		}
+		if(this.isImmuneToWeak || this.getRidingEntity() != null) return false;
 		if(this.getPlantEnumName().isWaterPlant) {
-			return ! this.isInWater() && world.getBlockState(getPosition()).getBlock() != Blocks.WATER;
+			return this.onGround && ! this.isInWater() && world.getBlockState(getPosition()).getBlock() != Blocks.WATER;
 		} else {
-			if(! this.onGround) {
-				return false;
-			}
+			if(! this.onGround) return false;
+			if(this.isInWater()) return true;
 			double y1 = this.getPosY();
 			double y2 = MathHelper.floor(y1);
 			BlockPos pos = (Math.abs(y1 - y2) <= 0.01D ? this.getPosition().down() : this.getPosition());
@@ -670,23 +668,50 @@ public abstract class PVZPlantEntity extends CreatureEntity implements IPVZPlant
 	protected boolean processInteract(PlayerEntity player, Hand hand) {
 		if(! world.isRemote) {
 			ItemStack stack = player.getHeldItem(hand);
-			if(stack.getItem() instanceof PlantCardItem) {
+			if(stack.getItem() instanceof PlantCardItem) {// plant card right click plant entity
 				PlantCardItem item = (PlantCardItem) stack.getItem();
-				if(item.plantType == Plants.PUMPKIN) {
+				if(item.plantType == Plants.PUMPKIN) { // use pumpkin card on plant entity
 					if(this.outerPlant.isPresent() && this.outerPlant.get() == Plants.PUMPKIN) {
-						if(this.getPumpkinLife() < PlantUtil.PUMPKIN_LIFE) {
+						if(this.getPumpkinLife() < PlantUtil.PUMPKIN_LIFE) { // heal pumpkin
 							PlantCardItem.checkSunAndHealPlant(player, this, item, stack);
 						}
-					} else {
+					} else { // place pumpkin on plant entity
 						PlantCardItem.checkSunAndOuterPlant(player, this, item, stack);
 					}
-				} else if(item.plantType == Plants.COFFEE_BEAN) {
+				} else if(item instanceof ImitaterCardItem && ((ImitaterCardItem) item).isPlantTypeEqual(stack, Plants.PUMPKIN)){
+					if(this.outerPlant.isPresent() && this.outerPlant.get() == Plants.PUMPKIN) {
+						if(this.getPumpkinLife() < PlantUtil.PUMPKIN_LIFE) { // heal pumpkin
+							PlantCardItem.checkSunAndHealPlant(player, this, item, stack);
+						}
+					} else { // place pumpkin on plant entity
+						PlantCardItem.checkSunAndOuterPlant(player, this, item, stack);
+					}
+				} else if(item.plantType == Plants.COFFEE_BEAN) { // place coffee bean on plant entity
 					PlantCardItem.checkSunAndSummonPlant(player, stack, item, getPosition(), (plantEntity) -> {
 						plantEntity.startRiding(this);
 					});
-				} else if(this.getUpgradePlantType() == item.plantType) {
+				} else if(item instanceof ImitaterCardItem && ((ImitaterCardItem) item).isPlantTypeEqual(stack, Plants.COFFEE_BEAN)) { 
+					ImitaterCardItem.checkSunAndSummonImitater(player, stack, item, getPosition(), (imitater) -> {
+						imitater.startRiding(this);
+					});
+				} else if(this.getUpgradePlantType() == item.plantType) { // place upgrade plant entity on base plant entity
 					PlantCardItem.checkSunAndSummonPlant(player, stack, item, getPosition(), (plantEntity) -> {
+						//keep old plant's outer plant, such as pumpkin.
+						plantEntity.setPumpkinLife(this.getPumpkinLife());
+						this.getOuterPlantType().ifPresent((plantType) -> {
+							plantEntity.setOuterPlantType(plantType);
+						});
+						plantEntity.outerSunCost = this.outerSunCost;
+						//add sun cost to new plant.
+						plantEntity.plantSunCost += this.plantSunCost;
+						//keep sleep of plant
+						plantEntity.setSleepTime(this.getSleepTime());
+						//remove old plant itself
 						this.remove();
+					});
+				} else if(item instanceof ImitaterCardItem && ((ImitaterCardItem) item).isPlantTypeEqual(stack, getUpgradePlantType())) {
+					ImitaterCardItem.checkSunAndSummonImitater(player, stack, item, getPosition(), (imitater) -> {
+						imitater.targetPlantEntity = Optional.of(this);
 					});
 				}
 			}

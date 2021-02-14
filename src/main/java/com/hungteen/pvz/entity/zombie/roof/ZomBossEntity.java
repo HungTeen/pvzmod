@@ -58,6 +58,7 @@ public class ZomBossEntity extends PVZZombieEntity {
 	
 	public ZomBossEntity(EntityType<? extends MonsterEntity> type, World worldIn) {
 		super(type, worldIn);
+		this.canCollideWithZombie = false;
 		this.canBeMini = false;
 		this.canBeButter = false;
 		this.canBeCharm = false;
@@ -216,9 +217,8 @@ public class ZomBossEntity extends PVZZombieEntity {
 	 */
 	public void checkAndHeal() {
 		if(this.getAttackTarget() == null) {
-			this.heal(5);
+			this.heal(10);
 		}
-		
 	}
 	
 	/**
@@ -227,7 +227,7 @@ public class ZomBossEntity extends PVZZombieEntity {
 	public void kickEnemiesNearby() {
 		if(this.ticksExisted % 30 == 0) {
 			float range = 5;
-			world.getEntitiesWithinAABB(LivingEntity.class, EntityUtil.getEntityAABB(this, range, range), (target) -> {
+			world.getEntitiesWithinAABB(LivingEntity.class, EntityUtil.getEntityAABB(this, range, 15), (target) -> {
 				return EntityUtil.checkCanEntityAttack(target, this);
 			}).forEach((target) -> {
 				if(target instanceof PVZPlantEntity) target.setHealth(0);

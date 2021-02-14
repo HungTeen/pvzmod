@@ -3,6 +3,8 @@ package com.hungteen.pvz.register;
 import java.util.Map;
 
 import com.hungteen.pvz.model.baked.BowlingGloveBakedModel;
+import com.hungteen.pvz.model.baked.ImitaterCardBakedModel;
+import com.hungteen.pvz.model.baked.PVZBakedModel;
 import com.hungteen.pvz.particle.BlueFlameParticle;
 import com.hungteen.pvz.particle.DirtBurstOutParticle;
 import com.hungteen.pvz.particle.DoomParticle;
@@ -16,6 +18,7 @@ import com.hungteen.pvz.particle.SporeParticle;
 import com.hungteen.pvz.particle.YellowFlameParticle;
 import com.hungteen.pvz.particle.bomb.CherryBombParticle;
 import com.hungteen.pvz.particle.bomb.PotatoMineParticle;
+import com.mojang.datafixers.util.Pair;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.particle.ParticleManager;
@@ -23,6 +26,7 @@ import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.RenderTypeLookup;
 import net.minecraft.client.renderer.model.IBakedModel;
 import net.minecraft.client.renderer.model.ModelResourceLocation;
+import net.minecraft.item.Item;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.client.event.ModelBakeEvent;
@@ -37,15 +41,15 @@ public class ClientRegister {
 	@SubscribeEvent
 	public static void onModelBaked(ModelBakeEvent ev) {
 		Map<ResourceLocation, IBakedModel> modelRegistry = ev.getModelRegistry();
-		ModelResourceLocation location = new ModelResourceLocation(ItemRegister.BOWLING_GLOVE.get().getRegistryName(), "inventory");
-		IBakedModel model = modelRegistry.get(location);
-		if(model == null) {
-			throw new RuntimeException("Did not find Obsidian Hidden in registry");
-		} else if(model instanceof BowlingGloveBakedModel) {
-			throw new RuntimeException("Tried to replaceObsidian Hidden twice");
-		} else {
-			BowlingGloveBakedModel tmp = new BowlingGloveBakedModel(model);
-			modelRegistry.put(location, tmp);
+		{
+			Pair<IBakedModel, ModelResourceLocation> now = getBakedModel(ev, ItemRegister.BOWLING_GLOVE.get());
+			BowlingGloveBakedModel tmp = new BowlingGloveBakedModel(now.getFirst());
+			modelRegistry.put(now.getSecond(), tmp);
+		}
+		{
+			Pair<IBakedModel, ModelResourceLocation> now = getBakedModel(ev, ItemRegister.IMITATER_CARD.get());
+			ImitaterCardBakedModel tmp = new ImitaterCardBakedModel(now.getFirst());
+			modelRegistry.put(now.getSecond(), tmp);
 		}
 	}
 	
@@ -84,6 +88,15 @@ public class ClientRegister {
 		RenderTypeLookup.setRenderLayer(BlockRegister.ESSENCE_ALTAR.get(), RenderType.getTranslucent());
 		RenderTypeLookup.setRenderLayer(BlockRegister.STEEL_LADDER.get(), RenderType.getCutout());
 		TileEntityRegister.bindRenderers(ev);
+	}
+	
+	private static Pair<IBakedModel, ModelResourceLocation> getBakedModel(ModelBakeEvent ev, Item item) {
+		Map<ResourceLocation, IBakedModel> modelRegistry = ev.getModelRegistry();
+		ModelResourceLocation location = new ModelResourceLocation(item.getRegistryName(), "inventory");
+		IBakedModel model = modelRegistry.get(location);
+		if(model == null) throw new RuntimeException("Did not find Obsidian Hidden in registry");
+        else if(model instanceof PVZBakedModel) throw new RuntimeException("Tried to replaceObsidian Hidden twice");
+		return Pair.of(model, location);
 	}
 	
 }

@@ -4,6 +4,7 @@ import com.hungteen.pvz.capability.CapabilityHandler;
 import com.hungteen.pvz.entity.plant.base.PlantShooterEntity;
 import com.hungteen.pvz.entity.plant.flame.TorchWoodEntity;
 import com.hungteen.pvz.entity.plant.interfaces.IIcePlant;
+import com.hungteen.pvz.entity.zombie.plantzombie.PeaShooterZombieEntity;
 import com.hungteen.pvz.misc.damage.PVZDamageSource;
 import com.hungteen.pvz.register.EntityRegister;
 import com.hungteen.pvz.register.ItemRegister;
@@ -139,6 +140,7 @@ public class PeaEntity extends PVZItemBulletEntity {
 		if(this.getThrower() instanceof TorchWoodEntity) return 2;
 		if (this.getThrower() instanceof PlantShooterEntity) return ((PlantShooterEntity) this.getThrower()).getAttackDamage();
 		if(this.getThrower() instanceof PlayerEntity) return 2;
+		if(this.getThrower() instanceof PeaShooterZombieEntity) return ((PeaShooterZombieEntity) this.getThrower()).getAttackDamage();
 		return 0;
 	}
 	

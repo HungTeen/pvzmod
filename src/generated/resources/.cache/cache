@@ -69,6 +69,7 @@ bdc8b246b2530ada62e309370a0effbf66e2900c assets\pvz\models\item\fume_shroom_card
 840b1ac4ac2b601e600f28d77263adf816909dec assets\pvz\models\item\garlic_card.json
 b11e55e8b73ad5e5f88a5942e39e3740dc981346 assets\pvz\models\item\garlic_enjoy_card.json
 640fb723df4adaf9b0e055a7e45afa7756e5acb4 assets\pvz\models\item\garlic_spawn_egg.json
+640fb723df4adaf9b0e055a7e45afa7756e5acb4 assets\pvz\models\item\gatlingpea_zombie_spawn_egg.json
 65a4e73d963b3672c1e25cc4aadf892c0050baeb assets\pvz\models\item\gatling_pea_card.json
 974bc13bf17d25f5415997307cea55dfd084a684 assets\pvz\models\item\gatling_pea_enjoy_card.json
 640fb723df4adaf9b0e055a7e45afa7756e5acb4 assets\pvz\models\item\gatling_pea_spawn_egg.json
@@ -101,11 +102,15 @@ fd77bea65df6cf8f6e6f42c330163ae4906f37d4 assets\pvz\models\item\iceberg_lettuce_
 fa8da7f074ac0feb03aba0d494e0545e222fd4ee assets\pvz\models\item\ice_shroom_card.json
 1262f813f27a5229f638b10d24d9726fef4d40fc assets\pvz\models\item\ice_shroom_enjoy_card.json
 640fb723df4adaf9b0e055a7e45afa7756e5acb4 assets\pvz\models\item\ice_shroom_spawn_egg.json
+5dee3624e5bf0fee6ade82aa4daa6faa25f5fe48 assets\pvz\models\item\imitater_card.json
+057bf176a9f513ddccd6df93c056b31873846a02 assets\pvz\models\item\imitater_enjoy_card.json
+640fb723df4adaf9b0e055a7e45afa7756e5acb4 assets\pvz\models\item\imitater_spawn_egg.json
 640fb723df4adaf9b0e055a7e45afa7756e5acb4 assets\pvz\models\item\imp_spawn_egg.json
 640fb723df4adaf9b0e055a7e45afa7756e5acb4 assets\pvz\models\item\jack_in_box_zombie_spawn_egg.json
 0749c53371ae359420119825ec9f278d8dc387a5 assets\pvz\models\item\jalapeno_card.json
 149b6f89683ea10b614e3fc2b156cb945ff23511 assets\pvz\models\item\jalapeno_enjoy_card.json
 640fb723df4adaf9b0e055a7e45afa7756e5acb4 assets\pvz\models\item\jalapeno_spawn_egg.json
+640fb723df4adaf9b0e055a7e45afa7756e5acb4 assets\pvz\models\item\jalapeno_zombie_spawn_egg.json
 640fb723df4adaf9b0e055a7e45afa7756e5acb4 assets\pvz\models\item\jewel_spawn_egg.json
 4931a8931f7c7d8c221db69cc2f7f96008997262 assets\pvz\models\item\kernel_pult_card.json
 64a574fc483149817c811938f937b2a4d6776507 assets\pvz\models\item\kernel_pult_enjoy_card.json
@@ -129,6 +134,7 @@ e84bdf3448615fe8836f3a35ecf96aa8d154c89b assets\pvz\models\item\marigold_enjoy_c
 640fb723df4adaf9b0e055a7e45afa7756e5acb4 assets\pvz\models\item\normal_zombie_spawn_egg.json
 640fb723df4adaf9b0e055a7e45afa7756e5acb4 assets\pvz\models\item\old_zombie_spawn_egg.json
 640fb723df4adaf9b0e055a7e45afa7756e5acb4 assets\pvz\models\item\panney_spawn_egg.json
+640fb723df4adaf9b0e055a7e45afa7756e5acb4 assets\pvz\models\item\peashooter_zombie_spawn_egg.json
 983ea10066e2fc52bce31ad94c1fef2105ebd5ca assets\pvz\models\item\pea_shooter_card.json
 8fb8564b88e4a83409941db4342632f4368b15f6 assets\pvz\models\item\pea_shooter_enjoy_card.json
 640fb723df4adaf9b0e055a7e45afa7756e5acb4 assets\pvz\models\item\pea_shooter_spawn_egg.json
@@ -174,6 +180,7 @@ a0654fcfbbba07f8d5898c9ecf43c9cc739f9e61 assets\pvz\models\item\snow_pea_enjoy_c
 e009faaeb0cceb327bd2262624be86846d319267 assets\pvz\models\item\squash_card.json
 1bb82728312fc93539878da69efc368faeebad27 assets\pvz\models\item\squash_enjoy_card.json
 640fb723df4adaf9b0e055a7e45afa7756e5acb4 assets\pvz\models\item\squash_spawn_egg.json
+640fb723df4adaf9b0e055a7e45afa7756e5acb4 assets\pvz\models\item\squash_zombie_spawn_egg.json
 d900f7ea03e5fc9b26c7076c7bfcedad3ed0d0fd assets\pvz\models\item\star_fruit_card.json
 1e64611b88794ee99d891bfe07a26e8bab3ea266 assets\pvz\models\item\star_fruit_enjoy_card.json
 640fb723df4adaf9b0e055a7e45afa7756e5acb4 assets\pvz\models\item\star_fruit_spawn_egg.json
@@ -189,6 +196,7 @@ a4275e592d4eda9e3d735fea6df71f4480bb2fec assets\pvz\models\item\sun_shroom_card.
 1238b59a27ee883d868f3c7a5e8b121b813df6e3 assets\pvz\models\item\sun_shroom_enjoy_card.json
 640fb723df4adaf9b0e055a7e45afa7756e5acb4 assets\pvz\models\item\sun_shroom_spawn_egg.json
 640fb723df4adaf9b0e055a7e45afa7756e5acb4 assets\pvz\models\item\sun_spawn_egg.json
+640fb723df4adaf9b0e055a7e45afa7756e5acb4 assets\pvz\models\item\tallnut_zombie_spawn_egg.json
 879230039fa1135e4d8734cf638427958a8e9861 assets\pvz\models\item\tall_nut_card.json
 c4c5e4fba5233203561d39db50666b046c8e0fa9 assets\pvz\models\item\tall_nut_enjoy_card.json
 640fb723df4adaf9b0e055a7e45afa7756e5acb4 assets\pvz\models\item\tall_nut_spawn_egg.json
@@ -209,6 +217,7 @@ f7d9106e6b65b308f59fbef0a3c93e5412637499 assets\pvz\models\item\twin_sunflower_e
 47c42055593ff959a3286996120ba0e63e6a30e0 assets\pvz\models\item\umbrella_leaf_card.json
 7a205248428b5a7615c160fc53c3c0189d7edaee assets\pvz\models\item\umbrella_leaf_enjoy_card.json
 640fb723df4adaf9b0e055a7e45afa7756e5acb4 assets\pvz\models\item\umbrella_leaf_spawn_egg.json
+640fb723df4adaf9b0e055a7e45afa7756e5acb4 assets\pvz\models\item\wallnut_zombie_spawn_egg.json
 a9a92cd6325618d2dcf729a3a355509d1aa349d5 assets\pvz\models\item\wall_nut_card.json
 577110bfcaaf412c61657e186a4c62f98af520f4 assets\pvz\models\item\wall_nut_enjoy_card.json
 640fb723df4adaf9b0e055a7e45afa7756e5acb4 assets\pvz\models\item\wall_nut_spawn_egg.json
@@ -300,7 +309,7 @@ d5eadfd3aee4f0b370846e896c8e0fc06d21c4c2 data\pvz\recipes\smelting\amethyst_ingo
 c480118fb9bd972d6e68516abde47f519559f2fe data\pvz\recipes\smelting\cooked_brain_from_smoking.json
 81350523dbc1d543edb337104a1d6c26f3d253d6 data\pvz\recipes\smelting\steel_ingot_from_blasting.json
 da22f030f7ed1efdf58dd4981b918e1413a36d26 data\pvz\recipes\smelting\steel_ingot_from_smelting.json
-737cc91c2f4a479a8299a3073002396c5d81a1d0 data\pvz\tags\items\cards\plant_card.json
-d169d500883409cc50a50096cb3fa902673ac685 data\pvz\tags\items\cards\plant_enjoy_card.json
-402bbf9082691156d36d1041669661e0ce0cf493 data\pvz\tags\items\cards\plant_summon_card.json
+85ec9de3c453121ce91563b4a9d642df8edaf4a4 data\pvz\tags\items\cards\plant_card.json
+8bd37f59bbbbfd02b9e5f2fe24446e908e78c9a5 data\pvz\tags\items\cards\plant_enjoy_card.json
+b5ce9f9060f41393b2cdb78ee9b34c979e3c16fb data\pvz\tags\items\cards\plant_summon_card.json
 293c3c6119087956dfb83d72d897f82c1c248628 data\pvz\tags\items\cards\template_card.json

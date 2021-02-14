@@ -11,7 +11,7 @@ import net.minecraft.inventory.container.Container;
 import net.minecraft.inventory.container.Slot;
 import net.minecraft.item.ItemStack;
 
-public class PeaGunContainer extends Container{
+public class PeaGunContainer extends Container {
 
 	private Inventory backpack;
 	private final PlayerEntity player;
@@ -27,28 +27,28 @@ public class PeaGunContainer extends Container{
 		}
 		backpack = PeaGunItem.getInventory(stack);
 		
-		this.addSlot(new Slot(backpack,0,80,21));//special slots
+		this.addSlot(new Slot(backpack, 0, 80, 21));//special slots
 		
-		for(int i=0;i<3;i++) {
-			for(int j=0;j<9;j++) {
-				this.addSlot(new Slot(backpack,j+i*9+1,8+18*j,45+18*i) {
+		for(int i = 0; i < 3; ++ i) {
+			for(int j = 0; j < 9; ++ j) {
+				this.addSlot(new Slot(backpack, j + i * 9 + 1, 8 + 18 * j, 45 + 18 * i) {
 					@Override
 					public boolean isItemValid(ItemStack stack) {
-						return stack.getItem()==ItemRegister.PEA.get()
-								||stack.getItem()==ItemRegister.SNOW_PEA.get()||stack.getItem()==ItemRegister.FLAME_PEA.get();
+						return stack.getItem() == ItemRegister.PEA.get()
+								|| stack.getItem() == ItemRegister.SNOW_PEA.get() || stack.getItem() == ItemRegister.FLAME_PEA.get();
 					}
 				});
 			}
 		}
 		
-		for(int i=0;i<3;i++) {
-			for(int j=0;j<9;j++) {
-				this.addSlot(new Slot(player.inventory,j+i*9+9,8+18*j,105+18*i));
+		for(int i = 0;i < 3; ++ i) {
+			for(int j = 0; j < 9; ++ j) {
+				this.addSlot(new Slot(player.inventory, j + i * 9 + 9, 8 + 18 * j, 105 + 18 * i));
 			}
 		}
 		
-		for(int i=0;i<9;i++) {
-			this.addSlot(new Slot(player.inventory,i,8+18*i,163));
+		for(int i = 0; i < 9; ++ i) {
+			this.addSlot(new Slot(player.inventory, i, 8 + 18 * i, 163));
 		}
 	}
 	

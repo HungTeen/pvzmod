@@ -59,7 +59,6 @@ public class BlockPlantCardItem extends PlantCardItem{
 					return ActionResult.resultSuccess(itemstack);
 				}
 			}
-
 			return ActionResult.resultFail(itemstack);
 		}
 	}
@@ -93,6 +92,17 @@ public class BlockPlantCardItem extends PlantCardItem{
 		switch(plant) {
 		case LILY_PAD: return BlockRegister.LILY_PAD.get().getStateForPlacement(player);
 		case FLOWER_POT: return BlockRegister.FLOWER_POT.get().getStateForPlacement(player);
+		default:{
+			PVZMod.LOGGER.debug("No such block plant!");
+			return null;
+		}
+		}
+	}
+	
+	public static BlockState getBlockState(Direction direction, Plants plant) {
+		switch(plant) {
+		case LILY_PAD: return BlockRegister.LILY_PAD.get().getStateForPlacement(direction);
+		case FLOWER_POT: return BlockRegister.FLOWER_POT.get().getStateForPlacement(direction);
 		default:{
 			PVZMod.LOGGER.debug("No such block plant!");
 			return null;

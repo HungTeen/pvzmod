@@ -27,7 +27,7 @@ public class ConeHeadZombieEntity extends NormalZombieEntity{
 	}
 	
 	@Override
-	protected SoundEvent getHurtSound(DamageSource damageSourceIn) {
+	public SoundEvent getHurtSound(DamageSource damageSourceIn) {
 		return this.getDefenceLife() > 0 ? SoundRegister.PLASTIC_HIT.get() : super.getHurtSound(damageSourceIn);
 	}
 	

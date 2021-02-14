@@ -52,15 +52,18 @@ public class ElementBallEntity extends AbstractOwnerEntity {
 		this.dataManager.register(ELEMENTS, ElementTypes.FLAME.ordinal());
 	}
 	
-	public void onKilledByPlants(PVZPlantEntity plant) {
-		plant.getOwnerUUID().ifPresent((uuid) -> {
-			PlayerEntity player = world.getPlayerByUuid(uuid);
-			if(player != null) {
-				PlantCardItem item = (this.getElementBallType() == ElementTypes.FLAME ? ItemRegister.ICE_SHROOM_CARD.get() : ItemRegister.JALAPENO_CARD.get());
-				float percent = player.getCooldownTracker().getCooldown(item, 0F);
-				player.getCooldownTracker().setCooldown(item, MathHelper.floor(200 * percent));
-			}
-		});
+	public void onKilledByPlants(LivingEntity entity) {
+		if(entity instanceof PVZPlantEntity) {
+			PVZPlantEntity plant = (PVZPlantEntity) entity;
+			plant.getOwnerUUID().ifPresent((uuid) -> {
+			    PlayerEntity player = world.getPlayerByUuid(uuid);
+			    if(player != null) {
+				    PlantCardItem item = (this.getElementBallType() == ElementTypes.FLAME ? ItemRegister.ICE_SHROOM_CARD.get() : ItemRegister.JALAPENO_CARD.get());
+				    float percent = player.getCooldownTracker().getCooldown(item, 0F);
+				    player.getCooldownTracker().setCooldown(item, MathHelper.floor(200 * percent));
+			    }
+		    });
+		} 
 		this.remove();
 	}
 	

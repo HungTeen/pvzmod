@@ -3,6 +3,7 @@ package com.hungteen.pvz.entity.plant.flame;
 import com.hungteen.pvz.entity.misc.ElementBallEntity;
 import com.hungteen.pvz.entity.misc.ElementBallEntity.ElementTypes;
 import com.hungteen.pvz.entity.plant.base.PlantBomberEntity;
+import com.hungteen.pvz.entity.zombie.plantzombie.JalapenoZombieEntity;
 import com.hungteen.pvz.misc.damage.PVZDamageSource;
 import com.hungteen.pvz.register.SoundRegister;
 import com.hungteen.pvz.utils.EntityUtil;
@@ -29,51 +30,61 @@ public class JalapenoEntity extends PlantBomberEntity{
 	public void startBomb() {
 		int range = this.getFireRange();
 		for(int i = - range; i <= range; ++ i) {
-			clearSnowAndSpawnFlame(i, 0);
-			clearSnowAndSpawnFlame(0, i);
+			clearSnowAndSpawnFlame(this, i, 0);
+			clearSnowAndSpawnFlame(this, 0, i);
 		}
-		if(!world.isRemote) {
+		if(! world.isRemote) {
 			EntityUtil.playSound(this, SoundRegister.JALAPENO.get());
 		}
-		fireMob(range, 0.5f);
-		fireMob(0.5f, range);
-		killIceBall();
+		fireMob(this, range, 0.5f);
+		fireMob(this, 0.5f, range);
+		if(! this.isCharmed()) {
+			killIceBall(this);
+		}
 	}
 	
 	/**
 	 * kill zomboss iceball
 	 */
-	private void killIceBall() {
-		if(! world.isRemote) {
-			float range = this.getFireRange() + 10F;
-			world.getEntitiesWithinAABB(ElementBallEntity.class, EntityUtil.getEntityAABB(this, range, range), (target) -> {
+	public static void killIceBall(LivingEntity entity) {
+		if(! entity.world.isRemote) {
+			float range = 10;
+			if(entity instanceof JalapenoEntity) range = ((JalapenoEntity) entity).getFireRange() + 10F;
+			else if(entity instanceof JalapenoZombieEntity) range = ((JalapenoZombieEntity) entity).getFireRange();
+			entity.world.getEntitiesWithinAABB(ElementBallEntity.class, EntityUtil.getEntityAABB(entity, range, range), (target) -> {
 				return target.getElementBallType() == ElementTypes.ICE;
 			}).forEach((target) -> {
-				target.onKilledByPlants(this);
+				target.onKilledByPlants(entity);
 			});
 		}
 	}
 	
-	private void fireMob(float dx, float dz) {
-		BlockPos pos = new BlockPos(this);
+	public static void fireMob(LivingEntity entity, float dx, float dz) {
+		BlockPos pos = entity.getPosition();
 		double x = pos.getX() + 0.5f;
 		double y = pos.getY() + 0.5f;
 		double z = pos.getZ() + 0.5f;
 		AxisAlignedBB aabb = new AxisAlignedBB(x + dx, y + 1, z + dz, x - dx, y - 1, z - dz);
-		for(LivingEntity target:EntityUtil.getEntityTargetableEntity(this, aabb)) {
-			target.attackEntityFrom(PVZDamageSource.causeFireDamage(this, this), this.getAttackDamage());
+		for(LivingEntity target : EntityUtil.getEntityTargetableEntity(entity, aabb)) {
+			float damage = 0;
+			if(entity instanceof JalapenoEntity) damage = ((JalapenoEntity) entity).getAttackDamage();
+			else if(entity instanceof JalapenoZombieEntity) damage = EntityUtil.getCurrentMaxHealth(target) * 2;
+			target.attackEntityFrom(PVZDamageSource.causeFireDamage(entity, entity), damage);
 		}
 	}
 	
-	private void clearSnowAndSpawnFlame(int dx, int dz) {
-		BlockPos pos = this.getPosition().add(dx, 0, dz);
-		if(world.getBlockState(pos).getBlock() == Blocks.SNOW||world.getBlockState(pos).getBlock()==Blocks.SNOW_BLOCK) {
-			world.setBlockState(pos, Blocks.AIR.getDefaultState());
+	/**
+	 * clear snow
+	 */
+	public static void clearSnowAndSpawnFlame(LivingEntity entity, int dx, int dz) {
+		BlockPos pos = entity.getPosition().add(dx, 0, dz);
+		if(entity.world.getBlockState(pos).getBlock() == Blocks.SNOW || entity.world.getBlockState(pos).getBlock()==Blocks.SNOW_BLOCK) {
+			entity.world.setBlockState(pos, Blocks.AIR.getDefaultState());
 		}
-		if(world.isRemote) {
+		if(entity.world.isRemote) {
 			for(int i = 0; i < 30; ++ i) {
-				world.addParticle(ParticleTypes.FLAME, pos.getX() + 0.5, pos.getY(), pos.getZ() + 0.5, 
-						(this.getRNG().nextFloat() - 0.5) / 10, this.getRNG().nextFloat() / 8, (this.getRNG().nextFloat() - 0.5) / 10);
+				entity.world.addParticle(ParticleTypes.FLAME, pos.getX() + 0.5, pos.getY(), pos.getZ() + 0.5, 
+						(entity.getRNG().nextFloat() - 0.5) / 10, entity.getRNG().nextFloat() / 8, (entity.getRNG().nextFloat() - 0.5) / 10);
 			}
 		}
 	}

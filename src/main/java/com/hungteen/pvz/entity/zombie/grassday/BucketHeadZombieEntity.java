@@ -49,7 +49,7 @@ public class BucketHeadZombieEntity extends NormalZombieEntity implements IHasMe
 	}
 	
 	@Override
-	protected SoundEvent getHurtSound(DamageSource damageSourceIn) {
+	public SoundEvent getHurtSound(DamageSource damageSourceIn) {
 		return hasMetal() ? SoundRegister.METAL_HIT.get() : super.getHurtSound(damageSourceIn);
 	}
 	

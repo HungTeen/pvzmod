@@ -90,6 +90,7 @@ public class PlantUtil {
 		putPlantInfoToMap(Plants.WINTER_MELON, 225, CDs.VERY_SLOW, Ranks.GOLD, Essences.ICE, EntityRegister.WINTER_MELON, ItemRegister.WINTER_MELON_CARD, ItemRegister.WINTER_MELON_ENJOY_CARD);
 		putPlantInfoToMap(Plants.GOLD_MAGNET, 100, CDs.VERY_SLOW, Ranks.WHITE, Essences.ASSIST, EntityRegister.GOLD_MAGNET, ItemRegister.GOLD_MAGNET_CARD, ItemRegister.GOLD_MAGNET_ENJOY_CARD);
 		putPlantInfoToMap(Plants.SPIKE_ROCK, 150, CDs.VERY_SLOW, Ranks.PURPLE, Essences.SPEAR, EntityRegister.SPIKE_ROCK, ItemRegister.SPIKE_ROCK_CARD, ItemRegister.SPIKE_ROCK_ENJOY_CARD);
+		putPlantInfoToMap(Plants.IMITATER, 0, CDs.FAST, Ranks.GOLD, Essences.MAGIC, EntityRegister.IMITATER, ItemRegister.IMITATER_CARD, ItemRegister.IMITATER_ENJOY_CARD);
 		putPlantInfoToMap(Plants.WATER_GUARD, 50, CDs.LITTLE_SLOW, Ranks.GRAY, Essences.DEFENCE, EntityRegister.WATER_GUARD, ItemRegister.WATER_GUARD_CARD, ItemRegister.WATER_GUARD_ENJOY_CARD);
 		putPlantInfoToMap(Plants.STRANGE_CAT, 325, CDs.HUGE_SLOW, Ranks.PURPLE, Essences.MAGIC, EntityRegister.STRANGE_CAT, ItemRegister.STRANGE_CAT_CARD, ItemRegister.STRANGE_CAT_ENJOY_CARD);
 		putPlantInfoToMap(Plants.GOLD_LEAF, 75, CDs.NORMAL, Ranks.PURPLE, Essences.LIGHT, EntityRegister.GOLD_LEAF, ItemRegister.GOLD_LEAF_CARD, ItemRegister.GOLD_LEAF_ENJOY_CARD);
@@ -147,6 +148,7 @@ public class PlantUtil {
 		case LILY_PAD: return 1;
 		case PUMPKIN: return 1;
 		case FLOWER_POT: return 1;
+		case IMITATER: return 1;
 		default: return 20;
 		}
 	}

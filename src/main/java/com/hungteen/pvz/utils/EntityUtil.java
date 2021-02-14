@@ -31,6 +31,7 @@ import net.minecraft.entity.SharedMonsterAttributes;
 import net.minecraft.entity.SpawnReason;
 import net.minecraft.entity.monster.IMob;
 import net.minecraft.entity.passive.BatEntity;
+import net.minecraft.entity.passive.GolemEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.potion.EffectInstance;
 import net.minecraft.scoreboard.Team;
@@ -271,7 +272,7 @@ public class EntityUtil {
 	 * multipart the same as its owner
 	 * others : 0 
 	 */
-	public static int getEntityGroup(Entity entity){
+	public static int getEntityGroup(Entity entity) {
 		int group = 0;
 		if(entity instanceof PlayerEntity) {
 			return PVZConfig.COMMON_CONFIG.EntitySettings.PlayerOriginGroup.get();
@@ -287,6 +288,8 @@ public class EntityUtil {
 			}
 		} else if(entity instanceof IGroupEntity) {
 			return ((IGroupEntity) entity).getEntityGroupType();
+		} else if(entity instanceof GolemEntity) {
+			return 1;
 		}
 		return group;
 	}

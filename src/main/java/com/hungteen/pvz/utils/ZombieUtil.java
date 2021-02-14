@@ -89,8 +89,16 @@ public class ZombieUtil {
 		putZombieInfoToMap(Zombies.IMP, Ranks.GRAY, EntityRegister.IMP);
 		putZombieInfoToMap(Zombies.SAD_GARGANTUAR, Ranks.GOLD, EntityRegister.SAD_GARGANTUAR);
 		putZombieInfoToMap(Zombies.ZOMBOSS, Ranks.MEGA, EntityRegister.ZOMBOSS);
-		//other
+		//plant zombie
+		putZombieInfoToMap(Zombies.PEASHOOTER_ZOMBIE, Ranks.WHITE, EntityRegister.PEASHOOTER_ZOMBIE);
+		putZombieInfoToMap(Zombies.WALLNUT_ZOMBIE, Ranks.BLUE, EntityRegister.WALLNUT_ZOMBIE);
+		putZombieInfoToMap(Zombies.GATLINGPEA_ZOMBIE, Ranks.WHITE, EntityRegister.GATLINGPEA_ZOMBIE);
+		putZombieInfoToMap(Zombies.TALLNUT_ZOMBIE, Ranks.PURPLE, EntityRegister.TALLNUT_ZOMBIE);
+		putZombieInfoToMap(Zombies.SQUASH_ZOMBIE, Ranks.WHITE, EntityRegister.SQUASH_ZOMBIE);
+		putZombieInfoToMap(Zombies.JALAPENO_ZOMBIE, Ranks.GREEN, EntityRegister.JALAPENO_ZOMBIE);
 		putZombieInfoToMap(Zombies.PUMPKIN_ZOMBIE, Ranks.PURPLE, EntityRegister.PUMPKIN_ZOMBIE);
+		//other
+		
 		putZombieInfoToMap(Zombies.TRICK_ZOMBIE, Ranks.GRAY, EntityRegister.TRICK_ZOMBIE);
 		putZombieInfoToMap(Zombies.RA_ZOMBIE, Ranks.WHITE, EntityRegister.RA_ZOMBIE);
 	}

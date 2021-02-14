@@ -5,6 +5,7 @@ import com.hungteen.pvz.gui.container.AlmanacContainer;
 import com.hungteen.pvz.gui.container.CardFusionContainer;
 import com.hungteen.pvz.gui.container.EssenceAltarContainer;
 import com.hungteen.pvz.gui.container.FragmentSpliceContainer;
+import com.hungteen.pvz.gui.container.ImitaterContainer;
 import com.hungteen.pvz.gui.container.PeaGunContainer;
 import com.hungteen.pvz.gui.container.PlayerInventoryContainer;
 import com.hungteen.pvz.gui.container.SlotMachineContainer;
@@ -17,6 +18,7 @@ import com.hungteen.pvz.gui.screen.AlmanacScreen;
 import com.hungteen.pvz.gui.screen.CardFusionScreen;
 import com.hungteen.pvz.gui.screen.EssenceAltarScreen;
 import com.hungteen.pvz.gui.screen.FragmentSpliceScreen;
+import com.hungteen.pvz.gui.screen.ImitaterScreen;
 import com.hungteen.pvz.gui.screen.PeaGunScreen;
 import com.hungteen.pvz.gui.screen.PlayerInventoryScreen;
 import com.hungteen.pvz.gui.screen.SlotMachineScreen;
@@ -102,6 +104,11 @@ public class ContainerRegister {
             return new CardFusionContainer(windowId, inv.player, data.readBlockPos());
         });
 	});
+	public static final RegistryObject<ContainerType<ImitaterContainer>> IMITATER = CONTAINER_TYPES.register("imitater", () -> {
+		return IForgeContainerType.create((windowId, inv, data) -> {
+            return new ImitaterContainer(windowId, inv.player);
+        });
+	});
 	
 	@SubscribeEvent
     public static void onClientSetupEvent(FMLClientSetupEvent event) {
@@ -117,6 +124,7 @@ public class ContainerRegister {
         ScreenManager.registerFactory(MYSTERY_SHOP.get(), MysteryShopScreen::new);
         ScreenManager.registerFactory(ESSENCE_ALTAR.get(), EssenceAltarScreen::new);
         ScreenManager.registerFactory(CARD_FUSION.get(), CardFusionScreen::new);
+        ScreenManager.registerFactory(IMITATER.get(), ImitaterScreen::new);
     }
 	
 }

@@ -85,6 +85,7 @@ public abstract class PVZZombieEntity extends MonsterEntity implements IPVZZombi
 	private static final DataParameter<Float> DEFENCE_LIFE = EntityDataManager.createKey(PVZZombieEntity.class, DataSerializers.FLOAT);
 	private static final int CHARM_FLAG = 0;
 	private static final int MINI_FLAG = 1;
+	public boolean canCollideWithZombie = true;
 	protected boolean hasDirectDefence = false;
 	protected boolean canSpawnDrop = true;
 	protected boolean canBeCold = true;
@@ -211,9 +212,7 @@ public abstract class PVZZombieEntity extends MonsterEntity implements IPVZZombi
 	}
 
 	public int getAttackCD() {
-		if (!this.canZombieNormalUpdate()) {
-			return 10000000;
-		}
+		if (! this.canZombieNormalUpdate()) return 10000000;
 		int now = 20;
 		if (this.isPotionActive(EffectRegister.COLD_EFFECT.get())) {
 			int lvl = this.getActivePotionEffect(EffectRegister.COLD_EFFECT.get()).getAmplifier();
@@ -294,22 +293,27 @@ public abstract class PVZZombieEntity extends MonsterEntity implements IPVZZombi
 	 * zombies have chance to drop coin when died.
 	 */
 	protected void dropCoinOrSpecial() {
-		int num = this.getRNG().nextInt(10000);
-		if(num < 1110) {
+		final int time1 = 8;
+		final int time2 = time1 * time1;
+		final int time3 = time2 * time1;
+		final int time4 = time2 * time2;
+		int num = this.getRNG().nextInt(time4);
+		if(num < time1 + time2 + time3) {// 0 ~ time3 is coin
 			int amount = CoinType.GOLD.money;
-			if(num < 1000) amount = CoinType.COPPER.money;
-			else if(num < 1100) amount = CoinType.SILVER.money;
+			if(num < time3) amount = CoinType.COPPER.money;
+			else if(num < time2 + time3) amount = CoinType.SILVER.money;
 			CoinEntity coin = EntityRegister.COIN.get().create(world);
 			coin.setAmount(amount);
 			EntityUtil.onMobEntitySpawn(world, coin, getPosition());
 			return ;
 		}
-		if(num == 1110) {
+		num -= time1 + time2 + time3;
+		if(num == 0) {// 0 is jewel
 			JewelEntity jewel = EntityRegister.JEWEL.get().create(world);
 			EntityUtil.onMobEntitySpawn(world, jewel, getPosition());
 			return ;
 		}
-		if(num == 1111){
+		if(num < 4) { // 1 - 3 is chocolate
 			ItemEntity chocolate = new ItemEntity(world, getPosX(), getPosY(), getPosZ(), new ItemStack(ItemRegister.CHOCOLATE.get()));
 			EntityUtil.playSound(chocolate, SoundRegister.JEWEL_DROP.get());
 			world.addEntity(chocolate);
@@ -341,31 +345,17 @@ public abstract class PVZZombieEntity extends MonsterEntity implements IPVZZombi
 	
 	@Override
 	public boolean attackEntityFrom(DamageSource source, float amount) {
-		if(! world.isRemote && this.hasDirectDefence) {
-			if(this.getDefenceLife() > 0) {
-				if(this.getDefenceLife() > amount) {
-				    this.setDefenceLife(this.getDefenceLife() - amount);
-				    amount = 0;
-			    } else {
-				    amount -= this.getDefenceLife();
-				    this.setDefenceLife(0);
-			    }
-				EntityUtil.playSound(this, getHurtSound(source));
-				if(amount == 0) {
-					amount = 0.001F;
-				}
-			}
-		}
+		if(world.isRemote) return false;
+		if (source instanceof PVZDamageSource) this.hurtResistantTime = 0;
 		boolean flag = super.attackEntityFrom(source, amount);
 		if (source instanceof PVZDamageSource) {
-			this.hurtResistantTime = 0;
 			if (this.canBeFrozen() && ((PVZDamageSource) source).getPVZDamageType() == PVZDamageType.ICE && !((PVZDamageSource) source).isDefended()) {
 				if (! this.isZombieColdOrForzen() && ! this.world.isRemote) {
-					this.playSound(SoundRegister.ZOMBIE_FROZEN.get(), 1f, 1f);
+					EntityUtil.playSound(this, SoundRegister.ZOMBIE_FROZEN.get());
 				}
 			} else if (((PVZDamageSource) source).getPVZDamageType() == PVZDamageType.FIRE && !((PVZDamageSource) source).isDefended()) {
 				if (this.isZombieColdOrForzen() && ! this.world.isRemote) {
-					this.playSound(SoundRegister.ZOMBIE_FIRE.get(), 1f, 1f);
+					EntityUtil.playSound(this, SoundRegister.ZOMBIE_FIRE.get());
 					this.removePotionEffect(EffectRegister.COLD_EFFECT.get());
 					this.removeActivePotionEffect(EffectRegister.FROZEN_EFFECT.get());
 				}
@@ -542,7 +532,7 @@ public abstract class PVZZombieEntity extends MonsterEntity implements IPVZZombi
 			return true;
 		}
 		if(target instanceof PVZZombieEntity) {
-			return true;
+			return this.canCollideWithZombie && ((PVZZombieEntity) target).canCollideWithZombie;
 		}
 		return false;
 	}
@@ -564,6 +554,10 @@ public abstract class PVZZombieEntity extends MonsterEntity implements IPVZZombi
 		return false;
 	}
 
+	public boolean hasDefence() {
+		return this.hasDirectDefence;
+	}
+	
 	@Override
 	public void writeAdditional(CompoundNBT compound) {
 		super.writeAdditional(compound);
@@ -748,7 +742,7 @@ public abstract class PVZZombieEntity extends MonsterEntity implements IPVZZombi
 	}
 	
 	@Override
-	protected SoundEvent getHurtSound(DamageSource damageSourceIn) {
+	public SoundEvent getHurtSound(DamageSource damageSourceIn) {
 		if(damageSourceIn.getImmediateSource() instanceof AbstractBulletEntity) {
 			return SoundRegister.PEA_HIT.get();
 		}

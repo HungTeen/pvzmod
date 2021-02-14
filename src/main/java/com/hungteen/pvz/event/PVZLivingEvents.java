@@ -16,6 +16,7 @@ import com.hungteen.pvz.utils.enums.Resources;
 
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.entity.player.PlayerEntity;
+import net.minecraftforge.event.entity.living.LivingDamageEvent;
 import net.minecraftforge.event.entity.living.LivingDeathEvent;
 import net.minecraftforge.event.entity.living.LivingHurtEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
@@ -75,6 +76,25 @@ public class PVZLivingEvents {
 				LivingEventHandler.handleHurtEffects(ev.getEntityLiving(), (PVZDamageSource) ev.getSource());
 			}
 		}
+	}
+	
+	@SubscribeEvent
+	public static void onLivingDamage(LivingDamageEvent ev) {
+		float amount = ev.getAmount();
+		if(ev.getEntityLiving() instanceof PVZZombieEntity) {// zombie defence hit
+			PVZZombieEntity zombie = (PVZZombieEntity) ev.getEntityLiving();
+			if(zombie.hasDefence() && zombie.getDefenceLife() > 0) {
+				if(zombie.getDefenceLife() > amount) {
+				    zombie.setDefenceLife(zombie.getDefenceLife() - amount);
+				    amount = 0;
+				} else {
+			        amount -= zombie.getDefenceLife();
+					zombie.setDefenceLife(0);
+				}
+				if(amount == 0) amount = 0.00001F;
+			}
+		}
+		ev.setAmount(amount);
 	}
 	
 }
