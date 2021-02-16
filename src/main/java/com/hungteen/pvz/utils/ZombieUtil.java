@@ -61,7 +61,7 @@ public class ZombieUtil {
 		putZombieInfoToMap(Zombies.DANCING_ZOMBIE, Ranks.GREEN, EntityRegister.DANCING_ZOMBIE);
 		putZombieInfoToMap(Zombies.BACKUP_DANCER, Ranks.WHITE, EntityRegister.BACKUP_DANCER);
 		putZombieInfoToMap(Zombies.GIGA_FOOTBALL_ZOMBIE, Ranks.GOLD, EntityRegister.GIGA_FOOTBALL_ZOMBIE);
-		putZombieInfoToMap(Zombies.OLD_ZOMBIE, Ranks.BLUE, EntityRegister.NEWSPAPER_ZOMBIE);
+		putZombieInfoToMap(Zombies.OLD_ZOMBIE, Ranks.BLUE, EntityRegister.OLD_ZOMBIE);
 		putZombieInfoToMap(Zombies.SUNDAY_EDITION_ZOMBIE, Ranks.GOLD, EntityRegister.SUNDAY_EDITION_ZOMBIE);
 		putZombieInfoToMap(Zombies.COFFIN, Ranks.GOLD, EntityRegister.COFFIN);
 		putZombieInfoToMap(Zombies.MOURNER_ZOMBIE, Ranks.GREEN, EntityRegister.MOURNER_ZOMBIE);

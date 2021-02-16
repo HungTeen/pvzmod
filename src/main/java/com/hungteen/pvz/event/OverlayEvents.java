@@ -3,6 +3,7 @@ package com.hungteen.pvz.event;
 import com.hungteen.pvz.PVZConfig;
 import com.hungteen.pvz.PVZMod;
 import com.hungteen.pvz.capability.player.ClientPlayerResources;
+import com.hungteen.pvz.entity.plant.explosion.CobCannonEntity;
 import com.hungteen.pvz.register.KeyBindRegister;
 import com.hungteen.pvz.utils.PlayerUtil;
 import com.hungteen.pvz.utils.RenderUtil;
@@ -29,6 +30,7 @@ public class OverlayEvents {
 	private static final ResourceLocation RESOURCE = StringUtil.prefix("textures/gui/overlay/resource.png");
 	private static final ResourceLocation FOG = StringUtil.prefix("textures/gui/overlay/fog.png");
 	private static final ResourceLocation INVASION = StringUtil.prefix("textures/gui/overlay/invasion.png");
+	private static final ResourceLocation TARGET = StringUtil.prefix("textures/gui/overlay/target.png");
 	private static final int W = 160;
 	private static final int H = 32;
 	private static final int BAR_LEN = 123;
@@ -61,6 +63,12 @@ public class OverlayEvents {
 			if(KeyBindRegister.showInvasionProgress) {
 				if(PlayerUtil.isPlayerSurvival(mc.player)  && PVZConfig.CLIENT_CONFIG.InvasionRender.RenderInvasionProgress.get()) {
 					renderInvasionProgress(ev.getWindow().getScaledWidth(), ev.getWindow().getScaledHeight());
+				}
+			}
+			if(mc.player.getRidingEntity() instanceof CobCannonEntity) {
+				CobCannonEntity cob = (CobCannonEntity) mc.player.getRidingEntity();
+				if(cob.getCornNum() > 0) {
+					renderTargetAim(ev.getWindow().getScaledWidth(), ev.getWindow().getScaledHeight());
 				}
 			}
 		}
@@ -100,6 +108,17 @@ public class OverlayEvents {
 			mc.ingameGUI.blit(w * 2 - waveLen - 11 + offsetX, h * 2 - HEIGHT + (rise ? - 9 : - 4) + offsetY, 27, 42, 20, (rise ? 27 : 19));
 		}
 		mc.ingameGUI.blit(w * 2 - barlen - 11 + offsetX, h * 2 - HEIGHT - 4 + offsetY, 0, 42, 24, 23);
+		RenderSystem.popMatrix();
+	}
+	
+	private static void renderTargetAim(int w, int h) {
+		RenderSystem.pushMatrix();
+		RenderSystem.color4f(1f, 1f, 1f, 1f);
+		float scale = 1F;
+		RenderSystem.scaled(scale, scale, scale);
+		mc.getTextureManager().bindTexture(TARGET);
+		final int WIDTH = 32, HEIGHT = 32;
+		mc.ingameGUI.blit((w - WIDTH) / 2 - 0, (h - HEIGHT) / 2 - 0, 0, 0, WIDTH, HEIGHT);
 		RenderSystem.popMatrix();
 	}
 

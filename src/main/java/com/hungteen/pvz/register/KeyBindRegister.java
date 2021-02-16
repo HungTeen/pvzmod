@@ -1,7 +1,10 @@
 package com.hungteen.pvz.register;
 
 import com.hungteen.pvz.PVZMod;
+import com.hungteen.pvz.entity.plant.explosion.CobCannonEntity;
 import com.hungteen.pvz.event.OverlayEvents;
+import com.hungteen.pvz.network.EntityInteractPacket;
+import com.hungteen.pvz.network.PVZPacketHandler;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.settings.KeyBinding;
@@ -54,6 +57,19 @@ public class KeyBindRegister {
 ////				});
 //				PVZPacketHandler.CHANNEL.sendToServer(new OpenGuiPacket(Guis.PLAYER_INVENTORY.ordinal()));
 //			}
+		}
+	}
+	
+	@SubscribeEvent
+	public static void onMouseDown(InputEvent.MouseInputEvent ev) {
+		Minecraft mc = Minecraft.getInstance();
+		if(mc.isGameFocused() && mc.player != null) {
+			if(mc.player.getRidingEntity() instanceof CobCannonEntity) {
+				CobCannonEntity cob = (CobCannonEntity) mc.player.getRidingEntity();
+				if(mc.player.getHeldItemMainhand().isEmpty() && cob.getCornNum() > 0 && mc.gameSettings.keyBindUseItem.isPressed()) {
+				    PVZPacketHandler.CHANNEL.sendToServer(new EntityInteractPacket(cob.getEntityId(), 0, 0));
+				}
+			}
 		}
 	}
 	

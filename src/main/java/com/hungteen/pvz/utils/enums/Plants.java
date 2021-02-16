@@ -54,7 +54,7 @@ public enum Plants {
 	WINTER_MELON(8),
 	GOLD_MAGNET(8), 
 	SPIKE_ROCK(8),
-//	COB_CANNON,
+	COB_CANNON(8),
 	IMITATER(0),
 	// other
 	WATER_GUARD(4),

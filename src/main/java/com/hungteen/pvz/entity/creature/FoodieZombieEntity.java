@@ -84,10 +84,7 @@ public class FoodieZombieEntity extends AnimalEntity {
 	@Override
 	public void livingTick() {
 		super.livingTick();
-//		if(this.ticksExisted%50==0) {
-//			System.out.println(this.getGenTick());
-//		}
-		if (!world.isRemote && this.getGenTick() >= 0) {
+		if (! world.isRemote && this.getGenTick() >= 0) {
 			this.setGenTick(this.getGenTick() - 1);
 			if (this.getGenTick() == 0) {
 				this.produceSun();
@@ -110,7 +107,7 @@ public class FoodieZombieEntity extends AnimalEntity {
 	public boolean processInteract(PlayerEntity player, Hand hand) {
 		ItemStack itemstack = player.getHeldItem(hand);
 		if (this.isBreedingItem(itemstack)) {
-			if (!this.world.isRemote && this.getGrowingAge() == 0 && this.getGenTick() == -1 && this.canBreed()) {
+			if (! this.world.isRemote && this.getGrowingAge() == 0 && this.getGenTick() == - 1 && this.canBreed()) {
 				this.consumeItemFromStack(player, itemstack);
 				this.playSound(SoundRegister.SLURP.get(), 1f, 1f);
 				this.setInLove(player);

@@ -289,5 +289,8 @@
     },
     "zombie_on_your_lawn":{
         "sounds":[{"name":"pvz:music/zombie_on_your_lawn", "stream":true}]
+    },
+    "cob_launch":{
+        "sounds":[{"name":"pvz:entity/plant/attack/cob_launch"}]
     }
 }
