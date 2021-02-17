@@ -1,5 +1,6 @@
 package com.hungteen.pvz.entity.plant.magic;
 
+import com.hungteen.pvz.advancement.trigger.EntityEffectAmountTrigger;
 import com.hungteen.pvz.entity.plant.PVZPlantEntity;
 import com.hungteen.pvz.entity.plant.base.PlantBomberEntity;
 import com.hungteen.pvz.register.SoundRegister;
@@ -10,6 +11,8 @@ import net.minecraft.entity.CreatureEntity;
 import net.minecraft.entity.EntitySize;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.Pose;
+import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.world.World;
 
@@ -27,11 +30,19 @@ public class CoffeeBeanEntity extends PlantBomberEntity{
 			float len = this.getAwakeRange();
 			AxisAlignedBB aabb=EntityUtil.getEntityAABB(this, len, len + 2);
 			boolean hasEffect = false;
+			int awakeCnt = 0;
 			for(PVZPlantEntity plant : world.getEntitiesWithinAABB(PVZPlantEntity.class, aabb)) {
 				if(! EntityUtil.checkCanEntityAttack(this, plant)) {
+					if(plant.isPlantSleeping()) {
+						++ awakeCnt;
+					}
 					plant.setSleepTime(- this.getAwakeTime());
 					hasEffect = true;
 				}
+			}
+			PlayerEntity player = EntityUtil.getEntityOwner(world, this);
+			if(player != null && player instanceof ServerPlayerEntity) {
+				EntityEffectAmountTrigger.INSTANCE.trigger((ServerPlayerEntity) player, this, awakeCnt);
 			}
 			if(hasEffect) {
 				EntityUtil.playSound(this, SoundRegister.WAKE_UP.get());

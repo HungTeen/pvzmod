@@ -5,19 +5,24 @@ import com.hungteen.pvz.capability.player.PlayerDataManager;
 import com.hungteen.pvz.enchantment.EnchantmentUtil;
 import com.hungteen.pvz.entity.drop.SunEntity;
 import com.hungteen.pvz.entity.plant.PVZPlantEntity;
+import com.hungteen.pvz.entity.zombie.PVZZombieEntity;
 import com.hungteen.pvz.gui.search.SearchOption;
 import com.hungteen.pvz.register.SoundRegister;
 import com.hungteen.pvz.utils.EntityUtil;
 import com.hungteen.pvz.utils.PlantUtil;
 import com.hungteen.pvz.utils.PlayerUtil;
+import com.hungteen.pvz.utils.ZombieUtil;
 import com.hungteen.pvz.utils.enums.Plants;
 import com.hungteen.pvz.utils.enums.Resources;
 import com.hungteen.pvz.utils.enums.Zombies;
 import com.hungteen.pvz.world.WaveManager;
 
+import net.minecraft.advancements.CriteriaTriggers;
+import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.item.ItemStack;
+import net.minecraft.util.DamageSource;
 import net.minecraft.util.Hand;
 
 public class PlayerEventHandler {
@@ -37,6 +42,16 @@ public class PlayerEventHandler {
 			EntityUtil.playSound(plant, SoundRegister.PLANT_ON_GROUND.get());
 			stack.damageItem(3, player, (p) -> {p.sendBreakAnimation(Hand.MAIN_HAND);});
 		}
+	}
+	
+	public static void onPlayerKillEntity(PlayerEntity player, DamageSource source, LivingEntity living) {
+		if(living instanceof PVZZombieEntity) {
+			PVZZombieEntity zombie = (PVZZombieEntity) living;
+			int xp = ZombieUtil.getZombieXp(zombie.getZombieEnumName());
+			PlayerUtil.addPlayerStats(player, Resources.TREE_XP, xp);
+			onPlayerKillZombie(player, zombie.getZombieEnumName());
+		}
+		CriteriaTriggers.PLAYER_KILLED_ENTITY.trigger((ServerPlayerEntity) player, living, source);
 	}
 	
 	public static void onPlayerKillZombie(PlayerEntity player, Zombies zombie) {

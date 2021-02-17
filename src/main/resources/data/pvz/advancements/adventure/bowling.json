@@ -1,0 +1,38 @@
+{
+  "parent": "pvz:adventure/plant",
+  "display": {
+    "icon": {
+      "item": "pvz:bowling_glove"
+    },
+    "title": {
+      "translate": "advancement.pvz.bowling"
+    },
+    "description": {
+      "translate": "advancement.pvz.bowling.desc"
+    },
+    "frame": "task",
+    "show_toast": true,
+    "announce_to_chat": true,
+    "hidden": false
+  },
+  "criteria": {
+    "shot_arrow": {
+      "trigger": "pvz:entity_effect_amount",
+      "conditions": {
+        "entity":{
+          "type": "pvz:wall_nut_bowling"
+        },
+        "amount":{
+          "amount":{
+            "min": 5
+          }
+        }
+      }
+    }
+  },
+  "requirements": [
+    [
+      "shot_arrow"
+    ]
+  ]
+}

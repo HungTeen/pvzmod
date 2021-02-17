@@ -1,5 +1,6 @@
 package com.hungteen.pvz.entity.plant.toxic;
 
+import com.hungteen.pvz.advancement.trigger.EntityEffectAmountTrigger;
 import com.hungteen.pvz.entity.ai.target.PVZNearestTargetGoal;
 import com.hungteen.pvz.entity.bullet.itembullet.SporeEntity;
 import com.hungteen.pvz.entity.plant.base.PlantShooterEntity;
@@ -13,6 +14,8 @@ import net.minecraft.entity.EntitySize;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.Pose;
+import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.World;
 
@@ -40,8 +43,8 @@ public class PuffShroomEntity extends PlantShooterEntity {
 		double dx = target.getPosX() - this.getPosX();
         double dz = target.getPosZ() - this.getPosZ();
         double y = this.getPosY()+this.getSize(getPose()).height*0.7f;
-        double dis =MathHelper.sqrt(dx * dx + dz * dz);
-        double tmp=this.LENTH / dis;
+        double dis = MathHelper.sqrt(dx * dx + dz * dz);
+        double tmp = this.LENTH / dis;
         double deltaX = tmp * dx;
         double deltaZ = tmp * dz;
         SporeEntity spore = new SporeEntity(this.world, this);
@@ -56,13 +59,19 @@ public class PuffShroomEntity extends PlantShooterEntity {
 		super.startSuperMode(first);
 		if(first) {
 			int x = this.getHelpRange();
+			int cnt = 1;
 			for(PuffShroomEntity shroom : world.getEntitiesWithinAABB(EntityRegister.PUFF_SHROOM.get(), EntityUtil.getEntityAABB(this, x, x), (shroom)-> {
-				return !EntityUtil.checkCanEntityAttack(this, shroom);
+				return ! EntityUtil.checkCanEntityAttack(this, shroom);
 			})) {
 				if(shroom.canStartSuperMode()) {
-				    shroom.startSuperMode(false);	
+				    shroom.startSuperMode(false);
+				    ++ cnt;
 				}
 				shroom.setLiveTick(0);
+			}
+			PlayerEntity player = EntityUtil.getEntityOwner(world, this);
+			if(player != null && player instanceof ServerPlayerEntity) {
+				EntityEffectAmountTrigger.INSTANCE.trigger((ServerPlayerEntity) player, this, cnt);
 			}
 		}
 	}

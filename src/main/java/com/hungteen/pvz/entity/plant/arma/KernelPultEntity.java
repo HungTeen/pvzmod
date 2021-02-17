@@ -1,5 +1,6 @@
 package com.hungteen.pvz.entity.plant.arma;
 
+import java.util.List;
 import java.util.Optional;
 
 import com.hungteen.pvz.entity.ai.target.PVZNearestTargetGoal;
@@ -7,6 +8,8 @@ import com.hungteen.pvz.entity.bullet.ButterEntity;
 import com.hungteen.pvz.entity.bullet.KernelEntity;
 import com.hungteen.pvz.entity.bullet.PultBulletEntity;
 import com.hungteen.pvz.entity.plant.base.PlantPultEntity;
+import com.hungteen.pvz.item.tool.card.ImitaterCardItem;
+import com.hungteen.pvz.item.tool.card.PlantCardItem;
 import com.hungteen.pvz.register.EffectRegister;
 import com.hungteen.pvz.register.SoundRegister;
 import com.hungteen.pvz.utils.EntityUtil;
@@ -17,11 +20,14 @@ import net.minecraft.entity.EntitySize;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.Pose;
+import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.network.datasync.DataParameter;
 import net.minecraft.network.datasync.DataSerializers;
 import net.minecraft.network.datasync.EntityDataManager;
 import net.minecraft.potion.EffectInstance;
+import net.minecraft.util.Hand;
 import net.minecraft.world.World;
 
 public class KernelPultEntity extends PlantPultEntity {
@@ -43,6 +49,45 @@ public class KernelPultEntity extends PlantPultEntity {
 	protected void registerGoals() {
 		super.registerGoals();
 		this.targetSelector.addGoal(0, new PVZNearestTargetGoal(this, true, 5, getPultRange(), 11, 10));
+	}
+	
+	@Override
+	protected boolean processInteract(PlayerEntity player, Hand hand) {
+		if(! world.isRemote && hand == Hand.MAIN_HAND && ! EntityUtil.checkCanEntityAttack(this, player)) {
+			ItemStack stack = player.getHeldItem(hand);
+			if(stack.getItem() instanceof PlantCardItem) {
+				PlantCardItem item = (PlantCardItem) stack.getItem();
+				if(item.plantType == Plants.COB_CANNON) {
+					Optional<KernelPultEntity> pult = this.getNearByPult(player);
+					if(pult.isPresent()) {
+						PlantCardItem.checkSunAndSummonPlant(player, stack, item, getPosition(), (plantEntity) -> {
+							this.onPlantUpgrade(plantEntity);
+							plantEntity.plantSunCost += pult.get().plantSunCost;
+							pult.get().remove();
+						});
+					}
+				} else if(item instanceof ImitaterCardItem && ((ImitaterCardItem) item).isPlantTypeEqual(stack, Plants.COB_CANNON)) {
+					Optional<KernelPultEntity> pult = this.getNearByPult(player);
+					if(pult.isPresent()) {
+					    ImitaterCardItem.checkSunAndSummonImitater(player, stack, item, getPosition(), (imitater) -> {
+						    imitater.targetPlantEntity = Optional.of(this);
+						    imitater.plantSunCost += pult.get().plantSunCost;
+						    pult.get().remove();
+					    });
+					}
+				}
+			}
+		}
+		return super.processInteract(player, hand);
+	}
+	
+	private Optional<KernelPultEntity> getNearByPult(PlayerEntity player){
+		float range = 1.5F;
+		List<KernelPultEntity> list = world.getEntitiesWithinAABB(KernelPultEntity.class, EntityUtil.getEntityAABB(this, range, range), (pult) -> {
+			return ! pult.isEntityEqual(this) && pult.getPlantEnumName() == Plants.KERNEL_PULT && ! EntityUtil.checkCanEntityAttack(pult, player);
+		});
+		if(list.isEmpty()) return Optional.empty();
+		return Optional.ofNullable(list.get(0));
 	}
 	
 	@Override

@@ -1,19 +1,21 @@
-package com.hungteen.pvz.advancement;
+package com.hungteen.pvz.advancement.trigger;
 
 import com.google.gson.JsonDeserializationContext;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.hungteen.pvz.advancement.predicate.AmountPredicate;
+import com.hungteen.pvz.utils.StringUtil;
 
 import net.minecraft.advancements.criterion.AbstractCriterionTrigger;
 import net.minecraft.advancements.criterion.CriterionInstance;
 import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.util.ResourceLocation;
 
-public class SunAmountTrigger extends AbstractCriterionTrigger<SunAmountTrigger.Instance> {
+public class PlantLevelTrigger extends AbstractCriterionTrigger<PlantLevelTrigger.Instance> {
 
-	private static final ResourceLocation ID = new ResourceLocation("sun_amount");
-
+	private static final ResourceLocation ID = StringUtil.prefix("plant_level");
+	public static final PlantLevelTrigger INSTANCE = new PlantLevelTrigger();
+	
 	public ResourceLocation getId() {
 		return ID;
 	}

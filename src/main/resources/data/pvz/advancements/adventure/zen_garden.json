@@ -1,35 +1,33 @@
 {
   "display": {
     "icon": {
-      "item": "pvz:pea_shooter_card"
+      "item": "pvz:nut_sapling"
     },
     "title": {
-      "translate": "advancement.pvz.root"
+      "translate": "advancement.pvz.zen_garden"
     },
     "description": {
-      "translate": "advancement.pvz.root.desc"
+      "translate": "advancement.pvz.zen_garden.desc"
     },
 	"frame":"task",
-    "background": "pvz:textures/block/origin_block.png",
     "announce_to_chat": true
   },
+  "parent":"pvz:adventure/root",
   "criteria": {
-    "in_world": {
+    "reach": {
       "trigger": "minecraft:location",
       "conditions": {
+        "biome":"pvz:zen_garden",
         "dimension": "overworld"
       }
     }
   },
   "requirements": [[
-    "in_world"
+    "reach"
   ]],
   "rewards":{
     "recipes":[
-	    "pvz:guild_book"
-    ],
-    "loot":[
-        "pvz:rewards/join_overworld"
+     
     ]
   }
 }

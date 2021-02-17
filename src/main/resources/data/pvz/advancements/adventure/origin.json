@@ -9,10 +9,10 @@
     "description": {
       "translate": "advancement.pvz.origin.desc"
     },
-	"frame":"task",
+	"frame":"goal",
     "announce_to_chat": true
   },
-  "parent":"pvz:root",
+  "parent":"pvz:adventure/root",
   "criteria": {
     "get_origin": {
       "trigger": "minecraft:inventory_changed",

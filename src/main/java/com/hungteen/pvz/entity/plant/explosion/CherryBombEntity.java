@@ -1,5 +1,6 @@
 package com.hungteen.pvz.entity.plant.explosion;
 
+import com.hungteen.pvz.advancement.trigger.EntityEffectAmountTrigger;
 import com.hungteen.pvz.entity.plant.base.PlantBomberEntity;
 import com.hungteen.pvz.misc.damage.PVZDamageSource;
 import com.hungteen.pvz.register.ParticleRegister;
@@ -8,9 +9,12 @@ import com.hungteen.pvz.utils.EntityUtil;
 import com.hungteen.pvz.utils.enums.Plants;
 
 import net.minecraft.entity.CreatureEntity;
+import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntitySize;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.Pose;
+import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.world.World;
 
@@ -26,9 +30,17 @@ public class CherryBombEntity extends PlantBomberEntity{
 		if(! this.world.isRemote) {
 			float len = this.getExpRange();
 			AxisAlignedBB aabb = EntityUtil.getEntityAABB(this, len, len);
-			EntityUtil.getAttackEntities(this, aabb).forEach((target) -> {
+			int deathCnt = 0;
+			for(Entity target : EntityUtil.getAttackEntities(this, aabb)) {
 				target.attackEntityFrom(PVZDamageSource.causeExplosionDamage(this, this), this.getAttackDamage());
-			});
+				if(! EntityUtil.isEntityValid(target)) {
+					++ deathCnt;
+				}
+			}
+			PlayerEntity owner = EntityUtil.getEntityOwner(world, this);
+			if(owner != null && owner instanceof ServerPlayerEntity) {
+				EntityEffectAmountTrigger.INSTANCE.trigger((ServerPlayerEntity) owner, this, deathCnt);
+			}
 			EntityUtil.playSound(this, SoundRegister.CHERRY_BOMB.get());
 		}
 		for(int i = 0; i < 5; ++ i) {

@@ -1,0 +1,35 @@
+{
+  "parent": "pvz:adventure/origin",
+  "display": {
+    "icon": {
+      "item": "pvz:sun_collector"
+    },
+    "title": {
+      "translate": "advancement.pvz.sunny_days"
+    },
+    "description": {
+      "translate": "advancement.pvz.sunny_days.desc"
+    },
+    "frame": "goal",
+    "show_toast": true,
+    "announce_to_chat": true,
+    "hidden": false
+  },
+  "criteria": {
+    "shot_arrow": {
+      "trigger": "pvz:sun_amount",
+      "conditions": {
+        "amount": {
+          "amount": {
+            "min": 8000
+          }
+        }
+      }
+    }
+  },
+  "requirements": [
+    [
+      "shot_arrow"
+    ]
+  ]
+}

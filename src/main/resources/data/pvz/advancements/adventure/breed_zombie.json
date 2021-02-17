@@ -1,8 +1,8 @@
 {
-  "parent": "pvz:root",
+  "parent": "pvz:adventure/undead",
   "display": {
     "icon": {
-      "item": "pvz:fake_brain"
+      "item": "pvz:real_brain"
     },
     "title": {
       "translate": "advancement.pvz.breed_zombie"
@@ -10,7 +10,7 @@
     "description": {
       "translate": "advancement.pvz.breed_zombie.desc"
     },
-    "frame": "task",
+    "frame": "goal",
     "show_toast": true,
     "announce_to_chat": true,
     "hidden": false

@@ -83,10 +83,12 @@ public class ImitaterEntity extends PlantBomberEntity {
 					PVZPlantEntity plantEntity = PlantUtil.getPlantEntity(world, plant);
 					this.copyDataToPlant(plantEntity);
 					plantEntity.plantSunCost = target.plantSunCost + this.plantSunCost;
-					if(target.getOuterPlantType().isPresent()) {
-						plantEntity.setOuterPlantType(target.getOuterPlantType().get());
+					if(! plant.isBigPlant) {
+						if(target.getOuterPlantType().isPresent()) {
+						    plantEntity.setOuterPlantType(target.getOuterPlantType().get());
+					    }
+					    plantEntity.setPumpkinLife(target.getPumpkinLife());
 					}
-					plantEntity.setPumpkinLife(target.getPumpkinLife());
 					PlantCardItem.summonPlantEntityByCard(plantEntity, stack);
 					world.addEntity(plantEntity);
 					this.targetPlantEntity.get().remove();

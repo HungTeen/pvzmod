@@ -1,0 +1,42 @@
+{
+  "display": {
+    "icon": {
+      "item": "pvz:diamond_sunflower_trophy"
+    },
+    "title": {
+      "translate": "advancement.pvz.trophy"
+    },
+    "description": {
+      "translate": "advancement.pvz.trophy.desc"
+    },
+	"frame":"challenge",
+    "announce_to_chat": true
+  },
+  "parent":"pvz:adventure/zomboss",
+  "criteria": {
+    "get_origin": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items":[
+		  {
+		    "item":"pvz:diamond_sunflower_trophy"
+		  }
+		]
+      }
+    }
+  },
+  "requirements": [[
+    "get_origin"
+  ]],
+  "rewards":{
+    "recipes":[
+        "pvz:origin_block",
+	    "pvz:card/model/gray_card",
+	    "pvz:card/model/white_card",
+	    "pvz:card/model/green_card",
+	    "pvz:card/model/blue_card",
+	    "pvz:card/model/purple_card",
+	    "pvz:card/model/gold_card"
+    ]
+  }
+}

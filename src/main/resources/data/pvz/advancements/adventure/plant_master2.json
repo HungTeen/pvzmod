@@ -1,0 +1,35 @@
+{
+  "parent": "pvz:adventure/plant_master1",
+  "display": {
+    "icon": {
+      "item": "pvz:three_peater_card"
+    },
+    "title": {
+      "translate": "advancement.pvz.plant_master2"
+    },
+    "description": {
+      "translate": "advancement.pvz.plant_master2.desc"
+    },
+    "frame": "goal",
+    "show_toast": true,
+    "announce_to_chat": true,
+    "hidden": false
+  },
+  "criteria": {
+    "shot_arrow": {
+      "trigger": "pvz:plant_level",
+      "conditions": {
+        "amount": {
+          "amount": {
+            "min": 13
+          }
+        }
+      }
+    }
+  },
+  "requirements": [
+    [
+      "shot_arrow"
+    ]
+  ]
+}

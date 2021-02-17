@@ -1,0 +1,52 @@
+{
+  "parent": "pvz:adventure/plant",
+  "display": {
+    "icon": {
+      "item": "pvz:ice_shroom_enjoy_card"
+    },
+    "title": {
+      "translate": "advancement.pvz.frozen"
+    },
+    "description": {
+      "translate": "advancement.pvz.frozen.desc"
+    },
+    "frame": "task",
+    "show_toast": true,
+    "announce_to_chat": true,
+    "hidden": false
+  },
+  "criteria": {
+    "frozen1": {
+      "trigger": "pvz:entity_effect_amount",
+      "conditions": {
+        "entity":{
+          "type": "pvz:ice_shroom"
+        },
+        "amount":{
+          "amount":{
+            "min": 20
+          }
+        }
+      }
+    },
+    "frozen2": {
+      "trigger": "pvz:entity_effect_amount",
+      "conditions": {
+        "entity":{
+          "type": "pvz:iceberg_lettuce"
+        },
+        "amount":{
+          "amount":{
+            "min": 20
+          }
+        }
+      }
+    }
+  },
+  "requirements": [
+    [
+      "frozen1",
+      "frozen2"
+    ]
+  ]
+}

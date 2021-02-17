@@ -4,6 +4,7 @@ import org.apache.commons.lang3.tuple.Pair;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+import com.hungteen.pvz.advancement.AdvancementHandler;
 import com.hungteen.pvz.register.EntitySpawnRegister;
 
 import net.minecraft.world.dimension.DimensionType;
@@ -44,6 +45,7 @@ public class PVZMod
     	}
     	PROXY.init();
     	RegistryHandler.register();
+    	AdvancementHandler.init();
     }
 
     @SubscribeEvent

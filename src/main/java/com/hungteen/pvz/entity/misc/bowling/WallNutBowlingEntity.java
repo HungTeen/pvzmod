@@ -1,5 +1,6 @@
 package com.hungteen.pvz.entity.misc.bowling;
 
+import com.hungteen.pvz.advancement.trigger.EntityEffectAmountTrigger;
 import com.hungteen.pvz.entity.drop.CoinEntity;
 import com.hungteen.pvz.misc.damage.PVZDamageSource;
 import com.hungteen.pvz.register.EntityRegister;
@@ -9,6 +10,7 @@ import com.hungteen.pvz.utils.EntityUtil;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.world.World;
 
 public class WallNutBowlingEntity extends AbstractBowlingEntity {
@@ -31,6 +33,10 @@ public class WallNutBowlingEntity extends AbstractBowlingEntity {
 		}
 		entity.attackEntityFrom(PVZDamageSource.causeBowlingDamage(this, this.getOwner()).setCount(hitCount), 30);
 		EntityUtil.playSound(this, SoundRegister.BOWLING_HIT.get());
+		PlayerEntity player = (PlayerEntity) this.getOwner();
+		if(player != null && player instanceof ServerPlayerEntity) {
+			EntityEffectAmountTrigger.INSTANCE.trigger((ServerPlayerEntity) player, this, hitCount);
+		}
 	}
 
 }

@@ -35,12 +35,12 @@ public class HypnoShroomEntity extends PVZPlantEntity {
 						GargantuarEntity gar = EntityRegister.GARGANTUAR.get().create(world);
 						EntityUtil.onMobEntitySpawn(world, gar, cause.getTrueSource().getPosition());
 						gar.setHealth(gar.getMaxHealth() * this.getSummonHealth());
-						gar.onCharmed();
+						gar.onCharmed(this);
 					}
 				} else {
 					if(cause.getTrueSource() instanceof PVZZombieEntity) {
 					    PVZZombieEntity zombie = (PVZZombieEntity) cause.getTrueSource();
-					    zombie.onCharmed();
+					    zombie.onCharmed(this);
 					    EntityUtil.playSound(this, SoundRegister.CHARM.get());
 					    float life = zombie.getHealth();
 					    float max = zombie.getMaxHealth();

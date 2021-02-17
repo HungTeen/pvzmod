@@ -1,0 +1,35 @@
+{
+  "display": {
+    "icon": {
+      "item": "pvz:fake_brain"
+    },
+    "title": {
+      "translate": "advancement.pvz.undead"
+    },
+    "description": {
+      "translate": "advancement.pvz.undead.desc"
+    },
+	"frame":"task",
+    "announce_to_chat": true
+  },
+  "parent":"pvz:adventure/root",
+  "criteria": {
+    "get_almanac": {
+      "trigger": "minecraft:consume_item",
+      "conditions": {
+        "items":[
+		  {
+		    "item":"pvz:fake_brain"
+		  }
+		]
+      }
+    }
+  },
+  "requirements": [[
+    "get_almanac"
+  ]],
+  "rewards":{
+    "recipes":[
+    ]
+  }
+}

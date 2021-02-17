@@ -1,5 +1,5 @@
 {
-  "parent": "pvz:origin",
+  "parent": "pvz:adventure/plant",
   "display": {
     "icon": {
       "item": "pvz:pea_gun"
@@ -10,7 +10,7 @@
     "description": {
       "translate": "advancement.pvz.pea_holiday.desc"
     },
-    "frame": "task",
+    "frame": "goal",
     "show_toast": true,
     "announce_to_chat": true,
     "hidden": false

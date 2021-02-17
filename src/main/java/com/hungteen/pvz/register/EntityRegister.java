@@ -26,6 +26,7 @@ import com.hungteen.pvz.entity.misc.BobsleCarEntity;
 import com.hungteen.pvz.entity.misc.DestroyCarEntity;
 import com.hungteen.pvz.entity.misc.ElementBallEntity;
 import com.hungteen.pvz.entity.misc.FireCrackersEntity;
+import com.hungteen.pvz.entity.misc.GardenRakeEntity;
 import com.hungteen.pvz.entity.misc.LawnMowerEntity;
 import com.hungteen.pvz.entity.misc.SmallChomperEntity;
 import com.hungteen.pvz.entity.misc.ZombieHandEntity;
@@ -164,6 +165,7 @@ import com.hungteen.pvz.render.entity.misc.DestroyCarRender;
 import com.hungteen.pvz.render.entity.misc.ElementBallRender;
 import com.hungteen.pvz.render.entity.misc.EmptyRender;
 import com.hungteen.pvz.render.entity.misc.FireCrackersRender;
+import com.hungteen.pvz.render.entity.misc.GardenRakeRender;
 import com.hungteen.pvz.render.entity.misc.LawnMowerRender;
 import com.hungteen.pvz.render.entity.misc.SmallChomperRender;
 import com.hungteen.pvz.render.entity.misc.ZombieHandRender;
@@ -333,6 +335,7 @@ public class EntityRegister {
 	public static final RegistryObject<EntityType<FireCrackersEntity>> FIRE_CRACKERS = registerEntityType(FireCrackersEntity::new, "fire_crackers", EntityClassification.MISC);
 	public static final RegistryObject<EntityType<ElementBallEntity>> ELEMENT_BALL = registerEntityType(ElementBallEntity::new, "element_ball", EntityClassification.MISC);
 	public static final RegistryObject<EntityType<DestroyCarEntity>> DESTROY_CAR = registerEntityType(DestroyCarEntity::new, "destroy_car", EntityClassification.MISC);
+	public static final RegistryObject<EntityType<GardenRakeEntity>> GARDEN_RAKE = registerEntityType(GardenRakeEntity::new, "garden_rake", EntityClassification.MISC);
 	
 	//animal
 	public static final RegistryObject<EntityType<FoodieZombieEntity>> FOODIE_ZOMBIE = registerEntityType(FoodieZombieEntity::new, "foodie_zombie", EntityClassification.WATER_CREATURE);
@@ -487,6 +490,7 @@ public class EntityRegister {
         RenderingRegistry.registerEntityRenderingHandler(FIRE_CRACKERS.get(), FireCrackersRender::new);
         RenderingRegistry.registerEntityRenderingHandler(ELEMENT_BALL.get(), ElementBallRender::new);
         RenderingRegistry.registerEntityRenderingHandler(DESTROY_CAR.get(), DestroyCarRender::new);
+        RenderingRegistry.registerEntityRenderingHandler(GARDEN_RAKE.get(), GardenRakeRender::new);
         
         //animal 
         RenderingRegistry.registerEntityRenderingHandler(FOODIE_ZOMBIE.get(), FoodieZombieRender::new);

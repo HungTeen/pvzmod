@@ -1,0 +1,37 @@
+{
+  "display": {
+    "icon": {
+      "item": "pvz:plantern_enjoy_card"
+    },
+    "title": {
+      "translate": "advancement.pvz.light_eye"
+    },
+    "description": {
+      "translate": "advancement.pvz.light_eye.desc"
+    },
+	"frame":"task",
+    "announce_to_chat": true
+  },
+  "parent":"pvz:adventure/plant",
+  "criteria": {
+    "get_almanac": {
+      "trigger": "minecraft:effects_changed",
+      "conditions": {
+        "effects":{
+          "pvz:light_eye":{
+            "amplifier":{
+              "min": 1
+            }
+          }
+        }
+      }
+    }
+  },
+  "requirements": [[
+    "get_almanac"
+  ]],
+  "rewards":{
+    "recipes":[
+    ]
+  }
+}

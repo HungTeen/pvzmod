@@ -63,13 +63,19 @@ public class CobCannonEntity extends PVZPlantEntity {
 
 	protected void registerAttributes() {
 		super.registerAttributes();
-		this.getAttribute(SharedMonsterAttributes.MOVEMENT_SPEED).setBaseValue((double) 0.4F);
+		this.getAttribute(SharedMonsterAttributes.MOVEMENT_SPEED).setBaseValue((double) 0.2F);
 	}
 
 	@Override
 	protected void registerGoals() {
 		super.registerGoals();
 		this.targetSelector.addGoal(2, new PVZRandomTargetGoal(this, true, 10, 48, 16));
+	}
+	
+	@Override
+	public void onSpawnedByPlayer(PlayerEntity player, int lvl) {
+		super.onSpawnedByPlayer(player, lvl);
+		this.getAttribute(SharedMonsterAttributes.MOVEMENT_SPEED).setBaseValue(this.getMoveSpeed());
 	}
 	
 	@Override
@@ -255,8 +261,8 @@ public class CobCannonEntity extends PVZPlantEntity {
 
 	protected boolean mountTo(PlayerEntity player) {
 		if (!this.world.isRemote) {
-			player.rotationYaw = this.rotationYaw;
-			player.rotationPitch = this.rotationPitch;
+			this.rotationYaw = player.rotationYaw;
+			this.rotationPitch = player.rotationPitch;
 			player.startRiding(this);
 			return true;
 		}
@@ -288,7 +294,7 @@ public class CobCannonEntity extends PVZPlantEntity {
 
 	@Override
 	protected boolean canFitPassenger(Entity passenger) {
-		return !EntityUtil.checkCanEntityAttack(this, passenger) && super.canFitPassenger(passenger);
+		return ! EntityUtil.checkCanEntityAttack(this, passenger) && super.canFitPassenger(passenger);
 	}
 
 	@Override
@@ -302,15 +308,25 @@ public class CobCannonEntity extends PVZPlantEntity {
 	}
 
 	public int getPreCD() {
-		return 400;
+		return 1000;
 	}
 	
 	public int getSuperCornNum() {
-		return 4;
+		if(this.isPlantInStage(1)) return 4;
+		if(this.isPlantInStage(2)) return 5;
+		return 6;
 	}
 	
 	public float getAttackDamage() {
-		return 150F;
+		int lvl = this.getPlantLvl();
+		if(lvl <= 19) return 145 + 5 * lvl;
+		return 250F;
+	}
+	
+	public float getMoveSpeed() {
+		int lvl = this.getPlantLvl();
+		if(lvl <= 19) return 0.19F + 0.1F * lvl;
+		return 0.4F;
 	}
 
 	public int getAnimCD() {
@@ -319,7 +335,7 @@ public class CobCannonEntity extends PVZPlantEntity {
 
 	@Override
 	public EntitySize getSize(Pose poseIn) {
-		return EntitySize.flexible(1.25f, 1.1f);
+		return EntitySize.flexible(1.25f, 1f);
 	}
 
 	@Override

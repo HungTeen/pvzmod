@@ -1,5 +1,6 @@
 package com.hungteen.pvz.entity.plant.ice;
 
+import com.hungteen.pvz.advancement.trigger.EntityEffectAmountTrigger;
 import com.hungteen.pvz.entity.plant.base.PlantCloserEntity;
 import com.hungteen.pvz.entity.plant.interfaces.IIcePlant;
 import com.hungteen.pvz.misc.damage.PVZDamageSource;
@@ -14,6 +15,8 @@ import net.minecraft.entity.EntitySize;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.Pose;
+import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.potion.EffectInstance;
 import net.minecraft.world.World;
 
@@ -41,9 +44,17 @@ public class IcebergLettuceEntity extends PlantCloserEntity implements IIcePlant
 			EntityUtil.spawnParticle(this, 5);
 		}
 		EntityUtil.playSound(this, SoundRegister.ZOMBIE_FROZEN.get());
-		EntityUtil.getAttackEntities(this, EntityUtil.getEntityAABB(this, range, range)).forEach((target) -> {
+		int cnt = 0;
+		for(Entity target : EntityUtil.getAttackEntities(this, EntityUtil.getEntityAABB(this, range, range))) {
 			this.dealDamageTo(target);
-		});
+			if(target instanceof LivingEntity && EntityUtil.isEntityCold((LivingEntity) target)) {
+				++ cnt;
+			}
+		};
+		PlayerEntity player = EntityUtil.getEntityOwner(world, this);
+		if(player != null && player instanceof ServerPlayerEntity) {
+			EntityEffectAmountTrigger.INSTANCE.trigger((ServerPlayerEntity) player, this, cnt);
+		}
 	}
 	
 	private void dealDamageTo(Entity target) {

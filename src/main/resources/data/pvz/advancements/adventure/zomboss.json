@@ -12,7 +12,7 @@
 	"frame":"task",
     "announce_to_chat": true
   },
-  "parent":"pvz:origin",
+  "parent":"pvz:adventure/giant",
   "criteria": {
     "get_origin": {
       "trigger": "minecraft:player_killed_entity",

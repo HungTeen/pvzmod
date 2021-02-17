@@ -29,7 +29,6 @@ import net.minecraftforge.api.distmarker.OnlyIn;
 public class LawnMowerEntity extends AbstractOwnerEntity {
 
 	private static final DataParameter<Boolean> START_RUN = EntityDataManager.createKey(LawnMowerEntity.class, DataSerializers.BOOLEAN);
-	private static final DataParameter<Float> ROTATION = EntityDataManager.createKey(LawnMowerEntity.class, DataSerializers.FLOAT);
 	
 	public LawnMowerEntity(EntityType<?> entityTypeIn, World worldIn) {
 		super(entityTypeIn, worldIn);
@@ -40,7 +39,6 @@ public class LawnMowerEntity extends AbstractOwnerEntity {
 	protected void registerData() {
 		super.registerData();
 		this.dataManager.register(START_RUN, false);
-		this.dataManager.register(ROTATION, 0F);
 	}
 	
 	@Override
@@ -83,7 +81,6 @@ public class LawnMowerEntity extends AbstractOwnerEntity {
 	
 	@Override
 	public boolean processInitialInteract(PlayerEntity player, Hand hand) {
-//		System.out.println("1");
 		if(! this.isStartRun() && hand == Hand.MAIN_HAND && player.getHeldItemMainhand().isEmpty()) {
 			if(! world.isRemote) {
 				player.addItemStackToInventory(new ItemStack(ItemRegister.LAWN_MOWER.get()));

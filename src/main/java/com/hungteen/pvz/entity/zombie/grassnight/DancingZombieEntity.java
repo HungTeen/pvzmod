@@ -81,6 +81,7 @@ public class DancingZombieEntity extends PVZZombieEntity{
 				BackupDancerEntity dancer = EntityRegister.BACKUP_DANCER.get().create(world);
 				BlockPos pos = this.getPosition().add(POS_OFFSET[i][0], 0, POS_OFFSET[i][1]);
 				dancer.setOwnerId(this.getEntityId());
+				dancer.setCharmed(this.isCharmed());
 				EntityUtil.onMobEntitySpawn(world, dancer, pos);
 			}
 		}

@@ -3,6 +3,7 @@ package com.hungteen.pvz.item.tool.card;
 import java.util.function.Consumer;
 
 import com.hungteen.pvz.PVZMod;
+import com.hungteen.pvz.advancement.trigger.PlayerPlacePlantTrigger;
 import com.hungteen.pvz.capability.CapabilityHandler;
 import com.hungteen.pvz.capability.player.PlayerDataManager;
 import com.hungteen.pvz.enchantment.EnchantmentUtil;
@@ -272,6 +273,9 @@ public class PlantCardItem extends SummonCardItem {
 			}
 		} else {
 			handlePlantCardCoolDown(player, stack, item, plantLvl);
+		}
+		if(player instanceof ServerPlayerEntity) {
+		    PlayerPlacePlantTrigger.INSTANCE.trigger((ServerPlayerEntity) player, item.plantType.ordinal());
 		}
 		player.addStat(Stats.ITEM_USED.get(item));
 	}

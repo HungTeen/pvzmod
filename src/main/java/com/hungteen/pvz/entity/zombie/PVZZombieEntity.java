@@ -8,6 +8,7 @@ import java.util.UUID;
 import javax.annotation.Nullable;
 
 import com.hungteen.pvz.PVZConfig;
+import com.hungteen.pvz.advancement.trigger.CharmZombieTrigger;
 import com.hungteen.pvz.data.loot.PVZLoot;
 import com.hungteen.pvz.entity.ai.BreakBlockGoal;
 import com.hungteen.pvz.entity.ai.PVZLookRandomlyGoal;
@@ -52,6 +53,7 @@ import net.minecraft.entity.ai.goal.WaterAvoidingRandomWalkingGoal;
 import net.minecraft.entity.item.ItemEntity;
 import net.minecraft.entity.monster.MonsterEntity;
 import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.network.datasync.DataParameter;
@@ -622,8 +624,12 @@ public abstract class PVZZombieEntity extends MonsterEntity implements IPVZZombi
 	 * charm -> uncharm
 	 * uncharm -> charm
 	 */
-	public void onCharmed() {
+	public void onCharmed(PVZPlantEntity plantEntity) {
 		if(this.canBeCharmed()) {
+			PlayerEntity player = EntityUtil.getEntityOwner(world, plantEntity);
+			if(player != null && player instanceof ServerPlayerEntity) {
+				CharmZombieTrigger.INSTANCE.trigger((ServerPlayerEntity) player, this);
+			}
 			this.setCharmed(! this.isCharmed());
 			if(this.getZombieType() == Type.SUPER) {
 				this.setZombieType(Type.NORMAL);

@@ -19,6 +19,7 @@ import com.hungteen.pvz.item.tool.BalloonItem;
 import com.hungteen.pvz.item.tool.BobsleCarItem;
 import com.hungteen.pvz.item.tool.BowlingGloveItem;
 import com.hungteen.pvz.item.tool.FireCrackerItem;
+import com.hungteen.pvz.item.tool.GardenRakeItem;
 import com.hungteen.pvz.item.tool.JackBoxItem;
 import com.hungteen.pvz.item.tool.LawnMowerItem;
 import com.hungteen.pvz.item.tool.PeaGunItem;
@@ -243,6 +244,7 @@ public class ItemRegister {
 	public static final RegistryObject<Item> FIRE_CRACKER = ITEMS.register("fire_cracker", FireCrackerItem::new);
 	public static final RegistryObject<Item> WARNING_SIGN = ITEMS.register("warning_sign", () -> new SwordItem(PVZItemTier.STEEL, 5, - 2.4F, new Item.Properties().group(GroupRegister.PVZ_MISC).maxStackSize(1)));
 	public static final RegistryObject<Item> POLE = ITEMS.register("pole", () -> new AxeItem(PVZItemTier.STEEL, 8, - 3F, new Item.Properties().group(GroupRegister.PVZ_MISC).maxStackSize(1)));
+	public static final RegistryObject<Item> GARDEN_RAKE = ITEMS.register("garden_rake", GardenRakeItem::new);
 	
 	//armor
 	public static final RegistryObject<Item> CONE_HEAD = ITEMS.register("cone_head", ()->new ConeArmorItem(ArmorMaterial.LEATHER, EquipmentSlotType.HEAD));

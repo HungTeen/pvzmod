@@ -4,7 +4,10 @@ package com.hungteen.pvz.capability.player;
 import java.util.EnumMap;
 import java.util.HashMap;
 
-import com.hungteen.pvz.advancement.AdvancementHandler;
+import com.hungteen.pvz.advancement.trigger.MoneyTrigger;
+import com.hungteen.pvz.advancement.trigger.PlantLevelTrigger;
+import com.hungteen.pvz.advancement.trigger.SunAmountTrigger;
+import com.hungteen.pvz.advancement.trigger.TreeLevelTrigger;
 import com.hungteen.pvz.event.events.PlayerLevelUpEvent.PlantLevelUpEvent;
 import com.hungteen.pvz.event.events.PlayerLevelUpEvent.TreeLevelUpEvent;
 import com.hungteen.pvz.gui.container.shop.MysteryShopContainer;
@@ -115,6 +118,7 @@ public class PlayerDataManager {
 				int now = MathHelper.clamp(resources.get(Resources.TREE_LVL) + num, 1, PlayerUtil.MAX_TREE_LVL);
 				resources.put(Resources.TREE_LVL, now);
 				this.addPlayerStats(Resources.SUN_NUM, 0);
+				TreeLevelTrigger.INSTANCE.trigger((ServerPlayerEntity) player, now);
 				break;
 			}
 			case TREE_XP:{
@@ -124,7 +128,7 @@ public class PlayerDataManager {
 			case SUN_NUM:{
 				int now = MathHelper.clamp(resources.get(Resources.SUN_NUM) + num, 0, PlayerUtil.getPlayerMaxSunNum(resources.get(Resources.TREE_LVL)));
 				resources.put(Resources.SUN_NUM, now);
-				AdvancementHandler.SUN_AMOUNT.trigger((ServerPlayerEntity) player, now);
+				SunAmountTrigger.INSTANCE.trigger((ServerPlayerEntity) player, now);
 				break;
 			}
 			case ENERGY_NUM:{
@@ -150,6 +154,9 @@ public class PlayerDataManager {
 			default:
 				int now = MathHelper.clamp(resources.get(res) + num, 0, PlayerUtil.MAX_MONEY);
 				resources.put(res, now);
+				if(res == Resources.MONEY) {
+					MoneyTrigger.INSTANCE.trigger((ServerPlayerEntity) player, now);
+				}
 				break;
 			}
 			this.sendPacket(player, res);
@@ -242,6 +249,7 @@ public class PlayerDataManager {
 			int maxLvl = PlantUtil.getPlantMaxLvl(plant);
 			now = MathHelper.clamp(now, 1, maxLvl);
 			this.plantLevel.put(plant, now);
+			PlantLevelTrigger.INSTANCE.trigger((ServerPlayerEntity) player, now);
 			this.sendPlantPacket(player, plant);
 		}
 		

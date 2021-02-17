@@ -1,0 +1,35 @@
+{
+  "parent": "pvz:adventure/plant",
+  "display": {
+    "icon": {
+      "item": "pvz:potato_mine_enjoy_card"
+    },
+    "title": {
+      "translate": "advancement.pvz.spudow"
+    },
+    "description": {
+      "translate": "advancement.pvz.spudow.desc"
+    },
+    "frame": "goal",
+    "show_toast": true,
+    "announce_to_chat": true,
+    "hidden": false
+  },
+  "criteria": {
+    "shot_arrow": {
+      "trigger": "minecraft:player_killed_entity",
+      "conditions": {
+        "killing_blow": {
+          "source_entity": {
+            "type": "pvz:potato_mine"
+          }
+        }
+      }
+    }
+  },
+  "requirements": [
+    [
+      "shot_arrow"
+    ]
+  ]
+}

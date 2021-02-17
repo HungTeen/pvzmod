@@ -54,7 +54,7 @@ public enum Plants {
 	WINTER_MELON(8),
 	GOLD_MAGNET(8), 
 	SPIKE_ROCK(8),
-	COB_CANNON(8),
+	COB_CANNON(40),
 	IMITATER(0),
 	// other
 	WATER_GUARD(4),
@@ -81,6 +81,7 @@ public enum Plants {
 	public final boolean isWaterPlant;
 	public final boolean isUpgradePlant;
 	public final boolean isOuterPlant;
+	public final boolean isBigPlant;
 	
 	private Plants(int status) {
 		this.isShroomPlant = (((status >> 0) & 1) == 1);
@@ -88,6 +89,7 @@ public enum Plants {
 		this.isWaterPlant = (((status >> 2) & 1) == 1);
 		this.isUpgradePlant = (((status >> 3) & 1) == 1);
 		this.isOuterPlant = (((status >> 4) & 1) == 1);
+		this.isBigPlant = (((status >> 5) & 1) == 1);
 	}
 	
 	public static Plants getPlantByName(String name) {

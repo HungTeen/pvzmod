@@ -37,6 +37,7 @@ public class TradeUtil {
 		putInfoToDaveGoodsMap(DaveGoods.WINTER_MELON_CARD, 15000, new ItemStack(ItemRegister.WINTER_MELON_CARD.get()));
 		putInfoToDaveGoodsMap(DaveGoods.GOLD_MAGNET_CARD, 3000, new ItemStack(ItemRegister.GOLD_MAGNET_CARD.get()));
 		putInfoToDaveGoodsMap(DaveGoods.SPIKE_ROCK_CARD, 7500, new ItemStack(ItemRegister.SPIKE_ROCK_CARD.get()));
+		putInfoToDaveGoodsMap(DaveGoods.COB_CANNON_CARD, 21000, new ItemStack(ItemRegister.COB_CANNON_CARD.get()));
 		putInfoToDaveGoodsMap(DaveGoods.IMITATER_CARD, 30000, new ItemStack(ItemRegister.IMITATER_CARD.get()));
 		putInfoToDaveGoodsMap(DaveGoods.CAR_KEY, 500, new ItemStack(ItemRegister.CAR_KEY.get()));
 		putInfoToDaveGoodsMap(DaveGoods.LIGHT_EYE_POTION_1, 100, PotionRecipeHandler.LIGHT_EYE_POTION_1);
@@ -101,6 +102,7 @@ public class TradeUtil {
 		WINTER_MELON_CARD(GuiHandler.DAVE_SHOP),
 		GOLD_MAGNET_CARD(GuiHandler.DAVE_SHOP),
 		SPIKE_ROCK_CARD(GuiHandler.DAVE_SHOP),
+		COB_CANNON_CARD(GuiHandler.DAVE_SHOP),
 		IMITATER_CARD(GuiHandler.DAVE_SHOP),
 		CAR_KEY(GuiHandler.DAVE_SHOP),
 		LIGHT_EYE_POTION_1(GuiHandler.SUN_SHOP),

@@ -59,6 +59,7 @@ public class TargetArrowEntity extends AbstractArrowEntity {
 			zombie.setCharmed(true);
 			zombie.setStealTarget((LivingEntity) result.getEntity());
 			EntityUtil.onMobEntitySpawn(world, zombie, getPosition().up(20));
+			super.onEntityHit(result);
 			this.remove();
 		}
 	}

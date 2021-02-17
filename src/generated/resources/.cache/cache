@@ -35,6 +35,9 @@ a4a34df522c5522b68312740da79914d000868ca assets\pvz\models\item\cat_tail_enjoy_c
 3f71c0aa4a3a5ece459864d9488f7af8130ac697 assets\pvz\models\item\chomper_card.json
 0455005272904f2080f93644dcfc8ef3af94f79c assets\pvz\models\item\chomper_enjoy_card.json
 640fb723df4adaf9b0e055a7e45afa7756e5acb4 assets\pvz\models\item\chomper_spawn_egg.json
+ceb96b0c90f370d3b96f3a8af953f12cf148ccb9 assets\pvz\models\item\cob_cannon_card.json
+702a92ad16052a5f06f7e14f0929b1a112d98b02 assets\pvz\models\item\cob_cannon_enjoy_card.json
+640fb723df4adaf9b0e055a7e45afa7756e5acb4 assets\pvz\models\item\cob_cannon_spawn_egg.json
 1e4199ff4f1314bf64327abd8b9e8e288901a565 assets\pvz\models\item\coffee_bean_card.json
 de1725bb678271d9f7f2960e56a1a83bc6190ce9 assets\pvz\models\item\coffee_bean_enjoy_card.json
 640fb723df4adaf9b0e055a7e45afa7756e5acb4 assets\pvz\models\item\coffee_bean_spawn_egg.json
@@ -318,7 +321,7 @@ d5eadfd3aee4f0b370846e896c8e0fc06d21c4c2 data\pvz\recipes\smelting\amethyst_ingo
 c480118fb9bd972d6e68516abde47f519559f2fe data\pvz\recipes\smelting\cooked_brain_from_smoking.json
 81350523dbc1d543edb337104a1d6c26f3d253d6 data\pvz\recipes\smelting\steel_ingot_from_blasting.json
 da22f030f7ed1efdf58dd4981b918e1413a36d26 data\pvz\recipes\smelting\steel_ingot_from_smelting.json
-85ec9de3c453121ce91563b4a9d642df8edaf4a4 data\pvz\tags\items\cards\plant_card.json
-8bd37f59bbbbfd02b9e5f2fe24446e908e78c9a5 data\pvz\tags\items\cards\plant_enjoy_card.json
-b5ce9f9060f41393b2cdb78ee9b34c979e3c16fb data\pvz\tags\items\cards\plant_summon_card.json
+4e1889a03b6102fc96f855bca6a4e96e2479b74b data\pvz\tags\items\cards\plant_card.json
+971073390e073718671a7dee0e6e58bb1e2d4540 data\pvz\tags\items\cards\plant_enjoy_card.json
+90c0be098b625d71f68ace96fab39edc87f9653b data\pvz\tags\items\cards\plant_summon_card.json
 293c3c6119087956dfb83d72d897f82c1c248628 data\pvz\tags\items\cards\template_card.json

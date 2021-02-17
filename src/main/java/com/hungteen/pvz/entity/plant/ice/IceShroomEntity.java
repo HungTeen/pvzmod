@@ -1,5 +1,6 @@
 package com.hungteen.pvz.entity.plant.ice;
 
+import com.hungteen.pvz.advancement.trigger.EntityEffectAmountTrigger;
 import com.hungteen.pvz.entity.misc.ElementBallEntity;
 import com.hungteen.pvz.entity.misc.ElementBallEntity.ElementTypes;
 import com.hungteen.pvz.entity.plant.base.PlantBomberEntity;
@@ -16,6 +17,8 @@ import net.minecraft.entity.EntitySize;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.Pose;
+import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.particles.ParticleTypes;
 import net.minecraft.potion.EffectInstance;
 import net.minecraft.util.math.AxisAlignedBB;
@@ -32,11 +35,19 @@ public class IceShroomEntity extends PlantBomberEntity implements IIcePlant{
 		if(! this.world.isRemote) {
 			float len = getAttackRange();
 			AxisAlignedBB aabb=EntityUtil.getEntityAABB(this, len, len);
+			int cnt = 0;
 			for(LivingEntity entity : EntityUtil.getEntityTargetableEntity(this, aabb)) {
 				 PVZDamageSource source = PVZDamageSource.causeIceDamage(this, this);
 				 source.addEffect(getColdEffect());
 				 source.addEffect(getFrozenEffect());
 				 entity.attackEntityFrom(source, this.getAttackDamage());
+				 if(EntityUtil.isEntityCold(entity)) {
+					 ++ cnt;
+				 }
+			}
+			PlayerEntity player = EntityUtil.getEntityOwner(world, this);
+			if(player != null && player instanceof ServerPlayerEntity) {
+				EntityEffectAmountTrigger.INSTANCE.trigger((ServerPlayerEntity) player, this, cnt);
 			}
 			EntityUtil.playSound(this, SoundRegister.ZOMBIE_FROZEN.get());
 		} else {

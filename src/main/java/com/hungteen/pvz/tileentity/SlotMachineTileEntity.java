@@ -56,6 +56,7 @@ public class SlotMachineTileEntity extends TileEntity implements ITickableTileEn
 	private int changeCnt;
 	private int changeTick = 0;
 	private boolean isRunning = false;
+	@SuppressWarnings("unused")
 	private PlayerEntity player;
 	
 	static {
@@ -173,11 +174,12 @@ public class SlotMachineTileEntity extends TileEntity implements ITickableTileEn
 //		System.out.println("");
 	}
 
-	public void startRun() {
+	public void startRun(PlayerEntity player) {
 		if(player == null) {
 			System.out.println("Error : No player bind with Slot Machine !");
 			return ;
 		}
+		this.player = player;
 		this.isRunning = true;
 		PlayerUtil.playClientSound(player, 8);
 		PlayerUtil.addPlayerStats(player, Resources.SUN_NUM, - SUN_COST);

@@ -7,6 +7,7 @@ import java.util.UUID;
 import javax.annotation.Nullable;
 
 import com.hungteen.pvz.PVZConfig;
+import com.hungteen.pvz.advancement.trigger.PlantSuperTrigger;
 import com.hungteen.pvz.entity.ai.PVZLookRandomlyGoal;
 import com.hungteen.pvz.entity.drop.SunEntity;
 import com.hungteen.pvz.entity.plant.enforce.SquashEntity;
@@ -45,6 +46,7 @@ import net.minecraft.entity.MobEntity;
 import net.minecraft.entity.SharedMonsterAttributes;
 import net.minecraft.entity.SpawnReason;
 import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.network.datasync.DataParameter;
@@ -65,17 +67,28 @@ import net.minecraft.world.World;
 
 public abstract class PVZPlantEntity extends CreatureEntity implements IPVZPlant, IHasMetal {
 
-	private static final DataParameter<Integer> SUPER_TIME = EntityDataManager.createKey(PVZPlantEntity.class, DataSerializers.VARINT);
-	private static final DataParameter<Integer> PLANT_LVL = EntityDataManager.createKey(PVZPlantEntity.class, DataSerializers.VARINT);
-	private static final DataParameter<Optional<UUID>> OWNER_UUID = EntityDataManager.createKey(PVZPlantEntity.class, DataSerializers.OPTIONAL_UNIQUE_ID);
-	private static final DataParameter<Integer> PLANT_STATES = EntityDataManager.createKey(PVZPlantEntity.class, DataSerializers.VARINT);
-	private static final DataParameter<Integer> ATTACK_TIME = EntityDataManager.createKey(PVZPlantEntity.class, DataSerializers.VARINT);
-	private static final DataParameter<Integer> GOLD_TIME = EntityDataManager.createKey(PVZPlantEntity.class, DataSerializers.VARINT);
-	private static final DataParameter<Integer> BOOST_TIME = EntityDataManager.createKey(PVZPlantEntity.class, DataSerializers.VARINT);
-	private static final DataParameter<Boolean> IS_CHARMED = EntityDataManager.createKey(PVZPlantEntity.class, DataSerializers.BOOLEAN);
-	private static final DataParameter<Integer> SLEEP_TIME = EntityDataManager.createKey(PVZPlantEntity.class, DataSerializers.VARINT);
-	private static final DataParameter<Integer> LIVE_TICK = EntityDataManager.createKey(PVZPlantEntity.class, DataSerializers.VARINT);
-	private static final DataParameter<Float> PUMPKIN_LIFE = EntityDataManager.createKey(PVZPlantEntity.class, DataSerializers.FLOAT);
+	private static final DataParameter<Integer> SUPER_TIME = EntityDataManager.createKey(PVZPlantEntity.class,
+			DataSerializers.VARINT);
+	private static final DataParameter<Integer> PLANT_LVL = EntityDataManager.createKey(PVZPlantEntity.class,
+			DataSerializers.VARINT);
+	private static final DataParameter<Optional<UUID>> OWNER_UUID = EntityDataManager.createKey(PVZPlantEntity.class,
+			DataSerializers.OPTIONAL_UNIQUE_ID);
+	private static final DataParameter<Integer> PLANT_STATES = EntityDataManager.createKey(PVZPlantEntity.class,
+			DataSerializers.VARINT);
+	private static final DataParameter<Integer> ATTACK_TIME = EntityDataManager.createKey(PVZPlantEntity.class,
+			DataSerializers.VARINT);
+	private static final DataParameter<Integer> GOLD_TIME = EntityDataManager.createKey(PVZPlantEntity.class,
+			DataSerializers.VARINT);
+	private static final DataParameter<Integer> BOOST_TIME = EntityDataManager.createKey(PVZPlantEntity.class,
+			DataSerializers.VARINT);
+	private static final DataParameter<Boolean> IS_CHARMED = EntityDataManager.createKey(PVZPlantEntity.class,
+			DataSerializers.BOOLEAN);
+	private static final DataParameter<Integer> SLEEP_TIME = EntityDataManager.createKey(PVZPlantEntity.class,
+			DataSerializers.VARINT);
+	private static final DataParameter<Integer> LIVE_TICK = EntityDataManager.createKey(PVZPlantEntity.class,
+			DataSerializers.VARINT);
+	private static final DataParameter<Float> PUMPKIN_LIFE = EntityDataManager.createKey(PVZPlantEntity.class,
+			DataSerializers.FLOAT);
 	private static final int LADDER_FLAG = 0;
 	protected int weakTime = 0;
 	protected boolean isImmuneToWeak = false;
@@ -86,12 +99,12 @@ public abstract class PVZPlantEntity extends CreatureEntity implements IPVZPlant
 	protected boolean canBeCharmed = true;
 	public int plantSunCost = 0;
 	public int outerSunCost = 0;
-	
+
 	public PVZPlantEntity(EntityType<? extends CreatureEntity> type, World worldIn) {
 		super(type, worldIn);
 		this.recalculateSize();
 	}
-	
+
 	@Override
 	protected void registerData() {
 		super.registerData();
@@ -107,21 +120,21 @@ public abstract class PVZPlantEntity extends CreatureEntity implements IPVZPlant
 		dataManager.register(PUMPKIN_LIFE, 0f);
 		dataManager.register(PLANT_STATES, 0);
 	}
-	
+
 	@Override
 	protected void registerAttributes() {
 		super.registerAttributes();
 		this.getAttributes().registerAttribute(SharedMonsterAttributes.ATTACK_DAMAGE).setBaseValue(0);
 		this.getAttributes().registerAttribute(SharedMonsterAttributes.ATTACK_SPEED).setBaseValue(0);
-        this.getAttribute(SharedMonsterAttributes.MOVEMENT_SPEED).setBaseValue(0d);
-        this.getAttribute(SharedMonsterAttributes.KNOCKBACK_RESISTANCE).setBaseValue(1d);
+		this.getAttribute(SharedMonsterAttributes.MOVEMENT_SPEED).setBaseValue(0d);
+		this.getAttribute(SharedMonsterAttributes.KNOCKBACK_RESISTANCE).setBaseValue(1d);
 	}
-	
+
 	@Override
 	protected void registerGoals() {
 		this.goalSelector.addGoal(2, new PVZLookRandomlyGoal(this));
 	}
-	
+
 	/**
 	 * init attributes with plant lvl
 	 */
@@ -131,108 +144,111 @@ public abstract class PVZPlantEntity extends CreatureEntity implements IPVZPlant
 		this.getAttribute(SharedMonsterAttributes.MAX_HEALTH).setBaseValue(this.getPlantHealth());
 		this.heal(this.getMaxHealth());
 	}
-	
+
 	@Override
 	public float getPlantHealth() {
 		int lvl = this.getPlantLvl();
-		if(lvl <= 14) {
+		if (lvl <= 14) {
 			return 27.5f + 2.5f * lvl;
-		} 
+		}
 		return 5 * lvl - 10;
 	}
-	
+
 	@Override
 	public void livingTick() {
 		super.livingTick();
-		if(! this.isAlive()) {
-			return ;
+		if (!this.isAlive()) {
+			return;
 		}
 		this.plantBaseTick();
-		if(this.canPlantNormalUpdate()) {
+		if (this.canPlantNormalUpdate()) {
 			this.normalPlantTick();
 		}
 	}
-	
+
 	public boolean canPlantNormalUpdate() {
-		if(this.getRidingEntity() instanceof BungeeZombieEntity || this.hasMetal()) return false;
-		return ! this.isPlantSleeping() && ! EntityUtil.isEntityFrozen(this) && ! EntityUtil.isEntityButter(this);
+		if (this.getRidingEntity() instanceof BungeeZombieEntity || this.hasMetal())
+			return false;
+		return !this.isPlantSleeping() && !EntityUtil.isEntityFrozen(this) && !EntityUtil.isEntityButter(this);
 	}
-	
+
 	/**
 	 * base tick for normal plant
 	 */
-    protected void plantBaseTick() {
-    	//when plant stand on wrong block
-		if(!this.world.isRemote && !this.isImmuneToWeak && this.getRidingEntity() == null) {
-			if(this.checkNormalPlantWeak() && this.weakTime == 0) {
+	protected void plantBaseTick() {
+		// when plant stand on wrong block
+		if (!this.world.isRemote && !this.isImmuneToWeak && this.getRidingEntity() == null) {
+			if (this.checkNormalPlantWeak() && this.weakTime == 0) {
 				this.weakTime = this.weakCD;
 				this.attackEntityFrom(PVZDamageSource.causeWeakDamage(this, this), this.weakDamage);
 			}
-			if(this.weakTime > 0) {
-				this.weakTime --;
+			if (this.weakTime > 0) {
+				this.weakTime--;
 			}
 		}
-		//super mode or boost time or sleep time
-		if(!this.world.isRemote) {
-			//super 
-		    if(this.getSuperTime() > 0) {
-			    this.setSuperTime(this.getSuperTime() - 1);
-		    }
-		    //boost
-		    if(this.getBoostTime() > 0) {
-		    	this.setBoostTime(this.getBoostTime() - 1);
-		    }
-		    //sleep
-		    if(this.shouldPlantRegularSleep()) {
-		    	if(this.getSleepTime() < 0) {
-		    		this.setSleepTime(this.getSleepTime() + 1);
-		    	}else {
-		    		this.setSleepTime(Math.max(1, this.getSleepTime()));
-		    	}
-		    }else {
-		    	if(this.getSleepTime() > 0) {
-		    		this.setSleepTime(this.getSleepTime() - 1);
-		    	}
-		    }
+		// super mode or boost time or sleep time
+		if (!this.world.isRemote) {
+			// super
+			if (this.getSuperTime() > 0) {
+				this.setSuperTime(this.getSuperTime() - 1);
+			}
+			// boost
+			if (this.getBoostTime() > 0) {
+				this.setBoostTime(this.getBoostTime() - 1);
+			}
+			// sleep
+			if (this.shouldPlantRegularSleep()) {
+				if (this.getSleepTime() < 0) {
+					this.setSleepTime(this.getSleepTime() + 1);
+				} else {
+					this.setSleepTime(Math.max(1, this.getSleepTime()));
+				}
+			} else {
+				if (this.getSleepTime() > 0) {
+					this.setSleepTime(this.getSleepTime() - 1);
+				}
+			}
 		}
-		//spawn sleep particle
-		if(world.isRemote && this.isPlantSleeping() && this.ticksExisted % 20 == 0) {
-			world.addParticle(ParticleRegister.SLEEP.get(), this.getPosX(), this.getPosY() + this.getEyeHeight(), this.getPosZ(), 0.05, 0.05, 0.05);
+		// spawn sleep particle
+		if (world.isRemote && this.isPlantSleeping() && this.ticksExisted % 20 == 0) {
+			world.addParticle(ParticleRegister.SLEEP.get(), this.getPosX(), this.getPosY() + this.getEyeHeight(),
+					this.getPosZ(), 0.05, 0.05, 0.05);
 		}
-		//max live tick
-		if(! world.isRemote) {
+		// max live tick
+		if (!world.isRemote) {
 			this.setLiveTick(this.getLiveTick() + 1);
-		    if(this.getLiveTick() >= this.getMaxLiveTick()) {//it's time to disappear 
-			    this.remove();
-		    }
+			if (this.getLiveTick() >= this.getMaxLiveTick()) {// it's time to disappear
+				this.remove();
+			}
 		}
-		//lock the x and z of plant
-		if(this.shouldLockXZ()) {
-		    if(this.getRidingEntity() != null) {
-		    }else {
-			    BlockPos pos = this.getPosition();
-		        this.setPosition(pos.getX() + 0.5, this.getPosY(), pos.getZ() + 0.5);
-		    }
+		// lock the x and z of plant
+		if (this.shouldLockXZ()) {
+			if (this.getRidingEntity() != null) {
+			} else {
+				BlockPos pos = this.getPosition();
+				this.setPosition(pos.getX() + 0.5, this.getPosY(), pos.getZ() + 0.5);
+			}
 		}
-		if(! world.isRemote) {
-			if(this.getPlantEnumName().isWaterPlant && this.isInWater()) {
+		if (!world.isRemote) {
+			if (this.getPlantEnumName().isWaterPlant && this.isInWater()) {
 				Vec3d vec = this.getMotion();
 				double speedY = Math.min(vec.y, 0.05D);
 				this.setMotion(vec.x, speedY, vec.z);
 			}
 		}
-    }
-	
+	}
+
 	/**
 	 * tick for normal plant
 	 */
-	protected void normalPlantTick(){
-		if(! this.world.isRemote && this.getGoldTime() < GoldLeafEntity.GOLD_GEN_CD) {
+	protected void normalPlantTick() {
+		if (!this.world.isRemote && this.getGoldTime() < GoldLeafEntity.GOLD_GEN_CD) {
 			Block block = this.world.getBlockState(this.getPosition().down()).getBlock();
 			int lvl = GoldLeafEntity.getBlockGoldLevel(block);
-			if(lvl <= 0) return ;
+			if (lvl <= 0)
+				return;
 			this.setGoldTime(this.getGoldTime() + 1);
-			if(this.getGoldTime() >= GoldLeafEntity.GOLD_GEN_CD) {
+			if (this.getGoldTime() >= GoldLeafEntity.GOLD_GEN_CD) {
 				this.setGoldTime(0);
 				SunEntity sun = EntityRegister.SUN.get().create(world);
 				sun.setAmount(GoldLeafEntity.getGoldGenAmount(lvl));
@@ -241,72 +257,76 @@ public abstract class PVZPlantEntity extends CreatureEntity implements IPVZPlant
 			}
 		}
 	}
-	
+
 	@Override
-	public ILivingEntityData onInitialSpawn(IWorld worldIn, DifficultyInstance difficultyIn, SpawnReason reason,ILivingEntityData spawnDataIn, CompoundNBT dataTag) {
-		if(! worldIn.isRemote()) {
+	public ILivingEntityData onInitialSpawn(IWorld worldIn, DifficultyInstance difficultyIn, SpawnReason reason,
+			ILivingEntityData spawnDataIn, CompoundNBT dataTag) {
+		if (!worldIn.isRemote()) {
 			EntityUtil.playSound(this, this.getSpawnSound());
 			this.getAttribute(SharedMonsterAttributes.MAX_HEALTH).setBaseValue(this.getPlantHealth());
 			this.heal(this.getMaxHealth());
 		}
 		return super.onInitialSpawn(worldIn, difficultyIn, reason, spawnDataIn, dataTag);
 	}
-	
-	
+
 	/**
 	 * check if the plant can stand on the current position
 	 */
-	protected boolean checkNormalPlantWeak(){
-		if(this.isImmuneToWeak || this.getRidingEntity() != null) return false;
-		if(this.getPlantEnumName().isWaterPlant) {
-			return this.onGround && ! this.isInWater() && world.getBlockState(getPosition()).getBlock() != Blocks.WATER;
+	protected boolean checkNormalPlantWeak() {
+		if (this.isImmuneToWeak || this.getRidingEntity() != null)
+			return false;
+		if (this.getPlantEnumName().isWaterPlant) {
+			return this.onGround && !this.isInWater() && world.getBlockState(getPosition()).getBlock() != Blocks.WATER;
 		} else {
-			if(! this.onGround) return false;
-			if(this.isInWater()) return true;
+			if (!this.onGround)
+				return false;
+			if (this.isInWater())
+				return true;
 			double y1 = this.getPosY();
 			double y2 = MathHelper.floor(y1);
 			BlockPos pos = (Math.abs(y1 - y2) <= 0.01D ? this.getPosition().down() : this.getPosition());
 			Block current = world.getBlockState(pos).getBlock();
-			return ! PlantUtil.getPlantSuitBlock(getPlantEnumName()).stream().anyMatch((block) -> {return block == current;});
+			return !PlantUtil.getPlantSuitBlock(getPlantEnumName()).stream().anyMatch((block) -> {
+				return block == current;
+			});
 		}
 	}
-	
+
 	/**
-	 * some zombie can attack but can not target.
-	 * such as digger zombie.
+	 * some zombie can attack but can not target. such as digger zombie.
 	 */
 	public boolean checkCanPlantTarget(LivingEntity entity) {
 		return EntityUtil.checkCanEntityAttack(this, entity) && this.canPlantTarget(entity);
 	}
-	
+
 	/**
 	 * use to extends for specific plants.
 	 */
 	protected boolean canPlantTarget(LivingEntity entity) {
-		if(entity instanceof DiggerZombieEntity) {
+		if (entity instanceof DiggerZombieEntity) {
 			return ((DiggerZombieEntity) entity).getAnimTime() == DiggerZombieEntity.MAX_ANIM_TIME;
-		} else if(entity instanceof BalloonZombieEntity) {
-			return ! ((BalloonZombieEntity) entity).hasBalloon();
-		} else if(entity instanceof BungeeZombieEntity) {
+		} else if (entity instanceof BalloonZombieEntity) {
+			return !((BalloonZombieEntity) entity).hasBalloon();
+		} else if (entity instanceof BungeeZombieEntity) {
 			return ((BungeeZombieEntity) entity).getBungeeState() == BungeeStates.CATCH;
 		}
 		return true;
 	}
-	
+
 	/**
 	 * use for shroom's sleep ,need check for later coffee bean update
 	 */
 	protected boolean shouldPlantRegularSleep() {
-		if(this.getPlantEnumName().isShroomPlant) {
+		if (this.getPlantEnumName().isShroomPlant) {
 			return world.isDaytime();
 		}
 		return false;
 	}
-	
+
 	@Override
 	public boolean attackEntityFrom(DamageSource source, float amount) {
-		if(source instanceof PVZDamageSource) {
-			this.hurtResistantTime=0;
+		if (source instanceof PVZDamageSource) {
+			this.hurtResistantTime = 0;
 		}
 		amount = this.pumpkinReduceDamage(source, amount);
 		return super.attackEntityFrom(source, amount);
@@ -314,144 +334,146 @@ public abstract class PVZPlantEntity extends CreatureEntity implements IPVZPlant
 
 	@Override
 	public boolean attackEntityAsMob(Entity entityIn) {
-		entityIn.hurtResistantTime=0;
+		entityIn.hurtResistantTime = 0;
 		return super.attackEntityAsMob(entityIn);
 	}
-	
+
 	/**
 	 * lock the movement of plant
 	 */
 	protected boolean shouldLockXZ() {
 		return true;
 	}
-	
+
 	@Override
 	public void applyEntityCollision(Entity entityIn) {
-		if (!this.isRidingSameEntity(entityIn)){
-            if (!entityIn.noClip && !this.noClip){
-                double d0 = entityIn.getPosX() - this.getPosX();
-                double d1 = entityIn.getPosZ() - this.getPosZ();
-                double d2 = MathHelper.absMax(d0, d1);
-                if (d2 >= 0.009999999776482582D){//collide from out to in,add velocity to out
-                    d2 = (double)MathHelper.sqrt(d2);
-                    d0 = d0 / d2;
-                    d1 = d1 / d2;
-                    double d3 = 1.0D / d2;
-                    if (d3 > 1.0D){
-                        d3 = 1.0D;
-                    }
-                    d0 = d0 * d3;
-                    d1 = d1 * d3;
-                    d0 = d0 * 0.05000000074505806D;
-                    d1 = d1 * 0.05000000074505806D;
-                    d0 = d0 * (double)(1.0F - this.entityCollisionReduction);
-                    d1 = d1 * (double)(1.0F - this.entityCollisionReduction);
-                    if (!entityIn.isBeingRidden()){
-                        entityIn.addVelocity(d0, 0.0D, d1);
-                    }
-                }else {
-                	if(this instanceof PVZPlantEntity && entityIn instanceof PVZPlantEntity && ! EntityUtil.checkCanEntityAttack(this, entityIn)) {
-                		if(this.ticksExisted >= entityIn.ticksExisted) {
-                			this.attackEntityFrom(DamageSource.CRAMMING, 10);
-                		}
+		if (!this.isRidingSameEntity(entityIn)) {
+			if (!entityIn.noClip && !this.noClip) {
+				double d0 = entityIn.getPosX() - this.getPosX();
+				double d1 = entityIn.getPosZ() - this.getPosZ();
+				double d2 = MathHelper.absMax(d0, d1);
+				if (d2 >= 0.009999999776482582D) {// collide from out to in,add velocity to out
+					d2 = (double) MathHelper.sqrt(d2);
+					d0 = d0 / d2;
+					d1 = d1 / d2;
+					double d3 = 1.0D / d2;
+					if (d3 > 1.0D) {
+						d3 = 1.0D;
+					}
+					d0 = d0 * d3;
+					d1 = d1 * d3;
+					d0 = d0 * 0.05000000074505806D;
+					d1 = d1 * 0.05000000074505806D;
+					d0 = d0 * (double) (1.0F - this.entityCollisionReduction);
+					d1 = d1 * (double) (1.0F - this.entityCollisionReduction);
+					if (!entityIn.isBeingRidden()) {
+						entityIn.addVelocity(d0, 0.0D, d1);
+					}
+				} else {
+					if (this instanceof PVZPlantEntity && entityIn instanceof PVZPlantEntity
+							&& !EntityUtil.checkCanEntityAttack(this, entityIn)) {
+						if (this.ticksExisted >= entityIn.ticksExisted) {
+							this.attackEntityFrom(DamageSource.CRAMMING, 10);
+						}
 //                	    entityIn.attackEntityFrom(DamageSource.CRAMMING, 10);
-                	}
-                }
-            }
-        }
+					}
+				}
+			}
+		}
 	}
-	
+
 	@Override
 	public boolean canBePushed() {
 		return false;
 	}
-	
+
 	@Override
 	public boolean isPushedByWater() {
-		return ! this.getPlantEnumName().isWaterPlant;
+		return !this.getPlantEnumName().isWaterPlant;
 	}
-	
+
 	@Override
 	protected void collideWithNearbyEntities() {
 		List<LivingEntity> list = this.world.getEntitiesWithinAABB(LivingEntity.class, this.getBoundingBox());
-		if (!list.isEmpty()){
-            int i = this.world.getGameRules().getInt(GameRules.MAX_ENTITY_CRAMMING);
-            if (i > 0 && list.size() > i - 1 && this.rand.nextInt(4) == 0){
-                int j = 0;
-                for (int k = 0; k < list.size(); ++k){
-                    if (!((Entity)list.get(k)).isPassenger()){
-                        ++j;
-                    }
-                }
-                if (j > i - 1){
-                    this.attackEntityFrom(DamageSource.CRAMMING, 6.0F);
-                }
-            }
-            for (int l = 0; l < list.size(); ++l){
-                LivingEntity target = list.get(l);
-                if(target != this && shouldCollideWithEntity(target)) {//can collide with
-                    this.collideWithEntity(target);
-                }
-            }
-        }
+		if (!list.isEmpty()) {
+			int i = this.world.getGameRules().getInt(GameRules.MAX_ENTITY_CRAMMING);
+			if (i > 0 && list.size() > i - 1 && this.rand.nextInt(4) == 0) {
+				int j = 0;
+				for (int k = 0; k < list.size(); ++k) {
+					if (!((Entity) list.get(k)).isPassenger()) {
+						++j;
+					}
+				}
+				if (j > i - 1) {
+					this.attackEntityFrom(DamageSource.CRAMMING, 6.0F);
+				}
+			}
+			for (int l = 0; l < list.size(); ++l) {
+				LivingEntity target = list.get(l);
+				if (target != this && shouldCollideWithEntity(target)) {// can collide with
+					this.collideWithEntity(target);
+				}
+			}
+		}
 	}
-	
+
 	/**
-	 * common plants collide with common plants,
-	 * mobs who target them,tombstone.
+	 * common plants collide with common plants, mobs who target them,tombstone.
 	 */
 	protected boolean shouldCollideWithEntity(LivingEntity target) {
-		if(target instanceof PVZPlantEntity) {
-			if(! this.canCollideWithPlant || ! ((PVZPlantEntity) target).canCollideWithPlant) {
+		if (target instanceof PVZPlantEntity) {
+			if (!this.canCollideWithPlant || !((PVZPlantEntity) target).canCollideWithPlant) {
 				return false;
 			}
-			if(target instanceof SquashEntity) {
+			if (target instanceof SquashEntity) {
 				return !EntityUtil.checkCanEntityAttack(this, target);
 			}
-			if(target instanceof SpikeWeedEntity) {
+			if (target instanceof SpikeWeedEntity) {
 				return !EntityUtil.checkCanEntityAttack(this, target);
 			}
 			return true;
 		}
-		if(target instanceof MobEntity) {
-			if(((MobEntity) target).getAttackTarget() == this) {
+		if (target instanceof MobEntity) {
+			if (((MobEntity) target).getAttackTarget() == this) {
 				return true;
 			}
-			if(target instanceof TombStoneEntity) {
+			if (target instanceof TombStoneEntity) {
 				return true;
 			}
 		}
 		return false;
 	}
-	
+
 	@Override
 	public boolean isInvulnerableTo(DamageSource source) {
 		return this.isPlantImmuneTo(source) && source != DamageSource.OUT_OF_WORLD && !source.isCreativePlayer();
 	}
-	
+
 	/**
 	 * a function that replace isinvulnerable
 	 */
 	public boolean isPlantImmuneTo(DamageSource source) {
-		if(this.isPlantInSuperMode()) return true;
+		if (this.isPlantInSuperMode())
+			return true;
 		return false;
 	}
-	
+
 	@Override
 	public boolean canBreatheUnderwater() {
 		return this.getPlantEnumName().isWaterPlant;
 	}
-	
+
 	@Nullable
 	public Plants getUpgradePlantType() {
 		return null;
 	}
-	
+
 	public void onPlantBeCharmed() {
-		if(! this.canBeCharmed) return ;
-		this.setCharmed(! this.isCharmed());
+		if (!this.canBeCharmed)
+			return;
+		this.setCharmed(!this.isCharmed());
 	}
-	
+
 	@Override
 	public void writeAdditional(CompoundNBT compound) {
 		super.writeAdditional(compound);
@@ -459,121 +481,120 @@ public abstract class PVZPlantEntity extends CreatureEntity implements IPVZPlant
 		compound.putInt("plant_super_time", this.getSuperTime());
 		compound.putInt("plant_lvl", this.getPlantLvl());
 		if (this.getOwnerUUID().isPresent()) {
-	         compound.putString("OwnerUUID", this.getOwnerUUID().get().toString());
-	    } else {
-	         compound.putString("OwnerUUID", "");
-	    }
-        compound.putInt("plant_attack_time", this.getAttackTime());
-        compound.putInt("plant_gold_time", this.getGoldTime());
-        compound.putInt("plant_boost_time", this.getBoostTime());
-        compound.putBoolean("is_plant_charmed", this.isCharmed());
-        compound.putInt("plant_sleep_time", this.getSleepTime());
-        compound.putInt("plant_live_tick", this.getLiveTick());
-        this.outerPlant.ifPresent((plant) -> {
-        	compound.putInt("outer_plant_type", plant.ordinal());
-        });
-        compound.putFloat("pumpkin_life", this.getPumpkinLife());
-        compound.putInt("plant_sun_cost", this.plantSunCost);
-        compound.putInt("outer_sun_cost", this.outerSunCost);
-        compound.putBoolean("immune_to_weak", this.isImmuneToWeak);
-        compound.putInt("plant_state", this.getPlantState());
+			compound.putString("OwnerUUID", this.getOwnerUUID().get().toString());
+		} else {
+			compound.putString("OwnerUUID", "");
+		}
+		compound.putInt("plant_attack_time", this.getAttackTime());
+		compound.putInt("plant_gold_time", this.getGoldTime());
+		compound.putInt("plant_boost_time", this.getBoostTime());
+		compound.putBoolean("is_plant_charmed", this.isCharmed());
+		compound.putInt("plant_sleep_time", this.getSleepTime());
+		compound.putInt("plant_live_tick", this.getLiveTick());
+		this.outerPlant.ifPresent((plant) -> {
+			compound.putInt("outer_plant_type", plant.ordinal());
+		});
+		compound.putFloat("pumpkin_life", this.getPumpkinLife());
+		compound.putInt("plant_sun_cost", this.plantSunCost);
+		compound.putInt("outer_sun_cost", this.outerSunCost);
+		compound.putBoolean("immune_to_weak", this.isImmuneToWeak);
+		compound.putInt("plant_state", this.getPlantState());
 	}
-	
+
 	@Override
 	public void readAdditional(CompoundNBT compound) {
 		super.readAdditional(compound);
-		if(compound.contains("plant_weak_time")) {
+		if (compound.contains("plant_weak_time")) {
 			this.weakTime = compound.getInt("plant_weak_time");
 		}
-		if(compound.contains("plant_super_time")) {
+		if (compound.contains("plant_super_time")) {
 			this.setSuperTime(compound.getInt("plant_super_time"));
 		}
-		if(compound.contains("plant_lvl")) {
+		if (compound.contains("plant_lvl")) {
 			this.setPlantLvl(compound.getInt("plant_lvl"));
 		}
 		String s;
-	    if (compound.contains("OwnerUUID", 8)) {
-	        s = compound.getString("OwnerUUID");
-	    } else {
-	        String s1 = compound.getString("Owner");
-	        s = PreYggdrasilConverter.convertMobOwnerIfNeeded(this.getServer(), s1);
-	    }
-	    if (!s.isEmpty()) {
-	        try {
-	            this.setOwnerUUID(UUID.fromString(s));
-	        } catch (Throwable var4) {
-	        }
-	    }
-	    if(compound.contains("plant_attack_time")) {
+		if (compound.contains("OwnerUUID", 8)) {
+			s = compound.getString("OwnerUUID");
+		} else {
+			String s1 = compound.getString("Owner");
+			s = PreYggdrasilConverter.convertMobOwnerIfNeeded(this.getServer(), s1);
+		}
+		if (!s.isEmpty()) {
+			try {
+				this.setOwnerUUID(UUID.fromString(s));
+			} catch (Throwable var4) {
+			}
+		}
+		if (compound.contains("plant_attack_time")) {
 			this.setAttackTime(compound.getInt("plant_attack_time"));
 		}
-	    if(compound.contains("plant_gold_time")) {
+		if (compound.contains("plant_gold_time")) {
 			this.setGoldTime(compound.getInt("plant_gold_time"));
 		}
-	    if(compound.contains("plant_boost_time")) {
+		if (compound.contains("plant_boost_time")) {
 			this.setBoostTime(compound.getInt("plant_boost_time"));
 		}
-	    if(compound.contains("is_plant_charmed")) {
+		if (compound.contains("is_plant_charmed")) {
 			this.setCharmed(compound.getBoolean("is_plant_charmed"));
 		}
-	    if(compound.contains("plant_sleep_time")) {
+		if (compound.contains("plant_sleep_time")) {
 			this.setSleepTime(compound.getInt("plant_sleep_time"));
 		}
-	    if(compound.contains("plant_live_tick")) {
-	    	this.setLiveTick(compound.getInt("plant_live_tick"));
-	    }
-	    if(compound.contains("pumpkin_life")) {
-	    	this.setPumpkinLife(compound.getFloat("pumpkin_life"));
-	    }
-        if(compound.contains("outer_plant_type")) {
-        	this.outerPlant = Optional.of(Plants.values()[compound.getInt("outer_plant_type")]);
-        }
-        if(compound.contains("plant_sun_cost")) {
-	    	this.plantSunCost = compound.getInt("plant_sun_cost");
-	    }
-        if(compound.contains("outer_sun_cost")) {
-	    	this.outerSunCost = compound.getInt("outer_sun_cost");
-	    }
-        if(compound.contains("immune_to_weak")) {
-	    	this.isImmuneToWeak = compound.getBoolean("immune_to_weak");
-	    }
-        if(compound.contains("plant_state")) {
-        	this.setPlantState(compound.getInt("plant_state"));
-        }
-    }
-	
+		if (compound.contains("plant_live_tick")) {
+			this.setLiveTick(compound.getInt("plant_live_tick"));
+		}
+		if (compound.contains("pumpkin_life")) {
+			this.setPumpkinLife(compound.getFloat("pumpkin_life"));
+		}
+		if (compound.contains("outer_plant_type")) {
+			this.outerPlant = Optional.of(Plants.values()[compound.getInt("outer_plant_type")]);
+		}
+		if (compound.contains("plant_sun_cost")) {
+			this.plantSunCost = compound.getInt("plant_sun_cost");
+		}
+		if (compound.contains("outer_sun_cost")) {
+			this.outerSunCost = compound.getInt("outer_sun_cost");
+		}
+		if (compound.contains("immune_to_weak")) {
+			this.isImmuneToWeak = compound.getBoolean("immune_to_weak");
+		}
+		if (compound.contains("plant_state")) {
+			this.setPlantState(compound.getInt("plant_state"));
+		}
+	}
+
 	/**
-	 * use to start plant super mode 
+	 * use to start plant super mode
 	 */
 	public void startSuperMode(boolean first) {
 		this.setSuperTime(this.getSuperTimeLength());
 		this.heal(this.getMaxHealth());
 		this.setLiveTick(0);
-		if(first) {
-			if(this.getOwnerUUID().isPresent()) {
-			    PlayerEntity player = this.world.getPlayerByUuid(this.getOwnerUUID().get());
-		        if(player != null) {
-		    	    PlayerUtil.addPlantXp(player, this.getPlantEnumName(), 2);
-		        }
-			}
-		    this.outerPlant.ifPresent((plant) -> {
-		    	if(plant == Plants.PUMPKIN) {
-		    		this.setPumpkinLife(PlantUtil.PUMPKIN_LIFE + PlantUtil.PUMPKIN_SUPER_LIFE);
-		    	}
-		    });
+		if (first) {
+			PlayerEntity player = EntityUtil.getEntityOwner(world, this);
+			if (player != null && player instanceof ServerPlayerEntity) {
+				PlantSuperTrigger.INSTANCE.trigger((ServerPlayerEntity) player, this);
+				PlayerUtil.addPlantXp(player, this.getPlantEnumName(), 2);
+		    }
+			this.outerPlant.ifPresent((plant) -> {
+				if (plant == Plants.PUMPKIN) {
+					this.setPumpkinLife(PlantUtil.PUMPKIN_LIFE + PlantUtil.PUMPKIN_SUPER_LIFE);
+				}
+			});
 		}
 	}
-	
+
 	/**
 	 * pumpkin reduce the hurt damage
 	 */
 	protected float pumpkinReduceDamage(DamageSource source, float amount) {
-		if(! world.isRemote) {
-			if(this.outerPlant.isPresent() && this.outerPlant.get() == Plants.PUMPKIN) {
-				if(this.getPumpkinLife() > amount) { // damage pumpkin health first
+		if (!world.isRemote) {
+			if (this.outerPlant.isPresent() && this.outerPlant.get() == Plants.PUMPKIN) {
+				if (this.getPumpkinLife() > amount) { // damage pumpkin health first
 					this.setPumpkinLife(this.getPumpkinLife() - amount);
 					amount = 0;
-				}else {
+				} else {
 					amount -= this.getPumpkinLife();
 					this.setPumpkinLife(0f);
 					this.outerPlant = Optional.empty();
@@ -582,7 +603,7 @@ public abstract class PVZPlantEntity extends CreatureEntity implements IPVZPlant
 		}
 		return amount;
 	}
-	
+
 	/**
 	 * how many tick can plant live
 	 */
@@ -591,44 +612,44 @@ public abstract class PVZPlantEntity extends CreatureEntity implements IPVZPlant
 //		System.out.println(tick);
 		return this.getPlantEnumName().isUpgradePlant ? 2 * tick : tick;
 	}
-	
-	public boolean isPlantInSuperMode(){
+
+	public boolean isPlantInSuperMode() {
 		return this.getSuperTime() > 0;
 	}
-	
+
 	/**
 	 * check can start super mode currently
 	 */
-	public boolean canStartSuperMode(){
-		return ! this.isPlantSleeping() && this.hasSuperMode() && ! this.isPlantInSuperMode();
+	public boolean canStartSuperMode() {
+		return !this.isPlantSleeping() && this.hasSuperMode() && !this.isPlantInSuperMode();
 	}
-	
+
 	private boolean hasSuperMode() {
-		return this.getSuperTimeLength()>0;
+		return this.getSuperTimeLength() > 0;
 	}
-	
-	public boolean isPlantInBoost(){
-		return this.getBoostTime()>0;
+
+	public boolean isPlantInBoost() {
+		return this.getBoostTime() > 0;
 	}
-	
-	public int getCoolDownTime(){
-		return PlantUtil.getPlantCoolDownTime(getPlantEnumName(),getPlantLvl());
+
+	public int getCoolDownTime() {
+		return PlantUtil.getPlantCoolDownTime(getPlantEnumName(), getPlantLvl());
 	}
-	
-	public int getSunCost(){
+
+	public int getSunCost() {
 		return PlantUtil.getPlantSunCost(getPlantEnumName());
 	}
-	
+
 	@Override
 	public Essences getPlantEssenceType() {
 		return PlantUtil.getPlantEssenceType(getPlantEnumName());
 	}
-	
+
 	@Override
 	public Ranks getPlantRank(Plants plant) {
 		return PlantUtil.getPlantRankByName(plant);
 	}
-	
+
 	@Override
 	public boolean canDespawn(double distanceToClosestPlayer) {
 		return false;
@@ -640,74 +661,67 @@ public abstract class PVZPlantEntity extends CreatureEntity implements IPVZPlant
 	public boolean isPlantSleeping() {
 		return this.getSleepTime() > 0;
 	}
-    
+
 	public void setOuterPlantType(Plants p) {
 		this.outerPlant = Optional.of(p);
 	}
-	
+
 	public Optional<Plants> getOuterPlantType() {
 		return this.outerPlant;
 	}
-	
+
 	public void setImmunneToWeak(boolean is) {
 		this.isImmuneToWeak = is;
 	}
-	
+
 	public void removeOuterPlant() {
 		this.outerPlant = Optional.empty();
 		this.setPumpkinLife(0);
 		this.outerSunCost = 0;
-		if(this.hasMetal()) {
+		if (this.hasMetal()) {
 			this.decreaseMetal();
 		}
 	}
 	
 	@Override
 	protected boolean processInteract(PlayerEntity player, Hand hand) {
-		if(! world.isRemote) {
+		if (!world.isRemote) {
 			ItemStack stack = player.getHeldItem(hand);
-			if(stack.getItem() instanceof PlantCardItem) {// plant card right click plant entity
+			if (stack.getItem() instanceof PlantCardItem) {// plant card right click plant entity
 				PlantCardItem item = (PlantCardItem) stack.getItem();
-				if(item.plantType == Plants.PUMPKIN) { // use pumpkin card on plant entity
-					if(this.outerPlant.isPresent() && this.outerPlant.get() == Plants.PUMPKIN) {
-						if(this.getPumpkinLife() < PlantUtil.PUMPKIN_LIFE) { // heal pumpkin
+				if (!this.getPlantEnumName().isBigPlant && item.plantType == Plants.PUMPKIN) { // use pumpkin card on
+																								// plant entity
+					if (this.outerPlant.isPresent() && this.outerPlant.get() == Plants.PUMPKIN) {
+						if (this.getPumpkinLife() < PlantUtil.PUMPKIN_LIFE) { // heal pumpkin
 							PlantCardItem.checkSunAndHealPlant(player, this, item, stack);
 						}
 					} else { // place pumpkin on plant entity
 						PlantCardItem.checkSunAndOuterPlant(player, this, item, stack);
 					}
-				} else if(item instanceof ImitaterCardItem && ((ImitaterCardItem) item).isPlantTypeEqual(stack, Plants.PUMPKIN)){
-					if(this.outerPlant.isPresent() && this.outerPlant.get() == Plants.PUMPKIN) {
-						if(this.getPumpkinLife() < PlantUtil.PUMPKIN_LIFE) { // heal pumpkin
+				} else if (!this.getPlantEnumName().isBigPlant && item instanceof ImitaterCardItem
+						&& ((ImitaterCardItem) item).isPlantTypeEqual(stack, Plants.PUMPKIN)) {
+					if (this.outerPlant.isPresent() && this.outerPlant.get() == Plants.PUMPKIN) {
+						if (this.getPumpkinLife() < PlantUtil.PUMPKIN_LIFE) { // heal pumpkin
 							PlantCardItem.checkSunAndHealPlant(player, this, item, stack);
 						}
 					} else { // place pumpkin on plant entity
 						PlantCardItem.checkSunAndOuterPlant(player, this, item, stack);
 					}
-				} else if(item.plantType == Plants.COFFEE_BEAN) { // place coffee bean on plant entity
+				} else if (item.plantType == Plants.COFFEE_BEAN) { // place coffee bean on plant entity
 					PlantCardItem.checkSunAndSummonPlant(player, stack, item, getPosition(), (plantEntity) -> {
 						plantEntity.startRiding(this);
 					});
-				} else if(item instanceof ImitaterCardItem && ((ImitaterCardItem) item).isPlantTypeEqual(stack, Plants.COFFEE_BEAN)) { 
+				} else if (item instanceof ImitaterCardItem
+						&& ((ImitaterCardItem) item).isPlantTypeEqual(stack, Plants.COFFEE_BEAN)) {
 					ImitaterCardItem.checkSunAndSummonImitater(player, stack, item, getPosition(), (imitater) -> {
 						imitater.startRiding(this);
 					});
-				} else if(this.getUpgradePlantType() == item.plantType) { // place upgrade plant entity on base plant entity
+				} else if (this.getUpgradePlantType() == item.plantType) { // place upgrade plant entity on base plant entity
 					PlantCardItem.checkSunAndSummonPlant(player, stack, item, getPosition(), (plantEntity) -> {
-						//keep old plant's outer plant, such as pumpkin.
-						plantEntity.setPumpkinLife(this.getPumpkinLife());
-						this.getOuterPlantType().ifPresent((plantType) -> {
-							plantEntity.setOuterPlantType(plantType);
-						});
-						plantEntity.outerSunCost = this.outerSunCost;
-						//add sun cost to new plant.
-						plantEntity.plantSunCost += this.plantSunCost;
-						//keep sleep of plant
-						plantEntity.setSleepTime(this.getSleepTime());
-						//remove old plant itself
-						this.remove();
+						this.onPlantUpgrade(plantEntity);
 					});
-				} else if(item instanceof ImitaterCardItem && ((ImitaterCardItem) item).isPlantTypeEqual(stack, getUpgradePlantType())) {
+				} else if (item instanceof ImitaterCardItem
+						&& ((ImitaterCardItem) item).isPlantTypeEqual(stack, getUpgradePlantType())) {
 					ImitaterCardItem.checkSunAndSummonImitater(player, stack, item, getPosition(), (imitater) -> {
 						imitater.targetPlantEntity = Optional.of(this);
 					});
@@ -716,144 +730,167 @@ public abstract class PVZPlantEntity extends CreatureEntity implements IPVZPlant
 		}
 		return true;
 	}
-	
+
+	protected void onPlantUpgrade(PVZPlantEntity plantEntity) {
+		// keep old plant's outer plant, such as pumpkin.
+		if (! plantEntity.getPlantEnumName().isBigPlant) {
+			plantEntity.setPumpkinLife(this.getPumpkinLife());
+			this.getOuterPlantType().ifPresent((plantType) -> {
+				plantEntity.setOuterPlantType(plantType);
+			});
+			plantEntity.outerSunCost = this.outerSunCost;
+		}
+		// add sun cost to new plant.
+		plantEntity.plantSunCost += this.plantSunCost;
+		// keep sleep of plant
+		plantEntity.setSleepTime(this.getSleepTime());
+		// remove old plant itself
+		this.remove();
+	}
+
 	public float getCurrentHealth() {
 		return this.getHealth() + this.getPumpkinLife();
 	}
-	
+
 	public float getCurrentMaxHealth() {
 		return this.getMaxHealth() + this.getPumpkinLife();
 	}
-	
+
 	protected boolean isPlantInStage(int stage) {
 		int lvl = this.getPlantLvl();
-		if(stage == 1) return lvl <= 6;
-		if(stage == 2) return 7 <= lvl && lvl <= 13;
-		if(stage == 3) return 14 <= lvl && lvl <= 20;
+		if (stage == 1)
+			return lvl <= 6;
+		if (stage == 2)
+			return 7 <= lvl && lvl <= 13;
+		if (stage == 3)
+			return 14 <= lvl && lvl <= 20;
 		return false;
 	}
-	
-	public int getBoostTime(){
-    	return dataManager.get(BOOST_TIME);
-    }
-    
-    public void setBoostTime(int time){
-    	dataManager.set(BOOST_TIME, time);
-    }
-    
-    public boolean isCharmed(){
-    	return dataManager.get(IS_CHARMED);
-    }
-    
-    public void setCharmed(boolean is){
-    	dataManager.set(IS_CHARMED,is);
-    }
-    
-    public int getGoldTime(){
-    	return dataManager.get(GOLD_TIME);
-    }
-    
-    public void setGoldTime(int cd){
-    	dataManager.set(GOLD_TIME, cd);
-    }
-    
-    public int getAttackTime(){
-    	return dataManager.get(ATTACK_TIME);
-    }
-    
-    public void setAttackTime(int cd){
-    	dataManager.set(ATTACK_TIME, cd);
-    }
-    
-    public int getSleepTime(){
-    	return dataManager.get(SLEEP_TIME);
-    }
-    
-    public void setSleepTime(int cd){
-    	dataManager.set(SLEEP_TIME, cd);
-    }
-    
-	public void setPlantLvl(int lvl){
+
+	public int getBoostTime() {
+		return dataManager.get(BOOST_TIME);
+	}
+
+	public void setBoostTime(int time) {
+		dataManager.set(BOOST_TIME, time);
+	}
+
+	public boolean isCharmed() {
+		return dataManager.get(IS_CHARMED);
+	}
+
+	public void setCharmed(boolean is) {
+		dataManager.set(IS_CHARMED, is);
+	}
+
+	public int getGoldTime() {
+		return dataManager.get(GOLD_TIME);
+	}
+
+	public void setGoldTime(int cd) {
+		dataManager.set(GOLD_TIME, cd);
+	}
+
+	public int getAttackTime() {
+		return dataManager.get(ATTACK_TIME);
+	}
+
+	public void setAttackTime(int cd) {
+		dataManager.set(ATTACK_TIME, cd);
+	}
+
+	public int getSleepTime() {
+		return dataManager.get(SLEEP_TIME);
+	}
+
+	public void setSleepTime(int cd) {
+		dataManager.set(SLEEP_TIME, cd);
+	}
+
+	public void setPlantLvl(int lvl) {
 		dataManager.set(PLANT_LVL, lvl);
 	}
-	
-	public int getPlantLvl(){
+
+	public int getPlantLvl() {
 		return dataManager.get(PLANT_LVL);
 	}
-	
-    public Optional<UUID> getOwnerUUID(){
-        return dataManager.get(OWNER_UUID);
-    }
 
-    public void setOwnerUUID(UUID uuid){
-        this.dataManager.set(OWNER_UUID, Optional.ofNullable(uuid));
-    }
-	
-    public void setSuperTime(int time){
+	public Optional<UUID> getOwnerUUID() {
+		return dataManager.get(OWNER_UUID);
+	}
+
+	public void setOwnerUUID(UUID uuid) {
+		this.dataManager.set(OWNER_UUID, Optional.ofNullable(uuid));
+	}
+
+	public void setSuperTime(int time) {
 		dataManager.set(SUPER_TIME, time);
 	}
-	
-	public int getSuperTime(){
+
+	public int getSuperTime() {
 		return dataManager.get(SUPER_TIME);
 	}
-	
+
 	public int getLiveTick() {
 		return this.dataManager.get(LIVE_TICK);
 	}
-	
+
 	public void setLiveTick(int tick) {
 		this.dataManager.set(LIVE_TICK, tick);
 	}
-	
-	public float getPumpkinLife(){
+
+	public float getPumpkinLife() {
 		return this.dataManager.get(PUMPKIN_LIFE);
 	}
-	
-	public void setPumpkinLife(float life){
+
+	public void setPumpkinLife(float life) {
 		this.dataManager.set(PUMPKIN_LIFE, life);
 	}
-	
+
 	public int getPlantState() {
 		return this.dataManager.get(PLANT_STATES);
 	}
-	
+
 	public void setPlantState(int state) {
 		this.dataManager.set(PLANT_STATES, state);
 	}
-	
+
 	@Override
 	public boolean hasMetal() {
 		return ((this.getPlantState() >> LADDER_FLAG) & 1) == 1;
 	}
-	
+
 	@Override
 	public void increaseMetal() {
 		int state = this.getPlantState();
 		this.setPlantState(state | (1 << LADDER_FLAG));
 	}
-	
+
 	@Override
 	public void decreaseMetal() {
 		int state = this.getPlantState();
-		if(this.hasMetal()) {
+		if (this.hasMetal()) {
 			state -= (1 << LADDER_FLAG);
 		}
 		this.setPlantState(state);
 	}
-	
+
 	@Override
 	public MetalTypes getMetalType() {
 		return MetalTypes.LADDER;
 	}
-	
+
 	@Override
 	protected SoundEvent getHurtSound(DamageSource damageSourceIn) {
-		if(damageSourceIn instanceof PVZDamageSource && ((PVZDamageSource)damageSourceIn).getPVZDamageType() == PVZDamageType.EAT) return SoundRegister.PLANT_HURT.get();
+		if (damageSourceIn instanceof PVZDamageSource
+				&& ((PVZDamageSource) damageSourceIn).getPVZDamageType() == PVZDamageType.EAT)
+			return SoundRegister.PLANT_HURT.get();
 		return super.getHurtSound(damageSourceIn);
 	}
-	
+
 	protected SoundEvent getSpawnSound() {
-		return this.getPlantEnumName().isWaterPlant ? SoundRegister.PLANT_IN_WATER.get() : SoundRegister.PLANT_ON_GROUND.get();
+		return this.getPlantEnumName().isWaterPlant ? SoundRegister.PLANT_IN_WATER.get()
+				: SoundRegister.PLANT_ON_GROUND.get();
 	}
-	
+
 }

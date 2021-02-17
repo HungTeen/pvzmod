@@ -210,7 +210,7 @@ public class EntityUtil {
 		UUID uuid = null;
 		if(entity instanceof PVZPlantEntity) {
 			uuid = ((PVZPlantEntity) entity).getOwnerUUID().orElse(null);
-		}else if(entity instanceof PVZZombieEntity) {
+		} else if(entity instanceof PVZZombieEntity) {
 			uuid = ((PVZZombieEntity) entity).getOwnerUUID().orElse(null);
 		}
 		return uuid == null ? null : world.getPlayerByUuid(uuid);

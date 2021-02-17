@@ -1,6 +1,9 @@
 package com.hungteen.pvz.entity.bullet;
 
+import com.hungteen.pvz.advancement.trigger.EntityEffectAmountTrigger;
+import com.hungteen.pvz.entity.plant.PVZPlantEntity;
 import com.hungteen.pvz.entity.plant.explosion.CobCannonEntity;
+import com.hungteen.pvz.entity.zombie.roof.GargantuarEntity;
 import com.hungteen.pvz.misc.damage.PVZDamageSource;
 import com.hungteen.pvz.register.EntityRegister;
 import com.hungteen.pvz.register.ItemRegister;
@@ -13,6 +16,8 @@ import net.minecraft.entity.EntityType;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.Pose;
 import net.minecraft.entity.item.ItemEntity;
+import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.world.World;
@@ -49,12 +54,22 @@ public class CornEntity extends PultBulletEntity {
 	
 	private void dealExplosionDamage() {
 		EntityUtil.playSound(this, SoundRegister.CHERRY_BOMB.get());
-		float range = 2.6F;
-		EntityUtil.getAttackEntities(this.getThrower(), EntityUtil.getEntityAABB(this, range, range)).forEach((entity) -> {
+		float range = 2.8F;
+		int killCnt = 0;
+		for(Entity entity : EntityUtil.getAttackEntities(this, EntityUtil.getEntityAABB(this, range, range))) {
 			if((! (entity instanceof LivingEntity) || EntityUtil.checkCanEntityTarget(this.getThrower(), (LivingEntity) entity))) {
 				entity.attackEntityFrom(PVZDamageSource.causeNormalDamage(this, this.getThrower()), this.attackDamage);
+				if(! EntityUtil.isEntityValid(entity) && entity instanceof GargantuarEntity) {
+					++ killCnt;
+				}
 			}
-		});
+		};
+		if(this.getThrower() instanceof PVZPlantEntity) {
+			PlayerEntity player = EntityUtil.getEntityOwner(world, getThrower());
+			if(player != null && player instanceof ServerPlayerEntity) {
+				EntityEffectAmountTrigger.INSTANCE.trigger((ServerPlayerEntity) player, getThrower(), killCnt);
+			}
+		}
 		ItemEntity item = new ItemEntity(world, getPosX(), getPosY() + 1, getPosZ(), new ItemStack(ItemRegister.POP_CORN.get(), this.cornCnt));
 		item.setDefaultPickupDelay();
 		world.addEntity(item);

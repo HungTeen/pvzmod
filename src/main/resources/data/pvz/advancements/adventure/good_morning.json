@@ -1,0 +1,38 @@
+{
+  "parent": "pvz:adventure/plant",
+  "display": {
+    "icon": {
+      "item": "pvz:coffee_bean_enjoy_card"
+    },
+    "title": {
+      "translate": "advancement.pvz.good_morning"
+    },
+    "description": {
+      "translate": "advancement.pvz.good_morning.desc"
+    },
+    "frame": "task",
+    "show_toast": true,
+    "announce_to_chat": true,
+    "hidden": false
+  },
+  "criteria": {
+    "shot_arrow": {
+      "trigger": "pvz:entity_effect_amount",
+      "conditions": {
+        "entity":{
+          "type": "pvz:coffee_bean"
+        },
+        "amount":{
+          "amount":{
+            "min": 4
+          }
+        }
+      }
+    }
+  },
+  "requirements": [
+    [
+      "shot_arrow"
+    ]
+  ]
+}

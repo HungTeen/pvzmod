@@ -74,7 +74,7 @@ public class ClickButtonPacket {
 				} else if(message.type == GuiHandler.SLOT_MACHINE) {
 					if(player.openContainer instanceof SlotMachineContainer) {
 						SlotMachineContainer container = (SlotMachineContainer) player.openContainer;
-						container.te.startRun();
+						container.te.startRun(player);
 					}
 				} else if(message.type == GuiHandler.PENNY_SHOP) {
 					if(player.openContainer instanceof PennyShopContainer) {

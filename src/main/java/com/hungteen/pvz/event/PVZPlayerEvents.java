@@ -121,7 +121,7 @@ public class PVZPlayerEvents {
 	@SubscribeEvent
 	public static void onPlayerGetAdvancement(AdvancementEvent ev) {
 		if(! ev.getPlayer().world.isRemote) {
-			if(PVZConfig.COMMON_CONFIG.WorldSettings.GiveBeginnerReward.get() && ev.getAdvancement().getId().equals(StringUtil.prefix("root"))) {
+			if(PVZConfig.COMMON_CONFIG.WorldSettings.GiveBeginnerReward.get() && ev.getAdvancement().getId().equals(StringUtil.prefix("adventure/root"))) {
 				ev.getPlayer().addItemStackToInventory(new ItemStack(ItemRegister.PEA_SHOOTER_CARD.get()));
 				ev.getPlayer().addItemStackToInventory(new ItemStack(ItemRegister.SUN_FLOWER_CARD.get()));
 				ev.getPlayer().addItemStackToInventory(new ItemStack(ItemRegister.WALL_NUT_CARD.get()));

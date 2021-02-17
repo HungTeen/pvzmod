@@ -139,7 +139,7 @@ public class CardFusionContainer extends AbstractOptionContainer {
 		if (slot != null && slot.getHasStack()) {
 			ItemStack itemstack1 = slot.getStack();
 			itemstack = itemstack1.copy();
-			if (index == 0 && index < 12) {
+			if (index == 0 || index < 12) {
 				if (!this.mergeItemStack(itemstack1, 13, this.inventorySlots.size(), true)) {
 					return ItemStack.EMPTY;
 				}
