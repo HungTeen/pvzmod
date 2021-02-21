@@ -28,6 +28,6 @@
             "text": "前面两面介绍了$(l)普通召唤卡和体验卡$()的区别，他们的获取其实也不一样。普通卡一般是$(bred)合成或者购买$()获得，而体验卡往往是$(bred)开宝箱或抽奖以及关卡奖励$()获得。"
         }
     ],
-    "advancement": "pvz:root",
+    "advancement": "pvz:adventure/root",
     "sortnum": 2
 }

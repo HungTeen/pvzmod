@@ -17,11 +17,9 @@
     "get_almanac": {
       "trigger": "minecraft:consume_item",
       "conditions": {
-        "items":[
-		  {
-		    "item":"pvz:fake_brain"
-		  }
-		]
+        "item":{
+		  "item":"pvz:fake_brain"
+		}
       }
     }
   },

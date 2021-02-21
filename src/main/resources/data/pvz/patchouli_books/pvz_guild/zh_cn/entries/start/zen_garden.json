@@ -14,6 +14,6 @@
             "text": "$(l)食人花$()非常稀有，要想找到它们需要花费不少功夫。"
         }
     ],
-    "advancement": "pvz:root",
+    "advancement": "pvz:adventure/root",
     "sortnum": 2
 }

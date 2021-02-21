@@ -52,6 +52,6 @@
             "text": "击败$(l)抬棺僵尸$()有概率掉落孢子，孢子要在$(bred)天空亮度为0$()的地方种植，右击收获。"
         }
     ],
-    "advancement": "pvz:root",
+    "advancement": "pvz:adventure/root",
     "sortnum": 5
 }

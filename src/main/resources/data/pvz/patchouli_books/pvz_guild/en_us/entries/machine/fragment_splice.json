@@ -16,6 +16,6 @@
             "text": "If you don't know how to craft, you can see it's left gui, and $(bred)don't fogot it need sun storage sapling to power up$()."
         }
     ],
-    "advancement": "pvz:root",
+    "advancement": "pvz:adventure/steel",
     "sortnum": 2
 }

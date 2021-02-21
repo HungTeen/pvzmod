@@ -16,6 +16,6 @@
             "text": "The recipe of Bowling Glove need $(l)nut, leather, amethyst ingot, Defence Essences, Explosion Essences$()."
         }
     ],
-    "advancement": "pvz:root",
+    "advancement": "pvz:adventure/origin",
     "sortnum": 2
 }

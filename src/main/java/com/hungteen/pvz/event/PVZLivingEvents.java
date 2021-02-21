@@ -9,6 +9,7 @@ import com.hungteen.pvz.event.handler.PlayerEventHandler;
 import com.hungteen.pvz.misc.damage.PVZDamageSource;
 import com.hungteen.pvz.register.EnchantmentRegister;
 import com.hungteen.pvz.utils.EntityUtil;
+import com.hungteen.pvz.utils.ZombieUtil;
 import com.hungteen.pvz.utils.enums.Resources;
 
 import net.minecraft.enchantment.EnchantmentHelper;
@@ -19,7 +20,7 @@ import net.minecraftforge.event.entity.living.LivingHurtEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 
-@Mod.EventBusSubscriber(modid=PVZMod.MOD_ID)
+@Mod.EventBusSubscriber(modid = PVZMod.MOD_ID)
 public class PVZLivingEvents {
 
 	@SubscribeEvent
@@ -65,6 +66,9 @@ public class PVZLivingEvents {
 			if(ev.getSource() instanceof PVZDamageSource) {
 				ev.getEntityLiving().hurtResistantTime = 0;
 				LivingEventHandler.handleHurtEffects(ev.getEntityLiving(), (PVZDamageSource) ev.getSource());
+			}
+			if(! ev.getEntity().isNonBoss() && ev.getAmount() > ev.getEntityLiving().getMaxHealth()) {
+				ev.setAmount(Math.min(ev.getAmount(), ZombieUtil.HUGE_HIGH));
 			}
 		}
 	}

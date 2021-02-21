@@ -52,6 +52,6 @@
             "text": "Kill $(l)Mourner zombie$() has chance to drop spore, they can be plant in place where $(bred)sky light is 0$(). right click can harvest."
         }
     ],
-    "advancement": "pvz:root",
+    "advancement": "pvz:adventure/root",
     "sortnum": 5
 }

@@ -52,6 +52,6 @@
             "text": "When PlantCards have $(bred)Soilless Plant$() Enchantment, the plants summoned are able to survive on every block. Its max lvl is 1."
         }
     ],
-    "advancement": "pvz:root",
+    "advancement": "pvz:adventure/root",
     "sortnum": 6
 }

@@ -353,6 +353,19 @@ public class EntityUtil {
 	}
 	
 	/**
+	 * get targetable entity
+	 */
+	public static List<LivingEntity> getViewableTargetableEntity(Entity attacker, AxisAlignedBB aabb){
+		List<LivingEntity> list = new ArrayList<>();
+		for(LivingEntity entity : attacker.world.getEntitiesWithinAABB(LivingEntity.class, aabb)) {
+			if(attacker != entity && EntityUtil.checkCanSeeEntity(attacker, entity) && checkCanEntityTarget(attacker, entity)) {
+				list.add(entity);
+			}
+		}
+		return list;
+	}
+	
+	/**
 	 * get final attack entities for explosion or other range attack.
 	 */
 	public static List<Entity> getAttackEntities(Entity attacker, AxisAlignedBB aabb) {

@@ -36,6 +36,6 @@
             "text":"If you can't see jewel num or money on the upper left coner, please press key(left <- or -> right) to toggle display."
         }
     ],
-    "advancement": "pvz:root",
+    "advancement": "pvz:adventure/root",
     "sortnum": 0
 }

@@ -63,6 +63,6 @@
             "text": "The above list does not include all special essences (such as $(#ff0000)Electric Essence$()), which is obtained in a special way and will be updated later. It can be seen that there are currently 14 special essences: $(l)appease, light, explosion, defense, ice, enforce, toxic, assist, magic, flame, spear, arma, shadow, and electric$() which is not yet available."
         }
     ],
-    "advancement": "pvz:root",
+    "advancement": "pvz:adventure/root",
     "sortnum": 0
 }

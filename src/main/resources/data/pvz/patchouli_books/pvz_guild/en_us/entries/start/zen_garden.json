@@ -14,6 +14,6 @@
             "text": "$(l)Chompers$() are very $(l)rare$(), so it will take a lot of effort to find them."
         }
     ],
-    "advancement": "pvz:root",
+    "advancement": "pvz:adventure/root",
     "sortnum": 2
 }

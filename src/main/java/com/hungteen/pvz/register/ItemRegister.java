@@ -211,9 +211,7 @@ public class ItemRegister {
 	public static final RegistryObject<Item> NUT = ITEMS.register("nut", PVZItemBase::new);
 	public static final RegistryObject<Item> SPORE = ITEMS.register("spore",()-> new BlockItem(BlockRegister.TOXIC_SHROOM.get(),new Item.Properties().group(GroupRegister.PVZ_MISC)));
 	public static final RegistryObject<Item> CABBAGE_SEEDS = ITEMS.register("cabbage_seeds", () -> new BlockItem(BlockRegister.CABBAGE.get(), new Item.Properties().group(GroupRegister.PVZ_MISC)));
-	public static final RegistryObject<Item> CABBAGE = ITEMS.register("cabbage", PVZItemBase::new);
 	public static final RegistryObject<Item> CORN_SEEDS = ITEMS.register("corn_seeds", () -> new BlockItem(BlockRegister.CORN.get(), new Item.Properties().group(GroupRegister.PVZ_MISC)));
-	public static final RegistryObject<Item> CORN = ITEMS.register("corn", PVZItemBase::new);
 	
 	//material
 	public static final RegistryObject<Item> SNOW_PEA = ITEMS.register("snow_pea", PVZItemBase::new);
@@ -280,7 +278,11 @@ public class ItemRegister {
 	public static final RegistryObject<Item> CHOCOLATE = ITEMS.register("chocolate", ()->new PVZFoodItem(PVZFoodItem.CHOCOLATE));
 	public static final RegistryObject<Item> PEA_SOUP = ITEMS.register("pea_soup", ()->new SoupItem(new Item.Properties().group(ItemGroup.FOOD).food(PVZFoodItem.PEA_SOUP).maxStackSize(1)));
 	public static final RegistryObject<Item> COOKED_BRAIN = ITEMS.register("cooked_brain", ()->new PVZFoodItem(PVZFoodItem.COOKED_BRAIN));
+	public static final RegistryObject<Item> CABBAGE = ITEMS.register("cabbage", ()->new PVZFoodItem(PVZFoodItem.CABBAGE));
+	public static final RegistryObject<Item> CORN = ITEMS.register("corn", ()->new PVZFoodItem(PVZFoodItem.CORN));
 	public static final RegistryObject<Item> POP_CORN = ITEMS.register("pop_corn", ()->new PVZFoodItem(PVZFoodItem.POP_CORN));
+	public static final RegistryObject<Item> TACOS = ITEMS.register("tacos", ()->new PVZFoodItem(PVZFoodItem.TACOS));
+	
 	//spawn egg
 	//drop
 	public static final RegistryObject<PVZSpawnEggItem> SUN_SPAWN_EGG = registerSpawnEgg("sun", EntityRegister.SUN, Colors.YELLOW, Colors.WHITE);

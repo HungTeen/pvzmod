@@ -18,6 +18,6 @@
             "text": "Each fusion need $(byellow)2000 Sun$() on the left sun slot, And $(bgreen)3 Random Essence$() on the right 3 essence slots."
         }
     ],
-    "advancement": "pvz:root",
+    "advancement": "pvz:adventure/steel",
     "sortnum": 4
 }

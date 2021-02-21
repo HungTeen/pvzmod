@@ -28,6 +28,6 @@
             "text": "$(byellow)阳光转化器$()能帮助储光树苗吸收阳光。 你只需要把$(l)树苗放在九个槽位的任意一个$()，然后转化器会$(bred)自动吸收周围的阳光$()并传递给储光树苗。"
         }
     ],
-    "advancement": "pvz:root",
+    "advancement": "pvz:adventure/steel",
     "sortnum": 1
 }

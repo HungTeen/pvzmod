@@ -33,6 +33,6 @@
             "text": "$(l)YetiHouse$():generated in $(l)Overworld snow tundra$().$(br)no spawner, but $(bred)may spawn a Yeti Zombie$(), $(br)There are $(l)3 chests$(), which may contain Enjoy Cards of $(bred)[SeaShroom, Plantern, Cactus, Blover, SplitPea, StarFruit, Pumpkin, MagnetShroom]$()."
         }
     ],
-    "advancement": "pvz:root",
+    "advancement": "pvz:adventure/root",
     "sortnum": 3
 }

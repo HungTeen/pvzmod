@@ -1,5 +1,6 @@
 package com.hungteen.pvz.item.tool.card;
 
+import java.util.List;
 import java.util.function.Consumer;
 
 import com.hungteen.pvz.PVZMod;
@@ -24,6 +25,7 @@ import net.minecraft.advancements.CriteriaTriggers;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
 import net.minecraft.block.FlowingFluidBlock;
+import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.SpawnReason;
@@ -40,6 +42,9 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.BlockRayTraceResult;
 import net.minecraft.util.math.RayTraceContext;
 import net.minecraft.util.math.RayTraceResult;
+import net.minecraft.util.text.ITextComponent;
+import net.minecraft.util.text.TextFormatting;
+import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraft.world.World;
 import net.minecraftforge.common.MinecraftForge;
 
@@ -289,6 +294,23 @@ public class PlantCardItem extends SummonCardItem {
 			l.getPlayerData().getItemCDStats().setPlantCardCD(item.plantType, cd);
 		});
 		player.getCooldownTracker().setCooldown(stack.getItem(), cd);
+	}
+	
+	@Override
+	public void addInformation(ItemStack stack, World worldIn, List<ITextComponent> tooltip, ITooltipFlag flagIn) {
+		super.addInformation(stack, worldIn, tooltip, flagIn);
+		tooltip.add(new TranslationTextComponent("tooltip.pvz.plant_card").applyTextStyle(TextFormatting.GREEN));
+		PlantCardItem item = (PlantCardItem) stack.getItem();
+		if(item == null) {
+			System.out.println("ERROR : Wrong Plant Card Item !");
+			return ;
+		}
+		Plants plant = item.plantType;
+		if(plant.isUpgradePlant) {
+			tooltip.add(new TranslationTextComponent("tooltip.pvz." + plant.toString().toLowerCase() + "_card").applyTextStyle(TextFormatting.RED));
+		} else if(plant == Plants.DOOM_SHROOM) {
+			tooltip.add(new TranslationTextComponent("tooltip.pvz." + plant.toString().toLowerCase() + "_card").applyTextStyle(TextFormatting.DARK_RED));
+		}
 	}
 	
 	/**

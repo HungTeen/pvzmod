@@ -16,6 +16,6 @@
             "text": "The recipe of Pea Gun need $(l)sunflowers, a daylight detector and Light Essences$()."
         }
     ],
-    "advancement": "pvz:root",
+    "advancement": "pvz:adventure/origin",
     "sortnum": 1
 }

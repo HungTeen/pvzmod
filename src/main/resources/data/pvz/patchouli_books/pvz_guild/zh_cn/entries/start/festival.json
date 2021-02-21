@@ -14,6 +14,6 @@
             "text": "一般来说$(borange)巧克力$()是很难获取的，但如果你有了$(bpurple)糖果$()，就可以直接合成了。"
         }
     ],
-    "advancement": "pvz:root",
+    "advancement": "pvz:adventure/root",
     "sortnum": 8
 }

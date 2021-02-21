@@ -5,11 +5,11 @@
     "pages": [
         {
             "type": "smelting",
-            "recipe": "pvz:smelting/steel_ingot",
+            "recipe": "pvz:smelting/steel_ingot_from_smelting",
             "title": "Steel",
             "text": "$(byellow)Steel Ingots$() can be got by smelting iron ingots. It's the basic material to craft machine in pvzmod. by the way, you can use steel ingot to repair many tools and armors such as (Football Armor, Screen Door and so on)."
         }
     ],
-    "advancement": "pvz:root",
+    "advancement": "pvz:adventure/steel",
     "sortnum": 0
 }

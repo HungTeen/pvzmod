@@ -58,6 +58,6 @@
             "text": "一次向前发射四个豌豆"
         }
     ],
-    "advancement": "pvz:root",
+    "advancement": "pvz:adventure/origin",
     "sortnum": 0
 }

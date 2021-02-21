@@ -16,6 +16,6 @@
             "text": "$(byellow)Sun Temple$() is a structure generated in $(l)Desert Sky$(), where a $(#ff0000)Sun Dave$() will spawned. Players can trade it with sun."
         }
     ],
-    "advancement": "pvz:root",
+    "advancement": "pvz:adventure/root",
     "sortnum": 4
 }

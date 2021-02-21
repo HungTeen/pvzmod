@@ -16,6 +16,6 @@
             "text": "$(byellow)太阳神庙$()是$(l)沙漠高空$()生成的结构，这里会生成一个$(#ff0000)阳光戴夫$()。通过阳光可以与阳光戴夫交易到很多有趣的阳光物品。"
         }
     ],
-    "advancement": "pvz:root",
+    "advancement": "pvz:adventure/root",
     "sortnum": 4
 }

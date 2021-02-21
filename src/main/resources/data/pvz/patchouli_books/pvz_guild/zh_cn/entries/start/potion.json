@@ -10,6 +10,6 @@
             "text": "兴奋药水可以让玩家处于兴奋状态，从而$(bred)减少植物卡的冷却时间$()。$(l)每一级兴奋都会减少10%$()，十级的兴奋效果可以使植物卡没有冷却。可以在$(l)炼药台$()用$(borange)巧克力$()制作兴奋药水。"
         }
     ],
-    "advancement": "pvz:root",
+    "advancement": "pvz:adventure/root",
     "sortnum": 7
 }

@@ -144,7 +144,7 @@ public class CobCannonEntity extends PVZPlantEntity {
 			return ;
 		}
 		float range = 45F;
-		List<LivingEntity> list = EntityUtil.getEntityTargetableEntity(this, EntityUtil.getEntityAABB(this, range, range));
+		List<LivingEntity> list = EntityUtil.getViewableTargetableEntity(this, EntityUtil.getEntityAABB(this, range, range));
 		int num = (this.isPlantInSuperMode() ? this.getSuperCornNum() : 1);
 		for(int i = 0; i < num; ++ i) {
 			LivingEntity res = this;
@@ -194,7 +194,7 @@ public class CobCannonEntity extends PVZPlantEntity {
 	protected EntityRayTraceResult rayTraceEntities(World world, PlayerEntity player, double range, Vec3d startVec, Vec3d endVec) {
 		return ProjectileHelper.rayTraceEntities(world, player, startVec, endVec, 
 				player.getBoundingBox().grow(range), (entity) -> {
-			return EntityUtil.isEntityValid(entity) && entity instanceof LivingEntity;
+			return EntityUtil.isEntityValid(entity) && entity instanceof LivingEntity && ! entity.isEntityEqual(this);
 		});
 	}
 

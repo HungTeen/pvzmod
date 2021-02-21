@@ -36,6 +36,6 @@
             "text":"如果你没有在左上角看到金钱数或宝石数，那么请按方向键 （左或右）来切换显示。"
         }
     ],
-    "advancement": "pvz:root",
+    "advancement": "pvz:adventure/root",
     "sortnum": 0
 }

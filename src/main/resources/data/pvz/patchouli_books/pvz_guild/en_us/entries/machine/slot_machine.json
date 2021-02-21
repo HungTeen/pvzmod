@@ -14,6 +14,6 @@
             "text": "$(s)In order to prevent players from being addicted to lottery draws$(), the number of player draws is very limited.$(br)$(bred)Players can only draw 10 times initially. Each time the player's TreeLevel increases by 1, it will increase 3 times. Each time the invasion ends, the reward will also get 2 chances$()."
         }
     ],
-    "advancement": "pvz:root",
+    "advancement": "pvz:adventure/origin",
     "sortnum": 4
 }

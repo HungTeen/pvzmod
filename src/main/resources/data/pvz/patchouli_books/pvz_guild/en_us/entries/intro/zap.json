@@ -24,6 +24,6 @@
             "text": "Both $(l)plants and zombies$() have $(bred)qualities$(). The qualities are $(bred)gray, white, green, blue, purple, gold$(), which become higher from left to right. The higher the quality, the stronger the corresponding plants or zombies. $(l)More experience gained from killing high-quality zombies$(). For plants, $(l)the higher the quality, the more difficult it is to get$()."
         }
     ],
-    "advancement": "pvz:root",
+    "advancement": "pvz:adventure/root",
     "sortnum": 1
 }

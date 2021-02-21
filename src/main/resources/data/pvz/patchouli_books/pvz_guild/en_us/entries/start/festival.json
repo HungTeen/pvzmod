@@ -14,6 +14,6 @@
             "text": "In general, $(borange)Chocolate$() is difficult to obtain, but if you have $(bpurple)Candy$(), you can directly craft it."
         }
     ],
-    "advancement": "pvz:root",
+    "advancement": "pvz:adventure/root",
     "sortnum": 8
 }

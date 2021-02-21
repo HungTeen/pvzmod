@@ -16,6 +16,6 @@
             "text": "Essence Altar Recipe"
         }
     ],
-    "advancement": "pvz:root",
+    "advancement": "pvz:adventure/plant",
     "sortnum": 10
 }

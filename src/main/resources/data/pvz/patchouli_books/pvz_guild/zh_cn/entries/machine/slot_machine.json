@@ -14,6 +14,6 @@
             "text": "$(s)为了防止玩家抽奖成瘾$()，玩家抽奖的次数非常有限。$(br)$(bred)玩家初始只能抽奖10次，玩家智慧树等级每次提升1级会加3次，每次入侵结束结算奖励也会获得2次机会$()。"
         }
     ],
-    "advancement": "pvz:root",
+    "advancement": "pvz:adventure/origin",
     "sortnum": 4
 }

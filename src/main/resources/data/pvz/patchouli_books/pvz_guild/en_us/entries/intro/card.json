@@ -28,6 +28,6 @@
             "text": "The previous two pages introduced the difference between $(bred)Common Summon Cards and Enjoy Cards$(), and their acquisition is actually different. Common Cards are generally obtained by $(bred)crafting or purchase$(), while Enjoy Cards are often obtained by opening $(bred)treasure chests or lottery or finish invasion$()."
         }
     ],
-    "advancement": "pvz:root",
+    "advancement": "pvz:adventure/root",
     "sortnum": 2
 }

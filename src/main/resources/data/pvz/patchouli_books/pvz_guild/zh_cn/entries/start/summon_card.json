@@ -40,6 +40,6 @@
             "text": "以$(#ff0000)豌豆射手卡$()为例，豌豆射手是$(l)灰色品质、喷射属性$()的生物。所以其合成需要$(l)豌豆、灰卡模板和喷射精华$()。"
         }
     ],
-    "advancement": "pvz:root",
+    "advancement": "pvz:adventure/origin",
     "sortnum": 1
 }

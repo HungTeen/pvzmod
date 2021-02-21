@@ -28,6 +28,6 @@
             "text": "$(byellow)Sun Converter$() can help Storage Saplings absorb sun, you just need to $(l)put saplings into the 9 slots$(), and the Converter will $(bred)automatically absorb nearby sun$() and transfer to saplings."
         }
     ],
-    "advancement": "pvz:root",
+    "advancement": "pvz:adventure/steel",
     "sortnum": 1
 }

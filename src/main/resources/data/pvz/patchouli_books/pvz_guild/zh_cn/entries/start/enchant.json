@@ -52,6 +52,6 @@
             "text": "当植物卡拥有$(bred)无土栽培$()附魔时，种出来的植物可以在任意方块存活。该附魔最高1级。"
         }
     ],
-    "advancement": "pvz:root",
+    "advancement": "pvz:adventure/root",
     "sortnum": 6
 }

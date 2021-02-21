@@ -52,7 +52,6 @@ public abstract class SummonCardItem extends Item{
 	
 	@Override
 	public void addInformation(ItemStack stack, World worldIn, List<ITextComponent> tooltip, ITooltipFlag flagIn) {
-		tooltip.add(new TranslationTextComponent("tooltip.pvz.summon_card").applyTextStyle(TextFormatting.GREEN));
 		tooltip.add(new TranslationTextComponent("tooltip.pvz.sun_cost").appendText(":" + getItemStackSunCost(stack)).applyTextStyle(TextFormatting.YELLOW));
 	}
 	

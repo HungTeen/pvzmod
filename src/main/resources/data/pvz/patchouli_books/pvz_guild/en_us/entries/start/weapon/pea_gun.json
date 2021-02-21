@@ -58,6 +58,6 @@
             "text": "shoot forward four peas at a time"
         }
     ],
-    "advancement": "pvz:root",
+    "advancement": "pvz:adventure/origin",
     "sortnum": 0
 }

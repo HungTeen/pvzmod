@@ -16,6 +16,6 @@
             "text": "保龄球手套的合成需要$(l)防御精华、爆炸精华、皮革、坚果以及紫晶锭。$()"
         }
     ],
-    "advancement": "pvz:root",
+    "advancement": "pvz:adventure/origin",
     "sortnum": 2
 }

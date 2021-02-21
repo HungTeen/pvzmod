@@ -18,6 +18,6 @@
             "text": "每次合成需要在左边阳光槽放上$(byellow)2000阳光$()，在右边的3个精华槽放上$(bgreen)3个任意精华$()。"
         }
     ],
-    "advancement": "pvz:root",
+    "advancement": "pvz:adventure/steel",
     "sortnum": 4
 }

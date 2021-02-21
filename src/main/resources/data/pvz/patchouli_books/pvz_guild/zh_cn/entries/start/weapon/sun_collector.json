@@ -16,6 +16,6 @@
             "text": "阳光收集器的合成需要$(l)向日葵、阳光感应器和阳光精华$()"
         }
     ],
-    "advancement": "pvz:root",
+    "advancement": "pvz:adventure/origin",
     "sortnum": 1
 }
