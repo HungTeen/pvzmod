@@ -67,7 +67,7 @@ public class StarEntity extends AbstractBulletEntity {
 	
 	@Override
 	protected int getMaxLiveTick() {
-		return 60;
+		return 80;
 	}
 	
 	private float getFixDamage() {

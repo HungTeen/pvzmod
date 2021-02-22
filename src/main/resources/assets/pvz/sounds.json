@@ -251,7 +251,7 @@
         "subtitle": "sound.pvz.melon_hit",
         "sounds":[{"name":"pvz:entity/zombie/hit/melon_hit1"},{"name":"pvz:entity/zombie/hit/melon_hit2"}]
     },
-    "butter":{
+    "butter_hit":{
         "subtitle": "sound.pvz.butter",
         "sounds":[{"name":"pvz:entity/zombie/hit/butter"}]
     },
