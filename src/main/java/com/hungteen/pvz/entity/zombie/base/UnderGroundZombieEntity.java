@@ -15,7 +15,7 @@ import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.potion.EffectInstance;
 import net.minecraft.potion.Effects;
 import net.minecraft.world.DifficultyInstance;
-import net.minecraft.world.IWorld;
+import net.minecraft.world.IServerWorld;
 import net.minecraft.world.World;
 
 public abstract class UnderGroundZombieEntity extends PVZZombieEntity{
@@ -28,16 +28,16 @@ public abstract class UnderGroundZombieEntity extends PVZZombieEntity{
 	}
 	
 	@Override
-	public ILivingEntityData onInitialSpawn(IWorld worldIn, DifficultyInstance difficultyIn, SpawnReason reason,
+	public ILivingEntityData finalizeSpawn(IServerWorld worldIn, DifficultyInstance difficultyIn, SpawnReason reason,
 			ILivingEntityData spawnDataIn, CompoundNBT dataTag) {
-		if(! world.isRemote) {
+		if(! level.isClientSide) {
 			if(this.isRiseType) {
 				EntityUtil.playSound(this, SoundRegister.DIRT_RISE.get());
 				this.setAttackTime(- this.getSpawnTime());
-				this.addPotionEffect(new EffectInstance(Effects.SLOWNESS, this.getSpawnTime(), 20, false, false));
+				this.addEffect(new EffectInstance(Effects.MOVEMENT_SLOWDOWN, this.getSpawnTime(), 20, false, false));
 			}
 		}
-		return super.onInitialSpawn(worldIn, difficultyIn, reason, spawnDataIn, dataTag);
+		return super.finalizeSpawn(worldIn, difficultyIn, reason, spawnDataIn, dataTag);
 	}
 	
 	public void setRiseType(boolean is) {
@@ -49,13 +49,13 @@ public abstract class UnderGroundZombieEntity extends PVZZombieEntity{
 		super.tick();
 		if(this.getAttackTime() < 0) {
 			this.setAttackTime(this.getAttackTime() + 1);
-			if(world.isRemote) {
+			if(level.isClientSide) {
 				for(int i = 0; i < this.particleNum; ++ i) {
-					Random rand = this.getRNG();
-					this.world.addParticle(ParticleRegister.DIRT_BURST_OUT.get(), this.getPosX() + 0.5d, this.getPosY(), this.getPosZ() + 0.5d, (rand.nextFloat() - 0.5) / 10, 0.05d, (rand.nextFloat() - 0.5) / 10);
-					this.world.addParticle(ParticleRegister.DIRT_BURST_OUT.get(), this.getPosX() + 0.5d, this.getPosY(), this.getPosZ() - 0.5d, (rand.nextFloat() - 0.5) / 10, 0.05d, (rand.nextFloat() - 0.5) / 10);
-					this.world.addParticle(ParticleRegister.DIRT_BURST_OUT.get(), this.getPosX() - 0.5d, this.getPosY(), this.getPosZ() + 0.5d, (rand.nextFloat() - 0.5) / 10, 0.05d, (rand.nextFloat() - 0.5) / 10);
-					this.world.addParticle(ParticleRegister.DIRT_BURST_OUT.get(), this.getPosX() - 0.5d, this.getPosY(), this.getPosZ() - 0.5d, (rand.nextFloat() - 0.5) / 10, 0.05d, (rand.nextFloat() - 0.5) / 10);
+					Random rand = this.getRandom();
+					this.level.addParticle(ParticleRegister.DIRT_BURST_OUT.get(), this.getX() + 0.5d, this.getY(), this.getZ() + 0.5d, (rand.nextFloat() - 0.5) / 10, 0.05d, (rand.nextFloat() - 0.5) / 10);
+					this.level.addParticle(ParticleRegister.DIRT_BURST_OUT.get(), this.getX() + 0.5d, this.getY(), this.getZ() - 0.5d, (rand.nextFloat() - 0.5) / 10, 0.05d, (rand.nextFloat() - 0.5) / 10);
+					this.level.addParticle(ParticleRegister.DIRT_BURST_OUT.get(), this.getX() - 0.5d, this.getY(), this.getZ() + 0.5d, (rand.nextFloat() - 0.5) / 10, 0.05d, (rand.nextFloat() - 0.5) / 10);
+					this.level.addParticle(ParticleRegister.DIRT_BURST_OUT.get(), this.getX() - 0.5d, this.getY(), this.getZ() - 0.5d, (rand.nextFloat() - 0.5) / 10, 0.05d, (rand.nextFloat() - 0.5) / 10);
 				}
 			}
 		}

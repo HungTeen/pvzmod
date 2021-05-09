@@ -25,17 +25,17 @@ public class ChomperEntity extends PVZPlantEntity {
 
 	public final int ATTACK_CD = 30;
 	private final int SUPER_RANGE = 20;
-	private static final DataParameter<Integer> REST_TICK = EntityDataManager.createKey(ChomperEntity.class,
-			DataSerializers.VARINT);
+	private static final DataParameter<Integer> REST_TICK = EntityDataManager.defineId(ChomperEntity.class,
+			DataSerializers.INT);
 
 	public ChomperEntity(EntityType<? extends CreatureEntity> type, World worldIn) {
 		super(type, worldIn);
 	}
 
 	@Override
-	protected void registerData() {
-		super.registerData();
-		dataManager.register(REST_TICK, 0);
+	protected void defineSynchedData() {
+		super.defineSynchedData();
+		entityData.define(REST_TICK, 0);
 	}
 
 	@Override
@@ -45,29 +45,29 @@ public class ChomperEntity extends PVZPlantEntity {
 	}
 
 	@Override
-	public EntitySize getSize(Pose poseIn) {
+	public EntitySize getDimensions(Pose poseIn) {
 		return new EntitySize(0.9f, 1.9f, false);
 	}
 
 	@Override
 	protected void normalPlantTick() {
 		super.normalPlantTick();
-		if (!world.isRemote && this.getAttackTarget() != null) {
-			this.lookController.setLookPositionWithEntity(this.getAttackTarget(), 30f, 30f);
+		if (!level.isClientSide && this.getTarget() != null) {
+			this.lookControl.setLookAt(this.getTarget(), 30f, 30f);
 		}
-		if (!world.isRemote) {
+		if (!level.isClientSide) {
 			if (this.getAttackTime() < this.ATTACK_CD / 2) {// attack stage
 				if (this.getRestTick() > 0) {// rest time cannot attack
 					this.setAttackTime(0);
 					this.setRestTick(this.getRestTick() - 1);
 					return;
 				}
-				if (this.getAttackTarget() == null) {// no target
+				if (this.getTarget() == null) {// no target
 					this.setAttackTime(0);
 					return;
 				}
-				if (!this.getAttackTarget().isAlive() || this.getDistanceSq(this.getAttackTarget()) > 9) {// target too far away
-					this.setAttackTarget(null);
+				if (!this.getTarget().isAlive() || this.distanceToSqr(this.getTarget()) > 9) {// target too far away
+					this.setTarget(null);
 					this.setAttackTime(0);
 					return;
 				}
@@ -89,9 +89,9 @@ public class ChomperEntity extends PVZPlantEntity {
 		super.startSuperMode(first);
 		int cnt = this.getSuperAttackCnt();
 		for (Entity target : EntityUtil.getEntityTargetableEntity(this, EntityUtil.getEntityAABB(this, this.SUPER_RANGE, this.SUPER_RANGE))) {
-			SmallChomperEntity chomper = EntityRegister.SMALL_CHOMPER.get().create(world);
+			SmallChomperEntity chomper = EntityRegister.SMALL_CHOMPER.get().create(level);
 			chomper.setOwner(this);
-			EntityUtil.onEntitySpawn(world, chomper, target.getPosition());
+			EntityUtil.onEntitySpawn(level, chomper, target.blockPosition());
 			-- cnt;
 			if (cnt == 0) {
 				break;
@@ -108,12 +108,12 @@ public class ChomperEntity extends PVZPlantEntity {
 	 * deal damage
 	 */
 	private void performAttack() {
-		LivingEntity target = this.getAttackTarget();
+		LivingEntity target = this.getTarget();
 		if (EntityUtil.getCurrentHealth(target) <= this.getAttackDamage()) {// eat to death need rest
 			this.setRestTick(this.getRestCD());
 		}
 		EntityUtil.playSound(this, SoundRegister.CHOMP.get());
-		target.attackEntityFrom(PVZDamageSource.causeEatDamage(this, this), this.getAttackDamage(target));
+		target.hurt(PVZDamageSource.causeEatDamage(this, this), this.getAttackDamage(target));
 	}
 
 	/**
@@ -160,25 +160,25 @@ public class ChomperEntity extends PVZPlantEntity {
 	}
 
 	@Override
-	public void writeAdditional(CompoundNBT compound) {
-		super.writeAdditional(compound);
+	public void addAdditionalSaveData(CompoundNBT compound) {
+		super.addAdditionalSaveData(compound);
 		compound.putInt("rest_tick", this.getRestTick());
 	}
 
 	@Override
-	public void readAdditional(CompoundNBT compound) {
-		super.readAdditional(compound);
+	public void readAdditionalSaveData(CompoundNBT compound) {
+		super.readAdditionalSaveData(compound);
 		if(compound.contains("rest_tick")) {
 			this.setRestTick(compound.getInt("rest_tick"));
 		}
 	}
 
 	public int getRestTick() {
-		return this.dataManager.get(REST_TICK);
+		return this.entityData.get(REST_TICK);
 	}
 
 	public void setRestTick(int tick) {
-		this.dataManager.set(REST_TICK, tick);
+		this.entityData.set(REST_TICK, tick);
 	}
 
 	@Override

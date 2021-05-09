@@ -16,7 +16,7 @@ public class ExplosionBowlingRender extends AbstractbowlingRender<ExplosionBowli
 	}
 	
 	@Override
-	public ResourceLocation getEntityTexture(ExplosionBowlingEntity entity) {
+	public ResourceLocation getTextureLocation(ExplosionBowlingEntity entity) {
 		return ExplodeONutRender.TEXTURE1;
 	}
 

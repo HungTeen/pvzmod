@@ -26,7 +26,7 @@ public class ImitaterRender extends PVZPlantRender<ImitaterEntity> {
 	}
 
 	@Override
-	public ResourceLocation getEntityTexture(ImitaterEntity entity) {
+	public ResourceLocation getTextureLocation(ImitaterEntity entity) {
 		return IMITATER_TEX;
 	}
 

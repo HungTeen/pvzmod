@@ -9,7 +9,7 @@ import net.minecraft.entity.Entity;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.potion.EffectInstance;
 import net.minecraft.util.DamageSource;
-import net.minecraft.util.math.Vec3d;
+import net.minecraft.util.math.vector.Vector3d;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.TranslationTextComponent;
 
@@ -89,7 +89,7 @@ public class PVZDamageSource extends DamageSource {
 	}
 
 	public static boolean isEnforceDamage(DamageSource source) {
-		if (source.damageType.equals("mob")) {
+		if (source.msgId.equals("mob")) {
 			return true;
 		}
 		if (source instanceof PVZDamageSource) {
@@ -102,13 +102,13 @@ public class PVZDamageSource extends DamageSource {
 	}
 
 	@Override
-	public ITextComponent getDeathMessage(LivingEntity entityLivingBaseIn) {
-		String s = "death.attack." + this.getDamageType();
+	public ITextComponent getLocalizedDeathMessage(LivingEntity entityLivingBaseIn) {
+		String s = "death.attack." + this.getMsgId();
 		return new TranslationTextComponent(s, entityLivingBaseIn.getDisplayName());
 	}
 
 	public static PVZDamageSource copyWithNewEnt(PVZDamageSource other, Entity damagingEntity, Entity attacker) {
-		PVZDamageSource newSrc = new PVZDamageSource(other.getDamageType(), damagingEntity, attacker, other.damageType);
+		PVZDamageSource newSrc = new PVZDamageSource(other.getMsgId(), damagingEntity, attacker, other.damageType);
 		return newSrc;
 	}
 
@@ -117,12 +117,12 @@ public class PVZDamageSource extends DamageSource {
 	}
 
 	@Override
-	public Entity getTrueSource() {
+	public Entity getEntity() {
 		return this.attackOwner;
 	}
 
 	@Override
-	public Entity getImmediateSource() {
+	public Entity getDirectEntity() {
 		return this.attacker;
 	}
 
@@ -144,7 +144,7 @@ public class PVZDamageSource extends DamageSource {
 	}
 
 	@Override
-	public boolean isUnblockable() {
+	public boolean isBypassArmor() {
 		return this.getPVZDamageType() == PVZDamageType.THROUGH;
 	}
 	
@@ -169,8 +169,8 @@ public class PVZDamageSource extends DamageSource {
 	 * Gets the location from which the damage originates.
 	 */
 	@Nullable
-	public Vec3d getDamageLocation() {
-		return this.attacker != null ? this.attacker.getPositionVec() : null;
+	public Vector3d getSourcePosition() {
+		return this.attacker != null ? this.attacker.position() : null;
 	}
 
 }

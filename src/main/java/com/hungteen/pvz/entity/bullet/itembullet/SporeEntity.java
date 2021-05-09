@@ -30,10 +30,10 @@ public class SporeEntity extends PVZItemBulletEntity{
 	@Override
 	public void tick() {
 		super.tick();
-		if(world.isRemote) {
+		if(level.isClientSide) {
 			int cnt = 3;
 			for(int i = 0; i < cnt; ++i) {
-	            this.world.addParticle(ParticleRegister.SPORE.get(), this.getPosX(), this.getPosY(), this.getPosZ(), 0.0D, 0.0D, 0.0D);
+	            this.level.addParticle(ParticleRegister.SPORE.get(), this.getX(), this.getY(), this.getZ(), 0.0D, 0.0D, 0.0D);
 	        }
 		}
 	}
@@ -55,19 +55,19 @@ public class SporeEntity extends PVZItemBulletEntity{
 		if (result.getType() == RayTraceResult.Type.ENTITY) {
 			Entity target = ((EntityRayTraceResult) result).getEntity();
 			if (checkCanAttack(target)) {
-				target.hurtResistantTime = 0;
+				target.invulnerableTime = 0;
 				this.dealSporeDamage(target); // attack 
 				flag = true;
 			}
 		}
-		this.world.setEntityState(this, (byte) 3);
+		this.level.broadcastEntityEvent(this, (byte) 3);
 		if (flag || !this.checkLive(result)) {
 			this.remove();
 		}
 	}
 	
 	private void dealSporeDamage(Entity target) {
-		target.attackEntityFrom(PVZDamageSource.causeAppeaseDamage(this, this.getThrower()), this.attackDamage);
+		target.hurt(PVZDamageSource.causeAppeaseDamage(this, this.getThrower()), this.attackDamage);
 	}
 	
 	@Override
@@ -77,8 +77,8 @@ public class SporeEntity extends PVZItemBulletEntity{
 	}
 	
 	@Override
-	public EntitySize getSize(Pose poseIn) {
-		return EntitySize.flexible(0.25f, 0.25f);
+	public EntitySize getDimensions(Pose poseIn) {
+		return EntitySize.scalable(0.25f, 0.25f);
 	}
 	
 	@Override

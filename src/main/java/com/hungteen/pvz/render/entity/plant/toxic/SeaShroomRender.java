@@ -23,7 +23,7 @@ public class SeaShroomRender extends PVZPlantRender<SeaShroomEntity>{
 	}
 
 	@Override
-	public ResourceLocation getEntityTexture(SeaShroomEntity entity) {
+	public ResourceLocation getTextureLocation(SeaShroomEntity entity) {
 		return StringUtil.prefix("textures/entity/plant/toxic/sea_shroom.png");
 	}
 

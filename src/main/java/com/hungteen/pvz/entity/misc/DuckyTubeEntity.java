@@ -1,14 +1,12 @@
 package com.hungteen.pvz.entity.misc;
 
 import com.hungteen.pvz.entity.zombie.PVZZombieToolBase;
-import com.hungteen.pvz.utils.ZombieUtil;
 
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntitySize;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.MobEntity;
 import net.minecraft.entity.Pose;
-import net.minecraft.entity.SharedMonsterAttributes;
 import net.minecraft.entity.ai.goal.SwimGoal;
 import net.minecraft.world.World;
 
@@ -25,11 +23,11 @@ public class DuckyTubeEntity extends PVZZombieToolBase {
 		this.goalSelector.addGoal(0, new SwimGoal(this));
 	}
 
-	@Override
-	protected void registerAttributes() {
-		super.registerAttributes();
-		this.getAttribute(SharedMonsterAttributes.MOVEMENT_SPEED).setBaseValue(ZombieUtil.LITTLE_FAST);
-	}
+//	@Override
+//	protected void func_110147_ax() {
+//		super.func_110147_ax();
+//		this.getAttribute(Attributes.MOVEMENT_SPEED).setBaseValue(ZombieUtil.LITTLE_FAST);
+//	}
 
 //	@Override
 //	public void livingTick() {
@@ -43,12 +41,12 @@ public class DuckyTubeEntity extends PVZZombieToolBase {
 //	}
 
 	@Override
-	public EntitySize getSize(Pose poseIn) {
+	public EntitySize getDimensions(Pose poseIn) {
 		return new EntitySize(0.2f, 0.2f, false);
 	}
 
 	@Override
-	public double getMountedYOffset() {
+	public double getPassengersRidingOffset() {
 		return -0.7f;
 	}
 
@@ -58,12 +56,12 @@ public class DuckyTubeEntity extends PVZZombieToolBase {
 	}
 
 	@Override
-	public boolean isPushedByWater() {
+	public boolean isPushedByFluid() {
 		return false;
 	}
 
 	@Override
-	public boolean canBeRiddenInWater() {
+	public boolean rideableUnderWater() {
 		return true;
 	}
 

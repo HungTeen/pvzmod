@@ -31,7 +31,7 @@ public class AngelStarFruitEntity extends PlantShooterEntity {
 	
 	@Override
 	public void normalPlantTick() {
-		if(world.isRemote) {
+		if(level.isClientSide) {
 			if(this.lightTick > 0) {
 				-- this.lightTick;
 			}
@@ -51,13 +51,13 @@ public class AngelStarFruitEntity extends PlantShooterEntity {
 	
 	@Override
 	public void shootBullet() {
-		float now = this.rotationYawHead;
+		float now = this.yHeadRot;
 		for(int i = 0; i < 5; ++ i) {
 			this.shootStarByAngle(now);
 			now += PER_ANGLE;
 		}
-		if(this.getRNG().nextInt(100) < this.getExtraAttackChance()) {
-			now = this.rotationYawHead + 36F;
+		if(this.getRandom().nextInt(100) < this.getExtraAttackChance()) {
+			now = this.yHeadRot + 36F;
 			for(int i = 0; i < 5; ++ i) {
 				this.shootStarByAngle(now);
 				now += PER_ANGLE;
@@ -96,16 +96,16 @@ public class AngelStarFruitEntity extends PlantShooterEntity {
 		double vx = - MathHelper.sin(angle);
 		double vz = MathHelper.cos(angle);
 		StarEntity.StarTypes type = this.isPlantInSuperMode() ? StarEntity.StarTypes.BIG : StarEntity.StarTypes.NORMAL;
-		StarEntity pea = new StarEntity(world, this, type, StarEntity.StarStates.PINK);
-		pea.setPosition(getPosX(), getPosY() + 0.2F, getPosZ());
+		StarEntity pea = new StarEntity(level, this, type, StarEntity.StarStates.PINK);
+		pea.setPos(getX(), getY() + 0.2F, getZ());
 		double speed = 1.4D;
-		pea.setMotion(vx * speed, 0, vz * speed);
-		world.addEntity(pea);
+		pea.setDeltaMovement(vx * speed, 0, vz * speed);
+		level.addFreshEntity(pea);
 	}
 	
 	@Override
-	public EntitySize getSize(Pose poseIn) {
-		return EntitySize.flexible(0.9F, 0.5F);
+	public EntitySize getDimensions(Pose poseIn) {
+		return EntitySize.scalable(0.9F, 0.5F);
 	}
 	
 	@Override

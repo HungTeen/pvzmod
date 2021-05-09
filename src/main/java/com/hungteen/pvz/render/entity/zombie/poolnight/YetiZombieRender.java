@@ -24,7 +24,7 @@ public class YetiZombieRender extends PVZZombieRender<YetiZombieEntity>{
 	}
 
 	@Override
-	public ResourceLocation getEntityTexture(YetiZombieEntity entity) {
+	public ResourceLocation getTextureLocation(YetiZombieEntity entity) {
 		return StringUtil.prefix("textures/entity/zombie/poolnight/yeti_zombie.png");
 	}
 

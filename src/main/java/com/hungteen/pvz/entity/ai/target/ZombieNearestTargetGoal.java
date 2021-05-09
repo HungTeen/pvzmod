@@ -20,17 +20,17 @@ public class ZombieNearestTargetGoal extends PVZNearestTargetGoal {
 	}
 
 	@Override
-	public boolean shouldContinueExecuting() {
-		LivingEntity entity = this.goalOwner.getAttackTarget();
+	public boolean canContinueToUse() {
+		LivingEntity entity = this.mob.getTarget();
 		if (entity == null) {
-			entity = this.target;
+			entity = this.targetMob;
 		}
 		if (entity == null || ! entity.isAlive()) {
 			return false;
 		}
-		if (EntityUtil.checkCanEntityTarget(goalOwner, entity) && entity != this.goalOwner) {
+		if (EntityUtil.checkCanEntityTarget(mob, entity) && entity != this.mob) {
 			if (this.checkOther(entity)) {
-				this.goalOwner.setAttackTarget(entity);
+				this.mob.setTarget(entity);
 				return true;
 			}
 		}

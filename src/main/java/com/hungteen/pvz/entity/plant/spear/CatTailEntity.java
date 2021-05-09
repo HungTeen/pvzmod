@@ -44,12 +44,12 @@ public class CatTailEntity extends PlantShooterEntity {
 	@Override
 	public void normalPlantTick() {
 		super.normalPlantTick();
-		if(! world.isRemote) {
+		if(! level.isClientSide) {
 			if(this.powerTick > 0) -- this.powerTick;
 			HashSet<ThornEntity> tmp = new HashSet<>();
 			thorns.forEach((thorn)->{
 				if(! thorn.removed && thorn.isInControl()) {
-					thorn.setThornTarget(this.getAttackTarget());
+					thorn.setThornTarget(this.getTarget());
 					tmp.add(thorn);
 				}
 			});
@@ -82,16 +82,16 @@ public class CatTailEntity extends PlantShooterEntity {
 	
 	@Override
 	public void shootBullet() {
-		LivingEntity target = this.getAttackTarget();
+		LivingEntity target = this.getTarget();
 		if(target == null) return ;
-		ThornEntity thorn = new ThornEntity(world, this);
+		ThornEntity thorn = new ThornEntity(level, this);
 		thorn.setThornType(this.getThornShootType());
 		thorn.setThornState(thorn.getThornType() == ThornTypes.AUTO ? ThornStates.POWER : ThornStates.NORMAL);
 		thorn.setExtraHitCount(this.getExtraAttackCount());
-		thorn.setPosition(getPosX(), getPosY() + this.getHeight() + 0.2F, getPosZ());
+		thorn.setPos(getX(), getY() + this.getBbHeight() + 0.2F, getZ());
 		this.thorns.add(thorn);
 		EntityUtil.playSound(this, SoundRegister.PLANT_THROW.get());
-		this.world.addEntity(thorn);
+		this.level.addFreshEntity(thorn);
 	}
 	
 	@Override
@@ -143,8 +143,8 @@ public class CatTailEntity extends PlantShooterEntity {
 	}
 
 	@Override
-	public EntitySize getSize(Pose poseIn) {
-		return EntitySize.flexible(0.8F, 1.4F);
+	public EntitySize getDimensions(Pose poseIn) {
+		return EntitySize.scalable(0.8F, 1.4F);
 	}
 	
 	@Override
@@ -163,8 +163,8 @@ public class CatTailEntity extends PlantShooterEntity {
 	}
 
 	@Override
-	public void readAdditional(CompoundNBT compound) {
-		super.readAdditional(compound);
+	public void readAdditionalSaveData(CompoundNBT compound) {
+		super.readAdditionalSaveData(compound);
 		if(compound.contains("power_thorn_count")){
 			this.powerCount = compound.getInt("power_thorn_count");
 		}
@@ -174,8 +174,8 @@ public class CatTailEntity extends PlantShooterEntity {
 	}
 	
 	@Override
-	public void writeAdditional(CompoundNBT compound) {
-		super.writeAdditional(compound);
+	public void addAdditionalSaveData(CompoundNBT compound) {
+		super.addAdditionalSaveData(compound);
 		compound.putInt("power_thorn_count", this.powerCount);
 		compound.putInt("power_shoot_tick", this.powerTick);
 	}

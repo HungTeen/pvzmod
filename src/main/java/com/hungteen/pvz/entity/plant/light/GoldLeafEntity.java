@@ -25,11 +25,11 @@ public class GoldLeafEntity extends PlantBomberEntity {
 
 	@Override
 	public void startBomb() {
-		Block block = world.getBlockState(this.getPosition().down()).getBlock();
+		Block block = level.getBlockState(this.blockPosition().below()).getBlock();
 		int lvl = getBlockGoldLevel(block);
 		if(lvl == - 1 || lvl >= this.getTileLevel()) return ;
-		if(! world.isRemote) {
-			world.setBlockState(getPosition().down(), this.getGoldTileByLvl(this.getTileLevel()).getDefaultState());
+		if(! level.isClientSide) {
+			level.setBlockAndUpdate(blockPosition().below(), this.getGoldTileByLvl(this.getTileLevel()).defaultBlockState());
 		} else {
 			
 		}
@@ -62,8 +62,8 @@ public class GoldLeafEntity extends PlantBomberEntity {
 	}
 
 	@Override
-	public EntitySize getSize(Pose poseIn) {
-		return EntitySize.flexible(0.6F, 1F);
+	public EntitySize getDimensions(Pose poseIn) {
+		return EntitySize.scalable(0.6F, 1F);
 	}
 	
 	@Override

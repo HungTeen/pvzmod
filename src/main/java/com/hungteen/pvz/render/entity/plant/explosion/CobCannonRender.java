@@ -25,7 +25,7 @@ public class CobCannonRender extends PVZPlantRender<CobCannonEntity> {
 	}
 
 	@Override
-	public ResourceLocation getEntityTexture(CobCannonEntity entity) {
+	public ResourceLocation getTextureLocation(CobCannonEntity entity) {
 		return COBCANNON_TEX;
 	}
 

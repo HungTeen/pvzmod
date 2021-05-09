@@ -22,7 +22,7 @@ public class BonkChoyRender extends PVZPlantRender<BonkChoyEntity> {
 	}
 
 	@Override
-	public ResourceLocation getEntityTexture(BonkChoyEntity entity) {
+	public ResourceLocation getTextureLocation(BonkChoyEntity entity) {
 		return BONK_CHOY_TEX;
 	}
 

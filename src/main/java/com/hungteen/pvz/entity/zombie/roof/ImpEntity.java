@@ -8,15 +8,15 @@ import net.minecraft.entity.EntitySize;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.ILivingEntityData;
 import net.minecraft.entity.Pose;
-import net.minecraft.entity.SharedMonsterAttributes;
 import net.minecraft.entity.SpawnReason;
+import net.minecraft.entity.ai.attributes.Attributes;
 import net.minecraft.entity.monster.MonsterEntity;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.potion.EffectInstance;
 import net.minecraft.potion.Effects;
 import net.minecraft.util.DamageSource;
 import net.minecraft.world.DifficultyInstance;
-import net.minecraft.world.IWorld;
+import net.minecraft.world.IServerWorld;
 import net.minecraft.world.World;
 
 public class ImpEntity extends PVZZombieEntity {
@@ -26,28 +26,28 @@ public class ImpEntity extends PVZZombieEntity {
 	}
 
 	@Override
-	public ILivingEntityData onInitialSpawn(IWorld worldIn, DifficultyInstance difficultyIn, SpawnReason reason,
+	public ILivingEntityData finalizeSpawn(IServerWorld worldIn, DifficultyInstance difficultyIn, SpawnReason reason,
 			ILivingEntityData spawnDataIn, CompoundNBT dataTag) {
-		if(! world.isRemote) {
-			int now = this.getRNG().nextInt(10);
-			if(now == 0) this.addPotionEffect(new EffectInstance(Effects.SPEED, 600, 1));
-			else if(now == 1) this.addPotionEffect(new EffectInstance(Effects.STRENGTH, 600, 1));
-			else if(now == 2) this.addPotionEffect(new EffectInstance(Effects.JUMP_BOOST, 600, 1));
-			else if(now == 3) this.addPotionEffect(new EffectInstance(Effects.HEALTH_BOOST, 600, 1));
-			else if(now == 3) this.addPotionEffect(new EffectInstance(Effects.ABSORPTION, 600, 1));
+		if(! level.isClientSide) {
+			int now = this.getRandom().nextInt(10);
+			if(now == 0) this.addEffect(new EffectInstance(Effects.MOVEMENT_SPEED, 600, 1));
+			else if(now == 1) this.addEffect(new EffectInstance(Effects.DAMAGE_BOOST, 600, 1));
+			else if(now == 2) this.addEffect(new EffectInstance(Effects.JUMP, 600, 1));
+			else if(now == 3) this.addEffect(new EffectInstance(Effects.HEALTH_BOOST, 600, 1));
+			else if(now == 3) this.addEffect(new EffectInstance(Effects.ABSORPTION, 600, 1));
 		}
-		return super.onInitialSpawn(worldIn, difficultyIn, reason, spawnDataIn, dataTag);
+		return super.finalizeSpawn(worldIn, difficultyIn, reason, spawnDataIn, dataTag);
 	}
 	
 	@Override
-	protected void registerAttributes() {
-		super.registerAttributes();
-		this.getAttribute(SharedMonsterAttributes.MOVEMENT_SPEED).setBaseValue(ZombieUtil.FAST);
+	protected void updateAttributes() {
+		super.updateAttributes();
+		this.getAttribute(Attributes.MOVEMENT_SPEED).setBaseValue(ZombieUtil.FAST);
 	}
 	
 	@Override
 	public boolean isInvulnerableTo(DamageSource source) {
-		if(source.getDamageType() == DamageSource.FALL.damageType) return true;
+		if(source.getMsgId() == DamageSource.FALL.msgId) return true;
 		return super.isInvulnerableTo(source);
 	}
 	
@@ -57,9 +57,9 @@ public class ImpEntity extends PVZZombieEntity {
 	}
 	
 	@Override
-	public EntitySize getSize(Pose poseIn) {
-		if(this.isMiniZombie()) return EntitySize.flexible(0.2F, 0.45F);
-		return EntitySize.flexible(0.6F, 1.2F);
+	public EntitySize getDimensions(Pose poseIn) {
+		if(this.isMiniZombie()) return EntitySize.scalable(0.2F, 0.45F);
+		return EntitySize.scalable(0.6F, 1.2F);
 	}
 
 	@Override

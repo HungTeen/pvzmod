@@ -23,13 +23,13 @@ public class ExplodeONutEntity extends WallNutEntity {
 	}
 	
 	@Override
-	public void onDeath(DamageSource cause) {
-		super.onDeath(cause);
-		if(! this.world.isRemote) {
+	public void die(DamageSource cause) {
+		super.die(cause);
+		if(! this.level.isClientSide) {
 			this.explode(this);
 		} else {
 			for(int i = 0; i < 5; ++ i) {
-		        this.world.addParticle(ParticleRegister.RED_BOMB.get(), this.getPosX(), this.getPosY(), this.getPosZ(), 0, 0, 0);
+		        this.level.addParticle(ParticleRegister.RED_BOMB.get(), this.getX(), this.getY(), this.getZ(), 0, 0, 0);
 			}
 		}
 	}
@@ -38,7 +38,7 @@ public class ExplodeONutEntity extends WallNutEntity {
 		float len = 2F;
 		AxisAlignedBB aabb = EntityUtil.getEntityAABB(entity, len, len);
 		EntityUtil.getAttackEntities(this, aabb).forEach((target) -> {
-			target.attackEntityFrom(PVZDamageSource.causeExplosionDamage(this, this), this.getAttackDamage());
+			target.hurt(PVZDamageSource.causeExplosionDamage(this, this), this.getAttackDamage());
 		});
 		EntityUtil.playSound(this, SoundRegister.CHERRY_BOMB.get());
 	}
@@ -53,7 +53,7 @@ public class ExplodeONutEntity extends WallNutEntity {
 			if(list.isEmpty()) return ;
 			for(int i = 0; i < this.getExtraAttackChance(); ++ i) {
 //				System.out.println(i);
-				Entity target = list.get(this.getRNG().nextInt(list.size()));
+				Entity target = list.get(this.getRandom().nextInt(list.size()));
 				this.explode(target);
 				EntityUtil.spawnParticle(target, 0);
 			}

@@ -25,7 +25,7 @@ public class IcebergLettuceRender extends PVZPlantRender<IcebergLettuceEntity> {
 	}
 
 	@Override
-	public ResourceLocation getEntityTexture(IcebergLettuceEntity entity) {
+	public ResourceLocation getTextureLocation(IcebergLettuceEntity entity) {
 		return ICEBERG_LETTUCE_TEX;
 	}
 

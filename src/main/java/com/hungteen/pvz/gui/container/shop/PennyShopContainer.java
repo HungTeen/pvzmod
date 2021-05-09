@@ -22,9 +22,9 @@ public class PennyShopContainer extends AbstractDaveShopContainer {
 			PlayerUtil.addPlayerStats(player, Resources.MONEY, 1000);
 		} else {
 			PlayerUtil.addPlayerStats(player, Resources.GEM_NUM, - TradeUtil.getGoodCost(good));
-			this.output.setInventorySlotContents(0, TradeUtil.getGoodItemStack(good));
+			this.output.setItem(0, TradeUtil.getGoodItemStack(good));
 		}
-		this.player.world.playSound(null, this.player.getPosition(), SoundRegister.DAVE_BUY.get(), SoundCategory.AMBIENT, 1f, 1f);
+		this.player.level.playSound(null, this.player, SoundRegister.DAVE_BUY.get(), SoundCategory.AMBIENT, 1f, 1f);
 	}
 	
 }

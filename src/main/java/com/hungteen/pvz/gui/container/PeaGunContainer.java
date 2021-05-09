@@ -20,7 +20,7 @@ public class PeaGunContainer extends Container {
 	public PeaGunContainer(int id, PlayerEntity player) {
 		super(ContainerRegister.PEA_GUN.get(), id);
 		this.player = player;
-		this.stack = this.player.getHeldItemOffhand();
+		this.stack = this.player.getOffhandItem();
 		if(stack.getItem() != ItemRegister.PEA_GUN.get()) {
 			PVZMod.LOGGER.debug("ERROR OFFHAND ITEM !");
 			return ;
@@ -33,7 +33,7 @@ public class PeaGunContainer extends Container {
 			for(int j = 0; j < 9; ++ j) {
 				this.addSlot(new Slot(backpack, j + i * 9 + 1, 8 + 18 * j, 45 + 18 * i) {
 					@Override
-					public boolean isItemValid(ItemStack stack) {
+					public boolean mayPlace(ItemStack stack) {
 						return stack.getItem() == ItemRegister.PEA.get()
 								|| stack.getItem() == ItemRegister.SNOW_PEA.get() || stack.getItem() == ItemRegister.FLAME_PEA.get();
 					}
@@ -53,34 +53,34 @@ public class PeaGunContainer extends Container {
 	}
 	
 	@Override
-	public ItemStack transferStackInSlot(PlayerEntity playerIn, int index) {
+	public ItemStack quickMoveStack(PlayerEntity playerIn, int index) {
 		ItemStack itemstack = ItemStack.EMPTY;
-		Slot slot = this.inventorySlots.get(index);
-		if (slot != null && slot.getHasStack()) {
-			ItemStack itemstack1 = slot.getStack();
+		Slot slot = this.slots.get(index);
+		if (slot != null && slot.hasItem()) {
+			ItemStack itemstack1 = slot.getItem();
 			itemstack = itemstack1.copy();
 			if(index == 0) {
-				if (! this.mergeItemStack(itemstack1, 1, this.inventorySlots.size(), true)) {
+				if (! this.moveItemStackTo(itemstack1, 1, this.slots.size(), true)) {
 					return ItemStack.EMPTY;
 				}
 			} else if (index <= PeaGunItem.PEA_GUN_SLOT_NUM) {
-				if (! this.mergeItemStack(itemstack1, PeaGunItem.PEA_GUN_SLOT_NUM + 1, this.inventorySlots.size(), true)) {
+				if (! this.moveItemStackTo(itemstack1, PeaGunItem.PEA_GUN_SLOT_NUM + 1, this.slots.size(), true)) {
 					return ItemStack.EMPTY;
 				}
 			} else if (index <= PeaGunItem.PEA_GUN_SLOT_NUM + 27) {
-				if(! mergeItemStack(itemstack1, 0, PeaGunItem.PEA_GUN_SLOT_NUM + 1, false)
-						&& ! mergeItemStack(itemstack1, PeaGunItem.PEA_GUN_SLOT_NUM + 27 + 1, this.inventorySlots.size(), false)) {
+				if(! moveItemStackTo(itemstack1, 0, PeaGunItem.PEA_GUN_SLOT_NUM + 1, false)
+						&& ! moveItemStackTo(itemstack1, PeaGunItem.PEA_GUN_SLOT_NUM + 27 + 1, this.slots.size(), false)) {
 					return ItemStack.EMPTY;
 				}
 			} else {
-				if (! this.mergeItemStack(itemstack1, 0, PeaGunItem.PEA_GUN_SLOT_NUM + 27 + 1, false)) {
+				if (! this.moveItemStackTo(itemstack1, 0, PeaGunItem.PEA_GUN_SLOT_NUM + 27 + 1, false)) {
 					return ItemStack.EMPTY;
 				}
 			}
 			if (itemstack1.isEmpty()) {
-				slot.putStack(ItemStack.EMPTY);
+				slot.set(ItemStack.EMPTY);
 			} else {
-				slot.onSlotChanged();
+				slot.setChanged();
 			}
 		}
 		return itemstack;
@@ -88,8 +88,8 @@ public class PeaGunContainer extends Container {
 	
 
 	@Override
-	public boolean canInteractWith(PlayerEntity playerIn) {
-		if(playerIn.getHeldItemOffhand().getItem() != ItemRegister.PEA_GUN.get()) {
+	public boolean stillValid(PlayerEntity playerIn) {
+		if(playerIn.getOffhandItem().getItem() != ItemRegister.PEA_GUN.get()) {
 			return false;
 		}
 		return true;

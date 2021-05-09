@@ -24,16 +24,16 @@ public abstract class PVZZombieRender<T extends PVZZombieEntity> extends PVZCrea
 	}
 
 	@Override
-	protected void preRenderCallback(T entity, MatrixStack matrixStackIn, float partialTickTime) {
-		if(this.getEntityModel() instanceof IHasDefence) {
-			((IHasDefence) this.getEntityModel()).setDestroyed(entity);
+	protected void scale(T entity, MatrixStack matrixStackIn, float partialTickTime) {
+		if(this.getModel() instanceof IHasDefence) {
+			((IHasDefence) this.getModel()).setDestroyed(entity);
 		}
-		super.preRenderCallback(entity, matrixStackIn, partialTickTime);
+		super.scale(entity, matrixStackIn, partialTickTime);
 	}
 	
 	@Override
-	protected boolean isVisible(T livingEntityIn) {
-		return super.isVisible(livingEntityIn) || ClientPlayerResources.lightLevel > 1;
+	protected boolean isBodyVisible(T livingEntityIn) {
+		return super.isBodyVisible(livingEntityIn) || ClientPlayerResources.lightLevel > 1;
 	}
 	
 	protected void addZombieLayers() {

@@ -26,36 +26,36 @@ import net.minecraft.network.datasync.EntityDataManager;
 import net.minecraft.util.DamageSource;
 import net.minecraft.world.DifficultyInstance;
 import net.minecraft.world.GameRules;
-import net.minecraft.world.IWorld;
+import net.minecraft.world.IServerWorld;
 import net.minecraft.world.World;
 
 public class SpikeRockEntity extends PVZPlantEntity {
 
-	private static final DataParameter<Integer> SPIKE_NUM = EntityDataManager.createKey(SpikeRockEntity.class, DataSerializers.VARINT);
+	private static final DataParameter<Integer> SPIKE_NUM = EntityDataManager.defineId(SpikeRockEntity.class, DataSerializers.INT);
 	
 	public SpikeRockEntity(EntityType<? extends CreatureEntity> type, World worldIn) {
 		super(type, worldIn);
 	}
 	
 	@Override
-	public ILivingEntityData onInitialSpawn(IWorld worldIn, DifficultyInstance difficultyIn, SpawnReason reason,
+	public ILivingEntityData finalizeSpawn(IServerWorld worldIn, DifficultyInstance difficultyIn, SpawnReason reason,
 			ILivingEntityData spawnDataIn, CompoundNBT dataTag) {
-		if(! world.isRemote) {
+		if(! level.isClientSide) {
 			this.setSpikeNum(this.getSpikesCount());
 		}
-		return super.onInitialSpawn(worldIn, difficultyIn, reason, spawnDataIn, dataTag);
+		return super.finalizeSpawn(worldIn, difficultyIn, reason, spawnDataIn, dataTag);
 	}
 	
 	@Override
-	protected void registerData() {
-		super.registerData();
-		this.dataManager.register(SPIKE_NUM, 1);
+	protected void defineSynchedData() {
+		super.defineSynchedData();
+		this.entityData.define(SPIKE_NUM, 1);
 	}
 	
 	@Override
 	protected void normalPlantTick() {
 		super.normalPlantTick();
-		if(! world.isRemote) {
+		if(! level.isClientSide) {
 			if(this.getSpikeNum() < 0) {
 				this.remove();
 			}
@@ -64,7 +64,7 @@ public class SpikeRockEntity extends PVZPlantEntity {
 			}
 			if(this.isPlantInSuperMode() && this.getSuperTime() % 10 == 0) {
 				for(LivingEntity target : EntityUtil.getEntityTargetableEntity(this, EntityUtil.getEntityAABB(this, 10, 2))) {
-					target.attackEntityFrom(PVZDamageSource.causeSpikeDamage(this, this), this.getAttackDamage() * 2);
+					target.hurt(PVZDamageSource.causeSpikeDamage(this, this), this.getAttackDamage() * 2);
 					for(int i = 0; i < 4; ++ i) {
 						EntityUtil.spawnParticle(target, 6);
 					}
@@ -74,11 +74,11 @@ public class SpikeRockEntity extends PVZPlantEntity {
 	}
 	
 	@Override
-	protected void collideWithNearbyEntities() {
-		List<LivingEntity> list = this.world.getEntitiesWithinAABB(LivingEntity.class, this.getBoundingBox());
+	protected void pushEntities() {
+		List<LivingEntity> list = this.level.getEntitiesOfClass(LivingEntity.class, this.getBoundingBox());
 		if (!list.isEmpty()) {
-            int i = this.world.getGameRules().getInt(GameRules.MAX_ENTITY_CRAMMING);
-            if (i > 0 && list.size() > i - 1 && this.rand.nextInt(4) == 0){
+            int i = this.level.getGameRules().getInt(GameRules.RULE_MAX_ENTITY_CRAMMING);
+            if (i > 0 && list.size() > i - 1 && this.random.nextInt(4) == 0){
                 int j = 0;
                 for (int k = 0; k < list.size(); ++k){
                     if (!((Entity)list.get(k)).isPassenger()){
@@ -86,16 +86,16 @@ public class SpikeRockEntity extends PVZPlantEntity {
                     }
                 }
                 if (j > i - 1){
-                    this.attackEntityFrom(DamageSource.CRAMMING, 6.0F);
+                    this.hurt(DamageSource.CRAMMING, 6.0F);
                 }
             }
             for (int l = 0; l < list.size(); ++l) {
                 LivingEntity target = list.get(l);
                 if(target != this && shouldCollideWithEntity(target)) {//can collide with
-                    this.collideWithEntity(target);
+                    this.doPush(target);
                 }
             }
-            if(! this.world.isRemote && this.getAttackTime() == 0) {
+            if(! this.level.isClientSide && this.getAttackTime() == 0) {
             	for (int l = 0; l < list.size(); ++l) {
             	    LivingEntity target = list.get(l);
             	    if(target != this && this.getSpikeNum() >= 0 && EntityUtil.checkCanEntityAttack(this, target)) {
@@ -118,15 +118,15 @@ public class SpikeRockEntity extends PVZPlantEntity {
 		if(! this.canPlantNormalUpdate()) return ;
 		this.setAttackTime(this.getAttackCD());
 		if(target instanceof ZomboniEntity || target instanceof BobsleTeamEntity || target instanceof CatapultZombieEntity) {
-			target.attackEntityFrom(PVZDamageSource.causeSpikeDamage(this, this), target.getMaxHealth());
+			target.hurt(PVZDamageSource.causeSpikeDamage(this, this), target.getMaxHealth());
 			this.setSpikeNum(this.getSpikeNum() - 1);
 		} else {
-			target.attackEntityFrom(PVZDamageSource.causeSpikeDamage(this, this), getAttackDamage());
+			target.hurt(PVZDamageSource.causeSpikeDamage(this, this), getAttackDamage());
 		}
 	}
 	
 	@Override
-	public boolean attackEntityFrom(DamageSource source, float amount) {
+	public boolean hurt(DamageSource source, float amount) {
 		if(source instanceof PVZDamageSource) {
 			if(((PVZDamageSource) source).getPVZDamageType() == PVZDamageType.CRUSH) {
 				if(this.getSpikeNum() >= 0) {
@@ -135,7 +135,7 @@ public class SpikeRockEntity extends PVZPlantEntity {
 				}
 			}
 		}
-		return super.attackEntityFrom(source, amount);
+		return super.hurt(source, amount);
 	}
 	
 	public int getAttackCD() {
@@ -163,7 +163,7 @@ public class SpikeRockEntity extends PVZPlantEntity {
 	}
 
 	@Override
-	public EntitySize getSize(Pose poseIn) {
+	public EntitySize getDimensions(Pose poseIn) {
 		return new EntitySize(0.95f, 0.4f, false);
 	}
 	
@@ -180,25 +180,25 @@ public class SpikeRockEntity extends PVZPlantEntity {
 	}
 	
 	@Override
-	public void readAdditional(CompoundNBT compound) {
-		super.readAdditional(compound);
+	public void readAdditionalSaveData(CompoundNBT compound) {
+		super.readAdditionalSaveData(compound);
 		if(compound.contains("spike_num")) {
 			this.setSpikeNum(compound.getInt("spike_num"));
 		}
 	}
 	
 	@Override
-	public void writeAdditional(CompoundNBT compound) {
-		super.writeAdditional(compound);
+	public void addAdditionalSaveData(CompoundNBT compound) {
+		super.addAdditionalSaveData(compound);
 		compound.putInt("spike_num", this.getSpikeNum());
 	}
 	
 	public int getSpikeNum() {
-		return this.dataManager.get(SPIKE_NUM);
+		return this.entityData.get(SPIKE_NUM);
 	}
 	
 	public void setSpikeNum(int num) {
-		this.dataManager.set(SPIKE_NUM, num);
+		this.entityData.set(SPIKE_NUM, num);
 	}
 
 }

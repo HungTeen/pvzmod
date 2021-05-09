@@ -13,7 +13,7 @@ import net.minecraft.entity.EntityType;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.Pose;
 import net.minecraft.util.math.MathHelper;
-import net.minecraft.util.math.Vec3d;
+import net.minecraft.util.math.vector.Vector3d;
 import net.minecraft.world.World;
 
 public class GloomShroomEntity extends PlantShooterEntity {
@@ -33,12 +33,12 @@ public class GloomShroomEntity extends PlantShooterEntity {
 	
 	@Override
 	public void shootBullet() {
-		LivingEntity target = this.getAttackTarget();
+		LivingEntity target = this.getTarget();
 		if(target == null) {
 			return ;
 		}
-		float now = this.rotationYawHead;
-		boolean kb = (this.getRNG().nextInt(400) < this.getKBChance());
+		float now = this.yHeadRot;
+		boolean kb = (this.getRandom().nextInt(400) < this.getKBChance());
 		for(int i = 0; i < SHOOT_NUM; ++ i) {
 			this.shootFume(now, kb);
 			now += 360F / SHOOT_NUM;
@@ -50,15 +50,15 @@ public class GloomShroomEntity extends PlantShooterEntity {
 		angle *= 3.14159F / 180F;
 		double vx = - MathHelper.sin(angle);
 		double vz = MathHelper.cos(angle);
-		FumeEntity fume = new FumeEntity(this.world, this);
+		FumeEntity fume = new FumeEntity(this.level, this);
         if(this.isPlantInSuperMode()) {
         	fume.setKnockback(this.getKnockback());
         } else {
         	if(kb) fume.setKnockback(1);
         }
-        fume.setPosition(this.getPosX(), this.getPosY() + this.getEyeHeight() - 0.2, this.getPosZ());
-        fume.setMotion(new Vec3d(vx, 0, vz));
-        this.world.addEntity(fume);
+        fume.setPos(this.getX(), this.getY() + this.getEyeHeight() - 0.2, this.getZ());
+        fume.setDeltaMovement(new Vector3d(vx, 0, vz));
+        this.level.addFreshEntity(fume);
 	}
 	
 	/**
@@ -95,8 +95,8 @@ public class GloomShroomEntity extends PlantShooterEntity {
 	}
     
     @Override
-    public EntitySize getSize(Pose poseIn) {
-    	return EntitySize.flexible(0.9F, 0.8F);
+    public EntitySize getDimensions(Pose poseIn) {
+    	return EntitySize.scalable(0.9F, 0.8F);
     }
     
 	@Override

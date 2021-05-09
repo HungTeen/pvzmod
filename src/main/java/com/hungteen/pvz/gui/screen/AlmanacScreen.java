@@ -39,7 +39,7 @@ import com.hungteen.pvz.utils.StringUtil;
 import com.hungteen.pvz.utils.enums.Colors;
 import com.hungteen.pvz.utils.enums.Plants;
 import com.hungteen.pvz.utils.enums.Resources;
-import com.mojang.blaze3d.systems.RenderSystem;
+import com.mojang.blaze3d.matrix.MatrixStack;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.entity.player.PlayerInventory;
@@ -59,58 +59,58 @@ public class AlmanacScreen extends AbstractOptionScreen<AlmanacContainer> {
 	
 	public AlmanacScreen(AlmanacContainer screenContainer, PlayerInventory inv, ITextComponent titleIn) {
 		super(screenContainer, inv, titleIn);
-		this.xSize = 240;
-		this.ySize = 200;
+		this.imageWidth = 240;
+		this.imageHeight = 200;
 	}
 
 	@Override
-	public void render(int mouseX, int mouseY, float partialTicks) {
-		this.renderAlmanac();
-		super.render(mouseX, mouseY, partialTicks);
-		this.renderHoveredToolTip(mouseX, mouseY);
+	public void render(MatrixStack stack, int mouseX, int mouseY, float partialTicks) {
+		this.renderAlmanac(stack);
+		super.render(stack, mouseX, mouseY, partialTicks);
+		this.renderTooltip(stack, mouseX, mouseY);
 	}
 	
-	protected void renderAlmanac(){
+	protected void renderAlmanac(MatrixStack stack){
 		if(! this.searchGui.getCurrentOption().isPresent()) return ;
 		SearchOption option = this.searchGui.getCurrentOption().get();
-		this.renderTitle(option);
+		this.renderTitle(stack, option);
 		if(! this.isOptionUnLocked(option)) return ;
-		this.renderLogo(option);
-		this.renderXpBar(option);
-		this.renderShortInfo(option);
+		this.renderLogo(stack, option);
+		this.renderXpBar(stack, option);
+		this.renderShortInfo(stack, option);
 		option.getPlant().ifPresent((plant) -> {
 			int lvl = ClientPlayerResources.getPlayerPlantCardLvl(plant);
 //			int maxLvl = PlantUtil.getPlantMaxLvl(plant);
 			this.propertyCnt = 0;
 			@SuppressWarnings("resource")
-			World world = Minecraft.getInstance().player.world;
-			this.drawProperty(Properties.SUN_COST, PlantUtil.getPlantSunCost(plant));
-			this.drawProperty(Properties.COOL_DOWN, PlantUtil.getPlantCoolDownTime(plant, lvl));
+			World world = Minecraft.getInstance().player.level;
+			this.drawProperty(stack, Properties.SUN_COST, PlantUtil.getPlantSunCost(plant));
+			this.drawProperty(stack, Properties.COOL_DOWN, PlantUtil.getPlantCoolDownTime(plant, lvl));
 			if(plant.isBlockPlant) {
 				return ;
 			} else if(plant.isOuterPlant) {
-				this.drawProperty(Properties.HEALTH, PlantUtil.PUMPKIN_LIFE);
+				this.drawProperty(stack, Properties.HEALTH, PlantUtil.PUMPKIN_LIFE);
 				return ;
 			}
 			PVZPlantEntity plantEntity =  PlantUtil.getPlantEntity(world, plant);
 			plantEntity.setPlantLvl(lvl);
-			this.drawProperty(Properties.HEALTH, plantEntity.getPlantHealth());
+			this.drawProperty(stack, Properties.HEALTH, plantEntity.getPlantHealth());
 			switch(plant) {
 			case PEA_SHOOTER:{
 				PeaShooterEntity peaShooter = (PeaShooterEntity) plantEntity;
-				this.drawProperty(Properties.ATTACK_DAMAGE, peaShooter.getAttackDamage());
-				this.drawProperty(Properties.BULLET_SPEED, peaShooter.getBulletSpeed());
+				this.drawProperty(stack, Properties.ATTACK_DAMAGE, peaShooter.getAttackDamage());
+				this.drawProperty(stack, Properties.BULLET_SPEED, peaShooter.getBulletSpeed());
 				break;
 			}
 			case SUN_FLOWER:{
 				SunFlowerEntity sunFlower = (SunFlowerEntity) plantEntity;
-				this.drawProperty(Properties.GEN_AMOUNT, sunFlower.getSunAmount());
+				this.drawProperty(stack, Properties.GEN_AMOUNT, sunFlower.getSunAmount());
 				break;
 			}
 			case CHERRY_BOMB:{
 				CherryBombEntity cherryBomb = (CherryBombEntity) plantEntity;
-				this.drawProperty(Properties.ATTACK_DAMAGE, cherryBomb.getAttackDamage());
-				this.drawProperty(Properties.ATTACK_RANGE, cherryBomb.getExpRange());
+				this.drawProperty(stack, Properties.ATTACK_DAMAGE, cherryBomb.getAttackDamage());
+				this.drawProperty(stack, Properties.ATTACK_RANGE, cherryBomb.getExpRange());
 				break;
 			}
 			case WALL_NUT:{
@@ -118,76 +118,76 @@ public class AlmanacScreen extends AbstractOptionScreen<AlmanacContainer> {
 			}
 			case POTATO_MINE:{
 				PotatoMineEntity potatoMine = (PotatoMineEntity) plantEntity;
-				this.drawProperty(Properties.ATTACK_DAMAGE, potatoMine.getAttackDamage());
-				this.drawProperty(Properties.PRE_TIME, potatoMine.getReadyTime());
+				this.drawProperty(stack, Properties.ATTACK_DAMAGE, potatoMine.getAttackDamage());
+				this.drawProperty(stack, Properties.PRE_TIME, potatoMine.getReadyTime());
 				break;
 			}
 			case SNOW_PEA:{
 				SnowPeaEntity snowPea = (SnowPeaEntity) plantEntity;
-				this.drawProperty(Properties.ATTACK_DAMAGE, snowPea.getAttackDamage());
-				this.drawProperty(Properties.BULLET_SPEED, snowPea.getBulletSpeed());
-				this.drawProperty(Properties.COLD_EFFECT, snowPea.getColdEffect().getAmplifier());
-				this.drawProperty(Properties.COLD_EFFECT_TIME, snowPea.getColdEffect().getDuration());
+				this.drawProperty(stack, Properties.ATTACK_DAMAGE, snowPea.getAttackDamage());
+				this.drawProperty(stack, Properties.BULLET_SPEED, snowPea.getBulletSpeed());
+				this.drawProperty(stack, Properties.COLD_EFFECT, snowPea.getColdEffect().getAmplifier());
+				this.drawProperty(stack, Properties.COLD_EFFECT_TIME, snowPea.getColdEffect().getDuration());
 				break;
 			}
 			case CHOMPER:{
 				ChomperEntity chomper = (ChomperEntity) plantEntity;
-				this.drawProperty(Properties.ATTACK_DAMAGE, chomper.getAttackDamage());
-				this.drawProperty(Properties.ATTACK_CD, chomper.getRestCD());
+				this.drawProperty(stack, Properties.ATTACK_DAMAGE, chomper.getAttackDamage());
+				this.drawProperty(stack, Properties.ATTACK_CD, chomper.getRestCD());
 				break;
 			}
 			case REPEATER:{
 				RepeaterEntity repeater = (RepeaterEntity) plantEntity;
-				this.drawProperty(Properties.ATTACK_DAMAGE, repeater.getAttackDamage());
-				this.drawProperty(Properties.BULLET_SPEED, repeater.getBulletSpeed());
+				this.drawProperty(stack, Properties.ATTACK_DAMAGE, repeater.getAttackDamage());
+				this.drawProperty(stack, Properties.BULLET_SPEED, repeater.getBulletSpeed());
 				break;
 			}
 			case PUFF_SHROOM:{
 				PuffShroomEntity puffShroom = (PuffShroomEntity) plantEntity;
-				this.drawProperty(Properties.ATTACK_DAMAGE, puffShroom.getAttackDamage());
-				this.drawProperty(Properties.LIVE_TICK, puffShroom.getMaxLiveTick());
+				this.drawProperty(stack, Properties.ATTACK_DAMAGE, puffShroom.getAttackDamage());
+				this.drawProperty(stack, Properties.LIVE_TICK, puffShroom.getMaxLiveTick());
 				break;
 			}
 			case SUN_SHROOM:{
 				SunShroomEntity sunShroom = (SunShroomEntity) plantEntity;
-				this.drawProperty(Properties.GEN_AMOUNT, sunShroom.getSunAmount());
+				this.drawProperty(stack, Properties.GEN_AMOUNT, sunShroom.getSunAmount());
 				break;
 			}
 			case FUME_SHROOM:{
 				FumeShroomEntity fumeShroom = (FumeShroomEntity) plantEntity;
-				this.drawProperty(Properties.ATTACK_DAMAGE, fumeShroom.getAttackDamage());
+				this.drawProperty(stack, Properties.ATTACK_DAMAGE, fumeShroom.getAttackDamage());
 				break;
 			}
 			case GRAVE_BUSTER:{
 				GraveBusterEntity graveBuster = (GraveBusterEntity) plantEntity;
-				this.drawProperty(Properties.ATTACK_CD, graveBuster.getAttackCD());
-				this.drawProperty(Properties.KILL_COUNT, graveBuster.getMaxKillCnt());
+				this.drawProperty(stack, Properties.ATTACK_CD, graveBuster.getAttackCD());
+				this.drawProperty(stack, Properties.KILL_COUNT, graveBuster.getMaxKillCnt());
 				break;
 			}
 			case HYPNO_SHROOM:{
 				HypnoShroomEntity hypnoShroom = (HypnoShroomEntity) plantEntity;
-				this.drawProperty(Properties.HEAL_HEALTH, hypnoShroom.getHealHealth());
+				this.drawProperty(stack, Properties.HEAL_HEALTH, hypnoShroom.getHealHealth());
 				break;
 			}
 			case SCAREDY_SHROOM:{
 				ScaredyShroomEntity scaredyShroom = (ScaredyShroomEntity) plantEntity;
-				this.drawProperty(Properties.ATTACK_DAMAGE, scaredyShroom.getAttackDamage());
-				this.drawProperty(Properties.SCARE_RANGE, scaredyShroom.getScareDistance());
+				this.drawProperty(stack, Properties.ATTACK_DAMAGE, scaredyShroom.getAttackDamage());
+				this.drawProperty(stack, Properties.SCARE_RANGE, scaredyShroom.getScareDistance());
 				break;
 			}
 			case ICE_SHROOM:{
 				IceShroomEntity iceShroom = (IceShroomEntity) plantEntity;
-				this.drawProperty(Properties.ATTACK_DAMAGE, iceShroom.getAttackDamage());
-				this.drawProperty(Properties.FROZEN_EFFECT_TIME, iceShroom.getFrozenEffect().getDuration());
-				this.drawProperty(Properties.COLD_EFFECT, iceShroom.getColdEffect().getAmplifier());
-				this.drawProperty(Properties.COLD_EFFECT_TIME, iceShroom.getColdEffect().getDuration());
-				this.drawProperty(Properties.ATTACK_RANGE, iceShroom.getAttackRange());
+				this.drawProperty(stack, Properties.ATTACK_DAMAGE, iceShroom.getAttackDamage());
+				this.drawProperty(stack, Properties.FROZEN_EFFECT_TIME, iceShroom.getFrozenEffect().getDuration());
+				this.drawProperty(stack, Properties.COLD_EFFECT, iceShroom.getColdEffect().getAmplifier());
+				this.drawProperty(stack, Properties.COLD_EFFECT_TIME, iceShroom.getColdEffect().getDuration());
+				this.drawProperty(stack, Properties.ATTACK_RANGE, iceShroom.getAttackRange());
 				break;
 			}
 			case DOOM_SHROOM:{
 				DoomShroomEntity doomShroom = (DoomShroomEntity) plantEntity;
-				this.drawProperty(Properties.ATTACK_DAMAGE, doomShroom.getAttackDamage());
-				this.drawProperty(Properties.ATTACK_RANGE, doomShroom.getAttackRange());
+				this.drawProperty(stack, Properties.ATTACK_DAMAGE, doomShroom.getAttackDamage());
+				this.drawProperty(stack, Properties.ATTACK_RANGE, doomShroom.getAttackRange());
 				break;
 			}
 			case LILY_PAD:{
@@ -195,31 +195,31 @@ public class AlmanacScreen extends AbstractOptionScreen<AlmanacContainer> {
 			}
 			case SQUASH:{
 				SquashEntity squash = (SquashEntity) plantEntity;
-				this.drawProperty(Properties.ATTACK_DAMAGE, squash.getAttackDamage());
-				this.drawProperty(Properties.DEATH_CHANCE, squash.getDeathChance() * 1.0f / 100);
+				this.drawProperty(stack, Properties.ATTACK_DAMAGE, squash.getAttackDamage());
+				this.drawProperty(stack, Properties.DEATH_CHANCE, squash.getDeathChance() * 1.0f / 100);
 				break;
 			}
 			case THREE_PEATER:{
 				ThreePeaterEntity threePeater = (ThreePeaterEntity) plantEntity;
-				this.drawProperty(Properties.ATTACK_DAMAGE, threePeater.getAttackDamage());
-				this.drawProperty(Properties.BULLET_SPEED, threePeater.getBulletSpeed());
+				this.drawProperty(stack, Properties.ATTACK_DAMAGE, threePeater.getAttackDamage());
+				this.drawProperty(stack, Properties.BULLET_SPEED, threePeater.getBulletSpeed());
 				break;
 			}
 			case TANGLE_KELP:{
 				TangleKelpEntity tangleKelp = (TangleKelpEntity) plantEntity;
-				this.drawProperty(Properties.ATTACK_DAMAGE, tangleKelp.getAttackDamage());
+				this.drawProperty(stack, Properties.ATTACK_DAMAGE, tangleKelp.getAttackDamage());
 				break;
 			}
 			case JALAPENO:{
 				JalapenoEntity jalapeno = (JalapenoEntity) plantEntity;
-				this.drawProperty(Properties.ATTACK_DAMAGE, jalapeno.getAttackDamage());
-				this.drawProperty(Properties.ATTACK_RANGE, jalapeno.getFireRange());
+				this.drawProperty(stack, Properties.ATTACK_DAMAGE, jalapeno.getAttackDamage());
+				this.drawProperty(stack, Properties.ATTACK_RANGE, jalapeno.getFireRange());
 				break;
 			}
 			case SPIKE_WEED:{
 				SpikeWeedEntity spikeWeed = (SpikeWeedEntity) plantEntity;
-				this.drawProperty(Properties.ATTACK_DAMAGE, spikeWeed.getAttackDamage());
-				this.drawProperty(Properties.ATTACK_CD, spikeWeed.getAttackCD());
+				this.drawProperty(stack, Properties.ATTACK_DAMAGE, spikeWeed.getAttackDamage());
+				this.drawProperty(stack, Properties.ATTACK_CD, spikeWeed.getAttackCD());
 				break;
 			}
 			case TORCH_WOOD:{
@@ -233,23 +233,23 @@ public class AlmanacScreen extends AbstractOptionScreen<AlmanacContainer> {
 			}
 			case COFFEE_BEAN:{
 				CoffeeBeanEntity coffeeBean = (CoffeeBeanEntity) plantEntity;
-				this.drawProperty(Properties.DURATION, coffeeBean.getAwakeTime());
+				this.drawProperty(stack, Properties.DURATION, coffeeBean.getAwakeTime());
 				break;
 			}
 			case MARIGOLD:{
 				MariGoldEntity marigold = (MariGoldEntity) plantEntity;
-				this.drawProperty(Properties.AVE_GEN_AMOUNT, marigold.getAveGenAmount());
+				this.drawProperty(stack, Properties.AVE_GEN_AMOUNT, marigold.getAveGenAmount());
 				break;
 			}
 			case GATLING_PEA:{
 				GatlingPeaEntity gatlingPea = (GatlingPeaEntity) plantEntity;
-				this.drawProperty(Properties.ATTACK_DAMAGE, gatlingPea.getAttackDamage());
-				this.drawProperty(Properties.BULLET_SPEED, gatlingPea.getBulletSpeed());
+				this.drawProperty(stack, Properties.ATTACK_DAMAGE, gatlingPea.getAttackDamage());
+				this.drawProperty(stack, Properties.BULLET_SPEED, gatlingPea.getBulletSpeed());
 				break;
 			}
 			case TWIN_SUNFLOWER:{
 				TwinSunFlowerEntity twinSunflower = (TwinSunFlowerEntity) plantEntity;
-				this.drawProperty(Properties.GEN_AMOUNT, twinSunflower.getSunAmount() * 2);
+				this.drawProperty(stack, Properties.GEN_AMOUNT, twinSunflower.getSunAmount() * 2);
 				break;
 			}
 			case WATER_GUARD:{
@@ -270,17 +270,17 @@ public class AlmanacScreen extends AbstractOptionScreen<AlmanacContainer> {
     		int money = ClientPlayerResources.getPlayerStats(Resources.MONEY);
     		int gemNum = ClientPlayerResources.getPlayerStats(Resources.GEM_NUM);
     		this.propertyCnt = 0;
-    		this.drawProperty(Properties.SUN_NUM, sunNum);
-    		this.drawProperty(Properties.ENERGY_NUM, energyNum);
-    		this.drawProperty(Properties.MONEY, money);
-    		this.drawProperty(Properties.GEM_NUM, gemNum);
+    		this.drawProperty(stack, Properties.SUN_NUM, sunNum);
+    		this.drawProperty(stack, Properties.ENERGY_NUM, energyNum);
+    		this.drawProperty(stack, Properties.MONEY, money);
+    		this.drawProperty(stack, Properties.GEM_NUM, gemNum);
 		}
 	}
 	
-	protected void drawProperty(Properties prop, float num) {
+	protected void drawProperty(MatrixStack stack, Properties prop, float num) {
 		this.propertyCnt ++;
-		int posX = this.guiLeft + 9 + 2 + ((this.propertyCnt & 1) == 1 ? 0 : 110);
-		int posY = this.guiTop + 92 + 2 + ((this.propertyCnt - 1) / 2) * 18;
+		int posX = this.leftPos + 9 + 2 + ((this.propertyCnt & 1) == 1 ? 0 : 110);
+		int posY = this.topPos + 92 + 2 + ((this.propertyCnt - 1) / 2) * 18;
 		String string = prop.getName()+": ";
 		int floorNum = MathHelper.fastFloor(num);
 		if(floorNum == num) {
@@ -288,23 +288,23 @@ public class AlmanacScreen extends AbstractOptionScreen<AlmanacContainer> {
 		} else {
 			string += num;
 		}
-		StringUtil.drawScaledString(font, string, posX, posY, prop.getColor(), 1f);
+		StringUtil.drawScaledString(stack, font, string, posX, posY, prop.getColor(), 1f);
 	}
 	
-	protected void renderShortInfo(SearchOption a) {
+	protected void renderShortInfo(MatrixStack stack, SearchOption a) {
 		if(a.isPlayer()) return ;
-		RenderSystem.pushMatrix();
+		stack.pushPose();
 //		int posX = this.guiLeft + 82 + 150 / 2;
 //		int posY = this.guiTop + 26 + 2;
 //		for(int i=0;i<4;i++) {
 //			StringUtil.drawCenteredScaledString(font, new TranslationTextComponent("gui.pvz.almanac."+a.toString().toLowerCase()+(i+1)).getFormattedText(), posX, posY, Colors.DARK_BLUE, 0.7f);
 //			posY += 12;
 //		}
-		RenderSystem.popMatrix();
+		stack.popPose();
 	}
 	
-	protected void renderXpBar(SearchOption a) {
-		RenderSystem.pushMatrix();
+	protected void renderXpBar(MatrixStack stack, SearchOption a) {
+		stack.pushPose();
 		int maxLvl = 1, lvl = 1;
 		Plants p = null;
 		if(a.isPlant()) {
@@ -330,37 +330,36 @@ public class AlmanacScreen extends AbstractOptionScreen<AlmanacContainer> {
 		}
 		int texX = 0;
 		int texY = (maxLvl == lvl ? 210 : 200);
-		RenderSystem.pushMatrix();
-		RenderSystem.translated(0, 0, 100);
-		this.minecraft.getTextureManager().bindTexture(TEXTURE);
-		blit(this.guiLeft + 9, this.guiTop + 66, texX, texY, len, barHeight);
-		StringUtil.drawCenteredScaledString(this.font, lvlInfo, this.guiLeft + 9 + barWidth / 2, this.guiTop + 66 + 1, Colors.BLACK, 1f);
-		RenderSystem.popMatrix();
-		RenderSystem.popMatrix();
+		stack.pushPose();
+		stack.translate(0, 0, 100);
+		this.minecraft.getTextureManager().bind(TEXTURE);
+		blit(stack, this.leftPos + 9, this.topPos + 66, texX, texY, len, barHeight);
+		StringUtil.drawCenteredScaledString(stack, this.font, lvlInfo, this.leftPos + 9 + barWidth / 2, this.topPos + 66 + 1, Colors.BLACK, 1f);
+		stack.popPose();
+		stack.popPose();
 	}
 	
-	protected void renderTitle(SearchOption a) {
-		RenderSystem.pushMatrix();
-		int dx = this.guiLeft + 82 + 150 / 2, dy = this.guiTop + 10 + 2;
-		StringUtil.drawCenteredScaledString(this.font, SearchOption.getOptionName(a), dx, dy, Colors.DARK_GREEN, 1.6f);
-		RenderSystem.popMatrix();
+	protected void renderTitle(MatrixStack stack, SearchOption a) {
+		stack.pushPose();
+		int dx = this.leftPos + 82 + 150 / 2, dy = this.topPos + 10 + 2;
+		StringUtil.drawCenteredScaledString(stack, this.font, SearchOption.getOptionName(a).getContents(), dx, dy, Colors.DARK_GREEN, 1.6f);
+		stack.popPose();
 	}
 	
-	protected void renderLogo(SearchOption a) {
-		int dx = this.guiLeft + 16, dy = this.guiTop + 14;
+	protected void renderLogo(MatrixStack stack, SearchOption a) {
+		int dx = this.leftPos + 16, dy = this.topPos + 14;
 		int scale = 3;
-		RenderSystem.pushMatrix();
-		RenderSystem.scaled(scale, scale, scale);
-		RenderSystem.translated((dx % scale) * 1.0d / scale , (dy % scale) * 1.0d / scale, 0);
-		this.itemRenderer.renderItemIntoGUI(SearchOption.getItemStackByOption(a), dx / scale, dy / scale);
-		RenderSystem.popMatrix();
+		stack.pushPose();
+		stack.scale(scale, scale, scale);
+		stack.translate((dx % scale) * 1.0d / scale , (dy % scale) * 1.0d / scale, 0);
+		this.itemRenderer.renderGuiItem(SearchOption.getItemStackByOption(a), dx / scale, dy / scale);
+		stack.popPose();
 	}
 
 	@Override
-	protected void drawGuiContainerBackgroundLayer(float partialTicks, int mouseX, int mouseY) {
-		RenderSystem.color4f(1.0F, 1.0F, 1.0F, 1.0F);
-		this.minecraft.getTextureManager().bindTexture(TEXTURE);
-		blit(this.guiLeft, this.guiTop, 0, 0, this.xSize, this.ySize);
+	protected void renderBg(MatrixStack stack, float partialTicks, int mouseX, int mouseY) {
+		this.minecraft.getTextureManager().bind(TEXTURE);
+		blit(stack, this.leftPos, this.topPos, 0, 0, this.imageWidth, this.imageHeight);
 	}
 
 	private enum Properties{
@@ -399,7 +398,7 @@ public class AlmanacScreen extends AbstractOptionScreen<AlmanacContainer> {
 		DURATION;
 		
 		public String getName() {
-			return new TranslationTextComponent("gui.pvz.almanac."+this.toString().toLowerCase()).getFormattedText();
+			return new TranslationTextComponent("gui.pvz.almanac."+this.toString().toLowerCase()).getContents();
 		}
 		
 		public int getColor() {

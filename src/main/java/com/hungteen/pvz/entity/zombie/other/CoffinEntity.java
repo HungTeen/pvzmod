@@ -19,8 +19,8 @@ import net.minecraft.entity.EntityType;
 import net.minecraft.entity.ILivingEntityData;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.Pose;
-import net.minecraft.entity.SharedMonsterAttributes;
 import net.minecraft.entity.SpawnReason;
+import net.minecraft.entity.ai.attributes.Attributes;
 import net.minecraft.entity.monster.MonsterEntity;
 import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.nbt.CompoundNBT;
@@ -34,15 +34,15 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.BossInfo;
 import net.minecraft.world.DifficultyInstance;
-import net.minecraft.world.IWorld;
+import net.minecraft.world.IServerWorld;
 import net.minecraft.world.World;
 import net.minecraft.world.server.ServerBossInfo;
 
 public class CoffinEntity extends UnderGroundZombieEntity {
 
-	private static final DataParameter<Integer> GUARD_STATE = EntityDataManager.createKey(CoffinEntity.class, DataSerializers.VARINT);
+	private static final DataParameter<Integer> GUARD_STATE = EntityDataManager.defineId(CoffinEntity.class, DataSerializers.INT);
 	private final ServerBossInfo bossInfo = (ServerBossInfo) (new ServerBossInfo(this.getDisplayName(),
-			BossInfo.Color.WHITE, BossInfo.Overlay.NOTCHED_6)).setDarkenSky(true);
+			BossInfo.Color.WHITE, BossInfo.Overlay.NOTCHED_6)).setDarkenScreen(true);
 
 	public CoffinEntity(EntityType<? extends MonsterEntity> type, World worldIn) {
 		super(type, worldIn);
@@ -56,31 +56,31 @@ public class CoffinEntity extends UnderGroundZombieEntity {
 	}
 	
 	@Override
-	protected void registerData() {
-		super.registerData();
-		this.dataManager.register(GUARD_STATE, 0);
+	protected void defineSynchedData() {
+		super.defineSynchedData();
+		this.entityData.define(GUARD_STATE, 0);
 	}
 	
 	@Override
-	protected void registerAttributes() {
-		super.registerAttributes();
-		this.getAttribute(SharedMonsterAttributes.ATTACK_DAMAGE).setBaseValue(ZombieUtil.LITTLE_LOW);
-		this.getAttribute(SharedMonsterAttributes.MOVEMENT_SPEED).setBaseValue(ZombieUtil.SLOW);
+	protected void updateAttributes() {
+		super.updateAttributes();
+		this.getAttribute(Attributes.ATTACK_DAMAGE).setBaseValue(ZombieUtil.LITTLE_LOW);
+		this.getAttribute(Attributes.MOVEMENT_SPEED).setBaseValue(ZombieUtil.SLOW);
 	}
 
 	@Override
-	public ILivingEntityData onInitialSpawn(IWorld worldIn, DifficultyInstance difficultyIn, SpawnReason reason,
+	public ILivingEntityData finalizeSpawn(IServerWorld worldIn, DifficultyInstance difficultyIn, SpawnReason reason,
 			ILivingEntityData spawnDataIn, CompoundNBT dataTag) {
-		if (! world.isRemote) {
+		if (! level.isClientSide) {
 			EntityUtil.playSound(this, SoundRegister.DIRT_RISE.get());
 			for (Entity target : EntityUtil.getEntityAttackableTarget(this,
 					EntityUtil.getEntityAABB(this, 50, 50))) {
-				ZombieHandEntity hand = EntityRegister.ZOMBIE_HAND.get().create(world);
+				ZombieHandEntity hand = EntityRegister.ZOMBIE_HAND.get().create(level);
 				hand.setOwner(this);
-				EntityUtil.onEntitySpawn(world, hand, target.getPosition());
+				EntityUtil.onEntitySpawn(level, hand, target.blockPosition());
 			}
 		}
-		return super.onInitialSpawn(worldIn, difficultyIn, reason, spawnDataIn, dataTag);
+		return super.finalizeSpawn(worldIn, difficultyIn, reason, spawnDataIn, dataTag);
 	}
 
 	@Override
@@ -95,40 +95,40 @@ public class CoffinEntity extends UnderGroundZombieEntity {
 				}
 				if(percent < (5 - i) * 1.0f / 6f) {
 					this.setGuardStateById(i, 1);
-					MournerZombieEntity zombie = EntityRegister.MOURNER_ZOMBIE.get().create(world);
+					MournerZombieEntity zombie = EntityRegister.MOURNER_ZOMBIE.get().create(level);
 					zombie.setRightShake((i & 1) == 0);
-					EntityUtil.onMobEntitySpawn(world, zombie, this.getAttackTarget() == null ? this.getPosition() : this.getAttackTarget().getPosition());
+					EntityUtil.onMobEntitySpawn(level, zombie, this.getTarget() == null ? this.blockPosition() : this.getTarget().blockPosition());
 				}
 			}
 		}
 	}
 
 	@Override
-	public void livingTick() {
-		super.livingTick();
-		if (this.collidedHorizontally && net.minecraftforge.event.ForgeEventFactory.getMobGriefingEvent(this.world, this)) {
+	public void aiStep() {
+		super.aiStep();
+		if (this.horizontalCollision && net.minecraftforge.event.ForgeEventFactory.getMobGriefingEvent(this.level, this)) {
             boolean flag = false;
-            AxisAlignedBB axisalignedbb = this.getBoundingBox().grow(0.2D);
+            AxisAlignedBB axisalignedbb = this.getBoundingBox().inflate(0.2D);
 
-            for(BlockPos blockpos : BlockPos.getAllInBoxMutable(MathHelper.floor(axisalignedbb.minX), MathHelper.floor(axisalignedbb.minY), MathHelper.floor(axisalignedbb.minZ), MathHelper.floor(axisalignedbb.maxX), MathHelper.floor(axisalignedbb.maxY), MathHelper.floor(axisalignedbb.maxZ))) {
-               BlockState blockstate = this.world.getBlockState(blockpos);
+            for(BlockPos blockpos : BlockPos.betweenClosed(MathHelper.floor(axisalignedbb.minX), MathHelper.floor(axisalignedbb.minY), MathHelper.floor(axisalignedbb.minZ), MathHelper.floor(axisalignedbb.maxX), MathHelper.floor(axisalignedbb.maxY), MathHelper.floor(axisalignedbb.maxZ))) {
+               BlockState blockstate = this.level.getBlockState(blockpos);
                Block block = blockstate.getBlock();
                if (block instanceof LeavesBlock) {
-                  flag = this.world.destroyBlock(blockpos, true, this) || flag;
+                  flag = this.level.destroyBlock(blockpos, true, this) || flag;
                }
             }
 
             if (!flag && this.onGround) {
-               this.jump();
+               this.jumpFromGround();
             }
          }
 	}
 	
 	@Override
-	protected void onDeathUpdate() {
+	protected void tickDeath() {
 		this.remove();
-		NobleZombieEntity boss = EntityRegister.NOBLE_ZOMBIE.get().create(world);
-		EntityUtil.onMobEntitySpawn(world, boss, getPosition());
+		NobleZombieEntity boss = EntityRegister.NOBLE_ZOMBIE.get().create(level);
+		EntityUtil.onMobEntitySpawn(level, boss, blockPosition());
 	}
 
 	@Override
@@ -137,11 +137,11 @@ public class CoffinEntity extends UnderGroundZombieEntity {
 	}
 
 	@Override
-	protected void collideWithEntity(Entity entityIn) {
-		super.collideWithEntity(entityIn);
+	protected void doPush(Entity entityIn) {
+		super.doPush(entityIn);
 		if (entityIn instanceof PVZPlantEntity) {
 			PVZPlantEntity plant = (PVZPlantEntity) entityIn;
-			plant.attackEntityFrom(PVZDamageSource.causeCrushDamage(this, this), plant.getMaxHealth());
+			plant.hurt(PVZDamageSource.causeCrushDamage(this, this), plant.getMaxHealth());
 		}
 	}
 	
@@ -151,8 +151,8 @@ public class CoffinEntity extends UnderGroundZombieEntity {
 	}
 
 	@Override
-	public EntitySize getSize(Pose poseIn) {
-		return EntitySize.flexible(2f, 2f);
+	public EntitySize getDimensions(Pose poseIn) {
+		return EntitySize.scalable(2f, 2f);
 	}
 
 	@Override
@@ -166,8 +166,8 @@ public class CoffinEntity extends UnderGroundZombieEntity {
 	}
 
 	@Override
-	public void readAdditional(CompoundNBT compound) {
-		super.readAdditional(compound);
+	public void readAdditionalSaveData(CompoundNBT compound) {
+		super.readAdditionalSaveData(compound);
 		if(compound.contains("guard_state")) {
 			this.setGuardState(compound.getInt("guard_state"));
 		}
@@ -177,27 +177,27 @@ public class CoffinEntity extends UnderGroundZombieEntity {
 	}
 
 	@Override
-	public void writeAdditional(CompoundNBT compound) {
-		super.writeAdditional(compound);
+	public void addAdditionalSaveData(CompoundNBT compound) {
+		super.addAdditionalSaveData(compound);
 		compound.putInt("guard_state", this.getGuardState());
 	}
 
-	public void addTrackingPlayer(ServerPlayerEntity player) {
-		super.addTrackingPlayer(player);
+	public void startSeenByPlayer(ServerPlayerEntity player) {
+		super.startSeenByPlayer(player);
 		this.bossInfo.addPlayer(player);
 	}
 
-	public void removeTrackingPlayer(ServerPlayerEntity player) {
-		super.removeTrackingPlayer(player);
+	public void stopSeenByPlayer(ServerPlayerEntity player) {
+		super.stopSeenByPlayer(player);
 		this.bossInfo.removePlayer(player);
 	}
 
 	public int getGuardState() {
-		return this.dataManager.get(GUARD_STATE);
+		return this.entityData.get(GUARD_STATE);
 	}
 	
 	public void setGuardState(int state) {
-		this.dataManager.set(GUARD_STATE, state);
+		this.entityData.set(GUARD_STATE, state);
 	}
 	
 	public boolean isGuardGone(int id) {
@@ -209,7 +209,7 @@ public class CoffinEntity extends UnderGroundZombieEntity {
 		if((is ^ (state >> id) & 1) == 1) {
 			state ^= (1 << id);
 		}
-		this.dataManager.set(GUARD_STATE, state);
+		this.entityData.set(GUARD_STATE, state);
 	}
 
 	@Override
@@ -223,12 +223,12 @@ public class CoffinEntity extends UnderGroundZombieEntity {
 	}
 
 	@Override
-	public boolean canDespawn(double distanceToClosestPlayer) {
+	public boolean removeWhenFarAway(double distanceToClosestPlayer) {
 		return false;
 	}
 
 	@Override
-	public boolean isNonBoss() {
+	public boolean canChangeDimensions() {
 		return false;
 	}
 
@@ -238,7 +238,7 @@ public class CoffinEntity extends UnderGroundZombieEntity {
 	}
 
 	@Override
-	protected ResourceLocation getLootTable() {
+	protected ResourceLocation getDefaultLootTable() {
 		return null;
 	}
 

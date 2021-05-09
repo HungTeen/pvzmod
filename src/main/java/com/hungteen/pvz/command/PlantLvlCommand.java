@@ -18,7 +18,7 @@ import net.minecraft.util.text.StringTextComponent;
 public class PlantLvlCommand {
 
 	public static void register(CommandDispatcher<CommandSource> dispatcher) {
-        LiteralArgumentBuilder<CommandSource> builder = Commands.literal("plantlvl").requires((ctx) -> {return ctx.hasPermissionLevel(2);});
+        LiteralArgumentBuilder<CommandSource> builder = Commands.literal("plantlvl").requires((ctx) -> {return ctx.hasPermission(2);});
         for(Plants p:Plants.values()) {
         	builder.then(Commands.argument("targets", EntityArgument.players()).then(Commands.literal("add").then(Commands.literal(p.toString().toLowerCase())
         	.then(Commands.literal("xp").then(Commands.argument("amount", IntegerArgumentType.integer()).executes((command)->{
@@ -57,7 +57,7 @@ public class PlantLvlCommand {
 	public static int queryPlantLvl(CommandSource source,Collection<? extends ServerPlayerEntity> targets,Plants plant) {
 		for(ServerPlayerEntity player:targets) {
 		    player.getCapability(CapabilityHandler.PLAYER_DATA_CAPABILITY).ifPresent((l)->{
-		    	source.sendFeedback(new StringTextComponent(""+l.getPlayerData().getPlantStats().getPlantLevel(plant)), true);
+		    	source.sendSuccess(new StringTextComponent(""+l.getPlayerData().getPlantStats().getPlantLevel(plant)), true);
 		    });
 		}
 		return targets.size();
@@ -66,7 +66,7 @@ public class PlantLvlCommand {
 	public static int queryPlantXp(CommandSource source,Collection<? extends ServerPlayerEntity> targets,Plants plant) {
 		for(ServerPlayerEntity player:targets) {
 		    player.getCapability(CapabilityHandler.PLAYER_DATA_CAPABILITY).ifPresent((l)->{
-		    	source.sendFeedback(new StringTextComponent(""+l.getPlayerData().getPlantStats().getPlantXp(plant)), true);
+		    	source.sendSuccess(new StringTextComponent(""+l.getPlayerData().getPlantStats().getPlantXp(plant)), true);
 		    });
 		}
 		return targets.size();

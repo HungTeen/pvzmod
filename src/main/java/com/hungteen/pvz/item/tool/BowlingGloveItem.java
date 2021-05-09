@@ -27,38 +27,39 @@ import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.TextFormatting;
 import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraft.world.World;
+import net.minecraft.world.server.ServerWorld;
 
 public class BowlingGloveItem extends Item {
 
 	public static final String BOWLING_STRING = "bowling_type";
 
 	public BowlingGloveItem() {
-		super(new Item.Properties().group(GroupRegister.PVZ_MISC).maxStackSize(1).setISTER(() -> BowlingGloveISTER::new));
+		super(new Item.Properties().tab(GroupRegister.PVZ_MISC).stacksTo(1).setISTER(() -> BowlingGloveISTER::new));
 	}
 
 	@Override
-	public ActionResultType onItemUse(ItemUseContext context) {
-		World world = context.getWorld();
+	public ActionResultType useOn(ItemUseContext context) {
+		World world = context.getLevel();
 		PlayerEntity player = context.getPlayer();
 		Hand hand = context.getHand();
-		ItemStack stack = player.getHeldItem(hand);
-		BlockPos pos = context.getPos();
+		ItemStack stack = player.getItemInHand(hand);
+		BlockPos pos = context.getClickedPos();
 		Optional<Plants> plantType = getBowlingType(stack);
 		if (!plantType.isPresent())
 			return ActionResultType.FAIL;
 		Plants plant = plantType.get();
 		BlockPos spawnPos = pos;
 		if (!world.getBlockState(pos).getCollisionShape(world, pos).isEmpty()) {
-			spawnPos = pos.offset(context.getFace());
+			spawnPos = pos.relative(context.getClickedFace());
 		}
-		if (context.getFace() == Direction.UP && world.isAirBlock(pos.up())) {// can plant here
+		if (context.getClickedFace() == Direction.UP && world.isEmptyBlock(pos.above())) {// can plant here
 			EntityType<? extends AbstractBowlingEntity> entityType = getEntityTypeByPlant(plant);
 			if (entityType == null) {
 				System.out.println("Error : no such bowling entity !");
 				return ActionResultType.FAIL;
 			}
-			if(! world.isRemote) {
-				AbstractBowlingEntity entity = (AbstractBowlingEntity) entityType.spawn(player.world, stack, player,
+			if(! world.isClientSide) {
+				AbstractBowlingEntity entity = (AbstractBowlingEntity) entityType.spawn((ServerWorld) player.level, stack, player,
 					spawnPos, SpawnReason.SPAWN_EGG, true, true);
 			    if (entity == null) {
 				    System.out.println("Error : bowling entity spawn error!");
@@ -66,7 +67,7 @@ public class BowlingGloveItem extends Item {
 			    }
 			    entity.setOwner(player);
 			    entity.shoot(player);
-			    if (!player.abilities.isCreativeMode) {// reset
+			    if (!player.abilities.instabuild) {// reset
 				    setBowlingType(stack, Plants.PEA_SHOOTER);
 			    }
 			}
@@ -113,8 +114,8 @@ public class BowlingGloveItem extends Item {
 	}
 
 	@Override
-	public void fillItemGroup(ItemGroup group, NonNullList<ItemStack> items) {
-		if (this.isInGroup(group)) {
+	public void fillItemCategory(ItemGroup group, NonNullList<ItemStack> items) {
+		if (this.allowdedIn(group)) {
 			items.add(new ItemStack(this));
 			items.add(setBowlingType(new ItemStack(this), Plants.WALL_NUT));
 			items.add(setBowlingType(new ItemStack(this), Plants.EXPLODE_O_NUT));
@@ -123,13 +124,13 @@ public class BowlingGloveItem extends Item {
 	}
 	
 	@Override
-	public void addInformation(ItemStack stack, World worldIn, List<ITextComponent> tooltip, ITooltipFlag flagIn) {
+	public void appendHoverText(ItemStack stack, World worldIn, List<ITextComponent> tooltip, ITooltipFlag flagIn) {
 		Optional<Plants> plant = getBowlingType(stack);
 		if(plant.isPresent()) {
 			Plants p = plant.get();
-			tooltip.add(new TranslationTextComponent("tooltip.pvz.bowling_glove." + p.toString().toLowerCase()).applyTextStyle(TextFormatting.GOLD));
+			tooltip.add(new TranslationTextComponent("tooltip.pvz.bowling_glove." + p.toString().toLowerCase()).withStyle(TextFormatting.GOLD));
 		} else {
-			tooltip.add(new TranslationTextComponent("tooltip.pvz.bowling_glove.empty").applyTextStyle(TextFormatting.GOLD));
+			tooltip.add(new TranslationTextComponent("tooltip.pvz.bowling_glove.empty").withStyle(TextFormatting.GOLD));
 		}
 	}
 

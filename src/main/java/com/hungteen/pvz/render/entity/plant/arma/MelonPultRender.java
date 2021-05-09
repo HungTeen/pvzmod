@@ -25,7 +25,7 @@ public class MelonPultRender extends PVZPlantRender<MelonPultEntity> {
 	}
 
 	@Override
-	public ResourceLocation getEntityTexture(MelonPultEntity entity) {
+	public ResourceLocation getTextureLocation(MelonPultEntity entity) {
 		return MELON_PULT_TEX;
 	}
 

@@ -19,8 +19,8 @@ import net.minecraft.entity.EntityType;
 import net.minecraft.entity.ILivingEntityData;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.Pose;
-import net.minecraft.entity.SharedMonsterAttributes;
 import net.minecraft.entity.SpawnReason;
+import net.minecraft.entity.ai.attributes.Attributes;
 import net.minecraft.entity.monster.MonsterEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.ServerPlayerEntity;
@@ -37,16 +37,16 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.BossInfo;
 import net.minecraft.world.DifficultyInstance;
-import net.minecraft.world.IWorld;
+import net.minecraft.world.IServerWorld;
 import net.minecraft.world.World;
 import net.minecraft.world.server.ServerBossInfo;
 
 public class NobleZombieEntity extends PVZZombieEntity {
 
-	private static final DataParameter<Integer> TP_TICK = EntityDataManager.createKey(NobleZombieEntity.class,
-			DataSerializers.VARINT);
+	private static final DataParameter<Integer> TP_TICK = EntityDataManager.defineId(NobleZombieEntity.class,
+			DataSerializers.INT);
 	private final ServerBossInfo bossInfo = (ServerBossInfo) (new ServerBossInfo(this.getDisplayName(),
-			BossInfo.Color.WHITE, BossInfo.Overlay.NOTCHED_6)).setDarkenSky(true);
+			BossInfo.Color.WHITE, BossInfo.Overlay.NOTCHED_6)).setDarkenScreen(true);
 	private int summonTick;
 	private final int minSummonTick = 300;
 	private final int maxSummonTick = 600;
@@ -59,9 +59,9 @@ public class NobleZombieEntity extends PVZZombieEntity {
 	public NobleZombieEntity(EntityType<? extends MonsterEntity> type, World worldIn) {
 		super(type, worldIn);
 		this.setAttackTime(this.maxSleepAttackCD);
-		this.summonTick = this.getRNG().nextInt(this.maxSummonTick - this.minSummonTick) + this.minSummonTick;
-		this.setTpTick(- this.getRNG().nextInt(this.maxTpCD - this.minTpCD + 1) - this.minTpCD);
-		this.experienceValue = 1000;
+		this.summonTick = this.getRandom().nextInt(this.maxSummonTick - this.minSummonTick) + this.minSummonTick;
+		this.setTpTick(- this.getRandom().nextInt(this.maxTpCD - this.minTpCD + 1) - this.minTpCD);
+		this.xpReward = 1000;
 		this.canBeButter = false;
 		this.canBeCold = false;
 		this.canBeCharm = false;
@@ -70,32 +70,32 @@ public class NobleZombieEntity extends PVZZombieEntity {
 	}
 	
 	@Override
-	protected void registerData() {
-		super.registerData();
-		this.dataManager.register(TP_TICK, 0);
+	protected void defineSynchedData() {
+		super.defineSynchedData();
+		this.entityData.define(TP_TICK, 0);
 	}
 
 	@Override
-	protected void registerAttributes() {
-		super.registerAttributes();
-		this.getAttribute(SharedMonsterAttributes.MOVEMENT_SPEED).setBaseValue(ZombieUtil.VERY_SLOW);
-		this.getAttribute(SharedMonsterAttributes.ATTACK_DAMAGE).setBaseValue(ZombieUtil.LITTLE_HIGH);
+	protected void updateAttributes() {
+		super.updateAttributes();
+		this.getAttribute(Attributes.MOVEMENT_SPEED).setBaseValue(ZombieUtil.VERY_SLOW);
+		this.getAttribute(Attributes.ATTACK_DAMAGE).setBaseValue(ZombieUtil.LITTLE_HIGH);
 	}
 
 	@Override
-	public ILivingEntityData onInitialSpawn(IWorld worldIn, DifficultyInstance difficultyIn, SpawnReason reason,
+	public ILivingEntityData finalizeSpawn(IServerWorld worldIn, DifficultyInstance difficultyIn, SpawnReason reason,
 			ILivingEntityData spawnDataIn, CompoundNBT dataTag) {
-		if(! world.isRemote) {
+		if(! level.isClientSide) {
 			for (Entity target : EntityUtil.getEntityAttackableTarget(this,
 					EntityUtil.getEntityAABB(this, 50, 50))) {
-				if(this.getRNG().nextInt(4) == 0) {
-					ZombieHandEntity hand = EntityRegister.ZOMBIE_HAND.get().create(world);
+				if(this.getRandom().nextInt(4) == 0) {
+					ZombieHandEntity hand = EntityRegister.ZOMBIE_HAND.get().create(level);
 				    hand.setOwner(this);
-				    EntityUtil.onEntitySpawn(world, hand, target.getPosition());
+				    EntityUtil.onEntitySpawn(level, hand, target.blockPosition());
 				}
 			}
 		}
-		return super.onInitialSpawn(worldIn, difficultyIn, reason, spawnDataIn, dataTag);
+		return super.finalizeSpawn(worldIn, difficultyIn, reason, spawnDataIn, dataTag);
 	}
 	
 	@Override
@@ -111,12 +111,12 @@ public class NobleZombieEntity extends PVZZombieEntity {
 	@Override
 	public void normalZombieTick() {
 		super.normalZombieTick();
-		if (!world.isRemote) {
+		if (!level.isClientSide) {
 			// summon MournerZombie
 			if (this.summonTick > 0) {
 				--this.summonTick;
 			} else if (this.summonTick == 0) {
-				this.summonTick = this.getRNG().nextInt(this.maxSummonTick - this.minSummonTick + 1) + this.minSummonTick;
+				this.summonTick = this.getRandom().nextInt(this.maxSummonTick - this.minSummonTick + 1) + this.minSummonTick;
 				this.checkAndSummonMournerZombie();
 			}
 			if(this.getAttackTime() > 0) {
@@ -126,23 +126,23 @@ public class NobleZombieEntity extends PVZZombieEntity {
 			}
 		} else {
 			if(this.getAttackTime() < 20) {
-				this.world.addParticle(ParticleTypes.NOTE, getPosX(), getPosY() + 2f, getPosZ(), 0, 0, 0);
+				this.level.addParticle(ParticleTypes.NOTE, getX(), getY() + 2f, getZ(), 0, 0, 0);
 			}
 		}
 		this.checkAndHeal();
 		if (this.getTpTick() < 0) {
 			this.setTpTick(this.getTpTick() + 1);
 		} else if (this.getTpTick() == 0) {
-			if (this.getRNG().nextInt(5) == 0) {
+			if (this.getRandom().nextInt(5) == 0) {
 				this.setTpTick(1);
 			}
 		} else {
 			if (this.getTpTick() >= this.getTpCD()) {
 				this.checkAndTeleport();
 			}
-			if(world.isRemote) {
+			if(level.isClientSide) {
 				for(int i = 0; i < 9; ++ i) {
-					world.addParticle(ParticleTypes.PORTAL, this.getPosX() + (this.getRNG().nextInt(5) - 2), this.getPosY() + (this.getRNG().nextInt(3)), this.getPosZ() + (this.getRNG().nextInt(5) - 2), 0, 0, 0);
+					level.addParticle(ParticleTypes.PORTAL, this.getX() + (this.getRandom().nextInt(5) - 2), this.getY() + (this.getRandom().nextInt(3)), this.getZ() + (this.getRandom().nextInt(5) - 2), 0, 0, 0);
 				}
 			}
 			this.setTpTick(this.getTpTick() + 1);
@@ -153,16 +153,16 @@ public class NobleZombieEntity extends PVZZombieEntity {
 	 * Skill 1 : Teleport and make explosion
 	 */
 	private void checkAndTeleport() {
-		if (this.getAttackTarget() == null) {
+		if (this.getTarget() == null) {
 			return;
 		}
-		BlockPos teleportPos = this.getAttackTarget().getPosition();
-		this.setTpTick(-this.getRNG().nextInt(this.maxTpCD - this.minTpCD + 1) - this.minTpCD);
+		BlockPos teleportPos = this.getTarget().blockPosition();
+		this.setTpTick(-this.getRandom().nextInt(this.maxTpCD - this.minTpCD + 1) - this.minTpCD);
 		float range = this.getExpRange();
 		this.teleportTo(teleportPos.getX(), teleportPos.getY(), teleportPos.getZ());
 		for (Entity target : EntityUtil.getEntityAttackableTarget(this, EntityUtil.getEntityAABB(this, range, range))) {
 			if (target instanceof PVZPlantEntity) {
-				target.attackEntityFrom(PVZDamageSource.causeExplosionDamage(this, this),
+				target.hurt(PVZDamageSource.causeExplosionDamage(this, this),
 						((LivingEntity) target).getMaxHealth());
 			}
 		}
@@ -172,7 +172,7 @@ public class NobleZombieEntity extends PVZZombieEntity {
 	 * Skill 2 : Summon MournerZombie.
 	 */
 	private void checkAndSummonMournerZombie() {
-		int num = this.world.getEntitiesWithinAABB(EntityRegister.MOURNER_ZOMBIE.get(),
+		int num = this.level.getEntities(EntityRegister.MOURNER_ZOMBIE.get(),
 				EntityUtil.getEntityAABB(this, 50, 50), (zombie) -> {
 					return !zombie.isCharmed();
 				}).size();
@@ -182,25 +182,25 @@ public class NobleZombieEntity extends PVZZombieEntity {
 		}
 		int max = Math.min(this.maxSummonedCnt - num, 3);
 		int min = 1;
-		int cnt = this.getRNG().nextInt(max - min + 1) + min;
+		int cnt = this.getRandom().nextInt(max - min + 1) + min;
 		for (int i = 0; i < cnt; ++i) {
-			MournerZombieEntity zombie = EntityRegister.MOURNER_ZOMBIE.get().create(world);
-			BlockPos pos = this.getAttackTarget() == null ? this.getPosition() : this.getAttackTarget().getPosition();
+			MournerZombieEntity zombie = EntityRegister.MOURNER_ZOMBIE.get().create(level);
+			BlockPos pos = this.getTarget() == null ? this.blockPosition() : this.getTarget().blockPosition();
 			for (int chance = 0; chance < 30; ++chance) {
-				int x = this.getPosition().getX()
-						+ MathHelper.nextInt(this.rand, 5, 20) * MathHelper.nextInt(this.rand, -1, 1);
-				int y = this.getPosition().getY() + MathHelper.nextInt(this.rand, 0, 10);
-				int z = this.getPosition().getZ()
-						+ MathHelper.nextInt(this.rand, 5, 20) * MathHelper.nextInt(this.rand, -1, 1);
+				int x = this.blockPosition().getX()
+						+ MathHelper.nextInt(this.random, 5, 20) * MathHelper.nextInt(this.random, -1, 1);
+				int y = this.blockPosition().getY() + MathHelper.nextInt(this.random, 0, 10);
+				int z = this.blockPosition().getZ()
+						+ MathHelper.nextInt(this.random, 5, 20) * MathHelper.nextInt(this.random, -1, 1);
 				BlockPos tmp = new BlockPos(x, y, z);
-				zombie.setPosition(x, y, z);
-				if (world.getBlockState(tmp).isTopSolid(world, tmp, zombie) && world.checkNoEntityCollision(zombie)
-						&& world.hasNoCollisions(zombie)) {
+				zombie.setPos(x, y, z);
+				if (level.getBlockState(tmp).entityCanStandOnFace(level, tmp, zombie, Direction.UP) && level.isUnobstructed(zombie)
+						&& level.noCollision(zombie)) {
 					pos = tmp;
 					break;
 				}
 			}
-			EntityUtil.onMobEntitySpawn(world, zombie, pos);
+			EntityUtil.onMobEntitySpawn(level, zombie, pos);
 		}
 	}
 	
@@ -208,23 +208,23 @@ public class NobleZombieEntity extends PVZZombieEntity {
 	 * Skill 3 : Sleep plants in a specific area.
 	 */
 	private void checkAndSleepPlant() {
-		List<PVZPlantEntity> list = this.world.getEntitiesWithinAABB(PVZPlantEntity.class, EntityUtil.getEntityAABB(this, 50, 50), (plant)->{
+		List<PVZPlantEntity> list = this.level.getEntitiesOfClass(PVZPlantEntity.class, EntityUtil.getEntityAABB(this, 50, 50), (plant)->{
 			return !plant.isCharmed();
 		});
 		int len = list.size();
 		if(len == 0) {
-			this.setAttackTime(this.getRNG().nextInt(this.maxSleepAttackCD - this.minSleepAttackCD + 1) + this.minSleepAttackCD);
+			this.setAttackTime(this.getRandom().nextInt(this.maxSleepAttackCD - this.minSleepAttackCD + 1) + this.minSleepAttackCD);
 			return ;
 		}
-		int pos = this.getRNG().nextInt(len);
+		int pos = this.getRandom().nextInt(len);
 		PVZPlantEntity plant = list.get(pos);
 		final float range = 1.5f;
-		for(PVZPlantEntity target : this.world.getEntitiesWithinAABB(PVZPlantEntity.class, EntityUtil.getEntityAABB(plant, range, range), (p)->{
+		for(PVZPlantEntity target : this.level.getEntitiesOfClass(PVZPlantEntity.class, EntityUtil.getEntityAABB(plant, range, range), (p)->{
 			return !p.isCharmed();
 		})) {
 			target.setSleepTime(2400);
 		}
-		this.setAttackTime(this.getRNG().nextInt(this.maxSleepAttackCD - this.minSleepAttackCD + 1) + this.minSleepAttackCD);
+		this.setAttackTime(this.getRandom().nextInt(this.maxSleepAttackCD - this.minSleepAttackCD + 1) + this.minSleepAttackCD);
 	}
 	
 	/**
@@ -234,10 +234,10 @@ public class NobleZombieEntity extends PVZZombieEntity {
 		int cnt = this.getHandSummonNum();
 		List<LivingEntity> list = EntityUtil.getEntityTargetableEntity(this, EntityUtil.getEntityAABB(this, 50, 50));
 		for(int i = 0; i < list.size(); ++ i) {
-			if(i + cnt >= list.size() || this.getRNG().nextInt(5) == 0) {
-				ZombieHandEntity hand = EntityRegister.ZOMBIE_HAND.get().create(world);
+			if(i + cnt >= list.size() || this.getRandom().nextInt(5) == 0) {
+				ZombieHandEntity hand = EntityRegister.ZOMBIE_HAND.get().create(level);
 				hand.setOwner(this);
-				EntityUtil.onEntitySpawn(world, hand, list.get(i).getPosition());
+				EntityUtil.onEntitySpawn(level, hand, list.get(i).blockPosition());
 				-- cnt;
 				if(cnt == 0) {
 					break;
@@ -251,8 +251,8 @@ public class NobleZombieEntity extends PVZZombieEntity {
 	 */
 	private void checkAndHeal() {
 		float percent = this.getHealth() / this.getMaxHealth();
-		if(!world.isRemote) {
-			if(this.getAttackTarget() == null) {
+		if(!level.isClientSide) {
+			if(this.getTarget() == null) {
 			    this.heal(0.3f);
 			} else if(percent < 1f / 2) {
 				this.heal(0.2f);
@@ -262,40 +262,37 @@ public class NobleZombieEntity extends PVZZombieEntity {
 		}
 	}
 	
-	private boolean teleportTo(double x, double y, double z) {
+	public void teleportTo(double x, double y, double z) {
 		BlockPos.Mutable blockpos$mutable = new BlockPos.Mutable(x, y, z);
 		while (blockpos$mutable.getY() > 0
-				&& !this.world.getBlockState(blockpos$mutable).getMaterial().blocksMovement()) {
+				&& !this.level.getBlockState(blockpos$mutable).getMaterial().blocksMotion()) {
 			blockpos$mutable.move(Direction.DOWN);
 		}
-		BlockState blockstate = this.world.getBlockState(blockpos$mutable);
-		boolean flag = blockstate.getMaterial().blocksMovement();
+		BlockState blockstate = this.level.getBlockState(blockpos$mutable);
+		boolean flag = blockstate.getMaterial().blocksMotion();
 		if (flag) {
-			boolean flag2 = this.attemptTeleport(x, y, z, true);
+			boolean flag2 = this.randomTeleport(x, y, z, true);
 			if (flag2) {
-				this.world.playSound((PlayerEntity) null, this.prevPosX, this.prevPosY, this.prevPosZ,
-						SoundEvents.ENTITY_ENDERMAN_TELEPORT, this.getSoundCategory(), 1.0F, 1.0F);
-				this.playSound(SoundEvents.ENTITY_ENDERMAN_TELEPORT, 1.0F, 1.0F);
+				this.level.playSound((PlayerEntity) null, this.xo, this.yo, this.zo,
+						SoundEvents.ENDERMAN_TELEPORT, this.getSoundSource(), 1.0F, 1.0F);
+				this.playSound(SoundEvents.ENDERMAN_TELEPORT, 1.0F, 1.0F);
 			}
-			return flag2;
-		} else {
-			return false;
 		}
 	}
 	
 	@Override
-	protected void onDeathUpdate() {
-		super.onDeathUpdate();
+	protected void tickDeath() {
+		super.tickDeath();
 	}
 
 	@Override
-	public boolean attackEntityFrom(DamageSource source, float amount) {
+	public boolean hurt(DamageSource source, float amount) {
 		if(amount >= 10) {
 			amount /= 3f;
 		}else {
 			amount /= 2f;
 		}
-		return super.attackEntityFrom(source, amount);
+		return super.hurt(source, amount);
 	}
 	
 	@Override
@@ -304,8 +301,8 @@ public class NobleZombieEntity extends PVZZombieEntity {
 	}
 
 	@Override
-	public EntitySize getSize(Pose poseIn) {
-		return EntitySize.flexible(0.9f, 1.9f);
+	public EntitySize getDimensions(Pose poseIn) {
+		return EntitySize.scalable(0.9f, 1.9f);
 	}
 
 	protected int getTpCD() {
@@ -347,8 +344,8 @@ public class NobleZombieEntity extends PVZZombieEntity {
 	}
 	
 	@Override
-	public void readAdditional(CompoundNBT compound) {
-		super.readAdditional(compound);
+	public void readAdditionalSaveData(CompoundNBT compound) {
+		super.readAdditionalSaveData(compound);
 		if(compound.contains("summon_zombie_tick")) {
 			this.summonTick = compound.getInt("summon_zombie_tick");
 		}
@@ -361,42 +358,42 @@ public class NobleZombieEntity extends PVZZombieEntity {
 	}
 
 	@Override
-	public void writeAdditional(CompoundNBT compound) {
-		super.writeAdditional(compound);
+	public void addAdditionalSaveData(CompoundNBT compound) {
+		super.addAdditionalSaveData(compound);
 		compound.putInt("summon_zombie_tick", this.summonTick);
 		compound.putInt("zombie_tp_tick", this.getTpTick());
 	}
 
-	public void addTrackingPlayer(ServerPlayerEntity player) {
-		super.addTrackingPlayer(player);
+	public void startSeenByPlayer(ServerPlayerEntity player) {
+		super.startSeenByPlayer(player);
 		this.bossInfo.addPlayer(player);
 	}
 
-	public void removeTrackingPlayer(ServerPlayerEntity player) {
-		super.removeTrackingPlayer(player);
+	public void stopSeenByPlayer(ServerPlayerEntity player) {
+		super.stopSeenByPlayer(player);
 		this.bossInfo.removePlayer(player);
 	}
 	
 	public int getTpTick() {
-		return this.dataManager.get(TP_TICK);
+		return this.entityData.get(TP_TICK);
 	}
 
 	public void setTpTick(int tick) {
-		this.dataManager.set(TP_TICK, tick);
+		this.entityData.set(TP_TICK, tick);
 	}
 	
 	@Override
-	public boolean canDespawn(double distanceToClosestPlayer) {
+	public boolean removeWhenFarAway(double distanceToClosestPlayer) {
 		return false;
 	}
 
 	@Override
-	protected ResourceLocation getLootTable() {
+	protected ResourceLocation getDefaultLootTable() {
 		return PVZLoot.NOBLE_ZOMBIE;
 	}
 	
 	@Override
-	public boolean isNonBoss() {
+	public boolean canChangeDimensions() {
 		return false;
 	}
 

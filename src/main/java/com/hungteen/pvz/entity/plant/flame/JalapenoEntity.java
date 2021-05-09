@@ -33,7 +33,7 @@ public class JalapenoEntity extends PlantBomberEntity{
 			clearSnowAndSpawnFlame(this, i, 0);
 			clearSnowAndSpawnFlame(this, 0, i);
 		}
-		if(! world.isRemote) {
+		if(! level.isClientSide) {
 			EntityUtil.playSound(this, SoundRegister.JALAPENO.get());
 		}
 		fireMob(this, range, 0.5f);
@@ -47,11 +47,11 @@ public class JalapenoEntity extends PlantBomberEntity{
 	 * kill zomboss iceball
 	 */
 	public static void killIceBall(LivingEntity entity) {
-		if(! entity.world.isRemote) {
+		if(! entity.level.isClientSide) {
 			float range = 10;
 			if(entity instanceof JalapenoEntity) range = ((JalapenoEntity) entity).getFireRange() + 10F;
 			else if(entity instanceof JalapenoZombieEntity) range = ((JalapenoZombieEntity) entity).getFireRange();
-			entity.world.getEntitiesWithinAABB(ElementBallEntity.class, EntityUtil.getEntityAABB(entity, range, range), (target) -> {
+			entity.level.getEntitiesOfClass(ElementBallEntity.class, EntityUtil.getEntityAABB(entity, range, range), (target) -> {
 				return target.getElementBallType() == ElementTypes.ICE;
 			}).forEach((target) -> {
 				target.onKilledByPlants(entity);
@@ -60,7 +60,7 @@ public class JalapenoEntity extends PlantBomberEntity{
 	}
 	
 	public static void fireMob(LivingEntity entity, float dx, float dz) {
-		BlockPos pos = entity.getPosition();
+		BlockPos pos = entity.blockPosition();
 		double x = pos.getX() + 0.5f;
 		double y = pos.getY() + 0.5f;
 		double z = pos.getZ() + 0.5f;
@@ -69,7 +69,7 @@ public class JalapenoEntity extends PlantBomberEntity{
 			float damage = 0;
 			if(entity instanceof JalapenoEntity) damage = ((JalapenoEntity) entity).getAttackDamage();
 			else if(entity instanceof JalapenoZombieEntity) damage = EntityUtil.getCurrentMaxHealth(target) * 2;
-			target.attackEntityFrom(PVZDamageSource.causeFireDamage(entity, entity), damage);
+			target.hurt(PVZDamageSource.causeFireDamage(entity, entity), damage);
 		}
 	}
 	
@@ -77,14 +77,14 @@ public class JalapenoEntity extends PlantBomberEntity{
 	 * clear snow
 	 */
 	public static void clearSnowAndSpawnFlame(LivingEntity entity, int dx, int dz) {
-		BlockPos pos = entity.getPosition().add(dx, 0, dz);
-		if(entity.world.getBlockState(pos).getBlock() == Blocks.SNOW || entity.world.getBlockState(pos).getBlock()==Blocks.SNOW_BLOCK) {
-			entity.world.setBlockState(pos, Blocks.AIR.getDefaultState());
+		BlockPos pos = entity.blockPosition().offset(dx, 0, dz);
+		if(entity.level.getBlockState(pos).getBlock() == Blocks.SNOW || entity.level.getBlockState(pos).getBlock()==Blocks.SNOW_BLOCK) {
+			entity.level.setBlockAndUpdate(pos, Blocks.AIR.defaultBlockState());
 		}
-		if(entity.world.isRemote) {
+		if(entity.level.isClientSide) {
 			for(int i = 0; i < 30; ++ i) {
-				entity.world.addParticle(ParticleTypes.FLAME, pos.getX() + 0.5, pos.getY(), pos.getZ() + 0.5, 
-						(entity.getRNG().nextFloat() - 0.5) / 10, entity.getRNG().nextFloat() / 8, (entity.getRNG().nextFloat() - 0.5) / 10);
+				entity.level.addParticle(ParticleTypes.FLAME, pos.getX() + 0.5, pos.getY(), pos.getZ() + 0.5, 
+						(entity.getRandom().nextFloat() - 0.5) / 10, entity.getRandom().nextFloat() / 8, (entity.getRandom().nextFloat() - 0.5) / 10);
 			}
 		}
 	}
@@ -104,8 +104,8 @@ public class JalapenoEntity extends PlantBomberEntity{
 	}
 	
 	@Override
-	public EntitySize getSize(Pose poseIn) {
-		return EntitySize.flexible(0.7f, 1.5f);
+	public EntitySize getDimensions(Pose poseIn) {
+		return EntitySize.scalable(0.7f, 1.5f);
 	}
 
 	@Override

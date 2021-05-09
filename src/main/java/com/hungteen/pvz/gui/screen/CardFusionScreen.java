@@ -14,7 +14,7 @@ import com.hungteen.pvz.utils.RenderUtil;
 import com.hungteen.pvz.utils.StringUtil;
 import com.hungteen.pvz.utils.enums.Colors;
 import com.hungteen.pvz.utils.enums.Plants;
-import com.mojang.blaze3d.systems.RenderSystem;
+import com.mojang.blaze3d.matrix.MatrixStack;
 
 import net.minecraft.client.gui.widget.button.Button;
 import net.minecraft.entity.player.PlayerInventory;
@@ -29,16 +29,16 @@ public class CardFusionScreen extends AbstractOptionScreen<CardFusionContainer> 
 	
 	public CardFusionScreen(CardFusionContainer screenContainer, PlayerInventory inv, ITextComponent titleIn) {
 		super(screenContainer, inv, titleIn);
-		this.xSize = 240;
-		this.ySize = 256;
+		this.imageWidth = 240;
+		this.imageHeight = 256;
 	}
 
 	@Override
 	protected void init() {
 		super.init();
-		this.craftButton = this.addButton(new Button(this.guiLeft + 216, this.guiTop + 154, 26, 18, new TranslationTextComponent("gui.pvz.fragment_splice").getFormattedText(), (button) -> {
+		this.craftButton = this.addButton(new Button(this.leftPos + 216, this.topPos + 154, 26, 18, new TranslationTextComponent("gui.pvz.fragment_splice"), (button) -> {
 			if(this.craftButton.visible) {
-			    PVZPacketHandler.CHANNEL.sendToServer(new ClickButtonPacket(GuiHandler.CARD_FUSION, 0, this.container.te.array.get(1)));
+			    PVZPacketHandler.CHANNEL.sendToServer(new ClickButtonPacket(GuiHandler.CARD_FUSION, 0, this.menu.te.array.get(1)));
 			}
 		}));
 		this.craftButton.visible = false;
@@ -49,7 +49,7 @@ public class CardFusionScreen extends AbstractOptionScreen<CardFusionContainer> 
 		super.tick();
 		if(this.searchGui.getCurrentOption().isPresent()) {
 			this.searchGui.getRecipeManager().clear();
-			PVZPacketHandler.CHANNEL.sendToServer(new ClickButtonPacket(GuiHandler.FRAGMENT_SPLICE, 1, this.container.te.array.get(1)));
+			PVZPacketHandler.CHANNEL.sendToServer(new ClickButtonPacket(GuiHandler.FRAGMENT_SPLICE, 1, this.menu.te.array.get(1)));
 			this.setGhostRecipe(this.searchGui.getCurrentOption().get());
 			this.searchGui.resetCurrentOption();
 		}
@@ -58,33 +58,32 @@ public class CardFusionScreen extends AbstractOptionScreen<CardFusionContainer> 
 	private void setGhostRecipe(SearchOption option) {
 		if(option.isPlant()) {
 			Plants plantType = option.getPlant().get();
-			this.searchGui.getRecipeManager().setRecipe(this.container.getRecipeForPlant(plantType));
+			this.searchGui.getRecipeManager().setRecipe(this.menu.getRecipeForPlant(plantType));
 		}
 	}
 	
 	@Override
-	public void render(int mouseX, int mouseY, float partialTicks) {
+	public void render(MatrixStack stack, int mouseX, int mouseY, float partialTicks) {
 		this.craftButton.visible = this.canCraftNow();
-		this.renderHoveredToolTip(mouseX, mouseY);
-		StringUtil.drawCenteredScaledString(font, new TranslationTextComponent("block.pvz.card_fusion_table").getFormattedText(), this.guiLeft + this.xSize / 2, this.guiTop + 8, Colors.BLACK, 1F);
-		StringUtil.drawCenteredScaledString(font, "" + this.container.te.array.get(0), this.guiLeft + 15, this.guiTop + 67, Colors.BLACK, 0.5F);
-	    super.render(mouseX, mouseY, partialTicks);
+		this.renderTooltip(stack, mouseX, mouseY);
+		StringUtil.drawCenteredScaledString(stack, font, new TranslationTextComponent("block.pvz.card_fusion_table").getContents(), this.leftPos + this.imageWidth / 2, this.topPos + 8, Colors.BLACK, 1F);
+		StringUtil.drawCenteredScaledString(stack, font, "" + this.menu.te.array.get(0), this.leftPos + 15, this.topPos + 67, Colors.BLACK, 0.5F);
+	    super.render(stack, mouseX, mouseY, partialTicks);
     }
 	
 	@Override
-	protected void drawGuiContainerBackgroundLayer(float partialTicks, int mouseX, int mouseY) {
-		RenderSystem.pushMatrix();
-		RenderSystem.color4f(1.0F, 1.0F, 1.0F, 1.0F);
-		this.minecraft.getTextureManager().bindTexture(TEXTURE);
-		blit(this.guiLeft, this.guiTop, 0, 0, this.xSize, this.ySize);
+	protected void renderBg(MatrixStack stack, float partialTicks, int mouseX, int mouseY) {
+		stack.pushPose();
+		this.minecraft.getTextureManager().bind(TEXTURE);
+		blit(stack, this.leftPos, this.topPos, 0, 0, this.imageWidth, this.imageHeight);
 		int maxLen = 124;
-		int len = RenderUtil.getRenderBarLen(this.container.te.array.get(0), CardFusionTileEntity.MAX_SUN_AMOUNT, maxLen);
-		blit(this.guiLeft + 7, this.guiTop + 149 - len + 1, 240, 0, 16, len);
-		RenderSystem.popMatrix();
+		int len = RenderUtil.getRenderBarLen(this.menu.te.array.get(0), CardFusionTileEntity.MAX_SUN_AMOUNT, maxLen);
+		blit(stack, this.leftPos + 7, this.topPos + 149 - len + 1, 240, 0, 16, len);
+		stack.popPose();
 	}
 
 	protected boolean canCraftNow() {
-		return this.container.te.array.get(1) >= 0;
+		return this.menu.te.array.get(1) >= 0;
 	}
 	
 	@Override

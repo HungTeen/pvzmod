@@ -17,7 +17,7 @@ import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.potion.EffectInstance;
 import net.minecraft.world.DifficultyInstance;
-import net.minecraft.world.IWorld;
+import net.minecraft.world.IServerWorld;
 import net.minecraft.world.World;
 
 public class PlanternEntity extends PVZPlantEntity implements ILightPlant {
@@ -27,19 +27,19 @@ public class PlanternEntity extends PVZPlantEntity implements ILightPlant {
 	}
 	
 	@Override
-	public ILivingEntityData onInitialSpawn(IWorld worldIn, DifficultyInstance difficultyIn, SpawnReason reason,
+	public ILivingEntityData finalizeSpawn(IServerWorld worldIn, DifficultyInstance difficultyIn, SpawnReason reason,
 			ILivingEntityData spawnDataIn, CompoundNBT dataTag) {
-		if(! world.isRemote) {
+		if(! level.isClientSide) {
 			EntityUtil.playSound(this, SoundRegister.PLANTERN.get());
 		}
-		return super.onInitialSpawn(worldIn, difficultyIn, reason, spawnDataIn, dataTag);
+		return super.finalizeSpawn(worldIn, difficultyIn, reason, spawnDataIn, dataTag);
 	}
 	
 	@Override
 	protected void normalPlantTick() {
 		super.normalPlantTick();
-		if(! world.isRemote) {
-			if(this.ticksExisted % 40 == 0) {
+		if(! level.isClientSide) {
+			if(this.tickCount % 40 == 0) {
 				int range = this.isPlantInSuperMode() ? 40 : 30;
 				this.giveLightToPlayers(range);
 			}
@@ -47,10 +47,10 @@ public class PlanternEntity extends PVZPlantEntity implements ILightPlant {
 	}
 	
 	private void giveLightToPlayers(float range) {
-		world.getEntitiesWithinAABB(PlayerEntity.class, EntityUtil.getEntityAABB(this, range, range), (player) -> {
+		level.getEntitiesOfClass(PlayerEntity.class, EntityUtil.getEntityAABB(this, range, range), (player) -> {
 			return ! EntityUtil.checkCanEntityAttack(this, player);
 		}).forEach((player) -> {
-			player.addPotionEffect(getLightEyeEffect());
+			player.addEffect(getLightEyeEffect());
 		});
 	}
 
@@ -60,8 +60,8 @@ public class PlanternEntity extends PVZPlantEntity implements ILightPlant {
 	}
 	
 	@Override
-	public EntitySize getSize(Pose poseIn) {
-		return EntitySize.flexible(0.75f, 1.7f);
+	public EntitySize getDimensions(Pose poseIn) {
+		return EntitySize.scalable(0.75f, 1.7f);
 	}
 
 	@Override

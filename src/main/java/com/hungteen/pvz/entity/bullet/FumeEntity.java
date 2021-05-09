@@ -20,7 +20,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.util.math.BlockRayTraceResult;
 import net.minecraft.util.math.EntityRayTraceResult;
 import net.minecraft.util.math.RayTraceResult;
-import net.minecraft.util.math.Vec3d;
+import net.minecraft.util.math.vector.Vector3d;
 import net.minecraft.world.World;
 
 public class FumeEntity extends PVZItemBulletEntity{
@@ -38,10 +38,10 @@ public class FumeEntity extends PVZItemBulletEntity{
 	@Override
 	public void tick() {
 		super.tick();
-		if(world.isRemote) {
-			int cnt = this.ticksExisted < getMaxLiveTick() / 2 ? 6 : 4;
+		if(level.isClientSide) {
+			int cnt = this.tickCount < getMaxLiveTick() / 2 ? 6 : 4;
 			for(int i = 0; i < cnt; ++i) {
-	            this.world.addParticle(ParticleRegister.FUME.get(), this.getPosX(), this.getPosY(), this.getPosZ(), 0.0D, 0.0D, 0.0D);
+	            this.level.addParticle(ParticleRegister.FUME.get(), this.getX(), this.getY(), this.getZ(), 0.0D, 0.0D, 0.0D);
 	        }
 		}
 	}
@@ -65,7 +65,7 @@ public class FumeEntity extends PVZItemBulletEntity{
 		if (result.getType() == RayTraceResult.Type.ENTITY) {
 			Entity target = ((EntityRayTraceResult) result).getEntity();
 			if (checkCanAttack(target)) {
-				target.hurtResistantTime = 0;
+				target.invulnerableTime = 0;
 				this.dealFumeDamage(target); // attack 
 				if(this.hitEntities == null) {
 					this.hitEntities = new IntOpenHashSet();
@@ -73,7 +73,7 @@ public class FumeEntity extends PVZItemBulletEntity{
 				this.addHitEntity(target);
 			}
 		}
-		this.world.setEntityState(this, (byte) 3);
+		this.level.broadcastEntityEvent(this, (byte) 3);
 		if (flag || !this.checkLive(result)) {
 			this.remove();
 		}
@@ -82,7 +82,7 @@ public class FumeEntity extends PVZItemBulletEntity{
 	@Override
 	protected boolean checkLive(RayTraceResult result) {
 		if(result.getType() == RayTraceResult.Type.BLOCK) {
-    		Block block = world.getBlockState(((BlockRayTraceResult)result).getPos()).getBlock();
+    		Block block = level.getBlockState(((BlockRayTraceResult)result).getBlockPos()).getBlock();
     		if(block instanceof BushBlock) {
     			return true;
     		}
@@ -92,12 +92,12 @@ public class FumeEntity extends PVZItemBulletEntity{
 	}
 	
 	private void dealFumeDamage(Entity target) {
-		target.attackEntityFrom(PVZDamageSource.causeThroughDamage(this, this.getThrower()), this.attackDamage);
-		if(!world.isRemote && this.knockback > 0) {
-			Vec3d speed = target.getMotion();
-			Vec3d now = this.getMotion();
+		target.hurt(PVZDamageSource.causeThroughDamage(this, this.getThrower()), this.attackDamage);
+		if(!level.isClientSide && this.knockback > 0) {
+			Vector3d speed = target.getDeltaMovement();
+			Vector3d now = this.getDeltaMovement();
 			int lvl = this.knockback;
-			target.setMotion(speed.add(now).mul(lvl, lvl, lvl));
+			target.setDeltaMovement(speed.add(now).multiply(lvl, lvl, lvl));
 		}
 	}
 	
@@ -116,8 +116,8 @@ public class FumeEntity extends PVZItemBulletEntity{
 	}
 	
 	@Override
-	public EntitySize getSize(Pose poseIn) {
-		return EntitySize.flexible(0.25f, 0.25f);
+	public EntitySize getDimensions(Pose poseIn) {
+		return EntitySize.scalable(0.25f, 0.25f);
 	}
 	
 	@Override

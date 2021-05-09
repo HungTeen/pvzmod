@@ -8,7 +8,7 @@ import net.minecraftforge.common.ToolType;
 public class SteelLadderBlock extends LadderBlock {
 
 	public SteelLadderBlock() {
-		super(Block.Properties.from(Blocks.LADDER).hardnessAndResistance(6F).harvestTool(ToolType.PICKAXE));
+		super(Block.Properties.copy(Blocks.LADDER).strength(6F).harvestTool(ToolType.PICKAXE));
 	}
 
 }

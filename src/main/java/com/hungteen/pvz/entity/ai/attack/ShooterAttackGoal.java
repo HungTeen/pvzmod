@@ -25,15 +25,15 @@ public class ShooterAttackGoal extends Goal{
 		this.shooter = shooter;
 		this.attacker = (MobEntity) shooter;
 		this.attackTime = 0;
-		this.setMutexFlags(EnumSet.of(Goal.Flag.MOVE, Goal.Flag.LOOK));
+		this.setFlags(EnumSet.of(Goal.Flag.MOVE, Goal.Flag.LOOK));
 	}
 	
 	@Override
-	public boolean shouldExecute() {
+	public boolean canUse() {
 		if(! this.shooter.canShoot()) {
 			return false;
 		}
-		LivingEntity attackTarget = this.attacker.getAttackTarget();
+		LivingEntity attackTarget = this.attacker.getTarget();
 		if(attackTarget == null) {
 			return false;
 		}else {
@@ -41,20 +41,20 @@ public class ShooterAttackGoal extends Goal{
 			if(this.checkTarget()) {
 				return true;
 			}
-			this.resetTask();
+			this.stop();
 			return false;
 		}
 	}
 	
 	@Override
-	public boolean shouldContinueExecuting() {
-		return this.shouldExecute();
+	public boolean canContinueToUse() {
+		return this.canUse();
 	}
 	
 	@Override
-	public void resetTask() {
+	public void stop() {
 		this.target = null;
-		this.attacker.setAttackTarget(null);
+		this.attacker.setTarget(null);
 	}
 
 	@Override
@@ -66,7 +66,7 @@ public class ShooterAttackGoal extends Goal{
 			this.shooter.startShootAttack();
 		}
 		if(! (this.attacker instanceof StarFruitEntity)) {
-			this.attacker.getLookController().setLookPositionWithEntity(this.target, 30.0F, 30.0F);
+			this.attacker.getLookControl().setLookAt(this.target, 30.0F, 30.0F);
 		}
 	}
 	
@@ -76,7 +76,7 @@ public class ShooterAttackGoal extends Goal{
 //				System.out.println(EntityUtil.checkCanSeeEntity(this.attacker, this.target));
 				return EntityUtil.checkCanSeeEntity(this.attacker, this.target);
 			}
-			return this.attacker.getEntitySenses().canSee(this.target);
+			return this.attacker.getSensing().canSee(this.target);
 		}
 		return false;
 	}

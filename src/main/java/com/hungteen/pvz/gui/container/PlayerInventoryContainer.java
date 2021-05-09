@@ -97,34 +97,34 @@ public class PlayerInventoryContainer extends Container {
 	}
 
 	@Override
-	public boolean canInteractWith(PlayerEntity playerIn) {
+	public boolean stillValid(PlayerEntity playerIn) {
 		return true;
 	}
 
 	@Override
-	public ItemStack transferStackInSlot(PlayerEntity playerIn, int index) {
+	public ItemStack quickMoveStack(PlayerEntity playerIn, int index) {
 		ItemStack itemstack = ItemStack.EMPTY;
-		Slot slot = this.inventorySlots.get(index);
-		if (slot != null && slot.getHasStack()) {
-			ItemStack itemstack1 = slot.getStack();
+		Slot slot = this.slots.get(index);
+		if (slot != null && slot.hasItem()) {
+			ItemStack itemstack1 = slot.getItem();
 			itemstack = itemstack1.copy();
 			if (index < 54 ) {// in valid card slots
-				if (!this.mergeItemStack(itemstack1, 54, this.inventorySlots.size(), true)) {
+				if (!this.moveItemStackTo(itemstack1, 54, this.slots.size(), true)) {
 					return ItemStack.EMPTY;
 				}
 			} else if(index < 81){
-				if (!this.mergeItemStack(itemstack1, 0, 54, false)&&!this.mergeItemStack(itemstack1, 81, 90, false)) {
+				if (!this.moveItemStackTo(itemstack1, 0, 54, false)&&!this.moveItemStackTo(itemstack1, 81, 90, false)) {
 					return ItemStack.EMPTY;
 				}
 			} else if(index < 90) {
-				if (!this.mergeItemStack(itemstack1, 0, 81, false)) {
+				if (!this.moveItemStackTo(itemstack1, 0, 81, false)) {
 					return ItemStack.EMPTY;
 				}
 			}
 			if (itemstack1.isEmpty()) {
-				slot.putStack(ItemStack.EMPTY);
+				slot.set(ItemStack.EMPTY);
 			} else {
-				slot.onSlotChanged();
+				slot.setChanged();
 			}
 		}
 		return itemstack;
@@ -137,7 +137,7 @@ public class PlayerInventoryContainer extends Container {
 		}
 
 		@Override
-		public boolean isItemValid(ItemStack stack) {
+		public boolean mayPlace(ItemStack stack) {
 			return stack.getItem() instanceof SummonCardItem;
 		}
 	}
@@ -149,7 +149,7 @@ public class PlayerInventoryContainer extends Container {
 		}
 
 		@Override
-		public boolean isItemValid(ItemStack stack) {
+		public boolean mayPlace(ItemStack stack) {
 			System.out.println("no !");
 			return false;
 		}

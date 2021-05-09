@@ -15,6 +15,7 @@ import com.hungteen.pvz.world.WaveManager;
 import com.hungteen.pvz.world.data.WorldEventData;
 
 import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.util.Util;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.StringTextComponent;
 import net.minecraft.util.text.TextFormatting;
@@ -26,8 +27,8 @@ import net.minecraftforge.event.TickEvent;
 
 public class OverWorldEvents {
 
-	private static final ITextComponent ZOMBIE_ATTACK = new TranslationTextComponent("event.pvz.zombie_attack").applyTextStyle(TextFormatting.DARK_RED);
-	private static final ITextComponent ATTACK_FINISH = new TranslationTextComponent("event.pvz.attack_finish").applyTextStyle(TextFormatting.GREEN);
+	private static final ITextComponent ZOMBIE_ATTACK = new TranslationTextComponent("event.pvz.zombie_attack").withStyle(TextFormatting.DARK_RED);
+	private static final ITextComponent ATTACK_FINISH = new TranslationTextComponent("event.pvz.attack_finish").withStyle(TextFormatting.GREEN);
 	
 	public static void tick(TickEvent.WorldTickEvent ev) {
 		World world = ev.world;
@@ -74,22 +75,22 @@ public class OverWorldEvents {
 	 * do not activate in peaceful mode.
 	 */
 	public static void activateZombieAttackEvents(World world) {
-		if(world.getDifficulty() != Difficulty.PEACEFUL && world.rand.nextInt(100) < PVZConfig.COMMON_CONFIG.WorldSettings.WorldEventSettings.ZombieAttackChance.get()) {
-		    for(PlayerEntity pl : world.getPlayers()) {
-			    pl.sendMessage(ZOMBIE_ATTACK);
+		if(world.getDifficulty() != Difficulty.PEACEFUL && world.random.nextInt(100) < PVZConfig.COMMON_CONFIG.WorldSettings.WorldEventSettings.ZombieAttackChance.get()) {
+		    for(PlayerEntity pl : world.players()) {
+			    pl.sendMessage(ZOMBIE_ATTACK, Util.NIL_UUID);
 			    PlayerUtil.playClientSound(pl, 3);
 			    WaveManager.resetPlayerWaveTime(pl);
 		    }
 		    //activate event
 		    Events event = EntitySpawnRegister.getCurrentEventByRandom(world);
 		    activateEvent(world, event);//activate event
-		    if(world.rand.nextInt(PVZConfig.COMMON_CONFIG.WorldSettings.WorldEventSettings.EventChanceSettings.FogEventChance.get()) == 0) {
+		    if(world.random.nextInt(PVZConfig.COMMON_CONFIG.WorldSettings.WorldEventSettings.EventChanceSettings.FogEventChance.get()) == 0) {
 		    	activateEvent(world, Events.FOG);
 		    }
-		    if(world.rand.nextInt(PVZConfig.COMMON_CONFIG.WorldSettings.WorldEventSettings.EventChanceSettings.MiniEventChance.get()) == 0) {
+		    if(world.random.nextInt(PVZConfig.COMMON_CONFIG.WorldSettings.WorldEventSettings.EventChanceSettings.MiniEventChance.get()) == 0) {
 		    	activateEvent(world, Events.MINI);
 		    }
-		    if(world.rand.nextInt(PVZConfig.COMMON_CONFIG.WorldSettings.WorldEventSettings.EventChanceSettings.InvisEventChance.get()) == 0) {
+		    if(world.random.nextInt(PVZConfig.COMMON_CONFIG.WorldSettings.WorldEventSettings.EventChanceSettings.InvisEventChance.get()) == 0) {
 		    	activateEvent(world, Events.INVIS);
 		    }
 		    //get zombie spawn list
@@ -101,18 +102,18 @@ public class OverWorldEvents {
 		    	}
 		    }
 		    if(PVZConfig.COMMON_CONFIG.WorldSettings.WorldEventSettings.ShowEventMessages.get()) {
-		    	world.getPlayers().forEach((player) -> {
+		    	world.players().forEach((player) -> {
 			        for(Events ev : Events.values()) {
 				        if(data.hasEvent(ev)) {
-					        player.sendMessage(Events.getEventText(ev));
+					        player.sendMessage(Events.getEventText(ev), Util.NIL_UUID);
 				        }
 			        }
 			        String zombieInfo = "";
 			        for(int i = 0; i < zombieList.size(); ++ i) {
-			        	zombieInfo += new TranslationTextComponent("entity.pvz." + zombieList.get(i).toString().toLowerCase()).getFormattedText()
+			        	zombieInfo += new TranslationTextComponent("entity.pvz." + zombieList.get(i).toString().toLowerCase()).getContents()
 			        			+ (i == zombieList.size() - 1 ? "" : ",");
 			        }
-			        player.sendMessage(new StringTextComponent(zombieInfo));
+			        player.sendMessage(new StringTextComponent(zombieInfo), Util.NIL_UUID);
 			    });
 		    }
 		}
@@ -139,8 +140,8 @@ public class OverWorldEvents {
 	    	flag |= data.hasEvent(ev);
 	    }
 		if(isNatural && flag) {
-			for(PlayerEntity pl : world.getPlayers()) {
-		        pl.sendMessage(ATTACK_FINISH);
+			for(PlayerEntity pl : world.players()) {
+		        pl.sendMessage(ATTACK_FINISH, Util.NIL_UUID);
 		        PlayerUtil.playClientSound(pl, 4);
 		        WaveManager.giveInvasionBonusToPlayer(world, pl);
 	        }

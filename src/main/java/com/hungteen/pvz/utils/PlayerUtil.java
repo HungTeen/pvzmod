@@ -110,14 +110,14 @@ public class PlayerUtil {
 
 	public static void sendTitleToPlayer(PlayerEntity player, ITextComponent text) {
 		if(player instanceof ServerPlayerEntity) {
-	         ((ServerPlayerEntity) player).connection.sendPacket(new STitlePacket(STitlePacket.Type.TITLE, text));
+	         ((ServerPlayerEntity) player).connection.send(new STitlePacket(STitlePacket.Type.TITLE, text));
 		}
 	}
 	
 	public static void sendSubTitleToPlayer(PlayerEntity player, ITextComponent text) {
 		if(player instanceof ServerPlayerEntity) {
 			 sendTitleToPlayer(player, new StringTextComponent(""));
-	         ((ServerPlayerEntity) player).connection.sendPacket(new STitlePacket(STitlePacket.Type.SUBTITLE, text));
+	         ((ServerPlayerEntity) player).connection.send(new STitlePacket(STitlePacket.Type.SUBTITLE, text));
 		}
 	}
 	

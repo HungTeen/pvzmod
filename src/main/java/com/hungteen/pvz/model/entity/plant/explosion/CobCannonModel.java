@@ -113,639 +113,639 @@ public class CobCannonModel extends EntityModel<CobCannonEntity> {
 	private final ModelRenderer face;
 
 	public CobCannonModel() {
-		textureWidth = 256;
-		textureHeight = 256;
+		texWidth = 256;
+		texHeight = 256;
 
 		total = new ModelRenderer(this);
-		total.setRotationPoint(0.0F, 24.0F, 0.0F);
+		total.setPos(0.0F, 24.0F, 0.0F);
 		
 
 		wheels = new ModelRenderer(this);
-		wheels.setRotationPoint(0.0F, -4.0F, 0.0F);
+		wheels.setPos(0.0F, -4.0F, 0.0F);
 		total.addChild(wheels);
 		
 
 		wheel1 = new ModelRenderer(this);
-		wheel1.setRotationPoint(9.0F, 0.0F, -10.0F);
+		wheel1.setPos(9.0F, 0.0F, -10.0F);
 		wheels.addChild(wheel1);
-		wheel1.setTextureOffset(0, 0).addBox(-1.0F, -4.0F, -1.0F, 2.0F, 4.0F, 2.0F, 0.0F, false);
-		wheel1.setTextureOffset(61, 77).addBox(-0.25F, -1.0F, -1.0F, 2.0F, 2.0F, 2.0F, -0.5F, false);
+		wheel1.texOffs(0, 0).addBox(-1.0F, -4.0F, -1.0F, 2.0F, 4.0F, 2.0F, 0.0F, false);
+		wheel1.texOffs(61, 77).addBox(-0.25F, -1.0F, -1.0F, 2.0F, 2.0F, 2.0F, -0.5F, false);
 
 		cube_r1 = new ModelRenderer(this);
-		cube_r1.setRotationPoint(0.0F, 0.0F, 0.0F);
+		cube_r1.setPos(0.0F, 0.0F, 0.0F);
 		wheel1.addChild(cube_r1);
 		setRotationAngle(cube_r1, 2.7489F, 0.0F, 0.0F);
-		cube_r1.setTextureOffset(0, 0).addBox(-1.0F, -4.0F, -1.0F, 2.0F, 4.0F, 2.0F, 0.0F, false);
+		cube_r1.texOffs(0, 0).addBox(-1.0F, -4.0F, -1.0F, 2.0F, 4.0F, 2.0F, 0.0F, false);
 
 		cube_r2 = new ModelRenderer(this);
-		cube_r2.setRotationPoint(0.0F, 0.0F, 0.0F);
+		cube_r2.setPos(0.0F, 0.0F, 0.0F);
 		wheel1.addChild(cube_r2);
 		setRotationAngle(cube_r2, 2.3562F, 0.0F, 0.0F);
-		cube_r2.setTextureOffset(0, 0).addBox(-1.0F, -4.0F, -1.0F, 2.0F, 4.0F, 2.0F, 0.0F, false);
+		cube_r2.texOffs(0, 0).addBox(-1.0F, -4.0F, -1.0F, 2.0F, 4.0F, 2.0F, 0.0F, false);
 
 		cube_r3 = new ModelRenderer(this);
-		cube_r3.setRotationPoint(0.0F, 0.0F, 0.0F);
+		cube_r3.setPos(0.0F, 0.0F, 0.0F);
 		wheel1.addChild(cube_r3);
 		setRotationAngle(cube_r3, 1.9635F, 0.0F, 0.0F);
-		cube_r3.setTextureOffset(0, 0).addBox(-1.0F, -4.0F, -1.0F, 2.0F, 4.0F, 2.0F, 0.0F, false);
+		cube_r3.texOffs(0, 0).addBox(-1.0F, -4.0F, -1.0F, 2.0F, 4.0F, 2.0F, 0.0F, false);
 
 		cube_r4 = new ModelRenderer(this);
-		cube_r4.setRotationPoint(0.0F, 0.0F, 0.0F);
+		cube_r4.setPos(0.0F, 0.0F, 0.0F);
 		wheel1.addChild(cube_r4);
 		setRotationAngle(cube_r4, 1.5708F, 0.0F, 0.0F);
-		cube_r4.setTextureOffset(0, 0).addBox(-1.0F, -4.0F, -1.0F, 2.0F, 4.0F, 2.0F, 0.0F, false);
+		cube_r4.texOffs(0, 0).addBox(-1.0F, -4.0F, -1.0F, 2.0F, 4.0F, 2.0F, 0.0F, false);
 
 		cube_r5 = new ModelRenderer(this);
-		cube_r5.setRotationPoint(0.0F, 0.0F, 0.0F);
+		cube_r5.setPos(0.0F, 0.0F, 0.0F);
 		wheel1.addChild(cube_r5);
 		setRotationAngle(cube_r5, 1.1781F, 0.0F, 0.0F);
-		cube_r5.setTextureOffset(0, 0).addBox(-1.0F, -4.0F, -1.0F, 2.0F, 4.0F, 2.0F, 0.0F, false);
+		cube_r5.texOffs(0, 0).addBox(-1.0F, -4.0F, -1.0F, 2.0F, 4.0F, 2.0F, 0.0F, false);
 
 		cube_r6 = new ModelRenderer(this);
-		cube_r6.setRotationPoint(0.0F, 0.0F, 0.0F);
+		cube_r6.setPos(0.0F, 0.0F, 0.0F);
 		wheel1.addChild(cube_r6);
 		setRotationAngle(cube_r6, 0.7854F, 0.0F, 0.0F);
-		cube_r6.setTextureOffset(0, 0).addBox(-1.0F, -4.0F, -1.0F, 2.0F, 4.0F, 2.0F, 0.0F, false);
+		cube_r6.texOffs(0, 0).addBox(-1.0F, -4.0F, -1.0F, 2.0F, 4.0F, 2.0F, 0.0F, false);
 
 		cube_r7 = new ModelRenderer(this);
-		cube_r7.setRotationPoint(0.0F, 0.0F, 0.0F);
+		cube_r7.setPos(0.0F, 0.0F, 0.0F);
 		wheel1.addChild(cube_r7);
 		setRotationAngle(cube_r7, 0.3927F, 0.0F, 0.0F);
-		cube_r7.setTextureOffset(0, 0).addBox(-1.0F, -4.0F, -1.0F, 2.0F, 4.0F, 2.0F, 0.0F, false);
+		cube_r7.texOffs(0, 0).addBox(-1.0F, -4.0F, -1.0F, 2.0F, 4.0F, 2.0F, 0.0F, false);
 
 		cube_r8 = new ModelRenderer(this);
-		cube_r8.setRotationPoint(0.0F, 0.0F, 0.0F);
+		cube_r8.setPos(0.0F, 0.0F, 0.0F);
 		wheel1.addChild(cube_r8);
 		setRotationAngle(cube_r8, 3.1416F, 0.0F, 0.0F);
-		cube_r8.setTextureOffset(0, 0).addBox(-1.0F, -4.0F, -1.0F, 2.0F, 4.0F, 2.0F, 0.0F, false);
+		cube_r8.texOffs(0, 0).addBox(-1.0F, -4.0F, -1.0F, 2.0F, 4.0F, 2.0F, 0.0F, false);
 
 		cube_r9 = new ModelRenderer(this);
-		cube_r9.setRotationPoint(0.0F, 0.0F, 0.0F);
+		cube_r9.setPos(0.0F, 0.0F, 0.0F);
 		wheel1.addChild(cube_r9);
 		setRotationAngle(cube_r9, -2.7489F, 0.0F, 0.0F);
-		cube_r9.setTextureOffset(0, 0).addBox(-1.0F, -4.0F, -1.0F, 2.0F, 4.0F, 2.0F, 0.0F, false);
+		cube_r9.texOffs(0, 0).addBox(-1.0F, -4.0F, -1.0F, 2.0F, 4.0F, 2.0F, 0.0F, false);
 
 		cube_r10 = new ModelRenderer(this);
-		cube_r10.setRotationPoint(0.0F, 0.0F, 0.0F);
+		cube_r10.setPos(0.0F, 0.0F, 0.0F);
 		wheel1.addChild(cube_r10);
 		setRotationAngle(cube_r10, -2.3562F, 0.0F, 0.0F);
-		cube_r10.setTextureOffset(0, 0).addBox(-1.0F, -4.0F, -1.0F, 2.0F, 4.0F, 2.0F, 0.0F, false);
+		cube_r10.texOffs(0, 0).addBox(-1.0F, -4.0F, -1.0F, 2.0F, 4.0F, 2.0F, 0.0F, false);
 
 		cube_r11 = new ModelRenderer(this);
-		cube_r11.setRotationPoint(0.0F, 0.0F, 0.0F);
+		cube_r11.setPos(0.0F, 0.0F, 0.0F);
 		wheel1.addChild(cube_r11);
 		setRotationAngle(cube_r11, -1.9635F, 0.0F, 0.0F);
-		cube_r11.setTextureOffset(0, 0).addBox(-1.0F, -4.0F, -1.0F, 2.0F, 4.0F, 2.0F, 0.0F, false);
+		cube_r11.texOffs(0, 0).addBox(-1.0F, -4.0F, -1.0F, 2.0F, 4.0F, 2.0F, 0.0F, false);
 
 		cube_r12 = new ModelRenderer(this);
-		cube_r12.setRotationPoint(0.0F, 0.0F, 0.0F);
+		cube_r12.setPos(0.0F, 0.0F, 0.0F);
 		wheel1.addChild(cube_r12);
 		setRotationAngle(cube_r12, -1.5708F, 0.0F, 0.0F);
-		cube_r12.setTextureOffset(0, 0).addBox(-1.0F, -4.0F, -1.0F, 2.0F, 4.0F, 2.0F, 0.0F, false);
+		cube_r12.texOffs(0, 0).addBox(-1.0F, -4.0F, -1.0F, 2.0F, 4.0F, 2.0F, 0.0F, false);
 
 		cube_r13 = new ModelRenderer(this);
-		cube_r13.setRotationPoint(0.0F, 0.0F, 0.0F);
+		cube_r13.setPos(0.0F, 0.0F, 0.0F);
 		wheel1.addChild(cube_r13);
 		setRotationAngle(cube_r13, -1.1781F, 0.0F, 0.0F);
-		cube_r13.setTextureOffset(0, 0).addBox(-1.0F, -4.0F, -1.0F, 2.0F, 4.0F, 2.0F, 0.0F, false);
+		cube_r13.texOffs(0, 0).addBox(-1.0F, -4.0F, -1.0F, 2.0F, 4.0F, 2.0F, 0.0F, false);
 
 		cube_r14 = new ModelRenderer(this);
-		cube_r14.setRotationPoint(0.0F, 0.0F, 0.0F);
+		cube_r14.setPos(0.0F, 0.0F, 0.0F);
 		wheel1.addChild(cube_r14);
 		setRotationAngle(cube_r14, -0.7854F, 0.0F, 0.0F);
-		cube_r14.setTextureOffset(0, 0).addBox(-1.0F, -4.0F, -1.0F, 2.0F, 4.0F, 2.0F, 0.0F, false);
+		cube_r14.texOffs(0, 0).addBox(-1.0F, -4.0F, -1.0F, 2.0F, 4.0F, 2.0F, 0.0F, false);
 
 		cube_r15 = new ModelRenderer(this);
-		cube_r15.setRotationPoint(0.0F, 0.0F, 0.0F);
+		cube_r15.setPos(0.0F, 0.0F, 0.0F);
 		wheel1.addChild(cube_r15);
 		setRotationAngle(cube_r15, -0.3927F, 0.0F, 0.0F);
-		cube_r15.setTextureOffset(0, 0).addBox(-1.0F, -4.0F, -1.0F, 2.0F, 4.0F, 2.0F, 0.0F, false);
+		cube_r15.texOffs(0, 0).addBox(-1.0F, -4.0F, -1.0F, 2.0F, 4.0F, 2.0F, 0.0F, false);
 
 		wheel2 = new ModelRenderer(this);
-		wheel2.setRotationPoint(-9.0F, 0.0F, -10.0F);
+		wheel2.setPos(-9.0F, 0.0F, -10.0F);
 		wheels.addChild(wheel2);
-		wheel2.setTextureOffset(0, 7).addBox(-1.0F, -4.0F, -1.0F, 2.0F, 4.0F, 2.0F, 0.0F, false);
-		wheel2.setTextureOffset(45, 102).addBox(-1.75F, -1.0F, -1.0F, 2.0F, 2.0F, 2.0F, -0.5F, false);
+		wheel2.texOffs(0, 7).addBox(-1.0F, -4.0F, -1.0F, 2.0F, 4.0F, 2.0F, 0.0F, false);
+		wheel2.texOffs(45, 102).addBox(-1.75F, -1.0F, -1.0F, 2.0F, 2.0F, 2.0F, -0.5F, false);
 
 		cube_r16 = new ModelRenderer(this);
-		cube_r16.setRotationPoint(0.0F, 0.0F, 0.0F);
+		cube_r16.setPos(0.0F, 0.0F, 0.0F);
 		wheel2.addChild(cube_r16);
 		setRotationAngle(cube_r16, 2.7489F, 0.0F, 0.0F);
-		cube_r16.setTextureOffset(0, 7).addBox(-1.0F, -4.0F, -1.0F, 2.0F, 4.0F, 2.0F, 0.0F, false);
+		cube_r16.texOffs(0, 7).addBox(-1.0F, -4.0F, -1.0F, 2.0F, 4.0F, 2.0F, 0.0F, false);
 
 		cube_r17 = new ModelRenderer(this);
-		cube_r17.setRotationPoint(0.0F, 0.0F, 0.0F);
+		cube_r17.setPos(0.0F, 0.0F, 0.0F);
 		wheel2.addChild(cube_r17);
 		setRotationAngle(cube_r17, 2.3562F, 0.0F, 0.0F);
-		cube_r17.setTextureOffset(0, 7).addBox(-1.0F, -4.0F, -1.0F, 2.0F, 4.0F, 2.0F, 0.0F, false);
+		cube_r17.texOffs(0, 7).addBox(-1.0F, -4.0F, -1.0F, 2.0F, 4.0F, 2.0F, 0.0F, false);
 
 		cube_r18 = new ModelRenderer(this);
-		cube_r18.setRotationPoint(0.0F, 0.0F, 0.0F);
+		cube_r18.setPos(0.0F, 0.0F, 0.0F);
 		wheel2.addChild(cube_r18);
 		setRotationAngle(cube_r18, 1.9635F, 0.0F, 0.0F);
-		cube_r18.setTextureOffset(0, 7).addBox(-1.0F, -4.0F, -1.0F, 2.0F, 4.0F, 2.0F, 0.0F, false);
+		cube_r18.texOffs(0, 7).addBox(-1.0F, -4.0F, -1.0F, 2.0F, 4.0F, 2.0F, 0.0F, false);
 
 		cube_r19 = new ModelRenderer(this);
-		cube_r19.setRotationPoint(0.0F, 0.0F, 0.0F);
+		cube_r19.setPos(0.0F, 0.0F, 0.0F);
 		wheel2.addChild(cube_r19);
 		setRotationAngle(cube_r19, 1.5708F, 0.0F, 0.0F);
-		cube_r19.setTextureOffset(0, 7).addBox(-1.0F, -4.0F, -1.0F, 2.0F, 4.0F, 2.0F, 0.0F, false);
+		cube_r19.texOffs(0, 7).addBox(-1.0F, -4.0F, -1.0F, 2.0F, 4.0F, 2.0F, 0.0F, false);
 
 		cube_r20 = new ModelRenderer(this);
-		cube_r20.setRotationPoint(0.0F, 0.0F, 0.0F);
+		cube_r20.setPos(0.0F, 0.0F, 0.0F);
 		wheel2.addChild(cube_r20);
 		setRotationAngle(cube_r20, 1.1781F, 0.0F, 0.0F);
-		cube_r20.setTextureOffset(0, 7).addBox(-1.0F, -4.0F, -1.0F, 2.0F, 4.0F, 2.0F, 0.0F, false);
+		cube_r20.texOffs(0, 7).addBox(-1.0F, -4.0F, -1.0F, 2.0F, 4.0F, 2.0F, 0.0F, false);
 
 		cube_r21 = new ModelRenderer(this);
-		cube_r21.setRotationPoint(0.0F, 0.0F, 0.0F);
+		cube_r21.setPos(0.0F, 0.0F, 0.0F);
 		wheel2.addChild(cube_r21);
 		setRotationAngle(cube_r21, 0.7854F, 0.0F, 0.0F);
-		cube_r21.setTextureOffset(0, 7).addBox(-1.0F, -4.0F, -1.0F, 2.0F, 4.0F, 2.0F, 0.0F, false);
+		cube_r21.texOffs(0, 7).addBox(-1.0F, -4.0F, -1.0F, 2.0F, 4.0F, 2.0F, 0.0F, false);
 
 		cube_r22 = new ModelRenderer(this);
-		cube_r22.setRotationPoint(0.0F, 0.0F, 0.0F);
+		cube_r22.setPos(0.0F, 0.0F, 0.0F);
 		wheel2.addChild(cube_r22);
 		setRotationAngle(cube_r22, 0.3927F, 0.0F, 0.0F);
-		cube_r22.setTextureOffset(0, 7).addBox(-1.0F, -4.0F, -1.0F, 2.0F, 4.0F, 2.0F, 0.0F, false);
+		cube_r22.texOffs(0, 7).addBox(-1.0F, -4.0F, -1.0F, 2.0F, 4.0F, 2.0F, 0.0F, false);
 
 		cube_r23 = new ModelRenderer(this);
-		cube_r23.setRotationPoint(0.0F, 0.0F, 0.0F);
+		cube_r23.setPos(0.0F, 0.0F, 0.0F);
 		wheel2.addChild(cube_r23);
 		setRotationAngle(cube_r23, 3.1416F, 0.0F, 0.0F);
-		cube_r23.setTextureOffset(0, 7).addBox(-1.0F, -4.0F, -1.0F, 2.0F, 4.0F, 2.0F, 0.0F, false);
+		cube_r23.texOffs(0, 7).addBox(-1.0F, -4.0F, -1.0F, 2.0F, 4.0F, 2.0F, 0.0F, false);
 
 		cube_r24 = new ModelRenderer(this);
-		cube_r24.setRotationPoint(0.0F, 0.0F, 0.0F);
+		cube_r24.setPos(0.0F, 0.0F, 0.0F);
 		wheel2.addChild(cube_r24);
 		setRotationAngle(cube_r24, -2.7489F, 0.0F, 0.0F);
-		cube_r24.setTextureOffset(0, 7).addBox(-1.0F, -4.0F, -1.0F, 2.0F, 4.0F, 2.0F, 0.0F, false);
+		cube_r24.texOffs(0, 7).addBox(-1.0F, -4.0F, -1.0F, 2.0F, 4.0F, 2.0F, 0.0F, false);
 
 		cube_r25 = new ModelRenderer(this);
-		cube_r25.setRotationPoint(0.0F, 0.0F, 0.0F);
+		cube_r25.setPos(0.0F, 0.0F, 0.0F);
 		wheel2.addChild(cube_r25);
 		setRotationAngle(cube_r25, -2.3562F, 0.0F, 0.0F);
-		cube_r25.setTextureOffset(0, 7).addBox(-1.0F, -4.0F, -1.0F, 2.0F, 4.0F, 2.0F, 0.0F, false);
+		cube_r25.texOffs(0, 7).addBox(-1.0F, -4.0F, -1.0F, 2.0F, 4.0F, 2.0F, 0.0F, false);
 
 		cube_r26 = new ModelRenderer(this);
-		cube_r26.setRotationPoint(0.0F, 0.0F, 0.0F);
+		cube_r26.setPos(0.0F, 0.0F, 0.0F);
 		wheel2.addChild(cube_r26);
 		setRotationAngle(cube_r26, -1.9635F, 0.0F, 0.0F);
-		cube_r26.setTextureOffset(0, 7).addBox(-1.0F, -4.0F, -1.0F, 2.0F, 4.0F, 2.0F, 0.0F, false);
+		cube_r26.texOffs(0, 7).addBox(-1.0F, -4.0F, -1.0F, 2.0F, 4.0F, 2.0F, 0.0F, false);
 
 		cube_r27 = new ModelRenderer(this);
-		cube_r27.setRotationPoint(0.0F, 0.0F, 0.0F);
+		cube_r27.setPos(0.0F, 0.0F, 0.0F);
 		wheel2.addChild(cube_r27);
 		setRotationAngle(cube_r27, -1.5708F, 0.0F, 0.0F);
-		cube_r27.setTextureOffset(0, 7).addBox(-1.0F, -4.0F, -1.0F, 2.0F, 4.0F, 2.0F, 0.0F, false);
+		cube_r27.texOffs(0, 7).addBox(-1.0F, -4.0F, -1.0F, 2.0F, 4.0F, 2.0F, 0.0F, false);
 
 		cube_r28 = new ModelRenderer(this);
-		cube_r28.setRotationPoint(0.0F, 0.0F, 0.0F);
+		cube_r28.setPos(0.0F, 0.0F, 0.0F);
 		wheel2.addChild(cube_r28);
 		setRotationAngle(cube_r28, -1.1781F, 0.0F, 0.0F);
-		cube_r28.setTextureOffset(0, 7).addBox(-1.0F, -4.0F, -1.0F, 2.0F, 4.0F, 2.0F, 0.0F, false);
+		cube_r28.texOffs(0, 7).addBox(-1.0F, -4.0F, -1.0F, 2.0F, 4.0F, 2.0F, 0.0F, false);
 
 		cube_r29 = new ModelRenderer(this);
-		cube_r29.setRotationPoint(0.0F, 0.0F, 0.0F);
+		cube_r29.setPos(0.0F, 0.0F, 0.0F);
 		wheel2.addChild(cube_r29);
 		setRotationAngle(cube_r29, -0.7854F, 0.0F, 0.0F);
-		cube_r29.setTextureOffset(0, 7).addBox(-1.0F, -4.0F, -1.0F, 2.0F, 4.0F, 2.0F, 0.0F, false);
+		cube_r29.texOffs(0, 7).addBox(-1.0F, -4.0F, -1.0F, 2.0F, 4.0F, 2.0F, 0.0F, false);
 
 		cube_r30 = new ModelRenderer(this);
-		cube_r30.setRotationPoint(0.0F, 0.0F, 0.0F);
+		cube_r30.setPos(0.0F, 0.0F, 0.0F);
 		wheel2.addChild(cube_r30);
 		setRotationAngle(cube_r30, -0.3927F, 0.0F, 0.0F);
-		cube_r30.setTextureOffset(0, 7).addBox(-1.0F, -4.0F, -1.0F, 2.0F, 4.0F, 2.0F, 0.0F, false);
+		cube_r30.texOffs(0, 7).addBox(-1.0F, -4.0F, -1.0F, 2.0F, 4.0F, 2.0F, 0.0F, false);
 
 		wheel3 = new ModelRenderer(this);
-		wheel3.setRotationPoint(9.0F, 0.0F, 11.0F);
+		wheel3.setPos(9.0F, 0.0F, 11.0F);
 		wheels.addChild(wheel3);
-		wheel3.setTextureOffset(0, 14).addBox(-1.0F, -4.0F, -1.0F, 2.0F, 4.0F, 2.0F, 0.0F, false);
-		wheel3.setTextureOffset(58, 85).addBox(-0.25F, -1.0F, -1.0F, 2.0F, 2.0F, 2.0F, -0.5F, false);
+		wheel3.texOffs(0, 14).addBox(-1.0F, -4.0F, -1.0F, 2.0F, 4.0F, 2.0F, 0.0F, false);
+		wheel3.texOffs(58, 85).addBox(-0.25F, -1.0F, -1.0F, 2.0F, 2.0F, 2.0F, -0.5F, false);
 
 		cube_r31 = new ModelRenderer(this);
-		cube_r31.setRotationPoint(0.0F, 0.0F, 0.0F);
+		cube_r31.setPos(0.0F, 0.0F, 0.0F);
 		wheel3.addChild(cube_r31);
 		setRotationAngle(cube_r31, 2.7489F, 0.0F, 0.0F);
-		cube_r31.setTextureOffset(0, 14).addBox(-1.0F, -4.0F, -1.0F, 2.0F, 4.0F, 2.0F, 0.0F, false);
+		cube_r31.texOffs(0, 14).addBox(-1.0F, -4.0F, -1.0F, 2.0F, 4.0F, 2.0F, 0.0F, false);
 
 		cube_r32 = new ModelRenderer(this);
-		cube_r32.setRotationPoint(0.0F, 0.0F, 0.0F);
+		cube_r32.setPos(0.0F, 0.0F, 0.0F);
 		wheel3.addChild(cube_r32);
 		setRotationAngle(cube_r32, 2.3562F, 0.0F, 0.0F);
-		cube_r32.setTextureOffset(0, 14).addBox(-1.0F, -4.0F, -1.0F, 2.0F, 4.0F, 2.0F, 0.0F, false);
+		cube_r32.texOffs(0, 14).addBox(-1.0F, -4.0F, -1.0F, 2.0F, 4.0F, 2.0F, 0.0F, false);
 
 		cube_r33 = new ModelRenderer(this);
-		cube_r33.setRotationPoint(0.0F, 0.0F, 0.0F);
+		cube_r33.setPos(0.0F, 0.0F, 0.0F);
 		wheel3.addChild(cube_r33);
 		setRotationAngle(cube_r33, 1.9635F, 0.0F, 0.0F);
-		cube_r33.setTextureOffset(0, 14).addBox(-1.0F, -4.0F, -1.0F, 2.0F, 4.0F, 2.0F, 0.0F, false);
+		cube_r33.texOffs(0, 14).addBox(-1.0F, -4.0F, -1.0F, 2.0F, 4.0F, 2.0F, 0.0F, false);
 
 		cube_r34 = new ModelRenderer(this);
-		cube_r34.setRotationPoint(0.0F, 0.0F, 0.0F);
+		cube_r34.setPos(0.0F, 0.0F, 0.0F);
 		wheel3.addChild(cube_r34);
 		setRotationAngle(cube_r34, 1.5708F, 0.0F, 0.0F);
-		cube_r34.setTextureOffset(0, 14).addBox(-1.0F, -4.0F, -1.0F, 2.0F, 4.0F, 2.0F, 0.0F, false);
+		cube_r34.texOffs(0, 14).addBox(-1.0F, -4.0F, -1.0F, 2.0F, 4.0F, 2.0F, 0.0F, false);
 
 		cube_r35 = new ModelRenderer(this);
-		cube_r35.setRotationPoint(0.0F, 0.0F, 0.0F);
+		cube_r35.setPos(0.0F, 0.0F, 0.0F);
 		wheel3.addChild(cube_r35);
 		setRotationAngle(cube_r35, 1.1781F, 0.0F, 0.0F);
-		cube_r35.setTextureOffset(0, 14).addBox(-1.0F, -4.0F, -1.0F, 2.0F, 4.0F, 2.0F, 0.0F, false);
+		cube_r35.texOffs(0, 14).addBox(-1.0F, -4.0F, -1.0F, 2.0F, 4.0F, 2.0F, 0.0F, false);
 
 		cube_r36 = new ModelRenderer(this);
-		cube_r36.setRotationPoint(0.0F, 0.0F, 0.0F);
+		cube_r36.setPos(0.0F, 0.0F, 0.0F);
 		wheel3.addChild(cube_r36);
 		setRotationAngle(cube_r36, 0.7854F, 0.0F, 0.0F);
-		cube_r36.setTextureOffset(0, 14).addBox(-1.0F, -4.0F, -1.0F, 2.0F, 4.0F, 2.0F, 0.0F, false);
+		cube_r36.texOffs(0, 14).addBox(-1.0F, -4.0F, -1.0F, 2.0F, 4.0F, 2.0F, 0.0F, false);
 
 		cube_r37 = new ModelRenderer(this);
-		cube_r37.setRotationPoint(0.0F, 0.0F, 0.0F);
+		cube_r37.setPos(0.0F, 0.0F, 0.0F);
 		wheel3.addChild(cube_r37);
 		setRotationAngle(cube_r37, 0.3927F, 0.0F, 0.0F);
-		cube_r37.setTextureOffset(0, 14).addBox(-1.0F, -4.0F, -1.0F, 2.0F, 4.0F, 2.0F, 0.0F, false);
+		cube_r37.texOffs(0, 14).addBox(-1.0F, -4.0F, -1.0F, 2.0F, 4.0F, 2.0F, 0.0F, false);
 
 		cube_r38 = new ModelRenderer(this);
-		cube_r38.setRotationPoint(0.0F, 0.0F, 0.0F);
+		cube_r38.setPos(0.0F, 0.0F, 0.0F);
 		wheel3.addChild(cube_r38);
 		setRotationAngle(cube_r38, 3.1416F, 0.0F, 0.0F);
-		cube_r38.setTextureOffset(0, 14).addBox(-1.0F, -4.0F, -1.0F, 2.0F, 4.0F, 2.0F, 0.0F, false);
+		cube_r38.texOffs(0, 14).addBox(-1.0F, -4.0F, -1.0F, 2.0F, 4.0F, 2.0F, 0.0F, false);
 
 		cube_r39 = new ModelRenderer(this);
-		cube_r39.setRotationPoint(0.0F, 0.0F, 0.0F);
+		cube_r39.setPos(0.0F, 0.0F, 0.0F);
 		wheel3.addChild(cube_r39);
 		setRotationAngle(cube_r39, -2.7489F, 0.0F, 0.0F);
-		cube_r39.setTextureOffset(0, 14).addBox(-1.0F, -4.0F, -1.0F, 2.0F, 4.0F, 2.0F, 0.0F, false);
+		cube_r39.texOffs(0, 14).addBox(-1.0F, -4.0F, -1.0F, 2.0F, 4.0F, 2.0F, 0.0F, false);
 
 		cube_r40 = new ModelRenderer(this);
-		cube_r40.setRotationPoint(0.0F, 0.0F, 0.0F);
+		cube_r40.setPos(0.0F, 0.0F, 0.0F);
 		wheel3.addChild(cube_r40);
 		setRotationAngle(cube_r40, -2.3562F, 0.0F, 0.0F);
-		cube_r40.setTextureOffset(0, 14).addBox(-1.0F, -4.0F, -1.0F, 2.0F, 4.0F, 2.0F, 0.0F, false);
+		cube_r40.texOffs(0, 14).addBox(-1.0F, -4.0F, -1.0F, 2.0F, 4.0F, 2.0F, 0.0F, false);
 
 		cube_r41 = new ModelRenderer(this);
-		cube_r41.setRotationPoint(0.0F, 0.0F, 0.0F);
+		cube_r41.setPos(0.0F, 0.0F, 0.0F);
 		wheel3.addChild(cube_r41);
 		setRotationAngle(cube_r41, -1.9635F, 0.0F, 0.0F);
-		cube_r41.setTextureOffset(0, 14).addBox(-1.0F, -4.0F, -1.0F, 2.0F, 4.0F, 2.0F, 0.0F, false);
+		cube_r41.texOffs(0, 14).addBox(-1.0F, -4.0F, -1.0F, 2.0F, 4.0F, 2.0F, 0.0F, false);
 
 		cube_r42 = new ModelRenderer(this);
-		cube_r42.setRotationPoint(0.0F, 0.0F, 0.0F);
+		cube_r42.setPos(0.0F, 0.0F, 0.0F);
 		wheel3.addChild(cube_r42);
 		setRotationAngle(cube_r42, -1.5708F, 0.0F, 0.0F);
-		cube_r42.setTextureOffset(0, 14).addBox(-1.0F, -4.0F, -1.0F, 2.0F, 4.0F, 2.0F, 0.0F, false);
+		cube_r42.texOffs(0, 14).addBox(-1.0F, -4.0F, -1.0F, 2.0F, 4.0F, 2.0F, 0.0F, false);
 
 		cube_r43 = new ModelRenderer(this);
-		cube_r43.setRotationPoint(0.0F, 0.0F, 0.0F);
+		cube_r43.setPos(0.0F, 0.0F, 0.0F);
 		wheel3.addChild(cube_r43);
 		setRotationAngle(cube_r43, -1.1781F, 0.0F, 0.0F);
-		cube_r43.setTextureOffset(0, 14).addBox(-1.0F, -4.0F, -1.0F, 2.0F, 4.0F, 2.0F, 0.0F, false);
+		cube_r43.texOffs(0, 14).addBox(-1.0F, -4.0F, -1.0F, 2.0F, 4.0F, 2.0F, 0.0F, false);
 
 		cube_r44 = new ModelRenderer(this);
-		cube_r44.setRotationPoint(0.0F, 0.0F, 0.0F);
+		cube_r44.setPos(0.0F, 0.0F, 0.0F);
 		wheel3.addChild(cube_r44);
 		setRotationAngle(cube_r44, -0.7854F, 0.0F, 0.0F);
-		cube_r44.setTextureOffset(0, 14).addBox(-1.0F, -4.0F, -1.0F, 2.0F, 4.0F, 2.0F, 0.0F, false);
+		cube_r44.texOffs(0, 14).addBox(-1.0F, -4.0F, -1.0F, 2.0F, 4.0F, 2.0F, 0.0F, false);
 
 		cube_r45 = new ModelRenderer(this);
-		cube_r45.setRotationPoint(0.0F, 0.0F, 0.0F);
+		cube_r45.setPos(0.0F, 0.0F, 0.0F);
 		wheel3.addChild(cube_r45);
 		setRotationAngle(cube_r45, -0.3927F, 0.0F, 0.0F);
-		cube_r45.setTextureOffset(0, 14).addBox(-1.0F, -4.0F, -1.0F, 2.0F, 4.0F, 2.0F, 0.0F, false);
+		cube_r45.texOffs(0, 14).addBox(-1.0F, -4.0F, -1.0F, 2.0F, 4.0F, 2.0F, 0.0F, false);
 
 		wheel4 = new ModelRenderer(this);
-		wheel4.setRotationPoint(-9.0F, 0.0F, 11.0F);
+		wheel4.setPos(-9.0F, 0.0F, 11.0F);
 		wheels.addChild(wheel4);
-		wheel4.setTextureOffset(0, 21).addBox(-1.0F, -4.0F, -1.0F, 2.0F, 4.0F, 2.0F, 0.0F, false);
-		wheel4.setTextureOffset(58, 93).addBox(-1.75F, -1.0F, -1.0F, 2.0F, 2.0F, 2.0F, -0.5F, false);
+		wheel4.texOffs(0, 21).addBox(-1.0F, -4.0F, -1.0F, 2.0F, 4.0F, 2.0F, 0.0F, false);
+		wheel4.texOffs(58, 93).addBox(-1.75F, -1.0F, -1.0F, 2.0F, 2.0F, 2.0F, -0.5F, false);
 
 		cube_r46 = new ModelRenderer(this);
-		cube_r46.setRotationPoint(0.0F, 0.0F, 0.0F);
+		cube_r46.setPos(0.0F, 0.0F, 0.0F);
 		wheel4.addChild(cube_r46);
 		setRotationAngle(cube_r46, 2.7489F, 0.0F, 0.0F);
-		cube_r46.setTextureOffset(0, 21).addBox(-1.0F, -4.0F, -1.0F, 2.0F, 4.0F, 2.0F, 0.0F, false);
+		cube_r46.texOffs(0, 21).addBox(-1.0F, -4.0F, -1.0F, 2.0F, 4.0F, 2.0F, 0.0F, false);
 
 		cube_r47 = new ModelRenderer(this);
-		cube_r47.setRotationPoint(0.0F, 0.0F, 0.0F);
+		cube_r47.setPos(0.0F, 0.0F, 0.0F);
 		wheel4.addChild(cube_r47);
 		setRotationAngle(cube_r47, 2.3562F, 0.0F, 0.0F);
-		cube_r47.setTextureOffset(0, 21).addBox(-1.0F, -4.0F, -1.0F, 2.0F, 4.0F, 2.0F, 0.0F, false);
+		cube_r47.texOffs(0, 21).addBox(-1.0F, -4.0F, -1.0F, 2.0F, 4.0F, 2.0F, 0.0F, false);
 
 		cube_r48 = new ModelRenderer(this);
-		cube_r48.setRotationPoint(0.0F, 0.0F, 0.0F);
+		cube_r48.setPos(0.0F, 0.0F, 0.0F);
 		wheel4.addChild(cube_r48);
 		setRotationAngle(cube_r48, 1.9635F, 0.0F, 0.0F);
-		cube_r48.setTextureOffset(0, 21).addBox(-1.0F, -4.0F, -1.0F, 2.0F, 4.0F, 2.0F, 0.0F, false);
+		cube_r48.texOffs(0, 21).addBox(-1.0F, -4.0F, -1.0F, 2.0F, 4.0F, 2.0F, 0.0F, false);
 
 		cube_r49 = new ModelRenderer(this);
-		cube_r49.setRotationPoint(0.0F, 0.0F, 0.0F);
+		cube_r49.setPos(0.0F, 0.0F, 0.0F);
 		wheel4.addChild(cube_r49);
 		setRotationAngle(cube_r49, 1.5708F, 0.0F, 0.0F);
-		cube_r49.setTextureOffset(0, 21).addBox(-1.0F, -4.0F, -1.0F, 2.0F, 4.0F, 2.0F, 0.0F, false);
+		cube_r49.texOffs(0, 21).addBox(-1.0F, -4.0F, -1.0F, 2.0F, 4.0F, 2.0F, 0.0F, false);
 
 		cube_r50 = new ModelRenderer(this);
-		cube_r50.setRotationPoint(0.0F, 0.0F, 0.0F);
+		cube_r50.setPos(0.0F, 0.0F, 0.0F);
 		wheel4.addChild(cube_r50);
 		setRotationAngle(cube_r50, 1.1781F, 0.0F, 0.0F);
-		cube_r50.setTextureOffset(0, 21).addBox(-1.0F, -4.0F, -1.0F, 2.0F, 4.0F, 2.0F, 0.0F, false);
+		cube_r50.texOffs(0, 21).addBox(-1.0F, -4.0F, -1.0F, 2.0F, 4.0F, 2.0F, 0.0F, false);
 
 		cube_r51 = new ModelRenderer(this);
-		cube_r51.setRotationPoint(0.0F, 0.0F, 0.0F);
+		cube_r51.setPos(0.0F, 0.0F, 0.0F);
 		wheel4.addChild(cube_r51);
 		setRotationAngle(cube_r51, 0.7854F, 0.0F, 0.0F);
-		cube_r51.setTextureOffset(0, 21).addBox(-1.0F, -4.0F, -1.0F, 2.0F, 4.0F, 2.0F, 0.0F, false);
+		cube_r51.texOffs(0, 21).addBox(-1.0F, -4.0F, -1.0F, 2.0F, 4.0F, 2.0F, 0.0F, false);
 
 		cube_r52 = new ModelRenderer(this);
-		cube_r52.setRotationPoint(0.0F, 0.0F, 0.0F);
+		cube_r52.setPos(0.0F, 0.0F, 0.0F);
 		wheel4.addChild(cube_r52);
 		setRotationAngle(cube_r52, 0.3927F, 0.0F, 0.0F);
-		cube_r52.setTextureOffset(0, 21).addBox(-1.0F, -4.0F, -1.0F, 2.0F, 4.0F, 2.0F, 0.0F, false);
+		cube_r52.texOffs(0, 21).addBox(-1.0F, -4.0F, -1.0F, 2.0F, 4.0F, 2.0F, 0.0F, false);
 
 		cube_r53 = new ModelRenderer(this);
-		cube_r53.setRotationPoint(0.0F, 0.0F, 0.0F);
+		cube_r53.setPos(0.0F, 0.0F, 0.0F);
 		wheel4.addChild(cube_r53);
 		setRotationAngle(cube_r53, 3.1416F, 0.0F, 0.0F);
-		cube_r53.setTextureOffset(0, 21).addBox(-1.0F, -4.0F, -1.0F, 2.0F, 4.0F, 2.0F, 0.0F, false);
+		cube_r53.texOffs(0, 21).addBox(-1.0F, -4.0F, -1.0F, 2.0F, 4.0F, 2.0F, 0.0F, false);
 
 		cube_r54 = new ModelRenderer(this);
-		cube_r54.setRotationPoint(0.0F, 0.0F, 0.0F);
+		cube_r54.setPos(0.0F, 0.0F, 0.0F);
 		wheel4.addChild(cube_r54);
 		setRotationAngle(cube_r54, -2.7489F, 0.0F, 0.0F);
-		cube_r54.setTextureOffset(0, 21).addBox(-1.0F, -4.0F, -1.0F, 2.0F, 4.0F, 2.0F, 0.0F, false);
+		cube_r54.texOffs(0, 21).addBox(-1.0F, -4.0F, -1.0F, 2.0F, 4.0F, 2.0F, 0.0F, false);
 
 		cube_r55 = new ModelRenderer(this);
-		cube_r55.setRotationPoint(0.0F, 0.0F, 0.0F);
+		cube_r55.setPos(0.0F, 0.0F, 0.0F);
 		wheel4.addChild(cube_r55);
 		setRotationAngle(cube_r55, -2.3562F, 0.0F, 0.0F);
-		cube_r55.setTextureOffset(0, 21).addBox(-1.0F, -4.0F, -1.0F, 2.0F, 4.0F, 2.0F, 0.0F, false);
+		cube_r55.texOffs(0, 21).addBox(-1.0F, -4.0F, -1.0F, 2.0F, 4.0F, 2.0F, 0.0F, false);
 
 		cube_r56 = new ModelRenderer(this);
-		cube_r56.setRotationPoint(0.0F, 0.0F, 0.0F);
+		cube_r56.setPos(0.0F, 0.0F, 0.0F);
 		wheel4.addChild(cube_r56);
 		setRotationAngle(cube_r56, -1.9635F, 0.0F, 0.0F);
-		cube_r56.setTextureOffset(0, 21).addBox(-1.0F, -4.0F, -1.0F, 2.0F, 4.0F, 2.0F, 0.0F, false);
+		cube_r56.texOffs(0, 21).addBox(-1.0F, -4.0F, -1.0F, 2.0F, 4.0F, 2.0F, 0.0F, false);
 
 		cube_r57 = new ModelRenderer(this);
-		cube_r57.setRotationPoint(0.0F, 0.0F, 0.0F);
+		cube_r57.setPos(0.0F, 0.0F, 0.0F);
 		wheel4.addChild(cube_r57);
 		setRotationAngle(cube_r57, -1.5708F, 0.0F, 0.0F);
-		cube_r57.setTextureOffset(0, 21).addBox(-1.0F, -4.0F, -1.0F, 2.0F, 4.0F, 2.0F, 0.0F, false);
+		cube_r57.texOffs(0, 21).addBox(-1.0F, -4.0F, -1.0F, 2.0F, 4.0F, 2.0F, 0.0F, false);
 
 		cube_r58 = new ModelRenderer(this);
-		cube_r58.setRotationPoint(0.0F, 0.0F, 0.0F);
+		cube_r58.setPos(0.0F, 0.0F, 0.0F);
 		wheel4.addChild(cube_r58);
 		setRotationAngle(cube_r58, -1.1781F, 0.0F, 0.0F);
-		cube_r58.setTextureOffset(0, 21).addBox(-1.0F, -4.0F, -1.0F, 2.0F, 4.0F, 2.0F, 0.0F, false);
+		cube_r58.texOffs(0, 21).addBox(-1.0F, -4.0F, -1.0F, 2.0F, 4.0F, 2.0F, 0.0F, false);
 
 		cube_r59 = new ModelRenderer(this);
-		cube_r59.setRotationPoint(0.0F, 0.0F, 0.0F);
+		cube_r59.setPos(0.0F, 0.0F, 0.0F);
 		wheel4.addChild(cube_r59);
 		setRotationAngle(cube_r59, -0.7854F, 0.0F, 0.0F);
-		cube_r59.setTextureOffset(0, 21).addBox(-1.0F, -4.0F, -1.0F, 2.0F, 4.0F, 2.0F, 0.0F, false);
+		cube_r59.texOffs(0, 21).addBox(-1.0F, -4.0F, -1.0F, 2.0F, 4.0F, 2.0F, 0.0F, false);
 
 		cube_r60 = new ModelRenderer(this);
-		cube_r60.setRotationPoint(0.0F, 0.0F, 0.0F);
+		cube_r60.setPos(0.0F, 0.0F, 0.0F);
 		wheel4.addChild(cube_r60);
 		setRotationAngle(cube_r60, -0.3927F, 0.0F, 0.0F);
-		cube_r60.setTextureOffset(0, 21).addBox(-1.0F, -4.0F, -1.0F, 2.0F, 4.0F, 2.0F, 0.0F, false);
+		cube_r60.texOffs(0, 21).addBox(-1.0F, -4.0F, -1.0F, 2.0F, 4.0F, 2.0F, 0.0F, false);
 
 		base = new ModelRenderer(this);
-		base.setRotationPoint(0.0F, -7.0F, 0.0F);
+		base.setPos(0.0F, -7.0F, 0.0F);
 		total.addChild(base);
-		base.setTextureOffset(0, 0).addBox(-8.0F, 1.0F, -16.0F, 3.0F, 4.0F, 32.0F, 0.0F, false);
-		base.setTextureOffset(40, 4).addBox(5.0F, 1.0F, -16.0F, 3.0F, 4.0F, 32.0F, 0.0F, false);
-		base.setTextureOffset(79, 0).addBox(-5.0F, 3.0F, -16.0F, 10.0F, 2.0F, 32.0F, 0.0F, false);
-		base.setTextureOffset(72, 76).addBox(-9.0F, 2.0F, -6.5F, 2.0F, 2.0F, 14.0F, -0.75F, false);
-		base.setTextureOffset(93, 62).addBox(7.0F, 2.0F, -6.5F, 2.0F, 2.0F, 14.0F, -0.75F, false);
+		base.texOffs(0, 0).addBox(-8.0F, 1.0F, -16.0F, 3.0F, 4.0F, 32.0F, 0.0F, false);
+		base.texOffs(40, 4).addBox(5.0F, 1.0F, -16.0F, 3.0F, 4.0F, 32.0F, 0.0F, false);
+		base.texOffs(79, 0).addBox(-5.0F, 3.0F, -16.0F, 10.0F, 2.0F, 32.0F, 0.0F, false);
+		base.texOffs(72, 76).addBox(-9.0F, 2.0F, -6.5F, 2.0F, 2.0F, 14.0F, -0.75F, false);
+		base.texOffs(93, 62).addBox(7.0F, 2.0F, -6.5F, 2.0F, 2.0F, 14.0F, -0.75F, false);
 
 		body = new ModelRenderer(this);
-		body.setRotationPoint(0.0F, -9.0F, 10.0F);
+		body.setPos(0.0F, -9.0F, 10.0F);
 		total.addChild(body);
 		setRotationAngle(body, 1.5708F, 0.0F, 0.0F);
 		
 
 		corn = new ModelRenderer(this);
-		corn.setRotationPoint(0.0F, 3.0F, -2.0F);
+		corn.setPos(0.0F, 3.0F, -2.0F);
 		body.addChild(corn);
-		corn.setTextureOffset(0, 37).addBox(-4.5F, -28.0F, -2.5F, 9.0F, 29.0F, 9.0F, 0.0F, false);
-		corn.setTextureOffset(41, 19).addBox(-3.5F, -28.75F, -1.5F, 7.0F, 1.0F, 7.0F, -0.25F, false);
+		corn.texOffs(0, 37).addBox(-4.5F, -28.0F, -2.5F, 9.0F, 29.0F, 9.0F, 0.0F, false);
+		corn.texOffs(41, 19).addBox(-3.5F, -28.75F, -1.5F, 7.0F, 1.0F, 7.0F, -0.25F, false);
 
 		outer = new ModelRenderer(this);
-		outer.setRotationPoint(0.0F, 0.0F, 0.0F);
+		outer.setPos(0.0F, 0.0F, 0.0F);
 		body.addChild(outer);
-		outer.setTextureOffset(99, 35).addBox(-5.0F, 4.25F, -5.0F, 10.0F, 1.0F, 10.0F, -0.25F, false);
-		outer.setTextureOffset(106, 48).addBox(-4.0F, 4.5F, -4.0F, 8.0F, 1.0F, 8.0F, 0.0F, false);
+		outer.texOffs(99, 35).addBox(-5.0F, 4.25F, -5.0F, 10.0F, 1.0F, 10.0F, -0.25F, false);
+		outer.texOffs(106, 48).addBox(-4.0F, 4.5F, -4.0F, 8.0F, 1.0F, 8.0F, 0.0F, false);
 
 		layer1 = new ModelRenderer(this);
-		layer1.setRotationPoint(0.0F, 0.0F, 0.0F);
+		layer1.setPos(0.0F, 0.0F, 0.0F);
 		outer.addChild(layer1);
-		layer1.setTextureOffset(10, 23).addBox(-5.25F, -22.0F, -5.0F, 1.0F, 2.0F, 3.0F, -0.25F, false);
-		layer1.setTextureOffset(38, 41).addBox(-5.25F, -19.0F, -5.0F, 1.0F, 24.0F, 10.0F, -0.25F, false);
-		layer1.setTextureOffset(20, 22).addBox(-5.25F, -20.5F, 1.0F, 1.0F, 2.0F, 4.0F, -0.25F, false);
-		layer1.setTextureOffset(10, 16).addBox(-5.25F, -20.5F, -5.0F, 1.0F, 2.0F, 4.0F, -0.25F, false);
-		layer1.setTextureOffset(22, 16).addBox(-5.25F, -22.0F, 2.0F, 1.0F, 2.0F, 3.0F, -0.25F, false);
-		layer1.setTextureOffset(11, 10).addBox(-5.25F, -23.5F, -5.0F, 1.0F, 2.0F, 2.0F, -0.25F, false);
-		layer1.setTextureOffset(21, 10).addBox(-5.25F, -23.5F, 3.0F, 1.0F, 2.0F, 2.0F, -0.25F, false);
+		layer1.texOffs(10, 23).addBox(-5.25F, -22.0F, -5.0F, 1.0F, 2.0F, 3.0F, -0.25F, false);
+		layer1.texOffs(38, 41).addBox(-5.25F, -19.0F, -5.0F, 1.0F, 24.0F, 10.0F, -0.25F, false);
+		layer1.texOffs(20, 22).addBox(-5.25F, -20.5F, 1.0F, 1.0F, 2.0F, 4.0F, -0.25F, false);
+		layer1.texOffs(10, 16).addBox(-5.25F, -20.5F, -5.0F, 1.0F, 2.0F, 4.0F, -0.25F, false);
+		layer1.texOffs(22, 16).addBox(-5.25F, -22.0F, 2.0F, 1.0F, 2.0F, 3.0F, -0.25F, false);
+		layer1.texOffs(11, 10).addBox(-5.25F, -23.5F, -5.0F, 1.0F, 2.0F, 2.0F, -0.25F, false);
+		layer1.texOffs(21, 10).addBox(-5.25F, -23.5F, 3.0F, 1.0F, 2.0F, 2.0F, -0.25F, false);
 
 		layer2 = new ModelRenderer(this);
-		layer2.setRotationPoint(9.5F, 0.0F, 0.0F);
+		layer2.setPos(9.5F, 0.0F, 0.0F);
 		outer.addChild(layer2);
-		layer2.setTextureOffset(10, 0).addBox(-5.25F, -22.0F, -5.0F, 1.0F, 2.0F, 3.0F, -0.25F, false);
-		layer2.setTextureOffset(60, 41).addBox(-5.25F, -19.0F, -5.0F, 1.0F, 24.0F, 10.0F, -0.25F, false);
-		layer2.setTextureOffset(20, 1).addBox(-5.25F, -20.5F, 1.0F, 1.0F, 2.0F, 4.0F, -0.25F, false);
-		layer2.setTextureOffset(41, 0).addBox(-5.25F, -20.5F, -5.0F, 1.0F, 2.0F, 4.0F, -0.25F, false);
-		layer2.setTextureOffset(54, 0).addBox(-5.25F, -22.0F, 2.0F, 1.0F, 2.0F, 3.0F, -0.25F, false);
-		layer2.setTextureOffset(40, 8).addBox(-5.25F, -23.5F, -5.0F, 1.0F, 2.0F, 2.0F, -0.25F, false);
-		layer2.setTextureOffset(40, 14).addBox(-5.25F, -23.5F, 3.0F, 1.0F, 2.0F, 2.0F, -0.25F, false);
+		layer2.texOffs(10, 0).addBox(-5.25F, -22.0F, -5.0F, 1.0F, 2.0F, 3.0F, -0.25F, false);
+		layer2.texOffs(60, 41).addBox(-5.25F, -19.0F, -5.0F, 1.0F, 24.0F, 10.0F, -0.25F, false);
+		layer2.texOffs(20, 1).addBox(-5.25F, -20.5F, 1.0F, 1.0F, 2.0F, 4.0F, -0.25F, false);
+		layer2.texOffs(41, 0).addBox(-5.25F, -20.5F, -5.0F, 1.0F, 2.0F, 4.0F, -0.25F, false);
+		layer2.texOffs(54, 0).addBox(-5.25F, -22.0F, 2.0F, 1.0F, 2.0F, 3.0F, -0.25F, false);
+		layer2.texOffs(40, 8).addBox(-5.25F, -23.5F, -5.0F, 1.0F, 2.0F, 2.0F, -0.25F, false);
+		layer2.texOffs(40, 14).addBox(-5.25F, -23.5F, 3.0F, 1.0F, 2.0F, 2.0F, -0.25F, false);
 
 		layer3 = new ModelRenderer(this);
-		layer3.setRotationPoint(0.0F, 0.0F, 0.0F);
+		layer3.setPos(0.0F, 0.0F, 0.0F);
 		outer.addChild(layer3);
 		setRotationAngle(layer3, 0.0F, 1.5708F, 0.0F);
-		layer3.setTextureOffset(51, 8).addBox(-5.25F, -22.0F, -5.0F, 1.0F, 2.0F, 3.0F, -0.25F, false);
-		layer3.setTextureOffset(83, 40).addBox(-5.25F, -19.0F, -5.0F, 1.0F, 24.0F, 10.0F, -0.25F, false);
-		layer3.setTextureOffset(80, 0).addBox(-5.25F, -20.5F, 1.0F, 1.0F, 2.0F, 4.0F, -0.25F, false);
-		layer3.setTextureOffset(80, 8).addBox(-5.25F, -20.5F, -5.0F, 1.0F, 2.0F, 4.0F, -0.25F, false);
-		layer3.setTextureOffset(81, 16).addBox(-5.25F, -22.0F, 2.0F, 1.0F, 2.0F, 3.0F, -0.25F, false);
-		layer3.setTextureOffset(82, 24).addBox(-5.25F, -23.5F, -5.0F, 1.0F, 2.0F, 2.0F, -0.25F, false);
-		layer3.setTextureOffset(92, 24).addBox(-5.25F, -23.5F, 3.0F, 1.0F, 2.0F, 2.0F, -0.25F, false);
+		layer3.texOffs(51, 8).addBox(-5.25F, -22.0F, -5.0F, 1.0F, 2.0F, 3.0F, -0.25F, false);
+		layer3.texOffs(83, 40).addBox(-5.25F, -19.0F, -5.0F, 1.0F, 24.0F, 10.0F, -0.25F, false);
+		layer3.texOffs(80, 0).addBox(-5.25F, -20.5F, 1.0F, 1.0F, 2.0F, 4.0F, -0.25F, false);
+		layer3.texOffs(80, 8).addBox(-5.25F, -20.5F, -5.0F, 1.0F, 2.0F, 4.0F, -0.25F, false);
+		layer3.texOffs(81, 16).addBox(-5.25F, -22.0F, 2.0F, 1.0F, 2.0F, 3.0F, -0.25F, false);
+		layer3.texOffs(82, 24).addBox(-5.25F, -23.5F, -5.0F, 1.0F, 2.0F, 2.0F, -0.25F, false);
+		layer3.texOffs(92, 24).addBox(-5.25F, -23.5F, 3.0F, 1.0F, 2.0F, 2.0F, -0.25F, false);
 
 		layer4 = new ModelRenderer(this);
-		layer4.setRotationPoint(0.0F, 0.0F, 0.0F);
+		layer4.setPos(0.0F, 0.0F, 0.0F);
 		outer.addChild(layer4);
 		setRotationAngle(layer4, 0.0F, -1.5708F, 0.0F);
-		layer4.setTextureOffset(92, 16).addBox(-5.25F, -22.0F, -5.0F, 1.0F, 2.0F, 3.0F, -0.25F, false);
-		layer4.setTextureOffset(0, 76).addBox(-5.25F, -19.0F, -5.0F, 1.0F, 24.0F, 10.0F, -0.25F, false);
-		layer4.setTextureOffset(93, 0).addBox(-5.25F, -20.5F, 1.0F, 1.0F, 2.0F, 4.0F, -0.25F, false);
-		layer4.setTextureOffset(92, 8).addBox(-5.25F, -20.5F, -5.0F, 1.0F, 2.0F, 4.0F, -0.25F, false);
-		layer4.setTextureOffset(14, 77).addBox(-5.25F, -22.0F, 2.0F, 1.0F, 2.0F, 3.0F, -0.25F, false);
-		layer4.setTextureOffset(0, 78).addBox(-5.25F, -23.5F, -5.0F, 1.0F, 2.0F, 2.0F, -0.25F, false);
-		layer4.setTextureOffset(0, 38).addBox(-5.25F, -23.5F, 3.0F, 1.0F, 2.0F, 2.0F, -0.25F, false);
+		layer4.texOffs(92, 16).addBox(-5.25F, -22.0F, -5.0F, 1.0F, 2.0F, 3.0F, -0.25F, false);
+		layer4.texOffs(0, 76).addBox(-5.25F, -19.0F, -5.0F, 1.0F, 24.0F, 10.0F, -0.25F, false);
+		layer4.texOffs(93, 0).addBox(-5.25F, -20.5F, 1.0F, 1.0F, 2.0F, 4.0F, -0.25F, false);
+		layer4.texOffs(92, 8).addBox(-5.25F, -20.5F, -5.0F, 1.0F, 2.0F, 4.0F, -0.25F, false);
+		layer4.texOffs(14, 77).addBox(-5.25F, -22.0F, 2.0F, 1.0F, 2.0F, 3.0F, -0.25F, false);
+		layer4.texOffs(0, 78).addBox(-5.25F, -23.5F, -5.0F, 1.0F, 2.0F, 2.0F, -0.25F, false);
+		layer4.texOffs(0, 38).addBox(-5.25F, -23.5F, 3.0F, 1.0F, 2.0F, 2.0F, -0.25F, false);
 
 		leaves = new ModelRenderer(this);
-		leaves.setRotationPoint(0.0F, 0.0F, 0.0F);
+		leaves.setPos(0.0F, 0.0F, 0.0F);
 		outer.addChild(leaves);
 		
 
 		leaf1 = new ModelRenderer(this);
-		leaf1.setRotationPoint(0.0F, 0.0F, 0.0F);
+		leaf1.setPos(0.0F, 0.0F, 0.0F);
 		leaves.addChild(leaf1);
 		
 
 		l1 = new ModelRenderer(this);
-		l1.setRotationPoint(-4.25F, -22.5F, 4.25F);
+		l1.setPos(-4.25F, -22.5F, 4.25F);
 		leaf1.addChild(l1);
 		setRotationAngle(l1, 0.0F, -0.7854F, 0.0F);
 		
 
 		cube_r61 = new ModelRenderer(this);
-		cube_r61.setRotationPoint(0.0F, 0.0F, 0.0F);
+		cube_r61.setPos(0.0F, 0.0F, 0.0F);
 		l1.addChild(cube_r61);
 		setRotationAngle(cube_r61, 0.5236F, 0.0F, 0.0F);
-		cube_r61.setTextureOffset(25, 77).addBox(-1.5F, -1.0F, 0.0F, 3.0F, 1.0F, 2.0F, -0.45F, false);
+		cube_r61.texOffs(25, 77).addBox(-1.5F, -1.0F, 0.0F, 3.0F, 1.0F, 2.0F, -0.45F, false);
 
 		bone = new ModelRenderer(this);
-		bone.setRotationPoint(0.0F, -0.5F, 1.5F);
+		bone.setPos(0.0F, -0.5F, 1.5F);
 		l1.addChild(bone);
-		bone.setTextureOffset(23, 82).addBox(-1.0F, -1.2013F, -0.8827F, 2.0F, 1.0F, 2.0F, -0.45F, false);
+		bone.texOffs(23, 82).addBox(-1.0F, -1.2013F, -0.8827F, 2.0F, 1.0F, 2.0F, -0.45F, false);
 
 		leaf2 = new ModelRenderer(this);
-		leaf2.setRotationPoint(0.0F, 0.0F, 0.0F);
+		leaf2.setPos(0.0F, 0.0F, 0.0F);
 		leaves.addChild(leaf2);
 		setRotationAngle(leaf2, 0.0F, 1.5708F, 0.0F);
 		
 
 		l2 = new ModelRenderer(this);
-		l2.setRotationPoint(-4.25F, -22.5F, 4.25F);
+		l2.setPos(-4.25F, -22.5F, 4.25F);
 		leaf2.addChild(l2);
 		setRotationAngle(l2, 0.0F, -0.7854F, 0.0F);
 		
 
 		cube_r62 = new ModelRenderer(this);
-		cube_r62.setRotationPoint(0.0F, 0.0F, 0.0F);
+		cube_r62.setPos(0.0F, 0.0F, 0.0F);
 		l2.addChild(cube_r62);
 		setRotationAngle(cube_r62, 0.5236F, 0.0F, 0.0F);
-		cube_r62.setTextureOffset(23, 86).addBox(-1.5F, -1.0F, 0.0F, 3.0F, 1.0F, 2.0F, -0.45F, false);
+		cube_r62.texOffs(23, 86).addBox(-1.5F, -1.0F, 0.0F, 3.0F, 1.0F, 2.0F, -0.45F, false);
 
 		bone2 = new ModelRenderer(this);
-		bone2.setRotationPoint(0.0F, -0.5F, 1.5F);
+		bone2.setPos(0.0F, -0.5F, 1.5F);
 		l2.addChild(bone2);
-		bone2.setTextureOffset(24, 92).addBox(-1.0F, -1.2013F, -0.8827F, 2.0F, 1.0F, 2.0F, -0.45F, false);
+		bone2.texOffs(24, 92).addBox(-1.0F, -1.2013F, -0.8827F, 2.0F, 1.0F, 2.0F, -0.45F, false);
 
 		leaf3 = new ModelRenderer(this);
-		leaf3.setRotationPoint(0.0F, 0.0F, 0.0F);
+		leaf3.setPos(0.0F, 0.0F, 0.0F);
 		leaves.addChild(leaf3);
 		setRotationAngle(leaf3, 0.0F, -1.5708F, 0.0F);
 		
 
 		l3 = new ModelRenderer(this);
-		l3.setRotationPoint(-4.25F, -22.5F, 4.25F);
+		l3.setPos(-4.25F, -22.5F, 4.25F);
 		leaf3.addChild(l3);
 		setRotationAngle(l3, 0.0F, -0.7854F, 0.0F);
 		
 
 		cube_r63 = new ModelRenderer(this);
-		cube_r63.setRotationPoint(0.0F, 0.0F, 0.0F);
+		cube_r63.setPos(0.0F, 0.0F, 0.0F);
 		l3.addChild(cube_r63);
 		setRotationAngle(cube_r63, 0.5236F, 0.0F, 0.0F);
-		cube_r63.setTextureOffset(24, 98).addBox(-1.5F, -1.0F, 0.0F, 3.0F, 1.0F, 2.0F, -0.45F, false);
+		cube_r63.texOffs(24, 98).addBox(-1.5F, -1.0F, 0.0F, 3.0F, 1.0F, 2.0F, -0.45F, false);
 
 		bone3 = new ModelRenderer(this);
-		bone3.setRotationPoint(0.0F, -0.5F, 1.5F);
+		bone3.setPos(0.0F, -0.5F, 1.5F);
 		l3.addChild(bone3);
-		bone3.setTextureOffset(24, 104).addBox(-1.0F, -1.2013F, -0.8827F, 2.0F, 1.0F, 2.0F, -0.45F, false);
+		bone3.texOffs(24, 104).addBox(-1.0F, -1.2013F, -0.8827F, 2.0F, 1.0F, 2.0F, -0.45F, false);
 
 		leaf4 = new ModelRenderer(this);
-		leaf4.setRotationPoint(0.0F, 0.0F, 0.0F);
+		leaf4.setPos(0.0F, 0.0F, 0.0F);
 		leaves.addChild(leaf4);
 		setRotationAngle(leaf4, 0.0F, 3.1416F, 0.0F);
 		
 
 		l4 = new ModelRenderer(this);
-		l4.setRotationPoint(-4.25F, -22.5F, 4.25F);
+		l4.setPos(-4.25F, -22.5F, 4.25F);
 		leaf4.addChild(l4);
 		setRotationAngle(l4, 0.0F, -0.7854F, 0.0F);
 		
 
 		cube_r64 = new ModelRenderer(this);
-		cube_r64.setRotationPoint(0.0F, 0.0F, 0.0F);
+		cube_r64.setPos(0.0F, 0.0F, 0.0F);
 		l4.addChild(cube_r64);
 		setRotationAngle(cube_r64, 0.5236F, 0.0F, 0.0F);
-		cube_r64.setTextureOffset(37, 77).addBox(-1.5F, -1.0F, 0.0F, 3.0F, 1.0F, 2.0F, -0.45F, false);
+		cube_r64.texOffs(37, 77).addBox(-1.5F, -1.0F, 0.0F, 3.0F, 1.0F, 2.0F, -0.45F, false);
 
 		bone4 = new ModelRenderer(this);
-		bone4.setRotationPoint(0.0F, -0.5F, 1.5F);
+		bone4.setPos(0.0F, -0.5F, 1.5F);
 		l4.addChild(bone4);
-		bone4.setTextureOffset(35, 82).addBox(-1.0F, -1.2013F, -0.8827F, 2.0F, 1.0F, 2.0F, -0.45F, false);
+		bone4.texOffs(35, 82).addBox(-1.0F, -1.2013F, -0.8827F, 2.0F, 1.0F, 2.0F, -0.45F, false);
 
 		tail = new ModelRenderer(this);
-		tail.setRotationPoint(0.0F, 6.0F, 0.0F);
+		tail.setPos(0.0F, 6.0F, 0.0F);
 		body.addChild(tail);
-		tail.setTextureOffset(49, 76).addBox(-1.0F, -2.0F, -1.0F, 2.0F, 5.0F, 2.0F, -0.75F, false);
-		tail.setTextureOffset(45, 88).addBox(-1.0F, 1.2474F, -2.0557F, 2.0F, 2.0F, 2.0F, -0.75F, false);
+		tail.texOffs(49, 76).addBox(-1.0F, -2.0F, -1.0F, 2.0F, 5.0F, 2.0F, -0.75F, false);
+		tail.texOffs(45, 88).addBox(-1.0F, 1.2474F, -2.0557F, 2.0F, 2.0F, 2.0F, -0.75F, false);
 
 		cube_r65 = new ModelRenderer(this);
-		cube_r65.setRotationPoint(0.0F, 4.1305F, -0.6718F);
+		cube_r65.setPos(0.0F, 4.1305F, -0.6718F);
 		tail.addChild(cube_r65);
 		setRotationAngle(cube_r65, -0.6109F, 0.0F, 0.0F);
-		cube_r65.setTextureOffset(45, 94).addBox(-1.0F, -2.8192F, -1.5736F, 2.0F, 2.0F, 2.0F, -0.75F, false);
+		cube_r65.texOffs(45, 94).addBox(-1.0F, -2.8192F, -1.5736F, 2.0F, 2.0F, 2.0F, -0.75F, false);
 
 		cube_r66 = new ModelRenderer(this);
-		cube_r66.setRotationPoint(0.0F, 4.0681F, -1.2443F);
+		cube_r66.setPos(0.0F, 4.0681F, -1.2443F);
 		tail.addChild(cube_r66);
 		setRotationAngle(cube_r66, -1.0472F, 0.0F, 0.0F);
-		cube_r66.setTextureOffset(35, 102).addBox(-1.0F, -2.5F, -1.866F, 2.0F, 2.0F, 2.0F, -0.75F, false);
+		cube_r66.texOffs(35, 102).addBox(-1.0F, -2.5F, -1.866F, 2.0F, 2.0F, 2.0F, -0.75F, false);
 
 		cube_r67 = new ModelRenderer(this);
-		cube_r67.setRotationPoint(0.0F, 2.5516F, -1.6933F);
+		cube_r67.setPos(0.0F, 2.5516F, -1.6933F);
 		tail.addChild(cube_r67);
 		setRotationAngle(cube_r67, -1.6581F, 0.0F, 0.0F);
-		cube_r67.setTextureOffset(36, 94).addBox(-1.0F, -2.0F, -1.0F, 2.0F, 2.0F, 2.0F, -0.75F, false);
+		cube_r67.texOffs(36, 94).addBox(-1.0F, -2.0F, -1.0F, 2.0F, 2.0F, 2.0F, -0.75F, false);
 
 		cube_r68 = new ModelRenderer(this);
-		cube_r68.setRotationPoint(0.0F, 1.0382F, -2.3037F);
+		cube_r68.setPos(0.0F, 1.0382F, -2.3037F);
 		tail.addChild(cube_r68);
 		setRotationAngle(cube_r68, 0.7418F, 0.0F, 0.0F);
-		cube_r68.setTextureOffset(34, 88).addBox(-1.0F, 1.0F, -1.0F, 2.0F, 2.0F, 2.0F, -0.75F, false);
+		cube_r68.texOffs(34, 88).addBox(-1.0F, 1.0F, -1.0F, 2.0F, 2.0F, 2.0F, -0.75F, false);
 
 		face = new ModelRenderer(this);
-		face.setRotationPoint(0.0F, 0.0F, 0.0F);
+		face.setPos(0.0F, 0.0F, 0.0F);
 		body.addChild(face);
-		face.setTextureOffset(77, 79).addBox(-5.5F, -7.0F, 1.0F, 1.0F, 4.0F, 2.0F, -0.45F, false);
-		face.setTextureOffset(58, 101).addBox(4.5F, -7.0F, 1.0F, 1.0F, 4.0F, 2.0F, -0.45F, false);
+		face.texOffs(77, 79).addBox(-5.5F, -7.0F, 1.0F, 1.0F, 4.0F, 2.0F, -0.45F, false);
+		face.texOffs(58, 101).addBox(4.5F, -7.0F, 1.0F, 1.0F, 4.0F, 2.0F, -0.45F, false);
 	}
 
 	@Override
-	public void setRotationAngles(CobCannonEntity entity, float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch){
+	public void setupAnim(CobCannonEntity entity, float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch){
 		if(entity.isPlayerRiding()) {
-			this.wheel1.rotateAngleX = ageInTicks / 2;
-			this.wheel2.rotateAngleX = ageInTicks / 2;
-			this.wheel3.rotateAngleX = ageInTicks / 2;
-			this.wheel4.rotateAngleX = ageInTicks / 2;
+			this.wheel1.xRot = ageInTicks / 2;
+			this.wheel2.xRot = ageInTicks / 2;
+			this.wheel3.xRot = ageInTicks / 2;
+			this.wheel4.xRot = ageInTicks / 2;
 		} else {
-			this.wheel1.rotateAngleX = 0;
-			this.wheel2.rotateAngleX = 0;
-			this.wheel3.rotateAngleX = 0;
-			this.wheel4.rotateAngleX = 0;
+			this.wheel1.xRot = 0;
+			this.wheel2.xRot = 0;
+			this.wheel3.xRot = 0;
+			this.wheel4.xRot = 0;
 		}
 		if(entity.getAttackTime() > 0) {
 			int time = entity.getAnimCD() - entity.getAttackTime() + 1;
-			this.body.rotateAngleX = 1.5708F - AnimationUtil.getUpDown(time, entity.getAnimCD(), 90);
-			this.corn.showModel = (time < entity.getAnimCD() / 2);
+			this.body.xRot = 1.5708F - AnimationUtil.getUpDown(time, entity.getAnimCD(), 90);
+			this.corn.visible = (time < entity.getAnimCD() / 2);
 		} else {
-			this.corn.showModel = (entity.getCornNum() > 0);
-			this.body.rotateAngleX = 1.5708F;
+			this.corn.visible = (entity.getCornNum() > 0);
+			this.body.xRot = 1.5708F;
 		}
 	}
 
 	@Override
-	public void render(MatrixStack matrixStack, IVertexBuilder buffer, int packedLight, int packedOverlay, float red, float green, float blue, float alpha){
+	public void renderToBuffer(MatrixStack matrixStack, IVertexBuilder buffer, int packedLight, int packedOverlay, float red, float green, float blue, float alpha){
 		total.render(matrixStack, buffer, packedLight, packedOverlay);
 	}
 
 	public void setRotationAngle(ModelRenderer modelRenderer, float x, float y, float z) {
-		modelRenderer.rotateAngleX = x;
-		modelRenderer.rotateAngleY = y;
-		modelRenderer.rotateAngleZ = z;
+		modelRenderer.xRot = x;
+		modelRenderer.yRot = y;
+		modelRenderer.zRot = z;
 	}
 }

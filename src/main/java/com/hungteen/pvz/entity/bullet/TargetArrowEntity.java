@@ -15,7 +15,7 @@ import net.minecraft.entity.projectile.AbstractArrowEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.network.IPacket;
 import net.minecraft.util.math.EntityRayTraceResult;
-import net.minecraft.util.math.Vec3d;
+import net.minecraft.util.math.vector.Vector3d;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.network.NetworkHooks;
 
@@ -31,13 +31,13 @@ public class TargetArrowEntity extends AbstractArrowEntity {
 	
 	@Override
 	public void tick() {
-		if(! world.isRemote) {
-			if(! EntityUtil.isEntityValid(this.getShooter())) { // shooter died
+		if(! level.isClientSide) {
+			if(! EntityUtil.isEntityValid(this.getOwner())) { // shooter died
 				this.remove();
 				return ;
 			} else {
-				if(this.getShooter() instanceof BungeeZombieEntity) {
-					BungeeZombieEntity bungee = (BungeeZombieEntity) this.getShooter();
+				if(this.getOwner() instanceof BungeeZombieEntity) {
+					BungeeZombieEntity bungee = (BungeeZombieEntity) this.getOwner();
 					if(bungee.getStealTarget() != null) {
 						this.shoot(bungee.getStealTarget());
 					}
@@ -48,40 +48,40 @@ public class TargetArrowEntity extends AbstractArrowEntity {
 	}
 	
 	@Override
-	protected void onEntityHit(EntityRayTraceResult result) {
-		if(result.getEntity() instanceof LivingEntity && this.getShooter() instanceof PlayerEntity) {// summon bungee
+	protected void onHitEntity(EntityRayTraceResult result) {
+		if(result.getEntity() instanceof LivingEntity && this.getOwner() instanceof PlayerEntity) {// summon bungee
 			if(! BungeeZombieEntity.canBungeeSteal(result.getEntity())) {
-				super.onEntityHit(result);
+				super.onHitEntity(result);
 				return ;
 			}
-			BungeeZombieEntity zombie = EntityRegister.BUNGEE_ZOMBIE.get().create(world);
+			BungeeZombieEntity zombie = EntityRegister.BUNGEE_ZOMBIE.get().create(level);
 			zombie.setBungeeType(BungeeTypes.HELP);
 			zombie.setCharmed(true);
 			zombie.setStealTarget((LivingEntity) result.getEntity());
-			EntityUtil.onMobEntitySpawn(world, zombie, getPosition().up(20));
-			super.onEntityHit(result);
+			EntityUtil.onMobEntitySpawn(level, zombie, blockPosition().above(20));
+			super.onHitEntity(result);
 			this.remove();
 		}
 	}
 	
 	public void shoot(LivingEntity target) {
-		Vec3d speed = target.getPositionVec().subtract(this.getPositionVec()).normalize();
+		Vector3d speed = target.position().subtract(this.position()).normalize();
 		double multi = 1D;
-		this.setMotion(speed.mul(multi, multi, multi));
+		this.setDeltaMovement(speed.multiply(multi, multi, multi));
 	}
 	
 	@Override
-	public EntitySize getSize(Pose poseIn) {
-		return EntitySize.flexible(0.5F, 0.5F);
+	public EntitySize getDimensions(Pose poseIn) {
+		return EntitySize.scalable(0.5F, 0.5F);
 	}
 
 	@Override
-	protected ItemStack getArrowStack() {
+	protected ItemStack getPickupItem() {
 		return new ItemStack(ItemRegister.TARGET_ARROW.get());
 	}
 	
 	@Override
-	public IPacket<?> createSpawnPacket() {
+	public IPacket<?> getAddEntityPacket() {
 		return NetworkHooks.getEntitySpawningPacket(this);
 	}
 

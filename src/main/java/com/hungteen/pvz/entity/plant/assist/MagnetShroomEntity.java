@@ -35,17 +35,17 @@ import net.minecraft.world.World;
 
 public class MagnetShroomEntity extends PVZPlantEntity {
 
-	private static final DataParameter<Integer> METAL_TYPE = EntityDataManager.createKey(MagnetShroomEntity.class,
-			DataSerializers.VARINT);
+	private static final DataParameter<Integer> METAL_TYPE = EntityDataManager.defineId(MagnetShroomEntity.class,
+			DataSerializers.INT);
 	
 	public MagnetShroomEntity(EntityType<? extends CreatureEntity> type, World worldIn) {
 		super(type, worldIn);
 	}
 
 	@Override
-	protected void registerData() {
-		super.registerData();
-		dataManager.register(METAL_TYPE, MetalTypes.EMPTY.ordinal());
+	protected void defineSynchedData() {
+		super.defineSynchedData();
+		entityData.define(METAL_TYPE, MetalTypes.EMPTY.ordinal());
 	}
 	
 	@Override
@@ -58,19 +58,19 @@ public class MagnetShroomEntity extends PVZPlantEntity {
 	@Override
 	protected void normalPlantTick() {
 		super.normalPlantTick();
-		if(! world.isRemote) {
+		if(! level.isClientSide) {
 			if(this.getAttackTime() > 0) {
 				this.setAttackTime(this.getAttackTime() - 1);
 			} else if(this.getAttackTime() == 0) {
 				this.setMetalType(MetalTypes.EMPTY);
 			}
-			LivingEntity target = this.getAttackTarget();
+			LivingEntity target = this.getTarget();
 			if(target != null) {
 				if(! this.checkCanPlantTarget(target)) {
 					if(! EntityUtil.checkCanEntityAttack(this, target) && target instanceof PVZPlantEntity && ((PVZPlantEntity) target).hasMetal()) {
 						
 					} else {
-						this.setAttackTarget(null);
+						this.setTarget(null);
 					    return ;
 					}
 				}
@@ -87,15 +87,15 @@ public class MagnetShroomEntity extends PVZPlantEntity {
 		int range = 20;
 		int cnt = this.getSuperDragCnt();
 		EntityUtil.playSound(this, SoundRegister.MAGNET.get());
-		for(LivingEntity target : world.getEntitiesWithinAABB(LivingEntity.class, EntityUtil.getEntityAABB(this, range, range), (entity) -> {
+		for(LivingEntity target : level.getEntitiesOfClass(LivingEntity.class, EntityUtil.getEntityAABB(this, range, range), (entity) -> {
 			return this.checkCanPlantTarget(entity);
 		})){
 			if(! (target instanceof IHasMetal)) continue;
 			((IHasMetal) target).decreaseMetal();
-			MetalItemEntity metal = new MetalItemEntity(world, this, ((IHasMetal) target).getMetalType());
+			MetalItemEntity metal = new MetalItemEntity(level, this, ((IHasMetal) target).getMetalType());
 			metal.setMetalState(MetalStates.BULLET);
-			metal.setPosition(target.getPosX(), target.getPosY() + target.getEyeHeight(), target.getPosZ());
-			world.addEntity(metal);
+			metal.setPos(target.getX(), target.getY() + target.getEyeHeight(), target.getZ());
+			level.addFreshEntity(metal);
 			if(-- cnt == 0) return ;
 		};
 	}
@@ -105,9 +105,9 @@ public class MagnetShroomEntity extends PVZPlantEntity {
 			EntityUtil.playSound(this, SoundRegister.MAGNET.get());
 			((IHasMetal) target).decreaseMetal();
 			this.setAttackTime(this.getAttackCD());
-			MetalItemEntity metal = new MetalItemEntity(world, this, ((IHasMetal) target).getMetalType());
-			metal.setPosition(target.getPosX(), target.getPosY() + target.getEyeHeight(), target.getPosZ());
-			world.addEntity(metal);
+			MetalItemEntity metal = new MetalItemEntity(level, this, ((IHasMetal) target).getMetalType());
+			metal.setPos(target.getX(), target.getY() + target.getEyeHeight(), target.getZ());
+			level.addFreshEntity(metal);
 		} else {
 			System.out.println("Error : wrong target !");
 		}
@@ -140,25 +140,25 @@ public class MagnetShroomEntity extends PVZPlantEntity {
 	}
 	
 	@Override
-	public void writeAdditional(CompoundNBT compound) {
-		super.writeAdditional(compound);
+	public void addAdditionalSaveData(CompoundNBT compound) {
+		super.addAdditionalSaveData(compound);
 		compound.putInt("metal_type", this.getMetalType().ordinal());
 	}
 
 	@Override
-	public void readAdditional(CompoundNBT compound) {
-		super.readAdditional(compound);
+	public void readAdditionalSaveData(CompoundNBT compound) {
+		super.readAdditionalSaveData(compound);
 		if(compound.contains("metal_type")) {
 			this.setMetalType(MetalTypes.values()[compound.getInt("metal_type")]);
 		}
 	}
 
 	public MetalTypes getMetalType() {
-		return MetalTypes.values()[dataManager.get(METAL_TYPE)];
+		return MetalTypes.values()[entityData.get(METAL_TYPE)];
 	}
 
 	public void setMetalType(MetalTypes type) {
-		dataManager.set(METAL_TYPE, type.ordinal());
+		entityData.set(METAL_TYPE, type.ordinal());
 	}
 	
 	@Override
@@ -172,8 +172,8 @@ public class MagnetShroomEntity extends PVZPlantEntity {
 	}
 	
 	@Override
-	public EntitySize getSize(Pose poseIn) {
-		return EntitySize.flexible(0.5f, 1.3f);
+	public EntitySize getDimensions(Pose poseIn) {
+		return EntitySize.scalable(0.5f, 1.3f);
 	}
 	
 	@Override
@@ -194,18 +194,18 @@ public class MagnetShroomEntity extends PVZPlantEntity {
 			this.width = w;
 			this.upperHeight = h;
 			this.lowerHeight = h;
-			this.sorter = new AlgorithmUtil.EntitySorter(goalOwner);
-			this.setMutexFlags(EnumSet.of(Goal.Flag.TARGET));
+			this.sorter = new AlgorithmUtil.EntitySorter(mob);
+			this.setFlags(EnumSet.of(Goal.Flag.TARGET));
 		}
 
 		@Override
-		public boolean shouldExecute() {
-			if (this.targetChance > 0 && this.goalOwner.getRNG().nextInt(this.targetChance) != 0) {
+		public boolean canUse() {
+			if (this.targetChance > 0 && this.mob.getRandom().nextInt(this.targetChance) != 0) {
 				return false;
 			}
 			List<LivingEntity> list1 = new ArrayList<LivingEntity>();
-			this.goalOwner.world.getEntitiesWithinAABB(PVZPlantEntity.class, getAABB()).forEach((plant) -> {
-				if(! EntityUtil.checkCanEntityAttack(goalOwner, plant) && this.checkSenses(plant)) {
+			this.mob.level.getEntitiesOfClass(PVZPlantEntity.class, getAABB()).forEach((plant) -> {
+				if(! EntityUtil.checkCanEntityAttack(mob, plant) && this.checkSenses(plant)) {
 					if(plant.hasMetal()) {
 						list1.add(plant);
 					}
@@ -215,39 +215,39 @@ public class MagnetShroomEntity extends PVZPlantEntity {
 				return false;
 			}
 			Collections.sort(list1, this.sorter);
-			this.target = list1.get(0);
+			this.targetMob = list1.get(0);
 			return true;
 		}
 
 		@Override
-		public void startExecuting() {
-			this.goalOwner.setAttackTarget(this.target);
+		public void start() {
+			this.mob.setTarget(this.targetMob);
 		}
 
 		@Override
-		public boolean shouldContinueExecuting() {
-			LivingEntity entity = this.goalOwner.getAttackTarget();
+		public boolean canContinueToUse() {
+			LivingEntity entity = this.mob.getTarget();
 			if (entity == null) {
-				entity = this.target;
+				entity = this.targetMob;
 			}
 			if(entity == null || ! entity.isAlive()) {
 				return false;
 			}
-			if(! EntityUtil.checkCanEntityAttack(goalOwner, entity) && this.checkSenses(entity)) {
-				this.goalOwner.setAttackTarget(entity);
+			if(! EntityUtil.checkCanEntityAttack(mob, entity) && this.checkSenses(entity)) {
+				this.mob.setTarget(entity);
 				return true;
 			}
 			return false;
 		}
 
 		protected boolean checkSenses(Entity entity) {
-			return this.goalOwner.getEntitySenses().canSee(entity);
+			return this.mob.getSensing().canSee(entity);
 		}
 
 		private AxisAlignedBB getAABB() {
-			return new AxisAlignedBB(this.goalOwner.getPosX() + width, this.goalOwner.getPosY() + this.upperHeight,
-					this.goalOwner.getPosZ() + width, this.goalOwner.getPosX() - width,
-					this.goalOwner.getPosY() - this.lowerHeight, this.goalOwner.getPosZ() - width);
+			return new AxisAlignedBB(this.mob.getX() + width, this.mob.getY() + this.upperHeight,
+					this.mob.getZ() + width, this.mob.getX() - width,
+					this.mob.getY() - this.lowerHeight, this.mob.getZ() - width);
 		}
 
 	}

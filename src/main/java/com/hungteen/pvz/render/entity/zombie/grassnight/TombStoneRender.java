@@ -28,7 +28,7 @@ public class TombStoneRender extends UnderGroundZombieRender<TombStoneEntity>{
 	}
 
 	@Override
-	public ResourceLocation getEntityTexture(TombStoneEntity entity) {
+	public ResourceLocation getTextureLocation(TombStoneEntity entity) {
 		double hp = entity.getHealth();
 		double max = entity.getMaxHealth();
 		if(hp <= max / 3) return StringUtil.prefix("textures/entity/zombie/grassnight/tomb_stone3.png");

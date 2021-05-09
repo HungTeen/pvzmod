@@ -7,7 +7,7 @@ import com.hungteen.pvz.utils.StringUtil;
 
 import net.minecraft.client.renderer.entity.EntityRendererManager;
 import net.minecraft.util.ResourceLocation;
-import net.minecraft.util.math.Vec3d;
+import net.minecraft.util.math.vector.Vector3d;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 
@@ -24,13 +24,13 @@ public class ZombieHandRender extends PVZEntityRender<ZombieHandEntity>{
 	}
     
     @Override
-    public Vec3d getTranslateVec(ZombieHandEntity entity) {
+    public Vector3d getTranslateVec(ZombieHandEntity entity) {
     	int tick = entity.getTick();//1 - 40
-		return new Vec3d(0, 0.05f * tick, 0);
+		return new Vector3d(0, 0.05f * tick, 0);
     }
     
 	@Override
-	public ResourceLocation getEntityTexture(ZombieHandEntity entity) {
+	public ResourceLocation getTextureLocation(ZombieHandEntity entity) {
 		return StringUtil.prefix("textures/entity/zombie/misc/zombie_hand.png");
 	}
 

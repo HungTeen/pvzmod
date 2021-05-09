@@ -23,6 +23,7 @@ import net.minecraft.network.datasync.DataParameter;
 import net.minecraft.network.datasync.DataSerializers;
 import net.minecraft.network.datasync.EntityDataManager;
 import net.minecraft.tags.FluidTags;
+import net.minecraft.util.ActionResultType;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.Direction;
 import net.minecraft.util.EntityPredicates;
@@ -31,10 +32,10 @@ import net.minecraft.util.IndirectEntityDamageSource;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
-import net.minecraft.util.math.Vec3d;
 import net.minecraft.util.math.shapes.IBooleanFunction;
 import net.minecraft.util.math.shapes.VoxelShape;
 import net.minecraft.util.math.shapes.VoxelShapes;
+import net.minecraft.util.math.vector.Vector3d;
 import net.minecraft.world.GameRules;
 import net.minecraft.world.World;
 import net.minecraftforge.api.distmarker.Dist;
@@ -43,9 +44,9 @@ import net.minecraftforge.fml.network.NetworkHooks;
 
 public class BobsleCarEntity extends Entity {
 
-	private static final DataParameter<Integer> TIME_SINCE_HIT = EntityDataManager.createKey(BobsleCarEntity.class,
-			DataSerializers.VARINT);
-	private static final DataParameter<Float> DAMAGE_TAKEN = EntityDataManager.createKey(BobsleCarEntity.class,
+	private static final DataParameter<Integer> TIME_SINCE_HIT = EntityDataManager.defineId(BobsleCarEntity.class,
+			DataSerializers.INT);
+	private static final DataParameter<Float> DAMAGE_TAKEN = EntityDataManager.defineId(BobsleCarEntity.class,
 			DataSerializers.FLOAT);
 	private static final int MAX_PASSENGER_SIZE = 4;
 	private static final float SNOW_SMOOTH = 0.991f;
@@ -64,19 +65,19 @@ public class BobsleCarEntity extends Entity {
 
 	public BobsleCarEntity(EntityType<?> entityTypeIn, World worldIn) {
 		super(entityTypeIn, worldIn);
-		recalculateSize();
+		refreshDimensions();
 	}
 
-	protected void registerData() {
-		this.dataManager.register(TIME_SINCE_HIT, 0);
-		this.dataManager.register(DAMAGE_TAKEN, 0.0F);
+	protected void defineSynchedData() {
+		this.entityData.define(TIME_SINCE_HIT, 0);
+		this.entityData.define(DAMAGE_TAKEN, 0.0F);
 	}
 
 	public void tick() {
 		super.tick();
 		this.status = this.getCarStatus();
 		if (this.status == Status.IN_WATER) {
-			this.removePassengers();
+			this.ejectPassengers();
 			this.remove();
 		}
 //		if(this.ticksExisted%20==0) {
@@ -91,29 +92,29 @@ public class BobsleCarEntity extends Entity {
 		}
 
 		this.tickLerp();
-		if (this.canPassengerSteer()) {
+		if (this.isControlledByLocalInstance()) {
 			this.updateMotion();
-			if (this.world.isRemote) {
+			if (this.level.isClientSide) {
 				this.updateControls();
 			}
 
-			this.move(MoverType.SELF, this.getMotion());
+			this.move(MoverType.SELF, this.getDeltaMovement());
 		} else {
-			this.setMotion(Vec3d.ZERO);
+			this.setDeltaMovement(Vector3d.ZERO);
 		}
 
-		this.doBlockCollisions();
+		this.checkInsideBlocks();
 
-		if (!world.isRemote) {// check collide or passenger
-			for (Entity entity : this.world.getEntitiesInAABBexcluding(this,
-					this.getBoundingBox().grow((double) 0.2F, (double) -0.01F, (double) 0.2F),
+		if (!level.isClientSide) {// check collide or passenger
+			for (Entity entity : this.level.getEntities(this,
+					this.getBoundingBox().inflate((double) 0.2F, (double) -0.01F, (double) 0.2F),
 					EntityPredicates.pushableBy(this))) {
 				if (!entity.isPassenger()) {
 //					System.out.println("has entity");
 					if (checkCanRideOn(entity)) {
 						entity.startRiding(this);
 					} else {
-						this.applyEntityCollision(entity);
+						this.push(entity);
 					}
 				}
 			}
@@ -124,17 +125,22 @@ public class BobsleCarEntity extends Entity {
 //    	System.out.println(entity.getWidth()+" "+this.getWidth());
 		return !(this.getControllingPassenger() instanceof PlayerEntity)
 				&& this.getPassengers().size() < MAX_PASSENGER_SIZE && !entity.isPassenger()
-				&& entity.getWidth() < this.getWidth() && entity instanceof LivingEntity
+				&& entity.getBbWidth() < this.getBbWidth() && entity instanceof LivingEntity
 				&& !(entity instanceof WaterMobEntity) && !(entity instanceof PlayerEntity);
 	}
 
 	@Override
-	public boolean processInitialInteract(PlayerEntity player, Hand hand) {
+	public ActionResultType interactAt(PlayerEntity player, Vector3d vec3d, Hand hand) {
 //		System.out.println("click!");
 		if (player.isSecondaryUseActive()) {
-			return false;
+			return ActionResultType.FAIL;
 		}
-		return !this.world.isRemote ? player.startRiding(this) : false;
+		if(! this.level.isClientSide) {
+			player.startRiding(this);
+			return ActionResultType.SUCCESS;
+		} else {
+			return ActionResultType.FAIL;
+		}
 	}
 
 	@OnlyIn(Dist.CLIENT)
@@ -146,10 +152,10 @@ public class BobsleCarEntity extends Entity {
 //			boolean right = mc.gameSettings.keyBindRight.isPressed();
 //			boolean forward = mc.gameSettings.keyBindForward.isPressed();
 //			boolean back = mc.gameSettings.keyBindBack.isPressed();
-			boolean left = mc.gameSettings.keyBindLeft.isKeyDown();
-			boolean right = mc.gameSettings.keyBindRight.isKeyDown();
-			boolean forward = mc.gameSettings.keyBindForward.isKeyDown();
-			boolean back = mc.gameSettings.keyBindBack.isKeyDown();
+			boolean left = mc.options.keyLeft.isDown();
+			boolean right = mc.options.keyRight.isDown();
+			boolean forward = mc.options.keyUp.isDown();
+			boolean back = mc.options.keyDown.isDown();
 			if (left) {
 				this.deltaRotation -= MAX_ROTATION;
 			}
@@ -159,7 +165,7 @@ public class BobsleCarEntity extends Entity {
 			if (!right && !left) {
 				this.deltaRotation = 0;
 			}
-			this.rotationYaw += this.deltaRotation;
+			this.yRot += this.deltaRotation;
 			if (right != left && !forward && !back) {
 				f += MAX_MOVE_SPEED / 10f;
 			}
@@ -169,15 +175,15 @@ public class BobsleCarEntity extends Entity {
 			if (back) {
 				f -= MAX_MOVE_SPEED / 3;
 			}
-			this.setMotion(
-					this.getMotion().add((double) (MathHelper.sin(-this.rotationYaw * ((float) Math.PI / 180F)) * f),
-							0.0D, (double) (MathHelper.cos(this.rotationYaw * ((float) Math.PI / 180F)) * f)));
+			this.setDeltaMovement(
+					this.getDeltaMovement().add((double) (MathHelper.sin(-this.yRot * ((float) Math.PI / 180F)) * f),
+							0.0D, (double) (MathHelper.cos(this.yRot * ((float) Math.PI / 180F)) * f)));
 		}
 	}
 
 	@OnlyIn(Dist.CLIENT)
 	private boolean isRidingPlayer(PlayerEntity player) {
-		return player.getRidingEntity() != null && player.getRidingEntity() == this;
+		return player.getVehicle() != null && player.getVehicle() == this;
 	}
 
 //	public void applyEntityCollision(Entity entityIn) {
@@ -191,7 +197,7 @@ public class BobsleCarEntity extends Entity {
 //	}
 
 	@SuppressWarnings("deprecation")
-	public boolean canBeCollidedWith() {
+	public boolean isPickable() {
 		return !this.removed;
 	}
 
@@ -201,12 +207,12 @@ public class BobsleCarEntity extends Entity {
 	}
 
 	@Override
-	public boolean canBePushed() {
+	public boolean isPushable() {
 		return true;
 	}
 
 	@Override
-	protected boolean canFitPassenger(Entity passenger) {
+	protected boolean canAddPassenger(Entity passenger) {
 		return this.getPassengers().size() < MAX_PASSENGER_SIZE;
 	}
 
@@ -216,45 +222,45 @@ public class BobsleCarEntity extends Entity {
 	}
 
 	@Override
-	public boolean canBeRiddenInWater() {
+	public boolean rideableUnderWater() {
 		return false;
 	}
 
 	@Nullable
-	public AxisAlignedBB getCollisionBox(Entity entityIn) {
+	public AxisAlignedBB func_70114_g(Entity entityIn) {
 		return entityIn.getBoundingBox();
 	}
 
 	@Nullable
-	public AxisAlignedBB getCollisionBoundingBox() {
+	public AxisAlignedBB func_70046_E() {
 		return this.getBoundingBox();
 	}
 
-	protected boolean canTriggerWalking() {
+	protected boolean isMovementNoisy() {
 		return false;
 	}
 
-	public double getMountedYOffset() {
+	public double getPassengersRidingOffset() {
 		return 0.2D;
 	}
 
 	@SuppressWarnings("deprecation")
-	public boolean attackEntityFrom(DamageSource source, float amount) {
+	public boolean hurt(DamageSource source, float amount) {
 		if (this.isInvulnerableTo(source)) {
 			return false;
-		} else if (!this.world.isRemote && !this.removed) {
-			if (source instanceof IndirectEntityDamageSource && source.getTrueSource() != null
-					&& this.isPassenger(source.getTrueSource())) {
+		} else if (!this.level.isClientSide && !this.removed) {
+			if (source instanceof IndirectEntityDamageSource && source.getEntity() != null
+					&& this.hasPassenger(source.getEntity())) {
 				return false;
 			} else {
 				this.setTimeSinceHit(10);
 				this.setDamageTaken(this.getDamageTaken() + amount * 10.0F);
-				this.markVelocityChanged();
-				boolean flag = source.getTrueSource() instanceof PlayerEntity
-						&& ((PlayerEntity) source.getTrueSource()).abilities.isCreativeMode;
+				this.markHurt();
+				boolean flag = source.getEntity() instanceof PlayerEntity
+						&& ((PlayerEntity) source.getEntity()).abilities.instabuild;
 				if (flag || this.getDamageTaken() > 40.0F) {
-					if (!flag && this.world.getGameRules().getBoolean(GameRules.DO_ENTITY_DROPS)) {
-						this.entityDropItem(ItemRegister.BOBSLE_CAR.get());
+					if (!flag && this.level.getGameRules().getBoolean(GameRules.RULE_DOENTITYDROPS)) {
+						this.spawnAtLocation(ItemRegister.BOBSLE_CAR.get());
 					}
 
 					this.remove();
@@ -272,7 +278,7 @@ public class BobsleCarEntity extends Entity {
 	 * multiplayer.
 	 */
 	@OnlyIn(Dist.CLIENT)
-	public void performHurtAnimation() {
+	public void animateHurt() {
 		this.setTimeSinceHit(10);
 		this.setDamageTaken(this.getDamageTaken() * 11.0F);
 	}
@@ -281,7 +287,7 @@ public class BobsleCarEntity extends Entity {
 	 * Sets a target for the client to interpolate towards over the next few ticks
 	 */
 	@OnlyIn(Dist.CLIENT)
-	public void setPositionAndRotationDirect(double x, double y, double z, float yaw, float pitch,
+	public void lerpTo(double x, double y, double z, float yaw, float pitch,
 			int posRotationIncrements, boolean teleport) {
 		this.lerpX = x;
 		this.lerpY = y;
@@ -295,27 +301,27 @@ public class BobsleCarEntity extends Entity {
 	 * Gets the horizontal facing direction of this Entity, adjusted to take
 	 * specially-treated entity types into account.
 	 */
-	public Direction getAdjustedHorizontalFacing() {
-		return this.getHorizontalFacing().rotateY();
+	public Direction getMotionDirection() {
+		return this.getDirection().getClockWise();
 	}
 
 	private void tickLerp() {
-		if (this.canPassengerSteer()) {
+		if (this.isControlledByLocalInstance()) {
 			this.lerpSteps = 0;
-			this.setPacketCoordinates(this.getPosX(), this.getPosY(), this.getPosZ());
+			this.setPacketCoordinates(this.getX(), this.getY(), this.getZ());
 		}
 
 		if (this.lerpSteps > 0) {
-			double d0 = this.getPosX() + (this.lerpX - this.getPosX()) / (double) this.lerpSteps;
-			double d1 = this.getPosY() + (this.lerpY - this.getPosY()) / (double) this.lerpSteps;
-			double d2 = this.getPosZ() + (this.lerpZ - this.getPosZ()) / (double) this.lerpSteps;
-			double d3 = MathHelper.wrapDegrees(this.lerpYaw - (double) this.rotationYaw);
-			this.rotationYaw = (float) ((double) this.rotationYaw + d3 / (double) this.lerpSteps);
-			this.rotationPitch = (float) ((double) this.rotationPitch
-					+ (this.lerpPitch - (double) this.rotationPitch) / (double) this.lerpSteps);
+			double d0 = this.getX() + (this.lerpX - this.getX()) / (double) this.lerpSteps;
+			double d1 = this.getY() + (this.lerpY - this.getY()) / (double) this.lerpSteps;
+			double d2 = this.getZ() + (this.lerpZ - this.getZ()) / (double) this.lerpSteps;
+			double d3 = MathHelper.wrapDegrees(this.lerpYaw - (double) this.yRot);
+			this.yRot = (float) ((double) this.yRot + d3 / (double) this.lerpSteps);
+			this.xRot = (float) ((double) this.xRot
+					+ (this.lerpPitch - (double) this.xRot) / (double) this.lerpSteps);
 			--this.lerpSteps;
-			this.setPosition(d0, d1, d2);
-			this.setRotation(this.rotationYaw, this.rotationPitch);
+			this.setPos(d0, d1, d2);
+			this.setRot(this.yRot, this.xRot);
 		}
 	}
 
@@ -342,8 +348,8 @@ public class BobsleCarEntity extends Entity {
 	 * slippery blocks)
 	 */
 	public float getCarGlide() {
-		if (this.world.getBlockState(new BlockPos(this)).getBlock() == Blocks.SNOW
-				|| this.world.getBlockState(new BlockPos(this).down()).getBlock() == Blocks.SNOW_BLOCK) {
+		if (this.level.getBlockState(this.blockPosition()).getBlock() == Blocks.SNOW
+				|| this.level.getBlockState(this.blockPosition().below()).getBlock() == Blocks.SNOW_BLOCK) {
 			return SNOW_SMOOTH;
 		}
 		AxisAlignedBB axisalignedbb = this.getBoundingBox();
@@ -358,29 +364,25 @@ public class BobsleCarEntity extends Entity {
 		VoxelShape voxelshape = VoxelShapes.create(axisalignedbb1);
 		float f = 0.0F;
 		int k1 = 0;
+		BlockPos.Mutable blockpos$mutable = new BlockPos.Mutable();
 
-		try (BlockPos.PooledMutable blockpos$pooledmutable = BlockPos.PooledMutable.retain()) {
-			for (int l1 = i; l1 < j; ++l1) {
-				for (int i2 = i1; i2 < j1; ++i2) {
-					int j2 = (l1 != i && l1 != j - 1 ? 0 : 1) + (i2 != i1 && i2 != j1 - 1 ? 0 : 1);
-					if (j2 != 2) {
-						for (int k2 = k; k2 < l; ++k2) {
-							if (j2 <= 0 || k2 != k && k2 != l - 1) {
-								blockpos$pooledmutable.setPos(l1, k2, i2);
-								BlockState blockstate = this.world.getBlockState(blockpos$pooledmutable);
-								if (!(blockstate.getBlock() instanceof LilyPadBlock) && VoxelShapes.compare(
-										blockstate.getCollisionShape(this.world, blockpos$pooledmutable)
-												.withOffset((double) l1, (double) k2, (double) i2),
-										voxelshape, IBooleanFunction.AND)) {
-									f += blockstate.getSlipperiness(this.world, blockpos$pooledmutable, this);
-									++k1;
-								}
-							}
-						}
-					}
-				}
-			}
-		}
+	      for(int l1 = i; l1 < j; ++l1) {
+	         for(int i2 = i1; i2 < j1; ++i2) {
+	            int j2 = (l1 != i && l1 != j - 1 ? 0 : 1) + (i2 != i1 && i2 != j1 - 1 ? 0 : 1);
+	            if (j2 != 2) {
+	               for(int k2 = k; k2 < l; ++k2) {
+	                  if (j2 <= 0 || k2 != k && k2 != l - 1) {
+	                     blockpos$mutable.set(l1, k2, i2);
+	                     BlockState blockstate = this.level.getBlockState(blockpos$mutable);
+	                     if (!(blockstate.getBlock() instanceof LilyPadBlock) && VoxelShapes.joinIsNotEmpty(blockstate.getCollisionShape(this.level, blockpos$mutable).move((double)l1, (double)k2, (double)i2), voxelshape, IBooleanFunction.AND)) {
+	                        f += blockstate.getSlipperiness(this.level, blockpos$mutable, this);
+	                        ++k1;
+	                     }
+	                  }
+	               }
+	            }
+	         }
+	      }
 
 		return f / (float) k1;
 	}
@@ -405,16 +407,16 @@ public class BobsleCarEntity extends Entity {
 			}
 		}
 
-		Vec3d vec3d = this.getMotion();
-		this.setMotion(vec3d.x * (double) this.momentum, vec3d.y + d1, vec3d.z * (double) this.momentum);
+		Vector3d vec3d = this.getDeltaMovement();
+		this.setDeltaMovement(vec3d.x * (double) this.momentum, vec3d.y + d1, vec3d.z * (double) this.momentum);
 		this.deltaRotation *= this.momentum;
 	}
 
 	@SuppressWarnings("deprecation")
-	public void updatePassenger(Entity passenger) {
-		if (this.isPassenger(passenger)) {
+	public void positionRider(Entity passenger) {
+		if (this.hasPassenger(passenger)) {
 			float f = 0.0F;
-			float f1 = (float) ((this.removed ? (double) 0.01F : this.getMountedYOffset()) + passenger.getYOffset());
+			float f1 = (float) ((this.removed ? (double) 0.01F : this.getPassengersRidingOffset()) + passenger.getMyRidingOffset());
 			if (this.getPassengers().size() > 1) {
 				int i = this.getPassengers().indexOf(passenger);
 				f = 0.2F - 0.7f * i;
@@ -423,16 +425,16 @@ public class BobsleCarEntity extends Entity {
 				}
 			}
 
-			Vec3d vec3d = (new Vec3d((double) f, 0.0D, 0.0D))
-					.rotateYaw(-this.rotationYaw * ((float) Math.PI / 180F) - ((float) Math.PI / 2F));
-			passenger.setPosition(this.getPosX() + vec3d.x, this.getPosY() + (double) f1, this.getPosZ() + vec3d.z);
-			passenger.rotationYaw += this.deltaRotation;
-			passenger.setRotationYawHead(passenger.getRotationYawHead() + this.deltaRotation);
+			Vector3d vec3d = (new Vector3d((double) f, 0.0D, 0.0D))
+					.yRot(-this.yRot * ((float) Math.PI / 180F) - ((float) Math.PI / 2F));
+			passenger.setPos(this.getX() + vec3d.x, this.getY() + (double) f1, this.getZ() + vec3d.z);
+			passenger.yRot += this.deltaRotation;
+			passenger.setYHeadRot(passenger.getYHeadRot() + this.deltaRotation);
 			this.applyYawToEntity(passenger);
 			if (passenger instanceof AnimalEntity && this.getPassengers().size() > 1) {
-				int j = passenger.getEntityId() % 2 == 0 ? 90 : 270;
-				passenger.setRenderYawOffset(((AnimalEntity) passenger).renderYawOffset + (float) j);
-				passenger.setRotationYawHead(passenger.getRotationYawHead() + (float) j);
+				int j = passenger.getId() % 2 == 0 ? 90 : 270;
+				passenger.setYBodyRot(((AnimalEntity) passenger).yBodyRot + (float) j);
+				passenger.setYHeadRot(passenger.getYHeadRot() + (float) j);
 			}
 
 		}
@@ -443,12 +445,12 @@ public class BobsleCarEntity extends Entity {
 	 * of its passenger.
 	 */
 	protected void applyYawToEntity(Entity entityToUpdate) {
-		entityToUpdate.setRenderYawOffset(this.rotationYaw);
-		float f = MathHelper.wrapDegrees(entityToUpdate.rotationYaw - this.rotationYaw);
+		entityToUpdate.setYBodyRot(this.yRot);
+		float f = MathHelper.wrapDegrees(entityToUpdate.yRot - this.yRot);
 		float f1 = MathHelper.clamp(f, -105.0F, 105.0F);
-		entityToUpdate.prevRotationYaw += f1 - f;
-		entityToUpdate.rotationYaw += f1 - f;
-		entityToUpdate.setRotationYawHead(entityToUpdate.rotationYaw);
+		entityToUpdate.yRotO += f1 - f;
+		entityToUpdate.yRot += f1 - f;
+		entityToUpdate.setYHeadRot(entityToUpdate.yRot);
 	}
 
 	/**
@@ -456,21 +458,21 @@ public class BobsleCarEntity extends Entity {
 	 * update passenger orientation.
 	 */
 	@OnlyIn(Dist.CLIENT)
-	public void applyOrientationToEntity(Entity entityToUpdate) {
+	public void onPassengerTurned(Entity entityToUpdate) {
 		this.applyYawToEntity(entityToUpdate);
 	}
 
-	protected void writeAdditional(CompoundNBT compound) {
+	protected void addAdditionalSaveData(CompoundNBT compound) {
 	}
 
 	/**
 	 * (abstract) Protected helper method to read subclass entity data from NBT.
 	 */
-	protected void readAdditional(CompoundNBT compound) {
+	protected void readAdditionalSaveData(CompoundNBT compound) {
 	}
 
 	@SuppressWarnings("deprecation")
-	protected void updateFallState(double y, boolean onGroundIn, BlockState state, BlockPos pos) {
+	protected void checkFallDamage(double y, boolean onGroundIn, BlockState state, BlockPos pos) {
 		if (!this.isPassenger()) {
 			if (onGroundIn) {
 				if (this.fallDistance > 3.0F) {
@@ -479,16 +481,16 @@ public class BobsleCarEntity extends Entity {
 						return;
 					}
 
-					this.onLivingFall(this.fallDistance, 1.0F);
-					if (!this.world.isRemote && !this.removed) {
+					this.causeFallDamage(this.fallDistance, 1.0F);
+					if (!this.level.isClientSide && !this.removed) {
 						this.remove();
-						if (this.world.getGameRules().getBoolean(GameRules.DO_ENTITY_DROPS)) {
-							this.entityDropItem(ItemRegister.BOBSLE_CAR.get());
+						if (this.level.getGameRules().getBoolean(GameRules.RULE_DOENTITYDROPS)) {
+							this.spawnAtLocation(ItemRegister.BOBSLE_CAR.get());
 						}
 					}
 				}
 				this.fallDistance = 0.0F;
-			} else if (!this.world.getFluidState((new BlockPos(this)).down()).isTagged(FluidTags.WATER) && y < 0.0D) {
+			} else if (!this.level.getFluidState(this.blockPosition().below()).is(FluidTags.WATER) && y < 0.0D) {
 				this.fallDistance = (float) ((double) this.fallDistance - y);
 			}
 
@@ -499,47 +501,47 @@ public class BobsleCarEntity extends Entity {
 	 * Sets the damage taken from the last hit.
 	 */
 	public void setDamageTaken(float damageTaken) {
-		this.dataManager.set(DAMAGE_TAKEN, damageTaken);
+		this.entityData.set(DAMAGE_TAKEN, damageTaken);
 	}
 
 	/**
 	 * Gets the damage taken from the last hit.
 	 */
 	public float getDamageTaken() {
-		return this.dataManager.get(DAMAGE_TAKEN);
+		return this.entityData.get(DAMAGE_TAKEN);
 	}
 
 	/**
 	 * Sets the time to count down from since the last time entity was hit.
 	 */
 	public void setTimeSinceHit(int timeSinceHit) {
-		this.dataManager.set(TIME_SINCE_HIT, timeSinceHit);
+		this.entityData.set(TIME_SINCE_HIT, timeSinceHit);
 	}
 
 	/**
 	 * Gets the time since the last hit.
 	 */
 	public int getTimeSinceHit() {
-		return this.dataManager.get(TIME_SINCE_HIT);
+		return this.entityData.get(TIME_SINCE_HIT);
 	}
 
 	// Forge: Fix MC-119811 by instantly completing lerp on board
 	@Override
 	protected void addPassenger(Entity passenger) {
 		super.addPassenger(passenger);
-		if (this.canPassengerSteer() && this.lerpSteps > 0) {
+		if (this.isControlledByLocalInstance() && this.lerpSteps > 0) {
 			this.lerpSteps = 0;
-			this.setPositionAndRotation(this.lerpX, this.lerpY, this.lerpZ, (float) this.lerpYaw,
+			this.absMoveTo(this.lerpX, this.lerpY, this.lerpZ, (float) this.lerpYaw,
 					(float) this.lerpPitch);
 		}
 	}
 
 	@Override
-	public EntitySize getSize(Pose poseIn) {
-		return EntitySize.flexible(1.25f, 1.4f);
+	public EntitySize getDimensions(Pose poseIn) {
+		return EntitySize.scalable(1.25f, 1.4f);
 	}
 
-	public IPacket<?> createSpawnPacket() {
+	public IPacket<?> getAddEntityPacket() {
 		return NetworkHooks.getEntitySpawningPacket(this);
 	}
 

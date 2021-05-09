@@ -31,7 +31,7 @@ public class CabbagePultEntity extends PlantPultEntity {
 
 	@Override
 	public void pultBullet() {
-		LivingEntity target = this.getAttackTarget();
+		LivingEntity target = this.getTarget();
 		this.pultCabbage(target);
 	}
 	
@@ -44,11 +44,11 @@ public class CabbagePultEntity extends PlantPultEntity {
 	
 	private Optional<CabbageEntity> pultCabbage(LivingEntity target){
 		if(target == null) return Optional.empty();
-		CabbageEntity cabbage = new CabbageEntity(world, this);
-        cabbage.setPosition(this.getPosX(), this.getPosY() + 1.7f, this.getPosZ());
+		CabbageEntity cabbage = new CabbageEntity(level, this);
+        cabbage.setPos(this.getX(), this.getY() + 1.7f, this.getZ());
         cabbage.shootPultBullet(target);
         EntityUtil.playSound(this, SoundRegister.PLANT_THROW.get());
-        this.world.addEntity(cabbage);
+        this.level.addFreshEntity(cabbage);
         return Optional.of(cabbage);
 	}
 	
@@ -59,8 +59,8 @@ public class CabbagePultEntity extends PlantPultEntity {
 	}
 	
 	@Override
-	public EntitySize getSize(Pose poseIn) {
-		return EntitySize.flexible(0.8F, 1F);
+	public EntitySize getDimensions(Pose poseIn) {
+		return EntitySize.scalable(0.8F, 1F);
 	}
 	
 	@Override

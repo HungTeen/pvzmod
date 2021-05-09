@@ -14,6 +14,7 @@ import net.minecraft.entity.EntityType;
 import net.minecraft.entity.ai.goal.Goal;
 import net.minecraft.entity.passive.AnimalEntity;
 import net.minecraft.world.World;
+import net.minecraft.world.server.ServerWorld;
 
 public class SnailEntity extends AnimalEntity {
 
@@ -28,12 +29,12 @@ public class SnailEntity extends AnimalEntity {
 		super.registerGoals();
 		this.goalSelector.addGoal(3, new SnailNearestTargetGoal(this, 15));
 	}
-
+	
 	@Override
-	public AgeableEntity createChild(AgeableEntity ageable) {
+	public AgeableEntity getBreedOffspring(ServerWorld p_241840_1_, AgeableEntity p_241840_2_) {
 		return null;
 	}
-	
+
 	public final class SnailNearestTargetGoal extends Goal {
 
 		private final SnailEntity owner;
@@ -45,14 +46,14 @@ public class SnailEntity extends AnimalEntity {
 		public SnailNearestTargetGoal(SnailEntity snail, float range) {
 			this.owner = snail;
 			this.range = range;
-			this.world = this.owner.world; 
+			this.world = this.owner.level; 
 			this.sorter = new AlgorithmUtil.EntitySorter(this.owner);
 		}
 		
 		@Override
-		public boolean shouldExecute() {
-			if(this.owner.getRNG().nextInt(this.targetChance) != 0) return false;
-			List<Entity> list = this.world.getEntitiesWithinAABB(Entity.class, EntityUtil.getEntityAABB(this.owner, this.range, this.range), (entity) -> {
+		public boolean canUse() {
+			if(this.owner.getRandom().nextInt(this.targetChance) != 0) return false;
+			List<Entity> list = this.world.getEntitiesOfClass(Entity.class, EntityUtil.getEntityAABB(this.owner, this.range, this.range), (entity) -> {
 				return true;
 			});
 			if(list.isEmpty()) return false;

@@ -8,7 +8,7 @@ import com.hungteen.pvz.utils.ZombieUtil;
 import com.hungteen.pvz.utils.enums.Zombies;
 
 import net.minecraft.entity.EntityType;
-import net.minecraft.entity.SharedMonsterAttributes;
+import net.minecraft.entity.ai.attributes.Attributes;
 import net.minecraft.entity.monster.MonsterEntity;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.network.datasync.DataParameter;
@@ -19,21 +19,21 @@ import net.minecraft.world.World;
 
 public class NewspaperZombieEntity extends DefenceZombieEntity {
 
-	private static final DataParameter<Boolean> IS_ANGRY = EntityDataManager.createKey(NewspaperZombieEntity.class, DataSerializers.BOOLEAN);
+	private static final DataParameter<Boolean> IS_ANGRY = EntityDataManager.defineId(NewspaperZombieEntity.class, DataSerializers.BOOLEAN);
 	
 	public NewspaperZombieEntity(EntityType<? extends MonsterEntity> type, World worldIn) {
 		super(type, worldIn);
 	}
 	
 	@Override
-	protected void registerData() {
-		super.registerData();
-		this.dataManager.register(IS_ANGRY, false);
+	protected void defineSynchedData() {
+		super.defineSynchedData();
+		this.entityData.define(IS_ANGRY, false);
 	}
 	
 	@Override
-	protected void registerAttributes() {
-		super.registerAttributes();
+	protected void updateAttributes() {
+		super.updateAttributes();
 		this.updateAngry(false);
 	}
 	
@@ -53,7 +53,7 @@ public class NewspaperZombieEntity extends DefenceZombieEntity {
 	@Override
 	public void tick() {
 		super.tick();
-		if(!world.isRemote) {
+		if(!level.isClientSide) {
 			if(this.canPartsBeRemoved() && !this.isAngry()) {
 				EntityUtil.playSound(this, SoundRegister.ANGRY.get());
 				this.updateAngry(true);
@@ -63,8 +63,8 @@ public class NewspaperZombieEntity extends DefenceZombieEntity {
 	
 	protected void updateAngry(boolean is) {
 		this.setAngry(is);
-		this.getAttribute(SharedMonsterAttributes.MOVEMENT_SPEED).setBaseValue(is ? ZombieUtil.LITTLE_FAST : ZombieUtil.LITTLE_SLOW);
-		this.getAttribute(SharedMonsterAttributes.ATTACK_DAMAGE).setBaseValue(is ? ZombieUtil.LOW : ZombieUtil.LITTLE_LOW);
+		this.getAttribute(Attributes.MOVEMENT_SPEED).setBaseValue(is ? ZombieUtil.LITTLE_FAST : ZombieUtil.LITTLE_SLOW);
+		this.getAttribute(Attributes.ATTACK_DAMAGE).setBaseValue(is ? ZombieUtil.LOW : ZombieUtil.LITTLE_LOW);
 	}
 	
 	@Override
@@ -83,25 +83,25 @@ public class NewspaperZombieEntity extends DefenceZombieEntity {
 	}
 	
 	@Override
-	public void readAdditional(CompoundNBT compound) {
-		super.readAdditional(compound);
+	public void readAdditionalSaveData(CompoundNBT compound) {
+		super.readAdditionalSaveData(compound);
 		if(compound.contains("is_zombie_angry")) {
 			this.setAngry(compound.getBoolean("is_zombie_angry"));
 		}
 	}
 	
 	@Override
-	public void writeAdditional(CompoundNBT compound) {
-		super.writeAdditional(compound);
+	public void addAdditionalSaveData(CompoundNBT compound) {
+		super.addAdditionalSaveData(compound);
 		compound.putBoolean("is_zombie_angry", this.isAngry());
 	}
 	
 	public void setAngry(boolean is) {
-		this.dataManager.set(IS_ANGRY, is);
+		this.entityData.set(IS_ANGRY, is);
 	}
 	
 	public boolean isAngry() {
-		return this.dataManager.get(IS_ANGRY);
+		return this.entityData.get(IS_ANGRY);
 	}
 	
 	@Override

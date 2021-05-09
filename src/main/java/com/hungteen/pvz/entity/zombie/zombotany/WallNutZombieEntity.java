@@ -20,7 +20,7 @@ public class WallNutZombieEntity extends AbstractZombotanyEntity {
 	}
 	
 	@Override
-	protected ResourceLocation getLootTable() {
+	protected ResourceLocation getDefaultLootTable() {
 		return PVZLoot.WALLNUT_ZOMBIE;
 	}
 

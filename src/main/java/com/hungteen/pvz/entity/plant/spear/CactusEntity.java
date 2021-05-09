@@ -26,8 +26,8 @@ import net.minecraft.world.World;
 
 public class CactusEntity extends PlantShooterEntity {
 
-	private static final DataParameter<Float> CACTUS_HEIGHT = EntityDataManager.createKey(CactusEntity.class, DataSerializers.FLOAT);
-	private static final DataParameter<Boolean> POWERED = EntityDataManager.createKey(CactusEntity.class, DataSerializers.BOOLEAN);
+	private static final DataParameter<Float> CACTUS_HEIGHT = EntityDataManager.defineId(CactusEntity.class, DataSerializers.FLOAT);
+	private static final DataParameter<Boolean> POWERED = EntityDataManager.defineId(CactusEntity.class, DataSerializers.BOOLEAN);
 	public static final float MAX_SEGMENT_NUM = 4;
 	public static final float SEGMENT_HEIGHT = 0.54F;
 	private static final float MIN_SHOOT_HEIGHT = 1.25F;
@@ -40,10 +40,10 @@ public class CactusEntity extends PlantShooterEntity {
 	}
 
 	@Override
-	protected void registerData() {
-		super.registerData();
-		this.dataManager.register(CACTUS_HEIGHT, 0f);
-		this.dataManager.register(POWERED, false);
+	protected void defineSynchedData() {
+		super.defineSynchedData();
+		this.entityData.define(CACTUS_HEIGHT, 0f);
+		this.entityData.define(POWERED, false);
 	}
 	
 	@Override
@@ -55,13 +55,13 @@ public class CactusEntity extends PlantShooterEntity {
 	@Override
 	public void normalPlantTick() {
 		super.normalPlantTick();
-		this.recalculateSize();
-		if(! world.isRemote) {
-			LivingEntity target = this.getAttackTarget();
+		this.refreshDimensions();
+		if(! level.isClientSide) {
+			LivingEntity target = this.getTarget();
 			if(target != null) {
 				if(! this.isSuitableHeight(target)) {
 					final float dh = SEGMENT_HEIGHT;
-				    if(this.getPosY() < target.getPosY()) {
+				    if(this.getY() < target.getY()) {
 					    this.setCactusHeight(Math.min(this.getCactusHeight() + dh, SEGMENT_HEIGHT * MAX_SEGMENT_NUM));
 				    } else {
 				    	this.setCactusHeight(Math.max(this.getCactusHeight() - dh, 0));
@@ -74,16 +74,16 @@ public class CactusEntity extends PlantShooterEntity {
 	}
 	
 	@Override
-	public boolean attackEntityFrom(DamageSource source, float amount) {
+	public boolean hurt(DamageSource source, float amount) {
 		this.dealThornBackDamage(source);
-		return super.attackEntityFrom(source, amount);
+		return super.hurt(source, amount);
 	}
 	
 	private void dealThornBackDamage(DamageSource source) {
-		if(EntityUtil.checkCanEntityAttack(this, source.getImmediateSource())) {
+		if(EntityUtil.checkCanEntityAttack(this, source.getDirectEntity())) {
 			float damage = this.getThornDamage();
 			if(this.isCactusPowered()) damage *= 2;
-			source.getImmediateSource().attackEntityFrom(PVZDamageSource.causeThornDamage(this, this), damage);
+			source.getDirectEntity().hurt(PVZDamageSource.causeThornDamage(this, this), damage);
 		}
 	}
 	
@@ -106,10 +106,10 @@ public class CactusEntity extends PlantShooterEntity {
 	}
 	
 	private boolean isSuitableHeight(Entity target) {
-		double dx = target.getPosX() - this.getPosX();
-		double ly = target.getPosY() - this.getPosY() - this.getShootHeight();
-		double ry = ly + target.getHeight();
-		double dz = target.getPosZ() - this.getPosZ();
+		double dx = target.getX() - this.getX();
+		double ly = target.getY() - this.getY() - this.getShootHeight();
+		double ry = ly + target.getBbHeight();
+		double dz = target.getZ() - this.getZ();
 		double dis = Math.sqrt(dx * dx + dz * dz);
 		double y = dis / getMaxShootAngle();
 		return ly <= y && ry >= - y;
@@ -123,11 +123,11 @@ public class CactusEntity extends PlantShooterEntity {
 	
 	@Override
 	public boolean checkY(Entity target) {
-		double dx = target.getPosX() - this.getPosX();
-		double dz = target.getPosZ() - this.getPosZ();
+		double dx = target.getX() - this.getX();
+		double dz = target.getZ() - this.getZ();
 		double dis = Math.sqrt(dx * dx + dz * dz);
 		double y = dis / getMaxShootAngle();
-		return this.getPosY() + MAX_SHOOT_HEIGHT + y >= target.getPosY() &&  this.getPosY() + MIN_SHOOT_HEIGHT - y <= target.getPosY() + target.getHeight();
+		return this.getY() + MAX_SHOOT_HEIGHT + y >= target.getY() &&  this.getY() + MIN_SHOOT_HEIGHT - y <= target.getY() + target.getBbHeight();
 	}
 	
 	@Override
@@ -136,8 +136,8 @@ public class CactusEntity extends PlantShooterEntity {
 	}
 	
 	@Override
-	public EntitySize getSize(Pose poseIn) {
-		return EntitySize.flexible(0.8F, 2.0F + this.getCactusHeight());
+	public EntitySize getDimensions(Pose poseIn) {
+		return EntitySize.scalable(0.8F, 2.0F + this.getCactusHeight());
 	}
 	
 	@Override
@@ -153,22 +153,22 @@ public class CactusEntity extends PlantShooterEntity {
 	
 	@Override
 	public void shootBullet() {
-		LivingEntity target = this.getAttackTarget();
+		LivingEntity target = this.getTarget();
 		if(target == null) return ;
-		double dx = target.getPosX() - this.getPosX();
-        double dz = target.getPosZ() - this.getPosZ();
-        double y = this.getPosY() + this.getShootHeight();
+		double dx = target.getX() - this.getX();
+        double dz = target.getZ() - this.getZ();
+        double y = this.getY() + this.getShootHeight();
         double dis =MathHelper.sqrt(dx * dx + dz * dz);
         double tmp = this.LENTH / dis;
         double deltaX = tmp * dx;
         double deltaZ = tmp * dz;
-		ThornEntity thorn = new ThornEntity(world, this);
+		ThornEntity thorn = new ThornEntity(level, this);
 		thorn.setThornType(ThornTypes.NORMAL);
 		thorn.setThornState(this.isCactusPowered() ? ThornStates.POWER : ThornStates.NORMAL);
 		thorn.setExtraHitCount(this.isCactusPowered() ? this.getThornCount() : 1);
-		thorn.setPosition(this.getPosX() + deltaX, y, this.getPosZ() + deltaZ);
-        thorn.shootPea(dx, target.getPosY() + target.getEyeHeight() - y, dz, this.getBulletSpeed());
-		this.world.addEntity(thorn);
+		thorn.setPos(this.getX() + deltaX, y, this.getZ() + deltaZ);
+        thorn.shootPea(dx, target.getY() + target.getEyeHeight() - y, dz, this.getBulletSpeed());
+		this.level.addFreshEntity(thorn);
 	}
 	
 	@Override
@@ -192,8 +192,8 @@ public class CactusEntity extends PlantShooterEntity {
 	}
 	
 	@Override
-	public void readAdditional(CompoundNBT compound) {
-		super.readAdditional(compound);
+	public void readAdditionalSaveData(CompoundNBT compound) {
+		super.readAdditionalSaveData(compound);
 		if(compound.contains("cactus_powered")) {
 			this.setCactusPowered(compound.getBoolean("cactus_powered"));
 		}
@@ -203,26 +203,26 @@ public class CactusEntity extends PlantShooterEntity {
 	}
 	
 	@Override
-	public void writeAdditional(CompoundNBT compound) {
-		super.writeAdditional(compound);
+	public void addAdditionalSaveData(CompoundNBT compound) {
+		super.addAdditionalSaveData(compound);
 		compound.putBoolean("cactus_powered", this.isCactusPowered());
 		compound.putFloat("cactus_height", this.getCactusHeight());
 	}
 	
 	public float getCactusHeight() {
-		return this.dataManager.get(CACTUS_HEIGHT);
+		return this.entityData.get(CACTUS_HEIGHT);
 	}
 	
 	public void setCactusHeight(float h) {
-		this.dataManager.set(CACTUS_HEIGHT, h);
+		this.entityData.set(CACTUS_HEIGHT, h);
 	}
 	
 	public boolean isCactusPowered() {
-		return this.dataManager.get(POWERED);
+		return this.entityData.get(POWERED);
 	}
 	
 	public void setCactusPowered(boolean is) {
-		this.dataManager.set(POWERED, is);
+		this.entityData.set(POWERED, is);
 	}
 
 	@Override

@@ -4,7 +4,7 @@ import com.hungteen.pvz.utils.ZombieUtil;
 import com.hungteen.pvz.utils.enums.Zombies;
 
 import net.minecraft.entity.EntityType;
-import net.minecraft.entity.SharedMonsterAttributes;
+import net.minecraft.entity.ai.attributes.Attributes;
 import net.minecraft.entity.monster.MonsterEntity;
 import net.minecraft.world.World;
 
@@ -18,8 +18,8 @@ public class SundayEditionZombieEntity extends NewspaperZombieEntity{
 	@Override
 	protected void updateAngry(boolean is) {
 		this.setAngry(is);
-		this.getAttribute(SharedMonsterAttributes.MOVEMENT_SPEED).setBaseValue(is ? ZombieUtil.SUPER_FAST : ZombieUtil.LITTLE_FAST);
-		this.getAttribute(SharedMonsterAttributes.ATTACK_DAMAGE).setBaseValue(is ? ZombieUtil.VERY_HIGH : ZombieUtil.LITTLE_HIGH);
+		this.getAttribute(Attributes.MOVEMENT_SPEED).setBaseValue(is ? ZombieUtil.SUPER_FAST : ZombieUtil.LITTLE_FAST);
+		this.getAttribute(Attributes.ATTACK_DAMAGE).setBaseValue(is ? ZombieUtil.VERY_HIGH : ZombieUtil.LITTLE_HIGH);
 	}
 	
 	@Override

@@ -18,7 +18,6 @@ import net.minecraft.item.ItemStack;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 
-@SuppressWarnings("deprecation")
 @OnlyIn(Dist.CLIENT)
 public class MetalItemLayer <T extends MagnetShroomEntity> extends LayerRenderer<T, EntityModel<T>> {
 
@@ -35,15 +34,15 @@ public class MetalItemLayer <T extends MagnetShroomEntity> extends LayerRenderer
 		if(entityIn.getMetalType() == MetalTypes.EMPTY || entityIn.isInvisible()) {
 			return ;
 		}
-		matrixStackIn.push();
+		matrixStackIn.pushPose();
 		matrixStackIn.scale(-1, -1, 1);
 		float percent = entityIn.getAttackTime() * 1.0F / entityIn.getAttackCD();
 		matrixStackIn.scale(percent, percent, percent);
 		ItemStack itemstack = entityIn.getMetalRenderItem();
-		IBakedModel ibakedmodel = this.itemRenderer.getItemModelWithOverrides(itemstack, entityIn.world, (LivingEntity) null);
-		this.itemRenderer.renderItem(itemstack, ItemCameraTransforms.TransformType.GROUND, false, matrixStackIn,
+		IBakedModel ibakedmodel = this.itemRenderer.getModel(itemstack, entityIn.level, (LivingEntity) null);
+		this.itemRenderer.render(itemstack, ItemCameraTransforms.TransformType.GROUND, false, matrixStackIn,
 				bufferIn, packedLightIn, OverlayTexture.NO_OVERLAY, ibakedmodel);
-		matrixStackIn.pop();
+		matrixStackIn.popPose();
 	}
 
 }

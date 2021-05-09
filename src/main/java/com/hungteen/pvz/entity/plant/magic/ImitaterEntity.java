@@ -20,7 +20,7 @@ import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntitySize;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.Pose;
-import net.minecraft.entity.SharedMonsterAttributes;
+import net.minecraft.entity.ai.attributes.Attributes;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.network.datasync.DataParameter;
@@ -33,7 +33,7 @@ import net.minecraft.world.World;
 
 public class ImitaterEntity extends PlantBomberEntity {
 
-	private static final DataParameter<ItemStack> IMITATE_CARD = EntityDataManager.createKey(ImitaterEntity.class, DataSerializers.ITEMSTACK);
+	private static final DataParameter<ItemStack> IMITATE_CARD = EntityDataManager.defineId(ImitaterEntity.class, DataSerializers.ITEM_STACK);
 	public Optional<PVZPlantEntity> targetPlantEntity = Optional.empty();
 	public Optional<BlockPos> targetPos = Optional.empty();
 	public Direction placeDirection = Direction.NORTH;
@@ -45,9 +45,9 @@ public class ImitaterEntity extends PlantBomberEntity {
 	}
 
 	@Override
-	protected void registerData() {
-		super.registerData();
-		this.dataManager.register(IMITATE_CARD, ItemStack.EMPTY);
+	protected void defineSynchedData() {
+		super.defineSynchedData();
+		this.entityData.define(IMITATE_CARD, ItemStack.EMPTY);
 	}
 	
 	@Override
@@ -56,7 +56,7 @@ public class ImitaterEntity extends PlantBomberEntity {
 	
 	@Override
 	public void startBomb() {
-		if(! world.isRemote) {
+		if(! level.isClientSide) {
 			ItemStack stack = getImitateCard();
 			if(stack.isEmpty()) return ; //empty itemstack
 			Optional<Plants> opt = ImitaterCardItem.getImitatePlantType(stack);
@@ -64,9 +64,9 @@ public class ImitaterEntity extends PlantBomberEntity {
 			Plants plant = opt.get();
 			EntityUtil.playSound(this, SoundRegister.WAKE_UP.get());
 			if(plant.isBlockPlant) {// imitate block
-				if(getPosition().getY() >= 2) {
+				if(blockPosition().getY() >= 2) {
 					BlockState state = BlockPlantCardItem.getBlockState(placeDirection, plant);
-					world.setBlockState(getPosition(), state, 11);
+					level.setBlock(blockPosition(), state, 11);
 				}
 				return ;
 			}
@@ -80,7 +80,7 @@ public class ImitaterEntity extends PlantBomberEntity {
 			if(plant.isUpgradePlant) {// imitate upgrade plant
 				if(this.targetPlantEntity.isPresent()) {
 					PVZPlantEntity target = this.targetPlantEntity.get();
-					PVZPlantEntity plantEntity = PlantUtil.getPlantEntity(world, plant);
+					PVZPlantEntity plantEntity = PlantUtil.getPlantEntity(level, plant);
 					this.copyDataToPlant(plantEntity);
 					plantEntity.plantSunCost = target.plantSunCost + this.plantSunCost;
 					if(! plant.isBigPlant) {
@@ -90,30 +90,30 @@ public class ImitaterEntity extends PlantBomberEntity {
 					    plantEntity.setPumpkinLife(target.getPumpkinLife());
 					}
 					PlantCardItem.summonPlantEntityByCard(plantEntity, stack);
-					world.addEntity(plantEntity);
+					level.addFreshEntity(plantEntity);
 					this.targetPlantEntity.get().remove();
 				} else if(plant == Plants.CAT_TAIL && this.targetPos.isPresent()) {
 					BlockPos pos = this.targetPos.get();
-					if(world.getBlockState(pos).getBlock() == BlockRegister.LILY_PAD.get()) {
-						world.setBlockState(pos, Blocks.AIR.getDefaultState());
-						PVZPlantEntity plantEntity = PlantUtil.getPlantEntity(world, plant);
+					if(level.getBlockState(pos).getBlock() == BlockRegister.LILY_PAD.get()) {
+						level.setBlockAndUpdate(pos, Blocks.AIR.defaultBlockState());
+						PVZPlantEntity plantEntity = PlantUtil.getPlantEntity(level, plant);
 						this.copyDataToPlant(plantEntity);
 						plantEntity.plantSunCost = this.plantSunCost + PlantUtil.getPlantSunCost(Plants.LILY_PAD);
 						PlantCardItem.summonPlantEntityByCard(plantEntity, stack);
-						world.addEntity(plantEntity);
+						level.addFreshEntity(plantEntity);
 					}
 				}
 				return ;
 			}
 			//imitate common plants.
-			PVZPlantEntity plantEntity = PlantUtil.getPlantEntity(world, plant);
+			PVZPlantEntity plantEntity = PlantUtil.getPlantEntity(level, plant);
 			this.copyDataToPlant(plantEntity);
 			plantEntity.plantSunCost = this.plantSunCost;
 			PlantCardItem.summonPlantEntityByCard(plantEntity, stack);
-			world.addEntity(plantEntity);
+			level.addFreshEntity(plantEntity);
 		} else {
 			for(int i = 0; i < 3; ++ i) {
-			    this.world.addParticle(ParticleTypes.EXPLOSION, this.getPosX(), this.getPosY() + 0.5, this.getPosZ(), 0, 0, 0);
+			    this.level.addParticle(ParticleTypes.EXPLOSION, this.getX(), this.getY() + 0.5, this.getZ(), 0, 0, 0);
 			}
 		}
 	}
@@ -123,34 +123,34 @@ public class ImitaterEntity extends PlantBomberEntity {
 			plantEntity.setOwnerUUID(this.getOwnerUUID().get());
 		}
 		plantEntity.setPlantLvl(this.getPlantLvl());
-		plantEntity.getAttribute(SharedMonsterAttributes.MAX_HEALTH).setBaseValue(plantEntity.getPlantHealth());
+		plantEntity.getAttribute(Attributes.MAX_HEALTH).setBaseValue(plantEntity.getPlantHealth());
 		plantEntity.heal(plantEntity.getMaxHealth());
-		plantEntity.setPosition(getPosX(), getPosY(), getPosZ());
-		Entity ridingEntity = this.getRidingEntity();
+		plantEntity.setPos(getX(), getY(), getZ());
+		Entity ridingEntity = this.getVehicle();
 		if(ridingEntity != null) {
 			this.stopRiding();
 			plantEntity.startRiding(ridingEntity);
 		}
-		if(this.getAttackTarget() != null) {
-			plantEntity.setAttackTarget(this.getAttackTarget());
+		if(this.getTarget() != null) {
+			plantEntity.setTarget(this.getTarget());
 		}
 	}
 	
 	@Override
 	public void tick() {
 		super.tick();
-		if(! world.isRemote) {
+		if(! level.isClientSide) {
 			if(this.isInWater()) {
 				double speed = 0.25D;
-				this.setMotion(0, speed, 0);
+				this.setDeltaMovement(0, speed, 0);
 			} else {
-				this.setMotion(0, 0, 0);
+				this.setDeltaMovement(0, 0, 0);
 			}
 		}
 	}
 
 	@Override
-	public boolean hasNoGravity() {
+	public boolean isNoGravity() {
 		return false;
 	}
 	
@@ -160,8 +160,8 @@ public class ImitaterEntity extends PlantBomberEntity {
 	}
 	
 	@Override
-	public EntitySize getSize(Pose poseIn) {
-		return EntitySize.flexible(0.7F, 1.25F);
+	public EntitySize getDimensions(Pose poseIn) {
+		return EntitySize.scalable(0.7F, 1.25F);
 	}
 
 	@Override
@@ -170,13 +170,13 @@ public class ImitaterEntity extends PlantBomberEntity {
 	}
 	
 	@Override
-	public void readAdditional(CompoundNBT compound) {
-		super.readAdditional(compound);
+	public void readAdditionalSaveData(CompoundNBT compound) {
+		super.readAdditionalSaveData(compound);
 		if(compound.contains("imitate_plant_card")) {
-			this.setImitateCard(ItemStack.read(compound.getCompound(("imitate_plant_card"))));
+			this.setImitateCard(ItemStack.of(compound.getCompound(("imitate_plant_card"))));
 		}
 		if(compound.contains("target_plant_entity")) {
-			this.targetPlantEntity = Optional.ofNullable((PVZPlantEntity) world.getEntityByID(compound.getInt("target_plant_entity")));
+			this.targetPlantEntity = Optional.ofNullable((PVZPlantEntity) level.getEntity(compound.getInt("target_plant_entity")));
 		}
 		if(compound.contains("target_blockpos")) {
 			CompoundNBT nbt = compound.getCompound("target_blockpos");
@@ -188,13 +188,13 @@ public class ImitaterEntity extends PlantBomberEntity {
 	}
 	
 	@Override
-	public void writeAdditional(CompoundNBT compound) {
-		super.writeAdditional(compound);
+	public void addAdditionalSaveData(CompoundNBT compound) {
+		super.addAdditionalSaveData(compound);
 		if(! this.getImitateCard().isEmpty()) {
 			compound.put("imitate_plant_card", this.getImitateCard().getOrCreateTag());
 		}
 		if(this.targetPlantEntity.isPresent()) {
-			compound.putInt("target_plant_entity", this.targetPlantEntity.get().getEntityId());
+			compound.putInt("target_plant_entity", this.targetPlantEntity.get().getId());
 		}
 		if(this.targetPos.isPresent()) {
 			CompoundNBT nbt = new CompoundNBT();
@@ -206,11 +206,11 @@ public class ImitaterEntity extends PlantBomberEntity {
 	}
 	
 	public void setImitateCard(ItemStack stack) {
-		this.dataManager.set(IMITATE_CARD, stack);
+		this.entityData.set(IMITATE_CARD, stack);
 	}
 	
 	public ItemStack getImitateCard() {
-		return this.dataManager.get(IMITATE_CARD);
+		return this.entityData.get(IMITATE_CARD);
 	}
 
 }

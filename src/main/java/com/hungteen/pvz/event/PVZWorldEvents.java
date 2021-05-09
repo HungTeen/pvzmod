@@ -2,7 +2,6 @@ package com.hungteen.pvz.event;
 
 import com.hungteen.pvz.PVZMod;
 
-import net.minecraft.world.dimension.DimensionType;
 import net.minecraftforge.event.TickEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
@@ -12,13 +11,12 @@ public class PVZWorldEvents {
 
 	@SubscribeEvent
 	public static void onWorldTick(TickEvent.WorldTickEvent ev) {
-		if (ev.phase != TickEvent.Phase.END || ev.world.isRemote) {
+		if (ev.phase != TickEvent.Phase.END || ev.world.isClientSide) {
 			return;
 		}
-		DimensionType type = ev.world.getDimension().getDimension().getType();
-		if(type==DimensionType.OVERWORLD) {
-			OverWorldEvents.tick(ev);
-		}
+//		if(ev.world.dimension() == World.OVERWORLD) {
+//			OverWorldEvents.tick(ev);
+//		}
 	}
 	
 }

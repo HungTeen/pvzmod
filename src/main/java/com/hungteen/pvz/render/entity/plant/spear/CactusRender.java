@@ -8,7 +8,7 @@ import com.mojang.blaze3d.matrix.MatrixStack;
 
 import net.minecraft.client.renderer.entity.EntityRendererManager;
 import net.minecraft.util.ResourceLocation;
-import net.minecraft.util.math.Vec3d;
+import net.minecraft.util.math.vector.Vector3d;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 
@@ -20,9 +20,9 @@ public class CactusRender extends PVZPlantRender<CactusEntity> {
 	}
 
 	@Override
-	protected void preRenderCallback(CactusEntity entitylivingbaseIn, MatrixStack matrixStackIn,
+	protected void scale(CactusEntity entitylivingbaseIn, MatrixStack matrixStackIn,
 			float partialTickTime) {
-		super.preRenderCallback(entitylivingbaseIn, matrixStackIn, partialTickTime);
+		super.scale(entitylivingbaseIn, matrixStackIn, partialTickTime);
 //		float hScale = 1F;
 //		matrixStackIn.scale(1, hScale, 1);
 	}
@@ -33,13 +33,13 @@ public class CactusRender extends PVZPlantRender<CactusEntity> {
 	}
 	
 	@Override
-	public Vec3d getTranslateVec(CactusEntity entity) {
+	public Vector3d getTranslateVec(CactusEntity entity) {
 		float h = entity.getCactusHeight();
-		return new Vec3d(0, - h, 0);
+		return new Vector3d(0, - h, 0);
 	}
 
 	@Override
-	public ResourceLocation getEntityTexture(CactusEntity entity) {
+	public ResourceLocation getTextureLocation(CactusEntity entity) {
 		if(entity.isCactusPowered()) return StringUtil.prefix("textures/entity/plant/spear/power_cactus.png");
 		return StringUtil.prefix("textures/entity/plant/spear/cactus.png");
 	}

@@ -57,41 +57,41 @@ public class ClientRegister {
 	@SubscribeEvent
     public static void registerFactories(ParticleFactoryRegisterEvent event) {
 		@SuppressWarnings("resource")
-		ParticleManager manager = Minecraft.getInstance().particles;
-        manager.registerFactory(ParticleRegister.RED_BOMB.get(), (sprite) -> {return new CherryBombParticle.Factory(sprite);});
-        manager.registerFactory(ParticleRegister.YELLOW_BOMB.get(), (sprite) -> {return new PotatoMineParticle.Factory(sprite);});
-        manager.registerFactory(ParticleRegister.DIRT_BURST_OUT.get(), (sprite) -> {return new DirtBurstOutParticle.Factory(sprite);});
-        manager.registerFactory(ParticleRegister.YELLOW_FLAME.get(), (sprite) -> {return new YellowFlameParticle.Factory(sprite);});
-        manager.registerFactory(ParticleRegister.BLUE_FLAME.get(), (sprite) -> {return new BlueFlameParticle.Factory(sprite);});
-        manager.registerFactory(ParticleRegister.SLEEP.get(), (sprite) -> {return new SleepParticle.Factory(sprite);});
-        manager.registerFactory(ParticleRegister.SPORE.get(), (sprite) -> {return new SporeParticle.Factory(sprite);});
-        manager.registerFactory(ParticleRegister.FUME.get(), (sprite) -> {return new FumeParticle.Factory(sprite);});
-        manager.registerFactory(ParticleRegister.SNOW_FLOWER.get(), (sprite) -> {return new SnowFlowerParticle.Factory(sprite);});
-        manager.registerFactory(ParticleRegister.DOOM.get(), (sprite) -> {return new DoomParticle.Factory(sprite);});
-        manager.registerFactory(ParticleRegister.MELON_SLICE.get(), (sprite) -> {return new MelonSliceParticle.Factory(sprite);});
-        manager.registerFactory(ParticleRegister.FROZEN_MELON_SLICE.get(), (sprite) -> {return new FrozenMelonSliceParticle.Factory(sprite);});
-        manager.registerFactory(ParticleRegister.GREEN_SWEEP.get(), (sprite) -> {return new GreenSweepParticle.Factory(sprite);});
-        manager.registerFactory(ParticleRegister.POP_CORN.get(), (sprite) -> {return new PopCornParticle.Factory(sprite);});
+		ParticleManager manager = Minecraft.getInstance().particleEngine;
+        manager.register(ParticleRegister.RED_BOMB.get(), (sprite) -> {return new CherryBombParticle.Factory(sprite);});
+        manager.register(ParticleRegister.YELLOW_BOMB.get(), (sprite) -> {return new PotatoMineParticle.Factory(sprite);});
+        manager.register(ParticleRegister.DIRT_BURST_OUT.get(), (sprite) -> {return new DirtBurstOutParticle.Factory(sprite);});
+        manager.register(ParticleRegister.YELLOW_FLAME.get(), (sprite) -> {return new YellowFlameParticle.Factory(sprite);});
+        manager.register(ParticleRegister.BLUE_FLAME.get(), (sprite) -> {return new BlueFlameParticle.Factory(sprite);});
+        manager.register(ParticleRegister.SLEEP.get(), (sprite) -> {return new SleepParticle.Factory(sprite);});
+        manager.register(ParticleRegister.SPORE.get(), (sprite) -> {return new SporeParticle.Factory(sprite);});
+        manager.register(ParticleRegister.FUME.get(), (sprite) -> {return new FumeParticle.Factory(sprite);});
+        manager.register(ParticleRegister.SNOW_FLOWER.get(), (sprite) -> {return new SnowFlowerParticle.Factory(sprite);});
+        manager.register(ParticleRegister.DOOM.get(), (sprite) -> {return new DoomParticle.Factory(sprite);});
+        manager.register(ParticleRegister.MELON_SLICE.get(), (sprite) -> {return new MelonSliceParticle.Factory(sprite);});
+        manager.register(ParticleRegister.FROZEN_MELON_SLICE.get(), (sprite) -> {return new FrozenMelonSliceParticle.Factory(sprite);});
+        manager.register(ParticleRegister.GREEN_SWEEP.get(), (sprite) -> {return new GreenSweepParticle.Factory(sprite);});
+        manager.register(ParticleRegister.POP_CORN.get(), (sprite) -> {return new PopCornParticle.Factory(sprite);});
         
 	}
 	
 	@SubscribeEvent
 	public static void reigsterRenderType(FMLClientSetupEvent ev){
-		RenderTypeLookup.setRenderLayer(BlockRegister.ORIGIN_BLOCK.get(), RenderType.getTranslucent());
-		RenderTypeLookup.setRenderLayer(BlockRegister.PEA_PLANT.get(), RenderType.getCutout());
-		RenderTypeLookup.setRenderLayer(BlockRegister.NUT_LEAVES.get(), RenderType.getCutout());
-		RenderTypeLookup.setRenderLayer(BlockRegister.NUT_SAPLING.get(), RenderType.getCutout());
-		RenderTypeLookup.setRenderLayer(BlockRegister.TOXIC_SHROOM.get(), RenderType.getCutout());
-		RenderTypeLookup.setRenderLayer(BlockRegister.LANTERN.get(), RenderType.getTranslucent());
-		RenderTypeLookup.setRenderLayer(BlockRegister.FLOWER_POT.get(), RenderType.getCutout());
-		RenderTypeLookup.setRenderLayer(BlockRegister.CABBAGE.get(), RenderType.getCutout());
-		RenderTypeLookup.setRenderLayer(BlockRegister.BUTTER_BLOCK.get(), RenderType.getTranslucent());
-		RenderTypeLookup.setRenderLayer(BlockRegister.CORN.get(), RenderType.getCutout());
-		RenderTypeLookup.setRenderLayer(BlockRegister.ESSENCE_ALTAR.get(), RenderType.getTranslucent());
-		RenderTypeLookup.setRenderLayer(BlockRegister.STEEL_LADDER.get(), RenderType.getCutout());
-		RenderTypeLookup.setRenderLayer(BlockRegister.SILVER_SUNFLOWER_TROPHY.get(), RenderType.getCutout());
-		RenderTypeLookup.setRenderLayer(BlockRegister.GOLD_SUNFLOWER_TROPHY.get(), RenderType.getCutout());
-		RenderTypeLookup.setRenderLayer(BlockRegister.DIAMOND_SUNFLOWER_TROPHY.get(), RenderType.getCutout());
+		RenderTypeLookup.setRenderLayer(BlockRegister.ORIGIN_BLOCK.get(), RenderType.translucent());
+		RenderTypeLookup.setRenderLayer(BlockRegister.PEA_PLANT.get(), RenderType.cutout());
+		RenderTypeLookup.setRenderLayer(BlockRegister.NUT_LEAVES.get(), RenderType.cutout());
+		RenderTypeLookup.setRenderLayer(BlockRegister.NUT_SAPLING.get(), RenderType.cutout());
+		RenderTypeLookup.setRenderLayer(BlockRegister.TOXIC_SHROOM.get(), RenderType.cutout());
+		RenderTypeLookup.setRenderLayer(BlockRegister.LANTERN.get(), RenderType.translucent());
+		RenderTypeLookup.setRenderLayer(BlockRegister.FLOWER_POT.get(), RenderType.cutout());
+		RenderTypeLookup.setRenderLayer(BlockRegister.CABBAGE.get(), RenderType.cutout());
+		RenderTypeLookup.setRenderLayer(BlockRegister.BUTTER_BLOCK.get(), RenderType.translucent());
+		RenderTypeLookup.setRenderLayer(BlockRegister.CORN.get(), RenderType.cutout());
+		RenderTypeLookup.setRenderLayer(BlockRegister.ESSENCE_ALTAR.get(), RenderType.translucent());
+		RenderTypeLookup.setRenderLayer(BlockRegister.STEEL_LADDER.get(), RenderType.cutout());
+		RenderTypeLookup.setRenderLayer(BlockRegister.SILVER_SUNFLOWER_TROPHY.get(), RenderType.cutout());
+		RenderTypeLookup.setRenderLayer(BlockRegister.GOLD_SUNFLOWER_TROPHY.get(), RenderType.cutout());
+		RenderTypeLookup.setRenderLayer(BlockRegister.DIAMOND_SUNFLOWER_TROPHY.get(), RenderType.cutout());
 		TileEntityRegister.bindRenderers(ev);
 	}
 	

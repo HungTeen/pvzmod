@@ -27,15 +27,15 @@ public class ElementBallRender extends EntityRenderer<ElementBallEntity>{
 	public void render(ElementBallEntity entityIn, float entityYaw, float partialTicks, MatrixStack matrixStackIn,
 			IRenderTypeBuffer bufferIn, int packedLightIn) {
 		super.render(entityIn, entityYaw, partialTicks, matrixStackIn, bufferIn, packedLightIn);
-		matrixStackIn.push();
+		matrixStackIn.pushPose();
 		float f = getScaleByEntity(entityIn);
 		matrixStackIn.scale(f, f, f);
 		matrixStackIn.translate(- 0.5F, 0, - 0.5F);
 //		matrixStackIn.rotate(Vector3f.XP.rotationDegrees(entityIn.ticksExisted * 15));
 //		matrixStackIn.rotate(Vector3f.YP.rotationDegrees(MathHelper.lerp(partialTicks, entityIn.prevRotationYaw, entityIn.rotationYaw) + 180.0F));
 //		matrixStackIn.rotate(Vector3f.ZP.rotationDegrees(MathHelper.lerp(partialTicks, entityIn.prevRotationPitch, entityIn.rotationPitch)));
-        Minecraft.getInstance().getBlockRendererDispatcher().renderBlock(getBlockByEntity(entityIn), matrixStackIn, bufferIn, packedLightIn, OverlayTexture.NO_OVERLAY);
-        matrixStackIn.pop();
+        Minecraft.getInstance().getBlockRenderer().renderSingleBlock(getBlockByEntity(entityIn), matrixStackIn, bufferIn, packedLightIn, OverlayTexture.NO_OVERLAY);
+        matrixStackIn.popPose();
 	}
 	
 	public float getScaleByEntity(ElementBallEntity entity) {
@@ -43,12 +43,12 @@ public class ElementBallRender extends EntityRenderer<ElementBallEntity>{
 	}
 
 	public BlockState getBlockByEntity(ElementBallEntity entity) {
-		if(entity.getElementBallType() == ElementTypes.FLAME) return Blocks.MAGMA_BLOCK.getDefaultState();
-		return Blocks.BLUE_ICE.getDefaultState();
+		if(entity.getElementBallType() == ElementTypes.FLAME) return Blocks.MAGMA_BLOCK.defaultBlockState();
+		return Blocks.BLUE_ICE.defaultBlockState();
 	}
 
 	@Override
-	public ResourceLocation getEntityTexture(ElementBallEntity entity) {
+	public ResourceLocation getTextureLocation(ElementBallEntity entity) {
 		return null;
 	}
 	

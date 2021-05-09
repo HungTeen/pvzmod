@@ -23,7 +23,7 @@ public class PeaShooterRender extends PVZPlantRender<PeaShooterEntity>{
 	}
 
 	@Override
-	public ResourceLocation getEntityTexture(PeaShooterEntity entity) {
+	public ResourceLocation getTextureLocation(PeaShooterEntity entity) {
 		return StringUtil.prefix("textures/entity/plant/appease/pea_shooter.png");
 	}
 

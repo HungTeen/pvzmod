@@ -6,7 +6,7 @@ import com.hungteen.pvz.render.layer.DuckyTubeLayer;
 
 import net.minecraft.client.renderer.entity.EntityRendererManager;
 import net.minecraft.client.renderer.entity.model.EntityModel;
-import net.minecraft.util.math.Vec3d;
+import net.minecraft.util.math.vector.Vector3d;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 
@@ -25,9 +25,9 @@ public abstract class AbstractZombotanyRender<T extends AbstractZombotanyEntity>
 	}
 	
 	@Override
-	public Vec3d getTranslateVec(T entity) {
+	public Vector3d getTranslateVec(T entity) {
 		if(entity.getAttackTime() >= 0 && entity.isInWater()) {
-			return new Vec3d(0, 0.6f, 0);
+			return new Vector3d(0, 0.6f, 0);
 		}
 		return super.getTranslateVec(entity);
 	}

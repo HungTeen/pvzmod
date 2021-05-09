@@ -11,7 +11,7 @@ import net.minecraft.util.LazyValue;
 public enum PVZItemTier implements IItemTier {
     
 	STEEL(3, 500, 6.0F, 2.0F, 4, () -> {
-		return Ingredient.fromItems(ItemRegister.STEEL_INGOT.get());
+		return Ingredient.of(ItemRegister.STEEL_INGOT.get());
 	});
 
 	private final int harvestLevel;
@@ -31,27 +31,27 @@ public enum PVZItemTier implements IItemTier {
 		this.repairMaterial = new LazyValue<>(repairMaterialIn);
 	}
 
-	public int getMaxUses() {
+	public int getUses() {
 		return this.maxUses;
 	}
 
-	public float getEfficiency() {
+	public float getSpeed() {
 		return this.efficiency;
 	}
 
-	public float getAttackDamage() {
+	public float getAttackDamageBonus() {
 		return this.attackDamage;
 	}
 
-	public int getHarvestLevel() {
+	public int getLevel() {
 		return this.harvestLevel;
 	}
 
-	public int getEnchantability() {
+	public int getEnchantmentValue() {
 		return this.enchantability;
 	}
 
-	public Ingredient getRepairMaterial() {
-		return this.repairMaterial.getValue();
+	public Ingredient getRepairIngredient() {
+		return this.repairMaterial.get();
 	}
 }

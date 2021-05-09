@@ -12,7 +12,7 @@ import com.mojang.blaze3d.matrix.MatrixStack;
 import net.minecraft.client.renderer.entity.EntityRendererManager;
 import net.minecraft.client.renderer.entity.MobRenderer;
 import net.minecraft.client.renderer.entity.model.EntityModel;
-import net.minecraft.util.math.Vec3d;
+import net.minecraft.util.math.vector.Vector3d;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 
@@ -25,9 +25,9 @@ public abstract class PVZPlantRender<T extends PVZPlantEntity> extends MobRender
 	}
 
 	@Override
-	protected void preRenderCallback(T entitylivingbaseIn, MatrixStack matrixStackIn, float partialTickTime) {
+	protected void scale(T entitylivingbaseIn, MatrixStack matrixStackIn, float partialTickTime) {
 		float sz = getScaleByEntity(entitylivingbaseIn);
-		Vec3d vec = getTranslateVec(entitylivingbaseIn);
+		Vector3d vec = getTranslateVec(entitylivingbaseIn);
 		matrixStackIn.scale(sz, sz, sz);
 		matrixStackIn.translate(vec.x, vec.y, vec.z);
 	}
@@ -43,8 +43,8 @@ public abstract class PVZPlantRender<T extends PVZPlantEntity> extends MobRender
 	
 	public abstract float getScaleByEntity(T entity);
 	
-	public Vec3d getTranslateVec(T entity) {
-		return new Vec3d(0, 0, 0);
+	public Vector3d getTranslateVec(T entity) {
+		return new Vector3d(0, 0, 0);
 	}
 	
 }

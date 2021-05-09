@@ -30,7 +30,7 @@ import net.minecraft.world.World;
 
 public class ElementBallEntity extends AbstractOwnerEntity {
 
-	private static final DataParameter<Integer> ELEMENTS = EntityDataManager.createKey(ElementBallEntity.class, DataSerializers.VARINT);
+	private static final DataParameter<Integer> ELEMENTS = EntityDataManager.defineId(ElementBallEntity.class, DataSerializers.INT);
 	protected Optional<Entity> target = Optional.empty(); 
 	private float speed;
 	private final int SEARACH_CD = 20;
@@ -47,20 +47,20 @@ public class ElementBallEntity extends AbstractOwnerEntity {
 	}
 	
 	@Override
-	protected void registerData() {
-		super.registerData();
-		this.dataManager.register(ELEMENTS, ElementTypes.FLAME.ordinal());
+	protected void defineSynchedData() {
+		super.defineSynchedData();
+		this.entityData.define(ELEMENTS, ElementTypes.FLAME.ordinal());
 	}
 	
 	public void onKilledByPlants(LivingEntity entity) {
 		if(entity instanceof PVZPlantEntity) {
 			PVZPlantEntity plant = (PVZPlantEntity) entity;
 			plant.getOwnerUUID().ifPresent((uuid) -> {
-			    PlayerEntity player = world.getPlayerByUuid(uuid);
+			    PlayerEntity player = level.getPlayerByUUID(uuid);
 			    if(player != null) {
 				    PlantCardItem item = (this.getElementBallType() == ElementTypes.FLAME ? ItemRegister.ICE_SHROOM_CARD.get() : ItemRegister.JALAPENO_CARD.get());
-				    float percent = player.getCooldownTracker().getCooldown(item, 0F);
-				    player.getCooldownTracker().setCooldown(item, MathHelper.floor(200 * percent));
+				    float percent = player.getCooldowns().getCooldownPercent(item, 0F);
+				    player.getCooldowns().addCooldown(item, MathHelper.floor(200 * percent));
 			    }
 		    });
 		} 
@@ -69,12 +69,12 @@ public class ElementBallEntity extends AbstractOwnerEntity {
 	
 	@Override
 	public void tick() {
-		this.noClip = true;
+		this.noPhysics = true;
 		super.tick();
 		this.tickMove();
 		this.tickCollision();
-		if(! world.isRemote) {
-			if(this.ticksExisted >= PVZConfig.COMMON_CONFIG.EntitySettings.EntityLiveTick.ElementBallLiveTick.get()) {
+		if(! level.isClientSide) {
+			if(this.tickCount >= PVZConfig.COMMON_CONFIG.EntitySettings.EntityLiveTick.ElementBallLiveTick.get()) {
 				this.remove();
 				return ;
 			}
@@ -84,29 +84,29 @@ public class ElementBallEntity extends AbstractOwnerEntity {
 				    return ;
 			    }
 			    //move to target
-			    this.setMotion(this.target.get().getPositionVec().subtract(this.getPositionVec()).normalize().scale(this.speed));
+			    this.setDeltaMovement(this.target.get().position().subtract(this.position()).normalize().scale(this.speed));
 		    } else { // search for target
-			    if(this.rand.nextInt(this.SEARACH_CD) == 0) {
+			    if(this.random.nextInt(this.SEARACH_CD) == 0) {
 				    List<LivingEntity> list = EntityUtil.getEntityTargetableEntity(this, EntityUtil.getEntityAABB(this, this.SEARCH_RANGE, this.SEARCH_RANGE));
 				    if(list.isEmpty()) return ;
-				    this.target = Optional.ofNullable(list.get(this.rand.nextInt(list.size())));
+				    this.target = Optional.ofNullable(list.get(this.random.nextInt(list.size())));
 			    }
 		    }
 		}
 	}
 	
 	private void tickCollision() {
-		if(! world.isRemote && this.ticksExisted % 10 == 0) {
-			EntityUtil.getAttackEntities(this, this.getBoundingBox().grow(0.5F)).forEach((target) -> {
+		if(! level.isClientSide && this.tickCount % 10 == 0) {
+			EntityUtil.getAttackEntities(this, this.getBoundingBox().inflate(0.5F)).forEach((target) -> {
 				if(target instanceof PVZPlantEntity) {
 					if(target instanceof JalapenoEntity && this.getElementBallType() == ElementTypes.ICE) ;
 					else if(target instanceof IceShroomEntity && this.getElementBallType() == ElementTypes.FLAME) ;
-					else target.attackEntityFrom(this.getAttackSource(), EntityUtil.getCurrentMaxHealth((PVZPlantEntity) target));
+					else target.hurt(this.getAttackSource(), EntityUtil.getCurrentMaxHealth((PVZPlantEntity) target));
 				} else if(target instanceof PVZZombieEntity) {
-					target.attackEntityFrom(this.getAttackSource(), EntityUtil.getCurrentMaxHealth((PVZZombieEntity) target));
+					target.hurt(this.getAttackSource(), EntityUtil.getCurrentMaxHealth((PVZZombieEntity) target));
 				} else {
-					target.attackEntityFrom(this.getAttackSource(), 5);
-					target.setMotion(target.getPositionVec().subtract(this.getPositionVec()).normalize().scale(this.speed));
+					target.hurt(this.getAttackSource(), 5);
+					target.setDeltaMovement(target.position().subtract(this.position()).normalize().scale(this.speed));
 				}
 			});
 		}
@@ -118,23 +118,23 @@ public class ElementBallEntity extends AbstractOwnerEntity {
 	}
 	
 	@Override
-	public EntitySize getSize(Pose poseIn) {
-		return EntitySize.flexible(3F, 3F);
+	public EntitySize getDimensions(Pose poseIn) {
+		return EntitySize.scalable(3F, 3F);
 	}
 	
 	@Override
-	public boolean hasNoGravity() {
+	public boolean isNoGravity() {
 		return true;
 	}
 	
 	@Override
-	public void readAdditional(CompoundNBT compound) {
-		super.readAdditional(compound);
+	public void readAdditionalSaveData(CompoundNBT compound) {
+		super.readAdditionalSaveData(compound);
 		if(compound.contains("element_ball_type")) {
 			this.setElementBallType(ElementTypes.values()[compound.getInt("element_ball_type")]);
 		}
 		if(compound.contains("element_target")) {
-			this.target = Optional.ofNullable(world.getEntityByID(compound.getInt("element_target")));
+			this.target = Optional.ofNullable(level.getEntity(compound.getInt("element_target")));
 		}
 		if(compound.contains("element_speed")) {
 			this.speed = compound.getFloat("element_speed"); 
@@ -142,21 +142,21 @@ public class ElementBallEntity extends AbstractOwnerEntity {
 	}
 	
 	@Override
-	public void writeAdditional(CompoundNBT compound) {
-		super.writeAdditional(compound);
+	public void addAdditionalSaveData(CompoundNBT compound) {
+		super.addAdditionalSaveData(compound);
 		compound.putInt("element_ball_type", this.getElementBallType().ordinal());
 		if(this.target.isPresent()) {
-			compound.putInt("element_target", this.target.get().getEntityId());
+			compound.putInt("element_target", this.target.get().getId());
 		}
 		compound.putFloat("element_speed", this.speed);
 	}
 	
 	public void setElementBallType(ElementTypes type) {
-		this.dataManager.set(ELEMENTS, type.ordinal());
+		this.entityData.set(ELEMENTS, type.ordinal());
 	}
 	
 	public ElementTypes getElementBallType() {
-		return ElementTypes.values()[this.dataManager.get(ELEMENTS)];
+		return ElementTypes.values()[this.entityData.get(ELEMENTS)];
 	}
 	
 	public static enum ElementTypes {

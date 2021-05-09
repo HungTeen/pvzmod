@@ -21,6 +21,7 @@ import com.hungteen.pvz.utils.enums.Plants;
 import com.hungteen.pvz.utils.enums.Ranks;
 import com.hungteen.pvz.utils.enums.Resources;
 
+import net.minecraft.block.BlockState;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.inventory.container.Container;
@@ -88,7 +89,7 @@ public class SlotMachineTileEntity extends TileEntity implements ITickableTileEn
 
 	@Override
 	public void tick() {
-		if(! world.isRemote) {
+		if(! level.isClientSide) {
 			for(int i = 0; i < 4; ++ i) {
 				for(int j = 0; j < 3; ++ j) {
 					int id = i * 3 + j;
@@ -114,7 +115,7 @@ public class SlotMachineTileEntity extends TileEntity implements ITickableTileEn
 						this.genNextRow();
 					}
 				}
-				world.notifyBlockUpdate(pos, getBlockState(), getBlockState(), Constants.BlockFlags.BLOCK_UPDATE);
+				level.sendBlockUpdated(worldPosition, getBlockState(), getBlockState(), Constants.BlockFlags.BLOCK_UPDATE);
 			}
 		}
 	}
@@ -142,25 +143,25 @@ public class SlotMachineTileEntity extends TileEntity implements ITickableTileEn
 		if(option.isSun) {
 			int cnt = (num == 1 ? 4 : 20);
 			for(int i = 0; i < cnt; ++ i) {
-				SunEntity sun = EntityRegister.SUN.get().create(world);
+				SunEntity sun = EntityRegister.SUN.get().create(level);
 				sun.setAmount(25);
-				EntityUtil.onMobEntityRandomPosSpawn(world, sun, pos, 2);
+				EntityUtil.onMobEntityRandomPosSpawn(level, sun, worldPosition, 2);
 			}
-			world.playSound(null, pos, SoundRegister.JEWEL_DROP.get(), SoundCategory.BLOCKS, 1F, 1F);
+			level.playSound(null, worldPosition, SoundRegister.JEWEL_DROP.get(), SoundCategory.BLOCKS, 1F, 1F);
 			return ;
 		}
 		for(int i = 0; i < num; ++ i) {
 			if(option.isJewel) {
-				JewelEntity jewel = EntityRegister.JEWEL.get().create(world);
+				JewelEntity jewel = EntityRegister.JEWEL.get().create(level);
 				jewel.setAmount(1);
-				EntityUtil.onMobEntityRandomPosSpawn(world, jewel, pos, 2);
+				EntityUtil.onMobEntityRandomPosSpawn(level, jewel, worldPosition, 2);
 			} else if(option.plantType.isPresent()){
 				Plants plant = option.plantType.get();
 				PlantCardItem item = PlantUtil.getPlantEnjoyCard(plant);
 				this.handler.setStackInSlot(i, new ItemStack(item));
 			}
 		}
-		world.playSound(null, pos, SoundRegister.JEWEL_DROP.get(), SoundCategory.BLOCKS, 1F, 1F);
+		level.playSound(null, worldPosition, SoundRegister.JEWEL_DROP.get(), SoundCategory.BLOCKS, 1F, 1F);
 	}
 	
 	private void genNextRow() {
@@ -168,7 +169,7 @@ public class SlotMachineTileEntity extends TileEntity implements ITickableTileEn
 		this.currentPos = (this.currentPos + 1) % 4;
 		int next = (this.currentPos + 1) % 4;
 		for(int i = 0; i < 3; ++ i) {
-			this.slotOptions[next][i] = currentList.get(world.rand.nextInt(currentList.size())); 
+			this.slotOptions[next][i] = currentList.get(level.random.nextInt(currentList.size())); 
 //			System.out.print(this.slotOptions[next][i].plantType.isPresent() ? this.slotOptions[next][i].plantType.get() + " " : "X ");
 		}
 //		System.out.println("");
@@ -184,7 +185,7 @@ public class SlotMachineTileEntity extends TileEntity implements ITickableTileEn
 		PlayerUtil.playClientSound(player, 8);
 		PlayerUtil.addPlayerStats(player, Resources.SUN_NUM, - SUN_COST);
 		PlayerUtil.addPlayerStats(player, Resources.LOTTERY_CHANCE, - 1);
-		this.changeCnt = world.rand.nextInt(this.maxChangeCnt - this.minChangeCnt + 1) + this.minChangeCnt;
+		this.changeCnt = level.random.nextInt(this.maxChangeCnt - this.minChangeCnt + 1) + this.minChangeCnt;
 		this.refreshOptionList();
 		this.genNextRow();
 	}
@@ -192,9 +193,9 @@ public class SlotMachineTileEntity extends TileEntity implements ITickableTileEn
 	private void refreshOptionList() {
 		this.currentList.clear();
 		this.currentList.add(OPTION_LIST.get(0));
-		int len = world.rand.nextInt(5) + 9;
+		int len = level.random.nextInt(5) + 9;
 		for(int i = 0; i < len; ++ i) {
-			int now = world.rand.nextInt(sum);
+			int now = level.random.nextInt(sum);
 			for(int j = 0; j < OPTION_LIST.size(); ++ j) {
 				if(now < WEIGHT_LIST.get(j)) {
 					this.currentList.add(OPTION_LIST.get(j));
@@ -222,17 +223,17 @@ public class SlotMachineTileEntity extends TileEntity implements ITickableTileEn
 	
 	@Override
 	public SUpdateTileEntityPacket getUpdatePacket() {
-		return new SUpdateTileEntityPacket(pos, 1, getUpdateTag());
+		return new SUpdateTileEntityPacket(worldPosition, 1, getUpdateTag());
 	}
 	
 	@Override
 	public void onDataPacket(NetworkManager net, SUpdateTileEntityPacket pkt) {
-		handleUpdateTag(pkt.getNbtCompound());
+		handleUpdateTag(this.level.getBlockState(getBlockPos()), pkt.getTag());
 	}
 	
 	@Override
-	public void handleUpdateTag(CompoundNBT tag) {
-		super.handleUpdateTag(tag);
+	public void handleUpdateTag(BlockState state, CompoundNBT tag) {
+		super.handleUpdateTag(state, tag);
 		for(int i = 0; i < 16; ++ i) {
 			if(tag.contains("slot_machine_" + i)){
 				this.array.set(i, tag.getInt("slot_machine_" + i));
@@ -250,8 +251,8 @@ public class SlotMachineTileEntity extends TileEntity implements ITickableTileEn
 	}
 	
 	@Override
-	public void read(CompoundNBT compound) {
-		super.read(compound);
+	public void load(BlockState state, CompoundNBT compound) {
+    	super.load(state, compound);
 		if(compound.contains("change_tick")) {
 			this.changeTick = compound.getInt("change_tick");
 		}
@@ -274,7 +275,7 @@ public class SlotMachineTileEntity extends TileEntity implements ITickableTileEn
 	}
 	
 	@Override
-	public CompoundNBT write(CompoundNBT compound) {
+	public CompoundNBT save(CompoundNBT compound) {
 		compound.putInt("change_tick", this.changeTick);
 		compound.putInt("change_cnt", this.changeCnt);
 		compound.putBoolean("is_machine_running", this.isRunning);
@@ -284,14 +285,14 @@ public class SlotMachineTileEntity extends TileEntity implements ITickableTileEn
 			}
 		}
 		compound.put("slot_machine_result", this.handler.serializeNBT());
-		return super.write(compound);
+		return super.save(compound);
 	}
 	
 	public boolean isUsableByPlayer(PlayerEntity player) {
-		if (this.world.getTileEntity(this.pos) != this) {
+		if (this.level.getBlockEntity(this.worldPosition) != this) {
 			return false;
 		}
-		return player.getDistanceSq((double) this.pos.getX() + 0.5D, (double) this.pos.getY() + 0.5D, (double) this.pos.getZ() + 0.5D) <= 64.0D;
+		return player.distanceToSqr((double) this.worldPosition.getX() + 0.5D, (double) this.worldPosition.getY() + 0.5D, (double) this.worldPosition.getZ() + 0.5D) <= 64.0D;
 	}
 	
 	public void setPlayer(PlayerEntity player) {
@@ -300,7 +301,7 @@ public class SlotMachineTileEntity extends TileEntity implements ITickableTileEn
 	
 	@Override
 	public Container createMenu(int id, PlayerInventory inv, PlayerEntity player) {
-		return new SlotMachineContainer(id, player, this.pos);
+		return new SlotMachineContainer(id, player, this.worldPosition);
 	}
 
 	@Override

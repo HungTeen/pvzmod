@@ -14,16 +14,16 @@ import net.minecraft.world.World;
 public class ZombieDollItem extends Item {
 
 	public ZombieDollItem() {
-		super(new Item.Properties().group(GroupRegister.PVZ_MISC).maxStackSize(1));
+		super(new Item.Properties().tab(GroupRegister.PVZ_MISC).stacksTo(1));
 	}
 	
 	@Override
-	public ActionResult<ItemStack> onItemRightClick(World worldIn, PlayerEntity playerIn, Hand handIn) {
-		if(! worldIn.isRemote && handIn == Hand.MAIN_HAND) {
+	public ActionResult<ItemStack> use(World worldIn, PlayerEntity playerIn, Hand handIn) {
+		if(! worldIn.isClientSide && handIn == Hand.MAIN_HAND) {
 			EntityUtil.playSound(playerIn, SoundRegister.ZOMBIE_SAY.get());
-			return ActionResult.resultSuccess(playerIn.getHeldItem(handIn));
+			return ActionResult.success(playerIn.getItemInHand(handIn));
 		}
-		return super.onItemRightClick(worldIn, playerIn, handIn);
+		return super.use(worldIn, playerIn, handIn);
 	}
 
 }

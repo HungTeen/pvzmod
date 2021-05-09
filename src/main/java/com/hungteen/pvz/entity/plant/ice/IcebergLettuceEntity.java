@@ -51,7 +51,7 @@ public class IcebergLettuceEntity extends PlantCloserEntity implements IIcePlant
 				++ cnt;
 			}
 		};
-		PlayerEntity player = EntityUtil.getEntityOwner(world, this);
+		PlayerEntity player = EntityUtil.getEntityOwner(level, this);
 		if(player != null && player instanceof ServerPlayerEntity) {
 			EntityEffectAmountTrigger.INSTANCE.trigger((ServerPlayerEntity) player, this, cnt);
 		}
@@ -61,7 +61,7 @@ public class IcebergLettuceEntity extends PlantCloserEntity implements IIcePlant
 		PVZDamageSource source = PVZDamageSource.causeIceDamage(this, this);
 		source.addEffect(this.getFrozenEffect());
 		source.addEffect(this.getColdEffect());
-		target.attackEntityFrom(source, 0.01F);
+		target.hurt(source, 0.01F);
 	}
 	
     @Override
@@ -98,7 +98,7 @@ public class IcebergLettuceEntity extends PlantCloserEntity implements IIcePlant
     }
     
 	@Override
-	public EntitySize getSize(Pose poseIn) {
+	public EntitySize getDimensions(Pose poseIn) {
 		return EntitySize.fixed(0.6F, 0.6F);
 	}
 	

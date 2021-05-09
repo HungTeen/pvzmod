@@ -17,27 +17,27 @@ public class BucketHeadModel extends BipedModel<LivingEntity> {
 		super(scale, 0, 64, 64);
 
 		total = new ModelRenderer(this);
-		total.setRotationPoint(0.0F, -8.0F, 0.0F);
-		total.setTextureOffset(23, 43).addBox(-5.0F, -10.0F, -5.0F, 10.0F, 10.0F, 10.0F, 0.0F, false);
-		total.setTextureOffset(0, 52).addBox(-5.0F, 0.0F, -5.0F, 1.0F, 1.0F, 10.0F, 0.0F, false);
-		total.setTextureOffset(0, 40).addBox(4.0F, 0.0F, -5.0F, 1.0F, 1.0F, 10.0F, 0.0F, false);
-		total.setTextureOffset(1, 35).addBox(-4.0F, 0.0F, -5.0F, 8.0F, 1.0F, 1.0F, 0.0F, false);
-		total.setTextureOffset(23, 35).addBox(-4.0F, 0.0F, 4.0F, 8.0F, 1.0F, 1.0F, 0.0F, false);
+		total.setPos(0.0F, -8.0F, 0.0F);
+		total.texOffs(23, 43).addBox(-5.0F, -10.0F, -5.0F, 10.0F, 10.0F, 10.0F, 0.0F, false);
+		total.texOffs(0, 52).addBox(-5.0F, 0.0F, -5.0F, 1.0F, 1.0F, 10.0F, 0.0F, false);
+		total.texOffs(0, 40).addBox(4.0F, 0.0F, -5.0F, 1.0F, 1.0F, 10.0F, 0.0F, false);
+		total.texOffs(1, 35).addBox(-4.0F, 0.0F, -5.0F, 8.0F, 1.0F, 1.0F, 0.0F, false);
+		total.texOffs(23, 35).addBox(-4.0F, 0.0F, 4.0F, 8.0F, 1.0F, 1.0F, 0.0F, false);
 
 		pole = new ModelRenderer(this);
-		pole.setRotationPoint(0.0F, 0.0F, 0.0F);
+		pole.setPos(0.0F, 0.0F, 0.0F);
 		total.addChild(pole);
 		setRotationAngle(pole, 1.0472F, 0.0F, 0.0F);
-		pole.setTextureOffset(0, 40).addBox(5.0F, -1.0F, -8.0F, 1.0F, 1.0F, 10.0F, 0.0F, false);
-		pole.setTextureOffset(0, 40).addBox(-6.0F, -1.0F, -8.0F, 1.0F, 1.0F, 10.0F, 0.0F, false);
-		pole.setTextureOffset(0, 40).addBox(-5.0F, -1.0F, -8.0F, 10.0F, 1.0F, 1.0F, 0.0F, false);
+		pole.texOffs(0, 40).addBox(5.0F, -1.0F, -8.0F, 1.0F, 1.0F, 10.0F, 0.0F, false);
+		pole.texOffs(0, 40).addBox(-6.0F, -1.0F, -8.0F, 1.0F, 1.0F, 10.0F, 0.0F, false);
+		pole.texOffs(0, 40).addBox(-5.0F, -1.0F, -8.0F, 10.0F, 1.0F, 1.0F, 0.0F, false);
 		
-		this.bipedHead.addChild(total);
+		this.head.addChild(total);
 	}
 
 	public void setRotationAngle(ModelRenderer modelRenderer, float x, float y, float z) {
-		modelRenderer.rotateAngleX = x;
-		modelRenderer.rotateAngleY = y;
-		modelRenderer.rotateAngleZ = z;
+		modelRenderer.xRot = x;
+		modelRenderer.yRot = y;
+		modelRenderer.zRot = z;
 	}
 }

@@ -23,7 +23,7 @@ public class BloverRender extends PVZPlantRender<BloverEntity> {
 	}
 
 	@Override
-	public ResourceLocation getEntityTexture(BloverEntity entity) {
+	public ResourceLocation getTextureLocation(BloverEntity entity) {
 		return StringUtil.prefix("textures/entity/plant/assist/blover.png");
 	}
 

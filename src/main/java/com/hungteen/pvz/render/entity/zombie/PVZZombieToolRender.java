@@ -15,7 +15,7 @@ public abstract class PVZZombieToolRender<T extends MobEntity> extends MobRender
 	}
 
 	@Override
-	protected void preRenderCallback(T entitylivingbaseIn, MatrixStack matrixStackIn, float partialTickTime) {
+	protected void scale(T entitylivingbaseIn, MatrixStack matrixStackIn, float partialTickTime) {
 		float sz=getScaleByEntity(entitylivingbaseIn);
 		matrixStackIn.scale(sz,sz,sz);
 	}

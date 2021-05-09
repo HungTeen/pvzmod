@@ -55,45 +55,45 @@ public class ImitaterCardItem extends PlantCardItem {
 	public static final String IMITATE_STRING = "imitate_plant_type";
 	
 	public ImitaterCardItem() {
-		super(new Item.Properties().group(GroupRegister.PVZ_CARD).maxStackSize(1).setISTER(() -> ImitaterCardISTER::new), Plants.IMITATER, false);
+		super(new Item.Properties().tab(GroupRegister.PVZ_CARD).stacksTo(1).setISTER(() -> ImitaterCardISTER::new), Plants.IMITATER, false);
 	}
 	
 	public ImitaterCardItem(boolean isFragment) {
-		super(new Item.Properties().group(GroupRegister.PVZ_CARD).maxStackSize(16), Plants.IMITATER, true);
+		super(new Item.Properties().tab(GroupRegister.PVZ_CARD).stacksTo(16), Plants.IMITATER, true);
 	}
 	
 	@Override
-	public ActionResult<ItemStack> onItemRightClick(World world, PlayerEntity player, Hand handIn) {
-		ItemStack stack = player.getHeldItem(handIn);
+	public ActionResult<ItemStack> use(World world, PlayerEntity player, Hand handIn) {
+		ItemStack stack = player.getItemInHand(handIn);
 		if(handIn == Hand.OFF_HAND) {
 			this.openImitateGui(player);
-			return ActionResult.resultSuccess(stack);
+			return ActionResult.success(stack);
 		}
-		RayTraceResult raytraceresult = rayTrace(world, player, RayTraceContext.FluidMode.SOURCE_ONLY);
-		if (raytraceresult.getType() != RayTraceResult.Type.BLOCK) return ActionResult.resultPass(stack);
-		if (world.isRemote) return ActionResult.resultSuccess(stack);
+		RayTraceResult raytraceresult = getPlayerPOVHitResult(world, player, RayTraceContext.FluidMode.SOURCE_ONLY);
+		if (raytraceresult.getType() != RayTraceResult.Type.BLOCK) return ActionResult.pass(stack);
+		if (world.isClientSide) return ActionResult.success(stack);
 		Optional<Plants> opt = getImitatePlantType(stack);
-		if(! opt.isPresent() || ! opt.get().isWaterPlant) return ActionResult.resultFail(stack);
-		if(opt.get() == Plants.FLOWER_POT) return ActionResult.resultFail(stack);
+		if(! opt.isPresent() || ! opt.get().isWaterPlant) return ActionResult.fail(stack);
+		if(opt.get() == Plants.FLOWER_POT) return ActionResult.fail(stack);
 		BlockRayTraceResult blockraytraceresult = (BlockRayTraceResult) raytraceresult;
-		BlockPos pos = blockraytraceresult.getPos();
-		if (!(world.getBlockState(pos).getBlock() instanceof FlowingFluidBlock)) return ActionResult.resultPass(stack);
-		if (world.isBlockModifiable(player, pos) && player.canPlayerEdit(pos, blockraytraceresult.getFace(), stack)) {
+		BlockPos pos = blockraytraceresult.getBlockPos();
+		if (!(world.getBlockState(pos).getBlock() instanceof FlowingFluidBlock)) return ActionResult.pass(stack);
+		if (world.mayInteract(player, pos) && player.mayUseItemAt(pos, blockraytraceresult.getDirection(), stack)) {
 			checkSunAndSummonImitater(player, stack, this, pos, (l) -> {});
-			return ActionResult.resultSuccess(stack);
+			return ActionResult.success(stack);
 		} else {
-			return ActionResult.resultFail(stack);
+			return ActionResult.fail(stack);
 		}
 	}
 	
 	@Override
-	public ActionResultType onItemUse(ItemUseContext context) {
-		World world = context.getWorld();
+	public ActionResultType useOn(ItemUseContext context) {
+		World world = context.getLevel();
 		PlayerEntity player = context.getPlayer();
 		Hand hand = context.getHand();
-		ItemStack stack = player.getHeldItem(hand);
-		BlockPos pos = context.getPos();
-		if (world.isRemote) return ActionResultType.SUCCESS;
+		ItemStack stack = player.getItemInHand(hand);
+		BlockPos pos = context.getClickedPos();
+		if (world.isClientSide) return ActionResultType.SUCCESS;
 		if(hand == Hand.OFF_HAND) {
 			this.openImitateGui(player);
 			return ActionResultType.SUCCESS;
@@ -113,9 +113,9 @@ public class ImitaterCardItem extends PlantCardItem {
 		}
 		BlockPos spawnPos = pos;
 		if(! world.getBlockState(pos).getCollisionShape(world, pos).isEmpty()) {
-			spawnPos = pos.offset(context.getFace());
+			spawnPos = pos.relative(context.getClickedFace());
 		}
-		if (context.getFace() == Direction.UP && world.isAirBlock(pos.up())) {// can plant here
+		if (context.getClickedFace() == Direction.UP && world.isEmptyBlock(pos.above())) {// can plant here
 			checkSunAndSummonImitater(player, stack, this, spawnPos, (l) -> {});
 			return ActionResultType.SUCCESS;
 		}
@@ -126,7 +126,7 @@ public class ImitaterCardItem extends PlantCardItem {
 		checkSunAndSummonPlant(player, stack, item, pos, (l) -> {
 			if(l instanceof ImitaterEntity) {
 				((ImitaterEntity) l).setImitateCard(stack.copy());
-				((ImitaterEntity) l).placeDirection = player.getHorizontalFacing().getOpposite();
+				((ImitaterEntity) l).placeDirection = player.getDirection().getOpposite();
 				Optional<Plants> opt = getImitatePlantType(stack);
 				if(opt.isPresent()) {
 					player.getCapability(CapabilityHandler.PLAYER_DATA_CAPABILITY).ifPresent((data) -> {
@@ -161,7 +161,7 @@ public class ImitaterCardItem extends PlantCardItem {
 	}
 	
 	public static Optional<Plants> getImitatePlantType(ItemStack stack) {
-		ItemStack inv = getInventory(stack).getStackInSlot(0);
+		ItemStack inv = getInventory(stack).getItem(0);
 		if(! (inv.getItem() instanceof PlantCardItem)) return Optional.empty();
 		PlantCardItem item = (PlantCardItem) inv.getItem();
 		return item.isEnjoyCard ? Optional.empty() : Optional.ofNullable(item.plantType);
@@ -185,18 +185,18 @@ public class ImitaterCardItem extends PlantCardItem {
 	}
 	
 	@Override
-	public void addInformation(ItemStack stack, World worldIn, List<ITextComponent> tooltip, ITooltipFlag flagIn) {
+	public void appendHoverText(ItemStack stack, World worldIn, List<ITextComponent> tooltip, ITooltipFlag flagIn) {
 		if(this.isEnjoyCard) {
-			tooltip.add(new TranslationTextComponent("tooltip.pvz.imitater_card.no").applyTextStyle(TextFormatting.RED));
+			tooltip.add(new TranslationTextComponent("tooltip.pvz.imitater_card.no").withStyle(TextFormatting.RED));
 			return ;
 		}
 		Optional<Plants> opt = getImitatePlantType(stack);
 		if(! opt.isPresent() || opt.get() == Plants.IMITATER) {
-			tooltip.add(new TranslationTextComponent("tooltip.pvz.imitater_card.empty").applyTextStyle(TextFormatting.RED));
+			tooltip.add(new TranslationTextComponent("tooltip.pvz.imitater_card.empty").withStyle(TextFormatting.RED));
 			return ;
 		}
-		super.addInformation(stack, worldIn, tooltip, flagIn);
-		tooltip.add(new TranslationTextComponent("tooltip.pvz.imitater_card.yes").appendText(":").appendSibling(new TranslationTextComponent("entity.pvz." + opt.get().toString().toLowerCase())).applyTextStyle(TextFormatting.LIGHT_PURPLE));
+		super.appendHoverText(stack, worldIn, tooltip, flagIn);
+		tooltip.add(new TranslationTextComponent("tooltip.pvz.imitater_card.yes").append(":").append(new TranslationTextComponent("entity.pvz." + opt.get().toString().toLowerCase())).withStyle(TextFormatting.LIGHT_PURPLE));
 	}
 	
 	@Nonnull
@@ -208,7 +208,7 @@ public class ImitaterCardItem extends PlantCardItem {
 	public static Inventory getInventory(ItemStack stack) {
 		return new ItemInventory(stack, 1) {
 			@Override
-			public boolean isItemValidForSlot(int slot, @Nonnull ItemStack stack) {
+			public boolean canPlaceItem(int slot, @Nonnull ItemStack stack) {
 				return isValidImitateSlot(stack);
 			}
 		};

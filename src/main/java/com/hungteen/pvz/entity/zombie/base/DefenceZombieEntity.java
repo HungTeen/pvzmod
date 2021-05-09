@@ -8,7 +8,7 @@ import com.hungteen.pvz.utils.interfaces.IMultiPartZombie;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.monster.MonsterEntity;
 import net.minecraft.util.SoundEvent;
-import net.minecraft.util.math.Vec3d;
+import net.minecraft.util.math.vector.Vector3d;
 import net.minecraft.world.World;
 
 public abstract class DefenceZombieEntity extends PVZZombieEntity implements IMultiPartZombie{
@@ -33,14 +33,14 @@ public abstract class DefenceZombieEntity extends PVZZombieEntity implements IMu
 	public void updateParts() {
 		if(this.part != null) {
 			if(! this.part.shouldContinuePersisting()) {
-				this.world.addEntity(this.part);
+				this.level.addFreshEntity(this.part);
 			}
-			float j = 2 * 3.14159f * this.rotationYaw / 360;
+			float j = 2 * 3.14159f * this.yRot / 360;
 			float dis = this.getPartOffset();
-			Vec3d pos = this.getPositionVec();
-			this.part.prevRotationYaw = this.rotationYaw;
-			this.part.prevRotationPitch = this.rotationPitch;
-			this.part.setLocationAndAngles(pos.getX() - Math.sin(j) * dis, pos.getY() + this.getPartHeightOffset(), pos.getZ() + Math.cos(j) * dis, this.rotationYaw, this.rotationPitch);
+			Vector3d pos = this.position();
+			this.part.yRotO = this.yRot;
+			this.part.xRotO = this.xRot;
+			this.part.moveTo(pos.x() - Math.sin(j) * dis, pos.y() + this.getPartHeightOffset(), pos.z() + Math.cos(j) * dis, this.yRot, this.xRot);
 			this.part.setOwner(this);
 		}
 	}
@@ -66,7 +66,7 @@ public abstract class DefenceZombieEntity extends PVZZombieEntity implements IMu
 		return 0.2f;
 	}
 	
-	public PVZMultiPartEntity[] getParts() {
+	public PVZMultiPartEntity[] getMultiParts() {
 		return new PVZMultiPartEntity[] {this.part};
 	}
 	
@@ -85,5 +85,5 @@ public abstract class DefenceZombieEntity extends PVZZombieEntity implements IMu
 		super.tick();
 		updateParts();
 	}
-	
+
 }

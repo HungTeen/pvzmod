@@ -38,17 +38,17 @@ public class KeyBindRegister {
 	@SubscribeEvent
 	public static void onKeyDown(InputEvent.KeyInputEvent ev) {
 		Minecraft mc = Minecraft.getInstance();
-		if(mc.isGameFocused()) {
-			if(ShowPlayerResources.isPressed()) {
+		if(mc.isWindowActive()) {
+			if(ShowPlayerResources.consumeClick()) {
 				showPlayerResources = ! showPlayerResources;
 			}
-			if(ShowInvasionProgress.isPressed()) {
+			if(ShowInvasionProgress.consumeClick()) {
 				showInvasionProgress = ! showInvasionProgress;
 			}
-			if(LeftToggle.isPressed()) {
+			if(LeftToggle.consumeClick()) {
 				changeToggle(- 1);
 			}
-			if(RightToggle.isPressed()) {
+			if(RightToggle.consumeClick()) {
 				changeToggle(1);
 			}
 //			if(ShowPlayerInventory.isPressed()) {
@@ -63,11 +63,11 @@ public class KeyBindRegister {
 	@SubscribeEvent
 	public static void onMouseDown(InputEvent.MouseInputEvent ev) {
 		Minecraft mc = Minecraft.getInstance();
-		if(mc.isGameFocused() && mc.player != null) {
-			if(mc.player.getRidingEntity() instanceof CobCannonEntity) {
-				CobCannonEntity cob = (CobCannonEntity) mc.player.getRidingEntity();
-				if(mc.player.getHeldItemMainhand().isEmpty() && cob.getCornNum() > 0 && mc.gameSettings.keyBindUseItem.isPressed()) {
-				    PVZPacketHandler.CHANNEL.sendToServer(new EntityInteractPacket(cob.getEntityId(), 0, 0));
+		if(mc.isWindowActive() && mc.player != null) {
+			if(mc.player.getVehicle() instanceof CobCannonEntity) {
+				CobCannonEntity cob = (CobCannonEntity) mc.player.getVehicle();
+				if(mc.player.getMainHandItem().isEmpty() && cob.getCornNum() > 0 && mc.options.keyUse.consumeClick()) {
+				    PVZPacketHandler.CHANNEL.sendToServer(new EntityInteractPacket(cob.getId(), 0, 0));
 				}
 			}
 		}

@@ -7,7 +7,7 @@ import com.hungteen.pvz.utils.enums.Zombies;
 
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
-import net.minecraft.entity.SharedMonsterAttributes;
+import net.minecraft.entity.ai.attributes.Attributes;
 import net.minecraft.entity.monster.MonsterEntity;
 import net.minecraft.pathfinding.PathNodeType;
 import net.minecraft.util.ResourceLocation;
@@ -17,20 +17,20 @@ public class LavaZombieEntity extends SwimmerZombieEntity{
 
 	public LavaZombieEntity(EntityType<? extends MonsterEntity> type, World worldIn) {
 		super(type, worldIn);
-		this.setPathPriority(PathNodeType.LAVA, 1);
+		this.setPathfindingMalus(PathNodeType.LAVA, 1);
 	}
 	
 	@Override
-	protected void registerAttributes() {
-		super.registerAttributes();
-		this.getAttribute(SharedMonsterAttributes.MOVEMENT_SPEED).setBaseValue(ZombieUtil.LITTLE_FAST);
-		this.getAttribute(SharedMonsterAttributes.ATTACK_DAMAGE).setBaseValue(ZombieUtil.LITTLE_LOW);
+	protected void updateAttributes() {
+		super.updateAttributes();
+		this.getAttribute(Attributes.MOVEMENT_SPEED).setBaseValue(ZombieUtil.LITTLE_FAST);
+		this.getAttribute(Attributes.ATTACK_DAMAGE).setBaseValue(ZombieUtil.LITTLE_LOW);
 	}
 	
 	@Override
-	public boolean attackEntityAsMob(Entity entityIn) {
-		entityIn.setFire(5);
-		return super.attackEntityAsMob(entityIn);
+	public boolean doHurtTarget(Entity entityIn) {
+		entityIn.setSecondsOnFire(5);
+		return super.doHurtTarget(entityIn);
 	}
 	
 	@Override
@@ -44,7 +44,7 @@ public class LavaZombieEntity extends SwimmerZombieEntity{
 	}
 	
 	@Override
-	protected ResourceLocation getLootTable() {
+	protected ResourceLocation getDefaultLootTable() {
 		return PVZLoot.LAVA_ZOMBIE;
 	}
 

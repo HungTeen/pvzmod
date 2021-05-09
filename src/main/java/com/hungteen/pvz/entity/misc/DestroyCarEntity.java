@@ -28,8 +28,8 @@ public class DestroyCarEntity extends AbstractOwnerEntity {
 	@Override
 	public void tick() {
 		super.tick();
-		if(! world.isRemote) {
-			if(this.ticksExisted >= 100) {
+		if(! level.isClientSide) {
+			if(this.tickCount >= 100) {
 				this.remove();
 			}
 		}
@@ -48,30 +48,30 @@ public class DestroyCarEntity extends AbstractOwnerEntity {
     	double g = this.getGravityVelocity();
     	double t1 = MathHelper.sqrt(2 * height / g);//go up time
     	double t2 = 0;
-    	if(this.getPosY() + height - target.getPosY() - target.getHeight() >= 0) {//random pult
-    		t2 = MathHelper.sqrt(2 * (this.getPosY() + height - target.getPosY() - target.getHeight()) / g);//go down time
+    	if(this.getY() + height - target.getY() - target.getBbHeight() >= 0) {//random pult
+    		t2 = MathHelper.sqrt(2 * (this.getY() + height - target.getY() - target.getBbHeight()) / g);//go down time
     	}
-    	double dx = target.getPosX() + target.getMotion().getX() * (t1 + t2) - this.getPosX();
-    	double dz = target.getPosZ() + target.getMotion().getZ() * (t1 + t2) - this.getPosZ();
+    	double dx = target.getX() + target.getDeltaMovement().x() * (t1 + t2) - this.getX();
+    	double dz = target.getZ() + target.getDeltaMovement().z() * (t1 + t2) - this.getZ();
     	double dxz = MathHelper.sqrt(dx * dx + dz * dz);
     	double vxz = dxz / (t1 + t2);
     	double vy = g * t1;
-    	this.setMotion(vxz * dx / dxz, vy, vxz * dz / dxz);
+    	this.setDeltaMovement(vxz * dx / dxz, vy, vxz * dz / dxz);
     }
 	
 	private void tickCollision() {
-		if(! world.isRemote && this.ticksExisted % 10 == 0) {
-			EntityUtil.getAttackEntities(this, this.getBoundingBox().grow(0.5F)).forEach((target) -> {
+		if(! level.isClientSide && this.tickCount % 10 == 0) {
+			EntityUtil.getAttackEntities(this, this.getBoundingBox().inflate(0.5F)).forEach((target) -> {
 				if(target instanceof PVZPlantEntity) {
-					target.attackEntityFrom(PVZDamageSource.causeNormalDamage(this, this.getOwner()), EntityUtil.getCurrentMaxHealth((PVZPlantEntity) target) * 2);
+					target.hurt(PVZDamageSource.causeNormalDamage(this, this.getOwner()), EntityUtil.getCurrentMaxHealth((PVZPlantEntity) target) * 2);
 				}
 			});
 		}
 	}
 	
 	@Override
-	public EntitySize getSize(Pose poseIn) {
-		return EntitySize.flexible(2F, 2F);
+	public EntitySize getDimensions(Pose poseIn) {
+		return EntitySize.scalable(2F, 2F);
 	}
 
 }

@@ -23,7 +23,7 @@ public class CrazyDaveRender extends PVZCreatureRender<CrazyDaveEntity>{
 	}
 
 	@Override
-	public ResourceLocation getEntityTexture(CrazyDaveEntity entity) {
+	public ResourceLocation getTextureLocation(CrazyDaveEntity entity) {
 		return StringUtil.prefix("textures/entity/npc/crazy_dave.png");
 	}
 

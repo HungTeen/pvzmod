@@ -25,7 +25,7 @@ public class FireCrackersRender extends PVZEntityRender<FireCrackersEntity> {
 	}
 
 	@Override
-	public ResourceLocation getEntityTexture(FireCrackersEntity entity) {
+	public ResourceLocation getTextureLocation(FireCrackersEntity entity) {
 		return FIRE_CRACKERS_TEX;
 	}
 

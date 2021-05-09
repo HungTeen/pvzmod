@@ -23,7 +23,7 @@ public class GoldMagnetRender extends PVZPlantRender<GoldMagnetEntity> {
 	}
 
 	@Override
-	public ResourceLocation getEntityTexture(GoldMagnetEntity entity) {
+	public ResourceLocation getTextureLocation(GoldMagnetEntity entity) {
 		if(entity.getAttackTime() > 0) return StringUtil.prefix("textures/entity/plant/assist/gold_magnet2.png");
 		return StringUtil.prefix("textures/entity/plant/assist/gold_magnet.png");
 	}

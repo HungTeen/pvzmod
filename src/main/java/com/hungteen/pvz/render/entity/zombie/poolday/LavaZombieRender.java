@@ -17,7 +17,7 @@ public class LavaZombieRender extends AbstractSwimmerRender<LavaZombieEntity>{
 	}
 
 	@Override
-	public ResourceLocation getEntityTexture(LavaZombieEntity entity) {
+	public ResourceLocation getTextureLocation(LavaZombieEntity entity) {
 		float life = entity.getHealth();
 		float max = entity.getMaxHealth();
 		if(life>=max*2/3) return StringUtil.prefix("textures/entity/zombie/poolday/lava_zombie1.png");

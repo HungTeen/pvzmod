@@ -6,7 +6,7 @@ import com.hungteen.pvz.utils.enums.Zombies;
 
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
-import net.minecraft.entity.SharedMonsterAttributes;
+import net.minecraft.entity.ai.attributes.Attributes;
 import net.minecraft.entity.monster.MonsterEntity;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.world.World;
@@ -26,8 +26,8 @@ public class BackupDancerEntity extends UnderGroundZombieEntity{
 	@Override
 	public void tick() {
 		super.tick();
-		if(! world.isRemote) {
-			this.getAttribute(SharedMonsterAttributes.MOVEMENT_SPEED).setBaseValue(this.getAttackTime() > 0 ? 0 : ZombieUtil.LITTLE_SLOW);
+		if(! level.isClientSide) {
+			this.getAttribute(Attributes.MOVEMENT_SPEED).setBaseValue(this.getAttackTime() > 0 ? 0 : ZombieUtil.LITTLE_SLOW);
 		}
 	}
 	
@@ -37,17 +37,17 @@ public class BackupDancerEntity extends UnderGroundZombieEntity{
 		if(this.getAttackTime() < 0) {
 			return ;
 		}
-		if(! world.isRemote) {
+		if(! level.isClientSide) {
 			if(this.needFollow()) {
 			    this.setAttackTime(this.getDancerOwner().getAttackTime());
-			    this.rotationYaw = this.getDancerOwner().rotationYaw;
-			    this.rotationPitch = this.getDancerOwner().rotationPitch;
-			    this.rotationYawHead = this.getDancerOwner().rotationYawHead;
+			    this.yRot = this.getDancerOwner().yRot;
+			    this.xRot = this.getDancerOwner().xRot;
+			    this.yHeadRot = this.getDancerOwner().yHeadRot;
 		    } else {
 			    if(this.getAttackTime() == 0) {
-			    	if(this.walkCD == 0 && this.getRNG().nextFloat() < 0.05f) {
+			    	if(this.walkCD == 0 && this.getRandom().nextFloat() < 0.05f) {
 			    	    this.setAttackTime(DANCE_CD);
-			    	    this.walkCD = this.getRNG().nextInt(this.maxWalkCD - this.minWalkCD + 1) + this.minWalkCD;
+			    	    this.walkCD = this.getRandom().nextInt(this.maxWalkCD - this.minWalkCD + 1) + this.minWalkCD;
 			    	} else if(this.walkCD > 0) {
 			    		-- this.walkCD;
 			    	}
@@ -72,7 +72,7 @@ public class BackupDancerEntity extends UnderGroundZombieEntity{
 	}
     
     public DancingZombieEntity getDancerOwner() {
-    	Entity entity = this.world.getEntityByID(ownerId);
+    	Entity entity = this.level.getEntity(ownerId);
     	if(entity instanceof DancingZombieEntity) {
     		return (DancingZombieEntity) entity;
     	}
@@ -80,8 +80,8 @@ public class BackupDancerEntity extends UnderGroundZombieEntity{
     }
 
     @Override
-    public void readAdditional(CompoundNBT compound) {
-    	super.readAdditional(compound);
+    public void readAdditionalSaveData(CompoundNBT compound) {
+    	super.readAdditionalSaveData(compound);
     	if(compound.contains("dancer_owner_id")) {
     		this.ownerId = compound.getInt("dancer_owner_id");
     	}
@@ -91,8 +91,8 @@ public class BackupDancerEntity extends UnderGroundZombieEntity{
     }
     
     @Override
-    public void writeAdditional(CompoundNBT compound) {
-    	super.writeAdditional(compound);
+    public void addAdditionalSaveData(CompoundNBT compound) {
+    	super.addAdditionalSaveData(compound);
     	compound.putInt("dancer_owner_id", this.ownerId);
     	compound.putInt("zombie_walk_cd", this.walkCD);
     }

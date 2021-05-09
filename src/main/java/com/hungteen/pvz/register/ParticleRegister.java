@@ -11,7 +11,7 @@ import net.minecraftforge.registries.ForgeRegistries;
 public class ParticleRegister {
 
 	//don't forget register particle factory in client register
-	public static final DeferredRegister<ParticleType<?>> PARTICLE_TYPES = new DeferredRegister<>(ForgeRegistries.PARTICLE_TYPES, PVZMod.MOD_ID);
+	public static final DeferredRegister<ParticleType<?>> PARTICLE_TYPES =  DeferredRegister.create(ForgeRegistries.PARTICLE_TYPES, PVZMod.MOD_ID);
 	
 	public static final RegistryObject<BasicParticleType> RED_BOMB = PARTICLE_TYPES.register("red_bomb", ()->{return new BasicParticleType(false);});
 	public static final RegistryObject<BasicParticleType> YELLOW_BOMB = PARTICLE_TYPES.register("yellow_bomb", ()->{return new BasicParticleType(false);});

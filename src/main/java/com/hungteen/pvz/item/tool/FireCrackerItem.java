@@ -10,7 +10,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.Hand;
 import net.minecraft.util.SoundEvents;
-import net.minecraft.util.math.Vec3d;
+import net.minecraft.util.math.vector.Vector3d;
 import net.minecraft.world.World;
 
 public class FireCrackerItem extends Item {
@@ -18,25 +18,25 @@ public class FireCrackerItem extends Item {
 	private static final int CD = 10;
 	
 	public FireCrackerItem() {
-		super(new Item.Properties().group(GroupRegister.PVZ_MISC));
+		super(new Item.Properties().tab(GroupRegister.PVZ_MISC));
 	}
 	
 	@Override
-	public ActionResult<ItemStack> onItemRightClick(World worldIn, PlayerEntity playerIn, Hand handIn) {
-		ItemStack stack = playerIn.getHeldItem(handIn);
-		if(! worldIn.isRemote && handIn == Hand.MAIN_HAND) {
+	public ActionResult<ItemStack> use(World worldIn, PlayerEntity playerIn, Hand handIn) {
+		ItemStack stack = playerIn.getItemInHand(handIn);
+		if(! worldIn.isClientSide && handIn == Hand.MAIN_HAND) {
 			FireCrackerEntity entity = new FireCrackerEntity(worldIn, playerIn);
-			Vec3d vec = playerIn.getLookVec();
-			entity.setPosition(playerIn.getPosX() + vec.x, playerIn.getPosY() + playerIn.getEyeHeight() + vec.y, playerIn.getPosZ() + vec.z);
+			Vector3d vec = playerIn.getLookAngle();
+			entity.setPos(playerIn.getX() + vec.x, playerIn.getY() + playerIn.getEyeHeight() + vec.y, playerIn.getZ() + vec.z);
 			entity.shoot(vec);
-			worldIn.addEntity(entity);
-			EntityUtil.playSound(playerIn, SoundEvents.ENTITY_SNOWBALL_THROW);
-			if(! playerIn.abilities.isCreativeMode) {
+			worldIn.addFreshEntity(entity);
+			EntityUtil.playSound(playerIn, SoundEvents.SNOWBALL_THROW);
+			if(! playerIn.abilities.instabuild) {
 				stack.shrink(1);
 			}
-			playerIn.getCooldownTracker().setCooldown(this, CD);
+			playerIn.getCooldowns().addCooldown(this, CD);
 		}
-		return ActionResult.resultSuccess(stack);
+		return ActionResult.success(stack);
 	}
 
 }

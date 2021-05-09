@@ -20,14 +20,14 @@ import net.minecraftforge.fml.network.NetworkHooks;
 public class FragmentSpliceBlock extends Block {
 
 	public FragmentSpliceBlock() {
-		super(Properties.from(BlockRegister.STEEL_BLOCK.get()));
+		super(Properties.copy(BlockRegister.STEEL_BLOCK.get()));
 	}
 	
 	@Override
-	public ActionResultType onBlockActivated(BlockState state, World worldIn, BlockPos pos, PlayerEntity player,
+	public ActionResultType use(BlockState state, World worldIn, BlockPos pos, PlayerEntity player,
 			Hand handIn, BlockRayTraceResult hit) {
-		if (! worldIn.isRemote && handIn == Hand.MAIN_HAND) {
-			FragmentSpliceTileEntity te = (FragmentSpliceTileEntity) worldIn.getTileEntity(pos);
+		if (! worldIn.isClientSide && handIn == Hand.MAIN_HAND) {
+			FragmentSpliceTileEntity te = (FragmentSpliceTileEntity) worldIn.getBlockEntity(pos);
 		    NetworkHooks.openGui((ServerPlayerEntity) player, te, pos);
 		}
 		return ActionResultType.SUCCESS;
@@ -45,17 +45,17 @@ public class FragmentSpliceBlock extends Block {
 	
 	@SuppressWarnings("deprecation")
 	@Override
-	public void onReplaced(BlockState state, World worldIn, BlockPos pos, BlockState newState, boolean isMoving) {
+	public void onRemove(BlockState state, World worldIn, BlockPos pos, BlockState newState, boolean isMoving) {
 		if (state.getBlock() != newState.getBlock()) {
-			TileEntity tileentity = worldIn.getTileEntity(pos);
+			TileEntity tileentity = worldIn.getBlockEntity(pos);
 			if (tileentity instanceof FragmentSpliceTileEntity) {
-				FragmentSpliceTileEntity te = (FragmentSpliceTileEntity) worldIn.getTileEntity(pos);
+				FragmentSpliceTileEntity te = (FragmentSpliceTileEntity) worldIn.getBlockEntity(pos);
 				for (int i = 0; i < te.handler.getSlots(); ++i) {
-					InventoryHelper.spawnItemStack(worldIn, pos.getX(), pos.getY(), pos.getZ(),
+					InventoryHelper.dropItemStack(worldIn, pos.getX(), pos.getY(), pos.getZ(),
 							te.handler.getStackInSlot(i));
 				}
 			}
-			super.onReplaced(state, worldIn, pos, newState, isMoving);
+			super.onRemove(state, worldIn, pos, newState, isMoving);
 		}
 	}
 

@@ -18,7 +18,7 @@ public class ZombieHandEntity extends AbstractOwnerEntity {
 	public ZombieHandEntity(EntityType<? extends Entity> entityTypeIn, World worldIn) {
 		super(entityTypeIn, worldIn);
 		this.setInvulnerable(true);
-		this.noClip = true;
+		this.noPhysics = true;
 	}
 
 	@Override
@@ -27,7 +27,7 @@ public class ZombieHandEntity extends AbstractOwnerEntity {
 		if(this.lifeTick < maxLifeTick) {
 			++ this.lifeTick;
 		} else {
-			if(! this.world.isRemote) {
+			if(! this.level.isClientSide) {
 			    this.performAttack();
 			    this.remove();
 			}
@@ -37,8 +37,8 @@ public class ZombieHandEntity extends AbstractOwnerEntity {
 	protected void performAttack() {
 		for(Entity target : EntityUtil.getAttackEntities(this, EntityUtil.getEntityAABB(this, 0.5f, 1f))) {
 			if(target instanceof LivingEntity) {
-				target.attackEntityFrom(PVZDamageSource.causeNormalDamage(this, this.owner), getAttackDamage((LivingEntity) target));
-			    target.setPosition(target.getPosX(), target.getPosY() - 3, target.getPosZ());
+				target.hurt(PVZDamageSource.causeNormalDamage(this, this.owner), getAttackDamage((LivingEntity) target));
+			    target.setPos(target.getX(), target.getY() - 3, target.getZ());
 			}
 		}
 	}
@@ -57,17 +57,17 @@ public class ZombieHandEntity extends AbstractOwnerEntity {
 	}
 	
 	@Override
-	public boolean canBeCollidedWith() {
+	public boolean isPickable() {
 		return false;
 	}
 	
 	@Override
-	public EntitySize getSize(Pose poseIn) {
+	public EntitySize getDimensions(Pose poseIn) {
 		return new EntitySize(0.4f, 0.5f, false);
 	}
 
 	@Override
-	public boolean hasNoGravity() {
+	public boolean isNoGravity() {
 		return true;
 	}
 	

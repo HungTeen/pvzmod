@@ -6,7 +6,7 @@ import net.minecraft.client.renderer.entity.EntityRendererManager;
 import net.minecraft.client.renderer.entity.MobRenderer;
 import net.minecraft.client.renderer.entity.model.EntityModel;
 import net.minecraft.entity.MobEntity;
-import net.minecraft.util.math.Vec3d;
+import net.minecraft.util.math.vector.Vector3d;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 
@@ -19,17 +19,17 @@ public abstract class PVZCreatureRender<T extends MobEntity> extends MobRenderer
 	}
 
 	@Override
-	protected void preRenderCallback(T entity, MatrixStack matrixStackIn, float partialTickTime) {
+	protected void scale(T entity, MatrixStack matrixStackIn, float partialTickTime) {
 		float sz = getScaleByEntity(entity);
 		matrixStackIn.scale(sz, sz, sz);
-		Vec3d vec = this.getTranslateVec(entity);
+		Vector3d vec = this.getTranslateVec(entity);
 		matrixStackIn.translate(vec.x, vec.y, vec.z);
 	}
 	
 	protected abstract float getScaleByEntity(T entity);
 	
-	public Vec3d getTranslateVec(T entity) {
-		return new Vec3d(0, 0, 0);
+	public Vector3d getTranslateVec(T entity) {
+		return new Vector3d(0, 0, 0);
 	}
 
 }

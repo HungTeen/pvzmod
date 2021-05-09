@@ -25,7 +25,7 @@ public class PeaShooterZombieEntity extends AbstractZombotanyEntity {
 	@Override
 	public void normalZombieTick() {
 		super.normalZombieTick();
-		if(! world.isRemote) {
+		if(! level.isClientSide) {
 			++ shootTick;
 			if(this.shootTick >= this.getFixedShootCD()) {
 				this.setAttackTime(this.getShootNum());
@@ -43,13 +43,13 @@ public class PeaShooterZombieEntity extends AbstractZombotanyEntity {
 	}
 	
 	private void shootPea() {
-		LivingEntity target = this.getAttackTarget();
+		LivingEntity target = this.getTarget();
 		if(target == null) return ;
-		PeaEntity pea = new PeaEntity(world, this, PeaEntity.Type.NORMAL, PeaEntity.State.NORMAL);
-		pea.setPosition(getPosX(), getPosY() + this.getEyeHeight(), getPosZ());
+		PeaEntity pea = new PeaEntity(level, this, PeaEntity.Type.NORMAL, PeaEntity.State.NORMAL);
+		pea.setPos(getX(), getY() + this.getEyeHeight(), getZ());
 		pea.shootToTarget(target, 1.5F);
-		world.addEntity(pea);
-		EntityUtil.playSound(this, SoundEvents.ENTITY_SNOW_GOLEM_SHOOT);
+		level.addFreshEntity(pea);
+		EntityUtil.playSound(this, SoundEvents.SNOW_GOLEM_SHOOT);
 	}
 	
 	@Override
@@ -59,8 +59,8 @@ public class PeaShooterZombieEntity extends AbstractZombotanyEntity {
 
 	protected int getFixedShootCD() {
 		int now = this.getShootCD();
-		if (this.isPotionActive(EffectRegister.COLD_EFFECT.get())) {
-			int lvl = this.getActivePotionEffect(EffectRegister.COLD_EFFECT.get()).getAmplifier();
+		if (this.hasEffect(EffectRegister.COLD_EFFECT.get())) {
+			int lvl = this.getEffect(EffectRegister.COLD_EFFECT.get()).getAmplifier();
 			now += 3 * lvl;
 		}
 		return now;
@@ -75,21 +75,21 @@ public class PeaShooterZombieEntity extends AbstractZombotanyEntity {
 	}
 	
 	@Override
-	public void readAdditional(CompoundNBT compound) {
-		super.readAdditional(compound);
+	public void readAdditionalSaveData(CompoundNBT compound) {
+		super.readAdditionalSaveData(compound);
 		if(compound.contains("shoot_tick")) {
 			this.shootTick = compound.getInt("shoot_tick");
 		}
 	}
 	
 	@Override
-	public void writeAdditional(CompoundNBT compound) {
-		super.writeAdditional(compound);
+	public void addAdditionalSaveData(CompoundNBT compound) {
+		super.addAdditionalSaveData(compound);
 		compound.putInt("shoot_tick", this.shootTick);
 	}
 	
 	@Override
-	protected ResourceLocation getLootTable() {
+	protected ResourceLocation getDefaultLootTable() {
 		return PVZLoot.PEASHOOTER_ZOMBIE;
 	}
 	

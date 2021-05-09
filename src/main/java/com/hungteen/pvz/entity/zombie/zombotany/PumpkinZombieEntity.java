@@ -6,7 +6,7 @@ import com.hungteen.pvz.utils.enums.Zombies;
 
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
-import net.minecraft.entity.SharedMonsterAttributes;
+import net.minecraft.entity.ai.attributes.Attributes;
 import net.minecraft.entity.monster.MonsterEntity;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.world.World;
@@ -18,17 +18,17 @@ public class PumpkinZombieEntity extends AbstractZombotanyEntity {
 	}
 
 	@Override
-	protected void registerAttributes() {
-		super.registerAttributes();
-		this.getAttribute(SharedMonsterAttributes.MOVEMENT_SPEED).setBaseValue(ZombieUtil.SLOW);
+	protected void updateAttributes() {
+		super.updateAttributes();
+		this.getAttribute(Attributes.MOVEMENT_SPEED).setBaseValue(ZombieUtil.SLOW);
 	}
 	
 	@Override
-	public boolean attackEntityAsMob(Entity entityIn) {
-		if(!world.isRemote) {
+	public boolean doHurtTarget(Entity entityIn) {
+		if(!level.isClientSide) {
 			this.heal(20);
 		}
-		return super.attackEntityAsMob(entityIn);
+		return super.doHurtTarget(entityIn);
 	}
 	
 	@Override
@@ -42,7 +42,7 @@ public class PumpkinZombieEntity extends AbstractZombotanyEntity {
 	}
 	
 	@Override
-	protected ResourceLocation getLootTable() {
+	protected ResourceLocation getDefaultLootTable() {
 		return PVZLoot.PUMPKIN_ZOMBIE;
 	}
 

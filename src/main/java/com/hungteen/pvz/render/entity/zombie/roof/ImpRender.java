@@ -26,7 +26,7 @@ public class ImpRender extends PVZZombieRender<ImpEntity> {
 	}
 
 	@Override
-	public ResourceLocation getEntityTexture(ImpEntity entity) {
+	public ResourceLocation getTextureLocation(ImpEntity entity) {
 		return IMP_TEX;
 	}
 

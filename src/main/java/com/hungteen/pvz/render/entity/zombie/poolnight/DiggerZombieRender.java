@@ -7,7 +7,7 @@ import com.hungteen.pvz.utils.StringUtil;
 
 import net.minecraft.client.renderer.entity.EntityRendererManager;
 import net.minecraft.util.ResourceLocation;
-import net.minecraft.util.math.Vec3d;
+import net.minecraft.util.math.vector.Vector3d;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 
@@ -25,15 +25,15 @@ public class DiggerZombieRender extends PVZZombieRender<DiggerZombieEntity>{
 	}
 
 	@Override
-	public Vec3d getTranslateVec(DiggerZombieEntity entity) {
+	public Vector3d getTranslateVec(DiggerZombieEntity entity) {
 		double maxOffset = 4D;
 		int now = entity.getAnimTime();
 		int max = DiggerZombieEntity.MAX_ANIM_TIME;
-		return new Vec3d(0, maxOffset * ( 1 - now * 1.0D / max), 0);
+		return new Vector3d(0, maxOffset * ( 1 - now * 1.0D / max), 0);
 	}
 	
 	@Override
-	public ResourceLocation getEntityTexture(DiggerZombieEntity entity) {
+	public ResourceLocation getTextureLocation(DiggerZombieEntity entity) {
 		return StringUtil.prefix("textures/entity/zombie/poolnight/digger_zombie.png");
 	}
 

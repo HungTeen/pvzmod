@@ -18,21 +18,21 @@ public class ProducerGenGoal extends Goal{
 		}
 		this.producer=entity;
 		this.plant=(PlantProducerEntity) entity;
-		this.setMutexFlags(EnumSet.of(Goal.Flag.TARGET));
+		this.setFlags(EnumSet.of(Goal.Flag.TARGET));
 	}
 	
 	@Override
-	public boolean shouldExecute() {
+	public boolean canUse() {
 		return true;
 	}
 
 	@Override
-	public boolean shouldContinueExecuting() {
-		return this.shouldExecute();
+	public boolean canContinueToUse() {
+		return this.canUse();
 	}
 	
 	@Override
-	public void resetTask() {
+	public void stop() {
 		
 	}
 	

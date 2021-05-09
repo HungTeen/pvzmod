@@ -21,15 +21,15 @@ import net.minecraft.network.datasync.DataSerializers;
 import net.minecraft.network.datasync.EntityDataManager;
 import net.minecraft.util.math.EntityRayTraceResult;
 import net.minecraft.util.math.RayTraceResult;
-import net.minecraft.util.math.Vec3d;
+import net.minecraft.util.math.vector.Vector3d;
 import net.minecraft.world.World;
 
 public class MetalItemEntity extends PVZItemBulletEntity {
 
-	private static final DataParameter<Integer> METAL_TYPE = EntityDataManager.createKey(MetalItemEntity.class,
-			DataSerializers.VARINT);
-	private static final DataParameter<Integer> METAL_STATE = EntityDataManager.createKey(MetalItemEntity.class,
-			DataSerializers.VARINT);
+	private static final DataParameter<Integer> METAL_TYPE = EntityDataManager.defineId(MetalItemEntity.class,
+			DataSerializers.INT);
+	private static final DataParameter<Integer> METAL_STATE = EntityDataManager.defineId(MetalItemEntity.class,
+			DataSerializers.INT);
 	private ItemStack stack = null;
 	
 	public MetalItemEntity(EntityType<?> type, World worldIn) {
@@ -42,18 +42,18 @@ public class MetalItemEntity extends PVZItemBulletEntity {
 	}
 	
 	@Override
-	protected void registerData() {
-		dataManager.register(METAL_TYPE, MetalTypes.EMPTY.ordinal());
-		dataManager.register(METAL_STATE, MetalStates.ABSORB.ordinal());
+	protected void defineSynchedData() {
+		entityData.define(METAL_TYPE, MetalTypes.EMPTY.ordinal());
+		entityData.define(METAL_STATE, MetalStates.ABSORB.ordinal());
 	}
 	
 	@Override
 	public void tick() {
 		super.tick();
-		this.noClip = (this.getMetalState() != MetalStates.SHOOT);
-		if(! world.isRemote && this.getThrower() != null && this.getThrower() instanceof MagnetShroomEntity) {
+		this.noPhysics = (this.getMetalState() != MetalStates.SHOOT);
+		if(! level.isClientSide && this.getThrower() != null && this.getThrower() instanceof MagnetShroomEntity) {
 			MagnetShroomEntity thrower = (MagnetShroomEntity) this.getThrower();
-			if(this.getDistanceSq(thrower) <= 3) {
+			if(this.distanceToSqr(thrower) <= 3) {
 				// near the thrower
 				if(this.getMetalState() == MetalStates.ABSORB) {
 					thrower.setMetalType(getMetalType());
@@ -63,30 +63,30 @@ public class MetalItemEntity extends PVZItemBulletEntity {
 				}
 			}
 			if(this.getMetalState() == MetalStates.BULLET || this.getMetalState() == MetalStates.ABSORB) {
-				Vec3d vec = thrower.getPositionVec().add(0, thrower.getHeight(), 0).subtract(this.getPositionVec());
+				Vector3d vec = thrower.position().add(0, thrower.getBbHeight(), 0).subtract(this.position());
 			    double speed = 0.8D;
-			    vec = vec.normalize().mul(speed, speed, speed);
-			    this.setMotion(vec);
+			    vec = vec.normalize().multiply(speed, speed, speed);
+			    this.setDeltaMovement(vec);
 			} else if(this.getMetalState() == MetalStates.WAIT){
 				LivingEntity target = getAttackTarget(thrower);
 				if(target == null) {
-					this.setMotion(0, 0, 0);
+					this.setDeltaMovement(0, 0, 0);
 					return ;
 				}
 				this.setMetalState(MetalStates.SHOOT);
-				Vec3d vec = target.getPositionVec().add(0, target.getEyeHeight(), 0).subtract(this.getPositionVec());
+				Vector3d vec = target.position().add(0, target.getEyeHeight(), 0).subtract(this.position());
 				this.shootPea(vec.x, vec.y, vec.z, 1.4F);
 			}
 		}
 	}
 	
 	private LivingEntity getAttackTarget(MagnetShroomEntity thrower) {
-		if(this.ticksExisted % 50 != 0) return null;
-		List<LivingEntity> list = world.getEntitiesWithinAABB(LivingEntity.class, EntityUtil.getEntityAABB(thrower, 20, 20), (entity)->{
+		if(this.tickCount % 50 != 0) return null;
+		List<LivingEntity> list = level.getEntitiesOfClass(LivingEntity.class, EntityUtil.getEntityAABB(thrower, 20, 20), (entity)->{
 			return EntityUtil.checkCanEntityAttack(thrower, entity);
 		});
 		if(list.size() == 0) return null;
-		int pos = thrower.getRNG().nextInt(list.size());
+		int pos = thrower.getRandom().nextInt(list.size());
 		return list.get(pos);
 	}
 	
@@ -96,13 +96,13 @@ public class MetalItemEntity extends PVZItemBulletEntity {
 		if (result.getType() == RayTraceResult.Type.ENTITY) {
 			Entity target = ((EntityRayTraceResult) result).getEntity();
 			if (this.getMetalState() == MetalStates.SHOOT && checkCanAttack(target)) {
-				target.hurtResistantTime = 0;
-				target.attackEntityFrom(PVZDamageSource.causeAppeaseDamage(this, this.getThrower()), getAttackDamage());
+				target.invulnerableTime = 0;
+				target.hurt(PVZDamageSource.causeAppeaseDamage(this, this.getThrower()), getAttackDamage());
 				EntityUtil.playSound(this, SoundRegister.METAL_HIT.get());
 				flag = true;
 			}
 		}
-		this.world.setEntityState(this, (byte) 3);
+		this.level.broadcastEntityEvent(this, (byte) 3);
 		if (flag || ! this.checkLive(result)) {
 			this.remove();
 		}
@@ -119,7 +119,7 @@ public class MetalItemEntity extends PVZItemBulletEntity {
 	}
 	
 	@Override
-	public EntitySize getSize(Pose poseIn) {
+	public EntitySize getDimensions(Pose poseIn) {
 		return new EntitySize(0.2f, 0.2f, false);
 	}
 
@@ -139,15 +139,15 @@ public class MetalItemEntity extends PVZItemBulletEntity {
 	}
 	
 	@Override
-	public void writeAdditional(CompoundNBT compound) {
-		super.writeAdditional(compound);
+	public void addAdditionalSaveData(CompoundNBT compound) {
+		super.addAdditionalSaveData(compound);
 		compound.putInt("metal_type", this.getMetalType().ordinal());
 		compound.putInt("metal_state", this.getMetalState().ordinal());
 	}
 
 	@Override
-	public void readAdditional(CompoundNBT compound) {
-		super.readAdditional(compound);
+	public void readAdditionalSaveData(CompoundNBT compound) {
+		super.readAdditionalSaveData(compound);
 		if(compound.contains("metal_type")) {
 			this.setMetalType(MetalTypes.values()[compound.getInt("metal_type")]);
 		}
@@ -157,19 +157,19 @@ public class MetalItemEntity extends PVZItemBulletEntity {
 	}
 
 	public MetalTypes getMetalType() {
-		return MetalTypes.values()[dataManager.get(METAL_TYPE)];
+		return MetalTypes.values()[entityData.get(METAL_TYPE)];
 	}
 
 	public void setMetalType(MetalTypes type) {
-		dataManager.set(METAL_TYPE, type.ordinal());
+		entityData.set(METAL_TYPE, type.ordinal());
 	}
 	
 	public MetalStates getMetalState() {
-		return MetalStates.values()[dataManager.get(METAL_STATE)];
+		return MetalStates.values()[entityData.get(METAL_STATE)];
 	}
 
 	public void setMetalState(MetalStates type) {
-		dataManager.set(METAL_STATE, type.ordinal());
+		entityData.set(METAL_STATE, type.ordinal());
 	}
 	
 	public enum MetalStates {

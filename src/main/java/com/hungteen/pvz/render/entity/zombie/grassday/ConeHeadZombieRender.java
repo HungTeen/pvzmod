@@ -17,7 +17,7 @@ public class ConeHeadZombieRender extends AbstractNormalRender<ConeHeadZombieEnt
 	}
 
 	@Override
-	public ResourceLocation getEntityTexture(ConeHeadZombieEntity entity) {
+	public ResourceLocation getTextureLocation(ConeHeadZombieEntity entity) {
 		return StringUtil.prefix("textures/entity/zombie/grassday/conehead_zombie.png");
 	}
 

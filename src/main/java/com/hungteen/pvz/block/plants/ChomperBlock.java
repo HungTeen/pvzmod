@@ -33,12 +33,12 @@ import net.minecraftforge.common.ToolType;
 
 public class ChomperBlock extends BushBlock{
 
-	public static final DirectionProperty FACING = HorizontalBlock.HORIZONTAL_FACING;
-	private static final VoxelShape SHAPE = Block.makeCuboidShape(3.0D, 0.0D, 3.0D, 13.0D, 10.0D, 13.0D);
+	public static final DirectionProperty FACING = HorizontalBlock.FACING;
+	private static final VoxelShape SHAPE = Block.box(3.0D, 0.0D, 3.0D, 13.0D, 10.0D, 13.0D);
 	
 	public ChomperBlock() {
-		super(Block.Properties.from(Blocks.PUMPKIN).doesNotBlockMovement().notSolid().harvestTool(ToolType.AXE).harvestLevel(2));
-		this.setDefaultState(this.stateContainer.getBaseState().with(FACING, Direction.NORTH));
+		super(Block.Properties.copy(Blocks.PUMPKIN).noCollission().noOcclusion().harvestTool(ToolType.AXE).harvestLevel(2));
+		this.registerDefaultState(this.stateDefinition.any().setValue(FACING, Direction.NORTH));
 	}
 	
 	@Override
@@ -47,30 +47,31 @@ public class ChomperBlock extends BushBlock{
 	}
 
 	@Override
-	public void onEntityCollision(BlockState state, World worldIn, BlockPos pos, Entity entityIn) {
+	public void entityInside(BlockState state, World worldIn, BlockPos pos, Entity entityIn) {
 		if(entityIn instanceof AnimalEntity||entityIn instanceof PlayerEntity) {
-			if(!worldIn.isRemote) {
+			if(!worldIn.isClientSide) {
 				if(this.RANDOM.nextInt(50)==0) {
-					entityIn.attackEntityFrom(PVZDamageSource.CHOMPER_PLANT, 12);
+					entityIn.hurt(PVZDamageSource.CHOMPER_PLANT, 12);
 				}
 			}
 		}
 	}
 	
+	@SuppressWarnings("deprecation")
 	@Override
-	public ActionResultType onBlockActivated(BlockState state, World worldIn, BlockPos pos, PlayerEntity player,
+	public ActionResultType use(BlockState state, World worldIn, BlockPos pos, PlayerEntity player,
 			Hand handIn, BlockRayTraceResult hit) {
-		if(player.getHeldItem(handIn).getItem()==Items.BONE_MEAL) {
+		if(player.getItemInHand(handIn).getItem()==Items.BONE_MEAL) {
 			for(int i=-2;i<=2;i++) {
-				if(worldIn.isRemote) break;
+				if(worldIn.isClientSide) break;
 				for(int j=-1;j<=1;j++) {
 					for(int k=-2;k<=2;k++) {
-						BlockPos tmp = pos.add(i, j, k);
-						if(isValidGround(worldIn.getBlockState(tmp), worldIn, tmp)) {
-							if(worldIn.isAirBlock(tmp.up())){
+						BlockPos tmp = pos.offset(i, j, k);
+						if(mayPlaceOn(worldIn.getBlockState(tmp), worldIn, tmp)) {
+							if(worldIn.isEmptyBlock(tmp.above())){
 								int chance=PVZConfig.COMMON_CONFIG.BlockSettings.ChomperGrowChance.get();
 								if(this.RANDOM.nextInt(chance)==0) {
-									worldIn.setBlockState(tmp.up(), BlockRegister.CHOMPER.get().getDefaultState().rotate(Rotation.randomRotation(RANDOM)));
+									worldIn.setBlockAndUpdate(tmp.above(), BlockRegister.CHOMPER.get().defaultBlockState().rotate(Rotation.getRandom(RANDOM)));
 								}
 							}
 						}
@@ -85,22 +86,23 @@ public class ChomperBlock extends BushBlock{
 	
 	@Override
 	public BlockState getStateForPlacement(BlockItemUseContext context) {
-		Direction direction = context.getPlacementHorizontalFacing().getOpposite();
-		return this.getDefaultState().with(FACING, direction);
+		Direction direction = context.getHorizontalDirection().getOpposite();
+		return this.defaultBlockState().setValue(FACING, direction);
 	}
 	
 	@Override
 	public BlockState rotate(BlockState state, Rotation rot) {
-		return state.with(FACING, rot.rotate(state.get(FACING)));
+		return state.setValue(FACING, rot.rotate(state.getValue(FACING)));
 	}
 	
+	@SuppressWarnings("deprecation")
 	@Override
 	public BlockState mirror(BlockState state, Mirror mirrorIn) {
-		return state.rotate(mirrorIn.toRotation(state.get(FACING)));
+		return state.rotate(mirrorIn.getRotation(state.getValue(FACING)));
 	}
 	
 	@Override
-	protected void fillStateContainer(Builder<Block, BlockState> builder) {
+	protected void createBlockStateDefinition(Builder<Block, BlockState> builder) {
 		builder.add(FACING);
 	}
 	

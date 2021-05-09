@@ -23,7 +23,7 @@ public class SadGargantuarRender extends PVZZombieRender<SadGargantuarEntity> {
 	}
 
 	@Override
-	public ResourceLocation getEntityTexture(SadGargantuarEntity entity) {
+	public ResourceLocation getTextureLocation(SadGargantuarEntity entity) {
 		return GargantuarRender.GARGANTUAR_TEX;
 	}
 

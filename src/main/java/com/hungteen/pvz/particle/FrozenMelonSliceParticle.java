@@ -3,20 +3,20 @@ package com.hungteen.pvz.particle;
 import net.minecraft.client.particle.IAnimatedSprite;
 import net.minecraft.client.particle.IParticleFactory;
 import net.minecraft.client.particle.Particle;
+import net.minecraft.client.world.ClientWorld;
 import net.minecraft.particles.BasicParticleType;
-import net.minecraft.world.World;
 
 public class FrozenMelonSliceParticle extends PVZNormalParticle{
 
-	public FrozenMelonSliceParticle(World world, double x, double y, double z, double xSpeed, double ySpeed, double zSpeed) {
+	public FrozenMelonSliceParticle(ClientWorld world, double x, double y, double z, double xSpeed, double ySpeed, double zSpeed) {
 		super(world, x, y, z, xSpeed, ySpeed, zSpeed);
-		this.particleScale = 0.25f;
-		this.maxAge = this.rand.nextInt(20) + 10;
-		this.canCollide = true;
-		this.particleGravity = 0.1f;
-		this.motionX = world.rand.nextFloat() - 0.5;
-		this.motionY = - world.rand.nextFloat() ;
-		this.motionZ = world.rand.nextFloat() - 0.5;
+		this.quadSize = 0.25f;
+		this.lifetime = this.random.nextInt(20) + 10;
+		this.hasPhysics = true;
+		this.gravity = 0.1f;
+		this.xd = world.random.nextFloat() - 0.5;
+		this.yd = - world.random.nextFloat() ;
+		this.zd = world.random.nextFloat() - 0.5;
 	}
 
 	public static class Factory implements IParticleFactory<BasicParticleType> {
@@ -28,10 +28,10 @@ public class FrozenMelonSliceParticle extends PVZNormalParticle{
 		}
 		
 		@Override
-		public Particle makeParticle(BasicParticleType typeIn, World worldIn, double x, double y, double z,
+		public Particle createParticle(BasicParticleType typeIn, ClientWorld worldIn, double x, double y, double z,
 				double xSpeed, double ySpeed, double zSpeed) {
 			FrozenMelonSliceParticle particle = new FrozenMelonSliceParticle(worldIn, x, y, z, xSpeed, ySpeed, zSpeed);
-			particle.selectSpriteRandomly(this.sprite);
+			particle.pickSprite(this.sprite);
 			return particle;
 		}
 

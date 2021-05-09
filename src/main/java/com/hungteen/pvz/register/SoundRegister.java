@@ -11,7 +11,7 @@ import net.minecraftforge.registries.ForgeRegistries;
 public class SoundRegister {
 
 	//https://minecraft.gamepedia.com/Sounds.json#Java_Edition_values
-	public static final DeferredRegister<SoundEvent> SOUNDS = new DeferredRegister<>(ForgeRegistries.SOUND_EVENTS, PVZMod.MOD_ID);
+	public static final DeferredRegister<SoundEvent> SOUNDS = DeferredRegister.create(ForgeRegistries.SOUND_EVENTS, PVZMod.MOD_ID);
 	
 	//spawn
 	public static final RegistryObject<SoundEvent> COIN_DROP = registerSound("coin_drop");

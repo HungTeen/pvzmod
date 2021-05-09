@@ -23,7 +23,7 @@ public class SpikeWeedRender extends PVZPlantRender<SpikeWeedEntity>{
 	}
 
 	@Override
-	public ResourceLocation getEntityTexture(SpikeWeedEntity entity) {
+	public ResourceLocation getTextureLocation(SpikeWeedEntity entity) {
 		return StringUtil.prefix("textures/entity/plant/spear/spike_weed.png");
 	}
 

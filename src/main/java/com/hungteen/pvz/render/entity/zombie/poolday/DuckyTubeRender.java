@@ -20,7 +20,7 @@ public class DuckyTubeRender extends PVZZombieToolRender<DuckyTubeEntity>{
 	}
 
 	@Override
-	public ResourceLocation getEntityTexture(DuckyTubeEntity entity) {
+	public ResourceLocation getTextureLocation(DuckyTubeEntity entity) {
 		return StringUtil.prefix("textures/entity/zombie/poolday/ducky_tube.png");
 	}
 

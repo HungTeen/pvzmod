@@ -25,7 +25,7 @@ public class NutEntity extends PVZItemBulletEntity {
 	}
 	
 	public void shoot(double x, double y, double z) {
-		this.setMotion(x, y, z);
+		this.setDeltaMovement(x, y, z);
 	}
 
 	@Override
@@ -37,28 +37,28 @@ public class NutEntity extends PVZItemBulletEntity {
 	protected void onImpact(RayTraceResult result) {
 		boolean flag = false;
 		if(result.getType() == RayTraceResult.Type.BLOCK) {
-			if(this.getThrower() != null && world.isAirBlock(this.getPosition().up()) && this.rand.nextInt(12) == 0) {
-				WallNutEntity nut = EntityRegister.WALL_NUT.get().create(world);
-				nut.setOwnerUUID(this.getThrower().getUniqueID());
-				EntityUtil.onMobEntitySpawn(world, nut, this.getPosition().up());
+			if(this.getThrower() != null && level.isEmptyBlock(this.blockPosition().above()) && this.random.nextInt(12) == 0) {
+				WallNutEntity nut = EntityRegister.WALL_NUT.get().create(level);
+				nut.setOwnerUUID(this.getThrower().getUUID());
+				EntityUtil.onMobEntitySpawn(level, nut, this.blockPosition().above());
 				flag = true;
 			}
 		} else if(result.getType() ==  RayTraceResult.Type.ENTITY) {
 			Entity target = ((EntityRayTraceResult) result).getEntity();
 			if (checkCanAttack(target)) {
-				target.hurtResistantTime = 0;
+				target.invulnerableTime = 0;
 				this.dealNutDamage(target); // attack 
 				flag = true;
 			}
 		}
-		this.world.setEntityState(this, (byte) 3);
+		this.level.broadcastEntityEvent(this, (byte) 3);
 		if (flag) {
 			this.remove();
 		}
 	}
 	
 	private void dealNutDamage(Entity target) {
-		target.attackEntityFrom(PVZDamageSource.causeNormalDamage(this, this.getThrower()), 2);
+		target.hurt(PVZDamageSource.causeNormalDamage(this, this.getThrower()), 2);
 	}
 	
 	@Override

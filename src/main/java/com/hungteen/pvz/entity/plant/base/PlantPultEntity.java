@@ -9,7 +9,7 @@ import com.hungteen.pvz.utils.interfaces.IPult;
 import net.minecraft.entity.CreatureEntity;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.SharedMonsterAttributes;
+import net.minecraft.entity.ai.attributes.Attributes;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.world.World;
 
@@ -28,15 +28,15 @@ public abstract class PlantPultEntity extends PVZPlantEntity implements IPult {
 	}
 	
 	@Override
-	protected void registerAttributes() {
-		super.registerAttributes();
-		this.getAttribute(SharedMonsterAttributes.FOLLOW_RANGE).setBaseValue(this.getPultRange());
+	protected void updateAttributes() {
+		super.updateAttributes();
+		this.getAttribute(Attributes.FOLLOW_RANGE).setBaseValue(this.getPultRange());
 	}
 	
 	@Override
 	protected void normalPlantTick() {
 		super.normalPlantTick();
-		if(! world.isRemote && this.getAttackTime() > 0) {
+		if(! level.isClientSide && this.getAttackTime() > 0) {
 			this.setAttackTime(this.getAttackTime() - 1);
 			if(this.getAttackTime() == this.getPultAnimTime() / 2) {
 				if(this.isPlantInSuperMode() && ! this.isSuperOut) {
@@ -70,7 +70,7 @@ public abstract class PlantPultEntity extends PVZPlantEntity implements IPult {
 	}
 	
 	protected boolean checkY(LivingEntity target) {
-		return this.getPosY() + 10 >= target.getPosY() + target.getHeight();
+		return this.getY() + 10 >= target.getY() + target.getBbHeight();
 	}
 	
 	public float getSuperRange() {
@@ -111,16 +111,16 @@ public abstract class PlantPultEntity extends PVZPlantEntity implements IPult {
 	}
 	
 	@Override
-	public void readAdditional(CompoundNBT compound) {
-		super.readAdditional(compound);
+	public void readAdditionalSaveData(CompoundNBT compound) {
+		super.readAdditionalSaveData(compound);
 		if(compound.contains("is_plant_super_out")) {
 			this.isSuperOut = compound.getBoolean("is_plant_super_out");
 		}
 	}
 	
 	@Override
-	public void writeAdditional(CompoundNBT compound) {
-		super.writeAdditional(compound);
+	public void addAdditionalSaveData(CompoundNBT compound) {
+		super.addAdditionalSaveData(compound);
 		compound.putBoolean("is_plant_super_out", this.isSuperOut);
 	}
 

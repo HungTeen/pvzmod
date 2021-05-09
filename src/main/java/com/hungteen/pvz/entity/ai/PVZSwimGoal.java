@@ -2,6 +2,7 @@ package com.hungteen.pvz.entity.ai;
 
 import net.minecraft.entity.MobEntity;
 import net.minecraft.entity.ai.goal.SwimGoal;
+import net.minecraft.tags.FluidTags;
 
 public class PVZSwimGoal extends SwimGoal {
 
@@ -13,9 +14,9 @@ public class PVZSwimGoal extends SwimGoal {
 	}
 
 	@Override
-	public boolean shouldExecute() {
+	public boolean canUse() {
 		double d0 = (double) this.entity.getEyeHeight() < 0.4D ? 0D : 0.4D;
-		return this.entity.getSubmergedHeight() > d0 && (this.entity.isInWater() || this.entity.isInLava());
+		return this.entity.getFluidHeight(FluidTags.WATER) > d0 && (this.entity.isInWater() || this.entity.isInLava());
 	}
 
 }

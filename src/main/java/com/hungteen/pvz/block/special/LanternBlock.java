@@ -14,10 +14,10 @@ import net.minecraft.world.IBlockReader;
 
 public class LanternBlock extends AbstractFacingBlock {
 
-	private static final VoxelShape SHAPE = Block.makeCuboidShape(3.0D, 0.0D, 3.0D, 13.0D, 24.0D, 13.0D);
+	private static final VoxelShape SHAPE = Block.box(3.0D, 0.0D, 3.0D, 13.0D, 24.0D, 13.0D);
 	
 	public LanternBlock() {
-		super(Block.Properties.from(Blocks.LANTERN).hardnessAndResistance(5, 9).lightValue(14).notSolid());
+		super(Block.Properties.copy(Blocks.LANTERN).strength(5, 9).lightLevel(i -> 14).noOcclusion());
 	}
 	
 	@Override

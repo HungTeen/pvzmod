@@ -20,7 +20,7 @@ public class SmallChomperEntity extends AbstractOwnerEntity {
 	public SmallChomperEntity(EntityType<? extends Entity> entityTypeIn, World worldIn) {
 		super(entityTypeIn, worldIn);
 		this.setInvulnerable(true);
-		this.noClip = true;
+		this.noPhysics = true;
 	}
 
 	@Override
@@ -29,7 +29,7 @@ public class SmallChomperEntity extends AbstractOwnerEntity {
 		if(this.lifeTick < maxLifeTick) {
 			++ this.lifeTick;
 		} else {
-			if(! this.world.isRemote) {
+			if(! this.level.isClientSide) {
 			    this.performAttack();
 			    this.remove();
 			}
@@ -43,7 +43,7 @@ public class SmallChomperEntity extends AbstractOwnerEntity {
 		}
 		for(Entity target : EntityUtil.getAttackEntities(this, EntityUtil.getEntityAABB(this, 0.5f, 1f))) {
 			if(target instanceof LivingEntity) {
-				target.attackEntityFrom(PVZDamageSource.causeEatDamage(this, this.owner), getAttackDamage((LivingEntity) target));
+				target.hurt(PVZDamageSource.causeEatDamage(this, this.owner), getAttackDamage((LivingEntity) target));
 			}
 		}
 		this.playSound(SoundRegister.CHOMP.get(), 1, 1);
@@ -61,17 +61,17 @@ public class SmallChomperEntity extends AbstractOwnerEntity {
 	}
 	
 	@Override
-	public boolean canBeCollidedWith() {
+	public boolean isPickable() {
 		return false;
 	}
 	
 	@Override
-	public boolean hasNoGravity() {
+	public boolean isNoGravity() {
 		return true;
 	}
 	
 	@Override
-	public EntitySize getSize(Pose poseIn) {
+	public EntitySize getDimensions(Pose poseIn) {
 		return new EntitySize(0.4f, 0.5f, false);
 	}
 

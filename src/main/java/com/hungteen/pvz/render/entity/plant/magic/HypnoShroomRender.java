@@ -26,7 +26,7 @@ public class HypnoShroomRender extends PVZPlantRender<HypnoShroomEntity>{
 	}
 	
 	@Override
-	public ResourceLocation getEntityTexture(HypnoShroomEntity entity) {
+	public ResourceLocation getTextureLocation(HypnoShroomEntity entity) {
 		return StringUtil.prefix("textures/entity/plant/magic/hypno_shroom.png");
 	}
 

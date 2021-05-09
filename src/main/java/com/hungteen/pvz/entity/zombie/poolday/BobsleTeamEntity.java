@@ -13,11 +13,11 @@ import com.hungteen.pvz.utils.interfaces.IMultiPartEntity;
 import net.minecraft.entity.EntitySize;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.Pose;
-import net.minecraft.entity.SharedMonsterAttributes;
+import net.minecraft.entity.ai.attributes.Attributes;
 import net.minecraft.entity.monster.MonsterEntity;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.ResourceLocation;
-import net.minecraft.util.math.Vec3d;
+import net.minecraft.util.math.vector.Vector3d;
 import net.minecraft.world.World;
 
 public class BobsleTeamEntity extends PVZZombieEntity implements IMultiPartEntity{
@@ -39,10 +39,10 @@ public class BobsleTeamEntity extends PVZZombieEntity implements IMultiPartEntit
 	}
 
 	@Override
-	protected void registerAttributes() {
-		super.registerAttributes();
-		this.getAttribute(SharedMonsterAttributes.MOVEMENT_SPEED).setBaseValue(ZombieUtil.VERY_FAST);
-		this.getAttribute(SharedMonsterAttributes.ATTACK_DAMAGE).setBaseValue(ZombieUtil.NORMAL_DAMAGE);
+	protected void updateAttributes() {
+		super.updateAttributes();
+		this.getAttribute(Attributes.MOVEMENT_SPEED).setBaseValue(ZombieUtil.VERY_FAST);
+		this.getAttribute(Attributes.ATTACK_DAMAGE).setBaseValue(ZombieUtil.NORMAL_DAMAGE);
 	}
 	
 	@Override
@@ -72,19 +72,19 @@ public class BobsleTeamEntity extends PVZZombieEntity implements IMultiPartEntit
 				continue;
 			}
 			if(!this.parts[i].shouldContinuePersisting()) {
-				this.world.addEntity(this.parts[i]);
+				this.level.addFreshEntity(this.parts[i]);
 			}
-			float j = 2 * 3.14159f * this.rotationYawHead / 360;
+			float j = 2 * 3.14159f * this.yHeadRot / 360;
 			float dis = this.getPartOffset(i);
-			Vec3d pos = this.getPositionVec();
-			this.parts[i].prevRotationYaw = this.rotationYaw;
-			this.parts[i].prevRotationPitch = this.rotationPitch;
-			this.parts[i].setLocationAndAngles(pos.getX() - Math.sin(j) * dis, pos.getY() + 0.05f, pos.getZ() + Math.cos(j) * dis, this.rotationYaw, this.rotationPitch);
+			Vector3d pos = this.position();
+			this.parts[i].yRotO = this.yRot;
+			this.parts[i].xRotO = this.xRot;
+			this.parts[i].moveTo(pos.x() - Math.sin(j) * dis, pos.y() + 0.05f, pos.z() + Math.cos(j) * dis, this.yRot, this.xRot);
 			this.parts[i].setOwner(this);
 		}
 	}
 	
-	public PVZMultiPartEntity[] getParts() {
+	public PVZMultiPartEntity[] getMultiParts() {
 		return this.parts;
 	}
 	
@@ -104,11 +104,11 @@ public class BobsleTeamEntity extends PVZZombieEntity implements IMultiPartEntit
 	}
 	
 	@Override
-	public void livingTick() {
-		super.livingTick();
-		if(!world.isRemote) {
+	public void aiStep() {
+		super.aiStep();
+		if(!level.isClientSide) {
 			if(!EntityUtil.isOnSnow(this)) {
-				this.attackEntityFrom(DamageSource.DROWN, 10);
+				this.hurt(DamageSource.DROWN, 10);
 			}
 		}
 	}
@@ -116,17 +116,17 @@ public class BobsleTeamEntity extends PVZZombieEntity implements IMultiPartEntit
 	@Override
 	protected void onZombieRemove() {
 		super.onZombieRemove();
-		if(! world.isRemote) {
+		if(! level.isClientSide) {
 			for(int i = 0; i < 4; ++ i) {
-				BobsleZombieEntity zombie = EntityRegister.BOBSLE_ZOMBIE.get().create(world);
-				EntityUtil.onMobEntityRandomPosSpawn(world, zombie, this.getPosition(), 3);
+				BobsleZombieEntity zombie = EntityRegister.BOBSLE_ZOMBIE.get().create(level);
+				EntityUtil.onMobEntityRandomPosSpawn(level, zombie, this.blockPosition(), 3);
 			}
 		}
 	}
 	
 	@Override
-	public EntitySize getSize(Pose poseIn) {
-		return EntitySize.flexible(1.25f, 1.4f);
+	public EntitySize getDimensions(Pose poseIn) {
+		return EntitySize.scalable(1.25f, 1.4f);
 	}
 	
 	@Override
@@ -135,7 +135,7 @@ public class BobsleTeamEntity extends PVZZombieEntity implements IMultiPartEntit
 	}
 	
 	@Override
-	protected ResourceLocation getLootTable() {
+	protected ResourceLocation getDefaultLootTable() {
 		return PVZLoot.BOBSLE_TEAM;
 	}
 

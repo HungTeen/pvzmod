@@ -3,6 +3,7 @@ package com.hungteen.pvz.gui.search;
 import java.util.List;
 
 import com.google.common.collect.Lists;
+import com.mojang.blaze3d.matrix.MatrixStack;
 import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.datafixers.util.Pair;
 
@@ -23,8 +24,8 @@ public class RecipeManager {
 	private final List<RecipeIngredient> ingredients = Lists.newArrayList();
 	private float time;
 
-	public void render(Minecraft mc, int left, int top, boolean p_194188_4_, float p_194188_5_) {
-		RenderSystem.pushMatrix();
+	public void render(Minecraft mc, MatrixStack stack, int left, int top, boolean p_194188_4_, float p_194188_5_) {
+		stack.pushPose();
 		if (! Screen.hasControlDown()) {
 			this.time += p_194188_5_;
 		}
@@ -32,18 +33,18 @@ public class RecipeManager {
 			RecipeIngredient ingredient = this.ingredients.get(i);
 			int x = ingredient.getX() + left;
 			int y = ingredient.getY() + top;
-			AbstractGui.fill(x, y, x + 16, y + 16, 822018048);
+			AbstractGui.fill(stack, x, y, x + 16, y + 16, 822018048);
 			ItemStack itemstack = ingredient.getItem();
 			ItemRenderer itemrenderer = mc.getItemRenderer();
-			itemrenderer.renderItemAndEffectIntoGUI(mc.player, itemstack, x, y);
+			itemrenderer.renderAndDecorateItem(mc.player, itemstack, x, y);
 			RenderSystem.depthFunc(516);
-			AbstractGui.fill(x, y, x + 16, y + 16, 822083583);
+			AbstractGui.fill(stack, x, y, x + 16, y + 16, 822083583);
 			RenderSystem.depthFunc(515);
 			if (i == 0) {
-				itemrenderer.renderItemOverlays(mc.fontRenderer, itemstack, x, y);
+				itemrenderer.renderGuiItemDecorations(mc.font, itemstack, x, y);
 			}
 		}
-		RenderSystem.popMatrix();
+		stack.popPose();
 	}
 
 	public void clear() {
@@ -53,7 +54,7 @@ public class RecipeManager {
 
 	public void setRecipe(List<Pair<Ingredient, Slot>> list) {
 		list.forEach((pair) -> {
-			this.addIngredient(pair.getFirst(), pair.getSecond().xPos, pair.getSecond().yPos);
+			this.addIngredient(pair.getFirst(), pair.getSecond().x, pair.getSecond().y);
 		});
 	}
 	
@@ -90,7 +91,7 @@ public class RecipeManager {
 		}
 
 		public ItemStack getItem() {
-			ItemStack[] aitemstack = this.ingredient.getMatchingStacks();
+			ItemStack[] aitemstack = this.ingredient.getItems();
 			return aitemstack[MathHelper.floor(RecipeManager.this.time / 30.0F) % aitemstack.length];
 		}
 	}

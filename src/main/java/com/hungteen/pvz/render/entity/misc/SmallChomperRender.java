@@ -7,7 +7,7 @@ import com.hungteen.pvz.utils.StringUtil;
 
 import net.minecraft.client.renderer.entity.EntityRendererManager;
 import net.minecraft.util.ResourceLocation;
-import net.minecraft.util.math.Vec3d;
+import net.minecraft.util.math.vector.Vector3d;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 
@@ -24,13 +24,13 @@ public class SmallChomperRender extends PVZEntityRender<SmallChomperEntity>{
 	}
 	
 	@Override
-	public Vec3d getTranslateVec(SmallChomperEntity entity) {
+	public Vector3d getTranslateVec(SmallChomperEntity entity) {
 		int tick = entity.getTick();//1 - 20
-		return new Vec3d(0, 1f - 0.05f * tick, 0);
+		return new Vector3d(0, 1f - 0.05f * tick, 0);
 	}
 	
 	@Override
-	public ResourceLocation getEntityTexture(SmallChomperEntity entity) {
+	public ResourceLocation getTextureLocation(SmallChomperEntity entity) {
 		return StringUtil.prefix("textures/entity/plant/enforce/chomper.png");
 	}
 

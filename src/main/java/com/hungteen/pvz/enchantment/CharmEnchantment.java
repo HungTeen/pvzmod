@@ -17,17 +17,17 @@ public class CharmEnchantment extends Enchantment{
 	}
 
 	@Override
-	public int getMinEnchantability(int enchantmentLevel) {
+	public int getMinCost(int enchantmentLevel) {
 		return 30;
 	}
 	
 	@Override
-	public int getMaxEnchantability(int enchantmentLevel) {
+	public int getMaxCost(int enchantmentLevel) {
 		return 100;
 	}
 	
 	@Override
-	public boolean isTreasureEnchantment() {
+	public boolean isTreasureOnly() {
 		return true;
 	}
 	

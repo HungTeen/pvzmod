@@ -23,7 +23,7 @@ public class SquashRender extends PVZPlantRender<SquashEntity>{
 	}
 
 	@Override
-	public ResourceLocation getEntityTexture(SquashEntity entity) {
+	public ResourceLocation getTextureLocation(SquashEntity entity) {
 		return StringUtil.prefix("textures/entity/plant/enforce/squash.png");
 	}
 

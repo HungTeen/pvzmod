@@ -21,21 +21,21 @@ public class ItemInventory extends Inventory {
 		}
 //		System.out.println(list.size());
 		for (int i = 0; i < size && i < list.size(); i++) {
-			setInventorySlotContents(i, ItemStack.read(list.getCompound(i)));
+			setItem(i, ItemStack.of(list.getCompound(i)));
 		}
 	}
 
 	@Override
-	public boolean isUsableByPlayer(PlayerEntity player) {
+	public boolean stillValid(PlayerEntity player) {
 		return !stack.isEmpty();
 	}
 
 	@Override
-	public void markDirty() {
-		super.markDirty();
+	public void setChanged() {
+		super.setChanged();
 		ListNBT list = new ListNBT();
-		for (int i = 0; i < getSizeInventory(); i++) {
-			list.add(getStackInSlot(i).write(new CompoundNBT()));
+		for (int i = 0; i < getContainerSize(); i++) {
+			list.add(getItem(i).save(new CompoundNBT()));
 		}
 		this.stack.getOrCreateTag().put(NAME, list);
 	}

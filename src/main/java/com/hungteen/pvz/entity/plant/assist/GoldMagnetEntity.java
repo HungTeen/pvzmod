@@ -20,7 +20,7 @@ import net.minecraft.entity.EntitySize;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.Pose;
 import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.util.math.Vec3d;
+import net.minecraft.util.math.vector.Vector3d;
 import net.minecraft.world.World;
 
 public class GoldMagnetEntity extends PVZPlantEntity {
@@ -36,9 +36,9 @@ public class GoldMagnetEntity extends PVZPlantEntity {
 	@Override
 	protected void normalPlantTick() {
 		super.normalPlantTick();
-		if (! world.isRemote) {
+		if (! level.isClientSide) {
 			if(this.getOwnerUUID().isPresent()) {
-			    this.player = Optional.ofNullable(this.world.getPlayerByUuid(this.getOwnerUUID().get()));
+			    this.player = Optional.ofNullable(this.level.getPlayerByUUID(this.getOwnerUUID().get()));
 			    this.tickCoinSet();
 			}
 			this.setAttackTime(this.coinSet.size());
@@ -68,7 +68,7 @@ public class GoldMagnetEntity extends PVZPlantEntity {
 		// find new sun.
 		if (this.getLiveTick() % this.MaxSearchTick == 0) {
 			float range = this.getSearchRange();
-			world.getEntitiesWithinAABB(DropEntity.class, EntityUtil.getEntityAABB(this, range, range), (drop) -> {
+			level.getEntitiesOfClass(DropEntity.class, EntityUtil.getEntityAABB(this, range, range), (drop) -> {
 				return (drop instanceof CoinEntity || drop instanceof JewelEntity) && drop.getDropState() == DropStates.NORMAL && ! this.coinSet.contains(drop);
 			}).forEach((coin) -> {
 				coin.setDropState(DropStates.ABSORB);
@@ -81,12 +81,12 @@ public class GoldMagnetEntity extends PVZPlantEntity {
 		// absorb suns in the set.
 		this.coinSet.forEach((coin) -> {
 			double speed = 0.3D;
-			Vec3d now = new Vec3d(this.getPosX(), this.getPosY() + this.getHeight(), this.getPosZ());
-			Vec3d vec = now.subtract(coin.getPositionVec());
+			Vector3d now = new Vector3d(this.getX(), this.getY() + this.getBbHeight(), this.getZ());
+			Vector3d vec = now.subtract(coin.position());
 			if (vec.length() <= 1) {
 				this.onCollectCoin(coin);
 			} else {
-				coin.setMotion(vec.normalize().scale(speed));
+				coin.setDeltaMovement(vec.normalize().scale(speed));
 			}
 		});
 	}
@@ -116,8 +116,8 @@ public class GoldMagnetEntity extends PVZPlantEntity {
 	}
 
 	@Override
-	public EntitySize getSize(Pose poseIn) {
-		return EntitySize.flexible(0.5f, 1.3f);
+	public EntitySize getDimensions(Pose poseIn) {
+		return EntitySize.scalable(0.5f, 1.3f);
 	}
 
 	@Override

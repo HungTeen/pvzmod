@@ -25,7 +25,7 @@ public class KernelPultRender extends PVZPlantRender<KernelPultEntity> {
 	}
 
 	@Override
-	public ResourceLocation getEntityTexture(KernelPultEntity entity) {
+	public ResourceLocation getTextureLocation(KernelPultEntity entity) {
 		return KERNEL_PULT_TEX;
 	}
 

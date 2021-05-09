@@ -22,7 +22,7 @@ public class KernelEntity extends PultBulletEntity {
 	}
 
 	protected void dealDamage(Entity target) {
-		target.attackEntityFrom(PVZDamageSource.causeThrowDamage(this, this.getThrower()), this.attackDamage);
+		target.hurt(PVZDamageSource.causeThrowDamage(this, this.getThrower()), this.attackDamage);
 	}
 	
 	@Override
@@ -32,8 +32,8 @@ public class KernelEntity extends PultBulletEntity {
 	}
 	
 	@Override
-	public EntitySize getSize(Pose poseIn) {
-		return EntitySize.flexible(0.4F, 0.4F);
+	public EntitySize getDimensions(Pose poseIn) {
+		return EntitySize.scalable(0.4F, 0.4F);
 	}
 	
 }

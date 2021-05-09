@@ -8,7 +8,7 @@ import net.minecraft.entity.CreatureEntity;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.SharedMonsterAttributes;
+import net.minecraft.entity.ai.attributes.Attributes;
 import net.minecraft.world.World;
 
 public abstract class PlantShooterEntity extends PVZPlantEntity implements IShooter {
@@ -18,9 +18,9 @@ public abstract class PlantShooterEntity extends PVZPlantEntity implements IShoo
 	}
 	
 	@Override
-	protected void registerAttributes() {
-		super.registerAttributes();
-		this.getAttribute(SharedMonsterAttributes.FOLLOW_RANGE).setBaseValue(getShootRange());
+	protected void updateAttributes() {
+		super.updateAttributes();
+		this.getAttribute(Attributes.FOLLOW_RANGE).setBaseValue(getShootRange());
 	}
 	
 	@Override
@@ -32,7 +32,7 @@ public abstract class PlantShooterEntity extends PVZPlantEntity implements IShoo
 	@Override
 	public void normalPlantTick() {
 		super.normalPlantTick();
-		if(! this.world.isRemote && this.canAttackNow()) {
+		if(! this.level.isClientSide && this.canAttackNow()) {
 			this.shootBullet();
 		}
 	    if(this.getAttackTime() > 0) {
@@ -64,10 +64,10 @@ public abstract class PlantShooterEntity extends PVZPlantEntity implements IShoo
 	
 	@Override
 	public boolean checkY(Entity target) {
-		double dx = target.getPosX() - this.getPosX();
-		double ly = target.getPosY() - this.getPosY() - this.getEyeHeight();
-		double ry = ly + target.getHeight();
-		double dz = target.getPosZ() - this.getPosZ();
+		double dx = target.getX() - this.getX();
+		double ly = target.getY() - this.getY() - this.getEyeHeight();
+		double ry = ly + target.getBbHeight();
+		double dz = target.getZ() - this.getZ();
 		double dis = Math.sqrt(dx * dx + dz * dz);
 		double y = dis / getMaxShootAngle();
 		return ly <= y && ry >= - y;

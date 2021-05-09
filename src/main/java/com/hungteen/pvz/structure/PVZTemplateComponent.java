@@ -34,16 +34,16 @@ public abstract class PVZTemplateComponent extends TemplateStructurePiece {
 	}
 
 	private void setUpTemplate(TemplateManager p_204754_1_) {
-		Template template = p_204754_1_.getTemplateDefaulted(this.res);
+		Template template = p_204754_1_.getOrCreate(this.res);
 		PlacementSettings placementsettings = (new PlacementSettings()).setRotation(this.rotation)
-				.setMirror(Mirror.NONE).setCenterOffset(STRUCTURE_OFFSET)
+				.setMirror(Mirror.NONE).setRotationPivot(STRUCTURE_OFFSET)
 				.addProcessor(BlockIgnoreStructureProcessor.STRUCTURE_BLOCK);
 		this.setup(template, this.templatePosition, placementsettings);
 	}
 	
 	@Override
-	protected void readAdditional(CompoundNBT tagCompound) {
-		super.readAdditional(tagCompound);
+	protected void addAdditionalSaveData(CompoundNBT tagCompound) {
+		super.addAdditionalSaveData(tagCompound);
 		tagCompound.putString("Template", this.res.toString());
         tagCompound.putString("Rot", this.rotation.name());
 	}

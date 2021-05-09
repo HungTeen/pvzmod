@@ -9,7 +9,7 @@ import com.hungteen.pvz.utils.enums.Zombies;
 
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.SharedMonsterAttributes;
+import net.minecraft.entity.ai.attributes.Attributes;
 import net.minecraft.entity.monster.MonsterEntity;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.world.World;
@@ -21,21 +21,21 @@ public class SquashZombieEntity extends AbstractZombotanyEntity {
 	}
 
 	@Override
-	protected void registerAttributes() {
-		super.registerAttributes();
-		this.getAttribute(SharedMonsterAttributes.MOVEMENT_SPEED).setBaseValue(ZombieUtil.FAST);
+	protected void updateAttributes() {
+		super.updateAttributes();
+		this.getAttribute(Attributes.MOVEMENT_SPEED).setBaseValue(ZombieUtil.FAST);
 	}
 	
 	@Override
 	public void normalZombieTick() {
 		super.normalZombieTick();
-		if(! world.isRemote) {
-			LivingEntity target = this.getAttackTarget();
-			if(target != null && this.getDistanceSq(target) <= 10) {
-				SquashEntity squash = EntityRegister.SQUASH.get().create(world);
+		if(! level.isClientSide) {
+			LivingEntity target = this.getTarget();
+			if(target != null && this.distanceToSqr(target) <= 10) {
+				SquashEntity squash = EntityRegister.SQUASH.get().create(level);
 				squash.setCharmed(! this.isCharmed());
-				squash.setAttackTarget(target);
-				EntityUtil.onMobEntitySpawn(world, squash, getPosition().up(2));
+				squash.setTarget(target);
+				EntityUtil.onMobEntitySpawn(level, squash, blockPosition().above(2));
 				this.remove();
 			}
 		}
@@ -47,7 +47,7 @@ public class SquashZombieEntity extends AbstractZombotanyEntity {
 	}
 	
 	@Override
-	protected ResourceLocation getLootTable() {
+	protected ResourceLocation getDefaultLootTable() {
 		return PVZLoot.SQUASH_ZOMBIE;
 	}
 

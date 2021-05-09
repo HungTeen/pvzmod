@@ -35,7 +35,7 @@ public class PlaySoundPacket {
 		    	if(id == 0) {
 		    		sound = SoundRegister.SUN_PICK.get();
 		    	} else if(id == 1) {
-		    		sound = SoundEvents.ENTITY_SNOW_GOLEM_SHOOT;
+		    		sound = SoundEvents.SNOW_GOLEM_SHOOT;
 		    	} else if(id == 2) {
 		    		sound = SoundRegister.HUGE_WAVE.get();
 		    	} else if(id == 3) {

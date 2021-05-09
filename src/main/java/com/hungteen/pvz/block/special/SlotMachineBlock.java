@@ -20,14 +20,14 @@ import net.minecraftforge.fml.network.NetworkHooks;
 public class SlotMachineBlock extends AbstractFacingBlock {
 
 	public SlotMachineBlock() {
-		super(Properties.from(Blocks.GOLD_BLOCK));
+		super(Properties.copy(Blocks.GOLD_BLOCK));
 	}
 	
 	@Override
-	public ActionResultType onBlockActivated(BlockState state, World worldIn, BlockPos pos, PlayerEntity player,
+	public ActionResultType use(BlockState state, World worldIn, BlockPos pos, PlayerEntity player,
 			Hand handIn, BlockRayTraceResult hit) {
-		if (! worldIn.isRemote && handIn == Hand.MAIN_HAND) {
-			SlotMachineTileEntity te = (SlotMachineTileEntity) worldIn.getTileEntity(pos);
+		if (! worldIn.isClientSide && handIn == Hand.MAIN_HAND) {
+			SlotMachineTileEntity te = (SlotMachineTileEntity) worldIn.getBlockEntity(pos);
 			NetworkHooks.openGui((ServerPlayerEntity) player, te, pos);
 		}
 		return ActionResultType.SUCCESS;
@@ -45,17 +45,17 @@ public class SlotMachineBlock extends AbstractFacingBlock {
 	
 	@SuppressWarnings("deprecation")
 	@Override
-	public void onReplaced(BlockState state, World worldIn, BlockPos pos, BlockState newState, boolean isMoving) {
+	public void onRemove(BlockState state, World worldIn, BlockPos pos, BlockState newState, boolean isMoving) {
 		if (state.getBlock() != newState.getBlock()) {
-			TileEntity tileentity = worldIn.getTileEntity(pos);
+			TileEntity tileentity = worldIn.getBlockEntity(pos);
 			if (tileentity instanceof SlotMachineTileEntity) {
-				SlotMachineTileEntity te = (SlotMachineTileEntity) worldIn.getTileEntity(pos);
+				SlotMachineTileEntity te = (SlotMachineTileEntity) worldIn.getBlockEntity(pos);
 				for (int i = 0; i < te.handler.getSlots(); ++i) {
-					InventoryHelper.spawnItemStack(worldIn, pos.getX(), pos.getY(), pos.getZ(),
+					InventoryHelper.dropItemStack(worldIn, pos.getX(), pos.getY(), pos.getZ(),
 							te.handler.getStackInSlot(i));
 				}
 			}
-			super.onReplaced(state, worldIn, pos, newState, isMoving);
+			super.onRemove(state, worldIn, pos, newState, isMoving);
 		}
 	}
 

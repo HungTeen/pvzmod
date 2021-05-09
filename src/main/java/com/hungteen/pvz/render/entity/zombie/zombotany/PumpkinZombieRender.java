@@ -17,7 +17,7 @@ public class PumpkinZombieRender extends AbstractZombotanyRender<PumpkinZombieEn
 	}
 
 	@Override
-	public ResourceLocation getEntityTexture(PumpkinZombieEntity entity) {
+	public ResourceLocation getTextureLocation(PumpkinZombieEntity entity) {
 		return StringUtil.prefix("textures/entity/zombie/plantzombie/pumpkin_zombie.png");
 	}
 

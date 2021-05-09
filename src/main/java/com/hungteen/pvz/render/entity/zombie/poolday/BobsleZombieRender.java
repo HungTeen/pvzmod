@@ -24,7 +24,7 @@ public class BobsleZombieRender extends PVZZombieRender<BobsleZombieEntity>{
 	}
 
 	@Override
-	public ResourceLocation getEntityTexture(BobsleZombieEntity entity) {
+	public ResourceLocation getTextureLocation(BobsleZombieEntity entity) {
 		return StringUtil.prefix("textures/entity/zombie/poolday/bobsle_zombie.png");
 	}
 

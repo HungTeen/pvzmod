@@ -23,7 +23,7 @@ public class CabbagePultRender extends PVZPlantRender<CabbagePultEntity> {
 	}
 
 	@Override
-	public ResourceLocation getEntityTexture(CabbagePultEntity entity) {
+	public ResourceLocation getTextureLocation(CabbagePultEntity entity) {
 		return StringUtil.prefix("textures/entity/plant/arma/cabbage_pult.png");
 	}
 

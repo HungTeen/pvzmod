@@ -17,7 +17,7 @@ public class SundayEditionZombieRender extends AbstractPaperZombieRender<SundayE
 	}
 
 	@Override
-	public ResourceLocation getEntityTexture(SundayEditionZombieEntity entity) {
+	public ResourceLocation getTextureLocation(SundayEditionZombieEntity entity) {
 		return StringUtil.prefix("textures/entity/zombie/grassnight/sunday_edition_zombie.png");
 	}
 

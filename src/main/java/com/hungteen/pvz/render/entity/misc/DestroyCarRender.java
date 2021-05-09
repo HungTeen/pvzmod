@@ -26,18 +26,18 @@ public class DestroyCarRender extends EntityRenderer<DestroyCarEntity> {
 	public void render(DestroyCarEntity entityIn, float entityYaw, float partialTicks, MatrixStack matrixStackIn,
 			IRenderTypeBuffer bufferIn, int packedLightIn) {
 		super.render(entityIn, entityYaw, partialTicks, matrixStackIn, bufferIn, packedLightIn);
-		matrixStackIn.push();
+		matrixStackIn.pushPose();
 		matrixStackIn.scale(-1, -1, 1);
 		float f = 1F;
 		matrixStackIn.scale(f, f, f);
 		matrixStackIn.translate(0.0, -1.501, 0.0);
-        IVertexBuilder ivertexbuilder = bufferIn.getBuffer(this.model.getRenderType(this.getEntityTexture(entityIn)));
-        this.model.render(matrixStackIn, ivertexbuilder, packedLightIn, OverlayTexture.NO_OVERLAY, 1.0F, 1.0F, 1.0F, 1.0F);
-        matrixStackIn.pop();
+        IVertexBuilder ivertexbuilder = bufferIn.getBuffer(this.model.renderType(this.getTextureLocation(entityIn)));
+        this.model.renderToBuffer(matrixStackIn, ivertexbuilder, packedLightIn, OverlayTexture.NO_OVERLAY, 1.0F, 1.0F, 1.0F, 1.0F);
+        matrixStackIn.popPose();
 	}
 	
 	@Override
-	public ResourceLocation getEntityTexture(DestroyCarEntity entity) {
+	public ResourceLocation getTextureLocation(DestroyCarEntity entity) {
 		return PennyRender.PENNY_TEX;
 	}
 

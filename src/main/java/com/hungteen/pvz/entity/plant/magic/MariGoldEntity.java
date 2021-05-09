@@ -21,15 +21,15 @@ public class MariGoldEntity extends PlantProducerEntity {
 
 	@Override
 	public void genSomething() {
-		CoinEntity coin = EntityRegister.COIN.get().create(world);
+		CoinEntity coin = EntityRegister.COIN.get().create(level);
 		coin.setAmount(this.getRandomAmount());
-		EntityUtil.onMobEntityRandomPosSpawn(world, coin, getPosition(), 3);
+		EntityUtil.onMobEntityRandomPosSpawn(level, coin, blockPosition(), 3);
 	}
 
 	protected void genSpecCoin(CoinType type) {
-		CoinEntity coin = EntityRegister.COIN.get().create(world);
+		CoinEntity coin = EntityRegister.COIN.get().create(level);
 		coin.setAmountByType(type);
-		EntityUtil.onMobEntityRandomPosSpawn(world, coin, getPosition(), 3);
+		EntityUtil.onMobEntityRandomPosSpawn(level, coin, blockPosition(), 3);
 	}
 
 	@Override
@@ -48,7 +48,7 @@ public class MariGoldEntity extends PlantProducerEntity {
 	}
 
 	private int getRandomAmount() {
-		int num = this.getRNG().nextInt(100);
+		int num = this.getRandom().nextInt(100);
 		int silverNum = this.getSilverChance();
 		int goldNum = this.getGoldChance();
 		if (num < goldNum)
@@ -95,8 +95,8 @@ public class MariGoldEntity extends PlantProducerEntity {
 	}
 	
 	@Override
-	public EntitySize getSize(Pose poseIn) {
-		return EntitySize.flexible(0.8f, 1.6f);
+	public EntitySize getDimensions(Pose poseIn) {
+		return EntitySize.scalable(0.8f, 1.6f);
 	}
 
 	@Override

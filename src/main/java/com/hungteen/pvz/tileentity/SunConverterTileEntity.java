@@ -10,6 +10,7 @@ import com.hungteen.pvz.item.tool.SunStorageSaplingItem;
 import com.hungteen.pvz.register.TileEntityRegister;
 import com.hungteen.pvz.utils.MathUtil;
 
+import net.minecraft.block.BlockState;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.inventory.container.Container;
@@ -20,7 +21,7 @@ import net.minecraft.tileentity.ITickableTileEntity;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.IIntArray;
 import net.minecraft.util.IntArray;
-import net.minecraft.util.math.Vec3d;
+import net.minecraft.util.math.vector.Vector3d;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraftforge.items.ItemStackHandler;
@@ -43,14 +44,14 @@ public class SunConverterTileEntity extends TileEntity implements ITickableTileE
 	public void tick() {
 		++ this.tickExist;
 		this.tickSunSet();
-		if(! world.isRemote) {
+		if(! level.isClientSide) {
 			this.array.set(0, this.checkCanWorkNow() ? 1: 0);
 		}
 	}
 	
 	@SuppressWarnings("deprecation")
 	private void tickSunSet() {
-		if (! world.isRemote) {
+		if (! level.isClientSide) {
 			//maintain the set.
 			Set<SunEntity> tmp = new HashSet<>();
 			this.sunSet.forEach((sun) -> {
@@ -71,7 +72,7 @@ public class SunConverterTileEntity extends TileEntity implements ITickableTileE
 			}
 			//find new sun.
 			if(this.tickExist % this.MaxSearchTick == 0) {
-			    world.getEntitiesWithinAABB(SunEntity.class, MathUtil.getAABBWithPos(pos, MaxSearchRange), (sun) -> {
+			    level.getEntitiesOfClass(SunEntity.class, MathUtil.getAABBWithPos(worldPosition, MaxSearchRange), (sun) -> {
 						return sun.getDropState() == DropStates.NORMAL && ! this.sunSet.contains(sun);
 			    }).forEach((sun) -> {
 			    	sun.setDropState(DropStates.ABSORB);
@@ -82,12 +83,12 @@ public class SunConverterTileEntity extends TileEntity implements ITickableTileE
 			this.sunSet.forEach((sun) -> {
 				if(! this.checkCanWorkNow()) return ;
 				double speed = 0.15D;
-				Vec3d now = new Vec3d(pos.getX() + 0.5D, pos.getY() + 1D, pos.getZ() + 0.5D);
-				Vec3d vec = now.subtract(sun.getPositionVec());
+				Vector3d now = new Vector3d(worldPosition.getX() + 0.5D, worldPosition.getY() + 1D, worldPosition.getZ() + 0.5D);
+				Vector3d vec = now.subtract(sun.position());
 				if(vec.length() <= 1) {
 				    this.onCollectSun(sun);
 				} else {
-				    sun.setMotion(vec.normalize().scale(speed));
+				    sun.setDeltaMovement(vec.normalize().scale(speed));
 				}
 			});
 		}
@@ -132,29 +133,29 @@ public class SunConverterTileEntity extends TileEntity implements ITickableTileE
 	 * Don't rename this method to canInteractWith due to conflicts with Container
 	 */
 	public boolean isUsableByPlayer(PlayerEntity player) {
-		if (this.world.getTileEntity(this.pos) != this) {
+		if (this.level.getBlockEntity(this.worldPosition) != this) {
 			return false;
 		}
-		return player.getDistanceSq((double) this.pos.getX() + 0.5D, (double) this.pos.getY() + 0.5D, (double) this.pos.getZ() + 0.5D) <= 64.0D;
+		return player.distanceToSqr((double) this.worldPosition.getX() + 0.5D, (double) this.worldPosition.getY() + 0.5D, (double) this.worldPosition.getZ() + 0.5D) <= 64.0D;
 	}
 
 	@Override
-	public void read(CompoundNBT compound) {
-		super.read(compound);
+	public void load(BlockState state, CompoundNBT compound) {
+    	super.load(state, compound);
 		this.handler.deserializeNBT(compound.getCompound("itemstack_list"));
 		this.tickExist = compound.getInt("exist_tick");
 	}
 
 	@Override
-	public CompoundNBT write(CompoundNBT compound) {
+	public CompoundNBT save(CompoundNBT compound) {
 		compound.put("itemstack_list", this.handler.serializeNBT());
 		compound.putInt("exist_tick", this.tickExist);
-		return super.write(compound);
+		return super.save(compound);
 	}
 
 	@Override
 	public Container createMenu(int id, PlayerInventory inv, PlayerEntity player) {
-		return new SunConverterContainer(id, player, this.pos);
+		return new SunConverterContainer(id, player, this.worldPosition);
 	}
 
 	@Override

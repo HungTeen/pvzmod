@@ -25,7 +25,7 @@ public class PennyRender extends PVZCreatureRender<PennyEntity>{
 	}
 
 	@Override
-	public ResourceLocation getEntityTexture(PennyEntity entity) {
+	public ResourceLocation getTextureLocation(PennyEntity entity) {
 		return PENNY_TEX;
 	}
 

@@ -16,7 +16,7 @@ public class JalapenoZombieRender extends AbstractZombotanyRender<JalapenoZombie
 	}
 
 	@Override
-	public ResourceLocation getEntityTexture(JalapenoZombieEntity entity) {
+	public ResourceLocation getTextureLocation(JalapenoZombieEntity entity) {
 		return JALAPENO_ZOMBIE_TEX;
 	}
 

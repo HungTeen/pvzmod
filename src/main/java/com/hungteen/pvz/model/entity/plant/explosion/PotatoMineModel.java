@@ -18,42 +18,42 @@ public class PotatoMineModel extends EntityModel<PotatoMineEntity> {
 	private final ModelRenderer string;
 
 	public PotatoMineModel() {
-		textureWidth = 128;
-		textureHeight = 128;
+		texWidth = 128;
+		texHeight = 128;
 
 		total = new ModelRenderer(this);
-		total.setRotationPoint(0.0F, 17.0F, 0.0F);
+		total.setPos(0.0F, 17.0F, 0.0F);
 		
 
 		body = new ModelRenderer(this);
-		body.setRotationPoint(0.0F, 0.0F, 0.0F);
+		body.setPos(0.0F, 0.0F, 0.0F);
 		total.addChild(body);
-		body.setTextureOffset(1, 105).addBox(-10.0F, 5.0F, -10.0F, 20.0F, 2.0F, 20.0F, 0.0F, false);
-		body.setTextureOffset(4, 82).addBox(-9.0F, 2.0F, -9.0F, 18.0F, 3.0F, 18.0F, 0.0F, false);
-		body.setTextureOffset(4, 61).addBox(-8.0F, -1.0F, -8.0F, 16.0F, 3.0F, 16.0F, 0.0F, false);
-		body.setTextureOffset(78, 2).addBox(-6.0F, -2.0F, -6.0F, 12.0F, 1.0F, 12.0F, 0.0F, false);
-		body.setTextureOffset(21, 24).addBox(-3.0F, -3.0F, -3.0F, 6.0F, 1.0F, 6.0F, 0.0F, false);
+		body.texOffs(1, 105).addBox(-10.0F, 5.0F, -10.0F, 20.0F, 2.0F, 20.0F, 0.0F, false);
+		body.texOffs(4, 82).addBox(-9.0F, 2.0F, -9.0F, 18.0F, 3.0F, 18.0F, 0.0F, false);
+		body.texOffs(4, 61).addBox(-8.0F, -1.0F, -8.0F, 16.0F, 3.0F, 16.0F, 0.0F, false);
+		body.texOffs(78, 2).addBox(-6.0F, -2.0F, -6.0F, 12.0F, 1.0F, 12.0F, 0.0F, false);
+		body.texOffs(21, 24).addBox(-3.0F, -3.0F, -3.0F, 6.0F, 1.0F, 6.0F, 0.0F, false);
 
 		string = new ModelRenderer(this);
-		string.setRotationPoint(0.0F, 0.0F, 0.0F);
+		string.setPos(0.0F, 0.0F, 0.0F);
 		total.addChild(string);
-		string.setTextureOffset(8, 34).addBox(-1.0F, -8.0F, -1.0F, 2.0F, 5.0F, 2.0F, 0.0F, false);
-		string.setTextureOffset(111, 22).addBox(-2.0F, -12.0F, -2.0F, 4.0F, 4.0F, 4.0F, 0.0F, false);
+		string.texOffs(8, 34).addBox(-1.0F, -8.0F, -1.0F, 2.0F, 5.0F, 2.0F, 0.0F, false);
+		string.texOffs(111, 22).addBox(-2.0F, -12.0F, -2.0F, 4.0F, 4.0F, 4.0F, 0.0F, false);
 	}
 
 	@Override
-	public void setRotationAngles(PotatoMineEntity entity, float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch){
+	public void setupAnim(PotatoMineEntity entity, float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch){
 		//previously the render function, render code was moved to a method below
 	}
 
 	@Override
-	public void render(MatrixStack matrixStack, IVertexBuilder buffer, int packedLight, int packedOverlay, float red, float green, float blue, float alpha){
+	public void renderToBuffer(MatrixStack matrixStack, IVertexBuilder buffer, int packedLight, int packedOverlay, float red, float green, float blue, float alpha){
 		total.render(matrixStack, buffer, packedLight, packedOverlay);
 	}
 
 	public void setRotationAngle(ModelRenderer modelRenderer, float x, float y, float z) {
-		modelRenderer.rotateAngleX = x;
-		modelRenderer.rotateAngleY = y;
-		modelRenderer.rotateAngleZ = z;
+		modelRenderer.xRot = x;
+		modelRenderer.yRot = y;
+		modelRenderer.zRot = z;
 	}
 }

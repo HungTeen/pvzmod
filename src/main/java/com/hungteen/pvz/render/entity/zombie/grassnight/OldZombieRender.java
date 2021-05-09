@@ -17,7 +17,7 @@ public class OldZombieRender extends AbstractPaperZombieRender<OldZombieEntity>{
 	}
 
 	@Override
-	public ResourceLocation getEntityTexture(OldZombieEntity entity) {
+	public ResourceLocation getTextureLocation(OldZombieEntity entity) {
 		return StringUtil.prefix("textures/entity/zombie/grassnight/old_zombie.png");
 	}
 

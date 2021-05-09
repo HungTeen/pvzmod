@@ -18,7 +18,7 @@ import net.minecraft.world.World;
 
 public abstract class PlantProducerEntity extends PVZPlantEntity implements IProducer{
 
-	private static final DataParameter<Boolean> IS_GEN_TIME = EntityDataManager.createKey(PlantProducerEntity.class, DataSerializers.BOOLEAN);
+	private static final DataParameter<Boolean> IS_GEN_TIME = EntityDataManager.defineId(PlantProducerEntity.class, DataSerializers.BOOLEAN);
 	public int genCD;
 	
 	public PlantProducerEntity(EntityType<? extends CreatureEntity> type, World worldIn) {
@@ -28,9 +28,9 @@ public abstract class PlantProducerEntity extends PVZPlantEntity implements IPro
 	}
 
 	@Override
-	protected void registerData() {
-		super.registerData();
-		dataManager.register(IS_GEN_TIME, false);
+	protected void defineSynchedData() {
+		super.defineSynchedData();
+		entityData.define(IS_GEN_TIME, false);
 	}
 	
 	@Override
@@ -49,15 +49,15 @@ public abstract class PlantProducerEntity extends PVZPlantEntity implements IPro
 	 * such as sunflower or sunshroom
 	 */
 	protected void genSun(int num){
-		SunEntity sun = EntityRegister.SUN.get().create(this.world);
+		SunEntity sun = EntityRegister.SUN.get().create(this.level);
 		sun.setAmount(num);
-		EntityUtil.onMobEntityRandomPosSpawn(world, sun, getPosition(), 2);
-		EntityUtil.playSound(this, SoundEvents.ENTITY_EXPERIENCE_ORB_PICKUP);
+		EntityUtil.onMobEntityRandomPosSpawn(level, sun, blockPosition(), 2);
+		EntityUtil.playSound(this, SoundEvents.EXPERIENCE_ORB_PICKUP);
 	}
 	
 	@Override
-	public void readAdditional(CompoundNBT compound) {
-		super.readAdditional(compound);
+	public void readAdditionalSaveData(CompoundNBT compound) {
+		super.readAdditionalSaveData(compound);
 		if(compound.contains("is_gen_time")) {
 			this.setIsGenTime(compound.getBoolean("is_gen_time"));
 		}
@@ -67,20 +67,20 @@ public abstract class PlantProducerEntity extends PVZPlantEntity implements IPro
 	}
 
 	@Override
-	public void writeAdditional(CompoundNBT compound) {
-		super.writeAdditional(compound);
+	public void addAdditionalSaveData(CompoundNBT compound) {
+		super.addAdditionalSaveData(compound);
 		compound.putBoolean("is_gen_time", this.getIsGenTime());
 		compound.putInt("gen_cd", this.genCD);
 	}
 	
 	public boolean getIsGenTime()
 	{
-		return dataManager.get(IS_GEN_TIME);
+		return entityData.get(IS_GEN_TIME);
 	}
 	
 	public void setIsGenTime(boolean is)
 	{
-		this.dataManager.set(IS_GEN_TIME, is);
+		this.entityData.set(IS_GEN_TIME, is);
 	}
 	
 }

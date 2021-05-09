@@ -19,7 +19,7 @@ public class GatlingPeaZombieRender extends AbstractZombotanyRender<GatlingPeaZo
 	}
 
 	@Override
-	public ResourceLocation getEntityTexture(GatlingPeaZombieEntity entity) {
+	public ResourceLocation getTextureLocation(GatlingPeaZombieEntity entity) {
 		return GATLINGPEA_ZOMBIE_TEX;
 	}
 

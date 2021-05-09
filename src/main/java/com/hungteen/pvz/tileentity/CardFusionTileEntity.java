@@ -14,6 +14,7 @@ import com.hungteen.pvz.utils.PlantUtil;
 import com.hungteen.pvz.utils.enums.Plants;
 import com.mojang.datafixers.util.Pair;
 
+import net.minecraft.block.BlockState;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.inventory.container.Container;
@@ -42,7 +43,7 @@ public class CardFusionTileEntity extends TileEntity implements ITickableTileEnt
 
 	@Override
 	public void tick() {
-		if(! world.isRemote) {
+		if(! level.isClientSide) {
 			this.absorbSunAmount();
 			this.array.set(0, sunAmount);
 			this.array.set(1, this.getResultPlantId());
@@ -66,13 +67,13 @@ public class CardFusionTileEntity extends TileEntity implements ITickableTileEnt
     }
 	
 	private Plants getFusionResult(FusionRecipes recipe) {
-		int pos = world.rand.nextInt(100);
+		int pos = level.random.nextInt(100);
 		int now = 0;
 		for(Pair<Plants, Integer> pair : recipe.resultPlants) {
 			now += pair.getSecond();
 			if(pos < now) return pair.getFirst();
 		}
-		pos = world.rand.nextInt(recipe.requirePlants.size());
+		pos = level.random.nextInt(recipe.requirePlants.size());
 		return recipe.requirePlants.get(pos);
 	}
 	
@@ -128,22 +129,22 @@ public class CardFusionTileEntity extends TileEntity implements ITickableTileEnt
     }
 	
 	@Override
-    public void read(CompoundNBT compound) {
-    	super.read(compound);
+    public void load(BlockState state, CompoundNBT compound) {
+    	super.load(state, compound);
     	this.handler.deserializeNBT(compound.getCompound("itemstack_list"));
     	this.sunAmount = compound.getInt("sun_amount");
     }
     
     @Override
-    public CompoundNBT write(CompoundNBT compound) {
+    public CompoundNBT save(CompoundNBT compound) {
     	compound.put("itemstack_list", this.handler.serializeNBT());
     	compound.putInt("sun_amount", this.sunAmount);
-    	return super.write(compound);
+    	return super.save(compound);
     }
     
 	@Override
 	public Container createMenu(int id, PlayerInventory inv, PlayerEntity player) {
-		return new CardFusionContainer(id, player, this.pos);
+		return new CardFusionContainer(id, player, this.worldPosition);
 	}
 
 	@Override
@@ -152,10 +153,10 @@ public class CardFusionTileEntity extends TileEntity implements ITickableTileEnt
 	}
 	
 	public boolean isUsableByPlayer(PlayerEntity player) {
-		if (this.world.getTileEntity(this.pos) != this) {
+		if (this.level.getBlockEntity(this.worldPosition) != this) {
 			return false;
 		}
-		return player.getDistanceSq((double) this.pos.getX() + 0.5D, (double) this.pos.getY() + 0.5D, (double) this.pos.getZ() + 0.5D) <= 64.0D;
+		return player.distanceToSqr((double) this.worldPosition.getX() + 0.5D, (double) this.worldPosition.getY() + 0.5D, (double) this.worldPosition.getZ() + 0.5D) <= 64.0D;
 	}
 
 }

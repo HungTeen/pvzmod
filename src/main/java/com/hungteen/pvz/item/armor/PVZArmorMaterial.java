@@ -15,11 +15,11 @@ import net.minecraftforge.api.distmarker.OnlyIn;
 
 public enum PVZArmorMaterial implements IArmorMaterial {
 	
-	FOOTBALL("football", 50, new int[] {3, 6, 8 ,3}, 15, SoundEvents.ITEM_ARMOR_EQUIP_IRON, 0.5F, () -> {
-	      return Ingredient.fromItems(ItemRegister.STEEL_INGOT.get());
+	FOOTBALL("football", 50, new int[] {3, 6, 8 ,3}, 15, SoundEvents.ARMOR_EQUIP_IRON, 0.5F, 0.1F, () -> {
+	      return Ingredient.of(ItemRegister.STEEL_INGOT.get());
 	}),
-	GIGA("giga", 80, new int[] {3, 6, 8 ,3}, 20, SoundEvents.ITEM_ARMOR_EQUIP_IRON, 2F, () -> {
-	      return Ingredient.fromItems(ItemRegister.STEEL_INGOT.get());
+	GIGA("giga", 80, new int[] {3, 6, 8 ,3}, 20, SoundEvents.ARMOR_EQUIP_IRON, 2F, 0.2F, () -> {
+	      return Ingredient.of(ItemRegister.STEEL_INGOT.get());
 	});
 
 	private static final int[] MAX_DAMAGE_ARRAY = new int[] { 13, 15, 16, 11 };
@@ -29,42 +29,44 @@ public enum PVZArmorMaterial implements IArmorMaterial {
 	private final int enchantability;
 	private final SoundEvent soundEvent;
 	private final float toughness;
+	private final float knockbackResistance;
 	private final LazyValue<Ingredient> repairMaterial;
 
 	private PVZArmorMaterial(String nameIn, int maxDamageFactorIn, int[] damageReductionAmountsIn, int enchantabilityIn,
-			SoundEvent equipSoundIn, float toughnessIn, Supplier<Ingredient> repairMaterialSupplier) {
+			SoundEvent equipSoundIn, float toughnessIn, float kb, Supplier<Ingredient> repairMaterialSupplier) {
 		this.name = nameIn;
 		this.maxDamageFactor = maxDamageFactorIn;
 		this.damageReductionAmountArray = damageReductionAmountsIn;
 		this.enchantability = enchantabilityIn;
 		this.soundEvent = equipSoundIn;
 		this.toughness = toughnessIn;
+		this.knockbackResistance = kb;
 		this.repairMaterial = new LazyValue<>(repairMaterialSupplier);
 	}
 
 	@Override
-	public int getDurability(EquipmentSlotType slotIn) {
+	public int getDurabilityForSlot(EquipmentSlotType slotIn) {
 		return MAX_DAMAGE_ARRAY[slotIn.getIndex()] * this.maxDamageFactor;
 	}
 
 	@Override
-	public int getDamageReductionAmount(EquipmentSlotType slotIn) {
+	public int getDefenseForSlot(EquipmentSlotType slotIn) {
 		return this.damageReductionAmountArray[slotIn.getIndex()];
 	}
 
 	@Override
-	public int getEnchantability() {
+	public int getEnchantmentValue() {
 		return this.enchantability;
 	}
 
 	@Override
-	public SoundEvent getSoundEvent() {
+	public SoundEvent getEquipSound() {
 		return this.soundEvent;
 	}
 
 	@Override
-	public Ingredient getRepairMaterial() {
-		return this.repairMaterial.getValue();
+	public Ingredient getRepairIngredient() {
+		return this.repairMaterial.get();
 	}
 
 	@Override
@@ -76,6 +78,11 @@ public enum PVZArmorMaterial implements IArmorMaterial {
 	@Override
 	public float getToughness() {
 		return this.toughness;
+	}
+
+	@Override
+	public float getKnockbackResistance() {
+		return this.knockbackResistance;
 	}
 
 }

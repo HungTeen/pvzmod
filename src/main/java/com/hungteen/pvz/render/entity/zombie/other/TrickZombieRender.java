@@ -24,7 +24,7 @@ public class TrickZombieRender extends PVZZombieRender<TrickZombieEntity>{
 	}
 
 	@Override
-	public ResourceLocation getEntityTexture(TrickZombieEntity entity) {
+	public ResourceLocation getTextureLocation(TrickZombieEntity entity) {
 		return StringUtil.prefix("textures/entity/zombie/other/trick_zombie.png");
 	}
 

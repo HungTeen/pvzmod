@@ -31,72 +31,72 @@ public abstract class PVZMeleeAttackGoal extends Goal {
 	    this.attacker = creature;
 	    this.speedTowardsTarget = speedIn;
 	    this.longMemory = useLongMemory;
-	    this.setMutexFlags(EnumSet.of(Goal.Flag.MOVE, Goal.Flag.LOOK));
+	    this.setFlags(EnumSet.of(Goal.Flag.MOVE, Goal.Flag.LOOK));
 	}
 	
 	@Override
-	public boolean shouldExecute() {
-		long currentTime = this.attacker.world.getGameTime();
+	public boolean canUse() {
+		long currentTime = this.attacker.level.getGameTime();
 		if (currentTime - this.lastExcuteTime < 20L) return false; //search each second.
 		this.lastExcuteTime = currentTime;
-		LivingEntity living = this.attacker.getAttackTarget();
+		LivingEntity living = this.attacker.getTarget();
 		if (! EntityUtil.isEntityValid(living)) return false;
 		if (canPenalize) {
 			if (-- this.delayCounter <= 0) {
-				this.path = this.attacker.getNavigator().getPathToEntity(living, 0);
-				this.delayCounter = 4 + this.attacker.getRNG().nextInt(7);
+				this.path = this.attacker.getNavigation().createPath(living, 0);
+				this.delayCounter = 4 + this.attacker.getRandom().nextInt(7);
 				return this.path != null;
 			} 
 			return true;
 		}
-		this.path = this.attacker.getNavigator().getPathToEntity(living, 0);
+		this.path = this.attacker.getNavigation().createPath(living, 0);
 		if (this.path != null) return true;//has walk path.
 		return this.getAttackReachSqr(living) >= EntityUtil.getNearestDistance(attacker, living);// target is already in attack range
 	}
 	
 	@Override
-	public boolean shouldContinueExecuting() {
-		LivingEntity living = this.attacker.getAttackTarget();
+	public boolean canContinueToUse() {
+		LivingEntity living = this.attacker.getTarget();
 		if (! EntityUtil.isEntityValid(living)) return false;
-		if (! this.longMemory) return ! this.attacker.getNavigator().noPath();
-		if (! this.attacker.isWithinHomeDistanceFromPosition(new BlockPos(living))) return false;
+		if (! this.longMemory) return ! this.attacker.getNavigation().isDone();
+		if (! this.attacker.isWithinRestriction(new BlockPos(living.position()))) return false;
 		return EntityUtil.checkCanEntityTarget(this.attacker, living);
 	}
 
 	@Override
-	public void startExecuting() {
-		this.attacker.getNavigator().setPath(this.path, this.speedTowardsTarget);
-		this.attacker.setAggroed(true);
+	public void start() {
+		this.attacker.getNavigation().moveTo(this.path, this.speedTowardsTarget);
+		this.attacker.setAggressive(true);
 		this.delayCounter = 0;
 	}
 
 	@Override
-	public void resetTask() {
-		this.attacker.setAttackTarget(null);
-		this.attacker.setAggroed(false);
-		this.attacker.getNavigator().clearPath();
+	public void stop() {
+		this.attacker.setTarget(null);
+		this.attacker.setAggressive(false);
+		this.attacker.getNavigation().stop();
 	}
 
 	/**
 	 * Keep ticking a continuous task that has already been started
 	 */
 	public void tick() {
-		LivingEntity target = this.attacker.getAttackTarget();
-		this.attacker.getLookController().setLookPositionWithEntity(target, 30.0F, 30.0F);
+		LivingEntity target = this.attacker.getTarget();
+		this.attacker.getLookControl().setLookAt(target, 30.0F, 30.0F);
 		-- this.delayCounter;
-		if ((this.longMemory || this.attacker.getEntitySenses().canSee(target)) && this.delayCounter <= 0 
+		if ((this.longMemory || this.attacker.getSensing().canSee(target)) && this.delayCounter <= 0 
 				&& (this.targetX == 0.0D && this.targetY == 0.0D && this.targetZ == 0.0D
-						|| target.getDistanceSq(this.targetX, this.targetY, this.targetZ) >= 1.0D
-						|| this.attacker.getRNG().nextFloat() < 0.05F)) {
-			this.targetX = target.getPosX();
-			this.targetY = target.getPosY();
-			this.targetZ = target.getPosZ();
-			this.delayCounter = 4 + this.attacker.getRNG().nextInt(7);
+						|| target.distanceToSqr(this.targetX, this.targetY, this.targetZ) >= 1.0D
+						|| this.attacker.getRandom().nextFloat() < 0.05F)) {
+			this.targetX = target.getX();
+			this.targetY = target.getY();
+			this.targetZ = target.getZ();
+			this.delayCounter = 4 + this.attacker.getRandom().nextInt(7);
 			if (this.canPenalize) {
 				this.delayCounter += failedPathFindingPenalty;
-				if (this.attacker.getNavigator().getPath() != null) {
-					net.minecraft.pathfinding.PathPoint finalPathPoint = this.attacker.getNavigator().getPath().getFinalPathPoint();
-					if (finalPathPoint != null && target.getDistanceSq(finalPathPoint.x, finalPathPoint.y, finalPathPoint.z) < 1) {
+				if (this.attacker.getNavigation().getPath() != null) {
+					net.minecraft.pathfinding.PathPoint finalPathPoint = this.attacker.getNavigation().getPath().getEndNode();
+					if (finalPathPoint != null && target.distanceToSqr(finalPathPoint.x, finalPathPoint.y, finalPathPoint.z) < 1) {
 						failedPathFindingPenalty = 0;
 					} else {
 						failedPathFindingPenalty += 10;
@@ -105,7 +105,7 @@ public abstract class PVZMeleeAttackGoal extends Goal {
 					failedPathFindingPenalty += 10;
 				}
 			}
-			if (! this.attacker.getNavigator().tryMoveToEntityLiving(target, this.speedTowardsTarget)) {
+			if (! this.attacker.getNavigation().moveTo(target, this.speedTowardsTarget)) {
 				this.delayCounter += 15 * this.delayCnt;
 				this.delayCnt = Math.min(10, this.delayCnt + 1);
 		    } else {

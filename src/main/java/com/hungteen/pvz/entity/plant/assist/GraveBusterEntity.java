@@ -12,7 +12,7 @@ import net.minecraft.entity.EntitySize;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.Pose;
-import net.minecraft.entity.SharedMonsterAttributes;
+import net.minecraft.entity.ai.attributes.Attributes;
 import net.minecraft.entity.ai.goal.Goal;
 import net.minecraft.entity.ai.goal.NearestAttackableTargetGoal;
 import net.minecraft.nbt.CompoundNBT;
@@ -23,7 +23,7 @@ import net.minecraft.world.World;
 
 public class GraveBusterEntity extends PVZPlantEntity{
 
-	private static final DataParameter<Boolean> IS_EATING = EntityDataManager.createKey(GraveBusterEntity.class, DataSerializers.BOOLEAN);
+	private static final DataParameter<Boolean> IS_EATING = EntityDataManager.defineId(GraveBusterEntity.class, DataSerializers.BOOLEAN);
 	private static final int MAX_LIVE_TICK = 100;
 	private int killCount = 0;
 	
@@ -33,9 +33,9 @@ public class GraveBusterEntity extends PVZPlantEntity{
 	}
 	
 	@Override
-	protected void registerData() {
-		super.registerData();
-		this.dataManager.register(IS_EATING, false);
+	protected void defineSynchedData() {
+		super.defineSynchedData();
+		this.entityData.define(IS_EATING, false);
 	}
 	
 	@Override
@@ -48,9 +48,9 @@ public class GraveBusterEntity extends PVZPlantEntity{
 	}
 	
 	@Override
-	protected void registerAttributes() {
-		super.registerAttributes();
-		this.getAttribute(SharedMonsterAttributes.FOLLOW_RANGE).setBaseValue(5);
+	protected void updateAttributes() {
+		super.updateAttributes();
+		this.getAttribute(Attributes.FOLLOW_RANGE).setBaseValue(5);
 	}
 	
 	@Override
@@ -89,28 +89,28 @@ public class GraveBusterEntity extends PVZPlantEntity{
 	}
 	
 	@Override
-	public EntitySize getSize(Pose poseIn) {
-		return EntitySize.flexible(1f, 1.6f);
+	public EntitySize getDimensions(Pose poseIn) {
+		return EntitySize.scalable(1f, 1.6f);
 	}
 	
 	public void setEating(boolean is) {
-		this.dataManager.set(IS_EATING, is);
+		this.entityData.set(IS_EATING, is);
 	}
 	
 	public boolean isEating() {
-		return this.dataManager.get(IS_EATING);
+		return this.entityData.get(IS_EATING);
 	}
 	
 	@Override
-	public void writeAdditional(CompoundNBT compound) {
-		super.writeAdditional(compound);
+	public void addAdditionalSaveData(CompoundNBT compound) {
+		super.addAdditionalSaveData(compound);
 		compound.putInt("kill_cnt", this.killCount);
 		compound.putBoolean("is_eating", this.isEating());
 	}
 	
 	@Override
-	public void readAdditional(CompoundNBT compound) {
-		super.readAdditional(compound);
+	public void readAdditionalSaveData(CompoundNBT compound) {
+		super.readAdditionalSaveData(compound);
 		if(compound.contains("kill_cnt")) {
 			this.killCount = compound.getInt("kill_cnt");
 		}
@@ -139,13 +139,13 @@ public class GraveBusterEntity extends PVZPlantEntity{
 		}
 		
 		@Override
-		public boolean shouldExecute() {
-			LivingEntity target = this.buster.getAttackTarget();
+		public boolean canUse() {
+			LivingEntity target = this.buster.getTarget();
 			if(target == null || !target.isAlive()) {
 				return false;
 			}
 			if(!target.getPassengers().isEmpty()) {
-				this.buster.setAttackTarget(null);
+				this.buster.setTarget(null);
 				this.target = null;
 				return false;
 			}
@@ -154,19 +154,19 @@ public class GraveBusterEntity extends PVZPlantEntity{
 		}
 		
 		@Override
-		public void startExecuting() {
+		public void start() {
 			this.buster.setEating(true);
 			this.buster.startRiding(this.target, true);
 		}
 		
 		@Override
-		public void resetTask() {
+		public void stop() {
 			this.buster.setEating(false);
 			this.target = null;
 		}
 		
 		@Override
-		public boolean shouldContinueExecuting() {
+		public boolean canContinueToUse() {
 			return this.target !=null && this.target instanceof TombStoneEntity;
 		}
 		
@@ -180,7 +180,7 @@ public class GraveBusterEntity extends PVZPlantEntity{
 				this.buster.setAttackTime(0);
 				this.buster.killCount ++;
 				this.buster.setEating(false);
-				this.target.attackEntityFrom(PVZDamageSource.causeEatDamage(this.buster, this.buster), this.target.getMaxHealth() * 1.5f);
+				this.target.hurt(PVZDamageSource.causeEatDamage(this.buster, this.buster), this.target.getMaxHealth() * 1.5f);
 				if(this.buster.killCount >= this.buster.getMaxKillCnt()) {
 					this.buster.remove();
 				}

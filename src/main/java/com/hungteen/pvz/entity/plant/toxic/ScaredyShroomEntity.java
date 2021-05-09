@@ -22,7 +22,7 @@ import net.minecraft.world.World;
 public class ScaredyShroomEntity extends PlantShooterEntity {
 
 	protected final double LENTH = 0.2d; //pea position offset
-	private static final DataParameter<Integer> SCARE_TIME = EntityDataManager.createKey(ScaredyShroomEntity.class, DataSerializers.VARINT);
+	private static final DataParameter<Integer> SCARE_TIME = EntityDataManager.defineId(ScaredyShroomEntity.class, DataSerializers.INT);
 	public static final int ANIM_TIME = 15;
 	
 	public ScaredyShroomEntity(EntityType<? extends CreatureEntity> type, World worldIn) {
@@ -30,9 +30,9 @@ public class ScaredyShroomEntity extends PlantShooterEntity {
 	}
 	
 	@Override
-	protected void registerData() {
-		super.registerData();
-		this.dataManager.register(SCARE_TIME, 0);
+	protected void defineSynchedData() {
+		super.defineSynchedData();
+		this.entityData.define(SCARE_TIME, 0);
 	}
 	
 	@Override
@@ -44,12 +44,12 @@ public class ScaredyShroomEntity extends PlantShooterEntity {
 	@Override
 	public void normalPlantTick() {
 		super.normalPlantTick();
-		this.recalculateSize();
-		if(!this.world.isRemote) {
+		this.refreshDimensions();
+		if(!this.level.isClientSide) {
 			int time = MathHelper.clamp(this.getScareTime() - 1, 0, ANIM_TIME);
-			if(this.getAttackTarget() != null) {//has target
+			if(this.getTarget() != null) {//has target
 				double dis = getScareDistance();
-				if(this.getDistanceSq(this.getAttackTarget()) <= dis * dis) {//close to this
+				if(this.distanceToSqr(this.getTarget()) <= dis * dis) {//close to this
 					time = MathHelper.clamp(this.getScareTime() + 1, 0, ANIM_TIME);
 				}
 			}
@@ -67,28 +67,28 @@ public class ScaredyShroomEntity extends PlantShooterEntity {
 	}
 	
 	@Override
-	public EntitySize getSize(Pose poseIn) {
-		return EntitySize.flexible(0.6f, 1.6f - this.getScareTime() * 1.0f / ANIM_TIME);
+	public EntitySize getDimensions(Pose poseIn) {
+		return EntitySize.scalable(0.6f, 1.6f - this.getScareTime() * 1.0f / ANIM_TIME);
 	}
 
 	@Override
 	public void shootBullet() {
-		LivingEntity target = this.getAttackTarget();
+		LivingEntity target = this.getTarget();
 		if(target == null || this.isScared()) {
 			return ;
 		}
-		double dx = target.getPosX() - this.getPosX();
-        double dz = target.getPosZ() - this.getPosZ();
-        double y = this.getPosY() + this.getSize(getPose()).height * 0.7f;
+		double dx = target.getX() - this.getX();
+        double dz = target.getZ() - this.getZ();
+        double y = this.getY() + this.getDimensions(getPose()).height * 0.7f;
         double dis = MathHelper.sqrt(dx * dx + dz * dz);
         double tmp = this.LENTH / dis;
         double deltaX = tmp * dx;
         double deltaZ = tmp * dz;
-        SporeEntity spore = new SporeEntity(this.world, this); 
-        spore.setPosition(this.getPosX() + deltaX, y, this.getPosZ() + deltaZ);
-        spore.shootPea(dx, target.getPosY() + target.getHeight() - y, dz, this.getBulletSpeed());
+        SporeEntity spore = new SporeEntity(this.level, this); 
+        spore.setPos(this.getX() + deltaX, y, this.getZ() + deltaZ);
+        spore.shootPea(dx, target.getY() + target.getBbHeight() - y, dz, this.getBulletSpeed());
         EntityUtil.playSound(this, SoundRegister.PUFF.get());
-        this.world.addEntity(spore);
+        this.level.addFreshEntity(spore);
 	}
 
 	@Override
@@ -109,11 +109,11 @@ public class ScaredyShroomEntity extends PlantShooterEntity {
 	}
     
     public int getScareTime() {
-    	return this.dataManager.get(SCARE_TIME);
+    	return this.entityData.get(SCARE_TIME);
     }
     
     public void setScareTime(int time) {
-    	this.dataManager.set(SCARE_TIME, time);
+    	this.entityData.set(SCARE_TIME, time);
     }
     
     public boolean isScared() {
@@ -126,14 +126,14 @@ public class ScaredyShroomEntity extends PlantShooterEntity {
 	}
 	
 	@Override
-	public void writeAdditional(CompoundNBT compound) {
-		super.writeAdditional(compound);
+	public void addAdditionalSaveData(CompoundNBT compound) {
+		super.addAdditionalSaveData(compound);
 		compound.putInt("scare_time", this.getScareTime());
 	}
 	
 	@Override
-	public void readAdditional(CompoundNBT compound) {
-		super.readAdditional(compound);
+	public void readAdditionalSaveData(CompoundNBT compound) {
+		super.readAdditionalSaveData(compound);
 		if(compound.contains("scare_time")) {
 			this.setScareTime(compound.getInt("scare_time"));
 		}

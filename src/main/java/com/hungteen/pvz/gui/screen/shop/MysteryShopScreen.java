@@ -15,7 +15,7 @@ import com.hungteen.pvz.utils.TradeUtil.DaveGoods;
 import com.hungteen.pvz.utils.enums.Colors;
 import com.hungteen.pvz.utils.enums.Plants;
 import com.hungteen.pvz.utils.enums.Resources;
-import com.mojang.blaze3d.systems.RenderSystem;
+import com.mojang.blaze3d.matrix.MatrixStack;
 
 import net.minecraft.client.gui.widget.button.Button;
 import net.minecraft.entity.player.PlayerInventory;
@@ -40,7 +40,7 @@ public class MysteryShopScreen extends AbstractDaveShopScreen {
 	@Override
 	protected void init() {
 		super.init();
-		this.buyButton = this.addButton(new Button(this.guiLeft + 206, this.guiTop + 85, 18, 18, new TranslationTextComponent("gui.pvz.dave_shop.buy").getFormattedText(), (button) -> {
+		this.buyButton = this.addButton(new Button(this.leftPos + 206, this.topPos + 85, 18, 18, new TranslationTextComponent("gui.pvz.dave_shop.buy"), (button) -> {
 			if(this.buyButton.visible) {
 			    PVZPacketHandler.CHANNEL.sendToServer(new ClickButtonPacket(this.getShopID(), this.selectedGood.type, this.selectedGood.ordinal()));
 			}
@@ -49,34 +49,35 @@ public class MysteryShopScreen extends AbstractDaveShopScreen {
 	
 	@Override
 	protected boolean canBuyNow() {
-		return this.selectedGood != null && this.selectedTrade != null && ClientPlayerResources.getPlayerStats(Resources.GEM_NUM) >= this.selectedTrade.money && this.container.canClickBuyButton();
+		return this.selectedGood != null && this.selectedTrade != null && ClientPlayerResources.getPlayerStats(Resources.GEM_NUM) >= this.selectedTrade.money && this.menu.canClickBuyButton();
 	}
 	
 	@Override
-	protected void drawGuiContainerBackgroundLayer(float partialTicks, int mouseX, int mouseY) {
-		RenderSystem.color4f(1.0F, 1.0F, 1.0F, 1.0F);
-		this.minecraft.getTextureManager().bindTexture(PennyShopScreen.TEXTURE);
-		blit(this.guiLeft, this.guiTop, this.getBlitOffset(), 0.0F, 0.0F, this.xSize, this.ySize, 256, 512);
-		StringUtil.drawCenteredScaledString(font, ClientPlayerResources.getPlayerStats(Resources.GEM_NUM) + "", this.guiLeft + 25 + 44, this.guiTop + 9, Colors.WHITE, 1.4f);
-		StringUtil.drawCenteredScaledString(font, new TranslationTextComponent("gui.pvz.mystery_shop.title").getFormattedText(), this.guiLeft + 115 + 82, this.guiTop + 6, Colors.BLACK, 1.4f);
-		StringUtil.drawCenteredScaledString(font, new TranslationTextComponent("gui.pvz.dave_shop.time_left").appendText(":" + ClientPlayerResources.updateGoodTick).getFormattedText(), this.guiLeft + 115 + 130, this.guiTop + 20, Colors.BLACK, 0.8f);
+	protected void renderBg(MatrixStack stack, float partialTicks, int mouseX, int mouseY) {
+		stack.pushPose();
+		this.minecraft.getTextureManager().bind(PennyShopScreen.TEXTURE);
+		blit(stack, this.leftPos, this.topPos, this.getBlitOffset(), 0.0F, 0.0F, this.imageWidth, this.imageHeight, 256, 512);
+		StringUtil.drawCenteredScaledString(stack, font, ClientPlayerResources.getPlayerStats(Resources.GEM_NUM) + "", this.leftPos + 25 + 44, this.topPos + 9, Colors.WHITE, 1.4f);
+		StringUtil.drawCenteredScaledString(stack, font, new TranslationTextComponent("gui.pvz.mystery_shop.title").getContents(), this.leftPos + 115 + 82, this.topPos + 6, Colors.BLACK, 1.4f);
+		StringUtil.drawCenteredScaledString(stack, font, new TranslationTextComponent("gui.pvz.dave_shop.time_left").append(":" + ClientPlayerResources.updateGoodTick).getContents(), this.leftPos + 115 + 130, this.topPos + 20, Colors.BLACK, 0.8f);
+	    stack.popPose();
 	}
 
 	@Override
-	protected void renderTrade(TradeType trade, int posX, int posY) {
-		StringUtil.drawCenteredScaledString(font, trade.money + "", posX + 31, posY + 4, Colors.BLUE, 1.2f);
+	protected void renderTrade(MatrixStack stack, TradeType trade, int posX, int posY) {
+		StringUtil.drawCenteredScaledString(stack, font, trade.money + "", posX + 31, posY + 4, Colors.BLUE, 1.2f);
 		int offsetX = posX + 81;
 		int offsetY = posY + 1;
-		this.itemRenderer.renderItemIntoGUI(TradeUtil.getGoodItemStack(trade.good), offsetX, offsetY);
+		this.itemRenderer.renderGuiItem(TradeUtil.getGoodItemStack(trade.good), offsetX, offsetY);
 	}
 	
 	@Override
-	protected void renderDetails() {
+	protected void renderDetails(MatrixStack stack) {
 		if(this.selectedGood.toString().startsWith("ENJOY_CARD")) {
 			Plants plant = Plants.values()[this.selectedGood.type];
-			StringUtil.drawCenteredScaledString(font, new TranslationTextComponent("item.pvz." + plant.toString().toLowerCase() + "_enjoy_card").getFormattedText(), this.guiLeft + 117 + 80, this.guiTop + 28 + 20, Colors.BLACK, 1.5f);
+			StringUtil.drawCenteredScaledString(stack, font, new TranslationTextComponent("item.pvz." + plant.toString().toLowerCase() + "_enjoy_card").getContents(), this.leftPos + 117 + 80, this.topPos + 28 + 20, Colors.BLACK, 1.5f);
 		} else {
-			StringUtil.drawCenteredScaledString(font, new TranslationTextComponent("gui.pvz.dave_shop." + this.selectedGood.toString().toLowerCase()).getFormattedText(), this.guiLeft + 117 + 80, this.guiTop + 28 + 20, Colors.BLACK, 1.5f);
+			StringUtil.drawCenteredScaledString(stack, font, new TranslationTextComponent("gui.pvz.dave_shop." + this.selectedGood.toString().toLowerCase()).getContents(), this.leftPos + 117 + 80, this.topPos + 28 + 20, Colors.BLACK, 1.5f);
 		}
 		
 	}
@@ -94,16 +95,16 @@ public class MysteryShopScreen extends AbstractDaveShopScreen {
 	}
 	
 	@Override
-	protected List<String> getToolTips(TradeType type) {
+	protected List<ITextComponent> getToolTips(TradeType type) {
 		DaveGoods good = type.good;
 		int num = 1;
-		List<String> list = new ArrayList<>();
+		List<ITextComponent> list = new ArrayList<>();
 		for(int i = 1; i <= num; ++ i) {
 			TranslationTextComponent text = new TranslationTextComponent("gui.pvz.dave_shop." + good.toString().toLowerCase() + i);
 			if(good.toString().startsWith("ENJOY_CARD")) {
 				text = new TranslationTextComponent("gui.pvz.dave_shop.enjoy_card");
 			}
-			list.add(text.getFormattedText());
+			list.add(text);
 		}
 		return list;
 	}

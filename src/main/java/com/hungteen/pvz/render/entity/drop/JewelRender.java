@@ -22,7 +22,7 @@ public class JewelRender extends DropRender<JewelEntity>{
 	}
 
 	@Override
-	public ResourceLocation getEntityTexture(JewelEntity entity) {
+	public ResourceLocation getTextureLocation(JewelEntity entity) {
 		return StringUtil.prefix("textures/entity/drop/jewel.png");
 	}
 

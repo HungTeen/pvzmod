@@ -14,10 +14,10 @@ public class TreeEvents {
 
 	@SubscribeEvent
 	public static void onTreeGrow(SaplingGrowTreeEvent ev) {
-		if(!ev.getWorld().isRemote()) {
+		if(!ev.getWorld().isClientSide()) {
 			if(ev.getRand().nextInt(PVZConfig.COMMON_CONFIG.BlockSettings.SaplingTurnOriginChance.get()) == 0) {
 				if(ev.getPos().getY() > 2) {
-					ev.getWorld().setBlockState(ev.getPos().down(), BlockRegister.ORIGIN_ORE.get().getDefaultState(), 3);
+					ev.getWorld().setBlock(ev.getPos().below(), BlockRegister.ORIGIN_ORE.get().defaultBlockState(), 3);
 					ev.setResult(Result.DENY);
 				}
 			}

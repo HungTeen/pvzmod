@@ -7,9 +7,9 @@ import com.hungteen.pvz.utils.StringUtil;
 import com.mojang.blaze3d.matrix.MatrixStack;
 
 import net.minecraft.client.renderer.IRenderTypeBuffer;
-import net.minecraft.client.renderer.Vector3f;
 import net.minecraft.client.renderer.entity.EntityRendererManager;
 import net.minecraft.util.ResourceLocation;
+import net.minecraft.util.math.vector.Vector3f;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 
@@ -23,10 +23,10 @@ public class GardenRakeRender extends PVZEntityRender<GardenRakeEntity> {
 	@Override
 	public void render(GardenRakeEntity entityIn, float entityYaw, float partialTicks, MatrixStack matrixStackIn,
 			IRenderTypeBuffer bufferIn, int packedLightIn) {
-		matrixStackIn.push();
-		matrixStackIn.rotate(Vector3f.YP.rotationDegrees(180.0F - entityYaw));
+		matrixStackIn.pushPose();
+		matrixStackIn.mulPose(Vector3f.YP.rotationDegrees(180.0F - entityYaw));
         super.render(entityIn, entityYaw, partialTicks, matrixStackIn, bufferIn, packedLightIn);
-        matrixStackIn.pop();
+        matrixStackIn.popPose();
 	}
 	
 	@Override
@@ -35,7 +35,7 @@ public class GardenRakeRender extends PVZEntityRender<GardenRakeEntity> {
 	}
 
 	@Override
-	public ResourceLocation getEntityTexture(GardenRakeEntity entity) {
+	public ResourceLocation getTextureLocation(GardenRakeEntity entity) {
 		return StringUtil.prefix("textures/entity/misc/garden_rake.png");
 	}
 

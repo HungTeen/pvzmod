@@ -23,7 +23,7 @@ public class ZombieDolphinRender extends PVZZombieRender<ZombieDolphinEntity>{
 	}
 
 	@Override
-	public ResourceLocation getEntityTexture(ZombieDolphinEntity entity) {
+	public ResourceLocation getTextureLocation(ZombieDolphinEntity entity) {
 		return StringUtil.prefix("textures/entity/zombie/poolday/zombie_dolphin.png");
 	}
 

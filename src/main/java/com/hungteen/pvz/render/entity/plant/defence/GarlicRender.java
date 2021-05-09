@@ -25,7 +25,7 @@ public class GarlicRender extends PVZPlantRender<GarlicEntity> {
 	}
 
 	@Override
-	public ResourceLocation getEntityTexture(GarlicEntity entity) {
+	public ResourceLocation getTextureLocation(GarlicEntity entity) {
 		return GARLIC_TEX;
 	}
 

@@ -25,28 +25,28 @@ public class PVZLivingEvents {
 
 	@SubscribeEvent
 	public static void onLivingDeath(LivingDeathEvent ev) {
-		if(! ev.getEntity().world.isRemote) {
-			PlayerEntity player = EntityUtil.getEntityOwner(ev.getEntityLiving().world, ev.getSource().getTrueSource());
+		if(! ev.getEntity().level.isClientSide) {
+			PlayerEntity player = EntityUtil.getEntityOwner(ev.getEntityLiving().level, ev.getSource().getEntity());
 			if(player == null) { //true source has no owner
-				if(ev.getSource().getTrueSource() instanceof PlayerEntity) {
-					PlayerEventHandler.onPlayerKillEntity((PlayerEntity) ev.getSource().getTrueSource(), ev.getSource(), ev.getEntityLiving());
+				if(ev.getSource().getEntity() instanceof PlayerEntity) {
+					PlayerEventHandler.onPlayerKillEntity((PlayerEntity) ev.getSource().getEntity(), ev.getSource(), ev.getEntityLiving());
 				}
 			} else {
 				PlayerEventHandler.onPlayerKillEntity(player, ev.getSource(), ev.getEntityLiving());
 			}
 		}
-		if(! ev.getEntity().world.isRemote && ev.getEntityLiving() instanceof PlayerEntity) {
+		if(! ev.getEntity().level.isClientSide && ev.getEntityLiving() instanceof PlayerEntity) {
 			PlayerEntity player = (PlayerEntity) ev.getEntityLiving();
 			player.getCapability(CapabilityHandler.PLAYER_DATA_CAPABILITY).ifPresent((l) -> {
 				l.getPlayerData().getPlayerStats().setPlayerStats(Resources.NO_FOG_TICK, 0);
 				l.getPlayerData().getPlayerStats().setPlayerStats(Resources.KILL_COUNT, 0);
 			});
 		}
-		if(! ev.getEntity().world.isRemote && ev.getSource() instanceof PVZDamageSource) {
+		if(! ev.getEntity().level.isClientSide && ev.getSource() instanceof PVZDamageSource) {
 			PVZDamageSource source = (PVZDamageSource) ev.getSource();
 			if(source.isCopyDamage()) {
-				if(source.getTrueSource() instanceof StrangeCatEntity) {
-					((StrangeCatEntity) source.getTrueSource()).onSelfCopy(ev.getEntityLiving());
+				if(source.getEntity() instanceof StrangeCatEntity) {
+					((StrangeCatEntity) source.getEntity()).onSelfCopy(ev.getEntityLiving());
 				}
 			}
 		}
@@ -54,9 +54,9 @@ public class PVZLivingEvents {
 	
 	@SubscribeEvent
 	public static void onLivingHurt(LivingHurtEvent ev) {
-		if(! ev.getEntityLiving().world.isRemote) {
-			ev.getEntityLiving().getArmorInventoryList().forEach((stack) -> {
-				if(EnchantmentHelper.getEnchantmentLevel(EnchantmentRegister.TREE_PROTECTION.get(), stack) > 0){
+		if(! ev.getEntityLiving().level.isClientSide) {
+			ev.getEntityLiving().getArmorSlots().forEach((stack) -> {
+				if(EnchantmentHelper.getItemEnchantmentLevel(EnchantmentRegister.TREE_PROTECTION.get(), stack) > 0){
 					float amount = ev.getAmount();
 					amount = Math.min(amount, ev.getEntityLiving().getMaxHealth());
 					ev.setAmount(amount);
@@ -64,10 +64,10 @@ public class PVZLivingEvents {
 				}
 		    });
 			if(ev.getSource() instanceof PVZDamageSource) {
-				ev.getEntityLiving().hurtResistantTime = 0;
+				ev.getEntityLiving().invulnerableTime = 0;
 				LivingEventHandler.handleHurtEffects(ev.getEntityLiving(), (PVZDamageSource) ev.getSource());
 			}
-			if(! ev.getEntity().isNonBoss() && ev.getAmount() > ev.getEntityLiving().getMaxHealth()) {
+			if(! ev.getEntity().canChangeDimensions() && ev.getAmount() > ev.getEntityLiving().getMaxHealth()) {
 				ev.setAmount(Math.min(ev.getAmount(), ZombieUtil.HUGE_HIGH));
 			}
 		}

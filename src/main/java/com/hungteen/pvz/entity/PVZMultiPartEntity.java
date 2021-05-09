@@ -14,18 +14,20 @@ import net.minecraft.network.IPacket;
 import net.minecraft.network.datasync.DataParameter;
 import net.minecraft.network.datasync.DataSerializers;
 import net.minecraft.network.datasync.EntityDataManager;
+import net.minecraft.util.ActionResultType;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.Hand;
+import net.minecraft.util.math.vector.Vector3d;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.network.NetworkHooks;
 
 public abstract class PVZMultiPartEntity extends Entity {
 
-	private static final DataParameter<Integer> OWNER_ID = EntityDataManager.createKey(PVZMultiPartEntity.class,
-			DataSerializers.VARINT);
-	private static final DataParameter<Float> WIDTH = EntityDataManager.createKey(PVZMultiPartEntity.class,
+	private static final DataParameter<Integer> OWNER_ID = EntityDataManager.defineId(PVZMultiPartEntity.class,
+			DataSerializers.INT);
+	private static final DataParameter<Float> WIDTH = EntityDataManager.defineId(PVZMultiPartEntity.class,
 			DataSerializers.FLOAT);
-	private static final DataParameter<Float> HEIGHT = EntityDataManager.createKey(PVZMultiPartEntity.class,
+	private static final DataParameter<Float> HEIGHT = EntityDataManager.defineId(PVZMultiPartEntity.class,
 			DataSerializers.FLOAT);
 	protected final float MaxWidth;
 	protected final float MaxHeight;
@@ -38,7 +40,7 @@ public abstract class PVZMultiPartEntity extends Entity {
 	}
 
 	public PVZMultiPartEntity(EntityType<?> entityTypeIn, LivingEntity owner, float sizeX, float sizeY) {
-		super(entityTypeIn, owner.world);
+		super(entityTypeIn, owner.level);
 		if(owner instanceof IMultiPartEntity) {
 			this.parent = (IMultiPartEntity) owner;
 		} else {
@@ -52,19 +54,19 @@ public abstract class PVZMultiPartEntity extends Entity {
 	}
 
 	@Override
-	protected void registerData() {
-		this.dataManager.register(OWNER_ID, Integer.valueOf(0));
-		this.dataManager.register(WIDTH, 0.5F);
-		this.dataManager.register(HEIGHT, 0.5F);
+	protected void defineSynchedData() {
+		this.entityData.define(OWNER_ID, Integer.valueOf(0));
+		this.entityData.define(WIDTH, 0.5F);
+		this.entityData.define(HEIGHT, 0.5F);
 	}
 
 	@Override
 	public void tick() {
-		recalculateSize();
-		if (! world.isRemote) {
+		refreshDimensions();
+		if (! level.isClientSide) {
 			LivingEntity owner = this.getOwner();
 			if (owner != null) {
-				this.markVelocityChanged();
+				this.markHurt();
 				this.collideWithNearbyEntities();
 				if(! owner.isAlive()) {
 					this.remove();
@@ -84,7 +86,7 @@ public abstract class PVZMultiPartEntity extends Entity {
 	 */
 	public LivingEntity getOwner() {
 		int id = getOwnerId();
-		Entity entity = world.getEntityByID(id);
+		Entity entity = level.getEntity(id);
 		return entity instanceof LivingEntity ? (LivingEntity) entity : null;
 	}
 	
@@ -93,16 +95,16 @@ public abstract class PVZMultiPartEntity extends Entity {
 	}
 
 	public void setOwner(LivingEntity entity) {
-		this.setOwnerId(entity.getEntityId());
+		this.setOwnerId(entity.getId());
 	}
 
 	@Override
-	public boolean isEntityEqual(Entity entity) {
+	public boolean is(Entity entity) {
 		return this == entity || this.getOwner() == entity;
 	}
 
 	@Override
-	public boolean canBeCollidedWith() {
+	public boolean isPickable() {
 		return true;
 	}
 
@@ -113,12 +115,12 @@ public abstract class PVZMultiPartEntity extends Entity {
 	}
 
 	@Override
-	public boolean processInitialInteract(PlayerEntity player, Hand hand) {
-		return false;
+	public ActionResultType interactAt(PlayerEntity player, Vector3d vec3d, Hand hand) {
+		return ActionResultType.FAIL;
 	}
 
 	@Override
-	public boolean attackEntityFrom(DamageSource source, float damage) {
+	public boolean hurt(DamageSource source, float damage) {
 		return false;
 	}
 
@@ -133,46 +135,46 @@ public abstract class PVZMultiPartEntity extends Entity {
 	}
 
 	@Override
-	protected void readAdditional(CompoundNBT compound) {
+	protected void readAdditionalSaveData(CompoundNBT compound) {
 
 	}
 
 	@Override
-	protected void writeAdditional(CompoundNBT compound) {
+	protected void addAdditionalSaveData(CompoundNBT compound) {
 	}
 
 	@Override
-	public EntitySize getSize(Pose poseIn) {
-		return EntitySize.flexible(getPartWidth(), getPartHeight());
+	public EntitySize getDimensions(Pose poseIn) {
+		return EntitySize.scalable(getPartWidth(), getPartHeight());
 	}
 
 	@Override
-	public IPacket<?> createSpawnPacket() {
+	public IPacket<?> getAddEntityPacket() {
 		return NetworkHooks.getEntitySpawningPacket(this);
 	}
 
 	private int getOwnerId() {
-		return this.dataManager.get(OWNER_ID).intValue();
+		return this.entityData.get(OWNER_ID).intValue();
 	}
 
 	public void setOwnerId(int OwnerId) {
-		this.dataManager.set(OWNER_ID, OwnerId);
+		this.entityData.set(OWNER_ID, OwnerId);
 	}
 
 	public float getPartWidth() {
-		return this.dataManager.get(WIDTH).floatValue();
+		return this.entityData.get(WIDTH).floatValue();
 	}
 
 	public void setPartWidth(float scale) {
-		this.dataManager.set(WIDTH, scale);
+		this.entityData.set(WIDTH, scale);
 	}
 
 	public float getPartHeight() {
-		return this.dataManager.get(HEIGHT).floatValue();
+		return this.entityData.get(HEIGHT).floatValue();
 	}
 
 	public void setPartHeight(float scale) {
-		this.dataManager.set(HEIGHT, scale);
+		this.entityData.set(HEIGHT, scale);
 	}
 	
 }

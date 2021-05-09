@@ -30,7 +30,7 @@ public class UmbrellaLeafEntity extends PVZPlantEntity{
 	@Override
 	protected void normalPlantTick() {
 		super.normalPlantTick();
-		if(! world.isRemote) {
+		if(! level.isClientSide) {
 			this.tickLeaf();
 			if(this.getAttackTime() == 0 && inc > 0) {
 				EntityUtil.playSound(this, SoundRegister.DRAG.get());
@@ -41,7 +41,7 @@ public class UmbrellaLeafEntity extends PVZPlantEntity{
 	
 	private void tickLeaf() {
 		float range = this.getProtectRange();
-		List<Entity> list = world.getEntitiesWithinAABB(Entity.class, EntityUtil.getEntityAABB(this, range, 3), (target) -> {
+		List<Entity> list = level.getEntitiesOfClass(Entity.class, EntityUtil.getEntityAABB(this, range, 3), (target) -> {
 			if(target instanceof PultBulletEntity) return EntityUtil.checkCanEntityAttack(this, target);
 			if(target instanceof BungeeZombieEntity) return EntityUtil.checkCanEntityAttack(this, target);
 			return false;
@@ -70,8 +70,8 @@ public class UmbrellaLeafEntity extends PVZPlantEntity{
 	}
 	
 	@Override
-	public EntitySize getSize(Pose poseIn) {
-		return EntitySize.flexible(0.7F, 1.2F);
+	public EntitySize getDimensions(Pose poseIn) {
+		return EntitySize.scalable(0.7F, 1.2F);
 	}
 	
 	@Override
@@ -80,16 +80,16 @@ public class UmbrellaLeafEntity extends PVZPlantEntity{
 	}
 	
 	@Override
-	public void readAdditional(CompoundNBT compound) {
-		super.readAdditional(compound);
+	public void readAdditionalSaveData(CompoundNBT compound) {
+		super.readAdditionalSaveData(compound);
 		if(compound.contains("anim_inc_num")) {
 			this.inc = compound.getInt("anim_inc_num");
 		}
 	}
 	
 	@Override
-	public void writeAdditional(CompoundNBT compound) {
-		super.writeAdditional(compound);
+	public void addAdditionalSaveData(CompoundNBT compound) {
+		super.addAdditionalSaveData(compound);
 		compound.putInt("anim_inc_num", this.inc);
 	}
 

@@ -10,7 +10,7 @@ public class EssenceItem extends Item {
 	public final Essences essence;
 	
 	public EssenceItem(Essences essence) {
-		super(new Properties().group(GroupRegister.PVZ_MISC));
+		super(new Properties().tab(GroupRegister.PVZ_MISC));
 		this.essence = essence;
 	}
 

@@ -22,7 +22,7 @@ public class ButterPultRender extends PVZPlantRender<ButterPultEntity> {
 	}
 
 	@Override
-	public ResourceLocation getEntityTexture(ButterPultEntity entity) {
+	public ResourceLocation getTextureLocation(ButterPultEntity entity) {
 		return KernelPultRender.KERNEL_PULT_TEX;
 	}
 

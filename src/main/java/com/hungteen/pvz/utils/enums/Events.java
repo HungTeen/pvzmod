@@ -41,23 +41,23 @@ public enum Events {
 	}
 	
 	public static ITextComponent getEventText(Events ev) {
-		ITextComponent text = new TranslationTextComponent("event.pvz." + ev.toString().toLowerCase());
+		TranslationTextComponent text = new TranslationTextComponent("event.pvz." + ev.toString().toLowerCase());
 		switch (ev) {
-		case BUCKET:{text.applyTextStyles(TextFormatting.GRAY); break;}
-		case WATER:{text.applyTextStyles(TextFormatting.DARK_BLUE); break;}
-		case HALLOWEEN:{text.applyTextStyles(TextFormatting.GOLD); break;}
-		case NEWSPAPER:{text.applyTextStyles(TextFormatting.DARK_GRAY); break;}
-		case FOOTBALL:{text.applyTextStyles(TextFormatting.BLACK); break;}
-		case YETI:{text.applyTextStyles(TextFormatting.AQUA); break;}
-		case FOG:{text.applyTextStyles(TextFormatting.GRAY); break;}
-		case RANDOM:{text.applyTextStyles(TextFormatting.GREEN); break;}
-		case BUNGEE:{text.applyTextStyles(TextFormatting.RED); break;}
-		case METAL:{text.applyTextStyles(TextFormatting.BLACK); break;}
-		case ROOF:{text.applyTextStyles(TextFormatting.GOLD); break;}
-		case GIANT:{text.applyTextStyles(TextFormatting.DARK_RED); break;}
-		case MINI:{text.applyTextStyles(TextFormatting.DARK_AQUA); break;}
-		case INVIS:{text.applyTextStyles(TextFormatting.DARK_GRAY); break;}
-		case ZOMBOTANY:{text.applyTextStyles(TextFormatting.DARK_GREEN); break;}
+		case BUCKET:{text.withStyle(TextFormatting.GRAY); break;}
+		case WATER:{text.withStyle(TextFormatting.DARK_BLUE); break;}
+		case HALLOWEEN:{text.withStyle(TextFormatting.GOLD); break;}
+		case NEWSPAPER:{text.withStyle(TextFormatting.DARK_GRAY); break;}
+		case FOOTBALL:{text.withStyle(TextFormatting.BLACK); break;}
+		case YETI:{text.withStyle(TextFormatting.AQUA); break;}
+		case FOG:{text.withStyle(TextFormatting.GRAY); break;}
+		case RANDOM:{text.withStyle(TextFormatting.GREEN); break;}
+		case BUNGEE:{text.withStyle(TextFormatting.RED); break;}
+		case METAL:{text.withStyle(TextFormatting.BLACK); break;}
+		case ROOF:{text.withStyle(TextFormatting.GOLD); break;}
+		case GIANT:{text.withStyle(TextFormatting.DARK_RED); break;}
+		case MINI:{text.withStyle(TextFormatting.DARK_AQUA); break;}
+		case INVIS:{text.withStyle(TextFormatting.DARK_GRAY); break;}
+		case ZOMBOTANY:{text.withStyle(TextFormatting.DARK_GREEN); break;}
 		default:
 			break;
 		}

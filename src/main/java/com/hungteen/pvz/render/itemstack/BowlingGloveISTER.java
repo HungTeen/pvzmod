@@ -14,7 +14,6 @@ import com.mojang.blaze3d.vertex.IVertexBuilder;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.IRenderTypeBuffer;
 import net.minecraft.client.renderer.ItemRenderer;
-import net.minecraft.client.renderer.Vector3f;
 import net.minecraft.client.renderer.entity.model.EntityModel;
 import net.minecraft.client.renderer.model.IBakedModel;
 import net.minecraft.client.renderer.model.ItemCameraTransforms;
@@ -22,37 +21,37 @@ import net.minecraft.client.renderer.texture.OverlayTexture;
 import net.minecraft.client.renderer.tileentity.ItemStackTileEntityRenderer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
+import net.minecraft.util.math.vector.Vector3f;
 
-@SuppressWarnings("deprecation")
 public class BowlingGloveISTER extends ItemStackTileEntityRenderer {
 
 	private final EntityModel<WallNutEntity> model = new WallNutModel<WallNutEntity>();
 	private int degree = 0;
 	
 	@Override
-	public void render(ItemStack stack, MatrixStack matrixStackIn, IRenderTypeBuffer bufferIn,
+	public void renderByItem(ItemStack stack, ItemCameraTransforms.TransformType tansformType, MatrixStack matrixStackIn, IRenderTypeBuffer bufferIn,
 			int combinedLightIn, int combinedOverlayIn) {
 		ItemRenderer itemRenderer = Minecraft.getInstance().getItemRenderer();
-        IBakedModel ibakedmodel = itemRenderer.getItemModelWithOverrides(stack, null, null);
-        matrixStackIn.push();
+        IBakedModel ibakedmodel = itemRenderer.getModel(stack, null, null);
+        matrixStackIn.pushPose();
         matrixStackIn.translate(0.8F, 0.7F, 0.4F);
-        itemRenderer.renderItem(stack, ItemCameraTransforms.TransformType.NONE, false, matrixStackIn, bufferIn, combinedLightIn, combinedOverlayIn, ibakedmodel.getBakedModel());
-        matrixStackIn.pop();
+        itemRenderer.render(stack, ItemCameraTransforms.TransformType.NONE, false, matrixStackIn, bufferIn, combinedLightIn, combinedOverlayIn, ibakedmodel.getBakedModel());
+        matrixStackIn.popPose();
 		Optional<Plants> plantType = BowlingGloveItem.getBowlingType(stack);
 		if(! plantType.isPresent()) return ;
 		if (degree >= 360) {
             degree -= 360;
         }
         degree += 4;
-		matrixStackIn.push();
+		matrixStackIn.pushPose();
 		matrixStackIn.scale(1, - 1, 1);
 		float f = getRenderSize(plantType.get());
 		matrixStackIn.scale(f, f, f);
 		matrixStackIn.translate(0.0, - 1.501, 0.0);
-		matrixStackIn.rotate(Vector3f.XN.rotationDegrees(- degree));
-        IVertexBuilder ivertexbuilder = bufferIn.getBuffer(this.model.getRenderType(this.getEntityTexture(plantType.get())));
-        this.model.render(matrixStackIn, ivertexbuilder, combinedLightIn, OverlayTexture.NO_OVERLAY, 1.0F, 1.0F, 1.0F, 1.0F);
-		matrixStackIn.pop();
+		matrixStackIn.mulPose(Vector3f.XN.rotationDegrees(- degree));
+        IVertexBuilder ivertexbuilder = bufferIn.getBuffer(this.model.renderType(this.getEntityTexture(plantType.get())));
+        this.model.renderToBuffer(matrixStackIn, ivertexbuilder, combinedLightIn, OverlayTexture.NO_OVERLAY, 1.0F, 1.0F, 1.0F, 1.0F);
+		matrixStackIn.popPose();
 	}
 	
 	protected float getRenderSize(Plants plant) {

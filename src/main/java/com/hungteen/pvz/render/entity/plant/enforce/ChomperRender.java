@@ -23,7 +23,7 @@ public class ChomperRender extends PVZPlantRender<ChomperEntity>{
 	}
 
 	@Override
-	public ResourceLocation getEntityTexture(ChomperEntity entity) {
+	public ResourceLocation getTextureLocation(ChomperEntity entity) {
 		return StringUtil.prefix("textures/entity/plant/enforce/chomper.png");
 	}
 

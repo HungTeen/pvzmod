@@ -16,7 +16,7 @@ public class WallNutZombieRender extends AbstractZombotanyRender<WallNutZombieEn
 	}
 
 	@Override
-	public ResourceLocation getEntityTexture(WallNutZombieEntity entity) {
+	public ResourceLocation getTextureLocation(WallNutZombieEntity entity) {
 		return WALLNUT_ZOMBIE_TEX;
 	}
 

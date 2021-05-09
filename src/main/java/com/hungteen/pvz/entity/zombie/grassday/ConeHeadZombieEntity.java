@@ -32,7 +32,7 @@ public class ConeHeadZombieEntity extends NormalZombieEntity{
 	}
 	
 	@Override
-	protected ResourceLocation getLootTable() {
+	protected ResourceLocation getDefaultLootTable() {
 		return PVZLoot.CONEHEAD_ZOMBIE;
 	}
 	

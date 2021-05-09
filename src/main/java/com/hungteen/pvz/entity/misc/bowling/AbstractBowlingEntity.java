@@ -24,7 +24,7 @@ import net.minecraft.util.Direction;
 import net.minecraft.util.math.EntityRayTraceResult;
 import net.minecraft.util.math.RayTraceContext;
 import net.minecraft.util.math.RayTraceResult;
-import net.minecraft.util.math.Vec3d;
+import net.minecraft.util.math.vector.Vector3d;
 import net.minecraft.world.World;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
@@ -32,8 +32,8 @@ import net.minecraftforge.api.distmarker.OnlyIn;
 public abstract class AbstractBowlingEntity extends AbstractOwnerEntity {
 
 	protected IntOpenHashSet hitEntities;
-	private static final DataParameter<Integer> FACING = EntityDataManager.createKey(AbstractBowlingEntity.class, DataSerializers.VARINT);
-	private static final DataParameter<Integer> DIRECTION = EntityDataManager.createKey(AbstractBowlingEntity.class, DataSerializers.VARINT);
+	private static final DataParameter<Integer> FACING = EntityDataManager.defineId(AbstractBowlingEntity.class, DataSerializers.INT);
+	private static final DataParameter<Integer> DIRECTION = EntityDataManager.defineId(AbstractBowlingEntity.class, DataSerializers.INT);
 	private int bowlingTick = 0;
 	private int wallTick = 0;
 	private boolean playSpawnSound = false;
@@ -41,7 +41,7 @@ public abstract class AbstractBowlingEntity extends AbstractOwnerEntity {
 	
 	public AbstractBowlingEntity(EntityType<?> type, World worldIn) {
 		super(type, worldIn);
-		this.entityCollisionReduction = 1F;
+		this.pushthrough = 1F;
 	}
 	
 	public AbstractBowlingEntity(EntityType<?> type, World worldIn, PlayerEntity livingEntityIn) {
@@ -49,9 +49,9 @@ public abstract class AbstractBowlingEntity extends AbstractOwnerEntity {
 	}
 	
 	@Override
-	protected void registerData() {
-		this.dataManager.register(FACING, BowlingFacings.MID.ordinal());
-		this.dataManager.register(DIRECTION, Direction.NORTH.ordinal());
+	protected void defineSynchedData() {
+		this.entityData.define(FACING, BowlingFacings.MID.ordinal());
+		this.entityData.define(DIRECTION, Direction.NORTH.ordinal());
 	}
 	
 	/**
@@ -59,29 +59,29 @@ public abstract class AbstractBowlingEntity extends AbstractOwnerEntity {
 	 */
 	public void tick() {
 		super.tick();
-		if (! world.isRemote) {
-			if(this.ticksExisted <= 10 && ! this.playSpawnSound) {
+		if (! level.isClientSide) {
+			if(this.tickCount <= 10 && ! this.playSpawnSound) {
 				EntityUtil.playSound(this, SoundRegister.BOWLING_SPAWN.get());
 				this.playSpawnSound = true;
 			}
-			if(this.ticksExisted >= this.getMaxLiveTick()) {
+			if(this.tickCount >= this.getMaxLiveTick()) {
 				this.remove();
 			}
 		}
-		this.prevRotationYaw = this.rotationYaw;
-		this.rotationYaw = this.getDirection().getHorizontalAngle() + this.getBowlingFacing().offset;
-		double angle = this.rotationYaw * Math.PI / 180;
+		this.yRotO = this.yRot;
+		this.yRot = this.getDirection().toYRot() + this.getBowlingFacing().offset;
+		double angle = this.yRot * Math.PI / 180;
 		double dx = - Math.sin(angle);
 		double dz = Math.cos(angle);
 		double speed = this.getBowlingSpeed();
-		this.setMotion(dx * speed, this.getMotion().getY(), dz * speed);
+		this.setDeltaMovement(dx * speed, this.getDeltaMovement().y(), dz * speed);
 		this.tickRayTrace();
 		this.tickMove();
 		this.tickCollision();
-		if(! this.world.isRemote) {
+		if(! this.level.isClientSide) {
 			if(this.bowlingTick > 0) -- this.bowlingTick;
 			if(this.wallTick > 0) -- this.wallTick;
-			if(this.bowlingTick == 0 && this.collidedHorizontally) {// collide with wall
+			if(this.bowlingTick == 0 && this.horizontalCollision) {// collide with wall
 				if(this.wallTick > 0) {
 					this.remove();
 				} else {
@@ -93,9 +93,9 @@ public abstract class AbstractBowlingEntity extends AbstractOwnerEntity {
 	}
 	
 	protected void tickCollision() {
-		if(this.world.isRemote) return ;
+		if(this.level.isClientSide) return ;
 		if(this.bowlingTick > 0) return ;
-		List<Entity> list = this.world.getEntitiesWithinAABB(Entity.class, this.getBoundingBox(), (target) -> {
+		List<Entity> list = this.level.getEntitiesOfClass(Entity.class, this.getBoundingBox(), (target) -> {
 			return EntityUtil.checkCanEntityAttack(this, target);
 		});
 		if(! list.isEmpty()) {
@@ -106,14 +106,14 @@ public abstract class AbstractBowlingEntity extends AbstractOwnerEntity {
 	
 	private void tickRayTrace() {
 		double rayLen = 3D;
-		double angle = (this.getDirection().getHorizontalAngle() + this.getBowlingFacing().offset) * Math.PI / 180;
+		double angle = (this.getDirection().toYRot() + this.getBowlingFacing().offset) * Math.PI / 180;
 		double dx = Math.sin(angle);
 		double dz = - Math.cos(angle);
-		Vec3d start = this.getPositionVec();
-		Vec3d end = start.add(new Vec3d(dx * rayLen, 0, dz * rayLen));
-		RayTraceResult result = this.world.rayTraceBlocks(new RayTraceContext(start, end, RayTraceContext.BlockMode.COLLIDER, RayTraceContext.FluidMode.NONE, this));
+		Vector3d start = this.position();
+		Vector3d end = start.add(new Vector3d(dx * rayLen, 0, dz * rayLen));
+		RayTraceResult result = this.level.clip(new RayTraceContext(start, end, RayTraceContext.BlockMode.COLLIDER, RayTraceContext.FluidMode.NONE, this));
 		if(result.getType() != RayTraceResult.Type.MISS) {// hit something
-			end = result.getHitVec();
+			end = result.getLocation();
 		}
 		EntityRayTraceResult entityRay = this.rayTraceEntities(start, end);
 		if(entityRay != null) {
@@ -126,7 +126,7 @@ public abstract class AbstractBowlingEntity extends AbstractOwnerEntity {
 	
 	protected void changeDiretion() {
 		if(this.getBowlingFacing() == BowlingFacings.MID) {
-			this.setBowlingFacing(this.rand.nextInt(2) == 0 ? BowlingFacings.LEFT :BowlingFacings.RIGHT);
+			this.setBowlingFacing(this.random.nextInt(2) == 0 ? BowlingFacings.LEFT :BowlingFacings.RIGHT);
 		} else if(this.getBowlingFacing() == BowlingFacings.LEFT){
 			this.setBowlingFacing(BowlingFacings.RIGHT);
 		} else if(this.getBowlingFacing() == BowlingFacings.RIGHT){
@@ -138,9 +138,9 @@ public abstract class AbstractBowlingEntity extends AbstractOwnerEntity {
 	protected abstract void dealDamageTo(Entity entity);
 	
 	public void shoot(PlayerEntity player) {
-		Direction direction = player.getHorizontalFacing();
+		Direction direction = player.getDirection();
 		this.setDirection(direction);
-		this.rotationYaw = direction.getHorizontalAngle();
+		this.yRot = direction.toYRot();
 	}
 	
 	public double getBowlingSpeed() {
@@ -159,11 +159,11 @@ public abstract class AbstractBowlingEntity extends AbstractOwnerEntity {
 	 * Gets the EntityRayTraceResult representing the entity hit
 	 */
 	@Nullable
-	protected EntityRayTraceResult rayTraceEntities(Vec3d startVec, Vec3d endVec) {
-		return ProjectileHelper.rayTraceEntities(this.world, this, startVec, endVec, 
-				this.getBoundingBox().expand(this.getMotion()).grow(1.0D), (entity) -> {
-			return entity.canBeCollidedWith() && shouldHit(entity)
-							&& (this.hitEntities == null|| ! this.hitEntities.contains(entity.getEntityId()));
+	protected EntityRayTraceResult rayTraceEntities(Vector3d startVec, Vector3d endVec) {
+		return ProjectileHelper.getEntityHitResult(this.level, this, startVec, endVec, 
+				this.getBoundingBox().expandTowards(this.getDeltaMovement()).inflate(1.0D), (entity) -> {
+			return entity.isPickable() && shouldHit(entity)
+							&& (this.hitEntities == null|| ! this.hitEntities.contains(entity.getId()));
 		});
 	}
 
@@ -172,16 +172,16 @@ public abstract class AbstractBowlingEntity extends AbstractOwnerEntity {
 	}
 	
 	@Override
-	public EntitySize getSize(Pose poseIn) {
-		return EntitySize.flexible(0.95F, 1F);
+	public EntitySize getDimensions(Pose poseIn) {
+		return EntitySize.scalable(0.95F, 1F);
 	}
 
 	protected int getMaxLiveTick() {
 		return PVZConfig.COMMON_CONFIG.EntitySettings.EntityLiveTick.BowlingLiveTick.get();
 	}
 	
-	public void writeAdditional(CompoundNBT compound) {
-		super.writeAdditional(compound);
+	public void addAdditionalSaveData(CompoundNBT compound) {
+		super.addAdditionalSaveData(compound);
 		compound.putInt("bowling_facings", this.getBowlingFacing().ordinal());
 		compound.putInt("bowling_directions", this.getDirection().ordinal());
 		compound.putInt("bowling_tick", this.bowlingTick);
@@ -191,8 +191,8 @@ public abstract class AbstractBowlingEntity extends AbstractOwnerEntity {
 	/**
 	 * (abstract) Protected helper method to read subclass entity data from NBT.
 	 */
-	public void readAdditional(CompoundNBT compound) {
-		super.readAdditional(compound);
+	public void readAdditionalSaveData(CompoundNBT compound) {
+		super.readAdditionalSaveData(compound);
 		if(compound.contains("bowling_facings")) {
 			this.setBowlingFacing(BowlingFacings.values()[compound.getInt("bowling_facings")]);
 		}
@@ -208,27 +208,27 @@ public abstract class AbstractBowlingEntity extends AbstractOwnerEntity {
 	}
 	
 	public Direction getDirection() {
-		return Direction.values()[this.dataManager.get(DIRECTION)];
+		return Direction.values()[this.entityData.get(DIRECTION)];
 	}
 	
 	public void setDirection(Direction drt) {
-		this.dataManager.set(DIRECTION, drt.ordinal());
+		this.entityData.set(DIRECTION, drt.ordinal());
 	}
 	
 	public BowlingFacings getBowlingFacing() {
-		return BowlingFacings.values()[this.dataManager.get(FACING)];
+		return BowlingFacings.values()[this.entityData.get(FACING)];
 	}
 	
 	public void setBowlingFacing(BowlingFacings facing) {
-		this.dataManager.set(FACING, facing.ordinal());
+		this.entityData.set(FACING, facing.ordinal());
 	}
 
 	/**
 	 * Checks if the entity is in range to render.
 	 */
 	@OnlyIn(Dist.CLIENT)
-	public boolean isInRangeToRenderDist(double distance) {
-		double d0 = this.getBoundingBox().getAverageEdgeLength() * 4.0D;
+	public boolean shouldRenderAtSqrDistance(double distance) {
+		double d0 = this.getBoundingBox().getSize() * 4.0D;
 		if (Double.isNaN(d0)) {
 			d0 = 4.0D;
 		}
@@ -241,8 +241,8 @@ public abstract class AbstractBowlingEntity extends AbstractOwnerEntity {
 	 * Updates the entity motion clientside, called by packets from the server
 	 */
 	@OnlyIn(Dist.CLIENT)
-	public void setVelocity(double x, double y, double z) {
-		this.setMotion(x, y, z);
+	public void lerpMotion(double x, double y, double z) {
+		this.setDeltaMovement(x, y, z);
 //		if (this.prevRotationPitch == 0.0F && this.prevRotationYaw == 0.0F) {
 //			float f = MathHelper.sqrt(x * x + z * z);
 //			this.rotationYaw = (float) (MathHelper.atan2(x, z) * (double) (180F / (float) Math.PI));
@@ -255,7 +255,7 @@ public abstract class AbstractBowlingEntity extends AbstractOwnerEntity {
 	}
 
 	@Override
-	public boolean canBeAttackedWithItem() {
+	public boolean isAttackable() {
 		return false;
 	}
 

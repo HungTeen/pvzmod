@@ -25,75 +25,75 @@ public class CrazyDaveModel extends EntityModel<CrazyDaveEntity> {
 	private final ModelRenderer hat;
 
 	public CrazyDaveModel() {
-		textureWidth = 128;
-		textureHeight = 128;
+		texWidth = 128;
+		texHeight = 128;
 
 		total = new ModelRenderer(this);
-		total.setRotationPoint(0.0F, 24.0F, 0.0F);
+		total.setPos(0.0F, 24.0F, 0.0F);
 		
 
 		right_leg = new ModelRenderer(this);
-		right_leg.setRotationPoint(-4.0F, -25.0F, 0.0F);
+		right_leg.setPos(-4.0F, -25.0F, 0.0F);
 		total.addChild(right_leg);
-		right_leg.setTextureOffset(1, 96).addBox(-3.0F, 0.0F, -3.0F, 7.0F, 25.0F, 6.0F, 0.0F, false);
+		right_leg.texOffs(1, 96).addBox(-3.0F, 0.0F, -3.0F, 7.0F, 25.0F, 6.0F, 0.0F, false);
 
 		left_leg = new ModelRenderer(this);
-		left_leg.setRotationPoint(3.0F, -25.0F, 0.0F);
+		left_leg.setPos(3.0F, -25.0F, 0.0F);
 		total.addChild(left_leg);
-		left_leg.setTextureOffset(30, 96).addBox(-3.0F, 0.0F, -3.0F, 7.0F, 25.0F, 6.0F, 0.0F, false);
+		left_leg.texOffs(30, 96).addBox(-3.0F, 0.0F, -3.0F, 7.0F, 25.0F, 6.0F, 0.0F, false);
 
 		up = new ModelRenderer(this);
-		up.setRotationPoint(0.0F, -25.0F, 0.0F);
+		up.setPos(0.0F, -25.0F, 0.0F);
 		total.addChild(up);
 		
 
 		body = new ModelRenderer(this);
-		body.setRotationPoint(-1.0F, 0.0F, 0.0F);
+		body.setPos(-1.0F, 0.0F, 0.0F);
 		up.addChild(body);
-		body.setTextureOffset(59, 94).addBox(-6.0F, -24.0F, -4.0F, 14.0F, 24.0F, 8.0F, 0.0F, false);
+		body.texOffs(59, 94).addBox(-6.0F, -24.0F, -4.0F, 14.0F, 24.0F, 8.0F, 0.0F, false);
 
 		left_hand = new ModelRenderer(this);
-		left_hand.setRotationPoint(10.0F, -21.0F, 0.0F);
+		left_hand.setPos(10.0F, -21.0F, 0.0F);
 		up.addChild(left_hand);
-		left_hand.setTextureOffset(102, 3).addBox(-3.0F, -3.0F, -3.0F, 6.0F, 25.0F, 6.0F, 0.0F, false);
+		left_hand.texOffs(102, 3).addBox(-3.0F, -3.0F, -3.0F, 6.0F, 25.0F, 6.0F, 0.0F, false);
 
 		right_hand = new ModelRenderer(this);
-		right_hand.setRotationPoint(-9.0F, -21.0F, 0.0F);
+		right_hand.setPos(-9.0F, -21.0F, 0.0F);
 		up.addChild(right_hand);
-		right_hand.setTextureOffset(102, 36).addBox(-4.0F, -3.0F, -3.0F, 6.0F, 25.0F, 6.0F, 0.0F, true);
+		right_hand.texOffs(102, 36).addBox(-4.0F, -3.0F, -3.0F, 6.0F, 25.0F, 6.0F, 0.0F, true);
 
 		head = new ModelRenderer(this);
-		head.setRotationPoint(0.0F, -25.0F, 0.0F);
+		head.setPos(0.0F, -25.0F, 0.0F);
 		up.addChild(head);
-		head.setTextureOffset(1, 1).addBox(-7.0F, -13.0F, -7.0F, 14.0F, 14.0F, 14.0F, 0.0F, false);
-		head.setTextureOffset(1, 33).addBox(-7.0F, 1.0F, -7.0F, 14.0F, 2.0F, 1.0F, 0.0F, false);
+		head.texOffs(1, 1).addBox(-7.0F, -13.0F, -7.0F, 14.0F, 14.0F, 14.0F, 0.0F, false);
+		head.texOffs(1, 33).addBox(-7.0F, 1.0F, -7.0F, 14.0F, 2.0F, 1.0F, 0.0F, false);
 
 		hat = new ModelRenderer(this);
-		hat.setRotationPoint(0.0F, -16.0F, 0.0F);
+		hat.setPos(0.0F, -16.0F, 0.0F);
 		head.addChild(hat);
-		hat.setTextureOffset(1, 40).addBox(-2.0F, -3.0F, -18.0F, 4.0F, 3.0F, 10.0F, 0.0F, false);
-		hat.setTextureOffset(3, 61).addBox(-8.0F, -8.0F, -8.0F, 16.0F, 11.0F, 16.0F, 0.0F, false);
+		hat.texOffs(1, 40).addBox(-2.0F, -3.0F, -18.0F, 4.0F, 3.0F, 10.0F, 0.0F, false);
+		hat.texOffs(3, 61).addBox(-8.0F, -8.0F, -8.0F, 16.0F, 11.0F, 16.0F, 0.0F, false);
 	}
 
 	@Override
-	public void setRotationAngles(CrazyDaveEntity entity, float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch){
-		this.head.rotateAngleY = netHeadYaw / (180F / (float)Math.PI);
-        this.head.rotateAngleX = headPitch / (180F / (float)Math.PI);
-        this.right_leg.rotateAngleX = MathHelper.cos(limbSwing * 0.6662F) * 1.4F * limbSwingAmount;
-        this.left_leg.rotateAngleX = MathHelper.cos(limbSwing * 0.6662F + (float)Math.PI) * 1.4F * limbSwingAmount;
-        this.right_hand.rotateAngleX = MathHelper.cos(limbSwing * 0.6662F) * 1.4F * limbSwingAmount;
-        this.left_hand.rotateAngleX = MathHelper.cos(limbSwing * 0.6662F + (float)Math.PI) * 1.4F * limbSwingAmount;
-        this.hat.rotateAngleY= ageInTicks*1.0f;
+	public void setupAnim(CrazyDaveEntity entity, float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch){
+		this.head.yRot = netHeadYaw / (180F / (float)Math.PI);
+        this.head.xRot = headPitch / (180F / (float)Math.PI);
+        this.right_leg.xRot = MathHelper.cos(limbSwing * 0.6662F) * 1.4F * limbSwingAmount;
+        this.left_leg.xRot = MathHelper.cos(limbSwing * 0.6662F + (float)Math.PI) * 1.4F * limbSwingAmount;
+        this.right_hand.xRot = MathHelper.cos(limbSwing * 0.6662F) * 1.4F * limbSwingAmount;
+        this.left_hand.xRot = MathHelper.cos(limbSwing * 0.6662F + (float)Math.PI) * 1.4F * limbSwingAmount;
+        this.hat.yRot= ageInTicks*1.0f;
 	}
 
 	@Override
-	public void render(MatrixStack matrixStack, IVertexBuilder buffer, int packedLight, int packedOverlay, float red, float green, float blue, float alpha){
+	public void renderToBuffer(MatrixStack matrixStack, IVertexBuilder buffer, int packedLight, int packedOverlay, float red, float green, float blue, float alpha){
 		total.render(matrixStack, buffer, packedLight, packedOverlay);
 	}
 
 	public void setRotationAngle(ModelRenderer modelRenderer, float x, float y, float z) {
-		modelRenderer.rotateAngleX = x;
-		modelRenderer.rotateAngleY = y;
-		modelRenderer.rotateAngleZ = z;
+		modelRenderer.xRot = x;
+		modelRenderer.yRot = y;
+		modelRenderer.zRot = z;
 	}
 }

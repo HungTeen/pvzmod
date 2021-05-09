@@ -23,7 +23,7 @@ public class PVZZombiePartEntity extends PVZMultiPartEntity{
 	@Override
 	public void tick() {
 		super.tick();
-		if(! world.isRemote && getZombie() != null) {
+		if(! level.isClientSide && getZombie() != null) {
 			float scale = (getZombie().isMiniZombie() ? 0.4F : 1F);
 		    this.setPartWidth(this.MaxWidth * scale);
 		    this.setPartHeight(this.MaxHeight * scale);
@@ -31,9 +31,9 @@ public class PVZZombiePartEntity extends PVZMultiPartEntity{
 	}
 	
 	@Override
-	public boolean attackEntityFrom(DamageSource source, float damage) {
+	public boolean hurt(DamageSource source, float damage) {
 		if(EntityUtil.isEntityValid(getOwner())) {
-			return getOwner().attackEntityFrom(source, damage);
+			return getOwner().hurt(source, damage);
 		}
 		return false;
 	}

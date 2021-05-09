@@ -27,11 +27,11 @@ public class WallNutBowlingEntity extends AbstractBowlingEntity {
 	protected void dealDamageTo(Entity entity) {
 		++ this.hitCount;
 		for(int i = 1; i < this.hitCount; ++ i) {
-			CoinEntity coin = EntityRegister.COIN.get().create(world);
+			CoinEntity coin = EntityRegister.COIN.get().create(level);
 			coin.setAmount(1);
-			EntityUtil.onMobEntityRandomPosSpawn(world, coin, this.getPosition(), 1);
+			EntityUtil.onMobEntityRandomPosSpawn(level, coin, this.blockPosition(), 1);
 		}
-		entity.attackEntityFrom(PVZDamageSource.causeBowlingDamage(this, this.getOwner()).setCount(hitCount), 30);
+		entity.hurt(PVZDamageSource.causeBowlingDamage(this, this.getOwner()).setCount(hitCount), 30);
 		EntityUtil.playSound(this, SoundRegister.BOWLING_HIT.get());
 		PlayerEntity player = (PlayerEntity) this.getOwner();
 		if(player != null && player instanceof ServerPlayerEntity) {

@@ -12,13 +12,13 @@ public class BreakOutEnchantment extends Enchantment{
 	}
 
 	@Override
-	public int getMinEnchantability(int enchantmentLevel) {
+	public int getMinCost(int enchantmentLevel) {
 		return enchantmentLevel * 15;
 	}
 	
 	@Override
-	public int getMaxEnchantability(int enchantmentLevel) {
-		return getMinEnchantability(enchantmentLevel) + 5;
+	public int getMaxCost(int enchantmentLevel) {
+		return getMinCost(enchantmentLevel) + 5;
 	}
 	
 	@Override

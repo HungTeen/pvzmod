@@ -1,6 +1,5 @@
 package com.hungteen.pvz.utils;
 
-import java.util.Collections;
 import java.util.stream.Stream;
 
 import net.minecraft.entity.Entity;
@@ -37,9 +36,8 @@ public class BlockUtil {
 
 	public static double getBlockPosOffset(IWorldReader worldReader, BlockPos pos, AxisAlignedBB aabb) {
 		AxisAlignedBB axisalignedbb = new AxisAlignedBB(pos);
-		Stream<VoxelShape> stream = worldReader.getCollisionShapes((Entity) null, axisalignedbb,
-				Collections.emptySet());
-		return 1.0D + VoxelShapes.getAllowedOffset(Direction.Axis.Y, aabb, stream, -1.0D);
+		Stream<VoxelShape> stream = worldReader.getCollisions((Entity) null, axisalignedbb, e -> true);
+		return 1.0D + VoxelShapes.collide(Direction.Axis.Y, aabb, stream, -1.0D);
 	}
 
 }

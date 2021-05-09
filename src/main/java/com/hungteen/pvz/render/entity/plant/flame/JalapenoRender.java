@@ -24,7 +24,7 @@ public class JalapenoRender extends PVZPlantRender<JalapenoEntity>{
 	}
 
 	@Override
-	public ResourceLocation getEntityTexture(JalapenoEntity entity) {
+	public ResourceLocation getTextureLocation(JalapenoEntity entity) {
 		return StringUtil.prefix("textures/entity/plant/flame/jalapeno.png");
 	}
 

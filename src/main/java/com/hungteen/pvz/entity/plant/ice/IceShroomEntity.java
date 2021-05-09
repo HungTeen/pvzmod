@@ -32,7 +32,7 @@ public class IceShroomEntity extends PlantBomberEntity implements IIcePlant{
 
 	@Override
 	public void startBomb() {
-		if(! this.world.isRemote) {
+		if(! this.level.isClientSide) {
 			float len = getAttackRange();
 			AxisAlignedBB aabb=EntityUtil.getEntityAABB(this, len, len);
 			int cnt = 0;
@@ -40,22 +40,22 @@ public class IceShroomEntity extends PlantBomberEntity implements IIcePlant{
 				 PVZDamageSource source = PVZDamageSource.causeIceDamage(this, this);
 				 source.addEffect(getColdEffect());
 				 source.addEffect(getFrozenEffect());
-				 entity.attackEntityFrom(source, this.getAttackDamage());
+				 entity.hurt(source, this.getAttackDamage());
 				 if(EntityUtil.isEntityCold(entity)) {
 					 ++ cnt;
 				 }
 			}
-			PlayerEntity player = EntityUtil.getEntityOwner(world, this);
+			PlayerEntity player = EntityUtil.getEntityOwner(level, this);
 			if(player != null && player instanceof ServerPlayerEntity) {
 				EntityEffectAmountTrigger.INSTANCE.trigger((ServerPlayerEntity) player, this, cnt);
 			}
 			EntityUtil.playSound(this, SoundRegister.ZOMBIE_FROZEN.get());
 		} else {
 			for(int i = 0;i < 3; ++ i) {
-		        this.world.addParticle(ParticleTypes.EXPLOSION, this.getPosX(), this.getPosY(), this.getPosZ(), 0, 0, 0);
+		        this.level.addParticle(ParticleTypes.EXPLOSION, this.getX(), this.getY(), this.getZ(), 0, 0, 0);
 	 	    }
 		    for(int i = 0; i < 15; ++ i) {
-			    this.world.addParticle(ParticleRegister.SNOW_FLOWER.get(), this.getPosX(), this.getPosY(), this.getPosZ(), (this.getRNG().nextFloat() - 0.5f) / 4, this.getRNG().nextFloat() / 5, (this.getRNG().nextFloat() - 0.5f) / 4);
+			    this.level.addParticle(ParticleRegister.SNOW_FLOWER.get(), this.getX(), this.getY(), this.getZ(), (this.getRandom().nextFloat() - 0.5f) / 4, this.getRandom().nextFloat() / 5, (this.getRandom().nextFloat() - 0.5f) / 4);
 		    }
 		}
 		this.killFireBall();
@@ -65,9 +65,9 @@ public class IceShroomEntity extends PlantBomberEntity implements IIcePlant{
 	 * kill zomboss fireball
 	 */
 	private void killFireBall() {
-		if(! world.isRemote) {
+		if(! level.isClientSide) {
 			float range = this.getAttackRange() + 10F;
-			world.getEntitiesWithinAABB(ElementBallEntity.class, EntityUtil.getEntityAABB(this, range, range), (target) -> {
+			level.getEntitiesOfClass(ElementBallEntity.class, EntityUtil.getEntityAABB(this, range, range), (target) -> {
 				return target.getElementBallType() == ElementTypes.FLAME;
 			}).forEach((target) -> {
 				target.onKilledByPlants(this);
@@ -95,8 +95,8 @@ public class IceShroomEntity extends PlantBomberEntity implements IIcePlant{
 	}
 	
 	@Override
-	public EntitySize getSize(Pose poseIn) {
-		return EntitySize.flexible(0.85f, 1.35f);
+	public EntitySize getDimensions(Pose poseIn) {
+		return EntitySize.scalable(0.85f, 1.35f);
 	}
 
 	@Override

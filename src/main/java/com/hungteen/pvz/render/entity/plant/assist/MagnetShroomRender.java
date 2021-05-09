@@ -30,8 +30,8 @@ public class MagnetShroomRender extends PVZPlantRender<MagnetShroomEntity> {
 	
 	@Nullable
 	protected RenderType func_230042_a_(MagnetShroomEntity entity, boolean p_230042_2_, boolean p_230042_3_) {
-		ResourceLocation resourcelocation = this.getEntityTexture(entity);
-		return RenderType.getEntityTranslucentCull(resourcelocation);
+		ResourceLocation resourcelocation = this.getTextureLocation(entity);
+		return RenderType.entityTranslucentCull(resourcelocation);
 	}
 	
 	@Override
@@ -40,7 +40,7 @@ public class MagnetShroomRender extends PVZPlantRender<MagnetShroomEntity> {
 	}
 
 	@Override
-	public ResourceLocation getEntityTexture(MagnetShroomEntity entity) {
+	public ResourceLocation getTextureLocation(MagnetShroomEntity entity) {
 		if(entity.getAttackTime() > 0 && entity.getMetalType() == MetalTypes.EMPTY) return StringUtil.prefix("textures/entity/plant/assist/magnet_shroom3.png");
 		if(entity.isPlantActive()) return StringUtil.prefix("textures/entity/plant/assist/magnet_shroom.png");
 		return StringUtil.prefix("textures/entity/plant/assist/magnet_shroom2.png");

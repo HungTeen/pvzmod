@@ -20,7 +20,7 @@ public class StrangeCatRender extends PVZPlantRender<StrangeCatEntity> {
 	}
 
 	@Override
-	public ResourceLocation getEntityTexture(StrangeCatEntity entity) {
+	public ResourceLocation getTextureLocation(StrangeCatEntity entity) {
 		return StringUtil.prefix("textures/entity/plant/magic/strange_cat.png");
 	}
 

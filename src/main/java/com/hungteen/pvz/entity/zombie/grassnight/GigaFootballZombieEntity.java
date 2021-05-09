@@ -13,7 +13,7 @@ import com.hungteen.pvz.utils.enums.Zombies;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.SharedMonsterAttributes;
+import net.minecraft.entity.ai.attributes.Attributes;
 import net.minecraft.entity.monster.MonsterEntity;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.util.DamageSource;
@@ -33,9 +33,9 @@ public class GigaFootballZombieEntity extends FootballZombieEntity {
 	}
 	
 	@Override
-	protected void registerAttributes() {
-		super.registerAttributes();
-		this.getAttribute(SharedMonsterAttributes.ATTACK_DAMAGE).setBaseValue(ZombieUtil.NORMAL_DAMAGE);
+	protected void updateAttributes() {
+		super.updateAttributes();
+		this.getAttribute(Attributes.ATTACK_DAMAGE).setBaseValue(ZombieUtil.NORMAL_DAMAGE);
 	}
 	
 	@Override
@@ -51,7 +51,7 @@ public class GigaFootballZombieEntity extends FootballZombieEntity {
 	@Override
 	public void normalZombieTick() {
 		super.normalZombieTick();
-		if(!this.world.isRemote) {
+		if(!this.level.isClientSide) {
 			if(!this.hasChanged && this.getAttackTime() == 0) {
 				this.updateRush(true);
 				this.hasChanged = true;
@@ -68,12 +68,12 @@ public class GigaFootballZombieEntity extends FootballZombieEntity {
 	}
 	
 	@Override
-	protected void collideWithNearbyEntities() {
+	protected void pushEntities() {
 		double dd = this.getCollideWidthOffset();
-		List<LivingEntity> list = this.world.getEntitiesWithinAABB(LivingEntity.class, this.getBoundingBox().grow(dd, 0, dd));
+		List<LivingEntity> list = this.level.getEntitiesOfClass(LivingEntity.class, this.getBoundingBox().inflate(dd, 0, dd));
 		if (!list.isEmpty()) {
-			int i = this.world.getGameRules().getInt(GameRules.MAX_ENTITY_CRAMMING);
-			if (i > 0 && list.size() > i - 1 && this.rand.nextInt(4) == 0) {
+			int i = this.level.getGameRules().getInt(GameRules.RULE_MAX_ENTITY_CRAMMING);
+			if (i > 0 && list.size() > i - 1 && this.random.nextInt(4) == 0) {
 				int j = 0;
 				for (int k = 0; k < list.size(); ++k) {
 					if (!((Entity) list.get(k)).isPassenger()) {
@@ -81,17 +81,17 @@ public class GigaFootballZombieEntity extends FootballZombieEntity {
 					}
 				}
 				if (j > i - 1) {
-					this.attackEntityFrom(DamageSource.CRAMMING, 6.0F);
+					this.hurt(DamageSource.CRAMMING, 6.0F);
 				}
 			}
 			for (int l = 0; l < list.size(); ++l) {
 				LivingEntity target = list.get(l);
 				if (target != this && this.shouldCollideWithEntity(target)) {// can collide with
 					if(this.getAttackTime() == 0) {
-						target.attackEntityFrom(PVZDamageSource.causeNormalDamage(this, this), target.getMaxHealth());
+						target.hurt(PVZDamageSource.causeNormalDamage(this, this), target.getMaxHealth());
 						this.updateRushCD();
 					}
-					this.collideWithEntity(target);
+					this.doPush(target);
 				}
 			}
 		}
@@ -100,7 +100,7 @@ public class GigaFootballZombieEntity extends FootballZombieEntity {
 	protected void updateRushCD() {
 		this.hasChanged = false;
 		this.updateRush(false);
-		this.setAttackTime(this.getRNG().nextInt(this.maxRushCD - this.minRushCD + 1) + this.minRushCD);
+		this.setAttackTime(this.getRandom().nextInt(this.maxRushCD - this.minRushCD + 1) + this.minRushCD);
 	}
 	
 	@Override
@@ -120,25 +120,25 @@ public class GigaFootballZombieEntity extends FootballZombieEntity {
 	}
 	
 	protected void updateRush(boolean is) {
-		this.getAttribute(SharedMonsterAttributes.MOVEMENT_SPEED).setBaseValue(is ? ZombieUtil.HUGE_FAST : ZombieUtil.LITTLE_FAST);
+		this.getAttribute(Attributes.MOVEMENT_SPEED).setBaseValue(is ? ZombieUtil.HUGE_FAST : ZombieUtil.LITTLE_FAST);
 	}
 	
 	@Override
-	public void readAdditional(CompoundNBT compound) {
-		super.readAdditional(compound);
+	public void readAdditionalSaveData(CompoundNBT compound) {
+		super.readAdditionalSaveData(compound);
 		if(compound.contains("has_changed_speed")) {
 			this.hasChanged = compound.getBoolean("has_changed_speed");
 		}
 	}
 	
 	@Override
-	public void writeAdditional(CompoundNBT compound) {
-		super.writeAdditional(compound);
+	public void addAdditionalSaveData(CompoundNBT compound) {
+		super.addAdditionalSaveData(compound);
 		compound.putBoolean("has_changed_speed", this.hasChanged);
 	}
 	
 	@Override
-	protected ResourceLocation getLootTable() {
+	protected ResourceLocation getDefaultLootTable() {
 		return PVZLoot.GIGA_FOOTBALL_ZOMBIE;
 	}
 	

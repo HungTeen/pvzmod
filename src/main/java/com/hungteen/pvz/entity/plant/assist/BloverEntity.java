@@ -18,7 +18,7 @@ import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.util.SoundEvent;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.MathHelper;
-import net.minecraft.util.math.Vec3d;
+import net.minecraft.util.math.vector.Vector3d;
 import net.minecraft.world.World;
 
 public class BloverEntity extends PlantBomberEntity {
@@ -34,29 +34,29 @@ public class BloverEntity extends PlantBomberEntity {
 	@Override
 	protected void normalPlantTick() {
 		super.normalPlantTick();
-		if(! world.isRemote && this.getAttackTime() == 5) {
+		if(! level.isClientSide && this.getAttackTime() == 5) {
 			this.blow();
 		}
 	}
 	
 	private void blow() {
-		if(! this.world.isRemote) {
+		if(! this.level.isClientSide) {
 			float len = 30;
 			AxisAlignedBB aabb = EntityUtil.getEntityAABB(this, len, len);
 			EntityUtil.getEntityTargetableEntity(this, aabb).forEach((target) -> {
 				if(EntityUtil.isEntityInSky(target)) {
-					target.attackEntityFrom(PVZDamageSource.causeNormalDamage(this, this), this.getAttackDamage());
-					Vec3d speed = target.getMotion();
-					double dx = target.getPosX() - this.getPosX();
-					double dz = target.getPosZ() - this.getPosZ();
+					target.hurt(PVZDamageSource.causeNormalDamage(this, this), this.getAttackDamage());
+					Vector3d speed = target.getDeltaMovement();
+					double dx = target.getX() - this.getX();
+					double dz = target.getZ() - this.getZ();
 					double tot = MathHelper.sqrt(dx * dx + dz * dz);
 					double lvl = this.getForceLevel() * 2.5F;
 					double speedX = dx / tot * lvl;
 					double speedZ = dz / tot * lvl;
-					target.setMotion(speed.x + speedX, speed.y, speed.z + speedZ);
+					target.setDeltaMovement(speed.x + speedX, speed.y, speed.z + speedZ);
 				}
 			});
-			world.getEntitiesWithinAABB(PlayerEntity.class, EntityUtil.getEntityAABB(this, len, len), (player) -> {
+			level.getEntitiesOfClass(PlayerEntity.class, EntityUtil.getEntityAABB(this, len, len), (player) -> {
 				return ! EntityUtil.checkCanEntityAttack(this, player);
 			}).forEach((player) -> {
 				PlayerUtil.addPlayerStats(player, Resources.NO_FOG_TICK, 2400 * this.getForceLevel());
@@ -93,8 +93,8 @@ public class BloverEntity extends PlantBomberEntity {
 	}
 	
 	@Override
-	public EntitySize getSize(Pose poseIn) {
-		return EntitySize.flexible(0.5F, 1.5F);
+	public EntitySize getDimensions(Pose poseIn) {
+		return EntitySize.scalable(0.5F, 1.5F);
 	}
 
 	@Override

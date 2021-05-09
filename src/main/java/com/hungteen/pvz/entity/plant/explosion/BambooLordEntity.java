@@ -30,7 +30,7 @@ public class BambooLordEntity extends PlantCloserEntity {
 	@Override
 	protected void normalPlantTick() {
 		super.normalPlantTick();
-		if(! world.isRemote) {
+		if(! level.isClientSide) {
 			if(this.getAttackTime() > 0) {
 				this.setAttackTime(this.getAttackTime() - 1);
 				if(this.getAttackTime() <= 0) {
@@ -44,17 +44,17 @@ public class BambooLordEntity extends PlantCloserEntity {
 		float range = 40;
 		List<LivingEntity> list = new ArrayList<>();
 		EntityUtil.getEntityTargetableEntity(this, EntityUtil.getEntityAABB(this, range, range)).forEach((target) -> {
-			if(this.getEntitySenses().canSee(target)) {
+			if(this.getSensing().canSee(target)) {
 				list.add(target);
 			}
 		});
 		if(! list.isEmpty()) {
 			for(int i = 0; i < this.getSplitCount(); ++ i) {
-				int pos = this.getRNG().nextInt(list.size());
-				FireCrackerEntity entity = new FireCrackerEntity(world, this);
-				entity.setPosition(this.getPosX(), this.getPosY(), this.getPosZ());
+				int pos = this.getRandom().nextInt(list.size());
+				FireCrackerEntity entity = new FireCrackerEntity(level, this);
+				entity.setPos(this.getX(), this.getY(), this.getZ());
 				entity.shoot(list.get(pos));
-				world.addEntity(entity);
+				level.addFreshEntity(entity);
 			}
 		}
 		for(int i = 0; i < 3; ++ i) {
@@ -72,11 +72,11 @@ public class BambooLordEntity extends PlantCloserEntity {
 		}
 		float range = 1.5F;
 		EntityUtil.getAttackEntities(this, EntityUtil.getEntityAABB(this, range, range)).forEach((target) -> {
-			target.attackEntityFrom(PVZDamageSource.causeExplosionDamage(this, this), this.getAttackDamage());
-			target.setMotion(target.getMotion().add(0, UP_SPEED, 0));
+			target.hurt(PVZDamageSource.causeExplosionDamage(this, this), this.getAttackDamage());
+			target.setDeltaMovement(target.getDeltaMovement().add(0, UP_SPEED, 0));
 		});
 		EntityUtil.playSound(this, SoundRegister.POTATO_MINE.get());
-		this.setMotion(this.getMotion().add(0, UP_SPEED, 0));
+		this.setDeltaMovement(this.getDeltaMovement().add(0, UP_SPEED, 0));
 	}
 	
 	@Override
@@ -88,16 +88,16 @@ public class BambooLordEntity extends PlantCloserEntity {
 	}
 	
 	private void generateCrackers() {
-		float rotate = this.getRNG().nextFloat() * 2 * 3.14159F;
+		float rotate = this.getRandom().nextFloat() * 2 * 3.14159F;
 		final int len = 10;
 		double dx = Math.sin(rotate);
 		double dz = Math.cos(rotate);
 		for(int i = 0; i < len; ++ i) {
-			BlockPos pos = this.getPosition().add(dx * i * 2, 2, dz * i * 2);
-			FireCrackersEntity entity = new FireCrackersEntity(world, this);
-			entity.setPosition(pos.getX(), pos.getY(), pos.getZ());
+			BlockPos pos = this.blockPosition().offset(dx * i * 2, 2, dz * i * 2);
+			FireCrackersEntity entity = new FireCrackersEntity(level, this);
+			entity.setPos(pos.getX(), pos.getY(), pos.getZ());
 			entity.setFuse(10 + 6 * i);
-			world.addEntity(entity);
+			level.addFreshEntity(entity);
 		}
 	}
 	
@@ -125,8 +125,8 @@ public class BambooLordEntity extends PlantCloserEntity {
 	}
 	
 	@Override
-	public EntitySize getSize(Pose poseIn) {
-		return EntitySize.flexible(0.6F, 1F);
+	public EntitySize getDimensions(Pose poseIn) {
+		return EntitySize.scalable(0.6F, 1F);
 	}
 	
 	@Override

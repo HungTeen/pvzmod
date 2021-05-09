@@ -17,7 +17,7 @@ public class FlagZombieRender extends AbstractNormalRender<FlagZombieEntity>{
 	}
 
 	@Override
-	public ResourceLocation getEntityTexture(FlagZombieEntity entity) {
+	public ResourceLocation getTextureLocation(FlagZombieEntity entity) {
 		return StringUtil.prefix("textures/entity/zombie/grassday/flag_zombie.png");
 	}
 

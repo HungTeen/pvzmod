@@ -17,7 +17,7 @@ public class SunRender extends DropRender<SunEntity>{
 	}
 
 	@Override
-	public ResourceLocation getEntityTexture(SunEntity entity) {
+	public ResourceLocation getTextureLocation(SunEntity entity) {
 		if(entity.getDropState() == DropStates.STEAL) return StringUtil.prefix("textures/entity/drop/sun2.png");
 		return StringUtil.prefix("textures/entity/drop/sun.png");
 	}

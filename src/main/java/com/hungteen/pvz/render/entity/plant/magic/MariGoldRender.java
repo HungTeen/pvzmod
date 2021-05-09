@@ -23,7 +23,7 @@ public class MariGoldRender extends PVZPlantRender<MariGoldEntity>{
 	}
 
 	@Override
-	public ResourceLocation getEntityTexture(MariGoldEntity entity) {
+	public ResourceLocation getTextureLocation(MariGoldEntity entity) {
 		return StringUtil.prefix("textures/entity/plant/magic/marigold.png");
 	}
 

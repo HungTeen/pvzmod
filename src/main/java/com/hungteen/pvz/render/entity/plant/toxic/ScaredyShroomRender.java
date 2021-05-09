@@ -7,7 +7,7 @@ import com.hungteen.pvz.utils.StringUtil;
 
 import net.minecraft.client.renderer.entity.EntityRendererManager;
 import net.minecraft.util.ResourceLocation;
-import net.minecraft.util.math.Vec3d;
+import net.minecraft.util.math.vector.Vector3d;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 
@@ -19,10 +19,10 @@ public class ScaredyShroomRender extends PVZPlantRender<ScaredyShroomEntity>{
 	}
 
 	@Override
-	public Vec3d getTranslateVec(ScaredyShroomEntity entity) {
+	public Vector3d getTranslateVec(ScaredyShroomEntity entity) {
 		double percent = entity.getScareTime() * 1.0 / ScaredyShroomEntity.ANIM_TIME;
 		double change = 1.38;
-		return new Vec3d(0, change * percent, 0);
+		return new Vector3d(0, change * percent, 0);
 	}
 	
 	@Override
@@ -31,7 +31,7 @@ public class ScaredyShroomRender extends PVZPlantRender<ScaredyShroomEntity>{
 	}
 
 	@Override
-	public ResourceLocation getEntityTexture(ScaredyShroomEntity entity) {
+	public ResourceLocation getTextureLocation(ScaredyShroomEntity entity) {
 		return StringUtil.prefix("textures/entity/plant/toxic/scaredy_shroom.png");
 	}
 

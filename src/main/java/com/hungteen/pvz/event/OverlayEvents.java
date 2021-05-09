@@ -11,6 +11,7 @@ import com.hungteen.pvz.utils.StringUtil;
 import com.hungteen.pvz.utils.enums.Colors;
 import com.hungteen.pvz.utils.enums.Resources;
 import com.hungteen.pvz.world.WaveManager;
+import com.mojang.blaze3d.matrix.MatrixStack;
 import com.mojang.blaze3d.systems.RenderSystem;
 
 import net.minecraft.client.Minecraft;
@@ -39,36 +40,36 @@ public class OverlayEvents {
 	@SubscribeEvent
 	public static void onPostRenderOverlay(RenderGameOverlayEvent.Post ev) {
 		if (ev.getType() != RenderGameOverlayEvent.ElementType.ALL
-				|| mc.player == null || mc.gameSettings.hideGUI || mc.player.isSpectator()) {
+				|| mc.player == null || mc.options.hideGui || mc.player.isSpectator()) {
 			return;
 		}
-		if (mc.currentScreen == null) {
+		if (mc.screen == null) {
 			if(KeyBindRegister.showPlayerResources) {
 				if (PVZConfig.CLIENT_CONFIG.ResourceRender.RenderSunNumBar.get()) {
 				    
 				}
 				if(checkCurrentPos(KeyBindRegister.currentResourcePos)) {
 					if(KeyBindRegister.currentResourcePos == 0) {
-						drawSunNumBar();
+						drawSunNumBar(ev.getMatrixStack());
 					} else if(KeyBindRegister.currentResourcePos == 1) {
-						drawMoneyBar();
+						drawMoneyBar(ev.getMatrixStack());
 					} else if(KeyBindRegister.currentResourcePos == 2) {
-						drawGemBar();
+						drawGemBar(ev.getMatrixStack());
 					}
 				}
 			    if (PVZConfig.CLIENT_CONFIG.ResourceRender.RenderEnergyNumBar.get()) {
-				    drawEnergyNumBar(ev.getWindow().getScaledWidth(), ev.getWindow().getScaledHeight());
+				    drawEnergyNumBar(ev.getMatrixStack(), ev.getWindow().getGuiScaledWidth(), ev.getWindow().getGuiScaledHeight());
 			    }
 			}
 			if(KeyBindRegister.showInvasionProgress) {
 				if(PlayerUtil.isPlayerSurvival(mc.player)  && PVZConfig.CLIENT_CONFIG.InvasionRender.RenderInvasionProgress.get()) {
-					renderInvasionProgress(ev.getWindow().getScaledWidth(), ev.getWindow().getScaledHeight());
+					renderInvasionProgress(ev.getMatrixStack(), ev.getWindow().getGuiScaledWidth(), ev.getWindow().getGuiScaledHeight());
 				}
 			}
-			if(mc.player.getRidingEntity() instanceof CobCannonEntity) {
-				CobCannonEntity cob = (CobCannonEntity) mc.player.getRidingEntity();
+			if(mc.player.getVehicle() instanceof CobCannonEntity) {
+				CobCannonEntity cob = (CobCannonEntity) mc.player.getVehicle();
 				if(cob.getCornNum() > 0) {
-					renderTargetAim(ev.getWindow().getScaledWidth(), ev.getWindow().getScaledHeight());
+					renderTargetAim(ev.getMatrixStack(), ev.getWindow().getGuiScaledWidth(), ev.getWindow().getGuiScaledHeight());
 				}
 			}
 		}
@@ -82,117 +83,116 @@ public class OverlayEvents {
 		if (PVZConfig.CLIENT_CONFIG.EnvironmentRender.RenderFog.get()) {
 			int tick = ClientPlayerResources.getPlayerStats(Resources.NO_FOG_TICK);
 			if(tick < 0) {
-				renderFog(ev.getWindow().getScaledWidth(), ev.getWindow().getScaledHeight(), Math.min(- tick * 1f / 100, 1f));
+				renderFog(ev.getMatrixStack(), ev.getWindow().getGuiScaledWidth(), ev.getWindow().getGuiScaledHeight(), Math.min(- tick * 1f / 100, 1f));
 			}
 		}
 	}
 	
-	private static void renderInvasionProgress(int w, int h) {
+	private static void renderInvasionProgress(MatrixStack stack, int w, int h) {
 		if(ClientPlayerResources.totalWaveCount == 0) return ;
-		RenderSystem.pushMatrix();
-		RenderSystem.color4f(1f, 1f, 1f, 1f);
+		stack.pushPose();
 		float scale = 0.5F;
 		int offsetY = 0;
 		int offsetX = 0;
-		RenderSystem.scaled(scale, scale, scale);
-		mc.getTextureManager().bindTexture(INVASION);
+		stack.scale(scale, scale, scale);
+		mc.getTextureManager().bind(INVASION);
 		final int WIDTH = 157, HEIGHT = 21;
-		mc.ingameGUI.blit(w * 2 - WIDTH + offsetX, h * 2 - HEIGHT + offsetY, 0, 0, WIDTH, HEIGHT);
+		mc.gui.blit(stack, w * 2 - WIDTH + offsetX, h * 2 - HEIGHT + offsetY, 0, 0, WIDTH, HEIGHT);
 		final int P_WIDTH = 143, P_HEIGHT = 7;
-		int barlen = RenderUtil.getRenderBarLen((int)(mc.player.world.getDayTime() % 24000L), 24000, P_WIDTH);
-		mc.ingameGUI.blit(w * 2 - barlen - 7 + offsetX, h * 2 - HEIGHT + 7 + offsetY, 149 - barlen + 1, 28, barlen, P_HEIGHT);
+		int barlen = RenderUtil.getRenderBarLen((int)(mc.player.level.getDayTime() % 24000L), 24000, P_WIDTH);
+		mc.gui.blit(stack, w * 2 - barlen - 7 + offsetX, h * 2 - HEIGHT + 7 + offsetY, 149 - barlen + 1, 28, barlen, P_HEIGHT);
 		for(int i = 0; i < ClientPlayerResources.totalWaveCount; ++ i) {
 			boolean rise = (ClientPlayerResources.zombieWaveTime[i] >= WaveManager.FINISH_OFFSET);
 			int waveTime = (rise ? ClientPlayerResources.zombieWaveTime[i] - WaveManager.FINISH_OFFSET : ClientPlayerResources.zombieWaveTime[i]);
 			int waveLen = RenderUtil.getRenderBarLen(waveTime, 24000, P_WIDTH);
-			mc.ingameGUI.blit(w * 2 - waveLen - 11 + offsetX, h * 2 - HEIGHT + (rise ? - 9 : - 4) + offsetY, 27, 42, 20, (rise ? 27 : 19));
+			mc.gui.blit(stack, w * 2 - waveLen - 11 + offsetX, h * 2 - HEIGHT + (rise ? - 9 : - 4) + offsetY, 27, 42, 20, (rise ? 27 : 19));
 		}
-		mc.ingameGUI.blit(w * 2 - barlen - 11 + offsetX, h * 2 - HEIGHT - 4 + offsetY, 0, 42, 24, 23);
-		RenderSystem.popMatrix();
+		mc.gui.blit(stack, w * 2 - barlen - 11 + offsetX, h * 2 - HEIGHT - 4 + offsetY, 0, 42, 24, 23);
+		stack.popPose();
 	}
 	
-	private static void renderTargetAim(int w, int h) {
-		RenderSystem.pushMatrix();
-		RenderSystem.color4f(1f, 1f, 1f, 1f);
+	private static void renderTargetAim(MatrixStack stack, int w, int h) {
+		stack.pushPose();
 		float scale = 1F;
-		RenderSystem.scaled(scale, scale, scale);
-		mc.getTextureManager().bindTexture(TARGET);
+		stack.scale(scale, scale, scale);
+		mc.getTextureManager().bind(TARGET);
 		final int WIDTH = 32, HEIGHT = 32;
-		mc.ingameGUI.blit((w - WIDTH) / 2 - 0, (h - HEIGHT) / 2 - 0, 0, 0, WIDTH, HEIGHT);
-		RenderSystem.popMatrix();
+		mc.gui.blit(stack, (w - WIDTH) / 2 - 0, (h - HEIGHT) / 2 - 0, 0, 0, WIDTH, HEIGHT);
+		stack.popPose();
 	}
 
-	private static void renderFog(int w, int h, float dep) {
-		RenderSystem.pushMatrix();
+	@SuppressWarnings("deprecation")
+	private static void renderFog(MatrixStack stack, int w, int h, float dep) {
+		stack.pushPose();
 		RenderSystem.enableBlend();
 		RenderSystem.color4f(1f, 1f, 1f, dep);
-		mc.getTextureManager().bindTexture(FOG);
+		mc.getTextureManager().bind(FOG);
 		Tessellator tessellator = Tessellator.getInstance();
-		BufferBuilder bufferbuilder = tessellator.getBuffer();
+		BufferBuilder bufferbuilder = tessellator.getBuilder();
 		bufferbuilder.begin(7, DefaultVertexFormats.POSITION_TEX);
-		bufferbuilder.pos(0.0D, h, -90.0D).tex(0.0F, 1.0F).endVertex();
-		bufferbuilder.pos(w, h, -90.0D).tex(1.0F, 1.0F).endVertex();
-		bufferbuilder.pos(w, 0.0D, -90.0D).tex(1.0F, 0.0F).endVertex();
-		bufferbuilder.pos(0.0D, 0.0D, -90.0D).tex(0.0F, 0.0F).endVertex();
-		tessellator.draw();
-		RenderSystem.popMatrix();
+		bufferbuilder.vertex(0.0D, h, -90.0D).uv(0.0F, 1.0F).endVertex();
+		bufferbuilder.vertex(w, h, -90.0D).uv(1.0F, 1.0F).endVertex();
+		bufferbuilder.vertex(w, 0.0D, -90.0D).uv(1.0F, 0.0F).endVertex();
+		bufferbuilder.vertex(0.0D, 0.0D, -90.0D).uv(0.0F, 0.0F).endVertex();
+		tessellator.end();
+		stack.popPose();
 	}
 
-	private static void drawSunNumBar() {
+	private static void drawSunNumBar(MatrixStack stack) {
 		int lvl = ClientPlayerResources.getPlayerStats(Resources.TREE_LVL);
 		int maxNum = PlayerUtil.getPlayerMaxSunNum(lvl);
 		int num = ClientPlayerResources.getPlayerStats(Resources.SUN_NUM);
 		int len = RenderUtil.getRenderBarLen(num, maxNum, BAR_LEN);
-		RenderSystem.pushMatrix();
+		stack.pushPose();
 		RenderSystem.enableBlend();
-		RenderSystem.scalef(0.6f, 0.6f, 0.6f);
-		mc.getTextureManager().bindTexture(RESOURCE);
-		mc.ingameGUI.blit(0, 0, 0, 0, W, H);
-		mc.ingameGUI.blit(0, 3, 0, 35, 34 + len, BAR_H);
-		StringUtil.drawCenteredScaledString(mc.fontRenderer, num + "", 95, 5, Colors.WHITE, 3f);
-		RenderSystem.popMatrix();
+		stack.scale(0.6f, 0.6f, 0.6f);
+		mc.getTextureManager().bind(RESOURCE);
+		mc.gui.blit(stack, 0, 0, 0, 0, W, H);
+		mc.gui.blit(stack, 0, 3, 0, 35, 34 + len, BAR_H);
+		StringUtil.drawCenteredScaledString(stack, mc.font, num + "", 95, 5, Colors.WHITE, 3f);
+		stack.popPose();
 	}
 
-	private static void drawMoneyBar() {
-		RenderSystem.pushMatrix();
+	private static void drawMoneyBar(MatrixStack stack) {
+		stack.pushPose();
 		RenderSystem.enableBlend();
-		RenderSystem.scalef(0.6f, 0.6f, 0.6f);
-		mc.getTextureManager().bindTexture(RESOURCE);
-		mc.ingameGUI.blit(0, 0, 0, 96, W, H);
-		StringUtil.drawCenteredScaledString(mc.fontRenderer, ClientPlayerResources.getPlayerStats(Resources.MONEY) + "", 95, 5, Colors.WHITE, 3f);
-		RenderSystem.popMatrix();
+		stack.scale(0.6f, 0.6f, 0.6f);
+		mc.getTextureManager().bind(RESOURCE);
+		mc.gui.blit(stack, 0, 0, 0, 96, W, H);
+		StringUtil.drawCenteredScaledString(stack, mc.font, ClientPlayerResources.getPlayerStats(Resources.MONEY) + "", 95, 5, Colors.WHITE, 3f);
+		stack.popPose();
 	}
 	
-	private static void drawGemBar() {
-		RenderSystem.pushMatrix();
+	private static void drawGemBar(MatrixStack stack) {
+		stack.pushPose();
 		RenderSystem.enableBlend();
-		RenderSystem.scalef(0.6f, 0.6f, 0.6f);
-		mc.getTextureManager().bindTexture(RESOURCE);
-		mc.ingameGUI.blit(0, 0, 0, 128, W, H);
-		StringUtil.drawCenteredScaledString(mc.fontRenderer, ClientPlayerResources.getPlayerStats(Resources.GEM_NUM) + "", 95, 5, Colors.WHITE, 3f);
-		RenderSystem.popMatrix();
+		stack.scale(0.6f, 0.6f, 0.6f);
+		mc.getTextureManager().bind(RESOURCE);
+		mc.gui.blit(stack, 0, 0, 0, 128, W, H);
+		StringUtil.drawCenteredScaledString(stack, mc.font, ClientPlayerResources.getPlayerStats(Resources.GEM_NUM) + "", 95, 5, Colors.WHITE, 3f);
+		stack.popPose();
 	}
 
-	private static void drawEnergyNumBar(int w, int h) {
+	private static void drawEnergyNumBar(MatrixStack stack, int w, int h) {
 		int maxNum = ClientPlayerResources.getPlayerStats(Resources.MAX_ENERGY_NUM);
 		int num = ClientPlayerResources.getPlayerStats(Resources.ENERGY_NUM);
-		mc.getTextureManager().bindTexture(RESOURCE);
-		RenderSystem.pushMatrix();
+		stack.pushPose();
+		mc.getTextureManager().bind(RESOURCE);
 		RenderSystem.enableBlend();
-		RenderSystem.scalef(0.5f, 0.5f, 0.5f);
-		mc.ingameGUI.blit(0, 2 * h - H, 0, 64, 35, H);// render head
+		stack.scale(0.5f, 0.5f, 0.5f);
+		mc.gui.blit(stack, 0, 2 * h - H, 0, 64, 35, H);// render head
 		int currentX = 35;
 		for (int i = 0; i < maxNum; i++) {
 			if (num > 0) {
 				num--;
-				mc.ingameGUI.blit(currentX, 2 * h - H, 35, 64, 26, H);
+				mc.gui.blit(stack, currentX, 2 * h - H, 35, 64, 26, H);
 			} else {
-				mc.ingameGUI.blit(currentX, 2 * h - H, 61, 64, 26, H);
+				mc.gui.blit(stack, currentX, 2 * h - H, 61, 64, 26, H);
 			}
 			currentX += 26;
 		}
-		mc.ingameGUI.blit(currentX, 2 * h - H, 156, 64, 4, H);// render tail
-		RenderSystem.popMatrix();
+		mc.gui.blit(stack, currentX, 2 * h - H, 156, 64, 4, H);// render tail
+		stack.popPose();
 	}
 	
 	public static boolean checkCurrentPos(int pos) {

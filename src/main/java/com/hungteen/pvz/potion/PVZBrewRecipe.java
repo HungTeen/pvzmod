@@ -22,10 +22,10 @@ public class PVZBrewRecipe implements IBrewingRecipe{
 	
 	@Override
 	public boolean isInput(ItemStack stack) {
-		Potion now = PotionUtils.getPotionFromItem(stack);
-		for(ItemStack itemstack : this.input.getMatchingStacks()) {
+		Potion now = PotionUtils.getPotion(stack);
+		for(ItemStack itemstack : this.input.getItems()) {
 			if(itemstack.getItem() != stack.getItem()) continue;
-			Potion std = PotionUtils.getPotionFromItem(itemstack);
+			Potion std = PotionUtils.getPotion(itemstack);
 			if(std == now) {
 				return true;
 			}

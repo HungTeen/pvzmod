@@ -24,7 +24,7 @@ public class BackupDancerRender extends UnderGroundZombieRender<BackupDancerEnti
 	}
 
 	@Override
-	public ResourceLocation getEntityTexture(BackupDancerEntity entity) {
+	public ResourceLocation getTextureLocation(BackupDancerEntity entity) {
 		return StringUtil.prefix("textures/entity/zombie/grassnight/backup_dancer.png");
 	}
 

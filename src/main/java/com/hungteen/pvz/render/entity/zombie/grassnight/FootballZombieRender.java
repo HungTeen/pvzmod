@@ -24,7 +24,7 @@ public class FootballZombieRender extends PVZZombieRender<FootballZombieEntity>{
 	}
 
 	@Override
-	public ResourceLocation getEntityTexture(FootballZombieEntity entity) {
+	public ResourceLocation getTextureLocation(FootballZombieEntity entity) {
 		return StringUtil.prefix("textures/entity/zombie/grassnight/football_zombie.png");
 	}
 

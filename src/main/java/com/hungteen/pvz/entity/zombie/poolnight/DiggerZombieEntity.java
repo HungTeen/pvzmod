@@ -11,7 +11,7 @@ import net.minecraft.entity.EntitySize;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.Pose;
-import net.minecraft.entity.SharedMonsterAttributes;
+import net.minecraft.entity.ai.attributes.Attributes;
 import net.minecraft.entity.monster.MonsterEntity;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.network.datasync.DataParameter;
@@ -23,8 +23,8 @@ import net.minecraft.world.World;
 
 public class DiggerZombieEntity extends PVZZombieEntity implements IHasMetal {
 
-	private static final DataParameter<Boolean> HAS_PICKAXE = EntityDataManager.createKey(DiggerZombieEntity.class, DataSerializers.BOOLEAN);
-	private static final DataParameter<Integer> ANIM_TIME = EntityDataManager.createKey(DiggerZombieEntity.class, DataSerializers.VARINT);
+	private static final DataParameter<Boolean> HAS_PICKAXE = EntityDataManager.defineId(DiggerZombieEntity.class, DataSerializers.BOOLEAN);
+	private static final DataParameter<Integer> ANIM_TIME = EntityDataManager.defineId(DiggerZombieEntity.class, DataSerializers.INT);
 	public static final int MAX_ANIM_TIME = 30;
 	
 	public DiggerZombieEntity(EntityType<? extends MonsterEntity> type, World worldIn) {
@@ -33,20 +33,20 @@ public class DiggerZombieEntity extends PVZZombieEntity implements IHasMetal {
 	}
 	
 	@Override
-	protected void registerData() {
-		super.registerData();
-		this.dataManager.register(HAS_PICKAXE, true);
-		this.dataManager.register(ANIM_TIME, 0);
+	protected void defineSynchedData() {
+		super.defineSynchedData();
+		this.entityData.define(HAS_PICKAXE, true);
+		this.entityData.define(ANIM_TIME, 0);
 	}
 	
 	@Override
 	public void normalZombieTick() {
 		super.normalZombieTick();
-		if(! world.isRemote) {
-			LivingEntity target = this.getAttackTarget();
+		if(! level.isClientSide) {
+			LivingEntity target = this.getTarget();
 			if(this.hasPickaxe()) {
 				if(target != null) {
-				    if(this.getDistanceSq(target) <= 8) {
+				    if(this.distanceToSqr(target) <= 8) {
 				    	this.setAnimTime(MathHelper.clamp(this.getAnimTime() + 1, 0, MAX_ANIM_TIME));
 				    } else {
 				    	this.setAnimTime(MathHelper.clamp(this.getAnimTime() - 1, 0, MAX_ANIM_TIME));
@@ -59,12 +59,12 @@ public class DiggerZombieEntity extends PVZZombieEntity implements IHasMetal {
 			}
 			this.updateAttributes(this.hasPickaxe());
 		}
-		this.recalculateSize();
+		this.refreshDimensions();
 	}
 	
 	private void updateAttributes(boolean has){
-		this.getAttribute(SharedMonsterAttributes.ATTACK_DAMAGE).setBaseValue(has ? ZombieUtil.NORMAL_DAMAGE : ZombieUtil.LOW);
-		this.getAttribute(SharedMonsterAttributes.MOVEMENT_SPEED).setBaseValue(has ? ZombieUtil.LITTLE_FAST : ZombieUtil.LITTLE_SLOW);
+		this.getAttribute(Attributes.ATTACK_DAMAGE).setBaseValue(has ? ZombieUtil.NORMAL_DAMAGE : ZombieUtil.LOW);
+		this.getAttribute(Attributes.MOVEMENT_SPEED).setBaseValue(has ? ZombieUtil.LITTLE_FAST : ZombieUtil.LITTLE_SLOW);
 	}
 	
 	@Override
@@ -93,14 +93,14 @@ public class DiggerZombieEntity extends PVZZombieEntity implements IHasMetal {
 	}
 	
 	@Override
-	public EntitySize getSize(Pose poseIn) {
-		if(this.isMiniZombie()) return EntitySize.flexible(0.4f, this.getAnimTime() * 0.02F + 0.1F);
-		return EntitySize.flexible(0.8f, this.getAnimTime() * 0.06F + 0.2F);
+	public EntitySize getDimensions(Pose poseIn) {
+		if(this.isMiniZombie()) return EntitySize.scalable(0.4f, this.getAnimTime() * 0.02F + 0.1F);
+		return EntitySize.scalable(0.8f, this.getAnimTime() * 0.06F + 0.2F);
 	}
 
 	@Override
-	public void readAdditional(CompoundNBT compound) {
-		super.readAdditional(compound);
+	public void readAdditionalSaveData(CompoundNBT compound) {
+		super.readAdditionalSaveData(compound);
 		if(compound.contains("digger_has_pickaxe")) {
 			this.setPickaxe(compound.getBoolean("digger_has_pickaxe"));
 		}
@@ -110,30 +110,30 @@ public class DiggerZombieEntity extends PVZZombieEntity implements IHasMetal {
 	}
 	
 	@Override
-	public void writeAdditional(CompoundNBT compound) {
-		super.writeAdditional(compound);
+	public void addAdditionalSaveData(CompoundNBT compound) {
+		super.addAdditionalSaveData(compound);
 		compound.putBoolean("digger_has_pickaxe", this.hasPickaxe());
 		compound.putInt("digger_anim_time", this.getAnimTime());
 	}
 	
 	public void setPickaxe(boolean has) {
-		this.dataManager.set(HAS_PICKAXE, has);
+		this.entityData.set(HAS_PICKAXE, has);
 	}
 	
 	public boolean hasPickaxe() {
-		return this.dataManager.get(HAS_PICKAXE);
+		return this.entityData.get(HAS_PICKAXE);
 	}
 	
 	public void setAnimTime(int time) {
-		this.dataManager.set(ANIM_TIME, time);
+		this.entityData.set(ANIM_TIME, time);
 	}
 	
 	public int getAnimTime() {
-		return this.dataManager.get(ANIM_TIME);
+		return this.entityData.get(ANIM_TIME);
 	}
 	
 	@Override
-	protected ResourceLocation getLootTable() {
+	protected ResourceLocation getDefaultLootTable() {
 		return PVZLoot.DIGGER_ZOMBIE;
 	}
 	

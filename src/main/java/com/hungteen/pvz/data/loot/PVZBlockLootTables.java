@@ -6,8 +6,8 @@ import java.util.function.BiConsumer;
 import com.hungteen.pvz.register.BlockRegister;
 
 import net.minecraft.data.loot.BlockLootTables;
+import net.minecraft.loot.LootTable.Builder;
 import net.minecraft.util.ResourceLocation;
-import net.minecraft.world.storage.loot.LootTable.Builder;
 
 public class PVZBlockLootTables extends BlockLootTables {
 
@@ -23,7 +23,7 @@ public class PVZBlockLootTables extends BlockLootTables {
 				BlockRegister.ESSENCE_ALTAR, BlockRegister.CARD_FUSION_TABLE, BlockRegister.STEEL_LADDER,
 				BlockRegister.SILVER_SUNFLOWER_TROPHY, BlockRegister.GOLD_SUNFLOWER_TROPHY, BlockRegister.DIAMOND_SUNFLOWER_TROPHY
 		).forEach((object) -> {
-			    this.registerDropSelfLootTable(object.get());
+			    this.dropSelf(object.get());
 		});
 	}
 

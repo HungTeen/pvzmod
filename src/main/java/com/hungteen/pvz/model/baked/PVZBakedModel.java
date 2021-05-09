@@ -35,8 +35,8 @@ public abstract class PVZBakedModel implements IBakedModel {
     }
 
     @Override
-    public boolean isAmbientOcclusion() {
-        return this.existingModel.isAmbientOcclusion();
+    public boolean useAmbientOcclusion() {
+        return this.existingModel.useAmbientOcclusion();
     }
 
     @Override
@@ -45,18 +45,18 @@ public abstract class PVZBakedModel implements IBakedModel {
     }
 
     @Override
-    public boolean func_230044_c_() {
-        return this.existingModel.func_230044_c_();
+    public boolean usesBlockLight() {
+        return this.existingModel.usesBlockLight();
     }
 
     @Override
-    public boolean isBuiltInRenderer() {
+    public boolean isCustomRenderer() {
         return true;
     }
 
 	@Override
-    public TextureAtlasSprite getParticleTexture() {
-        return this.existingModel.getParticleTexture();
+    public TextureAtlasSprite getParticleIcon() {
+        return this.existingModel.getParticleIcon();
     }
 
     @Override

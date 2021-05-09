@@ -10,7 +10,9 @@ import net.minecraft.entity.EntityType;
 import net.minecraft.entity.Pose;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
+import net.minecraft.util.ActionResultType;
 import net.minecraft.util.Hand;
+import net.minecraft.util.math.vector.Vector3d;
 import net.minecraft.world.World;
 
 public class WallNutEntity extends PlantDefenderEntity{
@@ -20,15 +22,15 @@ public class WallNutEntity extends PlantDefenderEntity{
 	}
 	
 	@Override
-	protected boolean processInteract(PlayerEntity player, Hand hand) {
-		ItemStack stack = player.getHeldItem(hand);
+	public ActionResultType interactAt(PlayerEntity player, Vector3d vec3d, Hand hand) {
+		ItemStack stack = player.getItemInHand(hand);
 		if(stack.getItem() instanceof BowlingGloveItem) {
-			if(! world.isRemote) {
+			if(! level.isClientSide) {
 				BowlingGloveItem.onPickUpBowlingPlant(this, stack);
 			}
-			return true;
+			return ActionResultType.SUCCESS;
 		}
-		return super.processInteract(player, hand);
+		return super.interactAt(player, vec3d, hand);
 	}
 
 	@Override
@@ -46,8 +48,8 @@ public class WallNutEntity extends PlantDefenderEntity{
 	}
 
 	@Override
-	public EntitySize getSize(Pose poseIn) {
-		return EntitySize.flexible(0.8f, 1.3f);
+	public EntitySize getDimensions(Pose poseIn) {
+		return EntitySize.scalable(0.8f, 1.3f);
 	}
 	
 	@Override

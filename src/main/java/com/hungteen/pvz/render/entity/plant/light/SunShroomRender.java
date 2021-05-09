@@ -25,7 +25,7 @@ public class SunShroomRender extends PVZPlantRender<SunShroomEntity>{
 	}
 
 	@Override
-	public ResourceLocation getEntityTexture(SunShroomEntity entity) {
+	public ResourceLocation getTextureLocation(SunShroomEntity entity) {
 		return StringUtil.prefix("textures/entity/plant/light/sun_shroom.png");
 	}
 }

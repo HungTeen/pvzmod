@@ -21,62 +21,62 @@ public class ZombieHandModel extends EntityModel<ZombieHandEntity> {
 	private final ModelRenderer bone5;
 
 	public ZombieHandModel() {
-		textureWidth = 64;
-		textureHeight = 64;
+		texWidth = 64;
+		texHeight = 64;
 
 		total = new ModelRenderer(this);
-		total.setRotationPoint(0.0F, 24.0F, 0.0F);
-		total.setTextureOffset(1, 31).addBox(-4.0F, -24.0F, -4.0F, 8.0F, 24.0F, 8.0F, 0.0F, false);
+		total.setPos(0.0F, 24.0F, 0.0F);
+		total.texOffs(1, 31).addBox(-4.0F, -24.0F, -4.0F, 8.0F, 24.0F, 8.0F, 0.0F, false);
 
 		bone = new ModelRenderer(this);
-		bone.setRotationPoint(-3.0F, -24.0F, 2.0F);
+		bone.setPos(-3.0F, -24.0F, 2.0F);
 		total.addChild(bone);
 		setRotationAngle(bone, -0.7854F, -0.2618F, 0.0F);
-		bone.setTextureOffset(35, 53).addBox(-1.0F, -6.0F, -1.0F, 2.0F, 7.0F, 2.0F, 0.0F, false);
+		bone.texOffs(35, 53).addBox(-1.0F, -6.0F, -1.0F, 2.0F, 7.0F, 2.0F, 0.0F, false);
 
 		bone2 = new ModelRenderer(this);
-		bone2.setRotationPoint(0.0F, -24.0F, 3.0F);
+		bone2.setPos(0.0F, -24.0F, 3.0F);
 		total.addChild(bone2);
 		setRotationAngle(bone2, -0.5236F, 0.0F, 0.0F);
-		bone2.setTextureOffset(45, 53).addBox(-1.0F, -7.0F, -1.0F, 2.0F, 8.0F, 2.0F, 0.0F, false);
+		bone2.texOffs(45, 53).addBox(-1.0F, -7.0F, -1.0F, 2.0F, 8.0F, 2.0F, 0.0F, false);
 
 		bone3 = new ModelRenderer(this);
-		bone3.setRotationPoint(3.0F, -24.0F, 2.0F);
+		bone3.setPos(3.0F, -24.0F, 2.0F);
 		total.addChild(bone3);
 		setRotationAngle(bone3, -0.7854F, 0.2618F, 0.0F);
-		bone3.setTextureOffset(55, 53).addBox(-1.0F, -6.0F, -1.0F, 2.0F, 7.0F, 2.0F, 0.0F, false);
+		bone3.texOffs(55, 53).addBox(-1.0F, -6.0F, -1.0F, 2.0F, 7.0F, 2.0F, 0.0F, false);
 
 		bone4 = new ModelRenderer(this);
-		bone4.setRotationPoint(-3.0F, -24.0F, -2.0F);
+		bone4.setPos(-3.0F, -24.0F, -2.0F);
 		total.addChild(bone4);
 		setRotationAngle(bone4, -1.0472F, -1.0472F, 0.0F);
-		bone4.setTextureOffset(34, 42).addBox(-1.0F, -5.0F, -1.0F, 2.0F, 7.0F, 2.0F, 0.0F, false);
+		bone4.texOffs(34, 42).addBox(-1.0F, -5.0F, -1.0F, 2.0F, 7.0F, 2.0F, 0.0F, false);
 
 		bone5 = new ModelRenderer(this);
-		bone5.setRotationPoint(3.0F, -24.0F, -2.0F);
+		bone5.setPos(3.0F, -24.0F, -2.0F);
 		total.addChild(bone5);
 		setRotationAngle(bone5, -1.0472F, 1.0472F, 0.0F);
-		bone5.setTextureOffset(45, 41).addBox(-1.0F, -5.0F, -1.0F, 2.0F, 7.0F, 2.0F, 0.0F, false);
+		bone5.texOffs(45, 41).addBox(-1.0F, -5.0F, -1.0F, 2.0F, 7.0F, 2.0F, 0.0F, false);
 	}
 
 	@Override
-	public void setRotationAngles(ZombieHandEntity entity, float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch){
+	public void setupAnim(ZombieHandEntity entity, float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch){
 		int tick = entity.getTick();
-		this.bone.rotateAngleX = - 0.785f + tick * 0.08f / 4;
-		this.bone2.rotateAngleX = - 0.523f + tick * 0.08f / 4;
-		this.bone3.rotateAngleX = - 0.785f + tick * 0.08f / 4;
-		this.bone4.rotateAngleX = - 1.047f + tick * 0.14f / 4;
-		this.bone5.rotateAngleX = - 1.047f + tick * 0.14f / 4;
+		this.bone.xRot = - 0.785f + tick * 0.08f / 4;
+		this.bone2.xRot = - 0.523f + tick * 0.08f / 4;
+		this.bone3.xRot = - 0.785f + tick * 0.08f / 4;
+		this.bone4.xRot = - 1.047f + tick * 0.14f / 4;
+		this.bone5.xRot = - 1.047f + tick * 0.14f / 4;
 	}
 
 	@Override
-	public void render(MatrixStack matrixStack, IVertexBuilder buffer, int packedLight, int packedOverlay, float red, float green, float blue, float alpha){
+	public void renderToBuffer(MatrixStack matrixStack, IVertexBuilder buffer, int packedLight, int packedOverlay, float red, float green, float blue, float alpha){
 		total.render(matrixStack, buffer, packedLight, packedOverlay);
 	}
 
 	public void setRotationAngle(ModelRenderer modelRenderer, float x, float y, float z) {
-		modelRenderer.rotateAngleX = x;
-		modelRenderer.rotateAngleY = y;
-		modelRenderer.rotateAngleZ = z;
+		modelRenderer.xRot = x;
+		modelRenderer.yRot = y;
+		modelRenderer.zRot = z;
 	}
 }

@@ -23,18 +23,18 @@ import net.minecraftforge.fml.network.NetworkHooks;
 public class EssenceAltarBlock extends Block {
 
 	public EssenceAltarBlock() {
-		super(Block.Properties.from(BlockRegister.ORIGIN_BLOCK.get()));
+		super(Block.Properties.copy(BlockRegister.ORIGIN_BLOCK.get()));
 	}
 	
 	@Override
-	public ActionResultType onBlockActivated(BlockState state, World worldIn, BlockPos pos, PlayerEntity player,
+	public ActionResultType use(BlockState state, World worldIn, BlockPos pos, PlayerEntity player,
 			Hand handIn, BlockRayTraceResult hit) {
-		if (! worldIn.isRemote && handIn == Hand.MAIN_HAND) {
+		if (! worldIn.isClientSide && handIn == Hand.MAIN_HAND) {
 			NetworkHooks.openGui((ServerPlayerEntity) player, new INamedContainerProvider() {
 				
 				@Override
 				public Container createMenu(int id, PlayerInventory inv, PlayerEntity player) {
-					return new EssenceAltarContainer(id, player, IWorldPosCallable.of(player.world, pos));
+					return new EssenceAltarContainer(id, player, IWorldPosCallable.create(player.level, pos));
 				}
 				
 				@Override

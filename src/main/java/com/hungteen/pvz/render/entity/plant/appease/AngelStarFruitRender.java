@@ -23,7 +23,7 @@ public class AngelStarFruitRender extends PVZPlantRender<AngelStarFruitEntity> {
 	}
 
 	@Override
-	public ResourceLocation getEntityTexture(AngelStarFruitEntity entity) {
+	public ResourceLocation getTextureLocation(AngelStarFruitEntity entity) {
 		return StringUtil.prefix("textures/entity/plant/appease/angel_star_fruit.png");
 	}
 

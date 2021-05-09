@@ -49,7 +49,7 @@ public class BlockRegister {
 	// resistance
 	//https://minecraft.gamepedia.com/Explosion#Blast_resistance
 
-	public static final DeferredRegister<Block> BLOCKS = new DeferredRegister<>(ForgeRegistries.BLOCKS, PVZMod.MOD_ID);
+	public static final DeferredRegister<Block> BLOCKS = DeferredRegister.create(ForgeRegistries.BLOCKS, PVZMod.MOD_ID);
 
 	//ore
 	public static final RegistryObject<Block> ORIGIN_ORE = BLOCKS.register("origin_ore",EssenceOreBlock::new);
@@ -67,24 +67,24 @@ public class BlockRegister {
 	public static final RegistryObject<Block> ARMA_ORE = BLOCKS.register("arma_ore",EssenceOreBlock::new);
 	public static final RegistryObject<Block> ELECTRIC_ORE = BLOCKS.register("electric_ore",EssenceOreBlock::new);
 	public static final RegistryObject<Block> SHADOW_ORE = BLOCKS.register("shadow_ore",EssenceOreBlock::new);
-	public static final RegistryObject<Block> AMETHYST_ORE = BLOCKS.register("amethyst_ore",() -> new Block(Block.Properties.from(Blocks.DIAMOND_ORE)));
+	public static final RegistryObject<Block> AMETHYST_ORE = BLOCKS.register("amethyst_ore",() -> new Block(Block.Properties.copy(Blocks.DIAMOND_ORE)));
 	
 	//block
-	public static final RegistryObject<Block> STEEL_BLOCK = BLOCKS.register("steel_block",() -> new Block(Block.Properties.from(Blocks.IRON_BLOCK).hardnessAndResistance(8, 8)));
-	public static final RegistryObject<Block> AMETHYST_BLOCK =BLOCKS.register("amethyst_block", () -> new Block(Block.Properties.from(Blocks.EMERALD_BLOCK).hardnessAndResistance(9, 9))); 
+	public static final RegistryObject<Block> STEEL_BLOCK = BLOCKS.register("steel_block",() -> new Block(Block.Properties.copy(Blocks.IRON_BLOCK).strength(8, 8)));
+	public static final RegistryObject<Block> AMETHYST_BLOCK =BLOCKS.register("amethyst_block", () -> new Block(Block.Properties.copy(Blocks.EMERALD_BLOCK).strength(9, 9))); 
 	public static final RegistryObject<Block> ORIGIN_BLOCK = BLOCKS.register("origin_block", OriginBlock::new);
 	public static final RegistryObject<Block> BUTTER_BLOCK = BLOCKS.register("butter_block", ButterBlock::new);
-	public static final RegistryObject<Block> FROZEN_MELON = BLOCKS.register("frozen_melon", () -> new Block(Block.Properties.from(Blocks.MELON)));
+	public static final RegistryObject<Block> FROZEN_MELON = BLOCKS.register("frozen_melon", () -> new Block(Block.Properties.copy(Blocks.MELON)));
 	public static final RegistryObject<Block> STEEL_LADDER = BLOCKS.register("steel_ladder", SteelLadderBlock::new);
 	
 	//crops
-	public static final RegistryObject<Block> PEA_PLANT = BLOCKS.register("pea_plant", () -> new PeaBlock(Block.Properties.from(Blocks.WHEAT)));
-	public static final RegistryObject<Block> TOXIC_SHROOM = BLOCKS.register("toxic_shroom", () -> new ToxicShroomBlock(Block.Properties.from(Blocks.SWEET_BERRY_BUSH)));
-	public static final RegistryObject<Block> CABBAGE = BLOCKS.register("cabbage", () -> new CabbageBlock(Block.Properties.from(Blocks.WHEAT)));
-	public static final RegistryObject<Block> CORN = BLOCKS.register("corn", () -> new CornBlock(Block.Properties.from(Blocks.WHEAT)));
+	public static final RegistryObject<Block> PEA_PLANT = BLOCKS.register("pea_plant", () -> new PeaBlock(Block.Properties.copy(Blocks.WHEAT)));
+	public static final RegistryObject<Block> TOXIC_SHROOM = BLOCKS.register("toxic_shroom", () -> new ToxicShroomBlock(Block.Properties.copy(Blocks.SWEET_BERRY_BUSH)));
+	public static final RegistryObject<Block> CABBAGE = BLOCKS.register("cabbage", () -> new CabbageBlock(Block.Properties.copy(Blocks.WHEAT)));
+	public static final RegistryObject<Block> CORN = BLOCKS.register("corn", () -> new CornBlock(Block.Properties.copy(Blocks.WHEAT)));
 	
 	//plants
-	public static final RegistryObject<Block> NUT_LEAVES = BLOCKS.register("nut_leaves", () -> new LeavesBlock(Block.Properties.from(Blocks.OAK_LEAVES)));
+	public static final RegistryObject<Block> NUT_LEAVES = BLOCKS.register("nut_leaves", () -> new LeavesBlock(Block.Properties.copy(Blocks.OAK_LEAVES)));
 	public static final RegistryObject<Block> NUT_SAPLING = BLOCKS.register("nut_sapling", () -> new PVZSaplingBlock(NutTree::new));
 	public static final RegistryObject<Block> CHOMPER = BLOCKS.register("chomper", ChomperBlock::new);
 	public static final RegistryObject<LilyPadBlock> LILY_PAD = BLOCKS.register("lily_pad", LilyPadBlock::new);
@@ -95,9 +95,9 @@ public class BlockRegister {
 	public static final RegistryObject<GoldTileBlock> GOLD_TILE1 = BLOCKS.register("gold_tile1", () -> new GoldTileBlock(1));
 	public static final RegistryObject<GoldTileBlock> GOLD_TILE2 = BLOCKS.register("gold_tile2", () -> new GoldTileBlock(2));
 	public static final RegistryObject<GoldTileBlock> GOLD_TILE3 = BLOCKS.register("gold_tile3", () -> new GoldTileBlock(3));
-	public static final RegistryObject<SunFlowerTrophyBlock> SILVER_SUNFLOWER_TROPHY = BLOCKS.register("silver_sunflower_trophy", () -> new SunFlowerTrophyBlock(Block.Properties.from(Blocks.IRON_BLOCK).notSolid(), 1));
-	public static final RegistryObject<SunFlowerTrophyBlock> GOLD_SUNFLOWER_TROPHY = BLOCKS.register("gold_sunflower_trophy", () -> new SunFlowerTrophyBlock(Block.Properties.from(Blocks.GOLD_BLOCK).notSolid(), 2));
-	public static final RegistryObject<SunFlowerTrophyBlock> DIAMOND_SUNFLOWER_TROPHY = BLOCKS.register("diamond_sunflower_trophy", () -> new SunFlowerTrophyBlock(Block.Properties.from(Blocks.DIAMOND_BLOCK).notSolid(), 3));
+	public static final RegistryObject<SunFlowerTrophyBlock> SILVER_SUNFLOWER_TROPHY = BLOCKS.register("silver_sunflower_trophy", () -> new SunFlowerTrophyBlock(Block.Properties.copy(Blocks.IRON_BLOCK).noOcclusion(), 1));
+	public static final RegistryObject<SunFlowerTrophyBlock> GOLD_SUNFLOWER_TROPHY = BLOCKS.register("gold_sunflower_trophy", () -> new SunFlowerTrophyBlock(Block.Properties.copy(Blocks.GOLD_BLOCK).noOcclusion(), 2));
+	public static final RegistryObject<SunFlowerTrophyBlock> DIAMOND_SUNFLOWER_TROPHY = BLOCKS.register("diamond_sunflower_trophy", () -> new SunFlowerTrophyBlock(Block.Properties.copy(Blocks.DIAMOND_BLOCK).noOcclusion(), 3));
 	
 	//gui & te block
 	public static final RegistryObject<SunConverterBlock> SUN_CONVERTER = BLOCKS.register("sun_converter", SunConverterBlock::new);
@@ -123,7 +123,7 @@ public class BlockRegister {
 			if(block == LILY_PAD) {
 				items.register(new LilyPadItem().setRegistryName(block.get().getRegistryName()));
 			}else {
-				items.register(new BlockItem(block.get(),new Item.Properties().group(GroupRegister.PVZ_MISC)).setRegistryName(block.get().getRegistryName()));
+				items.register(new BlockItem(block.get(),new Item.Properties().tab(GroupRegister.PVZ_MISC)).setRegistryName(block.get().getRegistryName()));
 			}
 		}
 	}

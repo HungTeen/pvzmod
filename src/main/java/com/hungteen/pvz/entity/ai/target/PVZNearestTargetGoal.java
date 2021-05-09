@@ -37,19 +37,19 @@ public class PVZNearestTargetGoal extends TargetGoal {
 		this.width = w;
 		this.upperHeight = h1;
 		this.lowerHeight = h2;
-		this.sorter = new AlgorithmUtil.EntitySorter(goalOwner);
-		this.setMutexFlags(EnumSet.of(Goal.Flag.TARGET));
+		this.sorter = new AlgorithmUtil.EntitySorter(mob);
+		this.setFlags(EnumSet.of(Goal.Flag.TARGET));
 	}
 
 	@Override
-	public boolean shouldExecute() {
-		if (this.targetChance > 0 && this.goalOwner.getRNG().nextInt(this.targetChance) != 0) {
+	public boolean canUse() {
+		if (this.targetChance > 0 && this.mob.getRandom().nextInt(this.targetChance) != 0) {
 			return false;
 		}
 //		System.out.println("should");
 		List<LivingEntity> list1 = new ArrayList<LivingEntity>();
-		for (LivingEntity entity : EntityUtil.getEntityTargetableEntity(goalOwner, getAABB())) {
-			if (entity != this.goalOwner && (! this.shouldCheckSight || this.checkSenses(entity))) {
+		for (LivingEntity entity : EntityUtil.getEntityTargetableEntity(mob, getAABB())) {
+			if (entity != this.mob && (! this.mustSee || this.checkSenses(entity))) {
 				if (this.checkOther(entity)) {
 					list1.add(entity);
 				}
@@ -59,27 +59,27 @@ public class PVZNearestTargetGoal extends TargetGoal {
 			return false;
 		}
 		Collections.sort(list1, this.sorter);
-		this.target = list1.get(0);
+		this.targetMob = list1.get(0);
 		return true;
 	}
 
 	@Override
-	public void startExecuting() {
-		this.goalOwner.setAttackTarget(this.target);
+	public void start() {
+		this.mob.setTarget(this.targetMob);
 	}
 
 	@Override
-	public boolean shouldContinueExecuting() {
-		LivingEntity entity = this.goalOwner.getAttackTarget();
+	public boolean canContinueToUse() {
+		LivingEntity entity = this.mob.getTarget();
 		if (entity == null) {
-			entity = this.target;
+			entity = this.targetMob;
 		}
 		if(entity == null || ! entity.isAlive()) {
 			return false;
 		}
-		if(EntityUtil.checkCanEntityTarget(goalOwner, entity) && entity != this.goalOwner && (! this.shouldCheckSight || this.checkSenses(entity))) {
+		if(EntityUtil.checkCanEntityTarget(mob, entity) && entity != this.mob && (! this.mustSee || this.checkSenses(entity))) {
 			if (this.checkOther(entity)) {
-				this.goalOwner.setAttackTarget(entity);
+				this.mob.setTarget(entity);
 				return true;
 			}
 		}
@@ -87,7 +87,7 @@ public class PVZNearestTargetGoal extends TargetGoal {
 	}
 
 	protected boolean checkSenses(Entity entity) {
-		return this.goalOwner.getEntitySenses().canSee(entity);
+		return this.mob.getSensing().canSee(entity);
 	}
 
 	protected boolean checkOther(LivingEntity entity) {
@@ -95,9 +95,9 @@ public class PVZNearestTargetGoal extends TargetGoal {
 	}
 
 	private AxisAlignedBB getAABB() {
-		return new AxisAlignedBB(this.goalOwner.getPosX() + width, this.goalOwner.getPosY() + this.upperHeight,
-				this.goalOwner.getPosZ() + width, this.goalOwner.getPosX() - width,
-				this.goalOwner.getPosY() - this.lowerHeight, this.goalOwner.getPosZ() - width);
+		return new AxisAlignedBB(this.mob.getX() + width, this.mob.getY() + this.upperHeight,
+				this.mob.getZ() + width, this.mob.getX() - width,
+				this.mob.getY() - this.lowerHeight, this.mob.getZ() - width);
 	}
 
 }

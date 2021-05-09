@@ -20,12 +20,12 @@ import net.minecraft.world.server.ServerWorld;
 
 public class CabbageBlock extends CropsBlock {
 
-	public static final IntegerProperty AGE = BlockStateProperties.AGE_0_3;
+	public static final IntegerProperty AGE = BlockStateProperties.AGE_3;
 	private static final VoxelShape[] SHAPE = new VoxelShape[] {
-			Block.makeCuboidShape(0.0D, 0.0D, 0.0D, 16.0D, 2.0D, 16.0D),
-			Block.makeCuboidShape(0.0D, 0.0D, 0.0D, 16.0D, 4.0D, 16.0D),
-			Block.makeCuboidShape(0.0D, 0.0D, 0.0D, 16.0D, 6.0D, 16.0D),
-			Block.makeCuboidShape(0.0D, 0.0D, 0.0D, 16.0D, 8.0D, 16.0D) };
+			Block.box(0.0D, 0.0D, 0.0D, 16.0D, 2.0D, 16.0D),
+			Block.box(0.0D, 0.0D, 0.0D, 16.0D, 4.0D, 16.0D),
+			Block.box(0.0D, 0.0D, 0.0D, 16.0D, 6.0D, 16.0D),
+			Block.box(0.0D, 0.0D, 0.0D, 16.0D, 8.0D, 16.0D) };
 
 	public CabbageBlock(Properties properties) {
 		super(properties);
@@ -39,10 +39,11 @@ public class CabbageBlock extends CropsBlock {
 		return 3;
 	}
 
-	protected IItemProvider getSeedsItem() {
+	protected IItemProvider getBaseSeedId() {
 		return ItemRegister.CABBAGE_SEEDS.get();
 	}
 
+	@SuppressWarnings("deprecation")
 	public void tick(BlockState state, ServerWorld worldIn, BlockPos pos, Random rand) {
 		if (rand.nextInt(4) != 0) {
 			super.tick(state, worldIn, pos, rand);
@@ -53,12 +54,12 @@ public class CabbageBlock extends CropsBlock {
 		return super.getBonemealAgeIncrease(worldIn) / 3;
 	}
 
-	protected void fillStateContainer(StateContainer.Builder<Block, BlockState> builder) {
+	protected void createBlockStateDefinition(StateContainer.Builder<Block, BlockState> builder) {
 		builder.add(AGE);
 	}
 
 	public VoxelShape getShape(BlockState state, IBlockReader worldIn, BlockPos pos, ISelectionContext context) {
-		return SHAPE[state.get(this.getAgeProperty())];
+		return SHAPE[state.getValue(this.getAgeProperty())];
 	}
 
 }

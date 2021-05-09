@@ -12,7 +12,6 @@ import net.minecraft.block.Block;
 import net.minecraft.block.BushBlock;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
-import net.minecraft.entity.IProjectile;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.projectile.ProjectileHelper;
 import net.minecraft.nbt.CompoundNBT;
@@ -23,13 +22,13 @@ import net.minecraft.util.math.EntityRayTraceResult;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.RayTraceContext;
 import net.minecraft.util.math.RayTraceResult;
-import net.minecraft.util.math.Vec3d;
+import net.minecraft.util.math.vector.Vector3d;
 import net.minecraft.world.World;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.fml.network.NetworkHooks;
 
-public abstract class AbstractBulletEntity extends AbstractOwnerEntity implements IProjectile, IGroupEntity {
+public abstract class AbstractBulletEntity extends AbstractOwnerEntity implements IGroupEntity {
 
 	protected IntOpenHashSet hitEntities;
 	protected float airSlowDown = 0.99F;
@@ -48,8 +47,8 @@ public abstract class AbstractBulletEntity extends AbstractOwnerEntity implement
 	 * Checks if the entity is in range to render.
 	 */
 	@OnlyIn(Dist.CLIENT)
-	public boolean isInRangeToRenderDist(double distance) {
-		double d0 = this.getBoundingBox().getAverageEdgeLength() * 4.0D;
+	public boolean shouldRenderAtSqrDistance(double distance) {
+		double d0 = this.getBoundingBox().getSize() * 4.0D;
 		if (Double.isNaN(d0)) {
 			d0 = 4.0D;
 		}
@@ -62,16 +61,16 @@ public abstract class AbstractBulletEntity extends AbstractOwnerEntity implement
 	 * Updates the entity motion clientside, called by packets from the server
 	 */
 	@OnlyIn(Dist.CLIENT)
-	public void setVelocity(double x, double y, double z) {
-		this.setMotion(x, y, z);
-		if (this.prevRotationPitch == 0.0F && this.prevRotationYaw == 0.0F) {
+	public void lerpMotion(double x, double y, double z) {
+		this.setDeltaMovement(x, y, z);
+		if (this.xRotO == 0.0F && this.yRotO == 0.0F) {
 			float f = MathHelper.sqrt(x * x + z * z);
-			this.rotationYaw = (float) (MathHelper.atan2(x, z) * (double) (180F / (float) Math.PI));
-			this.rotationPitch = (float) (MathHelper.atan2(y, (double) f) * (double) (180F / (float) Math.PI));
-			this.prevRotationYaw = this.rotationYaw;
-			this.prevRotationPitch = this.rotationPitch;
-			this.setLocationAndAngles(this.getPosX(), this.getPosY(), this.getPosZ(), this.rotationYaw,
-					this.rotationPitch);
+			this.yRot = (float) (MathHelper.atan2(x, z) * (double) (180F / (float) Math.PI));
+			this.xRot = (float) (MathHelper.atan2(y, (double) f) * (double) (180F / (float) Math.PI));
+			this.yRotO = this.yRot;
+			this.xRotO = this.xRot;
+			this.moveTo(this.getX(), this.getY(), this.getZ(), this.yRot,
+					this.xRot);
 		}
 	}
 
@@ -80,19 +79,19 @@ public abstract class AbstractBulletEntity extends AbstractOwnerEntity implement
 	 */
 	public void tick() {
 		super.tick();
-		if (! world.isRemote && this.ticksExisted >= this.getMaxLiveTick()) {
+		if (! level.isClientSide && this.tickCount >= this.getMaxLiveTick()) {
 			this.remove();
 		}
-		if(this.ticksExisted <= 10) {
-			this.recalculateSize();
+		if(this.tickCount <= 10) {
+			this.refreshDimensions();
 		}
 		//on hit
-		if(! world.isRemote) {
-			Vec3d start = this.getPositionVec();
-		    Vec3d end = start.add(this.getMotion());
-		    RayTraceResult result = this.world.rayTraceBlocks(new RayTraceContext(start, end, RayTraceContext.BlockMode.COLLIDER, RayTraceContext.FluidMode.NONE, this));
+		if(! level.isClientSide) {
+			Vector3d start = this.position();
+		    Vector3d end = start.add(this.getDeltaMovement());
+		    RayTraceResult result = this.level.clip(new RayTraceContext(start, end, RayTraceContext.BlockMode.COLLIDER, RayTraceContext.FluidMode.NONE, this));
 		    if(result.getType() != RayTraceResult.Type.MISS) {// hit something
-		    	end = result.getHitVec();
+		    	end = result.getLocation();
 		    }
 		    EntityRayTraceResult entityRay = this.rayTraceEntities(start, end);
 		    if(entityRay != null) {
@@ -103,44 +102,44 @@ public abstract class AbstractBulletEntity extends AbstractOwnerEntity implement
 		    }
 		}
 		//move
-		Vec3d vec3d = this.getMotion();
-		double d0 = this.getPosX() + vec3d.x;
-		double d1 = this.getPosY() + vec3d.y;
-		double d2 = this.getPosZ() + vec3d.z;
-		float f = MathHelper.sqrt(horizontalMag(vec3d));
-		this.rotationYaw = (float) (MathHelper.atan2(vec3d.x, vec3d.z) * (double) (180F / (float) Math.PI));
-		for (this.rotationPitch = (float) (MathHelper.atan2(vec3d.y, (double) f)
-				* (double) (180F / (float) Math.PI)); this.rotationPitch
-						- this.prevRotationPitch < -180.0F; this.prevRotationPitch -= 360.0F) {
+		Vector3d vec3d = this.getDeltaMovement();
+		double d0 = this.getX() + vec3d.x;
+		double d1 = this.getY() + vec3d.y;
+		double d2 = this.getZ() + vec3d.z;
+		float f = MathHelper.sqrt(getHorizontalDistanceSqr(vec3d));
+		this.yRot = (float) (MathHelper.atan2(vec3d.x, vec3d.z) * (double) (180F / (float) Math.PI));
+		for (this.xRot = (float) (MathHelper.atan2(vec3d.y, (double) f)
+				* (double) (180F / (float) Math.PI)); this.xRot
+						- this.xRotO < -180.0F; this.xRotO -= 360.0F) {
 			;
 		}
-		while (this.rotationPitch - this.prevRotationPitch >= 180.0F) {
-			this.prevRotationPitch += 360.0F;
+		while (this.xRot - this.xRotO >= 180.0F) {
+			this.xRotO += 360.0F;
 		}
-		while (this.rotationYaw - this.prevRotationYaw < -180.0F) {
-			this.prevRotationYaw -= 360.0F;
+		while (this.yRot - this.yRotO < -180.0F) {
+			this.yRotO -= 360.0F;
 		}
-		while (this.rotationYaw - this.prevRotationYaw >= 180.0F) {
-			this.prevRotationYaw += 360.0F;
+		while (this.yRot - this.yRotO >= 180.0F) {
+			this.yRotO += 360.0F;
 		}
-		this.rotationPitch = MathHelper.lerp(0.2F, this.prevRotationPitch, this.rotationPitch);
-		this.rotationYaw = MathHelper.lerp(0.2F, this.prevRotationYaw, this.rotationYaw);
+		this.xRot = MathHelper.lerp(0.2F, this.xRotO, this.xRot);
+		this.yRot = MathHelper.lerp(0.2F, this.yRotO, this.yRot);
 		float f1;
 		if (this.isInWater()) {
 			for (int i = 0; i < 4; ++i) {
-				this.world.addParticle(ParticleTypes.BUBBLE, d0 - vec3d.x * 0.25D, d1 - vec3d.y * 0.25D,
+				this.level.addParticle(ParticleTypes.BUBBLE, d0 - vec3d.x * 0.25D, d1 - vec3d.y * 0.25D,
 						d2 - vec3d.z * 0.25D, vec3d.x, vec3d.y, vec3d.z);
 			}
 			f1 = 0.8F;
 		} else {
 			f1 = this.airSlowDown;
 		}
-		this.setMotion(vec3d.scale((double) f1));
-		if (!this.hasNoGravity()) {
-			Vec3d vec3d1 = this.getMotion();
-			this.setMotion(vec3d1.x, vec3d1.y - (double) this.getGravityVelocity(), vec3d1.z);
+		this.setDeltaMovement(vec3d.scale((double) f1));
+		if (!this.isNoGravity()) {
+			Vector3d vec3d1 = this.getDeltaMovement();
+			this.setDeltaMovement(vec3d1.x, vec3d1.y - (double) this.getGravityVelocity(), vec3d1.z);
 		}
-		this.setPosition(d0, d1, d2);
+		this.setPos(d0, d1, d2);
 	}
 
 	protected void addHitEntity(Entity entity) {
@@ -166,7 +165,7 @@ public abstract class AbstractBulletEntity extends AbstractOwnerEntity implement
 		double vx = dx / dis * speed;
 		double vy = dy / dis * speed;
 		double vz = dz / dis * speed;
-		this.setMotion(vx, vy, vz);
+		this.setDeltaMovement(vx, vy, vz);
 	}
 	
 	public void shootPeaAnti(double dx, double dy, double dz, double speed) {
@@ -177,11 +176,11 @@ public abstract class AbstractBulletEntity extends AbstractOwnerEntity implement
 		double vx = dx / dis * speed;
 		double vy = dy / dis * speed;
 		double vz = dz / dis * speed;
-		this.setMotion(- vx, - vy, - vz);
+		this.setDeltaMovement(- vx, - vy, - vz);
 	}
 	
 	public void shootToTarget(LivingEntity target, double speed) {
-		this.setMotion(target.getPositionVec().add(0, target.getEyeHeight(), 0).subtract(this.getPositionVec()).normalize().scale(speed));
+		this.setDeltaMovement(target.position().add(0, target.getEyeHeight(), 0).subtract(this.position()).normalize().scale(speed));
 	}
 	
 	/**
@@ -198,11 +197,11 @@ public abstract class AbstractBulletEntity extends AbstractOwnerEntity implement
 	 * Gets the EntityRayTraceResult representing the entity hit
 	 */
 	@Nullable
-	protected EntityRayTraceResult rayTraceEntities(Vec3d startVec, Vec3d endVec) {
-		return ProjectileHelper.rayTraceEntities(this.world, this, startVec, endVec, 
-				this.getBoundingBox().expand(this.getMotion()).grow(1.0D), (entity) -> {
-			return entity.canBeCollidedWith() && shouldHit(entity)
-							&& (this.hitEntities == null|| !this.hitEntities.contains(entity.getEntityId()));
+	protected EntityRayTraceResult rayTraceEntities(Vector3d startVec, Vector3d endVec) {
+		return ProjectileHelper.getEntityHitResult(this.level, this, startVec, endVec, 
+				this.getBoundingBox().expandTowards(this.getDeltaMovement()).inflate(1.0D), (entity) -> {
+			return entity.isPickable() && shouldHit(entity)
+							&& (this.hitEntities == null|| !this.hitEntities.contains(entity.getId()));
 		});
 	}
 
@@ -237,7 +236,7 @@ public abstract class AbstractBulletEntity extends AbstractOwnerEntity implement
 			}
 			return true;
 		} else if (result.getType() == RayTraceResult.Type.BLOCK) {
-			Block block = world.getBlockState(((BlockRayTraceResult) result).getPos()).getBlock();
+			Block block = level.getBlockState(((BlockRayTraceResult) result).getBlockPos()).getBlock();
 			if (block instanceof BushBlock) {
 				return true;
 			}
@@ -246,30 +245,26 @@ public abstract class AbstractBulletEntity extends AbstractOwnerEntity implement
 	}
 	
 	@Override
-	public void readAdditional(CompoundNBT compound) {
-		super.readAdditional(compound);
+	public void readAdditionalSaveData(CompoundNBT compound) {
+		super.readAdditionalSaveData(compound);
 		if(compound.contains("bullet_attack_damage")) {
 			this.attackDamage = compound.getFloat("bullet_attack_damage");
 		}
 	}
 	
 	@Override
-	public void writeAdditional(CompoundNBT compound) {
-		super.writeAdditional(compound);
+	public void addAdditionalSaveData(CompoundNBT compound) {
+		super.addAdditionalSaveData(compound);
 		compound.putFloat("bullet_attack_damage", this.attackDamage);
 	}
 
 	@Override
-	public void shoot(double x, double y, double z, float velocity, float inaccuracy) {
-	}
-	
-	@Override
-	public boolean canBeAttackedWithItem() {
+	public boolean isAttackable() {
 		return false;
 	}
 
 	@Override
-	public IPacket<?> createSpawnPacket() {
+	public IPacket<?> getAddEntityPacket() {
 		return NetworkHooks.getEntitySpawningPacket(this);
 	}
 }

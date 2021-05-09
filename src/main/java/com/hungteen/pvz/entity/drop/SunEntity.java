@@ -46,12 +46,12 @@ public class SunEntity extends DropEntity {
 	public void tick() {
 		super.tick();
 		if(! this.onGround && ! this.isInWater()) {
-			this.setMotion(this.getMotion().getX(), - fall_speed, this.getMotion().getZ());
+			this.setDeltaMovement(this.getDeltaMovement().x(), - fall_speed, this.getDeltaMovement().z());
 		}
 	}
 	
 	@Override
-	public EntitySize getSize(Pose poseIn) {
+	public EntitySize getDimensions(Pose poseIn) {
 		//25 0.6 
 		int amount = this.getAmount();
 		float w = amount * 1f / 200 + 0.3f, h = amount * 1f / 75 + 0.1f;
@@ -59,8 +59,8 @@ public class SunEntity extends DropEntity {
 	}
 	
 	@Override
-	public void onCollideWithPlayer(PlayerEntity entityIn) {
-		if(!this.world.isRemote && this.isAlive() && this.getDropState() != DropStates.STEAL) {
+	public void playerTouch(PlayerEntity entityIn) {
+		if(!this.level.isClientSide && this.isAlive() && this.getDropState() != DropStates.STEAL) {
 			this.onCollectedByPlayer(entityIn);
 		}
 	}
@@ -69,13 +69,13 @@ public class SunEntity extends DropEntity {
 		if(MinecraftForge.EVENT_BUS.post(new PlayerCollectDropEvent.PlayerCollectSunEvent(player, this))) {
 			return ;
 		}
-		Entry<EquipmentSlotType, ItemStack> entry = EnchantmentHelper.getRandomItemWithEnchantment(EnchantmentRegister.SUN_MENDING.get(), player);
+		Entry<EquipmentSlotType, ItemStack> entry = EnchantmentHelper.getRandomItemWith(EnchantmentRegister.SUN_MENDING.get(), player);
 		if(entry != null) {
 			ItemStack stack = entry.getValue();
             if (! stack.isEmpty() && stack.isDamaged()) {
-               int canRepair = Math.min(EnchantmentUtil.getRepairDamageByAmount(stack, this.getAmount()), stack.getDamage());
+               int canRepair = Math.min(EnchantmentUtil.getRepairDamageByAmount(stack, this.getAmount()), stack.getDamageValue());
                this.setAmount(this.getAmount() - EnchantmentUtil.getSunCostByDamage(stack, canRepair));
-               stack.setDamage(stack.getDamage() - canRepair);
+               stack.setDamageValue(stack.getDamageValue() - canRepair);
             }
 		}
 		if(this.getAmount() > 0) {
@@ -88,7 +88,7 @@ public class SunEntity extends DropEntity {
 	}
 	
 	@Override
-	public int getMaxSpawnedInChunk() {
+	public int getMaxSpawnClusterSize() {
 		return 1;
 	}
 	
@@ -111,9 +111,9 @@ public class SunEntity extends DropEntity {
 	
 	public static boolean canSunSpawn(EntityType<? extends SunEntity> zombieType, IWorld worldIn, SpawnReason reason, BlockPos pos, Random rand) {
 		if(worldIn instanceof ServerWorld) {
-			return ! ((ServerWorld)worldIn).isRainingAt(pos) && ((ServerWorld)worldIn).isDaytime() && worldIn.getLightFor(LightType.SKY, pos) >= 15;
+			return ! ((ServerWorld)worldIn).isRainingAt(pos) && ((ServerWorld)worldIn).isDay() && worldIn.getBrightness(LightType.SKY, pos) >= 15;
 		}
-		return worldIn.getLightFor(LightType.SKY, pos) >= 15;
+		return worldIn.getBrightness(LightType.SKY, pos) >= 15;
 	}
 	
 	@Override

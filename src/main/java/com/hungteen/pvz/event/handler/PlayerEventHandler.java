@@ -31,16 +31,16 @@ public class PlayerEventHandler {
 	 * run when player right click plantEntity with shovel.
 	 */
 	public static void onPlantShovelByPlayer(PlayerEntity player, PVZPlantEntity plant, ItemStack stack) {
-		if(player.abilities.isCreativeMode || player.getUniqueID().equals(plant.getOwnerUUID().get()) || ! EntityUtil.checkCanEntityAttack(plant, player)) {
+		if(player.abilities.instabuild || player.getUUID().equals(plant.getOwnerUUID().get()) || ! EntityUtil.checkCanEntityAttack(plant, player)) {
 			if(plant.getOuterPlantType().isPresent()) {//has outer plant, shovel outer plant.
-				SunEntity.spawnSunsByAmount(player.world, plant.getPosition(), EnchantmentUtil.getSunShovelAmount(stack, plant.outerSunCost));
+				SunEntity.spawnSunsByAmount(player.level, plant.blockPosition(), EnchantmentUtil.getSunShovelAmount(stack, plant.outerSunCost));
 				plant.removeOuterPlant();
 			} else {
-				SunEntity.spawnSunsByAmount(player.world, plant.getPosition(), EnchantmentUtil.getSunShovelAmount(stack, plant.plantSunCost));
+				SunEntity.spawnSunsByAmount(player.level, plant.blockPosition(), EnchantmentUtil.getSunShovelAmount(stack, plant.plantSunCost));
 				plant.remove();
 			}
 			EntityUtil.playSound(plant, SoundRegister.PLANT_ON_GROUND.get());
-			stack.damageItem(3, player, (p) -> {p.sendBreakAnimation(Hand.MAIN_HAND);});
+			stack.hurtAndBreak(3, player, (p) -> {p.broadcastBreakEvent(Hand.MAIN_HAND);});
 		}
 	}
 	
@@ -84,7 +84,7 @@ public class PlayerEventHandler {
 			//item cd
 			PlayerDataManager.ItemCDStats itemCDStats = plData.getItemCDStats();
 			for(Plants p : Plants.values()) {
-				player.getCooldownTracker().setCooldown(PlantUtil.getPlantSummonCard(p), itemCDStats.getPlantCardCD(p));
+				player.getCooldowns().addCooldown(PlantUtil.getPlantSummonCard(p), itemCDStats.getPlantCardCD(p));
 			}
 		});
 		WaveManager.syncWaveTime(player);

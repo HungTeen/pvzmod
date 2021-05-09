@@ -23,7 +23,7 @@ public class CoffeeBeanRender extends PVZPlantRender<CoffeeBeanEntity>{
 	}
 
 	@Override
-	public ResourceLocation getEntityTexture(CoffeeBeanEntity entity) {
+	public ResourceLocation getTextureLocation(CoffeeBeanEntity entity) {
 		return StringUtil.prefix("textures/entity/plant/magic/coffee_bean.png");
 	}
 

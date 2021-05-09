@@ -14,7 +14,7 @@ import com.hungteen.pvz.utils.interfaces.IHasMetal;
 
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
-import net.minecraft.entity.SharedMonsterAttributes;
+import net.minecraft.entity.ai.attributes.Attributes;
 import net.minecraft.entity.monster.MonsterEntity;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.SoundEvent;
@@ -27,9 +27,9 @@ public class LadderZombieEntity extends DefenceZombieEntity implements IHasMetal
 	}
 	
 	@Override
-	protected void registerAttributes() {
-		super.registerAttributes();
-		this.getAttribute(SharedMonsterAttributes.MOVEMENT_SPEED).setBaseValue(ZombieUtil.FAST);
+	protected void updateAttributes() {
+		super.updateAttributes();
+		this.getAttribute(Attributes.MOVEMENT_SPEED).setBaseValue(ZombieUtil.FAST);
 	}
 
 	@Override
@@ -40,13 +40,13 @@ public class LadderZombieEntity extends DefenceZombieEntity implements IHasMetal
 	}
 	
 	@Override
-	public boolean attackEntityAsMob(Entity entityIn) {
+	public boolean doHurtTarget(Entity entityIn) {
 		if(this.hasMetal() && canTargetPutLadder(entityIn)) {
 			this.decreaseMetal();
 			PVZPlantEntity plant = (PVZPlantEntity) entityIn;
 			plant.increaseMetal();
 		}
-		return super.attackEntityAsMob(entityIn);
+		return super.doHurtTarget(entityIn);
 	}
 	
 	public static boolean canTargetPutLadder(Entity target) {
@@ -71,13 +71,13 @@ public class LadderZombieEntity extends DefenceZombieEntity implements IHasMetal
 	@Override
 	public void decreaseMetal() {
 		this.setDefenceLife(0);
-		this.getAttribute(SharedMonsterAttributes.MOVEMENT_SPEED).setBaseValue(ZombieUtil.NORMAL_SPEED);
+		this.getAttribute(Attributes.MOVEMENT_SPEED).setBaseValue(ZombieUtil.NORMAL_SPEED);
 	}
 
 	@Override
 	public void increaseMetal() {
 		this.setDefenceLife(this.getPartLife());
-		this.getAttribute(SharedMonsterAttributes.MOVEMENT_SPEED).setBaseValue(ZombieUtil.FAST);
+		this.getAttribute(Attributes.MOVEMENT_SPEED).setBaseValue(ZombieUtil.FAST);
 		this.resetParts();
 	}
 
@@ -102,7 +102,7 @@ public class LadderZombieEntity extends DefenceZombieEntity implements IHasMetal
 	}
 	
 	@Override
-	protected ResourceLocation getLootTable() {
+	protected ResourceLocation getDefaultLootTable() {
 		return PVZLoot.LADDER_ZOMBIE;
 	}
 

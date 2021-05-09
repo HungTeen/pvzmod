@@ -20,7 +20,7 @@ public class ImitaterContainer extends Container {
 	public ImitaterContainer(int id, PlayerEntity player) {
 		super(ContainerRegister.IMITATER.get(), id);
 		this.player = player;
-		this.stack = this.player.getHeldItemOffhand();
+		this.stack = this.player.getOffhandItem();
 		if(stack.getItem() != ItemRegister.IMITATER_CARD.get()) {
 			PVZMod.LOGGER.debug("ERROR OFFHAND ITEM !");
 			return ;
@@ -28,7 +28,7 @@ public class ImitaterContainer extends Container {
 		backpack = ImitaterCardItem.getInventory(stack);
 		this.addSlot(new Slot(backpack, 0, 80, 20) {
 			@Override
-			public boolean isItemValid(ItemStack stack) {
+			public boolean mayPlace(ItemStack stack) {
 				return ImitaterCardItem.isValidImitateSlot(stack);
 			}
 		});//special slots
@@ -43,38 +43,38 @@ public class ImitaterContainer extends Container {
 	}
 
 	@Override
-	public ItemStack transferStackInSlot(PlayerEntity playerIn, int index) {
+	public ItemStack quickMoveStack(PlayerEntity playerIn, int index) {
 		ItemStack itemstack = ItemStack.EMPTY;
-		Slot slot = this.inventorySlots.get(index);
-		if (slot != null && slot.getHasStack()) {
-			ItemStack itemstack1 = slot.getStack();
+		Slot slot = this.slots.get(index);
+		if (slot != null && slot.hasItem()) {
+			ItemStack itemstack1 = slot.getItem();
 			itemstack = itemstack1.copy();
 			if (index == 0) {
-				if (! this.mergeItemStack(itemstack1, 1, this.inventorySlots.size(), true)) {
+				if (! this.moveItemStackTo(itemstack1, 1, this.slots.size(), true)) {
 					return ItemStack.EMPTY;
 				}
 			} else if (index < 28) {
-				if(! mergeItemStack(itemstack1, 0, 1, false)
-						&& ! mergeItemStack(itemstack1, 28, this.inventorySlots.size(), false)) {
+				if(! moveItemStackTo(itemstack1, 0, 1, false)
+						&& ! moveItemStackTo(itemstack1, 28, this.slots.size(), false)) {
 					return ItemStack.EMPTY;
 				}
-			} else if(index < this.inventorySlots.size()){
-				if (! this.mergeItemStack(itemstack1, 0, 28, false)) {
+			} else if(index < this.slots.size()){
+				if (! this.moveItemStackTo(itemstack1, 0, 28, false)) {
 					return ItemStack.EMPTY;
 				}
 			}
 			if (itemstack1.isEmpty()) {
-				slot.putStack(ItemStack.EMPTY);
+				slot.set(ItemStack.EMPTY);
 			} else {
-				slot.onSlotChanged();
+				slot.setChanged();
 			}
 		}
 		return itemstack;
 	}
 	
 	@Override
-	public boolean canInteractWith(PlayerEntity playerIn) {
-		if(playerIn.getHeldItemOffhand().getItem() != ItemRegister.IMITATER_CARD.get()) {
+	public boolean stillValid(PlayerEntity playerIn) {
+		if(playerIn.getOffhandItem().getItem() != ItemRegister.IMITATER_CARD.get()) {
 			return false;
 		}
 		return true;

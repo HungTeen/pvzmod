@@ -5,8 +5,8 @@ import com.hungteen.pvz.particle.base.BombParticle;
 import net.minecraft.client.particle.IAnimatedSprite;
 import net.minecraft.client.particle.IParticleFactory;
 import net.minecraft.client.particle.Particle;
+import net.minecraft.client.world.ClientWorld;
 import net.minecraft.particles.BasicParticleType;
-import net.minecraft.world.World;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 
@@ -15,15 +15,15 @@ public class CherryBombParticle extends BombParticle {
 
 	protected final IAnimatedSprite sprite;
 
-	public CherryBombParticle(World world, double x, double y, double z, double xSpeed, double ySpeed, double zSpeed,
+	public CherryBombParticle(ClientWorld world, double x, double y, double z, double xSpeed, double ySpeed, double zSpeed,
 			IAnimatedSprite sprite) {
 		super(world, x, y, z, xSpeed, ySpeed, zSpeed,sprite);
-		this.maxAge = 6 + this.rand.nextInt(4);
+		this.lifetime = 6 + this.random.nextInt(4);
 		this.setColor(1,0,0);
-		this.particleScale = 4;
+		this.quadSize = 4;
 		this.sprite = sprite;
-		this.canCollide = false;
-		this.selectSpriteWithAge(this.sprite);
+		this.hasPhysics = false;
+		this.setSpriteFromAge(this.sprite);
 	}
 
 	public static class Factory implements IParticleFactory<BasicParticleType> {
@@ -34,7 +34,7 @@ public class CherryBombParticle extends BombParticle {
 		}
 
 		@Override
-		public Particle makeParticle(BasicParticleType typeIn, World worldIn, double x, double y, double z,
+		public Particle createParticle(BasicParticleType typeIn, ClientWorld worldIn, double x, double y, double z,
 				double xSpeed, double ySpeed, double zSpeed) {
 			return new CherryBombParticle(worldIn, x, y, z, xSpeed, ySpeed, zSpeed, this.sprite);
 		}

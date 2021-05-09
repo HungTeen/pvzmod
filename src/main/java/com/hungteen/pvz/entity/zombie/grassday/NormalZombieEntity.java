@@ -5,7 +5,7 @@ import com.hungteen.pvz.utils.ZombieUtil;
 import com.hungteen.pvz.utils.enums.Zombies;
 
 import net.minecraft.entity.EntityType;
-import net.minecraft.entity.SharedMonsterAttributes;
+import net.minecraft.entity.ai.attributes.Attributes;
 import net.minecraft.entity.monster.MonsterEntity;
 import net.minecraft.world.World;
 
@@ -25,8 +25,8 @@ public class NormalZombieEntity extends UnderGroundZombieEntity {
 	protected Type getSpawnType() {
 		Type type = super.getSpawnType();
 		if(type == Type.NORMAL) {
-			if(this.getRNG().nextInt(200) == 0) {
-				this.getAttribute(SharedMonsterAttributes.ATTACK_DAMAGE).setBaseValue(ZombieUtil.NORMAL_DAMAGE);
+			if(this.getRandom().nextInt(200) == 0) {
+				this.getAttribute(Attributes.ATTACK_DAMAGE).setBaseValue(ZombieUtil.NORMAL_DAMAGE);
 			    return Type.BEARD;
 			}
 		}

@@ -31,23 +31,23 @@ public class GarlicEntity extends PlantDefenderEntity {
 	}
 
 	@Override
-	public boolean attackEntityFrom(DamageSource source, float amount) {
-		if(source instanceof PVZDamageSource && ((PVZDamageSource) source).getPVZDamageType() == PVZDamageType.EAT && source.getTrueSource() instanceof MobEntity) {
+	public boolean hurt(DamageSource source, float amount) {
+		if(source instanceof PVZDamageSource && ((PVZDamageSource) source).getPVZDamageType() == PVZDamageType.EAT && source.getEntity() instanceof MobEntity) {
 			this.updateGarlic();
 			if(this.garlic != null) {
-				EntityUtil.playSound(((MobEntity) source.getTrueSource()), SoundRegister.YUCK.get());
-				((MobEntity) source.getTrueSource()).setAttackTarget(this.garlic);
+				EntityUtil.playSound(((MobEntity) source.getEntity()), SoundRegister.YUCK.get());
+				((MobEntity) source.getEntity()).setTarget(this.garlic);
 			}
 		}
-		return super.attackEntityFrom(source, amount);
+		return super.hurt(source, amount);
 	}
 	
 	private void updateGarlic() {
-		if(! EntityUtil.isEntityValid(garlic) || ! this.getEntitySenses().canSee(garlic)) {
+		if(! EntityUtil.isEntityValid(garlic) || ! this.getSensing().canSee(garlic)) {
 			this.garlic = null;
 			float range = this.getChangeRange();
-			List<GarlicEntity> list = world.getEntitiesWithinAABB(GarlicEntity.class, EntityUtil.getEntityAABB(this, range, range), (target) -> {
-				return !target.isEntityEqual(this) && EntityUtil.isEntityValid(target) && this.getEntitySenses().canSee(target);
+			List<GarlicEntity> list = level.getEntitiesOfClass(GarlicEntity.class, EntityUtil.getEntityAABB(this, range, range), (target) -> {
+				return !target.is(this) && EntityUtil.isEntityValid(target) && this.getSensing().canSee(target);
 			});
 			if(list.isEmpty()) return ;
 			Collections.sort(list, this.sorter);
@@ -79,8 +79,8 @@ public class GarlicEntity extends PlantDefenderEntity {
 	}
 	
 	@Override
-	public EntitySize getSize(Pose poseIn) {
-		return EntitySize.flexible(0.8F, 1.2F);
+	public EntitySize getDimensions(Pose poseIn) {
+		return EntitySize.scalable(0.8F, 1.2F);
 	}
 
 	@Override

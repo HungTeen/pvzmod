@@ -28,10 +28,10 @@ public class DaveShopContainer extends AbstractDaveShopContainer {
 			player.getCapability(CapabilityHandler.PLAYER_DATA_CAPABILITY).ifPresent((l) -> {
 				PlayerDataManager.PlayerStats stats = l.getPlayerData().getPlayerStats();
 				stats.addPlayerStats(Resources.MONEY, - TradeUtil.getGoodCost(good));
-				this.output.setInventorySlotContents(0, TradeUtil.getGoodItemStack(good));
+				this.output.setItem(0, TradeUtil.getGoodItemStack(good));
 			});
 		}
-		this.player.world.playSound(null, this.player.getPosition(), SoundRegister.DAVE_BUY.get(), SoundCategory.AMBIENT, 1f, 1f);
+		this.player.level.playSound(null, this.player, SoundRegister.DAVE_BUY.get(), SoundCategory.AMBIENT, 1f, 1f);
 	}
 	
 }

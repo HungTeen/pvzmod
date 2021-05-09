@@ -25,7 +25,7 @@ public class WinterMelonRender extends PVZPlantRender<WinterMelonEntity> {
 	}
 
 	@Override
-	public ResourceLocation getEntityTexture(WinterMelonEntity entity) {
+	public ResourceLocation getTextureLocation(WinterMelonEntity entity) {
 		return WINTER_MELON_TEX;
 	}
 

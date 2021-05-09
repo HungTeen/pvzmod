@@ -24,13 +24,13 @@ public class UmbrellaLeafRender extends PVZPlantRender<UmbrellaLeafEntity> {
 	@Override
 	public void render(UmbrellaLeafEntity entityIn, float entityYaw, float partialTicks, MatrixStack matrixStackIn,
 			IRenderTypeBuffer bufferIn, int packedLightIn) {
-		matrixStackIn.push();
+		matrixStackIn.pushPose();
 		float percent = entityIn.getAttackTime() * 1F / UmbrellaLeafEntity.ANIM_TICK;
 		float height = 2F * percent;
 		float width = 2F * percent;
 		matrixStackIn.scale(1 + width, 1 + height, 1 + width);
 		super.render(entityIn, entityYaw, partialTicks, matrixStackIn, bufferIn, packedLightIn);
-		matrixStackIn.pop();
+		matrixStackIn.popPose();
 	}
 	
 	@Override
@@ -39,7 +39,7 @@ public class UmbrellaLeafRender extends PVZPlantRender<UmbrellaLeafEntity> {
 	}
 	
 	@Override
-	public ResourceLocation getEntityTexture(UmbrellaLeafEntity entity) {
+	public ResourceLocation getTextureLocation(UmbrellaLeafEntity entity) {
 		return UMBRELLA_LEAF_TEX;
 	}
 

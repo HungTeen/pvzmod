@@ -36,14 +36,14 @@ public class SunFlowerEntity extends PlantProducerEntity{
 	}
 	
 	@Override
-	public EntitySize getSize(Pose poseIn) {
-		return EntitySize.flexible(0.8f, 1.65f);
+	public EntitySize getDimensions(Pose poseIn) {
+		return EntitySize.scalable(0.8f, 1.65f);
 	}
 	
 	@Override
 	public int getGenCD() {
 		int time = 500;
-		return this.world.isDaytime() ? time : 4 * time;
+		return this.level.isDay() ? time : 4 * time;
 	}
 	
 	@Override

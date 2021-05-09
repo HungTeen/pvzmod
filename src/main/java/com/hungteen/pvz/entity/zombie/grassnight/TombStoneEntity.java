@@ -22,17 +22,19 @@ import net.minecraft.entity.EntitySize;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.Pose;
-import net.minecraft.entity.SharedMonsterAttributes;
 import net.minecraft.entity.SpawnReason;
+import net.minecraft.entity.ai.attributes.Attributes;
 import net.minecraft.entity.ai.goal.NearestAttackableTargetGoal;
 import net.minecraft.entity.item.ItemEntity;
 import net.minecraft.entity.monster.MonsterEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
+import net.minecraft.util.ActionResultType;
 import net.minecraft.util.Hand;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.SoundEvent;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.vector.Vector3d;
 import net.minecraft.world.IWorld;
 import net.minecraft.world.World;
 import net.minecraft.world.server.ServerWorld;
@@ -46,7 +48,7 @@ public class TombStoneEntity extends UnderGroundZombieEntity {
 	
 	public TombStoneEntity(EntityType<? extends MonsterEntity> type, World worldIn) {
 		super(type, worldIn);
-		this.currentSummonCD = this.getRNG().nextInt(this.maxSummonCD - this.minSummonCD + 1) + this.minSummonCD; 
+		this.currentSummonCD = this.getRandom().nextInt(this.maxSummonCD - this.minSummonCD + 1) + this.minSummonCD; 
 		this.canBeButter = false;
 		this.canBeCold = false;
 		this.canBeCharm = false;
@@ -61,22 +63,22 @@ public class TombStoneEntity extends UnderGroundZombieEntity {
 	}
 
 	@Override
-	protected void registerAttributes() {
-		super.registerAttributes();
-		this.getAttribute(SharedMonsterAttributes.ATTACK_DAMAGE).setBaseValue(0);
-		this.getAttribute(SharedMonsterAttributes.MOVEMENT_SPEED).setBaseValue(0);
+	protected void updateAttributes() {
+		super.updateAttributes();
+		this.getAttribute(Attributes.MOVEMENT_SPEED).setBaseValue(0);
+		this.getAttribute(Attributes.ATTACK_DAMAGE).setBaseValue(0);
 	}
 	
 	@Override
-	public void livingTick() {
-		super.livingTick();
-		if(! this.world.isRemote && this.getAttackTime() >= 0) {
+	public void aiStep() {
+		super.aiStep();
+		if(! this.level.isClientSide && this.getAttackTime() >= 0) {
 			if(this.canSummonZombie()) {
 				this.setAttackTime(this.getAttackTime() + 1);
 				if(this.getAttackTime() >= this.currentSummonCD) {
 					this.summonZombie();
 					this.setAttackTime(0);
-					this.currentSummonCD = this.getRNG().nextInt(this.maxSummonCD - this.minSummonCD + 1) + this.minSummonCD;
+					this.currentSummonCD = this.getRandom().nextInt(this.maxSummonCD - this.minSummonCD + 1) + this.minSummonCD;
 				}
 			}
 		}
@@ -88,73 +90,74 @@ public class TombStoneEntity extends UnderGroundZombieEntity {
 	}
 	
 	public void summonZombie() {
-		int pos = this.getRNG().nextInt(GROUND_ZOMBIES.length);
-		PVZZombieEntity zombie = ZombieUtil.getZombieEntity(world, GROUND_ZOMBIES[pos]);
+		int pos = this.getRandom().nextInt(GROUND_ZOMBIES.length);
+		PVZZombieEntity zombie = ZombieUtil.getZombieEntity(level, GROUND_ZOMBIES[pos]);
 		if(zombie != null) {
 			if(zombie instanceof UnderGroundZombieEntity) {
 				((UnderGroundZombieEntity) zombie).setRiseType(true);
 			}
-			EntityUtil.onMobEntitySpawn(world, zombie, getPosition());
+			EntityUtil.onMobEntitySpawn(level, zombie, blockPosition());
 		}
 	}
 	
 	protected boolean canSummonZombie() {
-		return this.getAttackTarget() != null;
+		return this.getTarget() != null;
 	}
 	
 	public static boolean canTombSpawn(EntityType<? extends PVZZombieEntity> zombieType, IWorld worldIn,
 			SpawnReason reason, BlockPos pos, Random rand) {
-		return (worldIn instanceof ServerWorld && ! ((ServerWorld) worldIn).isDaytime()) ? canZombieSpawn(zombieType, worldIn, reason, pos, rand) : false;
+		return (worldIn instanceof ServerWorld && ! ((ServerWorld) worldIn).isDay()) ? canZombieSpawn(zombieType, worldIn, reason, pos, rand) : false;
 	}
 	
 	@Override
-	protected boolean processInteract(PlayerEntity player, Hand hand) {
-		if(! world.isRemote) {
-			ItemStack stack = player.getHeldItem(hand);
+	public ActionResultType interactAt(PlayerEntity player, Vector3d vec3d, Hand hand) {
+		if(! level.isClientSide) {
+			ItemStack stack = player.getItemInHand(hand);
 			if(this.getPassengers().isEmpty() && stack.getItem() instanceof PlantCardItem) {
 				PlantCardItem cardItem = (PlantCardItem) stack.getItem();
 				if(cardItem.plantType == Plants.GRAVE_BUSTER) {
-					PlantCardItem.checkSunAndSummonPlant(player, stack, cardItem, getPosition(), (plantEntity) -> {
-						plantEntity.setAttackTarget(this);
+					PlantCardItem.checkSunAndSummonPlant(player, stack, cardItem, blockPosition(), (plantEntity) -> {
+						plantEntity.setTarget(this);
 					});
 				} else if(cardItem instanceof ImitaterCardItem && ((ImitaterCardItem) cardItem).isPlantTypeEqual(stack, Plants.GRAVE_BUSTER)) {
-					ImitaterCardItem.checkSunAndSummonImitater(player, stack, cardItem, getPosition(), (imitater) -> {
-						imitater.setAttackTarget(this);
+					ImitaterCardItem.checkSunAndSummonImitater(player, stack, cardItem, blockPosition(), (imitater) -> {
+						imitater.setTarget(this);
 					});
 				}
+				return ActionResultType.CONSUME;
 			}
 		}
-		return super.processInteract(player, hand);
+		return super.interactAt(player, vec3d, hand);
 	}
 	
 	@Override
 	protected void dropCoinOrSpecial() {
-		int num = this.getRNG().nextInt(1000);
+		int num = this.getRandom().nextInt(1000);
 		if(num == 0) {
-			JewelEntity jewel = EntityRegister.JEWEL.get().create(world);
-			EntityUtil.onMobEntitySpawn(world, jewel, getPosition());
+			JewelEntity jewel = EntityRegister.JEWEL.get().create(level);
+			EntityUtil.onMobEntitySpawn(level, jewel, blockPosition());
 			return ;
 		}
 		if(num == 1){
-			ItemEntity chocolate = new ItemEntity(world, getPosX(), getPosY(), getPosZ(), new ItemStack(ItemRegister.CHOCOLATE.get()));
+			ItemEntity chocolate = new ItemEntity(level, getX(), getY(), getZ(), new ItemStack(ItemRegister.CHOCOLATE.get()));
 			EntityUtil.playSound(chocolate, SoundRegister.JEWEL_DROP.get());
-			world.addEntity(chocolate);
+			level.addFreshEntity(chocolate);
 			return ;
 		}
 		if(num < 1000) {
 			int amount = CoinType.COPPER.money;
 			if(num < 12) amount = CoinType.GOLD.money;
 			else if(num < 112) amount = CoinType.SILVER.money;
-			CoinEntity coin = EntityRegister.COIN.get().create(world);
+			CoinEntity coin = EntityRegister.COIN.get().create(level);
 			coin.setAmount(amount);
-			EntityUtil.onMobEntitySpawn(world, coin, getPosition());
+			EntityUtil.onMobEntitySpawn(level, coin, blockPosition());
 			return ;
 		}
 	}
 	
 	@Override
-	public EntitySize getSize(Pose poseIn) {
-		return EntitySize.flexible(0.8f, 1.6f);
+	public EntitySize getDimensions(Pose poseIn) {
+		return EntitySize.scalable(0.8f, 1.6f);
 	}
 	
 	@Override
@@ -163,7 +166,7 @@ public class TombStoneEntity extends UnderGroundZombieEntity {
 	}
 
 	@Override
-	public double getMountedYOffset() {
+	public double getPassengersRidingOffset() {
 		return 0;
 	}
 	
@@ -173,7 +176,7 @@ public class TombStoneEntity extends UnderGroundZombieEntity {
 	}
 	
 	@Override
-	protected ResourceLocation getLootTable() {
+	protected ResourceLocation getDefaultLootTable() {
 		return null;
 	}
 	

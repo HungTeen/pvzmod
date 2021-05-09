@@ -25,8 +25,8 @@ public class MelonRender extends EntityBlockRender<MelonEntity> {
 
 	@Override
 	public BlockState getBlockByEntity(MelonEntity entity) {
-		if(entity.getMelonState() == MelonStates.ICE) return BlockRegister.FROZEN_MELON.get().getDefaultState();
-		return Blocks.MELON.getDefaultState();
+		if(entity.getMelonState() == MelonStates.ICE) return BlockRegister.FROZEN_MELON.get().defaultBlockState();
+		return Blocks.MELON.defaultBlockState();
 	}
 
 }

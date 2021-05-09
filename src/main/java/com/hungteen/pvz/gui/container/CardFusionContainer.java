@@ -29,17 +29,17 @@ public class CardFusionContainer extends AbstractOptionContainer {
 	
 	public CardFusionContainer(int id, PlayerEntity player, BlockPos pos) {
 		super(ContainerRegister.CARD_FUSION.get(), id);
-		this.te = (CardFusionTileEntity) player.world.getTileEntity(pos);
+		this.te = (CardFusionTileEntity) player.level.getBlockEntity(pos);
 		this.player = player;
 		if(this.te == null) {
 			System.out.println("Error: Open Card Fusion GUI !");
 			return ;
 		}
-		this.trackIntArray(this.te.array);
+		this.addDataSlots(this.te.array);
 		//0 sun storage sapling, 1 - 8 craft card, 9 - 11, essence, 12 result
 		this.addSlot(new SlotItemHandler(te.handler, 0, 7, 155) {
 			@Override
-			public boolean isItemValid(ItemStack stack) {
+			public boolean mayPlace(ItemStack stack) {
 				return stack.getItem() instanceof SunStorageSaplingItem;
 			}
 		});
@@ -49,7 +49,7 @@ public class CardFusionContainer extends AbstractOptionContainer {
 				if(i == 1 && j == 1) continue;
 				this.addSlot(new SlotItemHandler(te.handler, now ++, 58 + j * 54, 26 + i * 54) {
 					@Override
-					public boolean isItemValid(ItemStack stack) {
+					public boolean mayPlace(ItemStack stack) {
 						if(! (stack.getItem() instanceof PlantCardItem)) return false;
 						PlantCardItem item = (PlantCardItem) stack.getItem();
 						return ! item.isEnjoyCard;
@@ -60,14 +60,14 @@ public class CardFusionContainer extends AbstractOptionContainer {
 		for(int i = 0; i < 3; ++ i) {
 			this.addSlot(new SlotItemHandler(te.handler, 9 + i, 217, 26 + i * 54) {
 				@Override
-				public boolean isItemValid(ItemStack stack) {
+				public boolean mayPlace(ItemStack stack) {
 					return stack.getItem() instanceof EssenceItem;
 				}
 			});
 		}
 		this.addSlot(new SlotItemHandler(te.handler, 12, 112, 80) {
 			@Override
-			public boolean isItemValid(ItemStack stack) {
+			public boolean mayPlace(ItemStack stack) {
 				return false;
 			}
 		});
@@ -87,10 +87,10 @@ public class CardFusionContainer extends AbstractOptionContainer {
 		if(! recipe.isPresent()) return list;
 		int pos = 0;
 		for(Plants plant : recipe.get().requirePlants) {
-			Ingredient card = Ingredient.fromItems(PlantUtil.getPlantSummonCard(plant));
+			Ingredient card = Ingredient.of(PlantUtil.getPlantSummonCard(plant));
 			list.add(Pair.of(card, this.getSlot(++ pos)));
 		}
-		Ingredient result = Ingredient.fromItems(PlantUtil.getPlantSummonCard(plantType));
+		Ingredient result = Ingredient.of(PlantUtil.getPlantSummonCard(plantType));
 		list.add(Pair.of(result, this.getSlot(12)));
 		return list;
 	}
@@ -106,8 +106,8 @@ public class CardFusionContainer extends AbstractOptionContainer {
 		ItemStack stack = this.te.handler.getStackInSlot(i);
 		if(stack.isEmpty()) return ;
 		int emptyPos = - 1;
-		for(int j = 0; j < this.player.inventory.mainInventory.size(); ++ j) {
-			ItemStack oldStack = this.player.inventory.mainInventory.get(j);
+		for(int j = 0; j < this.player.inventory.items.size(); ++ j) {
+			ItemStack oldStack = this.player.inventory.items.get(j);
 			if(oldStack.isEmpty()) emptyPos = j;
 			if(ItemUtil.canItemStackAddTo(oldStack, stack)) {
 				int maxSize = oldStack.getMaxStackSize();
@@ -127,36 +127,36 @@ public class CardFusionContainer extends AbstractOptionContainer {
 			}
 		}
 		if(stack.getCount() > 0) {
-			this.player.inventory.mainInventory.set(emptyPos, stack.copy());
+			this.player.inventory.items.set(emptyPos, stack.copy());
 			stack.shrink(stack.getCount());
 		}
 	}
 	
 	@Override
-	public ItemStack transferStackInSlot(PlayerEntity playerIn, int index) {
+	public ItemStack quickMoveStack(PlayerEntity playerIn, int index) {
 		ItemStack itemstack = ItemStack.EMPTY;
-		Slot slot = this.inventorySlots.get(index);
-		if (slot != null && slot.getHasStack()) {
-			ItemStack itemstack1 = slot.getStack();
+		Slot slot = this.slots.get(index);
+		if (slot != null && slot.hasItem()) {
+			ItemStack itemstack1 = slot.getItem();
 			itemstack = itemstack1.copy();
 			if (index == 0 || index < 12) {
-				if (!this.mergeItemStack(itemstack1, 13, this.inventorySlots.size(), true)) {
+				if (!this.moveItemStackTo(itemstack1, 13, this.slots.size(), true)) {
 					return ItemStack.EMPTY;
 				}
 			} else if (index < 13 + 27) {
-				if(!mergeItemStack(itemstack1, 0, 13, false)
-						&& !mergeItemStack(itemstack1, 13 + 27, this.inventorySlots.size(), false)) {
+				if(!moveItemStackTo(itemstack1, 0, 13, false)
+						&& !moveItemStackTo(itemstack1, 13 + 27, this.slots.size(), false)) {
 					return ItemStack.EMPTY;
 				}
 			} else {
-				if (!this.mergeItemStack(itemstack1, 0, 13 + 27, false)) {
+				if (!this.moveItemStackTo(itemstack1, 0, 13 + 27, false)) {
 					return ItemStack.EMPTY;
 				}
 			}
 			if (itemstack1.isEmpty()) {
-				slot.putStack(ItemStack.EMPTY);
+				slot.set(ItemStack.EMPTY);
 			} else {
-				slot.onSlotChanged();
+				slot.setChanged();
 			}
 		}
 		return itemstack;
@@ -164,11 +164,11 @@ public class CardFusionContainer extends AbstractOptionContainer {
 	
 	@Override
 	public boolean isCraftSlot(Slot slot) {
-		return slot != null && (slot.slotNumber > 0 && slot.slotNumber < 9 || slot.slotNumber == 12);
+		return slot != null && (slot.index > 0 && slot.index < 9 || slot.index == 12);
 	}
 
 	@Override
-	public boolean canInteractWith(PlayerEntity playerIn) {
+	public boolean stillValid(PlayerEntity playerIn) {
 		return this.te.isUsableByPlayer(playerIn);
 	}
 	

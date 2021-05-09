@@ -32,7 +32,7 @@ public class MelonPultEntity extends PlantPultEntity {
 	
 	@Override
 	public void pultBullet() {
-		LivingEntity target = this.getAttackTarget();
+		LivingEntity target = this.getTarget();
 		this.pultMelon(target);
 	}
 	
@@ -45,12 +45,12 @@ public class MelonPultEntity extends PlantPultEntity {
 	
 	private Optional<MelonEntity> pultMelon(LivingEntity target){
 		if(target == null) return Optional.empty();
-		MelonEntity melon = new MelonEntity(world, this);
-        melon.setPosition(this.getPosX(), this.getPosY() + 1.5f, this.getPosZ());
+		MelonEntity melon = new MelonEntity(level, this);
+        melon.setPos(this.getX(), this.getY() + 1.5f, this.getZ());
         melon.shootPultBullet(target);
         melon.setMelonState(this.getThrowMelonState());
         EntityUtil.playSound(this, SoundRegister.PLANT_THROW.get());
-        this.world.addEntity(melon);
+        this.level.addFreshEntity(melon);
         return Optional.of(melon);
 	}
 	
@@ -71,8 +71,8 @@ public class MelonPultEntity extends PlantPultEntity {
 	}
 	
 	@Override
-	public EntitySize getSize(Pose poseIn) {
-		return EntitySize.flexible(0.9F, 1F);
+	public EntitySize getDimensions(Pose poseIn) {
+		return EntitySize.scalable(0.9F, 1F);
 	}
 	
 	@Override

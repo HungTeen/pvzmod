@@ -20,7 +20,7 @@ public class RepeaterEntity extends PeaShooterEntity{
 	@Override
 	public void normalPlantTick() {
 		super.normalPlantTick();
-		if(!this.world.isRemote) {
+		if(!this.level.isClientSide) {
 			this.shootBigTick ++;
 		}
 	}
@@ -38,7 +38,7 @@ public class RepeaterEntity extends PeaShooterEntity{
 	@Override
 	public void startSuperMode(boolean first) {
 		super.startSuperMode(first);
-		if(!world.isRemote) {
+		if(!level.isClientSide) {
 			this.bigPeaNum += this.getBigPeaNum();//can shoot extra big pea
 		}
 	}

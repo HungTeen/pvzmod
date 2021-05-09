@@ -16,7 +16,7 @@ public class EmptyRender<T extends PVZMultiPartEntity> extends EntityRenderer<T>
 	}
 
 	@Override
-	public ResourceLocation getEntityTexture(T entity) {
+	public ResourceLocation getTextureLocation(T entity) {
 		return null;
 	}
 

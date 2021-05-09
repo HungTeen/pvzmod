@@ -21,7 +21,7 @@ public class MournerZombieRender extends PVZZombieRender<MournerZombieEntity>{
 	}
 
 	@Override
-	public ResourceLocation getEntityTexture(MournerZombieEntity entity) {
+	public ResourceLocation getTextureLocation(MournerZombieEntity entity) {
 		return StringUtil.prefix("textures/entity/zombie/other/mourner_zombie.png");
 	}
 

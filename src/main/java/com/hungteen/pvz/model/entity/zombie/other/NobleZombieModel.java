@@ -26,83 +26,83 @@ public class NobleZombieModel extends EntityModel<NobleZombieEntity> {
 	private final ModelRenderer bone;
 
 	public NobleZombieModel() {
-		textureWidth = 256;
-		textureHeight = 256;
+		texWidth = 256;
+		texHeight = 256;
 
 		total = new ModelRenderer(this);
-		total.setRotationPoint(0.0F, 24.0F, 0.0F);
+		total.setPos(0.0F, 24.0F, 0.0F);
 		
 
 		right_leg = new ModelRenderer(this);
-		right_leg.setRotationPoint(-4.0F, -24.0F, 0.0F);
+		right_leg.setPos(-4.0F, -24.0F, 0.0F);
 		total.addChild(right_leg);
-		right_leg.setTextureOffset(44, 0).addBox(-4.0F, 0.0F, -4.0F, 8.0F, 24.0F, 8.0F, 0.0F, false);
+		right_leg.texOffs(44, 0).addBox(-4.0F, 0.0F, -4.0F, 8.0F, 24.0F, 8.0F, 0.0F, false);
 
 		left_leg = new ModelRenderer(this);
-		left_leg.setRotationPoint(4.0F, -24.0F, 0.0F);
+		left_leg.setPos(4.0F, -24.0F, 0.0F);
 		total.addChild(left_leg);
-		left_leg.setTextureOffset(0, 0).addBox(-4.0F, 0.0F, -4.0F, 8.0F, 24.0F, 8.0F, 0.0F, false);
+		left_leg.texOffs(0, 0).addBox(-4.0F, 0.0F, -4.0F, 8.0F, 24.0F, 8.0F, 0.0F, false);
 
 		up = new ModelRenderer(this);
-		up.setRotationPoint(0.0F, -24.0F, 0.0F);
+		up.setPos(0.0F, -24.0F, 0.0F);
 		total.addChild(up);
 		
 
 		body = new ModelRenderer(this);
-		body.setRotationPoint(0.0F, 0.0F, 0.0F);
+		body.setPos(0.0F, 0.0F, 0.0F);
 		up.addChild(body);
-		body.setTextureOffset(0, 41).addBox(-8.0F, -24.0F, -4.0F, 16.0F, 24.0F, 8.0F, 0.0F, false);
+		body.texOffs(0, 41).addBox(-8.0F, -24.0F, -4.0F, 16.0F, 24.0F, 8.0F, 0.0F, false);
 
 		left_hand = new ModelRenderer(this);
-		left_hand.setRotationPoint(12.0F, -20.0F, 0.0F);
+		left_hand.setPos(12.0F, -20.0F, 0.0F);
 		up.addChild(left_hand);
-		left_hand.setTextureOffset(96, 60).addBox(-4.0F, -4.0F, -4.0F, 8.0F, 24.0F, 8.0F, 0.0F, false);
+		left_hand.texOffs(96, 60).addBox(-4.0F, -4.0F, -4.0F, 8.0F, 24.0F, 8.0F, 0.0F, false);
 
 		right_hand = new ModelRenderer(this);
-		right_hand.setRotationPoint(-12.0F, -20.0F, 0.0F);
+		right_hand.setPos(-12.0F, -20.0F, 0.0F);
 		up.addChild(right_hand);
-		right_hand.setTextureOffset(96, 0).addBox(-4.0F, -4.0F, -4.0F, 8.0F, 24.0F, 8.0F, 0.0F, false);
+		right_hand.texOffs(96, 0).addBox(-4.0F, -4.0F, -4.0F, 8.0F, 24.0F, 8.0F, 0.0F, false);
 
 		stick = new ModelRenderer(this);
-		stick.setRotationPoint(0.0F, 18.0F, 0.0F);
+		stick.setPos(0.0F, 18.0F, 0.0F);
 		right_hand.addChild(stick);
-		stick.setTextureOffset(59, 105).addBox(0.0F, -1.0F, -32.0F, 1.0F, 1.0F, 26.0F, 0.0F, false);
-		stick.setTextureOffset(20, 102).addBox(-0.5F, -1.5F, -34.0F, 2.0F, 2.0F, 2.0F, 0.0F, false);
-		stick.setTextureOffset(75, 84).addBox(-1.0F, -2.0F, -6.0F, 3.0F, 3.0F, 12.0F, 0.0F, false);
+		stick.texOffs(59, 105).addBox(0.0F, -1.0F, -32.0F, 1.0F, 1.0F, 26.0F, 0.0F, false);
+		stick.texOffs(20, 102).addBox(-0.5F, -1.5F, -34.0F, 2.0F, 2.0F, 2.0F, 0.0F, false);
+		stick.texOffs(75, 84).addBox(-1.0F, -2.0F, -6.0F, 3.0F, 3.0F, 12.0F, 0.0F, false);
 
 		head = new ModelRenderer(this);
-		head.setRotationPoint(0.0F, -24.0F, 0.0F);
+		head.setPos(0.0F, -24.0F, 0.0F);
 		up.addChild(head);
-		head.setTextureOffset(16, 96).addBox(-8.0F, -16.0F, -8.0F, 16.0F, 16.0F, 16.0F, 0.0F, false);
+		head.texOffs(16, 96).addBox(-8.0F, -16.0F, -8.0F, 16.0F, 16.0F, 16.0F, 0.0F, false);
 
 		bone = new ModelRenderer(this);
-		bone.setRotationPoint(0.0F, -16.0F, 0.0F);
+		bone.setPos(0.0F, -16.0F, 0.0F);
 		head.addChild(bone);
-		bone.setTextureOffset(0, 74).addBox(-11.0F, -1.0F, -10.0F, 22.0F, 1.0F, 20.0F, 0.0F, false);
-		bone.setTextureOffset(56, 37).addBox(-7.0F, -6.0F, -7.0F, 14.0F, 5.0F, 14.0F, 0.0F, false);
+		bone.texOffs(0, 74).addBox(-11.0F, -1.0F, -10.0F, 22.0F, 1.0F, 20.0F, 0.0F, false);
+		bone.texOffs(56, 37).addBox(-7.0F, -6.0F, -7.0F, 14.0F, 5.0F, 14.0F, 0.0F, false);
 	}
 
 	@Override
-	public void setRotationAngles(NobleZombieEntity entity, float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch){
-		this.head.rotateAngleY = netHeadYaw / (180F / (float)Math.PI);
-        this.head.rotateAngleX = headPitch / (180F / (float)Math.PI);
-        this.right_leg.rotateAngleX = MathHelper.cos(limbSwing * 0.6662F) * 1.4F * limbSwingAmount;
-        this.left_leg.rotateAngleX = MathHelper.cos(limbSwing * 0.6662F + (float)Math.PI) * 1.4F * limbSwingAmount;
-        this.right_hand.rotateAngleX = MathHelper.cos(limbSwing * 0.6662F) * 1.4F * limbSwingAmount;
-        this.left_hand.rotateAngleX = MathHelper.cos(limbSwing * 0.6662F + (float)Math.PI) * 1.4F * limbSwingAmount;
+	public void setupAnim(NobleZombieEntity entity, float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch){
+		this.head.yRot = netHeadYaw / (180F / (float)Math.PI);
+        this.head.xRot = headPitch / (180F / (float)Math.PI);
+        this.right_leg.xRot = MathHelper.cos(limbSwing * 0.6662F) * 1.4F * limbSwingAmount;
+        this.left_leg.xRot = MathHelper.cos(limbSwing * 0.6662F + (float)Math.PI) * 1.4F * limbSwingAmount;
+        this.right_hand.xRot = MathHelper.cos(limbSwing * 0.6662F) * 1.4F * limbSwingAmount;
+        this.left_hand.xRot = MathHelper.cos(limbSwing * 0.6662F + (float)Math.PI) * 1.4F * limbSwingAmount;
         if(entity.getAttackTime() < 20) {
-        	this.right_hand.rotateAngleX = - 2f;
+        	this.right_hand.xRot = - 2f;
         }
 	}
 
 	@Override
-	public void render(MatrixStack matrixStack, IVertexBuilder buffer, int packedLight, int packedOverlay, float red, float green, float blue, float alpha){
+	public void renderToBuffer(MatrixStack matrixStack, IVertexBuilder buffer, int packedLight, int packedOverlay, float red, float green, float blue, float alpha){
 		total.render(matrixStack, buffer, packedLight, packedOverlay);
 	}
 
 	public void setRotationAngle(ModelRenderer modelRenderer, float x, float y, float z) {
-		modelRenderer.rotateAngleX = x;
-		modelRenderer.rotateAngleY = y;
-		modelRenderer.rotateAngleZ = z;
+		modelRenderer.xRot = x;
+		modelRenderer.yRot = y;
+		modelRenderer.zRot = z;
 	}
 }

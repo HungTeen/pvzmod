@@ -32,21 +32,21 @@ public class SunStorageSaplingItem extends Item {
 	public static final String STORAGE_STRING = "sun_storage_amount";
 
 	public SunStorageSaplingItem(int num) {
-		super(new Item.Properties().group(GroupRegister.PVZ_MISC).maxStackSize(1));
+		super(new Item.Properties().tab(GroupRegister.PVZ_MISC).stacksTo(1));
 		this.MAX_STORAGE_NUM = num;
 	}
 
 	@Override
-	public ActionResult<ItemStack> onItemRightClick(World worldIn, PlayerEntity playerIn, Hand handIn) {
-		playerIn.setActiveHand(handIn);
-	    return ActionResult.resultSuccess(playerIn.getHeldItem(handIn));
+	public ActionResult<ItemStack> use(World worldIn, PlayerEntity playerIn, Hand handIn) {
+		playerIn.startUsingItem(handIn);
+	    return ActionResult.success(playerIn.getItemInHand(handIn));
 	}
 	
 	@Override
-	public ItemStack onItemUseFinish(ItemStack stack, World worldIn, LivingEntity entityLiving) {
+	public ItemStack finishUsingItem(ItemStack stack, World worldIn, LivingEntity entityLiving) {
 		if(entityLiving instanceof PlayerEntity) {
 			PlayerEntity player = (PlayerEntity) entityLiving;
-			if(! worldIn.isRemote) {
+			if(! worldIn.isClientSide) {
 				player.getCapability(CapabilityHandler.PLAYER_DATA_CAPABILITY).ifPresent((l) -> {
 					int sunNum = l.getPlayerData().getPlayerStats().getPlayerStats(Resources.SUN_NUM);
 					int lvl = l.getPlayerData().getPlayerStats().getPlayerStats(Resources.TREE_LVL);
@@ -91,7 +91,7 @@ public class SunStorageSaplingItem extends Item {
 	}
 
 	@Override
-	public UseAction getUseAction(ItemStack stack) {
+	public UseAction getUseAnimation(ItemStack stack) {
 		return UseAction.EAT;
 	}
 	
@@ -111,13 +111,13 @@ public class SunStorageSaplingItem extends Item {
 	}
 
 	@Override
-	public void addInformation(ItemStack stack, World worldIn, List<ITextComponent> tooltip, ITooltipFlag flagIn) {
-		tooltip.add(new TranslationTextComponent("tooltip.pvz.sun_storage_amount").appendText(":" + getStorageSunAmount(stack)).applyTextStyle(TextFormatting.YELLOW));
+	public void appendHoverText(ItemStack stack, World worldIn, List<ITextComponent> tooltip, ITooltipFlag flagIn) {
+		tooltip.add(new TranslationTextComponent("tooltip.pvz.sun_storage_amount").append(":" + getStorageSunAmount(stack)).withStyle(TextFormatting.YELLOW));
 	}
 
 	@Override
-	public void fillItemGroup(ItemGroup group, NonNullList<ItemStack> items) {
-		if (this.isInGroup(group)) {
+	public void fillItemCategory(ItemGroup group, NonNullList<ItemStack> items) {
+		if (this.allowdedIn(group)) {
 			items.add(new ItemStack(this));
 			items.add(setStorageSunAmount(new ItemStack(this), this.MAX_STORAGE_NUM));
 		}

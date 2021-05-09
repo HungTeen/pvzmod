@@ -25,7 +25,7 @@ public class PVZMod
     // Mod ID
 	public static final String MOD_ID = "pvz";
 	
-	public static CommonProxy PROXY = DistExecutor.runForDist(() -> ClientProxy::new, () -> CommonProxy::new);
+	public static CommonProxy PROXY = DistExecutor.safeRunForDist(() -> ClientProxy::new, () -> CommonProxy::new);
 	
     public PVZMod() {
     	{

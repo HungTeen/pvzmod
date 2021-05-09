@@ -15,7 +15,7 @@ import net.minecraft.entity.SpawnReason;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.world.DifficultyInstance;
-import net.minecraft.world.IWorld;
+import net.minecraft.world.IServerWorld;
 import net.minecraft.world.World;
 
 public class JewelEntity extends DropEntity{
@@ -26,17 +26,17 @@ public class JewelEntity extends DropEntity{
 	}
 
 	@Override
-	public ILivingEntityData onInitialSpawn(IWorld worldIn, DifficultyInstance difficultyIn, SpawnReason reason,
+	public ILivingEntityData finalizeSpawn(IServerWorld worldIn, DifficultyInstance difficultyIn, SpawnReason reason,
 			ILivingEntityData spawnDataIn, CompoundNBT dataTag) {
-		if(! world.isRemote) {
+		if(! level.isClientSide) {
 			EntityUtil.playSound(this, SoundRegister.JEWEL_DROP.get());
 		}
-		return super.onInitialSpawn(worldIn, difficultyIn, reason, spawnDataIn, dataTag);
+		return super.finalizeSpawn(worldIn, difficultyIn, reason, spawnDataIn, dataTag);
 	}
 	
 	@Override
-	public void onCollideWithPlayer(PlayerEntity entityIn) {
-		if(! this.world.isRemote) {
+	public void playerTouch(PlayerEntity entityIn) {
+		if(! this.level.isClientSide) {
 			PlayerUtil.addPlayerStats(entityIn, Resources.GEM_NUM, this.getAmount());
 		}
 		else {
@@ -46,8 +46,8 @@ public class JewelEntity extends DropEntity{
 	}
 	
 	@Override
-	public EntitySize getSize(Pose poseIn) {
-		return EntitySize.flexible(0.9f, 0.9f);
+	public EntitySize getDimensions(Pose poseIn) {
+		return EntitySize.scalable(0.9f, 0.9f);
 	}
 	
 	@Override

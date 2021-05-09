@@ -36,7 +36,7 @@ public class EntityInteractPacket {
 		public static void onMessage(EntityInteractPacket message, Supplier<NetworkEvent.Context> ctx) {
 			final ServerPlayerEntity player = ctx.get().getSender();
 			ctx.get().enqueueWork(()->{
-		    	Entity entity = player.world.getEntityByID(message.type);
+		    	Entity entity = player.level.getEntity(message.type);
 		    	if(entity instanceof CobCannonEntity) {
 		    		CobCannonEntity cob = (CobCannonEntity) entity;
 		    		cob.checkAndAttack();

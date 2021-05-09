@@ -39,9 +39,9 @@ public class UpdateMotionPacket {
 		public static void onMessage(UpdateMotionPacket message, Supplier<NetworkEvent.Context> ctx) {
 			final ServerPlayerEntity player = ctx.get().getSender();
 			ctx.get().enqueueWork(()->{
-		    	Entity entity = player.world.getEntityByID(message.type);
+		    	Entity entity = player.level.getEntity(message.type);
 		    	if(entity != null) {
-		    		entity.setMotion(message.x, message.y, message.z);
+		    		entity.setDeltaMovement(message.x, message.y, message.z);
 		    	}
 		    });
 		    ctx.get().setPacketHandled(true);

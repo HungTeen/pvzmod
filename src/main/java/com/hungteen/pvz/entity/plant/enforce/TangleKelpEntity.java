@@ -32,17 +32,17 @@ public class TangleKelpEntity extends PVZPlantEntity{
 	@Override
 	protected void normalPlantTick() {
 		super.normalPlantTick();
-		if(!world.isRemote) {
+		if(!level.isClientSide) {
 			if(this.getAttackTime()>0) {
 				this.setAttackTime(this.getAttackTime()+1);
 				if(this.getPassengers().isEmpty()) {
 					this.remove();
 					return ;
 				}
-				this.setMotion(0, - 0.03f, 0);
+				this.setDeltaMovement(0, - 0.03f, 0);
 				if(this.getAttackTime()%100==0) {
 					for(Entity target:this.getPassengers()) {
-						target.attackEntityFrom(PVZDamageSource.causeNormalDamage(this, this), this.getAttackDamage());
+						target.hurt(PVZDamageSource.causeNormalDamage(this, this), this.getAttackDamage());
 					}
 				}
 				if(this.getAttackTime()>=1000) {
@@ -50,12 +50,12 @@ public class TangleKelpEntity extends PVZPlantEntity{
 				}
 			}
 			if(this.getAttackTime()==0){
-				if(this.getAttackTarget()!=null) {
+				if(this.getTarget()!=null) {
 					this.setAttackTime(1);
-					if(this.getAttackTarget().getRidingEntity()!=null) {
-						this.getAttackTarget().stopRiding();
+					if(this.getTarget().getVehicle()!=null) {
+						this.getTarget().stopRiding();
 					}
-					this.getAttackTarget().startRiding(this, true);
+					this.getTarget().startRiding(this, true);
 					EntityUtil.playSound(this, SoundRegister.DRAG.get());
 				}
 			}
@@ -65,15 +65,15 @@ public class TangleKelpEntity extends PVZPlantEntity{
 	@Override
 	public void startSuperMode(boolean first) {
 		super.startSuperMode(first);
-		if(!world.isRemote) {
+		if(!level.isClientSide) {
 			int cnt = this.getCount();
 			for(Entity target:EntityUtil.getEntityTargetableEntity(this, EntityUtil.getEntityAABB(this, 25, 3))) {
 				if(target.isInWater()) {
 					-- cnt;
-					TangleKelpEntity entity = EntityRegister.TANGLE_KELP.get().create(world);
-					entity.setPosition(target.getPosX(), target.getPosY(), target.getPosZ());
+					TangleKelpEntity entity = EntityRegister.TANGLE_KELP.get().create(level);
+					entity.setPos(target.getX(), target.getY(), target.getZ());
 					PlantUtil.copyPlantData(entity, this);
-					world.addEntity(entity);
+					level.addFreshEntity(entity);
 				}
 				if(cnt<=0) {
 					break;
@@ -91,7 +91,7 @@ public class TangleKelpEntity extends PVZPlantEntity{
 	}
 	
 	@Override
-	public double getMountedYOffset() {
+	public double getPassengersRidingOffset() {
 		return 0;
 	}
 	
@@ -102,7 +102,7 @@ public class TangleKelpEntity extends PVZPlantEntity{
 	}
 	
 	@Override
-	public EntitySize getSize(Pose poseIn) {
+	public EntitySize getDimensions(Pose poseIn) {
 		return new EntitySize(0.6f, 1f, false);
 	}
 	
@@ -112,7 +112,7 @@ public class TangleKelpEntity extends PVZPlantEntity{
 	}
 	
 	@Override
-	public boolean canBeRiddenInWater() {
+	public boolean rideableUnderWater() {
 		return true;
 	}
 	
@@ -122,7 +122,7 @@ public class TangleKelpEntity extends PVZPlantEntity{
 	}
 	
 	@Override
-	public boolean hasNoGravity() {
+	public boolean isNoGravity() {
 		return this.isInWater();
 	}
 	

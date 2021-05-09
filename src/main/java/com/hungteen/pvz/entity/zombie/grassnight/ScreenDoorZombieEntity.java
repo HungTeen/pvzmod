@@ -64,7 +64,7 @@ public class ScreenDoorZombieEntity extends DefenceZombieEntity implements IHasM
 	}
 	
 	@Override
-	protected ResourceLocation getLootTable() {
+	protected ResourceLocation getDefaultLootTable() {
 		return PVZLoot.SCREENDOOR_ZOMBIE;
 	}
 

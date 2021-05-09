@@ -14,8 +14,8 @@ public class AlgorithmUtil {
 		}
 
 		public int compare(Entity a, Entity b) {
-			double d0 = this.entity.getDistanceSq(a);
-			double d1 = this.entity.getDistanceSq(b);
+			double d0 = this.entity.distanceToSqr(a);
+			double d1 = this.entity.distanceToSqr(b);
 			if (d0 < d1) {
 				return -1;
 			} else {

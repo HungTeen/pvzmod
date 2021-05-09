@@ -13,7 +13,6 @@ import com.hungteen.pvz.entity.zombie.PVZZombieEntity;
 import com.hungteen.pvz.entity.zombie.grassnight.TombStoneEntity;
 import com.hungteen.pvz.entity.zombie.poolnight.BalloonZombieEntity;
 import com.hungteen.pvz.entity.zombie.poolnight.YetiZombieEntity;
-import com.hungteen.pvz.utils.BiomeUtil;
 import com.hungteen.pvz.utils.ZombieUtil;
 import com.hungteen.pvz.utils.enums.Events;
 import com.hungteen.pvz.utils.enums.Zombies;
@@ -28,7 +27,7 @@ import net.minecraft.entity.MobEntity;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.World;
 import net.minecraft.world.biome.Biome;
-import net.minecraft.world.biome.Biome.SpawnListEntry;
+import net.minecraft.world.biome.MobSpawnInfo.Spawners;
 import net.minecraft.world.gen.Heightmap;
 import net.minecraftforge.event.RegistryEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
@@ -38,15 +37,15 @@ import net.minecraftforge.fml.common.Mod;
 public class EntitySpawnRegister {
 
 	public static final PlacementType IN_SKY = PlacementType.create("pvz_in_sky", (world, pos, type) -> {
-		return world.canSeeSky(pos) && world.canBlockSeeSky(pos.add(0, - 5, 0));
+		return world.canSeeSky(pos) && world.canSeeSkyFromBelowWater(pos.offset(0, - 5, 0));
 	});
 	
 	public static final PlacementType IN_HIGH_SKY = PlacementType.create("pvz_in_sky", (world, pos, type) -> {
-		return world.canSeeSky(pos) && world.canBlockSeeSky(pos.add(0, - 20, 0));
+		return world.canSeeSky(pos) && world.canSeeSkyFromBelowWater(pos.offset(0, - 20, 0));
 	});
 	
 	public static final PlacementType ON_SNOW = PlacementType.create("pvz_on_snow", (world, pos, type) -> {
-		return world.getBlockState(pos).getBlock() == Blocks.SNOW || world.getBlockState(pos.down()).getBlock() == Blocks.SNOW_BLOCK;
+		return world.getBlockState(pos).getBlock() == Blocks.SNOW || world.getBlockState(pos.below()).getBlock() == Blocks.SNOW_BLOCK;
 	});
 	
 	public static final EnumMap<Zombies, SpawnData> ZOMBIE_SPAWNS = new EnumMap<>(Zombies.class);
@@ -76,7 +75,7 @@ public class EntitySpawnRegister {
 		EntitySpawnPlacementRegistry.register(EntityRegister.DOLPHIN_RIDER.get(), PlacementType.IN_WATER, Heightmap.Type.MOTION_BLOCKING_NO_LEAVES, PVZZombieEntity::canZombieSpawn);
 		EntitySpawnPlacementRegistry.register(EntityRegister.FOODIE_ZOMBIE.get(), PlacementType.IN_WATER, Heightmap.Type.MOTION_BLOCKING_NO_LEAVES, FoodieZombieEntity::canSpawn);
 		EntitySpawnPlacementRegistry.register(EntityRegister.LAVA_ZOMBIE.get(), PlacementType.NO_RESTRICTIONS, Heightmap.Type.MOTION_BLOCKING_NO_LEAVES, PVZZombieEntity::canZombieSpawn);
-		EntitySpawnPlacementRegistry.register(EntityRegister.CRAZY_DAVE.get(), PlacementType.ON_GROUND, Heightmap.Type.MOTION_BLOCKING_NO_LEAVES, MobEntity::canSpawnOn);
+		EntitySpawnPlacementRegistry.register(EntityRegister.CRAZY_DAVE.get(), PlacementType.ON_GROUND, Heightmap.Type.MOTION_BLOCKING_NO_LEAVES, MobEntity::checkMobSpawnRules);
 		EntitySpawnPlacementRegistry.register(EntityRegister.PUMPKIN_ZOMBIE.get(), PlacementType.ON_GROUND, Heightmap.Type.MOTION_BLOCKING_NO_LEAVES, PVZZombieEntity::canZombieSpawn);
 		EntitySpawnPlacementRegistry.register(EntityRegister.TRICK_ZOMBIE.get(), PlacementType.ON_GROUND, Heightmap.Type.MOTION_BLOCKING_NO_LEAVES, PVZZombieEntity::canZombieSpawn);
 		EntitySpawnPlacementRegistry.register(EntityRegister.JACK_IN_BOX_ZOMBIE.get(), PlacementType.ON_GROUND, Heightmap.Type.MOTION_BLOCKING_NO_LEAVES, PVZZombieEntity::canZombieSpawn);
@@ -113,45 +112,45 @@ public class EntitySpawnRegister {
 		EVENT_CHANCE.put(Events.GIANT, PVZConfig.COMMON_CONFIG.WorldSettings.WorldEventSettings.EventChanceSettings.GiantAttackChance.get());
 		EVENT_CHANCE.put(Events.ZOMBOTANY, PVZConfig.COMMON_CONFIG.WorldSettings.WorldEventSettings.EventChanceSettings.ZombotanyAttackChance.get());
 		
-		putSpawnData(Zombies.NORMAL_ZOMBIE, 35, 1, 2, BiomeUtil.OVER_LAND);
-		putSpawnData(Zombies.CONEHEAD_ZOMBIE, 15, 1, 1, BiomeUtil.OVER_LAND);
-		putSpawnData(Zombies.POLE_ZOMBIE, 10, 1, 1, BiomeUtil.OVER_LAND);
-		putSpawnData(Zombies.BUCKETHEAD_ZOMBIE, 2, 1, 1, BiomeUtil.OVER_LAND);
-
-		putSpawnData(Zombies.SNORKEL_ZOMBIE, 30, 1, 2, BiomeUtil.OVER_LAND);
-		putSpawnData(Zombies.ZOMBONI, 10, 1, 1, BiomeUtil.OVER_LAND);
-		putSpawnData(Zombies.BOBSLE_TEAM, 20, 1, 1, BiomeUtil.OVER_LAND);
-		putSpawnData(Zombies.LAVA_ZOMBIE, 3, 1, 1, BiomeUtil.OVER_LAND);
-		
-		putSpawnData(Zombies.PUMPKIN_ZOMBIE, 20, 1, 1, BiomeUtil.OVER_LAND);
-		putSpawnData(Zombies.TRICK_ZOMBIE, 30, 1, 2, BiomeUtil.OVER_LAND);
-
-		putSpawnData(Zombies.NEWSPAPER_ZOMBIE, 30, 1, 1, BiomeUtil.OVER_LAND);
-		putSpawnData(Zombies.OLD_ZOMBIE, 15, 1, 1, BiomeUtil.OVER_LAND);
-		putSpawnData(Zombies.SUNDAY_EDITION_ZOMBIE, 2, 1, 1, BiomeUtil.OVER_LAND);
-		
-		putSpawnData(Zombies.SCREENDOOR_ZOMBIE, 30, 1, 1, BiomeUtil.OVER_LAND);
-		putSpawnData(Zombies.FOOTBALL_ZOMBIE, 12, 1, 1, BiomeUtil.OVER_LAND);
-		putSpawnData(Zombies.DANCING_ZOMBIE, 2, 1, 1, BiomeUtil.OVER_LAND);
-		putSpawnData(Zombies.GIGA_FOOTBALL_ZOMBIE, 2, 1, 1, BiomeUtil.OVER_LAND);
-		
-		putSpawnData(Zombies.JACK_IN_BOX_ZOMBIE, 15, 1, 1, BiomeUtil.OVER_LAND);
-		putSpawnData(Zombies.BALLOON_ZOMBIE, 15, 1, 1, BiomeUtil.OVER_LAND);
-		putSpawnData(Zombies.DIGGER_ZOMBIE, 6, 1, 1, BiomeUtil.OVER_LAND);
-		putSpawnData(Zombies.POGO_ZOMBIE, 8, 1, 1, BiomeUtil.OVER_LAND);
-		
-		putSpawnData(Zombies.BUNGEE_ZOMBIE, 5, 1, 1, BiomeUtil.OVER_LAND);
-		putSpawnData(Zombies.LADDER_ZOMBIE, 12, 1, 1, BiomeUtil.OVER_LAND);
-		putSpawnData(Zombies.CATAPULT_ZOMBIE, 10, 1, 1, BiomeUtil.OVER_LAND);
-		putSpawnData(Zombies.GARGANTUAR, 3, 1, 1, BiomeUtil.OVER_LAND);
-		putSpawnData(Zombies.SAD_GARGANTUAR, 1, 1, 1, BiomeUtil.OVER_LAND);
-		
-		putSpawnData(Zombies.PEASHOOTER_ZOMBIE, 21, 1, 1, BiomeUtil.OVER_LAND);
-		putSpawnData(Zombies.WALLNUT_ZOMBIE, 12, 1, 1, BiomeUtil.OVER_LAND);
-		putSpawnData(Zombies.GATLINGPEA_ZOMBIE, 10, 1, 1, BiomeUtil.OVER_LAND);
-		putSpawnData(Zombies.TALLNUT_ZOMBIE, 4, 1, 1, BiomeUtil.OVER_LAND);
-		putSpawnData(Zombies.SQUASH_ZOMBIE, 8, 1, 1, BiomeUtil.OVER_LAND);
-		putSpawnData(Zombies.JALAPENO_ZOMBIE, 6, 1, 1, BiomeUtil.OVER_LAND);
+//		putSpawnData(Zombies.NORMAL_ZOMBIE, 35, 1, 2, BiomeUtil.OVER_LAND);
+//		putSpawnData(Zombies.CONEHEAD_ZOMBIE, 15, 1, 1, BiomeUtil.OVER_LAND);
+//		putSpawnData(Zombies.POLE_ZOMBIE, 10, 1, 1, BiomeUtil.OVER_LAND);
+//		putSpawnData(Zombies.BUCKETHEAD_ZOMBIE, 2, 1, 1, BiomeUtil.OVER_LAND);
+//
+//		putSpawnData(Zombies.SNORKEL_ZOMBIE, 30, 1, 2, BiomeUtil.OVER_LAND);
+//		putSpawnData(Zombies.ZOMBONI, 10, 1, 1, BiomeUtil.OVER_LAND);
+//		putSpawnData(Zombies.BOBSLE_TEAM, 20, 1, 1, BiomeUtil.OVER_LAND);
+//		putSpawnData(Zombies.LAVA_ZOMBIE, 3, 1, 1, BiomeUtil.OVER_LAND);
+//		
+//		putSpawnData(Zombies.PUMPKIN_ZOMBIE, 20, 1, 1, BiomeUtil.OVER_LAND);
+//		putSpawnData(Zombies.TRICK_ZOMBIE, 30, 1, 2, BiomeUtil.OVER_LAND);
+//
+//		putSpawnData(Zombies.NEWSPAPER_ZOMBIE, 30, 1, 1, BiomeUtil.OVER_LAND);
+//		putSpawnData(Zombies.OLD_ZOMBIE, 15, 1, 1, BiomeUtil.OVER_LAND);
+//		putSpawnData(Zombies.SUNDAY_EDITION_ZOMBIE, 2, 1, 1, BiomeUtil.OVER_LAND);
+//		
+//		putSpawnData(Zombies.SCREENDOOR_ZOMBIE, 30, 1, 1, BiomeUtil.OVER_LAND);
+//		putSpawnData(Zombies.FOOTBALL_ZOMBIE, 12, 1, 1, BiomeUtil.OVER_LAND);
+//		putSpawnData(Zombies.DANCING_ZOMBIE, 2, 1, 1, BiomeUtil.OVER_LAND);
+//		putSpawnData(Zombies.GIGA_FOOTBALL_ZOMBIE, 2, 1, 1, BiomeUtil.OVER_LAND);
+//		
+//		putSpawnData(Zombies.JACK_IN_BOX_ZOMBIE, 15, 1, 1, BiomeUtil.OVER_LAND);
+//		putSpawnData(Zombies.BALLOON_ZOMBIE, 15, 1, 1, BiomeUtil.OVER_LAND);
+//		putSpawnData(Zombies.DIGGER_ZOMBIE, 6, 1, 1, BiomeUtil.OVER_LAND);
+//		putSpawnData(Zombies.POGO_ZOMBIE, 8, 1, 1, BiomeUtil.OVER_LAND);
+//		
+//		putSpawnData(Zombies.BUNGEE_ZOMBIE, 5, 1, 1, BiomeUtil.OVER_LAND);
+//		putSpawnData(Zombies.LADDER_ZOMBIE, 12, 1, 1, BiomeUtil.OVER_LAND);
+//		putSpawnData(Zombies.CATAPULT_ZOMBIE, 10, 1, 1, BiomeUtil.OVER_LAND);
+//		putSpawnData(Zombies.GARGANTUAR, 3, 1, 1, BiomeUtil.OVER_LAND);
+//		putSpawnData(Zombies.SAD_GARGANTUAR, 1, 1, 1, BiomeUtil.OVER_LAND);
+//		
+//		putSpawnData(Zombies.PEASHOOTER_ZOMBIE, 21, 1, 1, BiomeUtil.OVER_LAND);
+//		putSpawnData(Zombies.WALLNUT_ZOMBIE, 12, 1, 1, BiomeUtil.OVER_LAND);
+//		putSpawnData(Zombies.GATLINGPEA_ZOMBIE, 10, 1, 1, BiomeUtil.OVER_LAND);
+//		putSpawnData(Zombies.TALLNUT_ZOMBIE, 4, 1, 1, BiomeUtil.OVER_LAND);
+//		putSpawnData(Zombies.SQUASH_ZOMBIE, 8, 1, 1, BiomeUtil.OVER_LAND);
+//		putSpawnData(Zombies.JALAPENO_ZOMBIE, 6, 1, 1, BiomeUtil.OVER_LAND);
 	}
 	
 	public static List<ZombieSpawnEntry> getEventSpawnList(World world, Events ev){
@@ -184,7 +183,7 @@ public class EntitySpawnRegister {
 		}
 		for(int i = 0; i < 10; ++ i) {
 			if(zombies.size() >= 4) break;
-			int now = world.rand.nextInt(sum);
+			int now = world.random.nextInt(sum);
 			Zombies current = null;
 			for(int j = 0; j < list.size(); ++ j) {
 				if(now < list.get(j)) {
@@ -224,7 +223,7 @@ public class EntitySpawnRegister {
 			}
 			list.add(sum);
 		}
-		int current = world.rand.nextInt(sum);
+		int current = world.random.nextInt(sum);
 		Events res = null;
 		for(int i = 0; i < list.size(); ++ i) {
 			if(current < list.get(i)) {
@@ -292,6 +291,7 @@ public class EntitySpawnRegister {
         }
     }
     
+	@SuppressWarnings("unused")
 	private static void putSpawnData(Zombies zombie, int weight, int minGroupSize, int maxGroupSize, Biome... biomes) {
 		ZOMBIE_SPAWNS.put(zombie, new SpawnData(weight, minGroupSize, maxGroupSize, biomes));
 		ZOMBIE_SPAWN_LIST.add(zombie);
@@ -317,13 +317,13 @@ public class EntitySpawnRegister {
 		 */
 		public void addWorldZombieSpawn(World world) {
 			this.getZombieType().ifPresent((type) ->{
-				EntityClassification classification = type.getClassification();
+				EntityClassification classification = type.getCategory();
 				for (Biome biome : biomes) {
-				    List<SpawnListEntry> spawns = biome.getSpawns(classification);
+				    List<Spawners> spawns = biome.getMobSettings().getMobs(classification);
 				    if(! spawns.stream().anyMatch((entry) -> {
-					    return entry.entityType == type;
+					    return entry.type == type;
 				    })){
-					    spawns.add(new SpawnListEntry(type, weight, this.minGroupSize, this.maxGroupSize));
+					    spawns.add(new Spawners(type, weight, this.minGroupSize, this.maxGroupSize));
 				    }
 			    }
 			});
@@ -331,10 +331,10 @@ public class EntitySpawnRegister {
 		
 		public void removeWorldZombieSpawn(World world) {
 			this.getZombieType().ifPresent((type)->{
-				EntityClassification classification = type.getClassification();
+				EntityClassification classification = type.getCategory();
 			    for (Biome biome : biomes) {
-				    biome.getSpawns(classification).removeIf((entry) -> {
-					    return entry.entityType == type;
+				    biome.getMobSettings().getMobs(classification).removeIf((entry) -> {
+					    return entry.type == type;
 				    });
 			    }
 			});

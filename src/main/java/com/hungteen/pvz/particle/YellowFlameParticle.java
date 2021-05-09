@@ -3,20 +3,20 @@ package com.hungteen.pvz.particle;
 import net.minecraft.client.particle.IAnimatedSprite;
 import net.minecraft.client.particle.IParticleFactory;
 import net.minecraft.client.particle.Particle;
+import net.minecraft.client.world.ClientWorld;
 import net.minecraft.particles.BasicParticleType;
-import net.minecraft.world.World;
 
 public class YellowFlameParticle extends PVZNormalParticle{
 
-	public YellowFlameParticle(World world, double x, double y, double z, double xSpeed, double ySpeed, double zSpeed) {
+	public YellowFlameParticle(ClientWorld world, double x, double y, double z, double xSpeed, double ySpeed, double zSpeed) {
 		super(world, x, y, z, xSpeed, ySpeed, zSpeed);
-		this.particleScale=0.6f;
-		this.maxAge=10;
-		this.canCollide=false;
-		this.particleGravity=0f;
-		this.motionX/=10;
-		this.motionY/=10;
-		this.motionZ/=10;
+		this.quadSize=0.6f;
+		this.lifetime=10;
+		this.hasPhysics=false;
+		this.gravity=0f;
+		this.xd/=10;
+		this.yd/=10;
+		this.zd/=10;
 	}
 
 	public static class Factory implements IParticleFactory<BasicParticleType> {
@@ -28,10 +28,10 @@ public class YellowFlameParticle extends PVZNormalParticle{
 		}
 		
 		@Override
-		public Particle makeParticle(BasicParticleType typeIn, World worldIn, double x, double y, double z,
+		public Particle createParticle(BasicParticleType typeIn, ClientWorld worldIn, double x, double y, double z,
 				double xSpeed, double ySpeed, double zSpeed) {
 			YellowFlameParticle particle = new YellowFlameParticle(worldIn, x, y, z, xSpeed, ySpeed, zSpeed);
-			particle.selectSpriteRandomly(this.sprite);
+			particle.pickSprite(this.sprite);
 			return particle;
 		}
 

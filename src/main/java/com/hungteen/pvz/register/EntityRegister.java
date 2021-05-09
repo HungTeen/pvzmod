@@ -1,5 +1,7 @@
 package com.hungteen.pvz.register;
 
+import java.util.Arrays;
+
 import com.hungteen.pvz.PVZMod;
 import com.hungteen.pvz.entity.bullet.BallEntity;
 import com.hungteen.pvz.entity.bullet.ButterEntity;
@@ -36,6 +38,7 @@ import com.hungteen.pvz.entity.misc.bowling.WallNutBowlingEntity;
 import com.hungteen.pvz.entity.npc.CrazyDaveEntity;
 import com.hungteen.pvz.entity.npc.PennyEntity;
 import com.hungteen.pvz.entity.npc.SunDaveEntity;
+import com.hungteen.pvz.entity.plant.PVZPlantEntity;
 import com.hungteen.pvz.entity.plant.appease.AngelStarFruitEntity;
 import com.hungteen.pvz.entity.plant.appease.GatlingPeaEntity;
 import com.hungteen.pvz.entity.plant.appease.PeaShooterEntity;
@@ -285,6 +288,7 @@ import net.minecraft.entity.EntityType;
 import net.minecraft.entity.EntityType.IFactory;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
+import net.minecraftforge.event.entity.EntityAttributeCreationEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.RegistryObject;
 import net.minecraftforge.fml.client.registry.RenderingRegistry;
@@ -296,7 +300,7 @@ import net.minecraftforge.registries.ForgeRegistries;
 @Mod.EventBusSubscriber(modid = PVZMod.MOD_ID, bus = Mod.EventBusSubscriber.Bus.MOD)
 public class EntityRegister {
 
-	public static final DeferredRegister<EntityType<?>> ENTITY_TYPES = new DeferredRegister<>(ForgeRegistries.ENTITIES, PVZMod.MOD_ID);
+	public static final DeferredRegister<EntityType<?>> ENTITY_TYPES =  DeferredRegister.create(ForgeRegistries.ENTITIES, PVZMod.MOD_ID);
     
 	//entitytype
 	//drop
@@ -612,16 +616,24 @@ public class EntityRegister {
         RenderingRegistry.registerEntityRenderingHandler(ICEBERG_LETTUCE.get(), IcebergLettuceRender::new);
         RenderingRegistry.registerEntityRenderingHandler(BONK_CHOY.get(), BonkChoyRender::new);
     }
+	
+	@SubscribeEvent
+	public static void addEntityAttributes(EntityAttributeCreationEvent ev) {
+		Arrays.asList(PEA_SHOOTER, SUN_FLOWER
+		).forEach((type) -> {
+		    ev.put(type.get(), PVZPlantEntity.createPlantAttributes());
+		});
+	}
 
 	private static <T extends Entity> RegistryObject<EntityType<T>> registerEntityType(IFactory<T> factory,String name,EntityClassification classification){
-		return ENTITY_TYPES.register(name, () -> {return EntityType.Builder.create(factory, classification).build(StringUtil.prefix(name).toString());});
+		return ENTITY_TYPES.register(name, () -> {return EntityType.Builder.of(factory, classification).build(StringUtil.prefix(name).toString());});
 	}
 	
 	private static <T extends Entity> RegistryObject<EntityType<T>> registerImmuneFireEntityType(IFactory<T> factory,String name,EntityClassification classification){
-		return ENTITY_TYPES.register(name, () -> {return EntityType.Builder.create(factory, classification).immuneToFire().build(StringUtil.prefix(name).toString());});
+		return ENTITY_TYPES.register(name, () -> {return EntityType.Builder.of(factory, classification).fireImmune().build(StringUtil.prefix(name).toString());});
 	}
 	
 	private static <T extends Entity> RegistryObject<EntityType<T>> registerEntityType(IFactory<T> factory,String name,EntityClassification classification,float w,float h){
-		return ENTITY_TYPES.register(name, () -> {return EntityType.Builder.create(factory, classification).size(w, h).build(StringUtil.prefix(name).toString());});
+		return ENTITY_TYPES.register(name, () -> {return EntityType.Builder.of(factory, classification).sized(w, h).build(StringUtil.prefix(name).toString());});
 	}
 }

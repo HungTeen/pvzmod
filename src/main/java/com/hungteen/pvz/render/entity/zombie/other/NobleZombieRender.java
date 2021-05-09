@@ -23,7 +23,7 @@ public class NobleZombieRender extends PVZZombieRender<NobleZombieEntity>{
 	}
 
 	@Override
-	public ResourceLocation getEntityTexture(NobleZombieEntity entity) {
+	public ResourceLocation getTextureLocation(NobleZombieEntity entity) {
 		return StringUtil.prefix("textures/entity/zombie/other/noble_zombie.png");
 	}
 

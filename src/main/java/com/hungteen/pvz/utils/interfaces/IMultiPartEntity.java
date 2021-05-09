@@ -10,6 +10,6 @@ public interface IMultiPartEntity {
 	
 	void updateParts();
 	
-	PVZMultiPartEntity[] getParts();
+	PVZMultiPartEntity[] getMultiParts();
 	
 }

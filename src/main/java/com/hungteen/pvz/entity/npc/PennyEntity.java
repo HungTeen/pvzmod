@@ -16,10 +16,12 @@ import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.inventory.container.Container;
 import net.minecraft.inventory.container.INamedContainerProvider;
+import net.minecraft.util.ActionResultType;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.Hand;
 import net.minecraft.util.SoundEvent;
 import net.minecraft.util.SoundEvents;
+import net.minecraft.util.math.vector.Vector3d;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraft.world.World;
@@ -33,9 +35,9 @@ public class PennyEntity extends AbstractDaveEntity {
 	}
 
 	@Override
-	protected boolean processInteract(PlayerEntity player, Hand hand) {
-		if (! world.isRemote && player instanceof ServerPlayerEntity && hand == Hand.MAIN_HAND) {
-			if(player.getHeldItem(hand).getItem() == ItemRegister.CAR_KEY.get()) {
+	public ActionResultType interactAt(PlayerEntity player, Vector3d vec3d, Hand hand) {
+		if (! level.isClientSide && player instanceof ServerPlayerEntity && hand == Hand.MAIN_HAND) {
+			if(player.getItemInHand(hand).getItem() == ItemRegister.CAR_KEY.get()) {
 				NetworkHooks.openGui((ServerPlayerEntity) player, new INamedContainerProvider() {
 				    @Override
 				    public Container createMenu(int p_createMenu_1_, PlayerInventory p_createMenu_2_, PlayerEntity p_createMenu_3_) {
@@ -47,6 +49,7 @@ public class PennyEntity extends AbstractDaveEntity {
 					    return new TranslationTextComponent("gui.pvz.mystery_shop.show");
 				    }
 			    });
+				return ActionResultType.SUCCESS;
 			} else {
 				NetworkHooks.openGui((ServerPlayerEntity) player, new INamedContainerProvider() {
 				    @Override
@@ -60,14 +63,14 @@ public class PennyEntity extends AbstractDaveEntity {
 				    }
 			    });
 			}
-			return true;
+			return ActionResultType.SUCCESS;
 		}
-		return false;
+		return ActionResultType.FAIL;
 	}
 
 	@Override
-	public EntitySize getSize(Pose poseIn) {
-		return EntitySize.flexible(1.8f, 2f);
+	public EntitySize getDimensions(Pose poseIn) {
+		return EntitySize.scalable(1.8f, 2f);
 	}
 
 	@Override
@@ -77,16 +80,16 @@ public class PennyEntity extends AbstractDaveEntity {
 	
 	@Nullable
 	protected SoundEvent getHurtSound(DamageSource damageSourceIn) {
-		return SoundEvents.ENTITY_GENERIC_HURT;
+		return SoundEvents.GENERIC_HURT;
 	}
 
 	@Nullable
 	protected SoundEvent getDeathSound() {
-		return SoundEvents.ENTITY_GENERIC_DEATH;
+		return SoundEvents.GENERIC_DEATH;
 	}
 
 	@Override
-	public boolean canDespawn(double distanceToClosestPlayer) {
+	public boolean removeWhenFarAway(double distanceToClosestPlayer) {
 		return false;
 	}
 

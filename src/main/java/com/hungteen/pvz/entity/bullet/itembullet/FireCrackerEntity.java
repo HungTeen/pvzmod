@@ -17,7 +17,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.util.math.EntityRayTraceResult;
 import net.minecraft.util.math.RayTraceResult;
-import net.minecraft.util.math.Vec3d;
+import net.minecraft.util.math.vector.Vector3d;
 import net.minecraft.world.World;
 
 public class FireCrackerEntity extends PVZItemBulletEntity{
@@ -36,18 +36,18 @@ public class FireCrackerEntity extends PVZItemBulletEntity{
 	@Override
 	public void tick() {
 		super.tick();
-		if(! world.isRemote && EntityUtil.isEntityValid(target)) {
+		if(! level.isClientSide && EntityUtil.isEntityValid(target)) {
 			this.shoot(this.target);
 		}
 	}
 
-	public void shoot(Vec3d vec) {
-		this.setMotion(vec.scale(SPEED));
+	public void shoot(Vector3d vec) {
+		this.setDeltaMovement(vec.scale(SPEED));
 	}
 	
 	public void shoot(Entity target) {
 		this.target = target;
-		Vec3d vec = target.getPositionVec().subtract(this.getPositionVec()).normalize();
+		Vector3d vec = target.position().subtract(this.position()).normalize();
 		this.shoot(vec);
 	}
 	
@@ -57,12 +57,12 @@ public class FireCrackerEntity extends PVZItemBulletEntity{
 		if (result.getType() == RayTraceResult.Type.ENTITY) {
 			Entity target = ((EntityRayTraceResult) result).getEntity();
 			if (checkCanAttack(target)) {
-				target.hurtResistantTime = 0;
+				target.invulnerableTime = 0;
 				this.dealDamage(target); // attack 
 				flag = true;
 			}
 		}
-		this.world.setEntityState(this, (byte) 3);
+		this.level.broadcastEntityEvent(this, (byte) 3);
 		if (flag) {
 			this.remove();
 		} else if(! this.checkLive(result)) {
@@ -73,11 +73,11 @@ public class FireCrackerEntity extends PVZItemBulletEntity{
 	
 	private void dealDamage(Entity target) {
 		
-		if(! world.isRemote) {
+		if(! level.isClientSide) {
 			EntityUtil.playSound(this, SoundRegister.POTATO_MINE.get());
 		    float range = 1.5F;
 		    EntityUtil.getAttackEntities(this, EntityUtil.getEntityAABB(this, range, range)).forEach((entity) -> {
-			    entity.attackEntityFrom(PVZDamageSource.causeExplosionDamage(this, this.getThrower()), this.attackDamage);
+			    entity.hurt(PVZDamageSource.causeExplosionDamage(this, this.getThrower()), this.attackDamage);
 		    });
 		    for(int i = 0;i < 3; ++ i) {
 			    EntityUtil.spawnParticle(this, 5);
@@ -97,18 +97,18 @@ public class FireCrackerEntity extends PVZItemBulletEntity{
 	}
 	
 	@Override
-	public void readAdditional(CompoundNBT compound) {
-		super.readAdditional(compound);
+	public void readAdditionalSaveData(CompoundNBT compound) {
+		super.readAdditionalSaveData(compound);
 		if(compound.contains("target_entity_id")) {
-			this.target = (Entity) world.getEntityByID(compound.getInt("target_entity_id"));
+			this.target = (Entity) level.getEntity(compound.getInt("target_entity_id"));
 		}
 	}
 	
 	@Override
-	public void writeAdditional(CompoundNBT compound) {
-		super.writeAdditional(compound);
+	public void addAdditionalSaveData(CompoundNBT compound) {
+		super.addAdditionalSaveData(compound);
 		if(this.target != null) {
-			compound.putInt("target_entity_id", this.target.getEntityId());
+			compound.putInt("target_entity_id", this.target.getId());
 		}
 	}
 	
@@ -118,13 +118,13 @@ public class FireCrackerEntity extends PVZItemBulletEntity{
 	}
 	
 	@Override
-	public boolean hasNoGravity() {
+	public boolean isNoGravity() {
 		return true;
 	}
 	
 	@Override
-	public EntitySize getSize(Pose poseIn) {
-		return EntitySize.flexible(0.5F, 0.5F);
+	public EntitySize getDimensions(Pose poseIn) {
+		return EntitySize.scalable(0.5F, 0.5F);
 	}
 
 }

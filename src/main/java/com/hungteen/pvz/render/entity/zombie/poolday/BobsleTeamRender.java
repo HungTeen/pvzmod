@@ -23,7 +23,7 @@ public class BobsleTeamRender extends PVZZombieRender<BobsleTeamEntity>{
 	}
 
 	@Override
-	public ResourceLocation getEntityTexture(BobsleTeamEntity entity) {
+	public ResourceLocation getTextureLocation(BobsleTeamEntity entity) {
 		return StringUtil.prefix("textures/entity/misc/bobsle_car.png");
 	}
 

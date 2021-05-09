@@ -12,7 +12,7 @@ public class CornBlock extends CropsBlock {
 	}
 
 	@Override
-	protected IItemProvider getSeedsItem() {
+	protected IItemProvider getBaseSeedId() {
 		return ItemRegister.CORN_SEEDS.get();
 	}
 	

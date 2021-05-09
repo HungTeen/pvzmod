@@ -47,24 +47,24 @@ public class ClickButtonPacket {
 			final ServerPlayerEntity player = ctx.get().getSender();
 			ctx.get().enqueueWork(() -> {
 				if (message.type == GuiHandler.PLAYER_INVENTORY) { 
-					if(player.openContainer instanceof PlayerInventoryContainer) {
-						PlayerInventoryContainer inv = (PlayerInventoryContainer) player.openContainer;
+					if(player.containerMenu instanceof PlayerInventoryContainer) {
+						PlayerInventoryContainer inv = (PlayerInventoryContainer) player.containerMenu;
 						inv.currentPage+=message.num;
 						inv.onPageChange();
 					}
 				} else if(message.type == GuiHandler.DAVE_SHOP) {
-					if(player.openContainer instanceof DaveShopContainer) {
-						DaveShopContainer container = (DaveShopContainer) player.openContainer;
+					if(player.containerMenu instanceof DaveShopContainer) {
+						DaveShopContainer container = (DaveShopContainer) player.containerMenu;
 						container.buyGood(DaveGoods.values()[message.num]);
 					}
 				} else if(message.type == GuiHandler.SUN_SHOP) {
-					if(player.openContainer instanceof SunShopContainer) {
-						SunShopContainer container = (SunShopContainer) player.openContainer;
+					if(player.containerMenu instanceof SunShopContainer) {
+						SunShopContainer container = (SunShopContainer) player.containerMenu;
 						container.buyGood(DaveGoods.values()[message.num]);
 					}
 				} else if(message.type == GuiHandler.FRAGMENT_SPLICE) {
-					if(player.openContainer instanceof FragmentSpliceContainer) {
-						FragmentSpliceContainer container = (FragmentSpliceContainer) player.openContainer;
+					if(player.containerMenu instanceof FragmentSpliceContainer) {
+						FragmentSpliceContainer container = (FragmentSpliceContainer) player.containerMenu;
 						if(message.op == 0) {
 							container.te.setResult(message.num);
 						} else if(message.op == 1) {
@@ -72,28 +72,28 @@ public class ClickButtonPacket {
 						}
 					}
 				} else if(message.type == GuiHandler.SLOT_MACHINE) {
-					if(player.openContainer instanceof SlotMachineContainer) {
-						SlotMachineContainer container = (SlotMachineContainer) player.openContainer;
+					if(player.containerMenu instanceof SlotMachineContainer) {
+						SlotMachineContainer container = (SlotMachineContainer) player.containerMenu;
 						container.te.startRun(player);
 					}
 				} else if(message.type == GuiHandler.PENNY_SHOP) {
-					if(player.openContainer instanceof PennyShopContainer) {
-						PennyShopContainer container = (PennyShopContainer) player.openContainer;
+					if(player.containerMenu instanceof PennyShopContainer) {
+						PennyShopContainer container = (PennyShopContainer) player.containerMenu;
 						container.buyGood(DaveGoods.values()[message.num]);
 					}
 				} else if(message.type == GuiHandler.MYSTERY_SHOP) {
-					if(player.openContainer instanceof MysteryShopContainer) {
-						MysteryShopContainer container = (MysteryShopContainer) player.openContainer;
+					if(player.containerMenu instanceof MysteryShopContainer) {
+						MysteryShopContainer container = (MysteryShopContainer) player.containerMenu;
 						container.buyGood(DaveGoods.values()[message.num], message.op);
 					}
 				} else if(message.type == GuiHandler.ESSENCE_ALTAR) {
-					if(player.openContainer instanceof EssenceAltarContainer) {
-						EssenceAltarContainer container = (EssenceAltarContainer) player.openContainer;
+					if(player.containerMenu instanceof EssenceAltarContainer) {
+						EssenceAltarContainer container = (EssenceAltarContainer) player.containerMenu;
 						container.destroyAllCards();
 					}
 				} else if(message.type == GuiHandler.CARD_FUSION) {
-					if(player.openContainer instanceof CardFusionContainer) {
-						CardFusionContainer container = (CardFusionContainer) player.openContainer;
+					if(player.containerMenu instanceof CardFusionContainer) {
+						CardFusionContainer container = (CardFusionContainer) player.containerMenu;
 						if(message.op == 0) {
 							container.te.setResult(message.num);
 						} else if(message.op == 1) {

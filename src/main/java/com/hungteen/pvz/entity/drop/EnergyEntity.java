@@ -9,7 +9,7 @@ import net.minecraft.entity.EntityType;
 import net.minecraft.entity.MobEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.util.SoundCategory;
-import net.minecraft.util.math.Vec3d;
+import net.minecraft.util.math.vector.Vector3d;
 import net.minecraft.world.World;
 
 public class EnergyEntity extends DropEntity{
@@ -22,11 +22,11 @@ public class EnergyEntity extends DropEntity{
 	}
 
 	@Override
-	public void onCollideWithPlayer(PlayerEntity entityIn) {
-		if(!this.world.isRemote) {
+	public void playerTouch(PlayerEntity entityIn) {
+		if(!this.level.isClientSide) {
 			PlayerUtil.addPlayerStats(entityIn, Resources.ENERGY_NUM, this.getAmount());
 		}else {
-			this.world.playSound(entityIn, getPosition(), SoundRegister.JEWEL_PICK.get(), SoundCategory.NEUTRAL, 1f, 1f);
+			this.level.playSound(entityIn, blockPosition(), SoundRegister.JEWEL_PICK.get(), SoundCategory.NEUTRAL, 1f, 1f);
 		}
 		this.remove();
 	}
@@ -37,9 +37,9 @@ public class EnergyEntity extends DropEntity{
 		if(this.liveTime % this.changeVTime == 0) {
 			double mult = 0.2f;
 //			System.out.println(this.getMotion().y);
-			Vec3d v = new Vec3d(this.rand.nextInt(1000) - 500, this.rand.nextInt(1000) - 500, this.rand.nextInt(1000) - 500).normalize();
+			Vector3d v = new Vector3d(this.random.nextInt(1000) - 500, this.random.nextInt(1000) - 500, this.random.nextInt(1000) - 500).normalize();
 			v = v.scale(mult);
-			this.setMotion(v.x ,v.y / 5, v.z);
+			this.setDeltaMovement(v.x ,v.y / 5, v.z);
 		}
 	}
 	

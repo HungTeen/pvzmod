@@ -29,8 +29,8 @@ import net.minecraft.entity.EntityType;
 import net.minecraft.entity.ILivingEntityData;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.Pose;
-import net.minecraft.entity.SharedMonsterAttributes;
 import net.minecraft.entity.SpawnReason;
+import net.minecraft.entity.ai.attributes.Attributes;
 import net.minecraft.entity.ai.goal.LookAtGoal;
 import net.minecraft.entity.monster.MonsterEntity;
 import net.minecraft.entity.player.PlayerEntity;
@@ -45,19 +45,19 @@ import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.SoundEvent;
 import net.minecraft.world.BossInfo;
 import net.minecraft.world.DifficultyInstance;
-import net.minecraft.world.IWorld;
+import net.minecraft.world.IServerWorld;
 import net.minecraft.world.World;
 import net.minecraft.world.server.ServerBossInfo;
 
 public class ZomBossEntity extends PVZZombieEntity {
 
-	private static final DataParameter<Integer> STATES = EntityDataManager.createKey(ZomBossEntity.class, DataSerializers.VARINT);
+	private static final DataParameter<Integer> STATES = EntityDataManager.defineId(ZomBossEntity.class, DataSerializers.INT);
 	private static final List<Zombies> ZOMBIES_1 = Arrays.asList(Zombies.NORMAL_ZOMBIE, Zombies.NEWSPAPER_ZOMBIE, Zombies.SCREENDOOR_ZOMBIE, Zombies.SNORKEL_ZOMBIE, Zombies.BALLOON_ZOMBIE);
 	private static final List<Zombies> ZOMBIES_2 = Arrays.asList(Zombies.CONEHEAD_ZOMBIE, Zombies.POLE_ZOMBIE, Zombies.DANCING_ZOMBIE, Zombies.OLD_ZOMBIE, Zombies.JACK_IN_BOX_ZOMBIE, Zombies.DIGGER_ZOMBIE, Zombies.BALLOON_ZOMBIE, Zombies.POGO_ZOMBIE);
 	private static final List<Zombies> ZOMBIES_3 = Arrays.asList(Zombies.BUCKETHEAD_ZOMBIE, Zombies.FOOTBALL_ZOMBIE, Zombies.ZOMBONI, Zombies.JACK_IN_BOX_ZOMBIE, Zombies.DIGGER_ZOMBIE, Zombies.LADDER_ZOMBIE, Zombies.CATAPULT_ZOMBIE);
 	private static final List<Zombies> ZOMBIES_4 = Arrays.asList(Zombies.FOOTBALL_ZOMBIE, Zombies.GIGA_FOOTBALL_ZOMBIE, Zombies.ZOMBONI, Zombies.LAVA_ZOMBIE, Zombies.CATAPULT_ZOMBIE, Zombies.GARGANTUAR);
 	private static final List<Zombies> ZOMBIES_5 = Arrays.asList(Zombies.GIGA_FOOTBALL_ZOMBIE, Zombies.SUNDAY_EDITION_ZOMBIE, Zombies.LAVA_ZOMBIE, Zombies.CATAPULT_ZOMBIE, Zombies.GARGANTUAR, Zombies.SAD_GARGANTUAR);
-	private final ServerBossInfo bossInfo = (ServerBossInfo)(new ServerBossInfo(this.getDisplayName(), BossInfo.Color.RED, BossInfo.Overlay.PROGRESS)).setDarkenSky(true);
+	private final ServerBossInfo bossInfo = (ServerBossInfo)(new ServerBossInfo(this.getDisplayName(), BossInfo.Color.RED, BossInfo.Overlay.PROGRESS)).setDarkenScreen(true);
 	private final int maxPlantsInRange = 40;
 	private final int maxZombiesInRange = 30;
 	private int summonZombieTick = 0;
@@ -81,9 +81,9 @@ public class ZomBossEntity extends PVZZombieEntity {
 	}
 	
 	@Override
-	public ILivingEntityData onInitialSpawn(IWorld worldIn, DifficultyInstance difficultyIn, SpawnReason reason,
+	public ILivingEntityData finalizeSpawn(IServerWorld worldIn, DifficultyInstance difficultyIn, SpawnReason reason,
 			ILivingEntityData spawnDataIn, CompoundNBT dataTag) {
-		if(! world.isRemote) {
+		if(! level.isClientSide) {
 			this.setDefenceLife(this.getZomBossDefenceLife());
 			final float range = 50F;
 			EntityUtil.getAttackEntities(this, EntityUtil.getEntityAABB(this, range, range)).forEach((target) -> {
@@ -93,13 +93,13 @@ public class ZomBossEntity extends PVZZombieEntity {
 			});
 			EntityUtil.playSound(this, SoundRegister.ZOMBOSS_LAUGH.get());
 		}
-		return super.onInitialSpawn(worldIn, difficultyIn, reason, spawnDataIn, dataTag);
+		return super.finalizeSpawn(worldIn, difficultyIn, reason, spawnDataIn, dataTag);
 	}
 	
 	@Override
-	protected void registerData() {
-		super.registerData();
-		this.dataManager.register(STATES, ZomBossStates.NORMAL.ordinal());
+	protected void defineSynchedData() {
+		super.defineSynchedData();
+		this.entityData.define(STATES, ZomBossStates.NORMAL.ordinal());
 	}
 	
 	@Override
@@ -109,9 +109,9 @@ public class ZomBossEntity extends PVZZombieEntity {
 	}
 	
 	@Override
-	protected void registerAttributes() {
-		super.registerAttributes();
-		this.getAttribute(SharedMonsterAttributes.MOVEMENT_SPEED).setBaseValue(0);
+	protected void updateAttributes() {
+		super.updateAttributes();
+		this.getAttribute(Attributes.MOVEMENT_SPEED).setBaseValue(0);
 	}
 	
 	@Override
@@ -123,7 +123,7 @@ public class ZomBossEntity extends PVZZombieEntity {
 			-- this.shootBallCD;
 			-- this.stealPlantCD;
 		}
-		if(! world.isRemote) {
+		if(! level.isClientSide) {
 			this.checkAndHeal();
 			this.kickEnemiesNearby();
 		}
@@ -132,22 +132,22 @@ public class ZomBossEntity extends PVZZombieEntity {
 	@Override
 	public void normalZombieTick() {
 		super.normalZombieTick();
-		if(! world.isRemote) {
+		if(! level.isClientSide) {
 			++ this.summonZombieTick;
 			if(this.summonZombieTick >= this.getSummonZombieCD()) {
 				this.summonZombieTick = 0;
 				this.summonZombieByBungee();
 			}
 			if(this.getZomBossState() == ZomBossStates.NORMAL) {
-				int flag = this.getRNG().nextInt(10);
-				if(this.ticksExisted % 100 == 0 && this.getNearPlantsCount() > this.maxPlantsInRange) { 
+				int flag = this.getRandom().nextInt(10);
+				if(this.tickCount % 100 == 0 && this.getNearPlantsCount() > this.maxPlantsInRange) { 
 					this.setZomBossState(ZomBossStates.CAR);
 				} else if(flag < 4 && this.stealPlantCD <= 0) { 
 					this.setZomBossState(ZomBossStates.STEAL);
 					EntityUtil.playSound(this, SoundRegister.DRAG.get());
 					this.resetStealCD();
 				} else if(this.shootBallCD <= 0) {// 5 - 10
-					this.setZomBossState(this.getRNG().nextInt(2) == 0 ? ZomBossStates.FLAME : ZomBossStates.ICE);
+					this.setZomBossState(this.getRandom().nextInt(2) == 0 ? ZomBossStates.FLAME : ZomBossStates.ICE);
 					EntityUtil.playSound(this, SoundRegister.ZOMBOSS_SHOOT.get());
 					this.resetShootBallCD();
 				}
@@ -175,14 +175,14 @@ public class ZomBossEntity extends PVZZombieEntity {
 	 */
 	public void summonZombieByBungee() {
 		if(this.getNearZombiesCount() >= this.maxZombiesInRange) return ;//too many zombies nearby
-		for(int i = 0; i < this.getRNG().nextInt(2) + 1; ++ i) {
+		for(int i = 0; i < this.getRandom().nextInt(2) + 1; ++ i) {
 			getSummonZombie().ifPresent((zombie) -> {
-			    EntityUtil.onMobEntitySpawn(world, zombie, getPosition());
-			    BungeeZombieEntity bungee = EntityRegister.BUNGEE_ZOMBIE.get().create(world);
+			    EntityUtil.onMobEntitySpawn(level, zombie, blockPosition());
+			    BungeeZombieEntity bungee = EntityRegister.BUNGEE_ZOMBIE.get().create(level);
 		        bungee.setBungeeType(BungeeTypes.SUMMON);
 		        bungee.setBungeeState(BungeeStates.DOWN);
 		        bungee.setStealTarget(zombie);
-		        EntityUtil.onMobEntityRandomPosSpawn(world, bungee, getPosition().up(20), 5);
+		        EntityUtil.onMobEntityRandomPosSpawn(level, bungee, blockPosition().above(20), 5);
 		        EntityUtil.playSound(this, SoundRegister.BUNGEE_SCREAM.get());
 		    });
 		}
@@ -194,10 +194,10 @@ public class ZomBossEntity extends PVZZombieEntity {
 	public void shootElementBall() {
 		int now = getBossStage();
 		float speed = (now < 2 ? 0.1F : (now < 4 ? 0.2F : 0.25F));
-		ElementBallEntity ball = new ElementBallEntity(world, this, speed);
-		ball.setPosition(getPosX(), getPosY() + this.getEyeHeight(), getPosZ());
+		ElementBallEntity ball = new ElementBallEntity(level, this, speed);
+		ball.setPos(getX(), getY() + this.getEyeHeight(), getZ());
 		ball.setElementBallType(this.getZomBossState() == ZomBossStates.ICE ? ElementTypes.ICE : ElementTypes.FLAME);
-		world.addEntity(ball);
+		level.addFreshEntity(ball);
 		this.setAttackTime(0);
 		this.setZomBossState(ZomBossStates.NORMAL);
 	}
@@ -213,11 +213,11 @@ public class ZomBossEntity extends PVZZombieEntity {
 		List<LivingEntity> list = EntityUtil.getEntityTargetableEntity(this, EntityUtil.getEntityAABB(this, range, range));
 		if(list.isEmpty()) return ;
 		for(int i = 0; i < throwNum; ++ i) {
-			int pos = this.getRNG().nextInt(list.size());
-			DestroyCarEntity car = new DestroyCarEntity(world, this);
-			car.setPosition(getPosX(), getPosY() + this.getEyeHeight(), getPosZ());
+			int pos = this.getRandom().nextInt(list.size());
+			DestroyCarEntity car = new DestroyCarEntity(level, this);
+			car.setPos(getX(), getY() + this.getEyeHeight(), getZ());
 			car.shootPultBullet(list.get(pos));
-			world.addEntity(car);
+			level.addFreshEntity(car);
 		}
 	}
 	
@@ -225,7 +225,7 @@ public class ZomBossEntity extends PVZZombieEntity {
 	 * Skill 4 : if no target, then heal for 100 life per second
 	 */
 	public void checkAndHeal() {
-		if(this.getAttackTarget() == null) {
+		if(this.getTarget() == null) {
 			this.heal(10);
 		}
 	}
@@ -234,15 +234,15 @@ public class ZomBossEntity extends PVZZombieEntity {
 	 * Skill 5 : Kick all enemies nearby zomboss
 	 */
 	public void kickEnemiesNearby() {
-		if(this.ticksExisted % 20 == 0) {
+		if(this.tickCount % 20 == 0) {
 			float range = 5;
-			world.getEntitiesWithinAABB(LivingEntity.class, EntityUtil.getEntityAABB(this, range, 15), (target) -> {
+			level.getEntitiesOfClass(LivingEntity.class, EntityUtil.getEntityAABB(this, range, 15), (target) -> {
 				return EntityUtil.checkCanEntityAttack(target, this);
 			}).forEach((target) -> {
 				if(target instanceof PVZPlantEntity) target.setHealth(0);
 				else {
-					target.attackEntityFrom(PVZDamageSource.causeNormalDamage(this, this), 12F);
-					target.setMotion(target.getPositionVec().add(0, target.getEyeHeight(), 0).subtract(this.getPositionVec()).normalize().scale(2F));
+					target.hurt(PVZDamageSource.causeNormalDamage(this, this), 12F);
+					target.setDeltaMovement(target.position().add(0, target.getEyeHeight(), 0).subtract(this.position()).normalize().scale(2F));
 				}
 			});
 		}
@@ -256,35 +256,35 @@ public class ZomBossEntity extends PVZZombieEntity {
 		int now = this.getBossStage();
 		int minCnt = 3 + now / 2;
 		int maxCnt = 3 + now;
-		int cnt = this.getRNG().nextInt(maxCnt - minCnt + 1) + minCnt;
+		int cnt = this.getRandom().nextInt(maxCnt - minCnt + 1) + minCnt;
 		float range = 50;
 		List<LivingEntity> list = EntityUtil.getEntityTargetableEntity(this, EntityUtil.getEntityAABB(this, range, range));
 		if(list.isEmpty()) return ; // no target at all
 		for(int i = 0; i < cnt; ++ i) {
-			LivingEntity target = list.get(this.getRNG().nextInt(list.size()));
-			BungeeZombieEntity zombie = EntityRegister.BUNGEE_ZOMBIE.get().create(world);
+			LivingEntity target = list.get(this.getRandom().nextInt(list.size()));
+			BungeeZombieEntity zombie = EntityRegister.BUNGEE_ZOMBIE.get().create(level);
 			zombie.setBungeeType(BungeeTypes.STEAL);
 			zombie.setStealTarget(target);
 			zombie.setBungeeState(BungeeStates.DOWN);
-			EntityUtil.onMobEntitySpawn(world, zombie, getPosition().up(18));
+			EntityUtil.onMobEntitySpawn(level, zombie, blockPosition().above(18));
 		}
 	}
 	
 	@Override
-	protected void onDeathUpdate() {
-		super.onDeathUpdate();
+	protected void tickDeath() {
+		super.tickDeath();
 		if(this.deathTime % 20 == 1) {
-			if(world.isRemote) {
-				world.addParticle(ParticleTypes.EXPLOSION_EMITTER, getPosX(), getPosY(), getPosZ(), 0, 0, 0);
-				world.addParticle(ParticleTypes.EXPLOSION_EMITTER, getPosX(), getPosY() + 5, getPosZ(), 0, 0, 0);
+			if(level.isClientSide) {
+				level.addParticle(ParticleTypes.EXPLOSION_EMITTER, getX(), getY(), getZ(), 0, 0, 0);
+				level.addParticle(ParticleTypes.EXPLOSION_EMITTER, getX(), getY() + 5, getZ(), 0, 0, 0);
 			}
 		}
 	}
 	
 	@Override
-	public void onDeath(DamageSource cause) {
-		super.onDeath(cause);
-		if(! world.isRemote) {
+	public void die(DamageSource cause) {
+		super.die(cause);
+		if(! level.isClientSide) {
 			this.bossInfo.getPlayers().forEach((player) -> {
 				CriteriaTriggers.PLAYER_KILLED_ENTITY.trigger(player, this, cause);
 			});
@@ -294,12 +294,12 @@ public class ZomBossEntity extends PVZZombieEntity {
 	@Override
 	protected void dropCoinOrSpecial() {
 		float range = 50;
-		int playerCnt = world.getEntitiesWithinAABB(PlayerEntity.class , EntityUtil.getEntityAABB(this, range, range), (player) -> {
+		int playerCnt = level.getEntitiesOfClass(PlayerEntity.class , EntityUtil.getEntityAABB(this, range, range), (player) -> {
 			return PlayerUtil.isPlayerSurvival(player);
 		}).size();
 		for(int i = 0; i < 3 + 2 * playerCnt; ++ i) {
-			JewelEntity jewel = EntityRegister.JEWEL.get().create(world);
-			EntityUtil.onMobEntityRandomPosSpawn(world, jewel, getPosition().up(5), 4);
+			JewelEntity jewel = EntityRegister.JEWEL.get().create(level);
+			EntityUtil.onMobEntityRandomPosSpawn(level, jewel, blockPosition().above(5), 4);
 		}
 	}
 	
@@ -315,26 +315,26 @@ public class ZomBossEntity extends PVZZombieEntity {
 			System.out.println("Error : Wrong Boss Stage !");
 			return Optional.empty();
 		}
-		int pos = this.getRNG().nextInt(summon_zombie_list.size());
-		return Optional.of(ZombieUtil.getZombieEntity(world, summon_zombie_list.get(pos)));
+		int pos = this.getRandom().nextInt(summon_zombie_list.size());
+		return Optional.of(ZombieUtil.getZombieEntity(level, summon_zombie_list.get(pos)));
 	}
 	
 	private int getNearPlantsCount() {
 		float range = 50;
-		return world.getEntitiesWithinAABB(PVZPlantEntity.class, EntityUtil.getEntityAABB(this, range, range), (plant) -> {
+		return level.getEntitiesOfClass(PVZPlantEntity.class, EntityUtil.getEntityAABB(this, range, range), (plant) -> {
 			return EntityUtil.checkCanEntityAttack(this, plant);
 		}).size();
 	}
 	
 	private int getNearZombiesCount() {
 		float range = 30;
-		return world.getEntitiesWithinAABB(PVZZombieEntity.class, EntityUtil.getEntityAABB(this, range, range), (plant) -> {
+		return level.getEntitiesOfClass(PVZZombieEntity.class, EntityUtil.getEntityAABB(this, range, range), (plant) -> {
 			return ! EntityUtil.checkCanEntityAttack(this, plant);
 		}).size();
 	}
 	
-	public EntitySize getSize(Pose poseIn) {
-		return EntitySize.flexible(2F, 9F);
+	public EntitySize getDimensions(Pose poseIn) {
+		return EntitySize.scalable(2F, 9F);
 	}
 	
 	private void resetShootBallCD() {
@@ -347,14 +347,14 @@ public class ZomBossEntity extends PVZZombieEntity {
 			minCD -= 200;
 		    maxCD -= 200;
 		}
-		this.shootBallCD = this.getRNG().nextInt(maxCD - minCD + 1) + minCD;
+		this.shootBallCD = this.getRandom().nextInt(maxCD - minCD + 1) + minCD;
 	}
 	
 	private void resetStealCD() {
 		int now = this.getBossStage();
 		int maxCD = (now <= 3 ? 800 : 600); // 40s 30s
 		int minCD = (now <= 3 ? 500 : 400); // 25s 20s
-		this.stealPlantCD = this.getRNG().nextInt(maxCD - minCD + 1) + minCD;
+		this.stealPlantCD = this.getRandom().nextInt(maxCD - minCD + 1) + minCD;
 	}
 	
 	public int getBossStage() {
@@ -388,12 +388,12 @@ public class ZomBossEntity extends PVZZombieEntity {
 	}
 
 	@Override
-	public boolean isNonBoss() {
+	public boolean canChangeDimensions() {
 		return false;
 	}
 	
 	@Override
-	public boolean canDespawn(double distanceToClosestPlayer) {
+	public boolean removeWhenFarAway(double distanceToClosestPlayer) {
 		return false;
 	}
 	
@@ -403,14 +403,14 @@ public class ZomBossEntity extends PVZZombieEntity {
 	}
 	
 	@Override
-	public void addTrackingPlayer(ServerPlayerEntity player) {
-		super.addTrackingPlayer(player);
+	public void startSeenByPlayer(ServerPlayerEntity player) {
+		super.startSeenByPlayer(player);
 		this.bossInfo.addPlayer(player);
 	}
 
 	@Override
-	public void removeTrackingPlayer(ServerPlayerEntity player) {
-		super.removeTrackingPlayer(player);
+	public void stopSeenByPlayer(ServerPlayerEntity player) {
+		super.stopSeenByPlayer(player);
 		this.bossInfo.removePlayer(player);
 	}
 	
@@ -425,8 +425,8 @@ public class ZomBossEntity extends PVZZombieEntity {
 	}
 	
 	@Override
-	public void readAdditional(CompoundNBT compound) {
-		super.readAdditional(compound);
+	public void readAdditionalSaveData(CompoundNBT compound) {
+		super.readAdditionalSaveData(compound);
 		if(compound.contains("zomboss_state")) {
 			this.setZomBossState(ZomBossStates.values()[compound.getInt("zomboss_state")]);
 		}
@@ -445,8 +445,8 @@ public class ZomBossEntity extends PVZZombieEntity {
 	}
 	
 	@Override
-	public void writeAdditional(CompoundNBT compound) {
-		super.writeAdditional(compound);
+	public void addAdditionalSaveData(CompoundNBT compound) {
+		super.addAdditionalSaveData(compound);
 		compound.putInt("zomboss_state", this.getZomBossState().ordinal());
 		compound.putInt("zomboss_summon_tick", this.summonZombieTick);
 		compound.putInt("zomboss_shoot_ball_cd", this.shootBallCD);
@@ -454,15 +454,15 @@ public class ZomBossEntity extends PVZZombieEntity {
 	}
 	
 	public void setZomBossState(ZomBossStates state) {
-		this.dataManager.set(STATES, state.ordinal());
+		this.entityData.set(STATES, state.ordinal());
 	}
 	
 	public ZomBossStates getZomBossState() {
-		return ZomBossStates.values()[this.dataManager.get(STATES)];
+		return ZomBossStates.values()[this.entityData.get(STATES)];
 	}
 	
 	@Override
-	protected ResourceLocation getLootTable() {
+	protected ResourceLocation getDefaultLootTable() {
 		return PVZLoot.ZOMBOSS;
 	}
 	

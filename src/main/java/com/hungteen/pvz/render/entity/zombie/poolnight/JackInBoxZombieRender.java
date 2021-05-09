@@ -24,7 +24,7 @@ public class JackInBoxZombieRender extends PVZZombieRender<JackInBoxZombieEntity
 	}
 
 	@Override
-	public ResourceLocation getEntityTexture(JackInBoxZombieEntity entity) {
+	public ResourceLocation getTextureLocation(JackInBoxZombieEntity entity) {
 		return StringUtil.prefix("textures/entity/zombie/poolnight/jack_in_box_zombie.png");
 	}
 

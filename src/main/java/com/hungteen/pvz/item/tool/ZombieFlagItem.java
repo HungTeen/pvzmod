@@ -27,28 +27,28 @@ public class ZombieFlagItem extends Item{
 	private static final int effectCD = 600;
 	
 	public ZombieFlagItem() {
-		super(new Item.Properties().maxStackSize(1).group(GroupRegister.PVZ_MISC));
+		super(new Item.Properties().stacksTo(1).tab(GroupRegister.PVZ_MISC));
 	}
 
 	@Override
 	@OnlyIn(Dist.CLIENT)
-	public void addInformation(ItemStack stack, World worldIn, List<ITextComponent> tooltip, ITooltipFlag flagIn) {
-		tooltip.add(new TranslationTextComponent("tooltip.pvz.zombie_flag").applyTextStyle(TextFormatting.AQUA));
-		tooltip.add(new TranslationTextComponent("tooltip.pvz.sun_cost").appendText(":"+sunCost).applyTextStyle(TextFormatting.YELLOW));
+	public void appendHoverText(ItemStack stack, World worldIn, List<ITextComponent> tooltip, ITooltipFlag flagIn) {
+		tooltip.add(new TranslationTextComponent("tooltip.pvz.zombie_flag").withStyle(TextFormatting.AQUA));
+		tooltip.add(new TranslationTextComponent("tooltip.pvz.sun_cost").append(":"+sunCost).withStyle(TextFormatting.YELLOW));
 	}
 	
 	@Override
-	public ActionResult<ItemStack> onItemRightClick(World worldIn, PlayerEntity playerIn, Hand handIn) {
-		if(!playerIn.world.isRemote) {
+	public ActionResult<ItemStack> use(World worldIn, PlayerEntity playerIn, Hand handIn) {
+		if(!playerIn.level.isClientSide) {
 			playerIn.getCapability(CapabilityHandler.PLAYER_DATA_CAPABILITY).ifPresent((l)->{
 				int num=l.getPlayerData().getPlayerStats().getPlayerStats(Resources.SUN_NUM);
 				if(num>=sunCost) {
 					l.getPlayerData().getPlayerStats().addPlayerStats(Resources.SUN_NUM, -sunCost);
-					playerIn.addPotionEffect(new EffectInstance(Effects.SPEED, effectCD, 1));
-					playerIn.getCooldownTracker().setCooldown(playerIn.getHeldItem(handIn).getItem(), effectCD);
+					playerIn.addEffect(new EffectInstance(Effects.MOVEMENT_SPEED, effectCD, 1));
+					playerIn.getCooldowns().addCooldown(playerIn.getItemInHand(handIn).getItem(), effectCD);
 				}
 			});
 		}
-		return ActionResult.resultSuccess(playerIn.getHeldItem(handIn));
+		return ActionResult.success(playerIn.getItemInHand(handIn));
 	}
 }

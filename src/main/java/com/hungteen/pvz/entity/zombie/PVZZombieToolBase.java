@@ -16,14 +16,9 @@ public abstract class PVZZombieToolBase extends MobEntity{
 	}
 	
 	@Override
-	protected void registerAttributes() {
-		super.registerAttributes();
-	}
-	
-	@Override
-	public void livingTick() {
-		super.livingTick();
-		if(!world.isRemote) {
+	public void aiStep() {
+		super.aiStep();
+		if(!level.isClientSide) {
 			if(this.getPassengers().isEmpty()) {
 				this.liveTick++;
 			}else {
@@ -36,14 +31,14 @@ public abstract class PVZZombieToolBase extends MobEntity{
 	}
 	
 	@Override
-	public void readAdditional(CompoundNBT compound) {
-		super.readAdditional(compound);
+	public void readAdditionalSaveData(CompoundNBT compound) {
+		super.readAdditionalSaveData(compound);
 		this.liveTick = compound.getInt("live_tick");
 	}
 	
 	@Override
-	public void writeAdditional(CompoundNBT compound) {
-		super.writeAdditional(compound);
+	public void addAdditionalSaveData(CompoundNBT compound) {
+		super.addAdditionalSaveData(compound);
 		compound.putInt("live_tick",this.liveTick);
 	}
 

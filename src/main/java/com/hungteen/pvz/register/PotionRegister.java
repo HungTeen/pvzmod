@@ -10,7 +10,7 @@ import net.minecraftforge.registries.ForgeRegistries;
 
 public class PotionRegister {
 
-	public static final DeferredRegister<Potion> POTIONS = new DeferredRegister<>(ForgeRegistries.POTION_TYPES, PVZMod.MOD_ID);
+	public static final DeferredRegister<Potion> POTIONS = DeferredRegister.create(ForgeRegistries.POTION_TYPES, PVZMod.MOD_ID);
 
 	public static final RegistryObject<Potion> EXCITE_POTION_1 = POTIONS.register("excite_potion_1", () -> {return new Potion(new EffectInstance(EffectRegister.EXCITE_EFFECT.get(), 600, 0));});
 	public static final RegistryObject<Potion> EXCITE_POTION_2 = POTIONS.register("excite_potion_2", () -> {return new Potion(new EffectInstance(EffectRegister.EXCITE_EFFECT.get(), 1800, 1));});

@@ -24,7 +24,7 @@ import net.minecraft.world.World;
 
 public class PotatoMineEntity extends PlantCloserEntity{
 
-	private static final DataParameter<Boolean> MINE_READY = EntityDataManager.createKey(PotatoMineEntity.class, DataSerializers.BOOLEAN);
+	private static final DataParameter<Boolean> MINE_READY = EntityDataManager.defineId(PotatoMineEntity.class, DataSerializers.BOOLEAN);
 	public boolean sign_red = true;
 	private final float bombRange = 1.5f;
 	
@@ -33,9 +33,9 @@ public class PotatoMineEntity extends PlantCloserEntity{
 	}
 	
 	@Override
-	protected void registerData() {
-		super.registerData();
-		this.dataManager.register(MINE_READY, false);
+	protected void defineSynchedData() {
+		super.defineSynchedData();
+		this.entityData.define(MINE_READY, false);
 	}
 
 	@Override
@@ -65,13 +65,13 @@ public class PotatoMineEntity extends PlantCloserEntity{
 	protected void shootPotatos() {
 		int num = this.getShootNum();
 		for(int i = 1; i <= num; ++ i) {
-			PotatoEntity potato = new PotatoEntity(world, this);
-			potato.setPosition(this.getPosX(), this.getPosY() + 1, this.getPosZ());
-		    float dx = (this.getRNG().nextFloat() - 0.5f) * i / 3;
+			PotatoEntity potato = new PotatoEntity(level, this);
+			potato.setPos(this.getX(), this.getY() + 1, this.getZ());
+		    float dx = (this.getRandom().nextFloat() - 0.5f) * i / 3;
 		    float dy = 1;
-		    float dz = (this.getRNG().nextFloat() - 0.5f) * i / 3;
+		    float dz = (this.getRandom().nextFloat() - 0.5f) * i / 3;
 		    potato.shoot(dx, dy, dz);
-		    this.world.addEntity(potato);
+		    this.level.addFreshEntity(potato);
 		}
 	}
 	
@@ -84,10 +84,10 @@ public class PotatoMineEntity extends PlantCloserEntity{
 	@Override
 	public void performAttack(LivingEntity target1) {
 		if(! this.isMineReady()) return ;//not ready yet
-		if(! this.world.isRemote) {
+		if(! this.level.isClientSide) {
 			AxisAlignedBB aabb= EntityUtil.getEntityAABB(this, bombRange, bombRange);
 			EntityUtil.getAttackEntities(this, aabb).forEach((target) -> {
-				target.attackEntityFrom(PVZDamageSource.causeExplosionDamage(this, this), this.getAttackDamage());
+				target.hurt(PVZDamageSource.causeExplosionDamage(this, this), this.getAttackDamage());
 			});
 			EntityUtil.playSound(this, SoundRegister.POTATO_MINE.get());
 			for(int i = 1; i <= 5; ++ i) {
@@ -104,13 +104,13 @@ public class PotatoMineEntity extends PlantCloserEntity{
 	 */
 	protected void outDirt(){
 		this.setMineReady(true);
-		if(world.isRemote) {
+		if(level.isClientSide) {
 			for(int i = 0; i < 10; ++ i) {
-			    Random rand = this.getRNG();
-			    this.world.addParticle(ParticleRegister.DIRT_BURST_OUT.get(), this.getPosX() + 0.5d, this.getPosY(), this.getPosZ() + 0.5d, (rand.nextFloat() - 0.5) / 10, 0.05d, (rand.nextFloat() - 0.5) / 10);
-			    this.world.addParticle(ParticleRegister.DIRT_BURST_OUT.get(), this.getPosX() + 0.5d, this.getPosY(), this.getPosZ() - 0.5d, (rand.nextFloat() - 0.5) / 10, 0.05d, (rand.nextFloat() - 0.5) / 10);
-			    this.world.addParticle(ParticleRegister.DIRT_BURST_OUT.get(), this.getPosX() - 0.5d, this.getPosY(), this.getPosZ() + 0.5d, (rand.nextFloat() - 0.5) / 10, 0.05d, (rand.nextFloat() - 0.5) / 10);
-			    this.world.addParticle(ParticleRegister.DIRT_BURST_OUT.get(), this.getPosX() - 0.5d, this.getPosY(), this.getPosZ() - 0.5d, (rand.nextFloat() - 0.5) / 10, 0.05d, (rand.nextFloat() - 0.5) / 10);
+			    Random rand = this.getRandom();
+			    this.level.addParticle(ParticleRegister.DIRT_BURST_OUT.get(), this.getX() + 0.5d, this.getY(), this.getZ() + 0.5d, (rand.nextFloat() - 0.5) / 10, 0.05d, (rand.nextFloat() - 0.5) / 10);
+			    this.level.addParticle(ParticleRegister.DIRT_BURST_OUT.get(), this.getX() + 0.5d, this.getY(), this.getZ() - 0.5d, (rand.nextFloat() - 0.5) / 10, 0.05d, (rand.nextFloat() - 0.5) / 10);
+			    this.level.addParticle(ParticleRegister.DIRT_BURST_OUT.get(), this.getX() - 0.5d, this.getY(), this.getZ() + 0.5d, (rand.nextFloat() - 0.5) / 10, 0.05d, (rand.nextFloat() - 0.5) / 10);
+			    this.level.addParticle(ParticleRegister.DIRT_BURST_OUT.get(), this.getX() - 0.5d, this.getY(), this.getZ() - 0.5d, (rand.nextFloat() - 0.5) / 10, 0.05d, (rand.nextFloat() - 0.5) / 10);
 		    }
 		} else {
 			EntityUtil.playSound(this, SoundRegister.DIRT_RISE.get());
@@ -148,13 +148,13 @@ public class PotatoMineEntity extends PlantCloserEntity{
 	}
 	
 	@Override
-	public EntitySize getSize(Pose poseIn) {
+	public EntitySize getDimensions(Pose poseIn) {
 		return new EntitySize(0.6f, 0.4f, false);
 	}
 
 	@Override
-	public void readAdditional(CompoundNBT compound) {
-		super.readAdditional(compound);
+	public void readAdditionalSaveData(CompoundNBT compound) {
+		super.readAdditionalSaveData(compound);
 		if(compound.contains("mine_ready")) {
 			this.setMineReady(compound.getBoolean("mine_ready"));
 		}
@@ -164,18 +164,18 @@ public class PotatoMineEntity extends PlantCloserEntity{
 	}
 	
 	@Override
-	public void writeAdditional(CompoundNBT compound) {
-		super.writeAdditional(compound);
+	public void addAdditionalSaveData(CompoundNBT compound) {
+		super.addAdditionalSaveData(compound);
 		compound.putBoolean("mine_ready", this.isMineReady());
 		compound.putBoolean("sign_red", this.sign_red);
 	}
 	
 	public void setMineReady(boolean is){
-    	this.dataManager.set(MINE_READY, is);
+    	this.entityData.set(MINE_READY, is);
     }
     
     public boolean isMineReady(){
-    	return this.dataManager.get(MINE_READY);
+    	return this.entityData.get(MINE_READY);
     }
     
 	@Override

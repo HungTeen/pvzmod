@@ -47,14 +47,17 @@ import net.minecraft.entity.EntityType;
 import net.minecraft.entity.ILivingEntityData;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.Pose;
-import net.minecraft.entity.SharedMonsterAttributes;
 import net.minecraft.entity.SpawnReason;
+import net.minecraft.entity.ai.attributes.AttributeModifierMap;
+import net.minecraft.entity.ai.attributes.Attributes;
 import net.minecraft.entity.ai.goal.WaterAvoidingRandomWalkingGoal;
 import net.minecraft.entity.item.ItemEntity;
 import net.minecraft.entity.monster.MonsterEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.ServerPlayerEntity;
+import net.minecraft.item.AxeItem;
 import net.minecraft.item.ItemStack;
+import net.minecraft.item.Items;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.network.datasync.DataParameter;
 import net.minecraft.network.datasync.DataSerializers;
@@ -70,21 +73,24 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.DifficultyInstance;
 import net.minecraft.world.GameRules;
+import net.minecraft.world.IServerWorld;
 import net.minecraft.world.IWorld;
 import net.minecraft.world.IWorldReader;
 import net.minecraft.world.LightType;
 import net.minecraft.world.World;
-import net.minecraft.world.dimension.DimensionType;
 
 public abstract class PVZZombieEntity extends MonsterEntity implements IPVZZombie {
 
-	private static final DataParameter<Integer> ZOMBIE_TYPE = EntityDataManager.createKey(PVZZombieEntity.class,
-			DataSerializers.VARINT);
-	private static final DataParameter<Optional<UUID>> OWNER_UUID = EntityDataManager.createKey(PVZZombieEntity.class,
-			DataSerializers.OPTIONAL_UNIQUE_ID);
-	private static final DataParameter<Integer> ZOMBIE_STATES = EntityDataManager.createKey(PVZZombieEntity.class, DataSerializers.VARINT);
-	private static final DataParameter<Integer> ATTACK_TIME = EntityDataManager.createKey(PVZZombieEntity.class, DataSerializers.VARINT);
-	private static final DataParameter<Float> DEFENCE_LIFE = EntityDataManager.createKey(PVZZombieEntity.class, DataSerializers.FLOAT);
+	private static final DataParameter<Integer> ZOMBIE_TYPE = EntityDataManager.defineId(PVZZombieEntity.class,
+			DataSerializers.INT);
+	private static final DataParameter<Optional<UUID>> OWNER_UUID = EntityDataManager.defineId(PVZZombieEntity.class,
+			DataSerializers.OPTIONAL_UUID);
+	private static final DataParameter<Integer> ZOMBIE_STATES = EntityDataManager.defineId(PVZZombieEntity.class,
+			DataSerializers.INT);
+	private static final DataParameter<Integer> ATTACK_TIME = EntityDataManager.defineId(PVZZombieEntity.class,
+			DataSerializers.INT);
+	private static final DataParameter<Float> DEFENCE_LIFE = EntityDataManager.defineId(PVZZombieEntity.class,
+			DataSerializers.FLOAT);
 	private static final int CHARM_FLAG = 0;
 	private static final int MINI_FLAG = 1;
 	public boolean canCollideWithZombie = true;
@@ -98,42 +104,45 @@ public abstract class PVZZombieEntity extends MonsterEntity implements IPVZZombi
 	protected boolean canBeInvis = true;
 	protected boolean canBeStealByBungee = true;
 	protected int maxDeathTime = 20;
-	
+
 	public PVZZombieEntity(EntityType<? extends MonsterEntity> type, World worldIn) {
 		super(type, worldIn);
-		this.recalculateSize();
+		this.refreshDimensions();
 		this.setZombieAttributes();
-		this.experienceValue = this.getZombieRank().ordinal() * 2 + 5;
+		this.xpReward = this.getZombieRank().ordinal() * 2 + 5;
 	}
 
 	@Override
-	public ILivingEntityData onInitialSpawn(IWorld worldIn, DifficultyInstance difficultyIn, SpawnReason reason,
+	public ILivingEntityData finalizeSpawn(IServerWorld worldIn, DifficultyInstance difficultyIn, SpawnReason reason,
 			ILivingEntityData spawnDataIn, CompoundNBT dataTag) {
-		if(! world.isRemote) {
+		if (!level.isClientSide) {
 			this.setZombieType(this.getSpawnType());
 			EntityUtil.playSound(this, getSpawnSound());
-			if(worldIn.getDimension().getType() == DimensionType.OVERWORLD) {
-				WorldEventData data = WorldEventData.getOverWorldEventData(world);
-				if(this.canBeMini() && data.hasEvent(Events.MINI)) {
+			this.updateAttributes();
+			if (level.dimension() == World.OVERWORLD) {
+				WorldEventData data = WorldEventData.getOverWorldEventData(level);
+				if (this.canBeMini() && data.hasEvent(Events.MINI)) {
 					this.onZombieBeMini();
 				}
-				if(this.canBeInvis() && data.hasEvent(Events.INVIS)) {
-					this.addPotionEffect(new EffectInstance(Effects.INVISIBILITY, 1000000, 10, false, false));
+				if (this.canBeInvis() && data.hasEvent(Events.INVIS)) {
+					this.addEffect(new EffectInstance(Effects.INVISIBILITY, 1000000, 10, false, false));
 				}
 			}
 		}
-		return super.onInitialSpawn(worldIn, difficultyIn, reason, spawnDataIn, dataTag);
+		return super.finalizeSpawn(worldIn, difficultyIn, reason, spawnDataIn, dataTag);
 	}
-	
+
 	/**
 	 * get zombie type : super normal beard
 	 */
 	protected Type getSpawnType() {
-		int t = this.getRNG().nextInt(100);
+		int t = this.getRandom().nextInt(100);
 		int a = PVZConfig.COMMON_CONFIG.EntitySettings.ZombieSuperChance.get();
 		int b = PVZConfig.COMMON_CONFIG.EntitySettings.ZombieSunChance.get();
-		if (t < a) return Type.SUPER;
-		if (t < a + b) return Type.SUN;
+		if (t < a)
+			return Type.SUPER;
+		if (t < a + b)
+			return Type.SUN;
 		return Type.NORMAL;
 	}
 
@@ -142,22 +151,29 @@ public abstract class PVZZombieEntity extends MonsterEntity implements IPVZZombi
 	}
 
 	@Override
-	protected void registerData() {
-		super.registerData();
-		dataManager.register(ZOMBIE_TYPE, Type.NORMAL.ordinal());
-		dataManager.register(OWNER_UUID, Optional.empty());
-		dataManager.register(ZOMBIE_STATES, 0);
-		dataManager.register(ATTACK_TIME, 0);
-		dataManager.register(DEFENCE_LIFE, 0f);
+	protected void defineSynchedData() {
+		super.defineSynchedData();
+		entityData.define(ZOMBIE_TYPE, Type.NORMAL.ordinal());
+		entityData.define(OWNER_UUID, Optional.empty());
+		entityData.define(ZOMBIE_STATES, 0);
+		entityData.define(ATTACK_TIME, 0);
+		entityData.define(DEFENCE_LIFE, 0f);
 	}
-
-	@Override
-	protected void registerAttributes() {
-		super.registerAttributes();
-		this.getAttribute(SharedMonsterAttributes.ATTACK_DAMAGE).setBaseValue(ZombieUtil.LOW);
-		this.getAttribute(SharedMonsterAttributes.FOLLOW_RANGE).setBaseValue(30);
-		this.getAttribute(SharedMonsterAttributes.MOVEMENT_SPEED).setBaseValue(ZombieUtil.NORMAL_SPEED);
-		this.getAttribute(SharedMonsterAttributes.KNOCKBACK_RESISTANCE).setBaseValue(1D);
+	
+	public static AttributeModifierMap.MutableAttribute createZombieAttributes() {
+	      return LivingEntity.createLivingAttributes()
+	    		  .add(Attributes.MAX_HEALTH, 20)
+	    		  .add(Attributes.FOLLOW_RANGE, 40.0D)
+	    		  .add(Attributes.ATTACK_KNOCKBACK, 1)
+	    		  .add(Attributes.MOVEMENT_SPEED, 0.3)
+	    		  .add(Attributes.FLYING_SPEED, 0);
+	}
+	
+	protected void updateAttributes() {
+		this.getAttribute(Attributes.ATTACK_DAMAGE).setBaseValue(ZombieUtil.LOW);
+		this.getAttribute(Attributes.FOLLOW_RANGE).setBaseValue(30);
+		this.getAttribute(Attributes.MOVEMENT_SPEED).setBaseValue(ZombieUtil.NORMAL_SPEED);
+		this.getAttribute(Attributes.KNOCKBACK_RESISTANCE).setBaseValue(1D);
 	}
 
 	@Override
@@ -171,13 +187,13 @@ public abstract class PVZZombieEntity extends MonsterEntity implements IPVZZombi
 	}
 
 	@Override
-	public void livingTick() {
-		super.livingTick();
+	public void aiStep() {
+		super.aiStep();
 		if (!this.isAlive() || !this.canZombieNormalUpdate()) {
 			return;
 		}
-		if(this.ticksExisted <= 2) {
-			this.recalculateSize();
+		if (this.tickCount <= 2) {
+			this.refreshDimensions();
 		}
 		this.normalZombieTick();
 	}
@@ -186,86 +202,90 @@ public abstract class PVZZombieEntity extends MonsterEntity implements IPVZZombi
 	}
 
 	public void setZombieMaxHealth(float health) {
-		this.getAttribute(SharedMonsterAttributes.MAX_HEALTH).setBaseValue(health);
+		this.getAttribute(Attributes.MAX_HEALTH).setBaseValue(health);
 		this.heal(health);
 	}
-	
+
 	public float getCurrentHealth() {
-		if(this.hasDirectDefence) return this.getDefenceLife() + this.getHealth();
+		if (this.hasDirectDefence)
+			return this.getDefenceLife() + this.getHealth();
 		return this.getHealth();
 	}
-	
+
 	public float getCurrentMaxHealth() {
-		if(this.hasDirectDefence) return this.getDefenceLife() + this.getMaxHealth();
+		if (this.hasDirectDefence)
+			return this.getDefenceLife() + this.getMaxHealth();
 		return this.getMaxHealth();
 	}
-	
+
 	/**
 	 * run when zombie be mini type.
 	 */
 	public void onZombieBeMini() {
 		this.setMiniZombie(true);
-		this.getAttribute(SharedMonsterAttributes.MAX_HEALTH).setBaseValue(this.getMaxHealth() * 0.6);
-		if(this.hasDirectDefence) {
+		this.getAttribute(Attributes.MAX_HEALTH).setBaseValue(this.getMaxHealth() * 0.6);
+		if (this.hasDirectDefence) {
 			this.setDefenceLife(this.getDefenceLife() * 0.6F);
 		}
-		this.addPotionEffect(new EffectInstance(Effects.SPEED, 1000000, 0, false, false));
-		this.addPotionEffect(new EffectInstance(Effects.STRENGTH, 1000000, 0, false, false));
+		this.addEffect(new EffectInstance(Effects.MOVEMENT_SPEED, 1000000, 0, false, false));
+		this.addEffect(new EffectInstance(Effects.DAMAGE_BOOST, 1000000, 0, false, false));
 	}
 
 	public int getAttackCD() {
-		if (! this.canZombieNormalUpdate()) return 10000000;
+		if (!this.canZombieNormalUpdate())
+			return 10000000;
 		int now = 20;
-		if (this.isPotionActive(EffectRegister.COLD_EFFECT.get())) {
-			int lvl = this.getActivePotionEffect(EffectRegister.COLD_EFFECT.get()).getAmplifier();
+		if (this.hasEffect(EffectRegister.COLD_EFFECT.get())) {
+			int lvl = this.getEffect(EffectRegister.COLD_EFFECT.get()).getAmplifier();
 			now += 3 * lvl;
 		}
 		return now;
 	}
 
 	@Override
-	public EntitySize getSize(Pose poseIn) {
-		if(this.isMiniZombie()) return EntitySize.flexible(0.3F, 0.6F);
+	public EntitySize getDimensions(Pose poseIn) {
+		if (this.isMiniZombie())
+			return EntitySize.scalable(0.3F, 0.6F);
 		return new EntitySize(0.8f, 1.98f, false);
 	}
-	
+
 	@Override
-	public void onDeath(DamageSource cause) {
-		super.onDeath(cause);
-		if(cause instanceof PVZDamageSource && ((PVZDamageSource)cause).getPVZDamageType() == PVZDamageType.BOWLING && ((PVZDamageSource)cause).getDamageCount() > 0) {
+	public void die(DamageSource cause) {
+		super.die(cause);
+		if (cause instanceof PVZDamageSource && ((PVZDamageSource) cause).getPVZDamageType() == PVZDamageType.BOWLING
+				&& ((PVZDamageSource) cause).getDamageCount() > 0) {
 			this.canSpawnDrop = false;
 		}
 	}
-	
+
 	@Override
-	protected void onDeathUpdate() {
+	protected void tickDeath() {
 		++this.deathTime;
 		if (this.deathTime == this.maxDeathTime) {
 			this.remove();
 			for (int i = 0; i < 20; ++i) {
-				double d0 = this.rand.nextGaussian() * 0.02D;
-				double d1 = this.rand.nextGaussian() * 0.02D;
-				double d2 = this.rand.nextGaussian() * 0.02D;
-				this.world.addParticle(ParticleTypes.POOF, this.getPosXRandom(1.0D), this.getPosYRandom(),
-						this.getPosZRandom(1.0D), d0, d1, d2);
+				double d0 = this.random.nextGaussian() * 0.02D;
+				double d1 = this.random.nextGaussian() * 0.02D;
+				double d2 = this.random.nextGaussian() * 0.02D;
+				this.level.addParticle(ParticleTypes.POOF, this.getRandomX(1.0D), this.getRandomY(),
+						this.getRandomZ(1.0D), d0, d1, d2);
 			}
 			this.onZombieRemove();
 		}
 	}
-	
+
 	/**
-	 * the last tick of zombies.
-	 * for drop item and coin.
+	 * the last tick of zombies. for drop item and coin.
 	 */
 	protected void onZombieRemove() {
-		if (! world.isRemote) {
-			if (getZombieType() == Type.SUPER) {//drop energy
+		if (!level.isClientSide) {
+			if (getZombieType() == Type.SUPER) {// drop energy
 				this.dropEnergy();
-			} else if(getZombieType() == Type.SUN) {
+			} else if (getZombieType() == Type.SUN) {
 				this.dropSun();
 			} else if (getZombieType() == Type.BEARD) {// finish achievement
 			}
-			if(this.canSpawnDrop) {
+			if (this.canSpawnDrop) {
 				this.dropCoinOrSpecial();
 			}
 		}
@@ -275,22 +295,22 @@ public abstract class PVZZombieEntity extends MonsterEntity implements IPVZZombi
 	 * super mode type zombie can drop energy after death
 	 */
 	protected void dropEnergy() {
-		EnergyEntity energy = EntityRegister.ENERGY.get().create(world);
-		EntityUtil.onMobEntitySpawn(world, energy, this.getPosition().up());
+		EnergyEntity energy = EntityRegister.ENERGY.get().create(level);
+		EntityUtil.onMobEntitySpawn(level, energy, this.blockPosition().above());
 	}
-	
+
 	/**
 	 * sun type zombie can drop sun after death
 	 */
 	protected void dropSun() {
-		int num = this.getRNG().nextInt(8) + 3;
-		for(int i = 0; i < num; ++ i) {
-			SunEntity sun = EntityRegister.SUN.get().create(world);
+		int num = this.getRandom().nextInt(8) + 3;
+		for (int i = 0; i < num; ++i) {
+			SunEntity sun = EntityRegister.SUN.get().create(level);
 			sun.setAmount(25);
-			EntityUtil.onMobEntityRandomPosSpawn(world, sun, getPosition().up(), 2);
+			EntityUtil.onMobEntityRandomPosSpawn(level, sun, blockPosition().above(), 2);
 		}
 	}
-	
+
 	/**
 	 * zombies have chance to drop coin when died.
 	 */
@@ -299,128 +319,138 @@ public abstract class PVZZombieEntity extends MonsterEntity implements IPVZZombi
 		final int time2 = time1 * time1;
 		final int time3 = time2 * time1;
 		final int time4 = time2 * time2;
-		int num = this.getRNG().nextInt(time4);
-		if(num < time1 + time2 + time3) {// 0 ~ time3 is coin
+		int num = this.getRandom().nextInt(time4);
+		if (num < time1 + time2 + time3) {// 0 ~ time3 is coin
 			int amount = CoinType.GOLD.money;
-			if(num < time3) amount = CoinType.COPPER.money;
-			else if(num < time2 + time3) amount = CoinType.SILVER.money;
-			CoinEntity coin = EntityRegister.COIN.get().create(world);
+			if (num < time3)
+				amount = CoinType.COPPER.money;
+			else if (num < time2 + time3)
+				amount = CoinType.SILVER.money;
+			CoinEntity coin = EntityRegister.COIN.get().create(level);
 			coin.setAmount(amount);
-			EntityUtil.onMobEntitySpawn(world, coin, getPosition());
-			return ;
+			EntityUtil.onMobEntitySpawn(level, coin, blockPosition());
+			return;
 		}
 		num -= time1 + time2 + time3;
-		if(num == 0) {// 0 is jewel
-			JewelEntity jewel = EntityRegister.JEWEL.get().create(world);
-			EntityUtil.onMobEntitySpawn(world, jewel, getPosition());
-			return ;
+		if (num == 0) {// 0 is jewel
+			JewelEntity jewel = EntityRegister.JEWEL.get().create(level);
+			EntityUtil.onMobEntitySpawn(level, jewel, blockPosition());
+			return;
 		}
-		if(num < 4) { // 1 - 3 is chocolate
-			ItemEntity chocolate = new ItemEntity(world, getPosX(), getPosY(), getPosZ(), new ItemStack(ItemRegister.CHOCOLATE.get()));
+		if (num < 4) { // 1 - 3 is chocolate
+			ItemEntity chocolate = new ItemEntity(level, getX(), getY(), getZ(),
+					new ItemStack(ItemRegister.CHOCOLATE.get()));
 			EntityUtil.playSound(chocolate, SoundRegister.JEWEL_DROP.get());
-			world.addEntity(chocolate);
-			return ;
+			level.addFreshEntity(chocolate);
+			return;
 		}
 	}
 
-	/**p
-	 * can zombie set target as attackTarget
+	/**
+	 * p can zombie set target as attackTarget
 	 */
 	public boolean checkCanZombieTarget(LivingEntity target) {
 		return EntityUtil.checkCanEntityAttack(this, target) && this.canZombieTarget(target);
 	}
-	
+
 	protected boolean canZombieTarget(LivingEntity target) {
-		if(target instanceof SpikeRockEntity) return false;
-		if(target instanceof BungeeZombieEntity) return false;
-		if(target instanceof PVZPlantEntity && ((PVZPlantEntity) target).hasMetal()) return false;
+		if (target instanceof SpikeRockEntity)
+			return false;
+		if (target instanceof BungeeZombieEntity)
+			return false;
+		if (target instanceof PVZPlantEntity && ((PVZPlantEntity) target).hasMetal())
+			return false;
 		return true;
 	}
 
 	public boolean checkCanZombieBreakBlock() {
-		return ! this.isCharmed();
+		return !this.isCharmed();
 	}
-	
+
 	public boolean canZombieBeRemoved() {
 		return true;
 	}
-	
+
 	@Override
-	public boolean attackEntityFrom(DamageSource source, float amount) {
-		if(world.isRemote) return false;
-		if (source instanceof PVZDamageSource) this.hurtResistantTime = 0;
-		boolean flag = super.attackEntityFrom(source, amount);
+	public boolean hurt(DamageSource source, float amount) {
+		if (level.isClientSide)
+			return false;
+		if (source instanceof PVZDamageSource)
+			this.invulnerableTime = 0;
+		boolean flag = super.hurt(source, amount);
 		if (source instanceof PVZDamageSource) {
-			if (this.canBeFrozen() && ((PVZDamageSource) source).getPVZDamageType() == PVZDamageType.ICE && !((PVZDamageSource) source).isDefended()) {
-				if (! this.isZombieColdOrForzen() && ! this.world.isRemote) {
+			if (this.canBeFrozen() && ((PVZDamageSource) source).getPVZDamageType() == PVZDamageType.ICE
+					&& !((PVZDamageSource) source).isDefended()) {
+				if (!this.isZombieColdOrForzen() && !this.level.isClientSide) {
 					EntityUtil.playSound(this, SoundRegister.ZOMBIE_FROZEN.get());
 				}
-			} else if (((PVZDamageSource) source).getPVZDamageType() == PVZDamageType.FIRE && !((PVZDamageSource) source).isDefended()) {
-				if (this.isZombieColdOrForzen() && ! this.world.isRemote) {
+			} else if (((PVZDamageSource) source).getPVZDamageType() == PVZDamageType.FIRE
+					&& !((PVZDamageSource) source).isDefended()) {
+				if (this.isZombieColdOrForzen() && !this.level.isClientSide) {
 					EntityUtil.playSound(this, SoundRegister.ZOMBIE_FIRE.get());
-					this.removePotionEffect(EffectRegister.COLD_EFFECT.get());
-					this.removeActivePotionEffect(EffectRegister.FROZEN_EFFECT.get());
+					this.removeEffect(EffectRegister.COLD_EFFECT.get());
+					this.removeEffectNoUpdate(EffectRegister.FROZEN_EFFECT.get());
 				}
 			}
 		}
 		return flag;
 	}
-	
+
 	protected void dealDamageEffectToZombie(PVZDamageSource source) {
-		if(source.isDefended()) {
-			return ;
+		if (source.isDefended()) {
+			return;
 		}
-		for(EffectInstance effect : source.getEffects()) {
+		for (EffectInstance effect : source.getEffects()) {
 			EntityUtil.addEntityPotionEffect(this, effect);
 		}
 	}
 
 	@Override
-	public boolean attackEntityAsMob(Entity entityIn) {
-		entityIn.hurtResistantTime = 0;
+	public boolean doHurtTarget(Entity entityIn) {
+		entityIn.invulnerableTime = 0;
 		// add
-		float f = (float) this.getAttribute(SharedMonsterAttributes.ATTACK_DAMAGE).getValue();
-		float f1 = (float) this.getAttribute(SharedMonsterAttributes.ATTACK_KNOCKBACK).getValue();
+		float f = (float) this.getAttributeValue(Attributes.ATTACK_DAMAGE);
+		float f1 = (float) this.getAttributeValue(Attributes.ATTACK_KNOCKBACK);
 		if (entityIn instanceof LivingEntity) {
-			f += EnchantmentHelper.getModifierForCreature(this.getHeldItemMainhand(),
-					((LivingEntity) entityIn).getCreatureAttribute());
-			f1 += (float) EnchantmentHelper.getKnockbackModifier(this);
+			f += EnchantmentHelper.getDamageBonus(this.getMainHandItem(), ((LivingEntity) entityIn).getMobType());
+			f1 += (float) EnchantmentHelper.getKnockbackBonus(this);
 		}
 
-		int i = EnchantmentHelper.getFireAspectModifier(this);
+		int i = EnchantmentHelper.getFireAspect(this);
 		if (i > 0) {
-			entityIn.setFire(i * 4);
+			entityIn.setSecondsOnFire(i * 4);
 		}
 
-		boolean flag = entityIn.attackEntityFrom(getZombieAttackDamageSource(), getModifyAttackDamage(entityIn, f));
+		boolean flag = entityIn.hurt(getZombieAttackDamageSource(), getModifyAttackDamage(entityIn, f));
 		if (flag) {
 			if (f1 > 0.0F && entityIn instanceof LivingEntity) {
-				((LivingEntity) entityIn).knockBack(this, f1 * 0.5F,
-						(double) MathHelper.sin(this.rotationYaw * ((float) Math.PI / 180F)),
-						(double) (-MathHelper.cos(this.rotationYaw * ((float) Math.PI / 180F))));
-				this.setMotion(this.getMotion().mul(0.6D, 1.0D, 0.6D));
+				((LivingEntity) entityIn).knockback(f1 * 0.5F,
+						(double) MathHelper.sin(this.yRot * ((float) Math.PI / 180F)),
+						(double) (-MathHelper.cos(this.yRot * ((float) Math.PI / 180F))));
+				this.setDeltaMovement(this.getDeltaMovement().multiply(0.6D, 1.0D, 0.6D));
 			}
 
 			if (entityIn instanceof PlayerEntity) {
 				PlayerEntity playerentity = (PlayerEntity) entityIn;
-				ItemStack itemstack = this.getHeldItemMainhand();
-				ItemStack itemstack1 = playerentity.isHandActive() ? playerentity.getActiveItemStack()
-						: ItemStack.EMPTY;
-				if (!itemstack.isEmpty() && !itemstack1.isEmpty()
-						&& itemstack.canDisableShield(itemstack1, playerentity, this)
-						&& itemstack1.isShield(playerentity)) {
-					float f2 = 0.25F + (float) EnchantmentHelper.getEfficiencyModifier(this) * 0.05F;
-					if (this.rand.nextFloat() < f2) {
-						playerentity.getCooldownTracker().setCooldown(itemstack.getItem(), 100);
-						this.world.setEntityState(playerentity, (byte) 30);
-					}
-				}
+				this.maybeDisableShield(playerentity, this.getMainHandItem(),
+						playerentity.isUsingItem() ? playerentity.getUseItem() : ItemStack.EMPTY);
 			}
 
-			this.applyEnchantments(this, entityIn);
-			this.setLastAttackedEntity(entityIn);
+			this.doEnchantDamageEffects(this, entityIn);
+			this.setLastHurtMob(entityIn);
 		}
 		return flag;
+	}
+
+	private void maybeDisableShield(PlayerEntity p_233655_1_, ItemStack p_233655_2_, ItemStack p_233655_3_) {
+		if (!p_233655_2_.isEmpty() && !p_233655_3_.isEmpty() && p_233655_2_.getItem() instanceof AxeItem
+				&& p_233655_3_.getItem() == Items.SHIELD) {
+			float f = 0.25F + (float) EnchantmentHelper.getBlockEfficiency(this) * 0.05F;
+			if (this.random.nextFloat() < f) {
+				p_233655_1_.getCooldowns().addCooldown(Items.SHIELD, 100);
+				this.level.broadcastEntityEvent(p_233655_1_, (byte) 30);
+			}
+		}
 	}
 
 	@Override
@@ -430,13 +460,13 @@ public abstract class PVZZombieEntity extends MonsterEntity implements IPVZZombi
 
 	public static boolean canZombieSpawn(EntityType<? extends PVZZombieEntity> zombieType, IWorld worldIn,
 			SpawnReason reason, BlockPos pos, Random rand) {
-		return worldIn.getLightFor(LightType.BLOCK, pos) > 8 ? false
-				: canMonsterSpawn(zombieType, worldIn, reason, pos, rand);
+		return worldIn.getBrightness(LightType.BLOCK, pos) > 8 ? false
+				: checkAnyLightMonsterSpawnRules(zombieType, worldIn, reason, pos, rand);
 	}
-	
+
 	@Override
-	public float getBlockPathWeight(BlockPos pos, IWorldReader worldIn) {
-		return 9 - worldIn.getLightFor(LightType.BLOCK, pos);
+	public float getWalkTargetValue(BlockPos pos, IWorldReader worldIn) {
+		return 9 - worldIn.getBrightness(LightType.BLOCK, pos);
 	}
 
 	protected PVZDamageSource getZombieAttackDamageSource() {
@@ -457,14 +487,14 @@ public abstract class PVZZombieEntity extends MonsterEntity implements IPVZZombi
 	}
 
 	@Override
-	public void applyEntityCollision(Entity entityIn) {
+	public void push(Entity entityIn) {
 		if (this.isSleeping()) {
 			return;
 		}
-		if (!this.isRidingSameEntity(entityIn)) {
-			if (!entityIn.noClip && !this.noClip) {
-				double d0 = entityIn.getPosX() - this.getPosX();
-				double d1 = entityIn.getPosZ() - this.getPosZ();
+		if (!this.isPassengerOfSameVehicle(entityIn)) {
+			if (!entityIn.noPhysics && !this.noPhysics) {
+				double d0 = entityIn.getX() - this.getX();
+				double d1 = entityIn.getZ() - this.getZ();
 				double d2 = MathHelper.absMax(d0, d1);
 				if (d2 >= 0.009999999776482582D) {// collide from out to in,add velocity to out
 					d2 = (double) MathHelper.sqrt(d2);
@@ -478,14 +508,14 @@ public abstract class PVZZombieEntity extends MonsterEntity implements IPVZZombi
 					d1 = d1 * d3;
 					d0 = d0 * 0.05000000074505806D;
 					d1 = d1 * 0.05000000074505806D;
-					d0 = d0 * (double) (1.0F - this.entityCollisionReduction);
-					d1 = d1 * (double) (1.0F - this.entityCollisionReduction);
-					if (!this.isBeingRidden()) {
-						this.addVelocity(-d0, 0.0D, -d1);
+					d0 = d0 * (double) (1.0F - this.pushthrough);
+					d1 = d1 * (double) (1.0F - this.pushthrough);
+					if (!this.isVehicle()) {
+						this.push(-d0, 0.0D, -d1);
 					}
-					if (!entityIn.isBeingRidden()) {
+					if (!entityIn.isVehicle()) {
 						if (!(entityIn instanceof PVZPlantEntity)) {
-							entityIn.addVelocity(d0, 0.0D, d1);
+							entityIn.push(d0, 0.0D, d1);
 						}
 					}
 				}
@@ -494,12 +524,13 @@ public abstract class PVZZombieEntity extends MonsterEntity implements IPVZZombi
 	}
 
 	@Override
-	protected void collideWithNearbyEntities() {
+	protected void pushEntities() {
 		double dd = this.getCollideWidthOffset();
-		List<LivingEntity> list = this.world.getEntitiesWithinAABB(LivingEntity.class, this.getBoundingBox().grow(dd, 0, dd));
+		List<LivingEntity> list = this.level.getEntitiesOfClass(LivingEntity.class,
+				this.getBoundingBox().inflate(dd, 0, dd));
 		if (!list.isEmpty()) {
-			int i = this.world.getGameRules().getInt(GameRules.MAX_ENTITY_CRAMMING);
-			if (i > 0 && list.size() > i - 1 && this.rand.nextInt(4) == 0) {
+			int i = this.level.getGameRules().getInt(GameRules.RULE_MAX_ENTITY_CRAMMING);
+			if (i > 0 && list.size() > i - 1 && this.random.nextInt(4) == 0) {
 				int j = 0;
 				for (int k = 0; k < list.size(); ++k) {
 					if (!((Entity) list.get(k)).isPassenger()) {
@@ -507,38 +538,38 @@ public abstract class PVZZombieEntity extends MonsterEntity implements IPVZZombi
 					}
 				}
 				if (j > i - 1) {
-					this.attackEntityFrom(DamageSource.CRAMMING, 6.0F);
+					this.hurt(DamageSource.CRAMMING, 6.0F);
 				}
 			}
 			for (int l = 0; l < list.size(); ++l) {
 				LivingEntity target = list.get(l);
 				if (target != this && this.shouldCollideWithEntity(target)) {// can collide with
-					this.collideWithEntity(target);
+					this.doPush(target);
 				}
 			}
 		}
 	}
-	
+
 	protected double getCollideWidthOffset() {
 		return 0f;
 	}
-	
+
 	/**
 	 * can zombie collide with target
 	 */
 	protected boolean shouldCollideWithEntity(LivingEntity target) {
-		if(this.getAttackTarget() == target) {
-			if(target instanceof SquashEntity || target instanceof SpikeWeedEntity) {
-			    return false;
-		    }
+		if (this.getTarget() == target) {
+			if (target instanceof SquashEntity || target instanceof SpikeWeedEntity) {
+				return false;
+			}
 			return true;
 		}
-		if(target instanceof PVZZombieEntity) {
+		if (target instanceof PVZZombieEntity) {
 			return this.canCollideWithZombie && ((PVZZombieEntity) target).canCollideWithZombie;
 		}
 		return false;
 	}
-	
+
 	/**
 	 * can zombie push target
 	 */
@@ -550,7 +581,7 @@ public abstract class PVZZombieEntity extends MonsterEntity implements IPVZZombi
 	protected float getWaterSlowDown() {
 		return 0.85f;
 	}
-	
+
 	@Override
 	public boolean canAttackSpike() {
 		return false;
@@ -559,10 +590,10 @@ public abstract class PVZZombieEntity extends MonsterEntity implements IPVZZombi
 	public boolean hasDefence() {
 		return this.hasDirectDefence;
 	}
-	
+
 	@Override
-	public void writeAdditional(CompoundNBT compound) {
-		super.writeAdditional(compound);
+	public void addAdditionalSaveData(CompoundNBT compound) {
+		super.addAdditionalSaveData(compound);
 		compound.putInt("zombie_type", this.getZombieType().ordinal());
 		if (this.getOwnerUUID().isPresent()) {
 			compound.putString("OwnerUUID", this.getOwnerUUID().get().toString());
@@ -573,81 +604,83 @@ public abstract class PVZZombieEntity extends MonsterEntity implements IPVZZombi
 		compound.putInt("zombie_attack_time", this.getAttackTime());
 		compound.putFloat("defence_life", this.getDefenceLife());
 	}
-	
+
 	@Override
-	public void readAdditional(CompoundNBT compound) {
-		super.readAdditional(compound);
-		if(compound.contains("zombie_type")) {
+	public void readAdditionalSaveData(CompoundNBT compound) {
+		super.readAdditionalSaveData(compound);
+		if (compound.contains("zombie_type")) {
 			this.setZombieType(Type.values()[compound.getInt("zombie_type")]);
 		}
-		//owner UUID
-		String s;
+		// owner UUID
+		UUID uuid;
 		if (compound.contains("OwnerUUID", 8)) {
-			s = compound.getString("OwnerUUID");
+			uuid = compound.getUUID("OwnerUUID");
 		} else {
 			String s1 = compound.getString("Owner");
-			s = PreYggdrasilConverter.convertMobOwnerIfNeeded(this.getServer(), s1);
+			uuid = PreYggdrasilConverter.convertMobOwnerIfNecessary(this.getServer(), s1);
 		}
-		if (!s.isEmpty()) {
+		if (uuid != null) {
 			try {
-				this.setOwnerUUID(UUID.fromString(s));
+				this.setOwnerUUID(uuid);
 			} catch (Throwable var4) {
 			}
 		}
-		if(compound.contains("zombie_states_flag")) {
+		if (compound.contains("zombie_states_flag")) {
 			this.setZombieStates(compound.getInt("zombie_states_flag"));
 		}
-		if(compound.contains("zombie_attack_time")) {
+		if (compound.contains("zombie_attack_time")) {
 			this.setAttackTime(compound.getInt("zombie_attack_time"));
-		}if(compound.contains("defence_life")) {
+		}
+		if (compound.contains("defence_life")) {
 			this.setDefenceLife(compound.getFloat("defence_life"));
 		}
 	}
 
 	@Override
-	public boolean canBeLeashedTo(PlayerEntity player) {
+	public boolean canBeLeashed(PlayerEntity player) {
 		return false;
 	}
-	
+
 	/**
 	 * check can zombie add effect
 	 */
 	public void checkAndAddPotionEffect(EffectInstance effect) {
-		if(effect.getPotion() == EffectRegister.COLD_EFFECT.get() && ! this.canBeCold()) return;
-		if(effect.getPotion() == EffectRegister.FROZEN_EFFECT.get() && ! this.canBeFrozen()) return;
-		if(effect.getPotion() == EffectRegister.BUTTER_EFFECT.get() && ! this.canBeButter()) return ;
-		this.addPotionEffect(effect);
+		if (effect.getEffect() == EffectRegister.COLD_EFFECT.get() && !this.canBeCold())
+			return;
+		if (effect.getEffect() == EffectRegister.FROZEN_EFFECT.get() && !this.canBeFrozen())
+			return;
+		if (effect.getEffect() == EffectRegister.BUTTER_EFFECT.get() && !this.canBeButter())
+			return;
+		this.addEffect(effect);
 	}
-	
+
 	/**
-	 * when zombie turn to oppsite charm state
-	 * charm -> uncharm
-	 * uncharm -> charm
+	 * when zombie turn to oppsite charm state charm -> uncharm uncharm -> charm
 	 */
 	public void onCharmed(PVZPlantEntity plantEntity) {
-		if(this.canBeCharmed()) {
-			PlayerEntity player = EntityUtil.getEntityOwner(world, plantEntity);
-			if(player != null && player instanceof ServerPlayerEntity) {
+		if (this.canBeCharmed()) {
+			PlayerEntity player = EntityUtil.getEntityOwner(level, plantEntity);
+			if (player != null && player instanceof ServerPlayerEntity) {
 				CharmZombieTrigger.INSTANCE.trigger((ServerPlayerEntity) player, this);
 			}
-			this.setCharmed(! this.isCharmed());
-			if(this.getZombieType() == Type.SUPER) {
+			this.setCharmed(!this.isCharmed());
+			if (this.getZombieType() == Type.SUPER) {
 				this.setZombieType(Type.NORMAL);
 				this.dropEnergy();
 			}
 		}
 	}
-	
+
 	public boolean canBeButter() {
 		return this.canBeButter;
 	}
-	
+
 	public boolean canBeCharmed() {
 		return this.canBeCharm;
 	}
 
 	public boolean canBeFrozen() {
-		return this.canBeFrozen && ! this.isInWater() && ! this.isInLava();
+		return this.canBeFrozen && !this.isInWater() && !this.isInLava();
 	}
 
 	public boolean canBeMini() {
@@ -661,38 +694,38 @@ public abstract class PVZZombieEntity extends MonsterEntity implements IPVZZombi
 	public boolean canBeCold() {
 		return this.canBeCold;
 	}
-	
+
 	public boolean canBeStealByBungee() {
 		return this.canBeStealByBungee;
 	}
-	
+
 	@Nullable
 	protected SoundEvent getSpawnSound() {
 		return null;
 	}
-	
+
 	public int getZombieStates() {
-		return this.dataManager.get(ZOMBIE_STATES);
+		return this.entityData.get(ZOMBIE_STATES);
 	}
-	
+
 	public void setZombieStates(int state) {
-		this.dataManager.set(ZOMBIE_STATES, state);
+		this.entityData.set(ZOMBIE_STATES, state);
 	}
-	
+
 	public float getDefenceLife() {
-		return dataManager.get(DEFENCE_LIFE);
+		return entityData.get(DEFENCE_LIFE);
 	}
-	
+
 	public void setDefenceLife(float life) {
-		dataManager.set(DEFENCE_LIFE, life);
+		entityData.set(DEFENCE_LIFE, life);
 	}
-	
+
 	public Optional<UUID> getOwnerUUID() {
-		return dataManager.get(OWNER_UUID);
+		return entityData.get(OWNER_UUID);
 	}
 
 	public void setOwnerUUID(UUID uuid) {
-		this.dataManager.set(OWNER_UUID, Optional.ofNullable(uuid));
+		this.entityData.set(OWNER_UUID, Optional.ofNullable(uuid));
 	}
 
 	public void setCharmed(boolean is) {
@@ -702,15 +735,17 @@ public abstract class PVZZombieEntity extends MonsterEntity implements IPVZZombi
 	public void setMiniZombie(boolean is) {
 		this.setStateByFlag(is, MINI_FLAG);
 	}
-	
+
 	private void setStateByFlag(boolean is, int flag) {
 		int state = this.getZombieStates();
-		if(is) this.setZombieStates(state | (1 << flag));
-		else this.setZombieStates(state & ~ (1 << flag));
+		if (is)
+			this.setZombieStates(state | (1 << flag));
+		else
+			this.setZombieStates(state & ~(1 << flag));
 	}
 
 	public void setZombieType(Type type) {
-		dataManager.set(ZOMBIE_TYPE, type.ordinal());
+		entityData.set(ZOMBIE_TYPE, type.ordinal());
 	}
 
 	public boolean isCharmed() {
@@ -720,48 +755,49 @@ public abstract class PVZZombieEntity extends MonsterEntity implements IPVZZombi
 	public boolean isMiniZombie() {
 		return ((this.getZombieStates() >> MINI_FLAG) & 1) == 1;
 	}
-	
-	public int getAttackTime(){
-    	return dataManager.get(ATTACK_TIME);
-    }
-    
-    public void setAttackTime(int cd){
-    	dataManager.set(ATTACK_TIME, cd);
-    }
+
+	public int getAttackTime() {
+		return entityData.get(ATTACK_TIME);
+	}
+
+	public void setAttackTime(int cd) {
+		entityData.set(ATTACK_TIME, cd);
+	}
 
 	public boolean isZombieColdOrForzen() {
 		return EntityUtil.isEntityCold(this) || EntityUtil.isEntityFrozen(this);
 	}
 
 	public boolean canZombieNormalUpdate() {
-		if(this.getRidingEntity() instanceof BungeeZombieEntity) return false;
-		return ! EntityUtil.isEntityFrozen(this) && ! EntityUtil.isEntityButter(this) ;
+		if (this.getVehicle() instanceof BungeeZombieEntity)
+			return false;
+		return !EntityUtil.isEntityFrozen(this) && !EntityUtil.isEntityButter(this);
 	}
 
 	public Type getZombieType() {
-		return Type.values()[dataManager.get(ZOMBIE_TYPE)];
+		return Type.values()[entityData.get(ZOMBIE_TYPE)];
 	}
 
 	@Override
 	protected SoundEvent getAmbientSound() {
 		return SoundRegister.ZOMBIE_SAY.get();
 	}
-	
+
 	@Override
 	public SoundEvent getHurtSound(DamageSource damageSourceIn) {
-		if(damageSourceIn.getImmediateSource() instanceof AbstractBulletEntity) {
+		if (damageSourceIn.getDirectEntity() instanceof AbstractBulletEntity) {
 			return SoundRegister.PEA_HIT.get();
 		}
 		return super.getHurtSound(damageSourceIn);
 	}
 
 	@Override
-	protected ResourceLocation getLootTable() {
+	protected ResourceLocation getDefaultLootTable() {
 		return PVZLoot.NORMAL_ZOMBIE;
 	}
 
 	public enum Type {
 		NORMAL, SUPER, BEARD, SUN
 	}
-	
+
 }

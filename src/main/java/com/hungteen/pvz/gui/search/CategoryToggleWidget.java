@@ -1,5 +1,6 @@
 package com.hungteen.pvz.gui.search;
 
+import com.mojang.blaze3d.matrix.MatrixStack;
 import com.mojang.blaze3d.systems.RenderSystem;
 
 import net.minecraft.client.Minecraft;
@@ -23,25 +24,24 @@ public class CategoryToggleWidget extends ToggleWidget {
 	public void startAnimation(Minecraft mc) {
 	}
 
-	public void renderButton(int mouseX, int mouseY, float partialTicks) {
-        RenderSystem.pushMatrix();
-        RenderSystem.color4f(1.0F, 1.0F, 1.0F, 1.0F);
+	public void renderButton(MatrixStack stack, int mouseX, int mouseY, float partialTicks) {
+		stack.pushPose();
 		Minecraft minecraft = Minecraft.getInstance();
-		minecraft.getTextureManager().bindTexture(this.resourceLocation);
+		minecraft.getTextureManager().bind(this.resourceLocation);
 		RenderSystem.disableDepthTest();
-		int posX = this.stateTriggered ? this.x - 2 : this.x;
+		int posX = this.isStateTriggered ? this.x - 2 : this.x;
 		int posY = this.y;
-		int texX = this.stateTriggered ? this.xTexStart + this.xDiffTex : this.xTexStart;
-		int texY = this.stateTriggered ? this.yTexStart + this.yDiffTex : this.yTexStart;
-		this.blit(posX, posY, texX, texY, this.width, this.height);
+		int texX = this.isStateTriggered ? this.xTexStart + this.xDiffTex : this.xTexStart;
+		int texY = this.isStateTriggered ? this.yTexStart + this.yDiffTex : this.yTexStart;
+		this.blit(stack, posX, posY, texX, texY, this.width, this.height);
 		RenderSystem.enableDepthTest();
 		this.renderIcon(minecraft.getItemRenderer());
-		RenderSystem.popMatrix();
+		stack.popPose();
 	}
 
 	private void renderIcon(ItemRenderer renderer) {
-		int i = this.stateTriggered ? -2 : 0;
-		renderer.renderItemAndEffectIntoGUI(getRenderItemStack(), this.x + 9 + i, this.y + 5);
+		int i = this.isStateTriggered ? -2 : 0;
+		renderer.renderAndDecorateItem(getRenderItemStack(), this.x + 9 + i, this.y + 5);
 	}
 	
 	private ItemStack getRenderItemStack() {
@@ -52,7 +52,7 @@ public class CategoryToggleWidget extends ToggleWidget {
 		return this.category;
 	}
 
-//	public boolean func_199500_a(ClientRecipeBook p_199500_1_) {
+//	public boolean updateVisibility(ClientRecipeBook p_199500_1_) {
 //		List<RecipeList> list = p_199500_1_.getRecipes(this.category);
 //		this.visible = false;
 //		if (list != null) {

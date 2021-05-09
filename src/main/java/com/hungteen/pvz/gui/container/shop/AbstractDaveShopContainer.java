@@ -17,7 +17,7 @@ public abstract class AbstractDaveShopContainer extends Container{
 		this.player = player;
 		this.addSlot(new Slot(output, 0, 171, 86) {
 			@Override
-			public boolean isItemValid(ItemStack stack) {
+			public boolean mayPlace(ItemStack stack) {
 				return false;
 			}
 		});
@@ -32,38 +32,38 @@ public abstract class AbstractDaveShopContainer extends Container{
 	}
 	
 	public boolean canClickBuyButton() {
-		return this.output.getStackInSlot(0).isEmpty();
+		return this.output.getItem(0).isEmpty();
 	}
 	
 	@Override
-	public boolean canInteractWith(PlayerEntity playerIn) {
+	public boolean stillValid(PlayerEntity playerIn) {
 		return true;
 	}
 	
 	@Override
-	public ItemStack transferStackInSlot(PlayerEntity playerIn, int index) {
+	public ItemStack quickMoveStack(PlayerEntity playerIn, int index) {
 		ItemStack itemstack = ItemStack.EMPTY;
-		Slot slot = this.inventorySlots.get(index);
-		if (slot != null && slot.getHasStack()) {
-			ItemStack itemstack1 = slot.getStack();
+		Slot slot = this.slots.get(index);
+		if (slot != null && slot.hasItem()) {
+			ItemStack itemstack1 = slot.getItem();
 			itemstack = itemstack1.copy();
 			if (index == 0) {
-				if (!this.mergeItemStack(itemstack1, 1, this.inventorySlots.size(), true)) {
+				if (!this.moveItemStackTo(itemstack1, 1, this.slots.size(), true)) {
 					return ItemStack.EMPTY;
 				}
 			} else if (index < 28) {
-				if(!mergeItemStack(itemstack1, 28, this.inventorySlots.size(), false)) {
+				if(!moveItemStackTo(itemstack1, 28, this.slots.size(), false)) {
 					return ItemStack.EMPTY;
 				}
 			} else {
-				if (!this.mergeItemStack(itemstack1, 1, 28, false)) {
+				if (!this.moveItemStackTo(itemstack1, 1, 28, false)) {
 					return ItemStack.EMPTY;
 				}
 			}
 			if (itemstack1.isEmpty()) {
-				slot.putStack(ItemStack.EMPTY);
+				slot.set(ItemStack.EMPTY);
 			} else {
-				slot.onSlotChanged();
+				slot.setChanged();
 			}
 		}
 		return itemstack;

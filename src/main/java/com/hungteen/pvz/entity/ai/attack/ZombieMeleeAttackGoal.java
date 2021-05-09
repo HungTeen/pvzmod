@@ -25,30 +25,30 @@ public class ZombieMeleeAttackGoal extends Goal {
 
 	public ZombieMeleeAttackGoal(PVZZombieEntity creature) {
 		this.attacker = creature;
-		this.setMutexFlags(EnumSet.of(Goal.Flag.MOVE, Goal.Flag.LOOK));
+		this.setFlags(EnumSet.of(Goal.Flag.MOVE, Goal.Flag.LOOK));
 	}
 
 	@Override
-	public boolean shouldExecute() {
-		long currentTime = this.attacker.world.getGameTime();
+	public boolean canUse() {
+		long currentTime = this.attacker.level.getGameTime();
 		if (currentTime - this.excuteTime < 20L) return false;//search each second.
 		this.excuteTime = currentTime;
-		LivingEntity target = this.attacker.getAttackTarget();
+		LivingEntity target = this.attacker.getTarget();
 //		System.out.println(target);
 		if (target == null || ! target.isAlive()) {
 			return false;
 		}
-		this.path = this.attacker.getNavigator().getPathToEntity(target, 0);
+		this.path = this.attacker.getNavigation().createPath(target, 0);
 		if (this.path != null) {
 			return true;
 		} else {
-			return this.getAttackReachSqr(target) >= this.attacker.getDistanceSq(target);
+			return this.getAttackReachSqr(target) >= this.attacker.distanceToSqr(target);
 		}
 	}
 
 	@Override
-	public boolean shouldContinueExecuting() {
-		LivingEntity target = this.attacker.getAttackTarget();
+	public boolean canContinueToUse() {
+		LivingEntity target = this.attacker.getTarget();
 		if (target == null || ! target.isAlive()) {
 			return false;
 		}
@@ -63,32 +63,32 @@ public class ZombieMeleeAttackGoal extends Goal {
 	}
 
 	@Override
-	public void startExecuting() {
-		this.attacker.getNavigator().setPath(this.path, this.speed);
-		this.attacker.setAggroed(true);
+	public void start() {
+		this.attacker.getNavigation().moveTo(this.path, this.speed);
+		this.attacker.setAggressive(true);
 		this.delayCounter = 0;
 		this.delayCnt = 1;
 	}
 
 	@Override
-	public void resetTask() {
-		this.attacker.setAttackTarget(null);
-		this.attacker.setAggroed(false);
-		this.attacker.getNavigator().clearPath();
+	public void stop() {
+		this.attacker.setTarget(null);
+		this.attacker.setAggressive(false);
+		this.attacker.getNavigation().stop();
 	}
 
 	@Override
 	public void tick() {
-		LivingEntity target = this.attacker.getAttackTarget();
-		this.attacker.getLookController().setLookPositionWithEntity(target, 30.0F, 30.0F);
+		LivingEntity target = this.attacker.getTarget();
+		this.attacker.getLookControl().setLookAt(target, 30.0F, 30.0F);
 		--this.delayCounter;
-		if(this.delayCounter <= 0 && (this.targetX == 0.0D && this.targetY == 0.0D && this.targetZ == 0.0D || target.getDistanceSq(this.targetX, this.targetY, this.targetZ) >= 1.0D || this.attacker.getRNG().nextFloat() < 0.05F)) {
-			this.targetX = target.getPosX();
-	        this.targetY = target.getPosY();
-	        this.targetZ = target.getPosZ();
-			this.delayCounter = 5 + this.attacker.getRNG().nextInt(10);
+		if(this.delayCounter <= 0 && (this.targetX == 0.0D && this.targetY == 0.0D && this.targetZ == 0.0D || target.distanceToSqr(this.targetX, this.targetY, this.targetZ) >= 1.0D || this.attacker.getRandom().nextFloat() < 0.05F)) {
+			this.targetX = target.getX();
+	        this.targetY = target.getY();
+	        this.targetZ = target.getZ();
+			this.delayCounter = 5 + this.attacker.getRandom().nextInt(10);
 //			System.out.println("find path");
-			if(!this.attacker.getNavigator().tryMoveToEntityLiving(target, this.speed)) {
+			if(!this.attacker.getNavigation().moveTo(target, this.speed)) {
 			    this.delayCounter += 20 * this.delayCnt;
 			    this.delayCnt = Math.min(10, this.delayCnt + 1);
 		    } else {
@@ -100,18 +100,18 @@ public class ZombieMeleeAttackGoal extends Goal {
 	}
 
 	protected void checkAndPerformAttack(LivingEntity target) {
-		double dis = this.attacker.getDistanceSq(target);
+		double dis = this.attacker.distanceToSqr(target);
 		double range = this.getAttackReachSqr(target);
 		if (range >= dis && this.attackTick <= 0) {
 			this.attackTick = this.attacker.getAttackCD();
-			this.attacker.swingArm(Hand.MAIN_HAND);
-			this.attacker.attackEntityAsMob(target);
+			this.attacker.swing(Hand.MAIN_HAND);
+			this.attacker.doHurtTarget(target);
 		}
 	}
 
 	protected double getAttackReachSqr(LivingEntity attackTarget) {
 		double two = Math.sqrt(2);
-		double dis = (this.attacker.getWidth() / two + attackTarget.getWidth() / two + 0.5f);
+		double dis = (this.attacker.getBbWidth() / two + attackTarget.getBbWidth() / two + 0.5f);
 		return dis * dis;
 	}
 

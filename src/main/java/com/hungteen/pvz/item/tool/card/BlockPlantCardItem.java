@@ -6,8 +6,8 @@ import com.hungteen.pvz.utils.enums.Plants;
 
 import net.minecraft.block.BlockState;
 import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.fluid.FluidState;
 import net.minecraft.fluid.Fluids;
-import net.minecraft.fluid.IFluidState;
 import net.minecraft.item.BlockItemUseContext;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.ItemUseContext;
@@ -28,60 +28,60 @@ public class BlockPlantCardItem extends PlantCardItem{
 	}
 
 	@Override
-	public int getItemEnchantability() {
+	public int getEnchantmentValue() {
 		return 10;
 	}
 	
 	@Override
-	public ActionResult<ItemStack> onItemRightClick(World worldIn, PlayerEntity player, Hand handIn) {
-		ItemStack itemstack = player.getHeldItem(handIn);
+	public ActionResult<ItemStack> use(World worldIn, PlayerEntity player, Hand handIn) {
+		ItemStack itemstack = player.getItemInHand(handIn);
 		if(plantType != Plants.LILY_PAD) {//this is for lily_pad placement
-			return ActionResult.resultPass(itemstack);
+			return ActionResult.pass(itemstack);
 		}
-		RayTraceResult raytraceresult = rayTrace(worldIn, player, RayTraceContext.FluidMode.SOURCE_ONLY);
+		RayTraceResult raytraceresult = getPlayerPOVHitResult(worldIn, player, RayTraceContext.FluidMode.SOURCE_ONLY);
 		if (raytraceresult.getType() == RayTraceResult.Type.MISS) {
-			return ActionResult.resultPass(itemstack);
+			return ActionResult.pass(itemstack);
 		} else {
 			if (raytraceresult.getType() == RayTraceResult.Type.BLOCK) {
 				BlockRayTraceResult blockraytraceresult = (BlockRayTraceResult) raytraceresult;
-				BlockPos blockpos = blockraytraceresult.getPos();
-				Direction direction = blockraytraceresult.getFace();
-				if (!worldIn.isBlockModifiable(player, blockpos)
-						|| !player.canPlayerEdit(blockpos.offset(direction), direction, itemstack)) {
-					return ActionResult.resultFail(itemstack);
+				BlockPos blockpos = blockraytraceresult.getBlockPos();
+				Direction direction = blockraytraceresult.getDirection();
+				if (!worldIn.mayInteract(player, blockpos)
+						|| !player.mayUseItemAt(blockpos.relative(direction), direction, itemstack)) {
+					return ActionResult.fail(itemstack);
 				}
-				BlockPos blockpos1 = blockpos.up();
-				IFluidState ifluidstate = worldIn.getFluidState(blockpos);
-				if (ifluidstate.getFluid() == Fluids.WATER && worldIn.isAirBlock(blockpos1)) {
-					if(! worldIn.isRemote) {
+				BlockPos blockpos1 = blockpos.above();
+				FluidState ifluidstate = worldIn.getFluidState(blockpos);
+				if (ifluidstate.getType() == Fluids.WATER && worldIn.isEmptyBlock(blockpos1)) {
+					if(! worldIn.isClientSide) {
 						PlantCardItem.checkSunAndPlaceBlock(player, this, itemstack, blockpos1);
 					}
-					return ActionResult.resultSuccess(itemstack);
+					return ActionResult.success(itemstack);
 				}
 			}
-			return ActionResult.resultFail(itemstack);
+			return ActionResult.fail(itemstack);
 		}
 	}
 	
 	@Override
-	public ActionResultType onItemUse(ItemUseContext context) {
+	public ActionResultType useOn(ItemUseContext context) {
 		if(this.plantType != Plants.FLOWER_POT) {
 			return ActionResultType.PASS;
 		}
-		World world = context.getWorld();
+		World world = context.getLevel();
 		PlayerEntity player = context.getPlayer();
 		Hand hand = context.getHand();
-		ItemStack stack = player.getHeldItem(hand);
-		BlockPos pos = context.getPos();
-		if (world.isRemote) {
+		ItemStack stack = player.getItemInHand(hand);
+		BlockPos pos = context.getClickedPos();
+		if (world.isClientSide) {
 			return ActionResultType.SUCCESS;
 		}
-		if (context.getFace() == Direction.UP) {
-			if(world.getBlockState(pos).isReplaceable(new BlockItemUseContext(context))) {
+		if (context.getClickedFace() == Direction.UP) {
+			if(world.getBlockState(pos).canBeReplaced(new BlockItemUseContext(context))) {
 				checkSunAndPlaceBlock(player, this, stack, pos);
 				return ActionResultType.SUCCESS;
-			} else if(world.isAirBlock(pos.up()) && world.getBlockState(pos).isSolid()) {// can plant here
-			    checkSunAndPlaceBlock(player, this, stack, pos.up());
+			} else if(world.isEmptyBlock(pos.above()) && world.getBlockState(pos).canOcclude()) {// can plant here
+			    checkSunAndPlaceBlock(player, this, stack, pos.above());
 			    return ActionResultType.SUCCESS;
 			}
 		}

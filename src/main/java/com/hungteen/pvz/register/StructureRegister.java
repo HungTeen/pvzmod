@@ -1,13 +1,5 @@
 package com.hungteen.pvz.register;
 
-import com.hungteen.pvz.structure.shop.DaveVillaComponents;
-import com.hungteen.pvz.structure.shop.SunTempleComponents;
-import com.hungteen.pvz.structure.zombie.BucketHouseComponents;
-import com.hungteen.pvz.structure.zombie.DolphinHouseComponents;
-import com.hungteen.pvz.structure.zombie.GraveHouseComponents;
-import com.hungteen.pvz.structure.zombie.YetiHouseComponents;
-
-import net.minecraft.util.registry.Registry;
 import net.minecraft.world.gen.feature.structure.IStructurePieceType;
 
 public class StructureRegister {
@@ -20,11 +12,11 @@ public class StructureRegister {
 	public static IStructurePieceType YETI_HOUSE;
 	
 	public static void registerStructureType(){
-		DAVE_VILLA = Registry.register(Registry.STRUCTURE_PIECE, "dave_villa", DaveVillaComponents.DaveVillaComponent::new);
-		BUCKET_HOUSE = Registry.register(Registry.STRUCTURE_PIECE, "bucket_house", BucketHouseComponents.BucketHouseComponent::new);
-	    DOLPHIN_HOUSE = Registry.register(Registry.STRUCTURE_PIECE, "dolphin_house", DolphinHouseComponents.DolphinHouseComponent::new);
-	    GRAVE_HOUSE = Registry.register(Registry.STRUCTURE_PIECE, "grave_house", GraveHouseComponents.GraveHouseComponent::new);
-	    SUN_TEMPLE = Registry.register(Registry.STRUCTURE_PIECE, "sun_temple", SunTempleComponents.SunTempleComponent::new);
-	    YETI_HOUSE = Registry.register(Registry.STRUCTURE_PIECE, "yeti_house", YetiHouseComponents.YetiHouseComponent::new);
+//		DAVE_VILLA = Registry.register(Registry.STRUCTURE_PIECE, "dave_villa", DaveVillaComponents.DaveVillaComponent::new);
+//		BUCKET_HOUSE = Registry.register(Registry.STRUCTURE_PIECE, "bucket_house", BucketHouseComponents.BucketHouseComponent::new);
+//	    DOLPHIN_HOUSE = Registry.register(Registry.STRUCTURE_PIECE, "dolphin_house", DolphinHouseComponents.DolphinHouseComponent::new);
+//	    GRAVE_HOUSE = Registry.register(Registry.STRUCTURE_PIECE, "grave_house", GraveHouseComponents.GraveHouseComponent::new);
+//	    SUN_TEMPLE = Registry.register(Registry.STRUCTURE_PIECE, "sun_temple", SunTempleComponents.SunTempleComponent::new);
+//	    YETI_HOUSE = Registry.register(Registry.STRUCTURE_PIECE, "yeti_house", YetiHouseComponents.YetiHouseComponent::new);
 	}
 }

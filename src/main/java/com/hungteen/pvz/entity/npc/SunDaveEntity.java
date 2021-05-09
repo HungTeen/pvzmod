@@ -11,7 +11,9 @@ import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.inventory.container.Container;
 import net.minecraft.inventory.container.INamedContainerProvider;
+import net.minecraft.util.ActionResultType;
 import net.minecraft.util.Hand;
+import net.minecraft.util.math.vector.Vector3d;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraft.world.World;
@@ -24,8 +26,8 @@ public class SunDaveEntity extends AbstractDaveEntity {
 	}
 
 	@Override
-	protected boolean processInteract(PlayerEntity player, Hand hand) {
-		if (!world.isRemote && player instanceof ServerPlayerEntity) {
+	public ActionResultType interactAt(PlayerEntity player, Vector3d vec3d, Hand hand) {
+		if (!level.isClientSide && player instanceof ServerPlayerEntity) {
 			NetworkHooks.openGui((ServerPlayerEntity) player, new INamedContainerProvider() {
 
 				@Override
@@ -39,14 +41,14 @@ public class SunDaveEntity extends AbstractDaveEntity {
 					return new TranslationTextComponent("gui.pvz.sun_shop.show");
 				}
 			});
-			return true;
+			return ActionResultType.SUCCESS;
 		}
-		return false;
+		return ActionResultType.FAIL;
 	}
 
 	@Override
-	public EntitySize getSize(Pose poseIn) {
-		return EntitySize.flexible(0.9f, 2.5f);
+	public EntitySize getDimensions(Pose poseIn) {
+		return EntitySize.scalable(0.9f, 2.5f);
 	}
 	
 }

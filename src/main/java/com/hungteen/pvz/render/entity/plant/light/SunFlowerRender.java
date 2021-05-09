@@ -23,7 +23,7 @@ public class SunFlowerRender extends PVZPlantRender<SunFlowerEntity>{
 	}
 
 	@Override
-	public ResourceLocation getEntityTexture(SunFlowerEntity entity) {
+	public ResourceLocation getTextureLocation(SunFlowerEntity entity) {
 		return StringUtil.prefix("textures/entity/plant/light/sun_flower.png");
 	}
 }

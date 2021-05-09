@@ -15,7 +15,7 @@ import net.minecraft.entity.SpawnReason;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.world.DifficultyInstance;
-import net.minecraft.world.IWorld;
+import net.minecraft.world.IServerWorld;
 import net.minecraft.world.World;
 
 public class CoinEntity extends DropEntity{
@@ -28,17 +28,17 @@ public class CoinEntity extends DropEntity{
 	}
 	
 	@Override
-	public ILivingEntityData onInitialSpawn(IWorld worldIn, DifficultyInstance difficultyIn, SpawnReason reason,
+	public ILivingEntityData finalizeSpawn(IServerWorld worldIn, DifficultyInstance difficultyIn, SpawnReason reason,
 			ILivingEntityData spawnDataIn, CompoundNBT dataTag) {
-		if(! world.isRemote) {
+		if(! level.isClientSide) {
 			EntityUtil.playSound(this, SoundRegister.COIN_DROP.get());
 		}
-		return super.onInitialSpawn(worldIn, difficultyIn, reason, spawnDataIn, dataTag);
+		return super.finalizeSpawn(worldIn, difficultyIn, reason, spawnDataIn, dataTag);
 	}
 
 	@Override
-	public void onCollideWithPlayer(PlayerEntity entityIn) {
-		if(!this.world.isRemote) {
+	public void playerTouch(PlayerEntity entityIn) {
+		if(!this.level.isClientSide) {
 			PlayerUtil.addPlayerStats(entityIn, Resources.MONEY, this.getAmount());
 		} else {
 			EntityUtil.playSound(entityIn, SoundRegister.COIN_PICK.get());
@@ -47,7 +47,7 @@ public class CoinEntity extends DropEntity{
 	}
 	
 	@Override
-	public EntitySize getSize(Pose poseIn) {
+	public EntitySize getDimensions(Pose poseIn) {
 		//1000 <-> 1 1 <-> 0.5 
 		float t = (float) Math.log10(this.getAmount());//0 1 2 3
 		float w = t * 0.18f + 0.4f;
@@ -59,7 +59,7 @@ public class CoinEntity extends DropEntity{
 	}
 	
 	protected CoinType getRandomType(){
-		return CoinType.values()[this.rand.nextInt(COIN_TYPES)];
+		return CoinType.values()[this.random.nextInt(COIN_TYPES)];
 	}
 	
 	@Override

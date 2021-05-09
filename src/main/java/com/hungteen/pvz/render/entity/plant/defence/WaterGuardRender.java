@@ -23,7 +23,7 @@ public class WaterGuardRender extends PVZPlantRender<WaterGuardEntity>{
 	}
 
 	@Override
-	public ResourceLocation getEntityTexture(WaterGuardEntity entity) {
+	public ResourceLocation getTextureLocation(WaterGuardEntity entity) {
 		if(entity.getDefenceLife() > 0) return StringUtil.prefix("textures/entity/plant/defence/water_guard2.png");
 		return StringUtil.prefix("textures/entity/plant/defence/water_guard.png");
 	}

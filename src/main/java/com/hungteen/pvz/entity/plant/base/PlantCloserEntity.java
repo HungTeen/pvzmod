@@ -26,9 +26,9 @@ public abstract class PlantCloserEntity extends PVZPlantEntity implements IClose
 	@Override
 	protected void normalPlantTick() {
 		super.normalPlantTick();
-		if(EntityUtil.isEntityValid(this.getAttackTarget())) {
-			this.getLookController().setLookPositionWithEntity(getAttackTarget(), 30f, 30f);
-			this.performAttack(this.getAttackTarget());
+		if(EntityUtil.isEntityValid(this.getTarget())) {
+			this.getLookControl().setLookAt(getTarget(), 30f, 30f);
+			this.performAttack(this.getTarget());
 		}
 	}
 	

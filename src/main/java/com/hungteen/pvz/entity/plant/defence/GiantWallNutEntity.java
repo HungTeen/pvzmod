@@ -11,7 +11,7 @@ import net.minecraft.entity.Pose;
 import net.minecraft.entity.SpawnReason;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.world.DifficultyInstance;
-import net.minecraft.world.IWorld;
+import net.minecraft.world.IServerWorld;
 import net.minecraft.world.World;
 
 public class GiantWallNutEntity extends WallNutEntity {
@@ -21,21 +21,21 @@ public class GiantWallNutEntity extends WallNutEntity {
 	}
 	
 	@Override
-	public ILivingEntityData onInitialSpawn(IWorld worldIn, DifficultyInstance difficultyIn, SpawnReason reason,
+	public ILivingEntityData finalizeSpawn(IServerWorld worldIn, DifficultyInstance difficultyIn, SpawnReason reason,
 			ILivingEntityData spawnDataIn, CompoundNBT dataTag) {
 		this.setDefenceLife(this.getSuperLife());
-		return super.onInitialSpawn(worldIn, difficultyIn, reason, spawnDataIn, dataTag);
+		return super.finalizeSpawn(worldIn, difficultyIn, reason, spawnDataIn, dataTag);
 	}
 	
 	@Override
 	public void startSuperMode(boolean first) {
 		super.startSuperMode(first);
-		if(! world.isRemote) {
+		if(! level.isClientSide) {
 			for(int i = 0; i < this.getNutCount(); ++ i) {
-				NutEntity nut = new NutEntity(world, this);
-				nut.setPosition(this.getPosX(), this.getPosY() + 1D, this.getPosZ());
-				nut.shoot((this.getRNG().nextFloat() - 0.5f) * 1.5D, 0.5D, (this.getRNG().nextFloat() - 0.5f) * 1.5D);
-				world.addEntity(nut);
+				NutEntity nut = new NutEntity(level, this);
+				nut.setPos(this.getX(), this.getY() + 1D, this.getZ());
+				nut.shoot((this.getRandom().nextFloat() - 0.5f) * 1.5D, 0.5D, (this.getRandom().nextFloat() - 0.5f) * 1.5D);
+				level.addFreshEntity(nut);
 			}
 		}
 	}
@@ -66,8 +66,8 @@ public class GiantWallNutEntity extends WallNutEntity {
 	}
 	
 	@Override
-	public EntitySize getSize(Pose poseIn) {
-		return EntitySize.flexible(2F, 3F);
+	public EntitySize getDimensions(Pose poseIn) {
+		return EntitySize.scalable(2F, 3F);
 	}
 	
 	@Override

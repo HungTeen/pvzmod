@@ -47,21 +47,21 @@ public class StrangeCatEntity extends PVZPlantEntity {
 	@Override
 	protected void normalPlantTick() {
 		super.normalPlantTick();
-		if (! world.isRemote && this.getAttackTarget() != null) {
-			this.lookController.setLookPositionWithEntity(this.getAttackTarget(), 30f, 30f);
-			if(! this.isSuitableTarget(getAttackTarget())) {
-				this.setAttackTarget(null);
+		if (! level.isClientSide && this.getTarget() != null) {
+			this.lookControl.setLookAt(this.getTarget(), 30f, 30f);
+			if(! this.isSuitableTarget(getTarget())) {
+				this.setTarget(null);
 			}
 		}
-		if (! world.isRemote) {
-			if(this.getAttackTarget() == null) {
+		if (! level.isClientSide) {
+			if(this.getTarget() == null) {
 				this.setAttackTime(ANIM_CD);
 			} else {
 				if(this.restTick <= 0) {
 					if(this.getAttackTime() > 0) {
 				        this.setAttackTime(this.getAttackTime() - 1);
 				    } else {
-						this.performAttack(getAttackTarget());
+						this.performAttack(getTarget());
 					}
 				}
 			}
@@ -70,14 +70,14 @@ public class StrangeCatEntity extends PVZPlantEntity {
 	}
 	
 	public void onSelfCopy(LivingEntity target) {
-		StrangeCatEntity cat = EntityRegister.STRANGE_CAT.get().create(world);
+		StrangeCatEntity cat = EntityRegister.STRANGE_CAT.get().create(level);
 		PlantUtil.copyPlantData(cat, this);
-		if(this.getRNG().nextInt(PVZConfig.COMMON_CONFIG.EntitySettings.StrangeCatNameChance.get()) == 0) {
+		if(this.getRandom().nextInt(PVZConfig.COMMON_CONFIG.EntitySettings.StrangeCatNameChance.get()) == 0) {
 			List<String> list = Arrays.asList("芦苇", "Rua猫");
-			int pos = this.getRNG().nextInt(list.size());
+			int pos = this.getRandom().nextInt(list.size());
 			cat.setCustomName(new StringTextComponent(list.get(pos)));
 		}
-		EntityUtil.onMobEntitySpawn(world, cat, target.getPosition());
+		EntityUtil.onMobEntitySpawn(level, cat, target.blockPosition());
 	}
 	
 	@Override
@@ -89,7 +89,7 @@ public class StrangeCatEntity extends PVZPlantEntity {
 	 * deal damage
 	 */
 	private void performAttack(LivingEntity target) {
-		target.attackEntityFrom(PVZDamageSource.causeNormalDamage(this, this).setCopyDamage(), getAttackDamage());
+		target.hurt(PVZDamageSource.causeNormalDamage(this, this).setCopyDamage(), getAttackDamage());
 		EntityUtil.playSound(this, SoundRegister.BRUH.get());
 		this.restTick = this.getRestCD();
 	}
@@ -98,8 +98,8 @@ public class StrangeCatEntity extends PVZPlantEntity {
 	public void startSuperMode(boolean first) {
 		super.startSuperMode(first);
 		EntityUtil.playSound(this, SoundRegister.BRUH.get());
-		EntityUtil.getRandomLivingInRange(world, this, EntityUtil.getEntityAABB(this, 20, 20), getSuperAttackCount()).forEach((target) ->{
-			target.attackEntityFrom(PVZDamageSource.causeNormalDamage(this, this).setCopyDamage(), getAttackDamage());
+		EntityUtil.getRandomLivingInRange(level, this, EntityUtil.getEntityAABB(this, 20, 20), getSuperAttackCount()).forEach((target) ->{
+			target.hurt(PVZDamageSource.causeNormalDamage(this, this).setCopyDamage(), getAttackDamage());
 		});
 	}
 	
@@ -131,19 +131,19 @@ public class StrangeCatEntity extends PVZPlantEntity {
 	}
 	
 	@Override
-	public EntitySize getSize(Pose poseIn) {
+	public EntitySize getDimensions(Pose poseIn) {
 		return new EntitySize(0.8f, 1f, false);
 	}
 	
 	@Override
-	public void writeAdditional(CompoundNBT compound) {
-		super.writeAdditional(compound);
+	public void addAdditionalSaveData(CompoundNBT compound) {
+		super.addAdditionalSaveData(compound);
 		compound.putInt("rest_tick", this.restTick);
 	}
 
 	@Override
-	public void readAdditional(CompoundNBT compound) {
-		super.readAdditional(compound);
+	public void readAdditionalSaveData(CompoundNBT compound) {
+		super.readAdditionalSaveData(compound);
 		if(compound.contains("rest_tick")) {
 			this.restTick = compound.getInt("rest_tick");
 		}

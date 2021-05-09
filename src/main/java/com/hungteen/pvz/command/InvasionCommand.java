@@ -14,11 +14,12 @@ import net.minecraft.command.CommandSource;
 import net.minecraft.command.Commands;
 import net.minecraft.command.arguments.EntityArgument;
 import net.minecraft.entity.player.ServerPlayerEntity;
+import net.minecraft.util.Util;
 
 public class InvasionCommand {
 
 	public static void register(CommandDispatcher<CommandSource> dispatcher) {
-        LiteralArgumentBuilder<CommandSource> builder = Commands.literal("invasion").requires((ctx) -> {return ctx.hasPermissionLevel(2);});
+        LiteralArgumentBuilder<CommandSource> builder = Commands.literal("invasion").requires((ctx) -> {return ctx.hasPermission(2);});
         for(Events event : Events.values()) {
         	builder.then(Commands.literal("event")
         			.then(Commands.literal("add").then(Commands.literal(event.toString().toLowerCase()).executes((commond)->{
@@ -52,21 +53,21 @@ public class InvasionCommand {
 	}
 	
 	private static int addInvasionEvent(CommandSource source, Events event) {
-		OverWorldEvents.activateEvent(source.getWorld(), event);
+		OverWorldEvents.activateEvent(source.getLevel(), event);
 		return 0;
 	}
 	
 	private static int clearInvasionEvent(CommandSource source) {
-		OverWorldEvents.deactivateZombieAttackEvents(source.getWorld(), false);
+		OverWorldEvents.deactivateZombieAttackEvents(source.getLevel(), false);
 		return 0;
 	}
 	
 	private static int showInvasionEvent(CommandSource source, Collection<? extends ServerPlayerEntity> targets) {
 		targets.forEach((player)->{
-			WorldEventData data = WorldEventData.getOverWorldEventData(source.getWorld());
+			WorldEventData data = WorldEventData.getOverWorldEventData(source.getLevel());
 			for(Events event : Events.values()) {
 				if(data.hasEvent(event)) {
-					player.sendMessage(Events.getEventText(event));
+					player.sendMessage(Events.getEventText(event), Util.NIL_UUID);
 				}
 			}
 		});

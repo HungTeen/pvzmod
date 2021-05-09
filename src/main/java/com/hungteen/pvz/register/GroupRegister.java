@@ -7,13 +7,13 @@ public class GroupRegister {
 
 	public static final ItemGroup PVZ_MISC = new ItemGroup("pvz_misc") {
 		@Override
-		public ItemStack createIcon() {
+		public ItemStack makeIcon() {
 			return new ItemStack(ItemRegister.PEA.get());
 		}
 	};
 	public static final ItemGroup PVZ_CARD = new ItemGroup("pvz_card") {
 		@Override
-		public ItemStack createIcon() {
+		public ItemStack makeIcon() {
 			return new ItemStack(ItemRegister.PEA_SHOOTER_CARD.get());
 		}
 	};

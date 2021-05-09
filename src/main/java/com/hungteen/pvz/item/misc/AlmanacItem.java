@@ -20,12 +20,12 @@ import net.minecraftforge.fml.network.NetworkHooks;
 public class AlmanacItem extends Item{
 
 	public AlmanacItem() {
-		super(new Properties().group(GroupRegister.PVZ_MISC).maxStackSize(1));
+		super(new Properties().tab(GroupRegister.PVZ_MISC).stacksTo(1));
 	}
 
 	@Override
-	public ActionResult<ItemStack> onItemRightClick(World worldIn, PlayerEntity playerIn, Hand handIn) {
-		if(!worldIn.isRemote&&playerIn instanceof ServerPlayerEntity) {
+	public ActionResult<ItemStack> use(World worldIn, PlayerEntity playerIn, Hand handIn) {
+		if(!worldIn.isClientSide&&playerIn instanceof ServerPlayerEntity) {
 			NetworkHooks.openGui((ServerPlayerEntity) playerIn, new INamedContainerProvider() {
 
 				@Override
@@ -40,7 +40,7 @@ public class AlmanacItem extends Item{
 				}
 			});
 		}
-		return ActionResult.resultPass(playerIn.getHeldItem(handIn));
+		return ActionResult.pass(playerIn.getItemInHand(handIn));
 	}
 	
 }

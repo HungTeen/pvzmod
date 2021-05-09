@@ -15,15 +15,15 @@ public abstract class SwimmerZombieEntity extends PVZZombieEntity{
 	
 	public SwimmerZombieEntity(EntityType<? extends MonsterEntity> type, World worldIn) {
 		super(type, worldIn);
-		setPathPriority(PathNodeType.WATER, 0);
+		setPathfindingMalus(PathNodeType.WATER, 0);
 	}
 	
 	@Override
 	public void tick() {
 		super.tick();
-		if(!world.isRemote) {
+		if(!level.isClientSide) {
 			if(this.isInWater() || this.isInLava()) {
-				if(this.getAttackTarget() != null && this.getDistanceSq(this.getAttackTarget()) <= UP_DISTANCE) {
+				if(this.getTarget() != null && this.distanceToSqr(this.getTarget()) <= UP_DISTANCE) {
 					this.setPose(Pose.SPIN_ATTACK);
 				}else {
 					this.setPose(Pose.SWIMMING);
@@ -35,7 +35,7 @@ public abstract class SwimmerZombieEntity extends PVZZombieEntity{
 	}
 	
 	@Override
-	public EntitySize getSize(Pose poseIn) {
+	public EntitySize getDimensions(Pose poseIn) {
 		if(this.isMiniZombie()) {
 			return new EntitySize(0.4f, 0.6f, false);
 		}
@@ -53,7 +53,7 @@ public abstract class SwimmerZombieEntity extends PVZZombieEntity{
 	}
 	
 	@Override
-	public boolean isPushedByWater() {
+	public boolean isPushedByFluid() {
 		return false;
 	}
 

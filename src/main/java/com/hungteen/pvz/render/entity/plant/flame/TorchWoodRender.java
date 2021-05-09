@@ -23,7 +23,7 @@ public class TorchWoodRender extends PVZPlantRender<TorchWoodEntity>{
 	}
 
 	@Override
-	public ResourceLocation getEntityTexture(TorchWoodEntity entity) {
+	public ResourceLocation getTextureLocation(TorchWoodEntity entity) {
 		if(entity.IsSuperFlame()) return StringUtil.prefix("textures/entity/plant/flame/blue_torch_wood.png");
 		return StringUtil.prefix("textures/entity/plant/flame/yellow_torch_wood.png");
 	}

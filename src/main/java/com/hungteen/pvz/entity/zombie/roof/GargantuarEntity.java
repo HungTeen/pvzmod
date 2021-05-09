@@ -24,8 +24,8 @@ import net.minecraft.entity.EntityType;
 import net.minecraft.entity.ILivingEntityData;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.Pose;
-import net.minecraft.entity.SharedMonsterAttributes;
 import net.minecraft.entity.SpawnReason;
+import net.minecraft.entity.ai.attributes.Attributes;
 import net.minecraft.entity.ai.goal.Goal;
 import net.minecraft.entity.ai.goal.WaterAvoidingRandomWalkingGoal;
 import net.minecraft.entity.monster.MonsterEntity;
@@ -36,15 +36,15 @@ import net.minecraft.network.datasync.EntityDataManager;
 import net.minecraft.util.Hand;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.SoundEvent;
-import net.minecraft.util.math.Vec3d;
+import net.minecraft.util.math.vector.Vector3d;
 import net.minecraft.world.DifficultyInstance;
-import net.minecraft.world.IWorld;
+import net.minecraft.world.IServerWorld;
 import net.minecraft.world.World;
 
 public class GargantuarEntity extends PVZZombieEntity {
 
-	private static final DataParameter<Boolean> HAS_IMP = EntityDataManager.createKey(GargantuarEntity.class, DataSerializers.BOOLEAN);
-	private static final DataParameter<Integer> TOOL_TYPE = EntityDataManager.createKey(GargantuarEntity.class, DataSerializers.VARINT);
+	private static final DataParameter<Boolean> HAS_IMP = EntityDataManager.defineId(GargantuarEntity.class, DataSerializers.BOOLEAN);
+	private static final DataParameter<Integer> TOOL_TYPE = EntityDataManager.defineId(GargantuarEntity.class, DataSerializers.INT);
 	public boolean isSad = false;
 	
 	public GargantuarEntity(EntityType<? extends MonsterEntity> type, World worldIn) {
@@ -53,19 +53,19 @@ public class GargantuarEntity extends PVZZombieEntity {
 	}
 	
 	@Override
-	public ILivingEntityData onInitialSpawn(IWorld worldIn, DifficultyInstance difficultyIn, SpawnReason reason,
+	public ILivingEntityData finalizeSpawn(IServerWorld worldIn, DifficultyInstance difficultyIn, SpawnReason reason,
 			ILivingEntityData spawnDataIn, CompoundNBT dataTag) {
-		if(! world.isRemote) {
-			this.setToolType(GargantuarType.values()[this.getRNG().nextInt(GargantuarType.values().length)]);
+		if(! level.isClientSide) {
+			this.setToolType(GargantuarType.values()[this.getRandom().nextInt(GargantuarType.values().length)]);
 		}
-		return super.onInitialSpawn(worldIn, difficultyIn, reason, spawnDataIn, dataTag);
+		return super.finalizeSpawn(worldIn, difficultyIn, reason, spawnDataIn, dataTag);
 	}
 	
 	@Override
-	protected void registerData() {
-		super.registerData();
-		this.dataManager.register(HAS_IMP, true);
-		this.dataManager.register(TOOL_TYPE, GargantuarType.DOLL.ordinal());
+	protected void defineSynchedData() {
+		super.defineSynchedData();
+		this.entityData.define(HAS_IMP, true);
+		this.entityData.define(TOOL_TYPE, GargantuarType.DOLL.ordinal());
 	}
 	
 	@Override
@@ -81,25 +81,25 @@ public class GargantuarEntity extends PVZZombieEntity {
 	}
 	
 	@Override
-	protected void registerAttributes() {
-		super.registerAttributes();
-		this.getAttribute(SharedMonsterAttributes.MOVEMENT_SPEED).setBaseValue(ZombieUtil.SLOW);
+	protected void updateAttributes() {
+		super.updateAttributes();
+		this.getAttribute(Attributes.MOVEMENT_SPEED).setBaseValue(ZombieUtil.SLOW);
 	}
 	
 	public void throwImp(LivingEntity target) {
 		EntityUtil.playSound(this, SoundRegister.THROW_IMP.get());
-		Vec3d vec = new Vec3d(this.getRNG().nextFloat() - 0.5, this.getRNG().nextFloat() / 4, this.getRNG().nextFloat() - 0.5).normalize();
+		Vector3d vec = new Vector3d(this.getRandom().nextFloat() - 0.5, this.getRandom().nextFloat() / 4, this.getRandom().nextFloat() - 0.5).normalize();
 		if(target != null) {
 			double speed = 2F;
-			vec = target.getPositionVec().subtract(this.getPositionVec()).normalize().scale(speed);
+			vec = target.position().subtract(this.position()).normalize().scale(speed);
 		} else {
 			double speed = 0.5F;
 			vec = vec.scale(speed);
 		}
-		ImpEntity imp = EntityRegister.IMP.get().create(world);
-		imp.setMotion(vec);
+		ImpEntity imp = EntityRegister.IMP.get().create(level);
+		imp.setDeltaMovement(vec);
 		imp.setCharmed(this.isCharmed());
-		EntityUtil.onMobEntitySpawn(world, imp, getPosition().add(0, this.getHeight(), 0));
+		EntityUtil.onMobEntitySpawn(level, imp, blockPosition().offset(0, this.getBbHeight(), 0));
 		this.setHasImp(false);
 	}
 	
@@ -110,12 +110,12 @@ public class GargantuarEntity extends PVZZombieEntity {
 	}
 	
 	@Override
-	public boolean attackEntityAsMob(Entity entityIn) {
-		if(! world.isRemote) {
+	public boolean doHurtTarget(Entity entityIn) {
+		if(! level.isClientSide) {
 			EntityUtil.playSound(this, SoundRegister.GROUND_SHAKE.get());
 		}
 		if(!EntityUtil.isEntityValid(entityIn)) return false;
-		return super.attackEntityAsMob(entityIn);
+		return super.doHurtTarget(entityIn);
 	}
 	
 	@Override
@@ -132,9 +132,9 @@ public class GargantuarEntity extends PVZZombieEntity {
 	}
 	
 	@Override
-	public EntitySize getSize(Pose poseIn) {
-		if(this.isMiniZombie()) return EntitySize.flexible(0.6F, 1.8F);
-		return EntitySize.flexible(0.95f, 4f);
+	public EntitySize getDimensions(Pose poseIn) {
+		if(this.isMiniZombie()) return EntitySize.scalable(0.6F, 1.8F);
+		return EntitySize.scalable(0.95f, 4f);
 	}
 	
 	public boolean canThrowImp() {
@@ -165,7 +165,7 @@ public class GargantuarEntity extends PVZZombieEntity {
 	}
 	
 	@Override
-	public int getTalkInterval() {
+	public int getAmbientSoundInterval() {
 		return 200;
 	}
 
@@ -175,8 +175,8 @@ public class GargantuarEntity extends PVZZombieEntity {
 	}
 
 	@Override
-	public void readAdditional(CompoundNBT compound) {
-		super.readAdditional(compound);
+	public void readAdditionalSaveData(CompoundNBT compound) {
+		super.readAdditionalSaveData(compound);
 		if(compound.contains("has_imp")) {
 			this.setHasImp(compound.getBoolean("has_imp"));
 		}
@@ -186,30 +186,30 @@ public class GargantuarEntity extends PVZZombieEntity {
 	}
 	
 	@Override
-	public void writeAdditional(CompoundNBT compound) {
-		super.writeAdditional(compound);
+	public void addAdditionalSaveData(CompoundNBT compound) {
+		super.addAdditionalSaveData(compound);
 		compound.putBoolean("has_imp", this.hasImp());
 		compound.putInt("weapon_type", this.getToolType().ordinal());
 	}
 	
 	public void setHasImp(boolean has) {
-		this.dataManager.set(HAS_IMP, has);
+		this.entityData.set(HAS_IMP, has);
 	}
 	
 	public boolean hasImp() {
-		return this.dataManager.get(HAS_IMP);
+		return this.entityData.get(HAS_IMP);
 	}
 	
 	public void setToolType(GargantuarType type) {
-		this.dataManager.set(TOOL_TYPE, type.ordinal());
+		this.entityData.set(TOOL_TYPE, type.ordinal());
 	}
 	
 	public GargantuarType getToolType() {
-		return GargantuarType.values()[this.dataManager.get(TOOL_TYPE)];
+		return GargantuarType.values()[this.entityData.get(TOOL_TYPE)];
 	}
 	
 	@Override
-	protected ResourceLocation getLootTable() {
+	protected ResourceLocation getDefaultLootTable() {
 		return PVZLoot.GARGANTUAR;
 	}
 	
@@ -226,13 +226,13 @@ public class GargantuarEntity extends PVZZombieEntity {
 		}
 		
 		@Override
-		public boolean shouldExecute() {
-			return this.zombie.getAttackTime() == 0 && super.shouldExecute();
+		public boolean canUse() {
+			return this.zombie.getAttackTime() == 0 && super.canUse();
 		}
 		
 		@Override
-		public boolean shouldContinueExecuting() {
-			return this.zombie.getAttackTime() == 0 && super.shouldContinueExecuting();
+		public boolean canContinueToUse() {
+			return this.zombie.getAttackTime() == 0 && super.canContinueToUse();
 		}
 		
 		@Override
@@ -241,7 +241,7 @@ public class GargantuarEntity extends PVZZombieEntity {
 			double range = this.getAttackReachSqr(target);
 			if (range >= dis && this.attackTick <= 0) {
 				this.attackTick = this.zombie.getAttackCD();
-				this.attacker.swingArm(Hand.MAIN_HAND);
+				this.attacker.swing(Hand.MAIN_HAND);
 				this.zombie.setAttackTime(GargantuarEntity.this.getCrushCD());
 			}
 		}
@@ -254,16 +254,16 @@ public class GargantuarEntity extends PVZZombieEntity {
 		
 		public CrushAttackGoal(GargantuarEntity creature) {
 			this.attacker = creature;
-			this.setMutexFlags(EnumSet.of(Goal.Flag.MOVE, Goal.Flag.LOOK));
+			this.setFlags(EnumSet.of(Goal.Flag.MOVE, Goal.Flag.LOOK));
 		}
 		
 		@Override
-		public boolean shouldExecute() {
+		public boolean canUse() {
 			return this.attacker.getAttackTime() > 0;
 		}
 		
 		@Override
-		public boolean shouldContinueExecuting() {
+		public boolean canContinueToUse() {
 			return this.attacker.getAttackTime() > 0;
 		}
 		
@@ -272,7 +272,7 @@ public class GargantuarEntity extends PVZZombieEntity {
 			if(this.attacker.canZombieNormalUpdate() && this.attacker.getAttackTime() > 0) {
 				this.attacker.setAttackTime(this.attacker.getAttackTime() - 1);
 				if(this.attacker.getAttackTime() == this.attacker.getCrushCD() * 1 / 3) {
-					this.attacker.attackEntityAsMob(this.attacker.getAttackTarget());
+					this.attacker.doHurtTarget(this.attacker.getTarget());
 				}
 			}
 		}
@@ -285,26 +285,26 @@ public class GargantuarEntity extends PVZZombieEntity {
 		
 		public ThrowImpGoal(GargantuarEntity creature) {
 			this.attacker = creature;
-			this.setMutexFlags(EnumSet.of(Goal.Flag.MOVE, Goal.Flag.LOOK));
+			this.setFlags(EnumSet.of(Goal.Flag.MOVE, Goal.Flag.LOOK));
 		}
 		
 		@Override
-		public boolean shouldExecute() {
+		public boolean canUse() {
 			return this.attacker.hasImp() && this.attacker.canThrowImp();
 		}
 		
 		@Override
-		public void startExecuting() {
+		public void start() {
 			this.attacker.setAttackTime(- this.attacker.getThrowCD());
 		}
 		
 		@Override
-		public boolean shouldContinueExecuting() {
+		public boolean canContinueToUse() {
 			return this.attacker.getAttackTime() < 0;
 		}
 		
 		@Override
-		public void resetTask() {
+		public void stop() {
 			this.attacker.setAttackTime(0);
 		}
 		
@@ -313,7 +313,7 @@ public class GargantuarEntity extends PVZZombieEntity {
 			if(this.attacker.canZombieNormalUpdate() && this.attacker.getAttackTime() < 0) {
 				this.attacker.setAttackTime(this.attacker.getAttackTime() + 1);
 				if(this.attacker.hasImp() && - this.attacker.getAttackTime() == this.attacker.getThrowCD() * 1 / 4) {
-					this.attacker.throwImp(this.attacker.getAttackTarget());
+					this.attacker.throwImp(this.attacker.getTarget());
 				}
 			}
 		}

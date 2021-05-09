@@ -17,7 +17,7 @@ public class NewspaperZombieRender extends AbstractPaperZombieRender<NewspaperZo
 	}
 
 	@Override
-	public ResourceLocation getEntityTexture(NewspaperZombieEntity entity) {
+	public ResourceLocation getTextureLocation(NewspaperZombieEntity entity) {
 		return StringUtil.prefix("textures/entity/zombie/grassnight/newspaper_zombie.png");
 	}
 

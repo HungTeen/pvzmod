@@ -27,7 +27,7 @@ public class MysteryShopContainer extends AbstractDaveShopContainer {
 	
 	public MysteryShopContainer(int id, PlayerEntity player) {
 		super(ContainerRegister.MYSTERY_SHOP.get(), id, player);
-		if(! player.world.isRemote) {
+		if(! player.level.isClientSide) {
 			sendMysteryGoodsPacket(player, -1);
 		}
 	}
@@ -40,9 +40,9 @@ public class MysteryShopContainer extends AbstractDaveShopContainer {
 				sendMysteryGoodsPacket(player, pos);
 			});
 			PlayerUtil.addPlayerStats(player, Resources.GEM_NUM, - TradeUtil.getGoodCost(good.setType(type)));
-			this.output.setInventorySlotContents(0, TradeUtil.getGoodItemStack(good.setType(type)));
+			this.output.setItem(0, TradeUtil.getGoodItemStack(good.setType(type)));
 		}
-		this.player.world.playSound(null, this.player.getPosition(), SoundRegister.DAVE_BUY.get(), SoundCategory.AMBIENT, 1f, 1f);
+		this.player.level.playSound(null, this.player, SoundRegister.DAVE_BUY.get(), SoundCategory.AMBIENT, 1f, 1f);
 	}
 	
 	public static void genNextGoods(PlayerEntity player) {
@@ -54,7 +54,7 @@ public class MysteryShopContainer extends AbstractDaveShopContainer {
 				array.add(sum);
 			}
 			for(int i = 0; i < l.getPlayerData().getOtherStats().mysteryGoods.length; ++ i) {
-				int now = player.world.rand.nextInt(sum);
+				int now = player.level.random.nextInt(sum);
 				for(int j = 0; j < array.size(); ++ j) {
 					if(now < array.get(j)) {
 						l.getPlayerData().getOtherStats().mysteryGoods[i] = j;

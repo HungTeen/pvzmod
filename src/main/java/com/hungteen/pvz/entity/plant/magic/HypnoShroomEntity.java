@@ -25,21 +25,21 @@ public class HypnoShroomEntity extends PVZPlantEntity {
 	}
 
 	@Override
-	public void onDeath(DamageSource cause) {
-		super.onDeath(cause);
-		if(! world.isRemote && ! this.isPlantSleeping()) {
+	public void die(DamageSource cause) {
+		super.die(cause);
+		if(! level.isClientSide && ! this.isPlantSleeping()) {
 			if(cause instanceof PVZDamageSource && ((PVZDamageSource) cause).getPVZDamageType() == PVZDamageType.EAT) {
 				if(this.isPlantInSuperMode()) {
-					if(cause.getTrueSource() != null) {
-						cause.getTrueSource().remove();
-						GargantuarEntity gar = EntityRegister.GARGANTUAR.get().create(world);
-						EntityUtil.onMobEntitySpawn(world, gar, cause.getTrueSource().getPosition());
+					if(cause.getEntity() != null) {
+						cause.getEntity().remove();
+						GargantuarEntity gar = EntityRegister.GARGANTUAR.get().create(level);
+						EntityUtil.onMobEntitySpawn(level, gar, cause.getEntity().blockPosition());
 						gar.setHealth(gar.getMaxHealth() * this.getSummonHealth());
 						gar.onCharmed(this);
 					}
 				} else {
-					if(cause.getTrueSource() instanceof PVZZombieEntity) {
-					    PVZZombieEntity zombie = (PVZZombieEntity) cause.getTrueSource();
+					if(cause.getEntity() instanceof PVZZombieEntity) {
+					    PVZZombieEntity zombie = (PVZZombieEntity) cause.getEntity();
 					    zombie.onCharmed(this);
 					    EntityUtil.playSound(this, SoundRegister.CHARM.get());
 					    float life = zombie.getHealth();
@@ -81,8 +81,8 @@ public class HypnoShroomEntity extends PVZPlantEntity {
 	}
 	
 	@Override
-	public EntitySize getSize(Pose poseIn) {
-		return EntitySize.flexible(0.7f, 1.9f);
+	public EntitySize getDimensions(Pose poseIn) {
+		return EntitySize.scalable(0.7f, 1.9f);
 	}
 	
 	/**

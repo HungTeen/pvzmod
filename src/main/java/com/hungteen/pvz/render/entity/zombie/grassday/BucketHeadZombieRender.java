@@ -17,7 +17,7 @@ public class BucketHeadZombieRender extends AbstractNormalRender<BucketHeadZombi
 	}
 
 	@Override
-	public ResourceLocation getEntityTexture(BucketHeadZombieEntity entity) {
+	public ResourceLocation getTextureLocation(BucketHeadZombieEntity entity) {
 		return StringUtil.prefix("textures/entity/zombie/grassday/buckethead_zombie.png");
 	}
 

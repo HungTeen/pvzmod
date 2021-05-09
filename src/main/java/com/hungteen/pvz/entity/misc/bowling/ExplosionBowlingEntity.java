@@ -32,9 +32,9 @@ public class ExplosionBowlingEntity extends AbstractBowlingEntity {
 	}
 	
 	private void bomb() {
-		if(! world.isRemote) {
+		if(! level.isClientSide) {
 		} else {
-			this.world.addParticle(ParticleRegister.RED_BOMB.get(), this.getPosX(), this.getPosY(), this.getPosZ(), 0, 0, 0);
+			this.level.addParticle(ParticleRegister.RED_BOMB.get(), this.getX(), this.getY(), this.getZ(), 0, 0, 0);
 		}
 	}
 	
@@ -43,7 +43,7 @@ public class ExplosionBowlingEntity extends AbstractBowlingEntity {
 		float len = 2.5F;
 		AxisAlignedBB aabb = EntityUtil.getEntityAABB(this, len, len);
 		EntityUtil.getAttackEntities(this, aabb).forEach((target) -> {
-			target.attackEntityFrom(PVZDamageSource.causeExplosionDamage(this, this), 180);
+			target.hurt(PVZDamageSource.causeExplosionDamage(this, this), 180);
 		});
 		EntityUtil.playSound(this, SoundRegister.BOWLING_BOMB.get());
 		this.setBowlingFacing(BowlingFacings.BOMB);

@@ -23,7 +23,7 @@ public class WaterGuardEntity extends PlantDefenderEntity{
 	}
 	
 	@Override
-	public EntitySize getSize(Pose poseIn) {
+	public EntitySize getDimensions(Pose poseIn) {
 		return new EntitySize(0.8f, 0.8f, false);
 	}
 	

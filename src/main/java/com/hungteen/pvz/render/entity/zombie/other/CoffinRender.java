@@ -28,7 +28,7 @@ public class CoffinRender extends UnderGroundZombieRender<CoffinEntity>{
 	}
 
 	@Override
-	public ResourceLocation getEntityTexture(CoffinEntity entity) {
+	public ResourceLocation getTextureLocation(CoffinEntity entity) {
 		return StringUtil.prefix("textures/entity/zombie/other/coffin.png");
 	}
 

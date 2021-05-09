@@ -37,7 +37,7 @@ import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.Direction;
 import net.minecraft.util.Hand;
-import net.minecraft.util.math.Vec3d;
+import net.minecraft.util.math.vector.Vector3d;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.TextFormatting;
 import net.minecraft.util.text.TranslationTextComponent;
@@ -61,7 +61,7 @@ public class PeaGunItem extends Item {
 //	private Inventory backpack = new Inventory(PEA_GUN_SLOT_NUM);
 
 	public PeaGunItem() {
-		super(new Properties().group(GroupRegister.PVZ_MISC).maxStackSize(1));
+		super(new Properties().tab(GroupRegister.PVZ_MISC).stacksTo(1));
 	}
 
 	@Nonnull
@@ -73,7 +73,7 @@ public class PeaGunItem extends Item {
 	public static Inventory getInventory(ItemStack stack) {
 		return new ItemInventory(stack, PEA_GUN_SLOT_NUM) {
 			@Override
-			public boolean isItemValidForSlot(int slot, @Nonnull ItemStack stack) {
+			public boolean canPlaceItem(int slot, @Nonnull ItemStack stack) {
 				if (slot == 0) {
 					return true;
 				} else {
@@ -98,16 +98,16 @@ public class PeaGunItem extends Item {
 	}
 
 	@Override
-	public int getItemEnchantability() {
+	public int getEnchantmentValue() {
 		return 1;
 	}
 
 	@Override
-	public ActionResult<ItemStack> onItemRightClick(World worldIn, PlayerEntity playerIn, Hand handIn) {
-		if (!worldIn.isRemote) {
+	public ActionResult<ItemStack> use(World worldIn, PlayerEntity playerIn, Hand handIn) {
+		if (!worldIn.isClientSide) {
 			if (handIn == Hand.MAIN_HAND) {
-				if(!this.checkAndShootPea(worldIn, playerIn, playerIn.getHeldItemMainhand())) {
-					return ActionResult.resultFail(playerIn.getHeldItem(handIn));
+				if(!this.checkAndShootPea(worldIn, playerIn, playerIn.getMainHandItem())) {
+					return ActionResult.fail(playerIn.getItemInHand(handIn));
 				}
 			} else { // offhand open gui
 				if (playerIn instanceof ServerPlayerEntity) {
@@ -127,17 +127,17 @@ public class PeaGunItem extends Item {
 				}
 			}
 		}
-		return ActionResult.resultSuccess(playerIn.getHeldItem(handIn));
+		return ActionResult.success(playerIn.getItemInHand(handIn));
 	}
 
 	public boolean checkAndShootPea(World world, PlayerEntity player, ItemStack itemStack) {
 		Inventory backpack = getInventory(itemStack);
-		ItemStack special = backpack.getStackInSlot(0);
+		ItemStack special = backpack.getItem(0);
 //		System.out.println(itemStack);
 		if (special.getItem() instanceof PlantCardItem) {
 			Plants plant = ((PlantCardItem) special.getItem()).plantType;
 			for (int i = 1; i < PEA_GUN_SLOT_NUM; i++) {
-				ItemStack stack = backpack.getStackInSlot(i);
+				ItemStack stack = backpack.getItem(i);
 				if (stack.isEmpty()) {
 					continue;
 				}
@@ -162,11 +162,11 @@ public class PeaGunItem extends Item {
 
 	private void shrinkItemStack(PlayerEntity player, Inventory backpack, int i, ItemStack stack) {
 		player.getCapability(CapabilityHandler.PLAYER_DATA_CAPABILITY).ifPresent((l) -> {
-			boolean flag = EnchantmentHelper.getEnchantmentLevel(Enchantments.INFINITY, stack) > 0;
+			boolean flag = EnchantmentHelper.getItemEnchantmentLevel(Enchantments.INFINITY_ARROWS, stack) > 0;
 			int lvl = l.getPlayerData().getPlayerStats().getPlayerStats(Resources.TREE_LVL);
 			int cnt = (lvl - 1) / 10 * 5 + 5;
 			if (!flag || random.nextInt(100) >= cnt) {
-				backpack.decrStackSize(i, 1);
+				backpack.removeItem(i, 1);
 			}
 		});
 	}
@@ -224,25 +224,25 @@ public class PeaGunItem extends Item {
 					peaType = PeaEntity.Type.HUGE;
 				}
 			}
-			PeaEntity pea = new PeaEntity(player.world, player, peaType, getPeaState(plant, stack.getItem()));
-			pea.setPower(EnchantmentHelper.getEnchantmentLevel(Enchantments.POWER, peaGun));// Power Enchantment can affect pea gun.
-			Vec3d vec = player.getLookVec();
-			Vec3d offset = vec.scale(SHOOT_OFFSET);
-			pea.setPosition(player.getPosX() + offset.x, player.getPosY() + player.getEyeHeight() + offset.y,
-					player.getPosZ() + offset.z);
+			PeaEntity pea = new PeaEntity(player.level, player, peaType, getPeaState(plant, stack.getItem()));
+			pea.setPower(EnchantmentHelper.getItemEnchantmentLevel(Enchantments.POWER_ARROWS, peaGun));// Power Enchantment can affect pea gun.
+			Vector3d vec = player.getLookAngle();
+			Vector3d offset = vec.scale(SHOOT_OFFSET);
+			pea.setPos(player.getX() + offset.x, player.getY() + player.getEyeHeight() + offset.y,
+					player.getZ() + offset.z);
 			float speed = PEA_SPEED;
 			if (plant == Plants.REPEATER || plant == Plants.GATLING_PEA) {
 				speed -= 0.2 * type;
 			} else if (plant == Plants.THREE_PEATER) { 
 				offset = offset.scale(2);
 				if (type == 1) {
-					pea.setPosition(player.getPosX() + offset.x + offset.z,
-							player.getPosY() + player.getEyeHeight() + offset.y,
-							player.getPosZ() + offset.z - offset.x);
+					pea.setPos(player.getX() + offset.x + offset.z,
+							player.getY() + player.getEyeHeight() + offset.y,
+							player.getZ() + offset.z - offset.x);
 				} else if (type == 2) {
-					pea.setPosition(player.getPosX() + offset.x - offset.z,
-							player.getPosY() + player.getEyeHeight() + offset.y,
-							player.getPosZ() + offset.z + offset.x);
+					pea.setPos(player.getX() + offset.x - offset.z,
+							player.getY() + player.getEyeHeight() + offset.y,
+							player.getZ() + offset.z + offset.x);
 				}
 			} else if(plant == Plants.SPLIT_PEA) {
 				if(type > 0) {
@@ -250,8 +250,8 @@ public class PeaGunItem extends Item {
 					if(type == 2) speed += 0.2;
 				}
 			}
-			pea.setMotion(vec.scale(speed));
-			player.world.addEntity(pea);
+			pea.setDeltaMovement(vec.scale(speed));
+			player.level.addFreshEntity(pea);
 		});
 	}
 
@@ -279,13 +279,13 @@ public class PeaGunItem extends Item {
 			int CD = 30 - 2 * now;
 			if (lvl > 90)
 				CD -= 2;
-			player.getCooldownTracker().setCooldown(this, CD);
+			player.getCooldowns().addCooldown(this, CD);
 		});
 	}
 
 	@Override
-	public void addInformation(ItemStack stack, World worldIn, List<ITextComponent> tooltip, ITooltipFlag flagIn) {
-		tooltip.add(new TranslationTextComponent("tooltip.pvz.pea_gun").applyTextStyle(TextFormatting.GREEN));
+	public void appendHoverText(ItemStack stack, World worldIn, List<ITextComponent> tooltip, ITooltipFlag flagIn) {
+		tooltip.add(new TranslationTextComponent("tooltip.pvz.pea_gun").withStyle(TextFormatting.GREEN));
 	}
 
 	@Override

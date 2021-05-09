@@ -23,7 +23,7 @@ public class ThreePeaterRender extends PVZPlantRender<ThreePeaterEntity>{
 	}
 
 	@Override
-	public ResourceLocation getEntityTexture(ThreePeaterEntity entity) {
+	public ResourceLocation getTextureLocation(ThreePeaterEntity entity) {
 		return StringUtil.prefix("textures/entity/plant/appease/three_peater.png");
 	}
 

@@ -18,22 +18,24 @@ import net.minecraft.network.datasync.DataParameter;
 import net.minecraft.network.datasync.DataSerializers;
 import net.minecraft.network.datasync.EntityDataManager;
 import net.minecraft.particles.ParticleTypes;
+import net.minecraft.util.ActionResultType;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.Hand;
+import net.minecraft.util.math.vector.Vector3d;
 import net.minecraft.world.World;
 
 public abstract class PlantDefenderEntity extends PVZPlantEntity implements IDefender{
 
-	private static final DataParameter<Float> DEFENCE_LIFE = EntityDataManager.createKey(PlantDefenderEntity.class, DataSerializers.FLOAT);
+	private static final DataParameter<Float> DEFENCE_LIFE = EntityDataManager.defineId(PlantDefenderEntity.class, DataSerializers.FLOAT);
 	
 	public PlantDefenderEntity(EntityType<? extends CreatureEntity> type, World worldIn) {
 		super(type, worldIn);
 	}
 	
 	@Override
-	protected void registerData() {
-		super.registerData();
-		dataManager.register(DEFENCE_LIFE, 0f);
+	protected void defineSynchedData() {
+		super.defineSynchedData();
+		entityData.define(DEFENCE_LIFE, 0f);
 	}
 	
 	@Override
@@ -43,7 +45,7 @@ public abstract class PlantDefenderEntity extends PVZPlantEntity implements IDef
 			@Override
 			protected boolean checkOther(LivingEntity entity) {
 				if(entity instanceof MobEntity) {
-					return ! (((MobEntity) entity).getAttackTarget() instanceof PlantDefenderEntity);
+					return ! (((MobEntity) entity).getTarget() instanceof PlantDefenderEntity);
 				}
 				return false;
 			}
@@ -53,10 +55,10 @@ public abstract class PlantDefenderEntity extends PVZPlantEntity implements IDef
 	@Override
 	protected void normalPlantTick() {
 		super.normalPlantTick();
-		if(! world.isRemote) {
-			if(this.getAttackTarget() != null) {
+		if(! level.isClientSide) {
+			if(this.getTarget() != null) {
 				this.attract();
-				this.setAttackTarget(null);
+				this.setTarget(null);
 			}
 		}
 	}
@@ -78,8 +80,8 @@ public abstract class PlantDefenderEntity extends PVZPlantEntity implements IDef
 	
 	public void attract(LivingEntity target) {
 		if(target instanceof MobEntity) {
-			if(!(((MobEntity) target).getAttackTarget() instanceof PlantDefenderEntity)) {
-				((MobEntity) target).setAttackTarget(this);
+			if(!(((MobEntity) target).getTarget() instanceof PlantDefenderEntity)) {
+				((MobEntity) target).setTarget(this);
 			}
 		}
 	}
@@ -90,38 +92,38 @@ public abstract class PlantDefenderEntity extends PVZPlantEntity implements IDef
 	}
 	
 	@Override
-	protected boolean processInteract(PlayerEntity player, Hand hand) {
-		super.processInteract(player, hand);
-		ItemStack stack = player.getHeldItem(hand);
+	public ActionResultType interactAt(PlayerEntity player, Vector3d vec3d, Hand hand) {
+		super.interactAt(player, vec3d, hand);
+		ItemStack stack = player.getItemInHand(hand);
 		if(stack.getItem() instanceof PlantCardItem && this.getHealth() != this.getMaxHealth()) {
 			PlantCardItem cardItem = (PlantCardItem) stack.getItem();
 			if(cardItem.plantType == this.getPlantEnumName()) { // nut heal 
-				if(! world.isRemote) {
+				if(! level.isClientSide) {
 					PlantCardItem.checkSunAndHealPlant(player, this, cardItem, stack);
 				} else {
 					for(int i = 0; i < 4; ++ i) {
-						this.world.addParticle(ParticleTypes.HEART, this.getPosX(), this.getPosY() + this.getHeight(), this.getPosZ(), (this.getRNG().nextFloat()-0.5f)/8, 0.05f, (this.getRNG().nextFloat()-0.5f)/8);
+						this.level.addParticle(ParticleTypes.HEART, this.getX(), this.getY() + this.getBbHeight(), this.getZ(), (this.getRandom().nextFloat()-0.5f)/8, 0.05f, (this.getRandom().nextFloat()-0.5f)/8);
 					}
 				}
-				return true;
+				return ActionResultType.CONSUME;
 			} else if(cardItem instanceof ImitaterCardItem && ((ImitaterCardItem) cardItem).isPlantTypeEqual(stack, this.getPlantEnumName())) {
-				if(! world.isRemote) {
+				if(! level.isClientSide) {
 					PlantCardItem.checkSunAndHealPlant(player, this, cardItem, stack);
 				} else {
 					for(int i = 0; i < 4; ++ i) {
-						this.world.addParticle(ParticleTypes.HEART, this.getPosX(), this.getPosY() + this.getHeight(), this.getPosZ(), (this.getRNG().nextFloat()-0.5f)/8, 0.05f, (this.getRNG().nextFloat()-0.5f)/8);
+						this.level.addParticle(ParticleTypes.HEART, this.getX(), this.getY() + this.getBbHeight(), this.getZ(), (this.getRandom().nextFloat()-0.5f)/8, 0.05f, (this.getRandom().nextFloat()-0.5f)/8);
 					}
 				}
-				return true;
+				return ActionResultType.CONSUME;
 			}
 		}
-		return false;
+		return ActionResultType.FAIL;
 	}
 	
 	@Override
-	public boolean attackEntityFrom(DamageSource source, float amount) {
+	public boolean hurt(DamageSource source, float amount) {
 		amount = this.pumpkinReduceDamage(source, amount);
-		if(! world.isRemote && this.getDefenceLife() > 0) {
+		if(! level.isClientSide && this.getDefenceLife() > 0) {
 			if(this.getDefenceLife() > amount) { // damage armor health first
 				this.setDefenceLife(this.getDefenceLife() - amount);
 				amount = 0;
@@ -131,7 +133,7 @@ public abstract class PlantDefenderEntity extends PVZPlantEntity implements IDef
 			}
 		}
 		if(amount == 0) amount = 0.001F;
-		return super.attackEntityFrom(source, amount);
+		return super.hurt(source, amount);
 	}
 	
 	public float getAttractRange() {
@@ -144,24 +146,24 @@ public abstract class PlantDefenderEntity extends PVZPlantEntity implements IDef
 	}
 	
 	public float getDefenceLife() {
-		return dataManager.get(DEFENCE_LIFE);
+		return entityData.get(DEFENCE_LIFE);
 	}
 	
 	public void setDefenceLife(float life) {
-		dataManager.set(DEFENCE_LIFE, life);
+		entityData.set(DEFENCE_LIFE, life);
 	}
 	
 	@Override
-	public void readAdditional(CompoundNBT compound) {
-		super.readAdditional(compound);
+	public void readAdditionalSaveData(CompoundNBT compound) {
+		super.readAdditionalSaveData(compound);
 		if(compound.contains("defence_life")) {
 			this.setDefenceLife(compound.getFloat("defence_life"));
 		}
 	}
 	
 	@Override
-	public void writeAdditional(CompoundNBT compound) {
-		super.writeAdditional(compound);
+	public void addAdditionalSaveData(CompoundNBT compound) {
+		super.addAdditionalSaveData(compound);
 		compound.putFloat("defence_life", this.getDefenceLife());
 	}
 	

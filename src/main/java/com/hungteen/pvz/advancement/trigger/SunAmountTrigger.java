@@ -1,6 +1,5 @@
 package com.hungteen.pvz.advancement.trigger;
 
-import com.google.gson.JsonDeserializationContext;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.hungteen.pvz.advancement.predicate.AmountPredicate;
@@ -8,7 +7,10 @@ import com.hungteen.pvz.utils.StringUtil;
 
 import net.minecraft.advancements.criterion.AbstractCriterionTrigger;
 import net.minecraft.advancements.criterion.CriterionInstance;
+import net.minecraft.advancements.criterion.EntityPredicate;
+import net.minecraft.advancements.criterion.EntityPredicate.AndPredicate;
 import net.minecraft.entity.player.ServerPlayerEntity;
+import net.minecraft.loot.ConditionArrayParser;
 import net.minecraft.util.ResourceLocation;
 
 public class SunAmountTrigger extends AbstractCriterionTrigger<SunAmountTrigger.Instance> {
@@ -23,13 +25,15 @@ public class SunAmountTrigger extends AbstractCriterionTrigger<SunAmountTrigger.
 	/**
 	 * Deserialize a ICriterionInstance of this trigger from the data in the JSON.
 	 */
-	public Instance deserializeInstance(JsonObject json, JsonDeserializationContext context) {
+	@Override
+	protected Instance createInstance(JsonObject json, AndPredicate player,
+			ConditionArrayParser p_230241_3_) {
 		AmountPredicate amount = AmountPredicate.deserialize(json.get("amount"));
-		return new Instance(amount);
+		return new Instance(player, amount);
 	}
 
 	public void trigger(ServerPlayerEntity player, int amount) {
-		this.func_227070_a_(player.getAdvancements(), (instance) -> {
+		this.trigger(player, (instance) -> {
 			return instance.test(player, amount);
 		});
 	}
@@ -37,8 +41,8 @@ public class SunAmountTrigger extends AbstractCriterionTrigger<SunAmountTrigger.
 	public static class Instance extends CriterionInstance {
 		private final AmountPredicate amount;
 
-		public Instance(AmountPredicate amount) {
-			super(ID);
+		public Instance(EntityPredicate.AndPredicate player, AmountPredicate amount) {
+			super(ID, player);
 			this.amount = amount;
 		}
 
@@ -46,7 +50,7 @@ public class SunAmountTrigger extends AbstractCriterionTrigger<SunAmountTrigger.
 			return this.amount.test(player, amount);
 		}
 
-		public JsonElement serialize() {
+		public JsonElement func_200288_b() {
 			JsonObject jsonobject = new JsonObject();
 			jsonobject.add("amount", this.amount.serialize());
 			return jsonobject;

@@ -12,8 +12,8 @@ import com.hungteen.pvz.utils.ZombieUtil;
 import com.hungteen.pvz.utils.enums.Zombies;
 
 import net.minecraft.entity.EntityType;
-import net.minecraft.entity.SharedMonsterAttributes;
 import net.minecraft.entity.SpawnReason;
+import net.minecraft.entity.ai.attributes.Attributes;
 import net.minecraft.entity.ai.controller.FlyingMovementController;
 import net.minecraft.entity.ai.controller.MovementController;
 import net.minecraft.entity.monster.MonsterEntity;
@@ -35,63 +35,63 @@ import net.minecraft.world.World;
 
 public class BalloonZombieEntity extends PVZZombieEntity {
 
-	private static final DataParameter<Boolean> HAS_BALLOON = EntityDataManager.createKey(BalloonZombieEntity.class, DataSerializers.BOOLEAN);
-	private PathNavigator FlyNavigator = new FlyingPathNavigator(this, world);
-	private PathNavigator GroundNavigator = new GroundPathNavigator(this, world);
+	private static final DataParameter<Boolean> HAS_BALLOON = EntityDataManager.defineId(BalloonZombieEntity.class, DataSerializers.BOOLEAN);
+	private PathNavigator FlyNavigator = new FlyingPathNavigator(this, level);
+	private PathNavigator GroundNavigator = new GroundPathNavigator(this, level);
 	
 	public BalloonZombieEntity(EntityType<? extends MonsterEntity> type, World worldIn) {
 		super(type, worldIn);
-		this.moveController = new FlyingMovementController(this, 360, true);
+		this.moveControl = new FlyingMovementController(this, 360, true);
 		this.setBalloon(true);
 	}
 	
 	@Override
-	protected void registerData() {
-		super.registerData();
-		this.dataManager.register(HAS_BALLOON, true);
+	protected void defineSynchedData() {
+		super.defineSynchedData();
+		this.entityData.define(HAS_BALLOON, true);
 	}
 	
 	@Override
 	protected void registerGoals() {
-		this.FlyNavigator = new FlyingPathNavigator(this, world);
-		this.GroundNavigator = new GroundPathNavigator(this, world);
+		this.FlyNavigator = new FlyingPathNavigator(this, level);
+		this.GroundNavigator = new GroundPathNavigator(this, level);
 		super.registerGoals();
 	}
 	
 	@Override
-	protected void registerAttributes() {
-		super.registerAttributes();
-		this.getAttribute(SharedMonsterAttributes.MOVEMENT_SPEED).setBaseValue(ZombieUtil.SLOW);
-		this.getAttributes().registerAttribute(SharedMonsterAttributes.FLYING_SPEED).setBaseValue(ZombieUtil.FLY_FAST);
+	protected void updateAttributes() {
+		super.updateAttributes();
+		this.getAttribute(Attributes.MOVEMENT_SPEED).setBaseValue(ZombieUtil.SLOW);
+		this.getAttribute(Attributes.FLYING_SPEED).setBaseValue(ZombieUtil.FLY_FAST);
 	}
 	
 	@Override
 	public boolean isInvulnerableTo(DamageSource source) {
-		if(source.getDamageType() == DamageSource.FALL.damageType) return true;
+		if(source.getMsgId() == DamageSource.FALL.msgId) return true;
 		return super.isInvulnerableTo(source);
 	}
 	
 	@Override
-	public boolean attackEntityFrom(DamageSource source, float amount) {
+	public boolean hurt(DamageSource source, float amount) {
 		if(source instanceof PVZDamageSource && ((PVZDamageSource) source).getPVZDamageType() == PVZDamageType.THORN && this.hasBalloon()) {
 			this.onBalloonExplode();
 			amount = 0;
 		}
-		return super.attackEntityFrom(source, amount);
+		return super.hurt(source, amount);
 	}
 	
 	public void onBalloonExplode(){
-		if(! world.isRemote) {
+		if(! level.isClientSide) {
 			EntityUtil.playSound(this, SoundRegister.BALLOON_POP.get());
 		}
 		this.setBalloon(false);
 		this.setNoGravity(false);
-		this.moveController = new MovementController(this);
+		this.moveControl = new MovementController(this);
 	}
 	
 	public static boolean canBalloonSpawn(EntityType<? extends PVZZombieEntity> zombieType, IWorld worldIn,
 			SpawnReason reason, BlockPos pos, Random rand) {
-		return worldIn.getLightFor(LightType.BLOCK, pos) < 8 && worldIn.getDifficulty() != Difficulty.PEACEFUL && (reason == SpawnReason.SPAWNER || worldIn.isAirBlock(pos));
+		return worldIn.getBrightness(LightType.BLOCK, pos) < 8 && worldIn.getDifficulty() != Difficulty.PEACEFUL && (reason == SpawnReason.SPAWNER || worldIn.isEmptyBlock(pos));
 	}
 	
 	@Override
@@ -105,43 +105,43 @@ public class BalloonZombieEntity extends PVZZombieEntity {
 	}
 	
 	@Override
-	public PathNavigator getNavigator() {
+	public PathNavigator getNavigation() {
 		if(this.hasBalloon()) {
-			if(! (this.navigator instanceof FlyingPathNavigator)) {
-			    this.navigator = this.FlyNavigator;
+			if(! (this.navigation instanceof FlyingPathNavigator)) {
+			    this.navigation = this.FlyNavigator;
 			}
 		} else {
-			if(! (this.navigator instanceof GroundPathNavigator)) {
-				this.navigator = this.GroundNavigator;
+			if(! (this.navigation instanceof GroundPathNavigator)) {
+				this.navigation = this.GroundNavigator;
 			}
 		}
-		return super.getNavigator();
+		return super.getNavigation();
 	}
 	
 	@Override
-	public void readAdditional(CompoundNBT compound) {
-		super.readAdditional(compound);
+	public void readAdditionalSaveData(CompoundNBT compound) {
+		super.readAdditionalSaveData(compound);
 		if(compound.contains("HAS_BALLOON")) {
 			this.setBalloon(compound.getBoolean("HAS_BALLOON"));
 		}
 	}
 	
 	@Override
-	public void writeAdditional(CompoundNBT compound) {
-		super.writeAdditional(compound);
+	public void addAdditionalSaveData(CompoundNBT compound) {
+		super.addAdditionalSaveData(compound);
 		compound.putBoolean("HAS_BALLOON", this.hasBalloon());
 	}
 	
 	public void setBalloon(boolean has) {
-		this.dataManager.set(HAS_BALLOON, has);
+		this.entityData.set(HAS_BALLOON, has);
 	}
 	
 	public boolean hasBalloon() {
-		return this.dataManager.get(HAS_BALLOON);
+		return this.entityData.get(HAS_BALLOON);
 	}
 	
 	@Override
-	protected ResourceLocation getLootTable() {
+	protected ResourceLocation getDefaultLootTable() {
 		return PVZLoot.BALLOON_ZOMBIE;
 	}
 	

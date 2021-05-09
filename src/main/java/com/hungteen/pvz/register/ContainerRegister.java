@@ -42,7 +42,7 @@ import net.minecraftforge.registries.ForgeRegistries;
 @EventBusSubscriber(modid = PVZMod.MOD_ID, bus = EventBusSubscriber.Bus.MOD)
 public class ContainerRegister {
 
-	public static final DeferredRegister<ContainerType<?>> CONTAINER_TYPES = new DeferredRegister<>(ForgeRegistries.CONTAINERS, PVZMod.MOD_ID);
+	public static final DeferredRegister<ContainerType<?>> CONTAINER_TYPES = DeferredRegister.create(ForgeRegistries.CONTAINERS, PVZMod.MOD_ID);
 	
 	public static final RegistryObject<ContainerType<PlayerInventoryContainer>> PLAYER_INVENTORY = CONTAINER_TYPES.register("player_inventory", () -> {
 		return IForgeContainerType.create((windowId, inv, data) -> {
@@ -96,7 +96,7 @@ public class ContainerRegister {
 	});
 	public static final RegistryObject<ContainerType<EssenceAltarContainer>> ESSENCE_ALTAR = CONTAINER_TYPES.register("essence_altar", () -> {
 		return IForgeContainerType.create((windowId, inv, data) -> {
-            return new EssenceAltarContainer(windowId, inv.player, IWorldPosCallable.of(inv.player.world, data.readBlockPos()));
+            return new EssenceAltarContainer(windowId, inv.player, IWorldPosCallable.create(inv.player.level, data.readBlockPos()));
         });
 	});
 	public static final RegistryObject<ContainerType<CardFusionContainer>> CARD_FUSION = CONTAINER_TYPES.register("card_fusion", () -> {
@@ -112,19 +112,19 @@ public class ContainerRegister {
 	
 	@SubscribeEvent
     public static void onClientSetupEvent(FMLClientSetupEvent event) {
-        ScreenManager.registerFactory(PLAYER_INVENTORY.get(), PlayerInventoryScreen::new);
-        ScreenManager.registerFactory(ALMANAC.get(), AlmanacScreen::new);
-        ScreenManager.registerFactory(PEA_GUN.get(), PeaGunScreen::new);
-        ScreenManager.registerFactory(DAVE_SHOP.get(), DaveShopScreen::new);
-        ScreenManager.registerFactory(SUN_SHOP.get(), SunShopScreen::new);
-        ScreenManager.registerFactory(SUN_CONVERTER.get(), SunConverterScreen::new);
-        ScreenManager.registerFactory(FRAGMENT_SPLICE.get(), FragmentSpliceScreen::new);
-        ScreenManager.registerFactory(SLOT_MACHINE.get(), SlotMachineScreen::new);
-        ScreenManager.registerFactory(PENNY_SHOP.get(), PennyShopScreen::new);
-        ScreenManager.registerFactory(MYSTERY_SHOP.get(), MysteryShopScreen::new);
-        ScreenManager.registerFactory(ESSENCE_ALTAR.get(), EssenceAltarScreen::new);
-        ScreenManager.registerFactory(CARD_FUSION.get(), CardFusionScreen::new);
-        ScreenManager.registerFactory(IMITATER.get(), ImitaterScreen::new);
+        ScreenManager.register(PLAYER_INVENTORY.get(), PlayerInventoryScreen::new);
+        ScreenManager.register(ALMANAC.get(), AlmanacScreen::new);
+        ScreenManager.register(PEA_GUN.get(), PeaGunScreen::new);
+        ScreenManager.register(DAVE_SHOP.get(), DaveShopScreen::new);
+        ScreenManager.register(SUN_SHOP.get(), SunShopScreen::new);
+        ScreenManager.register(SUN_CONVERTER.get(), SunConverterScreen::new);
+        ScreenManager.register(FRAGMENT_SPLICE.get(), FragmentSpliceScreen::new);
+        ScreenManager.register(SLOT_MACHINE.get(), SlotMachineScreen::new);
+        ScreenManager.register(PENNY_SHOP.get(), PennyShopScreen::new);
+        ScreenManager.register(MYSTERY_SHOP.get(), MysteryShopScreen::new);
+        ScreenManager.register(ESSENCE_ALTAR.get(), EssenceAltarScreen::new);
+        ScreenManager.register(CARD_FUSION.get(), CardFusionScreen::new);
+        ScreenManager.register(IMITATER.get(), ImitaterScreen::new);
     }
 	
 }

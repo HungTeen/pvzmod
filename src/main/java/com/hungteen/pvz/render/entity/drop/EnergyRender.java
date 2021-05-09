@@ -22,7 +22,7 @@ public class EnergyRender extends DropRender<EnergyEntity>{
 	}
 
 	@Override
-	public ResourceLocation getEntityTexture(EnergyEntity entity) {
+	public ResourceLocation getTextureLocation(EnergyEntity entity) {
 		return StringUtil.prefix("textures/entity/drop/energy.png");
 	}
 

@@ -7,7 +7,6 @@ import com.hungteen.pvz.entity.zombie.PVZZombieEntity;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.monster.MonsterEntity;
 import net.minecraft.world.World;
-import net.minecraft.world.dimension.DimensionType;
 import net.minecraftforge.event.entity.EntityJoinWorldEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
@@ -21,7 +20,7 @@ public class PVZEntityEvents {
 			return;
 		}
 		World world = ev.getWorld();
-		if(!world.isRemote&&world.getDimension().getDimension().getType()==DimensionType.OVERWORLD) {
+		if(!world.isClientSide && world.dimension() == World.OVERWORLD) {
 			Entity entity = ev.getEntity();
 			if(!(entity instanceof PVZZombieEntity)&&entity instanceof MonsterEntity) {
 //				System.out.println(entity);

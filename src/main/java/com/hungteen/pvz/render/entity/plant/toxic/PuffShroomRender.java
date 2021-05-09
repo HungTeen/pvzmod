@@ -28,7 +28,7 @@ public class PuffShroomRender extends PVZPlantRender<PuffShroomEntity>{
 	}
 
 	@Override
-	public ResourceLocation getEntityTexture(PuffShroomEntity entity) {
+	public ResourceLocation getTextureLocation(PuffShroomEntity entity) {
 		return StringUtil.prefix("textures/entity/plant/toxic/puff_shroom.png");
 	}
 

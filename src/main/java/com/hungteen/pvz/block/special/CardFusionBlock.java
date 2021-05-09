@@ -21,14 +21,14 @@ import net.minecraftforge.fml.network.NetworkHooks;
 public class CardFusionBlock extends AbstractFacingBlock {
 
 	public CardFusionBlock() {
-		super(Block.Properties.from(BlockRegister.STEEL_BLOCK.get()));
+		super(Block.Properties.copy(BlockRegister.STEEL_BLOCK.get()));
 	}
 
 	@Override
-	public ActionResultType onBlockActivated(BlockState state, World worldIn, BlockPos pos, PlayerEntity player,
+	public ActionResultType use(BlockState state, World worldIn, BlockPos pos, PlayerEntity player,
 			Hand handIn, BlockRayTraceResult hit) {
-		if (! worldIn.isRemote && handIn == Hand.MAIN_HAND) {
-			CardFusionTileEntity te = (CardFusionTileEntity) worldIn.getTileEntity(pos);
+		if (! worldIn.isClientSide && handIn == Hand.MAIN_HAND) {
+			CardFusionTileEntity te = (CardFusionTileEntity) worldIn.getBlockEntity(pos);
 		    NetworkHooks.openGui((ServerPlayerEntity) player, te, pos);
 		}
 		return ActionResultType.SUCCESS;
@@ -46,17 +46,17 @@ public class CardFusionBlock extends AbstractFacingBlock {
 	
 	@SuppressWarnings("deprecation")
 	@Override
-	public void onReplaced(BlockState state, World worldIn, BlockPos pos, BlockState newState, boolean isMoving) {
+	public void onRemove(BlockState state, World worldIn, BlockPos pos, BlockState newState, boolean isMoving) {
 		if (state.getBlock() != newState.getBlock()) {
-			TileEntity tileentity = worldIn.getTileEntity(pos);
+			TileEntity tileentity = worldIn.getBlockEntity(pos);
 			if (tileentity instanceof CardFusionTileEntity) {
-				CardFusionTileEntity te = (CardFusionTileEntity) worldIn.getTileEntity(pos);
+				CardFusionTileEntity te = (CardFusionTileEntity) worldIn.getBlockEntity(pos);
 				for (int i = 0; i < te.handler.getSlots(); ++i) {
-					InventoryHelper.spawnItemStack(worldIn, pos.getX(), pos.getY(), pos.getZ(),
+					InventoryHelper.dropItemStack(worldIn, pos.getX(), pos.getY(), pos.getZ(),
 							te.handler.getStackInSlot(i));
 				}
 			}
-			super.onReplaced(state, worldIn, pos, newState, isMoving);
+			super.onRemove(state, worldIn, pos, newState, isMoving);
 		}
 	}
 	

@@ -54,7 +54,7 @@ public class BucketHeadZombieEntity extends NormalZombieEntity implements IHasMe
 	}
 	
 	@Override
-	protected ResourceLocation getLootTable() {
+	protected ResourceLocation getDefaultLootTable() {
 		return PVZLoot.BUCKETHEAD_ZOMBIE;
 	}
 	

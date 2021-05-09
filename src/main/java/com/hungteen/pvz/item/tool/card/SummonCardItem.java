@@ -21,7 +21,7 @@ public abstract class SummonCardItem extends Item{
 	public final boolean isEnjoyCard;
 	
 	public SummonCardItem(boolean isEnjoyCard) {
-		this(new Properties().group(GroupRegister.PVZ_CARD).maxStackSize(isEnjoyCard ? 16 : 1), isEnjoyCard);
+		this(new Properties().tab(GroupRegister.PVZ_CARD).stacksTo(isEnjoyCard ? 16 : 1), isEnjoyCard);
 	}
 	
 	public SummonCardItem(Properties properties, boolean isEnjoyCard) {
@@ -51,8 +51,8 @@ public abstract class SummonCardItem extends Item{
 	}
 	
 	@Override
-	public void addInformation(ItemStack stack, World worldIn, List<ITextComponent> tooltip, ITooltipFlag flagIn) {
-		tooltip.add(new TranslationTextComponent("tooltip.pvz.sun_cost").appendText(":" + getItemStackSunCost(stack)).applyTextStyle(TextFormatting.YELLOW));
+	public void appendHoverText(ItemStack stack, World worldIn, List<ITextComponent> tooltip, ITooltipFlag flagIn) {
+		tooltip.add(new TranslationTextComponent("tooltip.pvz.sun_cost").append(":" + getItemStackSunCost(stack)).withStyle(TextFormatting.YELLOW));
 	}
 	
 	@Override
@@ -66,7 +66,7 @@ public abstract class SummonCardItem extends Item{
 	}
 	
 	@Override
-	public int getItemEnchantability() {
+	public int getEnchantmentValue() {
 		return 20;//0 ~ 45
 	}
 	

@@ -24,7 +24,7 @@ public class DoomShroomRender extends PVZPlantRender<DoomShroomEntity>{
 	}
 
 	@Override
-	public ResourceLocation getEntityTexture(DoomShroomEntity entity) {
+	public ResourceLocation getTextureLocation(DoomShroomEntity entity) {
 		return StringUtil.prefix("textures/entity/plant/explosion/doom_shroom.png");
 	}
 

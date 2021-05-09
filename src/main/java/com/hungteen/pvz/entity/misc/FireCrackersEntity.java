@@ -16,8 +16,8 @@ import net.minecraft.world.World;
 
 public class FireCrackersEntity extends AbstractOwnerEntity {
 
-	private static final DataParameter<Integer> FUSE = EntityDataManager.createKey(FireCrackersEntity.class,
-			DataSerializers.VARINT);
+	private static final DataParameter<Integer> FUSE = EntityDataManager.defineId(FireCrackersEntity.class,
+			DataSerializers.INT);
 
 	public FireCrackersEntity(EntityType<?> entityTypeIn, World worldIn) {
 		super(entityTypeIn, worldIn);
@@ -27,14 +27,14 @@ public class FireCrackersEntity extends AbstractOwnerEntity {
 		super(EntityRegister.FIRE_CRACKERS.get(), worldIn, living);
 	}
 
-	protected void registerData() {
-		this.dataManager.register(FUSE, 80);
+	protected void defineSynchedData() {
+		this.entityData.define(FUSE, 80);
 	}
 	
 	@Override
 	public void tick() {
 		super.tick();
-		if(! world.isRemote) {
+		if(! level.isClientSide) {
 			if(this.getFuse() > 0) {
 				this.setFuse(this.getFuse() - 1);
 				if(this.getFuse() <= 0) {
@@ -48,10 +48,10 @@ public class FireCrackersEntity extends AbstractOwnerEntity {
 	
 	protected void explode() {
 		float range = 1.5F;
-		EntityUtil.playSound(this, SoundEvents.ENTITY_GENERIC_EXPLODE);
+		EntityUtil.playSound(this, SoundEvents.GENERIC_EXPLODE);
 		EntityUtil.getAttackEntities(this, EntityUtil.getEntityAABB(this, range, range)).forEach((target) -> {
-			target.attackEntityFrom(PVZDamageSource.causeExplosionDamage(this, this.getOwner()), this.getAttackDamage());
-			target.setMotion(target.getMotion().add(0, BambooLordEntity.UP_SPEED, 0));
+			target.hurt(PVZDamageSource.causeExplosionDamage(this, this.getOwner()), this.getAttackDamage());
+			target.setDeltaMovement(target.getDeltaMovement().add(0, BambooLordEntity.UP_SPEED, 0));
 		});
 		for(int i = 0;i < 2; ++ i) {
 		    EntityUtil.spawnParticle(this, 5);
@@ -63,30 +63,30 @@ public class FireCrackersEntity extends AbstractOwnerEntity {
 		return 0;
 	}
 
-	protected boolean canTriggerWalking() {
+	protected boolean isMovementNoisy() {
 		return false;
 	}
 	
 	@Override
-	public void readAdditional(CompoundNBT compound) {
-		super.readAdditional(compound);
+	public void readAdditionalSaveData(CompoundNBT compound) {
+		super.readAdditionalSaveData(compound);
 		if(compound.contains("fuse_tick")) {
 			this.setFuse(compound.getInt("fuse_tick"));
 		}
 	}
 	
 	@Override
-	public void writeAdditional(CompoundNBT compound) {
-		super.writeAdditional(compound);
+	public void addAdditionalSaveData(CompoundNBT compound) {
+		super.addAdditionalSaveData(compound);
 		compound.putInt("fuse_tick", this.getFuse());
 	}
 	
 	public void setFuse(int tick) {
-		this.dataManager.set(FUSE, tick);
+		this.entityData.set(FUSE, tick);
 	}
 	
 	public int getFuse() {
-		return this.dataManager.get(FUSE);
+		return this.entityData.get(FUSE);
 	}
 
 }

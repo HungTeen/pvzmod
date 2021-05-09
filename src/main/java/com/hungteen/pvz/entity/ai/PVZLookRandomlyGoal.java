@@ -16,8 +16,8 @@ public class PVZLookRandomlyGoal extends LookRandomlyGoal{
 	}
 
 	@Override
-	public boolean shouldExecute() {
-		return this.canExecute() && super.shouldExecute();
+	public boolean canUse() {
+		return this.canExecute() && super.canUse();
 	}
 	
 	private boolean canExecute() {
@@ -31,7 +31,7 @@ public class PVZLookRandomlyGoal extends LookRandomlyGoal{
 	}
 	
 	@Override
-	public boolean shouldContinueExecuting() {
-		return this.canExecute() && super.shouldContinueExecuting();
+	public boolean canContinueToUse() {
+		return this.canExecute() && super.canContinueToUse();
 	}
 }

@@ -29,94 +29,94 @@ public class SunDaveModel extends EntityModel<SunDaveEntity> {
 	private final ModelRenderer bone4;
 
 	public SunDaveModel() {
-		textureWidth = 128;
-		textureHeight = 128;
+		texWidth = 128;
+		texHeight = 128;
 
 		total = new ModelRenderer(this);
-		total.setRotationPoint(0.0F, 24.0F, 0.0F);
+		total.setPos(0.0F, 24.0F, 0.0F);
 		
 
 		right_leg = new ModelRenderer(this);
-		right_leg.setRotationPoint(-4.0F, -25.0F, 0.0F);
+		right_leg.setPos(-4.0F, -25.0F, 0.0F);
 		total.addChild(right_leg);
-		right_leg.setTextureOffset(1, 96).addBox(-3.0F, 0.0F, -3.0F, 7.0F, 25.0F, 6.0F, 0.0F, false);
+		right_leg.texOffs(1, 96).addBox(-3.0F, 0.0F, -3.0F, 7.0F, 25.0F, 6.0F, 0.0F, false);
 
 		left_leg = new ModelRenderer(this);
-		left_leg.setRotationPoint(3.0F, -25.0F, 0.0F);
+		left_leg.setPos(3.0F, -25.0F, 0.0F);
 		total.addChild(left_leg);
-		left_leg.setTextureOffset(30, 96).addBox(-3.0F, 0.0F, -3.0F, 7.0F, 25.0F, 6.0F, 0.0F, false);
+		left_leg.texOffs(30, 96).addBox(-3.0F, 0.0F, -3.0F, 7.0F, 25.0F, 6.0F, 0.0F, false);
 
 		up = new ModelRenderer(this);
-		up.setRotationPoint(0.0F, -25.0F, 0.0F);
+		up.setPos(0.0F, -25.0F, 0.0F);
 		total.addChild(up);
 		
 
 		body = new ModelRenderer(this);
-		body.setRotationPoint(-1.0F, 0.0F, 0.0F);
+		body.setPos(-1.0F, 0.0F, 0.0F);
 		up.addChild(body);
-		body.setTextureOffset(59, 94).addBox(-6.0F, -24.0F, -4.0F, 14.0F, 24.0F, 8.0F, 0.0F, false);
+		body.texOffs(59, 94).addBox(-6.0F, -24.0F, -4.0F, 14.0F, 24.0F, 8.0F, 0.0F, false);
 
 		left_hand = new ModelRenderer(this);
-		left_hand.setRotationPoint(10.0F, -21.0F, 0.0F);
+		left_hand.setPos(10.0F, -21.0F, 0.0F);
 		up.addChild(left_hand);
-		left_hand.setTextureOffset(102, 3).addBox(-3.0F, -3.0F, -3.0F, 6.0F, 25.0F, 6.0F, 0.0F, false);
+		left_hand.texOffs(102, 3).addBox(-3.0F, -3.0F, -3.0F, 6.0F, 25.0F, 6.0F, 0.0F, false);
 
 		right_hand = new ModelRenderer(this);
-		right_hand.setRotationPoint(-9.0F, -21.0F, 0.0F);
+		right_hand.setPos(-9.0F, -21.0F, 0.0F);
 		up.addChild(right_hand);
-		right_hand.setTextureOffset(102, 36).addBox(-4.0F, -3.0F, -3.0F, 6.0F, 25.0F, 6.0F, 0.0F, true);
+		right_hand.texOffs(102, 36).addBox(-4.0F, -3.0F, -3.0F, 6.0F, 25.0F, 6.0F, 0.0F, true);
 
 		head = new ModelRenderer(this);
-		head.setRotationPoint(0.0F, -25.0F, 0.0F);
+		head.setPos(0.0F, -25.0F, 0.0F);
 		up.addChild(head);
-		head.setTextureOffset(1, 1).addBox(-7.0F, -13.0F, -7.0F, 14.0F, 14.0F, 14.0F, 0.0F, false);
-		head.setTextureOffset(1, 33).addBox(-7.0F, 1.0F, -7.0F, 14.0F, 2.0F, 1.0F, 0.0F, false);
+		head.texOffs(1, 1).addBox(-7.0F, -13.0F, -7.0F, 14.0F, 14.0F, 14.0F, 0.0F, false);
+		head.texOffs(1, 33).addBox(-7.0F, 1.0F, -7.0F, 14.0F, 2.0F, 1.0F, 0.0F, false);
 
 		ring = new ModelRenderer(this);
-		ring.setRotationPoint(0.0F, -17.0F, 0.0F);
+		ring.setPos(0.0F, -17.0F, 0.0F);
 		head.addChild(ring);
 		
 
 		bone = new ModelRenderer(this);
-		bone.setRotationPoint(0.0F, 0.0F, -8.0F);
+		bone.setPos(0.0F, 0.0F, -8.0F);
 		ring.addChild(bone);
-		bone.setTextureOffset(61, 2).addBox(-8.0F, -1.0F, 0.0F, 16.0F, 1.0F, 1.0F, 0.0F, false);
+		bone.texOffs(61, 2).addBox(-8.0F, -1.0F, 0.0F, 16.0F, 1.0F, 1.0F, 0.0F, false);
 
 		bone2 = new ModelRenderer(this);
-		bone2.setRotationPoint(0.0F, 0.0F, 7.0F);
+		bone2.setPos(0.0F, 0.0F, 7.0F);
 		ring.addChild(bone2);
-		bone2.setTextureOffset(62, 20).addBox(-8.0F, -1.0F, 0.0F, 16.0F, 1.0F, 1.0F, 0.0F, false);
+		bone2.texOffs(62, 20).addBox(-8.0F, -1.0F, 0.0F, 16.0F, 1.0F, 1.0F, 0.0F, false);
 
 		bone3 = new ModelRenderer(this);
-		bone3.setRotationPoint(-7.0F, 0.0F, 0.0F);
+		bone3.setPos(-7.0F, 0.0F, 0.0F);
 		ring.addChild(bone3);
-		bone3.setTextureOffset(63, 27).addBox(-1.0F, -1.0F, -7.0F, 1.0F, 1.0F, 14.0F, 0.0F, false);
+		bone3.texOffs(63, 27).addBox(-1.0F, -1.0F, -7.0F, 1.0F, 1.0F, 14.0F, 0.0F, false);
 
 		bone4 = new ModelRenderer(this);
-		bone4.setRotationPoint(8.0F, 0.0F, 0.0F);
+		bone4.setPos(8.0F, 0.0F, 0.0F);
 		ring.addChild(bone4);
-		bone4.setTextureOffset(62, 46).addBox(-1.0F, -1.0F, -7.0F, 1.0F, 1.0F, 14.0F, 0.0F, false);
+		bone4.texOffs(62, 46).addBox(-1.0F, -1.0F, -7.0F, 1.0F, 1.0F, 14.0F, 0.0F, false);
 	}
 
 	@Override
-	public void setRotationAngles(SunDaveEntity entity, float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch){
-		this.head.rotateAngleY = netHeadYaw / (180F / (float)Math.PI);
-        this.head.rotateAngleX = headPitch / (180F / (float)Math.PI);
-        this.right_leg.rotateAngleX = MathHelper.cos(limbSwing * 0.6662F) * 1.4F * limbSwingAmount;
-        this.left_leg.rotateAngleX = MathHelper.cos(limbSwing * 0.6662F + (float)Math.PI) * 1.4F * limbSwingAmount;
-        this.right_hand.rotateAngleX = MathHelper.cos(limbSwing * 0.6662F) * 1.4F * limbSwingAmount;
-        this.left_hand.rotateAngleX = MathHelper.cos(limbSwing * 0.6662F + (float)Math.PI) * 1.4F * limbSwingAmount;
-		this.ring.rotateAngleY = ageInTicks / 4;
+	public void setupAnim(SunDaveEntity entity, float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch){
+		this.head.yRot = netHeadYaw / (180F / (float)Math.PI);
+        this.head.xRot = headPitch / (180F / (float)Math.PI);
+        this.right_leg.xRot = MathHelper.cos(limbSwing * 0.6662F) * 1.4F * limbSwingAmount;
+        this.left_leg.xRot = MathHelper.cos(limbSwing * 0.6662F + (float)Math.PI) * 1.4F * limbSwingAmount;
+        this.right_hand.xRot = MathHelper.cos(limbSwing * 0.6662F) * 1.4F * limbSwingAmount;
+        this.left_hand.xRot = MathHelper.cos(limbSwing * 0.6662F + (float)Math.PI) * 1.4F * limbSwingAmount;
+		this.ring.yRot = ageInTicks / 4;
 	}
 
 	@Override
-	public void render(MatrixStack matrixStack, IVertexBuilder buffer, int packedLight, int packedOverlay, float red, float green, float blue, float alpha){
+	public void renderToBuffer(MatrixStack matrixStack, IVertexBuilder buffer, int packedLight, int packedOverlay, float red, float green, float blue, float alpha){
 		total.render(matrixStack, buffer, packedLight, packedOverlay);
 	}
 
 	public void setRotationAngle(ModelRenderer modelRenderer, float x, float y, float z) {
-		modelRenderer.rotateAngleX = x;
-		modelRenderer.rotateAngleY = y;
-		modelRenderer.rotateAngleZ = z;
+		modelRenderer.xRot = x;
+		modelRenderer.yRot = y;
+		modelRenderer.zRot = z;
 	}
 }

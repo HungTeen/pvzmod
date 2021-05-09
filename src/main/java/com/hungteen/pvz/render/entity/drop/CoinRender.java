@@ -26,7 +26,7 @@ public class CoinRender extends DropRender<CoinEntity>{
 	}
 
 	@Override
-	public ResourceLocation getEntityTexture(CoinEntity entity) {
+	public ResourceLocation getTextureLocation(CoinEntity entity) {
 		if(entity.getAmount() == 1) return StringUtil.prefix("textures/entity/drop/copper_coin.png");
 		if(entity.getAmount() == 10) return StringUtil.prefix("textures/entity/drop/silver_coin.png");
 		if(entity.getAmount() == 100) return StringUtil.prefix("textures/entity/drop/gold_coin.png");

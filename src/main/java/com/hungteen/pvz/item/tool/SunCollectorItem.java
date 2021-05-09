@@ -20,7 +20,7 @@ import net.minecraft.util.math.EntityRayTraceResult;
 import net.minecraft.util.math.RayTraceContext;
 import net.minecraft.util.math.RayTraceResult;
 import net.minecraft.util.math.RayTraceResult.Type;
-import net.minecraft.util.math.Vec3d;
+import net.minecraft.util.math.vector.Vector3d;
 import net.minecraft.world.World;
 
 public class SunCollectorItem extends Item{
@@ -29,19 +29,19 @@ public class SunCollectorItem extends Item{
 	public static final int RANGE_COLLECT_COOL_DOWN = 200;
 	
 	public SunCollectorItem() {
-		super(new Properties().group(GroupRegister.PVZ_MISC).maxStackSize(1));
+		super(new Properties().tab(GroupRegister.PVZ_MISC).stacksTo(1));
 	}
 
 	@Override
-	public ActionResult<ItemStack> onItemRightClick(World worldIn, PlayerEntity playerIn, Hand handIn) {
-		if(! worldIn.isRemote) {
-			if(playerIn.isSneaking()) {//range collect
+	public ActionResult<ItemStack> use(World worldIn, PlayerEntity playerIn, Hand handIn) {
+		if(! worldIn.isClientSide) {
+			if(playerIn.isShiftKeyDown()) {//range collect
 				playerIn.getCapability(CapabilityHandler.PLAYER_DATA_CAPABILITY).ifPresent((l)->{
 					int lvl = l.getPlayerData().getPlayerStats().getPlayerStats(Resources.TREE_LVL);
 					int treeLvl = l.getPlayerData().getPlayerStats().getPlayerStats(Resources.TREE_LVL);
 					double range = getRangeCollectRange(lvl);
 					boolean has = false;
-					for(SunEntity sun : worldIn.getEntitiesWithinAABB(SunEntity.class, EntityUtil.getEntityAABB(playerIn, range, range), (sun)->{
+					for(SunEntity sun : worldIn.getEntitiesOfClass(SunEntity.class, EntityUtil.getEntityAABB(playerIn, range, range), (sun)->{
 						return sun.isAlive();
 					})) {
 						if(l.getPlayerData().getPlayerStats().getPlayerStats(Resources.SUN_NUM) == PlayerUtil.getPlayerMaxSunNum(treeLvl)) {
@@ -50,36 +50,36 @@ public class SunCollectorItem extends Item{
 						sun.onCollectedByPlayer(playerIn);
 						has = true;
 					}
-					playerIn.getCooldownTracker().setCooldown(this, has ? RANGE_COLLECT_COOL_DOWN : SINGLE_COLLET_COOL_DOWN);
+					playerIn.getCooldowns().addCooldown(this, has ? RANGE_COLLECT_COOL_DOWN : SINGLE_COLLET_COOL_DOWN);
 					if(has) {
-						playerIn.addStat(Stats.ITEM_USED.get(this));
+						playerIn.awardStat(Stats.ITEM_USED.get(this));
 					}
 				});
 			} else {
 				playerIn.getCapability(CapabilityHandler.PLAYER_DATA_CAPABILITY).ifPresent((l)->{
-					Vec3d look = playerIn.getLookVec();
-				    Vec3d start = playerIn.getPositionVec().add(0, playerIn.getEyeHeight(), 0);
+					Vector3d look = playerIn.getLookAngle();
+				    Vector3d start = playerIn.position().add(0, playerIn.getEyeHeight(), 0);
 				    int lvl = l.getPlayerData().getPlayerStats().getPlayerStats(Resources.TREE_LVL);
 				    double range = getSingleCollectRange(lvl);
-				    Vec3d end = start.add(look.normalize().mul(range, range, range));
+				    Vector3d end = start.add(look.normalize().multiply(range, range, range));
 				    RayTraceContext ray = new RayTraceContext(start, end, RayTraceContext.BlockMode.COLLIDER, RayTraceContext.FluidMode.NONE, playerIn);
-				    RayTraceResult result = worldIn.rayTraceBlocks(ray);
+				    RayTraceResult result = worldIn.clip(ray);
 				    if(result.getType() != RayTraceResult.Type.MISS) {// hit something
-					    end = result.getHitVec();
+					    end = result.getLocation();
 				    }
 					EntityRayTraceResult entityRay = this.rayTraceEntities(worldIn, playerIn, range, start, end);
 				    if(entityRay != null && entityRay.getType() == Type.ENTITY) {
 					    if(entityRay.getEntity() instanceof SunEntity) {
 						    SunEntity sun = (SunEntity) entityRay.getEntity();
 						    sun.onCollectedByPlayer(playerIn);
-						    playerIn.addStat(Stats.ITEM_USED.get(this));
-						    playerIn.getCooldownTracker().setCooldown(this, SINGLE_COLLET_COOL_DOWN);
+						    playerIn.awardStat(Stats.ITEM_USED.get(this));
+						    playerIn.getCooldowns().addCooldown(this, SINGLE_COLLET_COOL_DOWN);
 					    }
 				    }
 				});
 			}
 		}
-		return super.onItemRightClick(worldIn, playerIn, handIn);
+		return super.use(worldIn, playerIn, handIn);
 	}
 	
 	public static float getSingleCollectRange(int lvl) {
@@ -102,9 +102,9 @@ public class SunCollectorItem extends Item{
 	 * Gets the EntityRayTraceResult representing the entity hit
 	 */
 	@Nullable
-	protected EntityRayTraceResult rayTraceEntities(World world, PlayerEntity player, double range, Vec3d startVec, Vec3d endVec) {
-		return ProjectileHelper.rayTraceEntities(world, player, startVec, endVec, 
-				player.getBoundingBox().grow(range), (entity) -> {
+	protected EntityRayTraceResult rayTraceEntities(World world, PlayerEntity player, double range, Vector3d startVec, Vector3d endVec) {
+		return ProjectileHelper.getEntityHitResult(world, player, startVec, endVec, 
+				player.getBoundingBox().inflate(range), (entity) -> {
 			return entity instanceof SunEntity && entity.isAlive();
 		});
 	}

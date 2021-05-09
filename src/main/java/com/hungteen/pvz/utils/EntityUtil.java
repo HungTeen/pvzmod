@@ -27,8 +27,8 @@ import net.minecraft.entity.Entity;
 import net.minecraft.entity.FlyingEntity;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.MobEntity;
-import net.minecraft.entity.SharedMonsterAttributes;
 import net.minecraft.entity.SpawnReason;
+import net.minecraft.entity.ai.attributes.Attributes;
 import net.minecraft.entity.monster.IMob;
 import net.minecraft.entity.passive.BatEntity;
 import net.minecraft.entity.passive.GolemEntity;
@@ -40,7 +40,8 @@ import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.RayTraceContext;
 import net.minecraft.util.math.RayTraceResult;
-import net.minecraft.util.math.Vec3d;
+import net.minecraft.util.math.vector.Vector3d;
+import net.minecraft.world.IServerWorld;
 import net.minecraft.world.IWorld;
 import net.minecraft.world.World;
 import net.minecraftforge.event.ForgeEventFactory;
@@ -55,13 +56,13 @@ public class EntityUtil {
 		if(entity instanceof PVZZombieEntity) {
 			return ((PVZZombieEntity) entity).canZombieBeRemoved();
 		}
-		return entity.isNonBoss();
+		return entity.canChangeDimensions();
 	}
 	
 	public static void spawnParticle(Entity entity, int type) {
 		PVZPacketHandler.CHANNEL.send(PacketDistributor.NEAR.with(() -> {
-			return new TargetPoint(entity.getPosX(), entity.getPosY(), entity.getPosZ(), 40, entity.world.getDimension().getType());
-		}), new SpawnParticlePacket(type, entity.getPosX(), entity.getPosY(), entity.getPosZ()));
+			return new TargetPoint(entity.getX(), entity.getY(), entity.getZ(), 40, entity.level.dimension());
+		}), new SpawnParticlePacket(type, entity.getX(), entity.getY(), entity.getZ()));
 	}
 	
 	public static boolean canDestroyBlock(World world, BlockPos pos, Entity entity) {
@@ -80,7 +81,7 @@ public class EntityUtil {
 	
 	public static List<LivingEntity> getRandomLivingInRange(World world, LivingEntity attacker, AxisAlignedBB aabb, int cnt) {
 		List<LivingEntity> list = new ArrayList<>();
-		for(LivingEntity living : world.getEntitiesWithinAABB(LivingEntity.class, aabb, (target) -> {
+		for(LivingEntity living : world.getEntitiesOfClass(LivingEntity.class, aabb, (target) -> {
 			return EntityUtil.checkCanEntityTarget(attacker, target);
 		})){
 			list.add(living);
@@ -114,19 +115,19 @@ public class EntityUtil {
 	}
 
 	public static boolean checkCanSeeEntity(Entity entity, Entity target) {
-		Vec3d start = entity.getPositionVec().add(0, entity.getEyeHeight(), 0);
-		Vec3d lowerEnd = target.getPositionVec();
-		Vec3d upperEnd = lowerEnd.add(0, target.getHeight(), 0);
+		Vector3d start = entity.position().add(0, entity.getEyeHeight(), 0);
+		Vector3d lowerEnd = target.position();
+		Vector3d upperEnd = lowerEnd.add(0, target.getBbHeight(), 0);
 		RayTraceContext ray1 = new RayTraceContext(start, lowerEnd, RayTraceContext.BlockMode.COLLIDER, RayTraceContext.FluidMode.NONE, entity);
 		RayTraceContext ray2 = new RayTraceContext(start, upperEnd, RayTraceContext.BlockMode.COLLIDER, RayTraceContext.FluidMode.NONE, entity);
-		return entity.world.rayTraceBlocks(ray1).getType() != RayTraceResult.Type.BLOCK || entity.world.rayTraceBlocks(ray2).getType() != RayTraceResult.Type.BLOCK;
+		return entity.level.clip(ray1).getType() != RayTraceResult.Type.BLOCK || entity.level.clip(ray2).getType() != RayTraceResult.Type.BLOCK;
 	}
 	
 	/**
 	 * check can entity destroy the specific block.
 	 */
 	public static boolean canDestroyBlock(World world, BlockPos pos, BlockState state, Entity entity) {
-		float hardness = state.getBlockHardness(world, pos);
+		float hardness = state.getDestroySpeed(world, pos);
 		return hardness >= 0f && hardness < 50f && !state.getBlock().isAir(state, world, pos)
 				&& state.getBlock().canEntityDestroy(state, world, pos, entity) && (!(entity instanceof LivingEntity)
 				|| ForgeEventFactory.onEntityDestroyBlock((LivingEntity) entity, pos, state));
@@ -136,21 +137,21 @@ public class EntityUtil {
 	 * use to spawn mob in world
 	 */
 	public static void onMobEntitySpawn(IWorld world, MobEntity entity, BlockPos pos) {
-		entity.setPosition(pos.getX() + 0.5, pos.getY(), pos.getZ() + 0.5);
-		entity.onInitialSpawn(world, world.getDifficultyForLocation(entity.getPosition()), SpawnReason.SPAWNER, null, null);
-		world.addEntity(entity);
+		entity.setPos(pos.getX() + 0.5, pos.getY(), pos.getZ() + 0.5);
+		entity.finalizeSpawn((IServerWorld) world, world.getCurrentDifficultyAt(entity.blockPosition()), SpawnReason.SPAWNER, null, null);
+		world.addFreshEntity(entity);
 	}
 	
 	/**
 	 * use to spawn entity in world
 	 */
 	public static void onEntitySpawn(IWorld world, Entity entity, BlockPos pos) {
-		entity.setPosition(pos.getX() + 0.5, pos.getY(), pos.getZ() + 0.5);
-		world.addEntity(entity);
+		entity.setPos(pos.getX() + 0.5, pos.getY(), pos.getZ() + 0.5);
+		world.addFreshEntity(entity);
 	}
 	
 	public static void onMobEntityRandomPosSpawn(IWorld world, MobEntity entity, BlockPos pos, int dis) {
-		pos = pos.add(entity.getRNG().nextInt(dis * 2 + 1) - dis, entity.getRNG().nextInt(dis) + 1, entity.getRNG().nextInt(dis * 2 + 1) - dis);
+		pos = pos.offset(entity.getRandom().nextInt(dis * 2 + 1) - dis, entity.getRandom().nextInt(dis) + 1, entity.getRandom().nextInt(dis * 2 + 1) - dis);
 		onMobEntitySpawn(world, entity, pos);
 	}
 	
@@ -158,8 +159,8 @@ public class EntityUtil {
 	 * check if entity is on ground
 	 */
 	public static boolean isOnGround(Entity entity){
-		BlockPos pos=new BlockPos(entity).down();
-		if(!entity.world.isAirBlock(pos) && (entity.getPosY() - pos.getY()) <= 1.00001) {
+		BlockPos pos = entity.blockPosition().below();
+		if(!entity.level.isEmptyBlock(pos) && (entity.getY() - pos.getY()) <= 1.00001) {
 			return true;
 		}
 		return false;
@@ -169,15 +170,15 @@ public class EntityUtil {
 	 * check if entity is on snow
 	 */
 	public static boolean isOnSnow(Entity entity) {
-		BlockPos pos = entity.getPosition();
-		return entity.world.getBlockState(pos).getBlock()==Blocks.SNOW||entity.world.getBlockState(pos.down()).getBlock()==Blocks.SNOW_BLOCK;
+		BlockPos pos = entity.blockPosition();
+		return entity.level.getBlockState(pos).getBlock()==Blocks.SNOW||entity.level.getBlockState(pos.below()).getBlock()==Blocks.SNOW_BLOCK;
 	}
 	
 	/**
 	 * use for squash to check can attack
 	 */
 	public static boolean isSuitableTargetInRange(MobEntity entity, @Nonnull LivingEntity target, double range) {
-		return entity.getDistanceSq(target) > getAttackRange(entity, target, range) && checkCanEntityAttack(entity, target);
+		return entity.distanceToSqr(target) > getAttackRange(entity, target, range) && checkCanEntityAttack(entity, target);
 	}
 	
 	/**
@@ -185,18 +186,18 @@ public class EntityUtil {
 	 */
 	public static double getAttackRange(Entity a, Entity b, double r) {
 		double two = Math.sqrt(2);
-		double dis = (a.getWidth() / two + b.getWidth() / two + r);
+		double dis = (a.getBbWidth() / two + b.getBbWidth() / two + r);
 		return dis * dis;
 	}
 	
 	public static double getNearestDistance(Entity a, Entity b) {
-		double dx = a.getPosX() - b.getPosX();
-		double dz = a.getPosZ() - b.getPosZ();
+		double dx = a.getX() - b.getX();
+		double dz = a.getZ() - b.getZ();
 		double dy = 0;
-		if(a.getPosY() > b.getPosY() + b.getHeight()) {
-			dy = a.getPosY() - b.getPosY() - b.getHeight();
-		} else if(b.getPosY() > a.getPosY() + a.getHeight()) {
-			dy = b.getPosY() - a.getPosY() - a.getHeight();
+		if(a.getY() > b.getY() + b.getBbHeight()) {
+			dy = a.getY() - b.getY() - b.getBbHeight();
+		} else if(b.getY() > a.getY() + a.getBbHeight()) {
+			dy = b.getY() - a.getY() - a.getBbHeight();
 		}
 		return dx * dx + dy * dy + dz * dz;
 	}
@@ -213,7 +214,7 @@ public class EntityUtil {
 		} else if(entity instanceof PVZZombieEntity) {
 			uuid = ((PVZZombieEntity) entity).getOwnerUUID().orElse(null);
 		}
-		return uuid == null ? null : world.getPlayerByUuid(uuid);
+		return uuid == null ? null : world.getPlayerByUUID(uuid);
 	}
 	
 	/**
@@ -242,7 +243,7 @@ public class EntityUtil {
 		if(! target.isAlive()) {//need be a alive entity
 			return false;
 		}
-		World world = attacker.world;
+		World world = attacker.level;
 		if(target instanceof PlayerEntity) {//false if target is creative or spectator player 
 			if(((PlayerEntity) target).isCreative() || target.isSpectator()) {
 				return false;
@@ -253,7 +254,7 @@ public class EntityUtil {
 			Team team2 = getEntityTeam(world, target);
 			if(team1 != null && team2 != null) {
 				boolean change = isEntityCharmed(attacker) ^ isEntityCharmed(target);
-				return change ? team1.isSameTeam(team2) : ! team1.isSameTeam(team2);
+				return change ? team1.isAlliedTo(team2) : ! team1.isAlliedTo(team2);
 			}
 		}
 		int attackerGroup = getEntityGroup(attacker);
@@ -302,11 +303,11 @@ public class EntityUtil {
 			return entity.getTeam();
 		}
 		if(entity instanceof PVZPlantEntity && ((PVZPlantEntity) entity).getOwnerUUID().isPresent()) {
-			PlayerEntity player = world.getPlayerByUuid(((PVZPlantEntity) entity).getOwnerUUID().get());
+			PlayerEntity player = world.getPlayerByUUID(((PVZPlantEntity) entity).getOwnerUUID().get());
 			return player == null ? null : player.getTeam();
 		}
 		if(entity instanceof PVZZombieEntity && ((PVZZombieEntity) entity).getOwnerUUID().isPresent()) {
-			PlayerEntity player = world.getPlayerByUuid(((PVZZombieEntity) entity).getOwnerUUID().get());
+			PlayerEntity player = world.getPlayerByUUID(((PVZZombieEntity) entity).getOwnerUUID().get());
 			return player == null ? null : player.getTeam();
 		}
 	    return entity.getTeam();
@@ -330,7 +331,7 @@ public class EntityUtil {
 	 */
 	public static List<LivingEntity> getEntityTargetableEntity(Entity attacker, AxisAlignedBB aabb){
 		List<LivingEntity> list = new ArrayList<>();
-		for(LivingEntity entity : attacker.world.getEntitiesWithinAABB(LivingEntity.class, aabb)) {
+		for(LivingEntity entity : attacker.level.getEntitiesOfClass(LivingEntity.class, aabb)) {
 			if(attacker != entity && checkCanEntityTarget(attacker, entity)) {
 				list.add(entity);
 			}
@@ -344,7 +345,7 @@ public class EntityUtil {
 	public static List<Entity> getEntityAttackableTarget(Entity attacker, AxisAlignedBB aabb){
 		List<Entity> list = new ArrayList<>();
 		if(attacker == null) return list;
-		for(Entity entity : attacker.world.getEntitiesWithinAABB(Entity.class, aabb)) {
+		for(Entity entity : attacker.level.getEntitiesOfClass(Entity.class, aabb)) {
 			if(attacker != entity && checkCanEntityAttack(attacker, entity)) {
 				list.add(entity);
 			}
@@ -357,7 +358,7 @@ public class EntityUtil {
 	 */
 	public static List<LivingEntity> getViewableTargetableEntity(Entity attacker, AxisAlignedBB aabb){
 		List<LivingEntity> list = new ArrayList<>();
-		for(LivingEntity entity : attacker.world.getEntitiesWithinAABB(LivingEntity.class, aabb)) {
+		for(LivingEntity entity : attacker.level.getEntitiesOfClass(LivingEntity.class, aabb)) {
 			if(attacker != entity && EntityUtil.checkCanSeeEntity(attacker, entity) && checkCanEntityTarget(attacker, entity)) {
 				list.add(entity);
 			}
@@ -375,14 +376,14 @@ public class EntityUtil {
 		List<Entity> targets = getEntityAttackableTarget(attacker, aabb);
 		targets.forEach((target) -> {//owner first.
 			if(! (target instanceof PVZMultiPartEntity)) {
-				if(! set.contains(target.getEntityId())) {
+				if(! set.contains(target.getId())) {
 					set.addAll(getOwnerAndPartsID(target));
 					list.add(target);
 				}
 			}
 		});
 		targets.forEach((target) -> {//deal with part.
-			if(! set.contains(target.getEntityId())) {
+			if(! set.contains(target.getId())) {
 				set.addAll(getOwnerAndPartsID(target));
 				list.add(target);
 			}
@@ -395,25 +396,25 @@ public class EntityUtil {
 		if(entity instanceof PVZMultiPartEntity) {//the entity is a part.
 			LivingEntity owner = ((PVZMultiPartEntity) entity).getOwner();
 			if(owner == null) {// no owner
-				list.add(entity.getEntityId());
+				list.add(entity.getId());
 			} else {// get all id for owner's parts
 				IMultiPartEntity parent = ((PVZMultiPartEntity) entity).getParent();
-				for(Entity target : parent.getParts()) {
+				for(Entity target : parent.getMultiParts()) {
 				    if(target != null) {
-				    	list.add(target.getEntityId());
+				    	list.add(target.getId());
 				    }
 				}
-				list.add(owner.getEntityId());
+				list.add(owner.getId());
 			}
 		} else if(entity instanceof IMultiPartEntity){
-			for(Entity target : ((IMultiPartEntity) entity).getParts()) {
+			for(Entity target : ((IMultiPartEntity) entity).getMultiParts()) {
 			    if(target != null) {
-			    	list.add(target.getEntityId());
+			    	list.add(target.getId());
 			    }
 			}
-			list.add(entity.getEntityId());
+			list.add(entity.getId());
 		} else {
-			list.add(entity.getEntityId());
+			list.add(entity.getId());
 		}
 		return list;
 	}
@@ -427,7 +428,7 @@ public class EntityUtil {
 		} else if(entity instanceof PVZZombieEntity) {
 			((PVZZombieEntity) entity).checkAndAddPotionEffect(effect);
 		} else if(entity instanceof LivingEntity) {
-			((LivingEntity) entity).addPotionEffect(effect);
+			((LivingEntity) entity).addEffect(effect);
 		}
 	}
 	
@@ -435,34 +436,34 @@ public class EntityUtil {
 	 * get is entity cold
 	 */
 	public static boolean isEntityCold(LivingEntity entity) {
-		return entity.getAttribute(SharedMonsterAttributes.MOVEMENT_SPEED).getModifier(EffectRegister.COLD_EFFECT_UUID) != null;
+		return entity.getAttribute(Attributes.MOVEMENT_SPEED).getModifier(EffectRegister.COLD_EFFECT_UUID) != null;
 	}
 	
 	/**
 	 * get is entity frozen
 	 */
 	public static boolean isEntityFrozen(LivingEntity entity) {
-		return entity.getAttribute(SharedMonsterAttributes.MOVEMENT_SPEED).getModifier(EffectRegister.FROZEN_EFFECT_UUID) != null;
+		return entity.getAttribute(Attributes.MOVEMENT_SPEED).getModifier(EffectRegister.FROZEN_EFFECT_UUID) != null;
 	}
 	
 	/**
 	 * get is entity butter
 	 */
 	public static boolean isEntityButter(LivingEntity entity) {
-		return entity.getAttribute(SharedMonsterAttributes.MOVEMENT_SPEED).getModifier(EffectRegister.BUTTER_EFFECT_UUID) != null;
+		return entity.getAttribute(Attributes.MOVEMENT_SPEED).getModifier(EffectRegister.BUTTER_EFFECT_UUID) != null;
 	}
 	
 	public static boolean isEntityInSky(Entity entity) {
 		if(entity instanceof FlyingEntity || entity instanceof BatEntity) return true;
 		if(entity instanceof BalloonZombieEntity && ((BalloonZombieEntity) entity).hasBalloon()) return true;
-		return ! entity.onGround && ! entity.isInWater() && ! entity.isInLava();
+		return ! entity.isOnGround() && ! entity.isInWater() && ! entity.isInLava();
 	}
 	
 	/**
 	 * get aabb by entity and w & h
 	 */
 	public static AxisAlignedBB getEntityAABB(Entity entity, double w, double h){
-		return new AxisAlignedBB(entity.getPosX() - w, entity.getPosY() - h, entity.getPosZ() - w, entity.getPosX() + w, entity.getPosY() + h, entity.getPosZ() + w);
+		return new AxisAlignedBB(entity.getX() - w, entity.getY() - h, entity.getZ() - w, entity.getX() + w, entity.getY() + h, entity.getZ() + w);
 	}
 	
 }

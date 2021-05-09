@@ -23,7 +23,7 @@ public class SnowPeaRender extends PVZPlantRender<SnowPeaEntity>{
 	}
 
 	@Override
-	public ResourceLocation getEntityTexture(SnowPeaEntity entity) {
+	public ResourceLocation getTextureLocation(SnowPeaEntity entity) {
 		return StringUtil.prefix("textures/entity/plant/ice/snow_pea.png");
 	}
 

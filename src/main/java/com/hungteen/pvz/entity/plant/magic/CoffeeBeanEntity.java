@@ -26,12 +26,12 @@ public class CoffeeBeanEntity extends PlantBomberEntity{
 
 	@Override
 	public void startBomb() {
-		if(!this.world.isRemote) {
+		if(!this.level.isClientSide) {
 			float len = this.getAwakeRange();
 			AxisAlignedBB aabb=EntityUtil.getEntityAABB(this, len, len + 2);
 			boolean hasEffect = false;
 			int awakeCnt = 0;
-			for(PVZPlantEntity plant : world.getEntitiesWithinAABB(PVZPlantEntity.class, aabb)) {
+			for(PVZPlantEntity plant : level.getEntitiesOfClass(PVZPlantEntity.class, aabb)) {
 				if(! EntityUtil.checkCanEntityAttack(this, plant)) {
 					if(plant.isPlantSleeping()) {
 						++ awakeCnt;
@@ -40,7 +40,7 @@ public class CoffeeBeanEntity extends PlantBomberEntity{
 					hasEffect = true;
 				}
 			}
-			PlayerEntity player = EntityUtil.getEntityOwner(world, this);
+			PlayerEntity player = EntityUtil.getEntityOwner(level, this);
 			if(player != null && player instanceof ServerPlayerEntity) {
 				EntityEffectAmountTrigger.INSTANCE.trigger((ServerPlayerEntity) player, this, awakeCnt);
 			}
@@ -63,12 +63,12 @@ public class CoffeeBeanEntity extends PlantBomberEntity{
 	}
 	
 	@Override
-	public EntitySize getSize(Pose poseIn) {
-		return EntitySize.flexible(0.6f, 0.8f);
+	public EntitySize getDimensions(Pose poseIn) {
+		return EntitySize.scalable(0.6f, 0.8f);
 	}
 	
 	@Override
-	public boolean hasNoGravity() {
+	public boolean isNoGravity() {
 		return true;
 	}
 

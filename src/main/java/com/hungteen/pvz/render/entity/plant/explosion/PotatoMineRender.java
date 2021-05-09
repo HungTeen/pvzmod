@@ -7,7 +7,7 @@ import com.hungteen.pvz.utils.StringUtil;
 
 import net.minecraft.client.renderer.entity.EntityRendererManager;
 import net.minecraft.util.ResourceLocation;
-import net.minecraft.util.math.Vec3d;
+import net.minecraft.util.math.vector.Vector3d;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 
@@ -19,8 +19,8 @@ public class PotatoMineRender extends PVZPlantRender<PotatoMineEntity>{
 	}
 
 	@Override
-	public Vec3d getTranslateVec(PotatoMineEntity entity) {
-		return entity.isMineReady() ? new Vec3d(0, 0, 0) : new Vec3d(0, 0.6f, 0);
+	public Vector3d getTranslateVec(PotatoMineEntity entity) {
+		return entity.isMineReady() ? new Vector3d(0, 0, 0) : new Vector3d(0, 0.6f, 0);
 	}
 	
 	@Override
@@ -29,7 +29,7 @@ public class PotatoMineRender extends PVZPlantRender<PotatoMineEntity>{
 	}
 	
 	@Override
-	public ResourceLocation getEntityTexture(PotatoMineEntity entity) {
+	public ResourceLocation getTextureLocation(PotatoMineEntity entity) {
 		if(entity.sign_red) return StringUtil.prefix("textures/entity/plant/explosion/potato_mine2.png");
 		return StringUtil.prefix("textures/entity/plant/explosion/potato_mine1.png");
 	}

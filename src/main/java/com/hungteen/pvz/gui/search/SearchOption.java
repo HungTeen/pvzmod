@@ -14,6 +14,7 @@ import com.hungteen.pvz.utils.enums.Zombies;
 import net.minecraft.client.Minecraft;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
+import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.TranslationTextComponent;
 
 public class SearchOption {
@@ -58,13 +59,13 @@ public class SearchOption {
 	}
 	
 	@SuppressWarnings("resource")
-	public static String getOptionName(SearchOption a) {
-		if(a.isPlayer()) return Minecraft.getInstance().player.getName().getFormattedText();
+	public static ITextComponent getOptionName(SearchOption a) {
+		if(a.isPlayer()) return Minecraft.getInstance().player.getName();
 		if(a.isPlant()) {
 			Plants plant = a.getPlant().get();
-			return new TranslationTextComponent("entity.pvz." + plant.toString().toLowerCase()).getFormattedText();
+			return new TranslationTextComponent("entity.pvz." + plant.toString().toLowerCase());
 		}
-	    return new TranslationTextComponent("entity.pvz." + a.toString().toLowerCase()).getFormattedText();
+	    return new TranslationTextComponent("entity.pvz." + a.toString().toLowerCase());
 	}
 	
 	public static ItemStack getItemStackByOption(SearchOption a) {

@@ -9,7 +9,6 @@ import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.nbt.INBT;
 import net.minecraft.nbt.ListNBT;
 import net.minecraft.world.World;
-import net.minecraft.world.dimension.DimensionType;
 import net.minecraft.world.server.ServerWorld;
 import net.minecraft.world.storage.DimensionSavedDataManager;
 import net.minecraft.world.storage.WorldSavedData;
@@ -38,12 +37,12 @@ public class WorldEventData extends WorldSavedData{
 	
 	public void addZombieSpawnEntry(Zombies zombie) {
 		zombies.add(zombie);
-		this.markDirty();
+		this.setDirty();
 	}
 	
 	public void removeZombieSpawnEntry(Zombies zombie) {
 		zombies.remove(zombie);
-		this.markDirty();
+		this.setDirty();
 	}
 	
 	public boolean hasEvent(Events ev) {
@@ -52,32 +51,32 @@ public class WorldEventData extends WorldSavedData{
 	
 	public void addEvent(Events ev) {
 		events.add(ev);
-		this.markDirty();
+		this.setDirty();
 	}
 	
 	public void removeEvent(Events ev) {
 		events.remove(ev);
-		this.markDirty();
+		this.setDirty();
 	}
 	
 	public void setChanged(boolean is) {
 		this.changed=is;
-		this.markDirty();
+		this.setDirty();
 	}
 	
 	public void setIsZomBossDefeated(boolean is) {
 		this.isZomBossDefeated=is;
-		this.markDirty();
+		this.setDirty();
 	}
 	
 	public void setMustStartNextDay(boolean is) {
 		this.mustStartNextDay=is;
-		this.markDirty();
+		this.setDirty();
 	}
 	
 	public void setMustNotStartNextDay(boolean is) {
 		this.mustNotStartNextDay=is;
-		this.markDirty();
+		this.setDirty();
 	}
 	
 	public boolean hasChanged() {
@@ -97,7 +96,7 @@ public class WorldEventData extends WorldSavedData{
 	}
 	
 	@Override
-	public void read(CompoundNBT nbt) {
+	public void load(CompoundNBT nbt) {
 		//restore event.
 		events.clear();
 		ListNBT list = (ListNBT) nbt.get("event");
@@ -124,7 +123,7 @@ public class WorldEventData extends WorldSavedData{
 	}
 
 	@Override
-	public CompoundNBT write(CompoundNBT nbt) {
+	public CompoundNBT save(CompoundNBT nbt) {
 		ListNBT list = new ListNBT();
 		events.stream().forEach((event)->{
 			CompoundNBT tag = new CompoundNBT();
@@ -148,9 +147,9 @@ public class WorldEventData extends WorldSavedData{
 		if (! (worldIn instanceof ServerWorld)) {
             throw new RuntimeException("Attempted to get the data from a client world. This is wrong.");
         }
-		ServerWorld world = worldIn.getServer().getWorld(DimensionType.OVERWORLD);
-		DimensionSavedDataManager storage = world.getSavedData();
-		return storage.getOrCreate(WorldEventData::new, DATA_NAME);
+		ServerWorld world = worldIn.getServer().getLevel(World.OVERWORLD);
+		DimensionSavedDataManager storage = world.getDataStorage();
+		return storage.computeIfAbsent(WorldEventData::new, DATA_NAME);
 	}
 
 }

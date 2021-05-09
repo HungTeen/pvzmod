@@ -16,7 +16,7 @@ import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.SoundEvent;
 import net.minecraft.world.World;
-import net.minecraft.world.dimension.DimensionType;
+import net.minecraft.world.server.ServerWorld;
 
 public class AbstractDaveEntity extends CreatureEntity {
 
@@ -34,23 +34,23 @@ public class AbstractDaveEntity extends CreatureEntity {
 		this.goalSelector.addGoal(7, new WaterAvoidingRandomWalkingGoal(this, 0.25D) {
 			
 			@Override
-			public boolean shouldExecute() {
-				if(this.creature instanceof CrazyDaveEntity) {
-					return super.shouldExecute() && ((CrazyDaveEntity) this.creature).getCustomer() == null;
+			public boolean canUse() {
+				if(this.mob instanceof CrazyDaveEntity) {
+					return super.canUse() && ((CrazyDaveEntity) this.mob).getCustomer() == null;
 				}
-				return super.shouldExecute();
+				return super.canUse();
 			}
 		});
 	}
 	
 	@Override
-	public int getTalkInterval() {
+	public int getAmbientSoundInterval() {
 		return 180;
 	}
 
 	@Override
-	public EntitySize getSize(Pose poseIn) {
-		return EntitySize.flexible(0.9f, 2.6f);
+	public EntitySize getDimensions(Pose poseIn) {
+		return EntitySize.scalable(0.9f, 2.6f);
 	}
 	
 	@Override
@@ -82,13 +82,13 @@ public class AbstractDaveEntity extends CreatureEntity {
 	}
 
 	@Nullable
-	public Entity changeDimension(DimensionType destination, net.minecraftforge.common.util.ITeleporter teleporter) {
+	public Entity changeDimension(ServerWorld level, net.minecraftforge.common.util.ITeleporter teleporter) {
 		this.resetCustomer();
-		return super.changeDimension(destination, teleporter);
+		return super.changeDimension(level, teleporter);
 	}
 
 	@Override
-	public boolean canDespawn(double distanceToClosestPlayer) {
+	public boolean removeWhenFarAway(double distanceToClosestPlayer) {
 		return false;
 	}
 	
@@ -96,12 +96,12 @@ public class AbstractDaveEntity extends CreatureEntity {
 		this.setCustomer((PlayerEntity) null);
 	}
 
-	public void onDeath(DamageSource cause) {
-		super.onDeath(cause);
+	public void die(DamageSource cause) {
+		super.die(cause);
 		this.resetCustomer();
 	}
 
-	public boolean canBeLeashedTo(PlayerEntity player) {
+	public boolean canBeLeashed(PlayerEntity player) {
 		return false;
 	}
 
@@ -113,9 +113,9 @@ public class AbstractDaveEntity extends CreatureEntity {
 			this.dave = dave;
 		}
 
-		public boolean shouldExecute() {
+		public boolean canUse() {
 			if (this.dave.hasCustomer()) {
-				this.closestEntity = this.dave.getCustomer();
+				this.lookAt = this.dave.getCustomer();
 				return true;
 			} else {
 				return false;

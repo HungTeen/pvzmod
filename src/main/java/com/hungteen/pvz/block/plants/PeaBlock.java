@@ -21,14 +21,14 @@ import net.minecraft.world.World;
 public class PeaBlock extends CropsBlock{
 
     private static final VoxelShape[] SHAPE_BY_AGE = new VoxelShape[]{
-    		Block.makeCuboidShape(0.0D, 0.0D, 0.0D, 16.0D, 2.0D, 16.0D), 
-    		Block.makeCuboidShape(0.0D, 0.0D, 0.0D, 16.0D, 4.0D, 16.0D), 
-    		Block.makeCuboidShape(0.0D, 0.0D, 0.0D, 16.0D, 6.0D, 16.0D), 
-    		Block.makeCuboidShape(0.0D, 0.0D, 0.0D, 16.0D, 8.0D, 16.0D), 
-    		Block.makeCuboidShape(0.0D, 0.0D, 0.0D, 16.0D, 10.0D, 16.0D), 
-    		Block.makeCuboidShape(0.0D, 0.0D, 0.0D, 16.0D, 12.0D, 16.0D), 
-    		Block.makeCuboidShape(0.0D, 0.0D, 0.0D, 16.0D, 14.0D, 16.0D), 
-    		Block.makeCuboidShape(0.0D, 0.0D, 0.0D, 16.0D, 16.0D, 16.0D)
+    		Block.box(0.0D, 0.0D, 0.0D, 16.0D, 2.0D, 16.0D), 
+    		Block.box(0.0D, 0.0D, 0.0D, 16.0D, 4.0D, 16.0D), 
+    		Block.box(0.0D, 0.0D, 0.0D, 16.0D, 6.0D, 16.0D), 
+    		Block.box(0.0D, 0.0D, 0.0D, 16.0D, 8.0D, 16.0D), 
+    		Block.box(0.0D, 0.0D, 0.0D, 16.0D, 10.0D, 16.0D), 
+    		Block.box(0.0D, 0.0D, 0.0D, 16.0D, 12.0D, 16.0D), 
+    		Block.box(0.0D, 0.0D, 0.0D, 16.0D, 14.0D, 16.0D), 
+    		Block.box(0.0D, 0.0D, 0.0D, 16.0D, 16.0D, 16.0D)
     };
 	
     public PeaBlock(Properties builder) {
@@ -37,25 +37,25 @@ public class PeaBlock extends CropsBlock{
 
     @Override
     public VoxelShape getShape(BlockState state, IBlockReader worldIn, BlockPos pos, ISelectionContext context) {
-    	return SHAPE_BY_AGE[state.get(this.getAgeProperty())];
+    	return SHAPE_BY_AGE[state.getValue(this.getAgeProperty())];
     }
     
 	@SuppressWarnings("deprecation")
 	@Override
-	public ActionResultType onBlockActivated(BlockState state, World worldIn, BlockPos pos, PlayerEntity player,
+	public ActionResultType use(BlockState state, World worldIn, BlockPos pos, PlayerEntity player,
 			Hand handIn, BlockRayTraceResult hit) {
-		if(! worldIn.isRemote) {
+		if(! worldIn.isClientSide) {
 			if(this.isMaxAge(state)) {
-				worldIn.addEntity(new ItemEntity(worldIn, pos.getX(), pos.getY(), pos.getZ(), new ItemStack(ItemRegister.PEA.get(), 1)));
-				worldIn.setBlockState(pos, this.withAge(0));
+				worldIn.addFreshEntity(new ItemEntity(worldIn, pos.getX(), pos.getY(), pos.getZ(), new ItemStack(ItemRegister.PEA.get(), 1)));
+				worldIn.setBlockAndUpdate(pos, this.getStateForAge(0));
 				return ActionResultType.SUCCESS;
 			}
 		}
-		return super.onBlockActivated(state, worldIn, pos, player, handIn, hit);
+		return super.use(state, worldIn, pos, player, handIn, hit);
 	}
 	
 	@Override
-	protected IItemProvider getSeedsItem() {
+	protected IItemProvider getBaseSeedId() {
 		return ItemRegister.PEA.get();
 	}
 }

@@ -28,21 +28,21 @@ public class FragmentSpliceContainer extends AbstractOptionContainer {
 	public FragmentSpliceContainer(int id, PlayerEntity player, BlockPos pos) {
 		super(ContainerRegister.FRAGMENT_SPLICE.get(), id);
 		this.player = player;
-		this.te = (FragmentSpliceTileEntity) player.world.getTileEntity(pos);
+		this.te = (FragmentSpliceTileEntity) player.level.getBlockEntity(pos);
 		if(this.te == null) {
 			System.out.println("Error: Open Fragment Splice GUI !");
 			return ;
 		}
-		this.trackIntArray(this.te.array);
+		this.addDataSlots(this.te.array);
 		this.addSlot(new SlotItemHandler(te.handler, 0, 7, 119) {
 			@Override
-			public boolean isItemValid(ItemStack stack) {
+			public boolean mayPlace(ItemStack stack) {
 				return stack.getItem() instanceof SunStorageSaplingItem;
 			}
 		});
 		this.addSlot(new SlotItemHandler(te.handler, 1, 187, 62) {
 			@Override
-			public boolean isItemValid(ItemStack stack) {
+			public boolean mayPlace(ItemStack stack) {
 				return false;
 			}
 		});
@@ -62,38 +62,38 @@ public class FragmentSpliceContainer extends AbstractOptionContainer {
 	}
 
 	@Override
-	public ItemStack transferStackInSlot(PlayerEntity playerIn, int index) {
+	public ItemStack quickMoveStack(PlayerEntity playerIn, int index) {
 		ItemStack itemstack = ItemStack.EMPTY;
-		Slot slot = this.inventorySlots.get(index);
-		if (slot != null && slot.getHasStack()) {
-			ItemStack itemstack1 = slot.getStack();
+		Slot slot = this.slots.get(index);
+		if (slot != null && slot.hasItem()) {
+			ItemStack itemstack1 = slot.getItem();
 			itemstack = itemstack1.copy();
 			if (index == 0) {
-				if (!this.mergeItemStack(itemstack1, 27, this.inventorySlots.size(), true)) {
+				if (!this.moveItemStackTo(itemstack1, 27, this.slots.size(), true)) {
 					return ItemStack.EMPTY;
 				}
 			} else if(index == 1) {
-				if (!this.mergeItemStack(itemstack1, 27, this.inventorySlots.size(), true)) {
+				if (!this.moveItemStackTo(itemstack1, 27, this.slots.size(), true)) {
 					return ItemStack.EMPTY;
 				}
 			} else if(index < 27) {
-				if (!this.mergeItemStack(itemstack1, 27, this.inventorySlots.size(), true)) {
+				if (!this.moveItemStackTo(itemstack1, 27, this.slots.size(), true)) {
 					return ItemStack.EMPTY;
 				}
 			} else if (index < 27 + 27) {
-				if(!mergeItemStack(itemstack1, 2, 27, false)
-						&& !mergeItemStack(itemstack1, 27 + 27, this.inventorySlots.size(), false)) {
+				if(!moveItemStackTo(itemstack1, 2, 27, false)
+						&& !moveItemStackTo(itemstack1, 27 + 27, this.slots.size(), false)) {
 					return ItemStack.EMPTY;
 				}
 			} else {
-				if (!this.mergeItemStack(itemstack1, 2, 27 + 27, false)) {
+				if (!this.moveItemStackTo(itemstack1, 2, 27 + 27, false)) {
 					return ItemStack.EMPTY;
 				}
 			}
 			if (itemstack1.isEmpty()) {
-				slot.putStack(ItemStack.EMPTY);
+				slot.set(ItemStack.EMPTY);
 			} else {
-				slot.onSlotChanged();
+				slot.setChanged();
 			}
 		}
 		return itemstack;
@@ -104,8 +104,8 @@ public class FragmentSpliceContainer extends AbstractOptionContainer {
 			ItemStack stack = this.te.handler.getStackInSlot(i);
 			if(stack.isEmpty()) continue;
 			int emptyPos = - 1;
-			for(int j = 0; j < this.player.inventory.mainInventory.size(); ++ j) {
-				ItemStack oldStack = this.player.inventory.mainInventory.get(j);
+			for(int j = 0; j < this.player.inventory.items.size(); ++ j) {
+				ItemStack oldStack = this.player.inventory.items.get(j);
 				if(oldStack.isEmpty()) emptyPos = j;
 				if(ItemUtil.canItemStackAddTo(oldStack, stack)) {
 					int maxSize = oldStack.getMaxStackSize();
@@ -125,7 +125,7 @@ public class FragmentSpliceContainer extends AbstractOptionContainer {
 				}
 			}
 			if(stack.getCount() > 0) {
-				this.player.inventory.mainInventory.set(emptyPos, stack.copy());
+				this.player.inventory.items.set(emptyPos, stack.copy());
 				stack.shrink(stack.getCount());
 			}
 		}
@@ -139,17 +139,17 @@ public class FragmentSpliceContainer extends AbstractOptionContainer {
 	}
 	
 	@Override
-	public boolean canInteractWith(PlayerEntity playerIn) {
+	public boolean stillValid(PlayerEntity playerIn) {
 		return this.te.isUsableByPlayer(playerIn);
 	}
 
 	public List<Pair<Ingredient, Slot>> getRecipeForPlant(Plants plantType){
 		Ranks rank = PlantUtil.getPlantRankByName(plantType);
 		Essences essence = PlantUtil.getPlantEssenceType(plantType);
-		Ingredient fragment = Ingredient.fromItems(PlantUtil.getPlantEnjoyCard(plantType));
-		Ingredient template = Ingredient.fromItems(Ranks.getRankCardItem(rank));
-		Ingredient special = Ingredient.fromItems(Essences.getEssenceItem(essence));
-		Ingredient result = Ingredient.fromItems(PlantUtil.getPlantSummonCard(plantType));
+		Ingredient fragment = Ingredient.of(PlantUtil.getPlantEnjoyCard(plantType));
+		Ingredient template = Ingredient.of(Ranks.getRankCardItem(rank));
+		Ingredient special = Ingredient.of(Essences.getEssenceItem(essence));
+		Ingredient result = Ingredient.of(PlantUtil.getPlantSummonCard(plantType));
 		List<Pair<Ingredient, Slot>> list = new ArrayList<>();
 		for(int i = 0; i < 5; ++ i) {
 			for(int j = 0; j < 5; ++ j) {
@@ -170,7 +170,7 @@ public class FragmentSpliceContainer extends AbstractOptionContainer {
 	
 	@Override
 	public boolean isCraftSlot(Slot slot) {
-		return slot != null && slot.slotNumber > 0 && slot.slotNumber < 2 + 25;
+		return slot != null && slot.index > 0 && slot.index < 2 + 25;
 	}
 
 }

@@ -1,9 +1,10 @@
 package com.hungteen.pvz.render.entity.zombie;
 
 import com.hungteen.pvz.entity.zombie.base.UnderGroundZombieEntity;
+
 import net.minecraft.client.renderer.entity.EntityRendererManager;
 import net.minecraft.client.renderer.entity.model.EntityModel;
-import net.minecraft.util.math.Vec3d;
+import net.minecraft.util.math.vector.Vector3d;
 
 public abstract class UnderGroundZombieRender<T extends UnderGroundZombieEntity> extends PVZZombieRender<T>{
 
@@ -13,10 +14,10 @@ public abstract class UnderGroundZombieRender<T extends UnderGroundZombieEntity>
 	}
 
 	@Override
-	public Vec3d getTranslateVec(T entity) {
+	public Vector3d getTranslateVec(T entity) {
 		float height = this.getOffsetHeight();
 		float downOffset = entity.getAttackTime() < 0 ? (- entity.getAttackTime() * 1.0f / entity.getSpawnTime()) * height : 0;
-		return new Vec3d(0, downOffset, 0);
+		return new Vector3d(0, downOffset, 0);
 	}
 	
 	protected float getOffsetHeight() {

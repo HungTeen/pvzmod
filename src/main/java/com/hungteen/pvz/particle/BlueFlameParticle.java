@@ -3,12 +3,12 @@ package com.hungteen.pvz.particle;
 import net.minecraft.client.particle.IAnimatedSprite;
 import net.minecraft.client.particle.IParticleFactory;
 import net.minecraft.client.particle.Particle;
+import net.minecraft.client.world.ClientWorld;
 import net.minecraft.particles.BasicParticleType;
-import net.minecraft.world.World;
 
 public class BlueFlameParticle extends YellowFlameParticle{
 
-	public BlueFlameParticle(World world, double x, double y, double z, double xSpeed, double ySpeed, double zSpeed) {
+	public BlueFlameParticle(ClientWorld world, double x, double y, double z, double xSpeed, double ySpeed, double zSpeed) {
 		super(world, x, y, z, xSpeed, ySpeed, zSpeed);
 	}
 
@@ -21,10 +21,10 @@ public class BlueFlameParticle extends YellowFlameParticle{
 		}
 		
 		@Override
-		public Particle makeParticle(BasicParticleType typeIn, World worldIn, double x, double y, double z,
+		public Particle createParticle(BasicParticleType typeIn, ClientWorld worldIn, double x, double y, double z,
 				double xSpeed, double ySpeed, double zSpeed) {
 			BlueFlameParticle particle = new BlueFlameParticle(worldIn, x, y, z, xSpeed, ySpeed, zSpeed);
-			particle.selectSpriteRandomly(this.sprite);
+			particle.pickSprite(this.sprite);
 			return particle;
 		}
 

@@ -12,7 +12,7 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.EntityRayTraceResult;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.RayTraceResult;
-import net.minecraft.util.math.Vec3d;
+import net.minecraft.util.math.vector.Vector3d;
 import net.minecraft.world.World;
 
 public abstract class PultBulletEntity extends AbstractBulletEntity {
@@ -36,24 +36,24 @@ public abstract class PultBulletEntity extends AbstractBulletEntity {
 	@Override
 	public void tick() {
 		super.tick();
-		if(! this.world.isRemote && ! this.isPushBack && this.ticksExisted % this.targetChance == 0) {
+		if(! this.level.isClientSide && ! this.isPushBack && this.tickCount % this.targetChance == 0) {
 			if(this.lockTarget.isPresent() && EntityUtil.isEntityValid(lockTarget.get())) {
 				LivingEntity target = this.lockTarget.get();
-				Vec3d speed = this.getMotion();
+				Vector3d speed = this.getDeltaMovement();
 			    double g = this.getGravityVelocity();
 			    double t1 = speed.y / g;
 			    double height = speed.y * speed.y / 2 / g;
-			    double downHeight = this.getPosY() + height - target.getPosY() - target.getHeight();
+			    double downHeight = this.getY() + height - target.getY() - target.getBbHeight();
 			    if(downHeight < 0) return ;
 			    double t2 = Math.sqrt(2 * downHeight / g);
-			    double dx = target.getPosX() + target.getMotion().getX() * (t1 + t2) - this.getPosX();
-	    	    double dz = target.getPosZ() + target.getMotion().getZ() * (t1 + t2) - this.getPosZ();
+			    double dx = target.getX() + target.getDeltaMovement().x() * (t1 + t2) - this.getX();
+	    	    double dz = target.getZ() + target.getDeltaMovement().z() * (t1 + t2) - this.getZ();
 	    	    double dxz = MathHelper.sqrt(dx * dx + dz * dz);
 	    	    double vxz = dxz / (t1 + t2);
 	    	    if(dxz == 0) {
-	    	    	this.setMotion(0, speed.y, 0);
+	    	    	this.setDeltaMovement(0, speed.y, 0);
 	    	    } else {
-	    		    this.setMotion(vxz * dx / dxz, speed.y, vxz * dz / dxz);
+	    		    this.setDeltaMovement(vxz * dx / dxz, speed.y, vxz * dz / dxz);
 	    	    }
 			}
 		}
@@ -65,12 +65,12 @@ public abstract class PultBulletEntity extends AbstractBulletEntity {
 		if (result.getType() == RayTraceResult.Type.ENTITY) {
 			Entity target = ((EntityRayTraceResult) result).getEntity();
 			if (checkCanAttack(target)) {
-				target.hurtResistantTime = 0;
+				target.invulnerableTime = 0;
 				this.dealDamage(target); // attack 
 				flag = true;
 			}
 		}
-		this.world.setEntityState(this, (byte) 3);
+		this.level.broadcastEntityEvent(this, (byte) 3);
 		if (flag) {
 			this.remove();
 		} else if(! this.checkLive(result)) {
@@ -89,7 +89,7 @@ public abstract class PultBulletEntity extends AbstractBulletEntity {
 	
 	public void pushBack() {
 		this.isPushBack = true;
-		this.setMotion((this.rand.nextFloat() - 0.5F) * 2, this.rand.nextFloat() * 2, (this.rand.nextFloat() - 0.5F) * 2);
+		this.setDeltaMovement((this.random.nextFloat() - 0.5F) * 2, this.random.nextFloat() * 2, (this.random.nextFloat() - 0.5F) * 2);
 	}
 	
 	protected abstract void dealDamage(Entity target);
@@ -106,18 +106,18 @@ public abstract class PultBulletEntity extends AbstractBulletEntity {
     	double g = this.getGravityVelocity();
     	double t1 = MathHelper.sqrt(2 * height / g);//go up time
     	double t2 = 0;
-    	if(this.getPosY() + height - target.getPosY() - target.getHeight() >= 0) {//random pult
-    		t2 = MathHelper.sqrt(2 * (this.getPosY() + height - target.getPosY() - target.getHeight()) / g);//go down time
+    	if(this.getY() + height - target.getY() - target.getBbHeight() >= 0) {//random pult
+    		t2 = MathHelper.sqrt(2 * (this.getY() + height - target.getY() - target.getBbHeight()) / g);//go down time
     	}
-    	double dx = target.getPosX() + target.getMotion().getX() * (t1 + t2) - this.getPosX();
-    	double dz = target.getPosZ() + target.getMotion().getZ() * (t1 + t2) - this.getPosZ();
+    	double dx = target.getX() + target.getDeltaMovement().x() * (t1 + t2) - this.getX();
+    	double dz = target.getZ() + target.getDeltaMovement().z() * (t1 + t2) - this.getZ();
     	double dxz = MathHelper.sqrt(dx * dx + dz * dz);
     	double vxz = dxz / (t1 + t2);
     	double vy = g * t1;
     	if(dxz == 0) {
-    		this.setMotion(0, vy, 0);
+    		this.setDeltaMovement(0, vy, 0);
     	} else {
-    		this.setMotion(vxz * dx / dxz, vy, vxz * dz / dxz);
+    		this.setDeltaMovement(vxz * dx / dxz, vy, vxz * dz / dxz);
     	}
     }
     
@@ -133,18 +133,18 @@ public abstract class PultBulletEntity extends AbstractBulletEntity {
     	double g = this.getGravityVelocity();
     	double t1 = MathHelper.sqrt(2 * height / g);//go up time
     	double t2 = 0;
-    	if(this.getPosY() + height - pos.getY() - 1 >= 0) {//random pult
-    		t2 = MathHelper.sqrt(2 * (this.getPosY() + height - pos.getY() - 1) / g);//go down time
+    	if(this.getY() + height - pos.getY() - 1 >= 0) {//random pult
+    		t2 = MathHelper.sqrt(2 * (this.getY() + height - pos.getY() - 1) / g);//go down time
     	}
-    	double dx = pos.getX() - this.getPosX();
-    	double dz = pos.getZ() - this.getPosZ();
+    	double dx = pos.getX() - this.getX();
+    	double dz = pos.getZ() - this.getZ();
     	double dxz = MathHelper.sqrt(dx * dx + dz * dz);
     	double vxz = dxz / (t1 + t2);
     	double vy = g * t1;
     	if(dxz == 0) {
-    		this.setMotion(0, vy, 0);
+    		this.setDeltaMovement(0, vy, 0);
     	} else {
-    		this.setMotion(vxz * dx / dxz, vy, vxz * dz / dxz);
+    		this.setDeltaMovement(vxz * dx / dxz, vy, vxz * dz / dxz);
     	}
     }
     
@@ -154,10 +154,10 @@ public abstract class PultBulletEntity extends AbstractBulletEntity {
 	}
 	
 	@Override
-	public void readAdditional(CompoundNBT compound) {
-		super.readAdditional(compound);
+	public void readAdditionalSaveData(CompoundNBT compound) {
+		super.readAdditionalSaveData(compound);
 		if(compound.contains("target_entity_id")) {
-			this.lockTarget = Optional.ofNullable((LivingEntity) world.getEntityByID(compound.getInt("target_entity_id")));
+			this.lockTarget = Optional.ofNullable((LivingEntity) level.getEntity(compound.getInt("target_entity_id")));
 		}
 		if(compound.contains("is_target_push_back")) {
 			this.isPushBack = compound.getBoolean("is_target_push_back");
@@ -165,10 +165,10 @@ public abstract class PultBulletEntity extends AbstractBulletEntity {
 	}
 	
 	@Override
-	public void writeAdditional(CompoundNBT compound) {
-		super.writeAdditional(compound);
+	public void addAdditionalSaveData(CompoundNBT compound) {
+		super.addAdditionalSaveData(compound);
 		if(this.lockTarget.isPresent()) {
-			compound.putInt("target_entity_id", this.lockTarget.get().getEntityId());
+			compound.putInt("target_entity_id", this.lockTarget.get().getId());
 		}
 		compound.putBoolean("is_target_push_back", this.isPushBack);
 	}

@@ -10,26 +10,26 @@ import net.minecraft.world.World;
 public class ButterBlock extends BreakableBlock {
 
 	public ButterBlock() {
-		super(Block.Properties.from(Blocks.HONEY_BLOCK));
+		super(Block.Properties.copy(Blocks.HONEY_BLOCK));
 	}
 
 	@Override
-	public void onFallenUpon(World worldIn, BlockPos pos, Entity entityIn, float fallDistance) {
+	public void fallOn(World worldIn, BlockPos pos, Entity entityIn, float fallDistance) {
 		if (entityIn.isSuppressingBounce()) {
-			super.onFallenUpon(worldIn, pos, entityIn, fallDistance);
+			super.fallOn(worldIn, pos, entityIn, fallDistance);
 		} else {
-			entityIn.onLivingFall(fallDistance, 0.0F);
+			entityIn.causeFallDamage(fallDistance, 0.0F);
 		}
 	}
 
 	@Override
-	public void onEntityWalk(World worldIn, BlockPos pos, Entity entityIn) {
-		double d0 = Math.abs(entityIn.getMotion().y);
+	public void stepOn(World worldIn, BlockPos pos, Entity entityIn) {
+		double d0 = Math.abs(entityIn.getDeltaMovement().y);
 		if (d0 < 0.1D && !entityIn.isSteppingCarefully()) {
 			double d1 = 0.4D + d0 * 0.2D;
-			entityIn.setMotion(entityIn.getMotion().mul(d1, 1.0D, d1));
+			entityIn.setDeltaMovement(entityIn.getDeltaMovement().multiply(d1, 1.0D, d1));
 		}
-		super.onEntityWalk(worldIn, pos, entityIn);
+		super.stepOn(worldIn, pos, entityIn);
 	}
 
 }

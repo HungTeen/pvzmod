@@ -23,7 +23,7 @@ public class IceShroomRender extends PVZPlantRender<IceShroomEntity>{
 	}
 
 	@Override
-	public ResourceLocation getEntityTexture(IceShroomEntity entity) {
+	public ResourceLocation getTextureLocation(IceShroomEntity entity) {
 		return StringUtil.prefix("textures/entity/plant/ice/ice_shroom.png");
 	}
 

@@ -6,6 +6,7 @@ import com.google.common.collect.Lists;
 import com.hungteen.pvz.gui.screen.AbstractOptionScreen;
 import com.hungteen.pvz.utils.StringUtil;
 import com.hungteen.pvz.utils.enums.Colors;
+import com.mojang.blaze3d.matrix.MatrixStack;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.widget.ToggleWidget;
@@ -55,20 +56,20 @@ public class OptionPage {
 		this.backButton.visible = true;
 	}
 
-	public void render(int x, int y, int mouseX, int mouseY, float partialTicks) {
+	public void render(MatrixStack stack, int x, int y, int mouseX, int mouseY, float partialTicks) {
 		if (this.totalPages > 1) {
 			String s = (this.currentPage + 1) + "/" + this.totalPages;
-			StringUtil.drawCenteredScaledString(this.mc.fontRenderer, s, x + 75, y + 175, Colors.WHITE, 1.5f);
+			StringUtil.drawCenteredScaledString(stack, this.mc.font, s, x + 75, y + 175, Colors.WHITE, 1.5f);
 		}
 		this.hoveredButton = null;
 		for (OptionWidget card : this.buttons) {
-			card.render(mouseX, mouseY, partialTicks);
+			card.render(stack, mouseX, mouseY, partialTicks);
 			if (card.visible && card.isHovered()) {
 	            this.hoveredButton = card;
 	         }
 		}
-		this.backButton.render(mouseX, mouseY, partialTicks);
-		this.forwardButton.render(mouseX, mouseY, partialTicks);
+		this.backButton.render(stack, mouseX, mouseY, partialTicks);
+		this.forwardButton.render(stack, mouseX, mouseY, partialTicks);
 	}
 
 	public boolean mouseClicked(double p_198955_1_, double p_198955_3_, int p_198955_5_) {
@@ -91,9 +92,9 @@ public class OptionPage {
 		}
 	}
 
-	public void renderTooltip(int mouseX, int mouseY) {
-		if (this.mc.currentScreen != null && this.hoveredButton != null) {
-			this.mc.currentScreen.renderTooltip(this.hoveredButton.getToolTipText(this.mc.currentScreen),
+	public void renderTooltip(MatrixStack stack, int mouseX, int mouseY) {
+		if (this.mc.screen != null && this.hoveredButton != null) {
+			this.mc.screen.renderComponentTooltip(stack, this.hoveredButton.getToolTipText(this.mc.screen),
 					mouseX, mouseY);
 		}
 

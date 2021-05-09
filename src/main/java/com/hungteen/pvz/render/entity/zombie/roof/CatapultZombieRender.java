@@ -26,7 +26,7 @@ public class CatapultZombieRender extends PVZZombieRender<CatapultZombieEntity> 
 	}
 
 	@Override
-	public ResourceLocation getEntityTexture(CatapultZombieEntity entity) {
+	public ResourceLocation getTextureLocation(CatapultZombieEntity entity) {
 		return CATAPULT_TEX;
 	}
 

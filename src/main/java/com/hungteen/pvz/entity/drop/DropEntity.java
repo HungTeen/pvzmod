@@ -12,8 +12,8 @@ import net.minecraft.world.World;
 
 public abstract class DropEntity extends MobEntity {
 
-	private static final DataParameter<Integer> AMOUNT = EntityDataManager.createKey(DropEntity.class, DataSerializers.VARINT);
-	private static final DataParameter<Integer> STATE  = EntityDataManager.createKey(DropEntity.class, DataSerializers.VARINT);
+	private static final DataParameter<Integer> AMOUNT = EntityDataManager.defineId(DropEntity.class, DataSerializers.INT);
+	private static final DataParameter<Integer> STATE  = EntityDataManager.defineId(DropEntity.class, DataSerializers.INT);
 	protected int liveTime;
 	
 	public DropEntity(EntityType<? extends MobEntity> type, World worldIn) {
@@ -23,10 +23,10 @@ public abstract class DropEntity extends MobEntity {
 	}
 	
 	@Override
-	protected void registerData() {
-		super.registerData();
-		this.dataManager.register(AMOUNT, 1);
-		this.dataManager.register(STATE, DropStates.NORMAL.ordinal());
+	protected void defineSynchedData() {
+		super.defineSynchedData();
+		this.entityData.define(AMOUNT, 1);
+		this.entityData.define(STATE, DropStates.NORMAL.ordinal());
 	}
 	
 	@Override
@@ -37,8 +37,8 @@ public abstract class DropEntity extends MobEntity {
 	@Override
 	public void tick() {
 		super.tick();
-		this.noClip = this.getDropState() != DropStates.NORMAL;
-		if(! world.isRemote) {
+		this.noPhysics = this.getDropState() != DropStates.NORMAL;
+		if(! level.isClientSide) {
 			if(this.getDropState() == DropStates.NORMAL) {
 				++ this.liveTime;
 			}
@@ -49,15 +49,15 @@ public abstract class DropEntity extends MobEntity {
 	}
 	
 	@Override
-	protected void collideWithEntity(Entity entityIn) {
+	protected void doPush(Entity entityIn) {
 	}
 	
 	@Override
-	protected void collideWithNearbyEntities() {
+	protected void pushEntities() {
 	}
 	
 	@Override
-	public boolean canBeCollidedWith() {
+	public boolean isPickable() {
 		return false;
 	}
 	/**
@@ -66,26 +66,26 @@ public abstract class DropEntity extends MobEntity {
 	protected abstract int getMaxLiveTick();
 	
 	@Override
-	public void notifyDataManagerChange(DataParameter<?> key) {
+	public void onSyncedDataUpdated(DataParameter<?> key) {
 		if(AMOUNT.equals(key)) {
-			this.recalculateSize();
+			this.refreshDimensions();
 		}
-		super.notifyDataManagerChange(key);
+		super.onSyncedDataUpdated(key);
 	}
 	
 	@Override
-	public boolean onLivingFall(float distance, float damageMultiplier) {
+	public boolean causeFallDamage(float distance, float damageMultiplier) {
 		return false;
 	}
 	
 	@Override
-	protected void playFallSound() {
+	protected void playBlockFallSound() {
 		return ;
 	}
 
 	@Override
-	public void readAdditional(CompoundNBT compound) {
-		super.readAdditional(compound);
+	public void readAdditionalSaveData(CompoundNBT compound) {
+		super.readAdditionalSaveData(compound);
 		if(compound.contains("live_time")) {
 			this.liveTime = compound.getInt("live_time");
 		}
@@ -98,27 +98,27 @@ public abstract class DropEntity extends MobEntity {
 	}
 
 	@Override
-	public void writeAdditional(CompoundNBT compound) {
-		super.writeAdditional(compound);
+	public void addAdditionalSaveData(CompoundNBT compound) {
+		super.addAdditionalSaveData(compound);
 		compound.putInt("live_time", this.liveTime);
 		compound.putInt("drop_amount", this.getAmount());
 		compound.putInt("drop_state", this.getDropState().ordinal());
 	}
 	
 	public int getAmount(){
-		return this.dataManager.get(AMOUNT);
+		return this.entityData.get(AMOUNT);
 	}
 	
 	public void setAmount(int num){
-		this.dataManager.set(AMOUNT, num);
+		this.entityData.set(AMOUNT, num);
 	}
 	
 	public DropStates getDropState(){
-		return DropStates.values()[this.dataManager.get(STATE)];
+		return DropStates.values()[this.entityData.get(STATE)];
 	}
 	
 	public void setDropState(DropStates state){
-		this.dataManager.set(STATE, state.ordinal());
+		this.entityData.set(STATE, state.ordinal());
 	}
 	
 	public static enum DropStates {

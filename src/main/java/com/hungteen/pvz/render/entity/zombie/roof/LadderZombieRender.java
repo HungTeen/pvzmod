@@ -26,7 +26,7 @@ public class LadderZombieRender extends PVZZombieRender<LadderZombieEntity> {
 	}
 
 	@Override
-	public ResourceLocation getEntityTexture(LadderZombieEntity entity) {
+	public ResourceLocation getTextureLocation(LadderZombieEntity entity) {
 		return LADDER_TEX;
 	}
 	

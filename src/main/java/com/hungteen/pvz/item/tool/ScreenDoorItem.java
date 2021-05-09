@@ -16,7 +16,7 @@ import net.minecraft.world.World;
 public class ScreenDoorItem extends ShieldItem{
 
 	public ScreenDoorItem() {
-		super(new Item.Properties().maxStackSize(1).maxDamage(1600).group(GroupRegister.PVZ_MISC));
+		super(new Item.Properties().stacksTo(1).durability(1600).tab(GroupRegister.PVZ_MISC));
 	}
 
 	@Override
@@ -25,11 +25,11 @@ public class ScreenDoorItem extends ShieldItem{
 	}
 	
 	@Override
-	public void addInformation(ItemStack stack, World worldIn, List<ITextComponent> tooltip, ITooltipFlag flagIn) {
+	public void appendHoverText(ItemStack stack, World worldIn, List<ITextComponent> tooltip, ITooltipFlag flagIn) {
 	}
 	
 	@Override
-	public boolean getIsRepairable(ItemStack toRepair, ItemStack repair) {
+	public boolean isValidRepairItem(ItemStack toRepair, ItemStack repair) {
 		return repair.getItem() == ItemRegister.STEEL_INGOT.get();
 	}
 	

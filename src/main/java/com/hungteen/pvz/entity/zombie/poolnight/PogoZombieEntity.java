@@ -18,7 +18,7 @@ import net.minecraft.world.World;
 
 public class PogoZombieEntity extends PVZZombieEntity implements IHasMetal {
 
-	private static final DataParameter<Boolean> HAS_POGO = EntityDataManager.createKey(PogoZombieEntity.class, DataSerializers.BOOLEAN);
+	private static final DataParameter<Boolean> HAS_POGO = EntityDataManager.defineId(PogoZombieEntity.class, DataSerializers.BOOLEAN);
 	private final int JUMP_CD = 30;
 	
 	public PogoZombieEntity(EntityType<? extends MonsterEntity> type, World worldIn) {
@@ -27,18 +27,18 @@ public class PogoZombieEntity extends PVZZombieEntity implements IHasMetal {
 	}
 	
 	@Override
-	protected void registerData() {
-		super.registerData();
-		this.dataManager.register(HAS_POGO, true);
+	protected void defineSynchedData() {
+		super.defineSynchedData();
+		this.entityData.define(HAS_POGO, true);
 	}
 
 	@Override
 	public void normalZombieTick() {
 		super.normalZombieTick();
-		if(! world.isRemote) {
-			if(this.hasPogo() && this.ticksExisted % this.JUMP_CD == 0) {
+		if(! level.isClientSide) {
+			if(this.hasPogo() && this.tickCount % this.JUMP_CD == 0) {
 				double motionY = 0.85D;
-				this.setMotion(this.getMotion().getX(), motionY, this.getMotion().getZ());
+				this.setDeltaMovement(this.getDeltaMovement().x(), motionY, this.getDeltaMovement().z());
 				EntityUtil.playSound(this, SoundRegister.POGO.get());
 			}
 		}
@@ -54,7 +54,7 @@ public class PogoZombieEntity extends PVZZombieEntity implements IHasMetal {
 	
 	@Override
 	public boolean isInvulnerableTo(DamageSource source) {
-		if(source.getDamageType() == DamageSource.FALL.damageType) return true;
+		if(source.getMsgId() == DamageSource.FALL.msgId) return true;
 		return super.isInvulnerableTo(source);
 	}
 	
@@ -94,24 +94,24 @@ public class PogoZombieEntity extends PVZZombieEntity implements IHasMetal {
 	}
 
 	public boolean hasPogo() {
-		return this.dataManager.get(HAS_POGO);
+		return this.entityData.get(HAS_POGO);
 	}
 	
 	public void setPogo(boolean has) {
-		this.dataManager.set(HAS_POGO, has);
+		this.entityData.set(HAS_POGO, has);
 	}
 	
 	@Override
-	public void readAdditional(CompoundNBT compound) {
-		super.readAdditional(compound);
+	public void readAdditionalSaveData(CompoundNBT compound) {
+		super.readAdditionalSaveData(compound);
 		if(compound.contains("has_pogo")) {
 			this.setPogo(compound.getBoolean("has_pogo"));
 		}
 	}
 	
 	@Override
-	public void writeAdditional(CompoundNBT compound) {
-		super.writeAdditional(compound);
+	public void addAdditionalSaveData(CompoundNBT compound) {
+		super.addAdditionalSaveData(compound);
 		compound.putBoolean("has_pogo", this.hasPogo());
 	}
 	

@@ -6,6 +6,7 @@ import com.hungteen.pvz.gui.container.AbstractOptionContainer;
 import com.hungteen.pvz.gui.search.OptionSearchGui;
 import com.hungteen.pvz.gui.search.SearchCategories;
 import com.hungteen.pvz.gui.search.SearchOption;
+import com.mojang.blaze3d.matrix.MatrixStack;
 
 import net.minecraft.client.gui.screen.inventory.ContainerScreen;
 import net.minecraft.entity.player.PlayerInventory;
@@ -27,11 +28,11 @@ public abstract class AbstractOptionScreen<T extends AbstractOptionContainer> ex
 	@Override
 	protected void init() {
 		super.init();
-		this.searchGui.init(this.minecraft, this, this.container, this.width, this.height);
-		this.guiLeft = this.searchGui.updateScreenPosition(this.xSize, this.ySize);
+		this.searchGui.init(this.minecraft, this, this.menu, this.width, this.height);
+		this.leftPos = this.searchGui.updateScreenPosition(this.imageWidth, this.imageHeight);
 		this.searchGui.initSearchBar();
 		this.children.add(this.searchGui);
-		this.setFocusedDefault(this.searchGui);
+		this.setInitialFocus(this.searchGui);
 	}
 
 	@Override
@@ -41,18 +42,18 @@ public abstract class AbstractOptionScreen<T extends AbstractOptionContainer> ex
 	}
 
 	@Override
-	public void render(int mouseX, int mouseY, float partialTicks) {
-		this.searchGui.render(mouseX, mouseY, partialTicks);
-		super.render(mouseX, mouseY, partialTicks);
-		this.searchGui.renderGhostRecipe(this.guiLeft, this.guiTop, true, partialTicks);
-		this.renderHoveredToolTip(mouseX, mouseY);
-		this.searchGui.renderTooltip(this.guiLeft, this.guiTop, mouseX, mouseY);
+	public void render(MatrixStack stack, int mouseX, int mouseY, float partialTicks) {
+		this.searchGui.render(stack, mouseX, mouseY, partialTicks);
+		super.render(stack, mouseX, mouseY, partialTicks);
+		this.searchGui.renderGhostRecipe(stack, this.leftPos, this.topPos, true, partialTicks);
+		this.renderTooltip(stack, mouseX, mouseY);
+		this.searchGui.renderTooltip(stack, this.leftPos, this.topPos, mouseX, mouseY);
 	}
 	
 	@Override
 	protected boolean hasClickedOutside(double mouseX, double mouseY, int guiLeftIn, int guiTopIn, int mouseButton) {
-		boolean flag = mouseX < guiLeftIn || mouseY < guiTopIn || mouseX >= guiLeftIn + this.xSize || mouseY >= guiTopIn + this.ySize;
-	    return this.searchGui.hasClickedOutside(mouseX, mouseY, this.guiLeft, this.guiTop, mouseButton) && flag;
+		boolean flag = mouseX < guiLeftIn || mouseY < guiTopIn || mouseX >= guiLeftIn + this.imageWidth || mouseY >= guiTopIn + this.imageHeight;
+	    return this.searchGui.hasClickedOutside(mouseX, mouseY, this.leftPos, this.topPos, mouseButton) && flag;
 	}
 	
 	@Override
@@ -65,8 +66,8 @@ public abstract class AbstractOptionScreen<T extends AbstractOptionContainer> ex
 	}
 
 	@Override
-	protected void handleMouseClick(Slot slotIn, int slotId, int mouseButton, ClickType type) {
-		super.handleMouseClick(slotIn, slotId, mouseButton, type);
+	protected void slotClicked(Slot slotIn, int slotId, int mouseButton, ClickType type) {
+		super.slotClicked(slotIn, slotId, mouseButton, type);
 		this.searchGui.slotClicked(slotIn);
 	}
 	
@@ -77,7 +78,7 @@ public abstract class AbstractOptionScreen<T extends AbstractOptionContainer> ex
 	}
 
 	@Override
-	protected void drawGuiContainerBackgroundLayer(float partialTicks, int mouseX, int mouseY) {
+	protected void renderBg(MatrixStack stack, float partialTicks, int mouseX, int mouseY) {
 	}
 	
 	public abstract boolean isOptionUnLocked(SearchOption option);

@@ -33,7 +33,7 @@ public class StarFruitEntity extends PlantShooterEntity {
 
 	@Override
 	public void normalPlantTick() {
-		if(world.isRemote) {
+		if(level.isClientSide) {
 			if(this.lightTick > 0) {
 				-- this.lightTick;
 			}
@@ -59,7 +59,7 @@ public class StarFruitEntity extends PlantShooterEntity {
 
 	@Override
 	public void shootBullet() {
-		float now = this.rotationYaw + 180F;
+		float now = this.yRot + 180F;
 		for(int i = 0; i < 5; ++ i) {
 			this.shootStarByAngle(now);
 			now += PER_ANGLE;
@@ -72,15 +72,15 @@ public class StarFruitEntity extends PlantShooterEntity {
 		double vx = - MathHelper.sin(angle);
 		double vz = MathHelper.cos(angle);
 		StarEntity.StarTypes type = this.isPlantInSuperMode() ? StarEntity.StarTypes.HUGE : StarEntity.StarTypes.NORMAL;
-		StarEntity pea = new StarEntity(world, this, type, StarEntity.StarStates.YELLOW);
-		pea.setPosition(getPosX(), getPosY() + 0.2F, getPosZ());
-		pea.setMotion(vx, 0, vz);
-		world.addEntity(pea);
+		StarEntity pea = new StarEntity(level, this, type, StarEntity.StarStates.YELLOW);
+		pea.setPos(getX(), getY() + 0.2F, getZ());
+		pea.setDeltaMovement(vx, 0, vz);
+		level.addFreshEntity(pea);
 	}
 	
 	@Override
-	public EntitySize getSize(Pose poseIn) {
-		return EntitySize.flexible(0.9F, 0.5F);
+	public EntitySize getDimensions(Pose poseIn) {
+		return EntitySize.scalable(0.9F, 0.5F);
 	}
 	
 	@Override
@@ -95,11 +95,11 @@ public class StarFruitEntity extends PlantShooterEntity {
 	}
 	
 	private void updateFacing() {
-		float now = this.getRNG().nextFloat() * 3.14159F * 2F;
+		float now = this.getRandom().nextFloat() * 3.14159F * 2F;
 		double dx = Math.sin(now);
 		double dz = Math.cos(now);
 		double dy = 0;
-		this.lookAt(Type.FEET, this.getPositionVec().add(dx, dy, dz));
+		this.lookAt(Type.FEET, this.position().add(dx, dy, dz));
 	}
 	
 	@Override

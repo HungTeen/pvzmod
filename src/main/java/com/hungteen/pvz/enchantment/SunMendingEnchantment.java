@@ -11,16 +11,16 @@ public class SunMendingEnchantment extends Enchantment {
 	}
 
 	@Override
-	public int getMaxEnchantability(int enchantmentLevel) {
-		return this.getMinEnchantability(enchantmentLevel) + 10;
+	public int getMaxCost(int enchantmentLevel) {
+		return this.getMinCost(enchantmentLevel) + 10;
 	}
 
 	@Override
-	public int getMinEnchantability(int enchantmentLevel) {
+	public int getMinCost(int enchantmentLevel) {
 		return 10 * enchantmentLevel + 20;
 	}
 
-	public boolean isTreasureEnchantment() {
+	public boolean isTreasureOnly() {
 		return true;
 	}
 

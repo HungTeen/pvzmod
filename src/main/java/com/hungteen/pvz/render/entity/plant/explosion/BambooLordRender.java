@@ -25,7 +25,7 @@ public class BambooLordRender extends PVZPlantRender<BambooLordEntity> {
 	}
 
 	@Override
-	public ResourceLocation getEntityTexture(BambooLordEntity entity) {
+	public ResourceLocation getTextureLocation(BambooLordEntity entity) {
 		return BAMBOO_LORD_TEX;
 	}
 

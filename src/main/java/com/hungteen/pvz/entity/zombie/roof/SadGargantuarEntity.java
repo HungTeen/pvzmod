@@ -11,7 +11,7 @@ import net.minecraft.entity.EntitySize;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.Pose;
-import net.minecraft.entity.SharedMonsterAttributes;
+import net.minecraft.entity.ai.attributes.Attributes;
 import net.minecraft.entity.monster.MonsterEntity;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.world.World;
@@ -24,26 +24,26 @@ public class SadGargantuarEntity extends GargantuarEntity {
 	}
 	
 	@Override
-	protected void registerAttributes() {
-		super.registerAttributes();
-		this.getAttribute(SharedMonsterAttributes.MOVEMENT_SPEED).setBaseValue(ZombieUtil.LITTLE_SLOW);
+	protected void updateAttributes() {
+		super.updateAttributes();
+		this.getAttribute(Attributes.MOVEMENT_SPEED).setBaseValue(ZombieUtil.LITTLE_SLOW);
 	}
 	
 	@Override
-	public boolean attackEntityAsMob(Entity entityIn) {
-		if(! world.isRemote) {
+	public boolean doHurtTarget(Entity entityIn) {
+		if(! level.isClientSide) {
 			EntityUtil.playSound(this, SoundRegister.GROUND_SHAKE.get());
 		}
 		this.groundShack(entityIn);
 		if(!EntityUtil.isEntityValid(entityIn)) return false;
-		return super.attackEntityAsMob(entityIn);
+		return super.doHurtTarget(entityIn);
 	}
 	
 	private void groundShack(Entity entity) {
 		float range = 3;
 		EntityUtil.getEntityTargetableEntity(this, EntityUtil.getEntityAABB(this, range, range)).forEach((target) -> {
-			if(! target.isEntityEqual(entity)) {
-				target.attackEntityFrom(getZombieAttackDamageSource(), EntityUtil.getCurrentMaxHealth(target) / 2);
+			if(! target.is(entity)) {
+				target.hurt(getZombieAttackDamageSource(), EntityUtil.getCurrentMaxHealth(target) / 2);
 				for(int i = 0; i < 5; ++ i) {
 					EntityUtil.spawnParticle(target, 6);
 				}
@@ -72,13 +72,13 @@ public class SadGargantuarEntity extends GargantuarEntity {
 	}
 	
 	@Override
-	public EntitySize getSize(Pose poseIn) {
-		if(this.isMiniZombie()) return EntitySize.flexible(0.7F, 2F);
-		return super.getSize(poseIn);
+	public EntitySize getDimensions(Pose poseIn) {
+		if(this.isMiniZombie()) return EntitySize.scalable(0.7F, 2F);
+		return super.getDimensions(poseIn);
 	}
 
 	@Override
-	protected ResourceLocation getLootTable() {
+	protected ResourceLocation getDefaultLootTable() {
 		return PVZLoot.SAD_GARGANTUAR;
 	}
 	

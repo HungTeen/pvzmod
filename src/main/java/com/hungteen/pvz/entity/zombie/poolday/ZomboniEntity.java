@@ -18,13 +18,13 @@ import net.minecraft.entity.EntitySize;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.Pose;
-import net.minecraft.entity.SharedMonsterAttributes;
+import net.minecraft.entity.ai.attributes.Attributes;
 import net.minecraft.entity.monster.MonsterEntity;
 import net.minecraft.particles.ParticleTypes;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.SoundEvent;
 import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.Vec3d;
+import net.minecraft.util.math.vector.Vector3d;
 import net.minecraft.world.World;
 
 public class ZomboniEntity extends PVZZombieEntity implements IMultiPartEntity{
@@ -39,24 +39,24 @@ public class ZomboniEntity extends PVZZombieEntity implements IMultiPartEntity{
 	}
 	
 	@Override
-	protected void registerAttributes() {
-		super.registerAttributes();
-		this.getAttribute(SharedMonsterAttributes.MOVEMENT_SPEED).setBaseValue(ZombieUtil.LITTLE_SLOW);
+	protected void updateAttributes() {
+		super.updateAttributes();
+		this.getAttribute(Attributes.MOVEMENT_SPEED).setBaseValue(ZombieUtil.LITTLE_SLOW);
 	}
 	
 	@Override
 	public void normalZombieTick() {
 		super.normalZombieTick();
-		if(world.isRemote && this.getHealth() <= this.getMaxHealth() / 4) {
+		if(level.isClientSide && this.getHealth() <= this.getMaxHealth() / 4) {
 			for(int i = 1; i <= 3; i ++) {
-			    this.world.addParticle(ParticleTypes.SMOKE, this.getPosX(), this.getPosY(), this.getPosZ(), (this.getRNG().nextFloat() - 0.5) / 10, 0.05, (this.getRNG().nextFloat() - 0.5) / 10);
+			    this.level.addParticle(ParticleTypes.SMOKE, this.getX(), this.getY(), this.getZ(), (this.getRandom().nextFloat() - 0.5) / 10, 0.05, (this.getRandom().nextFloat() - 0.5) / 10);
 			}
 		}
-		if(! world.isRemote) {//produce snow layer block
-			BlockPos blockpos = this.getPosition();
-			BlockState state = Blocks.SNOW.getDefaultState().with(SnowBlock.LAYERS, 2);
-            if ((this.world.isAirBlock(blockpos) || world.getBlockState(blockpos).getBlock() == Blocks.SNOW) && state.isValidPosition(this.world, blockpos)) {
-               this.world.setBlockState(blockpos, state);
+		if(! level.isClientSide) {//produce snow layer block
+			BlockPos blockpos = this.blockPosition();
+			BlockState state = Blocks.SNOW.defaultBlockState().setValue(SnowBlock.LAYERS, 2);
+            if ((this.level.isEmptyBlock(blockpos) || level.getBlockState(blockpos).getBlock() == Blocks.SNOW) && state.canSurvive(this.level, blockpos)) {
+               this.level.setBlockAndUpdate(blockpos, state);
             }
 		}
 	}
@@ -91,32 +91,32 @@ public class ZomboniEntity extends PVZZombieEntity implements IMultiPartEntity{
 	public void updateParts() {
 		if(this.part != null) {
 			if(!this.part.shouldContinuePersisting()) {
-				this.world.addEntity(this.part);
+				this.level.addFreshEntity(this.part);
 			}
-			float j = 2 * 3.14159f * this.rotationYaw / 360;
+			float j = 2 * 3.14159f * this.yRot / 360;
 			float dis = this.getPartOffset();
-			Vec3d pos = this.getPositionVec();
-			this.part.prevRotationYaw = this.rotationYaw;
-			this.part.prevRotationPitch = this.rotationPitch;
-			this.part.setLocationAndAngles(pos.getX() - Math.sin(j) * dis, pos.getY() + 0.2f, pos.getZ() + Math.cos(j) * dis, this.rotationYaw, this.rotationPitch);
+			Vector3d pos = this.position();
+			this.part.yRotO = this.yRot;
+			this.part.xRotO = this.xRot;
+			this.part.moveTo(pos.x() - Math.sin(j) * dis, pos.y() + 0.2f, pos.z() + Math.cos(j) * dis, this.yRot, this.xRot);
 			this.part.setOwner(this);
 		}
 	}
 	
-	public PVZMultiPartEntity[] getParts() {
+	public PVZMultiPartEntity[] getMultiParts() {
 		return new PVZMultiPartEntity[] {this.part};
 	}
 	
 	@Override
-	protected void onDeathUpdate() {
-		super.onDeathUpdate();
+	protected void tickDeath() {
+		super.tickDeath();
 		if(this.deathTime == 1) {
-			if(! world.isRemote) {
+			if(! level.isClientSide) {
 				EntityUtil.playSound(this, SoundRegister.CAR_EXPLOSION.get());
 			}
 			else {
 				for(int i = 0; i < 4; ++ i) {
-				    this.world.addParticle(ParticleTypes.EXPLOSION, this.getPosX(), this.getPosY(), this.getPosZ(), 0, 0, 0);
+				    this.level.addParticle(ParticleTypes.EXPLOSION, this.getX(), this.getY(), this.getZ(), 0, 0, 0);
 				}
 			}
 		}
@@ -152,9 +152,9 @@ public class ZomboniEntity extends PVZZombieEntity implements IMultiPartEntity{
 	}
 	
 	@Override
-	public EntitySize getSize(Pose poseIn) {
-		if(this.isMiniZombie()) return EntitySize.flexible(0.7F, 1.2F);
-		return EntitySize.flexible(0.95f, 2.3f);
+	public EntitySize getDimensions(Pose poseIn) {
+		if(this.isMiniZombie()) return EntitySize.scalable(0.7F, 1.2F);
+		return EntitySize.scalable(0.95f, 2.3f);
 	}
 	
 	@Override

@@ -59,8 +59,8 @@ public class RegistryHandler {
     public static void commonSetup(FMLCommonSetupEvent ev){
     	CapabilityHandler.registerCapabilities();
     	PVZPacketHandler.init();
-    	BiomeRegister.addBiomes();
-    	BiomeRegister.addBiomeFeatures();
+//    	BiomeRegister.addBiomes();
+//    	BiomeRegister.addBiomeFeatures();
     	StructureRegister.registerStructureType();
     	EntitySpawnRegister.registerEntitySpawn();
     	PotionRecipeHandler.registerPotionRecipes();

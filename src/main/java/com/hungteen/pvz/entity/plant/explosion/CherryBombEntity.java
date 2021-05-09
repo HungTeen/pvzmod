@@ -27,24 +27,24 @@ public class CherryBombEntity extends PlantBomberEntity{
 	@Override
 	public void startBomb() {
 //		System.out.println(this.world.isRemote);
-		if(! this.world.isRemote) {
+		if(! this.level.isClientSide) {
 			float len = this.getExpRange();
 			AxisAlignedBB aabb = EntityUtil.getEntityAABB(this, len, len);
 			int deathCnt = 0;
 			for(Entity target : EntityUtil.getAttackEntities(this, aabb)) {
-				target.attackEntityFrom(PVZDamageSource.causeExplosionDamage(this, this), this.getAttackDamage());
+				target.hurt(PVZDamageSource.causeExplosionDamage(this, this), this.getAttackDamage());
 				if(! EntityUtil.isEntityValid(target)) {
 					++ deathCnt;
 				}
 			}
-			PlayerEntity owner = EntityUtil.getEntityOwner(world, this);
+			PlayerEntity owner = EntityUtil.getEntityOwner(level, this);
 			if(owner != null && owner instanceof ServerPlayerEntity) {
 				EntityEffectAmountTrigger.INSTANCE.trigger((ServerPlayerEntity) owner, this, deathCnt);
 			}
 			EntityUtil.playSound(this, SoundRegister.CHERRY_BOMB.get());
 		}
 		for(int i = 0; i < 5; ++ i) {
-		    this.world.addParticle(ParticleRegister.RED_BOMB.get(), this.getPosX(), this.getPosY(), this.getPosZ(), 0, 0, 0);
+		    this.level.addParticle(ParticleRegister.RED_BOMB.get(), this.getX(), this.getY(), this.getZ(), 0, 0, 0);
 		}
 	}
 	
@@ -61,7 +61,7 @@ public class CherryBombEntity extends PlantBomberEntity{
 	}
 	
 	@Override
-	public EntitySize getSize(Pose poseIn) {
+	public EntitySize getDimensions(Pose poseIn) {
 		return new EntitySize(0.9f, 1f, false);
 	}
 	

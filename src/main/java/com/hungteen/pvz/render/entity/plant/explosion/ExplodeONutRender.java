@@ -27,7 +27,7 @@ public class ExplodeONutRender extends PVZPlantRender<ExplodeONutEntity> {
 	}
 
 	@Override
-	public ResourceLocation getEntityTexture(ExplodeONutEntity entity) {
+	public ResourceLocation getTextureLocation(ExplodeONutEntity entity) {
 		float life = entity.getHealth();
 		float maxLife = entity.getMaxHealth();
     	if(life > 2 * maxLife / 3) return TEXTURE1;

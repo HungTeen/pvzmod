@@ -23,7 +23,7 @@ public class GatlingPeaRender extends PVZPlantRender<GatlingPeaEntity>{
 	}
 
 	@Override
-	public ResourceLocation getEntityTexture(GatlingPeaEntity entity) {
+	public ResourceLocation getTextureLocation(GatlingPeaEntity entity) {
 		return StringUtil.prefix("textures/entity/plant/appease/gatling_pea.png");
 	}
 

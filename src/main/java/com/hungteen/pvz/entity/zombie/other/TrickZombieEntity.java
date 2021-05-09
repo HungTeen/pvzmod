@@ -13,13 +13,15 @@ import com.hungteen.pvz.utils.enums.Zombies;
 import net.minecraft.entity.EntitySize;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.Pose;
-import net.minecraft.entity.SharedMonsterAttributes;
+import net.minecraft.entity.ai.attributes.Attributes;
 import net.minecraft.entity.monster.MonsterEntity;
 import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.util.ActionResultType;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.Hand;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.vector.Vector3d;
 import net.minecraft.world.Explosion;
 import net.minecraft.world.World;
 
@@ -35,58 +37,58 @@ public class TrickZombieEntity extends PVZZombieEntity{
 	}
 
 	@Override
-	protected void registerAttributes() {
-		super.registerAttributes();
-		this.getAttribute(SharedMonsterAttributes.MOVEMENT_SPEED).setBaseValue(ZombieUtil.LITTLE_FAST);
-		this.getAttribute(SharedMonsterAttributes.ATTACK_DAMAGE).setBaseValue(ZombieUtil.NORMAL_DAMAGE);
+	protected void updateAttributes() {
+		super.updateAttributes();
+		this.getAttribute(Attributes.MOVEMENT_SPEED).setBaseValue(ZombieUtil.LITTLE_FAST);
+		this.getAttribute(Attributes.ATTACK_DAMAGE).setBaseValue(ZombieUtil.NORMAL_DAMAGE);
 	}
 	
 	@Override
-	public boolean attackEntityFrom(DamageSource source, float amount) {
-		if(amount >= 2 && ! world.isRemote && this.ticksExisted - this.lastSummonTick >= this.summonGap && this.getRNG().nextInt(SUMMON_CHACNE) == 0) {
-			this.lastSummonTick = this.ticksExisted;
-			TrickZombieEntity zombie = EntityRegister.TRICK_ZOMBIE.get().create(world);
-			BlockPos pos = getPosition().add(this.getRNG().nextInt(5) - 2, this.getRNG().nextInt(2), this.getRNG().nextInt(5) - 2);
+	public boolean hurt(DamageSource source, float amount) {
+		if(amount >= 2 && ! level.isClientSide && this.tickCount - this.lastSummonTick >= this.summonGap && this.getRandom().nextInt(SUMMON_CHACNE) == 0) {
+			this.lastSummonTick = this.tickCount;
+			TrickZombieEntity zombie = EntityRegister.TRICK_ZOMBIE.get().create(level);
+			BlockPos pos = blockPosition().offset(this.getRandom().nextInt(5) - 2, this.getRandom().nextInt(2), this.getRandom().nextInt(5) - 2);
 			if(this.isCharmed()) {
 				zombie.setCharmed(true);
 			}
-			EntityUtil.onMobEntitySpawn(world, zombie, pos);
+			EntityUtil.onMobEntitySpawn(level, zombie, pos);
 		}
-		return super.attackEntityFrom(source, amount);
+		return super.hurt(source, amount);
 	}
 	
 	@Override
-	protected boolean processInteract(PlayerEntity player, Hand hand) {
-		if(! world.isRemote && player.getHeldItem(hand).getItem() == ItemRegister.CANDY.get() && ! this.isCharmed()) {
-			if(this.getRNG().nextInt(PVZConfig.COMMON_CONFIG.EntitySettings.TrickZombieCharmChance.get()) == 0) {
-				player.getHeldItem(hand).shrink(1);
+	public ActionResultType interactAt(PlayerEntity player, Vector3d vec3d, Hand hand) {
+		if(! level.isClientSide && player.getItemInHand(hand).getItem() == ItemRegister.CANDY.get() && ! this.isCharmed()) {
+			if(this.getRandom().nextInt(PVZConfig.COMMON_CONFIG.EntitySettings.TrickZombieCharmChance.get()) == 0) {
+				player.getItemInHand(hand).shrink(1);
 			    this.setCharmed(true);
-			    return true;
+			    return ActionResultType.CONSUME;
 			}
 		}
-		return super.processInteract(player, hand);
+		return super.interactAt(player, vec3d, hand);
 	}
 	
 	@Override
-	protected void spawnDrops(DamageSource damageSourceIn) {
-		if(! this.isPotionActive(EffectRegister.COLD_EFFECT.get()) && ! this.isCharmed()) {
-			if(this.getRNG().nextInt(EXPLOSION_CHANCE) == 0) {
-				Explosion.Mode mode = net.minecraftforge.event.ForgeEventFactory.getMobGriefingEvent(this.world, this) ? Explosion.Mode.DESTROY : Explosion.Mode.NONE;
-				this.world.createExplosion(this, getPosX(), getPosY(), getPosZ(), 0.5f, mode);
+	protected void dropAllDeathLoot(DamageSource damageSourceIn) {
+		if(! this.hasEffect(EffectRegister.COLD_EFFECT.get()) && ! this.isCharmed()) {
+			if(this.getRandom().nextInt(EXPLOSION_CHANCE) == 0) {
+				Explosion.Mode mode = net.minecraftforge.event.ForgeEventFactory.getMobGriefingEvent(this.level, this) ? Explosion.Mode.DESTROY : Explosion.Mode.NONE;
+				this.level.explode(this, getX(), getY(), getZ(), 0.5f, mode);
 			}
 		}
-		super.spawnDrops(damageSourceIn);
+		super.dropAllDeathLoot(damageSourceIn);
 	}
 	
 	@Override
-	public boolean isImmuneToExplosions() {
+	public boolean ignoreExplosion() {
 		return true;
 	}
 	
 	@Override
-	public EntitySize getSize(Pose poseIn) {
-		if(this.isMiniZombie()) return EntitySize.flexible(0.3F, 0.5F);
-		return EntitySize.flexible(0.6f, 1.2f);
+	public EntitySize getDimensions(Pose poseIn) {
+		if(this.isMiniZombie()) return EntitySize.scalable(0.3F, 0.5F);
+		return EntitySize.scalable(0.6f, 1.2f);
 	}
 	
 	@Override
@@ -95,7 +97,7 @@ public class TrickZombieEntity extends PVZZombieEntity{
 	}
 
 	@Override
-	protected ResourceLocation getLootTable() {
+	protected ResourceLocation getDefaultLootTable() {
 		return PVZLoot.TRICK_ZOMBIE;
 	}
 	

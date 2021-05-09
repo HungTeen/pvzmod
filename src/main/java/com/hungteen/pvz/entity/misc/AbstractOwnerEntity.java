@@ -15,7 +15,7 @@ import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.nbt.NBTUtil;
 import net.minecraft.network.IPacket;
 import net.minecraft.particles.ParticleTypes;
-import net.minecraft.util.math.Vec3d;
+import net.minecraft.util.math.vector.Vector3d;
 import net.minecraft.world.World;
 import net.minecraft.world.server.ServerWorld;
 import net.minecraftforge.fml.network.NetworkHooks;
@@ -34,43 +34,43 @@ public abstract class AbstractOwnerEntity extends Entity implements IGroupEntity
 	public AbstractOwnerEntity(EntityType<?> type, World worldIn, LivingEntity livingEntityIn) {
 		super(type, worldIn);
 		this.owner = livingEntityIn;
-		this.ownerId = livingEntityIn.getUniqueID();
+		this.ownerId = livingEntityIn.getUUID();
 		this.groupType = EntityUtil.getEntityGroup(owner);
 	}
 
 	@Override
-	protected void registerData() {
+	protected void defineSynchedData() {
 	}
 	
 	@Override
 	public void tick() {
 		super.tick();
-		if(this.ticksExisted <= 10) {
-			this.recalculateSize();
+		if(this.tickCount <= 10) {
+			this.refreshDimensions();
 		}
 	}
 	
 	protected void tickMove() {
-		Vec3d vec3d = this.getMotion();
-		double d0 = this.getPosX() + vec3d.x;
-		double d1 = this.getPosY() + vec3d.y;
-		double d2 = this.getPosZ() + vec3d.z;
+		Vector3d vec3d = this.getDeltaMovement();
+		double d0 = this.getX() + vec3d.x;
+		double d1 = this.getY() + vec3d.y;
+		double d2 = this.getZ() + vec3d.z;
 		float f1;
 		if (this.isInWater()) {
 			for (int i = 0; i < 4; ++i) {
-				this.world.addParticle(ParticleTypes.BUBBLE, d0 - vec3d.x * 0.25D, d1 - vec3d.y * 0.25D,
+				this.level.addParticle(ParticleTypes.BUBBLE, d0 - vec3d.x * 0.25D, d1 - vec3d.y * 0.25D,
 						d2 - vec3d.z * 0.25D, vec3d.x, vec3d.y, vec3d.z);
 			}
 			f1 = 0.8F;
 		} else {
 			f1 = 1F;
 		}
-		this.setMotion(vec3d.scale((double) f1));
-		if (! this.hasNoGravity()) {
-			Vec3d vec3d1 = this.getMotion();
-			this.setMotion(vec3d1.x, vec3d1.y - (double) this.getGravityVelocity(), vec3d1.z);
+		this.setDeltaMovement(vec3d.scale((double) f1));
+		if (! this.isNoGravity()) {
+			Vector3d vec3d1 = this.getDeltaMovement();
+			this.setDeltaMovement(vec3d1.x, vec3d1.y - (double) this.getGravityVelocity(), vec3d1.z);
 		}
-		this.move(MoverType.SELF, this.getMotion());
+		this.move(MoverType.SELF, this.getDeltaMovement());
 	}
 	
 	protected float getGravityVelocity() {
@@ -78,7 +78,7 @@ public abstract class AbstractOwnerEntity extends Entity implements IGroupEntity
 	}
 	
 	@Override
-	public boolean canBeAttackedWithItem() {
+	public boolean isAttackable() {
 		return false;
 	}
 	
@@ -88,8 +88,8 @@ public abstract class AbstractOwnerEntity extends Entity implements IGroupEntity
 
 	@Nullable
 	public LivingEntity getOwner() {
-		if ((this.owner == null || ! this.owner.isAlive()) && this.ownerId != null && this.world instanceof ServerWorld) {
-			Entity entity = ((ServerWorld) this.world).getEntityByUuid(this.ownerId);
+		if ((this.owner == null || ! this.owner.isAlive()) && this.ownerId != null && this.level instanceof ServerWorld) {
+			Entity entity = ((ServerWorld) this.level).getEntity(this.ownerId);
 			if (entity instanceof LivingEntity) {
 				this.owner = (LivingEntity) entity;
 			} else {
@@ -108,24 +108,24 @@ public abstract class AbstractOwnerEntity extends Entity implements IGroupEntity
 		return this.groupType;
 	}
 	
-	public void writeAdditional(CompoundNBT compound) {
+	public void addAdditionalSaveData(CompoundNBT compound) {
 		if (this.ownerId != null) {
-			compound.put("owner", NBTUtil.writeUniqueId(this.ownerId));
+			compound.put("owner", NBTUtil.createUUID(this.ownerId));
 		}
-		compound.putInt("entity_tick_exist", this.ticksExisted);
+		compound.putInt("entity_tick_exist", this.tickCount);
 		compound.putInt("group_owner_type", this.groupType);
 	}
 
 	/**
 	 * (abstract) Protected helper method to read subclass entity data from NBT.
 	 */
-	public void readAdditional(CompoundNBT compound) {
+	public void readAdditionalSaveData(CompoundNBT compound) {
 		this.owner = null;
 		if (compound.contains("owner", 10)) {
-			this.ownerId = NBTUtil.readUniqueId(compound.getCompound("owner"));
+			this.ownerId = NBTUtil.loadUUID(compound.getCompound("owner"));
 		}
 		if(compound.contains("entity_tick_exist")) {
-			this.ticksExisted = compound.getInt("entity_tick_exist");
+			this.tickCount = compound.getInt("entity_tick_exist");
 		}
 		if(compound.contains("group_owner_type")) {
 			this.groupType = compound.getInt("group_owner_type");
@@ -133,7 +133,7 @@ public abstract class AbstractOwnerEntity extends Entity implements IGroupEntity
 	}
 
 	@Override
-	public IPacket<?> createSpawnPacket() {
+	public IPacket<?> getAddEntityPacket() {
 		return NetworkHooks.getEntitySpawningPacket(this);
 	}
 

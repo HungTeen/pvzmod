@@ -45,19 +45,19 @@ public class PVZSpawnEggItem extends SpawnEggItem{
 	 * but supplier based ones won't have had their EntityTypes created yet.
 	 */
 	public static void initUnaddedEggs() {
-		final Map<EntityType<?>, SpawnEggItem> EGGS = ObfuscationReflectionHelper.getPrivateValue(SpawnEggItem.class, null, "field_195987_b");
+		final Map<EntityType<?>, SpawnEggItem> EGGS = ObfuscationReflectionHelper.getPrivateValue(SpawnEggItem.class, null, "BY_ID");
 		DefaultDispenseItemBehavior defaultDispenseItemBehavior = new DefaultDispenseItemBehavior() {
-			public ItemStack dispenseStack(IBlockSource source, ItemStack stack) {
-				Direction direction = source.getBlockState().get(DispenserBlock.FACING);
+			public ItemStack execute(IBlockSource source, ItemStack stack) {
+				Direction direction = source.getBlockState().getValue(DispenserBlock.FACING);
 				EntityType<?> entitytype = ((SpawnEggItem) stack.getItem()).getType(stack.getTag());
-				entitytype.spawn(source.getWorld(), stack, null, source.getBlockPos().offset(direction), SpawnReason.DISPENSER, direction != Direction.UP, false);
+				entitytype.spawn(source.getLevel(), stack, null, source.getPos().relative(direction), SpawnReason.DISPENSER, direction != Direction.UP, false);
 				stack.shrink(1);
 				return stack;
 			}
 		};
 		for (final SpawnEggItem egg : PVZ_EGGS) {
 			EGGS.put(egg.getType(null), egg);
-			DispenserBlock.registerDispenseBehavior(egg, defaultDispenseItemBehavior);
+			DispenserBlock.registerBehavior(egg, defaultDispenseItemBehavior);
 			// ItemColors for each spawn egg don't need to be registered because this method is called before ItemColors is created
 		}
 		PVZ_EGGS.clear();

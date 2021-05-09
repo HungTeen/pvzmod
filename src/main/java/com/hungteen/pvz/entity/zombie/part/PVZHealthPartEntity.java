@@ -24,10 +24,10 @@ public class PVZHealthPartEntity extends PVZZombiePartEntity{
 	}
 	
 	@Override
-	public boolean attackEntityFrom(DamageSource source, float damage) {
+	public boolean hurt(DamageSource source, float damage) {
 		if(source instanceof PVZDamageSource) {
 			if(((PVZDamageSource) source).getPVZDamageType() == PVZDamageType.THROUGH) {
-				return super.attackEntityFrom(source, damage);
+				return super.hurt(source, damage);
 			}
 			((PVZDamageSource) source).setDefended(true);
 		}
@@ -47,7 +47,7 @@ public class PVZHealthPartEntity extends PVZZombiePartEntity{
 			}
 		}
 		if(damage == 0) damage = 0.001F;
-		return super.attackEntityFrom(source, damage);
+		return super.hurt(source, damage);
 	}
 	
 	@Override

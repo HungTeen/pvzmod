@@ -19,58 +19,58 @@ public class GardenRakeModel extends EntityModel<GardenRakeEntity> {
 	private final ModelRenderer bone2;
 
 	public GardenRakeModel() {
-		textureWidth = 128;
-		textureHeight = 128;
+		texWidth = 128;
+		texHeight = 128;
 
 		total = new ModelRenderer(this);
-		total.setRotationPoint(0.0F, 24.0F, -3.0F);
-		total.setTextureOffset(75, 124).addBox(-12.0F, -1.0F, 1.0F, 24.0F, 1.0F, 2.0F, 0.0F, false);
-		total.setTextureOffset(0, 0).addBox(-12.0F, -4.0F, 0.0F, 1.0F, 3.0F, 1.0F, 0.0F, false);
-		total.setTextureOffset(0, 0).addBox(-10.0F, -4.0F, 0.0F, 1.0F, 3.0F, 1.0F, 0.0F, false);
-		total.setTextureOffset(0, 0).addBox(-8.0F, -4.0F, 0.0F, 1.0F, 3.0F, 1.0F, 0.0F, false);
-		total.setTextureOffset(0, 0).addBox(-6.0F, -4.0F, 0.0F, 1.0F, 3.0F, 1.0F, 0.0F, false);
-		total.setTextureOffset(0, 0).addBox(-4.0F, -4.0F, 0.0F, 1.0F, 3.0F, 1.0F, 0.0F, false);
-		total.setTextureOffset(0, 0).addBox(-2.0F, -4.0F, 0.0F, 1.0F, 3.0F, 1.0F, 0.0F, false);
-		total.setTextureOffset(0, 0).addBox(11.0F, -4.0F, 0.0F, 1.0F, 3.0F, 1.0F, 0.0F, false);
-		total.setTextureOffset(0, 0).addBox(9.0F, -4.0F, 0.0F, 1.0F, 3.0F, 1.0F, 0.0F, false);
-		total.setTextureOffset(0, 0).addBox(7.0F, -4.0F, 0.0F, 1.0F, 3.0F, 1.0F, 0.0F, false);
-		total.setTextureOffset(0, 0).addBox(5.0F, -4.0F, 0.0F, 1.0F, 3.0F, 1.0F, 0.0F, false);
-		total.setTextureOffset(0, 0).addBox(3.0F, -4.0F, 0.0F, 1.0F, 3.0F, 1.0F, 0.0F, false);
-		total.setTextureOffset(0, 0).addBox(0.0F, -4.0F, 0.0F, 2.0F, 3.0F, 1.0F, 0.0F, false);
-		total.setTextureOffset(23, 5).addBox(-1.0F, -1.0F, 3.0F, 2.0F, 1.0F, 48.0F, 0.0F, false);
+		total.setPos(0.0F, 24.0F, -3.0F);
+		total.texOffs(75, 124).addBox(-12.0F, -1.0F, 1.0F, 24.0F, 1.0F, 2.0F, 0.0F, false);
+		total.texOffs(0, 0).addBox(-12.0F, -4.0F, 0.0F, 1.0F, 3.0F, 1.0F, 0.0F, false);
+		total.texOffs(0, 0).addBox(-10.0F, -4.0F, 0.0F, 1.0F, 3.0F, 1.0F, 0.0F, false);
+		total.texOffs(0, 0).addBox(-8.0F, -4.0F, 0.0F, 1.0F, 3.0F, 1.0F, 0.0F, false);
+		total.texOffs(0, 0).addBox(-6.0F, -4.0F, 0.0F, 1.0F, 3.0F, 1.0F, 0.0F, false);
+		total.texOffs(0, 0).addBox(-4.0F, -4.0F, 0.0F, 1.0F, 3.0F, 1.0F, 0.0F, false);
+		total.texOffs(0, 0).addBox(-2.0F, -4.0F, 0.0F, 1.0F, 3.0F, 1.0F, 0.0F, false);
+		total.texOffs(0, 0).addBox(11.0F, -4.0F, 0.0F, 1.0F, 3.0F, 1.0F, 0.0F, false);
+		total.texOffs(0, 0).addBox(9.0F, -4.0F, 0.0F, 1.0F, 3.0F, 1.0F, 0.0F, false);
+		total.texOffs(0, 0).addBox(7.0F, -4.0F, 0.0F, 1.0F, 3.0F, 1.0F, 0.0F, false);
+		total.texOffs(0, 0).addBox(5.0F, -4.0F, 0.0F, 1.0F, 3.0F, 1.0F, 0.0F, false);
+		total.texOffs(0, 0).addBox(3.0F, -4.0F, 0.0F, 1.0F, 3.0F, 1.0F, 0.0F, false);
+		total.texOffs(0, 0).addBox(0.0F, -4.0F, 0.0F, 2.0F, 3.0F, 1.0F, 0.0F, false);
+		total.texOffs(23, 5).addBox(-1.0F, -1.0F, 3.0F, 2.0F, 1.0F, 48.0F, 0.0F, false);
 
 		bone = new ModelRenderer(this);
-		bone.setRotationPoint(1.0F, 0.0F, 12.0F);
+		bone.setPos(1.0F, 0.0F, 12.0F);
 		total.addChild(bone);
 		setRotationAngle(bone, 0.0F, 0.7854F, 0.0F);
-		bone.setTextureOffset(40, 117).addBox(-1.0F, -1.0F, 0.0F, 15.0F, 1.0F, 1.0F, 0.0F, false);
+		bone.texOffs(40, 117).addBox(-1.0F, -1.0F, 0.0F, 15.0F, 1.0F, 1.0F, 0.0F, false);
 
 		bone2 = new ModelRenderer(this);
-		bone2.setRotationPoint(-1.0F, 0.0F, 12.0F);
+		bone2.setPos(-1.0F, 0.0F, 12.0F);
 		total.addChild(bone2);
 		setRotationAngle(bone2, 0.0F, -0.7854F, 0.0F);
-		bone2.setTextureOffset(28, 123).addBox(-14.0F, -1.0F, 0.0F, 15.0F, 1.0F, 1.0F, 0.0F, false);
+		bone2.texOffs(28, 123).addBox(-14.0F, -1.0F, 0.0F, 15.0F, 1.0F, 1.0F, 0.0F, false);
 	}
 
 	@Override
-	public void setRotationAngles(GardenRakeEntity entity, float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch){
+	public void setupAnim(GardenRakeEntity entity, float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch){
 		int time = entity.getAttackTime();
 		if(time > 0) {
 			int max = entity.getAnimTime();
-			this.total.rotateAngleX = AnimationUtil.getUp(time, max, 120);
+			this.total.xRot = AnimationUtil.getUp(time, max, 120);
 		} else {
-			this.total.rotateAngleX = 0;
+			this.total.xRot = 0;
 		}
 	}
 
 	@Override
-	public void render(MatrixStack matrixStack, IVertexBuilder buffer, int packedLight, int packedOverlay, float red, float green, float blue, float alpha){
+	public void renderToBuffer(MatrixStack matrixStack, IVertexBuilder buffer, int packedLight, int packedOverlay, float red, float green, float blue, float alpha){
 		total.render(matrixStack, buffer, packedLight, packedOverlay);
 	}
 
 	public void setRotationAngle(ModelRenderer modelRenderer, float x, float y, float z) {
-		modelRenderer.rotateAngleX = x;
-		modelRenderer.rotateAngleY = y;
-		modelRenderer.rotateAngleZ = z;
+		modelRenderer.xRot = x;
+		modelRenderer.yRot = y;
+		modelRenderer.zRot = z;
 	}
 }

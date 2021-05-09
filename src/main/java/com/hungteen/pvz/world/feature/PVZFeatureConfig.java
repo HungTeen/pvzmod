@@ -10,5 +10,5 @@ import net.minecraft.world.gen.feature.BlockClusterFeatureConfig;
 
 public class PVZFeatureConfig {
 
-	public static final BlockClusterFeatureConfig CHOMPER_CONFIG = (new BlockClusterFeatureConfig.Builder(new SimpleBlockStateProvider(BlockRegister.CHOMPER.get().getDefaultState()), new SimpleBlockPlacer())).tries(64).whitelist(ImmutableSet.of(Blocks.GRASS_BLOCK.getBlock())).func_227317_b_().build();
+	public static final BlockClusterFeatureConfig CHOMPER_CONFIG = (new BlockClusterFeatureConfig.Builder(new SimpleBlockStateProvider(BlockRegister.CHOMPER.get().defaultBlockState()), new SimpleBlockPlacer())).tries(64).whitelist(ImmutableSet.of(Blocks.GRASS_BLOCK.getBlock())).noProjection().build();
 }

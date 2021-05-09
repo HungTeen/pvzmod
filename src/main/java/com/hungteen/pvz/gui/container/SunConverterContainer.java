@@ -20,17 +20,17 @@ public class SunConverterContainer extends Container {
 	public SunConverterContainer(int id, PlayerEntity player, BlockPos pos) {
 		super(ContainerRegister.SUN_CONVERTER.get(), id);
 		this.player = player;
-		this.te = (SunConverterTileEntity) player.world.getTileEntity(pos);
+		this.te = (SunConverterTileEntity) player.level.getBlockEntity(pos);
 		if(this.te == null) {
 			System.out.println("Error: Open Sun Converter GUI !");
 			return ;
 		}
-		this.trackIntArray(this.te.array);
+		this.addDataSlots(this.te.array);
 		for(int i = 0; i < 3; ++ i) {
 			for(int j = 0; j < 3; ++ j) {
 				this.addSlot(new SlotItemHandler(this.te.handler, i * 3 + j, 62 + 18 * j, 17 + 18 * i) {
 					@Override
-					public boolean isItemValid(ItemStack stack) {
+					public boolean mayPlace(ItemStack stack) {
 						return stack.getItem() instanceof SunStorageSaplingItem;
 					}
 				});
@@ -47,37 +47,37 @@ public class SunConverterContainer extends Container {
 	}
 
 	@Override
-    public ItemStack transferStackInSlot(PlayerEntity playerIn, int index) {
+    public ItemStack quickMoveStack(PlayerEntity playerIn, int index) {
 		ItemStack itemstack = ItemStack.EMPTY;
-		Slot slot = this.inventorySlots.get(index);
-		if (slot != null && slot.getHasStack()) {
-			ItemStack itemstack1 = slot.getStack();
+		Slot slot = this.slots.get(index);
+		if (slot != null && slot.hasItem()) {
+			ItemStack itemstack1 = slot.getItem();
 			itemstack = itemstack1.copy();
 			if (index < 9) {
-				if (!this.mergeItemStack(itemstack1, 9, this.inventorySlots.size(), true)) {
+				if (!this.moveItemStackTo(itemstack1, 9, this.slots.size(), true)) {
 					return ItemStack.EMPTY;
 				}
 			} else if (index < 9 + 27) {
-				if(!mergeItemStack(itemstack1, 0, 9, false)
-						&& !mergeItemStack(itemstack1, 9 + 27, this.inventorySlots.size(), false)) {
+				if(!moveItemStackTo(itemstack1, 0, 9, false)
+						&& !moveItemStackTo(itemstack1, 9 + 27, this.slots.size(), false)) {
 					return ItemStack.EMPTY;
 				}
 			} else {
-				if (!this.mergeItemStack(itemstack1, 0, 9 + 27, false)) {
+				if (!this.moveItemStackTo(itemstack1, 0, 9 + 27, false)) {
 					return ItemStack.EMPTY;
 				}
 			}
 			if (itemstack1.isEmpty()) {
-				slot.putStack(ItemStack.EMPTY);
+				slot.set(ItemStack.EMPTY);
 			} else {
-				slot.onSlotChanged();
+				slot.setChanged();
 			}
 		}
 		return itemstack;
     }
 	
 	@Override
-	public boolean canInteractWith(PlayerEntity playerIn) {
+	public boolean stillValid(PlayerEntity playerIn) {
 		return this.te.isUsableByPlayer(playerIn);
 	}
 

@@ -22,7 +22,7 @@ import net.minecraft.world.World;
 
 public class TorchWoodEntity extends PVZPlantEntity implements ILightPlant {
 
-	private static final DataParameter<Boolean> SUPER_FLAME = EntityDataManager.createKey(TorchWoodEntity.class, DataSerializers.BOOLEAN);
+	private static final DataParameter<Boolean> SUPER_FLAME = EntityDataManager.defineId(TorchWoodEntity.class, DataSerializers.BOOLEAN);
 	
 	public TorchWoodEntity(EntityType<? extends CreatureEntity> type, World worldIn) {
 		super(type, worldIn);
@@ -30,23 +30,23 @@ public class TorchWoodEntity extends PVZPlantEntity implements ILightPlant {
 	}
 	
 	@Override
-	protected void registerData() {
-		super.registerData();
-		dataManager.register(SUPER_FLAME, false);
+	protected void defineSynchedData() {
+		super.defineSynchedData();
+		entityData.define(SUPER_FLAME, false);
 	}
 
 	@Override
 	protected void normalPlantTick() {
 		super.normalPlantTick();
-		if(world.isRemote) {
+		if(level.isClientSide) {
 			if(this.IsSuperFlame()) {
-				this.world.addParticle(ParticleRegister.BLUE_FLAME.get(), this.getPosX(), this.getPosY()+1.5, this.getPosZ(), 0, 0, 0);
+				this.level.addParticle(ParticleRegister.BLUE_FLAME.get(), this.getX(), this.getY()+1.5, this.getZ(), 0, 0, 0);
 			}else {
-				this.world.addParticle(ParticleRegister.YELLOW_FLAME.get(), this.getPosX(), this.getPosY()+1.5, this.getPosZ(), 0, 0, 0);
+				this.level.addParticle(ParticleRegister.YELLOW_FLAME.get(), this.getX(), this.getY()+1.5, this.getZ(), 0, 0, 0);
 			}
 		}
-		if(! world.isRemote) {
-			if(this.ticksExisted % 40 == 0) {
+		if(! level.isClientSide) {
+			if(this.tickCount % 40 == 0) {
 				int range = 15;
 				this.giveLightToPlayers(range);
 			}
@@ -57,21 +57,21 @@ public class TorchWoodEntity extends PVZPlantEntity implements ILightPlant {
 	}
 	
 	private void giveLightToPlayers(float range) {
-		world.getEntitiesWithinAABB(PlayerEntity.class, EntityUtil.getEntityAABB(this, range, range), (player) -> {
+		level.getEntitiesOfClass(PlayerEntity.class, EntityUtil.getEntityAABB(this, range, range), (player) -> {
 			return ! EntityUtil.checkCanEntityAttack(this, player);
 		}).forEach((player) -> {
-			player.addPotionEffect(getLightEyeEffect());
+			player.addEffect(getLightEyeEffect());
 		});
 	}
 	
 	private void fireballRain() {
-		double dx = (this.getRNG().nextFloat() - 0.5f) * 6;
-		double dz = (this.getRNG().nextFloat() - 0.5f) * 6;
+		double dx = (this.getRandom().nextFloat() - 0.5f) * 6;
+		double dz = (this.getRandom().nextFloat() - 0.5f) * 6;
 		double dy = 10;
-		PeaEntity pea = new PeaEntity(world, this, PeaEntity.Type.NORMAL, PeaEntity.State.FIRE);
-		pea.setPosition(this.getPosX() + dx, this.getPosY() + dy, this.getPosZ() + dz);
-		pea.setMotion(0, - 0.4, 0);
-		world.addEntity(pea);
+		PeaEntity pea = new PeaEntity(level, this, PeaEntity.Type.NORMAL, PeaEntity.State.FIRE);
+		pea.setPos(this.getX() + dx, this.getY() + dy, this.getZ() + dz);
+		pea.setDeltaMovement(0, - 0.4, 0);
+		level.addFreshEntity(pea);
 	}
 	
 	@Override
@@ -86,7 +86,7 @@ public class TorchWoodEntity extends PVZPlantEntity implements ILightPlant {
 	}
 	
 	@Override
-	public EntitySize getSize(Pose poseIn) {
+	public EntitySize getDimensions(Pose poseIn) {
 		return new EntitySize(0.95f, 1.95f, false);
 	}
 	
@@ -103,24 +103,24 @@ public class TorchWoodEntity extends PVZPlantEntity implements ILightPlant {
 	}
 	
 	public boolean IsSuperFlame() {
-		return dataManager.get(SUPER_FLAME);
+		return entityData.get(SUPER_FLAME);
 	}
 	
 	public void setSuperFlame(boolean is) {
-		dataManager.set(SUPER_FLAME, is);
+		entityData.set(SUPER_FLAME, is);
 	}
 	
 	@Override
-	public void readAdditional(CompoundNBT compound) {
-		super.readAdditional(compound);
+	public void readAdditionalSaveData(CompoundNBT compound) {
+		super.readAdditionalSaveData(compound);
 		if(compound.contains("is_super_fire")) {
 			this.setSuperFlame(compound.getBoolean("is_super_fire"));
 		}
 	}
 	
 	@Override
-	public void writeAdditional(CompoundNBT compound) {
-		super.writeAdditional(compound);
+	public void addAdditionalSaveData(CompoundNBT compound) {
+		super.addAdditionalSaveData(compound);
 		compound.putBoolean("is_super_fire", this.IsSuperFlame());
 	}
 

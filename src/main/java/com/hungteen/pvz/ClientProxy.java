@@ -24,7 +24,7 @@ public class ClientProxy extends CommonProxy{
 	
 	@SuppressWarnings({ "rawtypes", "unchecked" })
 	private void addLayersForRender() {
-		MC.getRenderManager().renderers.values().forEach(r -> {
+		MC.getEntityRenderDispatcher().renderers.values().forEach(r -> {
 			if (r instanceof LivingRenderer) {
 				((LivingRenderer) r).addLayer(new ColdLayer<>((LivingRenderer) r));
 			}

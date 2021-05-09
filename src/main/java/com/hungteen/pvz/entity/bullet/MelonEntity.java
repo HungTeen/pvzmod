@@ -23,8 +23,8 @@ import net.minecraft.world.World;
 
 public class MelonEntity extends PultBulletEntity {
 
-	private static final DataParameter<Integer> MELON_TYPE = EntityDataManager.createKey(MelonEntity.class, DataSerializers.VARINT);
-	private static final DataParameter<Integer> MELON_STATE = EntityDataManager.createKey(MelonEntity.class, DataSerializers.VARINT);
+	private static final DataParameter<Integer> MELON_TYPE = EntityDataManager.defineId(MelonEntity.class, DataSerializers.INT);
+	private static final DataParameter<Integer> MELON_STATE = EntityDataManager.defineId(MelonEntity.class, DataSerializers.INT);
 	private Entity attackEntity = null;
 	protected float splashDamage = 0F;
 	
@@ -38,10 +38,10 @@ public class MelonEntity extends PultBulletEntity {
 	}
 	
 	@Override
-	protected void registerData() {
-		super.registerData();
-		this.dataManager.register(MELON_STATE, MelonStates.NORMAL.ordinal());
-		this.dataManager.register(MELON_TYPE, MelonTypes.NORMAL.ordinal());
+	protected void defineSynchedData() {
+		super.defineSynchedData();
+		this.entityData.define(MELON_STATE, MelonStates.NORMAL.ordinal());
+		this.entityData.define(MELON_TYPE, MelonTypes.NORMAL.ordinal());
 	}
 	
 	@Override
@@ -49,9 +49,9 @@ public class MelonEntity extends PultBulletEntity {
 		if(this.getIcePotion().isPresent()) {
 			PVZDamageSource source = PVZDamageSource.causeIceDamage(this, this.getThrower());
 			source.addEffect(this.getIcePotion().get());
-			target.attackEntityFrom(source, this.getFixDamage());
+			target.hurt(source, this.getFixDamage());
 		} else{
-			target.attackEntityFrom(PVZDamageSource.causeThrowDamage(this, this.getThrower()), this.getFixDamage());
+			target.hurt(PVZDamageSource.causeThrowDamage(this, this.getThrower()), this.getFixDamage());
 		}
 		this.attackEntity = target;
 		this.dealSplashDamage();
@@ -66,12 +66,12 @@ public class MelonEntity extends PultBulletEntity {
 		EntityUtil.playSound(this, SoundRegister.MELON_HIT.get());
 		float range = 2.5F;
 		EntityUtil.getAttackEntities(this.getThrower(), EntityUtil.getEntityAABB(this, range, range)).forEach((entity) -> {
-			if(! entity.isEntityEqual(attackEntity) && (! (entity instanceof LivingEntity) || EntityUtil.checkCanEntityTarget(this.getThrower(), (LivingEntity) entity))) {
+			if(! entity.is(attackEntity) && (! (entity instanceof LivingEntity) || EntityUtil.checkCanEntityTarget(this.getThrower(), (LivingEntity) entity))) {
 				PVZDamageSource source = PVZDamageSource.causeNormalDamage(this, this.getThrower());
 				this.getIcePotion().ifPresent((effect) -> {
 					source.addEffect(effect);
 				});
-				entity.attackEntityFrom(source, this.splashDamage);
+				entity.hurt(source, this.splashDamage);
 			}
 		});
 		for(int i = 0; i < 10; ++ i) {
@@ -102,13 +102,13 @@ public class MelonEntity extends PultBulletEntity {
 	}
 	
 	@Override
-	public EntitySize getSize(Pose poseIn) {
-		return EntitySize.flexible(0.6F, 0.6F);
+	public EntitySize getDimensions(Pose poseIn) {
+		return EntitySize.scalable(0.6F, 0.6F);
 	}
 	
 	@Override
-	public void readAdditional(CompoundNBT compound) {
-		super.readAdditional(compound);
+	public void readAdditionalSaveData(CompoundNBT compound) {
+		super.readAdditionalSaveData(compound);
 		if(compound.contains("melon_type")) {
 			this.setMelonType(MelonTypes.values()[compound.getInt("melon_type")]);
 		}
@@ -118,26 +118,26 @@ public class MelonEntity extends PultBulletEntity {
 	}
 	
 	@Override
-	public void writeAdditional(CompoundNBT compound) {
-		super.writeAdditional(compound);
+	public void addAdditionalSaveData(CompoundNBT compound) {
+		super.addAdditionalSaveData(compound);
 		compound.putInt("melon_type", this.getMelonType().ordinal());
 		compound.putInt("melon_state", this.getMelonState().ordinal());
 	}
 	
 	public void setMelonType(MelonTypes type) {
-		this.dataManager.set(MELON_TYPE, type.ordinal());
+		this.entityData.set(MELON_TYPE, type.ordinal());
 	}
 	
 	public MelonTypes getMelonType() {
-		return MelonTypes.values()[this.dataManager.get(MELON_TYPE)];
+		return MelonTypes.values()[this.entityData.get(MELON_TYPE)];
 	}
 	
 	public void setMelonState(MelonStates type) {
-		this.dataManager.set(MELON_STATE, type.ordinal());
+		this.entityData.set(MELON_STATE, type.ordinal());
 	}
 	
 	public MelonStates getMelonState() {
-		return MelonStates.values()[this.dataManager.get(MELON_STATE)];
+		return MelonStates.values()[this.entityData.get(MELON_STATE)];
 	}
 	
 	public static enum MelonStates {

@@ -15,7 +15,7 @@ import net.minecraft.entity.EntitySize;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.Pose;
-import net.minecraft.entity.SharedMonsterAttributes;
+import net.minecraft.entity.ai.attributes.Attributes;
 import net.minecraft.entity.monster.MonsterEntity;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.network.datasync.DataParameter;
@@ -26,7 +26,7 @@ import net.minecraft.world.World;
 
 public class CatapultZombieEntity extends PVZZombieEntity implements IPult {
 
-	private static final DataParameter<Integer> BALL_COUNT = EntityDataManager.createKey(CatapultZombieEntity.class, DataSerializers.VARINT);
+	private static final DataParameter<Integer> BALL_COUNT = EntityDataManager.defineId(CatapultZombieEntity.class, DataSerializers.INT);
 	private static final float PULT_DISTANCE = 2000;
 	
 	public CatapultZombieEntity(EntityType<? extends MonsterEntity> type, World worldIn) {
@@ -36,15 +36,15 @@ public class CatapultZombieEntity extends PVZZombieEntity implements IPult {
 	}
 	
 	@Override
-	protected void registerAttributes() {
-		super.registerAttributes();
-		this.getAttribute(SharedMonsterAttributes.MOVEMENT_SPEED).setBaseValue(ZombieUtil.LITTLE_SLOW);
+	protected void updateAttributes() {
+		super.updateAttributes();
+		this.getAttribute(Attributes.MOVEMENT_SPEED).setBaseValue(ZombieUtil.LITTLE_SLOW);
 	}
 
 	@Override
-	protected void registerData() {
-		super.registerData();
-		this.dataManager.register(BALL_COUNT, 0);
+	protected void defineSynchedData() {
+		super.defineSynchedData();
+		this.entityData.define(BALL_COUNT, 0);
 	}
 	
 	@Override
@@ -56,7 +56,7 @@ public class CatapultZombieEntity extends PVZZombieEntity implements IPult {
 	@Override
 	public void normalZombieTick() {
 		super.normalZombieTick();
-		if(! world.isRemote && this.getAttackTime() > 0) {
+		if(! level.isClientSide && this.getAttackTime() > 0) {
 			this.setAttackTime(this.getAttackTime() - 1);
 			if(this.getAttackTime() == this.getPultAnimTime() / 2) {
 				this.pultBullet();
@@ -89,7 +89,7 @@ public class CatapultZombieEntity extends PVZZombieEntity implements IPult {
 	}
 	
 	public boolean checkY(LivingEntity target) {
-		return this.getPosY() + 9 >= target.getPosY() + target.getHeight();
+		return this.getY() + 9 >= target.getY() + target.getBbHeight();
 	}
 	
 	@Override
@@ -107,26 +107,26 @@ public class CatapultZombieEntity extends PVZZombieEntity implements IPult {
 	
 	@Override
 	public void pultBullet() {
-		LivingEntity target = this.getAttackTarget();
+		LivingEntity target = this.getTarget();
 		if(target == null) return ;
-		BallEntity ball = new BallEntity(world, this);
-        ball.setPosition(this.getPosX(), this.getPosY() + 1.7f, this.getPosZ());
+		BallEntity ball = new BallEntity(level, this);
+        ball.setPos(this.getX(), this.getY() + 1.7f, this.getZ());
         ball.shootPultBullet(target);
         EntityUtil.playSound(this, SoundRegister.BASKETBALL.get());
-        this.world.addEntity(ball);
+        this.level.addFreshEntity(ball);
         this.setBallCount(this.getBallCount() + 1);
 	}
 	
 	@Override
-	protected void onDeathUpdate() {
-		super.onDeathUpdate();
+	protected void tickDeath() {
+		super.tickDeath();
 		if(this.deathTime == 1) {
-			if(! world.isRemote) {
+			if(! level.isClientSide) {
 				EntityUtil.playSound(this, SoundRegister.CAR_EXPLOSION.get());
 			}
 			else {
 				for(int i = 0; i < 4; ++ i) {
-				    this.world.addParticle(ParticleTypes.EXPLOSION, this.getPosX(), this.getPosY(), this.getPosZ(), 0, 0, 0);
+				    this.level.addParticle(ParticleTypes.EXPLOSION, this.getX(), this.getY(), this.getZ(), 0, 0, 0);
 				}
 			}
 		}
@@ -140,13 +140,13 @@ public class CatapultZombieEntity extends PVZZombieEntity implements IPult {
 	}
 	
 	public float getAttackDamage() {
-		return (float) this.getAttribute(SharedMonsterAttributes.ATTACK_DAMAGE).getBaseValue();
+		return (float) this.getAttribute(Attributes.ATTACK_DAMAGE).getBaseValue();
 	}
 	
 	@Override
-	public EntitySize getSize(Pose poseIn) {
-		if(this.isMiniZombie()) return EntitySize.flexible(0.6F, 1.1F);
-		return EntitySize.flexible(0.9F, 2F);
+	public EntitySize getDimensions(Pose poseIn) {
+		if(this.isMiniZombie()) return EntitySize.scalable(0.6F, 1.1F);
+		return EntitySize.scalable(0.9F, 2F);
 	}
 	
     @Override
@@ -155,25 +155,25 @@ public class CatapultZombieEntity extends PVZZombieEntity implements IPult {
 	}
     
     @Override
-    public void readAdditional(CompoundNBT compound) {
-    	super.readAdditional(compound);
+    public void readAdditionalSaveData(CompoundNBT compound) {
+    	super.readAdditionalSaveData(compound);
     	if(compound.contains("ball_count")) {
     		this.setBallCount(compound.getInt("ball_count"));
     	}
     }
     
     @Override
-    public void writeAdditional(CompoundNBT compound) {
-    	super.writeAdditional(compound);
+    public void addAdditionalSaveData(CompoundNBT compound) {
+    	super.addAdditionalSaveData(compound);
     	compound.putInt("ball_count", this.getBallCount());
     }
     
     public void setBallCount(int cnt) {
-    	this.dataManager.set(BALL_COUNT, cnt);
+    	this.entityData.set(BALL_COUNT, cnt);
     }
     
     public int getBallCount() {
-    	return this.dataManager.get(BALL_COUNT);
+    	return this.entityData.get(BALL_COUNT);
     }
 
 	@Override
@@ -194,13 +194,13 @@ public class CatapultZombieEntity extends PVZZombieEntity implements IPult {
 		}
 		
 		@Override
-		public void resetTask() {
+		public void stop() {
 			this.target = null;
 		}
 		
 		@Override
 		protected boolean checkTarget(LivingEntity target) {
-			return super.checkTarget(target) && this.attacker.getDistanceSq(target) <= PULT_DISTANCE && this.zombie.checkY(target);
+			return super.checkTarget(target) && this.attacker.distanceToSqr(target) <= PULT_DISTANCE && this.zombie.checkY(target);
 		}
 		
 	}

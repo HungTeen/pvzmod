@@ -29,15 +29,15 @@ public abstract class DropRender<T extends DropEntity> extends EntityRenderer<T>
 	public void render(T entityIn, float entityYaw, float partialTicks, MatrixStack matrixStackIn,
 			IRenderTypeBuffer bufferIn, int packedLightIn) {
 		super.render(entityIn, entityYaw, partialTicks, matrixStackIn, bufferIn, packedLightIn);
-		matrixStackIn.push();
+		matrixStackIn.pushPose();
 		matrixStackIn.scale(-1, -1, 1);
 		float f=getRenderSize(entityIn);
 		matrixStackIn.scale(f,f,f);
 		matrixStackIn.translate(0.0, -1.501, 0.0);
 //		matrixStackIn.rotate(Vector3f.XN.rotationDegrees(45));
-        IVertexBuilder ivertexbuilder = bufferIn.getBuffer(this.model.getRenderType(this.getEntityTexture(entityIn)));
-        this.model.setRotationAngles(entityIn, 0,0,entityIn.ticksExisted+partialTicks,0,0);
-        this.model.render(matrixStackIn, ivertexbuilder, packedLightIn, OverlayTexture.NO_OVERLAY, 1.0F, 1.0F, 1.0F, 1.0F);
-        matrixStackIn.pop();
+        IVertexBuilder ivertexbuilder = bufferIn.getBuffer(this.model.renderType(this.getTextureLocation(entityIn)));
+        this.model.setupAnim(entityIn, 0,0,entityIn.tickCount+partialTicks,0,0);
+        this.model.renderToBuffer(matrixStackIn, ivertexbuilder, packedLightIn, OverlayTexture.NO_OVERLAY, 1.0F, 1.0F, 1.0F, 1.0F);
+        matrixStackIn.popPose();
 	}
 }

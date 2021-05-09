@@ -27,12 +27,14 @@ import net.minecraft.network.datasync.DataParameter;
 import net.minecraft.network.datasync.DataSerializers;
 import net.minecraft.network.datasync.EntityDataManager;
 import net.minecraft.potion.EffectInstance;
+import net.minecraft.util.ActionResultType;
 import net.minecraft.util.Hand;
+import net.minecraft.util.math.vector.Vector3d;
 import net.minecraft.world.World;
 
 public class KernelPultEntity extends PlantPultEntity {
 
-	private static final DataParameter<Integer> CURRENT_BULLET = EntityDataManager.createKey(KernelPultEntity.class, DataSerializers.VARINT);
+	private static final DataParameter<Integer> CURRENT_BULLET = EntityDataManager.defineId(KernelPultEntity.class, DataSerializers.INT);
 	private static final int BUTTER_CHANCE = 10;
 	
 	public KernelPultEntity(EntityType<? extends CreatureEntity> type, World worldIn) {
@@ -40,9 +42,9 @@ public class KernelPultEntity extends PlantPultEntity {
 	}
 
 	@Override
-	protected void registerData() {
-		super.registerData();
-		this.dataManager.register(CURRENT_BULLET, CornTypes.KERNEL.ordinal());
+	protected void defineSynchedData() {
+		super.defineSynchedData();
+		this.entityData.define(CURRENT_BULLET, CornTypes.KERNEL.ordinal());
 	}
 	
 	@Override
@@ -52,15 +54,15 @@ public class KernelPultEntity extends PlantPultEntity {
 	}
 	
 	@Override
-	protected boolean processInteract(PlayerEntity player, Hand hand) {
-		if(! world.isRemote && hand == Hand.MAIN_HAND && ! EntityUtil.checkCanEntityAttack(this, player)) {
-			ItemStack stack = player.getHeldItem(hand);
+	public ActionResultType interactAt(PlayerEntity player, Vector3d vec3d, Hand hand) {
+		if(! level.isClientSide && hand == Hand.MAIN_HAND && ! EntityUtil.checkCanEntityAttack(this, player)) {
+			ItemStack stack = player.getItemInHand(hand);
 			if(stack.getItem() instanceof PlantCardItem) {
 				PlantCardItem item = (PlantCardItem) stack.getItem();
 				if(item.plantType == Plants.COB_CANNON) {
 					Optional<KernelPultEntity> pult = this.getNearByPult(player);
 					if(pult.isPresent()) {
-						PlantCardItem.checkSunAndSummonPlant(player, stack, item, getPosition(), (plantEntity) -> {
+						PlantCardItem.checkSunAndSummonPlant(player, stack, item, blockPosition(), (plantEntity) -> {
 							this.onPlantUpgrade(plantEntity);
 							plantEntity.plantSunCost += pult.get().plantSunCost;
 							pult.get().remove();
@@ -69,7 +71,7 @@ public class KernelPultEntity extends PlantPultEntity {
 				} else if(item instanceof ImitaterCardItem && ((ImitaterCardItem) item).isPlantTypeEqual(stack, Plants.COB_CANNON)) {
 					Optional<KernelPultEntity> pult = this.getNearByPult(player);
 					if(pult.isPresent()) {
-					    ImitaterCardItem.checkSunAndSummonImitater(player, stack, item, getPosition(), (imitater) -> {
+					    ImitaterCardItem.checkSunAndSummonImitater(player, stack, item, blockPosition(), (imitater) -> {
 						    imitater.targetPlantEntity = Optional.of(this);
 						    imitater.plantSunCost += pult.get().plantSunCost;
 						    pult.get().remove();
@@ -78,13 +80,13 @@ public class KernelPultEntity extends PlantPultEntity {
 				}
 			}
 		}
-		return super.processInteract(player, hand);
+		return super.interactAt(player, vec3d, hand);
 	}
 	
 	private Optional<KernelPultEntity> getNearByPult(PlayerEntity player){
 		float range = 1.5F;
-		List<KernelPultEntity> list = world.getEntitiesWithinAABB(KernelPultEntity.class, EntityUtil.getEntityAABB(this, range, range), (pult) -> {
-			return ! pult.isEntityEqual(this) && pult.getPlantEnumName() == Plants.KERNEL_PULT && ! EntityUtil.checkCanEntityAttack(pult, player);
+		List<KernelPultEntity> list = level.getEntitiesOfClass(KernelPultEntity.class, EntityUtil.getEntityAABB(this, range, range), (pult) -> {
+			return ! pult.is(this) && pult.getPlantEnumName() == Plants.KERNEL_PULT && ! EntityUtil.checkCanEntityAttack(pult, player);
 		});
 		if(list.isEmpty()) return Optional.empty();
 		return Optional.ofNullable(list.get(0));
@@ -101,12 +103,12 @@ public class KernelPultEntity extends PlantPultEntity {
 			this.setCurrentBullet(CornTypes.BUTTER);
 			return ;
 		}
-		this.setCurrentBullet(this.getRNG().nextInt(BUTTER_CHANCE) == 0 ? CornTypes.BUTTER : CornTypes.KERNEL);
+		this.setCurrentBullet(this.getRandom().nextInt(BUTTER_CHANCE) == 0 ? CornTypes.BUTTER : CornTypes.KERNEL);
 	}
 	
 	@Override
 	public void pultBullet() {
-		LivingEntity target = this.getAttackTarget();
+		LivingEntity target = this.getTarget();
 		this.pultKernel(target, false);
 	}
 	
@@ -119,17 +121,17 @@ public class KernelPultEntity extends PlantPultEntity {
 		if(target == null) return Optional.empty();
 		PultBulletEntity bullet = null;
 		if(isSuper || this.getCurrentBullet() == CornTypes.BUTTER) {
-			bullet = new ButterEntity(world, this);
+			bullet = new ButterEntity(level, this);
 		} else if(this.getCurrentBullet() == CornTypes.KERNEL) {
-			bullet = new KernelEntity(world, this);
+			bullet = new KernelEntity(level, this);
 		} 
 		if(bullet == null) {
 			System.out.println("ERROR : Wrong kernel Pult Throw Bullet Type !");
 			return Optional.empty();
 		}
-		bullet.setPosition(this.getPosX(), this.getPosY() + 1.7f, this.getPosZ());
+		bullet.setPos(this.getX(), this.getY() + 1.7f, this.getZ());
 		bullet.shootPultBullet(target);
-        this.world.addEntity(bullet);
+        this.level.addFreshEntity(bullet);
         EntityUtil.playSound(this, SoundRegister.PLANT_THROW.get());
         this.setCurrentBullet(CornTypes.KERNEL); 
         return Optional.of(bullet);
@@ -160,21 +162,21 @@ public class KernelPultEntity extends PlantPultEntity {
 	}
 	
 	@Override
-	public EntitySize getSize(Pose poseIn) {
-		return EntitySize.flexible(0.8F, 1F);
+	public EntitySize getDimensions(Pose poseIn) {
+		return EntitySize.scalable(0.8F, 1F);
 	}
 	
 	@Override
-	public void readAdditional(CompoundNBT compound) {
-		super.readAdditional(compound);
+	public void readAdditionalSaveData(CompoundNBT compound) {
+		super.readAdditionalSaveData(compound);
 		if(compound.contains("current_bullet_type")) {
 			this.setCurrentBullet(CornTypes.values()[compound.getInt("current_bullet_type")]);
 		}
 	}
 	
 	@Override
-	public void writeAdditional(CompoundNBT compound) {
-		super.writeAdditional(compound);
+	public void addAdditionalSaveData(CompoundNBT compound) {
+		super.addAdditionalSaveData(compound);
 		compound.putInt("current_bullet_type", this.getCurrentBullet().ordinal());
 	}
 	
@@ -184,11 +186,11 @@ public class KernelPultEntity extends PlantPultEntity {
 	}
 	
 	public void setCurrentBullet(CornTypes type) {
-		this.dataManager.set(CURRENT_BULLET, type.ordinal());
+		this.entityData.set(CURRENT_BULLET, type.ordinal());
 	}
 	
 	public CornTypes getCurrentBullet() {
-		return CornTypes.values()[this.dataManager.get(CURRENT_BULLET)];
+		return CornTypes.values()[this.entityData.get(CURRENT_BULLET)];
 	}
 
 	public static enum CornTypes{

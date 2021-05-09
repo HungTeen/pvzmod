@@ -14,10 +14,10 @@ import net.minecraft.world.IBlockReader;
 
 public class FlowerPotBlock extends AbstractFacingBlock {
 
-	protected static final VoxelShape LILY_PAD_AABB = Block.makeCuboidShape(0.0D, 0.0D, 0.0D, 16.0D, 12.0D, 16.0D);
+	protected static final VoxelShape LILY_PAD_AABB = Block.box(0.0D, 0.0D, 0.0D, 16.0D, 12.0D, 16.0D);
 	
 	public FlowerPotBlock() {
-		super(Block.Properties.from(Blocks.FLOWER_POT).hardnessAndResistance(1F).notSolid());
+		super(Block.Properties.copy(Blocks.FLOWER_POT).strength(1F).noOcclusion());
 	}
 	
 	@Override

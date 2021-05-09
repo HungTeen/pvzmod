@@ -17,18 +17,19 @@ import net.minecraftforge.fml.DistExecutor;
 public class StrangeHelpItem extends Item{
 
 	public StrangeHelpItem() {
-		super(new Properties().group(GroupRegister.PVZ_MISC).maxStackSize(1));
+		super(new Properties().tab(GroupRegister.PVZ_MISC).stacksTo(1));
 	}
 	
+	@SuppressWarnings("deprecation")
 	@OnlyIn(Dist.CLIENT)
 	@Override
-	public ActionResult<ItemStack> onItemRightClick(World worldIn, PlayerEntity playerIn, Hand handIn) {
-		if(worldIn.isRemote) {
+	public ActionResult<ItemStack> use(World worldIn, PlayerEntity playerIn, Hand handIn) {
+		if(worldIn.isClientSide) {
 			DistExecutor.runWhenOn(Dist.CLIENT, ()->()->{
-				Minecraft.getInstance().displayGuiScreen(new StrangeHelpScreen());
+				Minecraft.getInstance().setScreen(new StrangeHelpScreen());
 			});
 		}
-		return ActionResult.resultPass(playerIn.getHeldItem(handIn));
+		return ActionResult.pass(playerIn.getItemInHand(handIn));
 	}
 
 }

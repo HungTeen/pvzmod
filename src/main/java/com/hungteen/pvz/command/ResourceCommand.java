@@ -18,7 +18,7 @@ import net.minecraft.util.text.StringTextComponent;
 public class ResourceCommand {
 
 	public static void register(CommandDispatcher<CommandSource> dispatcher) {
-        LiteralArgumentBuilder<CommandSource> builder = Commands.literal("playerstats").requires((ctx) -> {return ctx.hasPermissionLevel(2);});
+        LiteralArgumentBuilder<CommandSource> builder = Commands.literal("playerstats").requires((ctx) -> {return ctx.hasPermission(2);});
         for(Resources res:Resources.values()) {
         	builder.then(Commands.argument("targets", EntityArgument.players())
         	    .then(Commands.literal("add").then(Commands.literal(res.toString().toLowerCase()).then(Commands.argument("amount", IntegerArgumentType.integer()).executes((command)->{
@@ -42,7 +42,7 @@ public class ResourceCommand {
 	public static int queryPlayerResource(CommandSource source,Collection<? extends ServerPlayerEntity> targets,Resources res) {
 		for(ServerPlayerEntity player:targets) {
 			player.getCapability(CapabilityHandler.PLAYER_DATA_CAPABILITY).ifPresent((l)->{
-		    	source.sendFeedback(new StringTextComponent(""+l.getPlayerData().getPlayerStats().getPlayerStats(res)), true);
+		    	source.sendSuccess(new StringTextComponent(""+l.getPlayerData().getPlayerStats().getPlayerStats(res)), true);
 		    });
 		}
 		return targets.size();

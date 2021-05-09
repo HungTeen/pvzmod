@@ -17,7 +17,7 @@ public class NormalZombieRender extends AbstractNormalRender<NormalZombieEntity>
 	}
 
 	@Override
-	public ResourceLocation getEntityTexture(NormalZombieEntity entity) {
+	public ResourceLocation getTextureLocation(NormalZombieEntity entity) {
 		return StringUtil.prefix("textures/entity/zombie/grassday/normal_zombie.png");
 	}
 

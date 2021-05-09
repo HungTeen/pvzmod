@@ -8,7 +8,7 @@ import com.hungteen.pvz.utils.ZombieUtil;
 import com.hungteen.pvz.utils.enums.Zombies;
 
 import net.minecraft.entity.EntityType;
-import net.minecraft.entity.SharedMonsterAttributes;
+import net.minecraft.entity.ai.attributes.Attributes;
 import net.minecraft.entity.monster.MonsterEntity;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.ResourceLocation;
@@ -21,17 +21,17 @@ public class JalapenoZombieEntity extends AbstractZombotanyEntity {
 	}
 	
 	@Override
-	protected void registerAttributes() {
-		super.registerAttributes();
-		this.getAttribute(SharedMonsterAttributes.MOVEMENT_SPEED).setBaseValue(ZombieUtil.LITTLE_FAST);
+	protected void updateAttributes() {
+		super.updateAttributes();
+		this.getAttribute(Attributes.MOVEMENT_SPEED).setBaseValue(ZombieUtil.LITTLE_FAST);
 	}
 	
 	@Override
-	public void onDeath(DamageSource cause) {
+	public void die(DamageSource cause) {
 		if(! EntityUtil.isEntityCold(this) && ! EntityUtil.isEntityFrozen(this)) {
 			this.startBomb();
 		}
-		super.onDeath(cause);
+		super.die(cause);
 	}
 	
 	public void startBomb() {
@@ -40,7 +40,7 @@ public class JalapenoZombieEntity extends AbstractZombotanyEntity {
 			JalapenoEntity.clearSnowAndSpawnFlame(this, i, 0);
 			JalapenoEntity.clearSnowAndSpawnFlame(this, 0, i);
 		}
-		if(! world.isRemote) {
+		if(! level.isClientSide) {
 			EntityUtil.playSound(this, SoundRegister.JALAPENO.get());
 		}
 		JalapenoEntity.fireMob(this, range, 0.5f);
@@ -60,7 +60,7 @@ public class JalapenoZombieEntity extends AbstractZombotanyEntity {
 	}
 	
 	@Override
-	protected ResourceLocation getLootTable() {
+	protected ResourceLocation getDefaultLootTable() {
 		return PVZLoot.JALAPENO_ZOMBIE;
 	}
 

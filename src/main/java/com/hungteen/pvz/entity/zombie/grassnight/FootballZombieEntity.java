@@ -10,7 +10,7 @@ import com.hungteen.pvz.utils.interfaces.IHasMetal;
 import net.minecraft.entity.EntitySize;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.Pose;
-import net.minecraft.entity.SharedMonsterAttributes;
+import net.minecraft.entity.ai.attributes.Attributes;
 import net.minecraft.entity.monster.MonsterEntity;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.world.World;
@@ -26,15 +26,15 @@ public class FootballZombieEntity extends PVZZombieEntity implements IHasMetal {
 	}
 	
 	@Override
-	protected void registerAttributes() {
-		super.registerAttributes();
-		this.getAttribute(SharedMonsterAttributes.MOVEMENT_SPEED).setBaseValue(ZombieUtil.FAST);
+	protected void updateAttributes() {
+		super.updateAttributes();
+		this.getAttribute(Attributes.MOVEMENT_SPEED).setBaseValue(ZombieUtil.FAST);
 	}
 	
 	@Override
-	public EntitySize getSize(Pose poseIn) {
-		if(this.isMiniZombie()) return EntitySize.flexible(0.5f, 0.75f);
-		return EntitySize.flexible(0.85f, 2.4f);
+	public EntitySize getDimensions(Pose poseIn) {
+		if(this.isMiniZombie()) return EntitySize.scalable(0.5f, 0.75f);
+		return EntitySize.scalable(0.85f, 2.4f);
 	}
 	
 	@Override
@@ -43,7 +43,7 @@ public class FootballZombieEntity extends PVZZombieEntity implements IHasMetal {
 	}
 
 	@Override
-	protected ResourceLocation getLootTable() {
+	protected ResourceLocation getDefaultLootTable() {
 		return PVZLoot.FOOTBALL_ZOMBIE;
 	}
 	

@@ -15,10 +15,10 @@ import net.minecraft.block.Blocks;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.screen.MainMenuScreen;
 import net.minecraft.client.renderer.IRenderTypeBuffer;
-import net.minecraft.client.renderer.Vector3f;
 import net.minecraft.client.renderer.entity.LivingRenderer;
 import net.minecraft.client.renderer.texture.OverlayTexture;
 import net.minecraft.entity.LivingEntity;
+import net.minecraft.util.math.vector.Vector3f;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.client.event.GuiOpenEvent;
 import net.minecraftforge.client.event.RenderLivingEvent;
@@ -28,7 +28,7 @@ import net.minecraftforge.fml.common.Mod;
 @Mod.EventBusSubscriber(modid = PVZMod.MOD_ID, value = Dist.CLIENT)
 public class PVZClientEvents {
 	
-	public static final BlockState ICE_BLOCK = Blocks.FROSTED_ICE.getDefaultState();
+	public static final BlockState ICE_BLOCK = Blocks.FROSTED_ICE.defaultBlockState();
 	
 	@SubscribeEvent 
 	public static void onLivingRender(@SuppressWarnings("rawtypes") RenderLivingEvent.Pre ev) {
@@ -52,44 +52,44 @@ public class PVZClientEvents {
 	
 	private static void checkBungeeHandStand(LivingEntity entity, MatrixStack stack) {
 		if(entity instanceof PVZPlantEntity || entity instanceof PVZZombieEntity) return ;
-		if(entity.getRidingEntity() instanceof BungeeZombieEntity) {
-			stack.rotate(Vector3f.ZP.rotationDegrees(180F));
+		if(entity.getVehicle() instanceof BungeeZombieEntity) {
+			stack.mulPose(Vector3f.ZP.rotationDegrees(180F));
 		}
 	}
 	
 	@SuppressWarnings("deprecation")
 	private static void checkAndRenderFrozenIce(LivingEntity entity, MatrixStack matrixStackIn, IRenderTypeBuffer bufferIn, int packedLightIn) {
 		if(! EntityUtil.isEntityValid(entity) || ! EntityUtil.isEntityFrozen(entity)) return ;
-		matrixStackIn.push();
+		matrixStackIn.pushPose();
 		float scale = 0.5F;
 		matrixStackIn.scale(scale, scale, scale);
-		matrixStackIn.push();
-		Minecraft.getInstance().getBlockRendererDispatcher().renderBlock(ICE_BLOCK, matrixStackIn, bufferIn, packedLightIn, OverlayTexture.NO_OVERLAY);
-		matrixStackIn.pop();
-		matrixStackIn.push();
-		matrixStackIn.rotate(Vector3f.YP.rotationDegrees(90F));
-		Minecraft.getInstance().getBlockRendererDispatcher().renderBlock(ICE_BLOCK, matrixStackIn, bufferIn, packedLightIn, OverlayTexture.NO_OVERLAY);
-		matrixStackIn.pop();
-		matrixStackIn.push();
-		matrixStackIn.rotate(Vector3f.YP.rotationDegrees(180F));
-		Minecraft.getInstance().getBlockRendererDispatcher().renderBlock(ICE_BLOCK, matrixStackIn, bufferIn, packedLightIn, OverlayTexture.NO_OVERLAY);
-		matrixStackIn.pop();
-		matrixStackIn.push();
-		matrixStackIn.rotate(Vector3f.YP.rotationDegrees(- 90F));
-		Minecraft.getInstance().getBlockRendererDispatcher().renderBlock(ICE_BLOCK, matrixStackIn, bufferIn, packedLightIn, OverlayTexture.NO_OVERLAY);
-		matrixStackIn.pop();
-		matrixStackIn.pop();
+		matrixStackIn.pushPose();
+		Minecraft.getInstance().getBlockRenderer().renderSingleBlock(ICE_BLOCK, matrixStackIn, bufferIn, packedLightIn, OverlayTexture.NO_OVERLAY);
+		matrixStackIn.popPose();
+		matrixStackIn.pushPose();
+		matrixStackIn.mulPose(Vector3f.YP.rotationDegrees(90F));
+		Minecraft.getInstance().getBlockRenderer().renderSingleBlock(ICE_BLOCK, matrixStackIn, bufferIn, packedLightIn, OverlayTexture.NO_OVERLAY);
+		matrixStackIn.popPose();
+		matrixStackIn.pushPose();
+		matrixStackIn.mulPose(Vector3f.YP.rotationDegrees(180F));
+		Minecraft.getInstance().getBlockRenderer().renderSingleBlock(ICE_BLOCK, matrixStackIn, bufferIn, packedLightIn, OverlayTexture.NO_OVERLAY);
+		matrixStackIn.popPose();
+		matrixStackIn.pushPose();
+		matrixStackIn.mulPose(Vector3f.YP.rotationDegrees(- 90F));
+		Minecraft.getInstance().getBlockRenderer().renderSingleBlock(ICE_BLOCK, matrixStackIn, bufferIn, packedLightIn, OverlayTexture.NO_OVERLAY);
+		matrixStackIn.popPose();
+		matrixStackIn.popPose();
 	}
 	
 	@SuppressWarnings({ "deprecation", "rawtypes" })
 	private static void checkAndRenderButter(LivingRenderer r, LivingEntity entity, MatrixStack matrixStackIn, IRenderTypeBuffer bufferIn, int packedLightIn) {
 		if(! EntityUtil.isEntityValid(entity) || ! EntityUtil.isEntityButter(entity)) return ;
-		matrixStackIn.push();
+		matrixStackIn.pushPose();
 		float scale = 0.7F;
 		matrixStackIn.scale(scale, scale, scale);
-		matrixStackIn.translate(- 0.5F, entity.getHeight() / scale - 0.5F, - 0.5F);
-		Minecraft.getInstance().getBlockRendererDispatcher().renderBlock(BlockRegister.BUTTER_BLOCK.get().getDefaultState(), matrixStackIn, bufferIn, packedLightIn, OverlayTexture.NO_OVERLAY);
-		matrixStackIn.pop();
+		matrixStackIn.translate(- 0.5F, entity.getBbHeight() / scale - 0.5F, - 0.5F);
+		Minecraft.getInstance().getBlockRenderer().renderSingleBlock(BlockRegister.BUTTER_BLOCK.get().defaultBlockState(), matrixStackIn, bufferIn, packedLightIn, OverlayTexture.NO_OVERLAY);
+		matrixStackIn.popPose();
 	}
 	
 }

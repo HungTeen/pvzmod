@@ -17,7 +17,7 @@ public class SnorkelZombieRender extends AbstractSwimmerRender<SnorkelZombieEnti
 	}
 	
 	@Override
-	public ResourceLocation getEntityTexture(SnorkelZombieEntity entity) {
+	public ResourceLocation getTextureLocation(SnorkelZombieEntity entity) {
 		return StringUtil.prefix("textures/entity/zombie/poolday/snorkel_zombie.png");
 	}
 

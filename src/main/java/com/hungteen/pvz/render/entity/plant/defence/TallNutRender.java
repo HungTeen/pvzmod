@@ -23,7 +23,7 @@ public class TallNutRender extends PVZPlantRender<TallNutEntity>{
 	}
 
 	@Override
-	public ResourceLocation getEntityTexture(TallNutEntity entity) {
+	public ResourceLocation getTextureLocation(TallNutEntity entity) {
 		float life=entity.getHealth();
 		float maxLife = entity.getMaxHealth();
 		float defLife = entity.getDefenceLife();

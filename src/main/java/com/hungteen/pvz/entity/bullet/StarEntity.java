@@ -22,10 +22,10 @@ import net.minecraftforge.api.distmarker.OnlyIn;
 
 public class StarEntity extends AbstractBulletEntity {
 
-	private static final DataParameter<Integer> STAR_TYPE = EntityDataManager.createKey(StarEntity.class,
-			DataSerializers.VARINT);
-	private static final DataParameter<Integer> STAR_STATE = EntityDataManager.createKey(StarEntity.class,
-			DataSerializers.VARINT);
+	private static final DataParameter<Integer> STAR_TYPE = EntityDataManager.defineId(StarEntity.class,
+			DataSerializers.INT);
+	private static final DataParameter<Integer> STAR_STATE = EntityDataManager.defineId(StarEntity.class,
+			DataSerializers.INT);
 	
 	public StarEntity(EntityType<?> type, World worldIn) {
 		super(type, worldIn);
@@ -38,10 +38,10 @@ public class StarEntity extends AbstractBulletEntity {
 	}
 	
 	@Override
-	protected void registerData() {
-		super.registerData();
-		this.dataManager.register(STAR_TYPE, 0);
-		this.dataManager.register(STAR_STATE, 0);
+	protected void defineSynchedData() {
+		super.defineSynchedData();
+		this.entityData.define(STAR_TYPE, 0);
+		this.entityData.define(STAR_STATE, 0);
 	}
 
 	@Override
@@ -50,19 +50,19 @@ public class StarEntity extends AbstractBulletEntity {
 		if (result.getType() == RayTraceResult.Type.ENTITY) {
 			Entity target = ((EntityRayTraceResult) result).getEntity();
 			if (checkCanAttack(target)) {
-				target.hurtResistantTime = 0;
+				target.invulnerableTime = 0;
 				this.dealStarDamage(target); // attack 
 				flag = true;
 			}
 		}
-		this.world.setEntityState(this, (byte) 3);
+		this.level.broadcastEntityEvent(this, (byte) 3);
 		if (flag || !this.checkLive(result)) {
 			this.remove();
 		}
 	}
 	
 	private void dealStarDamage(Entity target) {
-		target.attackEntityFrom(PVZDamageSource.causeAppeaseDamage(this, this.getThrower()), this.getFixDamage());
+		target.hurt(PVZDamageSource.causeAppeaseDamage(this, this.getThrower()), this.getFixDamage());
 	}
 	
 	@Override
@@ -85,10 +85,10 @@ public class StarEntity extends AbstractBulletEntity {
 	}
 	
 	@Override
-	public EntitySize getSize(Pose poseIn) {
-		if(this.getStarType() == StarTypes.BIG) return EntitySize.flexible(0.5f, 0.2f);
-		if(this.getStarType() == StarTypes.HUGE) return EntitySize.flexible(0.8f, 0.2f);
-		return EntitySize.flexible(0.2f, 0.2f);
+	public EntitySize getDimensions(Pose poseIn) {
+		if(this.getStarType() == StarTypes.BIG) return EntitySize.scalable(0.5f, 0.2f);
+		if(this.getStarType() == StarTypes.HUGE) return EntitySize.scalable(0.8f, 0.2f);
+		return EntitySize.scalable(0.2f, 0.2f);
 	}
 
 	@Override
@@ -100,18 +100,18 @@ public class StarEntity extends AbstractBulletEntity {
 	 * Updates the entity motion clientside, called by packets from the server
 	 */
 	@OnlyIn(Dist.CLIENT)
-	public void setVelocity(double x, double y, double z) {
-		this.setMotion(x, y, z);
-		if (this.prevRotationPitch == 0.0F && this.prevRotationYaw == 0.0F) {
-		    this.rotationYaw += 10;
-		    this.prevRotationYaw = this.rotationYaw;
-		    this.setLocationAndAngles(this.getPosX(), this.getPosY(), this.getPosZ(), this.rotationYaw, this.rotationPitch);
+	public void lerpMotion(double x, double y, double z) {
+		this.setDeltaMovement(x, y, z);
+		if (this.xRotO == 0.0F && this.yRotO == 0.0F) {
+		    this.yRot += 10;
+		    this.yRotO = this.yRot;
+		    this.moveTo(this.getX(), this.getY(), this.getZ(), this.yRot, this.xRot);
 		}
 	}	
 	
 	@Override
-	public void readAdditional(CompoundNBT compound) {
-		super.readAdditional(compound);
+	public void readAdditionalSaveData(CompoundNBT compound) {
+		super.readAdditionalSaveData(compound);
 		if(compound.contains("star_state")) {
 		    this.setStarState(StarStates.values()[compound.getInt("star_state")]);
 		}
@@ -122,26 +122,26 @@ public class StarEntity extends AbstractBulletEntity {
 	}
 	
 	@Override
-	public void writeAdditional(CompoundNBT compound) {
-		super.writeAdditional(compound);
+	public void addAdditionalSaveData(CompoundNBT compound) {
+		super.addAdditionalSaveData(compound);
 		compound.putInt("star_state", this.getStarState().ordinal());
 		compound.putInt("star_type", this.getStarType().ordinal());
 	}
 	
 	public StarStates getStarState() {
-		return StarStates.values()[dataManager.get(STAR_STATE)];
+		return StarStates.values()[entityData.get(STAR_STATE)];
 	}
 
 	public void setStarState(StarStates state) {
-		dataManager.set(STAR_STATE, state.ordinal());
+		entityData.set(STAR_STATE, state.ordinal());
 	}
 
 	public StarTypes getStarType() {
-		return StarTypes.values()[dataManager.get(STAR_TYPE)];
+		return StarTypes.values()[entityData.get(STAR_TYPE)];
 	}
 
 	public void setStarType(StarTypes type) {
-		dataManager.set(STAR_TYPE, type.ordinal());
+		entityData.set(STAR_TYPE, type.ordinal());
 	}
 	
 	public enum StarStates {

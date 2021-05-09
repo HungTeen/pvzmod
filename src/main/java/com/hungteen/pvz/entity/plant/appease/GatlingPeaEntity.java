@@ -17,7 +17,7 @@ public class GatlingPeaEntity extends RepeaterEntity{
 	@Override
 	public void tick() {
 		super.tick();
-		if(world.isRemote) {
+		if(level.isClientSide) {
 			if(this.getAttackTime() > 0) {
 				this.animTime = 15;
 			} else {

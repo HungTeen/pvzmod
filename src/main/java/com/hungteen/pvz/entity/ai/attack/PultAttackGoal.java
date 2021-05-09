@@ -23,31 +23,31 @@ public class PultAttackGoal extends Goal {
 			return ;
 		}
 		this.attacker = (MobEntity) pult;
-		this.setMutexFlags(EnumSet.of(Goal.Flag.MOVE, Goal.Flag.LOOK));
+		this.setFlags(EnumSet.of(Goal.Flag.MOVE, Goal.Flag.LOOK));
 	}
 	
 	@Override
-	public boolean shouldExecute() {
+	public boolean canUse() {
 		if(! this.pult.shouldPult()) return false;
-		LivingEntity target = this.attacker.getAttackTarget();
+		LivingEntity target = this.attacker.getTarget();
 		if(! EntityUtil.isEntityValid(target)) return false;
 		this.target = target;
 		if(this.checkTarget(target)) {
 			return true;
 		}
-		this.resetTask();
+		this.stop();
 		return false;
 	}
 	
 	@Override
-	public boolean shouldContinueExecuting() {
-		return this.shouldExecute();
+	public boolean canContinueToUse() {
+		return this.canUse();
 	}
 	
 	@Override
-	public void resetTask() {
+	public void stop() {
 		this.target = null;
-		this.attacker.setAttackTarget(null);
+		this.attacker.setTarget(null);
 	}
 
 	@Override
@@ -57,12 +57,12 @@ public class PultAttackGoal extends Goal {
 			this.attackTime = 0;
 			this.pult.startPultAttack();
 		}
-		this.attacker.getLookController().setLookPositionWithEntity(this.target, 30.0F, 30.0F);
+		this.attacker.getLookControl().setLookAt(this.target, 30.0F, 30.0F);
 	}
 	
 	protected boolean checkTarget(LivingEntity target) {
 		if(EntityUtil.checkCanEntityTarget(this.attacker, this.target)) {
-			return this.attacker.getEntitySenses().canSee(this.target);
+			return this.attacker.getSensing().canSee(this.target);
 		}
 		return false;
 	}

@@ -18,7 +18,7 @@ public class CommonRegister {
 	}
 
 	private static void registerCompostable(float chance, IItemProvider itemIn) {
-		ComposterBlock.CHANCES.put(itemIn.asItem(), chance);
+		ComposterBlock.COMPOSTABLES.put(itemIn.asItem(), chance);
 	}
 	
 }

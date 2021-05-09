@@ -13,7 +13,7 @@ import net.minecraft.entity.EntitySize;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.Pose;
-import net.minecraft.entity.SharedMonsterAttributes;
+import net.minecraft.entity.ai.attributes.Attributes;
 import net.minecraft.entity.ai.goal.LookAtGoal;
 import net.minecraft.entity.ai.goal.LookRandomlyGoal;
 import net.minecraft.entity.ai.goal.RandomWalkingGoal;
@@ -22,7 +22,8 @@ import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.pathfinding.PathNavigator;
 import net.minecraft.pathfinding.PathNodeType;
 import net.minecraft.pathfinding.SwimmerPathNavigator;
-import net.minecraft.util.math.Vec3d;
+import net.minecraft.tags.FluidTags;
+import net.minecraft.util.math.vector.Vector3d;
 import net.minecraft.world.World;
 
 public class DolphinRiderEntity extends PVZZombieEntity{
@@ -34,15 +35,15 @@ public class DolphinRiderEntity extends PVZZombieEntity{
 	
 	public DolphinRiderEntity(EntityType<? extends MonsterEntity> type, World worldIn) {
 		super(type, worldIn);
-		setPathPriority(PathNodeType.WATER, 0);
+		setPathfindingMalus(PathNodeType.WATER, 0);
 		this.jumpTick = 100;
 		this.canBeMini = false;
 	}
 	
 	@Override
-	protected void registerAttributes() {
-		super.registerAttributes();
-		this.getAttribute(SharedMonsterAttributes.MOVEMENT_SPEED).setBaseValue(ZombieUtil.WATER_FAST);
+	protected void updateAttributes() {
+		super.updateAttributes();
+		this.getAttribute(Attributes.MOVEMENT_SPEED).setBaseValue(ZombieUtil.WATER_FAST);
 	}
 	
 	@Override
@@ -58,32 +59,32 @@ public class DolphinRiderEntity extends PVZZombieEntity{
 	@Override
 	public void normalZombieTick() {
 		super.normalZombieTick();
-		if(!world.isRemote) {
+		if(!level.isClientSide) {
 			if(this.jumpTick>0) this.jumpTick--;
-			if(this.jumpTick==0&&this.rand.nextInt(JUMP_CHANCE)==0) {//jump
+			if(this.jumpTick==0&&this.random.nextInt(JUMP_CHANCE)==0) {//jump
 				this.playSound(SoundRegister.DOLPHIN_JUMP.get(), 1f, 1f);
 				double dxz=2,dyy=0.5d;
-				this.setMotion((this.rand.nextFloat()-0.5)/dxz,dyy,(this.rand.nextFloat()-0.5)/dxz);
-				this.setPosition(this.getPosX(), this.getPosY()+1, this.getPosZ());
-				this.jumpTick=this.rand.nextInt(JUMP_CD)+JUMP_CD;
+				this.setDeltaMovement((this.random.nextFloat()-0.5)/dxz,dyy,(this.random.nextFloat()-0.5)/dxz);
+				this.setPos(this.getX(), this.getY()+1, this.getZ());
+				this.jumpTick=this.random.nextInt(JUMP_CD)+JUMP_CD;
 			}
 		}
 	}
 	
 	
 	@Override
-	public void livingTick() {
-		super.livingTick();
-		if(!world.isRemote) {//swim up
+	public void aiStep() {
+		super.aiStep();
+		if(!level.isClientSide) {//swim up
 			if(this.isInWater() && this.shouldUp()){
-				Vec3d v = this.getMotion();
-				this.setMotion(v.getX(), UP_SPEED, v.getZ());
+				Vector3d v = this.getDeltaMovement();
+				this.setDeltaMovement(v.x(), UP_SPEED, v.z());
 			}
 		}
 	}
 	
 	protected boolean shouldUp() {
-		return this.getSubmergedHeight() > this.getEyeHeight()/3;
+		return this.getFluidHeight(FluidTags.WATER) > this.getEyeHeight()/3;
 	}
 	
 	@Override
@@ -95,8 +96,8 @@ public class DolphinRiderEntity extends PVZZombieEntity{
 	}
 	
 	@Override
-	public EntitySize getSize(Pose poseIn) {
-		return EntitySize.flexible(0.7f, 1.6f);
+	public EntitySize getDimensions(Pose poseIn) {
+		return EntitySize.scalable(0.7f, 1.6f);
 	}
 
 	@Override
@@ -105,7 +106,7 @@ public class DolphinRiderEntity extends PVZZombieEntity{
 	}
 	
 	@Override
-	protected PathNavigator createNavigator(World worldIn) {
+	protected PathNavigator createNavigation(World worldIn) {
 		return new SwimmerPathNavigator(this, worldIn);
 	}
 	

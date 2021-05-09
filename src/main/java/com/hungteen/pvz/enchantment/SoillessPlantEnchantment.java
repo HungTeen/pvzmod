@@ -12,12 +12,12 @@ public class SoillessPlantEnchantment extends Enchantment {
 	}
 
 	@Override
-	public int getMaxEnchantability(int enchantmentLevel) {
+	public int getMaxCost(int enchantmentLevel) {
 		return 40;
 	}
 
 	@Override
-	public int getMinEnchantability(int enchantmentLevel) {
+	public int getMinCost(int enchantmentLevel) {
 		return 100;
 	}
 

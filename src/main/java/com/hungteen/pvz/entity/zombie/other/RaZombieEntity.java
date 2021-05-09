@@ -13,12 +13,12 @@ import com.hungteen.pvz.utils.ZombieUtil;
 import com.hungteen.pvz.utils.enums.Zombies;
 
 import net.minecraft.entity.EntityType;
-import net.minecraft.entity.SharedMonsterAttributes;
+import net.minecraft.entity.ai.attributes.Attributes;
 import net.minecraft.entity.monster.MonsterEntity;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.SoundEvents;
-import net.minecraft.util.math.Vec3d;
+import net.minecraft.util.math.vector.Vector3d;
 import net.minecraft.world.World;
 
 public class RaZombieEntity extends PVZZombieEntity {
@@ -36,15 +36,15 @@ public class RaZombieEntity extends PVZZombieEntity {
 	}
 
 	@Override
-	protected void registerAttributes() {
-		super.registerAttributes();
-		this.getAttribute(SharedMonsterAttributes.MOVEMENT_SPEED).setBaseValue(ZombieUtil.LITTLE_SLOW);
+	protected void updateAttributes() {
+		super.updateAttributes();
+		this.getAttribute(Attributes.MOVEMENT_SPEED).setBaseValue(ZombieUtil.LITTLE_SLOW);
 	}
 
 	@Override
 	public void normalZombieTick() {
 		super.normalZombieTick();
-		if (!world.isRemote) {
+		if (!level.isClientSide) {
 			this.tickSunSet();
 			if (this.getAttackTime() > 0) {
 				this.setAttackTime(this.getAttackTime() - 1);
@@ -53,12 +53,12 @@ public class RaZombieEntity extends PVZZombieEntity {
 				--this.searchTick;
 			}
 			if (this.searchTick <= 0) {
-				this.searchTick = this.getRNG().nextInt(this.MaxSearchTick - this.MinSearchTick + 1)
+				this.searchTick = this.getRandom().nextInt(this.MaxSearchTick - this.MinSearchTick + 1)
 						+ this.MinSearchTick;
 				this.setAttackTime(ABSORB_TICK);
-				EntityUtil.playSound(this, SoundEvents.ENTITY_EXPERIENCE_ORB_PICKUP);
+				EntityUtil.playSound(this, SoundEvents.EXPERIENCE_ORB_PICKUP);
 				// search new sun.
-				world.getEntitiesWithinAABB(SunEntity.class, MathUtil.getAABBWithPos(getPosition(), MaxSearchRange),
+				level.getEntitiesOfClass(SunEntity.class, MathUtil.getAABBWithPos(blockPosition(), MaxSearchRange),
 						(sun) -> {
 							return sun.getDropState() != DropStates.STEAL && !this.sunSet.contains(sun);
 						}).forEach((sun) -> {
@@ -92,13 +92,13 @@ public class RaZombieEntity extends PVZZombieEntity {
 		// absorb suns in the set.
 		this.sunSet.forEach((sun) -> {
 			double speed = 0.3D;
-			Vec3d now = this.getPositionVec().add(0, getEyeHeight(), 0);
-			Vec3d vec = now.subtract(sun.getPositionVec());
+			Vector3d now = this.position().add(0, getEyeHeight(), 0);
+			Vector3d vec = now.subtract(sun.position());
 			if (vec.length() <= 2) {
 				this.sunAmount += sun.getAmount();
 				sun.remove();
 			} else {
-				sun.setMotion(vec.normalize().scale(speed));
+				sun.setDeltaMovement(vec.normalize().scale(speed));
 			}
 		});
 	}
@@ -106,8 +106,8 @@ public class RaZombieEntity extends PVZZombieEntity {
 	@Override
 	protected void onZombieRemove() {
 		super.onZombieRemove();
-		if(! world.isRemote) {
-			SunEntity.spawnSunsByAmount(world, getPosition(), sunAmount);
+		if(! level.isClientSide) {
+			SunEntity.spawnSunsByAmount(level, blockPosition(), sunAmount);
 			this.sunAmount = 0;
 		}
 	}
@@ -117,8 +117,8 @@ public class RaZombieEntity extends PVZZombieEntity {
 	}
 	
 	@Override
-	public void readAdditional(CompoundNBT compound) {
-		super.readAdditional(compound);
+	public void readAdditionalSaveData(CompoundNBT compound) {
+		super.readAdditionalSaveData(compound);
 		if(compound.contains("zombie_search_tick")) {
 			this.searchTick = compound.getInt("zombie_search_tick");
 		}
@@ -128,8 +128,8 @@ public class RaZombieEntity extends PVZZombieEntity {
 	}
 	
 	@Override
-	public void writeAdditional(CompoundNBT compound) {
-		super.writeAdditional(compound);
+	public void addAdditionalSaveData(CompoundNBT compound) {
+		super.addAdditionalSaveData(compound);
 		compound.putInt("zombie_search_tick", this.searchTick);
 		compound.putInt("zombie_sun_amount", this.sunAmount);
 	}
@@ -140,7 +140,7 @@ public class RaZombieEntity extends PVZZombieEntity {
 	}
 
 	@Override
-	protected ResourceLocation getLootTable() {
+	protected ResourceLocation getDefaultLootTable() {
 		return PVZLoot.RA_ZOMBIE;
 	}
 	

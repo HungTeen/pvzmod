@@ -7,7 +7,7 @@ import com.hungteen.pvz.utils.StringUtil;
 
 import net.minecraft.client.renderer.entity.EntityRendererManager;
 import net.minecraft.util.ResourceLocation;
-import net.minecraft.util.math.Vec3d;
+import net.minecraft.util.math.vector.Vector3d;
 
 public class PogoZombieRender extends PVZZombieRender<PogoZombieEntity>{
 
@@ -22,13 +22,13 @@ public class PogoZombieRender extends PVZZombieRender<PogoZombieEntity>{
 	}
 
 	@Override
-	public Vec3d getTranslateVec(PogoZombieEntity entity) {
-		if(! entity.hasMetal()) return new Vec3d(0, 0.4, 0);
+	public Vector3d getTranslateVec(PogoZombieEntity entity) {
+		if(! entity.hasMetal()) return new Vector3d(0, 0.4, 0);
 		return super.getTranslateVec(entity);
 	}
 	
 	@Override
-	public ResourceLocation getEntityTexture(PogoZombieEntity entity) {
+	public ResourceLocation getTextureLocation(PogoZombieEntity entity) {
 		return StringUtil.prefix("textures/entity/zombie/poolnight/pogo_zombie.png");
 	}
 

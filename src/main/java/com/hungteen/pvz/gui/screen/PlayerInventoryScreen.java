@@ -10,7 +10,7 @@ import com.hungteen.pvz.utils.PlayerUtil;
 import com.hungteen.pvz.utils.StringUtil;
 import com.hungteen.pvz.utils.enums.Colors;
 import com.hungteen.pvz.utils.enums.Resources;
-import com.mojang.blaze3d.systems.RenderSystem;
+import com.mojang.blaze3d.matrix.MatrixStack;
 import com.mojang.datafixers.util.Pair;
 
 import net.minecraft.client.gui.screen.inventory.ContainerScreen;
@@ -27,54 +27,55 @@ import net.minecraftforge.api.distmarker.OnlyIn;
 public class PlayerInventoryScreen extends ContainerScreen<PlayerInventoryContainer>{
 
 	private static final ResourceLocation TEXTURE = StringUtil.prefix("textures/gui/container/player_inventory.png");
-	private static final String TITLE = new TranslationTextComponent("gui.pvz.player_inventory.title").getFormattedText();
+	private static final String TITLE = new TranslationTextComponent("gui.pvz.player_inventory.title").getContents();
 	protected Button leftButton;
 	protected Button rightButton;
 	
 	public PlayerInventoryScreen(PlayerInventoryContainer screenContainer, PlayerInventory inv, ITextComponent titleIn) {
 		super(screenContainer, inv, titleIn);
-		this.xSize = 208;
-		this.ySize = 244;
+		this.imageWidth = 208;
+		this.imageHeight = 244;
 	}
 	
 	@Override
 	protected void init() {
 		super.init();
-		leftButton=this.addButton(new ChangeButton(TEXTURE, this.guiLeft + 6, this.guiTop + 136, false, (button) -> {
-			if(this.container.currentPage > 1) {
-				-- this.container.currentPage;
+		leftButton=this.addButton(new ChangeButton(TEXTURE, this.leftPos + 6, this.topPos + 136, false, (button) -> {
+			if(this.menu.currentPage > 1) {
+				-- this.menu.currentPage;
 			    PVZPacketHandler.CHANNEL.sendToServer(new ClickButtonPacket(GuiHandler.PLAYER_INVENTORY, 0, - 1));
 			}
 		}));
 		
-		rightButton=this.addButton(new ChangeButton(TEXTURE, this.guiLeft + 188, this.guiTop + 136, true,(button) -> {
-			if(this.container.currentPage < PlayerUtil.MAX_SLOT_NUM / 54) {
-				++ this.container.currentPage;
+		rightButton=this.addButton(new ChangeButton(TEXTURE, this.leftPos + 188, this.topPos + 136, true,(button) -> {
+			if(this.menu.currentPage < PlayerUtil.MAX_SLOT_NUM / 54) {
+				++ this.menu.currentPage;
 				PVZPacketHandler.CHANNEL.sendToServer(new ClickButtonPacket(GuiHandler.PLAYER_INVENTORY, 0, 1));
 			}
 		}));
 	}
 	
 	@Override
-	protected void drawGuiContainerBackgroundLayer(float partialTicks, int mouseX, int mouseY) {
-		RenderSystem.color4f(1.0F, 1.0F, 1.0F, 1.0F);
-        this.minecraft.getTextureManager().bindTexture(TEXTURE);
-        blit(this.guiLeft, this.guiTop, 0, 0, this.xSize, this.ySize);
-        int lock = this.container.currentPage * 54 - ClientPlayerResources.getPlayerStats(Resources.SLOT_NUM);
+	protected void renderBg(MatrixStack stack, float partialTicks, int mouseX, int mouseY) {
+		stack.pushPose();
+        this.minecraft.getTextureManager().bind(TEXTURE);
+        blit(stack, this.leftPos, this.topPos, 0, 0, this.imageWidth, this.imageHeight);
+        int lock = this.menu.currentPage * 54 - ClientPlayerResources.getPlayerStats(Resources.SLOT_NUM);
         int num = MathHelper.clamp(lock / 9, 0, 6);
         for(int i = 0;i < num;i ++) {
         	for(int j = 0;j < 9;j ++) {
-        		blit(this.guiLeft + 24 + 18 * j, this.guiTop + 119 - 18 * i, 208, 0, 16, 16);
+        		blit(stack, this.leftPos + 24 + 18 * j, this.topPos + 119 - 18 * i, 208, 0, 16, 16);
         	}
         }
-        StringUtil.drawCenteredScaledString(this.font, TITLE, this.width / 2, this.guiTop + 6, Colors.BLACK, 1.6f);
-		StringUtil.drawCenteredScaledString(this.font, this.container.currentPage + "/" + PlayerUtil.MAX_SLOT_NUM / 54, this.width / 2, this.guiTop + 141, Colors.BLACK, 1.5f);
+        StringUtil.drawCenteredScaledString(stack, this.font, TITLE, this.width / 2, this.topPos + 6, Colors.BLACK, 1.6f);
+		StringUtil.drawCenteredScaledString(stack, this.font, this.menu.currentPage + "/" + PlayerUtil.MAX_SLOT_NUM / 54, this.width / 2, this.topPos + 141, Colors.BLACK, 1.5f);
+	    stack.popPose();
 	}
 	
 	@Override
-	public void render(int mouseX, int mouseY, float partialTicks) {
-		super.render(mouseX, mouseY, partialTicks);
-		renderHoveredToolTip(mouseX, mouseY);
+	public void render(MatrixStack stack, int mouseX, int mouseY, float partialTicks) {
+		super.render(stack, mouseX, mouseY, partialTicks);
+		renderTooltip(stack, mouseX, mouseY);
 	}
 	
 	@Override

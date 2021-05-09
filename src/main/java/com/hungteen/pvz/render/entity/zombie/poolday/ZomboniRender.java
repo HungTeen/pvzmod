@@ -24,7 +24,7 @@ public class ZomboniRender extends PVZZombieRender<ZomboniEntity>{
 	}
 
 	@Override
-	public ResourceLocation getEntityTexture(ZomboniEntity entity) {
+	public ResourceLocation getTextureLocation(ZomboniEntity entity) {
 		float life = entity.getHealth();
 		float max = entity.getMaxHealth();
 		if(life>=max*2/3) return StringUtil.prefix("textures/entity/zombie/poolday/zomboni1.png");

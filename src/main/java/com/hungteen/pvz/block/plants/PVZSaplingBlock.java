@@ -21,13 +21,13 @@ import net.minecraft.world.server.ServerWorld;
 
 public class PVZSaplingBlock extends BushBlock implements IGrowable {
 
-	public static final IntegerProperty STAGE = BlockStateProperties.STAGE_0_1;
-	protected static final VoxelShape SHAPE = Block.makeCuboidShape(2.0D, 0.0D, 2.0D, 14.0D, 12.0D, 14.0D);
-	private final Supplier<Tree> tree;
+	public static final IntegerProperty STAGE = BlockStateProperties.STAGE;
+	protected static final VoxelShape SHAPE = Block.box(2.0D, 0.0D, 2.0D, 14.0D, 12.0D, 14.0D);
+//	private final Supplier<Tree> tree;
 
 	public PVZSaplingBlock(Supplier<Tree> tree) {
-		super(Block.Properties.from(Blocks.OAK_SAPLING));
-		this.tree = tree;
+		super(Block.Properties.copy(Blocks.OAK_SAPLING));
+//		this.tree = tree;
 	}
 
 	public VoxelShape getShape(BlockState state, IBlockReader worldIn, BlockPos pos, ISelectionContext context) {
@@ -39,41 +39,41 @@ public class PVZSaplingBlock extends BushBlock implements IGrowable {
 		super.tick(state, worldIn, pos, rand);
 		if (!worldIn.isAreaLoaded(pos, 1))
 			return; // Forge: prevent loading unloaded chunks when checking neighbor's light
-		if (worldIn.getLight(pos.up()) >= 9 && rand.nextInt(7) == 0) {
-			this.func_226942_a_(worldIn, pos, state, rand);
+		if (worldIn.getMaxLocalRawBrightness(pos.above()) >= 9 && rand.nextInt(7) == 0) {
+			this.advanceTree(worldIn, pos, state, rand);
 		}
 
 	}
 
-	public void func_226942_a_(ServerWorld p_226942_1_, BlockPos p_226942_2_, BlockState p_226942_3_,
+	public void advanceTree(ServerWorld p_226942_1_, BlockPos p_226942_2_, BlockState p_226942_3_,
 			Random p_226942_4_) {
-		if (p_226942_3_.get(STAGE) == 0) {
-			p_226942_1_.setBlockState(p_226942_2_, p_226942_3_.cycle(STAGE), 4);
-		} else {
-			if (!net.minecraftforge.event.ForgeEventFactory.saplingGrowTree(p_226942_1_, p_226942_4_, p_226942_2_))
-				return;
-			this.tree.get().place(p_226942_1_, p_226942_1_.getChunkProvider().getChunkGenerator(), p_226942_2_, p_226942_3_,
-					p_226942_4_);
-		}
+//		if (p_226942_3_.getValue(STAGE) == 0) {
+//			p_226942_1_.setBlock(p_226942_2_, p_226942_3_.func_177231_a(STAGE), 4);
+//		} else {
+//			if (!net.minecraftforge.event.ForgeEventFactory.saplingGrowTree(p_226942_1_, p_226942_4_, p_226942_2_))
+//				return;
+//			this.tree.get().func_225545_a_(p_226942_1_, p_226942_1_.getChunkSource().getGenerator(), p_226942_2_, p_226942_3_,
+//					p_226942_4_);
+//		}
 
 	}
 
 	/**
 	 * Whether this IGrowable can grow
 	 */
-	public boolean canGrow(IBlockReader worldIn, BlockPos pos, BlockState state, boolean isClient) {
+	public boolean isValidBonemealTarget(IBlockReader worldIn, BlockPos pos, BlockState state, boolean isClient) {
 		return true;
 	}
 
-	public boolean canUseBonemeal(World worldIn, Random rand, BlockPos pos, BlockState state) {
-		return (double) worldIn.rand.nextFloat() < 0.45D;
+	public boolean isBonemealSuccess(World worldIn, Random rand, BlockPos pos, BlockState state) {
+		return (double) worldIn.random.nextFloat() < 0.45D;
 	}
 
-	public void grow(ServerWorld worldIn, Random rand, BlockPos pos, BlockState state) {
-		this.func_226942_a_(worldIn, pos, state, rand);
+	public void performBonemeal(ServerWorld worldIn, Random rand, BlockPos pos, BlockState state) {
+		this.advanceTree(worldIn, pos, state, rand);
 	}
 
-	protected void fillStateContainer(StateContainer.Builder<Block, BlockState> builder) {
+	protected void createBlockStateDefinition(StateContainer.Builder<Block, BlockState> builder) {
 		builder.add(STAGE);
 	}
 

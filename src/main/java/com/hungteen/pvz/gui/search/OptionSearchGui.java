@@ -11,7 +11,7 @@ import com.hungteen.pvz.gui.container.AbstractOptionContainer;
 import com.hungteen.pvz.gui.screen.AbstractOptionScreen;
 import com.hungteen.pvz.utils.AlgorithmUtil;
 import com.hungteen.pvz.utils.StringUtil;
-import com.mojang.blaze3d.systems.RenderSystem;
+import com.mojang.blaze3d.matrix.MatrixStack;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.AbstractGui;
@@ -19,11 +19,10 @@ import net.minecraft.client.gui.IGuiEventListener;
 import net.minecraft.client.gui.IRenderable;
 import net.minecraft.client.gui.widget.TextFieldWidget;
 import net.minecraft.client.resources.I18n;
-import net.minecraft.client.resources.Language;
-import net.minecraft.client.resources.LanguageManager;
 import net.minecraft.inventory.container.Slot;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
+import net.minecraft.util.text.StringTextComponent;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 
@@ -56,17 +55,17 @@ public class OptionSearchGui extends AbstractGui implements IRenderable, IGuiEve
 		this.width = widthIn;
 		this.height = heightIn;
 		this.page = new OptionPage(screen);
-		mc.keyboardListener.enableRepeatEvents(true);
+		mc.keyboardHandler.setSendRepeatsToGui(true);
 	}
 
 	public void initSearchBar() {
-		String s = this.searchBar != null ? this.searchBar.getText() : "";
-		this.searchBar = new TextFieldWidget(this.mc.fontRenderer, this.guiLeft + 25, this.guiTop + 14, 100, 14, I18n.format("itemGroup.search"));
-		this.searchBar.setMaxStringLength(50);
-		this.searchBar.setEnableBackgroundDrawing(false);
+		String s = this.searchBar != null ? this.searchBar.getValue() : "";
+		this.searchBar = new TextFieldWidget(this.mc.font, this.guiLeft + 25, this.guiTop + 14, 100, 14, new StringTextComponent(I18n.get("itemGroup.search")));
+		this.searchBar.setMaxLength(50);
+		this.searchBar.setBordered(false);
 		this.searchBar.setVisible(true);
 		this.searchBar.setTextColor(16777215);
-		this.searchBar.setText(s);
+		this.searchBar.setValue(s);
 		this.page.init(this.mc, this.guiLeft, this.guiTop);
 		this.toggleTabs.clear();
 		for (SearchCategories c : this.screen.getSearchCategories()) {
@@ -88,10 +87,10 @@ public class OptionSearchGui extends AbstractGui implements IRenderable, IGuiEve
 	
 	private void updateCollections(boolean p_193003_1_) {
 		List<SearchOption> list = this.page.getCurrentList(this.currentTab.getCategory());
-		String s = this.searchBar.getText();
+		String s = this.searchBar.getValue();
 		if (! s.isEmpty()) {
 			list.removeIf((a) -> {
-				String now = SearchOption.getOptionName(a).toLowerCase();
+				String now = SearchOption.getOptionName(a).getContents().toLowerCase();
 				return ! AlgorithmUtil.KMP.kmp(now, s.toLowerCase());
 			});
 
@@ -111,10 +110,10 @@ public class OptionSearchGui extends AbstractGui implements IRenderable, IGuiEve
 				return true;
 			} else if (this.searchBar.isFocused()) {
 				return true;
-			} else if (this.mc.gameSettings.keyBindChat.matchesKey(p_keyPressed_1_, p_keyPressed_2_)
+			} else if (this.mc.options.keyChat.matches(p_keyPressed_1_, p_keyPressed_2_)
 					&& !this.searchBar.isFocused()) {
 				this.canType = true;
-				this.searchBar.setFocused2(true);
+				this.searchBar.setFocus(true);
 				return true;
 			} else {
 				return false;
@@ -125,8 +124,8 @@ public class OptionSearchGui extends AbstractGui implements IRenderable, IGuiEve
 	}
 
 	private void updateSearch() {
-		String s = this.searchBar.getText().toLowerCase(Locale.ROOT);
-		this.pirateRecipe(s);
+		String s = this.searchBar.getValue().toLowerCase(Locale.ROOT);
+//		this.pirateRecipe(s);
 		if (!s.equals(this.lastSearch)) {
 			this.updateCollections(false);
 			this.lastSearch = s;
@@ -136,21 +135,21 @@ public class OptionSearchGui extends AbstractGui implements IRenderable, IGuiEve
 	/**
 	 * "Check if we should activate the pirate speak easter egg"
 	 */
-	private void pirateRecipe(String text) {
-		if ("excitedze".equals(text)) {
-			LanguageManager languagemanager = this.mc.getLanguageManager();
-			Language language = languagemanager.getLanguage("en_pt");
-			if (languagemanager.getCurrentLanguage().compareTo(language) == 0) {
-				return;
-			}
-			languagemanager.setCurrentLanguage(language);
-			this.mc.gameSettings.language = language.getCode();
-			net.minecraftforge.client.ForgeHooksClient.refreshResources(this.mc,
-					net.minecraftforge.resource.VanillaResourceType.LANGUAGES);
-			this.mc.fontRenderer.setBidiFlag(languagemanager.isCurrentLanguageBidirectional());
-			this.mc.gameSettings.saveOptions();
-		}
-	}
+//	private void pirateRecipe(String text) {
+//		if ("excitedze".equals(text)) {
+//			LanguageManager languagemanager = this.mc.getLanguageManager();
+//			Language language = languagemanager.getLanguage("en_pt");
+//			if (languagemanager.getSelected().compareTo(language) == 0) {
+//				return;
+//			}
+//			languagemanager.setSelected(language);
+//			this.mc.options.languageCode = language.getCode();
+//			net.minecraftforge.client.ForgeHooksClient.refreshResources(this.mc,
+//					net.minecraftforge.resource.VanillaResourceType.LANGUAGES);
+//			this.mc.font.func_78275_b(languagemanager.isBidirectional());
+//			this.mc.options.save();
+//		}
+//	}
 
 	public boolean keyReleased(int keyCode, int scanCode, int modifiers) {
 		this.canType = false;
@@ -199,31 +198,30 @@ public class OptionSearchGui extends AbstractGui implements IRenderable, IGuiEve
 	}
 
 	@Override
-	public void render(int mouseX, int mouseY, float partialTicks) {
-		RenderSystem.pushMatrix();
-		RenderSystem.translatef(0.0F, 0.0F, 100.0F);
-		this.mc.getTextureManager().bindTexture(TEXTURE);
-		RenderSystem.color4f(1.0F, 1.0F, 1.0F, 1.0F);
-		this.blit(this.guiLeft, this.guiTop, 0, 0, this.xSize, this.ySize);
-		this.searchBar.render(mouseX, mouseY, partialTicks);
+	public void render(MatrixStack stack, int mouseX, int mouseY, float partialTicks) {
+		stack.pushPose();
+		stack.translate(0.0F, 0.0F, 100.0F);
+		this.mc.getTextureManager().bind(TEXTURE);
+		this.blit(stack, this.guiLeft, this.guiTop, 0, 0, this.xSize, this.ySize);
+		this.searchBar.render(stack, mouseX, mouseY, partialTicks);
 
 		for (CategoryToggleWidget a : this.toggleTabs) {
-			a.render(mouseX, mouseY, partialTicks);
+			a.render(stack, mouseX, mouseY, partialTicks);
 		}
 
-		this.page.render(this.guiLeft, this.guiTop, mouseX, mouseY, partialTicks);
-		RenderSystem.popMatrix();
+		this.page.render(stack, this.guiLeft, this.guiTop, mouseX, mouseY, partialTicks);
+		stack.popPose();
 	}
 
 	/**
 	 * render tool tips for ghost recipes and the page.
 	 */
-	public void renderTooltip(int guiLeft, int guiTop, int mouseX, int mouseY) {
-		this.page.renderTooltip(mouseX, mouseY);
-	    this.renderGhostRecipeTooltip(guiLeft, guiTop, mouseX, mouseY);
+	public void renderTooltip(MatrixStack stack, int guiLeft, int guiTop, int mouseX, int mouseY) {
+		this.page.renderTooltip(stack, mouseX, mouseY);
+	    this.renderGhostRecipeTooltip(stack, guiLeft, guiTop, mouseX, mouseY);
 	}
 
-	private void renderGhostRecipeTooltip(int guiLeft, int guiTop, int mouseX, int mouseY) {
+	private void renderGhostRecipeTooltip(MatrixStack stack, int guiLeft, int guiTop, int mouseX, int mouseY) {
 		ItemStack itemstack = null;
 		for (int i = 0; i < this.recipeManager.size(); ++i) {
 			RecipeManager.RecipeIngredient ingredient = this.recipeManager.get(i);
@@ -233,19 +231,19 @@ public class OptionSearchGui extends AbstractGui implements IRenderable, IGuiEve
 				itemstack = ingredient.getItem();
 			}
 		}
-		if (itemstack != null && this.mc.currentScreen != null) {
-			this.mc.currentScreen.renderTooltip(this.mc.currentScreen.getTooltipFromItem(itemstack), mouseX, mouseY);
+		if (itemstack != null && this.mc.screen != null) {
+			this.mc.screen.renderComponentTooltip(stack, this.mc.screen.getTooltipFromItem(itemstack), mouseX, mouseY);
 		}
 	}
 
-	public void renderGhostRecipe(int p_191864_1_, int p_191864_2_, boolean p_191864_3_, float p_191864_4_) {
-		this.recipeManager.render(this.mc, p_191864_1_, p_191864_2_, p_191864_3_, p_191864_4_);
+	public void renderGhostRecipe(MatrixStack stack, int p_191864_1_, int p_191864_2_, boolean p_191864_3_, float p_191864_4_) {
+		this.recipeManager.render(this.mc, stack, p_191864_1_, p_191864_2_, p_191864_3_, p_191864_4_);
 	}
 
 	public void removed() {
 		this.searchBar = null;
 		this.currentTab = null;
-		this.mc.keyboardListener.enableRepeatEvents(false);
+		this.mc.keyboardHandler.setSendRepeatsToGui(false);
 	}
 
 	public boolean hasClickedOutside(double mouseX, double mouseY, int guiLeftIn, int guiTopIn, int mouseButton) {

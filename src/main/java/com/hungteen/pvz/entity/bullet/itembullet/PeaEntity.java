@@ -28,10 +28,10 @@ import net.minecraft.world.World;
 
 public class PeaEntity extends PVZItemBulletEntity {
 
-	private static final DataParameter<Integer> PEA_STATE = EntityDataManager.createKey(PeaEntity.class,
-			DataSerializers.VARINT);
-	private static final DataParameter<Integer> PEA_TYPE = EntityDataManager.createKey(PeaEntity.class,
-			DataSerializers.VARINT);
+	private static final DataParameter<Integer> PEA_STATE = EntityDataManager.defineId(PeaEntity.class,
+			DataSerializers.INT);
+	private static final DataParameter<Integer> PEA_TYPE = EntityDataManager.defineId(PeaEntity.class,
+			DataSerializers.INT);
 	
 	private int power = 0;
 	private TorchWoodEntity torchWood = null;
@@ -45,13 +45,13 @@ public class PeaEntity extends PVZItemBulletEntity {
 		super(EntityRegister.PEA.get(), worldIn, shooter);
 		this.setPeaState(peaState);
 		this.setPeaType(peaType);
-		this.recalculateSize();
+		this.refreshDimensions();
 	}
 
 	@Override
-	protected void registerData() {
-		dataManager.register(PEA_STATE, State.NORMAL.ordinal());
-		dataManager.register(PEA_TYPE, Type.NORMAL.ordinal());
+	protected void defineSynchedData() {
+		entityData.define(PEA_STATE, State.NORMAL.ordinal());
+		entityData.define(PEA_TYPE, Type.NORMAL.ordinal());
 	}
 
 	@Override
@@ -60,13 +60,13 @@ public class PeaEntity extends PVZItemBulletEntity {
 		if (result.getType() == RayTraceResult.Type.ENTITY) {
 			Entity target = ((EntityRayTraceResult) result).getEntity();
 			if (checkCanAttack(target)) {
-				target.hurtResistantTime = 0;
+				target.invulnerableTime = 0;
 				this.dealPeaDamage(target); // attack 
 				flag = true;
 			}
 			if (target instanceof TorchWoodEntity) {// pea interact with torchwood
 				TorchWoodEntity tmp = (TorchWoodEntity) target;
-				if (this.torchWood == null || !this.torchWood.isEntityEqual(tmp)) {// don't fire twice by the same torchwood
+				if (this.torchWood == null || !this.torchWood.is(tmp)) {// don't fire twice by the same torchwood
 					this.torchWood = tmp;
 					if (this.torchWood.IsSuperFlame()) {// blue fire
 						if (this.getPeaState() == State.ICE) {//ice to fire
@@ -84,7 +84,7 @@ public class PeaEntity extends PVZItemBulletEntity {
 				}
 			}
 		}
-		this.world.setEntityState(this, (byte) 3);
+		this.level.broadcastEntityEvent(this, (byte) 3);
 		if (flag || !this.checkLive(result)) {
 			this.remove();
 		}
@@ -94,7 +94,7 @@ public class PeaEntity extends PVZItemBulletEntity {
 		final float damage = this.getFixDamage();
 		if (this.getPeaState() == State.NORMAL) {// normal pea attack
 			// System.out.println(this.getThrower());
-			target.attackEntityFrom(PVZDamageSource.causeAppeaseDamage(this, this.getThrower()), damage);
+			target.hurt(PVZDamageSource.causeAppeaseDamage(this, this.getThrower()), damage);
 		} else if (this.getPeaState() == State.ICE) {// snow pea attack
 			PVZDamageSource source = PVZDamageSource.causeIceDamage(this, this.getThrower());
 			LivingEntity owner = this.getThrower();
@@ -107,9 +107,9 @@ public class PeaEntity extends PVZItemBulletEntity {
 					source.addEffect(WeaponUtil.getPeaGunColdEffect(lvl));
 				});
 			}
-			target.attackEntityFrom(source, damage);
+			target.hurt(source, damage);
 		} else if (this.getPeaState() == State.FIRE || this.getPeaState() == State.BLUE_FIRE) {
-			target.attackEntityFrom(PVZDamageSource.causeFireDamage(this, this.getThrower()), damage);
+			target.hurt(PVZDamageSource.causeFireDamage(this, this.getThrower()), damage);
 		}
 	}
 	
@@ -150,7 +150,7 @@ public class PeaEntity extends PVZItemBulletEntity {
 	}
 
 	@Override
-	public EntitySize getSize(Pose poseIn) {
+	public EntitySize getDimensions(Pose poseIn) {
 		if (this.getPeaType() == Type.NORMAL)
 			return new EntitySize(0.2f, 0.2f, false);
 		if (this.getPeaType() == Type.BIG)
@@ -161,15 +161,15 @@ public class PeaEntity extends PVZItemBulletEntity {
 	}
 
 	@Override
-	public void writeAdditional(CompoundNBT compound) {
-		super.writeAdditional(compound);
+	public void addAdditionalSaveData(CompoundNBT compound) {
+		super.addAdditionalSaveData(compound);
 		compound.putInt("peaState", this.getPeaState().ordinal());
 		compound.putInt("peaType", this.getPeaType().ordinal());
 	}
 
 	@Override
-	public void readAdditional(CompoundNBT compound) {
-		super.readAdditional(compound);
+	public void readAdditionalSaveData(CompoundNBT compound) {
+		super.readAdditionalSaveData(compound);
 		if(compound.contains("peaState")) {
 			this.setPeaState(State.values()[compound.getInt("peaState")]);
 		}
@@ -184,19 +184,19 @@ public class PeaEntity extends PVZItemBulletEntity {
 	}
 
 	public State getPeaState() {
-		return State.values()[dataManager.get(PEA_STATE)];
+		return State.values()[entityData.get(PEA_STATE)];
 	}
 
 	public void setPeaState(State state) {
-		dataManager.set(PEA_STATE, state.ordinal());
+		entityData.set(PEA_STATE, state.ordinal());
 	}
 
 	public Type getPeaType() {
-		return Type.values()[dataManager.get(PEA_TYPE)];
+		return Type.values()[entityData.get(PEA_TYPE)];
 	}
 
 	public void setPeaType(Type type) {
-		dataManager.set(PEA_TYPE, type.ordinal());
+		entityData.set(PEA_TYPE, type.ordinal());
 	}
 
 	@Override

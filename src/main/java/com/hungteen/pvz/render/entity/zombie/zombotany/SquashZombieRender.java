@@ -16,7 +16,7 @@ public class SquashZombieRender extends AbstractZombotanyRender<SquashZombieEnti
 	}
 
 	@Override
-	public ResourceLocation getEntityTexture(SquashZombieEntity entity) {
+	public ResourceLocation getTextureLocation(SquashZombieEntity entity) {
 		return SQUASH_ZOMBIE_TEX;
 	}
 

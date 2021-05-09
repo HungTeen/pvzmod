@@ -16,7 +16,7 @@ public class AmountPredicate {
 	private final MinMaxBounds.IntBound amount;
 
 	public AmountPredicate() {
-		amount = MinMaxBounds.IntBound.UNBOUNDED;
+		amount = MinMaxBounds.IntBound.ANY;
 	}
 
 	public AmountPredicate(MinMaxBounds.IntBound bound) {
@@ -25,12 +25,12 @@ public class AmountPredicate {
 
 	public boolean test(ServerPlayerEntity player, int amount) {
 		if(this == ANY) return true;
-		return this.amount.test(amount);
+		return this.amount.matches(amount);
 	}
 
 	public static AmountPredicate deserialize(@Nullable JsonElement element) {
 		if (element != null && !element.isJsonNull()) {
-			JsonObject jsonobject = JSONUtils.getJsonObject(element, "amount");
+			JsonObject jsonobject = JSONUtils.convertToJsonObject(element, "amount");
 			MinMaxBounds.IntBound bound = MinMaxBounds.IntBound.fromJson(jsonobject.get("amount"));
 			return new AmountPredicate(bound);
 		} else {
@@ -43,13 +43,13 @@ public class AmountPredicate {
 			return JsonNull.INSTANCE;
 		} else {
 			JsonObject jsonobject = new JsonObject();
-			jsonobject.add("dealt", this.amount.serialize());
+			jsonobject.add("dealt", this.amount.serializeToJson());
 			return jsonobject;
 		}
 	}
 
 	public static class Builder {
-		private MinMaxBounds.IntBound dealt = MinMaxBounds.IntBound.UNBOUNDED;
+		private MinMaxBounds.IntBound dealt = MinMaxBounds.IntBound.ANY;
 
 		public static AmountPredicate.Builder create() {
 			return new AmountPredicate.Builder();

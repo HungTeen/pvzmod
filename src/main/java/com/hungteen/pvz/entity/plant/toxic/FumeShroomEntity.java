@@ -31,25 +31,25 @@ public class FumeShroomEntity extends PlantShooterEntity {
 	
 	@Override
 	public void shootBullet() {
-		LivingEntity target = this.getAttackTarget();
+		LivingEntity target = this.getTarget();
 		if(target == null) {
 			return ;
 		}
-		double dx = target.getPosX() - this.getPosX();
-        double dz = target.getPosZ() - this.getPosZ();
-        double y = this.getPosY() + this.getSize(getPose()).height * 0.7f;
+		double dx = target.getX() - this.getX();
+        double dz = target.getZ() - this.getZ();
+        double y = this.getY() + this.getDimensions(getPose()).height * 0.7f;
         double dis = MathHelper.sqrt(dx * dx + dz * dz);
         double tmp = this.LENTH / dis;
         double deltaX = tmp * dx;
         double deltaZ = tmp * dz;
-        FumeEntity fume = new FumeEntity(this.world, this);
+        FumeEntity fume = new FumeEntity(this.level, this);
         if(this.isPlantInSuperMode()) {
         	fume.setKnockback(this.getKnockback());
         }
-        fume.setPosition(this.getPosX() + deltaX, y, this.getPosZ() + deltaZ);
-        fume.shootPea(dx, target.getPosY() + target.getHeight() - y, dz, this.getBulletSpeed());
+        fume.setPos(this.getX() + deltaX, y, this.getZ() + deltaZ);
+        fume.shootPea(dx, target.getY() + target.getBbHeight() - y, dz, this.getBulletSpeed());
         EntityUtil.playSound(this, SoundRegister.FUME.get());
-        this.world.addEntity(fume);
+        this.level.addFreshEntity(fume);
 	}
 
 	@Override
@@ -74,8 +74,8 @@ public class FumeShroomEntity extends PlantShooterEntity {
 	}
     
 	@Override
-	public EntitySize getSize(Pose poseIn) {
-		return EntitySize.flexible(0.8f, 1.25f);
+	public EntitySize getDimensions(Pose poseIn) {
+		return EntitySize.scalable(0.8f, 1.25f);
 	}
 	
     @Override

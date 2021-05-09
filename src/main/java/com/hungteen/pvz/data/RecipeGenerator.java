@@ -19,8 +19,8 @@ import net.minecraft.item.Item;
 import net.minecraft.item.Items;
 import net.minecraft.item.crafting.IRecipeSerializer;
 import net.minecraft.item.crafting.Ingredient;
+import net.minecraft.tags.ITag;
 import net.minecraft.tags.ItemTags;
-import net.minecraft.tags.Tag;
 import net.minecraft.util.IItemProvider;
 import net.minecraftforge.common.data.ForgeRecipeProvider;
 
@@ -31,7 +31,7 @@ public class RecipeGenerator extends ForgeRecipeProvider{
 	}
 
 	@Override
-    protected void registerRecipes(Consumer<IFinishedRecipe> consumer) {
+    protected void buildShapelessRecipes(Consumer<IFinishedRecipe> consumer) {
 		//summon card
 		//1-1
 		registerCommonCard(consumer, ItemRegister.PEA_SHOOTER_CARD.get(), PVZItemTags.PEAS);
@@ -81,28 +81,28 @@ public class RecipeGenerator extends ForgeRecipeProvider{
 	}
 	
 	private void registerStoneSmelting(Consumer<IFinishedRecipe> consumer, IItemProvider input, IItemProvider item, float xp, int time, String name) {
-		CookingRecipeBuilder.smeltingRecipe(Ingredient.fromItems(input), item, xp, time).addCriterion("has_input", this.hasItem(input)).build(consumer, StringUtil.prefix("smelting/" + name + "_from_smelting"));
-		CookingRecipeBuilder.blastingRecipe(Ingredient.fromItems(input), item, xp, time).addCriterion("has_input", this.hasItem(input)).build(consumer, StringUtil.prefix("smelting/" + name + "_from_blasting"));
+		CookingRecipeBuilder.smelting(Ingredient.of(input), item, xp, time).unlockedBy("has_input", has(input)).save(consumer, StringUtil.prefix("smelting/" + name + "_from_smelting"));
+		CookingRecipeBuilder.blasting(Ingredient.of(input), item, xp, time).unlockedBy("has_input", has(input)).save(consumer, StringUtil.prefix("smelting/" + name + "_from_blasting"));
 	}
 	
 	private void registerFoodSmelting(Consumer<IFinishedRecipe> consumer, IItemProvider input, IItemProvider item, float xp, int time, String name) {
-		CookingRecipeBuilder.smeltingRecipe(Ingredient.fromItems(input), item, xp, time).addCriterion("has_input", this.hasItem(input)).build(consumer, StringUtil.prefix("smelting/" + name));
-		CookingRecipeBuilder.cookingRecipe(Ingredient.fromItems(input), item, xp, time, IRecipeSerializer.SMOKING).addCriterion("has_input", this.hasItem(input)).build(consumer, StringUtil.prefix("smelting/" + name + "_from_smoking"));
-		CookingRecipeBuilder.cookingRecipe(Ingredient.fromItems(input), item, xp, time, IRecipeSerializer.CAMPFIRE_COOKING).addCriterion("has_input", this.hasItem(input)).build(consumer, StringUtil.prefix("smelting/" + name + "_from_campfire_cooking"));
+		CookingRecipeBuilder.smelting(Ingredient.of(input), item, xp, time).unlockedBy("has_input", has(input)).save(consumer, StringUtil.prefix("smelting/" + name));
+		CookingRecipeBuilder.cooking(Ingredient.of(input), item, xp, time, IRecipeSerializer.SMOKING_RECIPE).unlockedBy("has_input", has(input)).save(consumer, StringUtil.prefix("smelting/" + name + "_from_smoking"));
+		CookingRecipeBuilder.cooking(Ingredient.of(input), item, xp, time, IRecipeSerializer.CAMPFIRE_COOKING_RECIPE).unlockedBy("has_input", has(input)).save(consumer, StringUtil.prefix("smelting/" + name + "_from_campfire_cooking"));
 	}
 	
 	private void registerCommonCard(Consumer<IFinishedRecipe> consumer, PlantCardItem result, Item crop) {
 		Item essence = Essences.getEssenceItem(PlantUtil.getPlantEssenceType(result.plantType));
 		Item rankCard = Ranks.getRankCardItem(PlantUtil.getPlantRankByName(result.plantType));
-		ShapedRecipeBuilder.shapedRecipe(result).patternLine("AAA").patternLine("ABA").patternLine("ACA")
-		.key('A', essence).key('B', crop).key('C', rankCard).addCriterion("has_essence", this.hasItem(essence)).build(consumer, StringUtil.prefix("card/" + result.plantType.toString().toLowerCase() + "_card"));
+		ShapedRecipeBuilder.shaped(result).pattern("AAA").pattern("ABA").pattern("ACA")
+		.define('A', essence).define('B', crop).define('C', rankCard).unlockedBy("has_essence", has(essence)).save(consumer, StringUtil.prefix("card/" + result.plantType.toString().toLowerCase() + "_card"));
 	}
 	
-	private void registerCommonCard(Consumer<IFinishedRecipe> consumer, PlantCardItem result, Tag<Item> crop) {
+	private void registerCommonCard(Consumer<IFinishedRecipe> consumer, PlantCardItem result, ITag.INamedTag<Item> crop) {
 		Item essence = Essences.getEssenceItem(PlantUtil.getPlantEssenceType(result.plantType));
 		Item rankCard = Ranks.getRankCardItem(PlantUtil.getPlantRankByName(result.plantType));
-		ShapedRecipeBuilder.shapedRecipe(result).patternLine("AAA").patternLine("ABA").patternLine("ACA")
-		.key('A', essence).key('B', crop).key('C', rankCard).addCriterion("has_essence", this.hasItem(essence)).build(consumer, StringUtil.prefix("card/" + result.plantType.toString().toLowerCase() + "_card"));
+		ShapedRecipeBuilder.shaped(result).pattern("AAA").pattern("ABA").pattern("ACA")
+		.define('A', essence).define('B', crop).define('C', rankCard).unlockedBy("has_essence", has(essence)).save(consumer, StringUtil.prefix("card/" + result.plantType.toString().toLowerCase() + "_card"));
 	}
 	
 }

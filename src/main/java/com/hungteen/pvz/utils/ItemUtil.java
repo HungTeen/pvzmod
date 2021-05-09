@@ -17,8 +17,8 @@ public class ItemUtil {
 	public static final float GOLDEN_SATURATION = 1.2f;
 	
 	public static boolean canItemStackAddTo(ItemStack stack1, ItemStack stack2) {
-		if(! stack1.isItemEqual(stack2)) return false;
-		if(! ItemStack.areItemStackTagsEqual(stack1, stack2)) return false;
+		if(! stack1.sameItem(stack2)) return false;
+		if(! ItemStack.tagMatches(stack1, stack2)) return false;
 		return true;
 	}
 	

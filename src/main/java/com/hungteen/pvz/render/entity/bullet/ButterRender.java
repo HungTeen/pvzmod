@@ -23,7 +23,7 @@ public class ButterRender extends EntityBlockRender<ButterEntity> {
 
 	@Override
 	public BlockState getBlockByEntity(ButterEntity entity) {
-		return BlockRegister.BUTTER_BLOCK.get().getDefaultState();
+		return BlockRegister.BUTTER_BLOCK.get().defaultBlockState();
 	}
 
 }

@@ -24,7 +24,7 @@ public class CherryBombRender extends PVZPlantRender<CherryBombEntity>{
 	}
 
 	@Override
-	public ResourceLocation getEntityTexture(CherryBombEntity entity) {
+	public ResourceLocation getTextureLocation(CherryBombEntity entity) {
 		return StringUtil.prefix("textures/entity/plant/explosion/cherry_bomb.png");
 	}
 

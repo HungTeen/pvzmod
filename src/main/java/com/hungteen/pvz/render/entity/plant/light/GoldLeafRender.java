@@ -23,7 +23,7 @@ public class GoldLeafRender extends PVZPlantRender<GoldLeafEntity> {
 	}
 
 	@Override
-	public ResourceLocation getEntityTexture(GoldLeafEntity entity) {
+	public ResourceLocation getTextureLocation(GoldLeafEntity entity) {
 		return StringUtil.prefix("textures/entity/plant/light/gold_leaf.png");
 	}
 

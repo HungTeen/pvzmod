@@ -23,7 +23,7 @@ public class SplitPeaRender extends PVZPlantRender<SplitPeaEntity>{
 	}
 
 	@Override
-	public ResourceLocation getEntityTexture(SplitPeaEntity entity) {
+	public ResourceLocation getTextureLocation(SplitPeaEntity entity) {
 		return StringUtil.prefix("textures/entity/plant/appease/split_pea.png");
 	}
 

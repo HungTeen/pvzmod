@@ -23,32 +23,32 @@ import net.minecraft.world.World;
 public class JackBoxItem extends Item {
 
 	public JackBoxItem() {
-		super(new Properties().group(GroupRegister.PVZ_MISC).maxStackSize(1));
+		super(new Properties().tab(GroupRegister.PVZ_MISC).stacksTo(1));
 	}
 	
 	@Override
-	public ActionResult<ItemStack> onItemRightClick(World worldIn, PlayerEntity playerIn, Hand handIn) {
-		ItemStack stack = playerIn.getHeldItem(handIn);
-		if(! worldIn.isRemote && stack.getItem() == this) {
+	public ActionResult<ItemStack> use(World worldIn, PlayerEntity playerIn, Hand handIn) {
+		ItemStack stack = playerIn.getItemInHand(handIn);
+		if(! worldIn.isClientSide && stack.getItem() == this) {
 			this.onLottery(playerIn);
 			stack.shrink(1);
 		}
-		return ActionResult.resultSuccess(stack);
+		return ActionResult.success(stack);
 	}
 	
 	@Override
-	public void addInformation(ItemStack stack, World worldIn, List<ITextComponent> tooltip, ITooltipFlag flagIn) {
-		tooltip.add(new TranslationTextComponent("tooltip.pvz.jack_box").applyTextStyle(TextFormatting.RED));
+	public void appendHoverText(ItemStack stack, World worldIn, List<ITextComponent> tooltip, ITooltipFlag flagIn) {
+		tooltip.add(new TranslationTextComponent("tooltip.pvz.jack_box").withStyle(TextFormatting.RED));
 	}
 	
 	private void onLottery(PlayerEntity player) {
-		if(player.getRNG().nextInt(PVZConfig.COMMON_CONFIG.ItemSettings.JackBoxSurpriseChance.get()) == 0){
+		if(player.getRandom().nextInt(PVZConfig.COMMON_CONFIG.ItemSettings.JackBoxSurpriseChance.get()) == 0){
 			EntityUtil.playSound(player, SoundRegister.JACK_SURPRISE.get());
-			Explosion.Mode mode = net.minecraftforge.event.ForgeEventFactory.getMobGriefingEvent(player.world, player) ? Explosion.Mode.DESTROY : Explosion.Mode.NONE;
-			player.world.createExplosion(player, player.getPosX(), player.getPosY(), player.getPosZ(), 3f, mode);
+			Explosion.Mode mode = net.minecraftforge.event.ForgeEventFactory.getMobGriefingEvent(player.level, player) ? Explosion.Mode.DESTROY : Explosion.Mode.NONE;
+			player.level.explode(player, player.getX(), player.getY(), player.getZ(), 3f, mode);
 		} else {
 			EntityUtil.playSound(player, SoundRegister.JACK_SAY.get());
-			player.addItemStackToInventory(Bundles.getRandomAllBundle());
+			player.addItem(Bundles.getRandomAllBundle());
 		}
 	}
 

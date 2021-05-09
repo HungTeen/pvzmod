@@ -22,9 +22,9 @@ public class SunShopContainer extends AbstractDaveShopContainer {
 			PlayerDataManager.PlayerStats stats = l.getPlayerData().getPlayerStats();
 			stats.addPlayerStats(Resources.SUN_NUM, - TradeUtil.getGoodCost(good));
 //			System.out.println(TradeUtil.getGoodItemStack(good) + " , " + this.output.getStackInSlot(0));
-			this.output.setInventorySlotContents(0, TradeUtil.getGoodItemStack(good));
+			this.output.setItem(0, TradeUtil.getGoodItemStack(good));
 		});
-		this.player.world.playSound(null, this.player.getPosition(), SoundRegister.DAVE_BUY.get(), SoundCategory.AMBIENT, 1f, 1f);
+		this.player.level.playSound(null, this.player, SoundRegister.DAVE_BUY.get(), SoundCategory.AMBIENT, 1f, 1f);
 	}
 	
 }

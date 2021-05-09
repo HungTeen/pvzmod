@@ -30,11 +30,11 @@ public class DuckyTubeLayer<T extends MobEntity> extends LayerRenderer<T, Entity
 		if(! zombie.isInWater() || zombie.isInvisible()) {
 			return ;
 		}
-		matrixStackIn.push();
-		IVertexBuilder builder = bufferIn.getBuffer(RenderType.getEntitySolid(TEXTURE));
+		matrixStackIn.pushPose();
+		IVertexBuilder builder = bufferIn.getBuffer(RenderType.entitySolid(TEXTURE));
 		matrixStackIn.translate(0, -1.3f, 0);
 		this.model.render(matrixStackIn, builder, packedLightIn, OverlayTexture.NO_OVERLAY);
-		matrixStackIn.pop();
+		matrixStackIn.popPose();
 	}
 	
 }

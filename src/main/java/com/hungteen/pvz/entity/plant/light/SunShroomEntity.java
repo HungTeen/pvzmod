@@ -18,7 +18,7 @@ import net.minecraft.world.World;
 public class SunShroomEntity extends PlantProducerEntity {
 
 	protected static final int GROW_TICK = 1800;
-	private static final DataParameter<Integer> GROW_ANIM = EntityDataManager.createKey(SunShroomEntity.class, DataSerializers.VARINT);
+	private static final DataParameter<Integer> GROW_ANIM = EntityDataManager.defineId(SunShroomEntity.class, DataSerializers.INT);
 	public final int growAnimTo = 10;
 	
 	public SunShroomEntity(EntityType<? extends CreatureEntity> type, World worldIn) {
@@ -26,9 +26,9 @@ public class SunShroomEntity extends PlantProducerEntity {
 	}
 	
 	@Override
-	protected void registerData() {
-		super.registerData();
-		this.dataManager.register(GROW_ANIM, 0);
+	protected void defineSynchedData() {
+		super.defineSynchedData();
+		this.entityData.define(GROW_ANIM, 0);
 	}
 
 	@Override
@@ -51,8 +51,8 @@ public class SunShroomEntity extends PlantProducerEntity {
 	}
 	
 	@Override
-	public EntitySize getSize(Pose poseIn) {
-		return this.hasGrowUp() ? EntitySize.flexible(0.6f, 0.8f) : EntitySize.flexible(0.4f, 0.4f);
+	public EntitySize getDimensions(Pose poseIn) {
+		return this.hasGrowUp() ? EntitySize.scalable(0.6f, 0.8f) : EntitySize.scalable(0.4f, 0.4f);
 	}
 	
 	/**
@@ -60,7 +60,7 @@ public class SunShroomEntity extends PlantProducerEntity {
 	 */
 	private void grow() {
 		this.setGrowAnim(1);
-		if(!world.isRemote) {
+		if(!level.isClientSide) {
 			EntityUtil.playSound(this, SoundRegister.PLANT_GROW.get());
 		}
 	}
@@ -106,25 +106,25 @@ public class SunShroomEntity extends PlantProducerEntity {
 	}
 	
 	@Override
-	public void writeAdditional(CompoundNBT compound) {
-		super.writeAdditional(compound);
+	public void addAdditionalSaveData(CompoundNBT compound) {
+		super.addAdditionalSaveData(compound);
 		compound.putInt("grow_anim", this.getGrowAnim());
 	}
 	
 	@Override
-	public void readAdditional(CompoundNBT compound) {
-		super.readAdditional(compound);
+	public void readAdditionalSaveData(CompoundNBT compound) {
+		super.readAdditionalSaveData(compound);
 		if(compound.contains("grow_anim")) {
 			this.setGrowAnim(compound.getInt("grow_anim"));
 		}
 	}
 
 	public void setGrowAnim(int tick) {
-		this.dataManager.set(GROW_ANIM, tick);
+		this.entityData.set(GROW_ANIM, tick);
 	}
 	
 	public int getGrowAnim() {
-		return this.dataManager.get(GROW_ANIM);
+		return this.entityData.get(GROW_ANIM);
 	}
 	
 	@Override

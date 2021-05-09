@@ -1,38 +1,40 @@
 package com.hungteen.pvz.utils;
 
 import com.hungteen.pvz.PVZMod;
-import com.mojang.blaze3d.systems.RenderSystem;
+import com.mojang.blaze3d.matrix.MatrixStack;
 
 import net.minecraft.client.gui.FontRenderer;
 import net.minecraft.util.ResourceLocation;
+import net.minecraft.util.text.StringTextComponent;
 
 public class StringUtil {
 
+	public static final StringTextComponent EMPTY = new StringTextComponent("");
 	public static final String ARMOR_PREFIX = PVZMod.MOD_ID + ":textures/models/armor/";
-
+	
 	public static ResourceLocation prefix(String a) {
 		return new ResourceLocation(PVZMod.MOD_ID, a);
 	}
 
-	public static void drawScaledString(FontRenderer render, String string, int x, int y, int color, float scale) {
-		RenderSystem.pushMatrix();
-		RenderSystem.scaled(scale, scale, scale);
-		render.drawString(string, x / scale, y / scale, color);
-		RenderSystem.popMatrix();
+	public static void drawScaledString(MatrixStack stack, FontRenderer render, String string, int x, int y, int color, float scale) {
+		stack.pushPose();
+		stack.scale(scale, scale, scale);
+		render.draw(stack, string, x / scale, y / scale, color);
+		stack.popPose();
 	}
 	
-	public static void drawCenteredString(FontRenderer render, String string, int x, int y, int color) {
-		int width = render.getStringWidth(string);
-		render.drawString(string, x - width / 2, y, color);
+	public static void drawCenteredString(MatrixStack stack, FontRenderer render, String string, int x, int y, int color) {
+		int width = render.width(string);
+		render.draw(stack, string, x - width / 2, y, color);
 	}
 
-	public static void drawCenteredScaledString(FontRenderer render, String string, int x, int y, int color,
+	public static void drawCenteredScaledString(MatrixStack stack, FontRenderer render, String string, int x, int y, int color,
 			float scale) {
-		int width = render.getStringWidth(string);
-		RenderSystem.pushMatrix();
-		RenderSystem.scaled(scale, scale, scale);
-		render.drawString(string, (x - width / 2 * scale) / scale, y / scale, color);
-		RenderSystem.popMatrix();
+		int width = render.width(string);
+		stack.pushPose();
+		stack.scale(scale, scale, scale);
+		render.draw(stack, string, (x - width / 2 * scale) / scale, y / scale, color);
+		stack.popPose();
 	}
-
+	
 }

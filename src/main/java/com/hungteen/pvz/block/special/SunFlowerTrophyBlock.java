@@ -12,7 +12,7 @@ public class SunFlowerTrophyBlock extends AbstractFacingBlock {
 	public final int lvl;
 	
 	public SunFlowerTrophyBlock(Properties properties, int lvl) {
-		super(properties.lightValue(14));
+		super(properties.lightLevel(i -> 14));
 		this.lvl = lvl;
 	}
 

@@ -21,10 +21,10 @@ import net.minecraftforge.fml.network.NetworkHooks;
 
 public class SunConverterBlock extends Block {
 
-	protected static final VoxelShape AABB = Block.makeCuboidShape(0.0D, 0.0D, 0.0D, 16.0D, 9.0D, 16.0D);
+	protected static final VoxelShape AABB = Block.box(0.0D, 0.0D, 0.0D, 16.0D, 9.0D, 16.0D);
 
 	public SunConverterBlock() {
-		super(Block.Properties.from(BlockRegister.STEEL_BLOCK.get()).notSolid());
+		super(Block.Properties.copy(BlockRegister.STEEL_BLOCK.get()).noOcclusion());
 	}
 
 	@Override
@@ -33,10 +33,10 @@ public class SunConverterBlock extends Block {
 	}
 
 	@Override
-	public ActionResultType onBlockActivated(BlockState state, World worldIn, BlockPos pos, PlayerEntity player,
+	public ActionResultType use(BlockState state, World worldIn, BlockPos pos, PlayerEntity player,
 			Hand handIn, BlockRayTraceResult hit) {
-		if (!worldIn.isRemote && handIn == Hand.MAIN_HAND) {
-			SunConverterTileEntity te = (SunConverterTileEntity) worldIn.getTileEntity(pos);
+		if (!worldIn.isClientSide && handIn == Hand.MAIN_HAND) {
+			SunConverterTileEntity te = (SunConverterTileEntity) worldIn.getBlockEntity(pos);
 			NetworkHooks.openGui((ServerPlayerEntity) player, te, pos);
 		}
 		return ActionResultType.SUCCESS;
@@ -54,17 +54,17 @@ public class SunConverterBlock extends Block {
 
 	@SuppressWarnings("deprecation")
 	@Override
-	public void onReplaced(BlockState state, World worldIn, BlockPos pos, BlockState newState, boolean isMoving) {
+	public void onRemove(BlockState state, World worldIn, BlockPos pos, BlockState newState, boolean isMoving) {
 		if (state.getBlock() != newState.getBlock()) {
-			TileEntity tileentity = worldIn.getTileEntity(pos);
+			TileEntity tileentity = worldIn.getBlockEntity(pos);
 			if (tileentity instanceof SunConverterTileEntity) {
-				SunConverterTileEntity te = (SunConverterTileEntity) worldIn.getTileEntity(pos);
+				SunConverterTileEntity te = (SunConverterTileEntity) worldIn.getBlockEntity(pos);
 				for (int i = 0; i < te.handler.getSlots(); ++i) {
-					InventoryHelper.spawnItemStack(worldIn, pos.getX(), pos.getY(), pos.getZ(),
+					InventoryHelper.dropItemStack(worldIn, pos.getX(), pos.getY(), pos.getZ(),
 							te.handler.getStackInSlot(i));
 				}
 			}
-			super.onReplaced(state, worldIn, pos, newState, isMoving);
+			super.onRemove(state, worldIn, pos, newState, isMoving);
 		}
 	}
 	

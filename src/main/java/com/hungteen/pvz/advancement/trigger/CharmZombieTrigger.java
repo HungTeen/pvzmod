@@ -1,6 +1,5 @@
 package com.hungteen.pvz.advancement.trigger;
 
-import com.google.gson.JsonDeserializationContext;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.hungteen.pvz.utils.StringUtil;
@@ -8,8 +7,10 @@ import com.hungteen.pvz.utils.StringUtil;
 import net.minecraft.advancements.criterion.AbstractCriterionTrigger;
 import net.minecraft.advancements.criterion.CriterionInstance;
 import net.minecraft.advancements.criterion.EntityPredicate;
+import net.minecraft.advancements.criterion.EntityPredicate.AndPredicate;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.ServerPlayerEntity;
+import net.minecraft.loot.ConditionArrayParser;
 import net.minecraft.util.ResourceLocation;
 
 public class CharmZombieTrigger extends AbstractCriterionTrigger<CharmZombieTrigger.Instance> {
@@ -24,12 +25,14 @@ public class CharmZombieTrigger extends AbstractCriterionTrigger<CharmZombieTrig
 	/**
 	 * Deserialize a ICriterionInstance of this trigger from the data in the JSON.
 	 */
-	public Instance deserializeInstance(JsonObject json, JsonDeserializationContext context) {
-		return new CharmZombieTrigger.Instance(EntityPredicate.deserialize(json.get("entity")));
+	@Override
+	protected Instance createInstance(JsonObject json, AndPredicate player,
+			ConditionArrayParser p_230241_3_) {
+		return new CharmZombieTrigger.Instance(player, EntityPredicate.fromJson(json.get("entity")));
 	}
-
+	
 	public void trigger(ServerPlayerEntity player, Entity entity) {
-		this.func_227070_a_(player.getAdvancements(), (instance) -> {
+		this.trigger(player, (instance) -> {
 			return instance.test(player, entity);
 		});
 	}
@@ -38,18 +41,18 @@ public class CharmZombieTrigger extends AbstractCriterionTrigger<CharmZombieTrig
 
 		private final EntityPredicate entity;
 
-		public Instance(EntityPredicate entity) {
-			super(ID);
+		public Instance(EntityPredicate.AndPredicate player, EntityPredicate entity) {
+			super(ID, player);
 			this.entity = entity;
 		}
 
 		public boolean test(ServerPlayerEntity player, Entity entity) {
-			return this.entity.test(player, entity);
+			return this.entity.matches(player, entity);
 		}
 
-		public JsonElement serialize() {
+		public JsonElement func_200288_b() {
 			JsonObject jsonobject = new JsonObject();
-			jsonobject.add("entity", this.entity.serialize());
+			jsonobject.add("entity", this.entity.serializeToJson());
 			return jsonobject;
 		}
 	}

@@ -23,7 +23,7 @@ public class TangleKelpRender extends PVZPlantRender<TangleKelpEntity>{
 	}
 
 	@Override
-	public ResourceLocation getEntityTexture(TangleKelpEntity entity) {
+	public ResourceLocation getTextureLocation(TangleKelpEntity entity) {
 		return StringUtil.prefix("textures/entity/plant/enforce/tangle_kelp.png");
 	}
 

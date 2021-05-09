@@ -3,7 +3,7 @@ package com.hungteen.pvz.particle.base;
 import net.minecraft.client.particle.IAnimatedSprite;
 import net.minecraft.client.particle.IParticleRenderType;
 import net.minecraft.client.particle.SpriteTexturedParticle;
-import net.minecraft.world.World;
+import net.minecraft.client.world.ClientWorld;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 
@@ -12,30 +12,30 @@ public abstract class SweepParticle extends SpriteTexturedParticle {
 	
 	protected final IAnimatedSprite sprite;
 
-	protected SweepParticle(World world, double x, double y, double z, double scale, IAnimatedSprite sprite) {
+	protected SweepParticle(ClientWorld world, double x, double y, double z, double scale, IAnimatedSprite sprite) {
 	      super(world, x, y, z, 0.0D, 0.0D, 0.0D);
 	      this.sprite = sprite;
-	      this.maxAge = 4;
-	      float f = this.rand.nextFloat() * 0.6F + 0.4F;
-	      this.particleRed = f;
-	      this.particleGreen = f;
-	      this.particleBlue = f;
-	      this.particleScale = 1.0F - (float)scale * 0.5F;
-	      this.selectSpriteWithAge(sprite);
+	      this.lifetime = 4;
+	      float f = this.random.nextFloat() * 0.6F + 0.4F;
+	      this.rCol = f;
+	      this.gCol = f;
+	      this.bCol = f;
+	      this.quadSize = 1.0F - (float)scale * 0.5F;
+	      this.setSpriteFromAge(sprite);
 	   }
 
-	public int getBrightnessForRender(float partialTick) {
+	public int getLightColor(float partialTick) {
 		return 15728880;
 	}
 
 	public void tick() {
-		this.prevPosX = this.posX;
-		this.prevPosY = this.posY;
-		this.prevPosZ = this.posZ;
-		if (this.age++ >= this.maxAge) {
-			this.setExpired();
+		this.xo = this.x;
+		this.yo = this.y;
+		this.zo = this.z;
+		if (this.age++ >= this.lifetime) {
+			this.remove();
 		} else {
-			this.selectSpriteWithAge(this.sprite);
+			this.setSpriteFromAge(this.sprite);
 		}
 	}
 

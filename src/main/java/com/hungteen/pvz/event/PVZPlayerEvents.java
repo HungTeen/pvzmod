@@ -55,13 +55,13 @@ public class PVZPlayerEvents {
 
 	@SubscribeEvent
 	public static void tickPlayer(TickEvent.PlayerTickEvent ev) {
-		if(! ev.player.world.isRemote) {
+		if(! ev.player.level.isClientSide) {
 			//for pea gun
-			ItemStack stack = ev.player.getItemStackFromSlot(EquipmentSlotType.HEAD);
-			if(stack.getItem() instanceof PeaGunItem && !ev.player.getCooldownTracker().hasCooldown(stack.getItem())) {
-			    ((PeaGunItem)stack.getItem()).checkAndShootPea(ev.player.world, ev.player, stack);
-			    if(!ev.player.getCooldownTracker().hasCooldown(stack.getItem())) {
-			    	ev.player.getCooldownTracker().setCooldown(stack.getItem(), 200);//cool down for no pea
+			ItemStack stack = ev.player.getItemBySlot(EquipmentSlotType.HEAD);
+			if(stack.getItem() instanceof PeaGunItem && !ev.player.getCooldowns().isOnCooldown(stack.getItem())) {
+			    ((PeaGunItem)stack.getItem()).checkAndShootPea(ev.player.level, ev.player, stack);
+			    if(!ev.player.getCooldowns().isOnCooldown(stack.getItem())) {
+			    	ev.player.getCooldowns().addCooldown(stack.getItem(), 200);//cool down for no pea
 			    }
 			}
 			ev.player.getCapability(CapabilityHandler.PLAYER_DATA_CAPABILITY).ifPresent((l) -> {
@@ -74,8 +74,8 @@ public class PVZPlayerEvents {
 					MysteryShopContainer.genNextGoods(ev.player);
 				}
 				int lightLvl = 0;
-				if(ev.player.isPotionActive(EffectRegister.LIGHT_EYE_EFFECT.get())) {
-				     lightLvl = 1 + ev.player.getActivePotionEffect(EffectRegister.LIGHT_EYE_EFFECT.get()).getAmplifier();
+				if(ev.player.hasEffect(EffectRegister.LIGHT_EYE_EFFECT.get())) {
+				     lightLvl = 1 + ev.player.getEffect(EffectRegister.LIGHT_EYE_EFFECT.get()).getAmplifier();
 				}
 				if(lightLvl != l.getPlayerData().getOtherStats().lightLevel) {
 					PVZPacketHandler.CHANNEL.send(PacketDistributor.PLAYER.with(() -> {
@@ -90,7 +90,7 @@ public class PVZPlayerEvents {
 	@SubscribeEvent(priority = EventPriority.HIGHEST)
 	public static void onPlayerLogin(PlayerEvent.PlayerLoggedInEvent ev) {
 		PlayerEntity player = ev.getPlayer();
-		if (! player.world.isRemote && player instanceof ServerPlayerEntity) {
+		if (! player.level.isClientSide && player instanceof ServerPlayerEntity) {
 			PlayerEventHandler.onPlayerLogin(player);
 		}
 	}
@@ -98,13 +98,13 @@ public class PVZPlayerEvents {
 	@SubscribeEvent
 	public static void onPlayerLogout(PlayerEvent.PlayerLoggedOutEvent ev) {
 		PlayerEntity player = ev.getPlayer();
-		if (! player.world.isRemote && player instanceof ServerPlayerEntity) {
+		if (! player.level.isClientSide && player instanceof ServerPlayerEntity) {
 			player.getCapability(CapabilityHandler.PLAYER_DATA_CAPABILITY).ifPresent((l)->{
 				PlayerDataManager plData = l.getPlayerData();
 				//item cd
 				PlayerDataManager.ItemCDStats itemCDStats = plData.getItemCDStats();
 				for(Plants p : Plants.values()) {
-					itemCDStats.setPlantCardBar(p, player.getCooldownTracker().getCooldown(PlantUtil.getPlantSummonCard(p), 0f));
+					itemCDStats.setPlantCardBar(p, player.getCooldowns().getCooldownPercent(PlantUtil.getPlantSummonCard(p), 0f));
 				}
 			});
 		}
@@ -113,19 +113,19 @@ public class PVZPlayerEvents {
 	@SubscribeEvent
 	public static void onPlayerClone(PlayerEvent.Clone ev) {
 		PlayerEntity player = ev.getPlayer();
-		if (! player.world.isRemote) {
+		if (! player.level.isClientSide) {
 			PlayerUtil.clonePlayerData(ev.getOriginal(),player);
 		}
 	}
 	
 	@SubscribeEvent
 	public static void onPlayerGetAdvancement(AdvancementEvent ev) {
-		if(! ev.getPlayer().world.isRemote) {
+		if(! ev.getPlayer().level.isClientSide) {
 			if(PVZConfig.COMMON_CONFIG.WorldSettings.GiveBeginnerReward.get() && ev.getAdvancement().getId().equals(StringUtil.prefix("adventure/root"))) {
-				ev.getPlayer().addItemStackToInventory(new ItemStack(ItemRegister.PEA_SHOOTER_CARD.get()));
-				ev.getPlayer().addItemStackToInventory(new ItemStack(ItemRegister.SUN_FLOWER_CARD.get()));
-				ev.getPlayer().addItemStackToInventory(new ItemStack(ItemRegister.WALL_NUT_CARD.get()));
-				ev.getPlayer().addItemStackToInventory(new ItemStack(ItemRegister.POTATO_MINE_CARD.get()));
+				ev.getPlayer().addItem(new ItemStack(ItemRegister.PEA_SHOOTER_CARD.get()));
+				ev.getPlayer().addItem(new ItemStack(ItemRegister.SUN_FLOWER_CARD.get()));
+				ev.getPlayer().addItem(new ItemStack(ItemRegister.WALL_NUT_CARD.get()));
+				ev.getPlayer().addItem(new ItemStack(ItemRegister.POTATO_MINE_CARD.get()));
 			}
 		}
 	}
@@ -135,14 +135,14 @@ public class PVZPlayerEvents {
 		PlayerEntity player=ev.getPlayer();
 		BlockState state = ev.getState();
 		BlockPos pos = ev.getPos();
-		if(! player.world.isRemote) {
+		if(! player.level.isClientSide) {
 			if(state.getBlock()==Blocks.GRASS || state.getBlock()==Blocks.TALL_GRASS) {//break grass
 				Random rand = new Random();
 				if(rand.nextInt(PVZConfig.COMMON_CONFIG.BlockSettings.BreakBlock.PeaDropChance.get()) == 0) {//drop pea 
-					player.world.addEntity(new ItemEntity(player.world,pos.getX(), pos.getY(), pos.getZ(), new ItemStack(ItemRegister.PEA.get(), 1)));
+					player.level.addFreshEntity(new ItemEntity(player.level,pos.getX(), pos.getY(), pos.getZ(), new ItemStack(ItemRegister.PEA.get(), 1)));
 				}
 				if(rand.nextInt(PVZConfig.COMMON_CONFIG.BlockSettings.BreakBlock.CabbageDropChance.get()) == 0) {//drop cabbage
-					player.world.addEntity(new ItemEntity(player.world,pos.getX(), pos.getY(), pos.getZ(), new ItemStack(ItemRegister.CABBAGE_SEEDS.get(), 1)));
+					player.level.addFreshEntity(new ItemEntity(player.level,pos.getX(), pos.getY(), pos.getZ(), new ItemStack(ItemRegister.CABBAGE_SEEDS.get(), 1)));
 				}
 			}
 		}
@@ -152,13 +152,13 @@ public class PVZPlayerEvents {
 	public static void onPlayerInteract(PlayerInteractEvent.EntityInteractSpecific ev) {
 		World world = ev.getWorld();
 		PlayerEntity player = ev.getPlayer();
-		if(! world.isRemote && ev.getHand() == Hand.MAIN_HAND) {
+		if(! world.isClientSide && ev.getHand() == Hand.MAIN_HAND) {
 			Entity entity = ev.getTarget();
 			if(entity instanceof PVZPlantEntity && entity.isAlive()) {//still alive
 				PVZPlantEntity plant = (PVZPlantEntity) entity;
-				ItemStack stack = player.getHeldItemMainhand();
+				ItemStack stack = player.getMainHandItem();
 				if(stack.getItem() instanceof SwordItem) {
-					if(EnchantmentHelper.getEnchantmentLevel(EnchantmentRegister.ENERGY_TRANSFER.get(), stack) > 0) {
+					if(EnchantmentHelper.getItemEnchantmentLevel(EnchantmentRegister.ENERGY_TRANSFER.get(), stack) > 0) {
 						if(plant.canStartSuperMode()){
 							player.getCapability(CapabilityHandler.PLAYER_DATA_CAPABILITY).ifPresent((l) -> {
 								PlayerStats stats = l.getPlayerData().getPlayerStats();
@@ -179,7 +179,7 @@ public class PVZPlayerEvents {
 	
 	@SubscribeEvent
 	public static void onPlayerTreeLevelUp(PlayerLevelUpEvent.TreeLevelUpEvent ev) {
-		if(! ev.getPlayer().world.isRemote) {
+		if(! ev.getPlayer().level.isClientSide) {
 			PlayerUtil.playClientSound(ev.getPlayer(), 9);
 		    PlayerUtil.addPlayerStats(ev.getPlayer(), Resources.LOTTERY_CHANCE, 3);
 		}
@@ -187,7 +187,7 @@ public class PVZPlayerEvents {
 	
 	@SubscribeEvent
 	public static void onPlayerPlantLevelUp(PlayerLevelUpEvent.PlantLevelUpEvent ev) {
-		if(! ev.getPlayer().world.isRemote) {
+		if(! ev.getPlayer().level.isClientSide) {
 			PlayerUtil.addPlayerStats(ev.getPlayer(), Resources.TREE_XP, ev.getCurrentLevel() * 2);
 		}
 	}
@@ -195,7 +195,7 @@ public class PVZPlayerEvents {
 	@SubscribeEvent
 	public static void onSummonCardUse(SummonCardUseEvent ev) {
 		PlayerEntity player = ev.getPlayer();
-		if(! player.world.isRemote) { //unlock almanac
+		if(! player.level.isClientSide) { //unlock almanac
 			SearchOption a = null;
 			if(ev.getItemStack().getItem() instanceof PlantCardItem) {// unlock plant card
 			    Plants plant = ((PlantCardItem) ev.getItemStack().getItem()).plantType;

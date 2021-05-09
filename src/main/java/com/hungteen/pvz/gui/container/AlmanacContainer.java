@@ -17,9 +17,9 @@ public class AlmanacContainer extends AbstractOptionContainer {
 	}
 
 	@Override
-	public boolean canInteractWith(PlayerEntity playerIn) {
-		return playerIn.getHeldItemMainhand().getItem()==ItemRegister.ALMANAC.get()
-				|| playerIn.getHeldItemOffhand().getItem()==ItemRegister.ALMANAC.get();
+	public boolean stillValid(PlayerEntity playerIn) {
+		return playerIn.getMainHandItem().getItem()==ItemRegister.ALMANAC.get()
+				|| playerIn.getOffhandItem().getItem()==ItemRegister.ALMANAC.get();
 	}
 
 	@Override

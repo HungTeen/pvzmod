@@ -25,7 +25,7 @@ public class ZomBossRender extends PVZZombieRender<ZomBossEntity> {
 	}
 
 	@Override
-	public ResourceLocation getEntityTexture(ZomBossEntity entity) {
+	public ResourceLocation getTextureLocation(ZomBossEntity entity) {
 		return ZOMBOSS_TEX;
 	}
 

@@ -24,7 +24,7 @@ public class ScreenDoorZombieRender extends PVZZombieRender<ScreenDoorZombieEnti
 	}
 
 	@Override
-	public ResourceLocation getEntityTexture(ScreenDoorZombieEntity entity) {
+	public ResourceLocation getTextureLocation(ScreenDoorZombieEntity entity) {
 		return StringUtil.prefix("textures/entity/zombie/grassnight/screendoor_zombie.png");
 	}
 

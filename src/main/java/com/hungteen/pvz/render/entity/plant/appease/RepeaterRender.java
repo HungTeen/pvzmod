@@ -20,7 +20,7 @@ public class RepeaterRender extends PVZPlantRender<RepeaterEntity>{
 	}
 
 	@Override
-	public ResourceLocation getEntityTexture(RepeaterEntity entity) {
+	public ResourceLocation getTextureLocation(RepeaterEntity entity) {
 		return StringUtil.prefix("textures/entity/plant/appease/repeater.png");
 	}
 

@@ -23,7 +23,7 @@ public class SunDaveRender extends PVZCreatureRender<SunDaveEntity> {
 	}
 
 	@Override
-	public ResourceLocation getEntityTexture(SunDaveEntity entity) {
+	public ResourceLocation getTextureLocation(SunDaveEntity entity) {
 		return StringUtil.prefix("textures/entity/npc/sun_dave.png");
 	}
 

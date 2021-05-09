@@ -22,10 +22,10 @@ public class ButterPultEntity extends KernelPultEntity {
 	
 	protected Optional<PultBulletEntity> pultKernel(LivingEntity target, boolean isSuper) {
 		if(target == null) return Optional.empty();
-		PultBulletEntity bullet = new ButterEntity(world, this);
-		bullet.setPosition(this.getPosX(), this.getPosY() + 1.7f, this.getPosZ());
+		PultBulletEntity bullet = new ButterEntity(level, this);
+		bullet.setPos(this.getX(), this.getY() + 1.7f, this.getZ());
 		bullet.shootPultBullet(target);
-        this.world.addEntity(bullet);
+        this.level.addFreshEntity(bullet);
         EntityUtil.playSound(this, SoundRegister.PLANT_THROW.get());
         this.setCurrentBullet(CornTypes.KERNEL); 
         return Optional.of(bullet);

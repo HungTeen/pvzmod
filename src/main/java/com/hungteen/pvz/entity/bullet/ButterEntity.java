@@ -26,7 +26,7 @@ public class ButterEntity extends PultBulletEntity {
 		if(this.getThrower() instanceof KernelPultEntity) {
 			source.addEffect(((KernelPultEntity) this.getThrower()).getButterEffect());
 		}
-		target.attackEntityFrom(source, this.attackDamage);
+		target.hurt(source, this.attackDamage);
 	}
 	
 	protected float getAttackDamage() {
@@ -35,8 +35,8 @@ public class ButterEntity extends PultBulletEntity {
 	}
 	
 	@Override
-	public EntitySize getSize(Pose poseIn) {
-		return EntitySize.flexible(0.6F, 0.6F);
+	public EntitySize getDimensions(Pose poseIn) {
+		return EntitySize.scalable(0.6F, 0.6F);
 	}
 	
 }

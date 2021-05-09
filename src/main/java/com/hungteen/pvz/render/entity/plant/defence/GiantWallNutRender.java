@@ -22,7 +22,7 @@ public class GiantWallNutRender extends PVZPlantRender<GiantWallNutEntity> {
 	}
 
 	@Override
-	public ResourceLocation getEntityTexture(GiantWallNutEntity entity) {
+	public ResourceLocation getTextureLocation(GiantWallNutEntity entity) {
 		float life = entity.getHealth();
 		float maxLife = entity.getMaxHealth();
     	if(life > 2 * maxLife / 3) return WallNutRender.TEXTURE1;

@@ -14,7 +14,7 @@ public class DolphinRiderZombieRender extends AbstractSwimmerRender<DolphinRider
 	}
 
 	@Override
-	public ResourceLocation getEntityTexture(DolphinRiderZombieEntity entity) {
+	public ResourceLocation getTextureLocation(DolphinRiderZombieEntity entity) {
 		return StringUtil.prefix("textures/entity/zombie/poolday/dolphin_rider_zombie.png");
 	}
 

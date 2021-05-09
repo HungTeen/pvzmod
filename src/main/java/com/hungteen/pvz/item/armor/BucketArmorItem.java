@@ -24,7 +24,7 @@ public class BucketArmorItem extends ArmorItem{
 	private static final Map<EquipmentSlotType,BipedModel> modelMap = new EnumMap<>(EquipmentSlotType.class);
 	
 	public BucketArmorItem(IArmorMaterial materialIn, EquipmentSlotType slot) {
-		super(materialIn, slot, new Item.Properties().group(GroupRegister.PVZ_MISC));
+		super(materialIn, slot, new Item.Properties().tab(GroupRegister.PVZ_MISC));
 	}
 
 	@Override

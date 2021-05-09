@@ -19,41 +19,42 @@ import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.network.datasync.DataParameter;
 import net.minecraft.network.datasync.DataSerializers;
 import net.minecraft.network.datasync.EntityDataManager;
+import net.minecraft.util.ActionResultType;
 import net.minecraft.util.Hand;
-import net.minecraft.util.math.Vec3d;
+import net.minecraft.util.math.vector.Vector3d;
 import net.minecraft.world.World;
 
 public class GardenRakeEntity extends AbstractOwnerEntity {
 	
-    private static final DataParameter<Integer> ATTACK_TIME = EntityDataManager.createKey(GardenRakeEntity.class, DataSerializers.VARINT);
+    private static final DataParameter<Integer> ATTACK_TIME = EntityDataManager.defineId(GardenRakeEntity.class, DataSerializers.INT);
 	
 	public GardenRakeEntity(EntityType<?> entityTypeIn, World worldIn) {
 		super(entityTypeIn, worldIn);
-		this.setMotion(Vec3d.ZERO);
+		this.setDeltaMovement(Vector3d.ZERO);
 	}
 	
 	public GardenRakeEntity(World worldIn, LivingEntity livingEntityIn) {
 		super(EntityRegister.GARDEN_RAKE.get(), worldIn, livingEntityIn);
-		this.rotationYaw = livingEntityIn.getHorizontalFacing().getHorizontalAngle();
+		this.yRot = livingEntityIn.getDirection().toYRot();
 	}
 	
 	@Override
-	protected void registerData() {
-		super.registerData();
-		this.dataManager.register(ATTACK_TIME, 0);
+	protected void defineSynchedData() {
+		super.defineSynchedData();
+		this.entityData.define(ATTACK_TIME, 0);
 	}
 	
 	@Override
 	public void tick() {
 		super.tick();
-		if(! world.isRemote) {
+		if(! level.isClientSide) {
 			if(this.isStartAttack()) {
 				this.setAttackTime(this.getAttackTime() + 1);
 				if(this.getAttackTime() >= this.getAnimTime()) {
 					this.dealDamage();
 				}
 			} else {
-				List<Entity> list = this.world.getEntitiesWithinAABB(Entity.class, this.getBoundingBox().grow(0.2D), (target) -> {
+				List<Entity> list = this.level.getEntitiesOfClass(Entity.class, this.getBoundingBox().inflate(0.2D), (target) -> {
 			        return EntityUtil.checkCanEntityAttack(this, target);
 		        });
 				if(! list.isEmpty()) {
@@ -65,10 +66,10 @@ public class GardenRakeEntity extends AbstractOwnerEntity {
 	}
 	
 	private void dealDamage() {
-		this.world.getEntitiesWithinAABB(Entity.class, this.getBoundingBox().grow(0.25D), (target) -> {
+		this.level.getEntitiesOfClass(Entity.class, this.getBoundingBox().inflate(0.25D), (target) -> {
 	        return EntityUtil.checkCanEntityAttack(this, target);
         }).forEach((target) -> {
-        	target.attackEntityFrom(PVZDamageSource.causeNormalDamage(this, this), 180F);
+        	target.hurt(PVZDamageSource.causeNormalDamage(this, this), 180F);
         });
 		EntityUtil.playSound(this, SoundRegister.SWING.get());
 		this.remove();
@@ -79,19 +80,19 @@ public class GardenRakeEntity extends AbstractOwnerEntity {
 	}
 	
 	@Override
-	public boolean processInitialInteract(PlayerEntity player, Hand hand) {
-		if(! this.isStartAttack() && hand == Hand.MAIN_HAND && player.getHeldItemMainhand().isEmpty()) {
-			if(! world.isRemote) {
-				player.addItemStackToInventory(new ItemStack(ItemRegister.GARDEN_RAKE.get()));
+	public ActionResultType interactAt(PlayerEntity player, Vector3d vec3d, Hand hand) {
+		if(! this.isStartAttack() && hand == Hand.MAIN_HAND && player.getMainHandItem().isEmpty()) {
+			if(! level.isClientSide) {
+				player.addItem(new ItemStack(ItemRegister.GARDEN_RAKE.get()));
 			    this.remove();
 			}
-			return true;
+			return ActionResultType.SUCCESS;
 		}
-		return false;
+		return ActionResultType.FAIL;
 	}
 	
 	@Override
-	public boolean canBeCollidedWith() {
+	public boolean isPickable() {
 		return true;
 	}
 	
@@ -105,34 +106,34 @@ public class GardenRakeEntity extends AbstractOwnerEntity {
 	
 	public void setPlacer(PlayerEntity player) {
 		this.setOwner(player);
-		this.rotationYaw = player.getHorizontalFacing().getHorizontalAngle();
+		this.yRot = player.getDirection().toYRot();
 	}
 	
 	@Override
-	public EntitySize getSize(Pose poseIn) {
-		return EntitySize.flexible(0.9F, 0.8F);
+	public EntitySize getDimensions(Pose poseIn) {
+		return EntitySize.scalable(0.9F, 0.8F);
 	}
 	
 	@Override
-	public void readAdditional(CompoundNBT compound) {
-		super.readAdditional(compound);
+	public void readAdditionalSaveData(CompoundNBT compound) {
+		super.readAdditionalSaveData(compound);
 		if (compound.contains("rake_attack_time")) {
 			this.setAttackTime(compound.getInt("rake_attack_time"));
 		}
 	}
 	
 	@Override
-	public void writeAdditional(CompoundNBT compound) {
-		super.writeAdditional(compound);
+	public void addAdditionalSaveData(CompoundNBT compound) {
+		super.addAdditionalSaveData(compound);
 		compound.putInt("rake_attack_time", this.getAttackTime());
 	}
 	
 	public int getAttackTime() {
-		return dataManager.get(ATTACK_TIME);
+		return entityData.get(ATTACK_TIME);
 	}
 
 	public void setAttackTime(int cd) {
-		dataManager.set(ATTACK_TIME, cd);
+		entityData.set(ATTACK_TIME, cd);
 	}
 
 	

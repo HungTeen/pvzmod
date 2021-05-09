@@ -66,7 +66,7 @@ public class SpawnParticlePacket {
 		    		particle = ParticleRegister.POP_CORN.get();
 		    	}
 		    	if(particle != null) {
-		    		Minecraft.getInstance().world.addParticle(particle, message.x, message.y, message.z, 0, 0, 0);
+		    		Minecraft.getInstance().level.addParticle(particle, message.x, message.y, message.z, 0, 0, 0);
 		    	}
 		    });
 		    ctx.get().setPacketHandled(true);

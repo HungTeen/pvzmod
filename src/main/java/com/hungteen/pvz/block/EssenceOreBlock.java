@@ -10,7 +10,7 @@ import net.minecraft.world.IWorldReader;
 public class EssenceOreBlock extends Block{
 
 	public EssenceOreBlock() {
-		super(Block.Properties.from(Blocks.DIAMOND_ORE).hardnessAndResistance(9, 9).lightValue(10).harvestLevel(3));
+		super(Block.Properties.copy(Blocks.DIAMOND_ORE).strength(9, 9).lightLevel(i -> 10).harvestLevel(3));
 	}
 	
 	@Override

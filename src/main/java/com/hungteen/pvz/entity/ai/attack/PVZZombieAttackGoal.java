@@ -27,8 +27,8 @@ public class PVZZombieAttackGoal extends PVZMeleeAttackGoal {
 		double range = this.getAttackReachSqr(target);
 		if (range >= dis && this.attackTick <= 0) {
 			this.attackTick = this.zombie.getAttackCD();
-			this.attacker.swingArm(Hand.MAIN_HAND);
-			this.attacker.attackEntityAsMob(target);
+			this.attacker.swing(Hand.MAIN_HAND);
+			this.attacker.doHurtTarget(target);
 		}
 	}
 

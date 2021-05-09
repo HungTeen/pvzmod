@@ -9,7 +9,7 @@ import net.minecraft.item.Item;
 public class BlockItemBase extends BlockItem{
 
 	public BlockItemBase(Block blockIn) {
-		super(blockIn,new Item.Properties().group(GroupRegister.PVZ_MISC));
+		super(blockIn,new Item.Properties().tab(GroupRegister.PVZ_MISC));
 	}
 
 }

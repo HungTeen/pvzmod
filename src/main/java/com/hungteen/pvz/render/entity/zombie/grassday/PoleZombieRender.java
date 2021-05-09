@@ -24,7 +24,7 @@ public class PoleZombieRender extends PVZZombieRender<PoleZombieEntity>{
 	}
 
 	@Override
-	public ResourceLocation getEntityTexture(PoleZombieEntity entity) {
+	public ResourceLocation getTextureLocation(PoleZombieEntity entity) {
 		return StringUtil.prefix("textures/entity/zombie/grassday/pole_zombie.png");
 	}
 

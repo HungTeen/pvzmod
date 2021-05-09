@@ -29,8 +29,8 @@ public class PlanternRender extends PVZPlantRender<PlanternEntity> {
 	
 	@Nullable
 	protected RenderType func_230042_a_(PlanternEntity p_230042_1_, boolean p_230042_2_, boolean p_230042_3_) {
-		ResourceLocation resourcelocation = this.getEntityTexture(p_230042_1_);
-		return RenderType.getEntityTranslucentCull(resourcelocation);
+		ResourceLocation resourcelocation = this.getTextureLocation(p_230042_1_);
+		return RenderType.entityTranslucentCull(resourcelocation);
 	}
 	
 	@Override
@@ -39,7 +39,7 @@ public class PlanternRender extends PVZPlantRender<PlanternEntity> {
 	}
 
 	@Override
-	public ResourceLocation getEntityTexture(PlanternEntity entity) {
+	public ResourceLocation getTextureLocation(PlanternEntity entity) {
 		return StringUtil.prefix("textures/entity/plant/light/plantern.png");
 	}
 

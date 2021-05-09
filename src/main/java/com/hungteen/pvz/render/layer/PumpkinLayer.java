@@ -36,8 +36,8 @@ public class PumpkinLayer<T extends PVZPlantEntity> extends LayerRenderer<T, Ent
 		if(plant.getPumpkinLife() == 0 || plant.isInvisible()) {
 			return ;
 		}
-		matrixStackIn.push();
-		IVertexBuilder builder = bufferIn.getBuffer(RenderType.getEntitySolid(this.getRenderTexture(plant)));
+		matrixStackIn.pushPose();
+		IVertexBuilder builder = bufferIn.getBuffer(RenderType.entitySolid(this.getRenderTexture(plant)));
 		if(this.plantRender != null) {
 			float scale = 0.6f;
 			float plantScale = this.plantRender.getScaleByEntity(plant);
@@ -48,7 +48,7 @@ public class PumpkinLayer<T extends PVZPlantEntity> extends LayerRenderer<T, Ent
 			PVZMod.LOGGER.debug("pumpkin render wrong !");
 		}
 		this.model.render(matrixStackIn, builder, packedLightIn, OverlayTexture.NO_OVERLAY);
-		matrixStackIn.pop();
+		matrixStackIn.popPose();
 	}
 	
 	protected ResourceLocation getRenderTexture(T plant) {

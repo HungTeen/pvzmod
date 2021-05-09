@@ -21,7 +21,7 @@ public class BalloonZombieRender extends PVZZombieRender<BalloonZombieEntity> {
 	}
 	
 	@Override
-	public ResourceLocation getEntityTexture(BalloonZombieEntity entity) {
+	public ResourceLocation getTextureLocation(BalloonZombieEntity entity) {
 		return StringUtil.prefix("textures/entity/zombie/poolnight/balloon_zombie.png");
 	}
 

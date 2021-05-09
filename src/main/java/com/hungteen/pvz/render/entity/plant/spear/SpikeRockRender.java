@@ -23,7 +23,7 @@ public class SpikeRockRender extends PVZPlantRender<SpikeRockEntity>{
 	}
 
 	@Override
-	public ResourceLocation getEntityTexture(SpikeRockEntity entity) {
+	public ResourceLocation getTextureLocation(SpikeRockEntity entity) {
 		return StringUtil.prefix("textures/entity/plant/spear/spike_rock.png");
 	}
 

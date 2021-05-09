@@ -38,7 +38,7 @@ public class CornEntity extends PultBulletEntity {
 	
 	@Override
 	public void tick() {
-		this.noClip = true;
+		this.noPhysics = true;
 		super.tick();
 	}
 	
@@ -58,21 +58,21 @@ public class CornEntity extends PultBulletEntity {
 		int killCnt = 0;
 		for(Entity entity : EntityUtil.getAttackEntities(this, EntityUtil.getEntityAABB(this, range, range))) {
 			if((! (entity instanceof LivingEntity) || EntityUtil.checkCanEntityTarget(this.getThrower(), (LivingEntity) entity))) {
-				entity.attackEntityFrom(PVZDamageSource.causeNormalDamage(this, this.getThrower()), this.attackDamage);
+				entity.hurt(PVZDamageSource.causeNormalDamage(this, this.getThrower()), this.attackDamage);
 				if(! EntityUtil.isEntityValid(entity) && entity instanceof GargantuarEntity) {
 					++ killCnt;
 				}
 			}
 		};
 		if(this.getThrower() instanceof PVZPlantEntity) {
-			PlayerEntity player = EntityUtil.getEntityOwner(world, getThrower());
+			PlayerEntity player = EntityUtil.getEntityOwner(level, getThrower());
 			if(player != null && player instanceof ServerPlayerEntity) {
 				EntityEffectAmountTrigger.INSTANCE.trigger((ServerPlayerEntity) player, getThrower(), killCnt);
 			}
 		}
-		ItemEntity item = new ItemEntity(world, getPosX(), getPosY() + 1, getPosZ(), new ItemStack(ItemRegister.POP_CORN.get(), this.cornCnt));
-		item.setDefaultPickupDelay();
-		world.addEntity(item);
+		ItemEntity item = new ItemEntity(level, getX(), getY() + 1, getZ(), new ItemStack(ItemRegister.POP_CORN.get(), this.cornCnt));
+		item.setDefaultPickUpDelay();
+		level.addFreshEntity(item);
 		this.cornCnt = 0;
 		for(int i = 0; i < 3; ++ i) {
 			EntityUtil.spawnParticle(this, 8);
@@ -89,8 +89,8 @@ public class CornEntity extends PultBulletEntity {
 	}
 	
 	@Override
-	public EntitySize getSize(Pose poseIn) {
-		return EntitySize.flexible(1F, 1F);
+	public EntitySize getDimensions(Pose poseIn) {
+		return EntitySize.scalable(1F, 1F);
 	}
 	
 	@Override
@@ -99,16 +99,16 @@ public class CornEntity extends PultBulletEntity {
 	}
 	
 	@Override
-	public void readAdditional(CompoundNBT compound) {
-		super.readAdditional(compound);
+	public void readAdditionalSaveData(CompoundNBT compound) {
+		super.readAdditionalSaveData(compound);
 		if(compound.contains("cannon_pop_corn_cnt")) {
 			this.cornCnt = compound.getInt("cannon_pop_corn_cnt");
 		}
 	}
 
 	@Override
-	public void writeAdditional(CompoundNBT compound) {
-		super.writeAdditional(compound);
+	public void addAdditionalSaveData(CompoundNBT compound) {
+		super.addAdditionalSaveData(compound);
 		compound.putInt("cannon_pop_corn_cnt", this.cornCnt);
 	}
 

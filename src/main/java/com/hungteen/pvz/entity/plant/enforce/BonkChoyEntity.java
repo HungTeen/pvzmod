@@ -32,12 +32,12 @@ public class BonkChoyEntity extends PVZPlantEntity {
 	@Override
 	protected void normalPlantTick() {
 		super.normalPlantTick();
-		if(! world.isRemote) {
+		if(! level.isClientSide) {
 			if(this.isPlantInSuperMode() && this.getSuperTime() % 5 == 0) {
 				float range = 3F;
 				EntityUtil.playSound(this, SoundRegister.SWING.get());
 				EntityUtil.getAttackEntities(this, EntityUtil.getEntityAABB(this, range, range)).forEach((target) -> {
-					target.attackEntityFrom(PVZDamageSource.causeNormalDamage(this, this), this.getAttackDamage() * 5);
+					target.hurt(PVZDamageSource.causeNormalDamage(this, this), this.getAttackDamage() * 5);
 					for(int i = 0; i < 2; ++ i) {
 						EntityUtil.spawnParticle(target, 7);
 					}
@@ -48,7 +48,7 @@ public class BonkChoyEntity extends PVZPlantEntity {
 	
 	public void attackTarget(LivingEntity target) {
 		EntityUtil.playSound(this, SoundRegister.SWING.get());
-		target.attackEntityFrom(PVZDamageSource.causeNormalDamage(this, this), this.getAttackDamage());
+		target.hurt(PVZDamageSource.causeNormalDamage(this, this), this.getAttackDamage());
 	}
 	
 	@Override
@@ -88,33 +88,33 @@ public class BonkChoyEntity extends PVZPlantEntity {
 		
 		public BonkChoyAttackGoal(BonkChoyEntity attacker) {
 			this.attacker = attacker;
-			this.setMutexFlags(EnumSet.of(Goal.Flag.MOVE, Goal.Flag.LOOK));
+			this.setFlags(EnumSet.of(Goal.Flag.MOVE, Goal.Flag.LOOK));
 		}
 		
 		@Override
-		public boolean shouldExecute() {
-			LivingEntity living = this.attacker.getAttackTarget();
+		public boolean canUse() {
+			LivingEntity living = this.attacker.getTarget();
 			if (! EntityUtil.isEntityValid(living)) return false;
-			return this.attacker.canEntityBeSeen(living) && EntityUtil.getAttackRange(attacker, living, 3F) >= EntityUtil.getNearestDistance(this.attacker, living);
+			return this.attacker.canSee(living) && EntityUtil.getAttackRange(attacker, living, 3F) >= EntityUtil.getNearestDistance(this.attacker, living);
 		}
 		
 		@Override
-		public boolean shouldContinueExecuting() {
-			LivingEntity living = this.attacker.getAttackTarget();
+		public boolean canContinueToUse() {
+			LivingEntity living = this.attacker.getTarget();
 			if (! EntityUtil.isEntityValid(living)) return false;
-			return this.attacker.canEntityBeSeen(living) && EntityUtil.getAttackRange(attacker, living, 3F) >= EntityUtil.getNearestDistance(this.attacker, living);
+			return this.attacker.canSee(living) && EntityUtil.getAttackRange(attacker, living, 3F) >= EntityUtil.getNearestDistance(this.attacker, living);
 		}
 		
 		@Override
-		public void resetTask() {
-			this.attacker.setAttackTarget(null);
+		public void stop() {
+			this.attacker.setTarget(null);
 			this.attacker.setAttackTime(0);
 		}
 		
 		@Override
 		public void tick() {
-			LivingEntity target = this.attacker.getAttackTarget();
-			this.attacker.getLookController().setLookPositionWithEntity(target, 30F, 30F);
+			LivingEntity target = this.attacker.getTarget();
+			this.attacker.getLookControl().setLookAt(target, 30F, 30F);
 			if(this.attacker.getAttackTime() == 0) {
 				if(this.attacker.getAttackDamage() >= EntityUtil.getCurrentHealth(target)) {
 					this.attacker.setAttackTime(1);

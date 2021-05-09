@@ -16,30 +16,30 @@ public class TombStoneModel extends EntityModel<TombStoneEntity> {
 	private final ModelRenderer total;
 
 	public TombStoneModel() {
-		textureWidth = 128;
-		textureHeight = 128;
+		texWidth = 128;
+		texHeight = 128;
 
 		total = new ModelRenderer(this);
-		total.setRotationPoint(0.0F, 24.0F, 0.0F);
-		total.setTextureOffset(56, 105).addBox(-9.0F, -4.0F, -9.0F, 18.0F, 4.0F, 18.0F, 0.0F, false);
-		total.setTextureOffset(56, 81).addBox(-9.0F, -38.0F, -9.0F, 18.0F, 4.0F, 18.0F, 0.0F, false);
-		total.setTextureOffset(0, 82).addBox(-8.0F, -34.0F, -8.0F, 2.0F, 30.0F, 16.0F, 0.0F, false);
-		total.setTextureOffset(92, 0).addBox(6.0F, -34.0F, -8.0F, 2.0F, 30.0F, 16.0F, 0.0F, false);
-		total.setTextureOffset(3, 5).addBox(-6.0F, -34.0F, -7.0F, 12.0F, 30.0F, 15.0F, 0.0F, false);
+		total.setPos(0.0F, 24.0F, 0.0F);
+		total.texOffs(56, 105).addBox(-9.0F, -4.0F, -9.0F, 18.0F, 4.0F, 18.0F, 0.0F, false);
+		total.texOffs(56, 81).addBox(-9.0F, -38.0F, -9.0F, 18.0F, 4.0F, 18.0F, 0.0F, false);
+		total.texOffs(0, 82).addBox(-8.0F, -34.0F, -8.0F, 2.0F, 30.0F, 16.0F, 0.0F, false);
+		total.texOffs(92, 0).addBox(6.0F, -34.0F, -8.0F, 2.0F, 30.0F, 16.0F, 0.0F, false);
+		total.texOffs(3, 5).addBox(-6.0F, -34.0F, -7.0F, 12.0F, 30.0F, 15.0F, 0.0F, false);
 	}
 
 	@Override
-	public void setRotationAngles(TombStoneEntity entity, float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch){
+	public void setupAnim(TombStoneEntity entity, float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch){
 	}
 
 	@Override
-	public void render(MatrixStack matrixStack, IVertexBuilder buffer, int packedLight, int packedOverlay, float red, float green, float blue, float alpha){
+	public void renderToBuffer(MatrixStack matrixStack, IVertexBuilder buffer, int packedLight, int packedOverlay, float red, float green, float blue, float alpha){
 		total.render(matrixStack, buffer, packedLight, packedOverlay);
 	}
 
 	public void setRotationAngle(ModelRenderer modelRenderer, float x, float y, float z) {
-		modelRenderer.rotateAngleX = x;
-		modelRenderer.rotateAngleY = y;
-		modelRenderer.rotateAngleZ = z;
+		modelRenderer.xRot = x;
+		modelRenderer.yRot = y;
+		modelRenderer.zRot = z;
 	}
 }
