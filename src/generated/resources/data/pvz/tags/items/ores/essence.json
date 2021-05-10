@@ -1,0 +1,20 @@
+{
+  "replace": false,
+  "values": [
+    "pvz:origin_ore",
+    "pvz:appease_ore",
+    "pvz:light_ore",
+    "pvz:explosion_ore",
+    "pvz:defence_ore",
+    "pvz:ice_ore",
+    "pvz:enforce_ore",
+    "pvz:toxic_ore",
+    "pvz:assist_ore",
+    "pvz:magic_ore",
+    "pvz:flame_ore",
+    "pvz:spear_ore",
+    "pvz:arma_ore",
+    "pvz:electric_ore",
+    "pvz:shadow_ore"
+  ]
+}

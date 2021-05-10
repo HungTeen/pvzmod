@@ -13,8 +13,8 @@ public class PVZBlockTags {
 	public static final INamedTag<Block> AMETHYST_ORES = forgeTag("ores/amethyst");
 	
 	//pvz
+	public static final INamedTag<Block> ESSENCE_ORES = pvzTag("ores/essence");
 		
-	@SuppressWarnings("unused")
 	private static INamedTag<Block> pvzTag(String name){
         return BlockTags.createOptional(StringUtil.prefix(name));
     }

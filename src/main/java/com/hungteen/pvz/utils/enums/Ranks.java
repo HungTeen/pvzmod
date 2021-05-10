@@ -14,7 +14,7 @@ public enum Ranks {
 	GREEN, 
 	BLUE,  
 	PURPLE,
-	GOLD,  
+	GOLD,
 	MEGA;
 	
     public static final EnumMap<Ranks, RegistryObject<? extends Item>> RANK_CARDS = new EnumMap<>(Ranks.class);

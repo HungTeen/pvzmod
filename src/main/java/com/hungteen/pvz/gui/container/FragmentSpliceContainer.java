@@ -148,7 +148,7 @@ public class FragmentSpliceContainer extends AbstractOptionContainer {
 		Essences essence = PlantUtil.getPlantEssenceType(plantType);
 		Ingredient fragment = Ingredient.of(PlantUtil.getPlantEnjoyCard(plantType));
 		Ingredient template = Ingredient.of(Ranks.getRankCardItem(rank));
-		Ingredient special = Ingredient.of(Essences.getEssenceItem(essence));
+		Ingredient special = Ingredient.of(Essences.getEssenceItem(essence).get());
 		Ingredient result = Ingredient.of(PlantUtil.getPlantSummonCard(plantType));
 		List<Pair<Ingredient, Slot>> list = new ArrayList<>();
 		for(int i = 0; i < 5; ++ i) {

@@ -44,6 +44,7 @@ public class PVZMainMenuScreen extends MainMenuScreen {
 		}
 	}
 
+	@SuppressWarnings("deprecation")
 	@Override
 	public void render(MatrixStack stack, int mouseX, int mouseY, float partialTicks) {
 		stack.pushPose();

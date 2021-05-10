@@ -12,6 +12,7 @@ import com.hungteen.pvz.item.armor.FootballArmorItem;
 import com.hungteen.pvz.item.armor.GigaArmorItem;
 import com.hungteen.pvz.item.armor.PVZArmorMaterial;
 import com.hungteen.pvz.item.material.EssenceItem;
+import com.hungteen.pvz.item.material.TemplateCardItem;
 import com.hungteen.pvz.item.misc.AlmanacItem;
 import com.hungteen.pvz.item.misc.StrangeHelpItem;
 import com.hungteen.pvz.item.misc.ZombieDollItem;
@@ -34,6 +35,7 @@ import com.hungteen.pvz.item.tool.card.PlantCardItem;
 import com.hungteen.pvz.utils.enums.Colors;
 import com.hungteen.pvz.utils.enums.Essences;
 import com.hungteen.pvz.utils.enums.Plants;
+import com.hungteen.pvz.utils.enums.Ranks;
 import com.mojang.datafixers.util.Pair;
 
 import net.minecraft.entity.EntityType;
@@ -78,13 +80,13 @@ public class ItemRegister {
     public static final RegistryObject<Item> AMETHYST_INGOT = ITEMS.register("amethyst_ingot", PVZItemBase::new);
     
     //card model
-    public static final RegistryObject<Item> GRAY_CARD = ITEMS.register("gray_card", PVZItemBase::new);
-    public static final RegistryObject<Item> WHITE_CARD = ITEMS.register("white_card", PVZItemBase::new);
-    public static final RegistryObject<Item> GREEN_CARD = ITEMS.register("green_card", PVZItemBase::new);
-    public static final RegistryObject<Item> BLUE_CARD = ITEMS.register("blue_card", PVZItemBase::new);
-    public static final RegistryObject<Item> PURPLE_CARD = ITEMS.register("purple_card", PVZItemBase::new);
-    public static final RegistryObject<Item> GOLD_CARD = ITEMS.register("gold_card", PVZItemBase::new);
-    public static final RegistryObject<Item> RED_CARD = ITEMS.register("red_card", PVZItemBase::new);
+    public static final RegistryObject<Item> GRAY_CARD = ITEMS.register("gray_card", () -> new TemplateCardItem(Ranks.GRAY));
+    public static final RegistryObject<Item> WHITE_CARD = ITEMS.register("white_card", () -> new TemplateCardItem(Ranks.WHITE));
+    public static final RegistryObject<Item> GREEN_CARD = ITEMS.register("green_card", () -> new TemplateCardItem(Ranks.GREEN));
+    public static final RegistryObject<Item> BLUE_CARD = ITEMS.register("blue_card", () -> new TemplateCardItem(Ranks.BLUE));
+    public static final RegistryObject<Item> PURPLE_CARD = ITEMS.register("purple_card", () -> new TemplateCardItem(Ranks.PURPLE));
+    public static final RegistryObject<Item> GOLD_CARD = ITEMS.register("gold_card", () -> new TemplateCardItem(Ranks.GOLD));
+    public static final RegistryObject<Item> RED_CARD = ITEMS.register("red_card", () -> new TemplateCardItem(Ranks.MEGA));
     
     //plant card & card fragment
     public static final RegistryObject<PlantCardItem> PEA_SHOOTER_CARD = registerCard(Plants.PEA_SHOOTER, false);

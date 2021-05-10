@@ -1,6 +1,7 @@
 package com.hungteen.pvz.utils.enums;
 
 import java.util.EnumMap;
+import java.util.Optional;
 
 import com.hungteen.pvz.register.ItemRegister;
 
@@ -45,11 +46,9 @@ public enum Essences {
 		ESSENCES.put(SHADOW, ItemRegister.SHADOW_ESSENCE);
 	}
 	
-	public static Item getEssenceItem(Essences e) {
-		if(ESSENCES.containsKey(e)) {
-			return ESSENCES.get(e).get();
-		}
+	public static Optional<Item> getEssenceItem(Essences e) {
+		if(ESSENCES.containsKey(e)) return Optional.ofNullable(ESSENCES.get(e).get());
 		System.out.println("Error: get Essence item !");
-		return null;
+		return Optional.empty();
 	}
 }
