@@ -30,9 +30,9 @@ public class DataGeneratorHandler {
 //			ev.getGenerator().addProvider(new USLanguageGenerator(ev.getGenerator()));
 			//for item model
 			ev.getGenerator().addProvider(new ItemModelGenerator(ev.getGenerator(), helper));
-			ev.getGenerator().addProvider(new BlockModelGenerator(ev.getGenerator(), helper));
+//			ev.getGenerator().addProvider(new BlockModelGenerator(ev.getGenerator(), helper));
 			//for block state
-			ev.getGenerator().addProvider(new BlockStateGenerator(ev.getGenerator(), helper));
+//			ev.getGenerator().addProvider(new BlockStateGenerator(ev.getGenerator(), helper));
 		}
 	}
 }
