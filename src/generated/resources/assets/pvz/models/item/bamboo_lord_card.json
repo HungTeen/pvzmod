@@ -1,7 +1,0 @@
-{
-  "parent": "minecraft:item/generated",
-  "textures": {
-    "layer0": "pvz:item/blue_card",
-    "layer1": "pvz:screenshot/plant/bamboo_lord"
-  }
-}

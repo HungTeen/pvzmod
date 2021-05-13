@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.EnumMap;
 import java.util.List;
 
+import javax.annotation.Nullable;
+
 import com.hungteen.pvz.PVZMod;
 import com.hungteen.pvz.entity.plant.PVZPlantEntity;
 import com.hungteen.pvz.item.tool.card.PlantCardItem;
@@ -168,11 +170,12 @@ public class PlantUtil {
 	/**
 	 * get plant entityType by given plant 
 	 */
+	@Nullable
 	public static EntityType<? extends PVZPlantEntity> getPlantEntityType(Plants plant){
 		if(PLANT_ENTITY.containsKey(plant) && PLANT_ENTITY.get(plant) != null) {
 			return PLANT_ENTITY.get(plant).get();
 		}
-		PVZMod.LOGGER.debug("plant get entityType error");
+		System.out.println("plant get entityType error");
 		return null;
 	}
 	

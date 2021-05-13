@@ -25,6 +25,7 @@ import com.hungteen.pvz.misc.damage.PVZDamageType;
 import com.hungteen.pvz.register.EntityRegister;
 import com.hungteen.pvz.register.ParticleRegister;
 import com.hungteen.pvz.register.SoundRegister;
+import com.hungteen.pvz.utils.AlgorithmUtil;
 import com.hungteen.pvz.utils.EntityUtil;
 import com.hungteen.pvz.utils.PlantUtil;
 import com.hungteen.pvz.utils.PlayerUtil;
@@ -83,20 +84,20 @@ public abstract class PVZPlantEntity extends CreatureEntity implements IPVZPlant
 			DataSerializers.INT);
 	private static final DataParameter<Integer> BOOST_TIME = EntityDataManager.defineId(PVZPlantEntity.class,
 			DataSerializers.INT);
-	private static final DataParameter<Boolean> IS_CHARMED = EntityDataManager.defineId(PVZPlantEntity.class,
-			DataSerializers.BOOLEAN);
 	private static final DataParameter<Integer> SLEEP_TIME = EntityDataManager.defineId(PVZPlantEntity.class,
 			DataSerializers.INT);
 	private static final DataParameter<Integer> LIVE_TICK = EntityDataManager.defineId(PVZPlantEntity.class,
 			DataSerializers.INT);
 	private static final DataParameter<Float> PUMPKIN_LIFE = EntityDataManager.defineId(PVZPlantEntity.class,
 			DataSerializers.FLOAT);
-	private static final int LADDER_FLAG = 0;
-	protected int weakTime = 0;
-	protected boolean isImmuneToWeak = false;
+	// plant states flag
+	protected static final int LADDER_FLAG = 0;
+	protected static final int CHARM_FLAG = 1;
+	protected static final int PLANT_LEVEL_FLAG_LEN = 7;// plant level range in (1, 128)
+	protected int weakTime = 0;//weak tick
 	private final int weakCD = 10;
-	private final int weakDamage = 15;
-	protected Optional<Plants> outerPlant = Optional.empty();
+	protected boolean isImmuneToWeak = false;//can plant survive in the no dirt block
+	protected Optional<Plants> outerPlant = Optional.empty();//outer plant of current plant, like pumpkin.
 	public boolean canCollideWithPlant = true;
 	protected boolean canBeCharmed = true;
 	public int plantSunCost = 0;
@@ -116,23 +117,15 @@ public abstract class PVZPlantEntity extends CreatureEntity implements IPVZPlant
 		entityData.define(ATTACK_TIME, 0);
 		entityData.define(GOLD_TIME, 0);
 		entityData.define(BOOST_TIME, 0);
-		entityData.define(IS_CHARMED, false);
 		entityData.define(SLEEP_TIME, 0);
 		entityData.define(LIVE_TICK, 0);
 		entityData.define(PUMPKIN_LIFE, 0f);
 		entityData.define(PLANT_STATES, 0);
 	}
-	
-	public static AttributeModifierMap createPlantAttributes() {
-	      return LivingEntity.createLivingAttributes()
-	    		  .add(Attributes.MAX_HEALTH, 30)
-	    		  .add(Attributes.FOLLOW_RANGE, 40.0D)
-	    		  .add(Attributes.ATTACK_KNOCKBACK, 1)
-	    		  .add(Attributes.MOVEMENT_SPEED, 0).build();
-	}
 
-	protected void updateAttributes() {
-		this.getAttribute(Attributes.MAX_HEALTH).setBaseValue(this.getPlantHealth());
+	public static AttributeModifierMap createPlantAttributes() {
+		return LivingEntity.createLivingAttributes().add(Attributes.MAX_HEALTH, 30).add(Attributes.FOLLOW_RANGE, 40.0D)
+				.add(Attributes.KNOCKBACK_RESISTANCE, 1).add(Attributes.MOVEMENT_SPEED, 0).build();
 	}
 
 	@Override
@@ -183,53 +176,38 @@ public abstract class PVZPlantEntity extends CreatureEntity implements IPVZPlant
 	protected void plantBaseTick() {
 		// when plant stand on wrong block
 		if (!this.level.isClientSide && !this.isImmuneToWeak && this.getVehicle() == null) {
-			if (this.checkNormalPlantWeak() && this.weakTime == 0) {
+			if (this.checkNormalPlantWeak() && this.weakTime <= 0) {
 				this.weakTime = this.weakCD;
-				this.hurt(PVZDamageSource.causeWeakDamage(this, this), this.weakDamage);
+				this.hurt(PVZDamageSource.causeWeakDamage(this, this), this.getMaxHealth() / 5);
 			}
-			if (this.weakTime > 0) {
-				this.weakTime--;
-			}
+			this.weakTime = Math.max(0, this.weakTime - 1);
 		}
 		// super mode or boost time or sleep time
 		if (!this.level.isClientSide) {
-			// super
-			if (this.getSuperTime() > 0) {
-				this.setSuperTime(this.getSuperTime() - 1);
-			}
-			// boost
-			if (this.getBoostTime() > 0) {
-				this.setBoostTime(this.getBoostTime() - 1);
-			}
-			// sleep
+			this.setSuperTime(Math.max(0, this.getSuperTime() - 1));
+			this.setBoostTime(Math.max(0, this.getBoostTime() - 1));
 			if (this.shouldPlantRegularSleep()) {
-				if (this.getSleepTime() < 0) {
-					this.setSleepTime(this.getSleepTime() + 1);
-				} else {
-					this.setSleepTime(Math.max(1, this.getSleepTime()));
-				}
+				this.setSleepTime(Math.min(1, this.getSleepTime() + 1));
 			} else {
-				if (this.getSleepTime() > 0) {
-					this.setSleepTime(this.getSleepTime() - 1);
-				}
+				if(this.getSleepTime() > 0) this.setSleepTime(0);
+				else this.setSleepTime(Math.min(0, this.getSleepTime() + 1));
 			}
 		}
 		// spawn sleep particle
 		if (level.isClientSide && this.isPlantSleeping() && this.tickCount % 20 == 0) {
-			level.addParticle(ParticleRegister.SLEEP.get(), this.getX(), this.getY() + this.getEyeHeight(),
-					this.getZ(), 0.05, 0.05, 0.05);
+			level.addParticle(ParticleRegister.SLEEP.get(), this.getX(), this.getY() + this.getEyeHeight(), this.getZ(),
+					0.05, 0.05, 0.05);
 		}
 		// max live tick
-		if (!level.isClientSide) {
-			this.setLiveTick(this.getLiveTick() + 1);
-			if (this.getLiveTick() >= this.getMaxLiveTick()) {// it's time to disappear
-				this.remove();
-			}
-		}
+//		if (!level.isClientSide) {
+//			this.setLiveTick(this.getLiveTick() + 1);
+//			if (this.getLiveTick() >= this.getMaxLiveTick()) {// it's time to disappear
+//				this.remove();
+//			}
+//		}
 		// lock the x and z of plant
 		if (this.shouldLockXZ()) {
-			if (this.getVehicle() != null) {
-			} else {
+			if (this.getVehicle() == null) {
 				BlockPos pos = this.blockPosition();
 				this.setPos(pos.getX() + 0.5, this.getY(), pos.getZ() + 0.5);
 			}
@@ -250,8 +228,7 @@ public abstract class PVZPlantEntity extends CreatureEntity implements IPVZPlant
 		if (!this.level.isClientSide && this.getGoldTime() < GoldLeafEntity.GOLD_GEN_CD) {
 			Block block = this.level.getBlockState(this.blockPosition().below()).getBlock();
 			int lvl = GoldLeafEntity.getBlockGoldLevel(block);
-			if (lvl <= 0)
-				return;
+			if (lvl <= 0) return;
 			this.setGoldTime(this.getGoldTime() + 1);
 			if (this.getGoldTime() >= GoldLeafEntity.GOLD_GEN_CD) {
 				this.setGoldTime(0);
@@ -273,15 +250,19 @@ public abstract class PVZPlantEntity extends CreatureEntity implements IPVZPlant
 		}
 		return super.finalizeSpawn(worldIn, difficultyIn, reason, spawnDataIn, dataTag);
 	}
+	
+	protected void updateAttributes() {
+		this.getAttribute(Attributes.MAX_HEALTH).setBaseValue(this.getPlantHealth());
+	}
 
 	/**
 	 * check if the plant can stand on the current position
 	 */
 	protected boolean checkNormalPlantWeak() {
-		if (this.isImmuneToWeak || this.getVehicle() != null)
-			return false;
+		if (this.isImmuneToWeak || this.getVehicle() != null) return false;
 		if (this.getPlantEnumName().isWaterPlant) {
-			return this.onGround && !this.isInWater() && level.getBlockState(blockPosition()).getBlock() != Blocks.WATER;
+			return this.onGround && !this.isInWater()
+					&& level.getBlockState(blockPosition()).getBlock() != Blocks.WATER;
 		} else {
 			if (!this.onGround)
 				return false;
@@ -581,7 +562,7 @@ public abstract class PVZPlantEntity extends CreatureEntity implements IPVZPlant
 			if (player != null && player instanceof ServerPlayerEntity) {
 				PlantSuperTrigger.INSTANCE.trigger((ServerPlayerEntity) player, this);
 				PlayerUtil.addPlantXp(player, this.getPlantEnumName(), 2);
-		    }
+			}
 			this.outerPlant.ifPresent((plant) -> {
 				if (plant == Plants.PUMPKIN) {
 					this.setPumpkinLife(PlantUtil.PUMPKIN_LIFE + PlantUtil.PUMPKIN_SUPER_LIFE);
@@ -687,7 +668,7 @@ public abstract class PVZPlantEntity extends CreatureEntity implements IPVZPlant
 			this.decreaseMetal();
 		}
 	}
-	
+
 	@Override
 	public ActionResultType interactAt(PlayerEntity player, Vector3d vec3d, Hand hand) {
 		if (!level.isClientSide) {
@@ -721,7 +702,8 @@ public abstract class PVZPlantEntity extends CreatureEntity implements IPVZPlant
 					ImitaterCardItem.checkSunAndSummonImitater(player, stack, item, blockPosition(), (imitater) -> {
 						imitater.startRiding(this);
 					});
-				} else if (this.getUpgradePlantType() == item.plantType) { // place upgrade plant entity on base plant entity
+				} else if (this.getUpgradePlantType() == item.plantType) { // place upgrade plant entity on base plant
+																			// entity
 					PlantCardItem.checkSunAndSummonPlant(player, stack, item, blockPosition(), (plantEntity) -> {
 						this.onPlantUpgrade(plantEntity);
 					});
@@ -738,7 +720,7 @@ public abstract class PVZPlantEntity extends CreatureEntity implements IPVZPlant
 
 	protected void onPlantUpgrade(PVZPlantEntity plantEntity) {
 		// keep old plant's outer plant, such as pumpkin.
-		if (! plantEntity.getPlantEnumName().isBigPlant) {
+		if (!plantEntity.getPlantEnumName().isBigPlant) {
 			plantEntity.setPumpkinLife(this.getPumpkinLife());
 			this.getOuterPlantType().ifPresent((plantType) -> {
 				plantEntity.setOuterPlantType(plantType);
@@ -778,14 +760,6 @@ public abstract class PVZPlantEntity extends CreatureEntity implements IPVZPlant
 
 	public void setBoostTime(int time) {
 		entityData.set(BOOST_TIME, time);
-	}
-
-	public boolean isCharmed() {
-		return entityData.get(IS_CHARMED);
-	}
-
-	public void setCharmed(boolean is) {
-		entityData.set(IS_CHARMED, is);
 	}
 
 	public int getGoldTime() {
@@ -862,22 +836,29 @@ public abstract class PVZPlantEntity extends CreatureEntity implements IPVZPlant
 
 	@Override
 	public boolean hasMetal() {
-		return ((this.getPlantState() >> LADDER_FLAG) & 1) == 1;
+		return AlgorithmUtil.BitOperator.hasBitOne(this.getPlantState(), LADDER_FLAG);
 	}
 
+	public void setMetal(boolean flag) {
+		this.setPlantState(AlgorithmUtil.BitOperator.setBit(this.getPlantState(), LADDER_FLAG, flag));
+	}
+	
+	public boolean isCharmed() {
+		return AlgorithmUtil.BitOperator.hasBitOne(this.getPlantState(), CHARM_FLAG);
+	}
+
+	public void setCharmed(boolean flag) {
+		this.setPlantState(AlgorithmUtil.BitOperator.setBit(this.getPlantState(), CHARM_FLAG, flag));
+	}
+	
 	@Override
 	public void increaseMetal() {
-		int state = this.getPlantState();
-		this.setPlantState(state | (1 << LADDER_FLAG));
+		this.setMetal(true);
 	}
 
 	@Override
 	public void decreaseMetal() {
-		int state = this.getPlantState();
-		if (this.hasMetal()) {
-			state -= (1 << LADDER_FLAG);
-		}
-		this.setPlantState(state);
+		this.setMetal(false);
 	}
 
 	@Override

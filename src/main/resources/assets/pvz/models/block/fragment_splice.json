@@ -6,7 +6,7 @@
     "south": "pvz:block/fragment_splice_side",
     "east": "pvz:block/fragment_splice_side",
     "west": "pvz:block/fragment_splice_side",
-    "up": "pvz:block/fragment_splice_up",
+    "up": "pvz:block/fragment_splice_top",
     "down": "pvz:block/fragment_splice_down"
   }
 }

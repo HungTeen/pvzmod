@@ -160,13 +160,15 @@ public abstract class PVZZombieEntity extends MonsterEntity implements IPVZZombi
 		entityData.define(DEFENCE_LIFE, 0f);
 	}
 	
-	public static AttributeModifierMap.MutableAttribute createZombieAttributes() {
-	      return LivingEntity.createLivingAttributes()
-	    		  .add(Attributes.MAX_HEALTH, 20)
-	    		  .add(Attributes.FOLLOW_RANGE, 40.0D)
-	    		  .add(Attributes.ATTACK_KNOCKBACK, 1)
-	    		  .add(Attributes.MOVEMENT_SPEED, 0.3)
-	    		  .add(Attributes.FLYING_SPEED, 0);
+	public static AttributeModifierMap createZombieAttributes() {
+		return MonsterEntity.createMonsterAttributes()
+				.add(Attributes.ATTACK_DAMAGE, ZombieUtil.LOW)
+	    	    .add(Attributes.MAX_HEALTH, 20)
+	     	    .add(Attributes.FOLLOW_RANGE, 40.0D)
+	    		.add(Attributes.KNOCKBACK_RESISTANCE, 1)
+	    		.add(Attributes.MOVEMENT_SPEED, 0.3)
+	    		.add(Attributes.FLYING_SPEED, 0)
+	    		.build();
 	}
 	
 	protected void updateAttributes() {

@@ -6,6 +6,27 @@ import net.minecraft.entity.Entity;
 
 public class AlgorithmUtil {
 
+	public static class BitOperator {
+		public static int setBit(int value, int pos, boolean flag) {
+		    if(flag) return setBitOne(value, pos);
+		    return setBitZero(value, pos);
+		}
+	
+	    public static boolean hasBitOne(int value, int pos) {
+	    	return ((value >> pos) & 1) == 1;
+	    }
+	
+	    private static int setBitOne(int value, int pos) {
+		    return (value | (1 << pos));
+	    }
+	
+	    private static int setBitZero(int value, int pos) {
+	    	if(hasBitOne(value, pos)) return value - (1 << pos);
+	    	return value;
+	    }
+	}
+	
+	
 	public static class EntitySorter implements Comparator<Entity> {
 		private final Entity entity;
 

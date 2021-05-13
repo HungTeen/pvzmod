@@ -1,6 +1,6 @@
 package com.hungteen.pvz.register;
 
-import java.util.Arrays;
+import java.util.Optional;
 
 import com.hungteen.pvz.PVZMod;
 import com.hungteen.pvz.entity.bullet.BallEntity;
@@ -95,6 +95,7 @@ import com.hungteen.pvz.entity.plant.toxic.GloomShroomEntity;
 import com.hungteen.pvz.entity.plant.toxic.PuffShroomEntity;
 import com.hungteen.pvz.entity.plant.toxic.ScaredyShroomEntity;
 import com.hungteen.pvz.entity.plant.toxic.SeaShroomEntity;
+import com.hungteen.pvz.entity.zombie.PVZZombieEntity;
 import com.hungteen.pvz.entity.zombie.grassday.BucketHeadZombieEntity;
 import com.hungteen.pvz.entity.zombie.grassday.ConeHeadZombieEntity;
 import com.hungteen.pvz.entity.zombie.grassday.FlagZombieEntity;
@@ -280,7 +281,11 @@ import com.hungteen.pvz.render.entity.zombie.zombotany.PumpkinZombieRender;
 import com.hungteen.pvz.render.entity.zombie.zombotany.SquashZombieRender;
 import com.hungteen.pvz.render.entity.zombie.zombotany.TallNutZombieRender;
 import com.hungteen.pvz.render.entity.zombie.zombotany.WallNutZombieRender;
+import com.hungteen.pvz.utils.PlantUtil;
 import com.hungteen.pvz.utils.StringUtil;
+import com.hungteen.pvz.utils.ZombieUtil;
+import com.hungteen.pvz.utils.enums.Plants;
+import com.hungteen.pvz.utils.enums.Zombies;
 
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityClassification;
@@ -619,10 +624,16 @@ public class EntityRegister {
 	
 	@SubscribeEvent
 	public static void addEntityAttributes(EntityAttributeCreationEvent ev) {
-		Arrays.asList(PEA_SHOOTER, SUN_FLOWER
-		).forEach((type) -> {
-		    ev.put(type.get(), PVZPlantEntity.createPlantAttributes());
-		});
+		for(Plants p : Plants.values()) {
+			Optional.ofNullable(PlantUtil.getPlantEntityType(p)).ifPresent(obj -> {
+		        ev.put(obj, PVZPlantEntity.createPlantAttributes());
+			});
+		}
+		for(Zombies z : Zombies.values()) {
+			Optional.ofNullable(ZombieUtil.getZombieEntityType(z)).ifPresent(obj -> {
+		        ev.put(obj, PVZZombieEntity.createZombieAttributes());
+			});
+		}
 	}
 
 	private static <T extends Entity> RegistryObject<EntityType<T>> registerEntityType(IFactory<T> factory,String name,EntityClassification classification){

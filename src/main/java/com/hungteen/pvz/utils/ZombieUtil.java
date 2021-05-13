@@ -121,7 +121,7 @@ public class ZombieUtil {
 		if(ZOMBIE_ENTITY.containsKey(zombie)) {
 			return ZOMBIE_ENTITY.get(zombie).get();
 		}
-		PVZMod.LOGGER.debug("Zombie get entity error");
+		System.out.println("Zombie get entity error");
 		return null;
 	}
 
