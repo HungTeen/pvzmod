@@ -88,7 +88,7 @@ public class CoffinEntity extends UnderGroundZombieEntity {
 		super.tick();
 		float percent = this.getHealth() / this.getMaxHealth();
 		this.bossInfo.setPercent(percent);
-		if(this.isAlive()) {
+		if(!level.isClientSide && this.isAlive()) {
 			for(int i = 0; i < 4; i ++) {
 				if(this.isGuardGone(i)) {
 					continue;
@@ -127,8 +127,10 @@ public class CoffinEntity extends UnderGroundZombieEntity {
 	@Override
 	protected void tickDeath() {
 		this.remove();
-		NobleZombieEntity boss = EntityRegister.NOBLE_ZOMBIE.get().create(level);
-		EntityUtil.onMobEntitySpawn(level, boss, blockPosition());
+		if(!level.isClientSide) {
+		    NobleZombieEntity boss = EntityRegister.NOBLE_ZOMBIE.get().create(level);
+		    EntityUtil.onMobEntitySpawn(level, boss, blockPosition());
+		}
 	}
 
 	@Override

@@ -159,7 +159,7 @@ public class NobleZombieEntity extends PVZZombieEntity {
 		BlockPos teleportPos = this.getTarget().blockPosition();
 		this.setTpTick(-this.getRandom().nextInt(this.maxTpCD - this.minTpCD + 1) - this.minTpCD);
 		float range = this.getExpRange();
-		this.teleportTo(teleportPos.getX(), teleportPos.getY(), teleportPos.getZ());
+		this.teleportToPos(teleportPos.getX(), teleportPos.getY(), teleportPos.getZ());
 		for (Entity target : EntityUtil.getEntityAttackableTarget(this, EntityUtil.getEntityAABB(this, range, range))) {
 			if (target instanceof PVZPlantEntity) {
 				target.hurt(PVZDamageSource.causeExplosionDamage(this, this),
@@ -262,7 +262,7 @@ public class NobleZombieEntity extends PVZZombieEntity {
 		}
 	}
 	
-	public void teleportTo(double x, double y, double z) {
+	public void teleportToPos(double x, double y, double z) {
 		BlockPos.Mutable blockpos$mutable = new BlockPos.Mutable(x, y, z);
 		while (blockpos$mutable.getY() > 0
 				&& !this.level.getBlockState(blockpos$mutable).getMaterial().blocksMotion()) {

@@ -134,7 +134,7 @@ public class GargantuarEntity extends PVZZombieEntity {
 	@Override
 	public EntitySize getDimensions(Pose poseIn) {
 		if(this.isMiniZombie()) return EntitySize.scalable(0.6F, 1.8F);
-		return EntitySize.scalable(0.95f, 4f);
+		return EntitySize.scalable(0.8f, 4f);
 	}
 	
 	public boolean canThrowImp() {

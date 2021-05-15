@@ -467,9 +467,7 @@ public abstract class PVZPlantEntity extends CreatureEntity implements IPVZPlant
 		compound.putInt("plant_super_time", this.getSuperTime());
 		compound.putInt("plant_lvl", this.getPlantLvl());
 		if (this.getOwnerUUID().isPresent()) {
-			compound.putString("OwnerUUID", this.getOwnerUUID().get().toString());
-		} else {
-			compound.putString("OwnerUUID", "");
+			compound.putUUID("OwnerUUID", this.getOwnerUUID().get());
 		}
 		compound.putInt("plant_attack_time", this.getAttackTime());
 		compound.putInt("plant_gold_time", this.getGoldTime());
@@ -500,10 +498,10 @@ public abstract class PVZPlantEntity extends CreatureEntity implements IPVZPlant
 			this.setPlantLvl(compound.getInt("plant_lvl"));
 		}
 		UUID uuid;
-		if (compound.contains("OwnerUUID", 8)) {
+		if (compound.hasUUID("OwnerUUID")) {
 			uuid = compound.getUUID("OwnerUUID");
 		} else {
-			String s1 = compound.getString("Owner");
+			String s1 = compound.getString("OwnerUUID");
 			uuid = PreYggdrasilConverter.convertMobOwnerIfNecessary(this.getServer(), s1);
 		}
 		if (uuid != null) {

@@ -166,7 +166,7 @@ public abstract class PVZZombieEntity extends MonsterEntity implements IPVZZombi
 	    	    .add(Attributes.MAX_HEALTH, 20)
 	     	    .add(Attributes.FOLLOW_RANGE, 40.0D)
 	    		.add(Attributes.KNOCKBACK_RESISTANCE, 1)
-	    		.add(Attributes.MOVEMENT_SPEED, 0.3)
+	    		.add(Attributes.MOVEMENT_SPEED, ZombieUtil.NORMAL_SPEED)
 	    		.add(Attributes.FLYING_SPEED, 0)
 	    		.build();
 	}
@@ -598,9 +598,7 @@ public abstract class PVZZombieEntity extends MonsterEntity implements IPVZZombi
 		super.addAdditionalSaveData(compound);
 		compound.putInt("zombie_type", this.getZombieType().ordinal());
 		if (this.getOwnerUUID().isPresent()) {
-			compound.putString("OwnerUUID", this.getOwnerUUID().get().toString());
-		} else {
-			compound.putString("OwnerUUID", "");
+			compound.putUUID("OwnerUUID", this.getOwnerUUID().get());
 		}
 		compound.putInt("zombie_states_flag", this.getZombieStates());
 		compound.putInt("zombie_attack_time", this.getAttackTime());
@@ -615,10 +613,10 @@ public abstract class PVZZombieEntity extends MonsterEntity implements IPVZZombi
 		}
 		// owner UUID
 		UUID uuid;
-		if (compound.contains("OwnerUUID", 8)) {
+		if (compound.hasUUID("OwnerUUID")) {
 			uuid = compound.getUUID("OwnerUUID");
 		} else {
-			String s1 = compound.getString("Owner");
+			String s1 = compound.getString("OwnerUUID");
 			uuid = PreYggdrasilConverter.convertMobOwnerIfNecessary(this.getServer(), s1);
 		}
 		if (uuid != null) {

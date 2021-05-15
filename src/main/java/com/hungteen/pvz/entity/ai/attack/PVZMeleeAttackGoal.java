@@ -105,9 +105,11 @@ public abstract class PVZMeleeAttackGoal extends Goal {
 					failedPathFindingPenalty += 10;
 				}
 			}
+			System.out.println(this.delayCounter);
 			if (! this.attacker.getNavigation().moveTo(target, this.speedTowardsTarget)) {
 				this.delayCounter += 15 * this.delayCnt;
 				this.delayCnt = Math.min(10, this.delayCnt + 1);
+				System.out.println("No way");
 		    } else {
 		    	this.delayCnt = Math.max(1, this.delayCnt - 1);
 		    }

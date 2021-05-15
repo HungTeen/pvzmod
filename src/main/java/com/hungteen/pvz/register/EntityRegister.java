@@ -1,5 +1,6 @@
 package com.hungteen.pvz.register;
 
+import java.util.Arrays;
 import java.util.Optional;
 
 import com.hungteen.pvz.PVZMod;
@@ -287,6 +288,7 @@ import com.hungteen.pvz.utils.ZombieUtil;
 import com.hungteen.pvz.utils.enums.Plants;
 import com.hungteen.pvz.utils.enums.Zombies;
 
+import net.minecraft.entity.CreatureEntity;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityClassification;
 import net.minecraft.entity.EntityType;
@@ -634,6 +636,12 @@ public class EntityRegister {
 		        ev.put(obj, PVZZombieEntity.createZombieAttributes());
 			});
 		}
+		Arrays.asList(SUN.get(), COIN.get(), JEWEL.get(), ENERGY.get(), 
+				CRAZY_DAVE.get(), SUN_DAVE.get(), PANNEY.get(),
+				FOODIE_ZOMBIE.get()
+				).forEach(obj -> {
+			ev.put(obj, CreatureEntity.createMobAttributes().build());
+		});
 	}
 
 	private static <T extends Entity> RegistryObject<EntityType<T>> registerEntityType(IFactory<T> factory,String name,EntityClassification classification){

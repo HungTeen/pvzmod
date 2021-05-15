@@ -59,6 +59,7 @@ public class GigaFootballZombieEntity extends FootballZombieEntity {
 			if(this.getAttackTime() > 0) {
 				this.setAttackTime(this.getAttackTime() - 1);
 			}
+			
 		}
 	}
 	

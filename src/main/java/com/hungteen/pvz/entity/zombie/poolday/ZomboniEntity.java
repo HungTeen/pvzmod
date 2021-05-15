@@ -154,7 +154,7 @@ public class ZomboniEntity extends PVZZombieEntity implements IMultiPartEntity{
 	@Override
 	public EntitySize getDimensions(Pose poseIn) {
 		if(this.isMiniZombie()) return EntitySize.scalable(0.7F, 1.2F);
-		return EntitySize.scalable(0.95f, 2.3f);
+		return EntitySize.scalable(0.8f, 2.3f);
 	}
 	
 	@Override
