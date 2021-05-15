@@ -43,6 +43,10 @@ public class CardFusionScreen extends AbstractOptionScreen<CardFusionContainer> 
 		}));
 		this.craftButton.visible = false;
 	}
+	
+	@Override
+	protected void renderLabels(MatrixStack p_230451_1_, int p_230451_2_, int p_230451_3_) {
+	}
 
 	@Override
 	public void tick() {
@@ -66,7 +70,7 @@ public class CardFusionScreen extends AbstractOptionScreen<CardFusionContainer> 
 	public void render(MatrixStack stack, int mouseX, int mouseY, float partialTicks) {
 		this.craftButton.visible = this.canCraftNow();
 		this.renderTooltip(stack, mouseX, mouseY);
-		StringUtil.drawCenteredScaledString(stack, font, new TranslationTextComponent("block.pvz.card_fusion_table").getContents(), this.leftPos + this.imageWidth / 2, this.topPos + 8, Colors.BLACK, 1F);
+		StringUtil.drawCenteredScaledString(stack, font, new TranslationTextComponent("block.pvz.card_fusion_table").getString(), this.leftPos + this.imageWidth / 2, this.topPos + 8, Colors.BLACK, 1F);
 		StringUtil.drawCenteredScaledString(stack, font, "" + this.menu.te.array.get(0), this.leftPos + 15, this.topPos + 67, Colors.BLACK, 0.5F);
 	    super.render(stack, mouseX, mouseY, partialTicks);
     }

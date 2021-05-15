@@ -22,6 +22,7 @@ import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.SharedConstants;
 import net.minecraft.util.Util;
 import net.minecraft.util.math.MathHelper;
+import net.minecraft.util.math.vector.Vector3f;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.client.ForgeHooksClient;
@@ -58,7 +59,7 @@ public class PVZMainMenuScreen extends MainMenuScreen {
 		if (this.splashText != null) {
 			stack.pushPose();
 			stack.translate((float) (this.width / 2 + 90), 70.0F, 0.0F);
-//			RenderSystem.rotatef(-20.0F, 0.0F, 0.0F, 1.0F);
+			stack.mulPose(Vector3f.ZP.rotationDegrees(- 22.5F));
 			float f2 = 1.8F - MathHelper.abs(MathHelper.sin((float) (Util.getMillis() % 1000L) / 1000.0F * ((float) Math.PI * 2F)) * 0.1F);
 			f2 = f2 * 100.0F / (float) (this.font.width(this.splashText) + 32);
 			stack.scale(f2, f2, f2);

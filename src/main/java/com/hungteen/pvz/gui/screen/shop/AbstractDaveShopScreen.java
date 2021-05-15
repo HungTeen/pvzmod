@@ -66,6 +66,10 @@ public abstract class AbstractDaveShopScreen extends ContainerScreen<AbstractDav
 		this.selectedGood = null;
 		this.selectedTrade = null;
 	}
+	
+	@Override
+	protected void renderLabels(MatrixStack p_230451_1_, int p_230451_2_, int p_230451_3_) {
+	}
 
 	@Override
 	public void render(MatrixStack stack, int mouseX, int mouseY, float partialTicks) {
@@ -106,7 +110,7 @@ public abstract class AbstractDaveShopScreen extends ContainerScreen<AbstractDav
 	}
 
 	protected void renderDetails(MatrixStack stack) {
-		StringUtil.drawCenteredScaledString(stack, font, new TranslationTextComponent("gui.pvz.dave_shop." + this.selectedGood.toString().toLowerCase()).getContents(), this.leftPos + 117 + 80, this.topPos + 28 + 20, Colors.BLACK, 1.5f);
+		StringUtil.drawCenteredScaledString(stack, font, new TranslationTextComponent("gui.pvz.dave_shop." + this.selectedGood.toString().toLowerCase()).getString(), this.leftPos + 117 + 80, this.topPos + 28 + 20, Colors.BLACK, 1.5f);
 	}
 
 	protected boolean canBuyNow() {

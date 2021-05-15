@@ -15,11 +15,11 @@ public class StrangeHelpScreen extends Screen{
 
 	private static final ResourceLocation TEXTURE = StringUtil.prefix("textures/gui/strange_help.png");
 	private static final String[] STRINGS = new String[] {
-			new TranslationTextComponent("gui.pvz.strange_help").getContents(),
-			new TranslationTextComponent("gui.pvz.strange_help1").getContents(),
-			new TranslationTextComponent("gui.pvz.strange_help2").getContents(),
-			new TranslationTextComponent("gui.pvz.strange_help3").getContents(),
-			new TranslationTextComponent("gui.pvz.strange_help4").getContents(),
+			new TranslationTextComponent("gui.pvz.strange_help").getString(),
+			new TranslationTextComponent("gui.pvz.strange_help1").getString(),
+			new TranslationTextComponent("gui.pvz.strange_help2").getString(),
+			new TranslationTextComponent("gui.pvz.strange_help3").getString(),
+			new TranslationTextComponent("gui.pvz.strange_help4").getString(),
 	};
 	private final int xSize = 256;
 	private final int ySize = 160;

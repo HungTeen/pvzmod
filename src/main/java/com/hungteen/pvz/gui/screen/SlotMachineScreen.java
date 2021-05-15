@@ -56,9 +56,13 @@ public class SlotMachineScreen extends ContainerScreen<SlotMachineContainer> {
 		this.renderTooltip(stack, mouseX, mouseY);
     }
 	
+	@Override
+	protected void renderLabels(MatrixStack p_230451_1_, int p_230451_2_, int p_230451_3_) {
+	}
+	
 	@SuppressWarnings("deprecation")
 	private void renderSlotMachine(MatrixStack stack) {
-		stack.pushPose();
+		RenderSystem.pushMatrix();
 		float percent = this.menu.te.array.get(12) * 1.0F / this.menu.te.array.get(15);
 		RenderSystem.translated(0, (1 - percent) * 18, 0);
 		int currentPos = this.menu.te.array.get(13);
@@ -71,37 +75,36 @@ public class SlotMachineScreen extends ContainerScreen<SlotMachineContainer> {
 				if(option.plantType.isPresent()) {
 					Plants plant = option.plantType.get();
 					ItemStack itemstack = new ItemStack(PlantUtil.getPlantEnjoyCard(plant));
+					RenderSystem.pushMatrix();
 					this.itemRenderer.blitOffset -= 100;
 					this.itemRenderer.renderAndDecorateItem(itemstack, x, y);
 					this.itemRenderer.blitOffset += 100;
+					RenderSystem.popMatrix();
 				} else if(option.isJewel) {
-					stack.pushPose();
-					RenderSystem.color4f(1.0F, 1.0F, 1.0F, 1.0F);
+					RenderSystem.pushMatrix();
 					this.minecraft.getTextureManager().bind(TEXTURE);
 					blit(stack, x, y, 176, 0, 16, 16);
-					stack.popPose();
+					RenderSystem.popMatrix();
 				} else if(option.isSun) {
-					stack.pushPose();
-					RenderSystem.color4f(1.0F, 1.0F, 1.0F, 1.0F);
+					RenderSystem.pushMatrix();
 					RenderSystem.enableBlend();
 					this.minecraft.getTextureManager().bind(TEXTURE);
 					blit(stack, x, y, 176, 16, 16, 16);
-					stack.popPose();
+					RenderSystem.popMatrix();
 				}
 			}
 		}
-		stack.popPose();
-		stack.pushPose();
-		RenderSystem.color4f(1.0F, 1.0F, 1.0F, 1.0F);
+		RenderSystem.popMatrix();
+		RenderSystem.pushMatrix();
 		RenderSystem.translated(0, 0, 120);
 		this.minecraft.getTextureManager().bind(TEXTURE);
 		blit(stack, this.leftPos + 61, this.topPos + 74, 61, 74, 54, 21);
 		blit(stack, this.leftPos + 61, this.topPos + 1, 61, 1, 54, 21);
-		StringUtil.drawScaledString(stack, font, new TranslationTextComponent("block.pvz.slot_machine").getContents(), this.leftPos + 5, this.topPos + 6, Colors.BLACK, 1F);
-		StringUtil.drawScaledString(stack, font, new TranslationTextComponent("gui.pvz.slot_machine.left").append(":" + ClientPlayerResources.getPlayerStats(Resources.LOTTERY_CHANCE)).getContents(), this.leftPos + this.imageWidth / 2 + 25, this.topPos + 6, Colors.BLACK, 1F);
-		StringUtil.drawScaledString(stack, font, new TranslationTextComponent("gui.pvz.slot_machine.sun").append(":" + ClientPlayerResources.getPlayerStats(Resources.SUN_NUM)).getContents(), this.leftPos + 12, this.topPos + 125, Colors.BLACK, 0.8F);
-		StringUtil.drawScaledString(stack, font, new TranslationTextComponent("gui.pvz.slot_machine.cost").append(":" + 25).getContents(), this.leftPos + this.imageWidth / 2 + 15, this.topPos + 125, Colors.BLACK, 0.8F);
-		stack.popPose();
+		StringUtil.drawScaledString(stack, font, new TranslationTextComponent("block.pvz.slot_machine").getString(), this.leftPos + 5, this.topPos + 6, Colors.BLACK, 1F);
+		StringUtil.drawScaledString(stack, font, new TranslationTextComponent("gui.pvz.slot_machine.left").append(":" + ClientPlayerResources.getPlayerStats(Resources.LOTTERY_CHANCE)).getString(), this.leftPos + this.imageWidth / 2 + 25, this.topPos + 6, Colors.BLACK, 1F);
+		StringUtil.drawScaledString(stack, font, new TranslationTextComponent("gui.pvz.slot_machine.sun").append(":" + ClientPlayerResources.getPlayerStats(Resources.SUN_NUM)).getString(), this.leftPos + 12, this.topPos + 125, Colors.BLACK, 0.8F);
+		StringUtil.drawScaledString(stack, font, new TranslationTextComponent("gui.pvz.slot_machine.cost").append(":" + 25).getString(), this.leftPos + this.imageWidth / 2 + 15, this.topPos + 125, Colors.BLACK, 0.8F);
+		RenderSystem.popMatrix();
 	}
 	
 	private boolean canLottery() {

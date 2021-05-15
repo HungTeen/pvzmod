@@ -40,7 +40,7 @@ public abstract class AbstractOptionScreen<T extends AbstractOptionContainer> ex
 		super.tick();
 		this.searchGui.tick();
 	}
-
+	
 	@Override
 	public void render(MatrixStack stack, int mouseX, int mouseY, float partialTicks) {
 		this.searchGui.render(stack, mouseX, mouseY, partialTicks);
@@ -48,6 +48,10 @@ public abstract class AbstractOptionScreen<T extends AbstractOptionContainer> ex
 		this.searchGui.renderGhostRecipe(stack, this.leftPos, this.topPos, true, partialTicks);
 		this.renderTooltip(stack, mouseX, mouseY);
 		this.searchGui.renderTooltip(stack, this.leftPos, this.topPos, mouseX, mouseY);
+	}
+	
+	@Override
+	protected void renderLabels(MatrixStack p_230451_1_, int p_230451_2_, int p_230451_3_) {
 	}
 	
 	@Override

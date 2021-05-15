@@ -36,7 +36,7 @@ public class DaveShopScreen extends AbstractDaveShopScreen {
 //        blit(this.guiLeft, this.guiTop, 0, 0, this.xSize, this.ySize, 512, 256);
 		blit(stack, this.leftPos, this.topPos, this.getBlitOffset(), 0.0F, 0.0F, this.imageWidth, this.imageHeight, 256, 512);
 		StringUtil.drawCenteredScaledString(stack, font, ClientPlayerResources.getPlayerStats(Resources.MONEY) + "", this.leftPos + 25 + 44, this.topPos + 9, Colors.WHITE, 1.4f);
-		StringUtil.drawCenteredScaledString(stack, font, new TranslationTextComponent("gui.pvz.dave_shop.title").getContents(), this.leftPos + 115 + 82, this.topPos + 6, Colors.BLACK, 1.4f);
+		StringUtil.drawCenteredScaledString(stack, font, new TranslationTextComponent("gui.pvz.dave_shop.title").getString(), this.leftPos + 115 + 82, this.topPos + 6, Colors.BLACK, 1.4f);
 	    stack.popPose();
 	}
 

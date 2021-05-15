@@ -69,7 +69,7 @@ public class FragmentSpliceScreen extends AbstractOptionScreen<FragmentSpliceCon
 	public void render(MatrixStack stack, int mouseX, int mouseY, float partialTicks) {
 		this.craftButton.visible = this.canCraftNow();
 		this.renderTooltip(stack, mouseX, mouseY);
-		StringUtil.drawCenteredScaledString(stack, font, new TranslationTextComponent("block.pvz.fragment_splice").getContents(), this.leftPos + this.imageWidth / 2, this.topPos + 8, Colors.BLACK, 1F);
+		StringUtil.drawCenteredScaledString(stack, font, new TranslationTextComponent("block.pvz.fragment_splice").getString(), this.leftPos + this.imageWidth / 2, this.topPos + 8, Colors.BLACK, 1F);
 		StringUtil.drawCenteredScaledString(stack, font, "" + this.menu.te.array.get(0), this.leftPos + 15, this.topPos + 67, Colors.BLACK, 0.5F);
 	    super.render(stack, mouseX, mouseY, partialTicks);
     }

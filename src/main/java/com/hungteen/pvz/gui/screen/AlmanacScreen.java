@@ -70,6 +70,10 @@ public class AlmanacScreen extends AbstractOptionScreen<AlmanacContainer> {
 		this.renderTooltip(stack, mouseX, mouseY);
 	}
 	
+	@Override
+	protected void renderLabels(MatrixStack p_230451_1_, int p_230451_2_, int p_230451_3_) {
+	}
+	
 	protected void renderAlmanac(MatrixStack stack){
 		if(! this.searchGui.getCurrentOption().isPresent()) return ;
 		SearchOption option = this.searchGui.getCurrentOption().get();
@@ -342,7 +346,7 @@ public class AlmanacScreen extends AbstractOptionScreen<AlmanacContainer> {
 	protected void renderTitle(MatrixStack stack, SearchOption a) {
 		stack.pushPose();
 		int dx = this.leftPos + 82 + 150 / 2, dy = this.topPos + 10 + 2;
-		StringUtil.drawCenteredScaledString(stack, this.font, SearchOption.getOptionName(a).getContents(), dx, dy, Colors.DARK_GREEN, 1.6f);
+		StringUtil.drawCenteredScaledString(stack, this.font, SearchOption.getOptionName(a).getString(), dx, dy, Colors.DARK_GREEN, 1.6f);
 		stack.popPose();
 	}
 	
@@ -398,7 +402,7 @@ public class AlmanacScreen extends AbstractOptionScreen<AlmanacContainer> {
 		DURATION;
 		
 		public String getName() {
-			return new TranslationTextComponent("gui.pvz.almanac."+this.toString().toLowerCase()).getContents();
+			return new TranslationTextComponent("gui.pvz.almanac."+this.toString().toLowerCase()).getString();
 		}
 		
 		public int getColor() {

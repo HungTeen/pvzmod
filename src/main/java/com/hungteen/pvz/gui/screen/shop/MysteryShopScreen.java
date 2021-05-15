@@ -58,8 +58,8 @@ public class MysteryShopScreen extends AbstractDaveShopScreen {
 		this.minecraft.getTextureManager().bind(PennyShopScreen.TEXTURE);
 		blit(stack, this.leftPos, this.topPos, this.getBlitOffset(), 0.0F, 0.0F, this.imageWidth, this.imageHeight, 256, 512);
 		StringUtil.drawCenteredScaledString(stack, font, ClientPlayerResources.getPlayerStats(Resources.GEM_NUM) + "", this.leftPos + 25 + 44, this.topPos + 9, Colors.WHITE, 1.4f);
-		StringUtil.drawCenteredScaledString(stack, font, new TranslationTextComponent("gui.pvz.mystery_shop.title").getContents(), this.leftPos + 115 + 82, this.topPos + 6, Colors.BLACK, 1.4f);
-		StringUtil.drawCenteredScaledString(stack, font, new TranslationTextComponent("gui.pvz.dave_shop.time_left").append(":" + ClientPlayerResources.updateGoodTick).getContents(), this.leftPos + 115 + 130, this.topPos + 20, Colors.BLACK, 0.8f);
+		StringUtil.drawCenteredScaledString(stack, font, new TranslationTextComponent("gui.pvz.mystery_shop.title").getString(), this.leftPos + 115 + 82, this.topPos + 6, Colors.BLACK, 1.4f);
+		StringUtil.drawCenteredScaledString(stack, font, new TranslationTextComponent("gui.pvz.dave_shop.time_left").append(":" + ClientPlayerResources.updateGoodTick).getString(), this.leftPos + 115 + 130, this.topPos + 20, Colors.BLACK, 0.8f);
 	    stack.popPose();
 	}
 
@@ -75,9 +75,9 @@ public class MysteryShopScreen extends AbstractDaveShopScreen {
 	protected void renderDetails(MatrixStack stack) {
 		if(this.selectedGood.toString().startsWith("ENJOY_CARD")) {
 			Plants plant = Plants.values()[this.selectedGood.type];
-			StringUtil.drawCenteredScaledString(stack, font, new TranslationTextComponent("item.pvz." + plant.toString().toLowerCase() + "_enjoy_card").getContents(), this.leftPos + 117 + 80, this.topPos + 28 + 20, Colors.BLACK, 1.5f);
+			StringUtil.drawCenteredScaledString(stack, font, new TranslationTextComponent("item.pvz." + plant.toString().toLowerCase() + "_enjoy_card").getString(), this.leftPos + 117 + 80, this.topPos + 28 + 20, Colors.BLACK, 1.5f);
 		} else {
-			StringUtil.drawCenteredScaledString(stack, font, new TranslationTextComponent("gui.pvz.dave_shop." + this.selectedGood.toString().toLowerCase()).getContents(), this.leftPos + 117 + 80, this.topPos + 28 + 20, Colors.BLACK, 1.5f);
+			StringUtil.drawCenteredScaledString(stack, font, new TranslationTextComponent("gui.pvz.dave_shop." + this.selectedGood.toString().toLowerCase()).getString(), this.leftPos + 117 + 80, this.topPos + 28 + 20, Colors.BLACK, 1.5f);
 		}
 		
 	}
