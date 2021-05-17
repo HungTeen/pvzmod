@@ -5,8 +5,13 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import com.hungteen.pvz.advancement.AdvancementHandler;
+import com.hungteen.pvz.register.BiomeRegister;
+import com.hungteen.pvz.world.gen.GenStructures;
 
 import net.minecraftforge.common.ForgeConfigSpec;
+import net.minecraftforge.common.MinecraftForge;
+import net.minecraftforge.eventbus.api.EventPriority;
+import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.DistExecutor;
 import net.minecraftforge.fml.ModLoadingContext;
@@ -14,6 +19,7 @@ import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.Mod.EventBusSubscriber;
 import net.minecraftforge.fml.config.ModConfig.Type;
 import net.minecraftforge.fml.event.lifecycle.FMLLoadCompleteEvent;
+import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 
 // The value here should match an entry in the META-INF/mods.toml file
 @Mod(PVZMod.MOD_ID)
@@ -39,13 +45,19 @@ public class PVZMod
     		PVZConfig.CLIENT_CONFIG = specPair.getLeft();
     	}
     	PROXY.init();
-    	RegistryHandler.register();
+    	IEventBus modBus = FMLJavaModLoadingContext.get().getModEventBus();
+    	RegistryHandler.deferredRegister(modBus);
+    	
+    	IEventBus forgeBus = MinecraftForge.EVENT_BUS;
+    	forgeBus.addListener(EventPriority.NORMAL, GenStructures::addDimensionalSpacing);
+    	forgeBus.addListener(EventPriority.HIGH, BiomeRegister::biomeModification);
+    	 
     	AdvancementHandler.init();
     }
-
+    
 	@SubscribeEvent
     public static void setupComplete(FMLLoadCompleteEvent event) {
         PROXY.postInit();
     }
-    
+	
 }

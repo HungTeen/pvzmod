@@ -1,0 +1,7 @@
+{
+  "parent": "minecraft:item/generated",
+  "textures": {
+    "layer0": "pvz:item/green_card",
+    "layer1": "pvz:screenshot/plant/coffee_bean"
+  }
+}

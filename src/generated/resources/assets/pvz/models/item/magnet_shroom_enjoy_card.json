@@ -1,0 +1,7 @@
+{
+  "parent": "minecraft:item/generated",
+  "textures": {
+    "layer0": "pvz:item/red_card",
+    "layer1": "pvz:screenshot/plant/magnet_shroom"
+  }
+}

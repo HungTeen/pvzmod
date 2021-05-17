@@ -23,39 +23,34 @@ public class PVZSaplingBlock extends BushBlock implements IGrowable {
 
 	public static final IntegerProperty STAGE = BlockStateProperties.STAGE;
 	protected static final VoxelShape SHAPE = Block.box(2.0D, 0.0D, 2.0D, 14.0D, 12.0D, 14.0D);
-//	private final Supplier<Tree> tree;
+	private final Supplier<Tree> treeGrower;
 
-	public PVZSaplingBlock(Supplier<Tree> tree) {
+	public PVZSaplingBlock(Supplier<Tree> grower) {
 		super(Block.Properties.copy(Blocks.OAK_SAPLING));
-//		this.tree = tree;
+		this.registerDefaultState(this.stateDefinition.any().setValue(STAGE, Integer.valueOf(0)));
+		this.treeGrower = grower;
 	}
 
 	public VoxelShape getShape(BlockState state, IBlockReader worldIn, BlockPos pos, ISelectionContext context) {
 		return SHAPE;
 	}
 
-	@SuppressWarnings("deprecation")
-	public void tick(BlockState state, ServerWorld worldIn, BlockPos pos, Random rand) {
-		super.tick(state, worldIn, pos, rand);
-		if (!worldIn.isAreaLoaded(pos, 1))
+	public void randomTick(BlockState state, ServerWorld worldIn, BlockPos pos, Random rand) {
+		if (!worldIn.isAreaLoaded(pos, 1)) {
 			return; // Forge: prevent loading unloaded chunks when checking neighbor's light
-		if (worldIn.getMaxLocalRawBrightness(pos.above()) >= 9 && rand.nextInt(7) == 0) {
-			this.advanceTree(worldIn, pos, state, rand);
 		}
-
+		if (worldIn.getMaxLocalRawBrightness(pos.above()) >= 9 && rand.nextInt(7) == 0) {
+			this.genTree(worldIn, pos, state, rand);
+		}
 	}
 
-	public void advanceTree(ServerWorld p_226942_1_, BlockPos p_226942_2_, BlockState p_226942_3_,
-			Random p_226942_4_) {
-//		if (p_226942_3_.getValue(STAGE) == 0) {
-//			p_226942_1_.setBlock(p_226942_2_, p_226942_3_.func_177231_a(STAGE), 4);
-//		} else {
-//			if (!net.minecraftforge.event.ForgeEventFactory.saplingGrowTree(p_226942_1_, p_226942_4_, p_226942_2_))
-//				return;
-//			this.tree.get().func_225545_a_(p_226942_1_, p_226942_1_.getChunkSource().getGenerator(), p_226942_2_, p_226942_3_,
-//					p_226942_4_);
-//		}
-
+	public void genTree(ServerWorld p_226942_1_, BlockPos p_226942_2_, BlockState p_226942_3_, Random p_226942_4_) {
+		if (p_226942_3_.getValue(STAGE) == 0) {
+			p_226942_1_.setBlock(p_226942_2_, p_226942_3_.cycle(STAGE), 4);
+		} else {
+			if (!net.minecraftforge.event.ForgeEventFactory.saplingGrowTree(p_226942_1_, p_226942_4_, p_226942_2_)) return;
+			this.treeGrower.get().growTree(p_226942_1_, p_226942_1_.getChunkSource().getGenerator(), p_226942_2_, p_226942_3_, p_226942_4_);
+		}
 	}
 
 	/**
@@ -70,7 +65,7 @@ public class PVZSaplingBlock extends BushBlock implements IGrowable {
 	}
 
 	public void performBonemeal(ServerWorld worldIn, Random rand, BlockPos pos, BlockState state) {
-		this.advanceTree(worldIn, pos, state, rand);
+		this.genTree(worldIn, pos, state, rand);
 	}
 
 	protected void createBlockStateDefinition(StateContainer.Builder<Block, BlockState> builder) {

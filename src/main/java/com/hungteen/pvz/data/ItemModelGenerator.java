@@ -7,6 +7,7 @@ import java.util.Set;
 import com.hungteen.pvz.PVZMod;
 import com.hungteen.pvz.item.PVZSpawnEggItem;
 import com.hungteen.pvz.item.tool.card.PlantCardItem;
+import com.hungteen.pvz.register.BlockRegister;
 import com.hungteen.pvz.register.ItemRegister;
 import com.hungteen.pvz.utils.PlantUtil;
 import com.hungteen.pvz.utils.StringUtil;
@@ -43,8 +44,8 @@ public class ItemModelGenerator extends ItemModelProvider{
 				
 				).forEach(i -> {
 			genNormalModel(i);
+			this.addedItems.add(i);
 		});
-		
 		//for mostly common items.
 		for (Item i : ForgeRegistries.ITEMS) {
 			if(! i.getRegistryName().getNamespace().equals(PVZMod.MOD_ID) || addedItems.contains(i)) continue ;
@@ -64,7 +65,12 @@ public class ItemModelGenerator extends ItemModelProvider{
 				}
 			} else if(i instanceof BlockItem) {
 				addedItems.add(i);
-				genBlockModel(((BlockItem) i).getBlock());
+				Block block = ((BlockItem) i).getBlock();
+				if(block == BlockRegister.NUT_SAPLING.get()) {
+					genItemModelWithBlock(i);
+				} else {
+					genBlockModel(block);
+				}
 			}
 		}
 		//for hand held item
@@ -78,13 +84,13 @@ public class ItemModelGenerator extends ItemModelProvider{
 		for(Item i : ForgeRegistries.ITEMS) {
 			if(i.getRegistryName().getNamespace().equals(PVZMod.MOD_ID) && ! addedItems.contains(i)) {
 				genNormal(i.getRegistryName().getPath(), StringUtil.prefix("item/" + i.getRegistryName().getPath()));
+			
 			}
 		}
 	}
 	
 	private void genNormalModel(Item i) {
 		genNormal(i.getRegistryName().getPath(), StringUtil.prefix("item/" + i.getRegistryName().getPath()));
-		this.addedItems.add(i);
 	}
 	
 	private ItemModelBuilder genNormal(String name, ResourceLocation... layers) {
@@ -105,6 +111,10 @@ public class ItemModelGenerator extends ItemModelProvider{
 	
 	private void genBlockModel(Block b) {
 		withExistingParent(b.getRegistryName().getPath(), StringUtil.prefix("block/" + b.getRegistryName().getPath()));
+	}
+	
+	private void genItemModelWithBlock(Item i) {
+		genNormal(i.getRegistryName().getPath(), StringUtil.prefix("block/" + i.getRegistryName().getPath()));
 	}
 	
 	@Override

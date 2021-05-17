@@ -1,34 +1,47 @@
 package com.hungteen.pvz.register;
 
-import com.hungteen.pvz.PVZMod;
+import java.util.Objects;
 
+import com.hungteen.pvz.PVZMod;
+import com.hungteen.pvz.world.biome.ZenGardenBiome;
+
+import net.minecraft.util.RegistryKey;
 import net.minecraft.world.biome.Biome;
+import net.minecraft.world.biome.Biome.Category;
+import net.minecraft.world.biome.Biome.RainType;
+import net.minecraft.world.biome.BiomeAmbience;
+import net.minecraft.world.biome.BiomeGenerationSettings;
+import net.minecraft.world.biome.MobSpawnInfo;
+import net.minecraftforge.common.BiomeDictionary;
+import net.minecraftforge.common.BiomeManager;
+import net.minecraftforge.common.BiomeManager.BiomeType;
+import net.minecraftforge.event.world.BiomeLoadingEvent;
+import net.minecraftforge.fml.RegistryObject;
+import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
 
 public class BiomeRegister {
 
 	public static final DeferredRegister<Biome> BIOMES = DeferredRegister.create(ForgeRegistries.BIOMES, PVZMod.MOD_ID);
+
+	public static final RegistryObject<Biome> ZEN_GARDEN = BIOMES.register("zen_garden", () -> {return ZenGardenBiome.getZenGardenBiome();});
 	
-//	public static final RegistryObject<Biome> ZEN_GARDEN = BIOMES.register("zen_garden", () -> 
-//	    new Biome.Builder()
-//	        .biomeCategory(Category.PLAINS)
-//	        .precipitation(Biome.RainType.RAIN)
-//	        .biomeCategory(Biome.Category.PLAINS)
-//	        .depth(0.125F)
-//	        .scale(0.05F)
-//	        .temperature(0.8F)
-//	        .downfall(0.4F)
-//	        .specialEffects(new BiomeAmbience.Builder().waterColor(4159204).waterFogColor(329011).build())
-//	        .generationSettings(new BiomeGenerationSettings.Builder().surfaceBuilder(new ConfiguredSurfaceBuilder<>(SurfaceBuilder.DEFAULT, SurfaceBuilder.CONFIG_GRASS)).build())
-//	        .mobSpawnSettings(new MobSpawnInfo.Builder()
-//	        		.addSpawn(EntityClassification.AMBIENT, new Spawn(EntityRegister.SUN.get(), 100, 1, 1))
-//	    .build()
-//	);
-	
-//    public static void addBiomes() {
-//        BiomeManager.addBiome(BiomeManager.BiomeType.COOL, new BiomeManager.BiomeEntry(ZEN_GARDEN.get(), 100));
-//    }
+    public static void registerBiomes(final FMLCommonSetupEvent ev) {
+    	ev.enqueueWork(() -> {
+    		registerBiome(ZEN_GARDEN.get(), BiomeType.WARM, 100, BiomeDictionary.Type.PLAINS, BiomeDictionary.Type.OVERWORLD);
+    	});
+    }
+    
+    private static void registerBiome(final Biome biome, final BiomeManager.BiomeType biomeType, final int weight, final BiomeDictionary.Type... types) {
+    	BiomeDictionary.addTypes(getKey(biome), types);
+		BiomeManager.addBiome(biomeType, new BiomeManager.BiomeEntry(getKey(biome), weight));
+    }
+    
+    private static RegistryKey<Biome> getKey(final Biome biome) {
+		return RegistryKey.create(ForgeRegistries.Keys.BIOMES, Objects.requireNonNull(ForgeRegistries.BIOMES.getKey(biome), "PVZ Biome registry name was null"));
+	}
+    
 //	
 //	public static void addBiomeFeatures(){
 //		for(Biome biome : ForgeRegistries.BIOMES.getValues()) {
@@ -63,14 +76,33 @@ public class BiomeRegister {
 //		}
 //		Biomes.SNOWY_TUNDRA.func_226711_a_(FeatureRegister.YETI_HOUSE.get().configured(IFeatureConfig.NONE));
 //	}
-//	
-//	public static void addStructureToBiome(Biome biome) {
-//		biome.func_203611_a(GenerationStage.Decoration.SURFACE_STRUCTURES, FeatureRegister.DAVE_VILLA.get().configured(IFeatureConfig.NONE).decorated(Placement.NOPE.configured(IPlacementConfig.NONE))); 
-//	    biome.func_203611_a(GenerationStage.Decoration.SURFACE_STRUCTURES, FeatureRegister.BUCKET_HOUSE.get().configured(IFeatureConfig.NONE).decorated(Placement.NOPE.configured(IPlacementConfig.NONE))); 
-//	    biome.func_203611_a(GenerationStage.Decoration.SURFACE_STRUCTURES, FeatureRegister.DOLPHIN_HOUSE.get().configured(IFeatureConfig.NONE).decorated(Placement.NOPE.configured(IPlacementConfig.NONE)));
-//	    biome.func_203611_a(GenerationStage.Decoration.SURFACE_STRUCTURES, FeatureRegister.GRAVE_HOUSE.get().configured(IFeatureConfig.NONE).decorated(Placement.NOPE.configured(IPlacementConfig.NONE))); 
-//	    biome.func_203611_a(GenerationStage.Decoration.SURFACE_STRUCTURES, FeatureRegister.SUN_TEMPLE.get().configured(IFeatureConfig.NONE).decorated(Placement.NOPE.configured(IPlacementConfig.NONE))); 
-//	    biome.func_203611_a(GenerationStage.Decoration.SURFACE_STRUCTURES, FeatureRegister.YETI_HOUSE.get().configured(IFeatureConfig.NONE).decorated(Placement.NOPE.configured(IPlacementConfig.NONE))); 
-//	}
+	
+	/**
+     * This is the event you will use to add anything to any biome.
+     * This includes spawns, changing the biome's looks, messing with its surfacebuilders,
+     * adding carvers, spawning new features... etc
+     *
+     * Here, we will use this to add our structure to all biomes.
+     */
+    public static void biomeModification(final BiomeLoadingEvent event) {
+    	Biome biome = ForgeRegistries.BIOMES.getValue(event.getName());
+    	event.getGeneration().addStructureStart(StructureRegister.CONFIGURED_BUCKET_HOUSE);
+    	event.getGeneration().addStructureStart(StructureRegister.CONFIGURED_DOLPHIN_HOUSE);
+    	event.getGeneration().addStructureStart(StructureRegister.CONFIGURED_GRAVE_HOUSE);
+    }
+    
+	public static Biome makeBiome(Category category, RainType rainType, float depth, float scale, float temperature, float downFall, BiomeAmbience effect, MobSpawnInfo mobInfo, BiomeGenerationSettings generateSettings) {
+		return new Biome.Builder()
+				.biomeCategory(category)
+				.precipitation(rainType)
+				.depth(depth)
+		        .scale(scale)
+		        .temperature(temperature)
+		        .downfall(downFall)
+		        .specialEffects(effect)
+		        .mobSpawnSettings(mobInfo)
+		        .generationSettings(generateSettings)
+				.build();
+	}
 	
 }

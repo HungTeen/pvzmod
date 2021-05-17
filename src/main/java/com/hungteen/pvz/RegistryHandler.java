@@ -34,13 +34,14 @@ import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod.EventBusSubscriber;
 import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
 import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
-import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 
 @EventBusSubscriber(modid = PVZMod.MOD_ID, bus = EventBusSubscriber.Bus.MOD)
 public class RegistryHandler {
 
-	public static void register() {
-		IEventBus bus = FMLJavaModLoadingContext.get().getModEventBus();
+	/**
+	 * put all deferred register together
+	 */
+	public static void deferredRegister(IEventBus bus) {
 		SoundRegister.SOUNDS.register(bus);
 		ItemRegister.ITEMS.register(bus);
 		BlockRegister.BLOCKS.register(bus);
@@ -49,6 +50,7 @@ public class RegistryHandler {
 		EffectRegister.EFFECTS.register(bus);
 		BiomeRegister.BIOMES.register(bus);
 		FeatureRegister.FEATURES.register(bus);
+		StructureRegister.STRUCTURE_FEATURES.register(bus);
 		TileEntityRegister.TILE_ENTITY_TYPES.register(bus);
 		EnchantmentRegister.ENCHANTMENTS.register(bus);
 		ContainerRegister.CONTAINER_TYPES.register(bus);
@@ -59,9 +61,10 @@ public class RegistryHandler {
     public static void commonSetup(FMLCommonSetupEvent ev){
     	CapabilityHandler.registerCapabilities();
     	PVZPacketHandler.init();
-//    	BiomeRegister.addBiomes();
-//    	BiomeRegister.addBiomeFeatures();
-    	StructureRegister.registerStructureType();
+    	BiomeRegister.registerBiomes(ev);
+    	ev.enqueueWork(() -> {
+    		StructureRegister.setupStructures();
+    	});
     	EntitySpawnRegister.registerEntitySpawn();
     	PotionRecipeHandler.registerPotionRecipes();
     	TradeUtil.initTrades();
