@@ -2,6 +2,7 @@ package com.hungteen.pvz.event;
 
 import com.hungteen.pvz.PVZMod;
 
+import net.minecraft.world.World;
 import net.minecraftforge.event.TickEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
@@ -14,9 +15,9 @@ public class PVZWorldEvents {
 		if (ev.phase != TickEvent.Phase.END || ev.world.isClientSide) {
 			return;
 		}
-//		if(ev.world.dimension() == World.OVERWORLD) {
-//			OverWorldEvents.tick(ev);
-//		}
+		if(ev.world.dimension() == World.OVERWORLD) {
+			OverWorldEvents.tick(ev);
+		}
 	}
 	
 }

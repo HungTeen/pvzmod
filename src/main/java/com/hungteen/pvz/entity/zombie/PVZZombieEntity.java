@@ -37,6 +37,7 @@ import com.hungteen.pvz.utils.EntityUtil;
 import com.hungteen.pvz.utils.ZombieUtil;
 import com.hungteen.pvz.utils.enums.Events;
 import com.hungteen.pvz.utils.enums.Ranks;
+import com.hungteen.pvz.utils.enums.Zombies;
 import com.hungteen.pvz.utils.interfaces.IPVZZombie;
 import com.hungteen.pvz.world.data.WorldEventData;
 
@@ -462,8 +463,27 @@ public abstract class PVZZombieEntity extends MonsterEntity implements IPVZZombi
 
 	public static boolean canZombieSpawn(EntityType<? extends PVZZombieEntity> zombieType, IWorld worldIn,
 			SpawnReason reason, BlockPos pos, Random rand) {
+		if(!hasZombieSpawn(zombieType, worldIn)) return false;
 		return worldIn.getBrightness(LightType.BLOCK, pos) > 8 ? false
 				: checkAnyLightMonsterSpawnRules(zombieType, worldIn, reason, pos, rand);
+	}
+	
+	public static boolean hasZombieSpawn(EntityType<? extends PVZZombieEntity> zombieType, IWorld worldIn) {
+		Optional<Zombies> opt = getZombieNameByType(zombieType);
+		if(worldIn instanceof World) {
+			if(opt.isPresent()) {
+			    WorldEventData data = WorldEventData.getOverWorldEventData((World) worldIn);
+			    if(! data.hasZombieSpawnEntry(opt.get())) return false;
+			} else {
+			    System.out.println("Error : No Such Zombie Type !");
+			    return false;
+			}
+		}
+		return true;
+	}
+	
+	public static Optional<Zombies> getZombieNameByType(EntityType<? extends PVZZombieEntity> zombieType){
+		return Optional.ofNullable(ZombieUtil.ENTITY_TYPE_ZOMBIE.get(zombieType));
 	}
 
 	@Override

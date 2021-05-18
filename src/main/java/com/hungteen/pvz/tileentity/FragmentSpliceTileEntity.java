@@ -46,7 +46,6 @@ public class FragmentSpliceTileEntity extends TileEntity implements ITickableTil
 			this.absorbSunAmount();
 			this.array.set(0, sunAmount);
 			this.array.set(1, this.getResultPlantId());
-//			System.out.println(this.getResultPlantId());
 		}
 	}
     
@@ -79,14 +78,12 @@ public class FragmentSpliceTileEntity extends TileEntity implements ITickableTil
     			if(i == 0 || i == 4 || j == 0 || j == 4) {
     				int now = 2 + i * 5 + j;
     				ItemStack stack = this.handler.getStackInSlot(now);
-//    				System.out.println(stack.getItem());
-    				if(! stack.getItem().equals(Essences.getEssenceItem(essence))) {
+    				if(! stack.getItem().equals(Essences.getEssenceItem(essence).get())) {
     					return -1;
     				}
     			}
     		}
     	}
-    	
     	//check card model
     	Ranks rank = PlantUtil.getPlantRankByName(plant);
     	ItemStack stack = this.handler.getStackInSlot(14);

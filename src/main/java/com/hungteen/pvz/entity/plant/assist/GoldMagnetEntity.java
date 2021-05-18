@@ -65,8 +65,8 @@ public class GoldMagnetEntity extends PVZPlantEntity {
 			this.coinSet.clear();
 			return;
 		}
-		// find new sun.
-		if (this.getLiveTick() % this.MaxSearchTick == 0) {
+		// find new sun. 
+		if (this.tickCount % this.MaxSearchTick == 0) {
 			float range = this.getSearchRange();
 			level.getEntitiesOfClass(DropEntity.class, EntityUtil.getEntityAABB(this, range, range), (drop) -> {
 				return (drop instanceof CoinEntity || drop instanceof JewelEntity) && drop.getDropState() == DropStates.NORMAL && ! this.coinSet.contains(drop);

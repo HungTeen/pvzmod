@@ -121,7 +121,6 @@ public class OverlayEvents {
 		stack.popPose();
 	}
 
-	@SuppressWarnings("deprecation")
 	private static void renderFog(MatrixStack stack, int w, int h, float dep) {
 		stack.pushPose();
 		RenderSystem.enableBlend();

@@ -15,7 +15,6 @@ import com.hungteen.pvz.register.ContainerRegister;
 import com.hungteen.pvz.register.EffectRegister;
 import com.hungteen.pvz.register.EnchantmentRegister;
 import com.hungteen.pvz.register.EntityRegister;
-import com.hungteen.pvz.register.EntitySpawnRegister;
 import com.hungteen.pvz.register.FeatureRegister;
 import com.hungteen.pvz.register.ItemRegister;
 import com.hungteen.pvz.register.KeyBindRegister;
@@ -24,7 +23,10 @@ import com.hungteen.pvz.register.PotionRegister;
 import com.hungteen.pvz.register.SoundRegister;
 import com.hungteen.pvz.register.StructureRegister;
 import com.hungteen.pvz.register.TileEntityRegister;
+import com.hungteen.pvz.utils.BiomeUtil;
+import com.hungteen.pvz.utils.PlantUtil;
 import com.hungteen.pvz.utils.TradeUtil;
+import com.hungteen.pvz.utils.ZombieUtil;
 
 import net.minecraft.entity.EntityType;
 import net.minecraftforge.event.RegistryEvent;
@@ -59,16 +61,18 @@ public class RegistryHandler {
 	
 	@SubscribeEvent
     public static void commonSetup(FMLCommonSetupEvent ev){
+		ZombieUtil.initZombieMap();
+		PlantUtil.initPlantMap();
     	CapabilityHandler.registerCapabilities();
     	PVZPacketHandler.init();
     	BiomeRegister.registerBiomes(ev);
     	ev.enqueueWork(() -> {
     		StructureRegister.setupStructures();
     	});
-    	EntitySpawnRegister.registerEntitySpawn();
     	PotionRecipeHandler.registerPotionRecipes();
     	TradeUtil.initTrades();
     	CommonRegister.registerCompostable();
+    	BiomeUtil.initBiomeSet();
     }
 	
 	@SubscribeEvent

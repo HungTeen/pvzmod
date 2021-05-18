@@ -302,7 +302,7 @@ public class NobleZombieEntity extends PVZZombieEntity {
 
 	@Override
 	public EntitySize getDimensions(Pose poseIn) {
-		return EntitySize.scalable(0.9f, 1.9f);
+		return EntitySize.scalable(0.8f, 1.9f);
 	}
 
 	protected int getTpCD() {

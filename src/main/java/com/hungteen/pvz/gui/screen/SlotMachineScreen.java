@@ -60,7 +60,6 @@ public class SlotMachineScreen extends ContainerScreen<SlotMachineContainer> {
 	protected void renderLabels(MatrixStack p_230451_1_, int p_230451_2_, int p_230451_3_) {
 	}
 	
-	@SuppressWarnings("deprecation")
 	private void renderSlotMachine(MatrixStack stack) {
 		RenderSystem.pushMatrix();
 		float percent = this.menu.te.array.get(12) * 1.0F / this.menu.te.array.get(15);

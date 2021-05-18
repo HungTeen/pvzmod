@@ -107,6 +107,13 @@ public class PlantUtil {
 		
 	}
 	
+	/**
+	 * init plant map that must after RegistryObject present.
+	 */
+	public static void initPlantMap() {
+		
+	}
+	
 	public static void putPlantInfoToMap(Plants plant,final int cost, CDs cd, Ranks rank, Essences essence, RegistryObject<? extends EntityType<? extends PVZPlantEntity>> type, RegistryObject<? extends PlantCardItem> summonCard, RegistryObject<? extends PlantCardItem> enjoyCard) {
 		PLANT_SUN_COST.put(plant, cost);
 		PLANT_CD.put(plant, cd);

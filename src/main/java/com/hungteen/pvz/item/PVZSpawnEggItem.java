@@ -45,7 +45,7 @@ public class PVZSpawnEggItem extends SpawnEggItem{
 	 * but supplier based ones won't have had their EntityTypes created yet.
 	 */
 	public static void initUnaddedEggs() {
-		final Map<EntityType<?>, SpawnEggItem> EGGS = ObfuscationReflectionHelper.getPrivateValue(SpawnEggItem.class, null, "BY_ID");
+		final Map<EntityType<?>, SpawnEggItem> EGGS = ObfuscationReflectionHelper.getPrivateValue(SpawnEggItem.class, null, "field_195987_b");
 		DefaultDispenseItemBehavior defaultDispenseItemBehavior = new DefaultDispenseItemBehavior() {
 			public ItemStack execute(IBlockSource source, ItemStack stack) {
 				Direction direction = source.getBlockState().getValue(DispenserBlock.FACING);

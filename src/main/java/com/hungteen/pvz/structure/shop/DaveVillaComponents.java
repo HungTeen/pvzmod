@@ -75,7 +75,7 @@ public class DaveVillaComponents {
 	
 	public static class DaveVillaComponent extends PVZTemplateComponent {
 
-        private static final IStructurePieceType type = StructureRegister.DAVE_VILLA;
+        private static final IStructurePieceType type = StructureRegister.DAVE_VILLA_PIECE;
 		
 		public DaveVillaComponent(TemplateManager manager, CompoundNBT nbt) {
 			super(type, manager, nbt);

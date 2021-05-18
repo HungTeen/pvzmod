@@ -91,6 +91,7 @@ public class BalloonZombieEntity extends PVZZombieEntity {
 	
 	public static boolean canBalloonSpawn(EntityType<? extends PVZZombieEntity> zombieType, IWorld worldIn,
 			SpawnReason reason, BlockPos pos, Random rand) {
+		if(!hasZombieSpawn(zombieType, worldIn)) return false;
 		return worldIn.getBrightness(LightType.BLOCK, pos) < 8 && worldIn.getDifficulty() != Difficulty.PEACEFUL && (reason == SpawnReason.SPAWNER || worldIn.isEmptyBlock(pos));
 	}
 	

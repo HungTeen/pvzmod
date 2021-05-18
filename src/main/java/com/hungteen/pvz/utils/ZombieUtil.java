@@ -43,10 +43,11 @@ public class ZombieUtil {
 	// follow range
 	public static final float ZOMBIE_FOLLOW_RANGE = 80;
 	public static final HashMap<Zombies, Ranks> ZOMBIE_RANK = new HashMap<>();
+	public static final HashMap<EntityType<? extends PVZZombieEntity>, Zombies> ENTITY_TYPE_ZOMBIE = new HashMap<>();
 	public static final HashMap<Zombies, RegistryObject<? extends EntityType<? extends PVZZombieEntity>>> ZOMBIE_ENTITY = new HashMap<>();
     public static int ZOMBIE_NUM = 0;
 	
-	static{
+	static {
 		//grass day
 		putZombieInfoToMap(Zombies.NORMAL_ZOMBIE, Ranks.WHITE, EntityRegister.NORMAL_ZOMBIE);
 		putZombieInfoToMap(Zombies.FLAG_ZOMBIE, Ranks.WHITE, EntityRegister.FLAG_ZOMBIE);
@@ -101,6 +102,16 @@ public class ZombieUtil {
 		
 		putZombieInfoToMap(Zombies.TRICK_ZOMBIE, Ranks.GRAY, EntityRegister.TRICK_ZOMBIE);
 		putZombieInfoToMap(Zombies.RA_ZOMBIE, Ranks.WHITE, EntityRegister.RA_ZOMBIE);
+	}
+	
+	/**
+	 * init zombie map that must after RegistryObject present.
+	 */
+	public static void initZombieMap() {
+		for(Zombies zombie : Zombies.values()) {
+			EntityType<? extends PVZZombieEntity> type = getZombieEntityType(zombie);
+			ENTITY_TYPE_ZOMBIE.put(type, zombie);
+		}
 	}
 	
 	public static void putZombieInfoToMap(Zombies zombie, Ranks rank, RegistryObject<? extends EntityType<? extends PVZZombieEntity>> type) {
