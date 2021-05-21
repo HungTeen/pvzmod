@@ -39,7 +39,9 @@ import com.hungteen.pvz.utils.enums.Events;
 import com.hungteen.pvz.utils.enums.Ranks;
 import com.hungteen.pvz.utils.enums.Zombies;
 import com.hungteen.pvz.utils.interfaces.IPVZZombie;
+import com.hungteen.pvz.utils.others.WeightList;
 import com.hungteen.pvz.world.data.WorldEventData;
+import com.mojang.datafixers.util.Pair;
 
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.entity.Entity;
@@ -92,6 +94,9 @@ public abstract class PVZZombieEntity extends MonsterEntity implements IPVZZombi
 			DataSerializers.INT);
 	private static final DataParameter<Float> DEFENCE_LIFE = EntityDataManager.defineId(PVZZombieEntity.class,
 			DataSerializers.FLOAT);
+	private static final DataParameter<Integer> ZOMBIE_LEVEL = EntityDataManager.defineId(PVZZombieEntity.class,
+			DataSerializers.INT);
+	protected WeightList<DropType> dropSpecialList;
 	private static final int CHARM_FLAG = 0;
 	private static final int MINI_FLAG = 1;
 	public boolean canCollideWithZombie = true;
@@ -108,18 +113,24 @@ public abstract class PVZZombieEntity extends MonsterEntity implements IPVZZombi
 
 	public PVZZombieEntity(EntityType<? extends MonsterEntity> type, World worldIn) {
 		super(type, worldIn);
+		//refresh size.
 		this.refreshDimensions();
-		this.setZombieAttributes();
-		this.xpReward = this.getZombieRank().ordinal() * 2 + 5;
+		//caculate how mush xp will zombie drop.
+		this.xpReward = ZombieUtil.caculateZombieXp(this);
+		//init drop coin list
+		this.dropSpecialList = this.getDropSpecialList();
 	}
 
 	@Override
 	public ILivingEntityData finalizeSpawn(IServerWorld worldIn, DifficultyInstance difficultyIn, SpawnReason reason,
 			ILivingEntityData spawnDataIn, CompoundNBT dataTag) {
 		if (!level.isClientSide) {
+			//decide the type of zombie, common or super or beard or sun.
 			this.setZombieType(this.getSpawnType());
 			EntityUtil.playSound(this, getSpawnSound());
+			//update its attributes like max health.
 			this.updateAttributes();
+			//check zombie state, must after method updateAttributes()
 			if (level.dimension() == World.OVERWORLD) {
 				WorldEventData data = WorldEventData.getOverWorldEventData(level);
 				if (this.canBeMini() && data.hasEvent(Events.MINI)) {
@@ -134,21 +145,17 @@ public abstract class PVZZombieEntity extends MonsterEntity implements IPVZZombi
 	}
 
 	/**
-	 * get zombie type : super normal beard
+	 * get zombie type : super or normal or beard or sun
 	 */
 	protected Type getSpawnType() {
 		int t = this.getRandom().nextInt(100);
-		int a = PVZConfig.COMMON_CONFIG.EntitySettings.ZombieSuperChance.get();
-		int b = PVZConfig.COMMON_CONFIG.EntitySettings.ZombieSunChance.get();
+		int a = PVZConfig.COMMON_CONFIG.EntitySettings.ZombieSetting.ZombieSuperChance.get();
+		int b = PVZConfig.COMMON_CONFIG.EntitySettings.ZombieSetting.ZombieSunChance.get();
 		if (t < a)
 			return Type.SUPER;
 		if (t < a + b)
 			return Type.SUN;
 		return Type.NORMAL;
-	}
-
-	protected void setZombieAttributes() {
-		this.setZombieMaxHealth(this.getLife());
 	}
 
 	@Override
@@ -159,6 +166,7 @@ public abstract class PVZZombieEntity extends MonsterEntity implements IPVZZombi
 		entityData.define(ZOMBIE_STATES, 0);
 		entityData.define(ATTACK_TIME, 0);
 		entityData.define(DEFENCE_LIFE, 0f);
+		entityData.define(ZOMBIE_LEVEL, 1);
 	}
 	
 	public static AttributeModifierMap createZombieAttributes() {
@@ -172,11 +180,15 @@ public abstract class PVZZombieEntity extends MonsterEntity implements IPVZZombi
 	    		.build();
 	}
 	
+	/**
+	 * update zombie attributes when first spawn.
+	 */
 	protected void updateAttributes() {
 		this.getAttribute(Attributes.ATTACK_DAMAGE).setBaseValue(ZombieUtil.LOW);
 		this.getAttribute(Attributes.FOLLOW_RANGE).setBaseValue(30);
 		this.getAttribute(Attributes.MOVEMENT_SPEED).setBaseValue(ZombieUtil.NORMAL_SPEED);
 		this.getAttribute(Attributes.KNOCKBACK_RESISTANCE).setBaseValue(1D);
+		EntityUtil.setLivingMaxHealthAndHeal(this, this.getLife());
 	}
 
 	@Override
@@ -201,48 +213,56 @@ public abstract class PVZZombieEntity extends MonsterEntity implements IPVZZombi
 		this.normalZombieTick();
 	}
 
+	/**
+	 * tick when zombie is normal state.
+	 * (not be frozen or butter and so on).
+	 */
 	public void normalZombieTick() {
 	}
 
-	public void setZombieMaxHealth(float health) {
-		this.getAttribute(Attributes.MAX_HEALTH).setBaseValue(health);
-		this.heal(health);
-	}
-
+	/**
+	 * get current health of zombie(contain its defence health).
+	 */
 	public float getCurrentHealth() {
-		if (this.hasDirectDefence)
-			return this.getDefenceLife() + this.getHealth();
-		return this.getHealth();
-	}
-
-	public float getCurrentMaxHealth() {
-		if (this.hasDirectDefence)
-			return this.getDefenceLife() + this.getMaxHealth();
-		return this.getMaxHealth();
+		return this.hasDirectDefence ? this.getDefenceLife() + this.getHealth() : this.getHealth();
 	}
 
 	/**
-	 * run when zombie be mini type.
+	 * get current max health of zombie(contain defence health).
+	 */
+	public float getCurrentMaxHealth() {
+		return this.hasDirectDefence ? this.getDefenceLife() + this.getMaxHealth() : this.getMaxHealth();
+	}
+
+	/**
+	 * run when zombie be mini state.
+	 * change max health to 60%.
+	 * give speed effect and damage boost.
 	 */
 	public void onZombieBeMini() {
 		this.setMiniZombie(true);
-		this.getAttribute(Attributes.MAX_HEALTH).setBaseValue(this.getMaxHealth() * 0.6);
+		final float healthDec = 0.6F;
+		EntityUtil.setLivingMaxHealthAndHeal(this, this.getMaxHealth() * healthDec);
 		if (this.hasDirectDefence) {
-			this.setDefenceLife(this.getDefenceLife() * 0.6F);
+			this.setDefenceLife(this.getDefenceLife() * healthDec);
 		}
 		this.addEffect(new EffectInstance(Effects.MOVEMENT_SPEED, 1000000, 0, false, false));
 		this.addEffect(new EffectInstance(Effects.DAMAGE_BOOST, 1000000, 0, false, false));
 	}
 
+	/**
+	 * zombie perform attack CD.
+	 */
 	public int getAttackCD() {
-		if (!this.canZombieNormalUpdate())
+		if (!this.canZombieNormalUpdate()) {//can not update means stop attack.
 			return 10000000;
-		int now = 20;
-		if (this.hasEffect(EffectRegister.COLD_EFFECT.get())) {
-			int lvl = this.getEffect(EffectRegister.COLD_EFFECT.get()).getAmplifier();
-			now += 3 * lvl;
 		}
-		return now;
+		int cd = 20;
+		if (this.hasEffect(EffectRegister.COLD_EFFECT.get())) {//cold will decrease attack CD.
+			int lvl = this.getEffect(EffectRegister.COLD_EFFECT.get()).getAmplifier();
+			cd += 3 * lvl;
+		}
+		return cd;
 	}
 
 	@Override
@@ -255,6 +275,7 @@ public abstract class PVZZombieEntity extends MonsterEntity implements IPVZZombi
 	@Override
 	public void die(DamageSource cause) {
 		super.die(cause);
+		//if zombie was killed by bowling, it will not drop coin.
 		if (cause instanceof PVZDamageSource && ((PVZDamageSource) cause).getPVZDamageType() == PVZDamageType.BOWLING
 				&& ((PVZDamageSource) cause).getDamageCount() > 0) {
 			this.canSpawnDrop = false;
@@ -289,7 +310,7 @@ public abstract class PVZZombieEntity extends MonsterEntity implements IPVZZombi
 			} else if (getZombieType() == Type.BEARD) {// finish achievement
 			}
 			if (this.canSpawnDrop) {
-				this.dropCoinOrSpecial();
+				this.spawnSpecialDrops();
 			}
 		}
 	}
@@ -313,40 +334,66 @@ public abstract class PVZZombieEntity extends MonsterEntity implements IPVZZombi
 			EntityUtil.onMobEntityRandomPosSpawn(level, sun, blockPosition().above(), 2);
 		}
 	}
+	
+	/**
+	 * zombies have chance to drop coin or chocolate when died.
+	 */
+	protected void spawnSpecialDrops() {
+		this.dropSpecialList.getRandomItem(this.random).ifPresent(type -> {
+			this.doZombieDrop(type);
+		});
+	}
 
 	/**
-	 * zombies have chance to drop coin when died.
+	 * do drop with different droptype.
 	 */
-	protected void dropCoinOrSpecial() {
-		final int time1 = 8;
-		final int time2 = time1 * time1;
-		final int time3 = time2 * time1;
-		final int time4 = time2 * time2;
-		int num = this.getRandom().nextInt(time4);
-		if (num < time1 + time2 + time3) {// 0 ~ time3 is coin
-			int amount = CoinType.GOLD.money;
-			if (num < time3)
-				amount = CoinType.COPPER.money;
-			else if (num < time2 + time3)
-				amount = CoinType.SILVER.money;
+	private void doZombieDrop(DropType type) {
+		switch(type) {
+		case COPPER:{
 			CoinEntity coin = EntityRegister.COIN.get().create(level);
-			coin.setAmount(amount);
+			coin.setAmount(CoinType.COPPER.money);
 			EntityUtil.onMobEntitySpawn(level, coin, blockPosition());
-			return;
+			break;
 		}
-		num -= time1 + time2 + time3;
-		if (num == 0) {// 0 is jewel
+		case SILVER:{
+			CoinEntity coin = EntityRegister.COIN.get().create(level);
+			coin.setAmount(CoinType.SILVER.money);
+			EntityUtil.onMobEntitySpawn(level, coin, blockPosition());
+			break;
+		}
+		case GOLD:{
+			CoinEntity coin = EntityRegister.COIN.get().create(level);
+			coin.setAmount(CoinType.GOLD.money);
+			EntityUtil.onMobEntitySpawn(level, coin, blockPosition());
+			break;
+		}
+		case JEWEL:{
 			JewelEntity jewel = EntityRegister.JEWEL.get().create(level);
 			EntityUtil.onMobEntitySpawn(level, jewel, blockPosition());
-			return;
+			break;
 		}
-		if (num < 4) { // 1 - 3 is chocolate
+		case CHOCOLATE:{
 			ItemEntity chocolate = new ItemEntity(level, getX(), getY(), getZ(),
 					new ItemStack(ItemRegister.CHOCOLATE.get()));
 			EntityUtil.playSound(chocolate, SoundRegister.JEWEL_DROP.get());
 			level.addFreshEntity(chocolate);
-			return;
 		}
+	}
+	}
+	
+	/**
+	 * init zombie special drop list.
+	 */
+	protected WeightList<DropType> getDropSpecialList(){
+		int p = PVZConfig.COMMON_CONFIG.EntitySettings.ZombieSetting.ZombieDropMultiper.get();
+		int pp = p * p;
+		return WeightList.of(
+				pp * pp,
+				Pair.of(DropType.SILVER, p * p * p),
+				Pair.of(DropType.GOLD, p * p ),
+				Pair.of(DropType.JEWEL, p),
+				Pair.of(DropType.CHOCOLATE, p)
+				);
 	}
 
 	/**
@@ -623,6 +670,7 @@ public abstract class PVZZombieEntity extends MonsterEntity implements IPVZZombi
 		compound.putInt("zombie_states_flag", this.getZombieStates());
 		compound.putInt("zombie_attack_time", this.getAttackTime());
 		compound.putFloat("defence_life", this.getDefenceLife());
+		compound.putInt("zombie_level", this.getZombieLevel());
 	}
 
 	@Override
@@ -653,6 +701,9 @@ public abstract class PVZZombieEntity extends MonsterEntity implements IPVZZombi
 		}
 		if (compound.contains("defence_life")) {
 			this.setDefenceLife(compound.getFloat("defence_life"));
+		}
+		if(compound.contains("zombie_level")) {
+			this.setZombieLevel(compound.getInt("zombie_level"));
 		}
 	}
 
@@ -783,6 +834,14 @@ public abstract class PVZZombieEntity extends MonsterEntity implements IPVZZombi
 	public void setAttackTime(int cd) {
 		entityData.set(ATTACK_TIME, cd);
 	}
+	
+	public int getZombieLevel() {
+		return entityData.get(ZOMBIE_LEVEL);
+	}
+
+	public void setZombieLevel(int level) {
+		entityData.set(ZOMBIE_LEVEL, level);
+	}
 
 	public boolean isZombieColdOrForzen() {
 		return EntityUtil.isEntityCold(this) || EntityUtil.isEntityFrozen(this);
@@ -818,6 +877,10 @@ public abstract class PVZZombieEntity extends MonsterEntity implements IPVZZombi
 
 	public enum Type {
 		NORMAL, SUPER, BEARD, SUN
+	}
+	
+	protected enum DropType{
+		COPPER, SILVER, GOLD, JEWEL, CHOCOLATE
 	}
 
 }

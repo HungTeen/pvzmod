@@ -56,7 +56,7 @@ public class SquashEntity extends PVZPlantEntity{
 				this.getLookControl().setLookAt(getTarget(), 30f, 30f);
 			}
 			if(this.getAttackTime() > 0) {
-				if(EntityUtil.isOnGround(this)) {
+				if(EntityUtil.isOnGround(this) || EntityUtil.isOnSnow(this)) {
 //					System.out.println("on ground!");
 					this.dealDamage();
 					if(this.extraChance > 0) {

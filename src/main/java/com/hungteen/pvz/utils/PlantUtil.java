@@ -179,11 +179,12 @@ public class PlantUtil {
 	 */
 	@Nullable
 	public static EntityType<? extends PVZPlantEntity> getPlantEntityType(Plants plant){
-		if(PLANT_ENTITY.containsKey(plant) && PLANT_ENTITY.get(plant) != null) {
+		try {
 			return PLANT_ENTITY.get(plant).get();
+		} catch (final NullPointerException e) {
+			if(! Plants.isEntityPlant(plant)) return null;
+			throw new NullPointerException("Error: plant get entityType !");
 		}
-		System.out.println("plant get entityType error");
-		return null;
 	}
 	
 	/**

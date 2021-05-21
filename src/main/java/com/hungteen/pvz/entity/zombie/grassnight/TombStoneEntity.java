@@ -2,21 +2,16 @@ package com.hungteen.pvz.entity.zombie.grassnight;
 
 import java.util.Random;
 
-import com.hungteen.pvz.entity.drop.CoinEntity;
-import com.hungteen.pvz.entity.drop.CoinEntity.CoinType;
-import com.hungteen.pvz.entity.drop.JewelEntity;
 import com.hungteen.pvz.entity.zombie.PVZZombieEntity;
 import com.hungteen.pvz.entity.zombie.base.UnderGroundZombieEntity;
 import com.hungteen.pvz.entity.zombie.other.NobleZombieEntity;
 import com.hungteen.pvz.item.tool.card.ImitaterCardItem;
 import com.hungteen.pvz.item.tool.card.PlantCardItem;
-import com.hungteen.pvz.register.EntityRegister;
-import com.hungteen.pvz.register.ItemRegister;
-import com.hungteen.pvz.register.SoundRegister;
 import com.hungteen.pvz.utils.EntityUtil;
 import com.hungteen.pvz.utils.ZombieUtil;
 import com.hungteen.pvz.utils.enums.Plants;
 import com.hungteen.pvz.utils.enums.Zombies;
+import com.hungteen.pvz.utils.others.WeightList;
 
 import net.minecraft.entity.EntitySize;
 import net.minecraft.entity.EntityType;
@@ -25,7 +20,6 @@ import net.minecraft.entity.Pose;
 import net.minecraft.entity.SpawnReason;
 import net.minecraft.entity.ai.attributes.Attributes;
 import net.minecraft.entity.ai.goal.NearestAttackableTargetGoal;
-import net.minecraft.entity.item.ItemEntity;
 import net.minecraft.entity.monster.MonsterEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
@@ -131,28 +125,8 @@ public class TombStoneEntity extends UnderGroundZombieEntity {
 	}
 	
 	@Override
-	protected void dropCoinOrSpecial() {
-		int num = this.getRandom().nextInt(1000);
-		if(num == 0) {
-			JewelEntity jewel = EntityRegister.JEWEL.get().create(level);
-			EntityUtil.onMobEntitySpawn(level, jewel, blockPosition());
-			return ;
-		}
-		if(num == 1){
-			ItemEntity chocolate = new ItemEntity(level, getX(), getY(), getZ(), new ItemStack(ItemRegister.CHOCOLATE.get()));
-			EntityUtil.playSound(chocolate, SoundRegister.JEWEL_DROP.get());
-			level.addFreshEntity(chocolate);
-			return ;
-		}
-		if(num < 1000) {
-			int amount = CoinType.COPPER.money;
-			if(num < 12) amount = CoinType.GOLD.money;
-			else if(num < 112) amount = CoinType.SILVER.money;
-			CoinEntity coin = EntityRegister.COIN.get().create(level);
-			coin.setAmount(amount);
-			EntityUtil.onMobEntitySpawn(level, coin, blockPosition());
-			return ;
-		}
+	protected WeightList<DropType> getDropSpecialList() {
+		return super.getDropSpecialList().setLeftItem(DropType.COPPER);
 	}
 	
 	@Override

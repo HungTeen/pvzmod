@@ -458,6 +458,14 @@ public class EntityUtil {
 		if(entity instanceof BalloonZombieEntity && ((BalloonZombieEntity) entity).hasBalloon()) return true;
 		return ! entity.isOnGround() && ! entity.isInWater() && ! entity.isInLava();
 	}
+
+	/**
+	 * set max health and heal.
+	 */
+	public static void setLivingMaxHealthAndHeal(LivingEntity living, float maxHealth) {
+		living.getAttribute(Attributes.MAX_HEALTH).setBaseValue(maxHealth);
+		living.heal(maxHealth);
+	}
 	
 	/**
 	 * get aabb by entity and w & h

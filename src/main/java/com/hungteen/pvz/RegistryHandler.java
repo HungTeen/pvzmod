@@ -67,7 +67,7 @@ public class RegistryHandler {
     	PVZPacketHandler.init();
     	BiomeRegister.registerBiomes(ev);
     	ev.enqueueWork(() -> {
-    		StructureRegister.setupStructures();
+    		FeatureRegister.setupConfiguredFeatures();
     	});
     	PotionRecipeHandler.registerPotionRecipes();
     	TradeUtil.initTrades();

@@ -292,7 +292,7 @@ public class ZomBossEntity extends PVZZombieEntity {
 	}
 	
 	@Override
-	protected void dropCoinOrSpecial() {
+	protected void spawnSpecialDrops() {
 		float range = 50;
 		int playerCnt = level.getEntitiesOfClass(PlayerEntity.class , EntityUtil.getEntityAABB(this, range, range), (player) -> {
 			return PlayerUtil.isPlayerSurvival(player);

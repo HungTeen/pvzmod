@@ -24,6 +24,7 @@ public abstract class PVZButton extends Button{
 		this.WIDGETS = location;
 	}
 
+	@Deprecated
 	@Override
     public void render(MatrixStack stack, int mouseX, int mouseY, float partial) {
         if (this.visible) {

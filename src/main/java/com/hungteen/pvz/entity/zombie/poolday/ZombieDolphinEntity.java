@@ -280,6 +280,7 @@ public class ZombieDolphinEntity extends PVZZombieEntity {
 		/**
 		 * Keep ticking a continuous task that has already been started
 		 */
+		@SuppressWarnings("deprecation")
 		public void tick() {
 			boolean flag = this.breached;
 			if (!flag) {

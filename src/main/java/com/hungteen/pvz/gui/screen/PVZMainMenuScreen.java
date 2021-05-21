@@ -1,23 +1,14 @@
 package com.hungteen.pvz.gui.screen;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.nio.charset.StandardCharsets;
-import java.util.Collections;
-import java.util.List;
 import java.util.Random;
-import java.util.stream.Collectors;
 
 import com.hungteen.pvz.utils.StringUtil;
 import com.mojang.blaze3d.matrix.MatrixStack;
 
-import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.screen.MainMenuScreen;
 import net.minecraft.client.renderer.RenderSkybox;
 import net.minecraft.client.renderer.RenderSkyboxCube;
 import net.minecraft.client.resources.I18n;
-import net.minecraft.resources.IResource;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.SharedConstants;
 import net.minecraft.util.Util;
@@ -41,7 +32,7 @@ public class PVZMainMenuScreen extends MainMenuScreen {
 	public PVZMainMenuScreen() {
 		rand = new Random();
 		if (splashText == null) {
-			this.splashText = this.getRandomSplashText();
+			this.splashText = StringUtil.getRandomLangText(minecraft, rand, "splashes");
 		}
 	}
 
@@ -91,38 +82,4 @@ public class PVZMainMenuScreen extends MainMenuScreen {
 		stack.popPose();
 	}
 
-	protected String getRandomSplashText() {
-		List<String> texts = getSplashTexts();
-		return texts.get(this.rand.nextInt(texts.size()));
-	}
-
-	protected List<String> getSplashTexts() {
-		try (IResource iresource = getSplashResource();
-				BufferedReader bufferedreader = new BufferedReader(
-						new InputStreamReader(iresource.getInputStream(), StandardCharsets.UTF_8));) {
-			List<String> list = bufferedreader.lines().map(String::trim).filter((p_215277_0_) -> {
-				return p_215277_0_.hashCode() != 125780783;
-			}).collect(Collectors.toList());
-			return list;
-		} catch (IOException var36) {
-			return Collections.emptyList();
-		}
-	}
-	
-	private IResource getSplashResource() {
-		if(this.minecraft == null) this.minecraft = Minecraft.getInstance();
-		ResourceLocation fileLoc = StringUtil.prefix("lang/splashes/" + this.minecraft.options.languageCode + ".txt");
-        ResourceLocation backupLoc = StringUtil.prefix("lang/splashes/en_us.txt");
-        IResource resource = null;
-        try {
-            resource = this.minecraft.getResourceManager().getResource(fileLoc);
-        } catch (IOException e) {
-            try {
-                resource = this.minecraft.getResourceManager().getResource(backupLoc);
-            } catch (IOException e1) {
-                e1.printStackTrace();
-            }
-        }
-        return resource;
-	}
 }

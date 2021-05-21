@@ -158,4 +158,10 @@ public class ZombieUtil {
 		}
 	}
 	
+	public static int caculateZombieXp(PVZZombieEntity zombie) {
+		int lvlBonus = zombie.getZombieLevel() / 2;
+		int rankBonus = zombie.getZombieRank().ordinal() / 2;
+		return rankBonus + lvlBonus + 3;
+	}
+	
 }

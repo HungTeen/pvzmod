@@ -1,9 +1,5 @@
 package com.hungteen.pvz.entity.plant.magic;
 
-import java.util.Arrays;
-import java.util.List;
-
-import com.hungteen.pvz.PVZConfig;
 import com.hungteen.pvz.entity.ai.target.PVZNearestTargetGoal;
 import com.hungteen.pvz.entity.plant.PVZPlantEntity;
 import com.hungteen.pvz.misc.damage.PVZDamageSource;
@@ -19,7 +15,6 @@ import net.minecraft.entity.EntityType;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.Pose;
 import net.minecraft.nbt.CompoundNBT;
-import net.minecraft.util.text.StringTextComponent;
 import net.minecraft.world.World;
 
 public class StrangeCatEntity extends PVZPlantEntity {
@@ -72,11 +67,11 @@ public class StrangeCatEntity extends PVZPlantEntity {
 	public void onSelfCopy(LivingEntity target) {
 		StrangeCatEntity cat = EntityRegister.STRANGE_CAT.get().create(level);
 		PlantUtil.copyPlantData(cat, this);
-		if(this.getRandom().nextInt(PVZConfig.COMMON_CONFIG.EntitySettings.StrangeCatNameChance.get()) == 0) {
-			List<String> list = Arrays.asList("芦苇", "Rua猫");
-			int pos = this.getRandom().nextInt(list.size());
-			cat.setCustomName(new StringTextComponent(list.get(pos)));
-		}
+//		if(this.getRandom().nextInt(PVZConfig.COMMON_CONFIG.EntitySettings.StrangeCatNameChance.get()) == 0) {
+//			List<String> list = Arrays.asList("芦苇", "Rua猫");
+//			int pos = this.getRandom().nextInt(list.size());
+//			cat.setCustomName(new StringTextComponent(list.get(pos)));
+//		}
 		EntityUtil.onMobEntitySpawn(level, cat, target.blockPosition());
 	}
 	

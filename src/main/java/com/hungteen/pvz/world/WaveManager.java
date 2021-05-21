@@ -260,7 +260,7 @@ public class WaveManager {
 	@SuppressWarnings("deprecation")
 	@Nullable
 	private BlockPos findRandomSpawnPos(int chance) {
-		int range = 16, distance = 48;
+		int range = 16, distance = 32;
 		for (int i = 0; i < chance; ++i) {
 			float f = this.world.random.nextFloat() * ((float) Math.PI * 2F);
 			int dx = MathHelper.floor(MathHelper.cos(f) * distance);

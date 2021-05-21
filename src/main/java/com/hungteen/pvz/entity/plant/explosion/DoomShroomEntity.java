@@ -29,7 +29,7 @@ import net.minecraft.world.server.ServerWorld;
 
 public class DoomShroomEntity extends PlantBomberEntity {
 
-	private final int destroyBlockHeight = 4;
+	private final int destroyBlockHeight = 1;
 	public static final float MAX_EXPLOSION_LEVEL = 500;
 	
 	public DoomShroomEntity(EntityType<? extends CreatureEntity> type, World worldIn) {

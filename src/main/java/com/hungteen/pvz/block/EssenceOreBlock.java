@@ -20,7 +20,7 @@ public class EssenceOreBlock extends Block{
 	
 	@Override
 	public int getExpDrop(BlockState state, IWorldReader world, BlockPos pos, int fortune, int silktouch) {
-		return MathHelper.nextInt(this.RANDOM, 1, 3);
+		return MathHelper.nextInt(this.RANDOM, 1, 2);
 	}
 
 }

@@ -1,9 +1,20 @@
 package com.hungteen.pvz.utils;
 
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.nio.charset.StandardCharsets;
+import java.util.Collections;
+import java.util.List;
+import java.util.Random;
+import java.util.stream.Collectors;
+
 import com.hungteen.pvz.PVZMod;
 import com.mojang.blaze3d.matrix.MatrixStack;
 
+import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.FontRenderer;
+import net.minecraft.resources.IResource;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.text.StringTextComponent;
 
@@ -35,6 +46,46 @@ public class StringUtil {
 		stack.scale(scale, scale, scale);
 		render.draw(stack, string, (x - width / 2 * scale) / scale, y / scale, color);
 		stack.popPose();
+	}
+	
+	public static String getRandomLangText(Minecraft mc, Random rand, String name) {
+		if(mc == null) {
+			mc = Minecraft.getInstance();
+		}
+		List<String> texts = StringUtil.getLangTextList(mc, name);
+		return texts.get(rand.nextInt(texts.size()));
+	}
+	
+	/**
+	 * get lang from resource.
+	 */
+	public static List<String> getLangTextList(Minecraft mc, String name) {
+		try (IResource iresource = StringUtil.getTxtResource(mc, name);
+				BufferedReader bufferedreader = new BufferedReader(
+						new InputStreamReader(iresource.getInputStream(), StandardCharsets.UTF_8));) {
+			List<String> list = bufferedreader.lines().map(String::trim).filter((p_215277_0_) -> {
+				return p_215277_0_.hashCode() != 125780783;
+			}).collect(Collectors.toList());
+			return list;
+		} catch (IOException var36) {
+			return Collections.emptyList();
+		}
+	}
+	
+	public static IResource getTxtResource(Minecraft mc, String name) {
+		ResourceLocation fileLoc = StringUtil.prefix("lang/others/" + mc.options.languageCode + "/" + name + ".txt");
+        ResourceLocation backupLoc = StringUtil.prefix("lang/others/en_us/" + name + ".txt");
+        IResource resource = null;
+        try {
+            resource = mc.getResourceManager().getResource(fileLoc);
+        } catch (IOException e) {
+            try {
+                resource = mc.getResourceManager().getResource(backupLoc);
+            } catch (IOException e1) {
+                e1.printStackTrace();
+            }
+        }
+        return resource;
 	}
 	
 }

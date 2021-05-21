@@ -3,6 +3,7 @@ package com.hungteen.pvz.register;
 import com.hungteen.pvz.PVZMod;
 import com.hungteen.pvz.utils.BiomeUtil;
 import com.hungteen.pvz.world.biome.ZenGardenBiome;
+import com.hungteen.pvz.world.gen.GenOres;
 
 import net.minecraft.world.biome.Biome;
 import net.minecraft.world.biome.Biome.Category;
@@ -39,6 +40,7 @@ public class BiomeRegister {
     public static void biomeModification(final BiomeLoadingEvent event) {
     	StructureRegister.addStructureToBiome(event);
     	EntitySpawnRegister.addEntitySpawnToBiome(event);
+    	GenOres.addOresToBiomes(event);
     }
     
 	public static Biome makeBiome(Category category, RainType rainType, float depth, float scale, float temperature, float downFall, BiomeAmbience effect, MobSpawnInfo mobInfo, BiomeGenerationSettings generateSettings) {

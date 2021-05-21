@@ -17,7 +17,7 @@
         },
         {   
             "type": "text",
-            "text": "$(bgreen)Plants$() are relatively fragile. Terrestrial plants can only survive on $(l)grass blocks and Water lilies$(), while aquatic plants can only survive $(l)in water$(). In addition, $(l)common plants can only survive up to 3 game day$(), which can be changed in the config file($(red)upgrade plants can live twice longer than common one$())."
+            "text": "$(bgreen)Plants$() are relatively fragile. Terrestrial plants can only survive on $(l)grass blocks and Water lilies$(), while aquatic plants can only survive $(l)in water$()."
         },
         {
             "type": "text",

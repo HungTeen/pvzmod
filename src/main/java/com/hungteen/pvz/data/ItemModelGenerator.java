@@ -46,6 +46,10 @@ public class ItemModelGenerator extends ItemModelProvider{
 			genNormalModel(i);
 			this.addedItems.add(i);
 		});
+		Arrays.asList(BlockRegister.NUT_SAPLING.get(), BlockRegister.STEEL_LADDER.get()).forEach(i -> {
+			genItemModelWithBlock(i.asItem());
+			this.addedItems.add(i.asItem());
+		});
 		//for mostly common items.
 		for (Item i : ForgeRegistries.ITEMS) {
 			if(! i.getRegistryName().getNamespace().equals(PVZMod.MOD_ID) || addedItems.contains(i)) continue ;
@@ -65,12 +69,7 @@ public class ItemModelGenerator extends ItemModelProvider{
 				}
 			} else if(i instanceof BlockItem) {
 				addedItems.add(i);
-				Block block = ((BlockItem) i).getBlock();
-				if(block == BlockRegister.NUT_SAPLING.get()) {
-					genItemModelWithBlock(i);
-				} else {
-					genBlockModel(block);
-				}
+				genBlockModel(((BlockItem) i).getBlock());
 			}
 		}
 		//for hand held item

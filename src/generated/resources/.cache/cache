@@ -272,7 +272,7 @@ c430bd7428ad8c645cce5c347ab0a8565c56b80b assets/pvz/models/item/steel_axe.json
 61301f30cf184e23d5680f52445fabfb7c54b0cb assets/pvz/models/item/steel_block.json
 4476eac5cc19c3e1e26bcd4b6f0e2e70476b86e5 assets/pvz/models/item/steel_hoe.json
 38152a439e7e79d17fd3f9dc3b8a7a77fdeab242 assets/pvz/models/item/steel_ingot.json
-0e3e1b79f7bef319f08fc827d97503a3949c8e77 assets/pvz/models/item/steel_ladder.json
+ef7275334ce491f6b17059db992efe5eee89a8d6 assets/pvz/models/item/steel_ladder.json
 466466a9d0c56a661cfc83482656e9542d5fa854 assets/pvz/models/item/steel_pickaxe.json
 93733e54cf890b41e8404b1f8ebcf6be6250c321 assets/pvz/models/item/steel_shovel.json
 00ff647de2201c5ebc0c68c04c786ed74f77c302 assets/pvz/models/item/steel_sword.json
@@ -347,6 +347,7 @@ a63cfcf7eadd5ff34bf9e006495b86bd0894ed34 data/forge/tags/items/ingots/amethyst.j
 4f9eaea0cdab711996b9f61bd3b26e96010e416d data/forge/tags/items/ores/amethyst.json
 05fb482232b9aa0b3142ea10ff82447d995cc94c data/forge/tags/items/seeds/cabbage.json
 f61963e0035f6c63d9f9a55930d601d81b12780f data/forge/tags/items/seeds/corn.json
+054aeedb6ba1c544a69e5f943c0ac4842a52e878 data/minecraft/tags/blocks/climbable.json
 20992a32bf3980d890c7c4773d2c79344b6d23e8 data/minecraft/tags/items/arrows.json
 fa3446437a0529b1c2a52625b2b087066fbe5b0c data/pvz/loot_tables/blocks/amethyst_block.json
 1a90951b600d5bef5cbfa140df3d7d23e7218e7b data/pvz/loot_tables/blocks/amethyst_ore.json

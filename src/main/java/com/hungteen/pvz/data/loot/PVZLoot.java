@@ -6,6 +6,8 @@ import net.minecraft.util.ResourceLocation;
 
 public class PVZLoot {
 
+	//fish
+	public static final ResourceLocation FISHING_ENJOY_CARD = getFishingLootTable("enjoy_card");
 	//chest
 	public static final ResourceLocation DAVE_VILLA_CHEST = getChestLootTable("dave_villa_chest");
 	public static final ResourceLocation BUCKET_HOUSE_CHEST = getChestLootTable("bucket_house_chest");
@@ -45,10 +47,14 @@ public class PVZLoot {
 	public static final ResourceLocation RA_ZOMBIE = getEntityLootTable("ra_zombie");
 	
 	public static ResourceLocation getChestLootTable(String name) {
-		return StringUtil.prefix("chests/"+name);
+		return StringUtil.prefix("chests/" + name);
 	}
 	
 	public static ResourceLocation getEntityLootTable(String name) {
-		return StringUtil.prefix("entities/"+name);
+		return StringUtil.prefix("entities/" + name);
+	}
+	
+	public static ResourceLocation getFishingLootTable(String name) {
+		return StringUtil.prefix("gameplay/fishing/" + name);
 	}
 }

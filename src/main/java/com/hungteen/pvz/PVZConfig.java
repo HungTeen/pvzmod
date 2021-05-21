@@ -174,24 +174,29 @@ public class PVZConfig {
 				EntitySettings.TeamAttack = builder
                         .comment("if true,when plant's owner is in a team,the plant will attack the entity from other team(include players).")
                         .define("PlantAttackTeam", false);
-				EntitySettings.ZombieSuperChance = builder
-						.comment("the spawn chance of zombie with plant energy(the bigger,the more chance it spawn).")
-						.defineInRange("ZombieSuperChance", 1, 0, 50);
-				EntitySettings.ZombieSunChance = builder
-						.comment("the spawn chance of zombie with sun layer(the bigger,the more chance it spawn).")
-						.defineInRange("ZombieSunChance", 1, 0, 30);
+				
 				EntitySettings.DoomRange = builder
 						.comment("The width range when doom shroom explosion will destroy,0 means no destroy.")
-						.defineInRange("DoomRange", 3, 0, 10);
-				EntitySettings.TrickZombieCharmChance = builder
-						.comment("The value related to the chance to use candy charm TrickZombie(if set to x, the chance is 1/x).")
-						.defineInRange("TrickZombieCharmChance", 3, 1, 100);
+						.defineInRange("DoomRange", 2, 0, 10);
 				EntitySettings.PlayerOriginGroup = builder
 						.comment("The Group of player, 1 means u are in plant group(zombie will attack u), 0 means u are mid(no plants and zombies attack u), -1 means u are in zombie group(plant will attack u).")
 						.defineInRange("PlayerOriginGroup", 1, -1, 1);
 				EntitySettings.StrangeCatNameChance = builder
 						.comment("The chance of strange cat to change its name.(1/x)")
 						.defineInRange("TrickZombieCharmChance", 3, 1, 1000000);
+				builder.comment("Settings about zombies.").push("Zombie Settings");
+				{
+					EntitySettings.ZombieSetting.ZombieSuperChance = builder
+						    .comment("the spawn chance of zombie with plant energy(the bigger,the more chance it spawn).")
+						    .defineInRange("ZombieSuperChance", 1, 0, 40);
+				    EntitySettings.ZombieSetting.ZombieSunChance = builder
+						    .comment("the spawn chance of zombie with sun layer(the bigger,the more chance it spawn).")
+						    .defineInRange("ZombieSunChance", 1, 0, 40);
+				    EntitySettings.ZombieSetting.ZombieDropMultiper = builder
+						    .comment("the drop chance of coin when zombie die(the bigger,the less chance it spawn).")
+						    .defineInRange("ZombieDropMultiper", 10, 3, 100);
+				}
+				builder.pop();
 				
 				builder.comment("The Max live time for Entity like sun.").push("EntityLiveTime");
 				{
@@ -328,14 +333,19 @@ public class PVZConfig {
 		public static class EntitySettings{
 			
 			public ForgeConfigSpec.BooleanValue TeamAttack;
-			public ForgeConfigSpec.IntValue ZombieSuperChance;
-			public ForgeConfigSpec.IntValue ZombieSunChance;
+			
 			public ForgeConfigSpec.IntValue DoomRange;
-			public ForgeConfigSpec.IntValue TrickZombieCharmChance;
 			public ForgeConfigSpec.IntValue PlayerOriginGroup;
 			public ForgeConfigSpec.IntValue StrangeCatNameChance;
 			
 			public EntityLiveTick EntityLiveTick = new EntityLiveTick();
+			public ZombieSetting ZombieSetting = new ZombieSetting();
+			
+			public static class ZombieSetting{
+				public ForgeConfigSpec.IntValue ZombieSuperChance;
+			    public ForgeConfigSpec.IntValue ZombieSunChance;
+			    public ForgeConfigSpec.IntValue ZombieDropMultiper;
+			}
 			
 			public static class EntityLiveTick{
 				public ForgeConfigSpec.IntValue SunLiveTick;
