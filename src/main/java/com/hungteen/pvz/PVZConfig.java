@@ -14,89 +14,85 @@ public class PVZConfig {
 			//World Settings
 			builder.comment("Settings about world.").push("World Settings");
 			{
-				builder.comment("Settings about world event.").push("WorldEvent Settings");
+				builder.comment("Settings about world invasion.").push("WorldInvasion Settings");
 				{
-					WorldSettings.WorldEventSettings.SafeDayLength = builder
-							.comment("If you set to 3,then the first 3 day of the world will not have any zombie attack event.")
-						    .defineInRange("SafeDayLength", 3, 0, 100);
+					WorldSettings.WorldInvasionSettings.SafeDayLength = builder
+							.comment("If you set to 5, then the first 5 days of the world will not have any zombie invasion event.")
+						    .defineInRange("SafeDayLength", 5, 0, 10000);
 					
-					WorldSettings.WorldEventSettings.ZombieAttackChance = builder
-						    .comment("The chance related to zombie attack event. the bigger the more chance it has(chance/100).")
-						    .defineInRange("ZombieAttackChance", 60, 0, 100);
+					WorldSettings.WorldInvasionSettings.InvasionIntervalLength = builder
+							.comment("The interval day length between each invasion.")
+						    .defineInRange("InvasionIntervalLength", 1, 0, 10000);
 					
-					WorldSettings.WorldEventSettings.SpawnWeightIncDuration = builder
-							.comment("How many day will the spawn weight of zombie increase to max. If set to 0, then the initial spawn weight is max.")
-							.defineInRange("SpawnWeightIncDuration", 100, 0, 100000);
-					
-					WorldSettings.WorldEventSettings.MaxSpawnWeightMultiple = builder
-							.comment("How many times the final weight is increased to the initial spawn weight(If initial is 60, value is 3, then final is 3 * 60 = 180).")
+					WorldSettings.WorldInvasionSettings.MaxSpawnWeightMultiple = builder
+							.comment("Spawn Weight Multipler of Zombies when Invasion happens.(such as the origin spawn weight of normal zombie is 100, your set to 3, then the final spawn weight is 3 * 100 = 300)")
 							.defineInRange("MaxSpawnWeightMultiple", 3, 1, 6);
 					
-					WorldSettings.WorldEventSettings.ShowEventMessages = builder
+					WorldSettings.WorldInvasionSettings.ShowEventMessages = builder
 							.comment("If true, you will receive detail message about each event when zombie invasion happened.")
 							.define("ShowEventMessages", true);
 					
-					WorldSettings.WorldEventSettings.EnableHugeWave = builder
+					WorldSettings.WorldInvasionSettings.EnableHugeWave = builder
 							.comment("If true, players will be invaded by a huge wave of zombies in zombie invasion day")
 							.define("EnableHugeWave", true);
 					
-					WorldSettings.WorldEventSettings.EventChanceSettings.BucketAttackChance = builder
+					WorldSettings.WorldInvasionSettings.EventChanceSettings.BucketAttackChance = builder
 							.comment("The weight to happen Bucket Invasion when it's a zombie attack day.")
 							.defineInRange("BucketAttackChance", 100, 0, 100000);
 						
-					WorldSettings.WorldEventSettings.EventChanceSettings.WaterAttackChance = builder
+					WorldSettings.WorldInvasionSettings.EventChanceSettings.WaterAttackChance = builder
 							.comment("The weight to happen Water Invasion when it's a zombie attack day.")
 							.defineInRange("WaterAttackChance", 80, 0, 100000);
 						
-					WorldSettings.WorldEventSettings.EventChanceSettings.HalloweenAttackChance = builder
+					WorldSettings.WorldInvasionSettings.EventChanceSettings.HalloweenAttackChance = builder
 							.comment("The weight to happen Halloween Invasion when it's a zombie attack day.")
 							.defineInRange("HalloweenAttackChance", 20, 0, 100000);
 						
-					WorldSettings.WorldEventSettings.EventChanceSettings.NewspaperAttackChance = builder
+					WorldSettings.WorldInvasionSettings.EventChanceSettings.NewspaperAttackChance = builder
 							.comment("The weight to happen Newspaper Invasion when it's a zombie attack day.")
 							.defineInRange("NewspaperAttackChance", 50, 0, 100000);
 						
-					WorldSettings.WorldEventSettings.EventChanceSettings.FootballAttackChance = builder
+					WorldSettings.WorldInvasionSettings.EventChanceSettings.FootballAttackChance = builder
 							.comment("The weight to happen Football Invasion when it's a zombie attack day.")
 							.defineInRange("FootballAttackChance", 50, 0, 100000);
 						
-					WorldSettings.WorldEventSettings.EventChanceSettings.RandomAttackChance = builder
+					WorldSettings.WorldInvasionSettings.EventChanceSettings.RandomAttackChance = builder
 							.comment("The weight to happen Random Invasion when it's a zombie attack day.")
 							.defineInRange("RandomAttackChance", 70, 0, 10000);
 					
-					WorldSettings.WorldEventSettings.EventChanceSettings.YetiAttackChance = builder
+					WorldSettings.WorldInvasionSettings.EventChanceSettings.YetiAttackChance = builder
 							.comment("The weight to happen Yeti Invasion when it's a zombie attack day.")
 							.defineInRange("YetiAttackChance", 20, 1, 10000);
 					
-					WorldSettings.WorldEventSettings.EventChanceSettings.BungeeAttackChance = builder
+					WorldSettings.WorldInvasionSettings.EventChanceSettings.BungeeAttackChance = builder
 							.comment("The weight to happen Bungee Invasion when it's a zombie attack day.")
 							.defineInRange("BungeeAttackChance", 40, 1, 10000);
 					
-					WorldSettings.WorldEventSettings.EventChanceSettings.MetalAttackChance = builder
+					WorldSettings.WorldInvasionSettings.EventChanceSettings.MetalAttackChance = builder
 							.comment("The weight to happen Metal Invasion when it's a zombie attack day.")
 							.defineInRange("MetalAttackChance", 25, 1, 10000);
 					
-					WorldSettings.WorldEventSettings.EventChanceSettings.RoofAttackChance = builder
+					WorldSettings.WorldInvasionSettings.EventChanceSettings.RoofAttackChance = builder
 							.comment("The weight to happen Roof Invasion when it's a zombie attack day.")
 							.defineInRange("RoofAttackChance", 50, 1, 10000);
 					
-					WorldSettings.WorldEventSettings.EventChanceSettings.GiantAttackChance = builder
+					WorldSettings.WorldInvasionSettings.EventChanceSettings.GiantAttackChance = builder
 							.comment("The weight to happen Giant Invasion when it's a zombie attack day.")
 							.defineInRange("GiantAttackChance", 25, 1, 10000);
 					
-					WorldSettings.WorldEventSettings.EventChanceSettings.ZombotanyAttackChance = builder
+					WorldSettings.WorldInvasionSettings.EventChanceSettings.ZombotanyAttackChance = builder
 							.comment("The weight to happen Zombotany Invasion when it's a zombie attack day.")
 							.defineInRange("ZombotanyAttackChance", 40, 1, 10000);
 					
-					WorldSettings.WorldEventSettings.EventChanceSettings.FogEventChance = builder
+					WorldSettings.WorldInvasionSettings.EventChanceSettings.FogEventChance = builder
 							.comment("The related value to happen Fog Event when it's a zombie attack day(If the value is x, then the chance is 1/x).")
 							.defineInRange("FogEventChance", 12, 1, 10000);
 					
-					WorldSettings.WorldEventSettings.EventChanceSettings.MiniEventChance = builder
+					WorldSettings.WorldInvasionSettings.EventChanceSettings.MiniEventChance = builder
 							.comment("The related value to happen Mini Event when it's a zombie attack day(If the value is x, then the chance is 1/x).")
 							.defineInRange("MiniEventChance", 10, 1, 10000);
 					
-					WorldSettings.WorldEventSettings.EventChanceSettings.InvisEventChance = builder
+					WorldSettings.WorldInvasionSettings.EventChanceSettings.InvisEventChance = builder
 							.comment("The related value to happen Invis Event when it's a zombie attack day(If the value is x, then the chance is 1/x).")
 							.defineInRange("InvisEventChance", 15, 1, 10000);
 					
@@ -276,18 +272,17 @@ public class PVZConfig {
 		public ItemSettings ItemSettings = new ItemSettings();
 		
 		public static class WorldSettings{
-			public WorldEventSettings WorldEventSettings = new WorldEventSettings();
+			public WorldInvasionSettings WorldInvasionSettings = new WorldInvasionSettings();
 			public StructureSettings StructureSettings = new StructureSettings();
 			public EntitySpawnSettings EntitySpawnSettings = new EntitySpawnSettings();
 			
 			public ForgeConfigSpec.BooleanValue CanSpawnDefaultMonster;
 			public ForgeConfigSpec.BooleanValue GiveBeginnerReward;
 			
-			public static class WorldEventSettings{
+			public static class WorldInvasionSettings{
 				public EventChanceSettings EventChanceSettings = new EventChanceSettings();
 				public ForgeConfigSpec.IntValue SafeDayLength;
-			    public ForgeConfigSpec.IntValue ZombieAttackChance;
-			    public ForgeConfigSpec.IntValue SpawnWeightIncDuration;
+				public ForgeConfigSpec.IntValue InvasionIntervalLength;
 			    public ForgeConfigSpec.IntValue MaxSpawnWeightMultiple;
 			    public ForgeConfigSpec.BooleanValue ShowEventMessages;
 			    public ForgeConfigSpec.BooleanValue EnableHugeWave;

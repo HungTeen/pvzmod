@@ -1,11 +1,11 @@
-package com.hungteen.pvz.world;
+package com.hungteen.pvz.world.invasion;
 
 import com.hungteen.pvz.capability.CapabilityHandler;
 import com.hungteen.pvz.register.EffectRegister;
 import com.hungteen.pvz.utils.PlayerUtil;
-import com.hungteen.pvz.utils.enums.Events;
+import com.hungteen.pvz.utils.enums.InvasionEvents;
 import com.hungteen.pvz.utils.enums.Resources;
-import com.hungteen.pvz.world.data.WorldEventData;
+import com.hungteen.pvz.world.data.PVZInvasionData;
 
 import net.minecraft.entity.Pose;
 import net.minecraft.entity.player.PlayerEntity;
@@ -29,7 +29,7 @@ public class FogManager {
 	}
 	
 	private static boolean shouldFogOn(World world, PlayerEntity player) {
-		return world.dimension().equals(World.OVERWORLD) && ! world.isDay() && WorldEventData.getOverWorldEventData(world).hasEvent(Events.FOG) && (player != null && PlayerUtil.isPlayerSurvival(player) && player.isUnderWater() 
+		return world.dimension().equals(World.OVERWORLD) && ! world.isDay() && PVZInvasionData.getOverWorldInvasionData(world).hasEvent(InvasionEvents.FOG) && (player != null && PlayerUtil.isPlayerSurvival(player) && player.isUnderWater() 
 				&& player.getPose() != Pose.SWIMMING && ! player.hasEffect(EffectRegister.LIGHT_EYE_EFFECT.get()));
 	}
 	

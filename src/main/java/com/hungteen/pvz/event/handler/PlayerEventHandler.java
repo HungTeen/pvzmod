@@ -15,7 +15,7 @@ import com.hungteen.pvz.utils.ZombieUtil;
 import com.hungteen.pvz.utils.enums.Plants;
 import com.hungteen.pvz.utils.enums.Resources;
 import com.hungteen.pvz.utils.enums.Zombies;
-import com.hungteen.pvz.world.WaveManager;
+import com.hungteen.pvz.world.invasion.WaveManager;
 
 import net.minecraft.advancements.CriteriaTriggers;
 import net.minecraft.entity.LivingEntity;

@@ -22,6 +22,7 @@ import com.hungteen.pvz.utils.EntityUtil;
 import com.hungteen.pvz.utils.PlayerUtil;
 import com.hungteen.pvz.utils.ZombieUtil;
 import com.hungteen.pvz.utils.enums.Zombies;
+import com.hungteen.pvz.world.data.PVZFlagData;
 
 import net.minecraft.advancements.CriteriaTriggers;
 import net.minecraft.entity.EntitySize;
@@ -288,6 +289,8 @@ public class ZomBossEntity extends PVZZombieEntity {
 			this.bossInfo.getPlayers().forEach((player) -> {
 				CriteriaTriggers.PLAYER_KILLED_ENTITY.trigger(player, this, cause);
 			});
+			PVZFlagData data = PVZFlagData.getGlobalFlagData(level);
+			data.addAdgarDefeatedCount();
 		}
 	}
 	

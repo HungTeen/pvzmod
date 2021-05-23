@@ -1,6 +1,7 @@
 package com.hungteen.pvz.event;
 
 import com.hungteen.pvz.PVZMod;
+import com.hungteen.pvz.world.invasion.OverworldInvasion;
 
 import net.minecraft.world.World;
 import net.minecraftforge.event.TickEvent;
@@ -16,7 +17,7 @@ public class PVZWorldEvents {
 			return;
 		}
 		if(ev.world.dimension() == World.OVERWORLD) {
-			OverWorldEvents.tick(ev);
+			OverworldInvasion.tick(ev);
 		}
 	}
 	

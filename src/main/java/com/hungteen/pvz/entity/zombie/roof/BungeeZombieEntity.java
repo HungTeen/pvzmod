@@ -300,7 +300,7 @@ public class BungeeZombieEntity extends PVZZombieEntity {
 
 	public static boolean canBungeeSpawn(EntityType<? extends PVZZombieEntity> zombieType, IWorld worldIn,
 			SpawnReason reason, BlockPos pos, Random rand) {
-		if(!hasZombieSpawn(zombieType, worldIn)) return false;
+		if(! checkZombieSpawn(zombieType, worldIn, reason)) return false;
 		return worldIn.getBrightness(LightType.BLOCK, pos) < 8 && worldIn.getDifficulty() != Difficulty.PEACEFUL && (reason == SpawnReason.SPAWNER || worldIn.isEmptyBlock(pos));
 	}
 	

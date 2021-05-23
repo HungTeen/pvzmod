@@ -355,10 +355,10 @@ fa3446437a0529b1c2a52625b2b087066fbe5b0c data/pvz/loot_tables/blocks/amethyst_bl
 70569db3e45324659a3245600ac641c8ca5ae61a data/pvz/loot_tables/blocks/arma_ore.json
 441692c777adb6e4d0d89b77917bb23b381032fc data/pvz/loot_tables/blocks/assist_ore.json
 3ebe1cd588415fca66fe549a986415c0eb78bdd2 data/pvz/loot_tables/blocks/butter_block.json
-bb1e96e0183b2e4a2051ce984fbb3a297f7b1942 data/pvz/loot_tables/blocks/cabbage.json
+bab50f4b775559451caeab5b8305522aa8fe1c34 data/pvz/loot_tables/blocks/cabbage.json
 a0602ad5f4ff37150e711fdd9107af3b2e5f788a data/pvz/loot_tables/blocks/card_fusion_table.json
 668a68e17aab810e4ae2457e30678b5166c250d0 data/pvz/loot_tables/blocks/chomper.json
-098a387128cc5c70b6f33043c8454c794063d3f3 data/pvz/loot_tables/blocks/corn.json
+38bd1ff2cc1d0c16ba27fef58bc5b46e23a3e464 data/pvz/loot_tables/blocks/corn.json
 f2654d03019961a592cccaf88df5196405ecebeb data/pvz/loot_tables/blocks/defence_ore.json
 ef9c9037faa5df28a8f5dc00ab50c5c8cf25b089 data/pvz/loot_tables/blocks/diamond_sunflower_trophy.json
 117c4d85e03ad4759f056627ce77b43589422746 data/pvz/loot_tables/blocks/electric_ore.json

@@ -18,7 +18,7 @@ import com.hungteen.pvz.utils.PlantUtil;
 import com.hungteen.pvz.utils.PlayerUtil;
 import com.hungteen.pvz.utils.enums.Plants;
 import com.hungteen.pvz.utils.enums.Resources;
-import com.hungteen.pvz.world.WaveManager;
+import com.hungteen.pvz.world.invasion.WaveManager;
 
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.ServerPlayerEntity;

@@ -1,9 +1,5 @@
 package com.hungteen.pvz.register;
 
-import java.util.ArrayList;
-import java.util.EnumMap;
-import java.util.List;
-
 import com.hungteen.pvz.PVZConfig;
 import com.hungteen.pvz.PVZMod;
 import com.hungteen.pvz.entity.creature.FoodieZombieEntity;
@@ -14,9 +10,6 @@ import com.hungteen.pvz.entity.zombie.poolnight.BalloonZombieEntity;
 import com.hungteen.pvz.entity.zombie.poolnight.YetiZombieEntity;
 import com.hungteen.pvz.entity.zombie.roof.BungeeZombieEntity;
 import com.hungteen.pvz.utils.BiomeUtil;
-import com.hungteen.pvz.utils.enums.Events;
-import com.hungteen.pvz.utils.enums.Zombies;
-import com.hungteen.pvz.world.data.WorldEventData;
 
 import net.minecraft.block.Blocks;
 import net.minecraft.entity.EntityClassification;
@@ -25,7 +18,6 @@ import net.minecraft.entity.EntitySpawnPlacementRegistry.PlacementType;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.MobEntity;
 import net.minecraft.util.RegistryKey;
-import net.minecraft.world.World;
 import net.minecraft.world.biome.Biome;
 import net.minecraft.world.biome.MobSpawnInfo.Spawners;
 import net.minecraft.world.gen.Heightmap;
@@ -35,7 +27,7 @@ import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.registries.ForgeRegistries;
 
-@Mod.EventBusSubscriber(modid=PVZMod.MOD_ID,bus=Mod.EventBusSubscriber.Bus.MOD)
+@Mod.EventBusSubscriber(modid=PVZMod.MOD_ID, bus=Mod.EventBusSubscriber.Bus.MOD)
 public class EntitySpawnRegister {
 
 	public static final PlacementType IN_SKY = PlacementType.create("pvz_in_sky", (world, pos, type) -> {
@@ -49,29 +41,6 @@ public class EntitySpawnRegister {
 	public static final PlacementType ON_SNOW = PlacementType.create("pvz_on_snow", (world, pos, type) -> {
 		return world.getBlockState(pos).getBlock() == Blocks.SNOW || world.getBlockState(pos.below()).getBlock() == Blocks.SNOW_BLOCK;
 	});
-	
-	public static final EnumMap<Events, Integer> EVENT_CHANCE = new EnumMap<>(Events.class);
-	public static final List<Zombies> ZOMBIE_SPAWN_LIST = new ArrayList<>();
-	
-	static {
-		EVENT_CHANCE.put(Events.BUCKET, PVZConfig.COMMON_CONFIG.WorldSettings.WorldEventSettings.EventChanceSettings.BucketAttackChance.get());
-		EVENT_CHANCE.put(Events.WATER, PVZConfig.COMMON_CONFIG.WorldSettings.WorldEventSettings.EventChanceSettings.WaterAttackChance.get());
-		EVENT_CHANCE.put(Events.HALLOWEEN, PVZConfig.COMMON_CONFIG.WorldSettings.WorldEventSettings.EventChanceSettings.HalloweenAttackChance.get());
-		EVENT_CHANCE.put(Events.NEWSPAPER, PVZConfig.COMMON_CONFIG.WorldSettings.WorldEventSettings.EventChanceSettings.NewspaperAttackChance.get());
-		EVENT_CHANCE.put(Events.FOOTBALL, PVZConfig.COMMON_CONFIG.WorldSettings.WorldEventSettings.EventChanceSettings.FootballAttackChance.get());
-		EVENT_CHANCE.put(Events.RANDOM, PVZConfig.COMMON_CONFIG.WorldSettings.WorldEventSettings.EventChanceSettings.RandomAttackChance.get());
-		EVENT_CHANCE.put(Events.YETI, PVZConfig.COMMON_CONFIG.WorldSettings.WorldEventSettings.EventChanceSettings.YetiAttackChance.get());
-		EVENT_CHANCE.put(Events.BUNGEE, PVZConfig.COMMON_CONFIG.WorldSettings.WorldEventSettings.EventChanceSettings.BungeeAttackChance.get());
-		EVENT_CHANCE.put(Events.METAL, PVZConfig.COMMON_CONFIG.WorldSettings.WorldEventSettings.EventChanceSettings.MetalAttackChance.get());
-		EVENT_CHANCE.put(Events.ROOF, PVZConfig.COMMON_CONFIG.WorldSettings.WorldEventSettings.EventChanceSettings.RoofAttackChance.get());
-		EVENT_CHANCE.put(Events.GIANT, PVZConfig.COMMON_CONFIG.WorldSettings.WorldEventSettings.EventChanceSettings.GiantAttackChance.get());
-		EVENT_CHANCE.put(Events.ZOMBOTANY, PVZConfig.COMMON_CONFIG.WorldSettings.WorldEventSettings.EventChanceSettings.ZombotanyAttackChance.get());
-		for(Zombies zombie : Zombies.values()) {
-			if(zombie.chooseWeight > 0) {
-				ZOMBIE_SPAWN_LIST.add(zombie);
-			}
-		}
-	}
 	
 	@SubscribeEvent
 	public static void registerEntities(RegistryEvent.Register<EntityType<?>> evt) {
@@ -119,6 +88,9 @@ public class EntitySpawnRegister {
 		
 	}
 	
+	/**
+	 * called at BiomeRegister
+	 */
 	public static void addEntitySpawnToBiome(BiomeLoadingEvent event) {
 		Biome biome = ForgeRegistries.BIOMES.getValue(event.getName());
 		if(biome == BiomeRegister.ZEN_GARDEN.get()) {
@@ -150,7 +122,7 @@ public class EntitySpawnRegister {
 	
 	private static void addSpawnToOverworldLand(BiomeLoadingEvent event) {
 		//common zombie spawn
-		int p = PVZConfig.COMMON_CONFIG.WorldSettings.WorldEventSettings.MaxSpawnWeightMultiple.get();
+		int p = PVZConfig.COMMON_CONFIG.WorldSettings.WorldInvasionSettings.MaxSpawnWeightMultiple.get();
 		EntityClassification ee = EntityClassification.MONSTER;
 		
 		event.getSpawns().addSpawn(ee, new Spawners(EntityRegister.YETI_ZOMBIE.get(), 3 * PVZConfig.COMMON_CONFIG.WorldSettings.EntitySpawnSettings.YetiZombieSpawnWeight.get(), 1, 1));
@@ -195,79 +167,5 @@ public class EntitySpawnRegister {
 		event.getSpawns().addSpawn(ee, new Spawners(EntityRegister.SQUASH_ZOMBIE.get(), 15 * p, 1, 1));
 		event.getSpawns().addSpawn(ee, new Spawners(EntityRegister.JALAPENO_ZOMBIE.get(), 10 * p, 1, 1));
 	}
-	
-	public static List<Zombies> getEventSpawnList(World world, Events ev){
-		if(ev == Events.RANDOM) return getRandomEventSpawnList(world);
-		return ev.zombies;
-	}
-	
-	public static List<Zombies> getRandomEventSpawnList(World world) {
-		List<Zombies> zombies = new ArrayList<>();
-		List<Integer> list = new ArrayList<>();
-		int sum = 0;
-		for(Zombies zombie : ZOMBIE_SPAWN_LIST) {
-			sum += zombie.chooseWeight;
-			list.add(sum);
-		}
-		for(int i = 0; i < 10; ++ i) {
-			if(zombies.size() >= 4) break;
-			int now = world.random.nextInt(sum);
-			Zombies current = null;
-			for(int j = 0; j < list.size(); ++ j) {
-				if(now < list.get(j)) {
-					current = ZOMBIE_SPAWN_LIST.get(j);
-					break;
-				}
-			}
-			if(current != null && zombies.indexOf(current) == -1){
-				zombies.add(current);
-			}
-		}
-		return zombies;
-	}
-	
-	public static Events getCurrentEventByRandom(World world) {
-		int sum = 0;
-		List<Integer> list = new ArrayList<>(Events.ATTACK_EVENTS.size());
-		for(Events ev : Events.ATTACK_EVENTS) {//get all attack events
-			if(EVENT_CHANCE.containsKey(ev)) {
-				sum += EVENT_CHANCE.get(ev);
-			}
-			list.add(sum);
-		}
-		int current = world.random.nextInt(sum);
-		Events res = null;
-		for(int i = 0; i < list.size(); ++ i) {
-			if(current < list.get(i)) {
-				res = Events.ATTACK_EVENTS.get(i);
-				break;
-			}
-		}
-		return res;
-	}
-	
-	/**
-	 * add spawn of zombies in event spawn list.
-	 */
-	public static void addEventSpawns(World world, Events event) {
-		WorldEventData data = WorldEventData.getOverWorldEventData(world);
-        for (Zombies zombie : getEventSpawnList(world, event)) {
-        	if(! data.hasZombieSpawnEntry(zombie)) {
-        		data.addZombieSpawnEntry(zombie);
-        	}
-        }
-    }
 
-	/**
-	 * remove all spawn of zombies in world data.
-	 */
-    public static void removeEventSpawns(World world) {
-    	WorldEventData data = WorldEventData.getOverWorldEventData(world);
-    	for(Zombies zombie : Zombies.values()) {
-    		if(data.hasZombieSpawnEntry(zombie)) {
-    			data.removeZombieSpawnEntry(zombie);
-    		}
-        }
-    }
-    
 }

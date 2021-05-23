@@ -10,7 +10,7 @@ import com.hungteen.pvz.utils.RenderUtil;
 import com.hungteen.pvz.utils.StringUtil;
 import com.hungteen.pvz.utils.enums.Colors;
 import com.hungteen.pvz.utils.enums.Resources;
-import com.hungteen.pvz.world.WaveManager;
+import com.hungteen.pvz.world.invasion.WaveManager;
 import com.mojang.blaze3d.matrix.MatrixStack;
 import com.mojang.blaze3d.systems.RenderSystem;
 

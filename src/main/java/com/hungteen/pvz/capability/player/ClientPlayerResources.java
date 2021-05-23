@@ -6,7 +6,7 @@ import com.hungteen.pvz.gui.container.shop.MysteryShopContainer;
 import com.hungteen.pvz.gui.search.SearchOption;
 import com.hungteen.pvz.utils.enums.Plants;
 import com.hungteen.pvz.utils.enums.Resources;
-import com.hungteen.pvz.world.WaveManager;
+import com.hungteen.pvz.world.invasion.WaveManager;
 
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;

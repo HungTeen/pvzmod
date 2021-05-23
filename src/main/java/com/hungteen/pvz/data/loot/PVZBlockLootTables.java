@@ -44,9 +44,9 @@ public class PVZBlockLootTables extends BlockLootTables {
 				});
 		//crop
 		this.tmpBuilder = getAgeBuilder(BlockRegister.CABBAGE.get(), 3);
-	    this.add(BlockRegister.CABBAGE.get(), createCropDrops(BlockRegister.CABBAGE.get(), ItemRegister.CABBAGE_SEEDS.get(), this.tmpBuilder));
+	    this.add(BlockRegister.CABBAGE.get(), createCropDrops(BlockRegister.CABBAGE.get(), ItemRegister.CABBAGE.get(), this.tmpBuilder));
 	    this.tmpBuilder = getAgeBuilder(BlockRegister.CORN.get(), 7);
-	    this.add(BlockRegister.CORN.get(), createCropDrops(BlockRegister.CORN.get(), ItemRegister.CORN_SEEDS.get(), this.tmpBuilder));
+	    this.add(BlockRegister.CORN.get(), createCropDrops(BlockRegister.CORN.get(), ItemRegister.CORN.get(), this.tmpBuilder));
 		
 	    //leaves
 	    this.add(BlockRegister.NUT_LEAVES.get(), (p_218506_0_) -> {
@@ -76,8 +76,8 @@ public class PVZBlockLootTables extends BlockLootTables {
 		this.knownBlocks.add(p_218507_1_);
 	}
 	
-	private static Builder createCropDrops(Block block, Item seed, ILootCondition.IBuilder bb) {
-		return createCropDrops(block, block.asItem(), seed, bb);
+	private static Builder createCropDrops(Block block, Item crops, ILootCondition.IBuilder bb) {
+		return createCropDrops(block, crops, block.asItem(), bb);
 	}
 	
 	private ILootCondition.IBuilder getAgeBuilder(Block block, int age) {

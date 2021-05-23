@@ -15,6 +15,9 @@ public class WeightList<T> {
 	private int tot;
 	private int sum = 0;
 	
+	public WeightList() {
+	}
+	
 	public WeightList(int tot) {
 		this.tot = tot;
 	}
@@ -28,6 +31,11 @@ public class WeightList<T> {
 	
 	public WeightList<T> setLeftItem(T item) {
 		this.leftItem = Optional.ofNullable(item);
+		return this;
+	}
+	
+	public WeightList<T> setTotal(int tot){
+		this.tot = tot;
 		return this;
 	}
 	
@@ -53,6 +61,17 @@ public class WeightList<T> {
 			list.addItem(p.getFirst(), p.getSecond());
 		}
 		return list;
+	}
+	
+	@SafeVarargs
+	public static <W> WeightList<W> of(Pair<W, Integer> ... pairs ){
+		WeightList<W> list = new WeightList<>();
+		int sum = 0;
+		for(Pair<W, Integer> p : pairs) {
+			list.addItem(p.getFirst(), p.getSecond());
+			sum += p.getSecond();
+		}
+		return list.setTotal(sum);
 	}
 	
 }

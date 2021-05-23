@@ -2,10 +2,10 @@ package com.hungteen.pvz.command;
 
 import java.util.Collection;
 
-import com.hungteen.pvz.event.OverWorldEvents;
-import com.hungteen.pvz.utils.enums.Events;
-import com.hungteen.pvz.world.WaveManager;
-import com.hungteen.pvz.world.data.WorldEventData;
+import com.hungteen.pvz.utils.enums.InvasionEvents;
+import com.hungteen.pvz.world.data.PVZInvasionData;
+import com.hungteen.pvz.world.invasion.OverworldInvasion;
+import com.hungteen.pvz.world.invasion.WaveManager;
 import com.mojang.brigadier.CommandDispatcher;
 import com.mojang.brigadier.arguments.IntegerArgumentType;
 import com.mojang.brigadier.builder.LiteralArgumentBuilder;
@@ -20,7 +20,7 @@ public class InvasionCommand {
 
 	public static void register(CommandDispatcher<CommandSource> dispatcher) {
         LiteralArgumentBuilder<CommandSource> builder = Commands.literal("invasion").requires((ctx) -> {return ctx.hasPermission(2);});
-        for(Events event : Events.values()) {
+        for(InvasionEvents event : InvasionEvents.values()) {
         	builder.then(Commands.literal("event")
         			.then(Commands.literal("add").then(Commands.literal(event.toString().toLowerCase()).executes((commond)->{
         				return addInvasionEvent(commond.getSource(), event);
@@ -52,22 +52,22 @@ public class InvasionCommand {
 		return targets.size();
 	}
 	
-	private static int addInvasionEvent(CommandSource source, Events event) {
-		OverWorldEvents.activateEvent(source.getLevel(), event);
+	private static int addInvasionEvent(CommandSource source, InvasionEvents event) {
+		OverworldInvasion.activateEvent(source.getLevel(), event);
 		return 0;
 	}
 	
 	private static int clearInvasionEvent(CommandSource source) {
-		OverWorldEvents.deactivateZombieAttackEvents(source.getLevel(), false);
+		OverworldInvasion.deactivateZombieAttackEvents(source.getLevel(), false);
 		return 0;
 	}
 	
 	private static int showInvasionEvent(CommandSource source, Collection<? extends ServerPlayerEntity> targets) {
 		targets.forEach((player)->{
-			WorldEventData data = WorldEventData.getOverWorldEventData(source.getLevel());
-			for(Events event : Events.values()) {
+			PVZInvasionData data = PVZInvasionData.getOverWorldInvasionData(source.getLevel());
+			for(InvasionEvents event : InvasionEvents.values()) {
 				if(data.hasEvent(event)) {
-					player.sendMessage(Events.getEventText(event), Util.NIL_UUID);
+					player.sendMessage(InvasionEvents.getEventText(event), Util.NIL_UUID);
 				}
 			}
 		});

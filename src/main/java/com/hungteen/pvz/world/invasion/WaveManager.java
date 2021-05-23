@@ -1,4 +1,4 @@
-package com.hungteen.pvz.world;
+package com.hungteen.pvz.world.invasion;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -19,10 +19,10 @@ import com.hungteen.pvz.register.SoundRegister;
 import com.hungteen.pvz.utils.EntityUtil;
 import com.hungteen.pvz.utils.PlayerUtil;
 import com.hungteen.pvz.utils.ZombieUtil;
-import com.hungteen.pvz.utils.enums.Events;
+import com.hungteen.pvz.utils.enums.InvasionEvents;
 import com.hungteen.pvz.utils.enums.Resources;
 import com.hungteen.pvz.utils.enums.Zombies;
-import com.hungteen.pvz.world.data.WorldEventData;
+import com.hungteen.pvz.world.data.PVZInvasionData;
 
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.ServerPlayerEntity;
@@ -140,7 +140,7 @@ public class WaveManager {
 	}
 	
 	protected void checkAndSummonBungee() {
-		WorldEventData data = WorldEventData.getOverWorldEventData(world);
+		PVZInvasionData data = PVZInvasionData.getOverWorldInvasionData(world);
 		if(! data.hasZombieSpawnEntry(Zombies.BUNGEE_ZOMBIE)) return ;
 		int minCnt = 5 + this.currentWave;
 		int maxCnt = 5 + 3 * this.currentWave;
@@ -185,22 +185,25 @@ public class WaveManager {
 	}
 	
 	public static void giveInvasionBonusToPlayer(World world, PlayerEntity player) {
-		if(! PlayerUtil.isPlayerSurvival(player)) return ;
+		if(! PlayerUtil.isPlayerSurvival(player)) return ;//do not effect to creative players.
 		player.getCapability(CapabilityHandler.PLAYER_DATA_CAPABILITY).ifPresent((l) -> {
 			int cnt = l.getPlayerData().getPlayerStats().getPlayerStats(Resources.KILL_COUNT);
-			if(cnt >= 20) {
+			if(cnt >= 50) {//give reward if kill count reach 50
 				PlayerUtil.playClientSound(player, 6);
-				PlayerUtil.addPlayerStats(player, Resources.MONEY, 50);
-				PlayerUtil.addPlayerStats(player, Resources.LOTTERY_CHANCE, 2);
-				player.addItem(getRandomItemForPlayer(world));
+			    PlayerUtil.addPlayerStats(player, Resources.MONEY, (cnt >= 200 ? 200 : 50));
+			    PlayerUtil.addPlayerStats(player, Resources.LOTTERY_CHANCE, (cnt >= 200 ? 5 : 3));
+			    for(int i = 0; i < (cnt >= 200 ? 2 : 1); ++ i) {
+		    	    player.addItem(getRandomItemForPlayer(world));
+			    }
 			}
+			//reset kill count.
 			l.getPlayerData().getPlayerStats().setPlayerStats(Resources.KILL_COUNT, 0);
 		});
 	}
 	
 	private static ItemStack getRandomItemForPlayer(World world) {
-		WorldEventData data = WorldEventData.getOverWorldEventData(world);
-		for(Events ev : Events.values()) {
+		PVZInvasionData data = PVZInvasionData.getOverWorldInvasionData(world);
+		for(InvasionEvents ev : InvasionEvents.values()) {
 			if(data.hasEvent(ev) && ev.bundle.isPresent()) {
 				return ev.bundle.get().getRandomBundle();
 			}
@@ -221,8 +224,8 @@ public class WaveManager {
 			}
 		}
 		if(groupNum == 1) {
-			WorldEventData data = WorldEventData.getOverWorldEventData(world);
-			if(data.hasEvent(Events.YETI) && world.random.nextInt(3) == 0) {
+			PVZInvasionData data = PVZInvasionData.getOverWorldInvasionData(world);
+			if(data.hasEvent(InvasionEvents.YETI) && world.random.nextInt(3) == 0) {
 				PVZZombieEntity yeti = EntityRegister.YETI_ZOMBIE.get().create(world);
 			    EntityUtil.onMobEntitySpawn(world, yeti, mid.offset(0, 1, 0));
 			}
@@ -249,7 +252,7 @@ public class WaveManager {
 	}
 	
 	private void updateSpawns() {
-		WorldEventData data = WorldEventData.getOverWorldEventData(world);
+		PVZInvasionData data = PVZInvasionData.getOverWorldInvasionData(world);
 		for(Zombies zombie : Zombies.values()) {
 			if(data.hasZombieSpawnEntry(zombie)) {
 				this.spawns.add(zombie);

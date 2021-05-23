@@ -35,12 +35,13 @@ import com.hungteen.pvz.register.ItemRegister;
 import com.hungteen.pvz.register.SoundRegister;
 import com.hungteen.pvz.utils.EntityUtil;
 import com.hungteen.pvz.utils.ZombieUtil;
-import com.hungteen.pvz.utils.enums.Events;
+import com.hungteen.pvz.utils.enums.InvasionEvents;
 import com.hungteen.pvz.utils.enums.Ranks;
 import com.hungteen.pvz.utils.enums.Zombies;
 import com.hungteen.pvz.utils.interfaces.IPVZZombie;
 import com.hungteen.pvz.utils.others.WeightList;
-import com.hungteen.pvz.world.data.WorldEventData;
+import com.hungteen.pvz.world.data.PVZInvasionData;
+import com.hungteen.pvz.world.invasion.OverworldInvasion;
 import com.mojang.datafixers.util.Pair;
 
 import net.minecraft.enchantment.EnchantmentHelper;
@@ -132,11 +133,11 @@ public abstract class PVZZombieEntity extends MonsterEntity implements IPVZZombi
 			this.updateAttributes();
 			//check zombie state, must after method updateAttributes()
 			if (level.dimension() == World.OVERWORLD) {
-				WorldEventData data = WorldEventData.getOverWorldEventData(level);
-				if (this.canBeMini() && data.hasEvent(Events.MINI)) {
+				PVZInvasionData data = PVZInvasionData.getOverWorldInvasionData(level);
+				if (this.canBeMini() && data.hasEvent(InvasionEvents.MINI)) {
 					this.onZombieBeMini();
 				}
-				if (this.canBeInvis() && data.hasEvent(Events.INVIS)) {
+				if (this.canBeInvis() && data.hasEvent(InvasionEvents.INVIS)) {
 					this.addEffect(new EffectInstance(Effects.INVISIBILITY, 1000000, 10, false, false));
 				}
 			}
@@ -510,23 +511,26 @@ public abstract class PVZZombieEntity extends MonsterEntity implements IPVZZombi
 
 	public static boolean canZombieSpawn(EntityType<? extends PVZZombieEntity> zombieType, IWorld worldIn,
 			SpawnReason reason, BlockPos pos, Random rand) {
-		if(!hasZombieSpawn(zombieType, worldIn)) return false;
+		if(! checkZombieSpawn(zombieType, worldIn, reason)) return false;
 		return worldIn.getBrightness(LightType.BLOCK, pos) > 8 ? false
 				: checkAnyLightMonsterSpawnRules(zombieType, worldIn, reason, pos, rand);
 	}
 	
-	public static boolean hasZombieSpawn(EntityType<? extends PVZZombieEntity> zombieType, IWorld worldIn) {
+	/**
+	 * chunk spawn zombie need has invasion event for that day.
+	 */
+	public static boolean checkZombieSpawn(EntityType<? extends PVZZombieEntity> zombieType, IWorld worldIn, SpawnReason reason) {
+		if(reason != SpawnReason.NATURAL) return true;
 		Optional<Zombies> opt = getZombieNameByType(zombieType);
 		if(worldIn instanceof World) {
 			if(opt.isPresent()) {
-			    WorldEventData data = WorldEventData.getOverWorldEventData((World) worldIn);
-			    if(! data.hasZombieSpawnEntry(opt.get())) return false;
+			    return OverworldInvasion.ZOMBIE_INVADE_SET.contains(opt.get());
 			} else {
 			    System.out.println("Error : No Such Zombie Type !");
 			    return false;
 			}
 		}
-		return true;
+		return false;
 	}
 	
 	public static Optional<Zombies> getZombieNameByType(EntityType<? extends PVZZombieEntity> zombieType){

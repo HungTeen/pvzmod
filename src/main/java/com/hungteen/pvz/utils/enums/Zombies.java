@@ -1,5 +1,7 @@
 package com.hungteen.pvz.utils.enums;
 
+import com.hungteen.pvz.utils.others.WeightList;
+
 public enum Zombies {
 	// 1
 	NORMAL_ZOMBIE(10, 5), 
@@ -55,8 +57,21 @@ public enum Zombies {
 	NOBLE_ZOMBIE(0, 0), 
 	RA_ZOMBIE(5, 0);
 
+	public static final WeightList<Zombies> ZOMBIE_SPAWN_LIST = new WeightList<>();
 	public final int spawnWeight;// wave spawn
 	public final int chooseWeight;//random invasion choose
+	
+	static {
+		//init random spawn weight list.
+		int sum = 0;
+		for(Zombies zombie : Zombies.values()) {
+			if(zombie.chooseWeight > 0) {
+				ZOMBIE_SPAWN_LIST.addItem(zombie, zombie.chooseWeight);
+				sum += zombie.chooseWeight;
+			}
+		}
+		ZOMBIE_SPAWN_LIST.setTotal(sum);
+	}
 	
 	private Zombies(int weight, int choose) {
 		this.spawnWeight = weight;
