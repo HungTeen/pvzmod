@@ -71,8 +71,8 @@ public class NormalZombieModel extends EntityModel<NormalZombieEntity> {
 	public void setupAnim(NormalZombieEntity entity, float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch){
 		this.head.yRot = netHeadYaw / (180F / (float)Math.PI);
         this.head.xRot = headPitch / (180F / (float)Math.PI);
-        this.right_leg.xRot = MathHelper.cos(limbSwing * 0.6662F) * 1.4F * limbSwingAmount;
-        this.left_leg.xRot = MathHelper.cos(limbSwing * 0.6662F + (float)Math.PI) * 1.4F * limbSwingAmount;
+        this.left_leg.xRot = MathHelper.cos(limbSwing * 0.6662F) * 1.4F * limbSwingAmount;
+        this.right_leg.xRot = MathHelper.cos(limbSwing * 0.6662F + (float)Math.PI) * 1.4F * limbSwingAmount;
         this.right_hand.xRot = MathHelper.cos(limbSwing * 0.6662F) * 1.4F * limbSwingAmount;
         this.left_hand.xRot = MathHelper.cos(limbSwing * 0.6662F + (float)Math.PI) * 1.4F * limbSwingAmount;
 	}
@@ -87,4 +87,26 @@ public class NormalZombieModel extends EntityModel<NormalZombieEntity> {
 		modelRenderer.yRot = y;
 		modelRenderer.zRot = z;
 	}
+	
+	public void performAnim(NormalZombieEntity entity, float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch){
+		this.head.yRot = netHeadYaw / (180F / (float)Math.PI);
+        this.head.xRot = headPitch / (180F / (float)Math.PI);
+        this.left_leg.xRot = MathHelper.cos(limbSwing * 0.6662F) * 1.4F * limbSwingAmount;
+        this.right_leg.xRot = MathHelper.cos(limbSwing * 0.6662F + (float)Math.PI) * 1.4F * limbSwingAmount;
+        this.right_hand.xRot = MathHelper.cos(limbSwing * 0.6662F) * 1.4F * limbSwingAmount;
+        this.left_hand.xRot = MathHelper.cos(limbSwing * 0.6662F + (float)Math.PI) * 1.4F * limbSwingAmount;
+	}
+	
+	public void renderHand(MatrixStack matrixStack, IVertexBuilder buffer, int packedLight, int packedOverlay, float red, float green, float blue, float alpha){
+//		this.total.visible = false;
+//		this.left_hand.visible = true;
+//		System.out.println("1");
+//		this.left_hand.setPos(0.0F, 24.0F, 0.0F);
+//		this.left_hand.render(matrixStack, buffer, packedLight, packedOverlay);
+	}
+	
+	public ModelRenderer getZombieHand() {
+		return this.left_hand;
+	}
+	
 }

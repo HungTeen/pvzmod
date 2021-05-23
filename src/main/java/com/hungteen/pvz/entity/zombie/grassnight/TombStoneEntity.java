@@ -49,6 +49,7 @@ public class TombStoneEntity extends UnderGroundZombieEntity {
 		this.canBeMini = false;
 		this.canBeFrozen = false;
 		this.canBeStealByBungee = false;
+		this.canCollideWithZombie = false;
 	}
 	
 	@Override
@@ -75,6 +76,10 @@ public class TombStoneEntity extends UnderGroundZombieEntity {
 					this.currentSummonCD = this.getRandom().nextInt(this.maxSummonCD - this.minSummonCD + 1) + this.minSummonCD;
 				}
 			}
+		}
+		if(! this.level.isClientSide) {
+			BlockPos pos = this.blockPosition();
+			this.setPos(pos.getX() + 0.5, this.getY(), pos.getZ() + 0.5);
 		}
 	}
 	

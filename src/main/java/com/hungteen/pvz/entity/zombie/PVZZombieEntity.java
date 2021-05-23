@@ -281,6 +281,11 @@ public abstract class PVZZombieEntity extends MonsterEntity implements IPVZZombi
 				&& ((PVZDamageSource) cause).getDamageCount() > 0) {
 			this.canSpawnDrop = false;
 		}
+		if(! this.level.isClientSide) {
+//			ZombieBodyEntity body = EntityRegister.ZOMBIE_BODY.get().create(level);
+//			body.setPos(getX(), getY(), getZ());
+//			level.addFreshEntity(body);
+		}
 	}
 
 	@Override

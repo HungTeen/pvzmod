@@ -79,8 +79,8 @@ public class MournerZombieModel extends EntityModel<MournerZombieEntity> {
         this.head.xRot = headPitch / (180F / (float)Math.PI);
         float tmp = MathHelper.abs(MathHelper.sin(ageInTicks * 0.5f));
         this.head.zRot = entity.isRightShake() ? tmp : - tmp;
-        this.right_leg.xRot = MathHelper.cos(limbSwing * 0.6662F) * 1.4F * limbSwingAmount;
-        this.left_leg.xRot = MathHelper.cos(limbSwing * 0.6662F + (float)Math.PI) * 1.4F * limbSwingAmount;
+        this.left_leg.xRot = MathHelper.cos(limbSwing * 0.6662F) * 1.4F * limbSwingAmount;
+        this.right_leg.xRot = MathHelper.cos(limbSwing * 0.6662F + (float)Math.PI) * 1.4F * limbSwingAmount;
         this.right_hand.xRot = MathHelper.cos(limbSwing * 0.6662F) * 1.4F * limbSwingAmount;
         this.left_hand.xRot = MathHelper.cos(limbSwing * 0.6662F + (float)Math.PI) * 1.4F * limbSwingAmount;
         if(entity.getAttackTime() > 0) {

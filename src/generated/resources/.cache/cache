@@ -378,7 +378,7 @@ eb9f90911f7b9301175a741d9fd01e2ee23125eb data/pvz/loot_tables/blocks/lantern.jso
 48e02e235f481a472848c3daf3640d2891660989 data/pvz/loot_tables/blocks/light_ore.json
 354aeed11f2f8e7152611897bf0ac3f99df29e7c data/pvz/loot_tables/blocks/lily_pad.json
 2d888e4966e902d3f2306cffe11fced2f3896f65 data/pvz/loot_tables/blocks/magic_ore.json
-2621462f256a5db6214559f86b1eb80336710056 data/pvz/loot_tables/blocks/nut_leaves.json
+c8e180540f649db0d91d7ebff508ae7e0be097c0 data/pvz/loot_tables/blocks/nut_leaves.json
 f402a5ae35ed5f3692c13aac9e0e6791e043c918 data/pvz/loot_tables/blocks/nut_sapling.json
 de79c756a8b8505782fb78ab5991a7bdd8e75a25 data/pvz/loot_tables/blocks/origin_block.json
 51b7f8f1705f5254626bbe7cc9ba0c04b70ea988 data/pvz/loot_tables/blocks/origin_ore.json

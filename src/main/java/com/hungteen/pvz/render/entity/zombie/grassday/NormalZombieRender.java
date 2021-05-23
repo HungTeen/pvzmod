@@ -12,13 +12,15 @@ import net.minecraftforge.api.distmarker.OnlyIn;
 @OnlyIn(Dist.CLIENT)
 public class NormalZombieRender extends AbstractNormalRender<NormalZombieEntity>{
 
+	public static final ResourceLocation TEXTURE = StringUtil.prefix("textures/entity/zombie/grassday/normal_zombie.png");
+	
 	public NormalZombieRender(EntityRendererManager rendererManager){
 		super(rendererManager, new NormalZombieModel(), 0.5f);
 	}
 
 	@Override
 	public ResourceLocation getTextureLocation(NormalZombieEntity entity) {
-		return StringUtil.prefix("textures/entity/zombie/grassday/normal_zombie.png");
+		return TEXTURE;
 	}
 
 }

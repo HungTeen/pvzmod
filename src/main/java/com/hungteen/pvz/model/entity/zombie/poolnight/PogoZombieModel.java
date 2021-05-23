@@ -119,9 +119,9 @@ public class PogoZombieModel extends EntityModel<PogoZombieEntity> {
 	        this.left_hand.yRot = 0;
 	        this.right_hand.xRot = MathHelper.cos(limbSwing * 0.6662F) * 1.4F * limbSwingAmount;
 	        this.right_hand.yRot = 0;
-	        this.left_leg.xRot = MathHelper.cos(limbSwing * 0.6662F + (float)Math.PI) * 1.4F * limbSwingAmount;
+	        this.right_leg.xRot = MathHelper.cos(limbSwing * 0.6662F + (float)Math.PI) * 1.4F * limbSwingAmount;
 			this.left_leg.yRot = 0;
-	        this.right_leg.xRot = MathHelper.cos(limbSwing * 0.6662F) * 1.4F * limbSwingAmount;
+	        this.left_leg.xRot = MathHelper.cos(limbSwing * 0.6662F) * 1.4F * limbSwingAmount;
 	        this.right_leg.yRot = 0;
 	        this.total.xRot = 0;
 		}
