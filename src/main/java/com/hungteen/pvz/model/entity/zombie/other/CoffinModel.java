@@ -1,20 +1,18 @@
 package com.hungteen.pvz.model.entity.zombie.other;
 
 import com.hungteen.pvz.entity.zombie.other.CoffinEntity;
-import com.hungteen.pvz.model.entity.IHasDefence;
 import com.mojang.blaze3d.matrix.MatrixStack;
 import com.mojang.blaze3d.vertex.IVertexBuilder;
 
 import net.minecraft.client.renderer.entity.model.EntityModel;
 import net.minecraft.client.renderer.model.ModelRenderer;
-import net.minecraft.entity.LivingEntity;
 import net.minecraft.util.math.MathHelper;
 
 // Made with Blockbench 3.7.2
 // Exported for Minecraft version 1.15
 // Paste this class into your mod and generate all required imports
 
-public class CoffinModel extends EntityModel<CoffinEntity> implements IHasDefence {
+public class CoffinModel extends EntityModel<CoffinEntity> {
 
 	private final ModelRenderer total;
 	private final ModelRenderer coffin;
@@ -283,6 +281,7 @@ public class CoffinModel extends EntityModel<CoffinEntity> implements IHasDefenc
 	@Override
 	public void setupAnim(CoffinEntity entity, float limbSwing, float limbSwingAmount, float ageInTicks,
 			float netHeadYaw, float headPitch) {
+		this.updateParts(entity);
 		// front left
 		this.left_leg.xRot = MathHelper.cos(limbSwing * 0.6662F) * 1.4F * limbSwingAmount;
 		this.right_leg.xRot = MathHelper.cos(limbSwing * 0.6662F + (float) Math.PI) * 1.4F * limbSwingAmount;
@@ -320,8 +319,7 @@ public class CoffinModel extends EntityModel<CoffinEntity> implements IHasDefenc
 		modelRenderer.zRot = z;
 	}
 
-	@Override
-	public void setDestroyed(LivingEntity entity) {
+	public void updateParts(CoffinEntity entity) {
 		float percent = entity.getHealth() / entity.getMaxHealth();
 		this.zombie1.visible = percent > 5f / 6;
 		this.zombie2.visible = percent > 4f / 6;

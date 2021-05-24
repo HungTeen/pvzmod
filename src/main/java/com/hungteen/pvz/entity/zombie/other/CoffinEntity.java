@@ -1,5 +1,6 @@
 package com.hungteen.pvz.entity.zombie.other;
 
+import com.hungteen.pvz.data.loot.PVZLoot;
 import com.hungteen.pvz.entity.misc.ZombieHandEntity;
 import com.hungteen.pvz.entity.plant.PVZPlantEntity;
 import com.hungteen.pvz.entity.zombie.base.UnderGroundZombieEntity;
@@ -241,7 +242,7 @@ public class CoffinEntity extends UnderGroundZombieEntity {
 
 	@Override
 	protected ResourceLocation getDefaultLootTable() {
-		return null;
+		return PVZLoot.COFFIN;
 	}
 
 	@Override

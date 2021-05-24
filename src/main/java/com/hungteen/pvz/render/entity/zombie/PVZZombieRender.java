@@ -2,13 +2,11 @@ package com.hungteen.pvz.render.entity.zombie;
 
 import com.hungteen.pvz.capability.player.ClientPlayerResources;
 import com.hungteen.pvz.entity.zombie.PVZZombieEntity;
-import com.hungteen.pvz.model.entity.IHasDefence;
 import com.hungteen.pvz.render.entity.PVZCreatureRender;
 import com.hungteen.pvz.render.layer.fullskin.CharmLayer;
 import com.hungteen.pvz.render.layer.fullskin.EnergyLayer;
 import com.hungteen.pvz.render.layer.fullskin.SunLayer;
 import com.hungteen.pvz.render.layer.fullskin.SunLightLayer;
-import com.mojang.blaze3d.matrix.MatrixStack;
 
 import net.minecraft.client.renderer.entity.EntityRendererManager;
 import net.minecraft.client.renderer.entity.model.EntityModel;
@@ -23,14 +21,6 @@ public abstract class PVZZombieRender<T extends PVZZombieEntity> extends PVZCrea
 		this.addZombieLayers();
 	}
 
-	@Override
-	protected void scale(T entity, MatrixStack matrixStackIn, float partialTickTime) {
-		if(this.getModel() instanceof IHasDefence) {
-			((IHasDefence) this.getModel()).setDestroyed(entity);
-		}
-		super.scale(entity, matrixStackIn, partialTickTime);
-	}
-	
 	@Override
 	protected boolean isBodyVisible(T livingEntityIn) {
 		return super.isBodyVisible(livingEntityIn) || ClientPlayerResources.lightLevel > 1;

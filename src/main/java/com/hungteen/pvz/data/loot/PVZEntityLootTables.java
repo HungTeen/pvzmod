@@ -50,9 +50,18 @@ public class PVZEntityLootTables implements Consumer<BiConsumer<ResourceLocation
 				.add(ItemLootEntry.lootTableItem(ItemRegister.GIGA_BOOTS.get()))
 				.when(RandomChanceWithLooting.randomChanceAndLootingBoost(0.03F, 0.01F))
 				));
-		t.accept(PVZLoot.NOBLE_ZOMBIE, getZombieLootTable().withPool(LootPool.lootPool().setRolls(ConstantRange.exactly(1))
-				.add(ItemLootEntry.lootTableItem(ItemRegister.TIME_KEY_TO_DEEP.get()))
-				.when(RandomChanceWithLooting.randomChanceAndLootingBoost(1F, 0.01F))
+		t.accept(PVZLoot.NOBLE_ZOMBIE, getZombieLootTable()
+				.withPool(LootPool.lootPool().setRolls(ConstantRange.exactly(1))
+				        .add(ItemLootEntry.lootTableItem(ItemRegister.TIME_KEY_TO_DEEP.get()))
+				        .when(RandomChanceWithLooting.randomChanceAndLootingBoost(1F, 0.01F)))
+				.withPool(LootPool.lootPool().setRolls(ConstantRange.exactly(1))
+						.add(ItemLootEntry.lootTableItem(Items.MYCELIUM))
+						.when(RandomChanceWithLooting.randomChanceAndLootingBoost(0.05F, 0.01F))
+				));
+		t.accept(PVZLoot.COFFIN, getLootTable()
+				.withPool(LootPool.lootPool().setRolls(ConstantRange.exactly(1))
+						.add(ItemLootEntry.lootTableItem(Items.MYCELIUM))
+						.when(RandomChanceWithLooting.randomChanceAndLootingBoost(0.06F, 0.01F))
 				));
 		t.accept(PVZLoot.MOURNER_ZOMBIE, getZombieLootTable().withPool(LootPool.lootPool().setRolls(ConstantRange.exactly(1))
 				.add(ItemLootEntry.lootTableItem(ItemRegister.SPORE.get()))
@@ -112,13 +121,13 @@ public class PVZEntityLootTables implements Consumer<BiConsumer<ResourceLocation
 				.add(ItemLootEntry.lootTableItem(ItemRegister.POLE.get()))
 				.add(ItemLootEntry.lootTableItem(ItemRegister.ZOMBIE_DOLL.get()))
 				.add(ItemLootEntry.lootTableItem(ItemRegister.WARNING_SIGN.get()))
-				.when(RandomChanceWithLooting.randomChanceAndLootingBoost(0.04F, 0.01F))
+				.when(RandomChanceWithLooting.randomChanceAndLootingBoost(0.05F, 0.01F))
 				));
 		t.accept(PVZLoot.SAD_GARGANTUAR, getLootTable().withPool(LootPool.lootPool().setRolls(ConstantRange.exactly(1))
 				.add(ItemLootEntry.lootTableItem(ItemRegister.POLE.get()))
 				.add(ItemLootEntry.lootTableItem(ItemRegister.ZOMBIE_DOLL.get()))
 				.add(ItemLootEntry.lootTableItem(ItemRegister.WARNING_SIGN.get()))
-				.when(RandomChanceWithLooting.randomChanceAndLootingBoost(0.1F, 0.01F))
+				.when(RandomChanceWithLooting.randomChanceAndLootingBoost(0.15F, 0.01F))
 				));
 		t.accept(PVZLoot.ZOMBOSS, getLootTable().withPool(LootPool.lootPool().setRolls(ConstantRange.exactly(1))
 				.add(ItemLootEntry.lootTableItem(BlockRegister.SILVER_SUNFLOWER_TROPHY.get()))

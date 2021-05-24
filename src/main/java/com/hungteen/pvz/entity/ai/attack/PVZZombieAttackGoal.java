@@ -17,7 +17,10 @@ public class PVZZombieAttackGoal extends PVZMeleeAttackGoal {
 	
 	@Override
 	public void tick() {
-		if(! this.zombie.canZombieNormalUpdate()) return ;
+		if(! this.zombie.canZombieNormalUpdate()) {
+			this.zombie.setAggressive(false);
+			return ;
+		}
 		super.tick();
 	}
 	
@@ -25,10 +28,13 @@ public class PVZZombieAttackGoal extends PVZMeleeAttackGoal {
 	protected void checkAndPerformAttack(LivingEntity target) {
 		double dis = EntityUtil.getNearestDistance(this.attacker, target);
 		double range = this.getAttackReachSqr(target);
-		if (range >= dis && this.attackTick <= 0) {
-			this.attackTick = this.zombie.getAttackCD();
-			this.attacker.swing(Hand.MAIN_HAND);
-			this.attacker.doHurtTarget(target);
+		if (range >= dis) {
+			this.zombie.setAggressive(true);
+			if(this.attackTick <= 0) {
+			    this.attackTick = this.zombie.getAttackCD();
+			    this.attacker.swing(Hand.MAIN_HAND);
+			    this.attacker.doHurtTarget(target);
+			}
 		}
 	}
 

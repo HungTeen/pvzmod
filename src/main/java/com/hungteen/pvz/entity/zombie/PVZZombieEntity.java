@@ -33,6 +33,7 @@ import com.hungteen.pvz.register.EffectRegister;
 import com.hungteen.pvz.register.EntityRegister;
 import com.hungteen.pvz.register.ItemRegister;
 import com.hungteen.pvz.register.SoundRegister;
+import com.hungteen.pvz.utils.AlgorithmUtil;
 import com.hungteen.pvz.utils.EntityUtil;
 import com.hungteen.pvz.utils.ZombieUtil;
 import com.hungteen.pvz.utils.enums.InvasionEvents;
@@ -93,6 +94,8 @@ public abstract class PVZZombieEntity extends MonsterEntity implements IPVZZombi
 			DataSerializers.INT);
 	private static final DataParameter<Integer> ATTACK_TIME = EntityDataManager.defineId(PVZZombieEntity.class,
 			DataSerializers.INT);
+	private static final DataParameter<Integer> ANIM_TIME = EntityDataManager.defineId(PVZZombieEntity.class,
+			DataSerializers.INT);
 	private static final DataParameter<Float> DEFENCE_LIFE = EntityDataManager.defineId(PVZZombieEntity.class,
 			DataSerializers.FLOAT);
 	private static final DataParameter<Integer> ZOMBIE_LEVEL = EntityDataManager.defineId(PVZZombieEntity.class,
@@ -100,6 +103,7 @@ public abstract class PVZZombieEntity extends MonsterEntity implements IPVZZombi
 	protected WeightList<DropType> dropSpecialList;
 	private static final int CHARM_FLAG = 0;
 	private static final int MINI_FLAG = 1;
+	public static final int PERFORM_ATTACK_CD = 10;
 	public boolean canCollideWithZombie = true;
 	protected boolean hasDirectDefence = false;
 	protected boolean canSpawnDrop = true;
@@ -168,6 +172,7 @@ public abstract class PVZZombieEntity extends MonsterEntity implements IPVZZombi
 		entityData.define(ATTACK_TIME, 0);
 		entityData.define(DEFENCE_LIFE, 0f);
 		entityData.define(ZOMBIE_LEVEL, 1);
+		entityData.define(ANIM_TIME, 0);
 	}
 	
 	public static AttributeModifierMap createZombieAttributes() {
@@ -219,6 +224,9 @@ public abstract class PVZZombieEntity extends MonsterEntity implements IPVZZombi
 	 * (not be frozen or butter and so on).
 	 */
 	public void normalZombieTick() {
+		if(! this.level.isClientSide) {
+			this.setAnimTime(Math.max(0, this.getAnimTime() - 1));
+		}
 	}
 
 	/**
@@ -464,6 +472,7 @@ public abstract class PVZZombieEntity extends MonsterEntity implements IPVZZombi
 	@Override
 	public boolean doHurtTarget(Entity entityIn) {
 		entityIn.invulnerableTime = 0;
+		this.setAnimTime(PERFORM_ATTACK_CD);
 		// add
 		float f = (float) this.getAttributeValue(Attributes.ATTACK_DAMAGE);
 		float f1 = (float) this.getAttributeValue(Attributes.ATTACK_KNOCKBACK);
@@ -668,7 +677,7 @@ public abstract class PVZZombieEntity extends MonsterEntity implements IPVZZombi
 	public boolean hasDefence() {
 		return this.hasDirectDefence;
 	}
-
+	
 	@Override
 	public void addAdditionalSaveData(CompoundNBT compound) {
 		super.addAdditionalSaveData(compound);
@@ -678,6 +687,7 @@ public abstract class PVZZombieEntity extends MonsterEntity implements IPVZZombi
 		}
 		compound.putInt("zombie_states_flag", this.getZombieStates());
 		compound.putInt("zombie_attack_time", this.getAttackTime());
+		compound.putInt("zombie_anim_time", this.getAnimTime());
 		compound.putFloat("defence_life", this.getDefenceLife());
 		compound.putInt("zombie_level", this.getZombieLevel());
 	}
@@ -707,6 +717,9 @@ public abstract class PVZZombieEntity extends MonsterEntity implements IPVZZombi
 		}
 		if (compound.contains("zombie_attack_time")) {
 			this.setAttackTime(compound.getInt("zombie_attack_time"));
+		}
+		if (compound.contains("zombie_anim_time")) {
+			this.setAnimTime(compound.getInt("zombie_anim_time"));
 		}
 		if (compound.contains("defence_life")) {
 			this.setDefenceLife(compound.getFloat("defence_life"));
@@ -799,7 +812,7 @@ public abstract class PVZZombieEntity extends MonsterEntity implements IPVZZombi
 	public void setDefenceLife(float life) {
 		entityData.set(DEFENCE_LIFE, life);
 	}
-
+	
 	public Optional<UUID> getOwnerUUID() {
 		return entityData.get(OWNER_UUID);
 	}
@@ -815,13 +828,9 @@ public abstract class PVZZombieEntity extends MonsterEntity implements IPVZZombi
 	public void setMiniZombie(boolean is) {
 		this.setStateByFlag(is, MINI_FLAG);
 	}
-
+	
 	private void setStateByFlag(boolean is, int flag) {
-		int state = this.getZombieStates();
-		if (is)
-			this.setZombieStates(state | (1 << flag));
-		else
-			this.setZombieStates(state & ~(1 << flag));
+		this.setZombieStates(AlgorithmUtil.BitOperator.setBit(this.getZombieStates(), flag, is));
 	}
 
 	public void setZombieType(Type type) {
@@ -829,19 +838,27 @@ public abstract class PVZZombieEntity extends MonsterEntity implements IPVZZombi
 	}
 
 	public boolean isCharmed() {
-		return ((this.getZombieStates() >> CHARM_FLAG) & 1) == 1;
+		return AlgorithmUtil.BitOperator.hasBitOne(this.getZombieStates(), CHARM_FLAG);
 	}
 
 	public boolean isMiniZombie() {
-		return ((this.getZombieStates() >> MINI_FLAG) & 1) == 1;
+		return AlgorithmUtil.BitOperator.hasBitOne(this.getZombieStates(), MINI_FLAG);
 	}
-
+	
 	public int getAttackTime() {
 		return entityData.get(ATTACK_TIME);
 	}
 
 	public void setAttackTime(int cd) {
 		entityData.set(ATTACK_TIME, cd);
+	}
+	
+	public int getAnimTime() {
+		return entityData.get(ANIM_TIME);
+	}
+
+	public void setAnimTime(int cd) {
+		entityData.set(ANIM_TIME, cd);
 	}
 	
 	public int getZombieLevel() {

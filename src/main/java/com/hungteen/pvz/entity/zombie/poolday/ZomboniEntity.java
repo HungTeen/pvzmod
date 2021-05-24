@@ -35,6 +35,7 @@ public class ZomboniEntity extends PVZZombieEntity implements IMultiPartEntity{
 		super(type, worldIn);
 		this.canBeButter = false;
 		this.canBeFrozen = false;
+		this.canBeCold = false;
 		resetParts();
 	}
 	

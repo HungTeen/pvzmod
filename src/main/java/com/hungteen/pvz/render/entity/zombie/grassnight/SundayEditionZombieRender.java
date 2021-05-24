@@ -12,13 +12,15 @@ import net.minecraftforge.api.distmarker.OnlyIn;
 @OnlyIn(Dist.CLIENT)
 public class SundayEditionZombieRender extends AbstractPaperZombieRender<SundayEditionZombieEntity>{
 
+	public static final ResourceLocation TEX = StringUtil.prefix("textures/entity/zombie/grassnight/sunday_edition_zombie.png");
+	
 	public SundayEditionZombieRender(EntityRendererManager rendererManager) {
 		super(rendererManager, new SundayEditionZombieModel());
 	}
 
 	@Override
 	public ResourceLocation getTextureLocation(SundayEditionZombieEntity entity) {
-		return StringUtil.prefix("textures/entity/zombie/grassnight/sunday_edition_zombie.png");
+		return TEX;
 	}
 
 	

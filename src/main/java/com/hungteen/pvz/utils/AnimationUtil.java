@@ -26,4 +26,8 @@ public class AnimationUtil {
 		return MathHelper.cos(sita * x) * maxAngle / 180 * PI;
 	}
 	
+	public static float byDegree(float degree) {
+		return PI / 180F * degree;
+	}
+	
 }

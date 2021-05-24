@@ -12,13 +12,15 @@ import net.minecraftforge.api.distmarker.OnlyIn;
 @OnlyIn(Dist.CLIENT)
 public class NewspaperZombieRender extends AbstractPaperZombieRender<NewspaperZombieEntity>{
 
+	public static final ResourceLocation TEX = StringUtil.prefix("textures/entity/zombie/grassnight/newspaper_zombie.png");
+	
 	public NewspaperZombieRender(EntityRendererManager rendererManager){
 		super(rendererManager, new NewspaperZombieModel());
 	}
 
 	@Override
 	public ResourceLocation getTextureLocation(NewspaperZombieEntity entity) {
-		return StringUtil.prefix("textures/entity/zombie/grassnight/newspaper_zombie.png");
+		return TEX;
 	}
 
 }

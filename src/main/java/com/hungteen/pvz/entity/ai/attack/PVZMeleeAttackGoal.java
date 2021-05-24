@@ -66,7 +66,6 @@ public abstract class PVZMeleeAttackGoal extends Goal {
 	@Override
 	public void start() {
 		this.attacker.getNavigation().moveTo(this.path, this.speedTowardsTarget);
-		this.attacker.setAggressive(true);
 		this.delayCounter = 0;
 	}
 

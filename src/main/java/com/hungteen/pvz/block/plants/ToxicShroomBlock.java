@@ -56,7 +56,6 @@ public class ToxicShroomBlock extends BushBlock implements IGrowable {
 
 	@Override
 	protected boolean mayPlaceOn(BlockState state, IBlockReader worldIn, BlockPos pos) {
-		System.out.println(state.getBlock());
 		return state.getBlock() == Blocks.MYCELIUM;
 	}
 
@@ -65,7 +64,6 @@ public class ToxicShroomBlock extends BushBlock implements IGrowable {
 		BlockPos blockpos = pos.below();
 		BlockState blockstate = worldIn.getBlockState(blockpos);
 		Block block = blockstate.getBlock();
-		System.out.println(worldIn.getRawBrightness(pos, 0) < VALID_LIGHT_LEVEL);
 		return block == Blocks.MYCELIUM && worldIn.getRawBrightness(pos, 0) < VALID_LIGHT_LEVEL
 				&& blockstate.canSustainPlant(worldIn, blockpos, net.minecraft.util.Direction.UP, this);
 	}
