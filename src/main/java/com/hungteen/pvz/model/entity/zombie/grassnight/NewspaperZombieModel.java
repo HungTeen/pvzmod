@@ -129,6 +129,12 @@ public class NewspaperZombieModel extends PVZZombieModel<NewspaperZombieEntity> 
 	}
 	
 	@Override
+	public void refreshAnim() {
+		this.getZombieLeftHand().xRot = -1.0472F;
+		this.getZombieRightHand().xRot = -1.0472F;
+	}
+	
+	@Override
 	protected boolean isZombieAngry(NewspaperZombieEntity entity) {
 		return entity.isAngry() || super.isZombieAngry(entity);
 	}

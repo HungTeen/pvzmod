@@ -1,4 +1,4 @@
-package com.hungteen.pvz.model.entity.misc;
+package com.hungteen.pvz.model.entity.zombie.poolday;
 
 import com.hungteen.pvz.entity.zombie.poolday.BobsleTeamEntity;
 import com.mojang.blaze3d.matrix.MatrixStack;

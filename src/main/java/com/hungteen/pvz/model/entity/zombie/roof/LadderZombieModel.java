@@ -1,10 +1,8 @@
 package com.hungteen.pvz.model.entity.zombie.roof;
 
 import com.hungteen.pvz.entity.zombie.roof.LadderZombieEntity;
-import com.mojang.blaze3d.matrix.MatrixStack;
-import com.mojang.blaze3d.vertex.IVertexBuilder;
+import com.hungteen.pvz.model.entity.zombie.PVZZombieModel;
 
-import net.minecraft.client.renderer.entity.model.EntityModel;
 import net.minecraft.client.renderer.model.ModelRenderer;
 import net.minecraft.util.math.MathHelper;
 
@@ -13,7 +11,7 @@ import net.minecraft.util.math.MathHelper;
 // Paste this class into your mod and generate all required imports
 
 
-public class LadderZombieModel extends EntityModel<LadderZombieEntity> {
+public class LadderZombieModel extends PVZZombieModel<LadderZombieEntity> {
 	private final ModelRenderer total;
 	private final ModelRenderer right_leg;
 	private final ModelRenderer left_leg;
@@ -135,10 +133,6 @@ public class LadderZombieModel extends EntityModel<LadderZombieEntity> {
 
 	@Override
 	public void setupAnim(LadderZombieEntity entity, float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch){
-		this.head.yRot = netHeadYaw / (180F / (float)Math.PI);
-        this.head.xRot = headPitch / (180F / (float)Math.PI);
-        this.right_leg.xRot = MathHelper.cos(limbSwing * 0.6662F) * 1.4F * limbSwingAmount;
-        this.left_leg.xRot = MathHelper.cos(limbSwing * 0.6662F + (float)Math.PI) * 1.4F * limbSwingAmount;
         if(entity.canPartsBeRemoved()) {
 	        this.left_hand.xRot = MathHelper.cos(limbSwing * 0.6662F) * 1.4F * limbSwingAmount;
 	        this.right_hand.xRot = MathHelper.cos(limbSwing * 0.6662F + (float)Math.PI) * 1.4F * limbSwingAmount;
@@ -146,17 +140,50 @@ public class LadderZombieModel extends EntityModel<LadderZombieEntity> {
 			this.right_hand.xRot = -0.8727F;
 			this.left_hand.xRot = -0.8727F;
 		}
-        this.ladder.visible = ! entity.canPartsBeRemoved();
+        super.setupAnim(entity, limbSwing, limbSwingAmount, ageInTicks, netHeadYaw, headPitch);
+	}
+	
+	@Override
+	public void updateFreeParts(LadderZombieEntity entity) {
+		final boolean hasLadder = ! entity.canPartsBeRemoved();
+		this.ladder.visible = hasLadder;
+		this.isLeftHandFree = ! hasLadder;
+		this.isRightHandFree = ! hasLadder;
 	}
 
 	@Override
-	public void renderToBuffer(MatrixStack matrixStack, IVertexBuilder buffer, int packedLight, int packedOverlay, float red, float green, float blue, float alpha){
-		total.render(matrixStack, buffer, packedLight, packedOverlay);
+	public ModelRenderer getZombieLeftHand() {
+		return this.left_hand;
 	}
 
-	public void setRotationAngle(ModelRenderer modelRenderer, float x, float y, float z) {
-		modelRenderer.xRot = x;
-		modelRenderer.yRot = y;
-		modelRenderer.zRot = z;
+	@Override
+	public ModelRenderer getZombieRightHand() {
+		return this.right_hand;
 	}
+
+	@Override
+	public ModelRenderer getZombieLeftLeg() {
+		return this.left_leg;
+	}
+
+	@Override
+	public ModelRenderer getZombieRightLeg() {
+		return this.right_leg;
+	}
+
+	@Override
+	public ModelRenderer getZombieHead() {
+		return this.head;
+	}
+	
+	@Override
+	public ModelRenderer getZombieUpBody() {
+		return this.up;
+	}
+
+	@Override
+	public ModelRenderer getZombieWholeBody() {
+		return this.total;
+	}
+	
 }

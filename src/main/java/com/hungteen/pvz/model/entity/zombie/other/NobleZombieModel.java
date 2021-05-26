@@ -1,19 +1,16 @@
 package com.hungteen.pvz.model.entity.zombie.other;
 
 import com.hungteen.pvz.entity.zombie.other.NobleZombieEntity;
-import com.mojang.blaze3d.matrix.MatrixStack;
-import com.mojang.blaze3d.vertex.IVertexBuilder;
+import com.hungteen.pvz.model.entity.zombie.PVZZombieModel;
 
-import net.minecraft.client.renderer.entity.model.EntityModel;
 import net.minecraft.client.renderer.model.ModelRenderer;
-import net.minecraft.util.math.MathHelper;
 
 // Made with Blockbench 3.7.2
 // Exported for Minecraft version 1.15
 // Paste this class into your mod and generate all required imports
 
 
-public class NobleZombieModel extends EntityModel<NobleZombieEntity> {
+public class NobleZombieModel extends PVZZombieModel<NobleZombieEntity> {
 	private final ModelRenderer total;
 	private final ModelRenderer right_leg;
 	private final ModelRenderer left_leg;
@@ -84,25 +81,44 @@ public class NobleZombieModel extends EntityModel<NobleZombieEntity> {
 
 	@Override
 	public void setupAnim(NobleZombieEntity entity, float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch){
-		this.head.yRot = netHeadYaw / (180F / (float)Math.PI);
-        this.head.xRot = headPitch / (180F / (float)Math.PI);
-        this.left_leg.xRot = MathHelper.cos(limbSwing * 0.6662F) * 1.4F * limbSwingAmount;
-        this.right_leg.xRot = MathHelper.cos(limbSwing * 0.6662F + (float)Math.PI) * 1.4F * limbSwingAmount;
-        this.right_hand.xRot = MathHelper.cos(limbSwing * 0.6662F) * 1.4F * limbSwingAmount;
-        this.left_hand.xRot = MathHelper.cos(limbSwing * 0.6662F + (float)Math.PI) * 1.4F * limbSwingAmount;
+		super.setupAnim(entity, limbSwing, limbSwingAmount, ageInTicks, netHeadYaw, headPitch);
         if(entity.getAttackTime() < 20) {
         	this.right_hand.xRot = - 2f;
         }
 	}
-
+	
 	@Override
-	public void renderToBuffer(MatrixStack matrixStack, IVertexBuilder buffer, int packedLight, int packedOverlay, float red, float green, float blue, float alpha){
-		total.render(matrixStack, buffer, packedLight, packedOverlay);
+	public ModelRenderer getZombieLeftHand() {
+		return this.left_hand;
 	}
 
-	public void setRotationAngle(ModelRenderer modelRenderer, float x, float y, float z) {
-		modelRenderer.xRot = x;
-		modelRenderer.yRot = y;
-		modelRenderer.zRot = z;
+	@Override
+	public ModelRenderer getZombieRightHand() {
+		return this.right_hand;
+	}
+
+	@Override
+	public ModelRenderer getZombieLeftLeg() {
+		return this.left_leg;
+	}
+
+	@Override
+	public ModelRenderer getZombieRightLeg() {
+		return this.right_leg;
+	}
+
+	@Override
+	public ModelRenderer getZombieHead() {
+		return this.head;
+	}
+	
+	@Override
+	public ModelRenderer getZombieUpBody() {
+		return this.up;
+	}
+
+	@Override
+	public ModelRenderer getZombieWholeBody() {
+		return this.total;
 	}
 }

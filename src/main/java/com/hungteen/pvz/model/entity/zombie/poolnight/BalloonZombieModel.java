@@ -1,19 +1,16 @@
 package com.hungteen.pvz.model.entity.zombie.poolnight;
 
 import com.hungteen.pvz.entity.zombie.poolnight.BalloonZombieEntity;
-import com.mojang.blaze3d.matrix.MatrixStack;
-import com.mojang.blaze3d.vertex.IVertexBuilder;
+import com.hungteen.pvz.model.entity.zombie.PVZZombieModel;
 
-import net.minecraft.client.renderer.entity.model.EntityModel;
 import net.minecraft.client.renderer.model.ModelRenderer;
-import net.minecraft.util.math.MathHelper;
 
 // Made with Blockbench 3.7.4
 // Exported for Minecraft version 1.15
 // Paste this class into your mod and generate all required imports
 
 
-public class BalloonZombieModel extends EntityModel<BalloonZombieEntity> {
+public class BalloonZombieModel extends PVZZombieModel<BalloonZombieEntity> {
 	private final ModelRenderer total;
 	private final ModelRenderer balloon;
 	private final ModelRenderer other;
@@ -123,7 +120,8 @@ public class BalloonZombieModel extends EntityModel<BalloonZombieEntity> {
 
 	@Override
 	public void setupAnim(BalloonZombieEntity entity, float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch){
-		if(entity.hasBalloon()) {
+		final boolean hasBalloon = entity.hasBalloon();
+		if(hasBalloon) {
 			this.zombie.xRot = 1.0472F;
 			this.left_leg.xRot = - 0.7854F;
 			this.right_leg.xRot = - 0.7854F;
@@ -136,25 +134,51 @@ public class BalloonZombieModel extends EntityModel<BalloonZombieEntity> {
 		} else {
 			this.up.xRot = 0;
 			this.zombie.xRot = 0;
+			super.setupAnim(entity, limbSwing, limbSwingAmount, ageInTicks, netHeadYaw, headPitch);
 			this.bone.yRot = ageInTicks / 4;
-			this.head.yRot = netHeadYaw / (180F / (float)Math.PI);
-	        this.head.xRot = headPitch / (180F / (float)Math.PI);
-	        this.left_leg.xRot = MathHelper.cos(limbSwing * 0.6662F) * 1.4F * limbSwingAmount;
-	        this.right_leg.xRot = MathHelper.cos(limbSwing * 0.6662F + (float)Math.PI) * 1.4F * limbSwingAmount;
-	        this.right_hand.xRot = MathHelper.cos(limbSwing * 0.6662F) * 1.4F * limbSwingAmount;
-	        this.left_hand.xRot = MathHelper.cos(limbSwing * 0.6662F + (float)Math.PI) * 1.4F * limbSwingAmount;
+//			this.head.yRot = netHeadYaw / (180F / (float)Math.PI);
+//	        this.head.xRot = headPitch / (180F / (float)Math.PI);
+//	        this.left_leg.xRot = MathHelper.cos(limbSwing * 0.6662F) * 1.4F * limbSwingAmount;
+//	        this.right_leg.xRot = MathHelper.cos(limbSwing * 0.6662F + (float)Math.PI) * 1.4F * limbSwingAmount;
+//	        this.right_hand.xRot = MathHelper.cos(limbSwing * 0.6662F) * 1.4F * limbSwingAmount;
+//	        this.left_hand.xRot = MathHelper.cos(limbSwing * 0.6662F + (float)Math.PI) * 1.4F * limbSwingAmount;
 		}
-		this.balloon.visible = entity.hasBalloon();
+		this.balloon.visible = hasBalloon;
+	}
+	
+
+	@Override
+	public ModelRenderer getZombieLeftHand() {
+		return this.left_hand;
 	}
 
 	@Override
-	public void renderToBuffer(MatrixStack matrixStack, IVertexBuilder buffer, int packedLight, int packedOverlay, float red, float green, float blue, float alpha){
-		total.render(matrixStack, buffer, packedLight, packedOverlay);
+	public ModelRenderer getZombieRightHand() {
+		return this.right_hand;
 	}
 
-	public void setRotationAngle(ModelRenderer modelRenderer, float x, float y, float z) {
-		modelRenderer.xRot = x;
-		modelRenderer.yRot = y;
-		modelRenderer.zRot = z;
+	@Override
+	public ModelRenderer getZombieLeftLeg() {
+		return this.left_leg;
+	}
+
+	@Override
+	public ModelRenderer getZombieRightLeg() {
+		return this.right_leg;
+	}
+
+	@Override
+	public ModelRenderer getZombieHead() {
+		return this.head;
+	}
+	
+	@Override
+	public ModelRenderer getZombieUpBody() {
+		return this.up;
+	}
+
+	@Override
+	public ModelRenderer getZombieWholeBody() {
+		return this.total;
 	}
 }

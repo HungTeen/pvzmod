@@ -24,7 +24,6 @@ import net.minecraft.world.World;
 public class DiggerZombieEntity extends PVZZombieEntity implements IHasMetal {
 
 	private static final DataParameter<Boolean> HAS_PICKAXE = EntityDataManager.defineId(DiggerZombieEntity.class, DataSerializers.BOOLEAN);
-	private static final DataParameter<Integer> ANIM_TIME = EntityDataManager.defineId(DiggerZombieEntity.class, DataSerializers.INT);
 	public static final int MAX_ANIM_TIME = 30;
 	
 	public DiggerZombieEntity(EntityType<? extends MonsterEntity> type, World worldIn) {
@@ -36,7 +35,6 @@ public class DiggerZombieEntity extends PVZZombieEntity implements IHasMetal {
 	protected void defineSynchedData() {
 		super.defineSynchedData();
 		this.entityData.define(HAS_PICKAXE, true);
-		this.entityData.define(ANIM_TIME, 0);
 	}
 	
 	@Override
@@ -47,15 +45,15 @@ public class DiggerZombieEntity extends PVZZombieEntity implements IHasMetal {
 			if(this.hasPickaxe()) {
 				if(target != null) {
 				    if(this.distanceToSqr(target) <= 8) {
-				    	this.setAnimTime(MathHelper.clamp(this.getAnimTime() + 1, 0, MAX_ANIM_TIME));
+				    	this.setAttackTime(MathHelper.clamp(this.getAttackTime() + 1, 0, MAX_ANIM_TIME));
 				    } else {
-				    	this.setAnimTime(MathHelper.clamp(this.getAnimTime() - 1, 0, MAX_ANIM_TIME));
+				    	this.setAttackTime(MathHelper.clamp(this.getAttackTime() - 1, 0, MAX_ANIM_TIME));
 				    }
 			    } else {
-			    	this.setAnimTime(MathHelper.clamp(this.getAnimTime() - 1, 0, MAX_ANIM_TIME));
+			    	this.setAttackTime(MathHelper.clamp(this.getAttackTime() - 1, 0, MAX_ANIM_TIME));
 			    }
 			} else {
-				this.setAnimTime(MathHelper.clamp(this.getAnimTime() + 1, 0, MAX_ANIM_TIME));
+				this.setAttackTime(MathHelper.clamp(this.getAttackTime() + 1, 0, MAX_ANIM_TIME));
 			}
 			this.updateAttributes(this.hasPickaxe());
 		}
@@ -94,8 +92,8 @@ public class DiggerZombieEntity extends PVZZombieEntity implements IHasMetal {
 	
 	@Override
 	public EntitySize getDimensions(Pose poseIn) {
-		if(this.isMiniZombie()) return EntitySize.scalable(0.4f, this.getAnimTime() * 0.02F + 0.1F);
-		return EntitySize.scalable(0.8f, this.getAnimTime() * 0.06F + 0.2F);
+		if(this.isMiniZombie()) return EntitySize.scalable(0.4f, this.getAttackTime() * 0.02F + 0.1F);
+		return EntitySize.scalable(0.8f, this.getAttackTime() * 0.06F + 0.2F);
 	}
 
 	@Override
@@ -104,16 +102,12 @@ public class DiggerZombieEntity extends PVZZombieEntity implements IHasMetal {
 		if(compound.contains("digger_has_pickaxe")) {
 			this.setPickaxe(compound.getBoolean("digger_has_pickaxe"));
 		}
-		if(compound.contains("digger_anim_time")) {
-			this.setAnimTime(compound.getInt("digger_anim_time"));
-		}
 	}
 	
 	@Override
 	public void addAdditionalSaveData(CompoundNBT compound) {
 		super.addAdditionalSaveData(compound);
 		compound.putBoolean("digger_has_pickaxe", this.hasPickaxe());
-		compound.putInt("digger_anim_time", this.getAnimTime());
 	}
 	
 	public void setPickaxe(boolean has) {
@@ -122,14 +116,6 @@ public class DiggerZombieEntity extends PVZZombieEntity implements IHasMetal {
 	
 	public boolean hasPickaxe() {
 		return this.entityData.get(HAS_PICKAXE);
-	}
-	
-	public void setAnimTime(int time) {
-		this.entityData.set(ANIM_TIME, time);
-	}
-	
-	public int getAnimTime() {
-		return this.entityData.get(ANIM_TIME);
 	}
 	
 	@Override

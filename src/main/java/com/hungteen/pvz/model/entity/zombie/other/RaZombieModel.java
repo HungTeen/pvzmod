@@ -1,19 +1,16 @@
 package com.hungteen.pvz.model.entity.zombie.other;
 
 import com.hungteen.pvz.entity.zombie.other.RaZombieEntity;
-import com.mojang.blaze3d.matrix.MatrixStack;
-import com.mojang.blaze3d.vertex.IVertexBuilder;
+import com.hungteen.pvz.model.entity.zombie.PVZZombieModel;
 
-import net.minecraft.client.renderer.entity.model.EntityModel;
 import net.minecraft.client.renderer.model.ModelRenderer;
-import net.minecraft.util.math.MathHelper;
 
 // Made with Blockbench 3.7.5
 // Exported for Minecraft version 1.15
 // Paste this class into your mod and generate all required imports
 
 
-public class RaZombieModel extends EntityModel<RaZombieEntity> {
+public class RaZombieModel extends PVZZombieModel<RaZombieEntity> {
 	private final ModelRenderer total;
 	private final ModelRenderer right_leg;
 	private final ModelRenderer left_leg;
@@ -55,9 +52,9 @@ public class RaZombieModel extends EntityModel<RaZombieEntity> {
 		
 
 		body = new ModelRenderer(this);
-		body.setPos(0.0F, -7.0F, 0.0F);
+		body.setPos(0.0F, 0.0F, 0.0F);
 		up.addChild(body);
-		body.texOffs(80, 96).addBox(-8.0F, -17.0F, -4.0F, 16.0F, 24.0F, 8.0F, 0.0F, false);
+		body.texOffs(80, 96).addBox(-8.0F, -24.0F, -4.0F, 16.0F, 24.0F, 8.0F, 0.0F, false);
 
 		left_hand = new ModelRenderer(this);
 		left_hand.setPos(12.0F, -20.0F, 0.0F);
@@ -142,28 +139,52 @@ public class RaZombieModel extends EntityModel<RaZombieEntity> {
 		bone.texOffs(20, 57).addBox(-1.0F, -1.0F, -1.0F, 2.0F, 2.0F, 2.0F, -0.05F, false);
 	}
 
+
 	@Override
 	public void setupAnim(RaZombieEntity entity, float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch){
-		this.head.yRot = netHeadYaw / (180F / (float)Math.PI);
-        this.head.xRot = headPitch / (180F / (float)Math.PI);
-        this.left_leg.xRot = MathHelper.cos(limbSwing * 0.6662F) * 1.4F * limbSwingAmount;
-        this.right_leg.xRot = MathHelper.cos(limbSwing * 0.6662F + (float)Math.PI) * 1.4F * limbSwingAmount;
-        this.left_hand.xRot = MathHelper.cos(limbSwing * 0.6662F + (float)Math.PI) * 1.4F * limbSwingAmount;
         if(entity.checkCanWorkNow()) {
         	this.right_hand.xRot = - 1F;
-        } else {
-        	this.right_hand.xRot = MathHelper.cos(limbSwing * 0.6662F) * 1.4F * limbSwingAmount;
         }
+        super.setupAnim(entity, limbSwing, limbSwingAmount, ageInTicks, netHeadYaw, headPitch);
+	}
+	
+	@Override
+	public void updateFreeParts(RaZombieEntity entity) {
+		this.isRightHandFree = ! entity.checkCanWorkNow();
 	}
 
 	@Override
-	public void renderToBuffer(MatrixStack matrixStack, IVertexBuilder buffer, int packedLight, int packedOverlay, float red, float green, float blue, float alpha){
-		total.render(matrixStack, buffer, packedLight, packedOverlay);
+	public ModelRenderer getZombieLeftHand() {
+		return this.left_hand;
 	}
 
-	public void setRotationAngle(ModelRenderer modelRenderer, float x, float y, float z) {
-		modelRenderer.xRot = x;
-		modelRenderer.yRot = y;
-		modelRenderer.zRot = z;
+	@Override
+	public ModelRenderer getZombieRightHand() {
+		return this.right_hand;
+	}
+
+	@Override
+	public ModelRenderer getZombieLeftLeg() {
+		return this.left_leg;
+	}
+
+	@Override
+	public ModelRenderer getZombieRightLeg() {
+		return this.right_leg;
+	}
+
+	@Override
+	public ModelRenderer getZombieHead() {
+		return this.head;
+	}
+	
+	@Override
+	public ModelRenderer getZombieUpBody() {
+		return this.up;
+	}
+
+	@Override
+	public ModelRenderer getZombieWholeBody() {
+		return this.total;
 	}
 }

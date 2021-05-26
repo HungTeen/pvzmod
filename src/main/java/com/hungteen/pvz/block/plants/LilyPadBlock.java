@@ -8,6 +8,7 @@ import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
 import net.minecraft.block.BushBlock;
 import net.minecraft.block.HorizontalBlock;
+import net.minecraft.block.material.Material;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.MobEntity;
 import net.minecraft.entity.player.PlayerEntity;
@@ -53,9 +54,10 @@ public class LilyPadBlock extends BushBlock {
 	}
 
 	@Override
-	protected boolean mayPlaceOn(BlockState state, IBlockReader worldIn, BlockPos pos) {
-		FluidState ifluidstate = worldIn.getFluidState(pos);
-		return ifluidstate.getType() == Fluids.WATER;
+	protected boolean mayPlaceOn(BlockState p_200014_1_, IBlockReader p_200014_2_, BlockPos p_200014_3_) {
+        FluidState fluidstate = p_200014_2_.getFluidState(p_200014_3_);
+        FluidState fluidstate1 = p_200014_2_.getFluidState(p_200014_3_.above());
+	    return (fluidstate.getType() == Fluids.WATER || p_200014_1_.getMaterial() == Material.ICE) && fluidstate1.getType() == Fluids.EMPTY;
 	}
 
 	public BlockState getStateForPlacement(PlayerEntity player) {

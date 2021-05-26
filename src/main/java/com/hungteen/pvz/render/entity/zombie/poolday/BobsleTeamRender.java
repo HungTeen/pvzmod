@@ -1,7 +1,7 @@
 package com.hungteen.pvz.render.entity.zombie.poolday;
 
 import com.hungteen.pvz.entity.zombie.poolday.BobsleTeamEntity;
-import com.hungteen.pvz.model.entity.misc.BobsleTeamModel;
+import com.hungteen.pvz.model.entity.zombie.poolday.BobsleTeamModel;
 import com.hungteen.pvz.render.entity.zombie.PVZZombieRender;
 import com.hungteen.pvz.utils.StringUtil;
 

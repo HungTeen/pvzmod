@@ -1,19 +1,16 @@
 package com.hungteen.pvz.model.entity.zombie.roof;
 
 import com.hungteen.pvz.entity.zombie.roof.ImpEntity;
-import com.mojang.blaze3d.matrix.MatrixStack;
-import com.mojang.blaze3d.vertex.IVertexBuilder;
+import com.hungteen.pvz.model.entity.zombie.PVZZombieModel;
 
-import net.minecraft.client.renderer.entity.model.EntityModel;
 import net.minecraft.client.renderer.model.ModelRenderer;
-import net.minecraft.util.math.MathHelper;
 
 // Made with Blockbench 3.7.5
 // Exported for Minecraft version 1.15
 // Paste this class into your mod and generate all required imports
 
 
-public class ImpModel extends EntityModel<ImpEntity> {
+public class ImpModel extends PVZZombieModel<ImpEntity> {
 	private final ModelRenderer total;
 	private final ModelRenderer left_leg;
 	private final ModelRenderer right_leg;
@@ -68,23 +65,38 @@ public class ImpModel extends EntityModel<ImpEntity> {
 	}
 
 	@Override
-	public void setupAnim(ImpEntity entity, float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch){
-		this.head.yRot = netHeadYaw / (180F / (float)Math.PI);
-        this.head.xRot = headPitch / (180F / (float)Math.PI);
-        this.right_leg.xRot = MathHelper.cos(limbSwing * 0.6662F) * 1.4F * limbSwingAmount;
-        this.left_leg.xRot = MathHelper.cos(limbSwing * 0.6662F + (float)Math.PI) * 1.4F * limbSwingAmount;
-        this.right_arm.xRot = MathHelper.cos(limbSwing * 0.6662F) * 1.4F * limbSwingAmount;
-        this.left_arm.xRot = MathHelper.cos(limbSwing * 0.6662F + (float)Math.PI) * 1.4F * limbSwingAmount;
+	public ModelRenderer getZombieLeftHand() {
+		return this.left_arm;
 	}
 
 	@Override
-	public void renderToBuffer(MatrixStack matrixStack, IVertexBuilder buffer, int packedLight, int packedOverlay, float red, float green, float blue, float alpha){
-		total.render(matrixStack, buffer, packedLight, packedOverlay);
+	public ModelRenderer getZombieRightHand() {
+		return this.right_arm;
 	}
 
-	public void setRotationAngle(ModelRenderer modelRenderer, float x, float y, float z) {
-		modelRenderer.xRot = x;
-		modelRenderer.yRot = y;
-		modelRenderer.zRot = z;
+	@Override
+	public ModelRenderer getZombieLeftLeg() {
+		return this.left_leg;
 	}
+
+	@Override
+	public ModelRenderer getZombieRightLeg() {
+		return this.right_leg;
+	}
+
+	@Override
+	public ModelRenderer getZombieHead() {
+		return this.head;
+	}
+	
+	@Override
+	public ModelRenderer getZombieUpBody() {
+		return this.up;
+	}
+
+	@Override
+	public ModelRenderer getZombieWholeBody() {
+		return this.total;
+	}
+	
 }

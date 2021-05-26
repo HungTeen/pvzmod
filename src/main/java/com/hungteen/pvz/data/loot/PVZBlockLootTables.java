@@ -47,6 +47,9 @@ public class PVZBlockLootTables extends BlockLootTables {
 
 	@Override
 	protected void addTables() {
+		final Set<Block> noLootBlocks = new HashSet<>(Arrays.asList(
+				BlockRegister.LILY_PAD.get(), BlockRegister.FLOWER_POT.get()
+			    ));
 		// drop item like coal ore
 		Arrays.asList(BlockRegister.ORIGIN_ORE.get(), BlockRegister.APPEASE_ORE.get(), BlockRegister.LIGHT_ORE.get(),
 				BlockRegister.EXPLOSION_ORE.get(), BlockRegister.DEFENCE_ORE.get(), BlockRegister.ICE_ORE.get(),
@@ -79,7 +82,7 @@ public class PVZBlockLootTables extends BlockLootTables {
 		this.dropOther(BlockRegister.GOLD_TILE3.get(), Blocks.GOLD_BLOCK);
 		// other blocks are drop itself
 		ForgeRegistries.BLOCKS.forEach(block -> {
-			if (block.getRegistryName().getNamespace().equals(PVZMod.MOD_ID) && !this.knownBlocks.contains(block)) {
+			if (block.getRegistryName().getNamespace().equals(PVZMod.MOD_ID) && !noLootBlocks.contains(block) && !this.knownBlocks.contains(block)) {
 				this.dropSelf(block);
 			}
 		});

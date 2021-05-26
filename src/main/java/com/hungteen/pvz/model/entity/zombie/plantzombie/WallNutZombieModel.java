@@ -1,19 +1,16 @@
 package com.hungteen.pvz.model.entity.zombie.plantzombie;
 
 import com.hungteen.pvz.entity.zombie.zombotany.WallNutZombieEntity;
-import com.mojang.blaze3d.matrix.MatrixStack;
-import com.mojang.blaze3d.vertex.IVertexBuilder;
+import com.hungteen.pvz.model.entity.zombie.PVZZombieModel;
 
-import net.minecraft.client.renderer.entity.model.EntityModel;
 import net.minecraft.client.renderer.model.ModelRenderer;
-import net.minecraft.util.math.MathHelper;
 
 // Made with Blockbench 3.7.5
 // Exported for Minecraft version 1.15
 // Paste this class into your mod and generate all required imports
 
 
-public class WallNutZombieModel extends EntityModel<WallNutZombieEntity> {
+public class WallNutZombieModel extends PVZZombieModel<WallNutZombieEntity> {
 	private final ModelRenderer total;
 	private final ModelRenderer right_leg;
 	private final ModelRenderer left_leg;
@@ -71,7 +68,7 @@ public class WallNutZombieModel extends EntityModel<WallNutZombieEntity> {
 		head.texOffs(92, 134).addBox(-8.0F, -1.0F, -8.0F, 16.0F, 1.0F, 16.0F, 0.0F, false);
 		head.texOffs(0, 135).addBox(-8.0F, -26.0F, -8.0F, 16.0F, 2.0F, 16.0F, 0.0F, false);
 		head.texOffs(0, 180).addBox(-10.0F, -25.0F, -10.0F, 20.0F, 24.0F, 20.0F, 0.0F, false);
-		head.texOffs(86, 221).addBox(-11.0F, -23.0F, -8.0F, 1.0F, 20.0F, 16.0F, 0.0F, false);
+		head.texOffs(86, 219).addBox(-11.0F, -23.0F, -8.0F, 1.0F, 20.0F, 16.0F, 0.0F, false);
 		head.texOffs(88, 178).addBox(10.0F, -23.0F, -8.0F, 1.0F, 20.0F, 16.0F, 0.0F, false);
 
 		face = new ModelRenderer(this);
@@ -99,26 +96,45 @@ public class WallNutZombieModel extends EntityModel<WallNutZombieEntity> {
 	}
 
 	@Override
-	public void setupAnim(WallNutZombieEntity entity, float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch){
-		this.head.yRot = netHeadYaw / (180F / (float)Math.PI);
-        this.head.xRot = headPitch / (180F / (float)Math.PI);
-        this.left_leg.xRot = MathHelper.cos(limbSwing * 0.6662F) * 1.4F * limbSwingAmount;
-        this.right_leg.xRot = MathHelper.cos(limbSwing * 0.6662F + (float)Math.PI) * 1.4F * limbSwingAmount;
-        this.right_hand.xRot = MathHelper.cos(limbSwing * 0.6662F) * 1.4F * limbSwingAmount;
-        this.left_hand.xRot = MathHelper.cos(limbSwing * 0.6662F + (float)Math.PI) * 1.4F * limbSwingAmount;
-        this.stage1.visible = (entity.getHealth() / entity.getMaxHealth() > 2F / 3); 
-        this.stage2.visible = (entity.getHealth() / entity.getMaxHealth() > 1F / 3); 
-        this.stage3.visible = (entity.getHealth() / entity.getMaxHealth() <= 1F / 3); 
+	public void updateFreeParts(WallNutZombieEntity entity) {
+		final float percent = entity.getHealth() / entity.getMaxHealth();
+		this.stage1.visible = (percent > 2F / 3); 
+        this.stage2.visible = (percent > 1F / 3); 
+        this.stage3.visible = (percent <= 1F / 3); 
+	}
+	
+	@Override
+	public ModelRenderer getZombieLeftHand() {
+		return this.left_hand;
 	}
 
 	@Override
-	public void renderToBuffer(MatrixStack matrixStack, IVertexBuilder buffer, int packedLight, int packedOverlay, float red, float green, float blue, float alpha){
-		total.render(matrixStack, buffer, packedLight, packedOverlay);
+	public ModelRenderer getZombieRightHand() {
+		return this.right_hand;
 	}
 
-	public void setRotationAngle(ModelRenderer modelRenderer, float x, float y, float z) {
-		modelRenderer.xRot = x;
-		modelRenderer.yRot = y;
-		modelRenderer.zRot = z;
+	@Override
+	public ModelRenderer getZombieLeftLeg() {
+		return this.left_leg;
+	}
+
+	@Override
+	public ModelRenderer getZombieRightLeg() {
+		return this.right_leg;
+	}
+
+	@Override
+	public ModelRenderer getZombieHead() {
+		return this.head;
+	}
+	
+	@Override
+	public ModelRenderer getZombieUpBody() {
+		return this.up;
+	}
+
+	@Override
+	public ModelRenderer getZombieWholeBody() {
+		return this.total;
 	}
 }

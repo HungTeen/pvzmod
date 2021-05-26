@@ -27,7 +27,7 @@ public class DiggerZombieRender extends PVZZombieRender<DiggerZombieEntity>{
 	@Override
 	public Vector3d getTranslateVec(DiggerZombieEntity entity) {
 		double maxOffset = 4D;
-		int now = entity.getAnimTime();
+		int now = entity.getAttackTime();
 		int max = DiggerZombieEntity.MAX_ANIM_TIME;
 		return new Vector3d(0, maxOffset * ( 1 - now * 1.0D / max), 0);
 	}

@@ -366,7 +366,6 @@ ef9c9037faa5df28a8f5dc00ab50c5c8cf25b089 data/pvz/loot_tables/blocks/diamond_sun
 dadea77ccbbd84e74e8c771d0e8b903c3bebe0fa data/pvz/loot_tables/blocks/essence_altar.json
 efa6daa2f1d75d8ccbbd7152da21b4a3b2f52053 data/pvz/loot_tables/blocks/explosion_ore.json
 6c501de892a856cd8fc1c1e2830ba8ee42901699 data/pvz/loot_tables/blocks/flame_ore.json
-7a5c5ef4e68ee04eb1fbf4b29e97efb41d1ab346 data/pvz/loot_tables/blocks/flower_pot.json
 b44d6a619ca4f6afadce7eb3ef5f2215d42e833e data/pvz/loot_tables/blocks/fragment_splice.json
 bbcc21fac0cbf1beaea1ee2ee06906418ad867ed data/pvz/loot_tables/blocks/frozen_melon.json
 0e604c2cea5e9a4af7200133c717e3f9c066525d data/pvz/loot_tables/blocks/gold_sunflower_trophy.json
@@ -376,7 +375,6 @@ c8229d0f41a4e3f3041965b07c0544187cc4a375 data/pvz/loot_tables/blocks/gold_tile3.
 0464a1abb58a5567112a1b566d40922d3a4109e1 data/pvz/loot_tables/blocks/ice_ore.json
 eb9f90911f7b9301175a741d9fd01e2ee23125eb data/pvz/loot_tables/blocks/lantern.json
 48e02e235f481a472848c3daf3640d2891660989 data/pvz/loot_tables/blocks/light_ore.json
-354aeed11f2f8e7152611897bf0ac3f99df29e7c data/pvz/loot_tables/blocks/lily_pad.json
 2d888e4966e902d3f2306cffe11fced2f3896f65 data/pvz/loot_tables/blocks/magic_ore.json
 c8e180540f649db0d91d7ebff508ae7e0be097c0 data/pvz/loot_tables/blocks/nut_leaves.json
 f402a5ae35ed5f3692c13aac9e0e6791e043c918 data/pvz/loot_tables/blocks/nut_sapling.json

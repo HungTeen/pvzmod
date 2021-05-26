@@ -15,6 +15,7 @@ public abstract class PVZZombieModel<T extends PVZZombieEntity> extends EntityMo
 	protected static final int MAX_ANIM_CD = PVZZombieEntity.PERFORM_ATTACK_CD;
 	protected boolean isLeftHandFree = true;
 	protected boolean isRightHandFree = true;
+	protected boolean isHeadFree = true;
 	
 	@Override
 	public void setupAnim(T entity, float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch) {

@@ -162,6 +162,12 @@ public class SundayEditionZombieModel extends PVZZombieModel<SundayEditionZombie
 	}
 	
 	@Override
+	public void refreshAnim() {
+		this.getZombieLeftHand().xRot = -1.0472F;
+		this.getZombieRightHand().xRot = -1.0472F;
+	}
+	
+	@Override
 	protected boolean isZombieAngry(SundayEditionZombieEntity entity) {
 		return entity.isAngry() || super.isZombieAngry(entity);
 	}

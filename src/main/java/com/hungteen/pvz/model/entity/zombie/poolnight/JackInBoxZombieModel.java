@@ -1,10 +1,8 @@
 package com.hungteen.pvz.model.entity.zombie.poolnight;
 
 import com.hungteen.pvz.entity.zombie.poolnight.JackInBoxZombieEntity;
-import com.mojang.blaze3d.matrix.MatrixStack;
-import com.mojang.blaze3d.vertex.IVertexBuilder;
+import com.hungteen.pvz.model.entity.zombie.PVZZombieModel;
 
-import net.minecraft.client.renderer.entity.model.EntityModel;
 import net.minecraft.client.renderer.model.ModelRenderer;
 import net.minecraft.util.math.MathHelper;
 
@@ -13,7 +11,7 @@ import net.minecraft.util.math.MathHelper;
 // Paste this class into your mod and generate all required imports
 
 
-public class JackInBoxZombieModel extends EntityModel<JackInBoxZombieEntity> {
+public class JackInBoxZombieModel extends PVZZombieModel<JackInBoxZombieEntity> {
 	private final ModelRenderer total;
 	private final ModelRenderer left_leg;
 	private final ModelRenderer right_leg;
@@ -148,14 +146,38 @@ public class JackInBoxZombieModel extends EntityModel<JackInBoxZombieEntity> {
 	}
 
 	@Override
-	public void renderToBuffer(MatrixStack matrixStack, IVertexBuilder buffer, int packedLight, int packedOverlay, float red, float green, float blue, float alpha){
-		total.render(matrixStack, buffer, packedLight, packedOverlay);
+	public ModelRenderer getZombieLeftHand() {
+		return this.left_arm;
 	}
 
-	public void setRotationAngle(ModelRenderer modelRenderer, float x, float y, float z) {
-		modelRenderer.xRot = x;
-		modelRenderer.yRot = y;
-		modelRenderer.zRot = z;
+	@Override
+	public ModelRenderer getZombieRightHand() {
+		return this.right_arm;
+	}
+
+	@Override
+	public ModelRenderer getZombieLeftLeg() {
+		return this.left_leg;
+	}
+
+	@Override
+	public ModelRenderer getZombieRightLeg() {
+		return this.right_leg;
+	}
+
+	@Override
+	public ModelRenderer getZombieHead() {
+		return this.head;
+	}
+	
+	@Override
+	public ModelRenderer getZombieUpBody() {
+		return this.up;
+	}
+
+	@Override
+	public ModelRenderer getZombieWholeBody() {
+		return this.total;
 	}
 
 }
