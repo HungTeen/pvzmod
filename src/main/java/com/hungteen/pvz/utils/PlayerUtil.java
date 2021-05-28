@@ -1,5 +1,7 @@
 package com.hungteen.pvz.utils;
 
+import java.util.List;
+
 import com.hungteen.pvz.capability.CapabilityHandler;
 import com.hungteen.pvz.capability.player.IPlayerDataCapability;
 import com.hungteen.pvz.gui.search.SearchOption;
@@ -13,8 +15,10 @@ import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.network.play.server.STitlePacket;
 import net.minecraft.stats.Stats;
+import net.minecraft.util.Util;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.StringTextComponent;
+import net.minecraft.world.World;
 import net.minecraftforge.common.util.LazyOptional;
 import net.minecraftforge.fml.network.PacketDistributor;
 
@@ -119,6 +123,19 @@ public class PlayerUtil {
 			 sendTitleToPlayer(player, new StringTextComponent(""));
 	         ((ServerPlayerEntity) player).connection.send(new STitlePacket(STitlePacket.Type.SUBTITLE, text));
 		}
+	}
+	
+	public static void sendMsgToAll(World world, ITextComponent text) {
+		world.getServer().getPlayerList().getPlayers().forEach(player -> {
+			player.sendMessage(text, Util.NIL_UUID);
+		});
+	}
+	
+	/**
+	 * get all players in the server.
+	 */
+	public static List<ServerPlayerEntity> getServerPlayers(World world){
+		return world.getServer().getPlayerList().getPlayers();
 	}
 	
 	public static boolean isPlayerSurvival(PlayerEntity player) {

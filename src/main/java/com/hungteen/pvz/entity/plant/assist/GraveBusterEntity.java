@@ -78,7 +78,6 @@ public class GraveBusterEntity extends PVZPlantEntity{
 		return 3;
 	}
 	
-	@Override
 	public int getMaxLiveTick() {
 		return MAX_LIVE_TICK;
 	}

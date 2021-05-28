@@ -132,10 +132,8 @@ public class DaveVillaComponents {
 				}
 				worldIn.setBlock(pos, Blocks.AIR.defaultBlockState(), 2);
 			}else if(function.equals("plant_pos5")){
-				if(rand.nextInt(2) == 0) {
-					SunFlowerEntity nut = EntityRegister.SUN_FLOWER.get().create(worldIn.getLevel());
-					EntityUtil.onMobEntitySpawn(worldIn, nut, pos);
-				}
+				SunFlowerEntity nut = EntityRegister.SUN_FLOWER.get().create(worldIn.getLevel());
+				EntityUtil.onMobEntitySpawn(worldIn, nut, pos);
 				worldIn.setBlock(pos, Blocks.AIR.defaultBlockState(), 2);
 			}else if(function.equals("plant_pos6")) {
 				if(rand.nextInt(2) == 0) {
@@ -178,10 +176,10 @@ public class DaveVillaComponents {
 			BlockPos min = new BlockPos(Math.min(pos.getX(), to.getX()),Math.min(pos.getY(), to.getY()),Math.min(pos.getZ(), to.getZ()));
 			BlockPos max = new BlockPos(Math.max(pos.getX(), to.getX()),Math.max(pos.getY(), to.getY()),Math.max(pos.getZ(), to.getZ()));
 			super.postProcess(worldIn, manager, chunkGeneratorIn, randomIn, mutableBoundingBoxIn, chunkPosIn, blockPos);
-			for(int i=min.getX();i<=max.getX();i++) {
-				for(int j=min.getZ();j<=max.getZ();j++) {
-					int y=min.getY()-1;
-					while(y>=50) {
+			for(int i = min.getX(); i <= max.getX(); ++ i) {
+				for(int j = min.getZ(); j <= max.getZ(); ++ j) {
+					int y = min.getY() - 1;
+					while(y >= 50) {
 						BlockPos tmp = new BlockPos(i,y,j);
 						if(worldIn.getBlockState(tmp).canOcclude()) {
 							break;

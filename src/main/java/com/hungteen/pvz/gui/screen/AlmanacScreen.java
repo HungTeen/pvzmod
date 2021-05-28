@@ -40,6 +40,7 @@ import com.hungteen.pvz.utils.enums.Colors;
 import com.hungteen.pvz.utils.enums.Plants;
 import com.hungteen.pvz.utils.enums.Resources;
 import com.mojang.blaze3d.matrix.MatrixStack;
+import com.mojang.blaze3d.systems.RenderSystem;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.entity.player.PlayerInventory;
@@ -65,8 +66,8 @@ public class AlmanacScreen extends AbstractOptionScreen<AlmanacContainer> {
 
 	@Override
 	public void render(MatrixStack stack, int mouseX, int mouseY, float partialTicks) {
-		this.renderAlmanac(stack);
 		super.render(stack, mouseX, mouseY, partialTicks);
+		this.renderAlmanac(stack);
 		this.renderTooltip(stack, mouseX, mouseY);
 	}
 	
@@ -350,14 +351,15 @@ public class AlmanacScreen extends AbstractOptionScreen<AlmanacContainer> {
 		stack.popPose();
 	}
 	
+	@SuppressWarnings("deprecation")
 	protected void renderLogo(MatrixStack stack, SearchOption a) {
 		int dx = this.leftPos + 16, dy = this.topPos + 14;
 		int scale = 3;
-		stack.pushPose();
-		stack.scale(scale, scale, scale);
-		stack.translate((dx % scale) * 1.0d / scale , (dy % scale) * 1.0d / scale, 0);
+		RenderSystem.pushMatrix();
+		RenderSystem.scaled(scale, scale, scale);
+		RenderSystem.translated((dx % scale) * 1.0d / scale , (dy % scale) * 1.0d / scale, 0);
 		this.itemRenderer.renderGuiItem(SearchOption.getItemStackByOption(a), dx / scale, dy / scale);
-		stack.popPose();
+		RenderSystem.popMatrix();
 	}
 
 	@Override

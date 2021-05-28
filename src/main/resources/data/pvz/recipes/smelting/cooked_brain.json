@@ -1,0 +1,9 @@
+{
+  "type": "minecraft:smelting",
+  "ingredient": {
+    "item": "pvz:fake_brain"
+  },
+  "result": "pvz:cooked_brain",
+  "experience": 0.4,
+  "cookingtime": 200
+}

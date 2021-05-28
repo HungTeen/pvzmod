@@ -1,5 +1,6 @@
 package com.hungteen.pvz.event;
 
+import java.util.Optional;
 import java.util.Random;
 
 import com.hungteen.pvz.PVZConfig;
@@ -20,6 +21,7 @@ import com.hungteen.pvz.network.PVZPacketHandler;
 import com.hungteen.pvz.register.EffectRegister;
 import com.hungteen.pvz.register.EnchantmentRegister;
 import com.hungteen.pvz.register.ItemRegister;
+import com.hungteen.pvz.utils.ItemUtil;
 import com.hungteen.pvz.utils.PlantUtil;
 import com.hungteen.pvz.utils.PlayerUtil;
 import com.hungteen.pvz.utils.StringUtil;
@@ -47,8 +49,10 @@ import net.minecraftforge.event.entity.player.PlayerInteractEvent;
 import net.minecraftforge.event.world.BlockEvent;
 import net.minecraftforge.eventbus.api.EventPriority;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
+import net.minecraftforge.fml.ModList;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.network.PacketDistributor;
+import net.minecraftforge.registries.ForgeRegistries;
 
 @Mod.EventBusSubscriber(modid=PVZMod.MOD_ID)
 public class PVZPlayerEvents {
@@ -121,11 +125,20 @@ public class PVZPlayerEvents {
 	@SubscribeEvent
 	public static void onPlayerGetAdvancement(AdvancementEvent ev) {
 		if(! ev.getPlayer().level.isClientSide) {
-			if(PVZConfig.COMMON_CONFIG.WorldSettings.GiveBeginnerReward.get() && ev.getAdvancement().getId().equals(StringUtil.prefix("adventure/root"))) {
-				ev.getPlayer().addItem(new ItemStack(ItemRegister.PEA_SHOOTER_CARD.get()));
-				ev.getPlayer().addItem(new ItemStack(ItemRegister.SUN_FLOWER_CARD.get()));
-				ev.getPlayer().addItem(new ItemStack(ItemRegister.WALL_NUT_CARD.get()));
-				ev.getPlayer().addItem(new ItemStack(ItemRegister.POTATO_MINE_CARD.get()));
+			if(ev.getAdvancement().getId().equals(StringUtil.prefix("adventure/root"))) {
+				if(PVZConfig.COMMON_CONFIG.WorldSettings.GiveBeginnerReward.get()) {
+					ev.getPlayer().addItem(new ItemStack(ItemRegister.PEA_SHOOTER_CARD.get()));
+		    		ev.getPlayer().addItem(new ItemStack(ItemRegister.SUN_FLOWER_CARD.get()));
+			    	ev.getPlayer().addItem(new ItemStack(ItemRegister.WALL_NUT_CARD.get()));
+				    ev.getPlayer().addItem(new ItemStack(ItemRegister.POTATO_MINE_CARD.get()));
+				}
+				if(ModList.get().isLoaded(StringUtil.PATCHOULI)) {
+					Optional.ofNullable(ForgeRegistries.ITEMS.getValue(ItemUtil.GUIDE_BOOK)).ifPresent(item -> {
+						final ItemStack book = new ItemStack(item, 1);
+						book.getOrCreateTag().putString("patchouli:book", "pvz:pvz_guide");
+						ev.getPlayer().addItem(book);
+					});
+				}
 			}
 		}
 	}

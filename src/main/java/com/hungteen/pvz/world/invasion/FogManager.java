@@ -22,7 +22,6 @@ public class FogManager {
 					now = Math.max(now, 0);
 				}
 				now = Math.max(now, - 100);
-//				System.out.println(now);
 				l.getPlayerData().getPlayerStats().setPlayerStats(Resources.NO_FOG_TICK, now);
 			});
 		});

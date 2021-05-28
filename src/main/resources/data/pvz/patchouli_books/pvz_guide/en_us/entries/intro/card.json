@@ -9,7 +9,7 @@
         },
         {
             "type": "text",
-            "text": "After player $(l)use card$() to summon a creature, $(bred)the creature will treat the player as its owner$(), and the creature's level is the same as the creature's level when its owner planted the creature."
+            "text": "After player $(l)use card$() to summon a creature, $(bred)the creature will treat the player as its owner$(), and the creature's level is the same as the creature's level when its owner planted the creature.$(br)$(bred)If you use Spawn Egg to summon entity, it will not consider you as its owner.$()"
         },
         {
             "type": "spotlight",

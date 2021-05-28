@@ -21,6 +21,7 @@ import net.minecraft.util.text.StringTextComponent;
 public class StringUtil {
 
 	public static final StringTextComponent EMPTY = new StringTextComponent("");
+	public static final String PATCHOULI = "patchouli";
 	public static final String ARMOR_PREFIX = PVZMod.MOD_ID + ":textures/models/armor/";
 	
 	public static ResourceLocation prefix(String a) {

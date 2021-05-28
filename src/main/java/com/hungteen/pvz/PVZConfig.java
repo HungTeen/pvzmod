@@ -38,39 +38,39 @@ public class PVZConfig {
 					
 					WorldSettings.WorldInvasionSettings.EventChanceSettings.BucketAttackChance = builder
 							.comment("The weight to happen Bucket Invasion when it's a zombie attack day.")
-							.defineInRange("BucketAttackChance", 100, 0, 100000);
+							.defineInRange("BucketAttackChance", 100, 1, 100000);
 						
 					WorldSettings.WorldInvasionSettings.EventChanceSettings.WaterAttackChance = builder
 							.comment("The weight to happen Water Invasion when it's a zombie attack day.")
-							.defineInRange("WaterAttackChance", 80, 0, 100000);
+							.defineInRange("WaterAttackChance", 80, 1, 100000);
 						
 					WorldSettings.WorldInvasionSettings.EventChanceSettings.HalloweenAttackChance = builder
 							.comment("The weight to happen Halloween Invasion when it's a zombie attack day.")
-							.defineInRange("HalloweenAttackChance", 20, 0, 100000);
-						
+							.defineInRange("HalloweenAttackChance", 30, 1, 100000);
+					
 					WorldSettings.WorldInvasionSettings.EventChanceSettings.NewspaperAttackChance = builder
 							.comment("The weight to happen Newspaper Invasion when it's a zombie attack day.")
-							.defineInRange("NewspaperAttackChance", 50, 0, 100000);
+							.defineInRange("NewspaperAttackChance", 70, 1, 100000);
 						
 					WorldSettings.WorldInvasionSettings.EventChanceSettings.FootballAttackChance = builder
 							.comment("The weight to happen Football Invasion when it's a zombie attack day.")
-							.defineInRange("FootballAttackChance", 50, 0, 100000);
+							.defineInRange("FootballAttackChance", 60, 1, 100000);
 						
 					WorldSettings.WorldInvasionSettings.EventChanceSettings.RandomAttackChance = builder
 							.comment("The weight to happen Random Invasion when it's a zombie attack day.")
-							.defineInRange("RandomAttackChance", 70, 0, 10000);
+							.defineInRange("RandomAttackChance", 100, 1, 10000);
 					
 					WorldSettings.WorldInvasionSettings.EventChanceSettings.YetiAttackChance = builder
 							.comment("The weight to happen Yeti Invasion when it's a zombie attack day.")
-							.defineInRange("YetiAttackChance", 20, 1, 10000);
+							.defineInRange("YetiAttackChance", 50, 1, 10000);
 					
 					WorldSettings.WorldInvasionSettings.EventChanceSettings.BungeeAttackChance = builder
 							.comment("The weight to happen Bungee Invasion when it's a zombie attack day.")
-							.defineInRange("BungeeAttackChance", 40, 1, 10000);
+							.defineInRange("BungeeAttackChance", 20, 1, 10000);
 					
 					WorldSettings.WorldInvasionSettings.EventChanceSettings.MetalAttackChance = builder
 							.comment("The weight to happen Metal Invasion when it's a zombie attack day.")
-							.defineInRange("MetalAttackChance", 25, 1, 10000);
+							.defineInRange("MetalAttackChance", 30, 1, 10000);
 					
 					WorldSettings.WorldInvasionSettings.EventChanceSettings.RoofAttackChance = builder
 							.comment("The weight to happen Roof Invasion when it's a zombie attack day.")
@@ -78,11 +78,11 @@ public class PVZConfig {
 					
 					WorldSettings.WorldInvasionSettings.EventChanceSettings.GiantAttackChance = builder
 							.comment("The weight to happen Giant Invasion when it's a zombie attack day.")
-							.defineInRange("GiantAttackChance", 25, 1, 10000);
+							.defineInRange("GiantAttackChance", 20, 1, 10000);
 					
 					WorldSettings.WorldInvasionSettings.EventChanceSettings.ZombotanyAttackChance = builder
 							.comment("The weight to happen Zombotany Invasion when it's a zombie attack day.")
-							.defineInRange("ZombotanyAttackChance", 40, 1, 10000);
+							.defineInRange("ZombotanyAttackChance", 30, 1, 10000);
 					
 					WorldSettings.WorldInvasionSettings.EventChanceSettings.FogEventChance = builder
 							.comment("The related value to happen Fog Event when it's a zombie attack day(If the value is x, then the chance is 1/x).")
@@ -177,9 +177,7 @@ public class PVZConfig {
 				EntitySettings.PlayerOriginGroup = builder
 						.comment("The Group of player, 1 means u are in plant group(zombie will attack u), 0 means u are mid(no plants and zombies attack u), -1 means u are in zombie group(plant will attack u).")
 						.defineInRange("PlayerOriginGroup", 1, -1, 1);
-				EntitySettings.StrangeCatNameChance = builder
-						.comment("The chance of strange cat to change its name.(1/x)")
-						.defineInRange("TrickZombieCharmChance", 3, 1, 1000000);
+
 				builder.comment("Settings about zombies.").push("Zombie Settings");
 				{
 					EntitySettings.ZombieSetting.ZombieSuperChance = builder
@@ -208,10 +206,6 @@ public class PVZConfig {
 					EntitySettings.EntityLiveTick.EnergyLiveTick = builder
 							.comment("how many ticks can the energy entity live.")
 							.defineInRange("EnergyLiveTick", 400, 1, 1200);
-					EntitySettings.EntityLiveTick.PlantLiveTick = builder
-							.comment("how many ticks can plant entity live.")
-							.worldRestart()
-							.defineInRange("PlantLiveTick", 48000, 1, 1000000);
 					EntitySettings.EntityLiveTick.YetiLiveTick = builder
 							.comment("how many ticks can yeti entity live(how long will it stay).")
 							.worldRestart()
@@ -331,7 +325,6 @@ public class PVZConfig {
 			
 			public ForgeConfigSpec.IntValue DoomRange;
 			public ForgeConfigSpec.IntValue PlayerOriginGroup;
-			public ForgeConfigSpec.IntValue StrangeCatNameChance;
 			
 			public EntityLiveTick EntityLiveTick = new EntityLiveTick();
 			public ZombieSetting ZombieSetting = new ZombieSetting();
@@ -347,7 +340,6 @@ public class PVZConfig {
 				public ForgeConfigSpec.IntValue CoinLiveTick;
 				public ForgeConfigSpec.IntValue JewelLiveTick;
 				public ForgeConfigSpec.IntValue EnergyLiveTick;
-				public ForgeConfigSpec.IntValue PlantLiveTick;
 				public ForgeConfigSpec.IntValue YetiLiveTick;
 				public ForgeConfigSpec.IntValue BowlingLiveTick;
 				public ForgeConfigSpec.IntValue LawnMowerLiveTick;

@@ -106,6 +106,16 @@ public class BalloonZombieEntity extends PVZZombieEntity {
 	}
 	
 	@Override
+	public boolean canBeButter() {
+		return ! this.hasBalloon();
+	}
+	
+	@Override
+	public boolean canBeFrozen() {
+		return ! this.hasBalloon();
+	}
+	
+	@Override
 	public PathNavigator getNavigation() {
 		if(this.hasBalloon()) {
 			if(! (this.navigation instanceof FlyingPathNavigator)) {

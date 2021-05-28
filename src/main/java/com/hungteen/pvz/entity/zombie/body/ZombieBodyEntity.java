@@ -11,6 +11,7 @@ import net.minecraftforge.fml.network.NetworkHooks;
 
 public class ZombieBodyEntity extends Entity {
 
+	@SuppressWarnings("unused")
 	private PVZZombieEntity bodyOwner;
 	
 	public ZombieBodyEntity(EntityType<?> p_i48580_1_, World p_i48580_2_) {

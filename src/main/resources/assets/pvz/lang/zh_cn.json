@@ -584,8 +584,8 @@
     "gui.pvz.strange_help3":"僵尸吃掉了你的脑子时，你就赢了!",
     "gui.pvz.strange_help4":"--这部分帮助是僵尸送给你的--",
 //guild book
-    "gui.pvz.pvz_guild":"植物大战僵尸指南",
-    "gui.pvz.guild_info":"欢迎来到植物大战僵尸的世界，这本书将带你游玩这个模组。",
+    "gui.pvz.pvz_guide":"植物大战僵尸指南",
+    "gui.pvz.guide_info":"欢迎来到植物大战僵尸的世界，这本书将带你游玩这个模组。",
 //dave shop
     "gui.pvz.dave_shop":"戴夫的商店",
     "gui.pvz.dave_shop.title":"戴夫的商店",
@@ -931,6 +931,9 @@
     "event.pvz.zombie_attack":"僵尸即将到来",
     "event.pvz.huge_wave":"一大波僵尸正在来袭 !",
     "event.pvz.attack_finish":"僵尸入侵结束",
+    "event.pvz.safe_day":"安全日剩余",
+    "event.pvz.count_down":"距下一次僵尸入侵还剩",
+    "event.pvz.day":"天",
     "event.pvz.bucket":"铁桶入侵",
     "event.pvz.water":"水域入侵",
     "event.pvz.halloween":"万圣节入侵",

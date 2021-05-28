@@ -6,7 +6,6 @@ import java.util.UUID;
 
 import javax.annotation.Nullable;
 
-import com.hungteen.pvz.PVZConfig;
 import com.hungteen.pvz.advancement.trigger.PlantSuperTrigger;
 import com.hungteen.pvz.entity.ai.PVZLookRandomlyGoal;
 import com.hungteen.pvz.entity.drop.SunEntity;
@@ -586,15 +585,6 @@ public abstract class PVZPlantEntity extends CreatureEntity implements IPVZPlant
 			}
 		}
 		return amount;
-	}
-
-	/**
-	 * how many tick can plant live
-	 */
-	public int getMaxLiveTick() {
-		int tick = PVZConfig.COMMON_CONFIG.EntitySettings.EntityLiveTick.PlantLiveTick.get();
-//		System.out.println(tick);
-		return this.getPlantEnumName().isUpgradePlant ? 2 * tick : tick;
 	}
 
 	public boolean isPlantInSuperMode() {

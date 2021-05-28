@@ -14,6 +14,7 @@ import com.hungteen.pvz.network.PVZPacketHandler;
 import com.hungteen.pvz.network.PlaySoundPacket;
 import com.hungteen.pvz.register.GroupRegister;
 import com.hungteen.pvz.register.ItemRegister;
+import com.hungteen.pvz.utils.PlayerUtil;
 import com.hungteen.pvz.utils.enums.Plants;
 import com.hungteen.pvz.utils.enums.Resources;
 
@@ -133,7 +134,6 @@ public class PeaGunItem extends Item {
 	public boolean checkAndShootPea(World world, PlayerEntity player, ItemStack itemStack) {
 		Inventory backpack = getInventory(itemStack);
 		ItemStack special = backpack.getItem(0);
-//		System.out.println(itemStack);
 		if (special.getItem() instanceof PlantCardItem) {
 			Plants plant = ((PlantCardItem) special.getItem()).plantType;
 			for (int i = 1; i < PEA_GUN_SLOT_NUM; i++) {
@@ -142,7 +142,9 @@ public class PeaGunItem extends Item {
 					continue;
 				}
 				if (this.canShoot(player, plant, stack, itemStack)) {
-					shrinkItemStack(player, backpack, i, itemStack);
+					if(PlayerUtil.isPlayerSurvival(player)) {
+					    shrinkItemStack(player, backpack, i, itemStack);
+					}
 					PVZPacketHandler.CHANNEL.send(PacketDistributor.PLAYER.with(()->{
 						return (ServerPlayerEntity) player;
 					}), new PlaySoundPacket(1));

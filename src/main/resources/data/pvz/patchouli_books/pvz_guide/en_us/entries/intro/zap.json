@@ -9,7 +9,7 @@
         },
         {   
             "type": "text",
-            "text": "There are various rewards for killing zombies, players can get $(bgreen)TreeXp$() by killing zombies, and players can get $(bgreen)PlantXp$() when their plants killed zombies. Zombies have chances to drop $(borange)Coins(copper coins, silver coins, gold coins)$(), $(bblue)Gems$(), $(borange)Chocolate$(), plant seeds, origin essence and so on. If you kill a zombie surrounded by $(bgreen)green light$(), it will definitely drop $(l)Energy$(). If you kill a zombie surrounded by $(byellow)yellow light$(), it will definitely drop $(byellow)Sun$()."
+            "text": "There are various rewards for killing zombies, players can get $(bgreen)TreeXp$() when they and their plants kill zombies. Zombies have chances to drop $(borange)Coins(silver coins, gold coins)$(), $(bblue)Gems$(), $(borange)Chocolate$(), plant seeds, origin essence and so on. If you kill a zombie surrounded by $(bgreen)green light$(), it will definitely drop $(l)Energy$(). If you kill a zombie surrounded by $(byellow)yellow light$(), it will definitely drop $(byellow)Sun$()."
         },
         {   
             "type": "text",
@@ -17,7 +17,7 @@
         },
         {   
             "type": "text",
-            "text": "$(bgreen)Plants$() are relatively fragile. Terrestrial plants can only survive on $(l)grass blocks and Water lilies$(), while aquatic plants can only survive $(l)in water$()."
+            "text": "$(bgreen)Plants$() are relatively fragile. Terrestrial plants can only survive on $(l)grass blocks and Water lilies and golden tiles and flower pots$(), while aquatic plants can only survive $(l)in water$()."
         },
         {
             "type": "text",

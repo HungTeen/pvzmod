@@ -39,6 +39,10 @@ public class WeightList<T> {
 		return this;
 	}
 	
+	public int getTotal() {
+		return this.tot;
+	}
+	
 	/**
 	 * get the weight item randomly.
 	 */

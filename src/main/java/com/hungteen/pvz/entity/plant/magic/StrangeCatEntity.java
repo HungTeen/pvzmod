@@ -67,11 +67,6 @@ public class StrangeCatEntity extends PVZPlantEntity {
 	public void onSelfCopy(LivingEntity target) {
 		StrangeCatEntity cat = EntityRegister.STRANGE_CAT.get().create(level);
 		PlantUtil.copyPlantData(cat, this);
-//		if(this.getRandom().nextInt(PVZConfig.COMMON_CONFIG.EntitySettings.StrangeCatNameChance.get()) == 0) {
-//			List<String> list = Arrays.asList("芦苇", "Rua猫");
-//			int pos = this.getRandom().nextInt(list.size());
-//			cat.setCustomName(new StringTextComponent(list.get(pos)));
-//		}
 		EntityUtil.onMobEntitySpawn(level, cat, target.blockPosition());
 	}
 	

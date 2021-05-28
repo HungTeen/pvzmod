@@ -29,13 +29,13 @@ public class PVZZombieAttackGoal extends PVZMeleeAttackGoal {
 		double dis = EntityUtil.getNearestDistance(this.attacker, target);
 		double range = this.getAttackReachSqr(target);
 		if (range >= dis) {
-			this.zombie.setAggressive(true);
 			if(this.attackTick <= 0) {
 			    this.attackTick = this.zombie.getAttackCD();
 			    this.attacker.swing(Hand.MAIN_HAND);
 			    this.attacker.doHurtTarget(target);
 			}
 		}
+		this.attacker.setAggressive(dis <= 20);
 	}
 
 }

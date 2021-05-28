@@ -17,7 +17,7 @@ authors="_HungTeen_" #optional
 
 [[mods]]
 modId="pvz"
-version="0.5.1"
+version="0.5.2"
 displayName="Plants vs Zombies"
 description='''
 A mod that brings Plants vs Zombies to Minecraft'''

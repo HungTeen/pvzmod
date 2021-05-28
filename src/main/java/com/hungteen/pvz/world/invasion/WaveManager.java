@@ -1,10 +1,8 @@
 package com.hungteen.pvz.world.invasion;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import javax.annotation.Nullable;
 
+import com.hungteen.pvz.PVZMod;
 import com.hungteen.pvz.capability.CapabilityHandler;
 import com.hungteen.pvz.capability.player.PlayerDataManager;
 import com.hungteen.pvz.capability.player.PlayerDataManager.OtherStats;
@@ -22,6 +20,7 @@ import com.hungteen.pvz.utils.ZombieUtil;
 import com.hungteen.pvz.utils.enums.InvasionEvents;
 import com.hungteen.pvz.utils.enums.Resources;
 import com.hungteen.pvz.utils.enums.Zombies;
+import com.hungteen.pvz.utils.others.WeightList;
 import com.hungteen.pvz.world.data.PVZInvasionData;
 
 import net.minecraft.entity.player.PlayerEntity;
@@ -49,10 +48,10 @@ public class WaveManager {
 	private final int currentWave;
 	private final PlayerEntity player;
 	private final BlockPos center;
-	private final List<Zombies> spawns = new ArrayList<>(); 
-	private final List<Integer> spawnWeights = new ArrayList<>();
-	private final int[] minSpawnCounts = new int[] {8, 12, 16, 21, 28};
-	private final int[] maxSpawnCounts = new int[] {15, 20, 25, 32, 40};
+	private final WeightList<Zombies> spawnList = new WeightList<>();
+//	private final List<Zombies> spawns = new ArrayList<>(); 
+//	private final List<Integer> spawnWeights = new ArrayList<>();
+	private static final int[] SPAWN_COUNT_EACH_WAVE = new int[] {20, 30, 40, 50, 60};
 	public int spawnCnt = 0;
 	
 	public WaveManager(PlayerEntity player, int waveNum) {
@@ -64,15 +63,16 @@ public class WaveManager {
 	}
 	
 	/**
-	 * check spawn huge wave of zombies for players.
+	 * check spawn huge wave of zombies for each player.
+	 * dayTime means current time.
 	 */
 	public static void tickWave(World world, int dayTime) {
-		if(world.getDifficulty() == Difficulty.PEACEFUL) return ;
-		world.players().forEach((player) -> {
+		if(! canWaveRun(world)) return ;
+		PlayerUtil.getServerPlayers(world).forEach(player -> {
 			if(PlayerUtil.isPlayerSurvival(player)) {
-				player.getCapability(CapabilityHandler.PLAYER_DATA_CAPABILITY).ifPresent((l) -> {
+				player.getCapability(CapabilityHandler.PLAYER_DATA_CAPABILITY).ifPresent(l -> {
 			        PlayerDataManager.OtherStats stats = l.getPlayerData().getOtherStats();
-			        for(int i = 0 ; i < stats.zombieWaveTime.length; ++ i) {
+			        for(int i = 0 ; i < stats.zombieWaveTime.length; ++i) {
 				        int time = stats.zombieWaveTime[i];
 				        if(time != 0 && time == dayTime) {
 						    WaveManager manager = new WaveManager(player, i);
@@ -111,25 +111,26 @@ public class WaveManager {
 		});
 	}
 	
+	/**
+	 * spawn wave zombies.
+	 */
 	public void spawnWaveZombies() {
+		//can only spawn in overworld.
 		if(! world.dimension().equals(World.OVERWORLD)) return ;
-		int now = 0;
-		for(int i = 0; i < this.spawns.size(); ++ i) {
-			Zombies zombie = this.spawns.get(i);
-			now += zombie.spawnWeight;
-			this.spawnWeights.add(now);
+		if(this.spawnList.getTotal() == 0) {
+			PVZMod.LOGGER.warn("Warn : Why cause no wave zombie spawned ?");
+			return ;
 		}
-		if(now == 0) return;
 		int cnt = this.getSpawnCount();
 		boolean spawned = false;
 		int groupNum = 0;
 		while(cnt >= 10) {
 			int teamCnt = (cnt < 15 ? cnt : 10);
-			spawned |= this.spawnZombieTeam(++groupNum, now, teamCnt);
+			spawned |= this.spawnZombieTeam(++groupNum, teamCnt);
 			cnt -= teamCnt;
 		}
 		if(cnt > 0) {
-			spawned |=this.spawnZombieTeam(++ groupNum, now, cnt);
+			spawned |=this.spawnZombieTeam(++ groupNum, cnt);
 		}
 		if(spawned) {
 			PlayerUtil.playClientSound(player, 2);
@@ -161,32 +162,29 @@ public class WaveManager {
 	 * reset the huge wave time of each player.
 	 */
 	public static void resetPlayerWaveTime(PlayerEntity player) {
-		player.getCapability(CapabilityHandler.PLAYER_DATA_CAPABILITY).ifPresent((l) -> {
+		player.getCapability(CapabilityHandler.PLAYER_DATA_CAPABILITY).ifPresent(l -> {
 			OtherStats stats = l.getPlayerData().getOtherStats();
 			int treeLvl = l.getPlayerData().getPlayerStats().getPlayerStats(Resources.TREE_LVL);
 			int maxCnt = PlayerUtil.getPlayerWaveCount(treeLvl);
 			int minCnt = (maxCnt + 1) / 2;
 			int cnt = player.getRandom().nextInt(maxCnt - minCnt + 1) + minCnt;
-			int partTime = 24000 / cnt;
+			int partTime = 21000 / cnt;//not happen at the first 2500 ticks and the last 500 ticks of the day.
 			for(int i = 0; i < MAX_WAVE_NUM; ++ i) {
 				if(i < cnt) {
 					int time = player.getRandom().nextInt(partTime - 2000);
-					stats.zombieWaveTime[i] = time + i * partTime + 1000;
+					stats.zombieWaveTime[i] = 2500 + (time + i * partTime + 1000);
 				} else {
 					stats.zombieWaveTime[i] = 0;
 				}
 			}
 			stats.totalWaveCount = cnt;
 			syncWaveTime(player);
-//			for(int i : stats.zombieWaveTime) {
-//				System.out.println(i);
-//			}
 		});
 	}
 	
 	public static void giveInvasionBonusToPlayer(World world, PlayerEntity player) {
 		if(! PlayerUtil.isPlayerSurvival(player)) return ;//do not effect to creative players.
-		player.getCapability(CapabilityHandler.PLAYER_DATA_CAPABILITY).ifPresent((l) -> {
+		player.getCapability(CapabilityHandler.PLAYER_DATA_CAPABILITY).ifPresent(l -> {
 			int cnt = l.getPlayerData().getPlayerStats().getPlayerStats(Resources.KILL_COUNT);
 			if(cnt >= 50) {//give reward if kill count reach 50
 				PlayerUtil.playClientSound(player, 6);
@@ -195,12 +193,22 @@ public class WaveManager {
 			    for(int i = 0; i < (cnt >= 200 ? 2 : 1); ++ i) {
 		    	    player.addItem(getRandomItemForPlayer(world));
 			    }
+			    PlayerDataManager.OtherStats stats = l.getPlayerData().getOtherStats();
+			    //sync zombie wave time
+			    for(int i = 0; i < stats.zombieWaveTime.length; ++i) {
+			    	stats.zombieWaveTime[i] = 0;
+			    }
+			    stats.totalWaveCount = 0;
+			    syncWaveTime(player);
 			}
 			//reset kill count.
 			l.getPlayerData().getPlayerStats().setPlayerStats(Resources.KILL_COUNT, 0);
 		});
 	}
 	
+	/**
+	 * get random enjoy card for bonus.
+	 */
 	private static ItemStack getRandomItemForPlayer(World world) {
 		PVZInvasionData data = PVZInvasionData.getOverWorldInvasionData(world);
 		for(InvasionEvents ev : InvasionEvents.values()) {
@@ -211,18 +219,18 @@ public class WaveManager {
 		return ItemStack.EMPTY;
 	}
 	
-	private boolean spawnZombieTeam(int groupNum, int sum, int cnt) {
+	/**
+	 * spawn a zombie invade team.
+	 */
+	private boolean spawnZombieTeam(int groupNum, int cnt) {
 		BlockPos mid = this.findRandomSpawnPos(20);
 		if(mid == null) return false; // no position do not spawn.
 		for(int i = 0; i < cnt; ++ i) {
-			int tmp = this.world.random.nextInt(sum);
-			for(int j = 0; j < this.spawnWeights.size(); ++ j) {
-				if(tmp < this.spawnWeights.get(j)) {
-					this.spawnZombie(this.spawns.get(j), mid);
-					break;
-				}
-			}
+			this.spawnList.getRandomItem(world.random).ifPresent(zombie -> {
+				this.spawnZombie(zombie, mid);
+			});
 		}
+		//spawn yeti zombie at team 1 when it's Yeti Invasion.
 		if(groupNum == 1) {
 			PVZInvasionData data = PVZInvasionData.getOverWorldInvasionData(world);
 			if(data.hasEvent(InvasionEvents.YETI) && world.random.nextInt(3) == 0) {
@@ -230,6 +238,7 @@ public class WaveManager {
 			    EntityUtil.onMobEntitySpawn(world, yeti, mid.offset(0, 1, 0));
 			}
 		}
+		//spawn team leader -- flag zombie.
 		PVZZombieEntity flagZombie = EntityRegister.FLAG_ZOMBIE.get().create(world);
 		EntityUtil.onMobEntitySpawn(world, flagZombie, mid.offset(0, 1, 0));
 		return true;
@@ -244,20 +253,29 @@ public class WaveManager {
 		EntityUtil.onMobEntitySpawn(world, zombieEntity, new BlockPos(x, y + 1, z));
 	}
 	
+	/**
+	 * calculate how many zombies will spawn each wave.
+	 */
 	private int getSpawnCount() {
 		if(this.spawnCnt != 0) return this.spawnCnt;
-		int minCnt = this.minSpawnCounts[this.currentWave];
-		int maxCnt = this.maxSpawnCounts[this.currentWave];
+		int maxCnt = SPAWN_COUNT_EACH_WAVE[this.currentWave];
+		int minCnt = maxCnt / 2;
 		return this.world.random.nextInt(maxCnt - minCnt + 1) + minCnt;
 	}
 	
+	/**
+	 * called at constructor.
+	 */
 	private void updateSpawns() {
 		PVZInvasionData data = PVZInvasionData.getOverWorldInvasionData(world);
+		int sum = 0;
 		for(Zombies zombie : Zombies.values()) {
 			if(data.hasZombieSpawnEntry(zombie)) {
-				this.spawns.add(zombie);
+				this.spawnList.addItem(zombie, zombie.spawnWeight);
+				sum += zombie.spawnWeight;
 			}
 		}
+		this.spawnList.setTotal(sum);
 	}
 
 	@SuppressWarnings("deprecation")
@@ -281,6 +299,10 @@ public class WaveManager {
 			}
 		}
 		return null;
+	}
+	
+	public static boolean canWaveRun(World world) {
+		return world.getDifficulty() != Difficulty.PEACEFUL;
 	}
 
 }

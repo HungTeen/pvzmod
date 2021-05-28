@@ -30,11 +30,14 @@ public class OverworldInvasion {
 
 	private static final ITextComponent ZOMBIE_ATTACK = new TranslationTextComponent("event.pvz.zombie_attack").withStyle(TextFormatting.DARK_RED);
 	private static final ITextComponent ATTACK_FINISH = new TranslationTextComponent("event.pvz.attack_finish").withStyle(TextFormatting.GREEN);
+	private static final ITextComponent SAFE_DAY_INFO = new TranslationTextComponent("event.pvz.safe_day");
+	private static final ITextComponent COUNT_DOWN_INFO = new TranslationTextComponent("event.pvz.count_down");
+	private static final ITextComponent DAY = new TranslationTextComponent("event.pvz.day");
 	public static final Set<Zombies> ZOMBIE_INVADE_SET = new HashSet<>();
-	public static final int PRE_START_TICK = 199;
-	public static final int START_TICK = 200;
-	public static final int PRE_END_TICK = 23799;
-	public static final int END_TICK = 23800;
+	public static final int PRE_START_TICK = 499;
+	public static final int START_TICK = 500;
+	public static final int PRE_END_TICK = 99;
+	public static final int END_TICK = 100;
 	
 	public static void tick(TickEvent.WorldTickEvent ev) {
 		World world = ev.world;
@@ -51,8 +54,16 @@ public class OverworldInvasion {
 			if(! data.hasChanged()) {
 				data.setChanged(true);
 				deactivateZombieAttackEvents(world, false);//cancel all invasion happened yesterday.
-				if(! data.hasCountDownDay() && ! isInSafeDay(world)) {
+				long dif = difSafeDay(world);
+				final boolean isSafe = (dif < 0);
+				int count = data.getCountDownDay();
+				final boolean hasCount = data.hasCountDownDay();
+				if(! hasCount && ! isSafe) {// no interval and not safe then invade happen !
 					activateZombieAttackEvents(world);
+				} else if(isSafe) {
+					PlayerUtil.sendMsgToAll(world, new StringTextComponent(SAFE_DAY_INFO.getString() + " : " + getLeftSafeDay(dif) + DAY.getString()).withStyle(TextFormatting.GREEN));
+				} else {
+					PlayerUtil.sendMsgToAll(world, new StringTextComponent(COUNT_DOWN_INFO.getString() + " : " + count + DAY.getString()).withStyle(TextFormatting.RED));
 				}
 				data.decCountDownDay();
 			}
@@ -249,8 +260,12 @@ public class OverworldInvasion {
 	/**
 	 * is still in safe day.
 	 */
-	public static boolean isInSafeDay(World world) {
-		return world.getGameTime() < PVZConfig.COMMON_CONFIG.WorldSettings.WorldInvasionSettings.SafeDayLength.get() * 24000;
+	public static long difSafeDay(World world) {
+		return world.getGameTime() - PVZConfig.COMMON_CONFIG.WorldSettings.WorldInvasionSettings.SafeDayLength.get() * 24000;
+	}
+	
+	public static long getLeftSafeDay(long len) {
+		return (- len + 23999) / 24000;
 	}
 	
 }

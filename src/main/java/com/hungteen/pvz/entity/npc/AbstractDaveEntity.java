@@ -25,6 +25,7 @@ public class AbstractDaveEntity extends CreatureEntity {
 
 	public AbstractDaveEntity(EntityType<? extends CreatureEntity> type, World worldIn) {
 		super(type, worldIn);
+		this.refreshDimensions();
 	}
 
 	@Override

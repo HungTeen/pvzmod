@@ -86,7 +86,6 @@ public class PuffShroomEntity extends PlantShooterEntity {
 		return EntitySize.scalable(0.5f, 0.5f);
 	}
 	
-	@Override
 	public int getMaxLiveTick() {
 		int lvl = this.getPlantLvl();
 		if(lvl <= 19) {
