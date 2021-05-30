@@ -3,8 +3,8 @@ package com.hungteen.pvz.utils;
 import java.util.EnumMap;
 
 import com.hungteen.pvz.PVZMod;
-import com.hungteen.pvz.gui.GuiHandler;
-import com.hungteen.pvz.potion.PotionRecipeHandler;
+import com.hungteen.pvz.client.gui.GuiHandler;
+import com.hungteen.pvz.common.potion.PotionRecipeHandler;
 import com.hungteen.pvz.register.BlockRegister;
 import com.hungteen.pvz.register.EnchantmentRegister;
 import com.hungteen.pvz.register.ItemRegister;

@@ -1,9 +1,9 @@
 package com.hungteen.pvz.register;
 
 import com.hungteen.pvz.PVZMod;
+import com.hungteen.pvz.common.world.biome.ZenGardenBiome;
+import com.hungteen.pvz.common.world.gen.GenOres;
 import com.hungteen.pvz.utils.BiomeUtil;
-import com.hungteen.pvz.world.biome.ZenGardenBiome;
-import com.hungteen.pvz.world.gen.GenOres;
 
 import net.minecraft.world.biome.Biome;
 import net.minecraft.world.biome.Biome.Category;

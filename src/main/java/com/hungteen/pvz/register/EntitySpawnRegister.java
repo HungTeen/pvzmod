@@ -2,13 +2,13 @@ package com.hungteen.pvz.register;
 
 import com.hungteen.pvz.PVZConfig;
 import com.hungteen.pvz.PVZMod;
-import com.hungteen.pvz.entity.creature.FoodieZombieEntity;
-import com.hungteen.pvz.entity.drop.SunEntity;
-import com.hungteen.pvz.entity.zombie.PVZZombieEntity;
-import com.hungteen.pvz.entity.zombie.grassnight.TombStoneEntity;
-import com.hungteen.pvz.entity.zombie.poolnight.BalloonZombieEntity;
-import com.hungteen.pvz.entity.zombie.poolnight.YetiZombieEntity;
-import com.hungteen.pvz.entity.zombie.roof.BungeeZombieEntity;
+import com.hungteen.pvz.common.entity.creature.FoodieZombieEntity;
+import com.hungteen.pvz.common.entity.drop.SunEntity;
+import com.hungteen.pvz.common.entity.zombie.PVZZombieEntity;
+import com.hungteen.pvz.common.entity.zombie.grassnight.TombStoneEntity;
+import com.hungteen.pvz.common.entity.zombie.poolnight.BalloonZombieEntity;
+import com.hungteen.pvz.common.entity.zombie.poolnight.YetiZombieEntity;
+import com.hungteen.pvz.common.entity.zombie.roof.BungeeZombieEntity;
 import com.hungteen.pvz.utils.BiomeUtil;
 
 import net.minecraft.block.Blocks;

@@ -4,11 +4,11 @@ import java.util.Comparator;
 import java.util.function.Predicate;
 
 import com.hungteen.pvz.PVZMod;
-import com.hungteen.pvz.block.EssenceOreBlock;
-import com.hungteen.pvz.item.material.TemplateCardItem;
-import com.hungteen.pvz.item.tool.card.PlantCardItem;
-import com.hungteen.pvz.item.tool.card.SummonCardItem;
-import com.hungteen.pvz.misc.tag.PVZItemTags;
+import com.hungteen.pvz.common.block.EssenceOreBlock;
+import com.hungteen.pvz.common.item.card.PlantCardItem;
+import com.hungteen.pvz.common.item.card.SummonCardItem;
+import com.hungteen.pvz.common.item.material.TemplateCardItem;
+import com.hungteen.pvz.common.misc.tag.PVZItemTags;
 import com.hungteen.pvz.register.BlockRegister;
 import com.hungteen.pvz.register.ItemRegister;
 

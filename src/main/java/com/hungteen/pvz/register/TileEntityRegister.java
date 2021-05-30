@@ -1,13 +1,13 @@
 package com.hungteen.pvz.register;
 
 import com.hungteen.pvz.PVZMod;
-import com.hungteen.pvz.render.tileentity.SunConverterTER;
-import com.hungteen.pvz.render.tileentity.SunFlowerTrophyTER;
-import com.hungteen.pvz.tileentity.CardFusionTileEntity;
-import com.hungteen.pvz.tileentity.FragmentSpliceTileEntity;
-import com.hungteen.pvz.tileentity.SlotMachineTileEntity;
-import com.hungteen.pvz.tileentity.SunConverterTileEntity;
-import com.hungteen.pvz.tileentity.SunFlowerTrophyTileEntity;
+import com.hungteen.pvz.client.render.tileentity.SunConverterTER;
+import com.hungteen.pvz.client.render.tileentity.SunFlowerTrophyTER;
+import com.hungteen.pvz.common.tileentity.CardFusionTileEntity;
+import com.hungteen.pvz.common.tileentity.FragmentSpliceTileEntity;
+import com.hungteen.pvz.common.tileentity.SlotMachineTileEntity;
+import com.hungteen.pvz.common.tileentity.SunConverterTileEntity;
+import com.hungteen.pvz.common.tileentity.SunFlowerTrophyTileEntity;
 
 import net.minecraft.tileentity.TileEntityType;
 import net.minecraftforge.api.distmarker.Dist;

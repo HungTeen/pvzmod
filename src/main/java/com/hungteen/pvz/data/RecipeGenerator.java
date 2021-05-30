@@ -2,8 +2,8 @@ package com.hungteen.pvz.data;
 
 import java.util.function.Consumer;
 
-import com.hungteen.pvz.item.tool.card.PlantCardItem;
-import com.hungteen.pvz.misc.tag.PVZItemTags;
+import com.hungteen.pvz.common.item.card.PlantCardItem;
+import com.hungteen.pvz.common.misc.tag.PVZItemTags;
 import com.hungteen.pvz.register.BlockRegister;
 import com.hungteen.pvz.register.ItemRegister;
 import com.hungteen.pvz.utils.PlantUtil;

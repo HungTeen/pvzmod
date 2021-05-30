@@ -1,13 +1,13 @@
 package com.hungteen.pvz;
 
-import com.hungteen.pvz.capability.CapabilityHandler;
-import com.hungteen.pvz.item.PVZSpawnEggItem;
-import com.hungteen.pvz.item.armor.BucketArmorItem;
-import com.hungteen.pvz.item.armor.ConeArmorItem;
-import com.hungteen.pvz.item.armor.FootballArmorItem;
-import com.hungteen.pvz.item.armor.GigaArmorItem;
-import com.hungteen.pvz.network.PVZPacketHandler;
-import com.hungteen.pvz.potion.PotionRecipeHandler;
+import com.hungteen.pvz.common.capability.CapabilityHandler;
+import com.hungteen.pvz.common.item.PVZSpawnEggItem;
+import com.hungteen.pvz.common.item.armor.BucketArmorItem;
+import com.hungteen.pvz.common.item.armor.ConeArmorItem;
+import com.hungteen.pvz.common.item.armor.FootballArmorItem;
+import com.hungteen.pvz.common.item.armor.GigaArmorItem;
+import com.hungteen.pvz.common.network.PVZPacketHandler;
+import com.hungteen.pvz.common.potion.PotionRecipeHandler;
 import com.hungteen.pvz.register.BiomeRegister;
 import com.hungteen.pvz.register.BlockRegister;
 import com.hungteen.pvz.register.CommonRegister;

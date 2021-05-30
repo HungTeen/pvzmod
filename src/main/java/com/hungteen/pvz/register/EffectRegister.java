@@ -3,7 +3,7 @@ package com.hungteen.pvz.register;
 import java.util.UUID;
 
 import com.hungteen.pvz.PVZMod;
-import com.hungteen.pvz.potion.PVZEffect;
+import com.hungteen.pvz.common.potion.PVZEffect;
 import com.hungteen.pvz.utils.enums.Colors;
 
 import net.minecraft.entity.ai.attributes.AttributeModifier.Operation;

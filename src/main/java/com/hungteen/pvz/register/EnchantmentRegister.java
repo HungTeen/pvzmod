@@ -1,17 +1,17 @@
 package com.hungteen.pvz.register;
 
 import com.hungteen.pvz.PVZMod;
-import com.hungteen.pvz.enchantment.BreakOutEnchantment;
-import com.hungteen.pvz.enchantment.CharmEnchantment;
-import com.hungteen.pvz.enchantment.EnergyTransferEnchantment;
-import com.hungteen.pvz.enchantment.SoillessPlantEnchantment;
-import com.hungteen.pvz.enchantment.SunMendingEnchantment;
-import com.hungteen.pvz.enchantment.SunReduceEnchantment;
-import com.hungteen.pvz.enchantment.SunShovelEnchantment;
-import com.hungteen.pvz.enchantment.TreeProtectionEnchantment;
-import com.hungteen.pvz.item.tool.card.BlockPlantCardItem;
-import com.hungteen.pvz.item.tool.card.PlantCardItem;
-import com.hungteen.pvz.item.tool.card.SummonCardItem;
+import com.hungteen.pvz.common.enchantment.BreakOutEnchantment;
+import com.hungteen.pvz.common.enchantment.CharmEnchantment;
+import com.hungteen.pvz.common.enchantment.EnergyTransferEnchantment;
+import com.hungteen.pvz.common.enchantment.SoillessPlantEnchantment;
+import com.hungteen.pvz.common.enchantment.SunMendingEnchantment;
+import com.hungteen.pvz.common.enchantment.SunReduceEnchantment;
+import com.hungteen.pvz.common.enchantment.SunShovelEnchantment;
+import com.hungteen.pvz.common.enchantment.TreeProtectionEnchantment;
+import com.hungteen.pvz.common.item.card.BlockPlantCardItem;
+import com.hungteen.pvz.common.item.card.PlantCardItem;
+import com.hungteen.pvz.common.item.card.SummonCardItem;
 
 import net.minecraft.enchantment.Enchantment;
 import net.minecraft.enchantment.EnchantmentType;

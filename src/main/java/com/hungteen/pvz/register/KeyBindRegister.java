@@ -1,10 +1,10 @@
 package com.hungteen.pvz.register;
 
 import com.hungteen.pvz.PVZMod;
-import com.hungteen.pvz.entity.plant.explosion.CobCannonEntity;
-import com.hungteen.pvz.event.OverlayEvents;
-import com.hungteen.pvz.network.EntityInteractPacket;
-import com.hungteen.pvz.network.PVZPacketHandler;
+import com.hungteen.pvz.client.OverlayEvents;
+import com.hungteen.pvz.common.entity.plant.explosion.CobCannonEntity;
+import com.hungteen.pvz.common.network.EntityInteractPacket;
+import com.hungteen.pvz.common.network.PVZPacketHandler;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.settings.KeyBinding;

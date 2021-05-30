@@ -5,8 +5,8 @@ import java.util.HashSet;
 import java.util.Set;
 
 import com.hungteen.pvz.PVZMod;
-import com.hungteen.pvz.item.PVZSpawnEggItem;
-import com.hungteen.pvz.item.tool.card.PlantCardItem;
+import com.hungteen.pvz.common.item.PVZSpawnEggItem;
+import com.hungteen.pvz.common.item.card.PlantCardItem;
 import com.hungteen.pvz.register.BlockRegister;
 import com.hungteen.pvz.register.ItemRegister;
 import com.hungteen.pvz.utils.PlantUtil;

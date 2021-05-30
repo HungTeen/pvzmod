@@ -4,9 +4,11 @@ import org.apache.commons.lang3.tuple.Pair;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-import com.hungteen.pvz.advancement.AdvancementHandler;
+import com.hungteen.pvz.client.ClientProxy;
+import com.hungteen.pvz.common.CommonProxy;
+import com.hungteen.pvz.common.advancement.AdvancementHandler;
+import com.hungteen.pvz.common.world.gen.GenStructures;
 import com.hungteen.pvz.register.BiomeRegister;
-import com.hungteen.pvz.world.gen.GenStructures;
 
 import net.minecraftforge.common.ForgeConfigSpec;
 import net.minecraftforge.common.MinecraftForge;

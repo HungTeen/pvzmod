@@ -4,8 +4,8 @@ import java.util.Comparator;
 import java.util.function.Predicate;
 
 import com.hungteen.pvz.PVZMod;
-import com.hungteen.pvz.block.EssenceOreBlock;
-import com.hungteen.pvz.misc.tag.PVZBlockTags;
+import com.hungteen.pvz.common.block.EssenceOreBlock;
+import com.hungteen.pvz.common.misc.tag.PVZBlockTags;
 import com.hungteen.pvz.register.BlockRegister;
 
 import net.minecraft.block.Block;

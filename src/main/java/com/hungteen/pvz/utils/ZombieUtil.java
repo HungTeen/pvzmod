@@ -3,7 +3,7 @@ package com.hungteen.pvz.utils;
 import java.util.HashMap;
 
 import com.hungteen.pvz.PVZMod;
-import com.hungteen.pvz.entity.zombie.PVZZombieEntity;
+import com.hungteen.pvz.common.entity.zombie.PVZZombieEntity;
 import com.hungteen.pvz.register.EntityRegister;
 import com.hungteen.pvz.utils.enums.Ranks;
 import com.hungteen.pvz.utils.enums.Zombies;

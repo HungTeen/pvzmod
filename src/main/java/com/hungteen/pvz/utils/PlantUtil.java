@@ -7,8 +7,8 @@ import java.util.List;
 import javax.annotation.Nullable;
 
 import com.hungteen.pvz.PVZMod;
-import com.hungteen.pvz.entity.plant.PVZPlantEntity;
-import com.hungteen.pvz.item.tool.card.PlantCardItem;
+import com.hungteen.pvz.common.entity.plant.PVZPlantEntity;
+import com.hungteen.pvz.common.item.card.PlantCardItem;
 import com.hungteen.pvz.register.BlockRegister;
 import com.hungteen.pvz.register.EntityRegister;
 import com.hungteen.pvz.register.ItemRegister;

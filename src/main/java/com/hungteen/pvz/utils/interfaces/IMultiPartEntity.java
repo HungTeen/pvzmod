@@ -1,6 +1,6 @@
 package com.hungteen.pvz.utils.interfaces;
 
-import com.hungteen.pvz.entity.PVZMultiPartEntity;
+import com.hungteen.pvz.common.entity.PVZMultiPartEntity;
 
 public interface IMultiPartEntity {
 

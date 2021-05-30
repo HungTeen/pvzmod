@@ -8,7 +8,7 @@ import java.util.Optional;
 import java.util.function.Predicate;
 
 import com.hungteen.pvz.PVZConfig;
-import com.hungteen.pvz.world.data.PVZFlagData;
+import com.hungteen.pvz.common.world.data.PVZFlagData;
 
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.TextFormatting;
