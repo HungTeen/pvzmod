@@ -97,7 +97,7 @@ public class DiggerZombieModel extends PVZZombieModel<DiggerZombieEntity> {
 
 	@Override
 	public void setupAnim(DiggerZombieEntity entity, float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch){
-		if(entity.getAttackTime() > 0 && entity.getAttackTime() < DiggerZombieEntity.MAX_ANIM_TIME) {
+		if(entity.getAttackTime() > 0 && entity.getAttackTime() < DiggerZombieEntity.MAX_OUT_TIME) {
 			total.yRot = ageInTicks / 1f;
 		} else {
 			total.yRot = 0;
@@ -113,6 +113,7 @@ public class DiggerZombieModel extends PVZZombieModel<DiggerZombieEntity> {
 	
 	@Override
 	public void updateFreeParts(DiggerZombieEntity entity) {
+		super.updateFreeParts(entity);
 		final boolean hasPickaxe = entity.hasPickaxe();
 		this.pickaxe.visible = hasPickaxe;
 		this.isRightHandFree = ! hasPickaxe;

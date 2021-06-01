@@ -236,7 +236,7 @@ import com.hungteen.pvz.common.entity.plant.toxic.PuffShroomEntity;
 import com.hungteen.pvz.common.entity.plant.toxic.ScaredyShroomEntity;
 import com.hungteen.pvz.common.entity.plant.toxic.SeaShroomEntity;
 import com.hungteen.pvz.common.entity.zombie.PVZZombieEntity;
-import com.hungteen.pvz.common.entity.zombie.body.ZombieBodyEntity;
+import com.hungteen.pvz.common.entity.zombie.body.ZombieDropBodyEntity;
 import com.hungteen.pvz.common.entity.zombie.grassday.BucketHeadZombieEntity;
 import com.hungteen.pvz.common.entity.zombie.grassday.ConeHeadZombieEntity;
 import com.hungteen.pvz.common.entity.zombie.grassday.FlagZombieEntity;
@@ -349,7 +349,7 @@ public class EntityRegister {
 	public static final RegistryObject<EntityType<ElementBallEntity>> ELEMENT_BALL = registerEntityType(ElementBallEntity::new, "element_ball", EntityClassification.MISC);
 	public static final RegistryObject<EntityType<DestroyCarEntity>> DESTROY_CAR = registerEntityType(DestroyCarEntity::new, "destroy_car", EntityClassification.MISC);
 	public static final RegistryObject<EntityType<GardenRakeEntity>> GARDEN_RAKE = registerEntityType(GardenRakeEntity::new, "garden_rake", EntityClassification.MISC);
-	public static final RegistryObject<EntityType<ZombieBodyEntity>> ZOMBIE_BODY = registerEntityType(ZombieBodyEntity::new, "zombie_body", EntityClassification.MISC);
+	public static final RegistryObject<EntityType<ZombieDropBodyEntity>> ZOMBIE_DROP_BODY = registerEntityType(ZombieDropBodyEntity::new, "zombie_drop_body", EntityClassification.MISC);
 	
 	//animal
 	public static final RegistryObject<EntityType<FoodieZombieEntity>> FOODIE_ZOMBIE = registerEntityType(FoodieZombieEntity::new, "foodie_zombie", EntityClassification.WATER_CREATURE);
@@ -505,7 +505,7 @@ public class EntityRegister {
         RenderingRegistry.registerEntityRenderingHandler(ELEMENT_BALL.get(), ElementBallRender::new);
         RenderingRegistry.registerEntityRenderingHandler(DESTROY_CAR.get(), DestroyCarRender::new);
         RenderingRegistry.registerEntityRenderingHandler(GARDEN_RAKE.get(), GardenRakeRender::new);
-        RenderingRegistry.registerEntityRenderingHandler(ZOMBIE_BODY.get(), ZombieBodyRender::new);
+        RenderingRegistry.registerEntityRenderingHandler(ZOMBIE_DROP_BODY.get(), ZombieBodyRender::new);
         
         //animal 
         RenderingRegistry.registerEntityRenderingHandler(FOODIE_ZOMBIE.get(), FoodieZombieRender::new);

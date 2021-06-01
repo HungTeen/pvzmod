@@ -1,7 +1,7 @@
 package com.hungteen.pvz.client.render.entity.zombie.roof;
 
 import com.hungteen.pvz.client.model.entity.zombie.roof.ZomBossModel;
-import com.hungteen.pvz.client.render.entity.zombie.PVZZombieRender;
+import com.hungteen.pvz.client.render.entity.zombie.OldPVZZombieRender;
 import com.hungteen.pvz.common.entity.zombie.roof.ZomBossEntity;
 import com.hungteen.pvz.utils.StringUtil;
 
@@ -11,7 +11,7 @@ import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 
 @OnlyIn(Dist.CLIENT)
-public class ZomBossRender extends PVZZombieRender<ZomBossEntity> {
+public class ZomBossRender extends OldPVZZombieRender<ZomBossEntity> {
 
 	private static final ResourceLocation ZOMBOSS_TEX = StringUtil.prefix("textures/entity/zombie/roof/zomboss.png");
 	

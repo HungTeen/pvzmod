@@ -35,8 +35,6 @@ public class StarRender extends PVZEntityRender<StarEntity> {
 		matrixStackIn.pushPose();
 		matrixStackIn.mulPose(Vector3f.YP.rotationDegrees(MathHelper.lerp(partialTicks, entityIn.yRotO, entityIn.yRot) + 180.0F));
 		super.render(entityIn, entityYaw, partialTicks, matrixStackIn, bufferIn, packedLightIn);
-//		matrixStackIn.pop();
-//		matrixStackIn.push();
 		matrixStackIn.scale(-1, -1, 1);
 		float f = getScaleByEntity(entityIn);
 		matrixStackIn.scale(f, f, f);

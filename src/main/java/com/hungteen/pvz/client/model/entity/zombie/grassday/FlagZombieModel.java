@@ -75,6 +75,7 @@ public class FlagZombieModel extends PVZZombieModel<FlagZombieEntity> {
 	
 	@Override
 	public void updateFreeParts(FlagZombieEntity entity) {
+		super.updateFreeParts(entity);
 		this.isRightHandFree = false;
 	}
 	

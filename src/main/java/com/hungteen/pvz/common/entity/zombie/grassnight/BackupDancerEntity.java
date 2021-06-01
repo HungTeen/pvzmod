@@ -1,6 +1,6 @@
 package com.hungteen.pvz.common.entity.zombie.grassnight;
 
-import com.hungteen.pvz.common.entity.zombie.base.UnderGroundZombieEntity;
+import com.hungteen.pvz.common.entity.zombie.PVZZombieEntity;
 import com.hungteen.pvz.utils.ZombieUtil;
 import com.hungteen.pvz.utils.enums.Zombies;
 
@@ -11,7 +11,7 @@ import net.minecraft.entity.monster.MonsterEntity;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.world.World;
 
-public class BackupDancerEntity extends UnderGroundZombieEntity{
+public class BackupDancerEntity extends PVZZombieEntity{
 
 	public static final int DANCE_CD = 100;
 	private int ownerId;
@@ -24,8 +24,8 @@ public class BackupDancerEntity extends UnderGroundZombieEntity{
 	}
 	
 	@Override
-	public void tick() {
-		super.tick();
+	public void zombieTick() {
+		super.zombieTick();
 		if(! level.isClientSide) {
 			this.getAttribute(Attributes.MOVEMENT_SPEED).setBaseValue(this.getAttackTime() > 0 ? 0 : ZombieUtil.LITTLE_SLOW);
 		}

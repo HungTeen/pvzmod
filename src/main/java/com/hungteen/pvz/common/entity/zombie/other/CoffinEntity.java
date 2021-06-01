@@ -2,7 +2,7 @@ package com.hungteen.pvz.common.entity.zombie.other;
 
 import com.hungteen.pvz.common.entity.misc.ZombieHandEntity;
 import com.hungteen.pvz.common.entity.plant.PVZPlantEntity;
-import com.hungteen.pvz.common.entity.zombie.base.UnderGroundZombieEntity;
+import com.hungteen.pvz.common.entity.zombie.PVZZombieEntity;
 import com.hungteen.pvz.common.misc.damage.PVZDamageSource;
 import com.hungteen.pvz.data.loot.PVZLoot;
 import com.hungteen.pvz.register.EntityRegister;
@@ -39,7 +39,7 @@ import net.minecraft.world.IServerWorld;
 import net.minecraft.world.World;
 import net.minecraft.world.server.ServerBossInfo;
 
-public class CoffinEntity extends UnderGroundZombieEntity {
+public class CoffinEntity extends PVZZombieEntity {
 
 	private static final DataParameter<Integer> GUARD_STATE = EntityDataManager.defineId(CoffinEntity.class, DataSerializers.INT);
 	private final ServerBossInfo bossInfo = (ServerBossInfo) (new ServerBossInfo(this.getDisplayName(),
@@ -47,13 +47,13 @@ public class CoffinEntity extends UnderGroundZombieEntity {
 
 	public CoffinEntity(EntityType<? extends MonsterEntity> type, World worldIn) {
 		super(type, worldIn);
-		this.particleNum = 3;
 		this.canBeButter = false;
 		this.canBeCold = false;
 		this.canBeCharm = false;
 		this.canBeMini = false;
 		this.canBeFrozen = false;
 		this.canBeStealByBungee = false;
+		this.maxDeathTime = 0;
 	}
 	
 	@Override
@@ -126,8 +126,7 @@ public class CoffinEntity extends UnderGroundZombieEntity {
 	}
 	
 	@Override
-	protected void tickDeath() {
-		this.remove();
+	protected void onZombieRemove() {
 		if(!level.isClientSide) {
 		    NobleZombieEntity boss = EntityRegister.NOBLE_ZOMBIE.get().create(level);
 		    EntityUtil.onMobEntitySpawn(level, boss, blockPosition());
@@ -163,11 +162,6 @@ public class CoffinEntity extends UnderGroundZombieEntity {
 		return Type.NORMAL;
 	}
 	
-	@Override
-	public int getSpawnTime() {
-		return 40;
-	}
-
 	@Override
 	public void readAdditionalSaveData(CompoundNBT compound) {
 		super.readAdditionalSaveData(compound);

@@ -120,6 +120,7 @@ public class OldZombieModel extends PVZZombieModel<OldZombieEntity> {
 
 	@Override
 	public void updateFreeParts(OldZombieEntity entity) {
+		super.updateFreeParts(entity);
 		final boolean isPaperDestroyed = entity.isAngry();
 		this.isLeftHandFree = isPaperDestroyed;
 		this.isRightHandFree = isPaperDestroyed;

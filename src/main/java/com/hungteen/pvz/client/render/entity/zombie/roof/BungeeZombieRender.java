@@ -1,7 +1,7 @@
 package com.hungteen.pvz.client.render.entity.zombie.roof;
 
 import com.hungteen.pvz.client.model.entity.zombie.roof.BungeeZombieModel;
-import com.hungteen.pvz.client.render.entity.zombie.PVZZombieRender;
+import com.hungteen.pvz.client.render.entity.zombie.OldPVZZombieRender;
 import com.hungteen.pvz.common.entity.zombie.roof.BungeeZombieEntity;
 import com.hungteen.pvz.utils.StringUtil;
 import com.mojang.blaze3d.matrix.MatrixStack;
@@ -19,7 +19,7 @@ import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 
 @OnlyIn(Dist.CLIENT)
-public class BungeeZombieRender extends PVZZombieRender<BungeeZombieEntity> {
+public class BungeeZombieRender extends OldPVZZombieRender<BungeeZombieEntity> {
 
 	private static final ResourceLocation BUNGEE_TEX = StringUtil.prefix("textures/entity/zombie/roof/bungee_zombie.png");
 	

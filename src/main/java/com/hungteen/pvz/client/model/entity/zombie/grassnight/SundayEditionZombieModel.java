@@ -153,6 +153,7 @@ public class SundayEditionZombieModel extends PVZZombieModel<SundayEditionZombie
 
 	@Override
 	public void updateFreeParts(SundayEditionZombieEntity entity) {
+		super.updateFreeParts(entity);
 		final boolean isPaperDestroyed = entity.isAngry();
 		this.isLeftHandFree = isPaperDestroyed;
 		this.isRightHandFree = isPaperDestroyed;

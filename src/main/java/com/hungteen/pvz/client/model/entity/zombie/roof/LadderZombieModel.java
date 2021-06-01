@@ -145,6 +145,7 @@ public class LadderZombieModel extends PVZZombieModel<LadderZombieEntity> {
 	
 	@Override
 	public void updateFreeParts(LadderZombieEntity entity) {
+		super.updateFreeParts(entity);
 		final boolean hasLadder = ! entity.canPartsBeRemoved();
 		this.ladder.visible = hasLadder;
 		this.isLeftHandFree = ! hasLadder;

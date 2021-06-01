@@ -189,6 +189,9 @@ public class PVZConfig {
 				    EntitySettings.ZombieSetting.ZombieDropMultiper = builder
 						    .comment("the drop chance of coin when zombie die(the bigger,the less chance it spawn).")
 						    .defineInRange("ZombieDropMultiper", 10, 3, 100);
+				    EntitySettings.ZombieSetting.EnableZombieDropHands = builder
+						    .comment("enable zombies to drop hands and heads when they got hurt(turn false to disable).")
+						    .define("EnableZombieDropHands", true);
 				}
 				builder.pop();
 				
@@ -237,7 +240,7 @@ public class PVZConfig {
 						.defineInRange("ChomperGrow", 20, 5, 100);
 				BlockSettings.SaplingTurnOriginChance = builder
 						.comment("The chance when sapling turn to origin ore,the bigger the less chance")
-						.defineInRange("SaplingTurnOrigin", 8, 2, 100);
+						.defineInRange("SaplingTurnOrigin", 6, 2, 100);
 				builder.comment("Setting about break blocks.").push("Break Block Setting");
 				{
 					BlockSettings.BreakBlock.PeaDropChance = builder
@@ -333,6 +336,7 @@ public class PVZConfig {
 				public ForgeConfigSpec.IntValue ZombieSuperChance;
 			    public ForgeConfigSpec.IntValue ZombieSunChance;
 			    public ForgeConfigSpec.IntValue ZombieDropMultiper;
+			    public ForgeConfigSpec.BooleanValue EnableZombieDropHands;
 			}
 			
 			public static class EntityLiveTick{

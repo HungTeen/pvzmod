@@ -95,6 +95,7 @@ public class PoleZombieModel extends PVZZombieModel<PoleZombieEntity> {
 	
 	@Override
 	public void updateFreeParts(PoleZombieEntity entity) {
+		super.updateFreeParts(entity);
 		this.isRightHandFree = false;
 	}
 

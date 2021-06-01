@@ -281,11 +281,6 @@ public class NobleZombieEntity extends PVZZombieEntity {
 	}
 	
 	@Override
-	protected void tickDeath() {
-		super.tickDeath();
-	}
-
-	@Override
 	public boolean hurt(DamageSource source, float amount) {
 		if(amount >= 10) {
 			amount /= 3f;

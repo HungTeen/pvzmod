@@ -1,5 +1,6 @@
 package com.hungteen.pvz.common.entity.zombie.poolnight;
 
+import java.util.Optional;
 import java.util.Random;
 
 import com.hungteen.pvz.common.entity.zombie.PVZZombieEntity;
@@ -96,8 +97,8 @@ public class BalloonZombieEntity extends PVZZombieEntity {
 	}
 	
 	@Override
-	protected SoundEvent getSpawnSound() {
-		return SoundRegister.BALLOON_FULL.get();
+	protected Optional<SoundEvent> getSpawnSound() {
+		return Optional.ofNullable(SoundRegister.BALLOON_FULL.get());
 	}
 
 	@Override

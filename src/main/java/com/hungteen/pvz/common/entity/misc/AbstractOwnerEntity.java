@@ -4,23 +4,19 @@ import java.util.UUID;
 
 import javax.annotation.Nullable;
 
+import com.hungteen.pvz.common.entity.PVZEntityBase;
 import com.hungteen.pvz.utils.EntityUtil;
 import com.hungteen.pvz.utils.interfaces.IGroupEntity;
 
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.MoverType;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.nbt.NBTUtil;
-import net.minecraft.network.IPacket;
-import net.minecraft.particles.ParticleTypes;
-import net.minecraft.util.math.vector.Vector3d;
 import net.minecraft.world.World;
 import net.minecraft.world.server.ServerWorld;
-import net.minecraftforge.fml.network.NetworkHooks;
 
-public abstract class AbstractOwnerEntity extends Entity implements IGroupEntity {
+public abstract class AbstractOwnerEntity extends PVZEntityBase implements IGroupEntity {
 
 	protected LivingEntity owner;
 	protected UUID ownerId;
@@ -38,45 +34,6 @@ public abstract class AbstractOwnerEntity extends Entity implements IGroupEntity
 		this.groupType = EntityUtil.getEntityGroup(owner);
 	}
 
-	@Override
-	protected void defineSynchedData() {
-	}
-	
-	@Override
-	public void tick() {
-		super.tick();
-		if(this.tickCount <= 10) {
-			this.refreshDimensions();
-		}
-	}
-	
-	protected void tickMove() {
-		Vector3d vec3d = this.getDeltaMovement();
-		double d0 = this.getX() + vec3d.x;
-		double d1 = this.getY() + vec3d.y;
-		double d2 = this.getZ() + vec3d.z;
-		float f1;
-		if (this.isInWater()) {
-			for (int i = 0; i < 4; ++i) {
-				this.level.addParticle(ParticleTypes.BUBBLE, d0 - vec3d.x * 0.25D, d1 - vec3d.y * 0.25D,
-						d2 - vec3d.z * 0.25D, vec3d.x, vec3d.y, vec3d.z);
-			}
-			f1 = 0.8F;
-		} else {
-			f1 = 1F;
-		}
-		this.setDeltaMovement(vec3d.scale((double) f1));
-		if (! this.isNoGravity()) {
-			Vector3d vec3d1 = this.getDeltaMovement();
-			this.setDeltaMovement(vec3d1.x, vec3d1.y - (double) this.getGravityVelocity(), vec3d1.z);
-		}
-		this.move(MoverType.SELF, this.getDeltaMovement());
-	}
-	
-	protected float getGravityVelocity() {
-		return 0.05F;
-	}
-	
 	@Override
 	public boolean isAttackable() {
 		return false;
@@ -130,11 +87,6 @@ public abstract class AbstractOwnerEntity extends Entity implements IGroupEntity
 		if(compound.contains("group_owner_type")) {
 			this.groupType = compound.getInt("group_owner_type");
 		}
-	}
-
-	@Override
-	public IPacket<?> getAddEntityPacket() {
-		return NetworkHooks.getEntitySpawningPacket(this);
 	}
 
 }

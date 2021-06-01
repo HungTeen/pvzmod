@@ -10,11 +10,13 @@ import com.hungteen.pvz.common.entity.zombie.PVZZombieEntity;
 
 import net.minecraft.client.renderer.entity.EntityRendererManager;
 import net.minecraft.client.renderer.entity.model.EntityModel;
-import net.minecraft.util.math.vector.Vector3d;
+import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.api.distmarker.OnlyIn;
 
-public abstract class PVZZombieRender <T extends PVZZombieEntity> extends PVZCreatureRender<T> {
+@OnlyIn(Dist.CLIENT)
+public abstract class OldPVZZombieRender<T extends PVZZombieEntity> extends PVZCreatureRender<T>{
 
-	public PVZZombieRender(EntityRendererManager rendererManager, EntityModel<T> entityModelIn, float shadowSizeIn) {
+	public OldPVZZombieRender(EntityRendererManager rendererManager, EntityModel<T> entityModelIn, float shadowSizeIn) {
 		super(rendererManager, entityModelIn, shadowSizeIn);
 		this.addZombieLayers();
 	}
@@ -29,20 +31,6 @@ public abstract class PVZZombieRender <T extends PVZZombieEntity> extends PVZCre
 		this.addLayer(new CharmLayer<>(this));
 		this.addLayer(new SunLightLayer<>(this));
 		this.addLayer(new SunLayer<>(this));
-	}
-	
-	@Override
-	public Vector3d getTranslateVec(T entity) {
-		float height = this.getOffsetRisingHeight();
-		float downOffset = entity.getAttackTime() < 0 ? (- entity.getAttackTime() * 1.0f / PVZZombieEntity.RISING_CD) * height : 0;
-		return new Vector3d(0, downOffset, 0);
-	}
-	
-	/**
-	 * the height zombie rising from.
-	 */
-	protected float getOffsetRisingHeight() {
-		return 1.6f;
 	}
 	
 }

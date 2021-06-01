@@ -49,7 +49,7 @@ public class TradeUtil {
 		putInfoToDaveGoodsMap(DaveGoods.GOLD_LEAF_CARD, 6000, new ItemStack(ItemRegister.GOLD_LEAF_CARD.get()));
 		putInfoToDaveGoodsMap(DaveGoods.LAWN_MOWER, 2, new ItemStack(ItemRegister.LAWN_MOWER.get()));
 		putInfoToDaveGoodsMap(DaveGoods.SOILLESS_PLANT, 5, SOILLESS_PLANT_BOOK);
-		putInfoToDaveGoodsMap(DaveGoods.CHARM, 1, SOILLESS_PLANT_BOOK);
+		putInfoToDaveGoodsMap(DaveGoods.CHARM, 1, CHARM_BOOK);
 	}
 	
 	public static void putInfoToDaveGoodsMap(DaveGoods good, int cost, ItemStack item) {

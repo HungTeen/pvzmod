@@ -1,4 +1,4 @@
-package com.hungteen.pvz.utils.interfaces;
+package com.hungteen.pvz.api.interfaces;
 
 import com.hungteen.pvz.utils.enums.Ranks;
 import com.hungteen.pvz.utils.enums.Zombies;

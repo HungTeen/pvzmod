@@ -1,6 +1,6 @@
 package com.hungteen.pvz.client.render.entity.zombie.grassnight;
 
-import com.hungteen.pvz.client.render.entity.zombie.PVZZombieRender;
+import com.hungteen.pvz.client.render.entity.zombie.OldPVZZombieRender;
 import com.hungteen.pvz.common.entity.zombie.grassnight.NewspaperZombieEntity;
 
 import net.minecraft.client.renderer.entity.EntityRendererManager;
@@ -9,7 +9,7 @@ import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 
 @OnlyIn(Dist.CLIENT)
-public abstract class AbstractPaperZombieRender<T extends NewspaperZombieEntity> extends PVZZombieRender<T>{
+public abstract class AbstractPaperZombieRender<T extends NewspaperZombieEntity> extends OldPVZZombieRender<T>{
 
 	public AbstractPaperZombieRender(EntityRendererManager rendererManager, EntityModel<T> entityModelIn) {
 		super(rendererManager, entityModelIn, 0.5f);

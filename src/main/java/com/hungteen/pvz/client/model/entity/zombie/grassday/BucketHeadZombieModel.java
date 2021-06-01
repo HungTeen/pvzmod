@@ -1,5 +1,7 @@
 package com.hungteen.pvz.client.model.entity.zombie.grassday;
 
+import java.util.Optional;
+
 import com.hungteen.pvz.client.model.entity.zombie.PVZZombieModel;
 import com.hungteen.pvz.common.entity.zombie.grassday.BucketHeadZombieEntity;
 
@@ -147,6 +149,11 @@ public class BucketHeadZombieModel extends PVZZombieModel<BucketHeadZombieEntity
 	@Override
 	public ModelRenderer getZombieWholeBody() {
 		return this.total;
+	}
+	
+	@Override
+	public Optional<ModelRenderer> getHelmet() {
+		return Optional.ofNullable(this.bucket);
 	}
 
 }

@@ -1,7 +1,7 @@
 package com.hungteen.pvz.client.render.entity.zombie.poolnight;
 
 import com.hungteen.pvz.client.model.entity.zombie.poolnight.DiggerZombieModel;
-import com.hungteen.pvz.client.render.entity.zombie.PVZZombieRender;
+import com.hungteen.pvz.client.render.entity.zombie.OldPVZZombieRender;
 import com.hungteen.pvz.common.entity.zombie.poolnight.DiggerZombieEntity;
 import com.hungteen.pvz.utils.StringUtil;
 
@@ -12,7 +12,7 @@ import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 
 @OnlyIn(Dist.CLIENT)
-public class DiggerZombieRender extends PVZZombieRender<DiggerZombieEntity>{
+public class DiggerZombieRender extends OldPVZZombieRender<DiggerZombieEntity>{
 
 	public DiggerZombieRender(EntityRendererManager rendererManager) {
 		super(rendererManager, new DiggerZombieModel(), 0.3f);
@@ -28,7 +28,7 @@ public class DiggerZombieRender extends PVZZombieRender<DiggerZombieEntity>{
 	public Vector3d getTranslateVec(DiggerZombieEntity entity) {
 		double maxOffset = 4D;
 		int now = entity.getAttackTime();
-		int max = DiggerZombieEntity.MAX_ANIM_TIME;
+		int max = DiggerZombieEntity.MAX_OUT_TIME;
 		return new Vector3d(0, maxOffset * ( 1 - now * 1.0D / max), 0);
 	}
 	

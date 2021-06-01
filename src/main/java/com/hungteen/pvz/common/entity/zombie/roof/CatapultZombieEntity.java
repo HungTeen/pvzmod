@@ -33,6 +33,7 @@ public class CatapultZombieEntity extends PVZZombieEntity implements IPult {
 		super(type, worldIn);
 		this.canBeButter = false;
 		this.canBeFrozen = false;
+		this.maxDeathTime = 1;
 	}
 	
 	@Override
@@ -118,18 +119,16 @@ public class CatapultZombieEntity extends PVZZombieEntity implements IPult {
 	}
 	
 	@Override
-	protected void tickDeath() {
-		super.tickDeath();
-		if(this.deathTime == 1) {
-			if(! level.isClientSide) {
-				EntityUtil.playSound(this, SoundRegister.CAR_EXPLOSION.get());
-			}
-			else {
-				for(int i = 0; i < 4; ++ i) {
-				    this.level.addParticle(ParticleTypes.EXPLOSION, this.getX(), this.getY(), this.getZ(), 0, 0, 0);
-				}
+	protected void onZombieRemove() {
+		if(! level.isClientSide) {
+			EntityUtil.playSound(this, SoundRegister.CAR_EXPLOSION.get());
+		}
+		else {
+			for(int i = 0; i < 4; ++ i) {
+			    this.level.addParticle(ParticleTypes.EXPLOSION, this.getX(), this.getY(), this.getZ(), 0, 0, 0);
 			}
 		}
+		super.onZombieRemove();
 	}
 	
 	/**

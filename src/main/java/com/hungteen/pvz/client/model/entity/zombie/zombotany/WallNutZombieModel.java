@@ -97,6 +97,7 @@ public class WallNutZombieModel extends PVZZombieModel<WallNutZombieEntity> {
 
 	@Override
 	public void updateFreeParts(WallNutZombieEntity entity) {
+		super.updateFreeParts(entity);
 		final float percent = entity.getHealth() / entity.getMaxHealth();
 		this.stage1.visible = (percent > 2F / 3); 
         this.stage2.visible = (percent > 1F / 3); 

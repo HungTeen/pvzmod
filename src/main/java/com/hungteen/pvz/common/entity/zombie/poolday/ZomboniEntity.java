@@ -1,5 +1,7 @@
 package com.hungteen.pvz.common.entity.zombie.poolday;
 
+import java.util.Optional;
+
 import com.hungteen.pvz.common.entity.PVZMultiPartEntity;
 import com.hungteen.pvz.common.entity.zombie.PVZZombieEntity;
 import com.hungteen.pvz.common.entity.zombie.part.PVZZombiePartEntity;
@@ -37,6 +39,7 @@ public class ZomboniEntity extends PVZZombieEntity implements IMultiPartEntity{
 		this.canBeFrozen = false;
 		this.canBeCold = false;
 		resetParts();
+		this.maxDeathTime = 1;
 	}
 	
 	@Override
@@ -69,8 +72,8 @@ public class ZomboniEntity extends PVZZombieEntity implements IMultiPartEntity{
 	}
 	
 	@Override
-	protected SoundEvent getSpawnSound() {
-		return SoundRegister.CAR_SPAWN.get();
+	protected Optional<SoundEvent> getSpawnSound() {
+		return Optional.ofNullable(SoundRegister.CAR_SPAWN.get());
 	}
 	
 	@Override
@@ -109,18 +112,16 @@ public class ZomboniEntity extends PVZZombieEntity implements IMultiPartEntity{
 	}
 	
 	@Override
-	protected void tickDeath() {
-		super.tickDeath();
-		if(this.deathTime == 1) {
-			if(! level.isClientSide) {
-				EntityUtil.playSound(this, SoundRegister.CAR_EXPLOSION.get());
-			}
-			else {
-				for(int i = 0; i < 4; ++ i) {
-				    this.level.addParticle(ParticleTypes.EXPLOSION, this.getX(), this.getY(), this.getZ(), 0, 0, 0);
-				}
+	protected void onZombieRemove() {
+		if(! level.isClientSide) {
+			EntityUtil.playSound(this, SoundRegister.CAR_EXPLOSION.get());
+		}
+		else {
+			for(int i = 0; i < 4; ++ i) {
+			    this.level.addParticle(ParticleTypes.EXPLOSION, this.getX(), this.getY(), this.getZ(), 0, 0, 0);
 			}
 		}
+		super.onZombieRemove();
 	}
 	
 	@Override

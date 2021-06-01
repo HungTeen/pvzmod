@@ -150,6 +150,7 @@ public class RaZombieModel extends PVZZombieModel<RaZombieEntity> {
 	
 	@Override
 	public void updateFreeParts(RaZombieEntity entity) {
+		super.updateFreeParts(entity);
 		this.isRightHandFree = ! entity.checkCanWorkNow();
 	}
 

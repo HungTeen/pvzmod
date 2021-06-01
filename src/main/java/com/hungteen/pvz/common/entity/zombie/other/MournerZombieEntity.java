@@ -28,6 +28,7 @@ public class MournerZombieEntity extends PVZZombieEntity{
 	public MournerZombieEntity(EntityType<? extends MonsterEntity> type, World worldIn) {
 		super(type, worldIn);
 		this.setRightShake(this.getRandom().nextInt(2) == 0 ? true : false);
+		this.maxDeathTime = 0;
 	}
 	
 	@Override
@@ -70,8 +71,7 @@ public class MournerZombieEntity extends PVZZombieEntity{
 	}
 	
 	@Override
-	protected void tickDeath() {
-		remove();
+	protected void onZombieRemove() {
 		if(!level.isClientSide) {
 			TombStoneEntity tomb = EntityRegister.TOMB_STONE.get().create(level);
 			EntityUtil.onMobEntitySpawn(level, tomb, blockPosition());

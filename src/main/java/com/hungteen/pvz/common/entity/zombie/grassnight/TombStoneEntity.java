@@ -3,7 +3,6 @@ package com.hungteen.pvz.common.entity.zombie.grassnight;
 import java.util.Random;
 
 import com.hungteen.pvz.common.entity.zombie.PVZZombieEntity;
-import com.hungteen.pvz.common.entity.zombie.base.UnderGroundZombieEntity;
 import com.hungteen.pvz.common.entity.zombie.other.NobleZombieEntity;
 import com.hungteen.pvz.common.item.card.ImitaterCardItem;
 import com.hungteen.pvz.common.item.card.PlantCardItem;
@@ -33,7 +32,7 @@ import net.minecraft.world.IWorld;
 import net.minecraft.world.World;
 import net.minecraft.world.server.ServerWorld;
 
-public class TombStoneEntity extends UnderGroundZombieEntity {
+public class TombStoneEntity extends PVZZombieEntity {
 
 	public static final Zombies[] GROUND_ZOMBIES = new Zombies[] {Zombies.NORMAL_ZOMBIE, Zombies.CONEHEAD_ZOMBIE, Zombies.BUCKETHEAD_ZOMBIE};
 	private int currentSummonCD;
@@ -92,9 +91,7 @@ public class TombStoneEntity extends UnderGroundZombieEntity {
 		int pos = this.getRandom().nextInt(GROUND_ZOMBIES.length);
 		PVZZombieEntity zombie = ZombieUtil.getZombieEntity(level, GROUND_ZOMBIES[pos]);
 		if(zombie != null) {
-			if(zombie instanceof UnderGroundZombieEntity) {
-				((UnderGroundZombieEntity) zombie).setRiseType(true);
-			}
+			zombie.setZombieRising();
 			EntityUtil.onMobEntitySpawn(level, zombie, blockPosition());
 		}
 	}

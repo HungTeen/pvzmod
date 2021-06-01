@@ -1,7 +1,7 @@
 package com.hungteen.pvz.client.render.entity.zombie.roof;
 
 import com.hungteen.pvz.client.model.entity.zombie.roof.CatapultZombieModel;
-import com.hungteen.pvz.client.render.entity.zombie.PVZZombieRender;
+import com.hungteen.pvz.client.render.entity.zombie.OldPVZZombieRender;
 import com.hungteen.pvz.common.entity.zombie.roof.CatapultZombieEntity;
 import com.hungteen.pvz.utils.StringUtil;
 
@@ -11,7 +11,7 @@ import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 
 @OnlyIn(Dist.CLIENT)
-public class CatapultZombieRender extends PVZZombieRender<CatapultZombieEntity> {
+public class CatapultZombieRender extends OldPVZZombieRender<CatapultZombieEntity> {
 
 	private static final ResourceLocation CATAPULT_TEX = StringUtil.prefix("textures/entity/zombie/roof/catapult_zombie.png");
 	

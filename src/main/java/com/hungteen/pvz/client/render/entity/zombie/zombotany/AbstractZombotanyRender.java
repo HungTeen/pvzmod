@@ -1,6 +1,6 @@
 package com.hungteen.pvz.client.render.entity.zombie.zombotany;
 
-import com.hungteen.pvz.client.render.entity.zombie.PVZZombieRender;
+import com.hungteen.pvz.client.render.entity.zombie.OldPVZZombieRender;
 import com.hungteen.pvz.client.render.layer.DuckyTubeLayer;
 import com.hungteen.pvz.common.entity.zombie.zombotany.AbstractZombotanyEntity;
 
@@ -11,7 +11,7 @@ import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 
 @OnlyIn(Dist.CLIENT)
-public abstract class AbstractZombotanyRender<T extends AbstractZombotanyEntity> extends PVZZombieRender<T>{
+public abstract class AbstractZombotanyRender<T extends AbstractZombotanyEntity> extends OldPVZZombieRender<T>{
 
 	public AbstractZombotanyRender(EntityRendererManager rendererManager, EntityModel<T> entityModelIn,
 			float shadowSizeIn) {

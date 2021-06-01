@@ -265,6 +265,7 @@ public class GigaFootballZombieModel extends PVZZombieModel<GigaFootballZombieEn
 	
 	@Override
 	public void updateFreeParts(GigaFootballZombieEntity entity) {
+		super.updateFreeParts(entity);
 		final boolean hasMetal = entity.hasMetal();
 		this.helmet.visible = hasMetal;
 		final boolean isRushing = (entity.getAttackTime() == 0);

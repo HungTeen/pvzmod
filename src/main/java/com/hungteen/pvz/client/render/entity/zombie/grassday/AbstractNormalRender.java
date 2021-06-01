@@ -1,6 +1,6 @@
 package com.hungteen.pvz.client.render.entity.zombie.grassday;
 
-import com.hungteen.pvz.client.render.entity.zombie.UnderGroundZombieRender;
+import com.hungteen.pvz.client.render.entity.zombie.PVZZombieRender;
 import com.hungteen.pvz.client.render.layer.DuckyTubeLayer;
 import com.hungteen.pvz.client.render.layer.ZombieBeardLayer;
 import com.hungteen.pvz.common.entity.zombie.grassday.NormalZombieEntity;
@@ -12,7 +12,7 @@ import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 
 @OnlyIn(Dist.CLIENT)
-public abstract class AbstractNormalRender<T extends NormalZombieEntity> extends UnderGroundZombieRender<T>{
+public abstract class AbstractNormalRender<T extends NormalZombieEntity> extends PVZZombieRender<T>{
 
 	public AbstractNormalRender(EntityRendererManager rendererManager, EntityModel<T> entityModelIn,
 			float shadowSizeIn) {
@@ -28,7 +28,7 @@ public abstract class AbstractNormalRender<T extends NormalZombieEntity> extends
 	
 	@Override
 	public Vector3d getTranslateVec(T entity) {
-		if(entity.getAttackTime() >= 0 && entity.isInWater()) {
+		if(entity.getAnimTime() >= 0 && entity.isInWater()) {
 			return new Vector3d(0, 0.6f, 0);
 		}
 		return super.getTranslateVec(entity);

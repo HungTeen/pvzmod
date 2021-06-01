@@ -1,6 +1,10 @@
 package com.hungteen.pvz.client.model.entity.zombie;
 
+import java.util.Optional;
+
 import com.hungteen.pvz.common.entity.zombie.PVZZombieEntity;
+import com.hungteen.pvz.common.entity.zombie.body.ZombieDropBodyEntity;
+import com.hungteen.pvz.common.entity.zombie.body.ZombieDropBodyEntity.BodyType;
 import com.hungteen.pvz.utils.AnimationUtil;
 import com.mojang.blaze3d.matrix.MatrixStack;
 import com.mojang.blaze3d.vertex.IVertexBuilder;
@@ -16,6 +20,24 @@ public abstract class PVZZombieModel<T extends PVZZombieEntity> extends EntityMo
 	protected boolean isLeftHandFree = true;
 	protected boolean isRightHandFree = true;
 	protected boolean isHeadFree = true;
+	
+	/**
+	 * use for drop part entity to render.
+	 * not for current entity.
+	 * {link @ZombieBodyRender}
+	 */
+	public void tickPartAnim(ZombieDropBodyEntity entity, BodyType type, float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch) {
+		if(type == BodyType.BODY) {
+			int cd = 20;
+			if(entity.getAnimTime() < 10) {
+				this.getZombieWholeBody().xRot = AnimationUtil.getUp(entity.getAnimTime(), cd, 90);
+				this.getZombieRightHand().xRot = - AnimationUtil.getUp(entity.getAnimTime(), cd, 180);
+			} else {
+				this.getZombieWholeBody().xRot = AnimationUtil.byDegree(90);
+				this.getZombieRightHand().xRot = AnimationUtil.byDegree(- 180);
+			}
+		}
+	}
 	
 	@Override
 	public void setupAnim(T entity, float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch) {
@@ -34,9 +56,17 @@ public abstract class PVZZombieModel<T extends PVZZombieEntity> extends EntityMo
         }
 	}
 	
+	/**
+	 * check if some part of body is free and update.
+	 */
 	public void updateFreeParts(T entity) {
+		this.getZombieLeftHand().visible = entity.hasHand();
+		this.getZombieHead().visible = entity.hasHead();
 	}
 	
+	/**
+	 * refresh the rotation of parts.
+	 */
 	public void refreshAnim() {
 	}
 	
@@ -78,11 +108,42 @@ public abstract class PVZZombieModel<T extends PVZZombieEntity> extends EntityMo
 	public void renderToBuffer(MatrixStack matrixStack, IVertexBuilder buffer, int packedLight, int packedOverlay, float red, float green, float blue, float alpha){
 		this.getZombieWholeBody().render(matrixStack, buffer, packedLight, packedOverlay);
 	}
-
+	
+	public void renderBody(MatrixStack stack, IVertexBuilder buffer, int packedLight, int packedOverlay, BodyType type) {
+		switch(type) {
+		case HAND:{
+			this.getZombieLeftHand().visible = true;
+			this.getZombieLeftHand().setPos(0, 24, 0);
+		    this.getZombieLeftHand().render(stack, buffer, packedLight, packedOverlay);
+		    break;
+		}
+		case HEAD:{
+			this.getZombieHead().visible = true;
+			this.getHelmet().ifPresent(m -> m.visible = false);
+			this.getZombieHead().setPos(0, 24, 0);
+		    this.getZombieHead().render(stack, buffer, packedLight, packedOverlay);
+		    break;
+		}
+		case BODY:{
+			this.getZombieHead().visible = false;
+		    this.getZombieHead().visible = false;
+		    this.getZombieWholeBody().render(stack, buffer, packedLight, packedOverlay);
+		    break;
+		}
+		}
+	}
+	
 	public void setRotationAngle(ModelRenderer modelRenderer, float x, float y, float z) {
 		modelRenderer.xRot = x;
 		modelRenderer.yRot = y;
 		modelRenderer.zRot = z;
+	}
+	
+	/**
+	 * get helmet to disable helmet render when drop hand.
+	 */
+	public Optional<ModelRenderer> getHelmet() {
+		return Optional.empty();
 	}
 	
 	public abstract ModelRenderer getZombieLeftHand();
@@ -98,5 +159,6 @@ public abstract class PVZZombieModel<T extends PVZZombieEntity> extends EntityMo
 	public abstract ModelRenderer getZombieUpBody();
 	
 	public abstract ModelRenderer getZombieWholeBody();
+	
 
 }

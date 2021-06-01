@@ -6,6 +6,7 @@ import java.util.UUID;
 
 import javax.annotation.Nullable;
 
+import com.hungteen.pvz.api.interfaces.IPVZPlant;
 import com.hungteen.pvz.common.advancement.trigger.PlantSuperTrigger;
 import com.hungteen.pvz.common.entity.drop.SunEntity;
 import com.hungteen.pvz.common.entity.goal.PVZLookRandomlyGoal;
@@ -33,7 +34,6 @@ import com.hungteen.pvz.utils.enums.MetalTypes;
 import com.hungteen.pvz.utils.enums.Plants;
 import com.hungteen.pvz.utils.enums.Ranks;
 import com.hungteen.pvz.utils.interfaces.IHasMetal;
-import com.hungteen.pvz.utils.interfaces.IPVZPlant;
 
 import net.minecraft.block.Block;
 import net.minecraft.block.Blocks;
@@ -289,7 +289,7 @@ public abstract class PVZPlantEntity extends CreatureEntity implements IPVZPlant
 	 */
 	protected boolean canPlantTarget(LivingEntity entity) {
 		if (entity instanceof DiggerZombieEntity) {
-			return ((DiggerZombieEntity) entity).getAnimTime() == DiggerZombieEntity.MAX_ANIM_TIME;
+			return ((DiggerZombieEntity) entity).getAttackTime() == DiggerZombieEntity.MAX_OUT_TIME;
 		} else if (entity instanceof BalloonZombieEntity) {
 			return !((BalloonZombieEntity) entity).hasBalloon();
 		} else if (entity instanceof BungeeZombieEntity) {

@@ -1,7 +1,7 @@
 package com.hungteen.pvz.client.render.entity.zombie.roof;
 
 import com.hungteen.pvz.client.model.entity.zombie.roof.LadderZombieModel;
-import com.hungteen.pvz.client.render.entity.zombie.PVZZombieRender;
+import com.hungteen.pvz.client.render.entity.zombie.OldPVZZombieRender;
 import com.hungteen.pvz.common.entity.zombie.roof.LadderZombieEntity;
 import com.hungteen.pvz.utils.StringUtil;
 
@@ -11,7 +11,7 @@ import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 
 @OnlyIn(Dist.CLIENT)
-public class LadderZombieRender extends PVZZombieRender<LadderZombieEntity> {
+public class LadderZombieRender extends OldPVZZombieRender<LadderZombieEntity> {
 
 	private static final ResourceLocation LADDER_TEX = StringUtil.prefix("textures/entity/zombie/roof/ladder_zombie.png");
 	

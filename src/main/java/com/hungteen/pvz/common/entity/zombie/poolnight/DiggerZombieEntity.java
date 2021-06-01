@@ -24,7 +24,7 @@ import net.minecraft.world.World;
 public class DiggerZombieEntity extends PVZZombieEntity implements IHasMetal {
 
 	private static final DataParameter<Boolean> HAS_PICKAXE = EntityDataManager.defineId(DiggerZombieEntity.class, DataSerializers.BOOLEAN);
-	public static final int MAX_ANIM_TIME = 30;
+	public static final int MAX_OUT_TIME = 30;
 	
 	public DiggerZombieEntity(EntityType<? extends MonsterEntity> type, World worldIn) {
 		super(type, worldIn);
@@ -45,15 +45,15 @@ public class DiggerZombieEntity extends PVZZombieEntity implements IHasMetal {
 			if(this.hasPickaxe()) {
 				if(target != null) {
 				    if(this.distanceToSqr(target) <= 8) {
-				    	this.setAttackTime(MathHelper.clamp(this.getAttackTime() + 1, 0, MAX_ANIM_TIME));
+				    	this.setAttackTime(MathHelper.clamp(this.getAttackTime() + 1, 0, MAX_OUT_TIME));
 				    } else {
-				    	this.setAttackTime(MathHelper.clamp(this.getAttackTime() - 1, 0, MAX_ANIM_TIME));
+				    	this.setAttackTime(MathHelper.clamp(this.getAttackTime() - 1, 0, MAX_OUT_TIME));
 				    }
 			    } else {
-			    	this.setAttackTime(MathHelper.clamp(this.getAttackTime() - 1, 0, MAX_ANIM_TIME));
+			    	this.setAttackTime(MathHelper.clamp(this.getAttackTime() - 1, 0, MAX_OUT_TIME));
 			    }
 			} else {
-				this.setAttackTime(MathHelper.clamp(this.getAttackTime() + 1, 0, MAX_ANIM_TIME));
+				this.setAttackTime(MathHelper.clamp(this.getAttackTime() + 1, 0, MAX_OUT_TIME));
 			}
 			this.updateAttributes(this.hasPickaxe());
 		}

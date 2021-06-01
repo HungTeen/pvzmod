@@ -120,6 +120,7 @@ public class NewspaperZombieModel extends PVZZombieModel<NewspaperZombieEntity> 
 
 	@Override
 	public void updateFreeParts(NewspaperZombieEntity entity) {
+		super.updateFreeParts(entity);
 		final boolean isPaperDestroyed = entity.isAngry();
 		this.isLeftHandFree = isPaperDestroyed;
 		this.isRightHandFree = isPaperDestroyed;

@@ -1,7 +1,7 @@
 package com.hungteen.pvz.client.render.entity.zombie.grassnight;
 
 import com.hungteen.pvz.client.model.entity.zombie.grassnight.FootballZombieModel;
-import com.hungteen.pvz.client.render.entity.zombie.PVZZombieRender;
+import com.hungteen.pvz.client.render.entity.zombie.OldPVZZombieRender;
 import com.hungteen.pvz.common.entity.zombie.grassnight.FootballZombieEntity;
 import com.hungteen.pvz.utils.StringUtil;
 
@@ -11,7 +11,7 @@ import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 
 @OnlyIn(Dist.CLIENT)
-public class FootballZombieRender extends PVZZombieRender<FootballZombieEntity>{
+public class FootballZombieRender extends OldPVZZombieRender<FootballZombieEntity>{
 
 	public FootballZombieRender(EntityRendererManager rendererManager) {
 		super(rendererManager, new FootballZombieModel(), 0.5f);

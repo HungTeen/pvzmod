@@ -1,5 +1,7 @@
 package com.hungteen.pvz.client.model.entity.zombie.grassday;
 
+import java.util.Optional;
+
 import com.hungteen.pvz.client.model.entity.zombie.PVZZombieModel;
 import com.hungteen.pvz.common.entity.zombie.grassday.ConeHeadZombieEntity;
 
@@ -19,6 +21,7 @@ public class ConeHeadZombieModel extends PVZZombieModel<ConeHeadZombieEntity> {
 	private final ModelRenderer left_hand;
 	private final ModelRenderer right_hand;
 	private final ModelRenderer head;
+	private final ModelRenderer defence;
 	private final ModelRenderer defence1;
 	private final ModelRenderer defence2;
 	private final ModelRenderer defence3;
@@ -66,27 +69,32 @@ public class ConeHeadZombieModel extends PVZZombieModel<ConeHeadZombieEntity> {
 		up.addChild(head);
 		head.texOffs(16, 96).addBox(-8.0F, -16.0F, -8.0F, 16.0F, 16.0F, 16.0F, 0.0F, false);
 
+		defence = new ModelRenderer(this);
+		defence.setPos(0.0F, -16.0F, 0.0F);
+		head.addChild(defence);
+		
+
+		defence3 = new ModelRenderer(this);
+		defence3.setPos(0.0F, 17.0F, 0.0F);
+		defence.addChild(defence3);
+		defence3.texOffs(205, 59).addBox(-2.0F, -37.0F, -2.0F, 4.0F, 3.0F, 4.0F, 0.0F, false);
+		defence3.texOffs(234, 60).addBox(-1.0F, -39.0F, -1.0F, 2.0F, 2.0F, 2.0F, 0.0F, false);
+
+		defence2 = new ModelRenderer(this);
+		defence2.setPos(0.0F, -6.0F, 0.0F);
+		defence.addChild(defence2);
+		defence2.texOffs(142, 81).addBox(-3.0F, -11.0F, -3.0F, 6.0F, 4.0F, 6.0F, 0.0F, false);
+		defence2.texOffs(217, 26).addBox(-5.0F, -7.0F, -5.0F, 10.0F, 5.0F, 10.0F, 0.0F, false);
+
 		defence1 = new ModelRenderer(this);
-		defence1.setPos(0.0F, -15.0F, 0.0F);
-		head.addChild(defence1);
+		defence1.setPos(0.0F, 1.0F, 0.0F);
+		defence.addChild(defence1);
 		defence1.texOffs(139, 2).addBox(-8.0F, -3.0F, -8.0F, 16.0F, 2.0F, 16.0F, 0.0F, false);
 		defence1.texOffs(216, 4).addBox(-9.0F, -3.0F, -9.0F, 18.0F, 3.0F, 1.0F, 0.0F, false);
 		defence1.texOffs(215, 15).addBox(-9.0F, -3.0F, 8.0F, 18.0F, 3.0F, 1.0F, 0.0F, false);
 		defence1.texOffs(139, 30).addBox(-9.0F, -3.0F, -8.0F, 1.0F, 3.0F, 16.0F, 0.0F, false);
 		defence1.texOffs(181, 28).addBox(8.0F, -3.0F, -8.0F, 1.0F, 3.0F, 16.0F, 0.0F, false);
 		defence1.texOffs(139, 56).addBox(-7.0F, -9.0F, -7.0F, 14.0F, 6.0F, 14.0F, 0.0F, false);
-
-		defence2 = new ModelRenderer(this);
-		defence2.setPos(0.0F, -22.0F, 0.0F);
-		head.addChild(defence2);
-		defence2.texOffs(142, 81).addBox(-3.0F, -11.0F, -3.0F, 6.0F, 4.0F, 6.0F, 0.0F, false);
-		defence2.texOffs(217, 26).addBox(-5.0F, -7.0F, -5.0F, 10.0F, 5.0F, 10.0F, 0.0F, false);
-
-		defence3 = new ModelRenderer(this);
-		defence3.setPos(0.0F, 1.0F, 0.0F);
-		head.addChild(defence3);
-		defence3.texOffs(205, 59).addBox(-2.0F, -37.0F, -2.0F, 4.0F, 3.0F, 4.0F, 0.0F, false);
-		defence3.texOffs(234, 60).addBox(-1.0F, -39.0F, -1.0F, 2.0F, 2.0F, 2.0F, 0.0F, false);
 	}
 	
 	@Override
@@ -131,6 +139,11 @@ public class ConeHeadZombieModel extends PVZZombieModel<ConeHeadZombieEntity> {
 	@Override
 	public ModelRenderer getZombieWholeBody() {
 		return this.total;
+	}
+	
+	@Override
+	public Optional<ModelRenderer> getHelmet() {
+		return Optional.ofNullable(this.defence);
 	}
 
 }

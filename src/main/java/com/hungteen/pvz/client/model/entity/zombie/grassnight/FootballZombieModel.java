@@ -209,6 +209,7 @@ public class FootballZombieModel extends PVZZombieModel<FootballZombieEntity> {
 
 	@Override
 	public void updateFreeParts(FootballZombieEntity entity) {
+		super.updateFreeParts(entity);
 		final boolean hasMetal = entity.hasMetal();
 		this.helmet.visible = hasMetal;
 	}
