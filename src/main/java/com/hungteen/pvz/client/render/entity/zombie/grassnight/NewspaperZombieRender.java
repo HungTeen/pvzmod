@@ -1,26 +1,18 @@
 package com.hungteen.pvz.client.render.entity.zombie.grassnight;
 
 import com.hungteen.pvz.client.model.entity.zombie.grassnight.NewspaperZombieModel;
+import com.hungteen.pvz.client.render.entity.zombie.PVZZombieRender;
 import com.hungteen.pvz.common.entity.zombie.grassnight.NewspaperZombieEntity;
-import com.hungteen.pvz.utils.StringUtil;
 
 import net.minecraft.client.renderer.entity.EntityRendererManager;
-import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 
 @OnlyIn(Dist.CLIENT)
-public class NewspaperZombieRender extends AbstractPaperZombieRender<NewspaperZombieEntity>{
-
-	public static final ResourceLocation TEX = StringUtil.prefix("textures/entity/zombie/grassnight/newspaper_zombie.png");
+public class NewspaperZombieRender extends PVZZombieRender<NewspaperZombieEntity>{
 	
 	public NewspaperZombieRender(EntityRendererManager rendererManager){
-		super(rendererManager, new NewspaperZombieModel());
-	}
-
-	@Override
-	public ResourceLocation getTextureLocation(NewspaperZombieEntity entity) {
-		return TEX;
+		super(rendererManager, new NewspaperZombieModel(), 0.5F);
 	}
 
 }

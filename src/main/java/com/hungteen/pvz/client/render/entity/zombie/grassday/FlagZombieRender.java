@@ -2,10 +2,8 @@ package com.hungteen.pvz.client.render.entity.zombie.grassday;
 
 import com.hungteen.pvz.client.model.entity.zombie.grassday.FlagZombieModel;
 import com.hungteen.pvz.common.entity.zombie.grassday.FlagZombieEntity;
-import com.hungteen.pvz.utils.StringUtil;
 
 import net.minecraft.client.renderer.entity.EntityRendererManager;
-import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 
@@ -14,11 +12,6 @@ public class FlagZombieRender extends AbstractNormalRender<FlagZombieEntity>{
 
 	public FlagZombieRender(EntityRendererManager rendererManager){
 		super(rendererManager, new FlagZombieModel(), 0.5f);
-	}
-
-	@Override
-	public ResourceLocation getTextureLocation(FlagZombieEntity entity) {
-		return StringUtil.prefix("textures/entity/zombie/grassday/flag_zombie.png");
 	}
 
 }

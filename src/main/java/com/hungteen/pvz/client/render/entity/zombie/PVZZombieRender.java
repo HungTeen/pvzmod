@@ -10,6 +10,7 @@ import com.hungteen.pvz.common.entity.zombie.PVZZombieEntity;
 
 import net.minecraft.client.renderer.entity.EntityRendererManager;
 import net.minecraft.client.renderer.entity.model.EntityModel;
+import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.vector.Vector3d;
 
 public abstract class PVZZombieRender <T extends PVZZombieEntity> extends PVZCreatureRender<T> {
@@ -38,11 +39,22 @@ public abstract class PVZZombieRender <T extends PVZZombieEntity> extends PVZCre
 		return new Vector3d(0, downOffset, 0);
 	}
 	
+	@Override
+	protected float getScaleByEntity(T entity) {
+		final float sz = ZombieRenderHandler.getZombieScale(entity.getZombieEnumName());
+		return entity.isMiniZombie() ? sz * 0.3F : sz;
+	}
+	
 	/**
 	 * the height zombie rising from.
 	 */
 	protected float getOffsetRisingHeight() {
 		return 1.6f;
+	}
+	
+	@Override
+	public ResourceLocation getTextureLocation(T entity) {
+		return ZombieRenderHandler.getZombieTex(entity.getZombieEnumName()).get();
 	}
 	
 }

@@ -41,22 +41,21 @@ public class ZombieBodyRender extends EntityRenderer<ZombieDropBodyEntity> {
 	    matrixStackIn.scale(sz, sz, sz); 
 		matrixStackIn.translate(0.0, (part != BodyType.BODY ? -1.501 : -1.7), 0.0);
 		ZombieRenderHandler.getZombieTex(zombie).ifPresent(tex -> {
-		    if(part == BodyType.BODY) {
-		    	ZombieModelHandler.getPart2Model(zombie).ifPresent(m -> {
-		    		final IVertexBuilder ivertexbuilder = bufferIn.getBuffer(m.renderType(tex));
-			        m.renderBody(matrixStackIn, ivertexbuilder, packedLightIn, OverlayTexture.NO_OVERLAY, part);
-			        m.tickPartAnim(entityIn, part, 0, 0, entityIn.tickCount + partialTicks, 0, 0);
-			        matrixStackIn.popPose();
-			    });
-		    } else {
+//		    if(part == BodyType.BODY) {
+//		    	ZombieModelHandler.getPart2Model(zombie).ifPresent(m -> {
+//		    		final IVertexBuilder ivertexbuilder = bufferIn.getBuffer(m.renderType(tex));
+//			        m.renderBody(matrixStackIn, ivertexbuilder, packedLightIn, OverlayTexture.NO_OVERLAY, part);
+//			        m.tickPartAnim(entityIn, part, 0, 0, entityIn.tickCount + partialTicks, 0, 0);
+//			    });
+//		    } else {
 			    ZombieModelHandler.getPart1Model(zombie).ifPresent(m -> {
 			    	final IVertexBuilder ivertexbuilder = bufferIn.getBuffer(m.renderType(tex));
+			    	m.tickPartAnim(entityIn, part, 0, 0, entityIn.tickCount + partialTicks, 0, 0);
 			        m.renderBody(matrixStackIn, ivertexbuilder, packedLightIn, OverlayTexture.NO_OVERLAY, part);
-			        m.tickPartAnim(entityIn, part, 0, 0, entityIn.tickCount + partialTicks, 0, 0);
-			        matrixStackIn.popPose();
 			    });
-		    }
+//		    }
 		});
+		matrixStackIn.popPose();
 	}
 
 	@Override

@@ -27,18 +27,31 @@ public abstract class PVZZombieModel<T extends PVZZombieEntity> extends EntityMo
 	 * {link @ZombieBodyRender}
 	 */
 	public void tickPartAnim(ZombieDropBodyEntity entity, BodyType type, float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch) {
-		if(type == BodyType.BODY) {
+		switch(type) {
+		case BODY:{
 			int cd = 20;
-			if(entity.getAnimTime() < 10) {
+			if(entity.getAnimTime() < cd) {
 				this.getZombieWholeBody().xRot = AnimationUtil.getUp(entity.getAnimTime(), cd, 90);
 				this.getZombieRightHand().xRot = - AnimationUtil.getUp(entity.getAnimTime(), cd, 180);
 			} else {
 				this.getZombieWholeBody().xRot = AnimationUtil.byDegree(90);
 				this.getZombieRightHand().xRot = AnimationUtil.byDegree(- 180);
 			}
+			if(entity.getAnimTime() % 10 == 0 || entity.getAnimTime() < cd) {
+//				System.out.println(entity.getId() + "," + entity.getAnimTime() + "," + this.getZombieWholeBody().xRot);
+			}
+			break;
+		}
+		default:{
+			break;
+		}
 		}
 	}
 	
+	/**
+	 * use for zombie animation.
+	 * called by specific zombie render.
+	 */
 	@Override
 	public void setupAnim(T entity, float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch) {
 		this.refreshAnim();
@@ -125,7 +138,7 @@ public abstract class PVZZombieModel<T extends PVZZombieEntity> extends EntityMo
 		    break;
 		}
 		case BODY:{
-			this.getZombieHead().visible = false;
+			this.getZombieLeftHand().visible = false;
 		    this.getZombieHead().visible = false;
 		    this.getZombieWholeBody().render(stack, buffer, packedLight, packedOverlay);
 		    break;

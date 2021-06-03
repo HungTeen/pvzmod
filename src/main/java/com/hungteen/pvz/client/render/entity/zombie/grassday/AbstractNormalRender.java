@@ -28,16 +28,10 @@ public abstract class AbstractNormalRender<T extends NormalZombieEntity> extends
 	
 	@Override
 	public Vector3d getTranslateVec(T entity) {
-		if(entity.getAnimTime() >= 0 && entity.isInWater()) {
+		if(entity.getAnimTime() >= 0 && entity.isInWater()) {//offset for render ducky tube.
 			return new Vector3d(0, 0.6f, 0);
 		}
 		return super.getTranslateVec(entity);
-	}
-	
-	@Override
-	protected float getScaleByEntity(T entity) {
-		if(entity.isMiniZombie()) return 0.15F;
-		return 0.5f;
 	}
 
 }
