@@ -106,11 +106,10 @@ public class BucketHeadZombieModel extends PVZZombieModel<BucketHeadZombieEntity
 		defence3.texOffs(182, 76).addBox(-9.0F, -20.0F, -9.0F, 18.0F, 6.0F, 18.0F, 0.0F, false);
 	}
 
-
 	@Override
-	public void setupAnim(BucketHeadZombieEntity entity, float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch){
-		super.setupAnim(entity, limbSwing, limbSwingAmount, ageInTicks, netHeadYaw, headPitch);
-        float percent = entity.getDefenceLife() / BucketHeadZombieEntity.BUCKET_HEALTH;
+	public void updateFreeParts(BucketHeadZombieEntity entity) {
+		super.updateFreeParts(entity);
+		float percent = entity.getDefenceLife() / BucketHeadZombieEntity.BUCKET_HEALTH;
         this.defence3.visible = percent > 2.0f / 3;
 		this.defence2.visible = percent > 1.0f / 3;
 		this.defence1.visible = percent > 0;

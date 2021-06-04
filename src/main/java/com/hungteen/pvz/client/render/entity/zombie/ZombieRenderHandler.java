@@ -27,6 +27,19 @@ public class ZombieRenderHandler {
 	public static final ResourceLocation GIGA_FOOTBALL_ZOMBIE_TEX = get(Zombies.GIGA_FOOTBALL_ZOMBIE);
 	public static final ResourceLocation OLD_ZOMBIE_TEX = get(Zombies.OLD_ZOMBIE);
 	public static final ResourceLocation SUNDAY_EDITION_ZOMBIE_TEX = get(Zombies.SUNDAY_EDITION_ZOMBIE);
+	public static final ResourceLocation SNORKEL_ZOMBIE_TEX = get(Zombies.SNORKEL_ZOMBIE);
+	public static final ResourceLocation ZOMBONI_TEX = get(Zombies.ZOMBONI);
+	public static final ResourceLocation BOBSLE_TEAM_TEX = get(Zombies.BOBSLE_TEAM);
+	public static final ResourceLocation BOBSLE_ZOMBIE_TEX = get(Zombies.BOBSLE_ZOMBIE);
+	public static final ResourceLocation DOLPHIN_RIDER_TEX = get(Zombies.DOLPHIN_RIDER);
+	public static final ResourceLocation DOLPHIN_RIDER_ZOMBIE_TEX = get(Zombies.DOLPHIN_RIDER_ZOMBIE);
+	public static final ResourceLocation ZOMBIE_DOLPHIN_TEX = get(Zombies.ZOMBIE_DOLPHIN, 1);
+	public static final ResourceLocation LAVA_ZOMBIE_TEX = get(Zombies.LAVA_ZOMBIE);
+	public static final ResourceLocation JACK_IN_BOX_ZOMBIE_TEX = get(Zombies.JACK_IN_BOX_ZOMBIE);
+	public static final ResourceLocation BALLOON_ZOMBIE_TEX = get(Zombies.BALLOON_ZOMBIE);
+	public static final ResourceLocation DIGGER_ZOMBIE_TEX = get(Zombies.DIGGER_ZOMBIE);
+	public static final ResourceLocation POGO_ZOMBIE_TEX = get(Zombies.POGO_ZOMBIE);
+	public static final ResourceLocation YETI_ZOMBIE_TEX = get(Zombies.YETI_ZOMBIE);
 	
 	private static ResourceLocation get(Zombies zombie) {
 		return get(zombie, 0.5F);
@@ -53,6 +66,25 @@ public class ZombieRenderHandler {
 		case OLD_ZOMBIE:
 		case SUNDAY_EDITION_ZOMBIE:{
 			sep = "grassnight";
+			break;
+		}
+		case SNORKEL_ZOMBIE:
+		case ZOMBONI:
+		case BOBSLE_TEAM:
+		case BOBSLE_ZOMBIE:
+		case DOLPHIN_RIDER:
+		case DOLPHIN_RIDER_ZOMBIE:
+		case ZOMBIE_DOLPHIN:
+		case LAVA_ZOMBIE:{
+			sep = "poolday";
+			break;
+		}
+		case JACK_IN_BOX_ZOMBIE:
+		case BALLOON_ZOMBIE:
+		case DIGGER_ZOMBIE:
+		case POGO_ZOMBIE:
+		case YETI_ZOMBIE:{
+			sep = "poolnight";
 			break;
 		}
 		default:

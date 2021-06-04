@@ -1,5 +1,7 @@
 package com.hungteen.pvz.client.model.entity.zombie.grassnight;
 
+import java.util.Optional;
+
 import com.hungteen.pvz.client.model.entity.zombie.PVZZombieModel;
 import com.hungteen.pvz.common.entity.zombie.grassnight.GigaFootballZombieEntity;
 import com.hungteen.pvz.utils.AnimationUtil;
@@ -271,6 +273,11 @@ public class GigaFootballZombieModel extends PVZZombieModel<GigaFootballZombieEn
 		final boolean isRushing = (entity.getAttackTime() == 0);
 		this.isLeftHandFree = ! isRushing;
 		this.isRightHandFree = ! isRushing;
+	}
+	
+	@Override
+	public Optional<ModelRenderer> getHelmet() {
+		return Optional.ofNullable(this.helmet);
 	}
 	
 	@Override

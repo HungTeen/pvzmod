@@ -1,6 +1,6 @@
 package com.hungteen.pvz.client.render.entity.zombie.poolday;
 
-import com.hungteen.pvz.client.render.entity.zombie.OldPVZZombieRender;
+import com.hungteen.pvz.client.render.entity.zombie.PVZZombieRender;
 import com.hungteen.pvz.common.entity.zombie.base.SwimmerZombieEntity;
 
 import net.minecraft.client.renderer.entity.EntityRendererManager;
@@ -11,7 +11,7 @@ import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 
 @OnlyIn(Dist.CLIENT)
-public abstract class AbstractSwimmerRender<T extends SwimmerZombieEntity> extends OldPVZZombieRender<T>{
+public abstract class AbstractSwimmerRender<T extends SwimmerZombieEntity> extends PVZZombieRender<T>{
 
 	public AbstractSwimmerRender(EntityRendererManager rendererManager, EntityModel<T> entityModelIn,
 			float shadowSizeIn) {
@@ -25,12 +25,6 @@ public abstract class AbstractSwimmerRender<T extends SwimmerZombieEntity> exten
 			if(entity.getPose() == Pose.SPIN_ATTACK) return new Vector3d(0, 1.25f, 0);
 		}
 		return super.getTranslateVec(entity);
-	}
-
-	@Override
-	protected float getScaleByEntity(T entity) {
-		if(entity.isMiniZombie()) return 0.15F;
-		return 0.5f;
 	}
 
 }

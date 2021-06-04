@@ -2,10 +2,8 @@ package com.hungteen.pvz.client.render.entity.zombie.poolday;
 
 import com.hungteen.pvz.client.model.entity.zombie.poolday.SnorkelZombieModel;
 import com.hungteen.pvz.common.entity.zombie.poolday.SnorkelZombieEntity;
-import com.hungteen.pvz.utils.StringUtil;
 
 import net.minecraft.client.renderer.entity.EntityRendererManager;
-import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 
@@ -16,9 +14,4 @@ public class SnorkelZombieRender extends AbstractSwimmerRender<SnorkelZombieEnti
 		super(rendererManager, new SnorkelZombieModel(), 0.5f);
 	}
 	
-	@Override
-	public ResourceLocation getTextureLocation(SnorkelZombieEntity entity) {
-		return StringUtil.prefix("textures/entity/zombie/poolday/snorkel_zombie.png");
-	}
-
 }

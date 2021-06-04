@@ -1,7 +1,11 @@
 package com.hungteen.pvz.client.model.entity.zombie.poolnight;
 
 import com.hungteen.pvz.client.model.entity.zombie.PVZZombieModel;
+import com.hungteen.pvz.common.entity.zombie.body.ZombieDropBodyEntity;
+import com.hungteen.pvz.common.entity.zombie.body.ZombieDropBodyEntity.BodyType;
 import com.hungteen.pvz.common.entity.zombie.poolnight.BalloonZombieEntity;
+import com.mojang.blaze3d.matrix.MatrixStack;
+import com.mojang.blaze3d.vertex.IVertexBuilder;
 
 import net.minecraft.client.renderer.model.ModelRenderer;
 
@@ -29,11 +33,11 @@ public class BalloonZombieModel extends PVZZombieModel<BalloonZombieEntity> {
 		texHeight = 128;
 
 		total = new ModelRenderer(this);
-		total.setPos(0.0F, -6.0F, 0.0F);
+		total.setPos(0.0F, 24.0F, 0.0F);
 		
 
 		balloon = new ModelRenderer(this);
-		balloon.setPos(0.0F, -4.0F, 0.75F);
+		balloon.setPos(0.0F, -34.0F, 0.75F);
 		total.addChild(balloon);
 		
 
@@ -66,7 +70,7 @@ public class BalloonZombieModel extends PVZZombieModel<BalloonZombieEntity> {
 		tile.texOffs(1, 10).addBox(-9.0F, 1.0F, 0.0F, 1.0F, 10.0F, 1.0F, 0.0F, false);
 
 		zombie = new ModelRenderer(this);
-		zombie.setPos(0.0F, 0.0F, 0.0F);
+		zombie.setPos(0.0F, -30.0F, 0.0F);
 		total.addChild(zombie);
 		setRotationAngle(zombie, 1.0472F, 0.0F, 0.0F);
 		
@@ -118,6 +122,7 @@ public class BalloonZombieModel extends PVZZombieModel<BalloonZombieEntity> {
 		bone.texOffs(114, 98).addBox(0.0F, -1.0F, 0.0F, 1.0F, 1.0F, 5.0F, 0.0F, false);
 	}
 
+
 	@Override
 	public void setupAnim(BalloonZombieEntity entity, float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch){
 		final boolean hasBalloon = entity.hasBalloon();
@@ -131,19 +136,45 @@ public class BalloonZombieModel extends PVZZombieModel<BalloonZombieEntity> {
 			this.head.xRot = -1.0472F;
 			this.head.yRot = 0;
 			this.bone.yRot = ageInTicks;
+			this.updateFreeParts(entity);
 		} else {
 			this.up.xRot = 0;
 			this.zombie.xRot = 0;
 			super.setupAnim(entity, limbSwing, limbSwingAmount, ageInTicks, netHeadYaw, headPitch);
 			this.bone.yRot = ageInTicks / 4;
-//			this.head.yRot = netHeadYaw / (180F / (float)Math.PI);
-//	        this.head.xRot = headPitch / (180F / (float)Math.PI);
-//	        this.left_leg.xRot = MathHelper.cos(limbSwing * 0.6662F) * 1.4F * limbSwingAmount;
-//	        this.right_leg.xRot = MathHelper.cos(limbSwing * 0.6662F + (float)Math.PI) * 1.4F * limbSwingAmount;
-//	        this.right_hand.xRot = MathHelper.cos(limbSwing * 0.6662F) * 1.4F * limbSwingAmount;
-//	        this.left_hand.xRot = MathHelper.cos(limbSwing * 0.6662F + (float)Math.PI) * 1.4F * limbSwingAmount;
 		}
 		this.balloon.visible = hasBalloon;
+	}
+	
+	@Override
+	public void updateFreeParts(BalloonZombieEntity entity) {
+		super.updateFreeParts(entity);
+		final boolean hasBalloon = entity.hasBalloon();
+		this.isLeftHandFree = ! hasBalloon;
+		this.isRightHandFree = ! hasBalloon;
+	}
+	
+	@Override
+	public void tickPartAnim(ZombieDropBodyEntity entity, BodyType type, float limbSwing, float limbSwingAmount,
+			float ageInTicks, float netHeadYaw, float headPitch) {
+		this.left_leg.xRot = 0;
+		this.right_leg.xRot = 0;
+		this.up.xRot = 0;
+		this.head.xRot = 0;
+		this.left_hand.xRot = 0;
+		this.right_hand.xRot = 0;
+		this.zombie.xRot = 0;
+		if(type == BodyType.HEAD) {
+			this.bone.yRot = ageInTicks / 4;
+		}
+		super.tickPartAnim(entity, type, limbSwing, limbSwingAmount, ageInTicks, netHeadYaw, headPitch);
+	}
+	
+	@Override
+	public void renderBody(ZombieDropBodyEntity entity, MatrixStack stack, IVertexBuilder buffer, int packedLight,
+			int packedOverlay, BodyType type) {
+		this.balloon.visible = false;
+		super.renderBody(entity, stack, buffer, packedLight, packedOverlay, type);
 	}
 	
 

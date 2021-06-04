@@ -22,6 +22,7 @@ public class FootballZombieEntity extends PVZZombieEntity implements IHasMetal {
 	public FootballZombieEntity(EntityType<? extends MonsterEntity> type, World worldIn) {
 		super(type, worldIn);
 		this.hasDirectDefence = true;
+		this.canLostHand = false;
 		this.increaseMetal();
 	}
 	

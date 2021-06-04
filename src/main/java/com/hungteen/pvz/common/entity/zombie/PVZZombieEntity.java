@@ -249,7 +249,7 @@ public abstract class PVZZombieEntity extends MonsterEntity implements IPVZZombi
 	/**
 	 * trigger at {@link #hurt()}
 	 */
-	public void onLostHand(DamageSource source) {
+	private void onLostHand(DamageSource source) {
 		this.lostHand(true);
 		ZombieDropBodyEntity body = EntityRegister.ZOMBIE_DROP_BODY.get().create(level);
 		body.droppedByOwner(this, source, BodyType.HAND);
@@ -259,7 +259,7 @@ public abstract class PVZZombieEntity extends MonsterEntity implements IPVZZombi
 	/**
 	 * trigger at {@link #hurt()}
 	 */
-	public void onLostHead(DamageSource source) {
+	private void onLostHead(DamageSource source) {
 		this.lostHead(true);
 		ZombieDropBodyEntity body = EntityRegister.ZOMBIE_DROP_BODY.get().create(level);
 		body.droppedByOwner(this, source, BodyType.HEAD);
@@ -269,10 +269,19 @@ public abstract class PVZZombieEntity extends MonsterEntity implements IPVZZombi
 	/**
 	 * trigger at {@link #tickDeath()}
 	 */
-	public void onFallBody(DamageSource source) {
+	private void onFallBody(DamageSource source) {
 		ZombieDropBodyEntity body = EntityRegister.ZOMBIE_DROP_BODY.get().create(level);
 		body.droppedByOwner(this, source, BodyType.BODY);
+		this.setBodyStates(body);
 		level.addFreshEntity(body);
+	}
+	
+	/**
+	 * set states to body.
+	 * such as has paper or not.
+	 */
+	protected void setBodyStates(ZombieDropBodyEntity body) {
+		
 	}
 	
 	/**
@@ -734,13 +743,22 @@ public abstract class PVZZombieEntity extends MonsterEntity implements IPVZZombi
 		return false;
 	}
 	
+	/**
+	 * some zombies are not able to drop hands.
+	 * {@link #hurt}
+	 */
 	public boolean checkCanLostHand() {
-		return false;
+		return this.getHealth() / this.getMaxHealth() < 0.5F;
 	}
 	
+	/**
+	 * some zombies are not able to drop heads.
+	 * {@link #hurt}
+	 */
 	public boolean checkCanLostHead() {
-		return false;
+		return this.getHealth() < 10 && this.getHealth() / this.getMaxHealth() < 0.1F;
 	}
+
 	
 	public static boolean enableZombieDropParts() {
 		return PVZConfig.COMMON_CONFIG.EntitySettings.ZombieSetting.EnableZombieDropHands.get();

@@ -47,6 +47,8 @@ public class TombStoneEntity extends PVZZombieEntity {
 		this.canBeCharm = false;
 		this.canBeMini = false;
 		this.canBeFrozen = false;
+		this.canLostHand = false;
+		this.canLostHead = false;
 		this.canBeStealByBungee = false;
 		this.canCollideWithZombie = false;
 	}

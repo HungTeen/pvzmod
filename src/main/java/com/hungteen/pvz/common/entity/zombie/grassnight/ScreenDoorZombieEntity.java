@@ -1,6 +1,7 @@
 package com.hungteen.pvz.common.entity.zombie.grassnight;
 
 import com.hungteen.pvz.common.entity.zombie.base.DefenceZombieEntity;
+import com.hungteen.pvz.common.entity.zombie.body.ZombieDropBodyEntity;
 import com.hungteen.pvz.common.entity.zombie.part.PVZHealthPartEntity;
 import com.hungteen.pvz.data.loot.PVZLoot;
 import com.hungteen.pvz.register.SoundRegister;
@@ -41,6 +42,17 @@ public class ScreenDoorZombieEntity extends DefenceZombieEntity implements IHasM
 	public void increaseMetal() {
 		this.setDefenceLife(this.getPartLife());
 		this.resetParts();
+	}
+	
+	@Override
+	public boolean canLostHand() {
+		return super.canLostHand() && ! this.hasMetal();
+	}
+	
+	@Override
+	protected void setBodyStates(ZombieDropBodyEntity body) {
+		super.setBodyStates(body);
+		body.setHandDefence(this.hasMetal());
 	}
 
 	@Override

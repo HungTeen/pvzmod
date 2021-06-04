@@ -13,13 +13,17 @@ import net.minecraft.client.renderer.entity.model.EntityModel;
 import net.minecraft.client.renderer.model.ModelRenderer;
 import net.minecraft.util.math.MathHelper;
 
-public abstract class PVZZombieModel<T extends PVZZombieEntity> extends EntityModel<T> {
+public abstract class PVZZombieModel<T extends PVZZombieEntity> extends EntityModel<T> implements IZombieModel<T>{
 
+	//related to attack animation.
 	protected static final float HAND_MAX_ANGLE = AnimationUtil.byDegree(- 120F);
 	protected static final int MAX_ANIM_CD = PVZZombieEntity.PERFORM_ATTACK_CD;
+	//use to check whether the part can move or not.
 	protected boolean isLeftHandFree = true;
 	protected boolean isRightHandFree = true;
 	protected boolean isHeadFree = true;
+	//use to render last body part animation.
+	protected float rightHandOriginAngel = 0;
 	
 	/**
 	 * use for drop part entity to render.
@@ -32,13 +36,16 @@ public abstract class PVZZombieModel<T extends PVZZombieEntity> extends EntityMo
 			int cd = 20;
 			if(entity.getAnimTime() < cd) {
 				this.getZombieWholeBody().xRot = AnimationUtil.getUp(entity.getAnimTime(), cd, 90);
-				this.getZombieRightHand().xRot = - AnimationUtil.getUp(entity.getAnimTime(), cd, 180);
+				this.getZombieRightHand().xRot = AnimationUtil.byDegree(rightHandOriginAngel) - AnimationUtil.getUp(entity.getAnimTime(), cd, 180 + rightHandOriginAngel);
+			    if(entity.hasHandDefence()) {
+			    	this.getZombieLeftHand().xRot = AnimationUtil.byDegree(rightHandOriginAngel) - AnimationUtil.getUp(entity.getAnimTime(), cd, 180 + rightHandOriginAngel);
+			    }
 			} else {
 				this.getZombieWholeBody().xRot = AnimationUtil.byDegree(90);
 				this.getZombieRightHand().xRot = AnimationUtil.byDegree(- 180);
-			}
-			if(entity.getAnimTime() % 10 == 0 || entity.getAnimTime() < cd) {
-//				System.out.println(entity.getId() + "," + entity.getAnimTime() + "," + this.getZombieWholeBody().xRot);
+				if(entity.hasHandDefence()) {
+					this.getZombieLeftHand().xRot = AnimationUtil.byDegree(- 180);
+			    }
 			}
 			break;
 		}
@@ -57,16 +64,13 @@ public abstract class PVZZombieModel<T extends PVZZombieEntity> extends EntityMo
 		this.refreshAnim();
         this.updateFreeParts(entity);
         this.doWalkAnimation(limbSwing, limbSwingAmount, netHeadYaw, headPitch);
-        //is attacking
-        if(entity.getAnimTime() > 0) {
-        	if(this.isLeftHandFree || this.isRightHandFree) {
-        		this.doHandEat(entity);
-        	}
-        } else {// no target
-        	if(isZombieAngry(entity)) {
-        	    this.doPreAttackPose();
-        	}
-        }
+        this.performAttack(entity);
+	}
+	
+	/**
+	 * refresh the rotation of parts.
+	 */
+	public void refreshAnim() {
 	}
 	
 	/**
@@ -75,12 +79,6 @@ public abstract class PVZZombieModel<T extends PVZZombieEntity> extends EntityMo
 	public void updateFreeParts(T entity) {
 		this.getZombieLeftHand().visible = entity.hasHand();
 		this.getZombieHead().visible = entity.hasHead();
-	}
-	
-	/**
-	 * refresh the rotation of parts.
-	 */
-	public void refreshAnim() {
 	}
 	
 	protected void doWalkAnimation(float limbSwing, float limbSwingAmount, float netHeadYaw, float headPitch) {
@@ -92,6 +90,24 @@ public abstract class PVZZombieModel<T extends PVZZombieEntity> extends EntityMo
         if(this.isLeftHandFree) this.getZombieLeftHand().xRot = MathHelper.cos(limbSwing * 0.6662F + (float)Math.PI) * 1.4F * limbSwingAmount;
 	}
 	
+	/**
+	 * do attack animation
+	 */
+	protected void performAttack(T entity) {
+		if(entity.getAnimTime() > 0) {
+        	if(this.isLeftHandFree || this.isRightHandFree) {
+        		this.doHandEat(entity);
+        	}
+        } else {// no target
+        	if(isZombieAngry(entity)) {
+        	    this.doPreAttackPose();
+        	}
+        }
+	}
+	
+	/**
+	 * hand rise when near to target.
+	 */
 	protected void doPreAttackPose() {
 		//can hand attack
 		if(this.isLeftHandFree || this.isRightHandFree) {
@@ -104,6 +120,9 @@ public abstract class PVZZombieModel<T extends PVZZombieEntity> extends EntityMo
 		} 
 	}
 	
+	/**
+	 * animate like default zombie.
+	 */
 	protected void doHandEat(T entity) {
 		if(this.isLeftHandFree) {
 			this.getZombieLeftHand().xRot = HAND_MAX_ANGLE - AnimationUtil.getUpDown(MAX_ANIM_CD - entity.getAnimTime(), MAX_ANIM_CD, - 70);
@@ -122,11 +141,15 @@ public abstract class PVZZombieModel<T extends PVZZombieEntity> extends EntityMo
 		this.getZombieWholeBody().render(matrixStack, buffer, packedLight, packedOverlay);
 	}
 	
-	public void renderBody(MatrixStack stack, IVertexBuilder buffer, int packedLight, int packedOverlay, BodyType type) {
+	/**
+	 * render drop body part.
+	 */
+	public void renderBody(ZombieDropBodyEntity entity, MatrixStack stack, IVertexBuilder buffer, int packedLight, int packedOverlay, BodyType type) {
 		switch(type) {
 		case HAND:{
 			this.getZombieLeftHand().visible = true;
 			this.getZombieLeftHand().setPos(0, 24, 0);
+			this.getZombieLeftHand().xRot = 0;
 		    this.getZombieLeftHand().render(stack, buffer, packedLight, packedOverlay);
 		    break;
 		}
@@ -138,8 +161,11 @@ public abstract class PVZZombieModel<T extends PVZZombieEntity> extends EntityMo
 		    break;
 		}
 		case BODY:{
-			this.getZombieLeftHand().visible = false;
+			this.getZombieLeftHand().visible = entity.hasHandDefence();
 		    this.getZombieHead().visible = false;
+		    this.getHandDefence().ifPresent(m -> {
+		    	m.visible = entity.hasHandDefence();
+		    });
 		    this.getZombieWholeBody().render(stack, buffer, packedLight, packedOverlay);
 		    break;
 		}
@@ -152,10 +178,22 @@ public abstract class PVZZombieModel<T extends PVZZombieEntity> extends EntityMo
 		modelRenderer.zRot = z;
 	}
 	
+	@Override
+	public EntityModel<T> getZombieModel() {
+		return this;
+	}
+	
 	/**
 	 * get helmet to disable helmet render when drop hand.
 	 */
 	public Optional<ModelRenderer> getHelmet() {
+		return Optional.empty();
+	}
+	
+	/**
+	 * get hand defence to disable its render when drop body.
+	 */
+	public Optional<ModelRenderer> getHandDefence() {
 		return Optional.empty();
 	}
 	

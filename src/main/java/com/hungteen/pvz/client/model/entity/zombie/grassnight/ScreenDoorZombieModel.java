@@ -1,5 +1,7 @@
 package com.hungteen.pvz.client.model.entity.zombie.grassnight;
 
+import java.util.Optional;
+
 import com.hungteen.pvz.client.model.entity.zombie.PVZZombieModel;
 import com.hungteen.pvz.common.entity.zombie.grassnight.ScreenDoorZombieEntity;
 
@@ -61,14 +63,10 @@ public class ScreenDoorZombieModel extends PVZZombieModel<ScreenDoorZombieEntity
 		setRotationAngle(right_hand, -1.0472F, 0.0F, 0.0F);
 		right_hand.texOffs(96, 0).addBox(-4.0F, -4.0F, -4.0F, 8.0F, 24.0F, 8.0F, 0.0F, false);
 
-		head = new ModelRenderer(this);
-		head.setPos(0.0F, -24.0F, 0.0F);
-		up.addChild(head);
-		head.texOffs(16, 96).addBox(-8.0F, -16.0F, -8.0F, 16.0F, 16.0F, 16.0F, 0.0F, false);
-
 		door = new ModelRenderer(this);
-		door.setPos(0.0F, -8.0F, -19.0F);
-		up.addChild(door);
+		door.setPos(12.0F, 23.0F, 1.0F);
+		right_hand.addChild(door);
+		setRotationAngle(door, 1.0472F, 0.0F, 0.0F);
 		door.texOffs(192, 186).addBox(-10.0F, -22.0F, -1.0F, 20.0F, 42.0F, 2.0F, 0.0F, false);
 		door.texOffs(58, 196).addBox(-13.0F, -22.0F, -2.0F, 3.0F, 42.0F, 4.0F, 0.0F, false);
 		door.texOffs(103, 197).addBox(10.0F, -22.0F, -2.0F, 3.0F, 42.0F, 4.0F, 0.0F, false);
@@ -80,6 +78,13 @@ public class ScreenDoorZombieModel extends PVZZombieModel<ScreenDoorZombieEntity
 		door.texOffs(46, 179).addBox(-14.0F, 17.0F, -2.0F, 1.0F, 5.0F, 1.0F, 0.0F, false);
 		door.texOffs(30, 179).addBox(-14.0F, -22.0F, -2.0F, 1.0F, 5.0F, 1.0F, 0.0F, false);
 		door.texOffs(12, 182).addBox(-14.0F, -3.0F, -2.0F, 1.0F, 5.0F, 1.0F, 0.0F, false);
+
+		head = new ModelRenderer(this);
+		head.setPos(0.0F, -24.0F, 0.0F);
+		up.addChild(head);
+		head.texOffs(16, 96).addBox(-8.0F, -16.0F, -8.0F, 16.0F, 16.0F, 16.0F, 0.0F, false);
+		
+		this.rightHandOriginAngel = - 60;
 	}
 
 	@Override
@@ -97,6 +102,11 @@ public class ScreenDoorZombieModel extends PVZZombieModel<ScreenDoorZombieEntity
 		this.getZombieRightHand().xRot = -1.0472F;
 	}
 
+	@Override
+	public Optional<ModelRenderer> getHandDefence() {
+		return Optional.ofNullable(this.door);
+	}
+	
 	@Override
 	public ModelRenderer getZombieLeftHand() {
 		return this.left_hand;

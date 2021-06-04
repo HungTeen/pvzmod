@@ -4,6 +4,7 @@ import java.util.Optional;
 
 import com.hungteen.pvz.common.entity.PVZEntityBase;
 import com.hungteen.pvz.common.entity.zombie.PVZZombieEntity;
+import com.hungteen.pvz.utils.AlgorithmUtil;
 import com.hungteen.pvz.utils.enums.Zombies;
 
 import net.minecraft.entity.EntityType;
@@ -24,9 +25,12 @@ public class ZombieDropBodyEntity extends PVZEntityBase {
 			DataSerializers.INT);
 	private static final DataParameter<Integer> BODY_TYPE = EntityDataManager.defineId(ZombieDropBodyEntity.class,
 			DataSerializers.INT);
+	private static final DataParameter<Integer> BODY_STATE = EntityDataManager.defineId(ZombieDropBodyEntity.class,
+			DataSerializers.INT);
 	private static final DataParameter<Integer> ANIM_TIME = EntityDataManager.defineId(ZombieDropBodyEntity.class,
 			DataSerializers.INT);
 	public static final int MAX_EXIST_TICK = 60;
+	private static final int HAS_HAND_DEFENCE = 0;
 	public final int HEAD_ROT;
 
 	public ZombieDropBodyEntity(EntityType<?> p_i48580_1_, World p_i48580_2_) {
@@ -38,6 +42,7 @@ public class ZombieDropBodyEntity extends PVZEntityBase {
 	protected void defineSynchedData() {
 		this.entityData.define(ZOMBIE_TYPE, Zombies.NORMAL_ZOMBIE.ordinal());
 		this.entityData.define(BODY_TYPE, BodyType.HAND.ordinal());
+		this.entityData.define(BODY_STATE, 0);
 		this.entityData.define(ANIM_TIME, 0);
 	}
 
@@ -54,7 +59,6 @@ public class ZombieDropBodyEntity extends PVZEntityBase {
 			
 		}
 		if(this.onGround) {
-//				this.remove();
 			this.setDeltaMovement(this.getDeltaMovement().scale(0.3D));
 		}
 	}
@@ -74,11 +78,10 @@ public class ZombieDropBodyEntity extends PVZEntityBase {
 			final double speed = 0.3D;
 			double speedX = (this.random.nextDouble() - 0.5D) * speed;
 			double speedZ = (this.random.nextDouble() - 0.5D) * speed;
-			double speedY = this.random.nextDouble() * speed * 2;
+			double speedY = this.random.nextDouble() * speed;
 			Optional.ofNullable(source.getSourcePosition()).ifPresent(vec -> {
 				Vector3d v = this.position().subtract(vec);
-				v = v.normalize().add(speedX, speedY, speedZ);
-				this.setDeltaMovement(v.normalize().multiply(speed, speed, speed));
+				this.setDeltaMovement(v.normalize().multiply(speed, speed, speed).add(speedX, speedY, speedZ));
 			});
 			break;
 		}
@@ -114,6 +117,9 @@ public class ZombieDropBodyEntity extends PVZEntityBase {
 		if (nbt.contains("body_zombie_type")) {
 			this.setZombieType(Zombies.values()[nbt.getInt("body_zombie_type")]);
 		}
+		if (nbt.contains("body_part_state")) {
+			this.setBodyState(nbt.getInt("body_part_state"));
+		}
 		if (nbt.contains("body_part_type")) {
 			this.setBodyType(BodyType.values()[nbt.getInt("body_part_type")]);
 		}
@@ -123,8 +129,11 @@ public class ZombieDropBodyEntity extends PVZEntityBase {
 	protected void addAdditionalSaveData(CompoundNBT nbt) {
 		nbt.putInt("body_anim_tick", this.getAnimTime());
 		nbt.putInt("body_zombie_type", this.getZombieType().ordinal());
+		nbt.putInt("body_part_state", this.getBodyState());
 		nbt.putInt("body_part_type", this.getBodyType().ordinal());
 	}
+	
+	/* getter setter */
 
 	public Zombies getZombieType() {
 		return Zombies.values()[entityData.get(ZOMBIE_TYPE)];
@@ -141,6 +150,14 @@ public class ZombieDropBodyEntity extends PVZEntityBase {
 	public void setBodyType(BodyType type) {
 		entityData.set(BODY_TYPE, type.ordinal());
 	}
+	
+	public int getBodyState() {
+		return entityData.get(BODY_STATE);
+	}
+
+	public void setBodyState(int state) {
+		entityData.set(BODY_STATE, state);
+	}
 
 	public int getAnimTime() {
 		return entityData.get(ANIM_TIME);
@@ -148,6 +165,14 @@ public class ZombieDropBodyEntity extends PVZEntityBase {
 
 	public void setAnimTime(int tick) {
 		entityData.set(ANIM_TIME, tick);
+	}
+	
+	public void setHandDefence(boolean flag) {
+		this.setBodyState(AlgorithmUtil.BitOperator.setBit(this.getBodyState(), HAS_HAND_DEFENCE, flag));
+	}
+	
+	public boolean hasHandDefence() {
+		return AlgorithmUtil.BitOperator.hasBitOne(this.getBodyState(), HAS_HAND_DEFENCE);
 	}
 
 	public enum BodyType {

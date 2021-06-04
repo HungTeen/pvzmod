@@ -66,6 +66,8 @@ public class FlagZombieModel extends PVZZombieModel<FlagZombieEntity> {
 		head.setPos(0.0F, -25.0F, 0.0F);
 		up.addChild(head);
 		head.texOffs(16, 96).addBox(-8.0F, -15.0F, -8.0F, 16.0F, 16.0F, 16.0F, 0.0F, false);
+		
+		this.rightHandOriginAngel = - 90;
 	}
 	
 	@Override

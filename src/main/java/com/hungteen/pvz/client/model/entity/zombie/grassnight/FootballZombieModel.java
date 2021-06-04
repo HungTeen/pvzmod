@@ -1,5 +1,7 @@
 package com.hungteen.pvz.client.model.entity.zombie.grassnight;
 
+import java.util.Optional;
+
 import com.hungteen.pvz.client.model.entity.zombie.PVZZombieModel;
 import com.hungteen.pvz.common.entity.zombie.grassnight.FootballZombieEntity;
 import com.hungteen.pvz.utils.AnimationUtil;
@@ -245,6 +247,11 @@ public class FootballZombieModel extends PVZZombieModel<FootballZombieEntity> {
 		if(this.isRightHandFree) {
 			this.getZombieRightHand().xRot = - HAND_MAX_ANGLE / 3 + AnimationUtil.getUpDown(MAX_ANIM_CD - entity.getAnimTime(), MAX_ANIM_CD, - 70);
 		}
+	}
+	
+	@Override
+	public Optional<ModelRenderer> getHelmet() {
+		return Optional.ofNullable(this.helmet);
 	}
 
 	@Override

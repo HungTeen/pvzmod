@@ -1,5 +1,7 @@
 package com.hungteen.pvz.client.model.entity.zombie.grassnight;
 
+import java.util.Optional;
+
 import com.hungteen.pvz.client.model.entity.zombie.PVZZombieModel;
 import com.hungteen.pvz.common.entity.zombie.grassnight.SundayEditionZombieEntity;
 
@@ -117,37 +119,39 @@ public class SundayEditionZombieModel extends PVZZombieModel<SundayEditionZombie
 		right_hand = new ModelRenderer(this);
 		right_hand.setPos(-11.0F, -45.0F, 0.0F);
 		up.addChild(right_hand);
-		setRotationAngle(right_hand, -1.309F, 0.0873F, 0.0F);
+		setRotationAngle(right_hand, -1.1781F, 0.0F, 0.0F);
 		right_hand.texOffs(148, 222).addBox(-3.0F, -3.0F, -3.0F, 6.0F, 24.0F, 6.0F, 0.0F, false);
+
+		paper = new ModelRenderer(this);
+		paper.setPos(12.0F, 20.0F, 0.5F);
+		right_hand.addChild(paper);
+		setRotationAngle(paper, -0.1745F, 0.0F, 0.0F);
+		
+
+		bone2 = new ModelRenderer(this);
+		bone2.setPos(10.75F, 1.7244F, 2.8059F);
+		paper.addChild(bone2);
+		setRotationAngle(bone2, 0.0F, 0.0F, 0.7854F);
+		bone2.texOffs(160, 75).addBox(1.7677F, -4.1066F, -28.0F, 1.0F, 22.0F, 45.0F, 0.0F, false);
+
+		bone = new ModelRenderer(this);
+		bone.setPos(-13.75F, 1.7244F, 2.8059F);
+		paper.addChild(bone);
+		setRotationAngle(bone, 0.0F, 0.0F, -0.7854F);
+		bone.texOffs(160, 4).addBox(-0.8393F, -1.8085F, -28.0F, 1.0F, 22.0F, 45.0F, 0.0F, false);
 
 		left_hand = new ModelRenderer(this);
 		left_hand.setPos(11.0F, -45.0F, 0.0F);
 		up.addChild(left_hand);
-		setRotationAngle(left_hand, -1.309F, -0.0873F, 0.0F);
+		setRotationAngle(left_hand, -1.1781F, -0.0873F, 0.0F);
 		left_hand.texOffs(59, 221).addBox(-3.0F, -3.0F, -3.0F, 6.0F, 24.0F, 6.0F, 0.0F, false);
 
 		body = new ModelRenderer(this);
 		body.setPos(0.0F, -24.0F, 0.0F);
 		up.addChild(body);
 		body.texOffs(3, 221).addBox(-8.0F, -24.0F, -4.0F, 16.0F, 24.0F, 8.0F, 0.0F, false);
-
-		paper = new ModelRenderer(this);
-		paper.setPos(0.0F, -42.0F, -19.5F);
-		up.addChild(paper);
-		setRotationAngle(paper, -1.309F, 0.0F, 0.0F);
 		
-
-		bone2 = new ModelRenderer(this);
-		bone2.setPos(10.75F, 1.7244F, 2.8059F);
-		paper.addChild(bone2);
-		setRotationAngle(bone2, 0.0F, 0.0F, 0.8727F);
-		bone2.texOffs(160, 75).addBox(1.7677F, -6.1066F, -28.0F, 1.0F, 22.0F, 45.0F, 0.0F, false);
-
-		bone = new ModelRenderer(this);
-		bone.setPos(-13.75F, 1.7244F, 2.8059F);
-		paper.addChild(bone);
-		setRotationAngle(bone, 0.0F, 0.0F, -0.8727F);
-		bone.texOffs(160, 4).addBox(-0.8393F, -3.8085F, -28.0F, 1.0F, 22.0F, 45.0F, 0.0F, false);
+		this.rightHandOriginAngel = - 67.5F;
 	}
 
 
@@ -171,6 +175,11 @@ public class SundayEditionZombieModel extends PVZZombieModel<SundayEditionZombie
 	@Override
 	protected boolean isZombieAngry(SundayEditionZombieEntity entity) {
 		return entity.isAngry() || super.isZombieAngry(entity);
+	}
+	
+	@Override
+	public Optional<ModelRenderer> getHandDefence() {
+		return Optional.ofNullable(this.paper);
 	}
 	
 	@Override

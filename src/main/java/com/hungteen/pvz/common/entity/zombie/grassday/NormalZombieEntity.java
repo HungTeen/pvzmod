@@ -38,16 +38,6 @@ public class NormalZombieEntity extends PVZZombieEntity {
 	}
 	
 	@Override
-	public boolean checkCanLostHand() {
-		return this.getHealth() / this.getMaxHealth() < 0.5;
-	}
-	
-	@Override
-	public boolean checkCanLostHead() {
-		return this.getHealth() < 1;
-	}
-	
-	@Override
 	public Zombies getZombieEnumName() {
 		return Zombies.NORMAL_ZOMBIE;
 	}

@@ -1,5 +1,7 @@
 package com.hungteen.pvz.client.model.entity.zombie.grassnight;
 
+import java.util.Optional;
+
 import com.hungteen.pvz.client.model.entity.zombie.PVZZombieModel;
 import com.hungteen.pvz.common.entity.zombie.grassnight.OldZombieEntity;
 
@@ -93,16 +95,10 @@ public class OldZombieModel extends PVZZombieModel<OldZombieEntity> {
 		setRotationAngle(right_hand, -1.0472F, 0.0F, 0.0F);
 		right_hand.texOffs(148, 222).addBox(-3.0F, -3.0F, -3.0F, 6.0F, 24.0F, 6.0F, 0.0F, false);
 
-		left_hand = new ModelRenderer(this);
-		left_hand.setPos(11.0F, -21.0F, 0.0F);
-		up.addChild(left_hand);
-		setRotationAngle(left_hand, -1.0472F, 0.0F, 0.0F);
-		left_hand.texOffs(59, 221).addBox(-3.0F, -3.0F, -3.0F, 6.0F, 24.0F, 6.0F, 0.0F, false);
-
 		paper = new ModelRenderer(this);
-		paper.setPos(0.0F, -22.0F, -20.0F);
-		up.addChild(paper);
-		setRotationAngle(paper, -1.309F, 0.0F, 0.0F);
+		paper.setPos(11.0F, 16.0F, -10.0F);
+		right_hand.addChild(paper);
+		setRotationAngle(paper, -0.3491F, 0.0F, 0.0F);
 		
 
 		bone2 = new ModelRenderer(this);
@@ -116,6 +112,14 @@ public class OldZombieModel extends PVZZombieModel<OldZombieEntity> {
 		paper.addChild(bone);
 		setRotationAngle(bone, 0.0F, 0.0F, -0.8727F);
 		bone.texOffs(5, 174).addBox(-1.0F, -2.0F, -13.0F, 1.0F, 15.0F, 25.0F, 0.0F, false);
+
+		left_hand = new ModelRenderer(this);
+		left_hand.setPos(11.0F, -21.0F, 0.0F);
+		up.addChild(left_hand);
+		setRotationAngle(left_hand, -1.0472F, 0.0F, 0.0F);
+		left_hand.texOffs(59, 221).addBox(-3.0F, -3.0F, -3.0F, 6.0F, 24.0F, 6.0F, 0.0F, false);
+		
+		this.rightHandOriginAngel = - 60;
 	}
 
 	@Override
@@ -139,6 +143,12 @@ public class OldZombieModel extends PVZZombieModel<OldZombieEntity> {
 	protected boolean isZombieAngry(OldZombieEntity entity) {
 		return entity.isAngry() || super.isZombieAngry(entity);
 	}
+	
+	@Override
+	public Optional<ModelRenderer> getHandDefence() {
+		return Optional.ofNullable(this.paper);
+	}
+
 	
 	@Override
 	public ModelRenderer getZombieLeftHand() {

@@ -1,5 +1,7 @@
 package com.hungteen.pvz.client.model.entity.zombie.grassnight;
 
+import java.util.Optional;
+
 import com.hungteen.pvz.client.model.entity.zombie.PVZZombieModel;
 import com.hungteen.pvz.common.entity.zombie.grassnight.NewspaperZombieEntity;
 
@@ -31,43 +33,25 @@ public class NewspaperZombieModel extends PVZZombieModel<NewspaperZombieEntity> 
 		texHeight = 256;
 
 		total = new ModelRenderer(this);
-		total.setPos(4.0F, 1.0F, 0.0F);
+		total.setPos(0.0F, 24.0F, 0.0F);
 		
 
 		left_leg = new ModelRenderer(this);
-		left_leg.setPos(0.0F, -1.0F, 0.0F);
+		left_leg.setPos(4.0F, -24.0F, 0.0F);
 		total.addChild(left_leg);
 		left_leg.texOffs(230, 225).addBox(-3.0F, 0.0F, -3.0F, 6.0F, 22.0F, 6.0F, 0.0F, false);
 		left_leg.texOffs(196, 242).addBox(-3.0F, 22.0F, -5.0F, 6.0F, 2.0F, 9.0F, 0.0F, false);
 
 		right_leg = new ModelRenderer(this);
-		right_leg.setPos(-8.0F, -1.0F, 0.0F);
+		right_leg.setPos(-4.0F, -24.0F, 0.0F);
 		total.addChild(right_leg);
 		right_leg.texOffs(230, 192).addBox(-3.0F, 0.0F, -3.0F, 6.0F, 22.0F, 6.0F, 0.0F, false);
 		right_leg.texOffs(191, 220).addBox(-3.0F, 22.0F, -5.0F, 6.0F, 2.0F, 9.0F, 0.0F, false);
 
 		up = new ModelRenderer(this);
-		up.setPos(-4.0F, -1.0F, 0.0F);
+		up.setPos(0.0F, -24.0F, 0.0F);
 		total.addChild(up);
 		
-
-		paper = new ModelRenderer(this);
-		paper.setPos(0.0F, -9.0F, 2.0F);
-		up.addChild(paper);
-		setRotationAngle(paper, 0.1745F, 0.0F, 0.0F);
-		
-
-		bone2 = new ModelRenderer(this);
-		bone2.setPos(10.0F, -13.8186F, -17.7502F);
-		paper.addChild(bone2);
-		setRotationAngle(bone2, -1.5708F, 0.6981F, 0.0F);
-		bone2.texOffs(88, 212).addBox(0.0F, 0.0F, -13.0F, 1.0F, 16.0F, 25.0F, 0.0F, false);
-
-		bone = new ModelRenderer(this);
-		bone.setPos(-10.0F, -13.8186F, -17.7502F);
-		paper.addChild(bone);
-		setRotationAngle(bone, -1.5708F, -0.6981F, 0.0F);
-		bone.texOffs(5, 174).addBox(-1.0F, 0.0F, -13.0F, 1.0F, 16.0F, 25.0F, 0.0F, false);
 
 		head = new ModelRenderer(this);
 		head.setPos(0.0F, -24.0F, 0.0F);
@@ -106,6 +90,24 @@ public class NewspaperZombieModel extends PVZZombieModel<NewspaperZombieEntity> 
 		setRotationAngle(right_hand, -1.0472F, 0.0F, 0.0F);
 		right_hand.texOffs(148, 222).addBox(-3.0F, -3.0F, -3.0F, 6.0F, 24.0F, 6.0F, 0.0F, false);
 
+		paper = new ModelRenderer(this);
+		paper.setPos(11.0F, 23.0F, 5.0F);
+		right_hand.addChild(paper);
+		setRotationAngle(paper, 1.2217F, 0.0F, 0.0F);
+		
+
+		bone2 = new ModelRenderer(this);
+		bone2.setPos(10.0F, -13.8186F, 1.2498F);
+		paper.addChild(bone2);
+		setRotationAngle(bone2, -1.5708F, 0.6981F, 0.0F);
+		bone2.texOffs(88, 212).addBox(0.0F, 0.0F, -13.0F, 1.0F, 16.0F, 25.0F, 0.0F, false);
+
+		bone = new ModelRenderer(this);
+		bone.setPos(-10.0F, -13.8186F, 1.2498F);
+		paper.addChild(bone);
+		setRotationAngle(bone, -1.5708F, -0.6981F, 0.0F);
+		bone.texOffs(5, 174).addBox(-1.0F, 0.0F, -13.0F, 1.0F, 16.0F, 25.0F, 0.0F, false);
+
 		left_hand = new ModelRenderer(this);
 		left_hand.setPos(11.0F, -21.0F, 0.0F);
 		up.addChild(left_hand);
@@ -116,6 +118,8 @@ public class NewspaperZombieModel extends PVZZombieModel<NewspaperZombieEntity> 
 		body.setPos(0.0F, -7.0F, 0.0F);
 		up.addChild(body);
 		body.texOffs(3, 221).addBox(-8.0F, -17.0F, -4.0F, 16.0F, 24.0F, 8.0F, 0.0F, false);
+		
+		this.rightHandOriginAngel = - 60;
 	}
 
 	@Override
@@ -138,6 +142,11 @@ public class NewspaperZombieModel extends PVZZombieModel<NewspaperZombieEntity> 
 	@Override
 	protected boolean isZombieAngry(NewspaperZombieEntity entity) {
 		return entity.isAngry() || super.isZombieAngry(entity);
+	}
+	
+	@Override
+	public Optional<ModelRenderer> getHandDefence() {
+		return Optional.ofNullable(this.paper);
 	}
 
 	@Override

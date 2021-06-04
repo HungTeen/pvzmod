@@ -86,6 +86,8 @@ public class PoleZombieModel extends PVZZombieModel<PoleZombieEntity> {
 		head.setPos(0.0F, -26.0F, 0.0F);
 		up.addChild(head);
 		head.texOffs(196, 104).addBox(-7.0F, -14.0F, -7.0F, 14.0F, 14.0F, 14.0F, 0.0F, false);
+		
+		this.rightHandOriginAngel = - 90;
 	}
 
 	@Override

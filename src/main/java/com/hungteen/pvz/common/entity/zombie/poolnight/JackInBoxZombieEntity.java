@@ -2,6 +2,7 @@ package com.hungteen.pvz.common.entity.zombie.poolnight;
 
 import com.hungteen.pvz.common.capability.CapabilityHandler;
 import com.hungteen.pvz.common.entity.zombie.PVZZombieEntity;
+import com.hungteen.pvz.common.entity.zombie.body.ZombieDropBodyEntity;
 import com.hungteen.pvz.common.misc.damage.PVZDamageSource;
 import com.hungteen.pvz.data.loot.PVZLoot;
 import com.hungteen.pvz.register.SoundRegister;
@@ -85,6 +86,17 @@ public class JackInBoxZombieEntity extends PVZZombieEntity implements IHasMetal 
 		    	}
 		    }
 		}
+	}
+	
+	@Override
+	public boolean canLostHead() {
+		return super.canLostHead() && ! this.hasBox();
+	}
+	
+	@Override
+	protected void setBodyStates(ZombieDropBodyEntity body) {
+		super.setBodyStates(body);
+		body.setHandDefence(this.hasBox());
 	}
 	
 	private boolean canExplode() {

@@ -1,7 +1,13 @@
 package com.hungteen.pvz.client.model.entity.zombie.poolnight;
 
+import java.util.Optional;
+
 import com.hungteen.pvz.client.model.entity.zombie.PVZZombieModel;
+import com.hungteen.pvz.common.entity.zombie.body.ZombieDropBodyEntity;
+import com.hungteen.pvz.common.entity.zombie.body.ZombieDropBodyEntity.BodyType;
 import com.hungteen.pvz.common.entity.zombie.poolnight.JackInBoxZombieEntity;
+import com.mojang.blaze3d.matrix.MatrixStack;
+import com.mojang.blaze3d.vertex.IVertexBuilder;
 
 import net.minecraft.client.renderer.model.ModelRenderer;
 import net.minecraft.util.math.MathHelper;
@@ -17,9 +23,9 @@ public class JackInBoxZombieModel extends PVZZombieModel<JackInBoxZombieEntity> 
 	private final ModelRenderer right_leg;
 	private final ModelRenderer up;
 	private final ModelRenderer body;
-	private final ModelRenderer left_arm;
+	private final ModelRenderer left_hand;
 	private final ModelRenderer bone;
-	private final ModelRenderer right_arm;
+	private final ModelRenderer right_hand;
 	private final ModelRenderer head;
 	private final ModelRenderer box;
 	private final ModelRenderer jack;
@@ -28,6 +34,7 @@ public class JackInBoxZombieModel extends PVZZombieModel<JackInBoxZombieEntity> 
 	private final ModelRenderer h3;
 	private final ModelRenderer h2;
 	private final ModelRenderer top;
+	private final ModelRenderer cube_r1;
 
 	public JackInBoxZombieModel() {
 		texWidth = 128;
@@ -59,41 +66,30 @@ public class JackInBoxZombieModel extends PVZZombieModel<JackInBoxZombieEntity> 
 		up.addChild(body);
 		body.texOffs(51, 0).addBox(-8.0F, -24.0F, -5.0F, 16.0F, 24.0F, 10.0F, 0.0F, false);
 
-		left_arm = new ModelRenderer(this);
-		left_arm.setPos(12.0F, -20.0F, 0.0F);
-		up.addChild(left_arm);
-		setRotationAngle(left_arm, -0.5236F, 0.0F, 0.0F);
-		left_arm.texOffs(21, 31).addBox(-4.0F, -4.0F, -3.0F, 6.0F, 26.0F, 6.0F, 0.0F, false);
+		left_hand = new ModelRenderer(this);
+		left_hand.setPos(12.0F, -20.0F, 0.0F);
+		up.addChild(left_hand);
+		setRotationAngle(left_hand, -0.5236F, 0.0F, 0.0F);
+		left_hand.texOffs(21, 31).addBox(-4.0F, -4.0F, -3.0F, 6.0F, 26.0F, 6.0F, 0.0F, false);
 
 		bone = new ModelRenderer(this);
 		bone.setPos(2.0F, 21.0F, 0.0F);
-		left_arm.addChild(bone);
+		left_hand.addChild(bone);
 		setRotationAngle(bone, -1.0472F, 0.0F, 0.0F);
 		bone.texOffs(1, 40).addBox(0.0F, 0.0F, -1.0F, 2.0F, 1.0F, 7.0F, 0.0F, false);
 
-		right_arm = new ModelRenderer(this);
-		right_arm.setPos(-12.0F, -20.0F, 0.0F);
-		up.addChild(right_arm);
-		setRotationAngle(right_arm, -1.5708F, 0.0F, 0.0F);
-		right_arm.texOffs(48, 35).addBox(-2.0F, -4.0F, -4.0F, 6.0F, 26.0F, 6.0F, 0.0F, false);
-		right_arm.texOffs(2, 49).addBox(0.0F, 22.0F, 1.0F, 2.0F, 1.0F, 6.0F, 0.0F, false);
-
-		head = new ModelRenderer(this);
-		head.setPos(0.0F, -24.0F, 0.0F);
-		up.addChild(head);
-		head.texOffs(0, 68).addBox(-7.0F, -14.0F, -7.0F, 14.0F, 14.0F, 14.0F, 0.0F, false);
-
 		box = new ModelRenderer(this);
-		box.setPos(0.0F, 0.0F, 0.0F);
-		up.addChild(box);
-		box.texOffs(1, 97).addBox(-3.0F, -4.0F, -21.0F, 12.0F, 1.0F, 12.0F, 0.0F, false);
-		box.texOffs(75, 35).addBox(-3.0F, -14.0F, -21.0F, 1.0F, 10.0F, 12.0F, 0.0F, false);
-		box.texOffs(75, 59).addBox(8.0F, -14.0F, -21.0F, 1.0F, 10.0F, 12.0F, 0.0F, false);
-		box.texOffs(50, 69).addBox(-2.0F, -14.0F, -21.0F, 10.0F, 10.0F, 1.0F, 0.0F, false);
-		box.texOffs(58, 83).addBox(-2.0F, -14.0F, -10.0F, 10.0F, 10.0F, 1.0F, 0.0F, false);
+		box.setPos(-10.0F, 27.0F, -3.0F);
+		left_hand.addChild(box);
+		setRotationAngle(box, 0.5236F, 0.0F, 0.0F);
+		box.texOffs(1, 97).addBox(-5.0F, -1.0F, -7.0F, 12.0F, 1.0F, 12.0F, 0.0F, false);
+		box.texOffs(75, 35).addBox(-5.0F, -11.0F, -7.0F, 1.0F, 10.0F, 12.0F, 0.0F, false);
+		box.texOffs(75, 59).addBox(6.0F, -11.0F, -7.0F, 1.0F, 10.0F, 12.0F, 0.0F, false);
+		box.texOffs(50, 69).addBox(-4.0F, -11.0F, -7.0F, 10.0F, 10.0F, 1.0F, 0.0F, false);
+		box.texOffs(58, 83).addBox(-4.0F, -11.0F, 4.0F, 10.0F, 10.0F, 1.0F, 0.0F, false);
 
 		jack = new ModelRenderer(this);
-		jack.setPos(3.0F, -4.0F, -15.0F);
+		jack.setPos(1.0F, -1.0F, -1.0F);
 		box.addChild(jack);
 		setRotationAngle(jack, 0.0873F, 0.0F, 0.0F);
 		jack.texOffs(106, 1).addBox(-1.0F, -18.0F, -1.0F, 2.0F, 18.0F, 2.0F, 0.0F, false);
@@ -123,36 +119,74 @@ public class JackInBoxZombieModel extends PVZZombieModel<JackInBoxZombieEntity> 
 		h2.texOffs(104, 50).addBox(-1.0F, -4.0F, -1.0F, 1.0F, 4.0F, 2.0F, 0.0F, false);
 
 		top = new ModelRenderer(this);
-		top.setPos(3.0F, -14.0F, -20.0F);
+		top.setPos(1.0F, -11.0F, -6.0F);
 		box.addChild(top);
-		top.texOffs(2, 112).addBox(-5.0F, -1.0F, 0.0F, 10.0F, 1.0F, 11.0F, 0.0F, false);
+		setRotationAngle(top, 2.0944F, 0.0F, 0.0F);
+		
+
+		cube_r1 = new ModelRenderer(this);
+		cube_r1.setPos(-3.0F, 0.0F, 0.0F);
+		top.addChild(cube_r1);
+		setRotationAngle(cube_r1, -2.0944F, 0.0F, 0.0F);
+		cube_r1.texOffs(2, 112).addBox(-2.0F, -1.0F, 0.0F, 10.0F, 1.0F, 11.0F, 0.0F, false);
+
+		right_hand = new ModelRenderer(this);
+		right_hand.setPos(-12.0F, -20.0F, 0.0F);
+		up.addChild(right_hand);
+		setRotationAngle(right_hand, -0.6981F, 0.0F, 0.0F);
+		right_hand.texOffs(48, 35).addBox(-2.0F, -4.0F, -4.0F, 6.0F, 26.0F, 6.0F, 0.0F, false);
+		right_hand.texOffs(2, 49).addBox(0.0F, 22.0F, 1.0F, 2.0F, 1.0F, 6.0F, 0.0F, false);
+
+		head = new ModelRenderer(this);
+		head.setPos(0.0F, -24.0F, 0.0F);
+		up.addChild(head);
+		head.texOffs(0, 68).addBox(-7.0F, -14.0F, -7.0F, 14.0F, 14.0F, 14.0F, 0.0F, false);
+		
+		this.rightHandOriginAngel = - 30;
 	}
 
 	@Override
 	public void setupAnim(JackInBoxZombieEntity entity, float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch){
+		super.setupAnim(entity, limbSwing, limbSwingAmount, ageInTicks, netHeadYaw, headPitch);
 		if(entity.getAnimTick() <= JackInBoxZombieEntity.MIN_ANIM_TICK) {
 			int tick = JackInBoxZombieEntity.MIN_ANIM_TICK - entity.getAnimTick();
-			this.top.xRot = tick * 1.1f / 10f;
+			this.top.xRot = 2.0944F - tick / 10f;
 		} else {
-			this.top.xRot = 0;
-			this.right_arm.xRot = MathHelper.sin(ageInTicks) / 4f - 1f;
+			this.top.xRot = 2.0944F;
+			this.right_hand.xRot = MathHelper.sin(ageInTicks) / 4f - 1f;
 		}
-		this.head.yRot = netHeadYaw / (180F / (float)Math.PI);
-        this.head.xRot = headPitch / (180F / (float)Math.PI);
-        this.right_leg.xRot = MathHelper.cos(limbSwing * 0.6662F) * 1.4F * limbSwingAmount;
-        this.left_leg.xRot = MathHelper.cos(limbSwing * 0.6662F + (float)Math.PI) * 1.4F * limbSwingAmount;
+	}
+	
+	@Override
+	public void renderBody(ZombieDropBodyEntity entity, MatrixStack stack, IVertexBuilder buffer, int packedLight,
+			int packedOverlay, BodyType type) {
+		if(type == BodyType.HAND) {
+			this.box.visible = false;
+		}
+		super.renderBody(entity, stack, buffer, packedLight, packedOverlay, type);
+	}
+	
+	@Override
+	public void updateFreeParts(JackInBoxZombieEntity entity) {
+		super.updateFreeParts(entity);
+		this.isLeftHandFree = ! entity.hasMetal();
 		this.jack.visible = (entity.getAnimTick() < JackInBoxZombieEntity.MIN_ANIM_TICK / 4);
 		this.box.visible = entity.hasMetal();
+	}
+	
+	@Override
+	public Optional<ModelRenderer> getHandDefence() {
+		return super.getHandDefence();
 	}
 
 	@Override
 	public ModelRenderer getZombieLeftHand() {
-		return this.left_arm;
+		return this.left_hand;
 	}
 
 	@Override
 	public ModelRenderer getZombieRightHand() {
-		return this.right_arm;
+		return this.right_hand;
 	}
 
 	@Override

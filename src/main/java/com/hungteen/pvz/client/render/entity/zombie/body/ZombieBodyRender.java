@@ -41,26 +41,26 @@ public class ZombieBodyRender extends EntityRenderer<ZombieDropBodyEntity> {
 	    matrixStackIn.scale(sz, sz, sz); 
 		matrixStackIn.translate(0.0, (part != BodyType.BODY ? -1.501 : -1.7), 0.0);
 		ZombieRenderHandler.getZombieTex(zombie).ifPresent(tex -> {
-//		    if(part == BodyType.BODY) {
-//		    	ZombieModelHandler.getPart2Model(zombie).ifPresent(m -> {
-//		    		final IVertexBuilder ivertexbuilder = bufferIn.getBuffer(m.renderType(tex));
-//			        m.renderBody(matrixStackIn, ivertexbuilder, packedLightIn, OverlayTexture.NO_OVERLAY, part);
-//			        m.tickPartAnim(entityIn, part, 0, 0, entityIn.tickCount + partialTicks, 0, 0);
-//			    });
-//		    } else {
+			if(part != BodyType.BODY) {
 			    ZombieModelHandler.getPart1Model(zombie).ifPresent(m -> {
-			    	final IVertexBuilder ivertexbuilder = bufferIn.getBuffer(m.renderType(tex));
-			    	m.tickPartAnim(entityIn, part, 0, 0, entityIn.tickCount + partialTicks, 0, 0);
-			        m.renderBody(matrixStackIn, ivertexbuilder, packedLightIn, OverlayTexture.NO_OVERLAY, part);
+			        final IVertexBuilder ivertexbuilder = bufferIn.getBuffer(m.getZombieModel().renderType(tex));
+			        m.tickPartAnim(entityIn, part, 0, 0, entityIn.tickCount + partialTicks, 0, 0);
+			        m.renderBody(entityIn, matrixStackIn, ivertexbuilder, packedLightIn, OverlayTexture.NO_OVERLAY, part);
 			    });
-//		    }
+			} else {
+				ZombieModelHandler.getPart2Model(zombie).ifPresent(m -> {
+			        final IVertexBuilder ivertexbuilder = bufferIn.getBuffer(m.getZombieModel().renderType(tex));
+			        m.tickPartAnim(entityIn, part, 0, 0, entityIn.tickCount + partialTicks, 0, 0);
+			        m.renderBody(entityIn, matrixStackIn, ivertexbuilder, packedLightIn, OverlayTexture.NO_OVERLAY, part);
+			    });
+			}
 		});
 		matrixStackIn.popPose();
 	}
 
 	@Override
 	public ResourceLocation getTextureLocation(ZombieDropBodyEntity p_110775_1_) {
-		return null;
+		return null;//no use
 	}
  
 }

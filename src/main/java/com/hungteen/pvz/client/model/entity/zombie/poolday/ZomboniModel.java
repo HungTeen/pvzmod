@@ -1,5 +1,8 @@
 package com.hungteen.pvz.client.model.entity.zombie.poolday;
 
+import com.hungteen.pvz.client.model.entity.zombie.IZombieModel;
+import com.hungteen.pvz.common.entity.zombie.body.ZombieDropBodyEntity;
+import com.hungteen.pvz.common.entity.zombie.body.ZombieDropBodyEntity.BodyType;
 import com.hungteen.pvz.common.entity.zombie.poolday.ZomboniEntity;
 import com.mojang.blaze3d.matrix.MatrixStack;
 import com.mojang.blaze3d.vertex.IVertexBuilder;
@@ -13,7 +16,7 @@ import net.minecraft.util.math.MathHelper;
 // Paste this class into your mod and generate all required imports
 
 
-public class ZomboniModel extends EntityModel<ZomboniEntity> {
+public class ZomboniModel extends EntityModel<ZomboniEntity> implements IZombieModel<ZomboniEntity>{
 	private final ModelRenderer total;
 	private final ModelRenderer car;
 	private final ModelRenderer lunzi;
@@ -398,4 +401,20 @@ public class ZomboniModel extends EntityModel<ZomboniEntity> {
 		modelRenderer.yRot = y;
 		modelRenderer.zRot = z;
 	}
+
+	@Override
+	public void tickPartAnim(ZombieDropBodyEntity entity, BodyType type, float limbSwing, float limbSwingAmount,
+			float ageInTicks, float netHeadYaw, float headPitch) {
+	}
+
+	@Override
+	public void renderBody(ZombieDropBodyEntity entity, MatrixStack stack, IVertexBuilder buffer, int packedLight,
+			int packedOverlay, BodyType type) {
+	}
+
+	@Override
+	public EntityModel<ZomboniEntity> getZombieModel() {
+		return this;
+	}
+
 }

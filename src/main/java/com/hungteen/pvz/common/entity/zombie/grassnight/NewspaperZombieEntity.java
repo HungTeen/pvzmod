@@ -1,6 +1,7 @@
 package com.hungteen.pvz.common.entity.zombie.grassnight;
 
 import com.hungteen.pvz.common.entity.zombie.base.DefenceZombieEntity;
+import com.hungteen.pvz.common.entity.zombie.body.ZombieDropBodyEntity;
 import com.hungteen.pvz.common.entity.zombie.part.PVZHealthPartEntity;
 import com.hungteen.pvz.register.SoundRegister;
 import com.hungteen.pvz.utils.EntityUtil;
@@ -65,6 +66,17 @@ public class NewspaperZombieEntity extends DefenceZombieEntity {
 		this.setAngry(is);
 		this.getAttribute(Attributes.MOVEMENT_SPEED).setBaseValue(is ? ZombieUtil.LITTLE_FAST : ZombieUtil.LITTLE_SLOW);
 		this.getAttribute(Attributes.ATTACK_DAMAGE).setBaseValue(is ? ZombieUtil.LOW : ZombieUtil.LITTLE_LOW);
+	}
+	
+	@Override
+	public boolean canLostHand() {
+		return super.canLostHand() && this.isAngry();
+	}
+	
+	@Override
+	protected void setBodyStates(ZombieDropBodyEntity body) {
+		super.setBodyStates(body);
+		body.setHandDefence(! this.isAngry());
 	}
 	
 	@Override
