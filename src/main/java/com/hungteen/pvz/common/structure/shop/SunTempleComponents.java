@@ -59,7 +59,7 @@ public class SunTempleComponents {
 				MutableBoundingBox sbb) {
 			if(function.equals("spawn")){
 				SunDaveEntity dave = EntityRegister.SUN_DAVE.get().create(worldIn.getLevel());
-				EntityUtil.onMobEntitySpawn(worldIn, dave, pos.above());
+				EntityUtil.onEntitySpawn(worldIn, dave, pos.above());
 			} else if(function.equals("chest")) {
 				this.createChest(worldIn, sbb, rand, pos.above(), PVZLoot.BUCKET_HOUSE_CHEST, null);
 				worldIn.setBlock(pos, Blocks.SPAWNER.defaultBlockState(), 2);

@@ -59,7 +59,6 @@ public class ShooterAttackGoal extends Goal{
 
 	@Override
 	public void tick() {
-//		System.out.println(this.checkTarget());
 		++ this.attackTime;
 		if(this.attackTime >= this.shooter.getShootCD()) {
 			this.attackTime = 0;
@@ -71,10 +70,9 @@ public class ShooterAttackGoal extends Goal{
 	}
 	
 	private boolean checkTarget() {
-		if(EntityUtil.checkCanEntityTarget(this.attacker, this.target)) {
+		if(EntityUtil.checkCanEntityBeAttack(this.attacker, this.target)) {
 			if(this.attacker instanceof CatTailEntity) {
-//				System.out.println(EntityUtil.checkCanSeeEntity(this.attacker, this.target));
-				return EntityUtil.checkCanSeeEntity(this.attacker, this.target);
+				return EntityUtil.canSeeEntity(this.attacker, this.target);
 			}
 			return this.attacker.getSensing().canSee(this.target);
 		}

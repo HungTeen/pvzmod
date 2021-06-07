@@ -54,6 +54,9 @@ public class CoffinEntity extends PVZZombieEntity {
 		this.canBeFrozen = false;
 		this.canBeStealByBungee = false;
 		this.maxDeathTime = 0;
+		this.canLostHand = false;
+		this.canLostHead = false;
+		this.canBeRemove = false;
 	}
 	
 	@Override
@@ -74,7 +77,7 @@ public class CoffinEntity extends PVZZombieEntity {
 			ILivingEntityData spawnDataIn, CompoundNBT dataTag) {
 		if (! level.isClientSide) {
 			EntityUtil.playSound(this, SoundRegister.DIRT_RISE.get());
-			for (Entity target : EntityUtil.getEntityAttackableTarget(this,
+			for (Entity target : EntityUtil.getTargetableEntities(this,
 					EntityUtil.getEntityAABB(this, 50, 50))) {
 				ZombieHandEntity hand = EntityRegister.ZOMBIE_HAND.get().create(level);
 				hand.setOwner(this);
@@ -98,7 +101,7 @@ public class CoffinEntity extends PVZZombieEntity {
 					this.setGuardStateById(i, 1);
 					MournerZombieEntity zombie = EntityRegister.MOURNER_ZOMBIE.get().create(level);
 					zombie.setRightShake((i & 1) == 0);
-					EntityUtil.onMobEntitySpawn(level, zombie, this.getTarget() == null ? this.blockPosition() : this.getTarget().blockPosition());
+					EntityUtil.onEntitySpawn(level, zombie, this.getTarget() == null ? this.blockPosition() : this.getTarget().blockPosition());
 				}
 			}
 		}
@@ -129,13 +132,13 @@ public class CoffinEntity extends PVZZombieEntity {
 	protected void onZombieRemove() {
 		if(!level.isClientSide) {
 		    NobleZombieEntity boss = EntityRegister.NOBLE_ZOMBIE.get().create(level);
-		    EntityUtil.onMobEntitySpawn(level, boss, blockPosition());
+		    EntityUtil.onEntitySpawn(level, boss, blockPosition());
 		}
 	}
 
 	@Override
 	protected boolean shouldCollideWithEntity(LivingEntity target) {
-		return EntityUtil.checkCanEntityAttack(this, target);
+		return EntityUtil.canTargetEntity(this, target);
 	}
 
 	@Override
@@ -212,11 +215,6 @@ public class CoffinEntity extends PVZZombieEntity {
 	@Override
 	public float getLife() {
 		return 1000;
-	}
-
-	@Override
-	public boolean canZombieBeRemoved() {
-		return false;
 	}
 
 	@Override

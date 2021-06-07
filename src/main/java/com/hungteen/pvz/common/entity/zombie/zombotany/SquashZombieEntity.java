@@ -18,6 +18,7 @@ public class SquashZombieEntity extends AbstractZombotanyEntity {
 
 	public SquashZombieEntity(EntityType<? extends MonsterEntity> type, World worldIn) {
 		super(type, worldIn);
+		this.canLostHead = false;
 	}
 
 	@Override
@@ -35,7 +36,7 @@ public class SquashZombieEntity extends AbstractZombotanyEntity {
 				SquashEntity squash = EntityRegister.SQUASH.get().create(level);
 				squash.setCharmed(! this.isCharmed());
 				squash.setTarget(target);
-				EntityUtil.onMobEntitySpawn(level, squash, blockPosition().above(2));
+				EntityUtil.onEntitySpawn(level, squash, blockPosition().above(2));
 				this.remove();
 			}
 		}

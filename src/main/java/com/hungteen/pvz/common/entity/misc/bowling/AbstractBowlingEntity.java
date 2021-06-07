@@ -96,7 +96,7 @@ public abstract class AbstractBowlingEntity extends AbstractOwnerEntity {
 		if(this.level.isClientSide) return ;
 		if(this.bowlingTick > 0) return ;
 		List<Entity> list = this.level.getEntitiesOfClass(Entity.class, this.getBoundingBox(), (target) -> {
-			return EntityUtil.checkCanEntityAttack(this, target);
+			return EntityUtil.canTargetEntity(this, target);
 		});
 		if(! list.isEmpty()) {
 			this.dealDamageTo(list.get(0));
@@ -152,7 +152,7 @@ public abstract class AbstractBowlingEntity extends AbstractOwnerEntity {
 	}
 	
 	protected boolean shouldHit(Entity target) {
-		return EntityUtil.checkCanEntityAttack(this.getOwner(), target);
+		return EntityUtil.canTargetEntity(this.getOwner(), target);
 	}
 	
 	/**

@@ -36,7 +36,7 @@ public class IceShroomEntity extends PlantBomberEntity implements IIcePlant{
 			float len = getAttackRange();
 			AxisAlignedBB aabb=EntityUtil.getEntityAABB(this, len, len);
 			int cnt = 0;
-			for(LivingEntity entity : EntityUtil.getEntityTargetableEntity(this, aabb)) {
+			for(LivingEntity entity : EntityUtil.getTargetableLivings(this, aabb)) {
 				 PVZDamageSource source = PVZDamageSource.causeIceDamage(this, this);
 				 source.addEffect(getColdEffect());
 				 source.addEffect(getFrozenEffect());

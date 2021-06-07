@@ -16,11 +16,6 @@ public class NormalZombieEntity extends PVZZombieEntity {
 	}
 	
 	@Override
-	protected float getWaterSlowDown() {
-		return 0.91f;
-	}
-
-	@Override
 	protected PVZZombieEntity.Type getSpawnType() {
 		PVZZombieEntity.Type type = super.getSpawnType();
 		if(type == PVZZombieEntity.Type.NORMAL) {
@@ -38,7 +33,13 @@ public class NormalZombieEntity extends PVZZombieEntity {
 	}
 	
 	@Override
+	protected float getWaterSlowDown() {
+		return 0.91f;
+	}
+	
+	@Override
 	public Zombies getZombieEnumName() {
 		return Zombies.NORMAL_ZOMBIE;
 	}
+
 }

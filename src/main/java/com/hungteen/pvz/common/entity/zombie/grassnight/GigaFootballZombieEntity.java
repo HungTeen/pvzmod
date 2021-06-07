@@ -65,13 +65,12 @@ public class GigaFootballZombieEntity extends FootballZombieEntity {
 	
 	@Override
 	protected boolean shouldCollideWithEntity(LivingEntity target) {
-		return EntityUtil.checkCanEntityAttack(this, target);
+		return EntityUtil.canTargetEntity(this, target);
 	}
 	
 	@Override
 	protected void pushEntities() {
-		double dd = this.getCollideWidthOffset();
-		List<LivingEntity> list = this.level.getEntitiesOfClass(LivingEntity.class, this.getBoundingBox().inflate(dd, 0, dd));
+		List<LivingEntity> list = this.level.getEntitiesOfClass(LivingEntity.class, this.getBoundingBox());
 		if (!list.isEmpty()) {
 			int i = this.level.getGameRules().getInt(GameRules.RULE_MAX_ENTITY_CRAMMING);
 			if (i > 0 && list.size() > i - 1 && this.random.nextInt(4) == 0) {
@@ -110,7 +109,7 @@ public class GigaFootballZombieEntity extends FootballZombieEntity {
 	}
 	
 	@Override
-	protected boolean canZombieTarget(LivingEntity target) {
+	protected boolean canZombieTarget(Entity target) {
 		if(target instanceof SpikeRockEntity) return true;
 		return super.canZombieTarget(target);
 	}

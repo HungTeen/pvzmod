@@ -46,7 +46,7 @@ public class PVZBlockEvents {
 	               }
 	               CoffinEntity coffin = EntityRegister.COFFIN.get().create(worldIn);
 	               BlockPos spawnPos = blockpattern$patternhelper.getBlock(1, 2, 0).getPos();
-	               EntityUtil.onMobEntitySpawn(worldIn, coffin, spawnPos);
+	               EntityUtil.onEntitySpawn(worldIn, coffin, spawnPos);
 	               coffin.moveTo(spawnPos.getX() + 0.5, spawnPos.getY() + 0.55, spawnPos.getZ() + 0.5, blockpattern$patternhelper.getForwards().getAxis() == Direction.Axis.X ? 0.0F : 90.0F, 0.0F);
 	               coffin.yBodyRot = blockpattern$patternhelper.getForwards().getAxis() == Direction.Axis.X ? 0.0F : 90.0F;
 	               for(ServerPlayerEntity serverplayerentity : worldIn.getEntitiesOfClass(ServerPlayerEntity.class, coffin.getBoundingBox().inflate(50.0D))) {

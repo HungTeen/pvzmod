@@ -2,6 +2,8 @@ package com.hungteen.pvz.utils;
 
 import java.util.List;
 
+import com.hungteen.pvz.PVZMod;
+import com.hungteen.pvz.api.enums.PVZGroupType;
 import com.hungteen.pvz.client.gui.search.SearchOption;
 import com.hungteen.pvz.common.capability.CapabilityHandler;
 import com.hungteen.pvz.common.capability.player.IPlayerDataCapability;
@@ -104,6 +106,19 @@ public class PlayerUtil {
 			return amount > 0;
 		}
 		return false;
+	}
+	
+	/**
+	 * get player's group.
+	 * {@link EntityUtil#getEntityGroup(net.minecraft.entity.Entity)}
+	 */
+	public static PVZGroupType getPlayerGroupType(ServerPlayerEntity player) {
+		final IPlayerDataCapability cap = player.getCapability(CapabilityHandler.PLAYER_DATA_CAPABILITY).orElse(null);
+		if(cap != null) {
+			return PVZGroupType.getGroup(cap.getPlayerData().getPlayerStats().getPlayerStats(Resources.GROUP_TYPE));
+		}
+		PVZMod.LOGGER.warn(player.getName().toString() + " get Group Error !");
+		return PVZGroupType.getGroup(ConfigUtil.getPlayerInitialGroup());
 	}
 	
 	public static void playClientSound(PlayerEntity player, int id) {

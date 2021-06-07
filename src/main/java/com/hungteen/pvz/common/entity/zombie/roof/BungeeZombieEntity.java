@@ -52,6 +52,8 @@ public class BungeeZombieEntity extends PVZZombieEntity {
 		this.canBeButter = false;
 		this.canBeFrozen = false;
 		this.canBeStealByBungee = false;
+		this.canLostHand = false;
+		this.canLostHead = false;
 	}
 	
 	@Override
@@ -199,7 +201,7 @@ public class BungeeZombieEntity extends PVZZombieEntity {
 	}
 	
 	@Override
-	public boolean checkCanZombieTarget(LivingEntity target) {
+	public boolean checkCanZombieTarget(Entity target) {
 		if(! canBungeeSteal(target)) return false;
 		return super.checkCanZombieTarget(target);
 	}
@@ -242,7 +244,7 @@ public class BungeeZombieEntity extends PVZZombieEntity {
 		int pos = this.getRandom().nextInt(ZOMBIES.length);
 		Zombies type = ZOMBIES[pos];
 		PVZZombieEntity zombie = ZombieUtil.getZombieEntity(level, type);
-		EntityUtil.onMobEntitySpawn(level, zombie, blockPosition());
+		EntityUtil.onEntitySpawn(level, zombie, blockPosition());
 		zombie.startRiding(this);
 		this.setStealTarget(zombie);
 	}
@@ -441,7 +443,7 @@ public class BungeeZombieEntity extends PVZZombieEntity {
 			if (entity == null || ! entity.isAlive()) {
 				return false;
 			}
-			if (EntityUtil.checkCanEntityTarget(mob, entity) && entity != this.mob) {
+			if (EntityUtil.canTargetEntity(mob, entity) && entity != this.mob) {
 				if (this.checkOther(entity)) {
 					this.mob.setTarget(entity);
 					return true;

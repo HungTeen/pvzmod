@@ -45,11 +45,8 @@ public class PogoZombieEntity extends PVZZombieEntity implements IHasMetal {
 	}
 	
 	@Override
-	public boolean checkCanZombieBreakBlock() {
-		if(super.checkCanZombieBreakBlock()) {
-			return ! this.hasMetal();
-		}
-		return false;
+	public boolean canBreakPlantBlock() {
+		return super.canBreakPlantBlock() && ! this.hasMetal();
 	}
 	
 	@Override

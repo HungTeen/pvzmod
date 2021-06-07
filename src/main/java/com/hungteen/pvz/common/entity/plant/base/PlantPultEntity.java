@@ -7,6 +7,7 @@ import com.hungteen.pvz.utils.EntityUtil;
 import com.hungteen.pvz.utils.interfaces.IPult;
 
 import net.minecraft.entity.CreatureEntity;
+import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.ai.attributes.Attributes;
@@ -51,7 +52,7 @@ public abstract class PlantPultEntity extends PVZPlantEntity implements IPult {
 	
 	protected void superAttack() {
 		float range = this.getSuperRange();
-		EntityUtil.getEntityTargetableEntity(this, EntityUtil.getEntityAABB(this, range, range)).forEach((target) -> {
+		EntityUtil.getTargetableLivings(this, EntityUtil.getEntityAABB(this, range, range)).forEach((target) -> {
 			this.doSuperAttackToTarget(target);
 		});
 	}
@@ -64,12 +65,12 @@ public abstract class PlantPultEntity extends PVZPlantEntity implements IPult {
 	}
 	
 	@Override
-	protected boolean canPlantTarget(LivingEntity entity) {
+	protected boolean canPlantTarget(Entity entity) {
 		if(entity instanceof BalloonZombieEntity) return true;
 		return this.checkY(entity) && super.canPlantTarget(entity);
 	}
 	
-	protected boolean checkY(LivingEntity target) {
+	protected boolean checkY(Entity target) {
 		return this.getY() + 10 >= target.getY() + target.getBbHeight();
 	}
 	

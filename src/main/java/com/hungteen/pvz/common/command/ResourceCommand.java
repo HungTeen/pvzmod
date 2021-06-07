@@ -3,7 +3,6 @@ package com.hungteen.pvz.common.command;
 import java.util.Collection;
 
 import com.hungteen.pvz.common.capability.CapabilityHandler;
-import com.hungteen.pvz.utils.PlayerUtil;
 import com.hungteen.pvz.utils.enums.Resources;
 import com.mojang.brigadier.CommandDispatcher;
 import com.mojang.brigadier.arguments.IntegerArgumentType;
@@ -27,6 +26,9 @@ public class ResourceCommand {
         	    .then(Commands.literal("query").then(Commands.literal(res.toString().toLowerCase()).executes((command)->{
     			    return queryPlayerResource(command.getSource(), EntityArgument.getPlayers(command, "targets"), res);
     		    })))
+        	    .then(Commands.literal("set").then(Commands.literal(res.toString().toLowerCase()).then(Commands.argument("amount", IntegerArgumentType.integer()).executes((command)->{
+    			    return setPlayerResource(command.getSource(), EntityArgument.getPlayers(command, "targets"), res, IntegerArgumentType.getInteger(command, "amount"));
+    		    }))))
             );
         }
         dispatcher.register(builder);
@@ -34,15 +36,28 @@ public class ResourceCommand {
 	
 	public static int addPlayerResource(CommandSource source,Collection<? extends ServerPlayerEntity> targets,Resources res,int num) {
 		for(ServerPlayerEntity player:targets) {
-		    PlayerUtil.addPlayerStats(player, res, num);
+			player.getCapability(CapabilityHandler.PLAYER_DATA_CAPABILITY).ifPresent(l -> {
+				l.getPlayerData().getPlayerStats().addPlayerStats(res, num);
+		    	source.sendSuccess(new StringTextComponent(res.getText().getString() + ":" + l.getPlayerData().getPlayerStats().getPlayerStats(res)), true);
+		    });
 		}
 		return targets.size();
 	}
 	
 	public static int queryPlayerResource(CommandSource source,Collection<? extends ServerPlayerEntity> targets,Resources res) {
 		for(ServerPlayerEntity player:targets) {
-			player.getCapability(CapabilityHandler.PLAYER_DATA_CAPABILITY).ifPresent((l)->{
-		    	source.sendSuccess(new StringTextComponent(""+l.getPlayerData().getPlayerStats().getPlayerStats(res)), true);
+			player.getCapability(CapabilityHandler.PLAYER_DATA_CAPABILITY).ifPresent(l -> {
+		    	source.sendSuccess(new StringTextComponent(res.getText().getString() + ":" + l.getPlayerData().getPlayerStats().getPlayerStats(res)), false);
+		    });
+		}
+		return targets.size();
+	}
+	
+	public static int setPlayerResource(CommandSource source, Collection<? extends ServerPlayerEntity> targets, Resources res, int num) {
+		for(ServerPlayerEntity player:targets) {
+			player.getCapability(CapabilityHandler.PLAYER_DATA_CAPABILITY).ifPresent(l -> {
+				l.getPlayerData().getPlayerStats().setPlayerStats(res, num);
+		    	source.sendSuccess(new StringTextComponent(res.getText().getString() + ":" + l.getPlayerData().getPlayerStats().getPlayerStats(res)), true);
 		    });
 		}
 		return targets.size();

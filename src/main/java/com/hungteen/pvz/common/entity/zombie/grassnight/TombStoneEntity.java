@@ -94,7 +94,7 @@ public class TombStoneEntity extends PVZZombieEntity {
 		PVZZombieEntity zombie = ZombieUtil.getZombieEntity(level, GROUND_ZOMBIES[pos]);
 		if(zombie != null) {
 			zombie.setZombieRising();
-			EntityUtil.onMobEntitySpawn(level, zombie, blockPosition());
+			EntityUtil.onEntitySpawn(level, zombie, blockPosition());
 		}
 	}
 	

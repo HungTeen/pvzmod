@@ -80,7 +80,7 @@ public class CactusEntity extends PlantShooterEntity {
 	}
 	
 	private void dealThornBackDamage(DamageSource source) {
-		if(EntityUtil.checkCanEntityAttack(this, source.getDirectEntity())) {
+		if(EntityUtil.canTargetEntity(this, source.getDirectEntity())) {
 			float damage = this.getThornDamage();
 			if(this.isCactusPowered()) damage *= 2;
 			source.getDirectEntity().hurt(PVZDamageSource.causeThornDamage(this, this), damage);
@@ -116,7 +116,7 @@ public class CactusEntity extends PlantShooterEntity {
 	}
 	
 	@Override
-	protected boolean canPlantTarget(LivingEntity entity) {
+	protected boolean canPlantTarget(Entity entity) {
 		if(entity instanceof BalloonZombieEntity) return true;
 		return super.canPlantTarget(entity);
 	}

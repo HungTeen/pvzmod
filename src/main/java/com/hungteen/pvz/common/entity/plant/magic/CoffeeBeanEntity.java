@@ -32,7 +32,7 @@ public class CoffeeBeanEntity extends PlantBomberEntity{
 			boolean hasEffect = false;
 			int awakeCnt = 0;
 			for(PVZPlantEntity plant : level.getEntitiesOfClass(PVZPlantEntity.class, aabb)) {
-				if(! EntityUtil.checkCanEntityAttack(this, plant)) {
+				if(! EntityUtil.canTargetEntity(this, plant)) {
 					if(plant.isPlantSleeping()) {
 						++ awakeCnt;
 					}

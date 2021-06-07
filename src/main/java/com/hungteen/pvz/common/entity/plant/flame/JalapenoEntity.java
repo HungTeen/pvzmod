@@ -65,7 +65,7 @@ public class JalapenoEntity extends PlantBomberEntity{
 		double y = pos.getY() + 0.5f;
 		double z = pos.getZ() + 0.5f;
 		AxisAlignedBB aabb = new AxisAlignedBB(x + dx, y + 1, z + dz, x - dx, y - 1, z - dz);
-		for(LivingEntity target : EntityUtil.getEntityTargetableEntity(entity, aabb)) {
+		for(LivingEntity target : EntityUtil.getTargetableLivings(entity, aabb)) {
 			float damage = 0;
 			if(entity instanceof JalapenoEntity) damage = ((JalapenoEntity) entity).getAttackDamage();
 			else if(entity instanceof JalapenoZombieEntity) damage = EntityUtil.getCurrentMaxHealth(target) * 2;

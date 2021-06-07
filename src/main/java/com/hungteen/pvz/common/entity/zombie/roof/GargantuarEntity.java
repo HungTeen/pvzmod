@@ -2,11 +2,11 @@ package com.hungteen.pvz.common.entity.zombie.roof;
 
 import java.util.EnumSet;
 
-import com.hungteen.pvz.common.entity.goal.BreakBlockGoal;
 import com.hungteen.pvz.common.entity.goal.PVZLookRandomlyGoal;
 import com.hungteen.pvz.common.entity.goal.PVZSwimGoal;
+import com.hungteen.pvz.common.entity.goal.ZombieBreakPlantBlockGoal;
 import com.hungteen.pvz.common.entity.goal.attack.PVZZombieAttackGoal;
-import com.hungteen.pvz.common.entity.goal.target.ZombieNearestTargetGoal;
+import com.hungteen.pvz.common.entity.goal.target.PVZNearestTargetGoal;
 import com.hungteen.pvz.common.entity.plant.spear.SpikeRockEntity;
 import com.hungteen.pvz.common.entity.zombie.PVZZombieEntity;
 import com.hungteen.pvz.common.misc.damage.PVZDamageSource;
@@ -50,6 +50,8 @@ public class GargantuarEntity extends PVZZombieEntity {
 	public GargantuarEntity(EntityType<? extends MonsterEntity> type, World worldIn) {
 		super(type, worldIn);
 		this.maxDeathTime = 40;
+		this.canLostHand = false;
+		this.canLostHead = false;
 	}
 	
 	@Override
@@ -76,8 +78,8 @@ public class GargantuarEntity extends PVZZombieEntity {
 		this.goalSelector.addGoal(3, new GargantuarMoveToTargetGoal(this, true));
 		this.goalSelector.addGoal(2, new CrushAttackGoal(this));
 		this.goalSelector.addGoal(1, new ThrowImpGoal(this));
-		this.goalSelector.addGoal(6, new BreakBlockGoal(BlockRegister.FLOWER_POT.get(), this, 1F, 10));
-		this.targetSelector.addGoal(0, new ZombieNearestTargetGoal(this, true, 60, 30));
+		this.goalSelector.addGoal(6, new ZombieBreakPlantBlockGoal(BlockRegister.FLOWER_POT.get(), this, 1F, 10));
+		this.targetSelector.addGoal(0, new PVZNearestTargetGoal(this, false, 60, 30));
 	}
 	
 	@Override
@@ -99,12 +101,12 @@ public class GargantuarEntity extends PVZZombieEntity {
 		ImpEntity imp = EntityRegister.IMP.get().create(level);
 		imp.setDeltaMovement(vec);
 		imp.setCharmed(this.isCharmed());
-		EntityUtil.onMobEntitySpawn(level, imp, blockPosition().offset(0, this.getBbHeight(), 0));
+		EntityUtil.onEntitySpawn(level, imp, blockPosition().offset(0, this.getBbHeight(), 0));
 		this.setHasImp(false);
 	}
 	
 	@Override
-	protected boolean canZombieTarget(LivingEntity target) {
+	protected boolean canZombieTarget(Entity target) {
 		if(target instanceof SpikeRockEntity) return true;
 		return super.canZombieTarget(target);
 	}

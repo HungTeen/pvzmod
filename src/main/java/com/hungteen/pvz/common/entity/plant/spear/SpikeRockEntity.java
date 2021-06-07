@@ -63,7 +63,7 @@ public class SpikeRockEntity extends PVZPlantEntity {
 				this.setAttackTime(this.getAttackTime() - 1);
 			}
 			if(this.isPlantInSuperMode() && this.getSuperTime() % 10 == 0) {
-				for(LivingEntity target : EntityUtil.getEntityTargetableEntity(this, EntityUtil.getEntityAABB(this, 10, 2))) {
+				for(LivingEntity target : EntityUtil.getTargetableLivings(this, EntityUtil.getEntityAABB(this, 10, 2))) {
 					target.hurt(PVZDamageSource.causeSpikeDamage(this, this), this.getAttackDamage() * 2);
 					for(int i = 0; i < 4; ++ i) {
 						EntityUtil.spawnParticle(target, 6);
@@ -98,7 +98,7 @@ public class SpikeRockEntity extends PVZPlantEntity {
             if(! this.level.isClientSide && this.getAttackTime() == 0) {
             	for (int l = 0; l < list.size(); ++l) {
             	    LivingEntity target = list.get(l);
-            	    if(target != this && this.getSpikeNum() >= 0 && EntityUtil.checkCanEntityAttack(this, target)) {
+            	    if(target != this && this.getSpikeNum() >= 0 && EntityUtil.canTargetEntity(this, target)) {
             		    this.spikeNormalAttack(target);
             	    }
                 }
@@ -108,7 +108,7 @@ public class SpikeRockEntity extends PVZPlantEntity {
 	
 	@Override
 	protected boolean shouldCollideWithEntity(LivingEntity target) {
-		if(EntityUtil.checkCanEntityAttack(this, target)) {
+		if(EntityUtil.canTargetEntity(this, target)) {
 			return false;
 		}
 		return super.shouldCollideWithEntity(target);

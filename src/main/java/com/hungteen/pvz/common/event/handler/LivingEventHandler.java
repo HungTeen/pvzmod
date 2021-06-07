@@ -10,7 +10,7 @@ public class LivingEventHandler {
 	public static void handleHurtEffects(LivingEntity target, PVZDamageSource source) {
 		if(source.isDefended()) return ;
 		source.getEffects().forEach((effect) -> {
-			EntityUtil.addEntityPotionEffect(target, effect);
+			EntityUtil.addPotionEffect(target, effect);
 		});
 		
 	}

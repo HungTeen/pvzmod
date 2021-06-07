@@ -1,5 +1,8 @@
 package com.hungteen.pvz.client.model.entity.zombie.roof;
 
+import com.hungteen.pvz.client.model.entity.zombie.IZombieModel;
+import com.hungteen.pvz.common.entity.zombie.body.ZombieDropBodyEntity;
+import com.hungteen.pvz.common.entity.zombie.body.ZombieDropBodyEntity.BodyType;
 import com.hungteen.pvz.common.entity.zombie.roof.CatapultZombieEntity;
 import com.mojang.blaze3d.matrix.MatrixStack;
 import com.mojang.blaze3d.vertex.IVertexBuilder;
@@ -13,7 +16,7 @@ import net.minecraft.util.math.MathHelper;
 // Paste this class into your mod and generate all required imports
 
 
-public class CatapultZombieModel extends EntityModel<CatapultZombieEntity> {
+public class CatapultZombieModel extends EntityModel<CatapultZombieEntity> implements IZombieModel<CatapultZombieEntity>{
 	private final ModelRenderer total;
 	private final ModelRenderer car;
 	private final ModelRenderer lunzi;
@@ -418,5 +421,22 @@ public class CatapultZombieModel extends EntityModel<CatapultZombieEntity> {
 		modelRenderer.xRot = x;
 		modelRenderer.yRot = y;
 		modelRenderer.zRot = z;
+	}
+
+	@Override
+	public void tickPartAnim(ZombieDropBodyEntity entity, BodyType type, float limbSwing, float limbSwingAmount,
+			float ageInTicks, float netHeadYaw, float headPitch) {
+		
+	}
+
+	@Override
+	public void renderBody(ZombieDropBodyEntity entity, MatrixStack stack, IVertexBuilder buffer, int packedLight,
+			int packedOverlay, BodyType type) {
+		
+	}
+
+	@Override
+	public EntityModel<CatapultZombieEntity> getZombieModel() {
+		return this;
 	}
 }

@@ -42,8 +42,8 @@ public class UmbrellaLeafEntity extends PVZPlantEntity{
 	private void tickLeaf() {
 		float range = this.getProtectRange();
 		List<Entity> list = level.getEntitiesOfClass(Entity.class, EntityUtil.getEntityAABB(this, range, 3), (target) -> {
-			if(target instanceof PultBulletEntity) return EntityUtil.checkCanEntityAttack(this, target);
-			if(target instanceof BungeeZombieEntity) return EntityUtil.checkCanEntityAttack(this, target);
+			if(target instanceof PultBulletEntity) return EntityUtil.canTargetEntity(this, target);
+			if(target instanceof BungeeZombieEntity) return EntityUtil.canTargetEntity(this, target);
 			return false;
 		});
 		if(list.isEmpty()) {

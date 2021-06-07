@@ -2,10 +2,11 @@ package com.hungteen.pvz.common.entity.bullet;
 
 import javax.annotation.Nullable;
 
+import com.hungteen.pvz.api.enums.PVZGroupType;
+import com.hungteen.pvz.api.interfaces.IGroupEntity;
 import com.hungteen.pvz.common.entity.misc.AbstractOwnerEntity;
 import com.hungteen.pvz.common.entity.plant.base.PlantShooterEntity;
 import com.hungteen.pvz.utils.EntityUtil;
-import com.hungteen.pvz.utils.interfaces.IGroupEntity;
 
 import it.unimi.dsi.fastutil.ints.IntOpenHashSet;
 import net.minecraft.block.Block;
@@ -147,11 +148,11 @@ public abstract class AbstractBulletEntity extends AbstractOwnerEntity implement
 	}
 	
 	protected boolean checkCanAttack(Entity target){
-		return EntityUtil.checkCanEntityAttack(this, target);
+		return EntityUtil.canTargetEntity(this, target);
 	}
 	
 	protected boolean shouldHit(Entity target) {
-		return EntityUtil.checkCanEntityAttack(this, target);
+		return EntityUtil.canTargetEntity(this, target);
 	}
 	
 	/**
@@ -231,7 +232,7 @@ public abstract class AbstractBulletEntity extends AbstractOwnerEntity implement
 	
 	protected boolean checkLive(RayTraceResult result) {
 		if (result.getType() == RayTraceResult.Type.ENTITY) {// attack entity
-			if (EntityUtil.checkCanEntityAttack(getThrower(), ((EntityRayTraceResult) result).getEntity())) {
+			if (EntityUtil.canTargetEntity(getThrower(), ((EntityRayTraceResult) result).getEntity())) {
 				return false;
 			}
 			return true;
@@ -261,6 +262,11 @@ public abstract class AbstractBulletEntity extends AbstractOwnerEntity implement
 	@Override
 	public boolean isAttackable() {
 		return false;
+	}
+	
+	@Override
+	public PVZGroupType getInitialEntityGroup() {
+		return PVZGroupType.PLANTS;
 	}
 
 	@Override

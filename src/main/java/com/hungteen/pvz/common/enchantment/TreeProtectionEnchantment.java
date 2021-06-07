@@ -1,10 +1,9 @@
 package com.hungteen.pvz.common.enchantment;
 
-import net.minecraft.enchantment.Enchantment;
 import net.minecraft.enchantment.EnchantmentType;
 import net.minecraft.inventory.EquipmentSlotType;
 
-public class TreeProtectionEnchantment extends Enchantment {
+public class TreeProtectionEnchantment extends PVZEnchantment {
 
 	public TreeProtectionEnchantment() {
 		super(Rarity.UNCOMMON, EnchantmentType.ARMOR , new EquipmentSlotType[] {EquipmentSlotType.HEAD, EquipmentSlotType.CHEST, EquipmentSlotType.LEGS, EquipmentSlotType.FEET});

@@ -40,6 +40,25 @@ public class ZombieRenderHandler {
 	public static final ResourceLocation DIGGER_ZOMBIE_TEX = get(Zombies.DIGGER_ZOMBIE);
 	public static final ResourceLocation POGO_ZOMBIE_TEX = get(Zombies.POGO_ZOMBIE);
 	public static final ResourceLocation YETI_ZOMBIE_TEX = get(Zombies.YETI_ZOMBIE);
+	public static final ResourceLocation BUNGEE_ZOMBIE_TEX = get(Zombies.BUNGEE_ZOMBIE);
+	public static final ResourceLocation LADDER_ZOMBIE_TEX = get(Zombies.LADDER_ZOMBIE);
+	public static final ResourceLocation CATAPULT_ZOMBIE_TEX = get(Zombies.CATAPULT_ZOMBIE);
+	public static final ResourceLocation GARGANTUAR_TEX = get(Zombies.GARGANTUAR, 0.75F);
+	public static final ResourceLocation SAD_GARGANTUAR_TEX = get(Zombies.SAD_GARGANTUAR, 0.8F);
+	public static final ResourceLocation IMP_TEX = get(Zombies.IMP);
+	public static final ResourceLocation ZOMBOSS_TEX = get(Zombies.ZOMBOSS, 2F);
+	public static final ResourceLocation PEASHOOTER_ZOMBIE_TEX = get(Zombies.PEASHOOTER_ZOMBIE);
+	public static final ResourceLocation WALLNUT_ZOMBIE_TEX = get(Zombies.WALLNUT_ZOMBIE);
+	public static final ResourceLocation GATLINGPEA_ZOMBIE_TEX = get(Zombies.GATLINGPEA_ZOMBIE);
+	public static final ResourceLocation TALLNUT_ZOMBIE_TEX = get(Zombies.TALLNUT_ZOMBIE);
+	public static final ResourceLocation JALAPENO_ZOMBIE_TEX = get(Zombies.JALAPENO_ZOMBIE);
+	public static final ResourceLocation SQUASH_ZOMBIE_TEX = get(Zombies.SQUASH_ZOMBIE);
+	public static final ResourceLocation PUMPKIN_ZOMBIE_TEX = get(Zombies.PUMPKIN_ZOMBIE);
+	public static final ResourceLocation COFFIN_TEX = get(Zombies.COFFIN);
+	public static final ResourceLocation MOURNER_ZOMBIE_TEX = get(Zombies.MOURNER_ZOMBIE);
+	public static final ResourceLocation NOBLE_ZOMBIE_TEX = get(Zombies.NOBLE_ZOMBIE);
+	public static final ResourceLocation RA_ZOMBIE_TEX = get(Zombies.RA_ZOMBIE);
+	public static final ResourceLocation TRICK_ZOMBIE_TEX = get(Zombies.TRICK_ZOMBIE);
 	
 	private static ResourceLocation get(Zombies zombie) {
 		return get(zombie, 0.5F);
@@ -85,6 +104,34 @@ public class ZombieRenderHandler {
 		case POGO_ZOMBIE:
 		case YETI_ZOMBIE:{
 			sep = "poolnight";
+			break;
+		}
+		case BUNGEE_ZOMBIE:
+		case LADDER_ZOMBIE:
+		case CATAPULT_ZOMBIE:
+		case GARGANTUAR:
+		case SAD_GARGANTUAR:
+		case IMP:
+		case ZOMBOSS:{
+			sep = "roof";
+			break;
+		}
+		case PEASHOOTER_ZOMBIE:
+		case WALLNUT_ZOMBIE:
+		case GATLINGPEA_ZOMBIE:
+		case TALLNUT_ZOMBIE:
+		case JALAPENO_ZOMBIE:
+		case SQUASH_ZOMBIE:
+		case PUMPKIN_ZOMBIE:{
+			sep = "zombotany";
+			break;
+		}
+		case COFFIN:
+		case MOURNER_ZOMBIE:
+		case NOBLE_ZOMBIE:
+		case RA_ZOMBIE:
+		case TRICK_ZOMBIE:{
+			sep = "other";
 			break;
 		}
 		default:

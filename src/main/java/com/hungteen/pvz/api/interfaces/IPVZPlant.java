@@ -4,7 +4,7 @@ import com.hungteen.pvz.utils.enums.Essences;
 import com.hungteen.pvz.utils.enums.Plants;
 import com.hungteen.pvz.utils.enums.Ranks;
 
-public interface IPVZPlant {
+public interface IPVZPlant extends IHasOwner, IGroupEntity, ICanCharm{
 
 	Plants getPlantEnumName();
 	

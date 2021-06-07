@@ -55,7 +55,7 @@ public class KernelPultEntity extends PlantPultEntity {
 	
 	@Override
 	public ActionResultType interactAt(PlayerEntity player, Vector3d vec3d, Hand hand) {
-		if(! level.isClientSide && hand == Hand.MAIN_HAND && ! EntityUtil.checkCanEntityAttack(this, player)) {
+		if(! level.isClientSide && hand == Hand.MAIN_HAND && ! EntityUtil.canTargetEntity(this, player)) {
 			ItemStack stack = player.getItemInHand(hand);
 			if(stack.getItem() instanceof PlantCardItem) {
 				PlantCardItem item = (PlantCardItem) stack.getItem();
@@ -86,7 +86,7 @@ public class KernelPultEntity extends PlantPultEntity {
 	private Optional<KernelPultEntity> getNearByPult(PlayerEntity player){
 		float range = 1.5F;
 		List<KernelPultEntity> list = level.getEntitiesOfClass(KernelPultEntity.class, EntityUtil.getEntityAABB(this, range, range), (pult) -> {
-			return ! pult.is(this) && pult.getPlantEnumName() == Plants.KERNEL_PULT && ! EntityUtil.checkCanEntityAttack(pult, player);
+			return ! pult.is(this) && pult.getPlantEnumName() == Plants.KERNEL_PULT && ! EntityUtil.canTargetEntity(pult, player);
 		});
 		if(list.isEmpty()) return Optional.empty();
 		return Optional.ofNullable(list.get(0));

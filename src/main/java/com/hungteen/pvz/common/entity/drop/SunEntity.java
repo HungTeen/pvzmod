@@ -95,18 +95,21 @@ public class SunEntity extends DropEntity {
 	public static void spawnSunsByAmount(World world, BlockPos pos, int amount) {
 		while(amount >= 75) {
 			amount -= 75;
-			spawnSunRandomly(world, pos, 75);
+			spawnSunRandomly(world, pos, 75, 1);
 		}
 		if(amount != 0) {
-			spawnSunRandomly(world, pos, amount);
+			spawnSunRandomly(world, pos, amount, 1);
 			amount = 0;
 		}
 	}
 	
-	public static void spawnSunRandomly(World world, BlockPos pos, int amount) {
+	/**
+	 * spawn sun entity in range randomly with specific amount.
+	 */
+	public static void spawnSunRandomly(World world, BlockPos pos, int amount, int dis) {
 		SunEntity sun = EntityRegister.SUN.get().create(world);
 		sun.setAmount(amount);
-		EntityUtil.onMobEntityRandomPosSpawn(world, sun, pos, 1);
+		EntityUtil.onMobEntityRandomPosSpawn(world, sun, pos, dis);
 	}
 	
 	public static boolean canSunSpawn(EntityType<? extends SunEntity> zombieType, IWorld worldIn, SpawnReason reason, BlockPos pos, Random rand) {

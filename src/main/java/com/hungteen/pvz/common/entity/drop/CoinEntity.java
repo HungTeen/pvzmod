@@ -1,6 +1,7 @@
 package com.hungteen.pvz.common.entity.drop;
 
 import com.hungteen.pvz.PVZConfig;
+import com.hungteen.pvz.register.EntityRegister;
 import com.hungteen.pvz.register.SoundRegister;
 import com.hungteen.pvz.utils.EntityUtil;
 import com.hungteen.pvz.utils.PlayerUtil;
@@ -14,6 +15,7 @@ import net.minecraft.entity.Pose;
 import net.minecraft.entity.SpawnReason;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.nbt.CompoundNBT;
+import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.DifficultyInstance;
 import net.minecraft.world.IServerWorld;
 import net.minecraft.world.World;
@@ -52,6 +54,15 @@ public class CoinEntity extends DropEntity{
 		float t = (float) Math.log10(this.getAmount());//0 1 2 3
 		float w = t * 0.18f + 0.4f;
 		return new EntitySize(w, w, false); //max (0.4w,0.4h) min(0.9w,0.9h)
+	}
+	
+	/**
+	 * spawn coin by type.
+	 */
+	public static void spawnCoin(World world, BlockPos pos, CoinType type) {
+		CoinEntity coin = EntityRegister.COIN.get().create(world);
+		coin.setAmount(type.money);
+		EntityUtil.onEntitySpawn(world, coin, pos);
 	}
 	
 	public void setAmountByType(CoinType type){

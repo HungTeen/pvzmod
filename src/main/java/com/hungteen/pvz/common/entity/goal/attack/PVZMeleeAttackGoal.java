@@ -60,7 +60,7 @@ public abstract class PVZMeleeAttackGoal extends Goal {
 		if (! EntityUtil.isEntityValid(living)) return false;
 		if (! this.longMemory) return ! this.attacker.getNavigation().isDone();
 		if (! this.attacker.isWithinRestriction(new BlockPos(living.position()))) return false;
-		return EntityUtil.checkCanEntityTarget(this.attacker, living);
+		return EntityUtil.checkCanEntityBeAttack(this.attacker, living);
 	}
 
 	@Override

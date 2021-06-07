@@ -37,7 +37,7 @@ public class ExplodeONutEntity extends WallNutEntity {
 	private void explode(Entity entity) {
 		float len = 2F;
 		AxisAlignedBB aabb = EntityUtil.getEntityAABB(entity, len, len);
-		EntityUtil.getAttackEntities(this, aabb).forEach((target) -> {
+		EntityUtil.getTargetableEntities(this, aabb).forEach((target) -> {
 			target.hurt(PVZDamageSource.causeExplosionDamage(this, this), this.getAttackDamage());
 		});
 		EntityUtil.playSound(this, SoundRegister.CHERRY_BOMB.get());
@@ -49,7 +49,7 @@ public class ExplodeONutEntity extends WallNutEntity {
 		this.explode(this);
 		EntityUtil.spawnParticle(this, 0);
 		if(this.getExtraAttackChance() > 0) {
-			List<Entity> list = EntityUtil.getAttackEntities(this, EntityUtil.getEntityAABB(this, 40, 40));
+			List<Entity> list = EntityUtil.getTargetableEntities(this, EntityUtil.getEntityAABB(this, 40, 40));
 			if(list.isEmpty()) return ;
 			for(int i = 0; i < this.getExtraAttackChance(); ++ i) {
 //				System.out.println(i);

@@ -43,7 +43,7 @@ public class EntitySpawnRegister {
 	});
 	
 	@SubscribeEvent
-	public static void registerEntities(RegistryEvent.Register<EntityType<?>> evt) {
+	public static void registerEntitySpawns(RegistryEvent.Register<EntityType<?>> evt) {
 		EntitySpawnPlacementRegistry.register(EntityRegister.NORMAL_ZOMBIE.get(), PlacementType.ON_GROUND, Heightmap.Type.MOTION_BLOCKING_NO_LEAVES, PVZZombieEntity::canZombieSpawn);
 		EntitySpawnPlacementRegistry.register(EntityRegister.FLAG_ZOMBIE.get(), PlacementType.ON_GROUND, Heightmap.Type.MOTION_BLOCKING_NO_LEAVES, PVZZombieEntity::canZombieSpawn);
 		EntitySpawnPlacementRegistry.register(EntityRegister.CONEHEAD_ZOMBIE.get(), PlacementType.ON_GROUND, Heightmap.Type.MOTION_BLOCKING_NO_LEAVES, PVZZombieEntity::canZombieSpawn);
@@ -89,14 +89,14 @@ public class EntitySpawnRegister {
 	}
 	
 	/**
-	 * called at BiomeRegister
+	 * {@link BiomeRegister#biomeModification(BiomeLoadingEvent)}
 	 */
 	public static void addEntitySpawnToBiome(BiomeLoadingEvent event) {
 		Biome biome = ForgeRegistries.BIOMES.getValue(event.getName());
-		if(biome == BiomeRegister.ZEN_GARDEN.get()) {
+		if(biome == null || biome == BiomeRegister.ZEN_GARDEN.get()) {//prevent crash with other mod.
     		return ;
     	}
-    	RegistryKey<Biome> biomeKey = BiomeUtil.getKey(biome);
+		RegistryKey<Biome> biomeKey = BiomeUtil.getKey(biome);
 		if(BiomeUtil.isOverworld(biomeKey)) {
 			if(BiomeUtil.isLand(biomeKey)) {
 				addSpawnToOverworldLand(event);

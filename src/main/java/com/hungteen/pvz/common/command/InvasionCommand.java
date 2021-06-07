@@ -6,6 +6,7 @@ import com.hungteen.pvz.common.world.data.PVZInvasionData;
 import com.hungteen.pvz.common.world.invasion.OverworldInvasion;
 import com.hungteen.pvz.common.world.invasion.WaveManager;
 import com.hungteen.pvz.utils.enums.InvasionEvents;
+import com.hungteen.pvz.utils.enums.Zombies;
 import com.mojang.brigadier.CommandDispatcher;
 import com.mojang.brigadier.arguments.IntegerArgumentType;
 import com.mojang.brigadier.builder.LiteralArgumentBuilder;
@@ -14,7 +15,8 @@ import net.minecraft.command.CommandSource;
 import net.minecraft.command.Commands;
 import net.minecraft.command.arguments.EntityArgument;
 import net.minecraft.entity.player.ServerPlayerEntity;
-import net.minecraft.util.Util;
+import net.minecraft.util.text.StringTextComponent;
+import net.minecraft.util.text.TranslationTextComponent;
 
 public class InvasionCommand {
 
@@ -35,30 +37,56 @@ public class InvasionCommand {
         	    	return showInvasionEvent(commond.getSource(), EntityArgument.getPlayers(commond, "targets"));
         	    })))
         	);
+        for(Zombies zombie : Zombies.values()) {
+        	builder.then(Commands.literal("zombie")
+        			.then(Commands.literal("add").then(Commands.literal(zombie.toString().toLowerCase()).executes((commond)->{
+        				return addZombie(commond.getSource(), zombie);
+        			})))
+        			.then(Commands.literal("remove").then(Commands.literal(zombie.toString().toLowerCase()).executes((commond)->{
+        				return removeZombie(commond.getSource(), zombie);
+        			})))
+        		);
+        }
         builder.then(Commands.literal("wave").then(Commands.argument("targets", EntityArgument.players()).then(Commands.argument("amount", IntegerArgumentType.integer()).executes((commond)->{
         	return spawnHugeWave(EntityArgument.getPlayers(commond, "targets"), IntegerArgumentType.getInteger(commond, "amount"));
         }))));
         dispatcher.register(builder);
     }
 	
+	private static int addZombie(CommandSource source, Zombies zombie) {
+		if(zombie.chooseWeight > 0) {
+			OverworldInvasion.addZombie(source.getLevel(), zombie);
+			source.sendSuccess(new StringTextComponent(new TranslationTextComponent("command.pvz.add_zombie").getString() + ":" + zombie.getText().getString()), true);
+		} else {
+			source.sendSuccess(new StringTextComponent(new TranslationTextComponent("command.pvz.add_zombie_fail").getString()), false);
+		}
+		return 0;
+	}
+	
+	private static int removeZombie(CommandSource source, Zombies zombie) {
+		OverworldInvasion.removeZombie(source.getLevel(), zombie);
+		source.sendSuccess(new StringTextComponent(new TranslationTextComponent("command.pvz.remove_zombie").getString() + ":" + zombie.getText().getString()), true);
+		return 0;
+	}
+	
 	private static int spawnHugeWave(Collection<? extends ServerPlayerEntity> targets, int num) {
 		targets.forEach((player)->{
-//			if(PlayerUtil.isPlayerSurvival(player)) {
-				WaveManager manager = new WaveManager(player, 0);
-				if(num != 0) manager.spawnCnt = num;
-				manager.spawnWaveZombies();
-//			}
+			WaveManager manager = new WaveManager(player, 0);
+			if(num != 0) manager.spawnCnt = num;
+			manager.spawnWaveZombies();
 		});
 		return targets.size();
 	}
 	
 	private static int addInvasionEvent(CommandSource source, InvasionEvents event) {
 		OverworldInvasion.activateEvent(source.getLevel(), event);
+		source.sendSuccess(new StringTextComponent(new TranslationTextComponent("command.pvz.add_event").getString() + ":" + InvasionEvents.getEventText(event).getString()), true);
 		return 0;
 	}
 	
 	private static int clearInvasionEvent(CommandSource source) {
 		OverworldInvasion.deactivateZombieAttackEvents(source.getLevel(), false);
+		source.sendSuccess(new TranslationTextComponent("command.pvz.clear_events"), true);
 		return 0;
 	}
 	
@@ -67,7 +95,7 @@ public class InvasionCommand {
 			PVZInvasionData data = PVZInvasionData.getOverWorldInvasionData(source.getLevel());
 			for(InvasionEvents event : InvasionEvents.values()) {
 				if(data.hasEvent(event)) {
-					player.sendMessage(InvasionEvents.getEventText(event), Util.NIL_UUID);
+					source.sendSuccess(InvasionEvents.getEventText(event), false);
 				}
 			}
 		});

@@ -13,7 +13,7 @@ public class PVZGlobalTargetGoal extends PVZNearestTargetGoal {
 	
 	@Override
 	protected boolean checkSenses(Entity entity) {
-		return EntityUtil.checkCanSeeEntity(this.mob, entity);
+		return EntityUtil.canSeeEntity(this.mob, entity);
 	}
 
 }

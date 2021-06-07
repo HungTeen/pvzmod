@@ -65,8 +65,8 @@ public class MelonEntity extends PultBulletEntity {
 	private void dealSplashDamage() {
 		EntityUtil.playSound(this, SoundRegister.MELON_HIT.get());
 		float range = 2.5F;
-		EntityUtil.getAttackEntities(this.getThrower(), EntityUtil.getEntityAABB(this, range, range)).forEach((entity) -> {
-			if(! entity.is(attackEntity) && (! (entity instanceof LivingEntity) || EntityUtil.checkCanEntityTarget(this.getThrower(), (LivingEntity) entity))) {
+		EntityUtil.getTargetableEntities(this.getThrower(), EntityUtil.getEntityAABB(this, range, range)).forEach((entity) -> {
+			if(! entity.is(attackEntity) && (! (entity instanceof LivingEntity) || EntityUtil.canTargetEntity(this.getThrower(), (LivingEntity) entity))) {
 				PVZDamageSource source = PVZDamageSource.causeNormalDamage(this, this.getThrower());
 				this.getIcePotion().ifPresent((effect) -> {
 					source.addEffect(effect);

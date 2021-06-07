@@ -171,12 +171,9 @@ public class PVZConfig {
                         .comment("if true,when plant's owner is in a team,the plant will attack the entity from other team(include players).")
                         .define("PlantAttackTeam", false);
 				
-				EntitySettings.DoomRange = builder
-						.comment("The width range when doom shroom explosion will destroy,0 means no destroy.")
-						.defineInRange("DoomRange", 2, 0, 10);
-				EntitySettings.PlayerOriginGroup = builder
-						.comment("The Group of player, 1 means u are in plant group(zombie will attack u), 0 means u are mid(no plants and zombies attack u), -1 means u are in zombie group(plant will attack u).")
-						.defineInRange("PlayerOriginGroup", 1, -1, 1);
+				EntitySettings.PlayerInitialGroup = builder
+						.comment("Player Initial Group When they join the world for the first time.(-2 means other monsters, -1 means zombies, 0 means neutral creatures, 1 means plants and 2 means other guards.")
+						.defineInRange("PlayerInitialGroup", 1, -2, 2);
 
 				builder.comment("Settings about zombies.").push("Zombie Settings");
 				{
@@ -326,8 +323,7 @@ public class PVZConfig {
 			
 			public ForgeConfigSpec.BooleanValue TeamAttack;
 			
-			public ForgeConfigSpec.IntValue DoomRange;
-			public ForgeConfigSpec.IntValue PlayerOriginGroup;
+			public ForgeConfigSpec.IntValue PlayerInitialGroup;
 			
 			public EntityLiveTick EntityLiveTick = new EntityLiveTick();
 			public ZombieSetting ZombieSetting = new ZombieSetting();

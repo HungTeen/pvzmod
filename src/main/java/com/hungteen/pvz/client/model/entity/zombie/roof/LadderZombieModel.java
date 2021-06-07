@@ -1,10 +1,11 @@
 package com.hungteen.pvz.client.model.entity.zombie.roof;
 
+import java.util.Optional;
+
 import com.hungteen.pvz.client.model.entity.zombie.PVZZombieModel;
 import com.hungteen.pvz.common.entity.zombie.roof.LadderZombieEntity;
 
 import net.minecraft.client.renderer.model.ModelRenderer;
-import net.minecraft.util.math.MathHelper;
 
 // Made with Blockbench 3.7.5
 // Exported for Minecraft version 1.15
@@ -132,24 +133,24 @@ public class LadderZombieModel extends PVZZombieModel<LadderZombieEntity> {
 	}
 
 	@Override
-	public void setupAnim(LadderZombieEntity entity, float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch){
-        if(entity.canPartsBeRemoved()) {
-	        this.left_hand.xRot = MathHelper.cos(limbSwing * 0.6662F) * 1.4F * limbSwingAmount;
-	        this.right_hand.xRot = MathHelper.cos(limbSwing * 0.6662F + (float)Math.PI) * 1.4F * limbSwingAmount;
-		} else {
-			this.right_hand.xRot = -0.8727F;
-			this.left_hand.xRot = -0.8727F;
-		}
-        super.setupAnim(entity, limbSwing, limbSwingAmount, ageInTicks, netHeadYaw, headPitch);
-	}
-	
-	@Override
 	public void updateFreeParts(LadderZombieEntity entity) {
 		super.updateFreeParts(entity);
 		final boolean hasLadder = ! entity.canPartsBeRemoved();
 		this.ladder.visible = hasLadder;
 		this.isLeftHandFree = ! hasLadder;
 		this.isRightHandFree = ! hasLadder;
+	}
+	
+	@Override
+	public void refreshAnim() {
+		super.refreshAnim();
+		this.right_hand.xRot = -0.8727F;
+		this.left_hand.xRot = -0.8727F;
+	}
+	
+	@Override
+	public Optional<ModelRenderer> getHandDefence() {
+		return Optional.ofNullable(this.ladder);
 	}
 
 	@Override

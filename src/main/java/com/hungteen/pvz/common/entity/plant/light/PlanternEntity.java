@@ -48,7 +48,7 @@ public class PlanternEntity extends PVZPlantEntity implements ILightPlant {
 	
 	private void giveLightToPlayers(float range) {
 		level.getEntitiesOfClass(PlayerEntity.class, EntityUtil.getEntityAABB(this, range, range), (player) -> {
-			return ! EntityUtil.checkCanEntityAttack(this, player);
+			return ! EntityUtil.canTargetEntity(this, player);
 		}).forEach((player) -> {
 			player.addEffect(getLightEyeEffect());
 		});

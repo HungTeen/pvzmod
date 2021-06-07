@@ -2,7 +2,7 @@ package com.hungteen.pvz.common.entity.zombie.poolday;
 
 import com.hungteen.pvz.common.entity.creature.FoodieZombieEntity;
 import com.hungteen.pvz.common.entity.goal.attack.ZombieMeleeAttackGoal;
-import com.hungteen.pvz.common.entity.goal.target.ZombieNearestTargetGoal;
+import com.hungteen.pvz.common.entity.goal.target.PVZNearestTargetGoal;
 import com.hungteen.pvz.common.entity.zombie.PVZZombieEntity;
 import com.hungteen.pvz.data.loot.PVZLoot;
 import com.hungteen.pvz.register.SoundRegister;
@@ -13,7 +13,6 @@ import net.minecraft.entity.CreatureAttribute;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntitySize;
 import net.minecraft.entity.EntityType;
-import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.Pose;
 import net.minecraft.entity.ai.attributes.Attributes;
 import net.minecraft.entity.ai.controller.DolphinLookController;
@@ -62,7 +61,7 @@ public class ZombieDolphinEntity extends PVZZombieEntity {
 		this.goalSelector.addGoal(5, new DolphinJumpGoal(this, 10));
 		this.goalSelector.addGoal(8, new FollowBoatGoal(this));
 		this.goalSelector.addGoal(0, new ZombieMeleeAttackGoal(this));
-		this.targetSelector.addGoal(0, new ZombieNearestTargetGoal(this, true, 80, 60));
+		this.targetSelector.addGoal(0, new PVZNearestTargetGoal(this, false, 80, 60));
 		this.targetSelector.addGoal(1, (new HurtByTargetGoal(this, GuardianEntity.class)).setAlertOthers());
 	}
 	
@@ -143,7 +142,7 @@ public class ZombieDolphinEntity extends PVZZombieEntity {
 	}
 
 	@Override
-	public boolean checkCanZombieTarget(LivingEntity target) {
+	public boolean checkCanZombieTarget(Entity target) {
 		return target instanceof DolphinEntity || target instanceof PlayerEntity
 				|| target instanceof FoodieZombieEntity;
 	}

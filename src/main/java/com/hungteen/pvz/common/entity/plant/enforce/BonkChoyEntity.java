@@ -11,6 +11,7 @@ import com.hungteen.pvz.utils.EntityUtil;
 import com.hungteen.pvz.utils.enums.Plants;
 
 import net.minecraft.entity.CreatureEntity;
+import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.ai.goal.Goal;
@@ -36,7 +37,7 @@ public class BonkChoyEntity extends PVZPlantEntity {
 			if(this.isPlantInSuperMode() && this.getSuperTime() % 5 == 0) {
 				float range = 3F;
 				EntityUtil.playSound(this, SoundRegister.SWING.get());
-				EntityUtil.getAttackEntities(this, EntityUtil.getEntityAABB(this, range, range)).forEach((target) -> {
+				EntityUtil.getTargetableEntities(this, EntityUtil.getEntityAABB(this, range, range)).forEach((target) -> {
 					target.hurt(PVZDamageSource.causeNormalDamage(this, this), this.getAttackDamage() * 5);
 					for(int i = 0; i < 2; ++ i) {
 						EntityUtil.spawnParticle(target, 7);
@@ -52,7 +53,7 @@ public class BonkChoyEntity extends PVZPlantEntity {
 	}
 	
 	@Override
-	protected boolean canPlantTarget(LivingEntity entity) {
+	protected boolean canPlantTarget(Entity entity) {
 		if(entity instanceof BalloonZombieEntity) return true;
 		return super.canPlantTarget(entity);
 	}

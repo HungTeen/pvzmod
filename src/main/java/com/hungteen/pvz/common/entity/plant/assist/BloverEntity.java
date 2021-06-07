@@ -10,9 +10,9 @@ import com.hungteen.pvz.utils.enums.Plants;
 import com.hungteen.pvz.utils.enums.Resources;
 
 import net.minecraft.entity.CreatureEntity;
+import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntitySize;
 import net.minecraft.entity.EntityType;
-import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.Pose;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.util.SoundEvent;
@@ -43,7 +43,7 @@ public class BloverEntity extends PlantBomberEntity {
 		if(! this.level.isClientSide) {
 			float len = 30;
 			AxisAlignedBB aabb = EntityUtil.getEntityAABB(this, len, len);
-			EntityUtil.getEntityTargetableEntity(this, aabb).forEach((target) -> {
+			EntityUtil.getTargetableLivings(this, aabb).forEach((target) -> {
 				if(EntityUtil.isEntityInSky(target)) {
 					target.hurt(PVZDamageSource.causeNormalDamage(this, this), this.getAttackDamage());
 					Vector3d speed = target.getDeltaMovement();
@@ -57,7 +57,7 @@ public class BloverEntity extends PlantBomberEntity {
 				}
 			});
 			level.getEntitiesOfClass(PlayerEntity.class, EntityUtil.getEntityAABB(this, len, len), (player) -> {
-				return ! EntityUtil.checkCanEntityAttack(this, player);
+				return ! EntityUtil.canTargetEntity(this, player);
 			}).forEach((player) -> {
 				PlayerUtil.addPlayerStats(player, Resources.NO_FOG_TICK, 2400 * this.getForceLevel());
 			});
@@ -65,7 +65,7 @@ public class BloverEntity extends PlantBomberEntity {
 	}
 	
 	@Override
-	protected boolean canPlantTarget(LivingEntity entity) {
+	protected boolean canPlantTarget(Entity entity) {
 		if(entity instanceof BalloonZombieEntity) return true;
 		return super.canPlantTarget(entity);
 	}

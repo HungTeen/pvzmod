@@ -67,6 +67,9 @@ public class NobleZombieEntity extends PVZZombieEntity {
 		this.canBeCharm = false;
 		this.canBeMini = false;
 		this.canBeStealByBungee = false;
+		this.canLostHand = false;
+		this.canLostHead = false;
+		this.canBeRemove = false;
 	}
 	
 	@Override
@@ -86,7 +89,7 @@ public class NobleZombieEntity extends PVZZombieEntity {
 	public ILivingEntityData finalizeSpawn(IServerWorld worldIn, DifficultyInstance difficultyIn, SpawnReason reason,
 			ILivingEntityData spawnDataIn, CompoundNBT dataTag) {
 		if(! level.isClientSide) {
-			for (Entity target : EntityUtil.getEntityAttackableTarget(this,
+			for (Entity target : EntityUtil.getTargetableEntities(this,
 					EntityUtil.getEntityAABB(this, 50, 50))) {
 				if(this.getRandom().nextInt(4) == 0) {
 					ZombieHandEntity hand = EntityRegister.ZOMBIE_HAND.get().create(level);
@@ -160,7 +163,7 @@ public class NobleZombieEntity extends PVZZombieEntity {
 		this.setTpTick(-this.getRandom().nextInt(this.maxTpCD - this.minTpCD + 1) - this.minTpCD);
 		float range = this.getExpRange();
 		this.teleportToPos(teleportPos.getX(), teleportPos.getY(), teleportPos.getZ());
-		for (Entity target : EntityUtil.getEntityAttackableTarget(this, EntityUtil.getEntityAABB(this, range, range))) {
+		for (Entity target : EntityUtil.getTargetableEntities(this, EntityUtil.getEntityAABB(this, range, range))) {
 			if (target instanceof PVZPlantEntity) {
 				target.hurt(PVZDamageSource.causeExplosionDamage(this, this),
 						((LivingEntity) target).getMaxHealth());
@@ -200,7 +203,7 @@ public class NobleZombieEntity extends PVZZombieEntity {
 					break;
 				}
 			}
-			EntityUtil.onMobEntitySpawn(level, zombie, pos);
+			EntityUtil.onEntitySpawn(level, zombie, pos);
 		}
 	}
 	
@@ -232,7 +235,7 @@ public class NobleZombieEntity extends PVZZombieEntity {
 	 */
 	private void checkAndSummonZombieHand() {
 		int cnt = this.getHandSummonNum();
-		List<LivingEntity> list = EntityUtil.getEntityTargetableEntity(this, EntityUtil.getEntityAABB(this, 50, 50));
+		List<LivingEntity> list = EntityUtil.getTargetableLivings(this, EntityUtil.getEntityAABB(this, 50, 50));
 		for(int i = 0; i < list.size(); ++ i) {
 			if(i + cnt >= list.size() || this.getRandom().nextInt(5) == 0) {
 				ZombieHandEntity hand = EntityRegister.ZOMBIE_HAND.get().create(level);
@@ -333,11 +336,6 @@ public class NobleZombieEntity extends PVZZombieEntity {
 		return Type.NORMAL;
 	}
 
-	@Override
-	public boolean canZombieBeRemoved() {
-		return false;
-	}
-	
 	@Override
 	public void readAdditionalSaveData(CompoundNBT compound) {
 		super.readAdditionalSaveData(compound);

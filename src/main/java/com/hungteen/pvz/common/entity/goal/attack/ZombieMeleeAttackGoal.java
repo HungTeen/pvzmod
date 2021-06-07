@@ -34,7 +34,6 @@ public class ZombieMeleeAttackGoal extends Goal {
 		if (currentTime - this.excuteTime < 20L) return false;//search each second.
 		this.excuteTime = currentTime;
 		LivingEntity target = this.attacker.getTarget();
-//		System.out.println(target);
 		if (target == null || ! target.isAlive()) {
 			return false;
 		}
@@ -52,14 +51,7 @@ public class ZombieMeleeAttackGoal extends Goal {
 		if (target == null || ! target.isAlive()) {
 			return false;
 		}
-//		if (this.getAttackReachSqr(target) < this.attacker.getDistanceSq(target)
-//				&& this.attacker.getNavigator().noPath()) {
-//			return false;
-//		}
-//		if(this.attacker instanceof TrickZombieEntity) {
-//			System.out.println(EntityUtil.checkCanEntityTarget(this.attacker, target));
-//		}
-		return EntityUtil.checkCanEntityTarget(this.attacker, target);
+		return EntityUtil.checkCanEntityBeAttack(this.attacker, target);
 	}
 
 	@Override
@@ -87,7 +79,6 @@ public class ZombieMeleeAttackGoal extends Goal {
 	        this.targetY = target.getY();
 	        this.targetZ = target.getZ();
 			this.delayCounter = 5 + this.attacker.getRandom().nextInt(10);
-//			System.out.println("find path");
 			if(!this.attacker.getNavigation().moveTo(target, this.speed)) {
 			    this.delayCounter += 20 * this.delayCnt;
 			    this.delayCnt = Math.min(10, this.delayCnt + 1);

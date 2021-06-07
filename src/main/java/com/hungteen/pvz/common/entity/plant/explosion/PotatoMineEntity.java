@@ -86,7 +86,7 @@ public class PotatoMineEntity extends PlantCloserEntity{
 		if(! this.isMineReady()) return ;//not ready yet
 		if(! this.level.isClientSide) {
 			AxisAlignedBB aabb= EntityUtil.getEntityAABB(this, bombRange, bombRange);
-			EntityUtil.getAttackEntities(this, aabb).forEach((target) -> {
+			EntityUtil.getTargetableEntities(this, aabb).forEach((target) -> {
 				target.hurt(PVZDamageSource.causeExplosionDamage(this, this), this.getAttackDamage());
 			});
 			EntityUtil.playSound(this, SoundRegister.POTATO_MINE.get());

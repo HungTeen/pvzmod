@@ -2,6 +2,8 @@ package com.hungteen.pvz.utils.enums;
 
 import com.hungteen.pvz.utils.others.WeightList;
 
+import net.minecraft.util.text.TranslationTextComponent;
+
 public enum Zombies {
 	// 1
 	NORMAL_ZOMBIE(10, 5), 
@@ -85,6 +87,10 @@ public enum Zombies {
 			}
 		}
 		return null;
+	}
+	
+	public TranslationTextComponent getText() {
+		return new TranslationTextComponent("entity.pvz." + this.toString().toLowerCase());
 	}
 	
 }

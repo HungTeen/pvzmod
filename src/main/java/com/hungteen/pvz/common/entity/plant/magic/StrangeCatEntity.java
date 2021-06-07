@@ -10,6 +10,7 @@ import com.hungteen.pvz.utils.PlantUtil;
 import com.hungteen.pvz.utils.enums.Plants;
 
 import net.minecraft.entity.CreatureEntity;
+import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntitySize;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.LivingEntity;
@@ -67,11 +68,11 @@ public class StrangeCatEntity extends PVZPlantEntity {
 	public void onSelfCopy(LivingEntity target) {
 		StrangeCatEntity cat = EntityRegister.STRANGE_CAT.get().create(level);
 		PlantUtil.copyPlantData(cat, this);
-		EntityUtil.onMobEntitySpawn(level, cat, target.blockPosition());
+		EntityUtil.onEntitySpawn(level, cat, target.blockPosition());
 	}
 	
 	@Override
-	protected boolean canPlantTarget(LivingEntity entity) {
+	protected boolean canPlantTarget(Entity entity) {
 		return super.canPlantTarget(entity) && this.isSuitableTarget(entity);
 	}
 	
@@ -93,8 +94,9 @@ public class StrangeCatEntity extends PVZPlantEntity {
 		});
 	}
 	
-	public boolean isSuitableTarget(LivingEntity target) {
-		return EntityUtil.getCurrentHealth(target) <= this.getAttackDamage();
+	public boolean isSuitableTarget(Entity target) {
+		if(! (target instanceof LivingEntity)) return false;
+		return EntityUtil.getCurrentHealth((LivingEntity) target) <= this.getAttackDamage();
 	}
 	
 	/**

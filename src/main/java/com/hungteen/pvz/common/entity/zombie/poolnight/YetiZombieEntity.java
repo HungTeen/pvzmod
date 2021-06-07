@@ -84,7 +84,7 @@ public class YetiZombieEntity extends PVZZombieEntity{
 	protected void spawnSpecialDrops() {
 		for(int i = 0; i < this.DROP_JEWEL_NUM; ++ i) {
 			JewelEntity jewel = EntityRegister.JEWEL.get().create(level);
-		    EntityUtil.onMobEntitySpawn(level, jewel, blockPosition().offset(this.DD[i], getRandom().nextDouble(), this.DD[(i + 1) % this.DROP_JEWEL_NUM]));
+		    EntityUtil.onEntitySpawn(level, jewel, blockPosition().offset(this.DD[i], getRandom().nextDouble(), this.DD[(i + 1) % this.DROP_JEWEL_NUM]));
 		}
 	}
 

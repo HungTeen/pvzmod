@@ -101,44 +101,44 @@ public class DaveVillaComponents {
 				MutableBoundingBox sbb) {
 			if(function.equals("dave")) {
 				CrazyDaveEntity dave = EntityRegister.CRAZY_DAVE.get().create(worldIn.getLevel());
-				EntityUtil.onMobEntitySpawn(worldIn, dave, pos);
+				EntityUtil.onEntitySpawn(worldIn, dave, pos);
 				worldIn.setBlock(pos, Blocks.AIR.defaultBlockState(), 2);
 			}else if(function.equals("panney")){
 				PennyEntity panney = EntityRegister.PANNEY.get().create(worldIn.getLevel());
-				EntityUtil.onMobEntitySpawn(worldIn, panney, pos);
+				EntityUtil.onEntitySpawn(worldIn, panney, pos);
 				worldIn.setBlock(pos, Blocks.AIR.defaultBlockState(), 2);
 			}else if(function.equals("plant_pos1")){
 				if(rand.nextInt(3) == 0) {
 					PeaShooterEntity nut = EntityRegister.PEA_SHOOTER.get().create(worldIn.getLevel());
-					EntityUtil.onMobEntitySpawn(worldIn, nut, pos);
+					EntityUtil.onEntitySpawn(worldIn, nut, pos);
 				}
 				worldIn.setBlock(pos, Blocks.AIR.defaultBlockState(), 2);
 			}else if(function.equals("plant_pos2")){
 				if(rand.nextInt(3) == 0) {
 					SunFlowerEntity nut = EntityRegister.SUN_FLOWER.get().create(worldIn.getLevel());
-					EntityUtil.onMobEntitySpawn(worldIn, nut, pos);
+					EntityUtil.onEntitySpawn(worldIn, nut, pos);
 				}
 				worldIn.setBlock(pos, Blocks.AIR.defaultBlockState(), 2);
 			}else if(function.equals("plant_pos3")){
 				if(rand.nextInt(3) == 0) {
 					PeaShooterEntity nut = EntityRegister.PEA_SHOOTER.get().create(worldIn.getLevel());
-					EntityUtil.onMobEntitySpawn(worldIn, nut, pos);
+					EntityUtil.onEntitySpawn(worldIn, nut, pos);
 				}
 				worldIn.setBlock(pos, Blocks.AIR.defaultBlockState(), 2);
 			}else if(function.equals("plant_pos4")){
 				if(rand.nextInt(2) == 0) {
 					WallNutEntity nut = EntityRegister.WALL_NUT.get().create(worldIn.getLevel());
-					EntityUtil.onMobEntitySpawn(worldIn, nut, pos);
+					EntityUtil.onEntitySpawn(worldIn, nut, pos);
 				}
 				worldIn.setBlock(pos, Blocks.AIR.defaultBlockState(), 2);
 			}else if(function.equals("plant_pos5")){
 				SunFlowerEntity nut = EntityRegister.SUN_FLOWER.get().create(worldIn.getLevel());
-				EntityUtil.onMobEntitySpawn(worldIn, nut, pos);
+				EntityUtil.onEntitySpawn(worldIn, nut, pos);
 				worldIn.setBlock(pos, Blocks.AIR.defaultBlockState(), 2);
 			}else if(function.equals("plant_pos6")) {
 				if(rand.nextInt(2) == 0) {
 					PeaShooterEntity nut = EntityRegister.PEA_SHOOTER.get().create(worldIn.getLevel());
-					EntityUtil.onMobEntitySpawn(worldIn, nut, pos);
+					EntityUtil.onEntitySpawn(worldIn, nut, pos);
 				}
 				worldIn.setBlock(pos, Blocks.AIR.defaultBlockState(), 2);
 			}else if(function.equals("bonus_chest1")) {

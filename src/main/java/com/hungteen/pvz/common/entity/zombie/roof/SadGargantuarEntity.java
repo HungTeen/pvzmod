@@ -41,7 +41,7 @@ public class SadGargantuarEntity extends GargantuarEntity {
 	
 	private void groundShack(Entity entity) {
 		float range = 3;
-		EntityUtil.getEntityTargetableEntity(this, EntityUtil.getEntityAABB(this, range, range)).forEach((target) -> {
+		EntityUtil.getTargetableLivings(this, EntityUtil.getEntityAABB(this, range, range)).forEach((target) -> {
 			if(! target.is(entity)) {
 				target.hurt(getZombieAttackDamageSource(), EntityUtil.getCurrentMaxHealth(target) / 2);
 				for(int i = 0; i < 5; ++ i) {

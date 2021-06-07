@@ -61,7 +61,7 @@ public class PultAttackGoal extends Goal {
 	}
 	
 	protected boolean checkTarget(LivingEntity target) {
-		if(EntityUtil.checkCanEntityTarget(this.attacker, this.target)) {
+		if(EntityUtil.checkCanEntityBeAttack(this.attacker, this.target)) {
 			return this.attacker.getSensing().canSee(this.target);
 		}
 		return false;

@@ -86,7 +86,7 @@ public class GraveHouseComponents {
 			} else if(function.startsWith("tomb")) {
 				if(rand.nextInt(3) == 0) {
 					TombStoneEntity tomb = EntityRegister.TOMB_STONE.get().create(worldIn.getLevel());
-				    EntityUtil.onMobEntitySpawn(worldIn, tomb, pos);
+				    EntityUtil.onEntitySpawn(worldIn, tomb, pos);
 				    worldIn.setBlock(pos, Blocks.AIR.defaultBlockState(), 2);
 				}
 			}

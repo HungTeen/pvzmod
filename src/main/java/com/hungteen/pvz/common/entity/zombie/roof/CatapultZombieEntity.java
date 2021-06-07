@@ -34,6 +34,8 @@ public class CatapultZombieEntity extends PVZZombieEntity implements IPult {
 		this.canBeButter = false;
 		this.canBeFrozen = false;
 		this.maxDeathTime = 1;
+		this.canLostHand = false;
+		this.canLostHead = false;
 	}
 	
 	@Override

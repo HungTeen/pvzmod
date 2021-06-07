@@ -5,7 +5,6 @@ import javax.annotation.Nullable;
 import com.hungteen.pvz.common.entity.zombie.PVZZombieEntity;
 
 import net.minecraft.block.Block;
-import net.minecraft.entity.CreatureEntity;
 import net.minecraft.entity.MobEntity;
 import net.minecraft.entity.ai.goal.MoveToBlockGoal;
 import net.minecraft.util.math.BlockPos;
@@ -16,32 +15,24 @@ import net.minecraft.world.World;
 import net.minecraft.world.chunk.ChunkStatus;
 import net.minecraft.world.chunk.IChunk;
 
-public class BreakBlockGoal extends MoveToBlockGoal {
+public class ZombieBreakPlantBlockGoal extends MoveToBlockGoal {
 	
-	protected final Block block;
-	protected final MobEntity entity;
+	protected final Block plantBlock;
+	protected final PVZZombieEntity zombie;
 	protected int breakingTime;
 
-	public BreakBlockGoal(Block blockIn, CreatureEntity creature, double speed, int yMax) {
-		super(creature, speed, 24, yMax);
-		this.block = blockIn;
-		this.entity = creature;
+	public ZombieBreakPlantBlockGoal(Block blockIn, PVZZombieEntity zombie, double speed, int yMax) {
+		super(zombie, speed, 24, yMax);
+		this.plantBlock = blockIn;
+		this.zombie = zombie;
 	}
 
-	/**
-	 * Returns whether execution should begin. You can also read and cache any state
-	 * necessary for execution in this method as well.
-	 */
+	@Override
 	public boolean canUse() {
-		if(entity.getTarget() != null) {
+		if(! this.canZombieContinue()) {
 			return false;
 		}
-		if(entity instanceof PVZZombieEntity) {
-			if(! ((PVZZombieEntity) entity).checkCanZombieBreakBlock()) {
-				return false;
-			}
-		}
-		if (!net.minecraftforge.common.ForgeHooks.canEntityDestroy(this.entity.level, this.blockPos,this.entity)) {
+		if (!net.minecraftforge.common.ForgeHooks.canEntityDestroy(zombie.level, this.blockPos, zombie)) {
 			return false;
 		} else if (this.nextStartTick > 0) {
 			--this.nextStartTick;
@@ -55,26 +46,58 @@ public class BreakBlockGoal extends MoveToBlockGoal {
 		}
 	}
 
-	private boolean tryFindBlock() {
-		return this.blockPos != null && this.isValidTarget(this.mob.level, this.blockPos) ? true
-				: this.findNearestBlock();
-	}
-
-	/**
-	 * Reset the task's internal state. Called when this task is interrupted by
-	 * another one
-	 */
+	@Override
 	public void stop() {
 		super.stop();
-		this.entity.fallDistance = 1.0F;
+		zombie.fallDistance = 1.0F;
 	}
 
-	/**
-	 * Execute a one shot task or start executing a continuous task
-	 */
+	@Override
 	public void start() {
 		super.start();
 		this.breakingTime = 0;
+	}
+	
+	@Override
+	public boolean canContinueToUse() {
+		if(! this.canZombieContinue()) {
+			return false;
+		}
+		return super.canContinueToUse();
+	}
+	
+	@Override
+	public void tick() {
+		super.tick();
+		World world = zombie.level;
+		if (this.isEntityNearBy() && this.blockPos != null) {
+			if (this.breakingTime % 2 == 0) {
+				if (this.breakingTime % 6 == 0) {
+					this.playBreakingSound(world, this.blockPos);
+				}
+			}
+			if (this.breakingTime > this.getBreakTime(zombie)) {
+				world.destroyBlock(this.blockPos, false);
+				if (!world.isClientSide) {
+					this.playBrokenSound(world, this.blockPos);
+				}
+			}
+			zombie.level.destroyBlockProgress(zombie.getId(), this.blockPos, breakingTime / 8);
+			++ this.breakingTime;
+		}
+	}
+	
+	/**
+	 * only execute when zombie has no attack target.
+	 * and charmed zombie do not break plant block.
+	 */
+	public boolean canZombieContinue() {
+		return zombie.canBreakPlantBlock() && zombie.getTarget() == null;
+	}
+	
+	private boolean tryFindBlock() {
+		return this.blockPos != null && this.isValidTarget(this.mob.level, this.blockPos) ? true
+				: this.findNearestBlock();
 	}
 
 	protected int getBreakTime(MobEntity entity) {
@@ -87,59 +110,25 @@ public class BreakBlockGoal extends MoveToBlockGoal {
 	public void playBrokenSound(World worldIn, BlockPos pos) {
 	}
 
-	@Override
-	public boolean canContinueToUse() {
-		if(entity instanceof PVZZombieEntity) {
-			if(! ((PVZZombieEntity) entity).checkCanZombieBreakBlock()) {
-				return false;
-			}
-		}
-		return super.canContinueToUse();
-	}
-	
-	/**
-	 * Keep ticking a continuous task that has already been started
-	 */
-	public void tick() {
-		super.tick();
-		World world = this.entity.level;
-		if (this.isEntityNearBy() && this.blockPos != null) {
-//            System.out.println(this.breakingTime);
-			if (this.breakingTime % 2 == 0) {
-				if (this.breakingTime % 6 == 0) {
-					this.playBreakingSound(world, this.blockPos);
-				}
-			}
-
-			if (this.breakingTime > this.getBreakTime(entity)) {
-				world.destroyBlock(this.blockPos, false);
-				if (!world.isClientSide) {
-					this.playBrokenSound(world, this.blockPos);
-				}
-			}
-			this.entity.level.destroyBlockProgress(this.entity.getId(), this.blockPos, breakingTime / 8);
-			++ this.breakingTime;
-		}
-
-	}
-	
 	protected boolean isEntityNearBy() {
-		if(Math.abs(this.blockPos.getY()-this.entity.getY()) > 3) return false;
-		double x=this.blockPos.getX(),z=this.blockPos.getZ();
-		double xx=this.entity.getX(),zz=this.entity.getZ();
-		return (x-xx)*(x-xx)+(z-zz)*(z-zz)<=4;
+		if(Math.abs(this.blockPos.getY() - zombie.getY()) > 3) {
+			return false;
+		}
+		double x = this.blockPos.getX(), z = this.blockPos.getZ();
+		double xx = zombie.getX(), zz = zombie.getZ();
+		return (x - xx) * (x - xx) + (z - zz) * (z - zz) <= 4;
 	}
 
 	@Nullable
 	private BlockPos findTarget(BlockPos pos, IBlockReader worldIn) {
-		if (worldIn.getBlockState(pos).getBlock() == this.block) {
+		if (worldIn.getBlockState(pos).getBlock() == this.plantBlock) {
 			return pos;
 		} else {
 			BlockPos[] ablockpos = new BlockPos[] { pos.below(), pos.west(), pos.east(), pos.north(), pos.south(),
 					pos.below().below() };
 
 			for (BlockPos blockpos : ablockpos) {
-				if (worldIn.getBlockState(blockpos).getBlock() == this.block) {
+				if (worldIn.getBlockState(blockpos).getBlock() == this.plantBlock) {
 					return blockpos;
 				}
 			}
@@ -157,7 +146,7 @@ public class BreakBlockGoal extends MoveToBlockGoal {
 		if (ichunk == null) {
 			return false;
 		} else {
-			return ichunk.getBlockState(pos).getBlock() == this.block && ichunk.getBlockState(pos.above()).isAir()
+			return ichunk.getBlockState(pos).getBlock() == this.plantBlock && ichunk.getBlockState(pos.above()).isAir()
 					&& ichunk.getBlockState(pos.above(2)).isAir();
 		}
 	}

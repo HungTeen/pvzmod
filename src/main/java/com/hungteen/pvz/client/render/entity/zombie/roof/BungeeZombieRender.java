@@ -1,16 +1,14 @@
 package com.hungteen.pvz.client.render.entity.zombie.roof;
 
 import com.hungteen.pvz.client.model.entity.zombie.roof.BungeeZombieModel;
-import com.hungteen.pvz.client.render.entity.zombie.OldPVZZombieRender;
+import com.hungteen.pvz.client.render.entity.zombie.PVZZombieRender;
 import com.hungteen.pvz.common.entity.zombie.roof.BungeeZombieEntity;
-import com.hungteen.pvz.utils.StringUtil;
 import com.mojang.blaze3d.matrix.MatrixStack;
 import com.mojang.blaze3d.vertex.IVertexBuilder;
 
 import net.minecraft.client.renderer.IRenderTypeBuffer;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.entity.EntityRendererManager;
-import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.vector.Matrix4f;
@@ -19,10 +17,8 @@ import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 
 @OnlyIn(Dist.CLIENT)
-public class BungeeZombieRender extends OldPVZZombieRender<BungeeZombieEntity> {
+public class BungeeZombieRender extends PVZZombieRender<BungeeZombieEntity> {
 
-	private static final ResourceLocation BUNGEE_TEX = StringUtil.prefix("textures/entity/zombie/roof/bungee_zombie.png");
-	
 	public BungeeZombieRender(EntityRendererManager rendererManager) {
 		super(rendererManager, new BungeeZombieModel(), 0);
 	}
@@ -67,16 +63,6 @@ public class BungeeZombieRender extends OldPVZZombieRender<BungeeZombieEntity> {
 	      renderSide(ivertexbuilder, matrix4f, f, f1, f2, i, j, k, l, 0.025F, 0.025F, f5, f6);
 	      renderSide(ivertexbuilder, matrix4f, f, f1, f2, i, j, k, l, 0.025F, 0.0F, f5, f6);
 	      matrixStackIn.popPose();
-	   }
+	 }
 	
-	@Override
-	protected float getScaleByEntity(BungeeZombieEntity entity) {
-		return 0.5F;
-	}
-
-	@Override
-	public ResourceLocation getTextureLocation(BungeeZombieEntity entity) {
-		return BUNGEE_TEX;
-	}
-
 }

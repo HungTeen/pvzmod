@@ -40,7 +40,7 @@ public class NutEntity extends PVZItemBulletEntity {
 			if(this.getThrower() != null && level.isEmptyBlock(this.blockPosition().above()) && this.random.nextInt(12) == 0) {
 				WallNutEntity nut = EntityRegister.WALL_NUT.get().create(level);
 				nut.setOwnerUUID(this.getThrower().getUUID());
-				EntityUtil.onMobEntitySpawn(level, nut, this.blockPosition().above());
+				EntityUtil.onEntitySpawn(level, nut, this.blockPosition().above());
 				flag = true;
 			}
 		} else if(result.getType() ==  RayTraceResult.Type.ENTITY) {

@@ -15,6 +15,7 @@ import com.hungteen.pvz.common.network.PVZPacketHandler;
 import com.hungteen.pvz.common.network.PlantStatsPacket;
 import com.hungteen.pvz.common.network.PlayerStatsPacket;
 import com.hungteen.pvz.common.world.invasion.WaveManager;
+import com.hungteen.pvz.utils.ConfigUtil;
 import com.hungteen.pvz.utils.PlantUtil;
 import com.hungteen.pvz.utils.PlayerUtil;
 import com.hungteen.pvz.utils.enums.Plants;
@@ -38,8 +39,8 @@ public class PlayerDataManager {
 	
 	public PlayerDataManager(PlayerEntity player) {
 		this.player = player;
-		this.playerStats = new PlayerStats(this);
-		this.plantStats = new PlantStats(this);
+		this.playerStats = new PlayerStats();
+		this.plantStats = new PlantStats();
 		this.itemCDStats = new ItemCDStats(this);
 		this.otherStats = new OtherStats(this);
 	}
@@ -87,19 +88,16 @@ public class PlayerDataManager {
 	}
 
 	public final class PlayerStats{
-		@SuppressWarnings("unused")
-		private final PlayerDataManager playerDataManager;
+		
 		private HashMap<Resources, Integer> resources = new HashMap<>(Resources.values().length);
 		
-		private PlayerStats(PlayerDataManager dataManager) {
-			this.playerDataManager = dataManager;
+		private PlayerStats() {
 			for(Resources res : Resources.values()) {
-				if(res == Resources.TREE_LVL) resources.put(res, 1);
-				else if(res == Resources.MAX_ENERGY_NUM) resources.put(res, 1);
-				else if(res == Resources.SUN_NUM) resources.put(res, 50);
-				else if(res == Resources.SLOT_NUM) resources.put(res, 18);
+				if(res == Resources.SUN_NUM) resources.put(res, 50);
 				else if(res == Resources.LOTTERY_CHANCE) resources.put(res, 10);
-				else resources.put(res,0);
+				else if(res == Resources.GROUP_TYPE) resources.put(res, ConfigUtil.getPlayerInitialGroup());
+				else if(res == Resources.NO_FOG_TICK) resources.put(res, 0);
+				else resources.put(res, res.min);
 			}
 		}
 		
@@ -109,7 +107,7 @@ public class PlayerDataManager {
 		
 		public void setPlayerStats(Resources res, int num) {
 			resources.put(res, num);
-			this.sendPacket(player, res);
+			this.addPlayerStats(res, 0);//check (min max) and sync send packet.
 		}
 		
 		public void addPlayerStats(Resources res, int num){
@@ -136,32 +134,21 @@ public class PlayerDataManager {
 				resources.put(Resources.ENERGY_NUM, now);
 				break;
 			}
-			case MAX_ENERGY_NUM:{
-				int now = MathHelper.clamp(resources.get(Resources.MAX_ENERGY_NUM) + num, 1, PlayerUtil.MAX_ENERGY_NUM);
-				resources.put(Resources.MAX_ENERGY_NUM, now);
-				break;
-			}
-			case SLOT_NUM:{
-				int now = MathHelper.clamp(resources.get(Resources.SLOT_NUM) + num, 18, PlayerUtil.MAX_SLOT_NUM);
-				resources.put(Resources.SLOT_NUM, now);
-				break;
-			}
-			case NO_FOG_TICK:{
-				int now = Math.min(resources.get(res) + num,  PlayerUtil.MAX_MONEY);
-				resources.put(res, now);
-				break;
-			}
 			default:
-				int now = MathHelper.clamp(resources.get(res) + num, 0, PlayerUtil.MAX_MONEY);
+				int now = MathHelper.clamp(resources.get(res) + num, res.min, res.max);
 				resources.put(res, now);
 				if(res == Resources.MONEY) {
 					MoneyTrigger.INSTANCE.trigger((ServerPlayerEntity) player, now);
-				}
+				} 
 				break;
 			}
 			this.sendPacket(player, res);
 		}
 		
+		/**
+		 * add tree xp and level up.
+		 * {@link #addPlayerStats(Resources, int)}
+		 */
 		private void addTreeXp(int num) {
 			int lvl = resources.get(Resources.TREE_LVL);
 			int now = resources.get(Resources.TREE_XP);
@@ -189,7 +176,6 @@ public class PlayerDataManager {
 		
 		public void sendPacket(PlayerEntity player, Resources res){
 			if (player instanceof ServerPlayerEntity) {
-//				System.out.println(res.toString()+" "+resources.get(res));
 				PVZPacketHandler.CHANNEL.send(
 					PacketDistributor.PLAYER.with(()->{
 						return (ServerPlayerEntity) player;
@@ -221,13 +207,11 @@ public class PlayerDataManager {
 	}
 	
 	public final class PlantStats {
-		@SuppressWarnings("unused")
-		private final PlayerDataManager playerDataManager;
+		
 		private HashMap<Plants, Integer> plantXp = new HashMap<Plants, Integer>(Plants.values().length);
 		private HashMap<Plants, Integer> plantLevel = new HashMap<Plants, Integer>(Plants.values().length);
 		
-		private PlantStats(PlayerDataManager dataManager) {
-			this.playerDataManager = dataManager;
+		private PlantStats() {
 			for (Plants plant : Plants.values()) {
 				plantXp.put(plant, 0);
 				plantLevel.put(plant, 1);

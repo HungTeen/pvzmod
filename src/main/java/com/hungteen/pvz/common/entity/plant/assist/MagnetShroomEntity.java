@@ -67,7 +67,7 @@ public class MagnetShroomEntity extends PVZPlantEntity {
 			LivingEntity target = this.getTarget();
 			if(target != null) {
 				if(! this.checkCanPlantTarget(target)) {
-					if(! EntityUtil.checkCanEntityAttack(this, target) && target instanceof PVZPlantEntity && ((PVZPlantEntity) target).hasMetal()) {
+					if(! EntityUtil.canTargetEntity(this, target) && target instanceof PVZPlantEntity && ((PVZPlantEntity) target).hasMetal()) {
 						
 					} else {
 						this.setTarget(null);
@@ -135,7 +135,7 @@ public class MagnetShroomEntity extends PVZPlantEntity {
 	}
 	
 	@Override
-	protected boolean canPlantTarget(LivingEntity entity) {
+	protected boolean canPlantTarget(Entity entity) {
 		return entity instanceof IHasMetal && ((IHasMetal) entity).hasMetal();
 	}
 	
@@ -205,7 +205,7 @@ public class MagnetShroomEntity extends PVZPlantEntity {
 			}
 			List<LivingEntity> list1 = new ArrayList<LivingEntity>();
 			this.mob.level.getEntitiesOfClass(PVZPlantEntity.class, getAABB()).forEach((plant) -> {
-				if(! EntityUtil.checkCanEntityAttack(mob, plant) && this.checkSenses(plant)) {
+				if(! EntityUtil.canTargetEntity(mob, plant) && this.checkSenses(plant)) {
 					if(plant.hasMetal()) {
 						list1.add(plant);
 					}
@@ -233,7 +233,7 @@ public class MagnetShroomEntity extends PVZPlantEntity {
 			if(entity == null || ! entity.isAlive()) {
 				return false;
 			}
-			if(! EntityUtil.checkCanEntityAttack(mob, entity) && this.checkSenses(entity)) {
+			if(! EntityUtil.canTargetEntity(mob, entity) && this.checkSenses(entity)) {
 				this.mob.setTarget(entity);
 				return true;
 			}

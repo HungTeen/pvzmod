@@ -34,7 +34,7 @@ public class ZomBossDollItem extends Item {
 		if(! world.isClientSide && ! player.getCooldowns().isOnCooldown(this) && context.getClickedFace() == Direction.UP) {
 			if(this.canSpawnHere(world, pos)) {
 				ZomBossEntity zomboss = EntityRegister.ZOMBOSS.get().create(world);
-				EntityUtil.onMobEntitySpawn(world, zomboss, pos.above());
+				EntityUtil.onEntitySpawn(world, zomboss, pos.above());
 			}
 		}
 		return super.useOn(context);

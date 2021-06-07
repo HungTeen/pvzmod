@@ -376,7 +376,7 @@ c8229d0f41a4e3f3041965b07c0544187cc4a375 data/pvz/loot_tables/blocks/gold_tile3.
 eb9f90911f7b9301175a741d9fd01e2ee23125eb data/pvz/loot_tables/blocks/lantern.json
 48e02e235f481a472848c3daf3640d2891660989 data/pvz/loot_tables/blocks/light_ore.json
 2d888e4966e902d3f2306cffe11fced2f3896f65 data/pvz/loot_tables/blocks/magic_ore.json
-c8e180540f649db0d91d7ebff508ae7e0be097c0 data/pvz/loot_tables/blocks/nut_leaves.json
+c0fedfbca880395c63fe80f5c6b71c0dce7ac3ea data/pvz/loot_tables/blocks/nut_leaves.json
 f402a5ae35ed5f3692c13aac9e0e6791e043c918 data/pvz/loot_tables/blocks/nut_sapling.json
 de79c756a8b8505782fb78ab5991a7bdd8e75a25 data/pvz/loot_tables/blocks/origin_block.json
 51b7f8f1705f5254626bbe7cc9ba0c04b70ea988 data/pvz/loot_tables/blocks/origin_ore.json
@@ -402,7 +402,7 @@ d3bd384b4b316b89d97afe58e3e8e9ca1bc0b61d data/pvz/loot_tables/entities/bungee_zo
 a0f222c0d18691f9541cd8ae4072b75a1dfd909e data/pvz/loot_tables/entities/coffin.json
 64d857e9eca12a7b1445a548f1f09bc1e35af6b6 data/pvz/loot_tables/entities/conehead_zombie.json
 c928873c6116649ee0a9787e29bf624892ace6a5 data/pvz/loot_tables/entities/digger_zombie.json
-03700439f863a4da8c33184b9c11138c57935746 data/pvz/loot_tables/entities/flag_zombie.json
+3253a72698e92eba621b82ad9894b2547b6de879 data/pvz/loot_tables/entities/flag_zombie.json
 5b1a3973063f3a25058827381db2d2568ddee4e6 data/pvz/loot_tables/entities/foodie_zombie.json
 7fccf7a3da885e5bd047f67c39ba02852cc5222e data/pvz/loot_tables/entities/football_zombie.json
 ffce9b5083da5954cf2035b80d486f45992f16ae data/pvz/loot_tables/entities/gargantuar.json

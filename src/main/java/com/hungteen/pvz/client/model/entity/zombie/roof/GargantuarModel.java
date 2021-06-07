@@ -1,10 +1,15 @@
 package com.hungteen.pvz.client.model.entity.zombie.roof;
 
-import com.hungteen.pvz.client.model.entity.zombie.PVZZombieModel;
+import com.hungteen.pvz.client.model.entity.zombie.IZombieModel;
+import com.hungteen.pvz.common.entity.zombie.body.ZombieDropBodyEntity;
+import com.hungteen.pvz.common.entity.zombie.body.ZombieDropBodyEntity.BodyType;
 import com.hungteen.pvz.common.entity.zombie.roof.GargantuarEntity;
 import com.hungteen.pvz.common.entity.zombie.roof.GargantuarEntity.GargantuarType;
 import com.hungteen.pvz.utils.AnimationUtil;
+import com.mojang.blaze3d.matrix.MatrixStack;
+import com.mojang.blaze3d.vertex.IVertexBuilder;
 
+import net.minecraft.client.renderer.entity.model.EntityModel;
 import net.minecraft.client.renderer.model.ModelRenderer;
 import net.minecraft.util.math.MathHelper;
 
@@ -13,7 +18,7 @@ import net.minecraft.util.math.MathHelper;
 // Paste this class into your mod and generate all required imports
 
 
-public class GargantuarModel<T extends GargantuarEntity> extends PVZZombieModel<T> {
+public class GargantuarModel<T extends GargantuarEntity> extends EntityModel<T> implements IZombieModel<T>{
 	private final ModelRenderer total;
 	private final ModelRenderer left_leg;
 	private final ModelRenderer right_leg;
@@ -375,38 +380,31 @@ public class GargantuarModel<T extends GargantuarEntity> extends PVZZombieModel<
 	}
 
 	@Override
-	public ModelRenderer getZombieLeftHand() {
-		return this.left_hand;
+	public void tickPartAnim(ZombieDropBodyEntity entity, BodyType type, float limbSwing, float limbSwingAmount,
+			float ageInTicks, float netHeadYaw, float headPitch) {
+		
 	}
 
 	@Override
-	public ModelRenderer getZombieRightHand() {
-		return this.right_hand;
+	public void renderBody(ZombieDropBodyEntity entity, MatrixStack stack, IVertexBuilder buffer, int packedLight,
+			int packedOverlay, BodyType type) {
+		
 	}
 
 	@Override
-	public ModelRenderer getZombieLeftLeg() {
-		return this.left_leg;
+	public EntityModel<T> getZombieModel() {
+		return this;
 	}
 
 	@Override
-	public ModelRenderer getZombieRightLeg() {
-		return this.right_leg;
-	}
-
-	@Override
-	public ModelRenderer getZombieHead() {
-		return this.head;
+	public void renderToBuffer(MatrixStack matrixStack, IVertexBuilder buffer, int packedLight, int packedOverlay, float red, float green, float blue, float alpha){
+		this.total.render(matrixStack, buffer, packedLight, packedOverlay);
 	}
 	
-	@Override
-	public ModelRenderer getZombieUpBody() {
-		return this.up;
-	}
-
-	@Override
-	public ModelRenderer getZombieWholeBody() {
-		return this.total;
+	public void setRotationAngle(ModelRenderer modelRenderer, float x, float y, float z) {
+		modelRenderer.xRot = x;
+		modelRenderer.yRot = y;
+		modelRenderer.zRot = z;
 	}
 	
 }

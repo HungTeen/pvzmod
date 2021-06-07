@@ -33,7 +33,7 @@ public class HypnoShroomEntity extends PVZPlantEntity {
 					if(cause.getEntity() != null) {
 						cause.getEntity().remove();
 						GargantuarEntity gar = EntityRegister.GARGANTUAR.get().create(level);
-						EntityUtil.onMobEntitySpawn(level, gar, cause.getEntity().blockPosition());
+						EntityUtil.onEntitySpawn(level, gar, cause.getEntity().blockPosition());
 						gar.setHealth(gar.getMaxHealth() * this.getSummonHealth());
 						gar.onCharmed(this);
 					}

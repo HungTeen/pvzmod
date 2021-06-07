@@ -153,7 +153,7 @@ public class WaveManager {
 //			System.out.println(posX + " " + (height + 20) + " " + posZ);
 			BungeeZombieEntity bungee = EntityRegister.BUNGEE_ZOMBIE.get().create(world);
 			bungee.setBungeeType(BungeeTypes.SUMMON);
-			EntityUtil.onMobEntitySpawn(world, bungee, new BlockPos(player.blockPosition().getX() + posX, height + 20, player.blockPosition().getZ() + posZ));
+			EntityUtil.onEntitySpawn(world, bungee, new BlockPos(player.blockPosition().getX() + posX, height + 20, player.blockPosition().getZ() + posZ));
 			EntityUtil.playSound(player, SoundRegister.BUNGEE_SCREAM.get());
 		}
 	}
@@ -235,12 +235,12 @@ public class WaveManager {
 			PVZInvasionData data = PVZInvasionData.getOverWorldInvasionData(world);
 			if(data.hasEvent(InvasionEvents.YETI) && world.random.nextInt(3) == 0) {
 				PVZZombieEntity yeti = EntityRegister.YETI_ZOMBIE.get().create(world);
-			    EntityUtil.onMobEntitySpawn(world, yeti, mid.offset(0, 1, 0));
+			    EntityUtil.onEntitySpawn(world, yeti, mid.offset(0, 1, 0));
 			}
 		}
 		//spawn team leader -- flag zombie.
 		PVZZombieEntity flagZombie = EntityRegister.FLAG_ZOMBIE.get().create(world);
-		EntityUtil.onMobEntitySpawn(world, flagZombie, mid.offset(0, 1, 0));
+		EntityUtil.onEntitySpawn(world, flagZombie, mid.offset(0, 1, 0));
 		return true;
 	}
 	
@@ -250,7 +250,7 @@ public class WaveManager {
 		int z = pos.getZ() + this.world.random.nextInt(range) - range / 2;
 		int y = this.world.getHeight(Type.MOTION_BLOCKING_NO_LEAVES, x, z);
 		PVZZombieEntity zombieEntity = ZombieUtil.getZombieEntity(world, zombie);
-		EntityUtil.onMobEntitySpawn(world, zombieEntity, new BlockPos(x, y + 1, z));
+		EntityUtil.onEntitySpawn(world, zombieEntity, new BlockPos(x, y + 1, z));
 	}
 	
 	/**

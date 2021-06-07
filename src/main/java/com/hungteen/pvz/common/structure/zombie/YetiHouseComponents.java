@@ -67,7 +67,7 @@ public class YetiHouseComponents {
 			} else if(function.equals("spawn")) {
 				if(rand.nextInt(3) == 0) {
 					YetiZombieEntity yeti = EntityRegister.YETI_ZOMBIE.get().create(worldIn.getLevel());
-					EntityUtil.onMobEntitySpawn(worldIn, yeti, pos);
+					EntityUtil.onEntitySpawn(worldIn, yeti, pos);
 					worldIn.setBlock(pos, Blocks.AIR.defaultBlockState(), 2);
 				}
 			}

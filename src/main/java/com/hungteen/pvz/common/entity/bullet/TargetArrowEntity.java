@@ -58,7 +58,7 @@ public class TargetArrowEntity extends AbstractArrowEntity {
 			zombie.setBungeeType(BungeeTypes.HELP);
 			zombie.setCharmed(true);
 			zombie.setStealTarget((LivingEntity) result.getEntity());
-			EntityUtil.onMobEntitySpawn(level, zombie, blockPosition().above(20));
+			EntityUtil.onEntitySpawn(level, zombie, blockPosition().above(20));
 			super.onHitEntity(result);
 			this.remove();
 		}

@@ -113,8 +113,8 @@ public class PVZBlockLootTables extends BlockLootTables {
 		return createLeavesDrops(p_218526_0_, p_218526_1_, p_218526_2_)
 				.withPool(LootPool.lootPool().setRolls(ConstantRange.exactly(1)).when(HAS_NO_SHEARS_OR_SILK_TOUCH)
 						.add(applyExplosionCondition(p_218526_0_, ItemLootEntry.lootTableItem(drop))
-								.when(TableBonus.bonusLevelFlatChance(Enchantments.BLOCK_FORTUNE, 0.005F, 0.0055555557F,
-										0.00625F, 0.008333334F, 0.025F))));
+								.when(TableBonus.bonusLevelFlatChance(Enchantments.BLOCK_FORTUNE, 0.01F, 0.015F,
+										0.02F, 0.025F, 0.03F))));
 	}
 
 }

@@ -272,7 +272,7 @@ public class CobCannonEntity extends PVZPlantEntity {
 
 	@Override
 	public ActionResultType interactAt(PlayerEntity player, Vector3d vec3d, Hand hand) {
-		if (player.isSecondaryUseActive() || EntityUtil.checkCanEntityAttack(this, player)) {
+		if (player.isSecondaryUseActive() || EntityUtil.canTargetEntity(this, player)) {
 			return ActionResultType.FAIL;
 		}
 		ItemStack stack = player.getItemInHand(hand);
@@ -295,7 +295,7 @@ public class CobCannonEntity extends PVZPlantEntity {
 
 	@Override
 	protected boolean canAddPassenger(Entity passenger) {
-		return ! EntityUtil.checkCanEntityAttack(this, passenger) && super.canAddPassenger(passenger);
+		return ! EntityUtil.canTargetEntity(this, passenger) && super.canAddPassenger(passenger);
 	}
 
 	@Override

@@ -1,5 +1,8 @@
 package com.hungteen.pvz.client.model.entity.zombie.roof;
 
+import com.hungteen.pvz.client.model.entity.zombie.IZombieModel;
+import com.hungteen.pvz.common.entity.zombie.body.ZombieDropBodyEntity;
+import com.hungteen.pvz.common.entity.zombie.body.ZombieDropBodyEntity.BodyType;
 import com.hungteen.pvz.common.entity.zombie.roof.ZomBossEntity;
 import com.hungteen.pvz.common.entity.zombie.roof.ZomBossEntity.ZomBossStates;
 import com.hungteen.pvz.utils.AnimationUtil;
@@ -14,7 +17,7 @@ import net.minecraft.client.renderer.model.ModelRenderer;
 // Paste this class into your mod and generate all required imports
 
 
-public class ZomBossModel extends EntityModel<ZomBossEntity> {
+public class ZomBossModel extends EntityModel<ZomBossEntity> implements IZombieModel<ZomBossEntity>{
 	private final ModelRenderer total;
 	private final ModelRenderer left_leg;
 	private final ModelRenderer left_shoo;
@@ -196,5 +199,22 @@ public class ZomBossModel extends EntityModel<ZomBossEntity> {
 		modelRenderer.xRot = x;
 		modelRenderer.yRot = y;
 		modelRenderer.zRot = z;
+	}
+
+	@Override
+	public void tickPartAnim(ZombieDropBodyEntity entity, BodyType type, float limbSwing, float limbSwingAmount,
+			float ageInTicks, float netHeadYaw, float headPitch) {
+		
+	}
+
+	@Override
+	public void renderBody(ZombieDropBodyEntity entity, MatrixStack stack, IVertexBuilder buffer, int packedLight,
+			int packedOverlay, BodyType type) {
+		
+	}
+
+	@Override
+	public EntityModel<ZomBossEntity> getZombieModel() {
+		return this;
 	}
 }

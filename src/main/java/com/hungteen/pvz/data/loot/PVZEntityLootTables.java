@@ -22,7 +22,7 @@ public class PVZEntityLootTables implements Consumer<BiConsumer<ResourceLocation
 		t.accept(PVZLoot.NORMAL_ZOMBIE, getZombieLootTable());
 		t.accept(PVZLoot.FLAG_ZOMBIE, getZombieLootTable().withPool(LootPool.lootPool().setRolls(ConstantRange.exactly(1))
 				.add(ItemLootEntry.lootTableItem(ItemRegister.ZOMBIE_FLAG.get()))
-				.when(RandomChanceWithLooting.randomChanceAndLootingBoost(0.01F, 0.01F))
+				.when(RandomChanceWithLooting.randomChanceAndLootingBoost(0.05F, 0.01F))
 				));
 		t.accept(PVZLoot.CONEHEAD_ZOMBIE, getZombieLootTable().withPool(LootPool.lootPool().setRolls(ConstantRange.exactly(1))
 				.add(ItemLootEntry.lootTableItem(ItemRegister.CONE_HEAD.get()))

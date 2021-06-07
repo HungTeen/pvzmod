@@ -43,7 +43,7 @@ public class BambooLordEntity extends PlantCloserEntity {
 	protected void explode() {
 		float range = 40;
 		List<LivingEntity> list = new ArrayList<>();
-		EntityUtil.getEntityTargetableEntity(this, EntityUtil.getEntityAABB(this, range, range)).forEach((target) -> {
+		EntityUtil.getTargetableLivings(this, EntityUtil.getEntityAABB(this, range, range)).forEach((target) -> {
 			if(this.getSensing().canSee(target)) {
 				list.add(target);
 			}
@@ -71,7 +71,7 @@ public class BambooLordEntity extends PlantCloserEntity {
 			EntityUtil.spawnParticle(this, 5);
 		}
 		float range = 1.5F;
-		EntityUtil.getAttackEntities(this, EntityUtil.getEntityAABB(this, range, range)).forEach((target) -> {
+		EntityUtil.getTargetableEntities(this, EntityUtil.getEntityAABB(this, range, range)).forEach((target) -> {
 			target.hurt(PVZDamageSource.causeExplosionDamage(this, this), this.getAttackDamage());
 			target.setDeltaMovement(target.getDeltaMovement().add(0, UP_SPEED, 0));
 		});

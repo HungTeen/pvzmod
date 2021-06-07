@@ -51,7 +51,7 @@ public class TrickZombieEntity extends PVZZombieEntity{
 			if(this.isCharmed()) {
 				zombie.setCharmed(true);
 			}
-			EntityUtil.onMobEntitySpawn(level, zombie, pos);
+			EntityUtil.onEntitySpawn(level, zombie, pos);
 		}
 		return super.hurt(source, amount);
 	}

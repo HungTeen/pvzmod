@@ -67,7 +67,7 @@ public class TangleKelpEntity extends PVZPlantEntity{
 		super.startSuperMode(first);
 		if(!level.isClientSide) {
 			int cnt = this.getCount();
-			for(Entity target:EntityUtil.getEntityTargetableEntity(this, EntityUtil.getEntityAABB(this, 25, 3))) {
+			for(Entity target:EntityUtil.getTargetableEntities(this, EntityUtil.getEntityAABB(this, 25, 3))) {
 				if(target.isInWater()) {
 					-- cnt;
 					TangleKelpEntity entity = EntityRegister.TANGLE_KELP.get().create(level);

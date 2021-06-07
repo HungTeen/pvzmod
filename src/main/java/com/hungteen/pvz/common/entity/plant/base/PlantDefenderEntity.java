@@ -73,7 +73,7 @@ public abstract class PlantDefenderEntity extends PVZPlantEntity implements IDef
 	@Override
 	public void attract() {
 		float range = getAttractRange();
-		for(LivingEntity target:EntityUtil.getEntityTargetableEntity(this, EntityUtil.getEntityAABB(this, range, range))) {
+		for(LivingEntity target:EntityUtil.getTargetableLivings(this, EntityUtil.getEntityAABB(this, range, range))) {
 			this.attract(target);
 		}
 	}
@@ -87,8 +87,8 @@ public abstract class PlantDefenderEntity extends PVZPlantEntity implements IDef
 	}
 	
 	@Override
-	public float getCurrentHealth() {
-		return super.getCurrentHealth() + this.getDefenceLife();
+	public float getCurrentDefenceHealth() {
+		return super.getCurrentDefenceHealth() + this.getDefenceLife();
 	}
 	
 	@Override

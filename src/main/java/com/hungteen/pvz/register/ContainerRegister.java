@@ -7,7 +7,6 @@ import com.hungteen.pvz.client.gui.screen.EssenceAltarScreen;
 import com.hungteen.pvz.client.gui.screen.FragmentSpliceScreen;
 import com.hungteen.pvz.client.gui.screen.ImitaterScreen;
 import com.hungteen.pvz.client.gui.screen.PeaGunScreen;
-import com.hungteen.pvz.client.gui.screen.PlayerInventoryScreen;
 import com.hungteen.pvz.client.gui.screen.SlotMachineScreen;
 import com.hungteen.pvz.client.gui.screen.SunConverterScreen;
 import com.hungteen.pvz.client.gui.screen.shop.DaveShopScreen;
@@ -20,7 +19,6 @@ import com.hungteen.pvz.common.container.EssenceAltarContainer;
 import com.hungteen.pvz.common.container.FragmentSpliceContainer;
 import com.hungteen.pvz.common.container.ImitaterContainer;
 import com.hungteen.pvz.common.container.PeaGunContainer;
-import com.hungteen.pvz.common.container.PlayerInventoryContainer;
 import com.hungteen.pvz.common.container.SlotMachineContainer;
 import com.hungteen.pvz.common.container.SunConverterContainer;
 import com.hungteen.pvz.common.container.shop.DaveShopContainer;
@@ -44,11 +42,11 @@ public class ContainerRegister {
 
 	public static final DeferredRegister<ContainerType<?>> CONTAINER_TYPES = DeferredRegister.create(ForgeRegistries.CONTAINERS, PVZMod.MOD_ID);
 	
-	public static final RegistryObject<ContainerType<PlayerInventoryContainer>> PLAYER_INVENTORY = CONTAINER_TYPES.register("player_inventory", () -> {
-		return IForgeContainerType.create((windowId, inv, data) -> {
-            return new PlayerInventoryContainer(windowId, inv.player);
-        });
-	});
+//	public static final RegistryObject<ContainerType<PlayerInventoryContainer>> PLAYER_INVENTORY = CONTAINER_TYPES.register("player_inventory", () -> {
+//		return IForgeContainerType.create((windowId, inv, data) -> {
+//            return new PlayerInventoryContainer(windowId, inv.player);
+//        });
+//	});
 	public static final RegistryObject<ContainerType<AlmanacContainer>> ALMANAC = CONTAINER_TYPES.register("almanac", () -> {
 		return IForgeContainerType.create((windowId, inv, data) -> {
             return new AlmanacContainer(windowId, inv.player);
@@ -112,7 +110,7 @@ public class ContainerRegister {
 	
 	@SubscribeEvent
     public static void onClientSetupEvent(FMLClientSetupEvent event) {
-        ScreenManager.register(PLAYER_INVENTORY.get(), PlayerInventoryScreen::new);
+//        ScreenManager.register(PLAYER_INVENTORY.get(), PlayerInventoryScreen::new);
         ScreenManager.register(ALMANAC.get(), AlmanacScreen::new);
         ScreenManager.register(PEA_GUN.get(), PeaGunScreen::new);
         ScreenManager.register(DAVE_SHOP.get(), DaveShopScreen::new);

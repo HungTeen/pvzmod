@@ -31,7 +31,7 @@ public class PlayerEventHandler {
 	 * run when player right click plantEntity with shovel.
 	 */
 	public static void onPlantShovelByPlayer(PlayerEntity player, PVZPlantEntity plant, ItemStack stack) {
-		if(player.abilities.instabuild || player.getUUID().equals(plant.getOwnerUUID().get()) || ! EntityUtil.checkCanEntityAttack(plant, player)) {
+		if(player.abilities.instabuild || player.getUUID().equals(plant.getOwnerUUID().get()) || ! EntityUtil.checkCanEntityBeAttack(plant, player)) {
 			if(plant.getOuterPlantType().isPresent()) {//has outer plant, shovel outer plant.
 				SunEntity.spawnSunsByAmount(player.level, plant.blockPosition(), EnchantmentUtil.getSunShovelAmount(stack, plant.outerSunCost));
 				plant.removeOuterPlant();

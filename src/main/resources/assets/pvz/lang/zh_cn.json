@@ -71,6 +71,8 @@
 //misc
     "entity.pvz.ducky_tube":"鸭子救生圈",
     "entity.pvz.bobsle_car":"雪橇车",
+    "entity.pvz.zombie_part":"僵尸防具",
+    "entity.pvz.zombie_drop_body":"僵尸肢体",
 //animal
     "entity.pvz.foodie_zombie":"吃货僵尸",
     "item.pvz.foodie_zombie_spawn_egg":"吃货僵尸刷怪蛋", 
@@ -212,10 +214,10 @@
     "item.pvz.chomper_enjoy_card":"大嘴花体验卡",
     "entity.pvz.small_chomper":"地下大嘴花",
 //Repeater
-    "entity.pvz.repeater":"双枪射手",
-    "item.pvz.repeater_spawn_egg":"双枪射手刷怪蛋",
-    "item.pvz.repeater_card":"双枪射手卡",
-    "item.pvz.repeater_enjoy_card":"双枪射手体验卡",
+    "entity.pvz.repeater":"双发射手",
+    "item.pvz.repeater_spawn_egg":"双发射手刷怪蛋",
+    "item.pvz.repeater_card":"双发射手卡",
+    "item.pvz.repeater_enjoy_card":"双发射手体验卡",
 //LilyPad
     "entity.pvz.lily_pad":"睡莲",
     "block.pvz.lily_pad":"睡莲",
@@ -898,6 +900,24 @@
     "advancement.pvz.sunny_days.desc":"至少拥有8000阳光",
     "advancement.pvz.towering_wisdom":"象牙塔",
     "advancement.pvz.towering_wisdom.desc":"智慧树等级达到100级",
+//command
+    "command.pvz.clear_events":"已清除所有入侵事件",
+    "command.pvz.add_event":"已添加入侵事件",
+    "command.pvz.add_zombie":"添加僵尸生成",
+    "command.pvz.add_zombie_fail":"不能将该僵尸加入生成",
+    "command.pvz.remove_zombie":"移除僵尸生成",
+//resources
+    "resource.pvz.tree_lvl":"智慧树等级",
+    "resource.pvz.tree_xp":"智慧树经验",
+    "resource.pvz.money":"金钱数",
+    "resource.pvz.gem_num":"宝石数",
+    "resource.pvz.sun_num":"阳光数",
+    "resource.pvz.energy_num":"能量豆数",
+    "resource.pvz.max_energy_num":"能量豆上限",
+    "resource.pvz.no_fog_tick":"无雾时间",
+    "resource.pvz.kill_count":"击杀数",
+    "resource.pvz.lottery_chance":"抽奖次数",
+    "resource.pvz.group_type":"玩家阵营",
 //enchantment
     "enchantment.pvz.sun_cost_reduce":"节能",
     "enchantment.pvz.break_out":"爆发",

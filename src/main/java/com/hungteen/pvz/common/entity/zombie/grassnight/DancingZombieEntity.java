@@ -82,7 +82,7 @@ public class DancingZombieEntity extends PVZZombieEntity{
 				BlockPos pos = this.blockPosition().offset(POS_OFFSET[i][0], 0, POS_OFFSET[i][1]);
 				dancer.setOwnerId(this.getId());
 				dancer.setCharmed(this.isCharmed());
-				EntityUtil.onMobEntitySpawn(level, dancer, pos);
+				EntityUtil.onEntitySpawn(level, dancer, pos);
 			}
 		}
 	}

@@ -6,10 +6,12 @@ import java.util.UUID;
 
 import javax.annotation.Nullable;
 
+import com.hungteen.pvz.api.enums.PVZGroupType;
 import com.hungteen.pvz.api.interfaces.IPVZPlant;
 import com.hungteen.pvz.common.advancement.trigger.PlantSuperTrigger;
 import com.hungteen.pvz.common.entity.drop.SunEntity;
 import com.hungteen.pvz.common.entity.goal.PVZLookRandomlyGoal;
+import com.hungteen.pvz.common.entity.goal.target.PVZHurtByTargetGoal;
 import com.hungteen.pvz.common.entity.plant.enforce.SquashEntity;
 import com.hungteen.pvz.common.entity.plant.light.GoldLeafEntity;
 import com.hungteen.pvz.common.entity.plant.spear.SpikeWeedEntity;
@@ -130,6 +132,7 @@ public abstract class PVZPlantEntity extends CreatureEntity implements IPVZPlant
 	@Override
 	protected void registerGoals() {
 		this.goalSelector.addGoal(2, new PVZLookRandomlyGoal(this));
+		this.targetSelector.addGoal(2, new PVZHurtByTargetGoal(this, 10));
 	}
 
 	/**
@@ -278,16 +281,25 @@ public abstract class PVZPlantEntity extends CreatureEntity implements IPVZPlant
 	}
 
 	/**
-	 * some zombie can attack but can not target. such as digger zombie.
+	 * check can plant set target as attackTarget.
+	 * {@link EntityUtil#canEntityAttack(Entity, Entity)}
 	 */
-	public boolean checkCanPlantTarget(LivingEntity entity) {
-		return EntityUtil.checkCanEntityAttack(this, entity) && this.canPlantTarget(entity);
+	public boolean checkCanPlantTarget(Entity entity) {
+		return EntityUtil.checkCanEntityBeTarget(this, entity) && this.canPlantTarget(entity);
+	}
+	
+	/**
+	 * check can plant attack target.
+	 * {@link EntityUtil#canAttackEntity(Entity, Entity)}
+	 */
+	public boolean checkCanPlantAttack(Entity entity) {
+		return EntityUtil.checkCanEntityBeAttack(this, entity) && this.canPlantTarget(entity);
 	}
 
 	/**
 	 * use to extends for specific plants.
 	 */
-	protected boolean canPlantTarget(LivingEntity entity) {
+	protected boolean canPlantTarget(Entity entity) {
 		if (entity instanceof DiggerZombieEntity) {
 			return ((DiggerZombieEntity) entity).getAttackTime() == DiggerZombieEntity.MAX_OUT_TIME;
 		} else if (entity instanceof BalloonZombieEntity) {
@@ -356,7 +368,7 @@ public abstract class PVZPlantEntity extends CreatureEntity implements IPVZPlant
 					}
 				} else {
 					if (this instanceof PVZPlantEntity && entityIn instanceof PVZPlantEntity
-							&& !EntityUtil.checkCanEntityAttack(this, entityIn)) {
+							&& !EntityUtil.canTargetEntity(this, entityIn)) {
 						if (this.tickCount >= entityIn.tickCount) {
 							this.hurt(DamageSource.CRAMMING, 10);
 						}
@@ -411,10 +423,10 @@ public abstract class PVZPlantEntity extends CreatureEntity implements IPVZPlant
 				return false;
 			}
 			if (target instanceof SquashEntity) {
-				return !EntityUtil.checkCanEntityAttack(this, target);
+				return !EntityUtil.canTargetEntity(this, target);
 			}
 			if (target instanceof SpikeWeedEntity) {
-				return !EntityUtil.checkCanEntityAttack(this, target);
+				return !EntityUtil.canTargetEntity(this, target);
 			}
 			return true;
 		}
@@ -471,7 +483,6 @@ public abstract class PVZPlantEntity extends CreatureEntity implements IPVZPlant
 		compound.putInt("plant_attack_time", this.getAttackTime());
 		compound.putInt("plant_gold_time", this.getGoldTime());
 		compound.putInt("plant_boost_time", this.getBoostTime());
-		compound.putBoolean("is_plant_charmed", this.isCharmed());
 		compound.putInt("plant_sleep_time", this.getSleepTime());
 		compound.putInt("plant_live_tick", this.getLiveTick());
 		this.outerPlant.ifPresent((plant) -> {
@@ -517,9 +528,6 @@ public abstract class PVZPlantEntity extends CreatureEntity implements IPVZPlant
 		}
 		if (compound.contains("plant_boost_time")) {
 			this.setBoostTime(compound.getInt("plant_boost_time"));
-		}
-		if (compound.contains("is_plant_charmed")) {
-			this.setCharmed(compound.getBoolean("is_plant_charmed"));
 		}
 		if (compound.contains("plant_sleep_time")) {
 			this.setSleepTime(compound.getInt("plant_sleep_time"));
@@ -623,6 +631,11 @@ public abstract class PVZPlantEntity extends CreatureEntity implements IPVZPlant
 	public Ranks getPlantRank(Plants plant) {
 		return PlantUtil.getPlantRankByName(plant);
 	}
+	
+	@Override
+	public PVZGroupType getEntityGroupType() {
+		return this.isCharmed() ? PVZGroupType.ZOMBIES : PVZGroupType.PLANTS;
+	}
 
 	@Override
 	public boolean removeWhenFarAway(double distanceToClosestPlayer) {
@@ -723,12 +736,25 @@ public abstract class PVZPlantEntity extends CreatureEntity implements IPVZPlant
 		this.remove();
 	}
 
+	/**
+	 * get plant's defence life.
+	 */
+	public float getCurrentDefenceHealth() {
+		return this.getPumpkinLife();
+	}
+	
+	/**
+	 * the total health of plants include defence health. 
+	 */
 	public float getCurrentHealth() {
-		return this.getHealth() + this.getPumpkinLife();
+		return this.getHealth() + this.getCurrentDefenceHealth();
 	}
 
+	/**
+	 * the total max health of plants include defence health. 
+	 */
 	public float getCurrentMaxHealth() {
-		return this.getMaxHealth() + this.getPumpkinLife();
+		return this.getMaxHealth() + this.getCurrentDefenceHealth();
 	}
 
 	protected boolean isPlantInStage(int stage) {
@@ -782,6 +808,7 @@ public abstract class PVZPlantEntity extends CreatureEntity implements IPVZPlant
 		return entityData.get(PLANT_LVL);
 	}
 
+	@Override
 	public Optional<UUID> getOwnerUUID() {
 		return entityData.get(OWNER_UUID);
 	}
@@ -831,6 +858,7 @@ public abstract class PVZPlantEntity extends CreatureEntity implements IPVZPlant
 		this.setPlantState(AlgorithmUtil.BitOperator.setBit(this.getPlantState(), LADDER_FLAG, flag));
 	}
 	
+	@Override
 	public boolean isCharmed() {
 		return AlgorithmUtil.BitOperator.hasBitOne(this.getPlantState(), CHARM_FLAG);
 	}

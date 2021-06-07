@@ -61,7 +61,7 @@ public class PuffShroomEntity extends PlantShooterEntity {
 			int x = this.getHelpRange();
 			int cnt = 1;
 			for(PuffShroomEntity shroom : level.getEntities(EntityRegister.PUFF_SHROOM.get(), EntityUtil.getEntityAABB(this, x, x), (shroom)-> {
-				return ! EntityUtil.checkCanEntityAttack(this, shroom);
+				return ! EntityUtil.canTargetEntity(this, shroom);
 			})) {
 				if(shroom.canStartSuperMode()) {
 				    shroom.startSuperMode(false);

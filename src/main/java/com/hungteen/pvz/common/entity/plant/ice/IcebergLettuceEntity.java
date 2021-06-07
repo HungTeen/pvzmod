@@ -45,7 +45,7 @@ public class IcebergLettuceEntity extends PlantCloserEntity implements IIcePlant
 		}
 		EntityUtil.playSound(this, SoundRegister.ZOMBIE_FROZEN.get());
 		int cnt = 0;
-		for(Entity target : EntityUtil.getAttackEntities(this, EntityUtil.getEntityAABB(this, range, range))) {
+		for(Entity target : EntityUtil.getTargetableEntities(this, EntityUtil.getEntityAABB(this, range, range))) {
 			this.dealDamageTo(target);
 			if(target instanceof LivingEntity && EntityUtil.isEntityCold((LivingEntity) target)) {
 				++ cnt;

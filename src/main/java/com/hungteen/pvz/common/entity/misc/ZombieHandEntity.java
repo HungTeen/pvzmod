@@ -1,5 +1,6 @@
 package com.hungteen.pvz.common.entity.misc;
 
+import com.hungteen.pvz.api.enums.PVZGroupType;
 import com.hungteen.pvz.common.misc.damage.PVZDamageSource;
 import com.hungteen.pvz.utils.EntityUtil;
 
@@ -35,7 +36,7 @@ public class ZombieHandEntity extends AbstractOwnerEntity {
 	}
 	
 	protected void performAttack() {
-		for(Entity target : EntityUtil.getAttackEntities(this, EntityUtil.getEntityAABB(this, 0.5f, 1f))) {
+		for(Entity target : EntityUtil.getTargetableEntities(this, EntityUtil.getEntityAABB(this, 0.5f, 1f))) {
 			if(target instanceof LivingEntity) {
 				target.hurt(PVZDamageSource.causeNormalDamage(this, this.owner), getAttackDamage((LivingEntity) target));
 			    target.setPos(target.getX(), target.getY() - 3, target.getZ());
@@ -44,8 +45,8 @@ public class ZombieHandEntity extends AbstractOwnerEntity {
 	}
 	
 	@Override
-	public int getInitialEntityGroup() {
-		return - 1;
+	public PVZGroupType getInitialEntityGroup() {
+		return PVZGroupType.ZOMBIES;
 	}
 	
 	private float getAttackDamage(LivingEntity target) {

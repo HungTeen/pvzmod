@@ -88,7 +88,7 @@ public class ChomperEntity extends PVZPlantEntity {
 	public void startSuperMode(boolean first) {
 		super.startSuperMode(first);
 		int cnt = this.getSuperAttackCnt();
-		for (Entity target : EntityUtil.getEntityTargetableEntity(this, EntityUtil.getEntityAABB(this, this.SUPER_RANGE, this.SUPER_RANGE))) {
+		for (Entity target : EntityUtil.getTargetableEntities(this, EntityUtil.getEntityAABB(this, this.SUPER_RANGE, this.SUPER_RANGE))) {
 			SmallChomperEntity chomper = EntityRegister.SMALL_CHOMPER.get().create(level);
 			chomper.setOwner(this);
 			EntityUtil.onEntitySpawn(level, chomper, target.blockPosition());

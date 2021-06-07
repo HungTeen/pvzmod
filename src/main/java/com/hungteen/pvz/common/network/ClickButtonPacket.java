@@ -6,7 +6,6 @@ import com.hungteen.pvz.client.gui.GuiHandler;
 import com.hungteen.pvz.common.container.CardFusionContainer;
 import com.hungteen.pvz.common.container.EssenceAltarContainer;
 import com.hungteen.pvz.common.container.FragmentSpliceContainer;
-import com.hungteen.pvz.common.container.PlayerInventoryContainer;
 import com.hungteen.pvz.common.container.SlotMachineContainer;
 import com.hungteen.pvz.common.container.shop.DaveShopContainer;
 import com.hungteen.pvz.common.container.shop.MysteryShopContainer;
@@ -47,11 +46,11 @@ public class ClickButtonPacket {
 			final ServerPlayerEntity player = ctx.get().getSender();
 			ctx.get().enqueueWork(() -> {
 				if (message.type == GuiHandler.PLAYER_INVENTORY) { 
-					if(player.containerMenu instanceof PlayerInventoryContainer) {
-						PlayerInventoryContainer inv = (PlayerInventoryContainer) player.containerMenu;
-						inv.currentPage+=message.num;
-						inv.onPageChange();
-					}
+//					if(player.containerMenu instanceof PlayerInventoryContainer) {
+//						PlayerInventoryContainer inv = (PlayerInventoryContainer) player.containerMenu;
+//						inv.currentPage+=message.num;
+//						inv.onPageChange();
+//					}
 				} else if(message.type == GuiHandler.DAVE_SHOP) {
 					if(player.containerMenu instanceof DaveShopContainer) {
 						DaveShopContainer container = (DaveShopContainer) player.containerMenu;

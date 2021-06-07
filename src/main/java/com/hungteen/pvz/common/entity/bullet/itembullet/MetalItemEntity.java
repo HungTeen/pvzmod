@@ -83,7 +83,7 @@ public class MetalItemEntity extends PVZItemBulletEntity {
 	private LivingEntity getAttackTarget(MagnetShroomEntity thrower) {
 		if(this.tickCount % 50 != 0) return null;
 		List<LivingEntity> list = level.getEntitiesOfClass(LivingEntity.class, EntityUtil.getEntityAABB(thrower, 20, 20), (entity)->{
-			return EntityUtil.checkCanEntityAttack(thrower, entity);
+			return EntityUtil.canTargetEntity(thrower, entity);
 		});
 		if(list.size() == 0) return null;
 		int pos = thrower.getRandom().nextInt(list.size());

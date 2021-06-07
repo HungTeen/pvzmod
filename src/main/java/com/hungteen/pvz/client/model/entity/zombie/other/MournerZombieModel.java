@@ -1,10 +1,8 @@
 package com.hungteen.pvz.client.model.entity.zombie.other;
 
+import com.hungteen.pvz.client.model.entity.zombie.PVZZombieModel;
 import com.hungteen.pvz.common.entity.zombie.other.MournerZombieEntity;
-import com.mojang.blaze3d.matrix.MatrixStack;
-import com.mojang.blaze3d.vertex.IVertexBuilder;
 
-import net.minecraft.client.renderer.entity.model.EntityModel;
 import net.minecraft.client.renderer.model.ModelRenderer;
 import net.minecraft.util.math.MathHelper;
 
@@ -13,7 +11,7 @@ import net.minecraft.util.math.MathHelper;
 // Paste this class into your mod and generate all required imports
 
 
-public class MournerZombieModel extends EntityModel<MournerZombieEntity> {
+public class MournerZombieModel extends PVZZombieModel<MournerZombieEntity> {
 	private final ModelRenderer total;
 	private final ModelRenderer right_leg;
 	private final ModelRenderer left_leg;
@@ -90,15 +88,40 @@ public class MournerZombieModel extends EntityModel<MournerZombieEntity> {
         	this.right_hand.xRot = - 2 * MathHelper.sin(3.14159f * now / max);
         }
 	}
+	
+	@Override
+	public ModelRenderer getZombieLeftHand() {
+		return this.left_hand;
+	}
 
 	@Override
-	public void renderToBuffer(MatrixStack matrixStack, IVertexBuilder buffer, int packedLight, int packedOverlay, float red, float green, float blue, float alpha){
-		total.render(matrixStack, buffer, packedLight, packedOverlay);
+	public ModelRenderer getZombieRightHand() {
+		return this.right_hand;
 	}
 
-	public void setRotationAngle(ModelRenderer modelRenderer, float x, float y, float z) {
-		modelRenderer.xRot = x;
-		modelRenderer.yRot = y;
-		modelRenderer.zRot = z;
+	@Override
+	public ModelRenderer getZombieLeftLeg() {
+		return this.left_leg;
 	}
+
+	@Override
+	public ModelRenderer getZombieRightLeg() {
+		return this.right_leg;
+	}
+
+	@Override
+	public ModelRenderer getZombieHead() {
+		return this.head;
+	}
+	
+	@Override
+	public ModelRenderer getZombieUpBody() {
+		return this.up;
+	}
+
+	@Override
+	public ModelRenderer getZombieWholeBody() {
+		return this.total;
+	}
+
 }

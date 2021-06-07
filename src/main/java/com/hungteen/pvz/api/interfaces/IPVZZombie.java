@@ -3,14 +3,9 @@ package com.hungteen.pvz.api.interfaces;
 import com.hungteen.pvz.utils.enums.Ranks;
 import com.hungteen.pvz.utils.enums.Zombies;
 
-public interface IPVZZombie {
+public interface IPVZZombie extends IHasOwner, IGroupEntity, ICanCharm {
     
 	float getLife();
-	
-	/**
-	 * use to check target of zombies
-	 */
-	boolean canAttackSpike();
 	
 	Zombies getZombieEnumName();
 	

@@ -51,12 +51,10 @@ public class LawnMowerEntity extends AbstractOwnerEntity {
 				return ;
 			}
 			if(this.isStartRun()) {
-				this.level.getEntitiesOfClass(Entity.class, this.getBoundingBox().inflate(0.5D), (target) -> {
-			        return EntityUtil.checkCanEntityAttack(this, target);
-		        }).forEach((target) -> {
-		        	if(EntityUtil.canEntityBeRemoved(target)) {
-		        		target.remove();// kill all entity pass by.
-		        	}
+				this.level.getEntitiesOfClass(Entity.class, this.getBoundingBox().inflate(0.5D), entity -> {
+			        return EntityUtil.checkCanEntityBeTarget(this, entity);
+		        }).forEach(target -> {
+		        	this.checkAndRemoveEntity(target);
 		        });
 				double angle = this.yRot * Math.PI / 180;
 				double dx = - Math.sin(angle);
@@ -66,7 +64,7 @@ public class LawnMowerEntity extends AbstractOwnerEntity {
 			} else {
 				-- tickCount;
 				List<Entity> list = this.level.getEntitiesOfClass(Entity.class, this.getBoundingBox().inflate(1), (target) -> {
-			        return EntityUtil.checkCanEntityAttack(this, target);
+			        return EntityUtil.checkCanEntityBeTarget(this, target);
 		        });
 				if(! list.isEmpty()) {
 			       this.onStartRun(list.get(0));
@@ -78,6 +76,12 @@ public class LawnMowerEntity extends AbstractOwnerEntity {
 			this.setPos(pos.getX() + 0.5D, this.getY(), pos.getZ() + 0.5D);
 		}
 		this.tickMove();
+	}
+	
+	public void checkAndRemoveEntity(Entity target) {
+		if(EntityUtil.canEntityBeRemoved(target)) {
+    		target.remove();// kill all entity pass by.
+    	}
 	}
 	
 	@Override

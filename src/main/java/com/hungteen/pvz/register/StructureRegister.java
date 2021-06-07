@@ -64,11 +64,11 @@ public class StructureRegister {
 	public static IStructurePieceType YETI_HOUSE_PIECE;
 	
 	/**
-	 * called at BiomeRegister
+	 * {@link BiomeRegister#biomeModification(BiomeLoadingEvent)}
 	 */
 	public static void addStructureToBiome(BiomeLoadingEvent event) {
 		Biome biome = ForgeRegistries.BIOMES.getValue(event.getName());
-		if(biome == BiomeRegister.ZEN_GARDEN.get()) {
+		if(biome == null || biome == BiomeRegister.ZEN_GARDEN.get()) {//prevent crash with other mod.
     		return ;
     	}
     	RegistryKey<Biome> biomeKey = BiomeUtil.getKey(biome);

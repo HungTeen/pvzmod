@@ -42,7 +42,7 @@ public abstract class PVZZombieRender <T extends PVZZombieEntity> extends PVZCre
 	@Override
 	protected float getScaleByEntity(T entity) {
 		final float sz = ZombieRenderHandler.getZombieScale(entity.getZombieEnumName());
-		return entity.isMiniZombie() ? sz * 0.3F : sz;
+		return entity.isMiniZombie() ? sz * 0.32F : sz;
 	}
 	
 	/**

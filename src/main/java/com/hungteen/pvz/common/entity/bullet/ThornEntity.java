@@ -109,8 +109,8 @@ public class ThornEntity extends AbstractBulletEntity {
 		}
 		List<LivingEntity> list = level.getEntitiesOfClass(LivingEntity.class,
 				EntityUtil.getEntityAABB(this, 40, 40), (entity) -> {
-					return !entity.equals(thornTarget) && EntityUtil.checkCanSeeEntity(this, entity)
-							&& EntityUtil.checkCanEntityTarget(this.getThrower(), entity);
+					return !entity.equals(thornTarget) && EntityUtil.canSeeEntity(this, entity)
+							&& EntityUtil.canTargetEntity(this.getThrower(), entity);
 				});
 		if (list.size() == 0)
 			return null;

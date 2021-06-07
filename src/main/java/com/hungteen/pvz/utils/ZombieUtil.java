@@ -1,6 +1,7 @@
 package com.hungteen.pvz.utils;
 
 import java.util.HashMap;
+import java.util.Optional;
 
 import com.hungteen.pvz.PVZMod;
 import com.hungteen.pvz.common.entity.zombie.PVZZombieEntity;
@@ -156,6 +157,13 @@ public class ZombieUtil {
 		case MEGA:return 50;
 		default:return 0;
 		}
+	}
+	
+	/**
+	 * use by @PVZZombieEntity to check spawn.
+	 */
+	public static Optional<Zombies> getZombieNameByType(EntityType<? extends PVZZombieEntity> zombieType){
+		return Optional.ofNullable(ZombieUtil.ENTITY_TYPE_ZOMBIE.get(zombieType));
 	}
 	
 	public static int caculateZombieXp(PVZZombieEntity zombie) {

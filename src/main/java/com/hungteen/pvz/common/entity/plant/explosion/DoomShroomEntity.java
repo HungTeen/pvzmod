@@ -1,6 +1,5 @@
 package com.hungteen.pvz.common.entity.plant.explosion;
 
-import com.hungteen.pvz.PVZConfig;
 import com.hungteen.pvz.common.entity.plant.base.PlantBomberEntity;
 import com.hungteen.pvz.common.misc.damage.PVZDamageSource;
 import com.hungteen.pvz.register.ParticleRegister;
@@ -40,18 +39,13 @@ public class DoomShroomEntity extends PlantBomberEntity {
 	@Override
 	public void startBomb() {
 		if(! level.isClientSide) {
-			EntityUtil.getAttackEntities(this, EntityUtil.getEntityAABB(this, this.getAttackRange(), this.getAttackRange())).forEach((target) -> {
+			EntityUtil.getTargetableEntities(this, EntityUtil.getEntityAABB(this, this.getAttackRange(), this.getAttackRange())).forEach((target) -> {
 				target.hurt(PVZDamageSource.causeExplosionDamage(this, this), this.getAttackDamage());
 			});
 			EntityUtil.playSound(this, SoundRegister.DOOM.get());
 			//destroy block and spawn drops
 			ObjectArrayList<Pair<ItemStack, BlockPos>> list = new ObjectArrayList<>();
-			int len = getDestroyBlockRange();
-			if(len == 0) {
-				return ;
-			} else {
-				-- len;
-			}
+			int len = 2;
 			for(int i = - len;i <= len;i ++) {
 				for(int j = - len;j <= len;j ++) {
 					for(int k = - destroyBlockHeight;k <= len;k ++) {
@@ -89,10 +83,6 @@ public class DoomShroomEntity extends PlantBomberEntity {
 		}
 	}
 	
-	private int getDestroyBlockRange() {
-		return PVZConfig.COMMON_CONFIG.EntitySettings.DoomRange.get();
-	}
-
 	public float getAttackRange() {
 		if(this.isPlantInStage(1)) return 5;
 		if(this.isPlantInStage(2)) return 6;

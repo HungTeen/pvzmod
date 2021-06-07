@@ -87,7 +87,7 @@ public class ElementBallEntity extends AbstractOwnerEntity {
 			    this.setDeltaMovement(this.target.get().position().subtract(this.position()).normalize().scale(this.speed));
 		    } else { // search for target
 			    if(this.random.nextInt(this.SEARACH_CD) == 0) {
-				    List<LivingEntity> list = EntityUtil.getEntityTargetableEntity(this, EntityUtil.getEntityAABB(this, this.SEARCH_RANGE, this.SEARCH_RANGE));
+				    List<LivingEntity> list = EntityUtil.getTargetableLivings(this, EntityUtil.getEntityAABB(this, this.SEARCH_RANGE, this.SEARCH_RANGE));
 				    if(list.isEmpty()) return ;
 				    this.target = Optional.ofNullable(list.get(this.random.nextInt(list.size())));
 			    }
@@ -97,7 +97,7 @@ public class ElementBallEntity extends AbstractOwnerEntity {
 	
 	private void tickCollision() {
 		if(! level.isClientSide && this.tickCount % 10 == 0) {
-			EntityUtil.getAttackEntities(this, this.getBoundingBox().inflate(0.5F)).forEach((target) -> {
+			EntityUtil.getTargetableEntities(this, this.getBoundingBox().inflate(0.5F)).forEach((target) -> {
 				if(target instanceof PVZPlantEntity) {
 					if(target instanceof JalapenoEntity && this.getElementBallType() == ElementTypes.ICE) ;
 					else if(target instanceof IceShroomEntity && this.getElementBallType() == ElementTypes.FLAME) ;

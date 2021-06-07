@@ -4,35 +4,40 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 import java.util.UUID;
+import java.util.stream.Collectors;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
-import com.hungteen.pvz.PVZConfig;
+import com.hungteen.pvz.PVZMod;
+import com.hungteen.pvz.api.enums.PVZGroupType;
+import com.hungteen.pvz.api.interfaces.ICanCharm;
+import com.hungteen.pvz.api.interfaces.IGroupEntity;
+import com.hungteen.pvz.api.interfaces.IHasOwner;
 import com.hungteen.pvz.common.entity.PVZMultiPartEntity;
-import com.hungteen.pvz.common.entity.npc.CrazyDaveEntity;
+import com.hungteen.pvz.common.entity.misc.LawnMowerEntity;
 import com.hungteen.pvz.common.entity.plant.PVZPlantEntity;
 import com.hungteen.pvz.common.entity.zombie.PVZZombieEntity;
 import com.hungteen.pvz.common.entity.zombie.poolnight.BalloonZombieEntity;
 import com.hungteen.pvz.common.network.PVZPacketHandler;
 import com.hungteen.pvz.common.network.SpawnParticlePacket;
+import com.hungteen.pvz.compat.jade.provider.PVZEntityProvider;
 import com.hungteen.pvz.register.EffectRegister;
-import com.hungteen.pvz.utils.interfaces.IGroupEntity;
 import com.hungteen.pvz.utils.interfaces.IMultiPartEntity;
 
 import it.unimi.dsi.fastutil.ints.IntOpenHashSet;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
 import net.minecraft.entity.Entity;
+import net.minecraft.entity.EntityType;
 import net.minecraft.entity.FlyingEntity;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.MobEntity;
 import net.minecraft.entity.SpawnReason;
 import net.minecraft.entity.ai.attributes.Attributes;
-import net.minecraft.entity.monster.IMob;
 import net.minecraft.entity.passive.BatEntity;
-import net.minecraft.entity.passive.GolemEntity;
 import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.potion.EffectInstance;
 import net.minecraft.scoreboard.Team;
 import net.minecraft.util.SoundEvent;
@@ -52,11 +57,19 @@ public class EntityUtil {
 
 	public static final Random RAND = new Random();
 	
+	/**
+	 * can zombie be instant remove by lawn mower.
+	 * {@link LawnMowerEntity#checkAndRemoveEntity(Entity)}
+	 */
 	public static boolean canEntityBeRemoved(Entity entity) {
 		if(entity instanceof PVZZombieEntity) {
 			return ((PVZZombieEntity) entity).canZombieBeRemoved();
 		}
-		return entity.canChangeDimensions();
+		if(!entity.getType().getRegistryName().getNamespace().equals(PVZMod.MOD_ID) 
+				&& (entity instanceof LivingEntity)) {
+			return ((LivingEntity) entity).getMaxHealth() > 100F;
+		}
+		return true;
 	}
 	
 	public static void spawnParticle(Entity entity, int type) {
@@ -82,7 +95,7 @@ public class EntityUtil {
 	public static List<LivingEntity> getRandomLivingInRange(World world, LivingEntity attacker, AxisAlignedBB aabb, int cnt) {
 		List<LivingEntity> list = new ArrayList<>();
 		for(LivingEntity living : world.getEntitiesOfClass(LivingEntity.class, aabb, (target) -> {
-			return EntityUtil.checkCanEntityTarget(attacker, target);
+			return EntityUtil.canTargetEntity(attacker, target);
 		})){
 			list.add(living);
 			if(-- cnt <= 0) break;
@@ -103,6 +116,19 @@ public class EntityUtil {
 	}
 	
 	/**
+	 * entity's defence health.
+	 * {@link PVZEntityProvider}
+	 */
+	public static float getCurrentDefenceHealth(LivingEntity entity) {
+		if(entity instanceof PVZZombieEntity) {
+			return ((PVZZombieEntity) entity).getDefenceLife();
+		} else if(entity instanceof PVZPlantEntity) {
+			return ((PVZPlantEntity) entity).getCurrentDefenceHealth();
+		}
+		return 0;
+	}
+	
+	/**
 	 * get the max health the target has currently.
 	 */
 	public static float getCurrentMaxHealth(LivingEntity target) {
@@ -113,8 +139,21 @@ public class EntityUtil {
 		}
 		return target.getMaxHealth();
 	}
+	
+	/**
+	 * entity's level.
+	 * {@link PVZEntityProvider}
+	 */
+	public static int getEntityLevel(LivingEntity entity) {
+		if(entity instanceof PVZZombieEntity) {
+			return ((PVZZombieEntity) entity).getZombieLevel();
+		} else if(entity instanceof PVZPlantEntity) {
+			return ((PVZPlantEntity) entity).getPlantLvl();
+		}
+		return 0;
+	}
 
-	public static boolean checkCanSeeEntity(Entity entity, Entity target) {
+	public static boolean canSeeEntity(Entity entity, Entity target) {
 		Vector3d start = entity.position().add(0, entity.getEyeHeight(), 0);
 		Vector3d lowerEnd = target.position();
 		Vector3d upperEnd = lowerEnd.add(0, target.getBbHeight(), 0);
@@ -134,25 +173,30 @@ public class EntityUtil {
 	}
 	
 	/**
-	 * use to spawn mob in world
+	 * use to create entity and spawn it in world.
 	 */
-	public static void onMobEntitySpawn(IWorld world, MobEntity entity, BlockPos pos) {
+	public static void createEntityAndSpawn(World world, EntityType<?> type, BlockPos pos) {
+		Entity entity = type.create(world);
+		onEntitySpawn(world, entity, pos);
+	}
+	
+	/**
+	 * use to spawn entity in world.
+	 */
+	public static void onEntitySpawn(IWorld world, Entity entity, BlockPos pos) {
 		entity.setPos(pos.getX() + 0.5, pos.getY(), pos.getZ() + 0.5);
-		entity.finalizeSpawn((IServerWorld) world, world.getCurrentDifficultyAt(entity.blockPosition()), SpawnReason.SPAWNER, null, null);
+		if(entity instanceof MobEntity) {
+			((MobEntity) entity).finalizeSpawn((IServerWorld) world, world.getCurrentDifficultyAt(entity.blockPosition()), SpawnReason.SPAWNER, null, null);
+		}
 		world.addFreshEntity(entity);
 	}
 	
 	/**
-	 * use to spawn entity in world
+	 * spawn in random range position.
 	 */
-	public static void onEntitySpawn(IWorld world, Entity entity, BlockPos pos) {
-		entity.setPos(pos.getX() + 0.5, pos.getY(), pos.getZ() + 0.5);
-		world.addFreshEntity(entity);
-	}
-	
 	public static void onMobEntityRandomPosSpawn(IWorld world, MobEntity entity, BlockPos pos, int dis) {
 		pos = pos.offset(entity.getRandom().nextInt(dis * 2 + 1) - dis, entity.getRandom().nextInt(dis) + 1, entity.getRandom().nextInt(dis * 2 + 1) - dis);
-		onMobEntitySpawn(world, entity, pos);
+		onEntitySpawn(world, entity, pos);
 	}
 	
 	/**
@@ -178,7 +222,7 @@ public class EntityUtil {
 	 * use for squash to check can attack
 	 */
 	public static boolean isSuitableTargetInRange(MobEntity entity, @Nonnull LivingEntity target, double range) {
-		return entity.distanceToSqr(target) > getAttackRange(entity, target, range) && checkCanEntityAttack(entity, target);
+		return entity.distanceToSqr(target) > getAttackRange(entity, target, range) && canTargetEntity(entity, target);
 	}
 	
 	/**
@@ -218,96 +262,111 @@ public class EntityUtil {
 	}
 	
 	/**
-	 * check if attacker can set target as AttackTarget
+	 * use for TargetGoal to check if attacker can set target as AttackTarget.
 	 */
-	public static boolean checkCanEntityTarget(Entity attacker, LivingEntity target) {
+	public static boolean canTargetEntity(Entity attacker, Entity target) {
 		if(attacker instanceof PVZZombieEntity) {
 			return ((PVZZombieEntity) attacker).checkCanZombieTarget(target);
 		}
 		if(attacker instanceof PVZPlantEntity) {
 			return ((PVZPlantEntity) attacker).checkCanPlantTarget(target);
 		}
-		return checkCanEntityAttack(attacker, target);
+		return checkCanEntityBeTarget(attacker, target);
+	}
+	
+	public static boolean canAttackEntity(Entity attacker, Entity target) {
+		if(attacker instanceof PVZZombieEntity) {
+			return ((PVZZombieEntity) attacker).checkCanZombieAttack(target);
+		}
+		if(attacker instanceof PVZPlantEntity) {
+			return ((PVZPlantEntity) attacker).checkCanPlantAttack(target);
+		}
+		return checkCanEntityBeAttack(attacker, target);
 	}
 	
 	/**
-	 * use to check can the attacker attack the current target
+	 * check can TargetGoal select target as attackTarget.
 	 */
-	public static boolean checkCanEntityAttack(Entity attacker, Entity target) {
+	public static boolean checkCanEntityBeTarget(Entity attacker, Entity target) {
+		if(! isEntityValid(attacker) || ! isEntityValid(target)) {//prevent crash
+			return false;
+		}
 		if(target instanceof PVZMultiPartEntity) {//can attack its owner then can attack it
-			target = ((PVZMultiPartEntity) target).getOwner();
+			return checkCanEntityBeTarget(attacker, ((PVZMultiPartEntity) target).getOwner());
 		}
-		if(attacker == null || target == null) {//prevent crash
+		if(target instanceof PlayerEntity && !PlayerUtil.isPlayerSurvival((PlayerEntity) target)) {
 			return false;
 		}
-		if(! target.isAlive()) {//need be a alive entity
-			return false;
-		}
-		World world = attacker.level;
-		if(target instanceof PlayerEntity) {//false if target is creative or spectator player 
-			if(((PlayerEntity) target).isCreative() || target.isSpectator()) {
-				return false;
-			}
-		}
-		if(PVZConfig.COMMON_CONFIG.EntitySettings.TeamAttack.get()) {//enable team attack
-			Team team1 = getEntityTeam(world, attacker);
-			Team team2 = getEntityTeam(world, target);
+		if(ConfigUtil.isTeamAttackEnable()) {//enable team attack
+			Team team1 = getEntityTeam(attacker.level, attacker);
+			Team team2 = getEntityTeam(attacker.level, target);
 			if(team1 != null && team2 != null) {
 				boolean change = isEntityCharmed(attacker) ^ isEntityCharmed(target);
 				return change ? team1.isAlliedTo(team2) : ! team1.isAlliedTo(team2);
 			}
 		}
-		int attackerGroup = getEntityGroup(attacker);
-		int targetGroup = getEntityGroup(target);
-		if(attackerGroup * targetGroup < 0) {//can attack
-			return true;
-		}
-		return false;
+		return PVZGroupType.checkCanTarget(getEntityGroup(attacker), getEntityGroup(target));
 	}
 	
 	/**
-	 * get entity's group
-	 * players : config file
-	 * plants & crazydave : 1
-	 * zombies & monsters : -1
-	 * multipart the same as its owner
-	 * others : 0 
+	 * check can AttackGoal continue to attack target.
 	 */
-	public static int getEntityGroup(Entity entity) {
-		int group = 0;
-		if(entity instanceof PlayerEntity) {
-			return PVZConfig.COMMON_CONFIG.EntitySettings.PlayerOriginGroup.get();
+	public static boolean checkCanEntityBeAttack(Entity attacker, Entity target) {
+		if(! isEntityValid(attacker) || ! isEntityValid(target)) {//prevent crash
+			return false;
 		}
-		if(entity instanceof PVZPlantEntity) {
-			group = ((PVZPlantEntity) entity).isCharmed() ? -1 : 1;
-		} else if(entity instanceof CrazyDaveEntity){
-			group = 1;
-		} else if(entity instanceof IMob) {
-			group = -1;
-			if(entity instanceof PVZZombieEntity) {
-				group = ((PVZZombieEntity) entity).isCharmed() ? 1 : -1;
+		if(target instanceof PVZMultiPartEntity) {//can attack its owner then can attack it
+			return checkCanEntityBeAttack(attacker, ((PVZMultiPartEntity) target).getOwner());
+		}
+		if(target instanceof PlayerEntity && !PlayerUtil.isPlayerSurvival((PlayerEntity) target)) {
+			return false;
+		}
+		if(ConfigUtil.isTeamAttackEnable()) {//enable team attack
+			Team team1 = getEntityTeam(attacker.level, attacker);
+			Team team2 = getEntityTeam(attacker.level, target);
+			if(team1 != null && team2 != null) {
+				boolean change = isEntityCharmed(attacker) ^ isEntityCharmed(target);
+				return change ? team1.isAlliedTo(team2) : ! team1.isAlliedTo(team2);
 			}
-		} else if(entity instanceof IGroupEntity) {
-			return ((IGroupEntity) entity).getEntityGroupType();
-		} else if(entity instanceof GolemEntity) {
-			return 1;
 		}
-		return group;
+		return PVZGroupType.checkCanAttack(getEntityGroup(attacker), getEntityGroup(target));
 	}
 	
 	/**
-	 * get team of the entity
+	 * get entity's group.
+	 * specially mention : multiparts' group the same as its owner.
+	 * others entity is group 0.
 	 */
-	public static Team getEntityTeam(World world,Entity entity){
+	public static PVZGroupType getEntityGroup(Entity entity) {
+		if(entity instanceof ServerPlayerEntity) {// get player's group
+			return PlayerUtil.getPlayerGroupType((ServerPlayerEntity) entity);
+		}
+		if(entity instanceof PVZMultiPartEntity) {
+			return getEntityGroup(((PVZMultiPartEntity) entity).getOwner());
+		}
+		if(entity instanceof IGroupEntity) {
+			return ((IGroupEntity) entity).getEntityGroupType();
+		}
+		if(PVZGroupType.isOtherMonsters(entity)) {
+			return PVZGroupType.OTHER_MONSTERS;
+		}
+		if(PVZGroupType.isOtherGuards(entity)) {
+			return PVZGroupType.OTHER_GURADS;
+		}
+		return PVZGroupType.CREATURES;
+	}
+	
+	/**
+	 * get team of the entity.
+	 * used at {@link #checkCanEntityBeAttack(Entity, Entity)}
+	 */
+	@Nullable
+	public static Team getEntityTeam(World world, Entity entity){
 		if(entity instanceof PlayerEntity) {
 			return entity.getTeam();
 		}
-		if(entity instanceof PVZPlantEntity && ((PVZPlantEntity) entity).getOwnerUUID().isPresent()) {
-			PlayerEntity player = world.getPlayerByUUID(((PVZPlantEntity) entity).getOwnerUUID().get());
-			return player == null ? null : player.getTeam();
-		}
-		if(entity instanceof PVZZombieEntity && ((PVZZombieEntity) entity).getOwnerUUID().isPresent()) {
-			PlayerEntity player = world.getPlayerByUUID(((PVZZombieEntity) entity).getOwnerUUID().get());
+		if(entity instanceof IHasOwner && ((IHasOwner) entity).getOwnerUUID().isPresent()) {
+			PlayerEntity player = world.getPlayerByUUID(((IHasOwner) entity).getOwnerUUID().get());
 			return player == null ? null : player.getTeam();
 		}
 	    return entity.getTeam();
@@ -317,64 +376,49 @@ public class EntityUtil {
 	 * check if entity is charmed
 	 */
 	public static boolean isEntityCharmed(Entity entity){
-		if(entity instanceof PVZPlantEntity) {
-			return ((PVZPlantEntity) entity).isCharmed();
-		}
-		if(entity instanceof PVZZombieEntity) {
-			return ((PVZZombieEntity) entity).isCharmed();
+		if(entity instanceof ICanCharm) {
+			return ((ICanCharm) entity).isCharmed();
 		}
 		return false;
 	}
 	
 	/**
-	 * get targetable entity
+	 * get targetable livingentity in range.
 	 */
-	public static List<LivingEntity> getEntityTargetableEntity(Entity attacker, AxisAlignedBB aabb){
-		List<LivingEntity> list = new ArrayList<>();
-		for(LivingEntity entity : attacker.level.getEntitiesOfClass(LivingEntity.class, aabb)) {
-			if(attacker != entity && checkCanEntityTarget(attacker, entity)) {
-				list.add(entity);
-			}
-		}
-		return list;
+	public static List<LivingEntity> getTargetableLivings(@Nonnull Entity attacker, AxisAlignedBB aabb){
+		return attacker.level.getEntitiesOfClass(LivingEntity.class, aabb).stream().filter(target -> {
+			return ! attacker.equals(target) && canTargetEntity(attacker, target);
+		}).collect(Collectors.toList());
 	}
 	
 	/**
-	 * get attackable entity
+	 * get viewable targetable livingentity in range.
 	 */
-	public static List<Entity> getEntityAttackableTarget(Entity attacker, AxisAlignedBB aabb){
-		List<Entity> list = new ArrayList<>();
-		if(attacker == null) return list;
-		for(Entity entity : attacker.level.getEntitiesOfClass(Entity.class, aabb)) {
-			if(attacker != entity && checkCanEntityAttack(attacker, entity)) {
-				list.add(entity);
-			}
-		}
-		return list;
+	public static List<LivingEntity> getViewableTargetableEntity(@Nonnull Entity attacker, AxisAlignedBB aabb){
+		return getTargetableLivings(attacker, aabb).stream().filter(target -> {
+			return canSeeEntity(attacker, target);
+		}).collect(Collectors.toList());
 	}
 	
 	/**
-	 * get targetable entity
+	 * get attackable entities.
 	 */
-	public static List<LivingEntity> getViewableTargetableEntity(Entity attacker, AxisAlignedBB aabb){
-		List<LivingEntity> list = new ArrayList<>();
-		for(LivingEntity entity : attacker.level.getEntitiesOfClass(LivingEntity.class, aabb)) {
-			if(attacker != entity && EntityUtil.checkCanSeeEntity(attacker, entity) && checkCanEntityTarget(attacker, entity)) {
-				list.add(entity);
-			}
-		}
-		return list;
+	public static List<Entity> getTargetableEntities(@Nonnull Entity attacker, AxisAlignedBB aabb){
+		if(attacker == null) return new ArrayList<>();
+		return attacker.level.getEntitiesOfClass(Entity.class, aabb).stream().filter(target -> {
+			return ! attacker.equals(target) && canTargetEntity(attacker, target);
+		}).collect(Collectors.toList());
 	}
-	
+//	
 	/**
 	 * get final attack entities for explosion or other range attack.
 	 */
-	public static List<Entity> getAttackEntities(Entity attacker, AxisAlignedBB aabb) {
+	public static List<Entity> getRangeTargetableEntities(@Nonnull Entity attacker, AxisAlignedBB aabb) {
 		IntOpenHashSet set = new IntOpenHashSet();
 		List<Entity> list = new ArrayList<>();
-		if(attacker == null) return list;
-		List<Entity> targets = getEntityAttackableTarget(attacker, aabb);
-		targets.forEach((target) -> {//owner first.
+		if(attacker == null) return list;//prevent crash.
+		List<Entity> targets = getTargetableEntities(attacker, aabb);
+		targets.forEach(target -> {//owner first.
 			if(! (target instanceof PVZMultiPartEntity)) {
 				if(! set.contains(target.getId())) {
 					set.addAll(getOwnerAndPartsID(target));
@@ -391,6 +435,9 @@ public class EntityUtil {
 		return list;
 	}
 	
+	/**
+	 * get all parts of a entity.
+	 */
 	public static List<Integer> getOwnerAndPartsID(Entity entity){
 		List<Integer> list = new ArrayList<>();
 		if(entity instanceof PVZMultiPartEntity) {//the entity is a part.
@@ -420,11 +467,11 @@ public class EntityUtil {
 	}
 	
 	/**
-	 * add entity cold effect 
+	 * add entity potion effect.
 	 */
-	public static void addEntityPotionEffect(Entity entity, EffectInstance effect) {
+	public static void addPotionEffect(Entity entity, EffectInstance effect) {
 		if(entity instanceof PVZMultiPartEntity) {
-			addEntityPotionEffect(((PVZMultiPartEntity) entity).getOwner(), effect);
+			addPotionEffect(((PVZMultiPartEntity) entity).getOwner(), effect);
 		} else if(entity instanceof PVZZombieEntity) {
 			((PVZZombieEntity) entity).checkAndAddPotionEffect(effect);
 		} else if(entity instanceof LivingEntity) {
@@ -433,21 +480,21 @@ public class EntityUtil {
 	}
 	
 	/**
-	 * get is entity cold
+	 * is entity has cold effect.
 	 */
 	public static boolean isEntityCold(LivingEntity entity) {
 		return entity.getAttribute(Attributes.MOVEMENT_SPEED).getModifier(EffectRegister.COLD_EFFECT_UUID) != null;
 	}
 	
 	/**
-	 * get is entity frozen
+	 * is entity has frozen effect.
 	 */
 	public static boolean isEntityFrozen(LivingEntity entity) {
 		return entity.getAttribute(Attributes.MOVEMENT_SPEED).getModifier(EffectRegister.FROZEN_EFFECT_UUID) != null;
 	}
 	
 	/**
-	 * get is entity butter
+	 * is entity has butter effect.
 	 */
 	public static boolean isEntityButter(LivingEntity entity) {
 		return entity.getAttribute(Attributes.MOVEMENT_SPEED).getModifier(EffectRegister.BUTTER_EFFECT_UUID) != null;

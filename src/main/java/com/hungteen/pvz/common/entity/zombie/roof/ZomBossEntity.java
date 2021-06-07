@@ -6,7 +6,7 @@ import java.util.List;
 import java.util.Optional;
 
 import com.hungteen.pvz.common.entity.drop.JewelEntity;
-import com.hungteen.pvz.common.entity.goal.target.ZombieNearestTargetGoal;
+import com.hungteen.pvz.common.entity.goal.target.PVZNearestTargetGoal;
 import com.hungteen.pvz.common.entity.misc.DestroyCarEntity;
 import com.hungteen.pvz.common.entity.misc.ElementBallEntity;
 import com.hungteen.pvz.common.entity.misc.ElementBallEntity.ElementTypes;
@@ -77,6 +77,9 @@ public class ZomBossEntity extends PVZZombieEntity {
 		this.canBeStealByBungee = false;
 		this.hasDirectDefence = true;
 		this.maxDeathTime = 60;
+		this.canLostHand = false;
+		this.canLostHead = false;
+		this.canBeRemove = false;
 		this.resetShootBallCD();
 		this.resetStealCD();
 	}
@@ -87,7 +90,7 @@ public class ZomBossEntity extends PVZZombieEntity {
 		if(! level.isClientSide) {
 			this.setDefenceLife(this.getZomBossDefenceLife());
 			final float range = 50F;
-			EntityUtil.getAttackEntities(this, EntityUtil.getEntityAABB(this, range, range)).forEach((target) -> {
+			EntityUtil.getTargetableEntities(this, EntityUtil.getEntityAABB(this, range, range)).forEach((target) -> {
 				if(target instanceof PVZPlantEntity) {
 					target.remove();
 				}
@@ -106,7 +109,7 @@ public class ZomBossEntity extends PVZZombieEntity {
 	@Override
 	protected void registerGoals() {
 		this.goalSelector.addGoal(7, new LookAtGoal(this, PlayerEntity.class, 40.0F));
-		this.targetSelector.addGoal(0, new ZombieNearestTargetGoal(this, false, 70, 60));
+		this.targetSelector.addGoal(0, new PVZNearestTargetGoal(this, false, 70, 60));
 	}
 	
 	@Override
@@ -178,7 +181,7 @@ public class ZomBossEntity extends PVZZombieEntity {
 		if(this.getNearZombiesCount() >= this.maxZombiesInRange) return ;//too many zombies nearby
 		for(int i = 0; i < this.getRandom().nextInt(2) + 1; ++ i) {
 			getSummonZombie().ifPresent((zombie) -> {
-			    EntityUtil.onMobEntitySpawn(level, zombie, blockPosition());
+			    EntityUtil.onEntitySpawn(level, zombie, blockPosition());
 			    BungeeZombieEntity bungee = EntityRegister.BUNGEE_ZOMBIE.get().create(level);
 		        bungee.setBungeeType(BungeeTypes.SUMMON);
 		        bungee.setBungeeState(BungeeStates.DOWN);
@@ -211,7 +214,7 @@ public class ZomBossEntity extends PVZZombieEntity {
 		int plantCount = this.getNearPlantsCount();
 		int throwNum = (plantCount <= 40 ? 1 : ((plantCount - 40 + 1) / 2 + 1));
 		float range = 50;
-		List<LivingEntity> list = EntityUtil.getEntityTargetableEntity(this, EntityUtil.getEntityAABB(this, range, range));
+		List<LivingEntity> list = EntityUtil.getTargetableLivings(this, EntityUtil.getEntityAABB(this, range, range));
 		if(list.isEmpty()) return ;
 		for(int i = 0; i < throwNum; ++ i) {
 			int pos = this.getRandom().nextInt(list.size());
@@ -238,7 +241,7 @@ public class ZomBossEntity extends PVZZombieEntity {
 		if(this.tickCount % 20 == 0) {
 			float range = 5;
 			level.getEntitiesOfClass(LivingEntity.class, EntityUtil.getEntityAABB(this, range, 15), (target) -> {
-				return EntityUtil.checkCanEntityAttack(target, this);
+				return EntityUtil.canTargetEntity(target, this);
 			}).forEach((target) -> {
 				if(target instanceof PVZPlantEntity) target.setHealth(0);
 				else {
@@ -259,7 +262,7 @@ public class ZomBossEntity extends PVZZombieEntity {
 		int maxCnt = 3 + now;
 		int cnt = this.getRandom().nextInt(maxCnt - minCnt + 1) + minCnt;
 		float range = 50;
-		List<LivingEntity> list = EntityUtil.getEntityTargetableEntity(this, EntityUtil.getEntityAABB(this, range, range));
+		List<LivingEntity> list = EntityUtil.getTargetableLivings(this, EntityUtil.getEntityAABB(this, range, range));
 		if(list.isEmpty()) return ; // no target at all
 		for(int i = 0; i < cnt; ++ i) {
 			LivingEntity target = list.get(this.getRandom().nextInt(list.size()));
@@ -267,7 +270,7 @@ public class ZomBossEntity extends PVZZombieEntity {
 			zombie.setBungeeType(BungeeTypes.STEAL);
 			zombie.setStealTarget(target);
 			zombie.setBungeeState(BungeeStates.DOWN);
-			EntityUtil.onMobEntitySpawn(level, zombie, blockPosition().above(18));
+			EntityUtil.onEntitySpawn(level, zombie, blockPosition().above(18));
 		}
 	}
 	
@@ -325,14 +328,14 @@ public class ZomBossEntity extends PVZZombieEntity {
 	private int getNearPlantsCount() {
 		float range = 50;
 		return level.getEntitiesOfClass(PVZPlantEntity.class, EntityUtil.getEntityAABB(this, range, range), (plant) -> {
-			return EntityUtil.checkCanEntityAttack(this, plant);
+			return EntityUtil.canTargetEntity(this, plant);
 		}).size();
 	}
 	
 	private int getNearZombiesCount() {
 		float range = 30;
 		return level.getEntitiesOfClass(PVZZombieEntity.class, EntityUtil.getEntityAABB(this, range, range), (plant) -> {
-			return ! EntityUtil.checkCanEntityAttack(this, plant);
+			return ! EntityUtil.canTargetEntity(this, plant);
 		}).size();
 	}
 	
@@ -420,11 +423,6 @@ public class ZomBossEntity extends PVZZombieEntity {
 	@Override
 	public Zombies getZombieEnumName() {
 		return Zombies.ZOMBOSS;
-	}
-	
-	@Override
-	public boolean canZombieBeRemoved() {
-		return false;
 	}
 	
 	@Override

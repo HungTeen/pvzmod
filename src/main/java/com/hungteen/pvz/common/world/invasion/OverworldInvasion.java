@@ -239,9 +239,30 @@ public class OverworldInvasion {
 	}
 	
 	/**
+	 * use in Invasion Command.
+	 */
+	public static void addZombie(World world, Zombies zombie) {
+		PVZInvasionData data = PVZInvasionData.getOverWorldInvasionData(world);
+		data.addZombieSpawnEntry(zombie);
+		syncStartSpawnList(world);
+	}
+	
+	/**
+	 * use in Invasion Command.
+	 */
+	public static void removeZombie(World world, Zombies zombie) {
+		PVZInvasionData data = PVZInvasionData.getOverWorldInvasionData(world);
+		if(data.hasZombieSpawnEntry(zombie)) {
+			data.removeZombieSpawnEntry(zombie);
+			syncStartSpawnList(world);
+		}
+	}
+	
+	/**
 	 * for server start sync.
 	 */
 	public static void syncStartSpawnList(World world) {
+		syncEndSpawnList(world);
 		PVZInvasionData data = PVZInvasionData.getOverWorldInvasionData(world);
         for (Zombies zombie : Zombies.values()) {
         	if(data.hasZombieSpawnEntry(zombie)) {

@@ -176,7 +176,7 @@ public class JackInBoxZombieModel extends PVZZombieModel<JackInBoxZombieEntity> 
 	
 	@Override
 	public Optional<ModelRenderer> getHandDefence() {
-		return super.getHandDefence();
+		return Optional.ofNullable(this.box);
 	}
 
 	@Override

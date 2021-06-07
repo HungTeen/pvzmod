@@ -1,5 +1,6 @@
 package com.hungteen.pvz.common.entity.npc;
 
+import com.hungteen.pvz.api.enums.PVZGroupType;
 import com.hungteen.pvz.common.container.shop.DaveShopContainer;
 
 import net.minecraft.entity.CreatureEntity;
@@ -49,6 +50,11 @@ public class CrazyDaveEntity extends AbstractDaveEntity {
 	@Override
 	public EntitySize getDimensions(Pose poseIn) {
 		return EntitySize.scalable(0.9f, 2.6f);
+	}
+	
+	@Override
+	public PVZGroupType getEntityGroupType() {
+		return PVZGroupType.PLANTS;
 	}
 
 }

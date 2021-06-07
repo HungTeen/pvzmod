@@ -78,7 +78,7 @@ public class SquashEntity extends PVZPlantEntity{
 	
 	@Override
 	protected boolean shouldCollideWithEntity(LivingEntity target) {
-		if(EntityUtil.checkCanEntityAttack(this, target)) {
+		if(EntityUtil.canTargetEntity(this, target)) {
 			return false;
 		}
 		return super.shouldCollideWithEntity(target);
@@ -97,7 +97,7 @@ public class SquashEntity extends PVZPlantEntity{
 		this.canCollideWithPlant = true;
 		this.restTick = CD;
 		EntityUtil.playSound(this, SoundRegister.GROUND_SHAKE.get());
-		for(Entity entity : EntityUtil.getEntityTargetableEntity(this, EntityUtil.getEntityAABB(this, 0.5f, 0.5f))) {
+		for(Entity entity : EntityUtil.getTargetableEntities(this, EntityUtil.getEntityAABB(this, 0.5f, 0.5f))) {
 			entity.hurt(PVZDamageSource.causeNormalDamage(this, this), this.getAttackDamage());
 		}
 	}

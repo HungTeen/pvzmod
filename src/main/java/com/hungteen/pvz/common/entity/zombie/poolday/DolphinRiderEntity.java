@@ -1,17 +1,17 @@
 package com.hungteen.pvz.common.entity.zombie.poolday;
 
-import com.hungteen.pvz.common.entity.goal.BreakBlockGoal;
+import com.hungteen.pvz.common.entity.goal.ZombieBreakPlantBlockGoal;
 import com.hungteen.pvz.common.entity.goal.attack.ZombieMeleeAttackGoal;
-import com.hungteen.pvz.common.entity.goal.target.ZombieNearestTargetGoal;
+import com.hungteen.pvz.common.entity.goal.target.PVZNearestTargetGoal;
 import com.hungteen.pvz.common.entity.zombie.PVZZombieEntity;
 import com.hungteen.pvz.register.BlockRegister;
 import com.hungteen.pvz.register.SoundRegister;
 import com.hungteen.pvz.utils.ZombieUtil;
 import com.hungteen.pvz.utils.enums.Zombies;
 
+import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntitySize;
 import net.minecraft.entity.EntityType;
-import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.Pose;
 import net.minecraft.entity.ai.attributes.Attributes;
 import net.minecraft.entity.ai.goal.LookAtGoal;
@@ -52,8 +52,8 @@ public class DolphinRiderEntity extends PVZZombieEntity{
 		this.goalSelector.addGoal(8, new LookRandomlyGoal(this));
 		this.goalSelector.addGoal(7, new RandomWalkingGoal(this, 1.0D));
 		this.goalSelector.addGoal(0, new ZombieMeleeAttackGoal(this));
-		this.goalSelector.addGoal(2, new BreakBlockGoal(BlockRegister.LILY_PAD.get(), this, 1, 3));
-		this.targetSelector.addGoal(0, new ZombieNearestTargetGoal(this, true, 80, 60));
+		this.goalSelector.addGoal(2, new ZombieBreakPlantBlockGoal(BlockRegister.LILY_PAD.get(), this, 1, 3));
+		this.targetSelector.addGoal(0, new PVZNearestTargetGoal(this, false, 80, 60));
 	}
 	
 	@Override
@@ -88,7 +88,7 @@ public class DolphinRiderEntity extends PVZZombieEntity{
 	}
 	
 	@Override
-	public boolean checkCanZombieTarget(LivingEntity target) {
+	public boolean checkCanZombieTarget(Entity target) {
 		if(super.checkCanZombieTarget(target)) {
 			return !this.isInWater()||target.isInWater();
 		}

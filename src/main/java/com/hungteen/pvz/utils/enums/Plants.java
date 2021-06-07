@@ -1,5 +1,7 @@
 package com.hungteen.pvz.utils.enums;
 
+import net.minecraft.util.text.TranslationTextComponent;
+
 public enum Plants {
 	//grass day
 	PEA_SHOOTER(0),
@@ -103,6 +105,10 @@ public enum Plants {
 	
 	public static boolean isEntityPlant(Plants p) {
 		return ! p.isBlockPlant && ! p.isOuterPlant;
+	}
+	
+	public TranslationTextComponent getText() {
+		return new TranslationTextComponent("entity.pvz." + this.toString().toLowerCase());
 	}
 	
 }

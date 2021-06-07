@@ -31,7 +31,7 @@ public class CherryBombEntity extends PlantBomberEntity{
 			float len = this.getExpRange();
 			AxisAlignedBB aabb = EntityUtil.getEntityAABB(this, len, len);
 			int deathCnt = 0;
-			for(Entity target : EntityUtil.getAttackEntities(this, aabb)) {
+			for(Entity target : EntityUtil.getTargetableEntities(this, aabb)) {
 				target.hurt(PVZDamageSource.causeExplosionDamage(this, this), this.getAttackDamage());
 				if(! EntityUtil.isEntityValid(target)) {
 					++ deathCnt;

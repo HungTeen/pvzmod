@@ -1,8 +1,8 @@
 package com.hungteen.pvz.common.entity.goal.target;
 
-import java.util.ArrayList;
 import java.util.EnumSet;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import com.hungteen.pvz.utils.EntityUtil;
 
@@ -42,14 +42,9 @@ public class PVZRandomTargetGoal extends TargetGoal {
 		if (this.targetChance > 0 && this.mob.getRandom().nextInt(this.targetChance) != 0) {
 			return false;
 		}
-		List<LivingEntity> list1 = new ArrayList<LivingEntity>();
-		for (LivingEntity entity : EntityUtil.getEntityTargetableEntity(mob, getAABB())) {
-			if (entity != this.mob && (! this.mustSee || this.checkSenses(entity))) {
-				if (this.checkOther(entity)) {
-					list1.add(entity);
-				}
-			}
-		}
+		List<LivingEntity> list1 = EntityUtil.getTargetableLivings(mob, getAABB()).stream().filter(target -> {
+			return (! this.mustSee || this.checkSenses(target)) && this.checkOther(target);
+		}).collect(Collectors.toList());
 		if (list1.isEmpty()) {
 			return false;
 		}
@@ -66,13 +61,13 @@ public class PVZRandomTargetGoal extends TargetGoal {
 	@Override
 	public boolean canContinueToUse() {
 		LivingEntity entity = this.mob.getTarget();
-		if (entity == null) {
+		if(! EntityUtil.isEntityValid(entity)) {
 			entity = this.targetMob;
 		}
-		if(entity == null || ! entity.isAlive()) {
+		if(! EntityUtil.isEntityValid(entity)) {
 			return false;
 		}
-		if(EntityUtil.checkCanEntityTarget(mob, entity) && entity != this.mob && (! this.mustSee || this.checkSenses(entity))) {
+		if(EntityUtil.canAttackEntity(mob, entity) && (! this.mustSee || this.checkSenses(entity))) {
 			if (this.checkOther(entity)) {
 				this.mob.setTarget(entity);
 				return true;

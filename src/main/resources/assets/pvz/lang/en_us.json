@@ -71,6 +71,8 @@
 //misc
     "entity.pvz.ducky_tube":"Ducky Tube",
     "entity.pvz.bobsle_car":"Bobsle Car",
+    "entity.pvz.zombie_part":"Zombie Part",
+    "entity.pvz.zombie_drop_body":"Zombie Body",
 //animal
     "entity.pvz.foodie_zombie":"FoodieZombie",
     "item.pvz.foodie_zombie_spawn_egg":"FoodieZombie Spawn Egg", 
@@ -907,6 +909,24 @@
     "enchantment.pvz.sun_shovel":"Sun Shovel",
     "enchantment.pvz.sun_mending":"Sun Mending",
     "enchantment.pvz.soilless_plant":"Soilless Plant",
+//command
+    "command.pvz.clear_events":"clear all events",
+    "command.pvz.add_event":"add invasion event",
+    "command.pvz.add_zombie":"add zombie spawn",
+    "command.pvz.add_zombie_fail":"can no add this zombie spawn",
+    "command.pvz.remove_zombie":"remove zombie spawn",
+//resources
+    "resource.pvz.tree_lvl":"Tree Level",
+    "resource.pvz.tree_xp":"Tree Xp",
+    "resource.pvz.money":"Money",
+    "resource.pvz.gem_num":"Gem Amount",
+    "resource.pvz.sun_num":"Sun Amount",
+    "resource.pvz.energy_num":"Energy Amount",
+    "resource.pvz.max_energy_num":"Energy Limit",
+    "resource.pvz.no_fog_tick":"No Fog Duration",
+    "resource.pvz.kill_count":"Kill Count",
+    "resource.pvz.lottery_chance":"Lottery Chance",
+    "resource.pvz.group_type":"Group Type",
 //effect
     "effect.pvz.cold":"Cold",
     "effect.pvz.frozen":"Frozen",

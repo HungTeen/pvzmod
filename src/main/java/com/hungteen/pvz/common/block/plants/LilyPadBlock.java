@@ -42,7 +42,7 @@ public class LilyPadBlock extends BushBlock {
 	public void entityInside(BlockState state, World worldIn, BlockPos pos, Entity entityIn) {
 		super.entityInside(state, worldIn, pos, entityIn);
 		if (worldIn instanceof ServerWorld && entityIn instanceof PVZZombieEntity ) {
-			if(entityIn.isAlive()) {
+			if(entityIn.isAlive() && ((PVZZombieEntity) entityIn).canBreakPlantBlock()) {
 			    worldIn.destroyBlock(new BlockPos(pos), true, entityIn);
 			}
 		}

@@ -59,7 +59,7 @@ public class CatTailEntity extends PlantShooterEntity {
 	}
 	
 	@Override
-	protected boolean canPlantTarget(LivingEntity entity) {
+	protected boolean canPlantTarget(Entity entity) {
 		if(entity instanceof BalloonZombieEntity) return true;
 		return super.canPlantTarget(entity);
 	}
