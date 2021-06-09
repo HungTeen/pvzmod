@@ -270,7 +270,7 @@ public class FoodieZombieEntity extends AnimalEntity {
 		}
 	}
 
-	public static boolean canSpawn(EntityType<? extends MobEntity> type, IWorld worldIn, SpawnReason reason,BlockPos pos, Random randomIn) {
+	public static boolean canSpawn(EntityType<? extends MobEntity> type, IWorld worldIn, SpawnReason reason, BlockPos pos, Random randomIn) {
 		return worldIn.getBlockState(pos).getBlock() == Blocks.WATER && worldIn.getBlockState(pos.above()).getBlock() == Blocks.WATER;
 	}
 

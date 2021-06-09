@@ -109,10 +109,9 @@ public class BucketHeadZombieModel extends PVZZombieModel<BucketHeadZombieEntity
 	@Override
 	public void updateFreeParts(BucketHeadZombieEntity entity) {
 		super.updateFreeParts(entity);
-		float percent = entity.getDefenceLife() / BucketHeadZombieEntity.BUCKET_HEALTH;
-        this.defence3.visible = percent > 2.0f / 3;
-		this.defence2.visible = percent > 1.0f / 3;
-		this.defence1.visible = percent > 0;
+        this.defence3.visible = entity.hasBucketHead(3);
+		this.defence2.visible = entity.hasBucketHead(2);
+		this.defence1.visible = entity.hasBucketHead(1);
 	}
 
 	@Override

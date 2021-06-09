@@ -14,4 +14,9 @@ public class MathUtil {
 		Vector3d now = new Vector3d(pos.getX() + 0.5D, pos.getY() + 0.5D, pos.getZ() + 0.5D);
 		return vec.distanceTo(now);
 	}
+	
+	public static Vector3d getHorizontalNormalizedVec(Vector3d a, Vector3d b) {
+		return new Vector3d(a.x - a.x, 0, b.z - a.z).normalize();
+	}
+	
 }

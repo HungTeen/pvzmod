@@ -26,11 +26,11 @@ public class PVZEntityLootTables implements Consumer<BiConsumer<ResourceLocation
 				));
 		t.accept(PVZLoot.CONEHEAD_ZOMBIE, getZombieLootTable().withPool(LootPool.lootPool().setRolls(ConstantRange.exactly(1))
 				.add(ItemLootEntry.lootTableItem(ItemRegister.CONE_HEAD.get()))
-				.when(RandomChanceWithLooting.randomChanceAndLootingBoost(0.01F, 0.01F))
+				.when(RandomChanceWithLooting.randomChanceAndLootingBoost(0.02F, 0.01F))
 				));
 		t.accept(PVZLoot.BUCKETHEAD_ZOMBIE, getZombieLootTable().withPool(LootPool.lootPool().setRolls(ConstantRange.exactly(1))
 				.add(ItemLootEntry.lootTableItem(ItemRegister.BUCKET_HEAD.get()))
-				.when(RandomChanceWithLooting.randomChanceAndLootingBoost(0.01F, 0.01F))
+				.when(RandomChanceWithLooting.randomChanceAndLootingBoost(0.02F, 0.01F))
 				));
 		t.accept(PVZLoot.SCREENDOOR_ZOMBIE, getZombieLootTable().withPool(LootPool.lootPool().setRolls(ConstantRange.exactly(1))
 				.add(ItemLootEntry.lootTableItem(ItemRegister.SCREEN_DOOR.get()))

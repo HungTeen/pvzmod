@@ -135,7 +135,7 @@ public class ThornEntity extends AbstractBulletEntity {
 	public double getBulletSpeed() {
 		if (this.getThrower() instanceof CatTailEntity) {
 			if(this.getThornType() == ThornTypes.AUTO) return 1D;
-			return 0.4D;
+			return 0.5D;
 		}
 		return 0.1D;
 	}

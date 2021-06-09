@@ -1,7 +1,14 @@
 package com.hungteen.pvz.client.model.entity.zombie.grassday;
 
+import java.util.Optional;
+
 import com.hungteen.pvz.client.model.entity.zombie.PVZZombieModel;
+import com.hungteen.pvz.common.entity.zombie.body.ZombieDropBodyEntity;
+import com.hungteen.pvz.common.entity.zombie.body.ZombieDropBodyEntity.BodyType;
 import com.hungteen.pvz.common.entity.zombie.grassday.PoleZombieEntity;
+import com.hungteen.pvz.utils.AnimationUtil;
+import com.mojang.blaze3d.matrix.MatrixStack;
+import com.mojang.blaze3d.vertex.IVertexBuilder;
 
 import net.minecraft.client.renderer.model.ModelRenderer;
 
@@ -91,16 +98,57 @@ public class PoleZombieModel extends PVZZombieModel<PoleZombieEntity> {
 	}
 
 	@Override
+	public void setupAnim(PoleZombieEntity entity, float limbSwing, float limbSwingAmount, float ageInTicks,
+			float netHeadYaw, float headPitch) {
+		super.setupAnim(entity, limbSwing, limbSwingAmount, ageInTicks, netHeadYaw, headPitch);
+		if(entity.getAttackTime() > 0) {
+			int time = entity.getPoleJumpCD() - entity.getAttackTime();
+			final int T = entity.getPoleJumpCD() / 4;
+			if(time < T) {
+				this.right_hand.xRot = - AnimationUtil.byDegree(90) + AnimationUtil.getUp(time, T, 90);
+			} else if(time < T * 3) {
+				this.right_hand.xRot = AnimationUtil.getUp(time - T, T * 2, 90);
+				this.up.xRot = - AnimationUtil.getUp(time - T, T * 2, 90);
+				this.left_leg.xRot = - AnimationUtil.getUp(time - T, T * 2, 120);
+				this.right_leg.xRot = - AnimationUtil.getUp(time - T, T * 2, 120);
+			} else {
+				this.right_hand.xRot = AnimationUtil.byDegree(90) - AnimationUtil.getUp(time - 3 * T, T, 90);
+				this.up.xRot = - AnimationUtil.byDegree(90) + AnimationUtil.getUp(time - 3 * T, T, 90);
+				this.left_leg.xRot = - AnimationUtil.byDegree(120) + AnimationUtil.getUp(time - 3 * T, T, 120);
+				this.right_leg.xRot = - AnimationUtil.byDegree(120) + AnimationUtil.getUp(time - 3 * T, T, 120);
+			}
+		}
+	}
+	
+	@Override
+	public void renderBody(ZombieDropBodyEntity entity, MatrixStack stack, IVertexBuilder buffer, int packedLight,
+			int packedOverlay, BodyType type) {
+		super.renderBody(entity, stack, buffer, packedLight, packedOverlay, type);
+		if(type == BodyType.BODY) {
+			this.right_hand2.xRot = ! entity.hasHandDefence() ? 0 : -1.5708F;
+		}
+	}
+	
+	@Override
 	public void refreshAnim() {
 		this.right_hand.xRot = -1.5708F;
+		this.up.xRot = 0;
 	}
 	
 	@Override
 	public void updateFreeParts(PoleZombieEntity entity) {
 		super.updateFreeParts(entity);
-		this.isRightHandFree = false;
+		final boolean hasPole = entity.hasPole();
+		this.pole.visible = hasPole;
+		this.isRightHandFree = ! hasPole;
+		this.right_hand2.xRot = this.isRightHandFree ? 0 : -1.5708F;
 	}
 
+	@Override
+	public Optional<ModelRenderer> getHandDefence() {
+		return Optional.ofNullable(this.pole);
+	}
+	
 	@Override
 	public ModelRenderer getZombieLeftHand() {
 		return this.left_hand;

@@ -46,6 +46,7 @@ import com.hungteen.pvz.utils.ZombieUtil;
 import com.hungteen.pvz.utils.enums.InvasionEvents;
 import com.hungteen.pvz.utils.enums.Ranks;
 import com.hungteen.pvz.utils.enums.Zombies;
+import com.hungteen.pvz.utils.interfaces.IDefender;
 import com.hungteen.pvz.utils.others.WeightList;
 import com.mojang.datafixers.util.Pair;
 
@@ -161,10 +162,24 @@ public abstract class PVZZombieEntity extends MonsterEntity implements IPVZZombi
 		this.goalSelector.addGoal(8, new PVZLookRandomlyGoal(this));
 		this.goalSelector.addGoal(7, new WaterAvoidingRandomWalkingGoal(this, 1.0D));
 		this.goalSelector.addGoal(7, new PVZSwimGoal(this));
+		this.targetSelector.addGoal(2, new PVZHurtByTargetGoal(this, 10));
+		this.registerAttackGoals();
+		this.registerTargetGoals();
+	}
+	
+	/**
+	 * {@link #registerGoals()}
+	 */
+	protected void registerAttackGoals() {
 		this.goalSelector.addGoal(3, new PVZZombieAttackGoal(this, true));
 		this.goalSelector.addGoal(6, new ZombieBreakPlantBlockGoal(BlockRegister.FLOWER_POT.get(), this, 1F, 10));
+	}
+	
+	/**
+	 * {@link #registerGoals()}
+	 */
+	protected void registerTargetGoals() {
 		this.targetSelector.addGoal(0, new PVZNearestTargetGoal(this, false, 60, 30));
-		this.targetSelector.addGoal(2, new PVZHurtByTargetGoal(this, 10));
 	}
 	
 	/* handle spawn */
@@ -247,7 +262,7 @@ public abstract class PVZZombieEntity extends MonsterEntity implements IPVZZombi
 			this.refreshDimensions();
 		}
 		//rising particle
-		if(this.needRising && this.getAnimTime() < 0) {
+		if(this.isZombieRising()) {
 			this.setAnimTime(this.getAnimTime() + 1);
 			if(level.isClientSide) {
 				ParticleUtil.spawnSplash(this.level, this.position(), 1);
@@ -761,9 +776,9 @@ public abstract class PVZZombieEntity extends MonsterEntity implements IPVZZombi
 	}
 	
 	protected double getCollideWidthOffset() {
-		return 0.8;
+		return - 0.2D;
 	}
-
+	
 	/**
 	 * can zombie collide with target.
 	 * {@link #pushEntities()}
@@ -794,6 +809,11 @@ public abstract class PVZZombieEntity extends MonsterEntity implements IPVZZombi
 		return 0.85f;
 	}
 	
+	@Override
+	public boolean isPushedByFluid() {
+		return false;
+	}
+	
 	public boolean hasDefence() {
 		return this.hasDirectDefence;
 	}
@@ -813,6 +833,11 @@ public abstract class PVZZombieEntity extends MonsterEntity implements IPVZZombi
 	@Override
 	public boolean canBeLeashed(PlayerEntity player) {
 		return ! EntityUtil.checkCanEntityBeAttack(this, player);
+	}
+	
+	@Override
+	public boolean canBeAttractedBy(IDefender defender) {
+		return true;
 	}
 	
 	/**
@@ -846,7 +871,7 @@ public abstract class PVZZombieEntity extends MonsterEntity implements IPVZZombi
 	}
 
 	/**
-	 * when zombie turn to oppsite charm state charm -> uncharm uncharm -> charm.
+	 * when zombie turn to oppsite charm state charm -> uncharm or uncharm -> charm.
 	 */
 	public void onCharmed(PVZPlantEntity plantEntity) {
 		if (this.canBeCharmed()) {
@@ -862,7 +887,23 @@ public abstract class PVZZombieEntity extends MonsterEntity implements IPVZZombi
 		}
 	}
 	
-	/* misc get */
+	@Override
+	public boolean isInvulnerableTo(DamageSource source) {
+		return source != DamageSource.OUT_OF_WORLD && !source.isCreativePlayer() && this.isZombieInvulnerableTo(source);
+	}
+	
+	protected boolean isZombieInvulnerableTo(DamageSource source) {
+		return this.isZombieRising();
+	}
+	
+	/**
+	 * is zombie still rising from dirt.
+	 */
+	public boolean isZombieRising() {
+		return this.needRising && this.getAnimTime() < 0;
+	}
+	
+	/* misc set */
 	
 	public void setZombieRising() {
 		this.needRising = true;

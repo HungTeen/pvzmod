@@ -293,5 +293,9 @@
     "cob_launch":{
         "subtitle": "sound.pvz.cob_launch",
         "sounds":[{"name":"pvz:entity/plant/attack/cob_launch"}]
+    },
+    "pole_jump":{
+        "subtitle": "sound.pvz.pole_jump",
+        "sounds":[{"name":"pvz:entity/zombie/jump/pole_jump"}]
     }
 }

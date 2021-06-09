@@ -52,9 +52,4 @@ public abstract class SwimmerZombieEntity extends PVZZombieEntity{
 		return 0.93f;
 	}
 	
-	@Override
-	public boolean isPushedByFluid() {
-		return false;
-	}
-
 }

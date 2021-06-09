@@ -1,5 +1,6 @@
 package com.hungteen.pvz.common.entity.zombie.grassday;
 
+import com.hungteen.pvz.client.model.entity.zombie.grassday.ConeHeadZombieModel;
 import com.hungteen.pvz.data.loot.PVZLoot;
 import com.hungteen.pvz.register.SoundRegister;
 import com.hungteen.pvz.utils.enums.Zombies;
@@ -13,7 +14,7 @@ import net.minecraft.world.World;
 
 public class ConeHeadZombieEntity extends NormalZombieEntity{
 
-	public static final float CONE_HEALTH = 40;
+	private static final float CONE_HEALTH = 40;
 	
 	public ConeHeadZombieEntity(EntityType<? extends MonsterEntity> type, World worldIn) {
 		super(type, worldIn);
@@ -24,6 +25,22 @@ public class ConeHeadZombieEntity extends NormalZombieEntity{
 	@Override
 	public float getLife() {
 		return 20;
+	}
+	
+	/**
+	 * check the visibility of conehead model.
+	 * {@link ConeHeadZombieModel#updateFreeParts(ConeHeadZombieEntity)} 
+	 */
+	public boolean hasConeHead(int stage) {
+		final float percent = this.getDefenceLife() / CONE_HEALTH;
+		if(stage == 3) {
+			return percent > 2.0f / 3;
+		} else if(stage == 2) {
+			return percent > 1.0f / 3;
+		} else if(stage == 1) {
+			return percent > 0;
+		}
+		return false;
 	}
 	
 	@Override

@@ -1,5 +1,6 @@
 package com.hungteen.pvz.common.entity.zombie.grassday;
 
+import com.hungteen.pvz.client.model.entity.zombie.grassday.BucketHeadZombieModel;
 import com.hungteen.pvz.data.loot.PVZLoot;
 import com.hungteen.pvz.register.SoundRegister;
 import com.hungteen.pvz.utils.enums.MetalTypes;
@@ -15,7 +16,7 @@ import net.minecraft.world.World;
 
 public class BucketHeadZombieEntity extends NormalZombieEntity implements IHasMetal{
 
-	public static final float BUCKET_HEALTH = 110;
+	private static final float BUCKET_HEALTH = 110;
 	
 	public BucketHeadZombieEntity(EntityType<? extends MonsterEntity> type, World worldIn) {
 		super(type, worldIn);
@@ -41,6 +42,22 @@ public class BucketHeadZombieEntity extends NormalZombieEntity implements IHasMe
 	@Override
 	public void increaseMetal() {
 		this.setDefenceLife(BUCKET_HEALTH);
+	}
+	
+	/**
+	 * check the visibility of buckethead model.
+	 * {@link BucketHeadZombieModel#updateFreeParts(BucketHeadZombieEntity)}
+	 */
+	public boolean hasBucketHead(int stage) {
+		final float percent = this.getDefenceLife() / BUCKET_HEALTH;
+		if(stage == 3) {
+			return percent > 2.0f / 3;
+		} else if(stage == 2) {
+			return percent > 1.0f / 3;
+		} else if(stage == 1) {
+			return percent > 0;
+		}
+		return false;
 	}
 
 	@Override

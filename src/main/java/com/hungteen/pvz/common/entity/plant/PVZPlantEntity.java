@@ -15,6 +15,7 @@ import com.hungteen.pvz.common.entity.goal.target.PVZHurtByTargetGoal;
 import com.hungteen.pvz.common.entity.plant.enforce.SquashEntity;
 import com.hungteen.pvz.common.entity.plant.light.GoldLeafEntity;
 import com.hungteen.pvz.common.entity.plant.spear.SpikeWeedEntity;
+import com.hungteen.pvz.common.entity.zombie.grassday.PoleZombieEntity;
 import com.hungteen.pvz.common.entity.zombie.grassnight.TombStoneEntity;
 import com.hungteen.pvz.common.entity.zombie.poolnight.BalloonZombieEntity;
 import com.hungteen.pvz.common.entity.zombie.poolnight.DiggerZombieEntity;
@@ -306,6 +307,8 @@ public abstract class PVZPlantEntity extends CreatureEntity implements IPVZPlant
 			return !((BalloonZombieEntity) entity).hasBalloon();
 		} else if (entity instanceof BungeeZombieEntity) {
 			return ((BungeeZombieEntity) entity).getBungeeState() == BungeeStates.CATCH;
+		} else if(entity instanceof PoleZombieEntity) {
+			return ! ((PoleZombieEntity) entity).isPoleJumping();
 		}
 		return true;
 	}

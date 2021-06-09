@@ -15,9 +15,11 @@ import com.hungteen.pvz.api.interfaces.ICanCharm;
 import com.hungteen.pvz.api.interfaces.IGroupEntity;
 import com.hungteen.pvz.api.interfaces.IHasOwner;
 import com.hungteen.pvz.common.entity.PVZMultiPartEntity;
+import com.hungteen.pvz.common.entity.goal.attack.PVZZombieAttackGoal;
 import com.hungteen.pvz.common.entity.misc.LawnMowerEntity;
 import com.hungteen.pvz.common.entity.plant.PVZPlantEntity;
 import com.hungteen.pvz.common.entity.zombie.PVZZombieEntity;
+import com.hungteen.pvz.common.entity.zombie.grassday.PoleZombieEntity;
 import com.hungteen.pvz.common.entity.zombie.poolnight.BalloonZombieEntity;
 import com.hungteen.pvz.common.network.PVZPacketHandler;
 import com.hungteen.pvz.common.network.SpawnParticlePacket;
@@ -163,6 +165,20 @@ public class EntityUtil {
 	}
 	
 	/**
+	 * can entity pass without hit block when it has a motion vec.
+	 * {@link PoleZombieEntity}
+	 */
+	public static boolean canEntityPass(Entity entity, Vector3d vec, float length) {
+		Vector3d lowStart = entity.position();
+		Vector3d upperStart = entity.position().add(0, entity.getBbHeight(), 0);
+		Vector3d lowerEnd = lowStart.add(vec.scale(length));
+		Vector3d upperEnd = upperStart.add(vec.scale(length));
+		RayTraceContext ray1 = new RayTraceContext(lowStart, lowerEnd, RayTraceContext.BlockMode.COLLIDER, RayTraceContext.FluidMode.NONE, entity);
+		RayTraceContext ray2 = new RayTraceContext(upperStart, upperEnd, RayTraceContext.BlockMode.COLLIDER, RayTraceContext.FluidMode.NONE, entity);
+		return entity.level.clip(ray1).getType() != RayTraceResult.Type.BLOCK && entity.level.clip(ray2).getType() != RayTraceResult.Type.BLOCK;
+	}
+	
+	/**
 	 * check can entity destroy the specific block.
 	 */
 	public static boolean canDestroyBlock(World world, BlockPos pos, BlockState state, Entity entity) {
@@ -234,6 +250,10 @@ public class EntityUtil {
 		return dis * dis;
 	}
 	
+	/**
+	 * get the nearest distance of two entities.
+	 * {@link PVZZombieAttackGoal}
+	 */
 	public static double getNearestDistance(Entity a, Entity b) {
 		double dx = a.getX() - b.getX();
 		double dz = a.getZ() - b.getZ();

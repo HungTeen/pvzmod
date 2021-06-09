@@ -75,6 +75,7 @@ public class SoundRegister {
 	public static final RegistryObject<SoundEvent> SWING = registerSound("swing");
 	public static final RegistryObject<SoundEvent> ZOMBOSS_SHOOT = registerSound("zomboss_shoot");
 	public static final RegistryObject<SoundEvent> COB_LAUNCH = registerSound("cob_launch");
+	public static final RegistryObject<SoundEvent> POLE_JUMP = registerSound("pole_jump");
 	//misc
 	public static final RegistryObject<SoundEvent> PLANT_ON_GROUND= registerSound("plant_on_ground");
 	public static final RegistryObject<SoundEvent> PLANT_IN_WATER = registerSound("plant_in_water");

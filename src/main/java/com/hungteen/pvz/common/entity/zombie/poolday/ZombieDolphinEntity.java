@@ -1,7 +1,7 @@
 package com.hungteen.pvz.common.entity.zombie.poolday;
 
 import com.hungteen.pvz.common.entity.creature.FoodieZombieEntity;
-import com.hungteen.pvz.common.entity.goal.attack.ZombieMeleeAttackGoal;
+import com.hungteen.pvz.common.entity.goal.attack.PVZZombieAttackGoal;
 import com.hungteen.pvz.common.entity.goal.target.PVZNearestTargetGoal;
 import com.hungteen.pvz.common.entity.zombie.PVZZombieEntity;
 import com.hungteen.pvz.data.loot.PVZLoot;
@@ -60,7 +60,7 @@ public class ZombieDolphinEntity extends PVZZombieEntity {
 		this.goalSelector.addGoal(5, new LookAtGoal(this, PlayerEntity.class, 6.0F));
 		this.goalSelector.addGoal(5, new DolphinJumpGoal(this, 10));
 		this.goalSelector.addGoal(8, new FollowBoatGoal(this));
-		this.goalSelector.addGoal(0, new ZombieMeleeAttackGoal(this));
+		this.goalSelector.addGoal(0, new PVZZombieAttackGoal(this, true));
 		this.targetSelector.addGoal(0, new PVZNearestTargetGoal(this, false, 80, 60));
 		this.targetSelector.addGoal(1, (new HurtByTargetGoal(this, GuardianEntity.class)).setAlertOthers());
 	}
@@ -116,11 +116,6 @@ public class ZombieDolphinEntity extends PVZZombieEntity {
 		return SoundRegister.DOLPHIN_SAY.get();
 	}
 
-	@Override
-	public boolean isPushedByFluid() {
-		return false;
-	}
-	
 	@Override
 	public CreatureAttribute getMobType() {
 		return CreatureAttribute.WATER;
