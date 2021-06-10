@@ -1,166 +1,133 @@
 package com.hungteen.pvz.common.entity.zombie.grassnight;
 
-import java.util.Random;
+import java.util.Arrays;
+import java.util.List;
+import java.util.Optional;
+import java.util.stream.Collectors;
 
-import com.hungteen.pvz.common.entity.zombie.PVZZombieEntity;
+import com.hungteen.pvz.common.entity.plant.assist.GraveBusterEntity;
 import com.hungteen.pvz.common.entity.zombie.other.NobleZombieEntity;
-import com.hungteen.pvz.common.item.card.ImitaterCardItem;
-import com.hungteen.pvz.common.item.card.PlantCardItem;
+import com.hungteen.pvz.common.entity.zombie.roof.ZomBossEntity;
+import com.hungteen.pvz.common.world.invasion.OverworldInvasion;
 import com.hungteen.pvz.utils.EntityUtil;
+import com.hungteen.pvz.utils.MathUtil;
 import com.hungteen.pvz.utils.ZombieUtil;
-import com.hungteen.pvz.utils.enums.Plants;
 import com.hungteen.pvz.utils.enums.Zombies;
-import com.hungteen.pvz.utils.others.WeightList;
 
-import net.minecraft.entity.EntitySize;
 import net.minecraft.entity.EntityType;
-import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.Pose;
-import net.minecraft.entity.SpawnReason;
-import net.minecraft.entity.ai.attributes.Attributes;
+import net.minecraft.entity.ai.goal.Goal;
 import net.minecraft.entity.ai.goal.NearestAttackableTargetGoal;
 import net.minecraft.entity.monster.MonsterEntity;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.item.ItemStack;
-import net.minecraft.util.ActionResultType;
-import net.minecraft.util.Hand;
-import net.minecraft.util.ResourceLocation;
-import net.minecraft.util.SoundEvent;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.vector.Vector3d;
-import net.minecraft.world.IWorld;
+import net.minecraft.util.DamageSource;
 import net.minecraft.world.World;
-import net.minecraft.world.server.ServerWorld;
 
-public class TombStoneEntity extends PVZZombieEntity {
+public class TombStoneEntity extends AbstractTombStoneEntity {
 
-	public static final Zombies[] GROUND_ZOMBIES = new Zombies[] {Zombies.NORMAL_ZOMBIE, Zombies.CONEHEAD_ZOMBIE, Zombies.BUCKETHEAD_ZOMBIE};
-	private int currentSummonCD;
-	private int minSummonCD = 360;
-	private int maxSummonCD = 1200;
+	public static final List<Zombies> DEFAULT_ZOMBIES = Arrays.asList(
+			Zombies.NORMAL_ZOMBIE, Zombies.CONEHEAD_ZOMBIE, Zombies.BUCKETHEAD_ZOMBIE,
+			Zombies.SCREENDOOR_ZOMBIE, Zombies.NEWSPAPER_ZOMBIE, Zombies.OLD_ZOMBIE
+			);
+	protected int currentSummonCD;
+	private final int MinSummonCD = 360;
+	private final int MaxSummonCD = 1200;
 	
 	public TombStoneEntity(EntityType<? extends MonsterEntity> type, World worldIn) {
 		super(type, worldIn);
-		this.currentSummonCD = this.getRandom().nextInt(this.maxSummonCD - this.minSummonCD + 1) + this.minSummonCD; 
-		this.canBeButter = false;
-		this.canBeCold = false;
-		this.canBeCharm = false;
-		this.canBeMini = false;
-		this.canBeFrozen = false;
-		this.canLostHand = false;
-		this.canLostHead = false;
-		this.canBeStealByBungee = false;
-		this.canCollideWithZombie = false;
 	}
 	
 	@Override
 	protected void registerGoals() {
-		this.goalSelector.addGoal(0, new NearestAttackableTargetGoal<NobleZombieEntity>(this, NobleZombieEntity.class, true));
+		this.goalSelector.addGoal(0, new TombStoneSummonZombieGoal(this));
+		this.targetSelector.addGoal(0, new NearestAttackableTargetGoal<>(this, NobleZombieEntity.class, true));
+		this.targetSelector.addGoal(0, new NearestAttackableTargetGoal<>(this, ZomBossEntity.class, true));
 	}
 
-	@Override
-	protected void updateAttributes() {
-		super.updateAttributes();
-		this.getAttribute(Attributes.MOVEMENT_SPEED).setBaseValue(0);
-		this.getAttribute(Attributes.ATTACK_DAMAGE).setBaseValue(0);
-	}
-	
-	@Override
-	public void aiStep() {
-		super.aiStep();
-		if(! this.level.isClientSide && this.getAttackTime() >= 0) {
-			if(this.canSummonZombie()) {
-				this.setAttackTime(this.getAttackTime() + 1);
-				if(this.getAttackTime() >= this.currentSummonCD) {
-					this.summonZombie();
-					this.setAttackTime(0);
-					this.currentSummonCD = this.getRandom().nextInt(this.maxSummonCD - this.minSummonCD + 1) + this.minSummonCD;
-				}
-			}
-		}
-		if(! this.level.isClientSide) {
-			BlockPos pos = this.blockPosition();
-			this.setPos(pos.getX() + 0.5, this.getY(), pos.getZ() + 0.5);
-		}
-	}
-	
-	@Override
-	protected boolean shouldCollideWithEntity(LivingEntity target) {
-		return target instanceof TombStoneEntity;
-	}
-	
+	/**
+	 * tombstone summon zombies.
+	 * it will select suitable zombie for that day.
+	 * used in {@link TombStoneSummonZombieGoal}
+	 */
 	public void summonZombie() {
-		int pos = this.getRandom().nextInt(GROUND_ZOMBIES.length);
-		PVZZombieEntity zombie = ZombieUtil.getZombieEntity(level, GROUND_ZOMBIES[pos]);
-		if(zombie != null) {
+		final List<Zombies> list = OverworldInvasion.ZOMBIE_INVADE_SET.isEmpty() ? DEFAULT_ZOMBIES : OverworldInvasion.ZOMBIE_INVADE_SET.stream().collect(Collectors.toList());
+		final Zombies zombieType = list.get(this.random.nextInt(list.size()));
+		Optional.ofNullable(ZombieUtil.getZombieEntity(level, zombieType)).ifPresent(zombie -> {
 			zombie.setZombieRising();
 			EntityUtil.onEntitySpawn(level, zombie, blockPosition());
-		}
+		});
 	}
 	
+	/**
+	 * check can summon zombie or not.
+	 * it need a valid boss target.
+	 */
 	protected boolean canSummonZombie() {
-		return this.getTarget() != null;
-	}
-	
-	public static boolean canTombSpawn(EntityType<? extends PVZZombieEntity> zombieType, IWorld worldIn,
-			SpawnReason reason, BlockPos pos, Random rand) {
-		return (worldIn instanceof ServerWorld && ! ((ServerWorld) worldIn).isDay()) ? canZombieSpawn(zombieType, worldIn, reason, pos, rand) : false;
+		return EntityUtil.isEntityValid(this.getTarget());
 	}
 	
 	@Override
-	public ActionResultType interactAt(PlayerEntity player, Vector3d vec3d, Hand hand) {
-		if(! level.isClientSide) {
-			ItemStack stack = player.getItemInHand(hand);
-			if(this.getPassengers().isEmpty() && stack.getItem() instanceof PlantCardItem) {
-				PlantCardItem cardItem = (PlantCardItem) stack.getItem();
-				if(cardItem.plantType == Plants.GRAVE_BUSTER) {
-					PlantCardItem.checkSunAndSummonPlant(player, stack, cardItem, blockPosition(), (plantEntity) -> {
-						plantEntity.setTarget(this);
-					});
-				} else if(cardItem instanceof ImitaterCardItem && ((ImitaterCardItem) cardItem).isPlantTypeEqual(stack, Plants.GRAVE_BUSTER)) {
-					ImitaterCardItem.checkSunAndSummonImitater(player, stack, cardItem, blockPosition(), (imitater) -> {
-						imitater.setTarget(this);
-					});
-				}
-				return ActionResultType.CONSUME;
-			}
-		}
-		return super.interactAt(player, vec3d, hand);
+	protected boolean isZombieInvulnerableTo(DamageSource source) {
+		return super.isZombieInvulnerableTo(source) || ! (source.getDirectEntity() instanceof GraveBusterEntity);
 	}
 	
-	@Override
-	protected WeightList<DropType> getDropSpecialList() {
-		return super.getDropSpecialList().setLeftItem(DropType.COPPER);
-	}
-	
-	@Override
-	public EntitySize getDimensions(Pose poseIn) {
-		return EntitySize.scalable(0.8f, 1.6f);
-	}
-	
-	@Override
-	public float getLife() {
-		return 70;
-	}
-
-	@Override
-	public double getPassengersRidingOffset() {
-		return 0;
-	}
-	
-	@Override
-	protected SoundEvent getAmbientSound() {
-		return null;
-	}
-	
-	@Override
-	protected ResourceLocation getDefaultLootTable() {
-		return null;
+	/**
+	 * next summon zombie cd for next time.
+	 */
+	protected int genSummonCD() {
+		return MathUtil.genRandomMinMax(getRandom(), MinSummonCD, MaxSummonCD);
 	}
 	
 	@Override
 	public Zombies getZombieEnumName() {
 		return Zombies.TOMB_STONE;
 	}
+	
+	static class TombStoneSummonZombieGoal extends Goal{
 
+		protected final TombStoneEntity tomb;
+		
+		public TombStoneSummonZombieGoal(TombStoneEntity tomb) {
+			this.tomb = tomb;
+		}
+		
+		@Override
+		public boolean canUse() {
+			if(this.tomb.getAttackTime() > 0) {
+				return true;
+			}
+			if(this.tomb.random.nextInt(10) == 0 && this.tomb.canSummonZombie()) {
+				this.tomb.setAttackTime(1);
+				this.tomb.currentSummonCD = this.tomb.genSummonCD();
+				return true;
+			}
+			return false;
+		}
+		
+		@Override
+		public void start() {
+			
+		}
+		
+		@Override
+		public boolean canContinueToUse() {
+			return this.tomb.getAttackTime() > 0 && this.tomb.canSummonZombie();
+		}
+		
+		@Override
+		public void tick() {
+			int time = this.tomb.getAttackTime();
+			if(time >= this.tomb.currentSummonCD) {
+				this.tomb.summonZombie();
+				this.tomb.setAttackTime(0);
+			} else {
+				this.tomb.setAttackTime(time + 1);
+			}
+		}
+		
+		@Override
+		public void stop() {
+			this.tomb.setAttackTime(0);
+		}
+		
+	}
+	
 }

@@ -652,15 +652,19 @@ public abstract class PVZZombieEntity extends MonsterEntity implements IPVZZombi
 		return true;
 	}
 	
+	public static boolean checkSpawn(EntityType<? extends PVZZombieEntity> zombieType, IWorld worldIn,
+			SpawnReason reason, BlockPos pos, Random rand) {
+		return worldIn.getBrightness(LightType.BLOCK, pos) > 8 ? false
+				: checkAnyLightMonsterSpawnRules(zombieType, worldIn, reason, pos, rand);
+	}
+	
 	/**
 	 * {@link EntitySpawnRegister#registerEntitySpawns(net.minecraftforge.event.RegistryEvent.Register)}
 	 */
 	public static boolean canZombieSpawn(EntityType<? extends PVZZombieEntity> zombieType, IWorld worldIn,
 			SpawnReason reason, BlockPos pos, Random rand) {
 		if(! checkZombieSpawn(zombieType, worldIn, reason)) return false;
-		System.out.println("1" + reason);
-		return worldIn.getBrightness(LightType.BLOCK, pos) > 8 ? false
-				: checkAnyLightMonsterSpawnRules(zombieType, worldIn, reason, pos, rand);
+		return checkSpawn(zombieType, worldIn, reason, pos, rand);
 	}
 	
 	/**
@@ -907,6 +911,24 @@ public abstract class PVZZombieEntity extends MonsterEntity implements IPVZZombi
 	
 	public void setZombieRising() {
 		this.needRising = true;
+	}
+	
+	/**
+	 * it will not be affect by any effects.
+	 */
+	public void setImmuneAllEffects() {
+		this.canBeButter = false;
+		this.canBeCold = false;
+		this.canBeCharm = false;
+		this.canBeFrozen = false;
+	}
+	
+	/**
+	 * it will not drop head and hand.
+	 */
+	public void setIsWholeBody() {
+		this.canLostHand = false;
+		this.canLostHead = false;
 	}
 	
 	/* misc get */

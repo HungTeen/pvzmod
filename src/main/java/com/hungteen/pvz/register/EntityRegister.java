@@ -106,6 +106,7 @@ import com.hungteen.pvz.client.render.entity.zombie.grassnight.BackupDancerRende
 import com.hungteen.pvz.client.render.entity.zombie.grassnight.DancingZombieRender;
 import com.hungteen.pvz.client.render.entity.zombie.grassnight.FootballZombieRender;
 import com.hungteen.pvz.client.render.entity.zombie.grassnight.GigaFootballZombieRender;
+import com.hungteen.pvz.client.render.entity.zombie.grassnight.GigaTombStoneRender;
 import com.hungteen.pvz.client.render.entity.zombie.grassnight.NewspaperZombieRender;
 import com.hungteen.pvz.client.render.entity.zombie.grassnight.OldZombieRender;
 import com.hungteen.pvz.client.render.entity.zombie.grassnight.ScreenDoorZombieRender;
@@ -246,6 +247,7 @@ import com.hungteen.pvz.common.entity.zombie.grassnight.BackupDancerEntity;
 import com.hungteen.pvz.common.entity.zombie.grassnight.DancingZombieEntity;
 import com.hungteen.pvz.common.entity.zombie.grassnight.FootballZombieEntity;
 import com.hungteen.pvz.common.entity.zombie.grassnight.GigaFootballZombieEntity;
+import com.hungteen.pvz.common.entity.zombie.grassnight.GigaTombStoneEntity;
 import com.hungteen.pvz.common.entity.zombie.grassnight.NewspaperZombieEntity;
 import com.hungteen.pvz.common.entity.zombie.grassnight.OldZombieEntity;
 import com.hungteen.pvz.common.entity.zombie.grassnight.ScreenDoorZombieEntity;
@@ -406,6 +408,7 @@ public class EntityRegister {
 	public static final RegistryObject<EntityType<JalapenoZombieEntity>> JALAPENO_ZOMBIE = registerEntityType(JalapenoZombieEntity::new, "jalapeno_zombie", EntityClassification.MONSTER);
 	public static final RegistryObject<EntityType<WallNutZombieEntity>> WALLNUT_ZOMBIE = registerEntityType(WallNutZombieEntity::new, "wallnut_zombie", EntityClassification.MONSTER);
 	public static final RegistryObject<EntityType<TallNutZombieEntity>> TALLNUT_ZOMBIE = registerEntityType(TallNutZombieEntity::new, "tallnut_zombie", EntityClassification.MONSTER);
+	public static final RegistryObject<EntityType<GigaTombStoneEntity>> GIGA_TOMB_STONE = registerEntityType(GigaTombStoneEntity::new, "giga_tomb_stone", EntityClassification.MONSTER);
 	
 	//plant
 	public static final RegistryObject<EntityType<PeaShooterEntity>> PEA_SHOOTER = registerEntityType(PeaShooterEntity::new, "pea_shooter", EntityClassification.CREATURE);
@@ -562,6 +565,7 @@ public class EntityRegister {
         RenderingRegistry.registerEntityRenderingHandler(JALAPENO_ZOMBIE.get(), JalapenoZombieRender::new);
         RenderingRegistry.registerEntityRenderingHandler(WALLNUT_ZOMBIE.get(), WallNutZombieRender::new);
         RenderingRegistry.registerEntityRenderingHandler(TALLNUT_ZOMBIE.get(), TallNutZombieRender::new);
+        RenderingRegistry.registerEntityRenderingHandler(GIGA_TOMB_STONE.get(), GigaTombStoneRender::new);
         
         //plant
         RenderingRegistry.registerEntityRenderingHandler(PEA_SHOOTER.get(), PeaShooterRender::new);

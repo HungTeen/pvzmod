@@ -141,8 +141,8 @@ public class PVZConfig {
 					WorldSettings.EntitySpawnSettings.LavaZombieSpawnWeight = builder
 							.comment("spawn weight of LavaZombie at nether.")
 							.defineInRange("LavaZombieSpawnWeight", 15, 1, 200);
-					WorldSettings.EntitySpawnSettings.TombStoneSpawnWeight = builder
-							.comment("spawn weight of TombStone at night in overworld when invasion.")
+					WorldSettings.EntitySpawnSettings.GigaTombStoneSpawnWeight = builder
+							.comment("spawn weight of GigaTombStone at night in overworld.")
 							.defineInRange("TombStoneSpawnWeight", 5, 1, 200);
 					WorldSettings.EntitySpawnSettings.YetiZombieSpawnWeight = builder
 							.comment("spawn weight of YetiZombie in overworld.")
@@ -314,7 +314,7 @@ public class PVZConfig {
 				public ForgeConfigSpec.IntValue ZombieDolphinSpawnWeight;
 				public ForgeConfigSpec.IntValue FoodieZombieSpawnWeight;
 				public ForgeConfigSpec.IntValue LavaZombieSpawnWeight;
-				public ForgeConfigSpec.IntValue TombStoneSpawnWeight;
+				public ForgeConfigSpec.IntValue GigaTombStoneSpawnWeight;
 				public ForgeConfigSpec.IntValue YetiZombieSpawnWeight;
 			}
 		}

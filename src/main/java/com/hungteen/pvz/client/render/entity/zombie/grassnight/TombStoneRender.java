@@ -12,7 +12,7 @@ import net.minecraftforge.api.distmarker.OnlyIn;
 public class TombStoneRender extends PVZZombieRender<TombStoneEntity>{
 
 	public TombStoneRender(EntityRendererManager rendererManager) {
-		super(rendererManager, new TombStoneModel(), 0.4f);
+		super(rendererManager, new TombStoneModel<>(), 0.4f);
 	}
 
 	@Override

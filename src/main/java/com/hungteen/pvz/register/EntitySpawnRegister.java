@@ -73,7 +73,7 @@ public class EntitySpawnRegister {
 		EntitySpawnPlacementRegistry.register(EntityRegister.DIGGER_ZOMBIE.get(), PlacementType.ON_GROUND, Heightmap.Type.MOTION_BLOCKING_NO_LEAVES, PVZZombieEntity::canZombieSpawn);
 		EntitySpawnPlacementRegistry.register(EntityRegister.POGO_ZOMBIE.get(), PlacementType.ON_GROUND, Heightmap.Type.MOTION_BLOCKING_NO_LEAVES, PVZZombieEntity::canZombieSpawn);
 		EntitySpawnPlacementRegistry.register(EntityRegister.YETI_ZOMBIE.get(), PlacementType.ON_GROUND, Heightmap.Type.MOTION_BLOCKING_NO_LEAVES, YetiZombieEntity::canYetiSpawn);
-		EntitySpawnPlacementRegistry.register(EntityRegister.TOMB_STONE.get(), PlacementType.ON_GROUND, Heightmap.Type.MOTION_BLOCKING_NO_LEAVES, TombStoneEntity::canTombSpawn);
+		EntitySpawnPlacementRegistry.register(EntityRegister.TOMB_STONE.get(), PlacementType.ON_GROUND, Heightmap.Type.MOTION_BLOCKING_NO_LEAVES, TombStoneEntity::canTombStoneSpawn);
 		EntitySpawnPlacementRegistry.register(EntityRegister.BUNGEE_ZOMBIE.get(), IN_SKY, Heightmap.Type.MOTION_BLOCKING_NO_LEAVES, BungeeZombieEntity::canBungeeSpawn);
 		EntitySpawnPlacementRegistry.register(EntityRegister.LADDER_ZOMBIE.get(), PlacementType.ON_GROUND, Heightmap.Type.MOTION_BLOCKING_NO_LEAVES, PVZZombieEntity::canZombieSpawn);
 		EntitySpawnPlacementRegistry.register(EntityRegister.CATAPULT_ZOMBIE.get(), PlacementType.ON_GROUND, Heightmap.Type.MOTION_BLOCKING_NO_LEAVES, PVZZombieEntity::canZombieSpawn);
@@ -85,7 +85,7 @@ public class EntitySpawnRegister {
 		EntitySpawnPlacementRegistry.register(EntityRegister.TALLNUT_ZOMBIE.get(), PlacementType.ON_GROUND, Heightmap.Type.MOTION_BLOCKING_NO_LEAVES, PVZZombieEntity::canZombieSpawn);
 		EntitySpawnPlacementRegistry.register(EntityRegister.SQUASH_ZOMBIE.get(), PlacementType.ON_GROUND, Heightmap.Type.MOTION_BLOCKING_NO_LEAVES, PVZZombieEntity::canZombieSpawn);
 		EntitySpawnPlacementRegistry.register(EntityRegister.JALAPENO_ZOMBIE.get(), PlacementType.ON_GROUND, Heightmap.Type.MOTION_BLOCKING_NO_LEAVES, PVZZombieEntity::canZombieSpawn);
-		
+		EntitySpawnPlacementRegistry.register(EntityRegister.GIGA_TOMB_STONE.get(), PlacementType.ON_GROUND, Heightmap.Type.MOTION_BLOCKING_NO_LEAVES, TombStoneEntity::canTombStoneSpawn);
 	}
 	
 	/**
@@ -101,7 +101,7 @@ public class EntitySpawnRegister {
 			if(BiomeUtil.isLand(biomeKey)) {
 				addSpawnToOverworldLand(event);
 				event.getSpawns().addSpawn(EntityClassification.AMBIENT, new Spawners(EntityRegister.SUN.get(), 2 * PVZConfig.COMMON_CONFIG.WorldSettings.EntitySpawnSettings.SunSpawnWeight.get(), 1, 1));
-				event.getSpawns().addSpawn(EntityClassification.AMBIENT, new Spawners(EntityRegister.TOMB_STONE.get(), PVZConfig.COMMON_CONFIG.WorldSettings.EntitySpawnSettings.TombStoneSpawnWeight.get(), 1, 1));
+				event.getSpawns().addSpawn(EntityClassification.AMBIENT, new Spawners(EntityRegister.GIGA_TOMB_STONE.get(), PVZConfig.COMMON_CONFIG.WorldSettings.EntitySpawnSettings.GigaTombStoneSpawnWeight.get(), 1, 1));
 			}
 			if(BiomeUtil.isDesert(biomeKey)) {
 			}

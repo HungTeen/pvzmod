@@ -57,7 +57,8 @@ public enum Zombies {
 	COFFIN(0, 0), 
 	MOURNER_ZOMBIE(0, 0), 
 	NOBLE_ZOMBIE(0, 0), 
-	RA_ZOMBIE(5, 0);
+	RA_ZOMBIE(5, 0),
+	GIGA_TOMB_STONE(0, 0);
 
 	public static final WeightList<Zombies> ZOMBIE_SPAWN_LIST = new WeightList<>();
 	public final int spawnWeight;// wave spawn

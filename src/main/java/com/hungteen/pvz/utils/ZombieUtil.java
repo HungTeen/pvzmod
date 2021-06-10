@@ -100,9 +100,9 @@ public class ZombieUtil {
 		putZombieInfoToMap(Zombies.JALAPENO_ZOMBIE, Ranks.GREEN, EntityRegister.JALAPENO_ZOMBIE);
 		putZombieInfoToMap(Zombies.PUMPKIN_ZOMBIE, Ranks.PURPLE, EntityRegister.PUMPKIN_ZOMBIE);
 		//other
-		
 		putZombieInfoToMap(Zombies.TRICK_ZOMBIE, Ranks.GRAY, EntityRegister.TRICK_ZOMBIE);
 		putZombieInfoToMap(Zombies.RA_ZOMBIE, Ranks.WHITE, EntityRegister.RA_ZOMBIE);
+		putZombieInfoToMap(Zombies.GIGA_TOMB_STONE, Ranks.GRAY, EntityRegister.GIGA_TOMB_STONE);
 	}
 	
 	/**

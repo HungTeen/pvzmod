@@ -1,6 +1,7 @@
 package com.hungteen.pvz.common.entity.plant.assist;
 
 import com.hungteen.pvz.common.entity.plant.PVZPlantEntity;
+import com.hungteen.pvz.common.entity.zombie.grassnight.AbstractTombStoneEntity;
 import com.hungteen.pvz.common.entity.zombie.grassnight.TombStoneEntity;
 import com.hungteen.pvz.common.misc.damage.PVZDamageSource;
 import com.hungteen.pvz.register.SoundRegister;
@@ -42,7 +43,7 @@ public class GraveBusterEntity extends PVZPlantEntity{
 	@Override
 	protected void registerGoals() {
 		super.registerGoals();
-		this.targetSelector.addGoal(0, new NearestAttackableTargetGoal<TombStoneEntity>(this, TombStoneEntity.class, 5, true, true, (tomb)-> {
+		this.targetSelector.addGoal(0, new NearestAttackableTargetGoal<>(this, AbstractTombStoneEntity.class, 5, true, true, (tomb)-> {
 			return tomb.getPassengers().isEmpty();
 		}));
 		this.targetSelector.addGoal(0, new EatTombStoneGoal(this));
@@ -167,7 +168,7 @@ public class GraveBusterEntity extends PVZPlantEntity{
 		
 		@Override
 		public boolean canContinueToUse() {
-			return this.target !=null && this.target instanceof TombStoneEntity;
+			return this.target != null && this.target instanceof AbstractTombStoneEntity;
 		}
 		
 		@Override

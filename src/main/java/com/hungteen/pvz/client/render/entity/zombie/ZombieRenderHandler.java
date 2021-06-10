@@ -59,6 +59,7 @@ public class ZombieRenderHandler {
 	public static final ResourceLocation NOBLE_ZOMBIE_TEX = get(Zombies.NOBLE_ZOMBIE);
 	public static final ResourceLocation RA_ZOMBIE_TEX = get(Zombies.RA_ZOMBIE);
 	public static final ResourceLocation TRICK_ZOMBIE_TEX = get(Zombies.TRICK_ZOMBIE);
+	public static final ResourceLocation GIGA_TOMB_STONE_TEX = get(Zombies.GIGA_TOMB_STONE);
 	
 	private static ResourceLocation get(Zombies zombie) {
 		return get(zombie, 0.5F);
@@ -76,6 +77,7 @@ public class ZombieRenderHandler {
 			break;
 		}
 		case TOMB_STONE:
+		case GIGA_TOMB_STONE:
 		case NEWSPAPER_ZOMBIE:
 		case SCREENDOOR_ZOMBIE:
 		case FOOTBALL_ZOMBIE:
