@@ -1,0 +1,17 @@
+{
+    "name": "Normal Zombie",
+    "icon": "pvz:zombie_doll",
+    "category": "pvz:common",
+    "pages": [
+        {
+            "type": "text",
+            "text": "$(bred)Normal Zombie$() is the most common zombie in this mod."
+        },
+        {
+            "type": "entity",
+            "entity": "pvz:normal_zombie",
+            "text": ""
+        }
+    ],
+    "sortnum": 0
+}

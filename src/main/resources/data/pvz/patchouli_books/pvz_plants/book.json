@@ -1,11 +1,11 @@
 {
-	"name": "gui.pvz.pvz_guide",
-	"landing_text": "gui.pvz.guide_info",
+	"name": "gui.pvz.pvz_plants",
+	"landing_text": "gui.pvz.plants_info",
 	"version": 5,
-	"book_texture":"patchouli:textures/gui/book_blue.png",
-	"model":"patchouli:book_blue",
+	"book_texture":"patchouli:textures/gui/book_green.png",
+	"model":"patchouli:book_green",
 	"show_progress":true,
-	"progress_bar_color":"FFFF55",
+	"progress_bar_color":"00FF00",
 	"progress_bar_background":"DDDDDD",
 	"creative_tab":"pvz_misc",
 	"macros": {
@@ -24,5 +24,4 @@
 	    "$(orange)":"$(#ff851f)",
 	    "$(borange)":"$(l)$(#ff851f)"
 	}
-	//https://github.com/Vazkii/Patchouli/wiki/Getting-Started
 }

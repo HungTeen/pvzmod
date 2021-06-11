@@ -176,6 +176,8 @@
     "item.pvz.trick_zombie_spawn_egg":"捣蛋鬼僵尸刷怪蛋",
     "entity.pvz.ra_zombie":"太阳神僵尸",
     "item.pvz.ra_zombie_spawn_egg":"太阳神僵尸刷怪蛋",
+    "entity.pvz.giga_tomb_stone":"狂暴墓碑",
+    "item.pvz.giga_tomb_stone_spawn_egg":"狂暴墓碑刷怪蛋",
 //plant
 //PeaShooter
     "entity.pvz.pea_shooter":"豌豆射手",
@@ -589,9 +591,6 @@
     "gui.pvz.strange_help2":"你只需要站在那儿，啥都不要做,",
     "gui.pvz.strange_help3":"僵尸吃掉了你的脑子时，你就赢了!",
     "gui.pvz.strange_help4":"--这部分帮助是僵尸送给你的--",
-//guild book
-    "gui.pvz.pvz_guide":"植物大战僵尸指南",
-    "gui.pvz.guide_info":"欢迎来到植物大战僵尸的世界，这本书将带你游玩这个模组。",
 //dave shop
     "gui.pvz.dave_shop":"戴夫的商店",
     "gui.pvz.dave_shop.title":"戴夫的商店",
@@ -993,6 +992,13 @@
 //itemGroup
     "itemGroup.pvz_misc":"PVZ杂项",
     "itemGroup.pvz_card":"PVZ召唤卡",
+//Patchouli
+    "gui.pvz.pvz_guide":"植物大战僵尸指南",
+    "gui.pvz.guide_info":"欢迎来到植物大战僵尸的世界，这本书将带你游玩这个模组。",
+    "gui.pvz.pvz_plants":"植物图鉴",
+    "gui.pvz.plants_info":"这本图鉴将为你介绍植物大战僵尸模组所有植物的功能。",
+    "gui.pvz.pvz_zombies":"僵尸图鉴",
+    "gui.pvz.zombies_info":"这本图鉴将为你介绍植物大战僵尸模组所有僵尸的功能。",
 //KeyBind
     "key.categories.pvz":"植物大战僵尸mod",
     "key.pvz.show_resources":"展示/隐藏玩家属性UI",

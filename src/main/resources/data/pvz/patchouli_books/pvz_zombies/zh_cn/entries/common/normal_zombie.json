@@ -1,0 +1,17 @@
+{
+    "name": "普通僵尸",
+    "icon": "pvz:zombie_doll",
+    "category": "pvz:common",
+    "pages": [
+        {
+            "type": "text",
+            "text": "$(bred)普通僵尸$()是本模组中最常见的僵尸。"
+        },
+        {
+            "type": "entity",
+            "entity": "pvz:normal_zombie",
+            "text": ""
+        }
+    ],
+    "sortnum": 0
+}

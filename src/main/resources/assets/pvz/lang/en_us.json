@@ -176,6 +176,8 @@
     "item.pvz.trick_zombie_spawn_egg":"Trick Zombie Spawn Egg",
     "entity.pvz.ra_zombie":"Ra Zombie",
     "item.pvz.ra_zombie_spawn_egg":"Ra Zombie Spawn Egg",
+    "entity.pvz.giga_tomb_stone":"Giga Tomb Stone",
+    "item.pvz.giga_tomb_stone_spawn_egg":"Giga Tomb Stone Spawn Egg",
 //plant
 //PeaShooter
     "entity.pvz.pea_shooter":"Peashooter",
@@ -589,9 +591,6 @@
     "gui.pvz.strange_help2":"stand there and do nothing.",
     "gui.pvz.strange_help3":"You win when they eat your brain!",
     "gui.pvz.strange_help4":"-Wrote by Zombies-",
-//guild book
-     "gui.pvz.pvz_guide":"PVZ Guild Book",
-     "gui.pvz.guide_info":"Welcome to the world of Plants vs. Zombies, this book will take you through this mod.",
 //dave shop
     "gui.pvz.dave_shop":"Dave Shop",
     "gui.pvz.dave_shop.title":"Dave Shop",
@@ -993,6 +992,13 @@
 //itemGroup
     "itemGroup.pvz_misc":"PVZ Misc",
     "itemGroup.pvz_card":"PVZ Card",
+//Patchouli
+     "gui.pvz.pvz_guide":"PVZ Guild Book",
+     "gui.pvz.guide_info":"Welcome to the world of Plants vs. Zombies, this book will take you through this mod.",
+     "gui.pvz.pvz_plants":"Plant Almanac",
+     "gui.pvz.plants_info":"This almanac will show you information of all plants in Plants vs Zombies mod.",
+     "gui.pvz.pvz_zombies":"Zombie Almanac",
+     "gui.pvz.zombies_info":"This almanac will show you information of all zombies in Plants vs Zombies mod.",
 //KeyBind
     "key.categories.pvz":"Plants vs Zombies mod",
     "key.pvz.show_resources":"Turn on/off Player Resources UI",

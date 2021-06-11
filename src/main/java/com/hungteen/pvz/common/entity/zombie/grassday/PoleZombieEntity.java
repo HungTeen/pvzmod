@@ -203,7 +203,8 @@ public class PoleZombieEntity extends PVZZombieEntity{
 				return false;
 			}
 			double dis = this.zombie.distanceToSqr(target);
-			if(dis > Math.max(100, 100 * left_jump_chance * left_jump_chance)) {
+			//can not be so close or so far.
+			if(dis < 64 || dis > Math.max(100, 100 * left_jump_chance * left_jump_chance)) {
 				return false;
 			}
 			Vector3d vec = MathUtil.getHorizontalNormalizedVec(zombie.position(), target.position())
