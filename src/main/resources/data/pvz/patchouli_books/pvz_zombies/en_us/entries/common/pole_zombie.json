@@ -1,0 +1,18 @@
+{
+    "name": "Pole Vaulting Zombie",
+    "icon": "pvz:zombie_doll",
+    "category": "pvz:common",
+    "pages": [
+        {
+            "type": "text",
+            "text": "$(bred)Pole Vaulting Zombie$() holds a pole and is ready to jump to you and eat your brain.$(br)$(bred)Health$() : $(l)50$()$(br)$(bred)Eat Damage$() : $(l)Low$()$(br)$(bblue)Speed$() : $(l)Fast$()$(br)$(l)Features$() : It will jump to $(bred)rapidly reach$() its target when distance is suitable and $(l)avoid damage when jumping$(), when pole lost it will slow down to $(l)Normal$() speed."
+        },
+        {
+            "type": "entity",
+            "entity": "pvz:pole_zombie",
+            "scale": 0.8,
+            "text": "Appearance"
+        }
+    ],
+    "sortnum": 3
+}

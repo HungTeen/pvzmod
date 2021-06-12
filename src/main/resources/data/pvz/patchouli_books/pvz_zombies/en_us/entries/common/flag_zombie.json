@@ -1,0 +1,24 @@
+{
+    "name": "Flag Zombie",
+    "icon": "pvz:zombie_doll",
+    "category": "pvz:common",
+    "pages": [
+        {
+            "type": "text",
+            "text": "$(bred)Flag Zombie$() often appears as the $(bred)huge wave$() team leader zombie.$(br)$(bred)Health$() : $(l)19$()$(br)$(bred)Eat Damage$() : $(l)Low$()$(br)$(bblue)Speed$() : $(l)Little Fast$()$(br)$(l)Features$() : Flag Zombie with $(bgreen)green beard$() has $(l)Normal$() Damage. When it's in water, it will wear a $(byellow)ducky tube$() to speed up."
+        },
+        {
+            "type": "entity",
+            "entity": "pvz:flag_zombie",
+            "scale": 0.8,
+            "text": "Appearance"
+        },
+        {
+            "type": "spotlight",
+            "item": "pvz:zombie_flag",
+            "title": "Special Drop",
+            "text": ""
+        }
+    ],
+    "sortnum": 1
+}

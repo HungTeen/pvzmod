@@ -5,12 +5,13 @@
     "pages": [
         {
             "type": "text",
-            "text": "$(bred)Normal Zombie$() is the most common zombie in this mod."
+            "text": "$(bred)Normal Zombie$() is the most common zombie in this mod, $(m)it also looks common$().$(br)$(bred)Health$() : $(l)20$()$(br)$(bred)Eat Damage$() : $(l)Low$()$(br)$(bblue)Speed$() : $(l)Normal$()$(br)$(l)Features$() : Normal Zombie with $(bgreen)green beard$() has $(l)Normal$() Damage. When it's in water, it will wear a $(byellow)ducky tube$() to speed up."
         },
         {
             "type": "entity",
             "entity": "pvz:normal_zombie",
-            "text": ""
+            "scale": 0.8,
+            "text": "Appearance"
         }
     ],
     "sortnum": 0

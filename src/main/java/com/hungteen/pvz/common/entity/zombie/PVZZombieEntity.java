@@ -904,7 +904,7 @@ public abstract class PVZZombieEntity extends MonsterEntity implements IPVZZombi
 	 * is zombie still rising from dirt.
 	 */
 	public boolean isZombieRising() {
-		return this.needRising && this.getAnimTime() < 0;
+		return this.getAnimTime() < 0;
 	}
 	
 	/* misc set */

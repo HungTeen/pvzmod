@@ -1,0 +1,24 @@
+{
+    "name": "ConeHead Zombie",
+    "icon": "pvz:zombie_doll",
+    "category": "pvz:common",
+    "pages": [
+        {
+            "type": "text",
+            "text": "$(bred)ConeHead Zombie$() is a Normal Zombie wearing Cone Head.$(br)$(bred)Health$() : $(l)20$()$(br)$(bred)Defence Health$() : $(l)40$()$(br)$(bred)Eat Damage$() : $(l)Low$()$(br)$(bblue)Speed$() : $(l)Normal$()$(br)$(l)Features$() : ConeHead Zombie with $(bgreen)green beard$() has $(l)Normal$() Damage. When it's in water, it will wear a $(byellow)ducky tube$() to speed up."
+        },
+        {
+            "type": "entity",
+            "entity": "pvz:conehead_zombie",
+            "scale": 0.8,
+            "text": "Appearance"
+        },
+        {
+            "type": "spotlight",
+            "item": "pvz:cone_head",
+            "title": "Special Drop",
+            "text": ""
+        }
+    ],
+    "sortnum": 2
+}

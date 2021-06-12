@@ -1,0 +1,18 @@
+{
+    "name": "撑杆跳僵尸",
+    "icon": "pvz:zombie_doll",
+    "category": "pvz:common",
+    "pages": [
+        {
+            "type": "text",
+            "text": "$(l)撑杆跳僵尸$()手持长杆，随时准备跳到你身旁，吃掉你的脑子。$(br)$(bred)生命值$() : $(l)50$()$(br)$(bred)攻击力$() : $(l)低$()$(br)$(bblue)速度$() : $(l)快$()$(br)$(l)特性$() : 当它距离植物较近时会尝试$(l)撑杆跳迅速靠近$()该植物并在$(bred)跳起时免疫伤害$()，当失去杆子后它的速度会变为$(l)一般$()。"
+        },
+        {
+            "type": "entity",
+            "entity": "pvz:pole_zombie",
+            "scale": 0.8,
+            "text": "外观"
+        }
+    ],
+    "sortnum": 3
+}

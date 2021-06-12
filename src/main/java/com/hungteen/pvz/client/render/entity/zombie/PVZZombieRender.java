@@ -35,7 +35,7 @@ public abstract class PVZZombieRender <T extends PVZZombieEntity> extends PVZCre
 	@Override
 	public Vector3d getTranslateVec(T entity) {
 		float height = this.getOffsetRisingHeight();
-		float downOffset = entity.getAttackTime() < 0 ? (- entity.getAttackTime() * 1.0f / PVZZombieEntity.RISING_CD) * height : 0;
+		float downOffset = entity.getAnimTime() < 0 ? (- entity.getAnimTime() * 1.0f / PVZZombieEntity.RISING_CD) * height : 0;
 		return new Vector3d(0, downOffset, 0);
 	}
 	
