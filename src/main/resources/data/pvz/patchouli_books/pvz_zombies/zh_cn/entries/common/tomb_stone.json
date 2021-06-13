@@ -1,0 +1,18 @@
+{
+    "name": "墓碑",
+    "icon": "pvz:zombie_doll",
+    "category": "pvz:common",
+    "pages": [
+        {
+            "type": "text",
+            "text": "$(l)墓碑$()是一个可以召唤僵尸的特殊实体，它们不会自然生成，往往伴随着$(bred)夜晚的第三或四或五波僵尸来袭$()出现，生成在玩家周围并召唤僵尸钻出地面。$(br)$(bred)特性$() : 墓碑只能被$(bgreen)墓碑吞噬者$()啃食，消灭后$(l)至少会掉落一个铜币$()。"
+        },
+        {
+            "type": "entity",
+            "entity": "pvz:tomb_stone",
+            "scale": 0.8,
+            "text": "外观"
+        }
+    ],
+    "sortnum": 5
+}

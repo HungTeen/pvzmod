@@ -5,5 +5,5 @@ package com.hungteen.pvz.utils.interfaces;
  */
 public interface IMultiPartZombie extends IMultiPartEntity{
 
-	boolean canPartsBeRemoved();
+	boolean canPartsExist();
 }

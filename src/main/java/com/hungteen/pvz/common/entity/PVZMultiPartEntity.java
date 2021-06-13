@@ -1,6 +1,9 @@
 package com.hungteen.pvz.common.entity;
 
+import javax.annotation.Nullable;
+
 import com.hungteen.pvz.PVZMod;
+import com.hungteen.pvz.utils.EntityUtil;
 import com.hungteen.pvz.utils.interfaces.IMultiPartEntity;
 
 import net.minecraft.entity.Entity;
@@ -29,9 +32,9 @@ public abstract class PVZMultiPartEntity extends Entity {
 			DataSerializers.FLOAT);
 	private static final DataParameter<Float> HEIGHT = EntityDataManager.defineId(PVZMultiPartEntity.class,
 			DataSerializers.FLOAT);
-	protected final float MaxWidth;
-	protected final float MaxHeight;
 	private IMultiPartEntity parent;
+	protected final float MaxHeight;
+	protected final float MaxWidth;
 
 	public PVZMultiPartEntity(EntityType<?> entityTypeIn, World worldIn) {
 		super(entityTypeIn, worldIn);
@@ -44,13 +47,13 @@ public abstract class PVZMultiPartEntity extends Entity {
 		if(owner instanceof IMultiPartEntity) {
 			this.parent = (IMultiPartEntity) owner;
 		} else {
-			PVZMod.LOGGER.debug("error multipart owner");
+			PVZMod.LOGGER.warn("Error Multipart Owner");
 		}
-		this.MaxHeight = sizeY;
-		this.MaxWidth = sizeX;
 		this.setOwner(owner);
-		this.setPartWidth(sizeX);
-		this.setPartHeight(sizeY);
+		this.MaxWidth = sizeX;
+		this.MaxHeight = sizeY;
+		this.setPartWidth(this.MaxWidth);
+		this.setPartHeight(this.MaxHeight);
 	}
 
 	@Override
@@ -62,30 +65,33 @@ public abstract class PVZMultiPartEntity extends Entity {
 
 	@Override
 	public void tick() {
-		refreshDimensions();
+		if(this.tickCount <= 5) {
+			refreshDimensions();
+		}
 		if (! level.isClientSide) {
-			LivingEntity owner = this.getOwner();
-			if (owner != null) {
+			if (this.canExist()) {//has owner.
 				this.markHurt();
 				this.collideWithNearbyEntities();
-				if(! owner.isAlive()) {
-					this.remove();
-				}
 			} else {
-				this.remove();
-			}
-			if(this.shouldNotExist()) {
 				this.remove();
 			}
 		}
 		super.tick();
 	}
+	
+	/**
+	 * {@link #tick()}
+	 */
+	public boolean canExist() {
+		return EntityUtil.isEntityValid(this.getOwner());
+	}
 
 	/**
-	 * get owner of this
+	 * get the owner of current part.
 	 */
+	@Nullable
 	public LivingEntity getOwner() {
-		int id = getOwnerId();
+		final int id = this.getOwnerId();
 		Entity entity = level.getEntity(id);
 		return entity instanceof LivingEntity ? (LivingEntity) entity : null;
 	}
@@ -109,7 +115,7 @@ public abstract class PVZMultiPartEntity extends Entity {
 	}
 
 	/**
-	 * collide with entities
+	 * collide with entities.
 	 */
 	public void collideWithNearbyEntities() {
 	}
@@ -124,37 +130,21 @@ public abstract class PVZMultiPartEntity extends Entity {
 		return false;
 	}
 
-	public boolean shouldNotExist() {
-		LivingEntity Owner = getOwner();
-		return !Owner.isAlive();
+	@Override
+	public EntitySize getDimensions(Pose poseIn) {
+		return EntitySize.scalable(this.getPartWidth(), this.getPartHeight());
 	}
-
-	@SuppressWarnings("deprecation")
-	public boolean shouldContinuePersisting() {
-		return isAddedToWorld() || this.removed;
-	}
-
+	
 	@Override
 	protected void readAdditionalSaveData(CompoundNBT compound) {
-
 	}
 
 	@Override
 	protected void addAdditionalSaveData(CompoundNBT compound) {
 	}
-
-	@Override
-	public EntitySize getDimensions(Pose poseIn) {
-		return EntitySize.scalable(getPartWidth(), getPartHeight());
-	}
-
-	@Override
-	public IPacket<?> getAddEntityPacket() {
-		return NetworkHooks.getEntitySpawningPacket(this);
-	}
-
+	
 	private int getOwnerId() {
-		return this.entityData.get(OWNER_ID).intValue();
+		return this.entityData.get(OWNER_ID);
 	}
 
 	public void setOwnerId(int OwnerId) {
@@ -162,7 +152,7 @@ public abstract class PVZMultiPartEntity extends Entity {
 	}
 
 	public float getPartWidth() {
-		return this.entityData.get(WIDTH).floatValue();
+		return this.entityData.get(WIDTH);
 	}
 
 	public void setPartWidth(float scale) {
@@ -170,11 +160,16 @@ public abstract class PVZMultiPartEntity extends Entity {
 	}
 
 	public float getPartHeight() {
-		return this.entityData.get(HEIGHT).floatValue();
+		return this.entityData.get(HEIGHT);
 	}
 
 	public void setPartHeight(float scale) {
 		this.entityData.set(HEIGHT, scale);
+	}
+	
+	@Override
+	public IPacket<?> getAddEntityPacket() {
+		return NetworkHooks.getEntitySpawningPacket(this);
 	}
 	
 }

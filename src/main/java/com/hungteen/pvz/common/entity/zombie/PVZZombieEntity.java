@@ -120,6 +120,7 @@ public abstract class PVZZombieEntity extends MonsterEntity implements IPVZZombi
 	protected boolean canBeRemove = true;
 	protected boolean canLostHand = true;
 	protected boolean canLostHead = true;
+	protected boolean canHelpAttack = true;
 	protected int maxDeathTime = 20;
 
 	public PVZZombieEntity(EntityType<? extends MonsterEntity> type, World worldIn) {
@@ -546,6 +547,13 @@ public abstract class PVZZombieEntity extends MonsterEntity implements IPVZZombi
 	 */
 	public boolean canZombieBeRemoved() {
 		return this.canBeRemove;
+	}
+	
+	/**
+	 * {@link EntityUtil#canHelpAttackOthers(Entity)}
+	 */
+	public boolean canHelpAttack() {
+		return this.canHelpAttack;
 	}
 	
 	@Override

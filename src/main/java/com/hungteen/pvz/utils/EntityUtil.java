@@ -74,6 +74,13 @@ public class EntityUtil {
 		return true;
 	}
 	
+	public static boolean canHelpAttackOthers(@Nonnull Entity entity) {
+		if(entity instanceof PVZZombieEntity) {
+			return ((PVZZombieEntity) entity).canHelpAttack();
+		}
+		return true;
+	}
+	
 	public static void spawnParticle(Entity entity, int type) {
 		PVZPacketHandler.CHANNEL.send(PacketDistributor.NEAR.with(() -> {
 			return new TargetPoint(entity.getX(), entity.getY(), entity.getZ(), 40, entity.level.dimension());

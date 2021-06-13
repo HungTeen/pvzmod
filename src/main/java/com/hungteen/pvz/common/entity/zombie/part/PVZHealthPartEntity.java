@@ -51,8 +51,8 @@ public class PVZHealthPartEntity extends PVZZombiePartEntity{
 	}
 	
 	@Override
-	public boolean shouldNotExist() {
-		return super.shouldNotExist() || this.zombie.getDefenceLife() == 0;
+	public boolean canExist() {
+		return super.canExist() && this.zombie.canPartsExist();
 	}
 	
 }

@@ -63,7 +63,7 @@ public class PVZHurtByTargetGoal extends TargetGoal {
 	}
 	
 	protected boolean canAlertEntity(LivingEntity entity) {
-		return ! EntityUtil.checkCanEntityBeAttack(this.mob, entity);
+		return ! EntityUtil.checkCanEntityBeAttack(this.mob, entity) && EntityUtil.canHelpAttackOthers(entity);
 	}
 
 	protected void alertOther(MobEntity entity, LivingEntity target) {

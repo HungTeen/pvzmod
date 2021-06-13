@@ -143,7 +143,7 @@ public class PVZConfig {
 							.defineInRange("LavaZombieSpawnWeight", 15, 1, 200);
 					WorldSettings.EntitySpawnSettings.GigaTombStoneSpawnWeight = builder
 							.comment("spawn weight of GigaTombStone at night in overworld.")
-							.defineInRange("TombStoneSpawnWeight", 5, 1, 200);
+							.defineInRange("GigaTombStoneSpawnWeight", 5, 1, 200);
 					WorldSettings.EntitySpawnSettings.YetiZombieSpawnWeight = builder
 							.comment("spawn weight of YetiZombie in overworld.")
 							.defineInRange("YetiZombieSpawnWeight", 1, 1, 200);

@@ -48,8 +48,10 @@ public class InvasionCommand {
         		);
         }
         builder.then(Commands.literal("wave").then(Commands.argument("targets", EntityArgument.players()).then(Commands.argument("amount", IntegerArgumentType.integer()).executes((commond)->{
-        	return spawnHugeWave(EntityArgument.getPlayers(commond, "targets"), IntegerArgumentType.getInteger(commond, "amount"));
-        }))));
+        	return spawnHugeWave(EntityArgument.getPlayers(commond, "targets"), IntegerArgumentType.getInteger(commond, "amount"), 1);
+        }).then(Commands.argument("wave_num", IntegerArgumentType.integer()).executes(commond -> {
+        	return spawnHugeWave(EntityArgument.getPlayers(commond, "targets"), IntegerArgumentType.getInteger(commond, "amount"), IntegerArgumentType.getInteger(commond, "wave_num"));
+        })))));
         dispatcher.register(builder);
     }
 	
@@ -69,10 +71,12 @@ public class InvasionCommand {
 		return 0;
 	}
 	
-	private static int spawnHugeWave(Collection<? extends ServerPlayerEntity> targets, int num) {
-		targets.forEach((player)->{
-			WaveManager manager = new WaveManager(player, 0);
-			if(num != 0) manager.spawnCnt = num;
+	private static int spawnHugeWave(Collection<? extends ServerPlayerEntity> targets, int num, int wave_num) {
+		targets.forEach(player -> {
+			WaveManager manager = new WaveManager(player, wave_num);
+			if(num != 0) {
+				manager.spawnCnt = num;
+			}
 			manager.spawnWaveZombies();
 		});
 		return targets.size();

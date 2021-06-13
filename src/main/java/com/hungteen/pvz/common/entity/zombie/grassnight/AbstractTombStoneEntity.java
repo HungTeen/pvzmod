@@ -36,6 +36,7 @@ public abstract class AbstractTombStoneEntity extends PVZZombieEntity {
 		this.canBeMini = false;
 		this.canBeStealByBungee = false;
 		this.canCollideWithZombie = false;
+		this.canHelpAttack = false;
 	}
 	
 	@Override

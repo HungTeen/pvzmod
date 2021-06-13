@@ -9,6 +9,8 @@ import com.hungteen.pvz.common.entity.plant.assist.GraveBusterEntity;
 import com.hungteen.pvz.common.entity.zombie.other.NobleZombieEntity;
 import com.hungteen.pvz.common.entity.zombie.roof.ZomBossEntity;
 import com.hungteen.pvz.common.world.invasion.OverworldInvasion;
+import com.hungteen.pvz.common.world.invasion.WaveManager;
+import com.hungteen.pvz.register.EntityRegister;
 import com.hungteen.pvz.utils.EntityUtil;
 import com.hungteen.pvz.utils.MathUtil;
 import com.hungteen.pvz.utils.ZombieUtil;
@@ -18,7 +20,9 @@ import net.minecraft.entity.EntityType;
 import net.minecraft.entity.ai.goal.Goal;
 import net.minecraft.entity.ai.goal.NearestAttackableTargetGoal;
 import net.minecraft.entity.monster.MonsterEntity;
+import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.util.DamageSource;
+import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 
 public class TombStoneEntity extends AbstractTombStoneEntity {
@@ -27,6 +31,7 @@ public class TombStoneEntity extends AbstractTombStoneEntity {
 			Zombies.NORMAL_ZOMBIE, Zombies.CONEHEAD_ZOMBIE, Zombies.BUCKETHEAD_ZOMBIE,
 			Zombies.SCREENDOOR_ZOMBIE, Zombies.NEWSPAPER_ZOMBIE, Zombies.OLD_ZOMBIE
 			);
+	protected int waveSummonTick = 0;
 	protected int currentSummonCD;
 	private final int MinSummonCD = 360;
 	private final int MaxSummonCD = 1200;
@@ -43,9 +48,35 @@ public class TombStoneEntity extends AbstractTombStoneEntity {
 	}
 
 	/**
+	 * {@link WaveManager#activateTombStone()}
+	 */
+	public void activateByWave() {
+		this.waveSummonTick = 40;
+	}
+	
+	public static void spawnTombStone(World world, BlockPos pos) {
+		TombStoneEntity tomb = EntityRegister.TOMB_STONE.get().create(world);
+		tomb.setZombieRising();
+		EntityUtil.onEntitySpawn(world, tomb, pos);
+	}
+	
+	@Override
+	public void normalZombieTick() {
+		super.normalZombieTick();
+		if(! level.isClientSide) {//update wave spawn.
+			if(this.waveSummonTick > 0) {
+				-- this.waveSummonTick;
+				if(this.waveSummonTick == 1) {
+					this.summonZombie();
+				}
+			}
+		}
+	}
+	
+	/**
 	 * tombstone summon zombies.
 	 * it will select suitable zombie for that day.
-	 * used in {@link TombStoneSummonZombieGoal}
+	 * {@link TombStoneSummonZombieGoal} and {@link #normalZombieTick()}
 	 */
 	public void summonZombie() {
 		final List<Zombies> list = OverworldInvasion.ZOMBIE_INVADE_SET.isEmpty() ? DEFAULT_ZOMBIES : OverworldInvasion.ZOMBIE_INVADE_SET.stream().collect(Collectors.toList());
@@ -73,12 +104,26 @@ public class TombStoneEntity extends AbstractTombStoneEntity {
 	 * next summon zombie cd for next time.
 	 */
 	protected int genSummonCD() {
-		return MathUtil.genRandomMinMax(getRandom(), MinSummonCD, MaxSummonCD);
+		return MathUtil.getRandomMinMax(getRandom(), MinSummonCD, MaxSummonCD);
 	}
 	
 	@Override
 	public Zombies getZombieEnumName() {
 		return Zombies.TOMB_STONE;
+	}
+	
+	@Override
+	public void readAdditionalSaveData(CompoundNBT compound) {
+		super.readAdditionalSaveData(compound);
+		if(compound.contains("wave_summon_tick")) {
+			this.waveSummonTick = compound.getInt("wave_summon_tick");
+		}
+	}
+	
+	@Override
+	public void addAdditionalSaveData(CompoundNBT compound) {
+		super.addAdditionalSaveData(compound);
+		compound.putInt("wave_summon_tick", this.waveSummonTick);
 	}
 	
 	static class TombStoneSummonZombieGoal extends Goal{

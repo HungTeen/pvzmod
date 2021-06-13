@@ -1,5 +1,8 @@
 package com.hungteen.pvz.common.entity.zombie.part;
 
+import java.util.Optional;
+
+import com.hungteen.pvz.PVZMod;
 import com.hungteen.pvz.common.entity.PVZMultiPartEntity;
 import com.hungteen.pvz.common.entity.zombie.PVZZombieEntity;
 import com.hungteen.pvz.register.EntityRegister;
@@ -20,14 +23,13 @@ public class PVZZombiePartEntity extends PVZMultiPartEntity{
 		super(EntityRegister.ZOMBIE_PART.get(), owner, sizeX, sizeY);
 	}
 
-	@Override
-	public void tick() {
-		super.tick();
-		if(! level.isClientSide && getZombie() != null) {
-			float scale = (getZombie().isMiniZombie() ? 0.4F : 1F);
-		    this.setPartWidth(this.MaxWidth * scale);
-		    this.setPartHeight(this.MaxHeight * scale);
-		}
+	/**
+	 * when owner is mini zombie, then the part need shrink size.
+	 */
+	public void onOwnerBeMini(PVZZombieEntity zombie) {
+		float scale = zombie.isMiniZombie() ? 0.4F : 1F;
+		this.setPartWidth(this.MaxWidth * scale);
+	    this.setPartHeight(this.MaxHeight * scale);
 	}
 	
 	@Override
@@ -38,18 +40,13 @@ public class PVZZombiePartEntity extends PVZMultiPartEntity{
 		return false;
 	}
 	
-	@Override
-	public boolean shouldNotExist() {
-		return ! EntityUtil.isEntityValid(getOwner());
-	}
-	
-	public PVZZombieEntity getZombie() {
+	public Optional<PVZZombieEntity> getZombie() {
 		LivingEntity owner = this.getOwner();
-		if(owner == null) return null;
 		if(! (owner instanceof PVZZombieEntity)) {
-			System.out.println("Error : Wrong Owner Entity for Part !");
+			PVZMod.LOGGER.warn("Wrong Owner Entity for Zombie's Part !");
+			return null;
 		}
-		return (PVZZombieEntity) owner;
+		return Optional.ofNullable((PVZZombieEntity) owner);
 	}
 	
 }

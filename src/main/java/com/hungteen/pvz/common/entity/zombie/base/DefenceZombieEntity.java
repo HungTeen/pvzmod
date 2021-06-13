@@ -3,6 +3,7 @@ package com.hungteen.pvz.common.entity.zombie.base;
 import com.hungteen.pvz.common.entity.PVZMultiPartEntity;
 import com.hungteen.pvz.common.entity.zombie.PVZZombieEntity;
 import com.hungteen.pvz.common.entity.zombie.part.PVZHealthPartEntity;
+import com.hungteen.pvz.utils.EntityUtil;
 import com.hungteen.pvz.utils.interfaces.IMultiPartZombie;
 
 import net.minecraft.entity.EntityType;
@@ -22,6 +23,12 @@ public abstract class DefenceZombieEntity extends PVZZombieEntity implements IMu
 	}
 	
 	@Override
+	public void tick() {
+		super.tick();
+		updateParts();
+	}
+	
+	@Override
 	public void removeParts() {
 		if(this.part != null) {
 			this.part.remove();
@@ -32,11 +39,11 @@ public abstract class DefenceZombieEntity extends PVZZombieEntity implements IMu
 	@Override
 	public void updateParts() {
 		if(this.part != null) {
-			if(! this.part.shouldContinuePersisting()) {
+			if(! this.part.isAddedToWorld()) {
 				this.level.addFreshEntity(this.part);
 			}
 			float j = 2 * 3.14159f * this.yRot / 360;
-			float dis = this.getPartOffset();
+			float dis = this.getPartWidthOffset();
 			Vector3d pos = this.position();
 			this.part.yRotO = this.yRot;
 			this.part.xRotO = this.xRot;
@@ -48,10 +55,33 @@ public abstract class DefenceZombieEntity extends PVZZombieEntity implements IMu
 	@Override
 	public void onZombieBeMini() {
 		super.onZombieBeMini();
+		if(EntityUtil.isEntityValid(this.part)) {
+			this.part.onOwnerBeMini(this);
+		}
 		this.setDefenceLife(this.getPartLife() * 0.6F);
 	}
 	
-	public abstract float getPartLife();
+	@Override
+	public PVZMultiPartEntity[] getMultiParts() {
+		return new PVZMultiPartEntity[] {this.part};
+	}
+	
+	@Override
+	public boolean canPartsExist() {
+		return this.getDefenceLife() > 0;
+	}
+	
+    public abstract float getPartLife();
+	
+	protected float getPartHeightOffset() {
+		if(this.isMiniZombie()) return 0.1F;
+		return 0.2f;
+	}
+	
+	public float getPartWidthOffset() {
+		if(this.isMiniZombie()) return 0.3F;
+		return 0.55f;
+	}
 	
 	public SoundEvent getPartHurtSound() {
 		return null;
@@ -59,31 +89,6 @@ public abstract class DefenceZombieEntity extends PVZZombieEntity implements IMu
 	
 	public SoundEvent getPartDeathSound() {
 		return null;
-	}
-	
-	protected float getPartHeightOffset() {
-		if(this.isMiniZombie()) return 0.1F;
-		return 0.2f;
-	}
-	
-	public PVZMultiPartEntity[] getMultiParts() {
-		return new PVZMultiPartEntity[] {this.part};
-	}
-	
-	@Override
-	public boolean canPartsBeRemoved() {
-		return this.getDefenceLife() == 0;
-	}
-	
-	public float getPartOffset() {
-		if(this.isMiniZombie()) return 0.3F;
-		return 0.55f;
-	}
-	
-	@Override
-	public void tick() {
-		super.tick();
-		updateParts();
 	}
 
 }
