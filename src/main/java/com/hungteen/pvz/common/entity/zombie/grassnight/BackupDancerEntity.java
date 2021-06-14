@@ -27,7 +27,7 @@ public class BackupDancerEntity extends PVZZombieEntity{
 	public void zombieTick() {
 		super.zombieTick();
 		if(! level.isClientSide) {
-			this.getAttribute(Attributes.MOVEMENT_SPEED).setBaseValue(this.getAttackTime() > 0 ? 0 : ZombieUtil.LITTLE_SLOW);
+			this.getAttribute(Attributes.MOVEMENT_SPEED).setBaseValue(this.getAttackTime() > 0 ? 0 : ZombieUtil.WALK_LITTLE_SLOW);
 		}
 	}
 	

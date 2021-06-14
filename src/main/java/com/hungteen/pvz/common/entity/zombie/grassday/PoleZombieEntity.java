@@ -62,14 +62,14 @@ public class PoleZombieEntity extends PVZZombieEntity{
 	@Override
 	protected void updateAttributes() {
 		super.updateAttributes();
-		this.getAttribute(Attributes.MOVEMENT_SPEED).setBaseValue(ZombieUtil.FAST);
+		this.getAttribute(Attributes.MOVEMENT_SPEED).setBaseValue(ZombieUtil.WALK_FAST);
 	}
 	
 	@Override
 	public void onSyncedDataUpdated(DataParameter<?> data) {
 		super.onSyncedDataUpdated(data);
 		if(data.equals(HAS_POLE)) {
-			this.getAttribute(Attributes.MOVEMENT_SPEED).setBaseValue(this.hasPole() ? ZombieUtil.FAST : ZombieUtil.NORMAL_SPEED);
+			this.getAttribute(Attributes.MOVEMENT_SPEED).setBaseValue(this.hasPole() ? ZombieUtil.WALK_FAST : ZombieUtil.WALK_NORMAL);
 		}
 	}
 	

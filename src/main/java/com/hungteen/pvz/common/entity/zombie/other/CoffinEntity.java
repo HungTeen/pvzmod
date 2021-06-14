@@ -69,7 +69,7 @@ public class CoffinEntity extends PVZZombieEntity {
 	protected void updateAttributes() {
 		super.updateAttributes();
 		this.getAttribute(Attributes.ATTACK_DAMAGE).setBaseValue(ZombieUtil.LITTLE_LOW);
-		this.getAttribute(Attributes.MOVEMENT_SPEED).setBaseValue(ZombieUtil.SLOW);
+		this.getAttribute(Attributes.MOVEMENT_SPEED).setBaseValue(ZombieUtil.WALK_SLOW);
 	}
 
 	@Override

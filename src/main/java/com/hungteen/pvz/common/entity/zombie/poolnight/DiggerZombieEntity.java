@@ -62,7 +62,7 @@ public class DiggerZombieEntity extends PVZZombieEntity implements IHasMetal {
 	
 	private void updateAttributes(boolean has){
 		this.getAttribute(Attributes.ATTACK_DAMAGE).setBaseValue(has ? ZombieUtil.NORMAL_DAMAGE : ZombieUtil.LOW);
-		this.getAttribute(Attributes.MOVEMENT_SPEED).setBaseValue(has ? ZombieUtil.LITTLE_FAST : ZombieUtil.LITTLE_SLOW);
+		this.getAttribute(Attributes.MOVEMENT_SPEED).setBaseValue(has ? ZombieUtil.WALK_LITTLE_FAST : ZombieUtil.WALK_LITTLE_SLOW);
 	}
 	
 	@Override

@@ -30,7 +30,7 @@ public class LadderZombieEntity extends DefenceZombieEntity implements IHasMetal
 	@Override
 	protected void updateAttributes() {
 		super.updateAttributes();
-		this.getAttribute(Attributes.MOVEMENT_SPEED).setBaseValue(ZombieUtil.FAST);
+		this.getAttribute(Attributes.MOVEMENT_SPEED).setBaseValue(ZombieUtil.WALK_FAST);
 	}
 
 	@Override
@@ -83,13 +83,13 @@ public class LadderZombieEntity extends DefenceZombieEntity implements IHasMetal
 	@Override
 	public void decreaseMetal() {
 		this.setDefenceLife(0);
-		this.getAttribute(Attributes.MOVEMENT_SPEED).setBaseValue(ZombieUtil.NORMAL_SPEED);
+		this.getAttribute(Attributes.MOVEMENT_SPEED).setBaseValue(ZombieUtil.WALK_NORMAL);
 	}
 
 	@Override
 	public void increaseMetal() {
 		this.setDefenceLife(this.getPartLife());
-		this.getAttribute(Attributes.MOVEMENT_SPEED).setBaseValue(ZombieUtil.FAST);
+		this.getAttribute(Attributes.MOVEMENT_SPEED).setBaseValue(ZombieUtil.WALK_FAST);
 		this.resetParts();
 	}
 

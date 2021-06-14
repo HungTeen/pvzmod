@@ -1,0 +1,42 @@
+{
+    "name": "橄榄球僵尸",
+    "icon": "pvz:zombie_doll",
+    "category": "pvz:common",
+    "pages": [
+        {
+            "type": "text",
+            "text": "$(l)橄榄球僵尸$()虽然不懂橄榄球，但它却知道如何冲刺，真的。$(br)$(bred)生命值$() : $(l)20$()$(br)$(bred)防具生命值$() : $(l)140$()$(br)$(bred)攻击力$() : $(l)低$()$(br)$(bblue)速度$() : $(l)快$()$(br)$(l)特性$() : 拥有较高的防御与较快的速度。"
+        },
+        {
+            "type": "entity",
+            "entity": "pvz:football_zombie",
+            "scale": 0.8,
+            "text": "外观"
+        },
+        {
+            "type": "spotlight",
+            "item": "pvz:football_helmet",
+            "title": "特殊掉落物",
+            "text": ""
+        },
+        {
+            "type": "spotlight",
+            "item": "pvz:football_chestplate",
+            "title": "特殊掉落物",
+            "text": ""
+        },
+        {
+            "type": "spotlight",
+            "item": "pvz:football_leggings",
+            "title": "特殊掉落物",
+            "text": ""
+        },
+        {
+            "type": "spotlight",
+            "item": "pvz:football_boots",
+            "title": "特殊掉落物",
+            "text": ""
+        }
+    ],
+    "sortnum": 8
+}

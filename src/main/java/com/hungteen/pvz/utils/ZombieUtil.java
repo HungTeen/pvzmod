@@ -16,17 +16,19 @@ import net.minecraftforge.fml.RegistryObject;
 public class ZombieUtil {
 	
     // zombies speed
-	public static final float VERY_SLOW = 0.16f; 
-	public static final float SLOW = 0.18f;
-	public static final float LITTLE_SLOW = 0.19f; 
-	public static final float NORMAL_SPEED = 0.20f; 
-	public static final float LITTLE_FAST = 0.22f;
-	public static final float FAST = 0.24f; 
-	public static final float VERY_FAST = 0.27f; 
-	public static final float HUGE_FAST = 0.28f; 
-	public static final float SUPER_FAST = 0.3f; 
-	public static final float WATER_FAST = 0.8f;
-	public static final float FLY_FAST = 0.5f;
+	public static final float WALK_SUPER_SLOW = 0.15F;
+	public static final float WALK_HUGE_SLOW = 0.16F; 
+	public static final float WALK_VERY_SLOW = 0.17F; 
+	public static final float WALK_SLOW = 0.18F;
+	public static final float WALK_LITTLE_SLOW = 0.19F; 
+	public static final float WALK_NORMAL = 0.20F; 
+	public static final float WALK_LITTLE_FAST = 0.225F;
+	public static final float WALK_FAST = 0.25F; 
+	public static final float WALK_VERY_FAST = 0.275F; 
+	public static final float WALK_HUGE_FAST = 0.3F; 
+	public static final float WALK_SUPER_FAST = 0.325F; 
+	public static final float WATER_FAST = 0.8F;
+	public static final float FLY_FAST = 0.5F;
 
 	// zombies attackDamage
 	public static final float VERY_LOW = 4; 
@@ -43,6 +45,7 @@ public class ZombieUtil {
 
 	// follow range
 	public static final float ZOMBIE_FOLLOW_RANGE = 80;
+	
 	public static final HashMap<Zombies, Ranks> ZOMBIE_RANK = new HashMap<>();
 	public static final HashMap<EntityType<? extends PVZZombieEntity>, Zombies> ENTITY_TYPE_ZOMBIE = new HashMap<>();
 	public static final HashMap<Zombies, RegistryObject<? extends EntityType<? extends PVZZombieEntity>>> ZOMBIE_ENTITY = new HashMap<>();

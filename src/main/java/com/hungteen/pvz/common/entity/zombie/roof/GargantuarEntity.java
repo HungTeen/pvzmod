@@ -85,7 +85,7 @@ public class GargantuarEntity extends PVZZombieEntity {
 	@Override
 	protected void updateAttributes() {
 		super.updateAttributes();
-		this.getAttribute(Attributes.MOVEMENT_SPEED).setBaseValue(ZombieUtil.SLOW);
+		this.getAttribute(Attributes.MOVEMENT_SPEED).setBaseValue(ZombieUtil.WALK_SLOW);
 	}
 	
 	public void throwImp(LivingEntity target) {

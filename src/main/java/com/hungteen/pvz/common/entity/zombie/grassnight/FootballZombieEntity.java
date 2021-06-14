@@ -17,7 +17,7 @@ import net.minecraft.world.World;
 
 public class FootballZombieEntity extends PVZZombieEntity implements IHasMetal {
 
-	public static final float FOOTBALL_HEALTH = 120;
+	public static final float FOOTBALL_HEALTH = 140;
 	
 	public FootballZombieEntity(EntityType<? extends MonsterEntity> type, World worldIn) {
 		super(type, worldIn);
@@ -29,7 +29,7 @@ public class FootballZombieEntity extends PVZZombieEntity implements IHasMetal {
 	@Override
 	protected void updateAttributes() {
 		super.updateAttributes();
-		this.getAttribute(Attributes.MOVEMENT_SPEED).setBaseValue(ZombieUtil.FAST);
+		this.getAttribute(Attributes.MOVEMENT_SPEED).setBaseValue(ZombieUtil.WALK_FAST);
 	}
 	
 	@Override

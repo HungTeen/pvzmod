@@ -17,7 +17,7 @@ public class SundayEditionZombieEntity extends NewspaperZombieEntity{
 
 	@Override
 	protected void updateAngry(boolean is) {
-		this.getAttribute(Attributes.MOVEMENT_SPEED).setBaseValue(is ? ZombieUtil.SUPER_FAST : ZombieUtil.LITTLE_FAST);
+		this.getAttribute(Attributes.MOVEMENT_SPEED).setBaseValue(is ? ZombieUtil.WALK_SUPER_FAST : ZombieUtil.WALK_LITTLE_FAST);
 		this.getAttribute(Attributes.ATTACK_DAMAGE).setBaseValue(is ? ZombieUtil.VERY_HIGH : ZombieUtil.LITTLE_HIGH);
 	}
 	

@@ -153,7 +153,7 @@ public abstract class PVZZombieEntity extends MonsterEntity implements IPVZZombi
 	    	    .add(Attributes.MAX_HEALTH, 20)
 	     	    .add(Attributes.FOLLOW_RANGE, 40.0D)
 	    		.add(Attributes.KNOCKBACK_RESISTANCE, 1)
-	    		.add(Attributes.MOVEMENT_SPEED, ZombieUtil.NORMAL_SPEED)
+	    		.add(Attributes.MOVEMENT_SPEED, ZombieUtil.WALK_NORMAL)
 	    		.add(Attributes.FLYING_SPEED, 0)
 	    		.build();
 	}
@@ -237,7 +237,7 @@ public abstract class PVZZombieEntity extends MonsterEntity implements IPVZZombi
 	protected void updateAttributes() {
 		this.getAttribute(Attributes.ATTACK_DAMAGE).setBaseValue(ZombieUtil.LOW);
 		this.getAttribute(Attributes.FOLLOW_RANGE).setBaseValue(30);
-		this.getAttribute(Attributes.MOVEMENT_SPEED).setBaseValue(ZombieUtil.NORMAL_SPEED);
+		this.getAttribute(Attributes.MOVEMENT_SPEED).setBaseValue(ZombieUtil.WALK_NORMAL);
 		this.getAttribute(Attributes.KNOCKBACK_RESISTANCE).setBaseValue(1D);
 		EntityUtil.setLivingMaxHealthAndHeal(this, this.getLife());
 		this.onLevelChanged();

@@ -43,7 +43,7 @@ public class DancingZombieEntity extends PVZZombieEntity{
 	public void tick() {
 		super.tick();
 		if(! level.isClientSide) {
-			this.getAttribute(Attributes.MOVEMENT_SPEED).setBaseValue(this.getAttackTime() > 0 ? 0 : ZombieUtil.LITTLE_SLOW);
+			this.getAttribute(Attributes.MOVEMENT_SPEED).setBaseValue(this.getAttackTime() > 0 ? 0 : ZombieUtil.WALK_LITTLE_SLOW);
 		}
 	}
 

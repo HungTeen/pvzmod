@@ -1,0 +1,24 @@
+{
+    "name": "铁门僵尸",
+    "icon": "pvz:zombie_doll",
+    "category": "pvz:common",
+    "pages": [
+        {
+            "type": "text",
+            "text": "$(l)铁门僵尸$()的门取自上一个它造访过的屋子，$(m)就在它只掉屋子主人的脑袋之后$()。$(br)$(bred)生命值$() : $(l)24$()$(br)$(bred)铁门生命值$() : $(l)200$()$(br)$(bred)攻击力$() : $(l)低$()$(br)$(bblue)速度$() : $(l)一般$()$(br)$(l)特性$() :它的$(bred)铁门可以抵挡大量伤害$()，但是僵尸本体血量很少。"
+        },
+        {
+            "type": "entity",
+            "entity": "pvz:screendoor_zombie",
+            "scale": 0.8,
+            "text": "外观"
+        },
+        {
+            "type": "spotlight",
+            "item": "pvz:screen_door",
+            "title": "特殊掉落",
+            "text": ""
+        }
+    ],
+    "sortnum": 7
+}

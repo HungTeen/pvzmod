@@ -121,7 +121,7 @@ public class JackInBoxZombieEntity extends PVZZombieEntity implements IHasMetal 
 	@Override
 	protected void updateAttributes() {
 		super.updateAttributes();
-		this.getAttribute(Attributes.MOVEMENT_SPEED).setBaseValue(ZombieUtil.FAST);
+		this.getAttribute(Attributes.MOVEMENT_SPEED).setBaseValue(ZombieUtil.WALK_FAST);
 	}
 	
 	private void setExplosionTime() {

@@ -1,0 +1,42 @@
+{
+    "name": "Football Zombie",
+    "icon": "pvz:zombie_doll",
+    "category": "pvz:common",
+    "pages": [
+        {
+            "type": "text",
+            "text": "$(bred)Football Zombie$() doesn't know what's football, but it really knows how to rush, really !$(br)$(bred)Health$() : $(l)20$()$(br)$(bred)Defence Health$() : $(l)140$()$(br)$(bred)Eat Damage$() : $(l)Low$()$(br)$(bblue)Speed$() : $(l)Fast$()$(br)$(l)Features$() : It has both little high armor and little fast speed."
+        },
+        {
+            "type": "entity",
+            "entity": "pvz:football_zombie",
+            "scale": 0.8,
+            "text": "Appearance"
+        },
+        {
+            "type": "spotlight",
+            "item": "pvz:football_helmet",
+            "title": "Special Drop",
+            "text": ""
+        },
+        {
+            "type": "spotlight",
+            "item": "pvz:football_chestplate",
+            "title": "Special Drop",
+            "text": ""
+        },
+        {
+            "type": "spotlight",
+            "item": "pvz:football_leggings",
+            "title": "Special Drop",
+            "text": ""
+        },
+        {
+            "type": "spotlight",
+            "item": "pvz:football_boots",
+            "title": "Special Drop",
+            "text": ""
+        }
+    ],
+    "sortnum": 8
+}

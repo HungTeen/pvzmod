@@ -120,7 +120,7 @@ public class GigaFootballZombieEntity extends FootballZombieEntity {
 	}
 	
 	protected void updateRush(boolean is) {
-		this.getAttribute(Attributes.MOVEMENT_SPEED).setBaseValue(is ? ZombieUtil.HUGE_FAST : ZombieUtil.LITTLE_FAST);
+		this.getAttribute(Attributes.MOVEMENT_SPEED).setBaseValue(is ? ZombieUtil.WALK_HUGE_FAST : ZombieUtil.WALK_LITTLE_FAST);
 	}
 	
 	@Override
