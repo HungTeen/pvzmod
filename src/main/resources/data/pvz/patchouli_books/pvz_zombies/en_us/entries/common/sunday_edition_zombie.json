@@ -1,0 +1,18 @@
+{
+    "name": "Sunday Edition Zombie",
+    "icon": "pvz:zombie_doll",
+    "category": "pvz:common",
+    "pages": [
+        {
+            "type": "text",
+            "text": "$(bred)Sunday Edition Zombie$() really loves comics, so never never touch it.$(br)$(bred)Health$() : $(l)350$()$(br)$(bred)Paper Health$() : $(l)100$()$(br)$(bred)Eat Damage$() : $(l)Little High$()$(br)$(bblue)Speed$() : $(l)Little Fast$()$(br)$(l)Features$() : When its newspaper broken, it will be immediately angered, and then increase its speed to $(l)Super Fast$() and damage to $(l)Very High$()."
+        },
+        {
+            "type": "entity",
+            "entity": "pvz:sunday_edition_zombie",
+            "scale": 0.8,
+            "text": "Appearance"
+        }
+    ],
+    "sortnum": 0
+}

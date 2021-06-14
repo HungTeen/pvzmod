@@ -97,7 +97,7 @@ public abstract class PVZZombieEntity extends MonsterEntity implements IPVZZombi
 	private static final DataParameter<Integer> ATTACK_TIME = EntityDataManager.defineId(PVZZombieEntity.class, DataSerializers.INT);
     //negative means rising, positive means perform attack animation.
 	private static final DataParameter<Integer> ANIM_TIME = EntityDataManager.defineId(PVZZombieEntity.class, DataSerializers.INT);
-	private static final DataParameter<Float> DEFENCE_LIFE = EntityDataManager.defineId(PVZZombieEntity.class, DataSerializers.FLOAT);
+	protected static final DataParameter<Float> DEFENCE_LIFE = EntityDataManager.defineId(PVZZombieEntity.class, DataSerializers.FLOAT);
 	private static final DataParameter<Integer> ZOMBIE_LEVEL = EntityDataManager.defineId(PVZZombieEntity.class, DataSerializers.INT);
 	protected static WeightList<DropType> dropSpecialList;
 	private static final int CHARM_FLAG = 0;

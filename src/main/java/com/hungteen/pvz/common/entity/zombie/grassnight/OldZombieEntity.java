@@ -16,7 +16,6 @@ public class OldZombieEntity extends NewspaperZombieEntity{
 	
 	@Override
 	protected void updateAngry(boolean is) {
-		this.setAngry(is);
 		this.getAttribute(Attributes.MOVEMENT_SPEED).setBaseValue(is ? ZombieUtil.VERY_FAST : ZombieUtil.NORMAL_SPEED);
 		this.getAttribute(Attributes.ATTACK_DAMAGE).setBaseValue(is ? ZombieUtil.NORMAL_DAMAGE : ZombieUtil.LITTLE_LOW);
 	}

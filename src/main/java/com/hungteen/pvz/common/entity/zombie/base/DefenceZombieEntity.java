@@ -25,12 +25,14 @@ public abstract class DefenceZombieEntity extends PVZZombieEntity implements IMu
 	@Override
 	public void tick() {
 		super.tick();
-		updateParts();
+		if(! this.level.isClientSide) {
+			updateParts();
+		}
 	}
 	
 	@Override
 	public void removeParts() {
-		if(this.part != null) {
+		if(EntityUtil.isEntityValid(this.part)) {
 			this.part.remove();
 			this.part = null;
 		}
@@ -38,7 +40,10 @@ public abstract class DefenceZombieEntity extends PVZZombieEntity implements IMu
 	
 	@Override
 	public void updateParts() {
-		if(this.part != null) {
+		if(this.canPartsExist()) {
+			if(! EntityUtil.isEntityValid(part)) {
+				this.resetParts();
+			}
 			if(! this.part.isAddedToWorld()) {
 				this.level.addFreshEntity(this.part);
 			}
@@ -49,6 +54,8 @@ public abstract class DefenceZombieEntity extends PVZZombieEntity implements IMu
 			this.part.xRotO = this.xRot;
 			this.part.moveTo(pos.x() - Math.sin(j) * dis, pos.y() + this.getPartHeightOffset(), pos.z() + Math.cos(j) * dis, this.yRot, this.xRot);
 			this.part.setOwner(this);
+		} else {
+			this.removeParts();
 		}
 	}
 	

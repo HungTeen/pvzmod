@@ -90,7 +90,7 @@ public class ScreenDoorZombieModel extends PVZZombieModel<ScreenDoorZombieEntity
 	@Override
 	public void updateFreeParts(ScreenDoorZombieEntity entity) {
 		super.updateFreeParts(entity);
-		final boolean isPartDestroyed = entity.canPartsBeRemoved();
+		final boolean isPartDestroyed = ! entity.hasMetal();
 		this.door.visible = ! isPartDestroyed;
 		this.isLeftHandFree = isPartDestroyed;
 		this.isRightHandFree = isPartDestroyed;

@@ -71,7 +71,7 @@ public class BobsleTeamEntity extends PVZZombieEntity implements IMultiPartEntit
 			if(this.parts[i] == null) {
 				continue;
 			}
-			if(!this.parts[i].shouldContinuePersisting()) {
+			if(! this.parts[i].isAddedToWorld()) {
 				this.level.addFreshEntity(this.parts[i]);
 			}
 			float j = 2 * 3.14159f * this.yHeadRot / 360;

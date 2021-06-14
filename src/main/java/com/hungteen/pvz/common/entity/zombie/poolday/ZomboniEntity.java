@@ -94,7 +94,7 @@ public class ZomboniEntity extends PVZZombieEntity implements IMultiPartEntity{
 	@Override
 	public void updateParts() {
 		if(this.part != null) {
-			if(!this.part.shouldContinuePersisting()) {
+			if(! this.part.isAddedToWorld()) {
 				this.level.addFreshEntity(this.part);
 			}
 			float j = 2 * 3.14159f * this.yRot / 360;
