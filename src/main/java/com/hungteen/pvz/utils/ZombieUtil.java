@@ -5,6 +5,7 @@ import java.util.Optional;
 
 import com.hungteen.pvz.PVZMod;
 import com.hungteen.pvz.common.entity.zombie.PVZZombieEntity;
+import com.hungteen.pvz.common.entity.zombie.grassnight.DancingZombieEntity;
 import com.hungteen.pvz.register.EntityRegister;
 import com.hungteen.pvz.utils.enums.Ranks;
 import com.hungteen.pvz.utils.enums.Zombies;
@@ -160,6 +161,15 @@ public class ZombieUtil {
 		case MEGA:return 50;
 		default:return 0;
 		}
+	}
+	
+	/**
+	 * copy some data to new zombie ,which is necessary to implement.
+	 * {@link DancingZombieEntity#summonEmptyDancers()}
+	 */
+	public static void copySummonZombieData(PVZZombieEntity old, PVZZombieEntity now) {
+		now.setCharmed(old.isCharmed());
+		now.setMiniZombie(old.isMiniZombie());
 	}
 	
 	/**

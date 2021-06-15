@@ -4,6 +4,7 @@ import com.hungteen.pvz.client.model.entity.zombie.PVZZombieModel;
 import com.hungteen.pvz.common.entity.zombie.grassnight.DancingZombieEntity;
 
 import net.minecraft.client.renderer.model.ModelRenderer;
+import net.minecraft.util.math.MathHelper;
 
 // Made with Blockbench 3.7.4
 // Exported for Minecraft version 1.15
@@ -77,32 +78,31 @@ public class DancingZombieModel extends PVZZombieModel<DancingZombieEntity> {
 
 	@Override
 	public void setupAnim(DancingZombieEntity entity, float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch){
+		if(entity.getSummonTime() > 0) {
+			this.total.yRot = 0;
+			this.left_hand.xRot = 0;
+			this.right_hand.xRot = - 2.5f;
+			this.left_leg.xRot = 0;
+			this.right_leg.xRot = 0;
+			return ;
+		}
+		if(entity.getAttackTime() > 0) {
+			int tick = entity.getAttackTime();
+			int max = DancingZombieEntity.DANCE_CD;
+			this.total.yRot = - MathHelper.sin(3.14159f * 2 * tick / max);
+			this.right_hand.xRot = - 3 * MathHelper.abs(MathHelper.sin(3.14159f * 4 * tick / max));
+			this.left_hand.xRot = - 3 * MathHelper.abs(MathHelper.sin(3.14159f * 4 * tick / max));
+			this.left_leg.xRot = 0;
+			this.right_leg.xRot = 0;
+			return ;
+		}
+		
 		super.setupAnim(entity, limbSwing, limbSwingAmount, ageInTicks, netHeadYaw, headPitch);
-//		if(entity.getSummonTime() > 0) {
-//			this.total.yRot = 0;
-//			this.left_hand.xRot = 0;
-//			this.right_hand.xRot = - 2.5f;
-//			this.left_leg.xRot = 0;
-//			this.right_leg.xRot = 0;
-//			return ;
-//		}
-//		if(entity.getAttackTime() > 0) {
-//			int tick = entity.getAttackTime();
-//			int max = DancingZombieEntity.DANCE_CD;
-//			this.total.yRot = - MathHelper.sin(3.14159f * 2 * tick / max);
-//			this.right_hand.xRot = - 3 * MathHelper.abs(MathHelper.sin(3.14159f * 4 * tick / max));
-//			this.left_hand.xRot = - 3 * MathHelper.abs(MathHelper.sin(3.14159f * 4 * tick / max));
-//			this.left_leg.xRot = 0;
-//			this.right_leg.xRot = 0;
-//			return ;
-//		}
-//		this.total.yRot = 0;
-//		this.head.yRot = netHeadYaw / (180F / (float)Math.PI);
-//        this.head.xRot = headPitch / (180F / (float)Math.PI);
-//        this.right_leg.xRot = MathHelper.cos(limbSwing * 0.6662F) * 1.4F * limbSwingAmount;
-//        this.left_leg.xRot = MathHelper.cos(limbSwing * 0.6662F + (float)Math.PI) * 1.4F * limbSwingAmount;
-//        this.right_hand.xRot = MathHelper.cos(limbSwing * 0.6662F) * 1.4F * limbSwingAmount;
-//        this.left_hand.xRot = MathHelper.cos(limbSwing * 0.6662F + (float)Math.PI) * 1.4F * limbSwingAmount;
+	}
+	
+	@Override
+	public void refreshAnim() {
+		this.total.yRot = 0;
 	}
 	
 	@Override

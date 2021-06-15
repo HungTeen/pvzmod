@@ -242,7 +242,7 @@ public class ItemRegister {
 	public static final RegistryObject<Item> BALLOON = ITEMS.register("balloon", BalloonItem::new);
 	public static final RegistryObject<Item> TARGET_ARROW = ITEMS.register("target_arrow", TargetArrowItem::new);
 	public static final RegistryObject<Item> FIRE_CRACKER = ITEMS.register("fire_cracker", FireCrackerItem::new);
-	public static final RegistryObject<Item> WARNING_SIGN = ITEMS.register("warning_sign", () -> new SwordItem(PVZItemTier.STEEL, 5, - 2.4F, new Item.Properties().tab(GroupRegister.PVZ_MISC).stacksTo(1)));
+	public static final RegistryObject<Item> WARNING_SIGN = ITEMS.register("warning_sign", () -> new SwordItem(PVZItemTier.STEEL, 6, - 2.4F, new Item.Properties().tab(GroupRegister.PVZ_MISC).stacksTo(1)));
 	public static final RegistryObject<Item> POLE = ITEMS.register("pole", () -> new AxeItem(PVZItemTier.STEEL, 8, - 3F, new Item.Properties().tab(GroupRegister.PVZ_MISC).stacksTo(1)));
 	public static final RegistryObject<Item> GARDEN_RAKE = ITEMS.register("garden_rake", GardenRakeItem::new);
 	
