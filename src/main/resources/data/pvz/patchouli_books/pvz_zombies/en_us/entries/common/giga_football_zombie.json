@@ -1,0 +1,42 @@
+{
+    "name": "Giga Football Zombie",
+    "icon": "pvz:zombie_doll",
+    "category": "pvz:common",
+    "pages": [
+        {
+            "type": "text",
+            "text": "$(bred)Giga Football Zombie$() also doesn't know what's football, but it really knows how to rush, really !$(br)$(bred)Health$() : $(l)100$()$(br)$(bred)Defence Health$() : $(l)300$()$(br)$(bred)Eat Damage$() : $(l)Normal$()$(br)$(bblue)Speed$() : $(l)Fast$()$(br)$(l)Features$() : It will randomly start rushing and speed up to $(l)Huge Fast$(), until hit the first enemy and $(bred)deal deadly damage$() to it, and start next rush after serveral seconds. When it's in rushing, $(bred)it won't be butter or cold$()."
+        },
+        {
+            "type": "entity",
+            "entity": "pvz:giga_football_zombie",
+            "scale": 0.8,
+            "text": "Appearance"
+        },
+        {
+            "type": "spotlight",
+            "item": "pvz:giga_helmet",
+            "title": "Special Drop",
+            "text": ""
+        },
+        {
+            "type": "spotlight",
+            "item": "pvz:giga_chestplate",
+            "title": "Special Drop",
+            "text": ""
+        },
+        {
+            "type": "spotlight",
+            "item": "pvz:giga_leggings",
+            "title": "Special Drop",
+            "text": ""
+        },
+        {
+            "type": "spotlight",
+            "item": "pvz:giga_boots",
+            "title": "Special Drop",
+            "text": ""
+        }
+    ],
+    "sortnum": 11
+}

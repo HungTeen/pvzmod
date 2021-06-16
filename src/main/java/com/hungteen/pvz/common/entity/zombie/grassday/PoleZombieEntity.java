@@ -4,7 +4,7 @@ import java.util.EnumSet;
 import java.util.Optional;
 
 import com.hungteen.pvz.api.interfaces.IPVZPlant;
-import com.hungteen.pvz.common.entity.goal.target.PVZRandomTargetGoal;
+import com.hungteen.pvz.common.entity.ai.goal.target.PVZRandomTargetGoal;
 import com.hungteen.pvz.common.entity.plant.PVZPlantEntity;
 import com.hungteen.pvz.common.entity.zombie.PVZZombieEntity;
 import com.hungteen.pvz.common.entity.zombie.body.ZombieDropBodyEntity;
@@ -80,6 +80,11 @@ public class PoleZombieEntity extends PVZZombieEntity{
 			return plant == Plants.TALL_NUT || plant == Plants.GIANT_WALL_NUT;
 		}
 		return true;
+	}
+	
+	@Override
+	public boolean canBeTargetBy(LivingEntity living) {
+		return ! this.isPoleJumping();
 	}
 	
 	@Override

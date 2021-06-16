@@ -11,19 +11,19 @@ import com.hungteen.pvz.api.enums.PVZGroupType;
 import com.hungteen.pvz.api.interfaces.IPVZZombie;
 import com.hungteen.pvz.client.particle.ParticleUtil;
 import com.hungteen.pvz.common.advancement.trigger.CharmZombieTrigger;
+import com.hungteen.pvz.common.entity.ai.goal.PVZLookRandomlyGoal;
+import com.hungteen.pvz.common.entity.ai.goal.PVZSwimGoal;
+import com.hungteen.pvz.common.entity.ai.goal.ZombieBreakPlantBlockGoal;
+import com.hungteen.pvz.common.entity.ai.goal.attack.PVZZombieAttackGoal;
+import com.hungteen.pvz.common.entity.ai.goal.target.PVZHurtByTargetGoal;
+import com.hungteen.pvz.common.entity.ai.goal.target.PVZNearestTargetGoal;
+import com.hungteen.pvz.common.entity.ai.navigator.ZombiePathNavigator;
 import com.hungteen.pvz.common.entity.bullet.AbstractBulletEntity;
 import com.hungteen.pvz.common.entity.drop.CoinEntity;
 import com.hungteen.pvz.common.entity.drop.CoinEntity.CoinType;
 import com.hungteen.pvz.common.entity.drop.SunEntity;
-import com.hungteen.pvz.common.entity.goal.PVZLookRandomlyGoal;
-import com.hungteen.pvz.common.entity.goal.PVZSwimGoal;
-import com.hungteen.pvz.common.entity.goal.ZombieBreakPlantBlockGoal;
-import com.hungteen.pvz.common.entity.goal.attack.PVZZombieAttackGoal;
-import com.hungteen.pvz.common.entity.goal.target.PVZHurtByTargetGoal;
-import com.hungteen.pvz.common.entity.goal.target.PVZNearestTargetGoal;
 import com.hungteen.pvz.common.entity.plant.PVZPlantEntity;
 import com.hungteen.pvz.common.entity.plant.enforce.SquashEntity;
-import com.hungteen.pvz.common.entity.plant.spear.SpikeRockEntity;
 import com.hungteen.pvz.common.entity.plant.spear.SpikeWeedEntity;
 import com.hungteen.pvz.common.entity.zombie.body.ZombieDropBodyEntity;
 import com.hungteen.pvz.common.entity.zombie.body.ZombieDropBodyEntity.BodyType;
@@ -73,6 +73,7 @@ import net.minecraft.network.datasync.DataParameter;
 import net.minecraft.network.datasync.DataSerializers;
 import net.minecraft.network.datasync.EntityDataManager;
 import net.minecraft.particles.ParticleTypes;
+import net.minecraft.pathfinding.PathNavigator;
 import net.minecraft.potion.EffectInstance;
 import net.minecraft.potion.Effects;
 import net.minecraft.server.management.PreYggdrasilConverter;
@@ -181,6 +182,11 @@ public abstract class PVZZombieEntity extends MonsterEntity implements IPVZZombi
 	 */
 	protected void registerTargetGoals() {
 		this.targetSelector.addGoal(0, new PVZNearestTargetGoal(this, false, 60, 30));
+	}
+	
+	@Override
+	protected PathNavigator createNavigation(World world) {
+		return new ZombiePathNavigator(this, world);
 	}
 	
 	/* handle spawn */
@@ -505,6 +511,10 @@ public abstract class PVZZombieEntity extends MonsterEntity implements IPVZZombi
 	 * {@link EntityUtil#canEntityTarget(Entity, Entity)}
 	 */
 	public boolean checkCanZombieTarget(Entity target) {
+		LivingEntity hurter = this.getLastHurtByMob();
+		if(EntityUtil.isEntityValid(hurter) && hurter.is(target)) {
+			return checkCanZombieAttack(target);
+		}
 		return EntityUtil.checkCanEntityBeTarget(this, target) && this.canZombieTarget(target);
 	}
 	
@@ -515,19 +525,24 @@ public abstract class PVZZombieEntity extends MonsterEntity implements IPVZZombi
 	public boolean checkCanZombieAttack(Entity target) {
 		return EntityUtil.checkCanEntityBeAttack(this, target) && this.canZombieTarget(target);
 	}
+	
+	/**
+	 * can zombie be target by living, often use for plant's target.
+	 * {@link PVZPlantEntity#canPlantTarget(Entity)}
+	 */
+	public boolean canBeTargetBy(LivingEntity living) {
+		return true;
+	}
 
 	/**
 	 * do not attack spike weed, bungee, plants with steel ladder.
 	 */
-	protected boolean canZombieTarget(Entity target) {
-		if (target instanceof SpikeRockEntity) {
-			return false;
+	public boolean canZombieTarget(Entity target) {
+		if(target instanceof PVZPlantEntity) {
+			return ((PVZPlantEntity) target).canBeTargetBy(this);
 		}
-		if (target instanceof BungeeZombieEntity) {
-			return false;
-		}
-		if (target instanceof PVZPlantEntity && ((PVZPlantEntity) target).hasMetal()) {
-			return false;
+		if(target instanceof PVZZombieEntity) {
+			return ((PVZZombieEntity) target).canBeTargetBy(this);
 		}
 		return true;
 	}
@@ -778,9 +793,9 @@ public abstract class PVZZombieEntity extends MonsterEntity implements IPVZZombi
 					this.hurt(DamageSource.CRAMMING, 6.0F);
 				}
 			}
-			for (int l = 0; l < list.size(); ++l) {
-				LivingEntity target = list.get(l);
-				if (target != this && this.shouldCollideWithEntity(target)) {// can collide with
+			for (int l = 0; l < list.size(); ++ l) {
+				final LivingEntity target = list.get(l);
+				if (! this.is(target) && this.shouldCollideWithEntity(target)) {// can collide with
 					this.doPush(target);
 				}
 			}
@@ -788,7 +803,7 @@ public abstract class PVZZombieEntity extends MonsterEntity implements IPVZZombi
 	}
 	
 	protected double getCollideWidthOffset() {
-		return - 0.2D;
+		return - 0.25D;
 	}
 	
 	/**
@@ -857,7 +872,7 @@ public abstract class PVZZombieEntity extends MonsterEntity implements IPVZZombi
 	 * {@link #hurt}
 	 */
 	public boolean checkCanLostHand() {
-		return this.getHealth() / this.getMaxHealth() < 0.5F;
+		return this.getHealth() < Math.min(40, this.getMaxHealth() * 0.5F);
 	}
 	
 	/**

@@ -1,7 +1,7 @@
 package com.hungteen.pvz.common.entity.plant.base;
 
 import com.hungteen.pvz.api.interfaces.ICanAttract;
-import com.hungteen.pvz.common.entity.goal.target.PVZNearestTargetGoal;
+import com.hungteen.pvz.common.entity.ai.goal.target.PVZNearestTargetGoal;
 import com.hungteen.pvz.common.entity.plant.PVZPlantEntity;
 import com.hungteen.pvz.common.item.card.ImitaterCardItem;
 import com.hungteen.pvz.common.item.card.PlantCardItem;

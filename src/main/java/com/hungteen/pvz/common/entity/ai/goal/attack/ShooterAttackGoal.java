@@ -1,4 +1,4 @@
-package com.hungteen.pvz.common.entity.goal.attack;
+package com.hungteen.pvz.common.entity.ai.goal.attack;
 
 import java.util.EnumSet;
 

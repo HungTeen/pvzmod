@@ -66,6 +66,11 @@ public class DiggerZombieEntity extends PVZZombieEntity implements IHasMetal {
 	}
 	
 	@Override
+	public boolean canBeTargetBy(LivingEntity living) {
+		return this.getAttackTime() == DiggerZombieEntity.MAX_OUT_TIME;
+	}
+	
+	@Override
 	public float getLife() {
 		return 40;
 	}

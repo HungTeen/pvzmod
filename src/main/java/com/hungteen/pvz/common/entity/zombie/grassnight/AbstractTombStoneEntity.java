@@ -82,8 +82,8 @@ public abstract class AbstractTombStoneEntity extends PVZZombieEntity {
 	}
 	
 	@Override
-	protected boolean shouldCollideWithEntity(LivingEntity target) {
-		return target instanceof TombStoneEntity;
+	public boolean canBeTargetBy(LivingEntity living) {
+		return false;
 	}
 	
 	@Override

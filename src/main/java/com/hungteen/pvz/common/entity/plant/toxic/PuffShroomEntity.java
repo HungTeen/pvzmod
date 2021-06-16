@@ -1,8 +1,8 @@
 package com.hungteen.pvz.common.entity.plant.toxic;
 
 import com.hungteen.pvz.common.advancement.trigger.EntityEffectAmountTrigger;
+import com.hungteen.pvz.common.entity.ai.goal.target.PVZNearestTargetGoal;
 import com.hungteen.pvz.common.entity.bullet.itembullet.SporeEntity;
-import com.hungteen.pvz.common.entity.goal.target.PVZNearestTargetGoal;
 import com.hungteen.pvz.common.entity.plant.base.PlantShooterEntity;
 import com.hungteen.pvz.register.EntityRegister;
 import com.hungteen.pvz.register.SoundRegister;

@@ -1,4 +1,4 @@
-package com.hungteen.pvz.common.entity.goal;
+package com.hungteen.pvz.common.entity.ai.goal;
 
 import javax.annotation.Nullable;
 

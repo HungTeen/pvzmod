@@ -7,7 +7,9 @@ import com.hungteen.pvz.common.entity.zombie.PVZZombieEntity;
 import com.hungteen.pvz.utils.AlgorithmUtil;
 import com.hungteen.pvz.utils.enums.Zombies;
 
+import net.minecraft.entity.EntitySize;
 import net.minecraft.entity.EntityType;
+import net.minecraft.entity.Pose;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.network.datasync.DataParameter;
 import net.minecraft.network.datasync.DataSerializers;
@@ -106,7 +108,11 @@ public class ZombieDropBodyEntity extends PVZEntityBase {
 			this.yRotO = this.yRot;
 			this.moveTo(this.getX(), this.getY(), this.getZ(), this.yRot, this.xRot);
 		}
-
+	}
+	
+	@Override
+	public EntitySize getDimensions(Pose p_213305_1_) {
+		return EntitySize.scalable(0.5F, 0.5F);
 	}
 
 	@Override

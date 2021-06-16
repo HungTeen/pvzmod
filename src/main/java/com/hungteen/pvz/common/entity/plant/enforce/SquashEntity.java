@@ -1,6 +1,6 @@
 package com.hungteen.pvz.common.entity.plant.enforce;
 
-import com.hungteen.pvz.common.entity.goal.target.PVZNearestTargetGoal;
+import com.hungteen.pvz.common.entity.ai.goal.target.PVZNearestTargetGoal;
 import com.hungteen.pvz.common.entity.plant.PVZPlantEntity;
 import com.hungteen.pvz.common.misc.damage.PVZDamageSource;
 import com.hungteen.pvz.register.SoundRegister;

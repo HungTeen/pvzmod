@@ -13,6 +13,7 @@ import com.hungteen.pvz.utils.ZombieUtil;
 import com.hungteen.pvz.utils.enums.Zombies;
 
 import net.minecraft.entity.EntityType;
+import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.SpawnReason;
 import net.minecraft.entity.ai.attributes.Attributes;
 import net.minecraft.entity.ai.controller.FlyingMovementController;
@@ -94,6 +95,11 @@ public class BalloonZombieEntity extends PVZZombieEntity {
 			SpawnReason reason, BlockPos pos, Random rand) {
 		if(! checkZombieSpawn(zombieType, worldIn, reason)) return false;
 		return worldIn.getBrightness(LightType.BLOCK, pos) < 8 && worldIn.getDifficulty() != Difficulty.PEACEFUL && (reason == SpawnReason.SPAWNER || worldIn.isEmptyBlock(pos));
+	}
+	
+	@Override
+	public boolean canBeTargetBy(LivingEntity living) {
+		return ! this.hasBalloon();
 	}
 	
 	@Override

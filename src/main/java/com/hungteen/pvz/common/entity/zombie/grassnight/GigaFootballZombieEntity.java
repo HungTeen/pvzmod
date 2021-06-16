@@ -1,11 +1,9 @@
 package com.hungteen.pvz.common.entity.zombie.grassnight;
 
-import java.util.List;
-
-import com.hungteen.pvz.common.entity.plant.spear.SpikeRockEntity;
 import com.hungteen.pvz.common.misc.damage.PVZDamageSource;
 import com.hungteen.pvz.data.loot.PVZLoot;
 import com.hungteen.pvz.utils.EntityUtil;
+import com.hungteen.pvz.utils.MathUtil;
 import com.hungteen.pvz.utils.ZombieUtil;
 import com.hungteen.pvz.utils.enums.MetalTypes;
 import com.hungteen.pvz.utils.enums.Zombies;
@@ -16,20 +14,19 @@ import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.ai.attributes.Attributes;
 import net.minecraft.entity.monster.MonsterEntity;
 import net.minecraft.nbt.CompoundNBT;
-import net.minecraft.util.DamageSource;
 import net.minecraft.util.ResourceLocation;
-import net.minecraft.world.GameRules;
 import net.minecraft.world.World;
 
 public class GigaFootballZombieEntity extends FootballZombieEntity {
 
-	public static final float GIGA_HEALTH = 300;
-	public boolean hasChanged = false;
+	private static final float GIGA_HEALTH = 300;
+	protected boolean isRushing = false;
 	private final int minRushCD = 200;
 	private final int maxRushCD = 600;
 	
 	public GigaFootballZombieEntity(EntityType<? extends MonsterEntity> type, World worldIn) {
 		super(type, worldIn);
+		this.canCollideWithZombie = false;
 	}
 	
 	@Override
@@ -51,15 +48,19 @@ public class GigaFootballZombieEntity extends FootballZombieEntity {
 	@Override
 	public void normalZombieTick() {
 		super.normalZombieTick();
-		if(!this.level.isClientSide) {
-			if(!this.hasChanged && this.getAttackTime() == 0) {
+		if(! this.level.isClientSide) {
+			if(!this.isRushing && this.getAttackTime() == 0) {
 				this.updateRush(true);
-				this.hasChanged = true;
 			}
-			if(this.getAttackTime() > 0) {
-				this.setAttackTime(this.getAttackTime() - 1);
-			}
-			
+			this.setAttackTime(Math.max(0, this.getAttackTime() - 1));
+		}
+	}
+	
+	protected void updateRush(boolean is) {
+		this.isRushing = is;
+		this.getAttribute(Attributes.MOVEMENT_SPEED).setBaseValue(is ? ZombieUtil.WALK_HUGE_FAST : ZombieUtil.WALK_FAST);
+		if(! is) {
+			this.setAttackTime(MathUtil.getRandomMinMax(getRandom(), minRushCD, maxRushCD));
 		}
 	}
 	
@@ -69,49 +70,30 @@ public class GigaFootballZombieEntity extends FootballZombieEntity {
 	}
 	
 	@Override
-	protected void pushEntities() {
-		List<LivingEntity> list = this.level.getEntitiesOfClass(LivingEntity.class, this.getBoundingBox());
-		if (!list.isEmpty()) {
-			int i = this.level.getGameRules().getInt(GameRules.RULE_MAX_ENTITY_CRAMMING);
-			if (i > 0 && list.size() > i - 1 && this.random.nextInt(4) == 0) {
-				int j = 0;
-				for (int k = 0; k < list.size(); ++k) {
-					if (!((Entity) list.get(k)).isPassenger()) {
-						++j;
-					}
-				}
-				if (j > i - 1) {
-					this.hurt(DamageSource.CRAMMING, 6.0F);
-				}
-			}
-			for (int l = 0; l < list.size(); ++l) {
-				LivingEntity target = list.get(l);
-				if (target != this && this.shouldCollideWithEntity(target)) {// can collide with
-					if(this.getAttackTime() == 0) {
-						target.hurt(PVZDamageSource.causeNormalDamage(this, this), target.getMaxHealth());
-						this.updateRushCD();
-					}
-					this.doPush(target);
-				}
-			}
+	protected void doPush(Entity target) {
+		if(this.isRushing() && target instanceof LivingEntity) {
+			EntityUtil.dealMaxHealthDamage((LivingEntity) target, PVZDamageSource.causeNormalDamage(this, this));
+			this.updateRush(false);
 		}
 	}
 	
-	protected void updateRushCD() {
-		this.hasChanged = false;
-		this.updateRush(false);
-		this.setAttackTime(this.getRandom().nextInt(this.maxRushCD - this.minRushCD + 1) + this.minRushCD);
+	@Override
+	protected double getCollideWidthOffset() {
+		return 0.4D;
 	}
 	
 	@Override
 	public boolean canBeCold() {
-		return this.getAttackTime() > 0;
+		return ! this.isRushing();
 	}
 	
 	@Override
-	protected boolean canZombieTarget(Entity target) {
-		if(target instanceof SpikeRockEntity) return true;
-		return super.canZombieTarget(target);
+	public boolean canBeButter() {
+		return ! this.isRushing();
+	}
+	
+	public boolean isRushing() {
+		return this.isRushing;
 	}
 	
 	@Override
@@ -119,22 +101,18 @@ public class GigaFootballZombieEntity extends FootballZombieEntity {
 		return 100;
 	}
 	
-	protected void updateRush(boolean is) {
-		this.getAttribute(Attributes.MOVEMENT_SPEED).setBaseValue(is ? ZombieUtil.WALK_HUGE_FAST : ZombieUtil.WALK_LITTLE_FAST);
-	}
-	
 	@Override
 	public void readAdditionalSaveData(CompoundNBT compound) {
 		super.readAdditionalSaveData(compound);
-		if(compound.contains("has_changed_speed")) {
-			this.hasChanged = compound.getBoolean("has_changed_speed");
+		if(compound.contains("is_zombie_rushing")) {
+			this.isRushing = compound.getBoolean("is_zombie_rushing");
 		}
 	}
 	
 	@Override
 	public void addAdditionalSaveData(CompoundNBT compound) {
 		super.addAdditionalSaveData(compound);
-		compound.putBoolean("has_changed_speed", this.hasChanged);
+		compound.putBoolean("is_zombie_rushing", this.isRushing);
 	}
 	
 	@Override

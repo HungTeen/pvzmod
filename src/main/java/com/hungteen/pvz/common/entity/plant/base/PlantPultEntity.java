@@ -1,6 +1,6 @@
 package com.hungteen.pvz.common.entity.plant.base;
 
-import com.hungteen.pvz.common.entity.goal.attack.PultAttackGoal;
+import com.hungteen.pvz.common.entity.ai.goal.attack.PultAttackGoal;
 import com.hungteen.pvz.common.entity.plant.PVZPlantEntity;
 import com.hungteen.pvz.common.entity.zombie.poolnight.BalloonZombieEntity;
 import com.hungteen.pvz.utils.EntityUtil;
@@ -65,7 +65,7 @@ public abstract class PlantPultEntity extends PVZPlantEntity implements IPult {
 	}
 	
 	@Override
-	protected boolean canPlantTarget(Entity entity) {
+	public boolean canPlantTarget(Entity entity) {
 		if(entity instanceof BalloonZombieEntity) return true;
 		return this.checkY(entity) && super.canPlantTarget(entity);
 	}

@@ -2,10 +2,10 @@ package com.hungteen.pvz.common.entity.plant.arma;
 
 import java.util.Optional;
 
+import com.hungteen.pvz.common.entity.ai.goal.target.PVZNearestTargetGoal;
 import com.hungteen.pvz.common.entity.bullet.MelonEntity;
 import com.hungteen.pvz.common.entity.bullet.MelonEntity.MelonStates;
 import com.hungteen.pvz.common.entity.bullet.MelonEntity.MelonTypes;
-import com.hungteen.pvz.common.entity.goal.target.PVZNearestTargetGoal;
 import com.hungteen.pvz.common.entity.plant.base.PlantPultEntity;
 import com.hungteen.pvz.register.SoundRegister;
 import com.hungteen.pvz.utils.EntityUtil;

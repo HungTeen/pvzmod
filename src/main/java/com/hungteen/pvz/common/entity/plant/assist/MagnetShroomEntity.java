@@ -5,9 +5,9 @@ import java.util.Collections;
 import java.util.EnumSet;
 import java.util.List;
 
+import com.hungteen.pvz.common.entity.ai.goal.target.PVZNearestTargetGoal;
 import com.hungteen.pvz.common.entity.bullet.itembullet.MetalItemEntity;
 import com.hungteen.pvz.common.entity.bullet.itembullet.MetalItemEntity.MetalStates;
-import com.hungteen.pvz.common.entity.goal.target.PVZNearestTargetGoal;
 import com.hungteen.pvz.common.entity.plant.PVZPlantEntity;
 import com.hungteen.pvz.register.SoundRegister;
 import com.hungteen.pvz.utils.AlgorithmUtil;
@@ -135,7 +135,7 @@ public class MagnetShroomEntity extends PVZPlantEntity {
 	}
 	
 	@Override
-	protected boolean canPlantTarget(Entity entity) {
+	public boolean canPlantTarget(Entity entity) {
 		return entity instanceof IHasMetal && ((IHasMetal) entity).hasMetal();
 	}
 	

@@ -1,5 +1,9 @@
 package com.hungteen.pvz.utils.enums;
 
+import java.util.Arrays;
+import java.util.HashSet;
+import java.util.Set;
+
 import com.hungteen.pvz.utils.others.WeightList;
 
 import net.minecraft.util.text.TranslationTextComponent;
@@ -61,6 +65,9 @@ public enum Zombies {
 	GIGA_TOMB_STONE(0, 0);
 
 	public static final WeightList<Zombies> ZOMBIE_SPAWN_LIST = new WeightList<>();
+	public static final Set<Zombies> BOSSES = new HashSet<>(Arrays.asList(
+			ZOMBOSS, COFFIN, NOBLE_ZOMBIE
+			));
 	public final int spawnWeight;// wave spawn
 	public final int chooseWeight;//random invasion choose
 	

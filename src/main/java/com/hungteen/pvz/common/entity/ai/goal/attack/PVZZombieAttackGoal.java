@@ -1,4 +1,4 @@
-package com.hungteen.pvz.common.entity.goal.attack;
+package com.hungteen.pvz.common.entity.ai.goal.attack;
 
 import com.hungteen.pvz.common.entity.zombie.PVZZombieEntity;
 import com.hungteen.pvz.utils.EntityUtil;

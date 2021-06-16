@@ -5,7 +5,7 @@
     "pages": [
         {
             "type": "text",
-            "text": "$(bred)Football Zombie$() doesn't know what's football, but it really knows how to rush, really !$(br)$(bred)Health$() : $(l)20$()$(br)$(bred)Defence Health$() : $(l)140$()$(br)$(bred)Eat Damage$() : $(l)Low$()$(br)$(bblue)Speed$() : $(l)Fast$()$(br)$(l)Features$() : It has both little high armor and little fast speed."
+            "text": "$(bred)Football Zombie$() gives 200 percent whenever it's on the field, $(m)although it has no idea what a football is$().$(br)$(bred)Health$() : $(l)20$()$(br)$(bred)Defence Health$() : $(l)140$()$(br)$(bred)Eat Damage$() : $(l)Low$()$(br)$(bblue)Speed$() : $(l)Fast$()$(br)$(l)Features$() : It has both little high armor and little fast speed."
         },
         {
             "type": "entity",

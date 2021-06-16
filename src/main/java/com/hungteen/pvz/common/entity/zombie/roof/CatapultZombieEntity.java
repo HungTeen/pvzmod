@@ -1,7 +1,7 @@
 package com.hungteen.pvz.common.entity.zombie.roof;
 
+import com.hungteen.pvz.common.entity.ai.goal.attack.PultAttackGoal;
 import com.hungteen.pvz.common.entity.bullet.BallEntity;
-import com.hungteen.pvz.common.entity.goal.attack.PultAttackGoal;
 import com.hungteen.pvz.common.entity.zombie.PVZZombieEntity;
 import com.hungteen.pvz.common.misc.damage.PVZDamageSource;
 import com.hungteen.pvz.register.SoundRegister;

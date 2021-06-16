@@ -2,11 +2,11 @@ package com.hungteen.pvz.common.entity.zombie.roof;
 
 import java.util.EnumSet;
 
-import com.hungteen.pvz.common.entity.goal.PVZLookRandomlyGoal;
-import com.hungteen.pvz.common.entity.goal.PVZSwimGoal;
-import com.hungteen.pvz.common.entity.goal.ZombieBreakPlantBlockGoal;
-import com.hungteen.pvz.common.entity.goal.attack.PVZZombieAttackGoal;
-import com.hungteen.pvz.common.entity.goal.target.PVZNearestTargetGoal;
+import com.hungteen.pvz.common.entity.ai.goal.PVZLookRandomlyGoal;
+import com.hungteen.pvz.common.entity.ai.goal.PVZSwimGoal;
+import com.hungteen.pvz.common.entity.ai.goal.ZombieBreakPlantBlockGoal;
+import com.hungteen.pvz.common.entity.ai.goal.attack.PVZZombieAttackGoal;
+import com.hungteen.pvz.common.entity.ai.goal.target.PVZNearestTargetGoal;
 import com.hungteen.pvz.common.entity.plant.spear.SpikeRockEntity;
 import com.hungteen.pvz.common.entity.zombie.PVZZombieEntity;
 import com.hungteen.pvz.common.misc.damage.PVZDamageSource;
@@ -106,7 +106,7 @@ public class GargantuarEntity extends PVZZombieEntity {
 	}
 	
 	@Override
-	protected boolean canZombieTarget(Entity target) {
+	public boolean canZombieTarget(Entity target) {
 		if(target instanceof SpikeRockEntity) return true;
 		return super.canZombieTarget(target);
 	}

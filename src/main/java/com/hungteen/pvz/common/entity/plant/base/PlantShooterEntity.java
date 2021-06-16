@@ -1,6 +1,6 @@
 package com.hungteen.pvz.common.entity.plant.base;
 
-import com.hungteen.pvz.common.entity.goal.attack.ShooterAttackGoal;
+import com.hungteen.pvz.common.entity.ai.goal.attack.ShooterAttackGoal;
 import com.hungteen.pvz.common.entity.plant.PVZPlantEntity;
 import com.hungteen.pvz.utils.interfaces.IShooter;
 
@@ -57,7 +57,7 @@ public abstract class PlantShooterEntity extends PVZPlantEntity implements IShoo
 	}
 	
 	@Override
-	protected boolean canPlantTarget(Entity entity) {
+	public boolean canPlantTarget(Entity entity) {
 		return this.checkY(entity) && super.canPlantTarget(entity);
 	}
 	

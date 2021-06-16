@@ -138,6 +138,11 @@ public class SpikeRockEntity extends PVZPlantEntity {
 		return super.hurt(source, amount);
 	}
 	
+	@Override
+	public boolean canBeTargetBy(LivingEntity living) {
+		return false;
+	}
+	
 	public int getAttackCD() {
 		int lvl = this.getPlantLvl();
 		if(lvl <= 19) return 41 - lvl;

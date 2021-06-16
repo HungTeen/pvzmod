@@ -1,4 +1,4 @@
-package com.hungteen.pvz.common.entity.goal.target;
+package com.hungteen.pvz.common.entity.ai.goal.target;
 
 import java.util.EnumSet;
 import java.util.stream.Collectors;
@@ -24,7 +24,7 @@ public class PVZHurtByTargetGoal extends TargetGoal {
 	@Override
 	public boolean canUse() {
 		LivingEntity target = this.mob.getLastHurtByMob();
-		if (!EntityUtil.isEntityValid(target)) {
+		if (!EntityUtil.isEntityValid(target)) {//not exsit.
 			return false;
 		}
 		return EntityUtil.checkCanEntityBeAttack(mob, target);
@@ -32,7 +32,7 @@ public class PVZHurtByTargetGoal extends TargetGoal {
 
 	@Override
 	public void start() {
-		this.mob.setTarget(this.mob.getLastHurtByMob());
+		this.mob.setTarget(this.mob.getLastHurtByMob());//set target.
 		this.targetMob = this.mob.getTarget();
 		this.alertOthers();
 		super.start();

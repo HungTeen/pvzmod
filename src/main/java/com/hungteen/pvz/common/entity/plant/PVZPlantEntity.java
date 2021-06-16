@@ -9,19 +9,15 @@ import javax.annotation.Nullable;
 import com.hungteen.pvz.api.enums.PVZGroupType;
 import com.hungteen.pvz.api.interfaces.IPVZPlant;
 import com.hungteen.pvz.common.advancement.trigger.PlantSuperTrigger;
+import com.hungteen.pvz.common.entity.ai.goal.PVZLookRandomlyGoal;
+import com.hungteen.pvz.common.entity.ai.goal.target.PVZHurtByTargetGoal;
 import com.hungteen.pvz.common.entity.drop.SunEntity;
-import com.hungteen.pvz.common.entity.goal.PVZLookRandomlyGoal;
-import com.hungteen.pvz.common.entity.goal.target.PVZHurtByTargetGoal;
 import com.hungteen.pvz.common.entity.plant.enforce.SquashEntity;
 import com.hungteen.pvz.common.entity.plant.light.GoldLeafEntity;
 import com.hungteen.pvz.common.entity.plant.spear.SpikeWeedEntity;
-import com.hungteen.pvz.common.entity.zombie.grassday.PoleZombieEntity;
-import com.hungteen.pvz.common.entity.zombie.grassnight.AbstractTombStoneEntity;
+import com.hungteen.pvz.common.entity.zombie.PVZZombieEntity;
 import com.hungteen.pvz.common.entity.zombie.grassnight.TombStoneEntity;
-import com.hungteen.pvz.common.entity.zombie.poolnight.BalloonZombieEntity;
-import com.hungteen.pvz.common.entity.zombie.poolnight.DiggerZombieEntity;
 import com.hungteen.pvz.common.entity.zombie.roof.BungeeZombieEntity;
-import com.hungteen.pvz.common.entity.zombie.roof.BungeeZombieEntity.BungeeStates;
 import com.hungteen.pvz.common.item.card.ImitaterCardItem;
 import com.hungteen.pvz.common.item.card.PlantCardItem;
 import com.hungteen.pvz.common.misc.damage.PVZDamageSource;
@@ -103,6 +99,7 @@ public abstract class PVZPlantEntity extends CreatureEntity implements IPVZPlant
 	protected Optional<Plants> outerPlant = Optional.empty();//outer plant of current plant, like pumpkin.
 	public boolean canCollideWithPlant = true;
 	protected boolean canBeCharmed = true;
+	protected boolean canHelpAttack = true;
 	public int plantSunCost = 0;
 	public int outerSunCost = 0;
 
@@ -286,8 +283,12 @@ public abstract class PVZPlantEntity extends CreatureEntity implements IPVZPlant
 	 * check can plant set target as attackTarget.
 	 * {@link EntityUtil#canEntityAttack(Entity, Entity)}
 	 */
-	public boolean checkCanPlantTarget(Entity entity) {
-		return EntityUtil.checkCanEntityBeTarget(this, entity) && this.canPlantTarget(entity);
+	public boolean checkCanPlantTarget(Entity target) {
+		LivingEntity hurter = this.getLastHurtByMob();
+		if(EntityUtil.isEntityValid(hurter) && hurter.is(target)) {
+			return checkCanPlantAttack(target);
+		}
+		return EntityUtil.checkCanEntityBeTarget(this, target) && this.canPlantTarget(target);
 	}
 	
 	/**
@@ -297,21 +298,24 @@ public abstract class PVZPlantEntity extends CreatureEntity implements IPVZPlant
 	public boolean checkCanPlantAttack(Entity entity) {
 		return EntityUtil.checkCanEntityBeAttack(this, entity) && this.canPlantTarget(entity);
 	}
+	
+	/**
+	 * can plant be target by living, often use for zombie's target.
+	 * {@link PVZZombieEntity#canZombieTarget(Entity)}
+	 */
+	public boolean canBeTargetBy(LivingEntity living) {
+		return ! this.hasMetal();
+	}
 
 	/**
 	 * use to extends for specific plants.
 	 */
-	protected boolean canPlantTarget(Entity entity) {
-		if (entity instanceof DiggerZombieEntity) {
-			return ((DiggerZombieEntity) entity).getAttackTime() == DiggerZombieEntity.MAX_OUT_TIME;
-		} else if (entity instanceof BalloonZombieEntity) {
-			return !((BalloonZombieEntity) entity).hasBalloon();
-		} else if (entity instanceof BungeeZombieEntity) {
-			return ((BungeeZombieEntity) entity).getBungeeState() == BungeeStates.CATCH;
-		} else if(entity instanceof PoleZombieEntity) {
-			return ! ((PoleZombieEntity) entity).isPoleJumping();
-		} else if(entity instanceof AbstractTombStoneEntity) {
-			return false;
+	public boolean canPlantTarget(Entity target) {
+		if(target instanceof PVZZombieEntity) {
+			return ((PVZZombieEntity) target).canBeTargetBy(this);
+		}
+		if(target instanceof PVZPlantEntity) {
+			return ((PVZPlantEntity) target).canBeTargetBy(this);
 		}
 		return true;
 	}
@@ -464,6 +468,13 @@ public abstract class PVZPlantEntity extends CreatureEntity implements IPVZPlant
 	@Override
 	public boolean canBreatheUnderwater() {
 		return this.getPlantEnumName().isWaterPlant;
+	}
+	
+	/**
+	 * {@link EntityUtil#canHelpAttackOthers(Entity)}
+	 */
+	public boolean canHelpAttack() {
+		return this.canHelpAttack;
 	}
 
 	@Nullable

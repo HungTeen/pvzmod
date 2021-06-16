@@ -2,8 +2,8 @@ package com.hungteen.pvz.common.entity.zombie.roof;
 
 import java.util.Random;
 
+import com.hungteen.pvz.common.entity.ai.goal.target.PVZRandomTargetGoal;
 import com.hungteen.pvz.common.entity.bullet.TargetArrowEntity;
-import com.hungteen.pvz.common.entity.goal.target.PVZRandomTargetGoal;
 import com.hungteen.pvz.common.entity.plant.PVZPlantEntity;
 import com.hungteen.pvz.common.entity.zombie.PVZZombieEntity;
 import com.hungteen.pvz.common.misc.damage.PVZDamageSource;
@@ -204,6 +204,11 @@ public class BungeeZombieEntity extends PVZZombieEntity {
 	public boolean checkCanZombieTarget(Entity target) {
 		if(! canBungeeSteal(target)) return false;
 		return super.checkCanZombieTarget(target);
+	}
+	
+	@Override
+	public boolean canBeTargetBy(LivingEntity living) {
+		return this.getBungeeState() == BungeeStates.CATCH;
 	}
 	
 	protected void tickSummon() {

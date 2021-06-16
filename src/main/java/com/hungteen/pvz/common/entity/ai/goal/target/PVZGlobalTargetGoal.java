@@ -1,4 +1,4 @@
-package com.hungteen.pvz.common.entity.goal.target;
+package com.hungteen.pvz.common.entity.ai.goal.target;
 
 import com.hungteen.pvz.utils.EntityUtil;
 

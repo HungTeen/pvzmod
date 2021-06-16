@@ -2,8 +2,8 @@ package com.hungteen.pvz.common.entity.creature;
 
 import java.util.Random;
 
+import com.hungteen.pvz.common.entity.ai.goal.WaterTemptGoal;
 import com.hungteen.pvz.common.entity.drop.SunEntity;
-import com.hungteen.pvz.common.entity.goal.WaterTemptGoal;
 import com.hungteen.pvz.common.entity.zombie.poolday.SnorkelZombieEntity;
 import com.hungteen.pvz.data.loot.PVZLoot;
 import com.hungteen.pvz.register.EntityRegister;

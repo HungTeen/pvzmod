@@ -1,6 +1,6 @@
 package com.hungteen.pvz.common.entity.plant.magic;
 
-import com.hungteen.pvz.common.entity.goal.target.PVZNearestTargetGoal;
+import com.hungteen.pvz.common.entity.ai.goal.target.PVZNearestTargetGoal;
 import com.hungteen.pvz.common.entity.plant.PVZPlantEntity;
 import com.hungteen.pvz.common.misc.damage.PVZDamageSource;
 import com.hungteen.pvz.register.EntityRegister;
@@ -72,7 +72,7 @@ public class StrangeCatEntity extends PVZPlantEntity {
 	}
 	
 	@Override
-	protected boolean canPlantTarget(Entity entity) {
+	public boolean canPlantTarget(Entity entity) {
 		return super.canPlantTarget(entity) && this.isSuitableTarget(entity);
 	}
 	

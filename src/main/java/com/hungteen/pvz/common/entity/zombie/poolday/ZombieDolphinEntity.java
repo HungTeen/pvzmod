@@ -1,8 +1,8 @@
 package com.hungteen.pvz.common.entity.zombie.poolday;
 
+import com.hungteen.pvz.common.entity.ai.goal.attack.PVZZombieAttackGoal;
+import com.hungteen.pvz.common.entity.ai.goal.target.PVZNearestTargetGoal;
 import com.hungteen.pvz.common.entity.creature.FoodieZombieEntity;
-import com.hungteen.pvz.common.entity.goal.attack.PVZZombieAttackGoal;
-import com.hungteen.pvz.common.entity.goal.target.PVZNearestTargetGoal;
 import com.hungteen.pvz.common.entity.zombie.PVZZombieEntity;
 import com.hungteen.pvz.data.loot.PVZLoot;
 import com.hungteen.pvz.register.SoundRegister;

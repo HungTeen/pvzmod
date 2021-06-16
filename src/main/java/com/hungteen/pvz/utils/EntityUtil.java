@@ -15,16 +15,19 @@ import com.hungteen.pvz.api.interfaces.ICanCharm;
 import com.hungteen.pvz.api.interfaces.IGroupEntity;
 import com.hungteen.pvz.api.interfaces.IHasOwner;
 import com.hungteen.pvz.common.entity.PVZMultiPartEntity;
-import com.hungteen.pvz.common.entity.goal.attack.PVZZombieAttackGoal;
+import com.hungteen.pvz.common.entity.ai.goal.attack.PVZZombieAttackGoal;
+import com.hungteen.pvz.common.entity.ai.goal.target.PVZHurtByTargetGoal;
 import com.hungteen.pvz.common.entity.misc.LawnMowerEntity;
 import com.hungteen.pvz.common.entity.plant.PVZPlantEntity;
 import com.hungteen.pvz.common.entity.zombie.PVZZombieEntity;
 import com.hungteen.pvz.common.entity.zombie.grassday.PoleZombieEntity;
 import com.hungteen.pvz.common.entity.zombie.poolnight.BalloonZombieEntity;
+import com.hungteen.pvz.common.misc.damage.PVZDamageSource;
 import com.hungteen.pvz.common.network.PVZPacketHandler;
 import com.hungteen.pvz.common.network.SpawnParticlePacket;
 import com.hungteen.pvz.compat.jade.provider.PVZEntityProvider;
 import com.hungteen.pvz.register.EffectRegister;
+import com.hungteen.pvz.utils.enums.Zombies;
 import com.hungteen.pvz.utils.interfaces.IMultiPartEntity;
 
 import it.unimi.dsi.fastutil.ints.IntOpenHashSet;
@@ -74,9 +77,15 @@ public class EntityUtil {
 		return true;
 	}
 	
+	/**
+	 * {@link PVZHurtByTargetGoal}
+	 */
 	public static boolean canHelpAttackOthers(@Nonnull Entity entity) {
 		if(entity instanceof PVZZombieEntity) {
 			return ((PVZZombieEntity) entity).canHelpAttack();
+		}
+		if(entity instanceof PVZPlantEntity) {
+			return ((PVZPlantEntity) entity).canHelpAttack();
 		}
 		return true;
 	}
@@ -147,6 +156,32 @@ public class EntityUtil {
 			return ((PVZPlantEntity) target).getCurrentMaxHealth();
 		}
 		return target.getMaxHealth();
+	}
+	
+	public static void dealMaxHealthDamage(LivingEntity target, PVZDamageSource source) {
+		dealMaxHealthDamage(target, source, 1);
+	}
+	
+	/**
+	 * avoid high damage to other mods.
+	 */
+	public static void dealMaxHealthDamage(LivingEntity target, PVZDamageSource source, float multiple) {
+		float damage = EntityUtil.getCurrentMaxHealth((LivingEntity) target) * multiple;
+		if(isEntityBoss(target)) {
+			damage = Math.min(100, damage);
+		}
+		target.hurt(source, damage);
+	}
+	
+	/**
+	 * entity's health more than 100 is consider as other mod's boss.
+	 */
+	public static boolean isEntityBoss(LivingEntity entity) {
+		if(entity instanceof PVZZombieEntity) {
+			Zombies zombie = ((PVZZombieEntity) entity).getZombieEnumName();
+			return Zombies.BOSSES.contains(zombie);
+		}
+		return entity.getHealth() > 100F;
 	}
 	
 	/**
@@ -293,10 +328,10 @@ public class EntityUtil {
 	 */
 	public static boolean canTargetEntity(Entity attacker, Entity target) {
 		if(attacker instanceof PVZZombieEntity) {
-			return ((PVZZombieEntity) attacker).checkCanZombieTarget(target);
+		    return ((PVZZombieEntity) attacker).checkCanZombieTarget(target);
 		}
 		if(attacker instanceof PVZPlantEntity) {
-			return ((PVZPlantEntity) attacker).checkCanPlantTarget(target);
+	        return ((PVZPlantEntity) attacker).checkCanPlantTarget(target);
 		}
 		return checkCanEntityBeTarget(attacker, target);
 	}

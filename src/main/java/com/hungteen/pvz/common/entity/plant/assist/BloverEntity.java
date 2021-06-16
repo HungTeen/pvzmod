@@ -65,7 +65,7 @@ public class BloverEntity extends PlantBomberEntity {
 	}
 	
 	@Override
-	protected boolean canPlantTarget(Entity entity) {
+	public boolean canPlantTarget(Entity entity) {
 		if(entity instanceof BalloonZombieEntity) return true;
 		return super.canPlantTarget(entity);
 	}
