@@ -1,0 +1,18 @@
+{
+    "name": "潜水僵尸",
+    "icon": "pvz:zombie_doll",
+    "category": "pvz:common",
+    "pages": [
+        {
+            "type": "text",
+            "text": "$(l)潜水僵尸$()一直咬着一个通气管，$(m)尽管僵尸不需要呼吸$()。$(br)$(bred)生命值$() : $(l)20$()$(br)$(bred)攻击力$() : $(l)低$()$(br)$(bblue)速度$() : $(l)较快$()$(br)$(l)特性$() : 它在水中离攻击目标较远时会只露一个头，从而隐蔽自身。$(l)它在水下移速更快$()。"
+        },
+        {
+            "type": "entity",
+            "entity": "pvz:snorkel_zombie",
+            "scale": 0.8,
+            "text": "外观"
+        }
+    ],
+    "sortnum": 14
+}

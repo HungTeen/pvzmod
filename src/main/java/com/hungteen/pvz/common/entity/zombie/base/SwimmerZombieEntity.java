@@ -37,19 +37,19 @@ public abstract class SwimmerZombieEntity extends PVZZombieEntity{
 	@Override
 	public EntitySize getDimensions(Pose poseIn) {
 		if(this.isMiniZombie()) {
-			return new EntitySize(0.4f, 0.6f, false);
+			return new EntitySize(0.5f, 0.6f, false);
 		}
 		if(this.getPose() == Pose.SPIN_ATTACK) {
-			return new EntitySize(0.7f, 1.2f, false);
+			return new EntitySize(0.7f, 1.4f, false);
 		}else if(this.getPose() == Pose.SWIMMING) {
-			return new EntitySize(0.7f, 0.5f, false);
+			return new EntitySize(0.7f, 0.9f, false);
 		}
 		return new EntitySize(0.7f, 1.9f, false);
 	}
 	
 	@Override
 	protected float getWaterSlowDown() {
-		return 0.93f;
+		return 0.94f;
 	}
 	
 }
