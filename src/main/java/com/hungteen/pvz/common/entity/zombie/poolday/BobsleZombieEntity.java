@@ -17,11 +17,12 @@ public class BobsleZombieEntity extends PVZZombieEntity{
 	}
 
 	@Override
-	public void normalZombieTick() {
-		super.normalZombieTick();
+	public void zombieTick() {
+		super.zombieTick();
 		if(! level.isClientSide) {
-			if(EntityUtil.isOnSnow(this)) {
-				this.addEffect(new EffectInstance(Effects.MOVEMENT_SPEED, 10, 0, false, false));
+			if(this.tickCount % 30 == 0 && (EntityUtil.isOnSnow(this) || EntityUtil.isOnIce(this))) {
+				this.addEffect(new EffectInstance(Effects.MOVEMENT_SPEED, 40, 0, false, false));
+				this.addEffect(new EffectInstance(Effects.REGENERATION, 40, 3, false, false));
 			}
 		}
 	}

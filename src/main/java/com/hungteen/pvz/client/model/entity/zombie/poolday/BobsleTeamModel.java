@@ -1,5 +1,9 @@
 package com.hungteen.pvz.client.model.entity.zombie.poolday;
 
+import com.hungteen.pvz.client.model.entity.PVZEntityModel;
+import com.hungteen.pvz.client.model.entity.zombie.IZombieModel;
+import com.hungteen.pvz.common.entity.zombie.body.ZombieDropBodyEntity;
+import com.hungteen.pvz.common.entity.zombie.body.ZombieDropBodyEntity.BodyType;
 import com.hungteen.pvz.common.entity.zombie.poolday.BobsleTeamEntity;
 import com.mojang.blaze3d.matrix.MatrixStack;
 import com.mojang.blaze3d.vertex.IVertexBuilder;
@@ -12,7 +16,8 @@ import net.minecraft.client.renderer.model.ModelRenderer;
 // Paste this class into your mod and generate all required imports
 
 
-public class BobsleTeamModel extends EntityModel<BobsleTeamEntity> {
+public class BobsleTeamModel extends PVZEntityModel<BobsleTeamEntity> implements IZombieModel<BobsleTeamEntity>{
+	
 	private final ModelRenderer total;
 	private final ModelRenderer z1;
 	private final ModelRenderer head;
@@ -395,7 +400,6 @@ public class BobsleTeamModel extends EntityModel<BobsleTeamEntity> {
 
 	@Override
 	public void setupAnim(BobsleTeamEntity entity, float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch){
-		//previously the render function, render code was moved to a method below
 	}
 
 	@Override
@@ -403,9 +407,24 @@ public class BobsleTeamModel extends EntityModel<BobsleTeamEntity> {
 		total.render(matrixStack, buffer, packedLight, packedOverlay);
 	}
 
-	public void setRotationAngle(ModelRenderer modelRenderer, float x, float y, float z) {
-		modelRenderer.xRot = x;
-		modelRenderer.yRot = y;
-		modelRenderer.zRot = z;
+	@Override
+	public void tickPartAnim(ZombieDropBodyEntity entity, BodyType type, float limbSwing, float limbSwingAmount,
+			float ageInTicks, float netHeadYaw, float headPitch) {
+		
+	}
+
+	@Override
+	public void renderBody(ZombieDropBodyEntity entity, MatrixStack stack, IVertexBuilder buffer, int packedLight,
+			int packedOverlay, BodyType type) {
+		this.z1.visible = false;
+		this.z2.visible = false;
+		this.z3.visible = false;
+		this.z4.visible = false;
+		total.render(stack, buffer, packedLight, packedOverlay);
+	}
+
+	@Override
+	public EntityModel<BobsleTeamEntity> getZombieModel() {
+		return this;
 	}
 }

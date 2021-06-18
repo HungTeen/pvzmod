@@ -1,13 +1,9 @@
 package com.hungteen.pvz.common.entity.ai.navigator;
 
 import net.minecraft.entity.MobEntity;
-import net.minecraft.network.DebugPacketSender;
 import net.minecraft.pathfinding.GroundPathNavigator;
 import net.minecraft.pathfinding.PathFinder;
 import net.minecraft.pathfinding.WalkAndSwimNodeProcessor;
-import net.minecraft.pathfinding.WalkNodeProcessor;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.vector.Vector3d;
 import net.minecraft.util.math.vector.Vector3i;
 import net.minecraft.world.World;
@@ -18,39 +14,12 @@ public class ZombiePathNavigator extends GroundPathNavigator {
 		super(p_i45875_1_, p_i45875_2_);
 	}
 
-	@SuppressWarnings("deprecation")
+	@Override
 	public void tick() {
-		++this.tick;
-		if (this.hasDelayedRecomputation) {
-			this.recomputePath();
-		}
-
-		if (!this.isDone()) {
-			if (this.canUpdatePath()) {
-				this.followThePath();
-			} else if (this.path != null && !this.path.isDone()) {
-
-				Vector3d vector3d = this.getTempMobPos();
-				Vector3d vector3d1 = this.path.getNextEntityPos(this.mob);
-				if (vector3d.y > vector3d1.y && !this.mob.isOnGround()
-						&& MathHelper.floor(vector3d.x) == MathHelper.floor(vector3d1.x)
-						&& MathHelper.floor(vector3d.z) == MathHelper.floor(vector3d1.z)) {
-					this.path.advance();
-				}
-			}
-
-			DebugPacketSender.sendPathFindingPacket(this.level, this.mob, this.path, this.maxDistanceToWaypoint);
-			if (!this.isDone()) {
-				Vector3d vector3d2 = this.path.getNextEntityPos(this.mob);
-				BlockPos blockpos = new BlockPos(vector3d2);
-				this.mob.getMoveControl().setWantedPosition(vector3d2.x,
-						this.level.getBlockState(blockpos.below()).isAir() ? vector3d2.y
-								: WalkNodeProcessor.getFloorLevel(this.level, blockpos),
-						vector3d2.z, this.speedModifier);
-			}
-		}
+		super.tick();
 	}
 
+	@Override
 	protected void followThePath() {
 		Vector3d vector3d = this.getTempMobPos();
 		this.maxDistanceToWaypoint = this.mob.getBbWidth() > 0.75F ? this.mob.getBbWidth() / 2.0F
@@ -71,6 +40,9 @@ public class ZombiePathNavigator extends GroundPathNavigator {
 		this.doStuckDetection(vector3d);
 	}
 
+	/**
+	 * copy from super.
+	 */
 	private boolean shouldTargetNextNodeInDirection(Vector3d p_234112_1_) {
 		if (this.path.getNextNodeIndex() + 1 >= this.path.getNodeCount()) {
 			return false;
@@ -87,6 +59,7 @@ public class ZombiePathNavigator extends GroundPathNavigator {
 		}
 	}
 
+	@Override
 	protected PathFinder createPathFinder(int p_179679_1_) {
 		this.nodeEvaluator = new WalkAndSwimNodeProcessor();
 		this.nodeEvaluator.setCanPassDoors(true);

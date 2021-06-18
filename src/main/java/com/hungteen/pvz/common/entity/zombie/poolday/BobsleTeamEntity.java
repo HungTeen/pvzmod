@@ -2,6 +2,8 @@ package com.hungteen.pvz.common.entity.zombie.poolday;
 
 import com.hungteen.pvz.common.entity.PVZMultiPartEntity;
 import com.hungteen.pvz.common.entity.zombie.PVZZombieEntity;
+import com.hungteen.pvz.common.entity.zombie.body.ZombieDropBodyEntity;
+import com.hungteen.pvz.common.entity.zombie.body.ZombieDropBodyEntity.BodyType;
 import com.hungteen.pvz.common.entity.zombie.part.PVZZombiePartEntity;
 import com.hungteen.pvz.data.loot.PVZLoot;
 import com.hungteen.pvz.register.EntityRegister;
@@ -15,6 +17,7 @@ import net.minecraft.entity.EntityType;
 import net.minecraft.entity.Pose;
 import net.minecraft.entity.ai.attributes.Attributes;
 import net.minecraft.entity.monster.MonsterEntity;
+import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.vector.Vector3d;
@@ -23,14 +26,22 @@ import net.minecraft.world.World;
 public class BobsleTeamEntity extends PVZZombieEntity implements IMultiPartEntity{
 
 	public static final int PART_NUM = 2;
+	private static final int MAX_OUT_SNOW_TICK = 100;
 	private PVZZombiePartEntity[] parts = new PVZZombiePartEntity[PART_NUM];
+	private int outSnowTick;
 	
 	public BobsleTeamEntity(EntityType<? extends MonsterEntity> type, World worldIn) {
 		super(type, worldIn);
-		this.canBeFrozen = false;
-		this.canBeButter = false;
+		this.setImmuneAllEffects();
+		this.setIsWholeBody();
+		this.resetParts();
 		this.canBeMini = false;
-		resetParts();
+		this.maxDeathTime = 1;
+	}
+	
+	@Override
+	protected void registerGoals() {
+		super.registerGoals();
 	}
 	
 	@Override
@@ -104,24 +115,38 @@ public class BobsleTeamEntity extends PVZZombieEntity implements IMultiPartEntit
 	}
 	
 	@Override
-	public void aiStep() {
-		super.aiStep();
+	public void zombieTick() {
+		super.zombieTick();
 		if(!level.isClientSide) {
-			if(!EntityUtil.isOnSnow(this)) {
-				this.hurt(DamageSource.DROWN, 10);
+			if(this.isInWaterOrBubble() || (this.isOnGround() && !EntityUtil.isOnSnow(this) && !EntityUtil.isOnIce(this))) {
+				++ this.outSnowTick;
+				if(this.outSnowTick > MAX_OUT_SNOW_TICK) {
+					this.onZombieRemove();
+					this.remove();
+				}
+			} else {
+				this.outSnowTick = 0;
 			}
 		}
 	}
 	
 	@Override
 	protected void onZombieRemove() {
-		super.onZombieRemove();
 		if(! level.isClientSide) {
 			for(int i = 0; i < 4; ++ i) {
 				BobsleZombieEntity zombie = EntityRegister.BOBSLE_ZOMBIE.get().create(level);
-				EntityUtil.onMobEntityRandomPosSpawn(level, zombie, this.blockPosition(), 3);
+				ZombieUtil.copySummonZombieData(this, zombie);
+				EntityUtil.onMobEntityRandomPosSpawn(level, zombie, this.blockPosition(), 2);
 			}
 		}
+	}
+	
+	@Override
+	protected void onFallBody(DamageSource source) {
+		ZombieDropBodyEntity body = EntityRegister.ZOMBIE_DROP_BODY.get().create(level);
+		body.specialDropBody(this, source, BodyType.HEAD);
+		this.setBodyStates(body);
+		level.addFreshEntity(body);
 	}
 	
 	@Override
@@ -132,6 +157,20 @@ public class BobsleTeamEntity extends PVZZombieEntity implements IMultiPartEntit
 	@Override
 	public float getLife() {
 		return 60;
+	}
+	
+	@Override
+	public void readAdditionalSaveData(CompoundNBT compound) {
+		super.readAdditionalSaveData(compound);
+		if(compound.contains("out_snow_tick")) {
+			this.outSnowTick = compound.getInt("out_snow_tick");
+		}
+	}
+	
+	@Override
+	public void addAdditionalSaveData(CompoundNBT compound) {
+		super.addAdditionalSaveData(compound);
+		compound.putInt("out_snow_tick", this.outSnowTick);
 	}
 	
 	@Override

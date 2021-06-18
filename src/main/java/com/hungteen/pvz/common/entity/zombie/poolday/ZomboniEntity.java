@@ -41,7 +41,7 @@ public class ZomboniEntity extends PVZZombieEntity implements IMultiPartEntity{
 		super(type, worldIn);
 		this.setImmuneAllEffects();
 		this.setIsWholeBody();
-		resetParts();
+		this.resetParts();
 		this.maxDeathTime = 1;
 	}
 	
@@ -77,6 +77,7 @@ public class ZomboniEntity extends PVZZombieEntity implements IMultiPartEntity{
 		}
 	}
 	
+	@Override
 	protected void onFallBody(DamageSource source) {
 		ZombieDropBodyEntity body = EntityRegister.ZOMBIE_DROP_BODY.get().create(level);
 		body.specialDropBody(this, source, BodyType.HEAD);

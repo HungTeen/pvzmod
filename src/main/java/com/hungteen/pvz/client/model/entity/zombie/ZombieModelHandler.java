@@ -22,6 +22,7 @@ import com.hungteen.pvz.client.model.entity.zombie.other.MournerZombieModel;
 import com.hungteen.pvz.client.model.entity.zombie.other.NobleZombieModel;
 import com.hungteen.pvz.client.model.entity.zombie.other.RaZombieModel;
 import com.hungteen.pvz.client.model.entity.zombie.other.TrickZombieModel;
+import com.hungteen.pvz.client.model.entity.zombie.poolday.BobsleTeamModel;
 import com.hungteen.pvz.client.model.entity.zombie.poolday.BobsleZombieModel;
 import com.hungteen.pvz.client.model.entity.zombie.poolday.DolphinRiderZombieModel;
 import com.hungteen.pvz.client.model.entity.zombie.poolday.LavaZombieModel;
@@ -72,9 +73,10 @@ public class ZombieModelHandler {
 		putModel(Zombies.GIGA_FOOTBALL_ZOMBIE, GigaFootballZombieModel::new);
 		putModel(Zombies.OLD_ZOMBIE, OldZombieModel::new);
 		putModel(Zombies.SUNDAY_EDITION_ZOMBIE, SundayEditionZombieModel::new);
-		//pool day(no bobsle team, dolphin rider)
+		//pool day(dolphin rider)
 		putModel(Zombies.SNORKEL_ZOMBIE, SnorkelZombieModel::new);
 		putModel(Zombies.ZOMBONI, ZomboniModel::new);
+		putModel(Zombies.BOBSLE_TEAM, BobsleTeamModel::new);
 		putModel(Zombies.BOBSLE_ZOMBIE, BobsleZombieModel::new);
 		putModel(Zombies.DOLPHIN_RIDER_ZOMBIE, DolphinRiderZombieModel::new);
 		putModel(Zombies.LAVA_ZOMBIE, LavaZombieModel::new);

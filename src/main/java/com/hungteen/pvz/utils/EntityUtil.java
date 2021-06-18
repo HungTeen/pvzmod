@@ -21,6 +21,7 @@ import com.hungteen.pvz.common.entity.misc.LawnMowerEntity;
 import com.hungteen.pvz.common.entity.plant.PVZPlantEntity;
 import com.hungteen.pvz.common.entity.zombie.PVZZombieEntity;
 import com.hungteen.pvz.common.entity.zombie.grassday.PoleZombieEntity;
+import com.hungteen.pvz.common.entity.zombie.poolday.BobsleTeamEntity;
 import com.hungteen.pvz.common.entity.zombie.poolnight.BalloonZombieEntity;
 import com.hungteen.pvz.common.network.PVZPacketHandler;
 import com.hungteen.pvz.common.network.SpawnParticlePacket;
@@ -44,6 +45,7 @@ import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.potion.EffectInstance;
 import net.minecraft.scoreboard.Team;
+import net.minecraft.tags.BlockTags;
 import net.minecraft.util.SoundEvent;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
@@ -268,11 +270,21 @@ public class EntityUtil {
 	}
 	
 	/**
-	 * check if entity is on snow
+	 * check if entity is on snow.
+	 * {@link BobsleTeamEntity#zombieTick()}
 	 */
 	public static boolean isOnSnow(Entity entity) {
 		BlockPos pos = entity.blockPosition();
-		return entity.level.getBlockState(pos).getBlock()==Blocks.SNOW||entity.level.getBlockState(pos.below()).getBlock()==Blocks.SNOW_BLOCK;
+		return entity.level.getBlockState(pos).is(Blocks.SNOW) || entity.level.getBlockState(pos.below()).is(Blocks.SNOW_BLOCK);
+	}
+	
+	/**
+	 * check if entity is on ice.
+	 * {@link BobsleTeamEntity#zombieTick()}
+	 */
+	public static boolean isOnIce(Entity entity) {
+		BlockPos pos = entity.blockPosition();
+		return entity.level.getBlockState(pos).is(BlockTags.ICE) || entity.level.getBlockState(pos.below()).is(BlockTags.ICE);
 	}
 	
 	/**

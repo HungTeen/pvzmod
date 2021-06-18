@@ -315,6 +315,7 @@ public abstract class PVZZombieEntity extends MonsterEntity implements IPVZZombi
 		ZombieDropBodyEntity body = EntityRegister.ZOMBIE_DROP_BODY.get().create(level);
 		body.droppedByOwner(this, source, BodyType.BODY);
 		this.setBodyStates(body);
+		body.setMaxLiveTick(40);
 		level.addFreshEntity(body);
 	}
 	

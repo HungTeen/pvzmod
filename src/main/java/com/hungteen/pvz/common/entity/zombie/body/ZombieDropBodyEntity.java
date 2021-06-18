@@ -34,10 +34,13 @@ public class ZombieDropBodyEntity extends PVZEntityBase {
 	public static final int MAX_EXIST_TICK = 60;
 	private static final int HAS_HAND_DEFENCE = 0;
 	public final int HEAD_ROT;
+	private int max_exist_tick;
+	private float friction = 0.3F;
 
 	public ZombieDropBodyEntity(EntityType<?> p_i48580_1_, World p_i48580_2_) {
 		super(p_i48580_1_, p_i48580_2_);
 		HEAD_ROT = this.random.nextInt(60) - 30;
+		this.max_exist_tick = MAX_EXIST_TICK;
 	}
 
 	@Override
@@ -53,7 +56,7 @@ public class ZombieDropBodyEntity extends PVZEntityBase {
 		super.tick();
 		this.tickMove();
 		if (!this.level.isClientSide) {
-			if (this.getAnimTime() >= MAX_EXIST_TICK) {
+			if (this.getAnimTime() >= this.max_exist_tick) {
 				this.remove();
 			} else {
 				this.setAnimTime(this.getAnimTime() + 1);
@@ -61,7 +64,7 @@ public class ZombieDropBodyEntity extends PVZEntityBase {
 			
 		}
 		if(this.onGround) {
-			this.setDeltaMovement(this.getDeltaMovement().scale(0.3D));
+			this.setDeltaMovement(this.getDeltaMovement().scale(this.friction));
 		}
 	}
 
@@ -99,6 +102,10 @@ public class ZombieDropBodyEntity extends PVZEntityBase {
 		switch (zombie.getZombieEnumName()) {
 		case ZOMBONI:{
 			this.hitUp(zombie, source, 0.5D, 0.5D, 0.5D);
+			break;
+		}
+		case BOBSLE_TEAM:{
+			this.friction = 0.8F;
 			break;
 		}
 		default:{
@@ -143,6 +150,10 @@ public class ZombieDropBodyEntity extends PVZEntityBase {
 	@Override
 	public EntitySize getDimensions(Pose p_213305_1_) {
 		return EntitySize.scalable(0.5F, 0.5F);
+	}
+	
+	public void setMaxLiveTick(int tick) {
+		this.max_exist_tick = tick;
 	}
 
 	@Override

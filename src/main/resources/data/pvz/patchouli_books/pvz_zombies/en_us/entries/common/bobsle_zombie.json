@@ -1,0 +1,18 @@
+{
+    "name": "Bobsle Zombie",
+    "icon": "pvz:zombie_doll",
+    "category": "pvz:common",
+    "pages": [
+        {
+            "type": "text",
+            "text": "$(bred)Bobsle Zombie$() appears at the same time as Bobsle Car.$(br)$(bred)Health$() : $(l)20$()$(br)$(bred)Eat Damage$() : $(l)Low$()$(br)$(bblue)Speed$() : $(l)Normal$()$(br)$(l)Features$() : It will gain $(l)Regeneration and Speed$() Effect when moving on $(baqua)snow or ice$().$(bred)it won't be cold or frozen or butter$()."
+        },
+        {
+            "type": "entity",
+            "entity": "pvz:bobsle_zombie",
+            "scale": 0.8,
+            "text": "Appearance"
+        }
+    ],
+    "sortnum": 17
+}

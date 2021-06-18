@@ -1,0 +1,18 @@
+{
+    "name": "僵尸雪橇队",
+    "icon": "pvz:zombie_doll",
+    "category": "pvz:common",
+    "pages": [
+        {
+            "type": "text",
+            "text": "$(l)僵尸雪橇队$()往往生成于有雪或冰的地方。$(br)$(bred)生命值$() : $(l)60$()$(br)$(bred)攻击力$() : $(l)一般$()$(br)$(bblue)速度$() : $(l)很快$()$(br)$(l)特性$() : 当雪橇车不在$(baqua)冰或雪$()上移动时会很快损坏，4名雪橇僵尸随即下车独立攻击。$(bred)免疫黄油、寒冷、冰冻$()。"
+        },
+        {
+            "type": "entity",
+            "entity": "pvz:bobsle_team",
+            "scale": 0.4,
+            "text": "外观"
+        }
+    ],
+    "sortnum": 16
+}
