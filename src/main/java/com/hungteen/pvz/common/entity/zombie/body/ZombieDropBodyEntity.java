@@ -65,9 +65,11 @@ public class ZombieDropBodyEntity extends PVZEntityBase {
 		}
 	}
 
+	/**
+	 * common drop styles.
+	 */
 	public void droppedByOwner(PVZZombieEntity zombie, DamageSource source, BodyType type) {
-		this.setZombieType(zombie.getZombieEnumName());
-		this.setBodyType(type);
+		this.updateInfo(zombie, type);
 		switch(type) {
 		case HAND:{
 			float j = 2 * 3.14159f * this.yRot / 360;
@@ -76,15 +78,7 @@ public class ZombieDropBodyEntity extends PVZEntityBase {
 			break;
 		}
 		case HEAD:{
-			this.setPos(zombie.position().x, zombie.position().y + zombie.getEyeHeight(), zombie.position().z);
-			final double speed = 0.3D;
-			double speedX = (this.random.nextDouble() - 0.5D) * speed;
-			double speedZ = (this.random.nextDouble() - 0.5D) * speed;
-			double speedY = this.random.nextDouble() * speed;
-			Optional.ofNullable(source.getSourcePosition()).ifPresent(vec -> {
-				Vector3d v = this.position().subtract(vec);
-				this.setDeltaMovement(v.normalize().multiply(speed, speed, speed).add(speedX, speedY, speedZ));
-			});
+			this.hitUp(zombie, source, 0.3D);
 			break;
 		}
 		case BODY:{
@@ -96,7 +90,43 @@ public class ZombieDropBodyEntity extends PVZEntityBase {
 			break;
 		}
 	}
-
+	
+	/**
+	 * special drop style, such as zomboni, gargantuar.
+	 */
+	public void specialDropBody(PVZZombieEntity zombie, DamageSource source, BodyType type) {
+		this.updateInfo(zombie, type);
+		switch (zombie.getZombieEnumName()) {
+		case ZOMBONI:{
+			this.hitUp(zombie, source, 0.5D, 0.5D, 0.5D);
+			break;
+		}
+		default:{
+			break;
+		}
+		}
+	}
+	
+	private void hitUp(PVZZombieEntity zombie, DamageSource source, double speed) {
+		this.hitUp(zombie, source, speed, speed, speed);
+	}
+	
+	private void hitUp(PVZZombieEntity zombie, DamageSource source, double speed, double speedH, double speedV) {
+		this.setPos(zombie.position().x, zombie.position().y + zombie.getEyeHeight(), zombie.position().z);
+		double speedX = (this.random.nextDouble() - 0.5D) * speedH;
+		double speedZ = (this.random.nextDouble() - 0.5D) * speedH;
+		double speedY = this.random.nextDouble() * speedV;
+		Optional.ofNullable(source.getSourcePosition()).ifPresent(vec -> {
+			Vector3d v = this.position().subtract(vec);
+			this.setDeltaMovement(v.normalize().multiply(speed, speed, speed).add(speedX, speedY, speedZ));
+		});
+	}
+	
+	private void updateInfo(PVZZombieEntity zombie, BodyType type) {
+		this.setZombieType(zombie.getZombieEnumName());
+		this.setBodyType(type);
+	}
+	
 	@OnlyIn(Dist.CLIENT)
 	public void lerpMotion(double p_70016_1_, double p_70016_3_, double p_70016_5_) {
 		this.setDeltaMovement(p_70016_1_, p_70016_3_, p_70016_5_);

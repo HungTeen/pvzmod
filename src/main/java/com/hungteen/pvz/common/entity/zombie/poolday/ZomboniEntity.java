@@ -4,8 +4,11 @@ import java.util.Optional;
 
 import com.hungteen.pvz.common.entity.PVZMultiPartEntity;
 import com.hungteen.pvz.common.entity.zombie.PVZZombieEntity;
+import com.hungteen.pvz.common.entity.zombie.body.ZombieDropBodyEntity;
+import com.hungteen.pvz.common.entity.zombie.body.ZombieDropBodyEntity.BodyType;
 import com.hungteen.pvz.common.entity.zombie.part.PVZZombiePartEntity;
 import com.hungteen.pvz.common.misc.damage.PVZDamageSource;
+import com.hungteen.pvz.register.EntityRegister;
 import com.hungteen.pvz.register.SoundRegister;
 import com.hungteen.pvz.utils.EntityUtil;
 import com.hungteen.pvz.utils.ZombieUtil;
@@ -15,6 +18,7 @@ import com.hungteen.pvz.utils.interfaces.IMultiPartEntity;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
 import net.minecraft.block.SnowBlock;
+import net.minecraft.enchantment.FrostWalkerEnchantment;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntitySize;
 import net.minecraft.entity.EntityType;
@@ -35,9 +39,8 @@ public class ZomboniEntity extends PVZZombieEntity implements IMultiPartEntity{
 	
 	public ZomboniEntity(EntityType<? extends MonsterEntity> type, World worldIn) {
 		super(type, worldIn);
-		this.canBeButter = false;
-		this.canBeFrozen = false;
-		this.canBeCold = false;
+		this.setImmuneAllEffects();
+		this.setIsWholeBody();
 		resetParts();
 		this.maxDeathTime = 1;
 	}
@@ -49,14 +52,15 @@ public class ZomboniEntity extends PVZZombieEntity implements IMultiPartEntity{
 	}
 	
 	@Override
-	public void normalZombieTick() {
-		super.normalZombieTick();
-		if(level.isClientSide && this.getHealth() <= this.getMaxHealth() / 4) {
+	public void zombieTick() {
+		super.zombieTick();
+		if(level.isClientSide && this.isZomboniShaking()) {
 			for(int i = 1; i <= 3; i ++) {
 			    this.level.addParticle(ParticleTypes.SMOKE, this.getX(), this.getY(), this.getZ(), (this.getRandom().nextFloat() - 0.5) / 10, 0.05, (this.getRandom().nextFloat() - 0.5) / 10);
 			}
 		}
-		if(! level.isClientSide) {//produce snow layer block
+		if(! level.isClientSide) {
+			FrostWalkerEnchantment.onEntityMoved(this, level, this.blockPosition(), 1);
 			BlockPos blockpos = this.blockPosition();
 			BlockState state = Blocks.SNOW.defaultBlockState().setValue(SnowBlock.LAYERS, 2);
             if ((this.level.isEmptyBlock(blockpos) || level.getBlockState(blockpos).getBlock() == Blocks.SNOW) && state.canSurvive(this.level, blockpos)) {
@@ -66,14 +70,28 @@ public class ZomboniEntity extends PVZZombieEntity implements IMultiPartEntity{
 	}
 	
 	@Override
-	public void tick() {
-		super.tick();
-		updateParts();
+	public void normalZombieTick() {
+		super.normalZombieTick();
+		if(! level.isClientSide) {//produce snow layer block
+			
+		}
+	}
+	
+	protected void onFallBody(DamageSource source) {
+		ZombieDropBodyEntity body = EntityRegister.ZOMBIE_DROP_BODY.get().create(level);
+		body.specialDropBody(this, source, BodyType.HEAD);
+		this.setBodyStates(body);
+		level.addFreshEntity(body);
+	}
+	
+	public boolean isZomboniShaking() {
+		return this.getHealth() <= this.getMaxHealth() / 4;
 	}
 	
 	@Override
-	protected Optional<SoundEvent> getSpawnSound() {
-		return Optional.ofNullable(SoundRegister.CAR_SPAWN.get());
+	public void tick() {
+		super.tick();
+		updateParts();
 	}
 	
 	@Override
@@ -143,7 +161,7 @@ public class ZomboniEntity extends PVZZombieEntity implements IMultiPartEntity{
 	@Override
 	protected float getModifyAttackDamage(Entity entity, float f) {
 		if(entity instanceof LivingEntity) {
-			return EntityUtil.getCurrentMaxHealth(((LivingEntity) entity));
+			return EntityUtil.getMaxHealthDamage(((LivingEntity) entity));
 		}
 		return f;
 	}
@@ -154,6 +172,11 @@ public class ZomboniEntity extends PVZZombieEntity implements IMultiPartEntity{
 	}
 	
 	@Override
+	protected Optional<SoundEvent> getSpawnSound() {
+		return Optional.ofNullable(SoundRegister.CAR_SPAWN.get());
+	}
+	
+	@Override
 	public EntitySize getDimensions(Pose poseIn) {
 		if(this.isMiniZombie()) return EntitySize.scalable(0.7F, 1.2F);
 		return EntitySize.scalable(0.8f, 2.3f);
@@ -161,7 +184,7 @@ public class ZomboniEntity extends PVZZombieEntity implements IMultiPartEntity{
 	
 	@Override
 	public float getLife() {
-		return 120;
+		return 130;
 	}
 
 	@Override

@@ -14,5 +14,10 @@ public class ZomboniRender extends PVZZombieRender<ZomboniEntity>{
 	public ZomboniRender(EntityRendererManager rendererManager) {
 		super(rendererManager, new ZomboniModel(), 0.5f);
 	}
+	
+	@Override
+	protected boolean isShaking(ZomboniEntity zombie) {
+		return zombie.isZomboniShaking();
+	}
 
 }

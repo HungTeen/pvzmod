@@ -22,7 +22,6 @@ import com.hungteen.pvz.common.entity.plant.PVZPlantEntity;
 import com.hungteen.pvz.common.entity.zombie.PVZZombieEntity;
 import com.hungteen.pvz.common.entity.zombie.grassday.PoleZombieEntity;
 import com.hungteen.pvz.common.entity.zombie.poolnight.BalloonZombieEntity;
-import com.hungteen.pvz.common.misc.damage.PVZDamageSource;
 import com.hungteen.pvz.common.network.PVZPacketHandler;
 import com.hungteen.pvz.common.network.SpawnParticlePacket;
 import com.hungteen.pvz.compat.jade.provider.PVZEntityProvider;
@@ -158,19 +157,19 @@ public class EntityUtil {
 		return target.getMaxHealth();
 	}
 	
-	public static void dealMaxHealthDamage(LivingEntity target, PVZDamageSource source) {
-		dealMaxHealthDamage(target, source, 1);
+	public static float getMaxHealthDamage(LivingEntity target) {
+		return getMaxHealthDamage(target, 1);
 	}
 	
 	/**
 	 * avoid high damage to other mods.
 	 */
-	public static void dealMaxHealthDamage(LivingEntity target, PVZDamageSource source, float multiple) {
+	public static float getMaxHealthDamage(LivingEntity target, float multiple) {
 		float damage = EntityUtil.getCurrentMaxHealth((LivingEntity) target) * multiple;
 		if(isEntityBoss(target)) {
 			damage = Math.min(100, damage);
 		}
-		target.hurt(source, damage);
+		return damage;
 	}
 	
 	/**

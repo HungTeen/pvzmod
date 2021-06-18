@@ -311,7 +311,7 @@ public abstract class PVZZombieEntity extends MonsterEntity implements IPVZZombi
 	/**
 	 * trigger at {@link #die(DamageSource)}
 	 */
-	private void onFallBody(DamageSource source) {
+	protected void onFallBody(DamageSource source) {
 		ZombieDropBodyEntity body = EntityRegister.ZOMBIE_DROP_BODY.get().create(level);
 		body.droppedByOwner(this, source, BodyType.BODY);
 		this.setBodyStates(body);
@@ -397,9 +397,9 @@ public abstract class PVZZombieEntity extends MonsterEntity implements IPVZZombi
 
 	@Override
 	protected void tickDeath() {
-		++this.deathTime;
+		++ this.deathTime;
 		if (ConfigUtil.enableZombieDropParts() || this.deathTime >= this.maxDeathTime) {
-			for (int i = 0; i < 20; ++i) {
+			for (int i = 0; i < 5; ++i) {
 				double d0 = this.random.nextGaussian() * 0.02D;
 				double d1 = this.random.nextGaussian() * 0.02D;
 				double d2 = this.random.nextGaussian() * 0.02D;
