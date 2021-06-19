@@ -149,6 +149,9 @@ public class PoleZombieEntity extends PVZZombieEntity{
 			CompoundNBT nbt = compound.getCompound("jump_dst_point");
 			this.jumpDstPoint = new Vector3d(nbt.getDouble("XXX"), nbt.getDouble("YYY"), nbt.getDouble("ZZZ"));
 		}
+		if(compound.contains("pole_jump_count")) {
+			this.pole_jump_cnt = compound.getInt("pole_jump_count");
+		}
 	}
 	
 	@Override
@@ -160,6 +163,7 @@ public class PoleZombieEntity extends PVZZombieEntity{
 		nbt.putDouble("YYY", this.jumpDstPoint.y);
 		nbt.putDouble("ZZZ", this.jumpDstPoint.z);
 		compound.put("jump_dst_point", nbt);
+		compound.putInt("pole_jump_count", this.pole_jump_cnt);
 	}
 	
 	public void setPole(boolean has) {

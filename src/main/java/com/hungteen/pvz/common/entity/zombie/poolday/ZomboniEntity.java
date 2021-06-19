@@ -48,7 +48,7 @@ public class ZomboniEntity extends PVZZombieEntity implements IMultiPartEntity{
 	@Override
 	protected void updateAttributes() {
 		super.updateAttributes();
-		this.getAttribute(Attributes.MOVEMENT_SPEED).setBaseValue(ZombieUtil.WALK_LITTLE_SLOW);
+		this.getAttribute(Attributes.MOVEMENT_SPEED).setBaseValue(ZombieUtil.WALK_SLOW);
 	}
 	
 	@Override
@@ -66,14 +66,6 @@ public class ZomboniEntity extends PVZZombieEntity implements IMultiPartEntity{
             if ((this.level.isEmptyBlock(blockpos) || level.getBlockState(blockpos).getBlock() == Blocks.SNOW) && state.canSurvive(this.level, blockpos)) {
                this.level.setBlockAndUpdate(blockpos, state);
             }
-		}
-	}
-	
-	@Override
-	public void normalZombieTick() {
-		super.normalZombieTick();
-		if(! level.isClientSide) {//produce snow layer block
-			
 		}
 	}
 	

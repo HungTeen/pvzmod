@@ -5,7 +5,7 @@
     "pages": [
         {
             "type": "text",
-            "text": "$(bred)Zomboni$() is a totally different life-form more closely related to Snow Gloem.$(br)$(bred)Health$() : $(l)130$()$(br)$(bred)Eat Damage$() : $(l)Deadly$()$(br)$(bblue)Speed$() : $(l)Little Slow$()$(br)$(l)Features$() : it will leave a snow trail and temporarily turn surround water into frost ice.$(bred)it won't be cold or frozen or butter$()."
+            "text": "$(bred)Zomboni$() is a totally different life-form more closely related to Snow Gloem.$(br)$(bred)Health$() : $(l)130$()$(br)$(bred)Eat Damage$() : $(l)Deadly$()$(br)$(bblue)Speed$() : $(l)Slow$()$(br)$(l)Features$() : it will leave a snow trail and temporarily turn surround water into frost ice.$(bred)it won't be cold or frozen or butter$()."
         },
         {
             "type": "entity",
