@@ -18,9 +18,7 @@ public class PVZSwimGoal extends Goal {
 
 	@Override
 	public boolean canUse() {
-		return this.mob.isInWater() && this.mob.getFluidHeight(FluidTags.WATER) > this.mob.getFluidJumpThreshold()
-				|| this.mob.isInLava();
-//		return this.entity.isInWater() && this.entity.getFluidHeight(FluidTags.WATER) > this.entity.getFluidJumpThreshold() && (this.entity.isInWater() || this.entity.isInLava());
+		return this.mob.isInWater() && this.mob.getFluidHeight(FluidTags.WATER) > this.mob.getFluidJumpThreshold();
 	}
 
 	public void tick() {

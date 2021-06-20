@@ -1,8 +1,6 @@
 package com.hungteen.pvz.common.entity.zombie.poolday;
 
 import com.hungteen.pvz.common.entity.ai.goal.attack.PVZZombieAttackGoal;
-import com.hungteen.pvz.common.entity.ai.goal.target.PVZNearestTargetGoal;
-import com.hungteen.pvz.common.entity.creature.FoodieZombieEntity;
 import com.hungteen.pvz.common.entity.zombie.PVZZombieEntity;
 import com.hungteen.pvz.data.loot.PVZLoot;
 import com.hungteen.pvz.register.SoundRegister;
@@ -19,14 +17,11 @@ import net.minecraft.entity.ai.controller.DolphinLookController;
 import net.minecraft.entity.ai.controller.MovementController;
 import net.minecraft.entity.ai.goal.BreatheAirGoal;
 import net.minecraft.entity.ai.goal.FollowBoatGoal;
-import net.minecraft.entity.ai.goal.HurtByTargetGoal;
 import net.minecraft.entity.ai.goal.JumpGoal;
 import net.minecraft.entity.ai.goal.LookAtGoal;
 import net.minecraft.entity.ai.goal.LookRandomlyGoal;
 import net.minecraft.entity.ai.goal.RandomSwimmingGoal;
-import net.minecraft.entity.monster.GuardianEntity;
 import net.minecraft.entity.monster.MonsterEntity;
-import net.minecraft.entity.passive.DolphinEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.fluid.FluidState;
 import net.minecraft.pathfinding.PathNavigator;
@@ -57,12 +52,11 @@ public class ZombieDolphinEntity extends PVZZombieEntity {
 		this.goalSelector.addGoal(0, new BreatheAirGoal(this));
 		this.goalSelector.addGoal(4, new RandomSwimmingGoal(this, 1.0D, 10));
 		this.goalSelector.addGoal(4, new LookRandomlyGoal(this));
-		this.goalSelector.addGoal(5, new LookAtGoal(this, PlayerEntity.class, 6.0F));
-		this.goalSelector.addGoal(5, new DolphinJumpGoal(this, 10));
+		this.goalSelector.addGoal(5, new LookAtGoal(this, PlayerEntity.class, 2.0F));
+		this.goalSelector.addGoal(5, new ZombieDolphinJumpGoal(this, 10));
 		this.goalSelector.addGoal(8, new FollowBoatGoal(this));
 		this.goalSelector.addGoal(0, new PVZZombieAttackGoal(this, true));
-		this.targetSelector.addGoal(0, new PVZNearestTargetGoal(this, false, 80, 60));
-		this.targetSelector.addGoal(1, (new HurtByTargetGoal(this, GuardianEntity.class)).setAlertOthers());
+		this.registerTargetGoals();
 	}
 	
 	@Override
@@ -84,7 +78,7 @@ public class ZombieDolphinEntity extends PVZZombieEntity {
 	
 	@Override
 	protected float getWaterSlowDown() {
-		return 0.85f;
+		return 0.88f;
 	}
 	
 	@Override
@@ -136,12 +130,6 @@ public class ZombieDolphinEntity extends PVZZombieEntity {
 		return Zombies.ZOMBIE_DOLPHIN;
 	}
 
-	@Override
-	public boolean checkCanZombieTarget(Entity target) {
-		return target instanceof DolphinEntity || target instanceof PlayerEntity
-				|| target instanceof FoodieZombieEntity;
-	}
-	
 	static class MoveHelperController extends MovementController {
 		private final ZombieDolphinEntity dolphin;
 
@@ -193,13 +181,13 @@ public class ZombieDolphinEntity extends PVZZombieEntity {
 		}
 	}
 
-	static class DolphinJumpGoal extends JumpGoal {
+	static class ZombieDolphinJumpGoal extends JumpGoal {
 		private static final int[] JUMP_DISTANCES = new int[] { 0, 1, 4, 5, 6, 7 };
 		private final ZombieDolphinEntity dolphin;
 		private final int chance;
 		private boolean breached;
 
-		public DolphinJumpGoal(ZombieDolphinEntity zombie, int chance) {
+		public ZombieDolphinJumpGoal(ZombieDolphinEntity zombie, int chance) {
 			this.dolphin = zombie;
 			this.chance = chance;
 		}

@@ -5,7 +5,7 @@
     "pages": [
         {
             "type": "text",
-            "text": "$(bred)Snorkel Zombie$() always wears a snorkel, $(m)although zombies don't need breathe#().$(br)$(bred)Health$() : $(l)20$()$(br)$(bred)Eat Damage$() : $(l)Low$()$(br)$(bblue)Speed$() : $(l)Little Fast$()$(br)$(l)Features$() : It will dive into the water when swimming if the distance to target is far.$(l)It swims faster than walking$()."
+            "text": "$(bred)Snorkel Zombie$() always wears a snorkel, $(m)although zombies don't need breathe$().$(br)$(bred)Health$() : $(l)20$()$(br)$(bred)Eat Damage$() : $(l)Low$()$(br)$(bblue)Speed$() : $(l)Little Fast$()$(br)$(l)Features$() : It will dive into the water when swimming if the distance to target is far.$(l)It swims faster than walking$()."
         },
         {
             "type": "entity",

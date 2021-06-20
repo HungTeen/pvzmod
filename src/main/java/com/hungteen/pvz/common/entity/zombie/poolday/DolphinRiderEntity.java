@@ -69,12 +69,19 @@ public class DolphinRiderEntity extends PVZZombieEntity{
 	public void zombieTick() {
 		super.zombieTick();
 		if(! level.isClientSide) {//swim up
-			if(this.isInWater() && this.shouldUp()){
-				Vector3d v = this.getDeltaMovement();
-				this.setDeltaMovement(v.x(), UP_SPEED, v.z());
+			if(this.isInWater()) {
+				if(this.shouldUp()){
+				    Vector3d v = this.getDeltaMovement();
+				    this.setDeltaMovement(v.x(), UP_SPEED, v.z());
+				}
+				if(EntityUtil.isEntityValid(this) && this.dolphin_jump_cnt == this.getMaxJumpCount()) {
+					this.separate();
+					return ;
+				}
 			}
 			if(this.isOnGround() && EntityUtil.isEntityValid(this)) {
 				this.separate();
+				return ;
 			}
 		}
 	}
@@ -86,7 +93,7 @@ public class DolphinRiderEntity extends PVZZombieEntity{
 	public void perfromJump() {
 		Optional.ofNullable(this.getTarget()).ifPresent(target -> {
 			Vector3d vec = MathUtil.getHorizontalNormalizedVec(this.position(), this.jumpDstPoint);
-			final double speedXZ = this.HorizontalJumpSpeed + (this.random.nextDouble() - 0.3D) / 2;
+			final double speedXZ = this.HorizontalJumpSpeed + (this.random.nextDouble() - 0.6D) / 3;
 			final double speedY = this.VerticalJumpSpeed + (this.random.nextDouble() - 0.3D) / 2;
 			this.setDeltaMovement(vec.x * speedXZ , speedY, vec.z * speedXZ);
 			EntityUtil.playSound(this, SoundRegister.DOLPHIN_JUMP.get());
@@ -228,10 +235,9 @@ public class DolphinRiderEntity extends PVZZombieEntity{
 			}
 			double dis = this.zombie.distanceToSqr(target);
 			//can not be so close or so far.
-			if(dis < 64 || dis > Math.max(100, 100 * left_jump_chance * left_jump_chance)) {
+			if(dis < 64 || dis > Math.max(120, 120 * left_jump_chance * left_jump_chance)) {
 				return false;
 			}
-			System.out.println("1");
 			Vector3d vec = MathUtil.getHorizontalNormalizedVec(zombie.position(), target.position())
 					.scale(this.zombie.HorizontalJumpSpeed)
 					.add(0, this.zombie.VerticalJumpSpeed * 2, 0);
@@ -263,9 +269,7 @@ public class DolphinRiderEntity extends PVZZombieEntity{
 			if(time == cd * 3 / 4) {
 				this.zombie.perfromJump();
 			} else if(time == 1) {
-				if(++ this.zombie.dolphin_jump_cnt == this.zombie.getMaxJumpCount()) {
-					this.zombie.separate();
-				}
+				++ this.zombie.dolphin_jump_cnt;
 			}
 			this.zombie.setAttackTime(Math.max(0, time - 1));
 		}

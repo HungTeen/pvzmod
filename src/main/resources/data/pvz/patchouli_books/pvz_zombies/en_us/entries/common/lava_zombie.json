@@ -1,0 +1,18 @@
+{
+    "name": "Lava Zombie",
+    "icon": "pvz:zombie_doll",
+    "category": "pvz:common",
+    "pages": [
+        {
+            "type": "text",
+            "text": "$(bred)Lava Zombie$() wears a black latent magma suit, but can’t hide its pink hobby.$(br)$(bred)Health$() : $(l)360$()$(br)$(bred)Eat Damage$() : $(l)Low$()$(br)$(bblue)Speed$() : $(l)Fast$()$(br)$(l)Features$() : It will dive into the water when swimming if the distance to target is far.$(l)It swims faster than walking$().$(bred)it can walk on lava and damage with fire aspect$()."
+        },
+        {
+            "type": "entity",
+            "entity": "pvz:lava_zombie",
+            "scale": 0.8,
+            "text": "Appearance"
+        }
+    ],
+    "sortnum": 21
+}

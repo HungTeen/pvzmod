@@ -22,7 +22,7 @@ public abstract class SwimmerZombieEntity extends PVZZombieEntity{
 	public void tick() {
 		super.tick();
 		if(!level.isClientSide) {
-			if(this.isInWater() || this.isInLava()) {
+			if(this.isInWater()) {
 				if(this.getTarget() != null && this.distanceToSqr(this.getTarget()) <= UP_DISTANCE) {
 					this.setPose(Pose.SPIN_ATTACK);
 				}else {

@@ -1,12 +1,7 @@
 package com.hungteen.pvz.common.entity.ai.navigator;
 
-import net.minecraft.entity.EntityType;
 import net.minecraft.entity.MobEntity;
-import net.minecraft.entity.item.ItemEntity;
-import net.minecraft.item.ItemStack;
-import net.minecraft.item.Items;
 import net.minecraft.network.DebugPacketSender;
-import net.minecraft.pathfinding.Path;
 import net.minecraft.pathfinding.PathFinder;
 import net.minecraft.pathfinding.SwimNodeProcessor;
 import net.minecraft.pathfinding.SwimmerPathNavigator;
@@ -29,20 +24,9 @@ public class ZombieWaterPathNavigator extends SwimmerPathNavigator {
 	@Override
 	public void tick() {
 		++this.tick;
-		if (tick % 10 == 0) {
+		if (tick % 20 == 0) {
 			this.recomputePath();
 		}
-//		if (this.mob.tickCount % 20 == 0) {
-//			Path path = this.mob.getNavigation().getPath();
-//			if (path != null) {
-//				for (int i = 0; i < path.getNodeCount(); ++i) {
-//					ItemEntity item = EntityType.ITEM.create(this.mob.level);
-//					item.setItem(new ItemStack(Items.OAK_LOG));
-//					item.setPos(path.getNode(i).x, path.getNode(i).y, path.getNode(i).z);
-//					this.mob.level.addFreshEntity(item);
-//				}
-//			}
-//		}
 		if (!this.isDone()) {
 			if (this.canUpdatePath()) {
 				this.followThePath();
@@ -65,7 +49,6 @@ public class ZombieWaterPathNavigator extends SwimmerPathNavigator {
 
 	@Override
 	protected void followThePath() {
-//		System.out.println("1");
 		if (this.path != null) {
 
 			Vector3d vector3d = this.getTempMobPos();
