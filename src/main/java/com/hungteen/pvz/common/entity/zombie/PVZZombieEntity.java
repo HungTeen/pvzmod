@@ -181,7 +181,7 @@ public abstract class PVZZombieEntity extends MonsterEntity implements IPVZZombi
 	 * {@link #registerGoals()}
 	 */
 	protected void registerTargetGoals() {
-		this.targetSelector.addGoal(0, new PVZNearestTargetGoal(this, false, 60, 30));
+		this.targetSelector.addGoal(0, new PVZNearestTargetGoal(this, true, 60, 30));
 	}
 	
 	@Override
@@ -512,10 +512,6 @@ public abstract class PVZZombieEntity extends MonsterEntity implements IPVZZombi
 	 * {@link EntityUtil#canEntityTarget(Entity, Entity)}
 	 */
 	public boolean checkCanZombieTarget(Entity target) {
-		LivingEntity hurter = this.getLastHurtByMob();
-		if(EntityUtil.isEntityValid(hurter) && hurter.is(target)) {
-			return checkCanZombieAttack(target);
-		}
 		return EntityUtil.checkCanEntityBeTarget(this, target) && this.canZombieTarget(target);
 	}
 	
@@ -921,7 +917,7 @@ public abstract class PVZZombieEntity extends MonsterEntity implements IPVZZombi
 	}
 	
 	protected boolean isZombieInvulnerableTo(DamageSource source) {
-		return this.isZombieRising();
+		return this.isZombieRising() || ! EntityUtil.isEntityValid(source.getEntity()) || source.isExplosion();
 	}
 	
 	/**

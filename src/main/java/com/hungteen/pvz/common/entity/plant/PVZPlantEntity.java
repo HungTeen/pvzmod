@@ -284,10 +284,6 @@ public abstract class PVZPlantEntity extends CreatureEntity implements IPVZPlant
 	 * {@link EntityUtil#canEntityAttack(Entity, Entity)}
 	 */
 	public boolean checkCanPlantTarget(Entity target) {
-		LivingEntity hurter = this.getLastHurtByMob();
-		if(EntityUtil.isEntityValid(hurter) && hurter.is(target)) {
-			return checkCanPlantAttack(target);
-		}
 		return EntityUtil.checkCanEntityBeTarget(this, target) && this.canPlantTarget(target);
 	}
 	

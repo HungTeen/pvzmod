@@ -24,6 +24,7 @@ import net.minecraft.entity.ai.goal.RandomSwimmingGoal;
 import net.minecraft.entity.monster.MonsterEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.fluid.FluidState;
+import net.minecraft.particles.ParticleTypes;
 import net.minecraft.pathfinding.PathNavigator;
 import net.minecraft.pathfinding.PathNodeType;
 import net.minecraft.pathfinding.SwimmerPathNavigator;
@@ -48,6 +49,7 @@ public class ZombieDolphinEntity extends PVZZombieEntity {
 		this.canBeMini = false;
 	}
 	
+	@Override
 	protected void registerGoals() {
 		this.goalSelector.addGoal(0, new BreatheAirGoal(this));
 		this.goalSelector.addGoal(4, new RandomSwimmingGoal(this, 1.0D, 10));
@@ -60,10 +62,31 @@ public class ZombieDolphinEntity extends PVZZombieEntity {
 	}
 	
 	@Override
+	public Type getZombieType() {
+		return Type.NORMAL;
+	}
+	
+	@Override
 	protected void updateAttributes() {
 		super.updateAttributes();
 		this.getAttribute(Attributes.MOVEMENT_SPEED).setBaseValue(1.2F);
 		this.getAttribute(Attributes.ATTACK_DAMAGE).setBaseValue(ZombieUtil.VERY_LOW);
+	}
+	
+	@Override
+	protected void tickDeath() {
+		++ this.deathTime;
+		if (this.deathTime >= this.maxDeathTime) {
+			for (int i = 0; i < 10; ++i) {
+				double d0 = this.random.nextGaussian() * 0.02D;
+				double d1 = this.random.nextGaussian() * 0.02D;
+				double d2 = this.random.nextGaussian() * 0.02D;
+				this.level.addParticle(ParticleTypes.POOF, this.getRandomX(1.0D), this.getRandomY(),
+						this.getRandomZ(1.0D), d0, d1, d2);
+			}
+			this.onZombieRemove();
+			this.remove();
+		}
 	}
 
 	@Override

@@ -148,8 +148,8 @@ public class JackInBoxZombieModel extends PVZZombieModel<JackInBoxZombieEntity> 
 	@Override
 	public void setupAnim(JackInBoxZombieEntity entity, float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch){
 		super.setupAnim(entity, limbSwing, limbSwingAmount, ageInTicks, netHeadYaw, headPitch);
-		if(entity.getAnimTick() <= JackInBoxZombieEntity.MIN_ANIM_TICK) {
-			int tick = JackInBoxZombieEntity.MIN_ANIM_TICK - entity.getAnimTick();
+		if(entity.getAttackTime() >= 0  && entity.getAttackTime() <= JackInBoxZombieEntity.JACK_EXPLODE_CD) {
+			final int tick = JackInBoxZombieEntity.JACK_EXPLODE_CD - entity.getAttackTime();
 			this.top.xRot = 2.0944F - tick / 10f;
 		} else {
 			this.top.xRot = 2.0944F;
@@ -169,9 +169,10 @@ public class JackInBoxZombieModel extends PVZZombieModel<JackInBoxZombieEntity> 
 	@Override
 	public void updateFreeParts(JackInBoxZombieEntity entity) {
 		super.updateFreeParts(entity);
-		this.isLeftHandFree = ! entity.hasMetal();
-		this.jack.visible = (entity.getAnimTick() < JackInBoxZombieEntity.MIN_ANIM_TICK / 4);
-		this.box.visible = entity.hasMetal();
+		final boolean hasBox = entity.hasMetal();
+		this.isLeftHandFree = ! hasBox;
+		this.box.visible = hasBox;
+		this.jack.visible = (entity.getAttackTime() >= 0 && entity.getAttackTime() < JackInBoxZombieEntity.JACK_EXPLODE_CD / 4);
 	}
 	
 	@Override

@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 import java.util.UUID;
+import java.util.function.Predicate;
 import java.util.stream.Collectors;
 
 import javax.annotation.Nonnull;
@@ -378,6 +379,11 @@ public class EntityUtil {
 				return change ? team1.isAlliedTo(team2) : ! team1.isAlliedTo(team2);
 			}
 		}
+		if(attacker instanceof LivingEntity) {
+			if(target.is(((LivingEntity) attacker).getLastHurtMob()) && checkCanEntityBeAttack(attacker, target)) {
+				return true;
+			}
+		}
 		return PVZGroupType.checkCanTarget(getEntityGroup(attacker), getEntityGroup(target));
 	}
 	
@@ -474,12 +480,31 @@ public class EntityUtil {
 	}
 	
 	/**
-	 * get attackable entities.
+	 * get targetable entities with details.
+	 * often use for normal attack check.
 	 */
 	public static List<Entity> getTargetableEntities(@Nonnull Entity attacker, AxisAlignedBB aabb){
-		if(attacker == null) return new ArrayList<>();
+		return getPredicateEntities(attacker, aabb, target -> canTargetEntity(attacker, target));
+	}
+	
+	/**
+	 * get targetable entities by original check function.
+	 * often use for explosion damage.
+	 */
+	public static List<Entity> getTargetableEntitiesIngoreCheck(@Nonnull Entity attacker, AxisAlignedBB aabb){
+		return getPredicateEntities(attacker, aabb, target -> checkCanEntityBeTarget(attacker, target));
+	}
+	
+	/**
+	 * {@link #getTargetableEntities(Entity, AxisAlignedBB)}
+	 * {@link #getTargetableEntitiesIngoreCheck(Entity, AxisAlignedBB)}
+	 */
+	private static List<Entity> getPredicateEntities(@Nonnull Entity attacker, AxisAlignedBB aabb, Predicate<Entity> predicate){
+		if(attacker == null) {
+			return new ArrayList<>();
+		}
 		return attacker.level.getEntitiesOfClass(Entity.class, aabb).stream().filter(target -> {
-			return ! attacker.equals(target) && canTargetEntity(attacker, target);
+			return ! attacker.equals(target) && predicate.test(target);
 		}).collect(Collectors.toList());
 	}
 //	

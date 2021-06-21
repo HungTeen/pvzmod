@@ -362,53 +362,53 @@ public class EntityRegister {
 	public static final RegistryObject<EntityType<SunDaveEntity>> SUN_DAVE = registerEntityType(SunDaveEntity::new, "sun_dave", EntityClassification.CREATURE);
 	
 	//zombie 
-	public static final RegistryObject<EntityType<NormalZombieEntity>> NORMAL_ZOMBIE = registerEntityType(NormalZombieEntity::new, "normal_zombie", EntityClassification.MONSTER);
-	public static final RegistryObject<EntityType<FlagZombieEntity>> FLAG_ZOMBIE = registerEntityType(FlagZombieEntity::new, "flag_zombie", EntityClassification.MONSTER);
-	public static final RegistryObject<EntityType<ConeHeadZombieEntity>> CONEHEAD_ZOMBIE = registerEntityType(ConeHeadZombieEntity::new, "conehead_zombie", EntityClassification.MONSTER);
-	public static final RegistryObject<EntityType<PoleZombieEntity>> POLE_ZOMBIE = registerEntityType(PoleZombieEntity::new, "pole_zombie", EntityClassification.MONSTER);
-	public static final RegistryObject<EntityType<BucketHeadZombieEntity>> BUCKETHEAD_ZOMBIE = registerEntityType(BucketHeadZombieEntity::new, "buckethead_zombie", EntityClassification.MONSTER);
-	public static final RegistryObject<EntityType<SnorkelZombieEntity>> SNORKEL_ZOMBIE = registerEntityType(SnorkelZombieEntity::new, "snorkel_zombie", EntityClassification.MONSTER);
-	public static final RegistryObject<EntityType<ZomboniEntity>> ZOMBONI = registerEntityType(ZomboniEntity::new, "zomboni", EntityClassification.MONSTER);
-	public static final RegistryObject<EntityType<BobsleTeamEntity>> BOBSLE_TEAM = registerEntityType(BobsleTeamEntity::new, "bobsle_team", EntityClassification.MONSTER);
-	public static final RegistryObject<EntityType<BobsleZombieEntity>> BOBSLE_ZOMBIE = registerEntityType(BobsleZombieEntity::new, "bobsle_zombie", EntityClassification.MONSTER);
-	public static final RegistryObject<EntityType<ZombieDolphinEntity>> ZOMBIE_DOLPHIN = registerEntityType(ZombieDolphinEntity::new, "zombie_dolphin", EntityClassification.MONSTER);
-	public static final RegistryObject<EntityType<DolphinRiderEntity>> DOLPHIN_RIDER = registerEntityType(DolphinRiderEntity::new, "dolphin_rider", EntityClassification.MONSTER);
-	public static final RegistryObject<EntityType<DolphinRiderZombieEntity>> DOLPHIN_RIDER_ZOMBIE = registerEntityType(DolphinRiderZombieEntity::new, "dolphin_rider_zombie", EntityClassification.MONSTER);
+	public static final RegistryObject<EntityType<NormalZombieEntity>> NORMAL_ZOMBIE = registerImmuneFireEntityType(NormalZombieEntity::new, "normal_zombie", EntityClassification.MONSTER);
+	public static final RegistryObject<EntityType<FlagZombieEntity>> FLAG_ZOMBIE = registerImmuneFireEntityType(FlagZombieEntity::new, "flag_zombie", EntityClassification.MONSTER);
+	public static final RegistryObject<EntityType<ConeHeadZombieEntity>> CONEHEAD_ZOMBIE = registerImmuneFireEntityType(ConeHeadZombieEntity::new, "conehead_zombie", EntityClassification.MONSTER);
+	public static final RegistryObject<EntityType<PoleZombieEntity>> POLE_ZOMBIE = registerImmuneFireEntityType(PoleZombieEntity::new, "pole_zombie", EntityClassification.MONSTER);
+	public static final RegistryObject<EntityType<BucketHeadZombieEntity>> BUCKETHEAD_ZOMBIE = registerImmuneFireEntityType(BucketHeadZombieEntity::new, "buckethead_zombie", EntityClassification.MONSTER);
+	public static final RegistryObject<EntityType<SnorkelZombieEntity>> SNORKEL_ZOMBIE = registerImmuneFireEntityType(SnorkelZombieEntity::new, "snorkel_zombie", EntityClassification.MONSTER);
+	public static final RegistryObject<EntityType<ZomboniEntity>> ZOMBONI = registerImmuneFireEntityType(ZomboniEntity::new, "zomboni", EntityClassification.MONSTER);
+	public static final RegistryObject<EntityType<BobsleTeamEntity>> BOBSLE_TEAM = registerImmuneFireEntityType(BobsleTeamEntity::new, "bobsle_team", EntityClassification.MONSTER);
+	public static final RegistryObject<EntityType<BobsleZombieEntity>> BOBSLE_ZOMBIE = registerImmuneFireEntityType(BobsleZombieEntity::new, "bobsle_zombie", EntityClassification.MONSTER);
+	public static final RegistryObject<EntityType<ZombieDolphinEntity>> ZOMBIE_DOLPHIN = registerImmuneFireEntityType(ZombieDolphinEntity::new, "zombie_dolphin", EntityClassification.MONSTER);
+	public static final RegistryObject<EntityType<DolphinRiderEntity>> DOLPHIN_RIDER = registerImmuneFireEntityType(DolphinRiderEntity::new, "dolphin_rider", EntityClassification.MONSTER);
+	public static final RegistryObject<EntityType<DolphinRiderZombieEntity>> DOLPHIN_RIDER_ZOMBIE = registerImmuneFireEntityType(DolphinRiderZombieEntity::new, "dolphin_rider_zombie", EntityClassification.MONSTER);
 	public static final RegistryObject<EntityType<LavaZombieEntity>> LAVA_ZOMBIE = registerImmuneFireEntityType(LavaZombieEntity::new, "lava_zombie", EntityClassification.MONSTER);
-	public static final RegistryObject<EntityType<NewspaperZombieEntity>> NEWSPAPER_ZOMBIE = registerEntityType(NewspaperZombieEntity::new, "newspaper_zombie", EntityClassification.MONSTER);
+	public static final RegistryObject<EntityType<NewspaperZombieEntity>> NEWSPAPER_ZOMBIE = registerImmuneFireEntityType(NewspaperZombieEntity::new, "newspaper_zombie", EntityClassification.MONSTER);
 	public static final RegistryObject<EntityType<TombStoneEntity>> TOMB_STONE = registerImmuneFireEntityType(TombStoneEntity::new, "tomb_stone", EntityClassification.MONSTER);
-	public static final RegistryObject<EntityType<ScreenDoorZombieEntity>> SCREENDOOR_ZOMBIE = registerEntityType(ScreenDoorZombieEntity::new, "screendoor_zombie", EntityClassification.MONSTER);
-	public static final RegistryObject<EntityType<FootballZombieEntity>> FOOTBALL_ZOMBIE = registerEntityType(FootballZombieEntity::new, "football_zombie", EntityClassification.MONSTER);
-	public static final RegistryObject<EntityType<DancingZombieEntity>> DANCING_ZOMBIE = registerEntityType(DancingZombieEntity::new, "dancing_zombie", EntityClassification.MONSTER);
-	public static final RegistryObject<EntityType<BackupDancerEntity>> BACKUP_DANCER = registerEntityType(BackupDancerEntity::new, "backup_dancer", EntityClassification.MONSTER);
-	public static final RegistryObject<EntityType<GigaFootballZombieEntity>> GIGA_FOOTBALL_ZOMBIE = registerEntityType(GigaFootballZombieEntity::new, "giga_football_zombie", EntityClassification.MONSTER);
-	public static final RegistryObject<EntityType<PumpkinZombieEntity>> PUMPKIN_ZOMBIE = registerEntityType(PumpkinZombieEntity::new, "pumpkin_zombie", EntityClassification.MONSTER);
-	public static final RegistryObject<EntityType<TrickZombieEntity>> TRICK_ZOMBIE = registerEntityType(TrickZombieEntity::new, "trick_zombie", EntityClassification.MONSTER);
+	public static final RegistryObject<EntityType<ScreenDoorZombieEntity>> SCREENDOOR_ZOMBIE = registerImmuneFireEntityType(ScreenDoorZombieEntity::new, "screendoor_zombie", EntityClassification.MONSTER);
+	public static final RegistryObject<EntityType<FootballZombieEntity>> FOOTBALL_ZOMBIE = registerImmuneFireEntityType(FootballZombieEntity::new, "football_zombie", EntityClassification.MONSTER);
+	public static final RegistryObject<EntityType<DancingZombieEntity>> DANCING_ZOMBIE = registerImmuneFireEntityType(DancingZombieEntity::new, "dancing_zombie", EntityClassification.MONSTER);
+	public static final RegistryObject<EntityType<BackupDancerEntity>> BACKUP_DANCER = registerImmuneFireEntityType(BackupDancerEntity::new, "backup_dancer", EntityClassification.MONSTER);
+	public static final RegistryObject<EntityType<GigaFootballZombieEntity>> GIGA_FOOTBALL_ZOMBIE = registerImmuneFireEntityType(GigaFootballZombieEntity::new, "giga_football_zombie", EntityClassification.MONSTER);
+	public static final RegistryObject<EntityType<PumpkinZombieEntity>> PUMPKIN_ZOMBIE = registerImmuneFireEntityType(PumpkinZombieEntity::new, "pumpkin_zombie", EntityClassification.MONSTER);
+	public static final RegistryObject<EntityType<TrickZombieEntity>> TRICK_ZOMBIE = registerImmuneFireEntityType(TrickZombieEntity::new, "trick_zombie", EntityClassification.MONSTER);
 	public static final RegistryObject<EntityType<CoffinEntity>> COFFIN = registerImmuneFireEntityType(CoffinEntity::new, "coffin", EntityClassification.MONSTER);
-	public static final RegistryObject<EntityType<MournerZombieEntity>> MOURNER_ZOMBIE = registerEntityType(MournerZombieEntity::new, "mourner_zombie", EntityClassification.MONSTER);
+	public static final RegistryObject<EntityType<MournerZombieEntity>> MOURNER_ZOMBIE = registerImmuneFireEntityType(MournerZombieEntity::new, "mourner_zombie", EntityClassification.MONSTER);
 	public static final RegistryObject<EntityType<NobleZombieEntity>> NOBLE_ZOMBIE = registerImmuneFireEntityType(NobleZombieEntity::new, "noble_zombie", EntityClassification.MONSTER);
-	public static final RegistryObject<EntityType<OldZombieEntity>> OLD_ZOMBIE = registerEntityType(OldZombieEntity::new, "old_zombie", EntityClassification.MONSTER);
-	public static final RegistryObject<EntityType<SundayEditionZombieEntity>> SUNDAY_EDITION_ZOMBIE = registerEntityType(SundayEditionZombieEntity::new, "sunday_edition_zombie", EntityClassification.MONSTER);
-	public static final RegistryObject<EntityType<JackInBoxZombieEntity>> JACK_IN_BOX_ZOMBIE = registerEntityType(JackInBoxZombieEntity::new, "jack_in_box_zombie", EntityClassification.MONSTER);
-	public static final RegistryObject<EntityType<PogoZombieEntity>> POGO_ZOMBIE = registerEntityType(PogoZombieEntity::new, "pogo_zombie", EntityClassification.MONSTER);
-	public static final RegistryObject<EntityType<YetiZombieEntity>> YETI_ZOMBIE = registerEntityType(YetiZombieEntity::new, "yeti_zombie", EntityClassification.MONSTER);
-	public static final RegistryObject<EntityType<DiggerZombieEntity>> DIGGER_ZOMBIE = registerEntityType(DiggerZombieEntity::new, "digger_zombie", EntityClassification.MONSTER);
-	public static final RegistryObject<EntityType<BalloonZombieEntity>> BALLOON_ZOMBIE = registerEntityType(BalloonZombieEntity::new, "balloon_zombie", EntityClassification.MONSTER);
-	public static final RegistryObject<EntityType<RaZombieEntity>> RA_ZOMBIE = registerEntityType(RaZombieEntity::new, "ra_zombie", EntityClassification.MONSTER);
-	public static final RegistryObject<EntityType<BungeeZombieEntity>> BUNGEE_ZOMBIE = registerEntityType(BungeeZombieEntity::new, "bungee_zombie", EntityClassification.MONSTER);
-	public static final RegistryObject<EntityType<LadderZombieEntity>> LADDER_ZOMBIE = registerEntityType(LadderZombieEntity::new, "ladder_zombie", EntityClassification.MONSTER);
-	public static final RegistryObject<EntityType<CatapultZombieEntity>> CATAPULT_ZOMBIE = registerEntityType(CatapultZombieEntity::new, "catapult_zombie", EntityClassification.MONSTER);
-	public static final RegistryObject<EntityType<GargantuarEntity>> GARGANTUAR = registerEntityType(GargantuarEntity::new, "gargantuar", EntityClassification.MONSTER);
-	public static final RegistryObject<EntityType<ImpEntity>> IMP = registerEntityType(ImpEntity::new, "imp", EntityClassification.MONSTER);
-	public static final RegistryObject<EntityType<SadGargantuarEntity>> SAD_GARGANTUAR = registerEntityType(SadGargantuarEntity::new, "sad_gargantuar", EntityClassification.MONSTER);
-	public static final RegistryObject<EntityType<ZomBossEntity>> ZOMBOSS = registerEntityType(ZomBossEntity::new, "zomboss", EntityClassification.MONSTER);
-	public static final RegistryObject<EntityType<PeaShooterZombieEntity>> PEASHOOTER_ZOMBIE = registerEntityType(PeaShooterZombieEntity::new, "peashooter_zombie", EntityClassification.MONSTER);
-	public static final RegistryObject<EntityType<GatlingPeaZombieEntity>> GATLINGPEA_ZOMBIE = registerEntityType(GatlingPeaZombieEntity::new, "gatlingpea_zombie", EntityClassification.MONSTER);
-	public static final RegistryObject<EntityType<SquashZombieEntity>> SQUASH_ZOMBIE = registerEntityType(SquashZombieEntity::new, "squash_zombie", EntityClassification.MONSTER);
-	public static final RegistryObject<EntityType<JalapenoZombieEntity>> JALAPENO_ZOMBIE = registerEntityType(JalapenoZombieEntity::new, "jalapeno_zombie", EntityClassification.MONSTER);
-	public static final RegistryObject<EntityType<WallNutZombieEntity>> WALLNUT_ZOMBIE = registerEntityType(WallNutZombieEntity::new, "wallnut_zombie", EntityClassification.MONSTER);
-	public static final RegistryObject<EntityType<TallNutZombieEntity>> TALLNUT_ZOMBIE = registerEntityType(TallNutZombieEntity::new, "tallnut_zombie", EntityClassification.MONSTER);
-	public static final RegistryObject<EntityType<GigaTombStoneEntity>> GIGA_TOMB_STONE = registerEntityType(GigaTombStoneEntity::new, "giga_tomb_stone", EntityClassification.MONSTER);
+	public static final RegistryObject<EntityType<OldZombieEntity>> OLD_ZOMBIE = registerImmuneFireEntityType(OldZombieEntity::new, "old_zombie", EntityClassification.MONSTER);
+	public static final RegistryObject<EntityType<SundayEditionZombieEntity>> SUNDAY_EDITION_ZOMBIE = registerImmuneFireEntityType(SundayEditionZombieEntity::new, "sunday_edition_zombie", EntityClassification.MONSTER);
+	public static final RegistryObject<EntityType<JackInBoxZombieEntity>> JACK_IN_BOX_ZOMBIE = registerImmuneFireEntityType(JackInBoxZombieEntity::new, "jack_in_box_zombie", EntityClassification.MONSTER);
+	public static final RegistryObject<EntityType<PogoZombieEntity>> POGO_ZOMBIE = registerImmuneFireEntityType(PogoZombieEntity::new, "pogo_zombie", EntityClassification.MONSTER);
+	public static final RegistryObject<EntityType<YetiZombieEntity>> YETI_ZOMBIE = registerImmuneFireEntityType(YetiZombieEntity::new, "yeti_zombie", EntityClassification.MONSTER);
+	public static final RegistryObject<EntityType<DiggerZombieEntity>> DIGGER_ZOMBIE = registerImmuneFireEntityType(DiggerZombieEntity::new, "digger_zombie", EntityClassification.MONSTER);
+	public static final RegistryObject<EntityType<BalloonZombieEntity>> BALLOON_ZOMBIE = registerImmuneFireEntityType(BalloonZombieEntity::new, "balloon_zombie", EntityClassification.MONSTER);
+	public static final RegistryObject<EntityType<RaZombieEntity>> RA_ZOMBIE = registerImmuneFireEntityType(RaZombieEntity::new, "ra_zombie", EntityClassification.MONSTER);
+	public static final RegistryObject<EntityType<BungeeZombieEntity>> BUNGEE_ZOMBIE = registerImmuneFireEntityType(BungeeZombieEntity::new, "bungee_zombie", EntityClassification.MONSTER);
+	public static final RegistryObject<EntityType<LadderZombieEntity>> LADDER_ZOMBIE = registerImmuneFireEntityType(LadderZombieEntity::new, "ladder_zombie", EntityClassification.MONSTER);
+	public static final RegistryObject<EntityType<CatapultZombieEntity>> CATAPULT_ZOMBIE = registerImmuneFireEntityType(CatapultZombieEntity::new, "catapult_zombie", EntityClassification.MONSTER);
+	public static final RegistryObject<EntityType<GargantuarEntity>> GARGANTUAR = registerImmuneFireEntityType(GargantuarEntity::new, "gargantuar", EntityClassification.MONSTER);
+	public static final RegistryObject<EntityType<ImpEntity>> IMP = registerImmuneFireEntityType(ImpEntity::new, "imp", EntityClassification.MONSTER);
+	public static final RegistryObject<EntityType<SadGargantuarEntity>> SAD_GARGANTUAR = registerImmuneFireEntityType(SadGargantuarEntity::new, "sad_gargantuar", EntityClassification.MONSTER);
+	public static final RegistryObject<EntityType<ZomBossEntity>> ZOMBOSS = registerImmuneFireEntityType(ZomBossEntity::new, "zomboss", EntityClassification.MONSTER);
+	public static final RegistryObject<EntityType<PeaShooterZombieEntity>> PEASHOOTER_ZOMBIE = registerImmuneFireEntityType(PeaShooterZombieEntity::new, "peashooter_zombie", EntityClassification.MONSTER);
+	public static final RegistryObject<EntityType<GatlingPeaZombieEntity>> GATLINGPEA_ZOMBIE = registerImmuneFireEntityType(GatlingPeaZombieEntity::new, "gatlingpea_zombie", EntityClassification.MONSTER);
+	public static final RegistryObject<EntityType<SquashZombieEntity>> SQUASH_ZOMBIE = registerImmuneFireEntityType(SquashZombieEntity::new, "squash_zombie", EntityClassification.MONSTER);
+	public static final RegistryObject<EntityType<JalapenoZombieEntity>> JALAPENO_ZOMBIE = registerImmuneFireEntityType(JalapenoZombieEntity::new, "jalapeno_zombie", EntityClassification.MONSTER);
+	public static final RegistryObject<EntityType<WallNutZombieEntity>> WALLNUT_ZOMBIE = registerImmuneFireEntityType(WallNutZombieEntity::new, "wallnut_zombie", EntityClassification.MONSTER);
+	public static final RegistryObject<EntityType<TallNutZombieEntity>> TALLNUT_ZOMBIE = registerImmuneFireEntityType(TallNutZombieEntity::new, "tallnut_zombie", EntityClassification.MONSTER);
+	public static final RegistryObject<EntityType<GigaTombStoneEntity>> GIGA_TOMB_STONE = registerImmuneFireEntityType(GigaTombStoneEntity::new, "giga_tomb_stone", EntityClassification.MONSTER);
 	
 	//plant
 	public static final RegistryObject<EntityType<PeaShooterEntity>> PEA_SHOOTER = registerEntityType(PeaShooterEntity::new, "pea_shooter", EntityClassification.CREATURE);
@@ -663,4 +663,5 @@ public class EntityRegister {
 	private static <T extends Entity> RegistryObject<EntityType<T>> registerEntityType(IFactory<T> factory,String name,EntityClassification classification,float w,float h){
 		return ENTITY_TYPES.register(name, () -> {return EntityType.Builder.of(factory, classification).sized(w, h).build(StringUtil.prefix(name).toString());});
 	}
+	
 }

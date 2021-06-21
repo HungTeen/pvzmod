@@ -7,6 +7,7 @@ import com.hungteen.pvz.common.misc.damage.PVZDamageSource;
 import com.hungteen.pvz.data.loot.PVZLoot;
 import com.hungteen.pvz.register.SoundRegister;
 import com.hungteen.pvz.utils.EntityUtil;
+import com.hungteen.pvz.utils.MathUtil;
 import com.hungteen.pvz.utils.PlayerUtil;
 import com.hungteen.pvz.utils.ZombieUtil;
 import com.hungteen.pvz.utils.enums.MetalTypes;
@@ -16,81 +17,137 @@ import com.hungteen.pvz.utils.interfaces.IHasMetal;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.ai.attributes.Attributes;
+import net.minecraft.entity.ai.goal.Goal;
 import net.minecraft.entity.monster.MonsterEntity;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.network.datasync.DataParameter;
 import net.minecraft.network.datasync.DataSerializers;
 import net.minecraft.network.datasync.EntityDataManager;
 import net.minecraft.particles.ParticleTypes;
+import net.minecraft.util.DamageSource;
 import net.minecraft.util.ResourceLocation;
+import net.minecraft.world.Difficulty;
 import net.minecraft.world.Explosion;
 import net.minecraft.world.World;
 
 public class JackInBoxZombieEntity extends PVZZombieEntity implements IHasMetal {
 
 	private static final DataParameter<Boolean> HAS_BOX = EntityDataManager.defineId(JackInBoxZombieEntity.class, DataSerializers.BOOLEAN);
-	private static final DataParameter<Integer> ANIM_TICK = EntityDataManager.defineId(JackInBoxZombieEntity.class, DataSerializers.INT);
-	public static final int MIN_ANIM_TICK = 20;
+	public static final int JACK_EXPLODE_CD = 30;
+	private final int MinExplodeTime = 300;
+	private final int MaxExplodeTime = 3000;
 	
 	public JackInBoxZombieEntity(EntityType<? extends MonsterEntity> type, World worldIn) {
 		super(type, worldIn);
 		if(! level.isClientSide) {
 			this.setExplosionTime();
 		}
-		this.setBox(true);
 	}
 	
 	@Override
 	protected void defineSynchedData() {
 		super.defineSynchedData();
 		this.entityData.define(HAS_BOX, true);
-		this.entityData.define(ANIM_TICK, 0);
 	}
-
+	
+	@Override
+	protected void registerGoals() {
+		super.registerGoals();
+		this.goalSelector.addGoal(1, new PlayJackBoxGoal(this));
+	}
+	
+	@Override
+	protected void updateAttributes() {
+		super.updateAttributes();
+		this.updateSpeed(true);
+	}
+	
 	@Override
 	public void normalZombieTick() {
 		super.normalZombieTick();
-		if(! level.isClientSide) {
-			if(this.getAnimTick() > 0) {
-				if(this.getAnimTick() == MIN_ANIM_TICK) {
+		if(! level.isClientSide && this.hasBox()) {
+			final int tick = this.getAttackTime();
+			if(tick < 0) {
+				if(tick == -1 && this.canJackExplode()) {
+					this.setAttackTime(JACK_EXPLODE_CD);
 					EntityUtil.playSound(this, SoundRegister.JACK_SURPRISE.get());
+				} else {
+					this.setAttackTime(Math.min(tick + 1, - 1));
 				}
-				this.setAnimTick(this.getAnimTick() - 1);
-			}
-			if(this.hasBox() && this.tickCount % 40 == 0) {
-				level.players().forEach((player) -> {
-					if(this.distanceToSqr(player) <= 400) {
-						player.getCapability(CapabilityHandler.PLAYER_DATA_CAPABILITY).ifPresent((l) -> {
-							if(l.getPlayerData().getOtherStats().playSoundTick == 0) {
-								PlayerUtil.playClientSound(player, 10);
-								l.getPlayerData().getOtherStats().playSoundTick = 300;
-							}
-						});
-					}
-				});
+			} else {
+				if(tick == 1) {
+					this.doJackExplode();
+				}
+				this.setAttackTime(Math.max(tick - 1, 0));
 			}
 		}
-		if(this.hasBox()) {
-			if(this.getAnimTick() == 1) {
-			    if(level.isClientSide) {
-				    for(int i = 0; i < 2; ++ i) {
-					    level.addParticle(ParticleTypes.EXPLOSION_EMITTER, this.getX(), this.getY(), this.getZ(), 0, 0, 0);
-				    }
-			    }
-		    } else if(this.getAnimTick() == 0) {
-		    	if(! level.isClientSide && this.canExplode()) {
-				    this.doExplosion();
-				    Explosion.Mode mode = net.minecraftforge.event.ForgeEventFactory.getMobGriefingEvent(this.level, this) ? Explosion.Mode.DESTROY : Explosion.Mode.NONE;
-				    this.level.explode(this, getX(), getY(), getZ(), 3f, mode);
-			        this.remove();
-		    	}
+		if(this.level.isClientSide && this.hasBox() && this.getAttackTime() == 3) {
+			for(int i = 0; i < 2; ++ i) {
+			    level.addParticle(ParticleTypes.EXPLOSION_EMITTER, this.getX(), this.getY(), this.getZ(), 0, 0, 0);
 		    }
 		}
 	}
 	
+	/**
+	 * jack box explode.
+	 * {@link #normalZombieTick()}
+	 */
+	private void doJackExplode() {
+		final float range =  5F;
+		final float damageMultiple = 1.5F;
+		EntityUtil.getTargetableEntitiesIngoreCheck(this, EntityUtil.getEntityAABB(this, range, range)).forEach(target -> {
+			if(target instanceof LivingEntity) {
+				target.hurt(PVZDamageSource.causeExplosionDamage(this, this), EntityUtil.getMaxHealthDamage((LivingEntity) target, damageMultiple));
+			}
+		});
+		EntityUtil.playSound(this, SoundRegister.CAR_EXPLOSION.get());
+		Explosion.Mode mode = net.minecraftforge.event.ForgeEventFactory.getMobGriefingEvent(this.level, this) ? Explosion.Mode.DESTROY : Explosion.Mode.NONE;
+		final float strenth = this.level.getDifficulty() == Difficulty.HARD ? 3F : 
+			                  this.level.getDifficulty() == Difficulty.NORMAL ? 2.5F : 2F;
+		this.level.explode(this, getX(), getY(), getZ(), strenth, mode);
+		this.remove();
+	}
+	
 	@Override
-	public boolean canLostHead() {
-		return super.canLostHead() && ! this.hasBox();
+	public void onSyncedDataUpdated(DataParameter<?> data) {
+		super.onSyncedDataUpdated(data);
+		if(data.equals(HAS_BOX)) {
+			this.updateSpeed(this.hasBox());
+		}
+	}
+	
+	@Override
+	public boolean canBeTargetBy(LivingEntity living) {
+		return super.canBeTargetBy(living) && ! this.isInExplosion();
+	}
+	
+	@Override
+	protected boolean isZombieInvulnerableTo(DamageSource source) {
+		return super.isZombieInvulnerableTo(source) || this.isInExplosion();
+	}
+	
+	/**
+	 * play sound to surround players.
+	 * {@link PlayJackBoxGoal#tick()}
+	 */
+	protected void playJackBoxSound() {
+		level.players().stream().filter(player -> this.distanceToSqr(player) <= 150).forEach(player -> {
+			player.getCapability(CapabilityHandler.PLAYER_DATA_CAPABILITY).ifPresent((l) -> {
+				if(l.getPlayerData().getOtherStats().playSoundTick == 0) {
+					PlayerUtil.playClientSound(player, 10);
+					l.getPlayerData().getOtherStats().playSoundTick = 300;
+				}
+			});
+		});
+	}
+	
+	private void updateSpeed(boolean is) {
+		this.getAttribute(Attributes.MOVEMENT_SPEED).setBaseValue(is ? ZombieUtil.WALK_FAST : ZombieUtil.WALK_LITTLE_FAST);
+	}
+	
+	@Override
+	public boolean canLostHand() {
+		return super.canLostHand() && ! this.hasBox();
 	}
 	
 	@Override
@@ -99,9 +156,15 @@ public class JackInBoxZombieEntity extends PVZZombieEntity implements IHasMetal 
 		body.setHandDefence(this.hasBox());
 	}
 	
-	private boolean canExplode() {
-		if(this.getTarget() == null) return false;
-		return this.distanceToSqr(this.getTarget()) <= 300;
+	/**
+	 * can explode if time is enough.
+	 * {@link #normalZombieTick()}
+	 */
+	private boolean canJackExplode() {
+		if(this.getTarget() == null) {//no target not explode.
+			return false;
+		}
+		return this.distanceToSqr(this.getTarget()) <= 100;
 	}
 	
 	@Override
@@ -109,29 +172,24 @@ public class JackInBoxZombieEntity extends PVZZombieEntity implements IHasMetal 
 		return 200;
 	}
 	
-	private void doExplosion() {
-		EntityUtil.getTargetableEntities(this, EntityUtil.getEntityAABB(this, 3, 3)).forEach((entity)->{
-			if(entity instanceof LivingEntity) {
-				entity.hurt(PVZDamageSource.causeExplosionDamage(this, this), EntityUtil.getCurrentMaxHealth((LivingEntity) entity) * 2);
-			}
-		});
-		EntityUtil.playSound(this, SoundRegister.CAR_EXPLOSION.get());
-	}
-	
-	@Override
-	protected void updateAttributes() {
-		super.updateAttributes();
-		this.getAttribute(Attributes.MOVEMENT_SPEED).setBaseValue(ZombieUtil.WALK_FAST);
-	}
-	
+	/**
+	 * attack time < 0 means normal, > 0 means in explosion.
+	 */
 	private void setExplosionTime() {
-		int min = 200, max = 2400;
-	    this.setAnimTick(this.getRandom().nextInt(max - min + 1) + min);
+		this.setAttackTime(- MathUtil.getRandomMinMax(getRandom(), MinExplodeTime, MaxExplodeTime));
 	}
 	
 	@Override
 	public float getLife() {
 		return 40;
+	}
+	
+	/**
+	 * {@link #isZombieInvulnerableTo(DamageSource)}
+	 * {@link #canBeTargetBy(LivingEntity)}
+	 */
+	public boolean isInExplosion() {
+		return this.getAttackTime() > 0;
 	}
 	
 	@Override
@@ -160,16 +218,12 @@ public class JackInBoxZombieEntity extends PVZZombieEntity implements IHasMetal 
 		if(compound.contains("has_jack_box")) {
 			this.setBox(compound.getBoolean("has_jack_box"));
 		}
-		if(compound.contains("jack_anim_tick")) {
-			this.setAnimTick(compound.getInt("jack_anim_tick"));
-		}
 	}
 	
 	@Override
 	public void addAdditionalSaveData(CompoundNBT compound) {
 		super.addAdditionalSaveData(compound);
 		compound.putBoolean("has_jack_box", this.hasBox());
-		compound.putInt("jack_anim_tick", this.getAnimTick());
 	}
 	
 	public void setBox(boolean has) {
@@ -180,14 +234,6 @@ public class JackInBoxZombieEntity extends PVZZombieEntity implements IHasMetal 
 		return this.entityData.get(HAS_BOX);
 	}
 	
-	public void setAnimTick(int tick) {
-		this.entityData.set(ANIM_TICK, tick);
-	}
-	
-	public int getAnimTick() {
-		return this.entityData.get(ANIM_TICK);
-	}
-	
 	@Override
 	protected ResourceLocation getDefaultLootTable() {
 		return PVZLoot.JACK_IN_BOX_ZOMBIE;
@@ -196,6 +242,47 @@ public class JackInBoxZombieEntity extends PVZZombieEntity implements IHasMetal 
 	@Override
 	public Zombies getZombieEnumName() {
 		return Zombies.JACK_IN_BOX_ZOMBIE;
+	}
+	
+	static class PlayJackBoxGoal extends Goal{
+
+		private final JackInBoxZombieEntity zombie;
+		private final int PlayCD = 50;
+		private int delayTick = 20;
+		
+		public PlayJackBoxGoal(JackInBoxZombieEntity zombie) {
+			this.zombie = zombie;
+		}
+		
+		@Override
+		public boolean canUse() {
+			if(-- this.delayTick > 0 || ! this.zombie.hasBox()) {
+				return false;
+			}
+			return this.zombie.getRandom().nextFloat() < 0.2F;
+		}
+		
+		@Override
+		public void start() {
+		}
+		
+		@Override
+		public boolean canContinueToUse() {
+			return this.zombie.hasBox();
+		}
+		
+		@Override
+		public void tick() {
+			if(this.zombie.tickCount % this.PlayCD == 0) {
+				this.zombie.playJackBoxSound();
+			}
+		}
+		
+		@Override
+		public void stop() {
+			this.delayTick = 20;
+		}
+		
 	}
 
 }
