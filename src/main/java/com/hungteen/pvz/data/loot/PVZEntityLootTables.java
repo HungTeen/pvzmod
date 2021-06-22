@@ -6,19 +6,36 @@ import java.util.function.Consumer;
 import com.hungteen.pvz.register.BlockRegister;
 import com.hungteen.pvz.register.ItemRegister;
 
+import net.minecraft.data.loot.EntityLootTables;
 import net.minecraft.item.Items;
 import net.minecraft.loot.ConstantRange;
 import net.minecraft.loot.ItemLootEntry;
 import net.minecraft.loot.LootPool;
 import net.minecraft.loot.LootTable;
+import net.minecraft.loot.RandomValueRange;
 import net.minecraft.loot.LootTable.Builder;
+import net.minecraft.loot.conditions.KilledByPlayer;
 import net.minecraft.loot.conditions.RandomChanceWithLooting;
+import net.minecraft.loot.functions.LootingEnchantBonus;
+import net.minecraft.loot.functions.SetCount;
 import net.minecraft.util.ResourceLocation;
 
 public class PVZEntityLootTables implements Consumer<BiConsumer<ResourceLocation, LootTable.Builder>> {
 
 	@Override
 	public void accept(BiConsumer<ResourceLocation, Builder> t) {
+//		LootTable.lootTable().withPool(LootPool.lootPool()
+//				.setRolls(ConstantRange.exactly(1))
+//				.add(ItemLootEntry.lootTableItem(Items.ROTTEN_FLESH)
+//						.apply(SetCount.setCount(RandomValueRange.between(0.0F, 2.0F)))
+//						.apply(LootingEnchantBonus.lootingMultiplier(RandomValueRange.between(0.0F, 1.0F)))))
+//		.withPool(LootPool.lootPool()
+//				.setRolls(ConstantRange.exactly(1))
+//				.add(ItemLootEntry.lootTableItem(Items.IRON_INGOT))
+//				.add(ItemLootEntry.lootTableItem(Items.CARROT))
+//				.add(ItemLootEntry.lootTableItem(Items.POTATO))
+//				.when(KilledByPlayer.killedByPlayer())
+//				.when(RandomChanceWithLooting.randomChanceAndLootingBoost(0.025F, 0.01F)));
 		t.accept(PVZLoot.NORMAL_ZOMBIE, getZombieLootTable());
 		t.accept(PVZLoot.FLAG_ZOMBIE, getZombieLootTable().withPool(LootPool.lootPool().setRolls(ConstantRange.exactly(1))
 				.add(ItemLootEntry.lootTableItem(ItemRegister.ZOMBIE_FLAG.get()))
@@ -34,7 +51,7 @@ public class PVZEntityLootTables implements Consumer<BiConsumer<ResourceLocation
 				));
 		t.accept(PVZLoot.SCREENDOOR_ZOMBIE, getZombieLootTable().withPool(LootPool.lootPool().setRolls(ConstantRange.exactly(1))
 				.add(ItemLootEntry.lootTableItem(ItemRegister.SCREEN_DOOR.get()))
-				.when(RandomChanceWithLooting.randomChanceAndLootingBoost(0.01F, 0.01F))
+				.when(RandomChanceWithLooting.randomChanceAndLootingBoost(0.02F, 0.01F))
 				));
 		t.accept(PVZLoot.FOOTBALL_ZOMBIE, getZombieLootTable().withPool(LootPool.lootPool().setRolls(ConstantRange.exactly(1))
 				.add(ItemLootEntry.lootTableItem(ItemRegister.FOOTBALL_HELMET.get()))

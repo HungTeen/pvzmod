@@ -143,6 +143,7 @@ public class BalloonZombieModel extends PVZZombieModel<BalloonZombieEntity> {
 			super.setupAnim(entity, limbSwing, limbSwingAmount, ageInTicks, netHeadYaw, headPitch);
 			this.bone.yRot = ageInTicks / 4;
 		}
+		this.updateFreeParts(entity);
 		this.balloon.visible = hasBalloon;
 	}
 	

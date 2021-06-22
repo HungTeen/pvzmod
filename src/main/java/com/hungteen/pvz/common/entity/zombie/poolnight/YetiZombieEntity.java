@@ -45,7 +45,7 @@ public class YetiZombieEntity extends PVZZombieEntity{
 	@Override
 	protected void updateAttributes() {
 		super.updateAttributes();
-		this.getAttribute(Attributes.ATTACK_DAMAGE).setBaseValue(ZombieUtil.NORMAL_DAMAGE);
+		this.getAttribute(Attributes.ATTACK_DAMAGE).setBaseValue(ZombieUtil.LITTLE_LOW);
 		this.getAttribute(Attributes.MOVEMENT_SPEED).setBaseValue(ZombieUtil.WALK_LITTLE_FAST);
 	}
 	
@@ -75,7 +75,7 @@ public class YetiZombieEntity extends PVZZombieEntity{
 	@Override
 	public boolean hurt(DamageSource source, float amount) {
 		if(amount >= 100) {
-			amount /= 3;
+			amount /= 10;
 		}
 		return super.hurt(source, amount);
 	}

@@ -125,6 +125,7 @@ public class PogoZombieModel extends PVZZombieModel<PogoZombieEntity> {
 	        this.total.xRot = 0;
 	        super.setupAnim(entity, limbSwing, limbSwingAmount, ageInTicks, netHeadYaw, headPitch);
 		}
+		this.updateFreeParts(entity);
 		this.pogo.visible = entity.hasMetal();
 	}
 	

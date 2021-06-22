@@ -1,0 +1,24 @@
+{
+    "name": "Balloon Zombie",
+    "icon": "pvz:zombie_doll",
+    "category": "pvz:common",
+    "pages": [
+        {
+            "type": "text",
+            "text": "$(bred)Balloon Zombie$() is very lucky to get the balloon, which help it float above the fray.$(br)$(bred)Health$() : $(l)23$()$(br)$(bred)Eat Damage$() : $(l)Low$()$(br)$(bblue)Speed$() : $(l)Little Slow$()$(br)$(l)Features$() : Its fly speed is $(l)Fast$(). most of plants $(bred)can't target it when it's flying$().$(br)$(bpurple)Weakness$() : $(bgreen)Cactus$(), $(bgreen)Blover$()..."
+        },
+        {
+            "type": "entity",
+            "entity": "pvz:balloon_zombie",
+            "scale": 0.8,
+            "text": "Appearance"
+        },
+        {
+            "type": "spotlight",
+            "item": "pvz:balloon",
+            "title": "Special Drop",
+            "text": ""
+        }
+    ],
+    "sortnum": 23
+}

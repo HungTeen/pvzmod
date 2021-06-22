@@ -1,0 +1,24 @@
+{
+    "name": "玩偶匣僵尸",
+    "icon": "pvz:zombie_doll",
+    "category": "pvz:common",
+    "pages": [
+        {
+            "type": "text",
+            "text": "$(l)玩偶匣僵尸$()常常发抖，不是因为它很冷，而是因为它疯了。$(br)$(bred)生命值$() : $(l)40$()$(br)$(bred)攻击力$() : $(l)低$()$(br)$(bblue)速度$() : $(l)快$()$(br)$(l)特性$() : 当它发现目标时会异常激动，手上的玩偶匣随时都可能$(bred)爆炸$()，$(l)对5格范围内的生物造成巨大伤害$()。"
+        },
+        {
+            "type": "entity",
+            "entity": "pvz:jack_in_box_zombie",
+            "scale": 0.8,
+            "text": "外观"
+        },
+        {
+            "type": "spotlight",
+            "item": "pvz:jack_box",
+            "title": "特殊掉落物",
+            "text": ""
+        }
+    ],
+    "sortnum": 22
+}

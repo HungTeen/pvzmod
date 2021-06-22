@@ -56,7 +56,7 @@ public class PoleZombieEntity extends PVZZombieEntity{
 	
 	@Override
 	protected void registerTargetGoals() {
-		this.targetSelector.addGoal(0, new PVZRandomTargetGoal(this, true, 60, 20));
+		this.targetSelector.addGoal(0, new PVZRandomTargetGoal(this, true, ZombieUtil.NORMAL_TARGET_RANGE, ZombieUtil.LOW_TARGET_HEIGHT));
 	}
 	
 	@Override

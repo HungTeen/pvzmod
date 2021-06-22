@@ -10,7 +10,6 @@ import com.hungteen.pvz.api.enums.PVZGroupType;
 import com.hungteen.pvz.api.interfaces.IPVZPlant;
 import com.hungteen.pvz.common.advancement.trigger.PlantSuperTrigger;
 import com.hungteen.pvz.common.entity.ai.goal.PVZLookRandomlyGoal;
-import com.hungteen.pvz.common.entity.ai.goal.target.PVZHurtByTargetGoal;
 import com.hungteen.pvz.common.entity.drop.SunEntity;
 import com.hungteen.pvz.common.entity.plant.enforce.SquashEntity;
 import com.hungteen.pvz.common.entity.plant.light.GoldLeafEntity;
@@ -131,7 +130,7 @@ public abstract class PVZPlantEntity extends CreatureEntity implements IPVZPlant
 	@Override
 	protected void registerGoals() {
 		this.goalSelector.addGoal(2, new PVZLookRandomlyGoal(this));
-		this.targetSelector.addGoal(2, new PVZHurtByTargetGoal(this, 10));
+//		this.targetSelector.addGoal(2, new PVZHurtByTargetGoal(this, 10));
 	}
 
 	/**

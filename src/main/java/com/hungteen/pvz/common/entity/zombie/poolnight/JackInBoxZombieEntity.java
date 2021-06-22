@@ -39,9 +39,7 @@ public class JackInBoxZombieEntity extends PVZZombieEntity implements IHasMetal 
 	
 	public JackInBoxZombieEntity(EntityType<? extends MonsterEntity> type, World worldIn) {
 		super(type, worldIn);
-		if(! level.isClientSide) {
-			this.setExplosionTime();
-		}
+		this.setExplosionTime();
 	}
 	
 	@Override

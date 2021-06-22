@@ -14,6 +14,7 @@ import net.minecraft.entity.ai.goal.TargetGoal;
 public class PVZHurtByTargetGoal extends TargetGoal {
 
 	private final int alertRange;
+	private int executeTick = 0;
 	
 	public PVZHurtByTargetGoal(CreatureEntity creature, int range) {
 		super(creature, true);
@@ -23,11 +24,22 @@ public class PVZHurtByTargetGoal extends TargetGoal {
 
 	@Override
 	public boolean canUse() {
-		LivingEntity target = this.mob.getLastHurtByMob();
-		if (!EntityUtil.isEntityValid(target)) {//not exsit.
+		LivingEntity target = this.mob.getTarget();
+		if(! EntityUtil.isEntityValid(target)) {//focus on 20 tick.
+			++ this.executeTick;
+			if(this.executeTick < 20) {
+			    return false;
+			} else {
+				this.executeTick = 0;
+			}
+		} else {
 			return false;
 		}
-		return EntityUtil.checkCanEntityBeAttack(mob, target);
+		LivingEntity attacker = this.mob.getLastHurtByMob();
+		if (!EntityUtil.isEntityValid(attacker)) {//not exsit target.
+			return false;
+		}
+		return EntityUtil.checkCanEntityBeAttack(mob, attacker);
 	}
 
 	@Override

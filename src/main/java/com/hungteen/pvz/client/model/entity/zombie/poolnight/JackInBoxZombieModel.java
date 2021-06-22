@@ -163,6 +163,7 @@ public class JackInBoxZombieModel extends PVZZombieModel<JackInBoxZombieEntity> 
 		if(type == BodyType.HAND) {
 			this.box.visible = false;
 		}
+		this.jack.visible = false;
 		super.renderBody(entity, stack, buffer, packedLight, packedOverlay, type);
 	}
 	

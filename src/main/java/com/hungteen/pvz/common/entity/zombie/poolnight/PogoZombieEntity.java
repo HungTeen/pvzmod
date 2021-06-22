@@ -1,10 +1,13 @@
 package com.hungteen.pvz.common.entity.zombie.poolnight;
 
+import com.hungteen.pvz.api.interfaces.IPVZPlant;
 import com.hungteen.pvz.common.entity.zombie.PVZZombieEntity;
 import com.hungteen.pvz.register.SoundRegister;
 import com.hungteen.pvz.utils.EntityUtil;
 import com.hungteen.pvz.utils.enums.MetalTypes;
+import com.hungteen.pvz.utils.enums.Plants;
 import com.hungteen.pvz.utils.enums.Zombies;
+import com.hungteen.pvz.utils.interfaces.IDefender;
 import com.hungteen.pvz.utils.interfaces.IHasMetal;
 
 import net.minecraft.entity.EntityType;
@@ -13,7 +16,6 @@ import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.network.datasync.DataParameter;
 import net.minecraft.network.datasync.DataSerializers;
 import net.minecraft.network.datasync.EntityDataManager;
-import net.minecraft.util.DamageSource;
 import net.minecraft.world.World;
 
 public class PogoZombieEntity extends PVZZombieEntity implements IHasMetal {
@@ -23,7 +25,6 @@ public class PogoZombieEntity extends PVZZombieEntity implements IHasMetal {
 	
 	public PogoZombieEntity(EntityType<? extends MonsterEntity> type, World worldIn) {
 		super(type, worldIn);
-		this.setPogo(true);
 	}
 	
 	@Override
@@ -50,9 +51,12 @@ public class PogoZombieEntity extends PVZZombieEntity implements IHasMetal {
 	}
 	
 	@Override
-	public boolean isInvulnerableTo(DamageSource source) {
-		if(source.getMsgId() == DamageSource.FALL.msgId) return true;
-		return super.isInvulnerableTo(source);
+	public boolean canBeAttractedBy(IDefender defender) {
+		if(defender instanceof IPVZPlant) {
+			final Plants plant = ((IPVZPlant) defender).getPlantEnumName();
+			return plant == Plants.TALL_NUT || plant == Plants.GIANT_WALL_NUT;
+		}
+		return true;
 	}
 	
 	@Override

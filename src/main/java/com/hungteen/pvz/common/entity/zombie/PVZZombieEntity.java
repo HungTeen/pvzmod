@@ -15,7 +15,6 @@ import com.hungteen.pvz.common.entity.ai.goal.PVZLookRandomlyGoal;
 import com.hungteen.pvz.common.entity.ai.goal.PVZSwimGoal;
 import com.hungteen.pvz.common.entity.ai.goal.ZombieBreakPlantBlockGoal;
 import com.hungteen.pvz.common.entity.ai.goal.attack.PVZZombieAttackGoal;
-import com.hungteen.pvz.common.entity.ai.goal.target.PVZHurtByTargetGoal;
 import com.hungteen.pvz.common.entity.ai.goal.target.PVZNearestTargetGoal;
 import com.hungteen.pvz.common.entity.ai.navigator.ZombiePathNavigator;
 import com.hungteen.pvz.common.entity.bullet.AbstractBulletEntity;
@@ -152,7 +151,7 @@ public abstract class PVZZombieEntity extends MonsterEntity implements IPVZZombi
 		return MonsterEntity.createMonsterAttributes()
 				.add(Attributes.ATTACK_DAMAGE, ZombieUtil.LOW)
 	    	    .add(Attributes.MAX_HEALTH, 20)
-	     	    .add(Attributes.FOLLOW_RANGE, 40.0D)
+	     	    .add(Attributes.FOLLOW_RANGE, ZombieUtil.NORMAL_FOLLOW_RANGE)
 	    		.add(Attributes.KNOCKBACK_RESISTANCE, 1)
 	    		.add(Attributes.MOVEMENT_SPEED, ZombieUtil.WALK_NORMAL)
 	    		.add(Attributes.FLYING_SPEED, 0)
@@ -164,7 +163,7 @@ public abstract class PVZZombieEntity extends MonsterEntity implements IPVZZombi
 		this.goalSelector.addGoal(8, new PVZLookRandomlyGoal(this));
 		this.goalSelector.addGoal(7, new WaterAvoidingRandomWalkingGoal(this, 1.0D));
 		this.goalSelector.addGoal(7, new PVZSwimGoal(this));
-		this.targetSelector.addGoal(2, new PVZHurtByTargetGoal(this, 10));
+//		this.targetSelector.addGoal(2, new PVZHurtByTargetGoal(this, 10));
 		this.registerAttackGoals();
 		this.registerTargetGoals();
 	}
@@ -181,7 +180,7 @@ public abstract class PVZZombieEntity extends MonsterEntity implements IPVZZombi
 	 * {@link #registerGoals()}
 	 */
 	protected void registerTargetGoals() {
-		this.targetSelector.addGoal(0, new PVZNearestTargetGoal(this, true, 60, 30));
+		this.targetSelector.addGoal(0, new PVZNearestTargetGoal(this, true, ZombieUtil.NORMAL_TARGET_RANGE, ZombieUtil.NORMAL_TARGET_HEIGHT));
 	}
 	
 	@Override

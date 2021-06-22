@@ -1,0 +1,18 @@
+{
+    "name": "Pogo Zombie",
+    "icon": "pvz:zombie_doll",
+    "category": "pvz:common",
+    "pages": [
+        {
+            "type": "text",
+            "text": "$(bred)Pogo Zombie$() likes Sproing! Sproing! Sproing!.$(br)$(bred)Health$() : $(l)48$()$(br)$(bred)Eat Damage$() : $(l)Low$()$(br)$(bblue)Speed$() : $(l)Normal$()$(br)$(l)Features$() : It can hop to bypass bullets."
+        },
+        {
+            "type": "entity",
+            "entity": "pvz:pogo_zombie",
+            "scale": 0.8,
+            "text": "Appearance"
+        }
+    ],
+    "sortnum": 25
+}

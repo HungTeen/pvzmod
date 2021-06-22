@@ -1,10 +1,12 @@
 package com.hungteen.pvz.common.entity.zombie.poolnight;
 
+import com.hungteen.pvz.common.entity.ai.goal.target.PVZRandomTargetGoal;
 import com.hungteen.pvz.common.entity.zombie.PVZZombieEntity;
 import com.hungteen.pvz.data.loot.PVZLoot;
 import com.hungteen.pvz.utils.ZombieUtil;
 import com.hungteen.pvz.utils.enums.MetalTypes;
 import com.hungteen.pvz.utils.enums.Zombies;
+import com.hungteen.pvz.utils.interfaces.IDefender;
 import com.hungteen.pvz.utils.interfaces.IHasMetal;
 
 import net.minecraft.entity.EntitySize;
@@ -17,6 +19,7 @@ import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.network.datasync.DataParameter;
 import net.minecraft.network.datasync.DataSerializers;
 import net.minecraft.network.datasync.EntityDataManager;
+import net.minecraft.util.DamageSource;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.World;
@@ -28,13 +31,17 @@ public class DiggerZombieEntity extends PVZZombieEntity implements IHasMetal {
 	
 	public DiggerZombieEntity(EntityType<? extends MonsterEntity> type, World worldIn) {
 		super(type, worldIn);
-		this.setPickaxe(true);
 	}
 	
 	@Override
 	protected void defineSynchedData() {
 		super.defineSynchedData();
 		this.entityData.define(HAS_PICKAXE, true);
+	}
+	
+	@Override
+	protected void registerTargetGoals() {
+		this.targetSelector.addGoal(0, new PVZRandomTargetGoal(this, true, ZombieUtil.NORMAL_TARGET_RANGE, ZombieUtil.NORMAL_TARGET_HEIGHT));
 	}
 	
 	@Override
@@ -55,9 +62,22 @@ public class DiggerZombieEntity extends PVZZombieEntity implements IHasMetal {
 			} else {
 				this.setAttackTime(MathHelper.clamp(this.getAttackTime() + 1, 0, MAX_OUT_TIME));
 			}
-			this.updateAttributes(this.hasPickaxe());
 		}
 		this.refreshDimensions();
+	}
+	
+	@Override
+	public void onSyncedDataUpdated(DataParameter<?> data) {
+		super.onSyncedDataUpdated(data);
+		if(data.equals(HAS_PICKAXE)) {
+			this.updateAttributes(this.hasPickaxe());
+		}
+	}
+	
+	@Override
+	protected void updateAttributes() {
+		super.updateAttributes();
+		this.updateAttributes(this.hasPickaxe());
 	}
 	
 	private void updateAttributes(boolean has){
@@ -67,6 +87,25 @@ public class DiggerZombieEntity extends PVZZombieEntity implements IHasMetal {
 	
 	@Override
 	public boolean canBeTargetBy(LivingEntity living) {
+		return this.isNotDigging();
+	}
+	
+	@Override
+	public boolean canBeAttractedBy(IDefender defender) {
+		return ! this.hasPickaxe();
+	}
+	
+	@Override
+	protected boolean isZombieInvulnerableTo(DamageSource source) {
+		return super.isZombieInvulnerableTo(source) || ! this.isNotDigging();
+	}
+	
+	/**
+	 * is zombie digging underground.
+	 * {@link #isZombieInvulnerableTo(DamageSource)}
+	 * {@link #canBeTargetBy(LivingEntity)}
+	 */
+	public boolean isNotDigging() {
 		return this.getAttackTime() == DiggerZombieEntity.MAX_OUT_TIME;
 	}
 	

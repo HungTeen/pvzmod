@@ -14,5 +14,10 @@ public class JackInBoxZombieRender extends PVZZombieRender<JackInBoxZombieEntity
 	public JackInBoxZombieRender(EntityRendererManager rendererManager) {
 		super(rendererManager, new JackInBoxZombieModel(), 0.45f);
 	}
+	
+	@Override
+	protected boolean isShaking(JackInBoxZombieEntity p_230495_1_) {
+		return true;
+	}
 
 }
