@@ -3,7 +3,6 @@ package com.hungteen.pvz.common.entity.zombie.poolday;
 import com.hungteen.pvz.common.entity.PVZMultiPartEntity;
 import com.hungteen.pvz.common.entity.zombie.PVZZombieEntity;
 import com.hungteen.pvz.common.entity.zombie.body.ZombieDropBodyEntity;
-import com.hungteen.pvz.common.entity.zombie.body.ZombieDropBodyEntity.BodyType;
 import com.hungteen.pvz.common.entity.zombie.part.PVZZombiePartEntity;
 import com.hungteen.pvz.data.loot.PVZLoot;
 import com.hungteen.pvz.register.EntityRegister;
@@ -37,11 +36,6 @@ public class BobsleTeamEntity extends PVZZombieEntity implements IMultiPartEntit
 		this.resetParts();
 		this.canBeMini = false;
 		this.maxDeathTime = 1;
-	}
-	
-	@Override
-	protected void registerGoals() {
-		super.registerGoals();
 	}
 	
 	@Override
@@ -121,6 +115,7 @@ public class BobsleTeamEntity extends PVZZombieEntity implements IMultiPartEntit
 			if(this.isInWaterOrBubble() || (this.isOnGround() && !EntityUtil.isOnSnow(this) && !EntityUtil.isOnIce(this))) {
 				++ this.outSnowTick;
 				if(this.outSnowTick > MAX_OUT_SNOW_TICK) {
+					this.onFallBody(DamageSource.DRY_OUT);
 					this.onZombieRemove();
 					this.remove();
 				}
@@ -142,11 +137,9 @@ public class BobsleTeamEntity extends PVZZombieEntity implements IMultiPartEntit
 	}
 	
 	@Override
-	protected void onFallBody(DamageSource source) {
-		ZombieDropBodyEntity body = EntityRegister.ZOMBIE_DROP_BODY.get().create(level);
-		body.specialDropBody(this, source, BodyType.HEAD);
-		this.setBodyStates(body);
-		level.addFreshEntity(body);
+	protected void setBodyStates(ZombieDropBodyEntity body) {
+		super.setBodyStates(body);
+		body.setFriction(0.95F);
 	}
 	
 	@Override

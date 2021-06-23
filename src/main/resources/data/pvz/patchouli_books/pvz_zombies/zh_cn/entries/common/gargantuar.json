@@ -1,0 +1,36 @@
+{
+    "name": "伽刚特尔",
+    "icon": "pvz:zombie_doll",
+    "category": "pvz:common",
+    "pages": [
+        {
+            "type": "text",
+            "text": "$(l)伽刚特尔$()简直就是所有僵尸的梦想楷模，$(m)可惜它还是没能找到女朋友$()。$(br)$(bred)生命值$() : $(l)300$()$(br)$(bred)攻击力$() : $(l)致命$()$(br)$(bblue)速度$() : $(l)慢$()$(br)$(l)特性$() : $(bred)当被它瞄准时，没有人能躲过去$()。当血量低于一半时，它会$(l)扔出一个小鬼僵尸$()。"
+        },
+        {
+            "type": "entity",
+            "entity": "pvz:gargantuar",
+            "scale": 0.8,
+            "text": "外观"
+        },
+        {
+            "type": "spotlight",
+            "item": "pvz:zombie_doll",
+            "title": "特殊掉落物",
+            "text": ""
+        },
+        {
+            "type": "spotlight",
+            "item": "pvz:warning_sign",
+            "title": "特殊掉落物",
+            "text": ""
+        },
+        {
+            "type": "spotlight",
+            "item": "pvz:pole",
+            "title": "特殊掉落物",
+            "text": ""
+        }
+    ],
+    "sortnum": 30
+}

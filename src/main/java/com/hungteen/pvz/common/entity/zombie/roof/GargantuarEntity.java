@@ -2,16 +2,12 @@ package com.hungteen.pvz.common.entity.zombie.roof;
 
 import java.util.EnumSet;
 
-import com.hungteen.pvz.common.entity.ai.goal.PVZLookRandomlyGoal;
-import com.hungteen.pvz.common.entity.ai.goal.PVZSwimGoal;
-import com.hungteen.pvz.common.entity.ai.goal.ZombieBreakPlantBlockGoal;
 import com.hungteen.pvz.common.entity.ai.goal.attack.PVZZombieAttackGoal;
-import com.hungteen.pvz.common.entity.ai.goal.target.PVZNearestTargetGoal;
 import com.hungteen.pvz.common.entity.plant.spear.SpikeRockEntity;
 import com.hungteen.pvz.common.entity.zombie.PVZZombieEntity;
+import com.hungteen.pvz.common.entity.zombie.body.ZombieDropBodyEntity;
 import com.hungteen.pvz.common.misc.damage.PVZDamageSource;
 import com.hungteen.pvz.data.loot.PVZLoot;
-import com.hungteen.pvz.register.BlockRegister;
 import com.hungteen.pvz.register.EntityRegister;
 import com.hungteen.pvz.register.SoundRegister;
 import com.hungteen.pvz.utils.EntityUtil;
@@ -27,7 +23,6 @@ import net.minecraft.entity.Pose;
 import net.minecraft.entity.SpawnReason;
 import net.minecraft.entity.ai.attributes.Attributes;
 import net.minecraft.entity.ai.goal.Goal;
-import net.minecraft.entity.ai.goal.WaterAvoidingRandomWalkingGoal;
 import net.minecraft.entity.monster.MonsterEntity;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.network.datasync.DataParameter;
@@ -36,7 +31,6 @@ import net.minecraft.network.datasync.EntityDataManager;
 import net.minecraft.util.Hand;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.SoundEvent;
-import net.minecraft.util.math.vector.Vector3d;
 import net.minecraft.world.DifficultyInstance;
 import net.minecraft.world.IServerWorld;
 import net.minecraft.world.World;
@@ -45,13 +39,13 @@ public class GargantuarEntity extends PVZZombieEntity {
 
 	private static final DataParameter<Boolean> HAS_IMP = EntityDataManager.defineId(GargantuarEntity.class, DataSerializers.BOOLEAN);
 	private static final DataParameter<Integer> TOOL_TYPE = EntityDataManager.defineId(GargantuarEntity.class, DataSerializers.INT);
+	public static final int DEATH_ANIM_CD = 100;
 	public boolean isSad = false;
 	
 	public GargantuarEntity(EntityType<? extends MonsterEntity> type, World worldIn) {
 		super(type, worldIn);
 		this.maxDeathTime = 40;
-		this.canLostHand = false;
-		this.canLostHead = false;
+		this.setIsWholeBody();
 	}
 	
 	@Override
@@ -71,15 +65,10 @@ public class GargantuarEntity extends PVZZombieEntity {
 	}
 	
 	@Override
-	protected void registerGoals() {
-		this.goalSelector.addGoal(8, new PVZLookRandomlyGoal(this));
-		this.goalSelector.addGoal(7, new WaterAvoidingRandomWalkingGoal(this, 1.0D));
-		this.goalSelector.addGoal(7, new PVZSwimGoal(this));
+	protected void registerAttackGoals() {
 		this.goalSelector.addGoal(3, new GargantuarMoveToTargetGoal(this, true));
 		this.goalSelector.addGoal(2, new CrushAttackGoal(this));
 		this.goalSelector.addGoal(1, new ThrowImpGoal(this));
-		this.goalSelector.addGoal(6, new ZombieBreakPlantBlockGoal(BlockRegister.FLOWER_POT.get(), this, 1F, 10));
-		this.targetSelector.addGoal(0, new PVZNearestTargetGoal(this, false, 60, 30));
 	}
 	
 	@Override
@@ -90,24 +79,24 @@ public class GargantuarEntity extends PVZZombieEntity {
 	
 	public void throwImp(LivingEntity target) {
 		EntityUtil.playSound(this, SoundRegister.THROW_IMP.get());
-		Vector3d vec = new Vector3d(this.getRandom().nextFloat() - 0.5, this.getRandom().nextFloat() / 4, this.getRandom().nextFloat() - 0.5).normalize();
-		if(target != null) {
-			double speed = 2F;
-			vec = target.position().subtract(this.position()).normalize().scale(speed);
-		} else {
-			double speed = 0.5F;
-			vec = vec.scale(speed);
-		}
 		ImpEntity imp = EntityRegister.IMP.get().create(level);
-		imp.setDeltaMovement(vec);
-		imp.setCharmed(this.isCharmed());
+		imp.throwByGargantuar(this, target);
 		EntityUtil.onEntitySpawn(level, imp, blockPosition().offset(0, this.getBbHeight(), 0));
 		this.setHasImp(false);
 	}
 	
 	@Override
+	protected void setBodyStates(ZombieDropBodyEntity body) {
+		super.setBodyStates(body);
+		body.setMaxLiveTick(DEATH_ANIM_CD);
+		body.setHandDefence(this.isSad);
+	}
+	
+	@Override
 	public boolean canZombieTarget(Entity target) {
-		if(target instanceof SpikeRockEntity) return true;
+		if(target instanceof SpikeRockEntity) {
+			return true;
+		}
 		return super.canZombieTarget(target);
 	}
 	
@@ -116,7 +105,9 @@ public class GargantuarEntity extends PVZZombieEntity {
 		if(! level.isClientSide) {
 			EntityUtil.playSound(this, SoundRegister.GROUND_SHAKE.get());
 		}
-		if(!EntityUtil.isEntityValid(entityIn)) return false;
+		if(! EntityUtil.isEntityValid(entityIn)) {
+			return false;
+		}
 		return super.doHurtTarget(entityIn);
 	}
 	
@@ -128,19 +119,26 @@ public class GargantuarEntity extends PVZZombieEntity {
 	@Override
 	protected float getModifyAttackDamage(Entity entity, float f) {
 		if(entity instanceof LivingEntity) {
-			return 2 * EntityUtil.getCurrentMaxHealth(((LivingEntity) entity));
+			return EntityUtil.getMaxHealthDamage(((LivingEntity) entity), 2);
 		}
 		return f;
 	}
 	
 	@Override
 	public EntitySize getDimensions(Pose poseIn) {
-		if(this.isMiniZombie()) return EntitySize.scalable(0.6F, 1.8F);
+		if(this.isMiniZombie()) {
+			return EntitySize.scalable(0.6F, 1.8F);
+		}
 		return EntitySize.scalable(0.8f, 4f);
 	}
 	
 	public boolean canThrowImp() {
 		return this.canZombieNormalUpdate() && this.getHealth() / this.getMaxHealth() < 0.5F;
+	}
+	
+	@Override
+	public boolean canBreakPlantBlock() {
+		return false;
 	}
 	
 	public int getCrushCD() {

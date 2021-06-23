@@ -1,7 +1,6 @@
 package com.hungteen.pvz.common.entity.zombie.roof;
 
 import com.hungteen.pvz.data.loot.PVZLoot;
-import com.hungteen.pvz.register.SoundRegister;
 import com.hungteen.pvz.utils.EntityUtil;
 import com.hungteen.pvz.utils.ZombieUtil;
 import com.hungteen.pvz.utils.enums.Zombies;
@@ -31,11 +30,7 @@ public class SadGargantuarEntity extends GargantuarEntity {
 	
 	@Override
 	public boolean doHurtTarget(Entity entityIn) {
-		if(! level.isClientSide) {
-			EntityUtil.playSound(this, SoundRegister.GROUND_SHAKE.get());
-		}
 		this.groundShack(entityIn);
-		if(!EntityUtil.isEntityValid(entityIn)) return false;
 		return super.doHurtTarget(entityIn);
 	}
 	
@@ -43,7 +38,7 @@ public class SadGargantuarEntity extends GargantuarEntity {
 		float range = 3;
 		EntityUtil.getTargetableLivings(this, EntityUtil.getEntityAABB(this, range, range)).forEach((target) -> {
 			if(! target.is(entity)) {
-				target.hurt(getZombieAttackDamageSource(), EntityUtil.getCurrentMaxHealth(target) / 2);
+				target.hurt(getZombieAttackDamageSource(), EntityUtil.getMaxHealthDamage(((LivingEntity) entity), 0.5F));
 				for(int i = 0; i < 5; ++ i) {
 					EntityUtil.spawnParticle(target, 6);
 				}
@@ -54,7 +49,7 @@ public class SadGargantuarEntity extends GargantuarEntity {
 	@Override
 	protected float getModifyAttackDamage(Entity entity, float f) {
 		if(entity instanceof LivingEntity) {
-			return 4 * EntityUtil.getCurrentMaxHealth(((LivingEntity) entity));
+			return EntityUtil.getMaxHealthDamage(((LivingEntity) entity), 4);
 		}
 		return f;
 	}
@@ -73,7 +68,9 @@ public class SadGargantuarEntity extends GargantuarEntity {
 	
 	@Override
 	public EntitySize getDimensions(Pose poseIn) {
-		if(this.isMiniZombie()) return EntitySize.scalable(0.7F, 2F);
+		if(this.isMiniZombie()) {
+			return EntitySize.scalable(0.7F, 2F);
+		}
 		return super.getDimensions(poseIn);
 	}
 

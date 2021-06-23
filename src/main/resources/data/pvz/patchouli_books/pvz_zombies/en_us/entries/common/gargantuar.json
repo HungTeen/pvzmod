@@ -1,0 +1,36 @@
+{
+    "name": "Gargantuar",
+    "icon": "pvz:zombie_doll",
+    "category": "pvz:common",
+    "pages": [
+        {
+            "type": "text",
+            "text": "$(bred)Gargantuar$() is the zombie other zombies dream they could be. $(m)But he still can't find a girlfriend$().$(br)$(bred)Health$() : $(l)300$()$(br)$(bred)Attack Damage$() : $(l)Deadly$()$(br)$(bblue)Speed$() : $(l)Slow$()$(br)$(l)Features$() : $(bred)Enemies can not escape when being aimed by it$(). It will $(l)throw a Imp$() when health is lower than a half."
+        },
+        {
+            "type": "entity",
+            "entity": "pvz:gargantuar",
+            "scale": 0.8,
+            "text": "Appearance"
+        },
+        {
+            "type": "spotlight",
+            "item": "pvz:pole",
+            "title": "Special Drop",
+            "text": ""
+        },
+        {
+            "type": "spotlight",
+            "item": "pvz:zombie_doll",
+            "title": "Special Drop",
+            "text": ""
+        },
+        {
+            "type": "spotlight",
+            "item": "pvz:warning_sign",
+            "title": "Special Drop",
+            "text": ""
+        }
+    ],
+    "sortnum": 30
+}

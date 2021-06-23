@@ -2,6 +2,7 @@ package com.hungteen.pvz.common.entity.ai.goal.attack;
 
 import java.util.EnumSet;
 
+import com.hungteen.pvz.PVZMod;
 import com.hungteen.pvz.utils.EntityUtil;
 import com.hungteen.pvz.utils.interfaces.IPult;
 
@@ -12,31 +13,40 @@ import net.minecraft.entity.ai.goal.Goal;
 public class PultAttackGoal extends Goal {
 
 	private final IPult pult;
-	protected MobEntity attacker;
+	protected final MobEntity attacker;
 	protected LivingEntity target;
+	protected final boolean checkSight;
 	protected int attackTime;
 	
 	public PultAttackGoal(IPult pult) {
+		this(pult, true);
+	}
+	
+	public PultAttackGoal(IPult pult, boolean checkSight) {
 		this.pult = pult;
+		this.checkSight = checkSight;
+		this.attacker = (MobEntity) pult;
 		if(! (pult instanceof MobEntity)) {
-			System.out.println("Error : Wrong pult attacker !");
+			PVZMod.LOGGER.fatal("Error : Wrong pult attacker !");
 			return ;
 		}
-		this.attacker = (MobEntity) pult;
 		this.setFlags(EnumSet.of(Goal.Flag.MOVE, Goal.Flag.LOOK));
 	}
 	
 	@Override
 	public boolean canUse() {
-		if(! this.pult.shouldPult()) return false;
-		LivingEntity target = this.attacker.getTarget();
-		if(! EntityUtil.isEntityValid(target)) return false;
-		this.target = target;
-		if(this.checkTarget(target)) {
-			return true;
+		//attacker can not pult because of itself.
+		if(! this.pult.shouldPult()) {
+			return false;
 		}
-		this.stop();
-		return false;
+		final LivingEntity target = this.attacker.getTarget();
+		//attacker can not pult because of its target, so clear target.
+		if(! EntityUtil.isEntityValid(target) || ! this.checkTarget(target)) {
+			this.stop();
+			return false;
+		}
+		this.target = target;
+		return true;
 	}
 	
 	@Override
@@ -61,8 +71,8 @@ public class PultAttackGoal extends Goal {
 	}
 	
 	protected boolean checkTarget(LivingEntity target) {
-		if(EntityUtil.checkCanEntityBeAttack(this.attacker, this.target)) {
-			return this.attacker.getSensing().canSee(this.target);
+		if(EntityUtil.checkCanEntityBeAttack(this.attacker, target)) {
+			return ! this.checkSight || this.attacker.getSensing().canSee(target);
 		}
 		return false;
 	}

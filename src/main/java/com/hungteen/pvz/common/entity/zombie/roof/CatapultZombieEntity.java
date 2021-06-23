@@ -1,16 +1,17 @@
 package com.hungteen.pvz.common.entity.zombie.roof;
 
+import java.util.Optional;
+
 import com.hungteen.pvz.common.entity.ai.goal.attack.PultAttackGoal;
+import com.hungteen.pvz.common.entity.ai.goal.target.PVZRandomTargetGoal;
 import com.hungteen.pvz.common.entity.bullet.BallEntity;
-import com.hungteen.pvz.common.entity.zombie.PVZZombieEntity;
-import com.hungteen.pvz.common.misc.damage.PVZDamageSource;
+import com.hungteen.pvz.common.entity.zombie.base.CarZombieEntity;
 import com.hungteen.pvz.register.SoundRegister;
 import com.hungteen.pvz.utils.EntityUtil;
 import com.hungteen.pvz.utils.ZombieUtil;
 import com.hungteen.pvz.utils.enums.Zombies;
 import com.hungteen.pvz.utils.interfaces.IPult;
 
-import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntitySize;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.LivingEntity;
@@ -21,21 +22,15 @@ import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.network.datasync.DataParameter;
 import net.minecraft.network.datasync.DataSerializers;
 import net.minecraft.network.datasync.EntityDataManager;
-import net.minecraft.particles.ParticleTypes;
 import net.minecraft.world.World;
 
-public class CatapultZombieEntity extends PVZZombieEntity implements IPult {
+public class CatapultZombieEntity extends CarZombieEntity implements IPult {
 
 	private static final DataParameter<Integer> BALL_COUNT = EntityDataManager.defineId(CatapultZombieEntity.class, DataSerializers.INT);
 	private static final float PULT_DISTANCE = 2000;
 	
 	public CatapultZombieEntity(EntityType<? extends MonsterEntity> type, World worldIn) {
 		super(type, worldIn);
-		this.canBeButter = false;
-		this.canBeFrozen = false;
-		this.maxDeathTime = 1;
-		this.canLostHand = false;
-		this.canLostHead = false;
 	}
 	
 	@Override
@@ -51,11 +46,16 @@ public class CatapultZombieEntity extends PVZZombieEntity implements IPult {
 	}
 	
 	@Override
-	protected void registerGoals() {
-		super.registerGoals();
+	protected void registerAttackGoals() {
+		super.registerAttackGoals();
 		this.goalSelector.addGoal(2, new CataPultAttackGoal(this));
 	}
 
+	@Override
+	protected void registerTargetGoals() {
+		this.targetSelector.addGoal(0, new PVZRandomTargetGoal(this, true, ZombieUtil.NORMAL_TARGET_RANGE, ZombieUtil.NORMAL_TARGET_HEIGHT));
+	}
+	
 	@Override
 	public void normalZombieTick() {
 		super.normalZombieTick();
@@ -88,7 +88,7 @@ public class CatapultZombieEntity extends PVZZombieEntity implements IPult {
 
 	@Override
 	public boolean shouldPult() {
-		return this.getBallCount() < this.getMaxBallUse();
+		return this.canZombieNormalUpdate() && this.getBallCount() < this.getMaxBallUse();
 	}
 	
 	public boolean checkY(LivingEntity target) {
@@ -96,48 +96,22 @@ public class CatapultZombieEntity extends PVZZombieEntity implements IPult {
 	}
 	
 	@Override
-	protected PVZDamageSource getZombieAttackDamageSource() {
-		return PVZDamageSource.causeCrushDamage(this, this);
-	}
-	
-	@Override
-	protected float getModifyAttackDamage(Entity entity, float f) {
-		if(entity instanceof LivingEntity) {
-			return EntityUtil.getCurrentMaxHealth(((LivingEntity) entity));
-		}
-		return f;
-	}
-	
-	@Override
 	public void pultBullet() {
-		LivingEntity target = this.getTarget();
-		if(target == null) return ;
-		BallEntity ball = new BallEntity(level, this);
-        ball.setPos(this.getX(), this.getY() + 1.7f, this.getZ());
-        ball.shootPultBullet(target);
-        EntityUtil.playSound(this, SoundRegister.BASKETBALL.get());
-        this.level.addFreshEntity(ball);
-        this.setBallCount(this.getBallCount() + 1);
-	}
-	
-	@Override
-	protected void onZombieRemove() {
-		if(! level.isClientSide) {
-			EntityUtil.playSound(this, SoundRegister.CAR_EXPLOSION.get());
-		}
-		else {
-			for(int i = 0; i < 4; ++ i) {
-			    this.level.addParticle(ParticleTypes.EXPLOSION, this.getX(), this.getY(), this.getZ(), 0, 0, 0);
-			}
-		}
-		super.onZombieRemove();
+		Optional.ofNullable(this.getTarget()).ifPresent(target -> {
+			BallEntity ball = new BallEntity(level, this);
+            ball.setPos(this.getX(), this.getY() + 1.7f, this.getZ());
+            ball.shootPultBullet(target);
+            EntityUtil.playSound(this, SoundRegister.BASKETBALL.get());
+            this.level.addFreshEntity(ball);
+            this.setBallCount(this.getBallCount() + 1);
+		});
 	}
 	
 	/**
 	 * how many ball can it pult.
 	 */
 	public int getMaxBallUse() {
-		return 50;
+		return 20;
 	}
 	
 	public float getAttackDamage() {
@@ -146,7 +120,6 @@ public class CatapultZombieEntity extends PVZZombieEntity implements IPult {
 	
 	@Override
 	public EntitySize getDimensions(Pose poseIn) {
-		if(this.isMiniZombie()) return EntitySize.scalable(0.6F, 1.1F);
 		return EntitySize.scalable(0.9F, 2F);
 	}
 	
@@ -186,17 +159,14 @@ public class CatapultZombieEntity extends PVZZombieEntity implements IPult {
 
 		private final CatapultZombieEntity zombie;
 		
-		public CataPultAttackGoal(IPult pult) {
-			super(pult);
-			this.zombie = (CatapultZombieEntity) pult;
-			if(! (pult instanceof CatapultZombieEntity)) {
-				System.out.println("ERROR : Wrong Pult Attack AI Owner !");
-			}
+		public CataPultAttackGoal(CatapultZombieEntity zombie) {
+			super(zombie);
+			this.zombie = zombie;
 		}
 		
 		@Override
 		public void stop() {
-			this.target = null;
+		    this.target = null;
 		}
 		
 		@Override

@@ -1,0 +1,18 @@
+{
+    "name": "投篮僵尸",
+    "icon": "pvz:zombie_doll",
+    "category": "pvz:common",
+    "pages": [
+        {
+            "type": "text",
+            "text": "$(l)投篮僵尸$()在所有投掷物中毫不犹豫的选择了篮球作为弹药。$(br)$(bred)生命值$() : $(l)105$()$(br)$(bred)攻击力$() : $(l)致命$()$(br)$(bblue)速度$() : $(l)较慢$()$(br)$(l)特性$() : 它会在远处投掷篮球攻击敌人。$(bred)免疫冰冻$()。$(br)$(bpurple)克星$() : $(bgreen)叶子保护伞$()..."
+        },
+        {
+            "type": "entity",
+            "entity": "pvz:catapult_zombie",
+            "scale": 0.8,
+            "text": "外观"
+        }
+    ],
+    "sortnum": 29
+}

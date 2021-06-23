@@ -1,5 +1,6 @@
 package com.hungteen.pvz.client.model.entity.zombie.roof;
 
+import com.hungteen.pvz.client.model.entity.PVZEntityModel;
 import com.hungteen.pvz.client.model.entity.zombie.IZombieModel;
 import com.hungteen.pvz.common.entity.zombie.body.ZombieDropBodyEntity;
 import com.hungteen.pvz.common.entity.zombie.body.ZombieDropBodyEntity.BodyType;
@@ -16,7 +17,7 @@ import net.minecraft.util.math.MathHelper;
 // Paste this class into your mod and generate all required imports
 
 
-public class CatapultZombieModel extends EntityModel<CatapultZombieEntity> implements IZombieModel<CatapultZombieEntity>{
+public class CatapultZombieModel extends PVZEntityModel<CatapultZombieEntity> implements IZombieModel<CatapultZombieEntity>{
 	private final ModelRenderer total;
 	private final ModelRenderer car;
 	private final ModelRenderer lunzi;
@@ -395,12 +396,10 @@ public class CatapultZombieModel extends EntityModel<CatapultZombieEntity> imple
 		if(entity.getAttackTime() > 0) {
 			float percent = 1 - entity.getAttackTime() * 1.0F / entity.getPultAnimTime();
 			this.pult.xRot = 0.3491F + (1F - MathHelper.abs(MathHelper.cos(percent * 3.14159F))) * 1.5F;
-//			this.ba.showModel = (percent < 0.5);
 			this.right_hand.xRot = - 1.0472F + MathHelper.cos(percent * 3.14159F) / 4;
 		} else {
 			this.pult.xRot = 0.3491F + MathHelper.sin(ageInTicks / 10) / 8;
 			this.right_hand.xRot = - 1.0472F;
-//			this.cabbage.showModel = true;
 		}
 		this.tyre_leftfront.xRot = ageInTicks % 360;
 		this.tyre_leftfront2.xRot = ageInTicks % 360;
@@ -417,12 +416,6 @@ public class CatapultZombieModel extends EntityModel<CatapultZombieEntity> imple
 		total.render(matrixStack, buffer, packedLight, packedOverlay);
 	}
 
-	public void setRotationAngle(ModelRenderer modelRenderer, float x, float y, float z) {
-		modelRenderer.xRot = x;
-		modelRenderer.yRot = y;
-		modelRenderer.zRot = z;
-	}
-
 	@Override
 	public void tickPartAnim(ZombieDropBodyEntity entity, BodyType type, float limbSwing, float limbSwingAmount,
 			float ageInTicks, float netHeadYaw, float headPitch) {
@@ -432,7 +425,8 @@ public class CatapultZombieModel extends EntityModel<CatapultZombieEntity> imple
 	@Override
 	public void renderBody(ZombieDropBodyEntity entity, MatrixStack stack, IVertexBuilder buffer, int packedLight,
 			int packedOverlay, BodyType type) {
-		
+		this.zombie.visible = false;
+		this.total.render(stack, buffer, packedLight, packedOverlay);
 	}
 
 	@Override

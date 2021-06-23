@@ -33,6 +33,7 @@ public class ZombieDropBodyEntity extends PVZEntityBase {
 			DataSerializers.INT);
 	public static final int MAX_EXIST_TICK = 60;
 	private static final int HAS_HAND_DEFENCE = 0;
+	private static final int MINI_BODY = 1;
 	public final int HEAD_ROT;
 	private int max_exist_tick;
 	private float friction = 0.3F;
@@ -61,10 +62,9 @@ public class ZombieDropBodyEntity extends PVZEntityBase {
 			} else {
 				this.setAnimTime(this.getAnimTime() + 1);
 			}
-			
 		}
 		if(this.onGround) {
-			this.setDeltaMovement(this.getDeltaMovement().scale(this.friction));
+		    this.setDeltaMovement(this.getDeltaMovement().scale(this.friction));
 		}
 	}
 
@@ -100,12 +100,9 @@ public class ZombieDropBodyEntity extends PVZEntityBase {
 	public void specialDropBody(PVZZombieEntity zombie, DamageSource source, BodyType type) {
 		this.updateInfo(zombie, type);
 		switch (zombie.getZombieEnumName()) {
-		case ZOMBONI:{
+		case ZOMBONI:
+		case CATAPULT_ZOMBIE:{
 			this.hitUp(zombie, source, 0.5D, 0.5D, 0.5D);
-			break;
-		}
-		case BOBSLE_TEAM:{
-			this.friction = 0.8F;
 			break;
 		}
 		default:{
@@ -155,7 +152,11 @@ public class ZombieDropBodyEntity extends PVZEntityBase {
 	public void setMaxLiveTick(int tick) {
 		this.max_exist_tick = tick;
 	}
-
+	
+	public void setFriction(float f) {
+		this.friction = f;
+	}
+	
 	@Override
 	protected void readAdditionalSaveData(CompoundNBT nbt) {
 		if (nbt.contains("body_anim_tick")) {
@@ -220,6 +221,14 @@ public class ZombieDropBodyEntity extends PVZEntityBase {
 	
 	public boolean hasHandDefence() {
 		return AlgorithmUtil.BitOperator.hasBitOne(this.getBodyState(), HAS_HAND_DEFENCE);
+	}
+	
+	public void setMini(boolean flag) {
+		this.setBodyState(AlgorithmUtil.BitOperator.setBit(this.getBodyState(), MINI_BODY, flag));
+	}
+	
+	public boolean isMini() {
+		return AlgorithmUtil.BitOperator.hasBitOne(this.getBodyState(), MINI_BODY);
 	}
 
 	public enum BodyType {

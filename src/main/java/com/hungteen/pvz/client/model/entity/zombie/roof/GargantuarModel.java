@@ -1,5 +1,6 @@
 package com.hungteen.pvz.client.model.entity.zombie.roof;
 
+import com.hungteen.pvz.client.model.entity.PVZEntityModel;
 import com.hungteen.pvz.client.model.entity.zombie.IZombieModel;
 import com.hungteen.pvz.common.entity.zombie.body.ZombieDropBodyEntity;
 import com.hungteen.pvz.common.entity.zombie.body.ZombieDropBodyEntity.BodyType;
@@ -18,7 +19,7 @@ import net.minecraft.util.math.MathHelper;
 // Paste this class into your mod and generate all required imports
 
 
-public class GargantuarModel<T extends GargantuarEntity> extends EntityModel<T> implements IZombieModel<T>{
+public class GargantuarModel<T extends GargantuarEntity> extends PVZEntityModel<T> implements IZombieModel<T>{
 	private final ModelRenderer total;
 	private final ModelRenderer left_leg;
 	private final ModelRenderer right_leg;
@@ -382,13 +383,29 @@ public class GargantuarModel<T extends GargantuarEntity> extends EntityModel<T> 
 	@Override
 	public void tickPartAnim(ZombieDropBodyEntity entity, BodyType type, float limbSwing, float limbSwingAmount,
 			float ageInTicks, float netHeadYaw, float headPitch) {
-		
+		final int cd = GargantuarEntity.DEATH_ANIM_CD;
+		final int time = entity.getAnimTime();
+		final int roundT = 40;
+		if(time < roundT) {
+			this.up.xRot = AnimationUtil.getUpDownUpDown(time, roundT, 15);
+			this.total.xRot = AnimationUtil.getUpDownUpDown(time - roundT, roundT, 5);
+		} else if(time < roundT * 2) {
+			this.up.xRot = AnimationUtil.getUpDownUpDown(time - roundT, roundT, 30);
+			this.total.xRot = AnimationUtil.getUpDownUpDown(time - roundT, roundT, 10);
+		} else {
+			this.total.xRot = AnimationUtil.getUp(time - 2 * roundT, cd - 2 * roundT, 80);
+		}
 	}
 
 	@Override
 	public void renderBody(ZombieDropBodyEntity entity, MatrixStack stack, IVertexBuilder buffer, int packedLight,
 			int packedOverlay, BodyType type) {
-		
+		this.pole.visible = false;
+		this.sign.visible = false;
+		this.doll.visible = false;
+		this.angry.visible = entity.hasHandDefence();
+		this.imp.visible = false;
+		this.total.render(stack, buffer, packedLight, packedOverlay);
 	}
 
 	@Override
@@ -399,12 +416,6 @@ public class GargantuarModel<T extends GargantuarEntity> extends EntityModel<T> 
 	@Override
 	public void renderToBuffer(MatrixStack matrixStack, IVertexBuilder buffer, int packedLight, int packedOverlay, float red, float green, float blue, float alpha){
 		this.total.render(matrixStack, buffer, packedLight, packedOverlay);
-	}
-	
-	public void setRotationAngle(ModelRenderer modelRenderer, float x, float y, float z) {
-		modelRenderer.xRot = x;
-		modelRenderer.yRot = y;
-		modelRenderer.zRot = z;
 	}
 	
 }

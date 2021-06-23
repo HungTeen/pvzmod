@@ -2,13 +2,28 @@ package com.hungteen.pvz.utils.interfaces;
 
 public interface IPult {
 
-	void startPultAttack();
-	
-	int getPultCD();
-	
-	float getPultRange();
-	
+	/**
+	 * check attacker's pult condition.
+	 */
 	boolean shouldPult();
 	
+	/**
+	 * attack interval.
+	 */
+	int getPultCD();
+	
+	/**
+	 * when tick reach the CD, start attack.
+	 */
+	void startPultAttack();
+	
+	/**
+	 * pulter attack range.
+	 */
+	float getPultRange();
+	
+	/**
+	 * shoot entity out.
+	 */
 	void pultBullet();
 }

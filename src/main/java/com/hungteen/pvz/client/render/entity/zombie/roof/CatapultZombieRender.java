@@ -15,4 +15,8 @@ public class CatapultZombieRender extends PVZZombieRender<CatapultZombieEntity> 
 		super(rendererManager, new CatapultZombieModel(), 0.5F);
 	}
 
+	@Override
+	protected boolean isShaking(CatapultZombieEntity zombie) {
+		return zombie.isCarShaking();
+	}
 }

@@ -1,6 +1,7 @@
 package com.hungteen.pvz.client.render.entity.zombie.body;
 
 import com.hungteen.pvz.client.model.entity.zombie.ZombieModelHandler;
+import com.hungteen.pvz.client.render.entity.zombie.PVZZombieRender;
 import com.hungteen.pvz.client.render.entity.zombie.ZombieRenderHandler;
 import com.hungteen.pvz.common.entity.zombie.body.ZombieDropBodyEntity;
 import com.hungteen.pvz.common.entity.zombie.body.ZombieDropBodyEntity.BodyType;
@@ -37,7 +38,7 @@ public class ZombieBodyRender extends EntityRenderer<ZombieDropBodyEntity> {
 		    }
 		}
 		matrixStackIn.scale(-1, -1, 1);
-	    final float sz = 0.5F;
+	    final float sz = entityIn.isMini() ? ZombieRenderHandler.getZombieScale(zombie) * PVZZombieRender.MINI_SCALE : ZombieRenderHandler.getZombieScale(zombie) ;
 	    matrixStackIn.scale(sz, sz, sz); 
 		matrixStackIn.translate(0.0, (part != BodyType.BODY ? -1.501 : -1.7), 0.0);
 		ZombieRenderHandler.getZombieTex(zombie).ifPresent(tex -> {

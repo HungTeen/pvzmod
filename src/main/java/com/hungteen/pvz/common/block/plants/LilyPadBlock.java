@@ -2,6 +2,7 @@ package com.hungteen.pvz.common.block.plants;
 
 
 import com.hungteen.pvz.common.entity.zombie.PVZZombieEntity;
+import com.hungteen.pvz.common.entity.zombie.poolday.ZombieDolphinEntity;
 
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
@@ -41,7 +42,7 @@ public class LilyPadBlock extends BushBlock {
 	@SuppressWarnings("deprecation")
 	public void entityInside(BlockState state, World worldIn, BlockPos pos, Entity entityIn) {
 		super.entityInside(state, worldIn, pos, entityIn);
-		if (worldIn instanceof ServerWorld && entityIn instanceof PVZZombieEntity ) {
+		if (worldIn instanceof ServerWorld && entityIn instanceof PVZZombieEntity && !(entityIn instanceof ZombieDolphinEntity)) {
 			if(entityIn.isAlive() && ((PVZZombieEntity) entityIn).canBreakPlantBlock()) {
 			    worldIn.destroyBlock(new BlockPos(pos), true, entityIn);
 			}

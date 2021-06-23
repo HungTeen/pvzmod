@@ -15,6 +15,8 @@ import net.minecraft.util.math.vector.Vector3d;
 
 public abstract class PVZZombieRender <T extends PVZZombieEntity> extends PVZCreatureRender<T> {
 
+	public static final float MINI_SCALE = 0.32F;
+	
 	public PVZZombieRender(EntityRendererManager rendererManager, EntityModel<T> entityModelIn, float shadowSizeIn) {
 		super(rendererManager, entityModelIn, shadowSizeIn);
 		this.addZombieLayers();
@@ -42,7 +44,7 @@ public abstract class PVZZombieRender <T extends PVZZombieEntity> extends PVZCre
 	@Override
 	protected float getScaleByEntity(T entity) {
 		final float sz = ZombieRenderHandler.getZombieScale(entity.getZombieEnumName());
-		return entity.isMiniZombie() ? sz * 0.32F : sz;
+		return entity.isMiniZombie() ? sz * MINI_SCALE : sz;
 	}
 	
 	/**

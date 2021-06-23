@@ -1,0 +1,18 @@
+{
+    "name": "Imp",
+    "icon": "pvz:zombie_doll",
+    "category": "pvz:common",
+    "pages": [
+        {
+            "type": "text",
+            "text": "$(bred)Imp$() may be small, but he's wiry.$(br)$(bred)Health$() : $(l)10$()$(br)$(bred)Eat Damage$() : $(l)Low$()$(br)$(bblue)Speed$() : $(l)Fast$()$(br)$(l)Features$() : It has chance to obtain random buff when spawn."
+        },
+        {
+            "type": "entity",
+            "entity": "pvz:imp",
+            "scale": 0.4,
+            "text": "Appearance"
+        }
+    ],
+    "sortnum": 31
+}

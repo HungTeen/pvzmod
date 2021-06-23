@@ -1,0 +1,18 @@
+{
+    "name": "Catapult Zombie",
+    "icon": "pvz:zombie_doll",
+    "category": "pvz:common",
+    "pages": [
+        {
+            "type": "text",
+            "text": "$(bred)Catapult Zombie$() choose basketball as its ammunition, which seemed like the best and most obvious choice.$(br)$(bred)Health$() : $(l)105$()$(br)$(bred)Eat Damage$() : $(l)Deadly$()$(br)$(bblue)Speed$() : $(l)Little Slow$()$(br)$(l)Features$() : It can pult basketball far away to attack plants.$(bred)can not be frozen$().$(br)$(bpurple)Weakness$() : $(bgreen)Umbrella Leaf$()..."
+        },
+        {
+            "type": "entity",
+            "entity": "pvz:catapult_zombie",
+            "scale": 0.8,
+            "text": "Appearance"
+        }
+    ],
+    "sortnum": 29
+}

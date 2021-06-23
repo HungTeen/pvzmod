@@ -324,7 +324,7 @@ public abstract class PVZZombieEntity extends MonsterEntity implements IPVZZombi
 	 * {@link #onFallBody(DamageSource)}
 	 */
 	protected void setBodyStates(ZombieDropBodyEntity body) {
-		
+		body.setMini(this.isMiniZombie());
 	}
 	
 	/**
