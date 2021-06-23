@@ -18,6 +18,7 @@ import com.hungteen.pvz.common.item.card.PlantCardItem;
 import com.hungteen.pvz.common.item.tool.PeaGunItem;
 import com.hungteen.pvz.common.network.OtherStatsPacket;
 import com.hungteen.pvz.common.network.PVZPacketHandler;
+import com.hungteen.pvz.register.BlockRegister;
 import com.hungteen.pvz.register.EffectRegister;
 import com.hungteen.pvz.register.EnchantmentRegister;
 import com.hungteen.pvz.register.ItemRegister;
@@ -41,6 +42,7 @@ import net.minecraft.item.ShovelItem;
 import net.minecraft.item.SwordItem;
 import net.minecraft.util.Hand;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.vector.Vector3d;
 import net.minecraft.world.World;
 import net.minecraftforge.event.TickEvent;
 import net.minecraftforge.event.entity.player.AdvancementEvent;
@@ -88,6 +90,14 @@ public class PVZPlayerEvents {
 					l.getPlayerData().getOtherStats().lightLevel = lightLvl;
 				}
 			});
+		} else {
+			if(ev.player.horizontalCollision && ev.player.onClimbable()){
+				//is on steel ladder.
+				if(ev.player.level.getBlockState(ev.player.blockPosition()).getBlock().is(BlockRegister.STEEL_LADDER.get())) {
+				    final Vector3d vec = ev.player.getDeltaMovement();
+				    ev.player.setDeltaMovement(vec.x, 0.5F, vec.z);
+				}
+			}
 		}
 	}
 	

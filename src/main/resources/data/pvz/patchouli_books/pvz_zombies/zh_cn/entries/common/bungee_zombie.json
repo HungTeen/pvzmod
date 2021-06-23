@@ -1,0 +1,24 @@
+{
+    "name": "蹦极僵尸",
+    "icon": "pvz:zombie_doll",
+    "category": "pvz:common",
+    "pages": [
+        {
+            "type": "text",
+            "text": "$(l)蹦极僵尸$()喜欢冒险，毕竟对于没有活过的僵尸来说，又怎么会怕死呢？$(br)$(bred)生命值$() : $(l)45$()$(br)$(l)特性$() : 它具有两种攻击类型。第一种是$(bred)偷走并杀死敌人$()，只有当它$(l)正在偷时才能受到伤害$()，这个过程持续$(l)4秒$()。另一种是$(bred)从空中运送僵尸到地面$()。$(br)$(bpurple)克星$() : $(bgreen)叶子保护伞$()..."
+        },
+        {
+            "type": "entity",
+            "entity": "pvz:bungee_zombie",
+            "scale": 0.8,
+            "text": "外观"
+        },
+        {
+            "type": "spotlight",
+            "item": "pvz:target_arrow",
+            "title": "特殊掉落物",
+            "text": ""
+        }
+    ],
+    "sortnum": 27
+}

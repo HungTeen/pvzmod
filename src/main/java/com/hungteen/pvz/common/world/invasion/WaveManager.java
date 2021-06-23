@@ -13,6 +13,7 @@ import com.hungteen.pvz.common.entity.zombie.roof.BungeeZombieEntity.BungeeTypes
 import com.hungteen.pvz.common.event.handler.PlayerEventHandler;
 import com.hungteen.pvz.common.network.OtherStatsPacket;
 import com.hungteen.pvz.common.network.PVZPacketHandler;
+import com.hungteen.pvz.common.world.data.PVZFlagData;
 import com.hungteen.pvz.common.world.data.PVZInvasionData;
 import com.hungteen.pvz.register.EntityRegister;
 import com.hungteen.pvz.register.SoundRegister;
@@ -135,8 +136,11 @@ public class WaveManager {
 		if(this.spawned) {
 			PlayerUtil.playClientSound(player, 2);
 		    PlayerUtil.sendSubTitleToPlayer(player, HUGE_WAVE);
-		    this.activateTombStone();
-		    this.checkAndSummonBungee();
+		    PVZFlagData data = PVZFlagData.getGlobalFlagData(world);
+		    if(data.isZombossDefeated()) {
+		        this.activateTombStone();
+		        this.checkAndSummonBungee();
+		    }
 		}
 	}
 	

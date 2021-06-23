@@ -11,6 +11,7 @@ import com.hungteen.pvz.api.enums.PVZGroupType;
 import com.hungteen.pvz.api.interfaces.IPVZZombie;
 import com.hungteen.pvz.client.particle.ParticleUtil;
 import com.hungteen.pvz.common.advancement.trigger.CharmZombieTrigger;
+import com.hungteen.pvz.common.cache.InvasionCache;
 import com.hungteen.pvz.common.entity.ai.goal.PVZLookRandomlyGoal;
 import com.hungteen.pvz.common.entity.ai.goal.PVZSwimGoal;
 import com.hungteen.pvz.common.entity.ai.goal.ZombieBreakPlantBlockGoal;
@@ -30,7 +31,6 @@ import com.hungteen.pvz.common.entity.zombie.roof.BungeeZombieEntity;
 import com.hungteen.pvz.common.misc.damage.PVZDamageSource;
 import com.hungteen.pvz.common.misc.damage.PVZDamageType;
 import com.hungteen.pvz.common.world.data.PVZInvasionData;
-import com.hungteen.pvz.common.world.invasion.OverworldInvasion;
 import com.hungteen.pvz.data.loot.PVZLoot;
 import com.hungteen.pvz.register.BlockRegister;
 import com.hungteen.pvz.register.EffectRegister;
@@ -694,7 +694,7 @@ public abstract class PVZZombieEntity extends MonsterEntity implements IPVZZombi
 		Optional<Zombies> opt = ZombieUtil.getZombieNameByType(zombieType);
 		if(worldIn instanceof World) {
 			if(opt.isPresent()) {
-			    return OverworldInvasion.ZOMBIE_INVADE_SET.contains(opt.get());
+			    return InvasionCache.ZOMBIE_INVADE_SET.contains(opt.get());
 			} else {
 				PVZMod.LOGGER.error("No Such Zombie Type !");
 			    return false;
@@ -952,30 +952,37 @@ public abstract class PVZZombieEntity extends MonsterEntity implements IPVZZombi
 	
 	/* misc get */
 
+	@Override
 	public boolean canBeButter() {
 		return this.canBeButter;
 	}
 
+	@Override
 	public boolean canBeCharmed() {
 		return this.canBeCharm;
 	}
 
+	@Override
 	public boolean canBeFrozen() {
 		return this.canBeFrozen && !this.isInWater() && !this.isInLava();
 	}
 
+	@Override
 	public boolean canBeMini() {
 		return this.canBeMini;
 	}
 
+	@Override
 	public boolean canBeInvis() {
 		return this.canBeInvis;
 	}
 
+	@Override
 	public boolean canBeCold() {
 		return this.canBeCold;
 	}
 
+	@Override
 	public boolean canBeStealByBungee() {
 		return this.canBeStealByBungee;
 	}

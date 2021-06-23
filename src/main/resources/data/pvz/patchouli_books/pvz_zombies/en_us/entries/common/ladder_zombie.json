@@ -1,0 +1,24 @@
+{
+    "name": "Ladder Zombie",
+    "icon": "pvz:zombie_doll",
+    "category": "pvz:common",
+    "pages": [
+        {
+            "type": "text",
+            "text": "$(bred)Ladder Zombie$() picked the ladder up for $8.99.$(br)$(bred)Health$() : $(l)65$()$(br)$(bred)Door Health$() : $(l)250$()$(br)$(bred)Eat Damage$() : $(l)Low$()$(br)$(bblue)Speed$() : $(l)Fast$()$(br)$(l)Features$() : It can put its ladder on $(l)defender plants$() and all type of plant with $(l)pumpkin defence$() to $(bred)make them unavailable$()."
+        },
+        {
+            "type": "entity",
+            "entity": "pvz:ladder_zombie",
+            "scale": 0.8,
+            "text": "Appearance"
+        },
+        {
+            "type": "spotlight",
+            "item": "pvz:steel_ladder",
+            "title": "Special Drop",
+            "text": ""
+        }
+    ],
+    "sortnum": 28
+}

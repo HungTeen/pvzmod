@@ -46,9 +46,13 @@ public class ZombieUtil {
 
 	// range
 	public static final float NORMAL_FOLLOW_RANGE = 50;
+	public static final float CLOSE_TARGET_RANGE = 40;
+	public static final float LITTLW_CLOSE_TARGET_RANGE = 50;
 	public static final float NORMAL_TARGET_RANGE = 60;
 	public static final float LOW_TARGET_HEIGHT = 20;
 	public static final float NORMAL_TARGET_HEIGHT = 30;
+	public static final float LITTLE_HIGH_TARGET_HEIGHT = 40;
+	public static final float HIGH_TARGET_HEIGHT = 50;
 	
 	public static final HashMap<Zombies, Ranks> ZOMBIE_RANK = new HashMap<>();
 	public static final HashMap<EntityType<? extends PVZZombieEntity>, Zombies> ENTITY_TYPE_ZOMBIE = new HashMap<>();

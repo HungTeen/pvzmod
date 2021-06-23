@@ -1,5 +1,6 @@
 package com.hungteen.pvz.common.entity.zombie.roof;
 
+import com.hungteen.pvz.api.interfaces.IPVZPlant;
 import com.hungteen.pvz.common.entity.plant.PVZPlantEntity;
 import com.hungteen.pvz.common.entity.plant.base.PlantDefenderEntity;
 import com.hungteen.pvz.common.entity.zombie.base.DefenceZombieEntity;
@@ -43,25 +44,41 @@ public class LadderZombieEntity extends DefenceZombieEntity implements IHasMetal
 	@Override
 	public boolean doHurtTarget(Entity entityIn) {
 		if(this.hasMetal() && canTargetPutLadder(entityIn)) {
-			this.decreaseMetal();
-			PVZPlantEntity plant = (PVZPlantEntity) entityIn;
-			plant.increaseMetal();
+			this.putLadderOn(entityIn);
 		}
 		return super.doHurtTarget(entityIn);
 	}
 	
+	/**
+	 * {@link #doHurtTarget(Entity)}
+	 */
+	public void putLadderOn(Entity entity) {
+		if(entity instanceof IPVZPlant) {
+			((IPVZPlant) entity).increaseMetal();
+		}
+		this.decreaseMetal();
+	}
+	
 	public static boolean canTargetPutLadder(Entity target) {
-		if(! (target instanceof PVZPlantEntity)) return false;
-		if(hasLadderOnEntity(target)) return false;
-		if(target instanceof PlantDefenderEntity) return true;
+		//can not put ladder or already has ladder on.
+		if(! (target instanceof IPVZPlant) || hasLadderOnEntity(target)) {
+			return false;
+		}
+		if(target instanceof PlantDefenderEntity) {
+			return true;
+		}
 		PVZPlantEntity plant = (PVZPlantEntity) target;
 		return plant.getOuterPlantType().isPresent() && plant.getOuterPlantType().get() == Plants.PUMPKIN;
 	}
 	
-	public static boolean hasLadderOnEntity(Entity target) {
-		if(! (target instanceof PVZPlantEntity)) return false;
-		PVZPlantEntity plant = (PVZPlantEntity) target;
-		return plant.hasMetal();
+	/**
+	 * {@link #canTargetPutLadder(Entity)}
+	 */
+	private static boolean hasLadderOnEntity(Entity target) {
+		if(! (target instanceof IPVZPlant)) {
+			return false;
+		}
+		return ((IPVZPlant) target).hasMetal();
 	}
 	
 	@Override

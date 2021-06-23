@@ -1,0 +1,24 @@
+{
+    "name": "扶梯僵尸",
+    "icon": "pvz:zombie_doll",
+    "category": "pvz:common",
+    "pages": [
+        {
+            "type": "text",
+            "text": "$(l)扶梯僵尸$()当初为了买它手里的梯子，居然花了九磅十五便士。$(br)$(bred)生命值$() : $(l)65$()$(br)$(bred)梯子生命值$() : $(l)250$()$(br)$(bred)攻击力$() : $(l)低$()$(br)$(bblue)速度$() : $(l)快$()$(br)$(l)特性$() :它可以将手里的梯子放在$(l)防御型植物$()以及所有$(l)带有南瓜头的植物$()上，$(bred)使植物失效$()。"
+        },
+        {
+            "type": "entity",
+            "entity": "pvz:ladder_zombie",
+            "scale": 0.8,
+            "text": "外观"
+        },
+        {
+            "type": "spotlight",
+            "item": "pvz:steel_ladder",
+            "title": "特殊掉落",
+            "text": ""
+        }
+    ],
+    "sortnum": 28
+}

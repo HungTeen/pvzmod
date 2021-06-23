@@ -38,8 +38,11 @@ public class TargetArrowEntity extends AbstractArrowEntity {
 			} else {
 				if(this.getOwner() instanceof BungeeZombieEntity) {
 					BungeeZombieEntity bungee = (BungeeZombieEntity) this.getOwner();
-					if(bungee.getStealTarget() != null) {
+					if(EntityUtil.isEntityValid(bungee.getStealTarget())) {
 						this.shoot(bungee.getStealTarget());
+					} else {
+						this.remove();
+						return ;
 					}
 				}
 			}
@@ -66,7 +69,7 @@ public class TargetArrowEntity extends AbstractArrowEntity {
 	
 	public void shoot(LivingEntity target) {
 		Vector3d speed = target.position().subtract(this.position()).normalize();
-		double multi = 1D;
+		double multi = 1.3D;
 		this.setDeltaMovement(speed.multiply(multi, multi, multi));
 	}
 	

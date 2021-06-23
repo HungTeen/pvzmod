@@ -32,7 +32,6 @@ import com.hungteen.pvz.utils.enums.Essences;
 import com.hungteen.pvz.utils.enums.MetalTypes;
 import com.hungteen.pvz.utils.enums.Plants;
 import com.hungteen.pvz.utils.enums.Ranks;
-import com.hungteen.pvz.utils.interfaces.IHasMetal;
 
 import net.minecraft.block.Block;
 import net.minecraft.block.Blocks;
@@ -66,7 +65,7 @@ import net.minecraft.world.GameRules;
 import net.minecraft.world.IServerWorld;
 import net.minecraft.world.World;
 
-public abstract class PVZPlantEntity extends CreatureEntity implements IPVZPlant, IHasMetal {
+public abstract class PVZPlantEntity extends CreatureEntity implements IPVZPlant {
 
 	private static final DataParameter<Integer> SUPER_TIME = EntityDataManager.defineId(PVZPlantEntity.class,
 			DataSerializers.INT);

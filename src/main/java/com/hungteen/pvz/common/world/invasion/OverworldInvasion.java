@@ -1,13 +1,12 @@
 package com.hungteen.pvz.common.world.invasion;
 
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
 import javax.annotation.Nonnull;
 
 import com.hungteen.pvz.PVZConfig;
+import com.hungteen.pvz.common.cache.InvasionCache;
 import com.hungteen.pvz.common.world.data.PVZFlagData;
 import com.hungteen.pvz.common.world.data.PVZInvasionData;
 import com.hungteen.pvz.utils.PlayerUtil;
@@ -33,7 +32,6 @@ public class OverworldInvasion {
 	private static final ITextComponent SAFE_DAY_INFO = new TranslationTextComponent("event.pvz.safe_day");
 	private static final ITextComponent COUNT_DOWN_INFO = new TranslationTextComponent("event.pvz.count_down");
 	private static final ITextComponent DAY = new TranslationTextComponent("event.pvz.day");
-	public static final Set<Zombies> ZOMBIE_INVADE_SET = new HashSet<>();
 	public static final int PRE_START_TICK = 499;
 	public static final int START_TICK = 500;
 	public static final int PRE_END_TICK = 99;
@@ -266,7 +264,7 @@ public class OverworldInvasion {
 		PVZInvasionData data = PVZInvasionData.getOverWorldInvasionData(world);
         for (Zombies zombie : Zombies.values()) {
         	if(data.hasZombieSpawnEntry(zombie)) {
-        		ZOMBIE_INVADE_SET.add(zombie);
+        		InvasionCache.ZOMBIE_INVADE_SET.add(zombie);
         	}
         }
 	}
@@ -275,7 +273,7 @@ public class OverworldInvasion {
 	 * for server end sync.
 	 */
 	public static void syncEndSpawnList(World world) {
-		ZOMBIE_INVADE_SET.clear();
+		InvasionCache.ZOMBIE_INVADE_SET.clear();
 	}
 	
 	/**

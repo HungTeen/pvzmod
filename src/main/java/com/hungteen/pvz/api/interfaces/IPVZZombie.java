@@ -14,4 +14,18 @@ public interface IPVZZombie extends IHasOwner, IGroupEntity, ICanCharm, ICanAttr
 	int getZombieXp();
 	
 	int getAttackCD();
+	
+	boolean canBeButter();
+	
+	boolean canBeCharmed();
+	
+	boolean canBeFrozen();
+	
+	boolean canBeMini();
+	
+	boolean canBeInvis();
+	
+	boolean canBeCold();
+	
+	boolean canBeStealByBungee();
 }

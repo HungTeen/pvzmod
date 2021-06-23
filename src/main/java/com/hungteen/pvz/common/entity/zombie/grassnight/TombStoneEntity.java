@@ -1,14 +1,12 @@
 package com.hungteen.pvz.common.entity.zombie.grassnight;
 
-import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
-import java.util.stream.Collectors;
 
+import com.hungteen.pvz.common.cache.InvasionCache;
 import com.hungteen.pvz.common.entity.plant.assist.GraveBusterEntity;
 import com.hungteen.pvz.common.entity.zombie.other.NobleZombieEntity;
 import com.hungteen.pvz.common.entity.zombie.roof.ZomBossEntity;
-import com.hungteen.pvz.common.world.invasion.OverworldInvasion;
 import com.hungteen.pvz.common.world.invasion.WaveManager;
 import com.hungteen.pvz.register.EntityRegister;
 import com.hungteen.pvz.utils.EntityUtil;
@@ -27,10 +25,6 @@ import net.minecraft.world.World;
 
 public class TombStoneEntity extends AbstractTombStoneEntity {
 
-	public static final List<Zombies> DEFAULT_ZOMBIES = Arrays.asList(
-			Zombies.NORMAL_ZOMBIE, Zombies.CONEHEAD_ZOMBIE, Zombies.BUCKETHEAD_ZOMBIE,
-			Zombies.SCREENDOOR_ZOMBIE, Zombies.NEWSPAPER_ZOMBIE, Zombies.OLD_ZOMBIE
-			);
 	protected int waveSummonTick = 0;
 	protected int currentSummonCD;
 	private final int MinSummonCD = 360;
@@ -79,7 +73,7 @@ public class TombStoneEntity extends AbstractTombStoneEntity {
 	 * {@link TombStoneSummonZombieGoal} and {@link #normalZombieTick()}
 	 */
 	public void summonZombie() {
-		final List<Zombies> list = OverworldInvasion.ZOMBIE_INVADE_SET.isEmpty() ? DEFAULT_ZOMBIES : OverworldInvasion.ZOMBIE_INVADE_SET.stream().collect(Collectors.toList());
+		final List<Zombies> list = InvasionCache.getOrDefaultZombieList(Zombies.DEFAULT_ZOMBIES);
 		final Zombies zombieType = list.get(this.random.nextInt(list.size()));
 		Optional.ofNullable(ZombieUtil.getZombieEntity(level, zombieType)).ifPresent(zombie -> {
 			zombie.setZombieRising();

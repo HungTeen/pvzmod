@@ -15,6 +15,8 @@ import com.hungteen.pvz.api.enums.PVZGroupType;
 import com.hungteen.pvz.api.interfaces.ICanCharm;
 import com.hungteen.pvz.api.interfaces.IGroupEntity;
 import com.hungteen.pvz.api.interfaces.IHasOwner;
+import com.hungteen.pvz.api.interfaces.IPVZPlant;
+import com.hungteen.pvz.api.interfaces.IPVZZombie;
 import com.hungteen.pvz.common.entity.PVZMultiPartEntity;
 import com.hungteen.pvz.common.entity.ai.goal.attack.PVZZombieAttackGoal;
 import com.hungteen.pvz.common.entity.ai.goal.target.PVZHurtByTargetGoal;
@@ -178,10 +180,13 @@ public class EntityUtil {
 	/**
 	 * entity's health more than 100 is consider as other mod's boss.
 	 */
-	public static boolean isEntityBoss(LivingEntity entity) {
-		if(entity instanceof PVZZombieEntity) {
-			Zombies zombie = ((PVZZombieEntity) entity).getZombieEnumName();
+	public static boolean isEntityBoss(@Nonnull LivingEntity entity) {
+		if(entity instanceof IPVZZombie) {
+			Zombies zombie = ((IPVZZombie) entity).getZombieEnumName();
 			return Zombies.BOSSES.contains(zombie);
+		}
+		if(entity instanceof IPVZPlant) {
+			return false;
 		}
 		return entity.getHealth() > 100F;
 	}

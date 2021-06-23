@@ -2,6 +2,7 @@ package com.hungteen.pvz.utils.enums;
 
 import java.util.Arrays;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 import com.hungteen.pvz.utils.others.WeightList;
@@ -65,6 +66,10 @@ public enum Zombies {
 	GIGA_TOMB_STONE(0, 0);
 
 	public static final WeightList<Zombies> ZOMBIE_SPAWN_LIST = new WeightList<>();
+	public static final List<Zombies> DEFAULT_ZOMBIES = Arrays.asList(
+			Zombies.NORMAL_ZOMBIE, Zombies.CONEHEAD_ZOMBIE, Zombies.BUCKETHEAD_ZOMBIE,
+			Zombies.SCREENDOOR_ZOMBIE, Zombies.NEWSPAPER_ZOMBIE
+			);
 	public static final Set<Zombies> BOSSES = new HashSet<>(Arrays.asList(
 			ZOMBOSS, COFFIN, NOBLE_ZOMBIE
 			));
