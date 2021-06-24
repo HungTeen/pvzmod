@@ -1,0 +1,25 @@
+{
+    "name": "南瓜头僵尸",
+    "icon": "pvz:zombie_doll",
+    "category": "pvz:zombotany",
+    "pages": [
+        {
+            "type": "text",
+            "text": "$(l)南瓜头僵尸$()是一个长有南瓜头的普通僵尸，$(m)不过你还是可以看到它的头$()。$(br)$(bred)生命值$() : $(l)180$()$(br)$(bred)攻击力$() : $(l)低$()$(br)$(bblue)速度$() : $(l)慢$()$(br)$(l)特性$() : 它$(bred)每次攻击会恢复20生命值$()。它下水会穿上$(byellow)鸭子救生圈$()加快水上行动速度。"
+        },
+        {
+            "type": "entity",
+            "entity": "pvz:pumpkin_zombie",
+            "scale": 0.8,
+            "text": "外观"
+        },
+        {
+            "type": "spotlight",
+            "item": "pvz:pumpkin_enjoy_card",
+            "title": "特殊掉落物",
+            "text": ""
+        }
+    ],
+    //"advancement": "pvz:adventure/zomboss",
+    "sortnum": 6
+}

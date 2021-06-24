@@ -1,0 +1,26 @@
+{
+    "name": "TallNut Zombie",
+    "icon": "pvz:zombie_doll",
+    "category": "pvz:zombotany",
+    "pages": [
+        {
+            "type": "text",
+            "text": "$(bred)TallNut Zombie$() is a Normal Zombie with TallNut's head.$(br)$(bred)Health$() : $(l)320$()$(br)$(bred)Eat Damage$() : $(l)Low$()$(br)$(bblue)Speed$() : $(l)Little Slow$()$(br)$(l)Features$() : When it's in water, it will wear a $(byellow)ducky tube$() to speed up."
+        },
+        {
+            "type": "entity",
+            "entity": "pvz:tallnut_zombie",
+            "scale": 0.8,
+            "offset": 0.3,
+            "text": "Appearance"
+        },
+        {
+            "type": "spotlight",
+            "item": "pvz:tall_nut_enjoy_card",
+            "title": "Special Drop",
+            "text": ""
+        }
+    ],
+    //"advancement": "pvz:adventure/zomboss",
+    "sortnum": 3
+}

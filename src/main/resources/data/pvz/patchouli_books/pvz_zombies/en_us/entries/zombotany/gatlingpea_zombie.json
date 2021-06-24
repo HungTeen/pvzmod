@@ -1,0 +1,25 @@
+{
+    "name": "GatlingPea Zombie",
+    "icon": "pvz:zombie_doll",
+    "category": "pvz:zombotany",
+    "pages": [
+        {
+            "type": "text",
+            "text": "$(bred)GatlingPea Zombie$() is a Normal Zombie with GatlingPea's head.$(br)$(bred)Health$() : $(l)30$()$(br)$(bred)Eat Damage$() : $(l)Low$()$(br)$(bblue)Speed$() : $(l)Normal$()$(br)$(l)Features$() : It can periodically fire peas at the enemy, $(l)four peas per shot$(). When it's in water, it will wear a $(byellow)ducky tube$() to speed up."
+        },
+        {
+            "type": "entity",
+            "entity": "pvz:gatlingpea_zombie",
+            "scale": 0.8,
+            "text": "Appearance"
+        },
+        {
+            "type": "spotlight",
+            "item": "pvz:gatling_pea_enjoy_card",
+            "title": "Special Drop",
+            "text": ""
+        }
+    ],
+    //"advancement": "pvz:adventure/zomboss",
+    "sortnum": 2
+}

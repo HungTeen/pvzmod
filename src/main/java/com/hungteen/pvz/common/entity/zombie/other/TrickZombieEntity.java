@@ -44,13 +44,11 @@ public class TrickZombieEntity extends PVZZombieEntity{
 	
 	@Override
 	public boolean hurt(DamageSource source, float amount) {
-		if(amount >= 2 && ! level.isClientSide && this.tickCount - this.lastSummonTick >= this.summonGap && this.getRandom().nextInt(SUMMON_CHACNE) == 0) {
+		if(amount >= 1.1F && ! level.isClientSide && this.tickCount - this.lastSummonTick >= this.summonGap && this.getRandom().nextInt(SUMMON_CHACNE) == 0) {
 			this.lastSummonTick = this.tickCount;
 			TrickZombieEntity zombie = EntityRegister.TRICK_ZOMBIE.get().create(level);
 			BlockPos pos = blockPosition().offset(this.getRandom().nextInt(5) - 2, this.getRandom().nextInt(2), this.getRandom().nextInt(5) - 2);
-			if(this.isCharmed()) {
-				zombie.setCharmed(true);
-			}
+			ZombieUtil.copySummonZombieData(this, zombie);
 			EntityUtil.onEntitySpawn(level, zombie, pos);
 		}
 		return super.hurt(source, amount);

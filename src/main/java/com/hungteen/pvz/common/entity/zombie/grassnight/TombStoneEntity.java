@@ -77,6 +77,7 @@ public class TombStoneEntity extends AbstractTombStoneEntity {
 		final Zombies zombieType = list.get(this.random.nextInt(list.size()));
 		Optional.ofNullable(ZombieUtil.getZombieEntity(level, zombieType)).ifPresent(zombie -> {
 			zombie.setZombieRising();
+			ZombieUtil.copySummonZombieData(this, zombie);
 			EntityUtil.onEntitySpawn(level, zombie, blockPosition());
 		});
 	}

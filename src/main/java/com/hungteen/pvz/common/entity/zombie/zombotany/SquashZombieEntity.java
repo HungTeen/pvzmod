@@ -24,7 +24,7 @@ public class SquashZombieEntity extends AbstractZombotanyEntity {
 	@Override
 	protected void updateAttributes() {
 		super.updateAttributes();
-		this.getAttribute(Attributes.MOVEMENT_SPEED).setBaseValue(ZombieUtil.WALK_FAST);
+		this.getAttribute(Attributes.MOVEMENT_SPEED).setBaseValue(ZombieUtil.WALK_VERY_FAST);
 	}
 	
 	@Override

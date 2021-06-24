@@ -68,17 +68,14 @@ public class ZomBossEntity extends PVZZombieEntity {
 	public ZomBossEntity(EntityType<? extends MonsterEntity> type, World worldIn) {
 		super(type, worldIn);
 		this.canCollideWithZombie = false;
+		this.setImmuneAllEffects();
 		this.canBeMini = false;
-		this.canBeButter = false;
 		this.canBeCharm = false;
-		this.canBeCold = false;
-		this.canBeFrozen = false;
 		this.canBeInvis = false;
 		this.canBeStealByBungee = false;
 		this.hasDirectDefence = true;
 		this.maxDeathTime = 60;
-		this.canLostHand = false;
-		this.canLostHead = false;
+		this.setIsWholeBody();
 		this.canBeRemove = false;
 		this.resetShootBallCD();
 		this.resetStealCD();
@@ -109,7 +106,7 @@ public class ZomBossEntity extends PVZZombieEntity {
 	@Override
 	protected void registerGoals() {
 		this.goalSelector.addGoal(7, new LookAtGoal(this, PlayerEntity.class, 40.0F));
-		this.targetSelector.addGoal(0, new PVZNearestTargetGoal(this, false, 70, 60));
+		this.targetSelector.addGoal(0, new PVZNearestTargetGoal(this, false, ZombieUtil.LITTLE_FAR_TARGET_RANGE, ZombieUtil.HIGH_TARGET_HEIGHT));
 	}
 	
 	@Override
@@ -270,6 +267,7 @@ public class ZomBossEntity extends PVZZombieEntity {
 			zombie.setBungeeType(BungeeTypes.STEAL);
 			zombie.setStealTarget(target);
 			zombie.setBungeeState(BungeeStates.DOWN);
+			ZombieUtil.copySummonZombieData(this, zombie);
 			EntityUtil.onEntitySpawn(level, zombie, blockPosition().above(18));
 		}
 	}

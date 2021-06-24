@@ -10,6 +10,7 @@ public class GigaTombStoneEntity extends AbstractTombStoneEntity {
 
 	public GigaTombStoneEntity(EntityType<? extends MonsterEntity> type, World worldIn) {
 		super(type, worldIn);
+		this.canBeCharm = false;
 	}
 
 	@Override

@@ -1,0 +1,26 @@
+{
+    "name": "Squash Zombie",
+    "icon": "pvz:zombie_doll",
+    "category": "pvz:zombotany",
+    "pages": [
+        {
+            "type": "text",
+            "text": "$(bred)Squash Zombie$() is a Normal Zombie with Squash's head.$(br)$(bred)Health$() : $(l)25$()$(br)$(bred)Eat Damage$() : $(l)Low$()$(br)$(bblue)Speed$() : $(l)Very Fast$()$(br)$(l)Features$() : It will summon Squash to $(bred)crash its enemy$() which is close to and then die. When it's in water, it will wear a $(byellow)ducky tube$() to speed up."
+        },
+        {
+            "type": "entity",
+            "entity": "pvz:squash_zombie",
+            "scale": 0.8,
+            "offset": 0.3,
+            "text": "Appearance"
+        },
+        {
+            "type": "spotlight",
+            "item": "pvz:squash_enjoy_card",
+            "title": "Special Drop",
+            "text": ""
+        }
+    ],
+    //"advancement": "pvz:adventure/zomboss",
+    "sortnum": 4
+}

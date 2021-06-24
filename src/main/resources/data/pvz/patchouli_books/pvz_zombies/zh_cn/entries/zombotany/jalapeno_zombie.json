@@ -1,0 +1,26 @@
+{
+    "name": "火爆辣椒僵尸",
+    "icon": "pvz:zombie_doll",
+    "category": "pvz:zombotany",
+    "pages": [
+        {
+            "type": "text",
+            "text": "$(l)火爆辣椒僵尸$()是一个长有火爆辣椒头的普通僵尸。$(br)$(bred)生命值$() : $(l)44$()$(br)$(bred)攻击力$() : $(l)低$()$(br)$(bblue)速度$() : $(l)快$()$(br)$(l)特性$() : 死亡时如果没有$(baqua)寒冷或冰冻$()效果，则会爆炸产生$(bred)十字交叉的烈焰$()对其中的所有敌人造成$(bred)致命伤害$()。它下水会穿上$(byellow)鸭子救生圈$()加快水上行动速度。"
+        },
+        {
+            "type": "entity",
+            "entity": "pvz:jalapeno_zombie",
+            "scale": 0.8,
+            "offset": 0.3,
+            "text": "外观"
+        },
+        {
+            "type": "spotlight",
+            "item": "pvz:jalapeno_enjoy_card",
+            "title": "特殊掉落物",
+            "text": ""
+        }
+    ],
+    //"advancement": "pvz:adventure/zomboss",
+    "sortnum": 5
+}

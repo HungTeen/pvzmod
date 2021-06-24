@@ -313,8 +313,8 @@ public abstract class PVZZombieEntity extends MonsterEntity implements IPVZZombi
 	protected void onFallBody(DamageSource source) {
 		ZombieDropBodyEntity body = EntityRegister.ZOMBIE_DROP_BODY.get().create(level);
 		body.droppedByOwner(this, source, BodyType.BODY);
-		this.setBodyStates(body);
 		body.setMaxLiveTick(40);
+		this.setBodyStates(body);
 		level.addFreshEntity(body);
 	}
 	
@@ -938,7 +938,6 @@ public abstract class PVZZombieEntity extends MonsterEntity implements IPVZZombi
 	public void setImmuneAllEffects() {
 		this.canBeButter = false;
 		this.canBeCold = false;
-		this.canBeCharm = false;
 		this.canBeFrozen = false;
 	}
 	
