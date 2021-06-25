@@ -252,7 +252,7 @@ public abstract class PVZZombieEntity extends MonsterEntity implements IPVZZombi
 	public void aiStep() {
 		super.aiStep();
 		this.zombieTick();
-		if (this.isAlive() && this.canZombieNormalUpdate()) {
+		if (this.canZombieNormalUpdate()) {
 			this.level.getProfiler().push("PVZ Zombie Tick");
 		    this.normalZombieTick();
 		    this.level.getProfiler().pop();
@@ -431,7 +431,7 @@ public abstract class PVZZombieEntity extends MonsterEntity implements IPVZZombi
 
 	/**
 	 * {@link #onZombieRemove()}
-	 * {@link #onCharmed(PVZPlantEntity)}
+	 * {@link #onCharmedBy(LivingEntity)}
 	 */
 	protected void dropEnergy() {
 		EntityUtil.createEntityAndSpawn(level, EntityRegister.ENERGY.get(), this.blockPosition().above());
@@ -707,6 +707,11 @@ public abstract class PVZZombieEntity extends MonsterEntity implements IPVZZombi
 	public float getWalkTargetValue(BlockPos pos, IWorldReader worldIn) {
 		return 9 - worldIn.getBrightness(LightType.BLOCK, pos);
 	}
+	
+	@Override
+	public boolean removeWhenFarAway(double distanceToClosestPlayer) {
+		return ! this.getOwnerUUID().isPresent();
+	}
 
 	/**
 	 * damage type of zombie.
@@ -845,11 +850,15 @@ public abstract class PVZZombieEntity extends MonsterEntity implements IPVZZombi
 	 * check can run {@link #normalZombieTick()} or not.
 	 */
 	public boolean canZombieNormalUpdate() {
+		if(! EntityUtil.isEntityValid(this)) {
+			return false;
+		}
 		if(this.needRising && this.getAnimTime() < 0) {//rising didn't update.
 			return false;
 		}
-		if (this.getVehicle() instanceof BungeeZombieEntity)
+		if (this.getVehicle() instanceof BungeeZombieEntity) {
 			return false;
+		}
 		return !EntityUtil.isEntityFrozen(this) && !EntityUtil.isEntityButter(this);
 	}
 	
@@ -896,17 +905,19 @@ public abstract class PVZZombieEntity extends MonsterEntity implements IPVZZombi
 	/**
 	 * when zombie turn to oppsite charm state charm -> uncharm or uncharm -> charm.
 	 */
-	public void onCharmed(PVZPlantEntity plantEntity) {
-		if (this.canBeCharmed()) {
-			PlayerEntity player = EntityUtil.getEntityOwner(level, plantEntity);
-			if (player != null && player instanceof ServerPlayerEntity) {
-				CharmZombieTrigger.INSTANCE.trigger((ServerPlayerEntity) player, this);
-			}
-			this.setCharmed(!this.isCharmed());
-			if (this.getZombieType() == Type.SUPER) {
-				this.setZombieType(Type.NORMAL);
-				this.dropEnergy();
-			}
+	@Override
+	public void onCharmedBy(LivingEntity entity) {
+		if(! this.canBeCharmed()) {
+			return ;
+		}
+		PlayerEntity player = EntityUtil.getEntityOwner(level, entity);
+		if (player != null && player instanceof ServerPlayerEntity) {
+			CharmZombieTrigger.INSTANCE.trigger((ServerPlayerEntity) player, this);
+		}
+		this.setCharmed(!this.isCharmed());
+		if (this.getZombieType() == Type.SUPER) {
+			this.setZombieType(Type.NORMAL);
+			this.dropEnergy();
 		}
 	}
 	
@@ -963,7 +974,7 @@ public abstract class PVZZombieEntity extends MonsterEntity implements IPVZZombi
 
 	@Override
 	public boolean canBeFrozen() {
-		return this.canBeFrozen && !this.isInWater() && !this.isInLava();
+		return this.canBeFrozen && !this.isInWaterOrBubble() && !this.isInLava();
 	}
 
 	@Override

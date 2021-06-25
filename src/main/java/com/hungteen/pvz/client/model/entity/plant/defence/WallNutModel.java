@@ -1,8 +1,7 @@
 package com.hungteen.pvz.client.model.entity.plant.defence;
 
+import com.hungteen.pvz.client.model.entity.plant.PVZPlantModel;
 import com.hungteen.pvz.common.entity.plant.defence.WallNutEntity;
-import com.mojang.blaze3d.matrix.MatrixStack;
-import com.mojang.blaze3d.vertex.IVertexBuilder;
 
 import net.minecraft.client.renderer.entity.model.EntityModel;
 import net.minecraft.client.renderer.model.ModelRenderer;
@@ -12,7 +11,7 @@ import net.minecraft.client.renderer.model.ModelRenderer;
 // Paste this class into your mod and generate all required imports
 
 
-public class WallNutModel<T extends WallNutEntity> extends EntityModel<T> {
+public class WallNutModel<T extends WallNutEntity> extends PVZPlantModel<T> {
 	private final ModelRenderer body;
 
 	public WallNutModel() {
@@ -43,13 +42,12 @@ public class WallNutModel<T extends WallNutEntity> extends EntityModel<T> {
 	}
 
 	@Override
-	public void renderToBuffer(MatrixStack matrixStack, IVertexBuilder buffer, int packedLight, int packedOverlay, float red, float green, float blue, float alpha){
-		body.render(matrixStack, buffer, packedLight, packedOverlay);
+	public ModelRenderer getPlantWholeBody() {
+		return this.body;
 	}
 
-	public void setRotationAngle(ModelRenderer modelRenderer, float x, float y, float z) {
-		modelRenderer.xRot = x;
-		modelRenderer.yRot = y;
-		modelRenderer.zRot = z;
+	@Override
+	public EntityModel<T> getPlantModel() {
+		return this;
 	}
 }

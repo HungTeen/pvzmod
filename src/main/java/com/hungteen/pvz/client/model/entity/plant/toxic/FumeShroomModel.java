@@ -1,8 +1,7 @@
 package com.hungteen.pvz.client.model.entity.plant.toxic;
 
+import com.hungteen.pvz.client.model.entity.plant.PVZPlantModel;
 import com.hungteen.pvz.common.entity.plant.toxic.FumeShroomEntity;
-import com.mojang.blaze3d.matrix.MatrixStack;
-import com.mojang.blaze3d.vertex.IVertexBuilder;
 
 import net.minecraft.client.renderer.entity.model.EntityModel;
 import net.minecraft.client.renderer.model.ModelRenderer;
@@ -12,7 +11,7 @@ import net.minecraft.client.renderer.model.ModelRenderer;
 // Paste this class into your mod and generate all required imports
 
 
-public class FumeShroomModel extends EntityModel<FumeShroomEntity> {
+public class FumeShroomModel extends PVZPlantModel<FumeShroomEntity> {
 	private final ModelRenderer total;
 
 	public FumeShroomModel() {
@@ -31,17 +30,15 @@ public class FumeShroomModel extends EntityModel<FumeShroomEntity> {
 
 	@Override
 	public void setupAnim(FumeShroomEntity entity, float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch){
-		//previously the render function, render code was moved to a method below
 	}
 
 	@Override
-	public void renderToBuffer(MatrixStack matrixStack, IVertexBuilder buffer, int packedLight, int packedOverlay, float red, float green, float blue, float alpha){
-		total.render(matrixStack, buffer, packedLight, packedOverlay);
+	public ModelRenderer getPlantWholeBody() {
+		return this.total;
 	}
 
-	public void setRotationAngle(ModelRenderer modelRenderer, float x, float y, float z) {
-		modelRenderer.xRot = x;
-		modelRenderer.yRot = y;
-		modelRenderer.zRot = z;
+	@Override
+	public EntityModel<FumeShroomEntity> getPlantModel() {
+		return this;
 	}
 }

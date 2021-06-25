@@ -12,6 +12,7 @@ import com.mojang.blaze3d.matrix.MatrixStack;
 import net.minecraft.client.renderer.entity.EntityRendererManager;
 import net.minecraft.client.renderer.entity.MobRenderer;
 import net.minecraft.client.renderer.entity.model.EntityModel;
+import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.vector.Vector3d;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
@@ -41,10 +42,17 @@ public abstract class PVZPlantRender<T extends PVZPlantEntity> extends MobRender
 		this.addLayer(new PlantLadderLayer<>(this));
 	}
 	
-	public abstract float getScaleByEntity(T entity);
+	public float getScaleByEntity(T entity) {
+		return PlantRenderHandler.getPlantScale(entity.getPlantEnumName());
+	}
 	
 	public Vector3d getTranslateVec(T entity) {
 		return new Vector3d(0, 0, 0);
+	}
+	
+	@Override
+	public ResourceLocation getTextureLocation(T entity) {
+		return PlantRenderHandler.getPlantTex(entity.getPlantEnumName()).orElse(PlantRenderHandler.PEA_SHOOTER_TEX);
 	}
 	
 }

@@ -1,8 +1,7 @@
 package com.hungteen.pvz.client.model.entity.plant.spear;
 
+import com.hungteen.pvz.client.model.entity.plant.PVZPlantModel;
 import com.hungteen.pvz.common.entity.plant.spear.CatTailEntity;
-import com.mojang.blaze3d.matrix.MatrixStack;
-import com.mojang.blaze3d.vertex.IVertexBuilder;
 
 import net.minecraft.client.renderer.entity.model.EntityModel;
 import net.minecraft.client.renderer.model.ModelRenderer;
@@ -13,7 +12,7 @@ import net.minecraft.util.math.MathHelper;
 // Paste this class into your mod and generate all required imports
 
 
-public class CatTailModel extends EntityModel<CatTailEntity> {
+public class CatTailModel extends PVZPlantModel<CatTailEntity> {
 	private final ModelRenderer total;
 	private final ModelRenderer body;
 	private final ModelRenderer bone4;
@@ -177,13 +176,12 @@ public class CatTailModel extends EntityModel<CatTailEntity> {
 	}
 
 	@Override
-	public void renderToBuffer(MatrixStack matrixStack, IVertexBuilder buffer, int packedLight, int packedOverlay, float red, float green, float blue, float alpha){
-		total.render(matrixStack, buffer, packedLight, packedOverlay);
+	public ModelRenderer getPlantWholeBody() {
+		return this.total;
 	}
 
-	public void setRotationAngle(ModelRenderer modelRenderer, float x, float y, float z) {
-		modelRenderer.xRot = x;
-		modelRenderer.yRot = y;
-		modelRenderer.zRot = z;
+	@Override
+	public EntityModel<CatTailEntity> getPlantModel() {
+		return this;
 	}
 }

@@ -36,7 +36,7 @@ public class CoffeeBeanEntity extends PlantBomberEntity{
 					if(plant.isPlantSleeping()) {
 						++ awakeCnt;
 					}
-					plant.setSleepTime(- this.getAwakeTime());
+					plant.sleepTime = - this.getAwakeTime();
 					hasEffect = true;
 				}
 			}

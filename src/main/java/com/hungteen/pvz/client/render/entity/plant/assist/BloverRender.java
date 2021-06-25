@@ -3,10 +3,8 @@ package com.hungteen.pvz.client.render.entity.plant.assist;
 import com.hungteen.pvz.client.model.entity.plant.assist.BloverModel;
 import com.hungteen.pvz.client.render.entity.plant.PVZPlantRender;
 import com.hungteen.pvz.common.entity.plant.assist.BloverEntity;
-import com.hungteen.pvz.utils.StringUtil;
 
 import net.minecraft.client.renderer.entity.EntityRendererManager;
-import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 
@@ -17,14 +15,9 @@ public class BloverRender extends PVZPlantRender<BloverEntity> {
 		super(rendererManager, new BloverModel(), 0.4F);
 	}
 
-	@Override
-	public float getScaleByEntity(BloverEntity entity) {
-		return 1.2F + entity.getLiveTick() * 0.3F / entity.getReadyTime();
-	}
-
-	@Override
-	public ResourceLocation getTextureLocation(BloverEntity entity) {
-		return StringUtil.prefix("textures/entity/plant/assist/blover.png");
-	}
+//	@Override
+//	public float getScaleByEntity(BloverEntity entity) {
+//		return 1.2F + entity.getLiveTick() * 0.3F / entity.getReadyTime();
+//	}
 
 }

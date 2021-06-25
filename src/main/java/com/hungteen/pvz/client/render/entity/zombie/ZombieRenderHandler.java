@@ -13,6 +13,7 @@ public class ZombieRenderHandler {
 
 	public static final Map<Zombies, ResourceLocation> ZOMBIE_TEX = new EnumMap<>(Zombies.class);
 	public static final Map<Zombies, Float> ZOMBIE_SCALE = new EnumMap<>(Zombies.class);
+	
 	public static final ResourceLocation NORMAL_ZOMBIE_TEX = get(Zombies.NORMAL_ZOMBIE);
 	public static final ResourceLocation FLAG_ZOMBIE_TEX = get(Zombies.FLAG_ZOMBIE);
 	public static final ResourceLocation CONEHEAD_ZOMBIE_TEX = get(Zombies.CONEHEAD_ZOMBIE);

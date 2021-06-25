@@ -67,7 +67,7 @@ public class PuffShroomEntity extends PlantShooterEntity {
 				    shroom.startSuperMode(false);
 				    ++ cnt;
 				}
-				shroom.setLiveTick(0);
+//				shroom.setLiveTick(0);
 			}
 			PlayerEntity player = EntityUtil.getEntityOwner(level, this);
 			if(player != null && player instanceof ServerPlayerEntity) {

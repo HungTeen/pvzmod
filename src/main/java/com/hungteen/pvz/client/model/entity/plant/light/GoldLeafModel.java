@@ -1,8 +1,7 @@
 package com.hungteen.pvz.client.model.entity.plant.light;
 
+import com.hungteen.pvz.client.model.entity.plant.PVZPlantModel;
 import com.hungteen.pvz.common.entity.plant.light.GoldLeafEntity;
-import com.mojang.blaze3d.matrix.MatrixStack;
-import com.mojang.blaze3d.vertex.IVertexBuilder;
 
 import net.minecraft.client.renderer.entity.model.EntityModel;
 import net.minecraft.client.renderer.model.ModelRenderer;
@@ -12,7 +11,7 @@ import net.minecraft.client.renderer.model.ModelRenderer;
 // Paste this class into your mod and generate all required imports
 
 
-public class GoldLeafModel extends EntityModel<GoldLeafEntity> {
+public class GoldLeafModel extends PVZPlantModel<GoldLeafEntity> {
 	private final ModelRenderer total;
 	private final ModelRenderer cube_r1;
 	private final ModelRenderer cube_r2;
@@ -153,13 +152,12 @@ public class GoldLeafModel extends EntityModel<GoldLeafEntity> {
 	}
 
 	@Override
-	public void renderToBuffer(MatrixStack matrixStack, IVertexBuilder buffer, int packedLight, int packedOverlay, float red, float green, float blue, float alpha){
-		total.render(matrixStack, buffer, packedLight, packedOverlay);
+	public ModelRenderer getPlantWholeBody() {
+		return this.total;
 	}
 
-	public void setRotationAngle(ModelRenderer modelRenderer, float x, float y, float z) {
-		modelRenderer.xRot = x;
-		modelRenderer.yRot = y;
-		modelRenderer.zRot = z;
+	@Override
+	public EntityModel<GoldLeafEntity> getPlantModel() {
+		return this;
 	}
 }

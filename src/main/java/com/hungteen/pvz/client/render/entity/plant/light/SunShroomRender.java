@@ -3,10 +3,8 @@ package com.hungteen.pvz.client.render.entity.plant.light;
 import com.hungteen.pvz.client.model.entity.plant.light.SunShroomModel;
 import com.hungteen.pvz.client.render.entity.plant.PVZPlantRender;
 import com.hungteen.pvz.common.entity.plant.light.SunShroomEntity;
-import com.hungteen.pvz.utils.StringUtil;
 
 import net.minecraft.client.renderer.entity.EntityRendererManager;
-import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 
@@ -24,8 +22,4 @@ public class SunShroomRender extends PVZPlantRender<SunShroomEntity>{
 		return smallSize + entity.getGrowAnim() * (bigSize - smallSize) / entity.growAnimTo;
 	}
 
-	@Override
-	public ResourceLocation getTextureLocation(SunShroomEntity entity) {
-		return StringUtil.prefix("textures/entity/plant/light/sun_shroom.png");
-	}
 }

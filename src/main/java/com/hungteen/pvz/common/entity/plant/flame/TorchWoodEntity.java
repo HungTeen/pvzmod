@@ -26,7 +26,7 @@ public class TorchWoodEntity extends PVZPlantEntity implements ILightPlant {
 	
 	public TorchWoodEntity(EntityType<? extends CreatureEntity> type, World worldIn) {
 		super(type, worldIn);
-		this.canBeCharmed = false;
+		this.canBeCharm = false;
 	}
 	
 	@Override

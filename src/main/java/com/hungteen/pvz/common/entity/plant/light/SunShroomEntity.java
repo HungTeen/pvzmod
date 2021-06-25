@@ -37,9 +37,9 @@ public class SunShroomEntity extends PlantProducerEntity {
 		if(this.getGrowAnim() > 0 && this.getGrowAnim() < this.growAnimTo) {
 			this.setGrowAnim(this.getGrowAnim() + 1);
 		}
-		if(!this.hasGrowUp() && this.getLiveTick() > GROW_TICK) {
-			this.grow();
-		}
+//		if(!this.hasGrowUp() && this.getLiveTick() > GROW_TICK) {
+//			this.grow();
+//		}
 	}
 	
 	@Override

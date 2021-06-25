@@ -1,18 +1,19 @@
 package com.hungteen.pvz.client.model.entity.plant.defence;
 
+import com.hungteen.pvz.client.model.entity.plant.PVZPlantModel;
+import com.hungteen.pvz.common.entity.plant.defence.PumpkinEntity;
 import com.mojang.blaze3d.matrix.MatrixStack;
 import com.mojang.blaze3d.vertex.IVertexBuilder;
 
 import net.minecraft.client.renderer.entity.model.EntityModel;
 import net.minecraft.client.renderer.model.ModelRenderer;
-import net.minecraft.entity.Entity;
 
 // Made with Blockbench 3.7.1
 // Exported for Minecraft version 1.15
 // Paste this class into your mod and generate all required imports
 
 
-public class PumpkinModel extends EntityModel<Entity> {
+public class PumpkinModel extends PVZPlantModel<PumpkinEntity> {
 	private final ModelRenderer total;
 
 	public PumpkinModel() {
@@ -29,7 +30,7 @@ public class PumpkinModel extends EntityModel<Entity> {
 	}
 
 	@Override
-	public void setupAnim(Entity entity, float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch){
+	public void setupAnim(PumpkinEntity entity, float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch){
 		
 	}
 
@@ -42,9 +43,14 @@ public class PumpkinModel extends EntityModel<Entity> {
 		total.render(matrixStack, buffer, packedLight, packedOverlay);
 	}
 
-	public void setRotationAngle(ModelRenderer modelRenderer, float x, float y, float z) {
-		modelRenderer.xRot = x;
-		modelRenderer.yRot = y;
-		modelRenderer.zRot = z;
+	@Override
+	public EntityModel<PumpkinEntity> getPlantModel() {
+		return this;
 	}
+
+	@Override
+	public ModelRenderer getPlantWholeBody() {
+		return this.total;
+	}
+
 }

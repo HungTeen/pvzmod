@@ -26,7 +26,7 @@ public class GarlicEntity extends PlantDefenderEntity {
 	
 	public GarlicEntity(EntityType<? extends CreatureEntity> type, World worldIn) {
 		super(type, worldIn);
-		this.canBeCharmed = false;
+		this.canBeCharm = false;
 		this.sorter = new AlgorithmUtil.EntitySorter(this);
 	}
 

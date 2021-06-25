@@ -31,7 +31,7 @@ public class GraveBusterEntity extends PVZPlantEntity{
 	
 	public GraveBusterEntity(EntityType<? extends CreatureEntity> type, World worldIn) {
 		super(type, worldIn);
-		this.canBeCharmed = false;
+		this.canBeCharm = false;
 	}
 	
 	@Override
@@ -59,7 +59,6 @@ public class GraveBusterEntity extends PVZPlantEntity{
 	protected void normalPlantTick() {
 		super.normalPlantTick();
 		if(this.isEating()) {
-			this.setLiveTick(0);
 			if(this.getAttackTime() % 20 == 0) {
 				EntityUtil.playSound(this, SoundRegister.PLANT_HURT.get());
 			}

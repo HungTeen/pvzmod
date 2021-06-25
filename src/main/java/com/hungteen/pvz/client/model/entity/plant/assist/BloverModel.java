@@ -1,8 +1,7 @@
 package com.hungteen.pvz.client.model.entity.plant.assist;
 
+import com.hungteen.pvz.client.model.entity.plant.PVZPlantModel;
 import com.hungteen.pvz.common.entity.plant.assist.BloverEntity;
-import com.mojang.blaze3d.matrix.MatrixStack;
-import com.mojang.blaze3d.vertex.IVertexBuilder;
 
 import net.minecraft.client.renderer.entity.model.EntityModel;
 import net.minecraft.client.renderer.model.ModelRenderer;
@@ -12,7 +11,7 @@ import net.minecraft.client.renderer.model.ModelRenderer;
 // Paste this class into your mod and generate all required imports
 
 
-public class BloverModel extends EntityModel<BloverEntity> {
+public class BloverModel extends PVZPlantModel<BloverEntity> {
 	private final ModelRenderer total;
 	private final ModelRenderer head;
 	private final ModelRenderer bone;
@@ -330,13 +329,12 @@ public class BloverModel extends EntityModel<BloverEntity> {
 	}
 
 	@Override
-	public void renderToBuffer(MatrixStack matrixStack, IVertexBuilder buffer, int packedLight, int packedOverlay, float red, float green, float blue, float alpha){
-		total.render(matrixStack, buffer, packedLight, packedOverlay);
+	public ModelRenderer getPlantWholeBody() {
+		return this.total;
 	}
 
-	public void setRotationAngle(ModelRenderer modelRenderer, float x, float y, float z) {
-		modelRenderer.xRot = x;
-		modelRenderer.yRot = y;
-		modelRenderer.zRot = z;
+	@Override
+	public EntityModel<BloverEntity> getPlantModel() {
+		return this;
 	}
 }

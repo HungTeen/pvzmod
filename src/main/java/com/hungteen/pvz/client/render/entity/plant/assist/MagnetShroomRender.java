@@ -6,8 +6,6 @@ import com.hungteen.pvz.client.model.entity.plant.assist.MagnetShroomModel;
 import com.hungteen.pvz.client.render.entity.plant.PVZPlantRender;
 import com.hungteen.pvz.client.render.layer.MetalItemLayer;
 import com.hungteen.pvz.common.entity.plant.assist.MagnetShroomEntity;
-import com.hungteen.pvz.utils.StringUtil;
-import com.hungteen.pvz.utils.enums.MetalTypes;
 
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.entity.EntityRendererManager;
@@ -34,16 +32,4 @@ public class MagnetShroomRender extends PVZPlantRender<MagnetShroomEntity> {
 		return RenderType.entityTranslucentCull(resourcelocation);
 	}
 	
-	@Override
-	public float getScaleByEntity(MagnetShroomEntity entity) {
-		return 1.2f;
-	}
-
-	@Override
-	public ResourceLocation getTextureLocation(MagnetShroomEntity entity) {
-		if(entity.getAttackTime() > 0 && entity.getMetalType() == MetalTypes.EMPTY) return StringUtil.prefix("textures/entity/plant/assist/magnet_shroom3.png");
-		if(entity.isPlantActive()) return StringUtil.prefix("textures/entity/plant/assist/magnet_shroom.png");
-		return StringUtil.prefix("textures/entity/plant/assist/magnet_shroom2.png");
-	}
-
 }

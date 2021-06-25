@@ -3,10 +3,8 @@ package com.hungteen.pvz.client.render.entity.plant.spear;
 import com.hungteen.pvz.client.model.entity.plant.spear.SpikeWeedModel;
 import com.hungteen.pvz.client.render.entity.plant.PVZPlantRender;
 import com.hungteen.pvz.common.entity.plant.spear.SpikeWeedEntity;
-import com.hungteen.pvz.utils.StringUtil;
 
 import net.minecraft.client.renderer.entity.EntityRendererManager;
-import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 
@@ -15,16 +13,6 @@ public class SpikeWeedRender extends PVZPlantRender<SpikeWeedEntity>{
 
 	public SpikeWeedRender(EntityRendererManager rendererManager) {
 		super(rendererManager, new SpikeWeedModel(), 0.4f);
-	}
-
-	@Override
-	public float getScaleByEntity(SpikeWeedEntity entity) {
-		return 0.5f;
-	}
-
-	@Override
-	public ResourceLocation getTextureLocation(SpikeWeedEntity entity) {
-		return StringUtil.prefix("textures/entity/plant/spear/spike_weed.png");
 	}
 
 }

@@ -29,8 +29,8 @@ public class SplitPeaEntity extends PeaShooterEntity{
 	}
 	
 	@Override
-	protected void plantBaseTick() {
-		super.plantBaseTick();
+	protected void plantTick() {
+		super.plantTick();
 		if(! level.isClientSide) {
 			if(this.getRoundTick() != 0 && this.getRoundTick() != MAX_ROUND_TIME / 2) {
 				this.rotateFacing();

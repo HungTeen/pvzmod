@@ -3,8 +3,7 @@ package com.hungteen.pvz.client.render.itemstack;
 import java.util.Optional;
 
 import com.hungteen.pvz.client.model.entity.plant.defence.WallNutModel;
-import com.hungteen.pvz.client.render.entity.plant.defence.WallNutRender;
-import com.hungteen.pvz.client.render.entity.plant.explosion.ExplodeONutRender;
+import com.hungteen.pvz.client.render.entity.plant.PlantRenderHandler;
 import com.hungteen.pvz.common.entity.plant.defence.WallNutEntity;
 import com.hungteen.pvz.common.item.tool.BowlingGloveItem;
 import com.hungteen.pvz.utils.enums.Plants;
@@ -60,8 +59,8 @@ public class BowlingGloveISTER extends ItemStackTileEntityRenderer {
 	}
 	
 	public ResourceLocation getEntityTexture(Plants plant) {
-		if(plant == Plants.EXPLODE_O_NUT) return ExplodeONutRender.TEXTURE1;
-		return WallNutRender.TEXTURE1;
+		if(plant == Plants.EXPLODE_O_NUT) return PlantRenderHandler.EXPLODE_O_NUT_TEX;
+		return PlantRenderHandler.WALL_NUT_TEX;
 	}
 	
 }

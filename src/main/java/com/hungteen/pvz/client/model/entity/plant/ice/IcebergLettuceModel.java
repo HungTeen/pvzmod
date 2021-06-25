@@ -1,8 +1,7 @@
 package com.hungteen.pvz.client.model.entity.plant.ice;
 
+import com.hungteen.pvz.client.model.entity.plant.PVZPlantModel;
 import com.hungteen.pvz.common.entity.plant.ice.IcebergLettuceEntity;
-import com.mojang.blaze3d.matrix.MatrixStack;
-import com.mojang.blaze3d.vertex.IVertexBuilder;
 
 import net.minecraft.client.renderer.entity.model.EntityModel;
 import net.minecraft.client.renderer.model.ModelRenderer;
@@ -12,7 +11,7 @@ import net.minecraft.client.renderer.model.ModelRenderer;
 // Paste this class into your mod and generate all required imports
 
 
-public class IcebergLettuceModel extends EntityModel<IcebergLettuceEntity> {
+public class IcebergLettuceModel extends PVZPlantModel<IcebergLettuceEntity> {
 	private final ModelRenderer body;
 	private final ModelRenderer hair;
 	private final ModelRenderer jojo;
@@ -73,13 +72,12 @@ public class IcebergLettuceModel extends EntityModel<IcebergLettuceEntity> {
 	}
 
 	@Override
-	public void renderToBuffer(MatrixStack matrixStack, IVertexBuilder buffer, int packedLight, int packedOverlay, float red, float green, float blue, float alpha){
-		body.render(matrixStack, buffer, packedLight, packedOverlay);
+	public ModelRenderer getPlantWholeBody() {
+		return this.body;
 	}
 
-	public void setRotationAngle(ModelRenderer modelRenderer, float x, float y, float z) {
-		modelRenderer.xRot = x;
-		modelRenderer.yRot = y;
-		modelRenderer.zRot = z;
+	@Override
+	public EntityModel<IcebergLettuceEntity> getPlantModel() {
+		return this;
 	}
 }

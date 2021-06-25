@@ -3,10 +3,8 @@ package com.hungteen.pvz.client.render.entity.plant.toxic;
 import com.hungteen.pvz.client.model.entity.plant.toxic.ScaredyShroomModel;
 import com.hungteen.pvz.client.render.entity.plant.PVZPlantRender;
 import com.hungteen.pvz.common.entity.plant.toxic.ScaredyShroomEntity;
-import com.hungteen.pvz.utils.StringUtil;
 
 import net.minecraft.client.renderer.entity.EntityRendererManager;
-import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.vector.Vector3d;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
@@ -25,14 +23,4 @@ public class ScaredyShroomRender extends PVZPlantRender<ScaredyShroomEntity>{
 		return new Vector3d(0, change * percent, 0);
 	}
 	
-	@Override
-	public float getScaleByEntity(ScaredyShroomEntity entity) {
-		return 0.7f;
-	}
-
-	@Override
-	public ResourceLocation getTextureLocation(ScaredyShroomEntity entity) {
-		return StringUtil.prefix("textures/entity/plant/toxic/scaredy_shroom.png");
-	}
-
 }

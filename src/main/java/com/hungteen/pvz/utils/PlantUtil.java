@@ -140,7 +140,9 @@ public class PlantUtil {
 		if(plant.isShroomPlant) {
 			list.add(Blocks.MYCELIUM);
 		}
-		if(plant == Plants.CACTUS) list.add(Blocks.SAND);
+		if(plant == Plants.CACTUS) {
+			list.add(Blocks.SAND);
+		}
 		return list;
 	}
 	
@@ -293,7 +295,7 @@ public class PlantUtil {
 		if(PLANT_ESSENCE.containsKey(plant)) {
 			return PLANT_ESSENCE.get(plant);
 		}
-		PVZMod.LOGGER.debug("plant get essence type error!");
+		PVZMod.LOGGER.fatal("plant get essence type error!");
 		return Essences.APPEASE;
 	}
 	

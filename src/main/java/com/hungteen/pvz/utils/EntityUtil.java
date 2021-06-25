@@ -46,6 +46,7 @@ import net.minecraft.entity.ai.attributes.Attributes;
 import net.minecraft.entity.passive.BatEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.ServerPlayerEntity;
+import net.minecraft.particles.IParticleData;
 import net.minecraft.potion.EffectInstance;
 import net.minecraft.scoreboard.Team;
 import net.minecraft.tags.BlockTags;
@@ -94,10 +95,27 @@ public class EntityUtil {
 		return true;
 	}
 	
+	/**
+	 * spawn particle from server side to client side.
+	 */
 	public static void spawnParticle(Entity entity, int type) {
 		PVZPacketHandler.CHANNEL.send(PacketDistributor.NEAR.with(() -> {
 			return new TargetPoint(entity.getX(), entity.getY(), entity.getZ(), 40, entity.level.dimension());
 		}), new SpawnParticlePacket(type, entity.getX(), entity.getY(), entity.getZ()));
+	}
+	
+	/**
+	 * spawn no speed particle on client side.
+	 */
+	public static void spawnStaticParticle(Entity entity, IParticleData type) {
+		spawnSpeedParticle(entity, type, 0);
+	}
+	
+	/**
+	 * spawn speed particle on client side.
+	 */
+	public static void spawnSpeedParticle(Entity entity, IParticleData type, float speed) {
+		WorldUtil.spawnRandomSpeedParticle(entity.level, type, entity.position().add(0, entity.getBbHeight(), 0), speed);
 	}
 	
 	public static boolean canDestroyBlock(World world, BlockPos pos, Entity entity) {
@@ -329,13 +347,10 @@ public class EntityUtil {
 	 * get the owner of entity
 	 */
 	@Nullable
-	public static PlayerEntity getEntityOwner(World world, Entity entity) {
-		if(entity == null) return null;
+	public static PlayerEntity getEntityOwner(World world, @Nullable Entity entity) {
 		UUID uuid = null;
-		if(entity instanceof PVZPlantEntity) {
-			uuid = ((PVZPlantEntity) entity).getOwnerUUID().orElse(null);
-		} else if(entity instanceof PVZZombieEntity) {
-			uuid = ((PVZZombieEntity) entity).getOwnerUUID().orElse(null);
+		if(entity instanceof IHasOwner) {
+			uuid = ((IHasOwner) entity).getOwnerUUID().orElse(null);
 		}
 		return uuid == null ? null : world.getPlayerByUUID(uuid);
 	}

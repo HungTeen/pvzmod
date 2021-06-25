@@ -1,8 +1,7 @@
 package com.hungteen.pvz.client.model.entity.plant.magic;
 
+import com.hungteen.pvz.client.model.entity.plant.PVZPlantModel;
 import com.hungteen.pvz.common.entity.plant.magic.HypnoShroomEntity;
-import com.mojang.blaze3d.matrix.MatrixStack;
-import com.mojang.blaze3d.vertex.IVertexBuilder;
 
 import net.minecraft.client.renderer.entity.model.EntityModel;
 import net.minecraft.client.renderer.model.ModelRenderer;
@@ -12,7 +11,7 @@ import net.minecraft.client.renderer.model.ModelRenderer;
 // Paste this class into your mod and generate all required imports
 
 
-public class HypnoShroomModel extends EntityModel<HypnoShroomEntity> {
+public class HypnoShroomModel extends PVZPlantModel<HypnoShroomEntity> {
 	private final ModelRenderer body;
 	private final ModelRenderer hat;
 
@@ -41,13 +40,12 @@ public class HypnoShroomModel extends EntityModel<HypnoShroomEntity> {
 	}
 
 	@Override
-	public void renderToBuffer(MatrixStack matrixStack, IVertexBuilder buffer, int packedLight, int packedOverlay, float red, float green, float blue, float alpha){
-		body.render(matrixStack, buffer, packedLight, packedOverlay);
+	public ModelRenderer getPlantWholeBody() {
+		return this.body;
 	}
 
-	public void setRotationAngle(ModelRenderer modelRenderer, float x, float y, float z) {
-		modelRenderer.xRot = x;
-		modelRenderer.yRot = y;
-		modelRenderer.zRot = z;
+	@Override
+	public EntityModel<HypnoShroomEntity> getPlantModel() {
+		return this;
 	}
 }

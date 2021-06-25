@@ -56,7 +56,7 @@ public abstract class PVZZombieRender <T extends PVZZombieEntity> extends PVZCre
 	
 	@Override
 	public ResourceLocation getTextureLocation(T entity) {
-		return ZombieRenderHandler.getZombieTex(entity.getZombieEnumName()).get();
+		return ZombieRenderHandler.getZombieTex(entity.getZombieEnumName()).orElse(ZombieRenderHandler.NORMAL_ZOMBIE_TEX);
 	}
 	
 }

@@ -20,7 +20,7 @@ public class GoldLeafEntity extends PlantBomberEntity {
 	public GoldLeafEntity(EntityType<? extends CreatureEntity> type, World worldIn) {
 		super(type, worldIn);
 		this.canCollideWithPlant = false;
-		this.canBeCharmed = false;
+		this.canBeCharm = false;
 	}
 
 	@Override

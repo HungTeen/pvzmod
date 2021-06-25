@@ -225,7 +225,7 @@ public class NobleZombieEntity extends PVZZombieEntity {
 		for(PVZPlantEntity target : this.level.getEntitiesOfClass(PVZPlantEntity.class, EntityUtil.getEntityAABB(plant, range, range), (p)->{
 			return !p.isCharmed();
 		})) {
-			target.setSleepTime(2400);
+			target.sleepTime = 2400;
 		}
 		this.setAttackTime(this.getRandom().nextInt(this.maxSleepAttackCD - this.minSleepAttackCD + 1) + this.minSleepAttackCD);
 	}

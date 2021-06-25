@@ -176,7 +176,7 @@ public class PlantCardItem extends SummonCardItem {
 			}
 		}
 		if(EnchantmentHelper.getItemEnchantmentLevel(EnchantmentRegister.CHARM.get(), stack) > 0) {
-			plantEntity.onPlantBeCharmed();
+			plantEntity.onCharmedBy(null);
 		}
 		if(EnchantmentHelper.getItemEnchantmentLevel(EnchantmentRegister.SOILLESS_PLANT.get(), stack) > 0) {
 			plantEntity.setImmunneToWeak(true);

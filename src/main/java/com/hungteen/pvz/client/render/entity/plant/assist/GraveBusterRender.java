@@ -3,11 +3,9 @@ package com.hungteen.pvz.client.render.entity.plant.assist;
 import com.hungteen.pvz.client.model.entity.plant.assist.GraveBusterModel;
 import com.hungteen.pvz.client.render.entity.plant.PVZPlantRender;
 import com.hungteen.pvz.common.entity.plant.assist.GraveBusterEntity;
-import com.hungteen.pvz.utils.StringUtil;
 import com.mojang.blaze3d.matrix.MatrixStack;
 
 import net.minecraft.client.renderer.entity.EntityRendererManager;
-import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.vector.Vector3d;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
@@ -41,14 +39,4 @@ public class GraveBusterRender extends PVZPlantRender<GraveBusterEntity>{
 		return super.getTranslateVec(entity);
 	}
 	
-	@Override
-	public float getScaleByEntity(GraveBusterEntity entity) {
-		return 1f;
-	}
-
-	@Override
-	public ResourceLocation getTextureLocation(GraveBusterEntity entity) {
-		return StringUtil.prefix("textures/entity/plant/assist/grave_buster.png");
-	}
-
 }
