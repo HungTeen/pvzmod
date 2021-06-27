@@ -52,8 +52,39 @@ public class InvasionCommand {
         }).then(Commands.argument("wave_num", IntegerArgumentType.integer()).executes(commond -> {
         	return spawnHugeWave(EntityArgument.getPlayers(commond, "targets"), IntegerArgumentType.getInteger(commond, "amount"), IntegerArgumentType.getInteger(commond, "wave_num"));
         })))));
+        builder.then(Commands.literal("difficulty")
+        		.then(Commands.literal("add").then(Commands.argument("amount", IntegerArgumentType.integer()).executes(commond -> {
+        			return addDifficulty(commond.getSource(), IntegerArgumentType.getInteger(commond, "amount"));
+		        })))
+		        .then(Commands.literal("set").then(Commands.argument("amount", IntegerArgumentType.integer()).executes(commond -> {
+        			return setDifficulty(commond.getSource(), IntegerArgumentType.getInteger(commond, "amount"));
+		        })))
+		        .then(Commands.literal("query").executes(commond -> {
+        			return queryDifficulty(commond.getSource());
+		        }))
+		);
         dispatcher.register(builder);
     }
+	
+	private static int addDifficulty(CommandSource source, int amount) {
+		PVZInvasionData data = PVZInvasionData.getOverWorldInvasionData(source.getLevel());
+		data.addCurrentDifficulty(amount);
+		queryDifficulty(source);
+		return 0;
+	}
+	
+	private static int setDifficulty(CommandSource source, int amount) {
+		PVZInvasionData data = PVZInvasionData.getOverWorldInvasionData(source.getLevel());
+		data.setCurrentDifficulty(amount);
+		queryDifficulty(source);
+		return 0;
+	}
+	
+	private static int queryDifficulty(CommandSource source) {
+		PVZInvasionData data = PVZInvasionData.getOverWorldInvasionData(source.getLevel());
+		source.sendSuccess(new StringTextComponent(new TranslationTextComponent("command.pvz.difficulty").getString() + " : " + data.getCurrentDifficulty()), true);
+		return 0;
+	}
 	
 	private static int addZombie(CommandSource source, Zombies zombie) {
 		if(zombie.chooseWeight > 0) {

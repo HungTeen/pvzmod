@@ -8,6 +8,20 @@ import net.minecraft.util.math.vector.Vector3d;
 
 public class MathUtil {
 
+	public static int getProgressAverage(int now, int max, int from, int to) {
+		if(now >= max) {
+			return to;
+		}
+		return from + (now - 1) * (to - from) / max;
+	}
+	
+	public static float getProgressAverage(int now, int max, float from, float to) {
+		if(now >= max) {
+			return to;
+		}
+		return from + (now - 1) * (to - from) / max;
+	}
+	
 	/**
 	 * gen random from min to max.
 	 */

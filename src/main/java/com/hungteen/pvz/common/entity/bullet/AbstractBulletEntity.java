@@ -3,8 +3,7 @@ package com.hungteen.pvz.common.entity.bullet;
 import javax.annotation.Nullable;
 
 import com.hungteen.pvz.api.enums.PVZGroupType;
-import com.hungteen.pvz.api.interfaces.IGroupEntity;
-import com.hungteen.pvz.common.entity.misc.AbstractOwnerEntity;
+import com.hungteen.pvz.common.entity.AbstractOwnerEntity;
 import com.hungteen.pvz.common.entity.plant.base.PlantShooterEntity;
 import com.hungteen.pvz.utils.EntityUtil;
 
@@ -14,9 +13,7 @@ import net.minecraft.block.BushBlock;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.projectile.ProjectileHelper;
 import net.minecraft.nbt.CompoundNBT;
-import net.minecraft.network.IPacket;
 import net.minecraft.particles.ParticleTypes;
 import net.minecraft.util.math.BlockRayTraceResult;
 import net.minecraft.util.math.EntityRayTraceResult;
@@ -27,9 +24,8 @@ import net.minecraft.util.math.vector.Vector3d;
 import net.minecraft.world.World;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
-import net.minecraftforge.fml.network.NetworkHooks;
 
-public abstract class AbstractBulletEntity extends AbstractOwnerEntity implements IGroupEntity {
+public abstract class AbstractBulletEntity extends AbstractOwnerEntity {
 
 	protected IntOpenHashSet hitEntities;
 	protected float airSlowDown = 0.99F;
@@ -37,44 +33,20 @@ public abstract class AbstractBulletEntity extends AbstractOwnerEntity implement
 	
 	public AbstractBulletEntity(EntityType<?> type, World worldIn) {
 		super(type, worldIn);
+		this.setNoGravity(true);
 	}
 
 	public AbstractBulletEntity(EntityType<?> type, World worldIn, LivingEntity livingEntityIn) {
 		super(type, worldIn, livingEntityIn);
+		this.setNoGravity(true);
+	}
+	
+	@Override
+	public void summonByOwner(Entity owner) {
+		super.summonByOwner(owner);
 		this.attackDamage = this.getAttackDamage();
 	}
 	
-	/**
-	 * Checks if the entity is in range to render.
-	 */
-	@OnlyIn(Dist.CLIENT)
-	public boolean shouldRenderAtSqrDistance(double distance) {
-		double d0 = this.getBoundingBox().getSize() * 4.0D;
-		if (Double.isNaN(d0)) {
-			d0 = 4.0D;
-		}
-
-		d0 = d0 * 64.0D;
-		return distance < d0 * d0;
-	}
-
-	/**
-	 * Updates the entity motion clientside, called by packets from the server
-	 */
-	@OnlyIn(Dist.CLIENT)
-	public void lerpMotion(double x, double y, double z) {
-		this.setDeltaMovement(x, y, z);
-		if (this.xRotO == 0.0F && this.yRotO == 0.0F) {
-			float f = MathHelper.sqrt(x * x + z * z);
-			this.yRot = (float) (MathHelper.atan2(x, z) * (double) (180F / (float) Math.PI));
-			this.xRot = (float) (MathHelper.atan2(y, (double) f) * (double) (180F / (float) Math.PI));
-			this.yRotO = this.yRot;
-			this.xRotO = this.xRot;
-			this.moveTo(this.getX(), this.getY(), this.getZ(), this.yRot,
-					this.xRot);
-		}
-	}
-
 	/**
 	 * Called to update the entity's position/logic.
 	 */
@@ -82,9 +54,6 @@ public abstract class AbstractBulletEntity extends AbstractOwnerEntity implement
 		super.tick();
 		if (! level.isClientSide && this.tickCount >= this.getMaxLiveTick()) {
 			this.remove();
-		}
-		if(this.tickCount <= 10) {
-			this.refreshDimensions();
 		}
 		//on hit
 		if(! level.isClientSide) {
@@ -102,7 +71,38 @@ public abstract class AbstractBulletEntity extends AbstractOwnerEntity implement
 			    this.onImpact(result);
 		    }
 		}
-		//move
+		this.tickMove();
+	}
+	
+	/**
+	 * Gets the EntityRayTraceResult representing the entity hit.
+	 * {@link #tick()}
+	 */
+	@Nullable
+	protected EntityRayTraceResult rayTraceEntities(Vector3d startVec, Vector3d endVec) {
+		return EntityUtil.rayTraceEntities(level, this, startVec, endVec, entity -> 
+		    entity.isPickable() && shouldHit(entity) && (this.hitEntities == null || !this.hitEntities.contains(entity.getId())
+		));
+	}
+	
+	/**
+	 * {@link #rayTraceEntities(Vector3d, Vector3d)}
+	 */
+	protected boolean shouldHit(Entity target) {
+		final Entity owner = this.getOwner();
+		return EntityUtil.canTargetEntity(owner == null ? this : owner, target);
+	}
+	
+	protected void addHitEntity(Entity entity) {
+		this.hitEntities.addAll(EntityUtil.getOwnerAndPartsID(entity));
+	}
+	
+	protected boolean checkCanAttack(Entity target){
+		return EntityUtil.canTargetEntity(this, target);
+	}
+	
+	@Override
+	protected void tickMove() {
 		Vector3d vec3d = this.getDeltaMovement();
 		double d0 = this.getX() + vec3d.x;
 		double d1 = this.getY() + vec3d.y;
@@ -143,18 +143,6 @@ public abstract class AbstractBulletEntity extends AbstractOwnerEntity implement
 		this.setPos(d0, d1, d2);
 	}
 
-	protected void addHitEntity(Entity entity) {
-		this.hitEntities.addAll(EntityUtil.getOwnerAndPartsID(entity));
-	}
-	
-	protected boolean checkCanAttack(Entity target){
-		return EntityUtil.canTargetEntity(this, target);
-	}
-	
-	protected boolean shouldHit(Entity target) {
-		return EntityUtil.canTargetEntity(this, target);
-	}
-	
 	/**
 	 * shoot bullet such as pea or spore
 	 */
@@ -195,18 +183,6 @@ public abstract class AbstractBulletEntity extends AbstractOwnerEntity implement
 	}
 	
 	/**
-	 * Gets the EntityRayTraceResult representing the entity hit
-	 */
-	@Nullable
-	protected EntityRayTraceResult rayTraceEntities(Vector3d startVec, Vector3d endVec) {
-		return ProjectileHelper.getEntityHitResult(this.level, this, startVec, endVec, 
-				this.getBoundingBox().expandTowards(this.getDeltaMovement()).inflate(1.0D), (entity) -> {
-			return entity.isPickable() && shouldHit(entity)
-							&& (this.hitEntities == null|| !this.hitEntities.contains(entity.getId()));
-		});
-	}
-
-	/**
 	 * Gets the amount of gravity to apply to the thrown entity with each tick.
 	 */
 	protected float getGravityVelocity() {
@@ -223,12 +199,12 @@ public abstract class AbstractBulletEntity extends AbstractOwnerEntity implement
 	 */
 	protected abstract float getAttackDamage();
 	
+	protected abstract int getMaxLiveTick(); 
+	
 	@Nullable
 	public LivingEntity getThrower() {
-		return this.getOwner();
+		return (LivingEntity) this.getOwner();
 	}
-	
-	protected abstract int getMaxLiveTick(); 
 	
 	protected boolean checkLive(RayTraceResult result) {
 		if (result.getType() == RayTraceResult.Type.ENTITY) {// attack entity
@@ -237,12 +213,43 @@ public abstract class AbstractBulletEntity extends AbstractOwnerEntity implement
 			}
 			return true;
 		} else if (result.getType() == RayTraceResult.Type.BLOCK) {
-			Block block = level.getBlockState(((BlockRayTraceResult) result).getBlockPos()).getBlock();
+			final Block block = level.getBlockState(((BlockRayTraceResult) result).getBlockPos()).getBlock();
 			if (block instanceof BushBlock) {
 				return true;
 			}
 		}
 		return false;
+	}
+	
+	/**
+	 * Checks if the entity is in range to render.
+	 */
+	@OnlyIn(Dist.CLIENT)
+	public boolean shouldRenderAtSqrDistance(double distance) {
+		double d0 = this.getBoundingBox().getSize() * 4.0D;
+		if (Double.isNaN(d0)) {
+			d0 = 4.0D;
+		}
+
+		d0 = d0 * 64.0D;
+		return distance < d0 * d0;
+	}
+
+	/**
+	 * Updates the entity motion clientside, called by packets from the server
+	 */
+	@OnlyIn(Dist.CLIENT)
+	public void lerpMotion(double x, double y, double z) {
+		this.setDeltaMovement(x, y, z);
+		if (this.xRotO == 0.0F && this.yRotO == 0.0F) {
+			float f = MathHelper.sqrt(x * x + z * z);
+			this.yRot = (float) (MathHelper.atan2(x, z) * (double) (180F / (float) Math.PI));
+			this.xRot = (float) (MathHelper.atan2(y, (double) f) * (double) (180F / (float) Math.PI));
+			this.yRotO = this.yRot;
+			this.xRotO = this.xRot;
+			this.moveTo(this.getX(), this.getY(), this.getZ(), this.yRot,
+					this.xRot);
+		}
 	}
 	
 	@Override
@@ -260,17 +267,8 @@ public abstract class AbstractBulletEntity extends AbstractOwnerEntity implement
 	}
 
 	@Override
-	public boolean isAttackable() {
-		return false;
-	}
-	
-	@Override
 	public PVZGroupType getInitialEntityGroup() {
 		return PVZGroupType.PLANTS;
 	}
 
-	@Override
-	public IPacket<?> getAddEntityPacket() {
-		return NetworkHooks.getEntitySpawningPacket(this);
-	}
 }

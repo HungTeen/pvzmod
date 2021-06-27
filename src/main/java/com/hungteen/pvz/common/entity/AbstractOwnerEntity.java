@@ -1,4 +1,4 @@
-package com.hungteen.pvz.common.entity.misc;
+package com.hungteen.pvz.common.entity;
 
 import java.util.Optional;
 import java.util.UUID;
@@ -8,7 +8,6 @@ import javax.annotation.Nullable;
 import com.hungteen.pvz.api.enums.PVZGroupType;
 import com.hungteen.pvz.api.interfaces.IGroupEntity;
 import com.hungteen.pvz.api.interfaces.IHasOwner;
-import com.hungteen.pvz.common.entity.PVZEntityBase;
 import com.hungteen.pvz.utils.EntityUtil;
 
 import net.minecraft.entity.Entity;
@@ -21,7 +20,7 @@ import net.minecraft.world.server.ServerWorld;
 
 public abstract class AbstractOwnerEntity extends PVZEntityBase implements IGroupEntity, IHasOwner {
 
-	protected LivingEntity owner;
+	protected Entity owner;
 	protected UUID ownerId;
 	protected PVZGroupType groupType;
 	
@@ -30,13 +29,20 @@ public abstract class AbstractOwnerEntity extends PVZEntityBase implements IGrou
 		this.groupType = this.getInitialEntityGroup();
 	}
 	
-	public AbstractOwnerEntity(EntityType<?> type, World worldIn, LivingEntity livingEntityIn) {
+	public AbstractOwnerEntity(EntityType<?> type, World worldIn, Entity livingEntityIn) {
 		super(type, worldIn);
-		this.owner = livingEntityIn;
-		this.ownerId = livingEntityIn.getUUID();
-		this.groupType = EntityUtil.getEntityGroup(owner);
+		this.summonByOwner(livingEntityIn);
 	}
 
+	/**
+	 * sync some data from owner.
+	 */
+	public void summonByOwner(Entity owner) {
+		this.owner = owner;
+		this.ownerId = owner.getUUID();
+		this.groupType = EntityUtil.getEntityGroup(owner);
+	}
+	
 	@Override
 	public boolean isAttackable() {
 		return false;
@@ -47,14 +53,9 @@ public abstract class AbstractOwnerEntity extends PVZEntityBase implements IGrou
 	}
 
 	@Nullable
-	public LivingEntity getOwner() {
-		if ((this.owner == null || ! this.owner.isAlive()) && this.ownerId != null && this.level instanceof ServerWorld) {
-			Entity entity = ((ServerWorld) this.level).getEntity(this.ownerId);
-			if (entity instanceof LivingEntity) {
-				this.owner = (LivingEntity) entity;
-			} else {
-				this.owner = null;
-			}
+	public Entity getOwner() {
+		if (EntityUtil.isEntityValid(this.owner) && this.ownerId != null && this.level instanceof ServerWorld) {
+			this.owner = ((ServerWorld) this.level).getEntity(this.ownerId);
 		}
 		return this.owner;
 	}

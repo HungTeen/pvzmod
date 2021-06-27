@@ -257,7 +257,7 @@ public class OverworldInvasion {
 	}
 	
 	/**
-	 * for server start sync.
+	 * {@link InvasionCache#syncStartInvasionCache(net.minecraft.world.server.ServerWorld)}
 	 */
 	public static void syncStartSpawnList(World world) {
 		syncEndSpawnList(world);
@@ -270,7 +270,7 @@ public class OverworldInvasion {
 	}
 
 	/**
-	 * for server end sync.
+	 * {@link InvasionCache#syncEndInvasionCache(net.minecraft.world.server.ServerWorld)}
 	 */
 	public static void syncEndSpawnList(World world) {
 		InvasionCache.ZOMBIE_INVADE_SET.clear();

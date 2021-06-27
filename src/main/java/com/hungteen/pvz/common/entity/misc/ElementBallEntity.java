@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Optional;
 
 import com.hungteen.pvz.PVZConfig;
+import com.hungteen.pvz.common.entity.AbstractOwnerEntity;
 import com.hungteen.pvz.common.entity.plant.PVZPlantEntity;
 import com.hungteen.pvz.common.entity.plant.flame.JalapenoEntity;
 import com.hungteen.pvz.common.entity.plant.ice.IceShroomEntity;

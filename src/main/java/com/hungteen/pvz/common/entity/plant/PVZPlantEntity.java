@@ -76,12 +76,12 @@ public abstract class PVZPlantEntity extends CreatureEntity implements IPVZPlant
 	private static final DataParameter<Integer> GOLD_TIME = EntityDataManager.defineId(PVZPlantEntity.class, DataSerializers.INT);
 	private static final DataParameter<Integer> BOOST_TIME = EntityDataManager.defineId(PVZPlantEntity.class, DataSerializers.INT);
 	private static final DataParameter<Float> PUMPKIN_LIFE = EntityDataManager.defineId(PVZPlantEntity.class, DataSerializers.FLOAT);
+	private static final DataParameter<Integer> EXIST_TICK = EntityDataManager.defineId(PVZPlantEntity.class, DataSerializers.INT);  
 	//handler plant level, plant level range in (1, 128).
 	protected static final int PLANT_LEVEL_FLAG_LEN = 7;
 	//handle sync plant level.
 	private static final int PLANT_LEVEL_SYNC_CD = 1200;
-	protected boolean need_sync_level = true;
-	private int sync_pos = EntityUtil.RAND.nextInt(PLANT_LEVEL_SYNC_CD);
+	public boolean need_sync_level = true;
 	//plant states flags.
 	protected static final int LADDER_FLAG = 0;
 	protected static final int CHARM_FLAG = 1;
@@ -122,6 +122,7 @@ public abstract class PVZPlantEntity extends CreatureEntity implements IPVZPlant
 		entityData.define(BOOST_TIME, 0);
 		entityData.define(PUMPKIN_LIFE, 0f);
 		entityData.define(PLANT_STATES, 0);
+		entityData.define(EXIST_TICK, 0);
 	}
 
 	public static AttributeModifierMap createPlantAttributes() {
@@ -159,9 +160,13 @@ public abstract class PVZPlantEntity extends CreatureEntity implements IPVZPlant
 	@Override
 	public void aiStep() {
 		super.aiStep();
+		this.level.getProfiler().push("PVZ Plant Tick");
 		this.plantTick();
+		this.level.getProfiler().pop();
 		if (this.canPlantNormalUpdate()) {
+			this.level.getProfiler().push("PVZ Normal Plant Tick");
 			this.normalPlantTick();
+			this.level.getProfiler().pop();
 		}
 	}
 	
@@ -197,6 +202,7 @@ public abstract class PVZPlantEntity extends CreatureEntity implements IPVZPlant
 			this.setSuperTime(Math.max(0, this.getSuperTime() - 1));
 			//handle boost mode(no use for currrent version).
 			this.setBoostTime(Math.max(0, this.getBoostTime() - 1));
+			this.setExistTick(this.getExistTick() + 1);
 			//handler plant's sleep.
 			if (this.shouldPlantRegularSleep()) {
 				this.sleepTime = this.sleepTime <= 1 ? this.sleepTime + 1 : this.sleepTime - 1;
@@ -229,7 +235,7 @@ public abstract class PVZPlantEntity extends CreatureEntity implements IPVZPlant
 			}
 		}
 		//update plant level.
-		if(!level.isClientSide && this.need_sync_level && this.tickCount % PLANT_LEVEL_SYNC_CD == this.sync_pos) {
+		if(!level.isClientSide && this.need_sync_level && this.getExistTick() % PLANT_LEVEL_SYNC_CD == 5) {
 			this.getOwnerUUID().ifPresent(uuid -> {
 				Optional.ofNullable(this.level.getPlayerByUUID(uuid)).ifPresent(player -> {
 					player.getCapability(CapabilityHandler.PLAYER_DATA_CAPABILITY).ifPresent(l -> {
@@ -305,9 +311,11 @@ public abstract class PVZPlantEntity extends CreatureEntity implements IPVZPlant
 	 * {@link #plantTick()}
 	 */
 	public void updatePlantLevel(int lvl) {
-		this.setPlantLvl(lvl);
-		this.getAttribute(Attributes.MAX_HEALTH).setBaseValue(this.getPlantHealth());
-		this.heal(this.getMaxHealth());
+		if(this.getPlantLvl() != lvl) {//level changed
+		    this.setPlantLvl(lvl);
+		    this.getAttribute(Attributes.MAX_HEALTH).setBaseValue(this.getPlantHealth());
+		    this.heal(this.getMaxHealth());
+		}
 	}
 
 	/**
@@ -766,6 +774,7 @@ public abstract class PVZPlantEntity extends CreatureEntity implements IPVZPlant
 		compound.putInt("outer_sun_cost", this.outerSunCost);
 		compound.putBoolean("immune_to_weak", this.isImmuneToWeak);
 		compound.putInt("plant_state", this.getPlantState());
+		compound.putInt("plant_exist_tick", this.getExistTick());
 	}
 
 	@Override
@@ -819,6 +828,9 @@ public abstract class PVZPlantEntity extends CreatureEntity implements IPVZPlant
 		}
 		if (compound.contains("plant_state")) {
 			this.setPlantState(compound.getInt("plant_state"));
+		}
+		if(compound.contains("plant_exist_tick")) {
+			this.setExistTick(compound.getInt("plant_exist_tick"));
 		}
 	}
 
@@ -891,6 +903,14 @@ public abstract class PVZPlantEntity extends CreatureEntity implements IPVZPlant
 
 	public void setPumpkinLife(float life) {
 		this.entityData.set(PUMPKIN_LIFE, life);
+	}
+	
+	public int getExistTick() {
+		return this.entityData.get(EXIST_TICK);
+	}
+
+	public void setExistTick(int tick) {
+		this.entityData.set(EXIST_TICK, tick);
 	}
 
 	public int getPlantState() {

@@ -14,6 +14,8 @@ public interface IShooter {
 	 */
 	int getShootCD();
 	
+	float getShootRange();
+	
 	/**
 	 * bullet initial move speed
 	 */
@@ -23,11 +25,6 @@ public interface IShooter {
 	 * perform shoot attack
 	 */
 	void startShootAttack();
-	
-	/**
-	 * shooter target range
-	 */
-	float getShootRange();
 	
 	/**
 	 * is suitable angle

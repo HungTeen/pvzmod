@@ -18,7 +18,7 @@ public class PlantRenderHandler {
 	public static final ResourceLocation PEA_SHOOTER_TEX = get(Plants.PEA_SHOOTER, 1F);
 	public static final ResourceLocation SUN_FLOWER_TEX = get(Plants.SUN_FLOWER);
 	public static final ResourceLocation CHERRY_BOMB_TEX = get(Plants.CHERRY_BOMB);
-	public static final ResourceLocation WALL_NUT_TEX = get(Plants.WALL_NUT, 1F);
+	public static final ResourceLocation WALL_NUT_TEX = get(Plants.WALL_NUT, 0.4F);
 	public static final ResourceLocation POTATO_MINE_TEX = get(Plants.POTATO_MINE, 0.6F);
 	public static final ResourceLocation SNOW_PEA_TEX = get(Plants.SNOW_PEA, 1F);
 	public static final ResourceLocation CHOMPER_TEX = get(Plants.CHOMPER, 0.85F);
@@ -44,7 +44,7 @@ public class PlantRenderHandler {
 	
 	public static final ResourceLocation SEA_SHROOM_TEX = get(Plants.SEA_SHROOM, 0.6F);
 	public static final ResourceLocation PLANTERN_TEX = get(Plants.PLANTERN, 0.7F);
-	public static final ResourceLocation CACTUS_TEX = get(Plants.FUME_SHROOM, 1F);
+	public static final ResourceLocation CACTUS_TEX = get(Plants.CACTUS, 1F);
 	public static final ResourceLocation BLOVER_TEX = get(Plants.BLOVER, 1.2F);
 	public static final ResourceLocation SPLIT_PEA_TEX = get(Plants.SPLIT_PEA, 1F);
 	public static final ResourceLocation STAR_FRUIT_TEX = get(Plants.STAR_FRUIT, 0.82F);
@@ -79,7 +79,7 @@ public class PlantRenderHandler {
 	public static final ResourceLocation BUTTER_PULT_TEX = get(Plants.BUTTER_PULT, 0.9F);
 	public static final ResourceLocation BAMBOO_LORD_TEX = get(Plants.BAMBOO_LORD, 1F);
 	public static final ResourceLocation ICEBERG_LETTUCE_TEX = get(Plants.ICEBERG_LETTUCE, 0.5F);
-	public static final ResourceLocation BONK_CHOY_TEX = get(Plants.BONK_CHOY, 0.5F);
+	public static final ResourceLocation BONK_CHOY_TEX = get(Plants.BONK_CHOY, 0.9F);
 	
 	private static ResourceLocation get(Plants plant) {
 		return get(plant, 0.5F);

@@ -7,6 +7,7 @@ import com.hungteen.pvz.client.render.layer.fullskin.EnergyLayer;
 import com.hungteen.pvz.client.render.layer.fullskin.HealLightLayer;
 import com.hungteen.pvz.client.render.layer.fullskin.SunLightLayer;
 import com.hungteen.pvz.common.entity.plant.PVZPlantEntity;
+import com.hungteen.pvz.utils.AnimationUtil;
 import com.mojang.blaze3d.matrix.MatrixStack;
 
 import net.minecraft.client.renderer.entity.EntityRendererManager;
@@ -20,15 +21,19 @@ import net.minecraftforge.api.distmarker.OnlyIn;
 @OnlyIn(Dist.CLIENT)
 public abstract class PVZPlantRender<T extends PVZPlantEntity> extends MobRenderer<T, EntityModel<T>>{
 
+	private static final int BREATH_ANIM_CD = 40;
+	
 	public PVZPlantRender(EntityRendererManager rendererManager, EntityModel<T> entityModelIn, float shadowSizeIn) {
 		super(rendererManager, entityModelIn, shadowSizeIn);
 		this.addPlantLayers();
 	}
 
 	@Override
-	protected void scale(T entitylivingbaseIn, MatrixStack matrixStackIn, float partialTickTime) {
-		float sz = getScaleByEntity(entitylivingbaseIn);
-		Vector3d vec = getTranslateVec(entitylivingbaseIn);
+	protected void scale(T plant, MatrixStack matrixStackIn, float partialTickTime) {
+		int live = plant.getExistTick() % BREATH_ANIM_CD;
+		final float scaleOffset = AnimationUtil.upDown(live, BREATH_ANIM_CD, 0.01F);
+		final float sz = getScaleByEntity(plant) + scaleOffset;
+		final Vector3d vec = getTranslateVec(plant);
 		matrixStackIn.scale(sz, sz, sz);
 		matrixStackIn.translate(vec.x, vec.y, vec.z);
 	}

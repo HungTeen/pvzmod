@@ -36,7 +36,7 @@ public class ThreePeaterEntity extends PeaShooterEntity {
         double dz = target.getZ() - this.getZ();
         double y = this.getY() + this.getDimensions(getPose()).height * 0.7f;
         double dis = MathHelper.sqrt(dx * dx + dz * dz);
-        double tmp= this.LENTH / dis;
+        double tmp= SHOOT_OFFSET / dis;
         double deltaX = tmp * dx;
         double deltaZ = tmp * dz;
         //shoot mid pea

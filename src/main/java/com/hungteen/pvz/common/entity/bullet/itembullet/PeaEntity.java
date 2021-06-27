@@ -1,6 +1,7 @@
 package com.hungteen.pvz.common.entity.bullet.itembullet;
 
 import com.hungteen.pvz.common.capability.CapabilityHandler;
+import com.hungteen.pvz.common.entity.bullet.AbstractShootBulletEntity;
 import com.hungteen.pvz.common.entity.plant.base.PlantShooterEntity;
 import com.hungteen.pvz.common.entity.plant.flame.TorchWoodEntity;
 import com.hungteen.pvz.common.entity.plant.interfaces.IIcePlant;
@@ -14,6 +15,7 @@ import com.hungteen.pvz.utils.enums.Plants;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntitySize;
 import net.minecraft.entity.EntityType;
+import net.minecraft.entity.IRendersAsItem;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.Pose;
 import net.minecraft.entity.player.PlayerEntity;
@@ -25,27 +27,25 @@ import net.minecraft.network.datasync.EntityDataManager;
 import net.minecraft.util.math.EntityRayTraceResult;
 import net.minecraft.util.math.RayTraceResult;
 import net.minecraft.world.World;
+import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.api.distmarker.OnlyIn;
 
-public class PeaEntity extends PVZItemBulletEntity {
+@OnlyIn(value = Dist.CLIENT, _interface = IRendersAsItem.class)
+public class PeaEntity extends AbstractShootBulletEntity implements IRendersAsItem {
 
-	private static final DataParameter<Integer> PEA_STATE = EntityDataManager.defineId(PeaEntity.class,
-			DataSerializers.INT);
-	private static final DataParameter<Integer> PEA_TYPE = EntityDataManager.defineId(PeaEntity.class,
-			DataSerializers.INT);
-	
-	private int power = 0;
+	private static final DataParameter<Integer> PEA_STATE = EntityDataManager.defineId(PeaEntity.class, DataSerializers.INT);
+	private static final DataParameter<Integer> PEA_TYPE = EntityDataManager.defineId(PeaEntity.class, DataSerializers.INT);
 	private TorchWoodEntity torchWood = null;
+	private int power = 0;
 
 	public PeaEntity(EntityType<?> type, World worldIn) {
 		super(type, worldIn);
 	}
 
-	public PeaEntity(World worldIn, LivingEntity shooter, Type peaType,
-			State peaState) {
+	public PeaEntity(World worldIn, LivingEntity shooter, Type peaType, State peaState) {
 		super(EntityRegister.PEA.get(), worldIn, shooter);
 		this.setPeaState(peaState);
 		this.setPeaType(peaType);
-		this.refreshDimensions();
 	}
 
 	@Override
@@ -217,7 +217,6 @@ public class PeaEntity extends PVZItemBulletEntity {
 	}
 	
 	public void setPower(int lvl) {
-//		System.out.println(lvl);
 		this.power = lvl;
 	}
 

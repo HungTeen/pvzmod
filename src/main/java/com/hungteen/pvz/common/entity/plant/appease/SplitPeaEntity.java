@@ -49,7 +49,7 @@ public class SplitPeaEntity extends PeaShooterEntity{
         double dz = target.getZ() - this.getZ();
         double y = this.getY() + this.getDimensions(getPose()).height * 0.7f;
         double dis =MathHelper.sqrt(dx * dx + dz * dz);
-        double tmp = this.LENTH / dis;
+        double tmp = SHOOT_OFFSET / dis;
         double deltaX = tmp * dx * (this.isFacingFront() ? 1 : -1);
         double deltaZ = tmp * dz * (this.isFacingFront() ? 1 : -1);
         //shoot front

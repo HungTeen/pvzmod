@@ -46,6 +46,7 @@ import net.minecraft.entity.ai.attributes.Attributes;
 import net.minecraft.entity.passive.BatEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.ServerPlayerEntity;
+import net.minecraft.entity.projectile.ProjectileHelper;
 import net.minecraft.particles.IParticleData;
 import net.minecraft.potion.EffectInstance;
 import net.minecraft.scoreboard.Team;
@@ -53,6 +54,7 @@ import net.minecraft.tags.BlockTags;
 import net.minecraft.util.SoundEvent;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.EntityRayTraceResult;
 import net.minecraft.util.math.RayTraceContext;
 import net.minecraft.util.math.RayTraceResult;
 import net.minecraft.util.math.vector.Vector3d;
@@ -66,6 +68,13 @@ import net.minecraftforge.fml.network.PacketDistributor.TargetPoint;
 public class EntityUtil {
 
 	public static final Random RAND = new Random();
+	
+	public static Vector3d getNormalisedVector2d(@Nonnull Entity a, @Nonnull Entity b) {
+		final double dx = b.getX() - a.getX();
+		final double dz = b.getZ() - a.getZ();
+		final double dis = Math.sqrt(dx * dx + dz * dz);
+		return new Vector3d(dx / dis, 0, dz / dis);
+	}
 	
 	/**
 	 * can zombie be instant remove by lawn mower.
@@ -630,6 +639,14 @@ public class EntityUtil {
 	public static void setLivingMaxHealthAndHeal(LivingEntity living, float maxHealth) {
 		living.getAttribute(Attributes.MAX_HEALTH).setBaseValue(maxHealth);
 		living.heal(maxHealth);
+	}
+	
+	/**
+	 * get predicate entity between start to end. 
+	 */
+	public static EntityRayTraceResult rayTraceEntities(World world, Entity entity, Vector3d startVec, Vector3d endVec, Predicate<Entity> predicate) {
+		return ProjectileHelper.getEntityHitResult(world, entity, startVec, endVec, 
+				entity.getBoundingBox().expandTowards(entity.getDeltaMovement()).inflate(1.0D), predicate);
 	}
 	
 	/**

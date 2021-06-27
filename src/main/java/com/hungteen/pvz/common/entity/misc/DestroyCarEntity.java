@@ -1,5 +1,6 @@
 package com.hungteen.pvz.common.entity.misc;
 
+import com.hungteen.pvz.common.entity.AbstractOwnerEntity;
 import com.hungteen.pvz.common.entity.plant.PVZPlantEntity;
 import com.hungteen.pvz.common.entity.zombie.roof.ZomBossEntity;
 import com.hungteen.pvz.common.misc.damage.PVZDamageSource;

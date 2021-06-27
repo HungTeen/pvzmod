@@ -5,7 +5,7 @@ import java.util.List;
 import javax.annotation.Nullable;
 
 import com.hungteen.pvz.PVZConfig;
-import com.hungteen.pvz.common.entity.misc.AbstractOwnerEntity;
+import com.hungteen.pvz.common.entity.AbstractOwnerEntity;
 import com.hungteen.pvz.register.SoundRegister;
 import com.hungteen.pvz.utils.EntityUtil;
 

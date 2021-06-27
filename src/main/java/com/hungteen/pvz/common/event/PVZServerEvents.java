@@ -1,7 +1,7 @@
 package com.hungteen.pvz.common.event;
 
 import com.hungteen.pvz.PVZMod;
-import com.hungteen.pvz.common.world.invasion.OverworldInvasion;
+import com.hungteen.pvz.common.cache.InvasionCache;
 
 import net.minecraft.world.World;
 import net.minecraft.world.server.ServerWorld;
@@ -16,13 +16,13 @@ public class PVZServerEvents {
 	@SubscribeEvent
     public static void serverInit(FMLServerStartingEvent ev) {
     	ServerWorld world = ev.getServer().getLevel(World.OVERWORLD);
-    	OverworldInvasion.syncStartSpawnList(world);
+    	InvasionCache.syncStartInvasionCache(world);
     }
     
     @SubscribeEvent
     public static void serverShutDown(FMLServerStoppingEvent ev) {
     	ServerWorld world = ev.getServer().getLevel(World.OVERWORLD);
-    	OverworldInvasion.syncEndSpawnList(world);
+    	InvasionCache.syncEndInvasionCache(world);
     }
     
 }

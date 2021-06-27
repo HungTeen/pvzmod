@@ -3,6 +3,7 @@ package com.hungteen.pvz.common.world.data;
 import java.util.HashSet;
 
 import com.hungteen.pvz.PVZConfig;
+import com.hungteen.pvz.common.cache.InvasionCache;
 import com.hungteen.pvz.utils.enums.InvasionEvents;
 import com.hungteen.pvz.utils.enums.Plants;
 import com.hungteen.pvz.utils.enums.Zombies;
@@ -113,7 +114,14 @@ public class PVZInvasionData extends WorldSavedData {
 
 	// getter setter for count down day.
 	public void setCurrentDifficulty(int dif) {
-		this.currentDifficulty = dif;
+		this.currentDifficulty = Math.max(0, dif);
+		InvasionCache.InvasionDifficulty = this.currentDifficulty;
+		this.setDirty();
+	}
+	
+	public void addCurrentDifficulty(int dif) {
+		this.currentDifficulty = Math.max(0, this.currentDifficulty + dif);
+		InvasionCache.InvasionDifficulty = this.currentDifficulty;
 		this.setDirty();
 	}
 

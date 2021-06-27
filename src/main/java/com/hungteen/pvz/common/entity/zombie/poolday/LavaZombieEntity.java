@@ -25,10 +25,7 @@ public class LavaZombieEntity extends SwimmerZombieEntity {
 
 	public LavaZombieEntity(EntityType<? extends MonsterEntity> type, World worldIn) {
 		super(type, worldIn);
-		this.setPathfindingMalus(PathNodeType.WATER, 0.0F);
 		this.setPathfindingMalus(PathNodeType.LAVA, 0.0F);
-		this.setPathfindingMalus(PathNodeType.DANGER_FIRE, 0.0F);
-		this.setPathfindingMalus(PathNodeType.DAMAGE_FIRE, 0.0F);
 	}
 
 	@Override

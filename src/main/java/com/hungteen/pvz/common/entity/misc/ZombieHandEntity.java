@@ -1,6 +1,7 @@
 package com.hungteen.pvz.common.entity.misc;
 
 import com.hungteen.pvz.api.enums.PVZGroupType;
+import com.hungteen.pvz.common.entity.AbstractOwnerEntity;
 import com.hungteen.pvz.common.misc.damage.PVZDamageSource;
 import com.hungteen.pvz.utils.EntityUtil;
 

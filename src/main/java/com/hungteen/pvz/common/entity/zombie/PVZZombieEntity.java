@@ -41,6 +41,7 @@ import com.hungteen.pvz.register.SoundRegister;
 import com.hungteen.pvz.utils.AlgorithmUtil;
 import com.hungteen.pvz.utils.ConfigUtil;
 import com.hungteen.pvz.utils.EntityUtil;
+import com.hungteen.pvz.utils.MathUtil;
 import com.hungteen.pvz.utils.ZombieUtil;
 import com.hungteen.pvz.utils.enums.InvasionEvents;
 import com.hungteen.pvz.utils.enums.Ranks;
@@ -73,6 +74,7 @@ import net.minecraft.network.datasync.DataSerializers;
 import net.minecraft.network.datasync.EntityDataManager;
 import net.minecraft.particles.ParticleTypes;
 import net.minecraft.pathfinding.PathNavigator;
+import net.minecraft.pathfinding.PathNodeType;
 import net.minecraft.potion.EffectInstance;
 import net.minecraft.potion.Effects;
 import net.minecraft.server.management.PreYggdrasilConverter;
@@ -129,6 +131,10 @@ public abstract class PVZZombieEntity extends MonsterEntity implements IPVZZombi
 		this.xpReward = ZombieUtil.caculateZombieXp(this);
 		dropSpecialList = this.getDropSpecialList();
 		this.onLevelChanged();
+		this.setPathfindingMalus(PathNodeType.DANGER_FIRE, 2.0F);
+		this.setPathfindingMalus(PathNodeType.DAMAGE_FIRE, 2.0F);
+		this.setPathfindingMalus(PathNodeType.DAMAGE_OTHER, 2.0F);
+		this.setPathfindingMalus(PathNodeType.UNPASSABLE_RAIL, 1.0F);
 	}
 	
 	@Override
@@ -198,6 +204,13 @@ public abstract class PVZZombieEntity extends MonsterEntity implements IPVZZombi
 			this.getSpawnSound().ifPresent(s -> {
 				EntityUtil.playSound(this, s);
 			});
+			/*just test */
+			//set its spawn level
+			final int minLvl = MathHelper.clamp(InvasionCache.InvasionDifficulty / 100 + 1, 1, 20);
+			final int maxLvl = MathHelper.clamp(InvasionCache.InvasionDifficulty / 50 + 1, 1, 20);
+			final int lvl = MathUtil.getRandomMinMax(getRandom(), minLvl, maxLvl);
+			this.setZombieLevel(lvl);
+			/*end test */
 			this.updateAttributes();
 			if(this.needRising) {// rising from dirt.
 				this.setAnimTime(- RISING_CD);
@@ -217,12 +230,6 @@ public abstract class PVZZombieEntity extends MonsterEntity implements IPVZZombi
 		return super.finalizeSpawn(worldIn, difficultyIn, reason, spawnDataIn, dataTag);
 	}
 	
-	public void onSpawnedByPlayer(PlayerEntity player, int lvl) {
-		this.setZombieLevel(lvl);
-		this.onLevelChanged();
-		this.setOwnerUUID(player.getUUID());
-	}
-
 	/**
 	 * get current variant type.
 	 * it will be override by @NormalZombieEntity
@@ -251,9 +258,11 @@ public abstract class PVZZombieEntity extends MonsterEntity implements IPVZZombi
 	@Override
 	public void aiStep() {
 		super.aiStep();
+		this.level.getProfiler().push("PVZ Zombie Tick");
 		this.zombieTick();
+		this.level.getProfiler().pop();
 		if (this.canZombieNormalUpdate()) {
-			this.level.getProfiler().push("PVZ Zombie Tick");
+			this.level.getProfiler().push("PVZ Normal Zombie Tick");
 		    this.normalZombieTick();
 		    this.level.getProfiler().pop();
 		}
@@ -284,6 +293,17 @@ public abstract class PVZZombieEntity extends MonsterEntity implements IPVZZombi
 	public void normalZombieTick() {
 		if(! this.level.isClientSide) {
 			this.setAnimTime(Math.max(0, this.getAnimTime() - 1));
+		}
+	}
+	
+	public void onSpawnedByPlayer(PlayerEntity player, int lvl) {
+		this.setOwnerUUID(player.getUUID());
+		this.updateZombieLevel(lvl);
+	}
+	
+	public void updateZombieLevel(int lvl) {
+		if(this.getZombieLevel() != lvl) {//level changed.
+			this.setZombieLevel(lvl);
 		}
 	}
 

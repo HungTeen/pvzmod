@@ -919,6 +919,7 @@
     "command.pvz.add_zombie":"add zombie spawn",
     "command.pvz.add_zombie_fail":"can no add this zombie spawn",
     "command.pvz.remove_zombie":"remove zombie spawn",
+    "command.pvz.difficulty":"Current Invasion Difficulty",
 //resources
     "resource.pvz.tree_lvl":"Tree Level",
     "resource.pvz.tree_xp":"Tree Xp",

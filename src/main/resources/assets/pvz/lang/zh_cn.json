@@ -910,6 +910,7 @@
     "command.pvz.add_zombie":"添加僵尸生成",
     "command.pvz.add_zombie_fail":"不能将该僵尸加入生成",
     "command.pvz.remove_zombie":"移除僵尸生成",
+    "command.pvz.difficulty":"当前入侵难度",
 //resources
     "resource.pvz.tree_lvl":"智慧树等级",
     "resource.pvz.tree_xp":"智慧树经验",

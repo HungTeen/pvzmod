@@ -41,6 +41,7 @@ public class PlantUtil {
 //	public static final int[] GOLD_XP = new int[] {0,35,60,90,120,175,255,350,450,600,800,1080,1500,2500,3600,5000,6400,8100,10800,14000,999999999};
 //	public static final int[] MEGA_XP = new int[] {0,40,70,100,150,210,300,400,520,700,960,1300,1800,3000,4200,6000,7800,9600,12500,16000,999999999};
 	public static int CURRENT_PLANT_NUM = 0;
+	public static final int MAX_PLANT_LEVEL = 20;
 	public static final float PUMPKIN_LIFE = 400;
 	public static final float PUMPKIN_SUPER_LIFE = 400;
 	
@@ -157,11 +158,11 @@ public class PlantUtil {
 	
 	public static int getPlantMaxLvl(Plants plant){
 		switch(plant) {
-		case LILY_PAD: return 1;
-		case PUMPKIN: return 1;
-		case FLOWER_POT: return 1;
+		case LILY_PAD:
+		case PUMPKIN:
+		case FLOWER_POT:
 		case IMITATER: return 1;
-		default: return 20;
+		default: return MAX_PLANT_LEVEL;
 		}
 	}
 	
