@@ -38,6 +38,7 @@ public abstract class AbstractBulletEntity extends AbstractOwnerEntity {
 
 	public AbstractBulletEntity(EntityType<?> type, World worldIn, LivingEntity livingEntityIn) {
 		super(type, worldIn, livingEntityIn);
+		this.summonByOwner(livingEntityIn);
 		this.setNoGravity(true);
 	}
 	
@@ -52,6 +53,7 @@ public abstract class AbstractBulletEntity extends AbstractOwnerEntity {
 	 */
 	public void tick() {
 		super.tick();
+		if(this.tickCount % 20 == 0)
 		if (! level.isClientSide && this.tickCount >= this.getMaxLiveTick()) {
 			this.remove();
 		}
@@ -195,7 +197,8 @@ public abstract class AbstractBulletEntity extends AbstractOwnerEntity {
 	protected abstract void onImpact(RayTraceResult result);
 
 	/**
-	 * get the first initial damage for thrower.
+	 * get the first initial damage by its thrower.
+	 * {@link #summonByOwner(Entity)}
 	 */
 	protected abstract float getAttackDamage();
 	

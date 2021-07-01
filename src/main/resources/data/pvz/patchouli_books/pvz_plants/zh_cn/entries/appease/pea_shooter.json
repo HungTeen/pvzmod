@@ -1,0 +1,22 @@
+{
+    "name": "豌豆射手",
+    "icon": "pvz:pea_shooter_card",
+    "category": "pvz:appease",
+    "pages": [
+        {
+            "type": "text",
+            "text": "$(bgreen)豌豆射手$()的成功秘诀是一份由阳光与高纤维二氧化碳合理搭配而成的健康早餐。$(br)$(byellow)阳光消耗$() : $(l)100$()$(br)$(bblue)冷却$() : $(l)非常快$()$(br)$(l)特点$() : 它是一个$(l)远程攻击$()植物，每1.5秒发射$(bred)一个豌豆$()攻击敌人。"
+        },
+        {
+            "type": "entity",
+            "entity": "pvz:pea_shooter",
+            "scale": 0.65,
+            "text": "外观"
+        },
+        {
+            "type": "text",
+            "text": "$(bgreen)能量豆大招$() : 它会每tick发射$(l)多个豌豆$()，持续5秒。"
+        }
+    ],
+    "sortnum": 0
+}

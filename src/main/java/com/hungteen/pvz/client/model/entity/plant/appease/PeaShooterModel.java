@@ -1,10 +1,10 @@
 package com.hungteen.pvz.client.model.entity.plant.appease;
 
-import com.hungteen.pvz.client.model.entity.plant.PVZPlantModel;
-import com.hungteen.pvz.common.entity.plant.appease.PeaShooterEntity;
-import com.hungteen.pvz.utils.AnimationUtil;
+import java.util.Optional;
 
-import net.minecraft.client.renderer.entity.model.EntityModel;
+import com.hungteen.pvz.client.model.entity.plant.PlantShooterModel;
+import com.hungteen.pvz.common.entity.plant.appease.PeaShooterEntity;
+
 import net.minecraft.client.renderer.model.ModelRenderer;
 
 // Made with Blockbench 3.6.5
@@ -12,7 +12,7 @@ import net.minecraft.client.renderer.model.ModelRenderer;
 // Paste this class into your mod and generate all required imports
 
 
-public class PeaShooterModel extends PVZPlantModel<PeaShooterEntity> {
+public class PeaShooterModel extends PlantShooterModel<PeaShooterEntity> {
 	private final ModelRenderer total;
 	private final ModelRenderer down;
 	private final ModelRenderer body;
@@ -77,26 +77,18 @@ public class PeaShooterModel extends PVZPlantModel<PeaShooterEntity> {
 	}
 	
 	@Override
-	public void setupAnim(PeaShooterEntity entity, float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch){
-		if(entity.isPlantInSuperMode()) {
-			
-		} else {
-			final int tick = entity.getShootTick();
-		    final int T = entity.getShootCD();
-		    this.body.xRot = AnimationUtil.getUpDownUpDown(tick, T, - 15);
-		    this.head.xRot = AnimationUtil.getUpDownUpDown(tick, T, 15);
-		}
-		
+	public Optional<ModelRenderer> getHeadModel() {
+		return Optional.ofNullable(this.head);
 	}
-
+	
+	@Override
+	public Optional<ModelRenderer> getBodyModel() {
+		return Optional.ofNullable(this.body);
+	}
+	
 	@Override
 	public ModelRenderer getPlantWholeBody() {
 		return this.total;
 	}
 
-	@Override
-	public EntityModel<PeaShooterEntity> getPlantModel() {
-		return this;
-	}
-	
 }

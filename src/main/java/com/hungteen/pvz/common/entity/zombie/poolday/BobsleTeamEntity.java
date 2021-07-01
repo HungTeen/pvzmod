@@ -33,8 +33,7 @@ public class BobsleTeamEntity extends PVZZombieEntity implements IMultiPartEntit
 		super(type, worldIn);
 		this.setIsWholeBody();
 		this.resetParts();
-		this.canBeFrozen = false;
-		this.canBeButter = false;
+		this.setImmuneAllEffects();
 		this.canBeMini = false;
 		this.maxDeathTime = 1;
 	}

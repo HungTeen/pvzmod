@@ -24,8 +24,12 @@ import net.minecraft.world.World;
 
 public abstract class PlantShooterEntity extends PVZPlantEntity implements IShooter {
 
+	//use for normal shoot attack animation and shoot goal.
 	private static final DataParameter<Integer> SHOOT_TICK = EntityDataManager.defineId(PVZPlantEntity.class, DataSerializers.INT);
-			
+	public static final int SHOOT_ANIM_CD = 10;
+	public static final int SHOOT_POINT = SHOOT_ANIM_CD * 3 / 4;
+	public static final int SHOOT_POINT_OFFSET = SHOOT_ANIM_CD - SHOOT_POINT;
+	
 	public PlantShooterEntity(EntityType<? extends CreatureEntity> type, World worldIn) {
 		super(type, worldIn);
 	}
@@ -183,6 +187,7 @@ public abstract class PlantShooterEntity extends PVZPlantEntity implements IShoo
 		public void tick() {
 			if(this.shooter.isPlantInSuperMode()) {
 				this.shooter.startShootAttack();
+				this.shooter.setShootTick(0);
 				return ;
 			}
 			final int time = this.shooter.getShootTick();
@@ -190,7 +195,7 @@ public abstract class PlantShooterEntity extends PVZPlantEntity implements IShoo
 			if(time >= T) {
 				this.shooter.setShootTick(0);
 			} else {
-				if(time == T * 3 / 4) {
+				if(time == T - SHOOT_POINT_OFFSET) {
 				    this.shooter.startShootAttack();
 			    }
 				this.shooter.setShootTick(time + 1);

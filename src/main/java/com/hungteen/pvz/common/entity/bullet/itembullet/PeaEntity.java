@@ -35,7 +35,7 @@ public class PeaEntity extends AbstractShootBulletEntity implements IRendersAsIt
 
 	private static final DataParameter<Integer> PEA_STATE = EntityDataManager.defineId(PeaEntity.class, DataSerializers.INT);
 	private static final DataParameter<Integer> PEA_TYPE = EntityDataManager.defineId(PeaEntity.class, DataSerializers.INT);
-	private TorchWoodEntity torchWood = null;
+	public TorchWoodEntity torchWood = null;
 	private int power = 0;
 
 	public PeaEntity(EntityType<?> type, World worldIn) {
@@ -53,7 +53,24 @@ public class PeaEntity extends AbstractShootBulletEntity implements IRendersAsIt
 		entityData.define(PEA_STATE, State.NORMAL.ordinal());
 		entityData.define(PEA_TYPE, Type.NORMAL.ordinal());
 	}
-
+	
+	@Override
+	protected float getAttackDamage() {
+		if(this.getThrower() instanceof TorchWoodEntity) {
+			return 2;
+		}
+		if (this.getThrower() instanceof PlantShooterEntity) {
+			return ((PlantShooterEntity) this.getThrower()).getAttackDamage();
+		}
+		if(this.getThrower() instanceof PlayerEntity) {
+			return 2;
+		}
+		if(this.getThrower() instanceof PeaShooterZombieEntity) {
+			return ((PeaShooterZombieEntity) this.getThrower()).getAttackDamage();
+		}
+		return 0;
+	}
+	
 	@Override
 	protected void onImpact(RayTraceResult result) {
 		boolean flag = false;
@@ -64,25 +81,25 @@ public class PeaEntity extends AbstractShootBulletEntity implements IRendersAsIt
 				this.dealPeaDamage(target); // attack 
 				flag = true;
 			}
-			if (target instanceof TorchWoodEntity) {// pea interact with torchwood
-				TorchWoodEntity tmp = (TorchWoodEntity) target;
-				if (this.torchWood == null || !this.torchWood.is(tmp)) {// don't fire twice by the same torchwood
-					this.torchWood = tmp;
-					if (this.torchWood.IsSuperFlame()) {// blue fire
-						if (this.getPeaState() == State.ICE) {//ice to fire
-							this.setPeaState(State.FIRE);
-						} else if (this.getPeaState().ordinal() < State.BLUE_FIRE.ordinal()) {// pea and fire to blue fire
-							this.setPeaState(State.BLUE_FIRE);
-						}
-					} else {// fire
-						if (this.getPeaState() == State.ICE) {//ice to normal 
-							this.setPeaState(State.NORMAL);
-						} else if (this.getPeaState() == State.NORMAL) {//normal to fire
-							this.setPeaState(State.FIRE);
-						}
-					}
-				}
-			}
+//			if (target instanceof TorchWoodEntity) {// pea interact with torchwood
+//				TorchWoodEntity tmp = (TorchWoodEntity) target;
+//				if (this.torchWood == null || !this.torchWood.is(tmp)) {// don't fire twice by the same torchwood
+//					this.torchWood = tmp;
+//					if (this.torchWood.IsSuperFlame()) {// blue fire
+//						if (this.getPeaState() == State.ICE) {//ice to fire
+//							this.setPeaState(State.FIRE);
+//						} else if (this.getPeaState().ordinal() < State.BLUE_FIRE.ordinal()) {// pea and fire to blue fire
+//							this.setPeaState(State.BLUE_FIRE);
+//						}
+//					} else {// fire
+//						if (this.getPeaState() == State.ICE) {//ice to normal 
+//							this.setPeaState(State.NORMAL);
+//						} else if (this.getPeaState() == State.NORMAL) {//normal to fire
+//							this.setPeaState(State.FIRE);
+//						}
+//					}
+//				}
+//			}
 		}
 		this.level.broadcastEntityEvent(this, (byte) 3);
 		if (flag || !this.checkLive(result)) {
@@ -93,7 +110,6 @@ public class PeaEntity extends AbstractShootBulletEntity implements IRendersAsIt
 	private void dealPeaDamage(Entity target) {
 		final float damage = this.getFixDamage();
 		if (this.getPeaState() == State.NORMAL) {// normal pea attack
-			// System.out.println(this.getThrower());
 			target.hurt(PVZDamageSource.causeAppeaseDamage(this, this.getThrower()), damage);
 		} else if (this.getPeaState() == State.ICE) {// snow pea attack
 			PVZDamageSource source = PVZDamageSource.causeIceDamage(this, this.getThrower());
@@ -136,14 +152,6 @@ public class PeaEntity extends AbstractShootBulletEntity implements IRendersAsIt
 		return damage;
 	}
 	
-	protected float getAttackDamage() {
-		if(this.getThrower() instanceof TorchWoodEntity) return 2;
-		if (this.getThrower() instanceof PlantShooterEntity) return ((PlantShooterEntity) this.getThrower()).getAttackDamage();
-		if(this.getThrower() instanceof PlayerEntity) return 2;
-		if(this.getThrower() instanceof PeaShooterZombieEntity) return ((PeaShooterZombieEntity) this.getThrower()).getAttackDamage();
-		return 0;
-	}
-	
 	@Override
 	protected int getMaxLiveTick() {
 		return 40;
@@ -151,12 +159,15 @@ public class PeaEntity extends AbstractShootBulletEntity implements IRendersAsIt
 
 	@Override
 	public EntitySize getDimensions(Pose poseIn) {
-		if (this.getPeaType() == Type.NORMAL)
+		if (this.getPeaType() == Type.NORMAL) {
 			return new EntitySize(0.2f, 0.2f, false);
-		if (this.getPeaType() == Type.BIG)
+		}
+		if (this.getPeaType() == Type.BIG) {
 			return new EntitySize(0.4f, 0.4f, false);
-		if (this.getPeaType() == Type.HUGE)
+		}
+		if (this.getPeaType() == Type.HUGE) {
 			return new EntitySize(0.6f, 0.6f, false);
+		}
 		return new EntitySize(0.2f, 0.2f, false);
 	}
 

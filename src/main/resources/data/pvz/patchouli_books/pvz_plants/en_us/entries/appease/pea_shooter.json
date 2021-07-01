@@ -1,0 +1,22 @@
+{
+    "name": "PeaShooter",
+    "icon": "pvz:pea_shooter_card",
+    "category": "pvz:appease",
+    "pages": [
+        {
+            "type": "text",
+            "text": "$(bgreen)PeaShooter$() has a healthy, well-balanced breakfast of sunlight and high-fiber carbon dioxide, which make everything all possible.$(br)$(byellow)Sun Cost$() : $(l)100$()$(br)$(bblue)Recharge$() : $(l)Very Fast$()$(br)$(l)Features$() : It is a $(l)range attack$() plant that shoots $(bred)one pea$() every 1.5 seconds to attack enemy."
+        },
+        {
+            "type": "entity",
+            "entity": "pvz:pea_shooter",
+            "scale": 0.65,
+            "text": "Appearance"
+        },
+        {
+            "type": "text",
+            "text": "$(bgreen)Plant Food :$() It will shoot $(l)serveral peas each tick$() which last 5 seconds."
+        }
+    ],
+    "sortnum": 0
+}

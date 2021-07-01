@@ -36,6 +36,13 @@ public class MathUtil {
 		return rand.nextInt(range << 1 | 1) - range;
 	}
 	
+	/**
+	 * get random from - 1 to 1.
+	 */
+	public static float getRandomFloat(Random rand) {
+		return (rand.nextFloat() - 0.5F) * 2;
+	}
+	
 	public static AxisAlignedBB getAABBWithPos(BlockPos pos, double len) {
 		return new AxisAlignedBB(pos.getX() + 0.5D - len, pos.getY() + 0.5D - len, pos.getZ() - len, pos.getX() + 0.5D + len, pos.getY() + 0.5D + len, pos.getZ() + 0.5D + len);
 	}
