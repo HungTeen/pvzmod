@@ -32,7 +32,8 @@ public abstract class PVZPlantRender<T extends PVZPlantEntity> extends MobRender
 	protected void scale(T plant, MatrixStack matrixStackIn, float partialTickTime) {
 		int live = plant.getExistTick() % BREATH_ANIM_CD;
 		final float scaleOffset = AnimationUtil.upDown(live, BREATH_ANIM_CD, 0.01F);
-		final float sz = getScaleByEntity(plant) + scaleOffset;
+		final float sz1 = getScaleByEntity(plant);
+		final float sz = sz1 * (1 + scaleOffset);
 		final Vector3d vec = getTranslateVec(plant);
 		matrixStackIn.scale(sz, sz, sz);
 		matrixStackIn.translate(vec.x, vec.y, vec.z);

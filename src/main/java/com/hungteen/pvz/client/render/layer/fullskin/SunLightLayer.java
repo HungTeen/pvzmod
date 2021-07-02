@@ -28,7 +28,7 @@ public class SunLightLayer<T extends LivingEntity, M extends EntityModel<T>> ext
 		if(entity instanceof StarFruitEntity && ((StarFruitEntity) entity).lightTick > 0) return true;
 		if(entity instanceof GoldLeafEntity && ((GoldLeafEntity) entity).getAttackTime() + 30 > ((GoldLeafEntity) entity).getReadyTime()) return true;
 		if(entity instanceof PlantProducerEntity) {
-			return ((PlantProducerEntity) entity).getIsGenTime();
+			return ((PlantProducerEntity) entity).isPlantInGen();
 		} else if(entity instanceof FoodieZombieEntity) {
 			int tick = ((FoodieZombieEntity) entity).getGenTick();
 			return tick > 0&& tick <= 60;

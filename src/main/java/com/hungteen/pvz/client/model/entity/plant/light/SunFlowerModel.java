@@ -2,6 +2,7 @@ package com.hungteen.pvz.client.model.entity.plant.light;
 
 import com.hungteen.pvz.client.model.entity.plant.PVZPlantModel;
 import com.hungteen.pvz.common.entity.plant.light.SunFlowerEntity;
+import com.hungteen.pvz.utils.AnimationUtil;
 
 import net.minecraft.client.renderer.entity.model.EntityModel;
 import net.minecraft.client.renderer.model.ModelRenderer;
@@ -13,8 +14,8 @@ import net.minecraft.client.renderer.model.ModelRenderer;
 
 public class SunFlowerModel extends PVZPlantModel<SunFlowerEntity> {
 	private final ModelRenderer total;
-	private final ModelRenderer left_hand;
-	private final ModelRenderer right_hand;
+	private final ModelRenderer body;
+	private final ModelRenderer cube_r1;
 	private final ModelRenderer head;
 	private final ModelRenderer HUABAN;
 	private final ModelRenderer HUABAN2;
@@ -22,12 +23,13 @@ public class SunFlowerModel extends PVZPlantModel<SunFlowerEntity> {
 	private final ModelRenderer HUABAN4;
 	private final ModelRenderer HUABAN5;
 	private final ModelRenderer HUABAN6;
-	private final ModelRenderer body;
-	private final ModelRenderer cube_r1;
-	private final ModelRenderer YEZI_4;
-	private final ModelRenderer YEZI_3;
-	private final ModelRenderer YEZI_1;
-	private final ModelRenderer YEZI_2;
+	private final ModelRenderer right_hand;
+	private final ModelRenderer left_hand;
+	private final ModelRenderer leaves;
+	private final ModelRenderer leaf1;
+	private final ModelRenderer leaf2;
+	private final ModelRenderer leaf3;
+	private final ModelRenderer leaf4;
 
 	public SunFlowerModel() {
 		texWidth = 128;
@@ -37,23 +39,20 @@ public class SunFlowerModel extends PVZPlantModel<SunFlowerEntity> {
 		total.setPos(0.0F, 24.0F, 0.0F);
 		
 
-		left_hand = new ModelRenderer(this);
-		left_hand.setPos(3.0F, -15.0F, 0.0F);
-		total.addChild(left_hand);
-		setRotationAngle(left_hand, 0.0F, 0.0F, -0.1745F);
-		left_hand.texOffs(0, 0).addBox(1.0F, -1.0F, -1.0F, 6.0F, 3.0F, 2.0F, 0.0F, false);
-		left_hand.texOffs(0, 0).addBox(-3.0912F, 0.0419F, 0.0F, 8.0F, 1.0F, 1.0F, 0.0F, false);
+		body = new ModelRenderer(this);
+		body.setPos(0.0F, -1.0F, 0.0F);
+		total.addChild(body);
+		body.texOffs(112, 43).addBox(-2.0F, -34.0F, -2.0F, 4.0F, 35.0F, 4.0F, 0.0F, false);
 
-		right_hand = new ModelRenderer(this);
-		right_hand.setPos(-3.0F, -15.0F, 0.0F);
-		total.addChild(right_hand);
-		setRotationAngle(right_hand, 0.0F, 0.0F, 0.1745F);
-		right_hand.texOffs(0, 0).addBox(-7.0F, -1.0F, -1.0F, 6.0F, 3.0F, 2.0F, 0.0F, false);
-		right_hand.texOffs(0, 0).addBox(-1.0F, 0.0F, 0.0F, 3.0F, 1.0F, 1.0F, 0.0F, false);
+		cube_r1 = new ModelRenderer(this);
+		cube_r1.setPos(0.0F, -34.7071F, -0.1213F);
+		body.addChild(cube_r1);
+		setRotationAngle(cube_r1, 0.7854F, 0.0F, 0.0F);
+		cube_r1.texOffs(23, 0).addBox(-2.0F, -4.0F, -3.0F, 4.0F, 6.0F, 4.0F, 0.0F, false);
 
 		head = new ModelRenderer(this);
-		head.setPos(0.0F, -32.0F, 0.0F);
-		total.addChild(head);
+		head.setPos(0.0F, -31.0F, 0.0F);
+		body.addChild(head);
 		head.texOffs(73, 100).addBox(-11.0F, -15.0F, -5.99F, 22.0F, 21.0F, 4.0F, -0.02F, false);
 		head.texOffs(0, 123).addBox(-5.0F, 5.9F, -6.0F, 10.0F, 1.0F, 4.0F, -0.02F, false);
 
@@ -110,44 +109,66 @@ public class SunFlowerModel extends PVZPlantModel<SunFlowerEntity> {
 		HUABAN6.texOffs(42, 36).addBox(11.8564F, -4.5359F, -6.0F, 4.0F, 8.0F, 4.0F, 0.0F, false);
 		HUABAN6.texOffs(73, 73).addBox(-14.0F, -4.5359F, -6.0F, 4.0F, 8.0F, 4.0F, 0.0F, false);
 
-		body = new ModelRenderer(this);
-		body.setPos(0.0F, -1.0F, 0.0F);
-		total.addChild(body);
-		body.texOffs(112, 43).addBox(-2.0F, -34.0F, -2.0F, 4.0F, 35.0F, 4.0F, 0.0F, false);
+		right_hand = new ModelRenderer(this);
+		right_hand.setPos(-3.0F, -14.0F, 0.0F);
+		body.addChild(right_hand);
+		setRotationAngle(right_hand, 0.0F, 0.0F, 0.1745F);
+		right_hand.texOffs(0, 0).addBox(-7.0F, -1.0F, -1.0F, 6.0F, 3.0F, 2.0F, 0.0F, false);
+		right_hand.texOffs(0, 0).addBox(-1.0F, 0.0F, 0.0F, 3.0F, 1.0F, 1.0F, 0.0F, false);
 
-		cube_r1 = new ModelRenderer(this);
-		cube_r1.setPos(0.0F, -34.7071F, -0.1213F);
-		body.addChild(cube_r1);
-		setRotationAngle(cube_r1, 0.7854F, 0.0F, 0.0F);
-		cube_r1.texOffs(23, 0).addBox(-2.0F, -4.0F, -3.0F, 4.0F, 6.0F, 4.0F, 0.0F, false);
+		left_hand = new ModelRenderer(this);
+		left_hand.setPos(3.0F, -14.0F, 0.0F);
+		body.addChild(left_hand);
+		setRotationAngle(left_hand, 0.0F, 0.0F, -0.1745F);
+		left_hand.texOffs(0, 0).addBox(1.0F, -1.0F, -1.0F, 6.0F, 3.0F, 2.0F, 0.0F, false);
+		left_hand.texOffs(0, 0).addBox(-3.0912F, 0.0419F, 0.0F, 8.0F, 1.0F, 1.0F, 0.0F, false);
 
-		YEZI_4 = new ModelRenderer(this);
-		YEZI_4.setPos(-2.0F, -1.0F, 0.0F);
-		total.addChild(YEZI_4);
-		YEZI_4.texOffs(78, 26).addBox(-11.0F, -1.0F, -4.0F, 8.0F, 2.0F, 8.0F, 0.0F, false);
-		YEZI_4.texOffs(114, 28).addBox(-3.0F, 0.0F, -2.0F, 3.0F, 1.0F, 4.0F, 0.0F, false);
+		leaves = new ModelRenderer(this);
+		leaves.setPos(0.0F, 0.0F, 0.0F);
+		total.addChild(leaves);
+		
 
-		YEZI_3 = new ModelRenderer(this);
-		YEZI_3.setPos(0.0F, 0.0F, -2.0F);
-		total.addChild(YEZI_3);
-		YEZI_3.texOffs(114, 19).addBox(-2.0F, -1.0F, -3.0F, 4.0F, 1.0F, 3.0F, 0.0F, false);
-		YEZI_3.texOffs(0, 36).addBox(-4.0F, -2.0F, -11.0F, 8.0F, 2.0F, 8.0F, 0.0F, false);
+		leaf1 = new ModelRenderer(this);
+		leaf1.setPos(-2.0F, -1.0F, 0.0F);
+		leaves.addChild(leaf1);
+		leaf1.texOffs(78, 26).addBox(-11.0F, -1.0F, -4.0F, 8.0F, 2.0F, 8.0F, 0.0F, false);
+		leaf1.texOffs(114, 28).addBox(-3.0F, 0.0F, -2.0F, 3.0F, 1.0F, 4.0F, 0.0F, false);
 
-		YEZI_1 = new ModelRenderer(this);
-		YEZI_1.setPos(2.0F, 0.0F, 0.0F);
-		total.addChild(YEZI_1);
-		YEZI_1.texOffs(114, 0).addBox(0.0F, -1.0F, -2.0F, 3.0F, 1.0F, 4.0F, 0.0F, false);
-		YEZI_1.texOffs(79, 0).addBox(3.0F, -2.0F, -4.0F, 8.0F, 2.0F, 8.0F, 0.0F, false);
+		leaf2 = new ModelRenderer(this);
+		leaf2.setPos(0.0F, 0.0F, -2.0F);
+		leaves.addChild(leaf2);
+		leaf2.texOffs(114, 19).addBox(-2.0F, -1.0F, -3.0F, 4.0F, 1.0F, 3.0F, 0.0F, false);
+		leaf2.texOffs(0, 36).addBox(-4.0F, -2.0F, -11.0F, 8.0F, 2.0F, 8.0F, 0.0F, false);
 
-		YEZI_2 = new ModelRenderer(this);
-		YEZI_2.setPos(0.0F, 0.0F, 2.0F);
-		total.addChild(YEZI_2);
-		YEZI_2.texOffs(78, 12).addBox(-4.0F, -2.0F, 3.0F, 8.0F, 2.0F, 8.0F, 0.0F, false);
-		YEZI_2.texOffs(114, 9).addBox(-2.0F, -1.0F, 0.0F, 4.0F, 1.0F, 3.0F, 0.0F, false);
+		leaf3 = new ModelRenderer(this);
+		leaf3.setPos(2.0F, 0.0F, 0.0F);
+		leaves.addChild(leaf3);
+		leaf3.texOffs(114, 0).addBox(0.0F, -1.0F, -2.0F, 3.0F, 1.0F, 4.0F, 0.0F, false);
+		leaf3.texOffs(79, 0).addBox(3.0F, -2.0F, -4.0F, 8.0F, 2.0F, 8.0F, 0.0F, false);
+
+		leaf4 = new ModelRenderer(this);
+		leaf4.setPos(0.0F, 0.0F, 2.0F);
+		leaves.addChild(leaf4);
+		leaf4.texOffs(78, 12).addBox(-4.0F, -2.0F, 3.0F, 8.0F, 2.0F, 8.0F, 0.0F, false);
+		leaf4.texOffs(114, 9).addBox(-2.0F, -1.0F, 0.0F, 4.0F, 1.0F, 3.0F, 0.0F, false);
 	}
 
 	@Override
 	public void setupAnim(SunFlowerEntity entity, float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch){
+		final int tick = entity.getAttackTime();
+		if(tick > 0 && tick < entity.getAnimGenCD() || entity.isPlantInSuperMode()) {
+			final int T = 10;
+			this.left_hand.zRot = AnimationUtil.getUpDownUpDown(ageInTicks % T, T, - 30);
+			this.right_hand.zRot = AnimationUtil.getUpDownUpDown(ageInTicks % T, T, - 30);
+		} else {
+			this.left_hand.zRot = 0;
+			this.right_hand.zRot = 0;
+		}
+		final int T = 60;
+		final int time = entity.getExistTick() % 60;
+		final float degree = 7.5F;
+		this.body.zRot = AnimationUtil.getUpDownUpDown(time, T, degree);
+		this.head.zRot = AnimationUtil.getUpDownUpDown(time, T, - degree);
 	}
 
 	@Override

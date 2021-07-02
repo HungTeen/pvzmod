@@ -2,24 +2,38 @@ package com.hungteen.pvz.utils;
 
 import java.util.Random;
 
+import com.hungteen.pvz.common.entity.plant.base.PlantShooterEntity;
+
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.vector.Vector3d;
 
 public class MathUtil {
 
-	public static int getProgressAverage(int now, int max, int from, int to) {
-		if(now >= max) {
-			return to;
-		}
-		return from + (now - 1) * (to - from) / max;
+	public static int getProgressByDif(int segLen, int dif, int now, int max, int from, int to) {
+		return MathHelper.floor(getProgressByDif(segLen, dif, now, max, from, to * 1F));
 	}
 	
-	public static float getProgressAverage(int now, int max, float from, float to) {
-		if(now >= max) {
+	public static float getProgressByDif(int segLen, float dif, int now, int max, float from, float to) {
+		if(now + segLen > max) {
 			return to;
 		}
-		return from + (now - 1) * (to - from) / max;
+		return from + (now - 1) / segLen * dif;
+	}
+	
+	/**
+	 * get average amount in (from, to).
+	 */
+	public static int getProgressAverage(int now, int max, int from, int to) {
+		return MathHelper.floor(getProgressAverage(now, max, from, to * 1F));
+	}
+	
+	/**
+	 * {@link PlantShooterEntity#getAttackDamage()}
+	 */
+	public static float getProgressAverage(int now, int max, float from, float to) {
+		return getProgressByDif(1, (to - from) / max, now, max, from, to);
 	}
 	
 	/**
@@ -31,6 +45,7 @@ public class MathUtil {
 	
 	/**
 	 * get random from - range to range.
+	 * {@link EntityUtil#onMobEntityRandomPosSpawn(net.minecraft.world.IWorld, net.minecraft.entity.MobEntity, BlockPos, int)}
 	 */
 	public static int getRandomInRange(Random rand, int range) {
 		return rand.nextInt(range << 1 | 1) - range;

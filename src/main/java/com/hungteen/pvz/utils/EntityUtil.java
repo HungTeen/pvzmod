@@ -287,7 +287,7 @@ public class EntityUtil {
 	 * spawn in random range position.
 	 */
 	public static void onMobEntityRandomPosSpawn(IWorld world, MobEntity entity, BlockPos pos, int dis) {
-		pos = pos.offset(entity.getRandom().nextInt(dis * 2 + 1) - dis, entity.getRandom().nextInt(dis) + 1, entity.getRandom().nextInt(dis * 2 + 1) - dis);
+		pos = pos.offset(MathUtil.getRandomInRange(entity.getRandom(), dis), entity.getRandom().nextInt(dis) + 1, MathUtil.getRandomInRange(entity.getRandom(), dis));
 		onEntitySpawn(world, entity, pos);
 	}
 	

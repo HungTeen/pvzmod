@@ -1,0 +1,22 @@
+{
+    "name": "向日葵",
+    "icon": "pvz:sun_flower_card",
+    "category": "pvz:light",
+    "pages": [
+        {
+            "type": "text",
+            "text": "$(bgreen)向日葵$()喜欢随着节拍起舞，这是大地母亲那赐予生命的爵士节奏。$(br)$(byellow)阳光消耗$() : $(l)50$()$(br)$(bblue)冷却$() : $(l)非常快$()$(br)$(l)特点$() : 它是一个$(l)生产型$()植物，每隔25秒会生产少量$(bred)阳光$()。$(bred)在夜晚或下雨时它的生产速度会减慢4倍$()。"
+        },
+        {
+            "type": "entity",
+            "entity": "pvz:sun_flower",
+            "scale": 0.65,
+            "text": "外观"
+        },
+        {
+            "type": "text",
+            "text": "$(bgreen)能量豆大招$() : 瞬间产生大量阳光。"
+        }
+    ],
+    "sortnum": 0
+}

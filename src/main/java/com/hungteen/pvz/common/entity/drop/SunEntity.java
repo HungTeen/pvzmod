@@ -5,6 +5,7 @@ import java.util.Random;
 
 import com.hungteen.pvz.PVZConfig;
 import com.hungteen.pvz.common.enchantment.EnchantmentUtil;
+import com.hungteen.pvz.common.entity.plant.light.SunFlowerEntity;
 import com.hungteen.pvz.common.event.events.PlayerCollectDropEvent;
 import com.hungteen.pvz.common.network.PVZPacketHandler;
 import com.hungteen.pvz.common.network.PlaySoundPacket;
@@ -93,12 +94,20 @@ public class SunEntity extends DropEntity {
 	}
 	
 	public static void spawnSunsByAmount(World world, BlockPos pos, int amount) {
-		while(amount >= 75) {
-			amount -= 75;
-			spawnSunRandomly(world, pos, 75, 1);
+		spawnSunsByAmount(world, pos, amount, 75, 1);
+	}
+	
+	/**
+	 * spawn sun in range, each is set to a specific amount.
+	 * {@link SunFlowerEntity#genSuper()} 
+	 */
+	public static void spawnSunsByAmount(World world, BlockPos pos, int amount, int each, int range) {
+		while(amount >= each) {
+			amount -= each;
+			spawnSunRandomly(world, pos, each, range);
 		}
 		if(amount != 0) {
-			spawnSunRandomly(world, pos, amount, 1);
+			spawnSunRandomly(world, pos, amount, range);
 			amount = 0;
 		}
 	}

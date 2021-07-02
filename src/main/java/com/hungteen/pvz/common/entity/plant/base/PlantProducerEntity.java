@@ -1,49 +1,29 @@
 package com.hungteen.pvz.common.entity.plant.base;
 
-import com.hungteen.pvz.common.entity.ai.goal.ProducerGenGoal;
 import com.hungteen.pvz.common.entity.drop.SunEntity;
 import com.hungteen.pvz.common.entity.plant.PVZPlantEntity;
 import com.hungteen.pvz.register.EntityRegister;
 import com.hungteen.pvz.utils.EntityUtil;
-import com.hungteen.pvz.utils.interfaces.IProducer;
 
 import net.minecraft.entity.CreatureEntity;
 import net.minecraft.entity.EntityType;
-import net.minecraft.nbt.CompoundNBT;
-import net.minecraft.network.datasync.DataParameter;
-import net.minecraft.network.datasync.DataSerializers;
-import net.minecraft.network.datasync.EntityDataManager;
+import net.minecraft.entity.ai.goal.Goal;
 import net.minecraft.util.SoundEvents;
 import net.minecraft.world.World;
 
-public abstract class PlantProducerEntity extends PVZPlantEntity implements IProducer{
+public abstract class PlantProducerEntity extends PVZPlantEntity {
 
-	private static final DataParameter<Boolean> IS_GEN_TIME = EntityDataManager.defineId(PlantProducerEntity.class, DataSerializers.BOOLEAN);
-	public int genCD;
-	
 	public PlantProducerEntity(EntityType<? extends CreatureEntity> type, World worldIn) {
 		super(type, worldIn);
-		this.canBeCharm = false;
-		this.genCD = this.getGenCD();
+		this.setAttackTime(200);//the first gen just need 10 seconds CD.
 	}
 
-	@Override
-	protected void defineSynchedData() {
-		super.defineSynchedData();
-		entityData.define(IS_GEN_TIME, false);
-	}
-	
 	@Override
 	protected void registerGoals() {
 		super.registerGoals();
 		this.goalSelector.addGoal(0, new ProducerGenGoal(this));
 	}
 	
-	@Override
-	public int getSuperTimeLength() {
-		return 20;
-	}
-
 	/**
 	 * sun produce plant gen sun
 	 * such as sunflower or sunshroom
@@ -55,32 +35,81 @@ public abstract class PlantProducerEntity extends PVZPlantEntity implements IPro
 		EntityUtil.playSound(this, SoundEvents.EXPERIENCE_ORB_PICKUP);
 	}
 	
-	@Override
-	public void readAdditionalSaveData(CompoundNBT compound) {
-		super.readAdditionalSaveData(compound);
-		if(compound.contains("is_gen_time")) {
-			this.setIsGenTime(compound.getBoolean("is_gen_time"));
-		}
-		if(compound.contains("gen_cd")) {
-			this.genCD = compound.getInt("gen_cd");
-		}
+	/**
+	 * produce something ,like sunflower produce sun.
+	 * {@link ProducerGenGoal#tick()}
+	 */
+	protected abstract void genSomething();
+	
+	/**
+	 * super produce.
+	 * {@link ProducerGenGoal#tick()}
+	 */
+	protected abstract void genSuper();
+	
+	/**
+	 * get next produce CD.
+	 * {@link ProducerGenGoal#tick()}
+	 */
+	public abstract int getGenCD();
+	
+	public int getAnimGenCD() {
+		return 20;
 	}
+	
+	@Override
+	public int getSuperTimeLength() {
+		return 30;
+	}
+	
+	/**
+	 * is producer going to gen, use for render sunflower sun layer.
+	 */
+	public boolean isPlantInGen() {
+		return this.getAttackTime() <= 10 || (this.isPlantInSuperMode() && this.getSuperTime() < 10);
+	}
+	
+	static class ProducerGenGoal extends Goal{
 
-	@Override
-	public void addAdditionalSaveData(CompoundNBT compound) {
-		super.addAdditionalSaveData(compound);
-		compound.putBoolean("is_gen_time", this.getIsGenTime());
-		compound.putInt("gen_cd", this.genCD);
-	}
-	
-	public boolean getIsGenTime()
-	{
-		return entityData.get(IS_GEN_TIME);
-	}
-	
-	public void setIsGenTime(boolean is)
-	{
-		this.entityData.set(IS_GEN_TIME, is);
+		private final PlantProducerEntity producer;
+		
+		public ProducerGenGoal(PlantProducerEntity entity) {
+			this.producer = entity;
+		}
+		
+		@Override
+		public boolean canUse() {
+			return true;
+		}
+
+		@Override
+		public boolean canContinueToUse() {
+			return true;
+		}
+		
+		@Override
+		public void stop() {
+		}
+		
+		@Override
+		public void tick() {
+			if(! this.producer.canPlantNormalUpdate()) {
+				return ;
+			}
+			if(this.producer.isPlantInSuperMode()){//Be Super Mode
+				if(this.producer.getSuperTime() == 1) {
+				    this.producer.genSuper();
+				}
+				return ;
+	        }
+			final int time = this.producer.getAttackTime();
+			if(time <= 1) {
+				this.producer.genSomething();
+				this.producer.setAttackTime(this.producer.getGenCD());
+			} else {
+				this.producer.setAttackTime(Math.max(0, time - 1));
+			}
+		}
 	}
 	
 }
