@@ -6,6 +6,8 @@ import com.hungteen.pvz.common.misc.damage.PVZDamageSource;
 import com.hungteen.pvz.register.ParticleRegister;
 import com.hungteen.pvz.register.SoundRegister;
 import com.hungteen.pvz.utils.EntityUtil;
+import com.hungteen.pvz.utils.MathUtil;
+import com.hungteen.pvz.utils.PlantUtil;
 import com.hungteen.pvz.utils.enums.Plants;
 
 import net.minecraft.entity.CreatureEntity;
@@ -15,49 +17,45 @@ import net.minecraft.entity.EntityType;
 import net.minecraft.entity.Pose;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.ServerPlayerEntity;
-import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.world.World;
 
 public class CherryBombEntity extends PlantBomberEntity{
 
+	private static final float BOMB_RANGE = 3.5F;
+	
 	public CherryBombEntity(EntityType<? extends CreatureEntity> type, World worldIn) {
 		super(type, worldIn);
 	}
 
 	@Override
-	public void startBomb() {
-//		System.out.println(this.world.isRemote);
-		if(! this.level.isClientSide) {
-			float len = this.getExpRange();
-			AxisAlignedBB aabb = EntityUtil.getEntityAABB(this, len, len);
+	public void startBomb(boolean server) {
+		if(server) {
 			int deathCnt = 0;
-			for(Entity target : EntityUtil.getTargetableEntities(this, aabb)) {
+			for(Entity target : EntityUtil.getTargetableEntitiesIngoreCheck(this, EntityUtil.getEntityAABB(this, BOMB_RANGE, BOMB_RANGE))) {
 				target.hurt(PVZDamageSource.causeExplosionDamage(this, this), this.getAttackDamage());
 				if(! EntityUtil.isEntityValid(target)) {
 					++ deathCnt;
 				}
 			}
+			EntityUtil.playSound(this, SoundRegister.CHERRY_BOMB.get());
+			//trigger advancement.
 			PlayerEntity owner = EntityUtil.getEntityOwner(level, this);
 			if(owner != null && owner instanceof ServerPlayerEntity) {
 				EntityEffectAmountTrigger.INSTANCE.trigger((ServerPlayerEntity) owner, this, deathCnt);
 			}
-			EntityUtil.playSound(this, SoundRegister.CHERRY_BOMB.get());
-		}
-		for(int i = 0; i < 5; ++ i) {
-		    this.level.addParticle(ParticleRegister.RED_BOMB.get(), this.getX(), this.getY(), this.getZ(), 0, 0, 0);
+		} else {
+			for(int i = 0; i < 5; ++ i) {
+		        this.level.addParticle(ParticleRegister.RED_BOMB.get(), this.getX(), this.getY(), this.getZ(), 0, 0, 0);
+			}
 		}
 	}
 	
-	public float getExpRange() {
-		return this.getPlantLvl() <= 10 ? 2f : 2.5f;
-	}
-	
+	/**
+	 * explosion damage.
+	 * {@link #startBomb()}
+	 */
 	public float getAttackDamage(){
-		int lvl = this.getPlantLvl();
-		if(lvl <= 19) {
-			return 145 + 5 * lvl;
-		}
-		return 250;
+		return MathUtil.getProgressAverage(this.getPlantLvl(), PlantUtil.MAX_PLANT_LEVEL, 150, 450);
 	}
 	
 	@Override

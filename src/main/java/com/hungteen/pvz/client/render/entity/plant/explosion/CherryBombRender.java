@@ -12,13 +12,13 @@ import net.minecraftforge.api.distmarker.OnlyIn;
 public class CherryBombRender extends PVZPlantRender<CherryBombEntity>{
 
 	public CherryBombRender(EntityRendererManager rendererManager){
-		super(rendererManager, new CherryBombModel(), 0.5f);
+		super(rendererManager, new CherryBombModel(), 0.5F);
 	}
 
 	@Override
 	public float getScaleByEntity(CherryBombEntity entity) {
-		float plus = entity.getAttackTime() * 1f / entity.getReadyTime();
-		return 0.5f + plus * 0.05f;
+		final float plus = entity.getAttackTime() * 1F / entity.getReadyTime();
+		return super.getScaleByEntity(entity) + plus * 0.15F;
 	}
 
 }

@@ -115,7 +115,7 @@ public class AlmanacScreen extends AbstractOptionScreen<AlmanacContainer> {
 			case CHERRY_BOMB:{
 				CherryBombEntity cherryBomb = (CherryBombEntity) plantEntity;
 				this.drawProperty(stack, Properties.ATTACK_DAMAGE, cherryBomb.getAttackDamage());
-				this.drawProperty(stack, Properties.ATTACK_RANGE, cherryBomb.getExpRange());
+//				this.drawProperty(stack, Properties.ATTACK_RANGE, cherryBomb.getExpRange());
 				break;
 			}
 			case WALL_NUT:{

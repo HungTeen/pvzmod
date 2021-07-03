@@ -31,7 +31,7 @@ public class IceShroomEntity extends PlantBomberEntity implements IIcePlant{
 	}
 
 	@Override
-	public void startBomb() {
+	public void startBomb(boolean server) {
 		if(! this.level.isClientSide) {
 			float len = getAttackRange();
 			AxisAlignedBB aabb=EntityUtil.getEntityAABB(this, len, len);

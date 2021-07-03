@@ -8,6 +8,7 @@ import com.hungteen.pvz.common.entity.plant.base.PlantShooterEntity;
 import com.hungteen.pvz.utils.EntityUtil;
 import com.hungteen.pvz.utils.MathUtil;
 import com.hungteen.pvz.utils.enums.Plants;
+import com.hungteen.pvz.utils.enums.ShootTypes;
 
 import net.minecraft.entity.CreatureEntity;
 import net.minecraft.entity.EntitySize;
@@ -39,10 +40,10 @@ public class PeaShooterEntity extends PlantShooterEntity{
 			for(int i = 0; i < cnt; ++ i) {
 				final float offset = MathUtil.getRandomFloat(getRandom()) / 5;
 				final float offsetH = MathUtil.getRandomFloat(getRandom()) / 5;
-				this.performShoot(SHOOT_OFFSET, offset, offsetH, i == 0);
+				this.performShoot(SHOOT_OFFSET, offset, offsetH, i == 0, ShootTypes.FORWARD);
 			}
 		} else {
-			this.performShoot(SHOOT_OFFSET, 0, 0, true);
+			this.performShoot(SHOOT_OFFSET, 0, 0, true, ShootTypes.FORWARD);
 		}
 	}
 	
@@ -50,15 +51,21 @@ public class PeaShooterEntity extends PlantShooterEntity{
 	 * shoot pea with offsets.
 	 * {@link #shootBullet()}
 	 */
-	public void performShoot(double forwardOffset, double rightOffset, double heightOffset, boolean needSound) {
+	public void performShoot(double forwardOffset, double rightOffset, double heightOffset, boolean needSound, ShootTypes type) {
 		Optional.ofNullable(this.getTarget()).ifPresent(target -> {
 			final Vector3d vec = EntityUtil.getNormalisedVector2d(this, target);
-            final double y = this.getY() + this.getDimensions(getPose()).height * 0.7f + heightOffset;
-            final double deltaX = forwardOffset * vec.x;
-            final double deltaZ = forwardOffset * vec.z;
+            final double deltaY = this.getDimensions(getPose()).height * 0.7F + heightOffset;
+            final double deltaX = forwardOffset * vec.x + rightOffset * vec.z;
+            final double deltaZ = forwardOffset * vec.z + rightOffset * vec.x;
             final PeaEntity pea = new PeaEntity(this.level, this, this.getShootType(), this.getShootState());
-            pea.setPos(this.getX() + deltaX, y, this.getZ() + deltaZ);
-            pea.shootPea(vec.x, target.getY() + target.getBbHeight() - y, vec.z, this.getBulletSpeed());
+            pea.setPos(this.getX() + deltaX, this.getY() + deltaY, this.getZ() + deltaZ);
+            switch(type) {//choose shoot position. 
+            case FORWARD:{
+            	pea.shootPea(vec.x, target.getY() + target.getBbHeight() - pea.getY(), vec.z, this.getBulletSpeed());
+            	break;
+            }
+            default:break;
+            }
             if(needSound) {
             	EntityUtil.playSound(this, this.getShootSound());
             }

@@ -538,7 +538,10 @@ public abstract class PVZPlantEntity extends CreatureEntity implements IPVZPlant
 		if (lvl <= 14) {
 			return 27.5f + 2.5f * lvl;
 		}
-		return 5 * lvl - 10;
+		if (lvl <= 20) {
+			return 5 * lvl - 10;
+		}
+		return 100;
 	}
 	
 	/**

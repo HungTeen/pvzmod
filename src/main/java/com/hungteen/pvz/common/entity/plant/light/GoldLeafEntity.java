@@ -24,7 +24,7 @@ public class GoldLeafEntity extends PlantBomberEntity {
 	}
 
 	@Override
-	public void startBomb() {
+	public void startBomb(boolean server) {
 		Block block = level.getBlockState(this.blockPosition().below()).getBlock();
 		int lvl = getBlockGoldLevel(block);
 		if(lvl == - 1 || lvl >= this.getTileLevel()) return ;

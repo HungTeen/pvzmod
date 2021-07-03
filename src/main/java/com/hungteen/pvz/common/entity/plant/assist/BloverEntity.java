@@ -28,7 +28,7 @@ public class BloverEntity extends PlantBomberEntity {
 	}
 
 	@Override
-	public void startBomb() {
+	public void startBomb(boolean server) {
 	}
 	
 	@Override

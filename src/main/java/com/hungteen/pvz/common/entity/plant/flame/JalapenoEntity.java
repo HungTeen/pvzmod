@@ -27,7 +27,7 @@ public class JalapenoEntity extends PlantBomberEntity{
 	}
 
 	@Override
-	public void startBomb() {
+	public void startBomb(boolean server) {
 		int range = this.getFireRange();
 		for(int i = - range; i <= range; ++ i) {
 			clearSnowAndSpawnFlame(this, i, 0);

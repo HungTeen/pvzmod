@@ -55,7 +55,7 @@ public class ImitaterEntity extends PlantBomberEntity {
 	}
 	
 	@Override
-	public void startBomb() {
+	public void startBomb(boolean server) {
 		if(! level.isClientSide) {
 			ItemStack stack = getImitateCard();
 			if(stack.isEmpty()) return ; //empty itemstack

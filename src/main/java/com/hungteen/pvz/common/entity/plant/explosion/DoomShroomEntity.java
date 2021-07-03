@@ -37,7 +37,7 @@ public class DoomShroomEntity extends PlantBomberEntity {
 
 	@SuppressWarnings("deprecation")
 	@Override
-	public void startBomb() {
+	public void startBomb(boolean server) {
 		if(! level.isClientSide) {
 			EntityUtil.getTargetableEntities(this, EntityUtil.getEntityAABB(this, this.getAttackRange(), this.getAttackRange())).forEach((target) -> {
 				target.hurt(PVZDamageSource.causeExplosionDamage(this, this), this.getAttackDamage());
