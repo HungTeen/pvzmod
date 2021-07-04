@@ -42,7 +42,7 @@ public class GiantWallNutEntity extends WallNutEntity {
 	
 	@Override
 	public float getAttractRange() {
-		return 7;
+		return 5;
 	}
 	
 	@Override

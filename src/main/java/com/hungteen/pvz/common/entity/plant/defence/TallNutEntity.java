@@ -35,7 +35,12 @@ public class TallNutEntity extends WallNutEntity{
 	
 	@Override
 	public float getAttractRange() {
-		return 5;
+		return 3.5F;
+	}
+	
+	@Override
+	public Plants getUpgradePlantType() {
+		return null;
 	}
 	
 	@Override

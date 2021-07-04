@@ -1,5 +1,7 @@
 package com.hungteen.pvz.utils.interfaces;
 
+import net.minecraft.entity.LivingEntity;
+
 public interface IDefender {
 
 	/**
@@ -8,6 +10,8 @@ public interface IDefender {
 	float getSuperLife();
 
 	float getAttractRange();
+	
+	boolean canAttract(LivingEntity target);
 	
 	/**
 	 * attract the attacker's target

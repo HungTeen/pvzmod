@@ -494,9 +494,7 @@ public class EntityUtil {
 	 * get targetable livingentity in range.
 	 */
 	public static List<LivingEntity> getTargetableLivings(@Nonnull Entity attacker, AxisAlignedBB aabb){
-		return attacker.level.getEntitiesOfClass(LivingEntity.class, aabb).stream().filter(target -> {
-			return ! attacker.equals(target) && canTargetEntity(attacker, target);
-		}).collect(Collectors.toList());
+		return getPredicateEntities(attacker, aabb, LivingEntity.class, target -> canTargetEntity(attacker, target));
 	}
 	
 	/**
@@ -513,7 +511,7 @@ public class EntityUtil {
 	 * often use for normal attack check.
 	 */
 	public static List<Entity> getTargetableEntities(@Nonnull Entity attacker, AxisAlignedBB aabb){
-		return getPredicateEntities(attacker, aabb, target -> canTargetEntity(attacker, target));
+		return getPredicateEntities(attacker, aabb, Entity.class, target -> canTargetEntity(attacker, target));
 	}
 	
 	/**
@@ -521,22 +519,22 @@ public class EntityUtil {
 	 * often use for explosion damage.
 	 */
 	public static List<Entity> getTargetableEntitiesIngoreCheck(@Nonnull Entity attacker, AxisAlignedBB aabb){
-		return getPredicateEntities(attacker, aabb, target -> checkCanEntityBeTarget(attacker, target));
+		return getPredicateEntities(attacker, aabb, Entity.class, target -> checkCanEntityBeTarget(attacker, target));
 	}
 	
 	/**
 	 * {@link #getTargetableEntities(Entity, AxisAlignedBB)}
 	 * {@link #getTargetableEntitiesIngoreCheck(Entity, AxisAlignedBB)}
 	 */
-	private static List<Entity> getPredicateEntities(@Nonnull Entity attacker, AxisAlignedBB aabb, Predicate<Entity> predicate){
+	private static <T extends Entity> List<T> getPredicateEntities(@Nonnull Entity attacker, AxisAlignedBB aabb, Class<T> tClass, Predicate<T> predicate){
 		if(attacker == null) {
 			return new ArrayList<>();
 		}
-		return attacker.level.getEntitiesOfClass(Entity.class, aabb).stream().filter(target -> {
+		return attacker.level.getEntitiesOfClass(tClass, aabb).stream().filter(target -> {
 			return ! attacker.equals(target) && predicate.test(target);
 		}).collect(Collectors.toList());
 	}
-//	
+	
 	/**
 	 * get final attack entities for explosion or other range attack.
 	 */

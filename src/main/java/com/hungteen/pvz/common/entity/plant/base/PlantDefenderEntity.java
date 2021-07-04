@@ -1,7 +1,6 @@
 package com.hungteen.pvz.common.entity.plant.base;
 
 import com.hungteen.pvz.api.interfaces.ICanAttract;
-import com.hungteen.pvz.common.entity.ai.goal.target.PVZNearestTargetGoal;
 import com.hungteen.pvz.common.entity.plant.PVZPlantEntity;
 import com.hungteen.pvz.common.item.card.ImitaterCardItem;
 import com.hungteen.pvz.common.item.card.PlantCardItem;
@@ -40,19 +39,10 @@ public abstract class PlantDefenderEntity extends PVZPlantEntity implements IDef
 	}
 	
 	@Override
-	protected void registerGoals() {
-		super.registerGoals();
-		this.targetSelector.addGoal(0, new DefenderNeareastTargetGoal(this));
-	}
-
-	@Override
 	protected void normalPlantTick() {
 		super.normalPlantTick();
-		if(! level.isClientSide) {
-			if(this.getTarget() != null) {
-				this.attract();
-				this.setTarget(null);
-			}
+		if(! level.isClientSide && this.tickCount % 15 == 0) {
+			this.attract();
 		}
 	}
 	
@@ -60,17 +50,35 @@ public abstract class PlantDefenderEntity extends PVZPlantEntity implements IDef
 	public void startSuperMode(boolean first) {
 		super.startSuperMode(first);
 		this.setDefenceLife(this.getSuperLife());
-		this.attract();
+	}
+	
+	@Override
+	public boolean canAttract(LivingEntity entity) {
+		//can not be attract by this.
+		if(entity instanceof ICanAttract && ! ((ICanAttract) entity).canBeAttractedBy(this)) {
+			return false;
+		}
+		if(! this.getSensing().canSee(entity)) {
+			return false;
+		}
+		if(entity instanceof MobEntity) {
+			return ! (((MobEntity) entity).getTarget() instanceof PlantDefenderEntity);
+		}
+		return false;
 	}
 	
 	@Override
 	public void attract() {
 		float range = getAttractRange();
-		for(LivingEntity target:EntityUtil.getTargetableLivings(this, EntityUtil.getEntityAABB(this, range, range))) {
+		EntityUtil.getTargetableLivings(this, EntityUtil.getEntityAABB(this, range, range))
+		.stream().filter(target -> this.canAttract(target)).forEach(target -> {
 			this.attract(target);
-		}
+		});
 	}
 	
+	/**
+	 * {@link #attract()}
+	 */
 	public void attract(LivingEntity target) {
 		if(target instanceof MobEntity) {
 			if(!(((MobEntity) target).getTarget() instanceof PlantDefenderEntity)) {
@@ -129,8 +137,9 @@ public abstract class PlantDefenderEntity extends PVZPlantEntity implements IDef
 		return super.hurt(source, amount);
 	}
 	
+	@Override
 	public float getAttractRange() {
-		return 3;
+		return 2.5F;
 	}
 	
 	@Override
@@ -158,28 +167,6 @@ public abstract class PlantDefenderEntity extends PVZPlantEntity implements IDef
 	public void addAdditionalSaveData(CompoundNBT compound) {
 		super.addAdditionalSaveData(compound);
 		compound.putFloat("defence_life", this.getDefenceLife());
-	}
-	
-	static class DefenderNeareastTargetGoal extends PVZNearestTargetGoal{
-		
-		private final IDefender defender;
-		
-		public DefenderNeareastTargetGoal(PlantDefenderEntity entity) {
-			super(entity, true, entity.getAttractRange(), entity.getAttractRange());
-			defender = entity;
-		}
-		
-		@Override
-		protected boolean checkOther(LivingEntity entity) {
-			if(entity instanceof ICanAttract && ! ((ICanAttract) entity).canBeAttractedBy(defender)) {
-				return false;
-			}
-			if(entity instanceof MobEntity) {
-				return ! (((MobEntity) entity).getTarget() instanceof PlantDefenderEntity);
-			}
-			return false;
-		}
-		
 	}
 	
 }
