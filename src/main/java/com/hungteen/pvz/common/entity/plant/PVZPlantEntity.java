@@ -141,7 +141,7 @@ public abstract class PVZPlantEntity extends CreatureEntity implements IPVZPlant
 	@Override
 	public ILivingEntityData finalizeSpawn(IServerWorld worldIn, DifficultyInstance difficultyIn, SpawnReason reason,
 			ILivingEntityData spawnDataIn, CompoundNBT dataTag) {
-		if (!worldIn.isClientSide()) {
+		if (! worldIn.isClientSide()) {
 			EntityUtil.playSound(this, this.getSpawnSound());
 			this.updateAttributes();
 			this.heal(this.getMaxHealth());

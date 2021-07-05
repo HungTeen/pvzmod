@@ -124,7 +124,6 @@ public class AlmanacScreen extends AbstractOptionScreen<AlmanacContainer> {
 			case POTATO_MINE:{
 				PotatoMineEntity potatoMine = (PotatoMineEntity) plantEntity;
 				this.drawProperty(stack, Properties.ATTACK_DAMAGE, potatoMine.getAttackDamage());
-				this.drawProperty(stack, Properties.PRE_TIME, potatoMine.getReadyTime());
 				break;
 			}
 			case SNOW_PEA:{

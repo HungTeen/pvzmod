@@ -14,7 +14,10 @@ import net.minecraft.client.renderer.model.ModelRenderer;
 public class PotatoMineModel extends PVZPlantModel<PotatoMineEntity> {
 	private final ModelRenderer total;
 	private final ModelRenderer body;
+	private final ModelRenderer bone;
 	private final ModelRenderer string;
+	private final ModelRenderer red;
+	private final ModelRenderer white;
 
 	public PotatoMineModel() {
 		texWidth = 128;
@@ -33,15 +36,34 @@ public class PotatoMineModel extends PVZPlantModel<PotatoMineEntity> {
 		body.texOffs(78, 2).addBox(-6.0F, -2.0F, -6.0F, 12.0F, 1.0F, 12.0F, 0.0F, false);
 		body.texOffs(21, 24).addBox(-3.0F, -3.0F, -3.0F, 6.0F, 1.0F, 6.0F, 0.0F, false);
 
+		bone = new ModelRenderer(this);
+		bone.setPos(0.0F, 0.0F, 0.0F);
+		body.addChild(bone);
+		
+
 		string = new ModelRenderer(this);
 		string.setPos(0.0F, 0.0F, 0.0F);
 		total.addChild(string);
 		string.texOffs(8, 34).addBox(-1.0F, -8.0F, -1.0F, 2.0F, 5.0F, 2.0F, 0.0F, false);
-		string.texOffs(111, 22).addBox(-2.0F, -12.0F, -2.0F, 4.0F, 4.0F, 4.0F, 0.0F, false);
+
+		red = new ModelRenderer(this);
+		red.setPos(0.0F, 0.0F, 0.0F);
+		string.addChild(red);
+		red.texOffs(111, 22).addBox(-2.0F, -12.0F, -2.0F, 4.0F, 4.0F, 4.0F, 0.0F, false);
+
+		white = new ModelRenderer(this);
+		white.setPos(0.0F, 0.0F, 0.0F);
+		string.addChild(white);
+		white.texOffs(110, 34).addBox(-2.0F, -12.0F, -2.0F, 4.0F, 4.0F, 4.0F, 0.0F, false);
 	}
 
 	@Override
 	public void setupAnim(PotatoMineEntity entity, float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch){
+		final int T = (entity.getSignChangeCD() << 1);
+		final int current = entity.getExistTick() % T;
+		final boolean flag = (current < (T >> 1));
+		this.red.visible = flag;
+		this.white.visible = ! flag;
 	}
 
 	@Override

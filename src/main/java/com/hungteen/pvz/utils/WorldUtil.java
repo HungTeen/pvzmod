@@ -34,9 +34,16 @@ public class WorldUtil {
 	 * {@link EntityUtil#spawnStaticParticle(net.minecraft.entity.Entity, IParticleData)}
 	 */
 	public static void spawnRandomSpeedParticle(World world, IParticleData type, Vector3d pos, float speed) {
-		float speedX = (world.random.nextFloat() - 0.5F) * speed * 2;
-		float speedY = (world.random.nextFloat() - 0.5F) * speed * 2;
-		float speedZ = (world.random.nextFloat() - 0.5F) * speed * 2;
+		spawnRandomSpeedParticle(world, type, pos, speed, speed);
+	}
+	
+	/**
+	 * Spawn Random speed Particle at pos.
+	 */
+	public static void spawnRandomSpeedParticle(World world, IParticleData type, Vector3d pos, float horizontalSpeed, float verticalSpeed) {
+		final float speedX = (world.random.nextFloat() - 0.5F) * horizontalSpeed * 2;
+		final float speedY = (world.random.nextFloat() - 0.5F) * verticalSpeed * 2;
+		final float speedZ = (world.random.nextFloat() - 0.5F) * horizontalSpeed * 2;
 		world.addParticle(type, pos.x, pos.y, pos.z, speedX, speedY, speedZ);
 	}
 	

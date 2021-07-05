@@ -13,12 +13,27 @@ import net.minecraftforge.api.distmarker.OnlyIn;
 public class PotatoMineRender extends PVZPlantRender<PotatoMineEntity>{
 
 	public PotatoMineRender(EntityRendererManager rendererManager) {
-		super(rendererManager, new PotatoMineModel() ,0.3f);
+		super(rendererManager, new PotatoMineModel(), 0.3F);
 	}
 
 	@Override
+	public float getScaleByEntity(PotatoMineEntity entity) {
+		final float sz = super.getScaleByEntity(entity);
+		if(entity.isMineReady()) {
+			final float scale = 0.15F;
+			return sz + entity.getAttackTime() * scale / PotatoMineEntity.ATTACK_ANIM_CD;
+		}
+		return sz;
+	}
+	
+	@Override
 	public Vector3d getTranslateVec(PotatoMineEntity entity) {
-		return entity.isMineReady() ? new Vector3d(0, 0, 0) : new Vector3d(0, 0.6f, 0);
+		final float offsetY = 0.6F;
+		if(entity.isRisingFromDirt()) {
+			final int time = entity.getExistTick() - PotatoMineEntity.RISING_ANIM_CD;
+			return new Vector3d(0, - time * offsetY / PotatoMineEntity.RISING_ANIM_CD, 0);
+		}
+		return entity.isMineReady() ? new Vector3d(0, 0, 0) : new Vector3d(0, offsetY, 0);
 	}
 	
 }

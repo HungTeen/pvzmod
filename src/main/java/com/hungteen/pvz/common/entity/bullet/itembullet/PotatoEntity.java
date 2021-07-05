@@ -32,7 +32,7 @@ public class PotatoEntity extends PVZItemBulletEntity{
 	}
 
 	@Override
-	protected void onImpact(RayTraceResult result) {
+	public void onImpact(RayTraceResult result) {
 		this.level.broadcastEntityEvent(this, (byte)3);
         if(! this.checkLive(result)) {
             if(! (this.getThrower() instanceof PVZPlantEntity)) {
@@ -41,8 +41,8 @@ public class PotatoEntity extends PVZItemBulletEntity{
             }
             PotatoMineEntity mine = EntityRegister.POTATO_MINE.get().create(level);
             PlantUtil.copyPlantData(mine, (PVZPlantEntity) getThrower());
-            mine.setMineReady(true);
             mine.setPos(this.getX(), this.getY(), this.getZ());
+            mine.setRisingFromDirt();
             this.level.addFreshEntity(mine);
             this.remove();
         }

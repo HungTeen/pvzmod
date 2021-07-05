@@ -319,7 +319,7 @@ public class PlantUtil {
 	/**
 	 * copy data from p1 to p2
 	 */
-	public static void copyPlantData(PVZPlantEntity p2,PVZPlantEntity p1) {
+	public static void copyPlantData(PVZPlantEntity p2, PVZPlantEntity p1) {
 		p2.setPlantLvl(p1.getPlantLvl());
 		p2.setCharmed(p1.isCharmed());
 		p2.setOwnerUUID(p1.getOwnerUUID().orElse(null));
