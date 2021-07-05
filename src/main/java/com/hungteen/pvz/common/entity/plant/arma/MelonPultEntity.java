@@ -27,7 +27,7 @@ public class MelonPultEntity extends PlantPultEntity {
 	@Override
 	protected void registerGoals() {
 		super.registerGoals();
-		this.targetSelector.addGoal(0, new PVZNearestTargetGoal(this, true, 5, getPultRange(), 11, 10));
+		this.targetSelector.addGoal(0, new PVZNearestTargetGoal(this, true, false, 5, getPultRange(), 11, 10));
 	}
 	
 	@Override

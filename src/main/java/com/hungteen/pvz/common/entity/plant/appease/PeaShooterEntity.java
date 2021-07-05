@@ -30,7 +30,7 @@ public class PeaShooterEntity extends PlantShooterEntity{
 	@Override
 	protected void registerGoals() {
 		super.registerGoals();
-		this.targetSelector.addGoal(0, new PVZNearestTargetGoal(this, true, getShootRange(), 1));
+		this.targetSelector.addGoal(0, new PVZNearestTargetGoal(this, true, false, getShootRange(), 1));
 	}
 	
 	@Override
@@ -38,8 +38,8 @@ public class PeaShooterEntity extends PlantShooterEntity{
 		if(this.isPlantInSuperMode()) {
 			final int cnt = this.getSuperShootCount();
 			for(int i = 0; i < cnt; ++ i) {
-				final float offset = MathUtil.getRandomFloat(getRandom()) / 5;
-				final float offsetH = MathUtil.getRandomFloat(getRandom()) / 5;
+				final float offset = MathUtil.getRandomFloat(getRandom()) / 3;
+				final float offsetH = MathUtil.getRandomFloat(getRandom()) / 3;
 				this.performShoot(SHOOT_OFFSET, offset, offsetH, i == 0, ShootTypes.FORWARD);
 			}
 		} else {

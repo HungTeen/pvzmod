@@ -1,10 +1,10 @@
 package com.hungteen.pvz.common.entity.bullet.itembullet;
 
+import com.hungteen.pvz.api.interfaces.IIceEffect;
 import com.hungteen.pvz.common.capability.CapabilityHandler;
 import com.hungteen.pvz.common.entity.bullet.AbstractShootBulletEntity;
 import com.hungteen.pvz.common.entity.plant.base.PlantShooterEntity;
 import com.hungteen.pvz.common.entity.plant.flame.TorchWoodEntity;
-import com.hungteen.pvz.common.entity.plant.interfaces.IIcePlant;
 import com.hungteen.pvz.common.entity.zombie.zombotany.PeaShooterZombieEntity;
 import com.hungteen.pvz.common.misc.damage.PVZDamageSource;
 import com.hungteen.pvz.register.EntityRegister;
@@ -114,9 +114,9 @@ public class PeaEntity extends AbstractShootBulletEntity implements IRendersAsIt
 		} else if (this.getPeaState() == State.ICE) {// snow pea attack
 			PVZDamageSource source = PVZDamageSource.causeIceDamage(this, this.getThrower());
 			LivingEntity owner = this.getThrower();
-			if (owner instanceof IIcePlant) {
-				source.addEffect(((IIcePlant) owner).getColdEffect());
-//				source.addEffect(((IIcePlant) owner).getFrozenEffect());
+			if (owner instanceof IIceEffect) {
+				((IIceEffect) owner).getColdEffect().ifPresent(e -> source.addEffect(e));
+				((IIceEffect) owner).getFrozenEffect().ifPresent(e -> source.addEffect(e));
 			} else if(owner instanceof PlayerEntity) {
 				((PlayerEntity)owner).getCapability(CapabilityHandler.PLAYER_DATA_CAPABILITY).ifPresent((l)->{
 					int lvl = l.getPlayerData().getPlantStats().getPlantLevel(Plants.SNOW_PEA);

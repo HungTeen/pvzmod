@@ -36,7 +36,7 @@ public class CatTailEntity extends PlantShooterEntity {
 	@Override
 	protected void registerGoals() {
 		super.registerGoals();
-		this.targetSelector.addGoal(0, new PVZGlobalTargetGoal(this, true, getShootRange(), getShootRange()));
+		this.targetSelector.addGoal(0, new PVZGlobalTargetGoal(this, true, false, getShootRange(), getShootRange()));
 		this.goalSelector.addGoal(2, new SwimGoal(this));
 	}
 

@@ -51,7 +51,7 @@ public class MagnetShroomEntity extends PVZPlantEntity {
 	@Override
 	protected void registerGoals() {
 		super.registerGoals();
-		this.targetSelector.addGoal(0, new PVZNearestTargetGoal(this, true, 12, 12));
+		this.targetSelector.addGoal(0, new PVZNearestTargetGoal(this, true, false,  12, 12));
 		this.targetSelector.addGoal(1, new MagnetShroomTargetLadder(this, true, 20, 20));
 	}
 	

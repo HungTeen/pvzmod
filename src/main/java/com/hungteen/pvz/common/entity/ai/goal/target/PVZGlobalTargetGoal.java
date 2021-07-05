@@ -7,8 +7,8 @@ import net.minecraft.entity.MobEntity;
 
 public class PVZGlobalTargetGoal extends PVZNearestTargetGoal {
 
-	public PVZGlobalTargetGoal(MobEntity mobIn, boolean checkSight, float w, float h) {
-		super(mobIn, checkSight, w, h);
+	public PVZGlobalTargetGoal(MobEntity mobIn, boolean checkSight, boolean memory, float w, float h) {
+		super(mobIn, checkSight, memory, w, h);
 	}
 	
 	@Override

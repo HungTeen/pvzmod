@@ -1,10 +1,12 @@
 package com.hungteen.pvz.common.entity.plant.ice;
 
+import java.util.Optional;
+
+import com.hungteen.pvz.api.interfaces.IIceEffect;
 import com.hungteen.pvz.common.advancement.trigger.EntityEffectAmountTrigger;
 import com.hungteen.pvz.common.entity.misc.ElementBallEntity;
 import com.hungteen.pvz.common.entity.misc.ElementBallEntity.ElementTypes;
 import com.hungteen.pvz.common.entity.plant.base.PlantBomberEntity;
-import com.hungteen.pvz.common.entity.plant.interfaces.IIcePlant;
 import com.hungteen.pvz.common.misc.damage.PVZDamageSource;
 import com.hungteen.pvz.register.EffectRegister;
 import com.hungteen.pvz.register.ParticleRegister;
@@ -24,7 +26,7 @@ import net.minecraft.potion.EffectInstance;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.world.World;
 
-public class IceShroomEntity extends PlantBomberEntity implements IIcePlant{
+public class IceShroomEntity extends PlantBomberEntity implements IIceEffect{
 
 	public IceShroomEntity(EntityType<? extends CreatureEntity> type, World worldIn) {
 		super(type, worldIn);
@@ -38,8 +40,8 @@ public class IceShroomEntity extends PlantBomberEntity implements IIcePlant{
 			int cnt = 0;
 			for(LivingEntity entity : EntityUtil.getTargetableLivings(this, aabb)) {
 				 PVZDamageSource source = PVZDamageSource.causeIceDamage(this, this);
-				 source.addEffect(getColdEffect());
-				 source.addEffect(getFrozenEffect());
+				 this.getColdEffect().ifPresent(e -> source.addEffect(e));
+				 this.getFrozenEffect().ifPresent(e -> source.addEffect(e));
 				 entity.hurt(source, this.getAttackDamage());
 				 if(EntityUtil.isEntityCold(entity)) {
 					 ++ cnt;
@@ -100,13 +102,13 @@ public class IceShroomEntity extends PlantBomberEntity implements IIcePlant{
 	}
 
 	@Override
-	public EffectInstance getColdEffect() {
+	public Optional<EffectInstance> getColdEffect() {
 		int lvl = this.getPlantLvl();
 		int amount = 0;
 		if(lvl > 4 && lvl <= 20) {
 			amount = (lvl <= 8 ? 5 : (lvl <= 16 ? 6 : 7));
 		}
-		return new EffectInstance(EffectRegister.COLD_EFFECT.get(), this.getColdTick() + this.getFrozenTick(), amount, false, false);
+		return Optional.ofNullable(new EffectInstance(EffectRegister.COLD_EFFECT.get(), this.getColdTick() + this.getFrozenTick(), amount, false, false));
 	}
 	
 	public int getColdLvl() {
@@ -136,8 +138,8 @@ public class IceShroomEntity extends PlantBomberEntity implements IIcePlant{
 	}
 
 	@Override
-	public EffectInstance getFrozenEffect() {
-		return new EffectInstance(EffectRegister.FROZEN_EFFECT.get(), this.getFrozenTick(), 1, false, false);
+	public Optional<EffectInstance> getFrozenEffect() {
+		return Optional.ofNullable(new EffectInstance(EffectRegister.FROZEN_EFFECT.get(), this.getFrozenTick(), 1, false, false));
 	}
 	
 	@Override

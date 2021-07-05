@@ -130,8 +130,8 @@ public class AlmanacScreen extends AbstractOptionScreen<AlmanacContainer> {
 				SnowPeaEntity snowPea = (SnowPeaEntity) plantEntity;
 				this.drawProperty(stack, Properties.ATTACK_DAMAGE, snowPea.getAttackDamage());
 				this.drawProperty(stack, Properties.BULLET_SPEED, snowPea.getBulletSpeed());
-				this.drawProperty(stack, Properties.COLD_EFFECT, snowPea.getColdEffect().getAmplifier());
-				this.drawProperty(stack, Properties.COLD_EFFECT_TIME, snowPea.getColdEffect().getDuration());
+				this.drawProperty(stack, Properties.COLD_EFFECT, snowPea.getColdLvl());
+				this.drawProperty(stack, Properties.COLD_EFFECT_TIME, snowPea.getColdTick());
 				break;
 			}
 			case CHOMPER:{
@@ -182,9 +182,9 @@ public class AlmanacScreen extends AbstractOptionScreen<AlmanacContainer> {
 			case ICE_SHROOM:{
 				IceShroomEntity iceShroom = (IceShroomEntity) plantEntity;
 				this.drawProperty(stack, Properties.ATTACK_DAMAGE, iceShroom.getAttackDamage());
-				this.drawProperty(stack, Properties.FROZEN_EFFECT_TIME, iceShroom.getFrozenEffect().getDuration());
-				this.drawProperty(stack, Properties.COLD_EFFECT, iceShroom.getColdEffect().getAmplifier());
-				this.drawProperty(stack, Properties.COLD_EFFECT_TIME, iceShroom.getColdEffect().getDuration());
+				this.drawProperty(stack, Properties.FROZEN_EFFECT_TIME, iceShroom.getFrozenTick());
+				this.drawProperty(stack, Properties.COLD_EFFECT, iceShroom.getColdLvl());
+				this.drawProperty(stack, Properties.COLD_EFFECT_TIME, iceShroom.getColdTick());
 				this.drawProperty(stack, Properties.ATTACK_RANGE, iceShroom.getAttackRange());
 				break;
 			}

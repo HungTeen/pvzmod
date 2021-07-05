@@ -41,7 +41,7 @@ public class ChomperEntity extends PVZPlantEntity {
 	@Override
 	protected void registerGoals() {
 		super.registerGoals();
-		this.targetSelector.addGoal(0, new PVZNearestTargetGoal(this, true, 5, 2));
+		this.targetSelector.addGoal(0, new PVZNearestTargetGoal(this, true, false, 5, 2));
 	}
 
 	@Override

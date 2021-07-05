@@ -1,0 +1,22 @@
+{
+    "name": "寒冰射手",
+    "icon": "pvz:snow_pea_card",
+    "category": "pvz:ice",
+    "pages": [
+        {
+            "type": "text",
+            "text": "$(bgreen)寒冰射手$()虽然外表很高冷，但是它很热爱它的朋友们。它最擅长在聚会上用冷笑话炒热全场。$(br)$(byellow)阳光消耗$() : $(l)175$()$(br)$(bblue)冷却$() : $(l)快$()$(br)$(l)特点$() : 它是一个$(l)远程攻击$()植物，每1.5秒发射$(bred)一个寒冰豌豆$()攻击并$(baqua)减速$()敌人。"
+        },
+        {
+            "type": "entity",
+            "entity": "pvz:snow_pea",
+            "scale": 0.65,
+            "text": "外观"
+        },
+        {
+            "type": "text",
+            "text": "$(bgreen)能量豆大招$() : 它会每tick发射$(l)多个寒冰豌豆$()，持续5秒。"
+        }
+    ],
+    "sortnum": 0
+}

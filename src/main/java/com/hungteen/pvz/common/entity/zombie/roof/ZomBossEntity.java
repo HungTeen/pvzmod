@@ -106,7 +106,7 @@ public class ZomBossEntity extends PVZZombieEntity {
 	@Override
 	protected void registerGoals() {
 		this.goalSelector.addGoal(7, new LookAtGoal(this, PlayerEntity.class, 40.0F));
-		this.targetSelector.addGoal(0, new PVZNearestTargetGoal(this, false, ZombieUtil.LITTLE_FAR_TARGET_RANGE, ZombieUtil.HIGH_TARGET_HEIGHT));
+		this.targetSelector.addGoal(0, new PVZNearestTargetGoal(this, false, true, ZombieUtil.LITTLE_FAR_TARGET_RANGE, ZombieUtil.HIGH_TARGET_HEIGHT));
 	}
 	
 	@Override

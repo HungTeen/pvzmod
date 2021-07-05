@@ -28,7 +28,7 @@ public abstract class PlantCloserEntity extends PVZPlantEntity{
 	@Override
 	protected void registerGoals() {
 		super.registerGoals();
-		this.targetSelector.addGoal(0, new PVZNearestTargetGoal(this, true, this.getCloseWidth(), this.getCloseHeight()));
+		this.targetSelector.addGoal(0, new PVZNearestTargetGoal(this, true, false, this.getCloseWidth(), this.getCloseHeight()));
 	}
 	
 	@Override

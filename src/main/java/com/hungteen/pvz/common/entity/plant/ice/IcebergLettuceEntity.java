@@ -1,8 +1,10 @@
 package com.hungteen.pvz.common.entity.plant.ice;
 
+import java.util.Optional;
+
+import com.hungteen.pvz.api.interfaces.IIceEffect;
 import com.hungteen.pvz.common.advancement.trigger.EntityEffectAmountTrigger;
 import com.hungteen.pvz.common.entity.plant.base.PlantCloserEntity;
-import com.hungteen.pvz.common.entity.plant.interfaces.IIcePlant;
 import com.hungteen.pvz.common.misc.damage.PVZDamageSource;
 import com.hungteen.pvz.register.EffectRegister;
 import com.hungteen.pvz.register.SoundRegister;
@@ -20,7 +22,7 @@ import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.potion.EffectInstance;
 import net.minecraft.world.World;
 
-public class IcebergLettuceEntity extends PlantCloserEntity implements IIcePlant {
+public class IcebergLettuceEntity extends PlantCloserEntity implements IIceEffect {
 
 	public IcebergLettuceEntity(EntityType<? extends CreatureEntity> type, World worldIn) {
 		super(type, worldIn);
@@ -59,19 +61,19 @@ public class IcebergLettuceEntity extends PlantCloserEntity implements IIcePlant
 	
 	private void dealDamageTo(Entity target) {
 		PVZDamageSource source = PVZDamageSource.causeIceDamage(this, this);
-		source.addEffect(this.getFrozenEffect());
-		source.addEffect(this.getColdEffect());
+		this.getColdEffect().ifPresent(e -> source.addEffect(e));
+		this.getFrozenEffect().ifPresent(e -> source.addEffect(e));
 		target.hurt(source, 0.01F);
 	}
 	
     @Override
-	public EffectInstance getColdEffect() {
-		return new EffectInstance(EffectRegister.COLD_EFFECT.get(), this.getFrozenTime() * 2, this.getColdLevel(), false, false);
+	public Optional<EffectInstance> getColdEffect() {
+		return Optional.ofNullable(new EffectInstance(EffectRegister.COLD_EFFECT.get(), this.getFrozenTime() * 2, this.getColdLevel(), false, false));
 	}
     
     @Override
-	public EffectInstance getFrozenEffect() {
-    	return new EffectInstance(EffectRegister.FROZEN_EFFECT.get(), this.getFrozenTime(), 1, false, false);
+	public Optional<EffectInstance> getFrozenEffect() {
+    	return Optional.ofNullable(new EffectInstance(EffectRegister.FROZEN_EFFECT.get(), this.getFrozenTime(), 1, false, false));
 	}
     
     public int getColdLevel() {

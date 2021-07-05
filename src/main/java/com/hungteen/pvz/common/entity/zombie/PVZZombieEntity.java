@@ -131,10 +131,10 @@ public abstract class PVZZombieEntity extends MonsterEntity implements IPVZZombi
 		this.xpReward = ZombieUtil.caculateZombieXp(this);
 		dropSpecialList = this.getDropSpecialList();
 		this.onLevelChanged();
-		this.setPathfindingMalus(PathNodeType.DANGER_FIRE, 2.0F);
-		this.setPathfindingMalus(PathNodeType.DAMAGE_FIRE, 2.0F);
-		this.setPathfindingMalus(PathNodeType.DAMAGE_OTHER, 2.0F);
-		this.setPathfindingMalus(PathNodeType.UNPASSABLE_RAIL, 1.0F);
+		this.setPathfindingMalus(PathNodeType.DANGER_FIRE, 6.0F);
+		this.setPathfindingMalus(PathNodeType.DAMAGE_FIRE, 6.0F);
+		this.setPathfindingMalus(PathNodeType.DAMAGE_OTHER, 8.0F);
+		this.setPathfindingMalus(PathNodeType.UNPASSABLE_RAIL, 8.0F);
 	}
 	
 	@Override
@@ -186,7 +186,7 @@ public abstract class PVZZombieEntity extends MonsterEntity implements IPVZZombi
 	 * {@link #registerGoals()}
 	 */
 	protected void registerTargetGoals() {
-		this.targetSelector.addGoal(0, new PVZNearestTargetGoal(this, true, ZombieUtil.NORMAL_TARGET_RANGE, ZombieUtil.NORMAL_TARGET_HEIGHT));
+		this.targetSelector.addGoal(0, new PVZNearestTargetGoal(this, true, true, ZombieUtil.NORMAL_TARGET_RANGE, ZombieUtil.NORMAL_TARGET_HEIGHT));
 	}
 	
 	@Override

@@ -32,7 +32,7 @@ public class SquashEntity extends PVZPlantEntity{
 	@Override
 	protected void registerGoals() {
 		super.registerGoals();
-		this.targetSelector.addGoal(0, new PVZNearestTargetGoal(this, true, range, 1));
+		this.targetSelector.addGoal(0, new PVZNearestTargetGoal(this, true, false, range, 1));
 	}
 
 	@Override

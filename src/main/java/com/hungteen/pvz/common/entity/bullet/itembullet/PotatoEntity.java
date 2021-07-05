@@ -1,5 +1,6 @@
 package com.hungteen.pvz.common.entity.bullet.itembullet;
 
+import com.hungteen.pvz.PVZMod;
 import com.hungteen.pvz.common.entity.plant.PVZPlantEntity;
 import com.hungteen.pvz.common.entity.plant.explosion.PotatoMineEntity;
 import com.hungteen.pvz.register.EntityRegister;
@@ -16,10 +17,12 @@ public class PotatoEntity extends PVZItemBulletEntity{
 
 	public PotatoEntity(EntityType<?> type, World worldIn) {
 		super(type, worldIn);
+		this.setNoGravity(false);
 	}
 	
 	public PotatoEntity(World worldIn, LivingEntity thrower) {
 		super(EntityRegister.POTATO.get(), worldIn, thrower);
+		this.setNoGravity(false);
 	}
 	
 	public void shoot(double x, double y, double z) {
@@ -36,7 +39,7 @@ public class PotatoEntity extends PVZItemBulletEntity{
 		this.level.broadcastEntityEvent(this, (byte)3);
         if(! this.checkLive(result)) {
             if(! (this.getThrower() instanceof PVZPlantEntity)) {
-            	System.out.println("ERROR : Who is shooting potato, there are some matter !");
+            	PVZMod.LOGGER.warn("Who is shooting potato, there are some matter !");
             	return ;
             }
             PotatoMineEntity mine = EntityRegister.POTATO_MINE.get().create(level);

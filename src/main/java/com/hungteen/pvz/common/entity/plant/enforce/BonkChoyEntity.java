@@ -27,7 +27,7 @@ public class BonkChoyEntity extends PVZPlantEntity {
 	protected void registerGoals() {
 		super.registerGoals();
 		this.goalSelector.addGoal(0, new BonkChoyAttackGoal(this));
-		this.targetSelector.addGoal(0, new PVZNearestTargetGoal(this, true, 3, 2));
+		this.targetSelector.addGoal(0, new PVZNearestTargetGoal(this, true, false, 3, 2));
 	}
 	
 	@Override

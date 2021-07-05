@@ -36,10 +36,12 @@ public abstract class PVZMeleeAttackGoal extends Goal {
 	
 	@Override
 	public boolean canUse() {
-		long currentTime = this.attacker.level.getGameTime();
-		if (currentTime - this.lastExcuteTime < 20L) return false; //search each second.
+		final long currentTime = this.attacker.level.getGameTime();
+		if (currentTime - this.lastExcuteTime < 20L) {
+			return false; //search each second.
+		}
 		this.lastExcuteTime = currentTime;
-		LivingEntity living = this.attacker.getTarget();
+		final LivingEntity living = this.attacker.getTarget();
 		if (! EntityUtil.isEntityValid(living)) return false;
 		if (canPenalize) {
 			if (-- this.delayCounter <= 0) {
@@ -50,7 +52,9 @@ public abstract class PVZMeleeAttackGoal extends Goal {
 			return true;
 		}
 		this.path = this.attacker.getNavigation().createPath(living, 0);
-		if (this.path != null) return true;//has walk path.
+		if (this.path != null) {
+			return true;//has walk path.
+		}
 		return this.getAttackReachSqr(living) >= EntityUtil.getNearestDistance(attacker, living);// target is already in attack range
 	}
 	
@@ -85,7 +89,7 @@ public abstract class PVZMeleeAttackGoal extends Goal {
 		LivingEntity target = this.attacker.getTarget();
 		this.attacker.getLookControl().setLookAt(target, 30.0F, 30.0F);
 		-- this.delayCounter;
-		if ((this.longMemory || this.attacker.getSensing().canSee(target)) && this.delayCounter <= 0 
+		if ((this.longMemory || EntityUtil.canSeeEntity(this.attacker, target)) && this.delayCounter <= 0 
 				&& (this.targetX == 0.0D && this.targetY == 0.0D && this.targetZ == 0.0D
 						|| target.distanceToSqr(this.targetX, this.targetY, this.targetZ) >= 1.0D
 						|| this.attacker.getRandom().nextFloat() < 0.05F)) {

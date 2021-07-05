@@ -28,7 +28,7 @@ public class SeaShroomEntity extends PlantShooterEntity {
 	protected void registerGoals() {
 		super.registerGoals();
 		this.goalSelector.addGoal(2, new SwimGoal(this));
-		this.targetSelector.addGoal(0, new PVZNearestTargetGoal(this, true, 5, getShootRange(), 2, 0));
+		this.targetSelector.addGoal(0, new PVZNearestTargetGoal(this, true, false, 5, getShootRange(), 2, 0));
 	}
 	
 	@Override

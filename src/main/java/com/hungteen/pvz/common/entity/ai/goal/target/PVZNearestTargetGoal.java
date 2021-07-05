@@ -18,22 +18,24 @@ import net.minecraft.util.math.AxisAlignedBB;
 public class PVZNearestTargetGoal extends TargetGoal {
 
 	protected final AlgorithmUtil.EntitySorter sorter;
+	protected final boolean longMemory;
 	private final int targetChance;
 	private final float upperHeight;
 	private final float lowerHeight;
 	private final float width;
 
-	public PVZNearestTargetGoal(MobEntity mobIn, boolean checkSight, float w, float h) {
-		this(mobIn, checkSight, 5, w, h);
+	public PVZNearestTargetGoal(MobEntity mobIn, boolean checkSight, boolean memory, float w, float h) {
+		this(mobIn, checkSight, memory, 5, w, h);
 	}
 
-	public PVZNearestTargetGoal(MobEntity mobIn, boolean checkSight, int chance, float w, float h) {
-		this(mobIn, checkSight, chance, w, h, h);
+	public PVZNearestTargetGoal(MobEntity mobIn, boolean checkSight, boolean memory, int chance, float w, float h) {
+		this(mobIn, checkSight, memory, chance, w, h, h);
 	}
 
-	public PVZNearestTargetGoal(MobEntity mobIn, boolean checkSight, int chance, float w, float h1, float h2) {
+	public PVZNearestTargetGoal(MobEntity mobIn, boolean checkSight, boolean memory, int chance, float w, float h1, float h2) {
 		super(mobIn, checkSight);
 		this.targetChance = chance;
+		this.longMemory = memory;
 		this.width = w;
 		this.upperHeight = h1;
 		this.lowerHeight = h2;
@@ -71,7 +73,7 @@ public class PVZNearestTargetGoal extends TargetGoal {
 		if(! EntityUtil.isEntityValid(entity)) {
 			return false;
 		}
-		if(EntityUtil.canAttackEntity(mob, entity) && (! this.mustSee || this.checkSenses(entity))) {
+		if(EntityUtil.canAttackEntity(mob, entity) && (this.longMemory || (! this.mustSee || this.checkSenses(entity)))) {
 			if (this.checkOther(entity)) {
 				this.mob.setTarget(entity);
 				return true;
@@ -81,7 +83,7 @@ public class PVZNearestTargetGoal extends TargetGoal {
 	}
 
 	protected boolean checkSenses(Entity entity) {
-		return this.mob.getSensing().canSee(entity);
+		return EntityUtil.canSeeEntity(this.mob, entity);
 	}
 
 	protected boolean checkOther(LivingEntity entity) {

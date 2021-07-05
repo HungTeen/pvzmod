@@ -1,9 +1,10 @@
 package com.hungteen.pvz.client.model.entity.plant.ice;
 
-import com.hungteen.pvz.client.model.entity.plant.PVZPlantModel;
+import java.util.Optional;
+
+import com.hungteen.pvz.client.model.entity.plant.PlantShooterModel;
 import com.hungteen.pvz.common.entity.plant.ice.SnowPeaEntity;
 
-import net.minecraft.client.renderer.entity.model.EntityModel;
 import net.minecraft.client.renderer.model.ModelRenderer;
 
 // Made with Blockbench 3.6.6
@@ -11,8 +12,10 @@ import net.minecraft.client.renderer.model.ModelRenderer;
 // Paste this class into your mod and generate all required imports
 
 
-public class SnowPeaModel extends PVZPlantModel<SnowPeaEntity> {
+public class SnowPeaModel extends PlantShooterModel<SnowPeaEntity> {
 	private final ModelRenderer total;
+	private final ModelRenderer leaves;
+	private final ModelRenderer body;
 	private final ModelRenderer head;
 	private final ModelRenderer bone;
 	private final ModelRenderer bone2;
@@ -25,8 +28,6 @@ public class SnowPeaModel extends PVZPlantModel<SnowPeaEntity> {
 	private final ModelRenderer bone9;
 	private final ModelRenderer bone10;
 	private final ModelRenderer bone11;
-	private final ModelRenderer down;
-	private final ModelRenderer body;
 
 	public SnowPeaModel() {
 		texWidth = 64;
@@ -36,9 +37,30 @@ public class SnowPeaModel extends PVZPlantModel<SnowPeaEntity> {
 		total.setPos(0.0F, 24.0F, 0.0F);
 		
 
+		leaves = new ModelRenderer(this);
+		leaves.setPos(1.0F, 0.0F, 0.0F);
+		total.addChild(leaves);
+		leaves.texOffs(14, 30).addBox(0.0F, -1.0F, -1.0F, 2.0F, 1.0F, 2.0F, 0.0F, false);
+		leaves.texOffs(13, 36).addBox(-2.0F, -1.0F, 1.0F, 2.0F, 1.0F, 2.0F, 0.0F, false);
+		leaves.texOffs(1, 30).addBox(-2.0F, -1.0F, -3.0F, 2.0F, 1.0F, 2.0F, 0.0F, false);
+		leaves.texOffs(1, 35).addBox(-4.0F, -1.0F, -1.0F, 2.0F, 1.0F, 2.0F, 0.0F, false);
+		leaves.texOffs(2, 45).addBox(2.0F, -1.0F, -2.0F, 3.0F, 1.0F, 4.0F, 0.0F, false);
+		leaves.texOffs(0, 55).addBox(-3.0F, -1.0F, 3.0F, 4.0F, 1.0F, 3.0F, 0.0F, false);
+		leaves.texOffs(41, 1).addBox(-7.0F, -1.0F, -2.0F, 3.0F, 1.0F, 4.0F, 0.0F, false);
+		leaves.texOffs(42, 30).addBox(-3.0F, -1.0F, -6.0F, 4.0F, 1.0F, 3.0F, 0.0F, false);
+
+		body = new ModelRenderer(this);
+		body.setPos(0.0F, 0.0F, 0.0F);
+		total.addChild(body);
+		body.texOffs(25, 36).addBox(-1.0F, -15.0F, -2.0F, 2.0F, 1.0F, 2.0F, 0.0F, false);
+		body.texOffs(24, 40).addBox(0.0F, -15.0F, -1.0F, 2.0F, 1.0F, 2.0F, 0.0F, false);
+		body.texOffs(23, 44).addBox(-2.0F, -15.0F, -1.0F, 2.0F, 1.0F, 2.0F, 0.0F, false);
+		body.texOffs(25, 31).addBox(-1.0F, -15.0F, 0.0F, 2.0F, 1.0F, 2.0F, 0.0F, false);
+		body.texOffs(55, 47).addBox(-1.0F, -14.0F, -1.0F, 2.0F, 14.0F, 2.0F, 0.0F, false);
+
 		head = new ModelRenderer(this);
 		head.setPos(0.0F, -15.0F, 0.0F);
-		total.addChild(head);
+		body.addChild(head);
 		head.texOffs(38, 15).addBox(-2.0F, -4.0F, -7.0F, 4.0F, 4.0F, 2.0F, 0.0F, false);
 		head.texOffs(1, 19).addBox(-1.0F, -3.0F, -5.0F, 2.0F, 2.0F, 1.0F, 0.0F, false);
 		head.texOffs(0, 1).addBox(-4.0F, -8.0F, -4.0F, 8.0F, 8.0F, 8.0F, 0.0F, false);
@@ -107,40 +129,21 @@ public class SnowPeaModel extends PVZPlantModel<SnowPeaEntity> {
 		bone10.addChild(bone11);
 		setRotationAngle(bone11, -0.7854F, 0.0F, 0.0F);
 		bone11.texOffs(37, 46).addBox(-1.0F, -1.0F, -1.0F, 2.0F, 2.0F, 2.0F, 0.0F, false);
-
-		down = new ModelRenderer(this);
-		down.setPos(1.0F, 0.0F, 0.0F);
-		total.addChild(down);
-		down.texOffs(14, 30).addBox(0.0F, -1.0F, -1.0F, 2.0F, 1.0F, 2.0F, 0.0F, false);
-		down.texOffs(13, 36).addBox(-2.0F, -1.0F, 1.0F, 2.0F, 1.0F, 2.0F, 0.0F, false);
-		down.texOffs(1, 30).addBox(-2.0F, -1.0F, -3.0F, 2.0F, 1.0F, 2.0F, 0.0F, false);
-		down.texOffs(1, 35).addBox(-4.0F, -1.0F, -1.0F, 2.0F, 1.0F, 2.0F, 0.0F, false);
-		down.texOffs(2, 45).addBox(2.0F, -1.0F, -2.0F, 3.0F, 1.0F, 4.0F, 0.0F, false);
-		down.texOffs(0, 55).addBox(-3.0F, -1.0F, 3.0F, 4.0F, 1.0F, 3.0F, 0.0F, false);
-		down.texOffs(41, 1).addBox(-7.0F, -1.0F, -2.0F, 3.0F, 1.0F, 4.0F, 0.0F, false);
-		down.texOffs(42, 30).addBox(-3.0F, -1.0F, -6.0F, 4.0F, 1.0F, 3.0F, 0.0F, false);
-
-		body = new ModelRenderer(this);
-		body.setPos(-1.0F, -13.0F, 0.0F);
-		total.addChild(body);
-		body.texOffs(25, 36).addBox(0.0F, -2.0F, -2.0F, 2.0F, 1.0F, 2.0F, 0.0F, false);
-		body.texOffs(24, 40).addBox(1.0F, -2.0F, -1.0F, 2.0F, 1.0F, 2.0F, 0.0F, false);
-		body.texOffs(23, 44).addBox(-1.0F, -2.0F, -1.0F, 2.0F, 1.0F, 2.0F, 0.0F, false);
-		body.texOffs(25, 31).addBox(0.0F, -2.0F, 0.0F, 2.0F, 1.0F, 2.0F, 0.0F, false);
-		body.texOffs(55, 47).addBox(0.0F, -1.0F, -1.0F, 2.0F, 14.0F, 2.0F, 0.0F, false);
-	}
-
-	@Override
-	public void setupAnim(SnowPeaEntity entity, float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch){
 	}
 
 	@Override
 	public ModelRenderer getPlantWholeBody() {
 		return this.total;
 	}
-
+	
 	@Override
-	public EntityModel<SnowPeaEntity> getPlantModel() {
-		return this;
+	public Optional<ModelRenderer> getHeadModel() {
+		return Optional.ofNullable(this.head);
 	}
+	
+	@Override
+	public Optional<ModelRenderer> getBodyModel() {
+		return Optional.ofNullable(this.body);
+	}
+
 }

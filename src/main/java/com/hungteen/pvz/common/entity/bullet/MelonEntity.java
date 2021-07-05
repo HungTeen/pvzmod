@@ -80,8 +80,10 @@ public class MelonEntity extends PultBulletEntity {
 	}
 	
 	private Optional<EffectInstance> getIcePotion() {
-		if(! (this.getThrower() instanceof WinterMelonEntity)) return Optional.empty();
-		return Optional.of(((WinterMelonEntity)this.getThrower()).getColdEffect());
+		if(! (this.getThrower() instanceof WinterMelonEntity)) {
+			return Optional.empty();
+		}
+		return ((WinterMelonEntity)this.getThrower()).getColdEffect();
 	}
 	
 	private float getFixDamage() {

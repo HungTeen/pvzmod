@@ -21,22 +21,29 @@ public class ZombiePathNavigator extends GroundPathNavigator {
 
 	@Override
 	protected void followThePath() {
+		/* use to debug path. */
+//		if(this.mob.tickCount % 100 == 0) {
+//			final Path path = this.mob.getNavigation().getPath();
+//			if(path != null) {
+//				for(int i = 0;i < path.getNodeCount(); ++ i) {
+//					ItemEntity item = EntityType.ITEM.create(this.mob.level);
+//					item.setItem(new ItemStack(Items.OAK_LOG));
+//					item.setPos(path.getNode(i).x, path.getNode(i).y, path.getNode(i).z);
+//					this.mob.level.addFreshEntity(item);
+//				}
+//			}
+//		}
+		/* end */
 		Vector3d vector3d = this.getTempMobPos();
-		this.maxDistanceToWaypoint = this.mob.getBbWidth() > 0.75F ? this.mob.getBbWidth() / 2.0F
-				: 0.75F - this.mob.getBbWidth() / 2.0F;
+		this.maxDistanceToWaypoint = this.mob.getBbWidth() > 0.75F ? this.mob.getBbWidth() / 2.0F : 0.75F - this.mob.getBbWidth() / 2.0F;
 		Vector3i vector3i = this.path.getNextNodePos();
-		double d0 = Math.abs(this.mob.getX() - ((double) vector3i.getX() + (this.mob.getBbWidth() + 1) / 2D)); // Forge:
-																												// Fix
-																												// MC-94054
-		double d2 = Math.abs(this.mob.getZ() - ((double) vector3i.getZ() + (this.mob.getBbWidth() + 1) / 2D)); // Forge:
-																												// Fix
-																												// MC-94054
-		boolean flag = d0 < (double) this.maxDistanceToWaypoint && d2 < (double) this.maxDistanceToWaypoint;
+		final double d0 = Math.abs(this.mob.getX() - ((double)vector3i.getX() + (this.mob.getBbWidth() + 1) / 2D)); //Forge: Fix MC-94054
+		final double d2 = Math.abs(this.mob.getZ() - ((double)vector3i.getZ() + (this.mob.getBbWidth() + 1) / 2D)); //Forge: Fix MC-94054
+		final boolean flag = d0 < (double) this.maxDistanceToWaypoint && d2 < (double) this.maxDistanceToWaypoint;
 		if (flag || this.mob.canCutCorner(this.path.getNextNode().type)
 				&& this.shouldTargetNextNodeInDirection(vector3d)) {
 			this.path.advance();
 		}
-
 		this.doStuckDetection(vector3d);
 	}
 

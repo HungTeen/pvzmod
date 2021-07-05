@@ -38,7 +38,7 @@ public class PotatoMineEntity extends PlantCloserEntity{
 			}
 		} else {
 			if(this.isRisingFromDirt()) {
-				for(int i = 0; i < 10; ++ i) {
+				for(int i = 0; i < 1; ++ i) {
 					Vector3d offset = new Vector3d(MathUtil.getRandomFloat(getRandom()), 0, MathUtil.getRandomFloat(getRandom())).normalize();
 					WorldUtil.spawnRandomSpeedParticle(level, ParticleRegister.DIRT_BURST_OUT.get(), this.position().add(offset), MathUtil.getRandomFloat(getRandom()) / 8, 0.06F);
 				}
@@ -69,7 +69,7 @@ public class PotatoMineEntity extends PlantCloserEntity{
 			PotatoEntity potato = new PotatoEntity(level, this);
 			potato.setPos(this.getX(), this.getY() + 1, this.getZ());
 		    final float dx = MathUtil.getRandomFloat(getRandom()) * i / 2;
-		    final float dy = 1;
+		    final float dy = 0.5F;
 		    final float dz = MathUtil.getRandomFloat(getRandom()) * i / 2;
 		    potato.shoot(dx, dy, dz);
 		    this.level.addFreshEntity(potato);
@@ -91,7 +91,7 @@ public class PotatoMineEntity extends PlantCloserEntity{
 	 * {@link #canBeImmuneToEnforce()}
 	 */
 	public boolean isRisingFromDirt() {
-		return this.getAttackTime() >= PREPARE_CD - RISING_ANIM_CD && this.getAttackTime() <= PREPARE_CD;
+		return this.getExistTick() >= PREPARE_CD - RISING_ANIM_CD && this.getExistTick() <= PREPARE_CD;
 	}
 	
 	/**
@@ -109,7 +109,7 @@ public class PotatoMineEntity extends PlantCloserEntity{
 				target.hurt(PVZDamageSource.causeExplosionDamage(this, this), this.getAttackDamage());
 			});
 			EntityUtil.playSound(this, SoundRegister.POTATO_MINE.get());
-			for(int i = 1; i <= 5; ++ i) {
+			for(int i = 1; i <= 10; ++ i) {
 				EntityUtil.spawnParticle(this, 3);
 				EntityUtil.spawnParticle(this, 4);
 			}
