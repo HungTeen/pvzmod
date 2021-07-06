@@ -185,6 +185,9 @@ public abstract class PlantShooterEntity extends PVZPlantEntity implements IShoo
 
 		@Override
 		public void tick() {
+			if(! (this.shooter instanceof StarFruitEntity)) {//star fruit don't need to look at target.
+				this.shooter.getLookControl().setLookAt(this.target, 30.0F, 30.0F);
+			}
 			if(this.shooter.isPlantInSuperMode()) {
 				this.shooter.startShootAttack();
 				this.shooter.setShootTick(0);
@@ -199,9 +202,6 @@ public abstract class PlantShooterEntity extends PVZPlantEntity implements IShoo
 				    this.shooter.startShootAttack();
 			    }
 				this.shooter.setShootTick(time + 1);
-			}
-			if(! (this.shooter instanceof StarFruitEntity)) {//star fruit don't need to look at target.
-				this.shooter.getLookControl().setLookAt(this.target, 30.0F, 30.0F);
 			}
 		}
 		

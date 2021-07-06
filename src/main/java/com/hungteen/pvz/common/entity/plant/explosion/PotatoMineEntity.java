@@ -3,6 +3,7 @@ package com.hungteen.pvz.common.entity.plant.explosion;
 import com.hungteen.pvz.client.model.entity.plant.explosion.PotatoMineModel;
 import com.hungteen.pvz.common.entity.bullet.itembullet.PotatoEntity;
 import com.hungteen.pvz.common.entity.plant.base.PlantCloserEntity;
+import com.hungteen.pvz.common.entity.zombie.poolnight.DiggerZombieEntity;
 import com.hungteen.pvz.common.misc.damage.PVZDamageSource;
 import com.hungteen.pvz.register.ParticleRegister;
 import com.hungteen.pvz.register.SoundRegister;
@@ -13,6 +14,7 @@ import com.hungteen.pvz.utils.WorldUtil;
 import com.hungteen.pvz.utils.enums.Plants;
 
 import net.minecraft.entity.CreatureEntity;
+import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntitySize;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.LivingEntity;
@@ -44,6 +46,14 @@ public class PotatoMineEntity extends PlantCloserEntity{
 				}
 			}
 		}
+	}
+	
+	@Override
+	public boolean canPlantTarget(Entity target) {
+		if(target instanceof DiggerZombieEntity) {
+			return true;
+		}
+		return super.canPlantTarget(target);
 	}
 	
 	@Override

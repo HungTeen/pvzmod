@@ -1,0 +1,22 @@
+{
+    "name": "双发射手",
+    "icon": "pvz:repeater_card",
+    "category": "pvz:appease",
+    "pages": [
+        {
+            "type": "text",
+            "text": "$(bgreen)双发射手$()很好斗，不把任何人放在眼里。它通过射击豌豆来保持与人们之间的距离。然而私底下，它仍然渴望爱情。$(br)$(byellow)阳光消耗$() : $(l)200$()$(br)$(bblue)冷却$() : $(l)很快$()$(br)$(l)特点$() : 它是一个$(l)远程攻击$()植物，每1.5秒发射$(bred)两个豌豆$()攻击敌人。"
+        },
+        {
+            "type": "entity",
+            "entity": "pvz:repeater",
+            "scale": 0.65,
+            "text": "外观"
+        },
+        {
+            "type": "text",
+            "text": "$(bgreen)能量豆大招$() : 它会每tick发射$(l)多个豌豆$()，持续6秒。同时会在大招过后发射$(l)几个大豌豆$()。"
+        }
+    ],
+    "sortnum": 1
+}

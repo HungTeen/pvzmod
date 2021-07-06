@@ -1,0 +1,22 @@
+{
+    "name": "大嘴花",
+    "icon": "pvz:chomper_card",
+    "category": "pvz:enforce",
+    "pages": [
+        {
+            "type": "text",
+            "text": "$(bgreen)大嘴花$()曾得到一个在电影《恐怖小店》中参演特技的机会，可惜该计划因它的经纪人要求给予太多的正面镜头而流产。$(br)$(byellow)阳光消耗$() : $(l)150$()$(br)$(bblue)冷却$() : $(l)一般$()$(br)$(l)特点$() : 它是一个$(l)近战攻击$()植物，能$(bred)一口吃掉$()附近的敌人，吃掉后需要一段时间的休息。如果碰到了血厚的敌人，$(bred)攻击力会减至2%$()。"
+        },
+        {
+            "type": "entity",
+            "entity": "pvz:chomper",
+            "scale": 0.65,
+            "text": "外观"
+        },
+        {
+            "type": "text",
+            "text": "$(bgreen)能量豆大招$() : 它会召唤多个地下大嘴花攻击敌人。"
+        }
+    ],
+    "sortnum": 0
+}

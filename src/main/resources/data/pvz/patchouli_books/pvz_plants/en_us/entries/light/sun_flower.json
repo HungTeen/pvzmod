@@ -5,7 +5,7 @@
     "pages": [
         {
             "type": "text",
-            "text": "$(bgreen)SunFlower$() can't resist bouncing to the beat, that's the life-giving jazzy rhythm of the Earth itself.$(br)$(byellow)Sun Cost$() : $(l)50$()$(br)$(bblue)Recharge$() : $(l)Very Fast$()$(br)$(l)Features$() : It is a $(l)producer$() plant that generate $(byellow)sun$() every 25 seconds. It will $(bred)slow down four times at night or when it rains.$()"
+            "text": "$(bgreen)SunFlower$() can't resist bouncing to the beat, that's the life-giving jazzy rhythm of the Earth itself.$(br)$(byellow)Sun Cost$() : $(l)50$()$(br)$(bblue)Recharge$() : $(l)Huge Fast$()$(br)$(l)Features$() : It is a $(l)producer$() plant that generate $(byellow)sun$() every 25 seconds. It will $(bred)slow down four times at night or when it rains.$()"
         },
         {
             "type": "entity",

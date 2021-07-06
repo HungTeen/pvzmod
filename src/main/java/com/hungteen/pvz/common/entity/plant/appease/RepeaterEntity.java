@@ -9,9 +9,9 @@ import net.minecraft.world.World;
 
 public class RepeaterEntity extends PeaShooterEntity{
 
+	protected static final int SHOOT_BIG_CD = 100;
 	protected int bigPeaNum = 0;
 	protected int shootBigTick = 0;
-	protected final int SHOOT_BIG_CD = 100;
 	
 	public RepeaterEntity(EntityType<? extends CreatureEntity> type, World worldIn) {
 		super(type, worldIn);
@@ -21,7 +21,7 @@ public class RepeaterEntity extends PeaShooterEntity{
 	public void normalPlantTick() {
 		super.normalPlantTick();
 		if(!this.level.isClientSide) {
-			this.shootBigTick ++;
+			++ this.shootBigTick;
 		}
 	}
 	
@@ -44,7 +44,7 @@ public class RepeaterEntity extends PeaShooterEntity{
 	}
 	
 	protected int getBigPeaNum() {
-		return this.isPlantInStage(2) ? 1 : 2;
+		return this.isPlantInStage(1) ? 1 : this.isPlantInStage(2) ? 2 : 3;
 	}
 	
 	@Override
@@ -54,9 +54,7 @@ public class RepeaterEntity extends PeaShooterEntity{
 	
 	@Override
 	public int getSuperTimeLength() {
-		if(this.isPlantInStage(1)) return 150;
-		if(this.isPlantInStage(2)) return 175;
-		return 200;
+		return 120;
 	}
 	
 	@Override

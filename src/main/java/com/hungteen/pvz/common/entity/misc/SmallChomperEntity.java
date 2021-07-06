@@ -1,5 +1,7 @@
 package com.hungteen.pvz.common.entity.misc;
 
+import java.util.Optional;
+
 import com.hungteen.pvz.common.entity.AbstractOwnerEntity;
 import com.hungteen.pvz.common.entity.plant.enforce.ChomperEntity;
 import com.hungteen.pvz.common.misc.damage.PVZDamageSource;
@@ -15,8 +17,8 @@ import net.minecraft.world.World;
 
 public class SmallChomperEntity extends AbstractOwnerEntity {
 
-	private int lifeTick;
 	private final int maxLifeTick = 20;
+	private int lifeTick;
 
 	public SmallChomperEntity(EntityType<? extends Entity> entityTypeIn, World worldIn) {
 		super(entityTypeIn, worldIn);
@@ -38,21 +40,20 @@ public class SmallChomperEntity extends AbstractOwnerEntity {
 	}
 	
 	protected void performAttack() {
-		Entity owner = this.owner;
-		if(owner == null) {
-			owner = this;
-		}
-		for(Entity target : EntityUtil.getTargetableEntities(this, EntityUtil.getEntityAABB(this, 0.5f, 1f))) {
-			if(target instanceof LivingEntity) {
-				target.hurt(PVZDamageSource.causeEatDamage(this, this.owner), getAttackDamage((LivingEntity) target));
+		Optional.ofNullable(this.getOwner()).ifPresent(owner -> {
+			for(LivingEntity target : EntityUtil.getTargetableLivings(this, EntityUtil.getEntityAABB(this, 1.5F, 2F))) {
+				target.hurt(PVZDamageSource.causeEatDamage(this, owner), getAttackDamage(owner));
 			}
-		}
-		this.playSound(SoundRegister.CHOMP.get(), 1, 1);
+		});
+		EntityUtil.playSound(this, SoundRegister.CHOMP.get());
 	}
 	
-	private float getAttackDamage(LivingEntity target) {
-		if(this.owner instanceof ChomperEntity) {
-			return ((ChomperEntity) this.owner).getAttackDamage(target);
+	/**
+	 * get damage by owner.
+	 */
+	private float getAttackDamage(Entity owner) {
+		if(owner instanceof ChomperEntity) {
+			return ((ChomperEntity) owner).getAttackDamage();
 		}
 		return 40;
 	}

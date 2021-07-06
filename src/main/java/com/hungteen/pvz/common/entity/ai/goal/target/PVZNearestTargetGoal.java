@@ -73,6 +73,9 @@ public class PVZNearestTargetGoal extends TargetGoal {
 		if(! EntityUtil.isEntityValid(entity)) {
 			return false;
 		}
+		if(Math.abs(entity.getX() - this.mob.getX()) > this.width || Math.abs(entity.getZ() - this.mob.getZ()) > this.width) {
+			return false;
+		}
 		if(EntityUtil.canAttackEntity(mob, entity) && (this.longMemory || (! this.mustSee || this.checkSenses(entity)))) {
 			if (this.checkOther(entity)) {
 				this.mob.setTarget(entity);

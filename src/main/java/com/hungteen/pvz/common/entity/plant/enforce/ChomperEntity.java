@@ -7,10 +7,11 @@ import com.hungteen.pvz.common.misc.damage.PVZDamageSource;
 import com.hungteen.pvz.register.EntityRegister;
 import com.hungteen.pvz.register.SoundRegister;
 import com.hungteen.pvz.utils.EntityUtil;
+import com.hungteen.pvz.utils.MathUtil;
+import com.hungteen.pvz.utils.PlantUtil;
 import com.hungteen.pvz.utils.enums.Plants;
 
 import net.minecraft.entity.CreatureEntity;
-import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntitySize;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.LivingEntity;
@@ -23,11 +24,9 @@ import net.minecraft.world.World;
 
 public class ChomperEntity extends PVZPlantEntity {
 
-	public final int ATTACK_CD = 30;
-	private final int SUPER_RANGE = 20;
-	private static final DataParameter<Integer> REST_TICK = EntityDataManager.defineId(ChomperEntity.class,
-			DataSerializers.INT);
-
+	private static final DataParameter<Integer> REST_TICK = EntityDataManager.defineId(ChomperEntity.class, DataSerializers.INT);
+    public static final int ATTACK_ANIM_CD = 30;
+	
 	public ChomperEntity(EntityType<? extends CreatureEntity> type, World worldIn) {
 		super(type, worldIn);
 	}
@@ -41,12 +40,7 @@ public class ChomperEntity extends PVZPlantEntity {
 	@Override
 	protected void registerGoals() {
 		super.registerGoals();
-		this.targetSelector.addGoal(0, new PVZNearestTargetGoal(this, true, false, 5, 2));
-	}
-
-	@Override
-	public EntitySize getDimensions(Pose poseIn) {
-		return new EntitySize(0.9f, 1.9f, false);
+		this.targetSelector.addGoal(0, new PVZNearestTargetGoal(this, true, false, 3, 2));
 	}
 
 	@Override
@@ -56,28 +50,23 @@ public class ChomperEntity extends PVZPlantEntity {
 			this.lookControl.setLookAt(this.getTarget(), 30f, 30f);
 		}
 		if (!level.isClientSide) {
-			if (this.getAttackTime() < this.ATTACK_CD / 2) {// attack stage
-				if (this.getRestTick() > 0) {// rest time cannot attack
+			if (this.getAttackTime() < ATTACK_ANIM_CD / 2) {//pre attack stage.
+				if (this.getRestTick() > 0) {// rest time cannot attack.
 					this.setAttackTime(0);
 					this.setRestTick(this.getRestTick() - 1);
 					return;
 				}
-				if (this.getTarget() == null) {// no target
-					this.setAttackTime(0);
-					return;
-				}
-				if (!this.getTarget().isAlive() || this.distanceToSqr(this.getTarget()) > 9) {// target too far away
-					this.setTarget(null);
+				if (! EntityUtil.isEntityValid(this.getTarget())) {//no target.
 					this.setAttackTime(0);
 					return;
 				}
 				this.setAttackTime(this.getAttackTime() + 1);
-				if (this.getAttackTime() == this.ATTACK_CD / 2) {// attack
+				if (this.getAttackTime() == ATTACK_ANIM_CD / 2) {// attack
 					this.performAttack();
 				}
 			} else {
 				this.setAttackTime(this.getAttackTime() + 1);
-				if (this.getAttackTime() > this.ATTACK_CD) {
+				if (this.getAttackTime() > ATTACK_ANIM_CD) {
 					this.setAttackTime(0);
 				}
 			}
@@ -87,71 +76,70 @@ public class ChomperEntity extends PVZPlantEntity {
 	@Override
 	public void startSuperMode(boolean first) {
 		super.startSuperMode(first);
+		//stop rest.
+		this.setRestTick(0);
+		//summon ground chomper
+		final float range = 30F;
 		int cnt = this.getSuperAttackCnt();
-		for (Entity target : EntityUtil.getTargetableEntities(this, EntityUtil.getEntityAABB(this, this.SUPER_RANGE, this.SUPER_RANGE))) {
+		for (LivingEntity target : EntityUtil.getTargetableLivings(this, EntityUtil.getEntityAABB(this, range, range))) {
+			if(! target.isOnGround()) {
+				continue;
+			}
 			SmallChomperEntity chomper = EntityRegister.SMALL_CHOMPER.get().create(level);
-			chomper.setOwner(this);
+			chomper.summonByOwner(this);
 			EntityUtil.onEntitySpawn(level, chomper, target.blockPosition());
-			-- cnt;
-			if (cnt == 0) {
+			if (-- cnt == 0) {
 				break;
 			}
 		}
 	}
 
-	@Override
-	public boolean isInvulnerable() {
-		return this.getAttackTime() > 0;
-	}
-
 	/**
-	 * deal damage
+	 * deal damage to target.
+	 * {@link #normalPlantTick()}
 	 */
-	private void performAttack() {
-		LivingEntity target = this.getTarget();
-		if (EntityUtil.getCurrentHealth(target) <= this.getAttackDamage()) {// eat to death need rest
+	protected void performAttack() {
+		final LivingEntity target = this.getTarget();
+		final float damage = this.getAttackDamage();
+		if (EntityUtil.getCurrentHealth(target) <= this.getAttackDamage()) {//can eat to death need rest
+			target.hurt(PVZDamageSource.causeEatDamage(this, this), damage);
 			this.setRestTick(this.getRestCD());
+		} else {
+			target.hurt(PVZDamageSource.causeEatDamage(this, this), damage / 50F);
 		}
 		EntityUtil.playSound(this, SoundRegister.CHOMP.get());
-		target.hurt(PVZDamageSource.causeEatDamage(this, this), this.getAttackDamage(target));
 	}
 
 	/**
-	 * real damage to target
-	 */
-	public float getAttackDamage(LivingEntity target) {
-		if (target.getHealth() <= this.getAttackDamage()) {// eat to death
-			return this.getAttackDamage();
-		} else {
-			return this.getAttackDamage() / 30;
-		}
-	}
-
-	/**
-	 * max damage to target
+	 * max damage to target.
 	 */
 	public float getAttackDamage() {
-		int lvl = this.getPlantLvl();
-		if (lvl <= 19) return 147 + 3 * lvl;
-		return 210;
+		return MathUtil.getProgressAverage(this.getPlantLvl(), PlantUtil.MAX_PLANT_LEVEL, 150, 250);
 	}
 
 	/**
-	 * rest time after each kill
+	 * rest time after each kill.
 	 */
 	public int getRestCD() {
-		int lvl = this.getPlantLvl();
-		if (lvl <= 19) return 850 - 10 * lvl;
-		return 640;
+		return MathUtil.getProgressAverage(this.getPlantLvl(), PlantUtil.MAX_PLANT_LEVEL, 840, 640);
 	}
 
 	/**
-	 * how many ground chomper to summon
+	 * how many ground chomper to summon.
 	 */
 	public int getSuperAttackCnt() {
-		if(this.isPlantInStage(1)) return 3;
-		if(this.isPlantInStage(2)) return 4;
-		return 5;
+		return this.isPlantInStage(1) ? 3 : this.isPlantInStage(2) ? 4 : 5;
+	}
+	
+	/**
+	 */
+	public boolean isResting() {
+		return this.getRestTick() > 0;
+	}
+	
+	@Override
+	public EntitySize getDimensions(Pose poseIn) {
+		return new EntitySize(0.9f, 1.9f, false);
 	}
 
 	@Override
@@ -185,5 +173,5 @@ public class ChomperEntity extends PVZPlantEntity {
 	public Plants getPlantEnumName() {
 		return Plants.CHOMPER;
 	}
-
+	
 }

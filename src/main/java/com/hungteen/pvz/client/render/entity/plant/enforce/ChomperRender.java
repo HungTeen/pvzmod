@@ -14,5 +14,5 @@ public class ChomperRender extends PVZPlantRender<ChomperEntity>{
 	public ChomperRender(EntityRendererManager rendererManager) {
 		super(rendererManager, new ChomperModel(), 0.5f);
 	}
-
+	
 }

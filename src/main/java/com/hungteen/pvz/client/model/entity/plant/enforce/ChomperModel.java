@@ -267,28 +267,26 @@ public class ChomperModel extends PVZPlantModel<ChomperEntity> {
 
 	@Override
 	public void setupAnim(ChomperEntity entity, float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch){
-		int tick = entity.getAttackTime();
-//		if(tick>0) {
-//			if(tick%5==0) System.out.println(entity.getEntityId());
-//		}
-		if(tick > 0 && tick <= entity.ATTACK_CD / 2) {//1 - 10
+		final int tick = entity.getAttackTime();
+		final int T = ChomperEntity.ATTACK_ANIM_CD;
+		if(tick > 0 && tick <= T / 2) {//1 - 10
 			this.body.xRot = 0.05f * tick;//0.5
 			this.head.xRot = 0.25f - 0.075f * tick;//0.25 - -0.5
-			if(tick <= entity.ATTACK_CD / 3) {//1 - 6
+			if(tick <= T / 3) {//1 - 6
 				this.up_mouse.xRot = - 0.52f - 0.05f*tick;
 				this.down_mouse.xRot = 0.52f + 0.05f*tick;
 			}else {// 7 - 10 ( 1 - 4)
-				float tmp = tick - entity.ATTACK_CD * 2f / 3;
+				float tmp = tick - T * 2f / 3;
 				this.up_mouse.xRot = - 0.82f + 0.2f * tmp;
 				this.down_mouse.xRot = 0.82f - 0.2f * tmp;
 			}
-		}else if(tick > entity.ATTACK_CD / 2){// 11 - 20 (1 - 10)
-			int tmp = tick - entity.ATTACK_CD / 2;
+		} else if(tick > T / 2){// 11 - 20 (1 - 10)
+			final int tmp = tick - T / 2;
 			this.body.xRot = 0.5f - 0.05f * tmp;
 			this.head.xRot = - 0.5f + 0.075f * tmp;
 			this.up_mouse.xRot = -0.05f * tmp;
 			this.down_mouse.xRot = 0.05f * tmp;
-		}else {
+		} else {
 			this.body.xRot = 0;
 			if(entity.getRestTick() > 0) {
 				this.tongue.xRot = entity.getRandom().nextFloat() - 0.5f;
@@ -317,4 +315,5 @@ public class ChomperModel extends PVZPlantModel<ChomperEntity> {
 	public EntityModel<ChomperEntity> getPlantModel() {
 		return this;
 	}
+	
 }

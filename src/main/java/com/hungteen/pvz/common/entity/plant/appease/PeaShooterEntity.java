@@ -43,7 +43,7 @@ public class PeaShooterEntity extends PlantShooterEntity{
 				this.performShoot(SHOOT_OFFSET, offset, offsetH, i == 0, ShootTypes.FORWARD);
 			}
 		} else {
-			this.performShoot(SHOOT_OFFSET, 0, 0, true, ShootTypes.FORWARD);
+			this.performShoot(SHOOT_OFFSET, 0, 0, this.getAttackTime() == 1, ShootTypes.FORWARD);
 		}
 	}
 	

@@ -1,0 +1,22 @@
+{
+    "name": "Repeater",
+    "icon": "pvz:repeater_card",
+    "category": "pvz:appease",
+    "pages": [
+        {
+            "type": "text",
+            "text": "$(bgreen)Repeater$() is fierce and doesn't take attitude from anybody. it shoots peas to keep people at a distance. Secretly, though, it yearns for love.$(br)$(byellow)Sun Cost$() : $(l)200$()$(br)$(bblue)Recharge$() : $(l)Very Fast$()$(br)$(l)Features$() : It is a $(l)range attack$() plant that shoots $(bred)two peas$() every 1.5 seconds to attack enemy."
+        },
+        {
+            "type": "entity",
+            "entity": "pvz:repeater",
+            "scale": 0.65,
+            "text": "Appearance"
+        },
+        {
+            "type": "text",
+            "text": "$(bgreen)Plant Food :$() It will shoot $(l)several peas each tick$() which last 6 seconds, and will shoot several $(l)big peas$() after super mode."
+        }
+    ],
+    "sortnum": 1
+}

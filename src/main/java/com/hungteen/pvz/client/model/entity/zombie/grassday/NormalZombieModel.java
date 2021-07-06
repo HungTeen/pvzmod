@@ -63,7 +63,7 @@ public class NormalZombieModel extends PVZZombieModel<NormalZombieEntity> {
 		up.addChild(head);
 		head.texOffs(16, 96).addBox(-8.0F, -16.0F, -8.0F, 16.0F, 16.0F, 16.0F, 0.0F, false);
 	}
-
+	
 	@Override
 	public ModelRenderer getZombieLeftHand() {
 		return this.left_hand;
