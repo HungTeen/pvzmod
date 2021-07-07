@@ -1,0 +1,22 @@
+{
+    "name": "小喷菇",
+    "icon": "pvz:puff_shroom_card",
+    "category": "pvz:toxic",
+    "pages": [
+        {
+            "type": "text",
+            "text": "$(bgreen)小喷菇$()直到最近才意识到它自认为只存在于童话故事或者电影当中的僵尸是真实存在的，这里的经历真是让人大开眼界！$(br)$(byellow)阳光消耗$() : $(l)0$()$(br)$(bblue)冷却$() : $(l)很快$()$(br)$(l)特点$() : 它是一个$(l)中远程攻击$()植物，每1.5秒发射$(bred)一个孢子$()攻击敌人。$(bred)它白天会睡觉$()。"
+        },
+        {
+            "type": "entity",
+            "entity": "pvz:puff_shroom",
+            "scale": 0.65,
+            "text": "外观"
+        },
+        {
+            "type": "text",
+            "text": "$(bgreen)能量豆大招$() : 它会每tick发射$(l)1个孢子$()，持续1秒。$(bred)它会激活周围的小喷菇一起释放大招$()。"
+        }
+    ],
+    "sortnum": 0
+}

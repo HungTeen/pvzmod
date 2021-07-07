@@ -1,24 +1,23 @@
 package com.hungteen.pvz.common.entity.plant.toxic;
 
-import com.hungteen.pvz.common.entity.ai.goal.target.PVZNearestTargetGoal;
+import com.hungteen.pvz.common.entity.bullet.AbstractBulletEntity;
 import com.hungteen.pvz.common.entity.bullet.itembullet.SporeEntity;
 import com.hungteen.pvz.common.entity.plant.base.PlantShooterEntity;
 import com.hungteen.pvz.register.SoundRegister;
-import com.hungteen.pvz.utils.EntityUtil;
 import com.hungteen.pvz.utils.enums.Plants;
+import com.hungteen.pvz.utils.enums.ShootTypes;
 
 import net.minecraft.entity.CreatureEntity;
 import net.minecraft.entity.EntitySize;
 import net.minecraft.entity.EntityType;
-import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.Pose;
 import net.minecraft.entity.ai.goal.SwimGoal;
-import net.minecraft.util.math.MathHelper;
+import net.minecraft.util.SoundEvent;
 import net.minecraft.world.World;
 
 public class SeaShroomEntity extends PlantShooterEntity {
 
-	protected final double LENTH = 0.15d;
+	protected static final double SHOOT_OFFSET = 0.1D;
 	
 	public SeaShroomEntity(EntityType<? extends CreatureEntity> type, World worldIn) {
 		super(type, worldIn);
@@ -28,30 +27,27 @@ public class SeaShroomEntity extends PlantShooterEntity {
 	protected void registerGoals() {
 		super.registerGoals();
 		this.goalSelector.addGoal(2, new SwimGoal(this));
-		this.targetSelector.addGoal(0, new PVZNearestTargetGoal(this, true, false, 5, getShootRange(), 2, 0));
 	}
 	
 	@Override
 	public void shootBullet() {
-		LivingEntity target=this.getTarget();
-		if(target==null) {
-			//System.out.println("no target at all!");
-			return ;
+		if(this.isPlantInSuperMode()) {
+			this.performShoot(SHOOT_OFFSET, 0, 0, this.getExistTick() % 5 == 0, ShootTypes.FORWARD);
+		} else {
+			this.performShoot(SHOOT_OFFSET, 0, 0, this.getAttackTime() == 1, ShootTypes.FORWARD);
 		}
-		double dx = target.getX() - this.getX();
-        double dz = target.getZ() - this.getZ();
-        double y = this.getY()+this.getDimensions(getPose()).height*0.7f;
-        double dis =MathHelper.sqrt(dx * dx + dz * dz);
-        double tmp=this.LENTH / dis;
-        double deltaX = tmp * dx;
-        double deltaZ = tmp * dz;
-        SporeEntity spore = new SporeEntity(this.level, this);
-        spore.setPos(this.getX() + deltaX, y, this.getZ() + deltaZ);
-        spore.shootPea(dx, target.getY() + target.getBbHeight() - y, dz, this.getBulletSpeed());      
-        EntityUtil.playSound(this, SoundRegister.PUFF.get());
-        this.level.addFreshEntity(spore);
 	}
-
+	
+	@Override
+	protected AbstractBulletEntity createBullet() {
+		return new SporeEntity(this.level, this);
+	}
+	
+	@Override
+	protected SoundEvent getShootSound() {
+		return SoundRegister.PUFF.get();
+	}
+	
 	@Override
 	public float getShootRange() {
 		return 10;

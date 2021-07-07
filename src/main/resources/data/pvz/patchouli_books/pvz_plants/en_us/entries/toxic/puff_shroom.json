@@ -1,0 +1,22 @@
+{
+    "name": "Puff Shroom",
+    "icon": "pvz:puff_shroom_card",
+    "category": "pvz:toxic",
+    "pages": [
+        {
+            "type": "text",
+            "text": "$(bgreen)Puff Shroom$() only recently became aware of the existence of zombies. This whole experience has been a huge eye-opener for it.$(br)$(byellow)Sun Cost$() : $(l)0$()$(br)$(bblue)Recharge$() : $(l)Very Fast$()$(br)$(l)Features$() : It is a $(l)medium range attack$() plant that shoots $(bred)one spore$() every 1.5 seconds to attack enemy.$(bred)It will sleep at daytime$()."
+        },
+        {
+            "type": "entity",
+            "entity": "pvz:puff_shroom",
+            "scale": 0.65,
+            "text": "Appearance"
+        },
+        {
+            "type": "text",
+            "text": "$(bgreen)Plant Food :$() It will shoot $(l)a spore each tick$() which last 1 seconds.$(bred)It will activate other nearby Puff Shrooms to be in super mode$()."
+        }
+    ],
+    "sortnum": 0
+}

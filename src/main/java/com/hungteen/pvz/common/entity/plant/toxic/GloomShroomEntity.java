@@ -1,6 +1,6 @@
 package com.hungteen.pvz.common.entity.plant.toxic;
 
-import com.hungteen.pvz.common.entity.ai.goal.target.PVZNearestTargetGoal;
+import com.hungteen.pvz.common.entity.bullet.AbstractBulletEntity;
 import com.hungteen.pvz.common.entity.bullet.FumeEntity;
 import com.hungteen.pvz.common.entity.plant.base.PlantShooterEntity;
 import com.hungteen.pvz.register.SoundRegister;
@@ -18,7 +18,7 @@ import net.minecraft.world.World;
 
 public class GloomShroomEntity extends PlantShooterEntity {
 
-	protected final double LENTH = 0.2d;
+	protected static final double SHOOT_OFFSET = 0.2D;
 	private static final int SHOOT_NUM = 8;
 	
 	public GloomShroomEntity(EntityType<? extends CreatureEntity> type, World worldIn) {
@@ -26,39 +26,36 @@ public class GloomShroomEntity extends PlantShooterEntity {
 	}
 
 	@Override
-	protected void registerGoals() {
-		super.registerGoals();
-		this.targetSelector.addGoal(0, new PVZNearestTargetGoal(this, true, false, 5, getShootRange(), 2, 0));
-	}
-	
-	@Override
 	public void shootBullet() {
 		LivingEntity target = this.getTarget();
 		if(target == null) {
 			return ;
 		}
 		float now = this.yHeadRot;
-		boolean kb = (this.getRandom().nextInt(400) < this.getKBChance());
 		for(int i = 0; i < SHOOT_NUM; ++ i) {
-			this.shootFume(now, kb);
+			this.shootFume(now);
 			now += 360F / SHOOT_NUM;
 		}
         EntityUtil.playSound(this, SoundRegister.FUME.get());
 	}
 	
-	private void shootFume(float angle, boolean kb) {
+	private void shootFume(float angle) {
 		angle *= 3.14159F / 180F;
 		double vx = - MathHelper.sin(angle);
 		double vz = MathHelper.cos(angle);
-		FumeEntity fume = new FumeEntity(this.level, this);
-        if(this.isPlantInSuperMode()) {
-        	fume.setKnockback(this.getKnockback());
-        } else {
-        	if(kb) fume.setKnockback(1);
-        }
+		AbstractBulletEntity fume = this.createBullet();
         fume.setPos(this.getX(), this.getY() + this.getEyeHeight() - 0.2, this.getZ());
         fume.setDeltaMovement(new Vector3d(vx, 0, vz));
         this.level.addFreshEntity(fume);
+	}
+	
+	@Override
+	protected AbstractBulletEntity createBullet() {
+		final FumeEntity fume = new FumeEntity(this.level, this);
+        if(this.isPlantInSuperMode()) {
+        	fume.setKnockback(this.getKnockback());
+        }
+        return fume;
 	}
 	
 	/**

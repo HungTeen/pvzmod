@@ -149,12 +149,11 @@ public class AlmanacScreen extends AbstractOptionScreen<AlmanacContainer> {
 			case PUFF_SHROOM:{
 				PuffShroomEntity puffShroom = (PuffShroomEntity) plantEntity;
 				this.drawProperty(stack, Properties.ATTACK_DAMAGE, puffShroom.getAttackDamage());
-				this.drawProperty(stack, Properties.LIVE_TICK, puffShroom.getMaxLiveTick());
 				break;
 			}
 			case SUN_SHROOM:{
 				SunShroomEntity sunShroom = (SunShroomEntity) plantEntity;
-				this.drawProperty(stack, Properties.GEN_AMOUNT, sunShroom.getSunAmount());
+				this.drawProperty(stack, Properties.GEN_AMOUNT, sunShroom.getSunAmountInStage(2));
 				break;
 			}
 			case FUME_SHROOM:{

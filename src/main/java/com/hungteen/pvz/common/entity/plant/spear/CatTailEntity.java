@@ -3,20 +3,20 @@ package com.hungteen.pvz.common.entity.plant.spear;
 import java.util.HashSet;
 
 import com.hungteen.pvz.common.entity.ai.goal.target.PVZGlobalTargetGoal;
+import com.hungteen.pvz.common.entity.bullet.AbstractBulletEntity;
 import com.hungteen.pvz.common.entity.bullet.ThornEntity;
 import com.hungteen.pvz.common.entity.bullet.ThornEntity.ThornStates;
 import com.hungteen.pvz.common.entity.bullet.ThornEntity.ThornTypes;
 import com.hungteen.pvz.common.entity.plant.base.PlantShooterEntity;
 import com.hungteen.pvz.common.entity.zombie.poolnight.BalloonZombieEntity;
-import com.hungteen.pvz.register.SoundRegister;
 import com.hungteen.pvz.utils.EntityUtil;
 import com.hungteen.pvz.utils.enums.Plants;
+import com.hungteen.pvz.utils.enums.ShootTypes;
 
 import net.minecraft.entity.CreatureEntity;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntitySize;
 import net.minecraft.entity.EntityType;
-import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.Pose;
 import net.minecraft.entity.ai.goal.SwimGoal;
 import net.minecraft.nbt.CompoundNBT;
@@ -36,19 +36,22 @@ public class CatTailEntity extends PlantShooterEntity {
 	@Override
 	protected void registerGoals() {
 		super.registerGoals();
-		this.targetSelector.addGoal(0, new PVZGlobalTargetGoal(this, true, false, getShootRange(), getShootRange()));
 		this.goalSelector.addGoal(2, new SwimGoal(this));
 	}
+	
+	@Override
+	protected void addTargetGoals() {
+		this.targetSelector.addGoal(0, new PVZGlobalTargetGoal(this, true, false, getShootRange(), getShootRange()));
+	}
 
-	@SuppressWarnings("deprecation")
 	@Override
 	public void normalPlantTick() {
 		super.normalPlantTick();
 		if(! level.isClientSide) {
 			if(this.powerTick > 0) -- this.powerTick;
 			HashSet<ThornEntity> tmp = new HashSet<>();
-			thorns.forEach((thorn)->{
-				if(! thorn.removed && thorn.isInControl()) {
+			thorns.forEach(thorn -> {
+				if(EntityUtil.isEntityValid(thorn) && thorn.isInControl()) {
 					thorn.setThornTarget(this.getTarget());
 					tmp.add(thorn);
 				}
@@ -56,6 +59,20 @@ public class CatTailEntity extends PlantShooterEntity {
 			this.thorns.clear();
 			this.thorns = tmp;
 		}
+	}
+	
+	@Override
+	public void shootBullet() {
+		this.performShoot(0, 0, 0.2, this.getAttackTime() == 1, ShootTypes.FORWARD);
+	}
+	
+	@Override
+	protected AbstractBulletEntity createBullet() {
+		final ThornEntity thorn = new ThornEntity(level, this);
+		thorn.setThornType(this.getThornShootType());
+		thorn.setThornState(thorn.getThornType() == ThornTypes.AUTO ? ThornStates.POWER : ThornStates.NORMAL);
+		thorn.setExtraHitCount(this.getExtraAttackCount());
+		return thorn;
 	}
 	
 	@Override
@@ -78,20 +95,6 @@ public class CatTailEntity extends PlantShooterEntity {
 	@Override
 	public boolean checkY(Entity target) {
 		return true;
-	}
-	
-	@Override
-	public void shootBullet() {
-		LivingEntity target = this.getTarget();
-		if(target == null) return ;
-		ThornEntity thorn = new ThornEntity(level, this);
-		thorn.setThornType(this.getThornShootType());
-		thorn.setThornState(thorn.getThornType() == ThornTypes.AUTO ? ThornStates.POWER : ThornStates.NORMAL);
-		thorn.setExtraHitCount(this.getExtraAttackCount());
-		thorn.setPos(getX(), getY() + this.getBbHeight() + 0.2F, getZ());
-		this.thorns.add(thorn);
-		EntityUtil.playSound(this, SoundRegister.PLANT_THROW.get());
-		this.level.addFreshEntity(thorn);
 	}
 	
 	@Override

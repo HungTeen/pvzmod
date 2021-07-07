@@ -1,6 +1,6 @@
 package com.hungteen.pvz.common.entity.plant.appease;
 
-import com.hungteen.pvz.common.entity.ai.goal.target.PVZNearestTargetGoal;
+import com.hungteen.pvz.common.entity.bullet.AbstractBulletEntity;
 import com.hungteen.pvz.common.entity.bullet.StarEntity;
 import com.hungteen.pvz.common.entity.plant.base.PlantShooterEntity;
 import com.hungteen.pvz.register.SoundRegister;
@@ -23,12 +23,6 @@ public class AngelStarFruitEntity extends PlantShooterEntity {
 		super(type, worldIn);
 	}
 
-	@Override
-	protected void registerGoals() {
-		super.registerGoals();
-		this.targetSelector.addGoal(0, new PVZNearestTargetGoal(this, true, false, 5, getShootRange(), 2, 0));
-	}
-	
 	@Override
 	public void normalPlantTick() {
 		if(level.isClientSide) {
@@ -95,12 +89,17 @@ public class AngelStarFruitEntity extends PlantShooterEntity {
 		angle *= 3.14159F / 180F;
 		double vx = - MathHelper.sin(angle);
 		double vz = MathHelper.cos(angle);
-		StarEntity.StarTypes type = this.isPlantInSuperMode() ? StarEntity.StarTypes.BIG : StarEntity.StarTypes.NORMAL;
-		StarEntity pea = new StarEntity(level, this, type, StarEntity.StarStates.PINK);
+		AbstractBulletEntity pea = this.createBullet();
 		pea.setPos(getX(), getY() + 0.2F, getZ());
 		double speed = 1.4D;
 		pea.setDeltaMovement(vx * speed, 0, vz * speed);
 		level.addFreshEntity(pea);
+	}
+	
+	@Override
+	protected AbstractBulletEntity createBullet() {
+		final StarEntity.StarTypes type = this.isPlantInSuperMode() ? StarEntity.StarTypes.BIG : StarEntity.StarTypes.NORMAL;
+		return new StarEntity(level, this, type, StarEntity.StarStates.PINK);
 	}
 	
 	@Override

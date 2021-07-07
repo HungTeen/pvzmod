@@ -1,6 +1,6 @@
 package com.hungteen.pvz.common.entity.plant.spear;
 
-import com.hungteen.pvz.common.entity.ai.goal.target.PVZNearestTargetGoal;
+import com.hungteen.pvz.common.entity.bullet.AbstractBulletEntity;
 import com.hungteen.pvz.common.entity.bullet.ThornEntity;
 import com.hungteen.pvz.common.entity.bullet.ThornEntity.ThornStates;
 import com.hungteen.pvz.common.entity.bullet.ThornEntity.ThornTypes;
@@ -9,6 +9,7 @@ import com.hungteen.pvz.common.entity.zombie.poolnight.BalloonZombieEntity;
 import com.hungteen.pvz.common.misc.damage.PVZDamageSource;
 import com.hungteen.pvz.utils.EntityUtil;
 import com.hungteen.pvz.utils.enums.Plants;
+import com.hungteen.pvz.utils.enums.ShootTypes;
 
 import net.minecraft.entity.CreatureEntity;
 import net.minecraft.entity.Entity;
@@ -21,7 +22,6 @@ import net.minecraft.network.datasync.DataParameter;
 import net.minecraft.network.datasync.DataSerializers;
 import net.minecraft.network.datasync.EntityDataManager;
 import net.minecraft.util.DamageSource;
-import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.World;
 
 public class CactusEntity extends PlantShooterEntity {
@@ -32,7 +32,7 @@ public class CactusEntity extends PlantShooterEntity {
 	public static final float SEGMENT_HEIGHT = 0.54F;
 	private static final float MIN_SHOOT_HEIGHT = 1.25F;
 	private static final float MAX_SHOOT_HEIGHT = MIN_SHOOT_HEIGHT + MAX_SEGMENT_NUM * SEGMENT_HEIGHT;
-	protected final double LENTH = 0.3D; //pea position offset
+	protected static final double SHOOT_OFFSET = 0.3D; //pea position offset
 	
 	
 	public CactusEntity(EntityType<? extends CreatureEntity> type, World worldIn) {
@@ -44,12 +44,6 @@ public class CactusEntity extends PlantShooterEntity {
 		super.defineSynchedData();
 		this.entityData.define(CACTUS_HEIGHT, 0f);
 		this.entityData.define(POWERED, false);
-	}
-	
-	@Override
-	protected void registerGoals() {
-		super.registerGoals();
-		this.targetSelector.addGoal(0, new PVZNearestTargetGoal(this, true, false, 5, getShootRange(), 6, 0));
 	}
 	
 	@Override
@@ -72,6 +66,21 @@ public class CactusEntity extends PlantShooterEntity {
 			}
 		}
 	}
+	
+	@Override
+	public void shootBullet() {
+		this.performShoot(SHOOT_OFFSET, 0, 0, this.getAttackTime() == 1, ShootTypes.FORWARD);
+	}
+	
+	@Override
+	protected AbstractBulletEntity createBullet() {
+		final ThornEntity thorn = new ThornEntity(level, this);
+		thorn.setThornType(ThornTypes.NORMAL);
+		thorn.setThornState(this.isCactusPowered() ? ThornStates.POWER : ThornStates.NORMAL);
+		thorn.setExtraHitCount(this.isCactusPowered() ? this.getThornCount() : 1);
+		return thorn;
+	}
+	
 	
 	@Override
 	public boolean hurt(DamageSource source, float amount) {
@@ -101,13 +110,13 @@ public class CactusEntity extends PlantShooterEntity {
 		return 6.5F;
 	}
 	
-	public float getShootHeight() {
+	public float getCurrentHeight() {
 		return this.getCactusHeight() + MIN_SHOOT_HEIGHT;
 	}
 	
 	private boolean isSuitableHeight(Entity target) {
 		double dx = target.getX() - this.getX();
-		double ly = target.getY() - this.getY() - this.getShootHeight();
+		double ly = target.getY() - this.getY() - this.getCurrentHeight();
 		double ry = ly + target.getBbHeight();
 		double dz = target.getZ() - this.getZ();
 		double dis = Math.sqrt(dx * dx + dz * dz);
@@ -149,31 +158,6 @@ public class CactusEntity extends PlantShooterEntity {
 	@Override
 	public boolean canStartSuperMode() {
 		return ! this.isCactusPowered();
-	}
-	
-	@Override
-	public void shootBullet() {
-		LivingEntity target = this.getTarget();
-		if(target == null) return ;
-		double dx = target.getX() - this.getX();
-        double dz = target.getZ() - this.getZ();
-        double y = this.getY() + this.getShootHeight();
-        double dis =MathHelper.sqrt(dx * dx + dz * dz);
-        double tmp = this.LENTH / dis;
-        double deltaX = tmp * dx;
-        double deltaZ = tmp * dz;
-		ThornEntity thorn = new ThornEntity(level, this);
-		thorn.setThornType(ThornTypes.NORMAL);
-		thorn.setThornState(this.isCactusPowered() ? ThornStates.POWER : ThornStates.NORMAL);
-		thorn.setExtraHitCount(this.isCactusPowered() ? this.getThornCount() : 1);
-		thorn.setPos(this.getX() + deltaX, y, this.getZ() + deltaZ);
-        thorn.shootPea(dx, target.getY() + target.getEyeHeight() - y, dz, this.getBulletSpeed());
-		this.level.addFreshEntity(thorn);
-	}
-	
-	@Override
-	public float getBulletSpeed() {
-		return 1.2F;
 	}
 	
 	@Override

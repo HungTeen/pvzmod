@@ -1,5 +1,6 @@
 package com.hungteen.pvz.common.entity.plant.light;
 
+import com.hungteen.pvz.common.entity.drop.SunEntity;
 import com.hungteen.pvz.common.entity.plant.base.PlantProducerEntity;
 import com.hungteen.pvz.register.SoundRegister;
 import com.hungteen.pvz.utils.EntityUtil;
@@ -9,60 +10,16 @@ import net.minecraft.entity.CreatureEntity;
 import net.minecraft.entity.EntitySize;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.Pose;
-import net.minecraft.nbt.CompoundNBT;
-import net.minecraft.network.datasync.DataParameter;
-import net.minecraft.network.datasync.DataSerializers;
-import net.minecraft.network.datasync.EntityDataManager;
+import net.minecraft.util.SoundEvents;
 import net.minecraft.world.World;
 
 public class SunShroomEntity extends PlantProducerEntity {
-
-	protected static final int GROW_TICK = 1800;
-	private static final DataParameter<Integer> GROW_ANIM = EntityDataManager.defineId(SunShroomEntity.class, DataSerializers.INT);
-	public final int growAnimTo = 10;
+	
+	public static final int GROW_CD = 24000;
+	public static final int GROW_ANIM_CD = 10;
 	
 	public SunShroomEntity(EntityType<? extends CreatureEntity> type, World worldIn) {
 		super(type, worldIn);
-	}
-	
-	@Override
-	protected void defineSynchedData() {
-		super.defineSynchedData();
-		this.entityData.define(GROW_ANIM, 0);
-	}
-
-	@Override
-	protected void normalPlantTick() {
-		super.normalPlantTick();
-		if(this.getGrowAnim() > 0 && this.getGrowAnim() < this.growAnimTo) {
-			this.setGrowAnim(this.getGrowAnim() + 1);
-		}
-//		if(!this.hasGrowUp() && this.getLiveTick() > GROW_TICK) {
-//			this.grow();
-//		}
-	}
-	
-	@Override
-	public void startSuperMode(boolean first) {
-		super.startSuperMode(first);
-		if(!this.hasGrowUp()) {
-		    this.grow();
-		}
-	}
-	
-	@Override
-	public EntitySize getDimensions(Pose poseIn) {
-		return this.hasGrowUp() ? EntitySize.scalable(0.6f, 0.8f) : EntitySize.scalable(0.4f, 0.4f);
-	}
-	
-	/**
-	 * sun shroom grow up progress
-	 */
-	private void grow() {
-		this.setGrowAnim(1);
-		if(!level.isClientSide) {
-			EntityUtil.playSound(this, SoundRegister.PLANT_GROW.get());
-		}
 	}
 	
 	@Override
@@ -72,32 +29,67 @@ public class SunShroomEntity extends PlantProducerEntity {
 
 	@Override
 	public void genSuper() {
-		for(int i = 0;i < 4;i ++) {
-			this.genSun(this.getSunAmount());
+		SunEntity.spawnSunsByAmount(level, blockPosition(), this.getSuperSunAmount(), 100, 3);
+		EntityUtil.playSound(this, SoundEvents.EXPERIENCE_ORB_PICKUP);
+	}
+	
+	@Override
+	public void startSuperMode(boolean first) {
+		super.startSuperMode(first);
+		if(! this.isInGrowStage(2)) {
+			this.growUpTo(2);
 		}
 	}
 	
 	/**
-	 * check weather the shroom has grow up
+	 * sun shroom grow up progress
 	 */
-	public boolean hasGrowUp() {
-		return this.getGrowAnim() > 0;
+	protected void growUpTo(int stage) {
+		this.setExistTick(GROW_CD * (stage - 1) - GROW_ANIM_CD - 2); 
+		EntityUtil.playSound(this, SoundRegister.PLANT_GROW.get());
+	}
+	
+	/**
+	 * {@link #getCurrentSunAmount()}
+	 */
+	public boolean isInGrowStage(int stage) {
+		return this.getExistTick() > GROW_CD * (stage - 1);
 	}
 	
 	/**
 	 * get current sun gen num;
 	 */
-	private int getCurrentSunAmount() {
-		return this.hasGrowUp() ? this.getSunAmount() : 15;
+	protected int getCurrentSunAmount() {
+		return this.isInGrowStage(3) ? this.getSunAmountInStage(3) : 
+			   this.isInGrowStage(2) ? this.getSunAmountInStage(2) : 
+			   this.getSunAmountInStage(1);
 	}
 	
 	/**
-	 * get sun amount when grow up
+	 * get sun amount when grow up.
+	 * use in almanac.
 	 */
-	public int getSunAmount(){
-		if(this.isPlantInStage(1)) return 25;
-		if(this.isPlantInStage(2)) return 35;
-		return 50;
+	public int getSunAmountInStage(int stage){
+		if(stage == 1) {
+			return this.getPlantLvl() <= 15 ? 15 : 25;
+		}
+		if(stage == 2) {
+			return this.getPlantLvl() <= 5 ? 25 : this.getPlantLvl() <= 10 ? 35 : 50;
+		}
+		return 75;
+	}
+	
+	/**
+	 * get normal gen sun amount by level.
+	 */
+	public int getSuperSunAmount(){
+		if(this.isPlantInStage(1)) {
+			return 500;
+		}
+		if(this.isPlantInStage(2)) {
+			return 750;
+		}
+		return 1000;
 	}
 
 	@Override
@@ -106,25 +98,10 @@ public class SunShroomEntity extends PlantProducerEntity {
 	}
 	
 	@Override
-	public void addAdditionalSaveData(CompoundNBT compound) {
-		super.addAdditionalSaveData(compound);
-		compound.putInt("grow_anim", this.getGrowAnim());
-	}
-	
-	@Override
-	public void readAdditionalSaveData(CompoundNBT compound) {
-		super.readAdditionalSaveData(compound);
-		if(compound.contains("grow_anim")) {
-			this.setGrowAnim(compound.getInt("grow_anim"));
-		}
-	}
-
-	public void setGrowAnim(int tick) {
-		this.entityData.set(GROW_ANIM, tick);
-	}
-	
-	public int getGrowAnim() {
-		return this.entityData.get(GROW_ANIM);
+	public EntitySize getDimensions(Pose poseIn) {
+		return this.isInGrowStage(3) ? EntitySize.scalable(0.8f, 1.2f): 
+			   this.isInGrowStage(2) ? EntitySize.scalable(0.6f, 1f) :
+			   EntitySize.scalable(0.4f, 0.4f);
 	}
 	
 	@Override

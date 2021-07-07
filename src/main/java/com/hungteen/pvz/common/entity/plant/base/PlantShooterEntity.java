@@ -1,13 +1,17 @@
 package com.hungteen.pvz.common.entity.plant.base;
 
 import java.util.EnumSet;
+import java.util.Optional;
 
+import com.hungteen.pvz.common.entity.ai.goal.target.PVZNearestTargetGoal;
+import com.hungteen.pvz.common.entity.bullet.AbstractBulletEntity;
 import com.hungteen.pvz.common.entity.plant.PVZPlantEntity;
 import com.hungteen.pvz.common.entity.plant.appease.StarFruitEntity;
 import com.hungteen.pvz.common.entity.plant.spear.CatTailEntity;
 import com.hungteen.pvz.utils.EntityUtil;
 import com.hungteen.pvz.utils.MathUtil;
 import com.hungteen.pvz.utils.PlantUtil;
+import com.hungteen.pvz.utils.enums.ShootTypes;
 import com.hungteen.pvz.utils.interfaces.IShooter;
 
 import net.minecraft.entity.CreatureEntity;
@@ -20,6 +24,9 @@ import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.network.datasync.DataParameter;
 import net.minecraft.network.datasync.DataSerializers;
 import net.minecraft.network.datasync.EntityDataManager;
+import net.minecraft.util.SoundEvent;
+import net.minecraft.util.SoundEvents;
+import net.minecraft.util.math.vector.Vector3d;
 import net.minecraft.world.World;
 
 public abstract class PlantShooterEntity extends PVZPlantEntity implements IShooter {
@@ -50,6 +57,11 @@ public abstract class PlantShooterEntity extends PVZPlantEntity implements IShoo
 	protected void registerGoals() {
 		super.registerGoals();
 	    this.goalSelector.addGoal(0, new ShooterAttackGoal(this));
+	    this.addTargetGoals();
+	}
+	
+	protected void addTargetGoals() {
+		this.targetSelector.addGoal(0, new ShooterNearestTargetGoal(this, true, false, getShootRange(), getShootHeight()));
 	}
 
 	@Override
@@ -61,6 +73,41 @@ public abstract class PlantShooterEntity extends PVZPlantEntity implements IShoo
 	    if(this.getAttackTime() > 0) {
 		    this.setAttackTime(this.getAttackTime() - 1);
 		}
+	}
+	
+	/**
+	 * shoot pea with offsets.
+	 */
+	public void performShoot(double forwardOffset, double rightOffset, double heightOffset, boolean needSound, ShootTypes type) {
+		Optional.ofNullable(this.getTarget()).ifPresent(target -> {
+			final Vector3d vec = EntityUtil.getNormalisedVector2d(this, target);
+            final double deltaY = this.getDimensions(getPose()).height * 0.7F + heightOffset;
+            final double deltaX = forwardOffset * vec.x + rightOffset * vec.z;
+            final double deltaZ = forwardOffset * vec.z + rightOffset * vec.x;
+            final AbstractBulletEntity bullet = this.createBullet();
+            bullet.setPos(this.getX() + deltaX, this.getY() + deltaY, this.getZ() + deltaZ);
+            switch(type) {//choose shoot position. 
+            case FORWARD:{
+            	bullet.shootPea(vec.x, target.getY() + target.getBbHeight() - bullet.getY(), vec.z, this.getBulletSpeed());
+            	break;
+            }
+            default:break;
+            }
+            if(needSound) {
+            	EntityUtil.playSound(this, this.getShootSound());
+            }
+            bullet.summonByOwner(this);
+            this.level.addFreshEntity(bullet);
+		});
+	}
+	
+	/**
+	 * {@link #performShoot(double, double, double, boolean, ShootTypes)}
+	 */
+	protected abstract AbstractBulletEntity createBullet();
+	
+	protected SoundEvent getShootSound() {
+		return SoundEvents.SNOW_GOLEM_SHOOT;
 	}
 	
 	protected boolean canAttackNow() {
@@ -98,12 +145,24 @@ public abstract class PlantShooterEntity extends PVZPlantEntity implements IShoo
 		return 60;
 	}
 	
-	@Override
+	/**
+	 * max target horizontal distance.
+	 */
 	public float getShootRange() {
 		return 30;
 	}
 	
-	@Override
+	/**
+	 * max target height.
+	 */
+	public float getShootHeight() {
+		return 2;
+	}
+	
+	/**
+	 * check weather the shooter can shoot currently.
+	 * {@link ShooterNearestTargetGoal#checkOther(LivingEntity)}
+	 */
 	public boolean canShoot() {
 		return this.canPlantNormalUpdate();
 	}
@@ -213,6 +272,22 @@ public abstract class PlantShooterEntity extends PVZPlantEntity implements IShoo
 				return this.shooter.getSensing().canSee(this.target);
 			}
 			return false;
+		}
+		
+	}
+	
+	protected static class ShooterNearestTargetGoal extends PVZNearestTargetGoal{
+
+		private final PlantShooterEntity shooter;
+		
+		public ShooterNearestTargetGoal(PlantShooterEntity mobIn, boolean checkSight, boolean memory, float w, float h) {
+			super(mobIn, checkSight, memory, w, h);
+			this.shooter = mobIn;
+		}
+		
+		@Override
+		protected boolean checkOther(LivingEntity entity) {
+			return this.shooter.checkY(entity);
 		}
 		
 	}

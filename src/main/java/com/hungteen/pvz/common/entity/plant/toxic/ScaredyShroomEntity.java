@@ -1,28 +1,28 @@
 package com.hungteen.pvz.common.entity.plant.toxic;
 
-import com.hungteen.pvz.common.entity.ai.goal.target.PVZNearestTargetGoal;
+import com.hungteen.pvz.common.entity.bullet.AbstractBulletEntity;
 import com.hungteen.pvz.common.entity.bullet.itembullet.SporeEntity;
 import com.hungteen.pvz.common.entity.plant.base.PlantShooterEntity;
 import com.hungteen.pvz.register.SoundRegister;
-import com.hungteen.pvz.utils.EntityUtil;
 import com.hungteen.pvz.utils.enums.Plants;
+import com.hungteen.pvz.utils.enums.ShootTypes;
 
 import net.minecraft.entity.CreatureEntity;
 import net.minecraft.entity.EntitySize;
 import net.minecraft.entity.EntityType;
-import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.Pose;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.network.datasync.DataParameter;
 import net.minecraft.network.datasync.DataSerializers;
 import net.minecraft.network.datasync.EntityDataManager;
+import net.minecraft.util.SoundEvent;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.World;
 
 public class ScaredyShroomEntity extends PlantShooterEntity {
 
-	protected final double LENTH = 0.2d; //pea position offset
 	private static final DataParameter<Integer> SCARE_TIME = EntityDataManager.defineId(ScaredyShroomEntity.class, DataSerializers.INT);
+	protected static final double SHOOT_OFFSET = 0.2D;
 	public static final int ANIM_TIME = 15;
 	
 	public ScaredyShroomEntity(EntityType<? extends CreatureEntity> type, World worldIn) {
@@ -33,12 +33,6 @@ public class ScaredyShroomEntity extends PlantShooterEntity {
 	protected void defineSynchedData() {
 		super.defineSynchedData();
 		this.entityData.define(SCARE_TIME, 0);
-	}
-	
-	@Override
-	protected void registerGoals() {
-		super.registerGoals();
-		this.targetSelector.addGoal(0, new PVZNearestTargetGoal(this, true, false, 5, getShootRange(), 2, 0));
 	}
 	
 	@Override
@@ -57,6 +51,25 @@ public class ScaredyShroomEntity extends PlantShooterEntity {
 		}
 	}
 	
+	@Override
+	public void shootBullet() {
+		if(this.isPlantInSuperMode()) {
+			this.performShoot(SHOOT_OFFSET, 0, 0, this.getExistTick() % 5 == 0, ShootTypes.FORWARD);
+		} else {
+			this.performShoot(SHOOT_OFFSET, 0, 0, this.getAttackTime() == 1, ShootTypes.FORWARD);
+		}
+	}
+	
+	@Override
+	protected AbstractBulletEntity createBullet() {
+		return new SporeEntity(this.level, this);
+	}
+	
+	@Override
+	protected SoundEvent getShootSound() {
+		return SoundRegister.PUFF.get();
+	}
+	
 	public float getScareDistance() {
 		int lvl = this.getPlantLvl();
 		if(lvl <= 20) {
@@ -69,26 +82,6 @@ public class ScaredyShroomEntity extends PlantShooterEntity {
 	@Override
 	public EntitySize getDimensions(Pose poseIn) {
 		return EntitySize.scalable(0.6f, 1.6f - this.getScareTime() * 1.0f / ANIM_TIME);
-	}
-
-	@Override
-	public void shootBullet() {
-		LivingEntity target = this.getTarget();
-		if(target == null || this.isScared()) {
-			return ;
-		}
-		double dx = target.getX() - this.getX();
-        double dz = target.getZ() - this.getZ();
-        double y = this.getY() + this.getDimensions(getPose()).height * 0.7f;
-        double dis = MathHelper.sqrt(dx * dx + dz * dz);
-        double tmp = this.LENTH / dis;
-        double deltaX = tmp * dx;
-        double deltaZ = tmp * dz;
-        SporeEntity spore = new SporeEntity(this.level, this); 
-        spore.setPos(this.getX() + deltaX, y, this.getZ() + deltaZ);
-        spore.shootPea(dx, target.getY() + target.getBbHeight() - y, dz, this.getBulletSpeed());
-        EntityUtil.playSound(this, SoundRegister.PUFF.get());
-        this.level.addFreshEntity(spore);
 	}
 
 	@Override

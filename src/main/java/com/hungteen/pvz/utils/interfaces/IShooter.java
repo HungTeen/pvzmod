@@ -14,8 +14,6 @@ public interface IShooter {
 	 */
 	int getShootCD();
 	
-	float getShootRange();
-	
 	/**
 	 * bullet initial move speed
 	 */
@@ -31,8 +29,4 @@ public interface IShooter {
 	 */
 	boolean checkY(Entity target);
 	
-	/**
-	 * check weather the shooter can shoot currently for AI
-	 */
-	boolean canShoot();
 }

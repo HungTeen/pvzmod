@@ -1,23 +1,21 @@
 package com.hungteen.pvz.common.entity.plant.toxic;
 
 import com.hungteen.pvz.common.entity.ai.goal.target.PVZNearestTargetGoal;
+import com.hungteen.pvz.common.entity.bullet.AbstractBulletEntity;
 import com.hungteen.pvz.common.entity.bullet.FumeEntity;
 import com.hungteen.pvz.common.entity.plant.base.PlantShooterEntity;
-import com.hungteen.pvz.register.SoundRegister;
-import com.hungteen.pvz.utils.EntityUtil;
 import com.hungteen.pvz.utils.enums.Plants;
+import com.hungteen.pvz.utils.enums.ShootTypes;
 
 import net.minecraft.entity.CreatureEntity;
 import net.minecraft.entity.EntitySize;
 import net.minecraft.entity.EntityType;
-import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.Pose;
-import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.World;
 
 public class FumeShroomEntity extends PlantShooterEntity {
 
-	protected final double LENTH = 0.2d;
+	protected static final double SHOOT_OFFSET = 0.2D;
 	
 	public FumeShroomEntity(EntityType<? extends CreatureEntity> type, World worldIn) {
 		super(type, worldIn);
@@ -31,25 +29,16 @@ public class FumeShroomEntity extends PlantShooterEntity {
 	
 	@Override
 	public void shootBullet() {
-		LivingEntity target = this.getTarget();
-		if(target == null) {
-			return ;
-		}
-		double dx = target.getX() - this.getX();
-        double dz = target.getZ() - this.getZ();
-        double y = this.getY() + this.getDimensions(getPose()).height * 0.7f;
-        double dis = MathHelper.sqrt(dx * dx + dz * dz);
-        double tmp = this.LENTH / dis;
-        double deltaX = tmp * dx;
-        double deltaZ = tmp * dz;
-        FumeEntity fume = new FumeEntity(this.level, this);
+		this.performShoot(SHOOT_OFFSET, 0, 0, this.getAttackTime() == 1, ShootTypes.FORWARD);
+	}
+	
+	@Override
+	protected AbstractBulletEntity createBullet() {
+		final FumeEntity fume = new FumeEntity(this.level, this);
         if(this.isPlantInSuperMode()) {
         	fume.setKnockback(this.getKnockback());
         }
-        fume.setPos(this.getX() + deltaX, y, this.getZ() + deltaZ);
-        fume.shootPea(dx, target.getY() + target.getBbHeight() - y, dz, this.getBulletSpeed());
-        EntityUtil.playSound(this, SoundRegister.FUME.get());
-        this.level.addFreshEntity(fume);
+        return fume;
 	}
 
 	@Override

@@ -1,0 +1,22 @@
+{
+    "name": "阳光菇",
+    "icon": "pvz:sun_shroom_card",
+    "category": "pvz:light",
+    "pages": [
+        {
+            "type": "text",
+            "text": "$(bgreen)阳光菇$()非常讨厌阳光，每次产出阳光时，它巴不得立马吐出来。$(m)阳光对它来说就是笨蛋$()。$(br)$(byellow)阳光消耗$() : $(l)25$()$(br)$(bblue)冷却$() : $(l)非常快$()$(br)$(l)特点$() : 它是一个$(l)生产型$()植物，每隔30秒会生产少量$(bred)阳光$()。$(l)存活1天$()后会长大，稍微增加阳光产量。$(bred)在白天会睡觉$()。"
+        },
+        {
+            "type": "entity",
+            "entity": "pvz:sun_shroom",
+            "scale": 0.35,
+            "text": "外观"
+        },
+        {
+            "type": "text",
+            "text": "$(bgreen)能量豆大招$() : 瞬间产生大量阳光。"
+        }
+    ],
+    "sortnum": 1
+}

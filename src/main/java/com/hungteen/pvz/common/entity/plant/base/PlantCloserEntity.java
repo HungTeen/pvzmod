@@ -6,6 +6,7 @@ import com.hungteen.pvz.common.misc.damage.PVZDamageSource;
 import com.hungteen.pvz.utils.EntityUtil;
 
 import net.minecraft.entity.CreatureEntity;
+import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.util.DamageSource;
@@ -64,14 +65,14 @@ public abstract class PlantCloserEntity extends PVZPlantEntity{
 	
 	@Override
 	public boolean isPlantImmuneTo(DamageSource source) {
-		if(this.canBeImmuneToEnforce()) {
+		if(this.canBeImmuneToEnforce(source.getEntity())) {
 			return super.isPlantImmuneTo(source) || PVZDamageSource.isEnforceDamage(source);
 		}
 		return super.isPlantImmuneTo(source);
 	}
 	
-	protected boolean canBeImmuneToEnforce() {
-		return true;
+	protected boolean canBeImmuneToEnforce(Entity entity) {
+		return checkCanPlantTarget(entity);
 	}
 	
 	@Override

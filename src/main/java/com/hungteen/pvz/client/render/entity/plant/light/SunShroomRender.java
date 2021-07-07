@@ -17,9 +17,22 @@ public class SunShroomRender extends PVZPlantRender<SunShroomEntity>{
 
 	@Override
 	public float getScaleByEntity(SunShroomEntity entity) {
-		float smallSize = 0.2f;
-		float bigSize = 0.4f;
-		return smallSize + entity.getGrowAnim() * (bigSize - smallSize) / entity.growAnimTo;
+		final float smallSize = 0.2F;
+		final float bigSize = 0.35F;
+//		final float hugeSize = 0.6F;
+		final int T = SunShroomEntity.GROW_ANIM_CD;
+		final int tick = entity.getExistTick();
+		if(entity.isInGrowStage(3)) {
+			
+		}
+		if(entity.isInGrowStage(2)) {
+			return bigSize;
+		}
+		if(entity.isInGrowStage(1)) {
+			final int now = tick + T - SunShroomEntity.GROW_CD;
+			return now >= 0 ? smallSize + (bigSize - smallSize) * now / T : smallSize;
+		}
+		return smallSize;
 	}
 
 }

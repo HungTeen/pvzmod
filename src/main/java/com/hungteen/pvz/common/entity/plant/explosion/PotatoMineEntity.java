@@ -128,8 +128,8 @@ public class PotatoMineEntity extends PlantCloserEntity{
 	}
 	
 	@Override
-	protected boolean canBeImmuneToEnforce() {
-		return this.isMineReady() || this.isRisingFromDirt();
+	protected boolean canBeImmuneToEnforce(Entity entity) {
+		return super.canBeImmuneToEnforce(entity) && (this.isMineReady() || this.isRisingFromDirt());
 	}
 	
 	@Override

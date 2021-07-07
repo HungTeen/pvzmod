@@ -1,0 +1,22 @@
+{
+    "name": "Sun Shroom",
+    "icon": "pvz:sun_shroom_card",
+    "category": "pvz:light",
+    "pages": [
+        {
+            "type": "text",
+            "text": "$(bgreen)Sun Shroom$() hates sun so much that when sun builds up in its system, it spits sun out as fast as possible. To it, sun is crass.$(br)$(byellow)Sun Cost$() : $(l)25$()$(br)$(bblue)Recharge$() : $(l)Huge Fast$()$(br)$(l)Features$() : It is a $(l)producer$() plant that generate $(byellow)sun$() every 30 seconds. It need $(l)a whole day$() to grow up and produce $()more sun$() each time. $(bred)It will sleep at daytime$()."
+        },
+        {
+            "type": "entity",
+            "entity": "pvz:sun_shroom",
+            "scale": 0.35,
+            "text": "Appearance"
+        },
+        {
+            "type": "text",
+            "text": "$(bgreen)Plant Food :$() It will instantly produce large amount of sun."
+        }
+    ],
+    "sortnum": 1
+}
