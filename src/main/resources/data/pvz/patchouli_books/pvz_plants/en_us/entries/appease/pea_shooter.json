@@ -15,7 +15,7 @@
         },
         {
             "type": "text",
-            "text": "$(bgreen)Plant Food :$() It will shoot $(l)serveral peas each tick$() which last 5 seconds."
+            "text": "$(bgreen)Plant Food :$() It will shoot $(l)several peas each tick$() which last 5 seconds."
         }
     ],
     "sortnum": 0

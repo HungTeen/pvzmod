@@ -7,6 +7,7 @@ import com.hungteen.pvz.common.misc.damage.PVZDamageSource;
 import com.hungteen.pvz.register.EntityRegister;
 import com.hungteen.pvz.register.ItemRegister;
 import com.hungteen.pvz.register.ParticleRegister;
+import com.hungteen.pvz.utils.WorldUtil;
 
 import it.unimi.dsi.fastutil.ints.IntOpenHashSet;
 import net.minecraft.block.Block;
@@ -39,9 +40,9 @@ public class FumeEntity extends PVZItemBulletEntity{
 	public void tick() {
 		super.tick();
 		if(level.isClientSide) {
-			int cnt = this.tickCount < getMaxLiveTick() / 2 ? 6 : 4;
-			for(int i = 0; i < cnt; ++i) {
-	            this.level.addParticle(ParticleRegister.FUME.get(), this.getX(), this.getY(), this.getZ(), 0.0D, 0.0D, 0.0D);
+			final int cnt = Math.max(2, Math.min(5, this.getMaxLiveTick() / this.tickCount));
+			for(int i = 0; i < cnt; ++ i) {
+				WorldUtil.spawnRandomSpeedParticle(level, ParticleRegister.FUME.get(), this.position(), 0);
 	        }
 		}
 	}
@@ -51,7 +52,7 @@ public class FumeEntity extends PVZItemBulletEntity{
 		if(this.getThrower() instanceof GloomShroomEntity) {
 			return 5;
 		}
-		return 25;
+		return 10;
 	}
 
 	@Override
@@ -103,7 +104,9 @@ public class FumeEntity extends PVZItemBulletEntity{
 	
 	@Override
 	protected float getAttackDamage() {
-		if(this.getThrower() instanceof PlantShooterEntity) return ((PlantShooterEntity) this.getThrower()).getAttackDamage();
+		if(this.getThrower() instanceof PlantShooterEntity) {
+			return ((PlantShooterEntity) this.getThrower()).getAttackDamage();
+		}
 		return 0;
 	}
 	

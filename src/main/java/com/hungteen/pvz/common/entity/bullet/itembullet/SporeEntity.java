@@ -2,10 +2,12 @@ package com.hungteen.pvz.common.entity.bullet.itembullet;
 
 import com.hungteen.pvz.common.entity.plant.base.PlantShooterEntity;
 import com.hungteen.pvz.common.entity.plant.toxic.PuffShroomEntity;
+import com.hungteen.pvz.common.entity.plant.toxic.SeaShroomEntity;
 import com.hungteen.pvz.common.misc.damage.PVZDamageSource;
 import com.hungteen.pvz.register.EntityRegister;
 import com.hungteen.pvz.register.ItemRegister;
 import com.hungteen.pvz.register.ParticleRegister;
+import com.hungteen.pvz.utils.WorldUtil;
 
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntitySize;
@@ -31,17 +33,18 @@ public class SporeEntity extends PVZItemBulletEntity{
 	public void tick() {
 		super.tick();
 		if(level.isClientSide) {
-			int cnt = 3;
-			for(int i = 0; i < cnt; ++i) {
-	            this.level.addParticle(ParticleRegister.SPORE.get(), this.getX(), this.getY(), this.getZ(), 0.0D, 0.0D, 0.0D);
+			for(int i = 0; i < 3; ++i) {
+				WorldUtil.spawnRandomSpeedParticle(level, ParticleRegister.SPORE.get(), this.position(), 0);
 	        }
 		}
 	}
 	
 	@Override
 	protected int getMaxLiveTick() {
-		if(this.getThrower() instanceof PuffShroomEntity) return 20;
-		return 50;
+		if(this.getThrower() instanceof PuffShroomEntity || this.getThrower() instanceof SeaShroomEntity) {
+			return 10;
+		}
+		return 24;
 	}
 	
 	@Override
@@ -72,7 +75,9 @@ public class SporeEntity extends PVZItemBulletEntity{
 	
 	@Override
 	protected float getAttackDamage() {
-		if(this.getThrower() instanceof PlantShooterEntity) return ((PlantShooterEntity) this.getThrower()).getAttackDamage();
+		if(this.getThrower() instanceof PlantShooterEntity) {
+			return ((PlantShooterEntity) this.getThrower()).getAttackDamage();
+		}
 		return 0;
 	}
 	

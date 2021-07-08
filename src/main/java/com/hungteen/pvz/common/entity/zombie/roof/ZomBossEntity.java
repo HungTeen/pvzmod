@@ -73,7 +73,6 @@ public class ZomBossEntity extends PVZZombieEntity {
 		this.canBeCharm = false;
 		this.canBeInvis = false;
 		this.canBeStealByBungee = false;
-		this.hasDirectDefence = true;
 		this.maxDeathTime = 60;
 		this.setIsWholeBody();
 		this.canBeRemove = false;
@@ -85,7 +84,6 @@ public class ZomBossEntity extends PVZZombieEntity {
 	public ILivingEntityData finalizeSpawn(IServerWorld worldIn, DifficultyInstance difficultyIn, SpawnReason reason,
 			ILivingEntityData spawnDataIn, CompoundNBT dataTag) {
 		if(! level.isClientSide) {
-			this.setDefenceLife(this.getZomBossDefenceLife());
 			final float range = 50F;
 			EntityUtil.getTargetableEntities(this, EntityUtil.getEntityAABB(this, range, range)).forEach((target) -> {
 				if(target instanceof PVZPlantEntity) {
@@ -118,7 +116,7 @@ public class ZomBossEntity extends PVZZombieEntity {
 	@Override
 	public void tick() {
 		super.tick();
-		float percent = (this.getDefenceLife() + this.getHealth()) / (this.getMaxHealth() + this.getZomBossDefenceLife());
+		float percent = (this.getDefenceLife() + this.getHealth()) / (this.getMaxHealth() + this.getExtraLife());
 		this.bossInfo.setPercent(percent);
 		if(this.shootBallCD > 0) {
 			-- this.shootBallCD;
@@ -362,7 +360,7 @@ public class ZomBossEntity extends PVZZombieEntity {
 	}
 	
 	public int getBossStage() {
-		float percent = this.getDefenceLife() / this.getZomBossDefenceLife();
+		float percent = this.getDefenceLife() / this.getExtraLife();
 		if(percent > 4F / 5) return 1;
 		if(percent > 3F / 5) return 2;
 		if(percent > 2F / 5) return 3;
@@ -370,13 +368,14 @@ public class ZomBossEntity extends PVZZombieEntity {
 		return 5;
 	}
 	
-	public float getZomBossDefenceLife() {
-		return 10000;
-	}
-
 	@Override
 	public float getLife() {
 		return 1000;
+	}
+	
+	@Override
+	public float getExtraLife() {
+		return 10000;
 	}
 	
 	protected int getSummonZombieCD() {

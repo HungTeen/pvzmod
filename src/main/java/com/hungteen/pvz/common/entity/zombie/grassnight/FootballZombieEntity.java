@@ -17,11 +17,8 @@ import net.minecraft.world.World;
 
 public class FootballZombieEntity extends PVZZombieEntity implements IHasMetal {
 
-	public static final float FOOTBALL_HEALTH = 140;
-	
 	public FootballZombieEntity(EntityType<? extends MonsterEntity> type, World worldIn) {
 		super(type, worldIn);
-		this.hasDirectDefence = true;
 		this.canLostHand = false;
 		this.increaseMetal();
 	}
@@ -41,6 +38,11 @@ public class FootballZombieEntity extends PVZZombieEntity implements IHasMetal {
 	@Override
 	public float getLife() {
 		return 20;
+	}
+	
+	@Override
+	public float getExtraLife() {
+		return 140;
 	}
 
 	@Override
@@ -65,7 +67,7 @@ public class FootballZombieEntity extends PVZZombieEntity implements IHasMetal {
 
 	@Override
 	public void increaseMetal() {
-		this.setDefenceLife(FOOTBALL_HEALTH);
+		this.setDefenceLife(this.getExtraLife());
 	}
 
 	@Override

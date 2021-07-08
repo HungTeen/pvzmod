@@ -22,6 +22,9 @@ public class SunShroomRender extends PVZPlantRender<SunShroomEntity>{
 //		final float hugeSize = 0.6F;
 		final int T = SunShroomEntity.GROW_ANIM_CD;
 		final int tick = entity.getExistTick();
+		if(tick <= 20) {
+			return smallSize;
+		}
 		if(entity.isInGrowStage(3)) {
 			
 		}

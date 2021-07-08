@@ -58,7 +58,8 @@ public class ZombieUtil {
 	public static final HashMap<Zombies, Ranks> ZOMBIE_RANK = new HashMap<>();
 	public static final HashMap<EntityType<? extends PVZZombieEntity>, Zombies> ENTITY_TYPE_ZOMBIE = new HashMap<>();
 	public static final HashMap<Zombies, RegistryObject<? extends EntityType<? extends PVZZombieEntity>>> ZOMBIE_ENTITY = new HashMap<>();
-    public static int ZOMBIE_NUM = 0;
+	 public static final int MAX_ZOMBIE_LEVEL = 20;
+	public static int ZOMBIE_NUM = 0;
 	
 	static {
 		//grass day

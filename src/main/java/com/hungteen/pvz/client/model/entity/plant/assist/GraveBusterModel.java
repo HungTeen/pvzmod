@@ -346,10 +346,10 @@ public class GraveBusterModel extends PVZPlantModel<GraveBusterEntity> {
 	@Override
 	public void setupAnim(GraveBusterEntity entity, float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch){
 		final float angle = 0.15f;
-		if(entity.isEating()) {
+		if(entity.isEatingTomb()) {
 			int x = entity.getAttackTime();
 			final int times = 7;
-			float T = entity.getAttackCD() * 1.0f / times;
+			float T = entity.getEatTombCD() * 1.0f / times;
 			double w = 2 * Math.PI / T;
 			this.m1.xRot = (float) - Math.cos(w * x) * angle;
 			this.m2.xRot = (float) Math.cos(w * x) * angle;

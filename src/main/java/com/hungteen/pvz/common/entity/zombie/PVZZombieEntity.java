@@ -24,6 +24,7 @@ import com.hungteen.pvz.common.entity.drop.CoinEntity.CoinType;
 import com.hungteen.pvz.common.entity.drop.SunEntity;
 import com.hungteen.pvz.common.entity.plant.PVZPlantEntity;
 import com.hungteen.pvz.common.entity.plant.enforce.SquashEntity;
+import com.hungteen.pvz.common.entity.plant.magic.HypnoShroomEntity;
 import com.hungteen.pvz.common.entity.plant.spear.SpikeWeedEntity;
 import com.hungteen.pvz.common.entity.zombie.body.ZombieDropBodyEntity;
 import com.hungteen.pvz.common.entity.zombie.body.ZombieDropBodyEntity.BodyType;
@@ -110,7 +111,6 @@ public abstract class PVZZombieEntity extends MonsterEntity implements IPVZZombi
 	public static final int RISING_CD = 30;
 	protected boolean needRising = false;
 	public boolean canCollideWithZombie = true;
-	protected boolean hasDirectDefence = false;
 	protected boolean canSpawnDrop = true;
 	protected boolean canBeCold = true;
 	protected boolean canBeFrozen = true;
@@ -252,6 +252,7 @@ public abstract class PVZZombieEntity extends MonsterEntity implements IPVZZombi
 		this.getAttribute(Attributes.MOVEMENT_SPEED).setBaseValue(ZombieUtil.WALK_NORMAL);
 		this.getAttribute(Attributes.KNOCKBACK_RESISTANCE).setBaseValue(1D);
 		EntityUtil.setLivingMaxHealthAndHeal(this, this.getLife());
+		this.setDefenceLife(this.getExtraLife());
 		this.onLevelChanged();
 	}
 
@@ -356,9 +357,7 @@ public abstract class PVZZombieEntity extends MonsterEntity implements IPVZZombi
 		this.setMiniZombie(true);
 		final float healthDec = 0.6F;
 		EntityUtil.setLivingMaxHealthAndHeal(this, this.getMaxHealth() * healthDec);
-		if (this.hasDirectDefence) {
-			this.setDefenceLife(this.getDefenceLife() * healthDec);
-		}
+		this.setDefenceLife(this.getDefenceLife() * healthDec);
 		this.addEffect(new EffectInstance(Effects.MOVEMENT_SPEED, 1000000, 0, false, false));
 		this.addEffect(new EffectInstance(Effects.DAMAGE_BOOST, 1000000, 0, false, false));
 	}
@@ -862,10 +861,6 @@ public abstract class PVZZombieEntity extends MonsterEntity implements IPVZZombi
 		return false;
 	}
 	
-	public boolean hasDefence() {
-		return this.hasDirectDefence;
-	}
-	
 	/**
 	 * check can run {@link #normalZombieTick()} or not.
 	 */
@@ -924,6 +919,7 @@ public abstract class PVZZombieEntity extends MonsterEntity implements IPVZZombi
 
 	/**
 	 * when zombie turn to oppsite charm state charm -> uncharm or uncharm -> charm.
+	 * {@link HypnoShroomEntity#die(DamageSource)}
 	 */
 	@Override
 	public void onCharmedBy(LivingEntity entity) {
@@ -939,6 +935,13 @@ public abstract class PVZZombieEntity extends MonsterEntity implements IPVZZombi
 			this.setZombieType(Type.NORMAL);
 			this.dropEnergy();
 		}
+	}
+	
+	public void healZombie(float health) {
+		final float need1 = this.getMaxHealth() - this.getHealth(); 
+		this.heal(Math.min(need1, health));
+		health -= need1;
+		this.setDefenceLife(Math.max(this.getExtraLife(), this.getDefenceLife() + health));
 	}
 	
 	@Override
@@ -1029,18 +1032,23 @@ public abstract class PVZZombieEntity extends MonsterEntity implements IPVZZombi
 		return EntityUtil.isEntityCold(this) || EntityUtil.isEntityFrozen(this);
 	}
 	
+	@Override
+	public float getExtraLife() {
+		return 0;
+	}
+	
 	/**
 	 * get current health of zombie(contain its defence health).
 	 */
 	public float getCurrentHealth() {
-		return this.hasDirectDefence ? this.getDefenceLife() + this.getHealth() : this.getHealth();
+		return this.getDefenceLife() + this.getHealth();
 	}
 
 	/**
 	 * get current max health of zombie(contain defence health).
 	 */
 	public float getCurrentMaxHealth() {
-		return this.hasDirectDefence ? this.getDefenceLife() + this.getMaxHealth() : this.getMaxHealth();
+		return this.getDefenceLife() + this.getMaxHealth();
 	}
 	
 	@Override

@@ -316,6 +316,14 @@ public class PlantUtil {
 		return null;
 	}
 	
+	public static int getPlantAverageProgress(PVZPlantEntity plant, int from, int to) {
+		return MathUtil.getProgressAverage(plant.getPlantLvl(), MAX_PLANT_LEVEL, from, to);
+	}
+	
+	public static float getPlantAverageProgress(PVZPlantEntity plant, float from, float to) {
+		return MathUtil.getProgressAverage(plant.getPlantLvl(), MAX_PLANT_LEVEL, from, to);
+	}
+	
 	/**
 	 * copy data from p1 to p2
 	 */

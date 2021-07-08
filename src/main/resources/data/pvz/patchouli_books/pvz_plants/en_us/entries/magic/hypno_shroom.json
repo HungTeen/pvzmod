@@ -1,0 +1,22 @@
+{
+    "name": "Hypno Shroom",
+    "icon": "pvz:hypno_shroom_card",
+    "category": "pvz:magic",
+    "pages": [
+        {
+            "type": "text",
+            "text": "$(bgreen)Hypno Shroom$() asserts that Zombies are our friends, and they are badly misunderstood creatures who play a valuable role in our ecology. We should do more to bring them round to our way of thinking.$(br)$(byellow)Sun Cost$() : $(l)75$()$(br)$(bblue)Recharge$() : $(l)Little Slow$()$(br)$(l)Features$() : It is a $(l)passive$() plant that works when $(l)eaten by equal or lower level zombie$(), and hypno it as yours."
+        },
+        {
+            "type": "entity",
+            "entity": "pvz:hypno_shroom",
+            "scale": 0.65,
+            "text": "Appearance"
+        },
+        {
+            "type": "text",
+            "text": "$(bgreen)Plant Food :$() The one who ate it will be removed and it will $(bred)summon a gargantuar$() to help you."
+        }
+    ],
+    "sortnum": 0
+}

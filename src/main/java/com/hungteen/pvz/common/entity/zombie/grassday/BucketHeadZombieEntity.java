@@ -16,17 +16,19 @@ import net.minecraft.world.World;
 
 public class BucketHeadZombieEntity extends NormalZombieEntity implements IHasMetal{
 
-	private static final float BUCKET_HEALTH = 110;
-	
 	public BucketHeadZombieEntity(EntityType<? extends MonsterEntity> type, World worldIn) {
 		super(type, worldIn);
-		this.hasDirectDefence = true;
 		this.increaseMetal();
 	}
 	
 	@Override
 	public float getLife() {
 		return 20;
+	}
+	
+	@Override
+	public float getExtraLife() {
+		return 110;
 	}
 	
 	@Override
@@ -41,7 +43,7 @@ public class BucketHeadZombieEntity extends NormalZombieEntity implements IHasMe
 
 	@Override
 	public void increaseMetal() {
-		this.setDefenceLife(BUCKET_HEALTH);
+		this.setDefenceLife(this.getExtraLife());
 	}
 	
 	/**
@@ -49,7 +51,7 @@ public class BucketHeadZombieEntity extends NormalZombieEntity implements IHasMe
 	 * {@link BucketHeadZombieModel#updateFreeParts(BucketHeadZombieEntity)}
 	 */
 	public boolean hasBucketHead(int stage) {
-		final float percent = this.getDefenceLife() / BUCKET_HEALTH;
+		final float percent = this.getDefenceLife() / this.getExtraLife();
 		if(stage == 3) {
 			return percent > 2.0f / 3;
 		} else if(stage == 2) {

@@ -78,7 +78,7 @@ public class PVZLivingEvents {
 		float amount = ev.getAmount();
 		if(ev.getEntityLiving() instanceof PVZZombieEntity) {// zombie defence hit
 			PVZZombieEntity zombie = (PVZZombieEntity) ev.getEntityLiving();
-			if(zombie.hasDefence() && zombie.getDefenceLife() > 0) {
+			if(zombie.getDefenceLife() > 0) {
 				if(zombie.getDefenceLife() > amount) {
 				    zombie.setDefenceLife(zombie.getDefenceLife() - amount);
 				    amount = 0;

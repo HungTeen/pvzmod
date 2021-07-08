@@ -1,0 +1,22 @@
+{
+    "name": "Grave Buster",
+    "icon": "pvz:grave_buster_card",
+    "category": "pvz:assist",
+    "pages": [
+        {
+            "type": "text",
+            "text": "$(bgreen)Grave Buster$() wants everyone to know that it loves kittens and spends its off hours volunteering at a local zombie rehabilitation center, $(m)despite its fearsome appearance$().$(br)$(byellow)Sun Cost$() : $(l)75$()$(br)$(bblue)Recharge$() : $(l)Very Fast$()$(br)$(l)Features$() : It is a $(l)close-kill$() plant that can eat and $(bred)destroy several TombStones nearby 5 blocks$()."
+        },
+        {
+            "type": "entity",
+            "entity": "pvz:grave_buster",
+            "scale": 0.65,
+            "text": "Appearance"
+        },
+        {
+            "type": "text",
+            "text": "$(bgreen)Plant Food :$() It will summon $(l)several GraveBusters$() to eat TombStones."
+        }
+    ],
+    "sortnum": 0
+}

@@ -163,7 +163,6 @@ public class AlmanacScreen extends AbstractOptionScreen<AlmanacContainer> {
 			}
 			case GRAVE_BUSTER:{
 				GraveBusterEntity graveBuster = (GraveBusterEntity) plantEntity;
-				this.drawProperty(stack, Properties.ATTACK_CD, graveBuster.getAttackCD());
 				this.drawProperty(stack, Properties.KILL_COUNT, graveBuster.getMaxKillCnt());
 				break;
 			}

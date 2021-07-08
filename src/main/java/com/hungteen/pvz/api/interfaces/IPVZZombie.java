@@ -7,6 +7,8 @@ public interface IPVZZombie extends IHasOwner, IGroupEntity, ICanCharm, ICanAttr
     
 	float getLife();
 	
+	float getExtraLife();
+	
 	Zombies getZombieEnumName();
 	
 	Ranks getZombieRank();

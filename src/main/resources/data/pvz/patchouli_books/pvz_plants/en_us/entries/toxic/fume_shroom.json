@@ -1,0 +1,22 @@
+{
+    "name": "Fume Shroom",
+    "icon": "pvz:fume_shroom_card",
+    "category": "pvz:toxic",
+    "pages": [
+        {
+            "type": "text",
+            "text": "$(bgreen)Fume Shroom$() was producing yeast spores for a bakery before, until it heard about a great opportunity blasting zombies. Now it's really making a difference.$(br)$(byellow)Sun Cost$() : $(l)100$()$(br)$(bblue)Recharge$() : $(l)Little Fast$()$(br)$(l)Features$() : It is a $(l)medium range attack$() plant that shoots $(bred)fume$() every 1.5 seconds to attack enemy. Fume can $()hits through all enemies$(). $(bred)It will sleep at daytime$()."
+        },
+        {
+            "type": "entity",
+            "entity": "pvz:fume_shroom",
+            "scale": 0.65,
+            "text": "Appearance"
+        },
+        {
+            "type": "text",
+            "text": "$(bgreen)Plant Food :$() It will shoot $(l)fume each tick$() which last several seconds."
+        }
+    ],
+    "sortnum": 1
+}

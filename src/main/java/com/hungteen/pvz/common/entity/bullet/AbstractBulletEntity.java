@@ -53,7 +53,6 @@ public abstract class AbstractBulletEntity extends AbstractOwnerEntity {
 	 */
 	public void tick() {
 		super.tick();
-		if(this.tickCount % 20 == 0)
 		if (! level.isClientSide && this.tickCount >= this.getMaxLiveTick()) {
 			this.remove();
 		}

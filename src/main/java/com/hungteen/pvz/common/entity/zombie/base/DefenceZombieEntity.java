@@ -18,7 +18,6 @@ public abstract class DefenceZombieEntity extends PVZZombieEntity implements IMu
 	
 	public DefenceZombieEntity(EntityType<? extends MonsterEntity> type, World worldIn) {
 		super(type, worldIn);
-		this.setDefenceLife(this.getPartLife());
 		resetParts();
 	}
 	
@@ -79,6 +78,11 @@ public abstract class DefenceZombieEntity extends PVZZombieEntity implements IMu
 	}
 	
     public abstract float getPartLife();
+    
+    @Override
+    public float getExtraLife() {
+    	return this.getPartLife();
+    }
 	
 	protected float getPartHeightOffset() {
 		if(this.isMiniZombie()) return 0.1F;

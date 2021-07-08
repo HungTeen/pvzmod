@@ -14,12 +14,8 @@ import net.minecraft.world.World;
 
 public class ConeHeadZombieEntity extends NormalZombieEntity{
 
-	private static final float CONE_HEALTH = 40;
-	
 	public ConeHeadZombieEntity(EntityType<? extends MonsterEntity> type, World worldIn) {
 		super(type, worldIn);
-		this.hasDirectDefence = true;
-		this.setDefenceLife(CONE_HEALTH);
 	}
 	
 	@Override
@@ -27,12 +23,17 @@ public class ConeHeadZombieEntity extends NormalZombieEntity{
 		return 20;
 	}
 	
+	@Override
+	public float getExtraLife() {
+		return 40;
+	}
+	
 	/**
 	 * check the visibility of conehead model.
 	 * {@link ConeHeadZombieModel#updateFreeParts(ConeHeadZombieEntity)} 
 	 */
 	public boolean hasConeHead(int stage) {
-		final float percent = this.getDefenceLife() / CONE_HEALTH;
+		final float percent = this.getDefenceLife() / this.getExtraLife();
 		if(stage == 3) {
 			return percent > 2.0f / 3;
 		} else if(stage == 2) {
