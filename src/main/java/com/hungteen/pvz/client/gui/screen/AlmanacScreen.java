@@ -189,7 +189,6 @@ public class AlmanacScreen extends AbstractOptionScreen<AlmanacContainer> {
 			case DOOM_SHROOM:{
 				DoomShroomEntity doomShroom = (DoomShroomEntity) plantEntity;
 				this.drawProperty(stack, Properties.ATTACK_DAMAGE, doomShroom.getAttackDamage());
-				this.drawProperty(stack, Properties.ATTACK_RANGE, doomShroom.getAttackRange());
 				break;
 			}
 			case LILY_PAD:{

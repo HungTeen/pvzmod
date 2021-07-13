@@ -68,6 +68,7 @@ import net.minecraftforge.fml.network.PacketDistributor.TargetPoint;
 public class EntityUtil {
 
 	public static final Random RAND = new Random();
+	public static final float LIMITED_DAMAGE = 100;
 	
 	public static Vector3d getNormalisedVector2d(@Nonnull Entity a, @Nonnull Entity b) {
 		final double dx = b.getX() - a.getX();
@@ -154,37 +155,36 @@ public class EntityUtil {
 	
 	/**
 	 * get how many health the target has currently.
+	 * {@link #getCurrentDefenceHealth(LivingEntity)}
 	 */
 	public static float getCurrentHealth(LivingEntity target) {
-		if(target instanceof PVZZombieEntity) {
-			return ((PVZZombieEntity) target).getCurrentHealth();
-		} else if(target instanceof PVZPlantEntity) {
-			return ((PVZPlantEntity) target).getCurrentHealth();
+		if(target instanceof IPVZZombie) {
+			return ((IPVZZombie) target).getCurrentHealth();
+		}
+		if(target instanceof IPVZPlant) {
+			return ((IPVZPlant) target).getCurrentHealth();
 		}
 		return target.getHealth();
 	}
 	
 	/**
-	 * entity's defence health.
+	 * get entity's defence health.
+	 * use to show on jade mod.
 	 * {@link PVZEntityProvider}
 	 */
 	public static float getCurrentDefenceHealth(LivingEntity entity) {
-		if(entity instanceof PVZZombieEntity) {
-			return ((PVZZombieEntity) entity).getDefenceLife();
-		} else if(entity instanceof PVZPlantEntity) {
-			return ((PVZPlantEntity) entity).getCurrentDefenceHealth();
-		}
-		return 0;
+		return getCurrentHealth(entity) - entity.getHealth();
 	}
 	
 	/**
 	 * get the max health the target has currently.
 	 */
 	public static float getCurrentMaxHealth(LivingEntity target) {
-		if(target instanceof PVZZombieEntity) {
-			return ((PVZZombieEntity) target).getCurrentMaxHealth();
-		} else if(target instanceof PVZPlantEntity) {
-			return ((PVZPlantEntity) target).getCurrentMaxHealth();
+		if(target instanceof IPVZZombie) {
+			return ((IPVZZombie) target).getCurrentMaxHealth();
+		}
+		if(target instanceof IPVZPlant) {
+			return ((IPVZPlant) target).getCurrentMaxHealth();
 		}
 		return target.getMaxHealth();
 	}
@@ -193,15 +193,8 @@ public class EntityUtil {
 		return getMaxHealthDamage(target, 1);
 	}
 	
-	/**
-	 * avoid high damage to other mods.
-	 */
 	public static float getMaxHealthDamage(LivingEntity target, float multiple) {
-		float damage = EntityUtil.getCurrentMaxHealth((LivingEntity) target) * multiple;
-		if(isEntityBoss(target)) {
-			damage = Math.min(100, damage);
-		}
-		return damage;
+		return EntityUtil.getCurrentMaxHealth(target) * multiple;
 	}
 	
 	/**

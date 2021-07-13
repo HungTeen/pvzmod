@@ -36,22 +36,26 @@ public class HypnoShroomEntity extends PVZPlantEntity {
 						cause.getEntity().remove();
 						GargantuarEntity gar = EntityRegister.GARGANTUAR.get().create(level);
 						EntityUtil.onEntitySpawn(level, gar, cause.getEntity().blockPosition());
-						this.perfromCharmTo(gar, this.getSummonHealth());
+						this.perfromCharmTo(gar);
 						gar.setZombieType(Type.NORMAL);
+						gar.setHealth(gar.getMaxHealth() * this.getSummonHealth());
 						gar.setCharmed(! this.isCharmed());
 					}
 				} else {
 					if(cause.getEntity() instanceof PVZZombieEntity) {
 					    PVZZombieEntity zombie = (PVZZombieEntity) cause.getEntity();
-					    zombie.onCharmedBy(this);
-					    this.perfromCharmTo(zombie, this.getHealHealth());
+					    if(zombie.getZombieLevel() <= this.getPlantLvl()) {
+					        zombie.onCharmedBy(this);
+					        zombie.healZombie(EntityUtil.getCurrentMaxHealth(zombie) * this.getHealHealth());
+					        this.perfromCharmTo(zombie);
+					    }
 				    }
 				}
 			}
 		}
 	}
 	
-	protected void perfromCharmTo(PVZZombieEntity zombie, float percent) {
+	protected void perfromCharmTo(PVZZombieEntity zombie) {
 		EntityUtil.playSound(this, SoundRegister.CHARM.get());
 		zombie.updateZombieLevel(Math.min(ZombieUtil.MAX_ZOMBIE_LEVEL, this.getPlantLvl()));
 	}

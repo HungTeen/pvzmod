@@ -12,6 +12,8 @@ import com.hungteen.pvz.register.EffectRegister;
 import com.hungteen.pvz.register.ParticleRegister;
 import com.hungteen.pvz.register.SoundRegister;
 import com.hungteen.pvz.utils.EntityUtil;
+import com.hungteen.pvz.utils.MathUtil;
+import com.hungteen.pvz.utils.PlantUtil;
 import com.hungteen.pvz.utils.enums.Plants;
 
 import net.minecraft.entity.CreatureEntity;
@@ -34,9 +36,10 @@ public class IceShroomEntity extends PlantBomberEntity implements IIceEffect{
 
 	@Override
 	public void startBomb(boolean server) {
-		if(! this.level.isClientSide) {
-			float len = getAttackRange();
-			AxisAlignedBB aabb=EntityUtil.getEntityAABB(this, len, len);
+		if(server) {
+			//frozen enemies.
+			final float len = getAttackRange();
+			final AxisAlignedBB aabb = EntityUtil.getEntityAABB(this, len, len);
 			int cnt = 0;
 			for(LivingEntity entity : EntityUtil.getTargetableLivings(this, aabb)) {
 				 PVZDamageSource source = PVZDamageSource.causeIceDamage(this, this);
@@ -47,11 +50,18 @@ public class IceShroomEntity extends PlantBomberEntity implements IIceEffect{
 					 ++ cnt;
 				 }
 			}
-			PlayerEntity player = EntityUtil.getEntityOwner(level, this);
+			EntityUtil.playSound(this, SoundRegister.ZOMBIE_FROZEN.get());
+			//trigger advancement.
+			final PlayerEntity player = EntityUtil.getEntityOwner(level, this);
 			if(player != null && player instanceof ServerPlayerEntity) {
 				EntityEffectAmountTrigger.INSTANCE.trigger((ServerPlayerEntity) player, this, cnt);
 			}
-			EntityUtil.playSound(this, SoundRegister.ZOMBIE_FROZEN.get());
+			//kill flame ball.
+			level.getEntitiesOfClass(ElementBallEntity.class, aabb.inflate(10), target -> {
+				return EntityUtil.checkCanEntityBeAttack(this, target) && target.getElementBallType() == ElementTypes.FLAME;
+			}).forEach(target -> {
+				target.onKilledByPlants(this);
+			});
 		} else {
 			for(int i = 0;i < 3; ++ i) {
 		        this.level.addParticle(ParticleTypes.EXPLOSION, this.getX(), this.getY(), this.getZ(), 0, 0, 0);
@@ -59,21 +69,6 @@ public class IceShroomEntity extends PlantBomberEntity implements IIceEffect{
 		    for(int i = 0; i < 15; ++ i) {
 			    this.level.addParticle(ParticleRegister.SNOW_FLOWER.get(), this.getX(), this.getY(), this.getZ(), (this.getRandom().nextFloat() - 0.5f) / 4, this.getRandom().nextFloat() / 5, (this.getRandom().nextFloat() - 0.5f) / 4);
 		    }
-		}
-		this.killFireBall();
-	}
-	
-	/**
-	 * kill zomboss fireball
-	 */
-	private void killFireBall() {
-		if(! level.isClientSide) {
-			float range = this.getAttackRange() + 10F;
-			level.getEntitiesOfClass(ElementBallEntity.class, EntityUtil.getEntityAABB(this, range, range), (target) -> {
-				return target.getElementBallType() == ElementTypes.FLAME;
-			}).forEach((target) -> {
-				target.onKilledByPlants(this);
-			});
 		}
 	}
 
@@ -83,58 +78,34 @@ public class IceShroomEntity extends PlantBomberEntity implements IIceEffect{
 	}
 	
 	public float getAttackDamage() {
-		int lvl = this.getPlantLvl();
-		if(lvl <= 20) {
-			return 0.5f * lvl;
-		}
-		return 10f;
+		final int lvl = this.getPlantLvl();
+		return lvl <= 20 ? 0.1F * lvl : 10F;
 	}
 	
 	public float getAttackRange() {
-		if(this.isPlantInStage(1)) return 10;
-		if(this.isPlantInStage(2)) return 15;
-		return 20;
+		return this.isPlantInStage(1) ? 20 : this.isPlantInStage(2) ? 25 : 30;
 	}
 	
 	@Override
 	public EntitySize getDimensions(Pose poseIn) {
 		return EntitySize.scalable(0.85f, 1.35f);
 	}
-
-	@Override
-	public Optional<EffectInstance> getColdEffect() {
-		int lvl = this.getPlantLvl();
-		int amount = 0;
-		if(lvl > 4 && lvl <= 20) {
-			amount = (lvl <= 8 ? 5 : (lvl <= 16 ? 6 : 7));
-		}
-		return Optional.ofNullable(new EffectInstance(EffectRegister.COLD_EFFECT.get(), this.getColdTick() + this.getFrozenTick(), amount, false, false));
-	}
 	
 	public int getColdLvl() {
-		int lvl = this.getPlantLvl();
-		if(lvl <= 20) {
-			int now = (lvl - 1) / 4;
-			return 3 + now;
-		}
-		return 7;
+		return MathUtil.getProgressByDif(4, 1, this.getPlantLvl(), PlantUtil.MAX_PLANT_LEVEL, 3, 7);
 	}
 	
 	public int getColdTick() {
-		int lvl = this.getPlantLvl();
-		if(lvl <= 20) {
-			return 5 * lvl;
-		}
-		return 100;
+		return PlantUtil.getPlantAverageProgress(this, 0, 200);
 	}
 	
 	public int getFrozenTick() {
-		int lvl = this.getPlantLvl();
-		int time = 240;
-		if(lvl <= 20) {
-			time = 93 + 7 * lvl;
-		}
-		return time;
+		return PlantUtil.getPlantAverageProgress(this, 100, 240);
+	}
+	
+	@Override
+	public Optional<EffectInstance> getColdEffect() {
+		return Optional.ofNullable(new EffectInstance(EffectRegister.COLD_EFFECT.get(), this.getColdTick() + this.getFrozenTick(), this.getColdLvl(), false, false));
 	}
 
 	@Override

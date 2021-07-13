@@ -14,5 +14,11 @@ public class IceShroomRender extends PVZPlantRender<IceShroomEntity>{
 	public IceShroomRender(EntityRendererManager rendererManager) {
 		super(rendererManager, new IceShroomModel(), 0.5f);
 	}
+	
+	@Override
+	public float getScaleByEntity(IceShroomEntity entity) {
+		final float plus = entity.getAttackTime() * 1F / entity.getReadyTime();
+		return super.getScaleByEntity(entity) + plus * 0.15F;
+	}
 
 }

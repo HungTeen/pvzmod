@@ -21,8 +21,6 @@ import net.minecraft.world.World;
 
 public class CherryBombEntity extends PlantBomberEntity{
 
-	private static final float BOMB_RANGE = 3.5F;
-	
 	public CherryBombEntity(EntityType<? extends CreatureEntity> type, World worldIn) {
 		super(type, worldIn);
 	}
@@ -31,7 +29,8 @@ public class CherryBombEntity extends PlantBomberEntity{
 	public void startBomb(boolean server) {
 		if(server) {
 			int deathCnt = 0;
-			for(Entity target : EntityUtil.getTargetableEntitiesIngoreCheck(this, EntityUtil.getEntityAABB(this, BOMB_RANGE, BOMB_RANGE))) {
+			final float range = 4.5F;
+			for(Entity target : EntityUtil.getTargetableEntitiesIngoreCheck(this, EntityUtil.getEntityAABB(this, range, range))) {
 				target.hurt(PVZDamageSource.causeExplosionDamage(this, this), this.getAttackDamage());
 				if(! EntityUtil.isEntityValid(target)) {
 					++ deathCnt;

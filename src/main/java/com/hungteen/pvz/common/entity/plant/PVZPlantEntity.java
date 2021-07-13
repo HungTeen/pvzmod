@@ -713,14 +713,17 @@ public abstract class PVZPlantEntity extends CreatureEntity implements IPVZPlant
 	
 	/**
 	 * get plant's defence life.
+	 * {@link #getCurrentHealth()}
+	 * {@link #getCurrentMaxHealth()}
 	 */
-	public float getCurrentDefenceHealth() {
+	protected float getCurrentDefenceHealth() {
 		return this.getPumpkinLife();
 	}
 	
 	/**
 	 * the total health of plants include defence health. 
 	 */
+	@Override
 	public float getCurrentHealth() {
 		return this.getHealth() + this.getCurrentDefenceHealth();
 	}
@@ -728,6 +731,7 @@ public abstract class PVZPlantEntity extends CreatureEntity implements IPVZPlant
 	/**
 	 * the total max health of plants include defence health. 
 	 */
+	@Override
 	public float getCurrentMaxHealth() {
 		return this.getMaxHealth() + this.getCurrentDefenceHealth();
 	}

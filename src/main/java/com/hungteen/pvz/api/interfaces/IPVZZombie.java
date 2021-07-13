@@ -1,5 +1,6 @@
 package com.hungteen.pvz.api.interfaces;
 
+import com.hungteen.pvz.utils.EntityUtil;
 import com.hungteen.pvz.utils.enums.Ranks;
 import com.hungteen.pvz.utils.enums.Zombies;
 
@@ -8,6 +9,18 @@ public interface IPVZZombie extends IHasOwner, IGroupEntity, ICanCharm, ICanAttr
 	float getLife();
 	
 	float getExtraLife();
+	
+	/**
+	 * how many health does zombie has.
+	 * {@link EntityUtil#getCurrentHealth(net.minecraft.entity.LivingEntity)}
+	 */
+	float getCurrentHealth();
+	
+	/**
+	 * how many max health does zombie have currently.
+	 * {@link EntityUtil#getCurrentMaxHealth(net.minecraft.entity.LivingEntity)}
+	 */
+	float getCurrentMaxHealth();
 	
 	Zombies getZombieEnumName();
 	
@@ -30,4 +43,5 @@ public interface IPVZZombie extends IHasOwner, IGroupEntity, ICanCharm, ICanAttr
 	boolean canBeCold();
 	
 	boolean canBeStealByBungee();
+	
 }

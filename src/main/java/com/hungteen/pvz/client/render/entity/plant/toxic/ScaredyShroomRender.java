@@ -18,9 +18,12 @@ public class ScaredyShroomRender extends PVZPlantRender<ScaredyShroomEntity>{
 
 	@Override
 	public Vector3d getTranslateVec(ScaredyShroomEntity entity) {
-		double percent = entity.getScareTime() * 1.0 / ScaredyShroomEntity.ANIM_TIME;
-		double change = 1.38;
-		return new Vector3d(0, change * percent, 0);
+		if(entity.isScared()) {
+			final double percent = entity.getScareTime() * 1.0 / ScaredyShroomEntity.SCARE_ANIM_CD;
+		    final double change = 1.38;
+		    return new Vector3d(0, change * percent, 0);
+		}
+		return super.getTranslateVec(entity);
 	}
 	
 }

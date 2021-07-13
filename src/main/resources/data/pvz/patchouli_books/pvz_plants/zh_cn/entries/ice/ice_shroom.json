@@ -1,0 +1,22 @@
+{
+    "name": "寒冰菇",
+    "icon": "pvz:ice_shroom_card",
+    "category": "pvz:ice",
+    "pages": [
+        {
+            "type": "text",
+            "text": "$(bgreen)寒冰菇$()皱起眉头，并不是因为他不高兴，而是由于儿时的一次受伤造成了面瘫。$(br)$(byellow)阳光消耗$() : $(l)75$()$(br)$(bblue)冷却$() : $(l)慢$()$(br)$(l)特点$() : 它是一个$(l)速杀型$()植物，种植后会$(baqua)冰冻以及寒冷$()周围大范围的所有敌人。$(bred)它白天会睡觉$()。"
+        },
+        {
+            "type": "entity",
+            "entity": "pvz:ice_shroom",
+            "scale": 0.65,
+            "text": "外观"
+        },
+        {
+            "type": "text",
+            "text": "$(bgreen)能量豆大招$() : 它会每tick发射$(l)多个寒冰豌豆$()，持续5秒。"
+        }
+    ],
+    "sortnum": 1
+}

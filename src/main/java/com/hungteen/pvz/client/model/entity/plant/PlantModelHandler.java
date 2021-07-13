@@ -18,6 +18,7 @@ import com.hungteen.pvz.client.model.entity.plant.arma.MelonPultModel;
 import com.hungteen.pvz.client.model.entity.plant.assist.BloverModel;
 import com.hungteen.pvz.client.model.entity.plant.assist.GoldMagnetModel;
 import com.hungteen.pvz.client.model.entity.plant.assist.GraveBusterModel;
+import com.hungteen.pvz.client.model.entity.plant.assist.LilyPadModel;
 import com.hungteen.pvz.client.model.entity.plant.assist.MagnetShroomModel;
 import com.hungteen.pvz.client.model.entity.plant.defence.GarlicModel;
 import com.hungteen.pvz.client.model.entity.plant.defence.PumpkinModel;
@@ -88,8 +89,8 @@ public class PlantModelHandler {
 		putModel(Plants.SCAREDY_SHROOM, ScaredyShroomModel::new);
 		putModel(Plants.ICE_SHROOM, IceShroomModel::new);
 		putModel(Plants.DOOM_SHROOM, DoomShroomModel::new);
-		//pool day(no lily pad)
-//		putModel(Plants.LILY_PAD, PeaShooterModel::new);
+		//pool day
+		putModel(Plants.LILY_PAD, LilyPadModel::new);
 		putModel(Plants.SQUASH, SquashModel::new);
 		putModel(Plants.THREE_PEATER, ThreePeaterModel::new);
 		putModel(Plants.TANGLE_KELP, TangleKelpModel::new);

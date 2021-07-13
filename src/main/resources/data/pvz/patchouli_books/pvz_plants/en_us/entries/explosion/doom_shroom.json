@@ -1,0 +1,22 @@
+{
+    "name": "Doom Shroom",
+    "icon": "pvz:doom_shroom_card",
+    "category": "pvz:explosion",
+    "pages": [
+        {
+            "type": "text",
+            "text": "$(bgreen)Doom Shroom$() thinks you're lucky on its side, because it could destroy everything you hold dear. It wouldn't be hard.$(br)$(byellow)Sun Cost$() : $(l)250$()$(br)$(bblue)Recharge$() : $(l)Super Slow$()$(br)$(l)Features$() : It is a $(l)instant-kill$() plant, which will make a $(bred)high explosion damage$() to all enemies in $(l)21 * 21$() area after planted. $(bred)It will sleep at daytime$()."
+        },
+        {
+            "type": "entity",
+            "entity": "pvz:doom_shroom",
+            "scale": 0.5,
+            "text": "Appearance"
+        },
+        {
+            "type": "text",
+            "text": "$(bgreen)Plant Food :$() Not Available."
+        }
+    ],
+    "sortnum": 2
+}

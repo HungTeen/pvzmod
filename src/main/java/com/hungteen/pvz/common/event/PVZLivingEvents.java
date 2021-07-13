@@ -2,17 +2,15 @@ package com.hungteen.pvz.common.event;
 
 import com.hungteen.pvz.PVZMod;
 import com.hungteen.pvz.common.capability.CapabilityHandler;
+import com.hungteen.pvz.common.enchantment.TreeProtectionEnchantment;
 import com.hungteen.pvz.common.entity.plant.magic.StrangeCatEntity;
 import com.hungteen.pvz.common.entity.zombie.PVZZombieEntity;
 import com.hungteen.pvz.common.event.handler.LivingEventHandler;
 import com.hungteen.pvz.common.event.handler.PlayerEventHandler;
 import com.hungteen.pvz.common.misc.damage.PVZDamageSource;
-import com.hungteen.pvz.register.EnchantmentRegister;
 import com.hungteen.pvz.utils.EntityUtil;
-import com.hungteen.pvz.utils.ZombieUtil;
 import com.hungteen.pvz.utils.enums.Resources;
 
-import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraftforge.event.entity.living.LivingDamageEvent;
 import net.minecraftforge.event.entity.living.LivingDeathEvent;
@@ -55,41 +53,18 @@ public class PVZLivingEvents {
 	@SubscribeEvent
 	public static void onLivingHurt(LivingHurtEvent ev) {
 		if(! ev.getEntityLiving().level.isClientSide) {
-			ev.getEntityLiving().getArmorSlots().forEach((stack) -> {
-				if(EnchantmentHelper.getItemEnchantmentLevel(EnchantmentRegister.TREE_PROTECTION.get(), stack) > 0){
-					float amount = ev.getAmount();
-					amount = Math.min(amount, ev.getEntityLiving().getMaxHealth());
-					ev.setAmount(amount);
-					return ;
-				}
-		    });
+			TreeProtectionEnchantment.handleTreeProtection(ev);
 			if(ev.getSource() instanceof PVZDamageSource) {
 				ev.getEntityLiving().invulnerableTime = 0;
 				LivingEventHandler.handleHurtEffects(ev.getEntityLiving(), (PVZDamageSource) ev.getSource());
 			}
-			if(! ev.getEntity().canChangeDimensions() && ev.getAmount() > ev.getEntityLiving().getMaxHealth()) {
-				ev.setAmount(Math.min(ev.getAmount(), ZombieUtil.HUGE_HIGH));
-			}
+			LivingEventHandler.handleHurtDamage(ev);
 		}
 	}
 	
 	@SubscribeEvent
 	public static void onLivingDamage(LivingDamageEvent ev) {
-		float amount = ev.getAmount();
-		if(ev.getEntityLiving() instanceof PVZZombieEntity) {// zombie defence hit
-			PVZZombieEntity zombie = (PVZZombieEntity) ev.getEntityLiving();
-			if(zombie.getDefenceLife() > 0) {
-				if(zombie.getDefenceLife() > amount) {
-				    zombie.setDefenceLife(zombie.getDefenceLife() - amount);
-				    amount = 0;
-				} else {
-			        amount -= zombie.getDefenceLife();
-					zombie.setDefenceLife(0);
-				}
-				if(amount == 0) amount = 0.00001F;
-			}
-		}
-		ev.setAmount(amount);
+		PVZZombieEntity.damageZombieDefence(ev);
 	}
 	
 }

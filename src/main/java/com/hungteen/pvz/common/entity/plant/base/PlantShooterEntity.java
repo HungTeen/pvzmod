@@ -224,7 +224,8 @@ public abstract class PlantShooterEntity extends PVZPlantEntity implements IShoo
 			}
 			this.target = this.shooter.getTarget();
 			if(! this.checkTarget()) {//can not shoot because of its target.
-				this.stop();
+				this.target = null;
+				this.shooter.setTarget(null);
 				return false;
 			}
 			return true;
@@ -237,9 +238,7 @@ public abstract class PlantShooterEntity extends PVZPlantEntity implements IShoo
 		
 		@Override
 		public void stop() {
-			this.target = null;
 			this.shooter.setShootTick(0);
-			this.shooter.setTarget(null);
 		}
 
 		@Override

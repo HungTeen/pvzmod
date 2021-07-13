@@ -16,6 +16,7 @@ public class ConeHeadZombieEntity extends NormalZombieEntity{
 
 	public ConeHeadZombieEntity(EntityType<? extends MonsterEntity> type, World worldIn) {
 		super(type, worldIn);
+		this.hasDirectDefence = true;
 	}
 	
 	@Override

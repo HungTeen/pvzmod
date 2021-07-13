@@ -88,7 +88,7 @@ public abstract class PlantDefenderEntity extends PVZPlantEntity implements IDef
 	}
 	
 	@Override
-	public float getCurrentDefenceHealth() {
+	protected float getCurrentDefenceHealth() {
 		return super.getCurrentDefenceHealth() + this.getDefenceLife();
 	}
 	

@@ -61,8 +61,8 @@ public class PlantUtil {
 		putPlantInfoToMap(Plants.HYPNO_SHROOM, 75, CDs.SLOW, Ranks.BLUE, Essences.MAGIC, EntityRegister.HYPNO_SHROOM, ItemRegister.HYPNO_SHROOM_CARD, ItemRegister.HYPNO_SHROOM_ENJOY_CARD);
 		putPlantInfoToMap(Plants.SCAREDY_SHROOM, 25, CDs.FAST, Ranks.GRAY, Essences.TOXIC, EntityRegister.SCAREDY_SHROOM, ItemRegister.SCAREDY_SHROOM_CARD, ItemRegister.SCAREDY_SHROOM_ENJOY_CARD);
 		putPlantInfoToMap(Plants.ICE_SHROOM, 75, CDs.VERY_SLOW, Ranks.BLUE, Essences.ICE, EntityRegister.ICE_SHROOM, ItemRegister.ICE_SHROOM_CARD, ItemRegister.ICE_SHROOM_ENJOY_CARD);
-		putPlantInfoToMap(Plants.DOOM_SHROOM, 125, CDs.SUPER_SLOW, Ranks.GOLD, Essences.EXPLOSION, EntityRegister.DOOM_SHROOM, ItemRegister.DOOM_SHROOM_CARD, ItemRegister.DOOM_SHROOM_ENJOY_CARD);
-		putPlantInfoToMap(Plants.LILY_PAD, 25, CDs.SUPER_FAST, Ranks.GRAY, Essences.ASSIST, null, ItemRegister.LILY_PAD_CARD, ItemRegister.LILY_PAD_ENJOY_CARD);
+		putPlantInfoToMap(Plants.DOOM_SHROOM, 250, CDs.SUPER_SLOW, Ranks.GOLD, Essences.EXPLOSION, EntityRegister.DOOM_SHROOM, ItemRegister.DOOM_SHROOM_CARD, ItemRegister.DOOM_SHROOM_ENJOY_CARD);
+		putPlantInfoToMap(Plants.LILY_PAD, 25, CDs.SUPER_FAST, Ranks.GRAY, Essences.ASSIST, EntityRegister.LILY_PAD, ItemRegister.LILY_PAD_CARD, ItemRegister.LILY_PAD_ENJOY_CARD);
 		putPlantInfoToMap(Plants.SQUASH, 50, CDs.LITTLE_SLOW, Ranks.GREEN, Essences.ENFORCE, EntityRegister.SQUASH, ItemRegister.SQUASH_CARD, ItemRegister.SQUASH_ENJOY_CARD);
 		putPlantInfoToMap(Plants.THREE_PEATER, 300, CDs.FAST, Ranks.BLUE, Essences.APPEASE, EntityRegister.THREE_PEATER, ItemRegister.THREE_PEATER_CARD, ItemRegister.THREE_PEATER_ENJOY_CARD);
 		putPlantInfoToMap(Plants.TANGLE_KELP, 25, CDs.LITTLE_SLOW, Ranks.WHITE, Essences.ENFORCE, EntityRegister.TANGLE_KELP, ItemRegister.TANGLE_KELP_CARD, ItemRegister.TANGLE_KELP_ENJOY_CARD);

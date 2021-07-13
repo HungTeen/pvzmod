@@ -29,6 +29,7 @@ import com.hungteen.pvz.common.entity.plant.spear.SpikeWeedEntity;
 import com.hungteen.pvz.common.entity.zombie.body.ZombieDropBodyEntity;
 import com.hungteen.pvz.common.entity.zombie.body.ZombieDropBodyEntity.BodyType;
 import com.hungteen.pvz.common.entity.zombie.roof.BungeeZombieEntity;
+import com.hungteen.pvz.common.event.PVZLivingEvents;
 import com.hungteen.pvz.common.misc.damage.PVZDamageSource;
 import com.hungteen.pvz.common.misc.damage.PVZDamageType;
 import com.hungteen.pvz.common.world.data.PVZInvasionData;
@@ -51,6 +52,8 @@ import com.hungteen.pvz.utils.interfaces.IDefender;
 import com.hungteen.pvz.utils.others.WeightList;
 import com.mojang.datafixers.util.Pair;
 
+import net.minecraft.block.Block;
+import net.minecraft.block.Blocks;
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntitySize;
@@ -91,6 +94,7 @@ import net.minecraft.world.IWorld;
 import net.minecraft.world.IWorldReader;
 import net.minecraft.world.LightType;
 import net.minecraft.world.World;
+import net.minecraftforge.event.entity.living.LivingDamageEvent;
 
 public abstract class PVZZombieEntity extends MonsterEntity implements IPVZZombie{
 
@@ -110,6 +114,7 @@ public abstract class PVZZombieEntity extends MonsterEntity implements IPVZZombi
 	public static final int PERFORM_ATTACK_CD = 10;
 	public static final int RISING_CD = 30;
 	protected boolean needRising = false;
+	protected boolean hasDirectDefence = false;
 	public boolean canCollideWithZombie = true;
 	protected boolean canSpawnDrop = true;
 	protected boolean canBeCold = true;
@@ -722,9 +727,39 @@ public abstract class PVZZombieEntity extends MonsterEntity implements IPVZZombi
 		return false;
 	}
 	
+	/**
+	 * {@link PVZLivingEvents#onLivingDamage(LivingDamageEvent)}
+	 */
+	public static void damageZombieDefence(final LivingDamageEvent ev) {
+		float amount = ev.getAmount();
+		if(ev.getEntityLiving() instanceof PVZZombieEntity) {// zombie defence hit
+			final PVZZombieEntity zombie = (PVZZombieEntity) ev.getEntityLiving();
+			if(zombie.hasDirectDefence() && zombie.getDefenceLife() > 0) {
+				if(zombie.getDefenceLife() > amount) {
+				    zombie.setDefenceLife(zombie.getDefenceLife() - amount);
+				    amount = 0;
+				} else {
+			        amount -= zombie.getDefenceLife();
+					zombie.setDefenceLife(0);
+				}
+			}
+		}
+		ev.setAmount(amount == 0 ? 0.000001F : amount);
+	}
+	
 	@Override
 	public float getWalkTargetValue(BlockPos pos, IWorldReader worldIn) {
 		return 9 - worldIn.getBrightness(LightType.BLOCK, pos);
+	}
+	
+	@Override
+	protected float getBlockSpeedFactor() {//not affect by soul sand.
+		Block block = this.level.getBlockState(this.blockPosition()).getBlock();
+	    float f = block.getSpeedFactor();
+	    if (block == Blocks.WATER || block != Blocks.BUBBLE_COLUMN) {
+	    	return f;
+	    }
+	    return 1F;
 	}
 	
 	@Override
@@ -1026,6 +1061,13 @@ public abstract class PVZZombieEntity extends MonsterEntity implements IPVZZombi
 	
 	public boolean canLostHead() {
 		return this.canLostHead;
+	}
+	
+	/**
+	 * {@link #damageZombieDefence(LivingDamageEvent)}
+	 */
+	public boolean hasDirectDefence() {
+		return this.hasDirectDefence;
 	}
 
 	public boolean isZombieColdOrForzen() {

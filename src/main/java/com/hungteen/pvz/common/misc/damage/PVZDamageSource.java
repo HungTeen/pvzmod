@@ -139,6 +139,9 @@ public class PVZDamageSource extends DamageSource {
 		return this.isCopyDamage;
 	}
 
+	/**
+	 * effect can not be apply on target.
+	 */
 	public boolean isDefended() {
 		return this.isDefended;
 	}

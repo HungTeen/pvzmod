@@ -9,12 +9,9 @@ import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
 import net.minecraft.block.BushBlock;
 import net.minecraft.block.HorizontalBlock;
-import net.minecraft.block.material.Material;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.MobEntity;
 import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.fluid.FluidState;
-import net.minecraft.fluid.Fluids;
 import net.minecraft.item.BlockItemUseContext;
 import net.minecraft.pathfinding.PathNodeType;
 import net.minecraft.state.DirectionProperty;
@@ -54,11 +51,10 @@ public class LilyPadBlock extends BushBlock {
 		return LILY_PAD_AABB;
 	}
 
+	@SuppressWarnings("deprecation")
 	@Override
-	protected boolean mayPlaceOn(BlockState p_200014_1_, IBlockReader p_200014_2_, BlockPos p_200014_3_) {
-        FluidState fluidstate = p_200014_2_.getFluidState(p_200014_3_);
-        FluidState fluidstate1 = p_200014_2_.getFluidState(p_200014_3_.above());
-	    return (fluidstate.getType() == Fluids.WATER || p_200014_1_.getMaterial() == Material.ICE) && fluidstate1.getType() == Fluids.EMPTY;
+	protected boolean mayPlaceOn(BlockState state, IBlockReader reader, BlockPos pos) {
+	    return ! state.isAir(reader, pos);
 	}
 
 	public BlockState getStateForPlacement(PlayerEntity player) {

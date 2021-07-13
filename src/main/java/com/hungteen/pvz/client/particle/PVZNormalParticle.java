@@ -8,6 +8,9 @@ public abstract class PVZNormalParticle extends SpriteTexturedParticle{
 
 	public PVZNormalParticle(ClientWorld world, double x, double y, double z, double xSpeed, double ySpeed, double zSpeed) {
 		super(world, x, y, z, xSpeed, ySpeed, zSpeed);
+		this.xd = xSpeed;
+		this.yd = ySpeed;
+		this.zd = zSpeed;
 	}
 
 	@Override

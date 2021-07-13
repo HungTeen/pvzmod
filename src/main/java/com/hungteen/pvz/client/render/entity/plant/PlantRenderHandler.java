@@ -33,7 +33,7 @@ public class PlantRenderHandler {
 	public static final ResourceLocation ICE_SHROOM_TEX = get(Plants.ICE_SHROOM, 0.82F);
 	public static final ResourceLocation DOOM_SHROOM_TEX = get(Plants.DOOM_SHROOM, 1F);
 	
-//	public static final ResourceLocation LILY_PAD_TEX = get(Plants.PUFF_SHROOM, 0.6F);
+	public static final ResourceLocation LILY_PAD_TEX = get(Plants.LILY_PAD, 1F);
 	public static final ResourceLocation SQUASH_TEX = get(Plants.SQUASH, 0.5F);
 	public static final ResourceLocation THREE_PEATER_TEX = get(Plants.THREE_PEATER, 0.99F);
 	public static final ResourceLocation TANGLE_KELP_TEX = get(Plants.TANGLE_KELP, 0.6F);

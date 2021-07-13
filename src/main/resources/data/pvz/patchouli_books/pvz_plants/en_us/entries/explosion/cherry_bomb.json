@@ -5,7 +5,7 @@
     "pages": [
         {
             "type": "text",
-            "text": "$(bgreen)Cherry Bomb$()'s left head wanna explode, but its right head likes to detonate slowly instead. After intense consultation they agree to explodonate.$(br)$(byellow)Sun Cost$() : $(l)150$()$(br)$(bblue)Recharge$() : $(l)Very Slow$()$(br)$(l)Features$() : It is a $(l)instant-kill$() plant, which will make a $(bred)explosion damage$() to all enemies in $(l)7 * 7$() area after planted."
+            "text": "$(bgreen)Cherry Bomb$()'s left head wanna explode, but its right head likes to detonate slowly instead. After intense consultation they agree to explodonate.$(br)$(byellow)Sun Cost$() : $(l)150$()$(br)$(bblue)Recharge$() : $(l)Very Slow$()$(br)$(l)Features$() : It is a $(l)instant-kill$() plant, which will make a $(bred)explosion damage$() to all enemies in $(l)9 * 9$() area after planted."
         },
         {
             "type": "entity",
