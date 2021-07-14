@@ -1,14 +1,14 @@
 package com.hungteen.pvz.common.entity.plant.enforce;
 
-import com.hungteen.pvz.common.entity.ai.goal.target.PVZNearestTargetGoal;
+import com.hungteen.pvz.common.entity.ai.goal.target.PVZRandomTargetGoal;
 import com.hungteen.pvz.common.entity.plant.PVZPlantEntity;
 import com.hungteen.pvz.common.misc.damage.PVZDamageSource;
 import com.hungteen.pvz.register.SoundRegister;
 import com.hungteen.pvz.utils.EntityUtil;
+import com.hungteen.pvz.utils.PlantUtil;
 import com.hungteen.pvz.utils.enums.Plants;
 
 import net.minecraft.entity.CreatureEntity;
-import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntitySize;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.LivingEntity;
@@ -20,10 +20,8 @@ import net.minecraft.world.World;
 
 public class SquashEntity extends PVZPlantEntity{
 
+	private static final int TARGET_RANGE = 3;
 	protected int extraChance = 0;
-	private final int range = 3;
-	private int restTick = 0;
-	private final int CD = 20;
 	
 	public SquashEntity(EntityType<? extends CreatureEntity> type, World worldIn) {
 		super(type, worldIn);
@@ -32,33 +30,20 @@ public class SquashEntity extends PVZPlantEntity{
 	@Override
 	protected void registerGoals() {
 		super.registerGoals();
-		this.targetSelector.addGoal(0, new PVZNearestTargetGoal(this, true, false, range, 1));
+		this.targetSelector.addGoal(0, new PVZRandomTargetGoal(this, true, TARGET_RANGE, TARGET_RANGE));
 	}
 
-	@Override
-	protected boolean shouldLockXZ() {
-		return false;
-	}
-	
 	@Override
 	protected void normalPlantTick() {
 		super.normalPlantTick();
 		if(!level.isClientSide) {
-			if(restTick > 0) {
-				-- restTick;
-				return ;
-			}
-			LivingEntity target = this.getTarget();
-			if(target != null && EntityUtil.isSuitableTargetInRange(this, target, range)) {
-				this.setTarget(null);
-			}
-			if(this.getTarget() != null) {
-				this.getLookControl().setLookAt(getTarget(), 30f, 30f);
+			if(EntityUtil.isEntityValid(this.getTarget())) {
+				this.getLookControl().setLookAt(this.getTarget(), 30f, 30f);
 			}
 			if(this.getAttackTime() > 0) {
-				if(EntityUtil.isOnGround(this) || EntityUtil.isOnSnow(this)) {
-//					System.out.println("on ground!");
+				if(this.isOnGround()) {
 					this.dealDamage();
+					//check death.
 					if(this.extraChance > 0) {
 						-- this.extraChance;
 					}else {
@@ -67,7 +52,7 @@ public class SquashEntity extends PVZPlantEntity{
 						}
 					}
 				}
-			}else {
+			} else {
 				if(this.getTarget() != null) {
 					EntityUtil.playSound(this, SoundRegister.SQUASH_HMM.get());
 					this.jumpToTarget(this.getTarget());
@@ -88,59 +73,59 @@ public class SquashEntity extends PVZPlantEntity{
 	public void startSuperMode(boolean first) {
 		super.startSuperMode(first);
 		if(!level.isClientSide) {
-		    this.extraChance = this.getSuperBonusChance();
+		    this.extraChance += this.getSuperBonusChance();
 		}
 	}
 	
+	/**
+	 * {@link #normalPlantTick()}
+	 */
 	protected void dealDamage(){
 		this.setAttackTime(0);
 		this.canCollideWithPlant = true;
-		this.restTick = CD;
+		this.isImmuneToWeak = false;
 		EntityUtil.playSound(this, SoundRegister.GROUND_SHAKE.get());
-		for(Entity entity : EntityUtil.getTargetableEntities(this, EntityUtil.getEntityAABB(this, 0.5f, 0.5f))) {
+		final float range = 1F;
+		for(LivingEntity entity : EntityUtil.getTargetableLivings(this, EntityUtil.getEntityAABB(this, range, range))) {
 			entity.hurt(PVZDamageSource.causeNormalDamage(this, this), this.getAttackDamage());
 		}
 	}
 	
 	/**
-	 * jump to the top of the target
+	 * jump to the top of the target.
+	 * {@link #normalPlantTick()}
 	 */
 	private void jumpToTarget(LivingEntity target) {
-		int tick = 10;
+		final int tick = 10;
 		this.canCollideWithPlant = false;
-		Vector3d pos = target.position().add(target.getDeltaMovement().multiply(tick, tick, tick));
+		this.isImmuneToWeak = true;
+		final Vector3d pos = target.position().add(target.getDeltaMovement().scale(tick * 0.8D));
 		this.setPos(pos.x(), pos.y() + target.getBbHeight() + 1, pos.z());
 		this.setDeltaMovement(this.getDeltaMovement().x(), 0, this.getDeltaMovement().z());
 		this.setAttackTime(1);
+	}
+	
+	@Override
+	protected boolean shouldLockXZ() {
+		return this.isOnGround();
 	}
 	
 	/**
 	 * extra smash times
 	 */
 	protected int getSuperBonusChance(){
-		if(this.isPlantInStage(1)) return 2;
-		if(this.isPlantInStage(2)) return 3;
-		return 4;
+		return this.isPlantInStage(1) ? 3 : this.isPlantInStage(2) ? 4 : 5;
 	}
 	
 	public float getAttackDamage(){
-		int lvl = this.getPlantLvl();
-		if(lvl <= 19) {
-			return 135 + 5 * lvl;
-		}
-		return 240;
+		return PlantUtil.getPlantAverageProgress(this, 125, 425);
 	}
 	
 	/**
 	 * die chance for each smash
 	 */
 	public int getDeathChance(){
-		int lvl = this.getPlantLvl();
-		if(lvl <= 20) {
-			int now = (lvl - 1) / 4;
-			return 90 - 5 * now;
-		}
-		return 70;
+		return PlantUtil.getPlantAverageProgress(this, 90, 40);
 	}
 	
 	@Override
@@ -148,11 +133,6 @@ public class SquashEntity extends PVZPlantEntity{
 		return super.isPlantImmuneTo(source) || PVZDamageSource.isEnforceDamage(source) || source == DamageSource.FALL;
 	}
 	
-	@Override
-	public Plants getPlantEnumName() {
-		return Plants.SQUASH;
-	}
-
 	@Override
 	public int getSuperTimeLength() {
 		return 20;
@@ -175,6 +155,11 @@ public class SquashEntity extends PVZPlantEntity{
 	public void addAdditionalSaveData(CompoundNBT compound) {
 		super.addAdditionalSaveData(compound);
 		compound.putInt("extra_chance", this.extraChance);
+	}
+	
+	@Override
+	public Plants getPlantEnumName() {
+		return Plants.SQUASH;
 	}
 
 }

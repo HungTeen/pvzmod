@@ -49,7 +49,9 @@ public class PVZDamageSource extends DamageSource {
 	}
 
 	public static PVZDamageSource causeExplosionDamage(Entity projectile, Entity shooter) {
-		return new PVZDamageSource("pvz_explosion", projectile, shooter, PVZDamageType.EXPLOSION);
+		final PVZDamageSource source = new PVZDamageSource("pvz_explosion", projectile, shooter, PVZDamageType.EXPLOSION);
+		source.setExplosion();
+		return source;
 	}
 
 	public static PVZDamageSource causeIceDamage(Entity projectile, Entity shooter) {

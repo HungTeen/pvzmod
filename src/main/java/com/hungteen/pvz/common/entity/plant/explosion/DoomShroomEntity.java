@@ -125,7 +125,7 @@ public class DoomShroomEntity extends PlantBomberEntity {
 	}
 	
 	public float getAttackDamage() {
-		return PlantUtil.getPlantAverageProgress(this, 200, 600);
+		return PlantUtil.getPlantAverageProgress(this, 200, 800);
 	}
 	
 	@Override

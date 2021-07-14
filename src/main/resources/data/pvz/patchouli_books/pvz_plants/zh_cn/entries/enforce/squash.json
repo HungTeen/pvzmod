@@ -1,0 +1,22 @@
+{
+    "name": "窝瓜",
+    "icon": "pvz:squash_card",
+    "category": "pvz:enforce",
+    "pages": [
+        {
+            "type": "text",
+            "text": "$(bgreen)窝瓜$()实际上是它的艺名。它的本名是特蕾西。$(br)$(byellow)阳光消耗$() : $(l)50$()$(br)$(bblue)冷却$() : $(l)较慢$()$(br)$(l)特点$() : 它是一个$(l)近战攻击$()植物，能压扁靠近的敌人。每次碾压会有$(bred)很大的概率死亡$()。"
+        },
+        {
+            "type": "entity",
+            "entity": "pvz:squash",
+            "scale": 0.65,
+            "text": "外观"
+        },
+        {
+            "type": "text",
+            "text": "$(bgreen)能量豆大招$() : 它会获得$(l)额外的碾压次数$()。"
+        }
+    ],
+    "sortnum": 1
+}

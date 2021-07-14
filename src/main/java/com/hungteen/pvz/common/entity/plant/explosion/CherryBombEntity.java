@@ -54,7 +54,7 @@ public class CherryBombEntity extends PlantBomberEntity{
 	 * {@link #startBomb()}
 	 */
 	public float getAttackDamage(){
-		return MathUtil.getProgressAverage(this.getPlantLvl(), PlantUtil.MAX_PLANT_LEVEL, 150, 450);
+		return MathUtil.getProgressAverage(this.getPlantLvl(), PlantUtil.MAX_PLANT_LEVEL, 150, 650);
 	}
 	
 	@Override

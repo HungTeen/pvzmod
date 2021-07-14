@@ -138,7 +138,7 @@ public class PotatoMineEntity extends PlantCloserEntity{
 	}
 	
 	public float getAttackDamage(){
-		return MathUtil.getProgressAverage(this.getPlantLvl(), PlantUtil.MAX_PLANT_LEVEL, 120, 320);
+		return PlantUtil.getPlantAverageProgress(this, 125, 425);
 	}
 	
 	/**
