@@ -94,7 +94,7 @@ public abstract class AbstractBulletEntity extends AbstractOwnerEntity {
 		return EntityUtil.canTargetEntity(owner == null ? this : owner, target);
 	}
 	
-	protected void addHitEntity(Entity entity) {
+	public void addHitEntity(Entity entity) {
 		this.hitEntities.addAll(EntityUtil.getOwnerAndPartsID(entity));
 	}
 	
@@ -147,15 +147,14 @@ public abstract class AbstractBulletEntity extends AbstractOwnerEntity {
 	/**
 	 * shoot bullet such as pea or spore
 	 */
-	public void shootPea(double dx, double dy, double dz, double speed) {
-		double down = this.getShootPeaAngle();
-		double dxz = Math.sqrt(dx * dx + dz * dz);
-		dy = MathHelper.clamp(dy, - dxz / down, dxz / down);
-		double dis = Math.sqrt(dx * dx + dy * dy + dz * dz);
-		double vx = dx / dis * speed;
-		double vy = dy / dis * speed;
-		double vz = dz / dis * speed;
-		this.setDeltaMovement(vx, vy, vz);
+	public void shootPea(double dx, double dy, double dz, double speed, double angleOffset) {
+		final double down = this.getShootPeaAngle();
+		final double dxz = Math.sqrt(dx * dx + dz * dz);
+		dy = MathHelper.clamp(dy, - dxz / down, dxz / down);//fix dy by angle
+		final double degree = MathHelper.atan2(dz, dx) + Math.toRadians(angleOffset);
+		dx = Math.cos(degree) * dxz;
+		dz = Math.sin(degree) * dxz;
+		this.setDeltaMovement(new Vector3d(dx, dy, dz).normalize().scale(speed));
 	}
 	
 	public void shootPeaAnti(double dx, double dy, double dz, double speed) {
@@ -176,7 +175,7 @@ public abstract class AbstractBulletEntity extends AbstractOwnerEntity {
 	/**
 	 * get how much angle can shoot by thrower
 	 */
-	protected double getShootPeaAngle() {
+	public double getShootPeaAngle() {
 		if (this.getThrower() instanceof PlantShooterEntity) {
 			return ((PlantShooterEntity) this.getThrower()).getMaxShootAngle();
 		}

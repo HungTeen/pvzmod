@@ -11,7 +11,6 @@ import com.hungteen.pvz.common.entity.plant.base.PlantShooterEntity;
 import com.hungteen.pvz.common.entity.zombie.poolnight.BalloonZombieEntity;
 import com.hungteen.pvz.utils.EntityUtil;
 import com.hungteen.pvz.utils.enums.Plants;
-import com.hungteen.pvz.utils.enums.ShootTypes;
 
 import net.minecraft.entity.CreatureEntity;
 import net.minecraft.entity.Entity;
@@ -63,7 +62,7 @@ public class CatTailEntity extends PlantShooterEntity {
 	
 	@Override
 	public void shootBullet() {
-		this.performShoot(0, 0, 0.2, this.getAttackTime() == 1, ShootTypes.FORWARD);
+		this.performShoot(0, 0, 0.2, this.getAttackTime() == 1, FORWARD_SHOOT_ANGLE);
 	}
 	
 	@Override

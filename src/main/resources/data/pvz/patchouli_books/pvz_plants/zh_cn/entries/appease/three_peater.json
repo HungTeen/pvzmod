@@ -1,0 +1,22 @@
+{
+    "name": "三线射手",
+    "icon": "pvz:three_peater_card",
+    "category": "pvz:appease",
+    "pages": [
+        {
+            "type": "text",
+            "text": "$(bgreen)三线射手$()喜欢读书、下棋和静思。三管豌豆也乐于参加演出活动，尤其是现代爵士。它的幸运数字是5。$(br)$(byellow)阳光消耗$() : $(l)300$()$(br)$(bblue)冷却$() : $(l)较快$()$(br)$(l)特点$() : 它是一个$(l)远程攻击$()植物，每1.5秒向3条路线发射$(bred)3个豌豆$()攻击敌人。"
+        },
+        {
+            "type": "entity",
+            "entity": "pvz:three_peater",
+            "scale": 0.65,
+            "text": "外观"
+        },
+        {
+            "type": "text",
+            "text": "$(bgreen)能量豆大招$() : 它会每tick$(l)往3行发射1个豌豆$()，持续多秒。"
+        }
+    ],
+    "sortnum": 2
+}

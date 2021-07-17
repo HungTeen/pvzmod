@@ -115,7 +115,7 @@ public class PotatoMineEntity extends PlantCloserEntity{
 	public void performAttack(LivingEntity target1) {
 		if(! this.level.isClientSide) {
 			final float range = 1.6F;
-			EntityUtil.getTargetableLivings(this, EntityUtil.getEntityAABB(this, range, range)).forEach(target -> {
+			EntityUtil.getWholeTargetableEntities(this, EntityUtil.getEntityAABB(this, range, range)).forEach(target -> {
 				target.hurt(PVZDamageSource.causeExplosionDamage(this, this), this.getAttackDamage());
 			});
 			EntityUtil.playSound(this, SoundRegister.POTATO_MINE.get());

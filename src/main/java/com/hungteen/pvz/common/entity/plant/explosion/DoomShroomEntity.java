@@ -22,11 +22,14 @@ import net.minecraft.entity.CreatureEntity;
 import net.minecraft.entity.EntitySize;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.Pose;
+import net.minecraft.entity.boss.dragon.EnderDragonEntity;
 import net.minecraft.entity.item.ItemEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.loot.LootContext;
 import net.minecraft.loot.LootParameters;
 import net.minecraft.tileentity.TileEntity;
+import net.minecraft.util.DamageSource;
+import net.minecraft.util.EntityDamageSource;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.vector.Vector3d;
 import net.minecraft.world.World;
@@ -56,8 +59,12 @@ public class DoomShroomEntity extends PlantBomberEntity {
 		if(server) {
 			//deal damage to targets.
 			final float range = 10.5F;
-			EntityUtil.getTargetableEntitiesIngoreCheck(this, EntityUtil.getEntityAABB(this, range, range)).forEach(target -> {
-				target.hurt(PVZDamageSource.causeExplosionDamage(this, this), this.getAttackDamage());
+			EntityUtil.getWholeTargetableEntities(this, EntityUtil.getEntityAABB(this, range, range)).forEach(target -> {
+				if(target instanceof EnderDragonEntity) {//make ender_dragon can be damaged by doom shroom. 
+					((EnderDragonEntity) target).hurt(((EntityDamageSource)DamageSource.mobAttack(this)).setThorns().setExplosion(), this.getAttackDamage() * 2);
+				} else {
+					target.hurt(PVZDamageSource.causeExplosionDamage(this, this), this.getAttackDamage());
+				}
 			});
 			EntityUtil.playSound(this, SoundRegister.DOOM.get());
 			//destroy block and spawn drops

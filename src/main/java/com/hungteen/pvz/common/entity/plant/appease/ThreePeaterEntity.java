@@ -1,67 +1,52 @@
 package com.hungteen.pvz.common.entity.plant.appease;
 
-import com.hungteen.pvz.common.entity.bullet.itembullet.PeaEntity;
-import com.hungteen.pvz.utils.EntityUtil;
+import com.hungteen.pvz.utils.AnimationUtil;
 import com.hungteen.pvz.utils.enums.Plants;
 
 import net.minecraft.entity.CreatureEntity;
 import net.minecraft.entity.EntitySize;
 import net.minecraft.entity.EntityType;
-import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.Pose;
-import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.World;
 
 public class ThreePeaterEntity extends PeaShooterEntity {
 
-	private final double DIS = 0.6d;
+	private static final double RIGHT_OFFSET = 0.6D;
+	private static final double DOWN_OFFSET = - 0.35D;
+	private static final int SUPER_CD = 100;
 	
 	public ThreePeaterEntity(EntityType<? extends CreatureEntity> type, World worldIn) {
 		super(type, worldIn);
 	}
 
 	@Override
-	public EntitySize getDimensions(Pose poseIn) {
-		return new EntitySize(0.9f, 1.7f, false);
+	public void shootBullet() {
+		if(this.isPlantInSuperMode()) {
+			final int tick = SUPER_CD - this.getSuperTime() % SUPER_CD;
+			final double angle = AnimationUtil.upDown(tick, SUPER_CD, 60F);
+			this.performShoot(SHOOT_OFFSET, 0, 0, this.getExistTick() % 10 == 0, FORWARD_SHOOT_ANGLE);
+			this.performShoot(SHOOT_OFFSET, - RIGHT_OFFSET, DOWN_OFFSET, false, - angle);
+			this.performShoot(SHOOT_OFFSET, RIGHT_OFFSET, DOWN_OFFSET, false, angle);
+		} else {
+			this.performShoot(SHOOT_OFFSET, 0, 0, true, FORWARD_SHOOT_ANGLE);
+			this.performShoot(SHOOT_OFFSET, - RIGHT_OFFSET, DOWN_OFFSET, false, FORWARD_LEFT_SHOOT_ANGLE);
+			this.performShoot(SHOOT_OFFSET, RIGHT_OFFSET, DOWN_OFFSET, false, FORWARD_RIGHT_SHOOT_ANGLE);
+		}
 	}
 	
 	@Override
-	public void shootBullet() {
-		LivingEntity target=this.getTarget();
-		if(target==null) {
-			//System.out.println("no target at all!");
-			return ;
-		}
-		double dx = target.getX() - this.getX();
-        double dz = target.getZ() - this.getZ();
-        double y = this.getY() + this.getDimensions(getPose()).height * 0.7f;
-        double dis = MathHelper.sqrt(dx * dx + dz * dz);
-        double tmp= SHOOT_OFFSET / dis;
-        double deltaX = tmp * dx;
-        double deltaZ = tmp * dz;
-        //shoot mid pea
-        PeaEntity pea = new PeaEntity(this.level, this, this.getShootType(), this.getShootState());
-        pea.setPos(this.getX() + deltaX, y, this.getZ() + deltaZ);
-        pea.shootPea(dx, target.getY() + target.getBbHeight() - y, dz, this.getBulletSpeed());      
-        this.level.addFreshEntity(pea);
-        //shoot left pea
-        double now = DIS / dis;
-        double deltaXX = now * dz;
-        double deltaZZ = -now * dx;
-        pea = new PeaEntity(this.level, this, this.getShootType(), this.getShootState());
-        pea.setPos(this.getX() + deltaX + deltaXX, this.getY() + this.getDimensions(getPose()).height * 0.5f, this.getZ() + deltaZ + deltaZZ);
-        pea.shootPea(dx, target.getY() + target.getBbHeight() - y, dz, this.getBulletSpeed());     
-        this.level.addFreshEntity(pea);
-        //shoot right pea
-        pea = new PeaEntity(this.level, this, this.getShootType(), this.getShootState());
-        pea.setPos(this.getX() + deltaX - deltaXX, this.getY() + this.getDimensions(getPose()).height * 0.5f, this.getZ() + deltaZ - deltaZZ);
-        pea.shootPea(dx, target.getY() + target.getBbHeight() - y, dz, this.getBulletSpeed());     
-        this.level.addFreshEntity(pea);
-        EntityUtil.playSound(this, this.getShootSound());
+	public int getSuperTimeLength() {
+		return (this.isPlantInStage(1) ? 1 : this.isPlantInStage(2) ? 2 : 3) * SUPER_CD;
+	}
+	
+	@Override
+	public EntitySize getDimensions(Pose poseIn) {
+		return new EntitySize(0.9f, 1.7f, false);
 	}
 	
 	@Override
 	public Plants getPlantEnumName() {
 		return Plants.THREE_PEATER;
 	}
+	
 }

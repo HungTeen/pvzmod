@@ -30,7 +30,7 @@ public class CherryBombEntity extends PlantBomberEntity{
 		if(server) {
 			int deathCnt = 0;
 			final float range = 4.5F;
-			for(Entity target : EntityUtil.getTargetableEntitiesIngoreCheck(this, EntityUtil.getEntityAABB(this, range, range))) {
+			for(Entity target : EntityUtil.getWholeTargetableEntities(this, EntityUtil.getEntityAABB(this, range, range))) {
 				target.hurt(PVZDamageSource.causeExplosionDamage(this, this), this.getAttackDamage());
 				if(! EntityUtil.isEntityValid(target)) {
 					++ deathCnt;

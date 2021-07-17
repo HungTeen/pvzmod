@@ -5,7 +5,6 @@ import com.hungteen.pvz.common.entity.bullet.itembullet.SporeEntity;
 import com.hungteen.pvz.common.entity.plant.base.PlantShooterEntity;
 import com.hungteen.pvz.register.SoundRegister;
 import com.hungteen.pvz.utils.enums.Plants;
-import com.hungteen.pvz.utils.enums.ShootTypes;
 
 import net.minecraft.entity.CreatureEntity;
 import net.minecraft.entity.EntitySize;
@@ -32,9 +31,9 @@ public class SeaShroomEntity extends PlantShooterEntity {
 	@Override
 	public void shootBullet() {
 		if(this.isPlantInSuperMode()) {
-			this.performShoot(SHOOT_OFFSET, 0, 0, this.getExistTick() % 5 == 0, ShootTypes.FORWARD);
+			this.performShoot(SHOOT_OFFSET, 0, 0, this.getExistTick() % 5 == 0, FORWARD_SHOOT_ANGLE);
 		} else {
-			this.performShoot(SHOOT_OFFSET, 0, 0, this.getAttackTime() == 1, ShootTypes.FORWARD);
+			this.performShoot(SHOOT_OFFSET, 0, 0, this.getAttackTime() == 1, FORWARD_SHOOT_ANGLE);
 		}
 	}
 	

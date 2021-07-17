@@ -6,7 +6,7 @@ import com.hungteen.pvz.utils.enums.Plants;
 import com.hungteen.pvz.utils.enums.Ranks;
 import com.hungteen.pvz.utils.interfaces.IHasMetal;
 
-public interface IPVZPlant extends IHasOwner, IGroupEntity, ICanCharm, IHasMetal{
+public interface IPVZPlant extends IHasOwner, IGroupEntity, ICanBeCharmed, IHasMetal{
 
 	Plants getPlantEnumName();
 	

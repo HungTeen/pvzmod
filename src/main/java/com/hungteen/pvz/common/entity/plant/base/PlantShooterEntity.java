@@ -11,7 +11,6 @@ import com.hungteen.pvz.common.entity.plant.spear.CatTailEntity;
 import com.hungteen.pvz.utils.EntityUtil;
 import com.hungteen.pvz.utils.MathUtil;
 import com.hungteen.pvz.utils.PlantUtil;
-import com.hungteen.pvz.utils.enums.ShootTypes;
 import com.hungteen.pvz.utils.interfaces.IShooter;
 
 import net.minecraft.entity.CreatureEntity;
@@ -33,6 +32,10 @@ public abstract class PlantShooterEntity extends PVZPlantEntity implements IShoo
 
 	//use for normal shoot attack animation and shoot goal.
 	private static final DataParameter<Integer> SHOOT_TICK = EntityDataManager.defineId(PVZPlantEntity.class, DataSerializers.INT);
+	public static final float FORWARD_SHOOT_ANGLE = 0;
+	public static final float BACK_SHOOT_ANGLE = 180;
+	public static final float FORWARD_LEFT_SHOOT_ANGLE = -7.5F;
+	public static final float FORWARD_RIGHT_SHOOT_ANGLE = 7.5F;
 	public static final int SHOOT_ANIM_CD = 10;
 	public static final int SHOOT_POINT = SHOOT_ANIM_CD * 3 / 4;
 	public static final int SHOOT_POINT_OFFSET = SHOOT_ANIM_CD - SHOOT_POINT;
@@ -78,21 +81,15 @@ public abstract class PlantShooterEntity extends PVZPlantEntity implements IShoo
 	/**
 	 * shoot pea with offsets.
 	 */
-	public void performShoot(double forwardOffset, double rightOffset, double heightOffset, boolean needSound, ShootTypes type) {
+	public void performShoot(double forwardOffset, double rightOffset, double heightOffset, boolean needSound, double angleOffset) {
 		Optional.ofNullable(this.getTarget()).ifPresent(target -> {
 			final Vector3d vec = EntityUtil.getNormalisedVector2d(this, target);
             final double deltaY = this.getDimensions(getPose()).height * 0.7F + heightOffset;
-            final double deltaX = forwardOffset * vec.x + rightOffset * vec.z;
+            final double deltaX = forwardOffset * vec.x - rightOffset * vec.z;
             final double deltaZ = forwardOffset * vec.z + rightOffset * vec.x;
             final AbstractBulletEntity bullet = this.createBullet();
             bullet.setPos(this.getX() + deltaX, this.getY() + deltaY, this.getZ() + deltaZ);
-            switch(type) {//choose shoot position. 
-            case FORWARD:{
-            	bullet.shootPea(vec.x, target.getY() + target.getBbHeight() - bullet.getY(), vec.z, this.getBulletSpeed());
-            	break;
-            }
-            default:break;
-            }
+            bullet.shootPea(vec.x, target.getY() + target.getBbHeight() - bullet.getY(), vec.z, this.getBulletSpeed(), angleOffset);
             if(needSound) {
             	EntityUtil.playSound(this, this.getShootSound());
             }
@@ -140,6 +137,7 @@ public abstract class PlantShooterEntity extends PVZPlantEntity implements IShoo
 	/**
 	 * use to check horizontal shoot path.
 	 * {@link #checkY(Entity)}
+	 * {@link AbstractBulletEntity#getShootPeaAngle()}
 	 */
 	public double getMaxShootAngle() {
 		return 60;

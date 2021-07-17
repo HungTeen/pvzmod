@@ -1,5 +1,7 @@
 package com.hungteen.pvz.common.entity.plant.magic;
 
+import com.hungteen.pvz.api.interfaces.ICanBeAttracted;
+import com.hungteen.pvz.common.entity.ai.goal.misc.PlantAttractGoal;
 import com.hungteen.pvz.common.entity.plant.PVZPlantEntity;
 import com.hungteen.pvz.common.entity.zombie.PVZZombieEntity;
 import com.hungteen.pvz.common.entity.zombie.PVZZombieEntity.Type;
@@ -12,20 +14,55 @@ import com.hungteen.pvz.utils.EntityUtil;
 import com.hungteen.pvz.utils.PlantUtil;
 import com.hungteen.pvz.utils.ZombieUtil;
 import com.hungteen.pvz.utils.enums.Plants;
+import com.hungteen.pvz.utils.interfaces.ICanAttract;
 
 import net.minecraft.entity.CreatureEntity;
 import net.minecraft.entity.EntitySize;
 import net.minecraft.entity.EntityType;
+import net.minecraft.entity.LivingEntity;
+import net.minecraft.entity.MobEntity;
 import net.minecraft.entity.Pose;
 import net.minecraft.util.DamageSource;
 import net.minecraft.world.World;
 
-public class HypnoShroomEntity extends PVZPlantEntity {
+public class HypnoShroomEntity extends PVZPlantEntity implements ICanAttract{
 
 	public HypnoShroomEntity(EntityType<? extends CreatureEntity> type, World worldIn) {
 		super(type, worldIn);
 	}
 
+	@Override
+	protected void registerGoals() {
+		super.registerGoals();
+		this.goalSelector.addGoal(0, new PlantAttractGoal(this, this, 25));
+	}
+	
+	@Override
+	public boolean canAttract(LivingEntity target) {
+		if(target instanceof ICanBeAttracted && ! ((ICanBeAttracted) target).canBeAttractedBy(this)) {
+			return false;
+		}
+		if(! this.getSensing().canSee(target)) {
+			return false;
+		}
+		if(target instanceof MobEntity) {
+			return ! (((MobEntity) target).getTarget() instanceof HypnoShroomEntity);
+		}
+		return false;
+	}
+
+	@Override
+	public void attract(LivingEntity target) {
+		if(target instanceof MobEntity) {
+			((MobEntity) target).setTarget(this);
+		}
+	}
+
+	@Override
+	public float getAttractRange() {
+		return 2.5F;
+	}
+	
 	@Override
 	public void die(DamageSource cause) {
 		super.die(cause);

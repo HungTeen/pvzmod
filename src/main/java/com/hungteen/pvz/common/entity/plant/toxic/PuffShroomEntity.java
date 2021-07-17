@@ -10,7 +10,6 @@ import com.hungteen.pvz.utils.EntityUtil;
 import com.hungteen.pvz.utils.MathUtil;
 import com.hungteen.pvz.utils.PlantUtil;
 import com.hungteen.pvz.utils.enums.Plants;
-import com.hungteen.pvz.utils.enums.ShootTypes;
 
 import net.minecraft.entity.CreatureEntity;
 import net.minecraft.entity.EntitySize;
@@ -32,9 +31,9 @@ public class PuffShroomEntity extends PlantShooterEntity {
 	@Override
 	public void shootBullet() {
 		if(this.isPlantInSuperMode()) {
-			this.performShoot(SHOOT_OFFSET, 0, -0.2F, this.getExistTick() % 5 == 0, ShootTypes.FORWARD);
+			this.performShoot(SHOOT_OFFSET, 0, -0.2F, this.getExistTick() % 5 == 0, FORWARD_SHOOT_ANGLE);
 		} else {
-			this.performShoot(SHOOT_OFFSET, 0, -0.2F, this.getAttackTime() == 1, ShootTypes.FORWARD);
+			this.performShoot(SHOOT_OFFSET, 0, -0.2F, this.getAttackTime() == 1, FORWARD_SHOOT_ANGLE);
 		}
 	}
 	

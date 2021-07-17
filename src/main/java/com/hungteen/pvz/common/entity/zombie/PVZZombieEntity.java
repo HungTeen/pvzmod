@@ -48,7 +48,7 @@ import com.hungteen.pvz.utils.ZombieUtil;
 import com.hungteen.pvz.utils.enums.InvasionEvents;
 import com.hungteen.pvz.utils.enums.Ranks;
 import com.hungteen.pvz.utils.enums.Zombies;
-import com.hungteen.pvz.utils.interfaces.IDefender;
+import com.hungteen.pvz.utils.interfaces.ICanAttract;
 import com.hungteen.pvz.utils.others.WeightList;
 import com.mojang.datafixers.util.Pair;
 
@@ -918,7 +918,7 @@ public abstract class PVZZombieEntity extends MonsterEntity implements IPVZZombi
 	}
 	
 	@Override
-	public boolean canBeAttractedBy(IDefender defender) {
+	public boolean canBeAttractedBy(ICanAttract defender) {
 		return true;
 	}
 	

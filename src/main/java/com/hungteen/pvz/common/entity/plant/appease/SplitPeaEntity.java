@@ -1,16 +1,13 @@
 package com.hungteen.pvz.common.entity.plant.appease;
 
-import com.hungteen.pvz.common.entity.bullet.itembullet.PeaEntity;
 import com.hungteen.pvz.utils.enums.Plants;
 
 import net.minecraft.entity.CreatureEntity;
 import net.minecraft.entity.EntityType;
-import net.minecraft.entity.LivingEntity;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.network.datasync.DataParameter;
 import net.minecraft.network.datasync.DataSerializers;
 import net.minecraft.network.datasync.EntityDataManager;
-import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.World;
 
 public class SplitPeaEntity extends PeaShooterEntity{
@@ -40,34 +37,34 @@ public class SplitPeaEntity extends PeaShooterEntity{
 	
 	@Override
 	public void shootBullet() {
-		LivingEntity target = this.getTarget();
-		if(target==null) {
-			//System.out.println("no target at all!");
-			return ;
-		}
-		double dx = target.getX() - this.getX();
-        double dz = target.getZ() - this.getZ();
-        double y = this.getY() + this.getDimensions(getPose()).height * 0.7f;
-        double dis =MathHelper.sqrt(dx * dx + dz * dz);
-        double tmp = SHOOT_OFFSET / dis;
-        double deltaX = tmp * dx * (this.isFacingFront() ? 1 : -1);
-        double deltaZ = tmp * dz * (this.isFacingFront() ? 1 : -1);
-        //shoot front
-        if(this.getAttackTime() >= (this.isFacingFront() ? 2 : 1)) {
-        	PeaEntity pea = new PeaEntity(this.level, this, this.getShootType(), this.getShootState());
-            pea.setPos(this.getX() + deltaX, y, this.getZ() + deltaZ);
-            pea.shootPea(dx, target.getY() + target.getBbHeight() - y, dz, this.getBulletSpeed());      
-            this.level.addFreshEntity(pea);
-        }
-        //shoot back
-        if(this.getAttackTime() >= (this.isFacingFront() ? 1 : 2)) {
-        	PeaEntity pea = new PeaEntity(this.level, this, this.getShootType(), this.getShootState());
-            pea.setPos(this.getX() - deltaX, y, this.getZ() - deltaZ);
-            pea.shootPeaAnti(dx, target.getY() + target.getBbHeight() - y, dz, this.getBulletSpeed());      
-            this.level.addFreshEntity(pea);
-        }
-        this.playSound(getShootSound(), 1.0F, 1.0F);
-        this.checkAndChangeFacing();
+//		LivingEntity target = this.getTarget();
+//		if(target==null) {
+//			//System.out.println("no target at all!");
+//			return ;
+//		}
+//		double dx = target.getX() - this.getX();
+//        double dz = target.getZ() - this.getZ();
+//        double y = this.getY() + this.getDimensions(getPose()).height * 0.7f;
+//        double dis =MathHelper.sqrt(dx * dx + dz * dz);
+//        double tmp = SHOOT_OFFSET / dis;
+//        double deltaX = tmp * dx * (this.isFacingFront() ? 1 : -1);
+//        double deltaZ = tmp * dz * (this.isFacingFront() ? 1 : -1);
+//        //shoot front
+//        if(this.getAttackTime() >= (this.isFacingFront() ? 2 : 1)) {
+//        	PeaEntity pea = new PeaEntity(this.level, this, this.getShootType(), this.getShootState());
+//            pea.setPos(this.getX() + deltaX, y, this.getZ() + deltaZ);
+//            pea.shootPea(dx, target.getY() + target.getBbHeight() - y, dz, this.getBulletSpeed());      
+//            this.level.addFreshEntity(pea);
+//        }
+//        //shoot back
+//        if(this.getAttackTime() >= (this.isFacingFront() ? 1 : 2)) {
+//        	PeaEntity pea = new PeaEntity(this.level, this, this.getShootType(), this.getShootState());
+//            pea.setPos(this.getX() - deltaX, y, this.getZ() - deltaZ);
+//            pea.shootPeaAnti(dx, target.getY() + target.getBbHeight() - y, dz, this.getBulletSpeed());      
+//            this.level.addFreshEntity(pea);
+//        }
+//        this.playSound(getShootSound(), 1.0F, 1.0F);
+//        this.checkAndChangeFacing();
 	}
 	
 	/**

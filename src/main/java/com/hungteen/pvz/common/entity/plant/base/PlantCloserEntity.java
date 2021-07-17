@@ -1,5 +1,7 @@
 package com.hungteen.pvz.common.entity.plant.base;
 
+import javax.annotation.Nonnull;
+
 import com.hungteen.pvz.common.entity.ai.goal.target.PVZNearestTargetGoal;
 import com.hungteen.pvz.common.entity.plant.PVZPlantEntity;
 import com.hungteen.pvz.common.misc.damage.PVZDamageSource;
@@ -18,7 +20,6 @@ import net.minecraft.world.World;
  */
 public abstract class PlantCloserEntity extends PVZPlantEntity{
 	
-	public static final int ATTACK_ANIM_CD = 10;
 	protected float closeWidth = 1.5F;
 	protected float closeHeight = 1.5F;
 	
@@ -37,9 +38,9 @@ public abstract class PlantCloserEntity extends PVZPlantEntity{
 		super.normalPlantTick();
 		if(! this.level.isClientSide && this.canCheckDistance()) {
 			if(EntityUtil.isEntityValid(this.getTarget())) {//target is close enough
-				this.getLookControl().setLookAt(this.getTarget(), 30f, 30f);
+				this.focusOnTarget(this.getTarget());
 				final int time = this.getAttackTime();
-				if(time >= ATTACK_ANIM_CD) {
+				if(time >= this.getAttackCD()) {
 					this.performAttack(this.getTarget());
 				}
 				this.setAttackTime(time + 1);
@@ -47,6 +48,14 @@ public abstract class PlantCloserEntity extends PVZPlantEntity{
 				this.setAttackTime(0);
 			}
 		}
+	}
+	
+	/**
+	 * perform when target is in range.
+	 * {@link #normalPlantTick()}
+	 */
+	public void focusOnTarget(@Nonnull LivingEntity target) {
+		this.getLookControl().setLookAt(this.getTarget(), 30f, 30f);
 	}
 	
 	/**
@@ -78,6 +87,13 @@ public abstract class PlantCloserEntity extends PVZPlantEntity{
 	@Override
 	public int getSuperTimeLength() {
 		return 20;
+	}
+	
+	/**
+	 * how long it takes to attack.
+	 */
+	public int getAttackCD() {
+		return 10;
 	}
 	
 	/**

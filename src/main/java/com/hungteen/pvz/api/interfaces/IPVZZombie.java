@@ -4,7 +4,7 @@ import com.hungteen.pvz.utils.EntityUtil;
 import com.hungteen.pvz.utils.enums.Ranks;
 import com.hungteen.pvz.utils.enums.Zombies;
 
-public interface IPVZZombie extends IHasOwner, IGroupEntity, ICanCharm, ICanAttract {
+public interface IPVZZombie extends IHasOwner, IGroupEntity, ICanBeCharmed, ICanBeAttracted {
     
 	float getLife();
 	

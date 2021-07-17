@@ -93,9 +93,12 @@ public class JackInBoxZombieEntity extends PVZZombieEntity implements IHasMetal 
 	private void doJackExplode() {
 		final float range =  5F;
 		final float damageMultiple = 1.5F;
-		EntityUtil.getTargetableEntitiesIngoreCheck(this, EntityUtil.getEntityAABB(this, range, range)).forEach(target -> {
+		EntityUtil.getWholeTargetableEntities(this, EntityUtil.getEntityAABB(this, range, range)).forEach(target -> {
+			final PVZDamageSource source = PVZDamageSource.causeExplosionDamage(this, this);
 			if(target instanceof LivingEntity) {
-				target.hurt(PVZDamageSource.causeExplosionDamage(this, this), EntityUtil.getMaxHealthDamage((LivingEntity) target, damageMultiple));
+				target.hurt(source, EntityUtil.getMaxHealthDamage((LivingEntity) target, damageMultiple));
+			} else {
+				target.hurt(source, 100);
 			}
 		});
 		EntityUtil.playSound(this, SoundRegister.CAR_EXPLOSION.get());

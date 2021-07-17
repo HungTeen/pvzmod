@@ -6,7 +6,7 @@ import com.hungteen.pvz.data.loot.PVZLoot;
 import com.hungteen.pvz.utils.ZombieUtil;
 import com.hungteen.pvz.utils.enums.MetalTypes;
 import com.hungteen.pvz.utils.enums.Zombies;
-import com.hungteen.pvz.utils.interfaces.IDefender;
+import com.hungteen.pvz.utils.interfaces.ICanAttract;
 import com.hungteen.pvz.utils.interfaces.IHasMetal;
 
 import net.minecraft.entity.EntitySize;
@@ -91,7 +91,7 @@ public class DiggerZombieEntity extends PVZZombieEntity implements IHasMetal {
 	}
 	
 	@Override
-	public boolean canBeAttractedBy(IDefender defender) {
+	public boolean canBeAttractedBy(ICanAttract defender) {
 		return ! this.hasPickaxe();
 	}
 	

@@ -5,7 +5,7 @@
     "pages": [
         {
             "type": "text",
-            "text": "$(bgreen)Hypno Shroom$() asserts that Zombies are our friends, and they are badly misunderstood creatures who play a valuable role in our ecology. We should do more to bring them round to our way of thinking.$(br)$(byellow)Sun Cost$() : $(l)75$()$(br)$(bblue)Recharge$() : $(l)Little Slow$()$(br)$(l)Features$() : It is a $(l)passive$() plant that works when $(l)eaten by equal or lower level zombie$(), and hypno it as yours."
+            "text": "$(bgreen)Hypno Shroom$() asserts that Zombies are our friends, and they are badly misunderstood creatures who play a valuable role in our ecology. We should do more to bring them round to our way of thinking.$(br)$(byellow)Sun Cost$() : $(l)75$()$(br)$(bblue)Recharge$() : $(l)Little Slow$()$(br)$(l)Features$() : It is a $(l)passive$() plant that works when $(l)eaten by equal or lower level zombie$(), and hypno it as yours, and it can $(bred)attract enemies in 5 * 5 range to attack itself$()."
         },
         {
             "type": "entity",

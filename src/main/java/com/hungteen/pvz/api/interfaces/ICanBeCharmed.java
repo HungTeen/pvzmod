@@ -7,7 +7,7 @@ import net.minecraft.entity.LivingEntity;
 /**
  * use to check can entity be charmed.
  */
-public interface ICanCharm {
+public interface ICanBeCharmed {
 
 	boolean isCharmed();
 	

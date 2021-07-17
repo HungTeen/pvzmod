@@ -75,7 +75,7 @@ public class MetalItemEntity extends PVZItemBulletEntity {
 				}
 				this.setMetalState(MetalStates.SHOOT);
 				Vector3d vec = target.position().add(0, target.getEyeHeight(), 0).subtract(this.position());
-				this.shootPea(vec.x, vec.y, vec.z, 1.4F);
+				this.shootPea(vec.x, vec.y, vec.z, 1.4F, 0);
 			}
 		}
 	}

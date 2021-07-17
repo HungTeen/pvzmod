@@ -8,7 +8,6 @@ import com.hungteen.pvz.utils.EntityUtil;
 import com.hungteen.pvz.utils.MathUtil;
 import com.hungteen.pvz.utils.PlantUtil;
 import com.hungteen.pvz.utils.enums.Plants;
-import com.hungteen.pvz.utils.enums.ShootTypes;
 
 import net.minecraft.entity.CreatureEntity;
 import net.minecraft.entity.EntitySize;
@@ -73,10 +72,10 @@ public class ScaredyShroomEntity extends PlantShooterEntity {
 			for(int i = 0; i < cnt; ++ i) {
 				final float offset = MathUtil.getRandomFloat(getRandom()) / 3;
 				final float offsetH = MathUtil.getRandomFloat(getRandom()) / 3;
-				this.performShoot(SHOOT_OFFSET, offset, offsetH, this.getExistTick() % 10 == 0, ShootTypes.FORWARD);
+				this.performShoot(SHOOT_OFFSET, offset, offsetH, this.getExistTick() % 10 == 0, FORWARD_SHOOT_ANGLE);
 			}
 		} else {
-			this.performShoot(SHOOT_OFFSET, 0, 0, this.getAttackTime() == 1, ShootTypes.FORWARD);
+			this.performShoot(SHOOT_OFFSET, 0, 0, this.getAttackTime() == 1, FORWARD_SHOOT_ANGLE);
 		}
 	}
 	

@@ -12,7 +12,7 @@ import javax.annotation.Nullable;
 
 import com.hungteen.pvz.PVZMod;
 import com.hungteen.pvz.api.enums.PVZGroupType;
-import com.hungteen.pvz.api.interfaces.ICanCharm;
+import com.hungteen.pvz.api.interfaces.ICanBeCharmed;
 import com.hungteen.pvz.api.interfaces.IGroupEntity;
 import com.hungteen.pvz.api.interfaces.IHasOwner;
 import com.hungteen.pvz.api.interfaces.IPVZPlant;
@@ -20,6 +20,7 @@ import com.hungteen.pvz.api.interfaces.IPVZZombie;
 import com.hungteen.pvz.common.entity.PVZMultiPartEntity;
 import com.hungteen.pvz.common.entity.ai.goal.attack.PVZZombieAttackGoal;
 import com.hungteen.pvz.common.entity.ai.goal.target.PVZHurtByTargetGoal;
+import com.hungteen.pvz.common.entity.bullet.AbstractBulletEntity;
 import com.hungteen.pvz.common.entity.misc.LawnMowerEntity;
 import com.hungteen.pvz.common.entity.plant.PVZPlantEntity;
 import com.hungteen.pvz.common.entity.zombie.PVZZombieEntity;
@@ -477,8 +478,8 @@ public class EntityUtil {
 	 * check if entity is charmed
 	 */
 	public static boolean isEntityCharmed(Entity entity){
-		if(entity instanceof ICanCharm) {
-			return ((ICanCharm) entity).isCharmed();
+		if(entity instanceof ICanBeCharmed) {
+			return ((ICanBeCharmed) entity).isCharmed();
 		}
 		return false;
 	}
@@ -509,9 +510,9 @@ public class EntityUtil {
 	
 	/**
 	 * get targetable entities by original check function.
-	 * often use for explosion damage.
+	 * {@link #getWholeTargetableEntities(Entity, AxisAlignedBB)}
 	 */
-	public static List<Entity> getTargetableEntitiesIngoreCheck(@Nonnull Entity attacker, AxisAlignedBB aabb){
+	private static List<Entity> getTargetableEntitiesIngoreCheck(@Nonnull Entity attacker, AxisAlignedBB aabb){
 		return getPredicateEntities(attacker, aabb, Entity.class, target -> checkCanEntityBeTarget(attacker, target));
 	}
 	
@@ -530,31 +531,31 @@ public class EntityUtil {
 	
 	/**
 	 * get final attack entities for explosion or other range attack.
+	 * use for every range attack condition.
 	 */
-	public static List<Entity> getRangeTargetableEntities(@Nonnull Entity attacker, AxisAlignedBB aabb) {
+	public static List<Entity> getWholeTargetableEntities(@Nonnull Entity attacker, AxisAlignedBB aabb) {
 		IntOpenHashSet set = new IntOpenHashSet();
 		List<Entity> list = new ArrayList<>();
 		if(attacker == null) return list;//prevent crash.
-		List<Entity> targets = getTargetableEntities(attacker, aabb);
-		targets.forEach(target -> {//owner first.
-			if(! (target instanceof PVZMultiPartEntity)) {
-				if(! set.contains(target.getId())) {
-					set.addAll(getOwnerAndPartsID(target));
-					list.add(target);
-				}
-			}
+		List<Entity> targets = getTargetableEntitiesIngoreCheck(attacker, aabb);
+		//choose owner first.
+		targets.stream().filter(target -> ! (target instanceof PVZMultiPartEntity) 
+				&& ! set.contains(target.getId())).forEach(target -> {
+			set.addAll(getOwnerAndPartsID(target));
+			list.add(target);
 		});
-		targets.forEach((target) -> {//deal with part.
-			if(! set.contains(target.getId())) {
-				set.addAll(getOwnerAndPartsID(target));
-				list.add(target);
-			}
+		//deal with part.
+		targets.stream().filter(target -> target instanceof PVZMultiPartEntity 
+				&& ! set.contains(target.getId())).forEach(target -> {
+			set.addAll(getOwnerAndPartsID(target));
+			list.add(target);
 		});
 		return list;
 	}
 	
 	/**
 	 * get all parts of a entity.
+	 * {@link AbstractBulletEntity#addHitEntity(Entity)}
 	 */
 	public static List<Integer> getOwnerAndPartsID(Entity entity){
 		List<Integer> list = new ArrayList<>();

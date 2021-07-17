@@ -1,0 +1,22 @@
+{
+    "name": "缠绕海草",
+    "icon": "pvz:tangle_kelp_card",
+    "category": "pvz:enforce",
+    "pages": [
+        {
+            "type": "text",
+            "text": "$(bgreen)缠绕海草$()认为它就藏在水面之下，谁也看不到它。但它的朋友们说能够看见，但是它不听。$(br)$(byellow)阳光消耗$() : $(l)25$()$(br)$(bblue)冷却$() : $(l)慢$()$(br)$(l)特点$() : 它是一个$(l)近战攻击$()植物，能将靠近的敌人拉入水中并造成伤害。"
+        },
+        {
+            "type": "entity",
+            "entity": "pvz:tangle_kelp",
+            "scale": 0.65,
+            "text": "外观"
+        },
+        {
+            "type": "text",
+            "text": "$(bgreen)能量豆大招$() : 它会召唤$(l)多个海草$()。"
+        }
+    ],
+    "sortnum": 2
+}

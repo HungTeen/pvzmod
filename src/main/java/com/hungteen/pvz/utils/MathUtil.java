@@ -71,6 +71,10 @@ public class MathUtil {
 		return new Vector3d(b.x - a.x, 0, b.z - a.z).normalize();
 	}
 	
+	public static Vector3d getVector3dBy2(double x, double z) {
+		return new Vector3d(x, 0, z);
+	}
+	
 	/**
 	 * it ignores y position.
 	 */

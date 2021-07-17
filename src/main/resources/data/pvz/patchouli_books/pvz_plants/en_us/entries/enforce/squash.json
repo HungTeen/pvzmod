@@ -15,7 +15,7 @@
         },
         {
             "type": "text",
-            "text": "$(bgreen)Plant Food :$() It will gain $(l)serveral extra smash chances$()."
+            "text": "$(bgreen)Plant Food :$() It will gain $(l)several extra smash chances$()."
         }
     ],
     "sortnum": 1

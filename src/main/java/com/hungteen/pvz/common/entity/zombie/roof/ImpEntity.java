@@ -3,7 +3,7 @@ package com.hungteen.pvz.common.entity.zombie.roof;
 import com.hungteen.pvz.common.entity.zombie.PVZZombieEntity;
 import com.hungteen.pvz.utils.ZombieUtil;
 import com.hungteen.pvz.utils.enums.Zombies;
-import com.hungteen.pvz.utils.interfaces.IDefender;
+import com.hungteen.pvz.utils.interfaces.ICanAttract;
 
 import net.minecraft.entity.EntitySize;
 import net.minecraft.entity.EntityType;
@@ -90,7 +90,7 @@ public class ImpEntity extends PVZZombieEntity {
 	}
 	
 	@Override
-	public boolean canBeAttractedBy(IDefender defender) {
+	public boolean canBeAttractedBy(ICanAttract defender) {
 		return ! this.isFalling && super.canBeAttractedBy(defender);
 	}
 	

@@ -9,6 +9,7 @@ import com.hungteen.pvz.utils.PlantUtil;
 import com.hungteen.pvz.utils.enums.Plants;
 
 import net.minecraft.entity.CreatureEntity;
+import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntitySize;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.LivingEntity;
@@ -86,7 +87,7 @@ public class SquashEntity extends PVZPlantEntity{
 		this.isImmuneToWeak = false;
 		EntityUtil.playSound(this, SoundRegister.GROUND_SHAKE.get());
 		final float range = 1F;
-		for(LivingEntity entity : EntityUtil.getTargetableLivings(this, EntityUtil.getEntityAABB(this, range, range))) {
+		for(Entity entity : EntityUtil.getWholeTargetableEntities(this, EntityUtil.getEntityAABB(this, range, range))) {
 			entity.hurt(PVZDamageSource.causeNormalDamage(this, this), this.getAttackDamage());
 		}
 	}

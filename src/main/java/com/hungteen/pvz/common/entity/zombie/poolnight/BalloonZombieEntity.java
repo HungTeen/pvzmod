@@ -11,7 +11,7 @@ import com.hungteen.pvz.register.SoundRegister;
 import com.hungteen.pvz.utils.EntityUtil;
 import com.hungteen.pvz.utils.ZombieUtil;
 import com.hungteen.pvz.utils.enums.Zombies;
-import com.hungteen.pvz.utils.interfaces.IDefender;
+import com.hungteen.pvz.utils.interfaces.ICanAttract;
 
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.LivingEntity;
@@ -119,7 +119,7 @@ public class BalloonZombieEntity extends PVZZombieEntity {
 	}
 	
 	@Override
-	public boolean canBeAttractedBy(IDefender defender) {
+	public boolean canBeAttractedBy(ICanAttract defender) {
 		return ! this.hasBalloon();
 	}
 	

@@ -15,7 +15,7 @@ import com.hungteen.pvz.utils.MathUtil;
 import com.hungteen.pvz.utils.ZombieUtil;
 import com.hungteen.pvz.utils.enums.Plants;
 import com.hungteen.pvz.utils.enums.Zombies;
-import com.hungteen.pvz.utils.interfaces.IDefender;
+import com.hungteen.pvz.utils.interfaces.ICanAttract;
 
 import net.minecraft.entity.EntitySize;
 import net.minecraft.entity.EntityType;
@@ -101,7 +101,7 @@ public class DolphinRiderEntity extends PVZZombieEntity{
 	}
 	
 	@Override
-	public boolean canBeAttractedBy(IDefender defender) {
+	public boolean canBeAttractedBy(ICanAttract defender) {
 		if(defender instanceof IPVZPlant) {
 			final Plants plant = ((IPVZPlant) defender).getPlantEnumName();
 			return plant == Plants.TALL_NUT || plant == Plants.GIANT_WALL_NUT;

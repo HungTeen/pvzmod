@@ -21,7 +21,7 @@ public class PotatoMineRender extends PVZPlantRender<PotatoMineEntity>{
 		final float sz = super.getScaleByEntity(entity);
 		if(entity.isMineReady()) {
 			final float scale = 0.15F;
-			return sz + entity.getAttackTime() * scale / PotatoMineEntity.ATTACK_ANIM_CD;
+			return sz + entity.getAttackTime() * scale / entity.getAttackCD();
 		}
 		return sz;
 	}
