@@ -165,7 +165,7 @@ public class NobleZombieEntity extends PVZZombieEntity {
 		this.teleportToPos(teleportPos.getX(), teleportPos.getY(), teleportPos.getZ());
 		for (Entity target : EntityUtil.getTargetableEntities(this, EntityUtil.getEntityAABB(this, range, range))) {
 			if (target instanceof PVZPlantEntity) {
-				target.hurt(PVZDamageSource.causeExplosionDamage(this, this),
+				target.hurt(PVZDamageSource.causeDeadlyDamage(this),
 						((LivingEntity) target).getMaxHealth());
 			}
 		}

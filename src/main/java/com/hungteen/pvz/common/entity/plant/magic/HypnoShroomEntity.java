@@ -7,7 +7,6 @@ import com.hungteen.pvz.common.entity.zombie.PVZZombieEntity;
 import com.hungteen.pvz.common.entity.zombie.PVZZombieEntity.Type;
 import com.hungteen.pvz.common.entity.zombie.roof.GargantuarEntity;
 import com.hungteen.pvz.common.misc.damage.PVZDamageSource;
-import com.hungteen.pvz.common.misc.damage.PVZDamageType;
 import com.hungteen.pvz.register.EntityRegister;
 import com.hungteen.pvz.register.SoundRegister;
 import com.hungteen.pvz.utils.EntityUtil;
@@ -67,7 +66,7 @@ public class HypnoShroomEntity extends PVZPlantEntity implements ICanAttract{
 	public void die(DamageSource cause) {
 		super.die(cause);
 		if(! level.isClientSide && ! this.canPlantNormalUpdate()) {
-			if(cause instanceof PVZDamageSource && ((PVZDamageSource) cause).getPVZDamageType() == PVZDamageType.EAT) {
+			if(cause instanceof PVZDamageSource && ((PVZDamageSource) cause).isEatDamage()) {
 				if(this.isPlantInSuperMode()) {
 					if(cause.getEntity() != null) {
 						cause.getEntity().remove();

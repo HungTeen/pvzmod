@@ -70,7 +70,7 @@ public class SporeEntity extends PVZItemBulletEntity{
 	}
 	
 	private void dealSporeDamage(Entity target) {
-		target.hurt(PVZDamageSource.causeAppeaseDamage(this, this.getThrower()), this.attackDamage);
+		target.hurt(PVZDamageSource.spore(this, this.getThrower()), this.attackDamage);
 	}
 	
 	@Override

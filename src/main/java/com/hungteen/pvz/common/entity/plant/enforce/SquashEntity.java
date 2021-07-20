@@ -88,7 +88,7 @@ public class SquashEntity extends PVZPlantEntity{
 		EntityUtil.playSound(this, SoundRegister.GROUND_SHAKE.get());
 		final float range = 1F;
 		for(Entity entity : EntityUtil.getWholeTargetableEntities(this, EntityUtil.getEntityAABB(this, range, range))) {
-			entity.hurt(PVZDamageSource.causeNormalDamage(this, this), this.getAttackDamage());
+			entity.hurt(PVZDamageSource.causeCrushDamage(this), this.getAttackDamage());
 		}
 	}
 	
@@ -131,7 +131,7 @@ public class SquashEntity extends PVZPlantEntity{
 	
 	@Override
 	public boolean isPlantImmuneTo(DamageSource source) {
-		return super.isPlantImmuneTo(source) || PVZDamageSource.isEnforceDamage(source) || source == DamageSource.FALL;
+		return super.isPlantImmuneTo(source) || PVZDamageSource.isEnforceDamage(source);
 	}
 	
 	@Override

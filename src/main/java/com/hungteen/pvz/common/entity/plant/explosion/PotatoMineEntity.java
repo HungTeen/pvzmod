@@ -2,6 +2,7 @@ package com.hungteen.pvz.common.entity.plant.explosion;
 
 import com.hungteen.pvz.client.model.entity.plant.explosion.PotatoMineModel;
 import com.hungteen.pvz.common.entity.bullet.itembullet.PotatoEntity;
+import com.hungteen.pvz.common.entity.plant.PVZPlantEntity;
 import com.hungteen.pvz.common.entity.plant.base.PlantCloserEntity;
 import com.hungteen.pvz.common.entity.zombie.poolnight.DiggerZombieEntity;
 import com.hungteen.pvz.common.misc.damage.PVZDamageSource;
@@ -19,6 +20,7 @@ import net.minecraft.entity.EntitySize;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.Pose;
+import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.vector.Vector3d;
 import net.minecraft.world.World;
 
@@ -45,6 +47,24 @@ public class PotatoMineEntity extends PlantCloserEntity{
 					WorldUtil.spawnRandomSpeedParticle(level, ParticleRegister.DIRT_BURST_OUT.get(), this.position().add(offset), MathUtil.getRandomFloat(getRandom()) / 8, 0.06F);
 				}
 			}
+		}
+	}
+	
+	@Override
+	public void performAttack(LivingEntity target1) {
+		if(! this.level.isClientSide) {
+			final float range = 1.6F;
+			final AxisAlignedBB aabb = EntityUtil.getEntityAABB(this, range, range);
+			EntityUtil.getWholeTargetableEntities(this, aabb).forEach(target -> {
+				target.hurt(PVZDamageSource.explode(this), this.getAttackDamage());
+			});
+			PVZPlantEntity.clearLadders(this, aabb);
+			EntityUtil.playSound(this, SoundRegister.POTATO_MINE.get());
+			for(int i = 1; i <= 10; ++ i) {
+				EntityUtil.spawnParticle(this, 3);
+				EntityUtil.spawnParticle(this, 4);
+			}
+			this.remove();
 		}
 	}
 	
@@ -109,22 +129,6 @@ public class PotatoMineEntity extends PlantCloserEntity{
 	 */
 	public void setRisingFromDirt() {
 		this.setExistTick(PREPARE_CD - RISING_ANIM_CD - 2);
-	}
-	
-	@Override
-	public void performAttack(LivingEntity target1) {
-		if(! this.level.isClientSide) {
-			final float range = 1.6F;
-			EntityUtil.getWholeTargetableEntities(this, EntityUtil.getEntityAABB(this, range, range)).forEach(target -> {
-				target.hurt(PVZDamageSource.causeExplosionDamage(this, this), this.getAttackDamage());
-			});
-			EntityUtil.playSound(this, SoundRegister.POTATO_MINE.get());
-			for(int i = 1; i <= 10; ++ i) {
-				EntityUtil.spawnParticle(this, 3);
-				EntityUtil.spawnParticle(this, 4);
-			}
-			this.remove();
-		}
 	}
 	
 	@Override

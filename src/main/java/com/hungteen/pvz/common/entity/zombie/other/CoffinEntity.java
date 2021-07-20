@@ -146,7 +146,7 @@ public class CoffinEntity extends PVZZombieEntity {
 		super.doPush(entityIn);
 		if (entityIn instanceof PVZPlantEntity) {
 			PVZPlantEntity plant = (PVZPlantEntity) entityIn;
-			plant.hurt(PVZDamageSource.causeCrushDamage(this, this), plant.getMaxHealth());
+			plant.hurt(PVZDamageSource.causeCrushDamage(this), plant.getMaxHealth());
 		}
 	}
 	

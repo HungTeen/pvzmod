@@ -14,7 +14,6 @@ import com.hungteen.pvz.common.entity.plant.PVZPlantEntity;
 import com.hungteen.pvz.common.entity.zombie.PVZZombieEntity;
 import com.hungteen.pvz.common.entity.zombie.roof.BungeeZombieEntity.BungeeStates;
 import com.hungteen.pvz.common.entity.zombie.roof.BungeeZombieEntity.BungeeTypes;
-import com.hungteen.pvz.common.misc.damage.PVZDamageSource;
 import com.hungteen.pvz.common.world.data.PVZFlagData;
 import com.hungteen.pvz.data.loot.PVZLoot;
 import com.hungteen.pvz.register.EntityRegister;
@@ -240,7 +239,7 @@ public class ZomBossEntity extends PVZZombieEntity {
 			}).forEach((target) -> {
 				if(target instanceof PVZPlantEntity) target.setHealth(0);
 				else {
-					target.hurt(PVZDamageSource.causeNormalDamage(this, this), 12F);
+//					target.hurt(PVZDamageSource.causeNormalDamage(this, this), 12F);
 					target.setDeltaMovement(target.position().add(0, target.getEyeHeight(), 0).subtract(this.position()).normalize().scale(2F));
 				}
 			});

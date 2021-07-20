@@ -3,7 +3,6 @@ package com.hungteen.pvz.common.entity.bullet.itembullet;
 import java.util.List;
 
 import com.hungteen.pvz.common.entity.plant.assist.MagnetShroomEntity;
-import com.hungteen.pvz.common.misc.damage.PVZDamageSource;
 import com.hungteen.pvz.register.EntityRegister;
 import com.hungteen.pvz.register.SoundRegister;
 import com.hungteen.pvz.utils.EntityUtil;
@@ -97,7 +96,7 @@ public class MetalItemEntity extends PVZItemBulletEntity {
 			Entity target = ((EntityRayTraceResult) result).getEntity();
 			if (this.getMetalState() == MetalStates.SHOOT && checkCanAttack(target)) {
 				target.invulnerableTime = 0;
-				target.hurt(PVZDamageSource.causeAppeaseDamage(this, this.getThrower()), getAttackDamage());
+//				target.hurt(PVZDamageSource.causeAppeaseDamage(this, this.getThrower()), getAttackDamage());
 				EntityUtil.playSound(this, SoundRegister.METAL_HIT.get());
 				flag = true;
 			}

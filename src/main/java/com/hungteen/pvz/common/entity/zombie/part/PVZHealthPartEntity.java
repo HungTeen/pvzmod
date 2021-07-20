@@ -2,7 +2,6 @@ package com.hungteen.pvz.common.entity.zombie.part;
 
 import com.hungteen.pvz.common.entity.zombie.base.DefenceZombieEntity;
 import com.hungteen.pvz.common.misc.damage.PVZDamageSource;
-import com.hungteen.pvz.common.misc.damage.PVZDamageType;
 import com.hungteen.pvz.utils.EntityUtil;
 
 import net.minecraft.entity.EntityType;
@@ -27,7 +26,7 @@ public class PVZHealthPartEntity extends PVZZombiePartEntity{
 	public boolean hurt(DamageSource source, float damage) {
 		//the source can pass through defence and deal damage to owner directly.
 		if(source instanceof PVZDamageSource) {
-			if(((PVZDamageSource) source).getPVZDamageType() == PVZDamageType.THROUGH) {
+			if(((PVZDamageSource) source).isThroughDamage()) {
 				return super.hurt(source, damage);
 			}
 			((PVZDamageSource) source).setDefended(true);

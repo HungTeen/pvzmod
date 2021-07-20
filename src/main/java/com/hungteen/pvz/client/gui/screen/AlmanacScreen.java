@@ -183,7 +183,6 @@ public class AlmanacScreen extends AbstractOptionScreen<AlmanacContainer> {
 				this.drawProperty(stack, Properties.FROZEN_EFFECT_TIME, iceShroom.getFrozenTick());
 				this.drawProperty(stack, Properties.COLD_EFFECT, iceShroom.getColdLvl());
 				this.drawProperty(stack, Properties.COLD_EFFECT_TIME, iceShroom.getColdTick());
-				this.drawProperty(stack, Properties.ATTACK_RANGE, iceShroom.getAttackRange());
 				break;
 			}
 			case DOOM_SHROOM:{
@@ -214,7 +213,6 @@ public class AlmanacScreen extends AbstractOptionScreen<AlmanacContainer> {
 			case JALAPENO:{
 				JalapenoEntity jalapeno = (JalapenoEntity) plantEntity;
 				this.drawProperty(stack, Properties.ATTACK_DAMAGE, jalapeno.getAttackDamage());
-				this.drawProperty(stack, Properties.ATTACK_RANGE, jalapeno.getFireRange());
 				break;
 			}
 			case SPIKE_WEED:{

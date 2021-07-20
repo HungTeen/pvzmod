@@ -60,7 +60,7 @@ public class MournerZombieEntity extends PVZZombieEntity{
 	
 	@Override
 	protected PVZDamageSource getZombieAttackDamageSource() {
-		return PVZDamageSource.causeNormalDamage(this, this);
+		return PVZDamageSource.normal(this);
 	}
 
 	@Override

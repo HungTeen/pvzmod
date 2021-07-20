@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.hungteen.pvz.common.entity.misc.DoomFixerEntity;
+import com.hungteen.pvz.common.entity.plant.PVZPlantEntity;
 import com.hungteen.pvz.common.entity.plant.base.PlantBomberEntity;
 import com.hungteen.pvz.common.misc.damage.PVZDamageSource;
 import com.hungteen.pvz.register.ParticleRegister;
@@ -30,6 +31,7 @@ import net.minecraft.loot.LootParameters;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.EntityDamageSource;
+import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.vector.Vector3d;
 import net.minecraft.world.World;
@@ -59,13 +61,15 @@ public class DoomShroomEntity extends PlantBomberEntity {
 		if(server) {
 			//deal damage to targets.
 			final float range = 10.5F;
-			EntityUtil.getWholeTargetableEntities(this, EntityUtil.getEntityAABB(this, range, range)).forEach(target -> {
+			final AxisAlignedBB aabb = EntityUtil.getEntityAABB(this, range, range);
+			EntityUtil.getWholeTargetableEntities(this, aabb).forEach(target -> {
 				if(target instanceof EnderDragonEntity) {//make ender_dragon can be damaged by doom shroom. 
 					((EnderDragonEntity) target).hurt(((EntityDamageSource)DamageSource.mobAttack(this)).setThorns().setExplosion(), this.getAttackDamage() * 2);
 				} else {
-					target.hurt(PVZDamageSource.causeExplosionDamage(this, this), this.getAttackDamage());
+					target.hurt(PVZDamageSource.explode(this), this.getAttackDamage());
 				}
 			});
+			PVZPlantEntity.clearLadders(this, aabb);
 			EntityUtil.playSound(this, SoundRegister.DOOM.get());
 			//destroy block and spawn drops
 			if(net.minecraftforge.event.ForgeEventFactory.getMobGriefingEvent(this.level, this)) {

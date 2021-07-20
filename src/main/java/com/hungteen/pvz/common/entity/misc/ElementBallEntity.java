@@ -53,6 +53,21 @@ public class ElementBallEntity extends AbstractOwnerEntity {
 		this.entityData.define(ELEMENTS, ElementTypes.FLAME.ordinal());
 	}
 	
+	/**
+	 * {@link IceShroomEntity#startBomb(boolean)}
+	 * {@link JalapenoEntity#startBomb(boolean)}
+	 */
+	public static void killElementBalls(LivingEntity attacker, float range, ElementTypes type) {
+		attacker.level.getEntitiesOfClass(ElementBallEntity.class, EntityUtil.getEntityAABB(attacker, range, range), target -> {
+			return target.getElementBallType() == type && EntityUtil.checkCanEntityBeAttack(attacker, target);
+		}).forEach(target -> {
+			target.onKilledByPlants(attacker);
+		});
+	}
+	
+	/**
+	 * {@link #killElementBalls(LivingEntity, float, ElementTypes)}
+	 */
 	public void onKilledByPlants(LivingEntity entity) {
 		if(entity instanceof PVZPlantEntity) {
 			PVZPlantEntity plant = (PVZPlantEntity) entity;
@@ -114,7 +129,9 @@ public class ElementBallEntity extends AbstractOwnerEntity {
 	}
 	
 	private PVZDamageSource getAttackSource() {
-		if(this.getElementBallType() == ElementTypes.FLAME) return PVZDamageSource.causeFireDamage(this, this.getOwner());
+		if(this.getElementBallType() == ElementTypes.FLAME) {
+			return PVZDamageSource.causeFlameDamage(this, this.getOwner());
+		}
 		return PVZDamageSource.causeIceDamage(this, this.getOwner());
 	}
 	

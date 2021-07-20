@@ -22,7 +22,7 @@ public class KernelEntity extends PultBulletEntity {
 	}
 
 	protected void dealDamage(Entity target) {
-		target.hurt(PVZDamageSource.causeThrowDamage(this, this.getThrower()), this.attackDamage);
+		target.hurt(PVZDamageSource.kernel(this, this.getThrower()), this.attackDamage);
 	}
 	
 	@Override

@@ -70,7 +70,7 @@ public class GardenRakeEntity extends AbstractOwnerEntity {
 		this.level.getEntitiesOfClass(Entity.class, this.getBoundingBox().inflate(0.25D), (target) -> {
 	        return EntityUtil.canTargetEntity(this, target);
         }).forEach((target) -> {
-        	target.hurt(PVZDamageSource.causeNormalDamage(this, this), 180F);
+        	target.hurt(PVZDamageSource.normal(this), 180F);
         });
 		EntityUtil.playSound(this, SoundRegister.SWING.get());
 		this.remove();

@@ -3,7 +3,6 @@ package com.hungteen.pvz.common.event;
 import com.hungteen.pvz.PVZMod;
 import com.hungteen.pvz.common.capability.CapabilityHandler;
 import com.hungteen.pvz.common.enchantment.TreeProtectionEnchantment;
-import com.hungteen.pvz.common.entity.plant.magic.StrangeCatEntity;
 import com.hungteen.pvz.common.entity.zombie.PVZZombieEntity;
 import com.hungteen.pvz.common.event.handler.LivingEventHandler;
 import com.hungteen.pvz.common.event.handler.PlayerEventHandler;
@@ -40,14 +39,14 @@ public class PVZLivingEvents {
 				l.getPlayerData().getPlayerStats().setPlayerStats(Resources.KILL_COUNT, 0);
 			});
 		}
-		if(! ev.getEntity().level.isClientSide && ev.getSource() instanceof PVZDamageSource) {
-			PVZDamageSource source = (PVZDamageSource) ev.getSource();
-			if(source.isCopyDamage()) {
-				if(source.getEntity() instanceof StrangeCatEntity) {
-					((StrangeCatEntity) source.getEntity()).onSelfCopy(ev.getEntityLiving());
-				}
-			}
-		}
+//		if(! ev.getEntity().level.isClientSide && ev.getSource() instanceof PVZDamageSource) {
+//			PVZDamageSource source = (PVZDamageSource) ev.getSource();
+//			if(source.isCopyDamage()) {
+//				if(source.getEntity() instanceof StrangeCatEntity) {
+//					((StrangeCatEntity) source.getEntity()).onSelfCopy(ev.getEntityLiving());
+//				}
+//			}
+//		}
 	}
 	
 	@SubscribeEvent

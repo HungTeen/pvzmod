@@ -46,7 +46,7 @@ public class CabbageEntity extends PultBulletEntity implements IRendersAsItem {
 	}
 
 	protected void dealDamage(Entity target) {
-		target.hurt(PVZDamageSource.causeThrowDamage(this, this.getThrower()), this.getFixDamage());
+		target.hurt(PVZDamageSource.cabbage(this, this.getThrower()), this.getFixDamage());
 	}
 	
 	private float getFixDamage() {

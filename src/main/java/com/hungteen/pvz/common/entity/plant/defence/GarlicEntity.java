@@ -4,9 +4,6 @@ import java.util.Collections;
 import java.util.List;
 
 import com.hungteen.pvz.common.entity.plant.base.PlantDefenderEntity;
-import com.hungteen.pvz.common.misc.damage.PVZDamageSource;
-import com.hungteen.pvz.common.misc.damage.PVZDamageType;
-import com.hungteen.pvz.register.SoundRegister;
 import com.hungteen.pvz.utils.AlgorithmUtil;
 import com.hungteen.pvz.utils.EntityUtil;
 import com.hungteen.pvz.utils.enums.Plants;
@@ -14,7 +11,6 @@ import com.hungteen.pvz.utils.enums.Plants;
 import net.minecraft.entity.CreatureEntity;
 import net.minecraft.entity.EntitySize;
 import net.minecraft.entity.EntityType;
-import net.minecraft.entity.MobEntity;
 import net.minecraft.entity.Pose;
 import net.minecraft.util.DamageSource;
 import net.minecraft.world.World;
@@ -32,13 +28,13 @@ public class GarlicEntity extends PlantDefenderEntity {
 
 	@Override
 	public boolean hurt(DamageSource source, float amount) {
-		if(source instanceof PVZDamageSource && ((PVZDamageSource) source).getPVZDamageType() == PVZDamageType.EAT && source.getEntity() instanceof MobEntity) {
-			this.updateGarlic();
-			if(this.garlic != null) {
-				EntityUtil.playSound(((MobEntity) source.getEntity()), SoundRegister.YUCK.get());
-				((MobEntity) source.getEntity()).setTarget(this.garlic);
-			}
-		}
+//		if(source instanceof PVZDamageSource && ((PVZDamageSource) source).getPVZDamageType() == PVZDamageType.EAT && source.getEntity() instanceof MobEntity) {
+//			this.updateGarlic();
+//			if(this.garlic != null) {
+//				EntityUtil.playSound(((MobEntity) source.getEntity()), SoundRegister.YUCK.get());
+//				((MobEntity) source.getEntity()).setTarget(this.garlic);
+//			}
+//		}
 		return super.hurt(source, amount);
 	}
 	

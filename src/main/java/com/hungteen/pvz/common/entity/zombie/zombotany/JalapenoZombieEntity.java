@@ -1,5 +1,7 @@
 package com.hungteen.pvz.common.entity.zombie.zombotany;
 
+import com.hungteen.pvz.common.entity.misc.ElementBallEntity;
+import com.hungteen.pvz.common.entity.misc.ElementBallEntity.ElementTypes;
 import com.hungteen.pvz.common.entity.plant.flame.JalapenoEntity;
 import com.hungteen.pvz.data.loot.PVZLoot;
 import com.hungteen.pvz.register.SoundRegister;
@@ -35,19 +37,14 @@ public class JalapenoZombieEntity extends AbstractZombotanyEntity {
 	}
 	
 	public void startBomb() {
-		int range = this.getFireRange();
-		for(int i = - range; i <= range; ++ i) {
-			JalapenoEntity.clearSnowAndSpawnFlame(this, i, 0);
-			JalapenoEntity.clearSnowAndSpawnFlame(this, 0, i);
-		}
+		final int range = this.getFireRange();
 		if(! level.isClientSide) {
+			JalapenoEntity.fireMob(this, range, 1f);
+		    JalapenoEntity.fireMob(this, 1f, range);
+		    ElementBallEntity.killElementBalls(this, 40, ElementTypes.ICE);
 			EntityUtil.playSound(this, SoundRegister.JALAPENO.get());
 		}
-		JalapenoEntity.fireMob(this, range, 0.5f);
-		JalapenoEntity.fireMob(this, 0.5f, range);
-		if(this.isCharmed()) {
-			JalapenoEntity.killIceBall(this);
-		}
+		JalapenoEntity.clearSnowAndSpawnFlame(this, range);
 	}
 	
 	public int getFireRange() {

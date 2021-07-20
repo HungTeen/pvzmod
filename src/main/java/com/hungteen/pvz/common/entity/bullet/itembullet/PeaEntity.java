@@ -110,9 +110,9 @@ public class PeaEntity extends AbstractShootBulletEntity implements IRendersAsIt
 	private void dealPeaDamage(Entity target) {
 		final float damage = this.getFixDamage();
 		if (this.getPeaState() == State.NORMAL) {// normal pea attack
-			target.hurt(PVZDamageSource.causeAppeaseDamage(this, this.getThrower()), damage);
+			target.hurt(PVZDamageSource.pea(this, this.getThrower()), damage);
 		} else if (this.getPeaState() == State.ICE) {// snow pea attack
-			PVZDamageSource source = PVZDamageSource.causeIceDamage(this, this.getThrower());
+			PVZDamageSource source = PVZDamageSource.snowPea(this, this.getThrower());
 			LivingEntity owner = this.getThrower();
 			if (owner instanceof IIceEffect) {
 				((IIceEffect) owner).getColdEffect().ifPresent(e -> source.addEffect(e));
@@ -125,7 +125,7 @@ public class PeaEntity extends AbstractShootBulletEntity implements IRendersAsIt
 			}
 			target.hurt(source, damage);
 		} else if (this.getPeaState() == State.FIRE || this.getPeaState() == State.BLUE_FIRE) {
-			target.hurt(PVZDamageSource.causeFireDamage(this, this.getThrower()), damage);
+			target.hurt(PVZDamageSource.flamePea(this, this.getThrower()), damage);
 		}
 	}
 	

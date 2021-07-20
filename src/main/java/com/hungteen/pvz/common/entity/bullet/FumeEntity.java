@@ -93,7 +93,7 @@ public class FumeEntity extends PVZItemBulletEntity{
 	}
 	
 	private void dealFumeDamage(Entity target) {
-		target.hurt(PVZDamageSource.causeThroughDamage(this, this.getThrower()), this.attackDamage);
+		target.hurt(PVZDamageSource.fume(this, this.getThrower()), this.attackDamage);
 		if(!level.isClientSide && this.knockback > 0) {
 			Vector3d speed = target.getDeltaMovement();
 			Vector3d now = this.getDeltaMovement();

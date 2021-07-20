@@ -28,7 +28,7 @@ public class GiantNutBowlingEntity extends AbstractBowlingEntity {
 			this.hitEntities = new IntOpenHashSet();
 		}
 		if(this.hitEntities != null && ! this.hitEntities.contains(entity.getId())) {
-			entity.hurt(PVZDamageSource.causeBowlingDamage(this, this.getOwner()), 200);
+			entity.hurt(PVZDamageSource.normal(this, this.getOwner()), 200);
 			this.hitEntities.add(entity.getId());
 		    EntityUtil.playSound(this, SoundRegister.BOWLING_HIT.get());
 		}

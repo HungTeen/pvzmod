@@ -102,10 +102,10 @@ public class ChomperEntity extends PVZPlantEntity {
 		final LivingEntity target = this.getTarget();
 		final float damage = this.getAttackDamage();
 		if (EntityUtil.getCurrentHealth(target) <= this.getAttackDamage()) {//can eat to death need rest
-			target.hurt(PVZDamageSource.causeEatDamage(this, this), damage);
+			target.hurt(PVZDamageSource.eat(this), damage);
 			this.setRestTick(this.getRestCD());
 		} else {
-			target.hurt(PVZDamageSource.causeEatDamage(this, this), damage / 50F);
+			target.hurt(PVZDamageSource.eat(this), damage / 50F);
 		}
 		EntityUtil.playSound(this, SoundRegister.CHOMP.get());
 	}

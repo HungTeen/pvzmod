@@ -58,7 +58,7 @@ public class CornEntity extends PultBulletEntity {
 		int killCnt = 0;
 		for(Entity entity : EntityUtil.getTargetableEntities(this, EntityUtil.getEntityAABB(this, range, range))) {
 			if((! (entity instanceof LivingEntity) || EntityUtil.canTargetEntity(this.getThrower(), (LivingEntity) entity))) {
-				entity.hurt(PVZDamageSource.causeNormalDamage(this, this.getThrower()), this.attackDamage);
+				entity.hurt(PVZDamageSource.corn(this, this.getThrower()), this.attackDamage);
 				if(! EntityUtil.isEntityValid(entity) && entity instanceof GargantuarEntity) {
 					++ killCnt;
 				}

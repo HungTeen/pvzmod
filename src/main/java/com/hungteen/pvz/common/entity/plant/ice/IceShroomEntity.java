@@ -38,7 +38,7 @@ public class IceShroomEntity extends PlantBomberEntity implements IIceEffect{
 	public void startBomb(boolean server) {
 		if(server) {
 			//frozen enemies.
-			final float len = getAttackRange();
+			final float len = 20;
 			final AxisAlignedBB aabb = EntityUtil.getEntityAABB(this, len, len);
 			int cnt = 0;
 			for(LivingEntity entity : EntityUtil.getTargetableLivings(this, aabb)) {
@@ -57,11 +57,7 @@ public class IceShroomEntity extends PlantBomberEntity implements IIceEffect{
 				EntityEffectAmountTrigger.INSTANCE.trigger((ServerPlayerEntity) player, this, cnt);
 			}
 			//kill flame ball.
-			level.getEntitiesOfClass(ElementBallEntity.class, aabb.inflate(10), target -> {
-				return EntityUtil.checkCanEntityBeAttack(this, target) && target.getElementBallType() == ElementTypes.FLAME;
-			}).forEach(target -> {
-				target.onKilledByPlants(this);
-			});
+			ElementBallEntity.killElementBalls(this, 40, ElementTypes.FLAME);
 		} else {
 			for(int i = 0;i < 3; ++ i) {
 		        this.level.addParticle(ParticleTypes.EXPLOSION, this.getX(), this.getY(), this.getZ(), 0, 0, 0);
@@ -80,10 +76,6 @@ public class IceShroomEntity extends PlantBomberEntity implements IIceEffect{
 	public float getAttackDamage() {
 		final int lvl = this.getPlantLvl();
 		return lvl <= 20 ? 0.1F * lvl : 10F;
-	}
-	
-	public float getAttackRange() {
-		return this.isPlantInStage(1) ? 20 : this.isPlantInStage(2) ? 25 : 30;
 	}
 	
 	@Override

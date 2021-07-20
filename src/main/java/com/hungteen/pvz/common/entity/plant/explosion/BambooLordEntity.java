@@ -72,7 +72,7 @@ public class BambooLordEntity extends PlantCloserEntity {
 		}
 		float range = 1.5F;
 		EntityUtil.getTargetableEntities(this, EntityUtil.getEntityAABB(this, range, range)).forEach((target) -> {
-			target.hurt(PVZDamageSource.causeExplosionDamage(this, this), this.getAttackDamage());
+			target.hurt(PVZDamageSource.explode(this), this.getAttackDamage());
 			target.setDeltaMovement(target.getDeltaMovement().add(0, UP_SPEED, 0));
 		});
 		EntityUtil.playSound(this, SoundRegister.POTATO_MINE.get());

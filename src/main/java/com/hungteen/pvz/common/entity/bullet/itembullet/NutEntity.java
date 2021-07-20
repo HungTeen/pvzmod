@@ -1,7 +1,6 @@
 package com.hungteen.pvz.common.entity.bullet.itembullet;
 
 import com.hungteen.pvz.common.entity.plant.defence.WallNutEntity;
-import com.hungteen.pvz.common.misc.damage.PVZDamageSource;
 import com.hungteen.pvz.register.EntityRegister;
 import com.hungteen.pvz.register.ItemRegister;
 import com.hungteen.pvz.utils.EntityUtil;
@@ -58,7 +57,7 @@ public class NutEntity extends PVZItemBulletEntity {
 	}
 	
 	private void dealNutDamage(Entity target) {
-		target.hurt(PVZDamageSource.causeNormalDamage(this, this.getThrower()), 2);
+//		target.hurt(PVZDamageSource.causeNormalDamage(this, this.getThrower()), 2);
 	}
 	
 	@Override

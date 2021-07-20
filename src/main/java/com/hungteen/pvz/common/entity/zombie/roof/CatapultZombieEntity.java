@@ -2,6 +2,7 @@ package com.hungteen.pvz.common.entity.zombie.roof;
 
 import java.util.Optional;
 
+import com.hungteen.pvz.api.interfaces.IHasWheel;
 import com.hungteen.pvz.common.entity.ai.goal.attack.PultAttackGoal;
 import com.hungteen.pvz.common.entity.ai.goal.target.PVZRandomTargetGoal;
 import com.hungteen.pvz.common.entity.bullet.BallEntity;
@@ -24,7 +25,7 @@ import net.minecraft.network.datasync.DataSerializers;
 import net.minecraft.network.datasync.EntityDataManager;
 import net.minecraft.world.World;
 
-public class CatapultZombieEntity extends CarZombieEntity implements IPult {
+public class CatapultZombieEntity extends CarZombieEntity implements IPult,IHasWheel {
 
 	private static final DataParameter<Integer> BALL_COUNT = EntityDataManager.defineId(CatapultZombieEntity.class, DataSerializers.INT);
 	private static final float PULT_DISTANCE = 2000;
@@ -65,6 +66,11 @@ public class CatapultZombieEntity extends CarZombieEntity implements IPult {
 				this.pultBullet();
 			}
 		}
+	}
+	
+	@Override
+	public void spikeWheelBy(LivingEntity entity) {
+		this.setHealth(0);
 	}
 	
 	@Override

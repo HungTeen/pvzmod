@@ -5,7 +5,6 @@ import java.util.Random;
 
 import com.hungteen.pvz.common.entity.zombie.PVZZombieEntity;
 import com.hungteen.pvz.common.misc.damage.PVZDamageSource;
-import com.hungteen.pvz.common.misc.damage.PVZDamageType;
 import com.hungteen.pvz.data.loot.PVZLoot;
 import com.hungteen.pvz.register.SoundRegister;
 import com.hungteen.pvz.utils.EntityUtil;
@@ -82,7 +81,7 @@ public class BalloonZombieEntity extends PVZZombieEntity {
 			return true;
 		}
 		if(source instanceof PVZDamageSource) {
-			return ((PVZDamageSource) source).getPVZDamageType() == PVZDamageType.THORN;
+			return ((PVZDamageSource) source).isThornDamage();
 		}
 		return false;
 	}

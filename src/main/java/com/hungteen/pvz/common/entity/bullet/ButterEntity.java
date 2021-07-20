@@ -22,7 +22,7 @@ public class ButterEntity extends PultBulletEntity {
 	}
 
 	protected void dealDamage(Entity target) {
-		PVZDamageSource source = PVZDamageSource.causeButterDamage(this, this.getThrower());
+		PVZDamageSource source = PVZDamageSource.butter(this, this.getThrower());
 		if(this.getThrower() instanceof KernelPultEntity) {
 			source.addEffect(((KernelPultEntity) this.getThrower()).getButterEffect());
 		}

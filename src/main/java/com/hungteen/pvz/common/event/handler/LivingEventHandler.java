@@ -17,12 +17,24 @@ public class LivingEventHandler {
 	 * {@link PVZLivingEvents#onLivingHurt(net.minecraftforge.event.entity.living.LivingHurtEvent)}
 	 */
 	public static void handleHurtEffects(LivingEntity target, PVZDamageSource source) {
-		if(source.isDefended()) {
-			return ;
+//		if (source instanceof PVZDamageSource) {
+//			if (EntityUtil.isEntityFrozen(entity)this.canBeFrozen() && ((PVZDamageSource) source).getPVZDamageType() == PVZDamageType.ICE
+//					&& !((PVZDamageSource) source).isDefended()) {
+//				if (!this.isZombieColdOrForzen() && !this.level.isClientSide) {
+//					EntityUtil.playSound(this, SoundRegister.ZOMBIE_FROZEN.get());
+//				}
+//			} else if (((PVZDamageSource) source).getPVZDamageType() == PVZDamageType.FIRE
+//					&& !((PVZDamageSource) source).isDefended()) {
+//				if (this.isZombieColdOrForzen() && !this.level.isClientSide) {
+//					EntityUtil.playSound(this, SoundRegister.ZOMBIE_FIRE.get());
+//					this.removeEffect(EffectRegister.COLD_EFFECT.get());
+//					this.removeEffectNoUpdate(EffectRegister.FROZEN_EFFECT.get());
+//				}
+//			}
+//		}
+		if(! source.isDefended()) {//source not defended by armor.
+			source.getEffects().forEach(effect -> EntityUtil.addPotionEffect(target, effect));
 		}
-		source.getEffects().forEach(effect -> {
-			EntityUtil.addPotionEffect(target, effect);
-		});
 	}
 	
 	/**

@@ -38,7 +38,7 @@ public class ExplodeONutEntity extends WallNutEntity {
 		float len = 2F;
 		AxisAlignedBB aabb = EntityUtil.getEntityAABB(entity, len, len);
 		EntityUtil.getTargetableEntities(this, aabb).forEach((target) -> {
-			target.hurt(PVZDamageSource.causeExplosionDamage(this, this), this.getAttackDamage());
+			target.hurt(PVZDamageSource.explode(this), this.getAttackDamage());
 		});
 		EntityUtil.playSound(this, SoundRegister.CHERRY_BOMB.get());
 	}

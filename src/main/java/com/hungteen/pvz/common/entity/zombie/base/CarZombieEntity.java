@@ -69,7 +69,7 @@ public abstract class CarZombieEntity extends PVZZombieEntity {
 	
 	@Override
 	protected PVZDamageSource getZombieAttackDamageSource() {
-		return PVZDamageSource.causeCrushDamage(this, this);
+		return PVZDamageSource.causeCrushDamage(this);
 	}
 	
 	@Override

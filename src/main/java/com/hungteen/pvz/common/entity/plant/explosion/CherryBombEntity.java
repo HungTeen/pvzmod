@@ -1,6 +1,7 @@
 package com.hungteen.pvz.common.entity.plant.explosion;
 
 import com.hungteen.pvz.common.advancement.trigger.EntityEffectAmountTrigger;
+import com.hungteen.pvz.common.entity.plant.PVZPlantEntity;
 import com.hungteen.pvz.common.entity.plant.base.PlantBomberEntity;
 import com.hungteen.pvz.common.misc.damage.PVZDamageSource;
 import com.hungteen.pvz.register.ParticleRegister;
@@ -17,6 +18,7 @@ import net.minecraft.entity.EntityType;
 import net.minecraft.entity.Pose;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.ServerPlayerEntity;
+import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.world.World;
 
 public class CherryBombEntity extends PlantBomberEntity{
@@ -30,12 +32,14 @@ public class CherryBombEntity extends PlantBomberEntity{
 		if(server) {
 			int deathCnt = 0;
 			final float range = 4.5F;
-			for(Entity target : EntityUtil.getWholeTargetableEntities(this, EntityUtil.getEntityAABB(this, range, range))) {
-				target.hurt(PVZDamageSource.causeExplosionDamage(this, this), this.getAttackDamage());
+			final AxisAlignedBB aabb = EntityUtil.getEntityAABB(this, range, range);
+			for(Entity target : EntityUtil.getWholeTargetableEntities(this, aabb)) {
+				target.hurt(PVZDamageSource.explode(this), this.getAttackDamage());
 				if(! EntityUtil.isEntityValid(target)) {
 					++ deathCnt;
 				}
 			}
+			PVZPlantEntity.clearLadders(this, aabb);
 			EntityUtil.playSound(this, SoundRegister.CHERRY_BOMB.get());
 			//trigger advancement.
 			PlayerEntity owner = EntityUtil.getEntityOwner(level, this);

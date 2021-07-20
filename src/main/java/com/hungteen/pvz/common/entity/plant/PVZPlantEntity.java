@@ -13,6 +13,7 @@ import com.hungteen.pvz.common.capability.CapabilityHandler;
 import com.hungteen.pvz.common.entity.ai.goal.PVZLookRandomlyGoal;
 import com.hungteen.pvz.common.entity.drop.SunEntity;
 import com.hungteen.pvz.common.entity.plant.enforce.SquashEntity;
+import com.hungteen.pvz.common.entity.plant.explosion.DoomShroomEntity;
 import com.hungteen.pvz.common.entity.plant.light.GoldLeafEntity;
 import com.hungteen.pvz.common.entity.plant.spear.SpikeWeedEntity;
 import com.hungteen.pvz.common.entity.zombie.PVZZombieEntity;
@@ -21,7 +22,6 @@ import com.hungteen.pvz.common.entity.zombie.roof.BungeeZombieEntity;
 import com.hungteen.pvz.common.item.card.ImitaterCardItem;
 import com.hungteen.pvz.common.item.card.PlantCardItem;
 import com.hungteen.pvz.common.misc.damage.PVZDamageSource;
-import com.hungteen.pvz.common.misc.damage.PVZDamageType;
 import com.hungteen.pvz.register.EntityRegister;
 import com.hungteen.pvz.register.ParticleRegister;
 import com.hungteen.pvz.register.SoundRegister;
@@ -58,6 +58,7 @@ import net.minecraft.util.DamageSource;
 import net.minecraft.util.Hand;
 import net.minecraft.util.SoundEvent;
 import net.minecraft.util.SoundEvents;
+import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.vector.Vector3d;
@@ -192,7 +193,7 @@ public abstract class PVZPlantEntity extends CreatureEntity implements IPVZPlant
 		if (!this.level.isClientSide && !this.isImmuneToWeak && this.getVehicle() == null) {
 			if (this.checkNormalPlantWeak() && this.weakTime <= 0) {
 				this.weakTime = PLANT_WEAK_CD;
-				this.hurt(PVZDamageSource.causeWeakDamage(this, this), this.getMaxHealth() / 2);
+				this.hurt(PVZDamageSource.PLANT_WILT, EntityUtil.getMaxHealthDamage(this, 0.5F));
 			}
 			this.weakTime = Math.max(0, this.weakTime - 1);
 		}
@@ -394,6 +395,17 @@ public abstract class PVZPlantEntity extends CreatureEntity implements IPVZPlant
 		}
 		return amount;
 	}
+	
+	/**
+	 * {@link DoomShroomEntity#startBomb(boolean)}
+	 */
+	public static void clearLadders(LivingEntity entity, AxisAlignedBB aabb) {
+		entity.level.getEntitiesOfClass(PVZPlantEntity.class, aabb, target -> {
+			return target.hasMetal() && ! EntityUtil.checkCanEntityBeAttack(entity, target);
+		}).forEach(plant -> {
+			plant.setMetal(false);
+		});
+	}
 
 	@Override
 	public boolean doHurtTarget(Entity entityIn) {
@@ -437,7 +449,7 @@ public abstract class PVZPlantEntity extends CreatureEntity implements IPVZPlant
 					if (this instanceof PVZPlantEntity && entityIn instanceof PVZPlantEntity
 							&& !EntityUtil.canTargetEntity(this, entityIn)) {
 						if (this.tickCount >= entityIn.tickCount) {
-							this.hurt(PVZDamageSource.causeWeakDamage(this, this), EntityUtil.getMaxHealthDamage(this, 0.5F));
+							this.hurt(PVZDamageSource.PLANT_WILT, EntityUtil.getMaxHealthDamage(this, 0.5F));
 						}
 					}
 				}
@@ -971,13 +983,13 @@ public abstract class PVZPlantEntity extends CreatureEntity implements IPVZPlant
 
 	/* sound */
 	
-	@Override
-	protected SoundEvent getHurtSound(DamageSource damageSourceIn) {
-		if (damageSourceIn instanceof PVZDamageSource
-				&& ((PVZDamageSource) damageSourceIn).getPVZDamageType() == PVZDamageType.EAT)
-			return SoundRegister.PLANT_HURT.get();
-		return super.getHurtSound(damageSourceIn);
-	}
+//	@Override
+//	protected SoundEvent getHurtSound(DamageSource damageSourceIn) {
+//		if (damageSourceIn instanceof PVZDamageSource
+//				&& ((PVZDamageSource) damageSourceIn).getPVZDamageType() == PVZDamageType.EAT)
+//			return SoundRegister.PLANT_HURT.get();
+//		return super.getHurtSound(damageSourceIn);
+//	}
 
 	protected SoundEvent getSpawnSound() {
 		return this.getPlantEnumName().isWaterPlant ? SoundRegister.PLANT_IN_WATER.get()

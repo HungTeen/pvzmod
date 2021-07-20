@@ -62,7 +62,7 @@ public class StarEntity extends AbstractBulletEntity {
 	}
 	
 	private void dealStarDamage(Entity target) {
-		target.hurt(PVZDamageSource.causeAppeaseDamage(this, this.getThrower()), this.getFixDamage());
+		target.hurt(PVZDamageSource.star(this, this.getThrower()), this.getFixDamage());
 	}
 	
 	@Override

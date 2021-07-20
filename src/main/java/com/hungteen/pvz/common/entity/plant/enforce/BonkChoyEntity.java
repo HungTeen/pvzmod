@@ -38,7 +38,7 @@ public class BonkChoyEntity extends PVZPlantEntity {
 				float range = 3F;
 				EntityUtil.playSound(this, SoundRegister.SWING.get());
 				EntityUtil.getTargetableEntities(this, EntityUtil.getEntityAABB(this, range, range)).forEach((target) -> {
-					target.hurt(PVZDamageSource.causeNormalDamage(this, this), this.getAttackDamage() * 5);
+					target.hurt(PVZDamageSource.normal(this), this.getAttackDamage() * 5);
 					for(int i = 0; i < 2; ++ i) {
 						EntityUtil.spawnParticle(target, 7);
 					}
@@ -49,7 +49,7 @@ public class BonkChoyEntity extends PVZPlantEntity {
 	
 	public void attackTarget(LivingEntity target) {
 		EntityUtil.playSound(this, SoundRegister.SWING.get());
-		target.hurt(PVZDamageSource.causeNormalDamage(this, this), this.getAttackDamage());
+		target.hurt(PVZDamageSource.normal(this), this.getAttackDamage());
 	}
 	
 	@Override

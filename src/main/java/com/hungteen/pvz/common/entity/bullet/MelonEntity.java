@@ -47,11 +47,11 @@ public class MelonEntity extends PultBulletEntity {
 	@Override
 	protected void dealDamage(Entity target) {
 		if(this.getIcePotion().isPresent()) {
-			PVZDamageSource source = PVZDamageSource.causeIceDamage(this, this.getThrower());
+			PVZDamageSource source = PVZDamageSource.winterMelon(this, this.getThrower());
 			source.addEffect(this.getIcePotion().get());
 			target.hurt(source, this.getFixDamage());
 		} else{
-			target.hurt(PVZDamageSource.causeThrowDamage(this, this.getThrower()), this.getFixDamage());
+			target.hurt(PVZDamageSource.melon(this, this.getThrower()), this.getFixDamage());
 		}
 		this.attackEntity = target;
 		this.dealSplashDamage();
@@ -67,7 +67,7 @@ public class MelonEntity extends PultBulletEntity {
 		float range = 2.5F;
 		EntityUtil.getTargetableEntities(this.getThrower(), EntityUtil.getEntityAABB(this, range, range)).forEach((entity) -> {
 			if(! entity.is(attackEntity) && (! (entity instanceof LivingEntity) || EntityUtil.canTargetEntity(this.getThrower(), (LivingEntity) entity))) {
-				PVZDamageSource source = PVZDamageSource.causeNormalDamage(this, this.getThrower());
+				PVZDamageSource source = PVZDamageSource.melon(this, this.getThrower());
 				this.getIcePotion().ifPresent((effect) -> {
 					source.addEffect(effect);
 				});

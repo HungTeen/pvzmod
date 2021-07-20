@@ -2,7 +2,6 @@ package com.hungteen.pvz.common.entity.plant.assist;
 
 import com.hungteen.pvz.common.entity.plant.base.PlantBomberEntity;
 import com.hungteen.pvz.common.entity.zombie.poolnight.BalloonZombieEntity;
-import com.hungteen.pvz.common.misc.damage.PVZDamageSource;
 import com.hungteen.pvz.register.SoundRegister;
 import com.hungteen.pvz.utils.EntityUtil;
 import com.hungteen.pvz.utils.PlayerUtil;
@@ -45,7 +44,7 @@ public class BloverEntity extends PlantBomberEntity {
 			AxisAlignedBB aabb = EntityUtil.getEntityAABB(this, len, len);
 			EntityUtil.getTargetableLivings(this, aabb).forEach((target) -> {
 				if(EntityUtil.isEntityInSky(target)) {
-					target.hurt(PVZDamageSource.causeNormalDamage(this, this), this.getAttackDamage());
+//					target.hurt(PVZDamageSource.causeNormalDamage(this, this), this.getAttackDamage());
 					Vector3d speed = target.getDeltaMovement();
 					double dx = target.getX() - this.getX();
 					double dz = target.getZ() - this.getZ();

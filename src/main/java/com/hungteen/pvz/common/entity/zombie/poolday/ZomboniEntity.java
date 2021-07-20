@@ -2,6 +2,7 @@ package com.hungteen.pvz.common.entity.zombie.poolday;
 
 import java.util.Optional;
 
+import com.hungteen.pvz.api.interfaces.IHasWheel;
 import com.hungteen.pvz.common.entity.PVZMultiPartEntity;
 import com.hungteen.pvz.common.entity.zombie.base.CarZombieEntity;
 import com.hungteen.pvz.common.entity.zombie.part.PVZZombiePartEntity;
@@ -16,6 +17,7 @@ import net.minecraft.block.SnowBlock;
 import net.minecraft.enchantment.FrostWalkerEnchantment;
 import net.minecraft.entity.EntitySize;
 import net.minecraft.entity.EntityType;
+import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.Pose;
 import net.minecraft.entity.ai.attributes.Attributes;
 import net.minecraft.entity.monster.MonsterEntity;
@@ -25,7 +27,7 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.vector.Vector3d;
 import net.minecraft.world.World;
 
-public class ZomboniEntity extends CarZombieEntity implements IMultiPartEntity{
+public class ZomboniEntity extends CarZombieEntity implements IMultiPartEntity, IHasWheel{
 	
 	private PVZZombiePartEntity part;
 	
@@ -58,6 +60,11 @@ public class ZomboniEntity extends CarZombieEntity implements IMultiPartEntity{
 	public void tick() {
 		super.tick();
 		updateParts();
+	}
+	
+	@Override
+	public void spikeWheelBy(LivingEntity entity) {
+		this.setHealth(0);
 	}
 	
 	@Override

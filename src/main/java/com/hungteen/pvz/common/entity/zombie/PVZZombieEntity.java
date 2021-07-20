@@ -22,6 +22,7 @@ import com.hungteen.pvz.common.entity.bullet.AbstractBulletEntity;
 import com.hungteen.pvz.common.entity.drop.CoinEntity;
 import com.hungteen.pvz.common.entity.drop.CoinEntity.CoinType;
 import com.hungteen.pvz.common.entity.drop.SunEntity;
+import com.hungteen.pvz.common.entity.misc.bowling.AbstractBowlingEntity;
 import com.hungteen.pvz.common.entity.plant.PVZPlantEntity;
 import com.hungteen.pvz.common.entity.plant.enforce.SquashEntity;
 import com.hungteen.pvz.common.entity.plant.magic.HypnoShroomEntity;
@@ -31,7 +32,6 @@ import com.hungteen.pvz.common.entity.zombie.body.ZombieDropBodyEntity.BodyType;
 import com.hungteen.pvz.common.entity.zombie.roof.BungeeZombieEntity;
 import com.hungteen.pvz.common.event.PVZLivingEvents;
 import com.hungteen.pvz.common.misc.damage.PVZDamageSource;
-import com.hungteen.pvz.common.misc.damage.PVZDamageType;
 import com.hungteen.pvz.common.world.data.PVZInvasionData;
 import com.hungteen.pvz.data.loot.PVZLoot;
 import com.hungteen.pvz.register.BlockRegister;
@@ -408,7 +408,7 @@ public abstract class PVZZombieEntity extends MonsterEntity implements IPVZZombi
 	public void die(DamageSource cause) {
 		super.die(cause);
 		//if zombie was killed by bowling, it will not drop anything.
-		if (cause instanceof PVZDamageSource && ((PVZDamageSource) cause).getPVZDamageType() == PVZDamageType.BOWLING
+		if (cause instanceof PVZDamageSource && ((PVZDamageSource) cause).getDirectEntity() instanceof AbstractBowlingEntity
 				&& ((PVZDamageSource) cause).getDamageCount() > 0) {
 			this.canSpawnDrop = false;
 		}
@@ -601,21 +601,6 @@ public abstract class PVZZombieEntity extends MonsterEntity implements IPVZZombi
 		}
 		amount = amount * this.getHurtReduction(); // hurt reduction
 		boolean flag = super.hurt(source, amount);
-		if (source instanceof PVZDamageSource) {
-			if (this.canBeFrozen() && ((PVZDamageSource) source).getPVZDamageType() == PVZDamageType.ICE
-					&& !((PVZDamageSource) source).isDefended()) {
-				if (!this.isZombieColdOrForzen() && !this.level.isClientSide) {
-					EntityUtil.playSound(this, SoundRegister.ZOMBIE_FROZEN.get());
-				}
-			} else if (((PVZDamageSource) source).getPVZDamageType() == PVZDamageType.FIRE
-					&& !((PVZDamageSource) source).isDefended()) {
-				if (this.isZombieColdOrForzen() && !this.level.isClientSide) {
-					EntityUtil.playSound(this, SoundRegister.ZOMBIE_FIRE.get());
-					this.removeEffect(EffectRegister.COLD_EFFECT.get());
-					this.removeEffectNoUpdate(EffectRegister.FROZEN_EFFECT.get());
-				}
-			}
-		}
 		if(ConfigUtil.enableZombieDropParts()) {
 		    if(!this.level.isClientSide) {
 			    if(this.hasHand() && this.canLostHand() && this.checkCanLostHand()) {
@@ -772,7 +757,7 @@ public abstract class PVZZombieEntity extends MonsterEntity implements IPVZZombi
 	 * {@link #doHurtTarget(Entity)}
 	 */
 	protected PVZDamageSource getZombieAttackDamageSource() {
-		return PVZDamageSource.causeEatDamage(this, this);
+		return PVZDamageSource.eat(this);
 	}
 
 	/**
