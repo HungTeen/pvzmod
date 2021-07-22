@@ -22,6 +22,7 @@ import com.hungteen.pvz.common.entity.zombie.roof.BungeeZombieEntity;
 import com.hungteen.pvz.common.item.card.ImitaterCardItem;
 import com.hungteen.pvz.common.item.card.PlantCardItem;
 import com.hungteen.pvz.common.misc.damage.PVZDamageSource;
+import com.hungteen.pvz.register.EffectRegister;
 import com.hungteen.pvz.register.EntityRegister;
 import com.hungteen.pvz.register.ParticleRegister;
 import com.hungteen.pvz.register.SoundRegister;
@@ -52,6 +53,7 @@ import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.network.datasync.DataParameter;
 import net.minecraft.network.datasync.DataSerializers;
 import net.minecraft.network.datasync.EntityDataManager;
+import net.minecraft.potion.EffectInstance;
 import net.minecraft.server.management.PreYggdrasilConverter;
 import net.minecraft.util.ActionResultType;
 import net.minecraft.util.DamageSource;
@@ -394,6 +396,23 @@ public abstract class PVZPlantEntity extends CreatureEntity implements IPVZPlant
 			}
 		}
 		return amount;
+	}
+	
+	/**
+	 * check can zombie add effect.
+	 * {@link EntityUtil#addPotionEffect(Entity, EffectInstance)}
+	 */
+	public void checkAndAddPotionEffect(EffectInstance effect) {
+		if (effect.getEffect() == EffectRegister.COLD_EFFECT.get() && !this.canBeCold()) {
+			return;
+		}
+		if (effect.getEffect() == EffectRegister.FROZEN_EFFECT.get() && !this.canBeFrozen()) {
+			return;
+		}
+		if (effect.getEffect() == EffectRegister.BUTTER_EFFECT.get() && !this.canBeButter()) {
+			return;
+		}
+		this.addEffect(effect);
 	}
 	
 	/**

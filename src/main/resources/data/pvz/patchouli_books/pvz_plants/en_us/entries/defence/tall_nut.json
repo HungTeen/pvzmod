@@ -1,0 +1,22 @@
+{
+    "name": "Tall Nut",
+    "icon": "pvz:tall_nut_card",
+    "category": "pvz:defence",
+    "pages": [
+        {
+            "type": "text",
+            "text": "$(bgreen)Tall Nut$() is opening a chain of stores for Tall and Taller gentlemen. he'll shell out the savings to you !$(br)$(byellow)Sun Cost$() : $(l)125$()$(br)$(bblue)Recharge$() : $(l)Very Slow$()$(br)$(l)Features$() : It is a $(l)defender$() plant that has high health, and it can $(bred)attract enemies in 7 * 7 range to attack itself$()."
+        },
+        {
+            "type": "entity",
+            "entity": "pvz:tall_nut",
+            "scale": 0.6,
+            "text": "Appearance"
+        },
+        {
+            "type": "text",
+            "text": "$(bpurple)Special :$() It can $(bred)block$() $(l)pole zombie, pogo zombie, dolphin rider$() to stop them.$(br)$(bgreen)Plant Food :$() It will gain a large amount of $(l)defence life$() to protecte itself."
+        }
+    ],
+    "sortnum": 1
+}

@@ -83,13 +83,23 @@ public class PoleZombieEntity extends PVZZombieEntity{
 	}
 	
 	@Override
+	public void attractBy(ICanAttract defender) {
+		super.attractBy(defender);
+		if(this.hasPole()) {
+		    this.setPole(false);
+		    this.setDeltaMovement(0, 0, 0);
+		    EntityUtil.playSound(this, SoundRegister.WALL_HIT.get());
+		}
+	}
+	
+	@Override
 	public boolean canBeTargetBy(LivingEntity living) {
 		return ! this.isPoleJumping();
 	}
 	
 	@Override
 	protected boolean isZombieInvulnerableTo(DamageSource source) {
-		return super.isZombieInvulnerableTo(source) || this.isPoleJumping() || DamageSource.FALL.equals(source);
+		return super.isZombieInvulnerableTo(source) || this.isPoleJumping();
 	}
 	
 	@Override

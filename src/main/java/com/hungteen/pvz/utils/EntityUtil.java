@@ -27,6 +27,7 @@ import com.hungteen.pvz.common.entity.zombie.PVZZombieEntity;
 import com.hungteen.pvz.common.entity.zombie.grassday.PoleZombieEntity;
 import com.hungteen.pvz.common.entity.zombie.poolday.BobsleTeamEntity;
 import com.hungteen.pvz.common.entity.zombie.poolnight.BalloonZombieEntity;
+import com.hungteen.pvz.common.event.handler.LivingEventHandler;
 import com.hungteen.pvz.common.network.PVZPacketHandler;
 import com.hungteen.pvz.common.network.SpawnParticlePacket;
 import com.hungteen.pvz.compat.jade.provider.PVZEntityProvider;
@@ -587,12 +588,15 @@ public class EntityUtil {
 	
 	/**
 	 * add entity potion effect.
+	 * {@link LivingEventHandler#handleHurtEffects(LivingEntity, com.hungteen.pvz.common.misc.damage.PVZDamageSource)}
 	 */
 	public static void addPotionEffect(Entity entity, EffectInstance effect) {
 		if(entity instanceof PVZMultiPartEntity) {
 			addPotionEffect(((PVZMultiPartEntity) entity).getOwner(), effect);
 		} else if(entity instanceof PVZZombieEntity) {
 			((PVZZombieEntity) entity).checkAndAddPotionEffect(effect);
+		} else if(entity instanceof PVZPlantEntity){
+			((PVZPlantEntity) entity).checkAndAddPotionEffect(effect);
 		} else if(entity instanceof LivingEntity) {
 			((LivingEntity) entity).addEffect(effect);
 		}
@@ -642,7 +646,7 @@ public class EntityUtil {
 	}
 	
 	/**
-	 * get aabb by entity and w & h
+	 * get AABB by entity's width and height.
 	 */
 	public static AxisAlignedBB getEntityAABB(Entity entity, double w, double h){
 		return new AxisAlignedBB(entity.getX() - w, entity.getY() - h, entity.getZ() - w, entity.getX() + w, entity.getY() + h, entity.getZ() + w);

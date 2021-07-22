@@ -27,6 +27,7 @@ import net.minecraft.world.World;
 public abstract class PlantDefenderEntity extends PVZPlantEntity implements ICanAttract {
 
 	private static final DataParameter<Float> DEFENCE_LIFE = EntityDataManager.defineId(PlantDefenderEntity.class, DataSerializers.FLOAT);
+	protected float damageMultiple = 1F;//use to reduce damage by tall nut.
 	
 	public PlantDefenderEntity(EntityType<? extends CreatureEntity> type, World worldIn) {
 		super(type, worldIn);
@@ -58,16 +59,16 @@ public abstract class PlantDefenderEntity extends PVZPlantEntity implements ICan
 		if(! this.getSensing().canSee(entity)) {
 			return false;
 		}
-		if(entity instanceof MobEntity) {
-			return ! (((MobEntity) entity).getTarget() instanceof ICanAttract);
-		}
-		return false;
+		return true;
 	}
 	
 	@Override
 	public void attract(LivingEntity target) {
-		if(target instanceof MobEntity) {
+		if(target instanceof MobEntity && (! (((MobEntity) target).getTarget() instanceof ICanAttract))) {
 			((MobEntity) target).setTarget(this);
+		}
+		if(target instanceof ICanBeAttracted) {
+			((ICanBeAttracted) target).attractBy(this);
 		}
 	}
 	
@@ -108,6 +109,7 @@ public abstract class PlantDefenderEntity extends PVZPlantEntity implements ICan
 	@Override
 	public boolean hurt(DamageSource source, float amount) {
 		amount = this.pumpkinReduceDamage(source, amount);
+		amount *= this.damageMultiple;
 		if(! level.isClientSide && this.getDefenceLife() > 0) {
 			if(this.getDefenceLife() > amount) { // damage armor health first
 				this.setDefenceLife(this.getDefenceLife() - amount);

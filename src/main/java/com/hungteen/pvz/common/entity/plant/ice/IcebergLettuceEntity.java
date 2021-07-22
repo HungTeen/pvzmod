@@ -33,7 +33,7 @@ public class IcebergLettuceEntity extends PlantCloserEntity implements IIceEffec
 		for(int i = 0; i < 2; ++ i) {
 			EntityUtil.spawnParticle(this, 5);
 		}
-		EntityUtil.playSound(this, SoundRegister.ZOMBIE_FROZEN.get());
+		EntityUtil.playSound(this, SoundRegister.FROZEN_HIT.get());
 		this.dealDamageTo(target);
 		this.remove();
 	}
@@ -45,7 +45,7 @@ public class IcebergLettuceEntity extends PlantCloserEntity implements IIceEffec
 		for(int i = 0; i < 2; ++ i) {
 			EntityUtil.spawnParticle(this, 5);
 		}
-		EntityUtil.playSound(this, SoundRegister.ZOMBIE_FROZEN.get());
+		EntityUtil.playSound(this, SoundRegister.FROZEN_HIT.get());
 		int cnt = 0;
 		for(Entity target : EntityUtil.getTargetableEntities(this, EntityUtil.getEntityAABB(this, range, range))) {
 			this.dealDamageTo(target);

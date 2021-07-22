@@ -12,25 +12,12 @@ public class TallNutEntity extends WallNutEntity{
 
 	public TallNutEntity(EntityType<? extends CreatureEntity> type, World worldIn) {
 		super(type, worldIn);
+		this.damageMultiple = 0.5F;
 	}
 	
 	@Override
 	public EntitySize getDimensions(Pose poseIn) {
 		return new EntitySize(0.9f, 1.9f, false);
-	}
-	
-	@Override
-	public float getPlantHealth() {
-		int lvl = this.getPlantLvl();
-		if(lvl <= 19) return 790 + 10 * lvl;
-		return 1000;
-	}
-	
-	@Override
-	public float getSuperLife() {
-		if(this.isPlantInStage(1)) return 800;
-		if(this.isPlantInStage(2)) return 1000;
-		return 1200;
 	}
 	
 	@Override

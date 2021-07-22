@@ -4,6 +4,8 @@ import com.hungteen.pvz.api.interfaces.IPVZPlant;
 import com.hungteen.pvz.api.interfaces.IPVZZombie;
 import com.hungteen.pvz.common.event.PVZLivingEvents;
 import com.hungteen.pvz.common.misc.damage.PVZDamageSource;
+import com.hungteen.pvz.register.EffectRegister;
+import com.hungteen.pvz.register.SoundRegister;
 import com.hungteen.pvz.utils.EntityUtil;
 
 import net.minecraft.entity.LivingEntity;
@@ -17,23 +19,29 @@ public class LivingEventHandler {
 	 * {@link PVZLivingEvents#onLivingHurt(net.minecraftforge.event.entity.living.LivingHurtEvent)}
 	 */
 	public static void handleHurtEffects(LivingEntity target, PVZDamageSource source) {
-//		if (source instanceof PVZDamageSource) {
-//			if (EntityUtil.isEntityFrozen(entity)this.canBeFrozen() && ((PVZDamageSource) source).getPVZDamageType() == PVZDamageType.ICE
-//					&& !((PVZDamageSource) source).isDefended()) {
-//				if (!this.isZombieColdOrForzen() && !this.level.isClientSide) {
-//					EntityUtil.playSound(this, SoundRegister.ZOMBIE_FROZEN.get());
-//				}
-//			} else if (((PVZDamageSource) source).getPVZDamageType() == PVZDamageType.FIRE
-//					&& !((PVZDamageSource) source).isDefended()) {
-//				if (this.isZombieColdOrForzen() && !this.level.isClientSide) {
-//					EntityUtil.playSound(this, SoundRegister.ZOMBIE_FIRE.get());
-//					this.removeEffect(EffectRegister.COLD_EFFECT.get());
-//					this.removeEffectNoUpdate(EffectRegister.FROZEN_EFFECT.get());
-//				}
-//			}
-//		}
 		if(! source.isDefended()) {//source not defended by armor.
+			if(source.isFlameDamage()) {
+				if(target.hasEffect(EffectRegister.COLD_EFFECT.get())){
+				    target.removeEffect(EffectRegister.COLD_EFFECT.get());
+				}
+				if(target.hasEffect(EffectRegister.FROZEN_EFFECT.get())){
+				    target.removeEffect(EffectRegister.FROZEN_EFFECT.get());
+				}
+			}
 			source.getEffects().forEach(effect -> EntityUtil.addPotionEffect(target, effect));
+		}
+	}
+	
+	/**
+	 * handle sound when living hurt.
+	 * {@link PVZLivingEvents#onLivingHurt(net.minecraftforge.event.entity.living.LivingHurtEvent)}
+	 */
+	public static void handleHurtSounds(LivingEntity target, PVZDamageSource source) {
+		if(source.isEatDamage()) {
+			EntityUtil.playSound(target, SoundRegister.EAT.get());
+		}
+		if(source.isFlameDamage() && source.isAppease()) {
+			EntityUtil.playSound(target, SoundRegister.FLAME_HIT.get());
 		}
 	}
 	

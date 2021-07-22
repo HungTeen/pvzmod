@@ -60,60 +60,60 @@ public class PVZDamageSource extends DamageSource {
 	
 	//projectiles
 	public static PVZDamageSource pea(PeaEntity pea, Entity shooter) {
-		return (PVZDamageSource) new PVZDamageSource("pvz_pea", pea, shooter).setAppease();
+		return (PVZDamageSource) new PVZDamageSource("pea", pea, shooter).setAppease();
 	}
 	
 	public static PVZDamageSource snowPea(PeaEntity pea, Entity shooter) {
-		return (PVZDamageSource) new PVZDamageSource("pvz_snow_pea", pea, shooter).setAppease().setIceDamage();
+		return (PVZDamageSource) new PVZDamageSource("snow_pea", pea, shooter).setAppease().setIceDamage();
 	}
 	
 	public static PVZDamageSource flamePea(PeaEntity pea, Entity shooter) {
-		return (PVZDamageSource) new PVZDamageSource("pvz_flame_pea", pea, shooter).setAppease().setFlameDamage();
+		return (PVZDamageSource) new PVZDamageSource("flame_pea", pea, shooter).setAppease().setFlameDamage();
 	}
 	
 	public static PVZDamageSource spore(SporeEntity pea, Entity shooter) {
-		return (PVZDamageSource) new PVZDamageSource("pvz_spore", pea, shooter).setAppease();
+		return (PVZDamageSource) new PVZDamageSource("spore", pea, shooter).setAppease();
 	}
 	
 	public static PVZDamageSource fume(FumeEntity pea, Entity shooter) {
-		return (PVZDamageSource) new PVZDamageSource("pvz_fume", pea, shooter).setAppease().setThroughDamage();
+		return (PVZDamageSource) new PVZDamageSource("fume", pea, shooter).setAppease().setThroughDamage();
 	}
 	
 	public static PVZDamageSource star(StarEntity pea, Entity shooter) {
-		return (PVZDamageSource) new PVZDamageSource("pvz_star", pea, shooter).setAppease();
+		return (PVZDamageSource) new PVZDamageSource("star", pea, shooter).setAppease();
 	}
 	
 	public static PVZDamageSource cabbage(CabbageEntity pea, Entity shooter) {
-		return (PVZDamageSource) new PVZDamageSource("pvz_cabbage", pea, shooter).setParabola();
+		return (PVZDamageSource) new PVZDamageSource("cabbage", pea, shooter).setParabola();
 	}
 	
 	public static PVZDamageSource kernel(KernelEntity pea, Entity shooter) {
-		return (PVZDamageSource) new PVZDamageSource("pvz_kernel", pea, shooter).setParabola();
+		return (PVZDamageSource) new PVZDamageSource("kernel", pea, shooter).setParabola();
 	}
 	
 	public static PVZDamageSource corn(CornEntity pea, Entity shooter) {
-		return (PVZDamageSource) new PVZDamageSource("pvz_corn", pea, shooter).setParabola().setExplosion();
+		return (PVZDamageSource) new PVZDamageSource("corn", pea, shooter).setParabola().setExplosion();
 	}
 	
 	public static PVZDamageSource butter(ButterEntity pea, Entity shooter) {
-		return (PVZDamageSource) new PVZDamageSource("pvz_butter", pea, shooter).setParabola();
+		return (PVZDamageSource) new PVZDamageSource("butter", pea, shooter).setParabola();
 	}
 	
 	public static PVZDamageSource melon(MelonEntity pea, Entity shooter) {
-		return (PVZDamageSource) new PVZDamageSource("pvz_melon", pea, shooter).setParabola();
+		return (PVZDamageSource) new PVZDamageSource("melon", pea, shooter).setParabola();
 	}
 	
 	public static PVZDamageSource winterMelon(MelonEntity pea, Entity shooter) {
-		return (PVZDamageSource) new PVZDamageSource("pvz_winter_melon", pea, shooter).setParabola().setIceDamage();
+		return (PVZDamageSource) new PVZDamageSource("winter_melon", pea, shooter).setParabola().setIceDamage();
 	}
 	
 	public static PVZDamageSource ball(BallEntity pea, Entity shooter) {
-		return (PVZDamageSource) new PVZDamageSource("pvz_ball", pea, shooter).setParabola();
+		return (PVZDamageSource) new PVZDamageSource("ball", pea, shooter).setParabola();
 	}
 	
 	//normal
 	public static PVZDamageSource normal(Entity projectile, Entity attacker) {
-		return new PVZDamageSource("pvz_normal", projectile, attacker);
+		return new PVZDamageSource("normal", projectile, attacker);
 	}
 	
 	public static PVZDamageSource normal(Entity attacker) {
@@ -122,7 +122,7 @@ public class PVZDamageSource extends DamageSource {
 
 	//eat
 	public static PVZDamageSource eat(Entity projectile, Entity attacker) {
-		return new PVZDamageSource("pvz_eat", projectile, attacker).setEatDamage();
+		return new PVZDamageSource("eat", projectile, attacker).setEatDamage();
 	}
 	
 	public static PVZDamageSource eat(Entity attacker) {
@@ -131,7 +131,7 @@ public class PVZDamageSource extends DamageSource {
 	
 	//explosion
 	public static PVZDamageSource explode(Entity projectile, Entity shooter) {
-		return (PVZDamageSource) new PVZDamageSource("pvz_explosion", projectile, shooter).setExplosion();
+		return (PVZDamageSource) new PVZDamageSource("explosion", projectile, shooter).setExplosion();
 	}
 	
 	public static PVZDamageSource explode(Entity attacker) {
@@ -140,7 +140,7 @@ public class PVZDamageSource extends DamageSource {
 	
 	//deadly
 	public static PVZDamageSource causeDeadlyDamage(Entity projectile, Entity shooter) {
-		return new PVZDamageSource("pvz_deadly", projectile, shooter);
+		return new PVZDamageSource("deadly", projectile, shooter);
 	}
 	
 	public static PVZDamageSource causeDeadlyDamage(Entity attacker) {
@@ -149,12 +149,12 @@ public class PVZDamageSource extends DamageSource {
 	
 	//crush
 	public static PVZDamageSource causeCrushDamage(Entity attacker) {
-		return new PVZDamageSource("pvz_crush", attacker).setCrushDamage();
+		return new PVZDamageSource("crush", attacker).setCrushDamage();
 	}
 	
 	//thorn
 	public static PVZDamageSource causeThornDamage(Entity projectile, Entity shooter) {
-		return new PVZDamageSource("pvz_thorn", projectile, shooter).setThornDamage();
+		return new PVZDamageSource("thorn", projectile, shooter).setThornDamage();
 	}
 	
 	public static PVZDamageSource causeThornDamage(Entity attacker) {
@@ -163,16 +163,16 @@ public class PVZDamageSource extends DamageSource {
 	
 	//ice
 	public static PVZDamageSource causeIceDamage(Entity projectile, Entity shooter) {
-		return new PVZDamageSource("pvz_ice", projectile, shooter).setIceDamage();
+		return new PVZDamageSource("ice", projectile, shooter).setIceDamage();
 	}
 	
 	public static PVZDamageSource causeIceDamage(Entity attacker) {
-		return new PVZDamageSource("pvz_ice", attacker).setIceDamage();
+		return causeIceDamage(attacker, attacker);
 	}
 	
 	//flame
 	public static PVZDamageSource causeFlameDamage(Entity projectile, Entity shooter) {
-		return new PVZDamageSource("pvz_flame", projectile, shooter).setFlameDamage();
+		return new PVZDamageSource("flame", projectile, shooter).setFlameDamage();
 	}
 	
 	public static PVZDamageSource causeFlameDamage(Entity attacker) {
@@ -188,7 +188,7 @@ public class PVZDamageSource extends DamageSource {
 
 	@Override
 	public ITextComponent getLocalizedDeathMessage(LivingEntity entityLivingBaseIn) {
-		String s = "death.attack." + this.getMsgId();
+		String s = "death.attack.pvz." + this.getMsgId();
 		return new TranslationTextComponent(s, entityLivingBaseIn.getDisplayName());
 	}
 

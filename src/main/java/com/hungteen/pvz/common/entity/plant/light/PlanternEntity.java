@@ -1,7 +1,7 @@
 package com.hungteen.pvz.common.entity.plant.light;
 
+import com.hungteen.pvz.api.interfaces.ILightEffect;
 import com.hungteen.pvz.common.entity.plant.PVZPlantEntity;
-import com.hungteen.pvz.common.entity.plant.interfaces.ILightPlant;
 import com.hungteen.pvz.register.EffectRegister;
 import com.hungteen.pvz.register.SoundRegister;
 import com.hungteen.pvz.utils.EntityUtil;
@@ -20,7 +20,7 @@ import net.minecraft.world.DifficultyInstance;
 import net.minecraft.world.IServerWorld;
 import net.minecraft.world.World;
 
-public class PlanternEntity extends PVZPlantEntity implements ILightPlant {
+public class PlanternEntity extends PVZPlantEntity implements ILightEffect {
 
 	public PlanternEntity(EntityType<? extends CreatureEntity> type, World worldIn) {
 		super(type, worldIn);

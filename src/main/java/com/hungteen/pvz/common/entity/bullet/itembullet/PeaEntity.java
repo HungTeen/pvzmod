@@ -5,6 +5,7 @@ import com.hungteen.pvz.common.capability.CapabilityHandler;
 import com.hungteen.pvz.common.entity.bullet.AbstractShootBulletEntity;
 import com.hungteen.pvz.common.entity.plant.base.PlantShooterEntity;
 import com.hungteen.pvz.common.entity.plant.flame.TorchWoodEntity;
+import com.hungteen.pvz.common.entity.plant.flame.TorchWoodEntity.FlameTypes;
 import com.hungteen.pvz.common.entity.zombie.zombotany.PeaShooterZombieEntity;
 import com.hungteen.pvz.common.misc.damage.PVZDamageSource;
 import com.hungteen.pvz.register.EntityRegister;
@@ -81,29 +82,32 @@ public class PeaEntity extends AbstractShootBulletEntity implements IRendersAsIt
 				this.dealPeaDamage(target); // attack 
 				flag = true;
 			}
-//			if (target instanceof TorchWoodEntity) {// pea interact with torchwood
-//				TorchWoodEntity tmp = (TorchWoodEntity) target;
-//				if (this.torchWood == null || !this.torchWood.is(tmp)) {// don't fire twice by the same torchwood
-//					this.torchWood = tmp;
-//					if (this.torchWood.IsSuperFlame()) {// blue fire
-//						if (this.getPeaState() == State.ICE) {//ice to fire
-//							this.setPeaState(State.FIRE);
-//						} else if (this.getPeaState().ordinal() < State.BLUE_FIRE.ordinal()) {// pea and fire to blue fire
-//							this.setPeaState(State.BLUE_FIRE);
-//						}
-//					} else {// fire
-//						if (this.getPeaState() == State.ICE) {//ice to normal 
-//							this.setPeaState(State.NORMAL);
-//						} else if (this.getPeaState() == State.NORMAL) {//normal to fire
-//							this.setPeaState(State.FIRE);
-//						}
-//					}
-//				}
-//			}
 		}
 		this.level.broadcastEntityEvent(this, (byte) 3);
 		if (flag || !this.checkLive(result)) {
 			this.remove();
+		}
+	}
+	
+	/**
+	 * {@link TorchWoodEntity#heatPeas()}
+	 */
+	public void heatBy(TorchWoodEntity wood) {
+		if (this.torchWood == null || !this.torchWood.is(wood)) {// don't fire twice by the same torchwood
+			this.torchWood = wood;
+			if (this.torchWood.getFlameType() == FlameTypes.BLUE) {// blue fire
+				if (this.getPeaState() == State.ICE) {//ice to fire
+					this.setPeaState(State.FIRE);
+				} else if (this.getPeaState().ordinal() < State.BLUE_FIRE.ordinal()) {// pea and fire to blue fire
+					this.setPeaState(State.BLUE_FIRE);
+				}
+			} else {// fire
+				if (this.getPeaState() == State.ICE) {//ice to normal 
+					this.setPeaState(State.NORMAL);
+				} else if (this.getPeaState() == State.NORMAL) {//normal to fire
+					this.setPeaState(State.FIRE);
+				}
+			}
 		}
 	}
 

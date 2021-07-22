@@ -56,6 +56,7 @@ public class PVZLivingEvents {
 			if(ev.getSource() instanceof PVZDamageSource) {
 				ev.getEntityLiving().invulnerableTime = 0;
 				LivingEventHandler.handleHurtEffects(ev.getEntityLiving(), (PVZDamageSource) ev.getSource());
+				LivingEventHandler.handleHurtSounds(ev.getEntityLiving(), (PVZDamageSource) ev.getSource());
 			}
 			LivingEventHandler.handleHurtDamage(ev);
 		}

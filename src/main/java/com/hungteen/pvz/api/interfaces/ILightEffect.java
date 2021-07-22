@@ -1,8 +1,8 @@
-package com.hungteen.pvz.common.entity.plant.interfaces;
+package com.hungteen.pvz.api.interfaces;
 
 import net.minecraft.potion.EffectInstance;
 
-public interface ILightPlant {
+public interface ILightEffect {
 
 	EffectInstance getLightEyeEffect();
 	

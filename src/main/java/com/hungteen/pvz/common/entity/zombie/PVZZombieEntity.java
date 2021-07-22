@@ -907,6 +907,10 @@ public abstract class PVZZombieEntity extends MonsterEntity implements IPVZZombi
 		return true;
 	}
 	
+	@Override
+	public void attractBy(ICanAttract defender) {
+	}
+	
 	/**
 	 * some zombies are not able to drop hands.
 	 * {@link #hurt}
@@ -928,12 +932,15 @@ public abstract class PVZZombieEntity extends MonsterEntity implements IPVZZombi
 	 * {@link EntityUtil#addPotionEffect(Entity, EffectInstance)}
 	 */
 	public void checkAndAddPotionEffect(EffectInstance effect) {
-		if (effect.getEffect() == EffectRegister.COLD_EFFECT.get() && !this.canBeCold())
+		if (effect.getEffect() == EffectRegister.COLD_EFFECT.get() && !this.canBeCold()) {
 			return;
-		if (effect.getEffect() == EffectRegister.FROZEN_EFFECT.get() && !this.canBeFrozen())
+		}
+		if (effect.getEffect() == EffectRegister.FROZEN_EFFECT.get() && !this.canBeFrozen()) {
 			return;
-		if (effect.getEffect() == EffectRegister.BUTTER_EFFECT.get() && !this.canBeButter())
+		}
+		if (effect.getEffect() == EffectRegister.BUTTER_EFFECT.get() && !this.canBeButter()) {
 			return;
+		}
 		this.addEffect(effect);
 	}
 
@@ -970,7 +977,7 @@ public abstract class PVZZombieEntity extends MonsterEntity implements IPVZZombi
 	}
 	
 	protected boolean isZombieInvulnerableTo(DamageSource source) {
-		return this.isZombieRising() || ! EntityUtil.isEntityValid(source.getEntity()) || source.isExplosion();
+		return this.isZombieRising() || (! EntityUtil.isEntityValid(source.getEntity()) && ! source.isMagic());
 	}
 	
 	/**

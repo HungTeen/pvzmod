@@ -44,7 +44,7 @@ public class GraveBusterEntity extends PVZPlantEntity{
 		if(!this.level.isClientSide) {
 			if(this.isEatingTomb()) {
 			    if(this.getAttackTime() % 20 == 10) {
-				    EntityUtil.playSound(this, SoundRegister.PLANT_HURT.get());
+				    EntityUtil.playSound(this, SoundRegister.EAT.get());
 			    }
 			    this.setExistTick(0);
 			}

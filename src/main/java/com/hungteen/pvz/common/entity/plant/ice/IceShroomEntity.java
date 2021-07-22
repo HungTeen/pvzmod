@@ -50,7 +50,7 @@ public class IceShroomEntity extends PlantBomberEntity implements IIceEffect{
 					 ++ cnt;
 				 }
 			}
-			EntityUtil.playSound(this, SoundRegister.ZOMBIE_FROZEN.get());
+			EntityUtil.playSound(this, SoundRegister.FROZEN_HIT.get());
 			//trigger advancement.
 			final PlayerEntity player = EntityUtil.getEntityOwner(level, this);
 			if(player != null && player instanceof ServerPlayerEntity) {

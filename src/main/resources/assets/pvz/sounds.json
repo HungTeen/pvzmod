@@ -19,8 +19,8 @@
         "subtitle": "sound.pvz.jewel_pick",
         "sounds":[{"name":"pvz:entity/drop/jewel/jewel_pick"}]
     },
-    "plant_hurt":{
-        "subtitle": "sound.pvz.plant_hurt",
+    "eat":{
+        "subtitle": "sound.pvz.eat",
         "sounds":[{"name":"pvz:entity/plant/hurt/hurt1"},{"name":"pvz:entity/plant/hurt/hurt2"}]
     },
     "zombie_say":{
@@ -39,8 +39,8 @@
         "subtitle": "sound.pvz.potato_mine",
         "sounds":[{"name":"pvz:entity/plant/bomb/potato_mine"}]
     },
-    "zombie_frozen":{
-        "subtitle": "sound.pvz.zombie_frozen",
+    "frozen_hit":{
+        "subtitle": "sound.pvz.frozen_hit",
         "sounds":[{"name":"pvz:entity/zombie/hit/frozen"}]
     },
     "metal_hit":{
@@ -87,8 +87,8 @@
         "subtitle": "sound.pvz.car_explosion",
         "sounds":[{"name":"pvz:entity/zombie/death/car_explosion"}]
     },
-    "zombie_fire":{
-        "subtitle": "sound.pvz.zombie_fire",
+    "flame_hit":{
+        "subtitle": "sound.pvz.flame_hit",
         "sounds":[{"name":"pvz:entity/zombie/hit/fire"}]
     },
     "dave_say":{
@@ -297,5 +297,9 @@
     "pole_jump":{
         "subtitle": "sound.pvz.pole_jump",
         "sounds":[{"name":"pvz:entity/zombie/jump/pole_jump"}]
+    },
+    "wall_hit":{
+        "subtitle": "sound.pvz.wall_hit",
+        "sounds":[{"name":"pvz:entity/zombie/hit/wall_hit"}]
     }
 }

@@ -110,6 +110,13 @@ public class DolphinRiderEntity extends PVZZombieEntity{
 	}
 	
 	@Override
+	public void attractBy(ICanAttract defender) {
+		super.attractBy(defender);
+		this.separate();
+		EntityUtil.playSound(this, SoundRegister.WALL_HIT.get());
+	}
+	
+	@Override
 	protected boolean isZombieInvulnerableTo(DamageSource source) {
 		return super.isZombieInvulnerableTo(source) || this.isDolphinJumping();
 	}
@@ -123,6 +130,7 @@ public class DolphinRiderEntity extends PVZZombieEntity{
 		DolphinRiderZombieEntity zombie = EntityRegister.DOLPHIN_RIDER_ZOMBIE.get().create(level);
 		ZombieUtil.copySummonZombieData(this, zombie);
 		EntityUtil.onMobEntityRandomPosSpawn(level, zombie, blockPosition(), 1);
+		zombie.setZombieType(Type.NORMAL);
 		//summon zombie dolphin.
 		ZombieDolphinEntity dolphin = EntityRegister.ZOMBIE_DOLPHIN.get().create(level);
 		ZombieUtil.copySummonZombieData(this, dolphin);

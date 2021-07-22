@@ -1,5 +1,7 @@
 package com.hungteen.pvz.common.entity.plant.spear;
 
+import javax.annotation.Nonnull;
+
 import com.hungteen.pvz.api.interfaces.IHasWheel;
 import com.hungteen.pvz.common.entity.plant.PVZPlantEntity;
 import com.hungteen.pvz.common.misc.damage.PVZDamageSource;
@@ -37,44 +39,36 @@ public class SpikeWeedEntity extends PVZPlantEntity {
 	protected void normalPlantTick() {
 		super.normalPlantTick();
 		if(! level.isClientSide) {
-			if(this.getSpikeNum() < 0) {
+			if(this.getSpikeNum() <= 0) {
 				this.remove();
 			}
-			if(this.getAttackTime() > 0) {
-				this.setAttackTime(this.getAttackTime() - 1);
-			}
-			if(this.isPlantInSuperMode() && this.getSuperTime() % 10 == 0) {
-				for(LivingEntity target : EntityUtil.getTargetableLivings(this, EntityUtil.getEntityAABB(this, 10, 2))) {
-					target.hurt(PVZDamageSource.causeThornDamage(this), this.getAttackDamage() * 2);
-					for(int i = 0; i < 4; ++ i) {
-						EntityUtil.spawnParticle(target, 6);
-					}
-				}
-			}
-		}
-	}
-	
-	@Override
-	protected void doPush(Entity target) {
-		super.doPush(target);
-		if(! this.level.isClientSide && this.canPlantNormalUpdate() && this.getAttackTime() == 0) {
-			if(this.getSpikeNum() > 0 && EntityUtil.canTargetEntity(this, target)) {
-                this.spikeNormalAttack(target);
+			final int time = this.getAttackTime();
+			if(time >= this.getAttackCD()) {
+				this.spikeAttack();
+				this.setAttackTime(0);
+			} else {
+				this.setAttackTime(time + 1);
 			}
 		}
 	}
 	
 	/**
-	 * {@link #doPush(Entity)}
+	 * {@link #normalPlantTick()}
 	 */
-	public void spikeNormalAttack(Entity target) {
-		this.setAttackTime(this.getAttackCD());
+	public void spikeAttack() {
+		final float range = 1F;
+		EntityUtil.getTargetableEntities(this, EntityUtil.getEntityAABB(this, range, range)).forEach(target -> {
+			this.spikeNormalAttack(target);
+		});
+	}
+	
+	/**
+	 * {@link #spikeAttack()}
+	 */
+	public void spikeNormalAttack(@Nonnull Entity target) {
 		if(target instanceof IHasWheel) {
 			((IHasWheel) target).spikeWheelBy(this);
 			this.setSpikeNum(this.getSpikeNum() - 1);
-			if(this.getSpikeNum() <= 0) {
-				this.remove();
-			}
 		} else {
 			target.hurt(PVZDamageSource.causeThornDamage(this), this.getAttackDamage());
 		}
@@ -84,13 +78,24 @@ public class SpikeWeedEntity extends PVZPlantEntity {
 	public boolean hurt(DamageSource source, float amount) {
 		if(source instanceof PVZDamageSource) {
 			if(((PVZDamageSource) source).isCrushDamage()) {
-				if(this.getSpikeNum() >= 0) {
+				if(this.getSpikeNum() > 0) {
 					this.setSpikeNum(this.getSpikeNum() - 1);
 					return false;
 				}
 			}
 		}
 		return super.hurt(source, amount);
+	}
+	
+	@Override
+	public void startSuperMode(boolean first) {
+		super.startSuperMode(first);
+		this.setSpikeNum(this.getSpikeNum() + this.getSuperSpikeCount());
+	}
+	
+	@Override
+	public boolean isPlantImmuneTo(DamageSource source) {
+		return super.isPlantImmuneTo(source) || (! (source instanceof PVZDamageSource) && ! source.isProjectile());
 	}
 	
 	@Override
@@ -110,6 +115,14 @@ public class SpikeWeedEntity extends PVZPlantEntity {
 		return PlantUtil.getPlantAverageProgress(this, 2F, 6F);
 	}
 	
+	/**
+	 * get extra spike when start super.
+	 * {@link #startSuperMode(boolean)}
+	 */
+	public int getSuperSpikeCount() {
+		return this.isPlantInStage(1) ? 3 : this.isPlantInStage(2) ? 6 : 9;
+	}
+	
 	public int getAttackCD() {
 		return 40;
 	}
@@ -120,9 +133,7 @@ public class SpikeWeedEntity extends PVZPlantEntity {
 	
 	@Override
 	public int getSuperTimeLength() {
-		if(this.isPlantInStage(1)) return 65;
-		if(this.isPlantInStage(2)) return 85;
-		return 105;
+		return 20;
 	}
 	
 	@Override

@@ -11,4 +11,7 @@ public interface ICanBeAttracted {
 	 * can be attracted by the specific defender.
 	 */
 	boolean canBeAttractedBy(ICanAttract defender);
+	
+	void attractBy(ICanAttract defender);
+	
 }

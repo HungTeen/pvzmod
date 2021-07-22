@@ -60,6 +60,15 @@ public class PogoZombieEntity extends PVZZombieEntity implements IHasMetal {
 	}
 	
 	@Override
+	public void attractBy(ICanAttract defender) {
+		super.attractBy(defender);
+		if(this.hasPogo()) {
+		    this.setPogo(false);
+		    EntityUtil.playSound(this, SoundRegister.WALL_HIT.get());
+		}
+	}
+	
+	@Override
 	public boolean hasMetal() {
 		return this.hasPogo();
 	}

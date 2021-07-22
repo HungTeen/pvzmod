@@ -1,0 +1,22 @@
+{
+    "name": "火炬树桩",
+    "icon": "pvz:torch_wood_card",
+    "category": "pvz:flame",
+    "pages": [
+        {
+            "type": "text",
+            "text": "$(bgreen)火炬树桩$()受到众人的敬爱，只因他的诚实正直、牢不可破的友谊，以及增强豌豆伤害的能力。但火炬树桩也有个秘密：他不识字。$(br)$(byellow)阳光消耗$() : $(l)175$()$(br)$(bblue)冷却$() : $(l)一般$()$(br)$(l)特点$() : 它是一个$(l)辅助型$()植物，可以将身边的豌豆加热来增加其攻击力。$(m)除了冰豌豆$()。"
+        },
+        {
+            "type": "entity",
+            "entity": "pvz:torch_wood",
+            "scale": 0.65,
+            "text": "外观"
+        },
+        {
+            "type": "text",
+            "text": "$(bpurple)特殊 :$() 它会给予10格内的玩家$(l)光眼效果$()来$(bred)驱散迷雾$()。$(br)$(bgreen)能量豆大招$() : 从黄色火焰变成$(bblue)蓝色火焰$()，更多的增加豌豆的伤害。"
+        }
+    ],
+    "sortnum": 1
+}

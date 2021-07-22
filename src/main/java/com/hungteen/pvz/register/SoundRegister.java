@@ -30,17 +30,18 @@ public class SoundRegister {
 	public static final RegistryObject<SoundEvent> GARGANTUAR_DEATH = registerSound("gargantuar_death");
 	public static final RegistryObject<SoundEvent> ZOMBOSS_DEATH = registerSound("zomboss_death");
 	//hit
-	public static final RegistryObject<SoundEvent> PLANT_HURT = registerSound("plant_hurt");
+	public static final RegistryObject<SoundEvent> EAT = registerSound("eat");
 	public static final RegistryObject<SoundEvent> PLASTIC_HIT = registerSound("plastic_hit");
 	public static final RegistryObject<SoundEvent> METAL_HIT = registerSound("metal_hit");
-	public static final RegistryObject<SoundEvent> ZOMBIE_FROZEN = registerSound("zombie_frozen");
-	public static final RegistryObject<SoundEvent> ZOMBIE_FIRE = registerSound("zombie_fire");
+	public static final RegistryObject<SoundEvent> FROZEN_HIT = registerSound("frozen_hit");
+	public static final RegistryObject<SoundEvent> FLAME_HIT = registerSound("flame_hit");
 	public static final RegistryObject<SoundEvent> DAVE_HURT = registerSound("dave_hurt");
 	public static final RegistryObject<SoundEvent> PEA_HIT = registerSound("pea_hit");
 	public static final RegistryObject<SoundEvent> BOWLING_HIT = registerSound("bowling_hit");
 	public static final RegistryObject<SoundEvent> BOWLING_BOMB = registerSound("bowling_bomb");
 	public static final RegistryObject<SoundEvent> MELON_HIT = registerSound("melon_hit");
 	public static final RegistryObject<SoundEvent> BUTTER_HIT = registerSound("butter_hit");
+	public static final RegistryObject<SoundEvent> WALL_HIT = registerSound("wall_hit");
 	//say
 	public static final RegistryObject<SoundEvent> ZOMBIE_SAY = registerSound("zombie_say");
 	public static final RegistryObject<SoundEvent> SQUASH_HMM = registerSound("squash_hmm");
