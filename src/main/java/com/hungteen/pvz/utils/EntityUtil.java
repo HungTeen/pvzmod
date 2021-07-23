@@ -510,6 +510,13 @@ public class EntityUtil {
 	}
 	
 	/**
+	 * get friendly entities.
+	 */
+	public static List<LivingEntity> getFriendlyLivings(@Nonnull Entity attacker, AxisAlignedBB aabb){
+		return getPredicateEntities(attacker, aabb, LivingEntity.class, target -> ! canAttackEntity(attacker, target));
+	}
+	
+	/**
 	 * get targetable entities by original check function.
 	 * {@link #getWholeTargetableEntities(Entity, AxisAlignedBB)}
 	 */

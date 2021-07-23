@@ -5,7 +5,7 @@
     "pages": [
         {
             "type": "text",
-            "text": "$(bgreen)Tall Nut$() is opening a chain of stores for Tall and Taller gentlemen. he'll shell out the savings to you !$(br)$(byellow)Sun Cost$() : $(l)125$()$(br)$(bblue)Recharge$() : $(l)Very Slow$()$(br)$(l)Features$() : It is a $(l)defender$() plant that has high health, and it can $(bred)attract enemies in 7 * 7 range to attack itself$()."
+            "text": "$(bgreen)Tall Nut$() thinks there's no rivalry with Wall-nut, because they are brothers.$(br)$(byellow)Sun Cost$() : $(l)125$()$(br)$(bblue)Recharge$() : $(l)Very Slow$()$(br)$(l)Features$() : It is a $(l)defender$() plant that has high health, and it can $(bred)attract enemies in 7 * 7 range to attack itself$()."
         },
         {
             "type": "entity",

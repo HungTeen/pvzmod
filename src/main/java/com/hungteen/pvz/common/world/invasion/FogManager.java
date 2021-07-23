@@ -9,20 +9,21 @@ import com.hungteen.pvz.utils.enums.Resources;
 
 import net.minecraft.entity.Pose;
 import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.World;
 
 public class FogManager {
 
+	public static final int CD = 100;
+	
 	public static void tickFog(World world) {
 		world.players().forEach((player) -> {
 			player.getCapability(CapabilityHandler.PLAYER_DATA_CAPABILITY).ifPresent((l) -> {
 				int now = l.getPlayerData().getPlayerStats().getPlayerStats(Resources.NO_FOG_TICK);
-				-- now;
-				if(! shouldFogOn(world, player)) {
-					now = Math.max(now, 0);
+				int newTick = (shouldFogOn(world, player)) ? MathHelper.clamp(now - 1, - CD, 0) : MathHelper.clamp(now + 1, - CD, 0);
+				if(newTick != now) {
+					l.getPlayerData().getPlayerStats().setPlayerStats(Resources.NO_FOG_TICK, newTick);
 				}
-				now = Math.max(now, - 100);
-				l.getPlayerData().getPlayerStats().setPlayerStats(Resources.NO_FOG_TICK, now);
 			});
 		});
 	}

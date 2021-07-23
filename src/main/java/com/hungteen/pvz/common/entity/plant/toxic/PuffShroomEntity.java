@@ -4,7 +4,6 @@ import com.hungteen.pvz.common.advancement.trigger.EntityEffectAmountTrigger;
 import com.hungteen.pvz.common.entity.bullet.AbstractBulletEntity;
 import com.hungteen.pvz.common.entity.bullet.itembullet.SporeEntity;
 import com.hungteen.pvz.common.entity.plant.base.PlantShooterEntity;
-import com.hungteen.pvz.register.EntityRegister;
 import com.hungteen.pvz.register.SoundRegister;
 import com.hungteen.pvz.utils.EntityUtil;
 import com.hungteen.pvz.utils.MathUtil;
@@ -53,8 +52,8 @@ public class PuffShroomEntity extends PlantShooterEntity {
 		if(first) {
 			int cnt = 1;
 			final int range = 20;
-			for(PuffShroomEntity shroom : level.getEntities(EntityRegister.PUFF_SHROOM.get(), EntityUtil.getEntityAABB(this, range, range), shroom -> {
-				return ! EntityUtil.canTargetEntity(this, shroom);
+			for(PuffShroomEntity shroom : level.getEntitiesOfClass(PuffShroomEntity.class, EntityUtil.getEntityAABB(this, range, range), shroom -> {
+				return this.canSuperTogether(shroom);
 			})) {
 				if(shroom.canStartSuperMode()) {
 				    shroom.startSuperMode(false);
@@ -69,6 +68,16 @@ public class PuffShroomEntity extends PlantShooterEntity {
 				EntityEffectAmountTrigger.INSTANCE.trigger((ServerPlayerEntity) player, this, cnt);
 			}
 		}
+	}
+	
+	/**
+	 * {@link #startSuperMode(boolean)}
+	 */
+	protected boolean canSuperTogether(PuffShroomEntity entity) {
+		if(EntityUtil.canTargetEntity(this, entity) || entity.getPlantEnumName() != this.getPlantEnumName()) {
+			return false;
+		}
+		return this.getOwnerUUID().isPresent() && entity.getOwnerUUID().isPresent() && entity.getOwnerUUID().get().equals(this.getOwnerUUID().get());
 	}
 	
 	public int getMaxSuperCnt() {

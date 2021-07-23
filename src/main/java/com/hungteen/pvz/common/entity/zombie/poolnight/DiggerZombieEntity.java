@@ -87,7 +87,7 @@ public class DiggerZombieEntity extends PVZZombieEntity implements IHasMetal {
 	
 	@Override
 	public boolean canBeTargetBy(LivingEntity living) {
-		return this.isNotDigging();
+		return super.canBeTargetBy(living) && this.isNotDigging();
 	}
 	
 	@Override

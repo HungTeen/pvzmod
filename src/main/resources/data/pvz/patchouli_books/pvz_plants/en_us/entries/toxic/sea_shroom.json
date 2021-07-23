@@ -1,0 +1,22 @@
+{
+    "name": "Sea Shroom",
+    "icon": "pvz:sea_shroom_card",
+    "category": "pvz:toxic",
+    "pages": [
+        {
+            "type": "text",
+            "text": "$(bgreen)Sea Shroom$() has never seen the sea. It's in his name, he's heard loads about it, but he's just never found the time. One day, though, it'll go down.$(br)$(byellow)Sun Cost$() : $(l)0$()$(br)$(bblue)Recharge$() : $(l)Little Fast$()$(br)$(l)Features$() : It is a $(l)medium range attack$() plant that shoots $(bred)one spore$() every 1.5 seconds to attack enemy. $(bred)It will sleep at daytime and lives in water$$()."
+        },
+        {
+            "type": "entity",
+            "entity": "pvz:sea_shroom",
+            "scale": 0.65,
+            "text": "Appearance"
+        },
+        {
+            "type": "text",
+            "text": "$(bgreen)Plant Food :$() It will shoot $(l)a spore each tick$() which last 1 seconds.$(bred)It will activate other nearby Sea Shrooms to be in super mode$()."
+        }
+    ],
+    "sortnum": 3
+}

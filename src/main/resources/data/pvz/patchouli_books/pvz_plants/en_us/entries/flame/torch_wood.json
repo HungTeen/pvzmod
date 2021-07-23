@@ -15,7 +15,7 @@
         },
         {
             "type": "text",
-            "text": "$(bpurple)Special :$() It can give players in 10 blocks $(l)Light Eye effect$() to $(bred)dispel the fog$().$(br)$(bpurple)Plant Food :$() It can turn yellow flame to$(l)blue flame$() and increase more damage for peas."
+            "text": "$(bpurple)Special :$() It can give players in 10 blocks $(l)Light Eye effect$() to $(bred)dispel the fog$().$(br)$(bpurple)Plant Food :$() It can turn $(byellow)yellow flame$() to $(bblue)blue flame$() and increase more damage for peas."
         }
     ],
     "sortnum": 1

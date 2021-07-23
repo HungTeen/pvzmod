@@ -284,7 +284,7 @@ public abstract class PlantShooterEntity extends PVZPlantEntity implements IShoo
 		
 		@Override
 		protected boolean checkOther(LivingEntity entity) {
-			return this.shooter.checkY(entity);
+			return super.checkOther(entity) && this.shooter.checkY(entity);
 		}
 		
 	}

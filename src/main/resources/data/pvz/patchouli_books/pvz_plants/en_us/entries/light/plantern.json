@@ -1,0 +1,22 @@
+{
+    "name": "Plantern",
+    "icon": "pvz:plantern_card",
+    "category": "pvz:light",
+    "pages": [
+        {
+            "type": "text",
+            "text": "$(bgreen)Plantern$() defies science. He just does. Other plants eat light and excrete oxygen; Plantern eats darkness and excretes light.$(br)$(byellow)Sun Cost$() : $(l)75$()$(br)$(bblue)Recharge$() : $(l)Fast$()$(br)$(l)Features$() : It is a $(l)assist$() plant that providers nearby players with $(byellow)Light Effect$() to $(bred)dispel the fog$()."
+        },
+        {
+            "type": "entity",
+            "entity": "pvz:plantern",
+            "scale": 0.65,
+            "text": "Appearance"
+        },
+        {
+            "type": "text",
+            "text": "$(bgreen)Plant Food :$() It will provider $(byellow)high level Light Eye$() effect for nearby entities, which can help watch $(bred)invisible zombies$()."
+        }
+    ],
+    "sortnum": 2
+}

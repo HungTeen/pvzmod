@@ -4,6 +4,7 @@ import com.hungteen.pvz.api.interfaces.IPVZPlant;
 import com.hungteen.pvz.common.entity.zombie.PVZZombieEntity;
 import com.hungteen.pvz.register.SoundRegister;
 import com.hungteen.pvz.utils.EntityUtil;
+import com.hungteen.pvz.utils.MathUtil;
 import com.hungteen.pvz.utils.enums.MetalTypes;
 import com.hungteen.pvz.utils.enums.Plants;
 import com.hungteen.pvz.utils.enums.Zombies;
@@ -21,7 +22,7 @@ import net.minecraft.world.World;
 public class PogoZombieEntity extends PVZZombieEntity implements IHasMetal {
 
 	private static final DataParameter<Boolean> HAS_POGO = EntityDataManager.defineId(PogoZombieEntity.class, DataSerializers.BOOLEAN);
-	private final int JUMP_CD = 30;
+	private static final int JUMP_CD = 10;
 	
 	public PogoZombieEntity(EntityType<? extends MonsterEntity> type, World worldIn) {
 		super(type, worldIn);
@@ -37,8 +38,9 @@ public class PogoZombieEntity extends PVZZombieEntity implements IHasMetal {
 	public void normalZombieTick() {
 		super.normalZombieTick();
 		if(! level.isClientSide) {
-			if(this.hasPogo() && this.tickCount % this.JUMP_CD == 0) {
-				double motionY = 0.85D;
+			this.setAttackTime((this.getAttackTime() + 1) % JUMP_CD); 
+			if(this.hasPogo() && (this.isOnGround() || this.isInWaterOrBubble()) && this.getAttackTime() % JUMP_CD == 0) {
+				double motionY = 0.85D + MathUtil.getRandomFloat(getRandom()) * 0.1D;
 				this.setDeltaMovement(this.getDeltaMovement().x(), motionY, this.getDeltaMovement().z());
 				EntityUtil.playSound(this, SoundRegister.POGO.get());
 			}

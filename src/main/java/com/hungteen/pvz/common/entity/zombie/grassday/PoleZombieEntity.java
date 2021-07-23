@@ -94,7 +94,7 @@ public class PoleZombieEntity extends PVZZombieEntity{
 	
 	@Override
 	public boolean canBeTargetBy(LivingEntity living) {
-		return ! this.isPoleJumping();
+		return super.canBeTargetBy(living) && ! this.isPoleJumping();
 	}
 	
 	@Override

@@ -114,7 +114,7 @@ public class BalloonZombieEntity extends PVZZombieEntity {
 	
 	@Override
 	public boolean canBeTargetBy(LivingEntity living) {
-		return ! this.hasBalloon();
+		return super.canBeTargetBy(living) && ! this.hasBalloon();
 	}
 	
 	@Override

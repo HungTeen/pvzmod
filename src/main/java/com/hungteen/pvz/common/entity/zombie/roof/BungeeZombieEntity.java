@@ -258,7 +258,7 @@ public class BungeeZombieEntity extends PVZZombieEntity {
 	
 	@Override
 	public boolean canBeTargetBy(LivingEntity living) {
-		return this.getBungeeState() == BungeeStates.CATCH;
+		return super.canBeTargetBy(living) && this.getBungeeState() == BungeeStates.CATCH;
 	}
 	
 	@Override

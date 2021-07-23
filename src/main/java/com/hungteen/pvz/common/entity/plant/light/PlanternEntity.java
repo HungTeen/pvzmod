@@ -10,55 +10,51 @@ import com.hungteen.pvz.utils.enums.Plants;
 import net.minecraft.entity.CreatureEntity;
 import net.minecraft.entity.EntitySize;
 import net.minecraft.entity.EntityType;
-import net.minecraft.entity.ILivingEntityData;
 import net.minecraft.entity.Pose;
-import net.minecraft.entity.SpawnReason;
 import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.potion.EffectInstance;
-import net.minecraft.world.DifficultyInstance;
-import net.minecraft.world.IServerWorld;
+import net.minecraft.util.SoundEvent;
 import net.minecraft.world.World;
 
 public class PlanternEntity extends PVZPlantEntity implements ILightEffect {
 
+	private static final int EFFECT_CD = 50;
+	
 	public PlanternEntity(EntityType<? extends CreatureEntity> type, World worldIn) {
 		super(type, worldIn);
-	}
-	
-	@Override
-	public ILivingEntityData finalizeSpawn(IServerWorld worldIn, DifficultyInstance difficultyIn, SpawnReason reason,
-			ILivingEntityData spawnDataIn, CompoundNBT dataTag) {
-		if(! level.isClientSide) {
-			EntityUtil.playSound(this, SoundRegister.PLANTERN.get());
-		}
-		return super.finalizeSpawn(worldIn, difficultyIn, reason, spawnDataIn, dataTag);
 	}
 	
 	@Override
 	protected void normalPlantTick() {
 		super.normalPlantTick();
 		if(! level.isClientSide) {
-			if(this.tickCount % 40 == 0) {
-				int range = this.isPlantInSuperMode() ? 40 : 30;
-				this.giveLightToPlayers(range);
+			if(this.getExistTick() % EFFECT_CD == 0) {
+				this.giveLightToPlayers();
 			}
 		}
 	}
 	
-	private void giveLightToPlayers(float range) {
-		level.getEntitiesOfClass(PlayerEntity.class, EntityUtil.getEntityAABB(this, range, range), (player) -> {
-			return ! EntityUtil.canTargetEntity(this, player);
-		}).forEach((player) -> {
-			player.addEffect(getLightEyeEffect());
+	/**
+	 * {@link #normalPlantTick()}
+	 */
+	private void giveLightToPlayers() {
+		final float range = 30;
+		EntityUtil.getFriendlyLivings(this, EntityUtil.getEntityAABB(this, range, range)).stream()
+		.filter(e -> e instanceof PlayerEntity).forEach(entity -> {
+			entity.addEffect(this.getLightEyeEffect());
 		});
 	}
-
-	@Override
-	public Plants getPlantEnumName() {
-		return Plants.PLANTERN;
-	}
 	
+	@Override
+	public void startSuperMode(boolean first) {
+		super.startSuperMode(first);
+		final float range = 30;
+		EntityUtil.getFriendlyLivings(this, EntityUtil.getEntityAABB(this, range, range)).forEach(entity -> {
+			entity.addEffect(this.createEffect(1, this.getSuperLightEyeTime()));
+		});
+		EntityUtil.playSound(this, this.getSpawnSound());
+	}
+
 	@Override
 	public EntitySize getDimensions(Pose poseIn) {
 		return EntitySize.scalable(0.75f, 1.7f);
@@ -66,34 +62,34 @@ public class PlanternEntity extends PVZPlantEntity implements ILightEffect {
 
 	@Override
 	public int getSuperTimeLength() {
-		return 50;
+		return 20;
 	}
 
 	@Override
 	public EffectInstance getLightEyeEffect() {
-		if(this.isPlantInSuperMode()) return new EffectInstance(EffectRegister.LIGHT_EYE_EFFECT.get(), this.getLightEyeTime() * 2, this.getSuperLightLvl(), false, true);
-		return new EffectInstance(EffectRegister.LIGHT_EYE_EFFECT.get(), this.getLightEyeTime(), this.getLightEyeLvl(), false, false);
+		return createEffect(0, this.getLightEyeTime());
 	}
 	
-	public int getLightEyeLvl() {
-		int lvl = this.getPlantLvl();
-		if(lvl <= 20) {
-			int now = (lvl - 1) / 5;
-			return now;
-		}
-		return 3;
-	}
-	
-	public int getSuperLightLvl() {
-		if(this.isPlantInStage(1)) return 1;
-		if(this.isPlantInStage(2)) return 2;
-		return 3;
+	private EffectInstance createEffect(int lvl, int time) {
+		return new EffectInstance(EffectRegister.LIGHT_EYE_EFFECT.get(), time, lvl, false, false);
 	}
 	
 	public int getLightEyeTime() {
-		int lvl = this.getPlantLvl();
-		if(lvl <= 20) return lvl * 200;
-		return 4000;
+		return Math.min(4000, this.getPlantLvl() * 200);
+	}
+	
+	public int getSuperLightEyeTime() {
+		return this.isPlantInStage(1) ? 3600 : this.isPlantInStage(2) ? 7200 : 10800; 
+	}
+	
+	@Override
+	protected SoundEvent getSpawnSound() {
+		return SoundRegister.PLANTERN.get();
+	}
+	
+	@Override
+	public Plants getPlantEnumName() {
+		return Plants.PLANTERN;
 	}
 	
 }

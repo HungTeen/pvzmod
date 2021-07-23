@@ -5,7 +5,7 @@
     "pages": [
         {
             "type": "text",
-            "text": "$(bgreen)Tangle Kelp$() thinks that it will hide below the surface and nobody will see it, but its friends say they can see it perfectly well, but it'll never change.$(br)$(byellow)Sun Cost$() : $(l)25$()$(br)$(bblue)Recharge$() : $(l)Slow$()$(br)$(l)Features$() : It is a $(l)close attack$() plant, which will drag a zombie into water and deal damage to it$()."
+            "text": "$(bgreen)Tangle Kelp$() thinks that it will hide below the surface and nobody will see it, but its friends say they can see it perfectly well, but it'll never change.$(br)$(byellow)Sun Cost$() : $(l)25$()$(br)$(bblue)Recharge$() : $(l)Slow$()$(br)$(l)Features$() : It is a $(l)close attack$() plant, which will drag a zombie into water and deal damage to it$(). $(bred)It lives in water$()."
         },
         {
             "type": "entity",

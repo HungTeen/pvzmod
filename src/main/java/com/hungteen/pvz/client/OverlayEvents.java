@@ -4,6 +4,7 @@ import com.hungteen.pvz.PVZConfig;
 import com.hungteen.pvz.PVZMod;
 import com.hungteen.pvz.client.cache.ClientPlayerResources;
 import com.hungteen.pvz.common.entity.plant.explosion.CobCannonEntity;
+import com.hungteen.pvz.common.world.invasion.FogManager;
 import com.hungteen.pvz.common.world.invasion.WaveManager;
 import com.hungteen.pvz.register.KeyBindRegister;
 import com.hungteen.pvz.utils.PlayerUtil;
@@ -83,7 +84,7 @@ public class OverlayEvents {
 		if (PVZConfig.CLIENT_CONFIG.EnvironmentRender.RenderFog.get()) {
 			int tick = ClientPlayerResources.getPlayerStats(Resources.NO_FOG_TICK);
 			if(tick < 0) {
-				renderFog(ev.getMatrixStack(), ev.getWindow().getGuiScaledWidth(), ev.getWindow().getGuiScaledHeight(), Math.min(- tick * 1f / 100, 1f));
+				renderFog(ev.getMatrixStack(), ev.getWindow().getGuiScaledWidth(), ev.getWindow().getGuiScaledHeight(), Math.min(- tick * 1F / FogManager.CD, 1F));
 			}
 		}
 	}
