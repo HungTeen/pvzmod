@@ -1,0 +1,22 @@
+{
+    "name": "Cactus",
+    "icon": "pvz:cactus_card",
+    "category": "pvz:spear",
+    "pages": [
+        {
+            "type": "text",
+            "text": "$(bgreen)Cactus$()' spikes belie a spongy heart filled with love and goodwill. She just wants to hug and be hugged. Most folks can't hang with that, but she doesn't mind.$(br)$(byellow)Sun Cost$() : $(l)125$()$(br)$(bblue)Recharge$() : $(l)Little Fast$()$(br)$(l)Features$() : She is a $(l)range attack$() plant that shoots $(bred)one thorn$() every 1.5 seconds to attack enemy, and can spike enemies who attack it for $(bred)double damage$()."
+        },
+        {
+            "type": "entity",
+            "entity": "pvz:cactus",
+            "scale": 0.65,
+            "text": "Appearance"
+        },
+        {
+            "type": "text",
+            "text": "$(bpurple)Special :$() She can $(bred)stretch herself$() to fit different height. She can Attack $(bred)fly target$().$(br)$(bgreen)Plant Food :$() It will turn $(baqua)blue spikes$(), and deal $(bred)double damage$(), and its thron can $(l)attack several target$()."
+        }
+    ],
+    "sortnum": 1
+}

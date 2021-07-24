@@ -70,7 +70,7 @@ public class CobCannonEntity extends PVZPlantEntity {
 	@Override
 	protected void registerGoals() {
 		super.registerGoals();
-		this.targetSelector.addGoal(2, new PVZRandomTargetGoal(this, true, 10, 48, 16));
+		this.targetSelector.addGoal(2, new PVZRandomTargetGoal(this, true, false, 10, 48, 16));
 	}
 	
 	@Override

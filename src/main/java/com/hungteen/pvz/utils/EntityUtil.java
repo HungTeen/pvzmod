@@ -23,6 +23,7 @@ import com.hungteen.pvz.common.entity.ai.goal.target.PVZHurtByTargetGoal;
 import com.hungteen.pvz.common.entity.bullet.AbstractBulletEntity;
 import com.hungteen.pvz.common.entity.misc.LawnMowerEntity;
 import com.hungteen.pvz.common.entity.plant.PVZPlantEntity;
+import com.hungteen.pvz.common.entity.plant.assist.BloverEntity;
 import com.hungteen.pvz.common.entity.zombie.PVZZombieEntity;
 import com.hungteen.pvz.common.entity.zombie.grassday.PoleZombieEntity;
 import com.hungteen.pvz.common.entity.zombie.poolday.BobsleTeamEntity;
@@ -630,9 +631,16 @@ public class EntityUtil {
 		return entity.getAttribute(Attributes.MOVEMENT_SPEED).getModifier(EffectRegister.BUTTER_EFFECT_UUID) != null;
 	}
 	
+	/**
+	 * {@link BloverEntity#blow()}
+	 */
 	public static boolean isEntityInSky(Entity entity) {
-		if(entity instanceof FlyingEntity || entity instanceof BatEntity) return true;
-		if(entity instanceof BalloonZombieEntity && ((BalloonZombieEntity) entity).hasBalloon()) return true;
+		if(entity instanceof FlyingEntity || entity instanceof BatEntity) {
+			return true;
+		}
+		if(entity instanceof BalloonZombieEntity && ((BalloonZombieEntity) entity).hasBalloon()) {
+			return true;
+		}
 		return ! entity.isOnGround() && ! entity.isInWater() && ! entity.isInLava();
 	}
 

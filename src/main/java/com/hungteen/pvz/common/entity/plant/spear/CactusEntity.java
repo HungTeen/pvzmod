@@ -48,10 +48,9 @@ public class CactusEntity extends PlantShooterEntity {
 	@Override
 	public void normalPlantTick() {
 		super.normalPlantTick();
-		this.refreshDimensions();
 		if(! level.isClientSide) {
-			LivingEntity target = this.getTarget();
-			if(target != null) {
+			final LivingEntity target = this.getTarget();
+			if(EntityUtil.isEntityValid(target)) {
 				if(! this.isSuitableHeight(target)) {
 					final float dh = SEGMENT_HEIGHT;
 				    if(this.getY() < target.getY()) {
@@ -63,6 +62,14 @@ public class CactusEntity extends PlantShooterEntity {
 			} else {
 				this.setCactusHeight(0);
 			}
+		}
+	}
+	
+	@Override
+	public void onSyncedDataUpdated(DataParameter<?> data) {
+		super.onSyncedDataUpdated(data);
+		if(data.equals(CACTUS_HEIGHT)){
+			this.refreshDimensions();
 		}
 	}
 	
@@ -83,36 +90,24 @@ public class CactusEntity extends PlantShooterEntity {
 	
 	@Override
 	public boolean hurt(DamageSource source, float amount) {
-		this.dealThornBackDamage(source);
+		if(EntityUtil.canAttackEntity(this, source.getEntity())) {
+			final float damage = this.isCactusPowered() ? this.getAttackDamage() * 4 : this.getAttackDamage() * 2;
+			source.getEntity().hurt(PVZDamageSource.causeThornDamage(this, this), damage);
+		}
 		return super.hurt(source, amount);
 	}
 	
-	private void dealThornBackDamage(DamageSource source) {
-		if(EntityUtil.canTargetEntity(this, source.getDirectEntity())) {
-			float damage = this.getThornDamage();
-			if(this.isCactusPowered()) damage *= 2;
-			source.getDirectEntity().hurt(PVZDamageSource.causeThornDamage(this, this), damage);
-		}
-	}
-	
 	public int getThornCount() {
-		if(this.isPlantInStage(1)) return 2;
-		if(this.isPlantInStage(2)) return 3;
-		return 4;
-	}
-	
-	public float getThornDamage() {
-		int lvl = this.getPlantLvl();
-		if(lvl <= 19) {
-			return 1.75F + 0.25F * lvl;
-		}
-		return 6.5F;
+		return this.isPlantInStage(1) ? 2 : this.isPlantInStage(2) ? 3 : 4;
 	}
 	
 	public float getCurrentHeight() {
 		return this.getCactusHeight() + MIN_SHOOT_HEIGHT;
 	}
 	
+	/**
+	 * {@link #normalPlantTick()}
+	 */
 	private boolean isSuitableHeight(Entity target) {
 		double dx = target.getX() - this.getX();
 		double ly = target.getY() - this.getY() - this.getCurrentHeight();
@@ -125,16 +120,18 @@ public class CactusEntity extends PlantShooterEntity {
 	
 	@Override
 	public boolean canPlantTarget(Entity entity) {
-		if(entity instanceof BalloonZombieEntity) return true;
+		if(entity instanceof BalloonZombieEntity) {
+			return true;
+		}
 		return super.canPlantTarget(entity);
 	}
 	
 	@Override
 	public boolean checkY(Entity target) {
-		double dx = target.getX() - this.getX();
-		double dz = target.getZ() - this.getZ();
-		double dis = Math.sqrt(dx * dx + dz * dz);
-		double y = dis / getMaxShootAngle();
+		final double dx = target.getX() - this.getX();
+		final double dz = target.getZ() - this.getZ();
+		final double dis = Math.sqrt(dx * dx + dz * dz);
+		final double y = dis / getMaxShootAngle();
 		return this.getY() + MAX_SHOOT_HEIGHT + y >= target.getY() &&  this.getY() + MIN_SHOOT_HEIGHT - y <= target.getY() + target.getBbHeight();
 	}
 	
@@ -156,22 +153,12 @@ public class CactusEntity extends PlantShooterEntity {
 	
 	@Override
 	public boolean canStartSuperMode() {
-		return ! this.isCactusPowered();
+		return super.canStartSuperMode() && ! this.isCactusPowered();
 	}
 	
 	@Override
-	public int getShootCD() {
-		return getNormalAttackCD();
-	}
-	
-	@Override
-	public float getAttackDamage() {
-		int lvl = this.getPlantLvl();
-		if(lvl <= 20) {
-			int now = (lvl - 1) / 2;
-			return 2.25F + now * 0.25F;
-		}
-		return 4.5F;
+	public int getSuperTimeLength() {
+		return 20;
 	}
 	
 	@Override
@@ -211,11 +198,6 @@ public class CactusEntity extends PlantShooterEntity {
 	@Override
 	public Plants getPlantEnumName() {
 		return Plants.CACTUS;
-	}
-
-	@Override
-	public int getSuperTimeLength() {
-		return 20;
 	}
 
 }

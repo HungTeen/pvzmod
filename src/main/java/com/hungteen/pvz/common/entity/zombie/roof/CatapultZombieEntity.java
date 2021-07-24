@@ -55,7 +55,7 @@ public class CatapultZombieEntity extends CarZombieEntity implements IPult,IHasW
 
 	@Override
 	protected void registerTargetGoals() {
-		this.targetSelector.addGoal(0, new PVZRandomTargetGoal(this, true, ZombieUtil.NORMAL_TARGET_RANGE, ZombieUtil.NORMAL_TARGET_HEIGHT));
+		this.targetSelector.addGoal(0, new PVZRandomTargetGoal(this, true, true, ZombieUtil.NORMAL_TARGET_RANGE, ZombieUtil.NORMAL_TARGET_HEIGHT));
 	}
 	
 	@Override

@@ -1,6 +1,6 @@
 package com.hungteen.pvz.client.model.entity.plant.spear;
 
-import com.hungteen.pvz.client.model.entity.plant.PVZPlantModel;
+import com.hungteen.pvz.client.model.entity.plant.PlantShooterModel;
 import com.hungteen.pvz.common.entity.plant.spear.CactusEntity;
 
 import net.minecraft.client.renderer.entity.model.EntityModel;
@@ -11,7 +11,7 @@ import net.minecraft.client.renderer.model.ModelRenderer;
 // Paste this class into your mod and generate all required imports
 
 
-public class CactusModel extends PVZPlantModel<CactusEntity> {
+public class CactusModel extends PlantShooterModel<CactusEntity> {
 	private final ModelRenderer total;
 	private final ModelRenderer body;
 	private final ModelRenderer branch;
@@ -36,6 +36,14 @@ public class CactusModel extends PVZPlantModel<CactusEntity> {
 	private final ModelRenderer bone19;
 	private final ModelRenderer bone20;
 	private final ModelRenderer bone21;
+	private final ModelRenderer blue_spikes3;
+	private final ModelRenderer bone46;
+	private final ModelRenderer bone47;
+	private final ModelRenderer bone48;
+	private final ModelRenderer bone49;
+	private final ModelRenderer bone50;
+	private final ModelRenderer bone51;
+	private final ModelRenderer bone52;
 	private final ModelRenderer right_hand;
 	private final ModelRenderer spikes1;
 	private final ModelRenderer bone;
@@ -45,6 +53,14 @@ public class CactusModel extends PVZPlantModel<CactusEntity> {
 	private final ModelRenderer bone5;
 	private final ModelRenderer bone6;
 	private final ModelRenderer bone7;
+	private final ModelRenderer blue_spikes1;
+	private final ModelRenderer bone53;
+	private final ModelRenderer bone54;
+	private final ModelRenderer bone55;
+	private final ModelRenderer bone56;
+	private final ModelRenderer bone57;
+	private final ModelRenderer bone58;
+	private final ModelRenderer bone59;
 	private final ModelRenderer left_hand;
 	private final ModelRenderer spikes2;
 	private final ModelRenderer bone8;
@@ -54,6 +70,14 @@ public class CactusModel extends PVZPlantModel<CactusEntity> {
 	private final ModelRenderer bone12;
 	private final ModelRenderer bone13;
 	private final ModelRenderer bone14;
+	private final ModelRenderer blue_spikes2;
+	private final ModelRenderer bone60;
+	private final ModelRenderer bone61;
+	private final ModelRenderer bone62;
+	private final ModelRenderer bone63;
+	private final ModelRenderer bone64;
+	private final ModelRenderer bone65;
+	private final ModelRenderer bone66;
 	private final ModelRenderer body2;
 	private final ModelRenderer spikes4;
 	private final ModelRenderer bone23;
@@ -62,6 +86,13 @@ public class CactusModel extends PVZPlantModel<CactusEntity> {
 	private final ModelRenderer bone26;
 	private final ModelRenderer bone27;
 	private final ModelRenderer bone28;
+	private final ModelRenderer blue_spikes4;
+	private final ModelRenderer bone67;
+	private final ModelRenderer bone68;
+	private final ModelRenderer bone69;
+	private final ModelRenderer bone70;
+	private final ModelRenderer bone71;
+	private final ModelRenderer bone72;
 	private final ModelRenderer body3;
 	private final ModelRenderer spikes5;
 	private final ModelRenderer bone22;
@@ -70,6 +101,13 @@ public class CactusModel extends PVZPlantModel<CactusEntity> {
 	private final ModelRenderer bone31;
 	private final ModelRenderer bone32;
 	private final ModelRenderer bone33;
+	private final ModelRenderer blue_spikes5;
+	private final ModelRenderer bone73;
+	private final ModelRenderer bone74;
+	private final ModelRenderer bone75;
+	private final ModelRenderer bone76;
+	private final ModelRenderer bone77;
+	private final ModelRenderer bone78;
 	private final ModelRenderer body4;
 	private final ModelRenderer spikes6;
 	private final ModelRenderer bone34;
@@ -78,6 +116,13 @@ public class CactusModel extends PVZPlantModel<CactusEntity> {
 	private final ModelRenderer bone37;
 	private final ModelRenderer bone38;
 	private final ModelRenderer bone39;
+	private final ModelRenderer blue_spikes6;
+	private final ModelRenderer bone79;
+	private final ModelRenderer bone80;
+	private final ModelRenderer bone81;
+	private final ModelRenderer bone82;
+	private final ModelRenderer bone83;
+	private final ModelRenderer bone84;
 	private final ModelRenderer body5;
 	private final ModelRenderer spikes7;
 	private final ModelRenderer bone40;
@@ -86,6 +131,13 @@ public class CactusModel extends PVZPlantModel<CactusEntity> {
 	private final ModelRenderer bone43;
 	private final ModelRenderer bone44;
 	private final ModelRenderer bone45;
+	private final ModelRenderer blue_spikes7;
+	private final ModelRenderer bone85;
+	private final ModelRenderer bone86;
+	private final ModelRenderer bone87;
+	private final ModelRenderer bone88;
+	private final ModelRenderer bone89;
+	private final ModelRenderer bone90;
 
 	public CactusModel() {
 		texWidth = 128;
@@ -250,6 +302,60 @@ public class CactusModel extends PVZPlantModel<CactusEntity> {
 		bone21.texOffs(78, 93).addBox(-0.5F, -4.0F, -1.0F, 1.0F, 4.0F, 1.0F, 0.0F, false);
 		bone21.texOffs(82, 95).addBox(-0.5F, -2.0F, -1.0F, 1.0F, 2.0F, 1.0F, 0.1F, false);
 
+		blue_spikes3 = new ModelRenderer(this);
+		blue_spikes3.setPos(0.0F, 0.0F, 0.0F);
+		body.addChild(blue_spikes3);
+		
+
+		bone46 = new ModelRenderer(this);
+		bone46.setPos(3.0F, -29.0F, -3.0F);
+		blue_spikes3.addChild(bone46);
+		setRotationAngle(bone46, 0.5236F, 0.0F, 0.7854F);
+		bone46.texOffs(1, 60).addBox(-0.5F, -4.0F, -1.0F, 1.0F, 4.0F, 1.0F, 0.0F, false);
+		bone46.texOffs(1, 60).addBox(-0.5F, -2.0F, -1.0F, 1.0F, 2.0F, 1.0F, 0.1F, false);
+
+		bone47 = new ModelRenderer(this);
+		bone47.setPos(2.0F, -3.0F, -3.0F);
+		blue_spikes3.addChild(bone47);
+		setRotationAngle(bone47, 0.7854F, 0.0F, 1.0472F);
+		bone47.texOffs(1, 60).addBox(-0.5F, -4.0F, -1.0F, 1.0F, 4.0F, 1.0F, 0.0F, false);
+		bone47.texOffs(1, 60).addBox(-0.5F, -2.0F, -1.0F, 1.0F, 2.0F, 1.0F, 0.1F, false);
+
+		bone48 = new ModelRenderer(this);
+		bone48.setPos(4.0F, -4.0F, 0.0F);
+		blue_spikes3.addChild(bone48);
+		setRotationAngle(bone48, -0.2182F, 0.0F, 1.309F);
+		bone48.texOffs(1, 60).addBox(-0.5F, -4.0F, -1.0F, 1.0F, 4.0F, 1.0F, 0.0F, false);
+		bone48.texOffs(1, 60).addBox(-0.5F, -2.0F, -1.0F, 1.0F, 2.0F, 1.0F, 0.1F, false);
+
+		bone49 = new ModelRenderer(this);
+		bone49.setPos(-2.0F, -6.0F, -4.0F);
+		blue_spikes3.addChild(bone49);
+		setRotationAngle(bone49, 2.1817F, -0.5236F, 1.309F);
+		bone49.texOffs(1, 60).addBox(-0.5F, -3.0F, -1.0F, 1.0F, 3.0F, 1.0F, 0.0F, false);
+		bone49.texOffs(1, 60).addBox(-0.5F, -2.0F, -1.0F, 1.0F, 2.0F, 1.0F, 0.1F, false);
+
+		bone50 = new ModelRenderer(this);
+		bone50.setPos(0.0F, -23.0F, 4.0F);
+		blue_spikes3.addChild(bone50);
+		setRotationAngle(bone50, -1.309F, 0.0F, 0.2618F);
+		bone50.texOffs(1, 60).addBox(-0.5F, -4.0F, -1.0F, 1.0F, 4.0F, 1.0F, 0.0F, false);
+		bone50.texOffs(1, 60).addBox(-0.5F, -2.0F, -1.0F, 1.0F, 2.0F, 1.0F, 0.1F, false);
+
+		bone51 = new ModelRenderer(this);
+		bone51.setPos(0.0F, -10.0F, 4.0F);
+		blue_spikes3.addChild(bone51);
+		setRotationAngle(bone51, -1.309F, 0.0F, -2.3126F);
+		bone51.texOffs(1, 60).addBox(-0.5F, -4.0F, -1.0F, 1.0F, 4.0F, 1.0F, 0.0F, false);
+		bone51.texOffs(1, 60).addBox(-0.5F, -2.0F, -1.0F, 1.0F, 2.0F, 1.0F, 0.1F, false);
+
+		bone52 = new ModelRenderer(this);
+		bone52.setPos(-4.0F, -5.0F, 0.0F);
+		blue_spikes3.addChild(bone52);
+		setRotationAngle(bone52, 3.0107F, -0.5236F, 1.309F);
+		bone52.texOffs(1, 60).addBox(-0.5F, -4.0F, -1.0F, 1.0F, 4.0F, 1.0F, 0.0F, false);
+		bone52.texOffs(1, 60).addBox(-0.5F, -2.0F, -1.0F, 1.0F, 2.0F, 1.0F, 0.1F, false);
+
 		right_hand = new ModelRenderer(this);
 		right_hand.setPos(-5.0F, -17.0F, 0.0F);
 		total.addChild(right_hand);
@@ -312,6 +418,60 @@ public class CactusModel extends PVZPlantModel<CactusEntity> {
 		setRotationAngle(bone7, -0.7854F, 0.0F, 0.2618F);
 		bone7.texOffs(82, 81).addBox(-0.5F, -4.0F, -1.0F, 1.0F, 4.0F, 1.0F, 0.0F, false);
 		bone7.texOffs(78, 87).addBox(-0.5F, -2.0F, -1.0F, 1.0F, 2.0F, 1.0F, 0.1F, false);
+
+		blue_spikes1 = new ModelRenderer(this);
+		blue_spikes1.setPos(0.0F, 0.0F, 0.0F);
+		right_hand.addChild(blue_spikes1);
+		
+
+		bone53 = new ModelRenderer(this);
+		bone53.setPos(-9.0F, -11.0F, 0.0F);
+		blue_spikes1.addChild(bone53);
+		setRotationAngle(bone53, 0.0F, 0.0F, -0.2182F);
+		bone53.texOffs(1, 59).addBox(-0.5F, -4.0F, -1.0F, 1.0F, 4.0F, 1.0F, 0.0F, false);
+		bone53.texOffs(1, 59).addBox(-0.5F, -2.0F, -1.0F, 1.0F, 2.0F, 1.0F, 0.1F, false);
+
+		bone54 = new ModelRenderer(this);
+		bone54.setPos(-10.0F, -7.0F, 1.0F);
+		blue_spikes1.addChild(bone54);
+		setRotationAngle(bone54, 0.0F, 0.0F, -1.1781F);
+		bone54.texOffs(1, 59).addBox(-0.5F, -4.0F, -1.0F, 1.0F, 4.0F, 1.0F, 0.0F, false);
+		bone54.texOffs(1, 59).addBox(-0.5F, -2.0F, -1.0F, 1.0F, 2.0F, 1.0F, 0.1F, false);
+
+		bone55 = new ModelRenderer(this);
+		bone55.setPos(-7.0F, -8.0F, -1.0F);
+		blue_spikes1.addChild(bone55);
+		setRotationAngle(bone55, 0.7854F, 0.0F, 0.5236F);
+		bone55.texOffs(1, 59).addBox(-0.5F, -4.0F, -1.0F, 1.0F, 4.0F, 1.0F, 0.0F, false);
+		bone55.texOffs(1, 59).addBox(-0.5F, -2.0F, -1.0F, 1.0F, 2.0F, 1.0F, 0.1F, false);
+
+		bone56 = new ModelRenderer(this);
+		bone56.setPos(-10.0F, -3.0F, -1.0F);
+		blue_spikes1.addChild(bone56);
+		setRotationAngle(bone56, 0.0F, 0.0F, -2.0944F);
+		bone56.texOffs(1, 59).addBox(-0.5F, -4.0F, -1.0F, 1.0F, 4.0F, 1.0F, 0.0F, false);
+		bone56.texOffs(1, 59).addBox(-0.5F, -2.0F, -1.0F, 1.0F, 2.0F, 1.0F, 0.1F, false);
+
+		bone57 = new ModelRenderer(this);
+		bone57.setPos(-8.0F, -3.0F, -1.0F);
+		blue_spikes1.addChild(bone57);
+		setRotationAngle(bone57, 0.2182F, 0.0F, -2.3998F);
+		bone57.texOffs(1, 59).addBox(-4.8301F, -5.5F, -1.0F, 1.0F, 3.0F, 1.0F, 0.0F, false);
+		bone57.texOffs(1, 59).addBox(-4.8301F, -4.5F, -1.0F, 1.0F, 2.0F, 1.0F, 0.1F, false);
+
+		bone58 = new ModelRenderer(this);
+		bone58.setPos(-7.0F, -3.0F, -1.0F);
+		blue_spikes1.addChild(bone58);
+		setRotationAngle(bone58, -0.4363F, 0.0F, -2.6616F);
+		bone58.texOffs(1, 59).addBox(-4.8301F, -6.5F, -1.0F, 1.0F, 4.0F, 1.0F, 0.0F, false);
+		bone58.texOffs(1, 59).addBox(-4.8301F, -4.5F, -1.0F, 1.0F, 2.0F, 1.0F, 0.1F, false);
+
+		bone59 = new ModelRenderer(this);
+		bone59.setPos(-7.0F, -6.0F, 1.0F);
+		blue_spikes1.addChild(bone59);
+		setRotationAngle(bone59, -0.7854F, 0.0F, 0.2618F);
+		bone59.texOffs(1, 59).addBox(-0.5F, -4.0F, -1.0F, 1.0F, 4.0F, 1.0F, 0.0F, false);
+		bone59.texOffs(1, 59).addBox(-0.5F, -2.0F, -1.0F, 1.0F, 2.0F, 1.0F, 0.1F, false);
 
 		left_hand = new ModelRenderer(this);
 		left_hand.setPos(5.0F, -17.0F, -1.0F);
@@ -377,6 +537,60 @@ public class CactusModel extends PVZPlantModel<CactusEntity> {
 		bone14.texOffs(29, 64).addBox(-0.5F, -4.0F, -1.0F, 1.0F, 4.0F, 1.0F, 0.0F, false);
 		bone14.texOffs(23, 66).addBox(-0.5F, -2.0F, -1.0F, 1.0F, 2.0F, 1.0F, 0.1F, false);
 
+		blue_spikes2 = new ModelRenderer(this);
+		blue_spikes2.setPos(0.0F, 0.0F, 0.0F);
+		left_hand.addChild(blue_spikes2);
+		
+
+		bone60 = new ModelRenderer(this);
+		bone60.setPos(-8.0F, -10.0F, 1.0F);
+		blue_spikes2.addChild(bone60);
+		setRotationAngle(bone60, 0.0F, 0.0F, 0.2618F);
+		bone60.texOffs(2, 59).addBox(-0.5F, -4.0F, -1.0F, 1.0F, 4.0F, 1.0F, 0.0F, false);
+		bone60.texOffs(2, 59).addBox(-0.5F, -2.0F, -1.0F, 1.0F, 2.0F, 1.0F, 0.1F, false);
+
+		bone61 = new ModelRenderer(this);
+		bone61.setPos(-10.0F, -8.0F, 0.0F);
+		blue_spikes2.addChild(bone61);
+		setRotationAngle(bone61, -0.3927F, 0.0F, -1.0472F);
+		bone61.texOffs(2, 59).addBox(-0.5F, -4.0F, -1.0F, 1.0F, 4.0F, 1.0F, 0.0F, false);
+		bone61.texOffs(2, 59).addBox(-0.5F, -2.0F, -1.0F, 1.0F, 2.0F, 1.0F, 0.1F, false);
+
+		bone62 = new ModelRenderer(this);
+		bone62.setPos(-7.0F, -8.0F, -2.0F);
+		blue_spikes2.addChild(bone62);
+		setRotationAngle(bone62, 0.7854F, 0.0F, 0.5236F);
+		bone62.texOffs(2, 59).addBox(-0.5F, -4.0F, -1.0F, 1.0F, 4.0F, 1.0F, 0.0F, false);
+		bone62.texOffs(2, 59).addBox(-0.5F, -2.0F, -1.0F, 1.0F, 2.0F, 1.0F, 0.1F, false);
+
+		bone63 = new ModelRenderer(this);
+		bone63.setPos(-5.0F, 0.0F, 1.0F);
+		blue_spikes2.addChild(bone63);
+		setRotationAngle(bone63, -2.618F, 0.0F, -0.5236F);
+		bone63.texOffs(2, 59).addBox(-0.5F, -4.0F, -1.0F, 1.0F, 4.0F, 1.0F, 0.0F, false);
+		bone63.texOffs(2, 59).addBox(-0.5F, -2.0F, -1.0F, 1.0F, 2.0F, 1.0F, 0.1F, false);
+
+		bone64 = new ModelRenderer(this);
+		bone64.setPos(-8.0F, 0.0F, 1.0F);
+		blue_spikes2.addChild(bone64);
+		setRotationAngle(bone64, -2.618F, 0.0F, 0.0F);
+		bone64.texOffs(2, 59).addBox(-0.5F, -3.0F, -1.0F, 1.0F, 3.0F, 1.0F, 0.0F, false);
+		bone64.texOffs(2, 59).addBox(-0.5F, -2.0F, -1.0F, 1.0F, 2.0F, 1.0F, 0.1F, false);
+
+		bone65 = new ModelRenderer(this);
+		bone65.setPos(-10.0F, 0.0F, -1.0F);
+		blue_spikes2.addChild(bone65);
+		setRotationAngle(bone65, -2.0944F, -1.309F, 0.0F);
+		bone65.texOffs(2, 59).addBox(-0.5F, -3.0F, -1.0F, 1.0F, 3.0F, 1.0F, 0.0F, false);
+		bone65.texOffs(2, 59).addBox(-0.5F, -2.0F, -1.0F, 1.0F, 2.0F, 1.0F, 0.1F, false);
+
+		bone66 = new ModelRenderer(this);
+		bone66.setPos(-3.0F, 1.0F, -2.0F);
+		blue_spikes2.addChild(bone66);
+		setRotationAngle(bone66, -1.309F, 2.8798F, 0.0F);
+		bone66.texOffs(2, 59).addBox(-0.5F, -4.0F, -1.0F, 1.0F, 4.0F, 1.0F, 0.0F, false);
+		bone66.texOffs(2, 59).addBox(-0.5F, -2.0F, -1.0F, 1.0F, 2.0F, 1.0F, 0.1F, false);
+
 		body2 = new ModelRenderer(this);
 		body2.setPos(0.0F, 0.0F, 0.0F);
 		total.addChild(body2);
@@ -431,6 +645,54 @@ public class CactusModel extends PVZPlantModel<CactusEntity> {
 		setRotationAngle(bone28, 3.0107F, -0.5236F, 1.309F);
 		bone28.texOffs(78, 93).addBox(-0.5F, -4.0F, -1.0F, 1.0F, 4.0F, 1.0F, 0.0F, false);
 		bone28.texOffs(82, 95).addBox(-0.5F, -2.0F, -1.0F, 1.0F, 2.0F, 1.0F, 0.1F, false);
+
+		blue_spikes4 = new ModelRenderer(this);
+		blue_spikes4.setPos(0.0F, 11.0F, 0.0F);
+		body2.addChild(blue_spikes4);
+		setRotationAngle(blue_spikes4, 0.0F, 0.3927F, 0.0F);
+		
+
+		bone67 = new ModelRenderer(this);
+		bone67.setPos(2.0F, -3.0F, -3.0F);
+		blue_spikes4.addChild(bone67);
+		setRotationAngle(bone67, 0.7854F, 0.0F, 1.0472F);
+		bone67.texOffs(2, 60).addBox(-0.5F, -4.0F, -1.0F, 1.0F, 4.0F, 1.0F, 0.0F, false);
+		bone67.texOffs(2, 60).addBox(-0.5F, -2.0F, -1.0F, 1.0F, 2.0F, 1.0F, 0.1F, false);
+
+		bone68 = new ModelRenderer(this);
+		bone68.setPos(4.0F, -4.0F, 0.0F);
+		blue_spikes4.addChild(bone68);
+		setRotationAngle(bone68, -0.2182F, 0.0F, 1.309F);
+		bone68.texOffs(2, 60).addBox(-0.5F, -4.0F, -1.0F, 1.0F, 4.0F, 1.0F, 0.0F, false);
+		bone68.texOffs(2, 60).addBox(-0.5F, -2.0F, -1.0F, 1.0F, 2.0F, 1.0F, 0.1F, false);
+
+		bone69 = new ModelRenderer(this);
+		bone69.setPos(-2.0F, -6.0F, -4.0F);
+		blue_spikes4.addChild(bone69);
+		setRotationAngle(bone69, 2.1817F, -0.5236F, 1.309F);
+		bone69.texOffs(2, 60).addBox(-0.5F, -3.0F, -1.0F, 1.0F, 3.0F, 1.0F, 0.0F, false);
+		bone69.texOffs(2, 60).addBox(-0.5F, -2.0F, -1.0F, 1.0F, 2.0F, 1.0F, 0.1F, false);
+
+		bone70 = new ModelRenderer(this);
+		bone70.setPos(0.0F, -23.0F, 4.0F);
+		blue_spikes4.addChild(bone70);
+		setRotationAngle(bone70, -1.309F, 0.0F, 0.2618F);
+		bone70.texOffs(2, 60).addBox(-0.5F, -4.0F, -1.0F, 1.0F, 4.0F, 1.0F, 0.0F, false);
+		bone70.texOffs(2, 60).addBox(-0.5F, -2.0F, -1.0F, 1.0F, 2.0F, 1.0F, 0.1F, false);
+
+		bone71 = new ModelRenderer(this);
+		bone71.setPos(0.0F, -10.0F, 4.0F);
+		blue_spikes4.addChild(bone71);
+		setRotationAngle(bone71, -1.309F, 0.0F, -2.3126F);
+		bone71.texOffs(2, 60).addBox(-0.5F, -4.0F, -1.0F, 1.0F, 4.0F, 1.0F, 0.0F, false);
+		bone71.texOffs(2, 60).addBox(-0.5F, -2.0F, -1.0F, 1.0F, 2.0F, 1.0F, 0.1F, false);
+
+		bone72 = new ModelRenderer(this);
+		bone72.setPos(-4.0F, -5.0F, 0.0F);
+		blue_spikes4.addChild(bone72);
+		setRotationAngle(bone72, 3.0107F, -0.5236F, 1.309F);
+		bone72.texOffs(2, 60).addBox(-0.5F, -4.0F, -1.0F, 1.0F, 4.0F, 1.0F, 0.0F, false);
+		bone72.texOffs(2, 60).addBox(-0.5F, -2.0F, -1.0F, 1.0F, 2.0F, 1.0F, 0.1F, false);
 
 		body3 = new ModelRenderer(this);
 		body3.setPos(0.0F, 10.0F, 0.0F);
@@ -487,6 +749,54 @@ public class CactusModel extends PVZPlantModel<CactusEntity> {
 		bone33.texOffs(78, 93).addBox(-0.5F, -4.0F, -1.0F, 1.0F, 4.0F, 1.0F, 0.0F, false);
 		bone33.texOffs(82, 95).addBox(-0.5F, -2.0F, -1.0F, 1.0F, 2.0F, 1.0F, 0.1F, false);
 
+		blue_spikes5 = new ModelRenderer(this);
+		blue_spikes5.setPos(0.0F, 11.0F, 0.0F);
+		body3.addChild(blue_spikes5);
+		setRotationAngle(blue_spikes5, 0.0F, -0.5672F, 0.0F);
+		
+
+		bone73 = new ModelRenderer(this);
+		bone73.setPos(2.0F, -3.0F, -3.0F);
+		blue_spikes5.addChild(bone73);
+		setRotationAngle(bone73, 0.7854F, 0.0F, 1.0472F);
+		bone73.texOffs(2, 59).addBox(-0.5F, -4.0F, -1.0F, 1.0F, 4.0F, 1.0F, 0.0F, false);
+		bone73.texOffs(2, 59).addBox(-0.5F, -2.0F, -1.0F, 1.0F, 2.0F, 1.0F, 0.1F, false);
+
+		bone74 = new ModelRenderer(this);
+		bone74.setPos(4.0F, -4.0F, 0.0F);
+		blue_spikes5.addChild(bone74);
+		setRotationAngle(bone74, -0.2182F, 0.0F, 1.309F);
+		bone74.texOffs(2, 59).addBox(-0.5F, -4.0F, -1.0F, 1.0F, 4.0F, 1.0F, 0.0F, false);
+		bone74.texOffs(2, 59).addBox(-0.5F, -2.0F, -1.0F, 1.0F, 2.0F, 1.0F, 0.1F, false);
+
+		bone75 = new ModelRenderer(this);
+		bone75.setPos(-2.0F, -6.0F, -4.0F);
+		blue_spikes5.addChild(bone75);
+		setRotationAngle(bone75, 2.1817F, -0.5236F, 1.309F);
+		bone75.texOffs(2, 59).addBox(-0.5F, -3.0F, -1.0F, 1.0F, 3.0F, 1.0F, 0.0F, false);
+		bone75.texOffs(2, 59).addBox(-0.5F, -2.0F, -1.0F, 1.0F, 2.0F, 1.0F, 0.1F, false);
+
+		bone76 = new ModelRenderer(this);
+		bone76.setPos(0.0F, -23.0F, 4.0F);
+		blue_spikes5.addChild(bone76);
+		setRotationAngle(bone76, -1.309F, 0.0F, 0.2618F);
+		bone76.texOffs(2, 59).addBox(-0.5F, -4.0F, -1.0F, 1.0F, 4.0F, 1.0F, 0.0F, false);
+		bone76.texOffs(2, 59).addBox(-0.5F, -2.0F, -1.0F, 1.0F, 2.0F, 1.0F, 0.1F, false);
+
+		bone77 = new ModelRenderer(this);
+		bone77.setPos(0.0F, -10.0F, 4.0F);
+		blue_spikes5.addChild(bone77);
+		setRotationAngle(bone77, -1.309F, 0.0F, -2.3126F);
+		bone77.texOffs(2, 59).addBox(-0.5F, -4.0F, -1.0F, 1.0F, 4.0F, 1.0F, 0.0F, false);
+		bone77.texOffs(2, 59).addBox(-0.5F, -2.0F, -1.0F, 1.0F, 2.0F, 1.0F, 0.1F, false);
+
+		bone78 = new ModelRenderer(this);
+		bone78.setPos(-4.0F, -5.0F, 0.0F);
+		blue_spikes5.addChild(bone78);
+		setRotationAngle(bone78, 3.0107F, -0.5236F, 1.309F);
+		bone78.texOffs(2, 59).addBox(-0.5F, -4.0F, -1.0F, 1.0F, 4.0F, 1.0F, 0.0F, false);
+		bone78.texOffs(2, 59).addBox(-0.5F, -2.0F, -1.0F, 1.0F, 2.0F, 1.0F, 0.1F, false);
+
 		body4 = new ModelRenderer(this);
 		body4.setPos(0.0F, 20.0F, 0.0F);
 		total.addChild(body4);
@@ -542,6 +852,54 @@ public class CactusModel extends PVZPlantModel<CactusEntity> {
 		bone39.texOffs(78, 93).addBox(-0.5F, -4.0F, -1.0F, 1.0F, 4.0F, 1.0F, 0.0F, false);
 		bone39.texOffs(82, 95).addBox(-0.5F, -2.0F, -1.0F, 1.0F, 2.0F, 1.0F, 0.1F, false);
 
+		blue_spikes6 = new ModelRenderer(this);
+		blue_spikes6.setPos(0.0F, 11.0F, 0.0F);
+		body4.addChild(blue_spikes6);
+		setRotationAngle(blue_spikes6, 0.0F, -0.9163F, 0.0F);
+		
+
+		bone79 = new ModelRenderer(this);
+		bone79.setPos(2.0F, -3.0F, -3.0F);
+		blue_spikes6.addChild(bone79);
+		setRotationAngle(bone79, 0.7854F, 0.0F, 1.0472F);
+		bone79.texOffs(2, 58).addBox(-0.5F, -4.0F, -1.0F, 1.0F, 4.0F, 1.0F, 0.0F, false);
+		bone79.texOffs(2, 58).addBox(-0.5F, -2.0F, -1.0F, 1.0F, 2.0F, 1.0F, 0.1F, false);
+
+		bone80 = new ModelRenderer(this);
+		bone80.setPos(4.0F, -4.0F, 0.0F);
+		blue_spikes6.addChild(bone80);
+		setRotationAngle(bone80, -0.2182F, 0.0F, 1.309F);
+		bone80.texOffs(2, 58).addBox(-0.5F, -4.0F, -1.0F, 1.0F, 4.0F, 1.0F, 0.0F, false);
+		bone80.texOffs(2, 58).addBox(-0.5F, -2.0F, -1.0F, 1.0F, 2.0F, 1.0F, 0.1F, false);
+
+		bone81 = new ModelRenderer(this);
+		bone81.setPos(-2.0F, -6.0F, -4.0F);
+		blue_spikes6.addChild(bone81);
+		setRotationAngle(bone81, 2.1817F, -0.5236F, 1.309F);
+		bone81.texOffs(2, 58).addBox(-0.5F, -3.0F, -1.0F, 1.0F, 3.0F, 1.0F, 0.0F, false);
+		bone81.texOffs(2, 58).addBox(-0.5F, -2.0F, -1.0F, 1.0F, 2.0F, 1.0F, 0.1F, false);
+
+		bone82 = new ModelRenderer(this);
+		bone82.setPos(0.0F, -23.0F, 4.0F);
+		blue_spikes6.addChild(bone82);
+		setRotationAngle(bone82, -1.309F, 0.0F, 0.2618F);
+		bone82.texOffs(2, 58).addBox(-0.5F, -4.0F, -1.0F, 1.0F, 4.0F, 1.0F, 0.0F, false);
+		bone82.texOffs(2, 58).addBox(-0.5F, -2.0F, -1.0F, 1.0F, 2.0F, 1.0F, 0.1F, false);
+
+		bone83 = new ModelRenderer(this);
+		bone83.setPos(0.0F, -10.0F, 4.0F);
+		blue_spikes6.addChild(bone83);
+		setRotationAngle(bone83, -1.309F, 0.0F, -2.3126F);
+		bone83.texOffs(2, 58).addBox(-0.5F, -4.0F, -1.0F, 1.0F, 4.0F, 1.0F, 0.0F, false);
+		bone83.texOffs(2, 58).addBox(-0.5F, -2.0F, -1.0F, 1.0F, 2.0F, 1.0F, 0.1F, false);
+
+		bone84 = new ModelRenderer(this);
+		bone84.setPos(-4.0F, -5.0F, 0.0F);
+		blue_spikes6.addChild(bone84);
+		setRotationAngle(bone84, 3.0107F, -0.5236F, 1.309F);
+		bone84.texOffs(2, 58).addBox(-0.5F, -4.0F, -1.0F, 1.0F, 4.0F, 1.0F, 0.0F, false);
+		bone84.texOffs(2, 58).addBox(-0.5F, -2.0F, -1.0F, 1.0F, 2.0F, 1.0F, 0.1F, false);
+
 		body5 = new ModelRenderer(this);
 		body5.setPos(0.0F, 30.0F, 0.0F);
 		total.addChild(body5);
@@ -596,22 +954,95 @@ public class CactusModel extends PVZPlantModel<CactusEntity> {
 		setRotationAngle(bone45, 3.0107F, -0.5236F, 1.309F);
 		bone45.texOffs(78, 93).addBox(-0.5F, -4.0F, -1.0F, 1.0F, 4.0F, 1.0F, 0.0F, false);
 		bone45.texOffs(82, 95).addBox(-0.5F, -2.0F, -1.0F, 1.0F, 2.0F, 1.0F, 0.1F, false);
+
+		blue_spikes7 = new ModelRenderer(this);
+		blue_spikes7.setPos(0.0F, 11.0F, 0.0F);
+		body5.addChild(blue_spikes7);
+		setRotationAngle(blue_spikes7, 0.0F, -0.5672F, 0.0F);
+		
+
+		bone85 = new ModelRenderer(this);
+		bone85.setPos(2.0F, -3.0F, -3.0F);
+		blue_spikes7.addChild(bone85);
+		setRotationAngle(bone85, 0.7854F, 0.0F, 1.0472F);
+		bone85.texOffs(2, 59).addBox(-0.5F, -4.0F, -1.0F, 1.0F, 4.0F, 1.0F, 0.0F, false);
+		bone85.texOffs(2, 59).addBox(-0.5F, -2.0F, -1.0F, 1.0F, 2.0F, 1.0F, 0.1F, false);
+
+		bone86 = new ModelRenderer(this);
+		bone86.setPos(4.0F, -4.0F, 0.0F);
+		blue_spikes7.addChild(bone86);
+		setRotationAngle(bone86, -0.2182F, 0.0F, 1.309F);
+		bone86.texOffs(2, 59).addBox(-0.5F, -4.0F, -1.0F, 1.0F, 4.0F, 1.0F, 0.0F, false);
+		bone86.texOffs(2, 59).addBox(-0.5F, -2.0F, -1.0F, 1.0F, 2.0F, 1.0F, 0.1F, false);
+
+		bone87 = new ModelRenderer(this);
+		bone87.setPos(-2.0F, -6.0F, -4.0F);
+		blue_spikes7.addChild(bone87);
+		setRotationAngle(bone87, 2.1817F, -0.5236F, 1.309F);
+		bone87.texOffs(2, 59).addBox(-0.5F, -3.0F, -1.0F, 1.0F, 3.0F, 1.0F, 0.0F, false);
+		bone87.texOffs(2, 59).addBox(-0.5F, -2.0F, -1.0F, 1.0F, 2.0F, 1.0F, 0.1F, false);
+
+		bone88 = new ModelRenderer(this);
+		bone88.setPos(0.0F, -23.0F, 4.0F);
+		blue_spikes7.addChild(bone88);
+		setRotationAngle(bone88, -1.309F, 0.0F, 0.2618F);
+		bone88.texOffs(2, 59).addBox(-0.5F, -4.0F, -1.0F, 1.0F, 4.0F, 1.0F, 0.0F, false);
+		bone88.texOffs(2, 59).addBox(-0.5F, -2.0F, -1.0F, 1.0F, 2.0F, 1.0F, 0.1F, false);
+
+		bone89 = new ModelRenderer(this);
+		bone89.setPos(0.0F, -10.0F, 4.0F);
+		blue_spikes7.addChild(bone89);
+		setRotationAngle(bone89, -1.309F, 0.0F, -2.3126F);
+		bone89.texOffs(2, 59).addBox(-0.5F, -4.0F, -1.0F, 1.0F, 4.0F, 1.0F, 0.0F, false);
+		bone89.texOffs(2, 59).addBox(-0.5F, -2.0F, -1.0F, 1.0F, 2.0F, 1.0F, 0.1F, false);
+
+		bone90 = new ModelRenderer(this);
+		bone90.setPos(-4.0F, -5.0F, 0.0F);
+		blue_spikes7.addChild(bone90);
+		setRotationAngle(bone90, 3.0107F, -0.5236F, 1.309F);
+		bone90.texOffs(2, 59).addBox(-0.5F, -4.0F, -1.0F, 1.0F, 4.0F, 1.0F, 0.0F, false);
+		bone90.texOffs(2, 59).addBox(-0.5F, -2.0F, -1.0F, 1.0F, 2.0F, 1.0F, 0.1F, false);
 	}
 
 	@Override
 	public void setupAnim(CactusEntity entity, float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch){
-		float height = entity.getCactusHeight();
-		this.body2.visible = true;
+		final float height = entity.getCactusHeight();
+		final boolean powered = entity.isCactusPowered();
+		//body
+		this.body2.visible = height > 0;
 		this.body3.visible = height > CactusEntity.SEGMENT_HEIGHT;
 		this.body4.visible = height > 2 * CactusEntity.SEGMENT_HEIGHT;
 		this.body5.visible = height > 3 * CactusEntity.SEGMENT_HEIGHT;
+		//spikes
+		this.spikes1.visible = ! powered;
+		this.blue_spikes1.visible = powered;
+		this.spikes2.visible = ! powered;
+		this.blue_spikes2.visible = powered;
+		this.spikes3.visible = ! powered;
+		this.blue_spikes3.visible = powered;
+		if(this.body2.visible) {
+			this.spikes4.visible = ! powered;
+			this.blue_spikes4.visible = powered;
+		}
+		if(this.body3.visible) {
+			this.spikes5.visible = ! powered;
+			this.blue_spikes5.visible = powered;
+		}
+		if(this.body4.visible) {
+			this.spikes6.visible = ! powered;
+			this.blue_spikes6.visible = powered;
+		}
+		if(this.body5.visible) {
+			this.spikes7.visible = ! powered;
+			this.blue_spikes7.visible = powered;
+		}
 	}
 
 	@Override
 	public ModelRenderer getPlantWholeBody() {
 		return this.total;
 	}
-
+	
 	@Override
 	public EntityModel<CactusEntity> getPlantModel() {
 		return this;

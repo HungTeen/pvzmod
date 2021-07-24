@@ -197,7 +197,11 @@ public class ThornEntity extends AbstractBulletEntity {
 
 	protected float getAttackDamage() {
 		if (this.getThrower() instanceof CatTailEntity) return ((CatTailEntity) this.getThrower()).getAttackDamage();
-		if(this.getThrower() instanceof CactusEntity) return ((CactusEntity) this.getThrower()).getAttackDamage();
+		if(this.getThrower() instanceof CactusEntity) {
+			final CactusEntity cactus = (CactusEntity) this.getThrower();
+			final float mult = cactus.isCactusPowered() ? 2F : 1F;
+			return cactus.getAttackDamage() * mult;
+		}
 		return 0;
 		
 	}

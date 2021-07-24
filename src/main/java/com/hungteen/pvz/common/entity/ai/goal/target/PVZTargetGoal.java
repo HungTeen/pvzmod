@@ -2,6 +2,7 @@ package com.hungteen.pvz.common.entity.ai.goal.target;
 
 import java.util.EnumSet;
 
+import com.hungteen.pvz.register.EffectRegister;
 import com.hungteen.pvz.utils.EntityUtil;
 
 import net.minecraft.entity.Entity;
@@ -61,13 +62,20 @@ public abstract class PVZTargetGoal extends Goal{
 		return false;
 	}
 	
+	@Override
+	public void stop() {
+		this.mob.setTarget(null);
+	}
+	
 	protected boolean checkSenses(Entity entity) {
 		return this.mob.getSensing().canSee(entity);
 	}
 
 	protected boolean checkOther(LivingEntity entity) {
-		//invisible entity need closer.
-		if(this.mustSee && entity.isInvisible() && this.mob.distanceToSqr(entity) > 100) {
+		//invisible entity need closer, except it has light eyes effect.
+		if(this.mustSee && entity.isInvisible() && this.mob.distanceToSqr(entity) > 100 
+				&& (! this.mob.hasEffect(EffectRegister.LIGHT_EYE_EFFECT.get()) 
+				|| this.mob.getEffect(EffectRegister.LIGHT_EYE_EFFECT.get()).getAmplifier() == 0)) {
 			return false;
 		}
 		return true;

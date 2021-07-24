@@ -82,6 +82,11 @@ public class TorchWoodEntity extends PVZPlantEntity implements ILightEffect {
 		this.setFlameType(FlameTypes.BLUE);
 	}
 	
+	@Override
+	public boolean canStartSuperMode() {
+		return super.canStartSuperMode() && this.getFlameType() == FlameTypes.YELLOW;
+	}
+	
 	/**
 	 * {@link #heatPeas()}
 	 */

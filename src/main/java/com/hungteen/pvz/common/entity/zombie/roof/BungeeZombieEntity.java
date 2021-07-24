@@ -86,7 +86,7 @@ public class BungeeZombieEntity extends PVZZombieEntity {
 	
 	@Override
 	protected void registerTargetGoals() {
-		this.targetSelector.addGoal(0, new BungeeRandomTargetGoal(this, true, ZombieUtil.CLOSE_TARGET_RANGE, ZombieUtil.HIGH_TARGET_HEIGHT));
+		this.targetSelector.addGoal(0, new BungeeRandomTargetGoal(this, true, true, ZombieUtil.CLOSE_TARGET_RANGE, ZombieUtil.HIGH_TARGET_HEIGHT));
 	}
 	
 	@Override
@@ -501,8 +501,8 @@ public class BungeeZombieEntity extends PVZZombieEntity {
 
 		private final BungeeZombieEntity zombie;
 		
-		public BungeeRandomTargetGoal(BungeeZombieEntity mobIn, boolean checkSight, float w, float h) {
-			super(mobIn, checkSight, w, h);
+		public BungeeRandomTargetGoal(BungeeZombieEntity mobIn, boolean checkSight, boolean mustReach, float w, float h) {
+			super(mobIn, checkSight, mustReach, w, h);
 			this.zombie = mobIn;
 		}
 		

@@ -31,7 +31,7 @@ public class SquashEntity extends PVZPlantEntity{
 	@Override
 	protected void registerGoals() {
 		super.registerGoals();
-		this.targetSelector.addGoal(0, new PVZRandomTargetGoal(this, true, TARGET_RANGE, TARGET_RANGE));
+		this.targetSelector.addGoal(0, new PVZRandomTargetGoal(this, true, false, TARGET_RANGE, TARGET_RANGE));
 	}
 
 	@Override
