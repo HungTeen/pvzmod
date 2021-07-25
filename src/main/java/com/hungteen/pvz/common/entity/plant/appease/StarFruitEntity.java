@@ -5,6 +5,7 @@ import com.hungteen.pvz.common.entity.bullet.StarEntity;
 import com.hungteen.pvz.common.entity.plant.base.PlantShooterEntity;
 import com.hungteen.pvz.register.SoundRegister;
 import com.hungteen.pvz.utils.EntityUtil;
+import com.hungteen.pvz.utils.PlantUtil;
 import com.hungteen.pvz.utils.enums.Plants;
 
 import net.minecraft.command.arguments.EntityAnchorArgument.Type;
@@ -12,7 +13,6 @@ import net.minecraft.entity.CreatureEntity;
 import net.minecraft.entity.EntitySize;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.Pose;
-import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.World;
 
 public class StarFruitEntity extends PlantShooterEntity {
@@ -44,10 +44,7 @@ public class StarFruitEntity extends PlantShooterEntity {
 	
 	@Override
 	public int getSuperTimeLength() {
-		if(this.isPlantInStage(1)) return 100;
-		if(this.isPlantInStage(2)) return 150;
-		if(this.isPlantInStage(3)) return 200;
-		return 200;
+		return this.isPlantInStage(1) ? 100 : this.isPlantInStage(2) ? 150 : 200;
 	}
 
 	@Override
@@ -60,20 +57,15 @@ public class StarFruitEntity extends PlantShooterEntity {
 		EntityUtil.playSound(this, SoundRegister.SNOW_SHOOT.get());
 	}
 	
-	private void shootStarByAngle(float angle) {
-		angle *= 3.14159F / 180F;
-		double vx = - MathHelper.sin(angle);
-		double vz = MathHelper.cos(angle);
-		AbstractBulletEntity pea = this.createBullet();
-		pea.setPos(getX(), getY() + 0.2F, getZ());
-		pea.setDeltaMovement(vx, 0, vz);
-		level.addFreshEntity(pea);
+	@Override
+	protected AbstractBulletEntity createBullet() {
+		final StarEntity.StarTypes type = this.isPlantInSuperMode() ? StarEntity.StarTypes.HUGE : StarEntity.StarTypes.NORMAL;
+		return new StarEntity(level, this, type, StarEntity.StarStates.YELLOW);
 	}
 	
 	@Override
-	protected AbstractBulletEntity createBullet() {
-		StarEntity.StarTypes type = this.isPlantInSuperMode() ? StarEntity.StarTypes.HUGE : StarEntity.StarTypes.NORMAL;
-		return new StarEntity(level, this, type, StarEntity.StarStates.YELLOW);
+	public float getAttackDamage() {
+		return PlantUtil.getPlantAverageProgress(this, 2F, 6F);
 	}
 	
 	@Override
@@ -83,7 +75,7 @@ public class StarFruitEntity extends PlantShooterEntity {
 	
 	@Override
 	public double getMaxShootAngle() {
-		return 40;
+		return 80;
 	}
 
 	@Override

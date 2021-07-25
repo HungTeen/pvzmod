@@ -973,6 +973,9 @@ public abstract class PVZZombieEntity extends MonsterEntity implements IPVZZombi
 	
 	@Override
 	public boolean isInvulnerableTo(DamageSource source) {
+		if(source instanceof PVZDamageSource && ((PVZDamageSource) source).isMustHurt()) {
+			return false;
+		}
 		return source != DamageSource.OUT_OF_WORLD && !source.isCreativePlayer() && this.isZombieInvulnerableTo(source);
 	}
 	

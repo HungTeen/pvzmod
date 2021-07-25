@@ -45,10 +45,10 @@ public class BloverEntity extends PlantBomberEntity {
 			//deal damage.
 			EntityUtil.getTargetableLivings(this, EntityUtil.getEntityAABB(this, len, len)).forEach(target -> {
 				if(EntityUtil.isEntityInSky(target)) {
-					target.hurt(PVZDamageSource.normal(this), this.getAttackDamage());
+					target.hurt(PVZDamageSource.normal(this).setMustHurt(), this.getAttackDamage());
 					final Vector3d speed = target.getDeltaMovement();
 					final double lvl = this.getForceLevel() * 2.5F;
-					final Vector3d delta = MathUtil.getHorizontalNormalizedVec(target.position(), this.position()).scale(lvl);
+					final Vector3d delta = MathUtil.getHorizontalNormalizedVec(this.position(), target.position()).scale(lvl);
 					target.setDeltaMovement(speed.x + delta.x, speed.y, speed.z + delta.z);
 				}
 			});
@@ -73,7 +73,7 @@ public class BloverEntity extends PlantBomberEntity {
 	}
 	
 	public float getAttackDamage(){
-		return PlantUtil.getPlantAverageProgress(this, 30, 120);
+		return PlantUtil.getPlantAverageProgress(this, 10, 50);
 	}
 	
 	public int getForceLevel() {

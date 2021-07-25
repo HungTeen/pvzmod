@@ -2,16 +2,18 @@ package com.hungteen.pvz.common.entity.plant.assist;
 
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.EnumSet;
 import java.util.List;
 
+import com.hungteen.pvz.PVZMod;
 import com.hungteen.pvz.common.entity.ai.goal.target.PVZNearestTargetGoal;
+import com.hungteen.pvz.common.entity.ai.goal.target.PVZTargetGoal;
 import com.hungteen.pvz.common.entity.bullet.itembullet.MetalItemEntity;
 import com.hungteen.pvz.common.entity.bullet.itembullet.MetalItemEntity.MetalStates;
 import com.hungteen.pvz.common.entity.plant.PVZPlantEntity;
 import com.hungteen.pvz.register.SoundRegister;
 import com.hungteen.pvz.utils.AlgorithmUtil;
 import com.hungteen.pvz.utils.EntityUtil;
+import com.hungteen.pvz.utils.PlantUtil;
 import com.hungteen.pvz.utils.enums.MetalTypes;
 import com.hungteen.pvz.utils.enums.Plants;
 import com.hungteen.pvz.utils.interfaces.IHasMetal;
@@ -23,14 +25,11 @@ import net.minecraft.entity.EntityType;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.MobEntity;
 import net.minecraft.entity.Pose;
-import net.minecraft.entity.ai.goal.Goal;
-import net.minecraft.entity.ai.goal.TargetGoal;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.network.datasync.DataParameter;
 import net.minecraft.network.datasync.DataSerializers;
 import net.minecraft.network.datasync.EntityDataManager;
-import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.world.World;
 
 public class MagnetShroomEntity extends PVZPlantEntity {
@@ -52,7 +51,7 @@ public class MagnetShroomEntity extends PVZPlantEntity {
 	protected void registerGoals() {
 		super.registerGoals();
 		this.targetSelector.addGoal(0, new PVZNearestTargetGoal(this, true, false,  12, 12));
-		this.targetSelector.addGoal(1, new MagnetShroomTargetLadder(this, true, 20, 20));
+		this.targetSelector.addGoal(1, new TargetLadderGoal(this, true, false, 20));
 	}
 	
 	@Override
@@ -65,18 +64,8 @@ public class MagnetShroomEntity extends PVZPlantEntity {
 				this.setMetalType(MetalTypes.EMPTY);
 			}
 			LivingEntity target = this.getTarget();
-			if(target != null) {
-				if(! this.checkCanPlantTarget(target)) {
-					if(! EntityUtil.canTargetEntity(this, target) && target instanceof PVZPlantEntity && ((PVZPlantEntity) target).hasMetal()) {
-						
-					} else {
-						this.setTarget(null);
-					    return ;
-					}
-				}
-				if(this.isPlantActive()) {
-					this.dragMetal(target);
-				}
+			if(EntityUtil.isEntityValid(target) && this.isPlantActive()) {
+				this.dragMetal(target);
 			}
 		}
 	}
@@ -100,23 +89,33 @@ public class MagnetShroomEntity extends PVZPlantEntity {
 		};
 	}
 	
-	private void dragMetal(LivingEntity target) {
+	/**
+	 * {@link #normalPlantTick()}
+	 */
+	public void dragMetal(LivingEntity target) {
 		if(target instanceof IHasMetal) {
-			EntityUtil.playSound(this, SoundRegister.MAGNET.get());
 			((IHasMetal) target).decreaseMetal();
 			this.setAttackTime(this.getAttackCD());
 			MetalItemEntity metal = new MetalItemEntity(level, this, ((IHasMetal) target).getMetalType());
 			metal.setPos(target.getX(), target.getY() + target.getEyeHeight(), target.getZ());
+			metal.summonByOwner(this);
 			level.addFreshEntity(metal);
+			EntityUtil.playSound(this, SoundRegister.MAGNET.get());
 		} else {
-			System.out.println("Error : wrong target !");
+			PVZMod.LOGGER.warn("Wrong target for MagnetShroom.");
 		}
 	}
 	
+	public int getAttackDamage() {
+		return this.isPlantInStage(1) ? 100 : this.isPlantInStage(2) ? 200 : 300;
+	}
+	
 	public int getSuperDragCnt() {
-		if(this.isPlantInStage(1)) return 3;
-		if(this.isPlantInStage(2)) return 4;
-		return 5;
+		return this.isPlantInStage(1) ? 3 : this.isPlantInStage(2) ? 4 : 5;
+	}
+	
+	public int getAttackCD() {
+		return PlantUtil.getPlantAverageProgress(this, 600, 200);
 	}
 	
 	public ItemStack getMetalRenderItem() {
@@ -124,14 +123,11 @@ public class MagnetShroomEntity extends PVZPlantEntity {
 		return new ItemStack(MetalTypes.getMetalItem(getMetalType()));
 	}
 	
+	/**
+	 * is not consuming metal.
+	 */
 	public boolean isPlantActive() {
-		return ! this.isPlantSleeping() && this.getAttackTime() == 0;
-	}
-	
-	public int getAttackCD() {
-		int lvl = this.getPlantLvl();
-		if(lvl <= 20) return 615 - 15 * lvl;
-		return 300;
+		return this.getAttackTime() == 0;
 	}
 	
 	@Override
@@ -162,11 +158,6 @@ public class MagnetShroomEntity extends PVZPlantEntity {
 	}
 	
 	@Override
-	public Plants getPlantEnumName() {
-		return Plants.MAGNET_SHROOM;
-	}
-
-	@Override
 	public Plants getUpgradePlantType() {
 		return Plants.GOLD_MAGNET;
 	}
@@ -181,21 +172,18 @@ public class MagnetShroomEntity extends PVZPlantEntity {
 		return 60;
 	}
 	
-	private static class MagnetShroomTargetLadder extends TargetGoal {
+	@Override
+	public Plants getPlantEnumName() {
+		return Plants.MAGNET_SHROOM;
+	}
+	
+	private static class TargetLadderGoal extends PVZTargetGoal {
 
 		protected final AlgorithmUtil.EntitySorter sorter;
-		private final int targetChance = 5;
-		private final float upperHeight;
-		private final float lowerHeight;
-		private final float width;
 
-		public MagnetShroomTargetLadder(MobEntity mobIn, boolean checkSight, float w, float h) {
-			super(mobIn, checkSight);
-			this.width = w;
-			this.upperHeight = h;
-			this.lowerHeight = h;
+		public TargetLadderGoal(MobEntity mobIn, boolean checkSight, boolean mustReach, float range) {
+			super(mobIn, checkSight, mustReach, range, range);
 			this.sorter = new AlgorithmUtil.EntitySorter(mob);
-			this.setFlags(EnumSet.of(Goal.Flag.TARGET));
 		}
 
 		@Override
@@ -204,7 +192,7 @@ public class MagnetShroomEntity extends PVZPlantEntity {
 				return false;
 			}
 			List<LivingEntity> list1 = new ArrayList<LivingEntity>();
-			this.mob.level.getEntitiesOfClass(PVZPlantEntity.class, getAABB()).forEach((plant) -> {
+			this.mob.level.getEntitiesOfClass(PVZPlantEntity.class, getAABB()).forEach(plant -> {
 				if(! EntityUtil.canTargetEntity(mob, plant) && this.checkSenses(plant)) {
 					if(plant.hasMetal()) {
 						list1.add(plant);
@@ -217,11 +205,6 @@ public class MagnetShroomEntity extends PVZPlantEntity {
 			Collections.sort(list1, this.sorter);
 			this.targetMob = list1.get(0);
 			return true;
-		}
-
-		@Override
-		public void start() {
-			this.mob.setTarget(this.targetMob);
 		}
 
 		@Override
@@ -238,16 +221,6 @@ public class MagnetShroomEntity extends PVZPlantEntity {
 				return true;
 			}
 			return false;
-		}
-
-		protected boolean checkSenses(Entity entity) {
-			return this.mob.getSensing().canSee(entity);
-		}
-
-		private AxisAlignedBB getAABB() {
-			return new AxisAlignedBB(this.mob.getX() + width, this.mob.getY() + this.upperHeight,
-					this.mob.getZ() + width, this.mob.getX() - width,
-					this.mob.getY() - this.lowerHeight, this.mob.getZ() - width);
 		}
 
 	}

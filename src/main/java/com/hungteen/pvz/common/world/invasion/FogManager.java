@@ -29,7 +29,7 @@ public class FogManager {
 	}
 	
 	private static boolean shouldFogOn(World world, PlayerEntity player) {
-		return world.dimension().equals(World.OVERWORLD) && ! world.isDay() && PVZInvasionData.getOverWorldInvasionData(world).hasEvent(InvasionEvents.FOG) && (player != null && PlayerUtil.isPlayerSurvival(player) && ! player.isUnderWater() 
+		return world.dimension().equals(World.OVERWORLD) && ! world.isDay() && ! world.isRainingAt(player.blockPosition()) && PVZInvasionData.getOverWorldInvasionData(world).hasEvent(InvasionEvents.FOG) && (player != null && PlayerUtil.isPlayerSurvival(player) && ! player.isUnderWater() 
 				&& player.getPose() != Pose.SWIMMING && ! player.hasEffect(EffectRegister.LIGHT_EYE_EFFECT.get()));
 	}
 	

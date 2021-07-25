@@ -25,6 +25,7 @@ import net.minecraft.network.datasync.DataSerializers;
 import net.minecraft.network.datasync.EntityDataManager;
 import net.minecraft.util.SoundEvent;
 import net.minecraft.util.SoundEvents;
+import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.vector.Vector3d;
 import net.minecraft.world.World;
 
@@ -96,6 +97,19 @@ public abstract class PlantShooterEntity extends PVZPlantEntity implements IShoo
             bullet.summonByOwner(this);
             this.level.addFreshEntity(bullet);
 		});
+	}
+	
+	/**
+	 * shoot pea by angle.
+	 */
+	public void shootStarByAngle(float angle) {
+		angle *= 3.14159F / 180F;
+		final double vx = - MathHelper.sin(angle);
+		final double vz = MathHelper.cos(angle);
+		final AbstractBulletEntity pea = this.createBullet();
+		pea.setPos(getX(), getY() + 0.2F, getZ());
+		pea.setDeltaMovement(vx * this.getBulletSpeed(), 0, vz * this.getBulletSpeed());
+		level.addFreshEntity(pea);
 	}
 	
 	/**

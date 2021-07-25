@@ -1,7 +1,6 @@
 package com.hungteen.pvz.common.entity.bullet;
 
-import com.hungteen.pvz.common.entity.plant.appease.AngelStarFruitEntity;
-import com.hungteen.pvz.common.entity.plant.appease.StarFruitEntity;
+import com.hungteen.pvz.common.entity.plant.base.PlantShooterEntity;
 import com.hungteen.pvz.common.misc.damage.PVZDamageSource;
 import com.hungteen.pvz.register.EntityRegister;
 
@@ -67,27 +66,35 @@ public class StarEntity extends AbstractBulletEntity {
 	
 	@Override
 	protected int getMaxLiveTick() {
-		return 80;
+		return 30;
 	}
 	
 	private float getFixDamage() {
 		float damage = this.attackDamage;
-		if(this.getStarType() == StarTypes.BIG) damage += 5;
-		if(this.getStarType() == StarTypes.HUGE) damage += 10;
+		if(this.getStarType() == StarTypes.BIG) {
+			damage += 5;
+		}
+		if(this.getStarType() == StarTypes.HUGE) {
+			damage += 10;
+		}
 		return damage;
 	}
 	
 	protected float getAttackDamage() {
-		if(this.getThrower() instanceof StarFruitEntity) return ((StarFruitEntity) this.getThrower()).getAttackDamage();
-		if(this.getThrower() instanceof AngelStarFruitEntity) return ((AngelStarFruitEntity) this.getThrower()).getAttackDamage();
+		if(this.getThrower() instanceof PlantShooterEntity) {
+			return ((PlantShooterEntity) this.getThrower()).getAttackDamage();
+		}
 		return 0;
-		
 	}
 	
 	@Override
 	public EntitySize getDimensions(Pose poseIn) {
-		if(this.getStarType() == StarTypes.BIG) return EntitySize.scalable(0.5f, 0.2f);
-		if(this.getStarType() == StarTypes.HUGE) return EntitySize.scalable(0.8f, 0.2f);
+		if(this.getStarType() == StarTypes.BIG) {
+			return EntitySize.scalable(0.5f, 0.2f);
+		}
+		if(this.getStarType() == StarTypes.HUGE) {
+			return EntitySize.scalable(0.8f, 0.2f);
+		}
 		return EntitySize.scalable(0.2f, 0.2f);
 	}
 

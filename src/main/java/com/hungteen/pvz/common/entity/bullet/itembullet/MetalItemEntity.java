@@ -3,6 +3,7 @@ package com.hungteen.pvz.common.entity.bullet.itembullet;
 import java.util.List;
 
 import com.hungteen.pvz.common.entity.plant.assist.MagnetShroomEntity;
+import com.hungteen.pvz.common.misc.damage.PVZDamageSource;
 import com.hungteen.pvz.register.EntityRegister;
 import com.hungteen.pvz.register.SoundRegister;
 import com.hungteen.pvz.utils.EntityUtil;
@@ -96,7 +97,7 @@ public class MetalItemEntity extends PVZItemBulletEntity {
 			Entity target = ((EntityRayTraceResult) result).getEntity();
 			if (this.getMetalState() == MetalStates.SHOOT && checkCanAttack(target)) {
 				target.invulnerableTime = 0;
-//				target.hurt(PVZDamageSource.causeAppeaseDamage(this, this.getThrower()), getAttackDamage());
+				target.hurt(PVZDamageSource.metal(this, this.getThrower()), this.getAttackDamage());
 				EntityUtil.playSound(this, SoundRegister.METAL_HIT.get());
 				flag = true;
 			}
@@ -109,12 +110,17 @@ public class MetalItemEntity extends PVZItemBulletEntity {
 	
 	@Override
 	protected boolean checkLive(RayTraceResult result) {
-		if(this.getMetalState() != MetalStates.SHOOT || result.getType() == RayTraceResult.Type.BLOCK) return true;
+		if(this.getMetalState() != MetalStates.SHOOT || result.getType() == RayTraceResult.Type.BLOCK) {
+			return true;
+		}
 		return super.checkLive(result);
 	}
 	
 	protected float getAttackDamage() {
-		return 50;
+		if(this.getThrower() instanceof MagnetShroomEntity) {
+			return ((MagnetShroomEntity) this.getThrower()).getAttackDamage();
+		}
+		return 0;
 	}
 	
 	@Override

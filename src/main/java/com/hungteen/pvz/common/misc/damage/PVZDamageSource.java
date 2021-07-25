@@ -13,6 +13,7 @@ import com.hungteen.pvz.common.entity.bullet.KernelEntity;
 import com.hungteen.pvz.common.entity.bullet.MelonEntity;
 import com.hungteen.pvz.common.entity.bullet.StarEntity;
 import com.hungteen.pvz.common.entity.bullet.itembullet.CabbageEntity;
+import com.hungteen.pvz.common.entity.bullet.itembullet.MetalItemEntity;
 import com.hungteen.pvz.common.entity.bullet.itembullet.PeaEntity;
 import com.hungteen.pvz.common.entity.bullet.itembullet.SporeEntity;
 import com.hungteen.pvz.common.entity.plant.enforce.SquashEntity;
@@ -39,6 +40,7 @@ public class PVZDamageSource extends DamageSource {
 	private boolean isThroughDamage = false;//damage can ignore defence. such as fume pass screen door.
 	private boolean isThornDamage = false;//sharp damage, which can hit balloon.
 	private boolean isDefended = false;// is defended by some defence. such as snow pea hit screen door.
+	private boolean mustHurt = false;//explosion must hurt every zombies.
 	private int damageCount = 0;
 
 	public static final PVZDamageSource PLANT_WILT = new PVZDamageSource("plant_wilt");
@@ -81,6 +83,10 @@ public class PVZDamageSource extends DamageSource {
 	
 	public static PVZDamageSource star(StarEntity pea, Entity shooter) {
 		return (PVZDamageSource) new PVZDamageSource("star", pea, shooter).setAppease();
+	}
+	
+	public static PVZDamageSource metal(MetalItemEntity pea, Entity shooter) {
+		return (PVZDamageSource) new PVZDamageSource("metal", pea, shooter).setAppease();
 	}
 	
 	public static PVZDamageSource cabbage(CabbageEntity pea, Entity shooter) {
@@ -131,7 +137,7 @@ public class PVZDamageSource extends DamageSource {
 	
 	//explosion
 	public static PVZDamageSource explode(Entity projectile, Entity shooter) {
-		return (PVZDamageSource) new PVZDamageSource("explosion", projectile, shooter).setExplosion();
+		return (PVZDamageSource) new PVZDamageSource("explosion", projectile, shooter).setMustHurt().setExplosion();
 	}
 	
 	public static PVZDamageSource explode(Entity attacker) {
@@ -140,7 +146,7 @@ public class PVZDamageSource extends DamageSource {
 	
 	//deadly
 	public static PVZDamageSource causeDeadlyDamage(Entity projectile, Entity shooter) {
-		return new PVZDamageSource("deadly", projectile, shooter);
+		return new PVZDamageSource("deadly", projectile, shooter).setMustHurt();
 	}
 	
 	public static PVZDamageSource causeDeadlyDamage(Entity attacker) {
@@ -314,6 +320,15 @@ public class PVZDamageSource extends DamageSource {
 
 	public PVZDamageSource setThornDamage() {
 		this.isThornDamage = true;
+		return this;
+	}
+	
+	public boolean isMustHurt() {
+		return this.mustHurt;
+	}
+
+	public PVZDamageSource setMustHurt() {
+		this.mustHurt = true;
 		return this;
 	}
 	

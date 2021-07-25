@@ -1,5 +1,7 @@
 package com.hungteen.pvz.client.model.entity.plant.spear;
 
+import java.util.Optional;
+
 import com.hungteen.pvz.client.model.entity.plant.PlantShooterModel;
 import com.hungteen.pvz.common.entity.plant.spear.CactusEntity;
 
@@ -1036,11 +1038,17 @@ public class CactusModel extends PlantShooterModel<CactusEntity> {
 			this.spikes7.visible = ! powered;
 			this.blue_spikes7.visible = powered;
 		}
+		super.setupAnim(entity, limbSwing, limbSwingAmount, ageInTicks, netHeadYaw, headPitch);
 	}
 
 	@Override
 	public ModelRenderer getPlantWholeBody() {
 		return this.total;
+	}
+	
+	@Override
+	public Optional<ModelRenderer> getBodyModel() {
+		return Optional.ofNullable(this.total);
 	}
 	
 	@Override

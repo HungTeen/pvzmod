@@ -1,5 +1,7 @@
 package com.hungteen.pvz.common.entity.plant.appease;
 
+import com.hungteen.pvz.utils.MathUtil;
+import com.hungteen.pvz.utils.PlantUtil;
 import com.hungteen.pvz.utils.enums.Plants;
 
 import net.minecraft.entity.CreatureEntity;
@@ -12,8 +14,8 @@ import net.minecraft.world.World;
 
 public class SplitPeaEntity extends PeaShooterEntity{
 
-	public static final int MAX_ROUND_TIME = 20;
 	private static final DataParameter<Integer> ROUND_TICK = EntityDataManager.defineId(SplitPeaEntity.class, DataSerializers.INT);  
+	public static final int MAX_ROUND_TIME = 20;
 	
 	public SplitPeaEntity(EntityType<? extends CreatureEntity> type, World worldIn) {
 		super(type, worldIn);
@@ -37,34 +39,25 @@ public class SplitPeaEntity extends PeaShooterEntity{
 	
 	@Override
 	public void shootBullet() {
-//		LivingEntity target = this.getTarget();
-//		if(target==null) {
-//			//System.out.println("no target at all!");
-//			return ;
-//		}
-//		double dx = target.getX() - this.getX();
-//        double dz = target.getZ() - this.getZ();
-//        double y = this.getY() + this.getDimensions(getPose()).height * 0.7f;
-//        double dis =MathHelper.sqrt(dx * dx + dz * dz);
-//        double tmp = SHOOT_OFFSET / dis;
-//        double deltaX = tmp * dx * (this.isFacingFront() ? 1 : -1);
-//        double deltaZ = tmp * dz * (this.isFacingFront() ? 1 : -1);
-//        //shoot front
-//        if(this.getAttackTime() >= (this.isFacingFront() ? 2 : 1)) {
-//        	PeaEntity pea = new PeaEntity(this.level, this, this.getShootType(), this.getShootState());
-//            pea.setPos(this.getX() + deltaX, y, this.getZ() + deltaZ);
-//            pea.shootPea(dx, target.getY() + target.getBbHeight() - y, dz, this.getBulletSpeed());      
-//            this.level.addFreshEntity(pea);
-//        }
-//        //shoot back
-//        if(this.getAttackTime() >= (this.isFacingFront() ? 1 : 2)) {
-//        	PeaEntity pea = new PeaEntity(this.level, this, this.getShootType(), this.getShootState());
-//            pea.setPos(this.getX() - deltaX, y, this.getZ() - deltaZ);
-//            pea.shootPeaAnti(dx, target.getY() + target.getBbHeight() - y, dz, this.getBulletSpeed());      
-//            this.level.addFreshEntity(pea);
-//        }
-//        this.playSound(getShootSound(), 1.0F, 1.0F);
-//        this.checkAndChangeFacing();
+		if(this.isPlantInSuperMode()) {
+			final int cnt = this.getSuperShootCount();
+			for(int i = 0; i < cnt; ++ i) {
+				final float offset = MathUtil.getRandomFloat(getRandom()) / 3;
+				final float offsetH = MathUtil.getRandomFloat(getRandom()) / 3;
+				this.performShoot(SHOOT_OFFSET, offset, offsetH, this.getExistTick() % 10 == 0, FORWARD_SHOOT_ANGLE);
+				this.performShoot(SHOOT_OFFSET, offset, offsetH, false, BACK_SHOOT_ANGLE);
+			}
+		} else {
+			final int frontNum = this.isFacingFront() ? 1 : 2;
+			final int backNum = this.isFacingFront() ? 2 : 1;
+			if(this.getAttackTime() <= frontNum) {
+				this.performShoot(SHOOT_OFFSET, 0, 0, this.getAttackTime() == 1, FORWARD_SHOOT_ANGLE);
+			}
+			if(this.getAttackTime() <= backNum) {
+			    this.performShoot(SHOOT_OFFSET, 0, 0, false, BACK_SHOOT_ANGLE);
+			}
+			this.checkAndChangeFacing();//change head.
+		}
 	}
 	
 	/**
@@ -72,7 +65,7 @@ public class SplitPeaEntity extends PeaShooterEntity{
 	 */
 	private void checkAndChangeFacing() {
 		if(this.getAttackTime() == 1 && ! this.isPlantInSuperMode()) {
-			int chance = this.isFacingFront() ? this.getDoubleChance() : 100 - this.getDoubleChance();
+			final int chance = this.isFacingFront() ? this.getDoubleChance() : 100 - this.getDoubleChance();
 			if(this.getRandom().nextInt(100) < chance) {
 				this.rotateFacing();
 			}
@@ -83,13 +76,11 @@ public class SplitPeaEntity extends PeaShooterEntity{
 		this.setRoundTick((this.getRoundTick() + 1) % MAX_ROUND_TIME);
 	}
 	
+	/**
+	 * Repeater head stay front chance. 
+	 */
 	public int getDoubleChance() {
-		int lvl = this.getPlantLvl();
-		if(lvl <= 20) {
-			int now = (lvl - 1) / 4;
-			return 20 + 10 * now;
-		}
-		return 60;
+		return PlantUtil.getPlantAverageProgress(this, 20, 80);
 	}
 	
 	@Override
@@ -115,17 +106,17 @@ public class SplitPeaEntity extends PeaShooterEntity{
 		compound.putInt("round_tick", this.getRoundTick());
 	}
 	
-	@Override
-	public Plants getPlantEnumName() {
-		return Plants.SPLIT_PEA;
-	}
-	
 	public int getRoundTick() {
 		return this.entityData.get(ROUND_TICK);
 	}
 	
 	public void setRoundTick(int tick) {
 		this.entityData.set(ROUND_TICK, tick);
+	}
+	
+	@Override
+	public Plants getPlantEnumName() {
+		return Plants.SPLIT_PEA;
 	}
 	
 }

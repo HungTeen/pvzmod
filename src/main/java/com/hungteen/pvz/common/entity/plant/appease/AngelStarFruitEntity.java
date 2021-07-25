@@ -5,13 +5,13 @@ import com.hungteen.pvz.common.entity.bullet.StarEntity;
 import com.hungteen.pvz.common.entity.plant.base.PlantShooterEntity;
 import com.hungteen.pvz.register.SoundRegister;
 import com.hungteen.pvz.utils.EntityUtil;
+import com.hungteen.pvz.utils.PlantUtil;
 import com.hungteen.pvz.utils.enums.Plants;
 
 import net.minecraft.entity.CreatureEntity;
 import net.minecraft.entity.EntitySize;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.Pose;
-import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.World;
 
 public class AngelStarFruitEntity extends PlantShooterEntity {
@@ -61,39 +61,17 @@ public class AngelStarFruitEntity extends PlantShooterEntity {
 	}
 	
 	public int getExtraAttackChance() {
-		int lvl = this.getPlantLvl();
-		if(lvl <= 19) return 17 + 3 * lvl;
-		return 80;
+		return PlantUtil.getPlantAverageProgress(this, 20, 80);
 	}
 	
 	@Override
 	public float getAttackDamage() {
-		int lvl = this.getPlantLvl();
-		if(lvl <= 12) {
-			int now = (lvl - 1) / 4;
-			return 3 + 0.25F * now;
-		} 
-		if(lvl <= 20) {
-			int now = (lvl - 13) / 2;
-			return 3.75F + 0.25F * now;
-		}
-		return 4.5F;
+		return PlantUtil.getPlantAverageProgress(this, 2F, 8F);
 	}
 	
 	@Override
 	protected boolean canAttackNow() {
 		return this.getAttackTime() == 2 && ! this.isPlantInSuperMode();
-	}
-	
-	private void shootStarByAngle(float angle) {
-		angle *= 3.14159F / 180F;
-		double vx = - MathHelper.sin(angle);
-		double vz = MathHelper.cos(angle);
-		AbstractBulletEntity pea = this.createBullet();
-		pea.setPos(getX(), getY() + 0.2F, getZ());
-		double speed = 1.4D;
-		pea.setDeltaMovement(vx * speed, 0, vz * speed);
-		level.addFreshEntity(pea);
 	}
 	
 	@Override
@@ -109,7 +87,7 @@ public class AngelStarFruitEntity extends PlantShooterEntity {
 	
 	@Override
 	public double getMaxShootAngle() {
-		return 40;
+		return 80;
 	}
 
 	@Override
@@ -118,15 +96,13 @@ public class AngelStarFruitEntity extends PlantShooterEntity {
 	}
 
 	@Override
+	public int getSuperTimeLength() {
+		return this.isPlantInStage(1) ? 100 : this.isPlantInStage(2) ? 200 : 300;
+	}
+	
+	@Override
 	public Plants getPlantEnumName() {
 		return Plants.ANGEL_STAR_FRUIT;
-	}
-
-	@Override
-	public int getSuperTimeLength() {
-		if(this.isPlantInStage(1)) return 100;
-		if(this.isPlantInStage(2)) return 200;
-		return 300;
 	}
 
 }
