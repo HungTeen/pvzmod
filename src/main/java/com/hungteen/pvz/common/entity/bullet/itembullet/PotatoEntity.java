@@ -61,9 +61,4 @@ public class PotatoEntity extends PVZItemBulletEntity{
 		return 0.06f;
 	}
 
-	@Override
-	protected float getAttackDamage() {
-		return 0;
-	}
-	
 }

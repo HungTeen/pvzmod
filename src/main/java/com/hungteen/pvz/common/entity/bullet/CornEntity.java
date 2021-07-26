@@ -2,7 +2,6 @@ package com.hungteen.pvz.common.entity.bullet;
 
 import com.hungteen.pvz.common.advancement.trigger.EntityEffectAmountTrigger;
 import com.hungteen.pvz.common.entity.plant.PVZPlantEntity;
-import com.hungteen.pvz.common.entity.plant.explosion.CobCannonEntity;
 import com.hungteen.pvz.common.entity.zombie.roof.GargantuarEntity;
 import com.hungteen.pvz.common.misc.damage.PVZDamageSource;
 import com.hungteen.pvz.register.EntityRegister;
@@ -82,12 +81,6 @@ public class CornEntity extends PultBulletEntity {
 		}
 	}
 
-	@Override
-	protected float getAttackDamage() {
-		if(this.getThrower() instanceof CobCannonEntity) return ((CobCannonEntity) this.getThrower()).getAttackDamage();
-		return 0;
-	}
-	
 	@Override
 	public EntitySize getDimensions(Pose poseIn) {
 		return EntitySize.scalable(1F, 1F);

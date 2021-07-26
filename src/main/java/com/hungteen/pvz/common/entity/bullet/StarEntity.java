@@ -1,6 +1,5 @@
 package com.hungteen.pvz.common.entity.bullet;
 
-import com.hungteen.pvz.common.entity.plant.base.PlantShooterEntity;
 import com.hungteen.pvz.common.misc.damage.PVZDamageSource;
 import com.hungteen.pvz.register.EntityRegister;
 
@@ -48,7 +47,7 @@ public class StarEntity extends AbstractBulletEntity {
 		boolean flag = false;
 		if (result.getType() == RayTraceResult.Type.ENTITY) {
 			Entity target = ((EntityRayTraceResult) result).getEntity();
-			if (checkCanAttack(target)) {
+			if (this.shouldHit(target)) {
 				target.invulnerableTime = 0;
 				this.dealStarDamage(target); // attack 
 				flag = true;
@@ -61,7 +60,7 @@ public class StarEntity extends AbstractBulletEntity {
 	}
 	
 	private void dealStarDamage(Entity target) {
-		target.hurt(PVZDamageSource.star(this, this.getThrower()), this.getFixDamage());
+		target.hurt(PVZDamageSource.star(this, this.getThrower()), this.getAttackDamage());
 	}
 	
 	@Override
@@ -69,7 +68,7 @@ public class StarEntity extends AbstractBulletEntity {
 		return 30;
 	}
 	
-	private float getFixDamage() {
+	public float getAttackDamage() {
 		float damage = this.attackDamage;
 		if(this.getStarType() == StarTypes.BIG) {
 			damage += 5;
@@ -78,13 +77,6 @@ public class StarEntity extends AbstractBulletEntity {
 			damage += 10;
 		}
 		return damage;
-	}
-	
-	protected float getAttackDamage() {
-		if(this.getThrower() instanceof PlantShooterEntity) {
-			return ((PlantShooterEntity) this.getThrower()).getAttackDamage();
-		}
-		return 0;
 	}
 	
 	@Override

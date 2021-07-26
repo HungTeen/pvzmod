@@ -778,6 +778,10 @@ public abstract class PVZPlantEntity extends CreatureEntity implements IPVZPlant
 		return false;
 	}
 	
+	public int getThreeStage(int a, int b, int c) {
+		return this.isPlantInStage(1) ? a : this.isPlantInStage(2) ? b : c;
+	}
+	
 	/**
 	 * check can start super mode currently.
 	 */

@@ -1,6 +1,5 @@
 package com.hungteen.pvz.common.entity.bullet;
 
-import com.hungteen.pvz.common.entity.plant.arma.KernelPultEntity;
 import com.hungteen.pvz.common.misc.damage.PVZDamageSource;
 import com.hungteen.pvz.register.EntityRegister;
 
@@ -22,13 +21,7 @@ public class KernelEntity extends PultBulletEntity {
 	}
 
 	protected void dealDamage(Entity target) {
-		target.hurt(PVZDamageSource.kernel(this, this.getThrower()), this.attackDamage);
-	}
-	
-	@Override
-	protected float getAttackDamage() {
-		if(this.getThrower() instanceof KernelPultEntity) return ((KernelPultEntity) this.getThrower()).getKernelDamage();
-		return 0;
+		target.hurt(PVZDamageSource.kernel(this, this.getThrower()), this.getAttackDamage() / 2F);
 	}
 	
 	@Override

@@ -1,6 +1,5 @@
 package com.hungteen.pvz.common.entity.bullet;
 
-import com.hungteen.pvz.common.entity.zombie.roof.CatapultZombieEntity;
 import com.hungteen.pvz.common.misc.damage.PVZDamageSource;
 import com.hungteen.pvz.register.EntityRegister;
 
@@ -29,12 +28,6 @@ public class BallEntity extends PultBulletEntity {
 	@Override
 	protected void dealDamage(Entity target) {
 		target.hurt(PVZDamageSource.ball(this, this.getThrower()), this.attackDamage);
-	}
-
-	@Override
-	protected float getAttackDamage() {
-		if(this.getThrower() instanceof CatapultZombieEntity) return ((CatapultZombieEntity) this.getThrower()).getAttackDamage();
-		return 2;
 	}
 
 }

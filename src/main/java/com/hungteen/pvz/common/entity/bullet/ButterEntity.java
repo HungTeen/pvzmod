@@ -29,11 +29,6 @@ public class ButterEntity extends PultBulletEntity {
 		target.hurt(source, this.attackDamage);
 	}
 	
-	protected float getAttackDamage() {
-		if(this.getThrower() instanceof KernelPultEntity) return ((KernelPultEntity) this.getThrower()).getButterDamage();
-		return 0;
-	}
-	
 	@Override
 	public EntitySize getDimensions(Pose poseIn) {
 		return EntitySize.scalable(0.6F, 0.6F);

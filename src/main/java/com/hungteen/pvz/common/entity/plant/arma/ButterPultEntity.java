@@ -1,16 +1,12 @@
 package com.hungteen.pvz.common.entity.plant.arma;
 
-import java.util.Optional;
-
 import com.hungteen.pvz.common.entity.bullet.ButterEntity;
 import com.hungteen.pvz.common.entity.bullet.PultBulletEntity;
-import com.hungteen.pvz.register.SoundRegister;
-import com.hungteen.pvz.utils.EntityUtil;
+import com.hungteen.pvz.utils.PlantUtil;
 import com.hungteen.pvz.utils.enums.Plants;
 
 import net.minecraft.entity.CreatureEntity;
 import net.minecraft.entity.EntityType;
-import net.minecraft.entity.LivingEntity;
 import net.minecraft.world.World;
 
 public class ButterPultEntity extends KernelPultEntity {
@@ -20,15 +16,9 @@ public class ButterPultEntity extends KernelPultEntity {
 		this.setCurrentBullet(CornTypes.BUTTER);
 	}
 	
-	protected Optional<PultBulletEntity> pultKernel(LivingEntity target, boolean isSuper) {
-		if(target == null) return Optional.empty();
-		PultBulletEntity bullet = new ButterEntity(level, this);
-		bullet.setPos(this.getX(), this.getY() + 1.7f, this.getZ());
-		bullet.shootPultBullet(target);
-        this.level.addFreshEntity(bullet);
-        EntityUtil.playSound(this, SoundRegister.PLANT_THROW.get());
-        this.setCurrentBullet(CornTypes.KERNEL); 
-        return Optional.of(bullet);
+	@Override
+	protected PultBulletEntity createBullet() {
+		return new ButterEntity(level, this);
 	}
 	
 	@Override
@@ -37,24 +27,14 @@ public class ButterPultEntity extends KernelPultEntity {
 	}
 
 	@Override
-	public float getSuperRange() {
-		if(this.isPlantInStage(1)) return 15;
-		if(this.isPlantInStage(2)) return 20;
-		return 25;
-	}
-	
-	@Override
-	public float getButterDamage() {
-		int lvl = this.getPlantLvl();
-		if(lvl <= 20) return 0.1F * lvl;
-		return 2;
+	public float getAttackDamage() {
+		final int lvl = this.getPlantLvl();
+		return lvl <= 20 ? 0.1F * lvl : 2;
 	}
 	
 	@Override
 	public int getButterDuration() {
-		int lvl = this.getPlantLvl();
-		if(lvl <= 19) return 72 + 8 * lvl;
-		return 240;
+		return PlantUtil.getPlantAverageProgress(this, 80, 240);
 	}
 	
 	@Override

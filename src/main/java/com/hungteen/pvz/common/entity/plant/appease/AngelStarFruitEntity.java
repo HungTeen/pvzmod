@@ -37,7 +37,7 @@ public class AngelStarFruitEntity extends PlantShooterEntity {
 		if(this.isPlantInSuperMode()) {
 			float now = this.getSuperTime() * 4;
 			for(int i = 0; i < 5; ++ i) {
-				this.shootStarByAngle(now);
+				this.shootByAngle(now);
 				now += PER_ANGLE;
 			}
 		}
@@ -47,13 +47,13 @@ public class AngelStarFruitEntity extends PlantShooterEntity {
 	public void shootBullet() {
 		float now = this.yHeadRot;
 		for(int i = 0; i < 5; ++ i) {
-			this.shootStarByAngle(now);
+			this.shootByAngle(now);
 			now += PER_ANGLE;
 		}
 		if(this.getRandom().nextInt(100) < this.getExtraAttackChance()) {
 			now = this.yHeadRot + 36F;
 			for(int i = 0; i < 5; ++ i) {
-				this.shootStarByAngle(now);
+				this.shootByAngle(now);
 				now += PER_ANGLE;
 			}
 		}

@@ -1,9 +1,14 @@
 package com.hungteen.pvz.common.entity.plant.base;
 
+import java.util.Optional;
+
 import com.hungteen.pvz.common.entity.ai.goal.attack.PultAttackGoal;
+import com.hungteen.pvz.common.entity.ai.goal.target.PVZNearestTargetGoal;
+import com.hungteen.pvz.common.entity.bullet.PultBulletEntity;
 import com.hungteen.pvz.common.entity.plant.PVZPlantEntity;
-import com.hungteen.pvz.common.entity.zombie.poolnight.BalloonZombieEntity;
+import com.hungteen.pvz.register.SoundRegister;
 import com.hungteen.pvz.utils.EntityUtil;
+import com.hungteen.pvz.utils.PlantUtil;
 import com.hungteen.pvz.utils.interfaces.IPult;
 
 import net.minecraft.entity.CreatureEntity;
@@ -26,6 +31,7 @@ public abstract class PlantPultEntity extends PVZPlantEntity implements IPult {
 	protected void registerGoals() {
 		super.registerGoals();
 		this.goalSelector.addGoal(0, new PultAttackGoal(this));
+		this.targetSelector.addGoal(0, new PVZNearestTargetGoal(this, true, false, getPultRange(), this.getPultHeight()));
 	}
 	
 	@Override
@@ -50,14 +56,46 @@ public abstract class PlantPultEntity extends PVZPlantEntity implements IPult {
 		}
 	}
 	
+	public void performPult(LivingEntity target1){
+		Optional.ofNullable(target1).ifPresent(target -> {
+			PultBulletEntity bullet = this.createBullet();
+			bullet.setPos(this.getX(), this.getY() + 1.7f, this.getZ());
+			bullet.shootPultBullet(target);
+			bullet.summonByOwner(this);
+			bullet.setAttackDamage(this.isPlantInSuperMode() ? this.getSuperDamage() : this.getAttackDamage());
+	        this.level.addFreshEntity(bullet);
+	        EntityUtil.playSound(this, SoundRegister.PLANT_THROW.get());
+		});
+	}
+	
 	protected void superAttack() {
-		float range = this.getSuperRange();
-		EntityUtil.getTargetableLivings(this, EntityUtil.getEntityAABB(this, range, range)).forEach((target) -> {
+		final float range = this.getSuperRange();
+		EntityUtil.getTargetableLivings(this, EntityUtil.getEntityAABB(this, range, range)).forEach(target -> {
 			this.doSuperAttackToTarget(target);
 		});
 	}
 	
-	protected abstract void doSuperAttackToTarget(LivingEntity target);
+	@Override
+	public void pultBullet() {
+		this.performPult(this.getTarget());
+	}
+	
+	/**
+	 * {@link #superAttack()}
+	 */
+	protected void doSuperAttackToTarget(LivingEntity target) {
+		this.performPult(target);
+	}
+	
+	/**
+	 * {@link #performPult(LivingEntity))}
+	 */
+	protected abstract PultBulletEntity createBullet();
+	
+	/**
+	 * {@link #performPult(LivingEntity))}
+	 */
+	public abstract float getSuperDamage();
 	
 	@Override
 	public boolean shouldPult() {
@@ -66,23 +104,31 @@ public abstract class PlantPultEntity extends PVZPlantEntity implements IPult {
 	
 	@Override
 	public boolean canPlantTarget(Entity entity) {
-		if(entity instanceof BalloonZombieEntity) return true;
 		return this.checkY(entity) && super.canPlantTarget(entity);
 	}
 	
 	protected boolean checkY(Entity target) {
-		return this.getY() + 10 >= target.getY() + target.getBbHeight();
+		return this.getY() + this.getPultHeight() >= target.getY() + target.getBbHeight();
 	}
 	
 	public float getSuperRange() {
-		if(this.isPlantInStage(1)) return 10;
-		if(this.isPlantInStage(2)) return 15;
-		return 20;
+		return this.isPlantInStage(1) ? 15 : this.isPlantInStage(2) ? 20 : 25;
+	}
+	
+	public float getAttackDamage() {
+		return PlantUtil.getPlantAverageProgress(this, 2, 8);
 	}
 	
 	@Override
 	public float getPultRange() {
-		return 40;
+		return 30;
+	}
+	
+	/**
+	 * max target height.
+	 */
+	public float getPultHeight() {
+		return 15;
 	}
 	
 	@Override

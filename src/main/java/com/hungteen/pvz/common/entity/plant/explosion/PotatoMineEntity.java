@@ -102,6 +102,7 @@ public class PotatoMineEntity extends PlantCloserEntity{
 		    final float dy = 0.5F;
 		    final float dz = MathUtil.getRandomFloat(getRandom()) * i / 2;
 		    potato.shoot(dx, dy, dz);
+		    potato.summonByOwner(this);
 		    this.level.addFreshEntity(potato);
 		}
 	}

@@ -64,7 +64,7 @@ public class MagnetShroomEntity extends PVZPlantEntity {
 				this.setMetalType(MetalTypes.EMPTY);
 			}
 			LivingEntity target = this.getTarget();
-			if(EntityUtil.isEntityValid(target) && this.isPlantActive()) {
+			if(EntityUtil.isEntityValid(target) && this.isMagnetActive()) {
 				this.dragMetal(target);
 			}
 		}
@@ -84,6 +84,8 @@ public class MagnetShroomEntity extends PVZPlantEntity {
 			MetalItemEntity metal = new MetalItemEntity(level, this, ((IHasMetal) target).getMetalType());
 			metal.setMetalState(MetalStates.BULLET);
 			metal.setPos(target.getX(), target.getY() + target.getEyeHeight(), target.getZ());
+			metal.summonByOwner(this);
+			metal.setAttackDamage(this.getAttackDamage());
 			level.addFreshEntity(metal);
 			if(-- cnt == 0) return ;
 		};
@@ -118,16 +120,16 @@ public class MagnetShroomEntity extends PVZPlantEntity {
 		return PlantUtil.getPlantAverageProgress(this, 600, 200);
 	}
 	
-	public ItemStack getMetalRenderItem() {
-		if(this.getMetalType() == null) return ItemStack.EMPTY;
-		return new ItemStack(MetalTypes.getMetalItem(getMetalType()));
-	}
-	
 	/**
 	 * is not consuming metal.
 	 */
-	public boolean isPlantActive() {
+	public boolean isMagnetActive() {
 		return this.getAttackTime() == 0;
+	}
+	
+	public ItemStack getMetalRenderItem() {
+		if(this.getMetalType() == null) return ItemStack.EMPTY;
+		return new ItemStack(MetalTypes.getMetalItem(getMetalType()));
 	}
 	
 	@Override

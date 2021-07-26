@@ -1,6 +1,5 @@
 package com.hungteen.pvz.common.entity.bullet.itembullet;
 
-import com.hungteen.pvz.common.entity.plant.explosion.BambooLordEntity;
 import com.hungteen.pvz.common.misc.damage.PVZDamageSource;
 import com.hungteen.pvz.register.EntityRegister;
 import com.hungteen.pvz.register.ItemRegister;
@@ -12,7 +11,6 @@ import net.minecraft.entity.EntitySize;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.Pose;
-import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.util.math.EntityRayTraceResult;
@@ -56,7 +54,7 @@ public class FireCrackerEntity extends PVZItemBulletEntity{
 		boolean flag = false;
 		if (result.getType() == RayTraceResult.Type.ENTITY) {
 			Entity target = ((EntityRayTraceResult) result).getEntity();
-			if (checkCanAttack(target)) {
+			if (this.shouldHit(target)) {
 				target.invulnerableTime = 0;
 				this.dealDamage(target); // attack 
 				flag = true;
@@ -83,12 +81,6 @@ public class FireCrackerEntity extends PVZItemBulletEntity{
 			    EntityUtil.spawnParticle(this, 5);
 		    }
 		} 
-	}
-	
-	protected float getAttackDamage() {
-		if(this.getThrower() instanceof BambooLordEntity) return ((BambooLordEntity) this.getThrower()).getAttackDamage() * 2;
-		if(this.getThrower() instanceof PlayerEntity) return 3;
-		return 0;
 	}
 	
 	@Override

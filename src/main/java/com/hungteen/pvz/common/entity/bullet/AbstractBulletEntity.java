@@ -42,12 +42,6 @@ public abstract class AbstractBulletEntity extends AbstractOwnerEntity {
 		this.setNoGravity(true);
 	}
 	
-	@Override
-	public void summonByOwner(Entity owner) {
-		super.summonByOwner(owner);
-		this.attackDamage = this.getAttackDamage();
-	}
-	
 	/**
 	 * Called to update the entity's position/logic.
 	 */
@@ -96,10 +90,6 @@ public abstract class AbstractBulletEntity extends AbstractOwnerEntity {
 	
 	public void addHitEntity(Entity entity) {
 		this.hitEntities.addAll(EntityUtil.getOwnerAndPartsID(entity));
-	}
-	
-	protected boolean checkCanAttack(Entity target){
-		return EntityUtil.canTargetEntity(this, target);
 	}
 	
 	@Override
@@ -157,55 +147,16 @@ public abstract class AbstractBulletEntity extends AbstractOwnerEntity {
 		this.setDeltaMovement(new Vector3d(dx, dy, dz).normalize().scale(speed));
 	}
 	
-	public void shootPeaAnti(double dx, double dy, double dz, double speed) {
-		double down = this.getShootPeaAngle();
-		double dxz = Math.sqrt(dx * dx + dz * dz);
-		dy = MathHelper.clamp(dy, -dxz / down, dxz / down);
-		double dis = Math.sqrt(dx * dx + dy * dy + dz * dz);
-		double vx = dx / dis * speed;
-		double vy = dy / dis * speed;
-		double vz = dz / dis * speed;
-		this.setDeltaMovement(- vx, - vy, - vz);
-	}
-	
 	public void shootToTarget(LivingEntity target, double speed) {
 		this.setDeltaMovement(target.position().add(0, target.getEyeHeight(), 0).subtract(this.position()).normalize().scale(speed));
 	}
 	
 	/**
-	 * get how much angle can shoot by thrower
-	 */
-	public double getShootPeaAngle() {
-		if (this.getThrower() instanceof PlantShooterEntity) {
-			return ((PlantShooterEntity) this.getThrower()).getMaxShootAngle();
-		}
-		return 10;
-	}
-	
-	/**
-	 * Gets the amount of gravity to apply to the thrown entity with each tick.
-	 */
-	protected float getGravityVelocity() {
-		return 0.03F;
-	}
-
-	/**
 	 * Called when this EntityThrowable hits a block or entity.
 	 */
 	protected abstract void onImpact(RayTraceResult result);
 
-	/**
-	 * get the first initial damage by its thrower.
-	 * {@link #summonByOwner(Entity)}
-	 */
-	protected abstract float getAttackDamage();
-	
 	protected abstract int getMaxLiveTick(); 
-	
-	@Nullable
-	public LivingEntity getThrower() {
-		return (LivingEntity) this.getOwner();
-	}
 	
 	protected boolean checkLive(RayTraceResult result) {
 		if (result.getType() == RayTraceResult.Type.ENTITY) {// attack entity
@@ -220,6 +171,36 @@ public abstract class AbstractBulletEntity extends AbstractOwnerEntity {
 			}
 		}
 		return false;
+	}
+	
+	@Nullable
+	public LivingEntity getThrower() {
+		return (LivingEntity) this.getOwner();
+	}
+	
+	public float getAttackDamage() {
+		return this.attackDamage;
+	}
+	
+	public void setAttackDamage(float damage) {
+		this.attackDamage = damage;
+	}
+	
+	/**
+	 * Gets the amount of gravity to apply to the thrown entity with each tick.
+	 */
+	protected float getGravityVelocity() {
+		return 0.03F;
+	}
+	
+	/**
+	 * get how much angle can shoot by thrower
+	 */
+	public double getShootPeaAngle() {
+		if (this.getThrower() instanceof PlantShooterEntity) {
+			return ((PlantShooterEntity) this.getThrower()).getMaxShootAngle();
+		}
+		return 10;
 	}
 	
 	/**

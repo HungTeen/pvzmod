@@ -92,11 +92,6 @@ public class MelonEntity extends PultBulletEntity {
 		return damage;
 	}
 	
-	protected float getAttackDamage() {
-		if(this.getThrower() instanceof MelonPultEntity) return ((MelonPultEntity) this.getThrower()).getAttackDamage();
-		return 0;
-	}
-	
 	private float getSplashDamage() {
 		if(this.getMelonType() == MelonTypes.POWER) return 3;
 		if(this.getThrower() instanceof MelonPultEntity) return ((MelonPultEntity) this.getThrower()).getSplashDamage();

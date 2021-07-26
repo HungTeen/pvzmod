@@ -110,6 +110,8 @@ public class CatapultZombieEntity extends CarZombieEntity implements IPult,IHasW
             ball.shootPultBullet(target);
             EntityUtil.playSound(this, SoundRegister.BASKETBALL.get());
             this.level.addFreshEntity(ball);
+            ball.summonByOwner(this);
+            ball.setAttackDamage(this.getAttackDamage());
             this.setBallCount(this.getBallCount() + 1);
 		});
 	}

@@ -1,7 +1,6 @@
 package com.hungteen.pvz.common.entity.bullet;
 
 import com.hungteen.pvz.common.entity.bullet.itembullet.PVZItemBulletEntity;
-import com.hungteen.pvz.common.entity.plant.base.PlantShooterEntity;
 import com.hungteen.pvz.common.entity.plant.toxic.GloomShroomEntity;
 import com.hungteen.pvz.common.misc.damage.PVZDamageSource;
 import com.hungteen.pvz.register.EntityRegister;
@@ -65,7 +64,7 @@ public class FumeEntity extends PVZItemBulletEntity{
 		boolean flag = false;
 		if (result.getType() == RayTraceResult.Type.ENTITY) {
 			Entity target = ((EntityRayTraceResult) result).getEntity();
-			if (checkCanAttack(target)) {
+			if (this.shouldHit(target)) {
 				target.invulnerableTime = 0;
 				this.dealFumeDamage(target); // attack 
 				if(this.hitEntities == null) {
@@ -100,14 +99,6 @@ public class FumeEntity extends PVZItemBulletEntity{
 			int lvl = this.knockback;
 			target.setDeltaMovement(speed.add(now).multiply(lvl, lvl, lvl));
 		}
-	}
-	
-	@Override
-	protected float getAttackDamage() {
-		if(this.getThrower() instanceof PlantShooterEntity) {
-			return ((PlantShooterEntity) this.getThrower()).getAttackDamage();
-		}
-		return 0;
 	}
 	
 	public void setKnockback(int lvl) {

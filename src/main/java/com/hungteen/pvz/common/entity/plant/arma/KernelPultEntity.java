@@ -3,7 +3,6 @@ package com.hungteen.pvz.common.entity.plant.arma;
 import java.util.List;
 import java.util.Optional;
 
-import com.hungteen.pvz.common.entity.ai.goal.target.PVZNearestTargetGoal;
 import com.hungteen.pvz.common.entity.bullet.ButterEntity;
 import com.hungteen.pvz.common.entity.bullet.KernelEntity;
 import com.hungteen.pvz.common.entity.bullet.PultBulletEntity;
@@ -11,7 +10,6 @@ import com.hungteen.pvz.common.entity.plant.base.PlantPultEntity;
 import com.hungteen.pvz.common.item.card.ImitaterCardItem;
 import com.hungteen.pvz.common.item.card.PlantCardItem;
 import com.hungteen.pvz.register.EffectRegister;
-import com.hungteen.pvz.register.SoundRegister;
 import com.hungteen.pvz.utils.EntityUtil;
 import com.hungteen.pvz.utils.enums.Plants;
 
@@ -48,12 +46,6 @@ public class KernelPultEntity extends PlantPultEntity {
 	}
 	
 	@Override
-	protected void registerGoals() {
-		super.registerGoals();
-		this.targetSelector.addGoal(0, new PVZNearestTargetGoal(this, true, false, getPultRange(), 11, 10));
-	}
-	
-	@Override
 	public ActionResultType interactAt(PlayerEntity player, Vector3d vec3d, Hand hand) {
 		if(! level.isClientSide && hand == Hand.MAIN_HAND && ! EntityUtil.canTargetEntity(this, player)) {
 			ItemStack stack = player.getItemInHand(hand);
@@ -84,8 +76,8 @@ public class KernelPultEntity extends PlantPultEntity {
 	}
 	
 	private Optional<KernelPultEntity> getNearByPult(PlayerEntity player){
-		float range = 1.5F;
-		List<KernelPultEntity> list = level.getEntitiesOfClass(KernelPultEntity.class, EntityUtil.getEntityAABB(this, range, range), (pult) -> {
+		final float range = 1.5F;
+		List<KernelPultEntity> list = level.getEntitiesOfClass(KernelPultEntity.class, EntityUtil.getEntityAABB(this, range, range), pult -> {
 			return ! pult.is(this) && pult.getPlantEnumName() == Plants.KERNEL_PULT && ! EntityUtil.canTargetEntity(pult, player);
 		});
 		if(list.isEmpty()) return Optional.empty();
@@ -98,6 +90,9 @@ public class KernelPultEntity extends PlantPultEntity {
 		this.changeBullet();
 	}
 	
+	/**
+	 * switch butter or kernel.
+	 */
 	protected void changeBullet() {
 		if(this.isPlantInSuperMode() && ! this.isSuperOut) {
 			this.setCurrentBullet(CornTypes.BUTTER);
@@ -107,35 +102,23 @@ public class KernelPultEntity extends PlantPultEntity {
 	}
 	
 	@Override
-	public void pultBullet() {
-		LivingEntity target = this.getTarget();
-		this.pultKernel(target, false);
+	public void performPult(LivingEntity target1) {
+		super.performPult(target1);
+		this.setCurrentBullet(CornTypes.KERNEL); 
 	}
 	
 	@Override
-	protected void doSuperAttackToTarget(LivingEntity target) {
-		this.pultKernel(target, true);
+	protected PultBulletEntity createBullet() {
+		if(this.isPlantInSuperMode() || this.getCurrentBullet() == CornTypes.BUTTER) {
+			return new ButterEntity(level, this);
+		}
+		return new KernelEntity(level, this);
 	}
 	
-	protected Optional<PultBulletEntity> pultKernel(LivingEntity target, boolean isSuper) {
-		if(target == null) return Optional.empty();
-		PultBulletEntity bullet = null;
-		if(isSuper || this.getCurrentBullet() == CornTypes.BUTTER) {
-			bullet = new ButterEntity(level, this);
-		} else if(this.getCurrentBullet() == CornTypes.KERNEL) {
-			bullet = new KernelEntity(level, this);
-		} 
-		if(bullet == null) {
-			System.out.println("ERROR : Wrong kernel Pult Throw Bullet Type !");
-			return Optional.empty();
-		}
-		bullet.setPos(this.getX(), this.getY() + 1.7f, this.getZ());
-		bullet.shootPultBullet(target);
-        this.level.addFreshEntity(bullet);
-        EntityUtil.playSound(this, SoundRegister.PLANT_THROW.get());
-        this.setCurrentBullet(CornTypes.KERNEL); 
-        return Optional.of(bullet);
-	}
+	@Override
+	public float getSuperDamage() {
+		return 2 * this.getAttackDamage();
+	};
 	
 	public EffectInstance getButterEffect() {
 		return new EffectInstance(EffectRegister.BUTTER_EFFECT.get(), this.getButterDuration(), 1, false, false);
@@ -143,22 +126,6 @@ public class KernelPultEntity extends PlantPultEntity {
 	
 	public int getButterDuration() {
 		return 100;
-	}
-	
-	public float getKernelDamage() {
-		int lvl = this.getPlantLvl();
-		if(lvl <= 18) {
-			int now = (lvl -1) / 2;
-			return 2 + 0.25f * now;
-		}
-		if(lvl <= 19) return 4.25f;
-		return 4.5f;
-	}
-	
-	public float getButterDamage() {
-		int lvl = this.getPlantLvl();
-		if(lvl <= 19) return 3.75F + 0.25F * lvl;
-		return 9;
 	}
 	
 	@Override
@@ -180,17 +147,17 @@ public class KernelPultEntity extends PlantPultEntity {
 		compound.putInt("current_bullet_type", this.getCurrentBullet().ordinal());
 	}
 	
-	@Override
-	public Plants getPlantEnumName() {
-		return Plants.KERNEL_PULT;
-	}
-	
 	public void setCurrentBullet(CornTypes type) {
 		this.entityData.set(CURRENT_BULLET, type.ordinal());
 	}
 	
 	public CornTypes getCurrentBullet() {
 		return CornTypes.values()[this.entityData.get(CURRENT_BULLET)];
+	}
+	
+	@Override
+	public Plants getPlantEnumName() {
+		return Plants.KERNEL_PULT;
 	}
 
 	public static enum CornTypes{

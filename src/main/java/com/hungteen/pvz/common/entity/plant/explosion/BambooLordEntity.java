@@ -54,6 +54,8 @@ public class BambooLordEntity extends PlantCloserEntity {
 				FireCrackerEntity entity = new FireCrackerEntity(level, this);
 				entity.setPos(this.getX(), this.getY(), this.getZ());
 				entity.shoot(list.get(pos));
+				entity.summonByOwner(this);
+				entity.setAttackDamage(this.getAttackDamage() * 2);
 				level.addFreshEntity(entity);
 			}
 		}

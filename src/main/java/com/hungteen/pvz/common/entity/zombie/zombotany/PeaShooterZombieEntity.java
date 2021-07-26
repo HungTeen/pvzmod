@@ -38,18 +38,22 @@ public class PeaShooterZombieEntity extends AbstractZombotanyEntity {
 		}
 	}
 	
-	public float getAttackDamage() {
-		return 3;
-	}
-	
 	private void shootPea() {
 		LivingEntity target = this.getTarget();
-		if(target == null) return ;
+		if(target == null) {
+			return ;
+		}
 		PeaEntity pea = new PeaEntity(level, this, PeaEntity.Type.NORMAL, PeaEntity.State.NORMAL);
 		pea.setPos(getX(), getY() + this.getEyeHeight(), getZ());
 		pea.shootToTarget(target, 1.5F);
+		pea.summonByOwner(this);
+		pea.setAttackDamage(this.getAttackDamage());
 		level.addFreshEntity(pea);
 		EntityUtil.playSound(this, SoundEvents.SNOW_GOLEM_SHOOT);
+	}
+	
+	public float getAttackDamage() {
+		return 3;
 	}
 	
 	@Override

@@ -51,7 +51,7 @@ public class StarFruitEntity extends PlantShooterEntity {
 	public void shootBullet() {
 		float now = this.yRot + 180F;
 		for(int i = 0; i < 5; ++ i) {
-			this.shootStarByAngle(now);
+			this.shootByAngle(now);
 			now += PER_ANGLE;
 		}
 		EntityUtil.playSound(this, SoundRegister.SNOW_SHOOT.get());

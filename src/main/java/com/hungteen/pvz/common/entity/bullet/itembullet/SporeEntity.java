@@ -1,6 +1,5 @@
 package com.hungteen.pvz.common.entity.bullet.itembullet;
 
-import com.hungteen.pvz.common.entity.plant.base.PlantShooterEntity;
 import com.hungteen.pvz.common.entity.plant.toxic.PuffShroomEntity;
 import com.hungteen.pvz.common.entity.plant.toxic.SeaShroomEntity;
 import com.hungteen.pvz.common.misc.damage.PVZDamageSource;
@@ -57,7 +56,7 @@ public class SporeEntity extends PVZItemBulletEntity{
 		boolean flag = false;
 		if (result.getType() == RayTraceResult.Type.ENTITY) {
 			Entity target = ((EntityRayTraceResult) result).getEntity();
-			if (checkCanAttack(target)) {
+			if (this.shouldHit(target)) {
 				target.invulnerableTime = 0;
 				this.dealSporeDamage(target); // attack 
 				flag = true;
@@ -71,14 +70,6 @@ public class SporeEntity extends PVZItemBulletEntity{
 	
 	private void dealSporeDamage(Entity target) {
 		target.hurt(PVZDamageSource.spore(this, this.getThrower()), this.attackDamage);
-	}
-	
-	@Override
-	protected float getAttackDamage() {
-		if(this.getThrower() instanceof PlantShooterEntity) {
-			return ((PlantShooterEntity) this.getThrower()).getAttackDamage();
-		}
-		return 0;
 	}
 	
 	@Override

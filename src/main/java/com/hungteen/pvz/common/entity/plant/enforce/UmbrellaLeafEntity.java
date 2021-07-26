@@ -39,11 +39,15 @@ public class UmbrellaLeafEntity extends PVZPlantEntity{
 		}
 	}
 	
-	private void tickLeaf() {
-		float range = this.getProtectRange();
-		List<Entity> list = level.getEntitiesOfClass(Entity.class, EntityUtil.getEntityAABB(this, range, 3), (target) -> {
-			if(target instanceof PultBulletEntity) return EntityUtil.canTargetEntity(this, target);
-			if(target instanceof BungeeZombieEntity) return EntityUtil.canTargetEntity(this, target);
+	/**
+	 * {@link #normalPlantTick()}
+	 */
+	public void tickLeaf() {
+		final float range = 4.5F;
+		List<Entity> list = level.getEntitiesOfClass(Entity.class, EntityUtil.getEntityAABB(this, range, 3), target -> {
+			if(target instanceof PultBulletEntity || target instanceof BungeeZombieEntity) {
+				return EntityUtil.canTargetEntity(this, target);
+			}
 			return false;
 		});
 		if(list.isEmpty()) {
@@ -54,7 +58,7 @@ public class UmbrellaLeafEntity extends PVZPlantEntity{
 			return ;
 		}
 		this.inc = 1;
-		list.forEach((target) -> {
+		list.forEach(target -> {
 			if(target instanceof BungeeZombieEntity) {
 				((BungeeZombieEntity) target).pushBack();
 			} else if(target instanceof PultBulletEntity){
@@ -63,10 +67,12 @@ public class UmbrellaLeafEntity extends PVZPlantEntity{
 		});
 	}
 	
-	public float getProtectRange() {
-		if(this.isPlantInStage(1)) return 2.5F;
-		if(this.isPlantInStage(2)) return 3.5F;
-		return 5F;
+	@Override
+	public boolean canPlantTarget(Entity target) {
+		if(target instanceof BungeeZombieEntity) {
+			return true;
+		}
+		return super.canPlantTarget(target);
 	}
 	
 	@Override
@@ -75,8 +81,8 @@ public class UmbrellaLeafEntity extends PVZPlantEntity{
 	}
 	
 	@Override
-	public Plants getPlantEnumName() {
-		return Plants.UMBRELLA_LEAF;
+	public int getSuperTimeLength() {
+		return 0;
 	}
 	
 	@Override
@@ -94,8 +100,8 @@ public class UmbrellaLeafEntity extends PVZPlantEntity{
 	}
 
 	@Override
-	public int getSuperTimeLength() {
-		return 0;
+	public Plants getPlantEnumName() {
+		return Plants.UMBRELLA_LEAF;
 	}
 	
 }

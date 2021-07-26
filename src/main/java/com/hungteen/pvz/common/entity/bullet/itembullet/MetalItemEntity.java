@@ -50,9 +50,9 @@ public class MetalItemEntity extends PVZItemBulletEntity {
 	@Override
 	public void tick() {
 		super.tick();
-		this.noPhysics = (this.getMetalState() != MetalStates.SHOOT);
-		if(! level.isClientSide && this.getThrower() != null && this.getThrower() instanceof MagnetShroomEntity) {
-			MagnetShroomEntity thrower = (MagnetShroomEntity) this.getThrower();
+		this.noPhysics = true;
+		if(! level.isClientSide && this.getThrower() instanceof MagnetShroomEntity) {
+			final MagnetShroomEntity thrower = (MagnetShroomEntity) this.getThrower();
 			if(this.distanceToSqr(thrower) <= 3) {
 				// near the thrower
 				if(this.getMetalState() == MetalStates.ABSORB) {
@@ -64,11 +64,9 @@ public class MetalItemEntity extends PVZItemBulletEntity {
 			}
 			if(this.getMetalState() == MetalStates.BULLET || this.getMetalState() == MetalStates.ABSORB) {
 				Vector3d vec = thrower.position().add(0, thrower.getBbHeight(), 0).subtract(this.position());
-			    double speed = 0.8D;
-			    vec = vec.normalize().multiply(speed, speed, speed);
-			    this.setDeltaMovement(vec);
+			    this.setDeltaMovement(vec.normalize().scale(0.8D));
 			} else if(this.getMetalState() == MetalStates.WAIT){
-				LivingEntity target = getAttackTarget(thrower);
+				LivingEntity target = this.getAttackTarget(thrower);
 				if(target == null) {
 					this.setDeltaMovement(0, 0, 0);
 					return ;
@@ -82,10 +80,13 @@ public class MetalItemEntity extends PVZItemBulletEntity {
 	
 	private LivingEntity getAttackTarget(MagnetShroomEntity thrower) {
 		if(this.tickCount % 50 != 0) return null;
-		List<LivingEntity> list = level.getEntitiesOfClass(LivingEntity.class, EntityUtil.getEntityAABB(thrower, 20, 20), (entity)->{
-			return EntityUtil.canTargetEntity(thrower, entity);
+		final float range = 20;
+		List<LivingEntity> list = level.getEntitiesOfClass(LivingEntity.class, EntityUtil.getEntityAABB(thrower, range, range), entity -> {
+			return EntityUtil.checkCanEntityBeTarget(thrower, entity);
 		});
-		if(list.size() == 0) return null;
+		if(list.size() == 0) {
+			return null;
+		}
 		int pos = thrower.getRandom().nextInt(list.size());
 		return list.get(pos);
 	}
@@ -95,7 +96,7 @@ public class MetalItemEntity extends PVZItemBulletEntity {
 		boolean flag = false;
 		if (result.getType() == RayTraceResult.Type.ENTITY) {
 			Entity target = ((EntityRayTraceResult) result).getEntity();
-			if (this.getMetalState() == MetalStates.SHOOT && checkCanAttack(target)) {
+			if (this.shouldHit(target)) {
 				target.invulnerableTime = 0;
 				target.hurt(PVZDamageSource.metal(this, this.getThrower()), this.getAttackDamage());
 				EntityUtil.playSound(this, SoundRegister.METAL_HIT.get());
@@ -109,18 +110,16 @@ public class MetalItemEntity extends PVZItemBulletEntity {
 	}
 	
 	@Override
+	protected boolean shouldHit(Entity target) {
+		return this.getMetalState() == MetalStates.SHOOT && EntityUtil.canTargetEntity(this, target);
+	}
+	
+	@Override
 	protected boolean checkLive(RayTraceResult result) {
 		if(this.getMetalState() != MetalStates.SHOOT || result.getType() == RayTraceResult.Type.BLOCK) {
 			return true;
 		}
 		return super.checkLive(result);
-	}
-	
-	protected float getAttackDamage() {
-		if(this.getThrower() instanceof MagnetShroomEntity) {
-			return ((MagnetShroomEntity) this.getThrower()).getAttackDamage();
-		}
-		return 0;
 	}
 	
 	@Override

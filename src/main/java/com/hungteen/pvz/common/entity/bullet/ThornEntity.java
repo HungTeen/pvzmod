@@ -50,22 +50,15 @@ public class ThornEntity extends AbstractBulletEntity {
 		entityData.define(THORN_TYPE, ThornTypes.NORMAL.ordinal());
 		entityData.define(THORN_STATE, ThornStates.NORMAL.ordinal());
 	}
-
-	/**
-	 * Updates the entity motion clientside, called by packets from the server
-	 */
-	@OnlyIn(Dist.CLIENT)
-	public void lerpMotion(double x, double y, double z) {
-		this.setDeltaMovement(x, y, z);
-		if (this.xRotO == 0.0F && this.yRotO == 0.0F) {
-			float f = MathHelper.sqrt(x * x + z * z);
-			this.xRot = (float) (MathHelper.atan2(y, (double) f) * (double) (180F / (float) Math.PI));
-			this.yRot = (float) (MathHelper.atan2(x, z) * (double) (180F / (float) Math.PI));
-			this.xRotO = this.xRot;
-			this.yRotO = this.yRot;
-			this.moveTo(this.getX(), this.getY(), this.getZ(), this.yRot,
-					this.xRot);
+	
+	protected float getPreAttackDamage() {
+		if (this.getThrower() instanceof CatTailEntity) return ((CatTailEntity) this.getThrower()).getAttackDamage();
+		if(this.getThrower() instanceof CactusEntity) {
+			final CactusEntity cactus = (CactusEntity) this.getThrower();
+			final float mult = cactus.isCactusPowered() ? 2F : 1F;
+			return cactus.getAttackDamage() * mult;
 		}
+		return 0;
 	}
 
 	@SuppressWarnings("deprecation")
@@ -153,7 +146,7 @@ public class ThornEntity extends AbstractBulletEntity {
 	}
 
 	private void onImpact(Entity target) {
-		if (checkCanAttack(target)) {
+		if (this.shouldHit(target)) {
 			target.invulnerableTime = 0;
 			this.dealThornDamage(target); // attack
 			if (this.getThornType() == ThornTypes.GUILD) {
@@ -172,38 +165,28 @@ public class ThornEntity extends AbstractBulletEntity {
 		}
 	}
 
-	@Override
-	protected boolean checkCanAttack(Entity target) {
-		if (!super.checkCanAttack(target))
-			return false;
-		if (this.getThornType() == ThornTypes.AUTO) {
-			return target.equals(this.thornTarget);
-		} else {
-			return ! set.contains(target.getId());
-		}
-	}
+//	@Override
+//	protected boolean checkCanAttack(Entity target) {
+//		if (!super.checkCanAttack(target))
+//			return false;
+//		if (this.getThornType() == ThornTypes.AUTO) {
+//			return target.equals(this.thornTarget);
+//		} else {
+//			return ! set.contains(target.getId());
+//		}
+//	}
 
 	protected void dealThornDamage(Entity target) {
-		target.hurt(PVZDamageSource.causeThornDamage(this, this), this.getFixDamage());
+		target.hurt(PVZDamageSource.causeThornDamage(this, this), this.getAttackDamage());
 	}
 	
-	private float getFixDamage() {
+	@Override
+	public float getAttackDamage() {
 		float damage = this.attackDamage;
 		if (this.getThornType() == ThornTypes.AUTO) {
 			damage += 10;
 		}
 		return damage;
-	}
-
-	protected float getAttackDamage() {
-		if (this.getThrower() instanceof CatTailEntity) return ((CatTailEntity) this.getThrower()).getAttackDamage();
-		if(this.getThrower() instanceof CactusEntity) {
-			final CactusEntity cactus = (CactusEntity) this.getThrower();
-			final float mult = cactus.isCactusPowered() ? 2F : 1F;
-			return cactus.getAttackDamage() * mult;
-		}
-		return 0;
-		
 	}
 
 	@Override
@@ -224,6 +207,23 @@ public class ThornEntity extends AbstractBulletEntity {
 	@Override
 	protected float getGravityVelocity() {
 		return 0f;
+	}
+	
+	/**
+	 * Updates the entity motion clientside, called by packets from the server
+	 */
+	@OnlyIn(Dist.CLIENT)
+	public void lerpMotion(double x, double y, double z) {
+		this.setDeltaMovement(x, y, z);
+		if (this.xRotO == 0.0F && this.yRotO == 0.0F) {
+			float f = MathHelper.sqrt(x * x + z * z);
+			this.xRot = (float) (MathHelper.atan2(y, (double) f) * (double) (180F / (float) Math.PI));
+			this.yRot = (float) (MathHelper.atan2(x, z) * (double) (180F / (float) Math.PI));
+			this.xRotO = this.xRot;
+			this.yRotO = this.yRot;
+			this.moveTo(this.getX(), this.getY(), this.getZ(), this.yRot,
+					this.xRot);
+		}
 	}
 
 	@Override

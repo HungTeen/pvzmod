@@ -44,7 +44,7 @@ public class NutEntity extends PVZItemBulletEntity {
 			}
 		} else if(result.getType() ==  RayTraceResult.Type.ENTITY) {
 			Entity target = ((EntityRayTraceResult) result).getEntity();
-			if (checkCanAttack(target)) {
+			if (this.shouldHit(target)) {
 				target.invulnerableTime = 0;
 				this.dealNutDamage(target); // attack 
 				flag = true;
@@ -68,11 +68,6 @@ public class NutEntity extends PVZItemBulletEntity {
 	@Override
 	protected float getGravityVelocity() {
 		return 0.06f;
-	}
-
-	@Override
-	protected float getAttackDamage() {
-		return 0;
 	}
 
 }

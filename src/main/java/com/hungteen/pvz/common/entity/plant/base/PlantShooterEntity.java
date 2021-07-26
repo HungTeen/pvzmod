@@ -95,6 +95,7 @@ public abstract class PlantShooterEntity extends PVZPlantEntity implements IShoo
             	EntityUtil.playSound(this, this.getShootSound());
             }
             bullet.summonByOwner(this);
+            bullet.setAttackDamage(this.getAttackDamage());
             this.level.addFreshEntity(bullet);
 		});
 	}
@@ -102,14 +103,16 @@ public abstract class PlantShooterEntity extends PVZPlantEntity implements IShoo
 	/**
 	 * shoot pea by angle.
 	 */
-	public void shootStarByAngle(float angle) {
+	public void shootByAngle(float angle) {
 		angle *= 3.14159F / 180F;
 		final double vx = - MathHelper.sin(angle);
 		final double vz = MathHelper.cos(angle);
-		final AbstractBulletEntity pea = this.createBullet();
-		pea.setPos(getX(), getY() + 0.2F, getZ());
-		pea.setDeltaMovement(vx * this.getBulletSpeed(), 0, vz * this.getBulletSpeed());
-		level.addFreshEntity(pea);
+		final AbstractBulletEntity bullet = this.createBullet();
+		bullet.setPos(getX(), getY() + 0.2F, getZ());
+		bullet.setDeltaMovement(vx * this.getBulletSpeed(), 0, vz * this.getBulletSpeed());
+		bullet.summonByOwner(this);
+        bullet.setAttackDamage(this.getAttackDamage());
+		level.addFreshEntity(bullet);
 	}
 	
 	/**

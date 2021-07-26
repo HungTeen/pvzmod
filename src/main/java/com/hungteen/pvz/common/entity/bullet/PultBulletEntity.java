@@ -2,7 +2,9 @@ package com.hungteen.pvz.common.entity.bullet;
 
 import java.util.Optional;
 
+import com.hungteen.pvz.PVZMod;
 import com.hungteen.pvz.utils.EntityUtil;
+import com.hungteen.pvz.utils.MathUtil;
 
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
@@ -25,11 +27,13 @@ public abstract class PultBulletEntity extends AbstractBulletEntity {
 	
 	public PultBulletEntity(EntityType<?> type, World worldIn) {
 		super(type, worldIn);
+		this.setNoGravity(false);
 		this.airSlowDown = 1F;
 	}
 	
 	public PultBulletEntity(EntityType<?> type, World worldIn, LivingEntity shooter) {
 		super(type, worldIn, shooter);
+		this.setNoGravity(false);
 		this.airSlowDown = 1F;
 	}
 	
@@ -38,18 +42,18 @@ public abstract class PultBulletEntity extends AbstractBulletEntity {
 		super.tick();
 		if(! this.level.isClientSide && ! this.isPushBack && this.tickCount % this.targetChance == 0) {
 			if(this.lockTarget.isPresent() && EntityUtil.isEntityValid(lockTarget.get())) {
-				LivingEntity target = this.lockTarget.get();
-				Vector3d speed = this.getDeltaMovement();
-			    double g = this.getGravityVelocity();
-			    double t1 = speed.y / g;
-			    double height = speed.y * speed.y / 2 / g;
-			    double downHeight = this.getY() + height - target.getY() - target.getBbHeight();
+				final LivingEntity target = this.lockTarget.get();
+				final Vector3d speed = this.getDeltaMovement();
+			    final double g = this.getGravityVelocity();
+			    final double t1 = speed.y / g;
+			    final double height = speed.y * speed.y / 2 / g;
+			    final double downHeight = this.getY() + height - target.getY() - target.getBbHeight();
 			    if(downHeight < 0) return ;
-			    double t2 = Math.sqrt(2 * downHeight / g);
-			    double dx = target.getX() + target.getDeltaMovement().x() * (t1 + t2) - this.getX();
-	    	    double dz = target.getZ() + target.getDeltaMovement().z() * (t1 + t2) - this.getZ();
-	    	    double dxz = MathHelper.sqrt(dx * dx + dz * dz);
-	    	    double vxz = dxz / (t1 + t2);
+			    final double t2 = Math.sqrt(2 * downHeight / g);
+			    final double dx = target.getX() + target.getDeltaMovement().x() * (t1 + t2) - this.getX();
+			    final double dz = target.getZ() + target.getDeltaMovement().z() * (t1 + t2) - this.getZ();
+			    final double dxz = MathHelper.sqrt(dx * dx + dz * dz);
+			    final double vxz = dxz / (t1 + t2);
 	    	    if(dxz == 0) {
 	    	    	this.setDeltaMovement(0, speed.y, 0);
 	    	    } else {
@@ -64,7 +68,7 @@ public abstract class PultBulletEntity extends AbstractBulletEntity {
 		boolean flag = false;
 		if (result.getType() == RayTraceResult.Type.ENTITY) {
 			Entity target = ((EntityRayTraceResult) result).getEntity();
-			if (checkCanAttack(target)) {
+			if (this.shouldHit(target)) {
 				target.invulnerableTime = 0;
 				this.dealDamage(target); // attack 
 				flag = true;
@@ -89,7 +93,7 @@ public abstract class PultBulletEntity extends AbstractBulletEntity {
 	
 	public void pushBack() {
 		this.isPushBack = true;
-		this.setDeltaMovement((this.random.nextFloat() - 0.5F) * 2, this.random.nextFloat() * 2, (this.random.nextFloat() - 0.5F) * 2);
+		this.setDeltaMovement(MathUtil.getRandomFloat(random), this.random.nextFloat() * 2, MathUtil.getRandomFloat(random));
 	}
 	
 	protected abstract void dealDamage(Entity target);
@@ -99,21 +103,21 @@ public abstract class PultBulletEntity extends AbstractBulletEntity {
      */
     public void shootPultBullet(LivingEntity target) {
     	if(target == null) {
-    		System.out.println("Warn: No target at all .");
+    		PVZMod.LOGGER.warn("No pult target at all !");
     		return ;
     	}
     	this.lockTarget = Optional.ofNullable(target);
-    	double g = this.getGravityVelocity();
-    	double t1 = MathHelper.sqrt(2 * height / g);//go up time
+    	final double g = this.getGravityVelocity();
+    	final double t1 = MathHelper.sqrt(2 * height / g);//go up time
     	double t2 = 0;
     	if(this.getY() + height - target.getY() - target.getBbHeight() >= 0) {//random pult
     		t2 = MathHelper.sqrt(2 * (this.getY() + height - target.getY() - target.getBbHeight()) / g);//go down time
     	}
-    	double dx = target.getX() + target.getDeltaMovement().x() * (t1 + t2) - this.getX();
-    	double dz = target.getZ() + target.getDeltaMovement().z() * (t1 + t2) - this.getZ();
-    	double dxz = MathHelper.sqrt(dx * dx + dz * dz);
-    	double vxz = dxz / (t1 + t2);
-    	double vy = g * t1;
+    	final double dx = target.getX() + target.getDeltaMovement().x() * (t1 + t2) - this.getX();
+    	final double dz = target.getZ() + target.getDeltaMovement().z() * (t1 + t2) - this.getZ();
+    	final double dxz = MathHelper.sqrt(dx * dx + dz * dz);
+    	final double vxz = dxz / (t1 + t2);
+    	final double vy = g * t1;
     	if(dxz == 0) {
     		this.setDeltaMovement(0, vy, 0);
     	} else {
@@ -126,21 +130,21 @@ public abstract class PultBulletEntity extends AbstractBulletEntity {
      */
     public void shootPultBullet(BlockPos pos) {
     	if(pos == null) {
-    		System.out.println("Warn: No pos at all .");
+    		PVZMod.LOGGER.warn("No pult target at all !");
     		return ;
     	}
     	this.lockPos = Optional.ofNullable(pos);
-    	double g = this.getGravityVelocity();
-    	double t1 = MathHelper.sqrt(2 * height / g);//go up time
+    	final double g = this.getGravityVelocity();
+    	final double t1 = MathHelper.sqrt(2 * height / g);//go up time
     	double t2 = 0;
     	if(this.getY() + height - pos.getY() - 1 >= 0) {//random pult
     		t2 = MathHelper.sqrt(2 * (this.getY() + height - pos.getY() - 1) / g);//go down time
     	}
-    	double dx = pos.getX() - this.getX();
-    	double dz = pos.getZ() - this.getZ();
-    	double dxz = MathHelper.sqrt(dx * dx + dz * dz);
-    	double vxz = dxz / (t1 + t2);
-    	double vy = g * t1;
+    	final double dx = pos.getX() - this.getX();
+    	final double dz = pos.getZ() - this.getZ();
+    	final double dxz = MathHelper.sqrt(dx * dx + dz * dz);
+    	final double vxz = dxz / (t1 + t2);
+    	final double vy = g * t1;
     	if(dxz == 0) {
     		this.setDeltaMovement(0, vy, 0);
     	} else {

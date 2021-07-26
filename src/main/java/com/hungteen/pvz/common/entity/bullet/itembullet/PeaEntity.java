@@ -3,10 +3,8 @@ package com.hungteen.pvz.common.entity.bullet.itembullet;
 import com.hungteen.pvz.api.interfaces.IIceEffect;
 import com.hungteen.pvz.common.capability.CapabilityHandler;
 import com.hungteen.pvz.common.entity.bullet.AbstractShootBulletEntity;
-import com.hungteen.pvz.common.entity.plant.base.PlantShooterEntity;
 import com.hungteen.pvz.common.entity.plant.flame.TorchWoodEntity;
 import com.hungteen.pvz.common.entity.plant.flame.TorchWoodEntity.FlameTypes;
-import com.hungteen.pvz.common.entity.zombie.zombotany.PeaShooterZombieEntity;
 import com.hungteen.pvz.common.misc.damage.PVZDamageSource;
 import com.hungteen.pvz.register.EntityRegister;
 import com.hungteen.pvz.register.ItemRegister;
@@ -56,28 +54,11 @@ public class PeaEntity extends AbstractShootBulletEntity implements IRendersAsIt
 	}
 	
 	@Override
-	protected float getAttackDamage() {
-		if(this.getThrower() instanceof TorchWoodEntity) {
-			return 2;
-		}
-		if (this.getThrower() instanceof PlantShooterEntity) {
-			return ((PlantShooterEntity) this.getThrower()).getAttackDamage();
-		}
-		if(this.getThrower() instanceof PlayerEntity) {
-			return 2;
-		}
-		if(this.getThrower() instanceof PeaShooterZombieEntity) {
-			return ((PeaShooterZombieEntity) this.getThrower()).getAttackDamage();
-		}
-		return 0;
-	}
-	
-	@Override
 	protected void onImpact(RayTraceResult result) {
 		boolean flag = false;
 		if (result.getType() == RayTraceResult.Type.ENTITY) {
 			Entity target = ((EntityRayTraceResult) result).getEntity();
-			if (checkCanAttack(target)) {
+			if (this.shouldHit(target)) {
 				target.invulnerableTime = 0;
 				this.dealPeaDamage(target); // attack 
 				flag = true;
@@ -112,7 +93,7 @@ public class PeaEntity extends AbstractShootBulletEntity implements IRendersAsIt
 	}
 
 	private void dealPeaDamage(Entity target) {
-		final float damage = this.getFixDamage();
+		final float damage = this.getAttackDamage();
 		if (this.getPeaState() == State.NORMAL) {// normal pea attack
 			target.hurt(PVZDamageSource.pea(this, this.getThrower()), damage);
 		} else if (this.getPeaState() == State.ICE) {// snow pea attack
@@ -138,7 +119,8 @@ public class PeaEntity extends AbstractShootBulletEntity implements IRendersAsIt
 		return super.shouldHit(target) || target instanceof TorchWoodEntity;
 	}
 	
-	private float getFixDamage() {
+	@Override
+	public float getAttackDamage() {
 		float damage = this.attackDamage;
 		damage *= (1 + this.power * 1.0f / 5);
 		// size
