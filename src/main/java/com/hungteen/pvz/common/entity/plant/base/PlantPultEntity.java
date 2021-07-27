@@ -116,7 +116,7 @@ public abstract class PlantPultEntity extends PVZPlantEntity implements IPult {
 	}
 	
 	public float getAttackDamage() {
-		return PlantUtil.getPlantAverageProgress(this, 2, 8);
+		return PlantUtil.getPlantAverageProgress(this, 2F, 8F);
 	}
 	
 	@Override

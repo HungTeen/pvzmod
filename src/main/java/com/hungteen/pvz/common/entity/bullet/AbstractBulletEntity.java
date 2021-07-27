@@ -84,8 +84,7 @@ public abstract class AbstractBulletEntity extends AbstractOwnerEntity {
 	 * {@link #rayTraceEntities(Vector3d, Vector3d)}
 	 */
 	protected boolean shouldHit(Entity target) {
-		final Entity owner = this.getOwner();
-		return EntityUtil.canTargetEntity(owner == null ? this : owner, target);
+		return EntityUtil.canTargetEntity(this.getOwnerOrSelf(), target);
 	}
 	
 	public void addHitEntity(Entity entity) {

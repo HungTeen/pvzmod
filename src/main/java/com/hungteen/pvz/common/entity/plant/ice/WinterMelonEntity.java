@@ -19,31 +19,22 @@ public class WinterMelonEntity extends MelonPultEntity implements IIceEffect {
 		super(type, worldIn);
 	}
 
+	public int getColdLvl() {
+		return this.getAverageProgress(7, 11);
+	}
+	
+	public int getColdTick() {
+		return this.getAverageProgress(80, 160);
+	}
+	
 	@Override
 	public Optional<EffectInstance> getColdEffect() {
 		return Optional.ofNullable(new EffectInstance(EffectRegister.COLD_EFFECT.get(), this.getColdTick(), this.getColdLvl(), false, false));
 	}
 	
-	public int getColdLvl() {
-		int lvl = this.getPlantLvl();
-		if(lvl <= 20) {
-			int now = (lvl - 1) / 4;
-			return 7 + now;
-		}
-		return 11;
-	}
-	
-	public int getColdTick() {
-		int lvl = this.getPlantLvl();
-		if(lvl <= 19) {
-			return 76 + 4 * lvl;
-		}
-		return 160;
-	}
-	
 	@Override
 	public Optional<EffectInstance> getFrozenEffect() {
-		return Optional.ofNullable(new EffectInstance(EffectRegister.FROZEN_EFFECT.get(), 0, 0, false, false));
+		return Optional.empty();
 	}
 	
 	@Override

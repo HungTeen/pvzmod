@@ -782,6 +782,14 @@ public abstract class PVZPlantEntity extends CreatureEntity implements IPVZPlant
 		return this.isPlantInStage(1) ? a : this.isPlantInStage(2) ? b : c;
 	}
 	
+	public int getAverageProgress(int a, int b) {
+		return PlantUtil.getPlantAverageProgress(this, a, b);
+	}
+	
+	public float getAverageProgress(float a, float b) {
+		return PlantUtil.getPlantAverageProgress(this, a, b);
+	}
+	
 	/**
 	 * check can start super mode currently.
 	 */

@@ -60,6 +60,10 @@ public abstract class AbstractOwnerEntity extends PVZEntityBase implements IGrou
 		return this.owner;
 	}
 	
+	public Entity getOwnerOrSelf() {
+		return this.getOwner() == null ? this : this.getOwner();
+	}
+	
 	@Override
 	public Optional<UUID> getOwnerUUID() {
 		return Optional.ofNullable(this.uuid);
