@@ -10,6 +10,8 @@ import com.hungteen.pvz.common.entity.bullet.ThornEntity.ThornTypes;
 import com.hungteen.pvz.common.entity.plant.base.PlantShooterEntity;
 import com.hungteen.pvz.common.entity.zombie.poolnight.BalloonZombieEntity;
 import com.hungteen.pvz.utils.EntityUtil;
+import com.hungteen.pvz.utils.MathUtil;
+import com.hungteen.pvz.utils.PlantUtil;
 import com.hungteen.pvz.utils.enums.Plants;
 
 import net.minecraft.entity.CreatureEntity;
@@ -76,7 +78,9 @@ public class CatTailEntity extends PlantShooterEntity {
 	
 	@Override
 	public boolean canPlantTarget(Entity entity) {
-		if(entity instanceof BalloonZombieEntity) return true;
+		if(entity instanceof BalloonZombieEntity) {
+			return true;
+		}
 		return super.canPlantTarget(entity);
 	}
 	
@@ -84,35 +88,6 @@ public class CatTailEntity extends PlantShooterEntity {
 	public void startSuperMode(boolean first) {
 		super.startSuperMode(first);
 		this.powerCount += this.getPowerThornCount();
-	}
-	
-	@Override
-	public int getShootCD() {
-		return getNormalAttackCD();
-	}
-	
-	@Override
-	public boolean checkY(Entity target) {
-		return true;
-	}
-	
-	@Override
-	public float getAttackDamage() {
-		int lvl = this.getPlantLvl();
-		if(lvl <= 20) {
-			int now = (lvl - 1) / 2;
-			return 2.25F + now * 0.25F;
-		}
-		return 4.5F;
-	}
-	
-	public int getExtraAttackCount() {
-		int lvl = this.getPlantLvl();
-		if(lvl <= 20) {
-			int now = (lvl - 1) / 4;
-			return now + 1;
-		}
-		return 5;
 	}
 	
 	private ThornTypes getThornShootType() {
@@ -124,15 +99,27 @@ public class CatTailEntity extends PlantShooterEntity {
 		return ThornTypes.GUILD;
 	}
 	
-	public int getPowerThornCount() {
-		if(this.isPlantInStage(1)) return 1;
-		if(this.isPlantInStage(2)) return 2;
-		return 3;
-	}
-	
 	@Override
 	protected boolean canAttackNow() {
 		return this.getAttackTime() > 0 && this.getAttackTime() % getAnimCD() == 0;
+	}
+	
+	@Override
+	public boolean checkY(Entity target) {
+		return true;
+	}
+	
+	public int getPowerThornCount() {
+		return this.getThreeStage(1, 2, 3);
+	}
+	
+	public int getExtraAttackCount() {
+		return MathUtil.getProgressByDif(5, 1, this.getPlantLvl(), PlantUtil.MAX_PLANT_LEVEL, 1, 4);
+	}
+	
+	@Override
+	public float getAttackDamage() {
+		return this.getAverageProgress(2F, 6F);
 	}
 	
 	public int getAnimCD() {
@@ -151,14 +138,9 @@ public class CatTailEntity extends PlantShooterEntity {
 	
 	@Override
 	public float getShootRange() {
-		return 50;
+		return 40;
 	}
 	
-	@Override
-	public Plants getPlantEnumName() {
-		return Plants.CAT_TAIL;
-	}
-
 	@Override
 	public int getSuperTimeLength() {
 		return 40;
@@ -180,6 +162,11 @@ public class CatTailEntity extends PlantShooterEntity {
 		super.addAdditionalSaveData(compound);
 		compound.putInt("power_thorn_count", this.powerCount);
 		compound.putInt("power_shoot_tick", this.powerTick);
+	}
+	
+	@Override
+	public Plants getPlantEnumName() {
+		return Plants.CAT_TAIL;
 	}
 	
 }

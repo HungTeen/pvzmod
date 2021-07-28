@@ -160,11 +160,12 @@ public class SpikeRockModel extends PVZPlantModel<SpikeRockEntity> {
 		this.t2.visible = (entity.getSpikeNum() * 1F / entity.getSpikesCount() > 2F / 3);
 		this.t3.visible = (entity.getSpikeNum() * 1F / entity.getSpikesCount() > 1F / 3);
 		this.t1.visible = (entity.getSpikeNum() * 1F / entity.getSpikesCount() > 0);
-		int tot = entity.getAttackCD();
-		int now = tot - entity.getAttackTime();
-		this.t3.zRot = AnimationUtil.getUpDown(now, tot, 25);
-		this.t2.zRot = AnimationUtil.getUpDown(now, tot, - 25);
-		this.t1.xRot = AnimationUtil.getUpDownUpDown(now, tot, 25);
+		final int tot = SpikeRockEntity.ATTACK_ANIM_CD;
+		final int now = tot - entity.getAttackTime();
+		final float angle = 25F;
+		this.t3.zRot = AnimationUtil.getUpDown(now, tot, angle);
+		this.t2.zRot = AnimationUtil.getUpDown(now, tot, - angle);
+		this.t1.xRot = AnimationUtil.getUpDownUpDown(now, tot, angle);
 	}
 
 	@Override

@@ -165,17 +165,6 @@ public class ThornEntity extends AbstractBulletEntity {
 		}
 	}
 
-//	@Override
-//	protected boolean checkCanAttack(Entity target) {
-//		if (!super.checkCanAttack(target))
-//			return false;
-//		if (this.getThornType() == ThornTypes.AUTO) {
-//			return target.equals(this.thornTarget);
-//		} else {
-//			return ! set.contains(target.getId());
-//		}
-//	}
-
 	protected void dealThornDamage(Entity target) {
 		target.hurt(PVZDamageSource.causeThornDamage(this, this), this.getAttackDamage());
 	}
@@ -204,11 +193,6 @@ public class ThornEntity extends AbstractBulletEntity {
 		return EntitySize.scalable(0.2f, 0.2f);
 	}
 
-	@Override
-	protected float getGravityVelocity() {
-		return 0f;
-	}
-	
 	/**
 	 * Updates the entity motion clientside, called by packets from the server
 	 */

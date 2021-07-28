@@ -5,7 +5,6 @@ import java.util.Optional;
 import com.hungteen.pvz.client.model.entity.plant.PlantShooterModel;
 import com.hungteen.pvz.common.entity.plant.spear.CactusEntity;
 
-import net.minecraft.client.renderer.entity.model.EntityModel;
 import net.minecraft.client.renderer.model.ModelRenderer;
 
 // Made with Blockbench 3.7.4
@@ -1052,8 +1051,8 @@ public class CactusModel extends PlantShooterModel<CactusEntity> {
 	}
 	
 	@Override
-	public EntityModel<CactusEntity> getPlantModel() {
-		return this;
+	public float getMaxRotAngle() {
+		return 10F;
 	}
 	
 }

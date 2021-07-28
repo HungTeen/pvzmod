@@ -103,12 +103,12 @@ public abstract class PlantShooterEntity extends PVZPlantEntity implements IShoo
 	/**
 	 * shoot pea by angle.
 	 */
-	public void shootByAngle(float angle) {
+	public void shootByAngle(float angle, float height) {
 		angle *= 3.14159F / 180F;
 		final double vx = - MathHelper.sin(angle);
 		final double vz = MathHelper.cos(angle);
 		final AbstractBulletEntity bullet = this.createBullet();
-		bullet.setPos(getX(), getY() + 0.2F, getZ());
+		bullet.setPos(getX(), getY() + height, getZ());
 		bullet.setDeltaMovement(vx * this.getBulletSpeed(), 0, vz * this.getBulletSpeed());
 		bullet.summonByOwner(this);
         bullet.setAttackDamage(this.getAttackDamage());
@@ -184,13 +184,6 @@ public abstract class PlantShooterEntity extends PVZPlantEntity implements IShoo
 	
 	@Override
 	public int getShootCD() {
-		return getNormalAttackCD();
-	}
-	
-	/**
-	 * get normal attack CD
-	 */
-	public int getNormalAttackCD() {
 		return 30;
 	}
 	

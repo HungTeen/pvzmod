@@ -22,12 +22,8 @@ public class TwinSunFlowerEntity extends SunFlowerEntity{
 	}
 
 	@Override
-	public void genSuper() {
-		int ge = 4;
-		int amount = this.isPlantInStage(1) ? 50 : this.isPlantInStage(2) ? 60 : 75;
-		for(int i = 1; i <= ge; ++ i) {
-		    this.genSun(amount);
-		}
+	public int getSuperSunAmount() {
+		return this.getThreeStage(750, 1000, 1250);
 	}
 	
 	@Override

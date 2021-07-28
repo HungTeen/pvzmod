@@ -30,16 +30,12 @@ public class GatlingPeaEntity extends RepeaterEntity{
 	
 	@Override
 	protected int getBigPeaNum() {
-		if(this.isPlantInStage(1)) return 2;
-		if(this.isPlantInStage(2)) return 3;
-		return 4;
+		return this.getThreeStage(2, 4, 6);
 	}
 	
 	@Override
 	public int getSuperTimeLength() {
-		if(this.isPlantInStage(1)) return 200;
-		if(this.isPlantInStage(2)) return 250;
-		return 300;
+		return 200;
 	}
 	
 	@Override

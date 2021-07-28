@@ -10,15 +10,12 @@ import com.hungteen.pvz.utils.enums.Plants;
 import net.minecraft.entity.CreatureEntity;
 import net.minecraft.entity.EntitySize;
 import net.minecraft.entity.EntityType;
-import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.Pose;
-import net.minecraft.util.math.MathHelper;
-import net.minecraft.util.math.vector.Vector3d;
 import net.minecraft.world.World;
 
 public class GloomShroomEntity extends PlantShooterEntity {
 
-	protected static final double SHOOT_OFFSET = 0.2D;
+	private static final float SHOOT_HEIGHT = 0.2F;
 	private static final int SHOOT_NUM = 8;
 	
 	public GloomShroomEntity(EntityType<? extends CreatureEntity> type, World worldIn) {
@@ -27,48 +24,21 @@ public class GloomShroomEntity extends PlantShooterEntity {
 
 	@Override
 	public void shootBullet() {
-		LivingEntity target = this.getTarget();
-		if(target == null) {
-			return ;
-		}
 		float now = this.yHeadRot;
 		for(int i = 0; i < SHOOT_NUM; ++ i) {
-			this.shootFume(now);
+			this.shootByAngle(now, SHOOT_HEIGHT);
 			now += 360F / SHOOT_NUM;
 		}
         EntityUtil.playSound(this, SoundRegister.FUME.get());
-	}
-	
-	private void shootFume(float angle) {
-		angle *= 3.14159F / 180F;
-		double vx = - MathHelper.sin(angle);
-		double vz = MathHelper.cos(angle);
-		AbstractBulletEntity fume = this.createBullet();
-        fume.setPos(this.getX(), this.getY() + this.getEyeHeight() - 0.2, this.getZ());
-        fume.setDeltaMovement(new Vector3d(vx, 0, vz));
-        this.level.addFreshEntity(fume);
 	}
 	
 	@Override
 	protected AbstractBulletEntity createBullet() {
 		final FumeEntity fume = new FumeEntity(this.level, this);
         if(this.isPlantInSuperMode()) {
-        	fume.setKnockback(this.getKnockback());
+        	fume.setKnockback(1);
         }
         return fume;
-	}
-	
-	/**
-	 * get bullet knockback lvl in super mode
-	 */
-	public int getKnockback() {
-		if(this.isPlantInStage(1)) return 1;
-		if(this.isPlantInStage(2)) return 2;
-		return 3;
-	}
-	
-	public int getKBChance() {
-		return this.getPlantLvl();
 	}
 	
 	@Override
@@ -78,11 +48,11 @@ public class GloomShroomEntity extends PlantShooterEntity {
 	
     @Override
 	public int getSuperTimeLength() {
-		return 100;
+		return this.getThreeStage(60, 80, 100);
 	}
     
     @Override
-    public int getNormalAttackCD() {
+    public int getShootCD() {
     	return 8;
     }
     

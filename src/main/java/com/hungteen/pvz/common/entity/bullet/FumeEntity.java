@@ -41,7 +41,7 @@ public class FumeEntity extends PVZItemBulletEntity{
 		if(level.isClientSide) {
 			final int cnt = Math.max(2, Math.min(5, this.getMaxLiveTick() / this.tickCount));
 			for(int i = 0; i < cnt; ++ i) {
-				WorldUtil.spawnRandomSpeedParticle(level, ParticleRegister.FUME.get(), this.position(), 0);
+				WorldUtil.spawnRandomSpeedParticle(level, ParticleRegister.FUME.get(), this.position(), 0.05F);
 	        }
 		}
 	}
@@ -49,7 +49,7 @@ public class FumeEntity extends PVZItemBulletEntity{
 	@Override
 	protected int getMaxLiveTick() {
 		if(this.getThrower() instanceof GloomShroomEntity) {
-			return 5;
+			return 3;
 		}
 		return 10;
 	}

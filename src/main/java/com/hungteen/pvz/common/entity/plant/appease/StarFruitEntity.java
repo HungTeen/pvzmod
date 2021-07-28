@@ -18,6 +18,7 @@ import net.minecraft.world.World;
 public class StarFruitEntity extends PlantShooterEntity {
 
 	public static final float PER_ANGLE = 360F / 5;
+	private static final float SHOOT_HEIGHT = 0.2F;
 	public int lightTick = 0;
 	
 	public StarFruitEntity(EntityType<? extends CreatureEntity> type, World worldIn) {
@@ -51,7 +52,7 @@ public class StarFruitEntity extends PlantShooterEntity {
 	public void shootBullet() {
 		float now = this.yRot + 180F;
 		for(int i = 0; i < 5; ++ i) {
-			this.shootByAngle(now);
+			this.shootByAngle(now, SHOOT_HEIGHT);
 			now += PER_ANGLE;
 		}
 		EntityUtil.playSound(this, SoundRegister.SNOW_SHOOT.get());

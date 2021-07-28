@@ -1,9 +1,10 @@
 package com.hungteen.pvz.client.model.entity.plant.appease;
 
-import com.hungteen.pvz.client.model.entity.plant.PVZPlantModel;
+import java.util.Optional;
+
+import com.hungteen.pvz.client.model.entity.plant.PlantShooterModel;
 import com.hungteen.pvz.common.entity.plant.appease.GatlingPeaEntity;
 
-import net.minecraft.client.renderer.entity.model.EntityModel;
 import net.minecraft.client.renderer.model.ModelRenderer;
 
 // Made with Blockbench 3.7.4
@@ -11,7 +12,7 @@ import net.minecraft.client.renderer.model.ModelRenderer;
 // Paste this class into your mod and generate all required imports
 
 
-public class GatlingPeaModel extends PVZPlantModel<GatlingPeaEntity> {
+public class GatlingPeaModel extends PlantShooterModel<GatlingPeaEntity> {
 	private final ModelRenderer total;
 	private final ModelRenderer body;
 	private final ModelRenderer head;
@@ -35,22 +36,22 @@ public class GatlingPeaModel extends PVZPlantModel<GatlingPeaEntity> {
 		
 
 		body = new ModelRenderer(this);
-		body.setPos(0.0F, -31.0F, 0.0F);
+		body.setPos(0.0F, 0.0F, 0.0F);
 		total.addChild(body);
-		body.texOffs(111, 91).addBox(-2.0F, -1.0F, -2.0F, 4.0F, 32.0F, 4.0F, 0.0F, false);
-		body.texOffs(86, 120).addBox(-3.0F, -2.0F, -3.0F, 6.0F, 1.0F, 6.0F, 0.0F, false);
+		body.texOffs(111, 90).addBox(-2.0F, -33.0F, -2.0F, 4.0F, 33.0F, 4.0F, 0.0F, false);
 
 		head = new ModelRenderer(this);
-		head.setPos(0.0F, -35.0F, 0.0F);
-		total.addChild(head);
-		head.texOffs(87, 106).addBox(-5.0F, -10.0F, 7.0F, 10.0F, 10.0F, 1.0F, 0.0F, false);
-		head.texOffs(1, 99).addBox(-7.0F, -12.0F, -7.0F, 14.0F, 14.0F, 14.0F, 0.0F, false);
-		head.texOffs(60, 111).addBox(7.0F, -10.0F, -5.0F, 1.0F, 10.0F, 6.0F, 0.0F, false);
-		head.texOffs(113, 73).addBox(-8.0F, -10.0F, -5.0F, 1.0F, 10.0F, 6.0F, 0.0F, false);
-		head.texOffs(87, 1).addBox(-5.0F, -13.0F, -5.0F, 10.0F, 1.0F, 10.0F, 0.0F, false);
+		head.setPos(0.0F, -33.0F, 0.0F);
+		body.addChild(head);
+		head.texOffs(87, 106).addBox(-5.0F, -12.0F, 7.0F, 10.0F, 10.0F, 1.0F, 0.0F, false);
+		head.texOffs(1, 99).addBox(-7.0F, -14.0F, -7.0F, 14.0F, 14.0F, 14.0F, 0.0F, false);
+		head.texOffs(60, 111).addBox(7.0F, -12.0F, -5.0F, 1.0F, 10.0F, 6.0F, 0.0F, false);
+		head.texOffs(113, 73).addBox(-8.0F, -12.0F, -5.0F, 1.0F, 10.0F, 6.0F, 0.0F, false);
+		head.texOffs(87, 1).addBox(-5.0F, -15.0F, -5.0F, 10.0F, 1.0F, 10.0F, 0.0F, false);
+		head.texOffs(86, 120).addBox(-3.0F, 0.0F, -3.0F, 6.0F, 1.0F, 6.0F, 0.0F, false);
 
 		helmet = new ModelRenderer(this);
-		helmet.setPos(0.0F, 0.0F, 0.0F);
+		helmet.setPos(0.0F, -2.0F, 0.0F);
 		head.addChild(helmet);
 		helmet.texOffs(119, 50).addBox(-9.0F, -12.0F, 1.0F, 2.0F, 15.0F, 2.0F, 0.0F, false);
 		helmet.texOffs(109, 51).addBox(7.0F, -13.0F, 1.0F, 2.0F, 16.0F, 2.0F, 0.0F, false);
@@ -73,7 +74,7 @@ public class GatlingPeaModel extends PVZPlantModel<GatlingPeaEntity> {
 		bone2.texOffs(64, 104).addBox(-8.0F, -1.0F, -1.0F, 9.0F, 1.0F, 2.0F, 0.0F, false);
 
 		mouse = new ModelRenderer(this);
-		mouse.setPos(0.0F, -3.0F, -7.0F);
+		mouse.setPos(0.0F, -5.0F, -7.0F);
 		head.addChild(mouse);
 		mouse.texOffs(74, 44).addBox(-3.0F, -3.0F, -7.0F, 6.0F, 6.0F, 7.0F, 0.0F, false);
 		mouse.texOffs(84, 62).addBox(-4.0F, -3.0F, -7.0F, 1.0F, 6.0F, 7.0F, 0.0F, false);
@@ -127,15 +128,22 @@ public class GatlingPeaModel extends PVZPlantModel<GatlingPeaEntity> {
 		} else {
 			this.gar.zRot = ageInTicks / 20.0f % 100;
 		}
+		super.setupAnim(entity, limbSwing, limbSwingAmount, ageInTicks, netHeadYaw, headPitch);
 	}
 	
 	@Override
 	public ModelRenderer getPlantWholeBody() {
 		return this.total;
 	}
-
+	
 	@Override
-	public EntityModel<GatlingPeaEntity> getPlantModel() {
-		return this;
+	public Optional<ModelRenderer> getHeadModel() {
+		return Optional.ofNullable(this.head);
 	}
+	
+	@Override
+	public Optional<ModelRenderer> getBodyModel() {
+		return Optional.ofNullable(this.body);
+	}
+
 }

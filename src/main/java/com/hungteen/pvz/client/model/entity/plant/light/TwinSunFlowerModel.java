@@ -2,6 +2,7 @@ package com.hungteen.pvz.client.model.entity.plant.light;
 
 import com.hungteen.pvz.client.model.entity.plant.PVZPlantModel;
 import com.hungteen.pvz.common.entity.plant.light.TwinSunFlowerEntity;
+import com.hungteen.pvz.utils.AnimationUtil;
 
 import net.minecraft.client.renderer.entity.model.EntityModel;
 import net.minecraft.client.renderer.model.ModelRenderer;
@@ -13,11 +14,7 @@ import net.minecraft.client.renderer.model.ModelRenderer;
 
 public class TwinSunFlowerModel extends PVZPlantModel<TwinSunFlowerEntity> {
 	private final ModelRenderer total;
-	private final ModelRenderer YEZI_4;
-	private final ModelRenderer YEZI_3;
-	private final ModelRenderer YEZI_1;
-	private final ModelRenderer YEZI_2;
-	private final ModelRenderer left_guy;
+	private final ModelRenderer left_flower;
 	private final ModelRenderer head2;
 	private final ModelRenderer HUABAN7;
 	private final ModelRenderer HUABAN8;
@@ -31,7 +28,7 @@ public class TwinSunFlowerModel extends PVZPlantModel<TwinSunFlowerEntity> {
 	private final ModelRenderer cube_r1;
 	private final ModelRenderer left_hand2;
 	private final ModelRenderer right_hand2;
-	private final ModelRenderer left_guy2;
+	private final ModelRenderer right_flower;
 	private final ModelRenderer body3;
 	private final ModelRenderer right_hand3;
 	private final ModelRenderer left_hand3;
@@ -45,6 +42,11 @@ public class TwinSunFlowerModel extends PVZPlantModel<TwinSunFlowerEntity> {
 	private final ModelRenderer HUABAN5;
 	private final ModelRenderer HUABAN6;
 	private final ModelRenderer HUABAN13;
+	private final ModelRenderer leaves;
+	private final ModelRenderer YEZI_1;
+	private final ModelRenderer YEZI_2;
+	private final ModelRenderer YEZI_3;
+	private final ModelRenderer YEZI_4;
 
 	public TwinSunFlowerModel() {
 		texWidth = 128;
@@ -54,38 +56,14 @@ public class TwinSunFlowerModel extends PVZPlantModel<TwinSunFlowerEntity> {
 		total.setPos(0.0F, 24.0F, 0.0F);
 		
 
-		YEZI_4 = new ModelRenderer(this);
-		YEZI_4.setPos(-2.0F, -1.0F, 0.0F);
-		total.addChild(YEZI_4);
-		YEZI_4.texOffs(78, 26).addBox(-11.0F, -1.0F, -4.0F, 8.0F, 2.0F, 8.0F, 0.0F, false);
-		YEZI_4.texOffs(114, 28).addBox(-3.0F, 0.0F, -2.0F, 3.0F, 1.0F, 4.0F, 0.0F, false);
-
-		YEZI_3 = new ModelRenderer(this);
-		YEZI_3.setPos(0.0F, 0.0F, -2.0F);
-		total.addChild(YEZI_3);
-		YEZI_3.texOffs(114, 19).addBox(-2.0F, -1.0F, -3.0F, 4.0F, 1.0F, 3.0F, 0.0F, false);
-		YEZI_3.texOffs(0, 36).addBox(-4.0F, -2.0F, -11.0F, 8.0F, 2.0F, 8.0F, 0.0F, false);
-
-		YEZI_1 = new ModelRenderer(this);
-		YEZI_1.setPos(2.0F, 0.0F, 0.0F);
-		total.addChild(YEZI_1);
-		YEZI_1.texOffs(114, 0).addBox(0.0F, -1.0F, -2.0F, 3.0F, 1.0F, 4.0F, 0.0F, false);
-		YEZI_1.texOffs(79, 0).addBox(3.0F, -2.0F, -4.0F, 8.0F, 2.0F, 8.0F, 0.0F, false);
-
-		YEZI_2 = new ModelRenderer(this);
-		YEZI_2.setPos(0.0F, 0.0F, 2.0F);
-		total.addChild(YEZI_2);
-		YEZI_2.texOffs(78, 12).addBox(-4.0F, -2.0F, 3.0F, 8.0F, 2.0F, 8.0F, 0.0F, false);
-		YEZI_2.texOffs(114, 9).addBox(-2.0F, -1.0F, 0.0F, 4.0F, 1.0F, 3.0F, 0.0F, false);
-
-		left_guy = new ModelRenderer(this);
-		left_guy.setPos(0.0F, 0.0F, 0.0F);
-		total.addChild(left_guy);
+		left_flower = new ModelRenderer(this);
+		left_flower.setPos(0.0F, 0.0F, 0.0F);
+		total.addChild(left_flower);
 		
 
 		head2 = new ModelRenderer(this);
 		head2.setPos(16.0F, -46.0F, 0.0F);
-		left_guy.addChild(head2);
+		left_flower.addChild(head2);
 		head2.texOffs(73, 100).addBox(-11.0F, -15.0F, -5.99F, 22.0F, 21.0F, 4.0F, -0.02F, false);
 		head2.texOffs(0, 123).addBox(-5.0F, 5.9F, -6.0F, 10.0F, 1.0F, 4.0F, -0.02F, false);
 
@@ -144,7 +122,7 @@ public class TwinSunFlowerModel extends PVZPlantModel<TwinSunFlowerEntity> {
 
 		body2 = new ModelRenderer(this);
 		body2.setPos(0.0F, -1.0F, 0.0F);
-		left_guy.addChild(body2);
+		left_flower.addChild(body2);
 		setRotationAngle(body2, 0.0F, 0.0F, 0.5236F);
 		body2.texOffs(112, 43).addBox(-2.0F, -31.0F, -2.0F, 4.0F, 32.0F, 4.0F, 0.0F, false);
 
@@ -179,14 +157,14 @@ public class TwinSunFlowerModel extends PVZPlantModel<TwinSunFlowerEntity> {
 		right_hand2.texOffs(0, 0).addBox(-8.4088F, -1.1233F, -1.0F, 6.0F, 3.0F, 2.0F, 0.0F, false);
 		right_hand2.texOffs(0, 0).addBox(-2.4088F, -0.1233F, 0.0F, 3.0F, 1.0F, 1.0F, 0.0F, false);
 
-		left_guy2 = new ModelRenderer(this);
-		left_guy2.setPos(0.0F, 0.0F, 0.0F);
-		total.addChild(left_guy2);
+		right_flower = new ModelRenderer(this);
+		right_flower.setPos(0.0F, 0.0F, 0.0F);
+		total.addChild(right_flower);
 		
 
 		body3 = new ModelRenderer(this);
 		body3.setPos(0.0F, -1.0F, 0.0F);
-		left_guy2.addChild(body3);
+		right_flower.addChild(body3);
 		setRotationAngle(body3, 0.0F, 0.0F, -0.5236F);
 		body3.texOffs(112, 43).addBox(-2.0F, -27.0F, -2.0F, 4.0F, 28.0F, 4.0F, 0.0F, false);
 
@@ -223,7 +201,7 @@ public class TwinSunFlowerModel extends PVZPlantModel<TwinSunFlowerEntity> {
 
 		head3 = new ModelRenderer(this);
 		head3.setPos(-16.0F, -33.0F, 0.0F);
-		left_guy2.addChild(head3);
+		right_flower.addChild(head3);
 		head3.texOffs(73, 100).addBox(-11.0F, -15.0F, -5.99F, 22.0F, 21.0F, 4.0F, -0.02F, false);
 		head3.texOffs(0, 123).addBox(-5.0F, 5.9F, -6.0F, 10.0F, 1.0F, 4.0F, -0.02F, false);
 
@@ -279,10 +257,57 @@ public class TwinSunFlowerModel extends PVZPlantModel<TwinSunFlowerEntity> {
 		HUABAN13.texOffs(29, 63).addBox(-3.0718F, 10.3923F, -6.0F, 8.0F, 4.0F, 4.0F, 0.0F, false);
 		HUABAN13.texOffs(42, 36).addBox(11.8564F, -4.5359F, -6.0F, 4.0F, 8.0F, 4.0F, 0.0F, false);
 		HUABAN13.texOffs(73, 73).addBox(-14.0F, -4.5359F, -6.0F, 4.0F, 8.0F, 4.0F, 0.0F, false);
+
+		leaves = new ModelRenderer(this);
+		leaves.setPos(0.0F, 0.0F, 0.0F);
+		total.addChild(leaves);
+		
+
+		YEZI_1 = new ModelRenderer(this);
+		YEZI_1.setPos(2.0F, 0.0F, 0.0F);
+		leaves.addChild(YEZI_1);
+		YEZI_1.texOffs(114, 0).addBox(0.0F, -1.0F, -2.0F, 3.0F, 1.0F, 4.0F, 0.0F, false);
+		YEZI_1.texOffs(79, 0).addBox(3.0F, -2.0F, -4.0F, 8.0F, 2.0F, 8.0F, 0.0F, false);
+
+		YEZI_2 = new ModelRenderer(this);
+		YEZI_2.setPos(0.0F, 0.0F, 2.0F);
+		leaves.addChild(YEZI_2);
+		YEZI_2.texOffs(78, 12).addBox(-4.0F, -2.0F, 3.0F, 8.0F, 2.0F, 8.0F, 0.0F, false);
+		YEZI_2.texOffs(114, 9).addBox(-2.0F, -1.0F, 0.0F, 4.0F, 1.0F, 3.0F, 0.0F, false);
+
+		YEZI_3 = new ModelRenderer(this);
+		YEZI_3.setPos(0.0F, 0.0F, -2.0F);
+		leaves.addChild(YEZI_3);
+		YEZI_3.texOffs(114, 19).addBox(-2.0F, -1.0F, -3.0F, 4.0F, 1.0F, 3.0F, 0.0F, false);
+		YEZI_3.texOffs(0, 36).addBox(-4.0F, -2.0F, -11.0F, 8.0F, 2.0F, 8.0F, 0.0F, false);
+
+		YEZI_4 = new ModelRenderer(this);
+		YEZI_4.setPos(-2.0F, -1.0F, 0.0F);
+		leaves.addChild(YEZI_4);
+		YEZI_4.texOffs(78, 26).addBox(-11.0F, -1.0F, -4.0F, 8.0F, 2.0F, 8.0F, 0.0F, false);
+		YEZI_4.texOffs(114, 28).addBox(-3.0F, 0.0F, -2.0F, 3.0F, 1.0F, 4.0F, 0.0F, false);
 	}
 
 	@Override
 	public void setupAnim(TwinSunFlowerEntity entity, float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch){
+		final int tick = entity.getAttackTime();
+		if(tick > 0 && tick < entity.getAnimGenCD() || entity.isPlantInSuperMode()) {
+			final int T = 10;
+			this.left_hand2.zRot = AnimationUtil.getUpDownUpDown(ageInTicks % T, T, - 30);
+			this.right_hand2.zRot = AnimationUtil.getUpDownUpDown(ageInTicks % T, T, - 30);
+			this.left_hand3.zRot = AnimationUtil.getUpDownUpDown(ageInTicks % T, T, - 30);
+			this.right_hand3.zRot = AnimationUtil.getUpDownUpDown(ageInTicks % T, T, - 30);
+		} else {
+			this.left_hand2.zRot = 0;
+			this.right_hand2.zRot = 0;
+			this.left_hand3.zRot = 0;
+			this.right_hand3.zRot = 0;
+		}
+		final int T = 60;
+		final int time = entity.getExistTick() % 60;
+		final float degree = 5F;
+		this.left_flower.zRot = AnimationUtil.getUpDown(time, T, degree);
+		this.right_flower.zRot = AnimationUtil.getUpDown(time, T, - degree);
 	}
 
 	@Override

@@ -42,13 +42,7 @@ public class SunFlowerEntity extends PlantProducerEntity{
 	 * get normal gen sun amount by level.
 	 */
 	public int getSuperSunAmount(){
-		if(this.isPlantInStage(1)) {
-			return 500;
-		}
-		if(this.isPlantInStage(2)) {
-			return 750;
-		}
-		return 1000;
+		return this.getThreeStage(500, 750, 1000);
 	}
 	
 	@Override

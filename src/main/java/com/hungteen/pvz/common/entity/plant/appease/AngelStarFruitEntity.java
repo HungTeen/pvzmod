@@ -17,6 +17,7 @@ import net.minecraft.world.World;
 public class AngelStarFruitEntity extends PlantShooterEntity {
 
 	public static final float PER_ANGLE = 360F / 5;
+	private static final float SHOOT_HEIGHT = 0.2F;
 	public int lightTick = 0;
 	
 	public AngelStarFruitEntity(EntityType<? extends CreatureEntity> type, World worldIn) {
@@ -37,7 +38,7 @@ public class AngelStarFruitEntity extends PlantShooterEntity {
 		if(this.isPlantInSuperMode()) {
 			float now = this.getSuperTime() * 4;
 			for(int i = 0; i < 5; ++ i) {
-				this.shootByAngle(now);
+				this.shootByAngle(now, SHOOT_HEIGHT);
 				now += PER_ANGLE;
 			}
 		}
@@ -47,13 +48,13 @@ public class AngelStarFruitEntity extends PlantShooterEntity {
 	public void shootBullet() {
 		float now = this.yHeadRot;
 		for(int i = 0; i < 5; ++ i) {
-			this.shootByAngle(now);
+			this.shootByAngle(now, SHOOT_HEIGHT);
 			now += PER_ANGLE;
 		}
 		if(this.getRandom().nextInt(100) < this.getExtraAttackChance()) {
 			now = this.yHeadRot + 36F;
 			for(int i = 0; i < 5; ++ i) {
-				this.shootByAngle(now);
+				this.shootByAngle(now, SHOOT_HEIGHT);
 				now += PER_ANGLE;
 			}
 		}

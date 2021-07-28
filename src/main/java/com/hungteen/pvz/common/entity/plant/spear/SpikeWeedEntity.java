@@ -23,6 +23,7 @@ import net.minecraft.world.World;
 public class SpikeWeedEntity extends PVZPlantEntity {
 
 	private static final DataParameter<Integer> SPIKE_NUM = EntityDataManager.defineId(SpikeWeedEntity.class, DataSerializers.INT);
+	public static final int ATTACK_ANIM_CD = 10;
 	
 	public SpikeWeedEntity(EntityType<? extends CreatureEntity> type, World worldIn) {
 		super(type, worldIn);
@@ -42,12 +43,11 @@ public class SpikeWeedEntity extends PVZPlantEntity {
 			if(this.getSpikeNum() <= 0) {
 				this.remove();
 			}
-			final int time = this.getAttackTime();
-			if(time >= this.getAttackCD()) {
+			if(this.getAttackTime() > 0) {
+				this.setAttackTime(this.getAttackTime() - 1);
+			}
+			if(this.getExistTick() % this.getAttackCD() == 10) {
 				this.spikeAttack();
-				this.setAttackTime(0);
-			} else {
-				this.setAttackTime(time + 1);
 			}
 		}
 	}
@@ -60,6 +60,7 @@ public class SpikeWeedEntity extends PVZPlantEntity {
 		EntityUtil.getTargetableEntities(this, EntityUtil.getEntityAABB(this, range, range)).forEach(target -> {
 			this.spikeNormalAttack(target);
 		});
+		this.setAttackTime(ATTACK_ANIM_CD);
 	}
 	
 	/**
@@ -72,6 +73,7 @@ public class SpikeWeedEntity extends PVZPlantEntity {
 		} else {
 			target.hurt(PVZDamageSource.causeThornDamage(this), this.getAttackDamage());
 		}
+		this.setAttackTime(ATTACK_ANIM_CD);
 	}
 	
 	@Override
