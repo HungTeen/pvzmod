@@ -91,6 +91,7 @@ public abstract class PVZPlantEntity extends CreatureEntity implements IPVZPlant
 	protected static final int SLEEP_FLAG = 2;
 	//handle plant weak, place on wrong block.
 	private static final int PLANT_WEAK_CD = 10;
+	protected PlayerEntity ownerPlayer;
 	protected boolean isImmuneToWeak = false;
 	protected int weakTime = 0;
 	//handle plant collide with other plants.
@@ -239,11 +240,9 @@ public abstract class PVZPlantEntity extends CreatureEntity implements IPVZPlant
 		}
 		//update plant level.
 		if(!level.isClientSide && this.need_sync_level && this.getExistTick() % PLANT_LEVEL_SYNC_CD == 5) {
-			this.getOwnerUUID().ifPresent(uuid -> {
-				Optional.ofNullable(this.level.getPlayerByUUID(uuid)).ifPresent(player -> {
-					player.getCapability(CapabilityHandler.PLAYER_DATA_CAPABILITY).ifPresent(l -> {
-						this.updatePlantLevel(l.getPlayerData().getPlantStats().getPlantLevel(getPlantEnumName()));
-					});
+			this.getOwnerPlayer().ifPresent(player -> {
+				player.getCapability(CapabilityHandler.PLAYER_DATA_CAPABILITY).ifPresent(l -> {
+					this.updatePlantLevel(l.getPlayerData().getPlantStats().getPlantLevel(getPlantEnumName()));
 				});
 			});
 		}
@@ -797,9 +796,26 @@ public abstract class PVZPlantEntity extends CreatureEntity implements IPVZPlant
 		return this.canPlantNormalUpdate() && this.hasSuperMode() && !this.isPlantInSuperMode();
 	}
 	
+    /**
+     * {@link #plantTick()}
+     */
+	public Optional<PlayerEntity> getOwnerPlayer() {
+		if(! this.hasOwner()) {
+			return Optional.empty();
+		}
+		if(! EntityUtil.isEntityValid(this.ownerPlayer)) {
+			this.ownerPlayer = this.level.getPlayerByUUID(this.getOwnerUUID().get());
+		}
+		return Optional.ofNullable(this.ownerPlayer);
+	}
+	
 	@Override
 	public PVZGroupType getEntityGroupType() {
 		return this.isCharmed() ? PVZGroupType.ZOMBIES : PVZGroupType.PLANTS;
+	}
+	
+	public boolean hasOwner() {
+		return this.getOwnerUUID().isPresent();
 	}
 	
 	/* data */

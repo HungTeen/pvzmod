@@ -2,7 +2,6 @@ package com.hungteen.pvz.common.entity.bullet;
 
 import java.util.List;
 
-import com.hungteen.pvz.common.entity.plant.spear.CactusEntity;
 import com.hungteen.pvz.common.entity.plant.spear.CatTailEntity;
 import com.hungteen.pvz.common.misc.damage.PVZDamageSource;
 import com.hungteen.pvz.register.EntityRegister;
@@ -51,22 +50,12 @@ public class ThornEntity extends AbstractBulletEntity {
 		entityData.define(THORN_STATE, ThornStates.NORMAL.ordinal());
 	}
 	
-	protected float getPreAttackDamage() {
-		if (this.getThrower() instanceof CatTailEntity) return ((CatTailEntity) this.getThrower()).getAttackDamage();
-		if(this.getThrower() instanceof CactusEntity) {
-			final CactusEntity cactus = (CactusEntity) this.getThrower();
-			final float mult = cactus.isCactusPowered() ? 2F : 1F;
-			return cactus.getAttackDamage() * mult;
-		}
-		return 0;
-	}
-
-	@SuppressWarnings("deprecation")
 	@Override
 	public void tick() {
 		super.tick();
 		this.noPhysics = true;
 		if (! level.isClientSide) {
+			//default code.
 			Vector3d vec = getShootVec().normalize();
 			if (this.xRotO == 0.0F && this.yRotO == 0.0F) {
 				float f = MathHelper.sqrt(getHorizontalDistanceSqr(vec));
@@ -75,48 +64,58 @@ public class ThornEntity extends AbstractBulletEntity {
 				this.yRotO = this.yRot;
 				this.xRotO = this.xRot;
 			}
-			if (this.getThornType() == ThornTypes.GUILD || this.getThornType() == ThornTypes.AUTO) {
+			//change speed.
+			if (this.getThornType() == ThornTypes.GUIDE || this.getThornType() == ThornTypes.AUTO) {
 				if (vec != Vector3d.ZERO) {
-					double speed = this.getBulletSpeed();
-					this.setDeltaMovement(vec.multiply(speed, speed, speed));
+					this.setDeltaMovement(vec.scale(this.getBulletSpeed()));
 				}
 			}
 			if (this.getThornType() == ThornTypes.AUTO) {
-				if ((this.thornTarget == null || ! this.isAlive() || this.thornTarget.removed) && this.tickCount % 20 == 0) {
+				//find new target.
+				if (! EntityUtil.isEntityValid(this.thornTarget) && this.tickCount % 20 == 0) {
 					this.thornTarget = this.getRandomAttackTarget();
 				}
 			}
-			if (this.thornTarget != null) {
+			if (EntityUtil.isEntityValid(this.thornTarget)) {//deal damage when close to target.
 				if (this.distanceToSqr(thornTarget) <= 4) {
 					this.onImpact(this.thornTarget);
 				}
 			}
-			if(this.getThrower() == null) this.remove();
+			if(this.getThrower() == null) {
+				this.remove();
+			}
 		}
 	}
 
+	/**
+	 * get target by itself automatically.
+	 * {@link #tick()}
+	 */
 	public LivingEntity getRandomAttackTarget() {
-		if (this.getThrower() == null) {
-			this.remove();
+		final float range = 40F;
+		List<LivingEntity> list = level.getEntitiesOfClass(LivingEntity.class, EntityUtil.getEntityAABB(this, range, range), entity -> {
+			return ! entity.is(thornTarget) && EntityUtil.canTargetEntity(this.getOwnerOrSelf(), entity);
+		});
+		if (list.size() == 0) {
 			return null;
 		}
-		List<LivingEntity> list = level.getEntitiesOfClass(LivingEntity.class,
-				EntityUtil.getEntityAABB(this, 40, 40), (entity) -> {
-					return !entity.equals(thornTarget) && EntityUtil.canSeeEntity(this, entity)
-							&& EntityUtil.canTargetEntity(this.getThrower(), entity);
-				});
-		if (list.size() == 0)
-			return null;
 		return list.get(this.random.nextInt(list.size()));
 	}
 
+	/**
+	 * {@link #tick()}
+	 */
 	public Vector3d getShootVec() {
-		LivingEntity target = this.thornTarget;
-		if (target == null)
+		if (this.thornTarget == null) {
 			return Vector3d.ZERO;
-		return target.position().add(0, target.getEyeHeight(), 0).subtract(this.position());
+		}
+		return this.thornTarget.position().add(0, this.thornTarget.getEyeHeight(), 0).subtract(this.position());
 	}
 
+	/**
+	 * update target when in guide mode.
+	 * {@link CatTailEntity#normalPlantTick()}
+	 */
 	public void setThornTarget(LivingEntity target) {
 		this.thornTarget = target;
 	}
@@ -127,14 +126,16 @@ public class ThornEntity extends AbstractBulletEntity {
 
 	public double getBulletSpeed() {
 		if (this.getThrower() instanceof CatTailEntity) {
-			if(this.getThornType() == ThornTypes.AUTO) return 1D;
-			return 0.5D;
+			return this.getThornType() == ThornTypes.AUTO ? 0.85D : 0.55D;
 		}
-		return 0.1D;
+		return 0.15D;
 	}
 
+	/**
+	 * {@link CatTailEntity#normalPlantTick()}
+	 */
 	public boolean isInControl() {
-		return this.getThornType() == ThornTypes.GUILD;
+		return this.getThornType() == ThornTypes.GUIDE;
 	}
 
 	@Override
@@ -149,7 +150,7 @@ public class ThornEntity extends AbstractBulletEntity {
 		if (this.shouldHit(target)) {
 			target.invulnerableTime = 0;
 			this.dealThornDamage(target); // attack
-			if (this.getThornType() == ThornTypes.GUILD) {
+			if (this.getThornType() == ThornTypes.GUIDE) {
 				this.setThornType(ThornTypes.NORMAL);
 				set.add(target.getId());
 			} else if (this.getThornType() == ThornTypes.AUTO) {
@@ -182,10 +183,21 @@ public class ThornEntity extends AbstractBulletEntity {
 	protected boolean checkLive(RayTraceResult result) {
 		return true;
 	}
+	
+	@Override
+	protected boolean shouldHit(Entity target) {
+		if (!super.shouldHit(target)) {
+			return false;
+		}
+		if (this.getThornType() == ThornTypes.AUTO) {
+			return target.equals(this.thornTarget);
+		}
+		return ! set.contains(target.getId());
+	}
 
 	@Override
 	protected int getMaxLiveTick() {
-		return this.getThornType() == ThornTypes.AUTO ? 600 : 200;
+		return this.getThornType() == ThornTypes.AUTO ? 500 : 200;
 	}
 
 	@Override
@@ -256,7 +268,9 @@ public class ThornEntity extends AbstractBulletEntity {
 	}
 
 	public enum ThornTypes {
-		NORMAL, GUILD, AUTO
+		NORMAL,
+		GUIDE,//can change direction by owner. 
+		AUTO//automatic
 	}
 
 }

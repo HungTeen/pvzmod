@@ -60,7 +60,6 @@ public class SpikeWeedEntity extends PVZPlantEntity {
 		EntityUtil.getTargetableEntities(this, EntityUtil.getEntityAABB(this, range, range)).forEach(target -> {
 			this.spikeNormalAttack(target);
 		});
-		this.setAttackTime(ATTACK_ANIM_CD);
 	}
 	
 	/**
