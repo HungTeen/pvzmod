@@ -23,27 +23,23 @@ public class WaterGuardEntity extends PlantDefenderEntity{
 	}
 	
 	@Override
-	public EntitySize getDimensions(Pose poseIn) {
-		return new EntitySize(0.8f, 0.8f, false);
-	}
-	
-	@Override
 	public float getPlantHealth() {
-		int lvl = this.getPlantLvl();
-		if(lvl <= 19) return 190 + lvl * 10;
-		return 400;
+		return this.getAverageProgress(250F, 500F);
 	}
 	
 	@Override
 	public float getSuperLife() {
-		if(this.isPlantInStage(1)) return 200;
-		if(this.isPlantInStage(2)) return 300;
-		return 400;
+		return this.getThreeStage(400, 600, 800);
 	}
 	
 	@Override
 	public int getSuperTimeLength() {
 		return 20;
+	}
+	
+	@Override
+	public EntitySize getDimensions(Pose poseIn) {
+		return new EntitySize(0.8f, 0.8f, false);
 	}
 
 	@Override

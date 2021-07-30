@@ -8,6 +8,7 @@ import javax.annotation.Nullable;
 import com.hungteen.pvz.common.entity.ai.goal.target.PVZRandomTargetGoal;
 import com.hungteen.pvz.common.entity.bullet.CornEntity;
 import com.hungteen.pvz.common.entity.plant.PVZPlantEntity;
+import com.hungteen.pvz.common.network.EntityInteractPacket;
 import com.hungteen.pvz.register.ItemRegister;
 import com.hungteen.pvz.register.SoundRegister;
 import com.hungteen.pvz.utils.EntityUtil;
@@ -49,6 +50,7 @@ public class CobCannonEntity extends PVZPlantEntity {
 	protected int cornCnt = 0;
 	protected final int MaxCornCnt = 16;
 	protected int preTick = 0;
+	private int climbTick = 0;
 
 	public CobCannonEntity(EntityType<? extends CreatureEntity> type, World worldIn) {
 		super(type, worldIn);
@@ -59,24 +61,18 @@ public class CobCannonEntity extends PVZPlantEntity {
 	@Override
 	protected void defineSynchedData() {
 		super.defineSynchedData();
-		this.entityData.define(CORN_NUM, 0);
+		this.entityData.define(CORN_NUM, 1);
 	}
 
 	protected void updateAttributes() {
 		super.updateAttributes();
-		this.getAttribute(Attributes.MOVEMENT_SPEED).setBaseValue((double) 0.2F);
+		this.getAttribute(Attributes.MOVEMENT_SPEED).setBaseValue(0.25D);
 	}
 
 	@Override
 	protected void registerGoals() {
 		super.registerGoals();
 		this.targetSelector.addGoal(2, new PVZRandomTargetGoal(this, true, false, 10, 48, 16));
-	}
-	
-	@Override
-	public void onSpawnedByPlayer(PlayerEntity player, int lvl) {
-		super.onSpawnedByPlayer(player, lvl);
-		this.getAttribute(Attributes.MOVEMENT_SPEED).setBaseValue(this.getMoveSpeed());
 	}
 	
 	@Override
@@ -104,13 +100,16 @@ public class CobCannonEntity extends PVZPlantEntity {
 		}
 	}
 	
+	/**
+	 * {@link EntityInteractPacket.Handler#onMessage(EntityInteractPacket, java.util.function.Supplier)}
+	 */
 	public void checkAndAttack() {
-		if(this.getAttackTime() > 0) return ;
-		if(this.isPlayerRiding()) {
-			PlayerEntity player = (PlayerEntity) this.getPassengers().get(0);
-			Vector3d look = player.getLookAngle();
-		    Vector3d start = player.position().add(0, player.getEyeHeight(), 0);
-		    double range = 60;
+		//is in player's control and not in attacking.
+		if(this.getAttackTime() == 0 && this.isPlayerRiding()) {
+			final PlayerEntity player = (PlayerEntity) this.getPassengers().get(0);
+			final Vector3d look = player.getLookAngle();
+		    final Vector3d start = player.position().add(0, player.getEyeHeight(), 0);
+		    final double range = 60;
 		    Vector3d end = start.add(look.normalize().multiply(range, range, range));
 		    RayTraceContext ray = new RayTraceContext(start, end, RayTraceContext.BlockMode.COLLIDER, RayTraceContext.FluidMode.NONE, player);
 		    RayTraceResult result = level.clip(ray);
@@ -119,12 +118,12 @@ public class CobCannonEntity extends PVZPlantEntity {
 		    }
 			EntityRayTraceResult entityRay = this.rayTraceEntities(level, player, range, start, end);
 		    if(entityRay != null && entityRay.getType() == Type.ENTITY) {
-			    if(entityRay.getEntity() instanceof LivingEntity) {
+			    if(entityRay.getEntity() instanceof LivingEntity) {//attack entity
 			    	this.setAttackTime(this.getAnimCD());
 			    	this.setCornNum(this.getCornNum() - 1);
 			    	this.lockTarget = Optional.ofNullable((LivingEntity) entityRay.getEntity());
 			    }
-		    } else if(result.getType() == RayTraceResult.Type.BLOCK) {
+		    } else if(result.getType() == RayTraceResult.Type.BLOCK) {//attack block.
 		    	this.setAttackTime(this.getAnimCD());
 		    	BlockPos pos = new BlockPos(end.x(), end.y(), end.z());
 		    	this.setCornNum(this.getCornNum() - 1);
@@ -133,7 +132,7 @@ public class CobCannonEntity extends PVZPlantEntity {
 		}
 	}
 	
-	private void startAttack() {
+	protected void startAttack() {
 		if(this.lockTarget.isPresent()) {
 			this.shootCorn(this.lockTarget.get());
 			this.lockTarget = Optional.empty();
@@ -144,9 +143,9 @@ public class CobCannonEntity extends PVZPlantEntity {
 			this.lockPos = Optional.empty();
 			return ;
 		}
-		float range = 45F;
-		List<LivingEntity> list = EntityUtil.getViewableTargetableEntity(this, EntityUtil.getEntityAABB(this, range, range));
-		int num = (this.isPlantInSuperMode() ? this.getSuperCornNum() : 1);
+		final float range = 45F;
+		final List<LivingEntity> list = EntityUtil.getViewableTargetableEntity(this, EntityUtil.getEntityAABB(this, range, range));
+		final int num = (this.isPlantInSuperMode() ? this.getSuperCornNum() : 1);
 		for(int i = 0; i < num; ++ i) {
 			LivingEntity res = this;
 		    if(! list.isEmpty()) {
@@ -157,24 +156,54 @@ public class CobCannonEntity extends PVZPlantEntity {
 		}
 	}
 
-	private void shootCorn(LivingEntity target) {
+	/**
+	 * shoot to entity.
+	 * {@link #startAttack()}
+	 */
+	protected void shootCorn(LivingEntity target) {
 		CornEntity corn = new CornEntity(level, this);
-		corn.setPos(this.getX(), this.getY() + 1.5D, this.getZ());
+		this.onShootCorn(corn);
 		corn.shootPultBullet(target);
-		corn.cornCnt = this.cornCnt;
-		this.cornCnt = 0;
-		EntityUtil.playSound(this, SoundRegister.COB_LAUNCH.get());
 		level.addFreshEntity(corn);
 	}
 	
-	private void shootCorn(BlockPos pos) {
+	/**
+	 * shoot to block.
+	 * {@link #startAttack()}
+	 */
+	protected void shootCorn(BlockPos pos) {
 		CornEntity corn = new CornEntity(level, this);
-		corn.setPos(this.getX(), this.getY() + 1.5D, this.getZ());
+		this.onShootCorn(corn);
 		corn.shootPultBullet(pos);
+		level.addFreshEntity(corn);
+	}
+	
+	private void onShootCorn(CornEntity corn) {
+		corn.setPos(this.getX(), this.getY() + 1.5D, this.getZ());
+		corn.setAttackDamage(this.getAttackDamage());
 		corn.cornCnt = this.cornCnt;
 		this.cornCnt = 0;
 		EntityUtil.playSound(this, SoundRegister.COB_LAUNCH.get());
-		level.addFreshEntity(corn);
+	}
+	
+	@Override
+	public ActionResultType interactAt(PlayerEntity player, Vector3d vec3d, Hand hand) {
+		if (player.isSecondaryUseActive() || EntityUtil.canTargetEntity(this, player)) {
+			return ActionResultType.FAIL;
+		}
+		ItemStack stack = player.getItemInHand(hand);
+		if(this.getAttackTime() == 0 && stack.isEmpty()) {
+			if(this.mountTo(player)) {
+				return ActionResultType.SUCCESS;
+			}
+		} else if(stack.getItem() == ItemRegister.CORN.get()) { 
+			if(this.cornCnt < this.MaxCornCnt) {
+			    ++ this.cornCnt;
+			    stack.shrink(Math.min(stack.getCount(), this.MaxCornCnt - this.cornCnt));
+			}
+			return ActionResultType.CONSUME;
+		}
+		return super.interactAt(player, vec3d, hand);
 	}
 	
 	@Override
@@ -194,7 +223,7 @@ public class CobCannonEntity extends PVZPlantEntity {
 	@Nullable
 	protected EntityRayTraceResult rayTraceEntities(World world, PlayerEntity player, double range, Vector3d startVec, Vector3d endVec) {
 		return ProjectileHelper.getEntityHitResult(world, player, startVec, endVec, 
-				player.getBoundingBox().inflate(range), (entity) -> {
+				player.getBoundingBox().inflate(range), entity -> {
 			return EntityUtil.isEntityValid(entity) && entity instanceof LivingEntity && ! entity.is(this);
 		});
 	}
@@ -231,9 +260,14 @@ public class CobCannonEntity extends PVZPlantEntity {
 				if (f1 <= 0.0F) {
 					f1 *= 0.25F;
 				}
+				//jump
 				if(this.horizontalCollision) {
-					Vector3d Vector3d = this.getDeltaMovement();
-	                this.setDeltaMovement(Vector3d.x, 0.2D, Vector3d.z);
+					if(++ this.climbTick <= 8) {
+						final Vector3d Vector3d = this.getDeltaMovement();
+	                    this.setDeltaMovement(Vector3d.x, 0.2D, Vector3d.z);
+					}
+				} else {
+					this.climbTick = 0;
 				}
 				this.flyingSpeed = this.getSpeed() * 0.1F;
 				this.setSpeed((float) this.getAttribute(Attributes.MOVEMENT_SPEED).getValue());
@@ -256,7 +290,9 @@ public class CobCannonEntity extends PVZPlantEntity {
 	
 	@Override
 	protected boolean checkNormalPlantWeak() {
-		if(this.isInWater()) return true;
+		if(this.isInWater()) {
+			return true;
+		}
 		return super.checkNormalPlantWeak();
 	}
 
@@ -270,24 +306,6 @@ public class CobCannonEntity extends PVZPlantEntity {
 		return false;
 	}
 
-	@Override
-	public ActionResultType interactAt(PlayerEntity player, Vector3d vec3d, Hand hand) {
-		if (player.isSecondaryUseActive() || EntityUtil.canTargetEntity(this, player)) {
-			return ActionResultType.FAIL;
-		}
-		ItemStack stack = player.getItemInHand(hand);
-		if(this.getAttackTime() == 0 && stack.isEmpty()) {
-			if(this.mountTo(player)) return ActionResultType.SUCCESS;
-		} else if(stack.getItem() == ItemRegister.CORN.get()) { 
-			if(this.cornCnt < this.MaxCornCnt) {
-			    ++ this.cornCnt;
-			    stack.shrink(Math.min(stack.getCount(), this.MaxCornCnt - this.cornCnt));
-			}
-			return ActionResultType.CONSUME;
-		}
-		return super.interactAt(player, vec3d, hand);
-	}
-	
 	@Override
 	public double getPassengersRidingOffset() {
 		return 0.8D;
@@ -313,23 +331,13 @@ public class CobCannonEntity extends PVZPlantEntity {
 	}
 	
 	public int getSuperCornNum() {
-		if(this.isPlantInStage(1)) return 4;
-		if(this.isPlantInStage(2)) return 5;
-		return 6;
+		return this.getThreeStage(4, 5, 6);
 	}
 	
 	public float getAttackDamage() {
-		int lvl = this.getPlantLvl();
-		if(lvl <= 19) return 145 + 5 * lvl;
-		return 250F;
+		return this.getAverageProgress(150F, 650F);
 	}
 	
-	public float getMoveSpeed() {
-		int lvl = this.getPlantLvl();
-		if(lvl <= 19) return 0.19F + 0.1F * lvl;
-		return 0.4F;
-	}
-
 	public int getAnimCD() {
 		return 60;
 	}
@@ -341,7 +349,7 @@ public class CobCannonEntity extends PVZPlantEntity {
 
 	@Override
 	public int getSuperTimeLength() {
-		return 60;
+		return 80;
 	}
 
 	@Override
@@ -386,17 +394,17 @@ public class CobCannonEntity extends PVZPlantEntity {
 		}
 	}
 
-	@Override
-	public Plants getPlantEnumName() {
-		return Plants.COB_CANNON;
-	}
-
 	public int getCornNum() {
 		return this.entityData.get(CORN_NUM);
 	}
 
 	public void setCornNum(int num) {
 		this.entityData.set(CORN_NUM, num);
+	}
+	
+	@Override
+	public Plants getPlantEnumName() {
+		return Plants.COB_CANNON;
 	}
 
 }

@@ -26,7 +26,7 @@ import net.minecraft.world.World;
 public class GoldMagnetEntity extends PVZPlantEntity {
 
 	private final Set<DropEntity> coinSet = new HashSet<>();
-	private final int MaxSearchTick = 60;
+	private static final int SEARCH_CD = 60;
 
 	public GoldMagnetEntity(EntityType<? extends CreatureEntity> type, World worldIn) {
 		super(type, worldIn);
@@ -61,7 +61,7 @@ public class GoldMagnetEntity extends PVZPlantEntity {
 			return;
 		}
 		// find new coin regularly. 
-		if (this.getExistTick() % this.MaxSearchTick == 0) {
+		if (this.getExistTick() % SEARCH_CD == 0) {
 			final float range = this.getSearchRange();
 			level.getEntitiesOfClass(DropEntity.class, EntityUtil.getEntityAABB(this, range, range), drop -> {
 				return (drop instanceof CoinEntity || drop instanceof JewelEntity) && drop.getDropState() == DropStates.NORMAL && ! this.coinSet.contains(drop);
@@ -75,7 +75,7 @@ public class GoldMagnetEntity extends PVZPlantEntity {
 		}
 		// absorb all coins in the set.
 		this.coinSet.forEach(coin -> {
-			final double speed = 0.3D;
+			final double speed = 0.35D;
 			Vector3d now = new Vector3d(this.getX(), this.getY() + this.getBbHeight(), this.getZ());
 			Vector3d vec = now.subtract(coin.position());
 			if (vec.length() <= 1) {

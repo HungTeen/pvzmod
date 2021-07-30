@@ -9,6 +9,8 @@ import com.hungteen.pvz.common.misc.damage.PVZDamageSource;
 import com.hungteen.pvz.register.EffectRegister;
 import com.hungteen.pvz.register.SoundRegister;
 import com.hungteen.pvz.utils.EntityUtil;
+import com.hungteen.pvz.utils.MathUtil;
+import com.hungteen.pvz.utils.PlantUtil;
 import com.hungteen.pvz.utils.enums.Plants;
 
 import net.minecraft.entity.CreatureEntity;
@@ -24,6 +26,8 @@ import net.minecraft.world.World;
 
 public class IcebergLettuceEntity extends PlantCloserEntity implements IIceEffect {
 
+	private static final int FROZEN_TICK = 200;
+	
 	public IcebergLettuceEntity(EntityType<? extends CreatureEntity> type, World worldIn) {
 		super(type, worldIn);
 	}
@@ -41,7 +45,7 @@ public class IcebergLettuceEntity extends PlantCloserEntity implements IIceEffec
 	@Override
 	public void startSuperMode(boolean first) {
 		super.startSuperMode(first);
-		float range = this.getSuperRange();
+		final float range = this.getSuperRange();
 		for(int i = 0; i < 2; ++ i) {
 			EntityUtil.spawnParticle(this, 5);
 		}
@@ -63,40 +67,29 @@ public class IcebergLettuceEntity extends PlantCloserEntity implements IIceEffec
 		PVZDamageSource source = PVZDamageSource.causeIceDamage(this, this);
 		this.getColdEffect().ifPresent(e -> source.addEffect(e));
 		this.getFrozenEffect().ifPresent(e -> source.addEffect(e));
-		target.hurt(source, 0.01F);
+		target.hurt(source, 0.001F);
 	}
 	
     @Override
 	public Optional<EffectInstance> getColdEffect() {
-		return Optional.ofNullable(new EffectInstance(EffectRegister.COLD_EFFECT.get(), this.getFrozenTime() * 2, this.getColdLevel(), false, false));
+		return Optional.ofNullable(new EffectInstance(EffectRegister.COLD_EFFECT.get(), FROZEN_TICK + this.getColdDuration(), this.getColdLevel(), false, false));
 	}
     
     @Override
 	public Optional<EffectInstance> getFrozenEffect() {
-    	return Optional.ofNullable(new EffectInstance(EffectRegister.FROZEN_EFFECT.get(), this.getFrozenTime(), 1, false, false));
+    	return Optional.ofNullable(new EffectInstance(EffectRegister.FROZEN_EFFECT.get(), FROZEN_TICK, 1, false, false));
 	}
     
     public int getColdLevel() {
-    	int lvl = this.getPlantLvl();
-    	if(lvl <= 20) {
-    		int now = (lvl - 1) / 5;
-    		return 4 + now;
-    	}
-    	return 7;
+    	return MathUtil.getProgressByDif(5, 1, this.getPlantLvl(), PlantUtil.MAX_PLANT_LEVEL, 4, 7);
     }
     
-    public int getFrozenTime() {
-    	int lvl = this.getPlantLvl();
-    	if(lvl <= 20) {
-    		return 95 + 5 * lvl;
-    	}
-    	return 200;
+    public int getColdDuration() {
+    	return this.getAverageProgress(100, 300);
     }
     
     public float getSuperRange() {
-    	if(this.isPlantInStage(1)) return 10;
-    	if(this.isPlantInStage(2)) return 15;
-    	return 20;
+    	return this.getThreeStage(20, 25, 30);
     }
     
 	@Override

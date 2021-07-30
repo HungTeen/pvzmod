@@ -115,11 +115,6 @@ public class PeaEntity extends AbstractShootBulletEntity implements IRendersAsIt
 	}
 	
 	@Override
-	protected boolean shouldHit(Entity target) {
-		return super.shouldHit(target) || target instanceof TorchWoodEntity;
-	}
-	
-	@Override
 	public float getAttackDamage() {
 		float damage = this.attackDamage;
 		damage *= (1 + this.power * 1.0f / 5);
@@ -173,11 +168,6 @@ public class PeaEntity extends AbstractShootBulletEntity implements IRendersAsIt
 		if(compound.contains("peaType")) {
 			this.setPeaType(Type.values()[compound.getInt("peaType")]);
 		}
-	}
-
-	@Override
-	protected float getGravityVelocity() {
-		return 0.002f;
 	}
 
 	public State getPeaState() {

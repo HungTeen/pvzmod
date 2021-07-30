@@ -151,7 +151,8 @@ public abstract class AbstractBulletEntity extends AbstractOwnerEntity {
 	}
 	
 	/**
-	 * Called when this EntityThrowable hits a block or entity.
+	 * Called when this EntityThrowable hits a block or entity.<br>
+	 * only in server side.
 	 */
 	protected abstract void onImpact(RayTraceResult result);
 

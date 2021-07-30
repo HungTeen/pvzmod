@@ -52,15 +52,12 @@ public class CornEntity extends PultBulletEntity {
 	}
 	
 	private void dealExplosionDamage() {
-		EntityUtil.playSound(this, SoundRegister.CHERRY_BOMB.get());
-		float range = 2.8F;
+		final float range = 4F;
 		int killCnt = 0;
-		for(Entity entity : EntityUtil.getTargetableEntities(this, EntityUtil.getEntityAABB(this, range, range))) {
-			if((! (entity instanceof LivingEntity) || EntityUtil.canTargetEntity(this.getThrower(), (LivingEntity) entity))) {
-				entity.hurt(PVZDamageSource.corn(this, this.getThrower()), this.attackDamage);
-				if(! EntityUtil.isEntityValid(entity) && entity instanceof GargantuarEntity) {
-					++ killCnt;
-				}
+		for(Entity entity : EntityUtil.getTargetableEntities(this.getOwnerOrSelf(), EntityUtil.getEntityAABB(this, range, range))) {
+			entity.hurt(PVZDamageSource.corn(this, this.getThrower()), this.attackDamage);
+			if(! EntityUtil.isEntityValid(entity) && entity instanceof GargantuarEntity) {
+				++ killCnt;
 			}
 		};
 		if(this.getThrower() instanceof PVZPlantEntity) {
@@ -79,6 +76,7 @@ public class CornEntity extends PultBulletEntity {
 		for(int i = 0; i < 20; ++ i) {
 			EntityUtil.spawnParticle(this, 9);
 		}
+		EntityUtil.playSound(this, SoundRegister.CHERRY_BOMB.get());
 	}
 
 	@Override

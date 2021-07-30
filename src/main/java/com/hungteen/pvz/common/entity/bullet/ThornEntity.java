@@ -197,7 +197,7 @@ public class ThornEntity extends AbstractBulletEntity {
 
 	@Override
 	protected int getMaxLiveTick() {
-		return this.getThornType() == ThornTypes.AUTO ? 500 : 200;
+		return this.getThornType() == ThornTypes.AUTO ? 500 : this.isInControl() ? 250 : 150;
 	}
 
 	@Override

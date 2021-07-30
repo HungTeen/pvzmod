@@ -20,45 +20,38 @@ public class GoldLeafEntity extends PlantBomberEntity {
 	public GoldLeafEntity(EntityType<? extends CreatureEntity> type, World worldIn) {
 		super(type, worldIn);
 		this.canCollideWithPlant = false;
-		this.canBeCharm = false;
 	}
 
 	@Override
 	public void startBomb(boolean server) {
 		Block block = level.getBlockState(this.blockPosition().below()).getBlock();
-		int lvl = getBlockGoldLevel(block);
-		if(lvl == - 1 || lvl >= this.getTileLevel()) return ;
-		if(! level.isClientSide) {
-			level.setBlockAndUpdate(blockPosition().below(), this.getGoldTileByLvl(this.getTileLevel()).defaultBlockState());
-		} else {
-			
+		final int lvl = getBlockGoldLevel(block);
+		if(server && lvl >= 0 && lvl < this.getTileLevel()) {
+			level.setBlockAndUpdate(blockPosition().below(), getGoldTileByLvl(this.getTileLevel()).defaultBlockState());
 		}
 	}
 	
 	public static int getBlockGoldLevel(Block block) {
-		if(block instanceof GoldTileBlock) return ((GoldTileBlock) block).lvl;
+		if(block instanceof GoldTileBlock) {
+			return ((GoldTileBlock) block).lvl;
+		}
 		if(block == Blocks.GOLD_BLOCK) return 0;
 		return - 1;
 	}
 	
 	public static int getGoldGenAmount(int lvl) {
-		if(lvl == 1) return 25;
-		if(lvl == 2) return 50;
-		return 75;
+		return lvl == 1 ? 25 : lvl == 2 ? 50 : 75;
 	}
 	
-	private Block getGoldTileByLvl(int lvl) {
-		if(lvl == 1) return BlockRegister.GOLD_TILE1.get();
-		if(lvl == 2) return BlockRegister.GOLD_TILE2.get();
-		if(lvl == 3) return BlockRegister.GOLD_TILE3.get();
-		System.out.println("Warn : Wrong use for gold tile !");
-		return Blocks.GOLD_BLOCK;
+	/**
+	 * {@link #startBomb(boolean)}
+	 */
+	public static Block getGoldTileByLvl(int lvl) {
+		return lvl == 1 ? BlockRegister.GOLD_TILE1.get() : lvl == 2 ? BlockRegister.GOLD_TILE2.get() : BlockRegister.GOLD_TILE3.get();
 	}
 	
 	public int getTileLevel() {
-		if(this.isPlantInStage(1)) return 1;
-		if(this.isPlantInStage(2)) return 2;
-		return 3;
+		return this.getThreeStage(1, 2, 3);
 	}
 
 	@Override
