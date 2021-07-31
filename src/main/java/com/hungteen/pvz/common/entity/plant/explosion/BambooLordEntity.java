@@ -9,6 +9,9 @@ import com.hungteen.pvz.common.entity.plant.base.PlantCloserEntity;
 import com.hungteen.pvz.common.misc.damage.PVZDamageSource;
 import com.hungteen.pvz.register.SoundRegister;
 import com.hungteen.pvz.utils.EntityUtil;
+import com.hungteen.pvz.utils.MathUtil;
+import com.hungteen.pvz.utils.PlantUtil;
+import com.hungteen.pvz.utils.WorldUtil;
 import com.hungteen.pvz.utils.enums.Plants;
 
 import net.minecraft.entity.CreatureEntity;
@@ -23,27 +26,48 @@ public class BambooLordEntity extends PlantCloserEntity {
 
 	public static final int UP_CD = 20;
 	public static final float UP_SPEED = 2F;
+	
 	public BambooLordEntity(EntityType<? extends CreatureEntity> type, World worldIn) {
 		super(type, worldIn);
 	}
 
 	@Override
-	protected void normalPlantTick() {
-		super.normalPlantTick();
-		if(! level.isClientSide) {
-			if(this.getAttackTime() > 0) {
-				this.setAttackTime(this.getAttackTime() - 1);
-				if(this.getAttackTime() <= 0) {
-					this.explode();
-				}
+	public void focusOnTarget(LivingEntity target1) {
+		super.focusOnTarget(target1);
+		if(this.getAttackTime() == 1) {//fly together.
+			final float range = 2F;
+			EntityUtil.getTargetableEntities(this, EntityUtil.getEntityAABB(this, range, range)).forEach((target) -> {
+				target.setDeltaMovement(target.getDeltaMovement().add(0, UP_SPEED, 0));
+			});
+			this.setDeltaMovement(this.getDeltaMovement().add(0, UP_SPEED, 0));
+			for(int i = 0; i < 3; ++ i) {
+				EntityUtil.spawnParticle(this, 5);
 			}
+			EntityUtil.playSound(this, SoundRegister.POTATO_MINE.get());
 		}
 	}
 	
-	protected void explode() {
-		float range = 40;
+	@Override
+	public void performAttack(LivingEntity target1) {
+		for(int i = 0; i < 3; ++ i) {
+			EntityUtil.spawnParticle(this, 5);
+		}
+		final float range = 3F;
+		EntityUtil.getTargetableEntities(this, EntityUtil.getEntityAABB(this, range, range)).forEach((target) -> {
+			target.hurt(PVZDamageSource.explode(this), this.getAttackDamage());
+			target.setDeltaMovement(target.getDeltaMovement().add(0, UP_SPEED, 0));
+		});
+		this.split();
+		EntityUtil.playSound(this, SoundRegister.POTATO_MINE.get());
+	}
+	
+	/**
+	 * {@link #performAttack(LivingEntity)}
+	 */
+	protected void split() {
+		final float range = 30;
 		List<LivingEntity> list = new ArrayList<>();
-		EntityUtil.getTargetableLivings(this, EntityUtil.getEntityAABB(this, range, range)).forEach((target) -> {
+		EntityUtil.getTargetableLivings(this, EntityUtil.getEntityAABB(this, range, range)).forEach(target -> {
 			if(this.getSensing().canSee(target)) {
 				list.add(target);
 			}
@@ -66,64 +90,33 @@ public class BambooLordEntity extends PlantCloserEntity {
 	}
 	
 	@Override
-	public void performAttack(LivingEntity target1) {
-		if(this.getAttackTime() != 0) return ;
-		this.setAttackTime(UP_CD);
-		for(int i = 0; i < 3; ++ i) {
-			EntityUtil.spawnParticle(this, 5);
-		}
-		float range = 1.5F;
-		EntityUtil.getTargetableEntities(this, EntityUtil.getEntityAABB(this, range, range)).forEach((target) -> {
-			target.hurt(PVZDamageSource.explode(this), this.getAttackDamage());
-			target.setDeltaMovement(target.getDeltaMovement().add(0, UP_SPEED, 0));
-		});
-		EntityUtil.playSound(this, SoundRegister.POTATO_MINE.get());
-		this.setDeltaMovement(this.getDeltaMovement().add(0, UP_SPEED, 0));
-	}
-	
-	@Override
 	public void startSuperMode(boolean first) {
 		super.startSuperMode(first);
 		for(int i = 0; i < this.getCrackersNum(); ++ i) {
-			this.generateCrackers();
+			this.generateCracker();
 		}
 	}
 	
-	private void generateCrackers() {
-		float rotate = this.getRandom().nextFloat() * 2 * 3.14159F;
-		final int len = 10;
-		double dx = Math.sin(rotate);
-		double dz = Math.cos(rotate);
-		for(int i = 0; i < len; ++ i) {
-			BlockPos pos = this.blockPosition().offset(dx * i * 2, 2, dz * i * 2);
-			FireCrackersEntity entity = new FireCrackersEntity(level, this);
-			entity.setPos(pos.getX(), pos.getY(), pos.getZ());
-			entity.setFuse(10 + 6 * i);
-			level.addFreshEntity(entity);
-		}
+	protected void generateCracker() {
+		final int range = 10;
+		final BlockPos pos = WorldUtil.getSuitableHeightRandomPos(this.level, this.blockPosition(), range);
+		FireCrackersEntity entity = new FireCrackersEntity(level, this);
+		entity.setPos(pos.getX(), pos.getY(), pos.getZ());
+		entity.setFuse(10);
+		entity.summonByOwner(this);
+		level.addFreshEntity(entity);
 	}
 	
 	public float getAttackDamage() {
-		int lvl = this.getPlantLvl();
-		if(lvl <= 20) {
-			return 57F + 3 * lvl;
-		}
-		return 120F;
+		return this.getAverageProgress(60F, 160F);
 	}
 	
 	public int getSplitCount() {
-		int lvl = this.getPlantLvl();
-		if(lvl <= 20) {
-			int now = (lvl - 1) / 5;
-			return now + 2;
-		}
-		return 5;
+		return MathUtil.getProgressByDif(5, 1, this.getPlantLvl(), PlantUtil.MAX_PLANT_LEVEL, 2, 5);
 	}
 	
 	public int getCrackersNum() {
-		if(this.isPlantInStage(1)) return 1;
-		if(this.isPlantInStage(2)) return 2;
-		return 3;
+		return this.getThreeStage(10, 15, 20);
 	}
 	
 	@Override

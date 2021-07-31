@@ -27,7 +27,7 @@ public class BonkChoyEntity extends PVZPlantEntity {
 	protected void registerGoals() {
 		super.registerGoals();
 		this.goalSelector.addGoal(0, new BonkChoyAttackGoal(this));
-		this.targetSelector.addGoal(0, new PVZNearestTargetGoal(this, true, false, 3, 2));
+		this.targetSelector.addGoal(0, new PVZNearestTargetGoal(this, true, false, 3, 3));
 	}
 	
 	@Override
@@ -35,13 +35,11 @@ public class BonkChoyEntity extends PVZPlantEntity {
 		super.normalPlantTick();
 		if(! level.isClientSide) {
 			if(this.isPlantInSuperMode() && this.getSuperTime() % 5 == 0) {
-				float range = 3F;
-				EntityUtil.playSound(this, SoundRegister.SWING.get());
+				final float range = 5F;
 				EntityUtil.getTargetableEntities(this, EntityUtil.getEntityAABB(this, range, range)).forEach((target) -> {
 					target.hurt(PVZDamageSource.normal(this), this.getAttackDamage() * 5);
-					for(int i = 0; i < 2; ++ i) {
-						EntityUtil.spawnParticle(target, 7);
-					}
+					EntityUtil.spawnParticle(target, 7);
+					EntityUtil.playSound(this, SoundRegister.SWING.get());
 				});
 			}
 		}
@@ -49,12 +47,15 @@ public class BonkChoyEntity extends PVZPlantEntity {
 	
 	public void attackTarget(LivingEntity target) {
 		EntityUtil.playSound(this, SoundRegister.SWING.get());
+		EntityUtil.spawnParticle(target, 7);
 		target.hurt(PVZDamageSource.normal(this), this.getAttackDamage());
 	}
 	
 	@Override
 	public boolean canPlantTarget(Entity entity) {
-		if(entity instanceof BalloonZombieEntity) return true;
+		if(entity instanceof BalloonZombieEntity) {
+			return true;
+		}
 		return super.canPlantTarget(entity);
 	}
 
@@ -63,19 +64,12 @@ public class BonkChoyEntity extends PVZPlantEntity {
 	}
 	
 	public float getAttackDamage() {
-		int lvl = this.getPlantLvl();
-		if(lvl <= 20) {
-			int now = (lvl - 1) / 2;
-			return 1.75F + now * 0.25F;
-		}
-		return 4F;
+		return this.getAverageProgress(1.5F, 5.5F);
 	}
 	
 	@Override
 	public int getSuperTimeLength() {
-		if(this.isPlantInStage(1)) return 80;
-		if(this.isPlantInStage(2)) return 100;
-		return 120;
+		return this.getThreeStage(100, 150, 200);
 	}
 	
 	@Override

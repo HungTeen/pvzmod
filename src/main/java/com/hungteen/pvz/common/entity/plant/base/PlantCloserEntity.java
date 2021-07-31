@@ -101,7 +101,7 @@ public abstract class PlantCloserEntity extends PVZPlantEntity{
 	 * {@link #registerGoals()}
 	 */
 	public float getCloseWidth() {
-		return 1;
+		return 1.5F;
 	}
 
 	/**
@@ -109,7 +109,7 @@ public abstract class PlantCloserEntity extends PVZPlantEntity{
 	 * {@link #registerGoals()}
 	 */
 	public float getCloseHeight() {
-		return 1;
+		return 1.5F;
 	}
 	
 }

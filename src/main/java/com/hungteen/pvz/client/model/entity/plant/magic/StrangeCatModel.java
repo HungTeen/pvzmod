@@ -2,6 +2,7 @@ package com.hungteen.pvz.client.model.entity.plant.magic;
 
 import com.hungteen.pvz.client.model.entity.plant.PVZPlantModel;
 import com.hungteen.pvz.common.entity.plant.magic.StrangeCatEntity;
+import com.hungteen.pvz.utils.AnimationUtil;
 
 import net.minecraft.client.renderer.entity.model.EntityModel;
 import net.minecraft.client.renderer.model.ModelRenderer;
@@ -170,9 +171,18 @@ public class StrangeCatModel extends PVZPlantModel<StrangeCatEntity> {
 
 	@Override
 	public void setupAnim(StrangeCatEntity entity, float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch){
-		int tick = StrangeCatEntity.ANIM_CD - entity.getAttackTime();
-		float v = 3.14159F / StrangeCatEntity.ANIM_CD / 2;
-		this.tail.xRot = 0.8F - 0.8F * Math.abs(MathHelper.cos(v * tick));
+		final int time = entity.getAttackTime();
+		if(entity.isResting()) {
+			this.tail.xRot = 0;
+		} else if(time == 0) {
+			final int T = 20;
+			final int now = entity.getExistTick() % T;
+			this.tail.xRot = AnimationUtil.getUpDownUpDown(now, T, 30);
+		} else {
+			final int tick = StrangeCatEntity.ANIM_CD - time;
+		    final float v = 3.14159F / StrangeCatEntity.ANIM_CD / 2;
+		    this.tail.xRot = 0.8F - 0.8F * Math.abs(MathHelper.cos(v * tick));
+		}
 	}
 
 	@Override

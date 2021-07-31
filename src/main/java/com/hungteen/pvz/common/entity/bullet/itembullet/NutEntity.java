@@ -7,7 +7,6 @@ import com.hungteen.pvz.utils.EntityUtil;
 
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
-import net.minecraft.entity.LivingEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.math.EntityRayTraceResult;
 import net.minecraft.util.math.RayTraceResult;
@@ -19,10 +18,10 @@ public class NutEntity extends PVZItemBulletEntity {
 		super(type, worldIn);
 	}
 	
-	public NutEntity(World worldIn, LivingEntity thrower) {
-		super(EntityRegister.NUT.get(), worldIn, thrower);
-	}
-	
+//	public NutEntity(World worldIn, LivingEntity thrower) {
+//		super(EntityRegister.NUT.get(), worldIn, thrower);
+//	}
+//	
 	public void shoot(double x, double y, double z) {
 		this.setDeltaMovement(x, y, z);
 	}

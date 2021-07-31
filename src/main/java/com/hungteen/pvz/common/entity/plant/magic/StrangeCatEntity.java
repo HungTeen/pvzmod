@@ -2,6 +2,8 @@ package com.hungteen.pvz.common.entity.plant.magic;
 
 import com.hungteen.pvz.common.entity.ai.goal.target.PVZNearestTargetGoal;
 import com.hungteen.pvz.common.entity.plant.PVZPlantEntity;
+import com.hungteen.pvz.common.event.PVZLivingEvents;
+import com.hungteen.pvz.common.misc.damage.PVZDamageSource;
 import com.hungteen.pvz.register.EntityRegister;
 import com.hungteen.pvz.register.SoundRegister;
 import com.hungteen.pvz.utils.EntityUtil;
@@ -9,58 +11,68 @@ import com.hungteen.pvz.utils.PlantUtil;
 import com.hungteen.pvz.utils.enums.Plants;
 
 import net.minecraft.entity.CreatureEntity;
-import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntitySize;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.Pose;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.world.World;
+import net.minecraftforge.event.entity.living.LivingDeathEvent;
 
 public class StrangeCatEntity extends PVZPlantEntity {
 
+	public static final int REST_CD = 1000;
 	public static final int ANIM_CD = 10;
-	private int restTick = 0;
+	private int restTick = REST_CD;
 	
 	public StrangeCatEntity(EntityType<? extends CreatureEntity> type, World worldIn) {
 		super(type, worldIn);
 		this.isImmuneToWeak = true;
-		this.restTick = this.getRestCD();
-	}
-
-	@Override
-	public Plants getPlantEnumName() {
-		return Plants.STRANGE_CAT;
 	}
 
 	@Override
 	protected void registerGoals() {
 		super.registerGoals();
-		this.targetSelector.addGoal(0, new PVZNearestTargetGoal(this, true, false, 4, 2));
+		this.targetSelector.addGoal(0, new PVZNearestTargetGoal(this, true, false, 5, 5));
 	}
 
 	@Override
 	protected void normalPlantTick() {
 		super.normalPlantTick();
-		if (! level.isClientSide && this.getTarget() != null) {
-			this.lookControl.setLookAt(this.getTarget(), 30f, 30f);
-			if(! this.isSuitableTarget(getTarget())) {
-				this.setTarget(null);
-			}
-		}
 		if (! level.isClientSide) {
-			if(this.getTarget() == null) {
-				this.setAttackTime(ANIM_CD);
-			} else {
-				if(this.restTick <= 0) {
-					if(this.getAttackTime() > 0) {
-				        this.setAttackTime(this.getAttackTime() - 1);
-				    } else {
-						this.performAttack(getTarget());
-					}
+			if(EntityUtil.isEntityValid(this.getTarget())) {
+				this.lookControl.setLookAt(this.getTarget(), 30f, 30f);
+			}
+			if(this.getAttackTime() > 0) {
+				this.setAttackTime(this.getAttackTime() - 1);
+			} else if(this.restTick == 0){
+				this.setAttackTime(0);
+				if(EntityUtil.isEntityValid(this.getTarget())) {
+					this.performAttack(getTarget());
 				}
+			} else {
+				this.setAttackTime(- 1);
 			}
 			this.restTick = Math.max(0, this.restTick - 1);
+		}
+	}
+	
+	/**
+	 * deal damage
+	 */
+	protected void performAttack(LivingEntity target) {
+		target.hurt(PVZDamageSource.normal(this), this.getAttackDamage());
+		EntityUtil.playSound(this, SoundRegister.BRUH.get());
+		this.setAttackTime(ANIM_CD);
+		this.restTick = REST_CD;
+	}
+	
+	/**
+	 * {@link PVZLivingEvents#onLivingDeath(LivingDeathEvent)}
+	 */
+	public static void handleCopyCat(final LivingDeathEvent ev) {
+		if(! ev.getEntity().level.isClientSide && ev.getSource().getEntity() instanceof StrangeCatEntity) {
+			((StrangeCatEntity) ev.getSource().getEntity()).onSelfCopy(ev.getEntityLiving());
 		}
 	}
 	
@@ -71,54 +83,33 @@ public class StrangeCatEntity extends PVZPlantEntity {
 	}
 	
 	@Override
-	public boolean canPlantTarget(Entity entity) {
-		return super.canPlantTarget(entity) && this.isSuitableTarget(entity);
-	}
-	
-	/**
-	 * deal damage
-	 */
-	private void performAttack(LivingEntity target) {
-//		target.hurt(PVZDamageSource.causeNormalDamage(this, this).setCopyDamage(), getAttackDamage());
-		EntityUtil.playSound(this, SoundRegister.BRUH.get());
-		this.restTick = this.getRestCD();
-	}
-
-	@Override
 	public void startSuperMode(boolean first) {
 		super.startSuperMode(first);
 		EntityUtil.playSound(this, SoundRegister.BRUH.get());
+		this.setAttackTime(ANIM_CD);
 		EntityUtil.getRandomLivingInRange(level, this, EntityUtil.getEntityAABB(this, 20, 20), getSuperAttackCount()).forEach((target) ->{
-//			target.hurt(PVZDamageSource.causeNormalDamage(this, this).setCopyDamage(), getAttackDamage());
+			target.hurt(PVZDamageSource.normal(this), this.getAttackDamage());
 		});
 	}
 	
-	public boolean isSuitableTarget(Entity target) {
-		if(! (target instanceof LivingEntity)) return false;
-		return EntityUtil.getCurrentHealth((LivingEntity) target) <= this.getAttackDamage();
+	public boolean isResting() {
+		return this.getAttackTime() < 0;
 	}
 	
 	/**
 	 * max damage to target
 	 */
 	public float getAttackDamage() {
-		int lvl = this.getPlantLvl();
-		if (lvl <= 19) return 156 + 4 * lvl;
-		return 240;
+		return this.getAverageProgress(200F, 400F);
 	}
 	
 	public int getSuperAttackCount() {
-		if(this.isPlantInStage(1)) return 1;
-		if(this.isPlantInStage(2)) return 2;
-		return 3;
+		return this.getThreeStage(4, 5, 6);
 	}
 	
-	public int getRestCD() {
-		int lvl = this.getPlantLvl();
-		if(lvl <= 19) {
-			return 1210 - 10 * lvl;
-		}
-		return 1000;
+	@Override
+	public int getSuperTimeLength() {
+		return 30;
 	}
 	
 	@Override
@@ -141,8 +132,8 @@ public class StrangeCatEntity extends PVZPlantEntity {
 	}
 	
 	@Override
-	public int getSuperTimeLength() {
-		return 30;
+	public Plants getPlantEnumName() {
+		return Plants.STRANGE_CAT;
 	}
 
 }

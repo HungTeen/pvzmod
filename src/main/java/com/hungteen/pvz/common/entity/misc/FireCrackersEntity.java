@@ -48,22 +48,17 @@ public class FireCrackersEntity extends AbstractOwnerEntity {
 	}
 	
 	protected void explode() {
-		float range = 1.5F;
+		final float range = 2F;
 		EntityUtil.playSound(this, SoundEvents.GENERIC_EXPLODE);
-		EntityUtil.getTargetableEntities(this, EntityUtil.getEntityAABB(this, range, range)).forEach((target) -> {
-			target.hurt(PVZDamageSource.explode(this, this.getOwner()), this.getAttackDamage());
+		EntityUtil.getTargetableEntities(this, EntityUtil.getEntityAABB(this, range, range)).forEach(target -> {
+			target.hurt(PVZDamageSource.explode(this, this.getOwner()), 50F);
 			target.setDeltaMovement(target.getDeltaMovement().add(0, BambooLordEntity.UP_SPEED, 0));
 		});
-		for(int i = 0;i < 2; ++ i) {
+		for(int i = 0; i < 2; ++ i) {
 		    EntityUtil.spawnParticle(this, 5);
 	    }
 	}
 	
-	protected float getAttackDamage() {
-		if(this.getOwner() instanceof BambooLordEntity) return ((BambooLordEntity) this.getOwner()).getAttackDamage();
-		return 0;
-	}
-
 	protected boolean isMovementNoisy() {
 		return false;
 	}

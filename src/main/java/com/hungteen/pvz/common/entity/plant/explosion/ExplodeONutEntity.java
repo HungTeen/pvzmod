@@ -1,7 +1,5 @@
 package com.hungteen.pvz.common.entity.plant.explosion;
 
-import java.util.List;
-
 import com.hungteen.pvz.common.entity.plant.defence.WallNutEntity;
 import com.hungteen.pvz.common.misc.damage.PVZDamageSource;
 import com.hungteen.pvz.register.ParticleRegister;
@@ -13,7 +11,6 @@ import net.minecraft.entity.CreatureEntity;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
 import net.minecraft.util.DamageSource;
-import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.world.World;
 
 public class ExplodeONutEntity extends WallNutEntity {
@@ -34,44 +31,35 @@ public class ExplodeONutEntity extends WallNutEntity {
 		}
 	}
 	
-	private void explode(Entity entity) {
-		float len = 2F;
-		AxisAlignedBB aabb = EntityUtil.getEntityAABB(entity, len, len);
-		EntityUtil.getTargetableEntities(this, aabb).forEach((target) -> {
-			target.hurt(PVZDamageSource.explode(this), this.getAttackDamage());
-		});
-		EntityUtil.playSound(this, SoundRegister.CHERRY_BOMB.get());
-	}
-	
 	@Override
 	public void startSuperMode(boolean first) {
 		super.startSuperMode(first);
 		this.explode(this);
 		EntityUtil.spawnParticle(this, 0);
-		if(this.getExtraAttackChance() > 0) {
-			List<Entity> list = EntityUtil.getTargetableEntities(this, EntityUtil.getEntityAABB(this, 40, 40));
-			if(list.isEmpty()) return ;
-			for(int i = 0; i < this.getExtraAttackChance(); ++ i) {
-//				System.out.println(i);
-				Entity target = list.get(this.getRandom().nextInt(list.size()));
-				this.explode(target);
-				EntityUtil.spawnParticle(target, 0);
-			}
-		}
+		final float range = 25F;
+		EntityUtil.getRandomLivingInRange(level, this, EntityUtil.getEntityAABB(this, range, range), this.getExtraAttackChance()).forEach(target -> {
+			this.explode(target);
+			EntityUtil.spawnParticle(target, 0);
+		});
+	}
+	
+	/**
+	 * explode at specific entity.
+	 */
+	public void explode(Entity entity) {
+		final float range = 4F;
+		EntityUtil.getWholeTargetableEntities(this, EntityUtil.getEntityAABB(entity, range, range)).forEach(target -> {
+			target.hurt(PVZDamageSource.explode(this), this.getAttackDamage());
+		});
+		EntityUtil.playSound(this, SoundRegister.CHERRY_BOMB.get());
 	}
 	
 	public int getExtraAttackChance() {
-		if(this.isPlantInStage(1)) return 0;
-		if(this.isPlantInStage(2)) return 1;
-		return 2;
+		return this.getThreeStage(1, 2, 3);
 	}
 	
 	public float getAttackDamage(){
-		int lvl = this.getPlantLvl();
-		if(lvl <= 20) {
-			return 140 + 5 * lvl;
-		}
-		return 240;
+		return this.getAverageProgress(150F, 650F);
 	}
 	
 	@Override

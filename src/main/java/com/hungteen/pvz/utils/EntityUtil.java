@@ -24,6 +24,7 @@ import com.hungteen.pvz.common.entity.bullet.AbstractBulletEntity;
 import com.hungteen.pvz.common.entity.misc.LawnMowerEntity;
 import com.hungteen.pvz.common.entity.plant.PVZPlantEntity;
 import com.hungteen.pvz.common.entity.plant.assist.BloverEntity;
+import com.hungteen.pvz.common.entity.plant.magic.StrangeCatEntity;
 import com.hungteen.pvz.common.entity.zombie.PVZZombieEntity;
 import com.hungteen.pvz.common.entity.zombie.grassday.PoleZombieEntity;
 import com.hungteen.pvz.common.entity.zombie.poolday.BobsleTeamEntity;
@@ -145,13 +146,16 @@ public class EntityUtil {
 		return target != null && target.isAlive();
 	}
 	
+	/**
+	 * {@link StrangeCatEntity#startSuperMode(boolean)}
+	 */
 	public static List<LivingEntity> getRandomLivingInRange(World world, LivingEntity attacker, AxisAlignedBB aabb, int cnt) {
 		List<LivingEntity> list = new ArrayList<>();
-		for(LivingEntity living : world.getEntitiesOfClass(LivingEntity.class, aabb, (target) -> {
-			return EntityUtil.canTargetEntity(attacker, target);
-		})){
+		for(LivingEntity living : EntityUtil.getTargetableLivings(attacker, aabb)){
 			list.add(living);
-			if(-- cnt <= 0) break;
+			if(-- cnt <= 0) {
+				break;
+			}
 		}
 		return list;
 	}
