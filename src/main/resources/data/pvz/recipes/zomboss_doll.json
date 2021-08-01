@@ -2,21 +2,15 @@
   "type": "minecraft:crafting_shaped",
   "pattern": [
     "AAA",
-    "BCD",
+    "ACA",
     "EFG"
   ],
   "key": {
     "A": {
-      "item": "pvz:real_brain"
-    },
-    "B": {
-      "item": "pvz:warning_sign"
+      "item": "pvz:fake_brain"
     },
     "C": {
       "item": "pvz:zombie_doll"
-    },
-    "D": {
-      "item": "pvz:pole"
     },
     "E": {
       "item": "pvz:ice_essence"

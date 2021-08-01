@@ -106,7 +106,7 @@ public class EntitySpawnRegister {
 			if(BiomeUtil.isDesert(biomeKey)) {
 			}
 			if(BiomeUtil.isOcean(biomeKey)) {
-				event.getSpawns().addSpawn(EntityClassification.CREATURE, new Spawners(EntityRegister.FOODIE_ZOMBIE.get(), PVZConfig.COMMON_CONFIG.WorldSettings.EntitySpawnSettings.FoodieZombieSpawnWeight.get(), 1, 1));
+//				event.getSpawns().addSpawn(EntityClassification.CREATURE, new Spawners(EntityRegister.FOODIE_ZOMBIE.get(), PVZConfig.COMMON_CONFIG.WorldSettings.EntitySpawnSettings.FoodieZombieSpawnWeight.get(), 1, 1));
 			}
 			if(BiomeUtil.isPlain(biomeKey)) {
 			}

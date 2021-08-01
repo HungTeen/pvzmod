@@ -33,6 +33,7 @@ import net.minecraft.block.Blocks;
 import net.minecraft.block.LeavesBlock;
 import net.minecraft.item.BlockItem;
 import net.minecraft.item.Item;
+import net.minecraftforge.common.ToolType;
 import net.minecraftforge.event.RegistryEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.RegistryObject;
@@ -68,7 +69,7 @@ public class BlockRegister {
 	public static final RegistryObject<EssenceOreBlock> ARMA_ORE = BLOCKS.register("arma_ore", () -> new EssenceOreBlock(Essences.ARMA));
 	public static final RegistryObject<EssenceOreBlock> ELECTRIC_ORE = BLOCKS.register("electric_ore", () -> new EssenceOreBlock(Essences.ELECTRIC));
 	public static final RegistryObject<EssenceOreBlock> SHADOW_ORE = BLOCKS.register("shadow_ore", () -> new EssenceOreBlock(Essences.SHADOW));
-	public static final RegistryObject<Block> AMETHYST_ORE = BLOCKS.register("amethyst_ore",() -> new Block(Block.Properties.copy(Blocks.DIAMOND_ORE).strength(4F, 6F)));
+	public static final RegistryObject<Block> AMETHYST_ORE = BLOCKS.register("amethyst_ore",() -> new Block(Block.Properties.copy(Blocks.DIAMOND_ORE).harvestTool(ToolType.PICKAXE).requiresCorrectToolForDrops().harvestLevel(3).strength(4F, 6F)));
 	
 	//block
 	public static final RegistryObject<Block> STEEL_BLOCK = BLOCKS.register("steel_block",() -> new Block(Block.Properties.copy(Blocks.IRON_BLOCK).strength(8, 8)));

@@ -27,7 +27,7 @@ public class BallEntity extends PultBulletEntity {
 
 	@Override
 	protected void dealDamage(Entity target) {
-		target.hurt(PVZDamageSource.ball(this, this.getThrower()), this.attackDamage);
+		target.hurt(PVZDamageSource.ball(this, this.getThrower()), this.getAttackDamage());
 	}
 
 }

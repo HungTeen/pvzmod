@@ -28,13 +28,14 @@ public class ZomBossDollItem extends Item {
 	
 	@Override
 	public ActionResultType useOn(ItemUseContext context) {
-		PlayerEntity player = context.getPlayer();
-		World world = context.getLevel();
-		BlockPos pos = context.getClickedPos();
+		final PlayerEntity player = context.getPlayer();
+		final World world = context.getLevel();
+		final BlockPos pos = context.getClickedPos();
 		if(! world.isClientSide && ! player.getCooldowns().isOnCooldown(this) && context.getClickedFace() == Direction.UP) {
 			if(this.canSpawnHere(world, pos)) {
 				ZomBossEntity zomboss = EntityRegister.ZOMBOSS.get().create(world);
 				EntityUtil.onEntitySpawn(world, zomboss, pos.above());
+				context.getItemInHand().shrink(1);
 			}
 		}
 		return super.useOn(context);

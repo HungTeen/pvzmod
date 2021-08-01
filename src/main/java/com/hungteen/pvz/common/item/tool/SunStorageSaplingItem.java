@@ -28,8 +28,8 @@ import net.minecraftforge.fml.network.PacketDistributor;
 
 public class SunStorageSaplingItem extends Item {
 
-	public final int MAX_STORAGE_NUM;
 	public static final String STORAGE_STRING = "sun_storage_amount";
+	public final int MAX_STORAGE_NUM;
 
 	public SunStorageSaplingItem(int num) {
 		super(new Item.Properties().tab(GroupRegister.PVZ_MISC).stacksTo(1));

@@ -99,7 +99,7 @@ public class CatapultZombieEntity extends CarZombieEntity implements IPult,IHasW
 	}
 	
 	public boolean checkY(LivingEntity target) {
-		return this.getY() + 9 >= target.getY() + target.getBbHeight();
+		return this.getY() + 12 >= target.getY() + target.getBbHeight();
 	}
 	
 	@Override
@@ -129,7 +129,7 @@ public class CatapultZombieEntity extends CarZombieEntity implements IPult,IHasW
 	
 	@Override
 	public EntitySize getDimensions(Pose poseIn) {
-		return EntitySize.scalable(0.9F, 2F);
+		return EntitySize.scalable(0.8F, 2F);
 	}
 	
     @Override

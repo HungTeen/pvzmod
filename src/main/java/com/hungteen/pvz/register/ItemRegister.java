@@ -236,7 +236,8 @@ public class ItemRegister {
 	public static final RegistryObject<Item> SCREEN_DOOR = ITEMS.register("screen_door", ScreenDoorItem::new);
 	public static final RegistryObject<Item> SUN_COLLECTOR = ITEMS.register("sun_collector", SunCollectorItem::new);
 	public static final RegistryObject<Item> SUN_STORAGE_SAPLING = ITEMS.register("sun_storage_sapling", () -> new SunStorageSaplingItem(10000));
-	public static final RegistryObject<Item> SUN_STORAGE_SAPLING2 = ITEMS.register("sun_storage_sapling2", () -> new SunStorageSaplingItem(1000));
+	public static final RegistryObject<Item> SMALL_SUN_STORAGE_SAPLING = ITEMS.register("sun_storage_sapling2", () -> new SunStorageSaplingItem(1000));
+	public static final RegistryObject<Item> LARGE_STORAGE_SAPLING = ITEMS.register("sun_storage_sapling3", () -> new SunStorageSaplingItem(100000));
 	public static final RegistryObject<Item> BOWLING_GLOVE = ITEMS.register("bowling_glove", BowlingGloveItem::new);
 	public static final RegistryObject<Item> JACK_BOX = ITEMS.register("jack_box", JackBoxItem::new);
 	public static final RegistryObject<Item> BALLOON = ITEMS.register("balloon", BalloonItem::new);
