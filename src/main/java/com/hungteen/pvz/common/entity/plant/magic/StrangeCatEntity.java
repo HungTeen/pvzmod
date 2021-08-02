@@ -1,5 +1,6 @@
 package com.hungteen.pvz.common.entity.plant.magic;
 
+import com.hungteen.pvz.PVZConfig;
 import com.hungteen.pvz.common.entity.ai.goal.target.PVZNearestTargetGoal;
 import com.hungteen.pvz.common.entity.plant.PVZPlantEntity;
 import com.hungteen.pvz.common.event.PVZLivingEvents;
@@ -72,7 +73,11 @@ public class StrangeCatEntity extends PVZPlantEntity {
 	 */
 	public static void handleCopyCat(final LivingDeathEvent ev) {
 		if(! ev.getEntity().level.isClientSide && ev.getSource().getEntity() instanceof StrangeCatEntity) {
-			((StrangeCatEntity) ev.getSource().getEntity()).onSelfCopy(ev.getEntityLiving());
+			final float range = 10F;
+			final int count = ev.getEntity().level.getEntitiesOfClass(StrangeCatEntity.class, EntityUtil.getEntityAABB(ev.getEntity(), range, range)).size();
+			if(count < PVZConfig.COMMON_CONFIG.EntitySettings.PlantSetting.StrangeCatCount.get()) {
+				((StrangeCatEntity) ev.getSource().getEntity()).onSelfCopy(ev.getEntityLiving());
+			}
 		}
 	}
 	

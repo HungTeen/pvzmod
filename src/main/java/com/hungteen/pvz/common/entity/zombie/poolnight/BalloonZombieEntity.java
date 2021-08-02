@@ -134,6 +134,11 @@ public class BalloonZombieEntity extends PVZZombieEntity {
 	}
 	
 	@Override
+	public boolean canClimbWalls() {
+		return super.canClimbWalls() && ! this.hasBalloon();
+	}
+	
+	@Override
 	public boolean canBeAttractedBy(ICanAttract defender) {
 		return ! this.hasBalloon();
 	}

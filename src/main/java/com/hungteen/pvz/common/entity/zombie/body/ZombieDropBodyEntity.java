@@ -128,6 +128,7 @@ public class ZombieDropBodyEntity extends PVZEntityBase {
 	
 	private void updateInfo(PVZZombieEntity zombie, BodyType type) {
 		this.setZombieType(zombie.getZombieEnumName());
+		this.setMini(zombie.isMiniZombie());
 		this.setBodyType(type);
 	}
 	

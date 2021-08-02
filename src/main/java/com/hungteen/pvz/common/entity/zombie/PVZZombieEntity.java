@@ -87,6 +87,7 @@ import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.SoundEvent;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
+import net.minecraft.util.math.vector.Vector3d;
 import net.minecraft.world.DifficultyInstance;
 import net.minecraft.world.GameRules;
 import net.minecraft.world.IServerWorld;
@@ -129,6 +130,8 @@ public abstract class PVZZombieEntity extends MonsterEntity implements IPVZZombi
 	protected boolean canLostHead = true;
 	protected boolean canHelpAttack = true;
 	protected int maxDeathTime = 20;
+	protected int climbUpTick = 0;
+	protected int maxClimbUpTick = 5;
 
 	public PVZZombieEntity(EntityType<? extends MonsterEntity> type, World worldIn) {
 		super(type, worldIn);
@@ -140,6 +143,8 @@ public abstract class PVZZombieEntity extends MonsterEntity implements IPVZZombi
 		this.setPathfindingMalus(PathNodeType.DAMAGE_FIRE, 6.0F);
 		this.setPathfindingMalus(PathNodeType.DAMAGE_OTHER, 8.0F);
 		this.setPathfindingMalus(PathNodeType.UNPASSABLE_RAIL, 8.0F);
+		this.setPathfindingMalus(PathNodeType.FENCE, 6F);
+		this.setPathfindingMalus(PathNodeType.LEAVES, 4F);
 	}
 	
 	@Override
@@ -299,6 +304,14 @@ public abstract class PVZZombieEntity extends MonsterEntity implements IPVZZombi
 	public void normalZombieTick() {
 		if(! this.level.isClientSide) {
 			this.setAnimTime(Math.max(0, this.getAnimTime() - 1));
+			if(this.canClimbWalls()) {
+				if(++ this.climbUpTick <= this.maxClimbUpTick) {
+					final Vector3d vec = this.getDeltaMovement();
+				    this.setDeltaMovement(vec.x, 0.3D, vec.z);
+				}
+			} else {
+				this.climbUpTick = 0;
+			}
 		}
 	}
 	
@@ -311,6 +324,13 @@ public abstract class PVZZombieEntity extends MonsterEntity implements IPVZZombi
 		if(this.getZombieLevel() != lvl) {//level changed.
 			this.setZombieLevel(lvl);
 		}
+	}
+	
+	/**
+	 * {@link #normalZombieTick()}
+	 */
+	public boolean canClimbWalls() {
+		return this.horizontalCollision;
 	}
 
 	/**

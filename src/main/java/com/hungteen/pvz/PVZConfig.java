@@ -192,6 +192,15 @@ public class PVZConfig {
 				}
 				builder.pop();
 				
+				builder.comment("Settings about plants.").push("Plant Settings");
+				{
+					EntitySettings.PlantSetting.StrangeCatCount = builder
+						    .comment("the max number StrangeCats can copy themselves in a range of 20 * 20.")
+						    .defineInRange("StrangeCatCount", 10, 0, 100);
+				    
+				}
+				builder.pop();
+				
 				builder.comment("The Max live time for Entity like sun.").push("EntityLiveTime");
 				{
 					EntitySettings.EntityLiveTick.SunLiveTick = builder
@@ -327,12 +336,17 @@ public class PVZConfig {
 			
 			public EntityLiveTick EntityLiveTick = new EntityLiveTick();
 			public ZombieSetting ZombieSetting = new ZombieSetting();
+			public PlantSetting PlantSetting = new PlantSetting();
 			
 			public static class ZombieSetting{
 				public ForgeConfigSpec.IntValue ZombieSuperChance;
 			    public ForgeConfigSpec.IntValue ZombieSunChance;
 			    public ForgeConfigSpec.IntValue ZombieDropMultiper;
 			    public ForgeConfigSpec.BooleanValue EnableZombieDropHands;
+			}
+			
+			public static class PlantSetting{
+				public ForgeConfigSpec.IntValue StrangeCatCount;
 			}
 			
 			public static class EntityLiveTick{

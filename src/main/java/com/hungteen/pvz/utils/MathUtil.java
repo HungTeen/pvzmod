@@ -68,7 +68,11 @@ public class MathUtil {
 	}
 	
 	public static Vector3d getHorizontalNormalizedVec(Vector3d a, Vector3d b) {
-		return new Vector3d(b.x - a.x, 0, b.z - a.z).normalize();
+		return getHorizontalVec(a, b).normalize();
+	}
+	
+	public static Vector3d getHorizontalVec(Vector3d a, Vector3d b) {
+		return new Vector3d(b.x - a.x, 0, b.z - a.z);
 	}
 	
 	public static Vector3d getVector3dBy2(double x, double z) {
