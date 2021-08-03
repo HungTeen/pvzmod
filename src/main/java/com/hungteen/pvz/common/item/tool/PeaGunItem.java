@@ -252,6 +252,8 @@ public class PeaGunItem extends Item {
 					if(type == 2) speed += 0.2;
 				}
 			}
+			pea.summonByOwner(player);
+			pea.setAttackDamage(2F);
 			pea.setDeltaMovement(vec.scale(speed));
 			player.level.addFreshEntity(pea);
 		});

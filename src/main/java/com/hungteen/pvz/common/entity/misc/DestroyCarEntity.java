@@ -62,7 +62,7 @@ public class DestroyCarEntity extends AbstractOwnerEntity {
 	
 	private void tickCollision() {
 		if(! level.isClientSide && this.tickCount % 10 == 0) {
-			EntityUtil.getTargetableEntities(this, this.getBoundingBox().inflate(0.5F)).forEach((target) -> {
+			EntityUtil.getTargetableEntities(this.getOwnerOrSelf(), this.getBoundingBox().inflate(0.5F)).forEach((target) -> {
 				if(target instanceof PVZPlantEntity) {
 					target.hurt(PVZDamageSource.causeDeadlyDamage(this, this.getOwner()), EntityUtil.getCurrentMaxHealth((PVZPlantEntity) target) * 2);
 				}

@@ -53,7 +53,7 @@ public class LawnMowerEntity extends AbstractOwnerEntity {
 			}
 			if(this.isStartRun()) {
 				this.level.getEntitiesOfClass(Entity.class, this.getBoundingBox().inflate(0.5D), entity -> {
-			        return EntityUtil.checkCanEntityBeTarget(this, entity);
+			        return EntityUtil.canTargetEntity(this.getOwnerOrSelf(), entity);
 		        }).forEach(target -> {
 		        	this.checkAndRemoveEntity(target);
 		        });
@@ -65,7 +65,7 @@ public class LawnMowerEntity extends AbstractOwnerEntity {
 			} else {
 				-- tickCount;
 				List<Entity> list = this.level.getEntitiesOfClass(Entity.class, this.getBoundingBox().inflate(1), (target) -> {
-			        return EntityUtil.checkCanEntityBeTarget(this, target);
+					 return EntityUtil.canTargetEntity(this.getOwnerOrSelf(), target);
 		        });
 				if(! list.isEmpty()) {
 			       this.onStartRun(list.get(0));

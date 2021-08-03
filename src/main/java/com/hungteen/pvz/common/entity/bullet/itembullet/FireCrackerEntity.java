@@ -70,12 +70,11 @@ public class FireCrackerEntity extends PVZItemBulletEntity{
 	}
 	
 	private void dealDamage(Entity target) {
-		
 		if(! level.isClientSide) {
 			EntityUtil.playSound(this, SoundRegister.POTATO_MINE.get());
-		    float range = 1.5F;
-		    EntityUtil.getTargetableEntities(this, EntityUtil.getEntityAABB(this, range, range)).forEach((entity) -> {
-			    entity.hurt(PVZDamageSource.explode(this, this.getThrower()), this.attackDamage);
+		    float range = 3F;
+		    EntityUtil.getTargetableEntities(this.getOwnerOrSelf(), EntityUtil.getEntityAABB(this, range, range)).forEach((entity) -> {
+			    entity.hurt(PVZDamageSource.explode(this, this.getThrower()), this.getAttackDamage());
 		    });
 		    for(int i = 0;i < 3; ++ i) {
 			    EntityUtil.spawnParticle(this, 5);

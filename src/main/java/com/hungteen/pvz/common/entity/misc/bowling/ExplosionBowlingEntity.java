@@ -42,7 +42,7 @@ public class ExplosionBowlingEntity extends AbstractBowlingEntity {
 	protected void changeDiretion() {
 		float len = 2.5F;
 		AxisAlignedBB aabb = EntityUtil.getEntityAABB(this, len, len);
-		EntityUtil.getTargetableEntities(this, aabb).forEach((target) -> {
+		EntityUtil.getTargetableEntities(this.getOwnerOrSelf(), aabb).forEach((target) -> {
 			target.hurt(PVZDamageSource.explode(this), 180);
 		});
 		EntityUtil.playSound(this, SoundRegister.BOWLING_BOMB.get());

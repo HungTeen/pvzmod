@@ -65,7 +65,7 @@ public class BowlingGloveItem extends Item {
 				    System.out.println("Error : bowling entity spawn error!");
 				    return ActionResultType.FAIL;
 			    }
-			    entity.setOwner(player);
+			    entity.summonByOwner(player);
 			    entity.shoot(player);
 			    if (!player.abilities.instabuild) {// reset
 				    setBowlingType(stack, Plants.PEA_SHOOTER);

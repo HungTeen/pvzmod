@@ -28,7 +28,9 @@ public class FireCrackerItem extends Item {
 			FireCrackerEntity entity = new FireCrackerEntity(worldIn, playerIn);
 			Vector3d vec = playerIn.getLookAngle();
 			entity.setPos(playerIn.getX() + vec.x, playerIn.getY() + playerIn.getEyeHeight() + vec.y, playerIn.getZ() + vec.z);
+			entity.summonByOwner(playerIn);
 			entity.shoot(vec);
+			entity.setAttackDamage(4F);
 			worldIn.addFreshEntity(entity);
 			EntityUtil.playSound(playerIn, SoundEvents.SNOWBALL_THROW);
 			if(! playerIn.abilities.instabuild) {

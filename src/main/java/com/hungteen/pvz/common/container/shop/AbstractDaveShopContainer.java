@@ -69,4 +69,10 @@ public abstract class AbstractDaveShopContainer extends Container{
 		return itemstack;
 	}
 	
+	@Override
+	public void removed(PlayerEntity player) {
+		super.removed(player);
+		this.clearContainer(player, player.level, this.output);
+	}
+	
 }

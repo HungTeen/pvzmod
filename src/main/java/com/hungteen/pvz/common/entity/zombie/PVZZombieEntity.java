@@ -53,7 +53,9 @@ import com.hungteen.pvz.utils.others.WeightList;
 import com.mojang.datafixers.util.Pair;
 
 import net.minecraft.block.Block;
+import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
+import net.minecraft.block.SweetBerryBushBlock;
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntitySize;
@@ -758,10 +760,16 @@ public abstract class PVZZombieEntity extends MonsterEntity implements IPVZZombi
 	}
 	
 	@Override
+	public void makeStuckInBlock(BlockState p_213295_1_, Vector3d p_213295_2_) {
+		this.fallDistance = 0.0F;
+	    this.stuckSpeedMultiplier = Vector3d.ZERO;
+	}
+	
+	@Override
 	protected float getBlockSpeedFactor() {//not affect by soul sand.
 		Block block = this.level.getBlockState(this.blockPosition()).getBlock();
 	    float f = block.getSpeedFactor();
-	    if (block == Blocks.WATER || block != Blocks.BUBBLE_COLUMN) {
+	    if (block == Blocks.WATER || block == Blocks.BUBBLE_COLUMN) {
 	    	return f;
 	    }
 	    return 1F;

@@ -42,6 +42,7 @@ public class GardenRakeItem extends Item {
 				    return ActionResultType.FAIL;
 			    }
 			    entity.setPlacer(player);
+			    entity.summonByOwner(player);
 			    if (! player.abilities.instabuild) {// reset
 				    stack.shrink(1);
 			    }
