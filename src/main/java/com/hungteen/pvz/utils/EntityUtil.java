@@ -397,7 +397,7 @@ public class EntityUtil {
 		if(target instanceof PVZMultiPartEntity) {//can attack its owner then can attack it
 			return checkCanEntityBeTarget(attacker, ((PVZMultiPartEntity) target).getOwner());
 		}
-		if(target instanceof PlayerEntity && !PlayerUtil.isPlayerSurvival((PlayerEntity) target)) {
+		if(target instanceof PlayerEntity && ! PlayerUtil.isPlayerSurvival((PlayerEntity) target)) {
 			return false;
 		}
 		if(ConfigUtil.isTeamAttackEnable()) {//enable team attack

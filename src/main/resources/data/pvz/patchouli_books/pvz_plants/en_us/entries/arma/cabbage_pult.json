@@ -1,0 +1,22 @@
+{
+    "name": "Cabbage Pult",
+    "icon": "pvz:cabbage_pult_card",
+    "category": "pvz:arma",
+    "pages": [
+        {
+            "type": "text",
+            "text": "$(bgreen)Cabbage Pult$() is okay with launching cabbages at zombies. It's what he's paid for, after all, and he's good at it.$(br)$(byellow)Sun Cost$() : $(l)100$()$(br)$(bblue)Recharge$() : $(l)Huge Fast$()$(br)$(l)Features$() : It is a $(l)range attack$() plant that throws $(bred)one cabbage$() every 3 seconds to attack enemy."
+        },
+        {
+            "type": "entity",
+            "entity": "pvz:cabbage_pult",
+            "scale": 0.4,
+            "text": "Appearance"
+        },
+        {
+            "type": "text",
+            "text": "$(bgreen)Plant Food :$() It will throw $(bred)powered cabbages$() to $(l)all surrounding enemies$()."
+        }
+    ],
+    "sortnum": 0
+}

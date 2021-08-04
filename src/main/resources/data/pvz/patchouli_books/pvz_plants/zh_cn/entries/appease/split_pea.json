@@ -1,0 +1,22 @@
+{
+    "name": "裂荚射手",
+    "icon": "pvz:split_pea_card",
+    "category": "pvz:appease",
+    "pages": [
+        {
+            "type": "text",
+            "text": "$(bgreen)裂荚射手$()长了两个脑袋——确切来说，一个脑袋后脑勺长上的另一个大脑袋——这为他的工作增色不少。$(br)$(byellow)阳光消耗$() : $(l)125$()$(br)$(bblue)冷却$() : $(l)非常快$()$(br)$(l)特点$() : 它是一个$(l)远程攻击$()植物，每1.5秒向前发射$(bred)一个豌豆，向后发射两个豌豆$()来攻击敌人。"
+        },
+        {
+            "type": "entity",
+            "entity": "pvz:split_pea",
+            "scale": 0.65,
+            "text": "外观"
+        },
+        {
+            "type": "text",
+            "text": "$(bpurple)特殊 :$() 它每次攻击都有几率$(l)交换头部的朝向$()。$(br)$(bgreen)能量豆大招$() : 它会每tick向前后发射$(l)多个豌豆$()，持续5秒。"
+        }
+    ],
+    "sortnum": 3
+}

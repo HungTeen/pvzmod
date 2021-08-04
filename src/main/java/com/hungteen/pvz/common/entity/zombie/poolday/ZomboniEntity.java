@@ -51,7 +51,7 @@ public class ZomboniEntity extends CarZombieEntity implements IMultiPartEntity, 
 		if(! level.isClientSide) {
 			FrostWalkerEnchantment.onEntityMoved(this, level, this.blockPosition(), 1);
 			BlockPos blockpos = this.blockPosition();
-			BlockState state = Blocks.SNOW.defaultBlockState().setValue(SnowBlock.LAYERS, 2);
+			BlockState state = Blocks.SNOW.defaultBlockState().setValue(SnowBlock.LAYERS, 1);
             if ((this.level.isEmptyBlock(blockpos) || level.getBlockState(blockpos).getBlock() == Blocks.SNOW) && state.canSurvive(this.level, blockpos)) {
                this.level.setBlockAndUpdate(blockpos, state);
             }

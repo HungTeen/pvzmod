@@ -22,19 +22,16 @@ public class CapabilityHandler {
 	@CapabilityInject(IPlayerDataCapability.class)
 	public static final Capability<IPlayerDataCapability> PLAYER_DATA_CAPABILITY = null;
 
-	public static void registerCapabilities()
-	{
+	public static void registerCapabilities(){
 		CapabilityManager.INSTANCE.register(IPlayerDataCapability.class,new PlayerDataStorage(), PlayerDataCapability::new);
 		MinecraftForge.EVENT_BUS.register(CapabilityHandler.class);
 	}
 	
 	@SubscribeEvent
-    public static void attachCapability(AttachCapabilitiesEvent<Entity> event)
-    {
+    public static void attachCapability(AttachCapabilitiesEvent<Entity> event){
 		Entity entity = event.getObject();
-        if (entity instanceof PlayerEntity)
-        {
-        	event.addCapability(new ResourceLocation(PVZMod.MOD_ID,"player_data"), new PlayerDataProvider((PlayerEntity) entity));
+        if (entity instanceof PlayerEntity){
+        	event.addCapability(new ResourceLocation(PVZMod.MOD_ID, "player_data"), new PlayerDataProvider((PlayerEntity) entity));
         }
     }
 }

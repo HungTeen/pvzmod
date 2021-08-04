@@ -120,7 +120,7 @@ public class WaveManager {
 			return ;
 		}
 		if(this.spawnList.getTotal() == 0) {
-			PVZMod.LOGGER.warn("Warn : Why cause zombie spawn list empty ?");
+			PVZMod.LOGGER.warn("WaveManager : Why cause zombie spawn list empty ?");
 			return ;
 		}
 		int cnt = this.getSpawnCount();

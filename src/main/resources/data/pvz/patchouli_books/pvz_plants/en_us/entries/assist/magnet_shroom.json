@@ -1,0 +1,22 @@
+{
+    "name": "Blover",
+    "icon": "pvz:magnet_shroom_card",
+    "category": "pvz:assist",
+    "pages": [
+        {
+            "type": "text",
+            "text": "$(bgreen)Magnet Shroom$() is a powerful force. Very powerful. Sometimes it scares Magnet Shroom a little. He's not sure if he can handle that kind of responsibility.$(br)$(byellow)Sun Cost$() : $(l)100$()$(br)$(bblue)Recharge$() : $(l)Little Fast$()$(br)$(l)Features$() : It is a $(bred)Assist$() plant that can $(bred)steal metal objects$() from enemies in 12 blocks."
+        },
+        {
+            "type": "entity",
+            "entity": "pvz:magnet_shroom",
+            "scale": 0.65,
+            "text": "Appearance"
+        },
+        {
+            "type": "text",
+            "text": "$(bpurple)Special :$() It can $(bred)destroy ladders$() on plants in 20 blocks. $(br)$(bgreen)Plant Food :$() It will $(l)steal$() several metal and $(l)throw$() them to hit enemies."
+        }
+    ],
+    "sortnum": 4
+}

@@ -15,7 +15,7 @@
         },
         {
             "type": "text",
-            "text": "$(bpurple) Special :$() It can $(bred)dispel the fog$() for near by players. $(br)$(bgreen)Plant Food :$() Not Avaiable."
+            "text": "$(bpurple)Special :$() It can $(bred)dispel the fog$() for near by players. $(br)$(bgreen)Plant Food :$() Not Avaiable."
         }
     ],
     "sortnum": 2

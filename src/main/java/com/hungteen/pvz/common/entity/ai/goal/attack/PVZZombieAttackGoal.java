@@ -2,7 +2,6 @@ package com.hungteen.pvz.common.entity.ai.goal.attack;
 
 import com.hungteen.pvz.common.entity.zombie.PVZZombieEntity;
 import com.hungteen.pvz.utils.EntityUtil;
-import com.hungteen.pvz.utils.MathUtil;
 
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.ai.attributes.Attributes;
@@ -39,12 +38,11 @@ public class PVZZombieAttackGoal extends PVZMeleeAttackGoal {
 			    this.attacker.swing(Hand.MAIN_HAND);
 			    this.attacker.doHurtTarget(target);
 			}
-		} else if(this.leapTick >= this.LeapCD){//check can leap to target or not.
-			final double horizonDistance = MathUtil.getHorizontalVec(this.attacker.position(), target.position()).length();
+		} else if(++ this.leapTick >= this.LeapCD){//check can leap to target or not.
 			if((this.attacker.getNavigation().getPath() == null || this.attacker.getNavigation().getPath().isDone()) 
-					&& horizonDistance <= 10 && this.attacker.getDeltaMovement().length() <= 1 && this.attacker.isOnGround()) {
+					&& this.zombie.canZombieNormalUpdate() && this.attacker.getDeltaMovement().length() <= 0.1D && this.attacker.isOnGround()) {
 				Vector3d speed = target.position().subtract(this.attacker.position()).normalize();
-				this.attacker.setDeltaMovement(speed.scale(this.attacker.getAttributeValue(Attributes.MOVEMENT_SPEED)));
+				this.attacker.setDeltaMovement(speed.scale(3D).scale(this.attacker.getAttributeValue(Attributes.MOVEMENT_SPEED)));
 				this.leapTick = 0;
 			}
 		}

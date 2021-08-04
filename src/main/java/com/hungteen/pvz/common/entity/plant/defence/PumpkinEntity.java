@@ -9,7 +9,7 @@ import net.minecraft.world.World;
 
 public class PumpkinEntity extends PVZPlantEntity{
 
-	protected PumpkinEntity(EntityType<? extends CreatureEntity> p_i48575_1_, World p_i48575_2_) {
+	public PumpkinEntity(EntityType<? extends CreatureEntity> p_i48575_1_, World p_i48575_2_) {
 		super(p_i48575_1_, p_i48575_2_);
 	}
 

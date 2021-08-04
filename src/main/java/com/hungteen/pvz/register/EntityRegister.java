@@ -58,6 +58,7 @@ import com.hungteen.pvz.client.render.entity.plant.assist.LilyPadRender;
 import com.hungteen.pvz.client.render.entity.plant.assist.MagnetShroomRender;
 import com.hungteen.pvz.client.render.entity.plant.defence.GarlicRender;
 import com.hungteen.pvz.client.render.entity.plant.defence.GiantWallNutRender;
+import com.hungteen.pvz.client.render.entity.plant.defence.PumpkinRender;
 import com.hungteen.pvz.client.render.entity.plant.defence.TallNutRender;
 import com.hungteen.pvz.client.render.entity.plant.defence.WallNutRender;
 import com.hungteen.pvz.client.render.entity.plant.defence.WaterGuardRender;
@@ -199,6 +200,7 @@ import com.hungteen.pvz.common.entity.plant.assist.LilyPadEntity;
 import com.hungteen.pvz.common.entity.plant.assist.MagnetShroomEntity;
 import com.hungteen.pvz.common.entity.plant.defence.GarlicEntity;
 import com.hungteen.pvz.common.entity.plant.defence.GiantWallNutEntity;
+import com.hungteen.pvz.common.entity.plant.defence.PumpkinEntity;
 import com.hungteen.pvz.common.entity.plant.defence.TallNutEntity;
 import com.hungteen.pvz.common.entity.plant.defence.WallNutEntity;
 import com.hungteen.pvz.common.entity.plant.defence.WaterGuardEntity;
@@ -445,6 +447,7 @@ public class EntityRegister {
 	public static final RegistryObject<EntityType<GatlingPeaEntity>> GATLING_PEA = registerEntityType(GatlingPeaEntity::new, "gatling_pea", EntityClassification.CREATURE);
 	public static final RegistryObject<EntityType<TwinSunFlowerEntity>> TWIN_SUNFLOWER = registerEntityType(TwinSunFlowerEntity::new, "twin_sunflower", EntityClassification.CREATURE);
 	public static final RegistryObject<EntityType<WaterGuardEntity>> WATER_GUARD = registerEntityType(WaterGuardEntity::new, "water_guard", EntityClassification.CREATURE);
+	public static final RegistryObject<EntityType<PumpkinEntity>> PUMPKIN = registerEntityType(PumpkinEntity::new, "pumpkin", EntityClassification.CREATURE);
 	public static final RegistryObject<EntityType<PlanternEntity>> PLANTERN = registerEntityType(PlanternEntity::new, "plantern", EntityClassification.CREATURE);
 	public static final RegistryObject<EntityType<MagnetShroomEntity>> MAGNET_SHROOM = registerEntityType(MagnetShroomEntity::new, "magnet_shroom", EntityClassification.CREATURE);
 	public static final RegistryObject<EntityType<CatTailEntity>> CAT_TAIL = registerEntityType(CatTailEntity::new, "cat_tail", EntityClassification.CREATURE);
@@ -605,6 +608,7 @@ public class EntityRegister {
         RenderingRegistry.registerEntityRenderingHandler(BLOVER.get(), BloverRender::new);
         RenderingRegistry.registerEntityRenderingHandler(SPLIT_PEA.get(), SplitPeaRender::new);
         RenderingRegistry.registerEntityRenderingHandler(STAR_FRUIT.get(), StarFruitRender::new);
+        RenderingRegistry.registerEntityRenderingHandler(PUMPKIN.get(), PumpkinRender::new);
         RenderingRegistry.registerEntityRenderingHandler(MAGNET_SHROOM.get(), MagnetShroomRender::new);
         
         RenderingRegistry.registerEntityRenderingHandler(CABBAGE_PULT.get(), CabbagePultRender::new);
@@ -658,15 +662,15 @@ public class EntityRegister {
 		});
 	}
 
-	private static <T extends Entity> RegistryObject<EntityType<T>> registerEntityType(IFactory<T> factory,String name,EntityClassification classification){
+	private static <T extends Entity> RegistryObject<EntityType<T>> registerEntityType(IFactory<T> factory, String name, EntityClassification classification){
 		return ENTITY_TYPES.register(name, () -> {return EntityType.Builder.of(factory, classification).build(StringUtil.prefix(name).toString());});
 	}
 	
-	private static <T extends Entity> RegistryObject<EntityType<T>> registerImmuneFireEntityType(IFactory<T> factory,String name,EntityClassification classification){
+	private static <T extends Entity> RegistryObject<EntityType<T>> registerImmuneFireEntityType(IFactory<T> factory, String name, EntityClassification classification){
 		return ENTITY_TYPES.register(name, () -> {return EntityType.Builder.of(factory, classification).fireImmune().build(StringUtil.prefix(name).toString());});
 	}
 	
-	private static <T extends Entity> RegistryObject<EntityType<T>> registerEntityType(IFactory<T> factory,String name,EntityClassification classification,float w,float h){
+	private static <T extends Entity> RegistryObject<EntityType<T>> registerEntityType(IFactory<T> factory, String name, EntityClassification classification, float w, float h){
 		return ENTITY_TYPES.register(name, () -> {return EntityType.Builder.of(factory, classification).sized(w, h).build(StringUtil.prefix(name).toString());});
 	}
 	

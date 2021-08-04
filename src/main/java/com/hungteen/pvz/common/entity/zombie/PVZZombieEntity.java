@@ -55,7 +55,6 @@ import com.mojang.datafixers.util.Pair;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
-import net.minecraft.block.SweetBerryBushBlock;
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntitySize;
@@ -143,9 +142,8 @@ public abstract class PVZZombieEntity extends MonsterEntity implements IPVZZombi
 		this.onLevelChanged();
 		this.setPathfindingMalus(PathNodeType.DANGER_FIRE, 6.0F);
 		this.setPathfindingMalus(PathNodeType.DAMAGE_FIRE, 6.0F);
-		this.setPathfindingMalus(PathNodeType.DAMAGE_OTHER, 8.0F);
-		this.setPathfindingMalus(PathNodeType.UNPASSABLE_RAIL, 8.0F);
-		this.setPathfindingMalus(PathNodeType.FENCE, 6F);
+		this.setPathfindingMalus(PathNodeType.DAMAGE_OTHER, 6.0F);
+		this.setPathfindingMalus(PathNodeType.UNPASSABLE_RAIL, 6.0F);
 		this.setPathfindingMalus(PathNodeType.LEAVES, 4F);
 	}
 	

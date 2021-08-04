@@ -2,7 +2,6 @@ package com.hungteen.pvz.utils;
 
 import java.util.List;
 
-import com.hungteen.pvz.PVZMod;
 import com.hungteen.pvz.api.enums.PVZGroupType;
 import com.hungteen.pvz.client.gui.search.SearchOption;
 import com.hungteen.pvz.common.capability.CapabilityHandler;
@@ -117,10 +116,9 @@ public class PlayerUtil {
 		if(cap != null) {
 			return PVZGroupType.getGroup(cap.getPlayerData().getPlayerStats().getPlayerStats(Resources.GROUP_TYPE));
 		}
-		PVZMod.LOGGER.warn(player.getName().toString() + " get Group Error !");
-		return PVZGroupType.getGroup(ConfigUtil.getPlayerInitialGroup());
+		return PVZGroupType.getGroup(ConfigUtil.getPlayerInitialGroup());// get Group Error !
 	}
-	
+//	
 	public static void playClientSound(PlayerEntity player, int id) {
 		PVZPacketHandler.CHANNEL.send(PacketDistributor.PLAYER.with(()->{
 			return (ServerPlayerEntity) player;

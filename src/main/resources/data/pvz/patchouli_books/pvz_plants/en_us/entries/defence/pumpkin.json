@@ -1,0 +1,22 @@
+{
+    "name": "Pumpkin",
+    "icon": "pvz:pumpkin_card",
+    "category": "pvz:defence",
+    "pages": [
+        {
+            "type": "text",
+            "text": "$(bgreen)Pumpkin$() hasn't heard from his cousin Renfield lately. Apparently Renfield's a big star, some kind of... what was it... sports hero? Peggle Master? Pumpkin doesn't really get it. He just does his job.$(br)$(byellow)Sun Cost$() : $(l)125$()$(br)$(bblue)Recharge$() : $(l)Slow$()$(br)$(l)Features$() : It is a $(l)Outer Layer$() plant that only place on other plants to protect them with a $(bred)400 heart defence$()."
+        },
+        {
+            "type": "entity",
+            "entity": "pvz:pumpkin",
+            "scale": 0.6,
+            "text": "Appearance"
+        },
+        {
+            "type": "text",
+            "text": "$(bgreen)Plant Food :$() Gain more defence."
+        }
+    ],
+    "sortnum": 2
+}
