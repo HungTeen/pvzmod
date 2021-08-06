@@ -371,6 +371,9 @@ public abstract class PVZPlantEntity extends CreatureEntity implements IPVZPlant
 
 	@Override
 	public boolean hurt(DamageSource source, float amount) {
+		if(level.isClientSide) {
+			return false;
+		}
 		if (source instanceof PVZDamageSource) {
 			this.invulnerableTime = 0;
 		}
@@ -382,16 +385,17 @@ public abstract class PVZPlantEntity extends CreatureEntity implements IPVZPlant
 	 * pumpkin reduce the hurt damage.
 	 */
 	protected float pumpkinReduceDamage(DamageSource source, float amount) {
-		if (!level.isClientSide) {
-			if (this.outerPlant.isPresent() && this.outerPlant.get() == Plants.PUMPKIN) {
-				if (this.getPumpkinLife() > amount) { // damage pumpkin health first
-					this.setPumpkinLife(this.getPumpkinLife() - amount);
-					amount = 0;
-				} else {
-					amount -= this.getPumpkinLife();
-					this.setPumpkinLife(0f);
-					this.outerPlant = Optional.empty();
-				}
+		if(source instanceof PVZDamageSource && ((PVZDamageSource) source).isParabola()) {
+			return amount;
+		}
+		if (this.outerPlant.isPresent() && this.outerPlant.get() == Plants.PUMPKIN) {
+			if (this.getPumpkinLife() > amount) { // damage pumpkin health first
+				this.setPumpkinLife(this.getPumpkinLife() - amount);
+				amount = 0;
+			} else {
+				amount -= this.getPumpkinLife();
+				this.setPumpkinLife(0f);
+				this.outerPlant = Optional.empty();
 			}
 		}
 		return amount;

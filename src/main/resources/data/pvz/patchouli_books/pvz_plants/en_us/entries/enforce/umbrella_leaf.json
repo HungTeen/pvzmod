@@ -1,0 +1,22 @@
+{
+    "name": "Umbrella Leaf",
+    "icon": "pvz:umbrella_leaf_card",
+    "category": "pvz:enforce",
+    "pages": [
+        {
+            "type": "text",
+            "text": "$(bgreen)Umbrella Leaf$() resembles a small tree more than any kind of known leaf. When a projectile comes down, it raises its leaves and blocks it. $(br)$(byellow)Sun Cost$() : $(l)100$()$(br)$(bblue)Recharge$() : $(l)Little Fast$()$(br)$(l)Features$() : It is a $(l)close-assist$() plant, which will protect plants in 9 x 9 range from $(bred)bungees and other projectiles$()."
+        },
+        {
+            "type": "entity",
+            "entity": "pvz:umbrella_leaf",
+            "scale": 0.65,
+            "text": "Appearance"
+        },
+        {
+            "type": "text",
+            "text": "$(bgreen)Plant Food :$() Not Available."
+        }
+    ],
+    "sortnum": 3
+}

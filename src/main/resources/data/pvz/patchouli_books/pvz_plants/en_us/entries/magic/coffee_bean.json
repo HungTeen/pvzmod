@@ -1,0 +1,22 @@
+{
+    "name": "Coffee Bean",
+    "icon": "pvz:coffee_bean_card",
+    "category": "pvz:magic",
+    "pages": [
+        {
+            "type": "text",
+            "text": "$(bgreen)Coffee Bean$() always likes to use his favorite movie to wake others up. This method is quite effective, at least his little friend can see a birdman every time he opens his eyes.$(br)$(byellow)Sun Cost$() : $(l)75$()$(br)$(bblue)Recharge$() : $(l)Fast$()$(br)$(l)Features$() : It is a $(l)instant-assist$() plant that can $(bred)wake plants up$() in 2.5 blocks, making them not naturally sleep several days."
+        },
+        {
+            "type": "entity",
+            "entity": "pvz:coffee_bean",
+            "scale": 0.65,
+            "text": "Appearance"
+        },
+        {
+            "type": "text",
+            "text": "$(bgreen)Plant Food : $()Not Available."
+        }
+    ],
+    "sortnum": 1
+}

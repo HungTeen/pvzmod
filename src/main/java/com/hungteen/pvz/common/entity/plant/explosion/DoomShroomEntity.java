@@ -97,7 +97,7 @@ public class DoomShroomEntity extends PlantBomberEntity {
 		}
 		//upper block positions.
 		final int range = 10;
-		for(int h = 1; h <= range + 8; ++ h) {
+		for(int h = 0; h <= range + 8; ++ h) {
 		    for(int i = - range; i <= range; ++ i) {
 			    for(int j = - range; j <= range; ++ j) {
 			    	if(new Vector3d(i, h - 5, j).lengthSqr() <= range * range) {

@@ -1,0 +1,22 @@
+{
+    "name": "咖啡豆",
+    "icon": "pvz:coffee_bean_card",
+    "category": "pvz:magic",
+    "pages": [
+        {
+            "type": "text",
+            "text": "$(bgreen)咖啡豆$()每次都喜欢用他最喜欢的电影台词来叫别人起床。还真别说，这法儿挺有效的，至少他的小伙伴每次睁眼都能看到一个鸟人的身影。$(br)$(byellow)阳光消耗$() : $(l)75$()$(br)$(bblue)冷却$() : $(l)快$()$(br)$(l)特征$() : 它是一个$(l)消耗辅助型$()植物，可以$(bred)唤醒$()周围5 x 5格的正在睡觉的植物，使植物好几天都不会自然睡觉。"
+        },
+        {
+            "type": "entity",
+            "entity": "pvz:coffee_bean",
+            "scale": 0.65,
+            "text": "外观"
+        },
+        {
+            "type": "text",
+            "text": "$(bgreen)能量豆大招 :$() 暂无。"
+        }
+    ],
+    "sortnum": 1
+}

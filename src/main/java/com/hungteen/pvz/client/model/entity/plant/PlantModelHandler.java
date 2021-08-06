@@ -16,6 +16,7 @@ import com.hungteen.pvz.client.model.entity.plant.arma.CabbagePultModel;
 import com.hungteen.pvz.client.model.entity.plant.arma.KernelPultModel;
 import com.hungteen.pvz.client.model.entity.plant.arma.MelonPultModel;
 import com.hungteen.pvz.client.model.entity.plant.assist.BloverModel;
+import com.hungteen.pvz.client.model.entity.plant.assist.FlowerPotModel;
 import com.hungteen.pvz.client.model.entity.plant.assist.GoldMagnetModel;
 import com.hungteen.pvz.client.model.entity.plant.assist.GraveBusterModel;
 import com.hungteen.pvz.client.model.entity.plant.assist.LilyPadModel;
@@ -109,7 +110,7 @@ public class PlantModelHandler {
 		putModel(Plants.MAGNET_SHROOM, MagnetShroomModel::new);
 		//roof(no flower pot)
 		putModel(Plants.CABBAGE_PULT, CabbagePultModel::new);
-//		putModel(Plants.FLOWER_POT, SeaShroomModel::new);
+		putModel(Plants.FLOWER_POT, FlowerPotModel::new);
 		putModel(Plants.KERNEL_PULT, KernelPultModel::new);
 		putModel(Plants.COFFEE_BEAN, CoffeeBeanModel::new);
 		putModel(Plants.GARLIC, GarlicModel::new);

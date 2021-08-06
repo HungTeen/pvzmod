@@ -1,0 +1,22 @@
+{
+    "name": "Flower Pot",
+    "icon": "pvz:flower_pot_card",
+    "category": "pvz:assist",
+    "pages": [
+        {
+            "type": "text",
+            "text": "$(bgreen)Flower Pot$() is a pot for planting. Yet he is also a plant. HAS YOUR MIND EXPLODED YET?$(br)$(byellow)Sun Cost$() : $(l)25$()$(br)$(bblue)Recharge$() : $(l)Huge Fast$()$(br)$(l)Features$() : It is a $(bred)block$() plant that can support plants place on every kind of solid block."
+        },
+        {
+            "type": "entity",
+            "entity": "pvz:flower_pot",
+            "scale": 0.65,
+            "text": "Appearance"
+        },
+        {
+            "type": "text",
+            "text": "$(bgreen)Plant Food :$() Not Avaiable."
+        }
+    ],
+    "sortnum": 4
+}

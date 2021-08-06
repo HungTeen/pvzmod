@@ -1,0 +1,22 @@
+{
+    "name": "kernel Pult",
+    "icon": "pvz:kernel_pult_card",
+    "category": "pvz:arma",
+    "pages": [
+        {
+            "type": "text",
+            "text": "$(bgreen)Kernel Pult$() is the eldest of the Pult brothers. Of the three of them, Kernel is the only one who consistently remembers the others' birthdays. He bugs them about it a little, too.$(br)$(byellow)Sun Cost$() : $(l)100$()$(br)$(bblue)Recharge$() : $(l)Fast$()$(br)$(l)Features$() : It is a $(l)range attack$() plant that 90% throws $(bred)one kernel$() and 10% throws $(bred)one butter$() that can stun enemy every 3 seconds to attack enemy."
+        },
+        {
+            "type": "entity",
+            "entity": "pvz:kernel_pult",
+            "scale": 0.4,
+            "text": "Appearance"
+        },
+        {
+            "type": "text",
+            "text": "$(bgreen)Plant Food :$() It will throw $(bred)powered butter$() to $(l)all surrounding enemies$()."
+        }
+    ],
+    "sortnum": 1
+}

@@ -52,6 +52,7 @@ import com.hungteen.pvz.client.render.entity.plant.arma.CabbagePultRender;
 import com.hungteen.pvz.client.render.entity.plant.arma.KernelPultRender;
 import com.hungteen.pvz.client.render.entity.plant.arma.MelonPultRender;
 import com.hungteen.pvz.client.render.entity.plant.assist.BloverRender;
+import com.hungteen.pvz.client.render.entity.plant.assist.FlowerPotRender;
 import com.hungteen.pvz.client.render.entity.plant.assist.GoldMagnetRender;
 import com.hungteen.pvz.client.render.entity.plant.assist.GraveBusterRender;
 import com.hungteen.pvz.client.render.entity.plant.assist.LilyPadRender;
@@ -194,6 +195,7 @@ import com.hungteen.pvz.common.entity.plant.arma.CabbagePultEntity;
 import com.hungteen.pvz.common.entity.plant.arma.KernelPultEntity;
 import com.hungteen.pvz.common.entity.plant.arma.MelonPultEntity;
 import com.hungteen.pvz.common.entity.plant.assist.BloverEntity;
+import com.hungteen.pvz.common.entity.plant.assist.FlowerPotEntity;
 import com.hungteen.pvz.common.entity.plant.assist.GoldMagnetEntity;
 import com.hungteen.pvz.common.entity.plant.assist.GraveBusterEntity;
 import com.hungteen.pvz.common.entity.plant.assist.LilyPadEntity;
@@ -461,6 +463,7 @@ public class EntityRegister {
 	public static final RegistryObject<EntityType<GoldLeafEntity>> GOLD_LEAF = registerEntityType(GoldLeafEntity::new, "gold_leaf", EntityClassification.CREATURE);
 	public static final RegistryObject<EntityType<ExplodeONutEntity>> EXPLODE_O_NUT = registerEntityType(ExplodeONutEntity::new, "explode_o_nut", EntityClassification.CREATURE);
 	public static final RegistryObject<EntityType<GiantWallNutEntity>> GIANT_WALL_NUT = registerEntityType(GiantWallNutEntity::new, "giant_wall_nut", EntityClassification.CREATURE);
+	public static final RegistryObject<EntityType<FlowerPotEntity>> FLOWER_POT = registerEntityType(FlowerPotEntity::new, "flower_pot", EntityClassification.CREATURE);
 	public static final RegistryObject<EntityType<CabbagePultEntity>> CABBAGE_PULT = registerEntityType(CabbagePultEntity::new, "cabbage_pult", EntityClassification.CREATURE);
 	public static final RegistryObject<EntityType<KernelPultEntity>> KERNEL_PULT = registerEntityType(KernelPultEntity::new, "kernel_pult", EntityClassification.CREATURE);
 	public static final RegistryObject<EntityType<ButterPultEntity>> BUTTER_PULT = registerEntityType(ButterPultEntity::new, "butter_pult", EntityClassification.CREATURE);
@@ -612,6 +615,7 @@ public class EntityRegister {
         RenderingRegistry.registerEntityRenderingHandler(MAGNET_SHROOM.get(), MagnetShroomRender::new);
         
         RenderingRegistry.registerEntityRenderingHandler(CABBAGE_PULT.get(), CabbagePultRender::new);
+        RenderingRegistry.registerEntityRenderingHandler(FLOWER_POT.get(), FlowerPotRender::new);
         RenderingRegistry.registerEntityRenderingHandler(KERNEL_PULT.get(), KernelPultRender::new);
         RenderingRegistry.registerEntityRenderingHandler(GARLIC.get(), GarlicRender::new);
         RenderingRegistry.registerEntityRenderingHandler(COFFEE_BEAN.get(), CoffeeBeanRender::new);

@@ -1,0 +1,22 @@
+{
+    "name": "叶子保护伞",
+    "icon": "pvz:umbrella_leaf_card",
+    "category": "pvz:enforce",
+    "pages": [
+        {
+            "type": "text",
+            "text": "$(bgreen)叶子保护伞$()比任何已知的叶子都更像一棵小树。 当弹丸落下时，它会抬起叶子并挡住它。$(br)$(byellow)阳光消耗$() : $(l)100$()$(br)$(bblue)冷却$() : $(l)较快$()$(br)$(l)特点$() : 它是一个$(l)近战辅助型$()植物，能保护周围9 x 9的植物免于$(bred)蹦极僵尸和投掷物$()的攻击。"
+        },
+        {
+            "type": "entity",
+            "entity": "pvz:umbrella_leaf",
+            "scale": 0.65,
+            "text": "外观"
+        },
+        {
+            "type": "text",
+            "text": "$(bgreen)能量豆大招$() : 暂无。"
+        }
+    ],
+    "sortnum": 3
+}

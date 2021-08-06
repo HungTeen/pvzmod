@@ -52,7 +52,7 @@ public class PlantRenderHandler {
 	public static final ResourceLocation MAGNET_SHROOM_TEX = get(Plants.MAGNET_SHROOM, 1.2F);
 	
 	public static final ResourceLocation CABBAGE_PULT_TEX = get(Plants.CABBAGE_PULT, 0.9F);
-//	public static final ResourceLocation FLOWER_POT_TEX = get(Plants.SEA_SHROOM, 0.6F);
+	public static final ResourceLocation FLOWER_POT_TEX = get(Plants.FLOWER_POT, 0.85F);
 	public static final ResourceLocation KERNEL_PULT_TEX = get(Plants.KERNEL_PULT, 0.9F);
 	public static final ResourceLocation COFFEE_BEAN_TEX = get(Plants.COFFEE_BEAN, 0.6F);
 	public static final ResourceLocation GARLIC_TEX = get(Plants.GARLIC, 0.9F);
