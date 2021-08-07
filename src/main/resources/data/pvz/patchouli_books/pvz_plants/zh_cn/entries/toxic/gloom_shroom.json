@@ -1,0 +1,22 @@
+{
+    "name": "忧郁菇",
+    "icon": "pvz:gloom_shroom_card",
+    "category": "pvz:toxic",
+    "pages": [
+        {
+            "type": "text",
+            "text": "$(bgreen)忧郁菇$()喜欢喷射大量烟雾。但是许多人并不喜欢烟雾，他们说这又粗鲁啦烟雾又很臭之类的。忧郁菇只想对那些人说说，你们是不是想自己的脑袋被僵尸吃掉？$(br)$(byellow)阳光消耗$() : $(l)175$()$(br)$(bblue)冷却$() : $(l)很慢$()$(br)$(l)特点$() : 它是一个$(l)短程攻击$()植物，每0.4秒向周围8个方向发射一次$(bred)烟幕$()攻击敌人。烟幕可以$(l)穿透任何敌人$()。$(bred)它白天会睡觉$()。"
+        },
+        {
+            "type": "entity",
+            "entity": "pvz:gloom_shroom",
+            "scale": 0.65,
+            "text": "外观"
+        },
+        {
+            "type": "text",
+            "text": "$(bgreen)能量豆大招$() : 它会每tick进行一次攻击，持续多秒。"
+        }
+    ],
+    "sortnum": 4
+}

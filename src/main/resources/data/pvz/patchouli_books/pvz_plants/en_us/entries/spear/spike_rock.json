@@ -1,0 +1,22 @@
+{
+    "name": "Spike Rock",
+    "icon": "pvz:spike_rock_card",
+    "category": "pvz:spear",
+    "pages": [
+        {
+            "type": "text",
+            "text": "$(bgreen)Spike Rock$() just got back from a trip to Europe. He never knew they made museums so big, or put so many paintings in them. That was a big surprise for him.$(br)$(byellow)Sun Cost$() : $(l)150$()$(br)$(bblue)Recharge$() : $(l)很慢$()$(br)$(l)Features$() : It is a $(l)close attack$() plant that deals damage to any grounded enemy that $(l)walks on top of him$() every 2 seconds."
+        },
+        {
+            "type": "entity",
+            "entity": "pvz:spike_rock",
+            "scale": 0.65,
+            "text": "Appearance"
+        },
+        {
+            "type": "text",
+            "text": "$(bpurple)Special :$() Most zombies $(l)can't track him as target$(). It can $(bred)pop many tires of cars$().$(br)$(bgreen)Plant Food :$() It will obtain $(l)several chances$() to resist crush damage."
+        }
+    ],
+    "sortnum": 3
+}

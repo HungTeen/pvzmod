@@ -1,0 +1,22 @@
+{
+    "name": "冰西瓜投手",
+    "icon": "pvz:winter_melon_card",
+    "category": "pvz:ice",
+    "pages": [
+        {
+            "type": "text",
+            "text": "$(bgreen)冰西瓜投手$()希望能够冷静一下——只因他听说僵尸们靠近了。他能成功么？会有人成功么？$(br)$(byellow)阳光消耗$() : $(l)225$()$(br)$(bblue)冷却$() : $(l)很慢$()$(br)$(l)特点$() : 它是一个$(l)远程攻击$()植物，每3秒投掷一个可以对3格内的所有敌人造成$(bred)溅射伤害$()并$(baqua)减速$()的$(bred)冰西瓜$()攻击敌人。"
+        },
+        {
+            "type": "entity",
+            "entity": "pvz:winter_melon",
+            "scale": 0.65,
+            "text": "外观"
+        },
+        {
+            "type": "text",
+            "text": "$(bgreen)能量豆大招$() : 它会朝$(l)周围所有$()敌人扔一个$(bred)强化冰西瓜$()。"
+        }
+    ],
+    "sortnum": 2
+}

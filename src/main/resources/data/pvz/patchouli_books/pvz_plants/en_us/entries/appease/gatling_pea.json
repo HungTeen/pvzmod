@@ -5,7 +5,7 @@
     "pages": [
         {
             "type": "text",
-            "text": "$(bgreen)Gatling Pea$() has a healthy, well-balanced breakfast of sunlight and high-fiber carbon dioxide, which make everything all possible.$(br)$(byellow)Sun Cost$() : $(l)100$()$(br)$(bblue)Recharge$() : $(l)Huge Fast$()$(br)$(l)Features$() : It is a $(l)range attack$() plant that shoots $(bred)one pea$() every 1.5 seconds to attack enemy."
+            "text": "$(bgreen)Gatling Pea$()'s parents were worried when he announced his intention to join the military. Gatling Pea refused to budge, although it's dangerous.$(br)$(byellow)Sun Cost$() : $(l)250$()$(br)$(bblue)Recharge$() : $(l)Very Slow$()$(br)$(l)Features$() : It is a $(l)range attack$() plant that shoots $(bred)four peas$() every 1.5 seconds to attack enemy."
         },
         {
             "type": "entity",
@@ -15,7 +15,7 @@
         },
         {
             "type": "text",
-            "text": "$(bgreen)Plant Food :$() It will shoot $(l)several peas each tick$() which last 5 seconds."
+            "text": "$(bgreen)Plant Food :$() It will shoot $(l)several peas each tick$() which last 10 seconds, and will shoot several $(l)big peas$() after super mode."
         }
     ],
     "sortnum": 5

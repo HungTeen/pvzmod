@@ -1,0 +1,22 @@
+{
+    "name": "吸金磁",
+    "icon": "pvz:gold_magnet_card",
+    "category": "pvz:assist",
+    "pages": [
+        {
+            "type": "text",
+            "text": "$(bgreen)吸金磁$()曾经是金融界人士——坐在办公室一角，计算的都是利润，考虑的净是股票。他本来会成为负责中西部业务的副总裁。现在他却在这儿，在这个草地上，而且还随时可能会被僵尸吃掉。$(br)$(byellow)阳光消耗$() : $(l)100$()$(br)$(bblue)冷却$() : $(l)很慢$()$(br)$(l)特点$() : 它是一个$(l)辅助型$()植物，可以为他的主人收集$(l)8格范围$()内的$(bred)钱币和宝石$()。"
+        },
+        {
+            "type": "entity",
+            "entity": "pvz:gold_magnet",
+            "scale": 0.65,
+            "text": "外观"
+        },
+        {
+            "type": "text",
+            "text": "$(bgreen)能量豆大招$() : 暂无。"
+        }
+    ],
+    "sortnum": 5
+}

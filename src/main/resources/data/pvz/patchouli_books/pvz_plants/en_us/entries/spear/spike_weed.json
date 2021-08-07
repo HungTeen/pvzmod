@@ -15,7 +15,7 @@
         },
         {
             "type": "text",
-            "text": "$(bpurple)Special :$() Most zombies $(l)can't track him as target$(). It can $(bred)pop tires of cars$().$(bgreen)Plant Food :$() It will obtain $(l)several chances$() to resist crush damage."
+            "text": "$(bpurple)Special :$() Most zombies $(l)can't track him as target$(). It can $(bred)pop tires of cars$().$(br)$(bgreen)Plant Food :$() It will obtain $(l)several chances$() to resist crush damage."
         }
     ],
     "sortnum": 0

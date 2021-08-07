@@ -1,0 +1,22 @@
+{
+    "name": "Gold Magnet",
+    "icon": "pvz:gold_magnet_card",
+    "category": "pvz:assist",
+    "pages": [
+        {
+            "type": "text",
+            "text": "$(bgreen)Gold Magnet$() was on the fast track - corner office, full benefits, stock options. he was gonna be Vice President of Midwestern Operations. Now he's here, on this lawn, in serious danger of being eaten to death.$(br)$(byellow)Sun Cost$() : $(l)100$()$(br)$(bblue)Recharge$() : $(l)Very Slow$()$(br)$(l)Features$() : It is a $(bred)Assist$() plant that can $(bred)collect coin and jewel$() in 8 blocks for its owner."
+        },
+        {
+            "type": "entity",
+            "entity": "pvz:gold_magnet",
+            "scale": 0.65,
+            "text": "Appearance"
+        },
+        {
+            "type": "text",
+            "text": "$(bgreen)Plant Food :$() Not Available."
+        }
+    ],
+    "sortnum": 5
+}

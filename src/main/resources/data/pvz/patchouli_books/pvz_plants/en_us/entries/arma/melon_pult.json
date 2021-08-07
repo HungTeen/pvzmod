@@ -15,7 +15,7 @@
         },
         {
             "type": "text",
-            "text": "$(bgreen)Plant Food :$() It will throw $(bred)powered Melons$() to $(l)all surrounding enemies$()."
+            "text": "$(bgreen)Plant Food :$() It will throw $(bred)powered melons$() to $(l)all surrounding enemies$()."
         }
     ],
     "sortnum": 2

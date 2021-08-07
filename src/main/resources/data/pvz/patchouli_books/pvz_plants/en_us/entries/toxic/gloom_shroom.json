@@ -1,0 +1,22 @@
+{
+    "name": "Gloom Shroom",
+    "icon": "pvz:gloom_shroom_card",
+    "category": "pvz:toxic",
+    "pages": [
+        {
+            "type": "text",
+            "text": "$(bgreen)Gloom Shroom$() always enjoyed releasing heavy fumes. A lot of people aren't cool with that. They say it's rude or that it smells bad. All he can say is, would you rather have your brain eaten by zombies?$(br)$(byellow)Sun Cost$() : $(l)175$()$(br)$(bblue)Recharge$() : $(l)Very Slow$()$(br)$(l)Features$() : It is a $(l)short range attack$() plant that shoots $(bred)Fume$() $(l)in an area around$() it every 0.4 second to attack enemy."
+        },
+        {
+            "type": "entity",
+            "entity": "pvz:gloom_shroom",
+            "scale": 0.65,
+            "text": "Appearance"
+        },
+        {
+            "type": "text",
+            "text": "$(bpurple)Special : $()Fume can $()hits through all enemies$(). $(bred)It will sleep at daytime$().$(br)$(bgreen)Plant Food :$() It will shoot $(l)Fume each tick$() which last several seconds."
+        }
+    ],
+    "sortnum": 4
+}

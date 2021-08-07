@@ -1,0 +1,22 @@
+{
+    "name": "Cat Tail",
+    "icon": "pvz:cat_tail_card",
+    "category": "pvz:spear",
+    "pages": [
+        {
+            "type": "text",
+            "text": "$(bgreen)Cat Tail$() was expected to say Meow like a cat because the word cat is in her name and she also look like a cat ?$(br)$(byellow)Sun Cost$() : $(l)275$()$(br)$(bblue)Recharge$() : $(l)Very Slow$()$(br)$(l)Features$() : She is a $(l)long range attack$() plant that shoots $(bred)two thorns$() every 1.5 seconds to attack enemy. Thorn can $()hits through all enemies$()."
+        },
+        {
+            "type": "entity",
+            "entity": "pvz:cat_tail",
+            "scale": 0.65,
+            "text": "Appearance"
+        },
+        {
+            "type": "text",
+            "text": "$(bpurple)Special :$() Her bullet can $(bred)auto change direction$() for the first hit. She can Attack $(bred)fly target$().$(br)$(bgreen)Plant Food :$() It will shoot normal thorn each tick, and several powered thorns."
+        }
+    ],
+    "sortnum": 2
+}
