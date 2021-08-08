@@ -1,0 +1,22 @@
+{
+    "name": "黄油投手",
+    "icon": "pvz:butter_pult_card",
+    "category": "pvz:arma",
+    "pages": [
+        {
+            "type": "text",
+            "text": "$(bgreen)黄油投手$()非常适合买彩票，尽管他从不做这种败坏德行的事。$(br)$(byellow)阳光消耗$() : $(l)275$()$(br)$(bblue)冷却$() : $(l)一般$()$(br)$(l)特点$() : 它是一个$(l)远程攻击$()植物，每3秒会投掷一个可以$(bred)定住敌人但伤害非常低$()的$(bred)黄油$()攻击敌人。"
+        },
+        {
+            "type": "entity",
+            "entity": "pvz:butter_pult",
+            "scale": 0.4,
+            "text": "外观"
+        },
+        {
+            "type": "text",
+            "text": "$(bgreen)能量豆大招$() : 它会朝$(l)周围所有$()敌人扔一个$(bred)强化黄油$()。"
+        }
+    ],
+    "sortnum": 3
+}

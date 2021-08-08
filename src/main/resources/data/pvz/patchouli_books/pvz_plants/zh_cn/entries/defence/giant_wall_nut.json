@@ -1,0 +1,22 @@
+{
+    "name": "巨型坚果墙",
+    "icon": "pvz:giant_wall_nut_card",
+    "category": "pvz:defence",
+    "pages": [
+        {
+            "type": "text",
+            "text": "$(bgreen)巨型坚果墙$()是超级版的坚果墙，而不仅仅是放大了的坚果墙。$(br)$(byellow)阳光消耗$() : $(l)200$()$(br)$(bblue)冷却$() : $(l)超级慢$()$(br)$(l)特点$() : 它是一个$(l)防御型$()植物，拥有较多的血量，同时可以$(bred)吸引$()10 x 10范围的敌人攻击自身。"
+        },
+        {
+            "type": "entity",
+            "entity": "pvz:giant_wall_nut",
+            "scale": 0.6,
+            "text": "外观"
+        },
+        {
+            "type": "text",
+            "text": "$(bpurple)特殊 :$() 它可以$(bred)阻挡$()撑杆跳僵尸、跳跳僵尸、海豚龙骑手。$(br)$(bgreen)能量豆大招$() : 获得大量的$(l)额外血量$()来保护自身。"
+        }
+    ],
+    "sortnum": 5
+}

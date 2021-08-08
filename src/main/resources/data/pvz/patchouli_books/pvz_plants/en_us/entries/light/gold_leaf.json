@@ -1,0 +1,22 @@
+{
+    "name": "Gold Leaf",
+    "icon": "pvz:gold_leaf_card",
+    "category": "pvz:light",
+    "pages": [
+        {
+            "type": "text",
+            "text": "$(bgreen)Gold Leaf$() is a firm believer in solar markets. he thinks everyone can generate huge sun.$(br)$(byellow)Sun Cost$() : $(l)75$()$(br)$(bblue)Recharge$() : $(l)Normal$()$(br)$(l)Features$() : It is a $(l)instant-assist$() plant that turns $(borange)gold block$() below it into $(borange)Gold Tile$(), which can let all plants standing on it to produce sun every 20 seconds. $(bred)Only live on gold block or gold tile$()."
+        },
+        {
+            "type": "entity",
+            "entity": "pvz:gold_leaf",
+            "scale": 0.65,
+            "text": "Appearance"
+        },
+        {
+            "type": "text",
+            "text": "$(bgreen)Plant Food :$() Not Available."
+        }
+    ],
+    "sortnum": 4
+}

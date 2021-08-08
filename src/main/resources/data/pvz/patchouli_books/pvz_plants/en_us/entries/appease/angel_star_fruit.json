@@ -1,0 +1,22 @@
+{
+    "name": "Angel Starfruit",
+    "icon": "pvz:angel_star_fruit_card",
+    "category": "pvz:appease",
+    "pages": [
+        {
+            "type": "text",
+            "text": "$(bgreen)Angel Starfruit$() despises starfruit from a small village, she thought starfruit is too lazy and no pursuit.$(br)$(byellow)Sun Cost$() : $(l)225$()$(br)$(bblue)Recharge$() : $(l)Little Fast$()$(br)$(l)Features$() : It is a $(l)range attack$() plant that shoots $(bred)5 stars in 5 directions$() every 1.5 seconds to attack enemy. It has chance to $(bred)shoot 5 more stars$() each attack."
+        },
+        {
+            "type": "entity",
+            "entity": "pvz:angel_star_fruit",
+            "scale": 0.65,
+            "text": "Appearance"
+        },
+        {
+            "type": "text",
+            "text": "$(bgreen)Plant Food :$() It will shoot $(l)several stars each tick$() in 5 directions which last several seconds."
+        }
+    ],
+    "sortnum": 6
+}

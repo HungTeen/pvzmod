@@ -1,0 +1,22 @@
+{
+    "name": "Giant Wall Nut",
+    "icon": "pvz:giant_wall_nut_card",
+    "category": "pvz:defence",
+    "pages": [
+        {
+            "type": "text",
+            "text": "$(bgreen)Giant Wall Nut$() is the mega version of a Wall-nut, not just a larger Wall-nut.$(br)$(byellow)Sun Cost$() : $(l)200$()$(br)$(bblue)Recharge$() : $(l)Super Slow$()$(br)$(l)Features$() : It is a $(l)defender$() plant that has high health, and it can $(bred)attract enemies$() in 10 * 10 range to attack itself."
+        },
+        {
+            "type": "entity",
+            "entity": "pvz:giant_wall_nut",
+            "scale": 0.6,
+            "text": "Appearance"
+        },
+        {
+            "type": "text",
+            "text": "$(bpurple)Special :$() It can $(bred)block$() $(l)pole zombie, pogo zombie, dolphin rider$() to stop them.$(br)$(bgreen)Plant Food :$() It will gain a large amount of $(l)defence life$() to protecte itself."
+        }
+    ],
+    "sortnum": 5
+}

@@ -1,0 +1,22 @@
+{
+    "name": "黄金叶",
+    "icon": "pvz:gold_leaf_card",
+    "category": "pvz:light",
+    "pages": [
+        {
+            "type": "text",
+            "text": "$(bgreen)黄金叶$()是太阳能市场的坚定信仰者。他相信所有植物都能够生产阳光。$(br)$(byellow)阳光消耗$() : $(l)75$()$(br)$(bblue)冷却$() : $(l)一般$()$(br)$(l)特点$() : 它是一个$(l)消耗辅助型$()植物，会将脚下的$(borange)金块$()变为$(borange)黄金瓷砖$()，植物种植其上会每20秒生产一次阳光。$(bred)只能种植在金块或黄金瓷砖上$()。"
+        },
+        {
+            "type": "entity",
+            "entity": "pvz:gold_leaf",
+            "scale": 0.65,
+            "text": "外观"
+        },
+        {
+            "type": "text",
+            "text": "$(bgreen)能量豆大招$() : 暂无。"
+        }
+    ],
+    "sortnum": 4
+}

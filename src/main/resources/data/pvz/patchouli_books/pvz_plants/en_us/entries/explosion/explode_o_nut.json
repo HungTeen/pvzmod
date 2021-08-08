@@ -1,0 +1,22 @@
+{
+    "name": "Explode-O-Nut",
+    "icon": "pvz:explode_o_nut_card",
+    "category": "pvz:explosion",
+    "pages": [
+        {
+            "type": "text",
+            "text": "$(bgreen)Explode-O-Nut$() is the explosive version of a Wall-nut, not just a Wall-nut with red skin.$(br)$(byellow)Sun Cost$() : $(l)150$()$(br)$(bblue)Recharge$() : $(l)Huge Slow$()$(br)$(l)Features$() : It is a $(l)defender$() plant that has high health, and it can $(bred)attract enemies$() in 5 * 5 range to attack itself. It will $(bred)make a 8 x 8 explosion$() when died."
+        },
+        {
+            "type": "entity",
+            "entity": "pvz:explode_o_nut",
+            "scale": 0.6,
+            "text": "Appearance"
+        },
+        {
+            "type": "text",
+            "text": "$(bgreen)Plant Food :$() It will instantly $(bred)make explosions$() to enemies around."
+        }
+    ],
+    "sortnum": 5
+}

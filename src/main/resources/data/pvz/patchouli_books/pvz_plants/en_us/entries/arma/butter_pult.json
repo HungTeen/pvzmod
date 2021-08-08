@@ -1,0 +1,22 @@
+{
+    "name": "Butter Pult",
+    "icon": "pvz:butter_pult_card",
+    "category": "pvz:arma",
+    "pages": [
+        {
+            "type": "text",
+            "text": "$(bgreen)Butter Pult$() is perfect for buying lottery tickets, even though he never does such a corrupting virtue.$(br)$(byellow)Sun Cost$() : $(l)275$()$(br)$(bblue)Recharge$() : $(l)Normal$()$(br)$(l)Features$() : It is a $(l)range attack$() plant that throws $(bred)one butter$() that can $(bred)stun enemy but low damage$() every 3 seconds to attack enemy."
+        },
+        {
+            "type": "entity",
+            "entity": "pvz:butter_pult",
+            "scale": 0.4,
+            "text": "Appearance"
+        },
+        {
+            "type": "text",
+            "text": "$(bgreen)Plant Food :$() It will throw $(bred)powered butter$() to $(l)all surrounding enemies$()."
+        }
+    ],
+    "sortnum": 3
+}

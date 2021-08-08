@@ -15,7 +15,7 @@
         },
         {
             "type": "text",
-            "text": "$(bpurple)Special :$() He will randomly $(l)change direction$() each shot.$(br)$(bgreen)Plant Food :$() It will shoot $(l)several peas each tick$() which last 5 seconds."
+            "text": "$(bpurple)Special :$() He will randomly $(l)change direction$() each shot.$(br)$(bgreen)Plant Food :$() It will shoot $(l)several stars each tick$() which last 5 seconds."
         }
     ],
     "sortnum": 4

@@ -1,0 +1,22 @@
+{
+    "name": "睡莲护卫",
+    "icon": "pvz:water_guard_card",
+    "category": "pvz:defence",
+    "pages": [
+        {
+            "type": "text",
+            "text": "$(bgreen)睡莲护卫$()特别喜欢广场舞。他就在那里，一个方形的植物在舞池中滑行，跳着广场舞。$(br)$(byellow)阳光消耗$() : $(l)50$()$(br)$(bblue)冷却$() : $(l)较慢$()$(br)$(l)特点$() : 它是一个$(l)防御型$()植物，拥有较多的血量，同时可以$(bred)吸引$()5 x 5范围的敌人攻击自身。$(bred)只能种在水中$()。"
+        },
+        {
+            "type": "entity",
+            "entity": "pvz:water_guard",
+            "scale": 0.6,
+            "text": "外观"
+        },
+        {
+            "type": "text",
+            "text": "$(bgreen)能量豆大招$() : 获得大量的$(l)额外血量$()来保护自身。"
+        }
+    ],
+    "sortnum": 4
+}

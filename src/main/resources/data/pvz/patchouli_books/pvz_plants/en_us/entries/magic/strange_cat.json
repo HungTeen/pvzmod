@@ -1,0 +1,22 @@
+{
+    "name": "Strange Cat",
+    "icon": "pvz:strange_cat_card",
+    "category": "pvz:magic",
+    "pages": [
+        {
+            "type": "text",
+            "text": "$(bgreen)Strange Cat$() always make others gain more strange xp, such as its relation with cat tail.$(br)$(byellow)Sun Cost$() : $(l)325$()$(br)$(bblue)Recharge$() : $(l)Very Slow$()$(br)$(l)Features$() : It is a $(l)close-attack$() plant that can deal $(bred)high damage$() to enemy, and $(l)turn it to another Strange Cat$() if its enemy died. Each attack need $(l)60 seconds' rest$()."
+        },
+        {
+            "type": "entity",
+            "entity": "pvz:strange_cat",
+            "scale": 0.45,
+            "text": "Appearance"
+        },
+        {
+            "type": "text",
+            "text": "$(bpurple)Special : $()to avoid low fps, the number of strange cat in range is limited in $(bred)config file$().$(br)$(bgreen)Plant Food : $()It will instantly attack several enemies."
+        }
+    ],
+    "sortnum": 4
+}

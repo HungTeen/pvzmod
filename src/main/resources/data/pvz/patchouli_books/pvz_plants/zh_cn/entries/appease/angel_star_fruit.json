@@ -1,0 +1,22 @@
+{
+    "name": "天使星星果",
+    "icon": "pvz:angel_star_fruit_card",
+    "category": "pvz:appease",
+    "pages": [
+        {
+            "type": "text",
+            "text": "$(bgreen)天使星星果$()非常瞧不起来自小地方的星星果，她认为星星果连转动一下都懒，太没追求了。$(br)$(byellow)阳光消耗$() : $(l)225$()$(br)$(bblue)冷却$() : $(l)较快$()$(br)$(l)特点$() : 它是一个$(l)远程攻击$()植物，每1.5秒朝$(bred)5个方向各发射一个星星$()来攻击敌人。有概率在攻击时$(bred)额外发射5个星星$()。"
+        },
+        {
+            "type": "entity",
+            "entity": "pvz:angel_star_fruit",
+            "scale": 0.65,
+            "text": "外观"
+        },
+        {
+            "type": "text",
+            "text": "$(bgreen)能量豆大招$() : 它会每tick朝5个方向发射$(l)多个星星$()，持续多秒。"
+        }
+    ],
+    "sortnum": 6
+}

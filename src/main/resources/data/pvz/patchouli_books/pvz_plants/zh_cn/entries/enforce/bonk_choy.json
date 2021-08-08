@@ -1,0 +1,22 @@
+{
+    "name": "菜问",
+    "icon": "pvz:bonk_choy_card",
+    "category": "pvz:enforce",
+    "pages": [
+        {
+            "type": "text",
+            "text": "$(bgreen)菜问$()是来自中国广东的功夫高手，精通东方和西方拳术。 他现在正在全世界范围修行，学习新奇的拳法或者教一些学生。说起学生，也许有几个比他本人有名得多。$(br)$(byellow)阳光消耗$() : $(l)175$()$(br)$(bblue)冷却$() : $(l)较快$()$(br)$(l)特点$() : 它是一个$(l)近战攻击$()植物，$(bred)每0.5秒拳击$()一次靠近的敌人。"
+        },
+        {
+            "type": "entity",
+            "entity": "pvz:bonk_choy",
+            "scale": 0.65,
+            "text": "外观"
+        },
+        {
+            "type": "text",
+            "text": "$(bgreen)能量豆大招$() : 它会对附近所有敌人$(bred)快速挥拳$()，持续多秒。"
+        }
+    ],
+    "sortnum": 4
+}

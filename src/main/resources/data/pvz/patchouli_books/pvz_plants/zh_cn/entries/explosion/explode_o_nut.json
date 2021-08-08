@@ -1,0 +1,22 @@
+{
+    "name": "爆炸坚果",
+    "icon": "pvz:explode_o_nut_card",
+    "category": "pvz:explosion",
+    "pages": [
+        {
+            "type": "text",
+            "text": "$(bgreen)爆炸坚果$()是爆炸版的坚果墙，而不仅仅是红色皮肤的坚果墙。$(br)$(byellow)阳光消耗$() : $(l)150$()$(br)$(bblue)冷却$() : $(l)非常慢$()$(br)$(l)特点$() : 它是一个$(l)防御型$()植物，拥有较多的血量，同时可以$(bred)吸引$()5 x 5范围的敌人攻击自身。死亡后会产生一个$(bred)8 x 8的爆炸$()。"
+        },
+        {
+            "type": "entity",
+            "entity": "pvz:explode_o_nut",
+            "scale": 0.6,
+            "text": "外观"
+        },
+        {
+            "type": "text",
+            "text": "$(bgreen)能量豆大招$() : 随机对周围的敌人附近$(bred)产生多次爆炸$()。"
+        }
+    ],
+    "sortnum": 5
+}

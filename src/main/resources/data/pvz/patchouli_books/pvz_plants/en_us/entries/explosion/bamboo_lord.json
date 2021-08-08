@@ -1,0 +1,22 @@
+{
+    "name": "Bamboo Lord",
+    "icon": "pvz:bamboo_lord_card",
+    "category": "pvz:explosion",
+    "pages": [
+        {
+            "type": "text",
+            "text": "$(bgreen)Bamboo Lord$() lives alone in a large mansion on the west side of Smoky Town, don't look at him facing vicious, but in fact he is a kind old man who likes children.$(br)$(byellow)Sun Cost$() : $(l)75$()$(br)$(bblue)Recharge$() : $(l)Normal$()$(br)$(l)Features$() : It is a $(l)close-kill$() plant, which will $(l)bring enemies to sky$() and then make a $(bred)explosion damage$() to all enemies in 3 blocks when enemy is close to it."
+        },
+        {
+            "type": "entity",
+            "entity": "pvz:bamboo_lord",
+            "scale": 0.5,
+            "text": "Appearance"
+        },
+        {
+            "type": "text",
+            "text": "$(bpurple)Special : $()It will $(bred)split several fire crackers$() when exploded.$(br)$(bgreen)Plant Food :$() place many fire crackers around randomly which can take damage and bring enemies to sky."
+        }
+    ],
+    "sortnum": 4
+}
