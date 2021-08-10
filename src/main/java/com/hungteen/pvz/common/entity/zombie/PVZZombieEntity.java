@@ -2,16 +2,13 @@ package com.hungteen.pvz.common.entity.zombie;
 
 import java.util.List;
 import java.util.Optional;
-import java.util.Random;
 import java.util.UUID;
 
 import com.hungteen.pvz.PVZConfig;
-import com.hungteen.pvz.PVZMod;
 import com.hungteen.pvz.api.enums.PVZGroupType;
 import com.hungteen.pvz.api.interfaces.IPVZZombie;
 import com.hungteen.pvz.client.particle.ParticleUtil;
 import com.hungteen.pvz.common.advancement.trigger.CharmZombieTrigger;
-import com.hungteen.pvz.common.cache.InvasionCache;
 import com.hungteen.pvz.common.entity.ai.goal.PVZLookRandomlyGoal;
 import com.hungteen.pvz.common.entity.ai.goal.PVZSwimGoal;
 import com.hungteen.pvz.common.entity.ai.goal.ZombieBreakPlantBlockGoal;
@@ -37,17 +34,14 @@ import com.hungteen.pvz.data.loot.PVZLoot;
 import com.hungteen.pvz.register.BlockRegister;
 import com.hungteen.pvz.register.EffectRegister;
 import com.hungteen.pvz.register.EntityRegister;
-import com.hungteen.pvz.register.EntitySpawnRegister;
 import com.hungteen.pvz.register.ItemRegister;
 import com.hungteen.pvz.register.SoundRegister;
 import com.hungteen.pvz.utils.AlgorithmUtil;
 import com.hungteen.pvz.utils.ConfigUtil;
 import com.hungteen.pvz.utils.EntityUtil;
-import com.hungteen.pvz.utils.MathUtil;
 import com.hungteen.pvz.utils.ZombieUtil;
 import com.hungteen.pvz.utils.enums.InvasionEvents;
 import com.hungteen.pvz.utils.enums.Ranks;
-import com.hungteen.pvz.utils.enums.Zombies;
 import com.hungteen.pvz.utils.interfaces.ICanAttract;
 import com.hungteen.pvz.utils.others.WeightList;
 import com.mojang.datafixers.util.Pair;
@@ -65,7 +59,7 @@ import net.minecraft.entity.Pose;
 import net.minecraft.entity.SpawnReason;
 import net.minecraft.entity.ai.attributes.AttributeModifierMap;
 import net.minecraft.entity.ai.attributes.Attributes;
-import net.minecraft.entity.ai.goal.WaterAvoidingRandomWalkingGoal;
+import net.minecraft.entity.ai.goal.RandomWalkingGoal;
 import net.minecraft.entity.item.ItemEntity;
 import net.minecraft.entity.monster.MonsterEntity;
 import net.minecraft.entity.player.PlayerEntity;
@@ -92,7 +86,6 @@ import net.minecraft.util.math.vector.Vector3d;
 import net.minecraft.world.DifficultyInstance;
 import net.minecraft.world.GameRules;
 import net.minecraft.world.IServerWorld;
-import net.minecraft.world.IWorld;
 import net.minecraft.world.IWorldReader;
 import net.minecraft.world.LightType;
 import net.minecraft.world.World;
@@ -140,6 +133,7 @@ public abstract class PVZZombieEntity extends MonsterEntity implements IPVZZombi
 		this.xpReward = ZombieUtil.caculateZombieXp(this);
 		dropSpecialList = this.getDropSpecialList();
 		this.onLevelChanged();
+		this.setPathfindingMalus(PathNodeType.WATER, 2F);
 		this.setPathfindingMalus(PathNodeType.DANGER_FIRE, 6.0F);
 		this.setPathfindingMalus(PathNodeType.DAMAGE_FIRE, 6.0F);
 		this.setPathfindingMalus(PathNodeType.DAMAGE_OTHER, 6.0F);
@@ -177,7 +171,7 @@ public abstract class PVZZombieEntity extends MonsterEntity implements IPVZZombi
 	@Override
 	protected void registerGoals() {
 		this.goalSelector.addGoal(8, new PVZLookRandomlyGoal(this));
-		this.goalSelector.addGoal(7, new WaterAvoidingRandomWalkingGoal(this, 1.0D));
+		this.goalSelector.addGoal(7, new RandomWalkingGoal(this, 1.0D));
 		this.goalSelector.addGoal(7, new PVZSwimGoal(this));
 //		this.targetSelector.addGoal(2, new PVZHurtByTargetGoal(this, 10));
 		this.registerAttackGoals();
@@ -216,10 +210,7 @@ public abstract class PVZZombieEntity extends MonsterEntity implements IPVZZombi
 			});
 			/*just test */
 			//set its spawn level
-			final int minLvl = MathHelper.clamp(InvasionCache.InvasionDifficulty / 100 + 1, 1, 20);
-			final int maxLvl = MathHelper.clamp(InvasionCache.InvasionDifficulty / 50 + 1, 1, 20);
-			final int lvl = MathUtil.getRandomMinMax(getRandom(), minLvl, maxLvl);
-			this.setZombieLevel(lvl);
+			this.setZombieLevel(ZombieUtil.caculateZombieLevel(this));
 			/*end test */
 			this.updateAttributes();
 			if(this.needRising) {// rising from dirt.
@@ -698,38 +689,6 @@ public abstract class PVZZombieEntity extends MonsterEntity implements IPVZZombi
 	@Override
 	public boolean canBreatheUnderwater() {
 		return true;
-	}
-	
-	public static boolean checkSpawn(EntityType<? extends PVZZombieEntity> zombieType, IWorld worldIn,
-			SpawnReason reason, BlockPos pos, Random rand) {
-		return worldIn.getBrightness(LightType.BLOCK, pos) > 8 ? false
-				: checkAnyLightMonsterSpawnRules(zombieType, worldIn, reason, pos, rand);
-	}
-	
-	/**
-	 * {@link EntitySpawnRegister#registerEntitySpawns(net.minecraftforge.event.RegistryEvent.Register)}
-	 */
-	public static boolean canZombieSpawn(EntityType<? extends PVZZombieEntity> zombieType, IWorld worldIn,
-			SpawnReason reason, BlockPos pos, Random rand) {
-		if(! checkZombieSpawn(zombieType, worldIn, reason)) return false;
-		return checkSpawn(zombieType, worldIn, reason, pos, rand);
-	}
-	
-	/**
-	 * chunk spawn zombie need has invasion event for that day.
-	 */
-	public static boolean checkZombieSpawn(EntityType<? extends PVZZombieEntity> zombieType, IWorld worldIn, SpawnReason reason) {
-		if(reason != SpawnReason.NATURAL) return true;
-		Optional<Zombies> opt = ZombieUtil.getZombieNameByType(zombieType);
-		if(worldIn instanceof World) {
-			if(opt.isPresent()) {
-			    return InvasionCache.ZOMBIE_INVADE_SET.contains(opt.get());
-			} else {
-				PVZMod.LOGGER.error("No Such Zombie Type !");
-			    return false;
-			}
-		}
-		return false;
 	}
 	
 	/**

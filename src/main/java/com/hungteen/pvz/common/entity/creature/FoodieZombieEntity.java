@@ -1,7 +1,5 @@
 package com.hungteen.pvz.common.entity.creature;
 
-import java.util.Random;
-
 import com.hungteen.pvz.common.entity.ai.goal.WaterTemptGoal;
 import com.hungteen.pvz.common.entity.drop.SunEntity;
 import com.hungteen.pvz.common.entity.zombie.poolday.SnorkelZombieEntity;
@@ -10,14 +8,11 @@ import com.hungteen.pvz.register.EntityRegister;
 import com.hungteen.pvz.register.ItemRegister;
 import com.hungteen.pvz.register.SoundRegister;
 
-import net.minecraft.block.Blocks;
 import net.minecraft.entity.AgeableEntity;
 import net.minecraft.entity.CreatureAttribute;
 import net.minecraft.entity.EntitySize;
 import net.minecraft.entity.EntityType;
-import net.minecraft.entity.MobEntity;
 import net.minecraft.entity.Pose;
-import net.minecraft.entity.SpawnReason;
 import net.minecraft.entity.ai.attributes.Attributes;
 import net.minecraft.entity.ai.controller.MovementController;
 import net.minecraft.entity.ai.goal.BreatheAirGoal;
@@ -41,10 +36,8 @@ import net.minecraft.pathfinding.SwimmerPathNavigator;
 import net.minecraft.util.ActionResultType;
 import net.minecraft.util.Hand;
 import net.minecraft.util.ResourceLocation;
-import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.vector.Vector3d;
-import net.minecraft.world.IWorld;
 import net.minecraft.world.IWorldReader;
 import net.minecraft.world.World;
 import net.minecraft.world.server.ServerWorld;
@@ -268,10 +261,6 @@ public class FoodieZombieEntity extends AnimalEntity {
 				this.zombie.setZza(0.0F);
 			}
 		}
-	}
-
-	public static boolean canSpawn(EntityType<? extends MobEntity> type, IWorld worldIn, SpawnReason reason, BlockPos pos, Random randomIn) {
-		return worldIn.getBlockState(pos).getBlock() == Blocks.WATER && worldIn.getBlockState(pos.above()).getBlock() == Blocks.WATER;
 	}
 
 	@Override

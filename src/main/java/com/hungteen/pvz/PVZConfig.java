@@ -189,6 +189,9 @@ public class PVZConfig {
 				    EntitySettings.ZombieSetting.EnableZombieDropHands = builder
 						    .comment("enable zombies to drop hands and heads when they got hurt(turn false to disable).")
 						    .define("EnableZombieDropHands", true);
+				    EntitySettings.ZombieSetting.ZombieMaxLevel = builder
+						    .comment("it can limit zombie's max level.")
+						    .defineInRange("ZombieMaxLevel", 20, 1, 20);
 				}
 				builder.pop();
 				
@@ -343,10 +346,12 @@ public class PVZConfig {
 			    public ForgeConfigSpec.IntValue ZombieSunChance;
 			    public ForgeConfigSpec.IntValue ZombieDropMultiper;
 			    public ForgeConfigSpec.BooleanValue EnableZombieDropHands;
+			    public ForgeConfigSpec.IntValue ZombieMaxLevel;
 			}
 			
 			public static class PlantSetting{
 				public ForgeConfigSpec.IntValue StrangeCatCount;
+				public ForgeConfigSpec.IntValue PlantMaxLevel;
 			}
 			
 			public static class EntityLiveTick{

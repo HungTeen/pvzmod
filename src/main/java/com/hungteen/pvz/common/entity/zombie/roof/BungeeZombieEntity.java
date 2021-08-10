@@ -2,7 +2,6 @@ package com.hungteen.pvz.common.entity.zombie.roof;
 
 import java.util.List;
 import java.util.Optional;
-import java.util.Random;
 
 import com.hungteen.pvz.api.interfaces.IPVZPlant;
 import com.hungteen.pvz.api.interfaces.IPVZZombie;
@@ -36,11 +35,8 @@ import net.minecraft.util.DamageSource;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.vector.Vector3d;
-import net.minecraft.world.Difficulty;
 import net.minecraft.world.DifficultyInstance;
 import net.minecraft.world.IServerWorld;
-import net.minecraft.world.IWorld;
-import net.minecraft.world.LightType;
 import net.minecraft.world.World;
 
 public class BungeeZombieEntity extends PVZZombieEntity {
@@ -340,12 +336,6 @@ public class BungeeZombieEntity extends PVZZombieEntity {
 		level.addFreshEntity(arrow);
 	}
 
-	public static boolean canBungeeSpawn(EntityType<? extends PVZZombieEntity> zombieType, IWorld worldIn,
-			SpawnReason reason, BlockPos pos, Random rand) {
-		if(! checkZombieSpawn(zombieType, worldIn, reason)) return false;
-		return worldIn.getBrightness(LightType.BLOCK, pos) < 8 && worldIn.getDifficulty() != Difficulty.PEACEFUL && (reason == SpawnReason.SPAWNER || worldIn.isEmptyBlock(pos));
-	}
-	
 	/**
 	 * can entity be choose as target.
 	 * {@link #canZombieTarget(Entity)}

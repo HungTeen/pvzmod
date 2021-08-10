@@ -6,7 +6,9 @@ import java.util.List;
 import javax.annotation.Nonnull;
 
 import com.hungteen.pvz.PVZConfig;
+import com.hungteen.pvz.common.cache.FlagCache;
 import com.hungteen.pvz.common.cache.InvasionCache;
+import com.hungteen.pvz.common.command.InvasionCommand;
 import com.hungteen.pvz.common.world.data.PVZFlagData;
 import com.hungteen.pvz.common.world.data.PVZInvasionData;
 import com.hungteen.pvz.utils.PlayerUtil;
@@ -32,6 +34,8 @@ public class OverworldInvasion {
 	private static final ITextComponent SAFE_DAY_INFO = new TranslationTextComponent("event.pvz.safe_day");
 	private static final ITextComponent COUNT_DOWN_INFO = new TranslationTextComponent("event.pvz.count_down");
 	private static final ITextComponent DAY = new TranslationTextComponent("event.pvz.day");
+	public static final int DIFFICULTY_INC = 2;
+	public static final int DIFFICULTY_DEC = 3;
 	public static final int PRE_START_TICK = 499;
 	public static final int START_TICK = 500;
 	public static final int PRE_END_TICK = 99;
@@ -97,13 +101,16 @@ public class OverworldInvasion {
 			    PlayerUtil.playClientSound(pl, 3);
 			    WaveManager.resetPlayerWaveTime(pl);
 		    }
+		    //add difficulty
+		    PVZInvasionData data = PVZInvasionData.getOverWorldInvasionData(world);
+		    data.addCurrentDifficulty(DIFFICULTY_INC);
 		    //choose random spawn event
 		    InvasionEvents event = getSpawnEvent(world);
-		    activateEvent(world, event);
+		    activateEvent(world, event, FlagCache.isEdgar090505Defeated());
 		    //check assist event
 		    activateAssistEvents(world);
 		    //get zombie spawn list
-		    PVZInvasionData data = PVZInvasionData.getOverWorldInvasionData(world);
+		    
 		    List<Zombies> zombieList = new ArrayList<>();
 		    for(Zombies zombie : Zombies.values()) {
 		    	if(data.hasZombieSpawnEntry(zombie)){
@@ -130,21 +137,22 @@ public class OverworldInvasion {
 	
 	/**
 	 * activate zombie spawn event.
+	 * {@link InvasionCommand#addInvasionEvent(net.minecraft.command.CommandSource, InvasionEvents)}
 	 */
-	public static void activateEvent(World world, @Nonnull InvasionEvents event) {
+	public static void activateEvent(World world, @Nonnull InvasionEvents event, boolean force) {
 		PVZInvasionData data = PVZInvasionData.getOverWorldInvasionData(world);
 		if(! data.hasEvent(event)) {
 			data.addEvent(event);
-			addEventSpawns(world, event);
+			addEventSpawns(world, event, force);
 		}
 	}
 	
 	/**
 	 * add spawn of zombies in event spawn list.
 	 */
-	public static void addEventSpawns(World world, InvasionEvents event) {
+	public static void addEventSpawns(World world, InvasionEvents event, boolean force) {
 		PVZInvasionData data = PVZInvasionData.getOverWorldInvasionData(world);
-        for (Zombies zombie : getInvasionSpawnZombies(world, event)) {
+        for (Zombies zombie : getInvasionSpawnZombies(world, event, force)) {
         	if(! data.hasZombieSpawnEntry(zombie)) {
         		data.addZombieSpawnEntry(zombie);
         	}
@@ -158,14 +166,14 @@ public class OverworldInvasion {
 	public static void activateAssistEvents(World world) {
 		PVZFlagData data = PVZFlagData.getGlobalFlagData(world);
 		if(world.random.nextInt(PVZConfig.COMMON_CONFIG.WorldSettings.WorldInvasionSettings.EventChanceSettings.FogEventChance.get()) == 0) {
-	    	activateEvent(world, InvasionEvents.FOG);
+	    	activateEvent(world, InvasionEvents.FOG, false);
 	    }
 		if(data.isZombossDefeated()) {
 			if(world.random.nextInt(PVZConfig.COMMON_CONFIG.WorldSettings.WorldInvasionSettings.EventChanceSettings.MiniEventChance.get()) == 0) {
-	    	    activateEvent(world, InvasionEvents.MINI);
+	    	    activateEvent(world, InvasionEvents.MINI, false);
 	        }
 	        if(world.random.nextInt(PVZConfig.COMMON_CONFIG.WorldSettings.WorldInvasionSettings.EventChanceSettings.InvisEventChance.get()) == 0) {
-	    	    activateEvent(world, InvasionEvents.INVIS);
+	    	    activateEvent(world, InvasionEvents.INVIS, false);
 	        }
 		}
 	}
@@ -201,9 +209,23 @@ public class OverworldInvasion {
 		syncEndSpawnList(world);
 	}
 	
-	public static List<Zombies> getInvasionSpawnZombies(World world, InvasionEvents ev){
-		if(ev == InvasionEvents.RANDOM) return getRandomSpawnZombies(world);
-		return ev.zombies;
+	/**
+	 * get spawn zombies for current invasion event.
+	 */
+	public static List<Zombies> getInvasionSpawnZombies(World world, InvasionEvents ev, boolean force){
+		if(ev == InvasionEvents.RANDOM) {
+			return getRandomSpawnZombies(world);
+		}
+		if(force) {
+			return ev.zombies;
+		}
+		final List<Zombies> zombies = new ArrayList<>();
+		for(Zombies zombie : ev.zombies) {
+			if(zombie.difficulty <= InvasionCache.getInvasionDifficulty()) {
+				zombies.add(zombie);
+			}
+		}
+		return zombies;
 	}
 	
 	private static List<Zombies> getRandomSpawnZombies(World world){

@@ -2,10 +2,6 @@ package com.hungteen.pvz;
 
 import com.hungteen.pvz.common.capability.CapabilityHandler;
 import com.hungteen.pvz.common.item.PVZSpawnEggItem;
-import com.hungteen.pvz.common.item.armor.BucketArmorItem;
-import com.hungteen.pvz.common.item.armor.ConeArmorItem;
-import com.hungteen.pvz.common.item.armor.FootballArmorItem;
-import com.hungteen.pvz.common.item.armor.GigaArmorItem;
 import com.hungteen.pvz.common.network.PVZPacketHandler;
 import com.hungteen.pvz.common.potion.PotionRecipeHandler;
 import com.hungteen.pvz.register.BiomeRegister;
@@ -17,7 +13,6 @@ import com.hungteen.pvz.register.EnchantmentRegister;
 import com.hungteen.pvz.register.EntityRegister;
 import com.hungteen.pvz.register.FeatureRegister;
 import com.hungteen.pvz.register.ItemRegister;
-import com.hungteen.pvz.register.KeyBindRegister;
 import com.hungteen.pvz.register.ParticleRegister;
 import com.hungteen.pvz.register.PotionRegister;
 import com.hungteen.pvz.register.SoundRegister;
@@ -34,14 +29,14 @@ import net.minecraftforge.eventbus.api.EventPriority;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod.EventBusSubscriber;
-import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
 import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
 
 @EventBusSubscriber(modid = PVZMod.MOD_ID, bus = EventBusSubscriber.Bus.MOD)
 public class RegistryHandler {
 
 	/**
-	 * put all deferred register together
+	 * put all deferred register together.
+	 * {@link PVZMod#PVZMod()}
 	 */
 	public static void deferredRegister(IEventBus bus) {
 		SoundRegister.SOUNDS.register(bus);
@@ -75,14 +70,14 @@ public class RegistryHandler {
     	BiomeUtil.initBiomeSet();
     }
 	
-	@SubscribeEvent
-	public static void clientSetup(FMLClientSetupEvent evt) {
-		ConeArmorItem.initArmorModel();
-		BucketArmorItem.initArmorModel();
-		FootballArmorItem.initArmorModel();
-		GigaArmorItem.initArmorModel();
-		KeyBindRegister.init();
-	}
+//	@SubscribeEvent
+//	public static void clientSetup(FMLClientSetupEvent evt) {
+//		ConeArmorItem.initArmorModel();
+//		BucketArmorItem.initArmorModel();
+//		FootballArmorItem.initArmorModel();
+//		GigaArmorItem.initArmorModel();
+//		KeyBindRegister.init();
+//	}
 	
 	/**
 	 * Exists to work around a limitation with Spawn Eggs:
@@ -95,4 +90,5 @@ public class RegistryHandler {
 	public static void onPostRegisterEntities(final RegistryEvent.Register<EntityType<?>> event) {
 		PVZSpawnEggItem.initUnaddedEggs();
 	}
+	
 }

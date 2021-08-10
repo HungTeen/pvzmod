@@ -1,7 +1,5 @@
 package com.hungteen.pvz.common.entity.zombie.grassnight;
 
-import java.util.Random;
-
 import com.hungteen.pvz.common.entity.zombie.PVZZombieEntity;
 import com.hungteen.pvz.common.item.card.ImitaterCardItem;
 import com.hungteen.pvz.common.item.card.PlantCardItem;
@@ -12,7 +10,6 @@ import net.minecraft.entity.EntitySize;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.Pose;
-import net.minecraft.entity.SpawnReason;
 import net.minecraft.entity.ai.attributes.Attributes;
 import net.minecraft.entity.monster.MonsterEntity;
 import net.minecraft.entity.player.PlayerEntity;
@@ -23,9 +20,7 @@ import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.SoundEvent;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.vector.Vector3d;
-import net.minecraft.world.IWorld;
 import net.minecraft.world.World;
-import net.minecraft.world.server.ServerWorld;
 
 public abstract class AbstractTombStoneEntity extends PVZZombieEntity {
 
@@ -74,11 +69,6 @@ public abstract class AbstractTombStoneEntity extends PVZZombieEntity {
 			}
 		}
 		return super.interactAt(player, vec3d, hand);
-	}
-	
-	public static boolean canTombStoneSpawn(EntityType<? extends PVZZombieEntity> zombieType, IWorld worldIn,
-			SpawnReason reason, BlockPos pos, Random rand) {
-		return (worldIn instanceof ServerWorld && ! ((ServerWorld) worldIn).isDay()) && checkSpawn(zombieType, worldIn, reason, pos, rand);
 	}
 	
 	@Override

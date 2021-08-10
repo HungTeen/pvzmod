@@ -18,7 +18,7 @@ import net.minecraft.world.World;
 public enum InvasionEvents {
 
 	BUCKET(true, Bundles.GRASS_DAY, Zombies.NORMAL_ZOMBIE, Zombies.CONEHEAD_ZOMBIE, Zombies.POLE_ZOMBIE, Zombies.BUCKETHEAD_ZOMBIE),
-	WATER(true, Bundles.POOL_DAY, Zombies.NORMAL_ZOMBIE, Zombies.SNORKEL_ZOMBIE, Zombies.ZOMBONI, Zombies.BOBSLE_TEAM, Zombies.LAVA_ZOMBIE), 
+	WATER(true, Bundles.POOL_DAY, Zombies.NORMAL_ZOMBIE, Zombies.SNORKEL_ZOMBIE, Zombies.ZOMBONI, Zombies.BOBSLE_TEAM, Zombies.DOLPHIN_RIDER, Zombies.LAVA_ZOMBIE), 
 	HALLOWEEN(true, Bundles.RANDOM, Zombies.NORMAL_ZOMBIE, Zombies.TRICK_ZOMBIE, Zombies.PUMPKIN_ZOMBIE),
 	NEWSPAPER(true, Bundles.GRASS_NIGHT, Zombies.NORMAL_ZOMBIE, Zombies.NEWSPAPER_ZOMBIE, Zombies.OLD_ZOMBIE, Zombies.SUNDAY_EDITION_ZOMBIE),
 	FOOTBALL(true, Bundles.GRASS_NIGHT, Zombies.NORMAL_ZOMBIE, Zombies.SCREENDOOR_ZOMBIE, Zombies.DANCING_ZOMBIE, Zombies.FOOTBALL_ZOMBIE, Zombies.GIGA_FOOTBALL_ZOMBIE),

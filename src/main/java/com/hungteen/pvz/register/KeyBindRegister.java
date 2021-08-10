@@ -14,7 +14,7 @@ import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.client.registry.ClientRegistry;
 import net.minecraftforge.fml.common.Mod;
 
-@Mod.EventBusSubscriber(modid=PVZMod.MOD_ID,value = Dist.CLIENT)
+@Mod.EventBusSubscriber(modid=PVZMod.MOD_ID, value = Dist.CLIENT)
 public class KeyBindRegister {
 
 	public static KeyBinding ShowPlayerResources = new KeyBinding("key.pvz.show_resources", 261, "key.categories.pvz");

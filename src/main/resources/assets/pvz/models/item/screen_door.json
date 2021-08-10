@@ -177,7 +177,7 @@
 	"overrides": [
         {
             "predicate": {
-                "blocking": 1
+                "pvz:blocking": 1
             },
             "model": "pvz:item/screen_door_blocking"
         }

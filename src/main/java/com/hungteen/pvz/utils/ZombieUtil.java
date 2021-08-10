@@ -3,7 +3,9 @@ package com.hungteen.pvz.utils;
 import java.util.HashMap;
 import java.util.Optional;
 
+import com.hungteen.pvz.PVZConfig;
 import com.hungteen.pvz.PVZMod;
+import com.hungteen.pvz.common.cache.InvasionCache;
 import com.hungteen.pvz.common.entity.zombie.PVZZombieEntity;
 import com.hungteen.pvz.common.entity.zombie.grassnight.DancingZombieEntity;
 import com.hungteen.pvz.register.EntityRegister;
@@ -11,6 +13,7 @@ import com.hungteen.pvz.utils.enums.Ranks;
 import com.hungteen.pvz.utils.enums.Zombies;
 
 import net.minecraft.entity.EntityType;
+import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.RegistryObject;
 
@@ -186,6 +189,14 @@ public class ZombieUtil {
 	 */
 	public static Optional<Zombies> getZombieNameByType(EntityType<? extends PVZZombieEntity> zombieType){
 		return Optional.ofNullable(ZombieUtil.ENTITY_TYPE_ZOMBIE.get(zombieType));
+	}
+	
+	public static int caculateZombieLevel(PVZZombieEntity zombie) {
+		final int difficulty = InvasionCache.getInvasionDifficulty() - 100;
+		final int maxLevel = PVZConfig.COMMON_CONFIG.EntitySettings.ZombieSetting.ZombieMaxLevel.get();
+		final int minLvl = MathHelper.clamp(difficulty / 50 + 1, 1, maxLevel);
+		final int maxLvl = MathHelper.clamp(difficulty / 30 + 2, 1, maxLevel);
+		return MathUtil.getRandomMinMax(zombie.getRandom(), minLvl, maxLvl);
 	}
 	
 	public static int caculateZombieXp(PVZZombieEntity zombie) {

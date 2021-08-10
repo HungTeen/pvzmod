@@ -1,7 +1,6 @@
 package com.hungteen.pvz.common.entity.zombie.poolnight;
 
 import java.util.Optional;
-import java.util.Random;
 
 import com.hungteen.pvz.common.entity.ai.navigator.ZombiePathNavigator;
 import com.hungteen.pvz.common.entity.zombie.PVZZombieEntity;
@@ -15,7 +14,6 @@ import com.hungteen.pvz.utils.interfaces.ICanAttract;
 
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.SpawnReason;
 import net.minecraft.entity.ai.attributes.Attributes;
 import net.minecraft.entity.ai.controller.FlyingMovementController;
 import net.minecraft.entity.ai.controller.MovementController;
@@ -31,10 +29,6 @@ import net.minecraft.pathfinding.PathNavigator;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.SoundEvent;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.world.Difficulty;
-import net.minecraft.world.IWorld;
-import net.minecraft.world.LightType;
 import net.minecraft.world.World;
 
 public class BalloonZombieEntity extends PVZZombieEntity {
@@ -113,14 +107,6 @@ public class BalloonZombieEntity extends PVZZombieEntity {
 	private void updateBalloonState(boolean has) {
 		this.setNoGravity(has);
 		this.moveControl = has ? FlyController : GroundController;
-	}
-	
-	public static boolean canBalloonSpawn(EntityType<? extends PVZZombieEntity> zombieType, IWorld worldIn,
-			SpawnReason reason, BlockPos pos, Random rand) {
-		if(! checkZombieSpawn(zombieType, worldIn, reason)) {
-			return false;
-		}
-		return worldIn.getBrightness(LightType.BLOCK, pos) < 8 && worldIn.getDifficulty() != Difficulty.PEACEFUL && (reason == SpawnReason.SPAWNER || worldIn.isEmptyBlock(pos));
 	}
 	
 	@Override

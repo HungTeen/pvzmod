@@ -1,5 +1,8 @@
 package com.hungteen.pvz.common.world.data;
 
+import com.hungteen.pvz.common.cache.FlagCache;
+import com.hungteen.pvz.common.entity.zombie.roof.ZomBossEntity;
+
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.world.World;
 import net.minecraft.world.server.ServerWorld;
@@ -19,13 +22,18 @@ public class PVZFlagData extends WorldSavedData {
 		super(name);
 	}
 	
+	/**
+	 * {@link ZomBossEntity#die(net.minecraft.util.DamageSource)}
+	 */
 	public void addAdgarDefeatedCount() {
 		++ this.zomboss1DefeatedCount;
+		FlagCache.isEdgar090505Defeated = (this.zomboss1DefeatedCount > 0);
 		setDirty();
 	}
 	
 	public void setZomboss1DefeatedCount(int cnt) {
 		this.zomboss1DefeatedCount = cnt;
+		FlagCache.isEdgar090505Defeated = (this.zomboss1DefeatedCount > 0);
 		setDirty();
 	}
 	

@@ -20,6 +20,8 @@ import net.minecraftforge.fml.ModLoadingContext;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.Mod.EventBusSubscriber;
 import net.minecraftforge.fml.config.ModConfig.Type;
+import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
+import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.minecraftforge.fml.event.lifecycle.FMLLoadCompleteEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 
@@ -46,7 +48,7 @@ public class PVZMod
     		ModLoadingContext.get().registerConfig(Type.CLIENT, specPair.getRight());
     		PVZConfig.CLIENT_CONFIG = specPair.getLeft();
     	}
-    	PROXY.init();
+    	
     	IEventBus modBus = FMLJavaModLoadingContext.get().getModEventBus();
     	RegistryHandler.deferredRegister(modBus);
     	
@@ -55,11 +57,25 @@ public class PVZMod
     	forgeBus.addListener(EventPriority.HIGH, BiomeRegister::biomeModification);
     	 
     	AdvancementHandler.init();
+    	
+    	PROXY.init();
     }
     
 	@SubscribeEvent
     public static void setupComplete(FMLLoadCompleteEvent event) {
         PROXY.postInit();
+    }
+	
+	@SubscribeEvent
+	public static void setupClient(FMLCommonSetupEvent event) {
+		event.enqueueWork(() ->{
+            PROXY.setUp();
+		});
+    }
+	
+	@SubscribeEvent
+	public static void setupClient(FMLClientSetupEvent event) {
+        PROXY.setUpClient();
     }
 	
 }

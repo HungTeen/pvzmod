@@ -1,7 +1,5 @@
 package com.hungteen.pvz.common.entity.zombie.poolnight;
 
-import java.util.Random;
-
 import com.hungteen.pvz.PVZConfig;
 import com.hungteen.pvz.common.entity.drop.JewelEntity;
 import com.hungteen.pvz.common.entity.zombie.PVZZombieEntity;
@@ -13,17 +11,13 @@ import com.hungteen.pvz.utils.enums.Zombies;
 import net.minecraft.entity.EntitySize;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.Pose;
-import net.minecraft.entity.SpawnReason;
 import net.minecraft.entity.ai.attributes.Attributes;
 import net.minecraft.entity.monster.MonsterEntity;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.potion.EffectInstance;
 import net.minecraft.potion.Effects;
 import net.minecraft.util.DamageSource;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.world.IWorld;
 import net.minecraft.world.World;
-import net.minecraft.world.server.ServerWorld;
 
 public class YetiZombieEntity extends PVZZombieEntity{
 
@@ -90,14 +84,6 @@ public class YetiZombieEntity extends PVZZombieEntity{
 
 	public int getYetiMaxLiveTick() {
 		return PVZConfig.COMMON_CONFIG.EntitySettings.EntityLiveTick.YetiLiveTick.get();
-	}
-	
-	public static boolean canYetiSpawn(EntityType<? extends PVZZombieEntity> zombieType, IWorld worldIn,
-			SpawnReason reason, BlockPos pos, Random rand) {
-		if(canZombieSpawn(zombieType, worldIn, reason, pos, rand)) {
-			return worldIn instanceof ServerWorld && ((ServerWorld) worldIn).isThundering() && ! ((ServerWorld) worldIn).isDay() && rand.nextInt(2) == 0;
-		}
-		return false;
 	}
 	
 	@Override

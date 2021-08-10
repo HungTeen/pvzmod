@@ -15,4 +15,5 @@ public class ConfigUtil {
 	public static int getPlayerInitialGroup() {
 		return PVZConfig.COMMON_CONFIG.EntitySettings.PlayerInitialGroup.get();
 	}
+	
 }

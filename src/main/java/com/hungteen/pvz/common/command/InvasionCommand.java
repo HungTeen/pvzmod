@@ -113,8 +113,8 @@ public class InvasionCommand {
 		return targets.size();
 	}
 	
-	private static int addInvasionEvent(CommandSource source, InvasionEvents event) {
-		OverworldInvasion.activateEvent(source.getLevel(), event);
+	public static int addInvasionEvent(CommandSource source, InvasionEvents event) {
+		OverworldInvasion.activateEvent(source.getLevel(), event, true);
 		source.sendSuccess(new StringTextComponent(new TranslationTextComponent("command.pvz.add_event").getString() + ":" + InvasionEvents.getEventText(event).getString()), true);
 		return 0;
 	}
