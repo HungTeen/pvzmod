@@ -1,0 +1,24 @@
+{
+    "name": "Noble Zombie",
+    "icon": "minecraft:wither_rose",
+    "category": "pvz:boss",
+    "pages": [
+        {
+            "type": "text",
+            "text": "Summoning $(bred)Noble Zombie$() requires a $(l)multi-block structure$(). You need $(l)three obsidians connected straight together, and then place two withered roses $() on each side, as shown in the picture on the right."
+        },
+        {
+            "type": "image",
+            "images": [
+                "pvz:textures/gui/patchouli/mourner_coffin.png"
+            ],
+            "title": "Mourner's Coffin"
+        },
+        {
+            "type": "text",
+            "text": ""
+        }
+    ],
+    "advancement": "pvz:adventure/plant",
+    "sortnum": 1
+}

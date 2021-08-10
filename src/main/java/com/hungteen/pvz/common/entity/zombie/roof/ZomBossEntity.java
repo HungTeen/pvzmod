@@ -57,8 +57,6 @@ public class ZomBossEntity extends PVZZombieEntity {
 	private static final List<Zombies> ZOMBIES_3 = Arrays.asList(Zombies.BUCKETHEAD_ZOMBIE, Zombies.FOOTBALL_ZOMBIE, Zombies.ZOMBONI, Zombies.JACK_IN_BOX_ZOMBIE, Zombies.DIGGER_ZOMBIE, Zombies.LADDER_ZOMBIE, Zombies.CATAPULT_ZOMBIE);
 	private static final List<Zombies> ZOMBIES_4 = Arrays.asList(Zombies.FOOTBALL_ZOMBIE, Zombies.GIGA_FOOTBALL_ZOMBIE, Zombies.ZOMBONI, Zombies.LAVA_ZOMBIE, Zombies.CATAPULT_ZOMBIE, Zombies.GARGANTUAR);
 	private static final List<Zombies> ZOMBIES_5 = Arrays.asList(Zombies.GIGA_FOOTBALL_ZOMBIE, Zombies.SUNDAY_EDITION_ZOMBIE, Zombies.LAVA_ZOMBIE, Zombies.CATAPULT_ZOMBIE, Zombies.GARGANTUAR, Zombies.SAD_GARGANTUAR);
-	private final ServerBossInfo bossInfo = (ServerBossInfo)(new ServerBossInfo(this.getDisplayName(), BossInfo.Color.RED, BossInfo.Overlay.PROGRESS)).setDarkenScreen(true);
-	private final int maxPlantsInRange = 40;
 	private final int maxZombiesInRange = 30;
 	private int summonZombieTick = 0;
 	public int shootBallCD = 100;
@@ -66,15 +64,8 @@ public class ZomBossEntity extends PVZZombieEntity {
 	
 	public ZomBossEntity(EntityType<? extends MonsterEntity> type, World worldIn) {
 		super(type, worldIn);
-		this.canCollideWithZombie = false;
-		this.setImmuneAllEffects();
-		this.canBeMini = false;
-		this.canBeCharm = false;
-		this.canBeInvis = false;
-		this.canBeStealByBungee = false;
 		this.maxDeathTime = 60;
 		this.setIsWholeBody();
-		this.canBeRemove = false;
 		this.resetShootBallCD();
 		this.resetStealCD();
 	}
@@ -115,8 +106,6 @@ public class ZomBossEntity extends PVZZombieEntity {
 	@Override
 	public void tick() {
 		super.tick();
-		float percent = (this.getDefenceLife() + this.getHealth()) / (this.getMaxHealth() + this.getExtraLife());
-		this.bossInfo.setPercent(percent);
 		if(this.shootBallCD > 0) {
 			-- this.shootBallCD;
 			-- this.stealPlantCD;
@@ -318,20 +307,6 @@ public class ZomBossEntity extends PVZZombieEntity {
 		}
 		int pos = this.getRandom().nextInt(summon_zombie_list.size());
 		return Optional.of(ZombieUtil.getZombieEntity(level, summon_zombie_list.get(pos)));
-	}
-	
-	private int getNearPlantsCount() {
-		float range = 50;
-		return level.getEntitiesOfClass(PVZPlantEntity.class, EntityUtil.getEntityAABB(this, range, range), (plant) -> {
-			return EntityUtil.canTargetEntity(this, plant);
-		}).size();
-	}
-	
-	private int getNearZombiesCount() {
-		float range = 30;
-		return level.getEntitiesOfClass(PVZZombieEntity.class, EntityUtil.getEntityAABB(this, range, range), (plant) -> {
-			return ! EntityUtil.canTargetEntity(this, plant);
-		}).size();
 	}
 	
 	public EntitySize getDimensions(Pose poseIn) {

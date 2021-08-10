@@ -2,8 +2,12 @@ package com.hungteen.pvz.common.entity.misc;
 
 import com.hungteen.pvz.api.enums.PVZGroupType;
 import com.hungteen.pvz.common.entity.AbstractOwnerEntity;
+import com.hungteen.pvz.common.entity.zombie.PVZZombieEntity;
+import com.hungteen.pvz.common.entity.zombie.other.CoffinEntity;
 import com.hungteen.pvz.common.misc.damage.PVZDamageSource;
+import com.hungteen.pvz.register.EntityRegister;
 import com.hungteen.pvz.utils.EntityUtil;
+import com.hungteen.pvz.utils.WorldUtil;
 
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntitySize;
@@ -36,13 +40,24 @@ public class ZombieHandEntity extends AbstractOwnerEntity {
 		}
 	}
 	
-	protected void performAttack() {
-		for(Entity target : EntityUtil.getTargetableEntities(this, EntityUtil.getEntityAABB(this, 0.5f, 1f))) {
-			if(target instanceof LivingEntity) {
-				target.hurt(PVZDamageSource.normal(this, this.owner), getAttackDamage((LivingEntity) target));
-			    target.setPos(target.getX(), target.getY() - 3, target.getZ());
+	/**
+	 * {@link CoffinEntity#finalizeSpawn(net.minecraft.world.IServerWorld, net.minecraft.world.DifficultyInstance, net.minecraft.entity.SpawnReason, net.minecraft.entity.ILivingEntityData, net.minecraft.nbt.CompoundNBT)}
+	 */
+	public static void spawnRangeZombieHands(World world, PVZZombieEntity zombie, int range) {
+		for(int i = - range; i <= range; ++ i) {
+			for(int j = - range; j <= range; ++ j) {
+				final ZombieHandEntity hand = EntityRegister.ZOMBIE_HAND.get().create(world);
+				hand.summonByOwner(zombie);
+				EntityUtil.onEntitySpawn(world, hand, WorldUtil.getSuitableHeightPos(world, zombie.blockPosition().offset(i, 0, j)));
 			}
 		}
+	}
+	
+	protected void performAttack() {
+		EntityUtil.getTargetableLivings(this, EntityUtil.getEntityAABB(this, 0.5f, 1f)).forEach(target -> {
+		    target.hurt(PVZDamageSource.normal(this, this.getOwnerOrSelf()), this.getAttackDamage(target));
+			target.setPos(target.getX(), target.getY() - 3, target.getZ());
+		});
 	}
 	
 	@Override
@@ -51,7 +66,7 @@ public class ZombieHandEntity extends AbstractOwnerEntity {
 	}
 	
 	private float getAttackDamage(LivingEntity target) {
-		return 5;
+		return 10;
 	}
 	
 	public int getTick() {

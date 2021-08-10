@@ -1,6 +1,6 @@
 {
     "name": "Zombie Invade",
-    "icon": "minecraft:iron_sword",
+    "icon": "pvz:zombie_flag",
     "category": "pvz:intro",
     "pages": [
         {
@@ -25,7 +25,7 @@
         },
         {
             "type": "text",
-            "text": "Current Event list:$(br)$(bred)Bucket invasion$()(Normal, Conehead, Pole, Bucket Zombies).$(br)$(bred)Water invasion$()(Normal, Snorkel, Zomboni, Bobsle Teams, Lava Zombies).$(br)$(bred)Halloween invasion$()(Normal, Pumpkin, Trick Zombies)$(br)$(bred)Newspaper Invasion$()(Normal, Newspaper, Old, SundayEdition Zombies)$(br)$(bred)Football Invasion$()(Normal, ScreenDoor, Football, Dancing, GigaFootball Zombies)$(br)"
+            "text": "Current Event list:$(br)$(bred)Bucket invasion$()(Normal, Conehead, Pole, Bucket Zombies).$(br)$(bred)Water invasion$()(Normal, Snorkel, Zomboni, Bobsle Teams, Dolphin Rider, Lava Zombies).$(br)$(bred)Halloween invasion$()(Normal, Pumpkin, Trick Zombies)$(br)$(bred)Newspaper Invasion$()(Normal, Newspaper, Old, SundayEdition Zombies)$(br)$(bred)Football Invasion$()(Normal, ScreenDoor, Football, Dancing, GigaFootball Zombies)$(br)"
         },
         {
             "type": "text",
@@ -41,5 +41,5 @@
         }
     ],
     "advancement": "pvz:adventure/root",
-    "sortnum": 3
+    "sortnum": 5
 }

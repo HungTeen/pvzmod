@@ -1,7 +1,7 @@
 {
 	"name": "gui.pvz.pvz_guide",
 	"landing_text": "gui.pvz.guide_info",
-	"version": 5,
+	"version": 6,
 	"book_texture":"patchouli:textures/gui/book_blue.png",
 	"model":"patchouli:book_blue",
 	"show_progress":true,

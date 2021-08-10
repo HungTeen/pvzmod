@@ -4,10 +4,11 @@ import java.util.List;
 
 import com.hungteen.pvz.common.entity.misc.ZombieHandEntity;
 import com.hungteen.pvz.common.entity.plant.PVZPlantEntity;
-import com.hungteen.pvz.common.entity.zombie.PVZZombieEntity;
+import com.hungteen.pvz.common.entity.zombie.base.AbstractBossZombieEntity;
 import com.hungteen.pvz.common.misc.damage.PVZDamageSource;
 import com.hungteen.pvz.data.loot.PVZLoot;
 import com.hungteen.pvz.register.EntityRegister;
+import com.hungteen.pvz.register.SoundRegister;
 import com.hungteen.pvz.utils.EntityUtil;
 import com.hungteen.pvz.utils.ZombieUtil;
 import com.hungteen.pvz.utils.enums.Zombies;
@@ -23,7 +24,6 @@ import net.minecraft.entity.SpawnReason;
 import net.minecraft.entity.ai.attributes.Attributes;
 import net.minecraft.entity.monster.MonsterEntity;
 import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.network.datasync.DataParameter;
 import net.minecraft.network.datasync.DataSerializers;
@@ -35,18 +35,14 @@ import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.SoundEvents;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
-import net.minecraft.world.BossInfo;
 import net.minecraft.world.DifficultyInstance;
 import net.minecraft.world.IServerWorld;
 import net.minecraft.world.World;
-import net.minecraft.world.server.ServerBossInfo;
 
-public class NobleZombieEntity extends PVZZombieEntity {
+public class NobleZombieEntity extends AbstractBossZombieEntity {
 
 	private static final DataParameter<Integer> TP_TICK = EntityDataManager.defineId(NobleZombieEntity.class,
 			DataSerializers.INT);
-	private final ServerBossInfo bossInfo = (ServerBossInfo) (new ServerBossInfo(this.getDisplayName(),
-			BossInfo.Color.WHITE, BossInfo.Overlay.NOTCHED_6)).setDarkenScreen(true);
 	private int summonTick;
 	private final int minSummonTick = 300;
 	private final int maxSummonTick = 600;
@@ -62,14 +58,7 @@ public class NobleZombieEntity extends PVZZombieEntity {
 		this.summonTick = this.getRandom().nextInt(this.maxSummonTick - this.minSummonTick) + this.minSummonTick;
 		this.setTpTick(- this.getRandom().nextInt(this.maxTpCD - this.minTpCD + 1) - this.minTpCD);
 		this.xpReward = 1000;
-		this.canBeButter = false;
-		this.canBeCold = false;
-		this.canBeCharm = false;
-		this.canBeMini = false;
-		this.canBeStealByBungee = false;
-		this.canLostHand = false;
-		this.canLostHead = false;
-		this.canBeRemove = false;
+		this.setIsWholeBody();
 	}
 	
 	@Override
@@ -88,25 +77,17 @@ public class NobleZombieEntity extends PVZZombieEntity {
 	@Override
 	public ILivingEntityData finalizeSpawn(IServerWorld worldIn, DifficultyInstance difficultyIn, SpawnReason reason,
 			ILivingEntityData spawnDataIn, CompoundNBT dataTag) {
-		if(! level.isClientSide) {
-			for (Entity target : EntityUtil.getTargetableEntities(this,
-					EntityUtil.getEntityAABB(this, 50, 50))) {
-				if(this.getRandom().nextInt(4) == 0) {
-					ZombieHandEntity hand = EntityRegister.ZOMBIE_HAND.get().create(level);
-				    hand.setOwner(this);
-				    EntityUtil.onEntitySpawn(level, hand, target.blockPosition());
-				}
-			}
+		if (! level.isClientSide) {
+			EntityUtil.playSound(this, SoundRegister.DIRT_RISE.get());
+			ZombieHandEntity.spawnRangeZombieHands(level, this, 10);
 		}
 		return super.finalizeSpawn(worldIn, difficultyIn, reason, spawnDataIn, dataTag);
 	}
 	
 	@Override
-	public void tick() {
-		super.tick();
-		float percent = this.getHealth() / this.getMaxHealth();
-		this.bossInfo.setPercent(percent);
-		if(!this.canZombieNormalUpdate()) {
+	public void zombieTick() {
+		super.zombieTick();
+		if(!this.level.isClientSide && ! this.canZombieNormalUpdate()) {
 			this.setTpTick(- this.maxTpCD);
 		}
 	}
@@ -332,11 +313,6 @@ public class NobleZombieEntity extends PVZZombieEntity {
 	}
 
 	@Override
-	protected Type getSpawnType() {
-		return Type.NORMAL;
-	}
-
-	@Override
 	public void readAdditionalSaveData(CompoundNBT compound) {
 		super.readAdditionalSaveData(compound);
 		if(compound.contains("summon_zombie_tick")) {
@@ -357,16 +333,6 @@ public class NobleZombieEntity extends PVZZombieEntity {
 		compound.putInt("zombie_tp_tick", this.getTpTick());
 	}
 
-	public void startSeenByPlayer(ServerPlayerEntity player) {
-		super.startSeenByPlayer(player);
-		this.bossInfo.addPlayer(player);
-	}
-
-	public void stopSeenByPlayer(ServerPlayerEntity player) {
-		super.stopSeenByPlayer(player);
-		this.bossInfo.removePlayer(player);
-	}
-	
 	public int getTpTick() {
 		return this.entityData.get(TP_TICK);
 	}
@@ -376,20 +342,10 @@ public class NobleZombieEntity extends PVZZombieEntity {
 	}
 	
 	@Override
-	public boolean removeWhenFarAway(double distanceToClosestPlayer) {
-		return false;
-	}
-
-	@Override
 	protected ResourceLocation getDefaultLootTable() {
 		return PVZLoot.NOBLE_ZOMBIE;
 	}
 	
-	@Override
-	public boolean canChangeDimensions() {
-		return false;
-	}
-
 	@Override
 	public Zombies getZombieEnumName() {
 		return Zombies.NOBLE_ZOMBIE;

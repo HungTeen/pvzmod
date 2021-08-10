@@ -1,16 +1,8 @@
 {
-    "name": "Zombies and Plants",
-    "icon": "minecraft:zombie_head",
+    "name": "Plants",
+    "icon": "pvz:pea",
     "category": "pvz:intro",
     "pages": [
-        {
-            "type": "text",
-            "text": "$(bpurple)Zombies$() are crazy creatures that feed on brains. $(l)They are enemies with plants and also attack players and Crazy Dave$(). There are many types of zombies, some can walk on the road; some can drive a car, some can dive in the sea, there are even zombies that can ride a dolphin."
-        },
-        {   
-            "type": "text",
-            "text": "There are various rewards for killing zombies, players can get $(bgreen)TreeXp$() when they and their plants kill zombies. Zombies have chances to drop $(borange)Coins(silver coins, gold coins)$(), $(bblue)Gems$(), $(borange)Chocolate$(), plant seeds, origin essence and so on. If you kill a zombie surrounded by $(bgreen)green light$(), it will definitely drop $(l)Energy$(). If you kill a zombie surrounded by $(byellow)yellow light$(), it will definitely drop $(byellow)Sun$()."
-        },
         {   
             "type": "text",
             "text": "$(bgreen)Plants$() are creatures that $(l)are hostile to zombies and $(bred)all kinds of monsters$(). Different plants have different usages. Some can produce sun, such as SunFlowers. Some can attack enemies, such as PeaShooters. Some can defend, such as NutWalls."
@@ -22,8 +14,13 @@
         {
             "type": "text",
             "text": "Both $(l)plants and zombies$() have $(bred)qualities$(). The qualities are $(bred)gray, white, green, blue, purple, gold$(), which become higher from left to right. The higher the quality, the stronger the corresponding plants or zombies. $(l)More experience gained from killing high-quality zombies$(). For plants, $(l)the higher the quality, the more difficult it is to get$()."
+        },
+        {
+            "type": "crafting",
+            "recipe": "pvz:pvz_plant",
+            "text": "It can help you know plants features."
         }
     ],
     "advancement": "pvz:adventure/root",
-    "sortnum": 1
+    "sortnum": 2
 }

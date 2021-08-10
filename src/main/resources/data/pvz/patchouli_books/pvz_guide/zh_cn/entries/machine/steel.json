@@ -7,9 +7,9 @@
             "type": "smelting",
             "recipe": "pvz:smelting/steel_ingot_from_smelting",
             "title": "钢",
-            "text": "$(byellow)钢锭$()由铁锭烧炼而成。它是植物大战僵尸mod里面基本的做机器的材料。 另外你能使用钢锭来修复很多工具和装备，例如（橄榄球套装、铁门盾牌等等）。"
+            "text": "$(byellow)钢锭$()由铁锭烧炼而成。它是植物大战僵尸mod里面基本的做机器的材料。另外你能使用钢锭来修复很多工具和装备，例如（橄榄球套装、铁门盾牌等等），以及用来合成$(baqua)钻石级$()的钢制工具。"
         }
     ],
-    "advancement": "pvz:adventure/steel",
+    "advancement": "pvz:adventure/root",
     "sortnum": 0
 }

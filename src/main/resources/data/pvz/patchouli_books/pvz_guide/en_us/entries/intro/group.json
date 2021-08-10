@@ -1,0 +1,21 @@
+{
+    "name": "Group",
+    "icon": "pvz:steel_sword",
+    "category": "pvz:intro",
+    "pages": [
+        {
+            "type": "text",
+            "text": "This world is divided into 5 groups, respectively, $(bred)other hostile(-2), zombies(-1),$() $(byellow)neutral(0), $()$(bgreen)plants(1), other guards(2)$().$(br)$(l)Players$() are initially set as $(bgreen)plants$(), and this option can be changed in the $(l)config file$(). Also players can change groups through the $(l)/playerstats$() command."
+        },
+        {
+            "type": "text",
+            "text": "$(l)Monsters$() other than zombies are in $(bred)other hostile$() groups, such as skeletons and creepers. $(br)$(l)Guards$() other than plants are in $(bgreen)other guards$() groups, such as iron golems and villagers.$(br)$(bpurple)Charmed$() $(bgreen)plants$() will be in the $(bred)zombie$() group, and $(bpurple)Charmed$() $(bred)zombies$() will be in the $(bgreen)plant$() group."
+        },
+        {
+            "type": "text",
+            "text": "The $(bred)zombie$() group will actively attack creatures in the $(bgreen)plant and other guard$() groups, and will passively attack other $(bred)hostile$() and $(byellow)neutral$() creatures.$(br)The $(bgreen)plant$() group will actively attack creatures from the $(bred)zombie and other hostile$() groups, while passively attacking $(bgreen)other guards$() and $(byellow)neutral$() creatures."
+        }
+    ],
+    "advancement": "pvz:adventure/root",
+    "sortnum": 3
+}

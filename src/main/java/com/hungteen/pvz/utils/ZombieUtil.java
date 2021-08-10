@@ -13,6 +13,7 @@ import com.hungteen.pvz.utils.enums.Ranks;
 import com.hungteen.pvz.utils.enums.Zombies;
 
 import net.minecraft.entity.EntityType;
+import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.RegistryObject;
@@ -182,6 +183,11 @@ public class ZombieUtil {
 	public static void copySummonZombieData(PVZZombieEntity old, PVZZombieEntity now) {
 		now.setCharmed(old.isCharmed());
 		now.setMiniZombie(old.isMiniZombie());
+	}
+	
+	public static void onZombieSpawn(PVZZombieEntity old, PVZZombieEntity now, BlockPos pos) {
+		ZombieUtil.copySummonZombieData(old, now);
+		EntityUtil.onEntitySpawn(old.level, now, pos);
 	}
 	
 	/**

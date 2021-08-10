@@ -1,5 +1,7 @@
 package com.hungteen.pvz.utils;
 
+import com.hungteen.pvz.common.entity.misc.ZombieHandEntity;
+
 import net.minecraft.particles.IParticleData;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.vector.Vector3d;
@@ -24,6 +26,9 @@ public class WorldUtil {
 		return getSuitableHeightRandomPos(world, pos, 0, maxR);
 	}
 	
+	/**
+	 * {@link ZombieHandEntity#spawnRangeZombieHands(World, com.hungteen.pvz.common.entity.zombie.PVZZombieEntity, int)}
+	 */
 	public static BlockPos getSuitableHeightPos(World world, BlockPos pos) {
 		int y = world.getHeight(Type.MOTION_BLOCKING_NO_LEAVES, pos.getX(), pos.getZ());
 		return new BlockPos(pos.getX(), y, pos.getZ());

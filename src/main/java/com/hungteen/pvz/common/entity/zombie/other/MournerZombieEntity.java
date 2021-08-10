@@ -5,7 +5,6 @@ import com.hungteen.pvz.common.entity.zombie.grassnight.TombStoneEntity;
 import com.hungteen.pvz.common.misc.damage.PVZDamageSource;
 import com.hungteen.pvz.data.loot.PVZLoot;
 import com.hungteen.pvz.register.EntityRegister;
-import com.hungteen.pvz.utils.EntityUtil;
 import com.hungteen.pvz.utils.ZombieUtil;
 import com.hungteen.pvz.utils.enums.Zombies;
 
@@ -53,7 +52,7 @@ public class MournerZombieEntity extends PVZZombieEntity{
 	@Override
 	public boolean doHurtTarget(Entity entityIn) {
 		this.setAttackTime(SHAKE_CD);
-		float scale = 3;
+		final float scale = 3;
 		entityIn.setDeltaMovement(0, Math.sqrt(this.getRandom().nextFloat()) * scale, 0);
 		return super.doHurtTarget(entityIn);
 	}
@@ -75,7 +74,7 @@ public class MournerZombieEntity extends PVZZombieEntity{
 	protected void onZombieRemove() {
 		if(!level.isClientSide) {
 			TombStoneEntity tomb = EntityRegister.TOMB_STONE.get().create(level);
-			EntityUtil.onEntitySpawn(level, tomb, blockPosition());
+			ZombieUtil.onZombieSpawn(this, tomb, blockPosition());
 		}
 	}
 	

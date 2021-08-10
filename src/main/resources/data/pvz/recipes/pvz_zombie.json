@@ -1,0 +1,29 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "ingredients":
+    [
+        {
+             "item": "minecraft:book"
+        },
+        {
+             "item": "pvz:fake_brain"
+        },
+        {
+             "item": "pvz:fake_brain"
+        },
+        {
+             "item": "pvz:fake_brain"
+        },
+        {
+             "item": "pvz:fake_brain"
+        }
+    ],
+
+     "result": {
+          "item": "patchouli:guide_book",
+          "nbt": {
+              "patchouli:book": "pvz:pvz_zombies"
+          },
+          "count": 1
+      }
+}

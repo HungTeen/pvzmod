@@ -1,0 +1,19 @@
+{
+    "name": "BOSS",
+    "icon": "minecraft:obsidian",
+    "category": "pvz:boss",
+    "pages": [
+        {
+            "type": "text",
+            "text": "$(bred)Edgar-090505$() is a robot created by Dr.Edgar, use $(bpurple)Zomboss Doll$() right click ground to summon it, $(bred)the summon place need be empty, even grass is not allowed.$()。"
+        },
+        {
+            "type": "crafting",
+            "recipe": "pvz:zomboss_doll",
+            "title": "Zomboss Doll",
+            "text": "Its recipe is related to Gargantuar's drop item."
+        }
+    ],
+    "advancement": "pvz:adventure/plant",
+    "sortnum": 2
+}

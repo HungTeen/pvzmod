@@ -1,0 +1,21 @@
+{
+    "name": "Difficulty",
+    "icon": "minecraft:golden_apple",
+    "category": "pvz:intro",
+    "pages": [
+        {
+            "type": "text",
+            "text": "There is not necessarily a $(bred)Roof Invasion$() will be Gargantua, it depends on the current $(bblue)difficulty$(). When the difficulty is higher, only then will those $(l)more powerful zombies appear$(). Of course, if you defeat $(bred)Edgar-090505$() quickly, then this condition will be ignored."
+        },
+        {
+            "type": "text",
+            "text": "In addition, $(bblue)Difficulty$() determines the $(l)level$() of the naturally spawning $(bred)zombies$(). When the difficulty is larger than $(l)100$(), the zombies are $(l)no longer only level 1$(), but increase with difficulty until they reach level $(l)20$(). Fortunately, the current level will only $(bred)increase the zombie's armor$()."
+        },
+        {
+            "type": "text",
+            "text": "The initial difficulty of the world is $(l)0$(). $(bred)Each invasion raises$() the difficulty value by $(l)2 points$(), and each time a $(l)player is killed by a zombie$() it decreases the difficulty value by $(l)1 point$()."
+        }
+    ],
+    "advancement": "pvz:adventure/root",
+    "sortnum": 6
+}
