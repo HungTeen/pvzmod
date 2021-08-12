@@ -210,7 +210,54 @@ public class ZomBossModel extends EntityModel<ZomBossEntity> implements IZombieM
 	@Override
 	public void renderBody(ZombieDropBodyEntity entity, MatrixStack stack, IVertexBuilder buffer, int packedLight,
 			int packedOverlay, BodyType type) {
-		
+		this.setAllInvis();
+		switch (type) {
+		case LEFT_LEG:{
+			this.left_leg.visible = true;
+			this.left_leg.setPos(0, 24, 0);
+			this.left_leg.render(stack, buffer, packedLight, packedOverlay);
+			break;
+		}
+		case RIGHT_LEG:{
+			this.right_leg.visible = true;
+			this.right_leg.setPos(0, 24, 0);
+			this.right_leg.render(stack, buffer, packedLight, packedOverlay);
+			break;
+		}
+		case LEFT_HAND:{
+			this.left_arm.visible = true;
+			this.left_arm.setPos(0, 24, 0);
+			this.left_arm.render(stack, buffer, packedLight, packedOverlay);
+			break;
+		}
+		case RIGHT_HAND:{
+			this.right_arm.visible = true;
+			this.right_arm.setPos(0, 24, 0);
+			this.right_leg.render(stack, buffer, packedLight, packedOverlay);
+		}
+		case BODY:{
+			this.body.visible = true;
+			this.body.setPos(0, 24, 0);
+			this.body.render(stack, buffer, packedLight, packedOverlay);
+			break;
+		}
+		case HEAD:{
+			this.head.visible = true;
+			this.head.setPos(0, 24, 0);
+			this.head.render(stack, buffer, packedLight, packedOverlay);
+		}
+		default:
+			break;
+		}
+	}
+	
+	public void setAllInvis() {
+		this.left_leg.visible = false;
+		this.right_leg.visible = false;
+		this.left_arm.visible = false;
+		this.right_arm.visible = false;
+		this.head.visible = false;
+		this.body.visible = false;
 	}
 
 	@Override

@@ -44,7 +44,7 @@ public class UmbrellaLeafEntity extends PVZPlantEntity{
 	 */
 	public void tickLeaf() {
 		final float range = 4.5F;
-		List<Entity> list = level.getEntitiesOfClass(Entity.class, EntityUtil.getEntityAABB(this, range, 3), target -> {
+		List<Entity> list = level.getEntitiesOfClass(Entity.class, EntityUtil.getEntityAABB(this, range, range), target -> {
 			if(target instanceof PultBulletEntity || target instanceof BungeeZombieEntity) {
 				return EntityUtil.canTargetEntity(this, target);
 			}

@@ -1,9 +1,10 @@
 package com.hungteen.pvz.common.entity.ai.navigator;
 
+import com.hungteen.pvz.common.entity.ai.processor.ZombieNodeProcessor;
+
 import net.minecraft.entity.MobEntity;
 import net.minecraft.pathfinding.GroundPathNavigator;
 import net.minecraft.pathfinding.PathFinder;
-import net.minecraft.pathfinding.WalkAndSwimNodeProcessor;
 import net.minecraft.util.math.vector.Vector3d;
 import net.minecraft.util.math.vector.Vector3i;
 import net.minecraft.world.World;
@@ -68,7 +69,7 @@ public class ZombiePathNavigator extends GroundPathNavigator {
 
 	@Override
 	protected PathFinder createPathFinder(int p_179679_1_) {
-		this.nodeEvaluator = new WalkAndSwimNodeProcessor();
+		this.nodeEvaluator = new ZombieNodeProcessor();
 		this.nodeEvaluator.setCanPassDoors(true);
 		return new PathFinder(this.nodeEvaluator, p_179679_1_);
 	}

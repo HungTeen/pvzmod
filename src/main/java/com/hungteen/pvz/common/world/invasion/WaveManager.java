@@ -81,6 +81,7 @@ public class WaveManager {
 				        if(time != 0 && time == dayTime) {
 						    WaveManager manager = new WaveManager(player, i);
 						    manager.spawnWaveZombies();
+						    -- stats.totalWaveCount;
 						    stats.zombieWaveTime[i] += FINISH_OFFSET;
 						    syncWaveTime(player);
 					        break;

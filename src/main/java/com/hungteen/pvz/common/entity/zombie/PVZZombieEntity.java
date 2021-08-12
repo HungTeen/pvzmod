@@ -133,7 +133,6 @@ public abstract class PVZZombieEntity extends MonsterEntity implements IPVZZombi
 		this.xpReward = ZombieUtil.caculateZombieXp(this);
 		dropSpecialList = this.getDropSpecialList();
 		this.onLevelChanged();
-		this.setPathfindingMalus(PathNodeType.WATER, 2F);
 		this.setPathfindingMalus(PathNodeType.DANGER_FIRE, 6.0F);
 		this.setPathfindingMalus(PathNodeType.DAMAGE_FIRE, 6.0F);
 		this.setPathfindingMalus(PathNodeType.DAMAGE_OTHER, 6.0F);
@@ -1121,6 +1120,7 @@ public abstract class PVZZombieEntity extends MonsterEntity implements IPVZZombi
 		compound.putInt("zombie_anim_time", this.getAnimTime());
 		compound.putFloat("defence_life", this.getDefenceLife());
 		compound.putInt("zombie_level", this.getZombieLevel());
+		compound.putInt("exist_tick", this.tickCount);
 	}
 
 	@Override
@@ -1158,6 +1158,7 @@ public abstract class PVZZombieEntity extends MonsterEntity implements IPVZZombi
 		if(compound.contains("zombie_level")) {
 			this.setZombieLevel(compound.getInt("zombie_level"));
 		}
+		this.tickCount = compound.getInt("exist_tick");
 	}
 	
 	/* getter setter */

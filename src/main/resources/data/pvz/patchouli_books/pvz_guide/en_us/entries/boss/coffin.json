@@ -16,7 +16,7 @@
         },
         {
             "type": "text",
-            "text": ""
+            "text": "After the set up, the $(bred)coffin team$() will appear first, defeat them then the $(bred)noble zombie$() locked in the coffin will appear. When the noble zombie surrounded by $(bpurple)purple particles$(), that is the signal that he is about to teleport, please $(baqua)freeze$() it in time. The noble zombie will also $(bred)hypnotize plants$() and summon mourner zombies, which will generate $(bred)tombstones$() when they die."
         }
     ],
     "advancement": "pvz:adventure/plant",

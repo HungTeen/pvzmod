@@ -169,6 +169,9 @@ public abstract class PVZZombieModel<T extends PVZZombieEntity> extends EntityMo
 		    this.getZombieWholeBody().render(stack, buffer, packedLight, packedOverlay);
 		    break;
 		}
+		default:{
+			break;
+		}
 		}
 	}
 	

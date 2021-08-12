@@ -5,16 +5,16 @@ import java.util.List;
 import com.hungteen.pvz.common.entity.misc.ZombieHandEntity;
 import com.hungteen.pvz.common.entity.plant.PVZPlantEntity;
 import com.hungteen.pvz.common.entity.zombie.base.AbstractBossZombieEntity;
-import com.hungteen.pvz.common.misc.damage.PVZDamageSource;
 import com.hungteen.pvz.data.loot.PVZLoot;
 import com.hungteen.pvz.register.EntityRegister;
 import com.hungteen.pvz.register.SoundRegister;
 import com.hungteen.pvz.utils.EntityUtil;
+import com.hungteen.pvz.utils.MathUtil;
+import com.hungteen.pvz.utils.WorldUtil;
 import com.hungteen.pvz.utils.ZombieUtil;
 import com.hungteen.pvz.utils.enums.Zombies;
 
 import net.minecraft.block.BlockState;
-import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntitySize;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.ILivingEntityData;
@@ -34,7 +34,6 @@ import net.minecraft.util.Direction;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.SoundEvents;
 import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.DifficultyInstance;
 import net.minecraft.world.IServerWorld;
 import net.minecraft.world.World;
@@ -46,7 +45,6 @@ public class NobleZombieEntity extends AbstractBossZombieEntity {
 	private int summonTick;
 	private final int minSummonTick = 300;
 	private final int maxSummonTick = 600;
-	private final int maxSummonedCnt = 8;
 	private final int minTpCD = 400;
 	private final int maxTpCD = 800;
 	private final int minSleepAttackCD = 360;
@@ -54,11 +52,13 @@ public class NobleZombieEntity extends AbstractBossZombieEntity {
 	
 	public NobleZombieEntity(EntityType<? extends MonsterEntity> type, World worldIn) {
 		super(type, worldIn);
-		this.setAttackTime(this.maxSleepAttackCD);
-		this.summonTick = this.getRandom().nextInt(this.maxSummonTick - this.minSummonTick) + this.minSummonTick;
-		this.setTpTick(- this.getRandom().nextInt(this.maxTpCD - this.minTpCD + 1) - this.minTpCD);
+		this.setAttackTime(this.maxSleepAttackCD / 5);
+		this.summonTick = this.maxSummonTick / 3;
+		this.setTpTick(- this.maxTpCD / 2);
 		this.xpReward = 1000;
 		this.setIsWholeBody();
+		this.canBeFrozen = true;
+		this.hasDirectDefence = true;
 	}
 	
 	@Override
@@ -79,7 +79,11 @@ public class NobleZombieEntity extends AbstractBossZombieEntity {
 			ILivingEntityData spawnDataIn, CompoundNBT dataTag) {
 		if (! level.isClientSide) {
 			EntityUtil.playSound(this, SoundRegister.DIRT_RISE.get());
-			ZombieHandEntity.spawnRangeZombieHands(level, this, 10);
+			ZombieHandEntity.spawnRangeZombieHands(level, this, 6);
+			for(int i = 0; i < this.getZombieLevel() / 2 + 5; ++ i) {
+				MournerZombieEntity zombie = EntityRegister.MOURNER_ZOMBIE.get().create(level);
+				this.onBossSummon(zombie, WorldUtil.getSuitableHeightRandomPos(level, blockPosition(), 10, 20));
+			}
 		}
 		return super.finalizeSpawn(worldIn, difficultyIn, reason, spawnDataIn, dataTag);
 	}
@@ -98,14 +102,16 @@ public class NobleZombieEntity extends AbstractBossZombieEntity {
 		if (!level.isClientSide) {
 			// summon MournerZombie
 			if (this.summonTick > 0) {
-				--this.summonTick;
-			} else if (this.summonTick == 0) {
-				this.summonTick = this.getRandom().nextInt(this.maxSummonTick - this.minSummonTick + 1) + this.minSummonTick;
+				-- this.summonTick;
+			} else {
+				this.summonTick = MathUtil.getRandomMinMax(getRandom(), this.minSummonTick, this.maxSummonTick);
 				this.checkAndSummonMournerZombie();
 			}
+			// make plants fall in sleep.
 			if(this.getAttackTime() > 0) {
 				this.setAttackTime(this.getAttackTime() - 1);
 			} else {
+				this.setAttackTime(MathUtil.getRandomMinMax(getRandom(), this.minSleepAttackCD, this.maxSleepAttackCD));
 				this.checkAndSleepPlant();
 			}
 		} else {
@@ -113,7 +119,6 @@ public class NobleZombieEntity extends AbstractBossZombieEntity {
 				this.level.addParticle(ParticleTypes.NOTE, getX(), getY() + 2f, getZ(), 0, 0, 0);
 			}
 		}
-		this.checkAndHeal();
 		if (this.getTpTick() < 0) {
 			this.setTpTick(this.getTpTick() + 1);
 		} else if (this.getTpTick() == 0) {
@@ -137,54 +142,24 @@ public class NobleZombieEntity extends AbstractBossZombieEntity {
 	 * Skill 1 : Teleport and make explosion
 	 */
 	private void checkAndTeleport() {
-		if (this.getTarget() == null) {
-			return;
-		}
-		BlockPos teleportPos = this.getTarget().blockPosition();
+		final BlockPos teleportPos = (this.getTarget() == null ? this.blockPosition() : this.getTarget().blockPosition());
 		this.setTpTick(-this.getRandom().nextInt(this.maxTpCD - this.minTpCD + 1) - this.minTpCD);
-		float range = this.getExpRange();
 		this.teleportToPos(teleportPos.getX(), teleportPos.getY(), teleportPos.getZ());
-		for (Entity target : EntityUtil.getTargetableEntities(this, EntityUtil.getEntityAABB(this, range, range))) {
-			if (target instanceof PVZPlantEntity) {
-				target.hurt(PVZDamageSource.causeDeadlyDamage(this),
-						((LivingEntity) target).getMaxHealth());
-			}
-		}
+		ZombieHandEntity.spawnRangeZombieHands(level, this, 3);
 	}
 
 	/**
-	 * Skill 2 : Summon MournerZombie.
+	 * Skill 2 : Summon Mourner Zombies.
 	 */
-	private void checkAndSummonMournerZombie() {
-		int num = this.level.getEntities(EntityRegister.MOURNER_ZOMBIE.get(),
-				EntityUtil.getEntityAABB(this, 50, 50), (zombie) -> {
-					return !zombie.isCharmed();
-				}).size();
-		if (num >= this.maxSummonedCnt) {// zombies in range are too many.
+	protected void checkAndSummonMournerZombie() {
+		if (this.nearbyZombieCount >= this.maxZombieSurround) {// there are so many zombies in range.
 			this.checkAndSummonZombieHand();
 			return;
 		}
-		int max = Math.min(this.maxSummonedCnt - num, 3);
-		int min = 1;
-		int cnt = this.getRandom().nextInt(max - min + 1) + min;
-		for (int i = 0; i < cnt; ++i) {
+		final int max = Math.min(this.maxZombieSurround - this.nearbyZombieCount, 3);
+		for (int i = 0; i < MathUtil.getRandomMinMax(getRandom(), 1 + max / 2, max + 1); ++i) {
 			MournerZombieEntity zombie = EntityRegister.MOURNER_ZOMBIE.get().create(level);
-			BlockPos pos = this.getTarget() == null ? this.blockPosition() : this.getTarget().blockPosition();
-			for (int chance = 0; chance < 30; ++chance) {
-				int x = this.blockPosition().getX()
-						+ MathHelper.nextInt(this.random, 5, 20) * MathHelper.nextInt(this.random, -1, 1);
-				int y = this.blockPosition().getY() + MathHelper.nextInt(this.random, 0, 10);
-				int z = this.blockPosition().getZ()
-						+ MathHelper.nextInt(this.random, 5, 20) * MathHelper.nextInt(this.random, -1, 1);
-				BlockPos tmp = new BlockPos(x, y, z);
-				zombie.setPos(x, y, z);
-				if (level.getBlockState(tmp).entityCanStandOnFace(level, tmp, zombie, Direction.UP) && level.isUnobstructed(zombie)
-						&& level.noCollision(zombie)) {
-					pos = tmp;
-					break;
-				}
-			}
-			EntityUtil.onEntitySpawn(level, zombie, pos);
+			this.onBossSummon(zombie, (this.getTarget() == null ? this.blockPosition() : this.getTarget().blockPosition()));
 		}
 	}
 	
@@ -192,23 +167,21 @@ public class NobleZombieEntity extends AbstractBossZombieEntity {
 	 * Skill 3 : Sleep plants in a specific area.
 	 */
 	private void checkAndSleepPlant() {
-		List<PVZPlantEntity> list = this.level.getEntitiesOfClass(PVZPlantEntity.class, EntityUtil.getEntityAABB(this, 50, 50), (plant)->{
-			return !plant.isCharmed();
+		final float range = 50;
+		List<PVZPlantEntity> list = this.level.getEntitiesOfClass(PVZPlantEntity.class, EntityUtil.getEntityAABB(this, range, range), plant -> {
+			return EntityUtil.canTargetEntity(this, plant);
 		});
-		int len = list.size();
-		if(len == 0) {
-			this.setAttackTime(this.getRandom().nextInt(this.maxSleepAttackCD - this.minSleepAttackCD + 1) + this.minSleepAttackCD);
+		if(list.isEmpty()) {
 			return ;
 		}
-		int pos = this.getRandom().nextInt(len);
-		PVZPlantEntity plant = list.get(pos);
-		final float range = 1.5f;
-		for(PVZPlantEntity target : this.level.getEntitiesOfClass(PVZPlantEntity.class, EntityUtil.getEntityAABB(plant, range, range), (p)->{
-			return !p.isCharmed();
+		int pos = this.getRandom().nextInt(list.size());
+		final PVZPlantEntity plant = list.get(pos);
+		final float radius = 3F;
+		for(PVZPlantEntity target : this.level.getEntitiesOfClass(PVZPlantEntity.class, EntityUtil.getEntityAABB(plant, radius, radius), p -> {
+			return EntityUtil.canTargetEntity(this, p);
 		})) {
 			target.sleepTime = 2400;
 		}
-		this.setAttackTime(this.getRandom().nextInt(this.maxSleepAttackCD - this.minSleepAttackCD + 1) + this.minSleepAttackCD);
 	}
 	
 	/**
@@ -220,10 +193,9 @@ public class NobleZombieEntity extends AbstractBossZombieEntity {
 		for(int i = 0; i < list.size(); ++ i) {
 			if(i + cnt >= list.size() || this.getRandom().nextInt(5) == 0) {
 				ZombieHandEntity hand = EntityRegister.ZOMBIE_HAND.get().create(level);
-				hand.setOwner(this);
-				EntityUtil.onEntitySpawn(level, hand, list.get(i).blockPosition());
-				-- cnt;
-				if(cnt == 0) {
+				hand.summonByOwner(this);
+				EntityUtil.onEntitySpawn(level, hand, WorldUtil.getSuitableHeightPos(level, list.get(i).blockPosition()));
+				if(-- cnt <= 0) {
 					break;
 				}
 			}
@@ -233,16 +205,11 @@ public class NobleZombieEntity extends AbstractBossZombieEntity {
 	/**
 	 * Skill 5 : Heal itself.
 	 */
-	private void checkAndHeal() {
-		float percent = this.getHealth() / this.getMaxHealth();
-		if(!level.isClientSide) {
-			if(this.getTarget() == null) {
-			    this.heal(0.3f);
-			} else if(percent < 1f / 2) {
-				this.heal(0.2f);
-			} else if(percent < 1f / 6) {
-				this.heal(0.5f);
-			}
+	public void checkAndHeal(float percent) {
+		if(percent < 1f / 2) {
+			this.heal(0.4f);
+		} else if(percent < 1f / 6) {
+			this.heal(0.8f);
 		}
 	}
 	
@@ -278,6 +245,11 @@ public class NobleZombieEntity extends AbstractBossZombieEntity {
 	public float getLife() {
 		return 1000;
 	}
+	
+	@Override
+	public float getExtraLife() {
+		return 1000;
+	}
 
 	@Override
 	public EntitySize getDimensions(Pose poseIn) {
@@ -285,7 +257,7 @@ public class NobleZombieEntity extends AbstractBossZombieEntity {
 	}
 
 	protected int getTpCD() {
-		float percent = this.getHealth() / this.getMaxHealth();
+		final float percent = this.bossInfo.getPercent();
 		if (percent < 1f / 3) {
 			return 60;
 		} else if (percent < 2f / 3) {
@@ -294,22 +266,10 @@ public class NobleZombieEntity extends AbstractBossZombieEntity {
 		return 100;
 	}
 
-	protected float getExpRange() {
-		float percent = this.getHealth() / this.getMaxHealth();
-		if (percent < 1f / 2) {
-			return 2.5f;
-		}
-		return 1.5f;
-	}
-	
 	protected int getHandSummonNum() {
-		float percent = this.getHealth() / this.getMaxHealth();
-		if (percent < 1f / 3) {
-			return 3;
-		} else if (percent < 2f / 3) {
-			return 2;
-		}
-		return 1;
+		final float percent = this.bossInfo.getPercent();
+		return percent < 1f / 3 ? this.nearbyPlantCount / 5 + 3 : 
+			percent < 2f / 3 ? this.nearbyPlantCount / 8 + 2 : this.nearbyPlantCount / 10 + 1;
 	}
 
 	@Override

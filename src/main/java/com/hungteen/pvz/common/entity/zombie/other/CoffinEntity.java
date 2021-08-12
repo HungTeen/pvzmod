@@ -33,6 +33,7 @@ public class CoffinEntity extends AbstractBossZombieEntity {
 		super(type, worldIn);
 		this.setIsWholeBody();
 		this.maxDeathTime = 0;
+		this.kickRange = 3;
 	}
 	
 	@Override
@@ -53,7 +54,7 @@ public class CoffinEntity extends AbstractBossZombieEntity {
 			ILivingEntityData spawnDataIn, CompoundNBT dataTag) {
 		if (! level.isClientSide) {
 			EntityUtil.playSound(this, SoundRegister.DIRT_RISE.get());
-			ZombieHandEntity.spawnRangeZombieHands(level, this, 5);
+			ZombieHandEntity.spawnRangeZombieHands(level, this, 3);
 		}
 		return super.finalizeSpawn(worldIn, difficultyIn, reason, spawnDataIn, dataTag);
 	}
@@ -86,7 +87,7 @@ public class CoffinEntity extends AbstractBossZombieEntity {
 
 	@Override
 	protected double getCollideWidthOffset() {
-		return 1.5;
+		return 0.5;
 	}
 	
 	@Override

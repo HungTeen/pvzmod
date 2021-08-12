@@ -8,7 +8,9 @@ import com.hungteen.pvz.common.entity.zombie.PVZZombieEntity;
 import com.hungteen.pvz.common.event.handler.LivingEventHandler;
 import com.hungteen.pvz.common.event.handler.PlayerEventHandler;
 import com.hungteen.pvz.common.misc.damage.PVZDamageSource;
+import com.hungteen.pvz.common.world.data.PVZInvasionData;
 import com.hungteen.pvz.utils.EntityUtil;
+import com.hungteen.pvz.utils.PlayerUtil;
 import com.hungteen.pvz.utils.enums.Resources;
 
 import net.minecraft.entity.player.PlayerEntity;
@@ -33,12 +35,19 @@ public class PVZLivingEvents {
 				PlayerEventHandler.onPlayerKillEntity(player, ev.getSource(), ev.getEntityLiving());
 			}
 		}
+		//when player death
 		if(! ev.getEntity().level.isClientSide && ev.getEntityLiving() instanceof PlayerEntity) {
 			PlayerEntity player = (PlayerEntity) ev.getEntityLiving();
-			player.getCapability(CapabilityHandler.PLAYER_DATA_CAPABILITY).ifPresent((l) -> {
-				l.getPlayerData().getPlayerStats().setPlayerStats(Resources.NO_FOG_TICK, 0);
-				l.getPlayerData().getPlayerStats().setPlayerStats(Resources.KILL_COUNT, 0);
-			});
+			if(PlayerUtil.isValidPlayer(player)) {
+				player.getCapability(CapabilityHandler.PLAYER_DATA_CAPABILITY).ifPresent((l) -> {
+				    l.getPlayerData().getPlayerStats().setPlayerStats(Resources.NO_FOG_TICK, 0);
+				    l.getPlayerData().getPlayerStats().setPlayerStats(Resources.KILL_COUNT, 0);
+			    });
+				if(ev.getSource().getEntity() instanceof PVZZombieEntity) {//player killed by zombie.
+					PVZInvasionData data = PVZInvasionData.getOverWorldInvasionData(ev.getEntity().level);
+				    data.addCurrentDifficulty(- 1);//decrease difficulty.
+				}
+			}
 		}
 		StrangeCatEntity.handleCopyCat(ev);
 	}

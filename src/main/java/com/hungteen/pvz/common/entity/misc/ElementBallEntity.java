@@ -9,10 +9,8 @@ import com.hungteen.pvz.common.entity.plant.PVZPlantEntity;
 import com.hungteen.pvz.common.entity.plant.flame.JalapenoEntity;
 import com.hungteen.pvz.common.entity.plant.ice.IceShroomEntity;
 import com.hungteen.pvz.common.entity.zombie.PVZZombieEntity;
-import com.hungteen.pvz.common.entity.zombie.roof.ZomBossEntity;
 import com.hungteen.pvz.common.item.card.PlantCardItem;
 import com.hungteen.pvz.common.misc.damage.PVZDamageSource;
-import com.hungteen.pvz.register.EntityRegister;
 import com.hungteen.pvz.register.ItemRegister;
 import com.hungteen.pvz.utils.EntityUtil;
 
@@ -33,18 +31,12 @@ public class ElementBallEntity extends AbstractOwnerEntity {
 
 	private static final DataParameter<Integer> ELEMENTS = EntityDataManager.defineId(ElementBallEntity.class, DataSerializers.INT);
 	protected Optional<Entity> target = Optional.empty(); 
-	private float speed;
+	public float speed = 0.25F;
 	private final int SEARACH_CD = 20;
 	private final float SEARCH_RANGE = 50;
 	
 	public ElementBallEntity(EntityType<?> entityTypeIn, World worldIn) {
 		super(entityTypeIn, worldIn);
-		this.speed = 0.25F;
-	}
-	
-	public ElementBallEntity(World worldIn, ZomBossEntity boss, float speed) {
-		super(EntityRegister.ELEMENT_BALL.get(), worldIn, boss);
-		this.speed = speed;
 	}
 	
 	@Override
@@ -113,7 +105,7 @@ public class ElementBallEntity extends AbstractOwnerEntity {
 	
 	private void tickCollision() {
 		if(! level.isClientSide && this.tickCount % 10 == 0) {
-			EntityUtil.getTargetableEntities(this, this.getBoundingBox().inflate(0.5F)).forEach((target) -> {
+			EntityUtil.getTargetableEntities(this, this.getBoundingBox().inflate(1F)).forEach(target -> {
 				if(target instanceof PVZPlantEntity) {
 					if(target instanceof JalapenoEntity && this.getElementBallType() == ElementTypes.ICE) ;
 					else if(target instanceof IceShroomEntity && this.getElementBallType() == ElementTypes.FLAME) ;

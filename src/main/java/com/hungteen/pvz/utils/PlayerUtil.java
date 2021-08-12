@@ -20,6 +20,7 @@ import net.minecraft.util.Util;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.StringTextComponent;
 import net.minecraft.world.World;
+import net.minecraftforge.common.util.FakePlayer;
 import net.minecraftforge.common.util.LazyOptional;
 import net.minecraftforge.fml.network.PacketDistributor;
 
@@ -56,22 +57,28 @@ public class PlayerUtil {
 		return TREE_LVL_XP[pos];
 	}
 	
-	public static void addPlayerStats(PlayerEntity player ,Resources res,int num){
-		player.getCapability(CapabilityHandler.PLAYER_DATA_CAPABILITY).ifPresent((l)->{
-			l.getPlayerData().getPlayerStats().addPlayerStats(res, num);
-		});
+	public static void addPlayerStats(PlayerEntity player, Resources res, int num) {
+		if(isValidPlayer(player)) {
+			player.getCapability(CapabilityHandler.PLAYER_DATA_CAPABILITY).ifPresent(l -> {
+			    l.getPlayerData().getPlayerStats().addPlayerStats(res, num);
+		    });
+		}
 	}
 	
 	public static void addPlantLvl(PlayerEntity player, Plants plant, int num) {
-		player.getCapability(CapabilityHandler.PLAYER_DATA_CAPABILITY).ifPresent((l)->{
-			l.getPlayerData().getPlantStats().addPlantLevel(plant, num);
-		});
+		if(isValidPlayer(player)) {
+		    player.getCapability(CapabilityHandler.PLAYER_DATA_CAPABILITY).ifPresent(l -> {
+			    l.getPlayerData().getPlantStats().addPlantLevel(plant, num);
+		    });
+		}
 	}
 	
 	public static void addPlantXp(PlayerEntity player, Plants plant, int num) {
-		player.getCapability(CapabilityHandler.PLAYER_DATA_CAPABILITY).ifPresent((l)->{
-			l.getPlayerData().getPlantStats().addPlantXp(plant, num);
-		});
+		if(isValidPlayer(player)) {
+		    player.getCapability(CapabilityHandler.PLAYER_DATA_CAPABILITY).ifPresent((l)->{
+			    l.getPlayerData().getPlantStats().addPlantXp(plant, num);
+		    });
+		}
 	}
 	
 	public static void clonePlayerData(PlayerEntity oldPlayer, PlayerEntity newPlayer) {
@@ -118,7 +125,7 @@ public class PlayerUtil {
 		}
 		return PVZGroupType.getGroup(ConfigUtil.getPlayerInitialGroup());// get Group Error !
 	}
-//	
+	
 	public static void playClientSound(PlayerEntity player, int id) {
 		PVZPacketHandler.CHANNEL.send(PacketDistributor.PLAYER.with(()->{
 			return (ServerPlayerEntity) player;
@@ -153,6 +160,13 @@ public class PlayerUtil {
 	
 	public static boolean isPlayerSurvival(PlayerEntity player) {
 		return ! player.isCreative() && ! player.isSpectator();
+	}
+	
+	/**
+	 * Avoid crash by fake player.
+	 */
+	public static boolean isValidPlayer(PlayerEntity player) {
+		return ! (player instanceof FakePlayer);
 	}
 	
 }

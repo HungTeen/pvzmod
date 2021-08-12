@@ -4,6 +4,7 @@ import java.util.Optional;
 
 import com.hungteen.pvz.common.entity.PVZEntityBase;
 import com.hungteen.pvz.common.entity.zombie.PVZZombieEntity;
+import com.hungteen.pvz.common.entity.zombie.roof.ZomBossEntity;
 import com.hungteen.pvz.utils.AlgorithmUtil;
 import com.hungteen.pvz.utils.enums.Zombies;
 
@@ -126,7 +127,10 @@ public class ZombieDropBodyEntity extends PVZEntityBase {
 		});
 	}
 	
-	private void updateInfo(PVZZombieEntity zombie, BodyType type) {
+	/**
+	 * {@link ZomBossEntity}
+	 */
+	public void updateInfo(PVZZombieEntity zombie, BodyType type) {
 		this.setZombieType(zombie.getZombieEnumName());
 		this.setMini(zombie.isMiniZombie());
 		this.setBodyType(type);
@@ -233,7 +237,7 @@ public class ZombieDropBodyEntity extends PVZEntityBase {
 	}
 
 	public enum BodyType {
-		HAND, HEAD, BODY,
+		HAND, HEAD, BODY, LEFT_HAND, RIGHT_HAND, LEFT_LEG, RIGHT_LEG
 	}
 
 }

@@ -42,7 +42,7 @@ public class PVZZombieAttackGoal extends PVZMeleeAttackGoal {
 			if((this.attacker.getNavigation().getPath() == null || this.attacker.getNavigation().getPath().isDone()) 
 					&& this.zombie.canZombieNormalUpdate() && this.attacker.getDeltaMovement().length() <= 0.1D && this.attacker.isOnGround()) {
 				Vector3d speed = target.position().subtract(this.attacker.position()).normalize();
-				this.attacker.setDeltaMovement(speed.scale(3D).scale(this.attacker.getAttributeValue(Attributes.MOVEMENT_SPEED)));
+				this.attacker.setDeltaMovement(speed.scale(this.attacker.getRandom().nextDouble() * 0.4 + 0.4).scale(this.attacker.getAttributeValue(Attributes.MOVEMENT_SPEED)));
 				this.leapTick = 0;
 			}
 		}

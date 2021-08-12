@@ -544,7 +544,7 @@ public abstract class PVZPlantEntity extends CreatureEntity implements IPVZPlant
 
 	@Override
 	public boolean isInvulnerableTo(DamageSource source) {
-		return this.isPlantImmuneTo(source) && source != DamageSource.OUT_OF_WORLD && !source.isCreativePlayer();
+		return this.isPlantImmuneTo(source) && source != DamageSource.OUT_OF_WORLD && !source.isCreativePlayer() && ! source.equals(PVZDamageSource.PLANT_WILT);
 	}
 
 	/**

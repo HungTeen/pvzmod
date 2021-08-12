@@ -11,13 +11,13 @@
         },
         {
             "type": "crafting",
-            "recipe": "pvz:food/sun_storage_sapling",
+            "recipe": "pvz:food/small_sun_storage_sapling",
             "title": "Low Storage Sapling",
             "text": "Basic storage sapling, its max storage amount is 1000."
         },
         {
             "type": "crafting",
-            "recipe": "pvz:food/sun_storage_sapling2",
+            "recipe": "pvz:food/sun_storage_sapling",
             "title": "Storage Sapling",
             "text": "High storage sapling, its max storage amount is 10000."
         },

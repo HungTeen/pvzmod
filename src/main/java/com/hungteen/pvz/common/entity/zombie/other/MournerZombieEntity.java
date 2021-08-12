@@ -5,11 +5,13 @@ import com.hungteen.pvz.common.entity.zombie.grassnight.TombStoneEntity;
 import com.hungteen.pvz.common.misc.damage.PVZDamageSource;
 import com.hungteen.pvz.data.loot.PVZLoot;
 import com.hungteen.pvz.register.EntityRegister;
+import com.hungteen.pvz.utils.EntityUtil;
 import com.hungteen.pvz.utils.ZombieUtil;
 import com.hungteen.pvz.utils.enums.Zombies;
 
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
+import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.ai.attributes.Attributes;
 import net.minecraft.entity.monster.MonsterEntity;
 import net.minecraft.nbt.CompoundNBT;
@@ -53,6 +55,9 @@ public class MournerZombieEntity extends PVZZombieEntity{
 	public boolean doHurtTarget(Entity entityIn) {
 		this.setAttackTime(SHAKE_CD);
 		final float scale = 3;
+		if(! entityIn.isOnGround() && entityIn instanceof LivingEntity) {
+			entityIn.hurt(PVZDamageSource.normal(this), EntityUtil.getMaxHealthDamage((LivingEntity) entityIn, 0.2F));
+		}
 		entityIn.setDeltaMovement(0, Math.sqrt(this.getRandom().nextFloat()) * scale, 0);
 		return super.doHurtTarget(entityIn);
 	}

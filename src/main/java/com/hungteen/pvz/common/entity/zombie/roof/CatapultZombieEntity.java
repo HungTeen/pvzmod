@@ -8,6 +8,7 @@ import com.hungteen.pvz.common.entity.ai.goal.target.PVZRandomTargetGoal;
 import com.hungteen.pvz.common.entity.bullet.BallEntity;
 import com.hungteen.pvz.common.entity.zombie.base.CarZombieEntity;
 import com.hungteen.pvz.common.misc.damage.PVZDamageSource;
+import com.hungteen.pvz.register.EntityRegister;
 import com.hungteen.pvz.register.SoundRegister;
 import com.hungteen.pvz.utils.EntityUtil;
 import com.hungteen.pvz.utils.ZombieUtil;
@@ -105,13 +106,13 @@ public class CatapultZombieEntity extends CarZombieEntity implements IPult,IHasW
 	@Override
 	public void pultBullet() {
 		Optional.ofNullable(this.getTarget()).ifPresent(target -> {
-			BallEntity ball = new BallEntity(level, this);
+			BallEntity ball = EntityRegister.BALL.get().create(level);
             ball.setPos(this.getX(), this.getY() + 1.7f, this.getZ());
             ball.shootPultBullet(target);
-            EntityUtil.playSound(this, SoundRegister.BASKETBALL.get());
-            this.level.addFreshEntity(ball);
             ball.summonByOwner(this);
             ball.setAttackDamage(this.getAttackDamage());
+            EntityUtil.playSound(this, SoundRegister.BASKETBALL.get());
+            this.level.addFreshEntity(ball);
             this.setBallCount(this.getBallCount() + 1);
 		});
 	}

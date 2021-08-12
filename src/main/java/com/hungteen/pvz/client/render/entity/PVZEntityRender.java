@@ -35,9 +35,11 @@ public abstract class PVZEntityRender <T extends Entity> extends EntityRenderer<
 		super.render(entityIn, entityYaw, partialTicks, matrixStackIn, bufferIn, packedLightIn);
 		matrixStackIn.pushPose();
 		matrixStackIn.scale(-1, -1, 1);
-		float f = getScaleByEntity(entityIn);
+		final float f = getScaleByEntity(entityIn);
 		matrixStackIn.scale(f, f, f);
 		matrixStackIn.translate(0.0, -1.501, 0.0);
+		final Vector3d vec = this.getTranslateVec(entityIn);
+		matrixStackIn.translate(vec.x, vec.y, vec.z);
         IVertexBuilder ivertexbuilder = bufferIn.getBuffer(this.model.renderType(this.getTextureLocation(entityIn)));
         this.model.setupAnim(entityIn, 0, 0, entityIn.tickCount + partialTicks, 0, 0);
         this.model.renderToBuffer(matrixStackIn, ivertexbuilder, packedLightIn, OverlayTexture.NO_OVERLAY, 1.0F, 1.0F, 1.0F, 1.0F);

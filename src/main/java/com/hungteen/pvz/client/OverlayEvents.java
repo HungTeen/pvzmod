@@ -90,7 +90,9 @@ public class OverlayEvents {
 	}
 	
 	private static void renderInvasionProgress(MatrixStack stack, int w, int h) {
-		if(ClientPlayerResources.totalWaveCount == 0) return ;
+		if(ClientPlayerResources.totalWaveCount == 0) {
+			return ;
+		}
 		stack.pushPose();
 		float scale = 0.5F;
 		int offsetY = 0;

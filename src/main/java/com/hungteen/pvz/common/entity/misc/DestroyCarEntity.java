@@ -6,6 +6,7 @@ import com.hungteen.pvz.common.entity.zombie.roof.ZomBossEntity;
 import com.hungteen.pvz.common.misc.damage.PVZDamageSource;
 import com.hungteen.pvz.register.EntityRegister;
 import com.hungteen.pvz.utils.EntityUtil;
+import com.hungteen.pvz.utils.MathUtil;
 
 import net.minecraft.entity.EntitySize;
 import net.minecraft.entity.EntityType;
@@ -57,14 +58,16 @@ public class DestroyCarEntity extends AbstractOwnerEntity {
     	double dxz = MathHelper.sqrt(dx * dx + dz * dz);
     	double vxz = dxz / (t1 + t2);
     	double vy = g * t1;
-    	this.setDeltaMovement(vxz * dx / dxz, vy, vxz * dz / dxz);
+    	this.setDeltaMovement(vxz * dx / dxz, vy + MathUtil.getRandomFloat(this.random) / 10, vxz * dz / dxz);
     }
 	
 	private void tickCollision() {
 		if(! level.isClientSide && this.tickCount % 10 == 0) {
-			EntityUtil.getTargetableEntities(this.getOwnerOrSelf(), this.getBoundingBox().inflate(0.5F)).forEach((target) -> {
+			EntityUtil.getTargetableEntities(this.getOwnerOrSelf(), this.getBoundingBox().inflate(1F)).forEach((target) -> {
 				if(target instanceof PVZPlantEntity) {
 					target.hurt(PVZDamageSource.causeDeadlyDamage(this, this.getOwner()), EntityUtil.getCurrentMaxHealth((PVZPlantEntity) target) * 2);
+				} else {
+					target.hurt(PVZDamageSource.normal(this, this.getOwner()), 5F);
 				}
 			});
 		}

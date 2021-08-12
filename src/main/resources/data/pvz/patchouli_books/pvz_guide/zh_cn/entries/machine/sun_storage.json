@@ -11,13 +11,13 @@
         },
         {
             "type": "crafting",
-            "recipe": "pvz:food/sun_storage_sapling",
+            "recipe": "pvz:food/small_sun_storage_sapling",
             "title": "低级储光树苗",
             "text": "基本的储光树苗，最大容量是1000。"
         },
         {
             "type": "crafting",
-            "recipe": "pvz:food/sun_storage_sapling2",
+            "recipe": "pvz:food/sun_storage_sapling",
             "title": "储光树苗",
             "text": "升级版的储光树苗，最大容量是10000。"
         },
