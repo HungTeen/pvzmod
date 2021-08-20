@@ -1,8 +1,9 @@
 package com.hungteen.pvz.common.entity.plant.appease;
 
+import com.hungteen.pvz.common.core.PlantType;
+import com.hungteen.pvz.common.impl.plant.PVZPlants;
 import com.hungteen.pvz.utils.MathUtil;
 import com.hungteen.pvz.utils.PlantUtil;
-import com.hungteen.pvz.utils.enums.Plants;
 
 import net.minecraft.entity.CreatureEntity;
 import net.minecraft.entity.EntityType;
@@ -115,8 +116,8 @@ public class SplitPeaEntity extends PeaShooterEntity{
 	}
 	
 	@Override
-	public Plants getPlantEnumName() {
-		return Plants.SPLIT_PEA;
+	public PlantType getPlantType() {
+		return PVZPlants.SPLIT_PEA;
 	}
 	
 }

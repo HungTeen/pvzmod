@@ -1,18 +1,8 @@
 package com.hungteen.pvz.common.tileentity;
 
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
-
 import com.hungteen.pvz.common.container.CardFusionContainer;
-import com.hungteen.pvz.common.item.card.PlantCardItem;
 import com.hungteen.pvz.common.item.tool.SunStorageSaplingItem;
-import com.hungteen.pvz.common.misc.recipe.FusionRecipes;
 import com.hungteen.pvz.register.TileEntityRegister;
-import com.hungteen.pvz.utils.PlantUtil;
-import com.hungteen.pvz.utils.enums.Plants;
-import com.mojang.datafixers.util.Pair;
 
 import net.minecraft.block.BlockState;
 import net.minecraft.entity.player.PlayerEntity;
@@ -46,69 +36,69 @@ public class CardFusionTileEntity extends TileEntity implements ITickableTileEnt
 		if(! level.isClientSide) {
 			this.absorbSunAmount();
 			this.array.set(0, sunAmount);
-			this.array.set(1, this.getResultPlantId());
+//			this.array.set(1, this.getResultPlantId());
 		}
 	}
 	
-	/**
-	 * run when click craft button.
-	 */
-	public void setResult(int id) {
-    	this.sunAmount -= CRAFT_COST;
-    	for(int i = 1; i < 9; ++ i) {
-    		this.handler.setStackInSlot(i, ItemStack.EMPTY);
-    	}
-    	for(int i = 9; i < 12; ++ i) {
-    		this.handler.getStackInSlot(i).shrink(1);
-    	}
-    	FusionRecipes recipe = FusionRecipes.values()[id];
-    	Plants plant = getFusionResult(recipe);
-    	this.handler.setStackInSlot(12, new ItemStack(PlantUtil.getPlantSummonCard(plant)));
-    }
-	
-	private Plants getFusionResult(FusionRecipes recipe) {
-		int pos = level.random.nextInt(100);
-		int now = 0;
-		for(Pair<Plants, Integer> pair : recipe.resultPlants) {
-			now += pair.getSecond();
-			if(pos < now) return pair.getFirst();
-		}
-		pos = level.random.nextInt(recipe.requirePlants.size());
-		return recipe.requirePlants.get(pos);
-	}
-	
-	private int getResultPlantId() {
-		if(! this.handler.getStackInSlot(12).isEmpty() || this.sunAmount < CRAFT_COST || ! checkEssences()) return - 1;
-		List<Plants> has = new ArrayList<>();
-		for(int i = 1; i < 9; ++ i) {
-			if(this.handler.getStackInSlot(i).isEmpty()) continue;
-			if(! (this.handler.getStackInSlot(i).getItem() instanceof PlantCardItem)) continue;
-			has.add(((PlantCardItem) this.handler.getStackInSlot(i).getItem()).plantType);
-		}
-		for(FusionRecipes recipe : FusionRecipes.values()) {
-			if(recipe.requirePlants.size() != has.size()) continue;
-			Set<Integer> set = new HashSet<>();
-			boolean match = true;
-			for(Plants p : recipe.requirePlants) {
-				boolean got = false;
-				for(int i = 0; i < has.size(); ++ i) {
-					if(p == has.get(i) && ! set.contains(i)) {//find a valide pos to match one
-						set.add(i);
-						got = true;
-						break;
-					}
-				}
-				if(got == false) {
-					match = false;
-					break;
-				}
-			}
-			if(match) {
-				return recipe.ordinal();
-			}
-		}
-		return - 1;
-	}
+//	/**
+//	 * run when click craft button.
+//	 */
+//	public void setResult(int id) {
+//    	this.sunAmount -= CRAFT_COST;
+//    	for(int i = 1; i < 9; ++ i) {
+//    		this.handler.setStackInSlot(i, ItemStack.EMPTY);
+//    	}
+//    	for(int i = 9; i < 12; ++ i) {
+//    		this.handler.getStackInSlot(i).shrink(1);
+//    	}
+//    	FusionRecipes recipe = FusionRecipes.values()[id];
+//    	Plants plant = getFusionResult(recipe);
+//    	this.handler.setStackInSlot(12, new ItemStack(PlantUtil.getPlantSummonCard(plant)));
+//    }
+//	
+//	private Plants getFusionResult(FusionRecipes recipe) {
+//		int pos = level.random.nextInt(100);
+//		int now = 0;
+//		for(Pair<Plants, Integer> pair : recipe.resultPlants) {
+//			now += pair.getSecond();
+//			if(pos < now) return pair.getFirst();
+//		}
+//		pos = level.random.nextInt(recipe.requirePlants.size());
+//		return recipe.requirePlants.get(pos);
+//	}
+//	
+//	private int getResultPlantId() {
+//		if(! this.handler.getStackInSlot(12).isEmpty() || this.sunAmount < CRAFT_COST || ! checkEssences()) return - 1;
+//		List<Plants> has = new ArrayList<>();
+//		for(int i = 1; i < 9; ++ i) {
+//			if(this.handler.getStackInSlot(i).isEmpty()) continue;
+//			if(! (this.handler.getStackInSlot(i).getItem() instanceof PlantCardItem)) continue;
+//			has.add(((PlantCardItem) this.handler.getStackInSlot(i).getItem()).plantType);
+//		}
+//		for(FusionRecipes recipe : FusionRecipes.values()) {
+//			if(recipe.requirePlants.size() != has.size()) continue;
+//			Set<Integer> set = new HashSet<>();
+//			boolean match = true;
+//			for(Plants p : recipe.requirePlants) {
+//				boolean got = false;
+//				for(int i = 0; i < has.size(); ++ i) {
+//					if(p == has.get(i) && ! set.contains(i)) {//find a valide pos to match one
+//						set.add(i);
+//						got = true;
+//						break;
+//					}
+//				}
+//				if(got == false) {
+//					match = false;
+//					break;
+//				}
+//			}
+//			if(match) {
+//				return recipe.ordinal();
+//			}
+//		}
+//		return - 1;
+//	}
 	
 	private boolean checkEssences() {
 		for(int i = 9; i < 12; ++ i) {

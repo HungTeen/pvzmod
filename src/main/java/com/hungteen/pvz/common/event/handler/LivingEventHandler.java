@@ -1,7 +1,7 @@
 package com.hungteen.pvz.common.event.handler;
 
-import com.hungteen.pvz.api.interfaces.IPVZPlant;
 import com.hungteen.pvz.api.interfaces.IPVZZombie;
+import com.hungteen.pvz.common.entity.plant.PVZPlantEntity;
 import com.hungteen.pvz.common.event.PVZLivingEvents;
 import com.hungteen.pvz.common.misc.damage.PVZDamageSource;
 import com.hungteen.pvz.register.EffectRegister;
@@ -61,7 +61,7 @@ public class LivingEventHandler {
 			return ;
 		}
 		//plant attack others except zombies.
-		if(attacker instanceof IPVZPlant && !(ev.getEntityLiving() instanceof IPVZZombie)) {
+		if(attacker instanceof PVZPlantEntity && !(ev.getEntityLiving() instanceof IPVZZombie)) {
 			if(ev.getEntityLiving() instanceof EnderDragonEntity) {
 				ev.setAmount(Math.min(EntityUtil.LIMITED_DAMAGE * 4, ev.getAmount()));
 			} else {
@@ -70,7 +70,7 @@ public class LivingEventHandler {
 			return ;
 		}
 		//zombie attack others except plants.
-		if(attacker instanceof IPVZZombie && !(ev.getEntityLiving() instanceof IPVZPlant)) {
+		if(attacker instanceof IPVZZombie && !(ev.getEntityLiving() instanceof PVZPlantEntity)) {
 			ev.setAmount(Math.min(EntityUtil.LIMITED_DAMAGE, ev.getAmount()));
 		}
 	}

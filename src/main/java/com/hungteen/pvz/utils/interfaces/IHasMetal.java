@@ -1,6 +1,6 @@
 package com.hungteen.pvz.utils.interfaces;
 
-import com.hungteen.pvz.utils.enums.MetalTypes;
+import com.hungteen.pvz.remove.MetalTypes;
 
 public interface IHasMetal {
 

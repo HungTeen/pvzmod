@@ -3,8 +3,8 @@ package com.hungteen.pvz.common.entity.zombie.poolday;
 import com.hungteen.pvz.common.entity.ai.navigator.LavaZombiePathNavigator;
 import com.hungteen.pvz.common.entity.zombie.base.SwimmerZombieEntity;
 import com.hungteen.pvz.data.loot.PVZLoot;
+import com.hungteen.pvz.remove.Zombies;
 import com.hungteen.pvz.utils.ZombieUtil;
-import com.hungteen.pvz.utils.enums.Zombies;
 
 import net.minecraft.block.FlowingFluidBlock;
 import net.minecraft.entity.Entity;

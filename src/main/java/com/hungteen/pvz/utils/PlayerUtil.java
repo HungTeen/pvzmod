@@ -6,10 +6,10 @@ import com.hungteen.pvz.api.enums.PVZGroupType;
 import com.hungteen.pvz.client.gui.search.SearchOption;
 import com.hungteen.pvz.common.capability.CapabilityHandler;
 import com.hungteen.pvz.common.capability.player.IPlayerDataCapability;
+import com.hungteen.pvz.common.core.PlantType;
 import com.hungteen.pvz.common.network.AlmanacUnLockPacket;
 import com.hungteen.pvz.common.network.PVZPacketHandler;
 import com.hungteen.pvz.common.network.PlaySoundPacket;
-import com.hungteen.pvz.utils.enums.Plants;
 import com.hungteen.pvz.utils.enums.Resources;
 
 import net.minecraft.entity.player.PlayerEntity;
@@ -65,7 +65,7 @@ public class PlayerUtil {
 		}
 	}
 	
-	public static void addPlantLvl(PlayerEntity player, Plants plant, int num) {
+	public static void addPlantLvl(PlayerEntity player, PlantType plant, int num) {
 		if(isValidPlayer(player)) {
 		    player.getCapability(CapabilityHandler.PLAYER_DATA_CAPABILITY).ifPresent(l -> {
 			    l.getPlayerData().getPlantStats().addPlantLevel(plant, num);
@@ -73,7 +73,7 @@ public class PlayerUtil {
 		}
 	}
 	
-	public static void addPlantXp(PlayerEntity player, Plants plant, int num) {
+	public static void addPlantXp(PlayerEntity player, PlantType plant, int num) {
 		if(isValidPlayer(player)) {
 		    player.getCapability(CapabilityHandler.PLAYER_DATA_CAPABILITY).ifPresent((l)->{
 			    l.getPlayerData().getPlantStats().addPlantXp(plant, num);
@@ -105,10 +105,12 @@ public class PlayerUtil {
 	}
 	
 	public static boolean isAlmanacUnlocked(ServerPlayerEntity player, SearchOption a) {
-		if(a.isPlayer()) return true;
-		if(a.isPlant()) {
-			Plants plant = a.getPlant().get();
-			int amount = player.getStats().getValue(Stats.ITEM_USED.get(PlantUtil.getPlantSummonCard(plant)));
+		if(a.isPlayer()) {
+			return true;
+		}
+		if(a.isPlant() && a.getPlant().get().getSummonCard().isPresent()) {
+			PlantType plant = a.getPlant().get();
+			int amount = player.getStats().getValue(Stats.ITEM_USED.get(plant.getSummonCard().get()));
 			return amount > 0;
 		}
 		return false;

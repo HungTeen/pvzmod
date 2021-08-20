@@ -5,11 +5,11 @@ import com.hungteen.pvz.common.capability.CapabilityHandler;
 import com.hungteen.pvz.common.entity.bullet.AbstractShootBulletEntity;
 import com.hungteen.pvz.common.entity.plant.flame.TorchWoodEntity;
 import com.hungteen.pvz.common.entity.plant.flame.TorchWoodEntity.FlameTypes;
+import com.hungteen.pvz.common.impl.plant.PVZPlants;
 import com.hungteen.pvz.common.misc.damage.PVZDamageSource;
 import com.hungteen.pvz.register.EntityRegister;
 import com.hungteen.pvz.register.ItemRegister;
 import com.hungteen.pvz.utils.WeaponUtil;
-import com.hungteen.pvz.utils.enums.Plants;
 
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntitySize;
@@ -104,7 +104,7 @@ public class PeaEntity extends AbstractShootBulletEntity implements IRendersAsIt
 				((IIceEffect) owner).getFrozenEffect().ifPresent(e -> source.addEffect(e));
 			} else if(owner instanceof PlayerEntity) {
 				((PlayerEntity)owner).getCapability(CapabilityHandler.PLAYER_DATA_CAPABILITY).ifPresent((l)->{
-					int lvl = l.getPlayerData().getPlantStats().getPlantLevel(Plants.SNOW_PEA);
+					int lvl = l.getPlayerData().getPlantStats().getPlantLevel(PVZPlants.SNOW_PEA);
 					source.addEffect(WeaponUtil.getPeaGunColdEffect(lvl));
 				});
 			}

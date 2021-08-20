@@ -1,9 +1,9 @@
 package com.hungteen.pvz.client.render.entity.misc.bowling;
 
 import com.hungteen.pvz.client.model.entity.plant.defence.WallNutModel;
-import com.hungteen.pvz.client.render.entity.plant.PlantRenderHandler;
 import com.hungteen.pvz.common.entity.misc.bowling.AbstractBowlingEntity;
 import com.hungteen.pvz.common.entity.plant.defence.WallNutEntity;
+import com.hungteen.pvz.common.impl.plant.PVZPlants;
 import com.mojang.blaze3d.matrix.MatrixStack;
 import com.mojang.blaze3d.vertex.IVertexBuilder;
 
@@ -50,7 +50,7 @@ public class AbstractbowlingRender<T extends AbstractBowlingEntity> extends Enti
 	
 	@Override
 	public ResourceLocation getTextureLocation(T entity) {
-		return PlantRenderHandler.WALL_NUT_TEX;
+		return PVZPlants.WALL_NUT.getRenderResource();
 	}
 
 }

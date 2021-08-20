@@ -1,16 +1,8 @@
 package com.hungteen.pvz.common.tileentity;
 
-import java.util.HashSet;
-import java.util.Set;
-
 import com.hungteen.pvz.common.container.FragmentSpliceContainer;
-import com.hungteen.pvz.common.item.card.PlantCardItem;
 import com.hungteen.pvz.common.item.tool.SunStorageSaplingItem;
 import com.hungteen.pvz.register.TileEntityRegister;
-import com.hungteen.pvz.utils.PlantUtil;
-import com.hungteen.pvz.utils.enums.Essences;
-import com.hungteen.pvz.utils.enums.Plants;
-import com.hungteen.pvz.utils.enums.Ranks;
 
 import net.minecraft.block.BlockState;
 import net.minecraft.entity.player.PlayerEntity;
@@ -45,7 +37,7 @@ public class FragmentSpliceTileEntity extends TileEntity implements ITickableTil
 		if(! level.isClientSide) {
 			this.absorbSunAmount();
 			this.array.set(0, sunAmount);
-			this.array.set(1, this.getResultPlantId());
+//			this.array.set(1, this.getResultPlantId());
 		}
 	}
     
@@ -54,44 +46,44 @@ public class FragmentSpliceTileEntity extends TileEntity implements ITickableTil
     	for(int i = 2; i < 2 + 25; ++ i) {
     		this.handler.setStackInSlot(i, ItemStack.EMPTY);
     	}
-    	this.handler.setStackInSlot(1, new ItemStack(PlantUtil.getPlantSummonCard(Plants.values()[id])));
+//    	this.handler.setStackInSlot(1, new ItemStack(PlantUtil.getPlantSummonCard(Plants.values()[id])));
     }
     
-    private int getResultPlantId() {
-    	//check plant enjoy card.
-    	Set<PlantCardItem> set = new HashSet<>();
-    	for(int i = 0; i < FRAGMENT_ARRAY.length; ++ i) {
-    		int pos = FRAGMENT_ARRAY[i];
-    		ItemStack stack = this.handler.getStackInSlot(pos);
-    		if(stack.getItem() instanceof PlantCardItem && ((PlantCardItem) stack.getItem()).isEnjoyCard) {
-    			set.add((PlantCardItem) stack.getItem());
-    		} else {
-    			return - 1;
-    		}
-    	}
-    	if(set.size() != 1) return -1;
-    	//check essence
-    	Plants plant = set.iterator().next().plantType;
-    	Essences essence = PlantUtil.getPlantEssenceType(plant);
-    	for(int i = 0; i < 5; ++ i) {
-    		for(int j = 0; j < 5; ++ j) {
-    			if(i == 0 || i == 4 || j == 0 || j == 4) {
-    				int now = 2 + i * 5 + j;
-    				ItemStack stack = this.handler.getStackInSlot(now);
-    				if(! stack.getItem().equals(Essences.getEssenceItem(essence).get())) {
-    					return -1;
-    				}
-    			}
-    		}
-    	}
-    	//check card model
-    	Ranks rank = PlantUtil.getPlantRankByName(plant);
-    	ItemStack stack = this.handler.getStackInSlot(14);
-    	if(! stack.getItem().equals(Ranks.getRankCardItem(rank))) {
-    		return -1;
-    	}
-    	return plant.ordinal();
-    }
+//    private int getResultPlantId() {
+//    	//check plant enjoy card.
+//    	Set<PlantCardItem> set = new HashSet<>();
+//    	for(int i = 0; i < FRAGMENT_ARRAY.length; ++ i) {
+//    		int pos = FRAGMENT_ARRAY[i];
+//    		ItemStack stack = this.handler.getStackInSlot(pos);
+//    		if(stack.getItem() instanceof PlantCardItem && ((PlantCardItem) stack.getItem()).isEnjoyCard) {
+//    			set.add((PlantCardItem) stack.getItem());
+//    		} else {
+//    			return - 1;
+//    		}
+//    	}
+//    	if(set.size() != 1) return -1;
+//    	//check essence
+//    	Plants plant = set.iterator().next().plantType;
+//    	Essences essence = PlantUtil.getPlantEssenceType(plant);
+//    	for(int i = 0; i < 5; ++ i) {
+//    		for(int j = 0; j < 5; ++ j) {
+//    			if(i == 0 || i == 4 || j == 0 || j == 4) {
+//    				int now = 2 + i * 5 + j;
+//    				ItemStack stack = this.handler.getStackInSlot(now);
+//    				if(! stack.getItem().equals(Essences.getEssenceItem(essence).get())) {
+//    					return -1;
+//    				}
+//    			}
+//    		}
+//    	}
+//    	//check card model
+//    	Ranks rank = PlantUtil.getPlantRankByName(plant);
+//    	ItemStack stack = this.handler.getStackInSlot(14);
+//    	if(! stack.getItem().equals(Ranks.getRankCardItem(rank))) {
+//    		return -1;
+//    	}
+//    	return plant.ordinal();
+//    }
     
     private void absorbSunAmount() {
     	ItemStack stack = this.handler.getStackInSlot(0);

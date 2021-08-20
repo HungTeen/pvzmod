@@ -3,7 +3,7 @@ package com.hungteen.pvz.common.entity.zombie.grassday;
 import com.hungteen.pvz.client.model.entity.zombie.grassday.ConeHeadZombieModel;
 import com.hungteen.pvz.data.loot.PVZLoot;
 import com.hungteen.pvz.register.SoundRegister;
-import com.hungteen.pvz.utils.enums.Zombies;
+import com.hungteen.pvz.remove.Zombies;
 
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.monster.MonsterEntity;

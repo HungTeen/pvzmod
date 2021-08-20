@@ -20,12 +20,12 @@ import com.hungteen.pvz.common.world.data.PVZFlagData;
 import com.hungteen.pvz.data.loot.PVZLoot;
 import com.hungteen.pvz.register.EntityRegister;
 import com.hungteen.pvz.register.SoundRegister;
+import com.hungteen.pvz.remove.Zombies;
 import com.hungteen.pvz.utils.EntityUtil;
 import com.hungteen.pvz.utils.MathUtil;
 import com.hungteen.pvz.utils.PlayerUtil;
 import com.hungteen.pvz.utils.WorldUtil;
 import com.hungteen.pvz.utils.ZombieUtil;
-import com.hungteen.pvz.utils.enums.Zombies;
 
 import net.minecraft.advancements.CriteriaTriggers;
 import net.minecraft.block.Blocks;

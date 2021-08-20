@@ -2,7 +2,7 @@ package com.hungteen.pvz.client.model.entity.plant.assist;
 
 import com.hungteen.pvz.client.model.entity.plant.PVZPlantModel;
 import com.hungteen.pvz.common.entity.plant.assist.MagnetShroomEntity;
-import com.hungteen.pvz.utils.enums.MetalTypes;
+import com.hungteen.pvz.remove.MetalTypes;
 
 import net.minecraft.client.renderer.entity.model.EntityModel;
 import net.minecraft.client.renderer.model.ModelRenderer;

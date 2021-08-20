@@ -8,14 +8,15 @@ import javax.annotation.Nullable;
 import com.hungteen.pvz.common.capability.CapabilityHandler;
 import com.hungteen.pvz.common.container.PeaGunContainer;
 import com.hungteen.pvz.common.container.inventory.ItemInventory;
+import com.hungteen.pvz.common.core.PlantType;
 import com.hungteen.pvz.common.entity.bullet.itembullet.PeaEntity;
+import com.hungteen.pvz.common.impl.plant.PVZPlants;
 import com.hungteen.pvz.common.item.card.PlantCardItem;
 import com.hungteen.pvz.common.network.PVZPacketHandler;
 import com.hungteen.pvz.common.network.PlaySoundPacket;
 import com.hungteen.pvz.register.GroupRegister;
 import com.hungteen.pvz.register.ItemRegister;
 import com.hungteen.pvz.utils.PlayerUtil;
-import com.hungteen.pvz.utils.enums.Plants;
 import com.hungteen.pvz.utils.enums.Resources;
 
 import net.minecraft.client.util.ITooltipFlag;
@@ -57,8 +58,8 @@ public class PeaGunItem extends Item {
 	public static final int PEA_GUN_SLOT_NUM = 28;
 	public static final float PEA_SPEED = 2.1f;
 	public static final double SHOOT_OFFSET = 0.5;
-	public static final Plants[] PEA_PLANTS = new Plants[] { Plants.PEA_SHOOTER, Plants.SNOW_PEA, Plants.REPEATER,
-			Plants.THREE_PEATER };
+	public static final PlantType[] PEA_PLANTS = new PlantType[] { PVZPlants.PEA_SHOOTER, PVZPlants.SNOW_PEA, PVZPlants.REPEATER,
+			PVZPlants.THREE_PEATER };
 //	private Inventory backpack = new Inventory(PEA_GUN_SLOT_NUM);
 
 	public PeaGunItem() {
@@ -135,7 +136,7 @@ public class PeaGunItem extends Item {
 		Inventory backpack = getInventory(itemStack);
 		ItemStack special = backpack.getItem(0);
 		if (special.getItem() instanceof PlantCardItem) {
-			Plants plant = ((PlantCardItem) special.getItem()).plantType;
+			PlantType plant = ((PlantCardItem) special.getItem()).plantType;
 			for (int i = 1; i < PEA_GUN_SLOT_NUM; i++) {
 				ItemStack stack = backpack.getItem(i);
 				if (stack.isEmpty()) {
@@ -173,44 +174,39 @@ public class PeaGunItem extends Item {
 		});
 	}
 
-	protected boolean canShoot(PlayerEntity player, Plants plant, ItemStack stack, ItemStack peaGun) {
-		switch (plant) {
-		case PEA_SHOOTER:
-		case SNOW_PEA: {
+	protected boolean canShoot(PlayerEntity player, PlantType plant, ItemStack stack, ItemStack peaGun) {
+		if(plant == PVZPlants.PEA_SHOOTER || plant == PVZPlants.SNOW_PEA) {
 			this.performShoot(player, plant, stack, peaGun, 0); // normal shoot
 			return true;
 		}
-		case REPEATER: {
+		if(plant == PVZPlants.REPEATER) {
 			this.performShoot(player, plant, stack, peaGun, 0);
 			this.performShoot(player, plant, stack, peaGun, 1);
 			return true;
 		}
-		case THREE_PEATER: {
-			this.performShoot(player, plant, stack, peaGun, 0);
-			this.performShoot(player, plant, stack, peaGun, 1);
-			this.performShoot(player, plant, stack, peaGun, 2);
-			return true;
-		}
-		case SPLIT_PEA: {
+		if(plant == PVZPlants.THREE_PEATER) {
 			this.performShoot(player, plant, stack, peaGun, 0);
 			this.performShoot(player, plant, stack, peaGun, 1);
 			this.performShoot(player, plant, stack, peaGun, 2);
 			return true;
 		}
-		case GATLING_PEA: {
+		if(plant == PVZPlants.SPLIT_PEA) {
+			this.performShoot(player, plant, stack, peaGun, 0);
+			this.performShoot(player, plant, stack, peaGun, 1);
+			this.performShoot(player, plant, stack, peaGun, 2);
+			return true;
+		}
+		if(plant == PVZPlants.GATLING_PEA) {
 			this.performShoot(player, plant, stack, peaGun, 0);
 			this.performShoot(player, plant, stack, peaGun, 1);
 			this.performShoot(player, plant, stack, peaGun, 2);
 			this.performShoot(player, plant, stack, peaGun, 3);
 			return true;
 		}
-		default: {
-			return false;
-		}
-		}
+		return false;
 	}
 
-	private void performShoot(PlayerEntity player, Plants plant, ItemStack stack, ItemStack peaGun, int type) {
+	private void performShoot(PlayerEntity player, PlantType plant, ItemStack stack, ItemStack peaGun, int type) {
 		player.getCapability(CapabilityHandler.PLAYER_DATA_CAPABILITY).ifPresent((l) -> {
 			int plantLvl = l.getPlayerData().getPlantStats().getPlantLevel(plant);
 			int lvl = l.getPlayerData().getPlayerStats().getPlayerStats(Resources.TREE_LVL);
@@ -233,9 +229,9 @@ public class PeaGunItem extends Item {
 			pea.setPos(player.getX() + offset.x, player.getY() + player.getEyeHeight() + offset.y,
 					player.getZ() + offset.z);
 			float speed = PEA_SPEED;
-			if (plant == Plants.REPEATER || plant == Plants.GATLING_PEA) {
+			if (plant == PVZPlants.REPEATER || plant == PVZPlants.GATLING_PEA) {
 				speed -= 0.2 * type;
-			} else if (plant == Plants.THREE_PEATER) { 
+			} else if (plant == PVZPlants.THREE_PEATER) { 
 				offset = offset.scale(2);
 				if (type == 1) {
 					pea.setPos(player.getX() + offset.x + offset.z,
@@ -246,7 +242,7 @@ public class PeaGunItem extends Item {
 							player.getY() + player.getEyeHeight() + offset.y,
 							player.getZ() + offset.z + offset.x);
 				}
-			} else if(plant == Plants.SPLIT_PEA) {
+			} else if(plant == PVZPlants.SPLIT_PEA) {
 				if(type > 0) {
 					speed *= -1;
 					if(type == 2) speed += 0.2;
@@ -262,8 +258,8 @@ public class PeaGunItem extends Item {
 	/**
 	 * get Shoot Pea State
 	 */
-	private PeaEntity.State getPeaState(Plants plant, Item item) {
-		if (plant == Plants.SNOW_PEA) {
+	private PeaEntity.State getPeaState(PlantType plant, Item item) {
+		if (plant == PVZPlants.SNOW_PEA) {
 			return PeaEntity.State.ICE;
 		}else if (item == ItemRegister.SNOW_PEA.get()) {
 			return PeaEntity.State.ICE;

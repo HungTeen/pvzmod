@@ -6,10 +6,7 @@ import com.hungteen.pvz.common.item.card.PlantCardItem;
 import com.hungteen.pvz.common.misc.tag.PVZItemTags;
 import com.hungteen.pvz.register.BlockRegister;
 import com.hungteen.pvz.register.ItemRegister;
-import com.hungteen.pvz.utils.PlantUtil;
 import com.hungteen.pvz.utils.StringUtil;
-import com.hungteen.pvz.utils.enums.Essences;
-import com.hungteen.pvz.utils.enums.Ranks;
 
 import net.minecraft.data.CookingRecipeBuilder;
 import net.minecraft.data.DataGenerator;
@@ -92,19 +89,17 @@ public class RecipeGenerator extends ForgeRecipeProvider{
 	}
 	
 	private void registerCommonCard(Consumer<IFinishedRecipe> consumer, PlantCardItem result, Item crop) {
-		Essences.getEssenceItem(PlantUtil.getPlantEssenceType(result.plantType)).ifPresent(essence -> {
-			Item rankCard = Ranks.getRankCardItem(PlantUtil.getPlantRankByName(result.plantType));
-		    ShapedRecipeBuilder.shaped(result).pattern("AAA").pattern("ABA").pattern("ACA")
+		final Item essence = result.plantType.getEssence().getEssenceItem();
+		final Item rankCard = result.plantType.getRank().getTemplateCard();
+	    ShapedRecipeBuilder.shaped(result).pattern("AAA").pattern("ABA").pattern("ACA")
 		    .define('A', essence).define('B', crop).define('C', rankCard).unlockedBy("has_essence", has(essence)).save(consumer, StringUtil.prefix("card/" + result.plantType.toString().toLowerCase() + "_card"));
-		});
 	}
 	
 	private void registerCommonCard(Consumer<IFinishedRecipe> consumer, PlantCardItem result, ITag.INamedTag<Item> crop) {
-		Essences.getEssenceItem(PlantUtil.getPlantEssenceType(result.plantType)).ifPresent(essence -> {
-		    Item rankCard = Ranks.getRankCardItem(PlantUtil.getPlantRankByName(result.plantType));
-		    ShapedRecipeBuilder.shaped(result).pattern("AAA").pattern("ABA").pattern("ACA")
+		final Item essence = result.plantType.getEssence().getEssenceItem();
+		final Item rankCard = result.plantType.getRank().getTemplateCard();
+		ShapedRecipeBuilder.shaped(result).pattern("AAA").pattern("ABA").pattern("ACA")
 		    .define('A', essence).define('B', crop).define('C', rankCard).unlockedBy("has_essence", has(essence)).save(consumer, StringUtil.prefix("card/" + result.plantType.toString().toLowerCase() + "_card"));
-		});
 	}
 	
 }

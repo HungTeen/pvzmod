@@ -3,17 +3,18 @@ package com.hungteen.pvz.common.entity.plant.assist;
 import java.util.HashSet;
 import java.util.Set;
 
+import com.hungteen.pvz.common.core.PlantType;
 import com.hungteen.pvz.common.entity.drop.CoinEntity;
 import com.hungteen.pvz.common.entity.drop.DropEntity;
 import com.hungteen.pvz.common.entity.drop.DropEntity.DropStates;
 import com.hungteen.pvz.common.entity.drop.JewelEntity;
 import com.hungteen.pvz.common.entity.plant.PVZPlantEntity;
+import com.hungteen.pvz.common.impl.plant.PVZPlants;
 import com.hungteen.pvz.register.SoundRegister;
 import com.hungteen.pvz.utils.EntityUtil;
 import com.hungteen.pvz.utils.MathUtil;
 import com.hungteen.pvz.utils.PlantUtil;
 import com.hungteen.pvz.utils.PlayerUtil;
-import com.hungteen.pvz.utils.enums.Plants;
 import com.hungteen.pvz.utils.enums.Resources;
 
 import net.minecraft.entity.CreatureEntity;
@@ -121,8 +122,8 @@ public class GoldMagnetEntity extends PVZPlantEntity {
 	}
 	
 	@Override
-	public Plants getPlantEnumName() {
-		return Plants.GOLD_MAGNET;
+	public PlantType getPlantType() {
+		return PVZPlants.GOLD_MAGNET;
 	}
 
 }

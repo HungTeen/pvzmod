@@ -1,12 +1,13 @@
 package com.hungteen.pvz.common.entity.plant.appease;
 
+import com.hungteen.pvz.common.core.PlantType;
 import com.hungteen.pvz.common.entity.bullet.AbstractBulletEntity;
 import com.hungteen.pvz.common.entity.bullet.StarEntity;
 import com.hungteen.pvz.common.entity.plant.base.PlantShooterEntity;
+import com.hungteen.pvz.common.impl.plant.OtherPlants;
 import com.hungteen.pvz.register.SoundRegister;
 import com.hungteen.pvz.utils.EntityUtil;
 import com.hungteen.pvz.utils.PlantUtil;
-import com.hungteen.pvz.utils.enums.Plants;
 
 import net.minecraft.entity.CreatureEntity;
 import net.minecraft.entity.EntitySize;
@@ -102,8 +103,8 @@ public class AngelStarFruitEntity extends PlantShooterEntity {
 	}
 	
 	@Override
-	public Plants getPlantEnumName() {
-		return Plants.ANGEL_STAR_FRUIT;
+	public PlantType getPlantType() {
+		return OtherPlants.ANGEL_STAR_FRUIT;
 	}
 
 }

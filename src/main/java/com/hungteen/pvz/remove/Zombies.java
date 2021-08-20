@@ -1,4 +1,4 @@
-package com.hungteen.pvz.utils.enums;
+package com.hungteen.pvz.remove;
 
 import java.util.Arrays;
 import java.util.HashSet;

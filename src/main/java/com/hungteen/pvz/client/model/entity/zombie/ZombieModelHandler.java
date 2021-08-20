@@ -46,7 +46,7 @@ import com.hungteen.pvz.client.model.entity.zombie.zombotany.SquashZombieModel;
 import com.hungteen.pvz.client.model.entity.zombie.zombotany.TallNutZombieModel;
 import com.hungteen.pvz.client.model.entity.zombie.zombotany.WallNutZombieModel;
 import com.hungteen.pvz.common.entity.zombie.PVZZombieEntity;
-import com.hungteen.pvz.utils.enums.Zombies;
+import com.hungteen.pvz.remove.Zombies;
 
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;

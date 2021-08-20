@@ -1,14 +1,15 @@
 package com.hungteen.pvz.common.entity.plant.toxic;
 
 import com.hungteen.pvz.common.advancement.trigger.EntityEffectAmountTrigger;
+import com.hungteen.pvz.common.core.PlantType;
 import com.hungteen.pvz.common.entity.bullet.AbstractBulletEntity;
 import com.hungteen.pvz.common.entity.bullet.itembullet.SporeEntity;
 import com.hungteen.pvz.common.entity.plant.base.PlantShooterEntity;
+import com.hungteen.pvz.common.impl.plant.PVZPlants;
 import com.hungteen.pvz.register.SoundRegister;
 import com.hungteen.pvz.utils.EntityUtil;
 import com.hungteen.pvz.utils.MathUtil;
 import com.hungteen.pvz.utils.PlantUtil;
-import com.hungteen.pvz.utils.enums.Plants;
 
 import net.minecraft.entity.CreatureEntity;
 import net.minecraft.entity.EntitySize;
@@ -74,7 +75,7 @@ public class PuffShroomEntity extends PlantShooterEntity {
 	 * {@link #startSuperMode(boolean)}
 	 */
 	protected boolean canSuperTogether(PuffShroomEntity entity) {
-		if(EntityUtil.canTargetEntity(this, entity) || entity.getPlantEnumName() != this.getPlantEnumName()) {
+		if(EntityUtil.canTargetEntity(this, entity) || entity.getPlantType() != this.getPlantType()) {
 			return false;
 		}
 		return this.getOwnerUUID().isPresent() && entity.getOwnerUUID().isPresent() && entity.getOwnerUUID().get().equals(this.getOwnerUUID().get());
@@ -115,8 +116,8 @@ public class PuffShroomEntity extends PlantShooterEntity {
 	}
 	
 	@Override
-	public Plants getPlantEnumName() {
-		return Plants.PUFF_SHROOM;
+	public PlantType getPlantType() {
+		return PVZPlants.PUFF_SHROOM;
 	}
 
 }

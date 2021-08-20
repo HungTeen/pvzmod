@@ -1,6 +1,7 @@
 package com.hungteen.pvz.common.entity.plant.defence;
 
-import com.hungteen.pvz.utils.enums.Plants;
+import com.hungteen.pvz.common.core.PlantType;
+import com.hungteen.pvz.common.impl.plant.PVZPlants;
 
 import net.minecraft.entity.CreatureEntity;
 import net.minecraft.entity.EntitySize;
@@ -26,13 +27,8 @@ public class TallNutEntity extends WallNutEntity{
 	}
 	
 	@Override
-	public Plants getUpgradePlantType() {
-		return null;
-	}
-	
-	@Override
-	public Plants getPlantEnumName() {
-		return Plants.TALL_NUT;
+	public PlantType getPlantType() {
+		return PVZPlants.TALL_NUT;
 	}
 	
 }

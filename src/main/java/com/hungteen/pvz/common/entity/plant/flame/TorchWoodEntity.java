@@ -1,13 +1,14 @@
 package com.hungteen.pvz.common.entity.plant.flame;
 
 import com.hungteen.pvz.api.interfaces.ILightEffect;
+import com.hungteen.pvz.common.core.PlantType;
 import com.hungteen.pvz.common.entity.bullet.itembullet.PeaEntity;
 import com.hungteen.pvz.common.entity.plant.PVZPlantEntity;
+import com.hungteen.pvz.common.impl.plant.PVZPlants;
 import com.hungteen.pvz.register.EffectRegister;
 import com.hungteen.pvz.register.ParticleRegister;
 import com.hungteen.pvz.utils.EntityUtil;
 import com.hungteen.pvz.utils.WorldUtil;
-import com.hungteen.pvz.utils.enums.Plants;
 
 import net.minecraft.entity.CreatureEntity;
 import net.minecraft.entity.EntitySize;
@@ -127,8 +128,8 @@ public class TorchWoodEntity extends PVZPlantEntity implements ILightEffect {
 	}
 	
 	@Override
-	public Plants getPlantEnumName() {
-		return Plants.TORCH_WOOD;
+	public PlantType getPlantType() {
+		return PVZPlants.TORCH_WOOD;
 	}
 	
 	public static enum FlameTypes{

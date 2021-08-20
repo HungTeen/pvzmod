@@ -1,9 +1,9 @@
 package com.hungteen.pvz.common.entity.zombie.grassnight;
 
 import com.hungteen.pvz.common.entity.zombie.PVZZombieEntity;
+import com.hungteen.pvz.common.impl.plant.PVZPlants;
 import com.hungteen.pvz.common.item.card.ImitaterCardItem;
 import com.hungteen.pvz.common.item.card.PlantCardItem;
-import com.hungteen.pvz.utils.enums.Plants;
 import com.hungteen.pvz.utils.others.WeightList;
 
 import net.minecraft.entity.EntitySize;
@@ -56,11 +56,11 @@ public abstract class AbstractTombStoneEntity extends PVZZombieEntity {
 			ItemStack stack = player.getItemInHand(hand);
 			if(this.getPassengers().isEmpty() && stack.getItem() instanceof PlantCardItem) {
 				PlantCardItem cardItem = (PlantCardItem) stack.getItem();
-				if(cardItem.plantType == Plants.GRAVE_BUSTER) {
+				if(cardItem.plantType == PVZPlants.GRAVE_BUSTER) {
 					PlantCardItem.checkSunAndSummonPlant(player, stack, cardItem, blockPosition(), (plantEntity) -> {
 						plantEntity.setTarget(this);
 					});
-				} else if(cardItem instanceof ImitaterCardItem && ((ImitaterCardItem) cardItem).isPlantTypeEqual(stack, Plants.GRAVE_BUSTER)) {
+				} else if(cardItem instanceof ImitaterCardItem && ((ImitaterCardItem) cardItem).isPlantTypeEqual(stack, PVZPlants.GRAVE_BUSTER)) {
 					ImitaterCardItem.checkSunAndSummonImitater(player, stack, cardItem, blockPosition(), (imitater) -> {
 						imitater.setTarget(this);
 					});

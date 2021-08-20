@@ -9,7 +9,7 @@ import com.hungteen.pvz.common.entity.zombie.grassnight.TombStoneEntity;
 import com.hungteen.pvz.common.event.PVZServerEvents;
 import com.hungteen.pvz.common.world.data.PVZInvasionData;
 import com.hungteen.pvz.common.world.invasion.OverworldInvasion;
-import com.hungteen.pvz.utils.enums.Zombies;
+import com.hungteen.pvz.remove.Zombies;
 
 import net.minecraft.world.server.ServerWorld;
 

@@ -2,12 +2,13 @@ package com.hungteen.pvz.common.entity.plant.enforce;
 
 import java.util.List;
 
+import com.hungteen.pvz.common.core.PlantType;
 import com.hungteen.pvz.common.entity.bullet.PultBulletEntity;
 import com.hungteen.pvz.common.entity.plant.PVZPlantEntity;
 import com.hungteen.pvz.common.entity.zombie.roof.BungeeZombieEntity;
+import com.hungteen.pvz.common.impl.plant.PVZPlants;
 import com.hungteen.pvz.register.SoundRegister;
 import com.hungteen.pvz.utils.EntityUtil;
-import com.hungteen.pvz.utils.enums.Plants;
 
 import net.minecraft.entity.CreatureEntity;
 import net.minecraft.entity.Entity;
@@ -100,8 +101,8 @@ public class UmbrellaLeafEntity extends PVZPlantEntity{
 	}
 
 	@Override
-	public Plants getPlantEnumName() {
-		return Plants.UMBRELLA_LEAF;
+	public PlantType getPlantType() {
+		return PVZPlants.UMBRELLA_LEAF;
 	}
 	
 }

@@ -1,6 +1,7 @@
 package com.hungteen.pvz.common.entity.plant.toxic;
 
-import com.hungteen.pvz.utils.enums.Plants;
+import com.hungteen.pvz.common.core.PlantType;
+import com.hungteen.pvz.common.impl.plant.PVZPlants;
 
 import net.minecraft.entity.CreatureEntity;
 import net.minecraft.entity.EntitySize;
@@ -32,8 +33,8 @@ public class SeaShroomEntity extends PuffShroomEntity {
 	}
 
 	@Override
-	public Plants getPlantEnumName() {
-		return Plants.SEA_SHROOM;
+	public PlantType getPlantType() {
+		return PVZPlants.SEA_SHROOM;
 	}
 
 }

@@ -1,12 +1,8 @@
 package com.hungteen.pvz.common.container;
 
-import com.hungteen.pvz.common.item.card.PlantCardItem;
 import com.hungteen.pvz.common.item.card.SummonCardItem;
 import com.hungteen.pvz.register.BlockRegister;
 import com.hungteen.pvz.register.ContainerRegister;
-import com.hungteen.pvz.utils.EntityUtil;
-import com.hungteen.pvz.utils.PlayerUtil;
-import com.hungteen.pvz.utils.enums.Plants;
 
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.inventory.Inventory;
@@ -14,7 +10,6 @@ import net.minecraft.inventory.container.Container;
 import net.minecraft.inventory.container.Slot;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.IWorldPosCallable;
-import net.minecraft.util.SoundEvents;
 
 public class EssenceAltarContainer extends Container{
 
@@ -47,17 +42,17 @@ public class EssenceAltarContainer extends Container{
 		}
 	}
 	
-	public void destroyAllCards() {
-		for(int i = 0; i < inv.getContainerSize(); ++ i) {
-			ItemStack stack = inv.getItem(i);
-			if(stack.isEmpty() || ! (stack.getItem() instanceof PlantCardItem)) continue;
-			Plants plant = ((PlantCardItem) stack.getItem()).plantType;
-			if(plant == Plants.IMITATER) plant = Plants.values()[player.getRandom().nextInt(Plants.values().length)];
-			PlayerUtil.addPlantXp(player, plant, 5 * stack.getCount());
-			stack.shrink(stack.getCount());
-		}
-		EntityUtil.playSound(player, SoundEvents.ENCHANTMENT_TABLE_USE);
-	}
+//	public void destroyAllCards() {
+//		for(int i = 0; i < inv.getContainerSize(); ++ i) {
+//			ItemStack stack = inv.getItem(i);
+//			if(stack.isEmpty() || ! (stack.getItem() instanceof PlantCardItem)) continue;
+//			Plants plant = ((PlantCardItem) stack.getItem()).plantType;
+//			if(plant == Plants.IMITATER) plant = Plants.values()[player.getRandom().nextInt(Plants.values().length)];
+//			PlayerUtil.addPlantXp(player, plant, 5 * stack.getCount());
+//			stack.shrink(stack.getCount());
+//		}
+//		EntityUtil.playSound(player, SoundEvents.ENCHANTMENT_TABLE_USE);
+//	}
 	
 	
 	public boolean isInventoryEmpty() {

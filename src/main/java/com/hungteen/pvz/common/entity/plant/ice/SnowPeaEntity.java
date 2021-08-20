@@ -3,13 +3,14 @@ package com.hungteen.pvz.common.entity.plant.ice;
 import java.util.Optional;
 
 import com.hungteen.pvz.api.interfaces.IIceEffect;
+import com.hungteen.pvz.common.core.PlantType;
 import com.hungteen.pvz.common.entity.bullet.itembullet.PeaEntity.State;
 import com.hungteen.pvz.common.entity.plant.appease.PeaShooterEntity;
+import com.hungteen.pvz.common.impl.plant.PVZPlants;
 import com.hungteen.pvz.register.EffectRegister;
 import com.hungteen.pvz.register.SoundRegister;
 import com.hungteen.pvz.utils.MathUtil;
 import com.hungteen.pvz.utils.PlantUtil;
-import com.hungteen.pvz.utils.enums.Plants;
 
 import net.minecraft.entity.CreatureEntity;
 import net.minecraft.entity.EntityType;
@@ -58,8 +59,8 @@ public class SnowPeaEntity extends PeaShooterEntity implements IIceEffect{
 	}
 	
 	@Override
-	public Plants getPlantEnumName() {
-		return Plants.SNOW_PEA;
+	public PlantType getPlantType() {
+		return PVZPlants.SNOW_PEA;
 	}
 	
 }

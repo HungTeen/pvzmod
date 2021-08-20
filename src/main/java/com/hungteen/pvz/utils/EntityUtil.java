@@ -15,7 +15,6 @@ import com.hungteen.pvz.api.enums.PVZGroupType;
 import com.hungteen.pvz.api.interfaces.ICanBeCharmed;
 import com.hungteen.pvz.api.interfaces.IGroupEntity;
 import com.hungteen.pvz.api.interfaces.IHasOwner;
-import com.hungteen.pvz.api.interfaces.IPVZPlant;
 import com.hungteen.pvz.api.interfaces.IPVZZombie;
 import com.hungteen.pvz.common.entity.PVZMultiPartEntity;
 import com.hungteen.pvz.common.entity.ai.goal.attack.PVZZombieAttackGoal;
@@ -34,7 +33,7 @@ import com.hungteen.pvz.common.network.PVZPacketHandler;
 import com.hungteen.pvz.common.network.SpawnParticlePacket;
 import com.hungteen.pvz.compat.jade.provider.PVZEntityProvider;
 import com.hungteen.pvz.register.EffectRegister;
-import com.hungteen.pvz.utils.enums.Zombies;
+import com.hungteen.pvz.remove.Zombies;
 import com.hungteen.pvz.utils.interfaces.IMultiPartEntity;
 
 import it.unimi.dsi.fastutil.ints.IntOpenHashSet;
@@ -168,8 +167,8 @@ public class EntityUtil {
 		if(target instanceof IPVZZombie) {
 			return ((IPVZZombie) target).getCurrentHealth();
 		}
-		if(target instanceof IPVZPlant) {
-			return ((IPVZPlant) target).getCurrentHealth();
+		if(target instanceof PVZPlantEntity) {
+			return ((PVZPlantEntity) target).getCurrentHealth();
 		}
 		return target.getHealth();
 	}
@@ -190,8 +189,8 @@ public class EntityUtil {
 		if(target instanceof IPVZZombie) {
 			return ((IPVZZombie) target).getCurrentMaxHealth();
 		}
-		if(target instanceof IPVZPlant) {
-			return ((IPVZPlant) target).getCurrentMaxHealth();
+		if(target instanceof PVZPlantEntity) {
+			return ((PVZPlantEntity) target).getCurrentMaxHealth();
 		}
 		return target.getMaxHealth();
 	}
@@ -212,7 +211,7 @@ public class EntityUtil {
 			Zombies zombie = ((IPVZZombie) entity).getZombieEnumName();
 			return Zombies.BOSSES.contains(zombie);
 		}
-		if(entity instanceof IPVZPlant) {
+		if(entity instanceof PVZPlantEntity) {
 			return false;
 		}
 		return entity.getHealth() > 100F;
@@ -391,7 +390,7 @@ public class EntityUtil {
 	 * check can TargetGoal select target as attackTarget.
 	 */
 	public static boolean checkCanEntityBeTarget(Entity attacker, Entity target) {
-		if(! isEntityValid(attacker) || ! isEntityValid(target)) {//prevent crash
+		if(attacker == null || target == null) {//prevent crash
 			return false;
 		}
 		if(target instanceof PVZMultiPartEntity) {//can attack its owner then can attack it
@@ -420,7 +419,7 @@ public class EntityUtil {
 	 * check can AttackGoal continue to attack target.
 	 */
 	public static boolean checkCanEntityBeAttack(Entity attacker, Entity target) {
-		if(! isEntityValid(attacker) || ! isEntityValid(target)) {//prevent crash
+		if(attacker == null || target == null) {//prevent crash
 			return false;
 		}
 		if(target instanceof PVZMultiPartEntity) {//can attack its owner then can attack it

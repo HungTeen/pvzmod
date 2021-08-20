@@ -3,10 +3,10 @@ package com.hungteen.pvz.client.render.itemstack;
 import java.util.Optional;
 
 import com.hungteen.pvz.client.model.entity.plant.defence.WallNutModel;
-import com.hungteen.pvz.client.render.entity.plant.PlantRenderHandler;
+import com.hungteen.pvz.common.core.PlantType;
 import com.hungteen.pvz.common.entity.plant.defence.WallNutEntity;
+import com.hungteen.pvz.common.impl.plant.PVZPlants;
 import com.hungteen.pvz.common.item.tool.BowlingGloveItem;
-import com.hungteen.pvz.utils.enums.Plants;
 import com.mojang.blaze3d.matrix.MatrixStack;
 import com.mojang.blaze3d.vertex.IVertexBuilder;
 
@@ -36,7 +36,7 @@ public class BowlingGloveISTER extends ItemStackTileEntityRenderer {
         matrixStackIn.translate(0.8F, 0.7F, 0.4F);
         itemRenderer.render(stack, ItemCameraTransforms.TransformType.NONE, false, matrixStackIn, bufferIn, combinedLightIn, combinedOverlayIn, ibakedmodel.getBakedModel());
         matrixStackIn.popPose();
-		Optional<Plants> plantType = BowlingGloveItem.getBowlingType(stack);
+		Optional<PlantType> plantType = BowlingGloveItem.getBowlingType(stack);
 		if(! plantType.isPresent()) return ;
 		if (degree >= 360) {
             degree -= 360;
@@ -53,14 +53,14 @@ public class BowlingGloveISTER extends ItemStackTileEntityRenderer {
 		matrixStackIn.popPose();
 	}
 	
-	protected float getRenderSize(Plants plant) {
-		if(plant == Plants.GIANT_WALL_NUT) return 0.38F;
+	protected float getRenderSize(PlantType plant) {
+		if(plant == PVZPlants.GIANT_WALL_NUT) return 0.38F;
 		return 0.2F;
 	}
 	
-	public ResourceLocation getEntityTexture(Plants plant) {
-		if(plant == Plants.EXPLODE_O_NUT) return PlantRenderHandler.EXPLODE_O_NUT_TEX;
-		return PlantRenderHandler.WALL_NUT_TEX;
+	public ResourceLocation getEntityTexture(PlantType plant) {
+		if(plant == PVZPlants.EXPLODE_O_NUT) return PVZPlants.EXPLODE_O_NUT.getRenderResource();
+		return PVZPlants.WALL_NUT.getRenderResource();
 	}
 	
 }

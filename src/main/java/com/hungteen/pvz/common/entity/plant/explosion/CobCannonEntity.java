@@ -5,14 +5,15 @@ import java.util.Optional;
 
 import javax.annotation.Nullable;
 
+import com.hungteen.pvz.common.core.PlantType;
 import com.hungteen.pvz.common.entity.ai.goal.target.PVZRandomTargetGoal;
 import com.hungteen.pvz.common.entity.bullet.CornEntity;
 import com.hungteen.pvz.common.entity.plant.PVZPlantEntity;
+import com.hungteen.pvz.common.impl.plant.PVZPlants;
 import com.hungteen.pvz.common.network.EntityInteractPacket;
 import com.hungteen.pvz.register.ItemRegister;
 import com.hungteen.pvz.register.SoundRegister;
 import com.hungteen.pvz.utils.EntityUtil;
-import com.hungteen.pvz.utils.enums.Plants;
 
 import net.minecraft.entity.CreatureEntity;
 import net.minecraft.entity.Entity;
@@ -289,11 +290,8 @@ public class CobCannonEntity extends PVZPlantEntity {
 	}
 	
 	@Override
-	protected boolean checkNormalPlantWeak() {
-		if(this.isInWater()) {
-			return true;
-		}
-		return super.checkNormalPlantWeak();
+	protected boolean shouldWilt() {
+		return this.isInWaterOrBubble();
 	}
 
 	protected boolean mountTo(PlayerEntity player) {
@@ -403,8 +401,8 @@ public class CobCannonEntity extends PVZPlantEntity {
 	}
 	
 	@Override
-	public Plants getPlantEnumName() {
-		return Plants.COB_CANNON;
+	public PlantType getPlantType() {
+		return PVZPlants.COB_CANNON;
 	}
 
 }

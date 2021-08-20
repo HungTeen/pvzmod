@@ -6,11 +6,8 @@ import com.hungteen.pvz.common.container.SlotMachineContainer;
 import com.hungteen.pvz.common.network.ClickButtonPacket;
 import com.hungteen.pvz.common.network.PVZPacketHandler;
 import com.hungteen.pvz.common.tileentity.SlotMachineTileEntity;
-import com.hungteen.pvz.common.tileentity.SlotMachineTileEntity.SlotOptions;
-import com.hungteen.pvz.utils.PlantUtil;
 import com.hungteen.pvz.utils.StringUtil;
 import com.hungteen.pvz.utils.enums.Colors;
-import com.hungteen.pvz.utils.enums.Plants;
 import com.hungteen.pvz.utils.enums.Resources;
 import com.mojang.blaze3d.matrix.MatrixStack;
 import com.mojang.blaze3d.systems.RenderSystem;
@@ -18,7 +15,6 @@ import com.mojang.blaze3d.systems.RenderSystem;
 import net.minecraft.client.gui.screen.inventory.ContainerScreen;
 import net.minecraft.client.gui.widget.button.Button;
 import net.minecraft.entity.player.PlayerInventory;
-import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.TranslationTextComponent;
@@ -66,34 +62,34 @@ public class SlotMachineScreen extends ContainerScreen<SlotMachineContainer> {
 		float percent = this.menu.te.array.get(12) * 1.0F / this.menu.te.array.get(15);
 		RenderSystem.translated(0, (1 - percent) * 18, 0);
 		int currentPos = this.menu.te.array.get(13);
-		for(int i = 0; i < 4; ++ i) {
-			int row = (currentPos + i - 2 + 4) % 4;
-			for(int j = 0; j < 3; ++ j) {
-				SlotOptions option = SlotMachineTileEntity.OPTION_LIST.get(this.menu.te.array.get(3 * row + j));
-				int x = this.leftPos + 62 + 18 * j;
-				int y = this.topPos + 58 - 18 * i;
-				if(option.plantType.isPresent()) {
-					Plants plant = option.plantType.get();
-					ItemStack itemstack = new ItemStack(PlantUtil.getPlantEnjoyCard(plant));
-					RenderSystem.pushMatrix();
-					this.itemRenderer.blitOffset -= 100;
-					this.itemRenderer.renderAndDecorateItem(itemstack, x, y);
-					this.itemRenderer.blitOffset += 100;
-					RenderSystem.popMatrix();
-				} else if(option.isJewel) {
-					RenderSystem.pushMatrix();
-					this.minecraft.getTextureManager().bind(TEXTURE);
-					blit(stack, x, y, 176, 0, 16, 16);
-					RenderSystem.popMatrix();
-				} else if(option.isSun) {
-					RenderSystem.pushMatrix();
-					RenderSystem.enableBlend();
-					this.minecraft.getTextureManager().bind(TEXTURE);
-					blit(stack, x, y, 176, 16, 16, 16);
-					RenderSystem.popMatrix();
-				}
-			}
-		}
+//		for(int i = 0; i < 4; ++ i) {
+//			int row = (currentPos + i - 2 + 4) % 4;
+//			for(int j = 0; j < 3; ++ j) {
+//				SlotOptions option = SlotMachineTileEntity.OPTION_LIST.get(this.menu.te.array.get(3 * row + j));
+//				int x = this.leftPos + 62 + 18 * j;
+//				int y = this.topPos + 58 - 18 * i;
+//				if(option.plantType.isPresent()) {
+//					Plants plant = option.plantType.get();
+//					ItemStack itemstack = new ItemStack(PlantUtil.getPlantEnjoyCard(plant));
+//					RenderSystem.pushMatrix();
+//					this.itemRenderer.blitOffset -= 100;
+//					this.itemRenderer.renderAndDecorateItem(itemstack, x, y);
+//					this.itemRenderer.blitOffset += 100;
+//					RenderSystem.popMatrix();
+//				} else if(option.isJewel) {
+//					RenderSystem.pushMatrix();
+//					this.minecraft.getTextureManager().bind(TEXTURE);
+//					blit(stack, x, y, 176, 0, 16, 16);
+//					RenderSystem.popMatrix();
+//				} else if(option.isSun) {
+//					RenderSystem.pushMatrix();
+//					RenderSystem.enableBlend();
+//					this.minecraft.getTextureManager().bind(TEXTURE);
+//					blit(stack, x, y, 176, 16, 16, 16);
+//					RenderSystem.popMatrix();
+//				}
+//			}
+//		}
 		RenderSystem.popMatrix();
 		RenderSystem.pushMatrix();
 		RenderSystem.translated(0, 0, 120);

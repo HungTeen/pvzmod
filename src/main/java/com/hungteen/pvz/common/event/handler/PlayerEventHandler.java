@@ -3,19 +3,18 @@ package com.hungteen.pvz.common.event.handler;
 import com.hungteen.pvz.client.gui.search.SearchOption;
 import com.hungteen.pvz.common.capability.CapabilityHandler;
 import com.hungteen.pvz.common.capability.player.PlayerDataManager;
+import com.hungteen.pvz.common.core.PlantType;
 import com.hungteen.pvz.common.enchantment.EnchantmentUtil;
 import com.hungteen.pvz.common.entity.drop.SunEntity;
 import com.hungteen.pvz.common.entity.plant.PVZPlantEntity;
 import com.hungteen.pvz.common.entity.zombie.PVZZombieEntity;
 import com.hungteen.pvz.common.world.invasion.WaveManager;
 import com.hungteen.pvz.register.SoundRegister;
+import com.hungteen.pvz.remove.Zombies;
 import com.hungteen.pvz.utils.EntityUtil;
-import com.hungteen.pvz.utils.PlantUtil;
 import com.hungteen.pvz.utils.PlayerUtil;
 import com.hungteen.pvz.utils.ZombieUtil;
-import com.hungteen.pvz.utils.enums.Plants;
 import com.hungteen.pvz.utils.enums.Resources;
-import com.hungteen.pvz.utils.enums.Zombies;
 
 import net.minecraft.advancements.CriteriaTriggers;
 import net.minecraft.entity.LivingEntity;
@@ -71,7 +70,7 @@ public class PlayerEventHandler {
 			}
 			//plants
 		    PlayerDataManager.PlantStats plantStats = plData.getPlantStats();
-			for (Plants plant : Plants.values()) {
+			for (PlantType plant : PlantType.getPlants()) {
 			   plantStats.sendPlantPacket(player, plant);
 		    }
 			//almanacs
@@ -83,8 +82,10 @@ public class PlayerEventHandler {
 			});
 			//item cd
 			PlayerDataManager.ItemCDStats itemCDStats = plData.getItemCDStats();
-			for(Plants p : Plants.values()) {
-				player.getCooldowns().addCooldown(PlantUtil.getPlantSummonCard(p), itemCDStats.getPlantCardCD(p));
+			for (PlantType plant : PlantType.getPlants()) {
+				if(plant.getSummonCard().isPresent()) {
+				    player.getCooldowns().addCooldown(plant.getSummonCard().get(), itemCDStats.getPlantCardCD(plant));
+				}
 			}
 		});
 		WaveManager.syncWaveTime(player);

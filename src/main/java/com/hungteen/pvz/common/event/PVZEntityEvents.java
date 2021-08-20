@@ -23,7 +23,6 @@ public class PVZEntityEvents {
 		if(!world.isClientSide && world.dimension() == World.OVERWORLD) {
 			Entity entity = ev.getEntity();
 			if(!(entity instanceof PVZZombieEntity)&&entity instanceof MonsterEntity) {
-//				System.out.println(entity);
 				ev.setCanceled(true);
 			}
 		}

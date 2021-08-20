@@ -3,15 +3,16 @@ package com.hungteen.pvz.common.entity.plant.arma;
 import java.util.List;
 import java.util.Optional;
 
+import com.hungteen.pvz.common.core.PlantType;
 import com.hungteen.pvz.common.entity.bullet.ButterEntity;
 import com.hungteen.pvz.common.entity.bullet.KernelEntity;
 import com.hungteen.pvz.common.entity.bullet.PultBulletEntity;
 import com.hungteen.pvz.common.entity.plant.base.PlantPultEntity;
+import com.hungteen.pvz.common.impl.plant.PVZPlants;
 import com.hungteen.pvz.common.item.card.ImitaterCardItem;
 import com.hungteen.pvz.common.item.card.PlantCardItem;
 import com.hungteen.pvz.register.EffectRegister;
 import com.hungteen.pvz.utils.EntityUtil;
-import com.hungteen.pvz.utils.enums.Plants;
 
 import net.minecraft.entity.CreatureEntity;
 import net.minecraft.entity.EntitySize;
@@ -51,7 +52,7 @@ public class KernelPultEntity extends PlantPultEntity {
 			ItemStack stack = player.getItemInHand(hand);
 			if(stack.getItem() instanceof PlantCardItem) {
 				PlantCardItem item = (PlantCardItem) stack.getItem();
-				if(item.plantType == Plants.COB_CANNON) {
+				if(item.plantType == PVZPlants.COB_CANNON) {
 					Optional<KernelPultEntity> pult = this.getNearByPult(player);
 					if(pult.isPresent()) {
 						PlantCardItem.checkSunAndSummonPlant(player, stack, item, blockPosition(), (plantEntity) -> {
@@ -60,7 +61,7 @@ public class KernelPultEntity extends PlantPultEntity {
 							pult.get().remove();
 						});
 					}
-				} else if(item instanceof ImitaterCardItem && ((ImitaterCardItem) item).isPlantTypeEqual(stack, Plants.COB_CANNON)) {
+				} else if(item instanceof ImitaterCardItem && ((ImitaterCardItem) item).isPlantTypeEqual(stack, PVZPlants.COB_CANNON)) {
 					Optional<KernelPultEntity> pult = this.getNearByPult(player);
 					if(pult.isPresent()) {
 					    ImitaterCardItem.checkSunAndSummonImitater(player, stack, item, blockPosition(), (imitater) -> {
@@ -78,7 +79,7 @@ public class KernelPultEntity extends PlantPultEntity {
 	private Optional<KernelPultEntity> getNearByPult(PlayerEntity player){
 		final float range = 1.5F;
 		List<KernelPultEntity> list = level.getEntitiesOfClass(KernelPultEntity.class, EntityUtil.getEntityAABB(this, range, range), pult -> {
-			return ! pult.is(this) && pult.getPlantEnumName() == Plants.KERNEL_PULT && ! EntityUtil.canTargetEntity(pult, player);
+			return ! pult.is(this) && pult.getPlantType() == PVZPlants.KERNEL_PULT && ! EntityUtil.canTargetEntity(pult, player);
 		});
 		if(list.isEmpty()) return Optional.empty();
 		return Optional.ofNullable(list.get(0));
@@ -156,8 +157,8 @@ public class KernelPultEntity extends PlantPultEntity {
 	}
 	
 	@Override
-	public Plants getPlantEnumName() {
-		return Plants.KERNEL_PULT;
+	public PlantType getPlantType() {
+		return PVZPlants.KERNEL_PULT;
 	}
 
 	public static enum CornTypes{

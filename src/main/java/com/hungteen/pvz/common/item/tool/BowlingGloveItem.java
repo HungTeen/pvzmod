@@ -4,11 +4,12 @@ import java.util.List;
 import java.util.Optional;
 
 import com.hungteen.pvz.client.render.itemstack.BowlingGloveISTER;
+import com.hungteen.pvz.common.core.PlantType;
 import com.hungteen.pvz.common.entity.misc.bowling.AbstractBowlingEntity;
 import com.hungteen.pvz.common.entity.plant.PVZPlantEntity;
+import com.hungteen.pvz.common.impl.plant.PVZPlants;
 import com.hungteen.pvz.register.EntityRegister;
 import com.hungteen.pvz.register.GroupRegister;
-import com.hungteen.pvz.utils.enums.Plants;
 
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.EntityType;
@@ -44,10 +45,10 @@ public class BowlingGloveItem extends Item {
 		Hand hand = context.getHand();
 		ItemStack stack = player.getItemInHand(hand);
 		BlockPos pos = context.getClickedPos();
-		Optional<Plants> plantType = getBowlingType(stack);
+		Optional<PlantType> plantType = getBowlingType(stack);
 		if (!plantType.isPresent())
 			return ActionResultType.FAIL;
-		Plants plant = plantType.get();
+		PlantType plant = plantType.get();
 		BlockPos spawnPos = pos;
 		if (!world.getBlockState(pos).getCollisionShape(world, pos).isEmpty()) {
 			spawnPos = pos.relative(context.getClickedFace());
@@ -68,7 +69,7 @@ public class BowlingGloveItem extends Item {
 			    entity.summonByOwner(player);
 			    entity.shoot(player);
 			    if (!player.abilities.instabuild) {// reset
-				    setBowlingType(stack, Plants.PEA_SHOOTER);
+				    setBowlingType(stack, PVZPlants.PEA_SHOOTER);
 			    }
 			}
 			return ActionResultType.SUCCESS;
@@ -77,39 +78,39 @@ public class BowlingGloveItem extends Item {
 	}
 	
 	public static void onPickUpBowlingPlant(PVZPlantEntity plantEntity, ItemStack stack) {
-		BowlingGloveItem.setBowlingType(stack, plantEntity.getPlantEnumName());
+		BowlingGloveItem.setBowlingType(stack, plantEntity.getPlantType());
 		plantEntity.remove();
 	}
 
-	private static EntityType<? extends AbstractBowlingEntity> getEntityTypeByPlant(Plants plant) {
-		if(plant == Plants.WALL_NUT) return EntityRegister.WALL_NUT_BOWLING.get();
-		if(plant == Plants.EXPLODE_O_NUT) return EntityRegister.EXPLOSION_BOWLING.get();
-		if (plant == Plants.GIANT_WALL_NUT) return EntityRegister.GIANT_NUT_BOWLING.get();
+	private static EntityType<? extends AbstractBowlingEntity> getEntityTypeByPlant(PlantType plant) {
+		if(plant == PVZPlants.WALL_NUT) return EntityRegister.WALL_NUT_BOWLING.get();
+		if(plant == PVZPlants.EXPLODE_O_NUT) return EntityRegister.EXPLOSION_BOWLING.get();
+		if (plant == PVZPlants.GIANT_WALL_NUT) return EntityRegister.GIANT_NUT_BOWLING.get();
 		return null;
 	}
 
-	public static Optional<Plants> getBowlingType(ItemStack stack) {
+	public static Optional<PlantType> getBowlingType(ItemStack stack) {
 		int type = stack.getOrCreateTag().getInt(BOWLING_STRING);
 		return getPlantTypeForBowling(type);
 	}
 
-	public static ItemStack setBowlingType(ItemStack stack, Plants plant) {
+	public static ItemStack setBowlingType(ItemStack stack, PlantType plant) {
 		stack.getOrCreateTag().putInt(BOWLING_STRING, getBowlingTypeForPlants(plant));
 		return stack;
 	}
 
-	public static int getBowlingTypeForPlants(Plants plant) {
-		if (plant == Plants.WALL_NUT) return 1;
-		if (plant == Plants.EXPLODE_O_NUT) return 2;
-		if (plant == Plants.GIANT_WALL_NUT) return 3;
+	public static int getBowlingTypeForPlants(PlantType plant) {
+		if (plant == PVZPlants.WALL_NUT) return 1;
+		if (plant == PVZPlants.EXPLODE_O_NUT) return 2;
+		if (plant == PVZPlants.GIANT_WALL_NUT) return 3;
 		return -1;
 	}
 
-	public static Optional<Plants> getPlantTypeForBowling(int type) {
-		Plants res = null;
-		if (type == 1) res = Plants.WALL_NUT;
-		else if (type == 2) res = Plants.EXPLODE_O_NUT;
-		else if (type == 3) res = Plants.GIANT_WALL_NUT;
+	public static Optional<PlantType> getPlantTypeForBowling(int type) {
+		PlantType res = null;
+		if (type == 1) res = PVZPlants.WALL_NUT;
+		else if (type == 2) res = PVZPlants.EXPLODE_O_NUT;
+		else if (type == 3) res = PVZPlants.GIANT_WALL_NUT;
 		return Optional.ofNullable(res);
 	}
 
@@ -117,17 +118,17 @@ public class BowlingGloveItem extends Item {
 	public void fillItemCategory(ItemGroup group, NonNullList<ItemStack> items) {
 		if (this.allowdedIn(group)) {
 			items.add(new ItemStack(this));
-			items.add(setBowlingType(new ItemStack(this), Plants.WALL_NUT));
-			items.add(setBowlingType(new ItemStack(this), Plants.EXPLODE_O_NUT));
-			items.add(setBowlingType(new ItemStack(this), Plants.GIANT_WALL_NUT));
+			items.add(setBowlingType(new ItemStack(this), PVZPlants.WALL_NUT));
+			items.add(setBowlingType(new ItemStack(this), PVZPlants.EXPLODE_O_NUT));
+			items.add(setBowlingType(new ItemStack(this), PVZPlants.GIANT_WALL_NUT));
 		}
 	}
 	
 	@Override
 	public void appendHoverText(ItemStack stack, World worldIn, List<ITextComponent> tooltip, ITooltipFlag flagIn) {
-		Optional<Plants> plant = getBowlingType(stack);
+		Optional<PlantType> plant = getBowlingType(stack);
 		if(plant.isPresent()) {
-			Plants p = plant.get();
+			PlantType p = plant.get();
 			tooltip.add(new TranslationTextComponent("tooltip.pvz.bowling_glove." + p.toString().toLowerCase()).withStyle(TextFormatting.GOLD));
 		} else {
 			tooltip.add(new TranslationTextComponent("tooltip.pvz.bowling_glove.empty").withStyle(TextFormatting.GOLD));

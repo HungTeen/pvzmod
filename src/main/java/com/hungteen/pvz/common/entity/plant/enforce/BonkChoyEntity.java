@@ -2,13 +2,14 @@ package com.hungteen.pvz.common.entity.plant.enforce;
 
 import java.util.EnumSet;
 
+import com.hungteen.pvz.common.core.PlantType;
 import com.hungteen.pvz.common.entity.ai.goal.target.PVZNearestTargetGoal;
 import com.hungteen.pvz.common.entity.plant.PVZPlantEntity;
 import com.hungteen.pvz.common.entity.zombie.poolnight.BalloonZombieEntity;
+import com.hungteen.pvz.common.impl.plant.OtherPlants;
 import com.hungteen.pvz.common.misc.damage.PVZDamageSource;
 import com.hungteen.pvz.register.SoundRegister;
 import com.hungteen.pvz.utils.EntityUtil;
-import com.hungteen.pvz.utils.enums.Plants;
 
 import net.minecraft.entity.CreatureEntity;
 import net.minecraft.entity.Entity;
@@ -73,8 +74,8 @@ public class BonkChoyEntity extends PVZPlantEntity {
 	}
 	
 	@Override
-	public Plants getPlantEnumName() {
-		return Plants.BONK_CHOY;
+	public PlantType getPlantType() {
+		return OtherPlants.BONK_CHOY;
 	}
 	
 	private final class BonkChoyAttackGoal extends Goal {

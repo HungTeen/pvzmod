@@ -7,7 +7,6 @@ import java.util.Set;
 import com.hungteen.pvz.PVZMod;
 import com.hungteen.pvz.register.BlockRegister;
 import com.hungteen.pvz.register.ItemRegister;
-import com.hungteen.pvz.utils.enums.Essences;
 
 import net.minecraft.advancements.criterion.EnchantmentPredicate;
 import net.minecraft.advancements.criterion.ItemPredicate;
@@ -57,11 +56,7 @@ public class PVZBlockLootTables extends BlockLootTables {
 				BlockRegister.MAGIC_ORE.get(), BlockRegister.FLAME_ORE.get(), BlockRegister.SPEAR_ORE.get(),
 				BlockRegister.ARMA_ORE.get(), BlockRegister.ELECTRIC_ORE.get(), BlockRegister.SHADOW_ORE.get())
 				.forEach((object) -> {
-					Essences.getEssenceItem(object.essence).ifPresent((item) -> {
-						this.add(object, (block) -> {
-							return createOreDrop(block, item);
-						});
-					});
+					this.add(object, (block) -> createOreDrop(block, object.essence.getEssenceItem()));
 				});
 		// crop
 		this.tmpBuilder = getAgeBuilder(BlockRegister.CABBAGE.get(), 3);

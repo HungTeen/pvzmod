@@ -83,7 +83,7 @@ public abstract class PlantDefenderEntity extends PVZPlantEntity implements ICan
 		ItemStack stack = player.getItemInHand(hand);
 		if(stack.getItem() instanceof PlantCardItem && this.getHealth() != this.getMaxHealth()) {
 			PlantCardItem cardItem = (PlantCardItem) stack.getItem();
-			if(cardItem.plantType == this.getPlantEnumName()) { // nut heal 
+			if(cardItem.plantType == this.getPlantType()) { // nut heal 
 				if(! level.isClientSide) {
 					PlantCardItem.checkSunAndHealPlant(player, this, cardItem, stack);
 				} else {
@@ -92,7 +92,7 @@ public abstract class PlantDefenderEntity extends PVZPlantEntity implements ICan
 					}
 				}
 				return ActionResultType.CONSUME;
-			} else if(cardItem instanceof ImitaterCardItem && ((ImitaterCardItem) cardItem).isPlantTypeEqual(stack, this.getPlantEnumName())) {
+			} else if(cardItem instanceof ImitaterCardItem && ((ImitaterCardItem) cardItem).isPlantTypeEqual(stack, this.getPlantType())) {
 				if(! level.isClientSide) {
 					PlantCardItem.checkSunAndHealPlant(player, this, cardItem, stack);
 				} else {

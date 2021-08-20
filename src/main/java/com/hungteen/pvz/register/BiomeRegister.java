@@ -27,9 +27,7 @@ public class BiomeRegister {
 	public static final RegistryObject<Biome> ZEN_GARDEN = BIOMES.register("zen_garden", () -> {return ZenGardenBiome.getZenGardenBiome();});
 	
     public static void registerBiomes(final FMLCommonSetupEvent ev) {
-    	ev.enqueueWork(() -> {
-    		registerBiome(ZEN_GARDEN.get(), BiomeType.WARM, 100, BiomeDictionary.Type.PLAINS, BiomeDictionary.Type.OVERWORLD);
-    	});
+    	registerBiome(ZEN_GARDEN.get(), BiomeType.WARM, 100, BiomeDictionary.Type.PLAINS, BiomeDictionary.Type.OVERWORLD);
     }
     
     private static void registerBiome(final Biome biome, final BiomeManager.BiomeType biomeType, final int weight, final BiomeDictionary.Type... types) {

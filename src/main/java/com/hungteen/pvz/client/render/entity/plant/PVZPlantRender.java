@@ -49,7 +49,7 @@ public abstract class PVZPlantRender<T extends PVZPlantEntity> extends MobRender
 	}
 	
 	public float getScaleByEntity(T entity) {
-		return PlantRenderHandler.getPlantScale(entity.getPlantEnumName());
+		return entity.getPlantType().getRenderScale();
 	}
 	
 	public Vector3d getTranslateVec(T entity) {
@@ -58,7 +58,7 @@ public abstract class PVZPlantRender<T extends PVZPlantEntity> extends MobRender
 	
 	@Override
 	public ResourceLocation getTextureLocation(T entity) {
-		return PlantRenderHandler.getPlantTex(entity.getPlantEnumName()).orElse(PlantRenderHandler.PEA_SHOOTER_TEX);
+		return entity.getPlantType().getRenderResource();
 	}
 	
 }

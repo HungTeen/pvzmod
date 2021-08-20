@@ -1,9 +1,10 @@
 package com.hungteen.pvz.common.entity.plant.light;
 
 import com.hungteen.pvz.common.block.special.GoldTileBlock;
+import com.hungteen.pvz.common.core.PlantType;
 import com.hungteen.pvz.common.entity.plant.base.PlantBomberEntity;
+import com.hungteen.pvz.common.impl.plant.OtherPlants;
 import com.hungteen.pvz.register.BlockRegister;
-import com.hungteen.pvz.utils.enums.Plants;
 
 import net.minecraft.block.Block;
 import net.minecraft.block.Blocks;
@@ -65,8 +66,8 @@ public class GoldLeafEntity extends PlantBomberEntity {
 	}
 
 	@Override
-	public Plants getPlantEnumName() {
-		return Plants.GOLD_LEAF;
+	public PlantType getPlantType() {
+		return OtherPlants.GOLD_LEAF;
 	}
 
 }

@@ -1,7 +1,7 @@
 package com.hungteen.pvz.client.render.layer;
 
 import com.hungteen.pvz.common.entity.plant.assist.MagnetShroomEntity;
-import com.hungteen.pvz.utils.enums.MetalTypes;
+import com.hungteen.pvz.remove.MetalTypes;
 import com.mojang.blaze3d.matrix.MatrixStack;
 
 import net.minecraft.client.Minecraft;

@@ -1,17 +1,16 @@
 package com.hungteen.pvz.common.entity.zombie.roof;
 
-import com.hungteen.pvz.api.interfaces.IPVZPlant;
 import com.hungteen.pvz.common.entity.plant.PVZPlantEntity;
 import com.hungteen.pvz.common.entity.plant.base.PlantDefenderEntity;
 import com.hungteen.pvz.common.entity.zombie.base.DefenceZombieEntity;
 import com.hungteen.pvz.common.entity.zombie.body.ZombieDropBodyEntity;
 import com.hungteen.pvz.common.entity.zombie.part.PVZHealthPartEntity;
+import com.hungteen.pvz.common.impl.plant.PVZPlants;
 import com.hungteen.pvz.data.loot.PVZLoot;
 import com.hungteen.pvz.register.SoundRegister;
+import com.hungteen.pvz.remove.MetalTypes;
+import com.hungteen.pvz.remove.Zombies;
 import com.hungteen.pvz.utils.ZombieUtil;
-import com.hungteen.pvz.utils.enums.MetalTypes;
-import com.hungteen.pvz.utils.enums.Plants;
-import com.hungteen.pvz.utils.enums.Zombies;
 import com.hungteen.pvz.utils.interfaces.IHasMetal;
 
 import net.minecraft.entity.Entity;
@@ -53,32 +52,32 @@ public class LadderZombieEntity extends DefenceZombieEntity implements IHasMetal
 	 * {@link #doHurtTarget(Entity)}
 	 */
 	public void putLadderOn(Entity entity) {
-		if(entity instanceof IPVZPlant) {
-			((IPVZPlant) entity).increaseMetal();
+		if(entity instanceof PVZPlantEntity) {
+			((PVZPlantEntity) entity).increaseMetal();
 		}
 		this.decreaseMetal();
 	}
 	
 	public static boolean canTargetPutLadder(Entity target) {
 		//can not put ladder or already has ladder on.
-		if(! (target instanceof IPVZPlant) || hasLadderOnEntity(target)) {
+		if(! (target instanceof PVZPlantEntity) || hasLadderOnEntity(target)) {
 			return false;
 		}
 		if(target instanceof PlantDefenderEntity) {
 			return true;
 		}
 		PVZPlantEntity plant = (PVZPlantEntity) target;
-		return plant.getOuterPlantType().isPresent() && plant.getOuterPlantType().get() == Plants.PUMPKIN;
+		return plant.getOuterPlantType().isPresent() && plant.getOuterPlantType().get() == PVZPlants.PUMPKIN;
 	}
 	
 	/**
 	 * {@link #canTargetPutLadder(Entity)}
 	 */
 	private static boolean hasLadderOnEntity(Entity target) {
-		if(! (target instanceof IPVZPlant)) {
+		if(! (target instanceof PVZPlantEntity)) {
 			return false;
 		}
-		return ((IPVZPlant) target).hasMetal();
+		return ((PVZPlantEntity) target).hasMetal();
 	}
 	
 	@Override

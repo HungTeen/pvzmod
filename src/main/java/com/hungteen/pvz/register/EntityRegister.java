@@ -147,6 +147,7 @@ import com.hungteen.pvz.client.render.entity.zombie.zombotany.PumpkinZombieRende
 import com.hungteen.pvz.client.render.entity.zombie.zombotany.SquashZombieRender;
 import com.hungteen.pvz.client.render.entity.zombie.zombotany.TallNutZombieRender;
 import com.hungteen.pvz.client.render.entity.zombie.zombotany.WallNutZombieRender;
+import com.hungteen.pvz.common.core.PlantType;
 import com.hungteen.pvz.common.entity.bullet.BallEntity;
 import com.hungteen.pvz.common.entity.bullet.ButterEntity;
 import com.hungteen.pvz.common.entity.bullet.CornEntity;
@@ -292,11 +293,9 @@ import com.hungteen.pvz.common.entity.zombie.zombotany.PumpkinZombieEntity;
 import com.hungteen.pvz.common.entity.zombie.zombotany.SquashZombieEntity;
 import com.hungteen.pvz.common.entity.zombie.zombotany.TallNutZombieEntity;
 import com.hungteen.pvz.common.entity.zombie.zombotany.WallNutZombieEntity;
-import com.hungteen.pvz.utils.PlantUtil;
+import com.hungteen.pvz.remove.Zombies;
 import com.hungteen.pvz.utils.StringUtil;
 import com.hungteen.pvz.utils.ZombieUtil;
-import com.hungteen.pvz.utils.enums.Plants;
-import com.hungteen.pvz.utils.enums.Zombies;
 
 import net.minecraft.entity.CreatureEntity;
 import net.minecraft.entity.Entity;
@@ -648,8 +647,9 @@ public class EntityRegister {
 	
 	@SubscribeEvent
 	public static void addEntityAttributes(EntityAttributeCreationEvent ev) {
-		for(Plants p : Plants.values()) {
-			Optional.ofNullable(PlantUtil.getPlantEntityType(p)).ifPresent(obj -> {
+		//init all plants' attributes.
+		for(PlantType p : PlantType.getPlants()) {
+			p.getEntityType().ifPresent(obj -> {
 		        ev.put(obj, PVZPlantEntity.createPlantAttributes());
 			});
 		}

@@ -5,17 +5,18 @@ import java.util.Collections;
 import java.util.List;
 
 import com.hungteen.pvz.PVZMod;
+import com.hungteen.pvz.common.core.PlantType;
 import com.hungteen.pvz.common.entity.ai.goal.target.PVZNearestTargetGoal;
 import com.hungteen.pvz.common.entity.ai.goal.target.PVZTargetGoal;
 import com.hungteen.pvz.common.entity.bullet.itembullet.MetalItemEntity;
 import com.hungteen.pvz.common.entity.bullet.itembullet.MetalItemEntity.MetalStates;
 import com.hungteen.pvz.common.entity.plant.PVZPlantEntity;
+import com.hungteen.pvz.common.impl.plant.PVZPlants;
 import com.hungteen.pvz.register.SoundRegister;
+import com.hungteen.pvz.remove.MetalTypes;
 import com.hungteen.pvz.utils.AlgorithmUtil;
 import com.hungteen.pvz.utils.EntityUtil;
 import com.hungteen.pvz.utils.PlantUtil;
-import com.hungteen.pvz.utils.enums.MetalTypes;
-import com.hungteen.pvz.utils.enums.Plants;
 import com.hungteen.pvz.utils.interfaces.IHasMetal;
 
 import net.minecraft.entity.CreatureEntity;
@@ -160,11 +161,6 @@ public class MagnetShroomEntity extends PVZPlantEntity {
 	}
 	
 	@Override
-	public Plants getUpgradePlantType() {
-		return Plants.GOLD_MAGNET;
-	}
-	
-	@Override
 	public EntitySize getDimensions(Pose poseIn) {
 		return EntitySize.scalable(0.5f, 1.3f);
 	}
@@ -175,8 +171,8 @@ public class MagnetShroomEntity extends PVZPlantEntity {
 	}
 	
 	@Override
-	public Plants getPlantEnumName() {
-		return Plants.MAGNET_SHROOM;
+	public PlantType getPlantType() {
+		return PVZPlants.MAGNET_SHROOM;
 	}
 	
 	private static class TargetLadderGoal extends PVZTargetGoal {

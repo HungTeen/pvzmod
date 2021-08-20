@@ -1,12 +1,13 @@
 package com.hungteen.pvz.common.entity.plant.magic;
 
+import com.hungteen.pvz.common.core.PlantType;
 import com.hungteen.pvz.common.entity.drop.CoinEntity;
 import com.hungteen.pvz.common.entity.drop.CoinEntity.CoinType;
 import com.hungteen.pvz.common.entity.plant.base.PlantProducerEntity;
+import com.hungteen.pvz.common.impl.plant.PVZPlants;
 import com.hungteen.pvz.register.EntityRegister;
 import com.hungteen.pvz.utils.EntityUtil;
 import com.hungteen.pvz.utils.PlantUtil;
-import com.hungteen.pvz.utils.enums.Plants;
 
 import net.minecraft.entity.CreatureEntity;
 import net.minecraft.entity.EntitySize;
@@ -89,8 +90,8 @@ public class MariGoldEntity extends PlantProducerEntity {
 	}
 
 	@Override
-	public Plants getPlantEnumName() {
-		return Plants.MARIGOLD;
+	public PlantType getPlantType() {
+		return PVZPlants.MARIGOLD;
 	}
 
 }

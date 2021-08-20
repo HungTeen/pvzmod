@@ -1,16 +1,17 @@
 package com.hungteen.pvz.common.entity.plant.flame;
 
+import com.hungteen.pvz.common.core.PlantType;
 import com.hungteen.pvz.common.entity.misc.ElementBallEntity;
 import com.hungteen.pvz.common.entity.misc.ElementBallEntity.ElementTypes;
 import com.hungteen.pvz.common.entity.plant.PVZPlantEntity;
 import com.hungteen.pvz.common.entity.plant.base.PlantBomberEntity;
 import com.hungteen.pvz.common.entity.zombie.zombotany.JalapenoZombieEntity;
+import com.hungteen.pvz.common.impl.plant.PVZPlants;
 import com.hungteen.pvz.common.misc.damage.PVZDamageSource;
 import com.hungteen.pvz.register.SoundRegister;
 import com.hungteen.pvz.utils.EntityUtil;
 import com.hungteen.pvz.utils.PlantUtil;
 import com.hungteen.pvz.utils.WorldUtil;
-import com.hungteen.pvz.utils.enums.Plants;
 
 import net.minecraft.block.Blocks;
 import net.minecraft.entity.CreatureEntity;
@@ -129,8 +130,8 @@ public class JalapenoEntity extends PlantBomberEntity{
 	}
 
 	@Override
-	public Plants getPlantEnumName() {
-		return Plants.JALAPENO;
+	public PlantType getPlantType() {
+		return PVZPlants.JALAPENO;
 	}
 
 }

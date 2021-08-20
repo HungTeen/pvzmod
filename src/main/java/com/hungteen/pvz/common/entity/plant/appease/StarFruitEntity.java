@@ -1,12 +1,13 @@
 package com.hungteen.pvz.common.entity.plant.appease;
 
+import com.hungteen.pvz.common.core.PlantType;
 import com.hungteen.pvz.common.entity.bullet.AbstractBulletEntity;
 import com.hungteen.pvz.common.entity.bullet.StarEntity;
 import com.hungteen.pvz.common.entity.plant.base.PlantShooterEntity;
+import com.hungteen.pvz.common.impl.plant.PVZPlants;
 import com.hungteen.pvz.register.SoundRegister;
 import com.hungteen.pvz.utils.EntityUtil;
 import com.hungteen.pvz.utils.PlantUtil;
-import com.hungteen.pvz.utils.enums.Plants;
 
 import net.minecraft.command.arguments.EntityAnchorArgument.Type;
 import net.minecraft.entity.CreatureEntity;
@@ -94,8 +95,8 @@ public class StarFruitEntity extends PlantShooterEntity {
 	}
 	
 	@Override
-	public Plants getPlantEnumName() {
-		return Plants.STAR_FRUIT;
+	public PlantType getPlantType() {
+		return PVZPlants.STAR_FRUIT;
 	}
 	
 }

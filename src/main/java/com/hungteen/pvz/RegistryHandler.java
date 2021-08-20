@@ -19,7 +19,6 @@ import com.hungteen.pvz.register.SoundRegister;
 import com.hungteen.pvz.register.StructureRegister;
 import com.hungteen.pvz.register.TileEntityRegister;
 import com.hungteen.pvz.utils.BiomeUtil;
-import com.hungteen.pvz.utils.PlantUtil;
 import com.hungteen.pvz.utils.TradeUtil;
 import com.hungteen.pvz.utils.ZombieUtil;
 
@@ -54,30 +53,20 @@ public class RegistryHandler {
 		PotionRegister.POTIONS.register(bus);
 	}
 	
-	@SubscribeEvent
-    public static void commonSetup(FMLCommonSetupEvent ev){
+	/**
+	 * {@link PVZMod#setUp(FMLCommonSetupEvent)}
+	 */
+    public static void setUp(FMLCommonSetupEvent ev){
 		ZombieUtil.initZombieMap();
-		PlantUtil.initPlantMap();
     	CapabilityHandler.registerCapabilities();
     	PVZPacketHandler.init();
     	BiomeRegister.registerBiomes(ev);
-    	ev.enqueueWork(() -> {
-    		FeatureRegister.setupConfiguredFeatures();
-    	});
+    	FeatureRegister.setupConfiguredFeatures();
     	PotionRecipeHandler.registerPotionRecipes();
     	TradeUtil.initTrades();
     	CommonRegister.registerCompostable();
     	BiomeUtil.initBiomeSet();
     }
-	
-//	@SubscribeEvent
-//	public static void clientSetup(FMLClientSetupEvent evt) {
-//		ConeArmorItem.initArmorModel();
-//		BucketArmorItem.initArmorModel();
-//		FootballArmorItem.initArmorModel();
-//		GigaArmorItem.initArmorModel();
-//		KeyBindRegister.init();
-//	}
 	
 	/**
 	 * Exists to work around a limitation with Spawn Eggs:

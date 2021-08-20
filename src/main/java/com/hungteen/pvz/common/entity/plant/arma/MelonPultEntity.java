@@ -1,11 +1,12 @@
 package com.hungteen.pvz.common.entity.plant.arma;
 
+import com.hungteen.pvz.common.core.PlantType;
 import com.hungteen.pvz.common.entity.bullet.MelonEntity;
 import com.hungteen.pvz.common.entity.bullet.MelonEntity.MelonStates;
 import com.hungteen.pvz.common.entity.bullet.PultBulletEntity;
 import com.hungteen.pvz.common.entity.plant.base.PlantPultEntity;
+import com.hungteen.pvz.common.impl.plant.PVZPlants;
 import com.hungteen.pvz.utils.PlantUtil;
-import com.hungteen.pvz.utils.enums.Plants;
 
 import net.minecraft.entity.CreatureEntity;
 import net.minecraft.entity.EntitySize;
@@ -45,13 +46,8 @@ public class MelonPultEntity extends PlantPultEntity {
 	}
 	
 	@Override
-	public Plants getUpgradePlantType() {
-		return Plants.WINTER_MELON;
-	}
-
-	@Override
-	public Plants getPlantEnumName() {
-		return Plants.MELON_PULT;
+	public PlantType getPlantType() {
+		return PVZPlants.MELON_PULT;
 	}
 
 }

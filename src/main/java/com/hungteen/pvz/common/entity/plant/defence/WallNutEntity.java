@@ -1,10 +1,11 @@
 package com.hungteen.pvz.common.entity.plant.defence;
 
+import com.hungteen.pvz.common.core.PlantType;
 import com.hungteen.pvz.common.entity.plant.base.PlantDefenderEntity;
+import com.hungteen.pvz.common.impl.plant.PVZPlants;
 import com.hungteen.pvz.common.item.tool.BowlingGloveItem;
 import com.hungteen.pvz.utils.MathUtil;
 import com.hungteen.pvz.utils.PlantUtil;
-import com.hungteen.pvz.utils.enums.Plants;
 
 import net.minecraft.entity.CreatureEntity;
 import net.minecraft.entity.EntitySize;
@@ -51,13 +52,8 @@ public class WallNutEntity extends PlantDefenderEntity{
 	}
 	
 	@Override
-	public Plants getUpgradePlantType() {
-		return Plants.GIANT_WALL_NUT;
-	}
-	
-	@Override
-	public Plants getPlantEnumName() {
-		return Plants.WALL_NUT;
+	public PlantType getPlantType() {
+		return PVZPlants.WALL_NUT;
 	}
 
 }

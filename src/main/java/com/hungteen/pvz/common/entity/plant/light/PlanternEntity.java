@@ -1,11 +1,12 @@
 package com.hungteen.pvz.common.entity.plant.light;
 
 import com.hungteen.pvz.api.interfaces.ILightEffect;
+import com.hungteen.pvz.common.core.PlantType;
 import com.hungteen.pvz.common.entity.plant.PVZPlantEntity;
+import com.hungteen.pvz.common.impl.plant.PVZPlants;
 import com.hungteen.pvz.register.EffectRegister;
 import com.hungteen.pvz.register.SoundRegister;
 import com.hungteen.pvz.utils.EntityUtil;
-import com.hungteen.pvz.utils.enums.Plants;
 
 import net.minecraft.entity.CreatureEntity;
 import net.minecraft.entity.EntitySize;
@@ -88,8 +89,8 @@ public class PlanternEntity extends PVZPlantEntity implements ILightEffect {
 	}
 	
 	@Override
-	public Plants getPlantEnumName() {
-		return Plants.PLANTERN;
+	public PlantType getPlantType() {
+		return PVZPlants.PLANTERN;
 	}
 	
 }

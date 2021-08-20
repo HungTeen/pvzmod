@@ -1,14 +1,15 @@
 package com.hungteen.pvz.common.entity.plant.assist;
 
+import com.hungteen.pvz.common.core.PlantType;
 import com.hungteen.pvz.common.entity.plant.base.PlantBomberEntity;
 import com.hungteen.pvz.common.entity.zombie.poolnight.BalloonZombieEntity;
+import com.hungteen.pvz.common.impl.plant.PVZPlants;
 import com.hungteen.pvz.common.misc.damage.PVZDamageSource;
 import com.hungteen.pvz.register.SoundRegister;
 import com.hungteen.pvz.utils.EntityUtil;
 import com.hungteen.pvz.utils.MathUtil;
 import com.hungteen.pvz.utils.PlantUtil;
 import com.hungteen.pvz.utils.PlayerUtil;
-import com.hungteen.pvz.utils.enums.Plants;
 import com.hungteen.pvz.utils.enums.Resources;
 
 import net.minecraft.entity.CreatureEntity;
@@ -91,8 +92,8 @@ public class BloverEntity extends PlantBomberEntity {
 	}
 
 	@Override
-	public Plants getPlantEnumName() {
-		return Plants.BLOVER;
+	public PlantType getPlantType() {
+		return PVZPlants.BLOVER;
 	}
 
 }

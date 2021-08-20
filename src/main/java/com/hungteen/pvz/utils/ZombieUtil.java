@@ -6,11 +6,12 @@ import java.util.Optional;
 import com.hungteen.pvz.PVZConfig;
 import com.hungteen.pvz.PVZMod;
 import com.hungteen.pvz.common.cache.InvasionCache;
+import com.hungteen.pvz.common.core.CardRank;
 import com.hungteen.pvz.common.entity.zombie.PVZZombieEntity;
 import com.hungteen.pvz.common.entity.zombie.grassnight.DancingZombieEntity;
+import com.hungteen.pvz.common.impl.Ranks;
 import com.hungteen.pvz.register.EntityRegister;
-import com.hungteen.pvz.utils.enums.Ranks;
-import com.hungteen.pvz.utils.enums.Zombies;
+import com.hungteen.pvz.remove.Zombies;
 
 import net.minecraft.entity.EntityType;
 import net.minecraft.util.math.BlockPos;
@@ -59,7 +60,7 @@ public class ZombieUtil {
 	public static final float LITTLE_HIGH_TARGET_HEIGHT = 40;
 	public static final float HIGH_TARGET_HEIGHT = 50;
 	
-	public static final HashMap<Zombies, Ranks> ZOMBIE_RANK = new HashMap<>();
+	public static final HashMap<Zombies, CardRank> ZOMBIE_RANK = new HashMap<>();
 	public static final HashMap<EntityType<? extends PVZZombieEntity>, Zombies> ENTITY_TYPE_ZOMBIE = new HashMap<>();
 	public static final HashMap<Zombies, RegistryObject<? extends EntityType<? extends PVZZombieEntity>>> ZOMBIE_ENTITY = new HashMap<>();
 	 public static final int MAX_ZOMBIE_LEVEL = 20;
@@ -84,7 +85,7 @@ public class ZombieUtil {
 		putZombieInfoToMap(Zombies.SUNDAY_EDITION_ZOMBIE, Ranks.GOLD, EntityRegister.SUNDAY_EDITION_ZOMBIE);
 		putZombieInfoToMap(Zombies.COFFIN, Ranks.GOLD, EntityRegister.COFFIN);
 		putZombieInfoToMap(Zombies.MOURNER_ZOMBIE, Ranks.GREEN, EntityRegister.MOURNER_ZOMBIE);
-		putZombieInfoToMap(Zombies.NOBLE_ZOMBIE, Ranks.MEGA, EntityRegister.NOBLE_ZOMBIE);
+		putZombieInfoToMap(Zombies.NOBLE_ZOMBIE, Ranks.BLACK, EntityRegister.NOBLE_ZOMBIE);
 		//pool day
 		putZombieInfoToMap(Zombies.SNORKEL_ZOMBIE, Ranks.WHITE, EntityRegister.SNORKEL_ZOMBIE);
 		putZombieInfoToMap(Zombies.ZOMBONI, Ranks.BLUE, EntityRegister.ZOMBONI);
@@ -107,7 +108,7 @@ public class ZombieUtil {
 		putZombieInfoToMap(Zombies.GARGANTUAR, Ranks.PURPLE, EntityRegister.GARGANTUAR);
 		putZombieInfoToMap(Zombies.IMP, Ranks.GRAY, EntityRegister.IMP);
 		putZombieInfoToMap(Zombies.SAD_GARGANTUAR, Ranks.GOLD, EntityRegister.SAD_GARGANTUAR);
-		putZombieInfoToMap(Zombies.ZOMBOSS, Ranks.MEGA, EntityRegister.ZOMBOSS);
+		putZombieInfoToMap(Zombies.ZOMBOSS, Ranks.BLACK, EntityRegister.ZOMBOSS);
 		//plant zombie
 		putZombieInfoToMap(Zombies.PEASHOOTER_ZOMBIE, Ranks.WHITE, EntityRegister.PEASHOOTER_ZOMBIE);
 		putZombieInfoToMap(Zombies.WALLNUT_ZOMBIE, Ranks.BLUE, EntityRegister.WALLNUT_ZOMBIE);
@@ -132,7 +133,7 @@ public class ZombieUtil {
 		}
 	}
 	
-	public static void putZombieInfoToMap(Zombies zombie, Ranks rank, RegistryObject<? extends EntityType<? extends PVZZombieEntity>> type) {
+	public static void putZombieInfoToMap(Zombies zombie, CardRank rank, RegistryObject<? extends EntityType<? extends PVZZombieEntity>> type) {
 		ZOMBIE_RANK.put(zombie, rank);
 		ZOMBIE_ENTITY.put(zombie, type);
 		++ ZOMBIE_NUM;
@@ -154,7 +155,7 @@ public class ZombieUtil {
 		return null;
 	}
 
-	public static Ranks getZombieRank(Zombies zombie){
+	public static CardRank getZombieRank(Zombies zombie){
 		if(ZOMBIE_RANK.containsKey(zombie)) {
 			return ZOMBIE_RANK.get(zombie);
 		}
@@ -163,17 +164,18 @@ public class ZombieUtil {
 	}
 	
 	public static int getZombieXp(Zombies zombie){
-		Ranks rank = getZombieRank(zombie);
-		switch(rank) {
-		case GRAY:return 1;
-		case WHITE:return 2;
-		case GREEN:return 3;
-		case BLUE:return 5;
-		case PURPLE:return 8;
-		case GOLD:return 15;
-		case MEGA:return 50;
-		default:return 0;
-		}
+//		Ranks rank = getZombieRank(zombie);
+//		switch(rank) {
+//		case GRAY:return 1;
+//		case WHITE:return 2;
+//		case GREEN:return 3;
+//		case BLUE:return 5;
+//		case PURPLE:return 8;
+//		case GOLD:return 15;
+//		case MEGA:return 50;
+//		default:return 0;
+//		}
+		return 0;
 	}
 	
 	/**
@@ -206,9 +208,10 @@ public class ZombieUtil {
 	}
 	
 	public static int caculateZombieXp(PVZZombieEntity zombie) {
-		int lvlBonus = zombie.getZombieLevel() / 2;
-		int rankBonus = zombie.getZombieRank().ordinal() / 2;
-		return rankBonus + lvlBonus + 3;
+//		int lvlBonus = zombie.getZombieLevel() / 2;
+//		int rankBonus = zombie.getZombieRank().ordinal() / 2;
+//		return rankBonus + lvlBonus + 3;
+		return 1;
 	}
 	
 }

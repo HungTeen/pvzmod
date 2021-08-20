@@ -11,9 +11,11 @@ public class PVZBlockTags {
 
 	//forge
 	public static final INamedTag<Block> AMETHYST_ORES = forgeTag("ores/amethyst");
+	public static final INamedTag<Block> PLANT_SUIT_BLOCKS = forgeTag("plant_suit_block");
 	
 	//pvz
 	public static final INamedTag<Block> ESSENCE_ORES = pvzTag("ores/essence");
+	public static final INamedTag<Block> GOLD_TILES = pvzTag("gold_tile");
 		
 	private static INamedTag<Block> pvzTag(String name){
         return BlockTags.createOptional(StringUtil.prefix(name));

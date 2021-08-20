@@ -1,11 +1,12 @@
 package com.hungteen.pvz.common.entity.plant.light;
 
+import com.hungteen.pvz.common.core.PlantType;
 import com.hungteen.pvz.common.entity.drop.SunEntity;
 import com.hungteen.pvz.common.entity.plant.base.PlantProducerEntity;
+import com.hungteen.pvz.common.impl.plant.PVZPlants;
 import com.hungteen.pvz.utils.EntityUtil;
 import com.hungteen.pvz.utils.MathUtil;
 import com.hungteen.pvz.utils.PlantUtil;
-import com.hungteen.pvz.utils.enums.Plants;
 
 import net.minecraft.entity.CreatureEntity;
 import net.minecraft.entity.EntitySize;
@@ -57,13 +58,8 @@ public class SunFlowerEntity extends PlantProducerEntity{
 	}
 	
 	@Override
-	public Plants getPlantEnumName() {
-		return Plants.SUN_FLOWER;
-	}
-	
-	@Override
-	public Plants getUpgradePlantType() {
-		return Plants.TWIN_SUNFLOWER;
+	public PlantType getPlantType() {
+		return PVZPlants.SUN_FLOWER;
 	}
 
 }

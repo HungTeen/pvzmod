@@ -13,7 +13,6 @@ import com.hungteen.pvz.common.tileentity.CardFusionTileEntity;
 import com.hungteen.pvz.utils.RenderUtil;
 import com.hungteen.pvz.utils.StringUtil;
 import com.hungteen.pvz.utils.enums.Colors;
-import com.hungteen.pvz.utils.enums.Plants;
 import com.mojang.blaze3d.matrix.MatrixStack;
 
 import net.minecraft.client.gui.widget.button.Button;
@@ -61,8 +60,8 @@ public class CardFusionScreen extends AbstractOptionScreen<CardFusionContainer> 
 	
 	private void setGhostRecipe(SearchOption option) {
 		if(option.isPlant()) {
-			Plants plantType = option.getPlant().get();
-			this.searchGui.getRecipeManager().setRecipe(this.menu.getRecipeForPlant(plantType));
+//			Plants plantType = option.getPlant().get();
+//			this.searchGui.getRecipeManager().setRecipe(this.menu.getRecipeForPlant(plantType));
 		}
 	}
 	

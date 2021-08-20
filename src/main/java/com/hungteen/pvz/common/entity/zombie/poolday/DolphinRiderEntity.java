@@ -3,18 +3,19 @@ package com.hungteen.pvz.common.entity.zombie.poolday;
 import java.util.EnumSet;
 import java.util.Optional;
 
-import com.hungteen.pvz.api.interfaces.IPVZPlant;
+import com.hungteen.pvz.common.core.PlantType;
 import com.hungteen.pvz.common.entity.ai.goal.attack.PVZZombieAttackGoal;
 import com.hungteen.pvz.common.entity.ai.goal.target.PVZHurtByTargetGoal;
 import com.hungteen.pvz.common.entity.ai.navigator.ZombieWaterPathNavigator;
+import com.hungteen.pvz.common.entity.plant.PVZPlantEntity;
 import com.hungteen.pvz.common.entity.zombie.PVZZombieEntity;
+import com.hungteen.pvz.common.impl.plant.PVZPlants;
 import com.hungteen.pvz.register.EntityRegister;
 import com.hungteen.pvz.register.SoundRegister;
+import com.hungteen.pvz.remove.Zombies;
 import com.hungteen.pvz.utils.EntityUtil;
 import com.hungteen.pvz.utils.MathUtil;
 import com.hungteen.pvz.utils.ZombieUtil;
-import com.hungteen.pvz.utils.enums.Plants;
-import com.hungteen.pvz.utils.enums.Zombies;
 import com.hungteen.pvz.utils.interfaces.ICanAttract;
 
 import net.minecraft.entity.EntitySize;
@@ -102,9 +103,9 @@ public class DolphinRiderEntity extends PVZZombieEntity{
 	
 	@Override
 	public boolean canBeAttractedBy(ICanAttract defender) {
-		if(defender instanceof IPVZPlant) {
-			final Plants plant = ((IPVZPlant) defender).getPlantEnumName();
-			return plant == Plants.TALL_NUT || plant == Plants.GIANT_WALL_NUT;
+		if(defender instanceof PVZPlantEntity) {
+			final PlantType plant = ((PVZPlantEntity) defender).getPlantType();
+			return plant == PVZPlants.TALL_NUT || plant == PVZPlants.GIANT_WALL_NUT;
 		}
 		return true;
 	}

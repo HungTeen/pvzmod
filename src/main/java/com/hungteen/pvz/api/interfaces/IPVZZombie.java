@@ -1,8 +1,8 @@
 package com.hungteen.pvz.api.interfaces;
 
+import com.hungteen.pvz.common.core.CardRank;
+import com.hungteen.pvz.remove.Zombies;
 import com.hungteen.pvz.utils.EntityUtil;
-import com.hungteen.pvz.utils.enums.Ranks;
-import com.hungteen.pvz.utils.enums.Zombies;
 
 public interface IPVZZombie extends IHasOwner, IGroupEntity, ICanBeCharmed, ICanBeAttracted {
     
@@ -24,7 +24,7 @@ public interface IPVZZombie extends IHasOwner, IGroupEntity, ICanBeCharmed, ICan
 	
 	Zombies getZombieEnumName();
 	
-	Ranks getZombieRank();
+	CardRank getZombieRank();
 	
 	int getZombieXp();
 	

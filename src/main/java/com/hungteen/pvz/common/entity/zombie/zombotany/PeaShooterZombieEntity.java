@@ -3,8 +3,8 @@ package com.hungteen.pvz.common.entity.zombie.zombotany;
 import com.hungteen.pvz.common.entity.bullet.itembullet.PeaEntity;
 import com.hungteen.pvz.data.loot.PVZLoot;
 import com.hungteen.pvz.register.EffectRegister;
+import com.hungteen.pvz.remove.Zombies;
 import com.hungteen.pvz.utils.EntityUtil;
-import com.hungteen.pvz.utils.enums.Zombies;
 
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.LivingEntity;

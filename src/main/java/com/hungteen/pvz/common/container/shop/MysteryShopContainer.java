@@ -1,19 +1,13 @@
 package com.hungteen.pvz.common.container.shop;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import com.hungteen.pvz.common.capability.CapabilityHandler;
 import com.hungteen.pvz.common.network.OtherStatsPacket;
 import com.hungteen.pvz.common.network.PVZPacketHandler;
 import com.hungteen.pvz.register.ContainerRegister;
 import com.hungteen.pvz.register.SoundRegister;
-import com.hungteen.pvz.utils.PlantUtil;
 import com.hungteen.pvz.utils.PlayerUtil;
 import com.hungteen.pvz.utils.TradeUtil;
 import com.hungteen.pvz.utils.TradeUtil.DaveGoods;
-import com.hungteen.pvz.utils.enums.Plants;
-import com.hungteen.pvz.utils.enums.Ranks;
 import com.hungteen.pvz.utils.enums.Resources;
 
 import net.minecraft.entity.player.PlayerEntity;
@@ -45,26 +39,26 @@ public class MysteryShopContainer extends AbstractDaveShopContainer {
 		this.player.level.playSound(null, this.player, SoundRegister.DAVE_BUY.get(), SoundCategory.AMBIENT, 1f, 1f);
 	}
 	
-	public static void genNextGoods(PlayerEntity player) {
-		player.getCapability(CapabilityHandler.PLAYER_DATA_CAPABILITY).ifPresent((l) -> {
-			List<Integer> array = new ArrayList<>();
-			int sum = 0;
-			for(Plants plant : Plants.values()) {
-				sum += (Ranks.values().length - PlantUtil.getPlantRankByName(plant).ordinal() / 2 + 1);
-				array.add(sum);
-			}
-			for(int i = 0; i < l.getPlayerData().getOtherStats().mysteryGoods.length; ++ i) {
-				int now = player.level.random.nextInt(sum);
-				for(int j = 0; j < array.size(); ++ j) {
-					if(now < array.get(j)) {
-						l.getPlayerData().getOtherStats().mysteryGoods[i] = j;
-						break;
-					}
-				}
-			}
-			l.getPlayerData().getOtherStats().updateGoodTick = 24000;
-		});
-	}
+//	public static void genNextGoods(PlayerEntity player) {
+//		player.getCapability(CapabilityHandler.PLAYER_DATA_CAPABILITY).ifPresent((l) -> {
+//			List<Integer> array = new ArrayList<>();
+//			int sum = 0;
+//			for(Plants plant : Plants.values()) {
+//				sum += (Ranks.values().length - PlantUtil.getPlantRankByName(plant).ordinal() / 2 + 1);
+//				array.add(sum);
+//			}
+//			for(int i = 0; i < l.getPlayerData().getOtherStats().mysteryGoods.length; ++ i) {
+//				int now = player.level.random.nextInt(sum);
+//				for(int j = 0; j < array.size(); ++ j) {
+//					if(now < array.get(j)) {
+//						l.getPlayerData().getOtherStats().mysteryGoods[i] = j;
+//						break;
+//					}
+//				}
+//			}
+//			l.getPlayerData().getOtherStats().updateGoodTick = 24000;
+//		});
+//	}
 	
 	public static void sendMysteryGoodsPacket(PlayerEntity player, int pos) {
 		player.getCapability(CapabilityHandler.PLAYER_DATA_CAPABILITY).ifPresent((l) -> {

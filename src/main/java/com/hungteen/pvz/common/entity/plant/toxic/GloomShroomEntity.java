@@ -1,11 +1,12 @@
 package com.hungteen.pvz.common.entity.plant.toxic;
 
+import com.hungteen.pvz.common.core.PlantType;
 import com.hungteen.pvz.common.entity.bullet.AbstractBulletEntity;
 import com.hungteen.pvz.common.entity.bullet.FumeEntity;
 import com.hungteen.pvz.common.entity.plant.base.PlantShooterEntity;
+import com.hungteen.pvz.common.impl.plant.PVZPlants;
 import com.hungteen.pvz.register.SoundRegister;
 import com.hungteen.pvz.utils.EntityUtil;
-import com.hungteen.pvz.utils.enums.Plants;
 
 import net.minecraft.entity.CreatureEntity;
 import net.minecraft.entity.EntitySize;
@@ -66,9 +67,9 @@ public class GloomShroomEntity extends PlantShooterEntity {
     	return EntitySize.scalable(0.9F, 0.8F);
     }
     
-	@Override
-	public Plants getPlantEnumName() {
-		return Plants.GLOOM_SHROOM;
+    @Override
+	public PlantType getPlantType() {
+		return PVZPlants.GLOOM_SHROOM;
 	}
 
 }

@@ -4,8 +4,8 @@ import java.util.EnumMap;
 import java.util.Map;
 import java.util.Optional;
 
+import com.hungteen.pvz.remove.Zombies;
 import com.hungteen.pvz.utils.StringUtil;
-import com.hungteen.pvz.utils.enums.Zombies;
 
 import net.minecraft.util.ResourceLocation;
 

@@ -1,7 +1,8 @@
 package com.hungteen.pvz.common.entity.plant.appease;
 
+import com.hungteen.pvz.common.core.PlantType;
 import com.hungteen.pvz.common.entity.bullet.itembullet.PeaEntity.Type;
-import com.hungteen.pvz.utils.enums.Plants;
+import com.hungteen.pvz.common.impl.plant.PVZPlants;
 
 import net.minecraft.entity.CreatureEntity;
 import net.minecraft.entity.EntityType;
@@ -58,12 +59,7 @@ public class RepeaterEntity extends PeaShooterEntity{
 	}
 	
 	@Override
-	public Plants getPlantEnumName() {
-		return Plants.REPEATER;
-	}
-
-	@Override
-	public Plants getUpgradePlantType() {
-		return Plants.GATLING_PEA;
+	public PlantType getPlantType() {
+		return PVZPlants.REPEATER;
 	}
 }

@@ -4,8 +4,8 @@ import com.hungteen.pvz.common.entity.ai.goal.attack.PVZZombieAttackGoal;
 import com.hungteen.pvz.common.entity.zombie.PVZZombieEntity;
 import com.hungteen.pvz.data.loot.PVZLoot;
 import com.hungteen.pvz.register.SoundRegister;
+import com.hungteen.pvz.remove.Zombies;
 import com.hungteen.pvz.utils.ZombieUtil;
-import com.hungteen.pvz.utils.enums.Zombies;
 
 import net.minecraft.entity.CreatureAttribute;
 import net.minecraft.entity.Entity;

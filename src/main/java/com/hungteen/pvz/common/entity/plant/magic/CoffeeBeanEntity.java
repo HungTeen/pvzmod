@@ -1,12 +1,13 @@
 package com.hungteen.pvz.common.entity.plant.magic;
 
 import com.hungteen.pvz.common.advancement.trigger.EntityEffectAmountTrigger;
+import com.hungteen.pvz.common.core.PlantType;
 import com.hungteen.pvz.common.entity.plant.PVZPlantEntity;
 import com.hungteen.pvz.common.entity.plant.base.PlantBomberEntity;
+import com.hungteen.pvz.common.impl.plant.PVZPlants;
 import com.hungteen.pvz.register.SoundRegister;
 import com.hungteen.pvz.utils.EntityUtil;
 import com.hungteen.pvz.utils.PlantUtil;
-import com.hungteen.pvz.utils.enums.Plants;
 
 import net.minecraft.entity.CreatureEntity;
 import net.minecraft.entity.EntitySize;
@@ -69,8 +70,8 @@ public class CoffeeBeanEntity extends PlantBomberEntity{
 	}
 
 	@Override
-	public Plants getPlantEnumName() {
-		return Plants.COFFEE_BEAN;
+	public PlantType getPlantType() {
+		return PVZPlants.COFFEE_BEAN;
 	}
 
 }

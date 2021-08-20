@@ -1,14 +1,15 @@
 package com.hungteen.pvz.common.entity.plant.spear;
 
+import com.hungteen.pvz.common.core.PlantType;
 import com.hungteen.pvz.common.entity.bullet.AbstractBulletEntity;
 import com.hungteen.pvz.common.entity.bullet.ThornEntity;
 import com.hungteen.pvz.common.entity.bullet.ThornEntity.ThornStates;
 import com.hungteen.pvz.common.entity.bullet.ThornEntity.ThornTypes;
 import com.hungteen.pvz.common.entity.plant.base.PlantShooterEntity;
 import com.hungteen.pvz.common.entity.zombie.poolnight.BalloonZombieEntity;
+import com.hungteen.pvz.common.impl.plant.PVZPlants;
 import com.hungteen.pvz.common.misc.damage.PVZDamageSource;
 import com.hungteen.pvz.utils.EntityUtil;
-import com.hungteen.pvz.utils.enums.Plants;
 
 import net.minecraft.entity.CreatureEntity;
 import net.minecraft.entity.Entity;
@@ -196,8 +197,8 @@ public class CactusEntity extends PlantShooterEntity {
 	}
 
 	@Override
-	public Plants getPlantEnumName() {
-		return Plants.CACTUS;
+	public PlantType getPlantType() {
+		return PVZPlants.CACTUS;
 	}
 
 }

@@ -1,9 +1,9 @@
 package com.hungteen.pvz.common.entity.zombie.roof;
 
 import com.hungteen.pvz.data.loot.PVZLoot;
+import com.hungteen.pvz.remove.Zombies;
 import com.hungteen.pvz.utils.EntityUtil;
 import com.hungteen.pvz.utils.ZombieUtil;
-import com.hungteen.pvz.utils.enums.Zombies;
 
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntitySize;

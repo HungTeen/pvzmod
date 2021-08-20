@@ -3,16 +3,17 @@ package com.hungteen.pvz.common.entity.plant.explosion;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.hungteen.pvz.common.core.PlantType;
 import com.hungteen.pvz.common.entity.bullet.itembullet.FireCrackerEntity;
 import com.hungteen.pvz.common.entity.misc.FireCrackersEntity;
 import com.hungteen.pvz.common.entity.plant.base.PlantCloserEntity;
+import com.hungteen.pvz.common.impl.plant.OtherPlants;
 import com.hungteen.pvz.common.misc.damage.PVZDamageSource;
 import com.hungteen.pvz.register.SoundRegister;
 import com.hungteen.pvz.utils.EntityUtil;
 import com.hungteen.pvz.utils.MathUtil;
 import com.hungteen.pvz.utils.PlantUtil;
 import com.hungteen.pvz.utils.WorldUtil;
-import com.hungteen.pvz.utils.enums.Plants;
 
 import net.minecraft.entity.CreatureEntity;
 import net.minecraft.entity.EntitySize;
@@ -125,8 +126,8 @@ public class BambooLordEntity extends PlantCloserEntity {
 	}
 	
 	@Override
-	public Plants getPlantEnumName() {
-		return Plants.BAMBOO_LORD;
+	public PlantType getPlantType() {
+		return OtherPlants.BAMBOO_LORD;
 	}
 
 }

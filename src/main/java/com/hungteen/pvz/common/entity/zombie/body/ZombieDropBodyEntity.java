@@ -5,8 +5,8 @@ import java.util.Optional;
 import com.hungteen.pvz.common.entity.PVZEntityBase;
 import com.hungteen.pvz.common.entity.zombie.PVZZombieEntity;
 import com.hungteen.pvz.common.entity.zombie.roof.ZomBossEntity;
+import com.hungteen.pvz.remove.Zombies;
 import com.hungteen.pvz.utils.AlgorithmUtil;
-import com.hungteen.pvz.utils.enums.Zombies;
 
 import net.minecraft.entity.EntitySize;
 import net.minecraft.entity.EntityType;

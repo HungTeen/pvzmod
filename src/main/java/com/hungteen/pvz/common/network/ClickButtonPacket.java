@@ -88,13 +88,13 @@ public class ClickButtonPacket {
 				} else if(message.type == GuiHandler.ESSENCE_ALTAR) {
 					if(player.containerMenu instanceof EssenceAltarContainer) {
 						EssenceAltarContainer container = (EssenceAltarContainer) player.containerMenu;
-						container.destroyAllCards();
+//						container.destroyAllCards();
 					}
 				} else if(message.type == GuiHandler.CARD_FUSION) {
 					if(player.containerMenu instanceof CardFusionContainer) {
 						CardFusionContainer container = (CardFusionContainer) player.containerMenu;
 						if(message.op == 0) {
-							container.te.setResult(message.num);
+//							container.te.setResult(message.num);
 						} else if(message.op == 1) {
 							container.canPutStackBackToInventory();
 						}

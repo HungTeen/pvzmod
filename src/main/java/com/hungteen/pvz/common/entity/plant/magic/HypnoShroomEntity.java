@@ -1,18 +1,19 @@
 package com.hungteen.pvz.common.entity.plant.magic;
 
 import com.hungteen.pvz.api.interfaces.ICanBeAttracted;
+import com.hungteen.pvz.common.core.PlantType;
 import com.hungteen.pvz.common.entity.ai.goal.misc.PlantAttractGoal;
 import com.hungteen.pvz.common.entity.plant.PVZPlantEntity;
 import com.hungteen.pvz.common.entity.zombie.PVZZombieEntity;
 import com.hungteen.pvz.common.entity.zombie.PVZZombieEntity.Type;
 import com.hungteen.pvz.common.entity.zombie.roof.GargantuarEntity;
+import com.hungteen.pvz.common.impl.plant.PVZPlants;
 import com.hungteen.pvz.common.misc.damage.PVZDamageSource;
 import com.hungteen.pvz.register.EntityRegister;
 import com.hungteen.pvz.register.SoundRegister;
 import com.hungteen.pvz.utils.EntityUtil;
 import com.hungteen.pvz.utils.PlantUtil;
 import com.hungteen.pvz.utils.ZombieUtil;
-import com.hungteen.pvz.utils.enums.Plants;
 import com.hungteen.pvz.utils.interfaces.ICanAttract;
 
 import net.minecraft.entity.CreatureEntity;
@@ -128,8 +129,8 @@ public class HypnoShroomEntity extends PVZPlantEntity implements ICanAttract{
 	}
 	
 	@Override
-	public Plants getPlantEnumName() {
-		return Plants.HYPNO_SHROOM;
+	public PlantType getPlantType() {
+		return PVZPlants.HYPNO_SHROOM;
 	}
 
 }

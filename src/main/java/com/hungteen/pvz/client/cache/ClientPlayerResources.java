@@ -4,8 +4,8 @@ import java.util.HashMap;
 
 import com.hungteen.pvz.client.gui.search.SearchOption;
 import com.hungteen.pvz.common.container.shop.MysteryShopContainer;
+import com.hungteen.pvz.common.core.PlantType;
 import com.hungteen.pvz.common.world.invasion.WaveManager;
-import com.hungteen.pvz.utils.enums.Plants;
 import com.hungteen.pvz.utils.enums.Resources;
 
 import net.minecraftforge.api.distmarker.Dist;
@@ -15,8 +15,8 @@ import net.minecraftforge.api.distmarker.OnlyIn;
 public class ClientPlayerResources{
 
 	private static HashMap<Resources, Integer> resources = new HashMap<>(Resources.values().length);
-	private static HashMap<Plants, Integer> plantCardXp = new HashMap<Plants, Integer>(Plants.values().length);
-	private static HashMap<Plants, Integer> plantCardLevel = new HashMap<Plants, Integer>(Plants.values().length);
+	private static HashMap<PlantType, Integer> plantCardXp = new HashMap<>();
+	private static HashMap<PlantType, Integer> plantCardLevel = new HashMap<>();
 	private static HashMap<SearchOption, Boolean> unLocked = new HashMap<SearchOption, Boolean>(SearchOption.OPTION.size());
 	public static final int[] zombieWaveTime = new int[WaveManager.MAX_WAVE_NUM];
 	public static int totalWaveCount;
@@ -28,8 +28,8 @@ public class ClientPlayerResources{
 		for(Resources res : Resources.values()) {
 			resources.put(res, 0);
 		}
-		for(Plants p : Plants.values()) {
-			plantCardLevel.put(p, 0);
+		for(PlantType p : PlantType.getPlants()) {
+			plantCardLevel.put(p, 1);
 			plantCardXp.put(p, 0);
 		}
 		for(SearchOption a : SearchOption.OPTION) {
@@ -42,8 +42,8 @@ public class ClientPlayerResources{
 	}
 	
 	public static void setPlantData(int type, int lvl, int xp){
-		plantCardLevel.put(Plants.values()[type], lvl);
-		plantCardXp.put(Plants.values()[type], xp);
+		plantCardLevel.put(PlantType.getPlants().get(type), lvl);
+		plantCardXp.put(PlantType.getPlants().get(type), xp);
 	}
 	
 	public static void setAlmanacUnLocked(int type, boolean data){
@@ -54,11 +54,11 @@ public class ClientPlayerResources{
 		return resources.get(res);
 	}
 	
-	public static int getPlayerPlantCardLvl(Plants plant){
+	public static int getPlayerPlantCardLvl(PlantType plant){
 		return plantCardLevel.get(plant);
 	}
 	
-	public static int getPlayerPlantCardXp(Plants plant){
+	public static int getPlayerPlantCardXp(PlantType plant){
 		return plantCardXp.get(plant);
 	}
 	

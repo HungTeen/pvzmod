@@ -11,6 +11,7 @@ public class GroupRegister {
 			return new ItemStack(ItemRegister.PEA.get());
 		}
 	};
+	
 	public static final ItemGroup PVZ_CARD = new ItemGroup("pvz_card") {
 		@Override
 		public ItemStack makeIcon() {

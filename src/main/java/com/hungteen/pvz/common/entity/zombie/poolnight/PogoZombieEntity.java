@@ -1,13 +1,14 @@
 package com.hungteen.pvz.common.entity.zombie.poolnight;
 
-import com.hungteen.pvz.api.interfaces.IPVZPlant;
+import com.hungteen.pvz.common.core.PlantType;
+import com.hungteen.pvz.common.entity.plant.PVZPlantEntity;
 import com.hungteen.pvz.common.entity.zombie.PVZZombieEntity;
+import com.hungteen.pvz.common.impl.plant.PVZPlants;
 import com.hungteen.pvz.register.SoundRegister;
+import com.hungteen.pvz.remove.MetalTypes;
+import com.hungteen.pvz.remove.Zombies;
 import com.hungteen.pvz.utils.EntityUtil;
 import com.hungteen.pvz.utils.MathUtil;
-import com.hungteen.pvz.utils.enums.MetalTypes;
-import com.hungteen.pvz.utils.enums.Plants;
-import com.hungteen.pvz.utils.enums.Zombies;
 import com.hungteen.pvz.utils.interfaces.ICanAttract;
 import com.hungteen.pvz.utils.interfaces.IHasMetal;
 
@@ -54,9 +55,9 @@ public class PogoZombieEntity extends PVZZombieEntity implements IHasMetal {
 	
 	@Override
 	public boolean canBeAttractedBy(ICanAttract defender) {
-		if(defender instanceof IPVZPlant) {
-			final Plants plant = ((IPVZPlant) defender).getPlantEnumName();
-			return plant == Plants.TALL_NUT || plant == Plants.GIANT_WALL_NUT;
+		if(defender instanceof PVZPlantEntity) {
+			final PlantType plant = ((PVZPlantEntity) defender).getPlantType();
+			return plant == PVZPlants.TALL_NUT || plant == PVZPlants.GIANT_WALL_NUT;
 		}
 		return true;
 	}

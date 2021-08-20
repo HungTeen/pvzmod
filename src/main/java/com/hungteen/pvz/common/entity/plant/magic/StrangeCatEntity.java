@@ -1,15 +1,16 @@
 package com.hungteen.pvz.common.entity.plant.magic;
 
 import com.hungteen.pvz.PVZConfig;
+import com.hungteen.pvz.common.core.PlantType;
 import com.hungteen.pvz.common.entity.ai.goal.target.PVZNearestTargetGoal;
 import com.hungteen.pvz.common.entity.plant.PVZPlantEntity;
 import com.hungteen.pvz.common.event.PVZLivingEvents;
+import com.hungteen.pvz.common.impl.plant.MemePlants;
 import com.hungteen.pvz.common.misc.damage.PVZDamageSource;
 import com.hungteen.pvz.register.EntityRegister;
 import com.hungteen.pvz.register.SoundRegister;
 import com.hungteen.pvz.utils.EntityUtil;
 import com.hungteen.pvz.utils.PlantUtil;
-import com.hungteen.pvz.utils.enums.Plants;
 
 import net.minecraft.entity.CreatureEntity;
 import net.minecraft.entity.EntitySize;
@@ -137,8 +138,8 @@ public class StrangeCatEntity extends PVZPlantEntity {
 	}
 	
 	@Override
-	public Plants getPlantEnumName() {
-		return Plants.STRANGE_CAT;
+	public PlantType getPlantType() {
+		return MemePlants.STRANGE_CAT;
 	}
 
 }

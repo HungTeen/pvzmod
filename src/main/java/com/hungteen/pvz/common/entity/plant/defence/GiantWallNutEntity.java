@@ -1,6 +1,7 @@
 package com.hungteen.pvz.common.entity.plant.defence;
 
-import com.hungteen.pvz.utils.enums.Plants;
+import com.hungteen.pvz.common.core.PlantType;
+import com.hungteen.pvz.common.impl.plant.PVZPlants;
 
 import net.minecraft.entity.CreatureEntity;
 import net.minecraft.entity.EntitySize;
@@ -36,8 +37,8 @@ public class GiantWallNutEntity extends TallNutEntity {
 	}
 	
 	@Override
-	public Plants getPlantEnumName() {
-		return Plants.GIANT_WALL_NUT;
+	public PlantType getPlantType() {
+		return PVZPlants.GIANT_WALL_NUT;
 	}
 
 }

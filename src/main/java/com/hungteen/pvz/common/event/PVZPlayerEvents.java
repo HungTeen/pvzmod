@@ -9,7 +9,7 @@ import com.hungteen.pvz.client.gui.search.SearchOption;
 import com.hungteen.pvz.common.capability.CapabilityHandler;
 import com.hungteen.pvz.common.capability.player.PlayerDataManager;
 import com.hungteen.pvz.common.capability.player.PlayerDataManager.PlayerStats;
-import com.hungteen.pvz.common.container.shop.MysteryShopContainer;
+import com.hungteen.pvz.common.core.PlantType;
 import com.hungteen.pvz.common.entity.plant.PVZPlantEntity;
 import com.hungteen.pvz.common.event.events.PlayerLevelUpEvent;
 import com.hungteen.pvz.common.event.events.SummonCardUseEvent;
@@ -23,10 +23,8 @@ import com.hungteen.pvz.register.EffectRegister;
 import com.hungteen.pvz.register.EnchantmentRegister;
 import com.hungteen.pvz.register.ItemRegister;
 import com.hungteen.pvz.utils.ItemUtil;
-import com.hungteen.pvz.utils.PlantUtil;
 import com.hungteen.pvz.utils.PlayerUtil;
 import com.hungteen.pvz.utils.StringUtil;
-import com.hungteen.pvz.utils.enums.Plants;
 import com.hungteen.pvz.utils.enums.Resources;
 
 import net.minecraft.block.BlockState;
@@ -77,7 +75,7 @@ public class PVZPlayerEvents {
 				if(l.getPlayerData().getOtherStats().updateGoodTick > 0) {
 				    -- l.getPlayerData().getOtherStats().updateGoodTick;
 				} else {
-					MysteryShopContainer.genNextGoods(ev.player);
+//					MysteryShopContainer.genNextGoods(ev.player);
 				}
 				int lightLvl = 0;
 				if(ev.player.hasEffect(EffectRegister.LIGHT_EYE_EFFECT.get())) {
@@ -117,8 +115,10 @@ public class PVZPlayerEvents {
 				PlayerDataManager plData = l.getPlayerData();
 				//item cd
 				PlayerDataManager.ItemCDStats itemCDStats = plData.getItemCDStats();
-				for(Plants p : Plants.values()) {
-					itemCDStats.setPlantCardBar(p, player.getCooldowns().getCooldownPercent(PlantUtil.getPlantSummonCard(p), 0f));
+				for(PlantType p : PlantType.getPlants()) {
+					p.getSummonCard().ifPresent(card -> {
+						itemCDStats.setPlantCardBar(p, player.getCooldowns().getCooldownPercent(card, 0f));
+					});
 				}
 			});
 		}
@@ -221,7 +221,7 @@ public class PVZPlayerEvents {
 		if(! player.level.isClientSide) { //unlock almanac
 			SearchOption a = null;
 			if(ev.getItemStack().getItem() instanceof PlantCardItem) {// unlock plant card
-			    Plants plant = ((PlantCardItem) ev.getItemStack().getItem()).plantType;
+			    PlantType plant = ((PlantCardItem) ev.getItemStack().getItem()).plantType;
 			    a = SearchOption.get(plant);
 			}
 			PlayerUtil.unLockAlmanac(player, a);

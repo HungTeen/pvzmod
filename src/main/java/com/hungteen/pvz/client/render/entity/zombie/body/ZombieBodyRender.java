@@ -5,7 +5,7 @@ import com.hungteen.pvz.client.render.entity.zombie.PVZZombieRender;
 import com.hungteen.pvz.client.render.entity.zombie.ZombieRenderHandler;
 import com.hungteen.pvz.common.entity.zombie.body.ZombieDropBodyEntity;
 import com.hungteen.pvz.common.entity.zombie.body.ZombieDropBodyEntity.BodyType;
-import com.hungteen.pvz.utils.enums.Zombies;
+import com.hungteen.pvz.remove.Zombies;
 import com.mojang.blaze3d.matrix.MatrixStack;
 import com.mojang.blaze3d.vertex.IVertexBuilder;
 

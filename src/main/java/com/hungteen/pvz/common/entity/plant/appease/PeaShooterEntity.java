@@ -1,10 +1,11 @@
 package com.hungteen.pvz.common.entity.plant.appease;
 
+import com.hungteen.pvz.common.core.PlantType;
 import com.hungteen.pvz.common.entity.bullet.AbstractBulletEntity;
 import com.hungteen.pvz.common.entity.bullet.itembullet.PeaEntity;
 import com.hungteen.pvz.common.entity.plant.base.PlantShooterEntity;
+import com.hungteen.pvz.common.impl.plant.PVZPlants;
 import com.hungteen.pvz.utils.MathUtil;
-import com.hungteen.pvz.utils.enums.Plants;
 
 import net.minecraft.entity.CreatureEntity;
 import net.minecraft.entity.EntitySize;
@@ -72,8 +73,8 @@ public class PeaShooterEntity extends PlantShooterEntity{
 	}
 
 	@Override
-	public Plants getPlantEnumName() {
-		return Plants.PEA_SHOOTER;
+	public PlantType getPlantType() {
+		return PVZPlants.PEA_SHOOTER;
 	}
 
 }

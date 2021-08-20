@@ -4,21 +4,12 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Optional;
 import java.util.Random;
 
 import com.hungteen.pvz.common.container.SlotMachineContainer;
-import com.hungteen.pvz.common.entity.drop.JewelEntity;
-import com.hungteen.pvz.common.entity.drop.SunEntity;
-import com.hungteen.pvz.common.item.card.PlantCardItem;
-import com.hungteen.pvz.register.EntityRegister;
 import com.hungteen.pvz.register.SoundRegister;
 import com.hungteen.pvz.register.TileEntityRegister;
-import com.hungteen.pvz.utils.EntityUtil;
-import com.hungteen.pvz.utils.PlantUtil;
 import com.hungteen.pvz.utils.PlayerUtil;
-import com.hungteen.pvz.utils.enums.Plants;
-import com.hungteen.pvz.utils.enums.Ranks;
 import com.hungteen.pvz.utils.enums.Resources;
 
 import net.minecraft.block.BlockState;
@@ -26,7 +17,6 @@ import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.inventory.container.Container;
 import net.minecraft.inventory.container.INamedContainerProvider;
-import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.network.NetworkManager;
 import net.minecraft.network.play.server.SUpdateTileEntityPacket;
@@ -62,18 +52,18 @@ public class SlotMachineTileEntity extends TileEntity implements ITickableTileEn
 	
 	static {
 		sum = 0;
-		putOptionToMap(new SlotOptions(1, 2));
-		putOptionToMap(new SlotOptions(2, 1));
-		for(Plants plant : Plants.values()) {
-			Ranks rank = PlantUtil.getPlantRankByName(plant);
-			putOptionToMap(new SlotOptions(plant, (Ranks.values().length - rank.ordinal()) / 2 + 1));
-		}
+//		putOptionToMap(new SlotOptions(1, 2));
+//		putOptionToMap(new SlotOptions(2, 1));
+//		for(Plants plant : Plants.values()) {
+//			Ranks rank = PlantUtil.getPlantRankByName(plant);
+//			putOptionToMap(new SlotOptions(plant, (Ranks.values().length - rank.ordinal()) / 2 + 1));
+//		}
 	}
 	
 	private static void putOptionToMap(SlotOptions option) {
 		OPTION_MAP.put(option, OPTION_LIST.size());
 		OPTION_LIST.add(option);
-		sum += option.weight;
+//		sum += option.weight;
 		WEIGHT_LIST.add(sum);
 	}
 	
@@ -140,27 +130,27 @@ public class SlotMachineTileEntity extends TileEntity implements ITickableTileEn
 	
 	private void genBonusResult(int type, int num) {
 		SlotOptions option = OPTION_LIST.get(type);
-		if(option.isSun) {
-			int cnt = (num == 1 ? 4 : 20);
-			for(int i = 0; i < cnt; ++ i) {
-				SunEntity sun = EntityRegister.SUN.get().create(level);
-				sun.setAmount(25);
-				EntityUtil.onMobEntityRandomPosSpawn(level, sun, worldPosition, 2);
-			}
-			level.playSound(null, worldPosition, SoundRegister.JEWEL_DROP.get(), SoundCategory.BLOCKS, 1F, 1F);
-			return ;
-		}
-		for(int i = 0; i < num; ++ i) {
-			if(option.isJewel) {
-				JewelEntity jewel = EntityRegister.JEWEL.get().create(level);
-				jewel.setAmount(1);
-				EntityUtil.onMobEntityRandomPosSpawn(level, jewel, worldPosition, 2);
-			} else if(option.plantType.isPresent()){
-				Plants plant = option.plantType.get();
-				PlantCardItem item = PlantUtil.getPlantEnjoyCard(plant);
-				this.handler.setStackInSlot(i, new ItemStack(item));
-			}
-		}
+//		if(option.isSun) {
+//			int cnt = (num == 1 ? 4 : 20);
+//			for(int i = 0; i < cnt; ++ i) {
+//				SunEntity sun = EntityRegister.SUN.get().create(level);
+//				sun.setAmount(25);
+//				EntityUtil.onMobEntityRandomPosSpawn(level, sun, worldPosition, 2);
+//			}
+//			level.playSound(null, worldPosition, SoundRegister.JEWEL_DROP.get(), SoundCategory.BLOCKS, 1F, 1F);
+//			return ;
+//		}
+//		for(int i = 0; i < num; ++ i) {
+//			if(option.isJewel) {
+//				JewelEntity jewel = EntityRegister.JEWEL.get().create(level);
+//				jewel.setAmount(1);
+//				EntityUtil.onMobEntityRandomPosSpawn(level, jewel, worldPosition, 2);
+//			} else if(option.plantType.isPresent()){
+//				Plants plant = option.plantType.get();
+//				PlantCardItem item = PlantUtil.getPlantEnjoyCard(plant);
+//				this.handler.setStackInSlot(i, new ItemStack(item));
+//			}
+//		}
 		level.playSound(null, worldPosition, SoundRegister.JEWEL_DROP.get(), SoundCategory.BLOCKS, 1F, 1F);
 	}
 	
@@ -311,25 +301,25 @@ public class SlotMachineTileEntity extends TileEntity implements ITickableTileEn
 	
 	public static class SlotOptions {
 		
-		public final Optional<Plants> plantType;
-		public final boolean isSun;
-		public final boolean isJewel;
-		public final int weight;
-		
-		public SlotOptions(int type, int weight) {
-			this.plantType = Optional.empty();
-			this.isSun = (type == 1);
-			this.isJewel = (type == 2);
-			this.weight = weight;
-		}
-		
-		public SlotOptions(Plants plant, int weight) {
-			this.plantType = Optional.of(plant);
-			this.isSun = false;
-			this.isJewel = false;
-			this.weight = weight;
-		}
-		
+//		public final Optional<Plants> plantType;
+//		public final boolean isSun;
+//		public final boolean isJewel;
+//		public final int weight;
+//		
+//		public SlotOptions(int type, int weight) {
+//			this.plantType = Optional.empty();
+//			this.isSun = (type == 1);
+//			this.isJewel = (type == 2);
+//			this.weight = weight;
+//		}
+//		
+//		public SlotOptions(Plants plant, int weight) {
+//			this.plantType = Optional.of(plant);
+//			this.isSun = false;
+//			this.isJewel = false;
+//			this.weight = weight;
+//		}
+//		
 	}
 
 }

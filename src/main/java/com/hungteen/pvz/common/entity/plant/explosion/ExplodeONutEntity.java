@@ -1,11 +1,12 @@
 package com.hungteen.pvz.common.entity.plant.explosion;
 
+import com.hungteen.pvz.common.core.PlantType;
 import com.hungteen.pvz.common.entity.plant.defence.WallNutEntity;
+import com.hungteen.pvz.common.impl.plant.PVZPlants;
 import com.hungteen.pvz.common.misc.damage.PVZDamageSource;
 import com.hungteen.pvz.register.ParticleRegister;
 import com.hungteen.pvz.register.SoundRegister;
 import com.hungteen.pvz.utils.EntityUtil;
-import com.hungteen.pvz.utils.enums.Plants;
 
 import net.minecraft.entity.CreatureEntity;
 import net.minecraft.entity.Entity;
@@ -68,13 +69,8 @@ public class ExplodeONutEntity extends WallNutEntity {
 	}
 
 	@Override
-	public Plants getUpgradePlantType() {
-		return null;
-	}
-	
-	@Override
-	public Plants getPlantEnumName() {
-		return Plants.EXPLODE_O_NUT;
+	public PlantType getPlantType() {
+		return PVZPlants.EXPLODE_O_NUT;
 	}
 
 }

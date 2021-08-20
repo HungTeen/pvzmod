@@ -5,13 +5,12 @@ import java.util.HashSet;
 import java.util.Set;
 
 import com.hungteen.pvz.PVZMod;
+import com.hungteen.pvz.common.core.PlantType;
 import com.hungteen.pvz.common.item.PVZSpawnEggItem;
 import com.hungteen.pvz.common.item.card.PlantCardItem;
 import com.hungteen.pvz.register.BlockRegister;
 import com.hungteen.pvz.register.ItemRegister;
-import com.hungteen.pvz.utils.PlantUtil;
 import com.hungteen.pvz.utils.StringUtil;
-import com.hungteen.pvz.utils.enums.Plants;
 
 import net.minecraft.block.Block;
 import net.minecraft.data.DataGenerator;
@@ -57,15 +56,15 @@ public class ItemModelGenerator extends ItemModelProvider{
 				addedItems.add(i);
 				getBuilder(i.getRegistryName().getPath()).parent(getExistingFile(new ResourceLocation("item/template_spawn_egg")));
 			} else if(i instanceof PlantCardItem) {//for plant cards
-				Plants plant = ((PlantCardItem) i).plantType;
-				ResourceLocation plantResource = StringUtil.prefix("screenshot/plant/"+plant.toString().toLowerCase());
+				PlantType plant = ((PlantCardItem) i).plantType;
+				ResourceLocation plantResource = new ResourceLocation(plant.getModID(), "screenshot/plant/" + plant.toString());
 				addedItems.add(i);
 				if(((PlantCardItem) i).isEnjoyCard) {
 					ResourceLocation r = StringUtil.prefix("item/red_card");
 					genNormal(i.getRegistryName().getPath(), r, plantResource);
 				} else {
-					ResourceLocation r = StringUtil.prefix("item/"+PlantUtil.getPlantRankByName(plant).toString().toLowerCase()+"_card");
-					genNormal(i.getRegistryName().getPath(), r, plantResource);
+					ResourceLocation r = plant.getRank().getTemplateCard().getRegistryName();
+					genNormal(i.getRegistryName().getPath(), new ResourceLocation(r.getNamespace(), "item/" + r.getPath()), plantResource);
 				}
 			} else if(i instanceof BlockItem) {
 				addedItems.add(i);

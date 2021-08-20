@@ -3,13 +3,14 @@ package com.hungteen.pvz.common.entity.plant.defence;
 import java.util.Collections;
 import java.util.List;
 
+import com.hungteen.pvz.common.core.PlantType;
 import com.hungteen.pvz.common.entity.plant.base.PlantDefenderEntity;
+import com.hungteen.pvz.common.impl.plant.PVZPlants;
 import com.hungteen.pvz.common.misc.damage.PVZDamageSource;
 import com.hungteen.pvz.register.SoundRegister;
 import com.hungteen.pvz.utils.AlgorithmUtil;
 import com.hungteen.pvz.utils.EntityUtil;
 import com.hungteen.pvz.utils.PlantUtil;
-import com.hungteen.pvz.utils.enums.Plants;
 
 import net.minecraft.entity.CreatureEntity;
 import net.minecraft.entity.EntitySize;
@@ -81,8 +82,8 @@ public class GarlicEntity extends PlantDefenderEntity {
 	}
 	
 	@Override
-	public Plants getPlantEnumName() {
-		return Plants.GARLIC;
+	public PlantType getPlantType() {
+		return PVZPlants.GARLIC;
 	}
 
 }

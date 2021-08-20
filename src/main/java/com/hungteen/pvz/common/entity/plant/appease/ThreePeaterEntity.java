@@ -1,7 +1,8 @@
 package com.hungteen.pvz.common.entity.plant.appease;
 
+import com.hungteen.pvz.common.core.PlantType;
+import com.hungteen.pvz.common.impl.plant.PVZPlants;
 import com.hungteen.pvz.utils.AnimationUtil;
-import com.hungteen.pvz.utils.enums.Plants;
 
 import net.minecraft.entity.CreatureEntity;
 import net.minecraft.entity.EntitySize;
@@ -45,8 +46,8 @@ public class ThreePeaterEntity extends PeaShooterEntity {
 	}
 	
 	@Override
-	public Plants getPlantEnumName() {
-		return Plants.THREE_PEATER;
+	public PlantType getPlantType() {
+		return PVZPlants.THREE_PEATER;
 	}
 	
 }

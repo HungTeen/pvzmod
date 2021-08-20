@@ -2,10 +2,10 @@ package com.hungteen.pvz.client.render.itemstack;
 
 import java.util.Optional;
 
+import com.hungteen.pvz.common.core.PlantType;
+import com.hungteen.pvz.common.impl.plant.PVZPlants;
 import com.hungteen.pvz.common.item.card.ImitaterCardItem;
 import com.hungteen.pvz.register.ItemRegister;
-import com.hungteen.pvz.utils.PlantUtil;
-import com.hungteen.pvz.utils.enums.Plants;
 import com.mojang.blaze3d.matrix.MatrixStack;
 
 import net.minecraft.client.Minecraft;
@@ -26,9 +26,9 @@ public class ImitaterCardISTER extends ItemStackTileEntityRenderer {
         matrixStackIn.translate(0.5F, 0.5F, 0.5F);
         ItemStack itemstack = new ItemStack(ItemRegister.IMITATER_CARD.get());
 		if(stack.getItem() instanceof ImitaterCardItem) {
-			Optional<Plants> opt = ImitaterCardItem.getImitatePlantType(stack);
-			if(opt.isPresent() && opt.get() != Plants.IMITATER) {
-				itemstack = new ItemStack(PlantUtil.getPlantSummonCard(opt.get()));
+			Optional<PlantType> opt = ImitaterCardItem.getImitatePlantType(stack);
+			if(opt.isPresent() && opt.get() != PVZPlants.IMITATER && opt.get().getSummonCard().isPresent()) {
+				itemstack = new ItemStack(opt.get().getSummonCard().get());
 			}
 		}
 		itemRenderer.renderStatic(itemstack, TransformType.NONE, combinedLightIn, combinedOverlayIn, matrixStackIn, bufferIn);

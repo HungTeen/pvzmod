@@ -1,4 +1,4 @@
-package com.hungteen.pvz.utils.enums;
+package com.hungteen.pvz.remove;
 
 import com.hungteen.pvz.register.BlockRegister;
 import com.hungteen.pvz.register.ItemRegister;

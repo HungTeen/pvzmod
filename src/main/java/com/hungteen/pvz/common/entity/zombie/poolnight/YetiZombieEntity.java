@@ -4,9 +4,9 @@ import com.hungteen.pvz.PVZConfig;
 import com.hungteen.pvz.common.entity.drop.JewelEntity;
 import com.hungteen.pvz.common.entity.zombie.PVZZombieEntity;
 import com.hungteen.pvz.register.EntityRegister;
+import com.hungteen.pvz.remove.Zombies;
 import com.hungteen.pvz.utils.EntityUtil;
 import com.hungteen.pvz.utils.ZombieUtil;
-import com.hungteen.pvz.utils.enums.Zombies;
 
 import net.minecraft.entity.EntitySize;
 import net.minecraft.entity.EntityType;

@@ -1,7 +1,8 @@
 package com.hungteen.pvz.common.entity.plant.defence;
 
+import com.hungteen.pvz.common.core.PlantType;
 import com.hungteen.pvz.common.entity.plant.base.PlantDefenderEntity;
-import com.hungteen.pvz.utils.enums.Plants;
+import com.hungteen.pvz.common.impl.plant.CustomPlants;
 
 import net.minecraft.entity.CreatureEntity;
 import net.minecraft.entity.EntitySize;
@@ -43,8 +44,8 @@ public class WaterGuardEntity extends PlantDefenderEntity{
 	}
 
 	@Override
-	public Plants getPlantEnumName() {
-		return Plants.WATER_GUARD;
+	public PlantType getPlantType() {
+		return CustomPlants.WATER_GUARD;
 	}
 
 }

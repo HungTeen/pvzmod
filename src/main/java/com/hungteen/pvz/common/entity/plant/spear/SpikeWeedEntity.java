@@ -3,11 +3,12 @@ package com.hungteen.pvz.common.entity.plant.spear;
 import javax.annotation.Nonnull;
 
 import com.hungteen.pvz.api.interfaces.IHasWheel;
+import com.hungteen.pvz.common.core.PlantType;
 import com.hungteen.pvz.common.entity.plant.PVZPlantEntity;
+import com.hungteen.pvz.common.impl.plant.PVZPlants;
 import com.hungteen.pvz.common.misc.damage.PVZDamageSource;
 import com.hungteen.pvz.utils.EntityUtil;
 import com.hungteen.pvz.utils.PlantUtil;
-import com.hungteen.pvz.utils.enums.Plants;
 
 import net.minecraft.entity.CreatureEntity;
 import net.minecraft.entity.Entity;
@@ -160,13 +161,8 @@ public class SpikeWeedEntity extends PVZPlantEntity {
 	}
 	
 	@Override
-	public Plants getUpgradePlantType() {
-		return Plants.SPIKE_ROCK;
-	}
-	
-    @Override
-	public Plants getPlantEnumName() {
-		return Plants.SPIKE_WEED;
+	public PlantType getPlantType() {
+		return PVZPlants.SPIKE_WEED;
 	}
 
 }

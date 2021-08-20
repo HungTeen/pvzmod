@@ -3,10 +3,11 @@ package com.hungteen.pvz.common.entity.plant.ice;
 import java.util.Optional;
 
 import com.hungteen.pvz.api.interfaces.IIceEffect;
+import com.hungteen.pvz.common.core.PlantType;
 import com.hungteen.pvz.common.entity.bullet.MelonEntity.MelonStates;
 import com.hungteen.pvz.common.entity.plant.arma.MelonPultEntity;
+import com.hungteen.pvz.common.impl.plant.PVZPlants;
 import com.hungteen.pvz.register.EffectRegister;
-import com.hungteen.pvz.utils.enums.Plants;
 
 import net.minecraft.entity.CreatureEntity;
 import net.minecraft.entity.EntityType;
@@ -43,13 +44,8 @@ public class WinterMelonEntity extends MelonPultEntity implements IIceEffect {
 	}
 	
 	@Override
-	public Plants getUpgradePlantType() {
-		return null;
-	}
-	
-	@Override
-	public Plants getPlantEnumName() {
-		return Plants.WINTER_MELON;
+	public PlantType getPlantType() {
+		return PVZPlants.WINTER_MELON;
 	}
 
 }

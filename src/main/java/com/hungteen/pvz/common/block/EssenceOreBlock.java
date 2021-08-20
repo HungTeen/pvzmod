@@ -1,6 +1,6 @@
 package com.hungteen.pvz.common.block;
 
-import com.hungteen.pvz.utils.enums.Essences;
+import com.hungteen.pvz.common.core.EssenceType;
 
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
@@ -12,9 +12,9 @@ import net.minecraftforge.common.ToolType;
 
 public class EssenceOreBlock extends Block{
 
-	public final Essences essence;
+	public final EssenceType essence;
 	
-	public EssenceOreBlock(Essences e) {
+	public EssenceOreBlock(EssenceType e) {
 		super(Block.Properties.copy(Blocks.DIAMOND_ORE)
 				.strength(9, 9)
 				.harvestTool(ToolType.PICKAXE)

@@ -3,8 +3,8 @@ package com.hungteen.pvz.client.render.layer;
 import com.hungteen.pvz.PVZMod;
 import com.hungteen.pvz.client.model.entity.plant.defence.PumpkinModel;
 import com.hungteen.pvz.client.render.entity.plant.PVZPlantRender;
-import com.hungteen.pvz.client.render.entity.plant.PlantRenderHandler;
 import com.hungteen.pvz.common.entity.plant.PVZPlantEntity;
+import com.hungteen.pvz.common.impl.plant.PVZPlants;
 import com.mojang.blaze3d.matrix.MatrixStack;
 import com.mojang.blaze3d.vertex.IVertexBuilder;
 
@@ -51,23 +51,7 @@ public class PumpkinLayer<T extends PVZPlantEntity> extends LayerRenderer<T, Ent
 	}
 	
 	protected ResourceLocation getRenderTexture(T plant) {
-//		float life = plant.getPumpkinLife();
-//		if(life > PlantUtil.PUMPKIN_LIFE) {
-//			float tmp = life - PlantUtil.PUMPKIN_LIFE;
-//			if(tmp > PlantUtil.PUMPKIN_SUPER_LIFE * 2 / 3) {
-//				return StringUtil.prefix("textures/entity/plant/defence/pumpkin4.png");
-//			} else if(tmp > PlantUtil.PUMPKIN_SUPER_LIFE / 3) {
-//				return StringUtil.prefix("textures/entity/plant/defence/pumpkin5.png");
-//			}
-//			return StringUtil.prefix("textures/entity/plant/defence/pumpkin6.png");
-//		}
-//		if(life > PlantUtil.PUMPKIN_LIFE * 2 / 3) {
-//			return StringUtil.prefix("textures/entity/plant/defence/pumpkin1.png");
-//		} else if(life > PlantUtil.PUMPKIN_LIFE /3) {
-//			return StringUtil.prefix("textures/entity/plant/defence/pumpkin2.png");
-//		}
-//		return StringUtil.prefix("textures/entity/plant/defence/pumpkin3.png");
-		return PlantRenderHandler.PUMPKIN_TEX;
+		return PVZPlants.PUMPKIN.getRenderResource();
 	}
 	
 }

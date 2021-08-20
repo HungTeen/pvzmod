@@ -3,16 +3,17 @@ package com.hungteen.pvz.common.entity.plant.explosion;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.hungteen.pvz.common.core.PlantType;
 import com.hungteen.pvz.common.entity.misc.DoomFixerEntity;
 import com.hungteen.pvz.common.entity.plant.PVZPlantEntity;
 import com.hungteen.pvz.common.entity.plant.base.PlantBomberEntity;
+import com.hungteen.pvz.common.impl.plant.PVZPlants;
 import com.hungteen.pvz.common.misc.damage.PVZDamageSource;
 import com.hungteen.pvz.register.ParticleRegister;
 import com.hungteen.pvz.register.SoundRegister;
 import com.hungteen.pvz.utils.EntityUtil;
 import com.hungteen.pvz.utils.PlantUtil;
 import com.hungteen.pvz.utils.WorldUtil;
-import com.hungteen.pvz.utils.enums.Plants;
 import com.mojang.datafixers.util.Pair;
 
 import it.unimi.dsi.fastutil.objects.ObjectArrayList;
@@ -150,8 +151,8 @@ public class DoomShroomEntity extends PlantBomberEntity {
 	}
 
 	@Override
-	public Plants getPlantEnumName() {
-		return Plants.DOOM_SHROOM;
+	public PlantType getPlantType() {
+		return PVZPlants.DOOM_SHROOM;
 	}
 
 }

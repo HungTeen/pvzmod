@@ -4,9 +4,11 @@ import java.util.Optional;
 
 import com.hungteen.pvz.api.interfaces.IIceEffect;
 import com.hungteen.pvz.common.advancement.trigger.EntityEffectAmountTrigger;
+import com.hungteen.pvz.common.core.PlantType;
 import com.hungteen.pvz.common.entity.misc.ElementBallEntity;
 import com.hungteen.pvz.common.entity.misc.ElementBallEntity.ElementTypes;
 import com.hungteen.pvz.common.entity.plant.base.PlantBomberEntity;
+import com.hungteen.pvz.common.impl.plant.PVZPlants;
 import com.hungteen.pvz.common.misc.damage.PVZDamageSource;
 import com.hungteen.pvz.register.EffectRegister;
 import com.hungteen.pvz.register.ParticleRegister;
@@ -14,7 +16,6 @@ import com.hungteen.pvz.register.SoundRegister;
 import com.hungteen.pvz.utils.EntityUtil;
 import com.hungteen.pvz.utils.MathUtil;
 import com.hungteen.pvz.utils.PlantUtil;
-import com.hungteen.pvz.utils.enums.Plants;
 
 import net.minecraft.entity.CreatureEntity;
 import net.minecraft.entity.EntitySize;
@@ -106,8 +107,8 @@ public class IceShroomEntity extends PlantBomberEntity implements IIceEffect{
 	}
 	
 	@Override
-	public Plants getPlantEnumName() {
-		return Plants.ICE_SHROOM;
+	public PlantType getPlantType() {
+		return PVZPlants.ICE_SHROOM;
 	}
 
 }

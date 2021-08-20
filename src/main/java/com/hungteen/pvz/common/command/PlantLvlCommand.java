@@ -3,7 +3,7 @@ package com.hungteen.pvz.common.command;
 import java.util.Collection;
 
 import com.hungteen.pvz.common.capability.CapabilityHandler;
-import com.hungteen.pvz.utils.enums.Plants;
+import com.hungteen.pvz.common.core.PlantType;
 import com.mojang.brigadier.CommandDispatcher;
 import com.mojang.brigadier.arguments.IntegerArgumentType;
 import com.mojang.brigadier.builder.LiteralArgumentBuilder;
@@ -18,7 +18,7 @@ public class PlantLvlCommand {
 
 	public static void register(CommandDispatcher<CommandSource> dispatcher) {
         LiteralArgumentBuilder<CommandSource> builder = Commands.literal("plantlvl").requires((ctx) -> {return ctx.hasPermission(2);});
-        for(Plants p : Plants.values()) {
+        for(PlantType p : PlantType.getPlants()) {
         	builder.then(Commands.argument("targets", EntityArgument.players()).then(Commands.literal("add").then(Commands.literal(p.toString().toLowerCase())
         	.then(Commands.literal("xp").then(Commands.argument("amount", IntegerArgumentType.integer()).executes((command)->{
     			return addPlantXp(command.getSource(), EntityArgument.getPlayers(command, "targets"), p, IntegerArgumentType.getInteger(command, "amount"));
@@ -52,7 +52,7 @@ public class PlantLvlCommand {
 	public static int addAllPlantLvl(CommandSource source, Collection<? extends ServerPlayerEntity> targets, int num) {
 		for(ServerPlayerEntity player : targets) {
 			player.getCapability(CapabilityHandler.PLAYER_DATA_CAPABILITY).ifPresent(l -> {
-				for(Plants plant : Plants.values()) {
+				for(PlantType plant : PlantType.getPlants()) {
 					l.getPlayerData().getPlantStats().addPlantLevel(plant, num);
 					source.sendSuccess(new StringTextComponent(plant.getText().getString() + ":" + l.getPlayerData().getPlantStats().getPlantLevel(plant)), true);
 				}
@@ -64,7 +64,7 @@ public class PlantLvlCommand {
 	public static int addAllPlantXp(CommandSource source, Collection<? extends ServerPlayerEntity> targets, int num) {
 		for(ServerPlayerEntity player : targets) {
 			player.getCapability(CapabilityHandler.PLAYER_DATA_CAPABILITY).ifPresent(l -> {
-				for(Plants plant : Plants.values()) {
+				for(PlantType plant : PlantType.getPlants()) {
 					l.getPlayerData().getPlantStats().addPlantXp(plant, num);
 					source.sendSuccess(new StringTextComponent(plant.getText().getString() + ":" + l.getPlayerData().getPlantStats().getPlantLevel(plant)), true);
 				}
@@ -73,7 +73,7 @@ public class PlantLvlCommand {
 		return targets.size();
 	}
 	
-	public static int addPlantLvl(CommandSource source,Collection<? extends ServerPlayerEntity> targets,Plants plant,int num) {
+	public static int addPlantLvl(CommandSource source, Collection<? extends ServerPlayerEntity> targets, PlantType plant, int num) {
 		for(ServerPlayerEntity player : targets) {
 			player.getCapability(CapabilityHandler.PLAYER_DATA_CAPABILITY).ifPresent(l -> {
 				l.getPlayerData().getPlantStats().addPlantLevel(plant, num);
@@ -83,7 +83,7 @@ public class PlantLvlCommand {
 		return targets.size();
 	}
 	
-	public static int addPlantXp(CommandSource source,Collection<? extends ServerPlayerEntity> targets,Plants plant,int num) {
+	public static int addPlantXp(CommandSource source, Collection<? extends ServerPlayerEntity> targets, PlantType plant, int num) {
 		for(ServerPlayerEntity player : targets) {
 			player.getCapability(CapabilityHandler.PLAYER_DATA_CAPABILITY).ifPresent(l -> {
 				l.getPlayerData().getPlantStats().addPlantXp(plant, num);
@@ -93,7 +93,7 @@ public class PlantLvlCommand {
 		return targets.size();
 	}
 	
-	public static int queryPlantLvl(CommandSource source,Collection<? extends ServerPlayerEntity> targets,Plants plant) {
+	public static int queryPlantLvl(CommandSource source, Collection<? extends ServerPlayerEntity> targets, PlantType plant) {
 		for(ServerPlayerEntity player:targets) {
 		    player.getCapability(CapabilityHandler.PLAYER_DATA_CAPABILITY).ifPresent((l)->{
 		    	source.sendSuccess(new StringTextComponent(plant.getText().getString() + ":" + l.getPlayerData().getPlantStats().getPlantLevel(plant)), false);
@@ -102,7 +102,7 @@ public class PlantLvlCommand {
 		return targets.size();
 	}
 	
-	public static int queryPlantXp(CommandSource source,Collection<? extends ServerPlayerEntity> targets,Plants plant) {
+	public static int queryPlantXp(CommandSource source, Collection<? extends ServerPlayerEntity> targets, PlantType plant) {
 		for(ServerPlayerEntity player:targets) {
 		    player.getCapability(CapabilityHandler.PLAYER_DATA_CAPABILITY).ifPresent((l)->{
 		    	source.sendSuccess(new StringTextComponent(plant.getText().getString() + ":" + l.getPlayerData().getPlantStats().getPlantXp(plant)), false);

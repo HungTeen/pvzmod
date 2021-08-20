@@ -1,14 +1,14 @@
 package com.hungteen.pvz.common.item.material;
 
+import com.hungteen.pvz.common.core.CardRank;
 import com.hungteen.pvz.common.item.PVZItemBase;
 import com.hungteen.pvz.register.GroupRegister;
-import com.hungteen.pvz.utils.enums.Ranks;
 
 public class TemplateCardItem extends PVZItemBase {
 
-	public final Ranks Rank;
+	public final CardRank Rank;
 	
-	public TemplateCardItem(Ranks rank) {
+	public TemplateCardItem(CardRank rank) {
 		super(new Properties().tab(GroupRegister.PVZ_MISC));
 		this.Rank = rank;
 	}

@@ -5,8 +5,8 @@ import java.util.List;
 import com.hungteen.pvz.PVZConfig;
 import com.hungteen.pvz.register.GroupRegister;
 import com.hungteen.pvz.register.SoundRegister;
+import com.hungteen.pvz.remove.Bundles;
 import com.hungteen.pvz.utils.EntityUtil;
-import com.hungteen.pvz.utils.enums.Bundles;
 
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.player.PlayerEntity;

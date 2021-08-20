@@ -1,22 +1,13 @@
 package com.hungteen.pvz.common.container;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import com.hungteen.pvz.common.item.tool.SunStorageSaplingItem;
 import com.hungteen.pvz.common.tileentity.FragmentSpliceTileEntity;
 import com.hungteen.pvz.register.ContainerRegister;
 import com.hungteen.pvz.utils.ItemUtil;
-import com.hungteen.pvz.utils.PlantUtil;
-import com.hungteen.pvz.utils.enums.Essences;
-import com.hungteen.pvz.utils.enums.Plants;
-import com.hungteen.pvz.utils.enums.Ranks;
-import com.mojang.datafixers.util.Pair;
 
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.inventory.container.Slot;
 import net.minecraft.item.ItemStack;
-import net.minecraft.item.crafting.Ingredient;
 import net.minecraft.util.math.BlockPos;
 import net.minecraftforge.items.SlotItemHandler;
 
@@ -143,30 +134,30 @@ public class FragmentSpliceContainer extends AbstractOptionContainer {
 		return this.te.isUsableByPlayer(playerIn);
 	}
 
-	public List<Pair<Ingredient, Slot>> getRecipeForPlant(Plants plantType){
-		Ranks rank = PlantUtil.getPlantRankByName(plantType);
-		Essences essence = PlantUtil.getPlantEssenceType(plantType);
-		Ingredient fragment = Ingredient.of(PlantUtil.getPlantEnjoyCard(plantType));
-		Ingredient template = Ingredient.of(Ranks.getRankCardItem(rank));
-		Ingredient special = Ingredient.of(Essences.getEssenceItem(essence).get());
-		Ingredient result = Ingredient.of(PlantUtil.getPlantSummonCard(plantType));
-		List<Pair<Ingredient, Slot>> list = new ArrayList<>();
-		for(int i = 0; i < 5; ++ i) {
-			for(int j = 0; j < 5; ++ j) {
-				int slotId = 2 + i * 5 + j;
-				Slot slot = this.getSlot(slotId);
-				if(i == 0 || i == 4 || j == 0 || j == 4) {
-					list.add(Pair.of(special, slot));
-				} else if(i == 2 && j == 2) {
-					list.add(Pair.of(template, slot));
-				} else {
-					list.add(Pair.of(fragment, slot));
-				}
-			}
-		}
-		list.add(Pair.of(result, this.getSlot(1)));
-		return list;
-	}
+//	public List<Pair<Ingredient, Slot>> getRecipeForPlant(PlantType plantType){
+//		CardRank rank = plantType.getRank();
+//		EssenceType essence = plantType.getEssence();
+//		Ingredient fragment = Ingredient.of(plantType.getEnjoyCard());
+//		Ingredient template = Ingredient.of(rank.getTemplateCard());
+//		Ingredient special = Ingredient.of(Essences.getEssenceItem(essence).get());
+//		Ingredient result = Ingredient.of(PlantUtil.getPlantSummonCard(plantType));
+//		List<Pair<Ingredient, Slot>> list = new ArrayList<>();
+//		for(int i = 0; i < 5; ++ i) {
+//			for(int j = 0; j < 5; ++ j) {
+//				int slotId = 2 + i * 5 + j;
+//				Slot slot = this.getSlot(slotId);
+//				if(i == 0 || i == 4 || j == 0 || j == 4) {
+//					list.add(Pair.of(special, slot));
+//				} else if(i == 2 && j == 2) {
+//					list.add(Pair.of(template, slot));
+//				} else {
+//					list.add(Pair.of(fragment, slot));
+//				}
+//			}
+//		}
+//		list.add(Pair.of(result, this.getSlot(1)));
+//		return list;
+//	}
 	
 	@Override
 	public boolean isCraftSlot(Slot slot) {

@@ -1,6 +1,6 @@
 package com.hungteen.pvz.common.entity.zombie.grassnight;
 
-import com.hungteen.pvz.utils.enums.Zombies;
+import com.hungteen.pvz.remove.Zombies;
 
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.monster.MonsterEntity;

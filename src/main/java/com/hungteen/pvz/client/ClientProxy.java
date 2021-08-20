@@ -23,7 +23,6 @@ public class ClientProxy extends CommonProxy{
 	
 	@Override
 	public void init() {
-//		KeyBindRegister.init();
 	};
 	
 	@Override

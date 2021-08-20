@@ -9,6 +9,7 @@ import com.hungteen.pvz.api.enums.PVZGroupType;
 import com.hungteen.pvz.api.interfaces.IPVZZombie;
 import com.hungteen.pvz.client.particle.ParticleUtil;
 import com.hungteen.pvz.common.advancement.trigger.CharmZombieTrigger;
+import com.hungteen.pvz.common.core.CardRank;
 import com.hungteen.pvz.common.entity.ai.goal.PVZLookRandomlyGoal;
 import com.hungteen.pvz.common.entity.ai.goal.PVZSwimGoal;
 import com.hungteen.pvz.common.entity.ai.goal.ZombieBreakPlantBlockGoal;
@@ -36,12 +37,11 @@ import com.hungteen.pvz.register.EffectRegister;
 import com.hungteen.pvz.register.EntityRegister;
 import com.hungteen.pvz.register.ItemRegister;
 import com.hungteen.pvz.register.SoundRegister;
+import com.hungteen.pvz.remove.InvasionEvents;
 import com.hungteen.pvz.utils.AlgorithmUtil;
 import com.hungteen.pvz.utils.ConfigUtil;
 import com.hungteen.pvz.utils.EntityUtil;
 import com.hungteen.pvz.utils.ZombieUtil;
-import com.hungteen.pvz.utils.enums.InvasionEvents;
-import com.hungteen.pvz.utils.enums.Ranks;
 import com.hungteen.pvz.utils.interfaces.ICanAttract;
 import com.hungteen.pvz.utils.others.WeightList;
 import com.mojang.datafixers.util.Pair;
@@ -753,7 +753,7 @@ public abstract class PVZZombieEntity extends MonsterEntity implements IPVZZombi
 	}
 
 	@Override
-	public Ranks getZombieRank() {
+	public CardRank getZombieRank() {
 		return ZombieUtil.getZombieRank(getZombieEnumName());
 	}
 

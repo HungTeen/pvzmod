@@ -1,9 +1,10 @@
 package com.hungteen.pvz.common.entity.plant.arma;
 
+import com.hungteen.pvz.common.core.PlantType;
 import com.hungteen.pvz.common.entity.bullet.PultBulletEntity;
 import com.hungteen.pvz.common.entity.bullet.itembullet.CabbageEntity;
 import com.hungteen.pvz.common.entity.plant.base.PlantPultEntity;
-import com.hungteen.pvz.utils.enums.Plants;
+import com.hungteen.pvz.common.impl.plant.PVZPlants;
 
 import net.minecraft.entity.CreatureEntity;
 import net.minecraft.entity.EntitySize;
@@ -34,8 +35,8 @@ public class CabbagePultEntity extends PlantPultEntity {
 	}
 	
 	@Override
-	public Plants getPlantEnumName() {
-		return Plants.CABBAGE_PULT;
+	public PlantType getPlantType() {
+		return PVZPlants.CABBAGE_PULT;
 	}
 
 }

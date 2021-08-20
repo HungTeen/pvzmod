@@ -1,24 +1,15 @@
 package com.hungteen.pvz.common.container;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
-
 import com.hungteen.pvz.common.item.card.PlantCardItem;
 import com.hungteen.pvz.common.item.material.EssenceItem;
 import com.hungteen.pvz.common.item.tool.SunStorageSaplingItem;
-import com.hungteen.pvz.common.misc.recipe.FusionRecipes;
 import com.hungteen.pvz.common.tileentity.CardFusionTileEntity;
 import com.hungteen.pvz.register.ContainerRegister;
 import com.hungteen.pvz.utils.ItemUtil;
-import com.hungteen.pvz.utils.PlantUtil;
-import com.hungteen.pvz.utils.enums.Plants;
-import com.mojang.datafixers.util.Pair;
 
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.inventory.container.Slot;
 import net.minecraft.item.ItemStack;
-import net.minecraft.item.crafting.Ingredient;
 import net.minecraft.util.math.BlockPos;
 import net.minecraftforge.items.SlotItemHandler;
 
@@ -81,19 +72,19 @@ public class CardFusionContainer extends AbstractOptionContainer {
 		}
 	}
 
-	public List<Pair<Ingredient, Slot>> getRecipeForPlant(Plants plantType) {
-		Optional<FusionRecipes> recipe = FusionRecipes.getFusionRecipe(plantType);
-		List<Pair<Ingredient, Slot>> list = new ArrayList<>();
-		if(! recipe.isPresent()) return list;
-		int pos = 0;
-		for(Plants plant : recipe.get().requirePlants) {
-			Ingredient card = Ingredient.of(PlantUtil.getPlantSummonCard(plant));
-			list.add(Pair.of(card, this.getSlot(++ pos)));
-		}
-		Ingredient result = Ingredient.of(PlantUtil.getPlantSummonCard(plantType));
-		list.add(Pair.of(result, this.getSlot(12)));
-		return list;
-	}
+//	public List<Pair<Ingredient, Slot>> getRecipeForPlant(Plants plantType) {
+//		Optional<FusionRecipes> recipe = FusionRecipes.getFusionRecipe(plantType);
+//		List<Pair<Ingredient, Slot>> list = new ArrayList<>();
+//		if(! recipe.isPresent()) return list;
+//		int pos = 0;
+//		for(Plants plant : recipe.get().requirePlants) {
+//			Ingredient card = Ingredient.of(PlantUtil.getPlantSummonCard(plant));
+//			list.add(Pair.of(card, this.getSlot(++ pos)));
+//		}
+//		Ingredient result = Ingredient.of(PlantUtil.getPlantSummonCard(plantType));
+//		list.add(Pair.of(result, this.getSlot(12)));
+//		return list;
+//	}
 	
 	public void canPutStackBackToInventory() {
 		for(int i = 1;i < 9; ++ i) {

@@ -4,11 +4,11 @@ import java.util.EnumMap;
 
 import com.hungteen.pvz.PVZMod;
 import com.hungteen.pvz.client.gui.GuiHandler;
+import com.hungteen.pvz.common.core.PlantType;
 import com.hungteen.pvz.common.potion.PotionRecipeHandler;
 import com.hungteen.pvz.register.BlockRegister;
 import com.hungteen.pvz.register.EnchantmentRegister;
 import com.hungteen.pvz.register.ItemRegister;
-import com.hungteen.pvz.utils.enums.Plants;
 
 import net.minecraft.enchantment.EnchantmentData;
 import net.minecraft.item.EnchantedBookItem;
@@ -59,8 +59,11 @@ public class TradeUtil {
 	
 	public static ItemStack getGoodItemStack(DaveGoods good) {
 		if(good.toString().toLowerCase().startsWith("enjoy_card")) {
-			Plants plant = Plants.values()[good.type];
-			return new ItemStack(PlantUtil.getPlantEnjoyCard(plant));
+			PlantType plant = PlantType.getPlants().get(good.type);
+			if(plant.getEnjoyCard().isPresent()) {
+				return new ItemStack(plant.getEnjoyCard().get());
+			}
+			return ItemStack.EMPTY;
 		}
 		if(DAVE_GOODS_ITEM.containsKey(good)) {
 			ItemStack stack = DAVE_GOODS_ITEM.get(good).copy();
@@ -73,9 +76,9 @@ public class TradeUtil {
 	public static int getGoodCost(DaveGoods good) {
 		if(good == DaveGoods.MONEY) return 1;
 		if(good.toString().toLowerCase().startsWith("enjoy_card")) {
-			Plants plant = Plants.values()[good.type];
-			int x = PlantUtil.getPlantRankByName(plant).ordinal() / 2;
-			return x + 1;
+//			PlantType plant = PlantType.getPlants().get(good.type);
+//			int x = PlantUtil.getPlantRankByName(plant).ordinal() / 2;
+			return 1;
 		}
 		if(DAVE_GOODS_COST.containsKey(good)) {
 			return DAVE_GOODS_COST.get(good);

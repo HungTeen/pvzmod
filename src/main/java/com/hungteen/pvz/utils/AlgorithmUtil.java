@@ -2,6 +2,8 @@ package com.hungteen.pvz.utils;
 
 import java.util.Comparator;
 
+import com.mojang.datafixers.util.Pair;
+
 import net.minecraft.entity.Entity;
 
 public class AlgorithmUtil {
@@ -48,6 +50,14 @@ public class AlgorithmUtil {
 			} else {
 				return d0 > d1 ? 1 : 0;
 			}
+		}
+	}
+	
+	public static class PairSorter<T> implements Comparator<Pair<T, Integer>> {
+
+		@Override
+		public int compare(Pair<T, Integer> pair1, Pair<T, Integer> pair2) {
+			return pair1.getSecond() > pair2.getSecond() ? -1 : pair1.getSecond() == pair2.getSecond() ? 0 : 1;
 		}
 	}
 	

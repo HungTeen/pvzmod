@@ -11,12 +11,12 @@ import com.hungteen.pvz.client.render.itemstack.ImitaterCardISTER;
 import com.hungteen.pvz.common.capability.CapabilityHandler;
 import com.hungteen.pvz.common.container.ImitaterContainer;
 import com.hungteen.pvz.common.container.inventory.ItemInventory;
+import com.hungteen.pvz.common.core.PlantType;
 import com.hungteen.pvz.common.enchantment.EnchantmentUtil;
 import com.hungteen.pvz.common.entity.plant.magic.ImitaterEntity;
+import com.hungteen.pvz.common.impl.plant.PVZPlants;
 import com.hungteen.pvz.register.BlockRegister;
 import com.hungteen.pvz.register.GroupRegister;
-import com.hungteen.pvz.utils.PlantUtil;
-import com.hungteen.pvz.utils.enums.Plants;
 
 import net.minecraft.block.FlowingFluidBlock;
 import net.minecraft.client.util.ITooltipFlag;
@@ -55,11 +55,11 @@ public class ImitaterCardItem extends PlantCardItem {
 	public static final String IMITATE_STRING = "imitate_plant_type";
 	
 	public ImitaterCardItem() {
-		super(new Item.Properties().tab(GroupRegister.PVZ_CARD).stacksTo(1).setISTER(() -> ImitaterCardISTER::new), Plants.IMITATER, false);
+		super(new Item.Properties().tab(GroupRegister.PVZ_CARD).stacksTo(1).setISTER(() -> ImitaterCardISTER::new), PVZPlants.IMITATER, false);
 	}
 	
 	public ImitaterCardItem(boolean isFragment) {
-		super(new Item.Properties().tab(GroupRegister.PVZ_CARD).stacksTo(16), Plants.IMITATER, true);
+		super(new Item.Properties().tab(GroupRegister.PVZ_CARD).stacksTo(16), PVZPlants.IMITATER, true);
 	}
 	
 	@Override
@@ -72,9 +72,9 @@ public class ImitaterCardItem extends PlantCardItem {
 		RayTraceResult raytraceresult = getPlayerPOVHitResult(world, player, RayTraceContext.FluidMode.SOURCE_ONLY);
 		if (raytraceresult.getType() != RayTraceResult.Type.BLOCK) return ActionResult.pass(stack);
 		if (world.isClientSide) return ActionResult.success(stack);
-		Optional<Plants> opt = getImitatePlantType(stack);
-		if(! opt.isPresent() || ! opt.get().isWaterPlant) return ActionResult.fail(stack);
-		if(opt.get() == Plants.FLOWER_POT) return ActionResult.fail(stack);
+		Optional<PlantType> opt = getImitatePlantType(stack);
+		if(! opt.isPresent() || ! opt.get().isWaterPlant()) return ActionResult.fail(stack);
+		if(opt.get() == PVZPlants.FLOWER_POT) return ActionResult.fail(stack);
 		BlockRayTraceResult blockraytraceresult = (BlockRayTraceResult) raytraceresult;
 		BlockPos pos = blockraytraceresult.getBlockPos();
 		if (!(world.getBlockState(pos).getBlock() instanceof FlowingFluidBlock)) return ActionResult.pass(stack);
@@ -98,11 +98,11 @@ public class ImitaterCardItem extends PlantCardItem {
 			this.openImitateGui(player);
 			return ActionResultType.SUCCESS;
 		}
-		Optional<Plants> opt = getImitatePlantType(stack);
-		if(! opt.isPresent() || (opt.get() != Plants.CAT_TAIL && opt.get().isUpgradePlant)) return ActionResultType.FAIL;
-		if(opt.get() == Plants.LILY_PAD) return ActionResultType.PASS;
+		Optional<PlantType> opt = getImitatePlantType(stack);
+		if(! opt.isPresent() || (opt.get() != PVZPlants.CAT_TAIL && opt.get().getUpgradeFrom().isPresent())) return ActionResultType.FAIL;
+		if(opt.get() == PVZPlants.LILY_PAD) return ActionResultType.PASS;
 		//place cat tail
-		if(opt.get() == Plants.CAT_TAIL) {
+		if(opt.get() == PVZPlants.CAT_TAIL) {
 			if(world.getBlockState(pos).getBlock() == BlockRegister.LILY_PAD.get()) {
 			    checkSunAndSummonImitater(player, stack, this, pos, (imitater) -> {
 				    imitater.targetPos = Optional.of(pos);
@@ -127,7 +127,7 @@ public class ImitaterCardItem extends PlantCardItem {
 			if(l instanceof ImitaterEntity) {
 				((ImitaterEntity) l).setImitateCard(stack.copy());
 				((ImitaterEntity) l).placeDirection = player.getDirection().getOpposite();
-				Optional<Plants> opt = getImitatePlantType(stack);
+				Optional<PlantType> opt = getImitatePlantType(stack);
 				if(opt.isPresent()) {
 					player.getCapability(CapabilityHandler.PLAYER_DATA_CAPABILITY).ifPresent((data) -> {
 						l.setPlantLvl(data.getPlayerData().getPlantStats().getPlantLevel(opt.get()));
@@ -138,29 +138,29 @@ public class ImitaterCardItem extends PlantCardItem {
 		});
 	}
 	
-	public boolean isPlantTypeEqual(ItemStack stack, Plants tmp) {
-		Optional<Plants> opt = getImitatePlantType(stack);
+	public boolean isPlantTypeEqual(ItemStack stack, PlantType tmp) {
+		Optional<PlantType> opt = getImitatePlantType(stack);
 		return opt.isPresent() && opt.get() == tmp;
 	}
 	
 	public int getImitateSunCost(ItemStack stack) {
-		Optional<Plants> opt = getImitatePlantType(stack);
-		if(! opt.isPresent() || opt.get() == Plants.IMITATER) return - 1;
-		int cost = PlantUtil.getPlantSunCost(opt.get());
+		Optional<PlantType> opt = getImitatePlantType(stack);
+		if(! opt.isPresent() || opt.get() == PVZPlants.IMITATER) return - 1;
+		int cost = opt.get().getCost();
 		return Math.max(cost - EnchantmentUtil.getSunReduceNum(stack), 0);
 	}
 	
 	@Override
-	public int getPlantCardCD(PlayerEntity player, ItemStack stack, Plants plant, int lvl) {
-		Optional<Plants> opt = getImitatePlantType(stack);
-		if(! opt.isPresent() || opt.get() == Plants.IMITATER) {
+	public int getPlantCardCD(PlayerEntity player, ItemStack stack, PlantType plant, int lvl) {
+		Optional<PlantType> opt = getImitatePlantType(stack);
+		if(! opt.isPresent() || opt.get() == PVZPlants.IMITATER) {
 			System.out.println("ERROR : Wrong Use of Imitater Card !");
 			return 100;
 		}
 		return super.getPlantCardCD(player, stack, opt.get(), lvl);
 	}
 	
-	public static Optional<Plants> getImitatePlantType(ItemStack stack) {
+	public static Optional<PlantType> getImitatePlantType(ItemStack stack) {
 		ItemStack inv = getInventory(stack).getItem(0);
 		if(! (inv.getItem() instanceof PlantCardItem)) return Optional.empty();
 		PlantCardItem item = (PlantCardItem) inv.getItem();
@@ -190,8 +190,8 @@ public class ImitaterCardItem extends PlantCardItem {
 			tooltip.add(new TranslationTextComponent("tooltip.pvz.imitater_card.no").withStyle(TextFormatting.RED));
 			return ;
 		}
-		Optional<Plants> opt = getImitatePlantType(stack);
-		if(! opt.isPresent() || opt.get() == Plants.IMITATER) {
+		Optional<PlantType> opt = getImitatePlantType(stack);
+		if(! opt.isPresent() || opt.get() == PVZPlants.IMITATER) {
 			tooltip.add(new TranslationTextComponent("tooltip.pvz.imitater_card.empty").withStyle(TextFormatting.RED));
 			return ;
 		}

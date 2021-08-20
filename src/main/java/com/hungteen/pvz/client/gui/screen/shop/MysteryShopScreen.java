@@ -13,7 +13,6 @@ import com.hungteen.pvz.utils.StringUtil;
 import com.hungteen.pvz.utils.TradeUtil;
 import com.hungteen.pvz.utils.TradeUtil.DaveGoods;
 import com.hungteen.pvz.utils.enums.Colors;
-import com.hungteen.pvz.utils.enums.Plants;
 import com.hungteen.pvz.utils.enums.Resources;
 import com.mojang.blaze3d.matrix.MatrixStack;
 
@@ -74,8 +73,8 @@ public class MysteryShopScreen extends AbstractDaveShopScreen {
 	@Override
 	protected void renderDetails(MatrixStack stack) {
 		if(this.selectedGood.toString().startsWith("ENJOY_CARD")) {
-			Plants plant = Plants.values()[this.selectedGood.type];
-			StringUtil.drawCenteredScaledString(stack, font, new TranslationTextComponent("item.pvz." + plant.toString().toLowerCase() + "_enjoy_card").getString(), this.leftPos + 117 + 80, this.topPos + 28 + 20, Colors.BLACK, 1.5f);
+//			Plants plant = Plants.values()[this.selectedGood.type];
+//			StringUtil.drawCenteredScaledString(stack, font, new TranslationTextComponent("item.pvz." + plant.toString().toLowerCase() + "_enjoy_card").getString(), this.leftPos + 117 + 80, this.topPos + 28 + 20, Colors.BLACK, 1.5f);
 		} else {
 			StringUtil.drawCenteredScaledString(stack, font, new TranslationTextComponent("gui.pvz.dave_shop." + this.selectedGood.toString().toLowerCase()).getString(), this.leftPos + 117 + 80, this.topPos + 28 + 20, Colors.BLACK, 1.5f);
 		}

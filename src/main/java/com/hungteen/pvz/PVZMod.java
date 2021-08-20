@@ -7,6 +7,11 @@ import org.apache.logging.log4j.Logger;
 import com.hungteen.pvz.client.ClientProxy;
 import com.hungteen.pvz.common.CommonProxy;
 import com.hungteen.pvz.common.advancement.AdvancementHandler;
+import com.hungteen.pvz.common.core.PlantType;
+import com.hungteen.pvz.common.impl.plant.CustomPlants;
+import com.hungteen.pvz.common.impl.plant.MemePlants;
+import com.hungteen.pvz.common.impl.plant.OtherPlants;
+import com.hungteen.pvz.common.impl.plant.PVZPlants;
 import com.hungteen.pvz.common.world.gen.GenStructures;
 import com.hungteen.pvz.register.BiomeRegister;
 
@@ -34,7 +39,7 @@ public class PVZMod
     public static final Logger LOGGER = LogManager.getLogger();
     // Mod ID
 	public static final String MOD_ID = "pvz";
-	
+	// Proxy of Server and Client.
 	public static CommonProxy PROXY = DistExecutor.safeRunForDist(() -> ClientProxy::new, () -> CommonProxy::new);
 	
     public PVZMod() {
@@ -55,26 +60,34 @@ public class PVZMod
     	IEventBus forgeBus = MinecraftForge.EVENT_BUS;
     	forgeBus.addListener(EventPriority.NORMAL, GenStructures::addDimensionalSpacing);
     	forgeBus.addListener(EventPriority.HIGH, BiomeRegister::biomeModification);
-    	 
+    	
+//    	forgeBus.post(new PVZRegisterEvent());
+    	PVZPlants.register();
+		OtherPlants.register();
+		CustomPlants.register();
+		MemePlants.register();
+    	PlantType.PlantManager.sortPlants();
+    	
     	AdvancementHandler.init();
     	
     	PROXY.init();
     }
     
 	@SubscribeEvent
-    public static void setupComplete(FMLLoadCompleteEvent event) {
+    public static void setUpComplete(FMLLoadCompleteEvent event) {
         PROXY.postInit();
     }
 	
 	@SubscribeEvent
-	public static void setupClient(FMLCommonSetupEvent event) {
-		event.enqueueWork(() ->{
+	public static void setUp(FMLCommonSetupEvent event) {
+		event.enqueueWork(() -> {
             PROXY.setUp();
+            RegistryHandler.setUp(event);
 		});
     }
 	
 	@SubscribeEvent
-	public static void setupClient(FMLClientSetupEvent event) {
+	public static void setUpClient(FMLClientSetupEvent event) {
         PROXY.setUpClient();
     }
 	

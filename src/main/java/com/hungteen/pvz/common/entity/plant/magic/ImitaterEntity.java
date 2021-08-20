@@ -2,19 +2,11 @@ package com.hungteen.pvz.common.entity.plant.magic;
 
 import java.util.Optional;
 
+import com.hungteen.pvz.common.core.PlantType;
 import com.hungteen.pvz.common.entity.plant.PVZPlantEntity;
 import com.hungteen.pvz.common.entity.plant.base.PlantBomberEntity;
-import com.hungteen.pvz.common.item.card.BlockPlantCardItem;
-import com.hungteen.pvz.common.item.card.ImitaterCardItem;
-import com.hungteen.pvz.common.item.card.PlantCardItem;
-import com.hungteen.pvz.register.BlockRegister;
-import com.hungteen.pvz.register.SoundRegister;
-import com.hungteen.pvz.utils.EntityUtil;
-import com.hungteen.pvz.utils.PlantUtil;
-import com.hungteen.pvz.utils.enums.Plants;
+import com.hungteen.pvz.common.impl.plant.PVZPlants;
 
-import net.minecraft.block.BlockState;
-import net.minecraft.block.Blocks;
 import net.minecraft.entity.CreatureEntity;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntitySize;
@@ -26,7 +18,6 @@ import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.network.datasync.DataParameter;
 import net.minecraft.network.datasync.DataSerializers;
 import net.minecraft.network.datasync.EntityDataManager;
-import net.minecraft.particles.ParticleTypes;
 import net.minecraft.util.Direction;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
@@ -56,66 +47,66 @@ public class ImitaterEntity extends PlantBomberEntity {
 	
 	@Override
 	public void startBomb(boolean server) {
-		if(! level.isClientSide) {
-			ItemStack stack = getImitateCard();
-			if(stack.isEmpty()) return ; //empty itemstack
-			Optional<Plants> opt = ImitaterCardItem.getImitatePlantType(stack);
-			if(! opt.isPresent() || opt.get() == Plants.IMITATER) return ;// no imitate template plant.
-			Plants plant = opt.get();
-			EntityUtil.playSound(this, SoundRegister.WAKE_UP.get());
-			if(plant.isBlockPlant) {// imitate block
-				if(blockPosition().getY() >= 2) {
-					BlockState state = BlockPlantCardItem.getBlockState(placeDirection, plant);
-					level.setBlock(blockPosition(), state, 11);
-				}
-				return ;
-			}
-			if(plant.isOuterPlant) {// imitate outer plant
-				if(this.targetPlantEntity.isPresent()) {
-					PlantCardItem.placeOuterPlant(this.targetPlantEntity.get(), plant, getImitateCard());
-					this.targetPlantEntity.get().outerSunCost = this.plantSunCost;
-				}
-				return ;
-			}
-			if(plant.isUpgradePlant) {// imitate upgrade plant
-				if(this.targetPlantEntity.isPresent()) {
-					PVZPlantEntity target = this.targetPlantEntity.get();
-					PVZPlantEntity plantEntity = PlantUtil.getPlantEntity(level, plant);
-					this.copyDataToPlant(plantEntity);
-					plantEntity.plantSunCost = target.plantSunCost + this.plantSunCost;
-					if(! plant.isBigPlant) {
-						if(target.getOuterPlantType().isPresent()) {
-						    plantEntity.setOuterPlantType(target.getOuterPlantType().get());
-					    }
-					    plantEntity.setPumpkinLife(target.getPumpkinLife());
-					}
-					PlantCardItem.summonPlantEntityByCard(plantEntity, stack);
-					level.addFreshEntity(plantEntity);
-					this.targetPlantEntity.get().remove();
-				} else if(plant == Plants.CAT_TAIL && this.targetPos.isPresent()) {
-					BlockPos pos = this.targetPos.get();
-					if(level.getBlockState(pos).getBlock() == BlockRegister.LILY_PAD.get()) {
-						level.setBlockAndUpdate(pos, Blocks.AIR.defaultBlockState());
-						PVZPlantEntity plantEntity = PlantUtil.getPlantEntity(level, plant);
-						this.copyDataToPlant(plantEntity);
-						plantEntity.plantSunCost = this.plantSunCost + PlantUtil.getPlantSunCost(Plants.LILY_PAD);
-						PlantCardItem.summonPlantEntityByCard(plantEntity, stack);
-						level.addFreshEntity(plantEntity);
-					}
-				}
-				return ;
-			}
-			//imitate common plants.
-			PVZPlantEntity plantEntity = PlantUtil.getPlantEntity(level, plant);
-			this.copyDataToPlant(plantEntity);
-			plantEntity.plantSunCost = this.plantSunCost;
-			PlantCardItem.summonPlantEntityByCard(plantEntity, stack);
-			level.addFreshEntity(plantEntity);
-		} else {
-			for(int i = 0; i < 3; ++ i) {
-			    this.level.addParticle(ParticleTypes.EXPLOSION, this.getX(), this.getY() + 0.5, this.getZ(), 0, 0, 0);
-			}
-		}
+//		if(! level.isClientSide) {
+//			ItemStack stack = getImitateCard();
+//			if(stack.isEmpty()) return ; //empty itemstack
+//			Optional<Plants> opt = ImitaterCardItem.getImitatePlantType(stack);
+//			if(! opt.isPresent() || opt.get() == Plants.IMITATER) return ;// no imitate template plant.
+//			Plants plant = opt.get();
+//			EntityUtil.playSound(this, SoundRegister.WAKE_UP.get());
+//			if(plant.isBlockPlant()) {// imitate block
+//				if(blockPosition().getY() >= 2) {
+//					BlockState state = BlockPlantCardItem.getBlockState(placeDirection, plant);
+//					level.setBlock(blockPosition(), state, 11);
+//				}
+//				return ;
+//			}
+//			if(plant.isOuterPlant()) {// imitate outer plant
+//				if(this.targetPlantEntity.isPresent()) {
+//					PlantCardItem.placeOuterPlant(this.targetPlantEntity.get(), plant, getImitateCard());
+//					this.targetPlantEntity.get().outerSunCost = this.plantSunCost;
+//				}
+//				return ;
+//			}
+//			if(plant.isUpgradePlant()) {// imitate upgrade plant
+//				if(this.targetPlantEntity.isPresent()) {
+//					PVZPlantEntity target = this.targetPlantEntity.get();
+//					PVZPlantEntity plantEntity = PlantUtil.getPlantEntity(level, plant);
+//					this.copyDataToPlant(plantEntity);
+//					plantEntity.plantSunCost = target.plantSunCost + this.plantSunCost;
+//					if(! plant.isBigPlant) {
+//						if(target.getOuterPlantType().isPresent()) {
+//						    plantEntity.setOuterPlantType(target.getOuterPlantType().get());
+//					    }
+//					    plantEntity.setPumpkinLife(target.getPumpkinLife());
+//					}
+//					PlantCardItem.summonPlantEntityByCard(plantEntity, stack);
+//					level.addFreshEntity(plantEntity);
+//					this.targetPlantEntity.get().remove();
+//				} else if(plant == Plants.CAT_TAIL && this.targetPos.isPresent()) {
+//					BlockPos pos = this.targetPos.get();
+//					if(level.getBlockState(pos).getBlock() == BlockRegister.LILY_PAD.get()) {
+//						level.setBlockAndUpdate(pos, Blocks.AIR.defaultBlockState());
+//						PVZPlantEntity plantEntity = PlantUtil.getPlantEntity(level, plant);
+//						this.copyDataToPlant(plantEntity);
+//						plantEntity.plantSunCost = this.plantSunCost + PlantUtil.getPlantSunCost(Plants.LILY_PAD);
+//						PlantCardItem.summonPlantEntityByCard(plantEntity, stack);
+//						level.addFreshEntity(plantEntity);
+//					}
+//				}
+//				return ;
+//			}
+//			//imitate common plants.
+//			PVZPlantEntity plantEntity = PlantUtil.getPlantEntity(level, plant);
+//			this.copyDataToPlant(plantEntity);
+//			plantEntity.plantSunCost = this.plantSunCost;
+//			PlantCardItem.summonPlantEntityByCard(plantEntity, stack);
+//			level.addFreshEntity(plantEntity);
+//		} else {
+//			for(int i = 0; i < 3; ++ i) {
+//			    this.level.addParticle(ParticleTypes.EXPLOSION, this.getX(), this.getY() + 0.5, this.getZ(), 0, 0, 0);
+//			}
+//		}
 	}
 	
 	public void copyDataToPlant(PVZPlantEntity plantEntity) {
@@ -165,8 +156,8 @@ public class ImitaterEntity extends PlantBomberEntity {
 	}
 
 	@Override
-	public Plants getPlantEnumName() {
-		return Plants.IMITATER;
+	public PlantType getPlantType() {
+		return PVZPlants.IMITATER;
 	}
 	
 	@Override

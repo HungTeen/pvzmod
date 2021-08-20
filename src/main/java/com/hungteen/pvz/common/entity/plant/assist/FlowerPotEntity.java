@@ -1,7 +1,8 @@
 package com.hungteen.pvz.common.entity.plant.assist;
 
+import com.hungteen.pvz.common.core.PlantType;
 import com.hungteen.pvz.common.entity.plant.PVZPlantEntity;
-import com.hungteen.pvz.utils.enums.Plants;
+import com.hungteen.pvz.common.impl.plant.PVZPlants;
 
 import net.minecraft.entity.CreatureEntity;
 import net.minecraft.entity.EntityType;
@@ -14,8 +15,8 @@ public class FlowerPotEntity extends PVZPlantEntity{
 	}
 
 	@Override
-	public Plants getPlantEnumName() {
-		return Plants.FLOWER_POT;
+	public PlantType getPlantType() {
+		return PVZPlants.FLOWER_POT;
 	}
 
 	@Override

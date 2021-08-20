@@ -2,10 +2,9 @@ package com.hungteen.pvz.common.item.card;
 
 import java.util.List;
 
+import com.hungteen.pvz.common.core.PlantType;
 import com.hungteen.pvz.common.enchantment.EnchantmentUtil;
 import com.hungteen.pvz.register.GroupRegister;
-import com.hungteen.pvz.utils.PlantUtil;
-import com.hungteen.pvz.utils.enums.Plants;
 
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.enchantment.Enchantment;
@@ -31,8 +30,7 @@ public abstract class SummonCardItem extends Item{
 	 
 	@Override
 	public boolean canApplyAtEnchantingTable(ItemStack stack, Enchantment enchantment) {
-		if(this.isEnjoyCard) return false;//enjoy card have no enchant
-		return super.canApplyAtEnchantingTable(stack, enchantment);
+		return ! this.isEnjoyCard && super.canApplyAtEnchantingTable(stack, enchantment);//enjoy card have no enchant
 	}
 	
 	/**
@@ -43,8 +41,8 @@ public abstract class SummonCardItem extends Item{
 			return ((ImitaterCardItem) stack.getItem()).getImitateSunCost(stack);
 		}
 		if(stack.getItem() instanceof PlantCardItem) {
-			Plants plantType = ((PlantCardItem) stack.getItem()).plantType;
-			int cost = PlantUtil.getPlantSunCost(plantType);
+			PlantType plantType = ((PlantCardItem) stack.getItem()).plantType;
+			int cost = plantType.getCost();
 			return Math.max(cost - EnchantmentUtil.getSunReduceNum(stack), 0);
 		}
 		return 0;

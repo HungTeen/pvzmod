@@ -1,6 +1,6 @@
 package com.hungteen.pvz.common.event.events;
 
-import com.hungteen.pvz.utils.enums.Plants;
+import com.hungteen.pvz.common.core.PlantType;
 
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraftforge.event.entity.player.PlayerEvent;
@@ -28,9 +28,9 @@ public class PlayerLevelUpEvent extends PlayerEvent {
 	
 	public static class PlantLevelUpEvent extends PlayerLevelUpEvent {
 
-		public final Plants plant;
+		public final PlantType plant;
 		
-		public PlantLevelUpEvent(PlayerEntity player, Plants plant, int lvl) {
+		public PlantLevelUpEvent(PlayerEntity player, PlantType plant, int lvl) {
 			super(player, lvl);
 			this.plant = plant;
 		}

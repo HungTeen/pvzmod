@@ -1,9 +1,10 @@
 package com.hungteen.pvz.common.entity.plant.arma;
 
+import com.hungteen.pvz.common.core.PlantType;
 import com.hungteen.pvz.common.entity.bullet.ButterEntity;
 import com.hungteen.pvz.common.entity.bullet.PultBulletEntity;
+import com.hungteen.pvz.common.impl.plant.CustomPlants;
 import com.hungteen.pvz.utils.PlantUtil;
-import com.hungteen.pvz.utils.enums.Plants;
 
 import net.minecraft.entity.CreatureEntity;
 import net.minecraft.entity.EntityType;
@@ -38,8 +39,8 @@ public class ButterPultEntity extends KernelPultEntity {
 	}
 	
 	@Override
-	public Plants getPlantEnumName() {
-		return Plants.BUTTER_PULT;
+	public PlantType getPlantType() {
+		return CustomPlants.BUTTER_PULT;
 	}
 	
 }

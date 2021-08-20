@@ -1,15 +1,16 @@
 package com.hungteen.pvz.common.entity.plant.explosion;
 
 import com.hungteen.pvz.common.advancement.trigger.EntityEffectAmountTrigger;
+import com.hungteen.pvz.common.core.PlantType;
 import com.hungteen.pvz.common.entity.plant.PVZPlantEntity;
 import com.hungteen.pvz.common.entity.plant.base.PlantBomberEntity;
+import com.hungteen.pvz.common.impl.plant.PVZPlants;
 import com.hungteen.pvz.common.misc.damage.PVZDamageSource;
 import com.hungteen.pvz.register.ParticleRegister;
 import com.hungteen.pvz.register.SoundRegister;
 import com.hungteen.pvz.utils.EntityUtil;
 import com.hungteen.pvz.utils.MathUtil;
 import com.hungteen.pvz.utils.PlantUtil;
-import com.hungteen.pvz.utils.enums.Plants;
 
 import net.minecraft.entity.CreatureEntity;
 import net.minecraft.entity.Entity;
@@ -72,8 +73,8 @@ public class CherryBombEntity extends PlantBomberEntity{
 	}
 
 	@Override
-	public Plants getPlantEnumName() {
-		return Plants.CHERRY_BOMB;
+	public PlantType getPlantType() {
+		return PVZPlants.CHERRY_BOMB;
 	}
 
 }

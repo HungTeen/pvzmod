@@ -11,9 +11,9 @@ import com.hungteen.pvz.common.cache.InvasionCache;
 import com.hungteen.pvz.common.command.InvasionCommand;
 import com.hungteen.pvz.common.world.data.PVZFlagData;
 import com.hungteen.pvz.common.world.data.PVZInvasionData;
+import com.hungteen.pvz.remove.InvasionEvents;
+import com.hungteen.pvz.remove.Zombies;
 import com.hungteen.pvz.utils.PlayerUtil;
-import com.hungteen.pvz.utils.enums.InvasionEvents;
-import com.hungteen.pvz.utils.enums.Zombies;
 import com.hungteen.pvz.utils.others.WeightList;
 
 import net.minecraft.entity.player.ServerPlayerEntity;

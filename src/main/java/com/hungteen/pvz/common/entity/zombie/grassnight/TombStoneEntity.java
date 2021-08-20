@@ -9,10 +9,10 @@ import com.hungteen.pvz.common.entity.zombie.other.NobleZombieEntity;
 import com.hungteen.pvz.common.entity.zombie.roof.ZomBossEntity;
 import com.hungteen.pvz.common.world.invasion.WaveManager;
 import com.hungteen.pvz.register.EntityRegister;
+import com.hungteen.pvz.remove.Zombies;
 import com.hungteen.pvz.utils.EntityUtil;
 import com.hungteen.pvz.utils.MathUtil;
 import com.hungteen.pvz.utils.ZombieUtil;
-import com.hungteen.pvz.utils.enums.Zombies;
 
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.ai.goal.Goal;

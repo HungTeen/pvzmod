@@ -3,8 +3,8 @@ package com.hungteen.pvz.common.world.invasion;
 import com.hungteen.pvz.common.capability.CapabilityHandler;
 import com.hungteen.pvz.common.world.data.PVZInvasionData;
 import com.hungteen.pvz.register.EffectRegister;
+import com.hungteen.pvz.remove.InvasionEvents;
 import com.hungteen.pvz.utils.PlayerUtil;
-import com.hungteen.pvz.utils.enums.InvasionEvents;
 import com.hungteen.pvz.utils.enums.Resources;
 
 import net.minecraft.entity.Pose;

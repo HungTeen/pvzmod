@@ -6,8 +6,8 @@ import com.hungteen.pvz.common.entity.plant.assist.MagnetShroomEntity;
 import com.hungteen.pvz.common.misc.damage.PVZDamageSource;
 import com.hungteen.pvz.register.EntityRegister;
 import com.hungteen.pvz.register.SoundRegister;
+import com.hungteen.pvz.remove.MetalTypes;
 import com.hungteen.pvz.utils.EntityUtil;
-import com.hungteen.pvz.utils.enums.MetalTypes;
 
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntitySize;

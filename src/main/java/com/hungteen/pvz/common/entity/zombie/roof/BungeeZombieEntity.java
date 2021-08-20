@@ -3,19 +3,19 @@ package com.hungteen.pvz.common.entity.zombie.roof;
 import java.util.List;
 import java.util.Optional;
 
-import com.hungteen.pvz.api.interfaces.IPVZPlant;
 import com.hungteen.pvz.api.interfaces.IPVZZombie;
 import com.hungteen.pvz.common.cache.InvasionCache;
 import com.hungteen.pvz.common.entity.ai.goal.target.PVZRandomTargetGoal;
 import com.hungteen.pvz.common.entity.bullet.TargetArrowEntity;
+import com.hungteen.pvz.common.entity.plant.PVZPlantEntity;
 import com.hungteen.pvz.common.entity.zombie.PVZZombieEntity;
 import com.hungteen.pvz.common.misc.damage.PVZDamageSource;
 import com.hungteen.pvz.data.loot.PVZLoot;
 import com.hungteen.pvz.register.ItemRegister;
 import com.hungteen.pvz.register.SoundRegister;
+import com.hungteen.pvz.remove.Zombies;
 import com.hungteen.pvz.utils.EntityUtil;
 import com.hungteen.pvz.utils.ZombieUtil;
-import com.hungteen.pvz.utils.enums.Zombies;
 import com.hungteen.pvz.utils.interfaces.ICanAttract;
 
 import net.minecraft.block.Blocks;
@@ -348,7 +348,7 @@ public class BungeeZombieEntity extends PVZZombieEntity {
 		if(target instanceof IPVZZombie) {
 			return ((IPVZZombie) target).canBeStealByBungee();
 		}
-		if(target instanceof IPVZPlant) {
+		if(target instanceof PVZPlantEntity) {
 			return true;
 		}
 		return EntityUtil.getCurrentMaxHealth((LivingEntity) target) < 80;

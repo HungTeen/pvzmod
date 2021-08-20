@@ -1,8 +1,10 @@
 package com.hungteen.pvz.common.item.card;
 
-import com.hungteen.pvz.PVZMod;
+import javax.annotation.Nullable;
+
+import com.hungteen.pvz.common.core.PlantType;
+import com.hungteen.pvz.common.impl.plant.PVZPlants;
 import com.hungteen.pvz.register.BlockRegister;
-import com.hungteen.pvz.utils.enums.Plants;
 
 import net.minecraft.block.BlockState;
 import net.minecraft.entity.player.PlayerEntity;
@@ -23,7 +25,7 @@ import net.minecraft.world.World;
 
 public class BlockPlantCardItem extends PlantCardItem{
 
-	public BlockPlantCardItem(Plants plant, boolean isFragment) {
+	public BlockPlantCardItem(PlantType plant, boolean isFragment) {
 		super(plant, isFragment);
 	}
 
@@ -35,7 +37,7 @@ public class BlockPlantCardItem extends PlantCardItem{
 	@Override
 	public ActionResult<ItemStack> use(World worldIn, PlayerEntity player, Hand handIn) {
 		ItemStack itemstack = player.getItemInHand(handIn);
-		if(plantType != Plants.LILY_PAD) {//this is for lily_pad placement
+		if(plantType != PVZPlants.LILY_PAD) {//this is for lily_pad placement
 			return ActionResult.pass(itemstack);
 		}
 		RayTraceResult raytraceresult = getPlayerPOVHitResult(worldIn, player, RayTraceContext.FluidMode.SOURCE_ONLY);
@@ -65,7 +67,7 @@ public class BlockPlantCardItem extends PlantCardItem{
 	
 	@Override
 	public ActionResultType useOn(ItemUseContext context) {
-		if(this.plantType != Plants.FLOWER_POT) {
+		if(this.plantType != PVZPlants.FLOWER_POT) {
 			return ActionResultType.PASS;
 		}
 		World world = context.getLevel();
@@ -88,26 +90,17 @@ public class BlockPlantCardItem extends PlantCardItem{
 		return ActionResultType.FAIL;
 	}
 	
-	public static BlockState getBlockState(PlayerEntity player, Plants plant) {
-		switch(plant) {
-		case LILY_PAD: return BlockRegister.LILY_PAD.get().getStateForPlacement(player);
-		case FLOWER_POT: return BlockRegister.FLOWER_POT.get().getStateForPlacement(player);
-		default:{
-			PVZMod.LOGGER.debug("No such block plant!");
-			return null;
-		}
-		}
+	@Nullable
+	public static BlockState getBlockState(PlayerEntity player, PlantType plant) {
+		return plant == PVZPlants.LILY_PAD ? BlockRegister.LILY_PAD.get().getStateForPlacement(player) :
+			   plant == PVZPlants.FLOWER_POT ? BlockRegister.FLOWER_POT.get().getStateForPlacement(player) :
+			   null;
 	}
 	
-	public static BlockState getBlockState(Direction direction, Plants plant) {
-		switch(plant) {
-		case LILY_PAD: return BlockRegister.LILY_PAD.get().getStateForPlacement(direction);
-		case FLOWER_POT: return BlockRegister.FLOWER_POT.get().getStateForPlacement(direction);
-		default:{
-			PVZMod.LOGGER.debug("No such block plant!");
-			return null;
-		}
-		}
+	public static BlockState getBlockState(Direction direction, PlantType plant) {
+		return plant == PVZPlants.LILY_PAD ? BlockRegister.LILY_PAD.get().getStateForPlacement(direction) :
+			   plant == PVZPlants.FLOWER_POT ? BlockRegister.FLOWER_POT.get().getStateForPlacement(direction) :
+			   null;
 	}
 	
 }
