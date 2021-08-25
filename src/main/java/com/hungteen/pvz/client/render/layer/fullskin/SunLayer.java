@@ -1,7 +1,7 @@
 package com.hungteen.pvz.client.render.layer.fullskin;
 
 import com.hungteen.pvz.common.entity.zombie.PVZZombieEntity;
-import com.hungteen.pvz.common.entity.zombie.PVZZombieEntity.Type;
+import com.hungteen.pvz.common.entity.zombie.PVZZombieEntity.VariantType;
 import com.hungteen.pvz.utils.StringUtil;
 
 import net.minecraft.client.renderer.entity.IEntityRenderer;
@@ -22,7 +22,7 @@ public class SunLayer <T extends LivingEntity, M extends EntityModel<T>> extends
 	protected boolean canRender(T entity) {
 		if(entity.isInvisible()) return false;
 		if(entity instanceof PVZZombieEntity) {
-			return ((PVZZombieEntity) entity).getZombieType() == Type.SUN;
+			return ((PVZZombieEntity) entity).getVariantType() == VariantType.SUN;
 		}
 		return false;
 	}

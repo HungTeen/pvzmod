@@ -18,6 +18,7 @@ import com.hungteen.pvz.common.impl.Essences;
 import com.hungteen.pvz.common.impl.Placements;
 import com.hungteen.pvz.common.impl.Ranks;
 import com.hungteen.pvz.common.item.card.PlantCardItem;
+import com.hungteen.pvz.register.EntityRegister;
 import com.hungteen.pvz.utils.AlgorithmUtil;
 import com.hungteen.pvz.utils.PlantUtil;
 import com.mojang.datafixers.util.Pair;
@@ -37,9 +38,15 @@ import net.minecraftforge.fml.DistExecutor.SafeCallable;
  */
 public abstract class PlantType {
 
-	//not final register list, because it can not confirm order.
+	//all registered plants.
 	private static final List<PlantType> PLANTS = new ArrayList<>();
+	//category -> plant type list.
+	private static final Map<String, List<PlantType>> CATEGORY_LISTS = new HashMap<>();
+	//use to confirm no duplicate.
+	private static final Set<PlantType> PLANT_SET = new HashSet<>();
+	//plant type -> unique id.(dynamic each loading).
 	private static final Map<PlantType, Integer> PLANTS_ID = new HashMap<>();
+	private static final Map<EntityType<? extends PVZPlantEntity>, PlantType> ENTITY_TYPE = new HashMap<>();
 	protected final String plantName;
 	protected final ResourceLocation plantEntityResource;
 	protected int sunCost;
@@ -47,7 +54,7 @@ public abstract class PlantType {
 	protected float renderScale;
 	protected ICoolDown plantCD;
 	protected EssenceType plantEssence;
-	protected CardRank plantRank;
+	protected RankType plantRank;
 	protected Supplier<EntityType<? extends PVZPlantEntity>> plantEntitySup;
 	protected Supplier<? extends PlantCardItem> summonCardSup;
 	protected Supplier<? extends PlantCardItem> enjoyCardSup;
@@ -91,7 +98,7 @@ public abstract class PlantType {
 	 * use to specify plant store information.
 	 */
 	public String getIdentity() {
-		return this.getModID() + "_" + this.toString();
+		return this.getModID() + ":" + this.toString();
 	}
 	
 	/**
@@ -125,7 +132,7 @@ public abstract class PlantType {
 	/**
 	 * get the rank of plants.
 	 */
-	public CardRank getRank() {
+	public RankType getRank() {
 		return this.plantRank;
 	}
 	
@@ -240,6 +247,64 @@ public abstract class PlantType {
 		return 0;
 	}
 	
+	/**
+	 * {@link PVZMod#PVZMod()}
+	 */
+    public static void initPlants() {
+    	PVZMod.LOGGER.debug("PlantManager : registered " + PLANT_SET.size() + " plants.");
+    	PLANTS.clear();
+    	//get priority category list.
+    	List<Pair<String, Integer>> categoryList = new ArrayList<>();
+    	CATEGORY_LISTS.keySet().forEach(l -> {
+    		final PlantType tmp = CATEGORY_LISTS.get(l).get(0);
+    		categoryList.add(Pair.of(l, tmp.getSortPriority()));
+    	});
+    	//sort category by priority.
+    	Collections.sort(categoryList, new AlgorithmUtil.PairSorter<>());
+    	//deal with each category list one by one.
+    	for(Pair<String, Integer> category : categoryList) {
+    		//get priority category list.
+    		final List<Pair<PlantType, Integer>> tmp = new ArrayList<>();
+    		CATEGORY_LISTS.get(category.getFirst()).forEach(l -> tmp.add(Pair.of(l, l.getSortPriority())));
+    		//sort list by priority.
+    		Collections.sort(tmp, new AlgorithmUtil.PairSorter<>());
+    		PVZMod.LOGGER.debug("PlantManager : sort category [" + category.getFirst() + "] found " + tmp.size() + " plants.");
+    		//add to the final result list.
+    		tmp.forEach(pair -> PLANTS.add(pair.getFirst()));
+    	}
+    	for(int i = 0; i < PLANTS.size(); ++ i) {
+    		PLANTS_ID.put(PLANTS.get(i), i);
+    	}
+	}
+    
+    /**
+	 * {@link EntityRegister#addEntityAttributes(net.minecraftforge.event.entity.EntityAttributeCreationEvent)}
+	 */
+    public static void postInitPlants() {
+    	PLANTS.forEach(type -> {
+    		type.getEntityType().ifPresent(l -> {
+    			ENTITY_TYPE.put(l, type);
+    		});
+    	});
+	}
+    
+	protected static void registerPlant(PlantType plant) {
+		if(! PLANT_SET.contains(plant)) {
+		    PLANT_SET.add(plant);
+		    if(CATEGORY_LISTS.containsKey(plant.getCategoryName())) {
+		    	CATEGORY_LISTS.get(plant.getCategoryName()).add(plant);
+		    } else {
+		    	CATEGORY_LISTS.put(plant.getCategoryName(), new ArrayList<>(Arrays.asList(plant)));
+		    }
+		} else {
+			PVZMod.LOGGER.warn("PlantManager : already add " + plant.toString());
+		}
+	}
+	
+	protected static void registerPlants(List<PlantType> plants) {
+		plants.forEach(type -> registerPlant(type));
+	}
+	
 	public static List<PlantType> getPlants(){
 		return PLANTS;
 	}
@@ -281,13 +346,13 @@ public abstract class PlantType {
 	 */
 	public abstract String getModID();
 	
-	public static class PlantFeatures{
+	public static final class PlantFeatures{
 		protected int sunCost = 9999;
 		protected int maxLevel = PlantUtil.MAX_PLANT_LEVEL;
 		protected float renderScale = 0.5F;
 		protected ICoolDown plantCD = ICoolDown.DEFAULT;
 		protected EssenceType plantEssence = Essences.ORIGIN;
-		protected CardRank plantRank = Ranks.GRAY;
+		protected RankType plantRank = Ranks.GRAY;
 		protected Supplier<EntityType<? extends PVZPlantEntity>> plantEntitySup;
 		protected Supplier<? extends PlantCardItem> summonCardSup;
 		protected Supplier<? extends PlantCardItem> enjoyCardSup;
@@ -335,7 +400,7 @@ public abstract class PlantType {
 		/**
 		 * set the rank of plants.
 		 */
-		public PlantFeatures rank(CardRank r) {
+		public PlantFeatures rank(RankType r) {
 			this.plantRank = r;
 			return this;
 		}
@@ -440,63 +505,5 @@ public abstract class PlantType {
 		}
 		
 	}
-	
-	public static final class PlantManager {
-
-		//all registered plants.
-		private static final Map<String, List<PlantType>> CATEGORY_LISTS = new HashMap<>();
-		private static final Set<PlantType> PLANT_SET = new HashSet<>();
-		
-		/**
-		 * {@link PVZMod#PVZMod()}
-		 */
-	    public static void sortPlants() {
-	    	PVZMod.LOGGER.debug("PlantManager : registered " + PLANT_SET.size() + " plants.");
-	    	PLANTS.clear();
-	    	//get priority category list.
-	    	List<Pair<String, Integer>> categoryList = new ArrayList<>();
-	    	CATEGORY_LISTS.keySet().forEach(l -> {
-	    		final PlantType tmp = CATEGORY_LISTS.get(l).get(0);
-	    		categoryList.add(Pair.of(l, tmp.getSortPriority()));
-	    	});
-	    	//sort category by priority.
-	    	Collections.sort(categoryList, new AlgorithmUtil.PairSorter<>());
-	    	//deal with each category list one by one.
-	    	for(Pair<String, Integer> category : categoryList) {
-	    		//get priority category list.
-	    		final List<Pair<PlantType, Integer>> tmp = new ArrayList<>();
-	    		CATEGORY_LISTS.get(category.getFirst()).forEach(l -> tmp.add(Pair.of(l, l.getSortPriority())));
-	    		//sort list by priority.
-	    		Collections.sort(tmp, new AlgorithmUtil.PairSorter<>());
-	    		PVZMod.LOGGER.debug("PlantManager : sort category [" + category.getFirst() + "] found " + tmp.size() + " plants.");
-	    		//add to the final result list.
-	    		tmp.forEach(pair -> PLANTS.add(pair.getFirst()));
-	    	}
-	    	for(int i = 0; i < PLANTS.size(); ++ i) {
-	    		PLANTS_ID.put(PLANTS.get(i), i);
-	    	}
-		}
-	    
-		public static void registerPlant(PlantType plant) {
-			if(! PLANT_SET.contains(plant)) {
-			    PLANT_SET.add(plant);
-			    if(CATEGORY_LISTS.containsKey(plant.getCategoryName())) {
-			    	CATEGORY_LISTS.get(plant.getCategoryName()).add(plant);
-			    } else {
-			    	CATEGORY_LISTS.put(plant.getCategoryName(), new ArrayList<>(Arrays.asList(plant)));
-			    }
-			} else {
-				PVZMod.LOGGER.warn("PlantManager : already add " + plant.toString());
-			}
-		}
-		
-		public static void registerPlants(List<PlantType> plants) {
-			for(PlantType plant : plants) {
-				registerPlant(plant);
-			}
-		}
-		
-	}
-
 	
 }

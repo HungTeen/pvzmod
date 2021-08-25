@@ -36,8 +36,8 @@ public class PVZLoot {
 	public static final ResourceLocation BUNGEE_ZOMBIE = getEntityLootTable("bungee_zombie");
 	public static final ResourceLocation LADDER_ZOMBIE = getEntityLootTable("ladder_zombie");
 	public static final ResourceLocation GARGANTUAR = getEntityLootTable("gargantuar");
-	public static final ResourceLocation SAD_GARGANTUAR = getEntityLootTable("sad_gargantuar");
-	public static final ResourceLocation ZOMBOSS = getEntityLootTable("zomboss");
+	public static final ResourceLocation GIGA_GARGANTUAR = getEntityLootTable("giga_gargantuar");
+	public static final ResourceLocation EDGAR_090505 = getEntityLootTable("edgar_090505");
 	public static final ResourceLocation PEASHOOTER_ZOMBIE = getEntityLootTable("peashooter_zombie");
 	public static final ResourceLocation WALLNUT_ZOMBIE = getEntityLootTable("wallnut_zombie");
 	public static final ResourceLocation GATLINGPEA_ZOMBIE = getEntityLootTable("gatlingpea_zombie");

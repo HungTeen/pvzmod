@@ -1,25 +1,24 @@
 package com.hungteen.pvz.utils;
 
-import java.util.HashMap;
-import java.util.Optional;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 import com.hungteen.pvz.PVZConfig;
-import com.hungteen.pvz.PVZMod;
 import com.hungteen.pvz.common.cache.InvasionCache;
-import com.hungteen.pvz.common.core.CardRank;
+import com.hungteen.pvz.common.core.ZombieType;
 import com.hungteen.pvz.common.entity.zombie.PVZZombieEntity;
-import com.hungteen.pvz.common.entity.zombie.grassnight.DancingZombieEntity;
-import com.hungteen.pvz.common.impl.Ranks;
-import com.hungteen.pvz.register.EntityRegister;
-import com.hungteen.pvz.remove.Zombies;
+import com.hungteen.pvz.common.entity.zombie.grass.DancingZombieEntity;
+import com.hungteen.pvz.common.impl.zombie.GrassZombies;
 
-import net.minecraft.entity.EntityType;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
-import net.minecraft.world.World;
-import net.minecraftforge.fml.RegistryObject;
 
 public class ZombieUtil {
+	
+	public static final List<ZombieType> DEFAULT_ZOMBIES = new ArrayList<>(Arrays.asList(
+			GrassZombies.NORMAL_ZOMBIE, GrassZombies.CONEHEAD_ZOMBIE, GrassZombies.BUCKETHEAD_ZOMBIE, 
+			GrassZombies.SCREENDOOR_ZOMBIE, GrassZombies.NEWSPAPER_ZOMBIE));
 	
     // zombies speed
 	public static final float WALK_SUPER_SLOW = 0.15F;
@@ -60,123 +59,7 @@ public class ZombieUtil {
 	public static final float LITTLE_HIGH_TARGET_HEIGHT = 40;
 	public static final float HIGH_TARGET_HEIGHT = 50;
 	
-	public static final HashMap<Zombies, CardRank> ZOMBIE_RANK = new HashMap<>();
-	public static final HashMap<EntityType<? extends PVZZombieEntity>, Zombies> ENTITY_TYPE_ZOMBIE = new HashMap<>();
-	public static final HashMap<Zombies, RegistryObject<? extends EntityType<? extends PVZZombieEntity>>> ZOMBIE_ENTITY = new HashMap<>();
 	 public static final int MAX_ZOMBIE_LEVEL = 20;
-	public static int ZOMBIE_NUM = 0;
-	
-	static {
-		//grass day
-		putZombieInfoToMap(Zombies.NORMAL_ZOMBIE, Ranks.WHITE, EntityRegister.NORMAL_ZOMBIE);
-		putZombieInfoToMap(Zombies.FLAG_ZOMBIE, Ranks.WHITE, EntityRegister.FLAG_ZOMBIE);
-		putZombieInfoToMap(Zombies.CONEHEAD_ZOMBIE, Ranks.GREEN, EntityRegister.CONEHEAD_ZOMBIE);
-		putZombieInfoToMap(Zombies.POLE_ZOMBIE, Ranks.GREEN, EntityRegister.POLE_ZOMBIE);
-		putZombieInfoToMap(Zombies.BUCKETHEAD_ZOMBIE, Ranks.BLUE, EntityRegister.BUCKETHEAD_ZOMBIE);
-		//grass night
-		putZombieInfoToMap(Zombies.NEWSPAPER_ZOMBIE, Ranks.WHITE, EntityRegister.NEWSPAPER_ZOMBIE);
-		putZombieInfoToMap(Zombies.TOMB_STONE, Ranks.GRAY, EntityRegister.TOMB_STONE);
-		putZombieInfoToMap(Zombies.SCREENDOOR_ZOMBIE, Ranks.WHITE, EntityRegister.SCREENDOOR_ZOMBIE);
-		putZombieInfoToMap(Zombies.FOOTBALL_ZOMBIE, Ranks.BLUE, EntityRegister.FOOTBALL_ZOMBIE);
-		putZombieInfoToMap(Zombies.DANCING_ZOMBIE, Ranks.GREEN, EntityRegister.DANCING_ZOMBIE);
-		putZombieInfoToMap(Zombies.BACKUP_DANCER, Ranks.WHITE, EntityRegister.BACKUP_DANCER);
-		putZombieInfoToMap(Zombies.GIGA_FOOTBALL_ZOMBIE, Ranks.GOLD, EntityRegister.GIGA_FOOTBALL_ZOMBIE);
-		putZombieInfoToMap(Zombies.OLD_ZOMBIE, Ranks.BLUE, EntityRegister.OLD_ZOMBIE);
-		putZombieInfoToMap(Zombies.SUNDAY_EDITION_ZOMBIE, Ranks.GOLD, EntityRegister.SUNDAY_EDITION_ZOMBIE);
-		putZombieInfoToMap(Zombies.COFFIN, Ranks.GOLD, EntityRegister.COFFIN);
-		putZombieInfoToMap(Zombies.MOURNER_ZOMBIE, Ranks.GREEN, EntityRegister.MOURNER_ZOMBIE);
-		putZombieInfoToMap(Zombies.NOBLE_ZOMBIE, Ranks.BLACK, EntityRegister.NOBLE_ZOMBIE);
-		//pool day
-		putZombieInfoToMap(Zombies.SNORKEL_ZOMBIE, Ranks.WHITE, EntityRegister.SNORKEL_ZOMBIE);
-		putZombieInfoToMap(Zombies.ZOMBONI, Ranks.BLUE, EntityRegister.ZOMBONI);
-		putZombieInfoToMap(Zombies.BOBSLE_TEAM, Ranks.GREEN, EntityRegister.BOBSLE_TEAM);
-		putZombieInfoToMap(Zombies.BOBSLE_ZOMBIE, Ranks.WHITE, EntityRegister.BOBSLE_ZOMBIE);
-		putZombieInfoToMap(Zombies.DOLPHIN_RIDER, Ranks.GREEN, EntityRegister.DOLPHIN_RIDER);
-		putZombieInfoToMap(Zombies.DOLPHIN_RIDER_ZOMBIE, Ranks.WHITE, EntityRegister.DOLPHIN_RIDER_ZOMBIE);
-		putZombieInfoToMap(Zombies.ZOMBIE_DOLPHIN, Ranks.GRAY, EntityRegister.ZOMBIE_DOLPHIN);
-		putZombieInfoToMap(Zombies.LAVA_ZOMBIE, Ranks.PURPLE, EntityRegister.LAVA_ZOMBIE);
-		//pool night
-		putZombieInfoToMap(Zombies.JACK_IN_BOX_ZOMBIE, Ranks.GREEN, EntityRegister.JACK_IN_BOX_ZOMBIE);
-		putZombieInfoToMap(Zombies.BALLOON_ZOMBIE, Ranks.WHITE, EntityRegister.BALLOON_ZOMBIE);
-		putZombieInfoToMap(Zombies.DIGGER_ZOMBIE, Ranks.GREEN, EntityRegister.DIGGER_ZOMBIE);
-		putZombieInfoToMap(Zombies.POGO_ZOMBIE, Ranks.GREEN, EntityRegister.POGO_ZOMBIE);
-		putZombieInfoToMap(Zombies.YETI_ZOMBIE, Ranks.BLUE, EntityRegister.YETI_ZOMBIE);
-		//roof
-		putZombieInfoToMap(Zombies.BUNGEE_ZOMBIE, Ranks.GREEN, EntityRegister.BUNGEE_ZOMBIE);
-		putZombieInfoToMap(Zombies.LADDER_ZOMBIE, Ranks.GREEN, EntityRegister.LADDER_ZOMBIE);
-		putZombieInfoToMap(Zombies.CATAPULT_ZOMBIE, Ranks.BLUE, EntityRegister.CATAPULT_ZOMBIE);
-		putZombieInfoToMap(Zombies.GARGANTUAR, Ranks.PURPLE, EntityRegister.GARGANTUAR);
-		putZombieInfoToMap(Zombies.IMP, Ranks.GRAY, EntityRegister.IMP);
-		putZombieInfoToMap(Zombies.SAD_GARGANTUAR, Ranks.GOLD, EntityRegister.SAD_GARGANTUAR);
-		putZombieInfoToMap(Zombies.ZOMBOSS, Ranks.BLACK, EntityRegister.ZOMBOSS);
-		//plant zombie
-		putZombieInfoToMap(Zombies.PEASHOOTER_ZOMBIE, Ranks.WHITE, EntityRegister.PEASHOOTER_ZOMBIE);
-		putZombieInfoToMap(Zombies.WALLNUT_ZOMBIE, Ranks.BLUE, EntityRegister.WALLNUT_ZOMBIE);
-		putZombieInfoToMap(Zombies.GATLINGPEA_ZOMBIE, Ranks.WHITE, EntityRegister.GATLINGPEA_ZOMBIE);
-		putZombieInfoToMap(Zombies.TALLNUT_ZOMBIE, Ranks.PURPLE, EntityRegister.TALLNUT_ZOMBIE);
-		putZombieInfoToMap(Zombies.SQUASH_ZOMBIE, Ranks.WHITE, EntityRegister.SQUASH_ZOMBIE);
-		putZombieInfoToMap(Zombies.JALAPENO_ZOMBIE, Ranks.GREEN, EntityRegister.JALAPENO_ZOMBIE);
-		putZombieInfoToMap(Zombies.PUMPKIN_ZOMBIE, Ranks.PURPLE, EntityRegister.PUMPKIN_ZOMBIE);
-		//other
-		putZombieInfoToMap(Zombies.TRICK_ZOMBIE, Ranks.GRAY, EntityRegister.TRICK_ZOMBIE);
-		putZombieInfoToMap(Zombies.RA_ZOMBIE, Ranks.WHITE, EntityRegister.RA_ZOMBIE);
-		putZombieInfoToMap(Zombies.GIGA_TOMB_STONE, Ranks.GRAY, EntityRegister.GIGA_TOMB_STONE);
-	}
-	
-	/**
-	 * init zombie map that must after RegistryObject present.
-	 */
-	public static void initZombieMap() {
-		for(Zombies zombie : Zombies.values()) {
-			EntityType<? extends PVZZombieEntity> type = getZombieEntityType(zombie);
-			ENTITY_TYPE_ZOMBIE.put(type, zombie);
-		}
-	}
-	
-	public static void putZombieInfoToMap(Zombies zombie, CardRank rank, RegistryObject<? extends EntityType<? extends PVZZombieEntity>> type) {
-		ZOMBIE_RANK.put(zombie, rank);
-		ZOMBIE_ENTITY.put(zombie, type);
-		++ ZOMBIE_NUM;
-	}
-	
-	public static PVZZombieEntity getZombieEntity(World world, Zombies zombie) {
-		if(ZOMBIE_ENTITY.containsKey(zombie)) {
-			return ZOMBIE_ENTITY.get(zombie).get().create(world);
-		}
-		PVZMod.LOGGER.debug("Zombie get entity error");
-		return null;
-	}
-	
-	public static EntityType<? extends PVZZombieEntity> getZombieEntityType(Zombies zombie) {
-		if(ZOMBIE_ENTITY.containsKey(zombie)) {
-			return ZOMBIE_ENTITY.get(zombie).get();
-		}
-		System.out.println("Zombie get entity error");
-		return null;
-	}
-
-	public static CardRank getZombieRank(Zombies zombie){
-		if(ZOMBIE_RANK.containsKey(zombie)) {
-			return ZOMBIE_RANK.get(zombie);
-		}
-		PVZMod.LOGGER.debug("Zombie get rank error");
-		return null;
-	}
-	
-	public static int getZombieXp(Zombies zombie){
-//		Ranks rank = getZombieRank(zombie);
-//		switch(rank) {
-//		case GRAY:return 1;
-//		case WHITE:return 2;
-//		case GREEN:return 3;
-//		case BLUE:return 5;
-//		case PURPLE:return 8;
-//		case GOLD:return 15;
-//		case MEGA:return 50;
-//		default:return 0;
-//		}
-		return 0;
-	}
 	
 	/**
 	 * copy some data to new zombie ,which is necessary to implement.
@@ -192,26 +75,12 @@ public class ZombieUtil {
 		EntityUtil.onEntitySpawn(old.level, now, pos);
 	}
 	
-	/**
-	 * use by @PVZZombieEntity to check spawn.
-	 */
-	public static Optional<Zombies> getZombieNameByType(EntityType<? extends PVZZombieEntity> zombieType){
-		return Optional.ofNullable(ZombieUtil.ENTITY_TYPE_ZOMBIE.get(zombieType));
-	}
-	
 	public static int caculateZombieLevel(PVZZombieEntity zombie) {
 		final int difficulty = InvasionCache.getInvasionDifficulty() - 100;
 		final int maxLevel = PVZConfig.COMMON_CONFIG.EntitySettings.ZombieSetting.ZombieMaxLevel.get();
 		final int minLvl = MathHelper.clamp(difficulty / 50 + 1, 1, maxLevel);
 		final int maxLvl = MathHelper.clamp(difficulty / 30 + 2, 1, maxLevel);
 		return MathUtil.getRandomMinMax(zombie.getRandom(), minLvl, maxLvl);
-	}
-	
-	public static int caculateZombieXp(PVZZombieEntity zombie) {
-//		int lvlBonus = zombie.getZombieLevel() / 2;
-//		int rankBonus = zombie.getZombieRank().ordinal() / 2;
-//		return rankBonus + lvlBonus + 3;
-		return 1;
 	}
 	
 }

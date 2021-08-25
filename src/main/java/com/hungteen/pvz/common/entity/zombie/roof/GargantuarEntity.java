@@ -2,15 +2,16 @@ package com.hungteen.pvz.common.entity.zombie.roof;
 
 import java.util.EnumSet;
 
+import com.hungteen.pvz.common.core.ZombieType;
 import com.hungteen.pvz.common.entity.ai.goal.attack.PVZZombieAttackGoal;
 import com.hungteen.pvz.common.entity.plant.spear.SpikeRockEntity;
 import com.hungteen.pvz.common.entity.zombie.PVZZombieEntity;
 import com.hungteen.pvz.common.entity.zombie.body.ZombieDropBodyEntity;
+import com.hungteen.pvz.common.impl.zombie.RoofZombies;
 import com.hungteen.pvz.common.misc.damage.PVZDamageSource;
 import com.hungteen.pvz.data.loot.PVZLoot;
 import com.hungteen.pvz.register.EntityRegister;
 import com.hungteen.pvz.register.SoundRegister;
-import com.hungteen.pvz.remove.Zombies;
 import com.hungteen.pvz.utils.EntityUtil;
 import com.hungteen.pvz.utils.ZombieUtil;
 
@@ -170,9 +171,9 @@ public class GargantuarEntity extends PVZZombieEntity {
 	}
 
 	@Override
-	public Zombies getZombieEnumName() {
-		return Zombies.GARGANTUAR;
-	}
+    public ZombieType getZombieType() {
+	    return RoofZombies.GARGANTUAR;
+    }
 
 	@Override
 	public void readAdditionalSaveData(CompoundNBT compound) {

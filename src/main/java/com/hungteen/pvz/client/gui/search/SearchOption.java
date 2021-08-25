@@ -7,7 +7,7 @@ import java.util.Map;
 import java.util.Optional;
 
 import com.hungteen.pvz.common.core.PlantType;
-import com.hungteen.pvz.remove.Zombies;
+import com.hungteen.pvz.common.core.ZombieType;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.item.ItemStack;
@@ -31,7 +31,7 @@ public class SearchOption {
 	}
 	
 	private Optional<PlantType> plant = Optional.empty();
-	private Optional<Zombies> zombie = Optional.empty();
+	private Optional<ZombieType> zombie = Optional.empty();
 	
 	public SearchOption() {
 	}
@@ -40,7 +40,7 @@ public class SearchOption {
 		this.plant = Optional.of(plant);
 	}
 	
-	public SearchOption(Zombies zombie) {
+	public SearchOption(ZombieType zombie) {
 		this.zombie = Optional.of(zombie);
 	}
 	
@@ -52,8 +52,8 @@ public class SearchOption {
 		return OPTION.get(plant.getId() + 1);
 	}
 	
-	public static SearchOption get(Zombies zombie) {
-		return OPTION.get(PlantType.size() + zombie.ordinal());
+	public static SearchOption get(ZombieType zombie) {
+		return OPTION.get(PlantType.size() + zombie.getId() + 1);
 	}
 	
 	@SuppressWarnings("resource")
@@ -92,7 +92,7 @@ public class SearchOption {
 		return this.plant;
 	}
 	
-	public Optional<Zombies> getZombie() {
+	public Optional<ZombieType> getZombie() {
 		return this.zombie;
 	}
 	

@@ -20,7 +20,6 @@ import com.hungteen.pvz.register.StructureRegister;
 import com.hungteen.pvz.register.TileEntityRegister;
 import com.hungteen.pvz.utils.BiomeUtil;
 import com.hungteen.pvz.utils.TradeUtil;
-import com.hungteen.pvz.utils.ZombieUtil;
 
 import net.minecraft.entity.EntityType;
 import net.minecraftforge.event.RegistryEvent;
@@ -57,7 +56,6 @@ public class RegistryHandler {
 	 * {@link PVZMod#setUp(FMLCommonSetupEvent)}
 	 */
     public static void setUp(FMLCommonSetupEvent ev){
-		ZombieUtil.initZombieMap();
     	CapabilityHandler.registerCapabilities();
     	PVZPacketHandler.init();
     	BiomeRegister.registerBiomes(ev);

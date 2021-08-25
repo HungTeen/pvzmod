@@ -43,7 +43,7 @@ public abstract class PVZZombieRender <T extends PVZZombieEntity> extends PVZCre
 	
 	@Override
 	protected float getScaleByEntity(T entity) {
-		final float sz = ZombieRenderHandler.getZombieScale(entity.getZombieEnumName());
+		final float sz = entity.getZombieType().getRenderScale();
 		return entity.isMiniZombie() ? sz * MINI_SCALE : sz;
 	}
 	
@@ -56,7 +56,7 @@ public abstract class PVZZombieRender <T extends PVZZombieEntity> extends PVZCre
 	
 	@Override
 	public ResourceLocation getTextureLocation(T entity) {
-		return ZombieRenderHandler.getZombieTex(entity.getZombieEnumName()).orElse(ZombieRenderHandler.NORMAL_ZOMBIE_TEX);
+		return entity.getZombieType().getRenderResource();
 	}
 	
 }

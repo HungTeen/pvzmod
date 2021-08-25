@@ -3,11 +3,12 @@ package com.hungteen.pvz.common.entity.zombie.other;
 import java.util.HashSet;
 import java.util.Set;
 
-import com.hungteen.pvz.common.entity.drop.SunEntity;
+import com.hungteen.pvz.common.core.ZombieType;
 import com.hungteen.pvz.common.entity.drop.DropEntity.DropStates;
+import com.hungteen.pvz.common.entity.drop.SunEntity;
 import com.hungteen.pvz.common.entity.zombie.PVZZombieEntity;
+import com.hungteen.pvz.common.impl.zombie.OtherZombies;
 import com.hungteen.pvz.data.loot.PVZLoot;
-import com.hungteen.pvz.remove.Zombies;
 import com.hungteen.pvz.utils.EntityUtil;
 import com.hungteen.pvz.utils.MathUtil;
 import com.hungteen.pvz.utils.ZombieUtil;
@@ -145,8 +146,8 @@ public class RaZombieEntity extends PVZZombieEntity {
 	}
 	
 	@Override
-	public Zombies getZombieEnumName() {
-		return Zombies.RA_ZOMBIE;
+	public ZombieType getZombieType() {
+		return OtherZombies.RA_ZOMBIE;
 	}
 
 }

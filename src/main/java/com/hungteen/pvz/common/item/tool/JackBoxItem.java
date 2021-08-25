@@ -3,9 +3,9 @@ package com.hungteen.pvz.common.item.tool;
 import java.util.List;
 
 import com.hungteen.pvz.PVZConfig;
+import com.hungteen.pvz.common.impl.Bundles;
 import com.hungteen.pvz.register.GroupRegister;
 import com.hungteen.pvz.register.SoundRegister;
-import com.hungteen.pvz.remove.Bundles;
 import com.hungteen.pvz.utils.EntityUtil;
 
 import net.minecraft.client.util.ITooltipFlag;
@@ -48,7 +48,7 @@ public class JackBoxItem extends Item {
 			player.level.explode(player, player.getX(), player.getY(), player.getZ(), 3f, mode);
 		} else {
 			EntityUtil.playSound(player, SoundRegister.JACK_SAY.get());
-			player.addItem(Bundles.getRandomAllBundle());
+			player.addItem(Bundles.RANDOM_ALL.getEnjoyCard(player.getRandom()));
 		}
 	}
 

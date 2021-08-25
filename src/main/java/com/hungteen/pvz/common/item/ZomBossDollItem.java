@@ -2,7 +2,7 @@ package com.hungteen.pvz.common.item;
 
 import java.util.List;
 
-import com.hungteen.pvz.common.entity.zombie.roof.ZomBossEntity;
+import com.hungteen.pvz.common.entity.zombie.roof.Edgar090505Entity;
 import com.hungteen.pvz.register.EntityRegister;
 import com.hungteen.pvz.register.GroupRegister;
 import com.hungteen.pvz.utils.EntityUtil;
@@ -33,7 +33,7 @@ public class ZomBossDollItem extends Item {
 		final BlockPos pos = context.getClickedPos();
 		if(! world.isClientSide && ! player.getCooldowns().isOnCooldown(this) && context.getClickedFace() == Direction.UP) {
 			if(this.canSpawnHere(world, pos)) {
-				ZomBossEntity zomboss = EntityRegister.ZOMBOSS.get().create(world);
+				Edgar090505Entity zomboss = EntityRegister.EDGAR_090505.get().create(world);
 				EntityUtil.onEntitySpawn(world, zomboss, pos.above());
 				context.getItemInHand().shrink(1);
 			}

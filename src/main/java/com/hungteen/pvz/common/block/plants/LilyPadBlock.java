@@ -2,7 +2,7 @@ package com.hungteen.pvz.common.block.plants;
 
 
 import com.hungteen.pvz.common.entity.zombie.PVZZombieEntity;
-import com.hungteen.pvz.common.entity.zombie.poolday.ZombieDolphinEntity;
+import com.hungteen.pvz.common.entity.zombie.pool.ZombieDolphinEntity;
 
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;

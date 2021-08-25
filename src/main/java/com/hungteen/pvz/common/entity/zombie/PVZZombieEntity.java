@@ -6,10 +6,13 @@ import java.util.UUID;
 
 import com.hungteen.pvz.PVZConfig;
 import com.hungteen.pvz.api.enums.PVZGroupType;
-import com.hungteen.pvz.api.interfaces.IPVZZombie;
+import com.hungteen.pvz.api.interfaces.ICanBeAttracted;
+import com.hungteen.pvz.api.interfaces.ICanBeCharmed;
+import com.hungteen.pvz.api.interfaces.IGroupEntity;
+import com.hungteen.pvz.api.interfaces.IHasOwner;
 import com.hungteen.pvz.client.particle.ParticleUtil;
 import com.hungteen.pvz.common.advancement.trigger.CharmZombieTrigger;
-import com.hungteen.pvz.common.core.CardRank;
+import com.hungteen.pvz.common.core.ZombieType;
 import com.hungteen.pvz.common.entity.ai.goal.PVZLookRandomlyGoal;
 import com.hungteen.pvz.common.entity.ai.goal.PVZSwimGoal;
 import com.hungteen.pvz.common.entity.ai.goal.ZombieBreakPlantBlockGoal;
@@ -29,6 +32,7 @@ import com.hungteen.pvz.common.entity.zombie.body.ZombieDropBodyEntity;
 import com.hungteen.pvz.common.entity.zombie.body.ZombieDropBodyEntity.BodyType;
 import com.hungteen.pvz.common.entity.zombie.roof.BungeeZombieEntity;
 import com.hungteen.pvz.common.event.PVZLivingEvents;
+import com.hungteen.pvz.common.impl.InvasionEvents;
 import com.hungteen.pvz.common.misc.damage.PVZDamageSource;
 import com.hungteen.pvz.common.world.data.PVZInvasionData;
 import com.hungteen.pvz.data.loot.PVZLoot;
@@ -37,7 +41,6 @@ import com.hungteen.pvz.register.EffectRegister;
 import com.hungteen.pvz.register.EntityRegister;
 import com.hungteen.pvz.register.ItemRegister;
 import com.hungteen.pvz.register.SoundRegister;
-import com.hungteen.pvz.remove.InvasionEvents;
 import com.hungteen.pvz.utils.AlgorithmUtil;
 import com.hungteen.pvz.utils.ConfigUtil;
 import com.hungteen.pvz.utils.EntityUtil;
@@ -91,7 +94,7 @@ import net.minecraft.world.LightType;
 import net.minecraft.world.World;
 import net.minecraftforge.event.entity.living.LivingDamageEvent;
 
-public abstract class PVZZombieEntity extends MonsterEntity implements IPVZZombie{
+public abstract class PVZZombieEntity extends MonsterEntity implements IHasOwner, IGroupEntity, ICanBeCharmed, ICanBeAttracted{
 
 	private static final DataParameter<Integer> ZOMBIE_TYPE = EntityDataManager.defineId(PVZZombieEntity.class, DataSerializers.INT);
 	private static final DataParameter<Optional<UUID>> OWNER_UUID = EntityDataManager.defineId(PVZZombieEntity.class, DataSerializers.OPTIONAL_UUID);
@@ -130,7 +133,7 @@ public abstract class PVZZombieEntity extends MonsterEntity implements IPVZZombi
 	public PVZZombieEntity(EntityType<? extends MonsterEntity> type, World worldIn) {
 		super(type, worldIn);
 		this.refreshDimensions();
-		this.xpReward = ZombieUtil.caculateZombieXp(this);
+		this.xpReward = (int) (this.getZombieXp() * 2);
 		dropSpecialList = this.getDropSpecialList();
 		this.onLevelChanged();
 		this.setPathfindingMalus(PathNodeType.DANGER_FIRE, 6.0F);
@@ -143,7 +146,7 @@ public abstract class PVZZombieEntity extends MonsterEntity implements IPVZZombi
 	@Override
 	protected void defineSynchedData() {
 		super.defineSynchedData();
-		entityData.define(ZOMBIE_TYPE, Type.NORMAL.ordinal());
+		entityData.define(ZOMBIE_TYPE, VariantType.NORMAL.ordinal());
 		entityData.define(OWNER_UUID, Optional.empty());
 		entityData.define(ZOMBIE_STATES, 0);
 		entityData.define(ATTACK_TIME, 0);
@@ -235,11 +238,11 @@ public abstract class PVZZombieEntity extends MonsterEntity implements IPVZZombi
 	 * it will be override by @NormalZombieEntity
 	 * {@link #finalizeSpawn(IServerWorld, DifficultyInstance, SpawnReason, ILivingEntityData, CompoundNBT)}
 	 */
-	protected Type getSpawnType() {
+	protected VariantType getSpawnType() {
 		int t = this.getRandom().nextInt(100);
 		int a = PVZConfig.COMMON_CONFIG.EntitySettings.ZombieSetting.ZombieSuperChance.get();
 		int b = PVZConfig.COMMON_CONFIG.EntitySettings.ZombieSetting.ZombieSunChance.get();
-		return (t < a) ? Type.SUPER : (t < a + b) ? Type.SUN : Type.NORMAL;
+		return (t < a) ? VariantType.SUPER : (t < a + b) ? VariantType.SUN : VariantType.NORMAL;
 	}
 
 	/**
@@ -451,11 +454,11 @@ public abstract class PVZZombieEntity extends MonsterEntity implements IPVZZombi
 	 */
 	protected void onZombieRemove() {
 		if (!level.isClientSide) {
-			if (getZombieType() == Type.SUPER) {// drop energy
+			if (this.getVariantType() == VariantType.SUPER) {// drop energy
 				this.dropEnergy();
-			} else if (getZombieType() == Type.SUN) {
+			} else if (getVariantType() == VariantType.SUN) {
 				this.dropSun();
-			} else if (getZombieType() == Type.BEARD) {// finish achievement
+			} else if (getVariantType() == VariantType.BEARD) {// finish achievement
 			}
 			if (this.canSpawnDrop) {
 				this.spawnSpecialDrops();
@@ -753,16 +756,6 @@ public abstract class PVZZombieEntity extends MonsterEntity implements IPVZZombi
 	}
 
 	@Override
-	public CardRank getZombieRank() {
-		return ZombieUtil.getZombieRank(getZombieEnumName());
-	}
-
-	@Override
-	public int getZombieXp() {
-		return ZombieUtil.getZombieXp(getZombieEnumName());
-	}
-
-	@Override
 	public void push(Entity entityIn) {
 		if (this.isSleeping()) {
 			return;
@@ -942,8 +935,8 @@ public abstract class PVZZombieEntity extends MonsterEntity implements IPVZZombi
 			CharmZombieTrigger.INSTANCE.trigger((ServerPlayerEntity) player, this);
 		}
 		this.setCharmed(!this.isCharmed());
-		if (this.getZombieType() == Type.SUPER) {
-			this.setZombieType(Type.NORMAL);
+		if (this.getVariantType() == VariantType.SUPER) {
+			this.setZombieType(VariantType.NORMAL);
 			this.dropEnergy();
 		}
 	}
@@ -999,37 +992,30 @@ public abstract class PVZZombieEntity extends MonsterEntity implements IPVZZombi
 	
 	/* misc get */
 
-	@Override
 	public boolean canBeButter() {
 		return this.canBeButter;
 	}
 
-	@Override
 	public boolean canBeCharmed() {
 		return this.canBeCharm;
 	}
 
-	@Override
 	public boolean canBeFrozen() {
 		return this.canBeFrozen && !this.isInWaterOrBubble() && !this.isInLava();
 	}
 
-	@Override
 	public boolean canBeMini() {
 		return this.canBeMini;
 	}
 
-	@Override
 	public boolean canBeInvis() {
 		return this.canBeInvis;
 	}
 
-	@Override
 	public boolean canBeCold() {
 		return this.canBeCold;
 	}
 
-	@Override
 	public boolean canBeStealByBungee() {
 		return this.canBeStealByBungee;
 	}
@@ -1053,20 +1039,26 @@ public abstract class PVZZombieEntity extends MonsterEntity implements IPVZZombi
 		return EntityUtil.isEntityCold(this) || EntityUtil.isEntityFrozen(this);
 	}
 	
-	@Override
+	public abstract float getLife();
+	
+	/**
+	 * extra life independent with health. 
+	 */
 	public float getExtraLife() {
 		return 0;
 	}
 	
 	/**
-	 * get current health of zombie(contain its defence health).
+	 * how many health does zombie has.
+	 * {@link EntityUtil#getCurrentHealth(net.minecraft.entity.LivingEntity)}
 	 */
 	public float getCurrentHealth() {
 		return this.getDefenceLife() + this.getHealth();
 	}
 
 	/**
-	 * get current max health of zombie(contain defence health).
+	 * how many max health does zombie have currently.
+	 * {@link EntityUtil#getCurrentMaxHealth(net.minecraft.entity.LivingEntity)}
 	 */
 	public float getCurrentMaxHealth() {
 		return this.getDefenceLife() + this.getMaxHealth();
@@ -1076,6 +1068,18 @@ public abstract class PVZZombieEntity extends MonsterEntity implements IPVZZombi
 	public PVZGroupType getEntityGroupType() {
 		return this.isCharmed() ? PVZGroupType.PLANTS : PVZGroupType.ZOMBIES;
 	}
+	
+	/**
+	 * how much xp will it get, when killed by player or plants.
+	 */
+	public float getZombieXp() {
+		return this.getZombieType().getXp();
+	}
+	
+	/**
+	 * relate to zombie type.
+	 */
+	public abstract ZombieType getZombieType();
 
 	/* sound */
 	
@@ -1111,7 +1115,7 @@ public abstract class PVZZombieEntity extends MonsterEntity implements IPVZZombi
 	@Override
 	public void addAdditionalSaveData(CompoundNBT compound) {
 		super.addAdditionalSaveData(compound);
-		compound.putInt("zombie_type", this.getZombieType().ordinal());
+		compound.putInt("zombie_type", this.getVariantType().ordinal());
 		if (this.getOwnerUUID().isPresent()) {
 			compound.putUUID("OwnerUUID", this.getOwnerUUID().get());
 		}
@@ -1127,7 +1131,7 @@ public abstract class PVZZombieEntity extends MonsterEntity implements IPVZZombi
 	public void readAdditionalSaveData(CompoundNBT compound) {
 		super.readAdditionalSaveData(compound);
 		if (compound.contains("zombie_type")) {
-			this.setZombieType(Type.values()[compound.getInt("zombie_type")]);
+			this.setZombieType(VariantType.values()[compound.getInt("zombie_type")]);
 		}
 		// owner UUID
 		UUID uuid;
@@ -1212,11 +1216,11 @@ public abstract class PVZZombieEntity extends MonsterEntity implements IPVZZombi
 		this.entityData.set(OWNER_UUID, Optional.ofNullable(uuid));
 	}
 	
-	public Type getZombieType() {
-		return Type.values()[entityData.get(ZOMBIE_TYPE)];
+	public VariantType getVariantType() {
+		return VariantType.values()[entityData.get(ZOMBIE_TYPE)];
 	}
 	
-	public void setZombieType(Type type) {
+	public void setZombieType(VariantType type) {
 		entityData.set(ZOMBIE_TYPE, type.ordinal());
 	}
 	
@@ -1260,7 +1264,7 @@ public abstract class PVZZombieEntity extends MonsterEntity implements IPVZZombi
 	/**
 	 * Zombie Variant Types.
 	 */
-	public enum Type {
+	public enum VariantType {
 		NORMAL, //the common type.
 		SUPER, //zombie that will drop energy when death.
 		BEARD, //zombie with green beard.(can only own by normal_zombie family)

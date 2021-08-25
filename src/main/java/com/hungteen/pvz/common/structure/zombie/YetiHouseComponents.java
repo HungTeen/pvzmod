@@ -3,7 +3,7 @@ package com.hungteen.pvz.common.structure.zombie;
 import java.util.List;
 import java.util.Random;
 
-import com.hungteen.pvz.common.entity.zombie.poolnight.YetiZombieEntity;
+import com.hungteen.pvz.common.entity.zombie.pool.YetiZombieEntity;
 import com.hungteen.pvz.common.structure.PVZTemplateComponent;
 import com.hungteen.pvz.data.loot.PVZLoot;
 import com.hungteen.pvz.register.EntityRegister;

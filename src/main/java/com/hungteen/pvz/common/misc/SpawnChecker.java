@@ -5,10 +5,9 @@ import java.util.Random;
 
 import com.hungteen.pvz.PVZMod;
 import com.hungteen.pvz.common.cache.InvasionCache;
+import com.hungteen.pvz.common.core.ZombieType;
 import com.hungteen.pvz.common.entity.zombie.PVZZombieEntity;
 import com.hungteen.pvz.register.EntitySpawnRegister;
-import com.hungteen.pvz.remove.Zombies;
-import com.hungteen.pvz.utils.ZombieUtil;
 
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.SpawnReason;
@@ -92,7 +91,7 @@ public class SpawnChecker {
 		if(reason != SpawnReason.NATURAL) {
 			return true;
 		}
-		Optional<Zombies> opt = ZombieUtil.getZombieNameByType(zombieType);
+		Optional<ZombieType> opt = ZombieType.getByEntityType(zombieType);
 		if(worldIn instanceof World) {
 			if(opt.isPresent()) {
 			    return InvasionCache.ZOMBIE_INVADE_SET.contains(opt.get());

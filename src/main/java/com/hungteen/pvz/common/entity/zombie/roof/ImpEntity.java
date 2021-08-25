@@ -1,7 +1,8 @@
 package com.hungteen.pvz.common.entity.zombie.roof;
 
+import com.hungteen.pvz.common.core.ZombieType;
 import com.hungteen.pvz.common.entity.zombie.PVZZombieEntity;
-import com.hungteen.pvz.remove.Zombies;
+import com.hungteen.pvz.common.impl.zombie.RoofZombies;
 import com.hungteen.pvz.utils.ZombieUtil;
 import com.hungteen.pvz.utils.interfaces.ICanAttract;
 
@@ -126,8 +127,8 @@ public class ImpEntity extends PVZZombieEntity {
 	}
 
 	@Override
-	public Zombies getZombieEnumName() {
-		return Zombies.IMP;
-	}
+    public ZombieType getZombieType() {
+	    return RoofZombies.IMP;
+    }
 
 }

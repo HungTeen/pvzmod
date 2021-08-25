@@ -6,24 +6,25 @@ import com.hungteen.pvz.PVZMod;
 import com.hungteen.pvz.common.capability.CapabilityHandler;
 import com.hungteen.pvz.common.capability.player.PlayerDataManager;
 import com.hungteen.pvz.common.capability.player.PlayerDataManager.OtherStats;
+import com.hungteen.pvz.common.core.InvasionType;
+import com.hungteen.pvz.common.core.ZombieType;
 import com.hungteen.pvz.common.entity.zombie.PVZZombieEntity;
-import com.hungteen.pvz.common.entity.zombie.grassnight.TombStoneEntity;
+import com.hungteen.pvz.common.entity.zombie.grass.TombStoneEntity;
 import com.hungteen.pvz.common.entity.zombie.roof.BungeeZombieEntity;
 import com.hungteen.pvz.common.entity.zombie.roof.BungeeZombieEntity.BungeeTypes;
 import com.hungteen.pvz.common.event.handler.PlayerEventHandler;
+import com.hungteen.pvz.common.impl.InvasionEvents;
+import com.hungteen.pvz.common.impl.zombie.RoofZombies;
 import com.hungteen.pvz.common.network.OtherStatsPacket;
 import com.hungteen.pvz.common.network.PVZPacketHandler;
 import com.hungteen.pvz.common.world.data.PVZFlagData;
 import com.hungteen.pvz.common.world.data.PVZInvasionData;
 import com.hungteen.pvz.register.EntityRegister;
 import com.hungteen.pvz.register.SoundRegister;
-import com.hungteen.pvz.remove.InvasionEvents;
-import com.hungteen.pvz.remove.Zombies;
 import com.hungteen.pvz.utils.EntityUtil;
 import com.hungteen.pvz.utils.MathUtil;
 import com.hungteen.pvz.utils.PlayerUtil;
 import com.hungteen.pvz.utils.WorldUtil;
-import com.hungteen.pvz.utils.ZombieUtil;
 import com.hungteen.pvz.utils.enums.Resources;
 import com.hungteen.pvz.utils.others.WeightList;
 
@@ -52,7 +53,7 @@ public class WaveManager {
 	private final int currentWave;
 	private final PlayerEntity player;
 	private final BlockPos center;
-	private final WeightList<Zombies> spawnList = new WeightList<>();
+	private final WeightList<ZombieType> spawnList = new WeightList<>();
 	private static final int[] SPAWN_COUNT_EACH_WAVE = new int[] {20, 30, 40, 50, 60};
 	public int spawnCnt = 0;
 	protected boolean spawned = false;
@@ -120,7 +121,7 @@ public class WaveManager {
 		if(! world.dimension().equals(World.OVERWORLD)) {
 			return ;
 		}
-		if(this.spawnList.getTotal() == 0) {
+		if(this.spawnList.isEmpty()) {
 			PVZMod.LOGGER.warn("WaveManager : Why cause zombie spawn list empty ?");
 			return ;
 		}
@@ -170,7 +171,9 @@ public class WaveManager {
 	 */
 	protected void checkAndSummonBungee() {
 		PVZInvasionData data = PVZInvasionData.getOverWorldInvasionData(world);
-		if(! data.hasZombieSpawnEntry(Zombies.BUNGEE_ZOMBIE)) return ;
+		if(! data.hasZombieSpawnEntry(RoofZombies.BUNGEE_ZOMBIE)) {
+			return ;
+		}
 		int minCnt = 5 + this.currentWave;
 		int maxCnt = 5 + 3 * this.currentWave;
 		int cnt = world.random.nextInt(maxCnt - minCnt + 1) + minCnt;
@@ -238,9 +241,9 @@ public class WaveManager {
 	 */
 	private static ItemStack getRandomItemForPlayer(World world) {
 		PVZInvasionData data = PVZInvasionData.getOverWorldInvasionData(world);
-		for(InvasionEvents ev : InvasionEvents.values()) {
-			if(data.hasEvent(ev) && ev.bundle.isPresent()) {
-				return ev.bundle.get().getRandomBundle();
+		for(InvasionType ev : InvasionType.getInvasionEvents()) {
+			if(data.hasEvent(ev)) {
+				return ev.getBundle().getEnjoyCard(world.getRandom());
 			}
 		}
 		return ItemStack.EMPTY;
@@ -279,10 +282,11 @@ public class WaveManager {
 	 * @param zombie the type of spawned zombie.
 	 * @param pos position of the spawn center.
 	 */
-	private void spawnZombie(Zombies zombie, BlockPos pos, int radius) {
+	private void spawnZombie(ZombieType zombie, BlockPos pos, int radius) {
 		final BlockPos blockPos = WorldUtil.getSuitableHeightRandomPos(world, pos, radius);
-		PVZZombieEntity zombieEntity = ZombieUtil.getZombieEntity(world, zombie);
-		EntityUtil.onEntitySpawn(world, zombieEntity, blockPos.above());
+		zombie.getEntityType().ifPresent(l -> {
+			EntityUtil.onEntitySpawn(world, l.create(world), blockPos.above());
+		});
 	}
 	
 	private void spawnTombStone(BlockPos pos, int min, int max) {
@@ -315,14 +319,11 @@ public class WaveManager {
 	 */
 	private void updateSpawns() {
 		PVZInvasionData data = PVZInvasionData.getOverWorldInvasionData(world);
-		int sum = 0;
-		for(Zombies zombie : Zombies.values()) {
-			if(data.hasZombieSpawnEntry(zombie)) {
-				this.spawnList.addItem(zombie, zombie.spawnWeight);
-				sum += zombie.spawnWeight;
+		for(ZombieType zombie : ZombieType.getZombies()) {
+			if(data.hasZombieSpawnEntry(zombie) && zombie.getWaveWeight() > 0) {
+				this.spawnList.addItem(zombie, zombie.getWaveWeight());
 			}
 		}
-		this.spawnList.setTotal(sum);
 	}
 
 	@SuppressWarnings("deprecation")

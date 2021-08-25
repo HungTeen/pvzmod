@@ -9,23 +9,18 @@ import com.mojang.datafixers.util.Pair;
 
 public class WeightList<T> {
 	
-	private final List<T> itemList = new ArrayList<>();
-	private final List<Integer> weightList = new ArrayList<>();
-	private Optional<T> leftItem = Optional.empty();
-	private int tot;
-	private int sum = 0;
+	private final List<T> itemList = new ArrayList<>();//items to be selected.
+	private final List<Integer> weightList = new ArrayList<>();//weight of items
+	private Optional<T> leftItem = Optional.empty();//alternative item.
+	private int total = 0;
 	
 	public WeightList() {
 	}
 	
-	public WeightList(int tot) {
-		this.tot = tot;
-	}
-	
 	public WeightList<T> addItem(T item, int w) {
-		itemList.add(item);
-		weightList.add(w);
-		sum += w;
+		this.itemList.add(item);
+		this.weightList.add(w);
+		this.total += w;
 		return this;
 	}
 	
@@ -34,48 +29,59 @@ public class WeightList<T> {
 		return this;
 	}
 	
+	/**
+	 * set total range may cause empty getting item.
+	 */
 	public WeightList<T> setTotal(int tot){
-		this.tot = tot;
+		this.total = tot;
 		return this;
 	}
 	
-	public int getTotal() {
-		return this.tot;
+	public boolean isEmpty() {
+		return this.itemList.isEmpty();
+	}
+	
+	public int getLen() {
+		return this.itemList.size();
+	}
+	
+	public List<T> getItemList(){
+		return this.itemList;
 	}
 	
 	/**
 	 * get the weight item randomly.
 	 */
 	public Optional<T> getRandomItem(Random rand) {
+		final int pos = rand.nextInt(this.total);
 		int now = 0;
-		int pos = rand.nextInt(this.tot);
-		for(int i = 0;i < itemList.size(); ++ i) {
-			now += weightList.get(i);
+		for(int i = 0;i < this.itemList.size(); ++ i) {
+			now += this.weightList.get(i);
 			if(pos < now) {
-				return Optional.of(itemList.get(i));
+				return Optional.of(this.itemList.get(i));
 			}
 		}
 		return leftItem;
 	}
 	
+	/**
+	 * add several items with weight.
+	 */
 	@SafeVarargs
-	public static <W> WeightList<W> of(int tot, Pair<W, Integer> ... pairs ){
-		WeightList<W> list = new WeightList<>(tot);
+	public static <W> WeightList<W> of(Pair<W, Integer> ... pairs ){
+		WeightList<W> list = new WeightList<>();
 		for(Pair<W, Integer> p : pairs) {
 			list.addItem(p.getFirst(), p.getSecond());
 		}
 		return list;
 	}
 	
+	/**
+	 * set total while adding.
+	 */
 	@SafeVarargs
-	public static <W> WeightList<W> of(Pair<W, Integer> ... pairs ){
-		WeightList<W> list = new WeightList<>();
-		int sum = 0;
-		for(Pair<W, Integer> p : pairs) {
-			list.addItem(p.getFirst(), p.getSecond());
-			sum += p.getSecond();
-		}
-		return list.setTotal(sum);
+	public static <W> WeightList<W> of(int tot, Pair<W, Integer> ... pairs ){
+		return of(pairs).setTotal(tot);
 	}
 	
 }

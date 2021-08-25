@@ -2,7 +2,7 @@ package com.hungteen.pvz.client.render.layer.fullskin;
 
 import com.hungteen.pvz.common.entity.plant.PVZPlantEntity;
 import com.hungteen.pvz.common.entity.zombie.PVZZombieEntity;
-import com.hungteen.pvz.common.entity.zombie.PVZZombieEntity.Type;
+import com.hungteen.pvz.common.entity.zombie.PVZZombieEntity.VariantType;
 import com.hungteen.pvz.utils.StringUtil;
 
 import net.minecraft.client.renderer.entity.IEntityRenderer;
@@ -23,7 +23,7 @@ public class EnergyLayer <T extends LivingEntity, M extends EntityModel<T>> exte
 	protected boolean canRender(T entity) {
 		if(entity.isInvisible()) return false;
 		if(entity instanceof PVZZombieEntity) {
-			return ((PVZZombieEntity) entity).getZombieType()==Type.SUPER;
+			return ((PVZZombieEntity) entity).getVariantType() == VariantType.SUPER;
 		}
 		if(entity instanceof PVZPlantEntity) {
 			return ((PVZPlantEntity) entity).isPlantInSuperMode();

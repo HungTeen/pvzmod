@@ -1,11 +1,12 @@
 package com.hungteen.pvz.common.entity.zombie.other;
 
+import com.hungteen.pvz.common.core.ZombieType;
 import com.hungteen.pvz.common.entity.zombie.PVZZombieEntity;
-import com.hungteen.pvz.common.entity.zombie.grassnight.TombStoneEntity;
+import com.hungteen.pvz.common.entity.zombie.grass.TombStoneEntity;
+import com.hungteen.pvz.common.impl.zombie.CustomZombies;
 import com.hungteen.pvz.common.misc.damage.PVZDamageSource;
 import com.hungteen.pvz.data.loot.PVZLoot;
 import com.hungteen.pvz.register.EntityRegister;
-import com.hungteen.pvz.remove.Zombies;
 import com.hungteen.pvz.utils.EntityUtil;
 import com.hungteen.pvz.utils.ZombieUtil;
 
@@ -111,8 +112,8 @@ public class MournerZombieEntity extends PVZZombieEntity{
 	}
 	
 	@Override
-	public Zombies getZombieEnumName() {
-		return Zombies.MOURNER_ZOMBIE;
+	public ZombieType getZombieType() {
+		return CustomZombies.MOURNER_ZOMBIE;
 	}
 
 }

@@ -3,7 +3,7 @@ package com.hungteen.pvz.common.entity.plant.assist;
 import com.hungteen.pvz.common.core.PlantType;
 import com.hungteen.pvz.common.entity.ai.goal.target.PVZNearestTargetGoal;
 import com.hungteen.pvz.common.entity.plant.PVZPlantEntity;
-import com.hungteen.pvz.common.entity.zombie.grassnight.AbstractTombStoneEntity;
+import com.hungteen.pvz.common.entity.zombie.grass.AbstractTombStoneEntity;
 import com.hungteen.pvz.common.impl.plant.PVZPlants;
 import com.hungteen.pvz.common.misc.damage.PVZDamageSource;
 import com.hungteen.pvz.register.EntityRegister;

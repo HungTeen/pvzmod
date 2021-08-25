@@ -149,14 +149,14 @@ public class PVZEntityLootTables implements Consumer<BiConsumer<ResourceLocation
 				        .add(ItemLootEntry.lootTableItem(ItemRegister.WARNING_SIGN.get()))
 				        .when(RandomChanceWithLooting.randomChanceAndLootingBoost(0.06F, 0.01F))
 		));
-		t.accept(PVZLoot.SAD_GARGANTUAR, getLootTable()
+		t.accept(PVZLoot.GIGA_GARGANTUAR, getLootTable()
 				.withPool(LootPool.lootPool().setRolls(ConstantRange.exactly(1))
 				        .add(ItemLootEntry.lootTableItem(ItemRegister.POLE.get()))
 				        .add(ItemLootEntry.lootTableItem(ItemRegister.ZOMBIE_DOLL.get()))
 				        .add(ItemLootEntry.lootTableItem(ItemRegister.WARNING_SIGN.get()))
 				        .when(RandomChanceWithLooting.randomChanceAndLootingBoost(0.2F, 0.01F))
 		));
-		t.accept(PVZLoot.ZOMBOSS, getLootTable()
+		t.accept(PVZLoot.EDGAR_090505, getLootTable()
 				.withPool(LootPool.lootPool().setRolls(ConstantRange.exactly(1))
 				        .add(ItemLootEntry.lootTableItem(BlockRegister.SILVER_SUNFLOWER_TROPHY.get()))
 				        .when(RandomChanceWithLooting.randomChanceAndLootingBoost(1F, 0.01F))

@@ -2,7 +2,7 @@ package com.hungteen.pvz.common.entity.creature;
 
 import com.hungteen.pvz.common.entity.ai.goal.WaterTemptGoal;
 import com.hungteen.pvz.common.entity.drop.SunEntity;
-import com.hungteen.pvz.common.entity.zombie.poolday.SnorkelZombieEntity;
+import com.hungteen.pvz.common.entity.zombie.pool.SnorkelZombieEntity;
 import com.hungteen.pvz.data.loot.PVZLoot;
 import com.hungteen.pvz.register.EntityRegister;
 import com.hungteen.pvz.register.ItemRegister;

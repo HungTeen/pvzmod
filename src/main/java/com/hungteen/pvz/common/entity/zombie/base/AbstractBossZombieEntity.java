@@ -43,8 +43,8 @@ public abstract class AbstractBossZombieEntity extends PVZZombieEntity {
 	}
 	
 	@Override
-	protected Type getSpawnType() {
-		return Type.NORMAL;
+	protected VariantType getSpawnType() {
+		return VariantType.NORMAL;
 	}
 	
 	@Override

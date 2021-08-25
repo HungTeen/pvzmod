@@ -5,7 +5,7 @@ import com.hungteen.pvz.common.core.PlantType;
 import com.hungteen.pvz.common.entity.ai.goal.misc.PlantAttractGoal;
 import com.hungteen.pvz.common.entity.plant.PVZPlantEntity;
 import com.hungteen.pvz.common.entity.zombie.PVZZombieEntity;
-import com.hungteen.pvz.common.entity.zombie.PVZZombieEntity.Type;
+import com.hungteen.pvz.common.entity.zombie.PVZZombieEntity.VariantType;
 import com.hungteen.pvz.common.entity.zombie.roof.GargantuarEntity;
 import com.hungteen.pvz.common.impl.plant.PVZPlants;
 import com.hungteen.pvz.common.misc.damage.PVZDamageSource;
@@ -74,7 +74,7 @@ public class HypnoShroomEntity extends PVZPlantEntity implements ICanAttract{
 						GargantuarEntity gar = EntityRegister.GARGANTUAR.get().create(level);
 						EntityUtil.onEntitySpawn(level, gar, cause.getEntity().blockPosition());
 						this.perfromCharmTo(gar);
-						gar.setZombieType(Type.NORMAL);
+						gar.setZombieType(VariantType.NORMAL);
 						gar.setHealth(gar.getMaxHealth() * this.getSummonHealth());
 						gar.setCharmed(! this.isCharmed());
 					}

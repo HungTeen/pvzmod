@@ -1,19 +1,18 @@
 package com.hungteen.pvz.common.entity.zombie.roof;
 
 import java.util.List;
-import java.util.Optional;
 
-import com.hungteen.pvz.api.interfaces.IPVZZombie;
 import com.hungteen.pvz.common.cache.InvasionCache;
+import com.hungteen.pvz.common.core.ZombieType;
 import com.hungteen.pvz.common.entity.ai.goal.target.PVZRandomTargetGoal;
 import com.hungteen.pvz.common.entity.bullet.TargetArrowEntity;
 import com.hungteen.pvz.common.entity.plant.PVZPlantEntity;
 import com.hungteen.pvz.common.entity.zombie.PVZZombieEntity;
+import com.hungteen.pvz.common.impl.zombie.RoofZombies;
 import com.hungteen.pvz.common.misc.damage.PVZDamageSource;
 import com.hungteen.pvz.data.loot.PVZLoot;
 import com.hungteen.pvz.register.ItemRegister;
 import com.hungteen.pvz.register.SoundRegister;
-import com.hungteen.pvz.remove.Zombies;
 import com.hungteen.pvz.utils.EntityUtil;
 import com.hungteen.pvz.utils.ZombieUtil;
 import com.hungteen.pvz.utils.interfaces.ICanAttract;
@@ -267,9 +266,10 @@ public class BungeeZombieEntity extends PVZZombieEntity {
 	 * {@link #tickSummon()}
 	 */
 	public void summonZombie() {
-		final List<Zombies> list = InvasionCache.getOrDefaultZombieList(Zombies.DEFAULT_ZOMBIES);
-		final Zombies zombieType = list.get(this.random.nextInt(list.size()));
-		Optional.ofNullable(ZombieUtil.getZombieEntity(level, zombieType)).ifPresent(zombie -> {
+		final List<ZombieType> list = InvasionCache.getOrDefaultZombieList(ZombieUtil.DEFAULT_ZOMBIES);
+		final ZombieType zombieType = list.get(this.random.nextInt(list.size()));
+		zombieType.getEntityType().ifPresent(type -> {
+			PVZZombieEntity zombie = type.create(level);
 			EntityUtil.onEntitySpawn(level, zombie, blockPosition());
 			zombie.startRiding(this);
 			this.setStealTarget(zombie);
@@ -345,8 +345,8 @@ public class BungeeZombieEntity extends PVZZombieEntity {
 		if(! (target instanceof LivingEntity) || EntityUtil.isEntityBoss((LivingEntity) target) || isHoldingZombieDoll((LivingEntity) target)) {
 			return false;
 		}
-		if(target instanceof IPVZZombie) {
-			return ((IPVZZombie) target).canBeStealByBungee();
+		if(target instanceof PVZZombieEntity) {
+			return ((PVZZombieEntity) target).canBeStealByBungee();
 		}
 		if(target instanceof PVZPlantEntity) {
 			return true;
@@ -388,9 +388,9 @@ public class BungeeZombieEntity extends PVZZombieEntity {
 	}
 
 	@Override
-	public Zombies getZombieEnumName() {
-		return Zombies.BUNGEE_ZOMBIE;
-	}
+    public ZombieType getZombieType() {
+	    return RoofZombies.BUNGEE_ZOMBIE;
+    }
 	
 	@Override
 	public boolean rideableUnderWater() {

@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.hungteen.pvz.PVZMod;
-import com.hungteen.pvz.api.event.PVZRegisterEvent;
 import com.hungteen.pvz.client.model.entity.plant.appease.GatlingPeaModel;
 import com.hungteen.pvz.client.model.entity.plant.appease.PeaShooterModel;
 import com.hungteen.pvz.client.model.entity.plant.appease.RepeaterModel;
@@ -56,7 +55,6 @@ import com.hungteen.pvz.client.model.entity.plant.toxic.ScaredyShroomModel;
 import com.hungteen.pvz.client.model.entity.plant.toxic.SeaShroomModel;
 import com.hungteen.pvz.common.core.PlantType;
 import com.hungteen.pvz.common.impl.Essences;
-import com.hungteen.pvz.common.impl.ImplEvents;
 import com.hungteen.pvz.common.impl.Placements;
 import com.hungteen.pvz.common.impl.Ranks;
 import com.hungteen.pvz.register.EntityRegister;
@@ -64,7 +62,7 @@ import com.hungteen.pvz.register.ItemRegister;
 
 public final class PVZPlants extends PlantType {
 
-	private static final List<PlantType> PVZ_PLANTS = new ArrayList<>();
+	private static final List<PlantType> LIST = new ArrayList<>();
 	
 	/*
 	 * grass day.
@@ -523,19 +521,13 @@ public final class PVZPlants extends PlantType {
 			.upgradeFrom(() -> PVZPlants.WALL_NUT)
 	);
 	
-	private PVZPlants(String name, PlantFeatures features) {
-		super(name, features);
-		PVZ_PLANTS.add(this);
+	public static void register() {
+		registerPlants(LIST);
 	}
 	
-	/**
-	 * {@link ImplEvents#registerPlantTypes(PVZRegisterEvent)}
-	 */
-	public static void register() {
-		PlantManager.registerPlants(PVZ_PLANTS);
-		for(PlantType plant : PVZ_PLANTS) {
-			PVZMod.LOGGER.debug("register : " + plant.toString());
-		}
+	private PVZPlants(String name, PlantFeatures features) {
+		super(name, features);
+		LIST.add(this);
 	}
 	
     @Override

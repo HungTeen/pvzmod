@@ -6,7 +6,7 @@ Minecraft 1.12.2-0.7.10: Stop updating.
 
 Minecraft 1.15.2-0.5.1: Stop updating.
 
-Minecraft 1.16.5-0.5.1: Active.
+Minecraft 1.16.5-0.5.3: Active.
 
 ---
 

@@ -1,6 +1,6 @@
 package com.hungteen.pvz.client.render.layer;
 
-import com.hungteen.pvz.client.model.entity.zombie.poolday.DuckyTubeModel;
+import com.hungteen.pvz.client.model.entity.zombie.pool.DuckyTubeModel;
 import com.hungteen.pvz.utils.StringUtil;
 import com.mojang.blaze3d.matrix.MatrixStack;
 import com.mojang.blaze3d.vertex.IVertexBuilder;

@@ -3,14 +3,15 @@ package com.hungteen.pvz.common.entity.zombie.roof;
 import java.util.Optional;
 
 import com.hungteen.pvz.api.interfaces.IHasWheel;
+import com.hungteen.pvz.common.core.ZombieType;
 import com.hungteen.pvz.common.entity.ai.goal.attack.PultAttackGoal;
 import com.hungteen.pvz.common.entity.ai.goal.target.PVZRandomTargetGoal;
 import com.hungteen.pvz.common.entity.bullet.BallEntity;
 import com.hungteen.pvz.common.entity.zombie.base.CarZombieEntity;
+import com.hungteen.pvz.common.impl.zombie.RoofZombies;
 import com.hungteen.pvz.common.misc.damage.PVZDamageSource;
 import com.hungteen.pvz.register.EntityRegister;
 import com.hungteen.pvz.register.SoundRegister;
-import com.hungteen.pvz.remove.Zombies;
 import com.hungteen.pvz.utils.EntityUtil;
 import com.hungteen.pvz.utils.ZombieUtil;
 import com.hungteen.pvz.utils.interfaces.IPult;
@@ -160,10 +161,10 @@ public class CatapultZombieEntity extends CarZombieEntity implements IPult,IHasW
     	return this.entityData.get(BALL_COUNT);
     }
 
-	@Override
-	public Zombies getZombieEnumName() {
-		return Zombies.CATAPULT_ZOMBIE;
-	}
+    @Override
+    public ZombieType getZombieType() {
+	    return RoofZombies.CATAPULT_ZOMBIE;
+    }
 	
 	private static final class CataPultAttackGoal extends PultAttackGoal {
 

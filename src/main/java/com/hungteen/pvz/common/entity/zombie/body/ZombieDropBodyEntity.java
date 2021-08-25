@@ -2,10 +2,13 @@ package com.hungteen.pvz.common.entity.zombie.body;
 
 import java.util.Optional;
 
+import com.hungteen.pvz.common.core.ZombieType;
 import com.hungteen.pvz.common.entity.PVZEntityBase;
 import com.hungteen.pvz.common.entity.zombie.PVZZombieEntity;
-import com.hungteen.pvz.common.entity.zombie.roof.ZomBossEntity;
-import com.hungteen.pvz.remove.Zombies;
+import com.hungteen.pvz.common.entity.zombie.roof.Edgar090505Entity;
+import com.hungteen.pvz.common.impl.zombie.GrassZombies;
+import com.hungteen.pvz.common.impl.zombie.PoolZombies;
+import com.hungteen.pvz.common.impl.zombie.RoofZombies;
 import com.hungteen.pvz.utils.AlgorithmUtil;
 
 import net.minecraft.entity.EntitySize;
@@ -47,7 +50,7 @@ public class ZombieDropBodyEntity extends PVZEntityBase {
 
 	@Override
 	protected void defineSynchedData() {
-		this.entityData.define(ZOMBIE_TYPE, Zombies.NORMAL_ZOMBIE.ordinal());
+		this.entityData.define(ZOMBIE_TYPE, 0);
 		this.entityData.define(BODY_TYPE, BodyType.HAND.ordinal());
 		this.entityData.define(BODY_STATE, 0);
 		this.entityData.define(ANIM_TIME, 0);
@@ -100,15 +103,9 @@ public class ZombieDropBodyEntity extends PVZEntityBase {
 	 */
 	public void specialDropBody(PVZZombieEntity zombie, DamageSource source, BodyType type) {
 		this.updateInfo(zombie, type);
-		switch (zombie.getZombieEnumName()) {
-		case ZOMBONI:
-		case CATAPULT_ZOMBIE:{
+		final ZombieType zombieType = zombie.getZombieType();
+		if(zombieType == PoolZombies.ZOMBONI || zombieType == RoofZombies.CATAPULT_ZOMBIE) {
 			this.hitUp(zombie, source, 0.5D, 0.5D, 0.5D);
-			break;
-		}
-		default:{
-			break;
-		}
 		}
 	}
 	
@@ -128,10 +125,10 @@ public class ZombieDropBodyEntity extends PVZEntityBase {
 	}
 	
 	/**
-	 * {@link ZomBossEntity}
+	 * {@link Edgar090505Entity}
 	 */
 	public void updateInfo(PVZZombieEntity zombie, BodyType type) {
-		this.setZombieType(zombie.getZombieEnumName());
+		this.setZombieType(zombie.getZombieType());
 		this.setMini(zombie.isMiniZombie());
 		this.setBodyType(type);
 	}
@@ -168,7 +165,7 @@ public class ZombieDropBodyEntity extends PVZEntityBase {
 			this.setAnimTime(nbt.getInt("body_anim_tick"));
 		}
 		if (nbt.contains("body_zombie_type")) {
-			this.setZombieType(Zombies.values()[nbt.getInt("body_zombie_type")]);
+			this.setZombieType(nbt.getInt("body_zombie_type"));
 		}
 		if (nbt.contains("body_part_state")) {
 			this.setBodyState(nbt.getInt("body_part_state"));
@@ -181,19 +178,24 @@ public class ZombieDropBodyEntity extends PVZEntityBase {
 	@Override
 	protected void addAdditionalSaveData(CompoundNBT nbt) {
 		nbt.putInt("body_anim_tick", this.getAnimTime());
-		nbt.putInt("body_zombie_type", this.getZombieType().ordinal());
+		nbt.putInt("body_zombie_type", this.getZombieType().getId());
 		nbt.putInt("body_part_state", this.getBodyState());
 		nbt.putInt("body_part_type", this.getBodyType().ordinal());
 	}
 	
 	/* getter setter */
 
-	public Zombies getZombieType() {
-		return Zombies.values()[entityData.get(ZOMBIE_TYPE)];
+	public ZombieType getZombieType() {
+		final int pos = entityData.get(ZOMBIE_TYPE);
+		return pos < ZombieType.size() ? ZombieType.getZombies().get(pos) : GrassZombies.NORMAL_ZOMBIE;
 	}
 
-	public void setZombieType(Zombies type) {
-		entityData.set(ZOMBIE_TYPE, type.ordinal());
+	public void setZombieType(ZombieType type) {
+		entityData.set(ZOMBIE_TYPE, type.getId());
+	}
+	
+	public void setZombieType(int type) {
+		entityData.set(ZOMBIE_TYPE, type);
 	}
 
 	public BodyType getBodyType() {

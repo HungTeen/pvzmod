@@ -1,15 +1,16 @@
 package com.hungteen.pvz.common.entity.zombie.roof;
 
+import com.hungteen.pvz.common.core.ZombieType;
 import com.hungteen.pvz.common.entity.plant.PVZPlantEntity;
 import com.hungteen.pvz.common.entity.plant.base.PlantDefenderEntity;
 import com.hungteen.pvz.common.entity.zombie.base.DefenceZombieEntity;
 import com.hungteen.pvz.common.entity.zombie.body.ZombieDropBodyEntity;
 import com.hungteen.pvz.common.entity.zombie.part.PVZHealthPartEntity;
 import com.hungteen.pvz.common.impl.plant.PVZPlants;
+import com.hungteen.pvz.common.impl.zombie.RoofZombies;
 import com.hungteen.pvz.data.loot.PVZLoot;
 import com.hungteen.pvz.register.SoundRegister;
 import com.hungteen.pvz.remove.MetalTypes;
-import com.hungteen.pvz.remove.Zombies;
 import com.hungteen.pvz.utils.ZombieUtil;
 import com.hungteen.pvz.utils.interfaces.IHasMetal;
 
@@ -135,8 +136,8 @@ public class LadderZombieEntity extends DefenceZombieEntity implements IHasMetal
 	}
 
 	@Override
-	public Zombies getZombieEnumName() {
-		return Zombies.LADDER_ZOMBIE;
-	}
+    public ZombieType getZombieType() {
+	    return RoofZombies.LADDER_ZOMBIE;
+    }
 
 }

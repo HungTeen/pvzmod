@@ -4,16 +4,15 @@ import com.hungteen.pvz.client.gui.search.SearchOption;
 import com.hungteen.pvz.common.capability.CapabilityHandler;
 import com.hungteen.pvz.common.capability.player.PlayerDataManager;
 import com.hungteen.pvz.common.core.PlantType;
+import com.hungteen.pvz.common.core.ZombieType;
 import com.hungteen.pvz.common.enchantment.EnchantmentUtil;
 import com.hungteen.pvz.common.entity.drop.SunEntity;
 import com.hungteen.pvz.common.entity.plant.PVZPlantEntity;
 import com.hungteen.pvz.common.entity.zombie.PVZZombieEntity;
 import com.hungteen.pvz.common.world.invasion.WaveManager;
 import com.hungteen.pvz.register.SoundRegister;
-import com.hungteen.pvz.remove.Zombies;
 import com.hungteen.pvz.utils.EntityUtil;
 import com.hungteen.pvz.utils.PlayerUtil;
-import com.hungteen.pvz.utils.ZombieUtil;
 import com.hungteen.pvz.utils.enums.Resources;
 
 import net.minecraft.advancements.CriteriaTriggers;
@@ -46,14 +45,13 @@ public class PlayerEventHandler {
 	public static void onPlayerKillEntity(PlayerEntity player, DamageSource source, LivingEntity living) {
 		if(living instanceof PVZZombieEntity) {
 			PVZZombieEntity zombie = (PVZZombieEntity) living;
-			int xp = ZombieUtil.getZombieXp(zombie.getZombieEnumName());
-			PlayerUtil.addPlayerStats(player, Resources.TREE_XP, xp);
-			onPlayerKillZombie(player, zombie.getZombieEnumName());
+			PlayerUtil.addPlayerStats(player, Resources.TREE_XP, zombie.getZombieType().getXp());
+			onPlayerKillZombie(player, zombie.getZombieType());
 		}
 		CriteriaTriggers.PLAYER_KILLED_ENTITY.trigger((ServerPlayerEntity) player, living, source);
 	}
 	
-	public static void onPlayerKillZombie(PlayerEntity player, Zombies zombie) {
+	public static void onPlayerKillZombie(PlayerEntity player, ZombieType zombie) {
 		PlayerUtil.addPlayerStats(player, Resources.KILL_COUNT, 1);
 	}
 	

@@ -15,7 +15,6 @@ import com.hungteen.pvz.api.enums.PVZGroupType;
 import com.hungteen.pvz.api.interfaces.ICanBeCharmed;
 import com.hungteen.pvz.api.interfaces.IGroupEntity;
 import com.hungteen.pvz.api.interfaces.IHasOwner;
-import com.hungteen.pvz.api.interfaces.IPVZZombie;
 import com.hungteen.pvz.common.entity.PVZMultiPartEntity;
 import com.hungteen.pvz.common.entity.ai.goal.attack.PVZZombieAttackGoal;
 import com.hungteen.pvz.common.entity.ai.goal.target.PVZHurtByTargetGoal;
@@ -25,15 +24,15 @@ import com.hungteen.pvz.common.entity.plant.PVZPlantEntity;
 import com.hungteen.pvz.common.entity.plant.assist.BloverEntity;
 import com.hungteen.pvz.common.entity.plant.magic.StrangeCatEntity;
 import com.hungteen.pvz.common.entity.zombie.PVZZombieEntity;
-import com.hungteen.pvz.common.entity.zombie.grassday.PoleZombieEntity;
-import com.hungteen.pvz.common.entity.zombie.poolday.BobsleTeamEntity;
-import com.hungteen.pvz.common.entity.zombie.poolnight.BalloonZombieEntity;
+import com.hungteen.pvz.common.entity.zombie.base.AbstractBossZombieEntity;
+import com.hungteen.pvz.common.entity.zombie.grass.PoleZombieEntity;
+import com.hungteen.pvz.common.entity.zombie.pool.BalloonZombieEntity;
+import com.hungteen.pvz.common.entity.zombie.pool.BobsleTeamEntity;
 import com.hungteen.pvz.common.event.handler.LivingEventHandler;
 import com.hungteen.pvz.common.network.PVZPacketHandler;
 import com.hungteen.pvz.common.network.SpawnParticlePacket;
 import com.hungteen.pvz.compat.jade.provider.PVZEntityProvider;
 import com.hungteen.pvz.register.EffectRegister;
-import com.hungteen.pvz.remove.Zombies;
 import com.hungteen.pvz.utils.interfaces.IMultiPartEntity;
 
 import it.unimi.dsi.fastutil.ints.IntOpenHashSet;
@@ -164,8 +163,8 @@ public class EntityUtil {
 	 * {@link #getCurrentDefenceHealth(LivingEntity)}
 	 */
 	public static float getCurrentHealth(LivingEntity target) {
-		if(target instanceof IPVZZombie) {
-			return ((IPVZZombie) target).getCurrentHealth();
+		if(target instanceof PVZZombieEntity) {
+			return ((PVZZombieEntity) target).getCurrentHealth();
 		}
 		if(target instanceof PVZPlantEntity) {
 			return ((PVZPlantEntity) target).getCurrentHealth();
@@ -186,8 +185,8 @@ public class EntityUtil {
 	 * get the max health the target has currently.
 	 */
 	public static float getCurrentMaxHealth(LivingEntity target) {
-		if(target instanceof IPVZZombie) {
-			return ((IPVZZombie) target).getCurrentMaxHealth();
+		if(target instanceof PVZZombieEntity) {
+			return ((PVZZombieEntity) target).getCurrentMaxHealth();
 		}
 		if(target instanceof PVZPlantEntity) {
 			return ((PVZPlantEntity) target).getCurrentMaxHealth();
@@ -207,9 +206,8 @@ public class EntityUtil {
 	 * entity's health more than 100 is consider as other mod's boss.
 	 */
 	public static boolean isEntityBoss(@Nonnull LivingEntity entity) {
-		if(entity instanceof IPVZZombie) {
-			Zombies zombie = ((IPVZZombie) entity).getZombieEnumName();
-			return Zombies.BOSSES.contains(zombie);
+		if(entity instanceof AbstractBossZombieEntity) {
+			return true;
 		}
 		if(entity instanceof PVZPlantEntity) {
 			return false;

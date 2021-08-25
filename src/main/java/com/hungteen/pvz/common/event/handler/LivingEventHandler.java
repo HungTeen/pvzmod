@@ -1,7 +1,7 @@
 package com.hungteen.pvz.common.event.handler;
 
-import com.hungteen.pvz.api.interfaces.IPVZZombie;
 import com.hungteen.pvz.common.entity.plant.PVZPlantEntity;
+import com.hungteen.pvz.common.entity.zombie.PVZZombieEntity;
 import com.hungteen.pvz.common.event.PVZLivingEvents;
 import com.hungteen.pvz.common.misc.damage.PVZDamageSource;
 import com.hungteen.pvz.register.EffectRegister;
@@ -54,14 +54,14 @@ public class LivingEventHandler {
 			return ;
 		}
 		final LivingEntity attacker = (LivingEntity) ev.getSource().getEntity();
-		if(attacker instanceof IPVZZombie && ev.getEntityLiving() instanceof IPVZZombie) {
+		if(attacker instanceof PVZZombieEntity && ev.getEntityLiving() instanceof PVZZombieEntity) {
 			if(! EntityUtil.isEntityBoss(attacker)) {//common zombie attack zombie.
 				ev.setAmount(Math.min(EntityUtil.LIMITED_DAMAGE, ev.getAmount()));
 			}
 			return ;
 		}
 		//plant attack others except zombies.
-		if(attacker instanceof PVZPlantEntity && !(ev.getEntityLiving() instanceof IPVZZombie)) {
+		if(attacker instanceof PVZPlantEntity && !(ev.getEntityLiving() instanceof PVZZombieEntity)) {
 			if(ev.getEntityLiving() instanceof EnderDragonEntity) {
 				ev.setAmount(Math.min(EntityUtil.LIMITED_DAMAGE * 4, ev.getAmount()));
 			} else {
@@ -70,7 +70,7 @@ public class LivingEventHandler {
 			return ;
 		}
 		//zombie attack others except plants.
-		if(attacker instanceof IPVZZombie && !(ev.getEntityLiving() instanceof PVZPlantEntity)) {
+		if(attacker instanceof PVZZombieEntity && !(ev.getEntityLiving() instanceof PVZPlantEntity)) {
 			ev.setAmount(Math.min(EntityUtil.LIMITED_DAMAGE, ev.getAmount()));
 		}
 	}

@@ -7,13 +7,9 @@ import org.apache.logging.log4j.Logger;
 import com.hungteen.pvz.client.ClientProxy;
 import com.hungteen.pvz.common.CommonProxy;
 import com.hungteen.pvz.common.advancement.AdvancementHandler;
-import com.hungteen.pvz.common.core.PlantType;
-import com.hungteen.pvz.common.impl.plant.CustomPlants;
-import com.hungteen.pvz.common.impl.plant.MemePlants;
-import com.hungteen.pvz.common.impl.plant.OtherPlants;
-import com.hungteen.pvz.common.impl.plant.PVZPlants;
 import com.hungteen.pvz.common.world.gen.GenStructures;
 import com.hungteen.pvz.register.BiomeRegister;
+import com.hungteen.pvz.register.CoreRegister;
 
 import net.minecraftforge.common.ForgeConfigSpec;
 import net.minecraftforge.common.MinecraftForge;
@@ -61,14 +57,8 @@ public class PVZMod
     	forgeBus.addListener(EventPriority.NORMAL, GenStructures::addDimensionalSpacing);
     	forgeBus.addListener(EventPriority.HIGH, BiomeRegister::biomeModification);
     	
-//    	forgeBus.post(new PVZRegisterEvent());
-    	PVZPlants.register();
-		OtherPlants.register();
-		CustomPlants.register();
-		MemePlants.register();
-    	PlantType.PlantManager.sortPlants();
-    	
     	AdvancementHandler.init();
+    	CoreRegister.register();
     	
     	PROXY.init();
     }

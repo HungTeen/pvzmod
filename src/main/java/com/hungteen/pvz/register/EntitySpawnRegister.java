@@ -5,6 +5,7 @@ import com.hungteen.pvz.PVZMod;
 import com.hungteen.pvz.common.entity.drop.SunEntity;
 import com.hungteen.pvz.common.misc.SpawnChecker;
 import com.hungteen.pvz.utils.BiomeUtil;
+import com.hungteen.pvz.utils.ConfigUtil;
 
 import net.minecraft.block.Blocks;
 import net.minecraft.entity.EntityClassification;
@@ -80,7 +81,7 @@ public class EntitySpawnRegister {
 		EntitySpawnPlacementRegistry.register(EntityRegister.LADDER_ZOMBIE.get(), PlacementType.ON_GROUND, Heightmap.Type.MOTION_BLOCKING_NO_LEAVES, SpawnChecker::canGroundInvasionZombieSpawn);
 		EntitySpawnPlacementRegistry.register(EntityRegister.CATAPULT_ZOMBIE.get(), PlacementType.ON_GROUND, Heightmap.Type.MOTION_BLOCKING_NO_LEAVES, SpawnChecker::canGroundInvasionZombieSpawn);
 		EntitySpawnPlacementRegistry.register(EntityRegister.GARGANTUAR.get(), PlacementType.ON_GROUND, Heightmap.Type.MOTION_BLOCKING_NO_LEAVES, SpawnChecker::canGroundInvasionZombieSpawn);
-		EntitySpawnPlacementRegistry.register(EntityRegister.SAD_GARGANTUAR.get(), PlacementType.ON_GROUND, Heightmap.Type.MOTION_BLOCKING_NO_LEAVES, SpawnChecker::canGroundInvasionZombieSpawn);
+		EntitySpawnPlacementRegistry.register(EntityRegister.GIGA_GARGANTUAR.get(), PlacementType.ON_GROUND, Heightmap.Type.MOTION_BLOCKING_NO_LEAVES, SpawnChecker::canGroundInvasionZombieSpawn);
 		
 		EntitySpawnPlacementRegistry.register(EntityRegister.PEASHOOTER_ZOMBIE.get(), PlacementType.ON_GROUND, Heightmap.Type.MOTION_BLOCKING_NO_LEAVES, SpawnChecker::canGroundInvasionZombieSpawn);
 		EntitySpawnPlacementRegistry.register(EntityRegister.WALLNUT_ZOMBIE.get(), PlacementType.ON_GROUND, Heightmap.Type.MOTION_BLOCKING_NO_LEAVES, SpawnChecker::canGroundInvasionZombieSpawn);
@@ -126,7 +127,7 @@ public class EntitySpawnRegister {
 	
 	private static void addSpawnToOverworldLand(BiomeLoadingEvent event) {
 		//common zombie spawn
-		int p = PVZConfig.COMMON_CONFIG.WorldSettings.WorldInvasionSettings.MaxSpawnWeightMultiple.get();
+		final int p = ConfigUtil.getSpawnMultiple();
 		EntityClassification ee = EntityClassification.MONSTER;
 		
 		event.getSpawns().addSpawn(ee, new Spawners(EntityRegister.YETI_ZOMBIE.get(), 3 * PVZConfig.COMMON_CONFIG.WorldSettings.EntitySpawnSettings.YetiZombieSpawnWeight.get(), 1, 1));
@@ -162,7 +163,7 @@ public class EntitySpawnRegister {
 		event.getSpawns().addSpawn(ee, new Spawners(EntityRegister.LADDER_ZOMBIE.get(), 25 * p, 1, 1));
 		event.getSpawns().addSpawn(ee, new Spawners(EntityRegister.CATAPULT_ZOMBIE.get(), 25 * p, 1, 1));
 		event.getSpawns().addSpawn(ee, new Spawners(EntityRegister.GARGANTUAR.get(), 18 * p, 1, 1));
-		event.getSpawns().addSpawn(ee, new Spawners(EntityRegister.SAD_GARGANTUAR.get(), 5 * p, 1, 1));
+		event.getSpawns().addSpawn(ee, new Spawners(EntityRegister.GIGA_GARGANTUAR.get(), 5 * p, 1, 1));
 		
 		event.getSpawns().addSpawn(ee, new Spawners(EntityRegister.PEASHOOTER_ZOMBIE.get(), 60 * p, 1, 1));
 		event.getSpawns().addSpawn(ee, new Spawners(EntityRegister.WALLNUT_ZOMBIE.get(), 30 * p, 1, 1));
@@ -174,7 +175,7 @@ public class EntitySpawnRegister {
 	
 	private static void addSpawnToOverworld(BiomeLoadingEvent event) {
 		//common zombie spawn
-		int p = PVZConfig.COMMON_CONFIG.WorldSettings.WorldInvasionSettings.MaxSpawnWeightMultiple.get();
+		final int p = ConfigUtil.getSpawnMultiple();
 		EntityClassification ee = EntityClassification.MONSTER;
 				
 		event.getSpawns().addSpawn(ee, new Spawners(EntityRegister.SNORKEL_ZOMBIE.get(), 70 * p, 1, 2));
@@ -183,7 +184,7 @@ public class EntitySpawnRegister {
 	
 	private static void addSpawnToOverworldOcean(BiomeLoadingEvent event) {
 		//common zombie spawn
-		int p = PVZConfig.COMMON_CONFIG.WorldSettings.WorldInvasionSettings.MaxSpawnWeightMultiple.get();
+		final int p = ConfigUtil.getSpawnMultiple();
 		EntityClassification ee = EntityClassification.MONSTER;
 		
 		event.getSpawns().addSpawn(ee, new Spawners(EntityRegister.DOLPHIN_RIDER.get(), 15 * p, 1, 1));

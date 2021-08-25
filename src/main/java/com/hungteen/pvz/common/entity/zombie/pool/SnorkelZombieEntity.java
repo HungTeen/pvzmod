@@ -1,0 +1,35 @@
+package com.hungteen.pvz.common.entity.zombie.pool;
+
+import com.hungteen.pvz.common.core.ZombieType;
+import com.hungteen.pvz.common.entity.zombie.base.SwimmerZombieEntity;
+import com.hungteen.pvz.common.impl.zombie.PoolZombies;
+import com.hungteen.pvz.utils.ZombieUtil;
+
+import net.minecraft.entity.EntityType;
+import net.minecraft.entity.ai.attributes.Attributes;
+import net.minecraft.entity.monster.MonsterEntity;
+import net.minecraft.world.World;
+
+public class SnorkelZombieEntity extends SwimmerZombieEntity {
+
+	public SnorkelZombieEntity(EntityType<? extends MonsterEntity> type, World worldIn) {
+		super(type, worldIn);
+	}
+
+	@Override
+	protected void updateAttributes() {
+		super.updateAttributes();
+		this.getAttribute(Attributes.MOVEMENT_SPEED).setBaseValue(ZombieUtil.WALK_LITTLE_FAST);
+	}
+
+	@Override
+	public float getLife() {
+		return 20;
+	}
+	
+	@Override
+	public ZombieType getZombieType() {
+		return PoolZombies.SNORKEL_ZOMBIE;
+	}
+
+}

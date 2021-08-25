@@ -1,7 +1,8 @@
 package com.hungteen.pvz.common.entity.zombie.zombotany;
 
+import com.hungteen.pvz.common.core.ZombieType;
+import com.hungteen.pvz.common.impl.zombie.Zombotanies;
 import com.hungteen.pvz.data.loot.PVZLoot;
-import com.hungteen.pvz.remove.Zombies;
 
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.monster.MonsterEntity;
@@ -30,8 +31,8 @@ public class GatlingPeaZombieEntity extends PeaShooterZombieEntity {
 	}
 	
 	@Override
-	public Zombies getZombieEnumName() {
-		return Zombies.GATLINGPEA_ZOMBIE;
+	public ZombieType getZombieType() {
+		return Zombotanies.GATLINGPEA_ZOMBIE;
 	}
 	
 }

@@ -1,6 +1,6 @@
 package com.hungteen.pvz.common.cache;
 
-import com.hungteen.pvz.common.entity.zombie.grassnight.TombStoneEntity;
+import com.hungteen.pvz.common.entity.zombie.grass.TombStoneEntity;
 import com.hungteen.pvz.common.event.PVZServerEvents;
 import com.hungteen.pvz.common.world.data.PVZFlagData;
 

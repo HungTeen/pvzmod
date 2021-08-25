@@ -1,9 +1,10 @@
 package com.hungteen.pvz.common.entity.zombie.zombotany;
 
+import com.hungteen.pvz.common.core.ZombieType;
 import com.hungteen.pvz.common.entity.plant.flame.JalapenoEntity;
+import com.hungteen.pvz.common.impl.zombie.Zombotanies;
 import com.hungteen.pvz.data.loot.PVZLoot;
 import com.hungteen.pvz.register.EntityRegister;
-import com.hungteen.pvz.remove.Zombies;
 import com.hungteen.pvz.utils.EntityUtil;
 import com.hungteen.pvz.utils.ZombieUtil;
 
@@ -59,8 +60,8 @@ public class JalapenoZombieEntity extends AbstractZombotanyEntity {
 	}
 
 	@Override
-	public Zombies getZombieEnumName() {
-		return Zombies.JALAPENO_ZOMBIE;
+	public ZombieType getZombieType() {
+		return Zombotanies.JALAPENO_ZOMBIE;
 	}
 	
 }

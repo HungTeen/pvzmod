@@ -2,7 +2,7 @@ package com.hungteen.pvz.common.entity.misc;
 
 import com.hungteen.pvz.common.entity.AbstractOwnerEntity;
 import com.hungteen.pvz.common.entity.plant.PVZPlantEntity;
-import com.hungteen.pvz.common.entity.zombie.roof.ZomBossEntity;
+import com.hungteen.pvz.common.entity.zombie.roof.Edgar090505Entity;
 import com.hungteen.pvz.common.misc.damage.PVZDamageSource;
 import com.hungteen.pvz.register.EntityRegister;
 import com.hungteen.pvz.utils.EntityUtil;
@@ -23,7 +23,7 @@ public class DestroyCarEntity extends AbstractOwnerEntity {
 		super(entityTypeIn, worldIn);
 	}
 	
-	public DestroyCarEntity(World worldIn, ZomBossEntity boss) {
+	public DestroyCarEntity(World worldIn, Edgar090505Entity boss) {
 		super(EntityRegister.DESTROY_CAR.get(), worldIn, boss);
 	}
 	

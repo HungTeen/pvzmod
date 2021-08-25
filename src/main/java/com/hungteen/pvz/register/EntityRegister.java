@@ -1,7 +1,6 @@
 package com.hungteen.pvz.register;
 
 import java.util.Arrays;
-import java.util.Optional;
 
 import com.hungteen.pvz.PVZMod;
 import com.hungteen.pvz.client.render.entity.bullet.BallRender;
@@ -100,46 +99,46 @@ import com.hungteen.pvz.client.render.entity.plant.toxic.PuffShroomRender;
 import com.hungteen.pvz.client.render.entity.plant.toxic.ScaredyShroomRender;
 import com.hungteen.pvz.client.render.entity.plant.toxic.SeaShroomRender;
 import com.hungteen.pvz.client.render.entity.zombie.body.ZombieBodyRender;
-import com.hungteen.pvz.client.render.entity.zombie.grassday.BucketHeadZombieRender;
-import com.hungteen.pvz.client.render.entity.zombie.grassday.ConeHeadZombieRender;
-import com.hungteen.pvz.client.render.entity.zombie.grassday.FlagZombieRender;
-import com.hungteen.pvz.client.render.entity.zombie.grassday.NormalZombieRender;
-import com.hungteen.pvz.client.render.entity.zombie.grassday.PoleZombieRender;
-import com.hungteen.pvz.client.render.entity.zombie.grassnight.BackupDancerRender;
-import com.hungteen.pvz.client.render.entity.zombie.grassnight.DancingZombieRender;
-import com.hungteen.pvz.client.render.entity.zombie.grassnight.FootballZombieRender;
-import com.hungteen.pvz.client.render.entity.zombie.grassnight.GigaFootballZombieRender;
-import com.hungteen.pvz.client.render.entity.zombie.grassnight.GigaTombStoneRender;
-import com.hungteen.pvz.client.render.entity.zombie.grassnight.NewspaperZombieRender;
-import com.hungteen.pvz.client.render.entity.zombie.grassnight.OldZombieRender;
-import com.hungteen.pvz.client.render.entity.zombie.grassnight.ScreenDoorZombieRender;
-import com.hungteen.pvz.client.render.entity.zombie.grassnight.SundayEditionZombieRender;
-import com.hungteen.pvz.client.render.entity.zombie.grassnight.TombStoneRender;
+import com.hungteen.pvz.client.render.entity.zombie.grass.BackupDancerRender;
+import com.hungteen.pvz.client.render.entity.zombie.grass.BucketHeadZombieRender;
+import com.hungteen.pvz.client.render.entity.zombie.grass.ConeHeadZombieRender;
+import com.hungteen.pvz.client.render.entity.zombie.grass.DancingZombieRender;
+import com.hungteen.pvz.client.render.entity.zombie.grass.FlagZombieRender;
+import com.hungteen.pvz.client.render.entity.zombie.grass.FootballZombieRender;
+import com.hungteen.pvz.client.render.entity.zombie.grass.GigaFootballZombieRender;
+import com.hungteen.pvz.client.render.entity.zombie.grass.GigaTombStoneRender;
+import com.hungteen.pvz.client.render.entity.zombie.grass.NewspaperZombieRender;
+import com.hungteen.pvz.client.render.entity.zombie.grass.NormalZombieRender;
+import com.hungteen.pvz.client.render.entity.zombie.grass.OldZombieRender;
+import com.hungteen.pvz.client.render.entity.zombie.grass.PoleZombieRender;
+import com.hungteen.pvz.client.render.entity.zombie.grass.ScreenDoorZombieRender;
+import com.hungteen.pvz.client.render.entity.zombie.grass.SundayEditionZombieRender;
+import com.hungteen.pvz.client.render.entity.zombie.grass.TombStoneRender;
 import com.hungteen.pvz.client.render.entity.zombie.other.CoffinRender;
 import com.hungteen.pvz.client.render.entity.zombie.other.MournerZombieRender;
 import com.hungteen.pvz.client.render.entity.zombie.other.NobleZombieRender;
 import com.hungteen.pvz.client.render.entity.zombie.other.RaZombieRender;
 import com.hungteen.pvz.client.render.entity.zombie.other.TrickZombieRender;
-import com.hungteen.pvz.client.render.entity.zombie.poolday.BobsleTeamRender;
-import com.hungteen.pvz.client.render.entity.zombie.poolday.BobsleZombieRender;
-import com.hungteen.pvz.client.render.entity.zombie.poolday.DolphinRiderRender;
-import com.hungteen.pvz.client.render.entity.zombie.poolday.DolphinRiderZombieRender;
-import com.hungteen.pvz.client.render.entity.zombie.poolday.LavaZombieRender;
-import com.hungteen.pvz.client.render.entity.zombie.poolday.SnorkelZombieRender;
-import com.hungteen.pvz.client.render.entity.zombie.poolday.ZombieDolphinRender;
-import com.hungteen.pvz.client.render.entity.zombie.poolday.ZomboniRender;
-import com.hungteen.pvz.client.render.entity.zombie.poolnight.BalloonZombieRender;
-import com.hungteen.pvz.client.render.entity.zombie.poolnight.DiggerZombieRender;
-import com.hungteen.pvz.client.render.entity.zombie.poolnight.JackInBoxZombieRender;
-import com.hungteen.pvz.client.render.entity.zombie.poolnight.PogoZombieRender;
-import com.hungteen.pvz.client.render.entity.zombie.poolnight.YetiZombieRender;
+import com.hungteen.pvz.client.render.entity.zombie.pool.BalloonZombieRender;
+import com.hungteen.pvz.client.render.entity.zombie.pool.BobsleTeamRender;
+import com.hungteen.pvz.client.render.entity.zombie.pool.BobsleZombieRender;
+import com.hungteen.pvz.client.render.entity.zombie.pool.DiggerZombieRender;
+import com.hungteen.pvz.client.render.entity.zombie.pool.DolphinRiderRender;
+import com.hungteen.pvz.client.render.entity.zombie.pool.DolphinRiderZombieRender;
+import com.hungteen.pvz.client.render.entity.zombie.pool.JackInBoxZombieRender;
+import com.hungteen.pvz.client.render.entity.zombie.pool.LavaZombieRender;
+import com.hungteen.pvz.client.render.entity.zombie.pool.PogoZombieRender;
+import com.hungteen.pvz.client.render.entity.zombie.pool.SnorkelZombieRender;
+import com.hungteen.pvz.client.render.entity.zombie.pool.YetiZombieRender;
+import com.hungteen.pvz.client.render.entity.zombie.pool.ZombieDolphinRender;
+import com.hungteen.pvz.client.render.entity.zombie.pool.ZomboniRender;
 import com.hungteen.pvz.client.render.entity.zombie.roof.BungeeZombieRender;
 import com.hungteen.pvz.client.render.entity.zombie.roof.CatapultZombieRender;
+import com.hungteen.pvz.client.render.entity.zombie.roof.Edgar090505Render;
 import com.hungteen.pvz.client.render.entity.zombie.roof.GargantuarRender;
+import com.hungteen.pvz.client.render.entity.zombie.roof.GigaGargantuarRender;
 import com.hungteen.pvz.client.render.entity.zombie.roof.ImpRender;
 import com.hungteen.pvz.client.render.entity.zombie.roof.LadderZombieRender;
-import com.hungteen.pvz.client.render.entity.zombie.roof.SadGargantuarRender;
-import com.hungteen.pvz.client.render.entity.zombie.roof.ZomBossRender;
 import com.hungteen.pvz.client.render.entity.zombie.zombotany.GatlingPeaZombieRender;
 import com.hungteen.pvz.client.render.entity.zombie.zombotany.JalapenoZombieRender;
 import com.hungteen.pvz.client.render.entity.zombie.zombotany.PeaShooterZombieRender;
@@ -148,6 +147,7 @@ import com.hungteen.pvz.client.render.entity.zombie.zombotany.SquashZombieRender
 import com.hungteen.pvz.client.render.entity.zombie.zombotany.TallNutZombieRender;
 import com.hungteen.pvz.client.render.entity.zombie.zombotany.WallNutZombieRender;
 import com.hungteen.pvz.common.core.PlantType;
+import com.hungteen.pvz.common.core.ZombieType;
 import com.hungteen.pvz.common.entity.bullet.BallEntity;
 import com.hungteen.pvz.common.entity.bullet.ButterEntity;
 import com.hungteen.pvz.common.entity.bullet.CornEntity;
@@ -245,47 +245,47 @@ import com.hungteen.pvz.common.entity.plant.toxic.ScaredyShroomEntity;
 import com.hungteen.pvz.common.entity.plant.toxic.SeaShroomEntity;
 import com.hungteen.pvz.common.entity.zombie.PVZZombieEntity;
 import com.hungteen.pvz.common.entity.zombie.body.ZombieDropBodyEntity;
-import com.hungteen.pvz.common.entity.zombie.grassday.BucketHeadZombieEntity;
-import com.hungteen.pvz.common.entity.zombie.grassday.ConeHeadZombieEntity;
-import com.hungteen.pvz.common.entity.zombie.grassday.FlagZombieEntity;
-import com.hungteen.pvz.common.entity.zombie.grassday.NormalZombieEntity;
-import com.hungteen.pvz.common.entity.zombie.grassday.PoleZombieEntity;
-import com.hungteen.pvz.common.entity.zombie.grassnight.BackupDancerEntity;
-import com.hungteen.pvz.common.entity.zombie.grassnight.DancingZombieEntity;
-import com.hungteen.pvz.common.entity.zombie.grassnight.FootballZombieEntity;
-import com.hungteen.pvz.common.entity.zombie.grassnight.GigaFootballZombieEntity;
-import com.hungteen.pvz.common.entity.zombie.grassnight.GigaTombStoneEntity;
-import com.hungteen.pvz.common.entity.zombie.grassnight.NewspaperZombieEntity;
-import com.hungteen.pvz.common.entity.zombie.grassnight.OldZombieEntity;
-import com.hungteen.pvz.common.entity.zombie.grassnight.ScreenDoorZombieEntity;
-import com.hungteen.pvz.common.entity.zombie.grassnight.SundayEditionZombieEntity;
-import com.hungteen.pvz.common.entity.zombie.grassnight.TombStoneEntity;
+import com.hungteen.pvz.common.entity.zombie.custom.GigaTombStoneEntity;
+import com.hungteen.pvz.common.entity.zombie.custom.LavaZombieEntity;
+import com.hungteen.pvz.common.entity.zombie.grass.BackupDancerEntity;
+import com.hungteen.pvz.common.entity.zombie.grass.BucketHeadZombieEntity;
+import com.hungteen.pvz.common.entity.zombie.grass.ConeHeadZombieEntity;
+import com.hungteen.pvz.common.entity.zombie.grass.DancingZombieEntity;
+import com.hungteen.pvz.common.entity.zombie.grass.FlagZombieEntity;
+import com.hungteen.pvz.common.entity.zombie.grass.FootballZombieEntity;
+import com.hungteen.pvz.common.entity.zombie.grass.GigaFootballZombieEntity;
+import com.hungteen.pvz.common.entity.zombie.grass.NewspaperZombieEntity;
+import com.hungteen.pvz.common.entity.zombie.grass.NormalZombieEntity;
+import com.hungteen.pvz.common.entity.zombie.grass.OldZombieEntity;
+import com.hungteen.pvz.common.entity.zombie.grass.PoleZombieEntity;
+import com.hungteen.pvz.common.entity.zombie.grass.ScreenDoorZombieEntity;
+import com.hungteen.pvz.common.entity.zombie.grass.SundayEditionZombieEntity;
+import com.hungteen.pvz.common.entity.zombie.grass.TombStoneEntity;
 import com.hungteen.pvz.common.entity.zombie.other.CoffinEntity;
 import com.hungteen.pvz.common.entity.zombie.other.MournerZombieEntity;
 import com.hungteen.pvz.common.entity.zombie.other.NobleZombieEntity;
 import com.hungteen.pvz.common.entity.zombie.other.RaZombieEntity;
 import com.hungteen.pvz.common.entity.zombie.other.TrickZombieEntity;
 import com.hungteen.pvz.common.entity.zombie.part.PVZZombiePartEntity;
-import com.hungteen.pvz.common.entity.zombie.poolday.BobsleTeamEntity;
-import com.hungteen.pvz.common.entity.zombie.poolday.BobsleZombieEntity;
-import com.hungteen.pvz.common.entity.zombie.poolday.DolphinRiderEntity;
-import com.hungteen.pvz.common.entity.zombie.poolday.DolphinRiderZombieEntity;
-import com.hungteen.pvz.common.entity.zombie.poolday.LavaZombieEntity;
-import com.hungteen.pvz.common.entity.zombie.poolday.SnorkelZombieEntity;
-import com.hungteen.pvz.common.entity.zombie.poolday.ZombieDolphinEntity;
-import com.hungteen.pvz.common.entity.zombie.poolday.ZomboniEntity;
-import com.hungteen.pvz.common.entity.zombie.poolnight.BalloonZombieEntity;
-import com.hungteen.pvz.common.entity.zombie.poolnight.DiggerZombieEntity;
-import com.hungteen.pvz.common.entity.zombie.poolnight.JackInBoxZombieEntity;
-import com.hungteen.pvz.common.entity.zombie.poolnight.PogoZombieEntity;
-import com.hungteen.pvz.common.entity.zombie.poolnight.YetiZombieEntity;
+import com.hungteen.pvz.common.entity.zombie.pool.BalloonZombieEntity;
+import com.hungteen.pvz.common.entity.zombie.pool.BobsleTeamEntity;
+import com.hungteen.pvz.common.entity.zombie.pool.BobsleZombieEntity;
+import com.hungteen.pvz.common.entity.zombie.pool.DiggerZombieEntity;
+import com.hungteen.pvz.common.entity.zombie.pool.DolphinRiderEntity;
+import com.hungteen.pvz.common.entity.zombie.pool.DolphinRiderZombieEntity;
+import com.hungteen.pvz.common.entity.zombie.pool.JackInBoxZombieEntity;
+import com.hungteen.pvz.common.entity.zombie.pool.PogoZombieEntity;
+import com.hungteen.pvz.common.entity.zombie.pool.SnorkelZombieEntity;
+import com.hungteen.pvz.common.entity.zombie.pool.YetiZombieEntity;
+import com.hungteen.pvz.common.entity.zombie.pool.ZombieDolphinEntity;
+import com.hungteen.pvz.common.entity.zombie.pool.ZomboniEntity;
 import com.hungteen.pvz.common.entity.zombie.roof.BungeeZombieEntity;
 import com.hungteen.pvz.common.entity.zombie.roof.CatapultZombieEntity;
+import com.hungteen.pvz.common.entity.zombie.roof.Edgar090505Entity;
 import com.hungteen.pvz.common.entity.zombie.roof.GargantuarEntity;
+import com.hungteen.pvz.common.entity.zombie.roof.GigaGargantuarEntity;
 import com.hungteen.pvz.common.entity.zombie.roof.ImpEntity;
 import com.hungteen.pvz.common.entity.zombie.roof.LadderZombieEntity;
-import com.hungteen.pvz.common.entity.zombie.roof.SadGargantuarEntity;
-import com.hungteen.pvz.common.entity.zombie.roof.ZomBossEntity;
 import com.hungteen.pvz.common.entity.zombie.zombotany.GatlingPeaZombieEntity;
 import com.hungteen.pvz.common.entity.zombie.zombotany.JalapenoZombieEntity;
 import com.hungteen.pvz.common.entity.zombie.zombotany.PeaShooterZombieEntity;
@@ -293,9 +293,7 @@ import com.hungteen.pvz.common.entity.zombie.zombotany.PumpkinZombieEntity;
 import com.hungteen.pvz.common.entity.zombie.zombotany.SquashZombieEntity;
 import com.hungteen.pvz.common.entity.zombie.zombotany.TallNutZombieEntity;
 import com.hungteen.pvz.common.entity.zombie.zombotany.WallNutZombieEntity;
-import com.hungteen.pvz.remove.Zombies;
 import com.hungteen.pvz.utils.StringUtil;
-import com.hungteen.pvz.utils.ZombieUtil;
 
 import net.minecraft.entity.CreatureEntity;
 import net.minecraft.entity.Entity;
@@ -406,8 +404,8 @@ public class EntityRegister {
 	public static final RegistryObject<EntityType<CatapultZombieEntity>> CATAPULT_ZOMBIE = registerImmuneFireEntityType(CatapultZombieEntity::new, "catapult_zombie", EntityClassification.MONSTER);
 	public static final RegistryObject<EntityType<GargantuarEntity>> GARGANTUAR = registerImmuneFireEntityType(GargantuarEntity::new, "gargantuar", EntityClassification.MONSTER);
 	public static final RegistryObject<EntityType<ImpEntity>> IMP = registerImmuneFireEntityType(ImpEntity::new, "imp", EntityClassification.MONSTER);
-	public static final RegistryObject<EntityType<SadGargantuarEntity>> SAD_GARGANTUAR = registerImmuneFireEntityType(SadGargantuarEntity::new, "sad_gargantuar", EntityClassification.MONSTER);
-	public static final RegistryObject<EntityType<ZomBossEntity>> ZOMBOSS = registerImmuneFireEntityType(ZomBossEntity::new, "zomboss", EntityClassification.MONSTER);
+	public static final RegistryObject<EntityType<GigaGargantuarEntity>> GIGA_GARGANTUAR = registerImmuneFireEntityType(GigaGargantuarEntity::new, "giga_gargantuar", EntityClassification.MONSTER);
+	public static final RegistryObject<EntityType<Edgar090505Entity>> EDGAR_090505 = registerImmuneFireEntityType(Edgar090505Entity::new, "edgar_090505", EntityClassification.MONSTER);
 	public static final RegistryObject<EntityType<PeaShooterZombieEntity>> PEASHOOTER_ZOMBIE = registerImmuneFireEntityType(PeaShooterZombieEntity::new, "peashooter_zombie", EntityClassification.MONSTER);
 	public static final RegistryObject<EntityType<GatlingPeaZombieEntity>> GATLINGPEA_ZOMBIE = registerImmuneFireEntityType(GatlingPeaZombieEntity::new, "gatlingpea_zombie", EntityClassification.MONSTER);
 	public static final RegistryObject<EntityType<SquashZombieEntity>> SQUASH_ZOMBIE = registerImmuneFireEntityType(SquashZombieEntity::new, "squash_zombie", EntityClassification.MONSTER);
@@ -567,8 +565,8 @@ public class EntityRegister {
         RenderingRegistry.registerEntityRenderingHandler(CATAPULT_ZOMBIE.get(), CatapultZombieRender::new);
         RenderingRegistry.registerEntityRenderingHandler(GARGANTUAR.get(), GargantuarRender::new);
         RenderingRegistry.registerEntityRenderingHandler(IMP.get(), ImpRender::new);
-        RenderingRegistry.registerEntityRenderingHandler(SAD_GARGANTUAR.get(), SadGargantuarRender::new);
-        RenderingRegistry.registerEntityRenderingHandler(ZOMBOSS.get(), ZomBossRender::new);
+        RenderingRegistry.registerEntityRenderingHandler(GIGA_GARGANTUAR.get(), GigaGargantuarRender::new);
+        RenderingRegistry.registerEntityRenderingHandler(EDGAR_090505.get(), Edgar090505Render::new);
         RenderingRegistry.registerEntityRenderingHandler(PEASHOOTER_ZOMBIE.get(), PeaShooterZombieRender::new);
         RenderingRegistry.registerEntityRenderingHandler(GATLINGPEA_ZOMBIE.get(), GatlingPeaZombieRender::new);
         RenderingRegistry.registerEntityRenderingHandler(SQUASH_ZOMBIE.get(), SquashZombieRender::new);
@@ -647,15 +645,20 @@ public class EntityRegister {
 	
 	@SubscribeEvent
 	public static void addEntityAttributes(EntityAttributeCreationEvent ev) {
+		PlantType.initPlants();
+    	ZombieType.initZombies();
+		PlantType.postInitPlants();
+		ZombieType.postInitZombies();
 		//init all plants' attributes.
 		for(PlantType p : PlantType.getPlants()) {
 			p.getEntityType().ifPresent(obj -> {
 		        ev.put(obj, PVZPlantEntity.createPlantAttributes());
 			});
 		}
-		for(Zombies z : Zombies.values()) {
-			Optional.ofNullable(ZombieUtil.getZombieEntityType(z)).ifPresent(obj -> {
-		        ev.put(obj, PVZZombieEntity.createZombieAttributes());
+		//init all zombies' attributes.
+		for(ZombieType z : ZombieType.getZombies()) {
+			z.getEntityType().ifPresent(obj -> {
+				ev.put(obj, PVZZombieEntity.createZombieAttributes());
 			});
 		}
 		Arrays.asList(SUN.get(), COIN.get(), JEWEL.get(), ENERGY.get(), 

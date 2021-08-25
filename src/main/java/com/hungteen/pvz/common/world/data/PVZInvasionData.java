@@ -4,13 +4,11 @@ import java.util.HashSet;
 
 import com.hungteen.pvz.PVZConfig;
 import com.hungteen.pvz.common.cache.InvasionCache;
+import com.hungteen.pvz.common.core.InvasionType;
 import com.hungteen.pvz.common.core.PlantType;
-import com.hungteen.pvz.remove.InvasionEvents;
-import com.hungteen.pvz.remove.Zombies;
+import com.hungteen.pvz.common.core.ZombieType;
 
 import net.minecraft.nbt.CompoundNBT;
-import net.minecraft.nbt.INBT;
-import net.minecraft.nbt.ListNBT;
 import net.minecraft.world.World;
 import net.minecraft.world.server.ServerWorld;
 import net.minecraft.world.storage.DimensionSavedDataManager;
@@ -19,8 +17,8 @@ import net.minecraft.world.storage.WorldSavedData;
 public class PVZInvasionData extends WorldSavedData {
 
 	private static final String DATA_NAME = "WorldEventData";
-	private HashSet<InvasionEvents> events = new HashSet<>(InvasionEvents.values().length);
-	private HashSet<Zombies> zombies = new HashSet<>(Zombies.values().length);
+	private HashSet<InvasionType> events = new HashSet<>();
+	private HashSet<ZombieType> zombies = new HashSet<>();
 	private HashSet<PlantType> plants = new HashSet<>();
 	private boolean changed = false;
 	private int countDownDay = 0;
@@ -35,16 +33,16 @@ public class PVZInvasionData extends WorldSavedData {
 	}
 
 	// getter setter for zombie spawns.
-	public boolean hasZombieSpawnEntry(Zombies zombie) {
+	public boolean hasZombieSpawnEntry(ZombieType zombie) {
 		return zombies.contains(zombie);
 	}
 
-	public void addZombieSpawnEntry(Zombies zombie) {
+	public void addZombieSpawnEntry(ZombieType zombie) {
 		zombies.add(zombie);
 		this.setDirty();
 	}
 
-	public void removeZombieSpawnEntry(Zombies zombie) {
+	public void removeZombieSpawnEntry(ZombieType zombie) {
 		zombies.remove(zombie);
 		this.setDirty();
 	}
@@ -65,16 +63,16 @@ public class PVZInvasionData extends WorldSavedData {
 	}
 
 	// getter setter for invasion events.
-	public boolean hasEvent(InvasionEvents ev) {
+	public boolean hasEvent(InvasionType ev) {
 		return events.contains(ev);
 	}
 
-	public void addEvent(InvasionEvents ev) {
+	public void addEvent(InvasionType ev) {
 		events.add(ev);
 		this.setDirty();
 	}
 
-	public void removeEvent(InvasionEvents ev) {
+	public void removeEvent(InvasionType ev) {
 		events.remove(ev);
 		this.setDirty();
 	}
@@ -97,7 +95,7 @@ public class PVZInvasionData extends WorldSavedData {
 
 	public void decCountDownDay() {
 		if(this.countDownDay <= 0) {
-			this.countDownDay = PVZConfig.COMMON_CONFIG.WorldSettings.WorldInvasionSettings.InvasionIntervalLength.get();
+			this.countDownDay = PVZConfig.COMMON_CONFIG.InvasionSettings.InvasionIntervalLength.get();
 		} else {
 			-- this.countDownDay;
 		}
@@ -131,36 +129,37 @@ public class PVZInvasionData extends WorldSavedData {
 
 	@Override
 	public void load(CompoundNBT nbt) {
-		// restore event.
-		events.clear();
-		ListNBT list = (ListNBT) nbt.get("event");
-		if (list != null) {
-			for (INBT tmp : list) {
-				CompoundNBT tag = (CompoundNBT) tmp;
-				events.add(InvasionEvents.values()[tag.getInt("id")]);
+		/* restore event */
+		this.events.clear();
+		if(nbt.contains("invasion_events")) {
+			CompoundNBT tag = nbt.getCompound("invasion_events");
+			for(InvasionType type : InvasionType.getInvasionEvents()) {
+				if(tag.contains("has_" + type.getIdentity())) {
+					this.events.add(type);
+				}
 			}
 		}
-		// restore zombie spawn entry.
-		zombies.clear();
+		/* restore zombie spawn entry */
+		this.zombies.clear();
 		if (nbt.contains("zombie_spawn_entries")) {
-			CompoundNBT list2 = nbt.getCompound("zombie_spawn_entries");
-			for (Zombies zombie : Zombies.values()) {
-				if (list2.contains("type_" + zombie.toString()) && list2.getBoolean("type_" + zombie.toString())) {
+			CompoundNBT tag = nbt.getCompound("zombie_spawn_entries");
+			for (ZombieType zombie : ZombieType.getZombies()) {
+				if (tag.contains("has_" + zombie.getIdentity())) {
 					this.addZombieSpawnEntry(zombie);
 				}
 			}
 		}
-		// restore zombie spawn entry.
-		plants.clear();
+		/* restore zombie spawn entry */
+		this.plants.clear();
 		if (nbt.contains("plant_spawn_entries")) {
-			CompoundNBT list2 = nbt.getCompound("plant_spawn_entries");
+			CompoundNBT tag = nbt.getCompound("plant_spawn_entries");
 			for (PlantType plant : PlantType.getPlants()) {
-				if (list2.contains(plant.getIdentity()) && list2.getBoolean(plant.getIdentity())) {
+				if (tag.contains(plant.getIdentity())) {
 					this.addPlantSpawnEntry(plant);
 				}
 			}
 		}
-		//others
+		/* others */
 		this.changed = nbt.getBoolean("changed");
 		this.countDownDay = nbt.getInt("count_down_day");
 		this.currentDifficulty = nbt.getInt("pvz_current_difficulty");
@@ -168,27 +167,25 @@ public class PVZInvasionData extends WorldSavedData {
 
 	@Override
 	public CompoundNBT save(CompoundNBT nbt) {
-		ListNBT list = new ListNBT();
-		//events
-		events.stream().forEach((event) -> {
-			CompoundNBT tag = new CompoundNBT();
-			tag.putInt("id", event.ordinal());
-			list.add(tag);
-		});
-		nbt.put("event", list);
-		//zombies.
-		CompoundNBT list2 = new CompoundNBT();
-		for (Zombies zombie : Zombies.values()) {
-			list2.putBoolean("type_" + zombie.toString(), this.hasZombieSpawnEntry(zombie));
+		/* save events */
+		CompoundNBT event_list = new CompoundNBT();
+		for(InvasionType type : InvasionType.getInvasionEvents()) {
+			event_list.putBoolean("has_" + type.getIdentity(), this.hasEvent(type));
 		}
-		nbt.put("zombie_spawn_entries", list2);
-		//plants.
-		CompoundNBT list3 = new CompoundNBT();
+		nbt.put("invasion_events", event_list);
+		/* save zombies */
+		CompoundNBT zombie_list = new CompoundNBT();
+		for (ZombieType zombie : ZombieType.getZombies()) {
+			zombie_list.putBoolean("has_" + zombie.getIdentity(), this.hasZombieSpawnEntry(zombie));
+		}
+		nbt.put("zombie_spawn_entries", zombie_list);
+		/* save plants */
+		CompoundNBT plant_list = new CompoundNBT();
 		for (PlantType plant : PlantType.getPlants()) {
-			list3.putBoolean(plant.getIdentity(), this.hasPlantSpawnEntry(plant));
+			plant_list.putBoolean(plant.getIdentity(), this.hasPlantSpawnEntry(plant));
 		}
-		nbt.put("plant_spawn_entries", list3);
-		//others
+		nbt.put("plant_spawn_entries", plant_list);
+		/* others */
 		nbt.putBoolean("changed", this.changed);
 		nbt.putInt("count_down_day", this.countDownDay);
 		nbt.putInt("pvz_current_difficulty", this.currentDifficulty);

@@ -10,7 +10,7 @@ import com.hungteen.pvz.api.interfaces.IGroupEntity;
 import com.hungteen.pvz.api.interfaces.IHasOwner;
 import com.hungteen.pvz.common.advancement.trigger.PlantSuperTrigger;
 import com.hungteen.pvz.common.capability.CapabilityHandler;
-import com.hungteen.pvz.common.core.CardRank;
+import com.hungteen.pvz.common.core.RankType;
 import com.hungteen.pvz.common.core.EssenceType;
 import com.hungteen.pvz.common.core.PlantType;
 import com.hungteen.pvz.common.entity.ai.goal.PVZLookRandomlyGoal;
@@ -20,7 +20,7 @@ import com.hungteen.pvz.common.entity.plant.explosion.DoomShroomEntity;
 import com.hungteen.pvz.common.entity.plant.light.GoldLeafEntity;
 import com.hungteen.pvz.common.entity.plant.spear.SpikeWeedEntity;
 import com.hungteen.pvz.common.entity.zombie.PVZZombieEntity;
-import com.hungteen.pvz.common.entity.zombie.grassnight.TombStoneEntity;
+import com.hungteen.pvz.common.entity.zombie.grass.TombStoneEntity;
 import com.hungteen.pvz.common.entity.zombie.roof.BungeeZombieEntity;
 import com.hungteen.pvz.common.impl.plant.PVZPlants;
 import com.hungteen.pvz.common.misc.damage.PVZDamageSource;
@@ -1013,7 +1013,7 @@ public abstract class PVZPlantEntity extends CreatureEntity implements IHasOwner
 		return this.getPlantType().getEssence();
 	}
 
-	public CardRank getPlantRank() {
+	public RankType getPlantRank() {
 		return this.getPlantType().getRank();
 	}
 	

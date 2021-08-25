@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.hungteen.pvz.PVZMod;
-import com.hungteen.pvz.api.event.PVZRegisterEvent;
 import com.hungteen.pvz.client.model.entity.plant.appease.AngelStarFruitModel;
 import com.hungteen.pvz.client.model.entity.plant.enforce.BonkChoyModel;
 import com.hungteen.pvz.client.model.entity.plant.explosion.BambooLordModel;
@@ -12,7 +11,6 @@ import com.hungteen.pvz.client.model.entity.plant.ice.IcebergLettuceModel;
 import com.hungteen.pvz.client.model.entity.plant.light.GoldLeafModel;
 import com.hungteen.pvz.common.core.PlantType;
 import com.hungteen.pvz.common.impl.Essences;
-import com.hungteen.pvz.common.impl.ImplEvents;
 import com.hungteen.pvz.common.impl.Placements;
 import com.hungteen.pvz.common.impl.Ranks;
 import com.hungteen.pvz.register.EntityRegister;
@@ -20,7 +18,7 @@ import com.hungteen.pvz.register.ItemRegister;
 
 public final class OtherPlants extends PlantType {
 	
-	private static final List<PlantType> OTHER_PLANTS = new ArrayList<>();
+	private static final List<PlantType> LIST = new ArrayList<>();
 	
 	public static final PlantType ICEBERG_LETTUCE = new OtherPlants("iceberg_lettuce", new PlantFeatures()
 			.cost(1).cd(PlantCardCD.LITTLE_FAST).rank(Ranks.WHITE).essence(Essences.ICE)
@@ -63,16 +61,13 @@ public final class OtherPlants extends PlantType {
 			.plantModel(() -> BambooLordModel::new).scale(1F)
 	);
 	
-	private OtherPlants(String name, PlantFeatures features) {
-		super(name, features);
-		OTHER_PLANTS.add(this);
+	public static void register() {
+		registerPlants(LIST);
 	}
 	
-	/**
-	 * {@link ImplEvents#registerPlantTypes(PVZRegisterEvent)}
-	 */
-	public static void register() {
-		PlantManager.registerPlants(OTHER_PLANTS);
+	private OtherPlants(String name, PlantFeatures features) {
+		super(name, features);
+		LIST.add(this);
 	}
 	
     @Override

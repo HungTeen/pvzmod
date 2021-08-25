@@ -4,19 +4,17 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.hungteen.pvz.PVZMod;
-import com.hungteen.pvz.api.event.PVZRegisterEvent;
 import com.hungteen.pvz.client.model.entity.plant.arma.KernelPultModel;
 import com.hungteen.pvz.client.model.entity.plant.defence.WaterGuardModel;
 import com.hungteen.pvz.common.core.PlantType;
 import com.hungteen.pvz.common.impl.Essences;
-import com.hungteen.pvz.common.impl.ImplEvents;
 import com.hungteen.pvz.common.impl.Ranks;
 import com.hungteen.pvz.register.EntityRegister;
 import com.hungteen.pvz.register.ItemRegister;
 
 public final class CustomPlants extends PlantType {
 	
-	private static final List<PlantType> CUSTOM_PLANTS = new ArrayList<>();
+	private static final List<PlantType> LIST = new ArrayList<>();
 	
 	public static final PlantType WATER_GUARD = new CustomPlants("water_guard", new PlantFeatures().isWaterPlant()
 			.cost(50).cd(PlantCardCD.LITTLE_SLOW).rank(Ranks.GRAY).essence(Essences.DEFENCE)
@@ -34,16 +32,13 @@ public final class CustomPlants extends PlantType {
 			.plantModel(() -> KernelPultModel::new).scale(0.9F)
 	);
 	
-	private CustomPlants(String name, PlantFeatures features) {
-		super(name, features);
-		CUSTOM_PLANTS.add(this);
+	public static void register() {
+		registerPlants(LIST);
 	}
 	
-	/**
-	 * {@link ImplEvents#registerPlantTypes(PVZRegisterEvent)}
-	 */
-	public static void register() {
-		PlantManager.registerPlants(CUSTOM_PLANTS);
+	private CustomPlants(String name, PlantFeatures features) {
+		super(name, features);
+		LIST.add(this);
 	}
 	
     @Override

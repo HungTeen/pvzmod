@@ -2,11 +2,11 @@ package com.hungteen.pvz.common.command;
 
 import java.util.Collection;
 
+import com.hungteen.pvz.common.core.InvasionType;
+import com.hungteen.pvz.common.core.ZombieType;
 import com.hungteen.pvz.common.world.data.PVZInvasionData;
 import com.hungteen.pvz.common.world.invasion.OverworldInvasion;
 import com.hungteen.pvz.common.world.invasion.WaveManager;
-import com.hungteen.pvz.remove.InvasionEvents;
-import com.hungteen.pvz.remove.Zombies;
 import com.mojang.brigadier.CommandDispatcher;
 import com.mojang.brigadier.arguments.IntegerArgumentType;
 import com.mojang.brigadier.builder.LiteralArgumentBuilder;
@@ -22,9 +22,9 @@ public class InvasionCommand {
 
 	public static void register(CommandDispatcher<CommandSource> dispatcher) {
         LiteralArgumentBuilder<CommandSource> builder = Commands.literal("invasion").requires((ctx) -> {return ctx.hasPermission(2);});
-        for(InvasionEvents event : InvasionEvents.values()) {
+        for(InvasionType event : InvasionType.getInvasionEvents()) {
         	builder.then(Commands.literal("event")
-        			.then(Commands.literal("add").then(Commands.literal(event.toString().toLowerCase()).executes((commond)->{
+        			.then(Commands.literal("add").then(Commands.literal(event.getIdentity()).executes((commond)->{
         				return addInvasionEvent(commond.getSource(), event);
         			})))
         		);
@@ -37,7 +37,7 @@ public class InvasionCommand {
         	    	return showInvasionEvent(commond.getSource(), EntityArgument.getPlayers(commond, "targets"));
         	    })))
         	);
-        for(Zombies zombie : Zombies.values()) {
+        for (ZombieType zombie : ZombieType.getZombies()) {
         	builder.then(Commands.literal("zombie")
         			.then(Commands.literal("add").then(Commands.literal(zombie.toString().toLowerCase()).executes((commond)->{
         				return addZombie(commond.getSource(), zombie);
@@ -86,19 +86,19 @@ public class InvasionCommand {
 		return 0;
 	}
 	
-	private static int addZombie(CommandSource source, Zombies zombie) {
-		if(zombie.chooseWeight > 0) {
+	private static int addZombie(CommandSource source, ZombieType zombie) {
+		if(zombie.getInvasionWeight() > 0) {
 			OverworldInvasion.addZombie(source.getLevel(), zombie);
-			source.sendSuccess(new StringTextComponent(new TranslationTextComponent("command.pvz.add_zombie").getString() + ":" + zombie.getText().getString()), true);
+			source.sendSuccess(new StringTextComponent(new TranslationTextComponent("command.pvz.add_zombie").getString() + ":" + zombie.getTranslateText().getString()), true);
 		} else {
 			source.sendSuccess(new StringTextComponent(new TranslationTextComponent("command.pvz.add_zombie_fail").getString()), false);
 		}
 		return 0;
 	}
 	
-	private static int removeZombie(CommandSource source, Zombies zombie) {
+	private static int removeZombie(CommandSource source, ZombieType zombie) {
 		OverworldInvasion.removeZombie(source.getLevel(), zombie);
-		source.sendSuccess(new StringTextComponent(new TranslationTextComponent("command.pvz.remove_zombie").getString() + ":" + zombie.getText().getString()), true);
+		source.sendSuccess(new StringTextComponent(new TranslationTextComponent("command.pvz.remove_zombie").getString() + ":" + zombie.getTranslateText().getString()), true);
 		return 0;
 	}
 	
@@ -113,9 +113,9 @@ public class InvasionCommand {
 		return targets.size();
 	}
 	
-	public static int addInvasionEvent(CommandSource source, InvasionEvents event) {
+	public static int addInvasionEvent(CommandSource source, InvasionType event) {
 		OverworldInvasion.activateEvent(source.getLevel(), event, true);
-		source.sendSuccess(new StringTextComponent(new TranslationTextComponent("command.pvz.add_event").getString() + ":" + InvasionEvents.getEventText(event).getString()), true);
+		source.sendSuccess(new StringTextComponent(new TranslationTextComponent("command.pvz.add_event").getString() + ":" + event.getEventText().getString()), true);
 		return 0;
 	}
 	
@@ -128,9 +128,9 @@ public class InvasionCommand {
 	private static int showInvasionEvent(CommandSource source, Collection<? extends ServerPlayerEntity> targets) {
 		targets.forEach((player)->{
 			PVZInvasionData data = PVZInvasionData.getOverWorldInvasionData(source.getLevel());
-			for(InvasionEvents event : InvasionEvents.values()) {
+			for(InvasionType event : InvasionType.getInvasionEvents()) {
 				if(data.hasEvent(event)) {
-					source.sendSuccess(InvasionEvents.getEventText(event), false);
+					source.sendSuccess(event.getEventText(), false);
 				}
 			}
 		});
