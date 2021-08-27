@@ -1,4 +1,4 @@
-package com.hungteen.pvz.data;
+package com.hungteen.pvz.data.tag;
 
 import java.util.Comparator;
 import java.util.function.Predicate;

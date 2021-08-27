@@ -21,6 +21,8 @@ import net.minecraft.world.World;
 
 public class InvasionEvents extends InvasionType {
   
+	private static final List<InvasionType> LIST = new ArrayList<>();
+	
 	public static final InvasionType RANDOM = new InvasionEvents("random", new InvasionFeatures()
 			.chance(PVZConfig.COMMON_CONFIG.InvasionSettings.RandomInvasionChance.get())
 			.bundle(Bundles.RANDOM_ALL).color(TextFormatting.GREEN)
@@ -166,8 +168,13 @@ public class InvasionEvents extends InvasionType {
 			.available(world -> FlagCache.isEdgar090505Defeated())
 	);
 	
+	public static void register() {
+		registerInvasions(LIST);
+	}
+	
 	public InvasionEvents(String name, InvasionFeatures features) {
 		super(name, features);
+		LIST.add(this);
 	}
 	
 	@Override

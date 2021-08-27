@@ -40,12 +40,19 @@ public abstract class InvasionType {
 		this.bonusbundle = features.bonusbundle;
 		this.displayColor = features.displayColor;
 		this.isAvailable = features.isAvailable;
-		if(this.isAssistEvent()) {//assist event.
-			ASSIST_EVENTS.add(this);
+	}
+	
+	public static void registerInvasions(List<InvasionType> types) {
+		types.forEach(type -> registerInvasion(type));
+	}
+	
+	private static void registerInvasion(InvasionType type) {
+		if(type.isAssistEvent()) {//assist event.
+			ASSIST_EVENTS.add(type);
 		} else {
-			SPAWN_EVENTS.add(Pair.of(this, this.chance));
+			SPAWN_EVENTS.add(Pair.of(type, type.chance));
 		}
-		INVASION_EVENTS.add(this);
+		INVASION_EVENTS.add(type);
 	}
 	
 	public static List<InvasionType> getInvasionEvents(){

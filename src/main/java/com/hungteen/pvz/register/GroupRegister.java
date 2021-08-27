@@ -12,10 +12,17 @@ public class GroupRegister {
 		}
 	};
 	
-	public static final ItemGroup PVZ_CARD = new ItemGroup("pvz_card") {
+	public static final ItemGroup PVZ_PLANT_CARD = new ItemGroup("pvz_plant_card") {
 		@Override
 		public ItemStack makeIcon() {
 			return new ItemStack(ItemRegister.PEA_SHOOTER_CARD.get());
+		}
+	};
+	
+	public static final ItemGroup PVZ_TOOL = new ItemGroup("pvz_tool") {
+		@Override
+		public ItemStack makeIcon() {
+			return new ItemStack(ItemRegister.ZOMBIE_FLAG.get());
 		}
 	};
 	

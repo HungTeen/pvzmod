@@ -3,6 +3,7 @@ package com.hungteen.pvz.common.block.plants;
 import com.hungteen.pvz.PVZConfig;
 import com.hungteen.pvz.common.misc.damage.PVZDamageSource;
 import com.hungteen.pvz.register.BlockRegister;
+import com.hungteen.pvz.utils.WorldUtil;
 
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
@@ -48,10 +49,10 @@ public class ChomperBlock extends BushBlock{
 
 	@Override
 	public void entityInside(BlockState state, World worldIn, BlockPos pos, Entity entityIn) {
-		if(entityIn instanceof AnimalEntity||entityIn instanceof PlayerEntity) {
+		if(entityIn instanceof AnimalEntity || entityIn instanceof PlayerEntity) {
 			if(!worldIn.isClientSide) {
-				if(this.RANDOM.nextInt(50)==0) {
-					entityIn.hurt(PVZDamageSource.CHOMPER_PLANT, 12);
+				if(this.RANDOM.nextInt(50) == 0) {
+					entityIn.hurt(PVZDamageSource.CHOMPER_PLANT, 8);
 				}
 			}
 		}
@@ -61,24 +62,23 @@ public class ChomperBlock extends BushBlock{
 	@Override
 	public ActionResultType use(BlockState state, World worldIn, BlockPos pos, PlayerEntity player,
 			Hand handIn, BlockRayTraceResult hit) {
-		if(player.getItemInHand(handIn).getItem()==Items.BONE_MEAL) {
-			for(int i=-2;i<=2;i++) {
-				if(worldIn.isClientSide) break;
-				for(int j=-1;j<=1;j++) {
-					for(int k=-2;k<=2;k++) {
-						BlockPos tmp = pos.offset(i, j, k);
-						if(mayPlaceOn(worldIn.getBlockState(tmp), worldIn, tmp)) {
-							if(worldIn.isEmptyBlock(tmp.above())){
-								int chance=PVZConfig.COMMON_CONFIG.BlockSettings.ChomperGrowChance.get();
-								if(this.RANDOM.nextInt(chance)==0) {
-									worldIn.setBlockAndUpdate(tmp.above(), BlockRegister.CHOMPER.get().defaultBlockState().rotate(Rotation.getRandom(RANDOM)));
-								}
+		if(player.getItemInHand(handIn).getItem() == Items.BONE_MEAL) {
+			if(worldIn.isClientSide) {
+				return ActionResultType.SUCCESS;
+			}
+			for(int i = -2; i <= 2; ++ i) {
+				for(int k = -2; k <= 2; ++ k) {
+					final BlockPos tmp = WorldUtil.getSuitableHeightPos(worldIn, new BlockPos(i, 0, k));
+					if(Math.abs(pos.getY() - tmp.getY()) < 5 && mayPlaceOn(worldIn.getBlockState(tmp), worldIn, tmp)) {
+						if(worldIn.isEmptyBlock(tmp.above())){
+							final int chance = PVZConfig.COMMON_CONFIG.BlockSettings.ChomperGrowChance.get();
+							if(this.RANDOM.nextInt(chance) == 0) {
+								worldIn.setBlockAndUpdate(tmp.above(), BlockRegister.CHOMPER.get().defaultBlockState().rotate(Rotation.getRandom(RANDOM)));
 							}
 						}
 					}
 				}
 			}
-			
 			return ActionResultType.SUCCESS;
 		}
 		return ActionResultType.PASS;

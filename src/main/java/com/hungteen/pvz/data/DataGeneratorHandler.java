@@ -2,6 +2,9 @@ package com.hungteen.pvz.data;
 
 import com.hungteen.pvz.PVZMod;
 import com.hungteen.pvz.data.loot.LootTableGenerator;
+import com.hungteen.pvz.data.tag.BlockTagGenerator;
+import com.hungteen.pvz.data.tag.EntityTypeTagGenerator;
+import com.hungteen.pvz.data.tag.ItemTagGenerator;
 
 import net.minecraftforge.common.data.ExistingFileHelper;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
@@ -15,13 +18,14 @@ public class DataGeneratorHandler {
 	public static void gatherData(GatherDataEvent ev) {
 		ExistingFileHelper helper = ev.getExistingFileHelper();
 		if(ev.includeServer()) {
-			//for tags
+			//for tags.
 			BlockTagGenerator generator = new BlockTagGenerator(ev.getGenerator(), helper);
 			ev.getGenerator().addProvider(generator);
 			ev.getGenerator().addProvider(new ItemTagGenerator(ev.getGenerator(), generator, helper));
-			//for recipes
+			ev.getGenerator().addProvider(new EntityTypeTagGenerator(ev.getGenerator(), helper));
+			//for recipes.
 			ev.getGenerator().addProvider(new RecipeGenerator(ev.getGenerator()));
-			//for loot tables
+			//for loot tables.
 		    ev.getGenerator().addProvider(new LootTableGenerator(ev.getGenerator()));
 		}
 		if(ev.includeClient()) {

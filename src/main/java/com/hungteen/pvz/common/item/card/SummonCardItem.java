@@ -20,7 +20,7 @@ public abstract class SummonCardItem extends Item{
 	public final boolean isEnjoyCard;
 	
 	public SummonCardItem(boolean isEnjoyCard) {
-		this(new Properties().tab(GroupRegister.PVZ_CARD).stacksTo(isEnjoyCard ? 16 : 1), isEnjoyCard);
+		this(new Properties().tab(GroupRegister.PVZ_PLANT_CARD).stacksTo(isEnjoyCard ? 16 : 1), isEnjoyCard);
 	}
 	
 	public SummonCardItem(Properties properties, boolean isEnjoyCard) {

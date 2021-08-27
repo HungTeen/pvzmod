@@ -55,11 +55,11 @@ public class ImitaterCardItem extends PlantCardItem {
 	public static final String IMITATE_STRING = "imitate_plant_type";
 	
 	public ImitaterCardItem() {
-		super(new Item.Properties().tab(GroupRegister.PVZ_CARD).stacksTo(1).setISTER(() -> ImitaterCardISTER::new), PVZPlants.IMITATER, false);
+		super(new Item.Properties().tab(GroupRegister.PVZ_PLANT_CARD).stacksTo(1).setISTER(() -> ImitaterCardISTER::new), PVZPlants.IMITATER, false);
 	}
 	
 	public ImitaterCardItem(boolean isFragment) {
-		super(new Item.Properties().tab(GroupRegister.PVZ_CARD).stacksTo(16), PVZPlants.IMITATER, true);
+		super(new Item.Properties().tab(GroupRegister.PVZ_PLANT_CARD).stacksTo(16), PVZPlants.IMITATER, true);
 	}
 	
 	@Override

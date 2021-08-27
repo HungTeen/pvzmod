@@ -81,7 +81,7 @@ public class PlantCardItem extends SummonCardItem {
 	public void fillItemCategory(ItemGroup group, NonNullList<ItemStack> list) {
 		if(this.allowdedIn(group)) {
 			list.add(new ItemStack(this));
-			if(group == GroupRegister.PVZ_CARD) {
+			if(group == GroupRegister.PVZ_PLANT_CARD) {
 				// insert sort.
 				for(int i = list.size() - 1; i >= 1; -- i) {
 					final ItemStack pre = list.get(i - 1);
