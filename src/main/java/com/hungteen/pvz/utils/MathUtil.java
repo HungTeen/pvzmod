@@ -75,6 +75,10 @@ public class MathUtil {
 		return new Vector3d(b.x - a.x, 0, b.z - a.z);
 	}
 	
+	public static Vector3d toVector(BlockPos pos) {
+		return new Vector3d(pos.getX(), pos.getY(), pos.getZ());
+	}
+	
 	public static Vector3d getVector3dBy2(double x, double z) {
 		return new Vector3d(x, 0, z);
 	}

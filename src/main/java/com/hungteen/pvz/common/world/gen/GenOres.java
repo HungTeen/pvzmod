@@ -11,27 +11,29 @@ import net.minecraft.world.gen.GenerationStage;
 import net.minecraft.world.gen.feature.template.BlockMatchRuleTest;
 import net.minecraft.world.gen.feature.template.RuleTest;
 import net.minecraftforge.event.world.BiomeLoadingEvent;
-import net.minecraftforge.registries.ForgeRegistries;
 
 public class GenOres {
 
 	/**
 	 * {@link BiomeRegister#biomeModification(BiomeLoadingEvent)}
 	 */
-	public static void addOresToBiomes(final BiomeLoadingEvent event) {
-		Biome biome = ForgeRegistries.BIOMES.getValue(event.getName());
-		if(biome == null) {//prevent crash.
-			return ;
-		}
-		RegistryKey<Biome> biomeKey = BiomeUtil.getKey(biome);
+	public static void addOresToBiomes(final BiomeLoadingEvent event, RegistryKey<Biome> biomeKey) {
 		if (BiomeUtil.isTheEnd(biomeKey)) {
 			event.getGeneration().addFeature(GenerationStage.Decoration.UNDERGROUND_ORES,
 					FeatureRegister.CONFIGURED_AMETHYST_ORE);
+		}
+		if(BiomeUtil.isOverworld(biomeKey)) {
+			if(BiomeUtil.isForest(biomeKey)) {
+				event.getGeneration().addFeature(GenerationStage.Decoration.UNDERGROUND_ORES,
+						FeatureRegister.CONFIGURED_ORIGIN_ORE);
+			}
 		}
 	}
 
 	public static final class FillerBlockType {
 		public static final RuleTest END_STONE = new BlockMatchRuleTest(Blocks.END_STONE);
+		
+		public static final RuleTest GRASS = new BlockMatchRuleTest(Blocks.GRASS_BLOCK);
 	}
 
 }

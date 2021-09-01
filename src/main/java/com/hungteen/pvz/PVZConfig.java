@@ -17,67 +17,67 @@ public class PVZConfig {
 				builder.comment("Settings about invasion events.").push("Invasion Events Settings");
 				{
 					InvasionSettings.BucketInvasionChance = builder
-							.comment("The weight to happen Bucket Invasion when it's a zombie attack day.")
+							.comment("The weight to happen Bucket Invasion when it's a zombie invasion day. The larger the more chance.")
 							.defineInRange("BucketInvasionChance", 100, 1, 1000000);
 						
 					InvasionSettings.WaterInvasionChance = builder
-							.comment("The weight to happen Water Invasion when it's a zombie attack day.")
+							.comment("The weight to happen Water Invasion when it's a zombie invasion day. The larger the more chance.")
 							.defineInRange("WaterInvasionChance", 90, 1, 1000000);
 						
 					InvasionSettings.HalloweenInvasionChance = builder
-							.comment("The weight to happen Halloween Invasion when it's a zombie attack day.")
+							.comment("The weight to happen Halloween Invasion when it's a zombie invasion day. The larger the more chance.")
 							.defineInRange("HalloweenInvasionChance", 40, 1, 1000000);
 					
 					InvasionSettings.NewspaperInvasionChance = builder
-							.comment("The weight to happen Newspaper Invasion when it's a zombie attack day.")
+							.comment("The weight to happen Newspaper Invasion when it's a zombie invasion day. The larger the more chance.")
 							.defineInRange("NewspaperInvasionChance", 90, 1, 1000000);
 						
 					InvasionSettings.FootballInvasionChance = builder
-							.comment("The weight to happen Football Invasion when it's a zombie attack day.")
+							.comment("The weight to happen Football Invasion when it's a zombie invasion day. The larger the more chance.")
 							.defineInRange("FootballInvasionChance", 90, 1, 1000000);
 						
 					InvasionSettings.RandomInvasionChance = builder
-							.comment("The weight to happen Random Invasion when it's a zombie attack day.")
+							.comment("The weight to happen Random Invasion when it's a zombie invasion day. The larger the more chance.")
 							.defineInRange("RandomInvasionChance", 100, 1, 1000000);
 					
 					InvasionSettings.YetiInvasionChance = builder
-							.comment("The weight to happen Yeti Invasion when it's a zombie attack day.")
+							.comment("The weight to happen Yeti Invasion when it's a zombie invasion day. The larger the more chance.")
 							.defineInRange("YetiInvasionChance", 80, 1, 1000000);
 					
 					InvasionSettings.BungeeInvasionChance = builder
-							.comment("The weight to happen Bungee Invasion when it's a zombie attack day.")
+							.comment("The weight to happen Bungee Invasion when it's a zombie invasion day. The larger the more chance.")
 							.defineInRange("BungeeInvasionChance", 60, 1, 1000000);
 					
 					InvasionSettings.MetalInvasionChance = builder
-							.comment("The weight to happen Metal Invasion when it's a zombie attack day.")
+							.comment("The weight to happen Metal Invasion when it's a zombie invasion day. The larger the more chance.")
 							.defineInRange("MetalInvasionChance", 70, 1, 1000000);
 					
 					InvasionSettings.RoofInvasionChance = builder
-							.comment("The weight to happen Roof Invasion when it's a zombie attack day.")
+							.comment("The weight to happen Roof Invasion when it's a zombie invasion day. The larger the more chance.")
 							.defineInRange("RoofInvasionChance", 85, 1, 1000000);
 					
 					InvasionSettings.GiantInvasionChance = builder
-							.comment("The weight to happen Giant Invasion when it's a zombie attack day.")
+							.comment("The weight to happen Giant Invasion when it's a zombie invasion day. The larger the more chance.")
 							.defineInRange("GiantInvasionChance", 66, 1, 1000000);
 					
 					InvasionSettings.Zombotany1InvasionChance = builder
-							.comment("The weight to happen Zombotany I Invasion when it's a zombie attack day.")
+							.comment("The weight to happen Zombotany I Invasion when it's a zombie invasion day. The larger the more chance.")
 							.defineInRange("Zombotany1AttackChance", 100, 1, 1000000);
 					
 					InvasionSettings.Zombotany2InvasionChance = builder
-							.comment("The weight to happen Zombotany II Invasion when it's a zombie attack day.")
+							.comment("The weight to happen Zombotany II Invasion when it's a zombie invasion day. The larger the more chance.")
 							.defineInRange("Zombotany2AttackChance", 75, 1, 1000000);
 					
 					InvasionSettings.FogInvasionChance = builder
-							.comment("The related value to happen Fog Event when it's a zombie attack day(If the value is x, then the chance is 1/x).")
+							.comment("The related value to happen Fog Event when it's a zombie invasion day. The larger the less chance.")
 							.defineInRange("FogEventChance", 12, 1, 1000000);
 					
 					InvasionSettings.MiniInvasionChance = builder
-							.comment("The related value to happen Mini Event when it's a zombie attack day(If the value is x, then the chance is 1/x).")
+							.comment("The related value to happen Mini Event when it's a zombie invasion day. The larger the less chance.")
 							.defineInRange("MiniEventChance", 10, 1, 1000000);
 					
 					InvasionSettings.InvisInvasionChance = builder
-							.comment("The related value to happen Invis Event when it's a zombie attack day(If the value is x, then the chance is 1/x).")
+							.comment("The related value to happen Invis Event when it's a zombie invasion day. The larger the less chance.")
 							.defineInRange("InvisEventChance", 10, 1, 1000000);
 				}
 				builder.pop();
@@ -85,7 +85,7 @@ public class PVZConfig {
 				builder.comment("Settings about others.").push("Invasion Other Settings");
 				{
 					InvasionSettings.SafeDayLength = builder
-							.comment("If you set to 5, then the first 5 days of the world will not have any zombie invasion event.")
+							.comment("If you set to 5, then the first 5 * 20 minutes of the world will not have any zombie invasion event.")
 						    .defineInRange("SafeDayLength", 5, 0, 1000000);
 					
 					InvasionSettings.InvasionIntervalLength = builder
@@ -126,68 +126,92 @@ public class PVZConfig {
 			builder.pop();
 			
 			//World Settings
+			builder.comment("Settings about global rules.").push("Rule Settings");
+			{
+				
+				RuleSettings.CanSpawnDefaultMonster = builder
+						.comment("if turn to false, there will have no monster of other monsters spawn in overworld except pvz zombies.")
+						.define("CanSpawnDefaultMonster", true);
+				RuleSettings.GiveBeginnerReward = builder
+						.comment("If you set it true, you will get some basic plantcards when you first join world.")
+						.define("GiveBeginnerReward", false);
+				RuleSettings.AllowNaturalTurnOrigin = builder
+						.comment("If turn to false, saplings no longer to grow to Origin Ore naturally, except there is a block above it.")
+						.define("AllowNaturalTurnOrigin", true);
+				
+			}
+			builder.pop();
+			
+			//World Settings
 			builder.comment("Settings about world.").push("World Settings");
 			{
 				
+				builder.comment("Settings about the biome gen.").push("Biome Settings");
+				{
+					WorldSettings.GenZenGardenChance = builder
+							.comment("the gen chance of Zen Garden biome(the larger the more chance to see it).")
+							.defineInRange("GenZenGardenChance", 40, 1, 10000);
+				}
+				builder.pop();
+				
 				builder.comment("Settings about the structure gen.").push("Structure Settings");
 				{
-					WorldSettings.StructureSettings.DaveVillaDistance = builder
+					WorldSettings.DaveVillaDistance = builder
 							.comment("the distance value between dave villa.")
 							.defineInRange("DaveVillaDistance", 40, 1, 1000);
 					
-					WorldSettings.StructureSettings.BucketHouseDistance = builder
+					WorldSettings.BucketHouseDistance = builder
 							.comment("the distance value between bucket house.")
-							.defineInRange("BucketHouseDistance", 32, 1, 1000);
+							.defineInRange("BucketHouseDistance", 36, 1, 1000);
 					
-					WorldSettings.StructureSettings.DolphinHouseDistance = builder
+					WorldSettings.DolphinHouseDistance = builder
 							.comment("the distance value between dolphin house.")
 							.defineInRange("DolphinHouseDistance", 32, 1, 1000);
 					
-					WorldSettings.StructureSettings.GraveHouseDistance = builder
+					WorldSettings.GraveHouseDistance = builder
 							.comment("the distance value between grave house.")
 							.defineInRange("GraveHouseDistance", 28, 1, 1000);
 					
-					WorldSettings.StructureSettings.SunTempleDistance = builder
+					WorldSettings.SunTempleDistance = builder
 							.comment("the distance value between sun temple.")
-							.defineInRange("SunTempleDistance", 40, 1, 1000);
+							.defineInRange("SunTempleDistance", 36, 1, 1000);
 					
-					WorldSettings.StructureSettings.YetiHouseDistance = builder
+					WorldSettings.YetiHouseDistance = builder
 							.comment("the distance value between yeti house.")
 							.defineInRange("YetiHouseDistance", 28, 1, 1000);
 				}
 				builder.pop();
 				
-				builder.comment("The Spawn Weight of entity.").push("EntitySpawnWeight");
+				builder.comment("Settings about the ore gen.").push("Ore Settings");
 				{
-					WorldSettings.EntitySpawnSettings.SunSpawnWeight = builder
-							.comment("spawn weight of Sun.")
-							.defineInRange("SunSpawnWeight", 50, 1, 200);
-					WorldSettings.EntitySpawnSettings.ZombieDolphinSpawnWeight = builder
-							.comment("spawn weight of ZombieDolphin.")
-							.defineInRange("ZombieDolphinSpawnWeight", 1, 1, 200);
-					WorldSettings.EntitySpawnSettings.FoodieZombieSpawnWeight = builder
-							.comment("spawn weight of FoodieZombie.")
-							.defineInRange("FoodieZombieSpawnWeight", 1, 1, 200);
-					WorldSettings.EntitySpawnSettings.LavaZombieSpawnWeight = builder
-							.comment("spawn weight of LavaZombie at nether.")
-							.defineInRange("LavaZombieSpawnWeight", 15, 1, 200);
-					WorldSettings.EntitySpawnSettings.GigaTombStoneSpawnWeight = builder
-							.comment("spawn weight of GigaTombStone at night in overworld.")
-							.defineInRange("GigaTombStoneSpawnWeight", 5, 1, 200);
-					WorldSettings.EntitySpawnSettings.YetiZombieSpawnWeight = builder
-							.comment("spawn weight of YetiZombie in overworld.")
-							.defineInRange("YetiZombieSpawnWeight", 1, 1, 200);
+					
+					WorldSettings.GenOriginOreChance = builder
+							.comment("the gen chance of origin ore in overworld(the larger the more chance to see it).")
+							.defineInRange("GenOriginOreChance", 5, 1, 10000);
+					
+					WorldSettings.GenAmethystOreChance = builder
+							.comment("the gen chance of amethyst ore in the end(the larger the more chance to see it).")
+							.defineInRange("GenAmethystOreChance", 15, 1, 10000);
 				}
 				builder.pop();
 				
-				builder.comment("Other World Settings").push("Other World Settings");
+				builder.comment("The Spawn Weight of entity.").push("EntitySpawnWeight");
 				{
-					WorldSettings.CanSpawnDefaultMonster = builder
-							.comment("if false,there will have no monster of default mc spawn in overworld.")
-							.define("CanSpawnDefaultMonster", true);
-					WorldSettings.GiveBeginnerReward = builder
-							.comment("If you set it true, you will get some basic plantcards when you first join world.")
-							.define("GiveBeginnerReward", false);
+					WorldSettings.SunSpawnWeight = builder
+							.comment("spawn weight of Sun.")
+							.defineInRange("SunSpawnWeight", 50, 1, 200);
+					WorldSettings.ZombieDolphinSpawnWeight = builder
+							.comment("spawn weight of ZombieDolphin.")
+							.defineInRange("ZombieDolphinSpawnWeight", 1, 1, 200);
+					WorldSettings.LavaZombieSpawnWeight = builder
+							.comment("spawn weight of LavaZombie at nether.")
+							.defineInRange("LavaZombieSpawnWeight", 15, 1, 200);
+					WorldSettings.GigaTombStoneSpawnWeight = builder
+							.comment("spawn weight of GigaTombStone at night in overworld.")
+							.defineInRange("GigaTombStoneSpawnWeight", 5, 1, 200);
+					WorldSettings.YetiZombieSpawnWeight = builder
+							.comment("spawn weight of YetiZombie in overworld when thunder.")
+							.defineInRange("YetiZombieSpawnWeight", 1, 1, 200);
 				}
 				builder.pop();
 				
@@ -272,20 +296,18 @@ public class PVZConfig {
 			builder.comment("Settings about blocks.").push("Block Settings");
 			{
 				BlockSettings.OriginBlockEffectChance = builder
-						.comment("About the chance you got essence_ore from origin_block.the bigger the value is,the lower chance you get(more specificly 1/x).")
+						.comment("The chance to get Essence Ore from Origin Block's effect. the bigger the less chance.")
 						.defineInRange("OriginChance", 4, 1, 100);
-				BlockSettings.ChomperGrowChance = builder
-						.comment("The chance when you use bone meal to grow chomper,the bigger the less chance.")
-						.defineInRange("ChomperGrow", 20, 5, 100);
 				BlockSettings.SaplingTurnOriginChance = builder
-						.comment("The chance when sapling turn to origin ore,the bigger the less chance")
-						.defineInRange("SaplingTurnOrigin", 6, 2, 100);
+						.comment("The chance when sapling turn to origin ore, the bigger the less chance.")
+						.defineInRange("SaplingTurnOrigin", 6, 1, 10000);
+				
 				builder.comment("Setting about break blocks.").push("Break Block Setting");
 				{
-					BlockSettings.BreakBlock.PeaDropChance = builder
+					BlockSettings.PeaDropChance = builder
 						.comment("the drop chance of pea when you break grass.the bigger the value is,the lower chance you get.(more specificly 1/x)")
 						.defineInRange("DropPeaChance", 16, 1, 1000);
-					BlockSettings.BreakBlock.CabbageDropChance = builder
+					BlockSettings.CabbageDropChance = builder
 							.comment("the drop chance of cabbage when you break grass.the bigger the value is,the lower chance you get.(more specificly 1/x)")
 							.defineInRange("DropCabbageChance", 32, 1, 1000);
 				}
@@ -303,6 +325,7 @@ public class PVZConfig {
 		}
 		
 		public InvasionSettings InvasionSettings = new InvasionSettings();
+		public RuleSettings RuleSettings = new RuleSettings();
 		public WorldSettings WorldSettings = new WorldSettings();
 		public EntitySettings EntitySettings = new EntitySettings();
 		public BlockSettings BlockSettings = new BlockSettings();
@@ -339,30 +362,36 @@ public class PVZConfig {
 		    public ForgeConfigSpec.IntValue Zombotany2InvasionChance;
 		}
 		
-		public static class WorldSettings{
-			public StructureSettings StructureSettings = new StructureSettings();
-			public EntitySpawnSettings EntitySpawnSettings = new EntitySpawnSettings();
-			
+		public static class RuleSettings{
 			public ForgeConfigSpec.BooleanValue CanSpawnDefaultMonster;
 			public ForgeConfigSpec.BooleanValue GiveBeginnerReward;
+			public ForgeConfigSpec.BooleanValue AllowNaturalTurnOrigin;
+		}
+		
+		public static class WorldSettings{
 			
-			public static class StructureSettings{
-				public ForgeConfigSpec.IntValue DaveVillaDistance;
-			    public ForgeConfigSpec.IntValue BucketHouseDistance;
-			    public ForgeConfigSpec.IntValue DolphinHouseDistance;
-			    public ForgeConfigSpec.IntValue GraveHouseDistance;
-			    public ForgeConfigSpec.IntValue SunTempleDistance;
-			    public ForgeConfigSpec.IntValue YetiHouseDistance;
-			}
+			/* biome gen */
+			public ForgeConfigSpec.IntValue GenZenGardenChance;
 			
-			public static class EntitySpawnSettings{
-				public ForgeConfigSpec.IntValue SunSpawnWeight;
-				public ForgeConfigSpec.IntValue ZombieDolphinSpawnWeight;
-				public ForgeConfigSpec.IntValue FoodieZombieSpawnWeight;
-				public ForgeConfigSpec.IntValue LavaZombieSpawnWeight;
-				public ForgeConfigSpec.IntValue GigaTombStoneSpawnWeight;
-				public ForgeConfigSpec.IntValue YetiZombieSpawnWeight;
-			}
+			/* structure distance */
+		    public ForgeConfigSpec.IntValue DaveVillaDistance;
+			public ForgeConfigSpec.IntValue BucketHouseDistance;
+			public ForgeConfigSpec.IntValue DolphinHouseDistance;
+			public ForgeConfigSpec.IntValue GraveHouseDistance;
+			public ForgeConfigSpec.IntValue SunTempleDistance;
+			public ForgeConfigSpec.IntValue YetiHouseDistance;
+			
+			/* ore gen */
+			public ForgeConfigSpec.IntValue GenAmethystOreChance;
+			public ForgeConfigSpec.IntValue GenOriginOreChance;
+			
+			/* entity spawn */
+			public ForgeConfigSpec.IntValue SunSpawnWeight;
+			public ForgeConfigSpec.IntValue ZombieDolphinSpawnWeight;
+			public ForgeConfigSpec.IntValue FoodieZombieSpawnWeight;
+			public ForgeConfigSpec.IntValue LavaZombieSpawnWeight;
+			public ForgeConfigSpec.IntValue GigaTombStoneSpawnWeight;
+			public ForgeConfigSpec.IntValue YetiZombieSpawnWeight;
 		}
 		
 		public static class EntitySettings{
@@ -403,14 +432,11 @@ public class PVZConfig {
 		
 		public static class BlockSettings{
 			public ForgeConfigSpec.IntValue OriginBlockEffectChance;
-			public ForgeConfigSpec.IntValue ChomperGrowChance;
 			public ForgeConfigSpec.IntValue SaplingTurnOriginChance;
 			
-			public BreakBlock BreakBlock = new BreakBlock();
-			public static class BreakBlock{
-				public ForgeConfigSpec.IntValue PeaDropChance;
-				public ForgeConfigSpec.IntValue CabbageDropChance;
-			}
+			/* break block */
+			public ForgeConfigSpec.IntValue PeaDropChance;
+			public ForgeConfigSpec.IntValue CabbageDropChance;
 		}
 		
 		public static class ItemSettings {

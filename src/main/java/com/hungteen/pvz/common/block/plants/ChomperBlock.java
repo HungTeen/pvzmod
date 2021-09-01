@@ -1,8 +1,8 @@
 package com.hungteen.pvz.common.block.plants;
 
-import com.hungteen.pvz.PVZConfig;
 import com.hungteen.pvz.common.misc.damage.PVZDamageSource;
 import com.hungteen.pvz.register.BlockRegister;
+import com.hungteen.pvz.utils.MathUtil;
 import com.hungteen.pvz.utils.WorldUtil;
 
 import net.minecraft.block.Block;
@@ -16,6 +16,7 @@ import net.minecraft.entity.passive.AnimalEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.BlockItemUseContext;
 import net.minecraft.item.Items;
+import net.minecraft.particles.ParticleTypes;
 import net.minecraft.pathfinding.PathNodeType;
 import net.minecraft.state.DirectionProperty;
 import net.minecraft.state.StateContainer.Builder;
@@ -64,16 +65,19 @@ public class ChomperBlock extends BushBlock{
 			Hand handIn, BlockRayTraceResult hit) {
 		if(player.getItemInHand(handIn).getItem() == Items.BONE_MEAL) {
 			if(worldIn.isClientSide) {
-				return ActionResultType.SUCCESS;
+				for(int i = 0 ;i < 5; ++ i) {
+					WorldUtil.spawnRandomSpeedParticle(worldIn, ParticleTypes.COMPOSTER, MathUtil.toVector(pos), 0.1F);
+				}
 			}
 			for(int i = -2; i <= 2; ++ i) {
 				for(int k = -2; k <= 2; ++ k) {
-					final BlockPos tmp = WorldUtil.getSuitableHeightPos(worldIn, new BlockPos(i, 0, k));
+					final BlockPos tmp = WorldUtil.getSuitableHeightPos(worldIn, pos.offset(i, 0, k)).below();
 					if(Math.abs(pos.getY() - tmp.getY()) < 5 && mayPlaceOn(worldIn.getBlockState(tmp), worldIn, tmp)) {
 						if(worldIn.isEmptyBlock(tmp.above())){
-							final int chance = PVZConfig.COMMON_CONFIG.BlockSettings.ChomperGrowChance.get();
-							if(this.RANDOM.nextInt(chance) == 0) {
-								worldIn.setBlockAndUpdate(tmp.above(), BlockRegister.CHOMPER.get().defaultBlockState().rotate(Rotation.getRandom(RANDOM)));
+							if(! worldIn.isClientSide) {
+							    if(this.RANDOM.nextFloat() < 0.2F) {
+								    worldIn.setBlockAndUpdate(tmp.above(), BlockRegister.CHOMPER.get().defaultBlockState().rotate(Rotation.getRandom(RANDOM)));
+							    }
 							}
 						}
 					}

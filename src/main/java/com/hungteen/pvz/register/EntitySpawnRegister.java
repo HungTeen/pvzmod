@@ -21,7 +21,6 @@ import net.minecraftforge.event.RegistryEvent;
 import net.minecraftforge.event.world.BiomeLoadingEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
-import net.minecraftforge.registries.ForgeRegistries;
 
 @Mod.EventBusSubscriber(modid=PVZMod.MOD_ID, bus=Mod.EventBusSubscriber.Bus.MOD)
 public class EntitySpawnRegister {
@@ -89,22 +88,17 @@ public class EntitySpawnRegister {
 		EntitySpawnPlacementRegistry.register(EntityRegister.TALLNUT_ZOMBIE.get(), PlacementType.ON_GROUND, Heightmap.Type.MOTION_BLOCKING_NO_LEAVES, SpawnChecker::canGroundInvasionZombieSpawn);
 		EntitySpawnPlacementRegistry.register(EntityRegister.SQUASH_ZOMBIE.get(), PlacementType.ON_GROUND, Heightmap.Type.MOTION_BLOCKING_NO_LEAVES, SpawnChecker::canGroundInvasionZombieSpawn);
 		EntitySpawnPlacementRegistry.register(EntityRegister.JALAPENO_ZOMBIE.get(), PlacementType.ON_GROUND, Heightmap.Type.MOTION_BLOCKING_NO_LEAVES, SpawnChecker::canGroundInvasionZombieSpawn);
-		}
+	}
 	
 	/**
 	 * {@link BiomeRegister#biomeModification(BiomeLoadingEvent)}
 	 */
-	public static void addEntitySpawnToBiome(BiomeLoadingEvent event) {
-		Biome biome = ForgeRegistries.BIOMES.getValue(event.getName());
-		if(biome == null || biome == BiomeRegister.ZEN_GARDEN.get()) {//prevent crash with other mod.
-    		return ;
-    	}
-		RegistryKey<Biome> biomeKey = BiomeUtil.getKey(biome);
+	public static void addEntitySpawnToBiome(BiomeLoadingEvent event, RegistryKey<Biome> biomeKey) {
 		if(BiomeUtil.isOverworld(biomeKey)) {
 			if(BiomeUtil.isLand(biomeKey)) {
 				addSpawnToOverworldLand(event);
-				event.getSpawns().addSpawn(EntityClassification.AMBIENT, new Spawners(EntityRegister.SUN.get(), 2 * PVZConfig.COMMON_CONFIG.WorldSettings.EntitySpawnSettings.SunSpawnWeight.get(), 1, 1));
-				event.getSpawns().addSpawn(EntityClassification.MONSTER, new Spawners(EntityRegister.GIGA_TOMB_STONE.get(), PVZConfig.COMMON_CONFIG.WorldSettings.EntitySpawnSettings.GigaTombStoneSpawnWeight.get(), 1, 1));
+				event.getSpawns().addSpawn(EntityClassification.AMBIENT, new Spawners(EntityRegister.SUN.get(), 2 * PVZConfig.COMMON_CONFIG.WorldSettings.SunSpawnWeight.get(), 1, 1));
+				event.getSpawns().addSpawn(EntityClassification.MONSTER, new Spawners(EntityRegister.GIGA_TOMB_STONE.get(), PVZConfig.COMMON_CONFIG.WorldSettings.GigaTombStoneSpawnWeight.get(), 1, 1));
 			}
 			if(BiomeUtil.isDesert(biomeKey)) {
 			}
@@ -119,7 +113,7 @@ public class EntitySpawnRegister {
 			addSpawnToOverworld(event);
 		}
 		if(BiomeUtil.isNether(biomeKey)) {
-			event.getSpawns().addSpawn(EntityClassification.MONSTER, new Spawners(EntityRegister.LAVA_ZOMBIE.get(), PVZConfig.COMMON_CONFIG.WorldSettings.EntitySpawnSettings.LavaZombieSpawnWeight.get(), 1, 1));
+			event.getSpawns().addSpawn(EntityClassification.MONSTER, new Spawners(EntityRegister.LAVA_ZOMBIE.get(), PVZConfig.COMMON_CONFIG.WorldSettings.LavaZombieSpawnWeight.get(), 1, 1));
 		}
 		if(BiomeUtil.isTheEnd(biomeKey)) {
 		}
@@ -130,7 +124,7 @@ public class EntitySpawnRegister {
 		final int p = ConfigUtil.getSpawnMultiple();
 		EntityClassification ee = EntityClassification.MONSTER;
 		
-		event.getSpawns().addSpawn(ee, new Spawners(EntityRegister.YETI_ZOMBIE.get(), 3 * PVZConfig.COMMON_CONFIG.WorldSettings.EntitySpawnSettings.YetiZombieSpawnWeight.get(), 1, 1));
+		event.getSpawns().addSpawn(ee, new Spawners(EntityRegister.YETI_ZOMBIE.get(), 3 * PVZConfig.COMMON_CONFIG.WorldSettings.YetiZombieSpawnWeight.get(), 1, 1));
 		
 		event.getSpawns().addSpawn(ee, new Spawners(EntityRegister.NORMAL_ZOMBIE.get(), 100 * p, 1, 2));
 		event.getSpawns().addSpawn(ee, new Spawners(EntityRegister.CONEHEAD_ZOMBIE.get(), 50 * p, 1, 1));

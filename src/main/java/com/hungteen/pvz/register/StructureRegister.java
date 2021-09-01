@@ -66,12 +66,7 @@ public class StructureRegister {
 	/**
 	 * {@link BiomeRegister#biomeModification(BiomeLoadingEvent)}
 	 */
-	public static void addStructureToBiome(BiomeLoadingEvent event) {
-		Biome biome = ForgeRegistries.BIOMES.getValue(event.getName());
-		if(biome == null || biome == BiomeRegister.ZEN_GARDEN.get()) {//prevent crash with other mod.
-    		return ;
-    	}
-    	RegistryKey<Biome> biomeKey = BiomeUtil.getKey(biome);
+	public static void addStructureToBiome(BiomeLoadingEvent event, RegistryKey<Biome> biomeKey) {
 		if(BiomeUtil.isOverworld(biomeKey)) {
 			if(BiomeUtil.isLand(biomeKey)) {
 				event.getGeneration().addStructureStart(StructureRegister.CONFIGURED_BUCKET_HOUSE);
@@ -99,7 +94,7 @@ public class StructureRegister {
 	 */
 	public static void setupStructures() {
 		{
-			int dis = PVZConfig.COMMON_CONFIG.WorldSettings.StructureSettings.BucketHouseDistance.get();
+			int dis = PVZConfig.COMMON_CONFIG.WorldSettings.BucketHouseDistance.get();
 			addStructure(BUCKET_HOUSE.get(), new StructureSeparationSettings(dis, dis / 2, 998244353));
 		    BUCKET_HOUSE_PIECE = Registry.register(Registry.STRUCTURE_PIECE, "bucket_house", BucketHouseComponents.BucketHouseComponent::new);
 		    CONFIGURED_BUCKET_HOUSE = BUCKET_HOUSE.get().configured(IFeatureConfig.NONE);
@@ -107,7 +102,7 @@ public class StructureRegister {
 	    	FlatGenerationSettings.STRUCTURE_FEATURES.put(BUCKET_HOUSE.get(), CONFIGURED_BUCKET_HOUSE);
 		}
 		{
-			int dis = PVZConfig.COMMON_CONFIG.WorldSettings.StructureSettings.DolphinHouseDistance.get();
+			int dis = PVZConfig.COMMON_CONFIG.WorldSettings.DolphinHouseDistance.get();
 			addStructure(DOLPHIN_HOUSE.get(), new StructureSeparationSettings(dis, dis / 2, 165745799));
 		    DOLPHIN_HOUSE_PIECE = Registry.register(Registry.STRUCTURE_PIECE, "dolphin_house", DolphinHouseComponents.DolphinHouseComponent::new);
 		    CONFIGURED_DOLPHIN_HOUSE = DOLPHIN_HOUSE.get().configured(IFeatureConfig.NONE);
@@ -115,7 +110,7 @@ public class StructureRegister {
 	    	FlatGenerationSettings.STRUCTURE_FEATURES.put(DOLPHIN_HOUSE.get(), CONFIGURED_DOLPHIN_HOUSE);
 		}
 		{
-			int dis = PVZConfig.COMMON_CONFIG.WorldSettings.StructureSettings.GraveHouseDistance.get();
+			int dis = PVZConfig.COMMON_CONFIG.WorldSettings.GraveHouseDistance.get();
 			addStructure(GRAVE_HOUSE.get(), new StructureSeparationSettings(dis, dis / 2, 165745797));
 		    GRAVE_HOUSE_PIECE = Registry.register(Registry.STRUCTURE_PIECE, "grave_house", GraveHouseComponents.GraveHouseComponent::new);
 		    CONFIGURED_GRAVE_HOUSE = GRAVE_HOUSE.get().configured(IFeatureConfig.NONE);
@@ -123,7 +118,7 @@ public class StructureRegister {
 	    	FlatGenerationSettings.STRUCTURE_FEATURES.put(GRAVE_HOUSE.get(), CONFIGURED_GRAVE_HOUSE);
 		}
 		{
-			int dis = PVZConfig.COMMON_CONFIG.WorldSettings.StructureSettings.YetiHouseDistance.get();
+			int dis = PVZConfig.COMMON_CONFIG.WorldSettings.YetiHouseDistance.get();
 			addStructure(YETI_HOUSE.get(), new StructureSeparationSettings(dis, dis / 2, 165745797));
 		    YETI_HOUSE_PIECE = Registry.register(Registry.STRUCTURE_PIECE, "yeti_house", YetiHouseComponents.YetiHouseComponent::new);
 		    CONFIGURED_YETI_HOUSE = YETI_HOUSE.get().configured(IFeatureConfig.NONE);
@@ -131,7 +126,7 @@ public class StructureRegister {
 	    	FlatGenerationSettings.STRUCTURE_FEATURES.put(YETI_HOUSE.get(), CONFIGURED_YETI_HOUSE);
 		}
 		{
-			int dis = PVZConfig.COMMON_CONFIG.WorldSettings.StructureSettings.DaveVillaDistance.get();
+			int dis = PVZConfig.COMMON_CONFIG.WorldSettings.DaveVillaDistance.get();
 			addStructure(DAVE_VILLA.get(), new StructureSeparationSettings(dis, dis / 2, 165745797));
 		    DAVE_VILLA_PIECE = Registry.register(Registry.STRUCTURE_PIECE, "dave_villa", DaveVillaComponents.DaveVillaComponent::new);
 		    CONFIGURED_DAVE_VILLA = DAVE_VILLA.get().configured(IFeatureConfig.NONE);
@@ -139,7 +134,7 @@ public class StructureRegister {
 	    	FlatGenerationSettings.STRUCTURE_FEATURES.put(DAVE_VILLA.get(), CONFIGURED_DAVE_VILLA);
 		}
 		{
-			int dis = PVZConfig.COMMON_CONFIG.WorldSettings.StructureSettings.SunTempleDistance.get();
+			int dis = PVZConfig.COMMON_CONFIG.WorldSettings.SunTempleDistance.get();
 			addStructure(SUN_TEMPLE.get(), new StructureSeparationSettings(dis, dis / 2, 165745797));
 			SUN_TEMPLE_PIECE = Registry.register(Registry.STRUCTURE_PIECE, "sun_temple", SunTempleComponents.SunTempleComponent::new);
 		    CONFIGURED_SUN_TEMPLE = SUN_TEMPLE.get().configured(IFeatureConfig.NONE);

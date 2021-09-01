@@ -24,6 +24,7 @@ public class BiomeUtil {
 	public static final Set<Biome> OVERWORLD_PLAIN = new HashSet<>();
 	public static final Set<Biome> OVERWORLD_CONIFEROUS = new HashSet<>();//taiga
 	public static final Set<Biome> OVERWORLD_SNOW_LAND = new HashSet<>();
+	public static final Set<Biome> OVERWORLD_FOREST = new HashSet<>();
 	public static final Set<Biome> NETHER = new HashSet<>();
 	public static final Set<Biome> THE_END = new HashSet<>();
 	
@@ -34,12 +35,25 @@ public class BiomeUtil {
 			if(isOverworld(biomeKey)) {
 				if(isLand(biomeKey)) {
 					OVERWORLD_LAND.add(biome);
-					if(isSnowy(biomeKey)) OVERWORLD_SNOW_LAND.add(biome);
+					if(isSnowy(biomeKey)) {
+						OVERWORLD_SNOW_LAND.add(biome);
+					}
 				}
-				if(isDesert(biomeKey)) OVERWORLD_DESERT.add(biome);
-				if(isOcean(biomeKey)) OVERWORLD_OCEAN.add(biome);
-				if(isPlain(biomeKey)) OVERWORLD_PLAIN.add(biome);
-				if(isConiferous(biomeKey)) OVERWORLD_CONIFEROUS.add(biome);
+				if(isDesert(biomeKey)) {
+					OVERWORLD_DESERT.add(biome);
+				}
+				if(isOcean(biomeKey)) {
+					OVERWORLD_OCEAN.add(biome);
+				}
+				if(isPlain(biomeKey)) {
+					OVERWORLD_PLAIN.add(biome);
+				}
+				if(isConiferous(biomeKey)) {
+					OVERWORLD_CONIFEROUS.add(biome);
+				}
+				if(isForest(biomeKey)) {
+					OVERWORLD_FOREST.add(biome);
+				}
 			}
 			if(isNether(biomeKey)) {
 				NETHER.add(biome);
@@ -72,6 +86,10 @@ public class BiomeUtil {
 	
 	public static boolean isSnowy(RegistryKey<Biome> biomeKey) {
 		return BiomeDictionary.hasType(biomeKey, Type.SNOWY);
+	}
+	
+	public static boolean isForest(RegistryKey<Biome> biomeKey) {
+		return BiomeDictionary.hasType(biomeKey, Type.FOREST);
 	}
 	
 	public static boolean isOverworld(RegistryKey<Biome> biomeKey) {

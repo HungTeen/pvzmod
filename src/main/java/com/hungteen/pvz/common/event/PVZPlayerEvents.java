@@ -1,8 +1,5 @@
 package com.hungteen.pvz.common.event;
 
-import java.util.Optional;
-import java.util.Random;
-
 import com.hungteen.pvz.PVZConfig;
 import com.hungteen.pvz.PVZMod;
 import com.hungteen.pvz.client.gui.search.SearchOption;
@@ -13,25 +10,23 @@ import com.hungteen.pvz.common.core.PlantType;
 import com.hungteen.pvz.common.entity.plant.PVZPlantEntity;
 import com.hungteen.pvz.common.event.events.PlayerLevelUpEvent;
 import com.hungteen.pvz.common.event.events.SummonCardUseEvent;
+import com.hungteen.pvz.common.event.handler.BlockEventHandler;
 import com.hungteen.pvz.common.event.handler.PlayerEventHandler;
 import com.hungteen.pvz.common.item.card.PlantCardItem;
 import com.hungteen.pvz.common.item.tool.PeaGunItem;
 import com.hungteen.pvz.common.network.OtherStatsPacket;
 import com.hungteen.pvz.common.network.PVZPacketHandler;
+import com.hungteen.pvz.compat.patchouli.PatchouliHandler;
 import com.hungteen.pvz.register.BlockRegister;
 import com.hungteen.pvz.register.EffectRegister;
 import com.hungteen.pvz.register.EnchantmentRegister;
 import com.hungteen.pvz.register.ItemRegister;
-import com.hungteen.pvz.utils.ItemUtil;
 import com.hungteen.pvz.utils.PlayerUtil;
 import com.hungteen.pvz.utils.StringUtil;
 import com.hungteen.pvz.utils.enums.Resources;
 
-import net.minecraft.block.BlockState;
-import net.minecraft.block.Blocks;
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.entity.Entity;
-import net.minecraft.entity.item.ItemEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.inventory.EquipmentSlotType;
@@ -39,7 +34,6 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.item.ShovelItem;
 import net.minecraft.item.SwordItem;
 import net.minecraft.util.Hand;
-import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.vector.Vector3d;
 import net.minecraft.world.World;
 import net.minecraftforge.event.TickEvent;
@@ -49,10 +43,8 @@ import net.minecraftforge.event.entity.player.PlayerInteractEvent;
 import net.minecraftforge.event.world.BlockEvent;
 import net.minecraftforge.eventbus.api.EventPriority;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
-import net.minecraftforge.fml.ModList;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.network.PacketDistributor;
-import net.minecraftforge.registries.ForgeRegistries;
 
 @Mod.EventBusSubscriber(modid=PVZMod.MOD_ID)
 public class PVZPlayerEvents {
@@ -136,39 +128,20 @@ public class PVZPlayerEvents {
 	public static void onPlayerGetAdvancement(AdvancementEvent ev) {
 		if(! ev.getPlayer().level.isClientSide) {
 			if(ev.getAdvancement().getId().equals(StringUtil.prefix("adventure/root"))) {
-				if(PVZConfig.COMMON_CONFIG.WorldSettings.GiveBeginnerReward.get()) {
+				if(PVZConfig.COMMON_CONFIG.RuleSettings.GiveBeginnerReward.get()) {
 					ev.getPlayer().addItem(new ItemStack(ItemRegister.PEA_SHOOTER_CARD.get()));
 		    		ev.getPlayer().addItem(new ItemStack(ItemRegister.SUN_FLOWER_CARD.get()));
 			    	ev.getPlayer().addItem(new ItemStack(ItemRegister.WALL_NUT_CARD.get()));
 				    ev.getPlayer().addItem(new ItemStack(ItemRegister.POTATO_MINE_CARD.get()));
 				}
-				if(ModList.get().isLoaded(StringUtil.PATCHOULI)) {
-					Optional.ofNullable(ForgeRegistries.ITEMS.getValue(ItemUtil.GUIDE_BOOK)).ifPresent(item -> {
-						final ItemStack book = new ItemStack(item, 1);
-						book.getOrCreateTag().putString("patchouli:book", "pvz:pvz_guide");
-						ev.getPlayer().addItem(book);
-					});
-				}
+				PatchouliHandler.giveInitialGuideBook(ev.getPlayer());
 			}
 		}
 	}
 	
 	@SubscribeEvent
 	public static void onPlayerBreakBlock(BlockEvent.BreakEvent ev) {
-		PlayerEntity player=ev.getPlayer();
-		BlockState state = ev.getState();
-		BlockPos pos = ev.getPos();
-		if(! player.level.isClientSide) {
-			if(state.getBlock()==Blocks.GRASS || state.getBlock()==Blocks.TALL_GRASS) {//break grass
-				Random rand = new Random();
-				if(rand.nextInt(PVZConfig.COMMON_CONFIG.BlockSettings.BreakBlock.PeaDropChance.get()) == 0) {//drop pea 
-					player.level.addFreshEntity(new ItemEntity(player.level,pos.getX(), pos.getY(), pos.getZ(), new ItemStack(ItemRegister.PEA.get(), 1)));
-				}
-				if(rand.nextInt(PVZConfig.COMMON_CONFIG.BlockSettings.BreakBlock.CabbageDropChance.get()) == 0) {//drop cabbage
-					player.level.addFreshEntity(new ItemEntity(player.level,pos.getX(), pos.getY(), pos.getZ(), new ItemStack(ItemRegister.CABBAGE_SEEDS.get(), 1)));
-				}
-			}
-		}
+		BlockEventHandler.checkAndDropSeeds(ev);
 	}
 	
 	@SubscribeEvent

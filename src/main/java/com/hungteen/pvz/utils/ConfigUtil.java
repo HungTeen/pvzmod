@@ -24,4 +24,12 @@ public class ConfigUtil {
 		return PVZConfig.COMMON_CONFIG.InvasionSettings.MaxSpawnWeightMultiple.get();
 	}
 	
+	public static int getGenOriginOreChance() {
+		return PVZConfig.COMMON_CONFIG.WorldSettings.GenOriginOreChance.get();
+	}
+	
+	public static int getGenAmethystOreChance() {
+		return PVZConfig.COMMON_CONFIG.WorldSettings.GenAmethystOreChance.get();
+	}
+	
 }

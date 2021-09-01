@@ -1,7 +1,6 @@
 package com.hungteen.pvz.utils;
 
 import net.minecraft.item.ItemStack;
-import net.minecraft.util.ResourceLocation;
 
 public class ItemUtil {
 
@@ -16,8 +15,6 @@ public class ItemUtil {
 	public static final float BREAD_SATURATION = 0.6f;
 	public static final float PIG_SATURATION = 0.8f;
 	public static final float GOLDEN_SATURATION = 1.2f;
-	
-	public static final ResourceLocation GUIDE_BOOK = new ResourceLocation(StringUtil.PATCHOULI, "guide_book");
 	
 	public static boolean canItemStackAddTo(ItemStack stack1, ItemStack stack2) {
 		if(! stack1.sameItem(stack2)) return false;

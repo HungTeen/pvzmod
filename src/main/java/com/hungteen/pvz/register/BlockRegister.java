@@ -26,7 +26,7 @@ import com.hungteen.pvz.common.block.special.SunConverterBlock;
 import com.hungteen.pvz.common.block.special.SunFlowerTrophyBlock;
 import com.hungteen.pvz.common.impl.Essences;
 import com.hungteen.pvz.common.item.blockitem.LilyPadItem;
-import com.hungteen.pvz.common.world.feature.tree.NutTree;
+import com.hungteen.pvz.common.world.feature.NutTree;
 
 import net.minecraft.block.Block;
 import net.minecraft.block.Blocks;

@@ -1,8 +1,6 @@
-package com.hungteen.pvz.common.world.feature.tree;
+package com.hungteen.pvz.common.world.feature;
 
 import java.util.Random;
-
-import com.hungteen.pvz.common.world.feature.PVZFeatures;
 
 import net.minecraft.block.trees.Tree;
 import net.minecraft.world.gen.feature.BaseTreeFeatureConfig;
