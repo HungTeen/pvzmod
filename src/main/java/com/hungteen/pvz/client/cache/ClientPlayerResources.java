@@ -11,7 +11,6 @@ import com.hungteen.pvz.common.world.invasion.WaveManager;
 import com.hungteen.pvz.utils.enums.Resources;
 
 import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.CompoundNBT;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 
@@ -19,13 +18,12 @@ import net.minecraftforge.api.distmarker.OnlyIn;
 public class ClientPlayerResources{
 
 	private static HashMap<Resources, Integer> resources = new HashMap<>(Resources.values().length);
+	/* summon card inventory */
+	public static final List<ItemStack> SUMMON_CARDS = new ArrayList<>();
+	public static int emptySlot;
 	private static HashMap<PlantType, Integer> plantCardXp = new HashMap<>();
 	private static HashMap<PlantType, Integer> plantCardLevel = new HashMap<>();
 	private static HashMap<SearchOption, Boolean> unLocked = new HashMap<SearchOption, Boolean>(SearchOption.OPTION.size());
-	/* summon card inventory */
-	public static final List<ItemStack> SUMMON_CARDS = new ArrayList<>();
-	public static final CompoundNBT CARD_INVENTORY = new CompoundNBT();
-	public static int emptySlot;
 	public static final int[] zombieWaveTime = new int[WaveManager.MAX_WAVE_NUM];
 	public static int totalWaveCount;
 	public static final int[] mysteryGoods = new int[MysteryShopContainer.MAX_MYSTERY_GOOD];

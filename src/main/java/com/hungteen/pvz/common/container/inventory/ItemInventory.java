@@ -19,7 +19,6 @@ public class ItemInventory extends Inventory {
 		if(!stack.isEmpty() && stack.getOrCreateTag().contains(NAME)) {
 			list = stack.getOrCreateTag().getList(NAME, Constants.NBT.TAG_COMPOUND);
 		}
-//		System.out.println(list.size());
 		for (int i = 0; i < size && i < list.size(); i++) {
 			setItem(i, ItemStack.of(list.getCompound(i)));
 		}

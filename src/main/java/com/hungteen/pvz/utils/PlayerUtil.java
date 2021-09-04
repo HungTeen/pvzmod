@@ -2,6 +2,8 @@ package com.hungteen.pvz.utils;
 
 import java.util.List;
 
+import javax.annotation.Nullable;
+
 import com.hungteen.pvz.api.enums.PVZGroupType;
 import com.hungteen.pvz.client.gui.search.SearchOption;
 import com.hungteen.pvz.common.capability.CapabilityHandler;
@@ -15,6 +17,7 @@ import com.hungteen.pvz.utils.enums.Resources;
 
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.ServerPlayerEntity;
+import net.minecraft.item.ItemStack;
 import net.minecraft.network.play.server.STitlePacket;
 import net.minecraft.stats.Stats;
 import net.minecraft.util.Util;
@@ -62,6 +65,37 @@ public class PlayerUtil {
 		if(lvl <= 40) return 3;
 		if(lvl <= 60) return 4;
 		return 5;
+	}
+	
+	@Nullable
+	public static PlayerDataManager getManager(PlayerEntity player) {
+		if(isValidPlayer(player)) {
+			final IPlayerDataCapability cap = player.getCapability(CapabilityHandler.PLAYER_DATA_CAPABILITY).orElse(null);
+		    return cap != null ? cap.getPlayerData() : null;
+		}
+		return null;
+	}
+	
+	public static int getResource(PlayerEntity player, Resources res) {
+		final PlayerDataManager manager = getManager(player);
+		return manager != null ? manager.getResource(res) : 0;
+	}
+	
+	public static int getEmptyPos(PlayerEntity player) {
+		final PlayerDataManager manager = getManager(player);
+		return manager != null ? manager.getCurrentPos() : 0;
+	}
+	
+	public static ItemStack getItemStack(PlayerEntity player, int pos) {
+		final PlayerDataManager manager = getManager(player);
+		return manager != null ? manager.getItemAt(pos) : ItemStack.EMPTY;
+	}
+	
+	public static void setItemStack(PlayerEntity player, ItemStack stack, int pos) {
+		final PlayerDataManager manager = getManager(player);
+		if(manager != null) {
+			manager.setItemAt(stack, pos);
+		}
 	}
 	
 	public static void addPlayerStats(PlayerEntity player, Resources res, int num) {
