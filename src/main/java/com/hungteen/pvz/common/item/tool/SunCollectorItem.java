@@ -4,7 +4,7 @@ import javax.annotation.Nullable;
 
 import com.hungteen.pvz.common.capability.CapabilityHandler;
 import com.hungteen.pvz.common.entity.drop.SunEntity;
-import com.hungteen.pvz.register.GroupRegister;
+import com.hungteen.pvz.common.item.PVZItemGroups;
 import com.hungteen.pvz.utils.EntityUtil;
 import com.hungteen.pvz.utils.PlayerUtil;
 import com.hungteen.pvz.utils.enums.Resources;
@@ -29,7 +29,7 @@ public class SunCollectorItem extends Item{
 	public static final int RANGE_COLLECT_COOL_DOWN = 200;
 	
 	public SunCollectorItem() {
-		super(new Properties().tab(GroupRegister.PVZ_MISC).stacksTo(1));
+		super(new Properties().tab(PVZItemGroups.PVZ_MISC).stacksTo(1));
 	}
 
 	@Override
@@ -37,14 +37,14 @@ public class SunCollectorItem extends Item{
 		if(! worldIn.isClientSide) {
 			if(playerIn.isShiftKeyDown()) {//range collect
 				playerIn.getCapability(CapabilityHandler.PLAYER_DATA_CAPABILITY).ifPresent((l)->{
-					int lvl = l.getPlayerData().getPlayerStats().getPlayerStats(Resources.TREE_LVL);
-					int treeLvl = l.getPlayerData().getPlayerStats().getPlayerStats(Resources.TREE_LVL);
+					int lvl = l.getPlayerData().getResource(Resources.TREE_LVL);
+					int treeLvl = l.getPlayerData().getResource(Resources.TREE_LVL);
 					double range = getRangeCollectRange(lvl);
 					boolean has = false;
 					for(SunEntity sun : worldIn.getEntitiesOfClass(SunEntity.class, EntityUtil.getEntityAABB(playerIn, range, range), (sun)->{
 						return sun.isAlive();
 					})) {
-						if(l.getPlayerData().getPlayerStats().getPlayerStats(Resources.SUN_NUM) == PlayerUtil.getPlayerMaxSunNum(treeLvl)) {
+						if(l.getPlayerData().getResource(Resources.SUN_NUM) == PlayerUtil.getPlayerMaxSunNum(treeLvl)) {
 							break;
 						}
 						sun.onCollectedByPlayer(playerIn);
@@ -59,7 +59,7 @@ public class SunCollectorItem extends Item{
 				playerIn.getCapability(CapabilityHandler.PLAYER_DATA_CAPABILITY).ifPresent((l)->{
 					Vector3d look = playerIn.getLookAngle();
 				    Vector3d start = playerIn.position().add(0, playerIn.getEyeHeight(), 0);
-				    int lvl = l.getPlayerData().getPlayerStats().getPlayerStats(Resources.TREE_LVL);
+				    int lvl = l.getPlayerData().getResource(Resources.TREE_LVL);
 				    double range = getSingleCollectRange(lvl);
 				    Vector3d end = start.add(look.normalize().multiply(range, range, range));
 				    RayTraceContext ray = new RayTraceContext(start, end, RayTraceContext.BlockMode.COLLIDER, RayTraceContext.FluidMode.NONE, playerIn);

@@ -3,9 +3,9 @@ package com.hungteen.pvz.common.item.tool;
 import java.util.List;
 
 import com.hungteen.pvz.common.capability.CapabilityHandler;
+import com.hungteen.pvz.common.item.PVZItemGroups;
 import com.hungteen.pvz.common.network.PVZPacketHandler;
-import com.hungteen.pvz.common.network.PlaySoundPacket;
-import com.hungteen.pvz.register.GroupRegister;
+import com.hungteen.pvz.common.network.toclient.PlaySoundPacket;
 import com.hungteen.pvz.utils.PlayerUtil;
 import com.hungteen.pvz.utils.enums.Resources;
 
@@ -32,7 +32,7 @@ public class SunStorageSaplingItem extends Item {
 	public final int MAX_STORAGE_NUM;
 
 	public SunStorageSaplingItem(int num) {
-		super(new Item.Properties().tab(GroupRegister.PVZ_MISC).stacksTo(1));
+		super(new Item.Properties().tab(PVZItemGroups.PVZ_MISC).stacksTo(1));
 		this.MAX_STORAGE_NUM = num;
 	}
 
@@ -48,8 +48,8 @@ public class SunStorageSaplingItem extends Item {
 			PlayerEntity player = (PlayerEntity) entityLiving;
 			if(! worldIn.isClientSide) {
 				player.getCapability(CapabilityHandler.PLAYER_DATA_CAPABILITY).ifPresent((l) -> {
-					int sunNum = l.getPlayerData().getPlayerStats().getPlayerStats(Resources.SUN_NUM);
-					int lvl = l.getPlayerData().getPlayerStats().getPlayerStats(Resources.TREE_LVL);
+					int sunNum = l.getPlayerData().getResource(Resources.SUN_NUM);
+					int lvl = l.getPlayerData().getResource(Resources.TREE_LVL);
 					int maxNum = PlayerUtil.getPlayerMaxSunNum(lvl);
 					int amount = getStorageSunAmount(stack);
 					if(sunNum == maxNum || amount == 0) return ;
@@ -61,7 +61,7 @@ public class SunStorageSaplingItem extends Item {
 						amount = 0;
 					}
 					setStorageSunAmount(stack, amount);
-					l.getPlayerData().getPlayerStats().setPlayerStats(Resources.SUN_NUM, sunNum);
+					l.getPlayerData().setResource(Resources.SUN_NUM, sunNum);
 					PVZPacketHandler.CHANNEL.send(PacketDistributor.PLAYER.with(() -> {
 						return (ServerPlayerEntity) player;
 					}), new PlaySoundPacket(0));

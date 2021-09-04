@@ -15,8 +15,8 @@ import com.hungteen.pvz.common.entity.zombie.roof.BungeeZombieEntity.BungeeTypes
 import com.hungteen.pvz.common.event.handler.PlayerEventHandler;
 import com.hungteen.pvz.common.impl.InvasionEvents;
 import com.hungteen.pvz.common.impl.zombie.RoofZombies;
-import com.hungteen.pvz.common.network.OtherStatsPacket;
 import com.hungteen.pvz.common.network.PVZPacketHandler;
+import com.hungteen.pvz.common.network.toclient.OtherStatsPacket;
 import com.hungteen.pvz.common.world.data.PVZFlagData;
 import com.hungteen.pvz.common.world.data.PVZInvasionData;
 import com.hungteen.pvz.register.EntityRegister;
@@ -194,7 +194,7 @@ public class WaveManager {
 	public static void resetPlayerWaveTime(PlayerEntity player) {
 		player.getCapability(CapabilityHandler.PLAYER_DATA_CAPABILITY).ifPresent(l -> {
 			OtherStats stats = l.getPlayerData().getOtherStats();
-			int treeLvl = l.getPlayerData().getPlayerStats().getPlayerStats(Resources.TREE_LVL);
+			int treeLvl = l.getPlayerData().getResource(Resources.TREE_LVL);
 			int maxCnt = PlayerUtil.getPlayerWaveCount(treeLvl);
 			int minCnt = (maxCnt + 1) / 2;
 			int cnt = player.getRandom().nextInt(maxCnt - minCnt + 1) + minCnt;
@@ -215,7 +215,7 @@ public class WaveManager {
 	public static void giveInvasionBonusToPlayer(World world, PlayerEntity player) {
 		if(! PlayerUtil.isPlayerSurvival(player)) return ;//do not effect to creative players.
 		player.getCapability(CapabilityHandler.PLAYER_DATA_CAPABILITY).ifPresent(l -> {
-			int cnt = l.getPlayerData().getPlayerStats().getPlayerStats(Resources.KILL_COUNT);
+			int cnt = l.getPlayerData().getResource(Resources.KILL_COUNT);
 			if(cnt >= 50) {//give reward if kill count reach 50
 				PlayerUtil.playClientSound(player, 6);
 			    PlayerUtil.addPlayerStats(player, Resources.MONEY, (cnt >= 200 ? 200 : 50));
@@ -232,7 +232,7 @@ public class WaveManager {
 			    syncWaveTime(player);
 			}
 			//reset kill count.
-			l.getPlayerData().getPlayerStats().setPlayerStats(Resources.KILL_COUNT, 0);
+			l.getPlayerData().setResource(Resources.KILL_COUNT, 0);
 		});
 	}
 	

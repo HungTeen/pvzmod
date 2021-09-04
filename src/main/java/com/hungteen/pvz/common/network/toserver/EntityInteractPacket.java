@@ -1,4 +1,4 @@
-package com.hungteen.pvz.common.network;
+package com.hungteen.pvz.common.network.toserver;
 
 import java.util.function.Supplier;
 

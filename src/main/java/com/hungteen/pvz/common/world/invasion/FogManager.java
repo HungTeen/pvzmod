@@ -19,10 +19,10 @@ public class FogManager {
 	public static void tickFog(World world) {
 		world.players().forEach((player) -> {
 			player.getCapability(CapabilityHandler.PLAYER_DATA_CAPABILITY).ifPresent((l) -> {
-				int now = l.getPlayerData().getPlayerStats().getPlayerStats(Resources.NO_FOG_TICK);
+				int now = l.getPlayerData().getResource(Resources.NO_FOG_TICK);
 				int newTick = (shouldFogOn(world, player)) ? MathHelper.clamp(now - 1, - CD, 0) : MathHelper.clamp(now + 1, - CD, 0);
 				if(newTick != now) {
-					l.getPlayerData().getPlayerStats().setPlayerStats(Resources.NO_FOG_TICK, newTick);
+					l.getPlayerData().setResource(Resources.NO_FOG_TICK, newTick);
 				}
 			});
 		});

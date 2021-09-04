@@ -6,10 +6,11 @@ import com.hungteen.pvz.api.enums.PVZGroupType;
 import com.hungteen.pvz.client.gui.search.SearchOption;
 import com.hungteen.pvz.common.capability.CapabilityHandler;
 import com.hungteen.pvz.common.capability.player.IPlayerDataCapability;
+import com.hungteen.pvz.common.capability.player.PlayerDataManager;
 import com.hungteen.pvz.common.core.PlantType;
-import com.hungteen.pvz.common.network.AlmanacUnLockPacket;
 import com.hungteen.pvz.common.network.PVZPacketHandler;
-import com.hungteen.pvz.common.network.PlaySoundPacket;
+import com.hungteen.pvz.common.network.toclient.AlmanacUnLockPacket;
+import com.hungteen.pvz.common.network.toclient.PlaySoundPacket;
 import com.hungteen.pvz.utils.enums.Resources;
 
 import net.minecraft.entity.player.PlayerEntity;
@@ -26,19 +27,33 @@ import net.minecraftforge.fml.network.PacketDistributor;
 
 public class PlayerUtil {
 
-	public static final int MAX_TREE_LVL = 100;
-	public static final int MAX_ENERGY_NUM = 10;
-	public static final int MAX_MONEY = 9999999;
-	public static final int MAX_SLOT_NUM = 162;
-	public static final int[] TREE_LVL_XP = new int[] {10, 25, 50, 100, 200, 300, 500, 800, 1200, 2100, 3200, 5400, 7000, 8000, 9000, 10000, 12000, 15000, 18000, 20000}; 
+	public static final int[] TREE_LVL_XP = new int[] {100, 250, 500, 1000, 2000, 4000, 8000, 12500, 18000, 25000, 32000, 40000, 50000, 63000, 75000, 88000, 100000, 120000, 150000, 180000}; 
+	private static int OLD_PLAYER_LEVEL = 0;
+	private static int CACHE_MAX_SUN = 0;
 	
+	/**
+	 * a1 = 1000, d = 500, inc = 20. <br> 
+	 * an = n * a1 + (n - 1) * n / 2.<br>
+	 * {@link PlayerDataManager#addResource(Resources, int)}
+	 */
 	public static int getPlayerMaxSunNum(int lvl) {
-		if(lvl <= 40) {
-			return 900 + lvl * 100;
-		} else if(lvl <= 99) {
-			return lvl * 250 - 5100;
+		if(lvl == OLD_PLAYER_LEVEL) {
+			return CACHE_MAX_SUN;
+		} else {
+			final int len = 20;
+		    final int n = lvl / len;
+		    final int sum = 1000 * n + n * (n - 1) / 2 * 500 + (lvl - len * n) * (50 + n * 25);
+		    OLD_PLAYER_LEVEL = lvl;
+		    return (CACHE_MAX_SUN = ConfigUtil.getBaseSun() + sum);
 		}
-		return 19999;
+	}
+	
+	/**
+	 * {@link PlayerDataManager#addResource(Resources, int)}
+	 */
+	public static int getPlayerLevelUpXp(int lvl){
+		final int pos = lvl / 5;
+		return pos < TREE_LVL_XP.length ? TREE_LVL_XP[pos] : 200000;
 	}
 	
 	public static int getPlayerWaveCount(int lvl) {
@@ -49,18 +64,10 @@ public class PlayerUtil {
 		return 5;
 	}
 	
-	public static int getPlayerLevelUpXp(int lvl){
-		int pos = lvl / 5;
-		if(lvl >= MAX_TREE_LVL) {
-			return 1000000000;
-		}
-		return TREE_LVL_XP[pos];
-	}
-	
 	public static void addPlayerStats(PlayerEntity player, Resources res, int num) {
 		if(isValidPlayer(player)) {
 			player.getCapability(CapabilityHandler.PLAYER_DATA_CAPABILITY).ifPresent(l -> {
-			    l.getPlayerData().getPlayerStats().addPlayerStats(res, num);
+			    l.getPlayerData().addResource(res, num);
 		    });
 		}
 	}
@@ -123,7 +130,7 @@ public class PlayerUtil {
 	public static PVZGroupType getPlayerGroupType(ServerPlayerEntity player) {
 		final IPlayerDataCapability cap = player.getCapability(CapabilityHandler.PLAYER_DATA_CAPABILITY).orElse(null);
 		if(cap != null) {
-			return PVZGroupType.getGroup(cap.getPlayerData().getPlayerStats().getPlayerStats(Resources.GROUP_TYPE));
+			return PVZGroupType.getGroup(cap.getPlayerData().getResource(Resources.GROUP_TYPE));
 		}
 		return PVZGroupType.getGroup(ConfigUtil.getPlayerInitialGroup());// get Group Error !
 	}

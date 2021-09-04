@@ -1,7 +1,7 @@
 package com.hungteen.pvz.common.item.tool;
 
 import com.hungteen.pvz.common.entity.bullet.itembullet.FireCrackerEntity;
-import com.hungteen.pvz.register.GroupRegister;
+import com.hungteen.pvz.common.item.PVZItemGroups;
 import com.hungteen.pvz.utils.EntityUtil;
 
 import net.minecraft.entity.player.PlayerEntity;
@@ -18,7 +18,7 @@ public class FireCrackerItem extends Item {
 	private static final int CD = 10;
 	
 	public FireCrackerItem() {
-		super(new Item.Properties().tab(GroupRegister.PVZ_MISC));
+		super(new Item.Properties().tab(PVZItemGroups.PVZ_MISC));
 	}
 	
 	@Override

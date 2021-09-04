@@ -1,8 +1,8 @@
 package com.hungteen.pvz.common.container.shop;
 
 import com.hungteen.pvz.common.capability.CapabilityHandler;
-import com.hungteen.pvz.common.network.OtherStatsPacket;
 import com.hungteen.pvz.common.network.PVZPacketHandler;
+import com.hungteen.pvz.common.network.toclient.OtherStatsPacket;
 import com.hungteen.pvz.register.ContainerRegister;
 import com.hungteen.pvz.register.SoundRegister;
 import com.hungteen.pvz.utils.PlayerUtil;

@@ -8,6 +8,7 @@ import com.hungteen.pvz.common.impl.plant.CustomPlants;
 import com.hungteen.pvz.common.impl.plant.MemePlants;
 import com.hungteen.pvz.common.impl.plant.OtherPlants;
 import com.hungteen.pvz.common.impl.plant.PVZPlants;
+import com.hungteen.pvz.common.item.PVZItemGroups;
 import com.hungteen.pvz.common.item.PVZFoodItem;
 import com.hungteen.pvz.common.item.PVZItemBase;
 import com.hungteen.pvz.common.item.PVZItemTier;
@@ -214,11 +215,11 @@ public class ItemRegister {
     public static final RegistryObject<PlantCardItem> BONK_CHOY_ENJOY_CARD = registerCard(OtherPlants.BONK_CHOY, true);
     
     //plants
-	public static final RegistryObject<Item> PEA = ITEMS.register("pea",() -> new BlockItem(BlockRegister.PEA_PLANT.get(), new Item.Properties().tab(GroupRegister.PVZ_MISC)));
+	public static final RegistryObject<Item> PEA = ITEMS.register("pea",() -> new BlockItem(BlockRegister.PEA_PLANT.get(), new Item.Properties().tab(PVZItemGroups.PVZ_MISC)));
 	public static final RegistryObject<Item> NUT = ITEMS.register("nut", PVZItemBase::new);
-	public static final RegistryObject<Item> SPORE = ITEMS.register("spore",()-> new BlockItem(BlockRegister.TOXIC_SHROOM.get(),new Item.Properties().tab(GroupRegister.PVZ_MISC)));
-	public static final RegistryObject<Item> CABBAGE_SEEDS = ITEMS.register("cabbage_seeds", () -> new BlockItem(BlockRegister.CABBAGE.get(), new Item.Properties().tab(GroupRegister.PVZ_MISC)));
-	public static final RegistryObject<Item> CORN_SEEDS = ITEMS.register("corn_seeds", () -> new BlockItem(BlockRegister.CORN.get(), new Item.Properties().tab(GroupRegister.PVZ_MISC)));
+	public static final RegistryObject<Item> SPORE = ITEMS.register("spore",()-> new BlockItem(BlockRegister.TOXIC_SHROOM.get(),new Item.Properties().tab(PVZItemGroups.PVZ_MISC)));
+	public static final RegistryObject<Item> CABBAGE_SEEDS = ITEMS.register("cabbage_seeds", () -> new BlockItem(BlockRegister.CABBAGE.get(), new Item.Properties().tab(PVZItemGroups.PVZ_MISC)));
+	public static final RegistryObject<Item> CORN_SEEDS = ITEMS.register("corn_seeds", () -> new BlockItem(BlockRegister.CORN.get(), new Item.Properties().tab(PVZItemGroups.PVZ_MISC)));
 	
 	//material
 	public static final RegistryObject<Item> SNOW_PEA = ITEMS.register("snow_pea", PVZItemBase::new);
@@ -229,11 +230,11 @@ public class ItemRegister {
 	public static final RegistryObject<Item> FROZEN_MELON_SLICE = ITEMS.register("frozen_melon_slice", PVZItemBase::new);
 	
 	//tool
-	public static final RegistryObject<Item> STEEL_SWORD = ITEMS.register("steel_sword", () -> new SwordItem(PVZItemTier.STEEL, 3, -2.4F, new Item.Properties().tab(GroupRegister.PVZ_MISC)));
-	public static final RegistryObject<Item> STEEL_SHOVEL = ITEMS.register("steel_shovel", () -> new ShovelItem(PVZItemTier.STEEL, 1.5F, -3.0F, new Item.Properties().tab(GroupRegister.PVZ_MISC)));
-	public static final RegistryObject<Item> STEEL_PICKAXE = ITEMS.register("steel_pickaxe", () -> new PickaxeItem(PVZItemTier.STEEL, 1, -2.8F, new Item.Properties().tab(GroupRegister.PVZ_MISC)));
-	public static final RegistryObject<Item> STEEL_AXE = ITEMS.register("steel_axe", () -> new AxeItem(PVZItemTier.STEEL, 6.0F, -3.1F, new Item.Properties().tab(GroupRegister.PVZ_MISC)));
-	public static final RegistryObject<Item> STEEL_HOE = ITEMS.register("steel_hoe", () -> new HoeItem(PVZItemTier.STEEL, -2, -1.0F, new Item.Properties().tab(GroupRegister.PVZ_MISC)));
+	public static final RegistryObject<Item> STEEL_SWORD = ITEMS.register("steel_sword", () -> new SwordItem(PVZItemTier.STEEL, 3, -2.4F, new Item.Properties().tab(PVZItemGroups.PVZ_MISC)));
+	public static final RegistryObject<Item> STEEL_SHOVEL = ITEMS.register("steel_shovel", () -> new ShovelItem(PVZItemTier.STEEL, 1.5F, -3.0F, new Item.Properties().tab(PVZItemGroups.PVZ_MISC)));
+	public static final RegistryObject<Item> STEEL_PICKAXE = ITEMS.register("steel_pickaxe", () -> new PickaxeItem(PVZItemTier.STEEL, 1, -2.8F, new Item.Properties().tab(PVZItemGroups.PVZ_MISC)));
+	public static final RegistryObject<Item> STEEL_AXE = ITEMS.register("steel_axe", () -> new AxeItem(PVZItemTier.STEEL, 6.0F, -3.1F, new Item.Properties().tab(PVZItemGroups.PVZ_MISC)));
+	public static final RegistryObject<Item> STEEL_HOE = ITEMS.register("steel_hoe", () -> new HoeItem(PVZItemTier.STEEL, -2, -1.0F, new Item.Properties().tab(PVZItemGroups.PVZ_MISC)));
 	public static final RegistryObject<Item> ZOMBIE_FLAG = ITEMS.register("zombie_flag", ZombieFlagItem::new);
 	public static final RegistryObject<Item> BOBSLE_CAR = ITEMS.register("bobsle_car", BobsleCarItem::new);
 	public static final RegistryObject<Item> LAWN_MOWER = ITEMS.register("lawn_mower", LawnMowerItem::new);
@@ -248,8 +249,8 @@ public class ItemRegister {
 	public static final RegistryObject<Item> BALLOON = ITEMS.register("balloon", BalloonItem::new);
 	public static final RegistryObject<Item> TARGET_ARROW = ITEMS.register("target_arrow", TargetArrowItem::new);
 	public static final RegistryObject<Item> FIRE_CRACKER = ITEMS.register("fire_cracker", FireCrackerItem::new);
-	public static final RegistryObject<Item> WARNING_SIGN = ITEMS.register("warning_sign", () -> new SwordItem(PVZItemTier.STEEL, 6, - 2.4F, new Item.Properties().tab(GroupRegister.PVZ_MISC).stacksTo(1)));
-	public static final RegistryObject<Item> POLE = ITEMS.register("pole", () -> new AxeItem(PVZItemTier.STEEL, 8, - 3F, new Item.Properties().tab(GroupRegister.PVZ_MISC).stacksTo(1)));
+	public static final RegistryObject<Item> WARNING_SIGN = ITEMS.register("warning_sign", () -> new SwordItem(PVZItemTier.STEEL, 6, - 2.4F, new Item.Properties().tab(PVZItemGroups.PVZ_MISC).stacksTo(1)));
+	public static final RegistryObject<Item> POLE = ITEMS.register("pole", () -> new AxeItem(PVZItemTier.STEEL, 8, - 3F, new Item.Properties().tab(PVZItemGroups.PVZ_MISC).stacksTo(1)));
 	public static final RegistryObject<Item> GARDEN_RAKE = ITEMS.register("garden_rake", GardenRakeItem::new);
 	
 	//armor
@@ -276,7 +277,7 @@ public class ItemRegister {
 	public static final RegistryObject<Item> ZOMBIE_ON_YOUR_LAWN = ITEMS.register("zombie_on_your_lawn", () -> {return 
 			new MusicDiscItem(0, () -> {
 				return SoundRegister.ZOMBIE_ON_YOUR_LAWN.get();
-				}, new Item.Properties().stacksTo(1).tab(GroupRegister.PVZ_MISC).rarity(Rarity.RARE));
+				}, new Item.Properties().stacksTo(1).tab(PVZItemGroups.PVZ_MISC).rarity(Rarity.RARE));
 			});
 	
 	//food 
@@ -417,14 +418,14 @@ public class ItemRegister {
 	 * register spawn eggs
 	 */
     private static RegistryObject<PVZSpawnEggItem> registerSpawnEgg(String name, RegistryObject<? extends EntityType<?>> entityType, int color1, int color2){
-    	return ITEMS.register(name + "_spawn_egg", () -> new PVZSpawnEggItem(entityType, color1, color2, new Item.Properties().tab(GroupRegister.PVZ_MISC)));
+    	return ITEMS.register(name + "_spawn_egg", () -> new PVZSpawnEggItem(entityType, color1, color2, new Item.Properties().tab(PVZItemGroups.PVZ_MISC)));
     }
 
     /**
 	 * register spawn eggs
 	 */
     private static RegistryObject<PVZSpawnEggItem> registerSpawnEgg(String name, RegistryObject<? extends EntityType<?>> entityType, Pair<Integer, Integer> color){
-    	return ITEMS.register(name + "_spawn_egg", () -> new PVZSpawnEggItem(entityType, color.getFirst(), color.getSecond(), new Item.Properties().tab(GroupRegister.PVZ_MISC)));
+    	return ITEMS.register(name + "_spawn_egg", () -> new PVZSpawnEggItem(entityType, color.getFirst(), color.getSecond(), new Item.Properties().tab(PVZItemGroups.PVZ_MISC)));
     }
     
     private static RegistryObject<PlantCardItem> registerCard(PlantType plant, boolean is){

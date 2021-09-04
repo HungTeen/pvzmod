@@ -32,6 +32,7 @@ import net.minecraft.util.math.shapes.VoxelShape;
 import net.minecraft.util.math.vector.Vector3d;
 import net.minecraft.world.IBlockReader;
 import net.minecraft.world.IWorldReader;
+import net.minecraft.world.LightType;
 import net.minecraft.world.World;
 import net.minecraft.world.server.ServerWorld;
 
@@ -42,8 +43,8 @@ public class ToxicShroomBlock extends BushBlock implements IGrowable {
 			Block.box(1.0D, 0.0D, 1.0D, 15.0D, 10.0D, 15.0D),
 			Block.box(1.0D, 0.0D, 1.0D, 15.0D, 11.0D, 15.0D) };
 	private static final int VALID_LIGHT_LEVEL = 7;
-	private final int POISON_TICK = 100;
-	private final int POISON_LVL = 1;
+	private static final int POISON_TICK = 100;
+	private static final int POISON_LVL = 1;
 
 	public ToxicShroomBlock(Block.Properties p_i49971_1_) {
 		super(p_i49971_1_);
@@ -61,10 +62,10 @@ public class ToxicShroomBlock extends BushBlock implements IGrowable {
 
 	@Override
 	public boolean canSurvive(BlockState state, IWorldReader worldIn, BlockPos pos) {
-		BlockPos blockpos = pos.below();
-		BlockState blockstate = worldIn.getBlockState(blockpos);
-		Block block = blockstate.getBlock();
-		return block == Blocks.MYCELIUM && worldIn.getRawBrightness(pos, 0) < VALID_LIGHT_LEVEL
+		final BlockPos blockpos = pos.below();
+		final BlockState blockstate = worldIn.getBlockState(blockpos);
+		final Block block = blockstate.getBlock();
+		return block == Blocks.MYCELIUM && worldIn.getBrightness(LightType.SKY, pos) < VALID_LIGHT_LEVEL
 				&& blockstate.canSustainPlant(worldIn, blockpos, net.minecraft.util.Direction.UP, this);
 	}
 
@@ -102,8 +103,7 @@ public class ToxicShroomBlock extends BushBlock implements IGrowable {
 				double d1 = Math.abs(entityIn.getZ() - entityIn.zOld);
 				if (d0 >= (double) 0.003F || d1 >= (double) 0.003F) {
 					LivingEntity living = (LivingEntity) entityIn;
-					living.addEffect(
-							new EffectInstance(Effects.POISON, this.POISON_TICK, this.POISON_LVL, false, false));
+					living.addEffect(new EffectInstance(Effects.POISON, POISON_TICK, POISON_LVL, false, false));
 				}
 			}
 		}

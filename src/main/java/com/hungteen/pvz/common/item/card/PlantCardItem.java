@@ -13,9 +13,9 @@ import com.hungteen.pvz.common.entity.plant.PVZPlantEntity;
 import com.hungteen.pvz.common.entity.plant.base.PlantDefenderEntity;
 import com.hungteen.pvz.common.event.events.SummonCardUseEvent;
 import com.hungteen.pvz.common.impl.plant.PVZPlants;
+import com.hungteen.pvz.common.item.PVZItemGroups;
 import com.hungteen.pvz.register.EffectRegister;
 import com.hungteen.pvz.register.EnchantmentRegister;
-import com.hungteen.pvz.register.GroupRegister;
 import com.hungteen.pvz.register.SoundRegister;
 import com.hungteen.pvz.utils.EntityUtil;
 import com.hungteen.pvz.utils.PlantUtil;
@@ -81,7 +81,7 @@ public class PlantCardItem extends SummonCardItem {
 	public void fillItemCategory(ItemGroup group, NonNullList<ItemStack> list) {
 		if(this.allowdedIn(group)) {
 			list.add(new ItemStack(this));
-			if(group == GroupRegister.PVZ_PLANT_CARD) {
+			if(group == PVZItemGroups.PVZ_PLANT_CARD) {
 				// insert sort.
 				for(int i = list.size() - 1; i >= 1; -- i) {
 					final ItemStack pre = list.get(i - 1);
@@ -197,7 +197,7 @@ public class PlantCardItem extends SummonCardItem {
 		PlantType plantType = cardItem.plantType;
 		player.getCapability(CapabilityHandler.PLAYER_DATA_CAPABILITY).ifPresent((l) -> {
 			PlayerDataManager manager = l.getPlayerData();
-			int num = manager.getPlayerStats().getPlayerStats(Resources.SUN_NUM);
+			int num = manager.getResource(Resources.SUN_NUM);
 			int sunCost = SummonCardItem.getItemStackSunCost(stack);
 			if (num >= sunCost && plantType.getEntityType().isPresent()) { // sun is enough
 				EntityType<? extends PVZPlantEntity> entityType = plantType.getEntityType().get();
@@ -206,7 +206,7 @@ public class PlantCardItem extends SummonCardItem {
 					PVZMod.LOGGER.debug("no such plant");
 					return;
 				}
-				l.getPlayerData().getPlayerStats().addPlayerStats(Resources.SUN_NUM, - sunCost);
+				l.getPlayerData().addResource(Resources.SUN_NUM, - sunCost);
 				int lvl = manager.getPlantStats().getPlantLevel(plantType);
 				plantEntity.onSpawnedByPlayer(player, lvl);//update level health and owner.
 				plantEntity.plantSunCost = sunCost;// use for sun shovel
@@ -239,10 +239,10 @@ public class PlantCardItem extends SummonCardItem {
 		PlantType plantType = cardItem.plantType;
 		player.getCapability(CapabilityHandler.PLAYER_DATA_CAPABILITY).ifPresent((l) -> {
 			PlayerDataManager manager = l.getPlayerData();
-			int num = manager.getPlayerStats().getPlayerStats(Resources.SUN_NUM);
+			int num = manager.getResource(Resources.SUN_NUM);
 			int sunCost = SummonCardItem.getItemStackSunCost(stack);
 			if (num >= sunCost) { // sun is enough
-				l.getPlayerData().getPlayerStats().addPlayerStats(Resources.SUN_NUM, - sunCost);
+				l.getPlayerData().addResource(Resources.SUN_NUM, - sunCost);
 				onUsePlantCard(player, stack, cardItem, manager.getPlantStats().getPlantLevel(plantType));
 				BlockState state = BlockPlantCardItem.getBlockState(player, plantType);
 			    if(state == null) return;
@@ -264,10 +264,10 @@ public class PlantCardItem extends SummonCardItem {
 		PlantType plantType = cardItem.plantType;
 		player.getCapability(CapabilityHandler.PLAYER_DATA_CAPABILITY).ifPresent((l) -> {
 			PlayerDataManager manager = l.getPlayerData();
-			int num = manager.getPlayerStats().getPlayerStats(Resources.SUN_NUM);
+			int num = manager.getResource(Resources.SUN_NUM);
 			int sunCost = SummonCardItem.getItemStackSunCost(stack);
 			if (num >= sunCost) { // sun is enough
-				l.getPlayerData().getPlayerStats().addPlayerStats(Resources.SUN_NUM, - sunCost);
+				l.getPlayerData().addResource(Resources.SUN_NUM, - sunCost);
 				onUsePlantCard(player, stack, cardItem, manager.getPlantStats().getPlantLevel(plantType));
 				plantEntity.outerSunCost = sunCost;
 				placeOuterPlant(plantEntity, plantType, stack);
@@ -296,10 +296,10 @@ public class PlantCardItem extends SummonCardItem {
 		PlantType plantType = cardItem.plantType;
 		player.getCapability(CapabilityHandler.PLAYER_DATA_CAPABILITY).ifPresent((l) -> {
 			PlayerDataManager manager = l.getPlayerData();
-			int num = manager.getPlayerStats().getPlayerStats(Resources.SUN_NUM);
+			int num = manager.getResource(Resources.SUN_NUM);
 			int sunCost = SummonCardItem.getItemStackSunCost(stack);
 			if (num >= sunCost) { // sun is enough
-				l.getPlayerData().getPlayerStats().addPlayerStats(Resources.SUN_NUM, - sunCost);
+				l.getPlayerData().addResource(Resources.SUN_NUM, - sunCost);
 				onUsePlantCard(player, stack, cardItem, manager.getPlantStats().getPlantLevel(plantType));
 				if(cardItem.plantType == PVZPlants.PUMPKIN) {
 					float life = PlantUtil.PUMPKIN_LIFE;

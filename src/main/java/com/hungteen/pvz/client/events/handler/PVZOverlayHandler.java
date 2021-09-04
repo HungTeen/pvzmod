@@ -1,12 +1,12 @@
-package com.hungteen.pvz.client;
+package com.hungteen.pvz.client.events.handler;
 
 import com.hungteen.pvz.PVZConfig;
-import com.hungteen.pvz.PVZMod;
+import com.hungteen.pvz.client.ClientProxy;
 import com.hungteen.pvz.client.cache.ClientPlayerResources;
-import com.hungteen.pvz.common.entity.plant.explosion.CobCannonEntity;
-import com.hungteen.pvz.common.world.invasion.FogManager;
+import com.hungteen.pvz.common.item.card.SummonCardItem;
+import com.hungteen.pvz.common.network.PVZPacketHandler;
+import com.hungteen.pvz.common.network.toserver.PVZMouseScrollPacket;
 import com.hungteen.pvz.common.world.invasion.WaveManager;
-import com.hungteen.pvz.register.KeyBindRegister;
 import com.hungteen.pvz.utils.PlayerUtil;
 import com.hungteen.pvz.utils.RenderUtil;
 import com.hungteen.pvz.utils.StringUtil;
@@ -19,14 +19,13 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.BufferBuilder;
 import net.minecraft.client.renderer.Tessellator;
 import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
+import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.client.event.RenderGameOverlayEvent;
-import net.minecraftforge.eventbus.api.SubscribeEvent;
-import net.minecraftforge.fml.common.Mod;
+import net.minecraftforge.api.distmarker.OnlyIn;
 
-@Mod.EventBusSubscriber(modid = PVZMod.MOD_ID, value = Dist.CLIENT)
-public class OverlayEvents {
+@OnlyIn(Dist.CLIENT)
+public class PVZOverlayHandler {
 
 	private static Minecraft mc = Minecraft.getInstance();
 	private static final ResourceLocation RESOURCE = StringUtil.prefix("textures/gui/overlay/resource.png");
@@ -37,59 +36,53 @@ public class OverlayEvents {
 	private static final int H = 32;
 	private static final int BAR_LEN = 123;
 	private static final int BAR_H = 26;
-
-	@SubscribeEvent
-	public static void onPostRenderOverlay(RenderGameOverlayEvent.Post ev) {
-		if (ev.getType() != RenderGameOverlayEvent.ElementType.ALL
-				|| mc.player == null || mc.options.hideGui || mc.player.isSpectator()) {
-			return;
-		}
-		if (mc.screen == null) {
-			if(KeyBindRegister.showPlayerResources) {
-				if (PVZConfig.CLIENT_CONFIG.ResourceRender.RenderSunNumBar.get()) {
-				    
-				}
-				if(checkCurrentPos(KeyBindRegister.currentResourcePos)) {
-					if(KeyBindRegister.currentResourcePos == 0) {
-						drawSunNumBar(ev.getMatrixStack());
-					} else if(KeyBindRegister.currentResourcePos == 1) {
-						drawMoneyBar(ev.getMatrixStack());
-					} else if(KeyBindRegister.currentResourcePos == 2) {
-						drawGemBar(ev.getMatrixStack());
-					}
-				}
-			    if (PVZConfig.CLIENT_CONFIG.ResourceRender.RenderEnergyNumBar.get()) {
-				    drawEnergyNumBar(ev.getMatrixStack(), ev.getWindow().getGuiScaledWidth(), ev.getWindow().getGuiScaledHeight());
-			    }
+	private static final int SLOT_SIDE = 22;
+	private static final int SLOT_DELAY_CD = 20;
+	private static int SlotDelay = 0;
+	
+	@SuppressWarnings("deprecation")
+	public static void drawCardInventory(PlayerEntity player, MatrixStack stack, int w, int h) {
+		if(player.getMainHandItem().getItem() instanceof SummonCardItem) {
+			if(! ClientPlayerResources.SUMMON_CARDS.get(ClientPlayerResources.emptySlot).equals(player.getMainHandItem())) {
+				PVZPacketHandler.CHANNEL.sendToServer(new PVZMouseScrollPacket(0));
 			}
-			if(KeyBindRegister.showInvasionProgress) {
-				if(PlayerUtil.isPlayerSurvival(mc.player)  && PVZConfig.CLIENT_CONFIG.InvasionRender.RenderInvasionProgress.get()) {
-					renderInvasionProgress(ev.getMatrixStack(), ev.getWindow().getGuiScaledWidth(), ev.getWindow().getGuiScaledHeight());
-				}
+			if(SlotDelay < SLOT_DELAY_CD) {
+				++ SlotDelay;
 			}
-			if(mc.player.getVehicle() instanceof CobCannonEntity) {
-				CobCannonEntity cob = (CobCannonEntity) mc.player.getVehicle();
-				if(cob.getCornNum() > 0) {
-					renderTargetAim(ev.getMatrixStack(), ev.getWindow().getGuiScaledWidth(), ev.getWindow().getGuiScaledHeight());
-				}
+		} else {
+			if(SlotDelay > 0) {
+				-- SlotDelay;
 			}
 		}
-	}
-
-	@SubscribeEvent
-	public static void onRenderFog(RenderGameOverlayEvent.Pre ev) {
-		if (ev.getType() != RenderGameOverlayEvent.ElementType.ALL || mc.player == null || mc.player.isSpectator()) {
-			return;
-		}
-		if (PVZConfig.CLIENT_CONFIG.EnvironmentRender.RenderFog.get()) {
-			int tick = ClientPlayerResources.getPlayerStats(Resources.NO_FOG_TICK);
-			if(tick < 0) {
-				renderFog(ev.getMatrixStack(), ev.getWindow().getGuiScaledWidth(), ev.getWindow().getGuiScaledHeight(), Math.min(- tick * 1F / FogManager.CD, 1F));
+		if(SlotDelay > 0) {
+			final int maxSlot = ClientPlayerResources.getPlayerStats(Resources.SLOT_NUM) + 1;
+			final int totHeight = (SLOT_SIDE - 2) * maxSlot;
+			final int startHeight = (h - totHeight) / 2;
+			final float offset = - 10 + 10F * SlotDelay / SLOT_DELAY_CD;
+			stack.pushPose();
+			RenderSystem.enableBlend();
+			stack.translate(offset, 0, 0);
+			/* render slots */
+			for(int i = 0; i < maxSlot; ++ i) {
+				if(i == ClientPlayerResources.emptySlot) {
+					mc.gui.blit(stack, 0, startHeight + i * (SLOT_SIDE - 2), 162, 22, SLOT_SIDE, SLOT_SIDE);
+				} else {
+					mc.gui.blit(stack, 0, startHeight + i * (SLOT_SIDE - 2), 162, 0, SLOT_SIDE, SLOT_SIDE);
+				}
 			}
+			/* render itemstack */
+			for(int i = 0; i < Math.min(ClientPlayerResources.SUMMON_CARDS.size(), maxSlot); ++ i) {
+				RenderSystem.pushMatrix();
+				RenderSystem.translated(offset, 0, 0);
+				ClientProxy.MC.getItemRenderer().renderGuiItem(ClientPlayerResources.SUMMON_CARDS.get(i), 3, startHeight + 3 + i * (SLOT_SIDE - 2));
+			    RenderSystem.popMatrix();
+			}
+			stack.popPose();
 		}
+//		StringUtil.drawCenteredScaledString(stack, mc.font, num + "", 95, 5, Colors.WHITE, 3f);
 	}
 	
-	private static void renderInvasionProgress(MatrixStack stack, int w, int h) {
+	public static void renderInvasionProgress(MatrixStack stack, int w, int h) {
 		if(ClientPlayerResources.totalWaveCount == 0) {
 			return ;
 		}
@@ -114,7 +107,7 @@ public class OverlayEvents {
 		stack.popPose();
 	}
 	
-	private static void renderTargetAim(MatrixStack stack, int w, int h) {
+	public static void renderTargetAim(MatrixStack stack, int w, int h) {
 		stack.pushPose();
 		float scale = 1F;
 		stack.scale(scale, scale, scale);
@@ -125,7 +118,7 @@ public class OverlayEvents {
 	}
 
 	@SuppressWarnings("deprecation")
-	private static void renderFog(MatrixStack stack, int w, int h, float dep) {
+	public static void renderFog(MatrixStack stack, int w, int h, float dep) {
 		stack.pushPose();
 		RenderSystem.enableBlend();
 		RenderSystem.color4f(1f, 1f, 1f, dep);
@@ -141,7 +134,7 @@ public class OverlayEvents {
 		stack.popPose();
 	}
 
-	private static void drawSunNumBar(MatrixStack stack) {
+	public static void drawSunNumBar(MatrixStack stack) {
 		int lvl = ClientPlayerResources.getPlayerStats(Resources.TREE_LVL);
 		int maxNum = PlayerUtil.getPlayerMaxSunNum(lvl);
 		int num = ClientPlayerResources.getPlayerStats(Resources.SUN_NUM);
@@ -156,7 +149,7 @@ public class OverlayEvents {
 		stack.popPose();
 	}
 
-	private static void drawMoneyBar(MatrixStack stack) {
+	public static void drawMoneyBar(MatrixStack stack) {
 		stack.pushPose();
 		RenderSystem.enableBlend();
 		stack.scale(0.6f, 0.6f, 0.6f);
@@ -166,7 +159,7 @@ public class OverlayEvents {
 		stack.popPose();
 	}
 	
-	private static void drawGemBar(MatrixStack stack) {
+	public static void drawGemBar(MatrixStack stack) {
 		stack.pushPose();
 		RenderSystem.enableBlend();
 		stack.scale(0.6f, 0.6f, 0.6f);
@@ -176,7 +169,7 @@ public class OverlayEvents {
 		stack.popPose();
 	}
 
-	private static void drawEnergyNumBar(MatrixStack stack, int w, int h) {
+	public static void drawEnergyNumBar(MatrixStack stack, int w, int h) {
 		int maxNum = ClientPlayerResources.getPlayerStats(Resources.MAX_ENERGY_NUM);
 		int num = ClientPlayerResources.getPlayerStats(Resources.ENERGY_NUM);
 		stack.pushPose();
@@ -205,5 +198,5 @@ public class OverlayEvents {
 		System.out.println("Error : Wrong Resource Render Pos !");
 		return false;
 	}
-
+	
 }

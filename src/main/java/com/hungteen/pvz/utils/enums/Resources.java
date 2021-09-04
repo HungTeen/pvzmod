@@ -1,21 +1,52 @@
 package com.hungteen.pvz.utils.enums;
 
+import com.hungteen.pvz.common.capability.player.PlayerDataManager;
+import com.hungteen.pvz.utils.ConfigUtil;
+
 import net.minecraft.util.text.TranslationTextComponent;
 
 public enum Resources {
 
-	TREE_LVL(1, 100),
-	TREE_XP(0, 0),//max no use.
+	/* player tree level */
+	TREE_LVL(1, 200),
+	/* xp of player tree level */
+	TREE_XP(0, 0),
+	/* money, common currency */
 	MONEY(0, 9999999),
+	/* jewel, special currency */
 	GEM_NUM(0, 9999999),
-	SUN_NUM(0, 0),//max no use.
-	ENERGY_NUM(0, 0),//max no use.
+	/* sun amount, maximum is limited by tree level*/
+	SUN_NUM(0, 0),
+	/* plant food amount */
+	ENERGY_NUM(0, 0),
+	/* max plant food amount */
 	MAX_ENERGY_NUM(1, 10),
+	/* the tick to control fog display */
 	NO_FOG_TICK(- 9999999, 9999999),
+	/* kill zombie count */
 	KILL_COUNT(0, 9999999),
+	/* the chance to use slot machine */
 	LOTTERY_CHANCE(0, 9999999),
-	GROUP_TYPE(- 2, 2);
+	/* the group of player */
+	GROUP_TYPE(- 2, 2),
+	/* card slot */
+	SLOT_NUM(3, 9)
+	;
 	
+	/**
+	 * {@link PlayerDataManager#PlayerDataManager(net.minecraft.entity.player.PlayerEntity)}
+	 */
+	public static int getInitialValue(Resources res) {
+		switch (res) {
+		case SUN_NUM: return 50;
+		case LOTTERY_CHANCE: return 10;
+		case GROUP_TYPE: return ConfigUtil.getPlayerInitialGroup();
+		case NO_FOG_TICK: return 0;
+		default: return res.min;
+		}
+	}
+	
+	public static final int INF = 9999999;
 	public final int min;
 	public final int max;
 	

@@ -1,7 +1,7 @@
 package com.hungteen.pvz.common.item.misc;
 
 import com.hungteen.pvz.common.container.AlmanacContainer;
-import com.hungteen.pvz.register.GroupRegister;
+import com.hungteen.pvz.common.item.PVZItemGroups;
 
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
@@ -20,7 +20,7 @@ import net.minecraftforge.fml.network.NetworkHooks;
 public class AlmanacItem extends Item{
 
 	public AlmanacItem() {
-		super(new Properties().tab(GroupRegister.PVZ_MISC).stacksTo(1));
+		super(new Properties().tab(PVZItemGroups.PVZ_MISC).stacksTo(1));
 	}
 
 	@Override

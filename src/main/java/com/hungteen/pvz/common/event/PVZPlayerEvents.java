@@ -5,7 +5,6 @@ import com.hungteen.pvz.PVZMod;
 import com.hungteen.pvz.client.gui.search.SearchOption;
 import com.hungteen.pvz.common.capability.CapabilityHandler;
 import com.hungteen.pvz.common.capability.player.PlayerDataManager;
-import com.hungteen.pvz.common.capability.player.PlayerDataManager.PlayerStats;
 import com.hungteen.pvz.common.core.PlantType;
 import com.hungteen.pvz.common.entity.plant.PVZPlantEntity;
 import com.hungteen.pvz.common.event.events.PlayerLevelUpEvent;
@@ -14,8 +13,8 @@ import com.hungteen.pvz.common.event.handler.BlockEventHandler;
 import com.hungteen.pvz.common.event.handler.PlayerEventHandler;
 import com.hungteen.pvz.common.item.card.PlantCardItem;
 import com.hungteen.pvz.common.item.tool.PeaGunItem;
-import com.hungteen.pvz.common.network.OtherStatsPacket;
 import com.hungteen.pvz.common.network.PVZPacketHandler;
+import com.hungteen.pvz.common.network.toclient.OtherStatsPacket;
 import com.hungteen.pvz.compat.patchouli.PatchouliHandler;
 import com.hungteen.pvz.register.BlockRegister;
 import com.hungteen.pvz.register.EffectRegister;
@@ -157,9 +156,9 @@ public class PVZPlayerEvents {
 					if(EnchantmentHelper.getItemEnchantmentLevel(EnchantmentRegister.ENERGY_TRANSFER.get(), stack) > 0) {
 						if(plant.canStartSuperMode()){
 							player.getCapability(CapabilityHandler.PLAYER_DATA_CAPABILITY).ifPresent((l) -> {
-								PlayerStats stats = l.getPlayerData().getPlayerStats();
-								if(stats.getPlayerStats(Resources.ENERGY_NUM) >= 1) {
-									stats.addPlayerStats(Resources.ENERGY_NUM, - 1);
+								PlayerDataManager stats = l.getPlayerData();
+								if(stats.getResource(Resources.ENERGY_NUM) >= 1) {
+									stats.addResource(Resources.ENERGY_NUM, - 1);
 								    plant.startSuperMode(true);
 								}
 							});

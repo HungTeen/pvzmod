@@ -4,7 +4,6 @@ import java.util.List;
 
 import com.hungteen.pvz.common.entity.zombie.roof.Edgar090505Entity;
 import com.hungteen.pvz.register.EntityRegister;
-import com.hungteen.pvz.register.GroupRegister;
 import com.hungteen.pvz.utils.EntityUtil;
 
 import net.minecraft.client.util.ITooltipFlag;
@@ -23,7 +22,7 @@ import net.minecraft.world.World;
 public class ZomBossDollItem extends Item {
 
 	public ZomBossDollItem() {
-		super(new Item.Properties().tab(GroupRegister.PVZ_MISC));
+		super(new Item.Properties().tab(PVZItemGroups.PVZ_MISC));
 	}
 	
 	@Override

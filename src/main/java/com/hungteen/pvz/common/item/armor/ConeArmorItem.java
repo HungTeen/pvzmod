@@ -4,7 +4,7 @@ import java.util.EnumMap;
 import java.util.Map;
 
 import com.hungteen.pvz.client.model.armor.ConeHeadModel;
-import com.hungteen.pvz.register.GroupRegister;
+import com.hungteen.pvz.common.item.PVZItemGroups;
 import com.hungteen.pvz.utils.StringUtil;
 
 import net.minecraft.client.renderer.entity.model.BipedModel;
@@ -24,7 +24,7 @@ public class ConeArmorItem extends ArmorItem{
 	private static final Map<EquipmentSlotType,BipedModel> modelMap = new EnumMap<>(EquipmentSlotType.class);
 	
 	public ConeArmorItem(IArmorMaterial materialIn, EquipmentSlotType slot) {
-		super(materialIn, slot, new Item.Properties().tab(GroupRegister.PVZ_MISC));
+		super(materialIn, slot, new Item.Properties().tab(PVZItemGroups.PVZ_MISC));
 	}
 
 	@Override

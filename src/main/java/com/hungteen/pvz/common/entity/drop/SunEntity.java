@@ -8,7 +8,7 @@ import com.hungteen.pvz.common.enchantment.EnchantmentUtil;
 import com.hungteen.pvz.common.entity.plant.light.SunFlowerEntity;
 import com.hungteen.pvz.common.event.events.PlayerCollectDropEvent;
 import com.hungteen.pvz.common.network.PVZPacketHandler;
-import com.hungteen.pvz.common.network.PlaySoundPacket;
+import com.hungteen.pvz.common.network.toclient.PlaySoundPacket;
 import com.hungteen.pvz.register.EnchantmentRegister;
 import com.hungteen.pvz.register.EntityRegister;
 import com.hungteen.pvz.utils.EntityUtil;

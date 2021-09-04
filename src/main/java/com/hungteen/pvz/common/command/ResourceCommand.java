@@ -37,8 +37,8 @@ public class ResourceCommand {
 	public static int addPlayerResource(CommandSource source,Collection<? extends ServerPlayerEntity> targets,Resources res,int num) {
 		for(ServerPlayerEntity player:targets) {
 			player.getCapability(CapabilityHandler.PLAYER_DATA_CAPABILITY).ifPresent(l -> {
-				l.getPlayerData().getPlayerStats().addPlayerStats(res, num);
-		    	source.sendSuccess(new StringTextComponent(res.getText().getString() + ":" + l.getPlayerData().getPlayerStats().getPlayerStats(res)), true);
+				l.getPlayerData().addResource(res, num);
+		    	source.sendSuccess(new StringTextComponent(res.getText().getString() + ":" + l.getPlayerData().getResource(res)), true);
 		    });
 		}
 		return targets.size();
@@ -47,7 +47,7 @@ public class ResourceCommand {
 	public static int queryPlayerResource(CommandSource source,Collection<? extends ServerPlayerEntity> targets,Resources res) {
 		for(ServerPlayerEntity player:targets) {
 			player.getCapability(CapabilityHandler.PLAYER_DATA_CAPABILITY).ifPresent(l -> {
-		    	source.sendSuccess(new StringTextComponent(res.getText().getString() + ":" + l.getPlayerData().getPlayerStats().getPlayerStats(res)), false);
+		    	source.sendSuccess(new StringTextComponent(res.getText().getString() + ":" + l.getPlayerData().getResource(res)), false);
 		    });
 		}
 		return targets.size();
@@ -56,8 +56,8 @@ public class ResourceCommand {
 	public static int setPlayerResource(CommandSource source, Collection<? extends ServerPlayerEntity> targets, Resources res, int num) {
 		for(ServerPlayerEntity player:targets) {
 			player.getCapability(CapabilityHandler.PLAYER_DATA_CAPABILITY).ifPresent(l -> {
-				l.getPlayerData().getPlayerStats().setPlayerStats(res, num);
-		    	source.sendSuccess(new StringTextComponent(res.getText().getString() + ":" + l.getPlayerData().getPlayerStats().getPlayerStats(res)), true);
+				l.getPlayerData().setResource(res, num);
+		    	source.sendSuccess(new StringTextComponent(res.getText().getString() + ":" + l.getPlayerData().getResource(res)), true);
 		    });
 		}
 		return targets.size();

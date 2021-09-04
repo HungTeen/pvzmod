@@ -4,7 +4,7 @@ import java.util.List;
 
 import com.hungteen.pvz.common.core.PlantType;
 import com.hungteen.pvz.common.enchantment.EnchantmentUtil;
-import com.hungteen.pvz.register.GroupRegister;
+import com.hungteen.pvz.common.item.PVZItemGroups;
 
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.enchantment.Enchantment;
@@ -20,7 +20,7 @@ public abstract class SummonCardItem extends Item{
 	public final boolean isEnjoyCard;
 	
 	public SummonCardItem(boolean isEnjoyCard) {
-		this(new Properties().tab(GroupRegister.PVZ_PLANT_CARD).stacksTo(isEnjoyCard ? 16 : 1), isEnjoyCard);
+		this(new Properties().tab(PVZItemGroups.PVZ_PLANT_CARD).stacksTo(isEnjoyCard ? 16 : 1), isEnjoyCard);
 	}
 	
 	public SummonCardItem(Properties properties, boolean isEnjoyCard) {

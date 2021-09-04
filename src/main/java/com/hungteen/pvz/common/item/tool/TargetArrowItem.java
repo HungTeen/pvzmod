@@ -1,7 +1,7 @@
 package com.hungteen.pvz.common.item.tool;
 
 import com.hungteen.pvz.common.entity.bullet.TargetArrowEntity;
-import com.hungteen.pvz.register.GroupRegister;
+import com.hungteen.pvz.common.item.PVZItemGroups;
 
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
@@ -14,7 +14,7 @@ import net.minecraft.world.World;
 public class TargetArrowItem extends ArrowItem {
 
 	public TargetArrowItem() {
-		super(new Item.Properties().tab(GroupRegister.PVZ_MISC));
+		super(new Item.Properties().tab(PVZItemGroups.PVZ_MISC));
 	}
 
 	@Override

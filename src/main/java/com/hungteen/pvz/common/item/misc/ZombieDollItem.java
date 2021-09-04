@@ -1,6 +1,6 @@
 package com.hungteen.pvz.common.item.misc;
 
-import com.hungteen.pvz.register.GroupRegister;
+import com.hungteen.pvz.common.item.PVZItemGroups;
 import com.hungteen.pvz.register.SoundRegister;
 import com.hungteen.pvz.utils.EntityUtil;
 
@@ -14,7 +14,7 @@ import net.minecraft.world.World;
 public class ZombieDollItem extends Item {
 
 	public ZombieDollItem() {
-		super(new Item.Properties().tab(GroupRegister.PVZ_MISC).stacksTo(1));
+		super(new Item.Properties().tab(PVZItemGroups.PVZ_MISC).stacksTo(1));
 	}
 	
 	@Override

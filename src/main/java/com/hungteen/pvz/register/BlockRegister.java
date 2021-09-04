@@ -25,6 +25,7 @@ import com.hungteen.pvz.common.block.special.SlotMachineBlock;
 import com.hungteen.pvz.common.block.special.SunConverterBlock;
 import com.hungteen.pvz.common.block.special.SunFlowerTrophyBlock;
 import com.hungteen.pvz.common.impl.Essences;
+import com.hungteen.pvz.common.item.PVZItemGroups;
 import com.hungteen.pvz.common.item.blockitem.LilyPadItem;
 import com.hungteen.pvz.common.world.feature.NutTree;
 
@@ -125,7 +126,7 @@ public class BlockRegister {
 			if(block == LILY_PAD) {
 				items.register(new LilyPadItem().setRegistryName(block.get().getRegistryName()));
 			}else {
-				items.register(new BlockItem(block.get(),new Item.Properties().tab(GroupRegister.PVZ_MISC)).setRegistryName(block.get().getRegistryName()));
+				items.register(new BlockItem(block.get(),new Item.Properties().tab(PVZItemGroups.PVZ_MISC)).setRegistryName(block.get().getRegistryName()));
 			}
 		}
 	}

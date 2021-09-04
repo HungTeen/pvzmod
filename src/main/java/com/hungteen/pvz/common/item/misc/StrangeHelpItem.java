@@ -1,7 +1,7 @@
 package com.hungteen.pvz.common.item.misc;
 
 import com.hungteen.pvz.client.gui.screen.StrangeHelpScreen;
-import com.hungteen.pvz.register.GroupRegister;
+import com.hungteen.pvz.common.item.PVZItemGroups;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.entity.player.PlayerEntity;
@@ -17,7 +17,7 @@ import net.minecraftforge.fml.DistExecutor;
 public class StrangeHelpItem extends Item{
 
 	public StrangeHelpItem() {
-		super(new Properties().tab(GroupRegister.PVZ_MISC).stacksTo(1));
+		super(new Properties().tab(PVZItemGroups.PVZ_MISC).stacksTo(1));
 	}
 	
 	@SuppressWarnings("deprecation")

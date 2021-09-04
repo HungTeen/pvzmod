@@ -8,8 +8,8 @@ import com.hungteen.pvz.common.core.PlantType;
 import com.hungteen.pvz.common.entity.misc.bowling.AbstractBowlingEntity;
 import com.hungteen.pvz.common.entity.plant.PVZPlantEntity;
 import com.hungteen.pvz.common.impl.plant.PVZPlants;
+import com.hungteen.pvz.common.item.PVZItemGroups;
 import com.hungteen.pvz.register.EntityRegister;
-import com.hungteen.pvz.register.GroupRegister;
 
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.EntityType;
@@ -35,7 +35,7 @@ public class BowlingGloveItem extends Item {
 	public static final String BOWLING_STRING = "bowling_type";
 
 	public BowlingGloveItem() {
-		super(new Item.Properties().tab(GroupRegister.PVZ_MISC).stacksTo(1).setISTER(() -> BowlingGloveISTER::new));
+		super(new Item.Properties().tab(PVZItemGroups.PVZ_MISC).stacksTo(1).setISTER(() -> BowlingGloveISTER::new));
 	}
 
 	@Override

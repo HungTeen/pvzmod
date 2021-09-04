@@ -15,8 +15,8 @@ import com.hungteen.pvz.common.core.PlantType;
 import com.hungteen.pvz.common.enchantment.EnchantmentUtil;
 import com.hungteen.pvz.common.entity.plant.magic.ImitaterEntity;
 import com.hungteen.pvz.common.impl.plant.PVZPlants;
+import com.hungteen.pvz.common.item.PVZItemGroups;
 import com.hungteen.pvz.register.BlockRegister;
-import com.hungteen.pvz.register.GroupRegister;
 
 import net.minecraft.block.FlowingFluidBlock;
 import net.minecraft.client.util.ITooltipFlag;
@@ -55,11 +55,11 @@ public class ImitaterCardItem extends PlantCardItem {
 	public static final String IMITATE_STRING = "imitate_plant_type";
 	
 	public ImitaterCardItem() {
-		super(new Item.Properties().tab(GroupRegister.PVZ_PLANT_CARD).stacksTo(1).setISTER(() -> ImitaterCardISTER::new), PVZPlants.IMITATER, false);
+		super(new Item.Properties().tab(PVZItemGroups.PVZ_PLANT_CARD).stacksTo(1).setISTER(() -> ImitaterCardISTER::new), PVZPlants.IMITATER, false);
 	}
 	
 	public ImitaterCardItem(boolean isFragment) {
-		super(new Item.Properties().tab(GroupRegister.PVZ_PLANT_CARD).stacksTo(16), PVZPlants.IMITATER, true);
+		super(new Item.Properties().tab(PVZItemGroups.PVZ_PLANT_CARD).stacksTo(16), PVZPlants.IMITATER, true);
 	}
 	
 	@Override

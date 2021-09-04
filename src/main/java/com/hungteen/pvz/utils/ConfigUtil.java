@@ -5,7 +5,7 @@ import com.hungteen.pvz.PVZConfig;
 public class ConfigUtil {
 
 	public static boolean isTeamAttackEnable() {
-		return PVZConfig.COMMON_CONFIG.EntitySettings.TeamAttack.get();
+		return PVZConfig.COMMON_CONFIG.RuleSettings.TeamAttack.get();
 	}
 	
 	public static boolean enableZombieDropParts() {
@@ -30,6 +30,10 @@ public class ConfigUtil {
 	
 	public static int getGenAmethystOreChance() {
 		return PVZConfig.COMMON_CONFIG.WorldSettings.GenAmethystOreChance.get();
+	}
+	
+	public static int getBaseSun() {
+		return PVZConfig.COMMON_CONFIG.EntitySettings.PlayerBaseSunAmount.get();
 	}
 	
 }

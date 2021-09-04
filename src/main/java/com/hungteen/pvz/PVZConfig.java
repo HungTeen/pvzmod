@@ -138,6 +138,9 @@ public class PVZConfig {
 				RuleSettings.AllowNaturalTurnOrigin = builder
 						.comment("If turn to false, saplings no longer to grow to Origin Ore naturally, except there is a block above it.")
 						.define("AllowNaturalTurnOrigin", true);
+				RuleSettings.TeamAttack = builder
+                        .comment("if turn to true, when plant's owner is in a team, the plant will attack the entity from other team(include players).")
+                        .define("PlantAttackTeam", false);
 				
 			}
 			builder.pop();
@@ -221,13 +224,17 @@ public class PVZConfig {
 			//Entity Settings
 			builder.comment("Settings about entities.").push("Entity Settings");
 			{
-				EntitySettings.TeamAttack = builder
-                        .comment("if true,when plant's owner is in a team,the plant will attack the entity from other team(include players).")
-                        .define("PlantAttackTeam", false);
-				
-				EntitySettings.PlayerInitialGroup = builder
-						.comment("Player Initial Group When they join the world for the first time.(-2 means other monsters, -1 means zombies, 0 means neutral creatures, 1 means plants and 2 means other guards.")
-						.defineInRange("PlayerInitialGroup", 1, -2, 2);
+				builder.comment("Settings about players.").push("Player Settings");
+				{
+				    EntitySettings.PlayerInitialGroup = builder
+						    .comment("Player Initial Group When they join the world for the first time(-2 means other monsters, -1 means zombies, 0 means neutral creatures, 1 means plants and 2 means other guards).")
+						    .defineInRange("PlayerInitialGroup", 1, -2, 2);
+				    
+				    EntitySettings.PlayerBaseSunAmount = builder
+						    .comment("players' base sun amount, it will increase when tree level increasing.")
+						    .defineInRange("PlayerInitialGroup", 950, 100, 10000);
+				}
+				builder.pop();
 
 				builder.comment("Settings about zombies.").push("Zombie Settings");
 				{
@@ -366,6 +373,7 @@ public class PVZConfig {
 			public ForgeConfigSpec.BooleanValue CanSpawnDefaultMonster;
 			public ForgeConfigSpec.BooleanValue GiveBeginnerReward;
 			public ForgeConfigSpec.BooleanValue AllowNaturalTurnOrigin;
+			public ForgeConfigSpec.BooleanValue TeamAttack;
 		}
 		
 		public static class WorldSettings{
@@ -396,13 +404,12 @@ public class PVZConfig {
 		
 		public static class EntitySettings{
 			
-			public ForgeConfigSpec.BooleanValue TeamAttack;
-			
-			public ForgeConfigSpec.IntValue PlayerInitialGroup;
-			
 			public EntityLiveTick EntityLiveTick = new EntityLiveTick();
 			public ZombieSetting ZombieSetting = new ZombieSetting();
 			public PlantSetting PlantSetting = new PlantSetting();
+			
+			public ForgeConfigSpec.IntValue PlayerInitialGroup;
+			public ForgeConfigSpec.IntValue PlayerBaseSunAmount;
 			
 			public static class ZombieSetting{
 				public ForgeConfigSpec.IntValue ZombieSuperChance;

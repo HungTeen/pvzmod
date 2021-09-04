@@ -3,7 +3,7 @@ package com.hungteen.pvz.common.item.tool;
 import java.util.List;
 
 import com.hungteen.pvz.common.capability.CapabilityHandler;
-import com.hungteen.pvz.register.GroupRegister;
+import com.hungteen.pvz.common.item.PVZItemGroups;
 import com.hungteen.pvz.utils.enums.Resources;
 
 import net.minecraft.client.util.ITooltipFlag;
@@ -27,7 +27,7 @@ public class BalloonItem extends Item {
 	private static final int effectCD = 200;
 	
 	public BalloonItem() {
-		super(new Item.Properties().stacksTo(1).tab(GroupRegister.PVZ_MISC));
+		super(new Item.Properties().stacksTo(1).tab(PVZItemGroups.PVZ_MISC));
 	}
 
 	@Override
@@ -41,9 +41,9 @@ public class BalloonItem extends Item {
 	public ActionResult<ItemStack> use(World worldIn, PlayerEntity playerIn, Hand handIn) {
 		if(! playerIn.level.isClientSide) {
 			playerIn.getCapability(CapabilityHandler.PLAYER_DATA_CAPABILITY).ifPresent((l) -> {
-				int num = l.getPlayerData().getPlayerStats().getPlayerStats(Resources.SUN_NUM);
+				int num = l.getPlayerData().getResource(Resources.SUN_NUM);
 				if(num >= sunCost) {
-					l.getPlayerData().getPlayerStats().addPlayerStats(Resources.SUN_NUM, - sunCost);
+					l.getPlayerData().addResource(Resources.SUN_NUM, - sunCost);
 					playerIn.addEffect(new EffectInstance(Effects.SLOW_FALLING, effectCD, 10));
 					playerIn.getCooldowns().addCooldown(playerIn.getItemInHand(handIn).getItem(), effectCD);
 				}

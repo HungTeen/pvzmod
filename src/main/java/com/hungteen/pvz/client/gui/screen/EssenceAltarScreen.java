@@ -2,8 +2,8 @@ package com.hungteen.pvz.client.gui.screen;
 
 import com.hungteen.pvz.client.gui.GuiHandler;
 import com.hungteen.pvz.common.container.EssenceAltarContainer;
-import com.hungteen.pvz.common.network.ClickButtonPacket;
 import com.hungteen.pvz.common.network.PVZPacketHandler;
+import com.hungteen.pvz.common.network.toserver.ClickButtonPacket;
 import com.hungteen.pvz.utils.StringUtil;
 import com.hungteen.pvz.utils.enums.Colors;
 import com.mojang.blaze3d.matrix.MatrixStack;

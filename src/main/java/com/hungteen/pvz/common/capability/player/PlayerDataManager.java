@@ -1,9 +1,12 @@
 package com.hungteen.pvz.common.capability.player;
 
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
+import com.hungteen.pvz.client.gui.search.SearchOption;
 import com.hungteen.pvz.common.advancement.trigger.MoneyTrigger;
 import com.hungteen.pvz.common.advancement.trigger.PlantLevelTrigger;
 import com.hungteen.pvz.common.advancement.trigger.SunAmountTrigger;
@@ -12,18 +15,22 @@ import com.hungteen.pvz.common.container.shop.MysteryShopContainer;
 import com.hungteen.pvz.common.core.PlantType;
 import com.hungteen.pvz.common.event.events.PlayerLevelUpEvent.PlantLevelUpEvent;
 import com.hungteen.pvz.common.event.events.PlayerLevelUpEvent.TreeLevelUpEvent;
+import com.hungteen.pvz.common.impl.Bundles;
+import com.hungteen.pvz.common.item.card.SummonCardItem;
 import com.hungteen.pvz.common.network.PVZPacketHandler;
-import com.hungteen.pvz.common.network.PlantStatsPacket;
-import com.hungteen.pvz.common.network.PlayerStatsPacket;
+import com.hungteen.pvz.common.network.toclient.CardInventoryPacket;
+import com.hungteen.pvz.common.network.toclient.PlantStatsPacket;
+import com.hungteen.pvz.common.network.toclient.PlayerStatsPacket;
 import com.hungteen.pvz.common.world.invasion.WaveManager;
-import com.hungteen.pvz.utils.ConfigUtil;
 import com.hungteen.pvz.utils.PlantUtil;
 import com.hungteen.pvz.utils.PlayerUtil;
 import com.hungteen.pvz.utils.enums.Resources;
 
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.ServerPlayerEntity;
+import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.CompoundNBT;
+import net.minecraft.util.Hand;
 import net.minecraft.util.math.MathHelper;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.fml.network.PacketDistributor;
@@ -32,178 +39,300 @@ import net.minecraftforge.fml.network.PacketDistributor;
 public class PlayerDataManager {
 
 	private final PlayerEntity player;
-	private final PlayerStats playerStats;
+	/* player resources */
+	private HashMap<Resources, Integer> resources = new HashMap<>(Resources.values().length);
+	/* summon card inventory */
+	private final List<ItemStack> cards = new ArrayList<>();
+//	private CompoundNBT cardInventory;
+	private int emptySlot;
+	/* plant level */
 	private final PlantStats plantStats;
 	private final ItemCDStats itemCDStats;
 	private final OtherStats otherStats;
 	
 	public PlayerDataManager(PlayerEntity player) {
 		this.player = player;
-		this.playerStats = new PlayerStats();
+		{// init player resources.
+			for(Resources res : Resources.values()) {
+				resources.put(res, Resources.getInitialValue(res));
+			}
+		}
+		{// init card inventory.
+			for(int i = 0; i <= Resources.SLOT_NUM.max; ++ i) {
+//				this.setItemAt(ItemStack.EMPTY, i);
+				this.cards.add(Bundles.RANDOM_ALL.getEnjoyCard(player.getRandom()));
+			}
+		}
 		this.plantStats = new PlantStats();
 		this.itemCDStats = new ItemCDStats(this);
 		this.otherStats = new OtherStats(this);
 	}
 	
+	/**
+	 * read {@link PlayerDataStorage#readNBT(net.minecraftforge.common.capabilities.Capability, IPlayerDataCapability, net.minecraft.util.Direction, net.minecraft.nbt.INBT)}.
+	 */
+	public void loadFromNBT(CompoundNBT baseTag) {
+		{// load player resources.
+			if(baseTag.contains("player_stats")) {//old
+				CompoundNBT statsTag = baseTag.getCompound("player_stats");
+			    for(Resources res:Resources.values()) {
+			    	if(statsTag.contains("player_"+res.toString())) {
+				        this.resources.put(res, statsTag.getInt("player_"+res.toString()));
+			    	}
+			    }
+			}
+			if(baseTag.contains("player_resources")) {//new
+				CompoundNBT statsTag = baseTag.getCompound("player_resources");
+			    for(Resources res:Resources.values()) {
+			    	if(statsTag.contains(res.toString().toLowerCase())) {
+				        this.resources.put(res, statsTag.getInt(res.toString().toLowerCase()));
+			    	}
+			    }
+			}
+		}
+		{// load card inventory.
+			if(baseTag.contains("card_inventory")) {
+				CompoundNBT nbt = baseTag.getCompound("card_inventory");
+				for(int i = 0; i <= Resources.SLOT_NUM.max; ++ i) {
+					if(nbt.contains("slot_" + i)) {
+						this.cards.set(i, ItemStack.of(nbt.getCompound("slot_" + i)));
+					}
+				}
+				if(nbt.contains("current_pos")) {
+					this.emptySlot = nbt.getInt("current_pos");
+				}
+			}
+		}
+		plantStats.loadFromNBT(baseTag);
+		itemCDStats.loadFromNBT(baseTag);
+		otherStats.loadFromNBT(baseTag);
+	}
+	
+	/**
+	 * write {@link PlayerDataStorage#writeNBT(net.minecraftforge.common.capabilities.Capability, IPlayerDataCapability, net.minecraft.util.Direction)}.
+	 */
 	public CompoundNBT saveToNBT() {
 		CompoundNBT baseTag = new CompoundNBT();
-		playerStats.saveToNBT(baseTag);
+		{// save player resources.
+			CompoundNBT statsNBT = new CompoundNBT();
+			for(Resources res : Resources.values()) {
+				statsNBT.putInt(res.toString().toLowerCase(), resources.get(res));
+			}
+			baseTag.put("player_resources", statsNBT);
+		}
+		{// save card inventory.
+			CompoundNBT nbt = new CompoundNBT();
+			for(int i = 0; i < Resources.SLOT_NUM.max; ++ i) {
+				nbt.put("slot_" + i, this.getItemAt(i).save(new CompoundNBT()));
+			}
+			nbt.putInt("current_pos", this.emptySlot);
+			baseTag.put("card_inventory", nbt);
+		}
 		plantStats.saveToNBT(baseTag);
 		itemCDStats.saveToNBT(baseTag);
 		otherStats.saveToNBT(baseTag);
 		return baseTag;
 	}
-
-	public void loadFromNBT(CompoundNBT baseTag) {
-		playerStats.loadFromNBT(baseTag);
-		plantStats.loadFromNBT(baseTag);
-		itemCDStats.loadFromNBT(baseTag);
-		otherStats.loadFromNBT(baseTag);
-	}
 //	
 	public void cloneFromExistingPlayerData(PlayerDataManager data) {
-		//Resources
-		for(Resources res:Resources.values()) {
-			this.playerStats.resources.put(res,data.playerStats.resources.get(res));
+		this.loadFromNBT(data.saveToNBT());
+//		{// clone player resources.
+//			for(Resources res : Resources.values()) {
+//			    this.resources.put(res, data.resources.get(res));
+//		    }
+//		}
+//		//Plants
+//		for (PlantType plant : PlantType.getPlants()) {
+//			this.plantStats.plantLevel.put(plant, data.plantStats.plantLevel.get(plant));
+//			this.plantStats.plantXp.put(plant, data.plantStats.plantXp.get(plant));
+//		}
+//		for(PlantType p : PlantType.getPlants()) {
+//			this.itemCDStats.setPlantCardCD(p, data.itemCDStats.getPlantCardCoolDown(p));
+//			this.itemCDStats.setPlantCardBar(p, data.itemCDStats.getPlantCardBarLength(p));
+//		}
+//		//other
+//		for(int i = 0; i < WaveManager.MAX_WAVE_NUM; ++ i) {
+//			this.otherStats.zombieWaveTime[i] = data.otherStats.zombieWaveTime[i];
+//		}
+//		this.otherStats.totalWaveCount = data.otherStats.totalWaveCount;
+//		this.otherStats.playSoundTick = data.otherStats.playSoundTick;
+//		for(int i = 0; i < MysteryShopContainer.MAX_MYSTERY_GOOD; ++ i) {
+//			this.otherStats.mysteryGoods[i] = data.otherStats.mysteryGoods[i];
+//		}
+//		this.otherStats.updateGoodTick = data.otherStats.updateGoodTick;
+	}
+	
+	public void syncToClient() {
+		{// player resources.
+		    for(Resources res:Resources.values()) {
+			    this.sendResourcePacket(player, res);
+		    }
 		}
-		//Plants
+		{//
+			for(int i = 0; i <= Resources.SLOT_NUM.max; ++ i) {
+				this.sendInventoryPacket(player, i, this.getItemAt(i).save(new CompoundNBT()));
+			}
+			this.setCurrentPos(this.getCurrentPos());
+		}
+		//plants
 		for (PlantType plant : PlantType.getPlants()) {
-			this.plantStats.plantLevel.put(plant, data.plantStats.plantLevel.get(plant));
-			this.plantStats.plantXp.put(plant, data.plantStats.plantXp.get(plant));
+		   this.getPlantStats().sendPlantPacket(player, plant);
+	    }
+		//almanacs
+		SearchOption.OPTION.forEach((a) -> {
+			ServerPlayerEntity serverplayer = (ServerPlayerEntity) player;
+			if(PlayerUtil.isAlmanacUnlocked(serverplayer, a)) {
+				PlayerUtil.unLockAlmanac(serverplayer, a);
+			}
+		});
+		//item cd
+		for (PlantType plant : PlantType.getPlants()) {
+			if(plant.getSummonCard().isPresent()) {
+			    player.getCooldowns().addCooldown(plant.getSummonCard().get(), itemCDStats.getPlantCardCD(plant));
+			}
 		}
-		for(PlantType p : PlantType.getPlants()) {
-			this.itemCDStats.setPlantCardCD(p, data.itemCDStats.getPlantCardCoolDown(p));
-			this.itemCDStats.setPlantCardBar(p, data.itemCDStats.getPlantCardBarLength(p));
-		}
-		//other
-		for(int i = 0; i < WaveManager.MAX_WAVE_NUM; ++ i) {
-			this.otherStats.zombieWaveTime[i] = data.otherStats.zombieWaveTime[i];
-		}
-		this.otherStats.totalWaveCount = data.otherStats.totalWaveCount;
-		this.otherStats.playSoundTick = data.otherStats.playSoundTick;
-		for(int i = 0; i < MysteryShopContainer.MAX_MYSTERY_GOOD; ++ i) {
-			this.otherStats.mysteryGoods[i] = data.otherStats.mysteryGoods[i];
-		}
-		this.otherStats.updateGoodTick = data.otherStats.updateGoodTick;
 	}
 
-	public final class PlayerStats{
-		
-		private HashMap<Resources, Integer> resources = new HashMap<>(Resources.values().length);
-		
-		private PlayerStats() {
-			for(Resources res : Resources.values()) {
-				if(res == Resources.SUN_NUM) resources.put(res, 50);
-				else if(res == Resources.LOTTERY_CHANCE) resources.put(res, 10);
-				else if(res == Resources.GROUP_TYPE) resources.put(res, ConfigUtil.getPlayerInitialGroup());
-				else if(res == Resources.NO_FOG_TICK) resources.put(res, 0);
-				else resources.put(res, res.min);
-			}
+	/*
+	 * Operations of Player Resources.
+	 */
+	
+	public int getResource(Resources res){
+		return this.resources.get(res);
+	}
+	
+	/**
+	 * check (min, max) and sync send packet.
+	 */
+	public void setResource(Resources res, int num) {
+		resources.put(res, num);
+		this.addResource(res, 0);
+	}
+	
+	public void addResource(Resources res, int num) {
+		int now = resources.get(res);
+		switch (res) {
+		case TREE_XP:{
+			addTreeXp(now, num);
+			break;
 		}
-		
-		public int getPlayerStats(Resources res){
-			return resources.get(res);
+		case SUN_NUM:{
+			now = MathHelper.clamp(now + num, 0, PlayerUtil.getPlayerMaxSunNum(resources.get(Resources.TREE_LVL)));
+			resources.put(Resources.SUN_NUM, now);
+			SunAmountTrigger.INSTANCE.trigger((ServerPlayerEntity) player, now);
+			break;
 		}
-		
-		public void setPlayerStats(Resources res, int num) {
-			resources.put(res, num);
-			this.addPlayerStats(res, 0);//check (min max) and sync send packet.
+		case ENERGY_NUM:{
+			now = MathHelper.clamp(now + num, 0, resources.get(Resources.MAX_ENERGY_NUM));
+			resources.put(Resources.ENERGY_NUM, now);
+			break;
 		}
-		
-		public void addPlayerStats(Resources res, int num){
-			switch (res) {
-			case TREE_LVL:{
-				int now = MathHelper.clamp(resources.get(Resources.TREE_LVL) + num, 1, PlayerUtil.MAX_TREE_LVL);
-				resources.put(Resources.TREE_LVL, now);
-				this.addPlayerStats(Resources.SUN_NUM, 0);
+		default:
+			now = MathHelper.clamp(resources.get(res) + num, res.min, res.max);
+			resources.put(res, now);
+			if(res == Resources.TREE_LVL) {
+				this.addResource(Resources.SUN_NUM, 0);
 				TreeLevelTrigger.INSTANCE.trigger((ServerPlayerEntity) player, now);
-				break;
+			} else if(res == Resources.MONEY) {
+				MoneyTrigger.INSTANCE.trigger((ServerPlayerEntity) player, now);
 			}
-			case TREE_XP:{
-				addTreeXp(num);
-				break;
-			}
-			case SUN_NUM:{
-				int now = MathHelper.clamp(resources.get(Resources.SUN_NUM) + num, 0, PlayerUtil.getPlayerMaxSunNum(resources.get(Resources.TREE_LVL)));
-				resources.put(Resources.SUN_NUM, now);
-				SunAmountTrigger.INSTANCE.trigger((ServerPlayerEntity) player, now);
-				break;
-			}
-			case ENERGY_NUM:{
-				int now = MathHelper.clamp(resources.get(Resources.ENERGY_NUM) + num, 0, resources.get(Resources.MAX_ENERGY_NUM));
-				resources.put(Resources.ENERGY_NUM, now);
-				break;
-			}
-			default:
-				int now = MathHelper.clamp(resources.get(res) + num, res.min, res.max);
-				resources.put(res, now);
-				if(res == Resources.MONEY) {
-					MoneyTrigger.INSTANCE.trigger((ServerPlayerEntity) player, now);
-				} 
-				break;
-			}
-			this.sendPacket(player, res);
+			break;
 		}
+		this.sendResourcePacket(player, res);
+	}
+	
+	/**
+	 * add tree xp and level up.
+	 * {@link #addPlayerStats(Resources, int)}
+	 */
+	private void addTreeXp(int now, int num) {
+		int lvl = resources.get(Resources.TREE_LVL);
+		if(num > 0) {
+			int req = PlayerUtil.getPlayerLevelUpXp(lvl);
+			while(lvl < Resources.TREE_LVL.max && num + now >= req) {
+				num -= req - now;
+				this.addResource(Resources.TREE_LVL, 1);
+				MinecraftForge.EVENT_BUS.post(new TreeLevelUpEvent(player, ++ lvl));
+				now = 0;
+				req = PlayerUtil.getPlayerLevelUpXp(lvl);
+			}
+			resources.put(Resources.TREE_XP, num + now);
+		} else {
+			num = - num;
+			while(lvl > 1 && num > now) {
+				num -= now;
+				-- lvl;
+				now = PlayerUtil.getPlayerLevelUpXp(lvl);
+				this.addResource(Resources.TREE_LVL, - 1);
+			}
+			resources.put(Resources.TREE_XP, now - num);
+		}
+	}
+	
+	public void sendResourcePacket(PlayerEntity player, Resources res){
+		if (player instanceof ServerPlayerEntity) {
+			PVZPacketHandler.CHANNEL.send(
+				PacketDistributor.PLAYER.with(() -> {
+					return (ServerPlayerEntity) player;
+				}),
+				new PlayerStatsPacket(res.ordinal(), resources.get(res))
+			);
+		}
+	}
+	
+	/*
+	 * Operation about SummonCard Inventory.
+	 */
+	
+//	public CompoundNBT getCards() {
+//		return this.cardInventory;
+//	}
+	
+	public void onScrollInventory(double delta) {
+		final int maxSlot = this.getResource(Resources.SLOT_NUM);
+		final int now = this.emptySlot;
+		final int next = (now + (delta > 0 ? -1 : 1) + (maxSlot + 1)) % (maxSlot + 1);
 		
-		/**
-		 * add tree xp and level up.
-		 * {@link #addPlayerStats(Resources, int)}
-		 */
-		private void addTreeXp(int num) {
-			int lvl = resources.get(Resources.TREE_LVL);
-			int now = resources.get(Resources.TREE_XP);
-			if(num > 0) {
-				int req = PlayerUtil.getPlayerLevelUpXp(lvl);
-				while(lvl < PlayerUtil.MAX_TREE_LVL && num + now >= req) {
-					num -= req - now;
-					this.addPlayerStats(Resources.TREE_LVL, 1);
-					MinecraftForge.EVENT_BUS.post(new TreeLevelUpEvent(player, ++ lvl));
-					now = 0;
-					req = PlayerUtil.getPlayerLevelUpXp(lvl);
-				}
-				resources.put(Resources.TREE_XP, num + now);
-			} else {
-				num = - num;
-				while(lvl > 1 && num > now) {
-					num -= now;
-					-- lvl;
-					now = PlayerUtil.getPlayerLevelUpXp(lvl);
-					this.addPlayerStats(Resources.TREE_LVL, - 1);
-				}
-				resources.put(Resources.TREE_XP, now - num);
-			}
+		player.setItemInHand(Hand.MAIN_HAND, this.getItemAt(next));
+		this.setCurrentPos(next);
+	}
+	
+	public void onSwitchCard() {
+		if(player.getMainHandItem().getItem() instanceof SummonCardItem) {
+		    this.setItemAt(player.getMainHandItem(), this.emptySlot);
 		}
-		
-		public void sendPacket(PlayerEntity player, Resources res){
-			if (player instanceof ServerPlayerEntity) {
-				PVZPacketHandler.CHANNEL.send(
-					PacketDistributor.PLAYER.with(()->{
-						return (ServerPlayerEntity) player;
-					}),
-					new PlayerStatsPacket(res.ordinal(), resources.get(res))
-				);
-			}
+	}
+	
+	public ItemStack getItemAt(int pos) {
+		return this.cards.get(pos);
+	}
+	
+	public void setItemAt(ItemStack stack, int pos) {
+		pos = MathHelper.clamp(pos, 0, this.cards.size() - 1);
+		this.cards.set(pos, stack);
+		this.sendInventoryPacket(player, pos, this.cards.get(pos).save(new CompoundNBT()));
+	}
+	
+	public void setCurrentPos(int pos) {
+		this.emptySlot = pos;
+		CompoundNBT nbt = new CompoundNBT();
+		nbt.putInt(CardInventoryPacket.FLAG, this.emptySlot);
+		this.sendInventoryPacket(player, -1, nbt);
+	}
+	
+	public int getCurrentPos() {
+		return this.emptySlot;
+	}
+	
+	public void sendInventoryPacket(PlayerEntity player, int type, CompoundNBT nbt) {
+		if (player instanceof ServerPlayerEntity) {
+			PVZPacketHandler.CHANNEL.send(
+				PacketDistributor.PLAYER.with(() -> {
+					return (ServerPlayerEntity) player;
+				}),
+				new CardInventoryPacket(type, nbt)
+			);
 		}
-		
-		private void saveToNBT(CompoundNBT baseTag) {
-			CompoundNBT statsNBT = new CompoundNBT();
-			for(Resources res : Resources.values()) {
-				statsNBT.putInt("player_" + res.toString(), resources.get(res));
-			}
-			baseTag.put("player_stats", statsNBT);
-		}
-
-		private void loadFromNBT(CompoundNBT baseTag) {
-			if(baseTag.contains("player_stats")) {
-				CompoundNBT statsTag = baseTag.getCompound("player_stats");
-			    for(Resources res:Resources.values()) {
-			    	if(statsTag.contains("player_"+res.toString())) {
-				        resources.put(res, statsTag.getInt("player_"+res.toString()));
-			    	}
-			    }
-			}
-		}
-		
 	}
 	
 	public final class PlantStats {
@@ -442,10 +571,6 @@ public class PlayerDataManager {
 				this.updateGoodTick = baseTag.getInt("update_good_tick");
 			}
 		}
-	}
-	
-	public PlayerStats getPlayerStats() {
-		return this.playerStats;
 	}
 	
 	public PlantStats getPlantStats(){

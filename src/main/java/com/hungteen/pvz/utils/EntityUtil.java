@@ -30,7 +30,7 @@ import com.hungteen.pvz.common.entity.zombie.pool.BalloonZombieEntity;
 import com.hungteen.pvz.common.entity.zombie.pool.BobsleTeamEntity;
 import com.hungteen.pvz.common.event.handler.LivingEventHandler;
 import com.hungteen.pvz.common.network.PVZPacketHandler;
-import com.hungteen.pvz.common.network.SpawnParticlePacket;
+import com.hungteen.pvz.common.network.toclient.SpawnParticlePacket;
 import com.hungteen.pvz.compat.jade.provider.PVZEntityProvider;
 import com.hungteen.pvz.register.EffectRegister;
 import com.hungteen.pvz.utils.interfaces.IMultiPartEntity;

@@ -40,8 +40,8 @@ public class PVZLivingEvents {
 			PlayerEntity player = (PlayerEntity) ev.getEntityLiving();
 			if(PlayerUtil.isValidPlayer(player)) {
 				player.getCapability(CapabilityHandler.PLAYER_DATA_CAPABILITY).ifPresent((l) -> {
-				    l.getPlayerData().getPlayerStats().setPlayerStats(Resources.NO_FOG_TICK, 0);
-				    l.getPlayerData().getPlayerStats().setPlayerStats(Resources.KILL_COUNT, 0);
+				    l.getPlayerData().setResource(Resources.NO_FOG_TICK, 0);
+				    l.getPlayerData().setResource(Resources.KILL_COUNT, 0);
 			    });
 				if(ev.getSource().getEntity() instanceof PVZZombieEntity) {//player killed by zombie.
 					PVZInvasionData data = PVZInvasionData.getOverWorldInvasionData(ev.getEntity().level);

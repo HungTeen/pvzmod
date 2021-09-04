@@ -1,9 +1,6 @@
 package com.hungteen.pvz.common.event.handler;
 
-import com.hungteen.pvz.client.gui.search.SearchOption;
 import com.hungteen.pvz.common.capability.CapabilityHandler;
-import com.hungteen.pvz.common.capability.player.PlayerDataManager;
-import com.hungteen.pvz.common.core.PlantType;
 import com.hungteen.pvz.common.core.ZombieType;
 import com.hungteen.pvz.common.enchantment.EnchantmentUtil;
 import com.hungteen.pvz.common.entity.drop.SunEntity;
@@ -59,32 +56,8 @@ public class PlayerEventHandler {
 	 * send packet from server to client to sync player's data.
 	 */
 	public static void onPlayerLogin(PlayerEntity player) {
-		player.getCapability(CapabilityHandler.PLAYER_DATA_CAPABILITY).ifPresent((l)->{
-			PlayerDataManager plData = l.getPlayerData();
-			//resources
-			PlayerDataManager.PlayerStats playerStats = plData.getPlayerStats();
-			for(Resources res:Resources.values()) {
-				playerStats.sendPacket(player, res);
-			}
-			//plants
-		    PlayerDataManager.PlantStats plantStats = plData.getPlantStats();
-			for (PlantType plant : PlantType.getPlants()) {
-			   plantStats.sendPlantPacket(player, plant);
-		    }
-			//almanacs
-			SearchOption.OPTION.forEach((a) -> {
-				ServerPlayerEntity serverplayer = (ServerPlayerEntity) player;
-				if(PlayerUtil.isAlmanacUnlocked(serverplayer, a)) {
-					PlayerUtil.unLockAlmanac(serverplayer, a);
-				}
-			});
-			//item cd
-			PlayerDataManager.ItemCDStats itemCDStats = plData.getItemCDStats();
-			for (PlantType plant : PlantType.getPlants()) {
-				if(plant.getSummonCard().isPresent()) {
-				    player.getCooldowns().addCooldown(plant.getSummonCard().get(), itemCDStats.getPlantCardCD(plant));
-				}
-			}
+		player.getCapability(CapabilityHandler.PLAYER_DATA_CAPABILITY).ifPresent(l -> {
+			l.getPlayerData().syncToClient();
 		});
 		WaveManager.syncWaveTime(player);
 	}

@@ -1,9 +1,11 @@
-package com.hungteen.pvz.register;
+package com.hungteen.pvz.common.item;
+
+import com.hungteen.pvz.register.ItemRegister;
 
 import net.minecraft.item.ItemGroup;
 import net.minecraft.item.ItemStack;
 
-public class GroupRegister {
+public class PVZItemGroups {
 
 	public static final ItemGroup PVZ_MISC = new ItemGroup("pvz_misc") {
 		@Override

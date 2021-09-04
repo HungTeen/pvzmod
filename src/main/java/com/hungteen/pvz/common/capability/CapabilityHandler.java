@@ -23,7 +23,7 @@ public class CapabilityHandler {
 	public static final Capability<IPlayerDataCapability> PLAYER_DATA_CAPABILITY = null;
 
 	public static void registerCapabilities(){
-		CapabilityManager.INSTANCE.register(IPlayerDataCapability.class,new PlayerDataStorage(), PlayerDataCapability::new);
+		CapabilityManager.INSTANCE.register(IPlayerDataCapability.class, new PlayerDataStorage(), PlayerDataCapability::new);
 		MinecraftForge.EVENT_BUS.register(CapabilityHandler.class);
 	}
 	

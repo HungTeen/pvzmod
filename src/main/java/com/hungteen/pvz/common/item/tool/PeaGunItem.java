@@ -11,10 +11,10 @@ import com.hungteen.pvz.common.container.inventory.ItemInventory;
 import com.hungteen.pvz.common.core.PlantType;
 import com.hungteen.pvz.common.entity.bullet.itembullet.PeaEntity;
 import com.hungteen.pvz.common.impl.plant.PVZPlants;
+import com.hungteen.pvz.common.item.PVZItemGroups;
 import com.hungteen.pvz.common.item.card.PlantCardItem;
 import com.hungteen.pvz.common.network.PVZPacketHandler;
-import com.hungteen.pvz.common.network.PlaySoundPacket;
-import com.hungteen.pvz.register.GroupRegister;
+import com.hungteen.pvz.common.network.toclient.PlaySoundPacket;
 import com.hungteen.pvz.register.ItemRegister;
 import com.hungteen.pvz.utils.PlayerUtil;
 import com.hungteen.pvz.utils.enums.Resources;
@@ -63,7 +63,7 @@ public class PeaGunItem extends Item {
 //	private Inventory backpack = new Inventory(PEA_GUN_SLOT_NUM);
 
 	public PeaGunItem() {
-		super(new Properties().tab(GroupRegister.PVZ_MISC).stacksTo(1));
+		super(new Properties().tab(PVZItemGroups.PVZ_MISC).stacksTo(1));
 	}
 
 	@Nonnull
@@ -166,7 +166,7 @@ public class PeaGunItem extends Item {
 	private void shrinkItemStack(PlayerEntity player, Inventory backpack, int i, ItemStack stack) {
 		player.getCapability(CapabilityHandler.PLAYER_DATA_CAPABILITY).ifPresent((l) -> {
 			boolean flag = EnchantmentHelper.getItemEnchantmentLevel(Enchantments.INFINITY_ARROWS, stack) > 0;
-			int lvl = l.getPlayerData().getPlayerStats().getPlayerStats(Resources.TREE_LVL);
+			int lvl = l.getPlayerData().getResource(Resources.TREE_LVL);
 			int cnt = (lvl - 1) / 10 * 5 + 5;
 			if (!flag || random.nextInt(100) >= cnt) {
 				backpack.removeItem(i, 1);
@@ -209,7 +209,7 @@ public class PeaGunItem extends Item {
 	private void performShoot(PlayerEntity player, PlantType plant, ItemStack stack, ItemStack peaGun, int type) {
 		player.getCapability(CapabilityHandler.PLAYER_DATA_CAPABILITY).ifPresent((l) -> {
 			int plantLvl = l.getPlayerData().getPlantStats().getPlantLevel(plant);
-			int lvl = l.getPlayerData().getPlayerStats().getPlayerStats(Resources.TREE_LVL);
+			int lvl = l.getPlayerData().getResource(Resources.TREE_LVL);
 			PeaEntity.Type peaType = PeaEntity.Type.NORMAL;
 			if(plantLvl > 6) {
 				int now = (lvl + 19) / 20;
@@ -274,7 +274,7 @@ public class PeaGunItem extends Item {
 
 	protected void setPlayerCoolDownTick(PlayerEntity player) {
 		player.getCapability(CapabilityHandler.PLAYER_DATA_CAPABILITY).ifPresent((l) -> {
-			int lvl = l.getPlayerData().getPlayerStats().getPlayerStats(Resources.TREE_LVL);
+			int lvl = l.getPlayerData().getResource(Resources.TREE_LVL);
 			int now = (lvl - 1) / 10;
 			int CD = 30 - 2 * now;
 			if (lvl > 90)

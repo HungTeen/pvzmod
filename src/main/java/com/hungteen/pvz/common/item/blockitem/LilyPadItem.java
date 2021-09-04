@@ -1,7 +1,7 @@
 package com.hungteen.pvz.common.item.blockitem;
 
+import com.hungteen.pvz.common.item.PVZItemGroups;
 import com.hungteen.pvz.register.BlockRegister;
-import com.hungteen.pvz.register.GroupRegister;
 
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.BlockItem;
@@ -17,7 +17,7 @@ import net.minecraft.world.World;
 public class LilyPadItem extends BlockItem {
 
 	public LilyPadItem() {
-		super(BlockRegister.LILY_PAD.get(),new Properties().tab(GroupRegister.PVZ_MISC));
+		super(BlockRegister.LILY_PAD.get(),new Properties().tab(PVZItemGroups.PVZ_MISC));
 	}
 
 	@Override

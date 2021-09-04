@@ -19,8 +19,8 @@ public class SunShopContainer extends AbstractDaveShopContainer {
 	
 	public void buyGood(DaveGoods good) {
 		player.getCapability(CapabilityHandler.PLAYER_DATA_CAPABILITY).ifPresent((l) -> {
-			PlayerDataManager.PlayerStats stats = l.getPlayerData().getPlayerStats();
-			stats.addPlayerStats(Resources.SUN_NUM, - TradeUtil.getGoodCost(good));
+			PlayerDataManager stats = l.getPlayerData();
+			stats.addResource(Resources.SUN_NUM, - TradeUtil.getGoodCost(good));
 //			System.out.println(TradeUtil.getGoodItemStack(good) + " , " + this.output.getStackInSlot(0));
 			this.output.setItem(0, TradeUtil.getGoodItemStack(good));
 		});
