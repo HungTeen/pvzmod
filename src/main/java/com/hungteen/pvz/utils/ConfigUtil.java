@@ -36,4 +36,8 @@ public class ConfigUtil {
 		return PVZConfig.COMMON_CONFIG.EntitySettings.PlayerBaseSunAmount.get();
 	}
 	
+	public static int getLimitPlantCount() {
+		return PVZConfig.COMMON_CONFIG.RuleSettings.LimitPlantCount.get();
+	}
+	
 }

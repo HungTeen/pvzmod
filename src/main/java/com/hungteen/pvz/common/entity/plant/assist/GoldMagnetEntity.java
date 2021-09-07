@@ -93,10 +93,10 @@ public class GoldMagnetEntity extends PVZPlantEntity {
 	protected void onCollectCoin(DropEntity drop) {
 		this.getOwnerPlayer().ifPresent(player -> {
 			if(drop instanceof CoinEntity) {
-				PlayerUtil.addPlayerStats(player, Resources.MONEY, drop.getAmount());
+				PlayerUtil.addResource(player, Resources.MONEY, drop.getAmount());
 				EntityUtil.playSound(this, SoundRegister.COIN_PICK.get());
 			} else if(drop instanceof JewelEntity) {
-				PlayerUtil.addPlayerStats(player, Resources.GEM_NUM, drop.getAmount());
+				PlayerUtil.addResource(player, Resources.GEM_NUM, drop.getAmount());
 				EntityUtil.playSound(this, SoundRegister.JEWEL_PICK.get());
 			}
 		});

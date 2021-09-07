@@ -9,7 +9,6 @@ import com.hungteen.pvz.common.enchantment.SunMendingEnchantment;
 import com.hungteen.pvz.common.enchantment.SunReduceEnchantment;
 import com.hungteen.pvz.common.enchantment.SunShovelEnchantment;
 import com.hungteen.pvz.common.enchantment.TreeProtectionEnchantment;
-import com.hungteen.pvz.common.item.card.BlockPlantCardItem;
 import com.hungteen.pvz.common.item.card.PlantCardItem;
 import com.hungteen.pvz.common.item.card.SummonCardItem;
 
@@ -38,7 +37,7 @@ public class EnchantmentRegister {
 	});
 
 	public static final EnchantmentType PLANT_CARD = EnchantmentType.create("plant_card", (item) -> {
-		return item instanceof PlantCardItem && ! (item instanceof BlockPlantCardItem);
+		return item instanceof PlantCardItem;
 	});
 	
 	public static final EnchantmentType SHOVEL = EnchantmentType.create("shovel", (item) -> {

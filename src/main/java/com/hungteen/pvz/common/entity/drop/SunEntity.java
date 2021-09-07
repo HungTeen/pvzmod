@@ -80,7 +80,7 @@ public class SunEntity extends DropEntity {
             }
 		}
 		if(this.getAmount() > 0) {
-			PlayerUtil.addPlayerStats(player, Resources.SUN_NUM, this.getAmount());
+			PlayerUtil.addResource(player, Resources.SUN_NUM, this.getAmount());
 		}
 		PVZPacketHandler.CHANNEL.send(PacketDistributor.PLAYER.with(() -> {
 			return (ServerPlayerEntity) player;

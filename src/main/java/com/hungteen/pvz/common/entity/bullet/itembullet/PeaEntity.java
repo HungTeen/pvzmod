@@ -104,7 +104,7 @@ public class PeaEntity extends AbstractShootBulletEntity implements IRendersAsIt
 				((IIceEffect) owner).getFrozenEffect().ifPresent(e -> source.addEffect(e));
 			} else if(owner instanceof PlayerEntity) {
 				((PlayerEntity)owner).getCapability(CapabilityHandler.PLAYER_DATA_CAPABILITY).ifPresent((l)->{
-					int lvl = l.getPlayerData().getPlantStats().getPlantLevel(PVZPlants.SNOW_PEA);
+					int lvl = l.getPlayerData().getPlantLevel(PVZPlants.SNOW_PEA);
 					source.addEffect(WeaponUtil.getPeaGunColdEffect(lvl));
 				});
 			}

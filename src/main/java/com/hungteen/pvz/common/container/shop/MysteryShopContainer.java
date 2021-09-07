@@ -33,7 +33,7 @@ public class MysteryShopContainer extends AbstractDaveShopContainer {
 				l.getPlayerData().getOtherStats().mysteryGoods[pos] = - 1;
 				sendMysteryGoodsPacket(player, pos);
 			});
-			PlayerUtil.addPlayerStats(player, Resources.GEM_NUM, - TradeUtil.getGoodCost(good.setType(type)));
+			PlayerUtil.addResource(player, Resources.GEM_NUM, - TradeUtil.getGoodCost(good.setType(type)));
 			this.output.setItem(0, TradeUtil.getGoodItemStack(good.setType(type)));
 		}
 		this.player.level.playSound(null, this.player, SoundRegister.DAVE_BUY.get(), SoundCategory.AMBIENT, 1f, 1f);

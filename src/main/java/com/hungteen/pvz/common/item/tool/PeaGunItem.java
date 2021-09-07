@@ -39,7 +39,6 @@ import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.Direction;
 import net.minecraft.util.Hand;
-import net.minecraft.util.math.vector.Vector3d;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.TextFormatting;
 import net.minecraft.util.text.TranslationTextComponent;
@@ -207,52 +206,52 @@ public class PeaGunItem extends Item {
 	}
 
 	private void performShoot(PlayerEntity player, PlantType plant, ItemStack stack, ItemStack peaGun, int type) {
-		player.getCapability(CapabilityHandler.PLAYER_DATA_CAPABILITY).ifPresent((l) -> {
-			int plantLvl = l.getPlayerData().getPlantStats().getPlantLevel(plant);
-			int lvl = l.getPlayerData().getResource(Resources.TREE_LVL);
-			PeaEntity.Type peaType = PeaEntity.Type.NORMAL;
-			if(plantLvl > 6) {
-				int now = (lvl + 19) / 20;
-				int bigChance = now * 5;
-				int hugeChance = bigChance + ((plantLvl > 13) ? now : 0);
-				int tmp = random.nextInt(100);
-				if(tmp < bigChance) {
-					peaType = PeaEntity.Type.BIG;
-				}else if(tmp < hugeChance) {
-					peaType = PeaEntity.Type.HUGE;
-				}
-			}
-			PeaEntity pea = new PeaEntity(player.level, player, peaType, getPeaState(plant, stack.getItem()));
-			pea.setPower(EnchantmentHelper.getItemEnchantmentLevel(Enchantments.POWER_ARROWS, peaGun));// Power Enchantment can affect pea gun.
-			Vector3d vec = player.getLookAngle();
-			Vector3d offset = vec.scale(SHOOT_OFFSET);
-			pea.setPos(player.getX() + offset.x, player.getY() + player.getEyeHeight() + offset.y,
-					player.getZ() + offset.z);
-			float speed = PEA_SPEED;
-			if (plant == PVZPlants.REPEATER || plant == PVZPlants.GATLING_PEA) {
-				speed -= 0.2 * type;
-			} else if (plant == PVZPlants.THREE_PEATER) { 
-				offset = offset.scale(2);
-				if (type == 1) {
-					pea.setPos(player.getX() + offset.x + offset.z,
-							player.getY() + player.getEyeHeight() + offset.y,
-							player.getZ() + offset.z - offset.x);
-				} else if (type == 2) {
-					pea.setPos(player.getX() + offset.x - offset.z,
-							player.getY() + player.getEyeHeight() + offset.y,
-							player.getZ() + offset.z + offset.x);
-				}
-			} else if(plant == PVZPlants.SPLIT_PEA) {
-				if(type > 0) {
-					speed *= -1;
-					if(type == 2) speed += 0.2;
-				}
-			}
-			pea.summonByOwner(player);
-			pea.setAttackDamage(2F);
-			pea.setDeltaMovement(vec.scale(speed));
-			player.level.addFreshEntity(pea);
-		});
+//		player.getCapability(CapabilityHandler.PLAYER_DATA_CAPABILITY).ifPresent((l) -> {
+//			int plantLvl = l.getPlayerData().getPlantStats().getPlantLevel(plant);
+//			int lvl = l.getPlayerData().getResource(Resources.TREE_LVL);
+//			PeaEntity.Type peaType = PeaEntity.Type.NORMAL;
+//			if(plantLvl > 6) {
+//				int now = (lvl + 19) / 20;
+//				int bigChance = now * 5;
+//				int hugeChance = bigChance + ((plantLvl > 13) ? now : 0);
+//				int tmp = random.nextInt(100);
+//				if(tmp < bigChance) {
+//					peaType = PeaEntity.Type.BIG;
+//				}else if(tmp < hugeChance) {
+//					peaType = PeaEntity.Type.HUGE;
+//				}
+//			}
+//			PeaEntity pea = new PeaEntity(player.level, player, peaType, getPeaState(plant, stack.getItem()));
+//			pea.setPower(EnchantmentHelper.getItemEnchantmentLevel(Enchantments.POWER_ARROWS, peaGun));// Power Enchantment can affect pea gun.
+//			Vector3d vec = player.getLookAngle();
+//			Vector3d offset = vec.scale(SHOOT_OFFSET);
+//			pea.setPos(player.getX() + offset.x, player.getY() + player.getEyeHeight() + offset.y,
+//					player.getZ() + offset.z);
+//			float speed = PEA_SPEED;
+//			if (plant == PVZPlants.REPEATER || plant == PVZPlants.GATLING_PEA) {
+//				speed -= 0.2 * type;
+//			} else if (plant == PVZPlants.THREE_PEATER) { 
+//				offset = offset.scale(2);
+//				if (type == 1) {
+//					pea.setPos(player.getX() + offset.x + offset.z,
+//							player.getY() + player.getEyeHeight() + offset.y,
+//							player.getZ() + offset.z - offset.x);
+//				} else if (type == 2) {
+//					pea.setPos(player.getX() + offset.x - offset.z,
+//							player.getY() + player.getEyeHeight() + offset.y,
+//							player.getZ() + offset.z + offset.x);
+//				}
+//			} else if(plant == PVZPlants.SPLIT_PEA) {
+//				if(type > 0) {
+//					speed *= -1;
+//					if(type == 2) speed += 0.2;
+//				}
+//			}
+//			pea.summonByOwner(player);
+//			pea.setAttackDamage(2F);
+//			pea.setDeltaMovement(vec.scale(speed));
+//			player.level.addFreshEntity(pea);
+//		});
 	}
 
 	/**

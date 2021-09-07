@@ -18,10 +18,10 @@ public class PennyShopContainer extends AbstractDaveShopContainer {
 
 	public void buyGood(DaveGoods good) {
 		if(good == DaveGoods.MONEY) {
-			PlayerUtil.addPlayerStats(player, Resources.GEM_NUM, - TradeUtil.getGoodCost(good));
-			PlayerUtil.addPlayerStats(player, Resources.MONEY, 1000);
+			PlayerUtil.addResource(player, Resources.GEM_NUM, - TradeUtil.getGoodCost(good));
+			PlayerUtil.addResource(player, Resources.MONEY, 1000);
 		} else {
-			PlayerUtil.addPlayerStats(player, Resources.GEM_NUM, - TradeUtil.getGoodCost(good));
+			PlayerUtil.addResource(player, Resources.GEM_NUM, - TradeUtil.getGoodCost(good));
 			this.output.setItem(0, TradeUtil.getGoodItemStack(good));
 		}
 		this.player.level.playSound(null, this.player, SoundRegister.DAVE_BUY.get(), SoundCategory.AMBIENT, 1f, 1f);

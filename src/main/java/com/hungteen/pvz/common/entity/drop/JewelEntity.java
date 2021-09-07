@@ -37,7 +37,7 @@ public class JewelEntity extends DropEntity{
 	@Override
 	public void playerTouch(PlayerEntity entityIn) {
 		if(! this.level.isClientSide) {
-			PlayerUtil.addPlayerStats(entityIn, Resources.GEM_NUM, this.getAmount());
+			PlayerUtil.addResource(entityIn, Resources.GEM_NUM, this.getAmount());
 		}
 		else {
 			EntityUtil.playSound(entityIn, SoundRegister.JEWEL_PICK.get());

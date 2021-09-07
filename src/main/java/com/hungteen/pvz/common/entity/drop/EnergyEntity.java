@@ -24,7 +24,7 @@ public class EnergyEntity extends DropEntity{
 	@Override
 	public void playerTouch(PlayerEntity entityIn) {
 		if(!this.level.isClientSide) {
-			PlayerUtil.addPlayerStats(entityIn, Resources.ENERGY_NUM, this.getAmount());
+			PlayerUtil.addResource(entityIn, Resources.ENERGY_NUM, this.getAmount());
 		}else {
 			this.level.playSound(entityIn, blockPosition(), SoundRegister.JEWEL_PICK.get(), SoundCategory.NEUTRAL, 1f, 1f);
 		}

@@ -141,6 +141,14 @@ public abstract class PVZPlantEntity extends CreatureEntity implements IHasOwner
 		this.goalSelector.addGoal(2, new PVZLookRandomlyGoal(this));
 	}
 	
+	/**
+	 * init attributes with plant lvl.
+	 */
+	public void onSpawnedByPlayer(PlayerEntity player, int lvl) {
+		this.setOwnerUUID(player.getUUID());
+		this.updatePlantLevel(lvl);
+	}
+	
 	@Override
 	public ILivingEntityData finalizeSpawn(IServerWorld worldIn, DifficultyInstance difficultyIn, SpawnReason reason,
 			ILivingEntityData spawnDataIn, CompoundNBT dataTag) {
@@ -241,7 +249,7 @@ public abstract class PVZPlantEntity extends CreatureEntity implements IHasOwner
 		if(!level.isClientSide && this.need_sync_level && this.getExistTick() % PLANT_LEVEL_SYNC_CD == 5) {
 			this.getOwnerPlayer().ifPresent(player -> {
 				player.getCapability(CapabilityHandler.PLAYER_DATA_CAPABILITY).ifPresent(l -> {
-					this.updatePlantLevel(l.getPlayerData().getPlantStats().getPlantLevel(getPlantType()));
+					this.updatePlantLevel(l.getPlayerData().getPlantLevel(getPlantType()));
 				});
 			});
 		}
@@ -287,14 +295,6 @@ public abstract class PVZPlantEntity extends CreatureEntity implements IHasOwner
 		    return ! this.getPlantType().getPlacement().canPlaceOnBlock(level.getBlockState(pos).getBlock());
 		}
 		return false;
-	}
-	
-	/**
-	 * init attributes with plant lvl.
-	 */
-	public void onSpawnedByPlayer(PlayerEntity player, int lvl) {
-		this.setOwnerUUID(player.getUUID());
-		this.updatePlantLevel(lvl);
 	}
 	
 	/**
@@ -574,10 +574,9 @@ public abstract class PVZPlantEntity extends CreatureEntity implements IHasOwner
 	 */
 	@Override
 	public void onCharmedBy(LivingEntity entity) {
-		if(! this.canBeCharmed()) {
-			return ;
+		if(this.canBeCharmed()) {
+			this.setCharmed(! this.isCharmed());
 		}
-		this.setCharmed(! this.isCharmed());
 	}
 	
 	/**

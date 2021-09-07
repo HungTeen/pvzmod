@@ -134,8 +134,8 @@ public class PVZInvasionData extends WorldSavedData {
 		if(nbt.contains("invasion_events")) {
 			CompoundNBT tag = nbt.getCompound("invasion_events");
 			for(InvasionType type : InvasionType.getInvasionEvents()) {
-				if(tag.contains("has_" + type.getIdentity())) {
-					this.events.add(type);
+				if(tag.contains("has_" + type.getIdentity()) && tag.getBoolean("has_" + type.getIdentity())) {
+					this.addEvent(type);
 				}
 			}
 		}

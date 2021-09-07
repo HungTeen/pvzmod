@@ -53,8 +53,8 @@ public class PlantLvlCommand {
 		for(ServerPlayerEntity player : targets) {
 			player.getCapability(CapabilityHandler.PLAYER_DATA_CAPABILITY).ifPresent(l -> {
 				for(PlantType plant : PlantType.getPlants()) {
-					l.getPlayerData().getPlantStats().addPlantLevel(plant, num);
-					source.sendSuccess(new StringTextComponent(plant.getText().getString() + ":" + l.getPlayerData().getPlantStats().getPlantLevel(plant)), true);
+					l.getPlayerData().addPlantLevel(plant, num);
+					source.sendSuccess(new StringTextComponent(plant.getText().getString() + ":" + l.getPlayerData().getPlantLevel(plant)), true);
 				}
 			});
 		}
@@ -65,8 +65,8 @@ public class PlantLvlCommand {
 		for(ServerPlayerEntity player : targets) {
 			player.getCapability(CapabilityHandler.PLAYER_DATA_CAPABILITY).ifPresent(l -> {
 				for(PlantType plant : PlantType.getPlants()) {
-					l.getPlayerData().getPlantStats().addPlantXp(plant, num);
-					source.sendSuccess(new StringTextComponent(plant.getText().getString() + ":" + l.getPlayerData().getPlantStats().getPlantLevel(plant)), true);
+					l.getPlayerData().addPlantXp(plant, num);
+					source.sendSuccess(new StringTextComponent(plant.getText().getString() + ":" + l.getPlayerData().getPlantLevel(plant)), true);
 				}
 			});
 		}
@@ -76,8 +76,8 @@ public class PlantLvlCommand {
 	public static int addPlantLvl(CommandSource source, Collection<? extends ServerPlayerEntity> targets, PlantType plant, int num) {
 		for(ServerPlayerEntity player : targets) {
 			player.getCapability(CapabilityHandler.PLAYER_DATA_CAPABILITY).ifPresent(l -> {
-				l.getPlayerData().getPlantStats().addPlantLevel(plant, num);
-				source.sendSuccess(new StringTextComponent(plant.getText().getString() + ":" + l.getPlayerData().getPlantStats().getPlantLevel(plant)), true);
+				l.getPlayerData().addPlantLevel(plant, num);
+				source.sendSuccess(new StringTextComponent(plant.getText().getString() + ":" + l.getPlayerData().getPlantLevel(plant)), true);
 			});
 		}
 		return targets.size();
@@ -86,8 +86,8 @@ public class PlantLvlCommand {
 	public static int addPlantXp(CommandSource source, Collection<? extends ServerPlayerEntity> targets, PlantType plant, int num) {
 		for(ServerPlayerEntity player : targets) {
 			player.getCapability(CapabilityHandler.PLAYER_DATA_CAPABILITY).ifPresent(l -> {
-				l.getPlayerData().getPlantStats().addPlantXp(plant, num);
-				source.sendSuccess(new StringTextComponent(plant.getText().getString() + ":" + l.getPlayerData().getPlantStats().getPlantLevel(plant)), true);
+				l.getPlayerData().addPlantXp(plant, num);
+				source.sendSuccess(new StringTextComponent(plant.getText().getString() + ":" + l.getPlayerData().getPlantLevel(plant)), true);
 			});
 		}
 		return targets.size();
@@ -96,7 +96,7 @@ public class PlantLvlCommand {
 	public static int queryPlantLvl(CommandSource source, Collection<? extends ServerPlayerEntity> targets, PlantType plant) {
 		for(ServerPlayerEntity player:targets) {
 		    player.getCapability(CapabilityHandler.PLAYER_DATA_CAPABILITY).ifPresent((l)->{
-		    	source.sendSuccess(new StringTextComponent(plant.getText().getString() + ":" + l.getPlayerData().getPlantStats().getPlantLevel(plant)), false);
+		    	source.sendSuccess(new StringTextComponent(plant.getText().getString() + ":" + l.getPlayerData().getPlantLevel(plant)), false);
 			});
 		}
 		return targets.size();
@@ -105,7 +105,7 @@ public class PlantLvlCommand {
 	public static int queryPlantXp(CommandSource source, Collection<? extends ServerPlayerEntity> targets, PlantType plant) {
 		for(ServerPlayerEntity player:targets) {
 		    player.getCapability(CapabilityHandler.PLAYER_DATA_CAPABILITY).ifPresent((l)->{
-		    	source.sendSuccess(new StringTextComponent(plant.getText().getString() + ":" + l.getPlayerData().getPlantStats().getPlantXp(plant)), false);
+		    	source.sendSuccess(new StringTextComponent(plant.getText().getString() + ":" + l.getPlayerData().getPlantXp(plant)), false);
 		    });
 		}
 		return targets.size();

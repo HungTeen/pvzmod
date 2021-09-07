@@ -960,6 +960,11 @@ public abstract class PVZZombieEntity extends MonsterEntity implements IHasOwner
 		return this.isZombieRising() || (! EntityUtil.isEntityValid(source.getEntity()) && ! source.isMagic());
 	}
 	
+	@Override
+	public boolean fireImmune() {
+		return true;
+	}
+	
 	/**
 	 * is zombie still rising from dirt.
 	 */

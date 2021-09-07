@@ -105,10 +105,9 @@ public class PVZPlayerEvents {
 			player.getCapability(CapabilityHandler.PLAYER_DATA_CAPABILITY).ifPresent((l)->{
 				PlayerDataManager plData = l.getPlayerData();
 				//item cd
-				PlayerDataManager.ItemCDStats itemCDStats = plData.getItemCDStats();
 				for(PlantType p : PlantType.getPlants()) {
 					p.getSummonCard().ifPresent(card -> {
-						itemCDStats.setPlantCardBar(p, player.getCooldowns().getCooldownPercent(card, 0f));
+						plData.setPlantCardBar(p, player.getCooldowns().getCooldownPercent(card, 0f));
 					});
 				}
 			});
@@ -176,14 +175,14 @@ public class PVZPlayerEvents {
 	public static void onPlayerTreeLevelUp(PlayerLevelUpEvent.TreeLevelUpEvent ev) {
 		if(! ev.getPlayer().level.isClientSide) {
 			PlayerUtil.playClientSound(ev.getPlayer(), 9);
-		    PlayerUtil.addPlayerStats(ev.getPlayer(), Resources.LOTTERY_CHANCE, 3);
+		    PlayerUtil.addResource(ev.getPlayer(), Resources.LOTTERY_CHANCE, 3);
 		}
 	}
 	
 	@SubscribeEvent
 	public static void onPlayerPlantLevelUp(PlayerLevelUpEvent.PlantLevelUpEvent ev) {
 		if(! ev.getPlayer().level.isClientSide) {
-			PlayerUtil.addPlayerStats(ev.getPlayer(), Resources.TREE_XP, ev.getCurrentLevel() * 2);
+			PlayerUtil.addResource(ev.getPlayer(), Resources.TREE_XP, ev.getCurrentLevel() * 2);
 		}
 	}
 	

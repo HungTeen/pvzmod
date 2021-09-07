@@ -33,4 +33,8 @@ public class Placements {
 		return block.is(PVZBlockTags.PLANT_SUIT_BLOCKS) || block.is(Blocks.MYCELIUM);
 	};
 	
+	public static final ICardPlacement WATER = (block) -> {
+		return block.is(Blocks.WATER);
+	};
+	
 }

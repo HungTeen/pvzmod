@@ -43,11 +43,12 @@ public class PlayerDataManager {
 	private HashMap<Resources, Integer> resources = new HashMap<>(Resources.values().length);
 	/* summon card inventory */
 	private final List<ItemStack> cards = new ArrayList<>();
-//	private CompoundNBT cardInventory;
 	private int emptySlot;
-	/* plant level */
-	private final PlantStats plantStats;
-	private final ItemCDStats itemCDStats;
+	/* plant level and cd */
+	private Map<PlantType, Integer> plantLevel = new HashMap<>();
+	private Map<PlantType, Integer> plantXp = new HashMap<>();
+	private Map<PlantType, Integer> plantCardCD = new HashMap<>();
+	private Map<PlantType, Float> plantCardBar = new HashMap<>();
 	private final OtherStats otherStats;
 	
 	public PlayerDataManager(PlayerEntity player) {
@@ -63,8 +64,14 @@ public class PlayerDataManager {
 				this.cards.add(Bundles.RANDOM_ALL.getEnjoyCard(player.getRandom()));
 			}
 		}
-		this.plantStats = new PlantStats();
-		this.itemCDStats = new ItemCDStats(this);
+		{// init plant level and cd.
+			PlantType.getPlants().forEach(plant -> {
+			    plantXp.put(plant, 0);
+				plantLevel.put(plant, 1);
+				plantCardCD.put(plant, 0);
+				plantCardBar.put(plant, 0f);
+			});
+		}
 		this.otherStats = new OtherStats(this);
 	}
 	
@@ -103,8 +110,55 @@ public class PlayerDataManager {
 				}
 			}
 		}
-		plantStats.loadFromNBT(baseTag);
-		itemCDStats.loadFromNBT(baseTag);
+		{// load plant level.
+			/*
+			 * remain to keep old version's plant level.
+			 */
+			PlantType.getPlants().forEach(plant -> {
+				final CompoundNBT plantTag = (CompoundNBT) baseTag.get(plant.toString());
+				if(plantTag != null) {
+				    if(plantTag.contains("player_plant_lvl")) {
+					    this.plantLevel.put(plant, plantTag.getInt("player_plant_lvl"));
+				    }
+				    if(plantTag.contains("player_plant_exp")) {
+					    this.plantXp.put(plant, plantTag.getInt("player_plant_exp"));
+				    }
+				}
+			});
+			/*
+			 * new.
+			 */
+			if(baseTag.contains("plant_level_info")) {
+			    final CompoundNBT nbt = baseTag.getCompound("plant_level_info");
+			    PlantType.getPlants().forEach(plant -> {
+				    final CompoundNBT plantTag = (CompoundNBT) nbt.get(plant.getIdentity());
+				    if(plantTag != null) {
+				        if(plantTag.contains("player_plant_lvl")) {
+					        this.plantLevel.put(plant, plantTag.getInt("player_plant_lvl"));
+				        }
+				        if(plantTag.contains("player_plant_exp")) {
+					        this.plantXp.put(plant, plantTag.getInt("player_plant_exp"));
+				        }
+				    }
+			    });
+			}
+		}
+		{// load plant card cd.
+			if(baseTag.contains("plant_card_item_cd")) {
+			    final CompoundNBT nbt = baseTag.getCompound("plant_card_item_cd");
+			    PlantType.getPlants().forEach(plant -> {
+					final CompoundNBT plantNBT = (CompoundNBT) nbt.get(plant.getIdentity());
+					if(plantNBT != null) {
+					    if(plantNBT.contains("plant_card_cd")) {
+						    this.setPlantCardCD(plant, plantNBT.getInt("plant_card_cd"));
+					    }
+					    if(plantNBT.contains("plant_card_bar")) {
+						    this.setPlantCardBar(plant, plantNBT.getInt("plant_card_bar"));
+					    }
+					}
+				});
+			}
+		}
 		otherStats.loadFromNBT(baseTag);
 	}
 	
@@ -128,8 +182,26 @@ public class PlayerDataManager {
 			nbt.putInt("current_pos", this.emptySlot);
 			baseTag.put("card_inventory", nbt);
 		}
-		plantStats.saveToNBT(baseTag);
-		itemCDStats.saveToNBT(baseTag);
+		{// save plant level.
+			final CompoundNBT nbt = new CompoundNBT();
+			PlantType.getPlants().forEach(plant -> {
+		        final CompoundNBT plantNBT = new CompoundNBT();
+				plantNBT.putInt("player_plant_lvl", this.getPlantLevel(plant));
+				plantNBT.putInt("player_plant_exp", this.getPlantXp(plant));
+				nbt.put(plant.getIdentity(), plantNBT);
+			});
+			baseTag.put("plant_level_info", nbt);
+		}
+		{// save plant card cd.
+			final CompoundNBT nbt = new CompoundNBT();
+			for(PlantType plant : PlantType.getPlants()) {
+				final CompoundNBT plantNBT = new CompoundNBT();
+				nbt.putInt("plant_card_cd", this.plantCardCD.get(plant));
+				nbt.putFloat("plant_card_bar", this.plantCardBar.get(plant));
+				nbt.put(plant.getIdentity(), plantNBT);
+			}
+			baseTag.put("plant_card_item_cd", nbt);
+		}
 		otherStats.saveToNBT(baseTag);
 		return baseTag;
 	}
@@ -168,16 +240,17 @@ public class PlayerDataManager {
 			    this.sendResourcePacket(player, res);
 		    }
 		}
-		{//
+		{// card inventory.
 			for(int i = 0; i <= Resources.SLOT_NUM.max; ++ i) {
 				this.sendInventoryPacket(player, i, this.getItemAt(i).save(new CompoundNBT()));
 			}
 			this.setCurrentPos(this.getCurrentPos());
 		}
-		//plants
-		for (PlantType plant : PlantType.getPlants()) {
-		   this.getPlantStats().sendPlantPacket(player, plant);
-	    }
+		{// plants level.
+			for (PlantType plant : PlantType.getPlants()) {
+		       this.sendPlantLevelPacket(player, plant);
+	        }
+		}
 		//almanacs
 		SearchOption.OPTION.forEach((a) -> {
 			ServerPlayerEntity serverplayer = (ServerPlayerEntity) player;
@@ -188,7 +261,7 @@ public class PlayerDataManager {
 		//item cd
 		for (PlantType plant : PlantType.getPlants()) {
 			if(plant.getSummonCard().isPresent()) {
-			    player.getCooldowns().addCooldown(plant.getSummonCard().get(), itemCDStats.getPlantCardCD(plant));
+			    player.getCooldowns().addCooldown(plant.getSummonCard().get(), this.getPlantCardCD(plant));
 			}
 		}
 	}
@@ -335,179 +408,86 @@ public class PlayerDataManager {
 		}
 	}
 	
-	public final class PlantStats {
-		
-		private Map<PlantType, Integer> plantXp = new HashMap<>();
-		private Map<PlantType, Integer> plantLevel = new HashMap<>();
-		
-		private PlantStats() {
-			PlantType.getPlants().forEach(plant -> {
-			    plantXp.put(plant, 0);
-				plantLevel.put(plant, 1);
-			});
-		}
-		
-		//get		
-		public int getPlantLevel(PlantType plant){
-			return this.plantLevel.get(plant);
-		}
-		
-		public int getPlantXp(PlantType plant){
-			return this.plantXp.get(plant);
-		}
-		
-		//add
-		public void addPlantLevel(PlantType plant, int lvl){
-			final int now = MathHelper.clamp(this.getPlantLevel(plant) + lvl, 1, plant.getMaxLevel());
-			this.plantLevel.put(plant, now);
-			PlantLevelTrigger.INSTANCE.trigger((ServerPlayerEntity) player, now);
-			this.sendPlantPacket(player, plant);
-		}
-		
-		public void addPlantXp(PlantType plant, int num) {
-			final int maxLvl = plant.getMaxLevel();
-			int lvl = this.getPlantLevel(plant);
-			int xp = this.getPlantXp(plant) + num;
-			if(num > 0) {
+	/*
+	 * Operation about Plant Level.
+	 */
+	
+	public void addPlantLevel(PlantType plant, int lvl){
+		lvl = MathHelper.clamp(this.getPlantLevel(plant) + lvl, 1, plant.getMaxLevel());
+		this.plantLevel.put(plant, lvl);
+		PlantLevelTrigger.INSTANCE.trigger((ServerPlayerEntity) player, lvl);
+		this.sendPlantLevelPacket(player, plant);
+	}
+	
+	public void addPlantXp(PlantType plant, int num) {
+		final int maxLvl = plant.getMaxLevel();
+		int lvl = this.getPlantLevel(plant);
+		int xp = this.getPlantXp(plant) + num;
+		if(num > 0) {
+			int needXp = PlantUtil.getPlantLevelUpXp(plant, lvl);
+			while(lvl < maxLvl && xp >= needXp) {
+				xp -= needXp;
+				this.addPlantLevel(plant, 1);
+				MinecraftForge.EVENT_BUS.post(new PlantLevelUpEvent(player, plant, ++ lvl));
+				needXp = PlantUtil.getPlantLevelUpXp(plant, lvl);
+			}
+			if(lvl == maxLvl) xp = 0;
+		} else {
+			while(lvl > 1 && xp < 0) {
+				this.addPlantLevel(plant, - 1);
+				lvl = this.getPlantLevel(plant);
 				int needXp = PlantUtil.getPlantLevelUpXp(plant, lvl);
-				while(lvl < maxLvl && xp >= needXp) {
-					xp -= needXp;
-					this.addPlantLevel(plant, 1);
-					MinecraftForge.EVENT_BUS.post(new PlantLevelUpEvent(player, plant, ++ lvl));
-					needXp = PlantUtil.getPlantLevelUpXp(plant, lvl);
-				}
-				if(lvl == maxLvl) xp = 0;
-			} else {
-				while(lvl > 1 && xp < 0) {
-					this.addPlantLevel(plant, - 1);
-					lvl = this.getPlantLevel(plant);
-					int needXp = PlantUtil.getPlantLevelUpXp(plant, lvl);
-					xp += needXp;
-				}
-				if(lvl == 1 && xp < 0) xp = 0;
+				xp += needXp;
 			}
-			this.plantXp.put(plant, xp);
-			this.sendPlantPacket(player, plant);
-		}
-		
-		public void sendPlantPacket(PlayerEntity player, PlantType plant){
-			if (player instanceof ServerPlayerEntity) {
-				PVZPacketHandler.CHANNEL.send(
-					PacketDistributor.PLAYER.with(()->{
-						return (ServerPlayerEntity) player;
-					}),
-					new PlantStatsPacket(plant.getId(), plantLevel.get(plant), plantXp.get(plant))
-				);
+			if(lvl == 1 && xp < 0) {
+				xp = 0;
 			}
 		}
-		
-		private void saveToNBT(CompoundNBT baseTag) {
-			final CompoundNBT nbt = new CompoundNBT();
-			PlantType.getPlants().forEach(plant -> {
-		        final CompoundNBT plantNBT = new CompoundNBT();
-				plantNBT.putInt("player_plant_lvl", this.getPlantLevel(plant));
-				plantNBT.putInt("player_plant_exp", this.getPlantXp(plant));
-				nbt.put(plant.getIdentity(), plantNBT);
-			});
-			baseTag.put("plant_level_info", nbt);
-		}
-
-		private void loadFromNBT(CompoundNBT baseTag) {
-			/*
-			 * remain to keep old version's plant level.
-			 */
-			PlantType.getPlants().forEach(plant -> {
-				final CompoundNBT plantTag = (CompoundNBT) baseTag.get(plant.toString());
-				if(plantTag != null) {
-				    if(plantTag.contains("player_plant_lvl")) {
-					    this.plantLevel.put(plant, plantTag.getInt("player_plant_lvl"));
-				    }
-				    if(plantTag.contains("player_plant_exp")) {
-					    this.plantXp.put(plant, plantTag.getInt("player_plant_exp"));
-				    }
-				}
-			});
-			/*
-			 * new.
-			 */
-			if(baseTag.contains("plant_level_info")) {
-			    final CompoundNBT nbt = baseTag.getCompound("plant_level_info");
-			    PlantType.getPlants().forEach(plant -> {
-				    final CompoundNBT plantTag = (CompoundNBT) nbt.get(plant.getIdentity());
-				    if(plantTag != null) {
-				        if(plantTag.contains("player_plant_lvl")) {
-					        this.plantLevel.put(plant, plantTag.getInt("player_plant_lvl"));
-				        }
-				        if(plantTag.contains("player_plant_exp")) {
-					        this.plantXp.put(plant, plantTag.getInt("player_plant_exp"));
-				        }
-				    }
-			    });
-			}
+		this.plantXp.put(plant, xp);
+		this.sendPlantLevelPacket(player, plant);
+	}
+	
+	public int getPlantLevel(PlantType plant){
+		return this.plantLevel.get(plant);
+	}
+	
+	public int getPlantXp(PlantType plant){
+		return this.plantXp.get(plant);
+	}
+	
+	public void sendPlantLevelPacket(PlayerEntity player, PlantType plant){
+		if (player instanceof ServerPlayerEntity) {
+			PVZPacketHandler.CHANNEL.send(
+				PacketDistributor.PLAYER.with(()->{
+					return (ServerPlayerEntity) player;
+				}),
+				new PlantStatsPacket(plant.getId(), plantLevel.get(plant), plantXp.get(plant))
+			);
 		}
 	}
 	
-	public final class ItemCDStats{
-		@SuppressWarnings("unused")
-		private final PlayerDataManager manager;
-		private Map<PlantType, Integer> plantCardCD = new HashMap<>();
-		private Map<PlantType, Float> plantCardBar = new HashMap<>();
-		
-		public ItemCDStats(PlayerDataManager manager) {
-			this.manager = manager;
-			for(PlantType plant : PlantType.getPlants()) {
-				plantCardCD.put(plant, 0);
-				plantCardBar.put(plant, 0f);
-			}
-		}
-		
-		public void setPlantCardCD(PlantType plant, int tick) {
-			this.plantCardCD.put(plant, tick);
-		}
-		
-		public int getPlantCardCoolDown(PlantType plant) {
-			return this.plantCardCD.get(plant);
-		}
-		
-		public void setPlantCardBar(PlantType plant, float bar) {
-			this.plantCardBar.put(plant, bar);
-		}
-		
-		public float getPlantCardBarLength(PlantType plant) {
-			return this.plantCardBar.get(plant);
-		}
-		
-		public int getPlantCardCD(PlantType plant) {
-			return (int) (this.plantCardBar.get(plant) * this.plantCardCD.get(plant));
-		}
-		
-		private void saveToNBT(CompoundNBT baseTag) {
-			final CompoundNBT nbt = new CompoundNBT();
-			for(PlantType plant : PlantType.getPlants()) {
-				final CompoundNBT plantNBT = new CompoundNBT();
-				nbt.putInt("plant_card_cd", this.plantCardCD.get(plant));
-				nbt.putFloat("plant_card_bar", this.plantCardBar.get(plant));
-				nbt.put(plant.getIdentity(), plantNBT);
-			}
-			baseTag.put("plant_card_item_cd", nbt);
-		}
-
-		private void loadFromNBT(CompoundNBT baseTag) {
-			if(baseTag.contains("plant_card_item_cd")) {
-			    final CompoundNBT nbt = baseTag.getCompound("plant_card_item_cd");
-			    PlantType.getPlants().forEach(plant -> {
-					final CompoundNBT plantNBT = (CompoundNBT) nbt.get(plant.getIdentity());
-					if(plantNBT != null) {
-					    if(plantNBT.contains("plant_card_cd")) {
-						    this.setPlantCardCD(plant, plantNBT.getInt("plant_card_cd"));
-					    }
-					    if(plantNBT.contains("plant_card_bar")) {
-						    this.setPlantCardBar(plant, plantNBT.getInt("plant_card_bar"));
-					    }
-					}
-				});
-			}
-		}
+	/*
+	 * Operation about plant card CD.
+	 */
+	
+	public void setPlantCardCD(PlantType plant, int tick) {
+		this.plantCardCD.put(plant, tick);
+	}
+	
+	public int getPlantCardCoolDown(PlantType plant) {
+		return this.plantCardCD.get(plant);
+	}
+	
+	public void setPlantCardBar(PlantType plant, float bar) {
+		this.plantCardBar.put(plant, bar);
+	}
+	
+	public float getPlantCardBarLength(PlantType plant) {
+		return this.plantCardBar.get(plant);
+	}
+	
+	public int getPlantCardCD(PlantType plant) {
+		return (int) (this.plantCardBar.get(plant) * this.plantCardCD.get(plant));
 	}
 	
 	public final class OtherStats{
@@ -571,18 +551,6 @@ public class PlayerDataManager {
 				this.updateGoodTick = baseTag.getInt("update_good_tick");
 			}
 		}
-	}
-	
-	public PlantStats getPlantStats(){
-		return this.plantStats;
-	}
-	
-//	public AlmanacStats getAlmanacStats() {
-//		return this.almanacStats;
-//	}
-	
-	public ItemCDStats getItemCDStats() {
-		return this.itemCDStats;
 	}
 	
 	public OtherStats getOtherStats() {

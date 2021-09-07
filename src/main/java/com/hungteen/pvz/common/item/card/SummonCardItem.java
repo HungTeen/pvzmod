@@ -2,8 +2,6 @@ package com.hungteen.pvz.common.item.card;
 
 import java.util.List;
 
-import com.hungteen.pvz.common.core.PlantType;
-import com.hungteen.pvz.common.enchantment.EnchantmentUtil;
 import com.hungteen.pvz.common.item.PVZItemGroups;
 
 import net.minecraft.client.util.ITooltipFlag;
@@ -17,6 +15,8 @@ import net.minecraft.world.World;
 
 public abstract class SummonCardItem extends Item{
 
+	public static final ITextComponent SUN_ERROR = new TranslationTextComponent("help.pvz.sun").withStyle(TextFormatting.RED);
+	public static final ITextComponent CD_ERROR = new TranslationTextComponent("help.pvz.cd").withStyle(TextFormatting.RED);
 	public final boolean isEnjoyCard;
 	
 	public SummonCardItem(boolean isEnjoyCard) {
@@ -37,15 +37,13 @@ public abstract class SummonCardItem extends Item{
 	 * get final sun cost.
 	 */
 	public static int getItemStackSunCost(ItemStack stack) {
-		if(stack.getItem() instanceof ImitaterCardItem) {
-			return ((ImitaterCardItem) stack.getItem()).getImitateSunCost(stack);
-		}
+//		if(stack.getItem() instanceof ImitaterCardItem) {
+//			return ((ImitaterCardItem) stack.getItem()).getImitateSunCost(stack);
+//		}
 		if(stack.getItem() instanceof PlantCardItem) {
-			PlantType plantType = ((PlantCardItem) stack.getItem()).plantType;
-			int cost = plantType.getCost();
-			return Math.max(cost - EnchantmentUtil.getSunReduceNum(stack), 0);
+			return ((PlantCardItem) stack.getItem()).getBasisSunCost(stack);
 		}
-		return 0;
+		return 1;
 	}
 	
 	@Override

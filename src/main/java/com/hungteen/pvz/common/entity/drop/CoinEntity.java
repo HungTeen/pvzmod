@@ -41,7 +41,7 @@ public class CoinEntity extends DropEntity{
 	@Override
 	public void playerTouch(PlayerEntity entityIn) {
 		if(!this.level.isClientSide) {
-			PlayerUtil.addPlayerStats(entityIn, Resources.MONEY, this.getAmount());
+			PlayerUtil.addResource(entityIn, Resources.MONEY, this.getAmount());
 		} else {
 			EntityUtil.playSound(entityIn, SoundRegister.COIN_PICK.get());
 		}

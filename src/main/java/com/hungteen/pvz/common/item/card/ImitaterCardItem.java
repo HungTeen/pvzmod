@@ -123,19 +123,19 @@ public class ImitaterCardItem extends PlantCardItem {
 	}
 	
 	public static void checkSunAndSummonImitater(PlayerEntity player, ItemStack stack, PlantCardItem item, BlockPos pos, Consumer<ImitaterEntity> consumer) {
-		checkSunAndSummonPlant(player, stack, item, pos, (l) -> {
-			if(l instanceof ImitaterEntity) {
-				((ImitaterEntity) l).setImitateCard(stack.copy());
-				((ImitaterEntity) l).placeDirection = player.getDirection().getOpposite();
-				Optional<PlantType> opt = getImitatePlantType(stack);
-				if(opt.isPresent()) {
-					player.getCapability(CapabilityHandler.PLAYER_DATA_CAPABILITY).ifPresent((data) -> {
-						l.setPlantLvl(data.getPlayerData().getPlantStats().getPlantLevel(opt.get()));
-					});
-				}
-				consumer.accept((ImitaterEntity) l);
-			}
-		});
+//		checkSunAndSummonPlant(player, stack, item, pos, (l) -> {
+//			if(l instanceof ImitaterEntity) {
+//				((ImitaterEntity) l).setImitateCard(stack.copy());
+//				((ImitaterEntity) l).placeDirection = player.getDirection().getOpposite();
+//				Optional<PlantType> opt = getImitatePlantType(stack);
+//				if(opt.isPresent()) {
+//					player.getCapability(CapabilityHandler.PLAYER_DATA_CAPABILITY).ifPresent((data) -> {
+//						l.setPlantLvl(data.getPlayerData().getPlantStats().getPlantLevel(opt.get()));
+//					});
+//				}
+//				consumer.accept((ImitaterEntity) l);
+//			}
+//		});
 	}
 	
 	public boolean isPlantTypeEqual(ItemStack stack, PlantType tmp) {
@@ -143,22 +143,22 @@ public class ImitaterCardItem extends PlantCardItem {
 		return opt.isPresent() && opt.get() == tmp;
 	}
 	
-	public int getImitateSunCost(ItemStack stack) {
-		Optional<PlantType> opt = getImitatePlantType(stack);
-		if(! opt.isPresent() || opt.get() == PVZPlants.IMITATER) return - 1;
-		int cost = opt.get().getCost();
-		return Math.max(cost - EnchantmentUtil.getSunReduceNum(stack), 0);
-	}
-	
-	@Override
-	public int getPlantCardCD(PlayerEntity player, ItemStack stack, PlantType plant, int lvl) {
-		Optional<PlantType> opt = getImitatePlantType(stack);
-		if(! opt.isPresent() || opt.get() == PVZPlants.IMITATER) {
-			System.out.println("ERROR : Wrong Use of Imitater Card !");
-			return 100;
-		}
-		return super.getPlantCardCD(player, stack, opt.get(), lvl);
-	}
+//	public int getImitateSunCost(ItemStack stack) {
+//		Optional<PlantType> opt = getImitatePlantType(stack);
+//		if(! opt.isPresent() || opt.get() == PVZPlants.IMITATER) return - 1;
+//		int cost = opt.get().getCost();
+//		return Math.max(cost - EnchantmentUtil.getSunReduceNum(stack), 0);
+//	}
+//	
+//	@Override
+//	public int getPlantCardCD(PlayerEntity player, ItemStack stack, PlantType plant, int lvl) {
+//		Optional<PlantType> opt = getImitatePlantType(stack);
+//		if(! opt.isPresent() || opt.get() == PVZPlants.IMITATER) {
+//			System.out.println("ERROR : Wrong Use of Imitater Card !");
+//			return 100;
+//		}
+//		return super.getPlantCardCD(player, stack, opt.get(), lvl);
+//	}
 	
 	public static Optional<PlantType> getImitatePlantType(ItemStack stack) {
 		ItemStack inv = getInventory(stack).getItem(0);

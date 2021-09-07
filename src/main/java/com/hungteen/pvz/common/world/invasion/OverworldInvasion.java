@@ -219,19 +219,6 @@ public class OverworldInvasion {
 		return zombies;
 	}
 	
-//	private static List<ZombieType> getRandomSpawnZombies(World world){
-//		final List<ZombieType> zombies = new ArrayList<>();
-//		int zombieTypeCnt = world.random.nextInt(3) + 3;
-//		for(int i = 0 ;i < zombieTypeCnt; ++ i) {
-//			ZombieType.ZOMBIE_SPAWN_LIST.getRandomItem(world.random).ifPresent(zombie -> {
-//				if(zombies.indexOf(zombie) == -1) {
-//				    zombies.add(zombie);
-//				}
-//			});
-//		}
-//		return zombies;
-//	}
-	
 	/**
 	 * randomly get a spawn invasion event.
 	 */

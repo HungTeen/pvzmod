@@ -173,8 +173,8 @@ public class SlotMachineTileEntity extends TileEntity implements ITickableTileEn
 		this.player = player;
 		this.isRunning = true;
 		PlayerUtil.playClientSound(player, 8);
-		PlayerUtil.addPlayerStats(player, Resources.SUN_NUM, - SUN_COST);
-		PlayerUtil.addPlayerStats(player, Resources.LOTTERY_CHANCE, - 1);
+		PlayerUtil.addResource(player, Resources.SUN_NUM, - SUN_COST);
+		PlayerUtil.addResource(player, Resources.LOTTERY_CHANCE, - 1);
 		this.changeCnt = level.random.nextInt(this.maxChangeCnt - this.minChangeCnt + 1) + this.minChangeCnt;
 		this.refreshOptionList();
 		this.genNextRow();

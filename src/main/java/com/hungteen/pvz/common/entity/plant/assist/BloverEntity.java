@@ -55,7 +55,7 @@ public class BloverEntity extends PlantBomberEntity {
 			});
 			//dispel fog.
 			level.getEntitiesOfClass(PlayerEntity.class, EntityUtil.getEntityAABB(this, len, len), player -> ! EntityUtil.canTargetEntity(this, player)).forEach((player) -> {
-				PlayerUtil.addPlayerStats(player, Resources.NO_FOG_TICK, 2400 * this.getForceLevel());
+				PlayerUtil.addResource(player, Resources.NO_FOG_TICK, 2400 * this.getForceLevel());
 			});
 		}
 	}

@@ -218,8 +218,8 @@ public class WaveManager {
 			int cnt = l.getPlayerData().getResource(Resources.KILL_COUNT);
 			if(cnt >= 50) {//give reward if kill count reach 50
 				PlayerUtil.playClientSound(player, 6);
-			    PlayerUtil.addPlayerStats(player, Resources.MONEY, (cnt >= 200 ? 200 : 50));
-			    PlayerUtil.addPlayerStats(player, Resources.LOTTERY_CHANCE, (cnt >= 200 ? 5 : 3));
+			    PlayerUtil.addResource(player, Resources.MONEY, (cnt >= 200 ? 200 : 50));
+			    PlayerUtil.addResource(player, Resources.LOTTERY_CHANCE, (cnt >= 200 ? 5 : 3));
 			    for(int i = 0; i < (cnt >= 200 ? 2 : 1); ++ i) {
 		    	    player.addItem(getRandomItemForPlayer(world));
 			    }

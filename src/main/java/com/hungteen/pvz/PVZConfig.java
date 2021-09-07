@@ -141,7 +141,9 @@ public class PVZConfig {
 				RuleSettings.TeamAttack = builder
                         .comment("if turn to true, when plant's owner is in a team, the plant will attack the entity from other team(include players).")
                         .define("PlantAttackTeam", false);
-				
+				RuleSettings.LimitPlantCount = builder
+                        .comment("how many plants can you place in 30 x 30 area without increasing cost.")
+                        .defineInRange("LimitPlantCount", 50, 10, 1000);
 			}
 			builder.pop();
 			
@@ -374,6 +376,7 @@ public class PVZConfig {
 			public ForgeConfigSpec.BooleanValue GiveBeginnerReward;
 			public ForgeConfigSpec.BooleanValue AllowNaturalTurnOrigin;
 			public ForgeConfigSpec.BooleanValue TeamAttack;
+			public ForgeConfigSpec.IntValue LimitPlantCount;
 		}
 		
 		public static class WorldSettings{

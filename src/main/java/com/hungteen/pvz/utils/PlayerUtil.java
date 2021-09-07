@@ -98,7 +98,7 @@ public class PlayerUtil {
 		}
 	}
 	
-	public static void addPlayerStats(PlayerEntity player, Resources res, int num) {
+	public static void addResource(PlayerEntity player, Resources res, int num) {
 		if(isValidPlayer(player)) {
 			player.getCapability(CapabilityHandler.PLAYER_DATA_CAPABILITY).ifPresent(l -> {
 			    l.getPlayerData().addResource(res, num);
@@ -109,15 +109,20 @@ public class PlayerUtil {
 	public static void addPlantLvl(PlayerEntity player, PlantType plant, int num) {
 		if(isValidPlayer(player)) {
 		    player.getCapability(CapabilityHandler.PLAYER_DATA_CAPABILITY).ifPresent(l -> {
-			    l.getPlayerData().getPlantStats().addPlantLevel(plant, num);
+			    l.getPlayerData().addPlantLevel(plant, num);
 		    });
 		}
+	}
+	
+	public static int getPlantLvl(PlayerEntity player, PlantType plant) {
+		final PlayerDataManager manager = getManager(player);
+		return manager != null ? manager.getPlantLevel(plant) : 1;
 	}
 	
 	public static void addPlantXp(PlayerEntity player, PlantType plant, int num) {
 		if(isValidPlayer(player)) {
 		    player.getCapability(CapabilityHandler.PLAYER_DATA_CAPABILITY).ifPresent((l)->{
-			    l.getPlayerData().getPlantStats().addPlantXp(plant, num);
+			    l.getPlayerData().addPlantXp(plant, num);
 		    });
 		}
 	}
@@ -190,8 +195,12 @@ public class PlayerUtil {
 	
 	public static void sendMsgToAll(World world, ITextComponent text) {
 		world.getServer().getPlayerList().getPlayers().forEach(player -> {
-			player.sendMessage(text, Util.NIL_UUID);
+			sendMsgTo(player, text);
 		});
+	}
+	
+	public static void sendMsgTo(PlayerEntity player, ITextComponent text) {
+		player.sendMessage(text, Util.NIL_UUID);
 	}
 	
 	/**
