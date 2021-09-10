@@ -1,6 +1,7 @@
 package com.hungteen.pvz.common.block.plants;
 
 
+import com.hungteen.pvz.common.entity.plant.spear.CatTailEntity;
 import com.hungteen.pvz.common.entity.zombie.PVZZombieEntity;
 import com.hungteen.pvz.common.entity.zombie.pool.ZombieDolphinEntity;
 
@@ -39,9 +40,13 @@ public class LilyPadBlock extends BushBlock {
 	@SuppressWarnings("deprecation")
 	public void entityInside(BlockState state, World worldIn, BlockPos pos, Entity entityIn) {
 		super.entityInside(state, worldIn, pos, entityIn);
-		if (worldIn instanceof ServerWorld && entityIn instanceof PVZZombieEntity && !(entityIn instanceof ZombieDolphinEntity)) {
-			if(entityIn.isAlive() && ((PVZZombieEntity) entityIn).canBreakPlantBlock()) {
-			    worldIn.destroyBlock(new BlockPos(pos), true, entityIn);
+		if (worldIn instanceof ServerWorld) {
+			if((entityIn instanceof PVZZombieEntity && !(entityIn instanceof ZombieDolphinEntity))) {
+			    if(entityIn.isAlive() && ((PVZZombieEntity) entityIn).canBreakPlantBlock()) {
+			        worldIn.destroyBlock(new BlockPos(pos), true, entityIn);
+			    }
+			} else if(entityIn instanceof CatTailEntity && ! ((CatTailEntity) entityIn).isImmunneToWeak()){
+				 worldIn.destroyBlock(new BlockPos(pos), true, entityIn);
 			}
 		}
 	}

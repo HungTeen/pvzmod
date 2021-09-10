@@ -54,9 +54,11 @@ import com.hungteen.pvz.client.model.entity.plant.toxic.PuffShroomModel;
 import com.hungteen.pvz.client.model.entity.plant.toxic.ScaredyShroomModel;
 import com.hungteen.pvz.client.model.entity.plant.toxic.SeaShroomModel;
 import com.hungteen.pvz.common.core.PlantType;
+import com.hungteen.pvz.common.entity.plant.defence.PumpkinEntity.PumpkinInfo;
 import com.hungteen.pvz.common.impl.Essences;
 import com.hungteen.pvz.common.impl.Placements;
 import com.hungteen.pvz.common.impl.Ranks;
+import com.hungteen.pvz.register.BlockRegister;
 import com.hungteen.pvz.register.EntityRegister;
 import com.hungteen.pvz.register.ItemRegister;
 
@@ -208,8 +210,9 @@ public final class PVZPlants extends PlantType {
 	/*
 	 * pool day.
 	 */
-	public static final PlantType LILY_PAD = new PVZPlants("lily_pad", new PlantFeatures().isBlockPlant().isWaterPlant()
+	public static final PlantType LILY_PAD = new PVZPlants("lily_pad", new PlantFeatures().isWaterPlant()
 			.cost(25).cd(PlantCardCD.SUPER_FAST).rank(Ranks.GRAY).essence(Essences.ASSIST).level(1)
+			.plantBlock(() -> BlockRegister.LILY_PAD.get())
 			.entityType(() -> EntityRegister.LILY_PAD.get())
 			.summonCard(() -> ItemRegister.LILY_PAD_CARD.get())
 			.enjoyCard(() -> ItemRegister.LILY_PAD_ENJOY_CARD.get())
@@ -327,8 +330,9 @@ public final class PVZPlants extends PlantType {
 			.plantModel(() -> StarFruitModel::new).scale(0.82F)
 	);
 	
-	public static final PlantType PUMPKIN = new PVZPlants("pumpkin", new PlantFeatures().isOuterPlant()
+	public static final PlantType PUMPKIN = new PVZPlants("pumpkin", new PlantFeatures()
 			.cost(125).cd(PlantCardCD.SLOW).rank(Ranks.GREEN).essence(Essences.DEFENCE).level(1)
+			.outerPlant(() -> new PumpkinInfo())
 			.entityType(() -> EntityRegister.PUMPKIN.get())
 			.summonCard(() -> ItemRegister.PUMPKIN_CARD.get())
 			.enjoyCard(() -> ItemRegister.PUMPKIN_ENJOY_CARD.get())
@@ -355,8 +359,9 @@ public final class PVZPlants extends PlantType {
 			.plantModel(() -> CabbagePultModel::new).scale(0.9F)
 	);
 	
-	public static final PlantType FLOWER_POT = new PVZPlants("flower_pot", new PlantFeatures().isBlockPlant()
+	public static final PlantType FLOWER_POT = new PVZPlants("flower_pot", new PlantFeatures()
 			.cost(25).cd(PlantCardCD.HUGE_FAST).rank(Ranks.GRAY).essence(Essences.ASSIST).level(1)
+			.plantBlock(() -> BlockRegister.FLOWER_POT.get())
 			.entityType(() -> EntityRegister.FLOWER_POT.get())
 			.summonCard(() -> ItemRegister.FLOWER_POT_CARD.get())
 			.enjoyCard(() -> ItemRegister.FLOWER_POT_ENJOY_CARD.get())
@@ -446,11 +451,11 @@ public final class PVZPlants extends PlantType {
 	
 	public static final PlantType CAT_TAIL = new PVZPlants("cat_tail", new PlantFeatures().isWaterPlant()
 			.cost(300).cd(PlantCardCD.VERY_SLOW).rank(Ranks.GOLD).essence(Essences.SPEAR)
+			.placement(Placements.LILY_PAD)
 			.entityType(() -> EntityRegister.CAT_TAIL.get())
 			.summonCard(() -> ItemRegister.CAT_TAIL_CARD.get())
 			.enjoyCard(() -> ItemRegister.CAT_TAIL_ENJOY_CARD.get())
 			.plantModel(() -> CatTailModel::new).scale(0.18F)
-			.upgradeFrom(() -> PVZPlants.LILY_PAD)
 	);
 	
 	public static final PlantType WINTER_MELON = new PVZPlants("winter_melon", new PlantFeatures()

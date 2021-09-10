@@ -8,11 +8,9 @@ import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
 import com.hungteen.pvz.client.render.itemstack.ImitaterCardISTER;
-import com.hungteen.pvz.common.capability.CapabilityHandler;
 import com.hungteen.pvz.common.container.ImitaterContainer;
 import com.hungteen.pvz.common.container.inventory.ItemInventory;
 import com.hungteen.pvz.common.core.PlantType;
-import com.hungteen.pvz.common.enchantment.EnchantmentUtil;
 import com.hungteen.pvz.common.entity.plant.magic.ImitaterEntity;
 import com.hungteen.pvz.common.impl.plant.PVZPlants;
 import com.hungteen.pvz.common.item.PVZItemGroups;

@@ -49,29 +49,29 @@ public class KernelPultEntity extends PlantPultEntity {
 	@Override
 	public ActionResultType interactAt(PlayerEntity player, Vector3d vec3d, Hand hand) {
 		if(! level.isClientSide && hand == Hand.MAIN_HAND && ! EntityUtil.canTargetEntity(this, player)) {
-			ItemStack stack = player.getItemInHand(hand);
-			if(stack.getItem() instanceof PlantCardItem) {
-				PlantCardItem item = (PlantCardItem) stack.getItem();
-				if(item.plantType == PVZPlants.COB_CANNON) {
-					Optional<KernelPultEntity> pult = this.getNearByPult(player);
-					if(pult.isPresent()) {
-						PlantCardItem.checkSunAndSummonPlant(player, stack, item, blockPosition(), (plantEntity) -> {
-							this.onPlantUpgrade(plantEntity);
-							plantEntity.plantSunCost += pult.get().plantSunCost;
-							pult.get().remove();
-						});
-					}
-				} else if(item instanceof ImitaterCardItem && ((ImitaterCardItem) item).isPlantTypeEqual(stack, PVZPlants.COB_CANNON)) {
-					Optional<KernelPultEntity> pult = this.getNearByPult(player);
-					if(pult.isPresent()) {
-					    ImitaterCardItem.checkSunAndSummonImitater(player, stack, item, blockPosition(), (imitater) -> {
-						    imitater.targetPlantEntity = Optional.of(this);
-						    imitater.plantSunCost += pult.get().plantSunCost;
-						    pult.get().remove();
-					    });
-					}
-				}
-			}
+//			ItemStack stack = player.getItemInHand(hand);
+//			if(stack.getItem() instanceof PlantCardItem) {
+//				PlantCardItem item = (PlantCardItem) stack.getItem();
+//				if(item.plantType == PVZPlants.COB_CANNON) {
+//					Optional<KernelPultEntity> pult = this.getNearByPult(player);
+//					if(pult.isPresent()) {
+//						PlantCardItem.checkSunAndSummonPlant(player, stack, item, blockPosition(), (plantEntity) -> {
+//							this.onPlantUpgrade(plantEntity);
+//							plantEntity.plantSunCost += pult.get().plantSunCost;
+//							pult.get().remove();
+//						});
+//					}
+//				} else if(item instanceof ImitaterCardItem && ((ImitaterCardItem) item).isPlantTypeEqual(stack, PVZPlants.COB_CANNON)) {
+//					Optional<KernelPultEntity> pult = this.getNearByPult(player);
+//					if(pult.isPresent()) {
+//					    ImitaterCardItem.checkSunAndSummonImitater(player, stack, item, blockPosition(), (imitater) -> {
+//						    imitater.targetPlantEntity = Optional.of(this);
+//						    imitater.plantSunCost += pult.get().plantSunCost;
+//						    pult.get().remove();
+//					    });
+//					}
+//				}
+//			}
 		}
 		return super.interactAt(player, vec3d, hand);
 	}

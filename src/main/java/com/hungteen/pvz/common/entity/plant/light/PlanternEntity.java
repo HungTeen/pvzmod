@@ -84,7 +84,7 @@ public class PlanternEntity extends PVZPlantEntity implements ILightEffect {
 	}
 	
 	@Override
-	protected SoundEvent getSpawnSound() {
+	public SoundEvent getSpawnSound() {
 		return SoundRegister.PLANTERN.get();
 	}
 	

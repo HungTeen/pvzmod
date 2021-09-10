@@ -16,7 +16,7 @@ import net.minecraft.util.ResourceLocation;
 
 public class DuckyTubeLayer<T extends MobEntity> extends LayerRenderer<T, EntityModel<T>>{
 
-	public static final ResourceLocation TEXTURE = StringUtil.prefix("textures/entity/zombie/poolday/ducky_tube.png");
+	public static final ResourceLocation TEXTURE = StringUtil.prefix("textures/entity/zombie/pool/ducky_tube.png");
 	private DuckyTubeModel model = new DuckyTubeModel();
 	
 	public DuckyTubeLayer(IEntityRenderer<T, EntityModel<T>> entityRendererIn) {

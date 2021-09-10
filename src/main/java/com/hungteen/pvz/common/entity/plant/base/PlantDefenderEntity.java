@@ -3,6 +3,7 @@ package com.hungteen.pvz.common.entity.plant.base;
 import com.hungteen.pvz.api.interfaces.ICanBeAttracted;
 import com.hungteen.pvz.common.entity.ai.goal.misc.PlantAttractGoal;
 import com.hungteen.pvz.common.entity.plant.PVZPlantEntity;
+import com.hungteen.pvz.common.entity.plant.defence.PumpkinEntity;
 import com.hungteen.pvz.common.item.card.PlantCardItem;
 import com.hungteen.pvz.utils.interfaces.ICanAttract;
 
@@ -106,7 +107,7 @@ public abstract class PlantDefenderEntity extends PVZPlantEntity implements ICan
 	
 	@Override
 	public boolean hurt(DamageSource source, float amount) {
-		amount = this.pumpkinReduceDamage(source, amount);
+		amount = PumpkinEntity.PumpkinInfo.pumpkinReduceDamage(this, source, amount);
 		amount *= this.damageMultiple;
 		if(! level.isClientSide && this.getDefenceLife() > 0) {
 			if(this.getDefenceLife() > amount) { // damage armor health first

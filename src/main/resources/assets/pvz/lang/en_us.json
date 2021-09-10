@@ -808,6 +808,7 @@
     "help.pvz.upgrade":"Advance Plants can only place on Corresponding plants !",
     "help.pvz.ground":"It's not allowed to place here !",
     "help.pvz.outer":"It can only place on other plants !",
+    "help.pvz.outer_full":"Can not place on this plant !",
     "help.pvz.sun":"Sun is not enough !",
     "help.pvz.cd":"Please wait for cooling !",
 //-----------------------------------------Enchantments-----------------------------------------

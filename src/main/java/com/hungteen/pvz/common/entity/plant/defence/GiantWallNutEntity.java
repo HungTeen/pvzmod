@@ -27,6 +27,11 @@ public class GiantWallNutEntity extends TallNutEntity {
 	}
 	
 	@Override
+	public boolean canPlaceOuterPlant() {
+		return false;
+	}
+	
+	@Override
 	public EntitySize getDimensions(Pose poseIn) {
 		return EntitySize.scalable(2F, 3F);
 	}

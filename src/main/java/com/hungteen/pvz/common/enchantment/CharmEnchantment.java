@@ -7,7 +7,7 @@ import net.minecraft.inventory.EquipmentSlotType;
 public class CharmEnchantment extends PVZEnchantment{
 
 	public CharmEnchantment() {
-		super(Rarity.VERY_RARE, EnchantmentRegister.PLANT_CARD, new EquipmentSlotType[] {EquipmentSlotType.MAINHAND});
+		super(Rarity.VERY_RARE, EnchantmentRegister.ENTITY_CARD, new EquipmentSlotType[] {EquipmentSlotType.MAINHAND});
 		this.isTradeable = false;
 		this.isTreasureOnly = true;
 	}

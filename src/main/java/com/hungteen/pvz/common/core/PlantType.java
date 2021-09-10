@@ -14,6 +14,7 @@ import java.util.function.Supplier;
 import com.hungteen.pvz.PVZMod;
 import com.hungteen.pvz.client.model.entity.plant.IPlantModel;
 import com.hungteen.pvz.common.entity.plant.PVZPlantEntity;
+import com.hungteen.pvz.common.entity.plant.PlantInfo;
 import com.hungteen.pvz.common.impl.Essences;
 import com.hungteen.pvz.common.impl.Placements;
 import com.hungteen.pvz.common.impl.Ranks;
@@ -23,6 +24,7 @@ import com.hungteen.pvz.utils.AlgorithmUtil;
 import com.hungteen.pvz.utils.PlantUtil;
 import com.mojang.datafixers.util.Pair;
 
+import net.minecraft.block.Block;
 import net.minecraft.entity.EntityType;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.text.TranslationTextComponent;
@@ -47,6 +49,7 @@ public abstract class PlantType {
 	//plant type -> unique id.(dynamic each loading).
 	private static final Map<PlantType, Integer> PLANTS_ID = new HashMap<>();
 	private static final Map<EntityType<? extends PVZPlantEntity>, PlantType> ENTITY_TYPE = new HashMap<>();
+	private static final Map<String, PlantType> TYPE_BY_NAME = new HashMap<>();
 	protected final String plantName;
 	protected final ResourceLocation plantEntityResource;
 	protected int sunCost;
@@ -58,14 +61,14 @@ public abstract class PlantType {
 	protected Supplier<EntityType<? extends PVZPlantEntity>> plantEntitySup;
 	protected Supplier<? extends PlantCardItem> summonCardSup;
 	protected Supplier<? extends PlantCardItem> enjoyCardSup;
-	protected Optional<IPlantModel<? extends PVZPlantEntity>> plantModel;
+	protected IPlantModel<? extends PVZPlantEntity> plantModel;
 	protected Supplier<PlantType> upgradeFrom;
 	protected Supplier<PlantType> upgradeTo;
+	protected Supplier<Block> plantBlock;
+	protected Supplier<PlantInfo> outerPlant;
 	protected ICardPlacement cardPlacement;
 	protected boolean isShroomPlant;
-	protected boolean isBlockPlant;
 	protected boolean isWaterPlant;
-	protected boolean isOuterPlant;
 	
 	public PlantType(String name, PlantFeatures features) {
 		this.plantName = name;
@@ -81,11 +84,11 @@ public abstract class PlantType {
 		this.plantModel = features.plantModel;
 		this.upgradeFrom = features.upgradeFrom;
 		this.upgradeTo = features.upgradeTo;
+		this.plantBlock = features.plantBlock;
+		this.outerPlant = features.outerPlant;
 		this.cardPlacement = features.cardPlacement;
 		this.isShroomPlant = features.isShroomPlant;
-		this.isBlockPlant = features.isBlockPlant;
 		this.isWaterPlant = features.isWaterPlant;
-		this.isOuterPlant = features.isOuterPlant;
 		this.plantEntityResource = this.getEntityResource();
 	}
 	
@@ -162,7 +165,7 @@ public abstract class PlantType {
 	 */
 	@OnlyIn(Dist.CLIENT)
 	public Optional<IPlantModel<? extends PVZPlantEntity>> getPlantModel() {
-		return this.plantModel;
+		return Optional.ofNullable(this.plantModel);
 	}
 	
 	@OnlyIn(Dist.CLIENT)
@@ -209,7 +212,14 @@ public abstract class PlantType {
 	 * such as Lily Pad.
 	 */
 	public boolean isBlockPlant() {
-		return this.isBlockPlant;
+		return this.plantBlock != null;
+	}
+	
+	/**
+	 * get corresponding block.
+	 */
+	public Optional<Block> getPlantBlock() {
+		return Optional.ofNullable(this.plantBlock.get());
 	}
 	
 	/**
@@ -225,7 +235,14 @@ public abstract class PlantType {
 	 * such as Pumpkin.
 	 */
 	public boolean isOuterPlant() {
-		return this.isOuterPlant;
+		return this.outerPlant != null;
+	}
+	
+	/**
+	 * get corresponding block.
+	 */
+	public Optional<PlantInfo> getOuterPlant() {
+		return Optional.ofNullable(this.outerPlant.get());
 	}
 	
 	/**
@@ -274,6 +291,7 @@ public abstract class PlantType {
     	}
     	for(int i = 0; i < PLANTS.size(); ++ i) {
     		PLANTS_ID.put(PLANTS.get(i), i);
+    		TYPE_BY_NAME.put(PLANTS.get(i).getIdentity(), PLANTS.get(i));
     	}
 	}
     
@@ -310,10 +328,8 @@ public abstract class PlantType {
 	}
 	
 	public static Optional<PlantType> getPlantByName(String name){
-		for(PlantType plant : PLANTS) {
-			if(plant.getIdentity().equals(name)) {
-				return Optional.ofNullable(plant);
-			}
+		if(TYPE_BY_NAME.containsKey(name)) {
+			return Optional.ofNullable(TYPE_BY_NAME.get(name));
 		}
 		return Optional.empty();
 	}
@@ -356,14 +372,14 @@ public abstract class PlantType {
 		protected Supplier<EntityType<? extends PVZPlantEntity>> plantEntitySup;
 		protected Supplier<? extends PlantCardItem> summonCardSup;
 		protected Supplier<? extends PlantCardItem> enjoyCardSup;
-		protected Optional<IPlantModel<? extends PVZPlantEntity>> plantModel;
+		protected IPlantModel<? extends PVZPlantEntity> plantModel;
 		protected Supplier<PlantType> upgradeFrom;
 		protected Supplier<PlantType> upgradeTo;
+		protected Supplier<Block> plantBlock;
+		protected Supplier<PlantInfo> outerPlant;
 		protected ICardPlacement cardPlacement = Placements.COMMON;
 		protected boolean isShroomPlant = false;
-		protected boolean isBlockPlant = false;
 		protected boolean isWaterPlant = false;
-		protected boolean isOuterPlant = false;
 		
 		/**
 		 * set the sun cost of plant.
@@ -433,7 +449,7 @@ public abstract class PlantType {
 		 * set the entity model of plant (Client Side). 
 		 */
 		public PlantFeatures plantModel(Supplier<SafeCallable<IPlantModel<? extends PVZPlantEntity>>> sup) {
-			this.plantModel = Optional.ofNullable(DistExecutor.safeCallWhenOn(Dist.CLIENT, sup));
+			this.plantModel = DistExecutor.safeCallWhenOn(Dist.CLIENT, sup);
 			return this;
 		}
 		
@@ -470,6 +486,23 @@ public abstract class PlantType {
 		}
 		
 		/**
+		 * it's a block type plant.
+		 */
+		public PlantFeatures plantBlock(Supplier<Block> plantBlock) {
+			this.plantBlock = plantBlock;
+			return this;
+		}
+		
+		/**
+		 * it's a block type plant.
+		 */
+		public PlantFeatures outerPlant(Supplier<PlantInfo> info) {
+			this.outerPlant = info;
+			this.cardPlacement = Placements.NONE;
+			return this;
+		}
+		
+		/**
 		 * it's shroom type plant.
 		 */
 		public PlantFeatures isShroomPlant() {
@@ -479,27 +512,10 @@ public abstract class PlantType {
 		}
 		
 		/**
-		 * it's a block type plant.
-		 */
-		public PlantFeatures isBlockPlant() {
-			this.isBlockPlant = true;
-			return this;
-		}
-		
-		/**
 		 * it's a water only plant.
 		 */
 		public PlantFeatures isWaterPlant() {
 			this.isWaterPlant = true;
-			this.cardPlacement = Placements.NONE;
-			return this;
-		}
-		
-		/**
-		 * it's a outer kind rely on plants.
-		 */
-		public PlantFeatures isOuterPlant() {
-			this.isOuterPlant = true;
 			this.cardPlacement = Placements.NONE;
 			return this;
 		}

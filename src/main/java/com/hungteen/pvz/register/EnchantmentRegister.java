@@ -36,6 +36,27 @@ public class EnchantmentRegister {
 		return item instanceof SummonCardItem;
 	});
 
+	public static final EnchantmentType ENTITY_CARD = EnchantmentType.create("entity_card", (item) -> {
+		if(item instanceof PlantCardItem) {
+			return ! ((PlantCardItem) item).plantType.isBlockPlant() && ! ((PlantCardItem) item).plantType.isOuterPlant();
+		}
+		return false;
+	});
+	
+	public static final EnchantmentType PLANT_OR_OUTER_CARD = EnchantmentType.create("plant_or_outer_card", (item) -> {
+		if(item instanceof PlantCardItem) {
+			return ! ((PlantCardItem) item).plantType.isBlockPlant();
+		}
+		return false;
+	});
+	
+	public static final EnchantmentType NO_OUTER_PLANT_CARD = EnchantmentType.create("no_outer_plant_card", (item) -> {
+		if(item instanceof PlantCardItem) {
+			return ! ((PlantCardItem) item).plantType.isOuterPlant();
+		}
+		return false;
+	});
+	
 	public static final EnchantmentType PLANT_CARD = EnchantmentType.create("plant_card", (item) -> {
 		return item instanceof PlantCardItem;
 	});

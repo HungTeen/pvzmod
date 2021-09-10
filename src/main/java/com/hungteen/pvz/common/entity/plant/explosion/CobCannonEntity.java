@@ -236,6 +236,11 @@ public class CobCannonEntity extends PVZPlantEntity {
 		}
 		return false;
 	}
+	
+	@Override
+	public boolean canPlaceOuterPlant() {
+		return false;
+	}
 
 	@OnlyIn(Dist.CLIENT)
 	private boolean isRidingPlayer(PlayerEntity player) {

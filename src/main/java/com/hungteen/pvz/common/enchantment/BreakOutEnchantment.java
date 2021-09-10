@@ -11,7 +11,7 @@ import net.minecraft.item.ItemStack;
 public class BreakOutEnchantment extends PVZEnchantment{
 
 	public BreakOutEnchantment() {
-		super(Rarity.VERY_RARE, EnchantmentRegister.PLANT_CARD, new EquipmentSlotType[] {EquipmentSlotType.MAINHAND});
+		super(Rarity.VERY_RARE, EnchantmentRegister.PLANT_OR_OUTER_CARD, new EquipmentSlotType[] {EquipmentSlotType.MAINHAND});
 		this.isTradeable = false;
 	}
 

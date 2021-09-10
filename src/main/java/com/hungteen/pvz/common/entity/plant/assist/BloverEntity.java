@@ -69,7 +69,7 @@ public class BloverEntity extends PlantBomberEntity {
 	}
 	
 	@Override
-	protected SoundEvent getSpawnSound() {
+	public SoundEvent getSpawnSound() {
 		return SoundRegister.BLOVER.get();
 	}
 	

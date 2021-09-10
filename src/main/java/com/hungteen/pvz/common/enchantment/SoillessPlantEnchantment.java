@@ -9,7 +9,7 @@ import net.minecraft.item.ItemStack;
 public class SoillessPlantEnchantment extends PVZEnchantment {
 
 	public SoillessPlantEnchantment() {
-		super(Rarity.VERY_RARE, EnchantmentRegister.PLANT_CARD, new EquipmentSlotType[] { EquipmentSlotType.OFFHAND, EquipmentSlotType.MAINHAND });
+		super(Rarity.VERY_RARE, EnchantmentRegister.NO_OUTER_PLANT_CARD, new EquipmentSlotType[] { EquipmentSlotType.OFFHAND, EquipmentSlotType.MAINHAND });
 		this.isTradeable = false;
 	}
 	

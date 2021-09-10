@@ -4,17 +4,19 @@ import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
+import com.hungteen.pvz.PVZMod;
 import com.hungteen.pvz.api.enums.PVZGroupType;
 import com.hungteen.pvz.api.interfaces.ICanBeCharmed;
 import com.hungteen.pvz.api.interfaces.IGroupEntity;
 import com.hungteen.pvz.api.interfaces.IHasOwner;
 import com.hungteen.pvz.common.advancement.trigger.PlantSuperTrigger;
-import com.hungteen.pvz.common.capability.CapabilityHandler;
-import com.hungteen.pvz.common.core.RankType;
 import com.hungteen.pvz.common.core.EssenceType;
 import com.hungteen.pvz.common.core.PlantType;
+import com.hungteen.pvz.common.core.RankType;
 import com.hungteen.pvz.common.entity.ai.goal.PVZLookRandomlyGoal;
 import com.hungteen.pvz.common.entity.drop.SunEntity;
+import com.hungteen.pvz.common.entity.plant.defence.PumpkinEntity;
+import com.hungteen.pvz.common.entity.plant.defence.PumpkinEntity.PumpkinInfo;
 import com.hungteen.pvz.common.entity.plant.enforce.SquashEntity;
 import com.hungteen.pvz.common.entity.plant.explosion.DoomShroomEntity;
 import com.hungteen.pvz.common.entity.plant.light.GoldLeafEntity;
@@ -22,7 +24,8 @@ import com.hungteen.pvz.common.entity.plant.spear.SpikeWeedEntity;
 import com.hungteen.pvz.common.entity.zombie.PVZZombieEntity;
 import com.hungteen.pvz.common.entity.zombie.grass.TombStoneEntity;
 import com.hungteen.pvz.common.entity.zombie.roof.BungeeZombieEntity;
-import com.hungteen.pvz.common.impl.plant.PVZPlants;
+import com.hungteen.pvz.common.event.handler.PlayerEventHandler;
+import com.hungteen.pvz.common.item.card.PlantCardItem;
 import com.hungteen.pvz.common.misc.damage.PVZDamageSource;
 import com.hungteen.pvz.register.EffectRegister;
 import com.hungteen.pvz.register.EntityRegister;
@@ -47,6 +50,7 @@ import net.minecraft.entity.ai.attributes.AttributeModifierMap;
 import net.minecraft.entity.ai.attributes.Attributes;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.ServerPlayerEntity;
+import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.network.datasync.DataParameter;
 import net.minecraft.network.datasync.DataSerializers;
@@ -77,17 +81,16 @@ public abstract class PVZPlantEntity extends CreatureEntity implements IHasOwner
 	private static final DataParameter<Integer> ATTACK_TIME = EntityDataManager.defineId(PVZPlantEntity.class, DataSerializers.INT);
 	private static final DataParameter<Integer> GOLD_TIME = EntityDataManager.defineId(PVZPlantEntity.class, DataSerializers.INT);
 	private static final DataParameter<Integer> BOOST_TIME = EntityDataManager.defineId(PVZPlantEntity.class, DataSerializers.INT);
-	private static final DataParameter<Float> PUMPKIN_LIFE = EntityDataManager.defineId(PVZPlantEntity.class, DataSerializers.FLOAT);
 	private static final DataParameter<Integer> EXIST_TICK = EntityDataManager.defineId(PVZPlantEntity.class, DataSerializers.INT);  
 	//handler plant level, plant level range in (1, 128).
 	protected static final int PLANT_LEVEL_FLAG_LEN = 7;
 	//handle sync plant level.
 	private static final int PLANT_LEVEL_SYNC_CD = 1200;
-	public boolean need_sync_level = true;
 	//plant states flags.
 	protected static final int LADDER_FLAG = 0;
 	protected static final int CHARM_FLAG = 1;
 	protected static final int SLEEP_FLAG = 2;
+	protected static final int PUMPKIN_FLAG = 3;
 	//handle plant weak, place on wrong block.
 	private static final int PLANT_WEAK_CD = 10;
 	protected PlayerEntity ownerPlayer;
@@ -97,11 +100,10 @@ public abstract class PVZPlantEntity extends CreatureEntity implements IHasOwner
 	public boolean canCollideWithPlant = true;
 	//handle plant sleep.
 	public int sleepTime = 0;
+	//handle plant itself.
+    protected PlantInfo innerPlant;
 	//handle outer plant, like pumpkin.
-	protected Optional<PlantType> outerPlant = Optional.empty();
-	//handler sun cost of plant, and its outer plant.
-	public int outerSunCost = 0;
-	public int plantSunCost = 0;
+	protected PlantInfo outerPlant;
 	protected boolean canBeCold = true;
 	protected boolean canBeFrozen = true;
 	protected boolean canBeCharm = true;
@@ -112,6 +114,7 @@ public abstract class PVZPlantEntity extends CreatureEntity implements IHasOwner
 	public PVZPlantEntity(EntityType<? extends CreatureEntity> type, World worldIn) {
 		super(type, worldIn);
 		this.refreshDimensions();
+		this.innerPlant = new PlantInfo(this.getPlantType());
 	}
 
 	@Override
@@ -123,7 +126,6 @@ public abstract class PVZPlantEntity extends CreatureEntity implements IHasOwner
 		entityData.define(ATTACK_TIME, 0);
 		entityData.define(GOLD_TIME, 0);
 		entityData.define(BOOST_TIME, 0);
-		entityData.define(PUMPKIN_LIFE, 0f);
 		entityData.define(PLANT_STATES, 0);
 		entityData.define(EXIST_TICK, 0);
 	}
@@ -144,9 +146,12 @@ public abstract class PVZPlantEntity extends CreatureEntity implements IHasOwner
 	/**
 	 * init attributes with plant lvl.
 	 */
-	public void onSpawnedByPlayer(PlayerEntity player, int lvl) {
+	public void onSpawnedByPlayer(PlayerEntity player, int lvl, int sunCost) {
 		this.setOwnerUUID(player.getUUID());
 		this.updatePlantLevel(lvl);
+		this.getPlantInfo().ifPresent(info -> {
+			info.setSunCost(sunCost);
+		});
 	}
 	
 	@Override
@@ -245,14 +250,6 @@ public abstract class PVZPlantEntity extends CreatureEntity implements IHasOwner
 				this.setDeltaMovement(vec.x, speedY, vec.z);
 			}
 		}
-		//update plant level.
-		if(!level.isClientSide && this.need_sync_level && this.getExistTick() % PLANT_LEVEL_SYNC_CD == 5) {
-			this.getOwnerPlayer().ifPresent(player -> {
-				player.getCapability(CapabilityHandler.PLAYER_DATA_CAPABILITY).ifPresent(l -> {
-					this.updatePlantLevel(l.getPlayerData().getPlantLevel(getPlantType()));
-				});
-			});
-		}
 	}
 
 	/**
@@ -261,7 +258,7 @@ public abstract class PVZPlantEntity extends CreatureEntity implements IHasOwner
 	 * {@link #aiStep()}
 	 */
 	protected void normalPlantTick() {
-		//tick when plant is place on gold tile, and produce sun.
+		/* tick when plant is place on gold tile, and produce sun */
 		if (!this.level.isClientSide && this.getGoldTime() < GoldLeafEntity.GOLD_GEN_CD) {
 			Block block = this.level.getBlockState(this.blockPosition().below()).getBlock();
 			int lvl = GoldLeafEntity.getBlockGoldLevel(block);
@@ -276,6 +273,21 @@ public abstract class PVZPlantEntity extends CreatureEntity implements IHasOwner
 				EntityUtil.onMobEntityRandomPosSpawn(level, sun, blockPosition(), 2);
 				EntityUtil.playSound(this, SoundEvents.EXPERIENCE_ORB_PICKUP);
 			}
+		}
+		/* update plant level & outer plant level */
+		if(!level.isClientSide && this.getExistTick() % PLANT_LEVEL_SYNC_CD == 5) {
+			this.getOwnerPlayer().ifPresent(player -> {
+				this.getPlantInfo().ifPresent(info -> {
+				    if(info.needSyncLevel) {
+					    this.updatePlantLevel(PlayerUtil.getPlantLvl(player, info.getType()));
+				    }
+			    });
+				this.getOuterPlantInfo().ifPresent(info -> {
+				    if(info.needSyncLevel) {
+					    info.setLevel(PlayerUtil.getPlantLvl(player, info.getType()));
+				    }
+			    });
+			});
 		}
 	}
 
@@ -362,32 +374,13 @@ public abstract class PVZPlantEntity extends CreatureEntity implements IHasOwner
 	public boolean hurt(DamageSource source, float amount) {
 		if(level.isClientSide) {
 			return false;
-		}
-		if (source instanceof PVZDamageSource) {
-			this.invulnerableTime = 0;
-		}
-		amount = this.pumpkinReduceDamage(source, amount);
-		return super.hurt(source, amount);
-	}
-	
-	/**
-	 * pumpkin reduce the hurt damage.
-	 */
-	protected float pumpkinReduceDamage(DamageSource source, float amount) {
-		if(source instanceof PVZDamageSource && ((PVZDamageSource) source).isParabola()) {
-			return amount;
-		}
-		if (this.outerPlant.isPresent() && this.outerPlant.get() == PVZPlants.PUMPKIN) {
-			if (this.getPumpkinLife() > amount) { // damage pumpkin health first
-				this.setPumpkinLife(this.getPumpkinLife() - amount);
-				amount = 0;
-			} else {
-				amount -= this.getPumpkinLife();
-				this.setPumpkinLife(0f);
-				this.outerPlant = Optional.empty();
+		} else {
+			if (source instanceof PVZDamageSource) {
+			    this.invulnerableTime = 0;
 			}
+			amount = PumpkinEntity.PumpkinInfo.pumpkinReduceDamage(this, source, amount);
+		    return super.hurt(source, amount);
 		}
-		return amount;
 	}
 	
 	/**
@@ -591,11 +584,7 @@ public abstract class PVZPlantEntity extends CreatureEntity implements IHasOwner
 				PlantSuperTrigger.INSTANCE.trigger((ServerPlayerEntity) player, this);
 				PlayerUtil.addPlantXp(player, this.getPlantType(), 2);
 			}
-			this.outerPlant.ifPresent(plant -> {
-				if (plant == PVZPlants.PUMPKIN) {
-					this.setPumpkinLife(PlantUtil.PUMPKIN_LIFE + PlantUtil.PUMPKIN_SUPER_LIFE);
-				}
-			});
+			this.getOuterPlantInfo().ifPresent(p -> p.onSuper());
 		}
 	}
 	
@@ -604,30 +593,54 @@ public abstract class PVZPlantEntity extends CreatureEntity implements IHasOwner
 		return ! this.getOwnerUUID().isPresent();
 	}
 	
+	public boolean canPlaceOuterPlant() {
+		return ! this.getOuterPlantInfo().isPresent();
+	}
+	
+	/**
+	 * {@link PlantCardItem#checkSunAndOuterPlant(PlayerEntity, PVZPlantEntity, PlantCardItem, net.minecraft.item.ItemStack)}
+	 */
+	public void onPlaceOuterPlant(PlantType type, int lvl, int sunCost) {
+		if(type.isOuterPlant()) {
+			this.outerPlant = type.getOuterPlant().get();
+			System.out.println(1);
+			this.outerPlant.placeOn(this, lvl, sunCost);
+		} else {
+			PVZMod.LOGGER.error("Place Outer Plant Error : it's not outer plant type !");
+		}
+	}
+	/**
+	 * outer plant is shoveled or eaten.
+	 * {@link PlayerEventHandler#onPlantShovelByPlayer(PlayerEntity, PVZPlantEntity, net.minecraft.item.ItemStack)}
+	 */
 	public void removeOuterPlant() {
-		this.outerPlant = Optional.empty();
-		this.setPumpkinLife(0);
-		this.outerSunCost = 0;
+		this.outerPlant = null;
+		this.setPumpkin(false);
 		if (this.hasMetal()) {
 			this.decreaseMetal();
 		}
 	}
+	
+	public void onPlantUpgrade(PVZPlantEntity plantEntity) {
+		// keep old plant's outer plant, such as pumpkin.
+		plantEntity.outerPlant = this.outerPlant;
+		// keep sleep of plant
+		plantEntity.sleepTime = this.sleepTime;
+		// remove old plant itself
+		this.remove();
+	}
 
 	@Override
 	public ActionResultType interactAt(PlayerEntity player, Vector3d vec3d, Hand hand) {
-		if (!level.isClientSide) {
-//			ItemStack stack = player.getItemInHand(hand);
-//			if (stack.getItem() instanceof PlantCardItem) {// plant card right click plant entity
-//				PlantCardItem item = (PlantCardItem) stack.getItem();
-//				if (!this.getPlantType().isBigPlant && item.plantType == Plants.PUMPKIN) { // use pumpkin card on
-//																								// plant entity
-//					if (this.outerPlant.isPresent() && this.outerPlant.get() == Plants.PUMPKIN) {
-//						if (this.getPumpkinLife() < PlantUtil.PUMPKIN_LIFE) { // heal pumpkin
-//							PlantCardItem.checkSunAndHealPlant(player, this, item, stack);
-//						}
-//					} else { // place pumpkin on plant entity
-//						PlantCardItem.checkSunAndOuterPlant(player, this, item, stack);
-//					}
+		if (! level.isClientSide) {
+			ItemStack stack = player.getItemInHand(hand);
+			if (stack.getItem() instanceof PlantCardItem) {// plant card right click plant entity
+				PlantCardItem item = (PlantCardItem) stack.getItem();
+				if(PlantCardItem.checkSunAndHealPlant(player, this, item, stack)) {
+				} else if(PlantCardItem.checkSunAndUpgradePlant(player, this, item, stack)){
+				}
+			}
+		}
 //				} else if (!this.getPlantType().isBigPlant && item instanceof ImitaterCardItem
 //						&& ((ImitaterCardItem) item).isPlantTypeEqual(stack, Plants.PUMPKIN)) {
 //					if (this.outerPlant.isPresent() && this.outerPlant.get() == Plants.PUMPKIN) {
@@ -658,23 +671,7 @@ public abstract class PVZPlantEntity extends CreatureEntity implements IHasOwner
 //					});
 //				}
 //			}
-		}
 		return ActionResultType.SUCCESS;
-	}
-
-	protected void onPlantUpgrade(PVZPlantEntity plantEntity) {
-		// keep old plant's outer plant, such as pumpkin.
-			plantEntity.setPumpkinLife(this.getPumpkinLife());
-			this.getOuterPlantType().ifPresent((plantType) -> {
-				plantEntity.setOuterPlantType(plantType);
-			});
-			plantEntity.outerSunCost = this.outerSunCost;
-		// add sun cost to new plant.
-		plantEntity.plantSunCost += this.plantSunCost;
-		// keep sleep of plant
-		plantEntity.sleepTime = this.sleepTime;
-		// remove old plant itself
-		this.remove();
 	}
 
 	/* misc get */
@@ -713,7 +710,7 @@ public abstract class PVZPlantEntity extends CreatureEntity implements IHasOwner
 	 * {@link #getCurrentMaxHealth()}
 	 */
 	protected float getCurrentDefenceHealth() {
-		return this.getPumpkinLife();
+		return 0;
 	}
 	
 	/**
@@ -798,12 +795,8 @@ public abstract class PVZPlantEntity extends CreatureEntity implements IHasOwner
 		compound.putInt("plant_gold_time", this.getGoldTime());
 		compound.putInt("plant_boost_time", this.getBoostTime());
 		compound.putInt("plant_sleep_time", this.sleepTime);
-		this.outerPlant.ifPresent((plant) -> {
-			compound.putString("outer_plant_type", plant.getIdentity());
-		});
-		compound.putFloat("pumpkin_life", this.getPumpkinLife());
-		compound.putInt("plant_sun_cost", this.plantSunCost);
-		compound.putInt("outer_sun_cost", this.outerSunCost);
+		PlantInfo.write(this.innerPlant, compound, "inner_plant_info");
+		PlantInfo.write(this.outerPlant, compound, "outer_plant_info");
 		compound.putBoolean("immune_to_weak", this.isImmuneToWeak);
 		compound.putInt("plant_state", this.getPlantState());
 		compound.putInt("plant_exist_tick", this.getExistTick());
@@ -843,19 +836,8 @@ public abstract class PVZPlantEntity extends CreatureEntity implements IHasOwner
 		if(compound.contains("plant_sleep_time")) {
 			this.sleepTime = compound.getInt("plant_sleep_time");
 		}
-		if (compound.contains("pumpkin_life")) {
-			this.setPumpkinLife(compound.getFloat("pumpkin_life"));
-		}
-		if (compound.contains("outer_plant_type")) {
-			final String string = compound.getString("outer_plant_type");
-		    this.outerPlant = PlantType.getPlantByName(string);
-		}
-		if (compound.contains("plant_sun_cost")) {
-			this.plantSunCost = compound.getInt("plant_sun_cost");
-		}
-		if (compound.contains("outer_sun_cost")) {
-			this.outerSunCost = compound.getInt("outer_sun_cost");
-		}
+		PlantInfo.read(this.innerPlant, compound, "inner_plant_info");
+		PlantInfo.read(this.outerPlant, compound, "outer_plant_info");
 		if (compound.contains("immune_to_weak")) {
 			this.isImmuneToWeak = compound.getBoolean("immune_to_weak");
 		}
@@ -869,16 +851,20 @@ public abstract class PVZPlantEntity extends CreatureEntity implements IHasOwner
 
 	/* getter setter */
 	
-	public void setOuterPlantType(PlantType p) {
-		this.outerPlant = Optional.of(p);
+	public Optional<PlantInfo> getOuterPlantInfo() {
+		return Optional.ofNullable(this.outerPlant);
 	}
-
-	public Optional<PlantType> getOuterPlantType() {
-		return this.outerPlant;
+	
+	public Optional<PlantInfo> getPlantInfo() {
+		return Optional.ofNullable(this.innerPlant);
 	}
-
+	
 	public void setImmunneToWeak(boolean is) {
 		this.isImmuneToWeak = is;
+	}
+	
+	public boolean isImmunneToWeak() {
+		return this.isImmuneToWeak;
 	}
 
 	public int getBoostTime() {
@@ -929,14 +915,6 @@ public abstract class PVZPlantEntity extends CreatureEntity implements IHasOwner
 	public int getSuperTime() {
 		return entityData.get(SUPER_TIME);
 	}
-
-	public float getPumpkinLife() {
-		return this.entityData.get(PUMPKIN_LIFE);
-	}
-
-	public void setPumpkinLife(float life) {
-		this.entityData.set(PUMPKIN_LIFE, life);
-	}
 	
 	public int getExistTick() {
 		return this.entityData.get(EXIST_TICK);
@@ -980,6 +958,14 @@ public abstract class PVZPlantEntity extends CreatureEntity implements IHasOwner
 		this.setPlantState(AlgorithmUtil.BitOperator.setBit(this.getPlantState(), SLEEP_FLAG, flag));
 	}
 	
+	public boolean hasPumpkin() {
+		return AlgorithmUtil.BitOperator.hasBitOne(this.getPlantState(), PUMPKIN_FLAG);
+	}
+	
+	public void setPumpkin(boolean flag) {
+		this.setPlantState(AlgorithmUtil.BitOperator.setBit(this.getPlantState(), PUMPKIN_FLAG, flag));
+	}
+	
 	@Override
 	public void increaseMetal() {
 		this.setMetal(true);
@@ -997,7 +983,7 @@ public abstract class PVZPlantEntity extends CreatureEntity implements IHasOwner
 
 	/* sound */
 	
-	protected SoundEvent getSpawnSound() {
+	public SoundEvent getSpawnSound() {
 		return this.getPlantType().isWaterPlant() ? SoundRegister.PLANT_IN_WATER.get()
 				: SoundRegister.PLANT_ON_GROUND.get();
 	}
