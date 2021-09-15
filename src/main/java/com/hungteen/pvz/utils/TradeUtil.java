@@ -5,9 +5,9 @@ import java.util.EnumMap;
 import com.hungteen.pvz.PVZMod;
 import com.hungteen.pvz.client.gui.GuiHandler;
 import com.hungteen.pvz.common.core.PlantType;
+import com.hungteen.pvz.common.enchantment.EnchantmentRegister;
 import com.hungteen.pvz.common.potion.PotionRecipeHandler;
 import com.hungteen.pvz.register.BlockRegister;
-import com.hungteen.pvz.register.EnchantmentRegister;
 import com.hungteen.pvz.register.ItemRegister;
 
 import net.minecraft.enchantment.EnchantmentData;

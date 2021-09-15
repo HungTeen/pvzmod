@@ -6,8 +6,8 @@ import java.util.Set;
 
 import com.hungteen.pvz.PVZMod;
 import com.hungteen.pvz.common.core.PlantType;
-import com.hungteen.pvz.common.item.PVZSpawnEggItem;
-import com.hungteen.pvz.common.item.card.PlantCardItem;
+import com.hungteen.pvz.common.item.misc.PVZSpawnEggItem;
+import com.hungteen.pvz.common.item.spawn.card.PlantCardItem;
 import com.hungteen.pvz.register.BlockRegister;
 import com.hungteen.pvz.register.ItemRegister;
 import com.hungteen.pvz.utils.StringUtil;

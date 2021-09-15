@@ -6,7 +6,7 @@ import com.hungteen.pvz.client.model.entity.plant.defence.WallNutModel;
 import com.hungteen.pvz.common.core.PlantType;
 import com.hungteen.pvz.common.entity.plant.defence.WallNutEntity;
 import com.hungteen.pvz.common.impl.plant.PVZPlants;
-import com.hungteen.pvz.common.item.tool.BowlingGloveItem;
+import com.hungteen.pvz.common.item.tool.plant.BowlingGloveItem;
 import com.mojang.blaze3d.matrix.MatrixStack;
 import com.mojang.blaze3d.vertex.IVertexBuilder;
 

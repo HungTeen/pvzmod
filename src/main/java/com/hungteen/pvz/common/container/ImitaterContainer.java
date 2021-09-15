@@ -1,7 +1,7 @@
 package com.hungteen.pvz.common.container;
 
 import com.hungteen.pvz.PVZMod;
-import com.hungteen.pvz.common.item.card.ImitaterCardItem;
+import com.hungteen.pvz.common.item.spawn.card.ImitaterCardItem;
 import com.hungteen.pvz.register.ContainerRegister;
 import com.hungteen.pvz.register.ItemRegister;
 
@@ -25,7 +25,7 @@ public class ImitaterContainer extends Container {
 			PVZMod.LOGGER.debug("ERROR OFFHAND ITEM !");
 			return ;
 		}
-		backpack = ImitaterCardItem.getInventory(stack);
+		this.backpack = ImitaterCardItem.getInventory(this.stack);
 		this.addSlot(new Slot(backpack, 0, 80, 20) {
 			@Override
 			public boolean mayPlace(ItemStack stack) {

@@ -4,7 +4,7 @@ import com.hungteen.pvz.api.interfaces.ICanBeAttracted;
 import com.hungteen.pvz.common.entity.ai.goal.misc.PlantAttractGoal;
 import com.hungteen.pvz.common.entity.plant.PVZPlantEntity;
 import com.hungteen.pvz.common.entity.plant.defence.PumpkinEntity;
-import com.hungteen.pvz.common.item.card.PlantCardItem;
+import com.hungteen.pvz.common.item.spawn.card.PlantCardItem;
 import com.hungteen.pvz.utils.interfaces.ICanAttract;
 
 import net.minecraft.entity.CreatureEntity;

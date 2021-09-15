@@ -9,8 +9,8 @@ import com.hungteen.pvz.common.entity.bullet.KernelEntity;
 import com.hungteen.pvz.common.entity.bullet.PultBulletEntity;
 import com.hungteen.pvz.common.entity.plant.base.PlantPultEntity;
 import com.hungteen.pvz.common.impl.plant.PVZPlants;
-import com.hungteen.pvz.common.item.card.ImitaterCardItem;
-import com.hungteen.pvz.common.item.card.PlantCardItem;
+import com.hungteen.pvz.common.item.spawn.card.ImitaterCardItem;
+import com.hungteen.pvz.common.item.spawn.card.PlantCardItem;
 import com.hungteen.pvz.register.EffectRegister;
 import com.hungteen.pvz.utils.EntityUtil;
 

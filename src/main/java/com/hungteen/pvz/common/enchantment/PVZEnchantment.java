@@ -10,8 +10,8 @@ public class PVZEnchantment extends Enchantment {
 	protected boolean isCurse = false;
 	protected boolean isTreasureOnly = false;
 	
-	public PVZEnchantment(Rarity p_i46731_1_, EnchantmentType p_i46731_2_, EquipmentSlotType[] p_i46731_3_) {
-		super(p_i46731_1_, p_i46731_2_, p_i46731_3_);
+	public PVZEnchantment(Rarity rarity, EnchantmentType enchant, EquipmentSlotType[] slotTypes) {
+		super(rarity, enchant, slotTypes);
 	}
 	
 	@Override

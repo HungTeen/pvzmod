@@ -867,7 +867,8 @@
     "death.attack.pvz.flame":"%s was burned to death",
 //-----------------------------------------ItemGroups-----------------------------------------
     "itemGroup.pvz_misc":"PVZ Misc",
-    "itemGroup.pvz_card":"PVZ Card",
+    "itemGroup.pvz_plant_card":"PVZ Plant Card",
+    "itemGroup.pvz_tool":"PVZ Tool",
 //-----------------------------------------Patchouli-----------------------------------------
      "gui.pvz.pvz_guide":"PVZ Guild Book",
      "gui.pvz.guide_info":"Welcome to the world of Plants vs. Zombies, this book will take you through this mod.",

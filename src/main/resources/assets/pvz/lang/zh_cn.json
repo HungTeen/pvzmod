@@ -244,8 +244,8 @@
     "item.pvz.giga_football_zombie_spawn_egg":"暗黑橄榄球僵尸刷怪蛋",
     "entity.pvz.old_zombie":"二爷僵尸",
     "item.pvz.old_zombie_spawn_egg":"二爷僵尸刷怪蛋",
-    "entity.pvz.sunday_edition_zombie":"周刊大爷僵尸",
-    "item.pvz.sunday_edition_zombie_spawn_egg":"周刊大爷僵尸刷怪蛋",
+    "entity.pvz.sunday_edition_zombie":"周刊僵尸",
+    "item.pvz.sunday_edition_zombie_spawn_egg":"周刊僵尸刷怪蛋",
     "entity.pvz.jack_in_box_zombie":"玩偶匣僵尸",
     "item.pvz.jack_in_box_zombie_spawn_egg":"玩偶匣僵尸刷怪蛋",
     "entity.pvz.balloon_zombie":"气球僵尸",
@@ -867,7 +867,8 @@
     "death.attack.pvz.flame":"%s被烧死了",
 //-----------------------------------------物品组-----------------------------------------
     "itemGroup.pvz_misc":"PVZ杂项",
-    "itemGroup.pvz_card":"PVZ召唤卡",
+    "itemGroup.pvz_plant_card":"PVZ植物卡",
+    "itemGroup.pvz_tool":"PVZ道具",
 //-----------------------------------------帕秋莉-----------------------------------------
     "gui.pvz.pvz_guide":"植物大战僵尸指南",
     "gui.pvz.guide_info":"欢迎来到植物大战僵尸的世界，这本书将带你游玩这个模组。",

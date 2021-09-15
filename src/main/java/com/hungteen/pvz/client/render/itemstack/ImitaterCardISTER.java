@@ -4,7 +4,7 @@ import java.util.Optional;
 
 import com.hungteen.pvz.common.core.PlantType;
 import com.hungteen.pvz.common.impl.plant.PVZPlants;
-import com.hungteen.pvz.common.item.card.ImitaterCardItem;
+import com.hungteen.pvz.common.item.spawn.card.ImitaterCardItem;
 import com.hungteen.pvz.register.ItemRegister;
 import com.mojang.blaze3d.matrix.MatrixStack;
 

@@ -89,6 +89,10 @@ public class PumpkinEntity extends PVZPlantEntity{
 			return this.pumpkinSuper ? 800 : 400;
 		}
 		
+		public float getExistHealth() {
+			return this.getMaxAbsorbDamage() - this.absorbDamage;
+		}
+		
 	}
 	
 

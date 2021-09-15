@@ -4,6 +4,8 @@ import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
+import javax.annotation.Nullable;
+
 import com.hungteen.pvz.PVZMod;
 import com.hungteen.pvz.api.enums.PVZGroupType;
 import com.hungteen.pvz.api.interfaces.ICanBeCharmed;
@@ -25,7 +27,7 @@ import com.hungteen.pvz.common.entity.zombie.PVZZombieEntity;
 import com.hungteen.pvz.common.entity.zombie.grass.TombStoneEntity;
 import com.hungteen.pvz.common.entity.zombie.roof.BungeeZombieEntity;
 import com.hungteen.pvz.common.event.handler.PlayerEventHandler;
-import com.hungteen.pvz.common.item.card.PlantCardItem;
+import com.hungteen.pvz.common.item.spawn.card.PlantCardItem;
 import com.hungteen.pvz.common.misc.damage.PVZDamageSource;
 import com.hungteen.pvz.register.EffectRegister;
 import com.hungteen.pvz.register.EntityRegister;
@@ -146,8 +148,10 @@ public abstract class PVZPlantEntity extends CreatureEntity implements IHasOwner
 	/**
 	 * init attributes with plant lvl.
 	 */
-	public void onSpawnedByPlayer(PlayerEntity player, int lvl, int sunCost) {
-		this.setOwnerUUID(player.getUUID());
+	public void onSpawnedByPlayer(@Nullable PlayerEntity player, int lvl, int sunCost) {
+		if(player != null) {
+			this.setOwnerUUID(player.getUUID());
+		}
 		this.updatePlantLevel(lvl);
 		this.getPlantInfo().ifPresent(info -> {
 			info.setSunCost(sunCost);
@@ -603,12 +607,13 @@ public abstract class PVZPlantEntity extends CreatureEntity implements IHasOwner
 	public void onPlaceOuterPlant(PlantType type, int lvl, int sunCost) {
 		if(type.isOuterPlant()) {
 			this.outerPlant = type.getOuterPlant().get();
-			System.out.println(1);
+			this.outerPlant.setType(type);
 			this.outerPlant.placeOn(this, lvl, sunCost);
 		} else {
 			PVZMod.LOGGER.error("Place Outer Plant Error : it's not outer plant type !");
 		}
 	}
+	
 	/**
 	 * outer plant is shoveled or eaten.
 	 * {@link PlayerEventHandler#onPlantShovelByPlayer(PlayerEntity, PVZPlantEntity, net.minecraft.item.ItemStack)}
@@ -638,9 +643,12 @@ public abstract class PVZPlantEntity extends CreatureEntity implements IHasOwner
 				PlantCardItem item = (PlantCardItem) stack.getItem();
 				if(PlantCardItem.checkSunAndHealPlant(player, this, item, stack)) {
 				} else if(PlantCardItem.checkSunAndUpgradePlant(player, this, item, stack)){
+				} else if(PlantCardItem.checkSunAndOuterPlant(player, this, item, stack)) {
 				}
+				return ActionResultType.SUCCESS;
 			}
 		}
+		return super.interactAt(player, vec3d, hand);
 //				} else if (!this.getPlantType().isBigPlant && item instanceof ImitaterCardItem
 //						&& ((ImitaterCardItem) item).isPlantTypeEqual(stack, Plants.PUMPKIN)) {
 //					if (this.outerPlant.isPresent() && this.outerPlant.get() == Plants.PUMPKIN) {
@@ -671,7 +679,6 @@ public abstract class PVZPlantEntity extends CreatureEntity implements IHasOwner
 //					});
 //				}
 //			}
-		return ActionResultType.SUCCESS;
 	}
 
 	/* misc get */
@@ -710,6 +717,9 @@ public abstract class PVZPlantEntity extends CreatureEntity implements IHasOwner
 	 * {@link #getCurrentMaxHealth()}
 	 */
 	protected float getCurrentDefenceHealth() {
+		if(this.getOuterPlantInfo().isPresent() && this.getOuterPlantInfo().get() instanceof PumpkinInfo) {
+			return ((PumpkinInfo) this.getOuterPlantInfo().get()).getExistHealth();
+		}
 		return 0;
 	}
 	

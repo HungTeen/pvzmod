@@ -1,7 +1,7 @@
 package com.hungteen.pvz.common.container;
 
 import com.hungteen.pvz.PVZMod;
-import com.hungteen.pvz.common.item.tool.PeaGunItem;
+import com.hungteen.pvz.common.item.tool.plant.PeaGunItem;
 import com.hungteen.pvz.register.ContainerRegister;
 import com.hungteen.pvz.register.ItemRegister;
 

@@ -18,7 +18,7 @@ import com.hungteen.pvz.common.entity.plant.PlantInfo;
 import com.hungteen.pvz.common.impl.Essences;
 import com.hungteen.pvz.common.impl.Placements;
 import com.hungteen.pvz.common.impl.Ranks;
-import com.hungteen.pvz.common.item.card.PlantCardItem;
+import com.hungteen.pvz.common.item.spawn.card.PlantCardItem;
 import com.hungteen.pvz.register.EntityRegister;
 import com.hungteen.pvz.utils.AlgorithmUtil;
 import com.hungteen.pvz.utils.PlantUtil;

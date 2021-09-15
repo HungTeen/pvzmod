@@ -6,7 +6,7 @@ import javax.annotation.Nullable;
 import com.hungteen.pvz.common.container.CardPackContainer;
 import com.hungteen.pvz.common.container.inventory.ItemInventory;
 import com.hungteen.pvz.common.item.PVZItemGroups;
-import com.hungteen.pvz.common.item.card.SummonCardItem;
+import com.hungteen.pvz.common.item.spawn.card.SummonCardItem;
 
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;

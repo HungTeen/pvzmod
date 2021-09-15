@@ -47,7 +47,7 @@ public class NobleZombieEntity extends AbstractBossZombieEntity {
 	private final int minSummonTick = 300;
 	private final int maxSummonTick = 600;
 	private final int minTpCD = 400;
-	private final int maxTpCD = 800;
+	private final int maxTpCD = 850;
 	private final int minSleepAttackCD = 360;
 	private final int maxSleepAttackCD = 1000;
 	
@@ -120,22 +120,25 @@ public class NobleZombieEntity extends AbstractBossZombieEntity {
 				this.level.addParticle(ParticleTypes.NOTE, getX(), getY() + 2f, getZ(), 0, 0, 0);
 			}
 		}
-		if (this.getTpTick() < 0) {
-			this.setTpTick(this.getTpTick() + 1);
-		} else if (this.getTpTick() == 0) {
-			if (this.getRandom().nextInt(5) == 0) {
-				this.setTpTick(1);
-			}
+		if(! this.level.isClientSide) {
+			if (this.getTpTick() < 0) {
+			    this.setTpTick(this.getTpTick() + 1);
+		    } else if (this.getTpTick() == 0) {
+			    if (this.getRandom().nextInt(5) == 0) {
+				    this.setTpTick(1);
+			    }
+		    } else {
+			    if (this.getTpTick() >= this.getTpCD()) {
+				    this.checkAndTeleport();
+			    }
+			    this.setTpTick(this.getTpTick() + 1);
+		    }
 		} else {
-			if (this.getTpTick() >= this.getTpCD()) {
-				this.checkAndTeleport();
-			}
-			if(level.isClientSide) {
+			if(this.getTpTick() > 0) {
 				for(int i = 0; i < 9; ++ i) {
 					level.addParticle(ParticleTypes.PORTAL, this.getX() + (this.getRandom().nextInt(5) - 2), this.getY() + (this.getRandom().nextInt(3)), this.getZ() + (this.getRandom().nextInt(5) - 2), 0, 0, 0);
 				}
 			}
-			this.setTpTick(this.getTpTick() + 1);
 		}
 	}
 

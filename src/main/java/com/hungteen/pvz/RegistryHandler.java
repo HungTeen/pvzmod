@@ -1,7 +1,8 @@
 package com.hungteen.pvz;
 
 import com.hungteen.pvz.common.capability.CapabilityHandler;
-import com.hungteen.pvz.common.item.PVZSpawnEggItem;
+import com.hungteen.pvz.common.enchantment.EnchantmentRegister;
+import com.hungteen.pvz.common.item.misc.PVZSpawnEggItem;
 import com.hungteen.pvz.common.network.PVZPacketHandler;
 import com.hungteen.pvz.common.potion.PotionRecipeHandler;
 import com.hungteen.pvz.register.BiomeRegister;
@@ -9,7 +10,6 @@ import com.hungteen.pvz.register.BlockRegister;
 import com.hungteen.pvz.register.CommonRegister;
 import com.hungteen.pvz.register.ContainerRegister;
 import com.hungteen.pvz.register.EffectRegister;
-import com.hungteen.pvz.register.EnchantmentRegister;
 import com.hungteen.pvz.register.EntityRegister;
 import com.hungteen.pvz.register.FeatureRegister;
 import com.hungteen.pvz.register.ItemRegister;

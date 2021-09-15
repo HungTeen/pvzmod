@@ -3,7 +3,7 @@ package com.hungteen.pvz.common.entity.plant.defence;
 import com.hungteen.pvz.common.core.PlantType;
 import com.hungteen.pvz.common.entity.plant.base.PlantDefenderEntity;
 import com.hungteen.pvz.common.impl.plant.PVZPlants;
-import com.hungteen.pvz.common.item.tool.BowlingGloveItem;
+import com.hungteen.pvz.common.item.tool.plant.BowlingGloveItem;
 import com.hungteen.pvz.utils.MathUtil;
 import com.hungteen.pvz.utils.PlantUtil;
 

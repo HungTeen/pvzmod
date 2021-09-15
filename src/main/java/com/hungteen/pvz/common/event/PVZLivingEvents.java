@@ -2,7 +2,7 @@ package com.hungteen.pvz.common.event;
 
 import com.hungteen.pvz.PVZMod;
 import com.hungteen.pvz.common.capability.CapabilityHandler;
-import com.hungteen.pvz.common.enchantment.TreeProtectionEnchantment;
+import com.hungteen.pvz.common.enchantment.armor.TreeProtectionEnchantment;
 import com.hungteen.pvz.common.entity.plant.magic.StrangeCatEntity;
 import com.hungteen.pvz.common.entity.zombie.PVZZombieEntity;
 import com.hungteen.pvz.common.event.handler.LivingEventHandler;

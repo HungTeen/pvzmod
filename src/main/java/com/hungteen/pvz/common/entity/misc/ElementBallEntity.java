@@ -9,7 +9,7 @@ import com.hungteen.pvz.common.entity.plant.PVZPlantEntity;
 import com.hungteen.pvz.common.entity.plant.flame.JalapenoEntity;
 import com.hungteen.pvz.common.entity.plant.ice.IceShroomEntity;
 import com.hungteen.pvz.common.entity.zombie.PVZZombieEntity;
-import com.hungteen.pvz.common.item.card.PlantCardItem;
+import com.hungteen.pvz.common.item.spawn.card.PlantCardItem;
 import com.hungteen.pvz.common.misc.damage.PVZDamageSource;
 import com.hungteen.pvz.register.ItemRegister;
 import com.hungteen.pvz.utils.EntityUtil;

@@ -144,7 +144,7 @@ public class PVZInvasionData extends WorldSavedData {
 		if (nbt.contains("zombie_spawn_entries")) {
 			CompoundNBT tag = nbt.getCompound("zombie_spawn_entries");
 			for (ZombieType zombie : ZombieType.getZombies()) {
-				if (tag.contains("has_" + zombie.getIdentity())) {
+				if (tag.contains("has_" + zombie.getIdentity()) && tag.getBoolean("has_" + zombie.getIdentity())) {
 					this.addZombieSpawnEntry(zombie);
 				}
 			}
@@ -154,7 +154,7 @@ public class PVZInvasionData extends WorldSavedData {
 		if (nbt.contains("plant_spawn_entries")) {
 			CompoundNBT tag = nbt.getCompound("plant_spawn_entries");
 			for (PlantType plant : PlantType.getPlants()) {
-				if (tag.contains(plant.getIdentity())) {
+				if (tag.contains(plant.getIdentity()) && tag.getBoolean("has_" + plant.getIdentity())) {
 					this.addPlantSpawnEntry(plant);
 				}
 			}
