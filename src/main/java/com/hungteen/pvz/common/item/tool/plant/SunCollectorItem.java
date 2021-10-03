@@ -10,7 +10,6 @@ import com.hungteen.pvz.utils.PlayerUtil;
 import com.hungteen.pvz.utils.enums.Resources;
 
 import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.entity.projectile.ProjectileHelper;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.stats.Stats;
@@ -103,8 +102,7 @@ public class SunCollectorItem extends Item{
 	 */
 	@Nullable
 	protected EntityRayTraceResult rayTraceEntities(World world, PlayerEntity player, double range, Vector3d startVec, Vector3d endVec) {
-		return ProjectileHelper.getEntityHitResult(world, player, startVec, endVec, 
-				player.getBoundingBox().inflate(range), (entity) -> {
+		return EntityUtil.rayTraceEntities(world, player, startVec, endVec, entity -> {
 			return entity instanceof SunEntity && entity.isAlive();
 		});
 	}

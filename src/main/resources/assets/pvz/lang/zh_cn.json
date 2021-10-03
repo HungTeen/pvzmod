@@ -14,6 +14,7 @@
 // 物品组
 // 帕秋莉
 // 按键绑定
+// 杂项
 //***********************************
 //-----------------------------------------物品-----------------------------------------
     "item.pvz.origin_essence":"原始精华",
@@ -145,9 +146,18 @@
     "block.pvz.gold_sunflower_trophy":"黄金向日葵雕像",
     "block.pvz.diamond_sunflower_trophy":"钻石向日葵雕像",
 //-----------------------------------------工具提示-----------------------------------------
+    "tooltip.pvz.card_sun_cost":"基础阳光消耗 : %d",
+    "tooltip.pvz.card_cd":"基础冷却 : %s",
+    "tooltip.pvz.plant_card":"【植物卡】 : 右击召唤植物",
+    "tooltip.pvz.upgrade_card":"只能种在%s上",
+    "tooltip.pvz.doom_shroom_card":"注意此植物会严重破坏地形，尤其是地表上方 !",
+    "tooltip.pvz.cob_cannon_card":"只能种在两个相邻的玉米投手上",
+    "tooltip.pvz.gold_leaf_card":"只能种在金块或黄金瓷砖上 !",
+    "tooltip.pvz.imitater_card.enjoy_card":"不能种植，但是可以在精华祭坛随机给任意植物加经验",
+    "tooltip.pvz.imitater_card.empty":"左持此卡并右击来打开模仿界面",
+    "tooltip.pvz.imitater_card.full":"正在模仿 : [%s]",
+    
     "tooltip.pvz.zombie_flag":"右键会获得加速效果",
-    "tooltip.pvz.plant_card":"右击实体或方块召唤植物",
-    "tooltip.pvz.sun_cost":"阳光消耗",
     "tooltip.pvz.pea_gun":"主手右键发射豌豆,副手右键打开界面",
     "tooltip.pvz.sun_storage_amount":"阳光储量",
     "tooltip.pvz.bowling_glove.empty":"右击坚果墙或其他保龄球植物来使用",
@@ -157,19 +167,6 @@
     "tooltip.pvz.jack_box":"右击会有惊喜",
     "tooltip.pvz.balloon":"右键会获得缓降效果",
     "tooltip.pvz.zomboss_doll":"需要11*11*15的空旷地面才能召唤",
-    "tooltip.pvz.doom_shroom_card":"注意此植物会破坏地形",
-    "tooltip.pvz.gatling_pea_card":"只能种在双枪射手上",
-    "tooltip.pvz.twin_sunflower_card":"只能种在向日葵上",
-    "tooltip.pvz.gloom_shroom_card":"只能种在大喷菇上",
-    "tooltip.pvz.cat_tail_card":"只能种在睡莲上",
-    "tooltip.pvz.gold_magnet_card":"只能种在磁力菇上",
-    "tooltip.pvz.winter_melon_card":"只能种在西瓜投手上",
-    "tooltip.pvz.spike_rock_card":"只能种在地刺上",
-    "tooltip.pvz.cob_cannon_card":"只能种在两个相邻的玉米投手上",
-    "tooltip.pvz.giant_wall_nut_card":"只能种在坚果墙上",
-    "tooltip.pvz.imitater_card.no":"不能用于模仿种植，但是可以在精华祭坛随机给植物加经验",
-    "tooltip.pvz.imitater_card.empty":"左持该物品右击来打开模仿者界面",
-    "tooltip.pvz.imitater_card.yes":"当前模仿的植物",
     "item.pvz.zombie_on_your_lawn.desc":"Laura Shigihara - Zombies on your lawn",
     "tooltip.pvz.level":"等级",
     "tooltip.pvz.defence":"护甲血量",
@@ -813,13 +810,27 @@
     "help.pvz.cd":"正在冷却中 ！",
 //-----------------------------------------附魔-----------------------------------------
     "enchantment.pvz.sun_cost_reduce":"节能",
-    "enchantment.pvz.break_out":"爆发",
-    "enchantment.pvz.energy_transfer":"充能",
+    "enchantment.pvz.sun_cost_reduce.desc":"节省少量阳光消耗",
+    "enchantment.pvz.break_out":"能力觉醒",
+    "enchantment.pvz.break_out.desc":"召唤的植物有概率释放大招",
+    "enchantment.pvz.energy_transfer":"能量释放",
+    "enchantment.pvz.energy_transfer.desc":"用剑右击植物可以消耗能量豆释放大招",
     "enchantment.pvz.tree_protection":"树之庇护",
+    "enchantment.pvz.tree_protection.desc":"使受到的伤害不大于自身最大血量",
     "enchantment.pvz.charm":"魅惑",
+    "enchantment.pvz.charm.desc":"召唤的生物会被魅惑",
     "enchantment.pvz.sun_shovel":"阳光铲",
+    "enchantment.pvz.sun_shovel.desc":"铲除植物时会根据其种植消耗返还阳光",
     "enchantment.pvz.sun_mending":"阳光修补",
+    "enchantment.pvz.sun_mending.desc":"收集阳光来修补装备耐久",
     "enchantment.pvz.soilless_plant":"无土栽培",
+    "enchantment.pvz.soilness_plant.desc":"使植物可以独立种植在任意陆地上",
+    "enchantment.pvz.level_up":"进阶",
+    "enchantment.pvz.level_up.desc":"召唤的生物有概率随机提升一定等级",
+    "enchantment.pvz.immediate_cd":"瞬间冷却",
+    "enchantment.pvz.immediate_cd.desc":"使用召唤卡有概率大幅减免冷却",
+    "enchantment.pvz.densely_plant":"合理密植",
+    "enchantment.pvz.densely_plant.desc":"增加植物的种植上限",
 //-----------------------------------------药水 & 效果-----------------------------------------
     "effect.pvz.cold":"寒冷",
     "effect.pvz.frozen":"冰封",
@@ -881,5 +892,18 @@
     "key.pvz.show_resources":"展示/隐藏玩家属性UI",
     "key.pvz.show_progress":"展示/隐藏入侵进度",
     "key.pvz.left_toggle":"向左切换资源展示",
-    "key.pvz.right_toggle":"向右切换资源展示"
+    "key.pvz.right_toggle":"向右切换资源展示",
+//-----------------------------------------杂项-----------------------------------------
+    "misc.pvz.cd.default":"初始",
+    "misc.pvz.cd.super_fast":"超级快",
+    "misc.pvz.cd.huge_fast":"非常快",
+    "misc.pvz.cd.very_fast":"很快",
+    "misc.pvz.cd.fast":"快",
+    "misc.pvz.cd.little_fast":"较快",
+    "misc.pvz.cd.normal":"一般", 
+    "misc.pvz.cd.little_slow":"较慢",
+    "misc.pvz.cd.slow":"慢",
+    "misc.pvz.cd.very_slow":"很慢",
+    "misc.pvz.cd.huge_slow":"非常慢",
+    "misc.pvz.cd.super_slow":"超级慢"
 }

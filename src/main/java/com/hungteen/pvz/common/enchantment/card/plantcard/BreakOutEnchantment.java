@@ -1,9 +1,8 @@
 package com.hungteen.pvz.common.enchantment.card.plantcard;
 
-import java.util.Random;
-
 import com.hungteen.pvz.common.enchantment.EnchantmentRegister;
 import com.hungteen.pvz.common.enchantment.PVZEnchantment;
+import com.hungteen.pvz.common.entity.plant.PVZPlantEntity;
 
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.inventory.EquipmentSlotType;
@@ -16,8 +15,10 @@ public class BreakOutEnchantment extends PVZEnchantment{
 		this.isTradeable = false;
 	}
 
-	public static boolean canBreakOut(Random rand, ItemStack stack) {
-		return rand.nextFloat() * 100 < BreakOutEnchantment.getPlantBreakOutChance(stack);
+	public static void checkAndBreakOut(PVZPlantEntity plantEntity, ItemStack stack) {
+		if(plantEntity.canStartSuperMode() && plantEntity.getRandom().nextFloat() * 100 < BreakOutEnchantment.getPlantBreakOutChance(stack)) {
+			plantEntity.startSuperMode(false);
+		}
 	}
 	
 	private static float getPlantBreakOutChance(ItemStack stack) {

@@ -654,6 +654,15 @@ public class EntityUtil {
 	}
 	
 	/**
+	 * get predicate entity with dis and vec. 
+	 */
+	public static EntityRayTraceResult rayTraceEntities(World world, Entity entity, Vector3d lookVec, double dis, Predicate<Entity> predicate) {
+	    final Vector3d start = entity.position().add(0, entity.getEyeHeight(), 0);
+	    final Vector3d end = start.add(lookVec.normalize().scale(dis));
+	    return rayTraceEntities(world, entity, start, end, predicate);
+	}
+	
+	/**
 	 * get predicate entity between start to end. 
 	 */
 	public static EntityRayTraceResult rayTraceEntities(World world, Entity entity, Vector3d startVec, Vector3d endVec, Predicate<Entity> predicate) {

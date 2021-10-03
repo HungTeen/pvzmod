@@ -10,6 +10,7 @@ import com.hungteen.pvz.common.capability.CapabilityHandler;
 import com.hungteen.pvz.common.capability.player.IPlayerDataCapability;
 import com.hungteen.pvz.common.capability.player.PlayerDataManager;
 import com.hungteen.pvz.common.core.PlantType;
+import com.hungteen.pvz.common.item.spawn.card.PlantCardItem;
 import com.hungteen.pvz.common.network.PVZPacketHandler;
 import com.hungteen.pvz.common.network.toclient.AlmanacUnLockPacket;
 import com.hungteen.pvz.common.network.toclient.PlaySoundPacket;
@@ -125,6 +126,13 @@ public class PlayerUtil {
 			    l.getPlayerData().addPlantXp(plant, num);
 		    });
 		}
+	}
+	
+	public static void setCardCD(PlayerEntity player, PlantCardItem card, int cd) {
+		player.getCapability(CapabilityHandler.PLAYER_DATA_CAPABILITY).ifPresent(l -> {
+			l.getPlayerData().setPlantCardCD(card.plantType, cd);
+		});
+		player.getCooldowns().addCooldown(card, cd);
 	}
 	
 	public static void clonePlayerData(PlayerEntity oldPlayer, PlayerEntity newPlayer) {

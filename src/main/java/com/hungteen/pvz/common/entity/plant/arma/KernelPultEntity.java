@@ -1,16 +1,14 @@
 package com.hungteen.pvz.common.entity.plant.arma;
 
 import java.util.List;
-import java.util.Optional;
 
 import com.hungteen.pvz.common.core.PlantType;
 import com.hungteen.pvz.common.entity.bullet.ButterEntity;
 import com.hungteen.pvz.common.entity.bullet.KernelEntity;
 import com.hungteen.pvz.common.entity.bullet.PultBulletEntity;
+import com.hungteen.pvz.common.entity.plant.PVZPlantEntity;
 import com.hungteen.pvz.common.entity.plant.base.PlantPultEntity;
 import com.hungteen.pvz.common.impl.plant.PVZPlants;
-import com.hungteen.pvz.common.item.spawn.card.ImitaterCardItem;
-import com.hungteen.pvz.common.item.spawn.card.PlantCardItem;
 import com.hungteen.pvz.register.EffectRegister;
 import com.hungteen.pvz.utils.EntityUtil;
 
@@ -20,21 +18,18 @@ import net.minecraft.entity.EntityType;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.Pose;
 import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.network.datasync.DataParameter;
 import net.minecraft.network.datasync.DataSerializers;
 import net.minecraft.network.datasync.EntityDataManager;
 import net.minecraft.potion.EffectInstance;
-import net.minecraft.util.ActionResultType;
-import net.minecraft.util.Hand;
-import net.minecraft.util.math.vector.Vector3d;
 import net.minecraft.world.World;
 
 public class KernelPultEntity extends PlantPultEntity {
 
 	private static final DataParameter<Integer> CURRENT_BULLET = EntityDataManager.defineId(KernelPultEntity.class, DataSerializers.INT);
 	private static final int BUTTER_CHANCE = 10;
+	private KernelPultEntity upgradeEntity;
 	
 	public KernelPultEntity(EntityType<? extends CreatureEntity> type, World worldIn) {
 		super(type, worldIn);
@@ -47,42 +42,25 @@ public class KernelPultEntity extends PlantPultEntity {
 	}
 	
 	@Override
-	public ActionResultType interactAt(PlayerEntity player, Vector3d vec3d, Hand hand) {
-		if(! level.isClientSide && hand == Hand.MAIN_HAND && ! EntityUtil.canTargetEntity(this, player)) {
-//			ItemStack stack = player.getItemInHand(hand);
-//			if(stack.getItem() instanceof PlantCardItem) {
-//				PlantCardItem item = (PlantCardItem) stack.getItem();
-//				if(item.plantType == PVZPlants.COB_CANNON) {
-//					Optional<KernelPultEntity> pult = this.getNearByPult(player);
-//					if(pult.isPresent()) {
-//						PlantCardItem.checkSunAndSummonPlant(player, stack, item, blockPosition(), (plantEntity) -> {
-//							this.onPlantUpgrade(plantEntity);
-//							plantEntity.plantSunCost += pult.get().plantSunCost;
-//							pult.get().remove();
-//						});
-//					}
-//				} else if(item instanceof ImitaterCardItem && ((ImitaterCardItem) item).isPlantTypeEqual(stack, PVZPlants.COB_CANNON)) {
-//					Optional<KernelPultEntity> pult = this.getNearByPult(player);
-//					if(pult.isPresent()) {
-//					    ImitaterCardItem.checkSunAndSummonImitater(player, stack, item, blockPosition(), (imitater) -> {
-//						    imitater.targetPlantEntity = Optional.of(this);
-//						    imitater.plantSunCost += pult.get().plantSunCost;
-//						    pult.get().remove();
-//					    });
-//					}
-//				}
-//			}
+	public void onPlantUpgrade(PVZPlantEntity plantEntity) {
+		super.onPlantUpgrade(plantEntity);
+		if(this.upgradeEntity != null) {
+			this.upgradeEntity.remove();
 		}
-		return super.interactAt(player, vec3d, hand);
 	}
 	
-	private Optional<KernelPultEntity> getNearByPult(PlayerEntity player){
+	@Override
+	public boolean canBeUpgrade(PlayerEntity player) {
+		this.upgradeEntity = this.getNearByPult(player);
+		return super.canBeUpgrade(player) && EntityUtil.isEntityValid(this.upgradeEntity);
+	}
+	
+	private KernelPultEntity getNearByPult(PlayerEntity player){
 		final float range = 1.5F;
 		List<KernelPultEntity> list = level.getEntitiesOfClass(KernelPultEntity.class, EntityUtil.getEntityAABB(this, range, range), pult -> {
-			return ! pult.is(this) && pult.getPlantType() == PVZPlants.KERNEL_PULT && ! EntityUtil.canTargetEntity(pult, player);
+			return ! pult.is(this) && pult.getPlantType() == PVZPlants.KERNEL_PULT && ! EntityUtil.canAttackEntity(pult, player);
 		});
-		if(list.isEmpty()) return Optional.empty();
-		return Optional.ofNullable(list.get(0));
+		return list.size() == 0 ? null : list.get(0);
 	}
 	
 	@Override

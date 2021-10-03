@@ -10,6 +10,7 @@ import javax.annotation.Nullable;
 import com.hungteen.pvz.client.render.itemstack.ImitaterCardISTER;
 import com.hungteen.pvz.common.container.ImitaterContainer;
 import com.hungteen.pvz.common.container.inventory.ItemInventory;
+import com.hungteen.pvz.common.core.ICoolDown;
 import com.hungteen.pvz.common.core.PlantType;
 import com.hungteen.pvz.common.entity.plant.magic.ImitaterEntity;
 import com.hungteen.pvz.common.impl.plant.PVZPlants;
@@ -18,6 +19,7 @@ import com.hungteen.pvz.utils.PlayerUtil;
 import com.mojang.datafixers.util.Pair;
 
 import net.minecraft.client.util.ITooltipFlag;
+import net.minecraft.enchantment.Enchantment;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.entity.player.ServerPlayerEntity;
@@ -117,8 +119,10 @@ public class ImitaterCardItem extends PlantCardItem {
 			if(i instanceof ImitaterEntity) {
 				final ImitaterEntity imitater = (ImitaterEntity) i;
 				imitater.setImitateCard(plantStack.copy());
-    	        imitater.placeDirection = player.getDirection().getOpposite();
+    	        imitater.setDirection(player.getDirection().getOpposite());
 		        imitater.onSpawnedByPlayer(player, PlayerUtil.getPlantLvl(player, cardItem.plantType), cardItem.getBasisSunCost(plantStack));
+		        /* enchantment effects */
+				enchantPlantEntityByCard(imitater, plantStack);
 		        consumer.accept(imitater);
 			}
 		});
@@ -129,32 +133,27 @@ public class ImitaterCardItem extends PlantCardItem {
 		return opt.isPresent() && opt.get() == tmp;
 	}
 	
-//	public int getImitateSunCost(ItemStack stack) {
-//		Optional<PlantType> opt = getImitatePlantType(stack);
-//		if(! opt.isPresent() || opt.get() == PVZPlants.IMITATER) return - 1;
-//		int cost = opt.get().getCost();
-//		return Math.max(cost - EnchantmentUtil.getSunReduceNum(stack), 0);
-//	}
-//	
-//	@Override
-//	public int getPlantCardCD(PlayerEntity player, ItemStack stack, PlantType plant, int lvl) {
-//		Optional<PlantType> opt = getImitatePlantType(stack);
-//		if(! opt.isPresent() || opt.get() == PVZPlants.IMITATER) {
-//			System.out.println("ERROR : Wrong Use of Imitater Card !");
-//			return 100;
-//		}
-//		return super.getPlantCardCD(player, stack, opt.get(), lvl);
-//	}
+	@Override
+	public int getBasisSunCost(ItemStack stack) {
+		return super.getBasisSunCost(getDoubleStack(stack).getSecond());
+	}
 	
+	@Override
+	public ICoolDown getBasisCoolDown(ItemStack stack) {
+		return super.getBasisCoolDown(getDoubleStack(stack).getSecond());
+	}
+	
+	@Override
+	public boolean canApplyAtEnchantingTable(ItemStack stack, Enchantment enchantment) {
+		return false;//can not enchant.
+	}
+	
+	/**
+	 * first is imitater card item, second is imitated card item.
+	 */
 	public static Pair<ItemStack, ItemStack> getDoubleStack(ItemStack stack){
 		final Inventory inv = getInventory(stack);
-		if(inv != null) {
-			final ItemStack itemstack = getInventory(stack).getItem(0);
-			if(itemstack.getItem() instanceof PlantCardItem) {
-				return Pair.of(stack, itemstack);
-			}
-		}
-		return Pair.of(stack, stack);
+		return inv != null ? Pair.of(stack, inv.getItem(0)) : Pair.of(stack, stack);
 	}
 	
 	public static Optional<PlantType> getImitatePlantType(ItemStack stack) {
@@ -175,15 +174,15 @@ public class ImitaterCardItem extends PlantCardItem {
 	@Override
 	public void appendHoverText(ItemStack stack, World worldIn, List<ITextComponent> tooltip, ITooltipFlag flagIn) {
 		if(this.isEnjoyCard) {
-			tooltip.add(new TranslationTextComponent("tooltip.pvz.imitater_card.no").withStyle(TextFormatting.RED));
+			tooltip.add(new TranslationTextComponent("tooltip.pvz.imitater_card.enjoy_card").withStyle(TextFormatting.RED));
 			return ;
 		}
 		Optional<PlantType> opt = getImitatePlantType(stack);
 		if(! opt.isPresent()) {
 			tooltip.add(new TranslationTextComponent("tooltip.pvz.imitater_card.empty").withStyle(TextFormatting.RED));
 		} else {
-			super.appendHoverText(stack, worldIn, tooltip, flagIn);
-			tooltip.add(new TranslationTextComponent("tooltip.pvz.imitater_card.yes").append(":").append(new TranslationTextComponent("entity.pvz." + opt.get().toString().toLowerCase())).withStyle(TextFormatting.LIGHT_PURPLE));
+			tooltip.add(new TranslationTextComponent("tooltip.pvz.imitater_card.full", opt.get().getText().toString()).withStyle(TextFormatting.LIGHT_PURPLE));
+		    super.appendHoverText(getDoubleStack(stack).getSecond(), worldIn, tooltip, flagIn);
 		}
 	}
 	

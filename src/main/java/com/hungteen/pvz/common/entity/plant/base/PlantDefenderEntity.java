@@ -4,23 +4,17 @@ import com.hungteen.pvz.api.interfaces.ICanBeAttracted;
 import com.hungteen.pvz.common.entity.ai.goal.misc.PlantAttractGoal;
 import com.hungteen.pvz.common.entity.plant.PVZPlantEntity;
 import com.hungteen.pvz.common.entity.plant.defence.PumpkinEntity;
-import com.hungteen.pvz.common.item.spawn.card.PlantCardItem;
 import com.hungteen.pvz.utils.interfaces.ICanAttract;
 
 import net.minecraft.entity.CreatureEntity;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.MobEntity;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.network.datasync.DataParameter;
 import net.minecraft.network.datasync.DataSerializers;
 import net.minecraft.network.datasync.EntityDataManager;
-import net.minecraft.util.ActionResultType;
 import net.minecraft.util.DamageSource;
-import net.minecraft.util.Hand;
-import net.minecraft.util.math.vector.Vector3d;
 import net.minecraft.world.World;
 
 public abstract class PlantDefenderEntity extends PVZPlantEntity implements ICanAttract {
@@ -74,35 +68,6 @@ public abstract class PlantDefenderEntity extends PVZPlantEntity implements ICan
 	@Override
 	protected float getCurrentDefenceHealth() {
 		return super.getCurrentDefenceHealth() + this.getDefenceLife();
-	}
-	
-	@Override
-	public ActionResultType interactAt(PlayerEntity player, Vector3d vec3d, Hand hand) {
-		super.interactAt(player, vec3d, hand);
-		ItemStack stack = player.getItemInHand(hand);
-		if(stack.getItem() instanceof PlantCardItem && this.getHealth() != this.getMaxHealth()) {
-//			PlantCardItem cardItem = (PlantCardItem) stack.getItem();
-//			if(cardItem.plantType == this.getPlantType()) { // nut heal 
-//				if(! level.isClientSide) {
-//					PlantCardItem.checkSunAndHealPlant(player, this, cardItem, stack);
-//				} else {
-//					for(int i = 0; i < 4; ++ i) {
-//						this.level.addParticle(ParticleTypes.HEART, this.getX(), this.getY() + this.getBbHeight(), this.getZ(), (this.getRandom().nextFloat()-0.5f)/8, 0.05f, (this.getRandom().nextFloat()-0.5f)/8);
-//					}
-//				}
-//				return ActionResultType.CONSUME;
-//			} else if(cardItem instanceof ImitaterCardItem && ((ImitaterCardItem) cardItem).isPlantTypeEqual(stack, this.getPlantType())) {
-//				if(! level.isClientSide) {
-//					PlantCardItem.checkSunAndHealPlant(player, this, cardItem, stack);
-//				} else {
-//					for(int i = 0; i < 4; ++ i) {
-//						this.level.addParticle(ParticleTypes.HEART, this.getX(), this.getY() + this.getBbHeight(), this.getZ(), (this.getRandom().nextFloat()-0.5f)/8, 0.05f, (this.getRandom().nextFloat()-0.5f)/8);
-//					}
-//				}
-//				return ActionResultType.CONSUME;
-//			}
-		}
-		return ActionResultType.FAIL;
 	}
 	
 	@Override

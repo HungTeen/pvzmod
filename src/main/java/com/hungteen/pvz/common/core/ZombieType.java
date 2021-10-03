@@ -320,8 +320,8 @@ public abstract class ZombieType {
 		protected Supplier<EntityType<? extends PVZZombieEntity>> zombieEntitySup;
 //		protected Supplier<? extends PlantCardItem> summonCardSup;
 //		protected Supplier<? extends PlantCardItem> enjoyCardSup;
-		protected Optional<IZombieModel<? extends PVZZombieEntity>> zombieModel1;
-		protected Optional<IZombieModel<? extends PVZZombieEntity>> zombieModel2;
+		protected Optional<IZombieModel<? extends PVZZombieEntity>> zombieModel1 = Optional.empty();
+		protected Optional<IZombieModel<? extends PVZZombieEntity>> zombieModel2 = Optional.empty();
 		
 //		/**
 //		 * set the sun cost of plant.

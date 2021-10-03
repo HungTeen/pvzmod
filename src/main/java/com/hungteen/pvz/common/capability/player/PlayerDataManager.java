@@ -15,7 +15,6 @@ import com.hungteen.pvz.common.container.shop.MysteryShopContainer;
 import com.hungteen.pvz.common.core.PlantType;
 import com.hungteen.pvz.common.event.events.PlayerLevelUpEvent.PlantLevelUpEvent;
 import com.hungteen.pvz.common.event.events.PlayerLevelUpEvent.TreeLevelUpEvent;
-import com.hungteen.pvz.common.impl.Bundles;
 import com.hungteen.pvz.common.item.spawn.card.SummonCardItem;
 import com.hungteen.pvz.common.network.PVZPacketHandler;
 import com.hungteen.pvz.common.network.toclient.CardInventoryPacket;
@@ -61,7 +60,8 @@ public class PlayerDataManager {
 		{// init card inventory.
 			for(int i = 0; i <= Resources.SLOT_NUM.max; ++ i) {
 //				this.setItemAt(ItemStack.EMPTY, i);
-				this.cards.add(Bundles.RANDOM_ALL.getEnjoyCard(player.getRandom()));
+				this.cards.add(ItemStack.EMPTY);
+//				this.cards.add(Bundles.RANDOM_ALL.getEnjoyCard(player.getRandom()));
 			}
 		}
 		{// init plant level and cd.

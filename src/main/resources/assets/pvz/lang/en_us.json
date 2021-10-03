@@ -14,6 +14,7 @@
 // ItemGroups
 // Patchouli
 // KeyBinds
+// Misc
 //***********************************
 //-----------------------------------------Items-----------------------------------------
     "item.pvz.origin_essence":"Origin Essence",
@@ -145,9 +146,19 @@
     "block.pvz.gold_sunflower_trophy":"Gold Sunflower Trophy",
     "block.pvz.diamond_sunflower_trophy":"Diamond Sunflower Trophy",
 //-----------------------------------------Tool Tips-----------------------------------------
+    "tooltip.pvz.card_sun_cost":"Basic Sun Cost : %d",
+    "tooltip.pvz.card_cd":"Basic CD : %s",
+    "tooltip.pvz.plant_card_info":"[Plant Card] : Right click to summon plant",
+    "tooltip.pvz.upgrade_card":"Can only place on %s",
+    "tooltip.pvz.doom_shroom_card":"This plant will severely destroy blocks, especially above the surface !",
+    "tooltip.pvz.cob_cannon_card":"Can only place on 2 nearby KernelPult",
+    "tooltip.pvz.gold_leaf_card":"Can only place on gold block or gold tiles !",
+    "tooltip.pvz.imitater_card.enjoy_card":"Can not use, but it can level up for random plants on Essence Altar",
+    "tooltip.pvz.imitater_card.empty":"right click imitater card while holding with left hand to open imitate gui",
+    "tooltip.pvz.imitater_card.full":"Current Imitate Plant : [%s]",
+    
     "tooltip.pvz.zombie_flag":"Right Click to get a speed effect",
-    "tooltip.pvz.plant_card":"Right click entity or block to summon plant",
-    "tooltip.pvz.sun_cost":"Sun Cost",
+    
     "tooltip.pvz.pea_gun":"Main hand right click to shoot,off hand to open gui",
     "tooltip.pvz.sun_storage_amount":"Sun Amount",
     "tooltip.pvz.bowling_glove.empty":"Right click WallNut or other Bowling Plants to use",
@@ -157,19 +168,6 @@
     "tooltip.pvz.jack_box":"Right Click to get surprise",
     "tooltip.pvz.balloon":"Right Click to get a slow fall effect",
     "tooltip.pvz.zomboss_doll":"Need 11 * 11 * 15 air block place to summon",
-    "tooltip.pvz.doom_shroom_card":"Warn: This plant can destroy block !",
-    "tooltip.pvz.gatling_pea_card":"Can only place on Repeater",
-    "tooltip.pvz.twin_sunflower_card":"Can only place on Sunflower",
-    "tooltip.pvz.gloom_shroom_card":"Can only place on FumeShroom",
-    "tooltip.pvz.cat_tail_card":"Can only place on LilyPad",
-    "tooltip.pvz.gold_magnet_card":"Can only place on MagnetShroom",
-    "tooltip.pvz.winter_melon_card":"Can only place on MelonPult",
-    "tooltip.pvz.spike_rock_card":"Can only place on SpikeWeed",
-    "tooltip.pvz.cob_cannon_card":"Can only place on 2 nearby KernelPult",
-    "tooltip.pvz.giant_wall_nut_card":"Can only place on WallNut",
-    "tooltip.pvz.imitater_card.no":"Can not use to imitate, can level up for random plants on essence_altar.",
-    "tooltip.pvz.imitater_card.empty":"right click imitater card held in left hand to open imitate gui.",
-    "tooltip.pvz.imitater_card.yes":"Current Imitate Plants",
     "item.pvz.zombie_on_your_lawn.desc":"Laura Shigihara - Zombies on your lawn",
     "tooltip.pvz.level":"Level",
     "tooltip.pvz.defence":"Defence HP",
@@ -813,13 +811,27 @@
     "help.pvz.cd":"Please wait for cooling !",
 //-----------------------------------------Enchantments-----------------------------------------
     "enchantment.pvz.sun_cost_reduce":"Sun Reduce",
+    "enchantment.pvz.sun_cost_reduce.desc":"Reduce sun cost of summon cards",
     "enchantment.pvz.break_out":"Break Out",
+    "enchantment.pvz.break_out.desc":"plants have chance to be super when summon",
     "enchantment.pvz.energy_transfer":"Energy Transfer",
+    "enchantment.pvz.energy_transfer.desc":"Use swords right click plants to use plant food",
     "enchantment.pvz.tree_protection":"Tree Protection",
+    "enchantment.pvz.tree_protection.desc":"Make received damage not higher than its max health",
     "enchantment.pvz.charm":"Charm",
+    "enchantment.pvz.charm.desc":"Living summon by card will be charmed",
     "enchantment.pvz.sun_shovel":"Sun Shovel",
+    "enchantment.pvz.sun_shovel.desc":"Plants will drop sun when being shoveled",
     "enchantment.pvz.sun_mending":"Sun Mending",
+    "enchantment.pvz.sun_mending.desc":"Repairing item when collecting sun",
     "enchantment.pvz.soilless_plant":"Soilless Plant",
+    "enchantment.pvz.soilless_plant.desc":"Make plants able to live on land independently",
+    "enchantment.pvz.level_up":"Level Up",
+    "enchantment.pvz.level_up.desc":"Living summon by card will have chance to have higher level",
+    "enchantment.pvz.immediate_cd":"Immediate CoolDown",
+    "enchantment.pvz.immediate_cd.desc":"Summon cards have chance to instant cool down(1 second)",
+    "enchantment.pvz.densely_plant":"Densely Plant",
+    "enchantment.pvz.densely_plant.desc":"Allow to place more plants in an area",
 //-----------------------------------------Potions & Effects-----------------------------------------
     "effect.pvz.cold":"Cold",
     "effect.pvz.frozen":"Frozen",
@@ -881,5 +893,18 @@
     "key.pvz.show_resources":"Turn on/off Player Resources UI",
     "key.pvz.show_progress":"Turn on/off Invasion Progress",
     "key.pvz.left_toggle":"Left Toggle Resource UI",
-    "key.pvz.right_toggle":"Right Toggle Resource UI"
+    "key.pvz.right_toggle":"Right Toggle Resource UI",
+//-----------------------------------------杂项-----------------------------------------
+    "misc.pvz.cd.default":"Default",
+    "misc.pvz.cd.super_fast":"Super Fast",
+    "misc.pvz.cd.huge_fast":"Huge Fast",
+    "misc.pvz.cd.very_fast":"Very Fast",
+    "misc.pvz.cd.fast":"Fast",
+    "misc.pvz.cd.little_fast":"Little Fast",
+    "misc.pvz.cd.normal":"Normal", 
+    "misc.pvz.cd.little_slow":"Little Slow",
+    "misc.pvz.cd.slow":"Slow",
+    "misc.pvz.cd.very_slow":"Very Slow",
+    "misc.pvz.cd.huge_slow":"Huge Slow",
+    "misc.pvz.cd.super_slow":"Super Slow"
 }

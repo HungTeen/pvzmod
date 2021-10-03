@@ -75,6 +75,7 @@ public class ChomperBlock extends BushBlock{
 					if(Math.abs(pos.getY() - tmp.getY()) < 5 && mayPlaceOn(worldIn.getBlockState(tmp), worldIn, tmp)) {
 						if(worldIn.isEmptyBlock(tmp.above())){
 							if(! worldIn.isClientSide) {
+								player.getItemInHand(handIn).shrink(1);
 							    if(this.RANDOM.nextFloat() < 0.2F) {
 								    worldIn.setBlockAndUpdate(tmp.above(), BlockRegister.CHOMPER.get().defaultBlockState().rotate(Rotation.getRandom(RANDOM)));
 							    }

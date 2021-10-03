@@ -1,4 +1,4 @@
-package com.hungteen.pvz.register;
+package com.hungteen.pvz.client;
 
 import java.util.Map;
 
@@ -19,6 +19,10 @@ import com.hungteen.pvz.client.particle.SporeParticle;
 import com.hungteen.pvz.client.particle.YellowFlameParticle;
 import com.hungteen.pvz.client.particle.bomb.CherryBombParticle;
 import com.hungteen.pvz.client.particle.bomb.PotatoMineParticle;
+import com.hungteen.pvz.register.BlockRegister;
+import com.hungteen.pvz.register.ItemRegister;
+import com.hungteen.pvz.register.ParticleRegister;
+import com.hungteen.pvz.register.TileEntityRegister;
 import com.mojang.datafixers.util.Pair;
 
 import net.minecraft.client.Minecraft;

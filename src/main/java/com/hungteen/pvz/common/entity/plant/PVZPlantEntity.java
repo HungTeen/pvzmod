@@ -22,11 +22,13 @@ import com.hungteen.pvz.common.entity.plant.defence.PumpkinEntity.PumpkinInfo;
 import com.hungteen.pvz.common.entity.plant.enforce.SquashEntity;
 import com.hungteen.pvz.common.entity.plant.explosion.DoomShroomEntity;
 import com.hungteen.pvz.common.entity.plant.light.GoldLeafEntity;
+import com.hungteen.pvz.common.entity.plant.magic.CoffeeBeanEntity;
 import com.hungteen.pvz.common.entity.plant.spear.SpikeWeedEntity;
 import com.hungteen.pvz.common.entity.zombie.PVZZombieEntity;
 import com.hungteen.pvz.common.entity.zombie.grass.TombStoneEntity;
 import com.hungteen.pvz.common.entity.zombie.roof.BungeeZombieEntity;
 import com.hungteen.pvz.common.event.handler.PlayerEventHandler;
+import com.hungteen.pvz.common.impl.plant.PVZPlants;
 import com.hungteen.pvz.common.item.spawn.card.PlantCardItem;
 import com.hungteen.pvz.common.misc.damage.PVZDamageSource;
 import com.hungteen.pvz.register.EffectRegister;
@@ -58,6 +60,7 @@ import net.minecraft.network.datasync.DataParameter;
 import net.minecraft.network.datasync.DataSerializers;
 import net.minecraft.network.datasync.EntityDataManager;
 import net.minecraft.potion.EffectInstance;
+import net.minecraft.potion.Effects;
 import net.minecraft.server.management.PreYggdrasilConverter;
 import net.minecraft.tags.FluidTags;
 import net.minecraft.util.ActionResultType;
@@ -615,6 +618,14 @@ public abstract class PVZPlantEntity extends CreatureEntity implements IHasOwner
 	}
 	
 	/**
+	 * {@link PlantCardItem#checkSunAndHealPlant(PlayerEntity, PVZPlantEntity, PlantCardItem, ItemStack)}
+	 */
+	public void onHealByCard() {
+		this.addEffect(new EffectInstance(Effects.HEAL, 40, 255, true, false));
+		EntityUtil.playSound(this, this.getSpawnSound());
+	}
+	
+	/**
 	 * outer plant is shoveled or eaten.
 	 * {@link PlayerEventHandler#onPlantShovelByPlayer(PlayerEntity, PVZPlantEntity, net.minecraft.item.ItemStack)}
 	 */
@@ -634,7 +645,7 @@ public abstract class PVZPlantEntity extends CreatureEntity implements IHasOwner
 		// remove old plant itself
 		this.remove();
 	}
-
+	
 	@Override
 	public ActionResultType interactAt(PlayerEntity player, Vector3d vec3d, Hand hand) {
 		if (! level.isClientSide) {
@@ -644,41 +655,19 @@ public abstract class PVZPlantEntity extends CreatureEntity implements IHasOwner
 				if(PlantCardItem.checkSunAndHealPlant(player, this, item, stack)) {
 				} else if(PlantCardItem.checkSunAndUpgradePlant(player, this, item, stack)){
 				} else if(PlantCardItem.checkSunAndOuterPlant(player, this, item, stack)) {
+				} else if(PlantCardItem.checkSunAndInteractEntity(player, this, item, stack, type -> {
+					return type == PVZPlants.COFFEE_BEAN;
+				}, plantEntity -> {
+					if(plantEntity instanceof CoffeeBeanEntity) {
+						plantEntity.startRiding(this);
+					}
+				})) {
+					
 				}
 				return ActionResultType.SUCCESS;
 			}
 		}
 		return super.interactAt(player, vec3d, hand);
-//				} else if (!this.getPlantType().isBigPlant && item instanceof ImitaterCardItem
-//						&& ((ImitaterCardItem) item).isPlantTypeEqual(stack, Plants.PUMPKIN)) {
-//					if (this.outerPlant.isPresent() && this.outerPlant.get() == Plants.PUMPKIN) {
-//						if (this.getPumpkinLife() < PlantUtil.PUMPKIN_LIFE) { // heal pumpkin
-//							PlantCardItem.checkSunAndHealPlant(player, this, item, stack);
-//						}
-//					} else { // place pumpkin on plant entity
-//						PlantCardItem.checkSunAndOuterPlant(player, this, item, stack);
-//					}
-//				} else if (item.plantType == PVZPlants.COFFEE_BEAN) { // place coffee bean on plant entity
-//					PlantCardItem.checkSunAndSummonPlant(player, stack, item, blockPosition(), (plantEntity) -> {
-//						plantEntity.startRiding(this);
-//					});
-//				} else if (item instanceof ImitaterCardItem
-//						&& ((ImitaterCardItem) item).isPlantTypeEqual(stack, PVZPlants.COFFEE_BEAN)) {
-//					ImitaterCardItem.checkSunAndSummonImitater(player, stack, item, blockPosition(), (imitater) -> {
-//						imitater.startRiding(this);
-//					});
-//				} else if (this.getUpgradePlantType() == item.plantType) { // place upgrade plant entity on base plant
-//																			// entity
-//					PlantCardItem.checkSunAndSummonPlant(player, stack, item, blockPosition(), (plantEntity) -> {
-//						this.onPlantUpgrade(plantEntity);
-//					});
-//				} else if (item instanceof ImitaterCardItem
-//						&& ((ImitaterCardItem) item).isPlantTypeEqual(stack, getUpgradePlantType())) {
-//					ImitaterCardItem.checkSunAndSummonImitater(player, stack, item, blockPosition(), (imitater) -> {
-//						imitater.targetPlantEntity = Optional.of(this);
-//					});
-//				}
-//			}
 	}
 
 	/* misc get */
@@ -697,6 +686,10 @@ public abstract class PVZPlantEntity extends CreatureEntity implements IHasOwner
 
 	public boolean canBeCold() {
 		return this.canBeCold;
+	}
+	
+	public boolean canBeUpgrade(PlayerEntity player) {
+		return this.getPlantType().getUpgradeTo().isPresent();
 	}
 	
 	public boolean isPlantInSuperMode() {
@@ -902,7 +895,7 @@ public abstract class PVZPlantEntity extends CreatureEntity implements IHasOwner
 	}
 
 	public void setPlantLvl(int lvl) {
-		entityData.set(PLANT_LVL, lvl);
+		entityData.set(PLANT_LVL, Math.min(lvl, this.getPlantType().getMaxLevel()));
 	}
 
 	public int getPlantLvl() {

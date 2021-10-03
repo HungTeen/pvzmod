@@ -2,6 +2,7 @@ package com.hungteen.pvz.common.item.spawn.card;
 
 import java.util.List;
 
+import com.hungteen.pvz.common.core.ICoolDown;
 import com.hungteen.pvz.common.item.PVZItemGroups;
 
 import net.minecraft.client.util.ITooltipFlag;
@@ -34,21 +35,31 @@ public abstract class SummonCardItem extends Item{
 	}
 	
 	/**
-	 * get final sun cost.
+	 * get base sun cost.
+	 * {@link #appendHoverText(ItemStack, World, List, ITooltipFlag)}
 	 */
-	public static int getItemStackSunCost(ItemStack stack) {
-//		if(stack.getItem() instanceof ImitaterCardItem) {
-//			return ((ImitaterCardItem) stack.getItem()).getImitateSunCost(stack);
-//		}
+	public static int getCardSunCost(ItemStack stack) {
 		if(stack.getItem() instanceof PlantCardItem) {
 			return ((PlantCardItem) stack.getItem()).getBasisSunCost(stack);
 		}
 		return 1;
 	}
 	
+	/**
+	 * get base card cd.
+	 * {@link #appendHoverText(ItemStack, World, List, ITooltipFlag)}
+	 */
+	public static ICoolDown getCardCoolDown(ItemStack stack) {
+		if(stack.getItem() instanceof PlantCardItem) {
+			return ((PlantCardItem) stack.getItem()).getBasisCoolDown(stack);
+		}
+		return ICoolDown.DEFAULT;
+	}
+	
 	@Override
 	public void appendHoverText(ItemStack stack, World worldIn, List<ITextComponent> tooltip, ITooltipFlag flagIn) {
-		tooltip.add(new TranslationTextComponent("tooltip.pvz.sun_cost").append(":" + getItemStackSunCost(stack)).withStyle(TextFormatting.YELLOW));
+		tooltip.add(new TranslationTextComponent("tooltip.pvz.card_sun_cost", getCardSunCost(stack)).withStyle(TextFormatting.YELLOW));
+		tooltip.add(new TranslationTextComponent("tooltip.pvz.card_cd", new TranslationTextComponent(getCardCoolDown(stack).getTranslateKey()).getString()).withStyle(TextFormatting.AQUA));
 	}
 	
 	@Override

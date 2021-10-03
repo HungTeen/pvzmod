@@ -5,14 +5,14 @@ issueTrackerURL="https://github.com/HungTeen/pvzmod/issues"
 
 [[mods]]
 modId="pvz"
-version="0.5.3"
+version="0.6"
 displayName="Plants vs Zombies"
 authors="_HungTeen_" 
-displayURL="https://space.bilibili.com/362855464" 
 logoFile="logo.png" 
-credits="Model Helper : Wolf__Crystal, Men_Tian_Bai, InkyTheSheep, Chompy and so on." 
-description='''
-A mod that brings Plants vs Zombies to Minecraft'''
+displayURL="https://space.bilibili.com/362855464" 
+credits="_HungTeen_, Wolf__Crystal, Grass_Carp, Men_Tian_Bai, InkyTheSheep, Chompy, XXTT and so on." 
+description="A mod that brings Plants vs Zombies to Minecraft !"
+configBackground="pvz:textures/block/origin_block.png"
 
 [[dependencies.pvz]]
     modId="forge"

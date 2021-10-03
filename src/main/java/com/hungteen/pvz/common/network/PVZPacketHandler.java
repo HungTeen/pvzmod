@@ -22,7 +22,7 @@ public class PVZPacketHandler {
 	private static final ResourceLocation CHANNEL_NAME = new ResourceLocation(PVZMod.MOD_ID + ":networking");
 	private static final String PROTOCOL_VERSION = "1.0";
 	
-	public static final SimpleChannel CHANNEL =NetworkRegistry.newSimpleChannel(
+	public static final SimpleChannel CHANNEL = NetworkRegistry.newSimpleChannel(
 			CHANNEL_NAME, 
 			() -> PROTOCOL_VERSION,
 			PROTOCOL_VERSION::equals, 

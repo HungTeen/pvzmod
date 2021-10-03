@@ -1,6 +1,9 @@
 package com.hungteen.pvz.common.item.spawn.card;
 
+import java.util.Arrays;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 import java.util.function.Consumer;
 import java.util.function.Predicate;
 
@@ -8,16 +11,21 @@ import javax.annotation.Nullable;
 
 import com.hungteen.pvz.PVZMod;
 import com.hungteen.pvz.common.advancement.trigger.PlayerPlacePlantTrigger;
-import com.hungteen.pvz.common.capability.CapabilityHandler;
+import com.hungteen.pvz.common.core.ICoolDown;
 import com.hungteen.pvz.common.core.PlantType;
 import com.hungteen.pvz.common.enchantment.EnchantmentRegister;
+import com.hungteen.pvz.common.enchantment.card.ImmediateCDEnchantment;
+import com.hungteen.pvz.common.enchantment.card.LevelUpEnchantment;
 import com.hungteen.pvz.common.enchantment.card.SunReduceEnchantment;
 import com.hungteen.pvz.common.enchantment.card.plantcard.BreakOutEnchantment;
+import com.hungteen.pvz.common.enchantment.card.plantcard.DenselyPlantEnchantment;
 import com.hungteen.pvz.common.enchantment.card.plantcard.SoillessPlantEnchantment;
 import com.hungteen.pvz.common.entity.plant.PVZPlantEntity;
 import com.hungteen.pvz.common.entity.plant.base.PlantDefenderEntity;
 import com.hungteen.pvz.common.entity.plant.magic.ImitaterEntity;
+import com.hungteen.pvz.common.entity.plant.magic.ImitaterEntity.ImitateType;
 import com.hungteen.pvz.common.event.events.SummonCardUseEvent;
+import com.hungteen.pvz.common.impl.plant.OtherPlants;
 import com.hungteen.pvz.common.impl.plant.PVZPlants;
 import com.hungteen.pvz.common.item.PVZItemGroups;
 import com.hungteen.pvz.register.BlockRegister;
@@ -32,6 +40,7 @@ import net.minecraft.advancements.CriteriaTriggers;
 import net.minecraft.block.BlockState;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.enchantment.EnchantmentHelper;
+import net.minecraft.entity.Entity;
 import net.minecraft.entity.SpawnReason;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.ServerPlayerEntity;
@@ -40,8 +49,6 @@ import net.minecraft.item.BlockItemUseContext;
 import net.minecraft.item.ItemGroup;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.ItemUseContext;
-import net.minecraft.potion.EffectInstance;
-import net.minecraft.potion.Effects;
 import net.minecraft.stats.Stats;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.ActionResultType;
@@ -78,6 +85,9 @@ public class PlantCardItem extends SummonCardItem {
 	public static final ITextComponent GROUND_ERROR = new TranslationTextComponent("help.pvz.ground").withStyle(TextFormatting.RED);
 	public static final ITextComponent OUTER_ERROR = new TranslationTextComponent("help.pvz.outer").withStyle(TextFormatting.RED);
 	public static final ITextComponent OUTER_FULL = new TranslationTextComponent("help.pvz.outer_full").withStyle(TextFormatting.RED);
+	private static final Set<PlantType> TOOL_TIP_TYPES = new HashSet<>(Arrays.asList(
+			PVZPlants.DOOM_SHROOM, OtherPlants.GOLD_LEAF
+	));
 	public final PlantType plantType;
 
 	public PlantCardItem(PlantType plant, boolean isFragment) {
@@ -143,33 +153,30 @@ public class PlantCardItem extends SummonCardItem {
 	@Override
 	public ActionResult<ItemStack> use(World world, PlayerEntity player, Hand handIn) {
 		final ItemStack heldStack = getHeldStack(player.getItemInHand(handIn));
-		final ItemStack plantStack = getPlantStack(player.getItemInHand(handIn));
+		final ItemStack plantStack = getPlantStack(heldStack);
 		final PlantCardItem cardItem = (PlantCardItem) plantStack.getItem();
 		final PlantType plantType = cardItem.plantType;
+		if(world.isClientSide) {
+			return ActionResult.success(heldStack);
+		}
 		/* check cool down */
 		if(player.getCooldowns().isOnCooldown(heldStack.getItem())) {
 			this.notifyPlayerAndCD(player, heldStack, CD_ERROR);
 			return ActionResult.fail(heldStack);
 		}
-		if(world.isClientSide) {
-			return ActionResult.success(heldStack);
-		}
-		/* check plant type that can not place in water */
-		if(! plantType.isWaterPlant() || (plantType == PVZPlants.CAT_TAIL && ! SoillessPlantEnchantment.isSoilless(plantStack))) {
-			this.notifyPlayerAndCD(player, heldStack, GROUND_ERROR);
-			return ActionResult.fail(heldStack);
-		}
 		/* do ray check */
 		final BlockRayTraceResult result = getPlayerPOVHitResult(world, player, RayTraceContext.FluidMode.SOURCE_ONLY);
-		if (result.getType() != RayTraceResult.Type.BLOCK) {
-			return ActionResult.pass(heldStack);
-		} else {
+		if (result.getType() == RayTraceResult.Type.BLOCK) {
 			final BlockRayTraceResult raytraceResult = result.withPosition(result.getBlockPos().above());
 			final BlockPos pos = raytraceResult.getBlockPos();
 			/* can not place here */
 			if (world.getFluidState(pos.below()).getType() != Fluids.WATER || raytraceResult.getDirection() != Direction.UP || ! world.isEmptyBlock(pos)) {
-				this.notifyPlayerAndCD(player, heldStack, GROUND_ERROR);
 				return ActionResult.pass(heldStack);
+		    }
+			/* check plant type that can not place in water */
+			if(! plantType.isWaterPlant() || (plantType == PVZPlants.CAT_TAIL && ! SoillessPlantEnchantment.isSoilless(plantStack))) {
+			    this.notifyPlayerAndCD(player, heldStack, GROUND_ERROR);
+			    return ActionResult.fail(heldStack);
 		    }
 			if(plantType.isBlockPlant()) {
 				if(PlantCardItem.checkSunAndPlaceBlock(player, heldStack, plantStack, cardItem, pos)) {
@@ -181,6 +188,8 @@ public class PlantCardItem extends SummonCardItem {
 				}
 			}
 			return ActionResult.fail(heldStack);
+		} else {
+			return ActionResult.pass(heldStack);
 		}
 	}
 	
@@ -199,6 +208,9 @@ public class PlantCardItem extends SummonCardItem {
 		final PlantType plantType = cardItem.plantType;
 		final BlockPos pos = context.getClickedPos();
 		final boolean isSoilless = SoillessPlantEnchantment.isSoilless(plantStack);
+		if(world.isClientSide) {
+			return ActionResultType.SUCCESS;
+		}
 		if(plantType == null) {
 			PVZMod.LOGGER.error("Plant Card Use : Error Card !");
 			return ActionResultType.FAIL;
@@ -224,9 +236,6 @@ public class PlantCardItem extends SummonCardItem {
 			} else if(! isSoilless || world.getFluidState(pos.above()).getType() == Fluids.WATER) {
 			    return this.use(world, player, hand).getResult();
 			}
-		}
-		if(world.isClientSide) {
-			return ActionResultType.SUCCESS;
 		}
 		/* can not place here */
 		if(context.getClickedFace() != Direction.UP || ! world.isEmptyBlock(pos.above())) {
@@ -271,7 +280,7 @@ public class PlantCardItem extends SummonCardItem {
 		if(checkSunAndCD(player, cardItem, plantStack, false, p -> true)){
 			/* handle imitater card */
 			if(heldStack.getItem() instanceof ImitaterCardItem) {
-				return ImitaterCardItem.summonImitater(player, heldStack, plantStack, cardItem, pos, (imitater) -> {});
+				return ImitaterCardItem.summonImitater(player, heldStack, plantStack, cardItem, pos, i -> consumer.accept(i));
 			}
 			/* other plant card */
 			final int lvl = PlayerUtil.getPlantLvl(player, plantType);
@@ -280,6 +289,8 @@ public class PlantCardItem extends SummonCardItem {
 		        plantEntity.onSpawnedByPlayer(player, lvl, cardItem.getBasisSunCost(plantStack));
 		        /* other operations */
 		        consumer.accept(plantEntity);
+		        /* enchantment effects */
+				enchantPlantEntityByCard(plantEntity, plantStack);
 			})) {
 				return false;
 			}
@@ -305,8 +316,6 @@ public class PlantCardItem extends SummonCardItem {
 			return false;
     	}
     	consumer.accept(plantEntity);
-    	/* enchantment effects */
-		enchantPlantEntityByCard(plantEntity, plantStack);
 		return true;
 	}
 	
@@ -353,24 +362,44 @@ public class PlantCardItem extends SummonCardItem {
 	 * check sunCost and add outerplant for plantEntity
 	 */
 	public static boolean checkSunAndOuterPlant(PlayerEntity player, PVZPlantEntity plantEntity, PlantCardItem cardItem,
-			ItemStack stack) {
-		final PlantType plantType = cardItem.plantType;
-		/* not consider surrounding plants number */
-		if(checkSunAndCD(player, cardItem, stack, true, p -> {
-			if(! plantEntity.canPlaceOuterPlant()) {
-				cardItem.notifyPlayerAndCD(player, stack, OUTER_FULL);
-				return false;
+			ItemStack heldStack) {
+		/* check held stack */
+		if(! checkItemStackAndCD(player, heldStack, stack -> ((PlantCardItem) stack.getItem()).plantType.isOuterPlant())) {
+			return false;
+		}
+		final ItemStack plantStack = getPlantStack(heldStack);
+		final PlantType plantType = ((PlantCardItem) plantStack.getItem()).plantType;
+		final int lvl = PlayerUtil.getPlantLvl(player, plantType);
+		final int cost = cardItem.getBasisSunCost(plantStack);
+		if(heldStack.getItem() instanceof ImitaterCardItem) {
+			if(checkSunAndSummonPlant(player, heldStack, plantStack, cardItem, plantEntity.blockPosition(), p -> {
+				if(p instanceof ImitaterEntity) {
+					((ImitaterEntity) p).setImitateType(ImitateType.OUTER);
+					((ImitaterEntity) p).setTargetEntity(plantEntity);
+					((ImitaterEntity) p).setImitateAction(pp -> {
+						pp.onPlaceOuterPlant(plantType, lvl, cost);
+						BreakOutEnchantment.checkAndBreakOut(pp, plantStack);
+					});
+				}
+			})){
+				return true;
 			}
 			return true;
-		})) {
-			final int lvl = PlayerUtil.getPlantLvl(player, plantType);
-			plantEntity.onPlaceOuterPlant(plantType, lvl, cardItem.getBasisSunCost(stack));
-			/* check break out enchantment */
-			if (plantEntity.canStartSuperMode() && BreakOutEnchantment.canBreakOut(plantEntity.getRandom(), stack)) {
-				plantEntity.startSuperMode(false);
+		} else {
+			/* not consider surrounding plants number */
+			if(checkSunAndCD(player, cardItem, plantStack, true, p -> {
+			    if(! plantEntity.canPlaceOuterPlant()) {
+				    cardItem.notifyPlayerAndCD(player, heldStack, OUTER_FULL);
+				    return false;
+			    }
+			    return true;
+		    })) {
+			    plantEntity.onPlaceOuterPlant(plantType, lvl, cost);
+			    /* check break out enchantment */
+			    BreakOutEnchantment.checkAndBreakOut(plantEntity, plantStack);
+		        onUsePlantCard(player, heldStack, cardItem, lvl);
+		        return true;
 			}
-		    onUsePlantCard(player, stack, cardItem, lvl);
-		    return true;
 		}
 		return false;
 	}
@@ -380,21 +409,37 @@ public class PlantCardItem extends SummonCardItem {
 	 * {@link PVZPlantEntity#interactAt(PlayerEntity, net.minecraft.util.math.vector.Vector3d, Hand)}
 	 */
 	public static boolean checkSunAndHealPlant(PlayerEntity player, PVZPlantEntity plantEntity, PlantCardItem cardItem,
-			ItemStack stack) {
-		final PlantType plantType = cardItem.plantType;
+			ItemStack heldStack) {
+		/* check held stack */
+		if(! checkItemStackAndCD(player, heldStack, stack -> true)) {
+			return false;
+		}
+		final ItemStack plantStack = getPlantStack(heldStack);
+		final PlantType plantType = ((PlantCardItem) plantStack.getItem()).plantType;
+		/* can plant entity be heal or not */
 		if(plantEntity instanceof PlantDefenderEntity) {
 			if(EntityUtil.canAttackEntity(plantEntity, player) || ! plantType.equals(plantEntity.getPlantType())) {
 			    return false;
 			}
-		} else {//can not heal by card.
+		} else {
 			return false;
 		}
-		/* not consider surrounding plants number */
-		if(checkSunAndCD(player, cardItem, stack, true, p -> true)){
-			onUsePlantCard(player, stack, cardItem, PlayerUtil.getPlantLvl(player, plantType));
-			plantEntity.addEffect(new EffectInstance(Effects.HEAL, 40, 255, true, false));
-			EntityUtil.playSound(plantEntity, plantEntity.getSpawnSound());
+		if(heldStack.getItem() instanceof ImitaterCardItem) {
+			if(checkSunAndSummonPlant(player, heldStack, plantStack, cardItem, plantEntity.blockPosition(), p -> {
+				if(p instanceof ImitaterEntity) {
+					((ImitaterEntity) p).setImitateType(ImitateType.HEAL);
+					((ImitaterEntity) p).setTargetEntity(plantEntity);
+				}
+			})){
+				return true;
+			}
 			return true;
+		} else {/* not consider surrounding plants number */
+		    if(checkSunAndCD(player, cardItem, plantStack, true, p -> true)){
+			    onUsePlantCard(player, heldStack, cardItem, PlayerUtil.getPlantLvl(player, plantType));
+			    plantEntity.onHealByCard();
+			    return true;
+		    }
 		}
 		return false;
 	}
@@ -404,16 +449,52 @@ public class PlantCardItem extends SummonCardItem {
 	 * {@link PVZPlantEntity#interactAt(PlayerEntity, net.minecraft.util.math.vector.Vector3d, Hand)}
 	 */
 	public static boolean checkSunAndUpgradePlant(PlayerEntity player, PVZPlantEntity plantEntity, PlantCardItem cardItem,
-			ItemStack stack) {
-//		PlantType plantType = cardItem.plantType;
-//		/* not consider surrounding plants number */
-//		if(plantType.getUpgradeFrom().isPresent() && plantEntity.getPlantType().equals(plantType.getUpgradeFrom().get())) {
-//			if(PlantCardItem.checkSunAndSummonPlant(player, stack, cardItem, plantEntity.blockPosition(), (plant) -> {
-//				plantEntity.onPlantUpgrade(plant);
-//			})) {
-//				return true;
-//			}
-//		}
+			ItemStack heldStack) {
+		/* check held stack */
+		if(! checkItemStackAndCD(player, heldStack, stack -> true)) {
+			return false;
+		}
+		
+		final ItemStack plantStack = getPlantStack(heldStack);
+		final PlantType plantType = ((PlantCardItem) plantStack.getItem()).plantType;
+		if(plantType.getUpgradeFrom().isPresent() && plantEntity.getPlantType().equals(plantType.getUpgradeFrom().get())) {
+			if(plantEntity.canBeUpgrade(player) && PlantCardItem.checkSunAndSummonPlant(player, heldStack, plantStack, cardItem, plantEntity.blockPosition(), (plant) -> {
+				if(plant instanceof ImitaterEntity) {
+					((ImitaterEntity) plant).setImitateAction((p) -> plantEntity.onPlantUpgrade(p));
+				} else {
+					plantEntity.onPlantUpgrade(plant);
+				}
+			})) {
+				return true;
+			}
+		}
+		return false;
+	}
+	
+	/**
+	 * check sunCost and heal defender plantEntity.
+	 * {@link PVZPlantEntity#interactAt(PlayerEntity, net.minecraft.util.math.vector.Vector3d, Hand)}
+	 */
+	public static boolean checkSunAndInteractEntity(PlayerEntity player, Entity entity, PlantCardItem cardItem,
+			ItemStack heldStack, Predicate<PlantType> pre, Consumer<PVZPlantEntity> con) {
+		/* check held stack */
+		if(! checkItemStackAndCD(player, heldStack, stack -> true)) {
+			return false;
+		}
+		final ItemStack plantStack = getPlantStack(heldStack);
+		final PlantType plantType = ((PlantCardItem) plantStack.getItem()).plantType;
+		if(! pre.test(plantType)) {
+			return false;
+		}
+		if(PlantCardItem.checkSunAndSummonPlant(player, heldStack, plantStack, cardItem, entity.blockPosition(), plantEntity -> {
+			if(plantEntity instanceof ImitaterEntity) {
+				((ImitaterEntity) plantEntity).setImitateAction(p -> con.accept(p));
+			} else {
+				con.accept(plantEntity);
+			}
+		})) {
+			return true;
+		}
 		return false;
 	}
 	
@@ -427,6 +508,8 @@ public class PlantCardItem extends SummonCardItem {
 			cardItem.notifyPlayerAndCD(player, stack, CD_ERROR);
 			return false;
 		}
+		/* check lock */
+		
 		/* whether consider surrounding plants number */
 		final int sunCost = ignore ? cardItem.getBasisSunCost(stack) : cardItem.getCardSunCost(player, stack);
 		/* check sun */
@@ -442,13 +525,22 @@ public class PlantCardItem extends SummonCardItem {
 	}
 	
 	/**
+	 * does imitater has a correct card.
+	 */
+	private static boolean checkItemStackAndCD(PlayerEntity player, ItemStack heldStack, Predicate<ItemStack> predicate) {
+		ItemStack stack = heldStack;
+		if(heldStack.getItem() instanceof ImitaterCardItem) {
+			stack = getPlantStack(heldStack);
+		}
+		return stack.getItem() instanceof PlantCardItem && ! player.getCooldowns().isOnCooldown(stack.getItem()) && predicate.test(stack);
+	}
+	
+	/**
 	 * {@link #checkSunAndSummonPlant(PlayerEntity, ItemStack, PlantCardItem, BlockPos, Consumer)}
 	 */
-	private static void enchantPlantEntityByCard(PVZPlantEntity plantEntity, ItemStack stack) {
+	public static void enchantPlantEntityByCard(PVZPlantEntity plantEntity, ItemStack stack) {
 		/* check break out enchantment */
-		if (plantEntity.canStartSuperMode() && BreakOutEnchantment.canBreakOut(plantEntity.getRandom(), stack)) {
-			plantEntity.startSuperMode(false);
-		}
+		BreakOutEnchantment.checkAndBreakOut(plantEntity, stack);
 		/* check charm enchantment */
 		if(EnchantmentHelper.getItemEnchantmentLevel(EnchantmentRegister.CHARM.get(), stack) > 0) {
 			plantEntity.onCharmedBy(null);
@@ -457,6 +549,8 @@ public class PlantCardItem extends SummonCardItem {
 		if(EnchantmentHelper.getItemEnchantmentLevel(EnchantmentRegister.SOILLESS_PLANT.get(), stack) > 0) {
 			plantEntity.setImmunneToWeak(true);
 		}
+		/* check level up enchantment */
+		LevelUpEnchantment.levelUp(plantEntity, stack);
 	}
 
 	/**
@@ -484,11 +578,12 @@ public class PlantCardItem extends SummonCardItem {
 	 * set PlantCard Item cool down.
 	 */
 	public static void handlePlantCardCoolDown(PlayerEntity player, ItemStack stack, PlantCardItem item, int plantLvl) {
-		final int cd = getPlantCardCD(player, stack, item, plantLvl);
-		player.getCapability(CapabilityHandler.PLAYER_DATA_CAPABILITY).ifPresent((l)->{
-			l.getPlayerData().setPlantCardCD(item.plantType, cd);
-		});
-		player.getCooldowns().addCooldown(stack.getItem(), cd);
+		/* handle immediate cool down enchantment */
+		if(ImmediateCDEnchantment.canImmediateCD(stack, player.getRandom())) {
+			PlayerUtil.setCardCD(player, item, 20);
+		} else {
+			PlayerUtil.setCardCD(player, item, getPlantCardCD(player, stack, item, plantLvl));
+		}
 	}
 	
 	@Nullable
@@ -507,18 +602,22 @@ public class PlantCardItem extends SummonCardItem {
 	
 	@Override
 	public void appendHoverText(ItemStack stack, World worldIn, List<ITextComponent> tooltip, ITooltipFlag flagIn) {
+		tooltip.add(new TranslationTextComponent("tooltip.pvz.plant_card_info").withStyle(TextFormatting.GREEN));
 		super.appendHoverText(stack, worldIn, tooltip, flagIn);
-		tooltip.add(new TranslationTextComponent("tooltip.pvz.plant_card").withStyle(TextFormatting.GREEN));
-		PlantCardItem item = (PlantCardItem) stack.getItem();
-		if(item == null) {
-			System.out.println("ERROR : Wrong Plant Card Item !");
-			return ;
-		}
-		PlantType plant = item.plantType;
-		if(plant.getUpgradeFrom().isPresent()) {
-			tooltip.add(new TranslationTextComponent("tooltip.pvz." + plant.toString().toLowerCase() + "_card").withStyle(TextFormatting.RED));
-		} else if(plant == PVZPlants.DOOM_SHROOM) {
-			tooltip.add(new TranslationTextComponent("tooltip.pvz." + plant.toString().toLowerCase() + "_card").withStyle(TextFormatting.DARK_RED));
+		final PlantCardItem item = (PlantCardItem) stack.getItem();
+		if(item != null) {
+		    final PlantType plant = item.plantType;
+		    if(plant.getUpgradeFrom().isPresent() && ! SoillessPlantEnchantment.isSoilless(stack)) {
+		    	/* upgrade plant without soilless plant enchantment */
+		    	if(plant == PVZPlants.COB_CANNON) {
+		    		tooltip.add(new TranslationTextComponent("tooltip.pvz.cob_cannon_card").withStyle(TextFormatting.RED));
+		    	} else {
+		    		tooltip.add(new TranslationTextComponent("tooltip.pvz.upgrade_card", plant.getUpgradeFrom().get().getText().toString()).withStyle(TextFormatting.RED));
+		    	}
+		    }
+		    if(TOOL_TIP_TYPES.contains(plant)) {
+			    tooltip.add(new TranslationTextComponent("tooltip.pvz." + plant.toString().toLowerCase() + "_card").withStyle(TextFormatting.DARK_RED));
+		    }
 		}
 	}
 	
@@ -527,7 +626,9 @@ public class PlantCardItem extends SummonCardItem {
 	 */
 	public void notifyPlayerAndCD(PlayerEntity player, ItemStack stack, ITextComponent text) {
 		if(! player.level.isClientSide) {
-			PlayerUtil.sendMsgTo(player, text);
+			if(text != null) {
+				PlayerUtil.sendMsgTo(player, text);
+			}
 		    player.getCooldowns().addCooldown(stack.getItem(), 10);
 		}
 	}
@@ -538,9 +639,9 @@ public class PlantCardItem extends SummonCardItem {
 	public int getCardSunCost(PlayerEntity player, ItemStack stack) {
 		final int range = 30;
 		final long count = EntityUtil.getFriendlyLivings(player, EntityUtil.getEntityAABB(player, range, range))
-		    .stream().filter(entity -> entity instanceof PVZPlantEntity).count();
-		final long multipy = Math.max(1, (count - ConfigUtil.getLimitPlantCount()) / 10);
-		return (int) Math.min(100000, this.getBasisSunCost(stack) * multipy);
+		    .stream().filter(entity -> entity instanceof PVZPlantEntity).count() + 1;
+		final long multipy = Math.max(0, (count - ConfigUtil.getLimitPlantCount() - DenselyPlantEnchantment.getExtraPlantNum(stack) + 4) / 5);
+		return (int) Math.min(100000L, this.getBasisSunCost(stack) * (1L << multipy));
 	}
 	
 	/**
@@ -555,10 +656,21 @@ public class PlantCardItem extends SummonCardItem {
 	}
 	
 	/**
-	 * get cooldown for current plant
+	 * the cd of plant card without consider other condition.
 	 */
-	public static int getPlantCardCD(PlayerEntity player, ItemStack stack, PlantCardItem item, int plantLvl) {
-		int cd = item.getPlantCardCD(player, item.plantType, plantLvl);
+	public ICoolDown getBasisCoolDown(ItemStack stack) {
+		if(stack.getItem() instanceof PlantCardItem) {
+			PlantType plantType = ((PlantCardItem) stack.getItem()).plantType;
+			return plantType.getCD();
+		}
+		return ICoolDown.DEFAULT;
+	}
+	
+	/**
+	 * get cool down for current plant card.
+	 */
+	private static int getPlantCardCD(PlayerEntity player, ItemStack stack, PlantCardItem item, int plantLvl) {
+		int cd = item.getBasisCoolDown(stack).getCD(plantLvl);
 		if (player.hasEffect(EffectRegister.EXCITE_EFFECT.get())) {
 			int lvl = player.getEffect(EffectRegister.EXCITE_EFFECT.get()).getAmplifier();
 			float mult = Math.max(0, 0.9f - 0.1f * lvl);
@@ -575,10 +687,6 @@ public class PlantCardItem extends SummonCardItem {
 		return ImitaterCardItem.getDoubleStack(stack).getSecond();
 	}
 	
-	public int getPlantCardCD(PlayerEntity player, PlantType plant, int lvl) {
-		return plant.getCD().getCD(lvl);
-	}
-
 	@Override
 	public int getEnchantmentValue() {
 		return plantType.getRank().enchantPoint;
