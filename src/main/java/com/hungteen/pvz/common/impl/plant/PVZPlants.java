@@ -229,7 +229,7 @@ public final class PVZPlants extends PlantType {
 	);
 	
 	public static final PlantType THREE_PEATER = new PVZPlants("three_peater", new PlantFeatures()
-			.cost(300).cd(PlantCardCD.LITTLE_FAST).rank(Ranks.BLUE).essence(Essences.APPEASE)
+			.cost(300).cd(PlantCardCD.LITTLE_FAST).rank(Ranks.GREEN).essence(Essences.APPEASE)
 			.entityType(() -> EntityRegister.THREE_PEATER.get())
 			.summonCard(() -> ItemRegister.THREE_PEATER_CARD.get())
 			.enjoyCard(() -> ItemRegister.THREE_PEATER_ENJOY_CARD.get())
@@ -263,7 +263,7 @@ public final class PVZPlants extends PlantType {
 	);
 	
 	public static final PlantType TORCH_WOOD = new PVZPlants("torch_wood", new PlantFeatures()
-			.cost(200).cd(PlantCardCD.NORMAL).rank(Ranks.GREEN).essence(Essences.FLAME)
+			.cost(200).cd(PlantCardCD.NORMAL).rank(Ranks.PURPLE).essence(Essences.FLAME)
 			.entityType(() -> EntityRegister.TORCH_WOOD.get())
 			.summonCard(() -> ItemRegister.TORCH_WOOD_CARD.get())
 			.enjoyCard(() -> ItemRegister.TORCH_WOOD_ENJOY_CARD.get())
@@ -340,7 +340,7 @@ public final class PVZPlants extends PlantType {
 	);
 	
 	public static final PlantType MAGNET_SHROOM = new PVZPlants("magnet_shroom", new PlantFeatures().isShroomPlant()
-			.cost(100).cd(PlantCardCD.LITTLE_FAST).rank(Ranks.PURPLE).essence(Essences.ASSIST)
+			.cost(100).cd(PlantCardCD.LITTLE_FAST).rank(Ranks.BLUE).essence(Essences.ASSIST)
 			.entityType(() -> EntityRegister.MAGNET_SHROOM.get())
 			.summonCard(() -> ItemRegister.MAGNET_SHROOM_CARD.get())
 			.enjoyCard(() -> ItemRegister.MAGNET_SHROOM_ENJOY_CARD.get())
@@ -468,7 +468,7 @@ public final class PVZPlants extends PlantType {
 	);
 	
 	public static final PlantType GOLD_MAGNET = new PVZPlants("gold_magnet", new PlantFeatures()
-			.cost(225).cd(PlantCardCD.VERY_SLOW).rank(Ranks.GOLD).essence(Essences.ASSIST)
+			.cost(225).cd(PlantCardCD.VERY_SLOW).rank(Ranks.WHITE).essence(Essences.ASSIST)
 			.entityType(() -> EntityRegister.GOLD_MAGNET.get())
 			.summonCard(() -> ItemRegister.GOLD_MAGNET_CARD.get())
 			.enjoyCard(() -> ItemRegister.GOLD_MAGNET_ENJOY_CARD.get())

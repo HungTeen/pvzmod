@@ -6,6 +6,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import com.hungteen.pvz.PVZConfig;
 import com.hungteen.pvz.client.gui.search.SearchOption;
 import com.hungteen.pvz.common.advancement.trigger.MoneyTrigger;
 import com.hungteen.pvz.common.advancement.trigger.PlantLevelTrigger;
@@ -15,6 +16,7 @@ import com.hungteen.pvz.common.container.shop.MysteryShopContainer;
 import com.hungteen.pvz.common.core.PlantType;
 import com.hungteen.pvz.common.event.events.PlayerLevelUpEvent.PlantLevelUpEvent;
 import com.hungteen.pvz.common.event.events.PlayerLevelUpEvent.TreeLevelUpEvent;
+import com.hungteen.pvz.common.event.handler.PlayerEventHandler;
 import com.hungteen.pvz.common.item.spawn.card.SummonCardItem;
 import com.hungteen.pvz.common.network.PVZPacketHandler;
 import com.hungteen.pvz.common.network.toclient.CardInventoryPacket;
@@ -43,11 +45,14 @@ public class PlayerDataManager {
 	/* summon card inventory */
 	private final List<ItemStack> cards = new ArrayList<>();
 	private int emptySlot;
-	/* plant level and cd */
+	/* plant level */
 	private Map<PlantType, Integer> plantLevel = new HashMap<>();
 	private Map<PlantType, Integer> plantXp = new HashMap<>();
+	/* plant cd */
 	private Map<PlantType, Integer> plantCardCD = new HashMap<>();
 	private Map<PlantType, Float> plantCardBar = new HashMap<>();
+	/* plant lock */
+	private Map<PlantType, Boolean> plantLocked = new HashMap<>();
 	private final OtherStats otherStats;
 	
 	public PlayerDataManager(PlayerEntity player) {
@@ -64,12 +69,13 @@ public class PlayerDataManager {
 //				this.cards.add(Bundles.RANDOM_ALL.getEnjoyCard(player.getRandom()));
 			}
 		}
-		{// init plant level and cd.
+		{// init about plants.
 			PlantType.getPlants().forEach(plant -> {
-			    plantXp.put(plant, 0);
-				plantLevel.put(plant, 1);
-				plantCardCD.put(plant, 0);
-				plantCardBar.put(plant, 0f);
+			    this.plantXp.put(plant, 0);
+				this.plantLevel.put(plant, 1);
+				this.plantCardCD.put(plant, 0);
+				this.plantCardBar.put(plant, 0F);
+				this.plantLocked.put(plant, true);
 			});
 		}
 		this.otherStats = new OtherStats(this);
@@ -159,6 +165,19 @@ public class PlayerDataManager {
 				});
 			}
 		}
+		{// load plant lock.
+			if(baseTag.contains("plant_locks")) {
+			    final CompoundNBT nbt = baseTag.getCompound("plant_locks");
+			    PlantType.getPlants().forEach(plant -> {
+					final CompoundNBT plantNBT = (CompoundNBT) nbt.get(plant.getIdentity());
+					if(plantNBT != null) {
+					    if(plantNBT.contains("plant_locked")) {
+						    this.setPlantLocked(plant, plantNBT.getBoolean("plant_locked"));
+					    }
+					}
+				});
+			}
+		}
 		otherStats.loadFromNBT(baseTag);
 	}
 	
@@ -202,26 +221,26 @@ public class PlayerDataManager {
 			}
 			baseTag.put("plant_card_item_cd", nbt);
 		}
+		{// save plant lock.
+			final CompoundNBT nbt = new CompoundNBT();
+			for(PlantType plant : PlantType.getPlants()) {
+				final CompoundNBT plantNBT = new CompoundNBT();
+				nbt.putBoolean("plant_locked", this.isPlantLocked(plant));
+				nbt.put(plant.getIdentity(), plantNBT);
+			}
+			baseTag.put("plant_locks", nbt);
+		}
 		otherStats.saveToNBT(baseTag);
 		return baseTag;
 	}
 //	
-	public void cloneFromExistingPlayerData(PlayerDataManager data) {
+	public void cloneFromExistingPlayerData(PlayerDataManager data, boolean died) {
 		this.loadFromNBT(data.saveToNBT());
-//		{// clone player resources.
-//			for(Resources res : Resources.values()) {
-//			    this.resources.put(res, data.resources.get(res));
-//		    }
-//		}
-//		//Plants
-//		for (PlantType plant : PlantType.getPlants()) {
-//			this.plantStats.plantLevel.put(plant, data.plantStats.plantLevel.get(plant));
-//			this.plantStats.plantXp.put(plant, data.plantStats.plantXp.get(plant));
-//		}
-//		for(PlantType p : PlantType.getPlants()) {
-//			this.itemCDStats.setPlantCardCD(p, data.itemCDStats.getPlantCardCoolDown(p));
-//			this.itemCDStats.setPlantCardBar(p, data.itemCDStats.getPlantCardBarLength(p));
-//		}
+		if(died) {
+			if(! PVZConfig.COMMON_CONFIG.RuleSettings.KeepSunWhenDie.get()) {
+				this.setResource(Resources.SUN_NUM, 50);
+			}
+		}
 //		//other
 //		for(int i = 0; i < WaveManager.MAX_WAVE_NUM; ++ i) {
 //			this.otherStats.zombieWaveTime[i] = data.otherStats.zombieWaveTime[i];
@@ -234,9 +253,34 @@ public class PlayerDataManager {
 //		this.otherStats.updateGoodTick = data.otherStats.updateGoodTick;
 	}
 	
-	public void syncToClient() {
+	/**
+	 * run when player join world.
+	 * {@link PlayerEventHandler#onPlayerLogin(PlayerEntity)}
+	 */
+	public void init() {
+		this.syncBounds();
+		this.syncToClient();
+	}
+	
+	/**
+	 * avoid render out of bound.
+	 * {@link #init()}
+	 */
+	private void syncBounds() {
 		{// player resources.
-		    for(Resources res:Resources.values()) {
+		    for(Resources res : Resources.values()) {
+			    this.addResource(res, 0);
+		    }
+		}
+	}
+	
+	/**
+	 * sync data to client side.
+	 * {@link #init()}
+	 */
+	private void syncToClient() {
+		{// player resources.
+		    for(Resources res : Resources.values()) {
 			    this.sendResourcePacket(player, res);
 		    }
 		}
@@ -251,6 +295,13 @@ public class PlayerDataManager {
 		       this.sendPlantLevelPacket(player, plant);
 	        }
 		}
+		{// plant item cd.
+			for (PlantType plant : PlantType.getPlants()) {
+			    if(plant.getSummonCard().isPresent()) {
+			        player.getCooldowns().addCooldown(plant.getSummonCard().get(), this.getPlantCardCD(plant));
+			    }
+			}
+		}
 		//almanacs
 		SearchOption.OPTION.forEach((a) -> {
 			ServerPlayerEntity serverplayer = (ServerPlayerEntity) player;
@@ -258,12 +309,7 @@ public class PlayerDataManager {
 				PlayerUtil.unLockAlmanac(serverplayer, a);
 			}
 		});
-		//item cd
-		for (PlantType plant : PlantType.getPlants()) {
-			if(plant.getSummonCard().isPresent()) {
-			    player.getCooldowns().addCooldown(plant.getSummonCard().get(), this.getPlantCardCD(plant));
-			}
-		}
+		
 	}
 
 	/*
@@ -356,10 +402,6 @@ public class PlayerDataManager {
 	/*
 	 * Operation about SummonCard Inventory.
 	 */
-	
-//	public CompoundNBT getCards() {
-//		return this.cardInventory;
-//	}
 	
 	public void onScrollInventory(double delta) {
 		final int maxSlot = this.getResource(Resources.SLOT_NUM);
@@ -488,6 +530,18 @@ public class PlayerDataManager {
 	
 	public int getPlantCardCD(PlantType plant) {
 		return (int) (this.plantCardBar.get(plant) * this.plantCardCD.get(plant));
+	}
+
+	/*
+	 * Operation about plant lock.
+	 */
+	
+	public void setPlantLocked(PlantType plant, boolean is) {
+		this.plantLocked.put(plant, is);
+	}
+	
+	public boolean isPlantLocked(PlantType plant) {
+		return this.plantLocked.getOrDefault(plant, true);
 	}
 	
 	public final class OtherStats{

@@ -1,11 +1,17 @@
 package com.hungteen.pvz.common.event.handler;
 
+import java.util.Optional;
+
 import com.hungteen.pvz.common.capability.CapabilityHandler;
+import com.hungteen.pvz.common.capability.player.IPlayerDataCapability;
+import com.hungteen.pvz.common.capability.player.PlayerDataManager;
+import com.hungteen.pvz.common.core.PlantType;
 import com.hungteen.pvz.common.core.ZombieType;
 import com.hungteen.pvz.common.enchantment.EnchantmentUtil;
 import com.hungteen.pvz.common.entity.drop.SunEntity;
 import com.hungteen.pvz.common.entity.plant.PVZPlantEntity;
 import com.hungteen.pvz.common.entity.zombie.PVZZombieEntity;
+import com.hungteen.pvz.common.event.PVZPlayerEvents;
 import com.hungteen.pvz.common.world.invasion.WaveManager;
 import com.hungteen.pvz.register.SoundRegister;
 import com.hungteen.pvz.utils.EntityUtil;
@@ -19,6 +25,7 @@ import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.Hand;
+import net.minecraftforge.common.util.LazyOptional;
 
 public class PlayerEventHandler {
 	
@@ -54,12 +61,41 @@ public class PlayerEventHandler {
 	
 	/**
 	 * send packet from server to client to sync player's data.
+	 * {@link PVZPlayerEvents#onPlayerLogin(net.minecraftforge.event.entity.player.PlayerEvent.PlayerLoggedInEvent)}
 	 */
 	public static void onPlayerLogin(PlayerEntity player) {
-		player.getCapability(CapabilityHandler.PLAYER_DATA_CAPABILITY).ifPresent(l -> {
-			l.getPlayerData().syncToClient();
-		});
+		Optional.ofNullable(PlayerUtil.getManager(player)).ifPresent(l -> l.init());
 		WaveManager.syncWaveTime(player);
+	}
+	
+	/**
+	 * save card cd.
+	 * {@link PVZPlayerEvents#onPlayerLogout(net.minecraftforge.event.entity.player.PlayerEvent.PlayerLoggedOutEvent)}
+	 */
+	public static void onPlayerLogout(PlayerEntity player) {
+		player.getCapability(CapabilityHandler.PLAYER_DATA_CAPABILITY).ifPresent(l -> {
+			PlayerDataManager plData = l.getPlayerData();
+			for(PlantType p : PlantType.getPlants()) {
+				p.getSummonCard().ifPresent(card -> {
+					plData.setPlantCardBar(p, player.getCooldowns().getCooldownPercent(card, 0f));
+				});
+			}
+		});
+	}
+	
+	/**
+	 * {@link PVZPlayerEvents#onPlayerClone(net.minecraftforge.event.entity.player.PlayerEvent.Clone)}
+	 */
+	public static void clonePlayerData(PlayerEntity oldPlayer, PlayerEntity newPlayer, boolean died) {
+	    LazyOptional<IPlayerDataCapability> oldCap = oldPlayer.getCapability(CapabilityHandler.PLAYER_DATA_CAPABILITY);
+	    LazyOptional<IPlayerDataCapability> newCap = newPlayer.getCapability(CapabilityHandler.PLAYER_DATA_CAPABILITY);
+	    if(oldCap.isPresent() && newCap.isPresent()) {
+		    newCap.ifPresent(l -> {
+			    oldCap.ifPresent(r -> {
+				    l.getPlayerData().cloneFromExistingPlayerData(r.getPlayerData(), died);
+			    });
+		    });
+	    }
 	}
 	
 }

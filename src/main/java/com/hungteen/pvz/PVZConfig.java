@@ -144,6 +144,9 @@ public class PVZConfig {
 				RuleSettings.LimitPlantCount = builder
                         .comment("how many plants can you place in 30 x 30 area without increasing cost.")
                         .defineInRange("LimitPlantCount", 50, 10, 1000);
+				RuleSettings.KeepSunWhenDie = builder
+                        .comment("if turn to true, player will keep its sun after death.")
+                        .define("KeepSunWhenDie", false);
 			}
 			builder.pop();
 			
@@ -377,6 +380,7 @@ public class PVZConfig {
 			public ForgeConfigSpec.BooleanValue AllowNaturalTurnOrigin;
 			public ForgeConfigSpec.BooleanValue TeamAttack;
 			public ForgeConfigSpec.IntValue LimitPlantCount;
+			public ForgeConfigSpec.BooleanValue KeepSunWhenDie;
 		}
 		
 		public static class WorldSettings{

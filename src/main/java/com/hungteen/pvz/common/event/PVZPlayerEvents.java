@@ -93,32 +93,22 @@ public class PVZPlayerEvents {
 	@SubscribeEvent(priority = EventPriority.HIGHEST)
 	public static void onPlayerLogin(PlayerEvent.PlayerLoggedInEvent ev) {
 		PlayerEntity player = ev.getPlayer();
-		if (! player.level.isClientSide && player instanceof ServerPlayerEntity) {
+		if (! player.level.isClientSide) {
 			PlayerEventHandler.onPlayerLogin(player);
 		}
 	}
 	
 	@SubscribeEvent
 	public static void onPlayerLogout(PlayerEvent.PlayerLoggedOutEvent ev) {
-		PlayerEntity player = ev.getPlayer();
-		if (! player.level.isClientSide && player instanceof ServerPlayerEntity) {
-			player.getCapability(CapabilityHandler.PLAYER_DATA_CAPABILITY).ifPresent((l)->{
-				PlayerDataManager plData = l.getPlayerData();
-				//item cd
-				for(PlantType p : PlantType.getPlants()) {
-					p.getSummonCard().ifPresent(card -> {
-						plData.setPlantCardBar(p, player.getCooldowns().getCooldownPercent(card, 0f));
-					});
-				}
-			});
+		if (! ev.getPlayer().level.isClientSide) {
+			PlayerEventHandler.onPlayerLogout(ev.getPlayer());
 		}
 	}
 
 	@SubscribeEvent
 	public static void onPlayerClone(PlayerEvent.Clone ev) {
-		PlayerEntity player = ev.getPlayer();
-		if (! player.level.isClientSide) {
-			PlayerUtil.clonePlayerData(ev.getOriginal(),player);
+		if (! ev.getPlayer().level.isClientSide) {
+			PlayerEventHandler.clonePlayerData(ev.getOriginal(), ev.getPlayer(), ev.isWasDeath());
 		}
 	}
 	

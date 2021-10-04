@@ -16,8 +16,9 @@ import net.minecraft.world.World;
 
 public abstract class SummonCardItem extends Item{
 
-	public static final ITextComponent SUN_ERROR = new TranslationTextComponent("help.pvz.sun").withStyle(TextFormatting.RED);
-	public static final ITextComponent CD_ERROR = new TranslationTextComponent("help.pvz.cd").withStyle(TextFormatting.RED);
+	protected static final ITextComponent SUN_ERROR = new TranslationTextComponent("help.pvz.sun").withStyle(TextFormatting.RED);
+	protected static final ITextComponent CD_ERROR = new TranslationTextComponent("help.pvz.cd").withStyle(TextFormatting.RED);
+	protected static final ITextComponent LOCK_ERROR = new TranslationTextComponent("help.pvz.lock").withStyle(TextFormatting.RED);
 	public final boolean isEnjoyCard;
 	
 	public SummonCardItem(boolean isEnjoyCard) {

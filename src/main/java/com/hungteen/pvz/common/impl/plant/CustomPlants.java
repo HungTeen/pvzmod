@@ -25,7 +25,7 @@ public final class CustomPlants extends PlantType {
 	);
 	
 	public static final PlantType BUTTER_PULT = new CustomPlants("butter_pult", new PlantFeatures()
-			.cost(275).cd(PlantCardCD.NORMAL).rank(Ranks.GOLD).essence(Essences.ARMA)
+			.cost(275).cd(PlantCardCD.NORMAL).rank(Ranks.BLACK).essence(Essences.ARMA)
 			.entityType(() -> EntityRegister.BUTTER_PULT.get())
 			.summonCard(() -> ItemRegister.BUTTER_PULT_CARD.get())
 			.enjoyCard(() -> ItemRegister.BUTTER_PULT_ENJOY_CARD.get())

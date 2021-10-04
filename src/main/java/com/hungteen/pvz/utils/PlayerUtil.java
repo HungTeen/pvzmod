@@ -1,6 +1,7 @@
 package com.hungteen.pvz.utils;
 
 import java.util.List;
+import java.util.Optional;
 
 import javax.annotation.Nullable;
 
@@ -26,7 +27,6 @@ import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.StringTextComponent;
 import net.minecraft.world.World;
 import net.minecraftforge.common.util.FakePlayer;
-import net.minecraftforge.common.util.LazyOptional;
 import net.minecraftforge.fml.network.PacketDistributor;
 
 public class PlayerUtil {
@@ -135,16 +135,13 @@ public class PlayerUtil {
 		player.getCooldowns().addCooldown(card, cd);
 	}
 	
-	public static void clonePlayerData(PlayerEntity oldPlayer, PlayerEntity newPlayer) {
-		LazyOptional<IPlayerDataCapability> oldCap = oldPlayer.getCapability(CapabilityHandler.PLAYER_DATA_CAPABILITY);
-		LazyOptional<IPlayerDataCapability> newCap = newPlayer.getCapability(CapabilityHandler.PLAYER_DATA_CAPABILITY);
-		if(oldCap.isPresent()&&newCap.isPresent()) {
-			newCap.ifPresent((l)->{
-				oldCap.ifPresent((r)->{
-					l.getPlayerData().cloneFromExistingPlayerData(r.getPlayerData());
-				});
-			});
-		}
+	public static void setPlantLocked(PlayerEntity player, PlantType plant, boolean is) {
+		Optional.ofNullable(getManager(player)).ifPresent(l -> l.setPlantLocked(plant, is));
+	}
+	
+	public static boolean isPlantLocked(PlayerEntity player, PlantType plant) {
+		final PlayerDataManager manager = getManager(player);
+		return manager != null ? manager.isPlantLocked(plant) : true;
 	}
 	
 	public static void unLockAlmanac(PlayerEntity player, SearchOption a) {

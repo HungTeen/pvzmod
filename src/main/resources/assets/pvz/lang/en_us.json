@@ -151,7 +151,7 @@
     "tooltip.pvz.plant_card_info":"[Plant Card] : Right click to summon plant",
     "tooltip.pvz.upgrade_card":"Can only place on %s",
     "tooltip.pvz.doom_shroom_card":"This plant will severely destroy blocks, especially above the surface !",
-    "tooltip.pvz.cob_cannon_card":"Can only place on 2 nearby KernelPult",
+    "tooltip.pvz.cob_cannon_card":"Can only place on 2 nearby §nKernel Pult§r",
     "tooltip.pvz.gold_leaf_card":"Can only place on gold block or gold tiles !",
     "tooltip.pvz.imitater_card.enjoy_card":"Can not use, but it can level up for random plants on Essence Altar",
     "tooltip.pvz.imitater_card.empty":"right click imitater card while holding with left hand to open imitate gui",
@@ -809,6 +809,7 @@
     "help.pvz.outer_full":"Can not place on this plant !",
     "help.pvz.sun":"Sun is not enough !",
     "help.pvz.cd":"Please wait for cooling !",
+    "help.pvz.lock":"Locked !",
 //-----------------------------------------Enchantments-----------------------------------------
     "enchantment.pvz.sun_cost_reduce":"Sun Reduce",
     "enchantment.pvz.sun_cost_reduce.desc":"Reduce sun cost of summon cards",

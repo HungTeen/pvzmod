@@ -509,7 +509,10 @@ public class PlantCardItem extends SummonCardItem {
 			return false;
 		}
 		/* check lock */
-		
+		if(PlayerUtil.isPlantLocked(player, cardItem.plantType)) {
+			cardItem.notifyPlayerAndCD(player, stack, LOCK_ERROR);
+			return false;
+		}
 		/* whether consider surrounding plants number */
 		final int sunCost = ignore ? cardItem.getBasisSunCost(stack) : cardItem.getCardSunCost(player, stack);
 		/* check sun */
@@ -607,14 +610,19 @@ public class PlantCardItem extends SummonCardItem {
 		final PlantCardItem item = (PlantCardItem) stack.getItem();
 		if(item != null) {
 		    final PlantType plant = item.plantType;
-		    if(plant.getUpgradeFrom().isPresent() && ! SoillessPlantEnchantment.isSoilless(stack)) {
-		    	/* upgrade plant without soilless plant enchantment */
-		    	if(plant == PVZPlants.COB_CANNON) {
-		    		tooltip.add(new TranslationTextComponent("tooltip.pvz.cob_cannon_card").withStyle(TextFormatting.RED));
-		    	} else {
-		    		tooltip.add(new TranslationTextComponent("tooltip.pvz.upgrade_card", plant.getUpgradeFrom().get().getText().toString()).withStyle(TextFormatting.RED));
+		    /* upgrade plant without soilless plant enchantment */
+		    if(! SoillessPlantEnchantment.isSoilless(stack)) {
+		    	if(plant.getUpgradeFrom().isPresent()) {
+		    	    if(plant == PVZPlants.COB_CANNON) {
+		    		    tooltip.add(new TranslationTextComponent("tooltip.pvz.cob_cannon_card").withStyle(TextFormatting.RED));
+		    	    }  else {
+		    		    tooltip.add(new TranslationTextComponent("tooltip.pvz.upgrade_card").append(plant.getUpgradeFrom().get().getText().withStyle(TextFormatting.UNDERLINE)).withStyle(TextFormatting.RED));
+		    	    }
+		    	} else if(plant == PVZPlants.CAT_TAIL) {
+		    		tooltip.add(new TranslationTextComponent("tooltip.pvz.upgrade_card").append(PVZPlants.LILY_PAD.getText().withStyle(TextFormatting.UNDERLINE)).withStyle(TextFormatting.RED));
 		    	}
 		    }
+		    /* misc */
 		    if(TOOL_TIP_TYPES.contains(plant)) {
 			    tooltip.add(new TranslationTextComponent("tooltip.pvz." + plant.toString().toLowerCase() + "_card").withStyle(TextFormatting.DARK_RED));
 		    }

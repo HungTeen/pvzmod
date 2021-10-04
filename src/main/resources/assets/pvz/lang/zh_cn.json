@@ -148,10 +148,10 @@
 //-----------------------------------------工具提示-----------------------------------------
     "tooltip.pvz.card_sun_cost":"基础阳光消耗 : %d",
     "tooltip.pvz.card_cd":"基础冷却 : %s",
-    "tooltip.pvz.plant_card":"【植物卡】 : 右击召唤植物",
-    "tooltip.pvz.upgrade_card":"只能种在%s上",
+    "tooltip.pvz.plant_card_info":"【植物卡】 : 右击召唤植物",
+    "tooltip.pvz.upgrade_card":"只能种植于%s",
     "tooltip.pvz.doom_shroom_card":"注意此植物会严重破坏地形，尤其是地表上方 !",
-    "tooltip.pvz.cob_cannon_card":"只能种在两个相邻的玉米投手上",
+    "tooltip.pvz.cob_cannon_card":"只能种在两个相邻的§n玉米投手§r上",
     "tooltip.pvz.gold_leaf_card":"只能种在金块或黄金瓷砖上 !",
     "tooltip.pvz.imitater_card.enjoy_card":"不能种植，但是可以在精华祭坛随机给任意植物加经验",
     "tooltip.pvz.imitater_card.empty":"左持此卡并右击来打开模仿界面",
@@ -808,6 +808,7 @@
     "help.pvz.outer_full":"不能种植在该植物上！",
     "help.pvz.sun":"阳光不足 ！",
     "help.pvz.cd":"正在冷却中 ！",
+    "help.pvz.lock":"尚未解锁 ！",
 //-----------------------------------------附魔-----------------------------------------
     "enchantment.pvz.sun_cost_reduce":"节能",
     "enchantment.pvz.sun_cost_reduce.desc":"节省少量阳光消耗",
