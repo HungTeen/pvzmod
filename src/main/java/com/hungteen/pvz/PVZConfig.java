@@ -462,36 +462,48 @@ public class PVZConfig {
 	public static class Client{
 		
 		public Client(ForgeConfigSpec.Builder builder) {
-			builder.comment("Player Resource Bar Settings").push("Resource Render Settings");
+			builder.comment("Overlay Settings").push("Overlay Settings");
 			{
-				ResourceRender.RenderSunNumBar = builder
-						.comment("Should Render SunNumBar")
-						.define("RenderSunNumBar", true);
-				ResourceRender.RenderEnergyNumBar = builder
-						.comment("Should Render EnergyNumBar")
-						.define("RenderEnergyNumBar", true);
-				ResourceRender.RenderMoneyBar = builder
-						.comment("Should Render MoneyBar")
+				OverlaySettings.RenderSunBar = builder
+						.comment("turn to false to cancel the display of sun amount bar.")
+						.translation("config.pvz.overlay.sun_bar")
+						.define("RenderSunAmountBar", true);
+				
+				OverlaySettings.RenderMoneyBar = builder
+						.comment("turn to false to cancel the display of money bar.")
+						.translation("config.pvz.overlay.money_bar")
 						.define("RenderMoneyBar", true);
-				ResourceRender.RenderGemBar = builder
-						.comment("Should Render GemBar")
+				
+				OverlaySettings.RenderGemBar = builder
+						.comment("turn to false to cancel the display of gem bar.")
+						.translation("config.pvz.overlay.gem_bar")
 						.define("RenderGemBar", true);
-			}
-			builder.pop();
-			
-			builder.comment("Render about Invasion").push("Invasion Render Settings");
-			{
-				InvasionRender.RenderInvasionProgress = builder
-						.comment("Should Render Invasion Progress")
+				
+				OverlaySettings.RenderTreeLevel = builder
+						.comment("turn to false to cancel the display of tree level bar.")
+						.translation("config.pvz.overlay.level_bar")
+						.define("RenderTreeLevelBar", true);
+				
+				OverlaySettings.RenderPlantFoodBar = builder
+						.comment("turn to false to cancel the display of plant food bar.")
+						.translation("config.pvz.overlay.energy_bar")
+						.define("RenderPlantFoodBar", true);
+				
+				OverlaySettings.RenderInvasionProgress = builder
+						.comment("turn to false to cancel the display of invasion progress.")
+						.translation("config.pvz.overlay.invasion_bar")
 						.define("RenderInvasionProgress", true);
-			}
-			builder.pop();
-			
-			builder.comment("Render about Environment").push("Environment Render Settings");
-			{
-				EnvironmentRender.RenderFog = builder
-						.comment("Should Render Fog Overlay")
+				
+				OverlaySettings.RenderFog = builder
+						.comment("turn to false to cancel the display of fog.")
+						.translation("config.pvz.overlay.fog")
 						.define("RenderFog", true);
+				
+				OverlaySettings.RenderCardSlots = builder
+						.comment("turn to false to cancel the display of summon card slots.")
+						.translation("config.pvz.overlay.card_slot")
+						.define("RenderCardSlots", true);
+				
 			}
 			builder.pop();
 			
@@ -504,24 +516,18 @@ public class PVZConfig {
 			builder.pop();
 		}
 		
+		public OverlaySettings OverlaySettings = new OverlaySettings();
 		public OtherSettings OtherSettings = new OtherSettings();
-		public ResourceRender ResourceRender = new ResourceRender();
-		public EnvironmentRender EnvironmentRender = new EnvironmentRender();
-		public InvasionRender InvasionRender = new InvasionRender();
 		
-		public static class ResourceRender{
-			public ForgeConfigSpec.BooleanValue RenderSunNumBar;
-			public ForgeConfigSpec.BooleanValue RenderEnergyNumBar;
+		public static class OverlaySettings{
+			public ForgeConfigSpec.BooleanValue RenderSunBar;
 			public ForgeConfigSpec.BooleanValue RenderMoneyBar;
 			public ForgeConfigSpec.BooleanValue RenderGemBar;
-		}
-		
-		public static class InvasionRender {
+			public ForgeConfigSpec.BooleanValue RenderTreeLevel;
+			public ForgeConfigSpec.BooleanValue RenderPlantFoodBar;
 			public ForgeConfigSpec.BooleanValue RenderInvasionProgress;
-		}
-		
-		public static class EnvironmentRender{
 			public ForgeConfigSpec.BooleanValue RenderFog;
+			public ForgeConfigSpec.BooleanValue RenderCardSlots;
 		}
 		
 		public static class OtherSettings{

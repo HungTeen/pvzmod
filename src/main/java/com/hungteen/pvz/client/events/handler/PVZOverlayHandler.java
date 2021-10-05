@@ -3,6 +3,8 @@ package com.hungteen.pvz.client.events.handler;
 import com.hungteen.pvz.PVZConfig;
 import com.hungteen.pvz.client.ClientProxy;
 import com.hungteen.pvz.client.cache.ClientPlayerResources;
+import com.hungteen.pvz.client.events.OverlayEvents;
+import com.hungteen.pvz.client.events.PVZInputEvents;
 import com.hungteen.pvz.common.item.spawn.card.SummonCardItem;
 import com.hungteen.pvz.common.network.PVZPacketHandler;
 import com.hungteen.pvz.common.network.toserver.PVZMouseScrollPacket;
@@ -28,7 +30,7 @@ import net.minecraftforge.api.distmarker.OnlyIn;
 public class PVZOverlayHandler {
 
 	private static Minecraft mc = Minecraft.getInstance();
-	private static final ResourceLocation RESOURCE = StringUtil.prefix("textures/gui/overlay/resource.png");
+	private static final ResourceLocation RESOURCE = StringUtil.prefix("textures/gui/overlay/resources.png");
 	private static final ResourceLocation FOG = StringUtil.prefix("textures/gui/overlay/fog.png");
 	private static final ResourceLocation INVASION = StringUtil.prefix("textures/gui/overlay/invasion.png");
 	private static final ResourceLocation TARGET = StringUtil.prefix("textures/gui/overlay/target.png");
@@ -39,6 +41,29 @@ public class PVZOverlayHandler {
 	private static final int SLOT_SIDE = 22;
 	private static final int SLOT_DELAY_CD = 20;
 	private static int SlotDelay = 0;
+	
+	/**
+	 * {@link OverlayEvents#onPostRenderOverlay(net.minecraftforge.client.event.RenderGameOverlayEvent.Post)}
+	 */
+	public static void renderResources(MatrixStack stack, int width, int height) {
+//		if(PVZInputEvents.ShowOverlay) {
+//			/* render resources on left upper corner */
+//			final int pos = PVZInputEvents.CurrentResourcePos;
+//			if(pos == 0 && PVZConfig.CLIENT_CONFIG.OverlaySettings.RenderSunBar.get()) {
+//				renderSunNumBar(stack);
+//			} else if(pos == 1 && PVZConfig.CLIENT_CONFIG.OverlaySettings.RenderMoneyBar.get()) {
+//				renderMoneyBar(stack);
+//			} else if(pos == 2 && PVZConfig.CLIENT_CONFIG.OverlaySettings.RenderGemBar.get()) {
+//				renderGemBar(stack);
+//			} else if(pos == 3 && PVZConfig.CLIENT_CONFIG.OverlaySettings.RenderTreeLevelBar.get()) {
+//				renderTreeLevelBar(stack);
+//			}
+//			/* render plant food on left lower corner */
+//		    if (PVZConfig.CLIENT_CONFIG.OverlaySettings.RenderPlantFoodBar.get()) {
+//		    	PVZOverlayHandler.drawEnergyNumBar(ev.getMatrixStack(), ev.getWindow().getGuiScaledWidth(), ev.getWindow().getGuiScaledHeight());
+//		    }
+//		}
+	}
 	
 	@SuppressWarnings("deprecation")
 	public static void drawCardInventory(PlayerEntity player, MatrixStack stack, int w, int h) {
@@ -134,19 +159,21 @@ public class PVZOverlayHandler {
 		stack.popPose();
 	}
 
-	public static void drawSunNumBar(MatrixStack stack) {
-		int lvl = ClientPlayerResources.getPlayerStats(Resources.TREE_LVL);
-		int maxNum = PlayerUtil.getPlayerMaxSunNum(lvl);
-		int num = ClientPlayerResources.getPlayerStats(Resources.SUN_NUM);
-		int len = RenderUtil.getRenderBarLen(num, maxNum, BAR_LEN);
-		stack.pushPose();
-		RenderSystem.enableBlend();
-		stack.scale(0.6f, 0.6f, 0.6f);
-		mc.getTextureManager().bind(RESOURCE);
-		mc.gui.blit(stack, 0, 0, 0, 0, W, H);
-		mc.gui.blit(stack, 0, 3, 0, 35, 34 + len, BAR_H);
-		StringUtil.drawCenteredScaledString(stack, mc.font, num + "", 95, 5, Colors.WHITE, 3f);
-		stack.popPose();
+	/**
+	 * {@link #renderResources(MatrixStack, int, int)}
+	 */
+	private static void renderSunBar(MatrixStack stack) {
+//		final int max = PlayerUtil.getPlayerMaxSunNum(ClientPlayerResources.getPlayerStats(Resources.TREE_LVL));
+//		final int now = ClientPlayerResources.getPlayerStats(Resources.SUN_NUM);
+//		final int len = RenderUtil.getRenderBarLen(num, maxNum, BAR_LEN);
+//		stack.pushPose();
+//		RenderSystem.enableBlend();
+//		stack.scale(0.6f, 0.6f, 0.6f);
+//		mc.getTextureManager().bind(RESOURCE);
+//		mc.gui.blit(stack, 0, 0, 0, 0, W, H);
+//		mc.gui.blit(stack, 0, 3, 0, 35, 34 + len, BAR_H);
+//		StringUtil.drawCenteredScaledString(stack, mc.font, num + "", 95, 5, Colors.WHITE, 3f);
+//		stack.popPose();
 	}
 
 	public static void drawMoneyBar(MatrixStack stack) {
@@ -192,10 +219,9 @@ public class PVZOverlayHandler {
 	}
 	
 	public static boolean checkCurrentPos(int pos) {
-		if(pos == 0) return PVZConfig.CLIENT_CONFIG.ResourceRender.RenderSunNumBar.get();
-		if(pos == 1) return PVZConfig.CLIENT_CONFIG.ResourceRender.RenderMoneyBar.get();
-		if(pos == 2) return PVZConfig.CLIENT_CONFIG.ResourceRender.RenderGemBar.get();
-		System.out.println("Error : Wrong Resource Render Pos !");
+//		if(pos == 0) return PVZConfig.CLIENT_CONFIG.ResourceRender.RenderSunNumBar.get();
+//		if(pos == 1) return PVZConfig.CLIENT_CONFIG.ResourceRender.RenderMoneyBar.get();
+//		if(pos == 2) return PVZConfig.CLIENT_CONFIG.ResourceRender.RenderGemBar.get();
 		return false;
 	}
 	

@@ -22,36 +22,23 @@ public class OverlayEvents {
 
 	@SubscribeEvent
 	public static void onPostRenderOverlay(RenderGameOverlayEvent.Post ev) {
-		if (ev.getType() != RenderGameOverlayEvent.ElementType.ALL
-				|| mc.player == null || mc.options.hideGui || mc.player.isSpectator()) {
+		if (ev.getType() != RenderGameOverlayEvent.ElementType.ALL || ! canRender() || mc.options.hideGui) {
 			return;
 		}
+		/* no opened gui */
 		if (mc.screen == null) {
-			if(PVZInputEvents.showPlayerResources) {
-				if(PVZOverlayHandler.checkCurrentPos(PVZInputEvents.currentResourcePos)) {
-					if(PVZInputEvents.currentResourcePos == 0) {
-						PVZOverlayHandler.drawSunNumBar(ev.getMatrixStack());
-					} else if(PVZInputEvents.currentResourcePos == 1) {
-						PVZOverlayHandler.drawMoneyBar(ev.getMatrixStack());
-					} else if(PVZInputEvents.currentResourcePos == 2) {
-						PVZOverlayHandler.drawGemBar(ev.getMatrixStack());
-					}
-				}
-			    if (PVZConfig.CLIENT_CONFIG.ResourceRender.RenderEnergyNumBar.get()) {
-			    	PVZOverlayHandler.drawEnergyNumBar(ev.getMatrixStack(), ev.getWindow().getGuiScaledWidth(), ev.getWindow().getGuiScaledHeight());
-			    }
-			}
-			if(PVZInputEvents.showInvasionProgress) {
-				if(PlayerUtil.isPlayerSurvival(mc.player)  && PVZConfig.CLIENT_CONFIG.InvasionRender.RenderInvasionProgress.get()) {
-					PVZOverlayHandler.renderInvasionProgress(ev.getMatrixStack(), ev.getWindow().getGuiScaledWidth(), ev.getWindow().getGuiScaledHeight());
-				}
-			}
-			if(mc.player.getVehicle() instanceof CobCannonEntity) {
-				CobCannonEntity cob = (CobCannonEntity) mc.player.getVehicle();
-				if(cob.getCornNum() > 0) {
-					PVZOverlayHandler.renderTargetAim(ev.getMatrixStack(), ev.getWindow().getGuiScaledWidth(), ev.getWindow().getGuiScaledHeight());
-				}
-			}
+			PVZOverlayHandler.renderResources(ev.getMatrixStack(), ev.getWindow().getGuiScaledWidth(), ev.getWindow().getScreenHeight());
+//			if(PVZInputEvents.ShowOverlay) {
+//				if(PlayerUtil.isPlayerSurvival(mc.player)  && PVZConfig.CLIENT_CONFIG.InvasionRender.RenderInvasionProgress.get()) {
+//					PVZOverlayHandler.renderInvasionProgress(ev.getMatrixStack(), ev.getWindow().getGuiScaledWidth(), ev.getWindow().getGuiScaledHeight());
+//				}
+//			}
+//			if(mc.player.getVehicle() instanceof CobCannonEntity) {
+//				CobCannonEntity cob = (CobCannonEntity) mc.player.getVehicle();
+//				if(cob.getCornNum() > 0) {
+//					PVZOverlayHandler.renderTargetAim(ev.getMatrixStack(), ev.getWindow().getGuiScaledWidth(), ev.getWindow().getGuiScaledHeight());
+//				}
+//			}
 			PVZOverlayHandler.drawCardInventory(mc.player, ev.getMatrixStack(), ev.getWindow().getGuiScaledWidth(), ev.getWindow().getGuiScaledHeight());
 		}
 	}
@@ -61,12 +48,16 @@ public class OverlayEvents {
 		if (ev.getType() != RenderGameOverlayEvent.ElementType.ALL || mc.player == null || mc.player.isSpectator()) {
 			return;
 		}
-		if (PVZConfig.CLIENT_CONFIG.EnvironmentRender.RenderFog.get()) {
-			int tick = ClientPlayerResources.getPlayerStats(Resources.NO_FOG_TICK);
-			if(tick < 0) {
-				PVZOverlayHandler.renderFog(ev.getMatrixStack(), ev.getWindow().getGuiScaledWidth(), ev.getWindow().getGuiScaledHeight(), Math.min(- tick * 1F / FogManager.CD, 1F));
-			}
-		}
+//		if (PVZConfig.CLIENT_CONFIG.EnvironmentRender.RenderFog.get()) {
+//			int tick = ClientPlayerResources.getPlayerStats(Resources.NO_FOG_TICK);
+//			if(tick < 0) {
+//				PVZOverlayHandler.renderFog(ev.getMatrixStack(), ev.getWindow().getGuiScaledWidth(), ev.getWindow().getGuiScaledHeight(), Math.min(- tick * 1F / FogManager.CD, 1F));
+//			}
+//		}
+	}
+	
+	private static boolean canRender() {
+		return mc.player != null && ! mc.player.isSpectator();
 	}
 	
 }

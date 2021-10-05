@@ -14,6 +14,7 @@
 // 物品组
 // 帕秋莉
 // 按键绑定
+// 配置文件
 // 杂项
 //***********************************
 //-----------------------------------------物品-----------------------------------------
@@ -894,6 +895,15 @@
     "key.pvz.show_progress":"展示/隐藏入侵进度",
     "key.pvz.left_toggle":"向左切换资源展示",
     "key.pvz.right_toggle":"向右切换资源展示",
+//-----------------------------------------配置文件-----------------------------------------
+    "config.pvz.overlay.sun_bar":"显示阳光数值条",
+    "config.pvz.overlay.money_bar":"显示金钱数值条",
+    "config.pvz.overlay.gem_bar":"显示宝石数值条",
+    "config.pvz.overlay.level_bar":"显示智慧树等级条",
+    "config.pvz.overlay.energy_bar":"显示能量豆条",
+    "config.pvz.overlay.invasion_bar":"显示入侵进度条",
+    "config.pvz.overlay.fog":"显示迷雾",
+    "config.pvz.overlay.card_slot":"显示植物快捷栏",
 //-----------------------------------------杂项-----------------------------------------
     "misc.pvz.cd.default":"初始",
     "misc.pvz.cd.super_fast":"超级快",

@@ -7,7 +7,6 @@ import com.hungteen.pvz.common.item.armor.ConeArmorItem;
 import com.hungteen.pvz.common.item.armor.FootballArmorItem;
 import com.hungteen.pvz.common.item.armor.GigaArmorItem;
 import com.hungteen.pvz.register.ItemRegister;
-import com.hungteen.pvz.register.KeyBindRegister;
 import com.hungteen.pvz.utils.StringUtil;
 
 import net.minecraft.client.Minecraft;

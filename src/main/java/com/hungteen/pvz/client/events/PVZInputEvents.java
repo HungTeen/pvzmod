@@ -1,13 +1,13 @@
 package com.hungteen.pvz.client.events;
 
 import com.hungteen.pvz.PVZMod;
+import com.hungteen.pvz.client.KeyBindRegister;
 import com.hungteen.pvz.client.events.handler.PVZOverlayHandler;
 import com.hungteen.pvz.common.entity.plant.explosion.CobCannonEntity;
 import com.hungteen.pvz.common.item.spawn.card.SummonCardItem;
 import com.hungteen.pvz.common.network.PVZPacketHandler;
 import com.hungteen.pvz.common.network.toserver.EntityInteractPacket;
 import com.hungteen.pvz.common.network.toserver.PVZMouseScrollPacket;
-import com.hungteen.pvz.register.KeyBindRegister;
 import com.hungteen.pvz.utils.EntityUtil;
 
 import net.minecraft.client.Minecraft;
@@ -19,24 +19,20 @@ import net.minecraftforge.fml.common.Mod;
 @Mod.EventBusSubscriber(modid = PVZMod.MOD_ID, value = Dist.CLIENT)
 public class PVZInputEvents {
 
-	public static boolean showPlayerResources = true;
-	public static boolean showInvasionProgress = true;
-	public static int currentResourcePos = 0;
+	public static boolean ShowOverlay = true;
+	public static int CurrentResourcePos = 0;
 	
 	@SubscribeEvent
 	public static void onKeyDown(InputEvent.KeyInputEvent ev) {
 		Minecraft mc = Minecraft.getInstance();
 		if(mc.isWindowActive()) {
-			if(KeyBindRegister.ShowPlayerResources.consumeClick()) {
-				showPlayerResources = ! showPlayerResources;
+			if(KeyBindRegister.SHOW_OVERLAY.consumeClick()) {
+				ShowOverlay = ! ShowOverlay;
 			}
-			if(KeyBindRegister.ShowInvasionProgress.consumeClick()) {
-				showInvasionProgress = ! showInvasionProgress;
-			}
-			if(KeyBindRegister.LeftToggle.consumeClick()) {
+			if(KeyBindRegister.LEFT_TOGGLE.consumeClick()) {
 				changeToggle(- 1);
 			}
-			if(KeyBindRegister.RightToggle.consumeClick()) {
+			if(KeyBindRegister.RIGHT_TOGGLE.consumeClick()) {
 				changeToggle(1);
 			}
 //			if(ShowPlayerInventory.isPressed()) {
@@ -74,11 +70,11 @@ public class PVZInputEvents {
     }
 	
 	private static void changeToggle(int offset) {
-		int result = (currentResourcePos + offset + 3) % 3;
+		int result = (CurrentResourcePos + offset + 3) % 3;
 		while(! PVZOverlayHandler.checkCurrentPos(result)) {
 			result = (result + offset + 3) % 3;
 		}
-		currentResourcePos = result;
+		CurrentResourcePos = result;
 	}
 	
 }

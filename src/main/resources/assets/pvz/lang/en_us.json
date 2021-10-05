@@ -14,6 +14,7 @@
 // ItemGroups
 // Patchouli
 // KeyBinds
+// Config
 // Misc
 //***********************************
 //-----------------------------------------Items-----------------------------------------
@@ -895,7 +896,16 @@
     "key.pvz.show_progress":"Turn on/off Invasion Progress",
     "key.pvz.left_toggle":"Left Toggle Resource UI",
     "key.pvz.right_toggle":"Right Toggle Resource UI",
-//-----------------------------------------杂项-----------------------------------------
+//-----------------------------------------KeyBind-----------------------------------------
+    "config.pvz.overlay.sun_bar":"Display of sun amount bar",
+    "config.pvz.overlay.money_bar":"Display of money bar",
+    "config.pvz.overlay.gem_bar":"Display of gem bar",
+    "config.pvz.overlay.level_bar":"Display of tree level bar",
+    "config.pvz.overlay.energy_bar":"Display of plant food bar",
+    "config.pvz.overlay.invasion_bar":"Display of invasion progress",
+    "config.pvz.overlay.fog":"Display of fog",
+    "config.pvz.overlay.card_slot":"Display of card slots",
+//-----------------------------------------Misc-----------------------------------------
     "misc.pvz.cd.default":"Default",
     "misc.pvz.cd.super_fast":"Super Fast",
     "misc.pvz.cd.huge_fast":"Huge Fast",
