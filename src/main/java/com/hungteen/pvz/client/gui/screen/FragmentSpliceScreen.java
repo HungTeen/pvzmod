@@ -10,7 +10,7 @@ import com.hungteen.pvz.common.container.FragmentSpliceContainer;
 import com.hungteen.pvz.common.network.PVZPacketHandler;
 import com.hungteen.pvz.common.network.toserver.ClickButtonPacket;
 import com.hungteen.pvz.common.tileentity.FragmentSpliceTileEntity;
-import com.hungteen.pvz.utils.RenderUtil;
+import com.hungteen.pvz.utils.MathUtil;
 import com.hungteen.pvz.utils.StringUtil;
 import com.hungteen.pvz.utils.enums.Colors;
 import com.mojang.blaze3d.matrix.MatrixStack;
@@ -79,7 +79,7 @@ public class FragmentSpliceScreen extends AbstractOptionScreen<FragmentSpliceCon
 		this.minecraft.getTextureManager().bind(TEXTURE);
 		blit(stack, this.leftPos, this.topPos, 0, 0, this.imageWidth, this.imageHeight);
 		int maxLen = 88;
-		int len = RenderUtil.getRenderBarLen(this.menu.te.array.get(0), FragmentSpliceTileEntity.MAX_SUN_AMOUNT, maxLen);
+		int len = MathUtil.getBarLen(this.menu.te.array.get(0), FragmentSpliceTileEntity.MAX_SUN_AMOUNT, maxLen);
 		blit(stack, this.leftPos + 7, this.topPos + 113 - len + 1, 210, 0, 16, len);
 		stack.popPose();
 	}

@@ -86,10 +86,13 @@ public class MathUtil {
 	/**
 	 * use for render bar.
 	 */
-	public static int getRenderBarLen(int num, int maxNum, int maxLen) {
-		int percent = num * maxLen / maxNum;
-		if(percent==0 && num != 0) return 1;
-		if(percent == maxLen && num != maxNum) return maxLen - 1;
+	public static int getBarLen(int num, int maxNum, int maxLen) {
+		final int percent = num * maxLen / maxNum;
+		if(percent == 0 && num != 0) {
+			return 1;
+		} else if(percent == maxLen && num != maxNum) {
+			return maxLen - 1;
+		}
 		return percent;
 	}
 	

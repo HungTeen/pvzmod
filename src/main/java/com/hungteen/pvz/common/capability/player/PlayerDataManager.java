@@ -325,6 +325,10 @@ public class PlayerDataManager {
 	 */
 	public void setResource(Resources res, int num) {
 		resources.put(res, num);
+		if(res == Resources.TREE_LVL) {
+			resources.put(Resources.TREE_XP, 0);
+			this.addResource(Resources.TREE_XP, 0);
+		}
 		this.addResource(res, 0);
 	}
 	
@@ -384,7 +388,7 @@ public class PlayerDataManager {
 				now = PlayerUtil.getPlayerLevelUpXp(lvl);
 				this.addResource(Resources.TREE_LVL, - 1);
 			}
-			resources.put(Resources.TREE_XP, now - num);
+			resources.put(Resources.TREE_XP, Math.max(now - num, 0));
 		}
 	}
 	

@@ -10,7 +10,7 @@ import com.hungteen.pvz.common.container.CardFusionContainer;
 import com.hungteen.pvz.common.network.PVZPacketHandler;
 import com.hungteen.pvz.common.network.toserver.ClickButtonPacket;
 import com.hungteen.pvz.common.tileentity.CardFusionTileEntity;
-import com.hungteen.pvz.utils.RenderUtil;
+import com.hungteen.pvz.utils.MathUtil;
 import com.hungteen.pvz.utils.StringUtil;
 import com.hungteen.pvz.utils.enums.Colors;
 import com.mojang.blaze3d.matrix.MatrixStack;
@@ -80,7 +80,7 @@ public class CardFusionScreen extends AbstractOptionScreen<CardFusionContainer> 
 		this.minecraft.getTextureManager().bind(TEXTURE);
 		blit(stack, this.leftPos, this.topPos, 0, 0, this.imageWidth, this.imageHeight);
 		int maxLen = 124;
-		int len = RenderUtil.getRenderBarLen(this.menu.te.array.get(0), CardFusionTileEntity.MAX_SUN_AMOUNT, maxLen);
+		int len = MathUtil.getBarLen(this.menu.te.array.get(0), CardFusionTileEntity.MAX_SUN_AMOUNT, maxLen);
 		blit(stack, this.leftPos + 7, this.topPos + 149 - len + 1, 240, 0, 16, len);
 		stack.popPose();
 	}

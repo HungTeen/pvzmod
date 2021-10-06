@@ -2,12 +2,12 @@ package com.hungteen.pvz.client.events;
 
 import com.hungteen.pvz.PVZMod;
 import com.hungteen.pvz.client.KeyBindRegister;
-import com.hungteen.pvz.client.events.handler.PVZOverlayHandler;
 import com.hungteen.pvz.common.entity.plant.explosion.CobCannonEntity;
 import com.hungteen.pvz.common.item.spawn.card.SummonCardItem;
 import com.hungteen.pvz.common.network.PVZPacketHandler;
 import com.hungteen.pvz.common.network.toserver.EntityInteractPacket;
 import com.hungteen.pvz.common.network.toserver.PVZMouseScrollPacket;
+import com.hungteen.pvz.utils.ConfigUtil;
 import com.hungteen.pvz.utils.EntityUtil;
 
 import net.minecraft.client.Minecraft;
@@ -19,6 +19,7 @@ import net.minecraftforge.fml.common.Mod;
 @Mod.EventBusSubscriber(modid = PVZMod.MOD_ID, value = Dist.CLIENT)
 public class PVZInputEvents {
 
+	private static final int SWITCH_NUM = 4;
 	public static boolean ShowOverlay = true;
 	public static int CurrentResourcePos = 0;
 	
@@ -69,12 +70,27 @@ public class PVZInputEvents {
 		}
     }
 	
+	/**
+	 * {@link #onKeyDown(net.minecraftforge.client.event.InputEvent.KeyInputEvent)}
+	 */
 	private static void changeToggle(int offset) {
-		int result = (CurrentResourcePos + offset + 3) % 3;
-		while(! PVZOverlayHandler.checkCurrentPos(result)) {
+		int result = (CurrentResourcePos + offset + SWITCH_NUM) % SWITCH_NUM;
+		int cnt = 0;//avoid endless loop.
+		while(! checkCurrentPos(result)) {
 			result = (result + offset + 3) % 3;
+			if(++ cnt >= SWITCH_NUM + 1) {
+				break;
+			}
 		}
 		CurrentResourcePos = result;
+	}
+	
+	private static boolean checkCurrentPos(int pos) {
+		return pos == 0 ? ConfigUtil.renderSunBar() :
+			pos == 1 ? ConfigUtil.renderMoneyBar() :
+			pos == 2 ? ConfigUtil.renderGemBar() :
+			pos == 3 ? ConfigUtil.renderTreeLevel() :
+			false;
 	}
 	
 }

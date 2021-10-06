@@ -40,4 +40,21 @@ public class ConfigUtil {
 		return PVZConfig.COMMON_CONFIG.RuleSettings.LimitPlantCount.get();
 	}
 	
+	public static boolean renderSunBar() {
+		return PVZConfig.CLIENT_CONFIG.OverlaySettings.RenderSunBar.get();
+	}
+	
+	public static boolean renderMoneyBar() {
+		return PVZConfig.CLIENT_CONFIG.OverlaySettings.RenderMoneyBar.get();
+	}
+	
+	public static boolean renderGemBar() {
+		return PVZConfig.CLIENT_CONFIG.OverlaySettings.RenderGemBar.get();
+	}
+	
+	public static boolean renderTreeLevel() {
+		return PVZConfig.CLIENT_CONFIG.OverlaySettings.RenderTreeLevel.get();
+	}
+	
+	
 }
