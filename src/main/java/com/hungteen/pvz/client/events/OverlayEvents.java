@@ -27,18 +27,29 @@ public class OverlayEvents {
 		}
 		/* no opened gui */
 		if (mc.screen == null) {
+			/* render resources on left upper corner */
 			PVZOverlayHandler.renderResources(ev.getMatrixStack(), ev.getWindow().getGuiScaledWidth(), ev.getWindow().getScreenHeight());
-//			if(PVZInputEvents.ShowOverlay) {
-//				if(PlayerUtil.isPlayerSurvival(mc.player)  && PVZConfig.CLIENT_CONFIG.InvasionRender.RenderInvasionProgress.get()) {
-//					PVZOverlayHandler.renderInvasionProgress(ev.getMatrixStack(), ev.getWindow().getGuiScaledWidth(), ev.getWindow().getGuiScaledHeight());
-//				}
-//			}
-//			if(mc.player.getVehicle() instanceof CobCannonEntity) {
-//				CobCannonEntity cob = (CobCannonEntity) mc.player.getVehicle();
-//				if(cob.getCornNum() > 0) {
-//					PVZOverlayHandler.renderTargetAim(ev.getMatrixStack(), ev.getWindow().getGuiScaledWidth(), ev.getWindow().getGuiScaledHeight());
-//				}
-//			}
+			
+			/* render plant food on left lower corner */
+		    if (PVZConfig.CLIENT_CONFIG.OverlaySettings.RenderPlantFoodBar.get()) {
+		    	PVZOverlayHandler.renderPlantFood(ev.getMatrixStack(), ev.getWindow().getGuiScaledWidth(), ev.getWindow().getScreenHeight());
+		    }
+		    
+		    /* render invasion bar on right lower corner */
+			if(PVZInputEvents.ShowOverlay) {
+				if(PlayerUtil.isPlayerSurvival(mc.player)  && PVZConfig.CLIENT_CONFIG.OverlaySettings.RenderInvasionProgress.get()) {
+					PVZOverlayHandler.renderInvasionProgress(ev.getMatrixStack(), ev.getWindow().getGuiScaledWidth(), ev.getWindow().getGuiScaledHeight());
+				}
+			}
+			
+			if(mc.player.getVehicle() instanceof CobCannonEntity) {
+				CobCannonEntity cob = (CobCannonEntity) mc.player.getVehicle();
+				if(cob.getCornNum() > 0) {
+					PVZOverlayHandler.renderTargetAim(ev.getMatrixStack(), ev.getWindow().getGuiScaledWidth(), ev.getWindow().getGuiScaledHeight());
+				}
+			}
+			
+			/* render card slots on left side */
 			PVZOverlayHandler.drawCardInventory(mc.player, ev.getMatrixStack(), ev.getWindow().getGuiScaledWidth(), ev.getWindow().getGuiScaledHeight());
 		}
 	}
@@ -48,12 +59,12 @@ public class OverlayEvents {
 		if (ev.getType() != RenderGameOverlayEvent.ElementType.ALL || mc.player == null || mc.player.isSpectator()) {
 			return;
 		}
-//		if (PVZConfig.CLIENT_CONFIG.EnvironmentRender.RenderFog.get()) {
-//			int tick = ClientPlayerResources.getPlayerStats(Resources.NO_FOG_TICK);
-//			if(tick < 0) {
-//				PVZOverlayHandler.renderFog(ev.getMatrixStack(), ev.getWindow().getGuiScaledWidth(), ev.getWindow().getGuiScaledHeight(), Math.min(- tick * 1F / FogManager.CD, 1F));
-//			}
-//		}
+		if (PVZConfig.CLIENT_CONFIG.OverlaySettings.RenderFog.get()) {
+			int tick = ClientPlayerResources.getPlayerStats(Resources.NO_FOG_TICK);
+			if(tick < 0) {
+				PVZOverlayHandler.renderFog(ev.getMatrixStack(), ev.getWindow().getGuiScaledWidth(), ev.getWindow().getGuiScaledHeight(), Math.min(- tick * 1F / FogManager.CD, 1F));
+			}
+		}
 	}
 	
 	private static boolean canRender() {

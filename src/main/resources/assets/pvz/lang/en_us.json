@@ -12,6 +12,7 @@
 // Potions & Effects
 // Death Infos
 // ItemGroups
+// Biome
 // Patchouli
 // KeyBinds
 // Config
@@ -883,6 +884,8 @@
     "itemGroup.pvz_misc":"PVZ Misc",
     "itemGroup.pvz_plant_card":"PVZ Plant Card",
     "itemGroup.pvz_tool":"PVZ Tool",
+//-----------------------------------------Biomes--------------------------------------------
+    "pvz:zen_garden":"Zen Garden",
 //-----------------------------------------Patchouli-----------------------------------------
      "gui.pvz.pvz_guide":"PVZ Guild Book",
      "gui.pvz.guide_info":"Welcome to the world of Plants vs. Zombies, this book will take you through this mod.",
@@ -896,15 +899,102 @@
     "key.pvz.show_progress":"Turn on/off Invasion Progress",
     "key.pvz.left_toggle":"Left Toggle Resource UI",
     "key.pvz.right_toggle":"Right Toggle Resource UI",
-//-----------------------------------------KeyBind-----------------------------------------
-    "config.pvz.overlay.sun_bar":"Display of sun amount bar",
-    "config.pvz.overlay.money_bar":"Display of money bar",
-    "config.pvz.overlay.gem_bar":"Display of gem bar",
-    "config.pvz.overlay.level_bar":"Display of tree level bar",
-    "config.pvz.overlay.energy_bar":"Display of plant food bar",
-    "config.pvz.overlay.invasion_bar":"Display of invasion progress",
-    "config.pvz.overlay.fog":"Display of fog",
-    "config.pvz.overlay.card_slot":"Display of card slots",
+//-----------------------------------------Config-----------------------------------------
+    "config.pvz.invasion.bucket_chance":"Weight Of Bucket Invasion",
+    "config.pvz.invasion.water_chance":"Weight Of Water Invasion",
+    "config.pvz.invasion.halloween_chance":"Weight Of Halloween Invasion",
+    "config.pvz.invasion.newspaper_chance":"Weight Of Newpaper Invasion",
+    "config.pvz.invasion.football_chance":"Weight Of Football Invasion",
+    "config.pvz.invasion.random_chance":"Weight Of Random Invasion",
+    "config.pvz.invasion.yeti_chance":"Weight Of Yeti Invasion",
+    "config.pvz.invasion.bungee_chance":"Weight Of Bungee Invasion",
+    "config.pvz.invasion.metal_chance":"Weight Of Metal Invasion",
+    "config.pvz.invasion.roof_chance":"Weight Of Roof Invasion",
+    "config.pvz.invasion.giant_chance":"Weight Of Giant Invasion",
+    "config.pvz.invasion.zombotany1_chance":"Weight Of Zombotany Invasion I",
+    "config.pvz.invasion.zombotany2_chance":"Weight Of Zombotany Invasion II",
+    "config.pvz.invasion.fog_chance":"Chance Of Fog Event",
+    "config.pvz.invasion.mini_chance":"Chance Of Mini Event",
+    "config.pvz.invasion.invis_chance":"Chance Of Invis Event",
+    
+    "config.pvz.invasion.safe_day":"Safe Day Amount",
+    "config.pvz.invasion.interval":"interval Day Amount",
+    "config.pvz.invasion.spawn_weight_multiple":"Spawn Weight Multiple",
+    "config.pvz.invasion.show_message":"Show Invasion Message",
+    "config.pvz.invasion.enable_wave":"Enable Wave",
+    "config.pvz.invasion.limit_dif":"Limit level By Difficulty",
+    "config.pvz.invasion.dif_inc":"Diffciculty Inc Value",
+    "config.pvz.invasion.dif_dec":"Difficulty Dec Value",
+    "config.pvz.invasion.level_dif":"Difficulty Of Level",
+    
+    "config.pvz.rule.spawn_monster" :"Spawn Monster",
+    "config.pvz.rule.beginner_reward" :"Send Beginner Reward",
+    "config.pvz.rule.turn_origin" :"Allow Sapling Turn Ore",
+    "config.pvz.rule.team_attack" :"Enable Team Attack",
+    "config.pvz.rule.plant_count" :"Plant Limit Base Count",
+    "config.pvz.rule.keep_sun" :"Keep Sun When Die",
+    
+    "config.pvz.world.zen_garden_chance":"Weight of Zen Garden",
+    
+    "config.pvz.world.dave_villa_distance":"Distance Between Dave Villa",
+    "config.pvz.world.bucket_house_distance":"Distance Between Bucket House",
+    "config.pvz.world.dolphin_house_distance":"Distance Between Dolphin House",
+    "config.pvz.world.grave_house_distance":"Distance Between Grave Houst",
+    "config.pvz.world.sun_temple_distance":"Distance Between Sun Temple",
+    "config.pvz.world.yeti_house_distance":"Distance Between Yeti House",
+    
+    "config.pvz.world.origin_ore_chance":"Weight of Origin Ore",
+    "config.pvz.world.amethyst_ore_chance":"Weight of Amethyst Ore",
+    
+    "config.pvz.world.sun_weight":"Weight of Sun",
+    "config.pvz.world.lava_zombie_weight":"Weight of Lava Zombie",
+    "config.pvz.world.giga_tomb_weight":"Weight of Giga Tomb Stone",
+    "config.pvz.world.yeti_zombie_weight":"Weight of Yeti Zombie",
+    
+    "config.pvz.player.initial_group":"Player Initial Group",
+    "config.pvz.player.initial_sun":"Player Initial Sun",
+    
+    "config.pvz.zombie.super_chance":"Weight of Plant Food Zombie",
+    "config.pvz.zombie.sun_chance":"Weight of Sun Zombie",
+    "config.pvz.zombie.drop_multiper":"Drop Multiper",
+    "config.pvz.zombie.drop_part":"Zombie Body Drop",
+    "config.pvz.zombie.max_level":"Zombie Max Level",
+    
+    "config.pvz.plant.strange_cat_count":"Max Strange Cat Count",
+    
+    "config.pvz.entity.sun_live_tick":"Exist Tick of Sun",
+    "config.pvz.entity.coin_live_tick":"Exist Tick of Coin",
+    "config.pvz.entity.jewel_live_tick":"Exist Tick of Jewel",
+    "config.pvz.entity.plant_food_live_tick":"Exist Tick of Plant Food",
+    "config.pvz.entity.yeti_live_tick":"Exist Tick of Yeti Zombie",
+    "config.pvz.entity.bowling_live_tick":"Exist Tick of Bowling",
+    "config.pvz.entity.lawn_mower_live_tick":"Exist Tick of Lawn Mower",
+    "config.pvz.entity.element_ball_live_tick":"Exist Tick of Element Ball",
+    
+    "config.pvz.block.origin_effect_chance":"Value About Origin Spread",
+    "config.pvz.block.sapling_turn_chance":"Value About Sapling ",
+    
+    "config.pvz.block.pea_drop_chance":"Value About Pea Drop",
+    "config.pvz.block.cabbage_drop_chance":"Value About Cabbage Drop",
+    
+    "config.pvz.item.jack_surprise_chance":"Value About jack Box",
+    
+    "config.pvz.overlay.sun_bar":"Display Of Sun Amount Bar",
+    "config.pvz.overlay.money_bar":"Display Of Money Bar",
+    "config.pvz.overlay.gem_bar":"Display Of Gem Bar",
+    "config.pvz.overlay.level_bar":"Display Of Tree Level Bar",
+    "config.pvz.overlay.energy_bar":"Display Of Plant food Bar",
+    "config.pvz.overlay.invasion_bar":"Display Of Invasion Progress",
+    "config.pvz.overlay.fog":"Display Of Fog",
+    "config.pvz.overlay.card_slot":"Display Of Card Slots",
+    
+    "config.pvz.client.pvz_menu":"Enable PVZ Menu",
+    
+    "config.waila.plugin_pvz":"PVZ",
+    "config.waila.plugin_pvz.show_defence_health":"Show Defence HP",
+    "config.waila.plugin_pvz.show_level":"Show Level",
+    "config.waila.plugin_pvz.show_owner":"Show Owner",
+    "config.waila.plugin_pvz.show_zombie_hurt_reduction":"Show Hurt Reduction",
 //-----------------------------------------Misc-----------------------------------------
     "misc.pvz.cd.default":"Default",
     "misc.pvz.cd.super_fast":"Super Fast",

@@ -1,8 +1,5 @@
 package com.hungteen.pvz.client.events.handler;
 
-import org.lwjgl.opengl.GL11;
-
-import com.hungteen.pvz.PVZConfig;
 import com.hungteen.pvz.client.ClientProxy;
 import com.hungteen.pvz.client.cache.ClientPlayerResources;
 import com.hungteen.pvz.client.events.OverlayEvents;
@@ -20,7 +17,6 @@ import com.hungteen.pvz.utils.enums.Resources;
 import com.mojang.blaze3d.matrix.MatrixStack;
 import com.mojang.blaze3d.systems.RenderSystem;
 
-import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.BufferBuilder;
 import net.minecraft.client.renderer.Tessellator;
 import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
@@ -49,7 +45,6 @@ public class PVZOverlayHandler {
 	 */
 	public static void renderResources(MatrixStack stack, int width, int height) {
 		if(PVZInputEvents.ShowOverlay) {
-			/* render resources on left upper corner */
 			final int pos = PVZInputEvents.CurrentResourcePos;
 			if(pos == 0 && ConfigUtil.renderSunBar()) {
 				renderSunBar(stack, width, height);
@@ -60,11 +55,43 @@ public class PVZOverlayHandler {
 			} else if(pos == 3 && ConfigUtil.renderTreeLevel()) {
 				renderTreeLevel(stack, width, height);
 			}
-			/* render plant food on left lower corner */
-		    if (PVZConfig.CLIENT_CONFIG.OverlaySettings.RenderPlantFoodBar.get()) {
-		    	PVZOverlayHandler.renderPlantFood(stack, width, height);
-		    }
 		}
+	}
+	
+	/**
+	 * {@link OverlayEvents#onPostRenderOverlay(net.minecraftforge.client.event.RenderGameOverlayEvent.Post)}
+	 */
+	public static void renderPlantFood(MatrixStack stack, int w, int h) {
+		final int maxNum = ClientPlayerResources.getPlayerStats(Resources.MAX_ENERGY_NUM);
+		int num = ClientPlayerResources.getPlayerStats(Resources.ENERGY_NUM);
+		final float sz = 0.5F;
+		stack.pushPose();
+		RenderSystem.enableBlend();
+		stack.scale(sz, sz, 1F);
+		ClientProxy.MC.getTextureManager().bind(RESOURCE);
+		
+		/* render head */
+		ClientProxy.MC.gui.blit(stack, 0, h * 2 - SUN_BAR_H1, 0, 64, 34, SUN_BAR_H1);
+		if(num > 0) {// light.
+			ClientProxy.MC.gui.blit(stack, 0, h * 2 - SUN_BAR_H1, 162, 45, SUN_BAR_H1, SUN_BAR_H1);
+		}
+		
+		/* render body */
+		int currentX = 35;
+		for (int i = 0; i < maxNum; i++) {
+			if (num -- > 0) {
+				ClientProxy.MC.gui.blit(stack, currentX, h * 2 - SUN_BAR_H1, 35, 64, 26, SUN_BAR_H1);
+			} else {
+				ClientProxy.MC.gui.blit(stack, currentX, h * 2 - SUN_BAR_H1, 61, 64, 26, SUN_BAR_H1);
+			}
+			currentX += EACH_W;
+		}
+		
+		/* render tail */
+		ClientProxy.MC.gui.blit(stack, currentX, h * 2 - SUN_BAR_H1, 153, 64, 4, SUN_BAR_H1);
+		
+		RenderSystem.disableBlend();
+		stack.popPose();
 	}
 	
 	@SuppressWarnings("deprecation")
@@ -88,6 +115,7 @@ public class PVZOverlayHandler {
 			final float offset = - 10 + 10F * SlotDelay / SLOT_DELAY_CD;
 			stack.pushPose();
 			RenderSystem.enableBlend();
+			
 			stack.translate(offset, 0, 0);
 			/* render slots */
 			for(int i = 0; i < maxSlot; ++ i) {
@@ -104,9 +132,12 @@ public class PVZOverlayHandler {
 				ClientProxy.MC.getItemRenderer().renderGuiItem(ClientPlayerResources.SUMMON_CARDS.get(i), 3, startHeight + 3 + i * (SLOT_SIDE - 2));
 			    RenderSystem.popMatrix();
 			}
+			
+			RenderSystem.disableBlend();
 			stack.popPose();
 		}
-//		StringUtil.drawCenteredScaledString(stack, ClientProxy.MC.font, num + "", 95, 5, Colors.WHITE, 3f);
+		
+		renderPlantFood(stack, w, h);
 	}
 	
 	public static void renderInvasionProgress(MatrixStack stack, int w, int h) {
@@ -114,11 +145,12 @@ public class PVZOverlayHandler {
 			return ;
 		}
 		stack.pushPose();
-		float scale = 0.5F;
+		final float scale = 0.5F;
 		int offsetY = 0;
 		int offsetX = 0;
-		stack.scale(scale, scale, scale);
+		stack.scale(scale, scale, 1F);
 		ClientProxy.MC.getTextureManager().bind(INVASION);
+		
 		final int WIDTH = 157, HEIGHT = 21;
 		ClientProxy.MC.gui.blit(stack, w * 2 - WIDTH + offsetX, h * 2 - HEIGHT + offsetY, 0, 0, WIDTH, HEIGHT);
 		final int P_WIDTH = 143, P_HEIGHT = 7;
@@ -131,13 +163,14 @@ public class PVZOverlayHandler {
 			ClientProxy.MC.gui.blit(stack, w * 2 - waveLen - 11 + offsetX, h * 2 - HEIGHT + (rise ? - 9 : - 4) + offsetY, 27, 42, 20, (rise ? 27 : 19));
 		}
 		ClientProxy.MC.gui.blit(stack, w * 2 - barlen - 11 + offsetX, h * 2 - HEIGHT - 4 + offsetY, 0, 42, 24, 23);
+		
 		stack.popPose();
 	}
 	
 	public static void renderTargetAim(MatrixStack stack, int w, int h) {
 		stack.pushPose();
-		float scale = 1F;
-		stack.scale(scale, scale, scale);
+		final float scale = 1F;
+		stack.scale(scale, scale, 1F);
 		ClientProxy.MC.getTextureManager().bind(TARGET);
 		final int WIDTH = 32, HEIGHT = 32;
 		ClientProxy.MC.gui.blit(stack, (w - WIDTH) / 2 - 0, (h - HEIGHT) / 2 - 0, 0, 0, WIDTH, HEIGHT);
@@ -150,6 +183,7 @@ public class PVZOverlayHandler {
 		RenderSystem.enableBlend();
 		RenderSystem.color4f(1f, 1f, 1f, dep);
 		ClientProxy.MC.getTextureManager().bind(FOG);
+		
 		Tessellator tessellator = Tessellator.getInstance();
 		BufferBuilder bufferbuilder = tessellator.getBuilder();
 		bufferbuilder.begin(7, DefaultVertexFormats.POSITION_TEX);
@@ -158,74 +192,76 @@ public class PVZOverlayHandler {
 		bufferbuilder.vertex(w, 0.0D, -90.0D).uv(1.0F, 0.0F).endVertex();
 		bufferbuilder.vertex(0.0D, 0.0D, -90.0D).uv(0.0F, 0.0F).endVertex();
 		tessellator.end();
+		
+		RenderSystem.disableBlend();
 		stack.popPose();
 	}
 
 	/**
 	 * {@link #renderResources(MatrixStack, int, int)}
 	 */
-	@SuppressWarnings("deprecation")
 	private static void renderSunBar(MatrixStack stack, int width, int height) {
 		final int max = PlayerUtil.getPlayerMaxSunNum(ClientPlayerResources.getPlayerStats(Resources.TREE_LVL));
 		final int now = ClientPlayerResources.getPlayerStats(Resources.SUN_NUM);
 		final int len = MathUtil.getBarLen(now, max, SUN_BAR_W2);
 		final float sz = 0.7F;
 		stack.pushPose();
-		RenderSystem.pushMatrix();
 		RenderSystem.enableBlend();
-		stack.scale(sz, sz, 0);
+		stack.scale(sz, sz, 1F);
 		ClientProxy.MC.getTextureManager().bind(RESOURCE);
+		
 		ClientProxy.MC.gui.blit(stack, 0, 0, 0, 0, SUN_BAR_W1, SUN_BAR_H1);
 		ClientProxy.MC.gui.blit(stack, 0, 0, 0, 32, 32 + len, SUN_BAR_H1);
+		
 		StringUtil.drawCenteredScaledString(stack, ClientProxy.MC.font, now + "", 95 + 1, 5 + 1, 6698496, 1.5f);
 		StringUtil.drawCenteredScaledString(stack, ClientProxy.MC.font, now + "", 95, 5, Colors.WHITE, 1.5f);
-		RenderSystem.popMatrix();
+		
+		RenderSystem.disableBlend();
 		stack.popPose();
 	}
 
 	/**
 	 * {@link #renderResources(MatrixStack, int, int)}
 	 */
-	@SuppressWarnings("deprecation")
 	public static void renderMoneyBar(MatrixStack stack, int width, int height) {
 		final int now = ClientPlayerResources.getPlayerStats(Resources.MONEY);
 		final float sz = 0.7F;
 		stack.pushPose();
-		RenderSystem.pushMatrix();
 		RenderSystem.enableBlend();
-		stack.scale(sz, sz, 0);
+		stack.scale(sz, sz, 1F);
 		ClientProxy.MC.getTextureManager().bind(RESOURCE);
+		
 		ClientProxy.MC.gui.blit(stack, 0, 0, 0, 96, SUN_BAR_W1, SUN_BAR_H1);
+		
 		StringUtil.drawCenteredScaledString(stack, ClientProxy.MC.font, now + "", 95 + 1, 5 + 1, 3610880, 1.5f);
 		StringUtil.drawCenteredScaledString(stack, ClientProxy.MC.font, now + "", 95, 5, Colors.WHITE, 1.5f);
-		RenderSystem.popMatrix();
+		
+		RenderSystem.disableBlend();
 		stack.popPose();
 	}
 	
 	/**
 	 * {@link #renderResources(MatrixStack, int, int)}
 	 */
-	@SuppressWarnings("deprecation")
 	public static void renderGemBar(MatrixStack stack, int width, int height) {
 		final int now = ClientPlayerResources.getPlayerStats(Resources.GEM_NUM);
 		final float sz = 0.7F;
 		stack.pushPose();
 		RenderSystem.enableBlend();
-		RenderSystem.pushMatrix();
-		RenderSystem.enableBlend();
-		stack.scale(sz, sz, 0);
+		stack.scale(sz, sz, 1F);
 		ClientProxy.MC.getTextureManager().bind(RESOURCE);
+		
 		ClientProxy.MC.gui.blit(stack, 0, 0, 0, 128, SUN_BAR_W1, SUN_BAR_H1);
 		StringUtil.drawCenteredScaledString(stack, ClientProxy.MC.font, now + "", 95 + 1, 5, 46545, 1.5f);
 		StringUtil.drawCenteredScaledString(stack, ClientProxy.MC.font, now + "", 95, 5, Colors.WHITE, 1.5f);
-		RenderSystem.popMatrix();
+		
+		RenderSystem.disableBlend();
 		stack.popPose();
 	}
 	
 	/**
 	 * {@link #renderResources(MatrixStack, int, int)}
 	 */
-	@SuppressWarnings("deprecation")
 	private static void renderTreeLevel(MatrixStack stack, int width, int height) {
 		final int level = ClientPlayerResources.getPlayerStats(Resources.TREE_LVL);
 		final int max = PlayerUtil.getPlayerLevelUpXp(level);
@@ -233,54 +269,17 @@ public class PVZOverlayHandler {
 		final int len = MathUtil.getBarLen(now, max, 120);
 		final float sz = 0.7F;
 		stack.pushPose();
-		RenderSystem.pushMatrix();
 		RenderSystem.enableBlend();
-		stack.scale(sz, sz, 0);
+		stack.scale(sz, sz, 1F);
 		ClientProxy.MC.getTextureManager().bind(RESOURCE);
+		
 		ClientProxy.MC.gui.blit(stack, 0, 0, 0, 160, 157, 34);
 		ClientProxy.MC.gui.blit(stack, 34, 3, 34, 194, len, 8);
 		
 		StringUtil.drawCenteredScaledString(stack, ClientProxy.MC.font, "Lv." + level, 52, 18, Colors.WHITE, 1f);
 		
-		RenderSystem.popMatrix();
+		RenderSystem.disableBlend();
 		stack.popPose();
 	}
 
-	/**
-	 * {@link #renderResources(MatrixStack, int, int)}
-	 */
-	@SuppressWarnings("deprecation")
-	private static void renderPlantFood(MatrixStack stack, int w, int h) {
-		final int maxNum = ClientPlayerResources.getPlayerStats(Resources.MAX_ENERGY_NUM);
-		int num = ClientPlayerResources.getPlayerStats(Resources.ENERGY_NUM);
-		stack.pushPose();
-		RenderSystem.pushMatrix();
-		RenderSystem.enableBlend();
-		ClientProxy.MC.getTextureManager().bind(RESOURCE);
-		stack.scale(0.5F, 0.5F, 0F);
-		
-		/* render head */
-		ClientProxy.MC.gui.blit(stack, 0, h / 2 - SUN_BAR_H1, 0, 64, 34, SUN_BAR_H1);
-		if(num > 0) {// light.
-			ClientProxy.MC.gui.blit(stack, 0, h / 2 - SUN_BAR_H1, 162, 45, SUN_BAR_H1, SUN_BAR_H1);
-		}
-		
-		/* render body */
-		int currentX = 35;
-		for (int i = 0; i < maxNum; i++) {
-			if (num -- > 0) {
-				ClientProxy.MC.gui.blit(stack, currentX, h / 2 - SUN_BAR_H1, 35, 64, 26, SUN_BAR_H1);
-			} else {
-				ClientProxy.MC.gui.blit(stack, currentX, h / 2 - SUN_BAR_H1, 61, 64, 26, SUN_BAR_H1);
-			}
-			currentX += EACH_W;
-		}
-		
-		/* render tail */
-		ClientProxy.MC.gui.blit(stack, currentX, h / 2 - SUN_BAR_H1, 153, 64, 4, SUN_BAR_H1);
-		
-		RenderSystem.popMatrix();
-		stack.popPose();
-	}
-	
 }

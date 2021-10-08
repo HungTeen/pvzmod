@@ -7,10 +7,8 @@ import java.util.UUID;
 import javax.annotation.Nullable;
 
 import com.hungteen.pvz.PVZMod;
+import com.hungteen.pvz.api.IPlantEntity;
 import com.hungteen.pvz.api.enums.PVZGroupType;
-import com.hungteen.pvz.api.interfaces.ICanBeCharmed;
-import com.hungteen.pvz.api.interfaces.IGroupEntity;
-import com.hungteen.pvz.api.interfaces.IHasOwner;
 import com.hungteen.pvz.common.advancement.trigger.PlantSuperTrigger;
 import com.hungteen.pvz.common.core.EssenceType;
 import com.hungteen.pvz.common.core.PlantType;
@@ -40,7 +38,6 @@ import com.hungteen.pvz.utils.AlgorithmUtil;
 import com.hungteen.pvz.utils.EntityUtil;
 import com.hungteen.pvz.utils.PlantUtil;
 import com.hungteen.pvz.utils.PlayerUtil;
-import com.hungteen.pvz.utils.interfaces.IHasMetal;
 
 import net.minecraft.block.Block;
 import net.minecraft.entity.CreatureEntity;
@@ -77,7 +74,7 @@ import net.minecraft.world.GameRules;
 import net.minecraft.world.IServerWorld;
 import net.minecraft.world.World;
 
-public abstract class PVZPlantEntity extends CreatureEntity implements IHasOwner, IGroupEntity, ICanBeCharmed, IHasMetal {
+public abstract class PVZPlantEntity extends CreatureEntity implements IPlantEntity {
 
 	private static final DataParameter<Integer> SUPER_TIME = EntityDataManager.defineId(PVZPlantEntity.class, DataSerializers.INT);
 	private static final DataParameter<Integer> PLANT_LVL = EntityDataManager.defineId(PVZPlantEntity.class, DataSerializers.INT);

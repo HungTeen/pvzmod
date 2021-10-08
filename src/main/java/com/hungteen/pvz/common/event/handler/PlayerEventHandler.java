@@ -11,7 +11,9 @@ import com.hungteen.pvz.common.enchantment.EnchantmentUtil;
 import com.hungteen.pvz.common.entity.drop.SunEntity;
 import com.hungteen.pvz.common.entity.plant.PVZPlantEntity;
 import com.hungteen.pvz.common.entity.zombie.PVZZombieEntity;
+import com.hungteen.pvz.common.event.PVZLivingEvents;
 import com.hungteen.pvz.common.event.PVZPlayerEvents;
+import com.hungteen.pvz.common.world.data.PVZInvasionData;
 import com.hungteen.pvz.common.world.invasion.WaveManager;
 import com.hungteen.pvz.register.SoundRegister;
 import com.hungteen.pvz.utils.EntityUtil;
@@ -25,7 +27,9 @@ import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.Hand;
+import net.minecraft.util.math.MathHelper;
 import net.minecraftforge.common.util.LazyOptional;
+import net.minecraftforge.event.entity.living.LivingDeathEvent;
 
 public class PlayerEventHandler {
 	
@@ -84,6 +88,22 @@ public class PlayerEventHandler {
 	}
 	
 	/**
+	 * {@link PVZLivingEvents#onLivingDeath(LivingDeathEvent)}
+	 */
+	public static void handlePlayerDeath(LivingDeathEvent ev, PlayerEntity player) {
+		if(player != null && !player.level.isClientSide && PlayerUtil.isValidPlayer(player)) {
+			/* spawn sun around*/
+			spawnSunAroundPlayer(player);
+			
+			/* decrease difficulty */
+			if(ev.getSource().getEntity() instanceof PVZZombieEntity) {//player killed by zombie.
+				PVZInvasionData data = PVZInvasionData.getOverWorldInvasionData(ev.getEntity().level);
+			    data.addCurrentDifficulty(- 1);//decrease difficulty.
+			}
+		}
+	}
+	
+	/**
 	 * {@link PVZPlayerEvents#onPlayerClone(net.minecraftforge.event.entity.player.PlayerEvent.Clone)}
 	 */
 	public static void clonePlayerData(PlayerEntity oldPlayer, PlayerEntity newPlayer, boolean died) {
@@ -96,6 +116,17 @@ public class PlayerEventHandler {
 			    });
 		    });
 	    }
+	}
+	
+	/**
+	 * {@link #handlePlayerDeath(LivingDeathEvent, PlayerEntity)}
+	 */
+	private static void spawnSunAroundPlayer(PlayerEntity player) {
+		final int amount = PlayerUtil.getResource(player, Resources.SUN_NUM);
+		final int spawn = amount > 50 ? MathHelper.clamp((amount - 50) / 10, 25, 250) : 0;
+		if(amount > 15) {
+			SunEntity.spawnSunsByAmount(player.level, player.blockPosition(), spawn, 50, 3);
+		}
 	}
 	
 }

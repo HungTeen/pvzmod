@@ -236,21 +236,15 @@ public class PlayerDataManager {
 //	
 	public void cloneFromExistingPlayerData(PlayerDataManager data, boolean died) {
 		this.loadFromNBT(data.saveToNBT());
+		
+		/* reset some value when die */
 		if(died) {
 			if(! PVZConfig.COMMON_CONFIG.RuleSettings.KeepSunWhenDie.get()) {
 				this.setResource(Resources.SUN_NUM, 50);
 			}
+			this.setResource(Resources.NO_FOG_TICK, 0);
+			this.setResource(Resources.KILL_COUNT, 0);
 		}
-//		//other
-//		for(int i = 0; i < WaveManager.MAX_WAVE_NUM; ++ i) {
-//			this.otherStats.zombieWaveTime[i] = data.otherStats.zombieWaveTime[i];
-//		}
-//		this.otherStats.totalWaveCount = data.otherStats.totalWaveCount;
-//		this.otherStats.playSoundTick = data.otherStats.playSoundTick;
-//		for(int i = 0; i < MysteryShopContainer.MAX_MYSTERY_GOOD; ++ i) {
-//			this.otherStats.mysteryGoods[i] = data.otherStats.mysteryGoods[i];
-//		}
-//		this.otherStats.updateGoodTick = data.otherStats.updateGoodTick;
 	}
 	
 	/**

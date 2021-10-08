@@ -1,6 +1,7 @@
 package com.hungteen.pvz.client.events;
 
 import com.hungteen.pvz.PVZMod;
+import com.hungteen.pvz.client.ClientProxy;
 import com.hungteen.pvz.client.KeyBindRegister;
 import com.hungteen.pvz.common.entity.plant.explosion.CobCannonEntity;
 import com.hungteen.pvz.common.item.spawn.card.SummonCardItem;
@@ -11,6 +12,7 @@ import com.hungteen.pvz.utils.ConfigUtil;
 import com.hungteen.pvz.utils.EntityUtil;
 
 import net.minecraft.client.Minecraft;
+import net.minecraft.util.Hand;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.client.event.InputEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
@@ -26,32 +28,38 @@ public class PVZInputEvents {
 	@SubscribeEvent
 	public static void onKeyDown(InputEvent.KeyInputEvent ev) {
 		Minecraft mc = Minecraft.getInstance();
-		if(mc.isWindowActive()) {
+		if(mc.isWindowActive() && ClientProxy.MC.player != null) {
+			/* change display of resource overlay */
 			if(KeyBindRegister.SHOW_OVERLAY.consumeClick()) {
 				ShowOverlay = ! ShowOverlay;
 			}
+			
+			/* change card slot position */
+			if(ClientProxy.MC.player.getItemInHand(Hand.MAIN_HAND).getItem() instanceof SummonCardItem) {
+				if(KeyBindRegister.UP_TOGGLE.consumeClick()) {
+				    changeCardSlot(1F);
+				}
+			    if(KeyBindRegister.DOWN_TOGGLE.consumeClick()) {
+				    changeCardSlot(- 1F);
+			    }
+			}
+			
+			/* change resource to display */
 			if(KeyBindRegister.LEFT_TOGGLE.consumeClick()) {
 				changeToggle(- 1);
 			}
 			if(KeyBindRegister.RIGHT_TOGGLE.consumeClick()) {
 				changeToggle(1);
 			}
-//			if(ShowPlayerInventory.isPressed()) {
-////				DistExecutor.runWhenOn(Dist.CLIENT, ()->()->{
-////					Minecraft.getInstance().displayGuiScreen(new PVZPlayerInventoryGui());
-////				});
-//				PVZPacketHandler.CHANNEL.sendToServer(new OpenGuiPacket(Guis.PLAYER_INVENTORY.ordinal()));
-//			}
 		}
 	}
 	
 	@SubscribeEvent
 	public static void onMouseDown(InputEvent.MouseInputEvent ev) {
-		Minecraft mc = Minecraft.getInstance();
-		if(mc.isWindowActive() && mc.player != null) {
-			if(mc.player.getVehicle() instanceof CobCannonEntity) {
-				CobCannonEntity cob = (CobCannonEntity) mc.player.getVehicle();
-				if(mc.player.getMainHandItem().isEmpty() && cob.getCornNum() > 0 && mc.options.keyUse.consumeClick()) {
+		if(ClientProxy.MC.isWindowActive() && ClientProxy.MC.player != null) {
+			if(ClientProxy.MC.player.getVehicle() instanceof CobCannonEntity) {
+				CobCannonEntity cob = (CobCannonEntity) ClientProxy.MC.player.getVehicle();
+				if(ClientProxy.MC.player.getMainHandItem().isEmpty() && cob.getCornNum() > 0 && ClientProxy.MC.options.keyUse.consumeClick()) {
 				    PVZPacketHandler.CHANNEL.sendToServer(new EntityInteractPacket(cob.getId(), 0, 0));
 				}
 			}
@@ -60,11 +68,10 @@ public class PVZInputEvents {
 	
 	@SubscribeEvent
     public static void onMouseScroll(InputEvent.MouseScrollEvent ev) {
-		Minecraft mc = Minecraft.getInstance();
 		double delta = ev.getScrollDelta();
-		if(delta != 0.0 && EntityUtil.isEntityValid(mc.player) && mc.player.isShiftKeyDown()) {
-			if(mc.player.getMainHandItem().getItem() instanceof SummonCardItem) {
-				PVZPacketHandler.CHANNEL.sendToServer(new PVZMouseScrollPacket(delta));
+		if(delta != 0.0 && EntityUtil.isEntityValid(ClientProxy.MC.player) && KeyBindRegister.SHIFT.isDown()) {
+			if(ClientProxy.MC.player.getMainHandItem().getItem() instanceof SummonCardItem) {
+				changeCardSlot(delta);
 				ev.setCanceled(true);
 			}
 		}
@@ -83,6 +90,14 @@ public class PVZInputEvents {
 			}
 		}
 		CurrentResourcePos = result;
+	}
+	
+	/**
+	 * {@link #onKeyDown(net.minecraftforge.client.event.InputEvent.KeyInputEvent)}
+	 * {@link #onMouseScroll(net.minecraftforge.client.event.InputEvent.MouseScrollEvent)}
+	 */
+	private static void changeCardSlot(double delta) {
+		PVZPacketHandler.CHANNEL.sendToServer(new PVZMouseScrollPacket(delta));
 	}
 	
 	private static boolean checkCurrentPos(int pos) {

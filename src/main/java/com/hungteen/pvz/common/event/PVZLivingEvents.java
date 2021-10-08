@@ -1,17 +1,13 @@
 package com.hungteen.pvz.common.event;
 
 import com.hungteen.pvz.PVZMod;
-import com.hungteen.pvz.common.capability.CapabilityHandler;
 import com.hungteen.pvz.common.enchantment.armor.TreeProtectionEnchantment;
 import com.hungteen.pvz.common.entity.plant.magic.StrangeCatEntity;
 import com.hungteen.pvz.common.entity.zombie.PVZZombieEntity;
 import com.hungteen.pvz.common.event.handler.LivingEventHandler;
 import com.hungteen.pvz.common.event.handler.PlayerEventHandler;
 import com.hungteen.pvz.common.misc.damage.PVZDamageSource;
-import com.hungteen.pvz.common.world.data.PVZInvasionData;
 import com.hungteen.pvz.utils.EntityUtil;
-import com.hungteen.pvz.utils.PlayerUtil;
-import com.hungteen.pvz.utils.enums.Resources;
 
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraftforge.event.entity.living.LivingDamageEvent;
@@ -25,6 +21,7 @@ public class PVZLivingEvents {
 
 	@SubscribeEvent
 	public static void onLivingDeath(LivingDeathEvent ev) {
+		/* handle player or its creature kill entity */
 		if(! ev.getEntity().level.isClientSide) {
 			PlayerEntity player = EntityUtil.getEntityOwner(ev.getEntityLiving().level, ev.getSource().getEntity());
 			if(player == null) { //true source has no owner
@@ -35,20 +32,13 @@ public class PVZLivingEvents {
 				PlayerEventHandler.onPlayerKillEntity(player, ev.getSource(), ev.getEntityLiving());
 			}
 		}
-		//when player death
-		if(! ev.getEntity().level.isClientSide && ev.getEntityLiving() instanceof PlayerEntity) {
-			PlayerEntity player = (PlayerEntity) ev.getEntityLiving();
-			if(PlayerUtil.isValidPlayer(player)) {
-				player.getCapability(CapabilityHandler.PLAYER_DATA_CAPABILITY).ifPresent((l) -> {
-				    l.getPlayerData().setResource(Resources.NO_FOG_TICK, 0);
-				    l.getPlayerData().setResource(Resources.KILL_COUNT, 0);
-			    });
-				if(ev.getSource().getEntity() instanceof PVZZombieEntity) {//player killed by zombie.
-					PVZInvasionData data = PVZInvasionData.getOverWorldInvasionData(ev.getEntity().level);
-				    data.addCurrentDifficulty(- 1);//decrease difficulty.
-				}
-			}
+		
+		/* handle player death */
+		if(ev.getEntity() instanceof PlayerEntity) {
+		    PlayerEventHandler.handlePlayerDeath(ev, (PlayerEntity) ev.getEntity());
 		}
+		
+		/* strange cat copy */
 		StrangeCatEntity.handleCopyCat(ev);
 	}
 	

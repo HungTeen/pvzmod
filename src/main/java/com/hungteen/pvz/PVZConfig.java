@@ -17,66 +17,82 @@ public class PVZConfig {
 				builder.comment("Settings about invasion events.").push("Invasion Events Settings");
 				{
 					InvasionSettings.BucketInvasionChance = builder
+							.translation("config.pvz.invasion.bucket_chance")
 							.comment("The weight to happen Bucket Invasion when it's a zombie invasion day. The larger the more chance.")
 							.defineInRange("BucketInvasionChance", 100, 1, 1000000);
 						
 					InvasionSettings.WaterInvasionChance = builder
+							.translation("config.pvz.invasion.water_chance")
 							.comment("The weight to happen Water Invasion when it's a zombie invasion day. The larger the more chance.")
 							.defineInRange("WaterInvasionChance", 90, 1, 1000000);
 						
 					InvasionSettings.HalloweenInvasionChance = builder
+							.translation("config.pvz.invasion.halloween_chance")
 							.comment("The weight to happen Halloween Invasion when it's a zombie invasion day. The larger the more chance.")
 							.defineInRange("HalloweenInvasionChance", 40, 1, 1000000);
 					
 					InvasionSettings.NewspaperInvasionChance = builder
+							.translation("config.pvz.invasion.newspaper_chance")
 							.comment("The weight to happen Newspaper Invasion when it's a zombie invasion day. The larger the more chance.")
 							.defineInRange("NewspaperInvasionChance", 90, 1, 1000000);
 						
 					InvasionSettings.FootballInvasionChance = builder
+							.translation("config.pvz.invasion.football_chance")
 							.comment("The weight to happen Football Invasion when it's a zombie invasion day. The larger the more chance.")
 							.defineInRange("FootballInvasionChance", 90, 1, 1000000);
 						
 					InvasionSettings.RandomInvasionChance = builder
+							.translation("config.pvz.invasion.random_chance")
 							.comment("The weight to happen Random Invasion when it's a zombie invasion day. The larger the more chance.")
 							.defineInRange("RandomInvasionChance", 100, 1, 1000000);
 					
 					InvasionSettings.YetiInvasionChance = builder
+							.translation("config.pvz.invasion.yeti_chance")
 							.comment("The weight to happen Yeti Invasion when it's a zombie invasion day. The larger the more chance.")
 							.defineInRange("YetiInvasionChance", 80, 1, 1000000);
 					
 					InvasionSettings.BungeeInvasionChance = builder
+							.translation("config.pvz.invasion.bungee_chance")
 							.comment("The weight to happen Bungee Invasion when it's a zombie invasion day. The larger the more chance.")
 							.defineInRange("BungeeInvasionChance", 60, 1, 1000000);
 					
 					InvasionSettings.MetalInvasionChance = builder
+							.translation("config.pvz.invasion.metal_chance")
 							.comment("The weight to happen Metal Invasion when it's a zombie invasion day. The larger the more chance.")
 							.defineInRange("MetalInvasionChance", 70, 1, 1000000);
 					
 					InvasionSettings.RoofInvasionChance = builder
+							.translation("config.pvz.invasion.roof_chance")
 							.comment("The weight to happen Roof Invasion when it's a zombie invasion day. The larger the more chance.")
 							.defineInRange("RoofInvasionChance", 85, 1, 1000000);
 					
 					InvasionSettings.GiantInvasionChance = builder
+							.translation("config.pvz.invasion.giant_chance")
 							.comment("The weight to happen Giant Invasion when it's a zombie invasion day. The larger the more chance.")
 							.defineInRange("GiantInvasionChance", 66, 1, 1000000);
 					
 					InvasionSettings.Zombotany1InvasionChance = builder
+							.translation("config.pvz.invasion.zombotany1_chance")
 							.comment("The weight to happen Zombotany I Invasion when it's a zombie invasion day. The larger the more chance.")
 							.defineInRange("Zombotany1AttackChance", 100, 1, 1000000);
 					
 					InvasionSettings.Zombotany2InvasionChance = builder
+							.translation("config.pvz.invasion.zombotany2_chance")
 							.comment("The weight to happen Zombotany II Invasion when it's a zombie invasion day. The larger the more chance.")
 							.defineInRange("Zombotany2AttackChance", 75, 1, 1000000);
 					
 					InvasionSettings.FogInvasionChance = builder
+							.translation("config.pvz.invasion.fog_chance")
 							.comment("The related value to happen Fog Event when it's a zombie invasion day. The larger the less chance.")
 							.defineInRange("FogEventChance", 12, 1, 1000000);
 					
 					InvasionSettings.MiniInvasionChance = builder
+							.translation("config.pvz.invasion.mini_chance")
 							.comment("The related value to happen Mini Event when it's a zombie invasion day. The larger the less chance.")
 							.defineInRange("MiniEventChance", 10, 1, 1000000);
 					
 					InvasionSettings.InvisInvasionChance = builder
+							.translation("config.pvz.invasion.invis_chance")
 							.comment("The related value to happen Invis Event when it's a zombie invasion day. The larger the less chance.")
 							.defineInRange("InvisEventChance", 10, 1, 1000000);
 				}
@@ -85,38 +101,47 @@ public class PVZConfig {
 				builder.comment("Settings about others.").push("Invasion Other Settings");
 				{
 					InvasionSettings.SafeDayLength = builder
+							.translation("config.pvz.invasion.safe_day")
 							.comment("If you set to 5, then the first 5 * 20 minutes of the world will not have any zombie invasion event.")
 						    .defineInRange("SafeDayLength", 5, 0, 1000000);
 					
 					InvasionSettings.InvasionIntervalLength = builder
+							.translation("config.pvz.invasion.interval")
 							.comment("The interval day length between each invasion.")
 						    .defineInRange("InvasionIntervalLength", 1, 0, 1000000);
 					
 					InvasionSettings.MaxSpawnWeightMultiple = builder
+							.translation("config.pvz.invasion.spawn_weight_multiple")
 							.comment("Spawn Weight Multipler of Zombies when Invasion happens.(such as the origin spawn weight of normal zombie is 100, your set to 3, then the final spawn weight is 3 * 100 = 300)")
 							.defineInRange("MaxSpawnWeightMultiple", 3, 1, 6);
 					
 					InvasionSettings.ShowEventMessages = builder
+							.translation("config.pvz.invasion.show_message")
 							.comment("If true, you will receive detail message about each event when zombie invasion happened.")
 							.define("ShowEventMessages", true);
 					
 					InvasionSettings.EnableHugeWave = builder
+							.translation("config.pvz.invasion.enable_wave")
 							.comment("If true, players will be invaded by a huge wave of zombies in zombie invasion day")
 							.define("EnableHugeWave", true);
 					
 					InvasionSettings.LimitByDifficulty = builder
-							.comment("If true, zombies will spawn with difficulty's incresing, stronger zombies only invade when difficulty is enough high.")
+							.translation("config.pvz.invasion.limit_dif")
+							.comment("If true, zombies will spawn with difficulty's increasing, stronger zombies only invade when difficulty is enough high.")
 							.define("LimitByDifficulty", true);
 					
 					InvasionSettings.IncDifficulty = builder
+							.translation("config.pvz.invasion.dif_inc")
 							.comment("The inc of difficulty when invasion happen.")
-							.defineInRange("IncDifficulty", 10, 1, 100);
+							.defineInRange("IncDifficulty", 10, 1, 1000);
 					
 					InvasionSettings.DecDifficulty = builder
+							.translation("config.pvz.invasion.dif_dec")
 							.comment("how many difficulty will dec when player killed by zombies.")
-							.defineInRange("DecDifficulty", 3, 1, 100);
+							.defineInRange("DecDifficulty", 3, 1, 1000);
 					
 					InvasionSettings.LevelNeedDifficulty = builder
+							.translation("config.pvz.invasion.level_dif")
 							.comment("how many difficulty needed to spawn high level zombie.")
 							.defineInRange("LevelNeedDifficulty", 1000, 0, 1000000);
 					
@@ -130,21 +155,32 @@ public class PVZConfig {
 			{
 				
 				RuleSettings.CanSpawnDefaultMonster = builder
+						.translation("config.pvz.rule.spawn_monster")
 						.comment("if turn to false, there will have no monster of other monsters spawn in overworld except pvz zombies.")
 						.define("CanSpawnDefaultMonster", true);
+				
 				RuleSettings.GiveBeginnerReward = builder
+						.translation("config.pvz.rule.beginner_reward")
 						.comment("If you set it true, you will get some basic plantcards when you first join world.")
 						.define("GiveBeginnerReward", false);
+				
 				RuleSettings.AllowNaturalTurnOrigin = builder
+						.translation("config.pvz.rule.turn_origin")
 						.comment("If turn to false, saplings no longer to grow to Origin Ore naturally, except there is a block above it.")
 						.define("AllowNaturalTurnOrigin", true);
+				
 				RuleSettings.TeamAttack = builder
+						.translation("config.pvz.rule.team_attack")
                         .comment("if turn to true, when plant's owner is in a team, the plant will attack the entity from other team(include players).")
                         .define("PlantAttackTeam", false);
+				
 				RuleSettings.LimitPlantCount = builder
+						.translation("config.pvz.rule.plant_count")
                         .comment("how many plants can you place in 30 x 30 area without increasing cost.")
                         .defineInRange("LimitPlantCount", 50, 10, 1000);
+				
 				RuleSettings.KeepSunWhenDie = builder
+						.translation("config.pvz.rule.keep_sun")
                         .comment("if turn to true, player will keep its sun after death.")
                         .define("KeepSunWhenDie", false);
 			}
@@ -157,6 +193,7 @@ public class PVZConfig {
 				builder.comment("Settings about the biome gen.").push("Biome Settings");
 				{
 					WorldSettings.GenZenGardenChance = builder
+							.translation("config.pvz.world.zen_garden_chance")
 							.comment("the gen chance of Zen Garden biome(the larger the more chance to see it).")
 							.defineInRange("GenZenGardenChance", 40, 1, 10000);
 				}
@@ -165,26 +202,32 @@ public class PVZConfig {
 				builder.comment("Settings about the structure gen.").push("Structure Settings");
 				{
 					WorldSettings.DaveVillaDistance = builder
+							.translation("config.pvz.world.dave_villa_distance")
 							.comment("the distance value between dave villa.")
 							.defineInRange("DaveVillaDistance", 40, 1, 1000);
 					
 					WorldSettings.BucketHouseDistance = builder
+							.translation("config.pvz.world.bucket_house_distance")
 							.comment("the distance value between bucket house.")
 							.defineInRange("BucketHouseDistance", 36, 1, 1000);
 					
 					WorldSettings.DolphinHouseDistance = builder
+							.translation("config.pvz.world.dolphin_house_distance")
 							.comment("the distance value between dolphin house.")
 							.defineInRange("DolphinHouseDistance", 32, 1, 1000);
 					
 					WorldSettings.GraveHouseDistance = builder
+							.translation("config.pvz.world.grave_house_distance")
 							.comment("the distance value between grave house.")
 							.defineInRange("GraveHouseDistance", 28, 1, 1000);
 					
 					WorldSettings.SunTempleDistance = builder
+							.translation("config.pvz.world.sun_temple_distance")
 							.comment("the distance value between sun temple.")
 							.defineInRange("SunTempleDistance", 36, 1, 1000);
 					
 					WorldSettings.YetiHouseDistance = builder
+							.translation("config.pvz.world.yeti_house_distance")
 							.comment("the distance value between yeti house.")
 							.defineInRange("YetiHouseDistance", 28, 1, 1000);
 				}
@@ -194,10 +237,12 @@ public class PVZConfig {
 				{
 					
 					WorldSettings.GenOriginOreChance = builder
+							.translation("config.pvz.world.origin_ore_chance")
 							.comment("the gen chance of origin ore in overworld(the larger the more chance to see it).")
 							.defineInRange("GenOriginOreChance", 5, 1, 10000);
 					
 					WorldSettings.GenAmethystOreChance = builder
+							.translation("config.pvz.world.amethyst_ore_chance")
 							.comment("the gen chance of amethyst ore in the end(the larger the more chance to see it).")
 							.defineInRange("GenAmethystOreChance", 15, 1, 10000);
 				}
@@ -206,18 +251,22 @@ public class PVZConfig {
 				builder.comment("The Spawn Weight of entity.").push("EntitySpawnWeight");
 				{
 					WorldSettings.SunSpawnWeight = builder
+							.translation("config.pvz.world.sun_weight")
 							.comment("spawn weight of Sun.")
 							.defineInRange("SunSpawnWeight", 50, 1, 200);
-					WorldSettings.ZombieDolphinSpawnWeight = builder
-							.comment("spawn weight of ZombieDolphin.")
-							.defineInRange("ZombieDolphinSpawnWeight", 1, 1, 200);
+					
 					WorldSettings.LavaZombieSpawnWeight = builder
+							.translation("config.pvz.world.lava_zombie_weight")
 							.comment("spawn weight of LavaZombie at nether.")
 							.defineInRange("LavaZombieSpawnWeight", 15, 1, 200);
+					
 					WorldSettings.GigaTombStoneSpawnWeight = builder
+							.translation("config.pvz.world.giga_tomb_weight")
 							.comment("spawn weight of GigaTombStone at night in overworld.")
 							.defineInRange("GigaTombStoneSpawnWeight", 5, 1, 200);
+					
 					WorldSettings.YetiZombieSpawnWeight = builder
+							.translation("config.pvz.world.yeti_zombie_weight")
 							.comment("spawn weight of YetiZombie in overworld when thunder.")
 							.defineInRange("YetiZombieSpawnWeight", 1, 1, 200);
 				}
@@ -232,30 +281,41 @@ public class PVZConfig {
 				builder.comment("Settings about players.").push("Player Settings");
 				{
 				    EntitySettings.PlayerInitialGroup = builder
+				    		.translation("config.pvz.player.initial_group")
 						    .comment("Player Initial Group When they join the world for the first time(-2 means other monsters, -1 means zombies, 0 means neutral creatures, 1 means plants and 2 means other guards).")
 						    .defineInRange("PlayerInitialGroup", 1, -2, 2);
 				    
 				    EntitySettings.PlayerBaseSunAmount = builder
+				    		.translation("config.pvz.player.initial_sun")
 						    .comment("players' base sun amount, it will increase when tree level increasing.")
-						    .defineInRange("PlayerInitialGroup", 950, 100, 10000);
+						    .defineInRange("PlayerInitialSun", 950, 100, 10000);
 				}
 				builder.pop();
 
 				builder.comment("Settings about zombies.").push("Zombie Settings");
 				{
 					EntitySettings.ZombieSetting.ZombieSuperChance = builder
+							.translation("config.pvz.zombie.super_chance")
 						    .comment("the spawn chance of zombie with plant energy(the bigger,the more chance it spawn).")
 						    .defineInRange("ZombieSuperChance", 1, 0, 40);
+					
 				    EntitySettings.ZombieSetting.ZombieSunChance = builder
+				    		.translation("config.pvz.zombie.sun_chance")
 						    .comment("the spawn chance of zombie with sun layer(the bigger,the more chance it spawn).")
 						    .defineInRange("ZombieSunChance", 1, 0, 40);
+				    
 				    EntitySettings.ZombieSetting.ZombieDropMultiper = builder
+				    		.translation("config.pvz.zombie.drop_multiper")
 						    .comment("the drop chance of coin when zombie die(the bigger,the less chance it spawn).")
 						    .defineInRange("ZombieDropMultiper", 10, 3, 100);
+				    
 				    EntitySettings.ZombieSetting.EnableZombieDropHands = builder
+				    		.translation("config.pvz.zombie.drop_part")
 						    .comment("enable zombies to drop hands and heads when they got hurt(turn false to disable).")
-						    .define("EnableZombieDropHands", true);
+						    .define("EnableZombieDropParts", true);
+				    
 				    EntitySettings.ZombieSetting.ZombieMaxLevel = builder
+				    		.translation("config.pvz.zombie.max_level")
 						    .comment("it can limit zombie's max level.")
 						    .defineInRange("ZombieMaxLevel", 20, 1, 20);
 				}
@@ -264,6 +324,7 @@ public class PVZConfig {
 				builder.comment("Settings about plants.").push("Plant Settings");
 				{
 					EntitySettings.PlantSetting.StrangeCatCount = builder
+							.translation("config.pvz.plant.strange_cat_count")
 						    .comment("the max number StrangeCats can copy themselves in a range of 20 * 20.")
 						    .defineInRange("StrangeCatCount", 10, 0, 100);
 				    
@@ -273,32 +334,43 @@ public class PVZConfig {
 				builder.comment("The Max live time for Entity like sun.").push("EntityLiveTime");
 				{
 					EntitySettings.EntityLiveTick.SunLiveTick = builder
+							.translation("config.pvz.entity.sun_live_tick")
 							.comment("how many ticks can the sun entity live.")
 							.defineInRange("SunLiveTick", 400, 1, 1200);
+					
 					EntitySettings.EntityLiveTick.CoinLiveTick = builder
+							.translation("config.pvz.entity.coin_live_tick")
 							.comment("how many ticks can the coin entity live.")
 							.defineInRange("CoinLiveTick", 400, 1, 1200);
+					
 					EntitySettings.EntityLiveTick.JewelLiveTick = builder
+							.translation("config.pvz.entity.jewel_live_tick")
 							.comment("how many ticks can the jewel entity live.")
 							.defineInRange("JewelLiveTick", 500, 1, 1200);
+					
 					EntitySettings.EntityLiveTick.EnergyLiveTick = builder
+							.translation("config.pvz.entity.plant_food_live_tick")
 							.comment("how many ticks can the energy entity live.")
-							.defineInRange("EnergyLiveTick", 400, 1, 1200);
+							.defineInRange("PlantFoodLiveTick", 400, 1, 1200);
+					
 					EntitySettings.EntityLiveTick.YetiLiveTick = builder
+							.translation("config.pvz.entity.yeti_live_tick")
 							.comment("how many ticks can yeti entity live(how long will it stay).")
-							.worldRestart()
 							.defineInRange("YetiLiveTick", 2400, 1, 1000000);
+					
 					EntitySettings.EntityLiveTick.BowlingLiveTick = builder
+							.translation("config.pvz.entity.bowling_live_tick")
 							.comment("how many ticks can bowling entity live.")
-							.worldRestart()
 							.defineInRange("BowlingLiveTick", 300, 1, 1000000);
+					
 					EntitySettings.EntityLiveTick.LawnMowerLiveTick = builder
+							.translation("config.pvz.entity.lawn_mower_live_tick")
 							.comment("how many ticks can lawnmower entity live.")
-							.worldRestart()
 							.defineInRange("LawnMowerLiveTick", 200, 1, 1000000);
+					
 					EntitySettings.EntityLiveTick.ElementBallLiveTick = builder
+							.translation("config.pvz.entity.element_ball_live_tick")
 							.comment("how many ticks can element ball entity live.")
-							.worldRestart()
 							.defineInRange("ElementBallLiveTick", 600, 1, 1000000);
 				}
 				builder.pop();
@@ -308,19 +380,25 @@ public class PVZConfig {
 			builder.comment("Settings about blocks.").push("Block Settings");
 			{
 				BlockSettings.OriginBlockEffectChance = builder
+						.translation("config.pvz.block.origin_effect_chance")
 						.comment("The chance to get Essence Ore from Origin Block's effect. the bigger the less chance.")
 						.defineInRange("OriginChance", 4, 1, 100);
+				
 				BlockSettings.SaplingTurnOriginChance = builder
+						.translation("config.pvz.block.sapling_turn_chance")
 						.comment("The chance when sapling turn to origin ore, the bigger the less chance.")
 						.defineInRange("SaplingTurnOrigin", 6, 1, 10000);
 				
 				builder.comment("Setting about break blocks.").push("Break Block Setting");
 				{
 					BlockSettings.PeaDropChance = builder
-						.comment("the drop chance of pea when you break grass.the bigger the value is,the lower chance you get.(more specificly 1/x)")
+						.translation("config.pvz.block.pea_drop_chance")
+						.comment("the drop chance of pea when you break grass. the bigger the value is,the lower chance you get.(more specificly 1/x)")
 						.defineInRange("DropPeaChance", 16, 1, 1000);
+					
 					BlockSettings.CabbageDropChance = builder
-							.comment("the drop chance of cabbage when you break grass.the bigger the value is,the lower chance you get.(more specificly 1/x)")
+							.translation("config.pvz.block.cabbage_drop_chance")
+							.comment("the drop chance of cabbage when you break grass. the bigger the value is,the lower chance you get.(more specificly 1/x)")
 							.defineInRange("DropCabbageChance", 32, 1, 1000);
 				}
 				builder.pop();
@@ -330,6 +408,7 @@ public class PVZConfig {
 			builder.comment("Settings about items.").push("Item Settings");
 			{
 				ItemSettings.JackBoxSurpriseChance = builder
+						.translation("config.pvz.item.jack_surprise_chance")
 						.comment("The chance when player got a surprise when use jack box.the bigger the value is,the lower chance you get.(more specificly 1/x)")
 						.defineInRange("JackBoxSurpriseChance", 10, 1, 1000000);
 			}
@@ -510,6 +589,7 @@ public class PVZConfig {
 			builder.comment("Other Render Settings").push("Other Render Settings");
 			{
 				OtherSettings.ShowPVZMainMenu = builder
+						.translation("config.pvz.client.pvz_menu")
 						.comment("show pvz main menu")
 						.define("ShowPVZMainMenu", true);
 			}
