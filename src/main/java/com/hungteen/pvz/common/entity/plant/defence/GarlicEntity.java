@@ -3,7 +3,7 @@ package com.hungteen.pvz.common.entity.plant.defence;
 import java.util.Collections;
 import java.util.List;
 
-import com.hungteen.pvz.common.core.PlantType;
+import com.hungteen.pvz.api.types.IPlantType;
 import com.hungteen.pvz.common.entity.plant.base.PlantDefenderEntity;
 import com.hungteen.pvz.common.impl.plant.PVZPlants;
 import com.hungteen.pvz.common.misc.damage.PVZDamageSource;
@@ -82,7 +82,7 @@ public class GarlicEntity extends PlantDefenderEntity {
 	}
 	
 	@Override
-	public PlantType getPlantType() {
+	public IPlantType getPlantType() {
 		return PVZPlants.GARLIC;
 	}
 

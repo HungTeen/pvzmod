@@ -1,6 +1,6 @@
 package com.hungteen.pvz.common.entity.plant.appease;
 
-import com.hungteen.pvz.common.core.PlantType;
+import com.hungteen.pvz.api.types.IPlantType;
 import com.hungteen.pvz.common.impl.plant.PVZPlants;
 import com.hungteen.pvz.utils.AnimationUtil;
 
@@ -46,7 +46,7 @@ public class ThreePeaterEntity extends PeaShooterEntity {
 	}
 	
 	@Override
-	public PlantType getPlantType() {
+	public IPlantType getPlantType() {
 		return PVZPlants.THREE_PEATER;
 	}
 	

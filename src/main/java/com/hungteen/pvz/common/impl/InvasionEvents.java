@@ -5,9 +5,10 @@ import java.util.List;
 
 import com.hungteen.pvz.PVZConfig;
 import com.hungteen.pvz.PVZMod;
+import com.hungteen.pvz.api.types.IInvasionType;
+import com.hungteen.pvz.api.types.IZombieType;
 import com.hungteen.pvz.common.cache.FlagCache;
-import com.hungteen.pvz.common.core.InvasionType;
-import com.hungteen.pvz.common.core.ZombieType;
+import com.hungteen.pvz.common.impl.misc.InvasionType;
 import com.hungteen.pvz.common.impl.zombie.CustomZombies;
 import com.hungteen.pvz.common.impl.zombie.GrassZombies;
 import com.hungteen.pvz.common.impl.zombie.PoolZombies;
@@ -21,7 +22,7 @@ import net.minecraft.world.World;
 
 public class InvasionEvents extends InvasionType {
   
-	private static final List<InvasionType> LIST = new ArrayList<>();
+	private static final List<IInvasionType> LIST = new ArrayList<>();
 	
 	public static final InvasionType RANDOM = new InvasionEvents("random", new InvasionFeatures()
 			.chance(PVZConfig.COMMON_CONFIG.InvasionSettings.RandomInvasionChance.get())
@@ -30,15 +31,15 @@ public class InvasionEvents extends InvasionType {
 			.available(world -> FlagCache.isEdgar090505Defeated())
 	) {
 		    @Override
-			public List<ZombieType> getSpawnZombies(World world) {
-		    	WeightList<ZombieType> list = new WeightList<>();
+			public List<IZombieType> getSpawnZombies(World world) {
+		    	WeightList<IZombieType> list = new WeightList<>();
 		    	ZombieType.getZombies().stream().filter(type -> type.getInvasionWeight() > 0).forEach(type -> {
 		    		list.addItem(type, type.getInvasionWeight());
 		    	});
-		    	List<ZombieType> zombies = new ArrayList<>();
+		    	List<IZombieType> zombies = new ArrayList<>();
 		    	final int spawnCnt = MathUtil.getRandomMinMax(world.getRandom(), 1, 5);
 		    	for(int i = 0; i < spawnCnt; ++ i) {
-		    		final ZombieType type = list.getRandomItem(world.getRandom()).get();
+		    		final IZombieType type = list.getRandomItem(world.getRandom()).get();
 		    		if(! zombies.contains(type)) {
 		    			zombies.add(type);
 		    		}

@@ -1,13 +1,11 @@
 package com.hungteen.pvz.common.entity.zombie.roof;
 
-import java.util.Optional;
-
 import com.hungteen.pvz.api.interfaces.IHasWheel;
-import com.hungteen.pvz.common.core.ZombieType;
 import com.hungteen.pvz.common.entity.ai.goal.attack.PultAttackGoal;
 import com.hungteen.pvz.common.entity.ai.goal.target.PVZRandomTargetGoal;
 import com.hungteen.pvz.common.entity.bullet.BallEntity;
 import com.hungteen.pvz.common.entity.zombie.base.CarZombieEntity;
+import com.hungteen.pvz.common.impl.ZombieType;
 import com.hungteen.pvz.common.impl.zombie.RoofZombies;
 import com.hungteen.pvz.common.misc.damage.PVZDamageSource;
 import com.hungteen.pvz.register.EntityRegister;
@@ -15,25 +13,22 @@ import com.hungteen.pvz.register.SoundRegister;
 import com.hungteen.pvz.utils.EntityUtil;
 import com.hungteen.pvz.utils.ZombieUtil;
 import com.hungteen.pvz.utils.interfaces.IPult;
-
-import net.minecraft.entity.EntitySize;
-import net.minecraft.entity.EntityType;
-import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.Pose;
+import net.minecraft.entity.*;
 import net.minecraft.entity.ai.attributes.Attributes;
-import net.minecraft.entity.monster.MonsterEntity;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.network.datasync.DataParameter;
 import net.minecraft.network.datasync.DataSerializers;
 import net.minecraft.network.datasync.EntityDataManager;
 import net.minecraft.world.World;
 
+import java.util.Optional;
+
 public class CatapultZombieEntity extends CarZombieEntity implements IPult,IHasWheel {
 
 	private static final DataParameter<Integer> BALL_COUNT = EntityDataManager.defineId(CatapultZombieEntity.class, DataSerializers.INT);
 	private static final float PULT_DISTANCE = 2000;
 	
-	public CatapultZombieEntity(EntityType<? extends MonsterEntity> type, World worldIn) {
+	public CatapultZombieEntity(EntityType<? extends CreatureEntity> type, World worldIn) {
 		super(type, worldIn);
 	}
 	

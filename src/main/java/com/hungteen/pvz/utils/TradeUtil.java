@@ -1,19 +1,19 @@
 package com.hungteen.pvz.utils;
 
-import java.util.EnumMap;
-
 import com.hungteen.pvz.PVZMod;
+import com.hungteen.pvz.api.types.IPlantType;
 import com.hungteen.pvz.client.gui.GuiHandler;
-import com.hungteen.pvz.common.core.PlantType;
 import com.hungteen.pvz.common.enchantment.EnchantmentRegister;
+import com.hungteen.pvz.common.impl.PlantType;
 import com.hungteen.pvz.common.potion.PotionRecipeHandler;
 import com.hungteen.pvz.register.BlockRegister;
 import com.hungteen.pvz.register.ItemRegister;
-
 import net.minecraft.enchantment.EnchantmentData;
 import net.minecraft.item.EnchantedBookItem;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
+
+import java.util.EnumMap;
 
 public class TradeUtil {
 
@@ -59,7 +59,7 @@ public class TradeUtil {
 	
 	public static ItemStack getGoodItemStack(DaveGoods good) {
 		if(good.toString().toLowerCase().startsWith("enjoy_card")) {
-			PlantType plant = PlantType.getPlants().get(good.type);
+			IPlantType plant = PlantType.getPlants().get(good.type);
 			if(plant.getEnjoyCard().isPresent()) {
 				return new ItemStack(plant.getEnjoyCard().get());
 			}
@@ -69,7 +69,6 @@ public class TradeUtil {
 			ItemStack stack = DAVE_GOODS_ITEM.get(good).copy();
 			return stack;
 		}
-		PVZMod.LOGGER.debug("ERROR: Get DaveGoods ItemStack !");
 		return null;
 	}
 	

@@ -1,6 +1,6 @@
 package com.hungteen.pvz.common.entity.plant.flame;
 
-import com.hungteen.pvz.common.core.PlantType;
+import com.hungteen.pvz.api.types.IPlantType;
 import com.hungteen.pvz.common.entity.misc.ElementBallEntity;
 import com.hungteen.pvz.common.entity.misc.ElementBallEntity.ElementTypes;
 import com.hungteen.pvz.common.entity.plant.PVZPlantEntity;
@@ -130,7 +130,7 @@ public class JalapenoEntity extends PlantBomberEntity{
 	}
 
 	@Override
-	public PlantType getPlantType() {
+	public IPlantType getPlantType() {
 		return PVZPlants.JALAPENO;
 	}
 

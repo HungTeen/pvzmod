@@ -1,15 +1,14 @@
 package com.hungteen.pvz.common.entity.zombie.zombotany;
 
-import com.hungteen.pvz.common.core.ZombieType;
 import com.hungteen.pvz.common.entity.bullet.itembullet.PeaEntity;
+import com.hungteen.pvz.common.impl.ZombieType;
 import com.hungteen.pvz.common.impl.zombie.Zombotanies;
 import com.hungteen.pvz.data.loot.PVZLoot;
 import com.hungteen.pvz.register.EffectRegister;
 import com.hungteen.pvz.utils.EntityUtil;
-
+import net.minecraft.entity.CreatureEntity;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.monster.MonsterEntity;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.SoundEvents;
@@ -19,7 +18,7 @@ public class PeaShooterZombieEntity extends AbstractZombotanyEntity {
 
 	private int shootTick = 0;
 	
-	public PeaShooterZombieEntity(EntityType<? extends MonsterEntity> type, World worldIn) {
+	public PeaShooterZombieEntity(EntityType<? extends CreatureEntity> type, World worldIn) {
 		super(type, worldIn);
 	}
 

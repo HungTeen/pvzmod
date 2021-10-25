@@ -2,8 +2,10 @@ package com.hungteen.pvz.common.command;
 
 import java.util.Collection;
 
-import com.hungteen.pvz.common.core.InvasionType;
-import com.hungteen.pvz.common.core.ZombieType;
+import com.hungteen.pvz.api.types.IInvasionType;
+import com.hungteen.pvz.api.types.IZombieType;
+import com.hungteen.pvz.common.impl.ZombieType;
+import com.hungteen.pvz.common.impl.misc.InvasionType;
 import com.hungteen.pvz.common.world.data.PVZInvasionData;
 import com.hungteen.pvz.common.world.invasion.OverworldInvasion;
 import com.hungteen.pvz.common.world.invasion.WaveManager;
@@ -22,7 +24,7 @@ public class InvasionCommand {
 
 	public static void register(CommandDispatcher<CommandSource> dispatcher) {
         LiteralArgumentBuilder<CommandSource> builder = Commands.literal("invasion").requires((ctx) -> {return ctx.hasPermission(2);});
-        for(InvasionType event : InvasionType.getInvasionEvents()) {
+        for(IInvasionType event : InvasionType.getInvasionEvents()) {
         	builder.then(Commands.literal("event")
         			.then(Commands.literal("add").then(Commands.literal(event.getIdentity()).executes((commond)->{
         				return addInvasionEvent(commond.getSource(), event);
@@ -37,7 +39,7 @@ public class InvasionCommand {
         	    	return showInvasionEvent(commond.getSource(), EntityArgument.getPlayers(commond, "targets"));
         	    })))
         	);
-        for (ZombieType zombie : ZombieType.getZombies()) {
+        for (IZombieType zombie : ZombieType.getZombies()) {
         	builder.then(Commands.literal("zombie")
         			.then(Commands.literal("add").then(Commands.literal(zombie.toString().toLowerCase()).executes((commond)->{
         				return addZombie(commond.getSource(), zombie);
@@ -86,19 +88,19 @@ public class InvasionCommand {
 		return 0;
 	}
 	
-	private static int addZombie(CommandSource source, ZombieType zombie) {
+	private static int addZombie(CommandSource source, IZombieType zombie) {
 		if(zombie.getInvasionWeight() > 0) {
 			OverworldInvasion.addZombie(source.getLevel(), zombie);
-			source.sendSuccess(new StringTextComponent(new TranslationTextComponent("command.pvz.add_zombie").getString() + ":" + zombie.getTranslateText().getString()), true);
+			source.sendSuccess(new TranslationTextComponent("command.pvz.add_zombie").append(":").append(zombie.getText()), true);
 		} else {
-			source.sendSuccess(new StringTextComponent(new TranslationTextComponent("command.pvz.add_zombie_fail").getString()), false);
+			source.sendSuccess(new TranslationTextComponent("command.pvz.add_zombie_fail"), false);
 		}
 		return 0;
 	}
 	
-	private static int removeZombie(CommandSource source, ZombieType zombie) {
+	private static int removeZombie(CommandSource source, IZombieType zombie) {
 		OverworldInvasion.removeZombie(source.getLevel(), zombie);
-		source.sendSuccess(new StringTextComponent(new TranslationTextComponent("command.pvz.remove_zombie").getString() + ":" + zombie.getTranslateText().getString()), true);
+		source.sendSuccess(new TranslationTextComponent("command.pvz.remove_zombie").append(":").append(zombie.getText()), true);
 		return 0;
 	}
 	
@@ -113,9 +115,9 @@ public class InvasionCommand {
 		return targets.size();
 	}
 	
-	public static int addInvasionEvent(CommandSource source, InvasionType event) {
+	public static int addInvasionEvent(CommandSource source, IInvasionType event) {
 		OverworldInvasion.activateEvent(source.getLevel(), event, true);
-		source.sendSuccess(new StringTextComponent(new TranslationTextComponent("command.pvz.add_event").getString() + ":" + event.getEventText().getString()), true);
+		source.sendSuccess(new TranslationTextComponent("command.pvz.add_event").append(":").append(event.getText()), true);
 		return 0;
 	}
 	
@@ -128,9 +130,9 @@ public class InvasionCommand {
 	private static int showInvasionEvent(CommandSource source, Collection<? extends ServerPlayerEntity> targets) {
 		targets.forEach((player)->{
 			PVZInvasionData data = PVZInvasionData.getOverWorldInvasionData(source.getLevel());
-			for(InvasionType event : InvasionType.getInvasionEvents()) {
+			for(IInvasionType event : InvasionType.getInvasionEvents()) {
 				if(data.hasEvent(event)) {
-					source.sendSuccess(event.getEventText(), false);
+					source.sendSuccess(event.getText(), false);
 				}
 			}
 		});

@@ -1,11 +1,9 @@
 package com.hungteen.pvz.common.entity.zombie.other;
 
-import java.util.List;
-
-import com.hungteen.pvz.common.core.ZombieType;
 import com.hungteen.pvz.common.entity.misc.ZombieHandEntity;
 import com.hungteen.pvz.common.entity.plant.PVZPlantEntity;
 import com.hungteen.pvz.common.entity.zombie.base.AbstractBossZombieEntity;
+import com.hungteen.pvz.common.impl.ZombieType;
 import com.hungteen.pvz.common.impl.zombie.CustomZombies;
 import com.hungteen.pvz.data.loot.PVZLoot;
 import com.hungteen.pvz.register.EntityRegister;
@@ -14,16 +12,9 @@ import com.hungteen.pvz.utils.EntityUtil;
 import com.hungteen.pvz.utils.MathUtil;
 import com.hungteen.pvz.utils.WorldUtil;
 import com.hungteen.pvz.utils.ZombieUtil;
-
 import net.minecraft.block.BlockState;
-import net.minecraft.entity.EntitySize;
-import net.minecraft.entity.EntityType;
-import net.minecraft.entity.ILivingEntityData;
-import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.Pose;
-import net.minecraft.entity.SpawnReason;
+import net.minecraft.entity.*;
 import net.minecraft.entity.ai.attributes.Attributes;
-import net.minecraft.entity.monster.MonsterEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.network.datasync.DataParameter;
@@ -39,6 +30,8 @@ import net.minecraft.world.DifficultyInstance;
 import net.minecraft.world.IServerWorld;
 import net.minecraft.world.World;
 
+import java.util.List;
+
 public class NobleZombieEntity extends AbstractBossZombieEntity {
 
 	private static final DataParameter<Integer> TP_TICK = EntityDataManager.defineId(NobleZombieEntity.class,
@@ -51,7 +44,7 @@ public class NobleZombieEntity extends AbstractBossZombieEntity {
 	private final int minSleepAttackCD = 360;
 	private final int maxSleepAttackCD = 1000;
 	
-	public NobleZombieEntity(EntityType<? extends MonsterEntity> type, World worldIn) {
+	public NobleZombieEntity(EntityType<? extends CreatureEntity> type, World worldIn) {
 		super(type, worldIn);
 		this.setAttackTime(this.maxSleepAttackCD / 5);
 		this.summonTick = this.maxSummonTick / 3;
@@ -81,7 +74,7 @@ public class NobleZombieEntity extends AbstractBossZombieEntity {
 		if (! level.isClientSide) {
 			EntityUtil.playSound(this, SoundRegister.DIRT_RISE.get());
 			ZombieHandEntity.spawnRangeZombieHands(level, this, 6);
-			for(int i = 0; i < this.getZombieLevel() / 2 + 5; ++ i) {
+			for(int i = 0; i < this.getPAZLevel() / 2 + 5; ++ i) {
 				MournerZombieEntity zombie = EntityRegister.MOURNER_ZOMBIE.get().create(level);
 				this.onBossSummon(zombie, WorldUtil.getSuitableHeightRandomPos(level, blockPosition(), 10, 20));
 			}

@@ -1,7 +1,7 @@
 package com.hungteen.pvz.common.entity.plant.explosion;
 
+import com.hungteen.pvz.api.types.IPlantType;
 import com.hungteen.pvz.client.model.entity.plant.explosion.PotatoMineModel;
-import com.hungteen.pvz.common.core.PlantType;
 import com.hungteen.pvz.common.entity.bullet.itembullet.PotatoEntity;
 import com.hungteen.pvz.common.entity.plant.PVZPlantEntity;
 import com.hungteen.pvz.common.entity.plant.base.PlantCloserEntity;
@@ -161,7 +161,7 @@ public class PotatoMineEntity extends PlantCloserEntity{
 	}
 
 	@Override
-	public PlantType getPlantType() {
+	public IPlantType getPlantType() {
 		return PVZPlants.POTATO_MINE;
 	}
 

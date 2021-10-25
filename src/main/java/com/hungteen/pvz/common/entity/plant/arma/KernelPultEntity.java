@@ -2,7 +2,7 @@ package com.hungteen.pvz.common.entity.plant.arma;
 
 import java.util.List;
 
-import com.hungteen.pvz.common.core.PlantType;
+import com.hungteen.pvz.api.types.IPlantType;
 import com.hungteen.pvz.common.entity.bullet.ButterEntity;
 import com.hungteen.pvz.common.entity.bullet.KernelEntity;
 import com.hungteen.pvz.common.entity.bullet.PultBulletEntity;
@@ -135,7 +135,7 @@ public class KernelPultEntity extends PlantPultEntity {
 	}
 	
 	@Override
-	public PlantType getPlantType() {
+	public IPlantType getPlantType() {
 		return PVZPlants.KERNEL_PULT;
 	}
 

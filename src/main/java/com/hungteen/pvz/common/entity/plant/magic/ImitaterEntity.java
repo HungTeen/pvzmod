@@ -1,9 +1,7 @@
 package com.hungteen.pvz.common.entity.plant.magic;
 
-import java.util.function.Consumer;
-
 import com.hungteen.pvz.PVZMod;
-import com.hungteen.pvz.common.core.PlantType;
+import com.hungteen.pvz.api.types.IPlantType;
 import com.hungteen.pvz.common.entity.plant.PVZPlantEntity;
 import com.hungteen.pvz.common.entity.plant.base.PlantBomberEntity;
 import com.hungteen.pvz.common.impl.plant.PVZPlants;
@@ -12,14 +10,8 @@ import com.hungteen.pvz.register.SoundRegister;
 import com.hungteen.pvz.utils.EntityUtil;
 import com.hungteen.pvz.utils.PlantUtil;
 import com.hungteen.pvz.utils.WorldUtil;
-
 import net.minecraft.block.BlockState;
-import net.minecraft.entity.CreatureEntity;
-import net.minecraft.entity.Entity;
-import net.minecraft.entity.EntitySize;
-import net.minecraft.entity.EntityType;
-import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.Pose;
+import net.minecraft.entity.*;
 import net.minecraft.item.ItemStack;
 import net.minecraft.network.datasync.DataParameter;
 import net.minecraft.network.datasync.DataSerializers;
@@ -27,6 +19,8 @@ import net.minecraft.network.datasync.EntityDataManager;
 import net.minecraft.particles.ParticleTypes;
 import net.minecraft.util.Direction;
 import net.minecraft.world.World;
+
+import java.util.function.Consumer;
 
 public class ImitaterEntity extends PlantBomberEntity {
 
@@ -59,7 +53,7 @@ public class ImitaterEntity extends PlantBomberEntity {
 				PVZMod.LOGGER.warn("Imitate Error : Wrong Card !");
 				return ;
 			}
-			final PlantType plantType = ((PlantCardItem) this.getImitateCard().getItem()).plantType;
+			final IPlantType plantType = ((PlantCardItem) this.getImitateCard().getItem()).plantType;
 			EntityUtil.playSound(this, SoundRegister.WAKE_UP.get());
 			if(plantType == PVZPlants.IMITATER) {
 				this.imitateRandomly();
@@ -73,7 +67,7 @@ public class ImitaterEntity extends PlantBomberEntity {
 		}
 	}
 	
-	public void imitate(PlantType plantType) {
+	public void imitate(IPlantType plantType) {
 		if(this.imitateType == ImitateType.HEAL) {
 			if(this.targetEntity instanceof PVZPlantEntity) {
 				((PVZPlantEntity) this.targetEntity).onHealByCard();
@@ -165,7 +159,7 @@ public class ImitaterEntity extends PlantBomberEntity {
 	}
 	
 	@Override
-	public PlantType getPlantType() {
+	public IPlantType getPlantType() {
 		return PVZPlants.IMITATER;
 	}
 	

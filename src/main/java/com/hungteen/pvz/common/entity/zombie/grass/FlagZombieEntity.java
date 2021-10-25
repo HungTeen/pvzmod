@@ -1,19 +1,18 @@
 package com.hungteen.pvz.common.entity.zombie.grass;
 
-import com.hungteen.pvz.common.core.ZombieType;
+import com.hungteen.pvz.common.impl.ZombieType;
 import com.hungteen.pvz.common.impl.zombie.GrassZombies;
 import com.hungteen.pvz.data.loot.PVZLoot;
 import com.hungteen.pvz.utils.ZombieUtil;
-
+import net.minecraft.entity.CreatureEntity;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.ai.attributes.Attributes;
-import net.minecraft.entity.monster.MonsterEntity;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.world.World;
 
 public class FlagZombieEntity extends NormalZombieEntity{
 
-	public FlagZombieEntity(EntityType<? extends MonsterEntity> type, World worldIn) {
+	public FlagZombieEntity(EntityType<? extends CreatureEntity> type, World worldIn) {
 		super(type, worldIn);
 	}
 

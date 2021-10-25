@@ -1,17 +1,16 @@
 package com.hungteen.pvz.common.entity.zombie.custom;
 
-import com.hungteen.pvz.common.core.ZombieType;
 import com.hungteen.pvz.common.entity.ai.navigator.LavaZombiePathNavigator;
 import com.hungteen.pvz.common.entity.zombie.base.SwimmerZombieEntity;
+import com.hungteen.pvz.common.impl.ZombieType;
 import com.hungteen.pvz.common.impl.zombie.CustomZombies;
 import com.hungteen.pvz.data.loot.PVZLoot;
 import com.hungteen.pvz.utils.ZombieUtil;
-
 import net.minecraft.block.FlowingFluidBlock;
+import net.minecraft.entity.CreatureEntity;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.ai.attributes.Attributes;
-import net.minecraft.entity.monster.MonsterEntity;
 import net.minecraft.fluid.Fluid;
 import net.minecraft.pathfinding.PathNavigator;
 import net.minecraft.pathfinding.PathNodeType;
@@ -24,7 +23,7 @@ import net.minecraft.world.World;
 
 public class LavaZombieEntity extends SwimmerZombieEntity {
 
-	public LavaZombieEntity(EntityType<? extends MonsterEntity> type, World worldIn) {
+	public LavaZombieEntity(EntityType<? extends CreatureEntity> type, World worldIn) {
 		super(type, worldIn);
 		this.setPathfindingMalus(PathNodeType.LAVA, 0.0F);
 	}

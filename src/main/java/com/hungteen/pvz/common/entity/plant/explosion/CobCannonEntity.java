@@ -5,7 +5,7 @@ import java.util.Optional;
 
 import javax.annotation.Nullable;
 
-import com.hungteen.pvz.common.core.PlantType;
+import com.hungteen.pvz.api.types.IPlantType;
 import com.hungteen.pvz.common.entity.ai.goal.target.PVZRandomTargetGoal;
 import com.hungteen.pvz.common.entity.bullet.CornEntity;
 import com.hungteen.pvz.common.entity.plant.PVZPlantEntity;
@@ -406,7 +406,7 @@ public class CobCannonEntity extends PVZPlantEntity {
 	}
 	
 	@Override
-	public PlantType getPlantType() {
+	public IPlantType getPlantType() {
 		return PVZPlants.COB_CANNON;
 	}
 

@@ -1,40 +1,42 @@
 package com.hungteen.pvz.common.network.toclient;
 
-import java.util.function.Supplier;
-
+import com.hungteen.pvz.api.PVZAPI;
 import com.hungteen.pvz.client.cache.ClientPlayerResources;
-
 import net.minecraft.network.PacketBuffer;
 import net.minecraftforge.fml.network.NetworkEvent;
 
+import java.util.function.Supplier;
+
 public class PlantStatsPacket {
 
-	private int type;
+	private String type;
 	private int lvl;
 	private int xp;
 	
-	public PlantStatsPacket(int x,int y,int z) {
-		this.type = x;
-		this.lvl = y;
-		this.xp = z;
+	public PlantStatsPacket(String id, int lvl, int xp) {
+		this.type = id;
+		this.lvl = lvl;
+		this.xp = xp;
 	}
 	
 	public PlantStatsPacket(PacketBuffer buffer) {
-		this.type = buffer.readInt();
+		this.type = buffer.readUtf();
 		this.lvl = buffer.readInt();
 		this.xp = buffer.readInt();
 	}
 
 	public void encode(PacketBuffer buffer) {
-		buffer.writeInt(this.type);
+		buffer.writeUtf(this.type);
 		buffer.writeInt(this.lvl);
 		buffer.writeInt(this.xp);
 	}
 
 	public static class Handler {
 		public static void onMessage(PlantStatsPacket message, Supplier<NetworkEvent.Context> ctx) {
-		    ctx.get().enqueueWork(()->{
-			    ClientPlayerResources.setPlantData(message.type, message.lvl, message.xp);
+		    ctx.get().enqueueWork(() -> {
+				PVZAPI.get().getTypeByID(message.type).ifPresent(type -> {
+					ClientPlayerResources.setPlantData(type, message.lvl, message.xp);
+				});
 		    });
 		    ctx.get().setPacketHandled(true);
 	    }

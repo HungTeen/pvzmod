@@ -5,7 +5,7 @@ import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
 
-import com.hungteen.pvz.common.core.ZombieType;
+import com.hungteen.pvz.api.types.IZombieType;
 import com.hungteen.pvz.common.entity.zombie.grass.TombStoneEntity;
 import com.hungteen.pvz.common.event.PVZServerEvents;
 import com.hungteen.pvz.common.world.data.PVZInvasionData;
@@ -15,7 +15,7 @@ import net.minecraft.world.server.ServerWorld;
 
 public class InvasionCache {
 
-	public static final Set<ZombieType> ZOMBIE_INVADE_SET = new HashSet<>();
+	public static final Set<IZombieType> ZOMBIE_INVADE_SET = new HashSet<>();
 	public static int InvasionDifficulty = 0;
 	
 	/**
@@ -39,7 +39,7 @@ public class InvasionCache {
 	/**
 	 * {@link TombStoneEntity#summonZombie()}
 	 */
-	public static List<ZombieType> getOrDefaultZombieList(List<ZombieType> list){
+	public static List<IZombieType> getOrDefaultZombieList(List<IZombieType> list){
 		return ZOMBIE_INVADE_SET.isEmpty() ? list : ZOMBIE_INVADE_SET.stream().collect(Collectors.toList());
 	}
 	

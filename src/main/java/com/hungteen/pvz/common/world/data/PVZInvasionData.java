@@ -3,10 +3,13 @@ package com.hungteen.pvz.common.world.data;
 import java.util.HashSet;
 
 import com.hungteen.pvz.PVZConfig;
+import com.hungteen.pvz.api.types.IInvasionType;
+import com.hungteen.pvz.api.types.IPlantType;
+import com.hungteen.pvz.api.types.IZombieType;
 import com.hungteen.pvz.common.cache.InvasionCache;
-import com.hungteen.pvz.common.core.InvasionType;
-import com.hungteen.pvz.common.core.PlantType;
-import com.hungteen.pvz.common.core.ZombieType;
+import com.hungteen.pvz.common.impl.PlantType;
+import com.hungteen.pvz.common.impl.ZombieType;
+import com.hungteen.pvz.common.impl.misc.InvasionType;
 
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.world.World;
@@ -17,9 +20,9 @@ import net.minecraft.world.storage.WorldSavedData;
 public class PVZInvasionData extends WorldSavedData {
 
 	private static final String DATA_NAME = "WorldEventData";
-	private HashSet<InvasionType> events = new HashSet<>();
-	private HashSet<ZombieType> zombies = new HashSet<>();
-	private HashSet<PlantType> plants = new HashSet<>();
+	private HashSet<IInvasionType> events = new HashSet<>();
+	private HashSet<IZombieType> zombies = new HashSet<>();
+	private HashSet<IPlantType> plants = new HashSet<>();
 	private boolean changed = false;
 	private int countDownDay = 0;
 	private int currentDifficulty = 0;
@@ -33,46 +36,46 @@ public class PVZInvasionData extends WorldSavedData {
 	}
 
 	// getter setter for zombie spawns.
-	public boolean hasZombieSpawnEntry(ZombieType zombie) {
+	public boolean hasZombieSpawnEntry(IZombieType zombie) {
 		return zombies.contains(zombie);
 	}
 
-	public void addZombieSpawnEntry(ZombieType zombie) {
+	public void addZombieSpawnEntry(IZombieType zombie) {
 		zombies.add(zombie);
 		this.setDirty();
 	}
 
-	public void removeZombieSpawnEntry(ZombieType zombie) {
+	public void removeZombieSpawnEntry(IZombieType zombie) {
 		zombies.remove(zombie);
 		this.setDirty();
 	}
 
 	// getter setter for plant spawns.
-	public boolean hasPlantSpawnEntry(PlantType plant) {
+	public boolean hasPlantSpawnEntry(IPlantType plant) {
 		return plants.contains(plant);
 	}
 
-	public void addPlantSpawnEntry(PlantType plant) {
+	public void addPlantSpawnEntry(IPlantType plant) {
 		plants.add(plant);
 		this.setDirty();
 	}
 
-	public void removePlantSpawnEntry(PlantType plant) {
+	public void removePlantSpawnEntry(IPlantType plant) {
 		plants.remove(plant);
 		this.setDirty();
 	}
 
 	// getter setter for invasion events.
-	public boolean hasEvent(InvasionType ev) {
+	public boolean hasEvent(IInvasionType ev) {
 		return events.contains(ev);
 	}
 
-	public void addEvent(InvasionType ev) {
+	public void addEvent(IInvasionType ev) {
 		events.add(ev);
 		this.setDirty();
 	}
 
-	public void removeEvent(InvasionType ev) {
+	public void removeEvent(IInvasionType ev) {
 		events.remove(ev);
 		this.setDirty();
 	}
@@ -133,7 +136,7 @@ public class PVZInvasionData extends WorldSavedData {
 		this.events.clear();
 		if(nbt.contains("invasion_events")) {
 			CompoundNBT tag = nbt.getCompound("invasion_events");
-			for(InvasionType type : InvasionType.getInvasionEvents()) {
+			for(IInvasionType type : InvasionType.getInvasionEvents()) {
 				if(tag.contains("has_" + type.getIdentity()) && tag.getBoolean("has_" + type.getIdentity())) {
 					this.addEvent(type);
 				}
@@ -143,7 +146,7 @@ public class PVZInvasionData extends WorldSavedData {
 		this.zombies.clear();
 		if (nbt.contains("zombie_spawn_entries")) {
 			CompoundNBT tag = nbt.getCompound("zombie_spawn_entries");
-			for (ZombieType zombie : ZombieType.getZombies()) {
+			for (IZombieType zombie : ZombieType.getZombies()) {
 				if (tag.contains("has_" + zombie.getIdentity()) && tag.getBoolean("has_" + zombie.getIdentity())) {
 					this.addZombieSpawnEntry(zombie);
 				}
@@ -153,7 +156,7 @@ public class PVZInvasionData extends WorldSavedData {
 		this.plants.clear();
 		if (nbt.contains("plant_spawn_entries")) {
 			CompoundNBT tag = nbt.getCompound("plant_spawn_entries");
-			for (PlantType plant : PlantType.getPlants()) {
+			for (IPlantType plant : PlantType.getPlants()) {
 				if (tag.contains(plant.getIdentity()) && tag.getBoolean("has_" + plant.getIdentity())) {
 					this.addPlantSpawnEntry(plant);
 				}
@@ -169,19 +172,19 @@ public class PVZInvasionData extends WorldSavedData {
 	public CompoundNBT save(CompoundNBT nbt) {
 		/* save events */
 		CompoundNBT event_list = new CompoundNBT();
-		for(InvasionType type : InvasionType.getInvasionEvents()) {
+		for(IInvasionType type : InvasionType.getInvasionEvents()) {
 			event_list.putBoolean("has_" + type.getIdentity(), this.hasEvent(type));
 		}
 		nbt.put("invasion_events", event_list);
 		/* save zombies */
 		CompoundNBT zombie_list = new CompoundNBT();
-		for (ZombieType zombie : ZombieType.getZombies()) {
+		for (IZombieType zombie : ZombieType.getZombies()) {
 			zombie_list.putBoolean("has_" + zombie.getIdentity(), this.hasZombieSpawnEntry(zombie));
 		}
 		nbt.put("zombie_spawn_entries", zombie_list);
 		/* save plants */
 		CompoundNBT plant_list = new CompoundNBT();
-		for (PlantType plant : PlantType.getPlants()) {
+		for (IPlantType plant : PlantType.getPlants()) {
 			plant_list.putBoolean(plant.getIdentity(), this.hasPlantSpawnEntry(plant));
 		}
 		nbt.put("plant_spawn_entries", plant_list);
@@ -208,7 +211,7 @@ public class PVZInvasionData extends WorldSavedData {
 		if (!(worldIn instanceof ServerWorld)) {
 			throw new RuntimeException("Attempted to get the data from a client world. This is wrong.");
 		}
-		ServerWorld world = worldIn.getServer().getLevel(World.OVERWORLD);
+		final ServerWorld world = worldIn.getServer().getLevel(World.OVERWORLD);
 		DimensionSavedDataManager storage = world.getDataStorage();
 		return storage.computeIfAbsent(PVZInvasionData::new, DATA_NAME);
 	}

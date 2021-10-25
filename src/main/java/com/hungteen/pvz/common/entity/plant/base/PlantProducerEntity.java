@@ -93,7 +93,7 @@ public abstract class PlantProducerEntity extends PVZPlantEntity {
 		
 		@Override
 		public void tick() {
-			if(! this.producer.canPlantNormalUpdate()) {
+			if(! this.producer.canNormalUpdate()) {
 				return ;
 			}
 			if(this.producer.isPlantInSuperMode()){//Be Super Mode

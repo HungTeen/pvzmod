@@ -1,7 +1,7 @@
 package com.hungteen.pvz.common.entity.plant.magic;
 
 import com.hungteen.pvz.PVZConfig;
-import com.hungteen.pvz.common.core.PlantType;
+import com.hungteen.pvz.api.types.IPlantType;
 import com.hungteen.pvz.common.entity.ai.goal.target.PVZNearestTargetGoal;
 import com.hungteen.pvz.common.entity.plant.PVZPlantEntity;
 import com.hungteen.pvz.common.event.PVZLivingEvents;
@@ -138,7 +138,7 @@ public class StrangeCatEntity extends PVZPlantEntity {
 	}
 	
 	@Override
-	public PlantType getPlantType() {
+	public IPlantType getPlantType() {
 		return MemePlants.STRANGE_CAT;
 	}
 

@@ -1,6 +1,6 @@
 package com.hungteen.pvz.common.entity.plant.light;
 
-import com.hungteen.pvz.common.core.PlantType;
+import com.hungteen.pvz.api.types.IPlantType;
 import com.hungteen.pvz.common.entity.drop.SunEntity;
 import com.hungteen.pvz.common.entity.plant.base.PlantProducerEntity;
 import com.hungteen.pvz.common.impl.plant.PVZPlants;
@@ -36,7 +36,7 @@ public class SunFlowerEntity extends PlantProducerEntity{
 	 * get normal gen sun amount by level.
 	 */
 	public int getSunAmount(){
-		return MathUtil.getProgressByDif(4, 5, this.getPlantLvl(), PlantUtil.MAX_PLANT_LEVEL, 25, 50);
+		return MathUtil.getProgressByDif(4, 5, this.getPAZLevel(), PlantUtil.MAX_PLANT_LEVEL, 25, 50);
 	}
 	
 	/**
@@ -58,7 +58,7 @@ public class SunFlowerEntity extends PlantProducerEntity{
 	}
 	
 	@Override
-	public PlantType getPlantType() {
+	public IPlantType getPlantType() {
 		return PVZPlants.SUN_FLOWER;
 	}
 

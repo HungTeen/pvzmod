@@ -5,9 +5,8 @@ import com.hungteen.pvz.common.entity.zombie.PVZZombieEntity;
 import com.hungteen.pvz.common.entity.zombie.part.PVZHealthPartEntity;
 import com.hungteen.pvz.utils.EntityUtil;
 import com.hungteen.pvz.utils.interfaces.IMultiPartZombie;
-
+import net.minecraft.entity.CreatureEntity;
 import net.minecraft.entity.EntityType;
-import net.minecraft.entity.monster.MonsterEntity;
 import net.minecraft.util.SoundEvent;
 import net.minecraft.util.math.vector.Vector3d;
 import net.minecraft.world.World;
@@ -16,7 +15,7 @@ public abstract class DefenceZombieEntity extends PVZZombieEntity implements IMu
 
 	protected PVZHealthPartEntity part;
 	
-	public DefenceZombieEntity(EntityType<? extends MonsterEntity> type, World worldIn) {
+	public DefenceZombieEntity(EntityType<? extends CreatureEntity> type, World worldIn) {
 		super(type, worldIn);
 		resetParts();
 	}

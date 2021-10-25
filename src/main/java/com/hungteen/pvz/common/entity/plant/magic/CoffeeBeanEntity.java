@@ -1,7 +1,7 @@
 package com.hungteen.pvz.common.entity.plant.magic;
 
+import com.hungteen.pvz.api.types.IPlantType;
 import com.hungteen.pvz.common.advancement.trigger.EntityEffectAmountTrigger;
-import com.hungteen.pvz.common.core.PlantType;
 import com.hungteen.pvz.common.entity.plant.PVZPlantEntity;
 import com.hungteen.pvz.common.entity.plant.base.PlantBomberEntity;
 import com.hungteen.pvz.common.impl.plant.PVZPlants;
@@ -70,7 +70,7 @@ public class CoffeeBeanEntity extends PlantBomberEntity{
 	}
 
 	@Override
-	public PlantType getPlantType() {
+	public IPlantType getPlantType() {
 		return PVZPlants.COFFEE_BEAN;
 	}
 

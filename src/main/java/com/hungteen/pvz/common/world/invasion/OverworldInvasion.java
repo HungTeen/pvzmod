@@ -6,13 +6,15 @@ import java.util.List;
 import javax.annotation.Nonnull;
 
 import com.hungteen.pvz.PVZConfig;
+import com.hungteen.pvz.api.types.IInvasionType;
+import com.hungteen.pvz.api.types.IZombieType;
 import com.hungteen.pvz.common.cache.FlagCache;
 import com.hungteen.pvz.common.cache.InvasionCache;
 import com.hungteen.pvz.common.command.InvasionCommand;
-import com.hungteen.pvz.common.core.InvasionType;
-import com.hungteen.pvz.common.core.ZombieType;
 import com.hungteen.pvz.common.event.events.InvasionEvent;
 import com.hungteen.pvz.common.impl.InvasionEvents;
+import com.hungteen.pvz.common.impl.ZombieType;
+import com.hungteen.pvz.common.impl.misc.InvasionType;
 import com.hungteen.pvz.common.world.data.PVZInvasionData;
 import com.hungteen.pvz.utils.ConfigUtil;
 import com.hungteen.pvz.utils.PlayerUtil;
@@ -20,6 +22,7 @@ import com.hungteen.pvz.utils.others.WeightList;
 
 import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.util.Util;
+import net.minecraft.util.text.IFormattableTextComponent;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.StringTextComponent;
 import net.minecraft.util.text.TextFormatting;
@@ -106,30 +109,31 @@ public class OverworldInvasion {
 		    PVZInvasionData data = PVZInvasionData.getOverWorldInvasionData(world);
 		    data.addCurrentDifficulty(ConfigUtil.getIncDifficulty());
 		    /* choose random spawn event */
-		    InvasionType event = getSpawnEvent(world);
+		    IInvasionType event = getSpawnEvent(world);
 		    activateEvent(world, event, FlagCache.isEdgar090505Defeated());
 		    /* check assist event */
 		    activateAssistEvents(world);
 		    /* get zombie spawn list */
-		    List<ZombieType> zombieList = new ArrayList<>();
-		    for(ZombieType zombie : ZombieType.getZombies()) {
+		    List<IZombieType> zombieList = new ArrayList<>();
+		    for(IZombieType zombie : ZombieType.getZombies()) {
 		    	if(data.hasZombieSpawnEntry(zombie)){
 		    		zombieList.add(zombie);
 		    	}
 		    }
 		    if(PVZConfig.COMMON_CONFIG.InvasionSettings.ShowEventMessages.get()) {
 		    	PlayerUtil.getServerPlayers(world).forEach(player -> {
-			        for(InvasionType ev : InvasionType.getInvasionEvents()) {
+			        for(IInvasionType ev : InvasionType.getInvasionEvents()) {
 				        if(data.hasEvent(ev)) {
-					        player.sendMessage(ev.getEventText(), Util.NIL_UUID);
+					        player.sendMessage(ev.getText(), Util.NIL_UUID);
 				        }
 			        }
-			        String zombieInfo = "";
-			        for(int i = 0; i < zombieList.size(); ++ i) {
-			        	zombieInfo += zombieList.get(i).getTranslateText().toString()
-			        			+ (i == zombieList.size() - 1 ? "" : ",");
+			        if(zombieList.size() > 0) {
+			        	 final IFormattableTextComponent text = zombieList.get(0).getText();
+			        	 for(int i = 1; i < zombieList.size(); ++ i) {
+			        		 text.append(",").append(zombieList.get(i).getText());
+		        	         player.sendMessage(text, Util.NIL_UUID);
+			        	 }
 			        }
-			        player.sendMessage(new StringTextComponent(zombieInfo), Util.NIL_UUID);
 			    });
 		    }
 		}
@@ -139,7 +143,7 @@ public class OverworldInvasion {
 	 * activate zombie spawn event.
 	 * {@link InvasionCommand#addInvasionEvent(net.minecraft.command.CommandSource, InvasionEvents)}
 	 */
-	public static void activateEvent(World world, @Nonnull InvasionType event, boolean force) {
+	public static void activateEvent(World world, @Nonnull IInvasionType event, boolean force) {
 		PVZInvasionData data = PVZInvasionData.getOverWorldInvasionData(world);
 		if(! data.hasEvent(event)) {
 			data.addEvent(event);
@@ -150,9 +154,9 @@ public class OverworldInvasion {
 	/**
 	 * add spawn of zombies in event spawn list.
 	 */
-	public static void addEventSpawns(World world, InvasionType event, boolean force) {
+	public static void addEventSpawns(World world, IInvasionType event, boolean force) {
 		PVZInvasionData data = PVZInvasionData.getOverWorldInvasionData(world);
-        for (ZombieType zombie : getInvasionSpawnZombies(world, event, force)) {
+        for (IZombieType zombie : getInvasionSpawnZombies(world, event, force)) {
         	if(! data.hasZombieSpawnEntry(zombie)) {
         		data.addZombieSpawnEntry(zombie);
         	}
@@ -178,7 +182,7 @@ public class OverworldInvasion {
 	public static void deactivateZombieAttackEvents(World world, boolean isNatural) {
 	    boolean flag = false;
 	    PVZInvasionData data = PVZInvasionData.getOverWorldInvasionData(world);
-	    for(InvasionType ev : InvasionType.getInvasionEvents()) {// has invasion event
+	    for(IInvasionType ev : InvasionType.getInvasionEvents()) {// has invasion event
 	    	flag |= data.hasEvent(ev);
 	    }
 		if(isNatural && flag) {//end invasion
@@ -189,13 +193,13 @@ public class OverworldInvasion {
 	        }
 		}
 		//remove invasion event
-		for(InvasionType ev : InvasionType.getInvasionEvents()) {
+		for(IInvasionType ev : InvasionType.getInvasionEvents()) {
 			if(data.hasEvent(ev)) {
 				data.removeEvent(ev);
 			}
 		}
 		//remove zombie spawns.
-		for(ZombieType zombie : ZombieType.getZombies()) {
+		for(IZombieType zombie : ZombieType.getZombies()) {
     		if(data.hasZombieSpawnEntry(zombie)) {
     			data.removeZombieSpawnEntry(zombie);
     		}
@@ -206,12 +210,12 @@ public class OverworldInvasion {
 	/**
 	 * get spawn zombies for current invasion event.
 	 */
-	public static List<ZombieType> getInvasionSpawnZombies(World world, InvasionType ev, boolean force){
+	public static List<IZombieType> getInvasionSpawnZombies(World world, IInvasionType ev, boolean force){
 		if(force || ev.equals(InvasionEvents.RANDOM)) {
 			return ev.getSpawnZombies(world);
 		}
-		final List<ZombieType> zombies = new ArrayList<>();
-		for(ZombieType zombie : ev.getSpawnZombies(world)) {
+		final List<IZombieType> zombies = new ArrayList<>();
+		for(IZombieType zombie : ev.getSpawnZombies(world)) {
 			if(zombie.getDifficulty() <= InvasionCache.getInvasionDifficulty()) {
 				zombies.add(zombie);
 			}
@@ -222,8 +226,8 @@ public class OverworldInvasion {
 	/**
 	 * randomly get a spawn invasion event.
 	 */
-	private static InvasionType getSpawnEvent(World world) {
-		WeightList<InvasionType> list = new WeightList<>();
+	private static IInvasionType getSpawnEvent(World world) {
+		WeightList<IInvasionType> list = new WeightList<>();
 		InvasionType.getAvailableSpawnEvents(world).forEach(p -> {
 			list.addItem(p.getFirst(), p.getSecond());
 		});
@@ -233,7 +237,7 @@ public class OverworldInvasion {
 	/**
 	 * use in Invasion Command.
 	 */
-	public static void addZombie(World world, ZombieType zombie) {
+	public static void addZombie(World world, IZombieType zombie) {
 		PVZInvasionData data = PVZInvasionData.getOverWorldInvasionData(world);
 		data.addZombieSpawnEntry(zombie);
 		syncStartSpawnList(world);
@@ -242,7 +246,7 @@ public class OverworldInvasion {
 	/**
 	 * use in Invasion Command.
 	 */
-	public static void removeZombie(World world, ZombieType zombie) {
+	public static void removeZombie(World world, IZombieType zombie) {
 		PVZInvasionData data = PVZInvasionData.getOverWorldInvasionData(world);
 		if(data.hasZombieSpawnEntry(zombie)) {
 			data.removeZombieSpawnEntry(zombie);
@@ -256,7 +260,7 @@ public class OverworldInvasion {
 	public static void syncStartSpawnList(World world) {
 		syncEndSpawnList(world);
 		PVZInvasionData data = PVZInvasionData.getOverWorldInvasionData(world);
-        for (ZombieType zombie : ZombieType.getZombies()) {
+        for (IZombieType zombie : ZombieType.getZombies()) {
         	if(data.hasZombieSpawnEntry(zombie)) {
         		InvasionCache.ZOMBIE_INVADE_SET.add(zombie);
         	}

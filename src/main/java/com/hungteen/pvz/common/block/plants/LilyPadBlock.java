@@ -45,7 +45,7 @@ public class LilyPadBlock extends BushBlock {
 			    if(entityIn.isAlive() && ((PVZZombieEntity) entityIn).canBreakPlantBlock()) {
 			        worldIn.destroyBlock(new BlockPos(pos), true, entityIn);
 			    }
-			} else if(entityIn instanceof CatTailEntity && ! ((CatTailEntity) entityIn).isImmunneToWeak()){
+			} else if(entityIn instanceof CatTailEntity && ! ((CatTailEntity) entityIn).isImmuneToWeak()){
 				 worldIn.destroyBlock(new BlockPos(pos), true, entityIn);
 			}
 		}

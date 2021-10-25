@@ -1,29 +1,28 @@
 package com.hungteen.pvz.common.entity.zombie.roof;
 
-import com.hungteen.pvz.common.core.ZombieType;
 import com.hungteen.pvz.common.entity.plant.PVZPlantEntity;
 import com.hungteen.pvz.common.entity.plant.base.PlantDefenderEntity;
 import com.hungteen.pvz.common.entity.zombie.base.DefenceZombieEntity;
 import com.hungteen.pvz.common.entity.zombie.body.ZombieDropBodyEntity;
 import com.hungteen.pvz.common.entity.zombie.part.PVZHealthPartEntity;
+import com.hungteen.pvz.common.impl.ZombieType;
 import com.hungteen.pvz.common.impl.zombie.RoofZombies;
 import com.hungteen.pvz.data.loot.PVZLoot;
 import com.hungteen.pvz.register.SoundRegister;
 import com.hungteen.pvz.remove.MetalTypes;
 import com.hungteen.pvz.utils.ZombieUtil;
 import com.hungteen.pvz.utils.interfaces.IHasMetal;
-
+import net.minecraft.entity.CreatureEntity;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.ai.attributes.Attributes;
-import net.minecraft.entity.monster.MonsterEntity;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.SoundEvent;
 import net.minecraft.world.World;
 
 public class LadderZombieEntity extends DefenceZombieEntity implements IHasMetal {
 	
-	public LadderZombieEntity(EntityType<? extends MonsterEntity> type, World worldIn) {
+	public LadderZombieEntity(EntityType<? extends CreatureEntity> type, World worldIn) {
 		super(type, worldIn);
 	}
 	

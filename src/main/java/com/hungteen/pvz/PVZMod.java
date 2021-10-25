@@ -26,11 +26,10 @@ import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.minecraftforge.fml.event.lifecycle.FMLLoadCompleteEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 
-// The value here should match an entry in the META-INF/mods.toml file
 @Mod(PVZMod.MOD_ID)
 @Mod.EventBusSubscriber(modid = PVZMod.MOD_ID, bus = EventBusSubscriber.Bus.MOD)
-public class PVZMod
-{
+public class PVZMod {
+
     // Directly reference a log4j logger.
     public static final Logger LOGGER = LogManager.getLogger();
     // Mod ID

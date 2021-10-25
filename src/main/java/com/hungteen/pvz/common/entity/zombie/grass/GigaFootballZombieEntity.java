@@ -1,6 +1,6 @@
 package com.hungteen.pvz.common.entity.zombie.grass;
 
-import com.hungteen.pvz.common.core.ZombieType;
+import com.hungteen.pvz.common.impl.ZombieType;
 import com.hungteen.pvz.common.impl.zombie.GrassZombies;
 import com.hungteen.pvz.common.misc.damage.PVZDamageSource;
 import com.hungteen.pvz.data.loot.PVZLoot;
@@ -8,12 +8,11 @@ import com.hungteen.pvz.remove.MetalTypes;
 import com.hungteen.pvz.utils.EntityUtil;
 import com.hungteen.pvz.utils.MathUtil;
 import com.hungteen.pvz.utils.ZombieUtil;
-
+import net.minecraft.entity.CreatureEntity;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.ai.attributes.Attributes;
-import net.minecraft.entity.monster.MonsterEntity;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.world.World;
@@ -25,7 +24,7 @@ public class GigaFootballZombieEntity extends FootballZombieEntity {
 	private final int minRushCD = 200;
 	private final int maxRushCD = 600;
 	
-	public GigaFootballZombieEntity(EntityType<? extends MonsterEntity> type, World worldIn) {
+	public GigaFootballZombieEntity(EntityType<? extends CreatureEntity> type, World worldIn) {
 		super(type, worldIn);
 		this.canCollideWithZombie = false;
 	}
@@ -89,7 +88,7 @@ public class GigaFootballZombieEntity extends FootballZombieEntity {
 	}
 	
 	@Override
-	public boolean canBeButter() {
+	public boolean canBeButtered() {
 		return ! this.isRushing();
 	}
 	

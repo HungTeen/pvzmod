@@ -2,7 +2,7 @@ package com.hungteen.pvz.common.item.spawn.card;
 
 import java.util.List;
 
-import com.hungteen.pvz.common.core.ICoolDown;
+import com.hungteen.pvz.api.types.ICoolDown;
 import com.hungteen.pvz.common.item.PVZItemGroups;
 
 import net.minecraft.client.util.ITooltipFlag;

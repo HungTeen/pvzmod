@@ -1,6 +1,6 @@
 package com.hungteen.pvz.common.entity.plant.explosion;
 
-import com.hungteen.pvz.common.core.PlantType;
+import com.hungteen.pvz.api.types.IPlantType;
 import com.hungteen.pvz.common.entity.plant.defence.WallNutEntity;
 import com.hungteen.pvz.common.impl.plant.PVZPlants;
 import com.hungteen.pvz.common.misc.damage.PVZDamageSource;
@@ -69,7 +69,7 @@ public class ExplodeONutEntity extends WallNutEntity {
 	}
 
 	@Override
-	public PlantType getPlantType() {
+	public IPlantType getPlantType() {
 		return PVZPlants.EXPLODE_O_NUT;
 	}
 

@@ -21,7 +21,7 @@ public class LevelUpEnchantment extends PVZEnchantment {
 			final int min = lvl < 4 ? 0 : 1;
 			final int max = lvl < 4 ? lvl : 3;
 			final int level = MathUtil.getRandomMinMax(plantEntity.getRandom(), min, max);
-			plantEntity.setPlantLvl(plantEntity.getPlantLvl() + level);
+			plantEntity.setPAZLevel(plantEntity.getPAZLevel() + level);
 		}
 	}
 	

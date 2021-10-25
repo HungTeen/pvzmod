@@ -1,25 +1,22 @@
 package com.hungteen.pvz.common.event.handler;
 
-import java.util.Optional;
-
+import com.hungteen.pvz.api.PVZAPI;
 import com.hungteen.pvz.common.capability.CapabilityHandler;
 import com.hungteen.pvz.common.capability.player.IPlayerDataCapability;
 import com.hungteen.pvz.common.capability.player.PlayerDataManager;
-import com.hungteen.pvz.common.core.PlantType;
-import com.hungteen.pvz.common.core.ZombieType;
 import com.hungteen.pvz.common.enchantment.EnchantmentUtil;
 import com.hungteen.pvz.common.entity.drop.SunEntity;
 import com.hungteen.pvz.common.entity.plant.PVZPlantEntity;
 import com.hungteen.pvz.common.entity.zombie.PVZZombieEntity;
 import com.hungteen.pvz.common.event.PVZLivingEvents;
 import com.hungteen.pvz.common.event.PVZPlayerEvents;
+import com.hungteen.pvz.common.impl.ZombieType;
 import com.hungteen.pvz.common.world.data.PVZInvasionData;
 import com.hungteen.pvz.common.world.invasion.WaveManager;
 import com.hungteen.pvz.register.SoundRegister;
 import com.hungteen.pvz.utils.EntityUtil;
 import com.hungteen.pvz.utils.PlayerUtil;
 import com.hungteen.pvz.utils.enums.Resources;
-
 import net.minecraft.advancements.CriteriaTriggers;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
@@ -30,6 +27,8 @@ import net.minecraft.util.Hand;
 import net.minecraft.util.math.MathHelper;
 import net.minecraftforge.common.util.LazyOptional;
 import net.minecraftforge.event.entity.living.LivingDeathEvent;
+
+import java.util.Optional;
 
 public class PlayerEventHandler {
 	
@@ -79,11 +78,11 @@ public class PlayerEventHandler {
 	public static void onPlayerLogout(PlayerEntity player) {
 		player.getCapability(CapabilityHandler.PLAYER_DATA_CAPABILITY).ifPresent(l -> {
 			PlayerDataManager plData = l.getPlayerData();
-			for(PlantType p : PlantType.getPlants()) {
+			PVZAPI.get().getPAZs().forEach(p -> {
 				p.getSummonCard().ifPresent(card -> {
-					plData.setPlantCardBar(p, player.getCooldowns().getCooldownPercent(card, 0f));
+					plData.setPAZCardBar(p, player.getCooldowns().getCooldownPercent(card, 0f));
 				});
-			}
+			});
 		});
 	}
 	

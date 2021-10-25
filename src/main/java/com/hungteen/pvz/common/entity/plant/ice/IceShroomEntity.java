@@ -3,8 +3,8 @@ package com.hungteen.pvz.common.entity.plant.ice;
 import java.util.Optional;
 
 import com.hungteen.pvz.api.interfaces.IIceEffect;
+import com.hungteen.pvz.api.types.IPlantType;
 import com.hungteen.pvz.common.advancement.trigger.EntityEffectAmountTrigger;
-import com.hungteen.pvz.common.core.PlantType;
 import com.hungteen.pvz.common.entity.misc.ElementBallEntity;
 import com.hungteen.pvz.common.entity.misc.ElementBallEntity.ElementTypes;
 import com.hungteen.pvz.common.entity.plant.base.PlantBomberEntity;
@@ -75,7 +75,7 @@ public class IceShroomEntity extends PlantBomberEntity implements IIceEffect{
 	}
 	
 	public float getAttackDamage() {
-		final int lvl = this.getPlantLvl();
+		final int lvl = this.getPAZLevel();
 		return lvl <= 20 ? 0.1F * lvl : 10F;
 	}
 	
@@ -85,7 +85,7 @@ public class IceShroomEntity extends PlantBomberEntity implements IIceEffect{
 	}
 	
 	public int getColdLvl() {
-		return MathUtil.getProgressByDif(4, 1, this.getPlantLvl(), PlantUtil.MAX_PLANT_LEVEL, 3, 7);
+		return MathUtil.getProgressByDif(4, 1, this.getPAZLevel(), PlantUtil.MAX_PLANT_LEVEL, 3, 7);
 	}
 	
 	public int getColdTick() {
@@ -107,7 +107,7 @@ public class IceShroomEntity extends PlantBomberEntity implements IIceEffect{
 	}
 	
 	@Override
-	public PlantType getPlantType() {
+	public IPlantType getPlantType() {
 		return PVZPlants.ICE_SHROOM;
 	}
 

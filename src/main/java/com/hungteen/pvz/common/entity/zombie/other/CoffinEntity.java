@@ -1,22 +1,16 @@
 package com.hungteen.pvz.common.entity.zombie.other;
 
-import com.hungteen.pvz.common.core.ZombieType;
 import com.hungteen.pvz.common.entity.misc.ZombieHandEntity;
 import com.hungteen.pvz.common.entity.zombie.base.AbstractBossZombieEntity;
+import com.hungteen.pvz.common.impl.ZombieType;
 import com.hungteen.pvz.common.impl.zombie.CustomZombies;
 import com.hungteen.pvz.data.loot.PVZLoot;
 import com.hungteen.pvz.register.EntityRegister;
 import com.hungteen.pvz.register.SoundRegister;
 import com.hungteen.pvz.utils.EntityUtil;
 import com.hungteen.pvz.utils.ZombieUtil;
-
-import net.minecraft.entity.EntitySize;
-import net.minecraft.entity.EntityType;
-import net.minecraft.entity.ILivingEntityData;
-import net.minecraft.entity.Pose;
-import net.minecraft.entity.SpawnReason;
+import net.minecraft.entity.*;
 import net.minecraft.entity.ai.attributes.Attributes;
-import net.minecraft.entity.monster.MonsterEntity;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.network.datasync.DataParameter;
 import net.minecraft.network.datasync.DataSerializers;
@@ -30,7 +24,7 @@ public class CoffinEntity extends AbstractBossZombieEntity {
 
 	private static final DataParameter<Integer> GUARD_STATE = EntityDataManager.defineId(CoffinEntity.class, DataSerializers.INT);
 
-	public CoffinEntity(EntityType<? extends MonsterEntity> type, World worldIn) {
+	public CoffinEntity(EntityType<? extends CreatureEntity> type, World worldIn) {
 		super(type, worldIn);
 		this.setIsWholeBody();
 		this.maxDeathTime = 0;

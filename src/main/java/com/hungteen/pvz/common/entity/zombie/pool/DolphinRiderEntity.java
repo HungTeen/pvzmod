@@ -1,15 +1,12 @@
 package com.hungteen.pvz.common.entity.zombie.pool;
 
-import java.util.EnumSet;
-import java.util.Optional;
-
-import com.hungteen.pvz.common.core.PlantType;
-import com.hungteen.pvz.common.core.ZombieType;
+import com.hungteen.pvz.api.types.IPlantType;
 import com.hungteen.pvz.common.entity.ai.goal.attack.PVZZombieAttackGoal;
 import com.hungteen.pvz.common.entity.ai.goal.target.PVZHurtByTargetGoal;
 import com.hungteen.pvz.common.entity.ai.navigator.ZombieWaterPathNavigator;
 import com.hungteen.pvz.common.entity.plant.PVZPlantEntity;
 import com.hungteen.pvz.common.entity.zombie.PVZZombieEntity;
+import com.hungteen.pvz.common.impl.ZombieType;
 import com.hungteen.pvz.common.impl.plant.PVZPlants;
 import com.hungteen.pvz.common.impl.zombie.PoolZombies;
 import com.hungteen.pvz.register.EntityRegister;
@@ -18,16 +15,11 @@ import com.hungteen.pvz.utils.EntityUtil;
 import com.hungteen.pvz.utils.MathUtil;
 import com.hungteen.pvz.utils.ZombieUtil;
 import com.hungteen.pvz.utils.interfaces.ICanAttract;
-
-import net.minecraft.entity.EntitySize;
-import net.minecraft.entity.EntityType;
-import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.Pose;
+import net.minecraft.entity.*;
 import net.minecraft.entity.ai.attributes.Attributes;
 import net.minecraft.entity.ai.goal.Goal;
 import net.minecraft.entity.ai.goal.LookRandomlyGoal;
 import net.minecraft.entity.ai.goal.RandomWalkingGoal;
-import net.minecraft.entity.monster.MonsterEntity;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.pathfinding.PathNavigator;
 import net.minecraft.pathfinding.PathNodeType;
@@ -35,6 +27,9 @@ import net.minecraft.tags.FluidTags;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.math.vector.Vector3d;
 import net.minecraft.world.World;
+
+import java.util.EnumSet;
+import java.util.Optional;
 
 public class DolphinRiderEntity extends PVZZombieEntity{
 
@@ -44,7 +39,7 @@ public class DolphinRiderEntity extends PVZZombieEntity{
 	protected Vector3d jumpDstPoint = Vector3d.ZERO;
 	protected int dolphin_jump_cnt;
 	
-	public DolphinRiderEntity(EntityType<? extends MonsterEntity> type, World worldIn) {
+	public DolphinRiderEntity(EntityType<? extends CreatureEntity> type, World worldIn) {
 		super(type, worldIn);
 		setPathfindingMalus(PathNodeType.WATER, 0);
 		this.setIsWholeBody();
@@ -105,7 +100,7 @@ public class DolphinRiderEntity extends PVZZombieEntity{
 	@Override
 	public boolean canBeAttractedBy(ICanAttract defender) {
 		if(defender instanceof PVZPlantEntity) {
-			final PlantType plant = ((PVZPlantEntity) defender).getPlantType();
+			final IPlantType plant = ((PVZPlantEntity) defender).getPlantType();
 			return plant == PVZPlants.TALL_NUT || plant == PVZPlants.GIANT_WALL_NUT;
 		}
 		return true;

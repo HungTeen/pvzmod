@@ -1,15 +1,11 @@
 package com.hungteen.pvz.common.item.tool.plant;
 
-import java.util.List;
-
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
-
+import com.hungteen.pvz.api.types.IPlantType;
 import com.hungteen.pvz.common.capability.CapabilityHandler;
 import com.hungteen.pvz.common.container.PeaGunContainer;
 import com.hungteen.pvz.common.container.inventory.ItemInventory;
-import com.hungteen.pvz.common.core.PlantType;
 import com.hungteen.pvz.common.entity.bullet.itembullet.PeaEntity;
+import com.hungteen.pvz.common.impl.PlantType;
 import com.hungteen.pvz.common.impl.plant.PVZPlants;
 import com.hungteen.pvz.common.item.PVZItemGroups;
 import com.hungteen.pvz.common.item.spawn.card.PlantCardItem;
@@ -18,13 +14,8 @@ import com.hungteen.pvz.common.network.toclient.PlaySoundPacket;
 import com.hungteen.pvz.register.ItemRegister;
 import com.hungteen.pvz.utils.PlayerUtil;
 import com.hungteen.pvz.utils.enums.Resources;
-
 import net.minecraft.client.util.ITooltipFlag;
-import net.minecraft.enchantment.Enchantment;
-import net.minecraft.enchantment.EnchantmentHelper;
-import net.minecraft.enchantment.Enchantments;
-import net.minecraft.enchantment.InfinityEnchantment;
-import net.minecraft.enchantment.PowerEnchantment;
+import net.minecraft.enchantment.*;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
@@ -52,12 +43,16 @@ import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.IItemHandler;
 import net.minecraftforge.items.wrapper.InvWrapper;
 
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
+import java.util.List;
+
 public class PeaGunItem extends Item {
 
 	public static final int PEA_GUN_SLOT_NUM = 28;
 	public static final float PEA_SPEED = 2.1f;
 	public static final double SHOOT_OFFSET = 0.5;
-	public static final PlantType[] PEA_PLANTS = new PlantType[] { PVZPlants.PEA_SHOOTER, PVZPlants.SNOW_PEA, PVZPlants.REPEATER,
+	public static final IPlantType[] PEA_PLANTS = new IPlantType[] { PVZPlants.PEA_SHOOTER, PVZPlants.SNOW_PEA, PVZPlants.REPEATER,
 			PVZPlants.THREE_PEATER };
 //	private Inventory backpack = new Inventory(PEA_GUN_SLOT_NUM);
 
@@ -135,7 +130,7 @@ public class PeaGunItem extends Item {
 		Inventory backpack = getInventory(itemStack);
 		ItemStack special = backpack.getItem(0);
 		if (special.getItem() instanceof PlantCardItem) {
-			PlantType plant = ((PlantCardItem) special.getItem()).plantType;
+			IPlantType plant = ((PlantCardItem) special.getItem()).plantType;
 			for (int i = 1; i < PEA_GUN_SLOT_NUM; i++) {
 				ItemStack stack = backpack.getItem(i);
 				if (stack.isEmpty()) {
@@ -173,7 +168,7 @@ public class PeaGunItem extends Item {
 		});
 	}
 
-	protected boolean canShoot(PlayerEntity player, PlantType plant, ItemStack stack, ItemStack peaGun) {
+	protected boolean canShoot(PlayerEntity player, IPlantType plant, ItemStack stack, ItemStack peaGun) {
 		if(plant == PVZPlants.PEA_SHOOTER || plant == PVZPlants.SNOW_PEA) {
 			this.performShoot(player, plant, stack, peaGun, 0); // normal shoot
 			return true;
@@ -205,9 +200,10 @@ public class PeaGunItem extends Item {
 		return false;
 	}
 
-	private void performShoot(PlayerEntity player, PlantType plant, ItemStack stack, ItemStack peaGun, int type) {
+	private void performShoot(PlayerEntity player, IPlantType plant, ItemStack stack, ItemStack peaGun, int type) {
+		//TODO 豌豆枪
 //		player.getCapability(CapabilityHandler.PLAYER_DATA_CAPABILITY).ifPresent((l) -> {
-//			int plantLvl = l.getPlayerData().getPlantStats().getPlantLevel(plant);
+//			int plantLvl = l.getPlayerData().getPlantStats().getPAZLevel(plant);
 //			int lvl = l.getPlayerData().getResource(Resources.TREE_LVL);
 //			PeaEntity.Type peaType = PeaEntity.Type.NORMAL;
 //			if(plantLvl > 6) {

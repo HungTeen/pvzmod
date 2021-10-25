@@ -1,7 +1,7 @@
 package com.hungteen.pvz.common.entity.plant.flame;
 
 import com.hungteen.pvz.api.interfaces.ILightEffect;
-import com.hungteen.pvz.common.core.PlantType;
+import com.hungteen.pvz.api.types.IPlantType;
 import com.hungteen.pvz.common.entity.bullet.itembullet.PeaEntity;
 import com.hungteen.pvz.common.entity.plant.PVZPlantEntity;
 import com.hungteen.pvz.common.impl.plant.PVZPlants;
@@ -128,7 +128,7 @@ public class TorchWoodEntity extends PVZPlantEntity implements ILightEffect {
 	}
 	
 	@Override
-	public PlantType getPlantType() {
+	public IPlantType getPlantType() {
 		return PVZPlants.TORCH_WOOD;
 	}
 	

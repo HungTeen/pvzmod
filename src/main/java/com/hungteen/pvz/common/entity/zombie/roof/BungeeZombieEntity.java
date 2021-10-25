@@ -1,13 +1,12 @@
 package com.hungteen.pvz.common.entity.zombie.roof;
 
-import java.util.List;
-
+import com.hungteen.pvz.api.types.IZombieType;
 import com.hungteen.pvz.common.cache.InvasionCache;
-import com.hungteen.pvz.common.core.ZombieType;
 import com.hungteen.pvz.common.entity.ai.goal.target.PVZRandomTargetGoal;
 import com.hungteen.pvz.common.entity.bullet.TargetArrowEntity;
 import com.hungteen.pvz.common.entity.plant.PVZPlantEntity;
 import com.hungteen.pvz.common.entity.zombie.PVZZombieEntity;
+import com.hungteen.pvz.common.impl.ZombieType;
 import com.hungteen.pvz.common.impl.zombie.RoofZombies;
 import com.hungteen.pvz.common.misc.damage.PVZDamageSource;
 import com.hungteen.pvz.data.loot.PVZLoot;
@@ -16,16 +15,8 @@ import com.hungteen.pvz.register.SoundRegister;
 import com.hungteen.pvz.utils.EntityUtil;
 import com.hungteen.pvz.utils.ZombieUtil;
 import com.hungteen.pvz.utils.interfaces.ICanAttract;
-
 import net.minecraft.block.Blocks;
-import net.minecraft.entity.Entity;
-import net.minecraft.entity.EntitySize;
-import net.minecraft.entity.EntityType;
-import net.minecraft.entity.ILivingEntityData;
-import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.Pose;
-import net.minecraft.entity.SpawnReason;
-import net.minecraft.entity.monster.MonsterEntity;
+import net.minecraft.entity.*;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.network.datasync.DataParameter;
 import net.minecraft.network.datasync.DataSerializers;
@@ -38,6 +29,8 @@ import net.minecraft.world.DifficultyInstance;
 import net.minecraft.world.IServerWorld;
 import net.minecraft.world.World;
 
+import java.util.List;
+
 public class BungeeZombieEntity extends PVZZombieEntity {
 
 	private static final DataParameter<Integer> BUNGEE_STATE = EntityDataManager.defineId(BungeeZombieEntity.class, DataSerializers.INT);
@@ -45,7 +38,7 @@ public class BungeeZombieEntity extends PVZZombieEntity {
 	private static final DataParameter<BlockPos> ORIGIN_POS = EntityDataManager.defineId(BungeeZombieEntity.class, DataSerializers.BLOCK_POS);
 	private LivingEntity stealTarget;
 	
-	public BungeeZombieEntity(EntityType<? extends MonsterEntity> type, World worldIn) {
+	public BungeeZombieEntity(EntityType<? extends CreatureEntity> type, World worldIn) {
 		super(type, worldIn);
 		this.canBeMini = false;
 		this.canBeStealByBungee = false;
@@ -266,10 +259,10 @@ public class BungeeZombieEntity extends PVZZombieEntity {
 	 * {@link #tickSummon()}
 	 */
 	public void summonZombie() {
-		final List<ZombieType> list = InvasionCache.getOrDefaultZombieList(ZombieUtil.DEFAULT_ZOMBIES);
-		final ZombieType zombieType = list.get(this.random.nextInt(list.size()));
+		final List<IZombieType> list = InvasionCache.getOrDefaultZombieList(ZombieUtil.DEFAULT_ZOMBIES);
+		final IZombieType zombieType = list.get(this.random.nextInt(list.size()));
 		zombieType.getEntityType().ifPresent(type -> {
-			PVZZombieEntity zombie = type.create(level);
+			CreatureEntity zombie = type.create(level);
 			EntityUtil.onEntitySpawn(level, zombie, blockPosition());
 			zombie.startRiding(this);
 			this.setStealTarget(zombie);

@@ -46,7 +46,7 @@ public abstract class PlantBomberEntity extends PVZPlantEntity {
 	
 	@Override
 	public boolean isPlantImmuneTo(DamageSource source) {
-		return super.isPlantImmuneTo(source) || this.canPlantNormalUpdate();
+		return super.isPlantImmuneTo(source) || this.canNormalUpdate();
 	}
 	
 	@Override

@@ -1,6 +1,6 @@
 package com.hungteen.pvz.common.impl.plant;
 
-import com.hungteen.pvz.common.core.ICoolDown;
+import com.hungteen.pvz.api.types.ICoolDown;
 import com.hungteen.pvz.utils.MathUtil;
 import com.hungteen.pvz.utils.PlantUtil;
 

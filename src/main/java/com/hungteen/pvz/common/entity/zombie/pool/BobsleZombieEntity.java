@@ -1,19 +1,18 @@
 package com.hungteen.pvz.common.entity.zombie.pool;
 
-import com.hungteen.pvz.common.core.ZombieType;
 import com.hungteen.pvz.common.entity.zombie.PVZZombieEntity;
+import com.hungteen.pvz.common.impl.ZombieType;
 import com.hungteen.pvz.common.impl.zombie.PoolZombies;
 import com.hungteen.pvz.utils.EntityUtil;
-
+import net.minecraft.entity.CreatureEntity;
 import net.minecraft.entity.EntityType;
-import net.minecraft.entity.monster.MonsterEntity;
 import net.minecraft.potion.EffectInstance;
 import net.minecraft.potion.Effects;
 import net.minecraft.world.World;
 
 public class BobsleZombieEntity extends PVZZombieEntity{
 
-	public BobsleZombieEntity(EntityType<? extends MonsterEntity> type, World worldIn) {
+	public BobsleZombieEntity(EntityType<? extends CreatureEntity> type, World worldIn) {
 		super(type, worldIn);
 	}
 

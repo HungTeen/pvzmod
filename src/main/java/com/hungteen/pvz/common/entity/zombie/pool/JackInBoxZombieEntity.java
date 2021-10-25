@@ -1,9 +1,9 @@
 package com.hungteen.pvz.common.entity.zombie.pool;
 
 import com.hungteen.pvz.common.capability.CapabilityHandler;
-import com.hungteen.pvz.common.core.ZombieType;
 import com.hungteen.pvz.common.entity.zombie.PVZZombieEntity;
 import com.hungteen.pvz.common.entity.zombie.body.ZombieDropBodyEntity;
+import com.hungteen.pvz.common.impl.ZombieType;
 import com.hungteen.pvz.common.impl.zombie.PoolZombies;
 import com.hungteen.pvz.common.misc.damage.PVZDamageSource;
 import com.hungteen.pvz.data.loot.PVZLoot;
@@ -14,12 +14,11 @@ import com.hungteen.pvz.utils.MathUtil;
 import com.hungteen.pvz.utils.PlayerUtil;
 import com.hungteen.pvz.utils.ZombieUtil;
 import com.hungteen.pvz.utils.interfaces.IHasMetal;
-
+import net.minecraft.entity.CreatureEntity;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.ai.attributes.Attributes;
 import net.minecraft.entity.ai.goal.Goal;
-import net.minecraft.entity.monster.MonsterEntity;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.network.datasync.DataParameter;
 import net.minecraft.network.datasync.DataSerializers;
@@ -38,7 +37,7 @@ public class JackInBoxZombieEntity extends PVZZombieEntity implements IHasMetal 
 	private final int MinExplodeTime = 300;
 	private final int MaxExplodeTime = 3000;
 	
-	public JackInBoxZombieEntity(EntityType<? extends MonsterEntity> type, World worldIn) {
+	public JackInBoxZombieEntity(EntityType<? extends CreatureEntity> type, World worldIn) {
 		super(type, worldIn);
 		this.setExplosionTime();
 	}

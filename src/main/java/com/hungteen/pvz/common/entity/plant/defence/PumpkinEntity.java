@@ -1,11 +1,12 @@
 package com.hungteen.pvz.common.entity.plant.defence;
 
-import com.hungteen.pvz.common.core.PlantType;
+import com.hungteen.pvz.api.IPlantEntity;
+import com.hungteen.pvz.api.IPlantInfo;
+import com.hungteen.pvz.api.types.IPlantType;
 import com.hungteen.pvz.common.entity.plant.PVZPlantEntity;
 import com.hungteen.pvz.common.entity.plant.PlantInfo;
 import com.hungteen.pvz.common.impl.plant.PVZPlants;
 import com.hungteen.pvz.common.misc.damage.PVZDamageSource;
-
 import net.minecraft.entity.CreatureEntity;
 import net.minecraft.entity.EntityType;
 import net.minecraft.nbt.CompoundNBT;
@@ -19,7 +20,7 @@ public class PumpkinEntity extends PVZPlantEntity{
 	}
 	
 	@Override
-	public PlantType getPlantType() {
+	public IPlantType getPlantType() {
 		return PVZPlants.PUMPKIN;
 	}
 
@@ -37,7 +38,7 @@ public class PumpkinEntity extends PVZPlantEntity{
 		 * pumpkin reduce the hurt damage.
 		 */
 		public static float pumpkinReduceDamage(PVZPlantEntity plant, DamageSource source, float amount) {
-			final PlantInfo info = plant.getOuterPlantInfo().orElseGet(() -> null);
+			final IPlantInfo info = plant.getOuterPlantInfo().orElseGet(() -> null);
 			/* can not protect throw damage */
 			if(! (info instanceof PumpkinInfo) || (source instanceof PVZDamageSource && ((PVZDamageSource) source).isParabola())) {
 				return amount;
@@ -62,7 +63,7 @@ public class PumpkinEntity extends PVZPlantEntity{
 		}
 		
 		@Override
-		public void placeOn(PVZPlantEntity plantEntity, int lvl, int sunCost) {
+		public void placeOn(IPlantEntity plantEntity, int lvl, int sunCost) {
 			super.placeOn(plantEntity, lvl, sunCost);
 			plantEntity.setPumpkin(true);
 		}

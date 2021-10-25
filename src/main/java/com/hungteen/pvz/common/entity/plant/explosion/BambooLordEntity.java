@@ -3,7 +3,7 @@ package com.hungteen.pvz.common.entity.plant.explosion;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.hungteen.pvz.common.core.PlantType;
+import com.hungteen.pvz.api.types.IPlantType;
 import com.hungteen.pvz.common.entity.bullet.itembullet.FireCrackerEntity;
 import com.hungteen.pvz.common.entity.misc.FireCrackersEntity;
 import com.hungteen.pvz.common.entity.plant.base.PlantCloserEntity;
@@ -113,7 +113,7 @@ public class BambooLordEntity extends PlantCloserEntity {
 	}
 	
 	public int getSplitCount() {
-		return MathUtil.getProgressByDif(5, 1, this.getPlantLvl(), PlantUtil.MAX_PLANT_LEVEL, 2, 5);
+		return MathUtil.getProgressByDif(5, 1, this.getPAZLevel(), PlantUtil.MAX_PLANT_LEVEL, 2, 5);
 	}
 	
 	public int getCrackersNum() {
@@ -126,7 +126,7 @@ public class BambooLordEntity extends PlantCloserEntity {
 	}
 	
 	@Override
-	public PlantType getPlantType() {
+	public IPlantType getPlantType() {
 		return OtherPlants.BAMBOO_LORD;
 	}
 

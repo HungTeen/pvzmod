@@ -1,6 +1,6 @@
 package com.hungteen.pvz.common.entity.plant.defence;
 
-import com.hungteen.pvz.common.core.PlantType;
+import com.hungteen.pvz.api.types.IPlantType;
 import com.hungteen.pvz.common.entity.plant.base.PlantDefenderEntity;
 import com.hungteen.pvz.common.impl.plant.PVZPlants;
 import com.hungteen.pvz.common.item.tool.plant.BowlingGloveItem;
@@ -38,7 +38,7 @@ public class WallNutEntity extends PlantDefenderEntity{
 
 	@Override
 	public float getPlantHealth() {
-		return MathUtil.getProgressAverage(this.getPlantLvl(), PlantUtil.MAX_PLANT_LEVEL, 400, 800);
+		return MathUtil.getProgressAverage(this.getPAZLevel(), PlantUtil.MAX_PLANT_LEVEL, 400, 800);
 	}
 	
 	@Override
@@ -52,7 +52,7 @@ public class WallNutEntity extends PlantDefenderEntity{
 	}
 	
 	@Override
-	public PlantType getPlantType() {
+	public IPlantType getPlantType() {
 		return PVZPlants.WALL_NUT;
 	}
 

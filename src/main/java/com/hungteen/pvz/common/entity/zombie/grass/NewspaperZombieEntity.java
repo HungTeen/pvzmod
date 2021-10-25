@@ -1,24 +1,23 @@
 package com.hungteen.pvz.common.entity.zombie.grass;
 
-import com.hungteen.pvz.common.core.ZombieType;
 import com.hungteen.pvz.common.entity.zombie.base.DefenceZombieEntity;
 import com.hungteen.pvz.common.entity.zombie.body.ZombieDropBodyEntity;
 import com.hungteen.pvz.common.entity.zombie.part.PVZHealthPartEntity;
+import com.hungteen.pvz.common.impl.ZombieType;
 import com.hungteen.pvz.common.impl.zombie.GrassZombies;
 import com.hungteen.pvz.register.SoundRegister;
 import com.hungteen.pvz.utils.EntityUtil;
 import com.hungteen.pvz.utils.ZombieUtil;
-
+import net.minecraft.entity.CreatureEntity;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.ai.attributes.Attributes;
-import net.minecraft.entity.monster.MonsterEntity;
 import net.minecraft.network.datasync.DataParameter;
 import net.minecraft.util.SoundEvent;
 import net.minecraft.world.World;
 
 public class NewspaperZombieEntity extends DefenceZombieEntity {
 
-	public NewspaperZombieEntity(EntityType<? extends MonsterEntity> type, World worldIn) {
+	public NewspaperZombieEntity(EntityType<? extends CreatureEntity> type, World worldIn) {
 		super(type, worldIn);
 	}
 	

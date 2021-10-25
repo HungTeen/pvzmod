@@ -3,7 +3,7 @@ package com.hungteen.pvz.common.entity.plant.explosion;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.hungteen.pvz.common.core.PlantType;
+import com.hungteen.pvz.api.types.IPlantType;
 import com.hungteen.pvz.common.entity.misc.DoomFixerEntity;
 import com.hungteen.pvz.common.entity.plant.PVZPlantEntity;
 import com.hungteen.pvz.common.entity.plant.base.PlantBomberEntity;
@@ -151,7 +151,7 @@ public class DoomShroomEntity extends PlantBomberEntity {
 	}
 
 	@Override
-	public PlantType getPlantType() {
+	public IPlantType getPlantType() {
 		return PVZPlants.DOOM_SHROOM;
 	}
 

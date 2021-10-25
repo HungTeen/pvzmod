@@ -1,18 +1,14 @@
 package com.hungteen.pvz.common.entity.plant;
 
-import java.util.List;
-import java.util.Optional;
-import java.util.UUID;
-
-import javax.annotation.Nullable;
-
 import com.hungteen.pvz.PVZMod;
 import com.hungteen.pvz.api.IPlantEntity;
+import com.hungteen.pvz.api.IPlantInfo;
 import com.hungteen.pvz.api.enums.PVZGroupType;
+import com.hungteen.pvz.api.types.IEssenceType;
+import com.hungteen.pvz.api.types.IPAZType;
+import com.hungteen.pvz.api.types.IPlantType;
 import com.hungteen.pvz.common.advancement.trigger.PlantSuperTrigger;
-import com.hungteen.pvz.common.core.EssenceType;
-import com.hungteen.pvz.common.core.PlantType;
-import com.hungteen.pvz.common.core.RankType;
+import com.hungteen.pvz.common.entity.AbstractPAZEntity;
 import com.hungteen.pvz.common.entity.ai.goal.PVZLookRandomlyGoal;
 import com.hungteen.pvz.common.entity.drop.SunEntity;
 import com.hungteen.pvz.common.entity.plant.defence.PumpkinEntity;
@@ -32,21 +28,14 @@ import com.hungteen.pvz.common.misc.damage.PVZDamageSource;
 import com.hungteen.pvz.register.EffectRegister;
 import com.hungteen.pvz.register.EntityRegister;
 import com.hungteen.pvz.register.ParticleRegister;
-import com.hungteen.pvz.register.SoundRegister;
 import com.hungteen.pvz.remove.MetalTypes;
 import com.hungteen.pvz.utils.AlgorithmUtil;
 import com.hungteen.pvz.utils.EntityUtil;
 import com.hungteen.pvz.utils.PlantUtil;
 import com.hungteen.pvz.utils.PlayerUtil;
-
+import com.hungteen.pvz.utils.interfaces.ICanAttract;
 import net.minecraft.block.Block;
-import net.minecraft.entity.CreatureEntity;
-import net.minecraft.entity.Entity;
-import net.minecraft.entity.EntityType;
-import net.minecraft.entity.ILivingEntityData;
-import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.MobEntity;
-import net.minecraft.entity.SpawnReason;
+import net.minecraft.entity.*;
 import net.minecraft.entity.ai.attributes.AttributeModifierMap;
 import net.minecraft.entity.ai.attributes.Attributes;
 import net.minecraft.entity.player.PlayerEntity;
@@ -58,12 +47,10 @@ import net.minecraft.network.datasync.DataSerializers;
 import net.minecraft.network.datasync.EntityDataManager;
 import net.minecraft.potion.EffectInstance;
 import net.minecraft.potion.Effects;
-import net.minecraft.server.management.PreYggdrasilConverter;
 import net.minecraft.tags.FluidTags;
 import net.minecraft.util.ActionResultType;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.Hand;
-import net.minecraft.util.SoundEvent;
 import net.minecraft.util.SoundEvents;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
@@ -74,20 +61,17 @@ import net.minecraft.world.GameRules;
 import net.minecraft.world.IServerWorld;
 import net.minecraft.world.World;
 
-public abstract class PVZPlantEntity extends CreatureEntity implements IPlantEntity {
+import javax.annotation.Nullable;
+import java.util.List;
+import java.util.Optional;
+
+public abstract class PVZPlantEntity extends AbstractPAZEntity implements IPlantEntity {
 
 	private static final DataParameter<Integer> SUPER_TIME = EntityDataManager.defineId(PVZPlantEntity.class, DataSerializers.INT);
-	private static final DataParameter<Integer> PLANT_LVL = EntityDataManager.defineId(PVZPlantEntity.class, DataSerializers.INT);
-	private static final DataParameter<Optional<UUID>> OWNER_UUID = EntityDataManager.defineId(PVZPlantEntity.class, DataSerializers.OPTIONAL_UUID);
 	private static final DataParameter<Integer> PLANT_STATES = EntityDataManager.defineId(PVZPlantEntity.class, DataSerializers.INT);
 	private static final DataParameter<Integer> ATTACK_TIME = EntityDataManager.defineId(PVZPlantEntity.class, DataSerializers.INT);
 	private static final DataParameter<Integer> GOLD_TIME = EntityDataManager.defineId(PVZPlantEntity.class, DataSerializers.INT);
 	private static final DataParameter<Integer> BOOST_TIME = EntityDataManager.defineId(PVZPlantEntity.class, DataSerializers.INT);
-	private static final DataParameter<Integer> EXIST_TICK = EntityDataManager.defineId(PVZPlantEntity.class, DataSerializers.INT);  
-	//handler plant level, plant level range in (1, 128).
-	protected static final int PLANT_LEVEL_FLAG_LEN = 7;
-	//handle sync plant level.
-	private static final int PLANT_LEVEL_SYNC_CD = 1200;
 	//plant states flags.
 	protected static final int LADDER_FLAG = 0;
 	protected static final int CHARM_FLAG = 1;
@@ -95,7 +79,6 @@ public abstract class PVZPlantEntity extends CreatureEntity implements IPlantEnt
 	protected static final int PUMPKIN_FLAG = 3;
 	//handle plant weak, place on wrong block.
 	private static final int PLANT_WEAK_CD = 10;
-	protected PlayerEntity ownerPlayer;
 	protected boolean isImmuneToWeak = false;
 	protected int weakTime = 0;
 	//handle plant collide with other plants.
@@ -103,13 +86,9 @@ public abstract class PVZPlantEntity extends CreatureEntity implements IPlantEnt
 	//handle plant sleep.
 	public int sleepTime = 0;
 	//handle plant itself.
-    protected PlantInfo innerPlant;
+    protected IPlantInfo innerPlant;
 	//handle outer plant, like pumpkin.
-	protected PlantInfo outerPlant;
-	protected boolean canBeCold = true;
-	protected boolean canBeFrozen = true;
-	protected boolean canBeCharm = true;
-	protected boolean canBeButter = true;
+	protected IPlantInfo outerPlant;
 	protected boolean canBeRemove = true;
 	protected boolean canHelpAttack = true;
 
@@ -123,13 +102,10 @@ public abstract class PVZPlantEntity extends CreatureEntity implements IPlantEnt
 	protected void defineSynchedData() {
 		super.defineSynchedData();
 		entityData.define(SUPER_TIME, 0);
-		entityData.define(PLANT_LVL, 1);
-		entityData.define(OWNER_UUID, Optional.empty());
 		entityData.define(ATTACK_TIME, 0);
 		entityData.define(GOLD_TIME, 0);
 		entityData.define(BOOST_TIME, 0);
 		entityData.define(PLANT_STATES, 0);
-		entityData.define(EXIST_TICK, 0);
 	}
 
 	public static AttributeModifierMap createPlantAttributes() {
@@ -162,7 +138,6 @@ public abstract class PVZPlantEntity extends CreatureEntity implements IPlantEnt
 	public ILivingEntityData finalizeSpawn(IServerWorld worldIn, DifficultyInstance difficultyIn, SpawnReason reason,
 			ILivingEntityData spawnDataIn, CompoundNBT dataTag) {
 		if (! worldIn.isClientSide()) {
-			EntityUtil.playSound(this, this.getSpawnSound());
 			this.updateAttributes();
 			this.heal(this.getMaxHealth());
 		}
@@ -178,12 +153,12 @@ public abstract class PVZPlantEntity extends CreatureEntity implements IPlantEnt
 	}
 
 	@Override
-	public void aiStep() {
-		super.aiStep();
+	public void pazTick() {
+		super.pazTick();
 		this.level.getProfiler().push("PVZ Plant Tick");
 		this.plantTick();
 		this.level.getProfiler().pop();
-		if (this.canPlantNormalUpdate()) {
+		if (this.canNormalUpdate()) {
 			this.level.getProfiler().push("PVZ Normal Plant Tick");
 			this.normalPlantTick();
 			this.level.getProfiler().pop();
@@ -193,7 +168,8 @@ public abstract class PVZPlantEntity extends CreatureEntity implements IPlantEnt
 	/**
 	 * check can run {@link #normalPlantTick()} or not.
 	 */
-	public boolean canPlantNormalUpdate() {
+	@Override
+	public boolean canNormalUpdate() {
 		if(! EntityUtil.isEntityValid(this)) {
 			return false;
 		}
@@ -278,21 +254,6 @@ public abstract class PVZPlantEntity extends CreatureEntity implements IPlantEnt
 				EntityUtil.playSound(this, SoundEvents.EXPERIENCE_ORB_PICKUP);
 			}
 		}
-		/* update plant level & outer plant level */
-		if(!level.isClientSide && this.getExistTick() % PLANT_LEVEL_SYNC_CD == 5) {
-			this.getOwnerPlayer().ifPresent(player -> {
-				this.getPlantInfo().ifPresent(info -> {
-				    if(info.needSyncLevel) {
-					    this.updatePlantLevel(PlayerUtil.getPlantLvl(player, info.getType()));
-				    }
-			    });
-				this.getOuterPlantInfo().ifPresent(info -> {
-				    if(info.needSyncLevel) {
-					    info.setLevel(PlayerUtil.getPlantLvl(player, info.getType()));
-				    }
-			    });
-			});
-		}
 	}
 
 	/**
@@ -318,8 +279,8 @@ public abstract class PVZPlantEntity extends CreatureEntity implements IPlantEnt
 	 * {@link #plantTick()}
 	 */
 	public void updatePlantLevel(int lvl) {
-		if(this.getPlantLvl() != lvl) {//level changed
-		    this.setPlantLvl(lvl);
+		if(this.getPAZLevel() != lvl) {//level changed
+		    this.setPAZLevel(lvl);
 		    this.getAttribute(Attributes.MAX_HEALTH).setBaseValue(this.getPlantHealth());
 		    this.heal(this.getMaxHealth());
 		}
@@ -327,7 +288,6 @@ public abstract class PVZPlantEntity extends CreatureEntity implements IPlantEnt
 
 	/**
 	 * check can plant set target as attackTarget.
-	 * {@link EntityUtil#canEntityAttack(Entity, Entity)}
 	 */
 	public boolean checkCanPlantTarget(Entity target) {
 		return EntityUtil.checkCanEntityBeTarget(this, target) && this.canPlantTarget(target);
@@ -347,6 +307,18 @@ public abstract class PVZPlantEntity extends CreatureEntity implements IPlantEnt
 	 */
 	public boolean canBeTargetBy(LivingEntity living) {
 		return ! this.hasMetal();
+	}
+
+	@Override
+	public boolean canBeAttractedBy(ICanAttract defender) {
+		return true;
+	}
+
+	@Override
+	public void attractBy(ICanAttract defender) {
+		if(defender instanceof LivingEntity){
+			this.setTarget((LivingEntity) defender);
+		}
 	}
 
 	/**
@@ -398,7 +370,7 @@ public abstract class PVZPlantEntity extends CreatureEntity implements IPlantEnt
 		if (effect.getEffect() == EffectRegister.FROZEN_EFFECT.get() && !this.canBeFrozen()) {
 			return;
 		}
-		if (effect.getEffect() == EffectRegister.BUTTER_EFFECT.get() && !this.canBeButter()) {
+		if (effect.getEffect() == EffectRegister.BUTTER_EFFECT.get() && !this.canBeButtered()) {
 			return;
 		}
 		this.addEffect(effect);
@@ -556,7 +528,7 @@ public abstract class PVZPlantEntity extends CreatureEntity implements IPlantEnt
 	 * get plant max health.
 	 */
 	public float getPlantHealth() {
-		int lvl = this.getPlantLvl();
+		int lvl = this.getPAZLevel();
 		if (lvl <= 14) {
 			return 27.5f + 2.5f * lvl;
 		}
@@ -604,7 +576,7 @@ public abstract class PVZPlantEntity extends CreatureEntity implements IPlantEnt
 	/**
 	 * {@link PlantCardItem#checkSunAndOuterPlant(PlayerEntity, PVZPlantEntity, PlantCardItem, net.minecraft.item.ItemStack)}
 	 */
-	public void onPlaceOuterPlant(PlantType type, int lvl, int sunCost) {
+	public void onPlaceOuterPlant(IPlantType type, int lvl, int sunCost) {
 		if(type.isOuterPlant()) {
 			this.outerPlant = type.getOuterPlant().get();
 			this.outerPlant.setType(type);
@@ -619,7 +591,7 @@ public abstract class PVZPlantEntity extends CreatureEntity implements IPlantEnt
 	 */
 	public void onHealByCard() {
 		this.addEffect(new EffectInstance(Effects.HEAL, 40, 255, true, false));
-		EntityUtil.playSound(this, this.getSpawnSound());
+		this.getSpawnSound().ifPresent(s -> EntityUtil.playSound(this, s));
 	}
 	
 	/**
@@ -668,22 +640,6 @@ public abstract class PVZPlantEntity extends CreatureEntity implements IPlantEnt
 	}
 
 	/* misc get */
-
-	public boolean canBeButter() {
-		return this.canBeButter;
-	}
-
-	public boolean canBeCharmed() {
-		return this.canBeCharm;
-	}
-
-	public boolean canBeFrozen() {
-		return this.canBeFrozen && !this.isInWaterOrBubble() && !this.isInLava();
-	}
-
-	public boolean canBeCold() {
-		return this.canBeCold;
-	}
 	
 	public boolean canBeUpgrade(PlayerEntity player) {
 		return this.getPlantType().getUpgradeTo().isPresent();
@@ -730,7 +686,7 @@ public abstract class PVZPlantEntity extends CreatureEntity implements IPlantEnt
 	}
 
 	protected boolean isPlantInStage(int stage) {
-		int lvl = this.getPlantLvl();
+		int lvl = this.getPAZLevel();
 		if (stage == 1)
 			return lvl <= 6;
 		if (stage == 2)
@@ -756,7 +712,7 @@ public abstract class PVZPlantEntity extends CreatureEntity implements IPlantEnt
 	 * check can start super mode currently.
 	 */
 	public boolean canStartSuperMode() {
-		return this.canPlantNormalUpdate() && this.hasSuperMode() && !this.isPlantInSuperMode();
+		return this.canNormalUpdate() && this.hasSuperMode() && !this.isPlantInSuperMode();
 	}
 	
     /**
@@ -787,7 +743,7 @@ public abstract class PVZPlantEntity extends CreatureEntity implements IPlantEnt
 	public void addAdditionalSaveData(CompoundNBT compound) {
 		super.addAdditionalSaveData(compound);
 		compound.putInt("plant_super_time", this.getSuperTime());
-		compound.putInt("plant_lvl", this.getPlantLvl());
+		compound.putInt("plant_lvl", this.getPAZLevel());
 		if (this.getOwnerUUID().isPresent()) {
 			compound.putUUID("OwnerUUID", this.getOwnerUUID().get());
 		}
@@ -807,22 +763,6 @@ public abstract class PVZPlantEntity extends CreatureEntity implements IPlantEnt
 		super.readAdditionalSaveData(compound);
 		if (compound.contains("plant_super_time")) {
 			this.setSuperTime(compound.getInt("plant_super_time"));
-		}
-		if (compound.contains("plant_lvl")) {
-			this.setPlantLvl(compound.getInt("plant_lvl"));
-		}
-		UUID uuid;
-		if (compound.hasUUID("OwnerUUID")) {
-			uuid = compound.getUUID("OwnerUUID");
-		} else {
-			String s1 = compound.getString("OwnerUUID");
-			uuid = PreYggdrasilConverter.convertMobOwnerIfNecessary(this.getServer(), s1);
-		}
-		if (uuid != null) {
-			try {
-				this.setOwnerUUID(uuid);
-			} catch (Throwable var4) {
-			}
 		}
 		if (compound.contains("plant_attack_time")) {
 			this.setAttackTime(compound.getInt("plant_attack_time"));
@@ -844,26 +784,23 @@ public abstract class PVZPlantEntity extends CreatureEntity implements IPlantEnt
 		if (compound.contains("plant_state")) {
 			this.setPlantState(compound.getInt("plant_state"));
 		}
-		if(compound.contains("plant_exist_tick")) {
-			this.setExistTick(compound.getInt("plant_exist_tick"));
-		}
 	}
 
 	/* getter setter */
 	
-	public Optional<PlantInfo> getOuterPlantInfo() {
+	public Optional<IPlantInfo> getOuterPlantInfo() {
 		return Optional.ofNullable(this.outerPlant);
 	}
 	
-	public Optional<PlantInfo> getPlantInfo() {
+	public Optional<IPlantInfo> getPlantInfo() {
 		return Optional.ofNullable(this.innerPlant);
 	}
 	
-	public void setImmunneToWeak(boolean is) {
+	public void setImmuneToWeak(boolean is) {
 		this.isImmuneToWeak = is;
 	}
 	
-	public boolean isImmunneToWeak() {
+	public boolean isImmuneToWeak() {
 		return this.isImmuneToWeak;
 	}
 
@@ -891,37 +828,12 @@ public abstract class PVZPlantEntity extends CreatureEntity implements IPlantEnt
 		entityData.set(ATTACK_TIME, cd);
 	}
 
-	public void setPlantLvl(int lvl) {
-		entityData.set(PLANT_LVL, Math.min(lvl, this.getPlantType().getMaxLevel()));
-	}
-
-	public int getPlantLvl() {
-		return entityData.get(PLANT_LVL);
-	}
-
-	@Override
-	public Optional<UUID> getOwnerUUID() {
-		return entityData.get(OWNER_UUID);
-	}
-
-	public void setOwnerUUID(UUID uuid) {
-		this.entityData.set(OWNER_UUID, Optional.ofNullable(uuid));
-	}
-
 	public void setSuperTime(int time) {
 		entityData.set(SUPER_TIME, time);
 	}
 
 	public int getSuperTime() {
 		return entityData.get(SUPER_TIME);
-	}
-	
-	public int getExistTick() {
-		return this.entityData.get(EXIST_TICK);
-	}
-
-	public void setExistTick(int tick) {
-		this.entityData.set(EXIST_TICK, tick);
 	}
 
 	public int getPlantState() {
@@ -981,31 +893,19 @@ public abstract class PVZPlantEntity extends CreatureEntity implements IPlantEnt
 		return MetalTypes.LADDER;
 	}
 
-	/* sound */
-	
-	public SoundEvent getSpawnSound() {
-		return this.getPlantType().isWaterPlant() ? SoundRegister.PLANT_IN_WATER.get()
-				: SoundRegister.PLANT_ON_GROUND.get();
-	}
-	
-	/* plant type */
-	
-	public int getCoolDownTime() {
-		return this.getPlantType().getCD().getCD(this.getPlantLvl());
-	}
-
-	public EssenceType getPlantEssenceType() {
+	public IEssenceType getPlantEssenceType() {
 		return this.getPlantType().getEssence();
 	}
 
-	public RankType getPlantRank() {
-		return this.getPlantType().getRank();
+	@Override
+	public IPAZType getPAZType() {
+		return this.getPlantType();
 	}
-	
+
 	/**
 	 * match entity with plant type.
 	 */
-	public abstract PlantType getPlantType();
+	public abstract IPlantType getPlantType();
 	
 	public abstract int getSuperTimeLength();
 

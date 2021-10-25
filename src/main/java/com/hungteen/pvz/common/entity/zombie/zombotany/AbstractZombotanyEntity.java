@@ -1,14 +1,13 @@
 package com.hungteen.pvz.common.entity.zombie.zombotany;
 
 import com.hungteen.pvz.common.entity.zombie.PVZZombieEntity;
-
+import net.minecraft.entity.CreatureEntity;
 import net.minecraft.entity.EntityType;
-import net.minecraft.entity.monster.MonsterEntity;
 import net.minecraft.world.World;
 
 public abstract class AbstractZombotanyEntity extends PVZZombieEntity {
 
-	public AbstractZombotanyEntity(EntityType<? extends MonsterEntity> type, World worldIn) {
+	public AbstractZombotanyEntity(EntityType<? extends CreatureEntity> type, World worldIn) {
 		super(type, worldIn);
 	}
 

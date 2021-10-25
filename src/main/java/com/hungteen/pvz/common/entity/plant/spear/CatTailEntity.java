@@ -2,7 +2,7 @@ package com.hungteen.pvz.common.entity.plant.spear;
 
 import java.util.HashSet;
 
-import com.hungteen.pvz.common.core.PlantType;
+import com.hungteen.pvz.api.types.IPlantType;
 import com.hungteen.pvz.common.entity.ai.goal.target.PVZGlobalTargetGoal;
 import com.hungteen.pvz.common.entity.bullet.AbstractBulletEntity;
 import com.hungteen.pvz.common.entity.bullet.ThornEntity;
@@ -118,7 +118,7 @@ public class CatTailEntity extends PlantShooterEntity {
 	}
 	
 	public int getExtraAttackCount() {
-		return MathUtil.getProgressByDif(5, 1, this.getPlantLvl(), PlantUtil.MAX_PLANT_LEVEL, 1, 4);
+		return MathUtil.getProgressByDif(5, 1, this.getPAZLevel(), PlantUtil.MAX_PLANT_LEVEL, 1, 4);
 	}
 	
 	@Override
@@ -174,7 +174,7 @@ public class CatTailEntity extends PlantShooterEntity {
 	}
 	
 	@Override
-	public PlantType getPlantType() {
+	public IPlantType getPlantType() {
 		return PVZPlants.CAT_TAIL;
 	}
 	

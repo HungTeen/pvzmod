@@ -1,6 +1,6 @@
 package com.hungteen.pvz.common.block;
 
-import com.hungteen.pvz.common.core.EssenceType;
+import com.hungteen.pvz.common.impl.misc.EssenceType;
 
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;

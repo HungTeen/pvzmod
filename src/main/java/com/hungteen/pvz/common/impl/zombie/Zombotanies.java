@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.hungteen.pvz.PVZMod;
+import com.hungteen.pvz.api.types.IZombieType;
 import com.hungteen.pvz.client.model.entity.zombie.zombotany.GatlingPeaZombieModel;
 import com.hungteen.pvz.client.model.entity.zombie.zombotany.JalapenoZombieModel;
 import com.hungteen.pvz.client.model.entity.zombie.zombotany.PeaShooterZombieModel;
@@ -11,13 +12,13 @@ import com.hungteen.pvz.client.model.entity.zombie.zombotany.PumpkinZombieModel;
 import com.hungteen.pvz.client.model.entity.zombie.zombotany.SquashZombieModel;
 import com.hungteen.pvz.client.model.entity.zombie.zombotany.TallNutZombieModel;
 import com.hungteen.pvz.client.model.entity.zombie.zombotany.WallNutZombieModel;
-import com.hungteen.pvz.common.core.ZombieType;
 import com.hungteen.pvz.common.impl.Ranks;
+import com.hungteen.pvz.common.impl.ZombieType;
 import com.hungteen.pvz.register.EntityRegister;
 
 public final class Zombotanies extends ZombieType {
 
-	private static final List<ZombieType> LIST = new ArrayList<>();
+	private static final List<IZombieType> LIST = new ArrayList<>();
 	
 	/*
 	 * zombotany.

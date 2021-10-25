@@ -1,6 +1,6 @@
 package com.hungteen.pvz.common.entity.plant.magic;
 
-import com.hungteen.pvz.common.core.PlantType;
+import com.hungteen.pvz.api.types.IPlantType;
 import com.hungteen.pvz.common.entity.drop.CoinEntity;
 import com.hungteen.pvz.common.entity.drop.CoinEntity.CoinType;
 import com.hungteen.pvz.common.entity.plant.base.PlantProducerEntity;
@@ -67,7 +67,7 @@ public class MariGoldEntity extends PlantProducerEntity {
 	}
 
 	public int getGoldChance() {
-		final int lvl = this.getPlantLvl();
+		final int lvl = this.getPAZLevel();
 		if (lvl <= 20) {
 			final int now = (lvl - 1) / 2;
 			return now + 1;
@@ -90,7 +90,7 @@ public class MariGoldEntity extends PlantProducerEntity {
 	}
 
 	@Override
-	public PlantType getPlantType() {
+	public IPlantType getPlantType() {
 		return PVZPlants.MARIGOLD;
 	}
 

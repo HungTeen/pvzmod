@@ -1,32 +1,29 @@
 package com.hungteen.pvz.common.capability.player;
 
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
 import com.hungteen.pvz.PVZConfig;
+import com.hungteen.pvz.api.PVZAPI;
+import com.hungteen.pvz.api.types.IPAZType;
+import com.hungteen.pvz.api.types.IPlantType;
 import com.hungteen.pvz.client.gui.search.SearchOption;
 import com.hungteen.pvz.common.advancement.trigger.MoneyTrigger;
 import com.hungteen.pvz.common.advancement.trigger.PlantLevelTrigger;
 import com.hungteen.pvz.common.advancement.trigger.SunAmountTrigger;
 import com.hungteen.pvz.common.advancement.trigger.TreeLevelTrigger;
 import com.hungteen.pvz.common.container.shop.MysteryShopContainer;
-import com.hungteen.pvz.common.core.PlantType;
-import com.hungteen.pvz.common.event.events.PlayerLevelUpEvent.PlantLevelUpEvent;
+import com.hungteen.pvz.common.event.events.PlayerLevelUpEvent.PAZLevelUpEvent;
 import com.hungteen.pvz.common.event.events.PlayerLevelUpEvent.TreeLevelUpEvent;
 import com.hungteen.pvz.common.event.handler.PlayerEventHandler;
+import com.hungteen.pvz.common.impl.PlantType;
 import com.hungteen.pvz.common.item.spawn.card.SummonCardItem;
 import com.hungteen.pvz.common.network.PVZPacketHandler;
 import com.hungteen.pvz.common.network.toclient.CardInventoryPacket;
 import com.hungteen.pvz.common.network.toclient.PlantStatsPacket;
 import com.hungteen.pvz.common.network.toclient.PlayerStatsPacket;
 import com.hungteen.pvz.common.world.invasion.WaveManager;
-import com.hungteen.pvz.utils.PlantUtil;
+import com.hungteen.pvz.utils.PAZUtil;
 import com.hungteen.pvz.utils.PlayerUtil;
 import com.hungteen.pvz.utils.enums.Resources;
-
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.item.ItemStack;
@@ -36,23 +33,28 @@ import net.minecraft.util.math.MathHelper;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.fml.network.PacketDistributor;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
 
 public class PlayerDataManager {
 
 	private final PlayerEntity player;
 	/* player resources */
-	private HashMap<Resources, Integer> resources = new HashMap<>(Resources.values().length);
+	private final HashMap<Resources, Integer> resources = new HashMap<>(Resources.values().length);
 	/* summon card inventory */
 	private final List<ItemStack> cards = new ArrayList<>();
 	private int emptySlot;
-	/* plant level */
-	private Map<PlantType, Integer> plantLevel = new HashMap<>();
-	private Map<PlantType, Integer> plantXp = new HashMap<>();
-	/* plant cd */
-	private Map<PlantType, Integer> plantCardCD = new HashMap<>();
-	private Map<PlantType, Float> plantCardBar = new HashMap<>();
-	/* plant lock */
-	private Map<PlantType, Boolean> plantLocked = new HashMap<>();
+	/* plant & zombie level */
+	private final Map<IPAZType, Integer> pazLevel = new HashMap<>();
+	private final Map<IPAZType, Integer> pazXp = new HashMap<>();
+	/* plant & zombie cd */
+	private final Map<IPAZType, Integer> pazCardCD = new HashMap<>();
+	private final Map<IPAZType, Float> pazCardBar = new HashMap<>();
+	/* plant & zombie lock */
+	private final Map<IPAZType, Boolean> pazLocked = new HashMap<>();
 	private final OtherStats otherStats;
 	
 	public PlayerDataManager(PlayerEntity player) {
@@ -64,18 +66,16 @@ public class PlayerDataManager {
 		}
 		{// init card inventory.
 			for(int i = 0; i <= Resources.SLOT_NUM.max; ++ i) {
-//				this.setItemAt(ItemStack.EMPTY, i);
 				this.cards.add(ItemStack.EMPTY);
-//				this.cards.add(Bundles.RANDOM_ALL.getEnjoyCard(player.getRandom()));
 			}
 		}
-		{// init about plants.
-			PlantType.getPlants().forEach(plant -> {
-			    this.plantXp.put(plant, 0);
-				this.plantLevel.put(plant, 1);
-				this.plantCardCD.put(plant, 0);
-				this.plantCardBar.put(plant, 0F);
-				this.plantLocked.put(plant, true);
+		{// init about plants & zombies.
+			PVZAPI.get().getPAZs().forEach(plant -> {
+				this.pazLevel.put(plant, 1);
+				this.pazXp.put(plant, 0);
+				this.pazCardCD.put(plant, 0);
+				this.pazCardBar.put(plant, 0F);
+				this.pazLocked.put(plant, true);
 			});
 		}
 		this.otherStats = new OtherStats(this);
@@ -116,7 +116,7 @@ public class PlayerDataManager {
 				}
 			}
 		}
-		{// load plant level.
+		{// load plants & zombies level.
 			/*
 			 * remain to keep old version's plant level.
 			 */
@@ -124,55 +124,55 @@ public class PlayerDataManager {
 				final CompoundNBT plantTag = (CompoundNBT) baseTag.get(plant.toString());
 				if(plantTag != null) {
 				    if(plantTag.contains("player_plant_lvl")) {
-					    this.plantLevel.put(plant, plantTag.getInt("player_plant_lvl"));
+					    this.pazLevel.put(plant, plantTag.getInt("player_plant_lvl"));
 				    }
 				    if(plantTag.contains("player_plant_exp")) {
-					    this.plantXp.put(plant, plantTag.getInt("player_plant_exp"));
+					    this.pazXp.put(plant, plantTag.getInt("player_plant_exp"));
 				    }
 				}
 			});
 			/*
-			 * new.
+			 * new one.
 			 */
-			if(baseTag.contains("plant_level_info")) {
-			    final CompoundNBT nbt = baseTag.getCompound("plant_level_info");
-			    PlantType.getPlants().forEach(plant -> {
+			if(baseTag.contains("paz_level_info")) {
+			    final CompoundNBT nbt = baseTag.getCompound("paz_level_info");
+				PVZAPI.get().getPAZs().forEach(plant -> {
 				    final CompoundNBT plantTag = (CompoundNBT) nbt.get(plant.getIdentity());
 				    if(plantTag != null) {
-				        if(plantTag.contains("player_plant_lvl")) {
-					        this.plantLevel.put(plant, plantTag.getInt("player_plant_lvl"));
+				        if(plantTag.contains("paz_lvl")) {
+					        this.pazLevel.put(plant, plantTag.getInt("paz_lvl"));
 				        }
-				        if(plantTag.contains("player_plant_exp")) {
-					        this.plantXp.put(plant, plantTag.getInt("player_plant_exp"));
+				        if(plantTag.contains("paz_xp")) {
+					        this.pazXp.put(plant, plantTag.getInt("paz_xp"));
 				        }
 				    }
 			    });
 			}
 		}
-		{// load plant card cd.
-			if(baseTag.contains("plant_card_item_cd")) {
-			    final CompoundNBT nbt = baseTag.getCompound("plant_card_item_cd");
-			    PlantType.getPlants().forEach(plant -> {
+		{// load plant & zombie card cd.
+			if(baseTag.contains("paz_card_item_cd")) {
+			    final CompoundNBT nbt = baseTag.getCompound("paz_card_item_cd");
+				PVZAPI.get().getPAZs().forEach(plant -> {
 					final CompoundNBT plantNBT = (CompoundNBT) nbt.get(plant.getIdentity());
 					if(plantNBT != null) {
-					    if(plantNBT.contains("plant_card_cd")) {
-						    this.setPlantCardCD(plant, plantNBT.getInt("plant_card_cd"));
+					    if(plantNBT.contains("paz_card_cd")) {
+						    this.setPAZCardCD(plant, plantNBT.getInt("paz_card_cd"));
 					    }
-					    if(plantNBT.contains("plant_card_bar")) {
-						    this.setPlantCardBar(plant, plantNBT.getInt("plant_card_bar"));
+					    if(plantNBT.contains("paz_card_bar")) {
+						    this.setPAZCardBar(plant, plantNBT.getInt("paz_card_bar"));
 					    }
 					}
 				});
 			}
 		}
-		{// load plant lock.
-			if(baseTag.contains("plant_locks")) {
-			    final CompoundNBT nbt = baseTag.getCompound("plant_locks");
-			    PlantType.getPlants().forEach(plant -> {
+		{// load plant & zombie lock.
+			if(baseTag.contains("paz_locks")) {
+			    final CompoundNBT nbt = baseTag.getCompound("paz_locks");
+				PVZAPI.get().getPAZs().forEach(plant -> {
 					final CompoundNBT plantNBT = (CompoundNBT) nbt.get(plant.getIdentity());
 					if(plantNBT != null) {
-					    if(plantNBT.contains("plant_locked")) {
-						    this.setPlantLocked(plant, plantNBT.getBoolean("plant_locked"));
+					    if(plantNBT.contains("paz_locked")) {
+						    this.setPAZLocked(plant, plantNBT.getBoolean("paz_locked"));
 					    }
 					}
 				});
@@ -201,34 +201,34 @@ public class PlayerDataManager {
 			nbt.putInt("current_pos", this.emptySlot);
 			baseTag.put("card_inventory", nbt);
 		}
-		{// save plant level.
+		{// save plant & zombie level.
 			final CompoundNBT nbt = new CompoundNBT();
-			PlantType.getPlants().forEach(plant -> {
+			PVZAPI.get().getPAZs().forEach(plant -> {
 		        final CompoundNBT plantNBT = new CompoundNBT();
-				plantNBT.putInt("player_plant_lvl", this.getPlantLevel(plant));
-				plantNBT.putInt("player_plant_exp", this.getPlantXp(plant));
+				plantNBT.putInt("paz_lvl", this.getPAZLevel(plant));
+				plantNBT.putInt("paz_xp", this.getPAZXp(plant));
 				nbt.put(plant.getIdentity(), plantNBT);
 			});
-			baseTag.put("plant_level_info", nbt);
+			baseTag.put("paz_level_info", nbt);
 		}
-		{// save plant card cd.
+		{// save plant & zombie card cd.
 			final CompoundNBT nbt = new CompoundNBT();
-			for(PlantType plant : PlantType.getPlants()) {
+			PVZAPI.get().getPAZs().forEach(plant -> {
 				final CompoundNBT plantNBT = new CompoundNBT();
-				nbt.putInt("plant_card_cd", this.plantCardCD.get(plant));
-				nbt.putFloat("plant_card_bar", this.plantCardBar.get(plant));
+				nbt.putInt("paz_card_cd", this.pazCardCD.get(plant));
+				nbt.putFloat("paz_card_bar", this.pazCardBar.get(plant));
 				nbt.put(plant.getIdentity(), plantNBT);
-			}
-			baseTag.put("plant_card_item_cd", nbt);
+			});
+			baseTag.put("paz_card_item_cd", nbt);
 		}
-		{// save plant lock.
+		{// save plant & zombie lock.
 			final CompoundNBT nbt = new CompoundNBT();
-			for(PlantType plant : PlantType.getPlants()) {
+			PVZAPI.get().getPAZs().forEach(plant -> {
 				final CompoundNBT plantNBT = new CompoundNBT();
-				nbt.putBoolean("plant_locked", this.isPlantLocked(plant));
+				nbt.putBoolean("paz_locked", this.isPAZLocked(plant));
 				nbt.put(plant.getIdentity(), plantNBT);
-			}
-			baseTag.put("plant_locks", nbt);
+			});
+			baseTag.put("paz_locks", nbt);
 		}
 		otherStats.saveToNBT(baseTag);
 		return baseTag;
@@ -285,12 +285,12 @@ public class PlayerDataManager {
 			this.setCurrentPos(this.getCurrentPos());
 		}
 		{// plants level.
-			for (PlantType plant : PlantType.getPlants()) {
-		       this.sendPlantLevelPacket(player, plant);
+			for (IPlantType plant : PlantType.getPlants()) {
+		       this.sendPAZLevelPacket(player, plant);
 	        }
 		}
 		{// plant item cd.
-			for (PlantType plant : PlantType.getPlants()) {
+			for (IPlantType plant : PlantType.getPlants()) {
 			    if(plant.getSummonCard().isPresent()) {
 			        player.getCooldowns().addCooldown(plant.getSummonCard().get(), this.getPlantCardCD(plant));
 			    }
@@ -360,7 +360,6 @@ public class PlayerDataManager {
 	
 	/**
 	 * add tree xp and level up.
-	 * {@link #addPlayerStats(Resources, int)}
 	 */
 	private void addTreeXp(int now, int num) {
 		int lvl = resources.get(Resources.TREE_LVL);
@@ -452,56 +451,56 @@ public class PlayerDataManager {
 	 * Operation about Plant Level.
 	 */
 	
-	public void addPlantLevel(PlantType plant, int lvl){
-		lvl = MathHelper.clamp(this.getPlantLevel(plant) + lvl, 1, plant.getMaxLevel());
-		this.plantLevel.put(plant, lvl);
+	public void addPAZLevel(IPAZType plant, int lvl){
+		lvl = MathHelper.clamp(this.getPAZLevel(plant) + lvl, 1, plant.getMaxLevel());
+		this.pazLevel.put(plant, lvl);
 		PlantLevelTrigger.INSTANCE.trigger((ServerPlayerEntity) player, lvl);
-		this.sendPlantLevelPacket(player, plant);
+		this.sendPAZLevelPacket(player, plant);
 	}
 	
-	public void addPlantXp(PlantType plant, int num) {
+	public void addPAZXp(IPAZType plant, int num) {
 		final int maxLvl = plant.getMaxLevel();
-		int lvl = this.getPlantLevel(plant);
-		int xp = this.getPlantXp(plant) + num;
+		int lvl = this.getPAZLevel(plant);
+		int xp = this.getPAZXp(plant) + num;
 		if(num > 0) {
-			int needXp = PlantUtil.getPlantLevelUpXp(plant, lvl);
+			int needXp = PAZUtil.getPAZLevelUpXp(plant, lvl);
 			while(lvl < maxLvl && xp >= needXp) {
 				xp -= needXp;
-				this.addPlantLevel(plant, 1);
-				MinecraftForge.EVENT_BUS.post(new PlantLevelUpEvent(player, plant, ++ lvl));
-				needXp = PlantUtil.getPlantLevelUpXp(plant, lvl);
+				this.addPAZLevel(plant, 1);
+				MinecraftForge.EVENT_BUS.post(new PAZLevelUpEvent(player, plant, ++ lvl));
+				needXp = PAZUtil.getPAZLevelUpXp(plant, lvl);
 			}
 			if(lvl == maxLvl) xp = 0;
 		} else {
 			while(lvl > 1 && xp < 0) {
-				this.addPlantLevel(plant, - 1);
-				lvl = this.getPlantLevel(plant);
-				int needXp = PlantUtil.getPlantLevelUpXp(plant, lvl);
+				this.addPAZLevel(plant, - 1);
+				lvl = this.getPAZLevel(plant);
+				int needXp = PAZUtil.getPAZLevelUpXp(plant, lvl);
 				xp += needXp;
 			}
 			if(lvl == 1 && xp < 0) {
 				xp = 0;
 			}
 		}
-		this.plantXp.put(plant, xp);
-		this.sendPlantLevelPacket(player, plant);
+		this.pazXp.put(plant, xp);
+		this.sendPAZLevelPacket(player, plant);
 	}
 	
-	public int getPlantLevel(PlantType plant){
-		return this.plantLevel.get(plant);
+	public int getPAZLevel(IPAZType plant){
+		return this.pazLevel.get(plant);
 	}
 	
-	public int getPlantXp(PlantType plant){
-		return this.plantXp.get(plant);
+	public int getPAZXp(IPAZType plant){
+		return this.pazXp.get(plant);
 	}
 	
-	public void sendPlantLevelPacket(PlayerEntity player, PlantType plant){
+	public void sendPAZLevelPacket(PlayerEntity player, IPAZType plant){
 		if (player instanceof ServerPlayerEntity) {
 			PVZPacketHandler.CHANNEL.send(
 				PacketDistributor.PLAYER.with(()->{
 					return (ServerPlayerEntity) player;
 				}),
-				new PlantStatsPacket(plant.getId(), plantLevel.get(plant), plantXp.get(plant))
+				new PlantStatsPacket(plant.getIdentity(), pazLevel.get(plant), pazXp.get(plant))
 			);
 		}
 	}
@@ -510,36 +509,36 @@ public class PlayerDataManager {
 	 * Operation about plant card CD.
 	 */
 	
-	public void setPlantCardCD(PlantType plant, int tick) {
-		this.plantCardCD.put(plant, tick);
+	public void setPAZCardCD(IPAZType plant, int tick) {
+		this.pazCardCD.put(plant, tick);
 	}
 	
-	public int getPlantCardCoolDown(PlantType plant) {
-		return this.plantCardCD.get(plant);
+	public int getPAZCardCoolDown(IPAZType plant) {
+		return this.pazCardCD.get(plant);
 	}
 	
-	public void setPlantCardBar(PlantType plant, float bar) {
-		this.plantCardBar.put(plant, bar);
+	public void setPAZCardBar(IPAZType plant, float bar) {
+		this.pazCardBar.put(plant, bar);
 	}
 	
-	public float getPlantCardBarLength(PlantType plant) {
-		return this.plantCardBar.get(plant);
+	public float getPAZCardBarLength(IPAZType plant) {
+		return this.pazCardBar.get(plant);
 	}
 	
-	public int getPlantCardCD(PlantType plant) {
-		return (int) (this.plantCardBar.get(plant) * this.plantCardCD.get(plant));
+	public int getPlantCardCD(IPAZType plant) {
+		return (int) (this.pazCardBar.get(plant) * this.pazCardCD.get(plant));
 	}
 
 	/*
 	 * Operation about plant lock.
 	 */
 	
-	public void setPlantLocked(PlantType plant, boolean is) {
-		this.plantLocked.put(plant, is);
+	public void setPAZLocked(IPAZType plant, boolean is) {
+		this.pazLocked.put(plant, is);
 	}
 	
-	public boolean isPlantLocked(PlantType plant) {
-		return this.plantLocked.getOrDefault(plant, true);
+	public boolean isPAZLocked(IPAZType plant) {
+		return this.pazLocked.getOrDefault(plant, true);
 	}
 	
 	public final class OtherStats{

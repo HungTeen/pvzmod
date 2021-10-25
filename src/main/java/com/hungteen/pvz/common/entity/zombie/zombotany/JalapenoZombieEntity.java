@@ -1,23 +1,22 @@
 package com.hungteen.pvz.common.entity.zombie.zombotany;
 
-import com.hungteen.pvz.common.core.ZombieType;
 import com.hungteen.pvz.common.entity.plant.flame.JalapenoEntity;
+import com.hungteen.pvz.common.impl.ZombieType;
 import com.hungteen.pvz.common.impl.zombie.Zombotanies;
 import com.hungteen.pvz.data.loot.PVZLoot;
 import com.hungteen.pvz.register.EntityRegister;
 import com.hungteen.pvz.utils.EntityUtil;
 import com.hungteen.pvz.utils.ZombieUtil;
-
+import net.minecraft.entity.CreatureEntity;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.ai.attributes.Attributes;
-import net.minecraft.entity.monster.MonsterEntity;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.world.World;
 
 public class JalapenoZombieEntity extends AbstractZombotanyEntity {
 
-	public JalapenoZombieEntity(EntityType<? extends MonsterEntity> type, World worldIn) {
+	public JalapenoZombieEntity(EntityType<? extends CreatureEntity> type, World worldIn) {
 		super(type, worldIn);
 	}
 	
@@ -38,9 +37,9 @@ public class JalapenoZombieEntity extends AbstractZombotanyEntity {
 	public void startBomb() {
 		if(! level.isClientSide) {
 			JalapenoEntity jalapeno = EntityRegister.JALAPENO.get().create(level);
-			jalapeno.setImmunneToWeak(true);
+			jalapeno.setImmuneToWeak(true);
 			jalapeno.setCharmed(! this.isCharmed());
-			jalapeno.setPlantLvl(this.getZombieLevel());
+			jalapeno.setPAZLevel(this.getPAZLevel());
 			EntityUtil.onEntitySpawn(level, jalapeno, this.blockPosition().above());
 		}
 	}

@@ -1,6 +1,6 @@
 package com.hungteen.pvz.common.entity.plant.appease;
 
-import com.hungteen.pvz.common.core.PlantType;
+import com.hungteen.pvz.api.types.IPlantType;
 import com.hungteen.pvz.common.entity.bullet.AbstractBulletEntity;
 import com.hungteen.pvz.common.entity.bullet.StarEntity;
 import com.hungteen.pvz.common.entity.plant.base.PlantShooterEntity;
@@ -95,7 +95,7 @@ public class StarFruitEntity extends PlantShooterEntity {
 	}
 	
 	@Override
-	public PlantType getPlantType() {
+	public IPlantType getPlantType() {
 		return PVZPlants.STAR_FRUIT;
 	}
 	

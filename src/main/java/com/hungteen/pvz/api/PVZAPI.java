@@ -1,10 +1,15 @@
 package com.hungteen.pvz.api;
 
-import java.util.function.Supplier;
-
+import com.google.common.base.Suppliers;
+import com.hungteen.pvz.api.types.IPAZType;
+import com.hungteen.pvz.api.types.IPlantType;
+import com.hungteen.pvz.api.types.IZombieType;
 import org.apache.logging.log4j.LogManager;
 
-import com.google.common.base.Suppliers;
+import java.util.Collection;
+import java.util.List;
+import java.util.Optional;
+import java.util.function.Supplier;
 
 public class PVZAPI {
 	
@@ -26,6 +31,50 @@ public class PVZAPI {
 	}
 	
 	public interface IPVZAPI {
+
+		/* register stuffs */
+
+		/**
+		 * register single plant type.
+		 */
+		void registerPlantType(IPlantType type);
+		
+		/**
+		 * register plant type list.
+		 */
+		void registerPlantTypes(Collection<IPlantType> types);
+		
+		/**
+		 * register single zombie type.
+		 */
+		void registerZombieType(IZombieType type);
+		
+		/**
+		 * register zombie type list.
+		 */
+		void registerZombieTypes(Collection<IZombieType> types);
+
+		/* getting stuffs */
+
+		/**
+		 * get all registered plant types.
+		 */
+		List<IPlantType> getPlants();
+
+		/**
+		 * get all registered zombie types.
+		 */
+		List<IZombieType> getZombies();
+
+		/**
+		 * get all registered plant & zombie types.
+		 */
+		List<IPAZType> getPAZs();
+
+		/**
+		 * get type by specific identity.
+		 */
+		Optional<IPAZType> getTypeByID(String id);
 		
 	}
 	

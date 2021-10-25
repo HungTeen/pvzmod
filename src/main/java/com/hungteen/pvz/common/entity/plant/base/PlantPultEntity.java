@@ -99,7 +99,7 @@ public abstract class PlantPultEntity extends PVZPlantEntity implements IPult {
 	
 	@Override
 	public boolean shouldPult() {
-		return this.canPlantNormalUpdate();
+		return this.canNormalUpdate();
 	}
 	
 	@Override

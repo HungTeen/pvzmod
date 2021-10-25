@@ -1,22 +1,21 @@
 package com.hungteen.pvz.utils;
 
+import com.hungteen.pvz.PVZConfig;
+import com.hungteen.pvz.api.types.IZombieType;
+import com.hungteen.pvz.common.cache.InvasionCache;
+import com.hungteen.pvz.common.entity.zombie.PVZZombieEntity;
+import com.hungteen.pvz.common.entity.zombie.grass.DancingZombieEntity;
+import com.hungteen.pvz.common.impl.zombie.GrassZombies;
+import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.MathHelper;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-import com.hungteen.pvz.PVZConfig;
-import com.hungteen.pvz.common.cache.InvasionCache;
-import com.hungteen.pvz.common.core.ZombieType;
-import com.hungteen.pvz.common.entity.zombie.PVZZombieEntity;
-import com.hungteen.pvz.common.entity.zombie.grass.DancingZombieEntity;
-import com.hungteen.pvz.common.impl.zombie.GrassZombies;
-
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.MathHelper;
-
 public class ZombieUtil {
 	
-	public static final List<ZombieType> DEFAULT_ZOMBIES = new ArrayList<>(Arrays.asList(
+	public static final List<IZombieType> DEFAULT_ZOMBIES = new ArrayList<>(Arrays.asList(
 			GrassZombies.NORMAL_ZOMBIE, GrassZombies.CONEHEAD_ZOMBIE, GrassZombies.BUCKETHEAD_ZOMBIE, 
 			GrassZombies.SCREENDOOR_ZOMBIE, GrassZombies.NEWSPAPER_ZOMBIE));
 	

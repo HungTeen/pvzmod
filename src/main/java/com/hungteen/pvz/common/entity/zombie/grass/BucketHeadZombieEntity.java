@@ -1,15 +1,14 @@
 package com.hungteen.pvz.common.entity.zombie.grass;
 
 import com.hungteen.pvz.client.model.entity.zombie.grass.BucketHeadZombieModel;
-import com.hungteen.pvz.common.core.ZombieType;
+import com.hungteen.pvz.common.impl.ZombieType;
 import com.hungteen.pvz.common.impl.zombie.GrassZombies;
 import com.hungteen.pvz.data.loot.PVZLoot;
 import com.hungteen.pvz.register.SoundRegister;
 import com.hungteen.pvz.remove.MetalTypes;
 import com.hungteen.pvz.utils.interfaces.IHasMetal;
-
+import net.minecraft.entity.CreatureEntity;
 import net.minecraft.entity.EntityType;
-import net.minecraft.entity.monster.MonsterEntity;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.SoundEvent;
@@ -17,7 +16,7 @@ import net.minecraft.world.World;
 
 public class BucketHeadZombieEntity extends NormalZombieEntity implements IHasMetal{
 
-	public BucketHeadZombieEntity(EntityType<? extends MonsterEntity> type, World worldIn) {
+	public BucketHeadZombieEntity(EntityType<? extends CreatureEntity> type, World worldIn) {
 		super(type, worldIn);
 		this.hasDirectDefence = true;
 		this.increaseMetal();

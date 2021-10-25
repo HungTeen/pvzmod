@@ -1,20 +1,19 @@
 package com.hungteen.pvz.common.entity.zombie.other;
 
-import com.hungteen.pvz.common.core.ZombieType;
 import com.hungteen.pvz.common.entity.zombie.PVZZombieEntity;
 import com.hungteen.pvz.common.entity.zombie.grass.TombStoneEntity;
+import com.hungteen.pvz.common.impl.ZombieType;
 import com.hungteen.pvz.common.impl.zombie.CustomZombies;
 import com.hungteen.pvz.common.misc.damage.PVZDamageSource;
 import com.hungteen.pvz.data.loot.PVZLoot;
 import com.hungteen.pvz.register.EntityRegister;
 import com.hungteen.pvz.utils.EntityUtil;
 import com.hungteen.pvz.utils.ZombieUtil;
-
+import net.minecraft.entity.CreatureEntity;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.ai.attributes.Attributes;
-import net.minecraft.entity.monster.MonsterEntity;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.network.datasync.DataParameter;
 import net.minecraft.network.datasync.DataSerializers;
@@ -27,7 +26,7 @@ public class MournerZombieEntity extends PVZZombieEntity{
 	private static final DataParameter<Boolean> RIGHT_SHAKE = EntityDataManager.defineId(MournerZombieEntity.class, DataSerializers.BOOLEAN);
 	public static final int SHAKE_CD = 10;
 	
-	public MournerZombieEntity(EntityType<? extends MonsterEntity> type, World worldIn) {
+	public MournerZombieEntity(EntityType<? extends CreatureEntity> type, World worldIn) {
 		super(type, worldIn);
 		this.setRightShake(this.getRandom().nextInt(2) == 0 ? true : false);
 		this.maxDeathTime = 0;

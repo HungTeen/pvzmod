@@ -2,8 +2,8 @@ package com.hungteen.pvz.common.impl;
 
 import java.util.Random;
 
-import com.hungteen.pvz.common.core.BundleType;
-import com.hungteen.pvz.common.core.PlantType;
+import com.hungteen.pvz.api.types.IPlantType;
+import com.hungteen.pvz.common.impl.misc.BundleType;
 import com.hungteen.pvz.common.impl.plant.PVZPlants;
 
 import net.minecraft.item.ItemStack;
@@ -55,7 +55,7 @@ public final class Bundles extends BundleType {
 		@Override
 		public ItemStack getEnjoyCard(Random rand) {
 			final int pos = rand.nextInt(PlantType.size());
-			PlantType plant = PlantType.getPlants().get(pos);
+			final IPlantType plant = PlantType.getPlants().get(pos);
 			if(plant.getEnjoyCard().isPresent()) {
 				return new ItemStack(plant.getEnjoyCard().get());
 			}

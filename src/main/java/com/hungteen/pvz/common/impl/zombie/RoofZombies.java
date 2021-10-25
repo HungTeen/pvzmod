@@ -4,18 +4,19 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.hungteen.pvz.PVZMod;
+import com.hungteen.pvz.api.types.IZombieType;
 import com.hungteen.pvz.client.model.entity.zombie.roof.CatapultZombieModel;
 import com.hungteen.pvz.client.model.entity.zombie.roof.Edgar090505Model;
 import com.hungteen.pvz.client.model.entity.zombie.roof.GargantuarModel;
 import com.hungteen.pvz.client.model.entity.zombie.roof.ImpModel;
 import com.hungteen.pvz.client.model.entity.zombie.roof.LadderZombieModel;
-import com.hungteen.pvz.common.core.ZombieType;
 import com.hungteen.pvz.common.impl.Ranks;
+import com.hungteen.pvz.common.impl.ZombieType;
 import com.hungteen.pvz.register.EntityRegister;
 
 public final class RoofZombies extends ZombieType {
 
-	private static final List<ZombieType> LIST = new ArrayList<>();
+	private static final List<IZombieType> LIST = new ArrayList<>();
 	
 	/*
 	 * roof.

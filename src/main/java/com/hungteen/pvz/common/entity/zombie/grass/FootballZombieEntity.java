@@ -1,24 +1,23 @@
 package com.hungteen.pvz.common.entity.zombie.grass;
 
-import com.hungteen.pvz.common.core.ZombieType;
 import com.hungteen.pvz.common.entity.zombie.PVZZombieEntity;
+import com.hungteen.pvz.common.impl.ZombieType;
 import com.hungteen.pvz.common.impl.zombie.GrassZombies;
 import com.hungteen.pvz.data.loot.PVZLoot;
 import com.hungteen.pvz.remove.MetalTypes;
 import com.hungteen.pvz.utils.ZombieUtil;
 import com.hungteen.pvz.utils.interfaces.IHasMetal;
-
+import net.minecraft.entity.CreatureEntity;
 import net.minecraft.entity.EntitySize;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.Pose;
 import net.minecraft.entity.ai.attributes.Attributes;
-import net.minecraft.entity.monster.MonsterEntity;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.world.World;
 
 public class FootballZombieEntity extends PVZZombieEntity implements IHasMetal {
 
-	public FootballZombieEntity(EntityType<? extends MonsterEntity> type, World worldIn) {
+	public FootballZombieEntity(EntityType<? extends CreatureEntity> type, World worldIn) {
 		super(type, worldIn);
 		this.hasDirectDefence = true;
 		this.canLostHand = false;

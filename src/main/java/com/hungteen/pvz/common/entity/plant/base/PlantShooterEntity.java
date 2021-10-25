@@ -132,7 +132,7 @@ public abstract class PlantShooterEntity extends PVZPlantEntity implements IShoo
 	 * get shooter bullet attack damage.
 	 */
 	public float getAttackDamage() {
-		return MathUtil.getProgressAverage(getPlantLvl(), PlantUtil.MAX_PLANT_LEVEL, 1F, 4F);
+		return MathUtil.getProgressAverage(getPAZLevel(), PlantUtil.MAX_PLANT_LEVEL, 1F, 4F);
 	}
 	
 	@Override
@@ -179,7 +179,7 @@ public abstract class PlantShooterEntity extends PVZPlantEntity implements IShoo
 	 * {@link ShooterNearestTargetGoal#checkOther(LivingEntity)}
 	 */
 	public boolean canShoot() {
-		return this.canPlantNormalUpdate();
+		return this.canNormalUpdate();
 	}
 	
 	@Override

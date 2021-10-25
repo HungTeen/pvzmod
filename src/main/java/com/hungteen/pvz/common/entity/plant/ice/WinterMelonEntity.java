@@ -3,7 +3,7 @@ package com.hungteen.pvz.common.entity.plant.ice;
 import java.util.Optional;
 
 import com.hungteen.pvz.api.interfaces.IIceEffect;
-import com.hungteen.pvz.common.core.PlantType;
+import com.hungteen.pvz.api.types.IPlantType;
 import com.hungteen.pvz.common.entity.bullet.MelonEntity.MelonStates;
 import com.hungteen.pvz.common.entity.plant.arma.MelonPultEntity;
 import com.hungteen.pvz.common.impl.plant.PVZPlants;
@@ -44,7 +44,7 @@ public class WinterMelonEntity extends MelonPultEntity implements IIceEffect {
 	}
 	
 	@Override
-	public PlantType getPlantType() {
+	public IPlantType getPlantType() {
 		return PVZPlants.WINTER_MELON;
 	}
 

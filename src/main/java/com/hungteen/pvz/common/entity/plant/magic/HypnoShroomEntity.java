@@ -1,7 +1,7 @@
 package com.hungteen.pvz.common.entity.plant.magic;
 
 import com.hungteen.pvz.api.interfaces.ICanBeAttracted;
-import com.hungteen.pvz.common.core.PlantType;
+import com.hungteen.pvz.api.types.IPlantType;
 import com.hungteen.pvz.common.entity.ai.goal.misc.PlantAttractGoal;
 import com.hungteen.pvz.common.entity.plant.PVZPlantEntity;
 import com.hungteen.pvz.common.entity.zombie.PVZZombieEntity;
@@ -66,7 +66,7 @@ public class HypnoShroomEntity extends PVZPlantEntity implements ICanAttract{
 	@Override
 	public void die(DamageSource cause) {
 		super.die(cause);
-		if(! level.isClientSide && ! this.canPlantNormalUpdate()) {
+		if(! level.isClientSide && ! this.canNormalUpdate()) {
 			if(cause instanceof PVZDamageSource && ((PVZDamageSource) cause).isEatDamage()) {
 				if(this.isPlantInSuperMode()) {
 					if(cause.getEntity() != null) {
@@ -81,7 +81,7 @@ public class HypnoShroomEntity extends PVZPlantEntity implements ICanAttract{
 				} else {
 					if(cause.getEntity() instanceof PVZZombieEntity) {
 					    PVZZombieEntity zombie = (PVZZombieEntity) cause.getEntity();
-					    if(zombie.getZombieLevel() <= this.getPlantLvl()) {
+					    if(zombie.getPAZLevel() <= this.getPAZLevel()) {
 					        zombie.onCharmedBy(this);
 					        zombie.healZombie(EntityUtil.getCurrentMaxHealth(zombie) * this.getHealHealth());
 					        this.perfromCharmTo(zombie);
@@ -94,7 +94,7 @@ public class HypnoShroomEntity extends PVZPlantEntity implements ICanAttract{
 	
 	protected void perfromCharmTo(PVZZombieEntity zombie) {
 		EntityUtil.playSound(this, SoundRegister.CHARM.get());
-		zombie.updateZombieLevel(Math.min(ZombieUtil.MAX_ZOMBIE_LEVEL, this.getPlantLvl()));
+		zombie.updateZombieLevel(Math.min(ZombieUtil.MAX_ZOMBIE_LEVEL, this.getPAZLevel()));
 	}
 	
 	@Override
@@ -129,7 +129,7 @@ public class HypnoShroomEntity extends PVZPlantEntity implements ICanAttract{
 	}
 	
 	@Override
-	public PlantType getPlantType() {
+	public IPlantType getPlantType() {
 		return PVZPlants.HYPNO_SHROOM;
 	}
 

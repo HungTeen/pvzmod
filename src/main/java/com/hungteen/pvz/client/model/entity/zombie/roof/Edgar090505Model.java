@@ -1,8 +1,7 @@
 package com.hungteen.pvz.client.model.entity.zombie.roof;
 
-import com.hungteen.pvz.client.model.entity.zombie.IZombieModel;
-import com.hungteen.pvz.common.entity.zombie.body.ZombieDropBodyEntity;
-import com.hungteen.pvz.common.entity.zombie.body.ZombieDropBodyEntity.BodyType;
+import com.hungteen.pvz.api.IBodyEntity;
+import com.hungteen.pvz.api.IZombieModel;
 import com.hungteen.pvz.common.entity.zombie.roof.Edgar090505Entity;
 import com.hungteen.pvz.common.entity.zombie.roof.Edgar090505Entity.ZomBossStates;
 import com.hungteen.pvz.utils.AnimationUtil;
@@ -202,16 +201,16 @@ public class Edgar090505Model extends EntityModel<Edgar090505Entity> implements 
 	}
 
 	@Override
-	public void tickPartAnim(ZombieDropBodyEntity entity, BodyType type, float limbSwing, float limbSwingAmount,
+	public void tickPartAnim(IBodyEntity entity, float limbSwing, float limbSwingAmount,
 			float ageInTicks, float netHeadYaw, float headPitch) {
 		
 	}
 
 	@Override
-	public void renderBody(ZombieDropBodyEntity entity, MatrixStack stack, IVertexBuilder buffer, int packedLight,
-			int packedOverlay, BodyType type) {
+	public void renderBody(IBodyEntity entity, MatrixStack stack, IVertexBuilder buffer, int packedLight,
+			int packedOverlay) {
 		this.setAllInvis();
-		switch (type) {
+		switch (entity.getBodyType()) {
 		case LEFT_LEG:{
 			this.left_leg.visible = true;
 			this.left_leg.setPos(0, 24, 0);

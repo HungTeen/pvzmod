@@ -1,14 +1,14 @@
 package com.hungteen.pvz.common.item.material;
 
-import com.hungteen.pvz.common.core.RankType;
-import com.hungteen.pvz.common.item.PVZItemGroups;
+import com.hungteen.pvz.api.types.IRankType;
 import com.hungteen.pvz.common.item.PVZItemBase;
+import com.hungteen.pvz.common.item.PVZItemGroups;
 
 public class TemplateCardItem extends PVZItemBase {
 
-	public final RankType Rank;
+	public final IRankType Rank;
 	
-	public TemplateCardItem(RankType rank) {
+	public TemplateCardItem(IRankType rank) {
 		super(new Properties().tab(PVZItemGroups.PVZ_MISC));
 		this.Rank = rank;
 	}

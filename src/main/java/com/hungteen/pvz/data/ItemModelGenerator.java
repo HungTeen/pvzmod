@@ -1,17 +1,12 @@
 package com.hungteen.pvz.data;
 
-import java.util.Arrays;
-import java.util.HashSet;
-import java.util.Set;
-
 import com.hungteen.pvz.PVZMod;
-import com.hungteen.pvz.common.core.PlantType;
+import com.hungteen.pvz.api.types.IPlantType;
 import com.hungteen.pvz.common.item.misc.PVZSpawnEggItem;
 import com.hungteen.pvz.common.item.spawn.card.PlantCardItem;
 import com.hungteen.pvz.register.BlockRegister;
 import com.hungteen.pvz.register.ItemRegister;
 import com.hungteen.pvz.utils.StringUtil;
-
 import net.minecraft.block.Block;
 import net.minecraft.data.DataGenerator;
 import net.minecraft.item.BlockItem;
@@ -21,6 +16,10 @@ import net.minecraftforge.client.model.generators.ItemModelBuilder;
 import net.minecraftforge.client.model.generators.ItemModelProvider;
 import net.minecraftforge.common.data.ExistingFileHelper;
 import net.minecraftforge.registries.ForgeRegistries;
+
+import java.util.Arrays;
+import java.util.HashSet;
+import java.util.Set;
 
 public class ItemModelGenerator extends ItemModelProvider{
 
@@ -56,7 +55,7 @@ public class ItemModelGenerator extends ItemModelProvider{
 				addedItems.add(i);
 				getBuilder(i.getRegistryName().getPath()).parent(getExistingFile(new ResourceLocation("item/template_spawn_egg")));
 			} else if(i instanceof PlantCardItem) {//for plant cards
-				PlantType plant = ((PlantCardItem) i).plantType;
+				IPlantType plant = ((PlantCardItem) i).plantType;
 				ResourceLocation plantResource = new ResourceLocation(plant.getModID(), "screenshot/plant/" + plant.toString());
 				addedItems.add(i);
 				if(((PlantCardItem) i).isEnjoyCard) {

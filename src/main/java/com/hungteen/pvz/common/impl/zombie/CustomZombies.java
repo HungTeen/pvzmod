@@ -4,17 +4,18 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.hungteen.pvz.PVZMod;
+import com.hungteen.pvz.api.types.IZombieType;
 import com.hungteen.pvz.client.model.entity.zombie.other.MournerZombieModel;
 import com.hungteen.pvz.client.model.entity.zombie.other.NobleZombieModel;
 import com.hungteen.pvz.client.model.entity.zombie.other.TrickZombieModel;
 import com.hungteen.pvz.client.model.entity.zombie.pool.LavaZombieModel;
-import com.hungteen.pvz.common.core.ZombieType;
 import com.hungteen.pvz.common.impl.Ranks;
+import com.hungteen.pvz.common.impl.ZombieType;
 import com.hungteen.pvz.register.EntityRegister;
 
 public final class CustomZombies extends ZombieType {
 	
-	private static final List<ZombieType> LIST = new ArrayList<>();
+	private static final List<IZombieType> LIST = new ArrayList<>();
 	
 	/*
 	 * zombotany.

@@ -1,19 +1,18 @@
 package com.hungteen.pvz.common.entity.zombie.pool;
 
 import com.hungteen.pvz.PVZConfig;
-import com.hungteen.pvz.common.core.ZombieType;
 import com.hungteen.pvz.common.entity.drop.JewelEntity;
 import com.hungteen.pvz.common.entity.zombie.PVZZombieEntity;
+import com.hungteen.pvz.common.impl.ZombieType;
 import com.hungteen.pvz.common.impl.zombie.PoolZombies;
 import com.hungteen.pvz.register.EntityRegister;
 import com.hungteen.pvz.utils.EntityUtil;
 import com.hungteen.pvz.utils.ZombieUtil;
-
+import net.minecraft.entity.CreatureEntity;
 import net.minecraft.entity.EntitySize;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.Pose;
 import net.minecraft.entity.ai.attributes.Attributes;
-import net.minecraft.entity.monster.MonsterEntity;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.potion.EffectInstance;
 import net.minecraft.potion.Effects;
@@ -27,7 +26,7 @@ public class YetiZombieEntity extends PVZZombieEntity{
 	private int live_tick = 0;
 	private boolean hasInvis = false;
 	
-	public YetiZombieEntity(EntityType<? extends MonsterEntity> type, World worldIn) {
+	public YetiZombieEntity(EntityType<? extends CreatureEntity> type, World worldIn) {
 		super(type, worldIn);
 		this.canBeFrozen = false;
 	}

@@ -1,9 +1,9 @@
 package com.hungteen.pvz.client.render.entity.zombie.body;
 
+import com.hungteen.pvz.api.enums.BodyType;
+import com.hungteen.pvz.api.types.IZombieType;
 import com.hungteen.pvz.client.render.entity.zombie.PVZZombieRender;
-import com.hungteen.pvz.common.core.ZombieType;
 import com.hungteen.pvz.common.entity.zombie.body.ZombieDropBodyEntity;
-import com.hungteen.pvz.common.entity.zombie.body.ZombieDropBodyEntity.BodyType;
 import com.mojang.blaze3d.matrix.MatrixStack;
 import com.mojang.blaze3d.vertex.IVertexBuilder;
 
@@ -24,8 +24,8 @@ public class ZombieBodyRender extends EntityRenderer<ZombieDropBodyEntity> {
 	@Override
 	public void render(ZombieDropBodyEntity entityIn, float entityYaw, float partialTicks, MatrixStack matrixStackIn,
 			IRenderTypeBuffer bufferIn, int packedLightIn) {
-		ZombieType zombie = entityIn.getZombieType();
-		BodyType part = entityIn.getBodyType(); 
+		final IZombieType zombie = entityIn.getZombieType();
+		final BodyType part = entityIn.getBodyType(); 
 		matrixStackIn.pushPose();
 		matrixStackIn.mulPose(Vector3f.YP.rotationDegrees(MathHelper.lerp(partialTicks, entityIn.yRotO, entityIn.yRot) + 180.0F));
 		if(part != BodyType.BODY) {
@@ -42,14 +42,14 @@ public class ZombieBodyRender extends EntityRenderer<ZombieDropBodyEntity> {
 		if(part != BodyType.BODY) {
 			zombie.getZombieModel1().ifPresent(m -> {
 			    final IVertexBuilder ivertexbuilder = bufferIn.getBuffer(m.getZombieModel().renderType(zombie.getRenderResource()));
-			    m.tickPartAnim(entityIn, part, 0, 0, entityIn.tickCount + partialTicks, 0, 0);
-			    m.renderBody(entityIn, matrixStackIn, ivertexbuilder, packedLightIn, OverlayTexture.NO_OVERLAY, part);
+			    m.tickPartAnim(entityIn, 0, 0, entityIn.tickCount + partialTicks, 0, 0);
+			    m.renderBody(entityIn, matrixStackIn, ivertexbuilder, packedLightIn, OverlayTexture.NO_OVERLAY);
 			});
 		} else {
 			zombie.getZombieModel2().ifPresent(m -> {
 		        final IVertexBuilder ivertexbuilder = bufferIn.getBuffer(m.getZombieModel().renderType(zombie.getRenderResource()));
-		        m.tickPartAnim(entityIn, part, 0, 0, entityIn.tickCount + partialTicks, 0, 0);
-		        m.renderBody(entityIn, matrixStackIn, ivertexbuilder, packedLightIn, OverlayTexture.NO_OVERLAY, part);
+		        m.tickPartAnim(entityIn, 0, 0, entityIn.tickCount + partialTicks, 0, 0);
+		        m.renderBody(entityIn, matrixStackIn, ivertexbuilder, packedLightIn, OverlayTexture.NO_OVERLAY);
 		    });
 		}
 		matrixStackIn.popPose();

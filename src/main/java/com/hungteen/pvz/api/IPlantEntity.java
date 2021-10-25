@@ -1,10 +1,16 @@
 package com.hungteen.pvz.api;
 
-import com.hungteen.pvz.api.interfaces.ICanBeCharmed;
-import com.hungteen.pvz.api.interfaces.IGroupEntity;
-import com.hungteen.pvz.api.interfaces.IHasOwner;
-import com.hungteen.pvz.utils.interfaces.IHasMetal;
+import com.hungteen.pvz.api.types.IEssenceType;
 
-public interface IPlantEntity extends IHasOwner, IGroupEntity, ICanBeCharmed, IHasMetal {
+public interface IPlantEntity extends IPAZEntity {
 
+    /**
+     * place pumpkin on plant entity.
+     */
+    void setPumpkin(boolean is);
+
+    /**
+     * which essence does it belong to.
+     */
+    IEssenceType getPlantEssenceType();
 }

@@ -2,7 +2,7 @@ package com.hungteen.pvz.common.entity.plant.enforce;
 
 import java.util.EnumSet;
 
-import com.hungteen.pvz.common.core.PlantType;
+import com.hungteen.pvz.api.types.IPlantType;
 import com.hungteen.pvz.common.entity.ai.goal.target.PVZNearestTargetGoal;
 import com.hungteen.pvz.common.entity.plant.PVZPlantEntity;
 import com.hungteen.pvz.common.entity.zombie.pool.BalloonZombieEntity;
@@ -74,7 +74,7 @@ public class BonkChoyEntity extends PVZPlantEntity {
 	}
 	
 	@Override
-	public PlantType getPlantType() {
+	public IPlantType getPlantType() {
 		return OtherPlants.BONK_CHOY;
 	}
 	

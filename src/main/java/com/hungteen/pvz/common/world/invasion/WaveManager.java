@@ -1,19 +1,19 @@
 package com.hungteen.pvz.common.world.invasion;
 
-import javax.annotation.Nullable;
-
 import com.hungteen.pvz.PVZMod;
+import com.hungteen.pvz.api.types.IInvasionType;
+import com.hungteen.pvz.api.types.IZombieType;
 import com.hungteen.pvz.common.capability.CapabilityHandler;
 import com.hungteen.pvz.common.capability.player.PlayerDataManager;
 import com.hungteen.pvz.common.capability.player.PlayerDataManager.OtherStats;
-import com.hungteen.pvz.common.core.InvasionType;
-import com.hungteen.pvz.common.core.ZombieType;
 import com.hungteen.pvz.common.entity.zombie.PVZZombieEntity;
 import com.hungteen.pvz.common.entity.zombie.grass.TombStoneEntity;
 import com.hungteen.pvz.common.entity.zombie.roof.BungeeZombieEntity;
 import com.hungteen.pvz.common.entity.zombie.roof.BungeeZombieEntity.BungeeTypes;
 import com.hungteen.pvz.common.event.handler.PlayerEventHandler;
 import com.hungteen.pvz.common.impl.InvasionEvents;
+import com.hungteen.pvz.common.impl.ZombieType;
+import com.hungteen.pvz.common.impl.misc.InvasionType;
 import com.hungteen.pvz.common.impl.zombie.RoofZombies;
 import com.hungteen.pvz.common.network.PVZPacketHandler;
 import com.hungteen.pvz.common.network.toclient.OtherStatsPacket;
@@ -27,7 +27,6 @@ import com.hungteen.pvz.utils.PlayerUtil;
 import com.hungteen.pvz.utils.WorldUtil;
 import com.hungteen.pvz.utils.enums.Resources;
 import com.hungteen.pvz.utils.others.WeightList;
-
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.item.ItemStack;
@@ -44,6 +43,8 @@ import net.minecraft.world.gen.Heightmap;
 import net.minecraft.world.gen.Heightmap.Type;
 import net.minecraftforge.fml.network.PacketDistributor;
 
+import javax.annotation.Nullable;
+
 public class WaveManager {
 
 	private static final ITextComponent HUGE_WAVE = new TranslationTextComponent("event.pvz.huge_wave").withStyle(TextFormatting.DARK_RED);
@@ -53,7 +54,7 @@ public class WaveManager {
 	private final int currentWave;
 	private final PlayerEntity player;
 	private final BlockPos center;
-	private final WeightList<ZombieType> spawnList = new WeightList<>();
+	private final WeightList<IZombieType> spawnList = new WeightList<>();
 	private static final int[] SPAWN_COUNT_EACH_WAVE = new int[] {20, 30, 40, 50, 60};
 	public int spawnCnt = 0;
 	protected boolean spawned = false;
@@ -241,7 +242,7 @@ public class WaveManager {
 	 */
 	private static ItemStack getRandomItemForPlayer(World world) {
 		PVZInvasionData data = PVZInvasionData.getOverWorldInvasionData(world);
-		for(InvasionType ev : InvasionType.getInvasionEvents()) {
+		for(IInvasionType ev : InvasionType.getInvasionEvents()) {
 			if(data.hasEvent(ev)) {
 				return ev.getBundle().getEnjoyCard(world.getRandom());
 			}
@@ -282,7 +283,7 @@ public class WaveManager {
 	 * @param zombie the type of spawned zombie.
 	 * @param pos position of the spawn center.
 	 */
-	private void spawnZombie(ZombieType zombie, BlockPos pos, int radius) {
+	private void spawnZombie(IZombieType zombie, BlockPos pos, int radius) {
 		final BlockPos blockPos = WorldUtil.getSuitableHeightRandomPos(world, pos, radius);
 		zombie.getEntityType().ifPresent(l -> {
 			EntityUtil.onEntitySpawn(world, l.create(world), blockPos.above());
@@ -319,7 +320,7 @@ public class WaveManager {
 	 */
 	private void updateSpawns() {
 		PVZInvasionData data = PVZInvasionData.getOverWorldInvasionData(world);
-		for(ZombieType zombie : ZombieType.getZombies()) {
+		for(IZombieType zombie : ZombieType.getZombies()) {
 			if(data.hasZombieSpawnEntry(zombie) && zombie.getWaveWeight() > 0) {
 				this.spawnList.addItem(zombie, zombie.getWaveWeight());
 			}

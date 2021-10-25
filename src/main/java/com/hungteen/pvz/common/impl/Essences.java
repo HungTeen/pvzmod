@@ -2,7 +2,7 @@ package com.hungteen.pvz.common.impl;
 
 import java.util.List;
 
-import com.hungteen.pvz.common.core.EssenceType;
+import com.hungteen.pvz.common.impl.misc.EssenceType;
 import com.hungteen.pvz.register.ItemRegister;
 
 public class Essences {

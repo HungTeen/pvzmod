@@ -1,26 +1,25 @@
 package com.hungteen.pvz.common.entity.zombie.other;
 
-import java.util.HashSet;
-import java.util.Set;
-
-import com.hungteen.pvz.common.core.ZombieType;
 import com.hungteen.pvz.common.entity.drop.DropEntity.DropStates;
 import com.hungteen.pvz.common.entity.drop.SunEntity;
 import com.hungteen.pvz.common.entity.zombie.PVZZombieEntity;
+import com.hungteen.pvz.common.impl.ZombieType;
 import com.hungteen.pvz.common.impl.zombie.OtherZombies;
 import com.hungteen.pvz.data.loot.PVZLoot;
 import com.hungteen.pvz.utils.EntityUtil;
 import com.hungteen.pvz.utils.MathUtil;
 import com.hungteen.pvz.utils.ZombieUtil;
-
+import net.minecraft.entity.CreatureEntity;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.ai.attributes.Attributes;
-import net.minecraft.entity.monster.MonsterEntity;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.SoundEvents;
 import net.minecraft.util.math.vector.Vector3d;
 import net.minecraft.world.World;
+
+import java.util.HashSet;
+import java.util.Set;
 
 public class RaZombieEntity extends PVZZombieEntity {
 
@@ -32,7 +31,7 @@ public class RaZombieEntity extends PVZZombieEntity {
 	private int sunAmount = 0;
 	private final double MaxSearchRange = 20;
 
-	public RaZombieEntity(EntityType<? extends MonsterEntity> type, World worldIn) {
+	public RaZombieEntity(EntityType<? extends CreatureEntity> type, World worldIn) {
 		super(type, worldIn);
 	}
 

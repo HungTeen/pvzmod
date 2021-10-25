@@ -5,13 +5,8 @@ import com.hungteen.pvz.common.entity.zombie.PVZZombieEntity;
 import com.hungteen.pvz.common.impl.plant.PVZPlants;
 import com.hungteen.pvz.common.item.spawn.card.PlantCardItem;
 import com.hungteen.pvz.utils.others.WeightList;
-
-import net.minecraft.entity.EntitySize;
-import net.minecraft.entity.EntityType;
-import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.Pose;
+import net.minecraft.entity.*;
 import net.minecraft.entity.ai.attributes.Attributes;
-import net.minecraft.entity.monster.MonsterEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ActionResultType;
@@ -24,7 +19,7 @@ import net.minecraft.world.World;
 
 public abstract class AbstractTombStoneEntity extends PVZZombieEntity {
 
-	public AbstractTombStoneEntity(EntityType<? extends MonsterEntity> type, World worldIn) {
+	public AbstractTombStoneEntity(EntityType<? extends CreatureEntity> type, World worldIn) {
 		super(type, worldIn);
 		this.setImmuneAllEffects();
 		this.setIsWholeBody();

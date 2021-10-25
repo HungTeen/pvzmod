@@ -1,6 +1,6 @@
 package com.hungteen.pvz.common.entity.plant.light;
 
-import com.hungteen.pvz.common.core.PlantType;
+import com.hungteen.pvz.api.types.IPlantType;
 import com.hungteen.pvz.common.entity.drop.SunEntity;
 import com.hungteen.pvz.common.entity.plant.base.PlantProducerEntity;
 import com.hungteen.pvz.common.impl.plant.PVZPlants;
@@ -72,10 +72,10 @@ public class SunShroomEntity extends PlantProducerEntity {
 	 */
 	public int getSunAmountInStage(int stage){
 		if(stage == 1) {
-			return this.getPlantLvl() <= 15 ? 15 : 25;
+			return this.getPAZLevel() <= 15 ? 15 : 25;
 		}
 		if(stage == 2) {
-			return this.getPlantLvl() <= 5 ? 25 : this.getPlantLvl() <= 10 ? 35 : 50;
+			return this.getPAZLevel() <= 5 ? 25 : this.getPAZLevel() <= 10 ? 35 : 50;
 		}
 		return 75;
 	}
@@ -106,7 +106,7 @@ public class SunShroomEntity extends PlantProducerEntity {
 	}
 	
 	@Override
-	public PlantType getPlantType() {
+	public IPlantType getPlantType() {
 		return PVZPlants.SUN_SHROOM;
 	}
 

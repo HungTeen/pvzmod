@@ -1,6 +1,6 @@
 package com.hungteen.pvz.common.entity.plant.defence;
 
-import com.hungteen.pvz.common.core.PlantType;
+import com.hungteen.pvz.api.types.IPlantType;
 import com.hungteen.pvz.common.entity.plant.base.PlantDefenderEntity;
 import com.hungteen.pvz.common.impl.plant.CustomPlants;
 
@@ -44,7 +44,7 @@ public class WaterGuardEntity extends PlantDefenderEntity{
 	}
 
 	@Override
-	public PlantType getPlantType() {
+	public IPlantType getPlantType() {
 		return CustomPlants.WATER_GUARD;
 	}
 

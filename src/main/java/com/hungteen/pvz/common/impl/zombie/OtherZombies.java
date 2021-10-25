@@ -4,14 +4,15 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.hungteen.pvz.PVZMod;
+import com.hungteen.pvz.api.types.IZombieType;
 import com.hungteen.pvz.client.model.entity.zombie.other.RaZombieModel;
-import com.hungteen.pvz.common.core.ZombieType;
 import com.hungteen.pvz.common.impl.Ranks;
+import com.hungteen.pvz.common.impl.ZombieType;
 import com.hungteen.pvz.register.EntityRegister;
 
 public final class OtherZombies extends ZombieType {
 
-	private static final List<ZombieType> LIST = new ArrayList<>();
+	private static final List<IZombieType> LIST = new ArrayList<>();
 	
 	/*
 	 * egypt.

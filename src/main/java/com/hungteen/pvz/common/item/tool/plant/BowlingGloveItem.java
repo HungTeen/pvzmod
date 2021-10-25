@@ -1,16 +1,12 @@
 package com.hungteen.pvz.common.item.tool.plant;
 
-import java.util.List;
-import java.util.Optional;
-
+import com.hungteen.pvz.api.types.IPlantType;
 import com.hungteen.pvz.client.render.itemstack.BowlingGloveISTER;
-import com.hungteen.pvz.common.core.PlantType;
 import com.hungteen.pvz.common.entity.misc.bowling.AbstractBowlingEntity;
 import com.hungteen.pvz.common.entity.plant.PVZPlantEntity;
 import com.hungteen.pvz.common.impl.plant.PVZPlants;
 import com.hungteen.pvz.common.item.PVZItemGroups;
 import com.hungteen.pvz.register.EntityRegister;
-
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.SpawnReason;
@@ -30,6 +26,9 @@ import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraft.world.World;
 import net.minecraft.world.server.ServerWorld;
 
+import java.util.List;
+import java.util.Optional;
+
 public class BowlingGloveItem extends Item {
 
 	public static final String BOWLING_STRING = "bowling_type";
@@ -45,10 +44,10 @@ public class BowlingGloveItem extends Item {
 		Hand hand = context.getHand();
 		ItemStack stack = player.getItemInHand(hand);
 		BlockPos pos = context.getClickedPos();
-		Optional<PlantType> plantType = getBowlingType(stack);
+		Optional<IPlantType> plantType = getBowlingType(stack);
 		if (!plantType.isPresent())
 			return ActionResultType.FAIL;
-		PlantType plant = plantType.get();
+		IPlantType plant = plantType.get();
 		BlockPos spawnPos = pos;
 		if (!world.getBlockState(pos).getCollisionShape(world, pos).isEmpty()) {
 			spawnPos = pos.relative(context.getClickedFace());
@@ -82,32 +81,32 @@ public class BowlingGloveItem extends Item {
 		plantEntity.remove();
 	}
 
-	private static EntityType<? extends AbstractBowlingEntity> getEntityTypeByPlant(PlantType plant) {
+	private static EntityType<? extends AbstractBowlingEntity> getEntityTypeByPlant(IPlantType plant) {
 		if(plant == PVZPlants.WALL_NUT) return EntityRegister.WALL_NUT_BOWLING.get();
 		if(plant == PVZPlants.EXPLODE_O_NUT) return EntityRegister.EXPLOSION_BOWLING.get();
 		if (plant == PVZPlants.GIANT_WALL_NUT) return EntityRegister.GIANT_NUT_BOWLING.get();
 		return null;
 	}
 
-	public static Optional<PlantType> getBowlingType(ItemStack stack) {
+	public static Optional<IPlantType> getBowlingType(ItemStack stack) {
 		int type = stack.getOrCreateTag().getInt(BOWLING_STRING);
 		return getPlantTypeForBowling(type);
 	}
 
-	public static ItemStack setBowlingType(ItemStack stack, PlantType plant) {
+	public static ItemStack setBowlingType(ItemStack stack, IPlantType plant) {
 		stack.getOrCreateTag().putInt(BOWLING_STRING, getBowlingTypeForPlants(plant));
 		return stack;
 	}
 
-	public static int getBowlingTypeForPlants(PlantType plant) {
+	public static int getBowlingTypeForPlants(IPlantType plant) {
 		if (plant == PVZPlants.WALL_NUT) return 1;
 		if (plant == PVZPlants.EXPLODE_O_NUT) return 2;
 		if (plant == PVZPlants.GIANT_WALL_NUT) return 3;
 		return -1;
 	}
 
-	public static Optional<PlantType> getPlantTypeForBowling(int type) {
-		PlantType res = null;
+	public static Optional<IPlantType> getPlantTypeForBowling(int type) {
+		IPlantType res = null;
 		if (type == 1) res = PVZPlants.WALL_NUT;
 		else if (type == 2) res = PVZPlants.EXPLODE_O_NUT;
 		else if (type == 3) res = PVZPlants.GIANT_WALL_NUT;
@@ -126,9 +125,9 @@ public class BowlingGloveItem extends Item {
 	
 	@Override
 	public void appendHoverText(ItemStack stack, World worldIn, List<ITextComponent> tooltip, ITooltipFlag flagIn) {
-		Optional<PlantType> plant = getBowlingType(stack);
+		Optional<IPlantType> plant = getBowlingType(stack);
 		if(plant.isPresent()) {
-			PlantType p = plant.get();
+			IPlantType p = plant.get();
 			tooltip.add(new TranslationTextComponent("tooltip.pvz.bowling_glove." + p.toString().toLowerCase()).withStyle(TextFormatting.GOLD));
 		} else {
 			tooltip.add(new TranslationTextComponent("tooltip.pvz.bowling_glove.empty").withStyle(TextFormatting.GOLD));

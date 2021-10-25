@@ -2,9 +2,9 @@ package com.hungteen.pvz.client.model.entity.zombie.pool;
 
 import java.util.Optional;
 
+import com.hungteen.pvz.api.IBodyEntity;
+import com.hungteen.pvz.api.enums.BodyType;
 import com.hungteen.pvz.client.model.entity.zombie.PVZZombieModel;
-import com.hungteen.pvz.common.entity.zombie.body.ZombieDropBodyEntity;
-import com.hungteen.pvz.common.entity.zombie.body.ZombieDropBodyEntity.BodyType;
 import com.hungteen.pvz.common.entity.zombie.pool.JackInBoxZombieEntity;
 import com.mojang.blaze3d.matrix.MatrixStack;
 import com.mojang.blaze3d.vertex.IVertexBuilder;
@@ -158,13 +158,13 @@ public class JackInBoxZombieModel extends PVZZombieModel<JackInBoxZombieEntity> 
 	}
 	
 	@Override
-	public void renderBody(ZombieDropBodyEntity entity, MatrixStack stack, IVertexBuilder buffer, int packedLight,
-			int packedOverlay, BodyType type) {
-		if(type == BodyType.HAND) {
+	public void renderBody(IBodyEntity entity, MatrixStack stack, IVertexBuilder buffer, int packedLight,
+			int packedOverlay) {
+		if(entity.getBodyType() == BodyType.HAND) {
 			this.box.visible = false;
 		}
 		this.jack.visible = false;
-		super.renderBody(entity, stack, buffer, packedLight, packedOverlay, type);
+		super.renderBody(entity, stack, buffer, packedLight, packedOverlay);
 	}
 	
 	@Override

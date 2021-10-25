@@ -1,22 +1,21 @@
 package com.hungteen.pvz.common.entity.zombie.grass;
 
-import java.util.EnumSet;
-import java.util.Optional;
-
-import com.hungteen.pvz.common.core.ZombieType;
 import com.hungteen.pvz.common.entity.zombie.PVZZombieEntity;
+import com.hungteen.pvz.common.impl.ZombieType;
 import com.hungteen.pvz.common.impl.zombie.GrassZombies;
 import com.hungteen.pvz.utils.EntityUtil;
 import com.hungteen.pvz.utils.MathUtil;
 import com.hungteen.pvz.utils.ZombieUtil;
-
+import net.minecraft.entity.CreatureEntity;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.ai.attributes.Attributes;
 import net.minecraft.entity.ai.goal.Goal;
-import net.minecraft.entity.monster.MonsterEntity;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.world.World;
+
+import java.util.EnumSet;
+import java.util.Optional;
 
 public class BackupDancerEntity extends PVZZombieEntity{
 
@@ -26,7 +25,7 @@ public class BackupDancerEntity extends PVZZombieEntity{
 	private static final int MAX_REST_CD = 300;
 	private int restTick = 0;
 	
-	public BackupDancerEntity(EntityType<? extends MonsterEntity> type, World worldIn) {
+	public BackupDancerEntity(EntityType<? extends CreatureEntity> type, World worldIn) {
 		super(type, worldIn);
 		this.canCollideWithZombie = false;
 	}

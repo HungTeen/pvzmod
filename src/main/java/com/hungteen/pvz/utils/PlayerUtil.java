@@ -1,22 +1,16 @@
 package com.hungteen.pvz.utils;
 
-import java.util.List;
-import java.util.Optional;
-
-import javax.annotation.Nullable;
-
 import com.hungteen.pvz.api.enums.PVZGroupType;
+import com.hungteen.pvz.api.types.IPlantType;
 import com.hungteen.pvz.client.gui.search.SearchOption;
 import com.hungteen.pvz.common.capability.CapabilityHandler;
 import com.hungteen.pvz.common.capability.player.IPlayerDataCapability;
 import com.hungteen.pvz.common.capability.player.PlayerDataManager;
-import com.hungteen.pvz.common.core.PlantType;
 import com.hungteen.pvz.common.item.spawn.card.PlantCardItem;
 import com.hungteen.pvz.common.network.PVZPacketHandler;
 import com.hungteen.pvz.common.network.toclient.AlmanacUnLockPacket;
 import com.hungteen.pvz.common.network.toclient.PlaySoundPacket;
 import com.hungteen.pvz.utils.enums.Resources;
-
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.item.ItemStack;
@@ -28,6 +22,10 @@ import net.minecraft.util.text.StringTextComponent;
 import net.minecraft.world.World;
 import net.minecraftforge.common.util.FakePlayer;
 import net.minecraftforge.fml.network.PacketDistributor;
+
+import javax.annotation.Nullable;
+import java.util.List;
+import java.util.Optional;
 
 public class PlayerUtil {
 
@@ -107,41 +105,41 @@ public class PlayerUtil {
 		}
 	}
 	
-	public static void addPlantLvl(PlayerEntity player, PlantType plant, int num) {
+	public static void addPlantLvl(PlayerEntity player, IPlantType plant, int num) {
 		if(isValidPlayer(player)) {
 		    player.getCapability(CapabilityHandler.PLAYER_DATA_CAPABILITY).ifPresent(l -> {
-			    l.getPlayerData().addPlantLevel(plant, num);
+			    l.getPlayerData().addPAZLevel(plant, num);
 		    });
 		}
 	}
 	
-	public static int getPlantLvl(PlayerEntity player, PlantType plant) {
+	public static int getPlantLvl(PlayerEntity player, IPlantType plant) {
 		final PlayerDataManager manager = getManager(player);
-		return manager != null ? manager.getPlantLevel(plant) : 1;
+		return manager != null ? manager.getPAZLevel(plant) : 1;
 	}
 	
-	public static void addPlantXp(PlayerEntity player, PlantType plant, int num) {
+	public static void addPlantXp(PlayerEntity player, IPlantType plant, int num) {
 		if(isValidPlayer(player)) {
 		    player.getCapability(CapabilityHandler.PLAYER_DATA_CAPABILITY).ifPresent((l)->{
-			    l.getPlayerData().addPlantXp(plant, num);
+			    l.getPlayerData().addPAZXp(plant, num);
 		    });
 		}
 	}
 	
 	public static void setCardCD(PlayerEntity player, PlantCardItem card, int cd) {
 		player.getCapability(CapabilityHandler.PLAYER_DATA_CAPABILITY).ifPresent(l -> {
-			l.getPlayerData().setPlantCardCD(card.plantType, cd);
+			l.getPlayerData().setPAZCardCD(card.plantType, cd);
 		});
 		player.getCooldowns().addCooldown(card, cd);
 	}
 	
-	public static void setPlantLocked(PlayerEntity player, PlantType plant, boolean is) {
-		Optional.ofNullable(getManager(player)).ifPresent(l -> l.setPlantLocked(plant, is));
+	public static void setPlantLocked(PlayerEntity player, IPlantType plant, boolean is) {
+		Optional.ofNullable(getManager(player)).ifPresent(l -> l.setPAZLocked(plant, is));
 	}
 	
-	public static boolean isPlantLocked(PlayerEntity player, PlantType plant) {
+	public static boolean isPlantLocked(PlayerEntity player, IPlantType plant) {
 		final PlayerDataManager manager = getManager(player);
-		return manager != null ? manager.isPlantLocked(plant) : true;
+		return manager != null ? manager.isPAZLocked(plant) : true;
 	}
 	
 	public static void unLockAlmanac(PlayerEntity player, SearchOption a) {
@@ -160,7 +158,7 @@ public class PlayerUtil {
 			return true;
 		}
 		if(a.isPlant() && a.getPlant().get().getSummonCard().isPresent()) {
-			PlantType plant = a.getPlant().get();
+			final IPlantType plant = a.getPlant().get();
 			int amount = player.getStats().getValue(Stats.ITEM_USED.get(plant.getSummonCard().get()));
 			return amount > 0;
 		}

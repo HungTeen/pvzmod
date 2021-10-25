@@ -221,9 +221,9 @@ public class EntityUtil {
 	 */
 	public static int getEntityLevel(LivingEntity entity) {
 		if(entity instanceof PVZZombieEntity) {
-			return ((PVZZombieEntity) entity).getZombieLevel();
+			return ((PVZZombieEntity) entity).getPAZLevel();
 		} else if(entity instanceof PVZPlantEntity) {
-			return ((PVZPlantEntity) entity).getPlantLvl();
+			return ((PVZPlantEntity) entity).getPAZLevel();
 		}
 		return 0;
 	}

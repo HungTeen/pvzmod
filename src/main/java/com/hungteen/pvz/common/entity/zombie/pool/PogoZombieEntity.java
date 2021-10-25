@@ -1,9 +1,9 @@
 package com.hungteen.pvz.common.entity.zombie.pool;
 
-import com.hungteen.pvz.common.core.PlantType;
-import com.hungteen.pvz.common.core.ZombieType;
+import com.hungteen.pvz.api.types.IPlantType;
 import com.hungteen.pvz.common.entity.plant.PVZPlantEntity;
 import com.hungteen.pvz.common.entity.zombie.PVZZombieEntity;
+import com.hungteen.pvz.common.impl.ZombieType;
 import com.hungteen.pvz.common.impl.plant.PVZPlants;
 import com.hungteen.pvz.common.impl.zombie.PoolZombies;
 import com.hungteen.pvz.register.SoundRegister;
@@ -12,9 +12,8 @@ import com.hungteen.pvz.utils.EntityUtil;
 import com.hungteen.pvz.utils.MathUtil;
 import com.hungteen.pvz.utils.interfaces.ICanAttract;
 import com.hungteen.pvz.utils.interfaces.IHasMetal;
-
+import net.minecraft.entity.CreatureEntity;
 import net.minecraft.entity.EntityType;
-import net.minecraft.entity.monster.MonsterEntity;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.network.datasync.DataParameter;
 import net.minecraft.network.datasync.DataSerializers;
@@ -26,7 +25,7 @@ public class PogoZombieEntity extends PVZZombieEntity implements IHasMetal {
 	private static final DataParameter<Boolean> HAS_POGO = EntityDataManager.defineId(PogoZombieEntity.class, DataSerializers.BOOLEAN);
 	private static final int JUMP_CD = 10;
 	
-	public PogoZombieEntity(EntityType<? extends MonsterEntity> type, World worldIn) {
+	public PogoZombieEntity(EntityType<? extends CreatureEntity> type, World worldIn) {
 		super(type, worldIn);
 	}
 	
@@ -57,7 +56,7 @@ public class PogoZombieEntity extends PVZZombieEntity implements IHasMetal {
 	@Override
 	public boolean canBeAttractedBy(ICanAttract defender) {
 		if(defender instanceof PVZPlantEntity) {
-			final PlantType plant = ((PVZPlantEntity) defender).getPlantType();
+			final IPlantType plant = ((PVZPlantEntity) defender).getPlantType();
 			return plant == PVZPlants.TALL_NUT || plant == PVZPlants.GIANT_WALL_NUT;
 		}
 		return true;
@@ -98,7 +97,7 @@ public class PogoZombieEntity extends PVZZombieEntity implements IHasMetal {
 	}
 	
 	@Override
-	public boolean canBeButter() {
+	public boolean canBeButtered() {
 		return ! this.hasPogo();
 	}
 	

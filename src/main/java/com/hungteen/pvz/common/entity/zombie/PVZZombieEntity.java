@@ -1,18 +1,13 @@
 package com.hungteen.pvz.common.entity.zombie;
 
-import java.util.List;
-import java.util.Optional;
-import java.util.UUID;
-
 import com.hungteen.pvz.PVZConfig;
+import com.hungteen.pvz.api.IZombieEntity;
+import com.hungteen.pvz.api.enums.BodyType;
 import com.hungteen.pvz.api.enums.PVZGroupType;
-import com.hungteen.pvz.api.interfaces.ICanBeAttracted;
-import com.hungteen.pvz.api.interfaces.ICanBeCharmed;
-import com.hungteen.pvz.api.interfaces.IGroupEntity;
-import com.hungteen.pvz.api.interfaces.IHasOwner;
+import com.hungteen.pvz.api.types.IPAZType;
 import com.hungteen.pvz.client.particle.ParticleUtil;
 import com.hungteen.pvz.common.advancement.trigger.CharmZombieTrigger;
-import com.hungteen.pvz.common.core.ZombieType;
+import com.hungteen.pvz.common.entity.AbstractPAZEntity;
 import com.hungteen.pvz.common.entity.ai.goal.PVZLookRandomlyGoal;
 import com.hungteen.pvz.common.entity.ai.goal.PVZSwimGoal;
 import com.hungteen.pvz.common.entity.ai.goal.ZombieBreakPlantBlockGoal;
@@ -29,18 +24,15 @@ import com.hungteen.pvz.common.entity.plant.enforce.SquashEntity;
 import com.hungteen.pvz.common.entity.plant.magic.HypnoShroomEntity;
 import com.hungteen.pvz.common.entity.plant.spear.SpikeWeedEntity;
 import com.hungteen.pvz.common.entity.zombie.body.ZombieDropBodyEntity;
-import com.hungteen.pvz.common.entity.zombie.body.ZombieDropBodyEntity.BodyType;
 import com.hungteen.pvz.common.entity.zombie.roof.BungeeZombieEntity;
 import com.hungteen.pvz.common.event.PVZLivingEvents;
 import com.hungteen.pvz.common.impl.InvasionEvents;
+import com.hungteen.pvz.common.impl.ZombieType;
 import com.hungteen.pvz.common.misc.damage.PVZDamageSource;
 import com.hungteen.pvz.common.world.data.PVZInvasionData;
 import com.hungteen.pvz.data.loot.PVZLoot;
-import com.hungteen.pvz.register.BlockRegister;
-import com.hungteen.pvz.register.EffectRegister;
-import com.hungteen.pvz.register.EntityRegister;
-import com.hungteen.pvz.register.ItemRegister;
-import com.hungteen.pvz.register.SoundRegister;
+import com.hungteen.pvz.register.*;
+import com.hungteen.pvz.remove.MetalTypes;
 import com.hungteen.pvz.utils.AlgorithmUtil;
 import com.hungteen.pvz.utils.ConfigUtil;
 import com.hungteen.pvz.utils.EntityUtil;
@@ -48,18 +40,11 @@ import com.hungteen.pvz.utils.ZombieUtil;
 import com.hungteen.pvz.utils.interfaces.ICanAttract;
 import com.hungteen.pvz.utils.others.WeightList;
 import com.mojang.datafixers.util.Pair;
-
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
 import net.minecraft.enchantment.EnchantmentHelper;
-import net.minecraft.entity.Entity;
-import net.minecraft.entity.EntitySize;
-import net.minecraft.entity.EntityType;
-import net.minecraft.entity.ILivingEntityData;
-import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.Pose;
-import net.minecraft.entity.SpawnReason;
+import net.minecraft.entity.*;
 import net.minecraft.entity.ai.attributes.AttributeModifierMap;
 import net.minecraft.entity.ai.attributes.Attributes;
 import net.minecraft.entity.ai.goal.RandomWalkingGoal;
@@ -79,25 +64,21 @@ import net.minecraft.pathfinding.PathNavigator;
 import net.minecraft.pathfinding.PathNodeType;
 import net.minecraft.potion.EffectInstance;
 import net.minecraft.potion.Effects;
-import net.minecraft.server.management.PreYggdrasilConverter;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.SoundEvent;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.vector.Vector3d;
-import net.minecraft.world.DifficultyInstance;
-import net.minecraft.world.GameRules;
-import net.minecraft.world.IServerWorld;
-import net.minecraft.world.IWorldReader;
-import net.minecraft.world.LightType;
-import net.minecraft.world.World;
+import net.minecraft.world.*;
 import net.minecraftforge.event.entity.living.LivingDamageEvent;
 
-public abstract class PVZZombieEntity extends MonsterEntity implements IHasOwner, IGroupEntity, ICanBeCharmed, ICanBeAttracted{
+import java.util.List;
+import java.util.Optional;
+
+public abstract class PVZZombieEntity extends AbstractPAZEntity implements IZombieEntity {
 
 	private static final DataParameter<Integer> ZOMBIE_TYPE = EntityDataManager.defineId(PVZZombieEntity.class, DataSerializers.INT);
-	private static final DataParameter<Optional<UUID>> OWNER_UUID = EntityDataManager.defineId(PVZZombieEntity.class, DataSerializers.OPTIONAL_UUID);
 	private static final DataParameter<Integer> ZOMBIE_STATES = EntityDataManager.defineId(PVZZombieEntity.class, DataSerializers.INT);
 	private static final DataParameter<Integer> ATTACK_TIME = EntityDataManager.defineId(PVZZombieEntity.class, DataSerializers.INT);
     //negative means rising, positive means perform attack animation.
@@ -115,14 +96,6 @@ public abstract class PVZZombieEntity extends MonsterEntity implements IHasOwner
 	protected boolean hasDirectDefence = false;
 	public boolean canCollideWithZombie = true;
 	protected boolean canSpawnDrop = true;
-	protected boolean canBeCold = true;
-	protected boolean canBeFrozen = true;
-	protected boolean canBeCharm = true;
-	protected boolean canBeButter = true;
-	protected boolean canBeMini = true;
-	protected boolean canBeInvis = true;
-	protected boolean canBeStealByBungee = true;
-	protected boolean canBeRemove = true;
 	protected boolean canLostHand = true;
 	protected boolean canLostHead = true;
 	protected boolean canHelpAttack = true;
@@ -130,7 +103,7 @@ public abstract class PVZZombieEntity extends MonsterEntity implements IHasOwner
 	protected int climbUpTick = 0;
 	protected int maxClimbUpTick = 5;
 
-	public PVZZombieEntity(EntityType<? extends MonsterEntity> type, World worldIn) {
+	public PVZZombieEntity(EntityType<? extends CreatureEntity> type, World worldIn) {
 		super(type, worldIn);
 		this.refreshDimensions();
 		this.xpReward = (int) (this.getZombieXp() * 2);
@@ -147,11 +120,9 @@ public abstract class PVZZombieEntity extends MonsterEntity implements IHasOwner
 	protected void defineSynchedData() {
 		super.defineSynchedData();
 		entityData.define(ZOMBIE_TYPE, VariantType.NORMAL.ordinal());
-		entityData.define(OWNER_UUID, Optional.empty());
 		entityData.define(ZOMBIE_STATES, 0);
 		entityData.define(ATTACK_TIME, 0);
 		entityData.define(DEFENCE_LIFE, 0f);
-		entityData.define(ZOMBIE_LEVEL, 1);
 		entityData.define(ANIM_TIME, 0);
 	}
 	
@@ -212,7 +183,7 @@ public abstract class PVZZombieEntity extends MonsterEntity implements IHasOwner
 			});
 			/*just test */
 			//set its spawn level
-			this.setZombieLevel(ZombieUtil.caculateZombieLevel(this));
+			this.setPAZLevel(ZombieUtil.caculateZombieLevel(this));
 			/*end test */
 			this.updateAttributes();
 			if(this.needRising) {// rising from dirt.
@@ -225,7 +196,7 @@ public abstract class PVZZombieEntity extends MonsterEntity implements IHasOwner
 				if (! this.needRising && this.canBeMini() && data.hasEvent(InvasionEvents.MINI)) {
 					this.onZombieBeMini();
 				}
-				if (this.canBeInvis() && data.hasEvent(InvasionEvents.INVIS)) {
+				if (this.canBeInvisible() && data.hasEvent(InvasionEvents.INVIS)) {
 					this.addEffect(new EffectInstance(Effects.INVISIBILITY, 1000000, 10, false, false));
 				}
 			}
@@ -314,8 +285,8 @@ public abstract class PVZZombieEntity extends MonsterEntity implements IHasOwner
 	}
 	
 	public void updateZombieLevel(int lvl) {
-		if(this.getZombieLevel() != lvl) {//level changed.
-			this.setZombieLevel(lvl);
+		if(this.getPAZLevel() != lvl) {//level changed.
+			this.setPAZLevel(lvl);
 		}
 	}
 	
@@ -327,7 +298,7 @@ public abstract class PVZZombieEntity extends MonsterEntity implements IHasOwner
 	}
 
 	/**
-	 * trigger at {@link #hurt()}
+	 * trigger at {@link #hurt(DamageSource, float)}
 	 */
 	private void onLostHand(DamageSource source) {
 		this.lostHand(true);
@@ -337,7 +308,7 @@ public abstract class PVZZombieEntity extends MonsterEntity implements IHasOwner
 	}
 	
 	/**
-	 * trigger at {@link #hurt()}
+	 * trigger at {@link #hurt(DamageSource, float)}
 	 */
 	private void onLostHead(DamageSource source) {
 		this.lostHead(true);
@@ -407,7 +378,7 @@ public abstract class PVZZombieEntity extends MonsterEntity implements IHasOwner
 	 * get how many percent of health will be resist.
 	 */
 	public float getHurtReduction() {
-		int lvl = this.getZombieLevel();
+		int lvl = this.getPAZLevel();
 		final float inc = 0.2F;
 		return (lvl >= 20) ? 0.2F : 1.0F / (1 + inc * (lvl - 1));
 	}
@@ -545,7 +516,6 @@ public abstract class PVZZombieEntity extends MonsterEntity implements IHasOwner
 
 	/**
 	 * check can zombie set target as attackTarget.
-	 * {@link EntityUtil#canEntityTarget(Entity, Entity)}
 	 */
 	public boolean checkCanZombieTarget(Entity target) {
 		return EntityUtil.checkCanEntityBeTarget(this, target) && this.canZombieTarget(target);
@@ -553,14 +523,13 @@ public abstract class PVZZombieEntity extends MonsterEntity implements IHasOwner
 	
 	/**
 	 * check can zombie attack target.
-	 * {@link EntityUtil#canEntityAttack(Entity, Entity)}
 	 */
 	public boolean checkCanZombieAttack(Entity target) {
 		return EntityUtil.checkCanEntityBeAttack(this, target) && this.canZombieTarget(target);
 	}
 	
 	/**
-	 * can zombie be target by living, often use for plant's target.
+	 * can zombie be targeted by living, often use for plant's target.
 	 * {@link PVZPlantEntity#canPlantTarget(Entity)}
 	 */
 	public boolean canBeTargetBy(LivingEntity living) {
@@ -583,7 +552,6 @@ public abstract class PVZZombieEntity extends MonsterEntity implements IHasOwner
 	/**
 	 * plant block are consider as group 1, so zombie will break them.
 	 * {@link ZombieBreakPlantBlockGoal#canZombieContinue()}
-	 * {@link LilyPadBlock#entityInside(net.minecraft.block.BlockState, World, BlockPos, Entity)
 	 */
 	public boolean canBreakPlantBlock() {
 		return ! this.isCharmed();
@@ -915,7 +883,7 @@ public abstract class PVZZombieEntity extends MonsterEntity implements IHasOwner
 		if (effect.getEffect() == EffectRegister.FROZEN_EFFECT.get() && !this.canBeFrozen()) {
 			return;
 		}
-		if (effect.getEffect() == EffectRegister.BUTTER_EFFECT.get() && !this.canBeButter()) {
+		if (effect.getEffect() == EffectRegister.BUTTER_EFFECT.get() && !this.canBeButtered()) {
 			return;
 		}
 		this.addEffect(effect);
@@ -982,7 +950,7 @@ public abstract class PVZZombieEntity extends MonsterEntity implements IHasOwner
 	 * it will not be affect by any effects.
 	 */
 	public void setImmuneAllEffects() {
-		this.canBeButter = false;
+		this.canBeButtered = false;
 		this.canBeCold = false;
 		this.canBeFrozen = false;
 	}
@@ -997,30 +965,6 @@ public abstract class PVZZombieEntity extends MonsterEntity implements IHasOwner
 	
 	/* misc get */
 
-	public boolean canBeButter() {
-		return this.canBeButter;
-	}
-
-	public boolean canBeCharmed() {
-		return this.canBeCharm;
-	}
-
-	public boolean canBeFrozen() {
-		return this.canBeFrozen && !this.isInWaterOrBubble() && !this.isInLava();
-	}
-
-	public boolean canBeMini() {
-		return this.canBeMini;
-	}
-
-	public boolean canBeInvis() {
-		return this.canBeInvis;
-	}
-
-	public boolean canBeCold() {
-		return this.canBeCold;
-	}
-
 	public boolean canBeStealByBungee() {
 		return this.canBeStealByBungee;
 	}
@@ -1032,7 +976,27 @@ public abstract class PVZZombieEntity extends MonsterEntity implements IHasOwner
 	public boolean canLostHead() {
 		return this.canLostHead;
 	}
-	
+
+	@Override
+	public boolean hasMetal() {
+		return false;
+	}
+
+	@Override
+	public void decreaseMetal() {
+
+	}
+
+	@Override
+	public void increaseMetal() {
+
+	}
+
+	@Override
+	public MetalTypes getMetalType() {
+		return MetalTypes.EMPTY;
+	}
+
 	/**
 	 * {@link #damageZombieDefence(LivingDamageEvent)}
 	 */
@@ -1080,7 +1044,12 @@ public abstract class PVZZombieEntity extends MonsterEntity implements IHasOwner
 	public float getZombieXp() {
 		return this.getZombieType().getXp();
 	}
-	
+
+	@Override
+	public IPAZType getPAZType() {
+		return this.getZombieType();
+	}
+
 	/**
 	 * relate to zombie type.
 	 */
@@ -1101,7 +1070,7 @@ public abstract class PVZZombieEntity extends MonsterEntity implements IHasOwner
 		return super.getHurtSound(damageSourceIn);
 	}
 	
-	protected Optional<SoundEvent> getSpawnSound() {
+	public Optional<SoundEvent> getSpawnSound() {
 		if(this.needRising) {//if zombie is rising from dirt.
 			return Optional.ofNullable(SoundRegister.DIRT_RISE.get());
 		}
@@ -1121,15 +1090,10 @@ public abstract class PVZZombieEntity extends MonsterEntity implements IHasOwner
 	public void addAdditionalSaveData(CompoundNBT compound) {
 		super.addAdditionalSaveData(compound);
 		compound.putInt("zombie_type", this.getVariantType().ordinal());
-		if (this.getOwnerUUID().isPresent()) {
-			compound.putUUID("OwnerUUID", this.getOwnerUUID().get());
-		}
 		compound.putInt("zombie_states_flag", this.getZombieStates());
 		compound.putInt("zombie_attack_time", this.getAttackTime());
 		compound.putInt("zombie_anim_time", this.getAnimTime());
 		compound.putFloat("defence_life", this.getDefenceLife());
-		compound.putInt("zombie_level", this.getZombieLevel());
-		compound.putInt("exist_tick", this.tickCount);
 	}
 
 	@Override
@@ -1137,20 +1101,6 @@ public abstract class PVZZombieEntity extends MonsterEntity implements IHasOwner
 		super.readAdditionalSaveData(compound);
 		if (compound.contains("zombie_type")) {
 			this.setZombieType(VariantType.values()[compound.getInt("zombie_type")]);
-		}
-		// owner UUID
-		UUID uuid;
-		if (compound.hasUUID("OwnerUUID")) {
-			uuid = compound.getUUID("OwnerUUID");
-		} else {
-			String s1 = compound.getString("OwnerUUID");
-			uuid = PreYggdrasilConverter.convertMobOwnerIfNecessary(this.getServer(), s1);
-		}
-		if (uuid != null) {
-			try {
-				this.setOwnerUUID(uuid);
-			} catch (Throwable var4) {
-			}
 		}
 		if (compound.contains("zombie_states_flag")) {
 			this.setZombieStates(compound.getInt("zombie_states_flag"));
@@ -1164,21 +1114,9 @@ public abstract class PVZZombieEntity extends MonsterEntity implements IHasOwner
 		if (compound.contains("defence_life")) {
 			this.setDefenceLife(compound.getFloat("defence_life"));
 		}
-		if(compound.contains("zombie_level")) {
-			this.setZombieLevel(compound.getInt("zombie_level"));
-		}
-		this.tickCount = compound.getInt("exist_tick");
 	}
 	
 	/* getter setter */
-	
-	public int getZombieLevel() {
-		return entityData.get(ZOMBIE_LEVEL);
-	}
-
-	public void setZombieLevel(int level) {
-		entityData.set(ZOMBIE_LEVEL, level);
-	}
 	
 	public int getAttackTime() {
 		return entityData.get(ATTACK_TIME);
@@ -1210,15 +1148,6 @@ public abstract class PVZZombieEntity extends MonsterEntity implements IHasOwner
 
 	public void setDefenceLife(float life) {
 		entityData.set(DEFENCE_LIFE, life);
-	}
-
-	@Override
-	public Optional<UUID> getOwnerUUID() {
-		return entityData.get(OWNER_UUID);
-	}
-	
-	public void setOwnerUUID(UUID uuid) {
-		this.entityData.set(OWNER_UUID, Optional.ofNullable(uuid));
 	}
 	
 	public VariantType getVariantType() {

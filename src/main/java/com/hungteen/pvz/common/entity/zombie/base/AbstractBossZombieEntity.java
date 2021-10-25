@@ -5,12 +5,11 @@ import com.hungteen.pvz.common.entity.zombie.PVZZombieEntity;
 import com.hungteen.pvz.common.misc.damage.PVZDamageSource;
 import com.hungteen.pvz.utils.EntityUtil;
 import com.hungteen.pvz.utils.ZombieUtil;
-
+import net.minecraft.entity.CreatureEntity;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.ai.attributes.Attributes;
-import net.minecraft.entity.monster.MonsterEntity;
 import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.SoundEvent;
@@ -32,12 +31,13 @@ public abstract class AbstractBossZombieEntity extends PVZZombieEntity {
 	protected int nearbyZombieCount = 0;
 	private int noTargetTick = 0;
 	
-	public AbstractBossZombieEntity(EntityType<? extends MonsterEntity> type, World worldIn) {
+	public AbstractBossZombieEntity(EntityType<? extends CreatureEntity> type, World worldIn) {
 		super(type, worldIn);
 		this.canCollideWithZombie = false;
+		this.canBeCharm = false;
 		this.setImmuneAllEffects();
 		this.canBeMini = false;
-		this.canBeInvis = false;
+		this.canBeInvisible = false;
 		this.canBeStealByBungee = false;
 		this.canBeRemove = false;
 	}
@@ -58,9 +58,9 @@ public abstract class AbstractBossZombieEntity extends PVZZombieEntity {
 				this.nearbyPlantCount = this.getNearbyPlantCount();
 			    this.nearbyZombieCount = this.getNearbyPlantCount();
 			    if(this.isCharmed()) {
-			    	this.setZombieLevel(MathHelper.clamp((this.nearbyZombieCount - 15) / 5, 1, ZombieUtil.MAX_ZOMBIE_LEVEL));
+			    	this.setPAZLevel(MathHelper.clamp((this.nearbyZombieCount - 15) / 5, 1, ZombieUtil.MAX_ZOMBIE_LEVEL));
 			    } else {
-			    	this.setZombieLevel(MathHelper.clamp((this.nearbyPlantCount - 15) / 5, 1, ZombieUtil.MAX_ZOMBIE_LEVEL));
+			    	this.setPAZLevel(MathHelper.clamp((this.nearbyPlantCount - 15) / 5, 1, ZombieUtil.MAX_ZOMBIE_LEVEL));
 			    }
 			}
 			this.kickEnemiesNearby();
@@ -123,7 +123,7 @@ public abstract class AbstractBossZombieEntity extends PVZZombieEntity {
 	public void onBossSummon(PVZZombieEntity zombie, BlockPos pos) {
 		ZombieUtil.copySummonZombieData(this, zombie);
 		EntityUtil.onEntitySpawn(this.level, zombie, pos);
-		zombie.setZombieLevel(this.getZombieLevel());
+		zombie.setPAZLevel(this.getPAZLevel());
 	}
 	
 	protected int getNearbyPlantCount() {

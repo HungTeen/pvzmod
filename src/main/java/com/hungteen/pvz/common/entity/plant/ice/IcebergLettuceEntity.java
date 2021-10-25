@@ -3,8 +3,8 @@ package com.hungteen.pvz.common.entity.plant.ice;
 import java.util.Optional;
 
 import com.hungteen.pvz.api.interfaces.IIceEffect;
+import com.hungteen.pvz.api.types.IPlantType;
 import com.hungteen.pvz.common.advancement.trigger.EntityEffectAmountTrigger;
-import com.hungteen.pvz.common.core.PlantType;
 import com.hungteen.pvz.common.entity.plant.base.PlantCloserEntity;
 import com.hungteen.pvz.common.impl.plant.OtherPlants;
 import com.hungteen.pvz.common.misc.damage.PVZDamageSource;
@@ -82,7 +82,7 @@ public class IcebergLettuceEntity extends PlantCloserEntity implements IIceEffec
 	}
     
     public int getColdLevel() {
-    	return MathUtil.getProgressByDif(5, 1, this.getPlantLvl(), PlantUtil.MAX_PLANT_LEVEL, 4, 7);
+    	return MathUtil.getProgressByDif(5, 1, this.getPAZLevel(), PlantUtil.MAX_PLANT_LEVEL, 4, 7);
     }
     
     public int getColdDuration() {
@@ -99,7 +99,7 @@ public class IcebergLettuceEntity extends PlantCloserEntity implements IIceEffec
 	}
 	
 	@Override
-	public PlantType getPlantType() {
+	public IPlantType getPlantType() {
 		return OtherPlants.ICEBERG_LETTUCE;
 	}
 

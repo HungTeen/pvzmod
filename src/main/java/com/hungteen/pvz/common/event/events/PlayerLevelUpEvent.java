@@ -1,7 +1,6 @@
 package com.hungteen.pvz.common.event.events;
 
-import com.hungteen.pvz.common.core.PlantType;
-
+import com.hungteen.pvz.api.types.IPAZType;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraftforge.event.entity.player.PlayerEvent;
 
@@ -26,11 +25,11 @@ public class PlayerLevelUpEvent extends PlayerEvent {
 		
 	}
 	
-	public static class PlantLevelUpEvent extends PlayerLevelUpEvent {
+	public static class PAZLevelUpEvent extends PlayerLevelUpEvent {
 
-		public final PlantType plant;
+		public final IPAZType plant;
 		
-		public PlantLevelUpEvent(PlayerEntity player, PlantType plant, int lvl) {
+		public PAZLevelUpEvent(PlayerEntity player, IPAZType plant, int lvl) {
 			super(player, lvl);
 			this.plant = plant;
 		}

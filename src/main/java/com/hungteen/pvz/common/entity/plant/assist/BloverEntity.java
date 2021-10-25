@@ -1,6 +1,6 @@
 package com.hungteen.pvz.common.entity.plant.assist;
 
-import com.hungteen.pvz.common.core.PlantType;
+import com.hungteen.pvz.api.types.IPlantType;
 import com.hungteen.pvz.common.entity.plant.base.PlantBomberEntity;
 import com.hungteen.pvz.common.entity.zombie.pool.BalloonZombieEntity;
 import com.hungteen.pvz.common.impl.plant.PVZPlants;
@@ -21,6 +21,8 @@ import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.util.SoundEvent;
 import net.minecraft.util.math.vector.Vector3d;
 import net.minecraft.world.World;
+
+import java.util.Optional;
 
 public class BloverEntity extends PlantBomberEntity {
 
@@ -69,8 +71,8 @@ public class BloverEntity extends PlantBomberEntity {
 	}
 	
 	@Override
-	public SoundEvent getSpawnSound() {
-		return SoundRegister.BLOVER.get();
+	public Optional<SoundEvent> getSpawnSound() {
+		return Optional.ofNullable(SoundRegister.BLOVER.get());
 	}
 	
 	public float getAttackDamage(){
@@ -92,7 +94,7 @@ public class BloverEntity extends PlantBomberEntity {
 	}
 
 	@Override
-	public PlantType getPlantType() {
+	public IPlantType getPlantType() {
 		return PVZPlants.BLOVER;
 	}
 

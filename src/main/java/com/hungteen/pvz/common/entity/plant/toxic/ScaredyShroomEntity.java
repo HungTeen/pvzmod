@@ -1,6 +1,6 @@
 package com.hungteen.pvz.common.entity.plant.toxic;
 
-import com.hungteen.pvz.common.core.PlantType;
+import com.hungteen.pvz.api.types.IPlantType;
 import com.hungteen.pvz.common.entity.bullet.AbstractBulletEntity;
 import com.hungteen.pvz.common.entity.bullet.itembullet.SporeEntity;
 import com.hungteen.pvz.common.entity.plant.base.PlantShooterEntity;
@@ -100,7 +100,7 @@ public class ScaredyShroomEntity extends PlantShooterEntity {
 	}
 	
 	public float getScareDistance() {
-		return MathUtil.getProgressByDif(4, -1, this.getPlantLvl(), PlantUtil.MAX_PLANT_LEVEL, 5, 1);
+		return MathUtil.getProgressByDif(4, -1, this.getPAZLevel(), PlantUtil.MAX_PLANT_LEVEL, 5, 1);
 	}
 	
 	@Override
@@ -153,7 +153,7 @@ public class ScaredyShroomEntity extends PlantShooterEntity {
     }
     
     @Override
-	public PlantType getPlantType() {
+	public IPlantType getPlantType() {
 		return PVZPlants.SCAREDY_SHROOM;
 	}
 

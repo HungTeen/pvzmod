@@ -1,23 +1,16 @@
 package com.hungteen.pvz.common.item.spawn.card;
 
-import java.util.List;
-import java.util.Optional;
-import java.util.function.Consumer;
-
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
-
+import com.hungteen.pvz.api.types.ICoolDown;
+import com.hungteen.pvz.api.types.IPlantType;
 import com.hungteen.pvz.client.render.itemstack.ImitaterCardISTER;
 import com.hungteen.pvz.common.container.ImitaterContainer;
 import com.hungteen.pvz.common.container.inventory.ItemInventory;
-import com.hungteen.pvz.common.core.ICoolDown;
-import com.hungteen.pvz.common.core.PlantType;
 import com.hungteen.pvz.common.entity.plant.magic.ImitaterEntity;
+import com.hungteen.pvz.common.impl.PlantType;
 import com.hungteen.pvz.common.impl.plant.PVZPlants;
 import com.hungteen.pvz.common.item.PVZItemGroups;
 import com.hungteen.pvz.utils.PlayerUtil;
 import com.mojang.datafixers.util.Pair;
-
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.enchantment.Enchantment;
 import net.minecraft.entity.player.PlayerEntity;
@@ -46,6 +39,12 @@ import net.minecraftforge.fml.network.NetworkHooks;
 import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.IItemHandler;
 import net.minecraftforge.items.wrapper.InvWrapper;
+
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
+import java.util.List;
+import java.util.Optional;
+import java.util.function.Consumer;
 
 public class ImitaterCardItem extends PlantCardItem {
 
@@ -129,7 +128,7 @@ public class ImitaterCardItem extends PlantCardItem {
 	}
 	
 	public boolean isPlantTypeEqual(ItemStack stack, PlantType tmp) {
-		Optional<PlantType> opt = getImitatePlantType(stack);
+		Optional<IPlantType> opt = getImitatePlantType(stack);
 		return opt.isPresent() && opt.get() == tmp;
 	}
 	
@@ -156,7 +155,7 @@ public class ImitaterCardItem extends PlantCardItem {
 		return inv != null ? Pair.of(stack, inv.getItem(0)) : Pair.of(stack, stack);
 	}
 	
-	public static Optional<PlantType> getImitatePlantType(ItemStack stack) {
+	public static Optional<IPlantType> getImitatePlantType(ItemStack stack) {
 		final Inventory inv = getInventory(stack);
 		if(inv != null) {
 			final ItemStack itemstack = getInventory(stack).getItem(0);
@@ -177,7 +176,7 @@ public class ImitaterCardItem extends PlantCardItem {
 			tooltip.add(new TranslationTextComponent("tooltip.pvz.imitater_card.enjoy_card").withStyle(TextFormatting.RED));
 			return ;
 		}
-		Optional<PlantType> opt = getImitatePlantType(stack);
+		Optional<IPlantType> opt = getImitatePlantType(stack);
 		if(! opt.isPresent()) {
 			tooltip.add(new TranslationTextComponent("tooltip.pvz.imitater_card.empty").withStyle(TextFormatting.RED));
 		} else {

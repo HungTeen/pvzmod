@@ -1,10 +1,8 @@
 package com.hungteen.pvz.common.entity.zombie.pool;
 
-import java.util.Optional;
-
-import com.hungteen.pvz.common.core.ZombieType;
 import com.hungteen.pvz.common.entity.ai.navigator.ZombiePathNavigator;
 import com.hungteen.pvz.common.entity.zombie.PVZZombieEntity;
+import com.hungteen.pvz.common.impl.ZombieType;
 import com.hungteen.pvz.common.impl.zombie.PoolZombies;
 import com.hungteen.pvz.common.misc.damage.PVZDamageSource;
 import com.hungteen.pvz.data.loot.PVZLoot;
@@ -12,13 +10,12 @@ import com.hungteen.pvz.register.SoundRegister;
 import com.hungteen.pvz.utils.EntityUtil;
 import com.hungteen.pvz.utils.ZombieUtil;
 import com.hungteen.pvz.utils.interfaces.ICanAttract;
-
+import net.minecraft.entity.CreatureEntity;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.ai.attributes.Attributes;
 import net.minecraft.entity.ai.controller.FlyingMovementController;
 import net.minecraft.entity.ai.controller.MovementController;
-import net.minecraft.entity.monster.MonsterEntity;
 import net.minecraft.entity.projectile.ArrowEntity;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.network.datasync.DataParameter;
@@ -32,6 +29,8 @@ import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.SoundEvent;
 import net.minecraft.world.World;
 
+import java.util.Optional;
+
 public class BalloonZombieEntity extends PVZZombieEntity {
 
 	private static final DataParameter<Boolean> HAS_BALLOON = EntityDataManager.defineId(BalloonZombieEntity.class, DataSerializers.BOOLEAN);
@@ -40,7 +39,7 @@ public class BalloonZombieEntity extends PVZZombieEntity {
 	private PathNavigator FlyNavigator;
 	private PathNavigator GroundNavigator;
 	
-	public BalloonZombieEntity(EntityType<? extends MonsterEntity> type, World worldIn) {
+	public BalloonZombieEntity(EntityType<? extends CreatureEntity> type, World worldIn) {
 		super(type, worldIn);
 		this.updateBalloonState(true);
 	}
@@ -136,7 +135,7 @@ public class BalloonZombieEntity extends PVZZombieEntity {
 	}
 	
 	@Override
-	public boolean canBeButter() {
+	public boolean canBeButtered() {
 		return ! this.hasBalloon();
 	}
 	
@@ -165,7 +164,7 @@ public class BalloonZombieEntity extends PVZZombieEntity {
 	}
 	
 	@Override
-	protected Optional<SoundEvent> getSpawnSound() {
+	public Optional<SoundEvent> getSpawnSound() {
 		return Optional.ofNullable(SoundRegister.BALLOON_FULL.get());
 	}
 	

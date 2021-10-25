@@ -1,21 +1,16 @@
 package com.hungteen.pvz.common.entity.zombie.pool;
 
-import com.hungteen.pvz.common.core.ZombieType;
 import com.hungteen.pvz.common.entity.ai.goal.target.PVZRandomTargetGoal;
 import com.hungteen.pvz.common.entity.zombie.PVZZombieEntity;
+import com.hungteen.pvz.common.impl.ZombieType;
 import com.hungteen.pvz.common.impl.zombie.PoolZombies;
 import com.hungteen.pvz.data.loot.PVZLoot;
 import com.hungteen.pvz.remove.MetalTypes;
 import com.hungteen.pvz.utils.ZombieUtil;
 import com.hungteen.pvz.utils.interfaces.ICanAttract;
 import com.hungteen.pvz.utils.interfaces.IHasMetal;
-
-import net.minecraft.entity.EntitySize;
-import net.minecraft.entity.EntityType;
-import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.Pose;
+import net.minecraft.entity.*;
 import net.minecraft.entity.ai.attributes.Attributes;
-import net.minecraft.entity.monster.MonsterEntity;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.network.datasync.DataParameter;
 import net.minecraft.network.datasync.DataSerializers;
@@ -30,7 +25,7 @@ public class DiggerZombieEntity extends PVZZombieEntity implements IHasMetal {
 	private static final DataParameter<Boolean> HAS_PICKAXE = EntityDataManager.defineId(DiggerZombieEntity.class, DataSerializers.BOOLEAN);
 	public static final int MAX_OUT_TIME = 30;
 	
-	public DiggerZombieEntity(EntityType<? extends MonsterEntity> type, World worldIn) {
+	public DiggerZombieEntity(EntityType<? extends CreatureEntity> type, World worldIn) {
 		super(type, worldIn);
 	}
 	

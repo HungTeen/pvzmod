@@ -1,6 +1,5 @@
 package com.hungteen.pvz.utils;
 
-import com.hungteen.pvz.common.core.PlantType;
 import com.hungteen.pvz.common.entity.plant.PVZPlantEntity;
 
 public class PlantUtil {
@@ -17,31 +16,20 @@ public class PlantUtil {
 	public static final int MAX_PLANT_LEVEL = 20;
 	public static final float PUMPKIN_LIFE = 400;
 	public static final float PUMPKIN_SUPER_LIFE = 400;
-	
-	public static int getPlantLevelUpXp(PlantType plant, int lvl){
-		if(lvl == plant.getMaxLevel()) {
-			return 999999999;
-		}
-		if(lvl <= 18) {
-			int now = (lvl - 1) / 2;
-			return 10 + 5 * now;
-		}
-		return 60;
-	}
-	
+
 	public static int getPlantAverageProgress(PVZPlantEntity plant, int from, int to) {
-		return MathUtil.getProgressAverage(plant.getPlantLvl(), MAX_PLANT_LEVEL, from, to);
+		return MathUtil.getProgressAverage(plant.getPAZLevel(), MAX_PLANT_LEVEL, from, to);
 	}
 	
 	public static float getPlantAverageProgress(PVZPlantEntity plant, float from, float to) {
-		return MathUtil.getProgressAverage(plant.getPlantLvl(), MAX_PLANT_LEVEL, from, to);
+		return MathUtil.getProgressAverage(plant.getPAZLevel(), MAX_PLANT_LEVEL, from, to);
 	}
 	
 	/**
 	 * copy data from p1 to p2
 	 */
 	public static void copyPlantData(PVZPlantEntity p2, PVZPlantEntity p1) {
-		p2.setPlantLvl(p1.getPlantLvl());
+		p2.setPAZLevel(p1.getPAZLevel());
 		p2.setCharmed(p1.isCharmed());
 		p2.setOwnerUUID(p1.getOwnerUUID().orElse(null));
 	}

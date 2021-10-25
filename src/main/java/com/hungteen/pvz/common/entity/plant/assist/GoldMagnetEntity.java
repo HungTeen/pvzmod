@@ -3,7 +3,7 @@ package com.hungteen.pvz.common.entity.plant.assist;
 import java.util.HashSet;
 import java.util.Set;
 
-import com.hungteen.pvz.common.core.PlantType;
+import com.hungteen.pvz.api.types.IPlantType;
 import com.hungteen.pvz.common.entity.drop.CoinEntity;
 import com.hungteen.pvz.common.entity.drop.DropEntity;
 import com.hungteen.pvz.common.entity.drop.DropEntity.DropStates;
@@ -104,7 +104,7 @@ public class GoldMagnetEntity extends PVZPlantEntity {
 	}
 
 	public int getSearchRange() {
-		return MathUtil.getProgressByDif(4, 2, this.getPlantLvl(), PlantUtil.MAX_PLANT_LEVEL, 8, 16);
+		return MathUtil.getProgressByDif(4, 2, this.getPAZLevel(), PlantUtil.MAX_PLANT_LEVEL, 8, 16);
 	}
 
 	protected boolean checkCanWorkNow() {
@@ -122,7 +122,7 @@ public class GoldMagnetEntity extends PVZPlantEntity {
 	}
 	
 	@Override
-	public PlantType getPlantType() {
+	public IPlantType getPlantType() {
 		return PVZPlants.GOLD_MAGNET;
 	}
 

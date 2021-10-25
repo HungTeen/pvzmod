@@ -1,6 +1,6 @@
 package com.hungteen.pvz.common.entity.plant.arma;
 
-import com.hungteen.pvz.common.core.PlantType;
+import com.hungteen.pvz.api.types.IPlantType;
 import com.hungteen.pvz.common.entity.bullet.ButterEntity;
 import com.hungteen.pvz.common.entity.bullet.PultBulletEntity;
 import com.hungteen.pvz.common.impl.plant.CustomPlants;
@@ -29,7 +29,7 @@ public class ButterPultEntity extends KernelPultEntity {
 
 	@Override
 	public float getAttackDamage() {
-		final int lvl = this.getPlantLvl();
+		final int lvl = this.getPAZLevel();
 		return lvl <= 20 ? 0.1F * lvl : 2;
 	}
 	
@@ -39,7 +39,7 @@ public class ButterPultEntity extends KernelPultEntity {
 	}
 	
 	@Override
-	public PlantType getPlantType() {
+	public IPlantType getPlantType() {
 		return CustomPlants.BUTTER_PULT;
 	}
 	

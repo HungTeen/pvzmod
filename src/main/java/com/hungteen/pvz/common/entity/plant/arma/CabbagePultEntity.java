@@ -1,6 +1,6 @@
 package com.hungteen.pvz.common.entity.plant.arma;
 
-import com.hungteen.pvz.common.core.PlantType;
+import com.hungteen.pvz.api.types.IPlantType;
 import com.hungteen.pvz.common.entity.bullet.PultBulletEntity;
 import com.hungteen.pvz.common.entity.bullet.itembullet.CabbageEntity;
 import com.hungteen.pvz.common.entity.plant.base.PlantPultEntity;
@@ -35,7 +35,7 @@ public class CabbagePultEntity extends PlantPultEntity {
 	}
 	
 	@Override
-	public PlantType getPlantType() {
+	public IPlantType getPlantType() {
 		return PVZPlants.CABBAGE_PULT;
 	}
 

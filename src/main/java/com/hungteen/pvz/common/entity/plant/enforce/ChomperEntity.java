@@ -1,6 +1,6 @@
 package com.hungteen.pvz.common.entity.plant.enforce;
 
-import com.hungteen.pvz.common.core.PlantType;
+import com.hungteen.pvz.api.types.IPlantType;
 import com.hungteen.pvz.common.entity.ai.goal.target.PVZNearestTargetGoal;
 import com.hungteen.pvz.common.entity.misc.SmallChomperEntity;
 import com.hungteen.pvz.common.entity.plant.PVZPlantEntity;
@@ -115,14 +115,14 @@ public class ChomperEntity extends PVZPlantEntity {
 	 * max damage to target.
 	 */
 	public float getAttackDamage() {
-		return MathUtil.getProgressAverage(this.getPlantLvl(), PlantUtil.MAX_PLANT_LEVEL, 150, 250);
+		return MathUtil.getProgressAverage(this.getPAZLevel(), PlantUtil.MAX_PLANT_LEVEL, 150, 250);
 	}
 
 	/**
 	 * rest time after each kill.
 	 */
 	public int getRestCD() {
-		return MathUtil.getProgressAverage(this.getPlantLvl(), PlantUtil.MAX_PLANT_LEVEL, 840, 640);
+		return MathUtil.getProgressAverage(this.getPAZLevel(), PlantUtil.MAX_PLANT_LEVEL, 840, 640);
 	}
 
 	/**
@@ -171,7 +171,7 @@ public class ChomperEntity extends PVZPlantEntity {
 	}
 
 	@Override
-	public PlantType getPlantType() {
+	public IPlantType getPlantType() {
 		return PVZPlants.CHOMPER;
 	}
 	

@@ -1,7 +1,7 @@
 package com.hungteen.pvz.register;
 
 import com.hungteen.pvz.PVZMod;
-import com.hungteen.pvz.common.core.PlantType;
+import com.hungteen.pvz.api.types.IPlantType;
 import com.hungteen.pvz.common.impl.Essences;
 import com.hungteen.pvz.common.impl.Ranks;
 import com.hungteen.pvz.common.impl.plant.CustomPlants;
@@ -11,11 +11,7 @@ import com.hungteen.pvz.common.impl.plant.PVZPlants;
 import com.hungteen.pvz.common.item.PVZItemBase;
 import com.hungteen.pvz.common.item.PVZItemGroups;
 import com.hungteen.pvz.common.item.PVZItemTier;
-import com.hungteen.pvz.common.item.armor.BucketArmorItem;
-import com.hungteen.pvz.common.item.armor.ConeArmorItem;
-import com.hungteen.pvz.common.item.armor.FootballArmorItem;
-import com.hungteen.pvz.common.item.armor.GigaArmorItem;
-import com.hungteen.pvz.common.item.armor.PVZArmorMaterial;
+import com.hungteen.pvz.common.item.armor.*;
 import com.hungteen.pvz.common.item.display.AlmanacItem;
 import com.hungteen.pvz.common.item.display.StrangeHelpItem;
 import com.hungteen.pvz.common.item.material.EssenceItem;
@@ -34,36 +30,19 @@ import com.hungteen.pvz.common.item.tool.plant.BowlingGloveItem;
 import com.hungteen.pvz.common.item.tool.plant.PeaGunItem;
 import com.hungteen.pvz.common.item.tool.plant.SunCollectorItem;
 import com.hungteen.pvz.common.item.tool.plant.SunStorageSaplingItem;
-import com.hungteen.pvz.common.item.tool.zombie.BalloonItem;
-import com.hungteen.pvz.common.item.tool.zombie.BobsleCarItem;
-import com.hungteen.pvz.common.item.tool.zombie.JackBoxItem;
-import com.hungteen.pvz.common.item.tool.zombie.ScreenDoorItem;
-import com.hungteen.pvz.common.item.tool.zombie.TargetArrowItem;
-import com.hungteen.pvz.common.item.tool.zombie.ZombieFlagItem;
+import com.hungteen.pvz.common.item.tool.zombie.*;
 import com.hungteen.pvz.utils.enums.Colors;
 import com.mojang.datafixers.util.Pair;
-
 import net.minecraft.entity.EntityType;
 import net.minecraft.inventory.EquipmentSlotType;
-import net.minecraft.item.ArmorMaterial;
-import net.minecraft.item.AxeItem;
-import net.minecraft.item.BlockItem;
-import net.minecraft.item.HoeItem;
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemGroup;
-import net.minecraft.item.MusicDiscItem;
-import net.minecraft.item.PickaxeItem;
-import net.minecraft.item.Rarity;
-import net.minecraft.item.ShovelItem;
-import net.minecraft.item.SoupItem;
-import net.minecraft.item.SwordItem;
+import net.minecraft.item.*;
 import net.minecraftforge.fml.RegistryObject;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
 
 public class ItemRegister {
 
-    public static final DeferredRegister<Item> ITEMS =  DeferredRegister.create(ForgeRegistries.ITEMS, PVZMod.MOD_ID);
+    public static final DeferredRegister<Item> ITEMS = DeferredRegister.create(ForgeRegistries.ITEMS, PVZMod.MOD_ID);
 	
     //ingot essence
     public static final RegistryObject<Item> ORIGIN_ESSENCE = ITEMS.register("origin_essence", () -> new EssenceItem(Essences.ORIGIN));
@@ -429,7 +408,7 @@ public class ItemRegister {
     	return ITEMS.register(name + "_spawn_egg", () -> new PVZSpawnEggItem(entityType, color.getFirst(), color.getSecond(), new Item.Properties().tab(PVZItemGroups.PVZ_MISC)));
     }
     
-    private static RegistryObject<PlantCardItem> registerCard(PlantType plant, boolean is){
+    private static RegistryObject<PlantCardItem> registerCard(IPlantType plant, boolean is){
     	String name = plant.toString();
     	if(is) name = name + "_enjoy";
     	name = name + "_card";

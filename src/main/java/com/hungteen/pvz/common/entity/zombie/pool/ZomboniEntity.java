@@ -1,40 +1,35 @@
 package com.hungteen.pvz.common.entity.zombie.pool;
 
-import java.util.Optional;
-
 import com.hungteen.pvz.api.interfaces.IHasWheel;
-import com.hungteen.pvz.common.core.ZombieType;
 import com.hungteen.pvz.common.entity.PVZMultiPartEntity;
 import com.hungteen.pvz.common.entity.zombie.base.CarZombieEntity;
 import com.hungteen.pvz.common.entity.zombie.part.PVZZombiePartEntity;
+import com.hungteen.pvz.common.impl.ZombieType;
 import com.hungteen.pvz.common.impl.zombie.PoolZombies;
 import com.hungteen.pvz.common.misc.damage.PVZDamageSource;
 import com.hungteen.pvz.register.SoundRegister;
 import com.hungteen.pvz.utils.EntityUtil;
 import com.hungteen.pvz.utils.ZombieUtil;
 import com.hungteen.pvz.utils.interfaces.IMultiPartEntity;
-
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
 import net.minecraft.block.SnowBlock;
 import net.minecraft.enchantment.FrostWalkerEnchantment;
-import net.minecraft.entity.EntitySize;
-import net.minecraft.entity.EntityType;
-import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.Pose;
+import net.minecraft.entity.*;
 import net.minecraft.entity.ai.attributes.Attributes;
-import net.minecraft.entity.monster.MonsterEntity;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.SoundEvent;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.vector.Vector3d;
 import net.minecraft.world.World;
 
+import java.util.Optional;
+
 public class ZomboniEntity extends CarZombieEntity implements IMultiPartEntity, IHasWheel{
 	
 	private PVZZombiePartEntity part;
 	
-	public ZomboniEntity(EntityType<? extends MonsterEntity> type, World worldIn) {
+	public ZomboniEntity(EntityType<? extends CreatureEntity> type, World worldIn) {
 		super(type, worldIn);
 		this.setImmuneAllEffects();
 		this.resetParts();
@@ -121,7 +116,7 @@ public class ZomboniEntity extends CarZombieEntity implements IMultiPartEntity, 
 	}
 	
 	@Override
-	protected Optional<SoundEvent> getSpawnSound() {
+	public Optional<SoundEvent> getSpawnSound() {
 		return Optional.ofNullable(SoundRegister.CAR_SPAWN.get());
 	}
 	

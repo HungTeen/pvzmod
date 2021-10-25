@@ -1,24 +1,23 @@
 package com.hungteen.pvz.common.entity.zombie.base;
 
+import com.hungteen.pvz.api.enums.BodyType;
 import com.hungteen.pvz.common.entity.zombie.PVZZombieEntity;
 import com.hungteen.pvz.common.entity.zombie.body.ZombieDropBodyEntity;
-import com.hungteen.pvz.common.entity.zombie.body.ZombieDropBodyEntity.BodyType;
 import com.hungteen.pvz.common.misc.damage.PVZDamageSource;
 import com.hungteen.pvz.register.EntityRegister;
 import com.hungteen.pvz.register.SoundRegister;
 import com.hungteen.pvz.utils.EntityUtil;
-
+import net.minecraft.entity.CreatureEntity;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.monster.MonsterEntity;
 import net.minecraft.particles.ParticleTypes;
 import net.minecraft.util.DamageSource;
 import net.minecraft.world.World;
 
 public abstract class CarZombieEntity extends PVZZombieEntity {
 
-	public CarZombieEntity(EntityType<? extends MonsterEntity> type, World worldIn) {
+	public CarZombieEntity(EntityType<? extends CreatureEntity> type, World worldIn) {
 		super(type, worldIn);
 		this.setIsWholeBody();
 		this.canBeFrozen = false;

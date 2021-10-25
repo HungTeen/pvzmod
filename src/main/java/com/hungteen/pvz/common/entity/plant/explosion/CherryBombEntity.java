@@ -1,7 +1,7 @@
 package com.hungteen.pvz.common.entity.plant.explosion;
 
+import com.hungteen.pvz.api.types.IPlantType;
 import com.hungteen.pvz.common.advancement.trigger.EntityEffectAmountTrigger;
-import com.hungteen.pvz.common.core.PlantType;
 import com.hungteen.pvz.common.entity.plant.PVZPlantEntity;
 import com.hungteen.pvz.common.entity.plant.base.PlantBomberEntity;
 import com.hungteen.pvz.common.impl.plant.PVZPlants;
@@ -59,7 +59,7 @@ public class CherryBombEntity extends PlantBomberEntity{
 	 * {@link #startBomb()}
 	 */
 	public float getAttackDamage(){
-		return MathUtil.getProgressAverage(this.getPlantLvl(), PlantUtil.MAX_PLANT_LEVEL, 150, 650);
+		return MathUtil.getProgressAverage(this.getPAZLevel(), PlantUtil.MAX_PLANT_LEVEL, 150, 650);
 	}
 	
 	@Override
@@ -73,7 +73,7 @@ public class CherryBombEntity extends PlantBomberEntity{
 	}
 
 	@Override
-	public PlantType getPlantType() {
+	public IPlantType getPlantType() {
 		return PVZPlants.CHERRY_BOMB;
 	}
 

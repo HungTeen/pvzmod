@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.hungteen.pvz.PVZMod;
+import com.hungteen.pvz.api.types.IZombieType;
 import com.hungteen.pvz.client.model.entity.zombie.pool.BalloonZombieModel;
 import com.hungteen.pvz.client.model.entity.zombie.pool.BobsleTeamModel;
 import com.hungteen.pvz.client.model.entity.zombie.pool.BobsleZombieModel;
@@ -14,13 +15,13 @@ import com.hungteen.pvz.client.model.entity.zombie.pool.PogoZombieModel;
 import com.hungteen.pvz.client.model.entity.zombie.pool.SnorkelZombieModel;
 import com.hungteen.pvz.client.model.entity.zombie.pool.YetiZombieModel;
 import com.hungteen.pvz.client.model.entity.zombie.pool.ZomboniModel;
-import com.hungteen.pvz.common.core.ZombieType;
 import com.hungteen.pvz.common.impl.Ranks;
+import com.hungteen.pvz.common.impl.ZombieType;
 import com.hungteen.pvz.register.EntityRegister;
 
 public final class PoolZombies extends ZombieType {
 
-	private static final List<ZombieType> LIST = new ArrayList<>();
+	private static final List<IZombieType> LIST = new ArrayList<>();
 	
 	/*
 	 * day.

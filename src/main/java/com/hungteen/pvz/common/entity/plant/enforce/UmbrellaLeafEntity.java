@@ -2,7 +2,7 @@ package com.hungteen.pvz.common.entity.plant.enforce;
 
 import java.util.List;
 
-import com.hungteen.pvz.common.core.PlantType;
+import com.hungteen.pvz.api.types.IPlantType;
 import com.hungteen.pvz.common.entity.bullet.PultBulletEntity;
 import com.hungteen.pvz.common.entity.plant.PVZPlantEntity;
 import com.hungteen.pvz.common.entity.zombie.roof.BungeeZombieEntity;
@@ -101,7 +101,7 @@ public class UmbrellaLeafEntity extends PVZPlantEntity{
 	}
 
 	@Override
-	public PlantType getPlantType() {
+	public IPlantType getPlantType() {
 		return PVZPlants.UMBRELLA_LEAF;
 	}
 	

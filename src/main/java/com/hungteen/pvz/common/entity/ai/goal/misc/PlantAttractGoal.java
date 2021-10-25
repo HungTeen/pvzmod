@@ -21,7 +21,7 @@ public class PlantAttractGoal extends Goal{
 	
 	@Override
 	public boolean canUse() {
-		return this.plantEntity.canPlantNormalUpdate();
+		return this.plantEntity.canNormalUpdate();
 	}
 	
 	@Override

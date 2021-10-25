@@ -3,7 +3,7 @@ package com.hungteen.pvz.common.entity.plant.spear;
 import javax.annotation.Nonnull;
 
 import com.hungteen.pvz.api.interfaces.IHasWheel;
-import com.hungteen.pvz.common.core.PlantType;
+import com.hungteen.pvz.api.types.IPlantType;
 import com.hungteen.pvz.common.entity.plant.PVZPlantEntity;
 import com.hungteen.pvz.common.impl.plant.PVZPlants;
 import com.hungteen.pvz.common.misc.damage.PVZDamageSource;
@@ -161,7 +161,7 @@ public class SpikeWeedEntity extends PVZPlantEntity {
 	}
 	
 	@Override
-	public PlantType getPlantType() {
+	public IPlantType getPlantType() {
 		return PVZPlants.SPIKE_WEED;
 	}
 

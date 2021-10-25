@@ -1,8 +1,7 @@
 package com.hungteen.pvz.client.model.entity.zombie.pool;
 
+import com.hungteen.pvz.api.IBodyEntity;
 import com.hungteen.pvz.client.model.entity.zombie.PVZZombieModel;
-import com.hungteen.pvz.common.entity.zombie.body.ZombieDropBodyEntity;
-import com.hungteen.pvz.common.entity.zombie.body.ZombieDropBodyEntity.BodyType;
 import com.hungteen.pvz.common.entity.zombie.pool.PogoZombieEntity;
 import com.mojang.blaze3d.matrix.MatrixStack;
 import com.mojang.blaze3d.vertex.IVertexBuilder;
@@ -130,7 +129,7 @@ public class PogoZombieModel extends PVZZombieModel<PogoZombieEntity> {
 	}
 	
 	@Override
-	public void tickPartAnim(ZombieDropBodyEntity entity, BodyType type, float limbSwing, float limbSwingAmount,
+	public void tickPartAnim(IBodyEntity entity, float limbSwing, float limbSwingAmount,
 			float ageInTicks, float netHeadYaw, float headPitch) {
 		this.left_hand.yRot = 0;
         this.right_hand.yRot = 0;
@@ -139,14 +138,14 @@ public class PogoZombieModel extends PVZZombieModel<PogoZombieEntity> {
         this.left_leg.xRot = 0;
         this.right_leg.xRot = 0;
         this.total.xRot = 0;
-		super.tickPartAnim(entity, type, limbSwing, limbSwingAmount, ageInTicks, netHeadYaw, headPitch);
+		super.tickPartAnim(entity, limbSwing, limbSwingAmount, ageInTicks, netHeadYaw, headPitch);
 	}
 	
 	@Override
-	public void renderBody(ZombieDropBodyEntity entity, MatrixStack stack, IVertexBuilder buffer, int packedLight,
-			int packedOverlay, BodyType type) {
+	public void renderBody(IBodyEntity entity, MatrixStack stack, IVertexBuilder buffer, int packedLight,
+			int packedOverlay) {
 		this.pogo.visible = false;
-		super.renderBody(entity, stack, buffer, packedLight, packedOverlay, type);
+		super.renderBody(entity, stack, buffer, packedLight, packedOverlay);
 	}
 
 	@Override

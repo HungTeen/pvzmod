@@ -1,7 +1,7 @@
 package com.hungteen.pvz.common.entity.plant.toxic;
 
+import com.hungteen.pvz.api.types.IPlantType;
 import com.hungteen.pvz.common.advancement.trigger.EntityEffectAmountTrigger;
-import com.hungteen.pvz.common.core.PlantType;
 import com.hungteen.pvz.common.entity.bullet.AbstractBulletEntity;
 import com.hungteen.pvz.common.entity.bullet.itembullet.SporeEntity;
 import com.hungteen.pvz.common.entity.plant.base.PlantShooterEntity;
@@ -102,7 +102,7 @@ public class PuffShroomEntity extends PlantShooterEntity {
 	
 	@Override
 	public float getPlantHealth() {
-		return MathUtil.getProgressAverage(this.getPlantLvl(), PlantUtil.MAX_PLANT_LEVEL, 30, 50);
+		return MathUtil.getProgressAverage(this.getPAZLevel(), PlantUtil.MAX_PLANT_LEVEL, 30, 50);
 	}
 	
 	@Override
@@ -116,7 +116,7 @@ public class PuffShroomEntity extends PlantShooterEntity {
 	}
 	
 	@Override
-	public PlantType getPlantType() {
+	public IPlantType getPlantType() {
 		return PVZPlants.PUFF_SHROOM;
 	}
 

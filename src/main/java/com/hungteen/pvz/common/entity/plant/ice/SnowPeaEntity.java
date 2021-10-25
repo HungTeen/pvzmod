@@ -3,7 +3,7 @@ package com.hungteen.pvz.common.entity.plant.ice;
 import java.util.Optional;
 
 import com.hungteen.pvz.api.interfaces.IIceEffect;
-import com.hungteen.pvz.common.core.PlantType;
+import com.hungteen.pvz.api.types.IPlantType;
 import com.hungteen.pvz.common.entity.bullet.itembullet.PeaEntity.State;
 import com.hungteen.pvz.common.entity.plant.appease.PeaShooterEntity;
 import com.hungteen.pvz.common.impl.plant.PVZPlants;
@@ -38,14 +38,14 @@ public class SnowPeaEntity extends PeaShooterEntity implements IIceEffect{
 	 * cold effect level.
 	 */
 	public int getColdLvl() {
-		return MathUtil.getProgressByDif(4, 1, this.getPlantLvl(), PlantUtil.MAX_PLANT_LEVEL, 5, 9);
+		return MathUtil.getProgressByDif(4, 1, this.getPAZLevel(), PlantUtil.MAX_PLANT_LEVEL, 5, 9);
 	}
 	
 	/**
 	 * cold effect duration.
 	 */
 	public int getColdTick() {
-		return MathUtil.getProgressAverage(this.getPlantLvl(), PlantUtil.MAX_PLANT_LEVEL, 80, 160);
+		return MathUtil.getProgressAverage(this.getPAZLevel(), PlantUtil.MAX_PLANT_LEVEL, 80, 160);
 	}
 	
 	@Override
@@ -59,7 +59,7 @@ public class SnowPeaEntity extends PeaShooterEntity implements IIceEffect{
 	}
 	
 	@Override
-	public PlantType getPlantType() {
+	public IPlantType getPlantType() {
 		return PVZPlants.SNOW_PEA;
 	}
 	

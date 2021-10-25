@@ -1,17 +1,15 @@
 package com.hungteen.pvz.common.misc;
 
-import java.util.Optional;
-import java.util.Random;
-
 import com.hungteen.pvz.PVZMod;
+import com.hungteen.pvz.api.types.IZombieType;
 import com.hungteen.pvz.common.cache.InvasionCache;
-import com.hungteen.pvz.common.core.ZombieType;
 import com.hungteen.pvz.common.entity.zombie.PVZZombieEntity;
+import com.hungteen.pvz.common.impl.ZombieType;
 import com.hungteen.pvz.register.EntitySpawnRegister;
-
+import net.minecraft.entity.CreatureEntity;
 import net.minecraft.entity.EntityType;
+import net.minecraft.entity.MobEntity;
 import net.minecraft.entity.SpawnReason;
-import net.minecraft.entity.monster.MonsterEntity;
 import net.minecraft.tags.FluidTags;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.Difficulty;
@@ -19,6 +17,9 @@ import net.minecraft.world.IWorld;
 import net.minecraft.world.LightType;
 import net.minecraft.world.World;
 import net.minecraft.world.server.ServerWorld;
+
+import java.util.Optional;
+import java.util.Random;
 
 public class SpawnChecker {
 
@@ -91,7 +92,7 @@ public class SpawnChecker {
 		if(reason != SpawnReason.NATURAL) {
 			return true;
 		}
-		Optional<ZombieType> opt = ZombieType.getByEntityType(zombieType);
+		Optional<IZombieType> opt = ZombieType.getByEntityType(zombieType);
 		if(worldIn instanceof World) {
 			if(opt.isPresent()) {
 			    return InvasionCache.ZOMBIE_INVADE_SET.contains(opt.get());
@@ -103,9 +104,8 @@ public class SpawnChecker {
 		return false;
 	}
 	
-	private static boolean checkSpawn(EntityType<? extends PVZZombieEntity> zombieType, IWorld worldIn,
-			SpawnReason reason, BlockPos pos, Random rand) {
-		return isDarkEnough(worldIn, pos) && MonsterEntity.checkAnyLightMonsterSpawnRules(zombieType, worldIn, reason, pos, rand);
+	private static boolean checkSpawn(EntityType<? extends CreatureEntity> zombieType, IWorld worldIn, SpawnReason reason, BlockPos pos, Random rand) {
+		return isDarkEnough(worldIn, pos) && worldIn.getDifficulty() != Difficulty.PEACEFUL && MobEntity.checkMobSpawnRules(zombieType, worldIn, reason, pos, rand);
 	}
 	
 	private static boolean isInWater(IWorld world, BlockPos pos) {

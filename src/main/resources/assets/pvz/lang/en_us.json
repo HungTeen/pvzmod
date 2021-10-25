@@ -1,24 +1,22 @@
 {
-//***********************************
-// Items
-// Blocks
-// Tooltips
-// Entities
-// Sounds
-// Guis
-// Advancements
-// System tips
-// Enchantments
-// Potions & Effects
-// Death Infos
-// ItemGroups
-// Biome
-// Patchouli
-// KeyBinds
-// Config
-// Misc
-//***********************************
-//-----------------------------------------Items-----------------------------------------
+    "_comment_1": "Item",
+    "_comment_2": "Block",
+    "_comment_3": "ToolTip",
+    "_comment_4": "Entity",
+    "_comment_5": "Sound",
+    "_comment_6": "GUI",
+    "_comment_7": "Advancement",
+    "_comment_8": "System Info",
+    "_comment_9": "Enchantment",
+    "_comment_10": "PotionEffect",
+    "_comment_11": "Death Msg",
+    "_comment_12": "ItemGroup",
+    "_comment_13": "Biome",
+    "_comment_14": "Patchouli",
+    "_comment_15": "KeyBind",
+    "_comment_16": "Config",
+    "_comment_17": "Misc",
+    "_comment1": "--------------------------------------------Item-------------------------------------------",
     "item.pvz.origin_essence":"Origin Essence",
     "item.pvz.appease_essence":"Appease Essence",
     "item.pvz.light_essence":"Light Essence",
@@ -103,7 +101,7 @@
     "item.pvz.zombie_doll":"Zombie Doll",
     "item.pvz.zomboss_doll":"ZomBoss Doll",
     "item.pvz.zombie_on_your_lawn":"PVZ Music Disk",
-//-----------------------------------------Blocks-----------------------------------------
+    "_comment2": "--------------------------------------------Block-------------------------------------------",
     "block.pvz.origin_ore":"Origin Ore",
     "block.pvz.appease_ore":"Appease Ore",
     "block.pvz.light_ore":"Light Ore",
@@ -147,7 +145,7 @@
     "block.pvz.silver_sunflower_trophy":"Silver Sunflower Trophy",
     "block.pvz.gold_sunflower_trophy":"Gold Sunflower Trophy",
     "block.pvz.diamond_sunflower_trophy":"Diamond Sunflower Trophy",
-//-----------------------------------------Tool Tips-----------------------------------------
+    "_comment3": "--------------------------------------------ToolTip-------------------------------------------",
     "tooltip.pvz.card_sun_cost":"Basic Sun Cost : %d",
     "tooltip.pvz.card_cd":"Basic CD : %s",
     "tooltip.pvz.plant_card_info":"[Plant Card] : Right click to summon plant",
@@ -175,7 +173,7 @@
     "tooltip.pvz.defence":"Defence HP",
     "tooltip.pvz.reduction":"Damage Reduction",
     "tooltip.pvz.owner":"Owner",
-//-----------------------------------------Entity & Spawn Egg & Summon Card-----------------------------------------
+    "_comment4": "--------------------------------------------Entity-------------------------------------------",
     "entity.pvz.sun":"Sun",
     "item.pvz.sun_spawn_egg":"Sun Spawn Egg",
     "entity.pvz.coin":"Coin",
@@ -532,7 +530,7 @@
     "item.pvz.bonk_choy_spawn_egg":"BonkChoy Spawn Egg",
     "item.pvz.bonk_choy_card":"BonkChoy Card",
     "item.pvz.bonk_choy_enjoy_card":"BonkChoy Enjoy Card",
-//-----------------------------------------Sound-----------------------------------------
+    "_comment5": "--------------------------------------------Sound-------------------------------------------",
     "sound.pvz.sun_pick":"Get Sun",
     "sound.pvz.coin_drop":"Drop Coin",
     "sound.pvz.coin_pick":"Get Coin",
@@ -607,7 +605,7 @@
     "sound.pvz.zomboss_death":"Robot Explosion",
     "sound.pvz.cob_launch":"Cob Launch",
     "sound.pvz.pole_jump":"Pole Jump",
-//-----------------------------------------GUI-----------------------------------------
+    "_comment6": "--------------------------------------------GUI-------------------------------------------",
     "gui.pvz.strange_help":"Help for Plants vs Zombies mod",
     "gui.pvz.strange_help1":"When the Zombies show up,just",
     "gui.pvz.strange_help2":"stand there and do nothing.",
@@ -699,7 +697,7 @@
     "gui.pvz.almanac.scare_range":"ScareRange",
     "gui.pvz.almanac.duration":"Duration",
     "gui.pvz.almanac.ave_gen_amount":"AveGen",
-//-----------------------------------------Advancements-----------------------------------------
+    "_comment7": "--------------------------------------------Advancement-------------------------------------------",
     "advancement.pvz.root":"Plants vs Zombies",
     "advancement.pvz.root.desc":"install Plants vs Zombies mod and join in world",
     "advancement.pvz.start":"Start!",
@@ -766,7 +764,7 @@
     "advancement.pvz.sunny_days.desc":"Reach 8000 sun",
     "advancement.pvz.towering_wisdom":"Towering Wisdom",
     "advancement.pvz.towering_wisdom.desc":"Tree Level reach 100",
-//-----------------------------------------System Tips-----------------------------------------
+    "_comment8": "--------------------------------------------SystemInfo-------------------------------------------",
     "command.pvz.clear_events":"clear all events",
     "command.pvz.add_event":"add invasion event",
     "command.pvz.add_zombie":"add zombie spawn",
@@ -812,7 +810,7 @@
     "help.pvz.sun":"Sun is not enough !",
     "help.pvz.cd":"Please wait for cooling !",
     "help.pvz.lock":"Locked !",
-//-----------------------------------------Enchantments-----------------------------------------
+    "_comment9": "--------------------------------------------Enchantment-------------------------------------------",
     "enchantment.pvz.sun_cost_reduce":"Sun Reduce",
     "enchantment.pvz.sun_cost_reduce.desc":"Reduce sun cost of summon cards",
     "enchantment.pvz.break_out":"Break Out",
@@ -835,7 +833,7 @@
     "enchantment.pvz.immediate_cd.desc":"Summon cards have chance to instant cool down(1 second)",
     "enchantment.pvz.densely_plant":"Densely Plant",
     "enchantment.pvz.densely_plant.desc":"Allow to place more plants in an area",
-//-----------------------------------------Potions & Effects-----------------------------------------
+    "_comment10": "--------------------------------------------PotionEffect-------------------------------------------",
     "effect.pvz.cold":"Cold",
     "effect.pvz.frozen":"Frozen",
     "effect.pvz.excite":"Excite",
@@ -856,7 +854,7 @@
     "item.minecraft.splash_potion.effect.light_eye_potion_2":"Splash Light Eyes Potion",
     "item.minecraft.lingering_potion.effect.light_eye_potion_1":"Lingering Light Eyes Potion",
     "item.minecraft.lingering_potion.effect.light_eye_potion_2":"Lingering Light Eyes Potion",
-//-----------------------------------------Death Info-----------------------------------------
+    "_comment11": "--------------------------------------------DeathMsg-------------------------------------------",
     "death.attack.pvz.plant_wilt":"%s was wilted",
     "death.attack.pvz.chomper_plant":"%s was eaten",
     "death.attack.pvz.pea":"%s was shot to death by pea",
@@ -880,26 +878,26 @@
     "death.attack.pvz.thorn":"%s was spiked to death",
     "death.attack.pvz.ice":"%s was frozen to death",
     "death.attack.pvz.flame":"%s was burned to death",
-//-----------------------------------------ItemGroups-----------------------------------------
+    "_comment12": "--------------------------------------------ItemGroup-------------------------------------------",
     "itemGroup.pvz_misc":"PVZ Misc",
     "itemGroup.pvz_plant_card":"PVZ Plant Card",
     "itemGroup.pvz_tool":"PVZ Tool",
-//-----------------------------------------Biomes--------------------------------------------
-    "pvz:zen_garden":"Zen Garden",
-//-----------------------------------------Patchouli-----------------------------------------
+    "_comment13": "--------------------------------------------Biome-------------------------------------------",
+    "biome.pvz.zen_garden":"Zen Garden",
+    "_comment14": "--------------------------------------------Patchouli-------------------------------------------",
      "gui.pvz.pvz_guide":"PVZ Guild Book",
      "gui.pvz.guide_info":"Welcome to the world of Plants vs. Zombies, this book will take you through this mod.",
      "gui.pvz.pvz_plants":"Plant Almanac",
      "gui.pvz.plants_info":"This almanac will show you information of all plants in Plants vs Zombies mod.",
      "gui.pvz.pvz_zombies":"Zombie Almanac",
      "gui.pvz.zombies_info":"This almanac will show you information of all zombies in Plants vs Zombies mod.",
-//-----------------------------------------KeyBind-----------------------------------------
+    "_comment15": "--------------------------------------------KeyBind-------------------------------------------",
     "key.categories.pvz":"Plants vs Zombies mod",
     "key.pvz.show_resources":"Turn on/off Player Resources UI",
     "key.pvz.show_progress":"Turn on/off Invasion Progress",
     "key.pvz.left_toggle":"Left Toggle Resource UI",
     "key.pvz.right_toggle":"Right Toggle Resource UI",
-//-----------------------------------------Config-----------------------------------------
+    "_comment16": "--------------------------------------------Config-------------------------------------------",
     "config.pvz.invasion.bucket_chance":"Weight Of Bucket Invasion",
     "config.pvz.invasion.water_chance":"Weight Of Water Invasion",
     "config.pvz.invasion.halloween_chance":"Weight Of Halloween Invasion",
@@ -995,7 +993,7 @@
     "config.waila.plugin_pvz.show_level":"Show Level",
     "config.waila.plugin_pvz.show_owner":"Show Owner",
     "config.waila.plugin_pvz.show_zombie_hurt_reduction":"Show Hurt Reduction",
-//-----------------------------------------Misc-----------------------------------------
+    "_comment17": "--------------------------------------------Misc-------------------------------------------",
     "misc.pvz.cd.default":"Default",
     "misc.pvz.cd.super_fast":"Super Fast",
     "misc.pvz.cd.huge_fast":"Huge Fast",

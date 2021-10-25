@@ -1,6 +1,6 @@
 package com.hungteen.pvz.common.entity.plant.spear;
 
-import com.hungteen.pvz.common.core.PlantType;
+import com.hungteen.pvz.api.types.IPlantType;
 import com.hungteen.pvz.common.entity.bullet.AbstractBulletEntity;
 import com.hungteen.pvz.common.entity.bullet.ThornEntity;
 import com.hungteen.pvz.common.entity.bullet.ThornEntity.ThornStates;
@@ -197,7 +197,7 @@ public class CactusEntity extends PlantShooterEntity {
 	}
 
 	@Override
-	public PlantType getPlantType() {
+	public IPlantType getPlantType() {
 		return PVZPlants.CACTUS;
 	}
 

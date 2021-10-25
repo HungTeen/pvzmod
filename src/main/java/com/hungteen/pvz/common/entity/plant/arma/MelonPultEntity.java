@@ -1,6 +1,6 @@
 package com.hungteen.pvz.common.entity.plant.arma;
 
-import com.hungteen.pvz.common.core.PlantType;
+import com.hungteen.pvz.api.types.IPlantType;
 import com.hungteen.pvz.common.entity.bullet.MelonEntity;
 import com.hungteen.pvz.common.entity.bullet.MelonEntity.MelonStates;
 import com.hungteen.pvz.common.entity.bullet.PultBulletEntity;
@@ -46,7 +46,7 @@ public class MelonPultEntity extends PlantPultEntity {
 	}
 	
 	@Override
-	public PlantType getPlantType() {
+	public IPlantType getPlantType() {
 		return PVZPlants.MELON_PULT;
 	}
 

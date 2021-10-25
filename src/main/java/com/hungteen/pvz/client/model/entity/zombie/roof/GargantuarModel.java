@@ -1,9 +1,8 @@
 package com.hungteen.pvz.client.model.entity.zombie.roof;
 
+import com.hungteen.pvz.api.IBodyEntity;
+import com.hungteen.pvz.api.IZombieModel;
 import com.hungteen.pvz.client.model.entity.PVZEntityModel;
-import com.hungteen.pvz.client.model.entity.zombie.IZombieModel;
-import com.hungteen.pvz.common.entity.zombie.body.ZombieDropBodyEntity;
-import com.hungteen.pvz.common.entity.zombie.body.ZombieDropBodyEntity.BodyType;
 import com.hungteen.pvz.common.entity.zombie.roof.GargantuarEntity;
 import com.hungteen.pvz.common.entity.zombie.roof.GargantuarEntity.GargantuarType;
 import com.hungteen.pvz.utils.AnimationUtil;
@@ -381,7 +380,7 @@ public class GargantuarModel<T extends GargantuarEntity> extends PVZEntityModel<
 	}
 
 	@Override
-	public void tickPartAnim(ZombieDropBodyEntity entity, BodyType type, float limbSwing, float limbSwingAmount,
+	public void tickPartAnim(IBodyEntity entity, float limbSwing, float limbSwingAmount,
 			float ageInTicks, float netHeadYaw, float headPitch) {
 		final int cd = GargantuarEntity.DEATH_ANIM_CD;
 		final int time = entity.getAnimTime();
@@ -398,8 +397,8 @@ public class GargantuarModel<T extends GargantuarEntity> extends PVZEntityModel<
 	}
 
 	@Override
-	public void renderBody(ZombieDropBodyEntity entity, MatrixStack stack, IVertexBuilder buffer, int packedLight,
-			int packedOverlay, BodyType type) {
+	public void renderBody(IBodyEntity entity, MatrixStack stack, IVertexBuilder buffer, int packedLight,
+			int packedOverlay) {
 		this.pole.visible = false;
 		this.sign.visible = false;
 		this.doll.visible = false;

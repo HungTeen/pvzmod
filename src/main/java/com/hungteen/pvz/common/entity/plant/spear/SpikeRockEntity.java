@@ -1,6 +1,6 @@
 package com.hungteen.pvz.common.entity.plant.spear;
 
-import com.hungteen.pvz.common.core.PlantType;
+import com.hungteen.pvz.api.types.IPlantType;
 import com.hungteen.pvz.common.impl.plant.PVZPlants;
 import com.hungteen.pvz.utils.MathUtil;
 import com.hungteen.pvz.utils.PlantUtil;
@@ -23,7 +23,7 @@ public class SpikeRockEntity extends SpikeWeedEntity {
 	}
 	
 	public int getSpikesCount() {
-		return MathUtil.getProgressByDif(5, 3, this.getPlantLvl(), PlantUtil.MAX_PLANT_LEVEL, 6, 15);
+		return MathUtil.getProgressByDif(5, 3, this.getPAZLevel(), PlantUtil.MAX_PLANT_LEVEL, 6, 15);
 	}
 	
 	@Override
@@ -32,7 +32,7 @@ public class SpikeRockEntity extends SpikeWeedEntity {
 	}
 	
 	@Override
-	public PlantType getPlantType() {
+	public IPlantType getPlantType() {
 		return PVZPlants.SPIKE_ROCK;
 	}
 	

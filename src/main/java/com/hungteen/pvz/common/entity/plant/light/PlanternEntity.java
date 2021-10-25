@@ -1,7 +1,7 @@
 package com.hungteen.pvz.common.entity.plant.light;
 
 import com.hungteen.pvz.api.interfaces.ILightEffect;
-import com.hungteen.pvz.common.core.PlantType;
+import com.hungteen.pvz.api.types.IPlantType;
 import com.hungteen.pvz.common.entity.plant.PVZPlantEntity;
 import com.hungteen.pvz.common.impl.plant.PVZPlants;
 import com.hungteen.pvz.register.EffectRegister;
@@ -16,6 +16,8 @@ import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.potion.EffectInstance;
 import net.minecraft.util.SoundEvent;
 import net.minecraft.world.World;
+
+import java.util.Optional;
 
 public class PlanternEntity extends PVZPlantEntity implements ILightEffect {
 
@@ -53,7 +55,7 @@ public class PlanternEntity extends PVZPlantEntity implements ILightEffect {
 		EntityUtil.getFriendlyLivings(this, EntityUtil.getEntityAABB(this, range, range)).forEach(entity -> {
 			entity.addEffect(this.createEffect(1, this.getSuperLightEyeTime()));
 		});
-		EntityUtil.playSound(this, this.getSpawnSound());
+		this.getSpawnSound().ifPresent(s -> EntityUtil.playSound(this, s));
 	}
 
 	@Override
@@ -76,7 +78,7 @@ public class PlanternEntity extends PVZPlantEntity implements ILightEffect {
 	}
 	
 	public int getLightEyeTime() {
-		return Math.min(4000, this.getPlantLvl() * 200);
+		return Math.min(4000, this.getPAZLevel() * 200);
 	}
 	
 	public int getSuperLightEyeTime() {
@@ -84,12 +86,12 @@ public class PlanternEntity extends PVZPlantEntity implements ILightEffect {
 	}
 	
 	@Override
-	public SoundEvent getSpawnSound() {
-		return SoundRegister.PLANTERN.get();
+	public Optional<SoundEvent> getSpawnSound() {
+		return Optional.ofNullable(SoundRegister.PLANTERN.get());
 	}
 	
 	@Override
-	public PlantType getPlantType() {
+	public IPlantType getPlantType() {
 		return PVZPlants.PLANTERN;
 	}
 	

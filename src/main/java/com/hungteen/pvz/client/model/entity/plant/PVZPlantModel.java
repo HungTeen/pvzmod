@@ -1,5 +1,6 @@
 package com.hungteen.pvz.client.model.entity.plant;
 
+import com.hungteen.pvz.api.IPlantModel;
 import com.hungteen.pvz.client.model.entity.PVZEntityModel;
 import com.hungteen.pvz.common.entity.plant.PVZPlantEntity;
 import com.mojang.blaze3d.matrix.MatrixStack;

@@ -2,9 +2,9 @@ package com.hungteen.pvz.client.model.entity.zombie;
 
 import java.util.Optional;
 
+import com.hungteen.pvz.api.IBodyEntity;
+import com.hungteen.pvz.api.IZombieModel;
 import com.hungteen.pvz.common.entity.zombie.PVZZombieEntity;
-import com.hungteen.pvz.common.entity.zombie.body.ZombieDropBodyEntity;
-import com.hungteen.pvz.common.entity.zombie.body.ZombieDropBodyEntity.BodyType;
 import com.hungteen.pvz.utils.AnimationUtil;
 import com.mojang.blaze3d.matrix.MatrixStack;
 import com.mojang.blaze3d.vertex.IVertexBuilder;
@@ -30,8 +30,9 @@ public abstract class PVZZombieModel<T extends PVZZombieEntity> extends EntityMo
 	 * not for current entity.
 	 * {link @ZombieBodyRender}
 	 */
-	public void tickPartAnim(ZombieDropBodyEntity entity, BodyType type, float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch) {
-		switch(type) {
+	@Override
+	public void tickPartAnim(IBodyEntity entity, float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch) {
+		switch(entity.getBodyType()) {
 		case BODY:{
 			int cd = 20;
 			if(entity.getAnimTime() < cd) {
@@ -144,8 +145,9 @@ public abstract class PVZZombieModel<T extends PVZZombieEntity> extends EntityMo
 	/**
 	 * render drop body part.
 	 */
-	public void renderBody(ZombieDropBodyEntity entity, MatrixStack stack, IVertexBuilder buffer, int packedLight, int packedOverlay, BodyType type) {
-		switch(type) {
+	@Override
+	public void renderBody(IBodyEntity entity, MatrixStack stack, IVertexBuilder buffer, int packedLight, int packedOverlay) {
+		switch(entity.getBodyType()) {
 		case HAND:{
 			this.getZombieLeftHand().visible = true;
 			this.getZombieLeftHand().setPos(0, 24, 0);

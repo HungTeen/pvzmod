@@ -1,6 +1,6 @@
 package com.hungteen.pvz.common.item.material;
 
-import com.hungteen.pvz.common.core.EssenceType;
+import com.hungteen.pvz.common.impl.misc.EssenceType;
 import com.hungteen.pvz.common.item.PVZItemGroups;
 
 import net.minecraft.item.Item;

@@ -1,24 +1,18 @@
 package com.hungteen.pvz.common.entity.zombie.roof;
 
-import com.hungteen.pvz.common.core.ZombieType;
+import com.hungteen.pvz.common.impl.ZombieType;
 import com.hungteen.pvz.common.impl.zombie.RoofZombies;
 import com.hungteen.pvz.data.loot.PVZLoot;
 import com.hungteen.pvz.utils.EntityUtil;
 import com.hungteen.pvz.utils.ZombieUtil;
-
-import net.minecraft.entity.Entity;
-import net.minecraft.entity.EntitySize;
-import net.minecraft.entity.EntityType;
-import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.Pose;
+import net.minecraft.entity.*;
 import net.minecraft.entity.ai.attributes.Attributes;
-import net.minecraft.entity.monster.MonsterEntity;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.world.World;
 
 public class GigaGargantuarEntity extends GargantuarEntity {
 
-	public GigaGargantuarEntity(EntityType<? extends MonsterEntity> type, World worldIn) {
+	public GigaGargantuarEntity(EntityType<? extends CreatureEntity> type, World worldIn) {
 		super(type, worldIn);
 		this.isSad = true;
 	}

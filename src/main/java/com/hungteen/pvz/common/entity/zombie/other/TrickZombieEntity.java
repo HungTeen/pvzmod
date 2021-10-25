@@ -1,7 +1,7 @@
 package com.hungteen.pvz.common.entity.zombie.other;
 
-import com.hungteen.pvz.common.core.ZombieType;
 import com.hungteen.pvz.common.entity.zombie.PVZZombieEntity;
+import com.hungteen.pvz.common.impl.ZombieType;
 import com.hungteen.pvz.common.impl.zombie.CustomZombies;
 import com.hungteen.pvz.data.loot.PVZLoot;
 import com.hungteen.pvz.register.EffectRegister;
@@ -9,12 +9,11 @@ import com.hungteen.pvz.register.EntityRegister;
 import com.hungteen.pvz.register.ItemRegister;
 import com.hungteen.pvz.utils.EntityUtil;
 import com.hungteen.pvz.utils.ZombieUtil;
-
+import net.minecraft.entity.CreatureEntity;
 import net.minecraft.entity.EntitySize;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.Pose;
 import net.minecraft.entity.ai.attributes.Attributes;
-import net.minecraft.entity.monster.MonsterEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.util.ActionResultType;
 import net.minecraft.util.DamageSource;
@@ -32,7 +31,7 @@ public class TrickZombieEntity extends PVZZombieEntity{
 	private int lastSummonTick = 0;
 	private final int summonGap = 40;
 	
-	public TrickZombieEntity(EntityType<? extends MonsterEntity> type, World worldIn) {
+	public TrickZombieEntity(EntityType<? extends CreatureEntity> type, World worldIn) {
 		super(type, worldIn);
 	}
 

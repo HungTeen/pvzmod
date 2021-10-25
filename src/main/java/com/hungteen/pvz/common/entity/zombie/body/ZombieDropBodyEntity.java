@@ -2,10 +2,13 @@ package com.hungteen.pvz.common.entity.zombie.body;
 
 import java.util.Optional;
 
-import com.hungteen.pvz.common.core.ZombieType;
+import com.hungteen.pvz.api.IBodyEntity;
+import com.hungteen.pvz.api.enums.BodyType;
+import com.hungteen.pvz.api.types.IZombieType;
 import com.hungteen.pvz.common.entity.PVZEntityBase;
 import com.hungteen.pvz.common.entity.zombie.PVZZombieEntity;
 import com.hungteen.pvz.common.entity.zombie.roof.Edgar090505Entity;
+import com.hungteen.pvz.common.impl.ZombieType;
 import com.hungteen.pvz.common.impl.zombie.GrassZombies;
 import com.hungteen.pvz.common.impl.zombie.PoolZombies;
 import com.hungteen.pvz.common.impl.zombie.RoofZombies;
@@ -25,7 +28,7 @@ import net.minecraft.world.World;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 
-public class ZombieDropBodyEntity extends PVZEntityBase {
+public class ZombieDropBodyEntity extends PVZEntityBase implements IBodyEntity {
 
 	private static final DataParameter<Integer> ZOMBIE_TYPE = EntityDataManager.defineId(ZombieDropBodyEntity.class,
 			DataSerializers.INT);
@@ -185,7 +188,8 @@ public class ZombieDropBodyEntity extends PVZEntityBase {
 	
 	/* getter setter */
 
-	public ZombieType getZombieType() {
+	@Override
+	public IZombieType getZombieType() {
 		final int pos = entityData.get(ZOMBIE_TYPE);
 		return pos < ZombieType.size() ? ZombieType.getZombies().get(pos) : GrassZombies.NORMAL_ZOMBIE;
 	}
@@ -198,6 +202,7 @@ public class ZombieDropBodyEntity extends PVZEntityBase {
 		entityData.set(ZOMBIE_TYPE, type);
 	}
 
+	@Override
 	public BodyType getBodyType() {
 		return BodyType.values()[entityData.get(BODY_TYPE)];
 	}
@@ -214,6 +219,7 @@ public class ZombieDropBodyEntity extends PVZEntityBase {
 		entityData.set(BODY_STATE, state);
 	}
 
+	@Override
 	public int getAnimTime() {
 		return entityData.get(ANIM_TIME);
 	}
@@ -226,6 +232,7 @@ public class ZombieDropBodyEntity extends PVZEntityBase {
 		this.setBodyState(AlgorithmUtil.BitOperator.setBit(this.getBodyState(), HAS_HAND_DEFENCE, flag));
 	}
 	
+	@Override
 	public boolean hasHandDefence() {
 		return AlgorithmUtil.BitOperator.hasBitOne(this.getBodyState(), HAS_HAND_DEFENCE);
 	}
@@ -234,12 +241,9 @@ public class ZombieDropBodyEntity extends PVZEntityBase {
 		this.setBodyState(AlgorithmUtil.BitOperator.setBit(this.getBodyState(), MINI_BODY, flag));
 	}
 	
+	@Override
 	public boolean isMini() {
 		return AlgorithmUtil.BitOperator.hasBitOne(this.getBodyState(), MINI_BODY);
-	}
-
-	public enum BodyType {
-		HAND, HEAD, BODY, LEFT_HAND, RIGHT_HAND, LEFT_LEG, RIGHT_LEG
 	}
 
 }

@@ -1,26 +1,22 @@
 package com.hungteen.pvz.client.gui.search;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Optional;
-
-import com.hungteen.pvz.common.core.PlantType;
-import com.hungteen.pvz.common.core.ZombieType;
-
+import com.hungteen.pvz.api.types.IPlantType;
+import com.hungteen.pvz.api.types.IZombieType;
+import com.hungteen.pvz.common.impl.PlantType;
 import net.minecraft.client.Minecraft;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.TranslationTextComponent;
 
+import java.util.*;
+
 public class SearchOption {
 	public static final List<SearchOption> OPTION = new ArrayList<>();
 	public static final Map<SearchOption, Integer> OPTION_MAP = new HashMap<>();
 	static {
 		putAlamanac(new SearchOption());
-		for(PlantType plant : PlantType.getPlants()) {
+		for(IPlantType plant : PlantType.getPlants()) {
 			putAlamanac(new SearchOption(plant));
 		}
 	}
@@ -30,17 +26,17 @@ public class SearchOption {
 		OPTION.add(a);
 	}
 	
-	private Optional<PlantType> plant = Optional.empty();
-	private Optional<ZombieType> zombie = Optional.empty();
+	private Optional<IPlantType> plant = Optional.empty();
+	private Optional<IZombieType> zombie = Optional.empty();
 	
 	public SearchOption() {
 	}
 	
-	public SearchOption(PlantType plant) {
+	public SearchOption(IPlantType plant) {
 		this.plant = Optional.of(plant);
 	}
 	
-	public SearchOption(ZombieType zombie) {
+	public SearchOption(IZombieType zombie) {
 		this.zombie = Optional.of(zombie);
 	}
 	
@@ -48,11 +44,11 @@ public class SearchOption {
 		return OPTION.get(0);
 	}
 	
-	public static SearchOption get(PlantType plant) {
+	public static SearchOption get(IPlantType plant) {
 		return OPTION.get(plant.getId() + 1);
 	}
 	
-	public static SearchOption get(ZombieType zombie) {
+	public static SearchOption get(IZombieType zombie) {
 		return OPTION.get(PlantType.size() + zombie.getId() + 1);
 	}
 	
@@ -60,7 +56,7 @@ public class SearchOption {
 	public static ITextComponent getOptionName(SearchOption a) {
 		if(a.isPlayer()) return Minecraft.getInstance().player.getName();
 		if(a.isPlant()) {
-			PlantType plant = a.getPlant().get();
+			final IPlantType plant = a.getPlant().get();
 			return new TranslationTextComponent("entity.pvz." + plant.toString().toLowerCase());
 		}
 	    return new TranslationTextComponent("entity.pvz." + a.toString().toLowerCase());
@@ -88,11 +84,11 @@ public class SearchOption {
 		return list;
 	}
 	
-	public Optional<PlantType> getPlant() {
+	public Optional<IPlantType> getPlant() {
 		return this.plant;
 	}
 	
-	public Optional<ZombieType> getZombie() {
+	public Optional<IZombieType> getZombie() {
 		return this.zombie;
 	}
 	

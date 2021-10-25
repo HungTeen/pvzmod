@@ -1,28 +1,17 @@
 package com.hungteen.pvz.common.entity.zombie.pool;
 
-import com.hungteen.pvz.common.core.ZombieType;
 import com.hungteen.pvz.common.entity.ai.goal.attack.PVZZombieAttackGoal;
 import com.hungteen.pvz.common.entity.zombie.PVZZombieEntity;
+import com.hungteen.pvz.common.impl.ZombieType;
 import com.hungteen.pvz.common.impl.zombie.PoolZombies;
 import com.hungteen.pvz.data.loot.PVZLoot;
 import com.hungteen.pvz.register.SoundRegister;
 import com.hungteen.pvz.utils.ZombieUtil;
-
-import net.minecraft.entity.CreatureAttribute;
-import net.minecraft.entity.Entity;
-import net.minecraft.entity.EntitySize;
-import net.minecraft.entity.EntityType;
-import net.minecraft.entity.Pose;
+import net.minecraft.entity.*;
 import net.minecraft.entity.ai.attributes.Attributes;
 import net.minecraft.entity.ai.controller.DolphinLookController;
 import net.minecraft.entity.ai.controller.MovementController;
-import net.minecraft.entity.ai.goal.BreatheAirGoal;
-import net.minecraft.entity.ai.goal.FollowBoatGoal;
-import net.minecraft.entity.ai.goal.JumpGoal;
-import net.minecraft.entity.ai.goal.LookAtGoal;
-import net.minecraft.entity.ai.goal.LookRandomlyGoal;
-import net.minecraft.entity.ai.goal.RandomSwimmingGoal;
-import net.minecraft.entity.monster.MonsterEntity;
+import net.minecraft.entity.ai.goal.*;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.fluid.FluidState;
 import net.minecraft.particles.ParticleTypes;
@@ -42,7 +31,7 @@ import net.minecraft.world.World;
 
 public class ZombieDolphinEntity extends PVZZombieEntity {
 
-	public ZombieDolphinEntity(EntityType<? extends MonsterEntity> type, World worldIn) {
+	public ZombieDolphinEntity(EntityType<? extends CreatureEntity> type, World worldIn) {
 		super(type, worldIn);
 		this.setPathfindingMalus(PathNodeType.WATER, 0.0F);
 		this.moveControl = new MoveHelperController(this);

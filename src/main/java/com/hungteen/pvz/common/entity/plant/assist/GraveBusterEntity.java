@@ -1,6 +1,6 @@
 package com.hungteen.pvz.common.entity.plant.assist;
 
-import com.hungteen.pvz.common.core.PlantType;
+import com.hungteen.pvz.api.types.IPlantType;
 import com.hungteen.pvz.common.entity.ai.goal.target.PVZNearestTargetGoal;
 import com.hungteen.pvz.common.entity.plant.PVZPlantEntity;
 import com.hungteen.pvz.common.entity.zombie.grass.AbstractTombStoneEntity;
@@ -87,7 +87,7 @@ public class GraveBusterEntity extends PVZPlantEntity{
 	}
 	
 	public int getMaxKillCnt() {
-		return MathUtil.getProgressByDif(5, 1, this.getPlantLvl(), PlantUtil.MAX_PLANT_LEVEL, 1, 4);
+		return MathUtil.getProgressByDif(5, 1, this.getPAZLevel(), PlantUtil.MAX_PLANT_LEVEL, 1, 4);
 	}
 	
 	/**
@@ -122,7 +122,7 @@ public class GraveBusterEntity extends PVZPlantEntity{
 	}
 	
 	@Override
-	public PlantType getPlantType() {
+	public IPlantType getPlantType() {
 		return PVZPlants.GRAVE_BUSTER;
 	}
 
@@ -168,7 +168,7 @@ public class GraveBusterEntity extends PVZPlantEntity{
 		
 		@Override
 		public void tick() {
-			if(! this.buster.canPlantNormalUpdate()) {
+			if(! this.buster.canNormalUpdate()) {
 				return ;
 			}
 			final int tick = this.buster.getAttackTime();

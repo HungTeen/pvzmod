@@ -1,29 +1,18 @@
 package com.hungteen.pvz.common.impl.zombie;
 
+import com.hungteen.pvz.PVZMod;
+import com.hungteen.pvz.api.types.IZombieType;
+import com.hungteen.pvz.client.model.entity.zombie.grass.*;
+import com.hungteen.pvz.common.impl.Ranks;
+import com.hungteen.pvz.common.impl.ZombieType;
+import com.hungteen.pvz.register.EntityRegister;
+
 import java.util.ArrayList;
 import java.util.List;
 
-import com.hungteen.pvz.PVZMod;
-import com.hungteen.pvz.client.model.entity.zombie.grass.BackupDancerModel;
-import com.hungteen.pvz.client.model.entity.zombie.grass.BucketHeadZombieModel;
-import com.hungteen.pvz.client.model.entity.zombie.grass.ConeHeadZombieModel;
-import com.hungteen.pvz.client.model.entity.zombie.grass.DancingZombieModel;
-import com.hungteen.pvz.client.model.entity.zombie.grass.FlagZombieModel;
-import com.hungteen.pvz.client.model.entity.zombie.grass.FootballZombieModel;
-import com.hungteen.pvz.client.model.entity.zombie.grass.GigaFootballZombieModel;
-import com.hungteen.pvz.client.model.entity.zombie.grass.NewspaperZombieModel;
-import com.hungteen.pvz.client.model.entity.zombie.grass.NormalZombieModel;
-import com.hungteen.pvz.client.model.entity.zombie.grass.OldZombieModel;
-import com.hungteen.pvz.client.model.entity.zombie.grass.PoleZombieModel;
-import com.hungteen.pvz.client.model.entity.zombie.grass.ScreenDoorZombieModel;
-import com.hungteen.pvz.client.model.entity.zombie.grass.SundayEditionZombieModel;
-import com.hungteen.pvz.common.core.ZombieType;
-import com.hungteen.pvz.common.impl.Ranks;
-import com.hungteen.pvz.register.EntityRegister;
-
 public final class GrassZombies extends ZombieType {
 
-	private static final List<ZombieType> LIST = new ArrayList<>();
+	private static final List<IZombieType> LIST = new ArrayList<>();
 	
 	/*
 	 * day.

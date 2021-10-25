@@ -2,9 +2,9 @@ package com.hungteen.pvz.client.model.entity.zombie.grass;
 
 import java.util.Optional;
 
+import com.hungteen.pvz.api.IBodyEntity;
+import com.hungteen.pvz.api.enums.BodyType;
 import com.hungteen.pvz.client.model.entity.zombie.PVZZombieModel;
-import com.hungteen.pvz.common.entity.zombie.body.ZombieDropBodyEntity;
-import com.hungteen.pvz.common.entity.zombie.body.ZombieDropBodyEntity.BodyType;
 import com.hungteen.pvz.common.entity.zombie.grass.PoleZombieEntity;
 import com.hungteen.pvz.utils.AnimationUtil;
 import com.mojang.blaze3d.matrix.MatrixStack;
@@ -121,10 +121,10 @@ public class PoleZombieModel extends PVZZombieModel<PoleZombieEntity> {
 	}
 	
 	@Override
-	public void renderBody(ZombieDropBodyEntity entity, MatrixStack stack, IVertexBuilder buffer, int packedLight,
-			int packedOverlay, BodyType type) {
-		super.renderBody(entity, stack, buffer, packedLight, packedOverlay, type);
-		if(type == BodyType.BODY) {
+	public void renderBody(IBodyEntity entity, MatrixStack stack, IVertexBuilder buffer, int packedLight,
+			int packedOverlay) {
+		super.renderBody(entity, stack, buffer, packedLight, packedOverlay);
+		if(entity.getBodyType() == BodyType.BODY) {
 			this.right_hand2.xRot = ! entity.hasHandDefence() ? 0 : -1.5708F;
 		}
 	}

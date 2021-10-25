@@ -5,7 +5,7 @@ import java.util.Collections;
 import java.util.List;
 
 import com.hungteen.pvz.PVZMod;
-import com.hungteen.pvz.common.core.PlantType;
+import com.hungteen.pvz.api.types.IPlantType;
 import com.hungteen.pvz.common.entity.ai.goal.target.PVZNearestTargetGoal;
 import com.hungteen.pvz.common.entity.ai.goal.target.PVZTargetGoal;
 import com.hungteen.pvz.common.entity.bullet.itembullet.MetalItemEntity;
@@ -171,7 +171,7 @@ public class MagnetShroomEntity extends PVZPlantEntity {
 	}
 	
 	@Override
-	public PlantType getPlantType() {
+	public IPlantType getPlantType() {
 		return PVZPlants.MAGNET_SHROOM;
 	}
 	

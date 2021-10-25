@@ -2,10 +2,10 @@ package com.hungteen.pvz.common.event;
 
 import com.hungteen.pvz.PVZConfig;
 import com.hungteen.pvz.PVZMod;
+import com.hungteen.pvz.api.types.IPlantType;
 import com.hungteen.pvz.client.gui.search.SearchOption;
 import com.hungteen.pvz.common.capability.CapabilityHandler;
 import com.hungteen.pvz.common.capability.player.PlayerDataManager;
-import com.hungteen.pvz.common.core.PlantType;
 import com.hungteen.pvz.common.enchantment.EnchantmentRegister;
 import com.hungteen.pvz.common.entity.plant.PVZPlantEntity;
 import com.hungteen.pvz.common.event.events.PlayerLevelUpEvent;
@@ -23,7 +23,6 @@ import com.hungteen.pvz.register.ItemRegister;
 import com.hungteen.pvz.utils.PlayerUtil;
 import com.hungteen.pvz.utils.StringUtil;
 import com.hungteen.pvz.utils.enums.Resources;
-
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.PlayerEntity;
@@ -170,7 +169,7 @@ public class PVZPlayerEvents {
 	}
 	
 	@SubscribeEvent
-	public static void onPlayerPlantLevelUp(PlayerLevelUpEvent.PlantLevelUpEvent ev) {
+	public static void onPlayerPlantLevelUp(PlayerLevelUpEvent.PAZLevelUpEvent ev) {
 		if(! ev.getPlayer().level.isClientSide) {
 			PlayerUtil.addResource(ev.getPlayer(), Resources.TREE_XP, ev.getCurrentLevel() * 2);
 		}
@@ -182,7 +181,7 @@ public class PVZPlayerEvents {
 		if(! player.level.isClientSide) { //unlock almanac
 			SearchOption a = null;
 			if(ev.getItemStack().getItem() instanceof PlantCardItem) {// unlock plant card
-			    PlantType plant = ((PlantCardItem) ev.getItemStack().getItem()).plantType;
+			    IPlantType plant = ((PlantCardItem) ev.getItemStack().getItem()).plantType;
 			    a = SearchOption.get(plant);
 			}
 			PlayerUtil.unLockAlmanac(player, a);
