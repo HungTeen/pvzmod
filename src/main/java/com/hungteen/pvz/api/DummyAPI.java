@@ -1,6 +1,7 @@
 package com.hungteen.pvz.api;
 
 import com.hungteen.pvz.api.PVZAPI.IPVZAPI;
+import com.hungteen.pvz.api.types.IEssenceType;
 import com.hungteen.pvz.api.types.IPAZType;
 import com.hungteen.pvz.api.types.IPlantType;
 import com.hungteen.pvz.api.types.IZombieType;
@@ -34,6 +35,16 @@ public class DummyAPI implements IPVZAPI {
     }
 
     @Override
+    public void registerEssenceType(IEssenceType type) {
+
+    }
+
+    @Override
+    public void registerEssenceTypes(Collection<IEssenceType> types) {
+
+    }
+
+    @Override
     public List<IPlantType> getPlants() {
         return new ArrayList<>();
     }
@@ -45,6 +56,11 @@ public class DummyAPI implements IPVZAPI {
 
     @Override
     public List<IPAZType> getPAZs() {
+        return new ArrayList<>();
+    }
+
+    @Override
+    public List<IEssenceType> getEssences() {
         return new ArrayList<>();
     }
 

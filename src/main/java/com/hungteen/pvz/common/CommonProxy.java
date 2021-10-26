@@ -10,7 +10,6 @@ public class CommonProxy {
 	}
 	
 	public void setUp() {
-		
 	}
 	
 	public void setUpClient() {

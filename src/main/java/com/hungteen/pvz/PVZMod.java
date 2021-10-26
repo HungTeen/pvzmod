@@ -1,16 +1,13 @@
 package com.hungteen.pvz;
 
-import org.apache.commons.lang3.tuple.Pair;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
-
 import com.hungteen.pvz.client.ClientProxy;
 import com.hungteen.pvz.common.CommonProxy;
 import com.hungteen.pvz.common.advancement.AdvancementHandler;
+import com.hungteen.pvz.common.block.OriginBlock;
+import com.hungteen.pvz.common.datapack.DataPackRegister;
 import com.hungteen.pvz.common.world.gen.GenStructures;
 import com.hungteen.pvz.register.BiomeRegister;
 import com.hungteen.pvz.register.CoreRegister;
-
 import net.minecraftforge.common.ForgeConfigSpec;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.eventbus.api.EventPriority;
@@ -25,6 +22,9 @@ import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
 import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.minecraftforge.fml.event.lifecycle.FMLLoadCompleteEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
+import org.apache.commons.lang3.tuple.Pair;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 @Mod(PVZMod.MOD_ID)
 @Mod.EventBusSubscriber(modid = PVZMod.MOD_ID, bus = EventBusSubscriber.Bus.MOD)
@@ -55,6 +55,7 @@ public class PVZMod {
     	IEventBus forgeBus = MinecraftForge.EVENT_BUS;
     	forgeBus.addListener(EventPriority.NORMAL, GenStructures::addDimensionalSpacing);
     	forgeBus.addListener(EventPriority.HIGH, BiomeRegister::biomeModification);
+		forgeBus.addListener(EventPriority.NORMAL, DataPackRegister::addReloadListenerEvent);
     	
     	AdvancementHandler.init();
     	CoreRegister.register();
@@ -72,6 +73,7 @@ public class PVZMod {
 		event.enqueueWork(() -> {
             PROXY.setUp();
             RegistryHandler.setUp(event);
+			OriginBlock.updateRadiationMap();
 		});
     }
 	

@@ -1,6 +1,7 @@
 package com.hungteen.pvz.api;
 
 import com.google.common.base.Suppliers;
+import com.hungteen.pvz.api.types.IEssenceType;
 import com.hungteen.pvz.api.types.IPAZType;
 import com.hungteen.pvz.api.types.IPlantType;
 import com.hungteen.pvz.api.types.IZombieType;
@@ -54,6 +55,16 @@ public class PVZAPI {
 		 */
 		void registerZombieTypes(Collection<IZombieType> types);
 
+		/**
+		 * register single essence type.
+		 */
+		void registerEssenceType(IEssenceType type);
+
+		/**
+		 * register essence type list.
+		 */
+		void registerEssenceTypes(Collection<IEssenceType> types);
+
 		/* getting stuffs */
 
 		/**
@@ -70,6 +81,11 @@ public class PVZAPI {
 		 * get all registered plant & zombie types.
 		 */
 		List<IPAZType> getPAZs();
+
+		/**
+		 * get all registered essence types.
+		 */
+		List<IEssenceType> getEssences();
 
 		/**
 		 * get type by specific identity.

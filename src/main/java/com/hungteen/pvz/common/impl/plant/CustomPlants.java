@@ -5,7 +5,7 @@ import com.hungteen.pvz.api.PVZAPI;
 import com.hungteen.pvz.api.types.IPlantType;
 import com.hungteen.pvz.client.model.entity.plant.arma.KernelPultModel;
 import com.hungteen.pvz.client.model.entity.plant.defence.WaterGuardModel;
-import com.hungteen.pvz.common.impl.Essences;
+import com.hungteen.pvz.common.impl.EssenceType;
 import com.hungteen.pvz.common.impl.PlantType;
 import com.hungteen.pvz.common.impl.Ranks;
 import com.hungteen.pvz.register.EntityRegister;
@@ -20,7 +20,7 @@ public final class CustomPlants extends PlantType {
 	
 	public static final IPlantType WATER_GUARD = new CustomPlants("water_guard", new PlantFeatures().isWaterPlant()
 			.cost(50).level(20).limitLevel(15)
-			.cd(PlantCardCD.LITTLE_SLOW).rank(Ranks.GRAY).essence(Essences.DEFENCE)
+			.cd(PlantCardCD.LITTLE_SLOW).rank(Ranks.GRAY).essence(EssenceType.DEFENCE)
 			.entityType(() -> EntityRegister.WATER_GUARD.get())
 			.summonCard(() -> ItemRegister.WATER_GUARD_CARD.get())
 			.enjoyCard(() -> ItemRegister.WATER_GUARD_ENJOY_CARD.get())
@@ -29,7 +29,7 @@ public final class CustomPlants extends PlantType {
 	
 	public static final IPlantType BUTTER_PULT = new CustomPlants("butter_pult", new PlantFeatures()
 			.cost(275).level(20).limitLevel(75)
-			.cd(PlantCardCD.NORMAL).rank(Ranks.BLACK).essence(Essences.ARMA)
+			.cd(PlantCardCD.NORMAL).rank(Ranks.BLACK).essence(EssenceType.ARMA)
 			.entityType(() -> EntityRegister.BUTTER_PULT.get())
 			.summonCard(() -> ItemRegister.BUTTER_PULT_CARD.get())
 			.enjoyCard(() -> ItemRegister.BUTTER_PULT_ENJOY_CARD.get())
