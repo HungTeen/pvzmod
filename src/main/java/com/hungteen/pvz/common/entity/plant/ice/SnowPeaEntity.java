@@ -35,7 +35,7 @@ public class SnowPeaEntity extends PeaShooterEntity implements IIceEffect{
 	}
 	
 	/**
-	 * cold effect level.
+	 * cold effect maxLevel.
 	 */
 	public int getColdLvl() {
 		return MathUtil.getProgressByDif(4, 1, this.getPAZLevel(), PlantUtil.MAX_PLANT_LEVEL, 5, 9);

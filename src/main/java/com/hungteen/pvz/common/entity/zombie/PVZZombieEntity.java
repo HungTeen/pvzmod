@@ -182,7 +182,7 @@ public abstract class PVZZombieEntity extends AbstractPAZEntity implements IZomb
 				EntityUtil.playSound(this, s);
 			});
 			/*just test */
-			//set its spawn level
+			//set its spawn maxLevel
 			this.setPAZLevel(ZombieUtil.caculateZombieLevel(this));
 			/*end test */
 			this.updateAttributes();
@@ -285,7 +285,7 @@ public abstract class PVZZombieEntity extends AbstractPAZEntity implements IZomb
 	}
 	
 	public void updateZombieLevel(int lvl) {
-		if(this.getPAZLevel() != lvl) {//level changed.
+		if(this.getPAZLevel() != lvl) {//maxLevel changed.
 			this.setPAZLevel(lvl);
 		}
 	}
@@ -352,7 +352,7 @@ public abstract class PVZZombieEntity extends AbstractPAZEntity implements IZomb
 	}
 	
 	/**
-	 * called every time when zombie's level changed.
+	 * called every time when zombie's maxLevel changed.
 	 * {@link #onSpawnedByPlayer(PlayerEntity, int)}
 	 */
 	public void onLevelChanged() {
@@ -1042,7 +1042,7 @@ public abstract class PVZZombieEntity extends AbstractPAZEntity implements IZomb
 	 * how much xp will it get, when killed by player or plants.
 	 */
 	public float getZombieXp() {
-		return this.getZombieType().getXp();
+		return this.getZombieType().getXpPoint();
 	}
 
 	@Override

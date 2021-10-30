@@ -1,10 +1,7 @@
 package com.hungteen.pvz.common.impl;
 
 import com.hungteen.pvz.api.PVZAPI.IPVZAPI;
-import com.hungteen.pvz.api.types.IEssenceType;
-import com.hungteen.pvz.api.types.IPAZType;
-import com.hungteen.pvz.api.types.IPlantType;
-import com.hungteen.pvz.api.types.IZombieType;
+import com.hungteen.pvz.api.types.*;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -44,6 +41,16 @@ public class PVZAPIImpl implements IPVZAPI{
 	}
 
 	@Override
+	public void registerCD(ICoolDown type) {
+		CoolDowns.registerCD(type);
+	}
+
+	@Override
+	public void registerCDs(Collection<ICoolDown> types) {
+		CoolDowns.registerCDs(types);
+	}
+
+	@Override
 	public List<IPlantType> getPlants() {
 		return PlantType.getPlants();
 	}
@@ -68,7 +75,19 @@ public class PVZAPIImpl implements IPVZAPI{
 
 	@Override
 	public Optional<IPAZType> getTypeByID(String id) {
-		//TODO 根据id获取type
+		final Optional<IPlantType> opt1 = getPlantTypeByID(id);
+		final Optional<IZombieType> opt2 = getZombieTypeByID(id);
+		return opt1.isPresent() ? Optional.ofNullable(opt1.get()) : Optional.ofNullable(opt2.get());
+	}
+
+	@Override
+	public Optional<IPlantType> getPlantTypeByID(String id) {
+		return PlantType.getPlantByName(id);
+	}
+
+	@Override
+	public Optional<IZombieType> getZombieTypeByID(String id) {
+		//TODO 通过僵尸名获取type
 		return Optional.empty();
 	}
 

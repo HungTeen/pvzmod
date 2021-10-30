@@ -275,11 +275,11 @@ public abstract class PVZPlantEntity extends AbstractPAZEntity implements IPlant
 	}
 	
 	/**
-	 * update plant's level.
+	 * update plant's maxLevel.
 	 * {@link #plantTick()}
 	 */
 	public void updatePlantLevel(int lvl) {
-		if(this.getPAZLevel() != lvl) {//level changed
+		if(this.getPAZLevel() != lvl) {//maxLevel changed
 		    this.setPAZLevel(lvl);
 		    this.getAttribute(Attributes.MAX_HEALTH).setBaseValue(this.getPlantHealth());
 		    this.heal(this.getMaxHealth());

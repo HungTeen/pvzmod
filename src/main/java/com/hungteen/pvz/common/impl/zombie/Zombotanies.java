@@ -1,20 +1,14 @@
 package com.hungteen.pvz.common.impl.zombie;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import com.hungteen.pvz.PVZMod;
 import com.hungteen.pvz.api.types.IZombieType;
-import com.hungteen.pvz.client.model.entity.zombie.zombotany.GatlingPeaZombieModel;
-import com.hungteen.pvz.client.model.entity.zombie.zombotany.JalapenoZombieModel;
-import com.hungteen.pvz.client.model.entity.zombie.zombotany.PeaShooterZombieModel;
-import com.hungteen.pvz.client.model.entity.zombie.zombotany.PumpkinZombieModel;
-import com.hungteen.pvz.client.model.entity.zombie.zombotany.SquashZombieModel;
-import com.hungteen.pvz.client.model.entity.zombie.zombotany.TallNutZombieModel;
-import com.hungteen.pvz.client.model.entity.zombie.zombotany.WallNutZombieModel;
+import com.hungteen.pvz.client.model.entity.zombie.zombotany.*;
 import com.hungteen.pvz.common.impl.Ranks;
 import com.hungteen.pvz.common.impl.ZombieType;
 import com.hungteen.pvz.register.EntityRegister;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public final class Zombotanies extends ZombieType {
 
@@ -24,42 +18,49 @@ public final class Zombotanies extends ZombieType {
 	 * zombotany.
 	 */
 	public static final ZombieType PEASHOOTER_ZOMBIE = new Zombotanies("peashooter_zombie", new ZombieFeatures()
+			.difficulty(10).invasionWeight(90).waveWeight(45)
 		    .rank(Ranks.GREEN).xp(8)
 			.entityType(() -> EntityRegister.PEASHOOTER_ZOMBIE.get())
 			.zombieModel(() -> PeaShooterZombieModel::new).scale(0.5F)
 	);
 	
 	public static final ZombieType WALLNUT_ZOMBIE = new Zombotanies("wallnut_zombie", new ZombieFeatures()
+			.difficulty(14).invasionWeight(80).waveWeight(40)
 		    .rank(Ranks.GREEN).xp(25)
 			.entityType(() -> EntityRegister.WALLNUT_ZOMBIE.get())
 			.zombieModel(() -> WallNutZombieModel::new).scale(0.5F)
 	);
 	
 	public static final ZombieType GATLINGPEA_ZOMBIE = new Zombotanies("gatlingpea_zombie", new ZombieFeatures()
+			.difficulty(40).invasionWeight(70).waveWeight(25)
 		    .rank(Ranks.PURPLE).xp(10)
 			.entityType(() -> EntityRegister.GATLINGPEA_ZOMBIE.get())
 			.zombieModel(() -> GatlingPeaZombieModel::new).scale(0.5F)
 	);
 	
 	public static final ZombieType SQUASH_ZOMBIE = new Zombotanies("squash_zombie", new ZombieFeatures()
+			.difficulty(15).invasionWeight(80).waveWeight(30)
 		    .rank(Ranks.BLUE).xp(10)
 			.entityType(() -> EntityRegister.SQUASH_ZOMBIE.get())
 			.zombieModel(() -> SquashZombieModel::new).scale(0.5F)
 	);
 	
 	public static final ZombieType JALAPENO_ZOMBIE = new Zombotanies("jalapeno_zombie", new ZombieFeatures()
+			.difficulty(42).invasionWeight(70).waveWeight(20)
 		    .rank(Ranks.GOLD).xp(12)
 			.entityType(() -> EntityRegister.JALAPENO_ZOMBIE.get())
 			.zombieModel(() -> JalapenoZombieModel::new).scale(0.5F)
 	);
 	
 	public static final ZombieType TALLNUT_ZOMBIE = new Zombotanies("tallnut_zombie", new ZombieFeatures()
+			.difficulty(24).invasionWeight(80).waveWeight(30)
 		    .rank(Ranks.PURPLE).xp(36)
 			.entityType(() -> EntityRegister.TALLNUT_ZOMBIE.get())
 			.zombieModel(() -> TallNutZombieModel::new).scale(0.5F)
 	);
 	
 	public static final ZombieType PUMPKIN_ZOMBIE = new Zombotanies("pumpkin_zombie", new ZombieFeatures()
+			.difficulty(20).invasionWeight(80).waveWeight(45)
 		    .rank(Ranks.PURPLE).xp(33)
 			.entityType(() -> EntityRegister.PUMPKIN_ZOMBIE.get())
 			.zombieModel(() -> PumpkinZombieModel::new).scale(0.5F)

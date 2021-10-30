@@ -47,7 +47,7 @@ public class PlayerDataManager {
 	/* summon card inventory */
 	private final List<ItemStack> cards = new ArrayList<>();
 	private int emptySlot;
-	/* plant & zombie level */
+	/* plant & zombie maxLevel */
 	private final Map<IPAZType, Integer> pazLevel = new HashMap<>();
 	private final Map<IPAZType, Integer> pazXp = new HashMap<>();
 	/* plant & zombie cd */
@@ -116,9 +116,9 @@ public class PlayerDataManager {
 				}
 			}
 		}
-		{// load plants & zombies level.
+		{// load plants & zombies maxLevel.
 			/*
-			 * remain to keep old version's plant level.
+			 * remain to keep old version's plant maxLevel.
 			 */
 			PlantType.getPlants().forEach(plant -> {
 				final CompoundNBT plantTag = (CompoundNBT) baseTag.get(plant.toString());
@@ -201,7 +201,7 @@ public class PlayerDataManager {
 			nbt.putInt("current_pos", this.emptySlot);
 			baseTag.put("card_inventory", nbt);
 		}
-		{// save plant & zombie level.
+		{// save plant & zombie maxLevel.
 			final CompoundNBT nbt = new CompoundNBT();
 			PVZAPI.get().getPAZs().forEach(plant -> {
 		        final CompoundNBT plantNBT = new CompoundNBT();
@@ -284,7 +284,7 @@ public class PlayerDataManager {
 			}
 			this.setCurrentPos(this.getCurrentPos());
 		}
-		{// plants level.
+		{// plants maxLevel.
 			for (IPlantType plant : PlantType.getPlants()) {
 		       this.sendPAZLevelPacket(player, plant);
 	        }
@@ -359,7 +359,7 @@ public class PlayerDataManager {
 	}
 	
 	/**
-	 * add tree xp and level up.
+	 * add tree xp and maxLevel up.
 	 */
 	private void addTreeXp(int now, int num) {
 		int lvl = resources.get(Resources.TREE_LVL);

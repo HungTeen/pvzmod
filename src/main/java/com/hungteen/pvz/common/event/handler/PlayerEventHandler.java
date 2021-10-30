@@ -52,7 +52,7 @@ public class PlayerEventHandler {
 	public static void onPlayerKillEntity(PlayerEntity player, DamageSource source, LivingEntity living) {
 		if(living instanceof PVZZombieEntity) {
 			PVZZombieEntity zombie = (PVZZombieEntity) living;
-			PlayerUtil.addResource(player, Resources.TREE_XP, zombie.getZombieType().getXp());
+			PlayerUtil.addResource(player, Resources.TREE_XP, zombie.getZombieType().getXpPoint());
 			onPlayerKillZombie(player, zombie.getZombieType());
 		}
 		CriteriaTriggers.PLAYER_KILLED_ENTITY.trigger((ServerPlayerEntity) player, living, source);

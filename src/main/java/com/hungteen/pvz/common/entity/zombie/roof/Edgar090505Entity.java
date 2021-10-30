@@ -174,13 +174,13 @@ public class Edgar090505Entity extends AbstractBossZombieEntity {
             //TODO 召唤蹦极
 //            this.getSummonZombie().ifPresent(zombie -> {
 //                this.onBossSummon(zombie, blockPosition().above(10));
-//                BungeeZombieEntity bungee = EntityRegister.BUNGEE_ZOMBIE.get().create(level);
+//                BungeeZombieEntity bungee = EntityRegister.BUNGEE_ZOMBIE.get().create(maxLevel);
 //                bungee.setBungeeType(BungeeTypes.SUMMON);
 //                bungee.setBungeeState(BungeeStates.DOWN);
 //                bungee.setStealTarget(zombie);
 //                BlockPos pos = this.getRandom().nextInt(5) == 0 ?
-//                        WorldUtil.getSuitableHeightRandomPos(level, blockPosition(), 20, 40) :
-//                        WorldUtil.getSuitableHeightRandomPos(level, blockPosition(), 3, 8);
+//                        WorldUtil.getSuitableHeightRandomPos(maxLevel, blockPosition(), 20, 40) :
+//                        WorldUtil.getSuitableHeightRandomPos(maxLevel, blockPosition(), 3, 8);
 //                this.onBossSummon(bungee, pos.above(20));
 //                EntityUtil.playSound(bungee, SoundRegister.BUNGEE_SCREAM.get());
 //            });
@@ -331,7 +331,7 @@ public class Edgar090505Entity extends AbstractBossZombieEntity {
 //        final int pos = this.getRandom().nextInt(summon_zombie_list.size());
 //        final IZombieType type = summon_zombie_list.get(pos);
 //        if (type.getEntityType().isPresent()) {
-//            return Optional.ofNullable(type.getEntityType().get().create(level));
+//            return Optional.ofNullable(type.getEntityType().get().create(maxLevel));
 //        }
         return Optional.empty();
     }

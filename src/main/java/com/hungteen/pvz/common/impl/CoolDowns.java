@@ -1,10 +1,32 @@
-package com.hungteen.pvz.common.impl.plant;
+package com.hungteen.pvz.common.impl;
 
+import com.hungteen.pvz.PVZMod;
+import com.hungteen.pvz.api.PVZAPI;
 import com.hungteen.pvz.api.types.ICoolDown;
 import com.hungteen.pvz.utils.MathUtil;
 import com.hungteen.pvz.utils.PlantUtil;
 
-public class PlantCardCD {
+import javax.annotation.Nullable;
+import java.util.*;
+
+public abstract class CoolDowns implements ICoolDown {
+
+	private static final List<ICoolDown> LIST = new ArrayList<>();
+	private static final Map<String, ICoolDown> MAP = new HashMap<>();
+
+	public static final ICoolDown DEFAULT = new ICoolDown() {
+
+		@Override
+		public String getTranslateKey() {
+			return "misc.pvz.cd.default";
+		}
+
+		@Override
+		public int getCD(int lvl) {
+			return 100;
+		}
+
+	};
 
 	public static final ICoolDown SUPER_FAST = new ICoolDown() {
 		
@@ -159,5 +181,37 @@ public class PlantCardCD {
 		}
 		
 	};
-	
+
+	public static void registerCD(ICoolDown cd){
+		if(! MAP.containsKey(cd.toString())){
+			MAP.put(cd.toString(), cd);
+		} else{
+			PVZMod.LOGGER.warn("CD Register : Duplicate CoolDown Type.");
+		}
+	}
+
+	public static void registerCDs(Collection<ICoolDown> cds){
+		cds.forEach(cd -> registerCD(cd));
+	}
+
+	public static void register(){
+		PVZAPI.get().registerCDs(LIST);
+	}
+
+	@Nullable
+	public static ICoolDown getCDByName(String name){
+		return MAP.getOrDefault(name, null);
+	}
+
+	private final String name;
+
+	protected CoolDowns(String name){
+		this.name = name;
+		LIST.add(this);
+	}
+
+	@Override
+	public String toString() {
+		return name;
+	}
 }

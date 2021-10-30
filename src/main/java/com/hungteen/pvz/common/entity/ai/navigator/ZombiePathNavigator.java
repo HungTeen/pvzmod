@@ -27,10 +27,10 @@ public class ZombiePathNavigator extends GroundPathNavigator {
 //			final Path path = this.mob.getNavigation().getPath();
 //			if(path != null) {
 //				for(int i = 0;i < path.getNodeCount(); ++ i) {
-//					ItemEntity item = EntityType.ITEM.create(this.mob.level);
+//					ItemEntity item = EntityType.ITEM.create(this.mob.maxLevel);
 //					item.setItem(new ItemStack(Items.OAK_LOG));
 //					item.setPos(path.getNode(i).x, path.getNode(i).y, path.getNode(i).z);
-//					this.mob.level.addFreshEntity(item);
+//					this.mob.maxLevel.addFreshEntity(item);
 //				}
 //			}
 //		}

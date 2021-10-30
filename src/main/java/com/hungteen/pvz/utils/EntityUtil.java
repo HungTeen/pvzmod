@@ -216,7 +216,7 @@ public class EntityUtil {
 	}
 	
 	/**
-	 * entity's level.
+	 * entity's maxLevel.
 	 * {@link PVZEntityProvider}
 	 */
 	public static int getEntityLevel(LivingEntity entity) {

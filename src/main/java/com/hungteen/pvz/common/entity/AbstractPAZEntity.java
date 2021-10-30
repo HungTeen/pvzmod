@@ -27,9 +27,9 @@ public abstract class AbstractPAZEntity extends CreatureEntity implements IPAZEn
     private static final DataParameter<Optional<UUID>> OWNER_UUID = EntityDataManager.defineId(AbstractPAZEntity.class, DataSerializers.OPTIONAL_UUID);
     private static final DataParameter<Integer> PAZ_LVL = EntityDataManager.defineId(AbstractPAZEntity.class, DataSerializers.INT);
     private static final DataParameter<Integer> EXIST_TICK = EntityDataManager.defineId(AbstractPAZEntity.class, DataSerializers.INT);
-    //handler level, level range in (1, 128).
+    //handler maxLevel, maxLevel range in (1, 128).
     protected static final int LEVEL_FLAG_LEN = 7;
-    //handle sync level.
+    //handle sync maxLevel.
     private static final int LEVEL_SYNC_CD = 1200;
     protected PlayerEntity ownerPlayer;
     protected boolean canBeCold = true;
@@ -88,8 +88,8 @@ public abstract class AbstractPAZEntity extends CreatureEntity implements IPAZEn
 
     public void normalPAZTick(){
         //TODO 植物信息同步
-/*        *//* update plant level & outer plant level *//*
-        if(!level.isClientSide && this.getExistTick() % PLANT_LEVEL_SYNC_CD == 5) {
+/*        *//* update plant maxLevel & outer plant maxLevel *//*
+        if(!maxLevel.isClientSide && this.getExistTick() % PLANT_LEVEL_SYNC_CD == 5) {
             this.getOwnerPlayer().ifPresent(player -> {
                 this.getPlantInfo().ifPresent(info -> {
                     if(info.needSyncLevel) {
@@ -118,7 +118,7 @@ public abstract class AbstractPAZEntity extends CreatureEntity implements IPAZEn
     }
 
     public int getCoolDownTime() {
-        return this.getPAZType().getCD().getCD(this.getPAZLevel());
+        return this.getPAZType().getCoolDown().getCD(this.getPAZLevel());
     }
 
     public IRankType getPlantRank() {

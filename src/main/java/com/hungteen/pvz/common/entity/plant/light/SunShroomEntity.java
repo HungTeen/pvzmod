@@ -81,7 +81,7 @@ public class SunShroomEntity extends PlantProducerEntity {
 	}
 	
 	/**
-	 * get normal gen sun amount by level.
+	 * get normal gen sun amount by maxLevel.
 	 */
 	public int getSuperSunAmount(){
 		if(this.isPlantInStage(1)) {

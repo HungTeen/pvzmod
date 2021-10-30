@@ -33,8 +33,8 @@ public class InvasionEvents extends InvasionType {
 		    @Override
 			public List<IZombieType> getSpawnZombies(World world) {
 		    	WeightList<IZombieType> list = new WeightList<>();
-		    	ZombieType.getZombies().stream().filter(type -> type.getInvasionWeight() > 0).forEach(type -> {
-		    		list.addItem(type, type.getInvasionWeight());
+		    	ZombieType.getZombies().stream().filter(type -> type.getRandomInvasionWeight() > 0).forEach(type -> {
+		    		list.addItem(type, type.getRandomInvasionWeight());
 		    	});
 		    	List<IZombieType> zombies = new ArrayList<>();
 		    	final int spawnCnt = MathUtil.getRandomMinMax(world.getRandom(), 1, 5);

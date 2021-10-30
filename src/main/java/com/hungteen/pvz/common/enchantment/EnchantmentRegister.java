@@ -44,14 +44,14 @@ public class EnchantmentRegister {
 
 	public static final EnchantmentType ENTITY_CARD = EnchantmentType.create("entity_card", (item) -> {
 		if(item instanceof PlantCardItem) {
-			return ! ((PlantCardItem) item).plantType.isBlockPlant() && ! ((PlantCardItem) item).plantType.isOuterPlant();
+			return ! ((PlantCardItem) item).plantType.getPlantBlock().isPresent() && ! ((PlantCardItem) item).plantType.isOuterPlant();
 		}
 		return false;
 	});
 	
 	public static final EnchantmentType PLANT_OR_OUTER_CARD = EnchantmentType.create("plant_or_outer_card", (item) -> {
 		if(item instanceof PlantCardItem) {
-			return ! ((PlantCardItem) item).plantType.isBlockPlant();
+			return ! ((PlantCardItem) item).plantType.getPlantBlock().isPresent();
 		}
 		return false;
 	});

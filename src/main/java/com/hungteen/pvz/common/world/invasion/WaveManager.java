@@ -321,8 +321,8 @@ public class WaveManager {
 	private void updateSpawns() {
 		PVZInvasionData data = PVZInvasionData.getOverWorldInvasionData(world);
 		for(IZombieType zombie : ZombieType.getZombies()) {
-			if(data.hasZombieSpawnEntry(zombie) && zombie.getWaveWeight() > 0) {
-				this.spawnList.addItem(zombie, zombie.getWaveWeight());
+			if(data.hasZombieSpawnEntry(zombie) && zombie.getWaveSpawnWeight() > 0) {
+				this.spawnList.addItem(zombie, zombie.getWaveSpawnWeight());
 			}
 		}
 	}

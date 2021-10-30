@@ -7,15 +7,15 @@ import net.minecraft.util.text.TranslationTextComponent;
 
 public enum Resources {
 
-	/* player tree level */
+	/* player tree maxLevel */
 	TREE_LVL(1, 200),
-	/* xp of player tree level */
+	/* xp of player tree maxLevel */
 	TREE_XP(0, 0),
 	/* money, common currency */
 	MONEY(0, 9999999),
 	/* jewel, special currency */
 	GEM_NUM(0, 9999999),
-	/* sun amount, maximum is limited by tree level*/
+	/* sun amount, maximum is limited by tree maxLevel*/
 	SUN_NUM(0, 0),
 	/* plant food amount */
 	ENERGY_NUM(0, 0),

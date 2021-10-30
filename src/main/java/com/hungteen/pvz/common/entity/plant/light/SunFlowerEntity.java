@@ -33,14 +33,14 @@ public class SunFlowerEntity extends PlantProducerEntity{
 	}
 
 	/**
-	 * get normal gen sun amount by level.
+	 * get normal gen sun amount by maxLevel.
 	 */
 	public int getSunAmount(){
 		return MathUtil.getProgressByDif(4, 5, this.getPAZLevel(), PlantUtil.MAX_PLANT_LEVEL, 25, 50);
 	}
 	
 	/**
-	 * get normal gen sun amount by level.
+	 * get normal gen sun amount by maxLevel.
 	 */
 	public int getSuperSunAmount(){
 		return this.getThreeStage(500, 750, 1000);

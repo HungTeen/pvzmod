@@ -217,7 +217,7 @@ public class PeaGunItem extends Item {
 //					peaType = PeaEntity.Type.HUGE;
 //				}
 //			}
-//			PeaEntity pea = new PeaEntity(player.level, player, peaType, getPeaState(plant, stack.getItem()));
+//			PeaEntity pea = new PeaEntity(player.maxLevel, player, peaType, getPeaState(plant, stack.getItem()));
 //			pea.setPower(EnchantmentHelper.getItemEnchantmentLevel(Enchantments.POWER_ARROWS, peaGun));// Power Enchantment can affect pea gun.
 //			Vector3d vec = player.getLookAngle();
 //			Vector3d offset = vec.scale(SHOOT_OFFSET);
@@ -246,7 +246,7 @@ public class PeaGunItem extends Item {
 //			pea.summonByOwner(player);
 //			pea.setAttackDamage(2F);
 //			pea.setDeltaMovement(vec.scale(speed));
-//			player.level.addFreshEntity(pea);
+//			player.maxLevel.addFreshEntity(pea);
 //		});
 	}
 

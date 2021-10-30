@@ -59,10 +59,10 @@ public class PVZEntityProvider implements IEntityComponentProvider {
 			return ;
 		}
 		int lvl = EntityUtil.getEntityLevel((LivingEntity) entity);
-		if(lvl == 0) {//no need to render if there is no level.
+		if(lvl == 0) {//no need to render if there is no maxLevel.
 			return ;
 		}
-		tooltip.add(new TranslationTextComponent("tooltip.pvz.level").append(" : " + lvl).withStyle(TextFormatting.YELLOW));
+		tooltip.add(new TranslationTextComponent("tooltip.pvz.maxLevel").append(" : " + lvl).withStyle(TextFormatting.YELLOW));
 	}
 	
 	private void appendDefenceHealth(Entity entity, List<ITextComponent> tooltip) {

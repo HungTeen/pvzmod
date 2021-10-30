@@ -1,0 +1,13 @@
+{
+  "pvz": {
+    "pea_shooter": {
+      "sun_cost": 50,
+      "cool_down": "very_fast",
+      "require_level": 10,
+      "occur_difficulty": 100
+    },
+    "cherry_bomb": {
+      "cool_down": "super_slow"
+    }
+  }
+}

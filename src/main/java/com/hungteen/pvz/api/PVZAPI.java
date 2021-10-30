@@ -1,10 +1,7 @@
 package com.hungteen.pvz.api;
 
 import com.google.common.base.Suppliers;
-import com.hungteen.pvz.api.types.IEssenceType;
-import com.hungteen.pvz.api.types.IPAZType;
-import com.hungteen.pvz.api.types.IPlantType;
-import com.hungteen.pvz.api.types.IZombieType;
+import com.hungteen.pvz.api.types.*;
 import org.apache.logging.log4j.LogManager;
 
 import java.util.Collection;
@@ -65,6 +62,16 @@ public class PVZAPI {
 		 */
 		void registerEssenceTypes(Collection<IEssenceType> types);
 
+		/**
+		 * register single cool down type.
+		 */
+		void registerCD(ICoolDown type);
+
+		/**
+		 * register several cds list.
+		 */
+		void registerCDs(Collection<ICoolDown> types);
+
 		/* getting stuffs */
 
 		/**
@@ -91,6 +98,16 @@ public class PVZAPI {
 		 * get type by specific identity.
 		 */
 		Optional<IPAZType> getTypeByID(String id);
+
+		/**
+		 * get type by specific identity.
+		 */
+		Optional<IPlantType> getPlantTypeByID(String id);
+
+		/**
+		 * get type by specific identity.
+		 */
+		Optional<IZombieType> getZombieTypeByID(String id);
 		
 	}
 	

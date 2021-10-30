@@ -48,7 +48,7 @@ public class MysteryShopContainer extends AbstractDaveShopContainer {
 //				array.add(sum);
 //			}
 //			for(int i = 0; i < l.getPlayerData().getOtherStats().mysteryGoods.length; ++ i) {
-//				int now = player.level.random.nextInt(sum);
+//				int now = player.maxLevel.random.nextInt(sum);
 //				for(int j = 0; j < array.size(); ++ j) {
 //					if(now < array.get(j)) {
 //						l.getPlayerData().getOtherStats().mysteryGoods[i] = j;

@@ -76,7 +76,7 @@ public class ImitaterEntity extends PlantBomberEntity {
 			if(this.consumer != null && this.targetEntity instanceof PVZPlantEntity) {
 				this.consumer.accept(((PVZPlantEntity) this.targetEntity));
 			}
-		} else if(plantType.isBlockPlant()) {
+		} else if(plantType.getPlantBlock().isPresent()) {
 			if(blockPosition().getY() >= 2) {
 				BlockState state = PlantCardItem.getBlockState(placeDirection, plantType);
 				PlantCardItem.handlePlantBlock(level, plantType, state, blockPosition());
@@ -85,7 +85,7 @@ public class ImitaterEntity extends PlantBomberEntity {
 			/* available when player is online */
 			this.getOwnerPlayer().ifPresent(player -> {
 				PlantCardItem.handlePlantEntity(player, plantType, this.getImitateCard(), blockPosition(), plantEntity -> {
-				    /* update owner and level */
+				    /* update owner and maxLevel */
 					PlantUtil.copyPlantData(plantEntity, this);
 					/* enchantment effects */
 					PlantCardItem.enchantPlantEntityByCard(plantEntity, this.getImitateCard());

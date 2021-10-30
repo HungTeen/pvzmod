@@ -1,10 +1,7 @@
 package com.hungteen.pvz.api;
 
 import com.hungteen.pvz.api.PVZAPI.IPVZAPI;
-import com.hungteen.pvz.api.types.IEssenceType;
-import com.hungteen.pvz.api.types.IPAZType;
-import com.hungteen.pvz.api.types.IPlantType;
-import com.hungteen.pvz.api.types.IZombieType;
+import com.hungteen.pvz.api.types.*;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -41,6 +38,14 @@ public class DummyAPI implements IPVZAPI {
 
     @Override
     public void registerEssenceTypes(Collection<IEssenceType> types) {
+    }
+
+    @Override
+    public void registerCD(ICoolDown type) {
+    }
+
+    @Override
+    public void registerCDs(Collection<ICoolDown> types) {
 
     }
 
@@ -66,6 +71,16 @@ public class DummyAPI implements IPVZAPI {
 
     @Override
     public Optional<IPAZType> getTypeByID(String id) {
+        return Optional.empty();
+    }
+
+    @Override
+    public Optional<IPlantType> getPlantTypeByID(String id) {
+        return Optional.empty();
+    }
+
+    @Override
+    public Optional<IZombieType> getZombieTypeByID(String id) {
         return Optional.empty();
     }
 

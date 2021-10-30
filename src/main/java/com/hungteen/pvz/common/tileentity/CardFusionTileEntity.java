@@ -57,13 +57,13 @@ public class CardFusionTileEntity extends TileEntity implements ITickableTileEnt
 //    }
 //	
 //	private Plants getFusionResult(FusionRecipes recipe) {
-//		int pos = level.random.nextInt(100);
+//		int pos = maxLevel.random.nextInt(100);
 //		int now = 0;
 //		for(Pair<Plants, Integer> pair : recipe.resultPlants) {
 //			now += pair.getSecond();
 //			if(pos < now) return pair.getFirst();
 //		}
-//		pos = level.random.nextInt(recipe.requirePlants.size());
+//		pos = maxLevel.random.nextInt(recipe.requirePlants.size());
 //		return recipe.requirePlants.get(pos);
 //	}
 //	

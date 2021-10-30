@@ -53,12 +53,7 @@ public interface IPlantType extends IPAZType {
 	
 	/**
 	 * the block type : it's not an entity, but a block. <br>
-	 * such as Lily Pad.
-	 */
-	boolean isBlockPlant();
-	
-	/**
-	 * get corresponding block.
+	 * get corresponding block, such as Lily Pad.
 	 */
 	Optional<Block> getPlantBlock();
 	

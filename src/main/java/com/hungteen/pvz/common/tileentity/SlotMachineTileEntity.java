@@ -133,18 +133,18 @@ public class SlotMachineTileEntity extends TileEntity implements ITickableTileEn
 //		if(option.isSun) {
 //			int cnt = (num == 1 ? 4 : 20);
 //			for(int i = 0; i < cnt; ++ i) {
-//				SunEntity sun = EntityRegister.SUN.get().create(level);
+//				SunEntity sun = EntityRegister.SUN.get().create(maxLevel);
 //				sun.setAmount(25);
-//				EntityUtil.onMobEntityRandomPosSpawn(level, sun, worldPosition, 2);
+//				EntityUtil.onMobEntityRandomPosSpawn(maxLevel, sun, worldPosition, 2);
 //			}
-//			level.playSound(null, worldPosition, SoundRegister.JEWEL_DROP.get(), SoundCategory.BLOCKS, 1F, 1F);
+//			maxLevel.playSound(null, worldPosition, SoundRegister.JEWEL_DROP.get(), SoundCategory.BLOCKS, 1F, 1F);
 //			return ;
 //		}
 //		for(int i = 0; i < num; ++ i) {
 //			if(option.isJewel) {
-//				JewelEntity jewel = EntityRegister.JEWEL.get().create(level);
+//				JewelEntity jewel = EntityRegister.JEWEL.get().create(maxLevel);
 //				jewel.setAmount(1);
-//				EntityUtil.onMobEntityRandomPosSpawn(level, jewel, worldPosition, 2);
+//				EntityUtil.onMobEntityRandomPosSpawn(maxLevel, jewel, worldPosition, 2);
 //			} else if(option.plantType.isPresent()){
 //				Plants plant = option.plantType.get();
 //				PlantCardItem item = PlantUtil.getPlantEnjoyCard(plant);

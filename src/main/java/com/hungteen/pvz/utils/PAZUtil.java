@@ -7,6 +7,8 @@ import com.hungteen.pvz.api.types.IPAZType;
  */
 public class PAZUtil {
 
+    public static final int DEFAULT_MAX_LEVEL = 20;
+
     public static int getPAZLevelUpXp(IPAZType plant, int lvl){
         if(lvl == plant.getMaxLevel()) {
             return 999999999;

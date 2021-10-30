@@ -21,13 +21,13 @@ public interface IPAZType extends IIDType {
 	int getSunCost();
 	
 	/**
-	 * get limit level to use its card.
-	 * if tree level doesn't reach requirement, then players can not use its card.
+	 * get limit maxLevel to use its card.
+	 * if tree maxLevel doesn't reach requirement, then players can not use its card.
 	 */
-	int getLimitedLevel();
+	int getRequiredLevel();
 	
 	/**
-	 * get the max level of role.
+	 * get the max maxLevel of role.
 	 */
 	int getMaxLevel();
 
@@ -35,27 +35,27 @@ public interface IPAZType extends IIDType {
 	 * get spawn limited difficulty.
 	 * when global difficulty reached, the role can be chosen to spawn.
 	 */
-	int getDifficulty();
+	int getOccurDifficulty();
 
 	/**
 	 * get choose weight in random invasion.
 	 */
-	int getInvasionWeight();
+	int getRandomInvasionWeight();
 
 	/**
 	 * get wave choose weight to spawn.
 	 */
-	int getWaveWeight();
+	int getWaveSpawnWeight();
 
 	/**
 	 * get the experience point of role.
 	 */
-	int getXp();
+	int getXpPoint();
 
 	/**
 	 * get the cool down of summon card of current type.
 	 */
-	ICoolDown getCD();
+	ICoolDown getCoolDown();
 	
 	/**
 	 * get the rank of type.
@@ -79,6 +79,7 @@ public interface IPAZType extends IIDType {
 	
 	/**
 	 * get type corresponding id in type list.
+	 * used to sort card item list.
 	 */
 	int getId();
 	

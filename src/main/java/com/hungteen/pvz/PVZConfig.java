@@ -142,7 +142,7 @@ public class PVZConfig {
 					
 					InvasionSettings.LevelNeedDifficulty = builder
 							.translation("config.pvz.invasion.level_dif")
-							.comment("how many difficulty needed to spawn high level zombie.")
+							.comment("how many difficulty needed to spawn high maxLevel zombie.")
 							.defineInRange("LevelNeedDifficulty", 1000, 0, 1000000);
 					
 				}
@@ -287,7 +287,7 @@ public class PVZConfig {
 				    
 				    EntitySettings.PlayerBaseSunAmount = builder
 				    		.translation("config.pvz.player.initial_sun")
-						    .comment("players' base sun amount, it will increase when tree level increasing.")
+						    .comment("players' base sun amount, it will increase when tree maxLevel increasing.")
 						    .defineInRange("PlayerInitialSun", 950, 100, 10000);
 				}
 				builder.pop();
@@ -316,7 +316,7 @@ public class PVZConfig {
 				    
 				    EntitySettings.ZombieSetting.ZombieMaxLevel = builder
 				    		.translation("config.pvz.zombie.max_level")
-						    .comment("it can limit zombie's max level.")
+						    .comment("it can limit zombie's max maxLevel.")
 						    .defineInRange("ZombieMaxLevel", 20, 1, 20);
 				}
 				builder.pop();
@@ -559,7 +559,7 @@ public class PVZConfig {
 						.define("RenderGemBar", true);
 				
 				OverlaySettings.RenderTreeLevel = builder
-						.comment("turn to false to cancel the display of tree level bar.")
+						.comment("turn to false to cancel the display of tree maxLevel bar.")
 						.translation("config.pvz.overlay.level_bar")
 						.define("RenderTreeLevelBar", true);
 				

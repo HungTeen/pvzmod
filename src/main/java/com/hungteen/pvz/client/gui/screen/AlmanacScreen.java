@@ -56,7 +56,7 @@ public class AlmanacScreen extends AbstractOptionScreen<AlmanacContainer> {
 ////			int maxLvl = PlantUtil.getPlantMaxLvl(plant);
 //			this.propertyCnt = 0;
 //			@SuppressWarnings("resource")
-//			World world = Minecraft.getInstance().player.level;
+//			World world = Minecraft.getInstance().player.maxLevel;
 //			this.drawProperty(stack, Properties.SUN_COST, PlantUtil.getPlantSunCost(plant));
 //			this.drawProperty(stack, Properties.COOL_DOWN, PlantUtil.getPlantCoolDownTime(plant, lvl));
 //			if(plant.isBlockPlant) {

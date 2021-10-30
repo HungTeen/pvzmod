@@ -89,7 +89,7 @@ public class InvasionCommand {
 	}
 	
 	private static int addZombie(CommandSource source, IZombieType zombie) {
-		if(zombie.getInvasionWeight() > 0) {
+		if(zombie.getRandomInvasionWeight() > 0) {
 			OverworldInvasion.addZombie(source.getLevel(), zombie);
 			source.sendSuccess(new TranslationTextComponent("command.pvz.add_zombie").append(":").append(zombie.getText()), true);
 		} else {

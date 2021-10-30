@@ -216,7 +216,7 @@ public class OverworldInvasion {
 		}
 		final List<IZombieType> zombies = new ArrayList<>();
 		for(IZombieType zombie : ev.getSpawnZombies(world)) {
-			if(zombie.getDifficulty() <= InvasionCache.getInvasionDifficulty()) {
+			if(zombie.getOccurDifficulty() <= InvasionCache.getInvasionDifficulty()) {
 				zombies.add(zombie);
 			}
 		}
