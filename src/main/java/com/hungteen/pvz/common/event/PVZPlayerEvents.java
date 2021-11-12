@@ -1,28 +1,22 @@
 package com.hungteen.pvz.common.event;
 
-import com.hungteen.pvz.PVZConfig;
 import com.hungteen.pvz.PVZMod;
-import com.hungteen.pvz.api.types.IPlantType;
-import com.hungteen.pvz.client.gui.search.SearchOption;
+import com.hungteen.pvz.api.events.PlayerLevelChangeEvent;
+import com.hungteen.pvz.common.block.BlockRegister;
 import com.hungteen.pvz.common.capability.CapabilityHandler;
 import com.hungteen.pvz.common.capability.player.PlayerDataManager;
 import com.hungteen.pvz.common.enchantment.EnchantmentRegister;
 import com.hungteen.pvz.common.entity.plant.PVZPlantEntity;
-import com.hungteen.pvz.common.event.events.PlayerLevelUpEvent;
 import com.hungteen.pvz.common.event.events.SummonCardUseEvent;
 import com.hungteen.pvz.common.event.handler.BlockEventHandler;
 import com.hungteen.pvz.common.event.handler.PlayerEventHandler;
-import com.hungteen.pvz.common.item.spawn.card.PlantCardItem;
 import com.hungteen.pvz.common.item.tool.plant.PeaGunItem;
 import com.hungteen.pvz.common.network.PVZPacketHandler;
 import com.hungteen.pvz.common.network.toclient.OtherStatsPacket;
-import com.hungteen.pvz.compat.patchouli.PatchouliHandler;
-import com.hungteen.pvz.register.BlockRegister;
 import com.hungteen.pvz.register.EffectRegister;
-import com.hungteen.pvz.register.ItemRegister;
 import com.hungteen.pvz.utils.PlayerUtil;
-import com.hungteen.pvz.utils.StringUtil;
 import com.hungteen.pvz.utils.enums.Resources;
+
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.PlayerEntity;
@@ -35,7 +29,6 @@ import net.minecraft.util.Hand;
 import net.minecraft.util.math.vector.Vector3d;
 import net.minecraft.world.World;
 import net.minecraftforge.event.TickEvent;
-import net.minecraftforge.event.entity.player.AdvancementEvent;
 import net.minecraftforge.event.entity.player.PlayerEvent;
 import net.minecraftforge.event.entity.player.PlayerInteractEvent;
 import net.minecraftforge.event.world.BlockEvent;
@@ -112,21 +105,6 @@ public class PVZPlayerEvents {
 	}
 	
 	@SubscribeEvent
-	public static void onPlayerGetAdvancement(AdvancementEvent ev) {
-		if(! ev.getPlayer().level.isClientSide) {
-			if(ev.getAdvancement().getId().equals(StringUtil.prefix("adventure/root"))) {
-				if(PVZConfig.COMMON_CONFIG.RuleSettings.GiveBeginnerReward.get()) {
-					ev.getPlayer().addItem(new ItemStack(ItemRegister.PEA_SHOOTER_CARD.get()));
-		    		ev.getPlayer().addItem(new ItemStack(ItemRegister.SUN_FLOWER_CARD.get()));
-			    	ev.getPlayer().addItem(new ItemStack(ItemRegister.WALL_NUT_CARD.get()));
-				    ev.getPlayer().addItem(new ItemStack(ItemRegister.POTATO_MINE_CARD.get()));
-				}
-				PatchouliHandler.giveInitialGuideBook(ev.getPlayer());
-			}
-		}
-	}
-	
-	@SubscribeEvent
 	public static void onPlayerBreakBlock(BlockEvent.BreakEvent ev) {
 		BlockEventHandler.checkAndDropSeeds(ev);
 	}
@@ -161,15 +139,16 @@ public class PVZPlayerEvents {
 	}
 	
 	@SubscribeEvent
-	public static void onPlayerTreeLevelUp(PlayerLevelUpEvent.TreeLevelUpEvent ev) {
-		if(! ev.getPlayer().level.isClientSide) {
+	public static void onPlayerTreeLevelUp(PlayerLevelChangeEvent ev) {
+		if(! ev.getPlayer().level.isClientSide && ev.isLevelUp()) {
+			PlayerEventHandler.unLockPAZs(ev.getPlayer());
 			PlayerUtil.playClientSound(ev.getPlayer(), 9);
 		    PlayerUtil.addResource(ev.getPlayer(), Resources.LOTTERY_CHANCE, 3);
 		}
 	}
 	
 	@SubscribeEvent
-	public static void onPlayerPlantLevelUp(PlayerLevelUpEvent.PAZLevelUpEvent ev) {
+	public static void onPlayerPlantLevelUp(PlayerLevelChangeEvent.PAZLevelChangeEvent ev) {
 		if(! ev.getPlayer().level.isClientSide) {
 			PlayerUtil.addResource(ev.getPlayer(), Resources.TREE_XP, ev.getCurrentLevel() * 2);
 		}
@@ -177,15 +156,15 @@ public class PVZPlayerEvents {
 	
 	@SubscribeEvent
 	public static void onSummonCardUse(SummonCardUseEvent ev) {
-		PlayerEntity player = ev.getPlayer();
-		if(! player.level.isClientSide) { //unlock almanac
-			SearchOption a = null;
-			if(ev.getItemStack().getItem() instanceof PlantCardItem) {// unlock plant card
-			    IPlantType plant = ((PlantCardItem) ev.getItemStack().getItem()).plantType;
-			    a = SearchOption.get(plant);
-			}
-			PlayerUtil.unLockAlmanac(player, a);
-		}
+//		PlayerEntity player = ev.getPlayer();
+//		if(! player.level.isClientSide) { //unlock almanac
+//			SearchOption a = null;
+//			if(ev.getItemStack().getItem() instanceof PlantCardItem) {// unlock plant card
+//			    IPlantType plant = ((PlantCardItem) ev.getItemStack().getItem()).plantType;
+//			    a = SearchOption.get(plant);
+//			}
+//			PlayerUtil.unLockAlmanac(player, a);
+//		}
 	}
 	
 }

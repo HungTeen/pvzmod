@@ -1,9 +1,9 @@
 package com.hungteen.pvz.common.entity.bullet.itembullet;
 
 import com.hungteen.pvz.common.entity.bullet.PultBulletEntity;
+import com.hungteen.pvz.common.item.ItemRegister;
 import com.hungteen.pvz.common.misc.damage.PVZDamageSource;
 import com.hungteen.pvz.register.EntityRegister;
-import com.hungteen.pvz.register.ItemRegister;
 
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntitySize;

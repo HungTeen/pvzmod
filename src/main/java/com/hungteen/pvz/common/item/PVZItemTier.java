@@ -2,16 +2,15 @@ package com.hungteen.pvz.common.item;
 
 import java.util.function.Supplier;
 
-import com.hungteen.pvz.register.ItemRegister;
-
 import net.minecraft.item.IItemTier;
+import net.minecraft.item.Items;
 import net.minecraft.item.crafting.Ingredient;
 import net.minecraft.util.LazyValue;
 
 public enum PVZItemTier implements IItemTier {
     
 	STEEL(3, 500, 6.0F, 2.0F, 4, () -> {
-		return Ingredient.of(ItemRegister.STEEL_INGOT.get());
+		return Ingredient.of(Items.IRON_INGOT);
 	});
 
 	private final int harvestLevel;

@@ -1,7 +1,7 @@
 package com.hungteen.pvz.common.block.plants;
 
+import com.hungteen.pvz.common.block.BlockRegister;
 import com.hungteen.pvz.common.misc.damage.PVZDamageSource;
-import com.hungteen.pvz.register.BlockRegister;
 import com.hungteen.pvz.utils.MathUtil;
 import com.hungteen.pvz.utils.WorldUtil;
 

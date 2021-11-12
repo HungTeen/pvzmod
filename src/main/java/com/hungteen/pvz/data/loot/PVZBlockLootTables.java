@@ -5,8 +5,8 @@ import java.util.HashSet;
 import java.util.Set;
 
 import com.hungteen.pvz.PVZMod;
-import com.hungteen.pvz.register.BlockRegister;
-import com.hungteen.pvz.register.ItemRegister;
+import com.hungteen.pvz.common.block.BlockRegister;
+import com.hungteen.pvz.common.item.ItemRegister;
 
 import net.minecraft.advancements.criterion.EnchantmentPredicate;
 import net.minecraft.advancements.criterion.ItemPredicate;

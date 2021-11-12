@@ -2,10 +2,10 @@ package com.hungteen.pvz.data;
 
 import com.hungteen.pvz.PVZMod;
 import com.hungteen.pvz.api.types.IPlantType;
+import com.hungteen.pvz.common.block.BlockRegister;
+import com.hungteen.pvz.common.item.ItemRegister;
 import com.hungteen.pvz.common.item.misc.PVZSpawnEggItem;
 import com.hungteen.pvz.common.item.spawn.card.PlantCardItem;
-import com.hungteen.pvz.register.BlockRegister;
-import com.hungteen.pvz.register.ItemRegister;
 import com.hungteen.pvz.utils.StringUtil;
 import net.minecraft.block.Block;
 import net.minecraft.data.DataGenerator;

@@ -1,9 +1,9 @@
 package com.hungteen.pvz.common.container;
 
 import com.hungteen.pvz.PVZMod;
+import com.hungteen.pvz.common.item.ItemRegister;
 import com.hungteen.pvz.common.item.spawn.card.ImitaterCardItem;
 import com.hungteen.pvz.register.ContainerRegister;
-import com.hungteen.pvz.register.ItemRegister;
 
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.inventory.Inventory;

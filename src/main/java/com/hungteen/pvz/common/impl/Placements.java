@@ -1,8 +1,8 @@
 package com.hungteen.pvz.common.impl;
 
 import com.hungteen.pvz.api.types.ICardPlacement;
+import com.hungteen.pvz.common.block.BlockRegister;
 import com.hungteen.pvz.common.misc.tag.PVZBlockTags;
-import com.hungteen.pvz.register.BlockRegister;
 
 import net.minecraft.block.Blocks;
 import net.minecraft.tags.BlockTags;

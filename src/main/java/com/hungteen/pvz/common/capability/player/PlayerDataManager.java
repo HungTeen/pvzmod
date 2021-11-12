@@ -3,26 +3,22 @@ package com.hungteen.pvz.common.capability.player;
 
 import com.hungteen.pvz.PVZConfig;
 import com.hungteen.pvz.api.PVZAPI;
+import com.hungteen.pvz.api.events.PlayerLevelChangeEvent;
 import com.hungteen.pvz.api.types.IPAZType;
-import com.hungteen.pvz.api.types.IPlantType;
-import com.hungteen.pvz.client.gui.search.SearchOption;
 import com.hungteen.pvz.common.advancement.trigger.MoneyTrigger;
 import com.hungteen.pvz.common.advancement.trigger.PlantLevelTrigger;
 import com.hungteen.pvz.common.advancement.trigger.SunAmountTrigger;
 import com.hungteen.pvz.common.advancement.trigger.TreeLevelTrigger;
 import com.hungteen.pvz.common.container.shop.MysteryShopContainer;
-import com.hungteen.pvz.common.event.events.PlayerLevelUpEvent.PAZLevelUpEvent;
-import com.hungteen.pvz.common.event.events.PlayerLevelUpEvent.TreeLevelUpEvent;
 import com.hungteen.pvz.common.event.handler.PlayerEventHandler;
-import com.hungteen.pvz.common.impl.PlantType;
 import com.hungteen.pvz.common.item.spawn.card.SummonCardItem;
+import com.hungteen.pvz.common.network.PAZStatsPacket;
 import com.hungteen.pvz.common.network.PVZPacketHandler;
 import com.hungteen.pvz.common.network.toclient.CardInventoryPacket;
-import com.hungteen.pvz.common.network.toclient.PlantStatsPacket;
 import com.hungteen.pvz.common.network.toclient.PlayerStatsPacket;
 import com.hungteen.pvz.common.world.invasion.WaveManager;
-import com.hungteen.pvz.utils.PAZUtil;
 import com.hungteen.pvz.utils.PlayerUtil;
+import com.hungteen.pvz.utils.StringUtil;
 import com.hungteen.pvz.utils.enums.Resources;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.ServerPlayerEntity;
@@ -47,14 +43,15 @@ public class PlayerDataManager {
 	/* summon card inventory */
 	private final List<ItemStack> cards = new ArrayList<>();
 	private int emptySlot;
-	/* plant & zombie maxLevel */
-	private final Map<IPAZType, Integer> pazLevel = new HashMap<>();
-	private final Map<IPAZType, Integer> pazXp = new HashMap<>();
+	/* plant & zombie point */
+	private final Map<IPAZType, Integer> pazPoint = new HashMap<>();
 	/* plant & zombie cd */
 	private final Map<IPAZType, Integer> pazCardCD = new HashMap<>();
 	private final Map<IPAZType, Float> pazCardBar = new HashMap<>();
 	/* plant & zombie lock */
 	private final Map<IPAZType, Boolean> pazLocked = new HashMap<>();
+	/* misc data */
+	public String lastVersion = StringUtil.INIT_VERSION;
 	private final OtherStats otherStats;
 	
 	public PlayerDataManager(PlayerEntity player) {
@@ -71,14 +68,15 @@ public class PlayerDataManager {
 		}
 		{// init about plants & zombies.
 			PVZAPI.get().getPAZs().forEach(plant -> {
-				this.pazLevel.put(plant, 1);
-				this.pazXp.put(plant, 0);
+				this.pazPoint.put(plant, 0);
 				this.pazCardCD.put(plant, 0);
 				this.pazCardBar.put(plant, 0F);
 				this.pazLocked.put(plant, true);
 			});
 		}
-		this.otherStats = new OtherStats(this);
+		{// init misc data.
+			this.otherStats = new OtherStats(this);
+		}
 	}
 	
 	/**
@@ -86,7 +84,7 @@ public class PlayerDataManager {
 	 */
 	public void loadFromNBT(CompoundNBT baseTag) {
 		{// load player resources.
-			if(baseTag.contains("player_stats")) {//old
+			if(baseTag.contains("player_stats")) {//old.
 				CompoundNBT statsTag = baseTag.getCompound("player_stats");
 			    for(Resources res:Resources.values()) {
 			    	if(statsTag.contains("player_"+res.toString())) {
@@ -94,7 +92,7 @@ public class PlayerDataManager {
 			    	}
 			    }
 			}
-			if(baseTag.contains("player_resources")) {//new
+			if(baseTag.contains("player_resources")) {//new.
 				CompoundNBT statsTag = baseTag.getCompound("player_resources");
 			    for(Resources res:Resources.values()) {
 			    	if(statsTag.contains(res.toString().toLowerCase())) {
@@ -116,34 +114,14 @@ public class PlayerDataManager {
 				}
 			}
 		}
-		{// load plants & zombies maxLevel.
-			/*
-			 * remain to keep old version's plant maxLevel.
-			 */
-			PlantType.getPlants().forEach(plant -> {
-				final CompoundNBT plantTag = (CompoundNBT) baseTag.get(plant.toString());
-				if(plantTag != null) {
-				    if(plantTag.contains("player_plant_lvl")) {
-					    this.pazLevel.put(plant, plantTag.getInt("player_plant_lvl"));
-				    }
-				    if(plantTag.contains("player_plant_exp")) {
-					    this.pazXp.put(plant, plantTag.getInt("player_plant_exp"));
-				    }
-				}
-			});
-			/*
-			 * new one.
-			 */
-			if(baseTag.contains("paz_level_info")) {
-			    final CompoundNBT nbt = baseTag.getCompound("paz_level_info");
+		{// load plants & zombies point.
+			if(baseTag.contains("paz_point_info")) {
+			    final CompoundNBT nbt = baseTag.getCompound("paz_point_info");
 				PVZAPI.get().getPAZs().forEach(plant -> {
 				    final CompoundNBT plantTag = (CompoundNBT) nbt.get(plant.getIdentity());
 				    if(plantTag != null) {
-				        if(plantTag.contains("paz_lvl")) {
-					        this.pazLevel.put(plant, plantTag.getInt("paz_lvl"));
-				        }
-				        if(plantTag.contains("paz_xp")) {
-					        this.pazXp.put(plant, plantTag.getInt("paz_xp"));
+				        if(plantTag.contains("paz_point")) {
+					        this.pazPoint.put(plant, plantTag.getInt("paz_point"));
 				        }
 				    }
 			    });
@@ -178,7 +156,13 @@ public class PlayerDataManager {
 				});
 			}
 		}
-		otherStats.loadFromNBT(baseTag);
+		{// load misc data.
+			if(baseTag.contains("last_join_version")) {
+				this.lastVersion = baseTag.getString("last_join_version");
+			}
+			this.otherStats.loadFromNBT(baseTag);
+		}
+		
 	}
 	
 	/**
@@ -201,15 +185,14 @@ public class PlayerDataManager {
 			nbt.putInt("current_pos", this.emptySlot);
 			baseTag.put("card_inventory", nbt);
 		}
-		{// save plant & zombie maxLevel.
+		{// save plant & zombie point.
 			final CompoundNBT nbt = new CompoundNBT();
 			PVZAPI.get().getPAZs().forEach(plant -> {
 		        final CompoundNBT plantNBT = new CompoundNBT();
-				plantNBT.putInt("paz_lvl", this.getPAZLevel(plant));
-				plantNBT.putInt("paz_xp", this.getPAZXp(plant));
+				plantNBT.putInt("paz_point", this.getPAZLevel(plant));
 				nbt.put(plant.getIdentity(), plantNBT);
 			});
-			baseTag.put("paz_level_info", nbt);
+			baseTag.put("paz_point_info", nbt);
 		}
 		{// save plant & zombie card cd.
 			final CompoundNBT nbt = new CompoundNBT();
@@ -230,7 +213,10 @@ public class PlayerDataManager {
 			});
 			baseTag.put("paz_locks", nbt);
 		}
-		otherStats.saveToNBT(baseTag);
+		{// load misc data.
+			baseTag.putString("last_join_version", this.lastVersion);
+			this.otherStats.saveToNBT(baseTag);
+		}
 		return baseTag;
 	}
 //	
@@ -284,26 +270,15 @@ public class PlayerDataManager {
 			}
 			this.setCurrentPos(this.getCurrentPos());
 		}
-		{// plants maxLevel.
-			for (IPlantType plant : PlantType.getPlants()) {
-		       this.sendPAZLevelPacket(player, plant);
-	        }
+		{// plants & zombies syncs.
+			PVZAPI.get().getPAZs().forEach(plant -> {
+				this.sendPAZLevelPacket(player, plant);//level.
+				if(plant.getSummonCard().isPresent()) {//card cd.
+					player.getCooldowns().addCooldown(plant.getSummonCard().get(), this.getPlantCardCD(plant));
+				}
+				this.sendPAZLockPacket(player, plant);//lock.
+			});
 		}
-		{// plant item cd.
-			for (IPlantType plant : PlantType.getPlants()) {
-			    if(plant.getSummonCard().isPresent()) {
-			        player.getCooldowns().addCooldown(plant.getSummonCard().get(), this.getPlantCardCD(plant));
-			    }
-			}
-		}
-		//almanacs
-		SearchOption.OPTION.forEach((a) -> {
-			ServerPlayerEntity serverplayer = (ServerPlayerEntity) player;
-			if(PlayerUtil.isAlmanacUnlocked(serverplayer, a)) {
-				PlayerUtil.unLockAlmanac(serverplayer, a);
-			}
-		});
-		
 	}
 
 	/*
@@ -328,6 +303,7 @@ public class PlayerDataManager {
 	
 	public void addResource(Resources res, int num) {
 		int now = resources.get(res);
+		final int old = now;
 		switch (res) {
 		case TREE_XP:{
 			addTreeXp(now, num);
@@ -350,6 +326,9 @@ public class PlayerDataManager {
 			if(res == Resources.TREE_LVL) {
 				this.addResource(Resources.SUN_NUM, 0);
 				TreeLevelTrigger.INSTANCE.trigger((ServerPlayerEntity) player, now);
+				if(old != now){
+					MinecraftForge.EVENT_BUS.post(new PlayerLevelChangeEvent(player, old, now));
+				}
 			} else if(res == Resources.MONEY) {
 				MoneyTrigger.INSTANCE.trigger((ServerPlayerEntity) player, now);
 			}
@@ -368,7 +347,6 @@ public class PlayerDataManager {
 			while(lvl < Resources.TREE_LVL.max && num + now >= req) {
 				num -= req - now;
 				this.addResource(Resources.TREE_LVL, 1);
-				MinecraftForge.EVENT_BUS.post(new TreeLevelUpEvent(player, ++ lvl));
 				now = 0;
 				req = PlayerUtil.getPlayerLevelUpXp(lvl);
 			}
@@ -385,7 +363,7 @@ public class PlayerDataManager {
 		}
 	}
 	
-	public void sendResourcePacket(PlayerEntity player, Resources res){
+	private void sendResourcePacket(PlayerEntity player, Resources res){
 		if (player instanceof ServerPlayerEntity) {
 			PVZPacketHandler.CHANNEL.send(
 				PacketDistributor.PLAYER.with(() -> {
@@ -436,7 +414,7 @@ public class PlayerDataManager {
 		return this.emptySlot;
 	}
 	
-	public void sendInventoryPacket(PlayerEntity player, int type, CompoundNBT nbt) {
+	private void sendInventoryPacket(PlayerEntity player, int type, CompoundNBT nbt) {
 		if (player instanceof ServerPlayerEntity) {
 			PVZPacketHandler.CHANNEL.send(
 				PacketDistributor.PLAYER.with(() -> {
@@ -451,62 +429,35 @@ public class PlayerDataManager {
 	 * Operation about Plant Level.
 	 */
 	
-	public void addPAZLevel(IPAZType plant, int lvl){
-		lvl = MathHelper.clamp(this.getPAZLevel(plant) + lvl, 1, plant.getMaxLevel());
-		this.pazLevel.put(plant, lvl);
+	public void addPAZLevel(IPAZType plant, int num){
+		final int old = this.getPAZLevel(plant);
+		final int lvl = MathHelper.clamp(old + num, 1, plant.getMaxLevel());
+		this.pazPoint.put(plant, lvl);
 		PlantLevelTrigger.INSTANCE.trigger((ServerPlayerEntity) player, lvl);
-		this.sendPAZLevelPacket(player, plant);
-	}
-	
-	public void addPAZXp(IPAZType plant, int num) {
-		final int maxLvl = plant.getMaxLevel();
-		int lvl = this.getPAZLevel(plant);
-		int xp = this.getPAZXp(plant) + num;
-		if(num > 0) {
-			int needXp = PAZUtil.getPAZLevelUpXp(plant, lvl);
-			while(lvl < maxLvl && xp >= needXp) {
-				xp -= needXp;
-				this.addPAZLevel(plant, 1);
-				MinecraftForge.EVENT_BUS.post(new PAZLevelUpEvent(player, plant, ++ lvl));
-				needXp = PAZUtil.getPAZLevelUpXp(plant, lvl);
-			}
-			if(lvl == maxLvl) xp = 0;
-		} else {
-			while(lvl > 1 && xp < 0) {
-				this.addPAZLevel(plant, - 1);
-				lvl = this.getPAZLevel(plant);
-				int needXp = PAZUtil.getPAZLevelUpXp(plant, lvl);
-				xp += needXp;
-			}
-			if(lvl == 1 && xp < 0) {
-				xp = 0;
-			}
+		if(lvl != old){
+			MinecraftForge.EVENT_BUS.post(new PlayerLevelChangeEvent.PAZLevelChangeEvent(player, plant, old, lvl));
 		}
-		this.pazXp.put(plant, xp);
 		this.sendPAZLevelPacket(player, plant);
 	}
 	
 	public int getPAZLevel(IPAZType plant){
-		return this.pazLevel.get(plant);
+		return this.pazPoint.get(plant);
 	}
 	
-	public int getPAZXp(IPAZType plant){
-		return this.pazXp.get(plant);
-	}
-	
-	public void sendPAZLevelPacket(PlayerEntity player, IPAZType plant){
+	private void sendPAZLevelPacket(PlayerEntity player, IPAZType plant){
 		if (player instanceof ServerPlayerEntity) {
 			PVZPacketHandler.CHANNEL.send(
 				PacketDistributor.PLAYER.with(()->{
 					return (ServerPlayerEntity) player;
 				}),
-				new PlantStatsPacket(plant.getIdentity(), pazLevel.get(plant), pazXp.get(plant))
+				new PAZStatsPacket(PAZStatsPacket.PAZPacketTypes.POINT, plant.getIdentity(), pazPoint.get(plant))
 			);
 		}
 	}
 	
 	/*
 	 * Operation about plant card CD.
+	 * just store data, no need to manually sync to client.
 	 */
 	
 	public void setPAZCardCD(IPAZType plant, int tick) {
@@ -534,11 +485,26 @@ public class PlayerDataManager {
 	 */
 	
 	public void setPAZLocked(IPAZType plant, boolean is) {
+		final boolean old = this.isPAZLocked(plant);
 		this.pazLocked.put(plant, is);
+		if(old != is) {
+			this.sendPAZLockPacket(player, plant);
+		}
 	}
 	
 	public boolean isPAZLocked(IPAZType plant) {
 		return this.pazLocked.getOrDefault(plant, true);
+	}
+
+	private void sendPAZLockPacket(PlayerEntity player, IPAZType plant){
+		if (player instanceof ServerPlayerEntity) {
+			PVZPacketHandler.CHANNEL.send(
+					PacketDistributor.PLAYER.with(() -> {
+						return (ServerPlayerEntity) player;
+					}),
+					new PAZStatsPacket(PAZStatsPacket.PAZPacketTypes.UNLOCK, plant.getIdentity(), this.isPAZLocked(plant))
+			);
+		}
 	}
 	
 	public final class OtherStats{

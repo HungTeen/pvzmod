@@ -60,7 +60,7 @@ public abstract class PlantType extends PAZType implements IPlantType {
 
 	protected PlantType(String name, PlantFeatures features) {
 		super(name);
-		//common.
+		// common.
 		this.sunCost = features.sunCost;
 		this.requiredLevel = features.requiredLevel;
 		this.maxLevel = features.maxLevel;
@@ -71,12 +71,11 @@ public abstract class PlantType extends PAZType implements IPlantType {
 		this.renderScale = features.renderScale;
 		this.coolDown = features.coolDown;
 		this.rankType = features.rankType;
-		this.entityRenderResource = this.genEntityResource();
 		this.lootTable = features.lootTable;
 		this.entitySup = features.entitySup;
 		this.summonCardSup = features.summonCardSup;
 		this.enjoyCardSup = features.enjoyCardSup;
-		//unique.
+		// unique.
 		this.plantEssence = features.plantEssence;
 		this.plantModel = features.plantModel;
 		this.upgradeFrom = features.upgradeFrom;
@@ -86,6 +85,8 @@ public abstract class PlantType extends PAZType implements IPlantType {
 		this.cardPlacement = features.cardPlacement;
 		this.isShroomPlant = features.isShroomPlant;
 		this.isWaterPlant = features.isWaterPlant;
+		// last.
+		this.entityRenderResource = this.genEntityResource();
 	}
 
 	@Override
@@ -424,6 +425,8 @@ public abstract class PlantType extends PAZType implements IPlantType {
 			});
 
 			PVZMod.LOGGER.info("Loaded {} custom plants' information", map.size());
+
+
 		}
 	}
 	

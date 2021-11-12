@@ -3,6 +3,7 @@ package com.hungteen.pvz.register;
 import com.hungteen.pvz.PVZMod;
 import com.hungteen.pvz.client.render.tileentity.SunConverterTER;
 import com.hungteen.pvz.client.render.tileentity.SunFlowerTrophyTER;
+import com.hungteen.pvz.common.block.BlockRegister;
 import com.hungteen.pvz.common.tileentity.CardFusionTileEntity;
 import com.hungteen.pvz.common.tileentity.FragmentSpliceTileEntity;
 import com.hungteen.pvz.common.tileentity.SlotMachineTileEntity;

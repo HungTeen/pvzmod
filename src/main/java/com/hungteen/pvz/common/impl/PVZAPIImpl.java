@@ -87,8 +87,7 @@ public class PVZAPIImpl implements IPVZAPI{
 
 	@Override
 	public Optional<IZombieType> getZombieTypeByID(String id) {
-		//TODO 通过僵尸名获取type
-		return Optional.empty();
+		return ZombieType.getZombieByName(id);
 	}
 
 }

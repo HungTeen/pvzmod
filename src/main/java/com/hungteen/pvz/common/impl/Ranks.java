@@ -2,7 +2,7 @@ package com.hungteen.pvz.common.impl;
 
 import com.hungteen.pvz.api.types.IRankType;
 import com.hungteen.pvz.common.impl.misc.RankType;
-import com.hungteen.pvz.register.ItemRegister;
+import com.hungteen.pvz.common.item.ItemRegister;
 
 import net.minecraft.item.Items;
 

@@ -1,10 +1,11 @@
 package com.hungteen.pvz.common.impl;
 
 import com.hungteen.pvz.api.types.IEssenceType;
+import com.hungteen.pvz.common.block.BlockRegister;
+import com.hungteen.pvz.common.item.ItemRegister;
 import com.hungteen.pvz.common.misc.tag.PVZBlockTags;
-import com.hungteen.pvz.register.BlockRegister;
 import com.hungteen.pvz.register.CoreRegister;
-import com.hungteen.pvz.register.ItemRegister;
+
 import net.minecraft.block.Block;
 import net.minecraft.block.Blocks;
 import net.minecraft.item.Item;

@@ -2,6 +2,7 @@ package com.hungteen.pvz.register;
 
 import com.hungteen.pvz.PVZMod;
 import com.hungteen.pvz.RegistryHandler;
+import com.hungteen.pvz.common.block.BlockRegister;
 import com.hungteen.pvz.common.world.gen.GenOres;
 import com.hungteen.pvz.utils.ConfigUtil;
 

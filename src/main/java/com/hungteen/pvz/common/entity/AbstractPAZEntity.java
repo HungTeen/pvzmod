@@ -93,12 +93,12 @@ public abstract class AbstractPAZEntity extends CreatureEntity implements IPAZEn
             this.getOwnerPlayer().ifPresent(player -> {
                 this.getPlantInfo().ifPresent(info -> {
                     if(info.needSyncLevel) {
-                        this.updatePlantLevel(PlayerUtil.getPAZLevel(player, info.getType()));
+                        this.updatePlantLevel(PlayerUtil.getPAZPoint(player, info.getType()));
                     }
                 });
                 this.getOuterPlantInfo().ifPresent(info -> {
                     if(info.needSyncLevel) {
-                        info.setLevel(PlayerUtil.getPAZLevel(player, info.getType()));
+                        info.setLevel(PlayerUtil.getPAZPoint(player, info.getType()));
                     }
                 });
             });

@@ -2,8 +2,9 @@ package com.hungteen.pvz.data.tag;
 
 import com.hungteen.pvz.PVZMod;
 import com.hungteen.pvz.api.PVZAPI;
+import com.hungteen.pvz.common.block.BlockRegister;
 import com.hungteen.pvz.common.misc.tag.PVZBlockTags;
-import com.hungteen.pvz.register.BlockRegister;
+
 import net.minecraft.block.Block;
 import net.minecraft.block.Blocks;
 import net.minecraft.data.BlockTagsProvider;

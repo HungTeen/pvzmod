@@ -2,7 +2,7 @@ package com.hungteen.pvz.common.world.feature;
 
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableSet;
-import com.hungteen.pvz.register.BlockRegister;
+import com.hungteen.pvz.common.block.BlockRegister;
 
 import net.minecraft.block.Blocks;
 import net.minecraft.util.registry.Registry;

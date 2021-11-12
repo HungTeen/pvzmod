@@ -48,7 +48,7 @@ public abstract class ZombieType extends PAZType implements IZombieType {
 	
 	protected ZombieType(String name, ZombieFeatures features) {
 		super(name);
-		//common.
+		// common.
 		this.sunCost = features.sunCost;
 		this.requiredLevel = features.requiredLevel;
 		this.maxLevel = features.maxLevel;
@@ -59,14 +59,15 @@ public abstract class ZombieType extends PAZType implements IZombieType {
 		this.renderScale = features.renderScale;
 		this.coolDown = features.coolDown;
 		this.rankType = features.rankType;
-		this.entityRenderResource = this.getEntityResource();
 		this.lootTable = features.lootTable;
 		this.entitySup = features.entitySup;
 		this.summonCardSup = features.summonCardSup;
 		this.enjoyCardSup = features.enjoyCardSup;
-		//unique.
+		// unique.
 		this.zombieModel1 = features.zombieModel1;
 		this.zombieModel2 = features.zombieModel2;
+		// last.
+		this.entityRenderResource = this.getEntityResource();
 	}
 
 	/**

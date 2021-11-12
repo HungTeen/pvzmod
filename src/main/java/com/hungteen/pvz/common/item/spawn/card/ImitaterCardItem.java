@@ -119,7 +119,7 @@ public class ImitaterCardItem extends PlantCardItem {
 				final ImitaterEntity imitater = (ImitaterEntity) i;
 				imitater.setImitateCard(plantStack.copy());
     	        imitater.setDirection(player.getDirection().getOpposite());
-		        imitater.onSpawnedByPlayer(player, PlayerUtil.getPlantLvl(player, cardItem.plantType), cardItem.getBasisSunCost(plantStack));
+		        imitater.onSpawnedByPlayer(player, PlayerUtil.getPAZPoint(player, cardItem.plantType), cardItem.getBasisSunCost(plantStack));
 		        /* enchantment effects */
 				enchantPlantEntityByCard(imitater, plantStack);
 		        consumer.accept(imitater);

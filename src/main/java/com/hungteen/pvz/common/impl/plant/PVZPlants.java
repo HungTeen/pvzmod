@@ -38,11 +38,11 @@ import com.hungteen.pvz.client.model.entity.plant.spear.CatTailModel;
 import com.hungteen.pvz.client.model.entity.plant.spear.SpikeRockModel;
 import com.hungteen.pvz.client.model.entity.plant.spear.SpikeWeedModel;
 import com.hungteen.pvz.client.model.entity.plant.toxic.*;
+import com.hungteen.pvz.common.block.BlockRegister;
 import com.hungteen.pvz.common.entity.plant.defence.PumpkinEntity.PumpkinInfo;
 import com.hungteen.pvz.common.impl.*;
-import com.hungteen.pvz.register.BlockRegister;
+import com.hungteen.pvz.common.item.ItemRegister;
 import com.hungteen.pvz.register.EntityRegister;
-import com.hungteen.pvz.register.ItemRegister;
 
 import java.util.ArrayList;
 import java.util.List;

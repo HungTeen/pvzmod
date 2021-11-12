@@ -65,7 +65,6 @@ public class OriginBlock extends Block {
      * check specific block and grow
      */
     private void checkAndGrow(World world, int x, int y, int z) {
-        //TODO 优化原始精华块代码
         final BlockPos pos = new BlockPos(x, y, z);
         final BlockState blockstate = world.getBlockState(pos);
         final Block block = blockstate.getBlock();

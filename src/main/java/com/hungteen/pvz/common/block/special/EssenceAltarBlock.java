@@ -1,7 +1,7 @@
 package com.hungteen.pvz.common.block.special;
 
+import com.hungteen.pvz.common.block.BlockRegister;
 import com.hungteen.pvz.common.container.EssenceAltarContainer;
-import com.hungteen.pvz.register.BlockRegister;
 
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;

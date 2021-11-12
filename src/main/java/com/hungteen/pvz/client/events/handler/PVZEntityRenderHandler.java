@@ -1,9 +1,9 @@
 package com.hungteen.pvz.client.events.handler;
 
+import com.hungteen.pvz.common.block.BlockRegister;
 import com.hungteen.pvz.common.entity.plant.PVZPlantEntity;
 import com.hungteen.pvz.common.entity.zombie.PVZZombieEntity;
 import com.hungteen.pvz.common.entity.zombie.roof.BungeeZombieEntity;
-import com.hungteen.pvz.register.BlockRegister;
 import com.hungteen.pvz.utils.EntityUtil;
 import com.mojang.blaze3d.matrix.MatrixStack;
 

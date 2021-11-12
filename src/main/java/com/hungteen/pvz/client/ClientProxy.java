@@ -2,11 +2,11 @@ package com.hungteen.pvz.client;
 
 import com.hungteen.pvz.client.render.layer.fullskin.ColdLayer;
 import com.hungteen.pvz.common.CommonProxy;
+import com.hungteen.pvz.common.item.ItemRegister;
 import com.hungteen.pvz.common.item.armor.BucketArmorItem;
 import com.hungteen.pvz.common.item.armor.ConeArmorItem;
 import com.hungteen.pvz.common.item.armor.FootballArmorItem;
 import com.hungteen.pvz.common.item.armor.GigaArmorItem;
-import com.hungteen.pvz.register.ItemRegister;
 import com.hungteen.pvz.utils.StringUtil;
 
 import net.minecraft.client.Minecraft;

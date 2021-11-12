@@ -1,7 +1,7 @@
 package com.hungteen.pvz.common.item.blockitem;
 
+import com.hungteen.pvz.common.block.BlockRegister;
 import com.hungteen.pvz.common.item.PVZItemGroups;
-import com.hungteen.pvz.register.BlockRegister;
 
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.BlockItem;

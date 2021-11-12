@@ -7,11 +7,11 @@ import com.hungteen.pvz.common.container.inventory.ItemInventory;
 import com.hungteen.pvz.common.entity.bullet.itembullet.PeaEntity;
 import com.hungteen.pvz.common.impl.PlantType;
 import com.hungteen.pvz.common.impl.plant.PVZPlants;
+import com.hungteen.pvz.common.item.ItemRegister;
 import com.hungteen.pvz.common.item.PVZItemGroups;
 import com.hungteen.pvz.common.item.spawn.card.PlantCardItem;
 import com.hungteen.pvz.common.network.PVZPacketHandler;
 import com.hungteen.pvz.common.network.toclient.PlaySoundPacket;
-import com.hungteen.pvz.register.ItemRegister;
 import com.hungteen.pvz.utils.PlayerUtil;
 import com.hungteen.pvz.utils.enums.Resources;
 import net.minecraft.client.util.ITooltipFlag;
@@ -203,7 +203,7 @@ public class PeaGunItem extends Item {
 	private void performShoot(PlayerEntity player, IPlantType plant, ItemStack stack, ItemStack peaGun, int type) {
 		//TODO 豌豆枪
 //		player.getCapability(CapabilityHandler.PLAYER_DATA_CAPABILITY).ifPresent((l) -> {
-//			int plantLvl = l.getPlayerData().getPlantStats().getPAZLevel(plant);
+//			int plantLvl = l.getPlayerData().getPlantStats().getPAZPoint(plant);
 //			int lvl = l.getPlayerData().getResource(Resources.TREE_LVL);
 //			PeaEntity.Type peaType = PeaEntity.Type.NORMAL;
 //			if(plantLvl > 6) {

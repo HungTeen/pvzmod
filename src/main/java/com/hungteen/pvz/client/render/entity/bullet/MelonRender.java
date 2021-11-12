@@ -1,9 +1,9 @@
 package com.hungteen.pvz.client.render.entity.bullet;
 
 import com.hungteen.pvz.client.render.entity.EntityBlockRender;
+import com.hungteen.pvz.common.block.BlockRegister;
 import com.hungteen.pvz.common.entity.bullet.MelonEntity;
 import com.hungteen.pvz.common.entity.bullet.MelonEntity.MelonStates;
-import com.hungteen.pvz.register.BlockRegister;
 
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;

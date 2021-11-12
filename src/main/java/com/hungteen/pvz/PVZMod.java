@@ -6,6 +6,7 @@ import com.hungteen.pvz.common.advancement.AdvancementHandler;
 import com.hungteen.pvz.common.block.OriginBlock;
 import com.hungteen.pvz.common.datapack.DataPackRegister;
 import com.hungteen.pvz.common.world.gen.GenStructures;
+import com.hungteen.pvz.compat.craid.CRaidRegister;
 import com.hungteen.pvz.register.BiomeRegister;
 import com.hungteen.pvz.register.CoreRegister;
 import net.minecraftforge.common.ForgeConfigSpec;
@@ -34,6 +35,8 @@ public class PVZMod {
     public static final Logger LOGGER = LogManager.getLogger();
     // Mod ID
 	public static final String MOD_ID = "pvz";
+	// Mod Version
+	public static final String MOD_VERSION = "0.6";
 	// Proxy of Server and Client.
 	public static CommonProxy PROXY = DistExecutor.safeRunForDist(() -> ClientProxy::new, () -> CommonProxy::new);
 	
@@ -59,6 +62,7 @@ public class PVZMod {
     	
     	AdvancementHandler.init();
     	CoreRegister.register();
+		CRaidRegister.register();
     	
     	PROXY.init();
     }

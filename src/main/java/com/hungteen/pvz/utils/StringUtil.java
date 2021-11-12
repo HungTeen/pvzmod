@@ -21,6 +21,7 @@ public class StringUtil {
 
 	public static final StringTextComponent EMPTY = new StringTextComponent("");
 	public static final String ARMOR_PREFIX = PVZMod.MOD_ID + ":textures/models/armor/";
+	public static final String INIT_VERSION = "0.0.0";
 	public static final String JSON_SUN_COST = "sun_cost";
 	public static final String JSON_COOL_DOWN = "cool_down";
 	public static final String JSON_REQUIRE_LEVEL = "require_level";

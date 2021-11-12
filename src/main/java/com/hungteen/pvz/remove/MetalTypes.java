@@ -1,7 +1,7 @@
 package com.hungteen.pvz.remove;
 
-import com.hungteen.pvz.register.BlockRegister;
-import com.hungteen.pvz.register.ItemRegister;
+import com.hungteen.pvz.common.block.BlockRegister;
+import com.hungteen.pvz.common.item.ItemRegister;
 
 import net.minecraft.item.Item;
 import net.minecraft.item.Items;
@@ -28,7 +28,7 @@ public enum MetalTypes {
 		case IRON_PICKAXE: return Items.IRON_PICKAXE;
 		case LADDER: return BlockRegister.STEEL_LADDER.get().asItem();
 		default:
-			return ItemRegister.STEEL_INGOT.get();
+			return Items.IRON_INGOT;
 		}
 	}
 }

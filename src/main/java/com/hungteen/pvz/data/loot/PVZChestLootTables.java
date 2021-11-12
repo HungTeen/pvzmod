@@ -3,7 +3,7 @@ package com.hungteen.pvz.data.loot;
 import java.util.function.BiConsumer;
 import java.util.function.Consumer;
 
-import com.hungteen.pvz.register.ItemRegister;
+import com.hungteen.pvz.common.item.ItemRegister;
 
 import net.minecraft.block.Blocks;
 import net.minecraft.item.Items;

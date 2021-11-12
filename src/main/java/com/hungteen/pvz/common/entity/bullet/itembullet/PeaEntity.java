@@ -6,9 +6,9 @@ import com.hungteen.pvz.common.entity.bullet.AbstractShootBulletEntity;
 import com.hungteen.pvz.common.entity.plant.flame.TorchWoodEntity;
 import com.hungteen.pvz.common.entity.plant.flame.TorchWoodEntity.FlameTypes;
 import com.hungteen.pvz.common.impl.plant.PVZPlants;
+import com.hungteen.pvz.common.item.ItemRegister;
 import com.hungteen.pvz.common.misc.damage.PVZDamageSource;
 import com.hungteen.pvz.register.EntityRegister;
-import com.hungteen.pvz.register.ItemRegister;
 import com.hungteen.pvz.utils.WeaponUtil;
 
 import net.minecraft.entity.Entity;

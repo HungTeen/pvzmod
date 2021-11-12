@@ -2,8 +2,8 @@ package com.hungteen.pvz.common.entity.bullet;
 
 import com.hungteen.pvz.common.entity.zombie.roof.BungeeZombieEntity;
 import com.hungteen.pvz.common.entity.zombie.roof.BungeeZombieEntity.BungeeTypes;
+import com.hungteen.pvz.common.item.ItemRegister;
 import com.hungteen.pvz.register.EntityRegister;
-import com.hungteen.pvz.register.ItemRegister;
 import com.hungteen.pvz.utils.EntityUtil;
 
 import net.minecraft.entity.EntitySize;

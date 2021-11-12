@@ -2,10 +2,10 @@ package com.hungteen.pvz.data;
 
 import java.util.function.Consumer;
 
+import com.hungteen.pvz.common.block.BlockRegister;
+import com.hungteen.pvz.common.item.ItemRegister;
 import com.hungteen.pvz.common.item.spawn.card.PlantCardItem;
 import com.hungteen.pvz.common.misc.tag.PVZItemTags;
-import com.hungteen.pvz.register.BlockRegister;
-import com.hungteen.pvz.register.ItemRegister;
 import com.hungteen.pvz.utils.StringUtil;
 
 import net.minecraft.data.CookingRecipeBuilder;
@@ -72,7 +72,6 @@ public class RecipeGenerator extends ForgeRecipeProvider{
 		
 		//smelt
 		registerStoneSmelting(consumer, BlockRegister.AMETHYST_ORE.get(), ItemRegister.AMETHYST_INGOT.get(), 1.4F, 250, "amethyst_ingot");
-		registerStoneSmelting(consumer, Items.IRON_INGOT, ItemRegister.STEEL_INGOT.get(), 1.0F, 600, "steel_ingot");
 		registerFoodSmelting(consumer, ItemRegister.FAKE_BRAIN.get(), ItemRegister.COOKED_BRAIN.get(), 0.4F, 200, "cooked_brain");
 	    
 	}

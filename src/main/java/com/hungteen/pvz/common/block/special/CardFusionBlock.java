@@ -1,8 +1,8 @@
 package com.hungteen.pvz.common.block.special;
 
 import com.hungteen.pvz.common.block.AbstractFacingBlock;
+import com.hungteen.pvz.common.block.BlockRegister;
 import com.hungteen.pvz.common.tileentity.CardFusionTileEntity;
-import com.hungteen.pvz.register.BlockRegister;
 
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;

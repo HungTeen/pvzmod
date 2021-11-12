@@ -1,6 +1,8 @@
 package com.hungteen.pvz.common.item.spawn.card;
 
 import com.hungteen.pvz.api.types.ICoolDown;
+import com.hungteen.pvz.api.types.IPAZType;
+import com.hungteen.pvz.client.ClientProxy;
 import com.hungteen.pvz.common.impl.CoolDowns;
 import com.hungteen.pvz.common.item.PVZItemGroups;
 import com.hungteen.pvz.utils.PlayerUtil;
@@ -19,14 +21,16 @@ import java.util.List;
 
 public abstract class SummonCardItem extends Item{
 
+	public final IPAZType type;
 	public final boolean isEnjoyCard;
 	
-	public SummonCardItem(boolean isEnjoyCard) {
-		this(new Properties().tab(PVZItemGroups.PVZ_PLANT_CARD).stacksTo(isEnjoyCard ? 16 : 1), isEnjoyCard);
+	public SummonCardItem(IPAZType type, boolean isEnjoyCard) {
+		this(new Properties().tab(PVZItemGroups.PVZ_PLANT_CARD).stacksTo(isEnjoyCard ? 16 : 1), type, isEnjoyCard);
 	}
 	
-	public SummonCardItem(Properties properties, boolean isEnjoyCard) {
+	public SummonCardItem(Properties properties, IPAZType type, boolean isEnjoyCard) {
 		super(properties);
+		this.type = type;
 		this.isEnjoyCard = isEnjoyCard;
 	}
 	 
@@ -71,7 +75,12 @@ public abstract class SummonCardItem extends Item{
 	public void appendHoverText(ItemStack stack, World worldIn, List<ITextComponent> tooltip, ITooltipFlag flagIn) {
 		tooltip.add(new TranslationTextComponent("tooltip.pvz.card_sun_cost", getCardSunCost(stack)).withStyle(TextFormatting.YELLOW));
 		tooltip.add(new TranslationTextComponent("tooltip.pvz.card_cd", new TranslationTextComponent(getCardCoolDown(stack).getTranslateKey()).getString()).withStyle(TextFormatting.AQUA));
-		tooltip.add(new TranslationTextComponent("tooltip.pvz.card_required_level", getCardRequiredLevel(stack)).withStyle(TextFormatting.RED));
+		PlayerUtil.getOptManager(ClientProxy.MC.player).ifPresent(m -> {
+			//this paz type is locked.
+			if (m.isPAZLocked(this.type)) {
+				tooltip.add(new TranslationTextComponent("tooltip.pvz.card_required_level", getCardRequiredLevel(stack)).withStyle(TextFormatting.RED));
+			}
+		});
 	}
 	
 	@Override

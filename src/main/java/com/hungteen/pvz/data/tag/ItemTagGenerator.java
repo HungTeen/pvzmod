@@ -4,13 +4,13 @@ import java.util.Comparator;
 import java.util.function.Predicate;
 
 import com.hungteen.pvz.PVZMod;
+import com.hungteen.pvz.common.block.BlockRegister;
 import com.hungteen.pvz.common.block.EssenceOreBlock;
+import com.hungteen.pvz.common.item.ItemRegister;
 import com.hungteen.pvz.common.item.material.TemplateCardItem;
 import com.hungteen.pvz.common.item.spawn.card.PlantCardItem;
 import com.hungteen.pvz.common.item.spawn.card.SummonCardItem;
 import com.hungteen.pvz.common.misc.tag.PVZItemTags;
-import com.hungteen.pvz.register.BlockRegister;
-import com.hungteen.pvz.register.ItemRegister;
 
 import net.minecraft.block.Block;
 import net.minecraft.data.BlockTagsProvider;
@@ -41,7 +41,6 @@ public class ItemTagGenerator extends ItemTagsProvider{
 		this.tag(PVZItemTags.CORNS).add(ItemRegister.CORN.get());
 		this.tag(PVZItemTags.CORN_SEEDS).add(ItemRegister.CORN_SEEDS.get());
 		this.tag(PVZItemTags.AMETHYST_INGOTS).add(ItemRegister.AMETHYST_INGOT.get());
-		this.tag(PVZItemTags.STEEL_INGOTS).add(ItemRegister.STEEL_INGOT.get());
 		this.tag(PVZItemTags.AMETHYST_ORES).add(BlockRegister.AMETHYST_ORE.get().asItem());
 		
 		//pvz tag

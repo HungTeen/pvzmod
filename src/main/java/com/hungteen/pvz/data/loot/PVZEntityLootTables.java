@@ -3,8 +3,8 @@ package com.hungteen.pvz.data.loot;
 import java.util.function.BiConsumer;
 import java.util.function.Consumer;
 
-import com.hungteen.pvz.register.BlockRegister;
-import com.hungteen.pvz.register.ItemRegister;
+import com.hungteen.pvz.common.block.BlockRegister;
+import com.hungteen.pvz.common.item.ItemRegister;
 
 import net.minecraft.item.Items;
 import net.minecraft.loot.ConstantRange;
@@ -139,7 +139,6 @@ public class PVZEntityLootTables implements Consumer<BiConsumer<ResourceLocation
 		t.accept(PVZLoot.LADDER_ZOMBIE, getLootTable()
 				.withPool(LootPool.lootPool().setRolls(ConstantRange.exactly(1))
 				        .add(ItemLootEntry.lootTableItem(BlockRegister.STEEL_LADDER.get()))
-				        .add(ItemLootEntry.lootTableItem(ItemRegister.STEEL_INGOT.get()))
 				        .when(RandomChanceWithLooting.randomChanceAndLootingBoost(0.05F, 0.01F))
 		));
 		t.accept(PVZLoot.GARGANTUAR, getLootTable()

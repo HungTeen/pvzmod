@@ -4,7 +4,7 @@ import javax.annotation.Nullable;
 
 import com.hungteen.pvz.common.container.shop.MysteryShopContainer;
 import com.hungteen.pvz.common.container.shop.PennyShopContainer;
-import com.hungteen.pvz.register.ItemRegister;
+import com.hungteen.pvz.common.item.ItemRegister;
 import com.hungteen.pvz.register.SoundRegister;
 
 import net.minecraft.entity.CreatureEntity;

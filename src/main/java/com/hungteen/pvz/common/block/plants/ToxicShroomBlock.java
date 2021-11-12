@@ -2,7 +2,7 @@ package com.hungteen.pvz.common.block.plants;
 
 import java.util.Random;
 
-import com.hungteen.pvz.register.ItemRegister;
+import com.hungteen.pvz.common.item.ItemRegister;
 
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;

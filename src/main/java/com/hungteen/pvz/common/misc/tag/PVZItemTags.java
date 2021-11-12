@@ -20,7 +20,6 @@ public class PVZItemTags {
 	public static final INamedTag<Item> CORNS = forgeTag("crops/corn");
 	public static final INamedTag<Item> CORN_SEEDS = forgeTag("seeds/corn");
 	public static final INamedTag<Item> AMETHYST_INGOTS = forgeTag("ingots/amethyst");
-	public static final INamedTag<Item> STEEL_INGOTS = forgeTag("ingots/steel");
 	public static final INamedTag<Item> AMETHYST_ORES = forgeTag("ores/amethyst");
 	
 	//pvz

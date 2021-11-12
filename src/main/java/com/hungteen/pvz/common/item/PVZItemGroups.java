@@ -1,7 +1,5 @@
 package com.hungteen.pvz.common.item;
 
-import com.hungteen.pvz.register.ItemRegister;
-
 import net.minecraft.item.ItemGroup;
 import net.minecraft.item.ItemStack;
 
@@ -25,6 +23,13 @@ public class PVZItemGroups {
 		@Override
 		public ItemStack makeIcon() {
 			return new ItemStack(ItemRegister.ZOMBIE_FLAG.get());
+		}
+	};
+	
+	public static final ItemGroup PVZ_ENVELOPE = new ItemGroup("pvz_envelope") {
+		@Override
+		public ItemStack makeIcon() {
+			return new ItemStack(ItemRegister.CHALLENGE_ENVELOPE.get());
 		}
 	};
 	

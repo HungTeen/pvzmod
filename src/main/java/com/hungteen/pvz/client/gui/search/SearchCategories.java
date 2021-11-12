@@ -1,7 +1,7 @@
 package com.hungteen.pvz.client.gui.search;
 
 import com.hungteen.pvz.PVZMod;
-import com.hungteen.pvz.register.ItemRegister;
+import com.hungteen.pvz.common.item.ItemRegister;
 
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;

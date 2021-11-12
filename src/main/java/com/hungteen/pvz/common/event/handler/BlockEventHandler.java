@@ -2,7 +2,7 @@ package com.hungteen.pvz.common.event.handler;
 
 import com.hungteen.pvz.PVZConfig;
 import com.hungteen.pvz.common.event.PVZPlayerEvents;
-import com.hungteen.pvz.register.ItemRegister;
+import com.hungteen.pvz.common.item.ItemRegister;
 
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;

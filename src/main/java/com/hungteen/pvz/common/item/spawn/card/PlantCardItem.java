@@ -4,6 +4,7 @@ import com.hungteen.pvz.PVZMod;
 import com.hungteen.pvz.api.types.ICoolDown;
 import com.hungteen.pvz.api.types.IPlantType;
 import com.hungteen.pvz.common.advancement.trigger.PlayerPlacePlantTrigger;
+import com.hungteen.pvz.common.block.BlockRegister;
 import com.hungteen.pvz.common.enchantment.EnchantmentRegister;
 import com.hungteen.pvz.common.enchantment.card.ImmediateCDEnchantment;
 import com.hungteen.pvz.common.enchantment.card.LevelUpEnchantment;
@@ -20,7 +21,6 @@ import com.hungteen.pvz.common.impl.CoolDowns;
 import com.hungteen.pvz.common.impl.plant.OtherPlants;
 import com.hungteen.pvz.common.impl.plant.PVZPlants;
 import com.hungteen.pvz.common.item.PVZItemGroups;
-import com.hungteen.pvz.register.BlockRegister;
 import com.hungteen.pvz.register.EffectRegister;
 import com.hungteen.pvz.register.SoundRegister;
 import com.hungteen.pvz.utils.ConfigUtil;
@@ -81,12 +81,12 @@ public class PlantCardItem extends SummonCardItem {
 	public final IPlantType plantType;
 
 	public PlantCardItem(IPlantType plant, boolean isFragment) {
-		super(isFragment);
+		super(plant, isFragment);
 		this.plantType = plant;
 	}
 	
 	public PlantCardItem(Properties properties, IPlantType plant, boolean isFragment) {
-		super(properties, isFragment);
+		super(properties, plant, isFragment);
 		this.plantType = plant;
 	}
 	
@@ -273,7 +273,7 @@ public class PlantCardItem extends SummonCardItem {
 				return ImitaterCardItem.summonImitater(player, heldStack, plantStack, cardItem, pos, i -> consumer.accept(i));
 			}
 			/* other plant card */
-			final int lvl = PlayerUtil.getPlantLvl(player, plantType);
+			final int lvl = PlayerUtil.getPAZPoint(player, plantType);
 			if(! handlePlantEntity(player, plantType, plantStack, pos, plantEntity -> {
 				/* update maxLevel and its owner */
 		        plantEntity.onSpawnedByPlayer(player, lvl, cardItem.getBasisSunCost(plantStack));
@@ -358,7 +358,7 @@ public class PlantCardItem extends SummonCardItem {
 		}
 		final ItemStack plantStack = getPlantStack(heldStack);
 		final IPlantType plantType = ((PlantCardItem) plantStack.getItem()).plantType;
-		final int lvl = PlayerUtil.getPlantLvl(player, plantType);
+		final int lvl = PlayerUtil.getPAZPoint(player, plantType);
 		final int cost = cardItem.getBasisSunCost(plantStack);
 		if(heldStack.getItem() instanceof ImitaterCardItem) {
 			if(checkSunAndSummonPlant(player, heldStack, plantStack, cardItem, plantEntity.blockPosition(), p -> {
@@ -425,7 +425,7 @@ public class PlantCardItem extends SummonCardItem {
 			return true;
 		} else {/* not consider surrounding plants number */
 		    if(checkSunAndCD(player, cardItem, plantStack, true, p -> true)){
-			    onUsePlantCard(player, heldStack, cardItem, PlayerUtil.getPlantLvl(player, plantType));
+			    onUsePlantCard(player, heldStack, cardItem, PlayerUtil.getPAZPoint(player, plantType));
 			    plantEntity.onHealByCard();
 			    return true;
 		    }
@@ -497,7 +497,7 @@ public class PlantCardItem extends SummonCardItem {
 			return false;
 		}
 		/* check lock */
-		if(PlayerUtil.isPlantLocked(player, cardItem.plantType)) {
+		if(PlayerUtil.isPAZLocked(player, cardItem.plantType)) {
 			cardItem.notifyPlayerAndCD(player, stack, PlacementErrors.LOCK_ERROR);
 			return false;
 		}

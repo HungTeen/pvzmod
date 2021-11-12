@@ -1,6 +1,6 @@
 package com.hungteen.pvz.common.block.plants;
 
-import com.hungteen.pvz.register.ItemRegister;
+import com.hungteen.pvz.common.item.ItemRegister;
 
 import net.minecraft.block.CropsBlock;
 import net.minecraft.util.IItemProvider;

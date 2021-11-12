@@ -25,7 +25,6 @@ public class PVZPacketHandler {
 	public static void init() {
 		int id = 0;
 		CHANNEL.registerMessage(id ++, PlayerStatsPacket.class, PlayerStatsPacket::encode, PlayerStatsPacket::new, PlayerStatsPacket.Handler::onMessage);
-		CHANNEL.registerMessage(id ++, PlantStatsPacket.class, PlantStatsPacket::encode, PlantStatsPacket::new, PlantStatsPacket.Handler::onMessage);
 		CHANNEL.registerMessage(id ++, OpenGuiPacket.class, OpenGuiPacket::encode, OpenGuiPacket::new, OpenGuiPacket.Handler::onMessage);
 		CHANNEL.registerMessage(id ++, ClickButtonPacket.class, ClickButtonPacket::encode, ClickButtonPacket::new, ClickButtonPacket.Handler::onMessage);
 		CHANNEL.registerMessage(id ++, PlaySoundPacket.class, PlaySoundPacket::encode, PlaySoundPacket::new, PlaySoundPacket.Handler::onMessage);
@@ -35,7 +34,7 @@ public class PVZPacketHandler {
 		CHANNEL.registerMessage(id ++, EntityInteractPacket.class, EntityInteractPacket::encode, EntityInteractPacket::new, EntityInteractPacket.Handler::onMessage);
 		CHANNEL.registerMessage(id ++, PVZMouseScrollPacket.class, PVZMouseScrollPacket::encode, PVZMouseScrollPacket::new, PVZMouseScrollPacket.Handler::onMessage);
 		CHANNEL.registerMessage(id ++, CardInventoryPacket.class, CardInventoryPacket::encode, CardInventoryPacket::new, CardInventoryPacket.Handler::onMessage);
-		CHANNEL.registerMessage(id ++, PAZPacket.class, PAZPacket::encode, PAZPacket::new, PAZPacket.Handler::onMessage);
+		CHANNEL.registerMessage(id ++, PAZStatsPacket.class, PAZStatsPacket::encode, PAZStatsPacket::new, PAZStatsPacket.Handler::onMessage);
 
 	}
 	

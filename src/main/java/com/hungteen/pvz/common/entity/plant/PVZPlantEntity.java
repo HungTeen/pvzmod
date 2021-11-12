@@ -32,7 +32,6 @@ import com.hungteen.pvz.remove.MetalTypes;
 import com.hungteen.pvz.utils.AlgorithmUtil;
 import com.hungteen.pvz.utils.EntityUtil;
 import com.hungteen.pvz.utils.PlantUtil;
-import com.hungteen.pvz.utils.PlayerUtil;
 import com.hungteen.pvz.utils.interfaces.ICanAttract;
 import net.minecraft.block.Block;
 import net.minecraft.entity.*;
@@ -558,7 +557,6 @@ public abstract class PVZPlantEntity extends AbstractPAZEntity implements IPlant
 			PlayerEntity player = EntityUtil.getEntityOwner(level, this);
 			if (player != null && player instanceof ServerPlayerEntity) {
 				PlantSuperTrigger.INSTANCE.trigger((ServerPlayerEntity) player, this);
-				PlayerUtil.addPlantXp(player, this.getPlantType(), 2);
 			}
 			this.getOuterPlantInfo().ifPresent(p -> p.onSuper());
 		}

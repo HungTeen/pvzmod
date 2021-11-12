@@ -5,10 +5,10 @@ import java.util.HashSet;
 import java.util.Set;
 
 import com.hungteen.pvz.PVZMod;
+import com.hungteen.pvz.common.block.BlockRegister;
 import com.hungteen.pvz.common.block.plants.CabbageBlock;
 import com.hungteen.pvz.common.block.plants.CornBlock;
 import com.hungteen.pvz.common.block.plants.ToxicShroomBlock;
-import com.hungteen.pvz.register.BlockRegister;
 import com.hungteen.pvz.utils.StringUtil;
 import com.mojang.datafixers.util.Pair;
 

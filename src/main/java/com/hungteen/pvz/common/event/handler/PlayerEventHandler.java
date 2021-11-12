@@ -1,5 +1,9 @@
 package com.hungteen.pvz.common.event.handler;
 
+import java.util.Optional;
+
+import com.hungteen.pvz.PVZConfig;
+import com.hungteen.pvz.PVZMod;
 import com.hungteen.pvz.api.PVZAPI;
 import com.hungteen.pvz.common.capability.CapabilityHandler;
 import com.hungteen.pvz.common.capability.player.IPlayerDataCapability;
@@ -11,12 +15,16 @@ import com.hungteen.pvz.common.entity.zombie.PVZZombieEntity;
 import com.hungteen.pvz.common.event.PVZLivingEvents;
 import com.hungteen.pvz.common.event.PVZPlayerEvents;
 import com.hungteen.pvz.common.impl.ZombieType;
+import com.hungteen.pvz.common.item.ItemRegister;
 import com.hungteen.pvz.common.world.data.PVZInvasionData;
 import com.hungteen.pvz.common.world.invasion.WaveManager;
+import com.hungteen.pvz.compat.patchouli.PVZPatchouliHandler;
 import com.hungteen.pvz.register.SoundRegister;
 import com.hungteen.pvz.utils.EntityUtil;
 import com.hungteen.pvz.utils.PlayerUtil;
+import com.hungteen.pvz.utils.StringUtil;
 import com.hungteen.pvz.utils.enums.Resources;
+
 import net.minecraft.advancements.CriteriaTriggers;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
@@ -28,10 +36,22 @@ import net.minecraft.util.math.MathHelper;
 import net.minecraftforge.common.util.LazyOptional;
 import net.minecraftforge.event.entity.living.LivingDeathEvent;
 
-import java.util.Optional;
-
 public class PlayerEventHandler {
-	
+
+	/**
+	 * when tree level is enough, unlock some plants & zombies.
+	 */
+	public static void unLockPAZs(PlayerEntity player){
+		final int level = PlayerUtil.getResource(player, Resources.TREE_LVL);
+		PVZAPI.get().getPAZs().forEach(type -> {
+			if(type.getRequiredLevel() <= level){
+				PlayerUtil.getOptManager(player).ifPresent(m -> {
+					m.setPAZLocked(type, false);
+				});
+			}
+		});
+	}
+
 	/**
 	 * run when player right click plantEntity with shovel.
 	 */
@@ -67,7 +87,23 @@ public class PlayerEventHandler {
 	 * {@link PVZPlayerEvents#onPlayerLogin(net.minecraftforge.event.entity.player.PlayerEvent.PlayerLoggedInEvent)}
 	 */
 	public static void onPlayerLogin(PlayerEntity player) {
-		Optional.ofNullable(PlayerUtil.getManager(player)).ifPresent(l -> l.init());
+		Optional.ofNullable(PlayerUtil.getManager(player)).ifPresent(l -> {
+			l.init();
+			if(l.lastVersion.equals(StringUtil.INIT_VERSION)) {//first join world.
+				// allow to get beginner reward.
+				if(PVZConfig.COMMON_CONFIG.RuleSettings.GiveBeginnerReward.get()) {
+					player.addItem(new ItemStack(ItemRegister.PEA_SHOOTER_CARD.get()));
+					player.addItem(new ItemStack(ItemRegister.SUN_FLOWER_CARD.get()));
+					player.addItem(new ItemStack(ItemRegister.WALL_NUT_CARD.get()));
+					player.addItem(new ItemStack(ItemRegister.POTATO_MINE_CARD.get()));
+				}
+				// give patchouli guide book to new join player.
+				PVZPatchouliHandler.giveInitialGuideBook(player);
+			} else if(! l.lastVersion.equals(PVZMod.MOD_VERSION)) {//version changed.
+				
+			}
+		});
+		unLockPAZs(player);
 		WaveManager.syncWaveTime(player);
 	}
 	

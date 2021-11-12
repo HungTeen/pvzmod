@@ -1,7 +1,7 @@
 package com.hungteen.pvz.common.container;
 
+import com.hungteen.pvz.common.block.BlockRegister;
 import com.hungteen.pvz.common.item.spawn.card.SummonCardItem;
-import com.hungteen.pvz.register.BlockRegister;
 import com.hungteen.pvz.register.ContainerRegister;
 
 import net.minecraft.entity.player.PlayerEntity;

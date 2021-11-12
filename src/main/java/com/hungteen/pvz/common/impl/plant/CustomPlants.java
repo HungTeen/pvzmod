@@ -9,8 +9,8 @@ import com.hungteen.pvz.common.impl.EssenceType;
 import com.hungteen.pvz.common.impl.CoolDowns;
 import com.hungteen.pvz.common.impl.PlantType;
 import com.hungteen.pvz.common.impl.Ranks;
+import com.hungteen.pvz.common.item.ItemRegister;
 import com.hungteen.pvz.register.EntityRegister;
-import com.hungteen.pvz.register.ItemRegister;
 
 import java.util.ArrayList;
 import java.util.List;

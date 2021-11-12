@@ -9,8 +9,8 @@ import com.hungteen.pvz.client.model.entity.plant.explosion.BambooLordModel;
 import com.hungteen.pvz.client.model.entity.plant.ice.IcebergLettuceModel;
 import com.hungteen.pvz.client.model.entity.plant.light.GoldLeafModel;
 import com.hungteen.pvz.common.impl.*;
+import com.hungteen.pvz.common.item.ItemRegister;
 import com.hungteen.pvz.register.EntityRegister;
-import com.hungteen.pvz.register.ItemRegister;
 
 import java.util.ArrayList;
 import java.util.List;

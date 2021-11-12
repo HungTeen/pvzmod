@@ -2,7 +2,7 @@ package com.hungteen.pvz.common.event;
 
 import com.hungteen.pvz.PVZConfig;
 import com.hungteen.pvz.PVZMod;
-import com.hungteen.pvz.register.BlockRegister;
+import com.hungteen.pvz.common.block.BlockRegister;
 
 import net.minecraftforge.event.world.SaplingGrowTreeEvent;
 import net.minecraftforge.eventbus.api.Event.Result;

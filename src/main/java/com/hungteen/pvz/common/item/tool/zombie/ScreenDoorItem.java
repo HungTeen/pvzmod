@@ -3,12 +3,12 @@ package com.hungteen.pvz.common.item.tool.zombie;
 import java.util.List;
 
 import com.hungteen.pvz.common.item.PVZItemGroups;
-import com.hungteen.pvz.register.ItemRegister;
 
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
+import net.minecraft.item.Items;
 import net.minecraft.item.ShieldItem;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.world.World;
@@ -30,7 +30,7 @@ public class ScreenDoorItem extends ShieldItem{
 	
 	@Override
 	public boolean isValidRepairItem(ItemStack toRepair, ItemStack repair) {
-		return repair.getItem() == ItemRegister.STEEL_INGOT.get();
+		return repair.getItem() == Items.IRON_INGOT;
 	}
 	
 	@Override

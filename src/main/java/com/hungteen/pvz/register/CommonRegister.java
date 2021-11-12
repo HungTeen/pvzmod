@@ -1,5 +1,8 @@
 package com.hungteen.pvz.register;
 
+import com.hungteen.pvz.common.block.BlockRegister;
+import com.hungteen.pvz.common.item.ItemRegister;
+
 import net.minecraft.block.ComposterBlock;
 import net.minecraft.util.IItemProvider;
 

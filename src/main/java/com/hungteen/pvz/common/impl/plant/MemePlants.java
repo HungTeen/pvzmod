@@ -5,8 +5,8 @@ import com.hungteen.pvz.api.PVZAPI;
 import com.hungteen.pvz.api.types.IPlantType;
 import com.hungteen.pvz.client.model.entity.plant.magic.StrangeCatModel;
 import com.hungteen.pvz.common.impl.*;
+import com.hungteen.pvz.common.item.ItemRegister;
 import com.hungteen.pvz.register.EntityRegister;
-import com.hungteen.pvz.register.ItemRegister;
 
 import java.util.ArrayList;
 import java.util.List;

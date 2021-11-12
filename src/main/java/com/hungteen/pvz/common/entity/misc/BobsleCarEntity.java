@@ -2,7 +2,7 @@ package com.hungteen.pvz.common.entity.misc;
 
 import javax.annotation.Nullable;
 
-import com.hungteen.pvz.register.ItemRegister;
+import com.hungteen.pvz.common.item.ItemRegister;
 
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
