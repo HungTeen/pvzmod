@@ -16,20 +16,12 @@ public class PlantUtil {
 	public static final int MAX_PLANT_LEVEL = 20;
 	public static final float PUMPKIN_LIFE = 400;
 	public static final float PUMPKIN_SUPER_LIFE = 400;
-
-	public static int getPlantAverageProgress(PVZPlantEntity plant, int from, int to) {
-		return MathUtil.getProgressAverage(plant.getPAZLevel(), MAX_PLANT_LEVEL, from, to);
-	}
-	
-	public static float getPlantAverageProgress(PVZPlantEntity plant, float from, float to) {
-		return MathUtil.getProgressAverage(plant.getPAZLevel(), MAX_PLANT_LEVEL, from, to);
-	}
 	
 	/**
 	 * copy data from p1 to p2
 	 */
 	public static void copyPlantData(PVZPlantEntity p2, PVZPlantEntity p1) {
-		p2.setPAZLevel(p1.getPAZLevel());
+		p2.setSkills(p1.getSkills());
 		p2.setCharmed(p1.isCharmed());
 		p2.setOwnerUUID(p1.getOwnerUUID().orElse(null));
 	}

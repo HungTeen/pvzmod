@@ -44,9 +44,10 @@ public class PeaShooterEntity extends PlantShooterEntity{
 	 * get how many peas need shoot per tick, when super.
 	 */
 	public int getSuperShootCount() {
-		final int min = this.isPlantInStage(3) ? 2 : 1;
-		final int max = this.isPlantInStage(1) ? 2 : 3;
-		return MathUtil.getRandomMinMax(getRandom(), min, max);
+//		final int min = this.isPlantInStage(3) ? 2 : 1;
+//		final int max = this.isPlantInStage(1) ? 2 : 3;
+		return 1;
+//		return MathUtil.getRandomMinMax(getRandom(), min, max);
 	}
 	
 	@Override

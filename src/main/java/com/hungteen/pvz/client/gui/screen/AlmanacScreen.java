@@ -67,7 +67,7 @@ public class AlmanacScreen extends AbstractOptionScreen<AlmanacContainer> {
 //			}
 //			PVZPlantEntity plantEntity =  PlantUtil.getPlantEntity(world, plant);
 //			plantEntity.setPlantLvl(lvl);
-//			this.drawProperty(stack, Properties.HEALTH, plantEntity.getPlantHealth());
+//			this.drawProperty(stack, Properties.HEALTH, plantEntity.getLife());
 //			switch(plant) {
 //			case PEA_SHOOTER:{
 //				PeaShooterEntity peaShooter = (PeaShooterEntity) plantEntity;

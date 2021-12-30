@@ -2,7 +2,6 @@ package com.hungteen.pvz.common.enchantment.card;
 
 import com.hungteen.pvz.common.enchantment.EnchantmentRegister;
 import com.hungteen.pvz.common.enchantment.PVZEnchantment;
-
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.inventory.EquipmentSlotType;
 import net.minecraft.item.ItemStack;

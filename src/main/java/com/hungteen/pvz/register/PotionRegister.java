@@ -1,6 +1,7 @@
 package com.hungteen.pvz.register;
 
 import com.hungteen.pvz.PVZMod;
+import com.hungteen.pvz.common.potion.EffectRegister;
 
 import net.minecraft.potion.EffectInstance;
 import net.minecraft.potion.Potion;

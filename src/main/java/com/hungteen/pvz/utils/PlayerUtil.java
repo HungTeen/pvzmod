@@ -110,12 +110,12 @@ public class PlayerUtil {
 	}
 	
 	public static void addPAZPoint(PlayerEntity player, IPAZType plant, int num) {
-		getOptManager(player).ifPresent(l -> l.addPAZLevel(plant, num));
+		getOptManager(player).ifPresent(l -> l.addPAZPoint(plant, num));
 	}
 	
 	public static int getPAZPoint(PlayerEntity player, IPAZType plant) {
 		final PlayerDataManager manager = getManager(player);
-		return manager != null ? manager.getPAZLevel(plant) : 1;
+		return manager != null ? manager.getPAZPoint(plant) : 1;
 	}
 	
 	public static void setCardCD(PlayerEntity player, PlantCardItem card, int cd) {

@@ -45,7 +45,8 @@ public class RepeaterEntity extends PeaShooterEntity{
 	}
 	
 	protected int getBigPeaNum() {
-		return this.isPlantInStage(1) ? 1 : this.isPlantInStage(2) ? 2 : 3;
+		return 1;
+//		return this.isPlantInStage(1) ? 1 : this.isPlantInStage(2) ? 2 : 3;
 	}
 	
 	@Override

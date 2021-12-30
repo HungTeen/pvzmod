@@ -12,8 +12,8 @@ import net.minecraftforge.fml.network.NetworkHooks;
 
 public abstract class PVZEntityBase extends Entity {
 
-	public PVZEntityBase(EntityType<?> p_i48580_1_, World p_i48580_2_) {
-		super(p_i48580_1_, p_i48580_2_);
+	public PVZEntityBase(EntityType<?> type, World world) {
+		super(type, world);
 	}
 
 	@Override

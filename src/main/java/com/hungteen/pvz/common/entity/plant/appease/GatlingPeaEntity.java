@@ -31,7 +31,8 @@ public class GatlingPeaEntity extends RepeaterEntity{
 	
 	@Override
 	protected int getBigPeaNum() {
-		return this.getThreeStage(2, 4, 6);
+		return 1;
+//		return this.getThreeStage(2, 4, 6);
 	}
 	
 	@Override

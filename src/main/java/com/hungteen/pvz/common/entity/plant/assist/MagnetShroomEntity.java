@@ -1,9 +1,5 @@
 package com.hungteen.pvz.common.entity.plant.assist;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-
 import com.hungteen.pvz.PVZMod;
 import com.hungteen.pvz.api.types.IPlantType;
 import com.hungteen.pvz.common.entity.ai.goal.target.PVZNearestTargetGoal;
@@ -16,22 +12,18 @@ import com.hungteen.pvz.register.SoundRegister;
 import com.hungteen.pvz.remove.MetalTypes;
 import com.hungteen.pvz.utils.AlgorithmUtil;
 import com.hungteen.pvz.utils.EntityUtil;
-import com.hungteen.pvz.utils.PlantUtil;
 import com.hungteen.pvz.utils.interfaces.IHasMetal;
-
-import net.minecraft.entity.CreatureEntity;
-import net.minecraft.entity.Entity;
-import net.minecraft.entity.EntitySize;
-import net.minecraft.entity.EntityType;
-import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.MobEntity;
-import net.minecraft.entity.Pose;
+import net.minecraft.entity.*;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.network.datasync.DataParameter;
 import net.minecraft.network.datasync.DataSerializers;
 import net.minecraft.network.datasync.EntityDataManager;
 import net.minecraft.world.World;
+
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 
 public class MagnetShroomEntity extends PVZPlantEntity {
 
@@ -110,15 +102,18 @@ public class MagnetShroomEntity extends PVZPlantEntity {
 	}
 	
 	public int getAttackDamage() {
-		return this.isPlantInStage(1) ? 100 : this.isPlantInStage(2) ? 200 : 300;
+		return 100;
+//		return this.isPlantInStage(1) ? 100 : this.isPlantInStage(2) ? 200 : 300;
 	}
 	
 	public int getSuperDragCnt() {
-		return this.isPlantInStage(1) ? 3 : this.isPlantInStage(2) ? 4 : 5;
+		return 3;
+//		return this.isPlantInStage(1) ? 3 : this.isPlantInStage(2) ? 4 : 5;
 	}
 	
 	public int getAttackCD() {
-		return PlantUtil.getPlantAverageProgress(this, 600, 200);
+		return 600;
+//		return PlantUtil.getPlantAverageProgress(this, 600, 200);
 	}
 	
 	/**

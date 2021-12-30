@@ -39,7 +39,7 @@ public class JalapenoZombieEntity extends AbstractZombotanyEntity {
 			JalapenoEntity jalapeno = EntityRegister.JALAPENO.get().create(level);
 			jalapeno.setImmuneToWeak(true);
 			jalapeno.setCharmed(! this.isCharmed());
-			jalapeno.setPAZLevel(this.getPAZLevel());
+			jalapeno.setSkills(this.getSkills());
 			EntityUtil.onEntitySpawn(level, jalapeno, this.blockPosition().above());
 		}
 	}

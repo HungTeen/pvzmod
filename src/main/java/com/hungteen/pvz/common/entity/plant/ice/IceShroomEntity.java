@@ -1,7 +1,5 @@
 package com.hungteen.pvz.common.entity.plant.ice;
 
-import java.util.Optional;
-
 import com.hungteen.pvz.api.interfaces.IIceEffect;
 import com.hungteen.pvz.api.types.IPlantType;
 import com.hungteen.pvz.common.advancement.trigger.EntityEffectAmountTrigger;
@@ -10,24 +8,19 @@ import com.hungteen.pvz.common.entity.misc.ElementBallEntity.ElementTypes;
 import com.hungteen.pvz.common.entity.plant.base.PlantBomberEntity;
 import com.hungteen.pvz.common.impl.plant.PVZPlants;
 import com.hungteen.pvz.common.misc.damage.PVZDamageSource;
-import com.hungteen.pvz.register.EffectRegister;
+import com.hungteen.pvz.common.potion.EffectRegister;
 import com.hungteen.pvz.register.ParticleRegister;
 import com.hungteen.pvz.register.SoundRegister;
 import com.hungteen.pvz.utils.EntityUtil;
-import com.hungteen.pvz.utils.MathUtil;
-import com.hungteen.pvz.utils.PlantUtil;
-
-import net.minecraft.entity.CreatureEntity;
-import net.minecraft.entity.EntitySize;
-import net.minecraft.entity.EntityType;
-import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.Pose;
+import net.minecraft.entity.*;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.particles.ParticleTypes;
 import net.minecraft.potion.EffectInstance;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.world.World;
+
+import java.util.Optional;
 
 public class IceShroomEntity extends PlantBomberEntity implements IIceEffect{
 
@@ -75,8 +68,9 @@ public class IceShroomEntity extends PlantBomberEntity implements IIceEffect{
 	}
 	
 	public float getAttackDamage() {
-		final int lvl = this.getPAZLevel();
-		return lvl <= 20 ? 0.1F * lvl : 10F;
+//		final int lvl = this.getSkills();
+//		return lvl <= 20 ? 0.1F * lvl : 10F;
+		return 0.1F;
 	}
 	
 	@Override
@@ -85,15 +79,18 @@ public class IceShroomEntity extends PlantBomberEntity implements IIceEffect{
 	}
 	
 	public int getColdLvl() {
-		return MathUtil.getProgressByDif(4, 1, this.getPAZLevel(), PlantUtil.MAX_PLANT_LEVEL, 3, 7);
+//		return MathUtil.getProgressByDif(4, 1, this.getSkills(), PlantUtil.MAX_PLANT_LEVEL, 3, 7);
+		return 1;
 	}
 	
 	public int getColdTick() {
-		return PlantUtil.getPlantAverageProgress(this, 0, 200);
+		return 0;
+//		return PlantUtil.getPlantAverageProgress(this, 0, 200);
 	}
 	
 	public int getFrozenTick() {
-		return PlantUtil.getPlantAverageProgress(this, 100, 240);
+		return 100;
+//		return PlantUtil.getPlantAverageProgress(this, 100, 240);
 	}
 	
 	@Override

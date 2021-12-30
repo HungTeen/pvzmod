@@ -1,18 +1,12 @@
 package com.hungteen.pvz.common.entity.plant.base;
 
-import java.util.EnumSet;
-import java.util.Optional;
-
 import com.hungteen.pvz.common.entity.ai.goal.target.PVZNearestTargetGoal;
 import com.hungteen.pvz.common.entity.bullet.AbstractBulletEntity;
 import com.hungteen.pvz.common.entity.plant.PVZPlantEntity;
 import com.hungteen.pvz.common.entity.plant.appease.StarFruitEntity;
 import com.hungteen.pvz.common.entity.plant.spear.CatTailEntity;
 import com.hungteen.pvz.utils.EntityUtil;
-import com.hungteen.pvz.utils.MathUtil;
-import com.hungteen.pvz.utils.PlantUtil;
 import com.hungteen.pvz.utils.interfaces.IShooter;
-
 import net.minecraft.entity.CreatureEntity;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
@@ -28,6 +22,9 @@ import net.minecraft.util.SoundEvents;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.vector.Vector3d;
 import net.minecraft.world.World;
+
+import java.util.EnumSet;
+import java.util.Optional;
 
 public abstract class PlantShooterEntity extends PVZPlantEntity implements IShooter {
 
@@ -132,7 +129,8 @@ public abstract class PlantShooterEntity extends PVZPlantEntity implements IShoo
 	 * get shooter bullet attack damage.
 	 */
 	public float getAttackDamage() {
-		return MathUtil.getProgressAverage(getPAZLevel(), PlantUtil.MAX_PLANT_LEVEL, 1F, 4F);
+		return 1;
+//		return MathUtil.getProgressAverage(getSkills(), PlantUtil.MAX_PLANT_LEVEL, 1F, 4F);
 	}
 	
 	@Override

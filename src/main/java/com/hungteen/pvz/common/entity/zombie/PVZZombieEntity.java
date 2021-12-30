@@ -27,13 +27,13 @@ import com.hungteen.pvz.common.entity.plant.spear.SpikeWeedEntity;
 import com.hungteen.pvz.common.entity.zombie.body.ZombieDropBodyEntity;
 import com.hungteen.pvz.common.entity.zombie.roof.BungeeZombieEntity;
 import com.hungteen.pvz.common.event.PVZLivingEvents;
-import com.hungteen.pvz.common.impl.InvasionEvents;
 import com.hungteen.pvz.common.impl.ZombieType;
 import com.hungteen.pvz.common.item.ItemRegister;
 import com.hungteen.pvz.common.misc.damage.PVZDamageSource;
-import com.hungteen.pvz.common.world.data.PVZInvasionData;
+import com.hungteen.pvz.common.potion.EffectRegister;
 import com.hungteen.pvz.data.loot.PVZLoot;
-import com.hungteen.pvz.register.*;
+import com.hungteen.pvz.register.EntityRegister;
+import com.hungteen.pvz.register.SoundRegister;
 import com.hungteen.pvz.remove.MetalTypes;
 import com.hungteen.pvz.utils.AlgorithmUtil;
 import com.hungteen.pvz.utils.ConfigUtil;
@@ -178,31 +178,32 @@ public abstract class PVZZombieEntity extends AbstractPAZEntity implements IZomb
 	@Override
 	public ILivingEntityData finalizeSpawn(IServerWorld worldIn, DifficultyInstance difficultyIn, SpawnReason reason,
 			ILivingEntityData spawnDataIn, CompoundNBT dataTag) {
-		if (!level.isClientSide) {
-			this.setZombieType(this.getSpawnType());
-			this.getSpawnSound().ifPresent(s -> {
-				EntityUtil.playSound(this, s);
-			});
-			/*just test */
-			//set its spawn maxLevel
-			this.setPAZLevel(ZombieUtil.caculateZombieLevel(this));
-			/*end test */
-			this.updateAttributes();
-			if(this.needRising) {// rising from dirt.
-				this.setAnimTime(- RISING_CD);
-				this.addEffect(new EffectInstance(Effects.MOVEMENT_SLOWDOWN, RISING_CD + 10, 20, false, false));
-			}
-			if (level.dimension() == World.OVERWORLD) {//update states.
-				PVZInvasionData data = PVZInvasionData.getOverWorldInvasionData(level);
-				//zombie rising from dirt can not be mini state.
-				if (! this.needRising && this.canBeMini() && data.hasEvent(InvasionEvents.MINI)) {
-					this.onZombieBeMini();
-				}
-				if (this.canBeInvisible() && data.hasEvent(InvasionEvents.INVIS)) {
-					this.addEffect(new EffectInstance(Effects.INVISIBILITY, 1000000, 10, false, false));
-				}
-			}
-		}
+		// @TODO 僵尸出生
+//		if (!level.isClientSide) {
+//			this.setZombieType(this.getSpawnType());
+//			this.getSpawnSound().ifPresent(s -> {
+//				EntityUtil.playSound(this, s);
+//			});
+//			/*just test */
+//			//set its spawn maxLevel
+//			this.setSkills(ZombieUtil.caculateZombieLevel(this));
+//			/*end test */
+//			this.updateAttributes();
+//			if(this.needRising) {// rising from dirt.
+//				this.setAnimTime(- RISING_CD);
+//				this.addEffect(new EffectInstance(Effects.MOVEMENT_SLOWDOWN, RISING_CD + 10, 20, false, false));
+//			}
+//			if (level.dimension() == World.OVERWORLD) {//update states.
+//				PVZInvasionData data = PVZInvasionData.getOverWorldInvasionData(level);
+//				//zombie rising from dirt can not be mini state.
+//				if (! this.needRising && this.canBeMini() && data.hasEvent(InvasionEvents.MINI)) {
+//					this.onZombieBeMini();
+//				}
+//				if (this.canBeInvisible() && data.hasEvent(InvasionEvents.INVIS)) {
+//					this.addEffect(new EffectInstance(Effects.INVISIBILITY, 1000000, 10, false, false));
+//				}
+//			}
+//		}
 		return super.finalizeSpawn(worldIn, difficultyIn, reason, spawnDataIn, dataTag);
 	}
 	
@@ -283,14 +284,14 @@ public abstract class PVZZombieEntity extends AbstractPAZEntity implements IZomb
 	
 	public void onSpawnedByPlayer(PlayerEntity player, int lvl) {
 		this.setOwnerUUID(player.getUUID());
-		this.updateZombieLevel(lvl);
+//		this.updateZombieLevel(lvl);
 	}
 	
-	public void updateZombieLevel(int lvl) {
-		if(this.getPAZLevel() != lvl) {//maxLevel changed.
-			this.setPAZLevel(lvl);
-		}
-	}
+//	public void updateZombieLevel(int lvl) {
+//		if(this.getSkills() != lvl) {//maxLevel changed.
+//			this.setSkills(lvl);
+//		}
+//	}
 	
 	/**
 	 * {@link #normalZombieTick()}
@@ -380,9 +381,11 @@ public abstract class PVZZombieEntity extends AbstractPAZEntity implements IZomb
 	 * get how many percent of health will be resist.
 	 */
 	public float getHurtReduction() {
-		int lvl = this.getPAZLevel();
-		final float inc = 0.2F;
-		return (lvl >= 20) ? 0.2F : 1.0F / (1 + inc * (lvl - 1));
+		// TODO 僵尸护甲
+		return 1;
+//		int lvl = this.getSkills();
+//		final float inc = 0.2F;
+//		return (lvl >= 20) ? 0.2F : 1.0F / (1 + inc * (lvl - 1));
 	}
 
 	@Override

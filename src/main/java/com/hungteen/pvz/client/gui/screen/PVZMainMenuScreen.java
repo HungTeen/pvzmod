@@ -2,9 +2,14 @@ package com.hungteen.pvz.client.gui.screen;
 
 import java.util.Random;
 
+import com.hungteen.pvz.common.network.PVZPacketHandler;
+import com.hungteen.pvz.compat.patchouli.PVZPatchouliHandler;
 import com.hungteen.pvz.utils.StringUtil;
+import com.hungteen.pvz.utils.enums.Colors;
 import com.mojang.blaze3d.matrix.MatrixStack;
+import com.mojang.blaze3d.systems.RenderSystem;
 
+import net.minecraft.client.gui.AbstractGui;
 import net.minecraft.client.gui.screen.MainMenuScreen;
 import net.minecraft.client.renderer.RenderSkybox;
 import net.minecraft.client.renderer.RenderSkyboxCube;
@@ -14,6 +19,7 @@ import net.minecraft.util.SharedConstants;
 import net.minecraft.util.Util;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.vector.Vector3f;
+import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.client.ForgeHooksClient;
@@ -56,6 +62,22 @@ public class PVZMainMenuScreen extends MainMenuScreen {
 			stack.scale(f2, f2, f2);
 			drawCenteredString(stack, this.font, this.splashText, 0, -8, 16776960);
 			stack.popPose();
+		}
+		// tip render
+		if(! PVZPatchouliHandler.isPatchouliLoaded()) {
+			stack.pushPose();
+			String tip = new TranslationTextComponent("help.pvz.patchouli").getString();
+			drawString(stack, this.font, tip, this.width - this.font.width(tip) - 2, this.height - 20, Colors.RED);
+			stack.popPose();
+//			stack.pushPose();
+//			final String tip = "install patchouli mod pls";
+//			stack.translate((float) (this.width / 2 - 90), 70.0F, 0.0F);
+//			stack.mulPose(Vector3f.ZP.rotationDegrees(22.5F));
+//			float f2 = 1.8F - MathHelper.abs(MathHelper.sin((float) (Util.getMillis() % 1000L) / 1000.0F * ((float) Math.PI * 2F)) * 0.1F);
+//			f2 = f2 * 100.0F / (float) (this.font.width(tip) + 32);
+//			stack.scale(f2, f2, f2);
+//			drawCenteredString(stack, this.font, tip, 0, -8, Colors.RED);
+//			stack.popPose();
 		}
         //render version
         String s = "Minecraft " + SharedConstants.getCurrentVersion().getName() + ("release".equalsIgnoreCase(this.minecraft.getVersionType()) ? "" : "/" + this.minecraft.getVersionType());

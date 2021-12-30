@@ -21,7 +21,7 @@ public interface IPlantInfo {
     /**
      * place it on plantEntity.
      */
-    void placeOn(IPlantEntity plantEntity, int lvl, int sunCost);
+    void placeOn(IPlantEntity plantEntity, int sunCost);
 
     /**
      * run when its inner plants in super mode.
@@ -36,11 +36,4 @@ public interface IPlantInfo {
 
     int getSunCost();
 
-    boolean needSyncLevel();
-
-    void setSyncLevel(boolean is);
-
-    void setLevel(int level);
-
-    int getLevel();
 }

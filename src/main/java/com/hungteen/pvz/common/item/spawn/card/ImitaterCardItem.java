@@ -9,7 +9,6 @@ import com.hungteen.pvz.common.entity.plant.magic.ImitaterEntity;
 import com.hungteen.pvz.common.impl.PlantType;
 import com.hungteen.pvz.common.impl.plant.PVZPlants;
 import com.hungteen.pvz.common.item.PVZItemGroups;
-import com.hungteen.pvz.utils.PlayerUtil;
 import com.mojang.datafixers.util.Pair;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.enchantment.Enchantment;
@@ -119,7 +118,7 @@ public class ImitaterCardItem extends PlantCardItem {
 				final ImitaterEntity imitater = (ImitaterEntity) i;
 				imitater.setImitateCard(plantStack.copy());
     	        imitater.setDirection(player.getDirection().getOpposite());
-		        imitater.onSpawnedByPlayer(player, PlayerUtil.getPAZPoint(player, cardItem.plantType), cardItem.getBasisSunCost(plantStack));
+		        imitater.onSpawnedByPlayer(player, cardItem.getBasisSunCost(plantStack));
 		        /* enchantment effects */
 				enchantPlantEntityByCard(imitater, plantStack);
 		        consumer.accept(imitater);

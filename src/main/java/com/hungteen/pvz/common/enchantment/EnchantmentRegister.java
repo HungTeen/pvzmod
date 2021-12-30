@@ -4,7 +4,6 @@ import com.hungteen.pvz.PVZMod;
 import com.hungteen.pvz.common.enchantment.armor.TreeProtectionEnchantment;
 import com.hungteen.pvz.common.enchantment.card.CharmEnchantment;
 import com.hungteen.pvz.common.enchantment.card.ImmediateCDEnchantment;
-import com.hungteen.pvz.common.enchantment.card.LevelUpEnchantment;
 import com.hungteen.pvz.common.enchantment.card.SunReduceEnchantment;
 import com.hungteen.pvz.common.enchantment.card.plantcard.BreakOutEnchantment;
 import com.hungteen.pvz.common.enchantment.card.plantcard.DenselyPlantEnchantment;
@@ -36,7 +35,6 @@ public class EnchantmentRegister {
 	public static final RegistryObject<Enchantment> SUN_MENDING = ENCHANTMENTS.register("sun_mending", SunMendingEnchantment::new);
 	public static final RegistryObject<Enchantment> DENSELY_PLANT = ENCHANTMENTS.register("densely_plant", DenselyPlantEnchantment::new);
 	public static final RegistryObject<Enchantment> IMMEDIATE_CD = ENCHANTMENTS.register("immediate_cd", ImmediateCDEnchantment::new);
-	public static final RegistryObject<Enchantment> LEVEL_UP = ENCHANTMENTS.register("level_up", LevelUpEnchantment::new);
 	
 	public static final EnchantmentType SUMMON_CARD = EnchantmentType.create("summon_card", (item) -> {
 		return item instanceof SummonCardItem;

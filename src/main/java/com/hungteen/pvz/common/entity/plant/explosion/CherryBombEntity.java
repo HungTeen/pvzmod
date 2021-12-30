@@ -9,14 +9,7 @@ import com.hungteen.pvz.common.misc.damage.PVZDamageSource;
 import com.hungteen.pvz.register.ParticleRegister;
 import com.hungteen.pvz.register.SoundRegister;
 import com.hungteen.pvz.utils.EntityUtil;
-import com.hungteen.pvz.utils.MathUtil;
-import com.hungteen.pvz.utils.PlantUtil;
-
-import net.minecraft.entity.CreatureEntity;
-import net.minecraft.entity.Entity;
-import net.minecraft.entity.EntitySize;
-import net.minecraft.entity.EntityType;
-import net.minecraft.entity.Pose;
+import net.minecraft.entity.*;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.util.math.AxisAlignedBB;
@@ -59,7 +52,8 @@ public class CherryBombEntity extends PlantBomberEntity{
 	 * {@link #startBomb()}
 	 */
 	public float getAttackDamage(){
-		return MathUtil.getProgressAverage(this.getPAZLevel(), PlantUtil.MAX_PLANT_LEVEL, 150, 650);
+		return 150;
+//		return MathUtil.getProgressAverage(this.getSkills(), PlantUtil.MAX_PLANT_LEVEL, 150, 650);
 	}
 	
 	@Override

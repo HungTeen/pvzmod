@@ -7,14 +7,7 @@ import com.hungteen.pvz.common.impl.plant.PVZPlants;
 import com.hungteen.pvz.common.misc.damage.PVZDamageSource;
 import com.hungteen.pvz.register.SoundRegister;
 import com.hungteen.pvz.utils.EntityUtil;
-import com.hungteen.pvz.utils.PlantUtil;
-
-import net.minecraft.entity.CreatureEntity;
-import net.minecraft.entity.Entity;
-import net.minecraft.entity.EntitySize;
-import net.minecraft.entity.EntityType;
-import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.Pose;
+import net.minecraft.entity.*;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.math.vector.Vector3d;
@@ -116,18 +109,21 @@ public class SquashEntity extends PVZPlantEntity{
 	 * extra smash times
 	 */
 	protected int getSuperBonusChance(){
-		return this.isPlantInStage(1) ? 3 : this.isPlantInStage(2) ? 4 : 5;
+		return 3;
+//		return this.isPlantInStage(1) ? 3 : this.isPlantInStage(2) ? 4 : 5;
 	}
 	
 	public float getAttackDamage(){
-		return PlantUtil.getPlantAverageProgress(this, 125, 425);
+		return 124;
+//		return PlantUtil.getPlantAverageProgress(this, 125, 425);
 	}
 	
 	/**
 	 * die chance for each smash
 	 */
 	public int getDeathChance(){
-		return PlantUtil.getPlantAverageProgress(this, 90, 40);
+		return 90;
+//		return PlantUtil.getPlantAverageProgress(this, 90, 40);
 	}
 	
 	@Override

@@ -52,7 +52,8 @@ public class GoldLeafEntity extends PlantBomberEntity {
 	}
 	
 	public int getTileLevel() {
-		return this.getThreeStage(1, 2, 3);
+		return 1;
+//		return this.getThreeStage(1, 2, 3);
 	}
 
 	@Override

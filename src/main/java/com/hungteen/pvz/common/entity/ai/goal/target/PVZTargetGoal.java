@@ -2,7 +2,7 @@ package com.hungteen.pvz.common.entity.ai.goal.target;
 
 import java.util.EnumSet;
 
-import com.hungteen.pvz.register.EffectRegister;
+import com.hungteen.pvz.common.potion.EffectRegister;
 import com.hungteen.pvz.utils.EntityUtil;
 
 import net.minecraft.entity.Entity;

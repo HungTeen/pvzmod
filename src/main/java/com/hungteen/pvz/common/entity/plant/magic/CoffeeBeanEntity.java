@@ -7,8 +7,6 @@ import com.hungteen.pvz.common.entity.plant.base.PlantBomberEntity;
 import com.hungteen.pvz.common.impl.plant.PVZPlants;
 import com.hungteen.pvz.register.SoundRegister;
 import com.hungteen.pvz.utils.EntityUtil;
-import com.hungteen.pvz.utils.PlantUtil;
-
 import net.minecraft.entity.CreatureEntity;
 import net.minecraft.entity.EntitySize;
 import net.minecraft.entity.EntityType;
@@ -51,7 +49,8 @@ public class CoffeeBeanEntity extends PlantBomberEntity{
 	}
 	
 	public int getAwakeTime() {
-		return PlantUtil.getPlantAverageProgress(this, 48000, 240000);
+		return 48000;
+//		return PlantUtil.getPlantAverageProgress(this, 48000, 240000);
 	}
 	
 	@Override

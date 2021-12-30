@@ -1,8 +1,5 @@
 package com.hungteen.pvz.common.entity.plant.assist;
 
-import java.util.HashSet;
-import java.util.Set;
-
 import com.hungteen.pvz.api.types.IPlantType;
 import com.hungteen.pvz.common.entity.drop.CoinEntity;
 import com.hungteen.pvz.common.entity.drop.DropEntity;
@@ -12,17 +9,17 @@ import com.hungteen.pvz.common.entity.plant.PVZPlantEntity;
 import com.hungteen.pvz.common.impl.plant.PVZPlants;
 import com.hungteen.pvz.register.SoundRegister;
 import com.hungteen.pvz.utils.EntityUtil;
-import com.hungteen.pvz.utils.MathUtil;
-import com.hungteen.pvz.utils.PlantUtil;
 import com.hungteen.pvz.utils.PlayerUtil;
 import com.hungteen.pvz.utils.enums.Resources;
-
 import net.minecraft.entity.CreatureEntity;
 import net.minecraft.entity.EntitySize;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.Pose;
 import net.minecraft.util.math.vector.Vector3d;
 import net.minecraft.world.World;
+
+import java.util.HashSet;
+import java.util.Set;
 
 public class GoldMagnetEntity extends PVZPlantEntity {
 
@@ -104,7 +101,8 @@ public class GoldMagnetEntity extends PVZPlantEntity {
 	}
 
 	public int getSearchRange() {
-		return MathUtil.getProgressByDif(4, 2, this.getPAZLevel(), PlantUtil.MAX_PLANT_LEVEL, 8, 16);
+//		return MathUtil.getProgressByDif(4, 2, this.getSkills(), PlantUtil.MAX_PLANT_LEVEL, 8, 16);
+		return 1;
 	}
 
 	protected boolean checkCanWorkNow() {

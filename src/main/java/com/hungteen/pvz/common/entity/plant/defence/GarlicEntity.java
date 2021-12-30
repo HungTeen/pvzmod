@@ -1,8 +1,5 @@
 package com.hungteen.pvz.common.entity.plant.defence;
 
-import java.util.Collections;
-import java.util.List;
-
 import com.hungteen.pvz.api.types.IPlantType;
 import com.hungteen.pvz.common.entity.plant.base.PlantDefenderEntity;
 import com.hungteen.pvz.common.impl.plant.PVZPlants;
@@ -10,15 +7,12 @@ import com.hungteen.pvz.common.misc.damage.PVZDamageSource;
 import com.hungteen.pvz.register.SoundRegister;
 import com.hungteen.pvz.utils.AlgorithmUtil;
 import com.hungteen.pvz.utils.EntityUtil;
-import com.hungteen.pvz.utils.PlantUtil;
-
-import net.minecraft.entity.CreatureEntity;
-import net.minecraft.entity.EntitySize;
-import net.minecraft.entity.EntityType;
-import net.minecraft.entity.MobEntity;
-import net.minecraft.entity.Pose;
+import net.minecraft.entity.*;
 import net.minecraft.util.DamageSource;
 import net.minecraft.world.World;
+
+import java.util.Collections;
+import java.util.List;
 
 public class GarlicEntity extends PlantDefenderEntity {
 
@@ -58,12 +52,14 @@ public class GarlicEntity extends PlantDefenderEntity {
 	}
 	
 	public float getChangeRange() {
-		return this.getThreeStage(10, 15, 20);
+//		return this.getThreeStage(10, 15, 20);
+		return 2;
 	}
 	
 	@Override
-	public float getPlantHealth() {
-		return PlantUtil.getPlantAverageProgress(this, 100, 400);
+	public float getLife() {
+		return 100;
+//		return PlantUtil.getPlantAverageProgress(this, 100, 400);
 	}
 	
 	@Override

@@ -126,7 +126,8 @@ public class PoleZombieEntity extends PVZZombieEntity{
 	 * how many times can it jump.
 	 */
 	public int getMaxJumpCount() {
-		return this.getPAZLevel();
+		return 1;
+//		return this.getSkills();
 	}
 	
 	@Override

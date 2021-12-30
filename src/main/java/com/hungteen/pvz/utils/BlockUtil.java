@@ -33,6 +33,10 @@ public class BlockUtil {
 		f = f / (float) handler.getSlots();
 		return MathHelper.floor(f * 14.0F) + (i > 0 ? 1 : 0);
 	}
+	
+	public static AxisAlignedBB getAABB(BlockPos pos, double w, double h) {
+		return new AxisAlignedBB(pos.getX() - w, pos.getY() - h, pos.getZ() - w, pos.getX() + w, pos.getY() + h, pos.getZ() + w);
+	}
 
 	public static double getBlockPosOffset(IWorldReader worldReader, BlockPos pos, AxisAlignedBB aabb) {
 		AxisAlignedBB axisalignedbb = new AxisAlignedBB(pos);

@@ -65,11 +65,13 @@ public class TangleKelpEntity extends PlantCloserEntity{
 	}
 	
 	public float getAttackDamage(){
-		return PlantUtil.getPlantAverageProgress(this, 150, 350);
+		return 150;
+//		return PlantUtil.getPlantAverageProgress(this, 150, 350);
 	}
 	
 	public int getSuperCount(){
-		return this.isPlantInStage(1) ? 3 : this.isPlantInStage(2) ? 4 : 5;
+		return 3;
+//		return this.isPlantInStage(1) ? 3 : this.isPlantInStage(2) ? 4 : 5;
 	}
 	
 	@Override

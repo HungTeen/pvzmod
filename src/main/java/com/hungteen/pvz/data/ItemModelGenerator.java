@@ -71,8 +71,8 @@ public class ItemModelGenerator extends ItemModelProvider{
 			}
 		}
 		//for hand held item
-		Arrays.asList(ItemRegister.STEEL_AXE.get(), ItemRegister.STEEL_HOE.get(), ItemRegister.STEEL_PICKAXE.get(), ItemRegister.STEEL_SHOVEL.get(),
-				ItemRegister.STEEL_SWORD.get()
+		Arrays.asList(ItemRegister.ORIGIN_AXE.get(), ItemRegister.ORIGIN_HOE.get(), ItemRegister.ORIGIN_PICKAXE.get(), ItemRegister.ORIGIN_SHOVEL.get(),
+				ItemRegister.ORIGIN_SWORD.get()
 				).forEach(i -> {
 			addedItems.add(i);
 			genHeld(i.getRegistryName().getPath(), StringUtil.prefix("item/" + i.getRegistryName().getPath()));

@@ -25,11 +25,6 @@ public interface IPAZType extends IIDType {
 	 * if tree maxLevel doesn't reach requirement, then players can not use its card.
 	 */
 	int getRequiredLevel();
-	
-	/**
-	 * get the max maxLevel of role.
-	 */
-	int getMaxLevel();
 
 	/**
 	 * get spawn limited difficulty.

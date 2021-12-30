@@ -24,7 +24,8 @@ public class TwinSunFlowerEntity extends SunFlowerEntity{
 
 	@Override
 	public int getSuperSunAmount() {
-		return this.getThreeStage(750, 1000, 1250);
+		return 750;
+//		return this.getThreeStage(750, 1000, 1250);
 	}
 	
 	@Override

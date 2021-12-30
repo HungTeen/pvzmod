@@ -122,7 +122,7 @@ public class PVZEntityLootTables implements Consumer<BiConsumer<ResourceLocation
 		));
 		t.accept(PVZLoot.DIGGER_ZOMBIE, getLootTable()
 				.withPool(LootPool.lootPool().setRolls(ConstantRange.exactly(1))
-				        .add(ItemLootEntry.lootTableItem(ItemRegister.STEEL_PICKAXE.get()))
+				        .add(ItemLootEntry.lootTableItem(ItemRegister.ORIGIN_PICKAXE.get()))
 				        .add(ItemLootEntry.lootTableItem(Items.DIAMOND_PICKAXE))
 				        .when(RandomChanceWithLooting.randomChanceAndLootingBoost(0.04F, 0.01F))
 		));

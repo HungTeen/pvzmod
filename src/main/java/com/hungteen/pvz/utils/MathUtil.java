@@ -112,4 +112,8 @@ public class MathUtil {
 		return new BlockPos(x, 0, z);
 	}
 	
+	public static boolean randDouble(Random rand, double value) {
+		return rand.nextDouble() < value;
+	}
+	
 }

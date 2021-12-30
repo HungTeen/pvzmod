@@ -14,7 +14,6 @@ import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.SoundEvent;
 import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.BossInfo;
 import net.minecraft.world.World;
 import net.minecraft.world.server.ServerBossInfo;
@@ -54,14 +53,15 @@ public abstract class AbstractBossZombieEntity extends PVZZombieEntity {
 		this.bossInfo.setPercent(percent);
 		if(! level.isClientSide) {
 			this.checkAndHeal(percent);
+			// TODO 僵王等级没了
 			if(this.tickCount % this.refreshCountCD == 0) {
 				this.nearbyPlantCount = this.getNearbyPlantCount();
 			    this.nearbyZombieCount = this.getNearbyPlantCount();
-			    if(this.isCharmed()) {
-			    	this.setPAZLevel(MathHelper.clamp((this.nearbyZombieCount - 15) / 5, 1, ZombieUtil.MAX_ZOMBIE_LEVEL));
-			    } else {
-			    	this.setPAZLevel(MathHelper.clamp((this.nearbyPlantCount - 15) / 5, 1, ZombieUtil.MAX_ZOMBIE_LEVEL));
-			    }
+//			    if(this.isCharmed()) {
+//			    	this.setSkills(MathHelper.clamp((this.nearbyZombieCount - 15) / 5, 1, ZombieUtil.MAX_ZOMBIE_LEVEL));
+//			    } else {
+//			    	this.setSkills(MathHelper.clamp((this.nearbyPlantCount - 15) / 5, 1, ZombieUtil.MAX_ZOMBIE_LEVEL));
+//			    }
 			}
 			this.kickEnemiesNearby();
 		}
@@ -123,7 +123,7 @@ public abstract class AbstractBossZombieEntity extends PVZZombieEntity {
 	public void onBossSummon(PVZZombieEntity zombie, BlockPos pos) {
 		ZombieUtil.copySummonZombieData(this, zombie);
 		EntityUtil.onEntitySpawn(this.level, zombie, pos);
-		zombie.setPAZLevel(this.getPAZLevel());
+		zombie.setSkills(this.getSkills());
 	}
 	
 	protected int getNearbyPlantCount() {

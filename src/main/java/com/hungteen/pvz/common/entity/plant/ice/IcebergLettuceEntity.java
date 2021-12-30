@@ -1,29 +1,21 @@
 package com.hungteen.pvz.common.entity.plant.ice;
 
-import java.util.Optional;
-
 import com.hungteen.pvz.api.interfaces.IIceEffect;
 import com.hungteen.pvz.api.types.IPlantType;
 import com.hungteen.pvz.common.advancement.trigger.EntityEffectAmountTrigger;
 import com.hungteen.pvz.common.entity.plant.base.PlantCloserEntity;
 import com.hungteen.pvz.common.impl.plant.OtherPlants;
 import com.hungteen.pvz.common.misc.damage.PVZDamageSource;
-import com.hungteen.pvz.register.EffectRegister;
+import com.hungteen.pvz.common.potion.EffectRegister;
 import com.hungteen.pvz.register.SoundRegister;
 import com.hungteen.pvz.utils.EntityUtil;
-import com.hungteen.pvz.utils.MathUtil;
-import com.hungteen.pvz.utils.PlantUtil;
-
-import net.minecraft.entity.CreatureEntity;
-import net.minecraft.entity.Entity;
-import net.minecraft.entity.EntitySize;
-import net.minecraft.entity.EntityType;
-import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.Pose;
+import net.minecraft.entity.*;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.potion.EffectInstance;
 import net.minecraft.world.World;
+
+import java.util.Optional;
 
 public class IcebergLettuceEntity extends PlantCloserEntity implements IIceEffect {
 
@@ -82,15 +74,18 @@ public class IcebergLettuceEntity extends PlantCloserEntity implements IIceEffec
 	}
     
     public int getColdLevel() {
-    	return MathUtil.getProgressByDif(5, 1, this.getPAZLevel(), PlantUtil.MAX_PLANT_LEVEL, 4, 7);
+		return 1;
+//    	return MathUtil.getProgressByDif(5, 1, this.getSkills(), PlantUtil.MAX_PLANT_LEVEL, 4, 7);
     }
     
     public int getColdDuration() {
-    	return this.getAverageProgress(100, 300);
+//    	return this.getAverageProgress(100, 300);
+		return 100;
     }
     
     public float getSuperRange() {
-    	return this.getThreeStage(20, 25, 30);
+		return 20;
+//    	return this.getThreeStage(20, 25, 30);
     }
     
 	@Override

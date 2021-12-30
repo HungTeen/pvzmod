@@ -7,8 +7,6 @@ import com.hungteen.pvz.common.entity.plant.base.PlantShooterEntity;
 import com.hungteen.pvz.common.impl.plant.PVZPlants;
 import com.hungteen.pvz.register.SoundRegister;
 import com.hungteen.pvz.utils.EntityUtil;
-import com.hungteen.pvz.utils.PlantUtil;
-
 import net.minecraft.command.arguments.EntityAnchorArgument.Type;
 import net.minecraft.entity.CreatureEntity;
 import net.minecraft.entity.EntitySize;
@@ -46,7 +44,8 @@ public class StarFruitEntity extends PlantShooterEntity {
 	
 	@Override
 	public int getSuperTimeLength() {
-		return this.isPlantInStage(1) ? 100 : this.isPlantInStage(2) ? 150 : 200;
+		return 1;
+//		return this.isPlantInStage(1) ? 100 : this.isPlantInStage(2) ? 150 : 200;
 	}
 
 	@Override
@@ -67,7 +66,8 @@ public class StarFruitEntity extends PlantShooterEntity {
 	
 	@Override
 	public float getAttackDamage() {
-		return PlantUtil.getPlantAverageProgress(this, 2F, 6F);
+		return 2;
+//		return PlantUtil.getPlantAverageProgress(this, 2F, 6F);
 	}
 	
 	@Override

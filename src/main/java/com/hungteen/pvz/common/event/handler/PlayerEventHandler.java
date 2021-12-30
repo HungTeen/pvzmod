@@ -102,6 +102,7 @@ public class PlayerEventHandler {
 			} else if(! l.lastVersion.equals(PVZMod.MOD_VERSION)) {//version changed.
 				
 			}
+			l.lastVersion = PVZMod.MOD_VERSION;
 		});
 		unLockPAZs(player);
 		WaveManager.syncWaveTime(player);

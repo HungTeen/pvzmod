@@ -1,8 +1,5 @@
 package com.hungteen.pvz.common.entity.plant.explosion;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import com.hungteen.pvz.api.types.IPlantType;
 import com.hungteen.pvz.common.entity.bullet.itembullet.FireCrackerEntity;
 import com.hungteen.pvz.common.entity.misc.FireCrackersEntity;
@@ -11,17 +8,13 @@ import com.hungteen.pvz.common.impl.plant.OtherPlants;
 import com.hungteen.pvz.common.misc.damage.PVZDamageSource;
 import com.hungteen.pvz.register.SoundRegister;
 import com.hungteen.pvz.utils.EntityUtil;
-import com.hungteen.pvz.utils.MathUtil;
-import com.hungteen.pvz.utils.PlantUtil;
 import com.hungteen.pvz.utils.WorldUtil;
-
-import net.minecraft.entity.CreatureEntity;
-import net.minecraft.entity.EntitySize;
-import net.minecraft.entity.EntityType;
-import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.Pose;
+import net.minecraft.entity.*;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class BambooLordEntity extends PlantCloserEntity {
 
@@ -109,15 +102,18 @@ public class BambooLordEntity extends PlantCloserEntity {
 	}
 	
 	public float getAttackDamage() {
-		return this.getAverageProgress(60F, 160F);
+//		return this.getAverageProgress(60F, 160F);
+		return 50;
 	}
 	
 	public int getSplitCount() {
-		return MathUtil.getProgressByDif(5, 1, this.getPAZLevel(), PlantUtil.MAX_PLANT_LEVEL, 2, 5);
+		return 1;
+//		return MathUtil.getProgressByDif(5, 1, this.getSkills(), PlantUtil.MAX_PLANT_LEVEL, 2, 5);
 	}
 	
 	public int getCrackersNum() {
-		return this.getThreeStage(10, 15, 20);
+		return 10;
+//		return this.getThreeStage(10, 15, 20);
 	}
 	
 	@Override

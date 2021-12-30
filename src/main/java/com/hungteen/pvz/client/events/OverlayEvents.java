@@ -28,7 +28,9 @@ public class OverlayEvents {
 		/* no opened gui */
 		if (mc.screen == null) {
 			/* render resources on left upper corner */
-			PVZOverlayHandler.renderResources(ev.getMatrixStack(), ev.getWindow().getGuiScaledWidth(), ev.getWindow().getScreenHeight());
+			if(! mc.options.renderDebug) {
+				PVZOverlayHandler.renderResources(ev.getMatrixStack(), ev.getWindow().getGuiScaledWidth(), ev.getWindow().getScreenHeight());
+			}
 			
 			/* render plant food on left lower corner */
 		    if (PVZConfig.CLIENT_CONFIG.OverlaySettings.RenderPlantFoodBar.get()) {

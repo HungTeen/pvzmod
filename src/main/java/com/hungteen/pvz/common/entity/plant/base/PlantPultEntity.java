@@ -1,16 +1,12 @@
 package com.hungteen.pvz.common.entity.plant.base;
 
-import java.util.Optional;
-
 import com.hungteen.pvz.common.entity.ai.goal.attack.PultAttackGoal;
 import com.hungteen.pvz.common.entity.ai.goal.target.PVZNearestTargetGoal;
 import com.hungteen.pvz.common.entity.bullet.PultBulletEntity;
 import com.hungteen.pvz.common.entity.plant.PVZPlantEntity;
 import com.hungteen.pvz.register.SoundRegister;
 import com.hungteen.pvz.utils.EntityUtil;
-import com.hungteen.pvz.utils.PlantUtil;
 import com.hungteen.pvz.utils.interfaces.IPult;
-
 import net.minecraft.entity.CreatureEntity;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
@@ -18,6 +14,8 @@ import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.ai.attributes.Attributes;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.world.World;
+
+import java.util.Optional;
 
 public abstract class PlantPultEntity extends PVZPlantEntity implements IPult {
 
@@ -112,11 +110,13 @@ public abstract class PlantPultEntity extends PVZPlantEntity implements IPult {
 	}
 	
 	public float getSuperRange() {
-		return this.isPlantInStage(1) ? 15 : this.isPlantInStage(2) ? 20 : 25;
+		return 15;
+//		return this.isPlantInStage(1) ? 15 : this.isPlantInStage(2) ? 20 : 25;
 	}
 	
 	public float getAttackDamage() {
-		return PlantUtil.getPlantAverageProgress(this, 2F, 8F);
+		return 2;
+//		return PlantUtil.getPlantAverageProgress(this, 2F, 8F);
 	}
 	
 	@Override

@@ -171,9 +171,15 @@ b78f49669ff46330b54af3e7c8aad3b1c4f009b1 assets/pvz/models/item/melon_pult_card.
 953987486f6741d19c018b2a288a517af0cbdf2d assets/pvz/models/item/nut_leaves.json
 ad441603b75739a419db086ec7347c54e984bf62 assets/pvz/models/item/nut_sapling.json
 98167609bf3898587f7565736a6fc24a7966cacd assets/pvz/models/item/old_zombie_spawn_egg.json
+cbf32c3622e3f14ad34f546ba3eb201d06c4343f assets/pvz/models/item/origin_axe.json
 4de53b5f37e77894e92deda39eea257f6622b9f1 assets/pvz/models/item/origin_block.json
 931c5d72af278dcfe492b0db8d6f9251f8f8b67a assets/pvz/models/item/origin_essence.json
+0a56e9e35350226e9ae606b9bc770711dd3443cf assets/pvz/models/item/origin_hoe.json
+86ee9577e2ccc7fe73b9a1225ba067b8193a47e8 assets/pvz/models/item/origin_ingot.json
 c8839da5423eae5239557d4d965ac36b770be220 assets/pvz/models/item/origin_ore.json
+c4b0bf2da837f6e0283c0ad725ee82e481d31819 assets/pvz/models/item/origin_pickaxe.json
+59daa66203fe2f0098b2d35be61243be9b237200 assets/pvz/models/item/origin_shovel.json
+eb173b7230187a63b9772a1ffa637f149479a0f4 assets/pvz/models/item/origin_sword.json
 98167609bf3898587f7565736a6fc24a7966cacd assets/pvz/models/item/panney_spawn_egg.json
 8620a99cbf460706021151de853f1e93eb8cc883 assets/pvz/models/item/pea.json
 9ac109ab3edc9d06fe426d49906917baa044044f assets/pvz/models/item/pea_shooter_card.json
@@ -228,13 +234,7 @@ df4828ed578f626c2ec1baf2a84fc7884d03fdcb assets/pvz/models/item/squash_card.json
 98167609bf3898587f7565736a6fc24a7966cacd assets/pvz/models/item/squash_zombie_spawn_egg.json
 d0bf5153d49a1d3e66343afeae40d374a22f43fc assets/pvz/models/item/star_fruit_card.json
 48fb66bc011ce10144a66289e21a62edc16cd4ac assets/pvz/models/item/star_fruit_enjoy_card.json
-c430bd7428ad8c645cce5c347ab0a8565c56b80b assets/pvz/models/item/steel_axe.json
-61301f30cf184e23d5680f52445fabfb7c54b0cb assets/pvz/models/item/steel_block.json
-4476eac5cc19c3e1e26bcd4b6f0e2e70476b86e5 assets/pvz/models/item/steel_hoe.json
 ef7275334ce491f6b17059db992efe5eee89a8d6 assets/pvz/models/item/steel_ladder.json
-466466a9d0c56a661cfc83482656e9542d5fa854 assets/pvz/models/item/steel_pickaxe.json
-93733e54cf890b41e8404b1f8ebcf6be6250c321 assets/pvz/models/item/steel_shovel.json
-00ff647de2201c5ebc0c68c04c786ed74f77c302 assets/pvz/models/item/steel_sword.json
 79e88dee3f93304b897e33f7c5ec4c809f70d075 assets/pvz/models/item/strange_cat_card.json
 bcf266c6c8a483400ace08667c8e413eeb99ba28 assets/pvz/models/item/strange_cat_enjoy_card.json
 518da971f1743540fc85685ccf9c158ceb3ba516 assets/pvz/models/item/sun_converter.json
@@ -332,7 +332,6 @@ de79c756a8b8505782fb78ab5991a7bdd8e75a25 data/pvz/loot_tables/blocks/origin_bloc
 9f5ecea44afe94b49d64407d588531d79e099e52 data/pvz/loot_tables/blocks/silver_sunflower_trophy.json
 bc9f228dfbaa85e4654eb42f40125bd72d2dce7c data/pvz/loot_tables/blocks/slot_machine.json
 efd98c0f044145ebcc61fd04cd03d179d8b49090 data/pvz/loot_tables/blocks/spear_ore.json
-b72951bff8436550300fafbad9877325564f9c31 data/pvz/loot_tables/blocks/steel_block.json
 ff19219dc563fa3cc6675a6f6f4d032f3575131b data/pvz/loot_tables/blocks/steel_ladder.json
 087463154d97b2fbc1d8cc8b4be0611b6712c1fa data/pvz/loot_tables/blocks/sun_converter.json
 5f4ab04956fba8899d4a9eca737d35685f7a9ef5 data/pvz/loot_tables/blocks/toxic_ore.json
@@ -348,7 +347,7 @@ f681743b97a905bb4b392f87cc83c51e6ddc46f7 data/pvz/loot_tables/entities/buckethea
 9b0aae802a0feaa44db8ef7ec077166a35d6dd37 data/pvz/loot_tables/entities/bungee_zombie.json
 afa1bd3083915e7b6b9f8a31de2cfbf50463af24 data/pvz/loot_tables/entities/coffin.json
 1fd3c450e44aa64d273d243521ec4e7313a8ebab data/pvz/loot_tables/entities/conehead_zombie.json
-85767c7b277762323ef4db6612f64d96b403fdf3 data/pvz/loot_tables/entities/digger_zombie.json
+fb645e0fb6cf8192b897c6ee5722791e91f88342 data/pvz/loot_tables/entities/digger_zombie.json
 d58352715cbe8105e25d9442df79cb3b0af69afb data/pvz/loot_tables/entities/edgar_090505.json
 b21cbde228c3e624307f5aa822d84dd906576408 data/pvz/loot_tables/entities/flag_zombie.json
 2250cfaecdd57e913934f10b6317ac51acebf231 data/pvz/loot_tables/entities/foodie_zombie.json
@@ -433,3 +432,4 @@ e528ed32ae5cbee9f37cf36a8f1dc7c564da613b data/pvz/tags/blocks/radiations/to_magi
 90c0be098b625d71f68ace96fab39edc87f9653b data/pvz/tags/items/cards/plant_summon_card.json
 1205e3b9c26f9f4dc119118ea8bb7309f54058bf data/pvz/tags/items/cards/template_card.json
 1c9b69b8145e4b24059a787785717e61a3d30fdf data/pvz/tags/items/ores/essence.json
+8ac81262812dca26cec82eada8e6e8b4f2ae0ca7 data/pvz/tags/items/pea_gun_bullets.json

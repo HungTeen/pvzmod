@@ -3,8 +3,6 @@ package com.hungteen.pvz.common.entity.plant.appease;
 import com.hungteen.pvz.api.types.IPlantType;
 import com.hungteen.pvz.common.impl.plant.PVZPlants;
 import com.hungteen.pvz.utils.MathUtil;
-import com.hungteen.pvz.utils.PlantUtil;
-
 import net.minecraft.entity.CreatureEntity;
 import net.minecraft.entity.EntityType;
 import net.minecraft.nbt.CompoundNBT;
@@ -81,7 +79,8 @@ public class SplitPeaEntity extends PeaShooterEntity{
 	 * Repeater head stay front chance. 
 	 */
 	public int getDoubleChance() {
-		return PlantUtil.getPlantAverageProgress(this, 20, 80);
+		return 20;
+//		return PlantUtil.getPlantAverageProgress(this, 20, 80);
 	}
 	
 	@Override

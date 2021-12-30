@@ -31,7 +31,7 @@ public class ChallengeEnvelopeItem extends Item{
 	public static final String CHALLENGE_TYPE = "challenge_type";
 
 	public ChallengeEnvelopeItem() {
-		super(new Properties().tab(PVZItemGroups.PVZ_MISC).stacksTo(1));
+		super(new Properties().tab(PVZItemGroups.PVZ_ENVELOPE).stacksTo(1));
 	}
 
 	public static ResourceLocation getChallengeType(ItemStack stack) {

@@ -2,18 +2,17 @@ package com.hungteen.pvz.common.event;
 
 import com.hungteen.pvz.PVZMod;
 import com.hungteen.pvz.api.events.PlayerLevelChangeEvent;
-import com.hungteen.pvz.common.block.BlockRegister;
+import com.hungteen.pvz.common.block.others.SteelLadderBlock;
 import com.hungteen.pvz.common.capability.CapabilityHandler;
 import com.hungteen.pvz.common.capability.player.PlayerDataManager;
 import com.hungteen.pvz.common.enchantment.EnchantmentRegister;
 import com.hungteen.pvz.common.entity.plant.PVZPlantEntity;
 import com.hungteen.pvz.common.event.events.SummonCardUseEvent;
-import com.hungteen.pvz.common.event.handler.BlockEventHandler;
 import com.hungteen.pvz.common.event.handler.PlayerEventHandler;
 import com.hungteen.pvz.common.item.tool.plant.PeaGunItem;
 import com.hungteen.pvz.common.network.PVZPacketHandler;
 import com.hungteen.pvz.common.network.toclient.OtherStatsPacket;
-import com.hungteen.pvz.register.EffectRegister;
+import com.hungteen.pvz.common.potion.EffectRegister;
 import com.hungteen.pvz.utils.PlayerUtil;
 import com.hungteen.pvz.utils.enums.Resources;
 
@@ -21,17 +20,14 @@ import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.ServerPlayerEntity;
-import net.minecraft.inventory.EquipmentSlotType;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.ShovelItem;
 import net.minecraft.item.SwordItem;
 import net.minecraft.util.Hand;
-import net.minecraft.util.math.vector.Vector3d;
 import net.minecraft.world.World;
 import net.minecraftforge.event.TickEvent;
 import net.minecraftforge.event.entity.player.PlayerEvent;
 import net.minecraftforge.event.entity.player.PlayerInteractEvent;
-import net.minecraftforge.event.world.BlockEvent;
 import net.minecraftforge.eventbus.api.EventPriority;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
@@ -43,14 +39,7 @@ public class PVZPlayerEvents {
 	@SubscribeEvent
 	public static void tickPlayer(TickEvent.PlayerTickEvent ev) {
 		if(! ev.player.level.isClientSide) {
-			//for pea gun
-			ItemStack stack = ev.player.getItemBySlot(EquipmentSlotType.HEAD);
-			if(stack.getItem() instanceof PeaGunItem && !ev.player.getCooldowns().isOnCooldown(stack.getItem())) {
-			    ((PeaGunItem)stack.getItem()).checkAndShootPea(ev.player.level, ev.player, stack);
-			    if(!ev.player.getCooldowns().isOnCooldown(stack.getItem())) {
-			    	ev.player.getCooldowns().addCooldown(stack.getItem(), 200);//cool down for no pea
-			    }
-			}
+			PeaGunItem.checkHeadShoot(ev.player);
 			ev.player.getCapability(CapabilityHandler.PLAYER_DATA_CAPABILITY).ifPresent((l) -> {
 				if(l.getPlayerData().getOtherStats().playSoundTick > 0) {
 				    -- l.getPlayerData().getOtherStats().playSoundTick;
@@ -72,13 +61,7 @@ public class PVZPlayerEvents {
 				}
 			});
 		} else {
-			if(ev.player.horizontalCollision && ev.player.onClimbable()){
-				//is on steel ladder.
-				if(ev.player.level.getBlockState(ev.player.blockPosition()).getBlock().is(BlockRegister.STEEL_LADDER.get())) {
-				    final Vector3d vec = ev.player.getDeltaMovement();
-				    ev.player.setDeltaMovement(vec.x, 0.5F, vec.z);
-				}
-			}
+			SteelLadderBlock.climbUp(ev.player);
 		}
 	}
 	
@@ -102,11 +85,6 @@ public class PVZPlayerEvents {
 		if (! ev.getPlayer().level.isClientSide) {
 			PlayerEventHandler.clonePlayerData(ev.getOriginal(), ev.getPlayer(), ev.isWasDeath());
 		}
-	}
-	
-	@SubscribeEvent
-	public static void onPlayerBreakBlock(BlockEvent.BreakEvent ev) {
-		BlockEventHandler.checkAndDropSeeds(ev);
 	}
 	
 	@SubscribeEvent

@@ -1,13 +1,9 @@
 package com.hungteen.pvz.compat.jade.provider;
 
-import java.util.List;
-import java.util.Optional;
-
 import com.hungteen.pvz.api.interfaces.IHasOwner;
 import com.hungteen.pvz.common.entity.zombie.PVZZombieEntity;
 import com.hungteen.pvz.compat.jade.JadeRegister;
 import com.hungteen.pvz.utils.EntityUtil;
-
 import mcp.mobius.waila.api.IEntityAccessor;
 import mcp.mobius.waila.api.IEntityComponentProvider;
 import mcp.mobius.waila.api.IPluginConfig;
@@ -19,6 +15,9 @@ import net.minecraft.util.text.TextFormatting;
 import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraft.world.World;
 import snownee.jade.Jade;
+
+import java.util.List;
+import java.util.Optional;
 
 public class PVZEntityProvider implements IEntityComponentProvider {
 
@@ -33,9 +32,6 @@ public class PVZEntityProvider implements IEntityComponentProvider {
 		if(accessor.getPlayer().getPose() == Pose.CROUCHING) {
 			if(config.get(JadeRegister.CONFIG_SHOW_OWNER)) {
 				appendOwner(accessor.getWorld(), accessor.getEntity(), tooltip);
-			}
-			if(config.get(JadeRegister.CONFIG_SHOW_LEVEL)) {
-			    appendLevel(accessor.getEntity(), tooltip);
 			}
 			if(config.get(JadeRegister.CONFIG_SHOW_ZOMBIE_REDUCTION)) {
 			    appendZombieHurtReduction(accessor.getEntity(), tooltip);
@@ -52,17 +48,6 @@ public class PVZEntityProvider implements IEntityComponentProvider {
 				tooltip.add(new TranslationTextComponent("tooltip.pvz.owner").append(" : " + player.getName().getString()).withStyle(TextFormatting.GREEN));
 			});
 		});
-	}
-	
-	private void appendLevel(Entity entity, List<ITextComponent> tooltip) {
-		if(! (entity instanceof LivingEntity)) {//only use for living.
-			return ;
-		}
-		int lvl = EntityUtil.getEntityLevel((LivingEntity) entity);
-		if(lvl == 0) {//no need to render if there is no maxLevel.
-			return ;
-		}
-		tooltip.add(new TranslationTextComponent("tooltip.pvz.maxLevel").append(" : " + lvl).withStyle(TextFormatting.YELLOW));
 	}
 	
 	private void appendDefenceHealth(Entity entity, List<ITextComponent> tooltip) {

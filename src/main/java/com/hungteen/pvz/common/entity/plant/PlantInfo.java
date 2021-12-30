@@ -14,9 +14,7 @@ import java.util.Optional;
 public class PlantInfo implements IPlantInfo {
 
 	protected IPlantType type;
-	protected boolean needSyncLevel = true;
 	protected int sunCost;
-	protected int level = 1;
 	
 	public PlantInfo() {
 	}
@@ -26,8 +24,7 @@ public class PlantInfo implements IPlantInfo {
 	}
 
 	@Override
-	public void placeOn(IPlantEntity plantEntity, int lvl, int sunCost) {
-		this.setLevel(lvl);
+	public void placeOn(IPlantEntity plantEntity, int sunCost) {
 		this.setSunCost(sunCost);
 		if(plantEntity instanceof Entity) {
 			EntityUtil.playSound((Entity) plantEntity, SoundRegister.PLANT_ON_GROUND.get());
@@ -36,7 +33,10 @@ public class PlantInfo implements IPlantInfo {
 
 	@Override
 	public void onSuper() {}
-	
+
+	/**
+	 * read nbt from plant entity.
+	 */
 	public static void read(IPlantInfo info, CompoundNBT compound, String flag) {
 		if (compound.contains(flag)) {
 			CompoundNBT nbt = compound.getCompound(flag);
@@ -54,7 +54,10 @@ public class PlantInfo implements IPlantInfo {
 			}
 		}
 	}
-	
+
+	/**
+	 * write nbt to plant entity.
+	 */
 	public static void write(IPlantInfo info, CompoundNBT compound, String flag) {
 	    if(info != null) {
 	    	CompoundNBT nbt = new CompoundNBT();
@@ -65,23 +68,16 @@ public class PlantInfo implements IPlantInfo {
 
 	@Override
 	public void read(CompoundNBT nbt) {
+		// no need to read plant type again.
 		if(nbt.contains("sun_cost")) {
 			this.setSunCost(nbt.getInt("sun_cost"));
-		}
-		if(nbt.contains("plant_level")) {
-			this.setLevel(nbt.getInt("plant_level"));
-		}
-		if(nbt.contains("need_sync")) {
-			this.setSyncLevel(nbt.getBoolean("need_sync"));
 		}
 	}
 
 	@Override
 	public void write(CompoundNBT nbt) {
-		nbt.putString("outer_plant_type", this.type.getIdentity());
+		nbt.putString("plant_type", this.type.getIdentity());
 		nbt.putInt("sun_cost", this.getSunCost());
-		nbt.putInt("plant_level", this.getLevel());
-		nbt.putBoolean("need_sync", this.needSyncLevel);
 	}
 
 	@Override
@@ -102,26 +98,6 @@ public class PlantInfo implements IPlantInfo {
 	@Override
 	public int getSunCost() {
 		return this.sunCost;
-	}
-
-	@Override
-	public boolean needSyncLevel() {
-		return this.needSyncLevel;
-	}
-
-	@Override
-	public void setSyncLevel(boolean is) {
-		this.needSyncLevel = is;
-	}
-
-	@Override
-	public void setLevel(int level) {
-		this.level = level;
-	}
-
-	@Override
-	public int getLevel() {
-		return this.level;
 	}
 	
 }

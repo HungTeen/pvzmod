@@ -2,9 +2,6 @@ package com.hungteen.pvz.common.entity.plant.spear;
 
 import com.hungteen.pvz.api.types.IPlantType;
 import com.hungteen.pvz.common.impl.plant.PVZPlants;
-import com.hungteen.pvz.utils.MathUtil;
-import com.hungteen.pvz.utils.PlantUtil;
-
 import net.minecraft.entity.CreatureEntity;
 import net.minecraft.entity.EntitySize;
 import net.minecraft.entity.EntityType;
@@ -19,11 +16,13 @@ public class SpikeRockEntity extends SpikeWeedEntity {
 	}
 
 	public float getAttackDamage() {
-		return this.getAverageProgress(4F, 12F);
+		return 4;
+//		return this.getAverageProgress(4F, 12F);
 	}
 	
 	public int getSpikesCount() {
-		return MathUtil.getProgressByDif(5, 3, this.getPAZLevel(), PlantUtil.MAX_PLANT_LEVEL, 6, 15);
+		return 6;
+//		return MathUtil.getProgressByDif(5, 3, this.getSkills(), PlantUtil.MAX_PLANT_LEVEL, 6, 15);
 	}
 	
 	@Override

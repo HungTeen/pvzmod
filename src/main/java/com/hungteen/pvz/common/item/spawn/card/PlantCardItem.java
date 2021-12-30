@@ -7,7 +7,6 @@ import com.hungteen.pvz.common.advancement.trigger.PlayerPlacePlantTrigger;
 import com.hungteen.pvz.common.block.BlockRegister;
 import com.hungteen.pvz.common.enchantment.EnchantmentRegister;
 import com.hungteen.pvz.common.enchantment.card.ImmediateCDEnchantment;
-import com.hungteen.pvz.common.enchantment.card.LevelUpEnchantment;
 import com.hungteen.pvz.common.enchantment.card.SunReduceEnchantment;
 import com.hungteen.pvz.common.enchantment.card.plantcard.BreakOutEnchantment;
 import com.hungteen.pvz.common.enchantment.card.plantcard.DenselyPlantEnchantment;
@@ -21,7 +20,7 @@ import com.hungteen.pvz.common.impl.CoolDowns;
 import com.hungteen.pvz.common.impl.plant.OtherPlants;
 import com.hungteen.pvz.common.impl.plant.PVZPlants;
 import com.hungteen.pvz.common.item.PVZItemGroups;
-import com.hungteen.pvz.register.EffectRegister;
+import com.hungteen.pvz.common.potion.EffectRegister;
 import com.hungteen.pvz.register.SoundRegister;
 import com.hungteen.pvz.utils.ConfigUtil;
 import com.hungteen.pvz.utils.EntityUtil;
@@ -276,7 +275,7 @@ public class PlantCardItem extends SummonCardItem {
 			final int lvl = PlayerUtil.getPAZPoint(player, plantType);
 			if(! handlePlantEntity(player, plantType, plantStack, pos, plantEntity -> {
 				/* update maxLevel and its owner */
-		        plantEntity.onSpawnedByPlayer(player, lvl, cardItem.getBasisSunCost(plantStack));
+		        plantEntity.onSpawnedByPlayer(player, cardItem.getBasisSunCost(plantStack));
 		        /* other operations */
 		        consumer.accept(plantEntity);
 		        /* enchantment effects */
@@ -539,8 +538,6 @@ public class PlantCardItem extends SummonCardItem {
 		if(EnchantmentHelper.getItemEnchantmentLevel(EnchantmentRegister.SOILLESS_PLANT.get(), stack) > 0) {
 			plantEntity.setImmuneToWeak(true);
 		}
-		/* check maxLevel up enchantment */
-		LevelUpEnchantment.levelUp(plantEntity, stack);
 	}
 
 	/**

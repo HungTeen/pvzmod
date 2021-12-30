@@ -106,11 +106,13 @@ public class StrangeCatEntity extends PVZPlantEntity {
 	 * max damage to target
 	 */
 	public float getAttackDamage() {
-		return this.getAverageProgress(200F, 400F);
+		return 200;
+//		return this.getAverageProgress(200F, 400F);
 	}
 	
 	public int getSuperAttackCount() {
-		return this.getThreeStage(4, 5, 6);
+		return 4;
+//		return this.getThreeStage(4, 5, 6);
 	}
 	
 	@Override

@@ -3,7 +3,7 @@ package com.hungteen.pvz;
 import com.hungteen.pvz.client.ClientProxy;
 import com.hungteen.pvz.common.CommonProxy;
 import com.hungteen.pvz.common.advancement.AdvancementHandler;
-import com.hungteen.pvz.common.block.OriginBlock;
+import com.hungteen.pvz.common.block.cubes.OriginBlock;
 import com.hungteen.pvz.common.datapack.DataPackRegister;
 import com.hungteen.pvz.common.world.gen.GenStructures;
 import com.hungteen.pvz.compat.craid.CRaidRegister;

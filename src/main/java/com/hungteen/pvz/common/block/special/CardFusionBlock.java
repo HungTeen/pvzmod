@@ -1,11 +1,11 @@
 package com.hungteen.pvz.common.block.special;
 
 import com.hungteen.pvz.common.block.AbstractFacingBlock;
-import com.hungteen.pvz.common.block.BlockRegister;
 import com.hungteen.pvz.common.tileentity.CardFusionTileEntity;
 
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
+import net.minecraft.block.Blocks;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.inventory.InventoryHelper;
@@ -21,7 +21,7 @@ import net.minecraftforge.fml.network.NetworkHooks;
 public class CardFusionBlock extends AbstractFacingBlock {
 
 	public CardFusionBlock() {
-		super(Block.Properties.copy(BlockRegister.STEEL_BLOCK.get()));
+		super(Block.Properties.copy(Blocks.IRON_BLOCK));
 	}
 
 	@Override

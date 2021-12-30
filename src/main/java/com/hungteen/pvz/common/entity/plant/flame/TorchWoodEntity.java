@@ -5,7 +5,7 @@ import com.hungteen.pvz.api.types.IPlantType;
 import com.hungteen.pvz.common.entity.bullet.itembullet.PeaEntity;
 import com.hungteen.pvz.common.entity.plant.PVZPlantEntity;
 import com.hungteen.pvz.common.impl.plant.PVZPlants;
-import com.hungteen.pvz.register.EffectRegister;
+import com.hungteen.pvz.common.potion.EffectRegister;
 import com.hungteen.pvz.register.ParticleRegister;
 import com.hungteen.pvz.utils.EntityUtil;
 import com.hungteen.pvz.utils.WorldUtil;
@@ -92,7 +92,8 @@ public class TorchWoodEntity extends PVZPlantEntity implements ILightEffect {
 	 * {@link #heatPeas()}
 	 */
 	public float getHeatRange() {
-		return this.isPlantInStage(1) ? 1.5F : this.isPlantInStage(2) ? 2 : 2.5F;
+		return 1.5F;
+//		return this.isPlantInStage(1) ? 1.5F : this.isPlantInStage(2) ? 2 : 2.5F;
 	}
 	
 	@Override

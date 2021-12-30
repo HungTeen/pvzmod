@@ -8,15 +8,9 @@ import com.hungteen.pvz.common.misc.damage.PVZDamageSource;
 import com.hungteen.pvz.register.SoundRegister;
 import com.hungteen.pvz.utils.EntityUtil;
 import com.hungteen.pvz.utils.MathUtil;
-import com.hungteen.pvz.utils.PlantUtil;
 import com.hungteen.pvz.utils.PlayerUtil;
 import com.hungteen.pvz.utils.enums.Resources;
-
-import net.minecraft.entity.CreatureEntity;
-import net.minecraft.entity.Entity;
-import net.minecraft.entity.EntitySize;
-import net.minecraft.entity.EntityType;
-import net.minecraft.entity.Pose;
+import net.minecraft.entity.*;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.util.SoundEvent;
 import net.minecraft.util.math.vector.Vector3d;
@@ -76,11 +70,13 @@ public class BloverEntity extends PlantBomberEntity {
 	}
 	
 	public float getAttackDamage(){
-		return PlantUtil.getPlantAverageProgress(this, 10, 50);
+		return 10;
+//		return PlantUtil.getPlantAverageProgress(this, 10, 50);
 	}
 	
 	public int getForceLevel() {
-		return this.isPlantInStage(1) ? 1 : this.isPlantInStage(2) ? 2 : 3;
+//		return this.isPlantInStage(1) ? 1 : this.isPlantInStage(2) ? 2 : 3;
+		return 2;
 	}
 	
 	@Override

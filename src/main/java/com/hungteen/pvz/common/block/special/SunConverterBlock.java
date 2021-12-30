@@ -1,10 +1,10 @@
 package com.hungteen.pvz.common.block.special;
 
-import com.hungteen.pvz.common.block.BlockRegister;
 import com.hungteen.pvz.common.tileentity.SunConverterTileEntity;
 
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
+import net.minecraft.block.Blocks;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.inventory.InventoryHelper;
@@ -24,7 +24,7 @@ public class SunConverterBlock extends Block {
 	protected static final VoxelShape AABB = Block.box(0.0D, 0.0D, 0.0D, 16.0D, 9.0D, 16.0D);
 
 	public SunConverterBlock() {
-		super(Block.Properties.copy(BlockRegister.STEEL_BLOCK.get()).noOcclusion());
+		super(Block.Properties.copy(Blocks.IRON_BLOCK).noCollission());
 	}
 
 	@Override

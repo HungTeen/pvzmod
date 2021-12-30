@@ -48,7 +48,8 @@ public class FumeShroomEntity extends PlantShooterEntity {
 	
 	@Override
 	public int getSuperTimeLength() {
-		return this.isPlantInStage(1) ? 40 : this.isPlantInStage(2) ? 60 : 80;
+		return 60;
+//		return this.isPlantInStage(1) ? 40 : this.isPlantInStage(2) ? 60 : 80;
 	}
 	
 	@Override

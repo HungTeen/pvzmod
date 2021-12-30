@@ -56,11 +56,13 @@ public class ExplodeONutEntity extends WallNutEntity {
 	}
 	
 	public int getExtraAttackChance() {
-		return this.getThreeStage(1, 2, 3);
+		return 1;
+//		return this.getThreeStage(1, 2, 3);
 	}
 	
 	public float getAttackDamage(){
-		return this.getAverageProgress(150F, 650F);
+		return 150F;
+//		return this.getAverageProgress(150F, 650F);
 	}
 	
 	@Override

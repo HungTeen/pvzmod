@@ -4,7 +4,7 @@ import com.hungteen.pvz.api.interfaces.ILightEffect;
 import com.hungteen.pvz.api.types.IPlantType;
 import com.hungteen.pvz.common.entity.plant.PVZPlantEntity;
 import com.hungteen.pvz.common.impl.plant.PVZPlants;
-import com.hungteen.pvz.register.EffectRegister;
+import com.hungteen.pvz.common.potion.EffectRegister;
 import com.hungteen.pvz.register.SoundRegister;
 import com.hungteen.pvz.utils.EntityUtil;
 
@@ -78,11 +78,13 @@ public class PlanternEntity extends PVZPlantEntity implements ILightEffect {
 	}
 	
 	public int getLightEyeTime() {
-		return Math.min(4000, this.getPAZLevel() * 200);
+		return 4000;
+//		return Math.min(4000, this.getSkills() * 200);
 	}
 	
 	public int getSuperLightEyeTime() {
-		return this.isPlantInStage(1) ? 3600 : this.isPlantInStage(2) ? 7200 : 10800; 
+		return 3600;
+//		return this.isPlantInStage(1) ? 3600 : this.isPlantInStage(2) ? 7200 : 10800;
 	}
 	
 	@Override

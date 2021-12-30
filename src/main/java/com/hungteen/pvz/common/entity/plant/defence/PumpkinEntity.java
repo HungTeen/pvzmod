@@ -63,8 +63,8 @@ public class PumpkinEntity extends PVZPlantEntity{
 		}
 		
 		@Override
-		public void placeOn(IPlantEntity plantEntity, int lvl, int sunCost) {
-			super.placeOn(plantEntity, lvl, sunCost);
+		public void placeOn(IPlantEntity plantEntity, int sunCost) {
+			super.placeOn(plantEntity, sunCost);
 			plantEntity.setPumpkin(true);
 		}
 		

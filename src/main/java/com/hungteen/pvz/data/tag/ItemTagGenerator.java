@@ -5,7 +5,7 @@ import java.util.function.Predicate;
 
 import com.hungteen.pvz.PVZMod;
 import com.hungteen.pvz.common.block.BlockRegister;
-import com.hungteen.pvz.common.block.EssenceOreBlock;
+import com.hungteen.pvz.common.block.ores.EssenceOreBlock;
 import com.hungteen.pvz.common.item.ItemRegister;
 import com.hungteen.pvz.common.item.material.TemplateCardItem;
 import com.hungteen.pvz.common.item.spawn.card.PlantCardItem;
@@ -62,6 +62,7 @@ public class ItemTagGenerator extends ItemTagsProvider{
 			}
 		}
 		this.tag(PVZItemTags.TEMPLATE_CARDS).add(this.getFilterItems(i -> i instanceof TemplateCardItem));
+		this.tag(PVZItemTags.PEA_GUN_BULLETS).add(ItemRegister.PEA.get()).add(ItemRegister.SNOW_PEA.get()).add(ItemRegister.FLAME_PEA.get()).add(ItemRegister.BLUE_FLAME_PEA.get());
 	}
 	
 	private Item[] getFilterItems(Predicate<Item> predicate) {

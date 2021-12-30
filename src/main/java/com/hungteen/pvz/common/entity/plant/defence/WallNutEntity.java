@@ -4,9 +4,6 @@ import com.hungteen.pvz.api.types.IPlantType;
 import com.hungteen.pvz.common.entity.plant.base.PlantDefenderEntity;
 import com.hungteen.pvz.common.impl.plant.PVZPlants;
 import com.hungteen.pvz.common.item.tool.plant.BowlingGloveItem;
-import com.hungteen.pvz.utils.MathUtil;
-import com.hungteen.pvz.utils.PlantUtil;
-
 import net.minecraft.entity.CreatureEntity;
 import net.minecraft.entity.EntitySize;
 import net.minecraft.entity.EntityType;
@@ -37,14 +34,17 @@ public class WallNutEntity extends PlantDefenderEntity{
 	}
 
 	@Override
-	public float getPlantHealth() {
-		return MathUtil.getProgressAverage(this.getPAZLevel(), PlantUtil.MAX_PLANT_LEVEL, 400, 800);
+	public float getLife() {
+		return 400;
+//		return MathUtil.getProgressAverage(this.getSkills(), PlantUtil.MAX_PLANT_LEVEL, 400, 800);
 	}
 	
 	@Override
 	public float getSuperLife() {
-		return this.isPlantInStage(1) ? 500 : this.isPlantInStage(2) ? 750 : 1000;
+//		return this.isPlantInStage(1) ? 500 : this.isPlantInStage(2) ? 750 : 1000;
+		return 100;
 	}
+
 
 	@Override
 	public EntitySize getDimensions(Pose poseIn) {

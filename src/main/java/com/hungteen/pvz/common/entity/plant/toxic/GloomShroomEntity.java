@@ -49,7 +49,8 @@ public class GloomShroomEntity extends PlantShooterEntity {
 	
     @Override
 	public int getSuperTimeLength() {
-		return this.getThreeStage(60, 80, 100);
+		return 60;
+//		return this.getThreeStage(60, 80, 100);
 	}
     
     @Override

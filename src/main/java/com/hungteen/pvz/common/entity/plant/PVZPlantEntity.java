@@ -25,13 +25,12 @@ import com.hungteen.pvz.common.event.handler.PlayerEventHandler;
 import com.hungteen.pvz.common.impl.plant.PVZPlants;
 import com.hungteen.pvz.common.item.spawn.card.PlantCardItem;
 import com.hungteen.pvz.common.misc.damage.PVZDamageSource;
-import com.hungteen.pvz.register.EffectRegister;
+import com.hungteen.pvz.common.potion.EffectRegister;
 import com.hungteen.pvz.register.EntityRegister;
 import com.hungteen.pvz.register.ParticleRegister;
 import com.hungteen.pvz.remove.MetalTypes;
 import com.hungteen.pvz.utils.AlgorithmUtil;
 import com.hungteen.pvz.utils.EntityUtil;
-import com.hungteen.pvz.utils.PlantUtil;
 import com.hungteen.pvz.utils.interfaces.ICanAttract;
 import net.minecraft.block.Block;
 import net.minecraft.entity.*;
@@ -123,11 +122,11 @@ public abstract class PVZPlantEntity extends AbstractPAZEntity implements IPlant
 	/**
 	 * init attributes with plant lvl.
 	 */
-	public void onSpawnedByPlayer(@Nullable PlayerEntity player, int lvl, int sunCost) {
+	public void onSpawnedByPlayer(@Nullable PlayerEntity player, int sunCost) {
 		if(player != null) {
 			this.setOwnerUUID(player.getUUID());
 		}
-		this.updatePlantLevel(lvl);
+//		this.updatePlantLevel(lvl);
 		this.getPlantInfo().ifPresent(info -> {
 			info.setSunCost(sunCost);
 		});
@@ -148,7 +147,7 @@ public abstract class PVZPlantEntity extends AbstractPAZEntity implements IPlant
 	 * {@link #finalizeSpawn(IServerWorld, DifficultyInstance, SpawnReason, ILivingEntityData, CompoundNBT)}
 	 */
 	protected void updateAttributes() {
-		this.getAttribute(Attributes.MAX_HEALTH).setBaseValue(this.getPlantHealth());
+		this.getAttribute(Attributes.MAX_HEALTH).setBaseValue(this.getLife());
 	}
 
 	@Override
@@ -271,18 +270,6 @@ public abstract class PVZPlantEntity extends AbstractPAZEntity implements IPlant
 		    return ! this.getPlantType().getPlacement().canPlaceOnBlock(level.getBlockState(pos).getBlock());
 		}
 		return false;
-	}
-	
-	/**
-	 * update plant's maxLevel.
-	 * {@link #plantTick()}
-	 */
-	public void updatePlantLevel(int lvl) {
-		if(this.getPAZLevel() != lvl) {//maxLevel changed
-		    this.setPAZLevel(lvl);
-		    this.getAttribute(Attributes.MAX_HEALTH).setBaseValue(this.getPlantHealth());
-		    this.heal(this.getMaxHealth());
-		}
 	}
 
 	/**
@@ -523,18 +510,9 @@ public abstract class PVZPlantEntity extends AbstractPAZEntity implements IPlant
 		return this.canHelpAttack;
 	}
 
-	/**
-	 * get plant max health.
-	 */
-	public float getPlantHealth() {
-		int lvl = this.getPAZLevel();
-		if (lvl <= 14) {
-			return 27.5f + 2.5f * lvl;
-		}
-		if (lvl <= 20) {
-			return 5 * lvl - 10;
-		}
-		return 100;
+	@Override
+	protected float getLife() {
+		return 30;
 	}
 	
 	/**
@@ -578,7 +556,7 @@ public abstract class PVZPlantEntity extends AbstractPAZEntity implements IPlant
 		if(type.isOuterPlant()) {
 			this.outerPlant = type.getOuterPlant().get();
 			this.outerPlant.setType(type);
-			this.outerPlant.placeOn(this, lvl, sunCost);
+			this.outerPlant.placeOn(this, sunCost);
 		} else {
 			PVZMod.LOGGER.error("Place Outer Plant Error : it's not outer plant type !");
 		}
@@ -683,29 +661,6 @@ public abstract class PVZPlantEntity extends AbstractPAZEntity implements IPlant
 		return this.getMaxHealth() + this.getCurrentDefenceHealth();
 	}
 
-	protected boolean isPlantInStage(int stage) {
-		int lvl = this.getPAZLevel();
-		if (stage == 1)
-			return lvl <= 6;
-		if (stage == 2)
-			return 7 <= lvl && lvl <= 13;
-		if (stage == 3)
-			return 14 <= lvl && lvl <= 20;
-		return false;
-	}
-	
-	public int getThreeStage(int a, int b, int c) {
-		return this.isPlantInStage(1) ? a : this.isPlantInStage(2) ? b : c;
-	}
-	
-	public int getAverageProgress(int a, int b) {
-		return PlantUtil.getPlantAverageProgress(this, a, b);
-	}
-	
-	public float getAverageProgress(float a, float b) {
-		return PlantUtil.getPlantAverageProgress(this, a, b);
-	}
-	
 	/**
 	 * check can start super mode currently.
 	 */
@@ -741,7 +696,6 @@ public abstract class PVZPlantEntity extends AbstractPAZEntity implements IPlant
 	public void addAdditionalSaveData(CompoundNBT compound) {
 		super.addAdditionalSaveData(compound);
 		compound.putInt("plant_super_time", this.getSuperTime());
-		compound.putInt("plant_lvl", this.getPAZLevel());
 		if (this.getOwnerUUID().isPresent()) {
 			compound.putUUID("OwnerUUID", this.getOwnerUUID().get());
 		}

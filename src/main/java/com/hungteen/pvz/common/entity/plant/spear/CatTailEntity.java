@@ -1,7 +1,5 @@
 package com.hungteen.pvz.common.entity.plant.spear;
 
-import java.util.HashSet;
-
 import com.hungteen.pvz.api.types.IPlantType;
 import com.hungteen.pvz.common.entity.ai.goal.target.PVZGlobalTargetGoal;
 import com.hungteen.pvz.common.entity.bullet.AbstractBulletEntity;
@@ -12,17 +10,12 @@ import com.hungteen.pvz.common.entity.plant.base.PlantShooterEntity;
 import com.hungteen.pvz.common.entity.zombie.pool.BalloonZombieEntity;
 import com.hungteen.pvz.common.impl.plant.PVZPlants;
 import com.hungteen.pvz.utils.EntityUtil;
-import com.hungteen.pvz.utils.MathUtil;
-import com.hungteen.pvz.utils.PlantUtil;
-
-import net.minecraft.entity.CreatureEntity;
-import net.minecraft.entity.Entity;
-import net.minecraft.entity.EntitySize;
-import net.minecraft.entity.EntityType;
-import net.minecraft.entity.Pose;
+import net.minecraft.entity.*;
 import net.minecraft.entity.ai.goal.SwimGoal;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.world.World;
+
+import java.util.HashSet;
 
 public class CatTailEntity extends PlantShooterEntity {
 
@@ -114,16 +107,19 @@ public class CatTailEntity extends PlantShooterEntity {
 	}
 	
 	public int getPowerThornCount() {
-		return this.getThreeStage(1, 2, 3);
+		return 1;
+//		return this.getThreeStage(1, 2, 3);
 	}
 	
 	public int getExtraAttackCount() {
-		return MathUtil.getProgressByDif(5, 1, this.getPAZLevel(), PlantUtil.MAX_PLANT_LEVEL, 1, 4);
+		return 1;
+//		return MathUtil.getProgressByDif(5, 1, this.getSkills(), PlantUtil.MAX_PLANT_LEVEL, 1, 4);
 	}
 	
 	@Override
 	public float getAttackDamage() {
-		return this.getAverageProgress(2F, 6F);
+		return 2;
+//		return this.getAverageProgress(2F, 6F);
 	}
 	
 	public int getAnimCD() {

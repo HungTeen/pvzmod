@@ -10,6 +10,7 @@ import net.minecraft.entity.ILivingEntityData;
 import net.minecraft.entity.SpawnReason;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.nbt.CompoundNBT;
+import net.minecraft.network.PacketBuffer;
 import net.minecraft.network.datasync.DataParameter;
 import net.minecraft.network.datasync.DataSerializers;
 import net.minecraft.network.datasync.EntityDataManager;
@@ -18,19 +19,16 @@ import net.minecraft.util.SoundEvent;
 import net.minecraft.world.DifficultyInstance;
 import net.minecraft.world.IServerWorld;
 import net.minecraft.world.World;
+import net.minecraftforge.fml.common.registry.IEntityAdditionalSpawnData;
 
 import java.util.Optional;
 import java.util.UUID;
 
-public abstract class AbstractPAZEntity extends CreatureEntity implements IPAZEntity {
+public abstract class AbstractPAZEntity extends CreatureEntity implements IPAZEntity, IEntityAdditionalSpawnData {
 
     private static final DataParameter<Optional<UUID>> OWNER_UUID = EntityDataManager.defineId(AbstractPAZEntity.class, DataSerializers.OPTIONAL_UUID);
-    private static final DataParameter<Integer> PAZ_LVL = EntityDataManager.defineId(AbstractPAZEntity.class, DataSerializers.INT);
+    private static final DataParameter<CompoundNBT> SKILLS = EntityDataManager.defineId(AbstractPAZEntity.class, DataSerializers.COMPOUND_TAG);
     private static final DataParameter<Integer> EXIST_TICK = EntityDataManager.defineId(AbstractPAZEntity.class, DataSerializers.INT);
-    //handler maxLevel, maxLevel range in (1, 128).
-    protected static final int LEVEL_FLAG_LEN = 7;
-    //handle sync maxLevel.
-    private static final int LEVEL_SYNC_CD = 1200;
     protected PlayerEntity ownerPlayer;
     protected boolean canBeCold = true;
     protected boolean canBeFrozen = true;
@@ -50,7 +48,7 @@ public abstract class AbstractPAZEntity extends CreatureEntity implements IPAZEn
     protected void defineSynchedData() {
         super.defineSynchedData();
         this.entityData.define(OWNER_UUID, Optional.empty());
-        this.entityData.define(PAZ_LVL, 1);
+        this.entityData.define(SKILLS, new CompoundNBT());
         this.entityData.define(EXIST_TICK, 0);
     }
 
@@ -87,23 +85,11 @@ public abstract class AbstractPAZEntity extends CreatureEntity implements IPAZEn
     }
 
     public void normalPAZTick(){
-        //TODO 植物信息同步
-/*        *//* update plant maxLevel & outer plant maxLevel *//*
-        if(!maxLevel.isClientSide && this.getExistTick() % PLANT_LEVEL_SYNC_CD == 5) {
-            this.getOwnerPlayer().ifPresent(player -> {
-                this.getPlantInfo().ifPresent(info -> {
-                    if(info.needSyncLevel) {
-                        this.updatePlantLevel(PlayerUtil.getPAZPoint(player, info.getType()));
-                    }
-                });
-                this.getOuterPlantInfo().ifPresent(info -> {
-                    if(info.needSyncLevel) {
-                        info.setLevel(PlayerUtil.getPAZPoint(player, info.getType()));
-                    }
-                });
-            });
-        }*/
+
     }
+
+    /* features */
+    protected abstract float getLife();
 
     /* misc get */
 
@@ -115,10 +101,6 @@ public abstract class AbstractPAZEntity extends CreatureEntity implements IPAZEn
             return false;
         }
         return !EntityUtil.isEntityFrozen(this) && !EntityUtil.isEntityButter(this);
-    }
-
-    public int getCoolDownTime() {
-        return this.getPAZType().getCoolDown().getCD(this.getPAZLevel());
     }
 
     public IRankType getPlantRank() {
@@ -166,19 +148,22 @@ public abstract class AbstractPAZEntity extends CreatureEntity implements IPAZEn
     @Override
     public void addAdditionalSaveData(CompoundNBT compound) {
         super.addAdditionalSaveData(compound);
-        compound.putInt("paz_lvl", this.getPAZLevel());
-        if (this.getOwnerUUID().isPresent()) {
-            compound.putUUID("OwnerUUID", this.getOwnerUUID().get());
+        {// save owner uuid.
+            if (this.getOwnerUUID().isPresent()) {
+                compound.putUUID("OwnerUUID", this.getOwnerUUID().get());
+            }
         }
-        compound.putInt("paz_exist_tick", this.getExistTick());
+        {// save paz skills.
+            compound.put("paz_skills", this.getSkills());
+        }
+        {// misc.
+            compound.putInt("paz_exist_tick", this.getExistTick());
+        }
     }
 
     @Override
     public void readAdditionalSaveData(CompoundNBT compound) {
         super.readAdditionalSaveData(compound);
-        if (compound.contains("paz_lvl")) {
-            this.setPAZLevel(compound.getInt("paz_lvl"));
-        }
         {// owner uuid.
             UUID ownerUuid;
             if (compound.hasUUID("OwnerUUID")) {
@@ -194,17 +179,34 @@ public abstract class AbstractPAZEntity extends CreatureEntity implements IPAZEn
                 }
             }
         }
-        if(compound.contains("paz_exist_tick")) {
-            this.setExistTick(compound.getInt("paz_exist_tick"));
+        {// paz skills.
+            if (compound.contains("paz_skills")) {
+                this.setSkills(compound.getCompound("paz_skills"));
+            }
+        }
+        {// misc.
+            if(compound.contains("paz_exist_tick")) {
+                this.setExistTick(compound.getInt("paz_exist_tick"));
+            }
         }
     }
 
-    public void setPAZLevel(int lvl) {
-        this.entityData.set(PAZ_LVL, Math.min(lvl, this.getPAZType().getMaxLevel()));
+    @Override
+    public void readSpawnData(PacketBuffer additionalData) {
+
     }
 
-    public int getPAZLevel() {
-        return this.entityData.get(PAZ_LVL);
+    @Override
+    public void writeSpawnData(PacketBuffer buffer) {
+
+    }
+
+    public void setSkills(CompoundNBT nbt) {
+        this.entityData.set(SKILLS, nbt);
+    }
+
+    public CompoundNBT getSkills() {
+        return this.entityData.get(SKILLS);
     }
 
     @Override

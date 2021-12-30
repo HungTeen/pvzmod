@@ -25,8 +25,9 @@ public class CabbagePultEntity extends PlantPultEntity {
 	
 	@Override
 	public float getSuperDamage() {
-		final float add = this.getThreeStage(20, 40, 60);
-		return this.getAttackDamage() + add;
+//		final float add = this.getThreeStage(20, 40, 60);
+//		return this.getAttackDamage() + add;
+		return this.getAttackDamage() + 20;
 	}
 	
 	@Override

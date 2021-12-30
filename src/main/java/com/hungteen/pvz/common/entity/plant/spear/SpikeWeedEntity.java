@@ -1,15 +1,11 @@
 package com.hungteen.pvz.common.entity.plant.spear;
 
-import javax.annotation.Nonnull;
-
 import com.hungteen.pvz.api.interfaces.IHasWheel;
 import com.hungteen.pvz.api.types.IPlantType;
 import com.hungteen.pvz.common.entity.plant.PVZPlantEntity;
 import com.hungteen.pvz.common.impl.plant.PVZPlants;
 import com.hungteen.pvz.common.misc.damage.PVZDamageSource;
 import com.hungteen.pvz.utils.EntityUtil;
-import com.hungteen.pvz.utils.PlantUtil;
-
 import net.minecraft.entity.CreatureEntity;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
@@ -20,6 +16,8 @@ import net.minecraft.network.datasync.DataSerializers;
 import net.minecraft.network.datasync.EntityDataManager;
 import net.minecraft.util.DamageSource;
 import net.minecraft.world.World;
+
+import javax.annotation.Nonnull;
 
 public class SpikeWeedEntity extends PVZPlantEntity {
 
@@ -114,7 +112,8 @@ public class SpikeWeedEntity extends PVZPlantEntity {
 	}
 	
 	public float getAttackDamage(){
-		return PlantUtil.getPlantAverageProgress(this, 2F, 6F);
+		return 2;
+//		return PlantUtil.getPlantAverageProgress(this, 2F, 6F);
 	}
 	
 	/**
@@ -122,7 +121,8 @@ public class SpikeWeedEntity extends PVZPlantEntity {
 	 * {@link #startSuperMode(boolean)}
 	 */
 	public int getSuperSpikeCount() {
-		return this.isPlantInStage(1) ? 3 : this.isPlantInStage(2) ? 6 : 9;
+		return 3;
+//		return this.isPlantInStage(1) ? 3 : this.isPlantInStage(2) ? 6 : 9;
 	}
 	
 	public int getAttackCD() {

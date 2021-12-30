@@ -379,27 +379,32 @@ public class PVZConfig {
 			//Block Settings 
 			builder.comment("Settings about blocks.").push("Block Settings");
 			{
-				BlockSettings.OriginBlockEffectChance = builder
+				BlockSettings.OriginEffectChance = builder
 						.translation("config.pvz.block.origin_effect_chance")
-						.comment("The chance to get Essence Ore from Origin Block's effect. the bigger the less chance.")
-						.defineInRange("OriginChance", 4, 1, 100);
+						.comment("The chance to get Essence Ore from Origin Block's effect")
+						.defineInRange("OriginEffectChance", 0.25, 0, 1);
 				
-				BlockSettings.SaplingTurnOriginChance = builder
+				BlockSettings.SaplingTurnChance = builder
 						.translation("config.pvz.block.sapling_turn_chance")
-						.comment("The chance when sapling turn to origin ore, the bigger the less chance.")
-						.defineInRange("SaplingTurnOrigin", 6, 1, 10000);
+						.comment("The chance when sapling turn to origin ore")
+						.defineInRange("SaplingTurnChance", 0.15, 0, 1);
 				
+				BlockSettings.AmethystAngerChance = builder
+						.translation("config.pvz.block.amethyst_anger_chance")
+						.comment("The chance of anger nearby enderman when break amethyst ore")
+						.defineInRange("AmethystAngerChance", 0.4, 0, 1);
+								
 				builder.comment("Setting about break blocks.").push("Break Block Setting");
 				{
 					BlockSettings.PeaDropChance = builder
 						.translation("config.pvz.block.pea_drop_chance")
-						.comment("the drop chance of pea when you break grass. the bigger the value is,the lower chance you get.(more specificly 1/x)")
-						.defineInRange("DropPeaChance", 16, 1, 1000);
+						.comment("the drop chance of pea when you break grass")
+						.defineInRange("DropPeaChance", 0.05, 0, 1);
 					
 					BlockSettings.CabbageDropChance = builder
 							.translation("config.pvz.block.cabbage_drop_chance")
-							.comment("the drop chance of cabbage when you break grass. the bigger the value is,the lower chance you get.(more specificly 1/x)")
-							.defineInRange("DropCabbageChance", 32, 1, 1000);
+							.comment("the drop chance of cabbage when you break grass")
+							.defineInRange("DropCabbageChance", 0.025, 0, 1);
 				}
 				builder.pop();
 			}
@@ -524,12 +529,15 @@ public class PVZConfig {
 		}
 		
 		public static class BlockSettings{
-			public ForgeConfigSpec.IntValue OriginBlockEffectChance;
-			public ForgeConfigSpec.IntValue SaplingTurnOriginChance;
+			public ForgeConfigSpec.DoubleValue OriginEffectChance;
+			public ForgeConfigSpec.DoubleValue SaplingTurnChance;
 			
 			/* break block */
-			public ForgeConfigSpec.IntValue PeaDropChance;
-			public ForgeConfigSpec.IntValue CabbageDropChance;
+			public ForgeConfigSpec.DoubleValue PeaDropChance;
+			public ForgeConfigSpec.DoubleValue CabbageDropChance;
+			
+			/* misc */
+			public ForgeConfigSpec.DoubleValue AmethystAngerChance;
 		}
 		
 		public static class ItemSettings {

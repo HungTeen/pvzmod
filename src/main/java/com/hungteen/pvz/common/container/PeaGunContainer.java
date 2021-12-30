@@ -3,6 +3,7 @@ package com.hungteen.pvz.common.container;
 import com.hungteen.pvz.PVZMod;
 import com.hungteen.pvz.common.item.ItemRegister;
 import com.hungteen.pvz.common.item.tool.plant.PeaGunItem;
+import com.hungteen.pvz.common.misc.tag.PVZItemTags;
 import com.hungteen.pvz.register.ContainerRegister;
 
 import net.minecraft.entity.player.PlayerEntity;
@@ -27,15 +28,20 @@ public class PeaGunContainer extends Container {
 		}
 		backpack = PeaGunItem.getInventory(stack);
 		
-		this.addSlot(new Slot(backpack, 0, 80, 21));//special slots
+		//special slots
+		this.addSlot(new Slot(backpack, 0, 80, 21) {
+			@Override
+			public boolean mayPlace(ItemStack stack) {
+				return PeaGunItem.isValidMode(stack);
+			}
+		});
 		
 		for(int i = 0; i < 3; ++ i) {
 			for(int j = 0; j < 9; ++ j) {
 				this.addSlot(new Slot(backpack, j + i * 9 + 1, 8 + 18 * j, 45 + 18 * i) {
 					@Override
 					public boolean mayPlace(ItemStack stack) {
-						return stack.getItem() == ItemRegister.PEA.get()
-								|| stack.getItem() == ItemRegister.SNOW_PEA.get() || stack.getItem() == ItemRegister.FLAME_PEA.get();
+						return stack.getItem().is(PVZItemTags.PEA_GUN_BULLETS);
 					}
 				});
 			}

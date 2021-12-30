@@ -218,7 +218,7 @@ public abstract class PlantType extends PAZType implements IPlantType {
 		//common.
 		protected int sunCost = 9999;
 		protected int requiredLevel = 100;
-		protected int maxLevel = PAZUtil.DEFAULT_MAX_LEVEL;
+		protected int maxLevel = PAZUtil.DEFAULT_MAX_POINTS;
 		protected int occurDifficulty = 0;
 		protected int randomInvasionWeight = 0;
 		protected int waveSpawnWeight = 0;

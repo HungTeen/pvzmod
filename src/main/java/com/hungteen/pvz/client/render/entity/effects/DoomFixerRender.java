@@ -1,4 +1,4 @@
-package com.hungteen.pvz.client.render.entity.misc;
+package com.hungteen.pvz.client.render.entity.effects;
 
 import com.hungteen.pvz.client.model.entity.plant.explosion.DoomShroomModel;
 import com.hungteen.pvz.common.entity.misc.DoomFixerEntity;

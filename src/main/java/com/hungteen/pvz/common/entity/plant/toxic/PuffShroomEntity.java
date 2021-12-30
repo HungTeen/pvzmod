@@ -8,9 +8,6 @@ import com.hungteen.pvz.common.entity.plant.base.PlantShooterEntity;
 import com.hungteen.pvz.common.impl.plant.PVZPlants;
 import com.hungteen.pvz.register.SoundRegister;
 import com.hungteen.pvz.utils.EntityUtil;
-import com.hungteen.pvz.utils.MathUtil;
-import com.hungteen.pvz.utils.PlantUtil;
-
 import net.minecraft.entity.CreatureEntity;
 import net.minecraft.entity.EntitySize;
 import net.minecraft.entity.EntityType;
@@ -82,7 +79,8 @@ public class PuffShroomEntity extends PlantShooterEntity {
 	}
 	
 	public int getMaxSuperCnt() {
-		return this.isPlantInStage(1) ? 10 : this.isPlantInStage(2) ? 15 : 25;
+		return 10;
+//		return this.isPlantInStage(1) ? 10 : this.isPlantInStage(2) ? 15 : 25;
 	}
 	
 	@Override
@@ -101,8 +99,9 @@ public class PuffShroomEntity extends PlantShooterEntity {
 	}
 	
 	@Override
-	public float getPlantHealth() {
-		return MathUtil.getProgressAverage(this.getPAZLevel(), PlantUtil.MAX_PLANT_LEVEL, 30, 50);
+	public float getLife() {
+		return 30;
+//		return MathUtil.getProgressAverage(this.getSkills(), PlantUtil.MAX_PLANT_LEVEL, 30, 50);
 	}
 	
 	@Override

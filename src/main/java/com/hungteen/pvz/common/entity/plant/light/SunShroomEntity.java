@@ -61,8 +61,9 @@ public class SunShroomEntity extends PlantProducerEntity {
 	 * get current sun gen num;
 	 */
 	protected int getCurrentSunAmount() {
-		return this.isInGrowStage(3) ? this.getSunAmountInStage(3) : 
-			   this.isInGrowStage(2) ? this.getSunAmountInStage(2) : 
+		return
+//				this.isInGrowStage(3) ? this.getSunAmountInStage(3) :
+//			   this.isInGrowStage(2) ? this.getSunAmountInStage(2) :
 			   this.getSunAmountInStage(1);
 	}
 	
@@ -71,12 +72,12 @@ public class SunShroomEntity extends PlantProducerEntity {
 	 * use in almanac.
 	 */
 	public int getSunAmountInStage(int stage){
-		if(stage == 1) {
-			return this.getPAZLevel() <= 15 ? 15 : 25;
-		}
-		if(stage == 2) {
-			return this.getPAZLevel() <= 5 ? 25 : this.getPAZLevel() <= 10 ? 35 : 50;
-		}
+//		if(stage == 1) {
+//			return this.getSkills() <= 15 ? 15 : 25;
+//		}
+//		if(stage == 2) {
+//			return this.getSkills() <= 5 ? 25 : this.getSkills() <= 10 ? 35 : 50;
+//		}
 		return 75;
 	}
 	
@@ -84,12 +85,12 @@ public class SunShroomEntity extends PlantProducerEntity {
 	 * get normal gen sun amount by maxLevel.
 	 */
 	public int getSuperSunAmount(){
-		if(this.isPlantInStage(1)) {
-			return 500;
-		}
-		if(this.isPlantInStage(2)) {
-			return 750;
-		}
+//		if(this.isPlantInStage(1)) {
+//			return 500;
+//		}
+//		if(this.isPlantInStage(2)) {
+//			return 750;
+//		}
 		return 1000;
 	}
 

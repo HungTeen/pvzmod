@@ -7,8 +7,6 @@ import com.hungteen.pvz.common.entity.plant.base.PlantProducerEntity;
 import com.hungteen.pvz.common.impl.plant.PVZPlants;
 import com.hungteen.pvz.register.EntityRegister;
 import com.hungteen.pvz.utils.EntityUtil;
-import com.hungteen.pvz.utils.PlantUtil;
-
 import net.minecraft.entity.CreatureEntity;
 import net.minecraft.entity.EntitySize;
 import net.minecraft.entity.EntityType;
@@ -63,20 +61,22 @@ public class MariGoldEntity extends PlantProducerEntity {
 	}
 	
 	public int getSilverChance() {
-		return PlantUtil.getPlantAverageProgress(this, 10, 50);
+		return 10;
+//		return PlantUtil.getPlantAverageProgress(this, 10, 50);
 	}
 
 	public int getGoldChance() {
-		final int lvl = this.getPAZLevel();
-		if (lvl <= 20) {
-			final int now = (lvl - 1) / 2;
-			return now + 1;
-		}
+//		final int lvl = this.getSkills();
+//		if (lvl <= 20) {
+//			final int now = (lvl - 1) / 2;
+//			return now + 1;
+//		}
 		return 10;
 	}
 
 	public int getSuperGenCnt() {
-		return this.getThreeStage(3, 5, 7);
+		return 3;
+//		return this.getThreeStage(3, 5, 7);
 	}
 
 	@Override

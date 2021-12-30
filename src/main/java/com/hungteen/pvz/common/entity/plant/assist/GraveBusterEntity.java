@@ -9,15 +9,8 @@ import com.hungteen.pvz.common.misc.damage.PVZDamageSource;
 import com.hungteen.pvz.register.EntityRegister;
 import com.hungteen.pvz.register.SoundRegister;
 import com.hungteen.pvz.utils.EntityUtil;
-import com.hungteen.pvz.utils.MathUtil;
 import com.hungteen.pvz.utils.PlantUtil;
-
-import net.minecraft.entity.CreatureEntity;
-import net.minecraft.entity.Entity;
-import net.minecraft.entity.EntitySize;
-import net.minecraft.entity.EntityType;
-import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.Pose;
+import net.minecraft.entity.*;
 import net.minecraft.entity.ai.goal.Goal;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.world.World;
@@ -83,18 +76,21 @@ public class GraveBusterEntity extends PVZPlantEntity{
 	}
 	
 	public int getEatTombCD() {
-		return PlantUtil.getPlantAverageProgress(this, 100, 20);
+		return 100;
+//		return PlantUtil.getPlantAverageProgress(this, 100, 20);
 	}
 	
 	public int getMaxKillCnt() {
-		return MathUtil.getProgressByDif(5, 1, this.getPAZLevel(), PlantUtil.MAX_PLANT_LEVEL, 1, 4);
+//		return MathUtil.getProgressByDif(5, 1, this.getSkills(), PlantUtil.MAX_PLANT_LEVEL, 1, 4);
+		return 2;
 	}
 	
 	/**
 	 * how many gravebuster to summon.
 	 */
 	public int getSuperAttackCnt() {
-		return this.isPlantInStage(1) ? 3 : this.isPlantInStage(2) ? 4 : 5;
+		return 2;
+//		return this.isPlantInStage(1) ? 3 : this.isPlantInStage(2) ? 4 : 5;
 	}
 	
 	@Override

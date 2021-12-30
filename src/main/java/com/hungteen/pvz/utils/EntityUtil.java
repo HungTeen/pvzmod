@@ -1,15 +1,5 @@
 package com.hungteen.pvz.utils;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Random;
-import java.util.UUID;
-import java.util.function.Predicate;
-import java.util.stream.Collectors;
-
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
-
 import com.hungteen.pvz.PVZMod;
 import com.hungteen.pvz.api.enums.PVZGroupType;
 import com.hungteen.pvz.api.interfaces.ICanBeCharmed;
@@ -31,19 +21,13 @@ import com.hungteen.pvz.common.entity.zombie.pool.BobsleTeamEntity;
 import com.hungteen.pvz.common.event.handler.LivingEventHandler;
 import com.hungteen.pvz.common.network.PVZPacketHandler;
 import com.hungteen.pvz.common.network.toclient.SpawnParticlePacket;
+import com.hungteen.pvz.common.potion.EffectRegister;
 import com.hungteen.pvz.compat.jade.provider.PVZEntityProvider;
-import com.hungteen.pvz.register.EffectRegister;
 import com.hungteen.pvz.utils.interfaces.IMultiPartEntity;
-
 import it.unimi.dsi.fastutil.ints.IntOpenHashSet;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
-import net.minecraft.entity.Entity;
-import net.minecraft.entity.EntityType;
-import net.minecraft.entity.FlyingEntity;
-import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.MobEntity;
-import net.minecraft.entity.SpawnReason;
+import net.minecraft.entity.*;
 import net.minecraft.entity.ai.attributes.Attributes;
 import net.minecraft.entity.passive.BatEntity;
 import net.minecraft.entity.player.PlayerEntity;
@@ -54,11 +38,7 @@ import net.minecraft.potion.EffectInstance;
 import net.minecraft.scoreboard.Team;
 import net.minecraft.tags.BlockTags;
 import net.minecraft.util.SoundEvent;
-import net.minecraft.util.math.AxisAlignedBB;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.EntityRayTraceResult;
-import net.minecraft.util.math.RayTraceContext;
-import net.minecraft.util.math.RayTraceResult;
+import net.minecraft.util.math.*;
 import net.minecraft.util.math.vector.Vector3d;
 import net.minecraft.world.IServerWorld;
 import net.minecraft.world.IWorld;
@@ -66,6 +46,15 @@ import net.minecraft.world.World;
 import net.minecraftforge.event.ForgeEventFactory;
 import net.minecraftforge.fml.network.PacketDistributor;
 import net.minecraftforge.fml.network.PacketDistributor.TargetPoint;
+
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Random;
+import java.util.UUID;
+import java.util.function.Predicate;
+import java.util.stream.Collectors;
 
 public class EntityUtil {
 
@@ -213,19 +202,6 @@ public class EntityUtil {
 			return false;
 		}
 		return entity.getHealth() > 100F;
-	}
-	
-	/**
-	 * entity's maxLevel.
-	 * {@link PVZEntityProvider}
-	 */
-	public static int getEntityLevel(LivingEntity entity) {
-		if(entity instanceof PVZZombieEntity) {
-			return ((PVZZombieEntity) entity).getPAZLevel();
-		} else if(entity instanceof PVZPlantEntity) {
-			return ((PVZPlantEntity) entity).getPAZLevel();
-		}
-		return 0;
 	}
 
 	public static boolean canSeeEntity(Entity entity, Entity target) {
@@ -530,7 +506,7 @@ public class EntityUtil {
 	 * {@link #getTargetableEntities(Entity, AxisAlignedBB)}
 	 * {@link #getTargetableEntitiesIngoreCheck(Entity, AxisAlignedBB)}
 	 */
-	private static <T extends Entity> List<T> getPredicateEntities(@Nonnull Entity attacker, AxisAlignedBB aabb, Class<T> tClass, Predicate<T> predicate){
+	public static <T extends Entity> List<T> getPredicateEntities(@Nonnull Entity attacker, AxisAlignedBB aabb, Class<T> tClass, Predicate<T> predicate){
 		if(attacker == null) {
 			return new ArrayList<>();
 		}
@@ -644,6 +620,12 @@ public class EntityUtil {
 		}
 		return ! entity.isOnGround() && ! entity.isInWater() && ! entity.isInLava();
 	}
+	
+	public static boolean hasNearBy(World world, BlockPos pos, double r, Predicate<Entity> pre) {
+		return world.getEntitiesOfClass(Entity.class, BlockUtil.getAABB(pos, r, r)).stream().filter(target -> {
+			return pre.test(target);
+		}).count() > 0;
+	}
 
 	/**
 	 * set max health and heal.
@@ -674,7 +656,7 @@ public class EntityUtil {
 	 * get AABB by entity's width and height.
 	 */
 	public static AxisAlignedBB getEntityAABB(Entity entity, double w, double h){
-		return new AxisAlignedBB(entity.getX() - w, entity.getY() - h, entity.getZ() - w, entity.getX() + w, entity.getY() + h, entity.getZ() + w);
+		return BlockUtil.getAABB(entity.blockPosition(), w, h);
 	}
 	
 }

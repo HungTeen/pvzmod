@@ -2,9 +2,9 @@ package com.hungteen.pvz.common.event;
 
 import com.hungteen.pvz.PVZMod;
 import com.hungteen.pvz.common.entity.zombie.other.CoffinEntity;
+import com.hungteen.pvz.common.event.handler.BlockEventHandler;
 import com.hungteen.pvz.register.EntityRegister;
 import com.hungteen.pvz.utils.EntityUtil;
-
 import net.minecraft.advancements.CriteriaTriggers;
 import net.minecraft.block.Block;
 import net.minecraft.block.Blocks;
@@ -23,8 +23,14 @@ import net.minecraftforge.event.world.BlockEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 
-@Mod.EventBusSubscriber(modid=PVZMod.MOD_ID)
+@Mod.EventBusSubscriber(modid = PVZMod.MOD_ID)
 public class PVZBlockEvents {
+
+	@SubscribeEvent
+	public static void onPlayerBreakBlock(BlockEvent.BreakEvent ev) {
+		BlockEventHandler.checkAndDropSeeds(ev);
+		BlockEventHandler.triggerAmethystAround(ev);
+	}
 
 	@SubscribeEvent
 	public static void onBlockPlacedBy(BlockEvent.EntityPlaceEvent ev) {

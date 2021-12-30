@@ -9,7 +9,7 @@ import net.minecraft.util.LazyValue;
 
 public enum PVZItemTier implements IItemTier {
     
-	STEEL(3, 500, 6.0F, 2.0F, 4, () -> {
+	ORIGIN(3, 666, 7.0F, 3.0F, 18, () -> {
 		return Ingredient.of(Items.IRON_INGOT);
 	});
 

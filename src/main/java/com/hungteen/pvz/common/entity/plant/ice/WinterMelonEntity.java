@@ -1,18 +1,18 @@
 package com.hungteen.pvz.common.entity.plant.ice;
 
-import java.util.Optional;
-
 import com.hungteen.pvz.api.interfaces.IIceEffect;
 import com.hungteen.pvz.api.types.IPlantType;
 import com.hungteen.pvz.common.entity.bullet.MelonEntity.MelonStates;
 import com.hungteen.pvz.common.entity.plant.arma.MelonPultEntity;
 import com.hungteen.pvz.common.impl.plant.PVZPlants;
-import com.hungteen.pvz.register.EffectRegister;
+import com.hungteen.pvz.common.potion.EffectRegister;
 
 import net.minecraft.entity.CreatureEntity;
 import net.minecraft.entity.EntityType;
 import net.minecraft.potion.EffectInstance;
 import net.minecraft.world.World;
+
+import java.util.Optional;
 
 public class WinterMelonEntity extends MelonPultEntity implements IIceEffect {
 
@@ -21,11 +21,13 @@ public class WinterMelonEntity extends MelonPultEntity implements IIceEffect {
 	}
 
 	public int getColdLvl() {
-		return this.getAverageProgress(7, 11);
+		return 7;
+//		return this.getAverageProgress(7, 11);
 	}
 	
 	public int getColdTick() {
-		return this.getAverageProgress(80, 160);
+		return 80;
+//		return this.getAverageProgress(80, 160);
 	}
 	
 	@Override

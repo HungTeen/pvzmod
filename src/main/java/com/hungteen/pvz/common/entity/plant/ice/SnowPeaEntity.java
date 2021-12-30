@@ -1,22 +1,19 @@
 package com.hungteen.pvz.common.entity.plant.ice;
 
-import java.util.Optional;
-
 import com.hungteen.pvz.api.interfaces.IIceEffect;
 import com.hungteen.pvz.api.types.IPlantType;
 import com.hungteen.pvz.common.entity.bullet.itembullet.PeaEntity.State;
 import com.hungteen.pvz.common.entity.plant.appease.PeaShooterEntity;
 import com.hungteen.pvz.common.impl.plant.PVZPlants;
-import com.hungteen.pvz.register.EffectRegister;
+import com.hungteen.pvz.common.potion.EffectRegister;
 import com.hungteen.pvz.register.SoundRegister;
-import com.hungteen.pvz.utils.MathUtil;
-import com.hungteen.pvz.utils.PlantUtil;
-
 import net.minecraft.entity.CreatureEntity;
 import net.minecraft.entity.EntityType;
 import net.minecraft.potion.EffectInstance;
 import net.minecraft.util.SoundEvent;
 import net.minecraft.world.World;
+
+import java.util.Optional;
 
 public class SnowPeaEntity extends PeaShooterEntity implements IIceEffect{
 
@@ -38,14 +35,16 @@ public class SnowPeaEntity extends PeaShooterEntity implements IIceEffect{
 	 * cold effect maxLevel.
 	 */
 	public int getColdLvl() {
-		return MathUtil.getProgressByDif(4, 1, this.getPAZLevel(), PlantUtil.MAX_PLANT_LEVEL, 5, 9);
+		return 5;
+//		return MathUtil.getProgressByDif(4, 1, this.getSkills(), PlantUtil.MAX_PLANT_LEVEL, 5, 9);
 	}
 	
 	/**
 	 * cold effect duration.
 	 */
 	public int getColdTick() {
-		return MathUtil.getProgressAverage(this.getPAZLevel(), PlantUtil.MAX_PLANT_LEVEL, 80, 160);
+		return 80;
+//		return MathUtil.getProgressAverage(this.getSkills(), PlantUtil.MAX_PLANT_LEVEL, 80, 160);
 	}
 	
 	@Override

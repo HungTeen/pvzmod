@@ -22,8 +22,9 @@ public class GiantWallNutEntity extends TallNutEntity {
 	}
 	
 	@Override
-	public float getPlantHealth() {
-		return this.getAverageProgress(500F, 1000F);
+	public float getLife() {
+		return 500;
+//		return this.getAverageProgress(500F, 1000F);
 	}
 	
 	@Override

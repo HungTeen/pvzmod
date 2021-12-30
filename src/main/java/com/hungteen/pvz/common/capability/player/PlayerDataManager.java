@@ -17,6 +17,7 @@ import com.hungteen.pvz.common.network.PVZPacketHandler;
 import com.hungteen.pvz.common.network.toclient.CardInventoryPacket;
 import com.hungteen.pvz.common.network.toclient.PlayerStatsPacket;
 import com.hungteen.pvz.common.world.invasion.WaveManager;
+import com.hungteen.pvz.utils.PAZUtil;
 import com.hungteen.pvz.utils.PlayerUtil;
 import com.hungteen.pvz.utils.StringUtil;
 import com.hungteen.pvz.utils.enums.Resources;
@@ -29,10 +30,7 @@ import net.minecraft.util.math.MathHelper;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.fml.network.PacketDistributor;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 
 public class PlayerDataManager {
@@ -189,7 +187,7 @@ public class PlayerDataManager {
 			final CompoundNBT nbt = new CompoundNBT();
 			PVZAPI.get().getPAZs().forEach(plant -> {
 		        final CompoundNBT plantNBT = new CompoundNBT();
-				plantNBT.putInt("paz_point", this.getPAZLevel(plant));
+				plantNBT.putInt("paz_point", this.getPAZPoint(plant));
 				nbt.put(plant.getIdentity(), plantNBT);
 			});
 			baseTag.put("paz_point_info", nbt);
@@ -272,7 +270,7 @@ public class PlayerDataManager {
 		}
 		{// plants & zombies syncs.
 			PVZAPI.get().getPAZs().forEach(plant -> {
-				this.sendPAZLevelPacket(player, plant);//level.
+				this.sendPAZPointPacket(player, plant);//level.
 				if(plant.getSummonCard().isPresent()) {//card cd.
 					player.getCooldowns().addCooldown(plant.getSummonCard().get(), this.getPlantCardCD(plant));
 				}
@@ -312,7 +310,9 @@ public class PlayerDataManager {
 		case SUN_NUM:{
 			now = MathHelper.clamp(now + num, 0, PlayerUtil.getPlayerMaxSunNum(resources.get(Resources.TREE_LVL)));
 			resources.put(Resources.SUN_NUM, now);
-			SunAmountTrigger.INSTANCE.trigger((ServerPlayerEntity) player, now);
+			if(player instanceof ServerPlayerEntity){
+				SunAmountTrigger.INSTANCE.trigger((ServerPlayerEntity) player, now);
+			}
 			break;
 		}
 		case ENERGY_NUM:{
@@ -325,12 +325,16 @@ public class PlayerDataManager {
 			resources.put(res, now);
 			if(res == Resources.TREE_LVL) {
 				this.addResource(Resources.SUN_NUM, 0);
-				TreeLevelTrigger.INSTANCE.trigger((ServerPlayerEntity) player, now);
-				if(old != now){
-					MinecraftForge.EVENT_BUS.post(new PlayerLevelChangeEvent(player, old, now));
+				if(player instanceof ServerPlayerEntity){
+					TreeLevelTrigger.INSTANCE.trigger((ServerPlayerEntity) player, now);
+					if(old != now){
+						MinecraftForge.EVENT_BUS.post(new PlayerLevelChangeEvent(player, old, now));
+					}
 				}
 			} else if(res == Resources.MONEY) {
-				MoneyTrigger.INSTANCE.trigger((ServerPlayerEntity) player, now);
+				if(player instanceof ServerPlayerEntity){
+					MoneyTrigger.INSTANCE.trigger((ServerPlayerEntity) player, now);
+				}
 			}
 			break;
 		}
@@ -426,25 +430,27 @@ public class PlayerDataManager {
 	}
 	
 	/*
-	 * Operation about Plant Level.
+	 * Operation about Plant Points.
 	 */
 	
-	public void addPAZLevel(IPAZType plant, int num){
-		final int old = this.getPAZLevel(plant);
-		final int lvl = MathHelper.clamp(old + num, 1, plant.getMaxLevel());
+	public void addPAZPoint(IPAZType plant, int num){
+		final int old = this.getPAZPoint(plant);
+		final int lvl = MathHelper.clamp(old + num, 0, PAZUtil.DEFAULT_MAX_POINTS);
 		this.pazPoint.put(plant, lvl);
-		PlantLevelTrigger.INSTANCE.trigger((ServerPlayerEntity) player, lvl);
-		if(lvl != old){
-			MinecraftForge.EVENT_BUS.post(new PlayerLevelChangeEvent.PAZLevelChangeEvent(player, plant, old, lvl));
+		if(player instanceof ServerPlayerEntity){
+			PlantLevelTrigger.INSTANCE.trigger((ServerPlayerEntity) player, lvl);
+			if(lvl != old){
+				MinecraftForge.EVENT_BUS.post(new PlayerLevelChangeEvent.PAZLevelChangeEvent(player, plant, old, lvl));
+			}
 		}
-		this.sendPAZLevelPacket(player, plant);
+		this.sendPAZPointPacket(player, plant);
 	}
 	
-	public int getPAZLevel(IPAZType plant){
+	public int getPAZPoint(IPAZType plant){
 		return this.pazPoint.get(plant);
 	}
 	
-	private void sendPAZLevelPacket(PlayerEntity player, IPAZType plant){
+	private void sendPAZPointPacket(PlayerEntity player, IPAZType plant){
 		if (player instanceof ServerPlayerEntity) {
 			PVZPacketHandler.CHANNEL.send(
 				PacketDistributor.PLAYER.with(()->{
@@ -572,6 +578,13 @@ public class PlayerDataManager {
 	
 	public OtherStats getOtherStats() {
 		return this.otherStats;
+	}
+
+	protected Optional<ServerPlayerEntity> getServerPlayerOpt(){
+		if(this.player instanceof ServerPlayerEntity){
+			return Optional.ofNullable((ServerPlayerEntity) this.player);
+		}
+		return Optional.empty();
 	}
 	
 }

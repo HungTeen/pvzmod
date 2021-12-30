@@ -136,6 +136,13 @@ public abstract class AbstractBulletEntity extends AbstractOwnerEntity {
 	/**
 	 * shoot bullet such as pea or spore
 	 */
+	public void shootPea(Vector3d vec, double speed, double angleOffset) {
+		this.shootPea(vec.x, vec.y, vec.z, speed, angleOffset);
+	}
+	
+	/**
+	 * shoot bullet such as pea or spore
+	 */
 	public void shootPea(double dx, double dy, double dz, double speed, double angleOffset) {
 		final double down = this.getShootPeaAngle();
 		final double dxz = Math.sqrt(dx * dx + dz * dz);
@@ -200,7 +207,7 @@ public abstract class AbstractBulletEntity extends AbstractOwnerEntity {
 		if (this.getThrower() instanceof PlantShooterEntity) {
 			return ((PlantShooterEntity) this.getThrower()).getMaxShootAngle();
 		}
-		return 10;
+		return 0.01;
 	}
 	
 	/**

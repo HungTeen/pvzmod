@@ -8,8 +8,6 @@ import com.hungteen.pvz.common.impl.plant.PVZPlants;
 import com.hungteen.pvz.register.SoundRegister;
 import com.hungteen.pvz.utils.EntityUtil;
 import com.hungteen.pvz.utils.MathUtil;
-import com.hungteen.pvz.utils.PlantUtil;
-
 import net.minecraft.entity.CreatureEntity;
 import net.minecraft.entity.EntitySize;
 import net.minecraft.entity.EntityType;
@@ -94,13 +92,15 @@ public class ScaredyShroomEntity extends PlantShooterEntity {
 	 * get how many spores need shoot per tick, when super.
 	 */
 	public int getSuperShootCount() {
-		final int min = this.isPlantInStage(3) ? 2 : 1;
-		final int max = this.isPlantInStage(1) ? 2 : 3;
-		return MathUtil.getRandomMinMax(getRandom(), min, max);
+//		final int min = this.isPlantInStage(3) ? 2 : 1;
+//		final int max = this.isPlantInStage(1) ? 2 : 3;
+//		return MathUtil.getRandomMinMax(getRandom(), min, max);
+		return 2;
 	}
 	
 	public float getScareDistance() {
-		return MathUtil.getProgressByDif(4, -1, this.getPAZLevel(), PlantUtil.MAX_PLANT_LEVEL, 5, 1);
+		return 5;
+//		return MathUtil.getProgressByDif(4, -1, this.getSkills(), PlantUtil.MAX_PLANT_LEVEL, 5, 1);
 	}
 	
 	@Override

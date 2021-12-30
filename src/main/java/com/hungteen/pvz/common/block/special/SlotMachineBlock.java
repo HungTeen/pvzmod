@@ -35,7 +35,8 @@ public class SlotMachineBlock extends AbstractFacingBlock {
 	
 	@Override
 	public boolean hasTileEntity(BlockState state) {
-		return true;
+		//TODO Slot Machine
+		return false;
 	}
 	
 	@Override

@@ -9,6 +9,8 @@ import com.hungteen.pvz.client.render.entity.drop.CoinRender;
 import com.hungteen.pvz.client.render.entity.drop.EnergyRender;
 import com.hungteen.pvz.client.render.entity.drop.JewelRender;
 import com.hungteen.pvz.client.render.entity.drop.SunRender;
+import com.hungteen.pvz.client.render.entity.effects.DoomFixerRender;
+import com.hungteen.pvz.client.render.entity.effects.OriginEffectRender;
 import com.hungteen.pvz.client.render.entity.misc.*;
 import com.hungteen.pvz.client.render.entity.misc.bowling.ExplosionBowlingRender;
 import com.hungteen.pvz.client.render.entity.misc.bowling.GiantNutBowlingRender;
@@ -51,6 +53,7 @@ import com.hungteen.pvz.common.entity.drop.CoinEntity;
 import com.hungteen.pvz.common.entity.drop.EnergyEntity;
 import com.hungteen.pvz.common.entity.drop.JewelEntity;
 import com.hungteen.pvz.common.entity.drop.SunEntity;
+import com.hungteen.pvz.common.entity.effect.OriginEffectEntity;
 import com.hungteen.pvz.common.entity.misc.*;
 import com.hungteen.pvz.common.entity.misc.bowling.ExplosionBowlingEntity;
 import com.hungteen.pvz.common.entity.misc.bowling.GiantNutBowlingEntity;
@@ -116,15 +119,18 @@ import java.util.Arrays;
 public class EntityRegister {
 
 	public static final DeferredRegister<EntityType<?>> ENTITY_TYPES =  DeferredRegister.create(ForgeRegistries.ENTITIES, PVZMod.MOD_ID);
-    
-	//entitytype
-	//drop
+
+	/**
+	 * drops
+	 */
 	public static final RegistryObject<EntityType<SunEntity>> SUN = registerEntityType(SunEntity::new, "sun", EntityClassification.AMBIENT);
 	public static final RegistryObject<EntityType<CoinEntity>> COIN = registerEntityType(CoinEntity::new, "coin", EntityClassification.MISC);
 	public static final RegistryObject<EntityType<JewelEntity>> JEWEL = registerEntityType(JewelEntity::new, "jewel", EntityClassification.MISC);
 	public static final RegistryObject<EntityType<EnergyEntity>> ENERGY = registerEntityType(EnergyEntity::new, "energy", EntityClassification.MISC, 0.9f, 2f);
-	
-	//bullet
+
+	/**
+	 * bullets
+	 */
 	public static final RegistryObject<EntityType<PeaEntity>> PEA = registerEntityType(PeaEntity::new, "pea", EntityClassification.MISC);
 	public static final RegistryObject<EntityType<PotatoEntity>> POTATO = registerEntityType(PotatoEntity::new, "potato", EntityClassification.MISC);
 	public static final RegistryObject<EntityType<SporeEntity>> SPORE = registerEntityType(SporeEntity::new, "spore", EntityClassification.MISC);
@@ -141,8 +147,16 @@ public class EntityRegister {
 	public static final RegistryObject<EntityType<FireCrackerEntity>> FIRE_CRACKER = registerEntityType(FireCrackerEntity::new, "fire_cracker", EntityClassification.MISC);
 	public static final RegistryObject<EntityType<BallEntity>> BALL = registerEntityType(BallEntity::new, "ball", EntityClassification.MISC);
 	public static final RegistryObject<EntityType<CornEntity>> CORN = registerEntityType(CornEntity::new, "corn", EntityClassification.MISC);
-	
-	//misc 
+
+	/**
+	 * effects
+	 */
+	public static final RegistryObject<EntityType<OriginEffectEntity>> ORIGIN_EFFECT = registerEntityType(OriginEffectEntity::new, "origin_effect", EntityClassification.MISC);
+	public static final RegistryObject<EntityType<DoomFixerEntity>> DOOM_FIXER = registerEntityType(DoomFixerEntity::new, "doom_fixer", EntityClassification.MISC);
+
+	/**
+	 * misc
+	 */
 	public static final RegistryObject<EntityType<SmallChomperEntity>> SMALL_CHOMPER = registerEntityType(SmallChomperEntity::new, "small_chomper", EntityClassification.MISC);
 	public static final RegistryObject<EntityType<BobsleCarEntity>> BOBSLE_CAR = registerEntityType(BobsleCarEntity::new, "bobsle_car", EntityClassification.MISC);
 	public static final RegistryObject<EntityType<PVZZombiePartEntity>> ZOMBIE_PART = registerEntityType(PVZZombiePartEntity::new, "zombie_part", EntityClassification.MISC);
@@ -156,17 +170,22 @@ public class EntityRegister {
 	public static final RegistryObject<EntityType<DestroyCarEntity>> DESTROY_CAR = registerEntityType(DestroyCarEntity::new, "destroy_car", EntityClassification.MISC);
 	public static final RegistryObject<EntityType<GardenRakeEntity>> GARDEN_RAKE = registerEntityType(GardenRakeEntity::new, "garden_rake", EntityClassification.MISC);
 	public static final RegistryObject<EntityType<ZombieDropBodyEntity>> ZOMBIE_DROP_BODY = registerEntityType(ZombieDropBodyEntity::new, "zombie_drop_body", EntityClassification.MISC);
-	public static final RegistryObject<EntityType<DoomFixerEntity>> DOOM_FIXER = registerEntityType(DoomFixerEntity::new, "doom_fixer", EntityClassification.MISC);
-	
-	//animal
+
+	/**
+	 * animals
+	 */
 	public static final RegistryObject<EntityType<FoodieZombieEntity>> FOODIE_ZOMBIE = registerEntityType(FoodieZombieEntity::new, "foodie_zombie", EntityClassification.WATER_CREATURE);
-	
-	//npc
+
+	/**
+	 * npc
+	 */
 	public static final RegistryObject<EntityType<CrazyDaveEntity>> CRAZY_DAVE = registerEntityType(CrazyDaveEntity::new, "crazy_dave", EntityClassification.CREATURE);
 	public static final RegistryObject<EntityType<PennyEntity>> PANNEY = registerEntityType(PennyEntity::new, "panney", EntityClassification.CREATURE);
 	public static final RegistryObject<EntityType<SunDaveEntity>> SUN_DAVE = registerEntityType(SunDaveEntity::new, "sun_dave", EntityClassification.CREATURE);
-	
-	//zombie 
+
+	/**
+	 * zombies
+	 */
 	public static final RegistryObject<EntityType<NormalZombieEntity>> NORMAL_ZOMBIE = registerImmuneFireEntityType(NormalZombieEntity::new, "normal_zombie", EntityClassification.MONSTER);
 	public static final RegistryObject<EntityType<FlagZombieEntity>> FLAG_ZOMBIE = registerImmuneFireEntityType(FlagZombieEntity::new, "flag_zombie", EntityClassification.MONSTER);
 	public static final RegistryObject<EntityType<ConeHeadZombieEntity>> CONEHEAD_ZOMBIE = registerImmuneFireEntityType(ConeHeadZombieEntity::new, "conehead_zombie", EntityClassification.MONSTER);
@@ -214,8 +233,10 @@ public class EntityRegister {
 	public static final RegistryObject<EntityType<WallNutZombieEntity>> WALLNUT_ZOMBIE = registerImmuneFireEntityType(WallNutZombieEntity::new, "wallnut_zombie", EntityClassification.MONSTER);
 	public static final RegistryObject<EntityType<TallNutZombieEntity>> TALLNUT_ZOMBIE = registerImmuneFireEntityType(TallNutZombieEntity::new, "tallnut_zombie", EntityClassification.MONSTER);
 	public static final RegistryObject<EntityType<GigaTombStoneEntity>> GIGA_TOMB_STONE = registerImmuneFireEntityType(GigaTombStoneEntity::new, "giga_tomb_stone", EntityClassification.MONSTER);
-	
-	//plant
+
+	/**
+	 * plants
+	 */
 	public static final RegistryObject<EntityType<PeaShooterEntity>> PEA_SHOOTER = registerEntityType(PeaShooterEntity::new, "pea_shooter", EntityClassification.CREATURE);
 	public static final RegistryObject<EntityType<SunFlowerEntity>> SUN_FLOWER = registerEntityType(SunFlowerEntity::new, "sun_flower", EntityClassification.CREATURE);
 	public static final RegistryObject<EntityType<CherryBombEntity>> CHERRY_BOMB = registerEntityType(CherryBombEntity::new, "cherry_bomb", EntityClassification.CREATURE);
@@ -279,13 +300,13 @@ public class EntityRegister {
 	@OnlyIn(Dist.CLIENT)
 	@SubscribeEvent
     public static void onClientSetUpEvent(FMLClientSetupEvent event) {
-		//drop
+		// drops
         RenderingRegistry.registerEntityRenderingHandler(SUN.get(), SunRender::new);
         RenderingRegistry.registerEntityRenderingHandler(COIN.get(), CoinRender::new);
         RenderingRegistry.registerEntityRenderingHandler(JEWEL.get(),JewelRender::new);
         RenderingRegistry.registerEntityRenderingHandler(ENERGY.get(), EnergyRender::new);
         
-        //bullet
+        // bullets
         RenderingRegistry.registerEntityRenderingHandler(PEA.get(), PeaRender::new);
         RenderingRegistry.registerEntityRenderingHandler(POTATO.get(), PotatoRender::new);
         RenderingRegistry.registerEntityRenderingHandler(SPORE.get(), SporeRender::new);
@@ -302,8 +323,12 @@ public class EntityRegister {
         RenderingRegistry.registerEntityRenderingHandler(FIRE_CRACKER.get(), FireCrackerRender::new);
         RenderingRegistry.registerEntityRenderingHandler(BALL.get(), BallRender::new);
         RenderingRegistry.registerEntityRenderingHandler(CORN.get(), CornRender::new);
-        
-        //misc
+
+		// effects
+		RenderingRegistry.registerEntityRenderingHandler(ORIGIN_EFFECT.get(), OriginEffectRender::new);
+		RenderingRegistry.registerEntityRenderingHandler(DOOM_FIXER.get(), DoomFixerRender::new);
+
+        // misc
         RenderingRegistry.registerEntityRenderingHandler(SMALL_CHOMPER.get(), SmallChomperRender::new);
         RenderingRegistry.registerEntityRenderingHandler(BOBSLE_CAR.get(), BobsleCarRender::new);
         RenderingRegistry.registerEntityRenderingHandler(ZOMBIE_PART.get(), EmptyRender::new);
@@ -317,17 +342,16 @@ public class EntityRegister {
         RenderingRegistry.registerEntityRenderingHandler(DESTROY_CAR.get(), DestroyCarRender::new);
         RenderingRegistry.registerEntityRenderingHandler(GARDEN_RAKE.get(), GardenRakeRender::new);
         RenderingRegistry.registerEntityRenderingHandler(ZOMBIE_DROP_BODY.get(), ZombieBodyRender::new);
-        RenderingRegistry.registerEntityRenderingHandler(DOOM_FIXER.get(), DoomFixerRender::new);
         
-        //animal 
+        // animals
         RenderingRegistry.registerEntityRenderingHandler(FOODIE_ZOMBIE.get(), FoodieZombieRender::new);
         
-        //npc
+        // npc
         RenderingRegistry.registerEntityRenderingHandler(CRAZY_DAVE.get(), CrazyDaveRender::new);
         RenderingRegistry.registerEntityRenderingHandler(PANNEY.get(), PennyRender::new);
         RenderingRegistry.registerEntityRenderingHandler(SUN_DAVE.get(), SunDaveRender::new);
         
-        //zombie
+        // zombies
         RenderingRegistry.registerEntityRenderingHandler(NORMAL_ZOMBIE.get(), NormalZombieRender::new);
         RenderingRegistry.registerEntityRenderingHandler(FLAG_ZOMBIE.get(), FlagZombieRender::new);
         RenderingRegistry.registerEntityRenderingHandler(CONEHEAD_ZOMBIE.get(), ConeHeadZombieRender::new);
@@ -376,7 +400,7 @@ public class EntityRegister {
         RenderingRegistry.registerEntityRenderingHandler(TALLNUT_ZOMBIE.get(), TallNutZombieRender::new);
         RenderingRegistry.registerEntityRenderingHandler(GIGA_TOMB_STONE.get(), GigaTombStoneRender::new);
         
-        //plant
+        // plants
         RenderingRegistry.registerEntityRenderingHandler(PEA_SHOOTER.get(), PeaShooterRender::new);
         RenderingRegistry.registerEntityRenderingHandler(SUN_FLOWER.get(), SunFlowerRender::new);
         RenderingRegistry.registerEntityRenderingHandler(CHERRY_BOMB.get(), CherryBombRender::new);

@@ -1,4 +1,4 @@
-package com.hungteen.pvz.common.block;
+package com.hungteen.pvz.common.block.cubes;
 
 import net.minecraft.block.Block;
 import net.minecraft.block.Blocks;

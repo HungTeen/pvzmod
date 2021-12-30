@@ -1,21 +1,17 @@
 package com.hungteen.pvz.common.entity.plant.explosion;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import com.hungteen.pvz.api.types.IPlantType;
 import com.hungteen.pvz.common.entity.misc.DoomFixerEntity;
 import com.hungteen.pvz.common.entity.plant.PVZPlantEntity;
 import com.hungteen.pvz.common.entity.plant.base.PlantBomberEntity;
 import com.hungteen.pvz.common.impl.plant.PVZPlants;
 import com.hungteen.pvz.common.misc.damage.PVZDamageSource;
+import com.hungteen.pvz.register.EntityRegister;
 import com.hungteen.pvz.register.ParticleRegister;
 import com.hungteen.pvz.register.SoundRegister;
 import com.hungteen.pvz.utils.EntityUtil;
-import com.hungteen.pvz.utils.PlantUtil;
 import com.hungteen.pvz.utils.WorldUtil;
 import com.mojang.datafixers.util.Pair;
-
 import it.unimi.dsi.fastutil.objects.ObjectArrayList;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
@@ -38,6 +34,9 @@ import net.minecraft.util.math.vector.Vector3d;
 import net.minecraft.world.World;
 import net.minecraft.world.server.ServerWorld;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class DoomShroomEntity extends PlantBomberEntity {
 
 	public static final float MAX_EXPLOSION_LEVEL = 500;
@@ -51,7 +50,7 @@ public class DoomShroomEntity extends PlantBomberEntity {
 		super.normalPlantTick();
 		if(! this.level.isClientSide) {
 			if(this.getAttackTime() == this.getReadyTime() - 2) {
-				DoomFixerEntity fixer = new DoomFixerEntity(this.level, this);
+				DoomFixerEntity fixer = EntityRegister.DOOM_FIXER.get().create(level);
 				EntityUtil.onEntitySpawn(level, fixer, this.blockPosition());
 			}
 		}
@@ -137,7 +136,8 @@ public class DoomShroomEntity extends PlantBomberEntity {
 	}
 	
 	public float getAttackDamage() {
-		return PlantUtil.getPlantAverageProgress(this, 200, 800);
+		return 200;
+//		return PlantUtil.getPlantAverageProgress(this, 200, 800);
 	}
 	
 	@Override

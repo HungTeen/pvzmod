@@ -99,7 +99,8 @@ public class CactusEntity extends PlantShooterEntity {
 	}
 	
 	public int getThornCount() {
-		return this.isPlantInStage(1) ? 2 : this.isPlantInStage(2) ? 3 : 4;
+		return 2;
+//		return this.isPlantInStage(1) ? 2 : this.isPlantInStage(2) ? 3 : 4;
 	}
 	
 	public float getCurrentHeight() {

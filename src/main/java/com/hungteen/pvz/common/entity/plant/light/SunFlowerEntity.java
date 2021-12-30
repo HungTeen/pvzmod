@@ -5,9 +5,6 @@ import com.hungteen.pvz.common.entity.drop.SunEntity;
 import com.hungteen.pvz.common.entity.plant.base.PlantProducerEntity;
 import com.hungteen.pvz.common.impl.plant.PVZPlants;
 import com.hungteen.pvz.utils.EntityUtil;
-import com.hungteen.pvz.utils.MathUtil;
-import com.hungteen.pvz.utils.PlantUtil;
-
 import net.minecraft.entity.CreatureEntity;
 import net.minecraft.entity.EntitySize;
 import net.minecraft.entity.EntityType;
@@ -36,14 +33,16 @@ public class SunFlowerEntity extends PlantProducerEntity{
 	 * get normal gen sun amount by maxLevel.
 	 */
 	public int getSunAmount(){
-		return MathUtil.getProgressByDif(4, 5, this.getPAZLevel(), PlantUtil.MAX_PLANT_LEVEL, 25, 50);
+		return 25;
+//		return MathUtil.getProgressByDif(4, 5, this.getSkills(), PlantUtil.MAX_PLANT_LEVEL, 25, 50);
 	}
 	
 	/**
 	 * get normal gen sun amount by maxLevel.
 	 */
 	public int getSuperSunAmount(){
-		return this.getThreeStage(500, 750, 1000);
+		return 500;
+//		return this.getThreeStage(500, 750, 1000);
 	}
 	
 	@Override

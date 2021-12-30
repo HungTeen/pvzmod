@@ -1,10 +1,5 @@
 package com.hungteen.pvz.common.entity.plant.explosion;
 
-import java.util.List;
-import java.util.Optional;
-
-import javax.annotation.Nullable;
-
 import com.hungteen.pvz.api.types.IPlantType;
 import com.hungteen.pvz.common.entity.ai.goal.target.PVZRandomTargetGoal;
 import com.hungteen.pvz.common.entity.bullet.CornEntity;
@@ -14,13 +9,7 @@ import com.hungteen.pvz.common.item.ItemRegister;
 import com.hungteen.pvz.common.network.toserver.EntityInteractPacket;
 import com.hungteen.pvz.register.SoundRegister;
 import com.hungteen.pvz.utils.EntityUtil;
-
-import net.minecraft.entity.CreatureEntity;
-import net.minecraft.entity.Entity;
-import net.minecraft.entity.EntitySize;
-import net.minecraft.entity.EntityType;
-import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.Pose;
+import net.minecraft.entity.*;
 import net.minecraft.entity.ai.attributes.Attributes;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.projectile.ProjectileHelper;
@@ -31,16 +20,16 @@ import net.minecraft.network.datasync.DataSerializers;
 import net.minecraft.network.datasync.EntityDataManager;
 import net.minecraft.util.ActionResultType;
 import net.minecraft.util.Hand;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.EntityRayTraceResult;
-import net.minecraft.util.math.MathHelper;
-import net.minecraft.util.math.RayTraceContext;
-import net.minecraft.util.math.RayTraceResult;
+import net.minecraft.util.math.*;
 import net.minecraft.util.math.RayTraceResult.Type;
 import net.minecraft.util.math.vector.Vector3d;
 import net.minecraft.world.World;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
+
+import javax.annotation.Nullable;
+import java.util.List;
+import java.util.Optional;
 
 public class CobCannonEntity extends PVZPlantEntity {
 
@@ -334,11 +323,13 @@ public class CobCannonEntity extends PVZPlantEntity {
 	}
 	
 	public int getSuperCornNum() {
-		return this.getThreeStage(4, 5, 6);
+//		return this.getThreeStage(4, 5, 6);
+		return 4;
 	}
 	
 	public float getAttackDamage() {
-		return this.getAverageProgress(150F, 650F);
+//		return this.getAverageProgress(150F, 650F);
+		return 150;
 	}
 	
 	public int getAnimCD() {

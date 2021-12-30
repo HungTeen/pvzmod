@@ -9,14 +9,7 @@ import com.hungteen.pvz.common.misc.damage.PVZDamageSource;
 import com.hungteen.pvz.register.EntityRegister;
 import com.hungteen.pvz.register.SoundRegister;
 import com.hungteen.pvz.utils.EntityUtil;
-import com.hungteen.pvz.utils.MathUtil;
-import com.hungteen.pvz.utils.PlantUtil;
-
-import net.minecraft.entity.CreatureEntity;
-import net.minecraft.entity.EntitySize;
-import net.minecraft.entity.EntityType;
-import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.Pose;
+import net.minecraft.entity.*;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.network.datasync.DataParameter;
 import net.minecraft.network.datasync.DataSerializers;
@@ -115,21 +108,24 @@ public class ChomperEntity extends PVZPlantEntity {
 	 * max damage to target.
 	 */
 	public float getAttackDamage() {
-		return MathUtil.getProgressAverage(this.getPAZLevel(), PlantUtil.MAX_PLANT_LEVEL, 150, 250);
+		return 150;
+//		return MathUtil.getProgressAverage(this.getSkills(), PlantUtil.MAX_PLANT_LEVEL, 150, 250);
 	}
 
 	/**
 	 * rest time after each kill.
 	 */
 	public int getRestCD() {
-		return MathUtil.getProgressAverage(this.getPAZLevel(), PlantUtil.MAX_PLANT_LEVEL, 840, 640);
+		return 800;
+//		return MathUtil.getProgressAverage(this.getSkills(), PlantUtil.MAX_PLANT_LEVEL, 840, 640);
 	}
 
 	/**
 	 * how many ground chomper to summon.
 	 */
 	public int getSuperAttackCnt() {
-		return this.isPlantInStage(1) ? 3 : this.isPlantInStage(2) ? 4 : 5;
+		return 3;
+//		return this.isPlantInStage(1) ? 3 : this.isPlantInStage(2) ? 4 : 5;
 	}
 	
 	/**

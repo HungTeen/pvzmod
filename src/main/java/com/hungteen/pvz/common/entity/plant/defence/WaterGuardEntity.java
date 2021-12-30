@@ -24,13 +24,15 @@ public class WaterGuardEntity extends PlantDefenderEntity{
 	}
 	
 	@Override
-	public float getPlantHealth() {
-		return this.getAverageProgress(250F, 500F);
+	public float getLife() {
+//		return this.getAverageProgress(250F, 500F);
+		return 200;
 	}
 	
 	@Override
 	public float getSuperLife() {
-		return this.getThreeStage(400, 600, 800);
+		return 400;
+//		return this.getThreeStage(400, 600, 800);
 	}
 	
 	@Override

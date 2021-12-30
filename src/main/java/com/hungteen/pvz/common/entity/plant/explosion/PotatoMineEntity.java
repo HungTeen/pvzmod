@@ -12,15 +12,8 @@ import com.hungteen.pvz.register.ParticleRegister;
 import com.hungteen.pvz.register.SoundRegister;
 import com.hungteen.pvz.utils.EntityUtil;
 import com.hungteen.pvz.utils.MathUtil;
-import com.hungteen.pvz.utils.PlantUtil;
 import com.hungteen.pvz.utils.WorldUtil;
-
-import net.minecraft.entity.CreatureEntity;
-import net.minecraft.entity.Entity;
-import net.minecraft.entity.EntitySize;
-import net.minecraft.entity.EntityType;
-import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.Pose;
+import net.minecraft.entity.*;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.vector.Vector3d;
 import net.minecraft.world.World;
@@ -109,18 +102,17 @@ public class PotatoMineEntity extends PlantCloserEntity{
 	}
 	
 	public int getShootNum() {
-		return this.isPlantInStage(1) ? 3 : this.isPlantInStage(2) ? 4 : 5;
+//		return this.isPlantInStage(1) ? 3 : this.isPlantInStage(2) ? 4 : 5;
+		return 3;
 	}
 	
 	/**
-	 * {@link #canBeImmuneToEnforce()}
 	 */
 	public boolean isMineReady() {
 		return this.getExistTick() > PREPARE_CD;
 	}
 	
 	/**
-	 * {@link #canBeImmuneToEnforce()}
 	 */
 	public boolean isRisingFromDirt() {
 		return this.getExistTick() >= PREPARE_CD - RISING_ANIM_CD && this.getExistTick() <= PREPARE_CD;
@@ -144,7 +136,8 @@ public class PotatoMineEntity extends PlantCloserEntity{
 	}
 	
 	public float getAttackDamage(){
-		return PlantUtil.getPlantAverageProgress(this, 125, 425);
+		return 125;
+//		return PlantUtil.getPlantAverageProgress(this, 125, 425);
 	}
 	
 	/**

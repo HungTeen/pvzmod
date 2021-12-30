@@ -1,7 +1,5 @@
 package com.hungteen.pvz.common.entity.plant.enforce;
 
-import java.util.EnumSet;
-
 import com.hungteen.pvz.api.types.IPlantType;
 import com.hungteen.pvz.common.entity.ai.goal.target.PVZNearestTargetGoal;
 import com.hungteen.pvz.common.entity.plant.PVZPlantEntity;
@@ -10,13 +8,14 @@ import com.hungteen.pvz.common.impl.plant.OtherPlants;
 import com.hungteen.pvz.common.misc.damage.PVZDamageSource;
 import com.hungteen.pvz.register.SoundRegister;
 import com.hungteen.pvz.utils.EntityUtil;
-
 import net.minecraft.entity.CreatureEntity;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.ai.goal.Goal;
 import net.minecraft.world.World;
+
+import java.util.EnumSet;
 
 public class BonkChoyEntity extends PVZPlantEntity {
 
@@ -65,12 +64,14 @@ public class BonkChoyEntity extends PVZPlantEntity {
 	}
 	
 	public float getAttackDamage() {
-		return this.getAverageProgress(1.5F, 5.5F);
+		return 2;
+//		return this.getAverageProgress(1.5F, 5.5F);
 	}
 	
 	@Override
 	public int getSuperTimeLength() {
-		return this.getThreeStage(100, 150, 200);
+		return 200;
+//		return this.getThreeStage(100, 150, 200);
 	}
 	
 	@Override

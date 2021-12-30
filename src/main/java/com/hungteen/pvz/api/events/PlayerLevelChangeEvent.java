@@ -30,7 +30,7 @@ public class PlayerLevelChangeEvent extends PlayerEvent {
 	}
 
 	/**
-	 * {@link com.hungteen.pvz.common.capability.player.PlayerDataManager#addPAZLevel(IPAZType, int)}
+	 * {@link com.hungteen.pvz.common.capability.player.PlayerDataManager#addPAZPoint(IPAZType, int)}
 	 */
 	public static class PAZLevelChangeEvent extends PlayerLevelChangeEvent {
 
