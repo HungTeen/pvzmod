@@ -3,16 +3,11 @@ package com.hungteen.pvz.common.entity.plant.defence;
 import com.hungteen.pvz.api.types.IPlantType;
 import com.hungteen.pvz.common.entity.plant.base.PlantDefenderEntity;
 import com.hungteen.pvz.common.impl.plant.PVZPlants;
-import com.hungteen.pvz.common.item.tool.plant.BowlingGloveItem;
+
 import net.minecraft.entity.CreatureEntity;
 import net.minecraft.entity.EntitySize;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.Pose;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.item.ItemStack;
-import net.minecraft.util.ActionResultType;
-import net.minecraft.util.Hand;
-import net.minecraft.util.math.vector.Vector3d;
 import net.minecraft.world.World;
 
 public class WallNutEntity extends PlantDefenderEntity{
@@ -21,18 +16,6 @@ public class WallNutEntity extends PlantDefenderEntity{
 		super(type, worldIn);
 	}
 	
-	@Override
-	public ActionResultType interactAt(PlayerEntity player, Vector3d vec3d, Hand hand) {
-		ItemStack stack = player.getItemInHand(hand);
-		if(stack.getItem() instanceof BowlingGloveItem) {
-			if(! level.isClientSide) {
-				BowlingGloveItem.onPickUpBowlingPlant(this, stack);
-			}
-			return ActionResultType.SUCCESS;
-		}
-		return super.interactAt(player, vec3d, hand);
-	}
-
 	@Override
 	public float getLife() {
 		return 400;

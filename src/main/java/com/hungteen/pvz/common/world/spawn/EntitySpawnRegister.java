@@ -1,9 +1,10 @@
-package com.hungteen.pvz.register;
+package com.hungteen.pvz.common.world.spawn;
 
 import com.hungteen.pvz.PVZConfig;
 import com.hungteen.pvz.PVZMod;
 import com.hungteen.pvz.common.entity.misc.drop.SunEntity;
-import com.hungteen.pvz.common.misc.SpawnChecker;
+import com.hungteen.pvz.register.BiomeRegister;
+import com.hungteen.pvz.register.EntityRegister;
 import com.hungteen.pvz.utils.BiomeUtil;
 import com.hungteen.pvz.utils.ConfigUtil;
 

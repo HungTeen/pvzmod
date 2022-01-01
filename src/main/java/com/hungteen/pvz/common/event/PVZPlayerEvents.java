@@ -9,6 +9,7 @@ import com.hungteen.pvz.common.enchantment.EnchantmentRegister;
 import com.hungteen.pvz.common.entity.plant.PVZPlantEntity;
 import com.hungteen.pvz.common.event.events.SummonCardUseEvent;
 import com.hungteen.pvz.common.event.handler.PlayerEventHandler;
+import com.hungteen.pvz.common.item.tool.plant.BowlingGloveItem;
 import com.hungteen.pvz.common.item.tool.plant.PeaGunItem;
 import com.hungteen.pvz.common.misc.sound.PVZSounds;
 import com.hungteen.pvz.common.network.PVZPacketHandler;
@@ -115,6 +116,7 @@ public class PVZPlayerEvents {
 				}
 			}
 		}
+		BowlingGloveItem.onPickUp(ev);
 	}
 	
 	@SubscribeEvent

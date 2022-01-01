@@ -14,7 +14,6 @@ public class BowlingGloveBakedModel extends PVZBakedModel {
 	@Override
     public IBakedModel handlePerspective(ItemCameraTransforms.TransformType cameraTransformType, MatrixStack mat) {
         if (cameraTransformType == ItemCameraTransforms.TransformType.FIRST_PERSON_RIGHT_HAND) return this;
-//        if (cameraTransformType == ItemCameraTransforms.TransformType.FIRST_PERSON_LEFT_HAND) return this;
         return this.existingModel.handlePerspective(cameraTransformType, mat);
     }
 }

@@ -5,6 +5,7 @@ import com.hungteen.pvz.PVZMod;
 import com.hungteen.pvz.RegistryHandler;
 import com.hungteen.pvz.common.world.biome.ZenGardenBiome;
 import com.hungteen.pvz.common.world.gen.GenOres;
+import com.hungteen.pvz.common.world.spawn.EntitySpawnRegister;
 import com.hungteen.pvz.utils.BiomeUtil;
 
 import net.minecraft.util.RegistryKey;

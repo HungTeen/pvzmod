@@ -1,11 +1,11 @@
-package com.hungteen.pvz.common.misc;
+package com.hungteen.pvz.common.world.spawn;
 
 import com.hungteen.pvz.PVZMod;
 import com.hungteen.pvz.api.types.IZombieType;
 import com.hungteen.pvz.common.cache.InvasionCache;
 import com.hungteen.pvz.common.entity.zombie.PVZZombieEntity;
 import com.hungteen.pvz.common.impl.ZombieType;
-import com.hungteen.pvz.register.EntitySpawnRegister;
+
 import net.minecraft.entity.CreatureEntity;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.MobEntity;

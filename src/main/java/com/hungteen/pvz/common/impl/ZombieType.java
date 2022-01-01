@@ -6,7 +6,7 @@ import com.hungteen.pvz.api.IZombieModel;
 import com.hungteen.pvz.api.types.ICoolDown;
 import com.hungteen.pvz.api.types.IRankType;
 import com.hungteen.pvz.api.types.IZombieType;
-import com.hungteen.pvz.common.misc.SpawnChecker;
+import com.hungteen.pvz.common.world.spawn.SpawnChecker;
 import com.hungteen.pvz.register.EntityRegister;
 import com.hungteen.pvz.utils.ConfigUtil;
 import com.hungteen.pvz.utils.PAZUtil;
