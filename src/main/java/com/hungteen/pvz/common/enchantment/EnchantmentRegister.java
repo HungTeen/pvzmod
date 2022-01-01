@@ -2,6 +2,7 @@ package com.hungteen.pvz.common.enchantment;
 
 import com.hungteen.pvz.PVZMod;
 import com.hungteen.pvz.common.enchantment.armor.TreeProtectionEnchantment;
+import com.hungteen.pvz.common.enchantment.card.BandageEnchantment;
 import com.hungteen.pvz.common.enchantment.card.CharmEnchantment;
 import com.hungteen.pvz.common.enchantment.card.ImmediateCDEnchantment;
 import com.hungteen.pvz.common.enchantment.card.SunReduceEnchantment;
@@ -9,11 +10,12 @@ import com.hungteen.pvz.common.enchantment.card.plantcard.BreakOutEnchantment;
 import com.hungteen.pvz.common.enchantment.card.plantcard.DenselyPlantEnchantment;
 import com.hungteen.pvz.common.enchantment.card.plantcard.SoillessPlantEnchantment;
 import com.hungteen.pvz.common.enchantment.misc.EnergyTransferEnchantment;
+import com.hungteen.pvz.common.enchantment.misc.RangeReachEnchantment;
 import com.hungteen.pvz.common.enchantment.misc.SunMendingEnchantment;
 import com.hungteen.pvz.common.enchantment.misc.SunShovelEnchantment;
 import com.hungteen.pvz.common.item.spawn.card.PlantCardItem;
 import com.hungteen.pvz.common.item.spawn.card.SummonCardItem;
-
+import com.hungteen.pvz.common.misc.tag.PVZItemTags;
 import net.minecraft.enchantment.Enchantment;
 import net.minecraft.enchantment.EnchantmentType;
 import net.minecraft.item.ShovelItem;
@@ -35,7 +37,9 @@ public class EnchantmentRegister {
 	public static final RegistryObject<Enchantment> SUN_MENDING = ENCHANTMENTS.register("sun_mending", SunMendingEnchantment::new);
 	public static final RegistryObject<Enchantment> DENSELY_PLANT = ENCHANTMENTS.register("densely_plant", DenselyPlantEnchantment::new);
 	public static final RegistryObject<Enchantment> IMMEDIATE_CD = ENCHANTMENTS.register("immediate_cd", ImmediateCDEnchantment::new);
-	
+	public static final RegistryObject<Enchantment> RANGE_REACH = ENCHANTMENTS.register("range_reach", RangeReachEnchantment::new);
+	public static final RegistryObject<Enchantment> CARD_HEAL = ENCHANTMENTS.register("bandage", BandageEnchantment::new);
+
 	public static final EnchantmentType SUMMON_CARD = EnchantmentType.create("summon_card", (item) -> {
 		return item instanceof SummonCardItem;
 	});
@@ -67,6 +71,10 @@ public class EnchantmentRegister {
 	
 	public static final EnchantmentType SHOVEL = EnchantmentType.create("shovel", (item) -> {
 		return item instanceof ShovelItem;
+	});
+
+	public static final EnchantmentType REACH = EnchantmentType.create("reach", (item) -> {
+		return item.is(PVZItemTags.REACH_ITEMS);
 	});
 	
 }

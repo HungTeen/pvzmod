@@ -22,7 +22,7 @@ public class PVZItemGroups {
 	public static final ItemGroup PVZ_TOOL = new ItemGroup("pvz_tool") {
 		@Override
 		public ItemStack makeIcon() {
-			return new ItemStack(ItemRegister.ZOMBIE_FLAG.get());
+			return new ItemStack(ItemRegister.PEA_GUN.get());
 		}
 	};
 	

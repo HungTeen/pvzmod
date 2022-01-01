@@ -4,8 +4,8 @@ import java.util.HashSet;
 import java.util.Set;
 
 import com.hungteen.pvz.common.container.SunConverterContainer;
-import com.hungteen.pvz.common.entity.drop.SunEntity;
-import com.hungteen.pvz.common.entity.drop.DropEntity.DropStates;
+import com.hungteen.pvz.common.entity.misc.drop.SunEntity;
+import com.hungteen.pvz.common.entity.misc.drop.DropEntity.DropStates;
 import com.hungteen.pvz.common.item.tool.plant.SunStorageSaplingItem;
 import com.hungteen.pvz.register.TileEntityRegister;
 import com.hungteen.pvz.utils.MathUtil;

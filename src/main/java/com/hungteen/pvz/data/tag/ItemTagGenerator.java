@@ -1,8 +1,5 @@
 package com.hungteen.pvz.data.tag;
 
-import java.util.Comparator;
-import java.util.function.Predicate;
-
 import com.hungteen.pvz.PVZMod;
 import com.hungteen.pvz.common.block.BlockRegister;
 import com.hungteen.pvz.common.block.ores.EssenceOreBlock;
@@ -11,7 +8,6 @@ import com.hungteen.pvz.common.item.material.TemplateCardItem;
 import com.hungteen.pvz.common.item.spawn.card.PlantCardItem;
 import com.hungteen.pvz.common.item.spawn.card.SummonCardItem;
 import com.hungteen.pvz.common.misc.tag.PVZItemTags;
-
 import net.minecraft.block.Block;
 import net.minecraft.data.BlockTagsProvider;
 import net.minecraft.data.DataGenerator;
@@ -20,6 +16,9 @@ import net.minecraft.item.BlockItem;
 import net.minecraft.item.Item;
 import net.minecraftforge.common.data.ExistingFileHelper;
 import net.minecraftforge.registries.ForgeRegistries;
+
+import java.util.Comparator;
+import java.util.function.Predicate;
 
 public class ItemTagGenerator extends ItemTagsProvider{
 
@@ -63,6 +62,7 @@ public class ItemTagGenerator extends ItemTagsProvider{
 		}
 		this.tag(PVZItemTags.TEMPLATE_CARDS).add(this.getFilterItems(i -> i instanceof TemplateCardItem));
 		this.tag(PVZItemTags.PEA_GUN_BULLETS).add(ItemRegister.PEA.get()).add(ItemRegister.SNOW_PEA.get()).add(ItemRegister.FLAME_PEA.get()).add(ItemRegister.BLUE_FLAME_PEA.get());
+		this.tag(PVZItemTags.REACH_ITEMS).add(ItemRegister.RESOURCE_COLLECTOR.get());
 	}
 	
 	private Item[] getFilterItems(Predicate<Item> predicate) {

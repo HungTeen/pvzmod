@@ -1,7 +1,7 @@
-package com.hungteen.pvz.client.render.entity.drop;
+package com.hungteen.pvz.client.render.entity.misc.drop;
 
-import com.hungteen.pvz.client.model.entity.drop.CoinModel;
-import com.hungteen.pvz.common.entity.drop.JewelEntity;
+import com.hungteen.pvz.client.model.entity.misc.DropModel;
+import com.hungteen.pvz.common.entity.misc.drop.JewelEntity;
 import com.hungteen.pvz.utils.StringUtil;
 
 import net.minecraft.client.renderer.entity.EntityRendererManager;
@@ -13,17 +13,17 @@ import net.minecraftforge.api.distmarker.OnlyIn;
 public class JewelRender extends DropRender<JewelEntity>{
 
 	public JewelRender(EntityRendererManager renderManager) {
-		super(renderManager, new CoinModel());
-	}
-
-	@Override
-	protected float getRenderSize(JewelEntity entity) {
-		return 0.3f;
+		super(renderManager, new DropModel<>());
 	}
 
 	@Override
 	public ResourceLocation getTextureLocation(JewelEntity entity) {
 		return StringUtil.prefix("textures/entity/drop/jewel.png");
+	}
+
+	@Override
+	protected float getScaleByEntity(JewelEntity entity) {
+		return 0.32F;
 	}
 
 }

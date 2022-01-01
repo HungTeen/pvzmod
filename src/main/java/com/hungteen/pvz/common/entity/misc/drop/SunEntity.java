@@ -1,4 +1,4 @@
-package com.hungteen.pvz.common.entity.drop;
+package com.hungteen.pvz.common.entity.misc.drop;
 
 import java.util.Map.Entry;
 import java.util.Random;
@@ -8,8 +8,7 @@ import com.hungteen.pvz.common.enchantment.EnchantmentRegister;
 import com.hungteen.pvz.common.enchantment.EnchantmentUtil;
 import com.hungteen.pvz.common.entity.plant.light.SunFlowerEntity;
 import com.hungteen.pvz.common.event.events.PlayerCollectDropEvent;
-import com.hungteen.pvz.common.network.PVZPacketHandler;
-import com.hungteen.pvz.common.network.toclient.PlaySoundPacket;
+import com.hungteen.pvz.common.misc.sound.PVZSounds;
 import com.hungteen.pvz.register.EntityRegister;
 import com.hungteen.pvz.utils.EntityUtil;
 import com.hungteen.pvz.utils.PlayerUtil;
@@ -22,7 +21,6 @@ import net.minecraft.entity.MobEntity;
 import net.minecraft.entity.Pose;
 import net.minecraft.entity.SpawnReason;
 import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.inventory.EquipmentSlotType;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.math.BlockPos;
@@ -31,7 +29,6 @@ import net.minecraft.world.LightType;
 import net.minecraft.world.World;
 import net.minecraft.world.server.ServerWorld;
 import net.minecraftforge.common.MinecraftForge;
-import net.minecraftforge.fml.network.PacketDistributor;
 
 public class SunEntity extends DropEntity {
 	
@@ -66,31 +63,23 @@ public class SunEntity extends DropEntity {
 		}
 	}
 	
-	public void onCollectedByPlayer(PlayerEntity player) {
-		if(MinecraftForge.EVENT_BUS.post(new PlayerCollectDropEvent.PlayerCollectSunEvent(player, this))) {
-			return ;
-		}
-		Entry<EquipmentSlotType, ItemStack> entry = EnchantmentHelper.getRandomItemWith(EnchantmentRegister.SUN_MENDING.get(), player);
-		if(entry != null) {
-			ItemStack stack = entry.getValue();
-            if (! stack.isEmpty() && stack.isDamaged()) {
-               int canRepair = Math.min(EnchantmentUtil.getRepairDamageByAmount(stack, this.getAmount()), stack.getDamageValue());
-               this.setAmount(this.getAmount() - EnchantmentUtil.getSunCostByDamage(stack, canRepair));
-               stack.setDamageValue(stack.getDamageValue() - canRepair);
-            }
-		}
-		if(this.getAmount() > 0) {
-			PlayerUtil.addResource(player, Resources.SUN_NUM, this.getAmount());
-		}
-		PVZPacketHandler.CHANNEL.send(PacketDistributor.PLAYER.with(() -> {
-			return (ServerPlayerEntity) player;
-		}), new PlaySoundPacket(0));
-		this.remove();
-	}
-	
 	@Override
-	public int getMaxSpawnClusterSize() {
-		return 1;
+	public void onCollectedByPlayer(PlayerEntity player) {
+		if(! level.isClientSide && ! MinecraftForge.EVENT_BUS.post(new PlayerCollectDropEvent.PlayerCollectSunEvent(player, this))) {
+		    Entry<EquipmentSlotType, ItemStack> entry = EnchantmentHelper.getRandomItemWith(EnchantmentRegister.SUN_MENDING.get(), player);
+		    if(entry != null) {
+			    ItemStack stack = entry.getValue();
+                if (! stack.isEmpty() && stack.isDamaged()) {
+                    int canRepair = Math.min(EnchantmentUtil.getRepairDamageByAmount(stack, this.getAmount()), stack.getDamageValue());
+                    this.setAmount(this.getAmount() - EnchantmentUtil.getSunCostByDamage(stack, canRepair));
+                    stack.setDamageValue(stack.getDamageValue() - canRepair);
+                }
+		    }
+		    if(this.getAmount() > 0) {
+			    PlayerUtil.addResource(player, Resources.SUN_NUM, this.getAmount());
+		    }
+		    PlayerUtil.playClientSound(player, PVZSounds.SUN_COLLECT);
+		}
 	}
 	
 	public static void spawnSunsByAmount(World world, BlockPos pos, int amount) {

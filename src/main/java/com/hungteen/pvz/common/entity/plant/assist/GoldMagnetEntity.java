@@ -1,13 +1,13 @@
 package com.hungteen.pvz.common.entity.plant.assist;
 
 import com.hungteen.pvz.api.types.IPlantType;
-import com.hungteen.pvz.common.entity.drop.CoinEntity;
-import com.hungteen.pvz.common.entity.drop.DropEntity;
-import com.hungteen.pvz.common.entity.drop.DropEntity.DropStates;
-import com.hungteen.pvz.common.entity.drop.JewelEntity;
+import com.hungteen.pvz.common.entity.misc.drop.CoinEntity;
+import com.hungteen.pvz.common.entity.misc.drop.DropEntity;
+import com.hungteen.pvz.common.entity.misc.drop.JewelEntity;
+import com.hungteen.pvz.common.entity.misc.drop.DropEntity.DropStates;
 import com.hungteen.pvz.common.entity.plant.PVZPlantEntity;
 import com.hungteen.pvz.common.impl.plant.PVZPlants;
-import com.hungteen.pvz.register.SoundRegister;
+import com.hungteen.pvz.common.misc.sound.SoundRegister;
 import com.hungteen.pvz.utils.EntityUtil;
 import com.hungteen.pvz.utils.PlayerUtil;
 import com.hungteen.pvz.utils.enums.Resources;

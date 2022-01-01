@@ -7,6 +7,7 @@ import com.hungteen.pvz.common.capability.CapabilityHandler;
 import com.hungteen.pvz.common.capability.player.IPlayerDataCapability;
 import com.hungteen.pvz.common.capability.player.PlayerDataManager;
 import com.hungteen.pvz.common.item.spawn.card.PlantCardItem;
+import com.hungteen.pvz.common.misc.sound.PVZSounds;
 import com.hungteen.pvz.common.network.PVZPacketHandler;
 import com.hungteen.pvz.common.network.toclient.AlmanacUnLockPacket;
 import com.hungteen.pvz.common.network.toclient.PlaySoundPacket;
@@ -157,10 +158,10 @@ public class PlayerUtil {
 		return PVZGroupType.getGroup(ConfigUtil.getPlayerInitialGroup());// get Group Error !
 	}
 	
-	public static void playClientSound(PlayerEntity player, int id) {
+	public static void playClientSound(PlayerEntity player, PVZSounds sound) {
 		PVZPacketHandler.CHANNEL.send(PacketDistributor.PLAYER.with(()->{
 			return (ServerPlayerEntity) player;
-		}), new PlaySoundPacket(id));
+		}), new PlaySoundPacket(sound));
 	}
 
 	public static void sendTitleToPlayer(PlayerEntity player, ITextComponent text) {

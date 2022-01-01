@@ -6,7 +6,7 @@
       "entries": [
         {
           "type": "minecraft:item",
-          "name": "pvz:sun_collector"
+          "name": "pvz:resource_collector"
         }
       ],
       "conditions": [

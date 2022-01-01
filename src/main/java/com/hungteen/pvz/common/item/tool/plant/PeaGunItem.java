@@ -1,12 +1,5 @@
 package com.hungteen.pvz.common.item.tool.plant;
 
-import java.util.Arrays;
-import java.util.HashSet;
-import java.util.List;
-
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
-
 import com.hungteen.pvz.api.types.IPlantType;
 import com.hungteen.pvz.common.container.PeaGunContainer;
 import com.hungteen.pvz.common.container.inventory.ItemInventory;
@@ -18,14 +11,13 @@ import com.hungteen.pvz.common.impl.plant.PVZPlants;
 import com.hungteen.pvz.common.item.ItemRegister;
 import com.hungteen.pvz.common.item.PVZItemGroups;
 import com.hungteen.pvz.common.item.spawn.card.PlantCardItem;
+import com.hungteen.pvz.common.misc.sound.SoundRegister;
 import com.hungteen.pvz.common.misc.tag.PVZItemTags;
 import com.hungteen.pvz.common.potion.EffectRegister;
 import com.hungteen.pvz.register.EntityRegister;
-import com.hungteen.pvz.register.SoundRegister;
 import com.hungteen.pvz.utils.EntityUtil;
 import com.hungteen.pvz.utils.PlayerUtil;
 import com.hungteen.pvz.utils.enums.Resources;
-
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.enchantment.Enchantment;
 import net.minecraft.enchantment.EnchantmentHelper;
@@ -44,11 +36,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
 import net.minecraft.item.UseAction;
 import net.minecraft.nbt.CompoundNBT;
-import net.minecraft.util.ActionResult;
-import net.minecraft.util.Direction;
-import net.minecraft.util.Hand;
-import net.minecraft.util.SoundEvent;
-import net.minecraft.util.SoundEvents;
+import net.minecraft.util.*;
 import net.minecraft.util.math.vector.Vector3d;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.TextFormatting;
@@ -63,18 +51,22 @@ import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.IItemHandler;
 import net.minecraftforge.items.wrapper.InvWrapper;
 
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
+import java.util.Arrays;
+import java.util.HashSet;
+import java.util.List;
+
 public class PeaGunItem extends Item {
 
 	public static final int PEA_GUN_SLOT_NUM = 28;
-	public static final float PEA_SPEED = 2.1f;
-	public static final double SHOOT_OFFSET = 0.5;
 	// register shoot mode here.
 	private static final HashSet<IPlantType> SHOOT_MODES = new HashSet<>(
 			Arrays.asList(PVZPlants.PEA_SHOOTER, PVZPlants.SNOW_PEA, PVZPlants.REPEATER, PVZPlants.THREE_PEATER,
 					PVZPlants.SPLIT_PEA, PVZPlants.GATLING_PEA, PVZPlants.STAR_FRUIT, OtherPlants.ANGEL_STAR_FRUIT));
 
 	public PeaGunItem() {
-		super(new Properties().tab(PVZItemGroups.PVZ_TOOL).stacksTo(1).durability(2000));
+		super(new Properties().tab(PVZItemGroups.PVZ_TOOL).stacksTo(1).durability(1200));
 	}
 
 	/**
@@ -160,7 +152,7 @@ public class PeaGunItem extends Item {
 		final Inventory inv = getInventory(stack);
 		final IPlantType type = getShootMode(inv.getItem(0));
 		
-		if (living instanceof PlayerEntity && tick > 10 && tick % cd == 0) {
+		if (living instanceof PlayerEntity && tick > 20 && tick % cd == 0) {
 			if (!MinecraftForge.EVENT_BUS.post(new PeaGunShootEvent((PlayerEntity) living, stack, type))) {
 				this.performShoot(world, (PlayerEntity) living, stack, type);
 			}
@@ -185,6 +177,9 @@ public class PeaGunItem extends Item {
 		}
 	}
 
+	/**
+	 * @param itemStack : pea gun stack.
+	 */
 	public void performShoot(World world, PlayerEntity player, ItemStack itemStack, IPlantType mode) {
 		final ItemStack stack = getFirstBullets(itemStack);
 
@@ -219,14 +214,14 @@ public class PeaGunItem extends Item {
 			this.shootPea(world, player, mode, stack, 0, 0, 0);
 		}
 
-		final SoundEvent sound = mode == PVZPlants.SNOW_PEA ? SoundRegister.SNOW_SHOOT.get()
-				: SoundEvents.SNOW_GOLEM_SHOOT;
+		final SoundEvent sound = (mode == PVZPlants.SNOW_PEA || stack.getItem().equals(ItemRegister.SNOW_PEA.get())) ? SoundRegister.SNOW_SHOOT.get() :
+				SoundEvents.SNOW_GOLEM_SHOOT;
 		EntityUtil.playSound(player, sound);
 
 		this.shrinkItemStack(player, itemStack);
 
 		if(PlayerUtil.isPlayerSurvival(player)) {
-			stack.hurtAndBreak(1, player, p -> p.broadcastBreakEvent(Hand.MAIN_HAND));
+			itemStack.hurtAndBreak(1, player, p -> p.broadcastBreakEvent(Hand.MAIN_HAND));
 		}
 	}
 
@@ -254,7 +249,8 @@ public class PeaGunItem extends Item {
 		final int pos = getFirstPos(stack);
 		final int lvl = PlayerUtil.getResource(player, Resources.TREE_LVL);
 		boolean flag = EnchantmentHelper.getItemEnchantmentLevel(Enchantments.INFINITY_ARROWS, stack) > 0;
-		if (PlayerUtil.isPlayerSurvival(player) && flag && player.getRandom().nextInt(100) >= 50 + (lvl + 9) / 10) {
+		if (player.hasEffect(EffectRegister.ENERGETIC_EFFECT.get()) || ! PlayerUtil.isPlayerSurvival(player) || (flag && player.getRandom().nextInt(100) < 50 + (lvl + 9) / 10)) {
+		} else {
 			inv.removeItem(pos, 1);
 		}
 	}

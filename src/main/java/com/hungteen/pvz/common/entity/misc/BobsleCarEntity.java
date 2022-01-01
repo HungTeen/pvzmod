@@ -80,9 +80,6 @@ public class BobsleCarEntity extends Entity {
 			this.ejectPassengers();
 			this.remove();
 		}
-//		if(this.ticksExisted%20==0) {
-//			System.out.println(this.rotationYaw);
-//		}
 		if (this.getTimeSinceHit() > 0) {
 			this.setTimeSinceHit(this.getTimeSinceHit() - 1);
 		}
@@ -110,7 +107,6 @@ public class BobsleCarEntity extends Entity {
 					this.getBoundingBox().inflate((double) 0.2F, (double) -0.01F, (double) 0.2F),
 					EntityPredicates.pushableBy(this))) {
 				if (!entity.isPassenger()) {
-//					System.out.println("has entity");
 					if (checkCanRideOn(entity)) {
 						entity.startRiding(this);
 					} else {
@@ -122,7 +118,6 @@ public class BobsleCarEntity extends Entity {
 	}
 
 	private boolean checkCanRideOn(Entity entity) {
-//    	System.out.println(entity.getWidth()+" "+this.getWidth());
 		return !(this.getControllingPassenger() instanceof PlayerEntity)
 				&& this.getPassengers().size() < MAX_PASSENGER_SIZE && !entity.isPassenger()
 				&& entity.getBbWidth() < this.getBbWidth() && entity instanceof LivingEntity
@@ -131,7 +126,6 @@ public class BobsleCarEntity extends Entity {
 
 	@Override
 	public ActionResultType interactAt(PlayerEntity player, Vector3d vec3d, Hand hand) {
-//		System.out.println("click!");
 		if (player.isSecondaryUseActive()) {
 			return ActionResultType.FAIL;
 		}
@@ -148,10 +142,6 @@ public class BobsleCarEntity extends Entity {
 		Minecraft mc = Minecraft.getInstance();
 		if (this.isRidingPlayer(mc.player)) {
 			float f = 0;
-//			boolean left = mc.gameSettings.keyBindLeft.isPressed();
-//			boolean right = mc.gameSettings.keyBindRight.isPressed();
-//			boolean forward = mc.gameSettings.keyBindForward.isPressed();
-//			boolean back = mc.gameSettings.keyBindBack.isPressed();
 			boolean left = mc.options.keyLeft.isDown();
 			boolean right = mc.options.keyRight.isDown();
 			boolean forward = mc.options.keyUp.isDown();
@@ -185,16 +175,6 @@ public class BobsleCarEntity extends Entity {
 	private boolean isRidingPlayer(PlayerEntity player) {
 		return player.getVehicle() != null && player.getVehicle() == this;
 	}
-
-//	public void applyEntityCollision(Entity entityIn) {
-//		if (entityIn instanceof BobsleCarEntity) {
-//			if (entityIn.getBoundingBox().minY < this.getBoundingBox().maxY) {
-//				super.applyEntityCollision(entityIn);
-//			}
-//		} else if (entityIn.getBoundingBox().minY <= this.getBoundingBox().minY) {
-//			super.applyEntityCollision(entityIn);
-//		}
-//	}
 
 	@SuppressWarnings("deprecation")
 	public boolean isPickable() {

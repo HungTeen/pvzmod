@@ -1,8 +1,8 @@
 package com.hungteen.pvz.common.entity.plant.magic;
 
 import com.hungteen.pvz.api.types.IPlantType;
-import com.hungteen.pvz.common.entity.drop.CoinEntity;
-import com.hungteen.pvz.common.entity.drop.CoinEntity.CoinType;
+import com.hungteen.pvz.common.entity.misc.drop.CoinEntity;
+import com.hungteen.pvz.common.entity.misc.drop.CoinEntity.CoinType;
 import com.hungteen.pvz.common.entity.plant.base.PlantProducerEntity;
 import com.hungteen.pvz.common.impl.plant.PVZPlants;
 import com.hungteen.pvz.register.EntityRegister;

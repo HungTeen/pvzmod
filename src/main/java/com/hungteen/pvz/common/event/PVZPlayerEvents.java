@@ -10,6 +10,7 @@ import com.hungteen.pvz.common.entity.plant.PVZPlantEntity;
 import com.hungteen.pvz.common.event.events.SummonCardUseEvent;
 import com.hungteen.pvz.common.event.handler.PlayerEventHandler;
 import com.hungteen.pvz.common.item.tool.plant.PeaGunItem;
+import com.hungteen.pvz.common.misc.sound.PVZSounds;
 import com.hungteen.pvz.common.network.PVZPacketHandler;
 import com.hungteen.pvz.common.network.toclient.OtherStatsPacket;
 import com.hungteen.pvz.common.potion.EffectRegister;
@@ -120,7 +121,7 @@ public class PVZPlayerEvents {
 	public static void onPlayerTreeLevelUp(PlayerLevelChangeEvent ev) {
 		if(! ev.getPlayer().level.isClientSide && ev.isLevelUp()) {
 			PlayerEventHandler.unLockPAZs(ev.getPlayer());
-			PlayerUtil.playClientSound(ev.getPlayer(), 9);
+			PlayerUtil.playClientSound(ev.getPlayer(), PVZSounds.PLANT_GROW);
 		    PlayerUtil.addResource(ev.getPlayer(), Resources.LOTTERY_CHANCE, 3);
 		}
 	}

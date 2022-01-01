@@ -7,7 +7,8 @@ import java.util.Map;
 import java.util.Random;
 
 import com.hungteen.pvz.common.container.SlotMachineContainer;
-import com.hungteen.pvz.register.SoundRegister;
+import com.hungteen.pvz.common.misc.sound.PVZSounds;
+import com.hungteen.pvz.common.misc.sound.SoundRegister;
 import com.hungteen.pvz.register.TileEntityRegister;
 import com.hungteen.pvz.utils.PlayerUtil;
 import com.hungteen.pvz.utils.enums.Resources;
@@ -172,7 +173,7 @@ public class SlotMachineTileEntity extends TileEntity implements ITickableTileEn
 		}
 		this.player = player;
 		this.isRunning = true;
-		PlayerUtil.playClientSound(player, 8);
+		PlayerUtil.playClientSound(player, PVZSounds.SLOT_MACHINE);
 		PlayerUtil.addResource(player, Resources.SUN_NUM, - SUN_COST);
 		PlayerUtil.addResource(player, Resources.LOTTERY_CHANCE, - 1);
 		this.changeCnt = level.random.nextInt(this.maxChangeCnt - this.minChangeCnt + 1) + this.minChangeCnt;

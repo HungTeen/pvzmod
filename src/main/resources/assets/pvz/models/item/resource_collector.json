@@ -1,8 +1,8 @@
 {
 	"credit": "Made with Blockbench",
 	"textures": {
-		"0": "pvz:item/sun_collector",
-		"particle": "pvz:item/sun_collector"
+		"0": "pvz:item/resource_collector",
+		"particle": "pvz:item/resource_collector"
 	},
 	"elements": [
 		{

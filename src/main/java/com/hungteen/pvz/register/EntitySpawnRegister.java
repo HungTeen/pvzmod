@@ -2,7 +2,7 @@ package com.hungteen.pvz.register;
 
 import com.hungteen.pvz.PVZConfig;
 import com.hungteen.pvz.PVZMod;
-import com.hungteen.pvz.common.entity.drop.SunEntity;
+import com.hungteen.pvz.common.entity.misc.drop.SunEntity;
 import com.hungteen.pvz.common.misc.SpawnChecker;
 import com.hungteen.pvz.utils.BiomeUtil;
 import com.hungteen.pvz.utils.ConfigUtil;

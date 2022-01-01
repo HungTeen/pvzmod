@@ -1,14 +1,13 @@
-package com.hungteen.pvz.common.entity.drop;
+package com.hungteen.pvz.common.entity.misc.drop;
 
 import com.hungteen.pvz.PVZConfig;
-import com.hungteen.pvz.register.SoundRegister;
+import com.hungteen.pvz.common.misc.sound.PVZSounds;
 import com.hungteen.pvz.utils.PlayerUtil;
 import com.hungteen.pvz.utils.enums.Resources;
 
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.MobEntity;
 import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.util.SoundCategory;
 import net.minecraft.util.math.vector.Vector3d;
 import net.minecraft.world.World;
 
@@ -22,13 +21,11 @@ public class EnergyEntity extends DropEntity{
 	}
 
 	@Override
-	public void playerTouch(PlayerEntity entityIn) {
-		if(!this.level.isClientSide) {
-			PlayerUtil.addResource(entityIn, Resources.ENERGY_NUM, this.getAmount());
-		}else {
-			this.level.playSound(entityIn, blockPosition(), SoundRegister.JEWEL_PICK.get(), SoundCategory.NEUTRAL, 1f, 1f);
+	public void onCollectedByPlayer(PlayerEntity player) {
+		if(! this.level.isClientSide) {
+			PlayerUtil.addResource(player, Resources.ENERGY_NUM, this.getAmount());
+			PlayerUtil.playClientSound(player, PVZSounds.ENERGY_COLLECT);
 		}
-		this.remove();
 	}
 	
 	@Override

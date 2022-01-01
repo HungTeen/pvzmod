@@ -128,7 +128,7 @@ public class PVZEntityLootTables implements Consumer<BiConsumer<ResourceLocation
 		));
 		t.accept(PVZLoot.RA_ZOMBIE, getLootTable()
 				.withPool(LootPool.lootPool().setRolls(ConstantRange.exactly(1))
-				        .add(ItemLootEntry.lootTableItem(ItemRegister.SUN_COLLECTOR.get()))
+				        .add(ItemLootEntry.lootTableItem(ItemRegister.RESOURCE_COLLECTOR.get()))
 				        .when(RandomChanceWithLooting.randomChanceAndLootingBoost(0.02F, 0.01F))
 		));
 		t.accept(PVZLoot.BUNGEE_ZOMBIE, getLootTable()

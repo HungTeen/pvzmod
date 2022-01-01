@@ -1,7 +1,7 @@
 package com.hungteen.pvz.common.entity.zombie.other;
 
-import com.hungteen.pvz.common.entity.drop.DropEntity.DropStates;
-import com.hungteen.pvz.common.entity.drop.SunEntity;
+import com.hungteen.pvz.common.entity.misc.drop.SunEntity;
+import com.hungteen.pvz.common.entity.misc.drop.DropEntity.DropStates;
 import com.hungteen.pvz.common.entity.zombie.PVZZombieEntity;
 import com.hungteen.pvz.common.impl.ZombieType;
 import com.hungteen.pvz.common.impl.zombie.OtherZombies;

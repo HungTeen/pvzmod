@@ -1,21 +1,17 @@
-package com.hungteen.pvz.common.entity.drop;
+package com.hungteen.pvz.common.entity.misc.drop;
 
 import com.hungteen.pvz.PVZConfig;
-import com.hungteen.pvz.register.SoundRegister;
+import com.hungteen.pvz.common.misc.sound.PVZSounds;
+import com.hungteen.pvz.common.misc.sound.SoundRegister;
 import com.hungteen.pvz.utils.EntityUtil;
 import com.hungteen.pvz.utils.PlayerUtil;
 import com.hungteen.pvz.utils.enums.Resources;
 
 import net.minecraft.entity.EntitySize;
 import net.minecraft.entity.EntityType;
-import net.minecraft.entity.ILivingEntityData;
 import net.minecraft.entity.MobEntity;
 import net.minecraft.entity.Pose;
-import net.minecraft.entity.SpawnReason;
 import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.nbt.CompoundNBT;
-import net.minecraft.world.DifficultyInstance;
-import net.minecraft.world.IServerWorld;
 import net.minecraft.world.World;
 
 public class JewelEntity extends DropEntity{
@@ -24,25 +20,21 @@ public class JewelEntity extends DropEntity{
 		super(type, worldIn);
 		this.setAmount(1);
 	}
-
+	
 	@Override
-	public ILivingEntityData finalizeSpawn(IServerWorld worldIn, DifficultyInstance difficultyIn, SpawnReason reason,
-			ILivingEntityData spawnDataIn, CompoundNBT dataTag) {
+	protected void onDropped() {
+		super.onDropped();
 		if(! level.isClientSide) {
 			EntityUtil.playSound(this, SoundRegister.JEWEL_DROP.get());
 		}
-		return super.finalizeSpawn(worldIn, difficultyIn, reason, spawnDataIn, dataTag);
 	}
 	
 	@Override
-	public void playerTouch(PlayerEntity entityIn) {
+	public void onCollectedByPlayer(PlayerEntity player) {
 		if(! this.level.isClientSide) {
-			PlayerUtil.addResource(entityIn, Resources.GEM_NUM, this.getAmount());
+			PlayerUtil.addResource(player, Resources.GEM_NUM, this.getAmount());
+			PlayerUtil.playClientSound(player, PVZSounds.JEWEL_COLLECT);
 		}
-		else {
-			EntityUtil.playSound(entityIn, SoundRegister.JEWEL_PICK.get());
-		}
-		this.remove();
 	}
 	
 	@Override

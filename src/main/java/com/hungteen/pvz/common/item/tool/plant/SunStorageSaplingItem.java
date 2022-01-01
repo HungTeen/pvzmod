@@ -4,15 +4,13 @@ import java.util.List;
 
 import com.hungteen.pvz.common.capability.CapabilityHandler;
 import com.hungteen.pvz.common.item.PVZItemGroups;
-import com.hungteen.pvz.common.network.PVZPacketHandler;
-import com.hungteen.pvz.common.network.toclient.PlaySoundPacket;
+import com.hungteen.pvz.common.misc.sound.PVZSounds;
 import com.hungteen.pvz.utils.PlayerUtil;
 import com.hungteen.pvz.utils.enums.Resources;
 
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemGroup;
 import net.minecraft.item.ItemStack;
@@ -24,7 +22,6 @@ import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.TextFormatting;
 import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraft.world.World;
-import net.minecraftforge.fml.network.PacketDistributor;
 
 public class SunStorageSaplingItem extends Item {
 
@@ -62,9 +59,7 @@ public class SunStorageSaplingItem extends Item {
 					}
 					setStorageSunAmount(stack, amount);
 					l.getPlayerData().setResource(Resources.SUN_NUM, sunNum);
-					PVZPacketHandler.CHANNEL.send(PacketDistributor.PLAYER.with(() -> {
-						return (ServerPlayerEntity) player;
-					}), new PlaySoundPacket(0));
+					PlayerUtil.playClientSound(player, PVZSounds.SUN_COLLECT);
 				});
 			}
 		}

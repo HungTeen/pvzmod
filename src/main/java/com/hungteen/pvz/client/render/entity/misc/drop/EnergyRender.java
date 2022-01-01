@@ -1,7 +1,7 @@
-package com.hungteen.pvz.client.render.entity.drop;
+package com.hungteen.pvz.client.render.entity.misc.drop;
 
-import com.hungteen.pvz.client.model.entity.drop.EnergyModel;
-import com.hungteen.pvz.common.entity.drop.EnergyEntity;
+import com.hungteen.pvz.client.model.entity.misc.DropModel;
+import com.hungteen.pvz.common.entity.misc.drop.EnergyEntity;
 import com.hungteen.pvz.utils.StringUtil;
 
 import net.minecraft.client.renderer.entity.EntityRendererManager;
@@ -13,17 +13,17 @@ import net.minecraftforge.api.distmarker.OnlyIn;
 public class EnergyRender extends DropRender<EnergyEntity>{
 
 	public EnergyRender(EntityRendererManager renderManager) {
-		super(renderManager, new EnergyModel());
-	}
-
-	@Override
-	protected float getRenderSize(EnergyEntity entity) {
-		return 0.5f;
+		super(renderManager, new DropModel<>());
 	}
 
 	@Override
 	public ResourceLocation getTextureLocation(EnergyEntity entity) {
 		return StringUtil.prefix("textures/entity/drop/energy.png");
+	}
+
+	@Override
+	protected float getScaleByEntity(EnergyEntity entity) {
+		return 0.5F;
 	}
 
 }

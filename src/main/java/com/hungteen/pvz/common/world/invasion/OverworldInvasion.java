@@ -15,6 +15,7 @@ import com.hungteen.pvz.common.event.events.InvasionEvent;
 import com.hungteen.pvz.common.impl.InvasionEvents;
 import com.hungteen.pvz.common.impl.ZombieType;
 import com.hungteen.pvz.common.impl.misc.InvasionType;
+import com.hungteen.pvz.common.misc.sound.PVZSounds;
 import com.hungteen.pvz.common.world.data.PVZInvasionData;
 import com.hungteen.pvz.utils.ConfigUtil;
 import com.hungteen.pvz.utils.PlayerUtil;
@@ -102,7 +103,7 @@ public class OverworldInvasion {
 			/* notify all players when invasion start. */
 		    for(ServerPlayerEntity pl : PlayerUtil.getServerPlayers(world)) {
 			    pl.sendMessage(ZOMBIE_ATTACK, Util.NIL_UUID);
-			    PlayerUtil.playClientSound(pl, 3);
+			    PlayerUtil.playClientSound(pl, PVZSounds.INVASION_WARN);
 			    WaveManager.resetPlayerWaveTime(pl);
 		    }
 		    /* add difficulty */
@@ -188,7 +189,7 @@ public class OverworldInvasion {
 		if(isNatural && flag) {//end invasion
 			for(ServerPlayerEntity pl : world.getServer().getPlayerList().getPlayers()) {
 		        pl.sendMessage(ATTACK_FINISH, Util.NIL_UUID);
-		        PlayerUtil.playClientSound(pl, 4);
+		        PlayerUtil.playClientSound(pl, PVZSounds.WIN_MUSIC);
 		        WaveManager.giveInvasionBonusToPlayer(world, pl);
 	        }
 		}

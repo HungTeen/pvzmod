@@ -15,12 +15,13 @@ import com.hungteen.pvz.common.impl.InvasionEvents;
 import com.hungteen.pvz.common.impl.ZombieType;
 import com.hungteen.pvz.common.impl.misc.InvasionType;
 import com.hungteen.pvz.common.impl.zombie.RoofZombies;
+import com.hungteen.pvz.common.misc.sound.PVZSounds;
+import com.hungteen.pvz.common.misc.sound.SoundRegister;
 import com.hungteen.pvz.common.network.PVZPacketHandler;
 import com.hungteen.pvz.common.network.toclient.OtherStatsPacket;
 import com.hungteen.pvz.common.world.data.PVZFlagData;
 import com.hungteen.pvz.common.world.data.PVZInvasionData;
 import com.hungteen.pvz.register.EntityRegister;
-import com.hungteen.pvz.register.SoundRegister;
 import com.hungteen.pvz.utils.EntityUtil;
 import com.hungteen.pvz.utils.MathUtil;
 import com.hungteen.pvz.utils.PlayerUtil;
@@ -137,7 +138,7 @@ public class WaveManager {
 			this.spawned |= this.spawnZombieTeam(++ groupNum, cnt);
 		}
 		if(this.spawned) {
-			PlayerUtil.playClientSound(player, 2);
+			PlayerUtil.playClientSound(player, PVZSounds.HUGE_WAVE);
 		    PlayerUtil.sendSubTitleToPlayer(player, HUGE_WAVE);
 		    PVZFlagData data = PVZFlagData.getGlobalFlagData(world);
 		    if(data.isZombossDefeated()) {
@@ -218,7 +219,7 @@ public class WaveManager {
 		player.getCapability(CapabilityHandler.PLAYER_DATA_CAPABILITY).ifPresent(l -> {
 			int cnt = l.getPlayerData().getResource(Resources.KILL_COUNT);
 			if(cnt >= 50) {//give reward if kill count reach 50
-				PlayerUtil.playClientSound(player, 6);
+				PlayerUtil.playClientSound(player, PVZSounds.COIN_COLLECT);
 			    PlayerUtil.addResource(player, Resources.MONEY, (cnt >= 200 ? 200 : 50));
 			    PlayerUtil.addResource(player, Resources.LOTTERY_CHANCE, (cnt >= 200 ? 5 : 3));
 			    for(int i = 0; i < (cnt >= 200 ? 2 : 1); ++ i) {

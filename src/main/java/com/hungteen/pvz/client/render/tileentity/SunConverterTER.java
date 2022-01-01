@@ -29,7 +29,7 @@ public class SunConverterTER extends TileEntityRenderer<SunConverterTileEntity> 
 			IRenderTypeBuffer bufferIn, int combinedLightIn, int combinedOverlayIn) {
 		matrixStackIn.pushPose();
 		ItemRenderer itemRenderer = Minecraft.getInstance().getItemRenderer();
-        ItemStack stack = new ItemStack(ItemRegister.SUN_COLLECTOR.get());
+        ItemStack stack = new ItemStack(ItemRegister.RESOURCE_COLLECTOR.get());
         float scale = 1.2F;
         matrixStackIn.scale(scale, scale, scale);
         matrixStackIn.translate(0.5D / scale, 1D / scale, 0.5D / scale);

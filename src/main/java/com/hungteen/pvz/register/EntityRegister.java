@@ -5,16 +5,16 @@ import com.hungteen.pvz.api.types.IPlantType;
 import com.hungteen.pvz.api.types.IZombieType;
 import com.hungteen.pvz.client.render.entity.bullet.*;
 import com.hungteen.pvz.client.render.entity.creature.FoodieZombieRender;
-import com.hungteen.pvz.client.render.entity.drop.CoinRender;
-import com.hungteen.pvz.client.render.entity.drop.EnergyRender;
-import com.hungteen.pvz.client.render.entity.drop.JewelRender;
-import com.hungteen.pvz.client.render.entity.drop.SunRender;
 import com.hungteen.pvz.client.render.entity.effects.DoomFixerRender;
 import com.hungteen.pvz.client.render.entity.effects.OriginEffectRender;
 import com.hungteen.pvz.client.render.entity.misc.*;
 import com.hungteen.pvz.client.render.entity.misc.bowling.ExplosionBowlingRender;
 import com.hungteen.pvz.client.render.entity.misc.bowling.GiantNutBowlingRender;
 import com.hungteen.pvz.client.render.entity.misc.bowling.WallNutBowlingRender;
+import com.hungteen.pvz.client.render.entity.misc.drop.CoinRender;
+import com.hungteen.pvz.client.render.entity.misc.drop.EnergyRender;
+import com.hungteen.pvz.client.render.entity.misc.drop.JewelRender;
+import com.hungteen.pvz.client.render.entity.misc.drop.SunRender;
 import com.hungteen.pvz.client.render.entity.npc.CrazyDaveRender;
 import com.hungteen.pvz.client.render.entity.npc.PennyRender;
 import com.hungteen.pvz.client.render.entity.npc.SunDaveRender;
@@ -49,15 +49,15 @@ import com.hungteen.pvz.client.render.entity.zombie.zombotany.*;
 import com.hungteen.pvz.common.entity.bullet.*;
 import com.hungteen.pvz.common.entity.bullet.itembullet.*;
 import com.hungteen.pvz.common.entity.creature.FoodieZombieEntity;
-import com.hungteen.pvz.common.entity.drop.CoinEntity;
-import com.hungteen.pvz.common.entity.drop.EnergyEntity;
-import com.hungteen.pvz.common.entity.drop.JewelEntity;
-import com.hungteen.pvz.common.entity.drop.SunEntity;
 import com.hungteen.pvz.common.entity.effect.OriginEffectEntity;
 import com.hungteen.pvz.common.entity.misc.*;
 import com.hungteen.pvz.common.entity.misc.bowling.ExplosionBowlingEntity;
 import com.hungteen.pvz.common.entity.misc.bowling.GiantNutBowlingEntity;
 import com.hungteen.pvz.common.entity.misc.bowling.WallNutBowlingEntity;
+import com.hungteen.pvz.common.entity.misc.drop.CoinEntity;
+import com.hungteen.pvz.common.entity.misc.drop.EnergyEntity;
+import com.hungteen.pvz.common.entity.misc.drop.JewelEntity;
+import com.hungteen.pvz.common.entity.misc.drop.SunEntity;
 import com.hungteen.pvz.common.entity.npc.CrazyDaveEntity;
 import com.hungteen.pvz.common.entity.npc.PennyEntity;
 import com.hungteen.pvz.common.entity.npc.SunDaveEntity;
@@ -486,10 +486,11 @@ public class EntityRegister {
 				ev.put(obj, PVZZombieEntity.createZombieAttributes());
 			});
 		}
-		Arrays.asList(SUN.get(), COIN.get(), JEWEL.get(), ENERGY.get(), 
+		Arrays.asList(
+				SUN.get(), COIN.get(), JEWEL.get(), ENERGY.get(),
 				CRAZY_DAVE.get(), SUN_DAVE.get(), PANNEY.get(),
 				FOODIE_ZOMBIE.get()
-				).forEach(obj -> {
+		).forEach(obj -> {
 			ev.put(obj, CreatureEntity.createMobAttributes().build());
 		});
 	}

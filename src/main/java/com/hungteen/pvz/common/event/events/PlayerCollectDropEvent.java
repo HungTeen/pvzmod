@@ -1,6 +1,6 @@
 package com.hungteen.pvz.common.event.events;
 
-import com.hungteen.pvz.common.entity.drop.SunEntity;
+import com.hungteen.pvz.common.entity.misc.drop.SunEntity;
 
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraftforge.event.entity.player.PlayerEvent;

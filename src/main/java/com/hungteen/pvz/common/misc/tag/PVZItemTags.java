@@ -29,6 +29,7 @@ public class PVZItemTags {
 	public static final INamedTag<Item> TEMPLATE_CARDS = pvzTag("cards/template_card");
 	public static final INamedTag<Item> ESSENCE_ORES = pvzTag("ores/essence");
 	public static final INamedTag<Item> PEA_GUN_BULLETS = pvzTag("pea_gun_bullets");
+	public static final INamedTag<Item> REACH_ITEMS = pvzTag("reach_items");
 		
 	private static INamedTag<Item> pvzTag(String name){
 		return ItemTags.createOptional(StringUtil.prefix(name));

@@ -365,7 +365,7 @@ f6c183d481d489cdad7ac605787320376976e841 data/pvz/loot_tables/entities/lava_zomb
 f3627800089d13d698e4806f81ebacfa865bbb3b data/pvz/loot_tables/entities/normal_zombie.json
 b29c479265ed95e49001408c2ce9a8af30374a7d data/pvz/loot_tables/entities/peashooter_zombie.json
 6333b3751bc5c8a1d7468388c12b2ae0af7cfce6 data/pvz/loot_tables/entities/pumpkin_zombie.json
-bc39991af9ff3fabde059cd9a83dd9e09060f2b9 data/pvz/loot_tables/entities/ra_zombie.json
+02090b104d7b7f5586384931780746c1c7630c09 data/pvz/loot_tables/entities/ra_zombie.json
 3aee8cb88fe3348bebc9570a7abc8622941ff468 data/pvz/loot_tables/entities/screendoor_zombie.json
 8c67211301a27838b1e0ad724511a61ca55fcf55 data/pvz/loot_tables/entities/squash_zombie.json
 d71710e93d96bdb3ae4a5a51f646de2b8b444b46 data/pvz/loot_tables/entities/tallnut_zombie.json
@@ -433,3 +433,4 @@ e528ed32ae5cbee9f37cf36a8f1dc7c564da613b data/pvz/tags/blocks/radiations/to_magi
 1205e3b9c26f9f4dc119118ea8bb7309f54058bf data/pvz/tags/items/cards/template_card.json
 1c9b69b8145e4b24059a787785717e61a3d30fdf data/pvz/tags/items/ores/essence.json
 8ac81262812dca26cec82eada8e6e8b4f2ae0ca7 data/pvz/tags/items/pea_gun_bullets.json
+4ed9160401242be3b0eb925243aeb6bdf813227c data/pvz/tags/items/reach_items.json

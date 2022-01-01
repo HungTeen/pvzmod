@@ -259,8 +259,8 @@ public class EntityUtil {
 	/**
 	 * spawn in random range position.
 	 */
-	public static void onMobEntityRandomPosSpawn(IWorld world, MobEntity entity, BlockPos pos, int dis) {
-		pos = pos.offset(MathUtil.getRandomInRange(entity.getRandom(), dis), entity.getRandom().nextInt(dis) + 1, MathUtil.getRandomInRange(entity.getRandom(), dis));
+	public static void onMobEntityRandomPosSpawn(IWorld world, Entity entity, BlockPos pos, int dis) {
+		pos = pos.offset(MathUtil.getRandomInRange(world.getRandom(), dis), world.getRandom().nextInt(dis) + 1, MathUtil.getRandomInRange(world.getRandom(), dis));
 		onEntitySpawn(world, entity, pos);
 	}
 	
@@ -636,20 +636,28 @@ public class EntityUtil {
 	}
 	
 	/**
-	 * get predicate entity with dis and vec. 
-	 */
-	public static EntityRayTraceResult rayTraceEntities(World world, Entity entity, Vector3d lookVec, double dis, Predicate<Entity> predicate) {
-	    final Vector3d start = entity.position().add(0, entity.getEyeHeight(), 0);
-	    final Vector3d end = start.add(lookVec.normalize().scale(dis));
-	    return rayTraceEntities(world, entity, start, end, predicate);
-	}
-	
-	/**
+	 * used for bullets hit check.
 	 * get predicate entity between start to end. 
 	 */
 	public static EntityRayTraceResult rayTraceEntities(World world, Entity entity, Vector3d startVec, Vector3d endVec, Predicate<Entity> predicate) {
 		return ProjectileHelper.getEntityHitResult(world, entity, startVec, endVec, 
 				entity.getBoundingBox().expandTowards(entity.getDeltaMovement()).inflate(1.0D), predicate);
+	}
+	
+	/**
+	 * used for item ray trace.
+	 * get predicate entity with dis and vec. 
+	 */
+	public static EntityRayTraceResult rayTraceEntities(World world, Entity entity, Vector3d lookVec, double distance, Predicate<Entity> predicate) {
+	    final Vector3d startVec = entity.position().add(0, entity.getEyeHeight(), 0);
+	    Vector3d endVec = startVec.add(lookVec.normalize().scale(distance));
+	    RayTraceContext ray = new RayTraceContext(startVec, endVec, RayTraceContext.BlockMode.COLLIDER, RayTraceContext.FluidMode.NONE, entity);
+		RayTraceResult result = world.clip(ray);
+		if(result.getType() != RayTraceResult.Type.MISS) {// hit something
+			endVec = result.getLocation();
+		}
+	    return ProjectileHelper.getEntityHitResult(world, entity, startVec, endVec, 
+				entity.getBoundingBox().inflate(distance), predicate);
 	}
 	
 	/**

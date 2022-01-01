@@ -4,7 +4,7 @@ import com.hungteen.pvz.api.IPlantEntity;
 import com.hungteen.pvz.api.IPlantInfo;
 import com.hungteen.pvz.api.types.IPlantType;
 import com.hungteen.pvz.common.impl.PlantType;
-import com.hungteen.pvz.register.SoundRegister;
+import com.hungteen.pvz.common.misc.sound.SoundRegister;
 import com.hungteen.pvz.utils.EntityUtil;
 import net.minecraft.entity.Entity;
 import net.minecraft.nbt.CompoundNBT;
