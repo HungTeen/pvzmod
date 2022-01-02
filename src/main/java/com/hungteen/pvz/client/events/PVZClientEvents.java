@@ -8,19 +8,16 @@ import com.hungteen.pvz.PVZMod;
 import com.hungteen.pvz.client.events.handler.PVZEntityRenderHandler;
 import com.hungteen.pvz.client.gui.screen.PVZMainMenuScreen;
 import com.hungteen.pvz.common.block.BlockRegister;
-import com.hungteen.pvz.common.item.tool.plant.PeaGunItem;
 import com.mojang.blaze3d.matrix.MatrixStack;
 
 import net.minecraft.client.gui.screen.MainMenuScreen;
 import net.minecraft.client.renderer.IRenderTypeBuffer;
-import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.Item;
 import net.minecraft.util.text.TextFormatting;
 import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.client.event.GuiOpenEvent;
 import net.minecraftforge.client.event.RenderLivingEvent;
-import net.minecraftforge.client.event.RenderPlayerEvent;
 import net.minecraftforge.event.entity.player.ItemTooltipEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
@@ -42,7 +39,7 @@ public class PVZClientEvents {
 	@SubscribeEvent
 	public static void addToolTips(ItemTooltipEvent event) {
 		HashSet<Item> set = new HashSet<>(Arrays.asList(
-				BlockRegister.STEEL_LADDER.get().asItem()
+				BlockRegister.STEEL_LADDER.get().asItem(), BlockRegister.SUN_CONVERTER.get().asItem()
 		));
 		if(set.contains(event.getItemStack().getItem())) {
 			event.getToolTip().add(new TranslationTextComponent("tooltip.pvz." + event.getItemStack().getItem().getRegistryName().getPath()).withStyle(TextFormatting.ITALIC));

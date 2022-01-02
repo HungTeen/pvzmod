@@ -4,6 +4,7 @@ import java.util.HashSet;
 import java.util.Set;
 
 import com.hungteen.pvz.common.container.SunConverterContainer;
+import com.hungteen.pvz.common.enchantment.misc.SunMendingEnchantment;
 import com.hungteen.pvz.common.entity.misc.drop.SunEntity;
 import com.hungteen.pvz.common.entity.misc.drop.DropEntity.DropStates;
 import com.hungteen.pvz.common.item.tool.plant.SunStorageSaplingItem;
@@ -94,22 +95,29 @@ public class SunConverterTileEntity extends TileEntity implements ITickableTileE
 		}
 	}
 	
+	/**
+	 * collect when sun is close.
+	 */
 	private void onCollectSun(SunEntity sun) {
 		int amount = sun.getAmount();
 		while(this.checkCanWorkNow() && amount > 0) {
-			ItemStack stack = this.handler.getStackInSlot(absorbPos);
-			if(! (stack.getItem() instanceof SunStorageSaplingItem)) return ;
-			SunStorageSaplingItem item = (SunStorageSaplingItem) stack.getItem();
-			int max = item.MAX_STORAGE_NUM;
-			int now = SunStorageSaplingItem.getStorageSunAmount(stack);
-			if(now + amount > max) {
-				amount -= max - now;
-				now = max;
+			final ItemStack stack = this.handler.getStackInSlot(this.absorbPos);
+			if(SunStorageSaplingItem.isNotOnceSapling(stack)) {
+				final SunStorageSaplingItem item = (SunStorageSaplingItem) stack.getItem();
+				final int max = item.MAX_STORAGE_NUM;
+			    int now = SunStorageSaplingItem.getStorageSunAmount(stack);
+			    if(now + amount > max) {
+				    amount -= max - now;
+				    now = max;
+			    } else {
+				    now += amount;
+				    amount = 0;
+			    }
+			    SunStorageSaplingItem.setStorageSunAmount(stack, now);
 			} else {
-				now += amount;
+				SunMendingEnchantment.repairItem(stack, amount);
 				amount = 0;
 			}
-			SunStorageSaplingItem.setStorageSunAmount(stack, now);
 		}
 		if(amount > 0) {
 			sun.setAmount(amount);
@@ -120,8 +128,14 @@ public class SunConverterTileEntity extends TileEntity implements ITickableTileE
 	
 	private boolean checkCanWorkNow() {
 		for(int i = 0; i < this.handler.getSlots(); ++ i) {
-			ItemStack stack = this.handler.getStackInSlot(i);
-			if(! SunStorageSaplingItem.isSunStorageFull(stack)) {
+			final ItemStack stack = this.handler.getStackInSlot(i);
+			// sapling absorb.
+			if(SunStorageSaplingItem.isNotOnceSapling(stack) && ! SunStorageSaplingItem.isSunStorageFull(stack)) {
+				this.absorbPos = i;
+				return true;
+			}
+			// repair tools.
+			if(stack.isDamaged()) {
 				this.absorbPos = i;
 				return true;
 			}
@@ -160,7 +174,7 @@ public class SunConverterTileEntity extends TileEntity implements ITickableTileE
 
 	@Override
 	public ITextComponent getDisplayName() {
-		return new TranslationTextComponent("gui.pvz.sun_converter");
+		return new TranslationTextComponent("block.pvz.sun_converter");
 	}
 
 }

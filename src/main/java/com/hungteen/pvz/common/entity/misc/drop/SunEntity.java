@@ -5,7 +5,7 @@ import java.util.Random;
 
 import com.hungteen.pvz.PVZConfig;
 import com.hungteen.pvz.common.enchantment.EnchantmentRegister;
-import com.hungteen.pvz.common.enchantment.EnchantmentUtil;
+import com.hungteen.pvz.common.enchantment.misc.SunMendingEnchantment;
 import com.hungteen.pvz.common.entity.plant.light.SunFlowerEntity;
 import com.hungteen.pvz.common.event.events.PlayerCollectDropEvent;
 import com.hungteen.pvz.common.misc.sound.PVZSounds;
@@ -68,18 +68,13 @@ public class SunEntity extends DropEntity {
 		if(! level.isClientSide && ! MinecraftForge.EVENT_BUS.post(new PlayerCollectDropEvent.PlayerCollectSunEvent(player, this))) {
 		    Entry<EquipmentSlotType, ItemStack> entry = EnchantmentHelper.getRandomItemWith(EnchantmentRegister.SUN_MENDING.get(), player);
 		    if(entry != null) {
-			    ItemStack stack = entry.getValue();
-                if (! stack.isEmpty() && stack.isDamaged()) {
-                    int canRepair = Math.min(EnchantmentUtil.getRepairDamageByAmount(stack, this.getAmount()), stack.getDamageValue());
-                    this.setAmount(this.getAmount() - EnchantmentUtil.getSunCostByDamage(stack, canRepair));
-                    stack.setDamageValue(stack.getDamageValue() - canRepair);
-                }
-		    }
-		    if(this.getAmount() > 0) {
-			    PlayerUtil.addResource(player, Resources.SUN_NUM, this.getAmount());
+                SunMendingEnchantment.repairItem(entry.getValue(), this.getAmount());
+		    } else {
+		    	PlayerUtil.addResource(player, Resources.SUN_NUM, this.getAmount());
 		    }
 		    PlayerUtil.playClientSound(player, PVZSounds.SUN_COLLECT);
 		}
+		this.remove();
 	}
 	
 	public static void spawnSunsByAmount(World world, BlockPos pos, int amount) {

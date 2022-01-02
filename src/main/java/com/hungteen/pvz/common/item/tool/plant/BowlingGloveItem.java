@@ -18,6 +18,7 @@ import com.hungteen.pvz.register.EntityRegister;
 import com.hungteen.pvz.utils.PlayerUtil;
 
 import net.minecraft.client.util.ITooltipFlag;
+import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.SpawnReason;
 import net.minecraft.entity.player.PlayerEntity;
@@ -74,19 +75,19 @@ public class BowlingGloveItem extends Item {
 			spawnPos = pos.relative(context.getClickedFace());
 		}
 		if (context.getClickedFace() == Direction.UP && world.isEmptyBlock(pos.above())) {// can plant here
-			final EntityType<? extends AbstractBowlingEntity> entityType = type.get().getEntity();
+			final EntityType<? extends Entity> entityType = type.get().getEntity();
 			if (entityType == null) {
 				PVZMod.LOGGER.error("BowlingGloveItem Error : no such bowling entity !");
 				return ActionResultType.FAIL;
 			}
 			if(! world.isClientSide) {
-				final AbstractBowlingEntity entity = (AbstractBowlingEntity) entityType.spawn((ServerWorld) player.level, stack, player, spawnPos, SpawnReason.SPAWN_EGG, true, true);
-			    if (entity == null) {
+				final Entity entity = entityType.spawn((ServerWorld) player.level, stack, player, spawnPos, SpawnReason.SPAWN_EGG, true, true);
+			    if (entity == null || ! (entity instanceof AbstractBowlingEntity)) {
 			    	PVZMod.LOGGER.error("BowlingGloveItem Error : bowling entity spawn error !");
 				    return ActionResultType.FAIL;
 			    }
-			    entity.summonByOwner(player);
-			    entity.shoot(player);
+			    ((AbstractBowlingEntity) entity).summonByOwner(player);
+			    ((AbstractBowlingEntity) entity).shoot(player);
 			    if (PlayerUtil.isPlayerSurvival(player)) {// reset
 				    setEmpty(stack);
 			    }
@@ -165,23 +166,23 @@ public class BowlingGloveItem extends Item {
 	/**
 	 * make sure the name of key equals to the entity's registry name who can be pick up by this item.
 	 */
-	public static void registerBowling(IPlantType type, Supplier<EntityType<? extends AbstractBowlingEntity>> supplier, float size) {
+	public static void registerBowling(IPlantType type, Supplier<EntityType<? extends Entity>> supplier, float size) {
 		BOWLINGS.put(type.getIdentity(), new BowlingType(type, supplier, size));
 	}
 	
 	public static class BowlingType {
 		
-		private final Supplier<EntityType<? extends AbstractBowlingEntity>> supplier;
+		private final Supplier<EntityType<? extends Entity>> supplier;
 		private final IPlantType type;
 		private final float renderSize;
 		
-		public BowlingType(IPlantType type, Supplier<EntityType<? extends AbstractBowlingEntity>> supplier, float size) {
+		public BowlingType(IPlantType type, Supplier<EntityType<? extends Entity>> supplier, float size) {
 			this.supplier = supplier;
 			this.type = type;
 			this.renderSize = size;
 		}
 		
-		public EntityType<? extends AbstractBowlingEntity> getEntity(){
+		public EntityType<? extends Entity> getEntity(){
 			return this.supplier.get();
 		}
 		

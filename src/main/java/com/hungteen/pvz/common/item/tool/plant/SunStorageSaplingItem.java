@@ -27,10 +27,18 @@ public class SunStorageSaplingItem extends Item {
 
 	public static final String STORAGE_STRING = "sun_storage_amount";
 	public final int MAX_STORAGE_NUM;
+	public final boolean isOnce;
 
 	public SunStorageSaplingItem(int num) {
-		super(new Item.Properties().tab(PVZItemGroups.PVZ_MISC).stacksTo(1));
+		super(new Item.Properties().tab(PVZItemGroups.PVZ_TOOL).stacksTo(1));
 		this.MAX_STORAGE_NUM = num;
+		this.isOnce = false;
+	}
+	
+	public SunStorageSaplingItem() {
+		super(new Item.Properties().tab(PVZItemGroups.PVZ_TOOL).stacksTo(1));
+		this.isOnce = true;
+		this.MAX_STORAGE_NUM = 10000;
 	}
 
 	@Override
@@ -61,6 +69,9 @@ public class SunStorageSaplingItem extends Item {
 					l.getPlayerData().setResource(Resources.SUN_NUM, sunNum);
 					PlayerUtil.playClientSound(player, PVZSounds.SUN_COLLECT);
 				});
+				if(! isNotOnceSapling(stack)) {
+					stack.shrink(1);
+				}
 			}
 		}
 		return stack;
@@ -86,36 +97,47 @@ public class SunStorageSaplingItem extends Item {
 	}
 
 	@Override
+	public void appendHoverText(ItemStack stack, World worldIn, List<ITextComponent> tooltip, ITooltipFlag flagIn) {
+		tooltip.add(new TranslationTextComponent("tooltip.pvz.sun_storage_sapling.use").withStyle(TextFormatting.GREEN));
+		tooltip.add(new TranslationTextComponent("tooltip.pvz.sun_storage_sapling.amount", getStorageSunAmount(stack)).withStyle(TextFormatting.YELLOW));
+		if(! isNotOnceSapling(stack)) {
+			tooltip.add(new TranslationTextComponent("tooltip.pvz.sun_storage_sapling.once").withStyle(TextFormatting.RED));
+		}
+	}
+	
+	public static boolean isNotOnceSapling(ItemStack stack) {
+		if(stack.getItem() instanceof SunStorageSaplingItem) {
+			return ! ((SunStorageSaplingItem) stack.getItem()).isOnce;
+		}
+		return false;
+	}
+
+	@Override
+	public void fillItemCategory(ItemGroup group, NonNullList<ItemStack> items) {
+		if (this.allowdedIn(group) && ! this.isOnce) {
+			items.add(new ItemStack(this));
+			items.add(setStorageSunAmount(new ItemStack(this), this.MAX_STORAGE_NUM));
+		}
+	}
+	
+	@Override
 	public UseAction getUseAnimation(ItemStack stack) {
 		return UseAction.EAT;
 	}
 	
 	@Override
 	public int getUseDuration(ItemStack stack) {
-		return 50;
+		return 60;
 	}
 	
 	@Override
 	public boolean showDurabilityBar(ItemStack stack) {
-		return true;
+		return ! this.isOnce;
 	}
 
 	@Override
 	public double getDurabilityForDisplay(ItemStack stack) {
 		return (1 - getStorageSunAmount(stack) * 1.0F / this.MAX_STORAGE_NUM);
-	}
-
-	@Override
-	public void appendHoverText(ItemStack stack, World worldIn, List<ITextComponent> tooltip, ITooltipFlag flagIn) {
-		tooltip.add(new TranslationTextComponent("tooltip.pvz.sun_storage_amount").append(":" + getStorageSunAmount(stack)).withStyle(TextFormatting.YELLOW));
-	}
-
-	@Override
-	public void fillItemCategory(ItemGroup group, NonNullList<ItemStack> items) {
-		if (this.allowdedIn(group)) {
-			items.add(new ItemStack(this));
-			items.add(setStorageSunAmount(new ItemStack(this), this.MAX_STORAGE_NUM));
-		}
 	}
 
 }

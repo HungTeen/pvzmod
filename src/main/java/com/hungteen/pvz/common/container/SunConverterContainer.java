@@ -1,6 +1,6 @@
 package com.hungteen.pvz.common.container;
 
-import com.hungteen.pvz.common.item.tool.plant.SunStorageSaplingItem;
+import com.hungteen.pvz.common.block.special.SunConverterBlock;
 import com.hungteen.pvz.common.tileentity.SunConverterTileEntity;
 import com.hungteen.pvz.register.ContainerRegister;
 
@@ -31,7 +31,7 @@ public class SunConverterContainer extends Container {
 				this.addSlot(new SlotItemHandler(this.te.handler, i * 3 + j, 62 + 18 * j, 17 + 18 * i) {
 					@Override
 					public boolean mayPlace(ItemStack stack) {
-						return stack.getItem() instanceof SunStorageSaplingItem;
+						return SunConverterBlock.isValidItem(stack);
 					}
 				});
 			}

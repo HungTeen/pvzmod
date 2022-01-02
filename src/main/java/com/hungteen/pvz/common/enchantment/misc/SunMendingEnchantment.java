@@ -1,11 +1,15 @@
 package com.hungteen.pvz.common.enchantment.misc;
 
+import com.hungteen.pvz.common.enchantment.EnchantmentRegister;
 import com.hungteen.pvz.common.enchantment.PVZEnchantment;
 
 import net.minecraft.enchantment.Enchantment;
+import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.enchantment.EnchantmentType;
 import net.minecraft.enchantment.Enchantments;
 import net.minecraft.inventory.EquipmentSlotType;
+import net.minecraft.item.ItemStack;
+import net.minecraft.util.math.MathHelper;
 
 public class SunMendingEnchantment extends PVZEnchantment {
 
@@ -14,7 +18,20 @@ public class SunMendingEnchantment extends PVZEnchantment {
 		this.isTradeable = false;
 		this.isTreasureOnly = true;
 	}
-
+	
+	public static void repairItem(ItemStack stack, int amount) {
+		if (! stack.isEmpty() && stack.isDamaged()) {
+			final int lvl = getLevel(stack);
+			final int needSunEach = Math.max(5, 30 - 5 * lvl);
+			final int repairDamage = Math.min(stack.getDamageValue(), MathHelper.floor(amount * stack.getXpRepairRatio() / needSunEach));
+            stack.setDamageValue(stack.getDamageValue() - repairDamage);
+        }
+	}
+	
+	public static int getLevel(ItemStack stack) {
+		return EnchantmentHelper.getItemEnchantmentLevel(EnchantmentRegister.SUN_MENDING.get(), stack);
+	}
+	
 	@Override
 	public int getMaxCost(int enchantmentLevel) {
 		return this.getMinCost(enchantmentLevel) + 10;
@@ -32,7 +49,7 @@ public class SunMendingEnchantment extends PVZEnchantment {
 
 	@Override
 	public int getMaxLevel() {
-		return 5;
+		return 3;
 	}
 	
 }

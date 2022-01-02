@@ -1,0 +1,23 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "AXA",
+    "XBX",
+    "AXA"
+  ],
+  "key": {
+    "X": {
+      "item":"minecraft:gold_ingot"
+    },
+    "A": {
+      "item":"pvz:assist_essence"
+    },
+    "B": {
+      "item":"minecraft:daylight_detector"
+    }
+  },
+  "result": {
+    "item": "pvz:resource_collector",
+    "count": 1
+  }
+}

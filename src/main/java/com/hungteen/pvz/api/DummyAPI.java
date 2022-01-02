@@ -3,10 +3,14 @@ package com.hungteen.pvz.api;
 import com.hungteen.pvz.api.PVZAPI.IPVZAPI;
 import com.hungteen.pvz.api.types.*;
 
+import net.minecraft.entity.Entity;
+import net.minecraft.entity.EntityType;
+
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 import java.util.Optional;
+import java.util.function.Supplier;
 
 /**
  * fake dummy API when there is no Custom Raid mod.
@@ -83,5 +87,13 @@ public class DummyAPI implements IPVZAPI {
     public Optional<IZombieType> getZombieTypeByID(String id) {
         return Optional.empty();
     }
+
+	@Override
+	public void registerPeaGunMode(IPlantType type) {
+	}
+
+	@Override
+	public void registerBowlingMode(IPlantType type, Supplier<EntityType<? extends Entity>> supplier, float size) {
+	}
 
 }

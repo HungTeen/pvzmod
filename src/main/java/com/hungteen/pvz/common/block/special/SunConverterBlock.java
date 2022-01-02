@@ -1,5 +1,7 @@
 package com.hungteen.pvz.common.block.special;
 
+import com.hungteen.pvz.common.enchantment.misc.SunMendingEnchantment;
+import com.hungteen.pvz.common.item.tool.plant.SunStorageSaplingItem;
 import com.hungteen.pvz.common.tileentity.SunConverterTileEntity;
 
 import net.minecraft.block.Block;
@@ -8,6 +10,7 @@ import net.minecraft.block.Blocks;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.inventory.InventoryHelper;
+import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.ActionResultType;
 import net.minecraft.util.Hand;
@@ -41,17 +44,7 @@ public class SunConverterBlock extends Block {
 		}
 		return ActionResultType.SUCCESS;
 	}
-
-	@Override
-	public VoxelShape getShape(BlockState state, IBlockReader worldIn, BlockPos pos, ISelectionContext context) {
-		return AABB;
-	}
-
-	@Override
-	public boolean hasTileEntity(BlockState state) {
-		return true;
-	}
-
+	
 	@SuppressWarnings("deprecation")
 	@Override
 	public void onRemove(BlockState state, World worldIn, BlockPos pos, BlockState newState, boolean isMoving) {
@@ -66,6 +59,23 @@ public class SunConverterBlock extends Block {
 			}
 			super.onRemove(state, worldIn, pos, newState, isMoving);
 		}
+	}
+	
+	/**
+	 * check can place in slots or not.
+	 */
+	public static boolean isValidItem(ItemStack stack) {
+		return SunStorageSaplingItem.isNotOnceSapling(stack) || SunMendingEnchantment.getLevel(stack) > 0;
+	}
+	
+	@Override
+	public VoxelShape getShape(BlockState state, IBlockReader worldIn, BlockPos pos, ISelectionContext context) {
+		return AABB;
+	}
+
+	@Override
+	public boolean hasTileEntity(BlockState state) {
+		return true;
 	}
 	
 }

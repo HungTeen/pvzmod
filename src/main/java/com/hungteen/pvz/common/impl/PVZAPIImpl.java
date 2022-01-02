@@ -2,11 +2,17 @@ package com.hungteen.pvz.common.impl;
 
 import com.hungteen.pvz.api.PVZAPI.IPVZAPI;
 import com.hungteen.pvz.api.types.*;
+import com.hungteen.pvz.common.item.tool.plant.BowlingGloveItem;
+import com.hungteen.pvz.common.item.tool.plant.PeaGunItem;
+
+import net.minecraft.entity.Entity;
+import net.minecraft.entity.EntityType;
 
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 import java.util.Optional;
+import java.util.function.Supplier;
 
 public class PVZAPIImpl implements IPVZAPI{
 
@@ -88,6 +94,16 @@ public class PVZAPIImpl implements IPVZAPI{
 	@Override
 	public Optional<IZombieType> getZombieTypeByID(String id) {
 		return ZombieType.getZombieByName(id);
+	}
+
+	@Override
+	public void registerPeaGunMode(IPlantType type) {
+		PeaGunItem.registerPeaGunShootMode(type);
+	}
+
+	@Override
+	public void registerBowlingMode(IPlantType type, Supplier<EntityType<? extends Entity>> supplier, float size) {
+		BowlingGloveItem.registerBowling(type, supplier, size);
 	}
 
 }

@@ -78,7 +78,7 @@ public class ItemModelGenerator extends ItemModelProvider{
 			genHeld(i.getRegistryName().getPath(), StringUtil.prefix("item/" + i.getRegistryName().getPath()));
 		});
 		//3 types of sun storage sapling.
-		genSameModelsWithAdd(ItemRegister.SUN_STORAGE_SAPLING.get(), ItemRegister.SMALL_SUN_STORAGE_SAPLING.get(), ItemRegister.LARGE_STORAGE_SAPLING.get());
+		genSameModelsWithAdd(ItemRegister.SUN_STORAGE_SAPLING.get(), ItemRegister.SMALL_SUN_STORAGE_SAPLING.get(), ItemRegister.LARGE_SUN_STORAGE_SAPLING.get(), ItemRegister.ONCE_SUN_STORAGE_SAPLING.get());
 		//last step for all normal item models.
 		for(Item i : ForgeRegistries.ITEMS) {
 			if(i.getRegistryName().getNamespace().equals(PVZMod.MOD_ID) && ! addedItems.contains(i)) {

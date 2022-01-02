@@ -2,6 +2,11 @@ package com.hungteen.pvz.api;
 
 import com.google.common.base.Suppliers;
 import com.hungteen.pvz.api.types.*;
+import com.hungteen.pvz.common.entity.misc.bowling.AbstractBowlingEntity;
+
+import net.minecraft.entity.Entity;
+import net.minecraft.entity.EntityType;
+
 import org.apache.logging.log4j.LogManager;
 
 import java.util.Collection;
@@ -71,6 +76,16 @@ public class PVZAPI {
 		 * register several cds list.
 		 */
 		void registerCDs(Collection<ICoolDown> types);
+		
+		/**
+		 * register pea gun shooting mode.
+		 */
+		void registerPeaGunMode(IPlantType type);
+		
+		/**
+		 * register bowling gloves mode, entity type should extends {@link AbstractBowlingEntity}.
+		 */
+		void registerBowlingMode(IPlantType type, Supplier<EntityType<? extends Entity>> supplier, float size);
 
 		/* getting stuffs */
 
