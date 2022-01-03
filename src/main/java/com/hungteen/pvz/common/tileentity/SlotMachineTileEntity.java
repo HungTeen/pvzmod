@@ -4,323 +4,552 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 import java.util.Random;
 
+import javax.annotation.Nullable;
+
+import com.hungteen.pvz.PVZMod;
+import com.hungteen.pvz.api.events.LotteryEvent;
 import com.hungteen.pvz.common.container.SlotMachineContainer;
+import com.hungteen.pvz.common.datapack.LotteryTypeLoader;
+import com.hungteen.pvz.common.entity.misc.drop.JewelEntity;
+import com.hungteen.pvz.common.entity.misc.drop.SunEntity;
 import com.hungteen.pvz.common.misc.sound.PVZSounds;
 import com.hungteen.pvz.common.misc.sound.SoundRegister;
+import com.hungteen.pvz.register.EntityRegister;
 import com.hungteen.pvz.register.TileEntityRegister;
+import com.hungteen.pvz.utils.EntityUtil;
 import com.hungteen.pvz.utils.PlayerUtil;
 import com.hungteen.pvz.utils.enums.Resources;
+import com.hungteen.pvz.utils.others.WeightList;
 
 import net.minecraft.block.BlockState;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.inventory.container.Container;
 import net.minecraft.inventory.container.INamedContainerProvider;
+import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.network.NetworkManager;
 import net.minecraft.network.play.server.SUpdateTileEntityPacket;
 import net.minecraft.tileentity.ITickableTileEntity;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.IIntArray;
+import net.minecraft.util.INameable;
 import net.minecraft.util.IntArray;
+import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.SoundCategory;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.TranslationTextComponent;
+import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.common.util.Constants;
 import net.minecraftforge.items.ItemStackHandler;
 
-public class SlotMachineTileEntity extends TileEntity implements ITickableTileEntity, INamedContainerProvider {
+/**
+ * 1. get resource of lottery type. 2. press button to choose fast start or slow
+ * start. 3. randomly get a short list from the default list to form a weight
+ * list. 4.
+ */
+public class SlotMachineTileEntity extends TileEntity implements ITickableTileEntity, INamedContainerProvider, INameable {
 
-	public static final List<SlotOptions> OPTION_LIST = new ArrayList<>();
-	public static final List<Integer> WEIGHT_LIST = new ArrayList<>();
-	public static final Map<SlotOptions, Integer> OPTION_MAP = new HashMap<>();
-	public static int sum;
-	public static final int SUN_COST = 25;
-	private final List<SlotOptions> currentList = new ArrayList<>();
 	public final ItemStackHandler handler = new ItemStackHandler(3);
+	/*
+	 * 0 - 11 : slot types. 12 : change tick. 13 : current pos. 14 : running or not.
+	 * 15 : change cd.
+	 */
 	public final IIntArray array = new IntArray(16);
-	public SlotOptions[][] slotOptions = new SlotOptions[4][3];
+//	public static final SlotType EMPTY = new SlotType(SlotTypes.EMPTY);
+	public final SlotType[][] SlotOptions = new SlotType[4][3];
+	protected final List<SlotType> List = new ArrayList<>();
+	private Map<SlotType, Integer> optionMap;
+	protected final Random rand = new Random();
+	protected ResourceLocation resource;
+	private LotteryType lotteryType;
 	public int currentPos = 1;
-	private final int minChangeCnt = 15;
-	private final int maxChangeCnt = 25;
+	private final int minChangeCnt = 12;
+	private final int maxChangeCnt = 24;
 	private int changeCnt;
 	private int changeTick = 0;
 	private boolean isRunning = false;
-	@SuppressWarnings("unused")
 	private PlayerEntity player;
-	
-	static {
-		sum = 0;
-//		putOptionToMap(new SlotOptions(1, 2));
-//		putOptionToMap(new SlotOptions(2, 1));
-//		for(Plants plant : Plants.values()) {
-//			Ranks rank = PlantUtil.getPlantRankByName(plant);
-//			putOptionToMap(new SlotOptions(plant, (Ranks.values().length - rank.ordinal()) / 2 + 1));
-//		}
-	}
-	
-	private static void putOptionToMap(SlotOptions option) {
-		OPTION_MAP.put(option, OPTION_LIST.size());
-		OPTION_LIST.add(option);
-//		sum += option.weight;
-		WEIGHT_LIST.add(sum);
-	}
-	
+	private ITextComponent name;
+
 	public SlotMachineTileEntity() {
 		super(TileEntityRegister.SLOT_MACHINE.get());
-		Random rand = new Random();
-		for(int i = 0; i < 4; ++ i) {
-			for(int j = 0; j < 3; ++ j) {
-				slotOptions[i][j] = OPTION_LIST.get(rand.nextInt(OPTION_LIST.size()));
+	}
+
+	public void fastStart(PlayerEntity player) {
+		this.onStart(player);
+		this.refreshOptionList();
+		this.genAll();
+		this.checkResult();
+
+		// sync.
+		for (int i = 0; i < 4; ++i) {
+			for (int j = 0; j < 3; ++j) {
+				int id = i * 3 + j;
+				this.array.set(id, this.getOptionMap().get(this.SlotOptions[i][j]));
 			}
 		}
+		this.level.sendBlockUpdated(worldPosition, getBlockState(), getBlockState(), Constants.BlockFlags.BLOCK_UPDATE);
+	}
+
+	public void slowStart(PlayerEntity player) {
+		this.onStart(player);
+		this.refreshOptionList();
+		this.genNextRow();
+		this.changeCnt = level.random.nextInt(this.maxChangeCnt - this.minChangeCnt + 1) + this.minChangeCnt;
+
 	}
 
 	@Override
 	public void tick() {
-		if(! level.isClientSide) {
-			for(int i = 0; i < 4; ++ i) {
-				for(int j = 0; j < 3; ++ j) {
-					int id = i * 3 + j;
-					this.array.set(id, OPTION_MAP.get(slotOptions[i][j]));//0 - 11
+		if (!level.isClientSide) {
+			if (this.getLotteryType() == null) {// wait for data pack sync.
+				return;
+			}
+
+//			if(this.rand.nextDouble() < 0.01) {
+//				for(int i = 0; i < 4; ++ i) {
+//					for(int j = 0; j < 3; ++ j) {
+//						System.out.print(this.SlotOptions[i][j].getStack().isPresent() ? this.SlotOptions[i][j].getStack().get() + ", " : "empty, ");
+//					}
+//					System.out.println();
+//				}
+//				System.out.println(this.currentPos);
+//			}
+//			
+			// sync.
+			for (int i = 0; i < 4; ++i) {
+				for (int j = 0; j < 3; ++j) {
+					final int id = i * 3 + j;
+					this.array.set(id, this.getOptionMap().get(this.SlotOptions[i][j]));
 				}
 			}
-			this.array.set(12, this.changeTick); // 12
-			this.array.set(13, this.currentPos); // 13
-			this.array.set(14, this.canRun() ? 1 : 0); // 14
-			this.array.set(15, this.getChangeTick()); // 15
-			if(this.changeTick > 0) {
-				if(this.currentList.isEmpty()) {
+			this.array.set(12, this.changeTick);
+			this.array.set(13, this.currentPos);
+			this.array.set(14, this.canRun() ? 1 : 0);
+			this.array.set(15, this.getChangeTick());
+
+			// run.
+			if (this.changeTick > 0) {
+				if (this.List.isEmpty()) {
 					this.changeTick = 0;
 					this.changeCnt = 0;
-					return ;
+					return;
 				}
-				-- this.changeTick;
-				if(this.changeTick == 0) {
-					-- this.changeCnt;
-					if(this.changeCnt == 0) {
+				--this.changeTick;
+				if (this.changeTick == 0) {
+					--this.changeCnt;
+					if (this.changeCnt == 0) {
 						this.checkResult();
 					} else {
 						this.genNextRow();
 					}
 				}
-				level.sendBlockUpdated(worldPosition, getBlockState(), getBlockState(), Constants.BlockFlags.BLOCK_UPDATE);
+				this.level.sendBlockUpdated(worldPosition, getBlockState(), getBlockState(),
+						Constants.BlockFlags.BLOCK_UPDATE);
 			}
 		}
 	}
-	
-	private void checkResult() {
-		this.isRunning = false;
-		int leftId = OPTION_MAP.get(this.slotOptions[this.currentPos][0]);
-		int midId = OPTION_MAP.get(this.slotOptions[this.currentPos][1]);
-		int rightId = OPTION_MAP.get(this.slotOptions[this.currentPos][2]);
-		if(leftId != midId && midId != rightId && leftId != rightId) {// nothing equal
-			return ;
-		} else if(leftId == midId && midId == rightId) { // all equal
-			this.genBonusResult(leftId, 3);
-		} else if(leftId == midId){
-			this.genBonusResult(leftId, 1);
-		} else if(leftId == rightId){
-		 	this.genBonusResult(leftId, 1);
-		} else if(rightId == midId){
-			this.genBonusResult(rightId, 1);
-		}
-	}
-	
-	private void genBonusResult(int type, int num) {
-		SlotOptions option = OPTION_LIST.get(type);
-//		if(option.isSun) {
-//			int cnt = (num == 1 ? 4 : 20);
-//			for(int i = 0; i < cnt; ++ i) {
-//				SunEntity sun = EntityRegister.SUN.get().create(maxLevel);
-//				sun.setAmount(25);
-//				EntityUtil.onMobEntityRandomPosSpawn(maxLevel, sun, worldPosition, 2);
-//			}
-//			maxLevel.playSound(null, worldPosition, SoundRegister.JEWEL_DROP.get(), SoundCategory.BLOCKS, 1F, 1F);
-//			return ;
-//		}
-//		for(int i = 0; i < num; ++ i) {
-//			if(option.isJewel) {
-//				JewelEntity jewel = EntityRegister.JEWEL.get().create(maxLevel);
-//				jewel.setAmount(1);
-//				EntityUtil.onMobEntityRandomPosSpawn(maxLevel, jewel, worldPosition, 2);
-//			} else if(option.plantType.isPresent()){
-//				Plants plant = option.plantType.get();
-//				PlantCardItem item = PlantUtil.getPlantEnjoyCard(plant);
-//				this.handler.setStackInSlot(i, new ItemStack(item));
-//			}
-//		}
-		level.playSound(null, worldPosition, SoundRegister.JEWEL_DROP.get(), SoundCategory.BLOCKS, 1F, 1F);
-	}
-	
-	private void genNextRow() {
-		this.changeTick = this.getChangeTick();
-		this.currentPos = (this.currentPos + 1) % 4;
-		int next = (this.currentPos + 1) % 4;
-		for(int i = 0; i < 3; ++ i) {
-			this.slotOptions[next][i] = currentList.get(level.random.nextInt(currentList.size())); 
-//			System.out.print(this.slotOptions[next][i].plantType.isPresent() ? this.slotOptions[next][i].plantType.get() + " " : "X ");
-		}
-//		System.out.println("");
-	}
 
-	public void startRun(PlayerEntity player) {
-		if(player == null) {
+	private void onStart(PlayerEntity player) {
+		if (player == null) {
 			System.out.println("Error : No player bind with Slot Machine !");
-			return ;
+			return;
 		}
 		this.player = player;
 		this.isRunning = true;
 		PlayerUtil.playClientSound(player, PVZSounds.SLOT_MACHINE);
-		PlayerUtil.addResource(player, Resources.SUN_NUM, - SUN_COST);
-		PlayerUtil.addResource(player, Resources.LOTTERY_CHANCE, - 1);
-		this.changeCnt = level.random.nextInt(this.maxChangeCnt - this.minChangeCnt + 1) + this.minChangeCnt;
-		this.refreshOptionList();
-		this.genNextRow();
+		PlayerUtil.addResource(player, Resources.SUN_NUM, -this.getSunCost());
+		PlayerUtil.addResource(player, Resources.LOTTERY_CHANCE, -1);
 	}
-	
-	private void refreshOptionList() {
-		this.currentList.clear();
-		this.currentList.add(OPTION_LIST.get(0));
-		int len = level.random.nextInt(5) + 9;
-		for(int i = 0; i < len; ++ i) {
-			int now = level.random.nextInt(sum);
-			for(int j = 0; j < OPTION_LIST.size(); ++ j) {
-				if(now < WEIGHT_LIST.get(j)) {
-					this.currentList.add(OPTION_LIST.get(j));
-					break;
-				}
+
+	protected void checkResult() {
+		final int leftId = this.getOptionMap().get(this.SlotOptions[this.currentPos][0]);
+		final int midId = this.getOptionMap().get(this.SlotOptions[this.currentPos][1]);
+		final int rightId = this.getOptionMap().get(this.SlotOptions[this.currentPos][2]);
+		this.isRunning = false;
+		if (leftId != midId && midId != rightId && leftId != rightId) {// nothing equal.
+			return;
+		} else if (leftId == midId && midId == rightId) { // all equal.
+			this.genBonusResult(leftId, 3);
+		} else if (leftId == midId) {
+			this.genBonusResult(leftId, 1);
+		} else if (leftId == rightId) {
+			this.genBonusResult(leftId, 1);
+		} else if (rightId == midId) {
+			this.genBonusResult(rightId, 1);
+		}
+	}
+
+	private void genBonusResult(int id, int num) {
+		final SlotType type = this.getLotteryType().getSlotType(id);
+		switch (type.getSlotTypes()) {
+		case ITEM: {
+			for (int i = 0; i < num; ++i) {
+				final ItemStack newStack = type.stack.get().copy();
+				this.handler.setStackInSlot(i, newStack);
+			}
+			break;
+		}
+		case SUN: {
+			final int amount = (num == 1 ? 3 : 10) * this.getSunCost();
+			SunEntity.spawnSunsByAmount(this.level, worldPosition, amount, 50, 2);
+			break;
+		}
+		case JEWEL: {
+			for (int i = 0; i < (num == 1 ? 2 : 7); ++i) {
+				JewelEntity jewel = EntityRegister.JEWEL.get().create(this.level);
+				jewel.setAmount(1);
+				EntityUtil.onMobEntityRandomPosSpawn(this.level, jewel, worldPosition, 3);
+			}
+			break;
+		}
+		case EVENT: {
+			MinecraftForge.EVENT_BUS.post(new LotteryEvent(this, this.player, type, num));
+			break;
+		}
+		default:
+			break;
+		}
+		this.level.playSound(null, worldPosition, SoundRegister.JEWEL_DROP.get(), SoundCategory.BLOCKS, 1F, 1F);
+	}
+
+	private void genAll() {
+		for (int i = 0; i < 4; ++i) {
+			for (int j = 0; j < 3; ++j) {
+				this.SlotOptions[i][j] = List.get(level.random.nextInt(List.size()));
 			}
 		}
 	}
-	
+
+	private void genNextRow() {
+		this.changeTick = this.getChangeTick();
+		this.currentPos = (this.currentPos + 1) % 4;
+		int next = (this.currentPos + 1) % 4;
+		for (int i = 0; i < 3; ++i) {
+			this.SlotOptions[next][i] = List.get(level.random.nextInt(List.size()));
+		}
+	}
+
+	private void refreshOptionList() {
+		this.List.clear();
+		final int len = this.getLotteryType().getSlotCount();
+		if (len == 0) {
+			PVZMod.LOGGER.error("Slot Machine TE : Error ! Why there is a zero length ?");
+			return;
+		}
+
+		for (int i = 0; i < len; ++i) {
+			final SlotType type = this.getLotteryType().getSlotType(this.rand);
+			this.List.add(type);
+		}
+	}
+
 	public int getChangeTick() {
-		if(this.changeCnt <= 2) return 16;
-		if(this.changeCnt <= 5) return 12;
-		if(this.changeCnt <= 12) return 8;
+		if (this.changeCnt <= 2)
+			return 16;
+		if (this.changeCnt <= 5)
+			return 12;
+		if (this.changeCnt <= 12)
+			return 8;
 		return 4;
 	}
-	
+
 	private boolean canRun() {
-		for(int i = 0; i < 3; ++ i) {
-			if(! this.handler.getStackInSlot(i).isEmpty()) {
+		// slot is full.
+		for (int i = 0; i < 3; ++i) {
+			if (!this.handler.getStackInSlot(i).isEmpty()) {
 				return false;
 			}
 		}
-		return ! this.isRunning;
+		// no enough sun or lottery chance.
+		if (PlayerUtil.getResource(this.player, Resources.SUN_NUM) < this.getSunCost()
+				|| PlayerUtil.getResource(this.player, Resources.LOTTERY_CHANCE) <= 0) {
+			return false;
+		}
+		return !this.isRunning;
 	}
-	
-	@Override
-	public SUpdateTileEntityPacket getUpdatePacket() {
-		return new SUpdateTileEntityPacket(worldPosition, 1, getUpdateTag());
-	}
-	
-	@Override
-	public void onDataPacket(NetworkManager net, SUpdateTileEntityPacket pkt) {
-		handleUpdateTag(this.level.getBlockState(getBlockPos()), pkt.getTag());
-	}
-	
-	@Override
-	public void handleUpdateTag(BlockState state, CompoundNBT tag) {
-		super.handleUpdateTag(state, tag);
-		for(int i = 0; i < 16; ++ i) {
-			if(tag.contains("slot_machine_" + i)){
-				this.array.set(i, tag.getInt("slot_machine_" + i));
-			}
-		}
-	}
-	
-	@Override
-	public CompoundNBT getUpdateTag() {
-		CompoundNBT compoundNBT = super.getUpdateTag();
-		for(int i = 0; i < 16; ++ i) {
-			compoundNBT.putInt("slot_machine_" + i, this.array.get(i));
-		}
-		return compoundNBT;
-	}
-	
-	@Override
-	public void load(BlockState state, CompoundNBT compound) {
-    	super.load(state, compound);
-		if(compound.contains("change_tick")) {
-			this.changeTick = compound.getInt("change_tick");
-		}
-		if(compound.contains("change_cnt")) {
-			this.changeCnt = compound.getInt("change_cnt");
-		}
-		if(compound.contains("is_machine_running")) {
-			this.isRunning = compound.getBoolean("is_machine_running");
-		}
-		for(int i = 0; i < 4; ++ i) {
-			for(int j = 0; j < 3; ++ j) {
-				if(compound.contains("slot_option" + (i * 3 + j))){
-					this.slotOptions[i][j] = OPTION_LIST.get(compound.getInt("slot_option" + (i * 3 + j)));
-				}
-			}
-		}
-		if(compound.contains("slot_machine_result")) {
-			this.handler.deserializeNBT(compound.getCompound("slot_machine_result"));
-		}
-	}
-	
-	@Override
-	public CompoundNBT save(CompoundNBT compound) {
-		compound.putInt("change_tick", this.changeTick);
-		compound.putInt("change_cnt", this.changeCnt);
-		compound.putBoolean("is_machine_running", this.isRunning);
-		for(int i = 0; i < 4; ++ i) {
-			for(int j = 0; j < 3; ++ j) {
-				compound.putInt("slot_option" + (i * 3 + j), OPTION_MAP.get(this.slotOptions[i][j]));
-			}
-		}
-		compound.put("slot_machine_result", this.handler.serializeNBT());
-		return super.save(compound);
-	}
-	
+
 	public boolean isUsableByPlayer(PlayerEntity player) {
 		if (this.level.getBlockEntity(this.worldPosition) != this) {
 			return false;
 		}
-		return player.distanceToSqr((double) this.worldPosition.getX() + 0.5D, (double) this.worldPosition.getY() + 0.5D, (double) this.worldPosition.getZ() + 0.5D) <= 64.0D;
+		return player.distanceToSqr((double) this.worldPosition.getX() + 0.5D,
+				(double) this.worldPosition.getY() + 0.5D, (double) this.worldPosition.getZ() + 0.5D) <= 64.0D;
 	}
-	
+
 	public void setPlayer(PlayerEntity player) {
 		this.player = player;
 	}
-	
+
+	public void init(ResourceLocation res) {
+		this.resource = res;
+		for (int i = 0; i < 4; ++i) {
+			for (int j = 0; j < 3; ++j) {
+				this.SlotOptions[i][j] = this.getLotteryType().getSlotType(this.rand);
+			}
+		}
+		this.level.sendBlockUpdated(worldPosition, getBlockState(), getBlockState(), Constants.BlockFlags.BLOCK_UPDATE);
+	}
+
 	@Override
 	public Container createMenu(int id, PlayerInventory inv, PlayerEntity player) {
 		return new SlotMachineContainer(id, player, this.worldPosition);
 	}
 
+	public void setCustomName(ITextComponent name) {
+		this.name = name;
+	}
+
 	@Override
 	public ITextComponent getDisplayName() {
-		return new TranslationTextComponent("gui.pvz.slot_machine");
+		return this.getName();
 	}
 	
-	public static class SlotOptions {
+	@Override
+	public ITextComponent getName() {
+		return this.name != null ? this.name : this.getDefaultName();
+	}
+
+	@Nullable
+	public ITextComponent getCustomName() {
+		return this.name;
+	}
+
+	public ITextComponent getDefaultName() {
+		return new TranslationTextComponent("gui.pvz.slot_machine");
+	}
+
+	public LotteryType getLotteryType() {
+		return this.lotteryType == null ? this.lotteryType = LotteryTypeLoader.LOTTERIES.get(this.resource)
+				: this.lotteryType;
+	}
+
+	public Map<SlotType, Integer> getOptionMap() {
+		if (this.optionMap == null) {
+			this.optionMap = new HashMap<>();
+			if(this.getLotteryType() != null) {
+				this.getLotteryType().updateMap(this.optionMap);
+			}
+		}
+		return this.optionMap;
+	}
+
+	public int getSunCost() {
+		return this.getLotteryType().getSunCost();
+	}
+
+	@Override
+	public SUpdateTileEntityPacket getUpdatePacket() {
+		return new SUpdateTileEntityPacket(worldPosition, 1, getUpdateTag());
+	}
+
+	@Override
+	public void onDataPacket(NetworkManager net, SUpdateTileEntityPacket pkt) {
+		handleUpdateTag(this.level.getBlockState(getBlockPos()), pkt.getTag());
+	}
+
+	@Override
+	public void handleUpdateTag(BlockState state, CompoundNBT tag) {
+		super.handleUpdateTag(state, tag);
+		for (int i = 0; i < 16; ++i) {
+			if (tag.contains("slot_machine_" + i)) {
+				this.array.set(i, tag.getInt("slot_machine_" + i));
+			}
+		}
+
+		if (tag.contains("lottery_type")) {
+			this.resource = new ResourceLocation(tag.getString("lottery_type"));
+		}
+	}
+
+	@Override
+	public CompoundNBT getUpdateTag() {
+		CompoundNBT compoundNBT = super.getUpdateTag();
+		for (int i = 0; i < 16; ++i) {
+			compoundNBT.putInt("slot_machine_" + i, this.array.get(i));
+		}
+
+		if (this.resource != null) {
+			compoundNBT.putString("lottery_type", this.resource.toString());
+		}
+
+		return compoundNBT;
+	}
+
+	@Override
+	public void load(BlockState state, CompoundNBT compound) {
+		super.load(state, compound);
+
+		if (compound.contains("change_tick")) {
+			this.changeTick = compound.getInt("change_tick");
+		}
+
+		if (compound.contains("change_cnt")) {
+			this.changeCnt = compound.getInt("change_cnt");
+		}
+
+		if (compound.contains("is_machine_running")) {
+			this.isRunning = compound.getBoolean("is_machine_running");
+		}
+
+		if (compound.contains("lottery_type")) {
+			this.resource = new ResourceLocation(compound.getString("lottery_type"));
+		}
+
+		for (int i = 0; i < 4; ++i) {
+			for (int j = 0; j < 3; ++j) {
+				if (compound.contains("slot_option" + (i * 3 + j))) {
+					this.SlotOptions[i][j] = this.getLotteryType()
+							.getSlotType(compound.getInt("slot_option" + (i * 3 + j)));
+				}
+			}
+		}
+
+		if (compound.contains("slot_machine_result")) {
+			this.handler.deserializeNBT(compound.getCompound("slot_machine_result"));
+		}
 		
-//		public final Optional<Plants> plantType;
-//		public final boolean isSun;
-//		public final boolean isJewel;
-//		public final int weight;
-//		
-//		public SlotOptions(int type, int weight) {
-//			this.plantType = Optional.empty();
-//			this.isSun = (type == 1);
-//			this.isJewel = (type == 2);
-//			this.weight = weight;
-//		}
-//		
-//		public SlotOptions(Plants plant, int weight) {
-//			this.plantType = Optional.of(plant);
-//			this.isSun = false;
-//			this.isJewel = false;
-//			this.weight = weight;
-//		}
-//		
+		if (compound.contains("CustomName", 8)) {
+	         this.name = ITextComponent.Serializer.fromJson(compound.getString("CustomName"));
+	      }
+	}
+
+	@Override
+	public CompoundNBT save(CompoundNBT compound) {
+		compound.putInt("change_tick", this.changeTick);
+
+		compound.putInt("change_cnt", this.changeCnt);
+
+		compound.putBoolean("is_machine_running", this.isRunning);
+
+		if (this.resource != null) {
+			compound.putString("lottery_type", this.resource.toString());
+		}
+		
+		for (int i = 0; i < 4; ++i) {
+			for (int j = 0; j < 3; ++j) {
+				if(this.getOptionMap().containsKey(this.SlotOptions[i][j])) {
+				    compound.putInt("slot_option" + (i * 3 + j), this.getOptionMap().get(this.SlotOptions[i][j]));
+				}
+			}
+		}
+
+		compound.put("slot_machine_result", this.handler.serializeNBT());
+		
+		if (this.name != null) {
+			compound.putString("CustomName", ITextComponent.Serializer.toJson(this.name));
+	      }
+
+		return super.save(compound);
+	}
+
+	public static class SlotType {
+		private Optional<ItemStack> stack = Optional.empty();
+		private String identity = "";
+		private final SlotTypes slotTypes;
+
+		public SlotType(SlotTypes type) {
+			this.slotTypes = type;
+		}
+
+		public void setItemStack(ItemStack stack) {
+			this.stack = Optional.ofNullable(stack);
+		}
+
+		public SlotTypes getSlotTypes() {
+			return slotTypes;
+		}
+
+		public Optional<ItemStack> getStack() {
+			return stack;
+		}
+
+		public void setIdentity(String identity) {
+			this.identity = identity;
+		}
+
+		public String getIdentity() {
+			return identity;
+		}
+	}
+
+	public static class LotteryType {
+
+		private final WeightList<SlotType> list = new WeightList<>();
+		private LotteryTypes lotteryTypes = LotteryTypes.NORMAL;
+		private final ResourceLocation res;
+		private int slotCount;
+		private int sunCost;
+
+		public LotteryType(ResourceLocation res) {
+			this.res = res;
+		}
+
+		public void addSlotType(SlotType type, int w) {
+			list.addItem(type, w);
+		}
+
+		public void setLotteryTypes(LotteryTypes lotteryTypes) {
+			this.lotteryTypes = lotteryTypes;
+		}
+
+		public LotteryTypes getLotteryTypes() {
+			return this.lotteryTypes;
+		}
+
+		public ResourceLocation getResource() {
+			return this.res;
+		}
+
+		public SlotType getSlotType(int pos) {
+			return this.list.getItemList().get(pos);
+		}
+
+		public void setSunCost(int cost) {
+			this.sunCost = cost;
+		}
+
+		public int getSunCost() {
+			return sunCost;
+		}
+
+		public void setSlotCount(int slotCount) {
+			this.slotCount = slotCount;
+		}
+
+		public int getSlotCount() {
+			return slotCount;
+		}
+
+		public SlotType getSlotType(Random rand) {
+			return this.list.getRandomItem(rand).get();
+		}
+
+		public void updateMap(Map<SlotType, Integer> map) {
+			map.clear();
+
+			final List<SlotType> list = this.list.getItemList();
+			for (int i = 0; i < list.size(); ++i) {
+				map.put(list.get(i), i);
+			}
+		}
+
+		public int getSize() {
+			return this.list.getLen();
+		}
+	}
+
+	public enum LotteryTypes {
+		NORMAL, ALL_PLANT_CARDS, ALL_ZOMBIE_CARDS, ALL_SUMMON_CARDS
+	}
+
+	public enum SlotTypes {
+//		EMPTY,//nothing
+		ITEM, SUN, JEWEL, TREE_XP, COIN, EVENT // for event handler.
 	}
 
 }

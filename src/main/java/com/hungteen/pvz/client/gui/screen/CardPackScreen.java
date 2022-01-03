@@ -1,9 +1,7 @@
 package com.hungteen.pvz.client.gui.screen;
 
-import com.hungteen.pvz.client.cache.ClientPlayerResources;
 import com.hungteen.pvz.common.container.CardPackContainer;
 import com.hungteen.pvz.utils.StringUtil;
-import com.hungteen.pvz.utils.enums.Resources;
 import com.mojang.blaze3d.matrix.MatrixStack;
 
 import net.minecraft.client.gui.screen.inventory.ContainerScreen;

@@ -3,9 +3,9 @@ package com.hungteen.pvz.client.gui.screen.shop;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.hungteen.pvz.client.cache.ClientPlayerResources;
 import com.hungteen.pvz.client.gui.GuiHandler;
 import com.hungteen.pvz.common.container.shop.AbstractDaveShopContainer;
+import com.hungteen.pvz.utils.PlayerUtil;
 import com.hungteen.pvz.utils.StringUtil;
 import com.hungteen.pvz.utils.TradeUtil;
 import com.hungteen.pvz.utils.TradeUtil.DaveGoods;
@@ -35,7 +35,7 @@ public class DaveShopScreen extends AbstractDaveShopScreen {
 		this.minecraft.getTextureManager().bind(TEXTURE);
 //        blit(this.guiLeft, this.guiTop, 0, 0, this.xSize, this.ySize, 512, 256);
 		blit(stack, this.leftPos, this.topPos, this.getBlitOffset(), 0.0F, 0.0F, this.imageWidth, this.imageHeight, 256, 512);
-		StringUtil.drawCenteredScaledString(stack, font, ClientPlayerResources.getPlayerStats(Resources.MONEY) + "", this.leftPos + 25 + 44, this.topPos + 9, Colors.WHITE, 1.4f);
+		StringUtil.drawCenteredScaledString(stack, font, PlayerUtil.getResource(this.minecraft.player, Resources.MONEY) + "", this.leftPos + 25 + 44, this.topPos + 9, Colors.WHITE, 1.4f);
 		StringUtil.drawCenteredScaledString(stack, font, new TranslationTextComponent("gui.pvz.dave_shop.title").getString(), this.leftPos + 115 + 82, this.topPos + 6, Colors.BLACK, 1.4f);
 	    stack.popPose();
 	}
@@ -57,7 +57,7 @@ public class DaveShopScreen extends AbstractDaveShopScreen {
 		List<TradeType> list = new ArrayList<>();
 		this.getAvailableGoods().forEach((good) -> {
 			if(good == DaveGoods.ENERGY) {
-				int num = ClientPlayerResources.getPlayerStats(Resources.MAX_ENERGY_NUM);
+				int num = PlayerUtil.getResource(this.minecraft.player, Resources.MAX_ENERGY_NUM);
 				if(num < 5) {
 				    int cost = TradeUtil.getEnergyCost(num);
 				    list.add(new TradeType(cost, good));

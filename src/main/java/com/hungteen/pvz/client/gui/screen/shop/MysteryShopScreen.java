@@ -9,6 +9,7 @@ import com.hungteen.pvz.common.container.shop.AbstractDaveShopContainer;
 import com.hungteen.pvz.common.container.shop.MysteryShopContainer;
 import com.hungteen.pvz.common.network.PVZPacketHandler;
 import com.hungteen.pvz.common.network.toserver.ClickButtonPacket;
+import com.hungteen.pvz.utils.PlayerUtil;
 import com.hungteen.pvz.utils.StringUtil;
 import com.hungteen.pvz.utils.TradeUtil;
 import com.hungteen.pvz.utils.TradeUtil.DaveGoods;
@@ -48,7 +49,7 @@ public class MysteryShopScreen extends AbstractDaveShopScreen {
 	
 	@Override
 	protected boolean canBuyNow() {
-		return this.selectedGood != null && this.selectedTrade != null && ClientPlayerResources.getPlayerStats(Resources.GEM_NUM) >= this.selectedTrade.money && this.menu.canClickBuyButton();
+		return this.selectedGood != null && this.selectedTrade != null && PlayerUtil.getResource(this.minecraft.player, Resources.GEM_NUM) >= this.selectedTrade.money && this.menu.canClickBuyButton();
 	}
 	
 	@Override
@@ -56,7 +57,7 @@ public class MysteryShopScreen extends AbstractDaveShopScreen {
 		stack.pushPose();
 		this.minecraft.getTextureManager().bind(PennyShopScreen.TEXTURE);
 		blit(stack, this.leftPos, this.topPos, this.getBlitOffset(), 0.0F, 0.0F, this.imageWidth, this.imageHeight, 256, 512);
-		StringUtil.drawCenteredScaledString(stack, font, ClientPlayerResources.getPlayerStats(Resources.GEM_NUM) + "", this.leftPos + 25 + 44, this.topPos + 9, Colors.WHITE, 1.4f);
+		StringUtil.drawCenteredScaledString(stack, font, PlayerUtil.getResource(this.minecraft.player, Resources.GEM_NUM) + "", this.leftPos + 25 + 44, this.topPos + 9, Colors.WHITE, 1.4f);
 		StringUtil.drawCenteredScaledString(stack, font, new TranslationTextComponent("gui.pvz.mystery_shop.title").getString(), this.leftPos + 115 + 82, this.topPos + 6, Colors.BLACK, 1.4f);
 		StringUtil.drawCenteredScaledString(stack, font, new TranslationTextComponent("gui.pvz.dave_shop.time_left").append(":" + ClientPlayerResources.updateGoodTick).getString(), this.leftPos + 115 + 130, this.topPos + 20, Colors.BLACK, 0.8f);
 	    stack.popPose();

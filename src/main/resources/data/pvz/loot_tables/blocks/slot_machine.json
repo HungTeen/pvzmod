@@ -6,6 +6,24 @@
       "entries": [
         {
           "type": "minecraft:item",
+          "functions": [
+            {
+              "function": "minecraft:copy_nbt",
+              "source": "block_entity",
+              "ops": [
+                {
+                  "source": "Lock",
+                  "target": "BlockEntityTag.Lock",
+                  "op": "replace"
+                },
+                {
+                  "source": "lottery_type",
+                  "target": "BlockEntityTag.lottery_type",
+                  "op": "replace"
+                }
+              ]
+            }
+          ],
           "name": "pvz:slot_machine"
         }
       ],

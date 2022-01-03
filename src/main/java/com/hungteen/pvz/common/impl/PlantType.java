@@ -1,7 +1,6 @@
 package com.hungteen.pvz.common.impl;
 
 import com.google.gson.*;
-import com.hungteen.craid.CRaid;
 import com.hungteen.pvz.PVZMod;
 import com.hungteen.pvz.api.IPlantEntity;
 import com.hungteen.pvz.api.IPlantInfo;
@@ -420,7 +419,7 @@ public abstract class PlantType extends PAZType implements IPlantType {
 						}
 					});
 				} catch (IllegalArgumentException | JsonParseException e) {
-					CRaid.LOGGER.error("Parsing error loading custom raid {}: {}", res, e.getMessage());
+					PVZMod.LOGGER.error("Parsing error loading custom raid {}: {}", res, e.getMessage());
 				}
 			});
 

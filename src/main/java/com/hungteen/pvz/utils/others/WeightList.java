@@ -1,11 +1,11 @@
 package com.hungteen.pvz.utils.others;
 
+import com.mojang.datafixers.util.Pair;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.Random;
-
-import com.mojang.datafixers.util.Pair;
 
 public class WeightList<T> {
 	
@@ -43,6 +43,12 @@ public class WeightList<T> {
 	
 	public int getLen() {
 		return this.itemList.size();
+	}
+
+	public void clear(){
+		this.itemList.clear();
+		this.weightList.clear();
+		this.total = 0;
 	}
 	
 	public List<T> getItemList(){

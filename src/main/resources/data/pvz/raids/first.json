@@ -33,7 +33,8 @@
     {
       "spawns":[
         {
-          "entity_type":"pvz:normal_zombie",
+          "entity_type":"minecraft:zombie",
+          "nbt": "{IsBaby:1}",
           "spawn_tick":10,
           "spawn_amount":{
             "count":5

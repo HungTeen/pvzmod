@@ -1,0 +1,40 @@
+{
+  "items": [
+    {
+      "item": "pvz:puff_shroom_card"
+    },
+    {
+      "item": "pvz:sun_shroom_card"
+    },
+    {
+      "item": "pvz:fume_shroom_card"
+    },
+    {
+      "item": "pvz:grave_buster_card"
+    },
+    {
+      "item": "pvz:hypno_shroom_card"
+    },
+    {
+      "item": "pvz:scaredy_shroom_card"
+    },
+    {
+      "item": "pvz:ice_shroom_card"
+    },
+    {
+      "item": "pvz:doom_shroom_card"
+    },
+    {
+      "item": "pvz:gloom_shroom_card",
+      "weight": 5
+    },
+    {
+      "type": "sun",
+      "weight": 8
+    },
+    {
+      "type": "jewel",
+      "weight": 1
+    }
+  ]
+}

@@ -20,12 +20,14 @@ import java.util.stream.Collectors;
 public class StringUtil {
 
 	public static final StringTextComponent EMPTY = new StringTextComponent("");
+	public static final String TE_TAG = "BlockEntityTag";
 	public static final String ARMOR_PREFIX = PVZMod.MOD_ID + ":textures/models/armor/";
 	public static final String INIT_VERSION = "0.0.0";
 	public static final String JSON_SUN_COST = "sun_cost";
 	public static final String JSON_COOL_DOWN = "cool_down";
 	public static final String JSON_REQUIRE_LEVEL = "require_level";
 	public static final String JSON_OCCUR_DIFFICULTY = "occur_difficulty";
+	
 	
 	public static ResourceLocation prefix(String a) {
 		return new ResourceLocation(PVZMod.MOD_ID, a);

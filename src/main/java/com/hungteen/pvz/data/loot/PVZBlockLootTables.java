@@ -1,13 +1,8 @@
 package com.hungteen.pvz.data.loot;
 
-import java.util.Arrays;
-import java.util.HashSet;
-import java.util.Set;
-
 import com.hungteen.pvz.PVZMod;
 import com.hungteen.pvz.common.block.BlockRegister;
 import com.hungteen.pvz.common.item.ItemRegister;
-
 import net.minecraft.advancements.criterion.EnchantmentPredicate;
 import net.minecraft.advancements.criterion.ItemPredicate;
 import net.minecraft.advancements.criterion.MinMaxBounds;
@@ -30,6 +25,10 @@ import net.minecraft.loot.conditions.MatchTool;
 import net.minecraft.loot.conditions.TableBonus;
 import net.minecraftforge.registries.ForgeRegistries;
 
+import java.util.Arrays;
+import java.util.HashSet;
+import java.util.Set;
+
 public class PVZBlockLootTables extends BlockLootTables {
 
 	private final Set<Block> knownBlocks = new HashSet<>();
@@ -47,7 +46,8 @@ public class PVZBlockLootTables extends BlockLootTables {
 	@Override
 	protected void addTables() {
 		final Set<Block> noLootBlocks = new HashSet<>(Arrays.asList(
-				BlockRegister.LILY_PAD.get(), BlockRegister.FLOWER_POT.get()
+				BlockRegister.LILY_PAD.get(), BlockRegister.FLOWER_POT.get(),
+				BlockRegister.SLOT_MACHINE.get()
 			    ));
 		// drop item like coal ore
 		Arrays.asList(BlockRegister.ORIGIN_ORE.get(), BlockRegister.APPEASE_ORE.get(), BlockRegister.LIGHT_ORE.get(),
@@ -75,6 +75,7 @@ public class PVZBlockLootTables extends BlockLootTables {
 		this.dropOther(BlockRegister.GOLD_TILE1.get(), Blocks.GOLD_BLOCK);
 		this.dropOther(BlockRegister.GOLD_TILE2.get(), Blocks.GOLD_BLOCK);
 		this.dropOther(BlockRegister.GOLD_TILE3.get(), Blocks.GOLD_BLOCK);
+
 		// other blocks are drop itself
 		ForgeRegistries.BLOCKS.forEach(block -> {
 			if (block.getRegistryName().getNamespace().equals(PVZMod.MOD_ID) && !noLootBlocks.contains(block) && !this.knownBlocks.contains(block)) {

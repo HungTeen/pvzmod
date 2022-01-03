@@ -1,26 +1,26 @@
 package com.hungteen.pvz.common.network.toclient;
 
-import java.util.function.Supplier;
-
-import com.hungteen.pvz.client.cache.ClientPlayerResources;
-
+import com.hungteen.pvz.client.ClientProxy;
+import com.hungteen.pvz.utils.PlayerUtil;
+import com.hungteen.pvz.utils.enums.Resources;
 import net.minecraft.network.PacketBuffer;
 import net.minecraftforge.fml.network.NetworkEvent;
+
+import java.util.function.Supplier;
 
 public class PlayerStatsPacket{
 
 	private int type;
 	private int data;
 	
-	public PlayerStatsPacket(int x,int y) {
-		this.type=x;
-		this.data=y;
-//		PVZMod.LOGGER.debug(type+" x "+data);
+	public PlayerStatsPacket(int x, int y) {
+		this.type = x;
+		this.data = y;
 	}
 	
 	public PlayerStatsPacket(PacketBuffer buffer) {
-		this.type=buffer.readInt();
-		this.data=buffer.readInt();
+		this.type = buffer.readInt();
+		this.data = buffer.readInt();
 	}
 
 	public void encode(PacketBuffer buffer) {
@@ -30,11 +30,9 @@ public class PlayerStatsPacket{
 
 	public static class Handler {
 		public static void onMessage(PlayerStatsPacket message, Supplier<NetworkEvent.Context> ctx) {
-//			PVZMod.LOGGER.debug(message.type+" y "+message.data);
-		    ctx.get().enqueueWork(()->{
-			    ClientPlayerResources.setPlayerData(message.type,message.data);
-//			    PVZMod.LOGGER.debug(message.type+" z "+message.data);
-		    });
+			ctx.get().enqueueWork(() -> {
+				PlayerUtil.setResource(ClientProxy.MC.player, Resources.values()[message.type], message.data);
+			});
 		    ctx.get().setPacketHandled(true);
 	    }
 	}

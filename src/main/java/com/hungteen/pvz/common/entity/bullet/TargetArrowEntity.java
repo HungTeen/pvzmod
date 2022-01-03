@@ -84,6 +84,11 @@ public class TargetArrowEntity extends AbstractArrowEntity {
 	}
 	
 	@Override
+	public byte getPierceLevel() {
+		return 0;
+	}
+	
+	@Override
 	public IPacket<?> getAddEntityPacket() {
 		return NetworkHooks.getEntitySpawningPacket(this);
 	}

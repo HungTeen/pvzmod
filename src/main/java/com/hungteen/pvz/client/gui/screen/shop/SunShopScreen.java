@@ -3,9 +3,9 @@ package com.hungteen.pvz.client.gui.screen.shop;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.hungteen.pvz.client.cache.ClientPlayerResources;
 import com.hungteen.pvz.client.gui.GuiHandler;
 import com.hungteen.pvz.common.container.shop.AbstractDaveShopContainer;
+import com.hungteen.pvz.utils.PlayerUtil;
 import com.hungteen.pvz.utils.StringUtil;
 import com.hungteen.pvz.utils.TradeUtil;
 import com.hungteen.pvz.utils.enums.Colors;
@@ -30,7 +30,7 @@ public class SunShopScreen extends AbstractDaveShopScreen {
 	
 	@Override
 	protected boolean canBuyNow() {
-		return this.selectedGood != null && this.selectedTrade != null && ClientPlayerResources.getPlayerStats(Resources.SUN_NUM) >= this.selectedTrade.money && this.menu.canClickBuyButton();
+		return this.selectedGood != null && this.selectedTrade != null && PlayerUtil.getResource(this.minecraft.player, Resources.SUN_NUM) >= this.selectedTrade.money && this.menu.canClickBuyButton();
 	}
 	
 	@Override
@@ -38,7 +38,7 @@ public class SunShopScreen extends AbstractDaveShopScreen {
 		stack.pushPose();
 		this.minecraft.getTextureManager().bind(TEXTURE);
 		blit(stack, this.leftPos, this.topPos, this.getBlitOffset(), 0.0F, 0.0F, this.imageWidth, this.imageHeight, 256, 512);
-		StringUtil.drawCenteredScaledString(stack, font, ClientPlayerResources.getPlayerStats(Resources.SUN_NUM) + "", this.leftPos + 25 + 44, this.topPos + 9, Colors.WHITE, 1.4f);
+		StringUtil.drawCenteredScaledString(stack, font, PlayerUtil.getResource(this.minecraft.player, Resources.SUN_NUM) + "", this.leftPos + 25 + 44, this.topPos + 9, Colors.WHITE, 1.4f);
 		StringUtil.drawCenteredScaledString(stack, font, new TranslationTextComponent("gui.pvz.sun_shop.title").getString(), this.leftPos + 115 + 82, this.topPos + 6, Colors.BLACK, 1.4f);
 	}
 

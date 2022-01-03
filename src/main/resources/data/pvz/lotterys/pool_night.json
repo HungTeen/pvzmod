@@ -1,0 +1,40 @@
+{
+  "items": [
+    {
+      "item": "pvz:sea_shroom_card"
+    },
+    {
+      "item": "pvz:plantern_card"
+    },
+    {
+      "item": "pvz:cactus_card"
+    },
+    {
+      "item": "pvz:blover_card"
+    },
+    {
+      "item": "pvz:split_pea_card"
+    },
+    {
+      "item": "pvz:pumpkin_card"
+    },
+    {
+      "item": "pvz:star_fruit_card"
+    },
+    {
+      "item": "pvz:magnet_shroom_card"
+    },
+    {
+      "item": "pvz:gold_magnet_card",
+      "weight": 5
+    },
+    {
+      "type": "sun",
+      "weight": 8
+    },
+    {
+      "type": "jewel",
+      "weight": 1
+    }
+  ]
+}

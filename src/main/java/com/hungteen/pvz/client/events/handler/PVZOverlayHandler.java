@@ -62,8 +62,8 @@ public class PVZOverlayHandler {
 	 * {@link OverlayEvents#onPostRenderOverlay(net.minecraftforge.client.event.RenderGameOverlayEvent.Post)}
 	 */
 	public static void renderPlantFood(MatrixStack stack, int w, int h) {
-		final int maxNum = ClientPlayerResources.getPlayerStats(Resources.MAX_ENERGY_NUM);
-		int num = ClientPlayerResources.getPlayerStats(Resources.ENERGY_NUM);
+		final int maxNum = PlayerUtil.getResource(ClientProxy.MC.player, Resources.MAX_ENERGY_NUM);
+		int num = PlayerUtil.getResource(ClientProxy.MC.player, Resources.ENERGY_NUM);
 		final float sz = 0.5F;
 		stack.pushPose();
 		RenderSystem.enableBlend();
@@ -109,7 +109,7 @@ public class PVZOverlayHandler {
 			}
 		}
 		if(SlotDelay > 0) {
-			final int maxSlot = ClientPlayerResources.getPlayerStats(Resources.SLOT_NUM) + 1;
+			final int maxSlot = PlayerUtil.getResource(ClientProxy.MC.player, Resources.SLOT_NUM) + 1;
 			final int totHeight = (SLOT_SIDE - 2) * maxSlot;
 			final int startHeight = (h - totHeight) / 2;
 			final float offset = - 10 + 10F * SlotDelay / SLOT_DELAY_CD;
@@ -201,8 +201,8 @@ public class PVZOverlayHandler {
 	 * {@link #renderResources(MatrixStack, int, int)}
 	 */
 	private static void renderSunBar(MatrixStack stack, int width, int height) {
-		final int max = PlayerUtil.getPlayerMaxSunNum(ClientPlayerResources.getPlayerStats(Resources.TREE_LVL));
-		final int now = ClientPlayerResources.getPlayerStats(Resources.SUN_NUM);
+		final int max = PlayerUtil.getPlayerMaxSunNum(PlayerUtil.getResource(ClientProxy.MC.player, Resources.TREE_LVL));
+		final int now = PlayerUtil.getResource(ClientProxy.MC.player, Resources.SUN_NUM);
 		final int len = MathUtil.getBarLen(now, max, SUN_BAR_W2);
 		final float sz = 0.7F;
 		stack.pushPose();
@@ -224,7 +224,7 @@ public class PVZOverlayHandler {
 	 * {@link #renderResources(MatrixStack, int, int)}
 	 */
 	public static void renderMoneyBar(MatrixStack stack, int width, int height) {
-		final int now = ClientPlayerResources.getPlayerStats(Resources.MONEY);
+		final int now = PlayerUtil.getResource(ClientProxy.MC.player, Resources.MONEY);
 		final float sz = 0.7F;
 		stack.pushPose();
 		RenderSystem.enableBlend();
@@ -244,7 +244,7 @@ public class PVZOverlayHandler {
 	 * {@link #renderResources(MatrixStack, int, int)}
 	 */
 	public static void renderGemBar(MatrixStack stack, int width, int height) {
-		final int now = ClientPlayerResources.getPlayerStats(Resources.GEM_NUM);
+		final int now = PlayerUtil.getResource(ClientProxy.MC.player, Resources.GEM_NUM);
 		final float sz = 0.7F;
 		stack.pushPose();
 		RenderSystem.enableBlend();
@@ -263,9 +263,9 @@ public class PVZOverlayHandler {
 	 * {@link #renderResources(MatrixStack, int, int)}
 	 */
 	private static void renderTreeLevel(MatrixStack stack, int width, int height) {
-		final int level = ClientPlayerResources.getPlayerStats(Resources.TREE_LVL);
+		final int level = PlayerUtil.getResource(ClientProxy.MC.player, Resources.TREE_LVL);
 		final int max = PlayerUtil.getPlayerLevelUpXp(level);
-		final int now = ClientPlayerResources.getPlayerStats(Resources.TREE_XP);
+		final int now = PlayerUtil.getResource(ClientProxy.MC.player, Resources.TREE_XP);
 		final int len = MathUtil.getBarLen(now, max, 120);
 		final float sz = 0.7F;
 		stack.pushPose();

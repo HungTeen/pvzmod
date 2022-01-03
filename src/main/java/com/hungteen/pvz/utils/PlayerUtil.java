@@ -80,6 +80,12 @@ public class PlayerUtil {
 		return null;
 	}
 	
+	public static void setResource(PlayerEntity player, Resources res, int num) {
+		getOptManager(player).ifPresent(m -> {
+			m.setResource(res, num);
+		});
+	}
+	
 	public static int getResource(PlayerEntity player, Resources res) {
 		final PlayerDataManager manager = getManager(player);
 		return manager != null ? manager.getResource(res) : 0;

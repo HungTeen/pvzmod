@@ -1,0 +1,44 @@
+{
+  "items": [
+    {
+      "item": "pvz:pea_shooter_card"
+    },
+    {
+      "item": "pvz:sun_flower_card"
+    },
+    {
+      "item": "pvz:cherry_bomb_card"
+    },
+    {
+      "item": "pvz:wall_nut_card"
+    },
+    {
+      "item": "pvz:potato_mine_card"
+    },
+    {
+      "item": "pvz:snow_pea_card"
+    },
+    {
+      "item": "pvz:chomper_card"
+    },
+    {
+      "item": "pvz:repeater_card"
+    },
+    {
+      "item": "pvz:twin_sunflower_card",
+      "weight": 5
+    },
+    {
+      "item": "pvz:gatling_pea_card",
+      "weight": 5
+    },
+    {
+      "type": "sun",
+      "weight": 8
+    },
+    {
+      "type": "jewel",
+      "weight": 1
+    }
+  ]
+}

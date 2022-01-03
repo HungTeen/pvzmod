@@ -1,0 +1,20 @@
+{
+    "name": "Resource Collector",
+    "icon": "pvz:resource_collector",
+    "category": "pvz:start/weapon",
+    "pages": [
+        {
+            "type": "spotlight",
+            "item": "pvz:resource_collector",
+            "title": "Resource Collector",
+            "text": "$(byellow)Resource Collector$() is a tool used to collect various resources.$(l)Normally aim at the entity and right click to collect it, or right click while shifting to collect a whole range of resource$()."
+        },
+        {
+            "type": "crafting",
+            "recipe": "pvz:resource_collector",
+            "title": "Resource Collector Recipe"
+        }
+    ],
+    "advancement": "pvz:adventure/origin",
+    "sortnum": 1
+}

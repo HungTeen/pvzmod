@@ -302,27 +302,22 @@ public class PlayerDataManager {
 	public void addResource(Resources res, int num) {
 		int now = resources.get(res);
 		final int old = now;
-		switch (res) {
-		case TREE_XP:{
+		
+		if(res == Resources.TREE_XP) {
 			addTreeXp(now, num);
-			break;
-		}
-		case SUN_NUM:{
+		} else if(res == Resources.SUN_NUM) {
 			now = MathHelper.clamp(now + num, 0, PlayerUtil.getPlayerMaxSunNum(resources.get(Resources.TREE_LVL)));
 			resources.put(Resources.SUN_NUM, now);
 			if(player instanceof ServerPlayerEntity){
 				SunAmountTrigger.INSTANCE.trigger((ServerPlayerEntity) player, now);
 			}
-			break;
-		}
-		case ENERGY_NUM:{
+		} else if(res == Resources.ENERGY_NUM) {
 			now = MathHelper.clamp(now + num, 0, resources.get(Resources.MAX_ENERGY_NUM));
 			resources.put(Resources.ENERGY_NUM, now);
-			break;
-		}
-		default:
-			now = MathHelper.clamp(resources.get(res) + num, res.min, res.max);
+		} else {
+			now = MathHelper.clamp(now + num, res.min, res.max);
 			resources.put(res, now);
+			
 			if(res == Resources.TREE_LVL) {
 				this.addResource(Resources.SUN_NUM, 0);
 				if(player instanceof ServerPlayerEntity){
@@ -336,8 +331,8 @@ public class PlayerDataManager {
 					MoneyTrigger.INSTANCE.trigger((ServerPlayerEntity) player, now);
 				}
 			}
-			break;
 		}
+		
 		this.sendResourcePacket(player, res);
 	}
 	

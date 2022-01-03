@@ -1,7 +1,5 @@
 package com.hungteen.pvz.common.network.toserver;
 
-import java.util.function.Supplier;
-
 import com.hungteen.pvz.client.gui.GuiHandler;
 import com.hungteen.pvz.common.container.CardFusionContainer;
 import com.hungteen.pvz.common.container.EssenceAltarContainer;
@@ -12,10 +10,11 @@ import com.hungteen.pvz.common.container.shop.MysteryShopContainer;
 import com.hungteen.pvz.common.container.shop.PennyShopContainer;
 import com.hungteen.pvz.common.container.shop.SunShopContainer;
 import com.hungteen.pvz.utils.TradeUtil.DaveGoods;
-
 import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.network.PacketBuffer;
 import net.minecraftforge.fml.network.NetworkEvent;
+
+import java.util.function.Supplier;
 
 public class ClickButtonPacket {
 
@@ -73,7 +72,12 @@ public class ClickButtonPacket {
 				} else if(message.type == GuiHandler.SLOT_MACHINE) {
 					if(player.containerMenu instanceof SlotMachineContainer) {
 						SlotMachineContainer container = (SlotMachineContainer) player.containerMenu;
-						container.te.startRun(player);
+						if(message.op == 0){
+							container.te.slowStart(player);
+						} else{
+							container.te.fastStart(player);
+						}
+
 					}
 				} else if(message.type == GuiHandler.PENNY_SHOP) {
 					if(player.containerMenu instanceof PennyShopContainer) {

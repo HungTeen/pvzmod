@@ -1,0 +1,20 @@
+{
+    "name": "资源收集器",
+    "icon": "pvz:resource_collector",
+    "category": "pvz:start/weapon",
+    "pages": [
+        {
+            "type": "spotlight",
+            "item": "pvz:resource_collector",
+            "title": "资源收集器",
+            "text": "$(byellow)资源收集器$()是一个用来收集阳光、钱币等等资源的工具。$(l)对准相应实体普通右击即可收集，下蹲右击可以收集整个范围内的各种资源$()。"
+        },
+        {
+            "type": "crafting",
+            "recipe": "pvz:resource_collector",
+            "title": "资源收集器配方"
+        }
+    ],
+    "advancement": "pvz:adventure/origin",
+    "sortnum": 1
+}

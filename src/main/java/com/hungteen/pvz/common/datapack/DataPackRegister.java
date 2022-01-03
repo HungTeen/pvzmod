@@ -10,8 +10,8 @@ public class DataPackRegister {
      * {@link PVZMod#PVZMod()}
      */
     public static void addReloadListenerEvent(AddReloadListenerEvent event) {
-        //TODO 自定义阳光等属性
         event.addListener(new PlantType.PlantTypeLoader());
+        event.addListener(new LotteryTypeLoader());
     }
 
 }

@@ -1,17 +1,36 @@
 package com.hungteen.pvz.common.block;
 
+import java.util.Arrays;
+import java.util.List;
+
 import com.hungteen.pvz.PVZMod;
 import com.hungteen.pvz.common.block.cubes.ButterBlock;
 import com.hungteen.pvz.common.block.cubes.OriginBlock;
 import com.hungteen.pvz.common.block.ores.EssenceOreBlock;
 import com.hungteen.pvz.common.block.ores.PVZOreBlock;
 import com.hungteen.pvz.common.block.others.SteelLadderBlock;
-import com.hungteen.pvz.common.block.plants.*;
-import com.hungteen.pvz.common.block.special.*;
+import com.hungteen.pvz.common.block.plants.CabbageBlock;
+import com.hungteen.pvz.common.block.plants.ChomperBlock;
+import com.hungteen.pvz.common.block.plants.CornBlock;
+import com.hungteen.pvz.common.block.plants.LilyPadBlock;
+import com.hungteen.pvz.common.block.plants.PVZSaplingBlock;
+import com.hungteen.pvz.common.block.plants.PeaBlock;
+import com.hungteen.pvz.common.block.plants.ToxicShroomBlock;
+import com.hungteen.pvz.common.block.special.CardFusionBlock;
+import com.hungteen.pvz.common.block.special.EssenceAltarBlock;
+import com.hungteen.pvz.common.block.special.FlowerPotBlock;
+import com.hungteen.pvz.common.block.special.FragmentSpliceBlock;
+import com.hungteen.pvz.common.block.special.GoldTileBlock;
+import com.hungteen.pvz.common.block.special.LanternBlock;
+import com.hungteen.pvz.common.block.special.SlotMachineBlock;
+import com.hungteen.pvz.common.block.special.SunConverterBlock;
+import com.hungteen.pvz.common.block.special.SunFlowerTrophyBlock;
 import com.hungteen.pvz.common.impl.EssenceType;
 import com.hungteen.pvz.common.item.PVZItemGroups;
 import com.hungteen.pvz.common.item.blockitem.LilyPadItem;
+import com.hungteen.pvz.common.item.blockitem.SlotMachineItem;
 import com.hungteen.pvz.common.world.feature.NutTree;
+
 import net.minecraft.block.Block;
 import net.minecraft.block.Blocks;
 import net.minecraft.block.LeavesBlock;
@@ -25,9 +44,6 @@ import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
 import net.minecraftforge.registries.IForgeRegistry;
-
-import java.util.Arrays;
-import java.util.List;
 
 @Mod.EventBusSubscriber(modid=PVZMod.MOD_ID,bus=Mod.EventBusSubscriber.Bus.MOD)
 public class BlockRegister {
@@ -101,13 +117,17 @@ public class BlockRegister {
 				LANTERN, FLOWER_POT, GOLD_TILE1, GOLD_TILE2, GOLD_TILE3, SILVER_SUNFLOWER_TROPHY, GOLD_SUNFLOWER_TROPHY, DIAMOND_SUNFLOWER_TROPHY,
 				SUN_CONVERTER, FRAGMENT_SPLICE, SLOT_MACHINE, ESSENCE_ALTAR, CARD_FUSION_TABLE
 		);
-		for(RegistryObject<? extends Block> block : blocks) {
-			if(block == LILY_PAD) {
-				items.register(new LilyPadItem().setRegistryName(block.get().getRegistryName()));
-			}else {
-				items.register(new BlockItem(block.get(),new Item.Properties().tab(PVZItemGroups.PVZ_MISC)).setRegistryName(block.get().getRegistryName()));
+		for(RegistryObject<? extends Block> b : blocks) {
+			final Block block = b.get();
+			if(block.equals(LILY_PAD.get())) {
+				items.register(new LilyPadItem().setRegistryName(block.getRegistryName()));
+			} else if(block.equals(SLOT_MACHINE.get())){
+				items.register(new SlotMachineItem().setRegistryName(block.getRegistryName()));
+			} else {
+				items.register(new BlockItem(block, new Item.Properties().tab(PVZItemGroups.PVZ_MISC)).setRegistryName(block.getRegistryName()));
 			}
 		}
+		
 	}
 	
 }

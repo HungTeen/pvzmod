@@ -15,7 +15,6 @@ import java.util.List;
 @OnlyIn(Dist.CLIENT)
 public class ClientPlayerResources{
 
-	private static final HashMap<Resources, Integer> RESOURCES = new HashMap<>(Resources.values().length);
 	/* summon card inventory */
 	public static final List<ItemStack> SUMMON_CARDS = new ArrayList<>();
 	public static int emptySlot;
@@ -27,10 +26,6 @@ public class ClientPlayerResources{
 	public static int lightLevel = 0;
 	
 	static { //init to avoid unexpected error !
-		/* init resources */
-		for(Resources res : Resources.values()) {
-			RESOURCES.put(res, 0);
-		}
 		/* init card list */
 		for(int i = 0; i <= Resources.SLOT_NUM.max; ++ i) {
 			SUMMON_CARDS.add(ItemStack.EMPTY);
@@ -39,17 +34,9 @@ public class ClientPlayerResources{
 			unLocked.put(a, false);
 		}
 	}
-	
-	public static void setPlayerData(int type,int data){
-		RESOURCES.put(Resources.values()[type], data);
-	}
-	
+
 	public static void setAlmanacUnLocked(int type, boolean data){
 		unLocked.put(SearchOption.OPTION.get(type), data);
-	}
-	
-	public static int getPlayerStats(Resources res){
-		return RESOURCES.get(res);
 	}
 	
 	public static boolean isAlmanacUnLocked(SearchOption option){
