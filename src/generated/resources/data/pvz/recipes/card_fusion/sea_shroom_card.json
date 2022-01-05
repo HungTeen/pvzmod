@@ -1,0 +1,17 @@
+{
+  "type": "pvz:card_fusion",
+  "ingredients": [
+    {
+      "item": "pvz:scaredy_shroom_card"
+    },
+    {
+      "item": "pvz:tangle_kelp_card"
+    },
+    {
+      "item": "pvz:white_card"
+    }
+  ],
+  "result": {
+    "item": "pvz:sea_shroom_card"
+  }
+}

@@ -1,0 +1,17 @@
+{
+  "type": "pvz:card_fusion",
+  "ingredients": [
+    {
+      "item": "pvz:pea_shooter_card"
+    },
+    {
+      "item": "pvz:repeater_card"
+    },
+    {
+      "item": "pvz:white_card"
+    }
+  ],
+  "result": {
+    "item": "pvz:split_pea_card"
+  }
+}

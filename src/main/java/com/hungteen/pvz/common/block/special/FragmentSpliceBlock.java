@@ -1,8 +1,6 @@
 package com.hungteen.pvz.common.block.special;
 
-import com.hungteen.pvz.common.item.PVZItemGroups;
 import com.hungteen.pvz.common.tileentity.FragmentSpliceTileEntity;
-
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
@@ -10,12 +8,10 @@ import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.inventory.InventoryHelper;
-import net.minecraft.item.ItemGroup;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.ActionResultType;
 import net.minecraft.util.Hand;
-import net.minecraft.util.NonNullList;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.BlockRayTraceResult;
 import net.minecraft.util.text.ITextComponent;
@@ -42,13 +38,6 @@ public class FragmentSpliceBlock extends Block {
 		    NetworkHooks.openGui((ServerPlayerEntity) player, te, pos);
 		}
 		return ActionResultType.SUCCESS;
-	}
-
-	@Override
-	public void fillItemCategory(ItemGroup itemGroup, NonNullList<ItemStack> itemStacks) {
-		if(itemGroup == PVZItemGroups.PVZ_TOOL) {
-			super.fillItemCategory(itemGroup, itemStacks);
-		}
 	}
 
 	@Override

@@ -1,126 +1,92 @@
 package com.hungteen.pvz.common.container;
 
+import com.hungteen.pvz.common.block.BlockRegister;
 import com.hungteen.pvz.common.item.material.EssenceItem;
-import com.hungteen.pvz.common.item.spawn.card.PlantCardItem;
 import com.hungteen.pvz.common.item.tool.plant.SunStorageSaplingItem;
+import com.hungteen.pvz.common.recipe.FusionRecipe;
+import com.hungteen.pvz.common.recipe.RecipeRegister;
 import com.hungteen.pvz.common.tileentity.CardFusionTileEntity;
 import com.hungteen.pvz.register.ContainerRegister;
-import com.hungteen.pvz.utils.ItemUtil;
-
 import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.inventory.CraftingInventory;
 import net.minecraft.inventory.container.Slot;
 import net.minecraft.item.ItemStack;
+import net.minecraft.util.IWorldPosCallable;
 import net.minecraft.util.math.BlockPos;
 import net.minecraftforge.items.SlotItemHandler;
 
-public class CardFusionContainer extends AbstractOptionContainer {
+import java.util.Optional;
+
+public class CardFusionContainer extends PVZContainer {
 
 	public final CardFusionTileEntity te;
+	private final CraftingInventory craftSlots = new CraftingInventory(this, 3, 3);
+	private final IWorldPosCallable access;
 	private final PlayerEntity player;
 	
 	public CardFusionContainer(int id, PlayerEntity player, BlockPos pos) {
 		super(ContainerRegister.CARD_FUSION.get(), id);
 		this.te = (CardFusionTileEntity) player.level.getBlockEntity(pos);
 		this.player = player;
+		this.access = IWorldPosCallable.create(player.level, pos);
 		if(this.te == null) {
 			System.out.println("Error: Open Card Fusion GUI !");
 			return ;
 		}
+
 		this.addDataSlots(this.te.array);
-		//0 sun storage sapling, 1 - 8 craft card, 9 - 11, essence, 12 result
-		this.addSlot(new SlotItemHandler(te.handler, 0, 7, 155) {
+
+		//sun storage sapling, 1 - 8 craft card, 9 - 11, essence, 12
+		this.addSlot(new SlotItemHandler(te.handler, 0, 9, 80) {
 			@Override
 			public boolean mayPlace(ItemStack stack) {
 				return stack.getItem() instanceof SunStorageSaplingItem;
 			}
 		});
-		int now = 1;
-		for(int i = 0; i < 3; ++ i) {
-			for(int j = 0; j < 3; ++ j) {
-				if(i == 1 && j == 1) continue;
-				this.addSlot(new SlotItemHandler(te.handler, now ++, 58 + j * 54, 26 + i * 54) {
-					@Override
-					public boolean mayPlace(ItemStack stack) {
-						if(! (stack.getItem() instanceof PlantCardItem)) return false;
-						PlantCardItem item = (PlantCardItem) stack.getItem();
-						return ! item.isEnjoyCard;
-					}
-				});
+		//essences.
+		this.addSlot(new SlotItemHandler(te.handler, 1, 153, 80) {
+			@Override
+			public boolean mayPlace(ItemStack stack) {
+				return stack.getItem() instanceof EssenceItem;
 			}
-		}
-		for(int i = 0; i < 3; ++ i) {
-			this.addSlot(new SlotItemHandler(te.handler, 9 + i, 217, 26 + i * 54) {
-				@Override
-				public boolean mayPlace(ItemStack stack) {
-					return stack.getItem() instanceof EssenceItem;
-				}
-			});
-		}
-		this.addSlot(new SlotItemHandler(te.handler, 12, 112, 80) {
+		});
+		//result.
+		this.addSlot(new SlotItemHandler(te.handler, 2, 81, 98) {
 			@Override
 			public boolean mayPlace(ItemStack stack) {
 				return false;
 			}
 		});
-		for(int i = 0; i < 3; ++ i) {
-			for(int j = 0; j < 9; ++ j) {
-				this.addSlot(new Slot(this.player.inventory, j + i * 9 + 9, 40 + 18 * j, 174 + 18 * i));
+		for(int i = 0; i < 3; ++ i){
+			for(int j = 0; j < 3; ++ j){
+				this.addSlot(new SlotItemHandler(te.handler, i * 3 + j + 3, 63 + j * 18, 26 + i * 18));
 			}
 		}
-		for(int i = 0; i < 9; ++ i) {
-			this.addSlot(new Slot(this.player.inventory, i, 40 + i * 18, 232));
-		}
+		//player inventory.
+		this.addInventoryAndHotBar(player, 9, 143);
 	}
 
-//	public List<Pair<Ingredient, Slot>> getRecipeForPlant(Plants plantType) {
-//		Optional<FusionRecipes> recipe = FusionRecipes.getFusionRecipe(plantType);
-//		List<Pair<Ingredient, Slot>> list = new ArrayList<>();
-//		if(! recipe.isPresent()) return list;
-//		int pos = 0;
-//		for(Plants plant : recipe.get().requirePlants) {
-//			Ingredient card = Ingredient.of(PlantUtil.getPlantSummonCard(plant));
-//			list.add(Pair.of(card, this.getSlot(++ pos)));
-//		}
-//		Ingredient result = Ingredient.of(PlantUtil.getPlantSummonCard(plantType));
-//		list.add(Pair.of(result, this.getSlot(12)));
-//		return list;
-//	}
-	
-	public void canPutStackBackToInventory() {
-		for(int i = 1;i < 9; ++ i) {
-			this.putPosSlotBack(i);
+	public void onCraft(){
+		this.te.handler.setStackInSlot(2, getResult().copy());
+		for(int i = 3; i < 12; ++ i){
+			this.te.handler.setStackInSlot(i, ItemStack.EMPTY);
 		}
-		this.putPosSlotBack(12);
+		this.te.sunAmount = 0;
+		this.te.essenceAmount = 0;
 	}
-	
-	private void putPosSlotBack(int i) {
-		ItemStack stack = this.te.handler.getStackInSlot(i);
-		if(stack.isEmpty()) return ;
-		int emptyPos = - 1;
-		for(int j = 0; j < this.player.inventory.items.size(); ++ j) {
-			ItemStack oldStack = this.player.inventory.items.get(j);
-			if(oldStack.isEmpty()) emptyPos = j;
-			if(ItemUtil.canItemStackAddTo(oldStack, stack)) {
-				int maxSize = oldStack.getMaxStackSize();
-				int oldSize = oldStack.getCount();
-				int stackSize = stack.getCount();
-				if(oldSize + stackSize <= maxSize) {
-					oldStack.grow(stackSize);
-					stack.shrink(stackSize);
-					break;
-				} else {
-					oldStack.grow(maxSize - oldSize);
-					stack.shrink(maxSize - oldSize);
-				}
-				if(stack.getCount() == 0) {
-					break;
-				}
+
+	public ItemStack getResult(){
+		for(int i = 0; i < 3; ++ i){
+			for(int j = 0; j < 3; ++ j){
+				this.craftSlots.setItem(i * 3 + j, this.te.handler.getStackInSlot(i * 3 + j + 3).copy());
 			}
 		}
-		if(stack.getCount() > 0) {
-			this.player.inventory.items.set(emptyPos, stack.copy());
-			stack.shrink(stack.getCount());
-		}
+		final Optional<FusionRecipe> recipe = this.player.level.getRecipeManager().getRecipeFor(RecipeRegister.FUSION_RECIPE_TYPE, this.craftSlots, this.player.level);
+		return recipe.isPresent() ? recipe.get().getResultItem() : ItemStack.EMPTY;
+	}
+
+	public boolean canCraft(){
+		return this.te.array.get(0) == CardFusionTileEntity.CRAFT_SUN_COST && this.te.array.get(1) == CardFusionTileEntity.CRAFT_ESSENCE_COST && this.te.handler.getStackInSlot(2).isEmpty() && ! this.getResult().isEmpty();
 	}
 	
 	@Override
@@ -152,15 +118,9 @@ public class CardFusionContainer extends AbstractOptionContainer {
 		}
 		return itemstack;
 	}
-	
-	@Override
-	public boolean isCraftSlot(Slot slot) {
-		return slot != null && (slot.index > 0 && slot.index < 9 || slot.index == 12);
-	}
 
 	@Override
 	public boolean stillValid(PlayerEntity playerIn) {
-		return this.te.isUsableByPlayer(playerIn);
+		return stillValid(this.access, player, BlockRegister.CARD_FUSION_TABLE.get());
 	}
-	
 }

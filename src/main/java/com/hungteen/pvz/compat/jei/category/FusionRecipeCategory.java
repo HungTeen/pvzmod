@@ -1,7 +1,7 @@
-package com.hungteen.pvz.compat.jei.fragment;
+package com.hungteen.pvz.compat.jei.category;
 
 import com.hungteen.pvz.common.block.BlockRegister;
-import com.hungteen.pvz.common.recipe.fragment.FragmentRecipe;
+import com.hungteen.pvz.common.recipe.FusionRecipe;
 import com.hungteen.pvz.utils.StringUtil;
 import com.mojang.blaze3d.matrix.MatrixStack;
 import mezz.jei.api.constants.VanillaTypes;
@@ -17,40 +17,40 @@ import net.minecraft.util.text.TranslationTextComponent;
 
 import java.util.Arrays;
 
-public class FragmentRecipeCategory implements IRecipeCategory<FragmentRecipe> {
+public class FusionRecipeCategory implements IRecipeCategory<FusionRecipe> {
 
     private final IDrawable slotDraw;
     private final IDrawable bgDraw;
     private final IDrawable iconDraw;
     private final IDrawable arrowDraw;
 
-    public FragmentRecipeCategory(IGuiHelper helper) {
+    public FusionRecipeCategory(IGuiHelper helper) {
         this.slotDraw = helper.getSlotDrawable();
         this.bgDraw = helper.createBlankDrawable(180, 120);
         this.arrowDraw = helper.drawableBuilder(StringUtil.WIDGETS, 44, 64, 22, 15).build();
-        this.iconDraw = helper.createDrawableIngredient(new ItemStack(BlockRegister.FRAGMENT_SPLICE.get()));
+        this.iconDraw = helper.createDrawableIngredient(new ItemStack(BlockRegister.CARD_FUSION_TABLE.get()));
     }
 
     @Override
-    public void draw(FragmentRecipe recipe, MatrixStack matrixStack, double mouseX, double mouseY) {
+    public void draw(FusionRecipe recipe, MatrixStack matrixStack, double mouseX, double mouseY) {
     	matrixStack.pushPose();
-        this.arrowDraw.draw(matrixStack, 118, 52);
+        this.arrowDraw.draw(matrixStack, 105, 52);
     	matrixStack.popPose();
     }
 
     @Override
     public ResourceLocation getUid() {
-        return FragmentRecipe.UID;
+        return FusionRecipe.UID;
     }
 
     @Override
-    public Class<? extends FragmentRecipe> getRecipeClass() {
-        return FragmentRecipe.class;
+    public Class<? extends FusionRecipe> getRecipeClass() {
+        return FusionRecipe.class;
     }
 
     @Override
     public String getTitle() {
-        return new TranslationTextComponent("block.pvz.fragment_splice").getString();
+        return new TranslationTextComponent("block.pvz.card_fusion_table").getString();
     }
 
     @Override
@@ -64,26 +64,28 @@ public class FragmentRecipeCategory implements IRecipeCategory<FragmentRecipe> {
     }
 
     @Override
-    public void setIngredients(FragmentRecipe recipe, IIngredients ingredients) {
+    public void setIngredients(FusionRecipe recipe, IIngredients ingredients) {
         ingredients.setInputIngredients(recipe.getIngredients());
         ingredients.setOutput(VanillaTypes.ITEM, recipe.getResultItem());
     }
 
     @Override
-    public void setRecipe(IRecipeLayout recipeLayout, FragmentRecipe recipe, IIngredients ingredients) {
+    public void setRecipe(IRecipeLayout recipeLayout, FusionRecipe recipe, IIngredients ingredients) {
         final IGuiIngredientGroup<ItemStack> guiIngredientGroup = recipeLayout.getIngredientsGroup(VanillaTypes.ITEM);
-        for(int i = 0; i < 5; ++ i){
-            for(int j = 0; j <5; ++ j){
-                final int slotId = i * 5 + j;
-               guiIngredientGroup.init(slotId, true, i * 20 + 10, j * 20 + 10);
-               guiIngredientGroup.set(slotId, Arrays.asList(recipe.getIngredients().get(slotId).getItems()));
-               guiIngredientGroup.setBackground(slotId, this.slotDraw);
+        for(int i = 0; i < 9; ++ i){
+            final int x = i / 3;
+            final int y = i % 3;
+
+            guiIngredientGroup.init(i, true, x * 20 + 30, y * 20 + 30);
+            if(i < recipe.getIngredients().size()){
+                guiIngredientGroup.set(i, Arrays.asList(recipe.getIngredients().get(i).getItems()));
             }
+            guiIngredientGroup.setBackground(i, this.slotDraw);
         }
 
-        guiIngredientGroup.init(25, false, 150, 50);
-        guiIngredientGroup.set(25, recipe.getResultItem());
-        guiIngredientGroup.setBackground(25, this.slotDraw);
+        guiIngredientGroup.init(9, false, 140, 50);
+        guiIngredientGroup.set(9, recipe.getResultItem());
+        guiIngredientGroup.setBackground(9, this.slotDraw);
 
         guiIngredientGroup.set(ingredients);
     }

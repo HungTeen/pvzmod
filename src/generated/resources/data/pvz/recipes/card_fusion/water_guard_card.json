@@ -1,0 +1,17 @@
+{
+  "type": "pvz:card_fusion",
+  "ingredients": [
+    {
+      "item": "pvz:lily_pad_card"
+    },
+    {
+      "item": "pvz:wall_nut_card"
+    },
+    {
+      "item": "pvz:gray_card"
+    }
+  ],
+  "result": {
+    "item": "pvz:water_guard_card"
+  }
+}

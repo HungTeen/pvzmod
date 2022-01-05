@@ -1,0 +1,17 @@
+{
+  "type": "pvz:card_fusion",
+  "ingredients": [
+    {
+      "item": "pvz:fume_shroom_card"
+    },
+    {
+      "item": "pvz:scaredy_shroom_card"
+    },
+    {
+      "item": "pvz:white_card"
+    }
+  ],
+  "result": {
+    "item": "pvz:puff_shroom_card"
+  }
+}

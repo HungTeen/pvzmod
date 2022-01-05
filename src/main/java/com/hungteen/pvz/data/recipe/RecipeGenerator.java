@@ -1,5 +1,9 @@
 package com.hungteen.pvz.data.recipe;
 
+import java.util.Arrays;
+import java.util.List;
+import java.util.function.Consumer;
+
 import com.hungteen.pvz.api.PVZAPI;
 import com.hungteen.pvz.api.types.IPlantType;
 import com.hungteen.pvz.common.block.BlockRegister;
@@ -7,11 +11,13 @@ import com.hungteen.pvz.common.item.ItemRegister;
 import com.hungteen.pvz.common.item.spawn.card.PlantCardItem;
 import com.hungteen.pvz.common.misc.tag.PVZItemTags;
 import com.hungteen.pvz.utils.StringUtil;
+
 import net.minecraft.data.CookingRecipeBuilder;
 import net.minecraft.data.DataGenerator;
 import net.minecraft.data.IFinishedRecipe;
 import net.minecraft.data.ShapedRecipeBuilder;
 import net.minecraft.item.Item;
+import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
 import net.minecraft.item.crafting.IRecipeSerializer;
 import net.minecraft.item.crafting.Ingredient;
@@ -19,8 +25,6 @@ import net.minecraft.tags.ITag;
 import net.minecraft.tags.ItemTags;
 import net.minecraft.util.IItemProvider;
 import net.minecraftforge.common.data.ForgeRecipeProvider;
-
-import java.util.function.Consumer;
 
 public class RecipeGenerator extends ForgeRecipeProvider{
 
@@ -79,6 +83,69 @@ public class RecipeGenerator extends ForgeRecipeProvider{
 		PVZAPI.get().getPlants().forEach(p -> {
 			registerFragment(consumer, p);
 		});
+
+		//fusion recipe
+		registerFusion(consumer, Arrays.asList(
+				ItemRegister.PEA_SHOOTER_CARD.get(),
+				ItemRegister.PEA_SHOOTER_CARD.get()
+				), ItemRegister.REPEATER_CARD.get());
+
+		registerFusion(consumer, Arrays.asList(
+				ItemRegister.PEA_SHOOTER_CARD.get(),
+				ItemRegister.PEA_SHOOTER_CARD.get(),
+				ItemRegister.PEA_SHOOTER_CARD.get()
+		), ItemRegister.THREE_PEATER_CARD.get());
+
+		registerFusion(consumer, Arrays.asList(
+				ItemRegister.PEA_SHOOTER_CARD.get(),
+				ItemRegister.REPEATER_CARD.get()
+		), ItemRegister.SPLIT_PEA_CARD.get());
+
+		registerFusion(consumer, Arrays.asList(
+				ItemRegister.LILY_PAD_CARD.get(),
+				ItemRegister.WALL_NUT_CARD.get()
+		), ItemRegister.WATER_GUARD_CARD.get());
+
+		registerFusion(consumer, Arrays.asList(
+				ItemRegister.FUME_SHROOM_CARD.get(),
+				ItemRegister.SCAREDY_SHROOM_CARD.get()
+		), ItemRegister.PUFF_SHROOM_CARD.get());
+
+		registerFusion(consumer, Arrays.asList(
+				ItemRegister.WALL_NUT_CARD.get(),
+				ItemRegister.WALL_NUT_CARD.get()
+		), ItemRegister.TALL_NUT_CARD.get());
+
+		registerFusion(consumer, Arrays.asList(
+				ItemRegister.WALL_NUT_CARD.get(),
+				ItemRegister.WALL_NUT_CARD.get(),
+				ItemRegister.WALL_NUT_CARD.get(),
+				ItemRegister.WALL_NUT_CARD.get(),
+				ItemRegister.WALL_NUT_CARD.get(),
+				ItemRegister.WALL_NUT_CARD.get(),
+				ItemRegister.WALL_NUT_CARD.get(),
+				ItemRegister.WALL_NUT_CARD.get()
+		), ItemRegister.GIANT_WALL_NUT_CARD.get());
+
+		registerFusion(consumer, Arrays.asList(
+				ItemRegister.WALL_NUT_CARD.get(),
+				ItemRegister.CHERRY_BOMB_CARD.get()
+				), ItemRegister.EXPLODE_O_NUT_CARD.get());
+
+		registerFusion(consumer, Arrays.asList(
+				ItemRegister.SCAREDY_SHROOM_CARD.get(),
+				ItemRegister.TANGLE_KELP_CARD.get()
+		), ItemRegister.SEA_SHROOM_CARD.get());
+	}
+
+	private void registerFusion(Consumer<IFinishedRecipe> consumer, List<IItemProvider> list, Item result) {
+		final ItemStack stack = new ItemStack(result);
+		final FusionRecipeBuilder builder = FusionRecipeBuilder.shapeless(result);
+		list.forEach(i -> builder.requires(i));
+		if(result instanceof PlantCardItem){
+			builder.requires(((PlantCardItem) result).plantType.getRank().getTemplateCard());
+		}
+		builder.save(consumer, StringUtil.prefix("card_fusion/" + result.getRegistryName().getPath()));
 	}
 
 	private void registerFragment(Consumer<IFinishedRecipe> consumer, IPlantType type) {

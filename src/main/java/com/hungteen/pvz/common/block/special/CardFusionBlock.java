@@ -51,7 +51,7 @@ public class CardFusionBlock extends AbstractFacingBlock {
 			TileEntity tileentity = worldIn.getBlockEntity(pos);
 			if (tileentity instanceof CardFusionTileEntity) {
 				CardFusionTileEntity te = (CardFusionTileEntity) worldIn.getBlockEntity(pos);
-				for (int i = 0; i < te.handler.getSlots(); ++i) {
+				for (int i = 0; i < te.handler.getSlots(); ++ i) {
 					InventoryHelper.dropItemStack(worldIn, pos.getX(), pos.getY(), pos.getZ(),
 							te.handler.getStackInSlot(i));
 				}

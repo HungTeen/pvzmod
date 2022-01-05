@@ -1,0 +1,17 @@
+{
+  "type": "pvz:card_fusion",
+  "ingredients": [
+    {
+      "item": "pvz:wall_nut_card"
+    },
+    {
+      "item": "pvz:cherry_bomb_card"
+    },
+    {
+      "item": "pvz:purple_card"
+    }
+  ],
+  "result": {
+    "item": "pvz:explode_o_nut_card"
+  }
+}

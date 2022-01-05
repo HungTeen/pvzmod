@@ -3,7 +3,7 @@ package com.hungteen.pvz.common.container;
 import com.hungteen.pvz.common.block.BlockRegister;
 import com.hungteen.pvz.common.item.tool.plant.SunStorageSaplingItem;
 import com.hungteen.pvz.common.recipe.RecipeRegister;
-import com.hungteen.pvz.common.recipe.fragment.FragmentRecipe;
+import com.hungteen.pvz.common.recipe.FragmentRecipe;
 import com.hungteen.pvz.common.tileentity.FragmentSpliceTileEntity;
 import com.hungteen.pvz.register.ContainerRegister;
 import net.minecraft.entity.player.PlayerEntity;

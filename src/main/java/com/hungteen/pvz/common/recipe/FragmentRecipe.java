@@ -1,10 +1,9 @@
-package com.hungteen.pvz.common.recipe.fragment;
+package com.hungteen.pvz.common.recipe;
 
 import com.google.common.annotations.VisibleForTesting;
 import com.google.common.collect.Maps;
 import com.google.common.collect.Sets;
 import com.google.gson.*;
-import com.hungteen.pvz.common.recipe.RecipeRegister;
 import com.hungteen.pvz.utils.StringUtil;
 import net.minecraft.inventory.CraftingInventory;
 import net.minecraft.item.Item;
@@ -26,7 +25,6 @@ import java.util.Set;
  */
 public class FragmentRecipe implements ICraftingRecipe, IShapedRecipe<CraftingInventory> {
 
-    public static final ResourceLocation TYPE = StringUtil.prefix("fragment_splice");
     public static final ResourceLocation UID = StringUtil.prefix("fragment_splice");
     private static final int MAX_WIDTH = 5;
     private static final int MAX_HEIGHT = 5;

@@ -96,9 +96,7 @@ public class ClickButtonPacket {
 					if(player.containerMenu instanceof CardFusionContainer) {
 						CardFusionContainer container = (CardFusionContainer) player.containerMenu;
 						if(message.op == 0) {
-//							container.te.setResult(message.num);
-						} else if(message.op == 1) {
-							container.canPutStackBackToInventory();
+							container.onCraft();
 						}
 					}
 				}

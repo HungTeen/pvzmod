@@ -1,0 +1,20 @@
+{
+  "type": "pvz:card_fusion",
+  "ingredients": [
+    {
+      "item": "pvz:pea_shooter_card"
+    },
+    {
+      "item": "pvz:pea_shooter_card"
+    },
+    {
+      "item": "pvz:pea_shooter_card"
+    },
+    {
+      "item": "pvz:green_card"
+    }
+  ],
+  "result": {
+    "item": "pvz:three_peater_card"
+  }
+}
