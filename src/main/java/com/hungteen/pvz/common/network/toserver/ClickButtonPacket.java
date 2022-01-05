@@ -64,9 +64,7 @@ public class ClickButtonPacket {
 					if(player.containerMenu instanceof FragmentSpliceContainer) {
 						FragmentSpliceContainer container = (FragmentSpliceContainer) player.containerMenu;
 						if(message.op == 0) {
-							container.te.setResult(message.num);
-						} else if(message.op == 1) {
-							container.canPutStackBackToInventory();
+							container.onCraft();
 						}
 					}
 				} else if(message.type == GuiHandler.SLOT_MACHINE) {

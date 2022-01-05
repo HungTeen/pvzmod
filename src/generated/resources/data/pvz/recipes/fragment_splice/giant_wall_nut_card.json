@@ -1,0 +1,24 @@
+{
+  "type": "pvz:fragment_splice",
+  "pattern": [
+    "AAAAA",
+    "ABBBA",
+    "ABCBA",
+    "ABBBA",
+    "AAAAA"
+  ],
+  "key": {
+    "A": {
+      "item": "pvz:giant_wall_nut_enjoy_card"
+    },
+    "B": {
+      "item": "pvz:defence_essence"
+    },
+    "C": {
+      "item": "pvz:purple_card"
+    }
+  },
+  "result": {
+    "item": "pvz:giant_wall_nut_card"
+  }
+}

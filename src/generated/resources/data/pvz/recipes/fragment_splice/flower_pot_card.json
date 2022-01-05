@@ -1,0 +1,24 @@
+{
+  "type": "pvz:fragment_splice",
+  "pattern": [
+    "AAAAA",
+    "ABBBA",
+    "ABCBA",
+    "ABBBA",
+    "AAAAA"
+  ],
+  "key": {
+    "A": {
+      "item": "pvz:flower_pot_enjoy_card"
+    },
+    "B": {
+      "item": "pvz:assist_essence"
+    },
+    "C": {
+      "item": "pvz:gray_card"
+    }
+  },
+  "result": {
+    "item": "pvz:flower_pot_card"
+  }
+}

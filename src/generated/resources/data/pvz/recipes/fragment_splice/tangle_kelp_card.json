@@ -1,0 +1,24 @@
+{
+  "type": "pvz:fragment_splice",
+  "pattern": [
+    "AAAAA",
+    "ABBBA",
+    "ABCBA",
+    "ABBBA",
+    "AAAAA"
+  ],
+  "key": {
+    "A": {
+      "item": "pvz:tangle_kelp_enjoy_card"
+    },
+    "B": {
+      "item": "pvz:enforce_essence"
+    },
+    "C": {
+      "item": "pvz:white_card"
+    }
+  },
+  "result": {
+    "item": "pvz:tangle_kelp_card"
+  }
+}

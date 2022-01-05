@@ -1,0 +1,24 @@
+{
+  "type": "pvz:fragment_splice",
+  "pattern": [
+    "AAAAA",
+    "ABBBA",
+    "ABCBA",
+    "ABBBA",
+    "AAAAA"
+  ],
+  "key": {
+    "A": {
+      "item": "pvz:melon_pult_enjoy_card"
+    },
+    "B": {
+      "item": "pvz:arma_essence"
+    },
+    "C": {
+      "item": "pvz:purple_card"
+    }
+  },
+  "result": {
+    "item": "pvz:melon_pult_card"
+  }
+}

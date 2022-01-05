@@ -1,0 +1,24 @@
+{
+  "type": "pvz:fragment_splice",
+  "pattern": [
+    "AAAAA",
+    "ABBBA",
+    "ABCBA",
+    "ABBBA",
+    "AAAAA"
+  ],
+  "key": {
+    "A": {
+      "item": "pvz:sea_shroom_enjoy_card"
+    },
+    "B": {
+      "item": "pvz:toxic_essence"
+    },
+    "C": {
+      "item": "pvz:white_card"
+    }
+  },
+  "result": {
+    "item": "pvz:sea_shroom_card"
+  }
+}

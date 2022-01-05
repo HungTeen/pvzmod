@@ -1,0 +1,24 @@
+{
+  "type": "pvz:fragment_splice",
+  "pattern": [
+    "AAAAA",
+    "ABBBA",
+    "ABCBA",
+    "ABBBA",
+    "AAAAA"
+  ],
+  "key": {
+    "A": {
+      "item": "pvz:jalapeno_enjoy_card"
+    },
+    "B": {
+      "item": "pvz:flame_essence"
+    },
+    "C": {
+      "item": "pvz:blue_card"
+    }
+  },
+  "result": {
+    "item": "pvz:jalapeno_card"
+  }
+}

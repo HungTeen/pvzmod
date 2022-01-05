@@ -1,0 +1,24 @@
+{
+  "type": "pvz:fragment_splice",
+  "pattern": [
+    "AAAAA",
+    "ABBBA",
+    "ABCBA",
+    "ABBBA",
+    "AAAAA"
+  ],
+  "key": {
+    "A": {
+      "item": "pvz:split_pea_enjoy_card"
+    },
+    "B": {
+      "item": "pvz:appease_essence"
+    },
+    "C": {
+      "item": "pvz:white_card"
+    }
+  },
+  "result": {
+    "item": "pvz:split_pea_card"
+  }
+}

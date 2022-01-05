@@ -2,6 +2,7 @@ package com.hungteen.pvz.data;
 
 import com.hungteen.pvz.PVZMod;
 import com.hungteen.pvz.data.loot.LootTableGenerator;
+import com.hungteen.pvz.data.recipe.RecipeGenerator;
 import com.hungteen.pvz.data.tag.BlockTagGenerator;
 import com.hungteen.pvz.data.tag.EntityTypeTagGenerator;
 import com.hungteen.pvz.data.tag.ItemTagGenerator;

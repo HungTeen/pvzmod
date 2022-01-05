@@ -20,6 +20,7 @@ import java.util.stream.Collectors;
 public class StringUtil {
 
 	public static final StringTextComponent EMPTY = new StringTextComponent("");
+	public static final ResourceLocation WIDGETS = StringUtil.prefix("textures/gui/widgets.png");
 	public static final String TE_TAG = "BlockEntityTag";
 	public static final String ARMOR_PREFIX = PVZMod.MOD_ID + ":textures/models/armor/";
 	public static final String INIT_VERSION = "0.0.0";

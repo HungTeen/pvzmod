@@ -1,0 +1,24 @@
+{
+  "type": "pvz:fragment_splice",
+  "pattern": [
+    "AAAAA",
+    "ABBBA",
+    "ABCBA",
+    "ABBBA",
+    "AAAAA"
+  ],
+  "key": {
+    "A": {
+      "item": "pvz:umbrella_leaf_enjoy_card"
+    },
+    "B": {
+      "item": "pvz:enforce_essence"
+    },
+    "C": {
+      "item": "pvz:green_card"
+    }
+  },
+  "result": {
+    "item": "pvz:umbrella_leaf_card"
+  }
+}

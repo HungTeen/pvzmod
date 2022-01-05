@@ -1,0 +1,24 @@
+{
+  "type": "pvz:fragment_splice",
+  "pattern": [
+    "AAAAA",
+    "ABBBA",
+    "ABCBA",
+    "ABBBA",
+    "AAAAA"
+  ],
+  "key": {
+    "A": {
+      "item": "pvz:ice_shroom_enjoy_card"
+    },
+    "B": {
+      "item": "pvz:ice_essence"
+    },
+    "C": {
+      "item": "pvz:blue_card"
+    }
+  },
+  "result": {
+    "item": "pvz:ice_shroom_card"
+  }
+}

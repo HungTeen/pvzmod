@@ -9,6 +9,7 @@ import com.hungteen.pvz.common.misc.sound.SoundRegister;
 import com.hungteen.pvz.common.network.PVZPacketHandler;
 import com.hungteen.pvz.common.potion.EffectRegister;
 import com.hungteen.pvz.common.potion.PotionRecipeHandler;
+import com.hungteen.pvz.common.recipe.RecipeRegister;
 import com.hungteen.pvz.register.BiomeRegister;
 import com.hungteen.pvz.register.CommonRegister;
 import com.hungteen.pvz.register.ContainerRegister;
@@ -50,6 +51,7 @@ public class RegistryHandler {
 		EnchantmentRegister.ENCHANTMENTS.register(bus);
 		ContainerRegister.CONTAINER_TYPES.register(bus);
 		PotionRegister.POTIONS.register(bus);
+		RecipeRegister.RECIPE_SERIALIZERS.register(bus);
 	}
 	
 	/**

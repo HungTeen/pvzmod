@@ -1,13 +1,12 @@
-package com.hungteen.pvz.data;
+package com.hungteen.pvz.data.recipe;
 
-import java.util.function.Consumer;
-
+import com.hungteen.pvz.api.PVZAPI;
+import com.hungteen.pvz.api.types.IPlantType;
 import com.hungteen.pvz.common.block.BlockRegister;
 import com.hungteen.pvz.common.item.ItemRegister;
 import com.hungteen.pvz.common.item.spawn.card.PlantCardItem;
 import com.hungteen.pvz.common.misc.tag.PVZItemTags;
 import com.hungteen.pvz.utils.StringUtil;
-
 import net.minecraft.data.CookingRecipeBuilder;
 import net.minecraft.data.DataGenerator;
 import net.minecraft.data.IFinishedRecipe;
@@ -20,6 +19,8 @@ import net.minecraft.tags.ITag;
 import net.minecraft.tags.ItemTags;
 import net.minecraft.util.IItemProvider;
 import net.minecraftforge.common.data.ForgeRecipeProvider;
+
+import java.util.function.Consumer;
 
 public class RecipeGenerator extends ForgeRecipeProvider{
 
@@ -73,7 +74,27 @@ public class RecipeGenerator extends ForgeRecipeProvider{
 		//smelt
 		registerStoneSmelting(consumer, BlockRegister.AMETHYST_ORE.get(), ItemRegister.AMETHYST_INGOT.get(), 1.4F, 250, "amethyst_ingot");
 		registerFoodSmelting(consumer, ItemRegister.FAKE_BRAIN.get(), ItemRegister.COOKED_BRAIN.get(), 0.4F, 200, "cooked_brain");
-	    
+
+		//fragment splice
+		PVZAPI.get().getPlants().forEach(p -> {
+			registerFragment(consumer, p);
+		});
+	}
+
+	private void registerFragment(Consumer<IFinishedRecipe> consumer, IPlantType type) {
+		type.getSummonCard().ifPresent(card -> {
+			FragmentRecipeBuilder.shaped(card)
+					.pattern("AAAAA")
+					.pattern("ABBBA")
+					.pattern("ABCBA")
+					.pattern("ABBBA")
+					.pattern("AAAAA")
+					.define('A', type.getEnjoyCard().get())
+					.define('B', type.getEssence().getEssenceItem())
+					.define('C', type.getRank().getTemplateCard())
+					.unlockedBy("has_essence", has(type.getEssence().getEssenceItem()))
+					.save(consumer, StringUtil.prefix("fragment_splice/" + type.toString() + "_card"));
+		});
 	}
 	
 	private void registerStoneSmelting(Consumer<IFinishedRecipe> consumer, IItemProvider input, IItemProvider item, float xp, int time, String name) {

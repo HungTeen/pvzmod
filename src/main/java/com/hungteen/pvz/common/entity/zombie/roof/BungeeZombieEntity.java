@@ -138,7 +138,7 @@ public class BungeeZombieEntity extends PVZZombieEntity {
 		} else if(this.getBungeeState() == BungeeStates.UP) {
 			this.setAttackTime(this.getAttackTime() - 1);
 			this.moveBackToOrigin();
-			if(this.getAttackTime() < - 60) {
+			if(this.getStealTarget() != null && this.getAttackTime() < - 60) {
 				this.dealDamageAndRemove();
 				return ;
 			}
