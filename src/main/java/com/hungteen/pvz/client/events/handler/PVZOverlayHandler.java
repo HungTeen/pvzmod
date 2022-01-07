@@ -7,7 +7,6 @@ import com.hungteen.pvz.client.events.PVZInputEvents;
 import com.hungteen.pvz.common.item.spawn.card.SummonCardItem;
 import com.hungteen.pvz.common.network.PVZPacketHandler;
 import com.hungteen.pvz.common.network.toserver.PVZMouseScrollPacket;
-import com.hungteen.pvz.common.world.invasion.WaveManager;
 import com.hungteen.pvz.utils.ConfigUtil;
 import com.hungteen.pvz.utils.MathUtil;
 import com.hungteen.pvz.utils.PlayerUtil;
@@ -141,30 +140,30 @@ public class PVZOverlayHandler {
 	}
 	
 	public static void renderInvasionProgress(MatrixStack stack, int w, int h) {
-		if(ClientPlayerResources.totalWaveCount == 0) {
-			return ;
-		}
-		stack.pushPose();
-		final float scale = 0.5F;
-		int offsetY = 0;
-		int offsetX = 0;
-		stack.scale(scale, scale, 1F);
-		ClientProxy.MC.getTextureManager().bind(INVASION);
-		
-		final int WIDTH = 157, HEIGHT = 21;
-		ClientProxy.MC.gui.blit(stack, w * 2 - WIDTH + offsetX, h * 2 - HEIGHT + offsetY, 0, 0, WIDTH, HEIGHT);
-		final int P_WIDTH = 143, P_HEIGHT = 7;
-		int barlen = MathUtil.getBarLen((int)(ClientProxy.MC.player.level.getDayTime() % 24000L), 24000, P_WIDTH);
-		ClientProxy.MC.gui.blit(stack, w * 2 - barlen - 7 + offsetX, h * 2 - HEIGHT + 7 + offsetY, 149 - barlen + 1, 28, barlen, P_HEIGHT);
-		for(int i = 0; i < ClientPlayerResources.totalWaveCount; ++ i) {
-			boolean rise = (ClientPlayerResources.zombieWaveTime[i] >= WaveManager.FINISH_OFFSET);
-			int waveTime = (rise ? ClientPlayerResources.zombieWaveTime[i] - WaveManager.FINISH_OFFSET : ClientPlayerResources.zombieWaveTime[i]);
-			int waveLen = MathUtil.getBarLen(waveTime, 24000, P_WIDTH);
-			ClientProxy.MC.gui.blit(stack, w * 2 - waveLen - 11 + offsetX, h * 2 - HEIGHT + (rise ? - 9 : - 4) + offsetY, 27, 42, 20, (rise ? 27 : 19));
-		}
-		ClientProxy.MC.gui.blit(stack, w * 2 - barlen - 11 + offsetX, h * 2 - HEIGHT - 4 + offsetY, 0, 42, 24, 23);
-		
-		stack.popPose();
+//		if(ClientPlayerResources.totalWaveCount == 0) {
+//			return ;
+//		}
+//		stack.pushPose();
+//		final float scale = 0.5F;
+//		int offsetY = 0;
+//		int offsetX = 0;
+//		stack.scale(scale, scale, 1F);
+//		ClientProxy.MC.getTextureManager().bind(INVASION);
+//		
+//		final int WIDTH = 157, HEIGHT = 21;
+//		ClientProxy.MC.gui.blit(stack, w * 2 - WIDTH + offsetX, h * 2 - HEIGHT + offsetY, 0, 0, WIDTH, HEIGHT);
+//		final int P_WIDTH = 143, P_HEIGHT = 7;
+//		int barlen = MathUtil.getBarLen((int)(ClientProxy.MC.player.level.getDayTime() % 24000L), 24000, P_WIDTH);
+//		ClientProxy.MC.gui.blit(stack, w * 2 - barlen - 7 + offsetX, h * 2 - HEIGHT + 7 + offsetY, 149 - barlen + 1, 28, barlen, P_HEIGHT);
+//		for(int i = 0; i < ClientPlayerResources.totalWaveCount; ++ i) {
+//			boolean rise = (ClientPlayerResources.zombieWaveTime[i] >= WaveManager.FINISH_OFFSET);
+//			int waveTime = (rise ? ClientPlayerResources.zombieWaveTime[i] - WaveManager.FINISH_OFFSET : ClientPlayerResources.zombieWaveTime[i]);
+//			int waveLen = MathUtil.getBarLen(waveTime, 24000, P_WIDTH);
+//			ClientProxy.MC.gui.blit(stack, w * 2 - waveLen - 11 + offsetX, h * 2 - HEIGHT + (rise ? - 9 : - 4) + offsetY, 27, 42, 20, (rise ? 27 : 19));
+//		}
+//		ClientProxy.MC.gui.blit(stack, w * 2 - barlen - 11 + offsetX, h * 2 - HEIGHT - 4 + offsetY, 0, 42, 24, 23);
+//		
+//		stack.popPose();
 	}
 	
 	public static void renderTargetAim(MatrixStack stack, int w, int h) {

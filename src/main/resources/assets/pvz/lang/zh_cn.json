@@ -165,6 +165,8 @@
   "tooltip.pvz.sun_storage_sapling.once": "一次性使用，不能再储存更多阳光",
   "tooltip.pvz.sun_converter": "阳光吸收装置",
   "tooltip.pvz.fragment_splice": "一个将体验卡合成为植物卡的机器装置",
+  "tooltip.pvz.steel_ladder":"比普通梯子具有更快的攀爬速度",
+  "tooltip.pvz.card_fusion_table":"一个将召唤卡融合为其他召唤卡的机器装置",
   "tooltip.pvz.zombie_flag": "右键会获得加速效果",
   "tooltip.pvz.jack_box": "右击会有惊喜",
   "tooltip.pvz.balloon": "右键会获得缓降效果",
@@ -174,7 +176,7 @@
   "tooltip.pvz.defence": "护甲血量",
   "tooltip.pvz.reduction": "伤害吸收",
   "tooltip.pvz.owner": "主人",
-  "tooltip.pvz.steel_ladder":"比普通梯子具有更快的攀爬速度",
+
   "_comment4": "--------------------------------------------实体-------------------------------------------",
   "entity.pvz.sun": "阳光",
   "item.pvz.sun_spawn_egg": "阳光刷怪蛋",

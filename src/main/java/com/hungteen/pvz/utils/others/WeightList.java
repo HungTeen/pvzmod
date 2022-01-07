@@ -54,6 +54,10 @@ public class WeightList<T> {
 	public List<T> getItemList(){
 		return this.itemList;
 	}
+
+	public T getItem(int pos){
+		return this.itemList.get(pos);
+	}
 	
 	/**
 	 * get the weight item randomly.

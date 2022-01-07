@@ -8,7 +8,7 @@ import com.hungteen.pvz.common.enchantment.EnchantmentRegister;
 import com.hungteen.pvz.common.enchantment.misc.SunMendingEnchantment;
 import com.hungteen.pvz.common.entity.plant.light.SunFlowerEntity;
 import com.hungteen.pvz.common.event.events.PlayerCollectDropEvent;
-import com.hungteen.pvz.common.misc.sound.PVZSounds;
+import com.hungteen.pvz.common.misc.sound.SoundRegister;
 import com.hungteen.pvz.register.EntityRegister;
 import com.hungteen.pvz.utils.EntityUtil;
 import com.hungteen.pvz.utils.PlayerUtil;
@@ -72,7 +72,7 @@ public class SunEntity extends DropEntity {
 		    } else {
 		    	PlayerUtil.addResource(player, Resources.SUN_NUM, this.getAmount());
 		    }
-		    PlayerUtil.playClientSound(player, PVZSounds.SUN_COLLECT);
+		    PlayerUtil.playClientSound(player, SoundRegister.SUN_PICK.get());
 		}
 		this.remove();
 	}

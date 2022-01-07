@@ -1,7 +1,8 @@
 package com.hungteen.pvz.common.event;
 
 import com.hungteen.pvz.PVZMod;
-import com.hungteen.pvz.common.world.invasion.OverworldInvasion;
+import com.hungteen.pvz.common.world.invasion.InvasionManager;
+import com.hungteen.pvz.common.world.raid.RaidManager;
 
 import net.minecraft.world.World;
 import net.minecraftforge.event.TickEvent;
@@ -16,8 +17,9 @@ public class PVZWorldEvents {
 		if (ev.phase != TickEvent.Phase.END || ev.world.isClientSide) {
 			return;
 		}
+		RaidManager.tickRaids(ev.world);
 		if(ev.world.dimension() == World.OVERWORLD) {
-			OverworldInvasion.tick(ev);
+			InvasionManager.tick(ev);
 		}
 	}
 	

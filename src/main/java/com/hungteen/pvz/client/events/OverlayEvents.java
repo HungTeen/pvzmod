@@ -2,12 +2,9 @@ package com.hungteen.pvz.client.events;
 
 import com.hungteen.pvz.PVZConfig;
 import com.hungteen.pvz.PVZMod;
-import com.hungteen.pvz.client.ClientProxy;
 import com.hungteen.pvz.client.events.handler.PVZOverlayHandler;
 import com.hungteen.pvz.common.entity.plant.explosion.CobCannonEntity;
-import com.hungteen.pvz.common.world.invasion.FogManager;
 import com.hungteen.pvz.utils.PlayerUtil;
-import com.hungteen.pvz.utils.enums.Resources;
 
 import net.minecraft.client.Minecraft;
 import net.minecraftforge.api.distmarker.Dist;
@@ -56,18 +53,18 @@ public class OverlayEvents {
 		}
 	}
 
-	@SubscribeEvent
-	public static void onRenderFog(RenderGameOverlayEvent.Pre ev) {
-		if (ev.getType() != RenderGameOverlayEvent.ElementType.ALL || mc.player == null || mc.player.isSpectator()) {
-			return;
-		}
-		if (PVZConfig.CLIENT_CONFIG.OverlaySettings.RenderFog.get()) {
-			int tick = PlayerUtil.getResource(ClientProxy.MC.player, Resources.NO_FOG_TICK);
-			if(tick < 0) {
-				PVZOverlayHandler.renderFog(ev.getMatrixStack(), ev.getWindow().getGuiScaledWidth(), ev.getWindow().getGuiScaledHeight(), Math.min(- tick * 1F / FogManager.CD, 1F));
-			}
-		}
-	}
+//	@SubscribeEvent
+//	public static void onRenderFog(RenderGameOverlayEvent.Pre ev) {
+//		if (ev.getType() != RenderGameOverlayEvent.ElementType.ALL || mc.player == null || mc.player.isSpectator()) {
+//			return;
+//		}
+//		if (PVZConfig.CLIENT_CONFIG.OverlaySettings.RenderFog.get()) {
+//			int tick = PlayerUtil.getResource(ClientProxy.MC.player, Resources.NO_FOG_TICK);
+//			if(tick < 0) {
+//				PVZOverlayHandler.renderFog(ev.getMatrixStack(), ev.getWindow().getGuiScaledWidth(), ev.getWindow().getGuiScaledHeight(), Math.min(- tick * 1F / FogManager.CD, 1F));
+//			}
+//		}
+//	}
 	
 	private static boolean canRender() {
 		return mc.player != null && ! mc.player.isSpectator();

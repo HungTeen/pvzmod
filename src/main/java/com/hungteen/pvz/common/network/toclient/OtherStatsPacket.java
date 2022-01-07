@@ -44,7 +44,7 @@ public class OtherStatsPacket{
 			    	if(message.pos == -1) {
 			    		ClientPlayerResources.totalWaveCount = message.data;
 			    	} else {
-			    		ClientPlayerResources.zombieWaveTime[message.pos] = message.data;
+//			    		ClientPlayerResources.zombieWaveTime[message.pos] = message.data;
 			    	}
 			    } else if(message.type == 2) {
 			    	if(message.pos == 0) {

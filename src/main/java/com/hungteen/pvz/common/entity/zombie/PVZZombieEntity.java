@@ -1,7 +1,7 @@
 package com.hungteen.pvz.common.entity.zombie;
 
 import com.hungteen.pvz.PVZConfig;
-import com.hungteen.pvz.api.IZombieEntity;
+import com.hungteen.pvz.api.paz.IZombieEntity;
 import com.hungteen.pvz.api.enums.BodyType;
 import com.hungteen.pvz.api.enums.PVZGroupType;
 import com.hungteen.pvz.api.types.IPAZType;

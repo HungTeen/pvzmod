@@ -1,10 +1,8 @@
 package com.hungteen.pvz.common.world.spawn;
 
-import com.hungteen.pvz.PVZMod;
-import com.hungteen.pvz.api.types.IZombieType;
-import com.hungteen.pvz.common.cache.InvasionCache;
+import java.util.Random;
+
 import com.hungteen.pvz.common.entity.zombie.PVZZombieEntity;
-import com.hungteen.pvz.common.impl.ZombieType;
 
 import net.minecraft.entity.CreatureEntity;
 import net.minecraft.entity.EntityType;
@@ -15,11 +13,7 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.Difficulty;
 import net.minecraft.world.IWorld;
 import net.minecraft.world.LightType;
-import net.minecraft.world.World;
 import net.minecraft.world.server.ServerWorld;
-
-import java.util.Optional;
-import java.util.Random;
 
 public class SpawnChecker {
 
@@ -89,18 +83,18 @@ public class SpawnChecker {
 	 * chunk spawn zombie need has invasion event for that day.
 	 */
 	private static boolean checkInvasionList(EntityType<? extends PVZZombieEntity> zombieType, IWorld worldIn, SpawnReason reason) {
-		if(reason != SpawnReason.NATURAL) {
-			return true;
-		}
-		Optional<IZombieType> opt = ZombieType.getByEntityType(zombieType);
-		if(worldIn instanceof World) {
-			if(opt.isPresent()) {
-			    return InvasionCache.ZOMBIE_INVADE_SET.contains(opt.get());
-			} else {
-				PVZMod.LOGGER.error("SpawnChecker : No Such Zombie Type !");
-			    return false;
-			}
-		}
+//		if(reason != SpawnReason.NATURAL) {
+//			return true;
+//		}
+//		Optional<IZombieType> opt = ZombieType.getByEntityType(zombieType);
+//		if(worldIn instanceof World) {
+//			if(opt.isPresent()) {
+//			    return InvasionCache.ZOMBIE_INVADE_SET.contains(opt.get());
+//			} else {
+//				PVZMod.LOGGER.error("SpawnChecker : No Such Zombie Type !");
+//			    return false;
+//			}
+//		}
 		return false;
 	}
 	

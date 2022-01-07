@@ -2,8 +2,7 @@ package com.hungteen.pvz.common.event;
 
 import com.hungteen.pvz.PVZMod;
 import com.hungteen.pvz.common.cache.FlagCache;
-import com.hungteen.pvz.common.cache.InvasionCache;
-
+import com.hungteen.pvz.common.world.invasion.InvasionManager;
 import net.minecraft.world.World;
 import net.minecraft.world.server.ServerWorld;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
@@ -17,14 +16,14 @@ public class PVZServerEvents {
 	@SubscribeEvent
     public static void serverInit(FMLServerStartingEvent ev) {
     	ServerWorld world = ev.getServer().getLevel(World.OVERWORLD);
-    	InvasionCache.syncStartInvasionCache(world);
+    	InvasionManager.syncStartInvasionCache(world);
     	FlagCache.syncStartFlagCache(world);
     }
     
     @SubscribeEvent
     public static void serverShutDown(FMLServerStoppingEvent ev) {
     	ServerWorld world = ev.getServer().getLevel(World.OVERWORLD);
-    	InvasionCache.syncEndInvasionCache(world);
+    	InvasionManager.syncEndInvasionCache(world);
     	FlagCache.syncEndFlagCache(world);
     }
     

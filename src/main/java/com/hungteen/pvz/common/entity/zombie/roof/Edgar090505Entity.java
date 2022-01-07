@@ -1,6 +1,6 @@
 package com.hungteen.pvz.common.entity.zombie.roof;
 
-import com.hungteen.pvz.api.IZombieEntity;
+import com.hungteen.pvz.api.paz.IZombieEntity;
 import com.hungteen.pvz.api.enums.BodyType;
 import com.hungteen.pvz.common.entity.ai.goal.target.PVZNearestTargetGoal;
 import com.hungteen.pvz.common.entity.misc.DestroyCarEntity;

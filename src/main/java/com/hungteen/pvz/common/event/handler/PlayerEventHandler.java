@@ -1,5 +1,7 @@
 package com.hungteen.pvz.common.event.handler;
 
+import java.util.Optional;
+
 import com.hungteen.pvz.PVZConfig;
 import com.hungteen.pvz.PVZMod;
 import com.hungteen.pvz.api.PVZAPI;
@@ -15,13 +17,13 @@ import com.hungteen.pvz.common.event.PVZPlayerEvents;
 import com.hungteen.pvz.common.impl.ZombieType;
 import com.hungteen.pvz.common.item.ItemRegister;
 import com.hungteen.pvz.common.misc.sound.SoundRegister;
-import com.hungteen.pvz.common.world.data.PVZInvasionData;
-import com.hungteen.pvz.common.world.invasion.WaveManager;
+import com.hungteen.pvz.common.world.invasion.PVZInvasionData;
 import com.hungteen.pvz.compat.patchouli.PVZPatchouliHandler;
 import com.hungteen.pvz.utils.EntityUtil;
 import com.hungteen.pvz.utils.PlayerUtil;
 import com.hungteen.pvz.utils.StringUtil;
 import com.hungteen.pvz.utils.enums.Resources;
+
 import net.minecraft.advancements.CriteriaTriggers;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
@@ -32,8 +34,6 @@ import net.minecraft.util.Hand;
 import net.minecraft.util.math.MathHelper;
 import net.minecraftforge.common.util.LazyOptional;
 import net.minecraftforge.event.entity.living.LivingDeathEvent;
-
-import java.util.Optional;
 
 public class PlayerEventHandler {
 
@@ -108,7 +108,7 @@ public class PlayerEventHandler {
 
 		unLockPAZs(player);
 
-		WaveManager.syncWaveTime(player);
+//		WaveManager.syncWaveTime(player);
 	}
 	
 	/**

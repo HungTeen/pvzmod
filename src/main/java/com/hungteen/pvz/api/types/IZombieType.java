@@ -1,7 +1,7 @@
 package com.hungteen.pvz.api.types;
 
-import com.hungteen.pvz.api.IZombieEntity;
-import com.hungteen.pvz.api.IZombieModel;
+import com.hungteen.pvz.api.paz.IZombieEntity;
+import com.hungteen.pvz.api.paz.IZombieModel;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 

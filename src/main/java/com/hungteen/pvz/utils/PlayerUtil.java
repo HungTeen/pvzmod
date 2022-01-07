@@ -7,7 +7,6 @@ import com.hungteen.pvz.common.capability.CapabilityHandler;
 import com.hungteen.pvz.common.capability.player.IPlayerDataCapability;
 import com.hungteen.pvz.common.capability.player.PlayerDataManager;
 import com.hungteen.pvz.common.item.spawn.card.PlantCardItem;
-import com.hungteen.pvz.common.misc.sound.PVZSounds;
 import com.hungteen.pvz.common.network.PVZPacketHandler;
 import com.hungteen.pvz.common.network.toclient.AlmanacUnLockPacket;
 import com.hungteen.pvz.common.network.toclient.PlaySoundPacket;
@@ -16,6 +15,7 @@ import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.network.play.server.STitlePacket;
+import net.minecraft.util.SoundEvent;
 import net.minecraft.util.Util;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.StringTextComponent;
@@ -164,10 +164,12 @@ public class PlayerUtil {
 		return PVZGroupType.getGroup(ConfigUtil.getPlayerInitialGroup());// get Group Error !
 	}
 	
-	public static void playClientSound(PlayerEntity player, PVZSounds sound) {
-		PVZPacketHandler.CHANNEL.send(PacketDistributor.PLAYER.with(()->{
-			return (ServerPlayerEntity) player;
-		}), new PlaySoundPacket(sound));
+	public static void playClientSound(PlayerEntity player, SoundEvent ev) {
+		if(ev != null) {
+			PVZPacketHandler.CHANNEL.send(PacketDistributor.PLAYER.with(() -> {
+				return (ServerPlayerEntity) player;
+			}), new PlaySoundPacket(ev.getRegistryName().toString()));
+		}
 	}
 
 	public static void sendTitleToPlayer(PlayerEntity player, ITextComponent text) {

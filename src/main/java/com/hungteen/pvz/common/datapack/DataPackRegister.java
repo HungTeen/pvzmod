@@ -12,6 +12,7 @@ public class DataPackRegister {
     public static void addReloadListenerEvent(AddReloadListenerEvent event) {
         event.addListener(new PlantType.PlantTypeLoader());
         event.addListener(new LotteryTypeLoader());
+        event.addListener(new InvasionTypeLoader());
     }
 
 }

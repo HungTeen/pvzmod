@@ -1,12 +1,11 @@
 package com.hungteen.pvz.common.item.display;
 
-import com.hungteen.craid.api.CRaidAPI;
-import com.hungteen.craid.api.IRaidComponent;
+import com.hungteen.pvz.api.PVZAPI;
+import com.hungteen.pvz.api.raid.IRaidComponent;
 import com.hungteen.pvz.client.gui.screen.StrangeHelpScreen;
 import com.hungteen.pvz.common.item.ItemRegister;
 import com.hungteen.pvz.common.item.PVZItemGroups;
-import com.hungteen.pvz.compat.craid.PVZRaidComponent;
-
+import com.hungteen.pvz.common.world.raid.PVZRaidComponent;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.player.PlayerEntity;
@@ -39,7 +38,7 @@ public class ChallengeEnvelopeItem extends Item{
 	}
 
 	public static Optional<PVZRaidComponent> getRaidComponent(ItemStack stack){
-		final IRaidComponent raidComponent = CRaidAPI.get().getRaidTypes().getOrDefault(getChallengeType(stack), null);
+		final IRaidComponent raidComponent = PVZAPI.get().getRaidTypes().getOrDefault(getChallengeType(stack), null);
 		return raidComponent instanceof PVZRaidComponent ? Optional.ofNullable((PVZRaidComponent) raidComponent) : Optional.empty();
 	}
 
@@ -51,7 +50,7 @@ public class ChallengeEnvelopeItem extends Item{
 	@Override
 	public void fillItemCategory(ItemGroup group, NonNullList<ItemStack> items) {
 		if (this.allowdedIn(group)) {
-			CRaidAPI.get().getRaidTypes().forEach((res, com) -> {
+			PVZAPI.get().getRaidTypes().forEach((res, com) -> {
 				if(com instanceof PVZRaidComponent){
 					items.add(setChallengeType(new ItemStack(ItemRegister.CHALLENGE_ENVELOPE.get()), res));
 				}

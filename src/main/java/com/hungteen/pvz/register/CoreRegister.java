@@ -1,7 +1,6 @@
 package com.hungteen.pvz.register;
 
 import com.hungteen.pvz.common.impl.EssenceType;
-import com.hungteen.pvz.common.impl.InvasionEvents;
 import com.hungteen.pvz.common.impl.plant.CustomPlants;
 import com.hungteen.pvz.common.impl.plant.MemePlants;
 import com.hungteen.pvz.common.impl.plant.OtherPlants;
@@ -30,6 +29,5 @@ public class CoreRegister {
 		CustomZombies.register();
 		Zombotanies.register();
 		OtherZombies.register();
-		InvasionEvents.register();
 	}
 }

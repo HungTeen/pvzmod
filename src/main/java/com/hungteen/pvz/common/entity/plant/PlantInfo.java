@@ -1,7 +1,7 @@
 package com.hungteen.pvz.common.entity.plant;
 
-import com.hungteen.pvz.api.IPlantEntity;
-import com.hungteen.pvz.api.IPlantInfo;
+import com.hungteen.pvz.api.paz.IPlantEntity;
+import com.hungteen.pvz.api.paz.IPlantInfo;
 import com.hungteen.pvz.api.types.IPlantType;
 import com.hungteen.pvz.common.impl.PlantType;
 import com.hungteen.pvz.common.misc.sound.SoundRegister;

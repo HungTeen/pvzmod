@@ -1,7 +1,7 @@
 package com.hungteen.pvz.client.model.entity.zombie.roof;
 
 import com.hungteen.pvz.api.IBodyEntity;
-import com.hungteen.pvz.api.IZombieModel;
+import com.hungteen.pvz.api.paz.IZombieModel;
 import com.hungteen.pvz.common.entity.zombie.roof.Edgar090505Entity;
 import com.hungteen.pvz.common.entity.zombie.roof.Edgar090505Entity.ZomBossStates;
 import com.hungteen.pvz.utils.AnimationUtil;

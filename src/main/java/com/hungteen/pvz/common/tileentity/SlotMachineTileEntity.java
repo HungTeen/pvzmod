@@ -1,21 +1,11 @@
 package com.hungteen.pvz.common.tileentity;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Optional;
-import java.util.Random;
-
-import javax.annotation.Nullable;
-
 import com.hungteen.pvz.PVZMod;
 import com.hungteen.pvz.api.events.LotteryEvent;
 import com.hungteen.pvz.common.container.SlotMachineContainer;
 import com.hungteen.pvz.common.datapack.LotteryTypeLoader;
 import com.hungteen.pvz.common.entity.misc.drop.JewelEntity;
 import com.hungteen.pvz.common.entity.misc.drop.SunEntity;
-import com.hungteen.pvz.common.misc.sound.PVZSounds;
 import com.hungteen.pvz.common.misc.sound.SoundRegister;
 import com.hungteen.pvz.register.EntityRegister;
 import com.hungteen.pvz.register.TileEntityRegister;
@@ -23,7 +13,6 @@ import com.hungteen.pvz.utils.EntityUtil;
 import com.hungteen.pvz.utils.PlayerUtil;
 import com.hungteen.pvz.utils.enums.Resources;
 import com.hungteen.pvz.utils.others.WeightList;
-
 import net.minecraft.block.BlockState;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
@@ -35,16 +24,15 @@ import net.minecraft.network.NetworkManager;
 import net.minecraft.network.play.server.SUpdateTileEntityPacket;
 import net.minecraft.tileentity.ITickableTileEntity;
 import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.IIntArray;
-import net.minecraft.util.INameable;
-import net.minecraft.util.IntArray;
-import net.minecraft.util.ResourceLocation;
-import net.minecraft.util.SoundCategory;
+import net.minecraft.util.*;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.common.util.Constants;
 import net.minecraftforge.items.ItemStackHandler;
+
+import javax.annotation.Nullable;
+import java.util.*;
 
 /**
  * 1. get resource of lottery type. 2. press button to choose fast start or slow
@@ -161,7 +149,7 @@ public class SlotMachineTileEntity extends TileEntity implements ITickableTileEn
 		}
 		this.player = player;
 		this.isRunning = true;
-		PlayerUtil.playClientSound(player, PVZSounds.SLOT_MACHINE);
+		PlayerUtil.playClientSound(player, SoundRegister.SLOT_MACHINE.get());
 		PlayerUtil.addResource(player, Resources.SUN_NUM, -this.getSunCost());
 		PlayerUtil.addResource(player, Resources.LOTTERY_CHANCE, -1);
 	}

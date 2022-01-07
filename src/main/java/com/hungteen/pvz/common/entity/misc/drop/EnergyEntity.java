@@ -1,7 +1,7 @@
 package com.hungteen.pvz.common.entity.misc.drop;
 
 import com.hungteen.pvz.PVZConfig;
-import com.hungteen.pvz.common.misc.sound.PVZSounds;
+import com.hungteen.pvz.common.misc.sound.SoundRegister;
 import com.hungteen.pvz.utils.PlayerUtil;
 import com.hungteen.pvz.utils.enums.Resources;
 
@@ -24,7 +24,7 @@ public class EnergyEntity extends DropEntity{
 	public void onCollectedByPlayer(PlayerEntity player) {
 		if(! this.level.isClientSide) {
 			PlayerUtil.addResource(player, Resources.ENERGY_NUM, this.getAmount());
-			PlayerUtil.playClientSound(player, PVZSounds.ENERGY_COLLECT);
+			PlayerUtil.playClientSound(player, SoundRegister.JEWEL_PICK.get());
 		}
 	}
 	

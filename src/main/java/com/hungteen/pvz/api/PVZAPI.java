@@ -1,16 +1,21 @@
 package com.hungteen.pvz.api;
 
 import com.google.common.base.Suppliers;
+import com.hungteen.pvz.api.raid.*;
 import com.hungteen.pvz.api.types.*;
 import com.hungteen.pvz.common.entity.misc.bowling.AbstractBowlingEntity;
-
+import com.hungteen.pvz.common.impl.raid.SpawnComponent;
+import com.hungteen.pvz.common.world.raid.Raid;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
-
+import net.minecraft.util.ResourceLocation;
+import net.minecraft.util.math.BlockPos;
+import net.minecraft.world.server.ServerWorld;
 import org.apache.logging.log4j.LogManager;
 
 import java.util.Collection;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 import java.util.function.Supplier;
 
@@ -86,6 +91,57 @@ public class PVZAPI {
 		 * register bowling gloves mode, entity type should extends {@link AbstractBowlingEntity}.
 		 */
 		void registerBowlingMode(IPlantType type, Supplier<EntityType<? extends Entity>> supplier, float size);
+
+		/**
+		 * register new spawn amount getter used in {@link SpawnComponent}
+		 */
+		void registerSpawnAmount(String name, Class<? extends IAmountComponent> c);
+
+		/**
+		 * register new spawn position getter used in {@link SpawnComponent}
+		 */
+		void registerSpawnPlacement(String name, Class<? extends IPlacementComponent> c);
+
+		/**
+		 * register new raid type, so that u can read your own json.
+		 */
+		void registerRaidType(String name, Class<? extends IRaidComponent> c);
+
+		/**
+		 * register new wave type, so that u can read your own json.
+		 */
+		void registerWaveType(String name, Class<? extends IWaveComponent> c);
+
+		/**
+		 * register new spawn type, so that u can read your own json.
+		 */
+		void registerSpawnType(String name, Class<? extends ISpawnComponent> c);
+
+		/**
+		 * register new reward type, so that u can read your own json.
+		 */
+		void registerReward(String name, Class<? extends IRewardComponent> c);
+
+		/**
+		 * create a raid event at pos with specific type.
+		 */
+		boolean createRaid(ServerWorld world, ResourceLocation res, BlockPos pos);
+
+		/**
+		 * it is a raider entity or not.
+		 */
+		boolean isRaider(ServerWorld world, Entity entity);
+
+		/**
+		 * get a nearby raid.<br>
+		 * NOTE : there won't have more than one raid in a suitable range.
+		 */
+		Optional<Raid> getNearByRaid(ServerWorld world, BlockPos pos);
+
+		/**
+		 * get all res -> raid component map.
+		 */
+		Map<ResourceLocation, IRaidComponent> getRaidTypes();
 
 		/* getting stuffs */
 

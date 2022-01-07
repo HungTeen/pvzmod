@@ -1,8 +1,8 @@
 package com.hungteen.pvz.common.impl;
 
 import com.hungteen.pvz.PVZMod;
-import com.hungteen.pvz.api.IZombieEntity;
-import com.hungteen.pvz.api.IZombieModel;
+import com.hungteen.pvz.api.paz.IZombieEntity;
+import com.hungteen.pvz.api.paz.IZombieModel;
 import com.hungteen.pvz.api.types.ICoolDown;
 import com.hungteen.pvz.api.types.IRankType;
 import com.hungteen.pvz.api.types.IZombieType;

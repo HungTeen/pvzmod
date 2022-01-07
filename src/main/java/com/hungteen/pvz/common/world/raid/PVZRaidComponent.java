@@ -1,9 +1,9 @@
-package com.hungteen.pvz.compat.craid;
+package com.hungteen.pvz.common.world.raid;
 
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
-import com.hungteen.craid.common.impl.RaidComponent;
+import com.hungteen.pvz.common.impl.raid.RaidComponent;
 import com.hungteen.pvz.utils.enums.Colors;
 import com.mojang.datafixers.util.Pair;
 import net.minecraft.util.JSONUtils;

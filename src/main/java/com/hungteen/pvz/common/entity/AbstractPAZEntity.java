@@ -1,6 +1,6 @@
 package com.hungteen.pvz.common.entity;
 
-import com.hungteen.pvz.api.IPAZEntity;
+import com.hungteen.pvz.api.paz.IPAZEntity;
 import com.hungteen.pvz.api.types.IRankType;
 import com.hungteen.pvz.common.entity.zombie.roof.BungeeZombieEntity;
 import com.hungteen.pvz.utils.EntityUtil;

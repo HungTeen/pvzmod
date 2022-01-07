@@ -4,10 +4,17 @@ import com.hungteen.pvz.common.entity.misc.ZombieHandEntity;
 
 import net.minecraft.particles.IParticleData;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.ChunkPos;
+import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.vector.Vector3d;
 import net.minecraft.world.IWorld;
+import net.minecraft.world.LightType;
 import net.minecraft.world.World;
+import net.minecraft.world.gen.Heightmap;
 import net.minecraft.world.gen.Heightmap.Type;
+
+import javax.annotation.Nullable;
+import java.util.function.Predicate;
 
 public class WorldUtil {
 
@@ -60,6 +67,28 @@ public class WorldUtil {
 			foundGround = worldIn.getBlockState(new BlockPos(x,y,z)).canOcclude();
 		}
 		return y;
+	}
+
+	@SuppressWarnings("deprecation")
+	@Nullable
+	public static BlockPos findRandomSpawnPos(World world, BlockPos center, int chance, int minRange, int maxRange, Predicate<BlockPos> predicate) {
+		final int range = minRange, distance = maxRange - minRange;
+		for (int i = 0; i < chance; ++i) {
+			final float f = world.random.nextFloat() * ((float) Math.PI * 2F);
+			final int dx = MathHelper.floor(MathHelper.cos(f) * distance);
+			final int dz = MathHelper.floor(MathHelper.sin(f) * distance);
+			final int x = center.getX() + (dx > 0 ? dx + range : dx - range);
+			final int z = center.getZ() + (dz > 0 ? dz + range : dz - range);
+			final int y = world.getHeight(Heightmap.Type.WORLD_SURFACE, x, z);
+			final BlockPos pos = new BlockPos(x, y, z);
+			if (world.hasChunksAt(pos.offset(-range, -range, -range), pos.offset(range, range, range))
+					&& world.getChunkSource().isEntityTickingChunk(new ChunkPos(pos))) {
+				if(predicate.test(pos) && world.getBrightness(LightType.BLOCK, pos) < 7) {
+					return pos;
+				}
+			}
+		}
+		return null;
 	}
 	
 }

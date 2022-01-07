@@ -6,7 +6,6 @@ import com.hungteen.pvz.common.entity.zombie.body.ZombieDropBodyEntity;
 import com.hungteen.pvz.common.impl.ZombieType;
 import com.hungteen.pvz.common.impl.zombie.PoolZombies;
 import com.hungteen.pvz.common.misc.damage.PVZDamageSource;
-import com.hungteen.pvz.common.misc.sound.PVZSounds;
 import com.hungteen.pvz.common.misc.sound.SoundRegister;
 import com.hungteen.pvz.data.loot.PVZLoot;
 import com.hungteen.pvz.remove.MetalTypes;
@@ -15,6 +14,7 @@ import com.hungteen.pvz.utils.MathUtil;
 import com.hungteen.pvz.utils.PlayerUtil;
 import com.hungteen.pvz.utils.ZombieUtil;
 import com.hungteen.pvz.utils.interfaces.IHasMetal;
+
 import net.minecraft.entity.CreatureEntity;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.LivingEntity;
@@ -136,7 +136,7 @@ public class JackInBoxZombieEntity extends PVZZombieEntity implements IHasMetal 
 		level.players().stream().filter(player -> this.distanceToSqr(player) <= 150).forEach(player -> {
 			player.getCapability(CapabilityHandler.PLAYER_DATA_CAPABILITY).ifPresent((l) -> {
 				if(l.getPlayerData().getOtherStats().playSoundTick == 0) {
-					PlayerUtil.playClientSound(player, PVZSounds.JACK_SAY);
+					PlayerUtil.playClientSound(player, SoundRegister.JACK_SAY.get());
 					l.getPlayerData().getOtherStats().playSoundTick = 300;
 				}
 			});

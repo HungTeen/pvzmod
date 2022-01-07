@@ -2,9 +2,9 @@ package com.hungteen.pvz.common.impl;
 
 import com.google.gson.*;
 import com.hungteen.pvz.PVZMod;
-import com.hungteen.pvz.api.IPlantEntity;
-import com.hungteen.pvz.api.IPlantInfo;
-import com.hungteen.pvz.api.IPlantModel;
+import com.hungteen.pvz.api.paz.IPlantEntity;
+import com.hungteen.pvz.api.paz.IPlantInfo;
+import com.hungteen.pvz.api.paz.IPlantModel;
 import com.hungteen.pvz.api.PVZAPI;
 import com.hungteen.pvz.api.types.*;
 import com.hungteen.pvz.register.EntityRegister;

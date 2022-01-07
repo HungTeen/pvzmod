@@ -6,7 +6,7 @@ import com.hungteen.pvz.common.advancement.AdvancementHandler;
 import com.hungteen.pvz.common.block.cubes.OriginBlock;
 import com.hungteen.pvz.common.datapack.DataPackRegister;
 import com.hungteen.pvz.common.world.gen.GenStructures;
-import com.hungteen.pvz.compat.craid.CRaidRegister;
+import com.hungteen.pvz.common.world.raid.CRaidRegister;
 import com.hungteen.pvz.register.BiomeRegister;
 import com.hungteen.pvz.register.CoreRegister;
 import net.minecraftforge.common.ForgeConfigSpec;
@@ -63,7 +63,7 @@ public class PVZMod {
     	AdvancementHandler.init();
     	CoreRegister.register();
 		CRaidRegister.register();
-    	
+
     	PROXY.init();
     }
     

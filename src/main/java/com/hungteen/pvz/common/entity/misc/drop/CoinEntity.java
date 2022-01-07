@@ -1,7 +1,6 @@
 package com.hungteen.pvz.common.entity.misc.drop;
 
 import com.hungteen.pvz.PVZConfig;
-import com.hungteen.pvz.common.misc.sound.PVZSounds;
 import com.hungteen.pvz.common.misc.sound.SoundRegister;
 import com.hungteen.pvz.register.EntityRegister;
 import com.hungteen.pvz.utils.EntityUtil;
@@ -37,7 +36,7 @@ public class CoinEntity extends DropEntity {
 	public void onCollectedByPlayer(PlayerEntity player) {
 		if (! this.level.isClientSide) {
 			PlayerUtil.addResource(player, Resources.MONEY, this.getAmount());
-			PlayerUtil.playClientSound(player, PVZSounds.COIN_COLLECT);
+			PlayerUtil.playClientSound(player, SoundRegister.COIN_PICK.get());
 		}
 	}
 	

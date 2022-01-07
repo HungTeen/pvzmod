@@ -20,10 +20,6 @@ public class ConfigUtil {
 		return PVZConfig.COMMON_CONFIG.InvasionSettings.IncDifficulty.get();
 	}
 	
-	public static int getSpawnMultiple() {
-		return PVZConfig.COMMON_CONFIG.InvasionSettings.MaxSpawnWeightMultiple.get();
-	}
-	
 	public static int getGenOriginOreChance() {
 		return PVZConfig.COMMON_CONFIG.WorldSettings.GenOriginOreChance.get();
 	}
@@ -55,6 +51,17 @@ public class ConfigUtil {
 	public static boolean renderTreeLevel() {
 		return PVZConfig.CLIENT_CONFIG.OverlaySettings.RenderTreeLevel.get();
 	}
-	
+
+	public static boolean isRaidEnable() {
+		return PVZConfig.COMMON_CONFIG.WorldSettings.EnableRaid.get();
+	}
+
+	public static int getRaidWaitTime() {
+		return PVZConfig.COMMON_CONFIG.WorldSettings.RaidWaitTime.get();
+	}
+
+	public static int getRaidRange() {
+		return PVZConfig.COMMON_CONFIG.WorldSettings.RaidRange.get();
+	}
 	
 }

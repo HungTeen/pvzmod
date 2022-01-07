@@ -1,18 +1,22 @@
 package com.hungteen.pvz.common.impl;
 
 import com.hungteen.pvz.api.PVZAPI.IPVZAPI;
+import com.hungteen.pvz.api.raid.*;
 import com.hungteen.pvz.api.types.*;
 import com.hungteen.pvz.common.item.tool.plant.BowlingGloveItem;
 import com.hungteen.pvz.common.item.tool.plant.PeaGunItem;
-
+import com.hungteen.pvz.common.world.raid.Raid;
+import com.hungteen.pvz.common.world.raid.RaidManager;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
+import net.minecraft.util.ResourceLocation;
+import net.minecraft.util.math.BlockPos;
+import net.minecraft.world.server.ServerWorld;
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 import java.util.function.Supplier;
+
+;
 
 public class PVZAPIImpl implements IPVZAPI{
 
@@ -54,6 +58,59 @@ public class PVZAPIImpl implements IPVZAPI{
 	@Override
 	public void registerCDs(Collection<ICoolDown> types) {
 		CoolDowns.registerCDs(types);
+	}
+
+	@Override
+	public void registerSpawnAmount(String name, Class<? extends IAmountComponent> c) {
+		RaidManager.registerSpawnAmount(name, c);
+	}
+
+	@Override
+	public void registerSpawnPlacement(String name, Class<? extends IPlacementComponent> c) {
+		RaidManager.registerSpawnPlacement(name, c);
+	}
+
+	@Override
+	public void registerReward(String name, Class<? extends IRewardComponent> c) {
+		RaidManager.registerReward(name, c);
+	}
+
+	@Override
+	public void registerRaidType(String name, Class<? extends IRaidComponent> c) {
+		RaidManager.registerRaidType(name, c);
+	}
+
+	@Override
+	public void registerWaveType(String name, Class<? extends IWaveComponent> c) {
+		RaidManager.registerWaveType(name, c);
+	}
+
+	@Override
+	public void registerSpawnType(String name, Class<? extends ISpawnComponent> c) {
+		RaidManager.registerSpawnType(name, c);
+	}
+
+	@Override
+	public boolean createRaid(ServerWorld world, ResourceLocation res, BlockPos pos) {
+		if(! RaidManager.hasRaidNearby(world, pos)) {
+			return RaidManager.createRaid(world, res, pos);
+		}
+		return false;
+	}
+
+	@Override
+	public boolean isRaider(ServerWorld world, Entity entity) {
+		return RaidManager.isRaider(world, entity);
+	}
+
+	@Override
+	public Optional<Raid> getNearByRaid(ServerWorld world, BlockPos pos) {
+		return RaidManager.getRaidNearBy(world, pos);
+	}
+
+	@Override
+	public Map<ResourceLocation, IRaidComponent> getRaidTypes() {
+		return RaidManager.getRaidTypes();
 	}
 
 	@Override

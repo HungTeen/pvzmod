@@ -3,7 +3,7 @@ package com.hungteen.pvz.client.model.entity.zombie;
 import java.util.Optional;
 
 import com.hungteen.pvz.api.IBodyEntity;
-import com.hungteen.pvz.api.IZombieModel;
+import com.hungteen.pvz.api.paz.IZombieModel;
 import com.hungteen.pvz.common.entity.zombie.PVZZombieEntity;
 import com.hungteen.pvz.utils.AnimationUtil;
 import com.mojang.blaze3d.matrix.MatrixStack;

@@ -1,4 +1,4 @@
-package com.hungteen.pvz.api;
+package com.hungteen.pvz.api.paz;
 
 import com.hungteen.pvz.api.types.IEssenceType;
 

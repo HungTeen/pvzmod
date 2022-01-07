@@ -120,8 +120,8 @@ dependencies {
     runtimeOnly fg.deobf("mezz.jei:jei-${mc_version}:${jei_version}")
     
     implementation fg.deobf("curse.maven:jade-324717:${jade_version}")
-    
-    implementation fg.deobf("curse.maven:craid-532546:${craid_version}")
+
+//    implementation fg.deobf("curse.maven:craid-532546:${craid_version}")
     
     implementation fg.deobf("curse.maven:configured-457570:${configured_version}")
 }

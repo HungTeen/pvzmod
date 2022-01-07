@@ -1,13 +1,10 @@
 package com.hungteen.pvz.common.item.tool.plant;
 
-import java.util.List;
-
 import com.hungteen.pvz.common.capability.CapabilityHandler;
 import com.hungteen.pvz.common.item.PVZItemGroups;
-import com.hungteen.pvz.common.misc.sound.PVZSounds;
+import com.hungteen.pvz.common.misc.sound.SoundRegister;
 import com.hungteen.pvz.utils.PlayerUtil;
 import com.hungteen.pvz.utils.enums.Resources;
-
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
@@ -22,6 +19,8 @@ import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.TextFormatting;
 import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraft.world.World;
+
+import java.util.List;
 
 public class SunStorageSaplingItem extends Item {
 
@@ -67,7 +66,7 @@ public class SunStorageSaplingItem extends Item {
 					}
 					setStorageSunAmount(stack, amount);
 					l.getPlayerData().setResource(Resources.SUN_NUM, sunNum);
-					PlayerUtil.playClientSound(player, PVZSounds.SUN_COLLECT);
+					PlayerUtil.playClientSound(player, SoundRegister.SUN_PICK.get());
 				});
 				if(! isNotOnceSapling(stack)) {
 					stack.shrink(1);

@@ -2,10 +2,10 @@ package com.hungteen.pvz.utils;
 
 import com.hungteen.pvz.PVZConfig;
 import com.hungteen.pvz.api.types.IZombieType;
-import com.hungteen.pvz.common.cache.InvasionCache;
 import com.hungteen.pvz.common.entity.zombie.PVZZombieEntity;
 import com.hungteen.pvz.common.entity.zombie.grass.DancingZombieEntity;
 import com.hungteen.pvz.common.impl.zombie.GrassZombies;
+import com.hungteen.pvz.common.world.invasion.InvasionManager;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
 
@@ -75,7 +75,7 @@ public class ZombieUtil {
 	}
 	
 	public static int caculateZombieLevel(PVZZombieEntity zombie) {
-		final int difficulty = InvasionCache.getInvasionDifficulty() - 100;
+		final int difficulty = InvasionManager.getInvasionDifficulty() - 100;
 		final int maxLevel = PVZConfig.COMMON_CONFIG.EntitySettings.ZombieSetting.ZombieMaxLevel.get();
 		final int minLvl = MathHelper.clamp(difficulty / 50 + 1, 1, maxLevel);
 		final int maxLvl = MathHelper.clamp(difficulty / 30 + 2, 1, maxLevel);

@@ -1,7 +1,6 @@
 package com.hungteen.pvz.common.entity.misc.drop;
 
 import com.hungteen.pvz.PVZConfig;
-import com.hungteen.pvz.common.misc.sound.PVZSounds;
 import com.hungteen.pvz.common.misc.sound.SoundRegister;
 import com.hungteen.pvz.utils.EntityUtil;
 import com.hungteen.pvz.utils.PlayerUtil;
@@ -33,7 +32,7 @@ public class JewelEntity extends DropEntity{
 	public void onCollectedByPlayer(PlayerEntity player) {
 		if(! this.level.isClientSide) {
 			PlayerUtil.addResource(player, Resources.GEM_NUM, this.getAmount());
-			PlayerUtil.playClientSound(player, PVZSounds.JEWEL_COLLECT);
+			PlayerUtil.playClientSound(player, SoundRegister.JEWEL_PICK.get());
 		}
 	}
 	

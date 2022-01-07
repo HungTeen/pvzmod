@@ -51,8 +51,12 @@ public class CardFusionScreen extends PVZContainerScreen<CardFusionContainer> {
 		super.render(stack, mouseX, mouseY, partialTicks);
 		this.renderTooltip(stack, mouseX, mouseY);
 		StringUtil.drawCenteredScaledString(stack, font, new TranslationTextComponent("block.pvz.card_fusion_table").getString(), this.leftPos + this.imageWidth / 2, this.topPos + 8, Colors.BLACK, 1F);
-		StringUtil.drawCenteredScaledString(stack, font, "" + this.menu.te.array.get(0), this.leftPos + 18, this.topPos + 52, Colors.BLACK, 0.5F);
-		StringUtil.drawCenteredScaledString(stack, font, "" + this.menu.te.array.get(1), this.leftPos + 160, this.topPos + 52, Colors.BLACK, 0.5F);
+		final float percent1 = this.menu.te.array.get(0) * 100.0F / CardFusionTileEntity.CRAFT_SUN_COST;
+		final float percent2 = this.menu.te.array.get(1) * 100.0F / CardFusionTileEntity.CRAFT_ESSENCE_COST;
+		StringUtil.drawCenteredScaledString(stack, font, "" + String.format("%.0f%%", percent1), this.leftPos + 19, this.topPos + 53, Colors.BLACK, 0.8F);
+		StringUtil.drawCenteredScaledString(stack, font, "" + String.format("%.0f%%", percent2), this.leftPos + 161, this.topPos + 53, Colors.BLACK, 0.8F);
+	    StringUtil.drawCenteredScaledString(stack, font, "" + String.format("%.0f%%", percent1), this.leftPos + 18, this.topPos + 52, Colors.WHITE, 0.8F);
+		StringUtil.drawCenteredScaledString(stack, font, "" + String.format("%.0f%%", percent2), this.leftPos + 160, this.topPos + 52, Colors.WHITE, 0.8F);
 	}
 	
 	@Override
