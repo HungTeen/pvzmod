@@ -42,16 +42,11 @@ public class WaveManager {
 	 * @param dayTime means current world time.
 	 */
 	public static void tickWave(World world, int dayTime) {
-		PlayerUtil.getServerPlayers(world).stream().filter(p -> PlayerUtil.isPlayerSurvival(p)).forEach(player -> {
+		PlayerUtil.getServerPlayers(world).stream().forEach(player -> {
 			PlayerUtil.getOptManager(player).ifPresent(l -> {
 				for(int i = 0; i < l.getTotalWaveCount(); ++ i){
 					if(dayTime == l.getWaveTime(i)){
-//						if(! l.getWaveTriggered(i)){
-							final WaveManager manager = new WaveManager(player, i);
-							if(manager.spawnWaveZombies()){
-								l.setWaveTriggered(i, true);
-							}
-//						}
+						l.setWaveTriggered(i, new WaveManager(player, i).spawnWaveZombies());
 					} else if(dayTime < l.getWaveTime(i)){
 						break;
 					}
@@ -66,7 +61,7 @@ public class WaveManager {
 	 */
 	public boolean spawnWaveZombies() {
 		//can only spawn in overworld, and peaceful, and wave enable.
-		if(! world.dimension().equals(World.OVERWORLD) || world.getDifficulty() == Difficulty.PEACEFUL || ! ConfigUtil.enableHugeWave()) {
+		if(! PlayerUtil.isPlayerSurvival(player) || ! world.dimension().equals(World.OVERWORLD) || world.getDifficulty() == Difficulty.PEACEFUL || ! ConfigUtil.enableHugeWave()) {
 			return false;
 		}
 		if(InvasionManager.spawnList.isEmpty()) {

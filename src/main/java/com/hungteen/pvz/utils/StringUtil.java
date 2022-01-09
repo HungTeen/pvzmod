@@ -1,13 +1,5 @@
 package com.hungteen.pvz.utils;
 
-import com.hungteen.pvz.PVZMod;
-import com.mojang.blaze3d.matrix.MatrixStack;
-import net.minecraft.client.Minecraft;
-import net.minecraft.client.gui.FontRenderer;
-import net.minecraft.resources.IResource;
-import net.minecraft.util.ResourceLocation;
-import net.minecraft.util.text.StringTextComponent;
-
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -16,6 +8,15 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Random;
 import java.util.stream.Collectors;
+
+import com.hungteen.pvz.PVZMod;
+import com.mojang.blaze3d.matrix.MatrixStack;
+
+import net.minecraft.client.Minecraft;
+import net.minecraft.client.gui.FontRenderer;
+import net.minecraft.resources.IResource;
+import net.minecraft.util.ResourceLocation;
+import net.minecraft.util.text.StringTextComponent;
 
 public class StringUtil {
 
@@ -83,7 +84,7 @@ public class StringUtil {
 	}
 	
 	public static void drawCenteredString(MatrixStack stack, FontRenderer render, String string, int x, int y, int color) {
-		int width = render.width(string);
+		final int width = render.width(string);
 		render.draw(stack, string, x - width / 2, y, color);
 	}
 

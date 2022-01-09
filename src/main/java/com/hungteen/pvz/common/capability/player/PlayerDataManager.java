@@ -56,8 +56,9 @@ public class PlayerDataManager {
 	private boolean[] waveTriggered = new boolean[WaveManager.MAX_WAVE_NUM];
 	private int totalWaveCount;
 	/* mission */
-	private LinkedList<Integer> killQueue = new LinkedList<>();
+	private int[] killQueue = new int[MissionManager.KILL_IN_SECOND];
 	public int killInSecond;
+	public int killPos = 0;
 	/* misc data */
 	public String lastVersion = StringUtil.INIT_VERSION;
 	private final OtherStats otherStats;
@@ -90,7 +91,10 @@ public class PlayerDataManager {
 			this.totalWaveCount = 0;
 		}
 		{
-			this.killQueue.clear();
+			for(int i = 0; i < MissionManager.KILL_IN_SECOND; ++ i) {
+				killQueue[i] = 0;
+			}
+			this.killPos = 0;
 			this.killInSecond = 0;
 		}
 		{// init misc data.
@@ -187,9 +191,10 @@ public class PlayerDataManager {
 			final CompoundNBT nbt = baseTag.getCompound("mission_nbt");
 			for(int i = 0; i < MissionManager.KILL_IN_SECOND; ++ i){
 				if(nbt.contains("kill_count" + i)){
-					this.killQueue.add(nbt.getInt("kill_count" + i));
+					this.killQueue[i] = nbt.getInt("kill_count" + i);
 				}
 			}
+			this.killPos = nbt.getInt("kill_pos");
 			this.killInSecond = nbt.getInt("kill_in_second");
 		}
 		{// load misc data.
@@ -259,9 +264,10 @@ public class PlayerDataManager {
 		}
 		{//mission.
 			final CompoundNBT nbt = new CompoundNBT();
-			for(int i = 0; i < killQueue.size(); ++ i){
-				nbt.putInt("kill_count" + i, killQueue.get(i));
+			for(int i = 0; i < MissionManager.KILL_IN_SECOND; ++ i){
+				nbt.putInt("kill_count" + i, killQueue[i]);
 			}
+			nbt.putInt("kill_pos", this.killPos);
 			nbt.putInt("kill_in_second", killInSecond);
 			baseTag.put("mission_nbt", nbt);
 		}
@@ -388,7 +394,7 @@ public class PlayerDataManager {
 					MoneyTrigger.INSTANCE.trigger((ServerPlayerEntity) player, now);
 				}
 			} else if(res == Resources.MISSION_VALUE){
-				if(this.getResource(Resources.MISSION_TYPE) == MissionManager.MissionType.INSTANT_KILL.ordinal()){
+				if(num > 0 && this.getResource(Resources.MISSION_TYPE) == MissionManager.MissionType.INSTANT_KILL.ordinal()){
 					this.killInSecond ++;
 				}
 			}
@@ -440,9 +446,11 @@ public class PlayerDataManager {
 	
 	public void onScrollInventory(double delta) {
 		final int maxSlot = this.getResource(Resources.SLOT_NUM);
-		final int now = this.emptySlot;
-		final int next = (now + (delta > 0 ? -1 : 1) + (maxSlot + 1)) % (maxSlot + 1);
-		
+		int now = this.emptySlot;
+		int next = (now + (delta > 0 ? -1 : 1) + (maxSlot + 1)) % (maxSlot + 1);
+		while(this.getItemAt(next).isEmpty()){
+			next = (next + (delta > 0 ? -1 : 1) + (maxSlot + 1)) % (maxSlot + 1);
+		}
 		player.setItemInHand(Hand.MAIN_HAND, this.getItemAt(next));
 		this.setCurrentPos(next);
 	}
@@ -468,6 +476,10 @@ public class PlayerDataManager {
 		CompoundNBT nbt = new CompoundNBT();
 		nbt.putInt(CardInventoryPacket.FLAG, this.emptySlot);
 		this.sendInventoryPacket(player, -1, nbt);
+	}
+	
+	public int getCardsSize() {
+		return this.cards.size();
 	}
 	
 	public int getCurrentPos() {
@@ -642,18 +654,19 @@ public class PlayerDataManager {
 		this.setResource(Resources.MISSION_TYPE, type.ordinal());
 		this.setResource(Resources.MISSION_VALUE, 0);
 		this.setResource(Resources.MISSION_STAGE, 0);
-		this.killQueue.clear();
+		for(int i = 0; i < MissionManager.KILL_IN_SECOND; ++ i) {
+			this.killQueue[i] = 0;
+		}
 		this.killInSecond = 0;
 	}
 
 	public void updateKillQueue(){
-		if(killQueue.size() < MissionManager.KILL_IN_SECOND){
-			killQueue.push(killInSecond);
-		} else{
-			this.addResource(Resources.MISSION_VALUE, - killQueue.pop());
-			killQueue.push(killInSecond);
-			killInSecond = 0;
-		}
+//		System.out.println(killInSecond);
+		final int next = (killPos + 1) % MissionManager.KILL_IN_SECOND;
+		this.addResource(Resources.MISSION_VALUE, - this.killQueue[next]);
+		this.killQueue[next] = this.killInSecond;
+		this.killPos = next;
+		this.killInSecond = 0;
 	}
 
 	public void clearMission(){

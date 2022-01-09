@@ -9,12 +9,12 @@ public class EssenceOreBlock extends PVZOreBlock {
 
 	public final IEssenceType essence;
 	
-	public EssenceOreBlock(IEssenceType e) {
+	public EssenceOreBlock(IEssenceType e, int light) {
 		super(Block.Properties.copy(Blocks.DIAMOND_ORE)
 				.strength(9, 9)
 				.harvestTool(ToolType.PICKAXE)
 				.requiresCorrectToolForDrops()
-				.lightLevel(i -> 10)
+				.lightLevel(i -> light)
 				.harvestLevel(2));
 		this.essence = e;
 	}

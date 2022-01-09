@@ -30,7 +30,7 @@ public enum Resources {
 	/* the group of player */
 	GROUP_TYPE(- 2, 2),
 	/* card slot */
-	SLOT_NUM(3, 9),
+	SLOT_NUM(1, 9),
 	/* mission use */
 	MISSION_TYPE(0, 3),
 	MISSION_STAGE(0, 4),

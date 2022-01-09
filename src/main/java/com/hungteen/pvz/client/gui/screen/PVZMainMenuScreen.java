@@ -1,15 +1,9 @@
 package com.hungteen.pvz.client.gui.screen;
 
-import java.util.Random;
-
-import com.hungteen.pvz.common.network.PVZPacketHandler;
 import com.hungteen.pvz.compat.patchouli.PVZPatchouliHandler;
 import com.hungteen.pvz.utils.StringUtil;
 import com.hungteen.pvz.utils.enums.Colors;
 import com.mojang.blaze3d.matrix.MatrixStack;
-import com.mojang.blaze3d.systems.RenderSystem;
-
-import net.minecraft.client.gui.AbstractGui;
 import net.minecraft.client.gui.screen.MainMenuScreen;
 import net.minecraft.client.renderer.RenderSkybox;
 import net.minecraft.client.renderer.RenderSkyboxCube;
@@ -25,18 +19,19 @@ import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.client.ForgeHooksClient;
 import net.minecraftforge.fml.BrandingControl;
 
+import java.util.Random;
+
 @OnlyIn(Dist.CLIENT)
 public class PVZMainMenuScreen extends MainMenuScreen {
 
-	public static final RenderSkyboxCube PANORAMA_RESOURCES = new RenderSkyboxCube(StringUtil.prefix("textures/gui/mainmenu/panorama"));
+	private static final RenderSkyboxCube PANORAMA_RESOURCES = new RenderSkyboxCube(StringUtil.prefix("textures/gui/mainmenu/panorama"));
 	private static final ResourceLocation MINECRAFT_TITLE_TEXTURES = new ResourceLocation("textures/gui/title/minecraft.png");
-	public static final ResourceLocation SPLASHES = StringUtil.prefix("splashes.txt");
+	private static final ResourceLocation SPLASHES = StringUtil.prefix("splashes.txt");
 	private String splashText;
 	private final RenderSkybox panorama = new RenderSkybox(PANORAMA_RESOURCES);
-	Random rand;
+	private final Random rand = new Random();;
 
 	public PVZMainMenuScreen() {
-		rand = new Random();
 		if (splashText == null) {
 			this.splashText = StringUtil.getRandomLangText(minecraft, rand, "splashes");
 		}

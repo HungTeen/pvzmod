@@ -1,11 +1,12 @@
 package com.hungteen.pvz.common.world.invasion;
 
 import com.hungteen.pvz.common.capability.player.PlayerDataManager;
+import com.hungteen.pvz.common.misc.sound.SoundRegister;
 import com.hungteen.pvz.utils.PlayerUtil;
 import com.hungteen.pvz.utils.enums.Resources;
 import com.hungteen.pvz.utils.others.WeightList;
 import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.util.text.StringTextComponent;
+import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraft.world.World;
 
 import java.util.Random;
@@ -14,8 +15,8 @@ public class MissionManager {
 
     public static final int MAX_MISSION_STAGE = 5;
     public static final int KILL_IN_SECOND = 10;
-    private static final int[] KILL_MISSIONS = new int[]{50, 100, 150, 200, 250};
-    private static final int[] INSTANT_KILL_MISSIONS = new int[]{15, 25, 40, 75, 100};
+    private static final int[] KILL_MISSIONS = new int[]{50, 100, 200, 300, 500};
+    private static final int[] INSTANT_KILL_MISSIONS = new int[]{10, 20, 40, 60, 80};
     private static final int[] COLLECT_SUN_MISSIONS = new int[]{5000, 10000, 15000, 20000, 25000};
 
     public static void offerMission(PlayerEntity player){
@@ -55,7 +56,44 @@ public class MissionManager {
     }
 
     public static void rewardPlayer(PlayerEntity player, MissionType type, int stage){
-        PlayerUtil.sendMsgTo(player, new StringTextComponent(type.toString().toLowerCase() + stage));
+        PlayerUtil.sendMsgTo(player, new TranslationTextComponent("invasion.pvz.mission.finish", stage));
+        if(stage == 0 || stage == 2){
+            rewardMoney(player, stage == 0 ? 250 : 500);
+        } else if(stage == 1 || stage == 3){
+            rewardLottery(player, 5);
+        } else{
+            rewardJewel(player, player.getRandom().nextInt(1) + 1);
+        }
+    }
+    
+    private static void rewardMoney(PlayerEntity player, int amount) {
+    	PlayerUtil.addResource(player, Resources.MONEY, amount);
+        PlayerUtil.playClientSound(player, SoundRegister.SUN_PICK.get());
+    }
+
+    private static void rewardJewel(PlayerEntity player, int amount){
+        PlayerUtil.addResource(player, Resources.GEM_NUM, amount);
+        PlayerUtil.playClientSound(player, SoundRegister.JEWEL_PICK.get());
+    }
+
+//    private static void rewardCard(PlayerEntity player, int count){
+//        for(int i = 0; i < count; ++ i){
+//            Optional.ofNullable(InvasionManager.getSpawnInvasion()).ifPresent(type -> {
+//                LotteryTypeLoader.getLotteryType(type.getBonusResource()).ifPresent(lotteryType -> {
+//                    final SlotMachineTileEntity.SlotType slotType = lotteryType.getSlotType(player.getRandom());
+//                    if(slotType.getStack().isPresent()){
+//                        player.addItem(slotType.getStack().get());
+//                    } else{
+//                        rewardJewel(player, 1);
+//                    }
+//                });
+//            });
+//        }
+//    }
+
+    private static void rewardLottery(PlayerEntity player, int amount){
+        PlayerUtil.addResource(player, Resources.LOTTERY_CHANCE, amount);
+        PlayerUtil.playClientSound(player, SoundRegister.SLOT_MACHINE.get());
     }
 
     public static MissionType getMission(Random rand){

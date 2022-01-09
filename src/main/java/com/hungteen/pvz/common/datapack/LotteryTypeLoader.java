@@ -20,6 +20,7 @@ import net.minecraft.util.ResourceLocation;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Optional;
 
 public class LotteryTypeLoader extends JsonReloadListener {
 
@@ -122,5 +123,9 @@ public class LotteryTypeLoader extends JsonReloadListener {
 
 		PVZMod.LOGGER.info("Loaded {} custom lottery type", LOTTERIES.size());
 
+	}
+
+	public static Optional<SlotMachineTileEntity.LotteryType> getLotteryType(ResourceLocation res){
+		return Optional.ofNullable(LOTTERIES.get(res));
 	}
 }

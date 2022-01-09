@@ -3,6 +3,7 @@ package com.hungteen.pvz.common.event.handler;
 import com.hungteen.pvz.PVZConfig;
 import com.hungteen.pvz.PVZMod;
 import com.hungteen.pvz.api.PVZAPI;
+import com.hungteen.pvz.api.enums.PVZGroupType;
 import com.hungteen.pvz.common.capability.CapabilityHandler;
 import com.hungteen.pvz.common.capability.player.IPlayerDataCapability;
 import com.hungteen.pvz.common.capability.player.PlayerDataManager;
@@ -70,7 +71,7 @@ public class PlayerEventHandler {
 	
 	public static void onPlayerKillEntity(PlayerEntity player, DamageSource source, LivingEntity living) {
 		if(living instanceof AbstractPAZEntity){
-			if(EntityUtil.canTargetEntity(living, player)){
+			if(PVZGroupType.checkCanTarget(EntityUtil.getEntityGroup(player), EntityUtil.getEntityGroup(living))){
 				PlayerUtil.addResource(player, Resources.TREE_XP, ((AbstractPAZEntity)living).getPAZType().getXpPoint());
 				if(MissionManager.getPlayerMission(player) == MissionManager.MissionType.KILL || MissionManager.getPlayerMission(player) == MissionManager.MissionType.INSTANT_KILL){
 					PlayerUtil.addResource(player, Resources.MISSION_VALUE, 1);

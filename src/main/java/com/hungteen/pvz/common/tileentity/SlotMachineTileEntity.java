@@ -308,7 +308,7 @@ public class SlotMachineTileEntity extends TileEntity implements ITickableTileEn
 	}
 
 	public ITextComponent getDefaultName() {
-		return new TranslationTextComponent("gui.pvz.slot_machine");
+		return new TranslationTextComponent("block.pvz.slot_machine");
 	}
 
 	public LotteryType getLotteryType() {

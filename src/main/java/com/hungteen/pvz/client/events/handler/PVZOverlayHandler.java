@@ -1,7 +1,6 @@
 package com.hungteen.pvz.client.events.handler;
 
 import com.hungteen.pvz.client.ClientProxy;
-import com.hungteen.pvz.client.cache.ClientPlayerResources;
 import com.hungteen.pvz.client.events.OverlayEvents;
 import com.hungteen.pvz.client.events.PVZInputEvents;
 import com.hungteen.pvz.common.capability.player.PlayerDataManager;
@@ -17,6 +16,7 @@ import com.hungteen.pvz.utils.enums.Colors;
 import com.hungteen.pvz.utils.enums.Resources;
 import com.mojang.blaze3d.matrix.MatrixStack;
 import com.mojang.blaze3d.systems.RenderSystem;
+
 import net.minecraft.client.renderer.BufferBuilder;
 import net.minecraft.client.renderer.Tessellator;
 import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
@@ -45,17 +45,15 @@ public class PVZOverlayHandler {
 	 * {@link OverlayEvents#onPostRenderOverlay(net.minecraftforge.client.event.RenderGameOverlayEvent.Post)}
 	 */
 	public static void renderResources(MatrixStack stack, int width, int height) {
-		if(PVZInputEvents.ShowOverlay) {
-			final int pos = PVZInputEvents.CurrentResourcePos;
-			if(pos == 0 && ConfigUtil.renderSunBar()) {
-				renderSunBar(stack, width, height);
-			} else if(pos == 1 && ConfigUtil.renderMoneyBar()) {
-				renderMoneyBar(stack, width, height);
-			} else if(pos == 2 && ConfigUtil.renderGemBar()) {
-				renderGemBar(stack, width, height);
-			} else if(pos == 3 && ConfigUtil.renderTreeLevel()) {
-				renderTreeLevel(stack, width, height);
-			}
+		final int pos = PVZInputEvents.CurrentResourcePos;
+		if(pos == 0 && ConfigUtil.renderSunBar()) {
+			renderSunBar(stack, width, height);
+		} else if(pos == 1 && ConfigUtil.renderMoneyBar()) {
+			renderMoneyBar(stack, width, height);
+		} else if(pos == 2 && ConfigUtil.renderGemBar()) {
+			renderGemBar(stack, width, height);
+		} else if(pos == 3 && ConfigUtil.renderTreeLevel()) {
+			renderTreeLevel(stack, width, height);
 		}
 	}
 	
@@ -98,7 +96,11 @@ public class PVZOverlayHandler {
 	@SuppressWarnings("deprecation")
 	public static void drawCardInventory(PlayerEntity player, MatrixStack stack, int w, int h) {
 		if(player.getMainHandItem().getItem() instanceof SummonCardItem) {
-			if(! ClientPlayerResources.SUMMON_CARDS.get(ClientPlayerResources.emptySlot).equals(player.getMainHandItem())) {
+			final PlayerDataManager manager = PlayerUtil.getManager(ClientProxy.MC.player);
+			if(manager == null ) {
+				return ;
+			}
+			if(! manager.getItemAt(manager.getCurrentPos()).equals(player.getMainHandItem())) {
 				PVZPacketHandler.CHANNEL.sendToServer(new PVZMouseScrollPacket(0));
 			}
 			if(SlotDelay < SLOT_DELAY_CD) {
@@ -109,36 +111,40 @@ public class PVZOverlayHandler {
 				-- SlotDelay;
 			}
 		}
+		final PlayerDataManager manager = PlayerUtil.getManager(ClientProxy.MC.player);
 		if(SlotDelay > 0) {
 			final int maxSlot = PlayerUtil.getResource(ClientProxy.MC.player, Resources.SLOT_NUM) + 1;
 			final int totHeight = (SLOT_SIDE - 2) * maxSlot;
 			final int startHeight = (h - totHeight) / 2;
 			final float offset = - 10 + 10F * SlotDelay / SLOT_DELAY_CD;
 			stack.pushPose();
+			RenderSystem.pushMatrix();
 			RenderSystem.enableBlend();
 			
+			ClientProxy.MC.getTextureManager().bind(RESOURCE);
 			stack.translate(offset, 0, 0);
 			/* render slots */
 			for(int i = 0; i < maxSlot; ++ i) {
-				if(i == ClientPlayerResources.emptySlot) {
+				if(i == manager.getCurrentPos()) {
 					ClientProxy.MC.gui.blit(stack, 0, startHeight + i * (SLOT_SIDE - 2), 162, 22, SLOT_SIDE, SLOT_SIDE);
 				} else {
 					ClientProxy.MC.gui.blit(stack, 0, startHeight + i * (SLOT_SIDE - 2), 162, 0, SLOT_SIDE, SLOT_SIDE);
 				}
 			}
 			/* render itemstack */
-			for(int i = 0; i < Math.min(ClientPlayerResources.SUMMON_CARDS.size(), maxSlot); ++ i) {
+			for(int i = 0; i < Math.min(manager.getCardsSize(), maxSlot); ++ i) {
 				RenderSystem.pushMatrix();
 				RenderSystem.translated(offset, 0, 0);
-				ClientProxy.MC.getItemRenderer().renderGuiItem(ClientPlayerResources.SUMMON_CARDS.get(i), 3, startHeight + 3 + i * (SLOT_SIDE - 2));
+				ClientProxy.MC.getItemRenderer().renderGuiItem(manager.getItemAt(i), 3, startHeight + 3 + i * (SLOT_SIDE - 2));
+				ClientProxy.MC.getItemRenderer().renderGuiItemDecorations(ClientProxy.MC.font, manager.getItemAt(i), 3, startHeight + 3 + i * (SLOT_SIDE - 2));
 			    RenderSystem.popMatrix();
 			}
 			
 			RenderSystem.disableBlend();
+			RenderSystem.popMatrix();
 			stack.popPose();
 		}
 		
-		renderPlantFood(stack, w, h);
 	}
 	
 	public static void renderInvasionProgress(MatrixStack stack, int w, int h) {
@@ -212,10 +218,12 @@ public class PVZOverlayHandler {
 			ClientProxy.MC.gui.blit(stack, w - WIDTH + 3, h - HEIGHT - 14, 48, 48, 8, 8);
 			break;
 		}
+		default:
+			break;
 		}
 		
-		StringUtil.drawScaledString(stack, ClientProxy.MC.font, new TranslationTextComponent("invasion.pvz.mission." + type.toString().toLowerCase(), need).getString(), w - WIDTH + 12, h - HEIGHT - 13, Colors.WHITE, 0.8F);
-		StringUtil.drawScaledString(stack, ClientProxy.MC.font, progress, w - WIDTH + 4, h - HEIGHT - 3, Colors.WHITE, 0.7F);
+		StringUtil.drawScaledString(stack, ClientProxy.MC.font, new TranslationTextComponent("invasion.pvz.mission." + type.toString().toLowerCase(), need).getString(), w - WIDTH + 12, h - HEIGHT - 13, Colors.WHITE, 0.7F);
+		StringUtil.drawScaledString(stack, ClientProxy.MC.font, progress, w - WIDTH + 4, h - HEIGHT - 3, Colors.WHITE, 0.6F);
 
 		stack.popPose();
 	}

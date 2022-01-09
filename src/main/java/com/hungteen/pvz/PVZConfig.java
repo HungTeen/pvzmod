@@ -329,12 +329,12 @@ public class PVZConfig {
                     BlockSettings.PeaDropChance = builder
                             .translation("config.pvz.block.pea_drop_chance")
                             .comment("the drop chance of pea when you break grass")
-                            .defineInRange("DropPeaChance", 0.05, 0, 1);
+                            .defineInRange("PeaDropChance", 0.05, 0, 1);
 
                     BlockSettings.CabbageDropChance = builder
                             .translation("config.pvz.block.cabbage_drop_chance")
                             .comment("the drop chance of cabbage when you break grass")
-                            .defineInRange("DropCabbageChance", 0.025, 0, 1);
+                            .defineInRange("CabbageDropChance", 0.025, 0, 1);
                 }
                 builder.pop();
             }

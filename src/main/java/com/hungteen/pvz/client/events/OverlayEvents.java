@@ -4,8 +4,6 @@ import com.hungteen.pvz.PVZConfig;
 import com.hungteen.pvz.PVZMod;
 import com.hungteen.pvz.client.events.handler.PVZOverlayHandler;
 import com.hungteen.pvz.common.entity.plant.explosion.CobCannonEntity;
-import com.hungteen.pvz.utils.PlayerUtil;
-
 import net.minecraft.client.Minecraft;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.client.event.RenderGameOverlayEvent;
@@ -23,23 +21,21 @@ public class OverlayEvents {
 			return;
 		}
 		/* no opened gui */
-		if (mc.screen == null) {
+		if (mc.screen == null && PVZInputEvents.ShowOverlay) {
 			/* render resources on left upper corner */
 			if(! mc.options.renderDebug) {
-				PVZOverlayHandler.renderResources(ev.getMatrixStack(), ev.getWindow().getGuiScaledWidth(), ev.getWindow().getScreenHeight());
+				PVZOverlayHandler.renderResources(ev.getMatrixStack(), ev.getWindow().getGuiScaledWidth(), ev.getWindow().getGuiScaledHeight());
 			}
-			
+
 			/* render plant food on left lower corner */
-		    if (PVZConfig.CLIENT_CONFIG.OverlaySettings.RenderPlantFoodBar.get()) {
-		    	PVZOverlayHandler.renderPlantFood(ev.getMatrixStack(), ev.getWindow().getGuiScaledWidth(), ev.getWindow().getScreenHeight());
-		    }
-		    
-		    /* render invasion bar on right lower corner */
-			if(PVZInputEvents.ShowOverlay) {
-				if(PlayerUtil.isPlayerSurvival(mc.player) && PVZConfig.CLIENT_CONFIG.OverlaySettings.RenderInvasionProgress.get()) {
-					PVZOverlayHandler.renderInvasionProgress(ev.getMatrixStack(), ev.getWindow().getGuiScaledWidth(), ev.getWindow().getGuiScaledHeight());
-					PVZOverlayHandler.renderMission(ev.getMatrixStack(), ev.getWindow().getGuiScaledWidth(), ev.getWindow().getGuiScaledHeight());
-				}
+			if (PVZConfig.CLIENT_CONFIG.OverlaySettings.RenderPlantFoodBar.get()) {
+				PVZOverlayHandler.renderPlantFood(ev.getMatrixStack(), ev.getWindow().getGuiScaledWidth(), ev.getWindow().getGuiScaledHeight());
+			}
+
+			/* render invasion bar on right lower corner */
+			if(PVZConfig.CLIENT_CONFIG.OverlaySettings.RenderInvasionProgress.get()) {
+				PVZOverlayHandler.renderInvasionProgress(ev.getMatrixStack(), ev.getWindow().getGuiScaledWidth(), ev.getWindow().getGuiScaledHeight());
+				PVZOverlayHandler.renderMission(ev.getMatrixStack(), ev.getWindow().getGuiScaledWidth(), ev.getWindow().getGuiScaledHeight());
 			}
 			
 			if(mc.player.getVehicle() instanceof CobCannonEntity) {
