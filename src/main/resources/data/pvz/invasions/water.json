@@ -1,0 +1,38 @@
+{
+  "isAssistInvasion": false,
+  "triggerChance": 90,
+  "bonus": "pvz:pool_day",
+  "display_color": "dark_blue",
+  "spawns": [
+    {
+      "entity_type": "pvz:normal_zombie",
+      "occur_day": 0,
+      "spawn_weight": 100,
+      "spawn_in_water": true
+    },
+    {
+      "entity_type": "pvz:snorkel_zombie",
+      "occur_day": 2,
+      "spawn_weight": 80,
+      "spawn_in_water": true
+    },
+    {
+      "entity_type": "pvz:conehead_zombie",
+      "occur_day": 5,
+      "spawn_weight": 60,
+      "spawn_in_water": true
+    },
+    {
+      "entity_type": "pvz:dolphin_rider",
+      "occur_day": 9,
+      "spawn_weight": 40,
+      "spawn_in_water": true
+    },
+    {
+      "entity_type": "pvz:lava_zombie",
+      "occur_day": 18,
+      "spawn_weight": 30,
+      "spawn_in_water": true
+    }
+  ]
+}

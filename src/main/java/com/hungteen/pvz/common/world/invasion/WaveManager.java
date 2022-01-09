@@ -1,106 +1,102 @@
 package com.hungteen.pvz.common.world.invasion;
 
-//TODO 一大波
+import com.hungteen.pvz.PVZMod;
+import com.hungteen.pvz.common.misc.sound.SoundRegister;
+import com.hungteen.pvz.register.EntityRegister;
+import com.hungteen.pvz.utils.*;
+import com.hungteen.pvz.utils.enums.Resources;
+import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.MathHelper;
+import net.minecraft.util.text.ITextComponent;
+import net.minecraft.util.text.TextFormatting;
+import net.minecraft.util.text.TranslationTextComponent;
+import net.minecraft.world.Difficulty;
+import net.minecraft.world.World;
+
+import java.util.Random;
+
+import static com.hungteen.pvz.common.world.invasion.InvasionManager.suitableInvasionPos;
+
 public class WaveManager {
 
-//	private static final ITextComponent HUGE_WAVE = new TranslationTextComponent("event.pvz.huge_wave").withStyle(TextFormatting.DARK_RED);
-	public static final int MAX_WAVE_NUM = 5;
+	private static final ITextComponent HUGE_WAVE = new TranslationTextComponent("invasion.pvz.huge_wave").withStyle(TextFormatting.DARK_RED);
+	public static final int MAX_WAVE_NUM = 10;
 //	public static final int FINISH_OFFSET = 30000;
-//	private final World world;
-//	private final int currentWave;
-//	private final PlayerEntity player;
-//	private final BlockPos center;
-//	private final WeightList<IZombieType> spawnList = new WeightList<>();
-//	private static final int[] SPAWN_COUNT_EACH_WAVE = new int[] {20, 30, 40, 50, 60};
-//	public int spawnCnt = 0;
-//	protected boolean spawned = false;
+	private final World world;
+	private final int currentWave;
+	private final PlayerEntity player;
+	private final BlockPos center;
+	private static final int[] SPAWN_COUNT_EACH_WAVE = new int[] {25, 30, 35, 40, 45, 50, 55, 60, 65, 70};
+	public int spawnCnt = 0;
 	
-//	public WaveManager(PlayerEntity player, int waveNum) {
-//		this.world = player.level;
-//		this.currentWave = MathHelper.clamp(waveNum, 1, 5);
-//		this.player = player;
-//		this.center = player.blockPosition();
-//		this.updateSpawns();
-//	}
-//
-//	/**
-//	 * check spawn huge wave of zombies for each player.
-//	 * @param dayTime means current world time.
-//	 */
-//	public static void tickWave(World world, int dayTime) {
-//		PlayerUtil.getServerPlayers(world).forEach(player -> {
-//			if(PlayerUtil.isPlayerSurvival(player)) {
-//				player.getCapability(CapabilityHandler.PLAYER_DATA_CAPABILITY).ifPresent(l -> {
-//			        PlayerDataManager.OtherStats stats = l.getPlayerData().getOtherStats();
-//			        for(int i = 0 ; i < stats.zombieWaveTime.length; ++i) {
-//				        int time = stats.zombieWaveTime[i];
-//				        if(time != 0 && time == dayTime) {
-//						    WaveManager manager = new WaveManager(player, i);
-//						    manager.spawnWaveZombies();
-//						    -- stats.totalWaveCount;
-//						    stats.zombieWaveTime[i] += FINISH_OFFSET;
-//						    syncWaveTime(player);
-//					        break;
-//				        }
-//			        }
-//		        });
-//			}
-//		});
-//	}
-//
-//	/**
-//	 * sync wave time to client side.
-//	 * {@link #tickWave(World, int)}
-//	 * {@link PlayerEventHandler#onPlayerLogin(PlayerEntity)}
-//	 */
-//	public static void syncWaveTime(PlayerEntity player) {
-//		player.getCapability(CapabilityHandler.PLAYER_DATA_CAPABILITY).ifPresent((l) -> {
-//			PlayerDataManager.OtherStats stats = l.getPlayerData().getOtherStats();
-//		    for(int i = 0; i < MAX_WAVE_NUM; ++ i) {
-//			    PVZPacketHandler.CHANNEL.send(PacketDistributor.PLAYER.with(() -> {
-//				    return (ServerPlayerEntity) player;
-//			    }), new OtherStatsPacket(1, i, stats.zombieWaveTime[i]));
-//		    }
-//		    PVZPacketHandler.CHANNEL.send(PacketDistributor.PLAYER.with(() -> {
-//			    return (ServerPlayerEntity) player;
-//		    }), new OtherStatsPacket(1, - 1, stats.totalWaveCount));
-//		});
-//	}
-//
-//	/**
-//	 * spawn wave zombies.
-//	 * {@link #tickWave(World, int)}
-//	 */
-//	public void spawnWaveZombies() {
-//		//can only spawn in overworld.
-//		if(! world.dimension().equals(World.OVERWORLD)) {
-//			return ;
-//		}
-//		if(this.spawnList.isEmpty()) {
-//			PVZMod.LOGGER.warn("WaveManager : Why cause zombie spawn list empty ?");
-//			return ;
-//		}
-//		int cnt = this.getSpawnCount();
-//		int groupNum = 0;
-//		while(cnt >= 10) {//split whole zombie to serveral zombie teams.
-//			int teamCnt = (cnt < 15 ? cnt : 10);
-//			this.spawned |= this.spawnZombieTeam(++ groupNum, teamCnt);
-//			cnt -= teamCnt;
-//		}
-//		if(cnt > 0) {
-//			this.spawned |= this.spawnZombieTeam(++ groupNum, cnt);
-//		}
-//		if(this.spawned) {
-//			PlayerUtil.playClientSound(player, PVZSounds.HUGE_WAVE);
-//		    PlayerUtil.sendSubTitleToPlayer(player, HUGE_WAVE);
+	public WaveManager(PlayerEntity player, int waveNum) {
+		this.world = player.level;
+		this.currentWave = MathHelper.clamp(waveNum, 1, MAX_WAVE_NUM);
+		this.player = player;
+		this.center = player.blockPosition();
+	}
+
+	/**
+	 * check spawn huge wave of zombies for each player.
+	 * @param dayTime means current world time.
+	 */
+	public static void tickWave(World world, int dayTime) {
+		PlayerUtil.getServerPlayers(world).stream().filter(p -> PlayerUtil.isPlayerSurvival(p)).forEach(player -> {
+			PlayerUtil.getOptManager(player).ifPresent(l -> {
+				for(int i = 0; i < l.getTotalWaveCount(); ++ i){
+					if(dayTime == l.getWaveTime(i)){
+//						if(! l.getWaveTriggered(i)){
+							final WaveManager manager = new WaveManager(player, i);
+							if(manager.spawnWaveZombies()){
+								l.setWaveTriggered(i, true);
+							}
+//						}
+					} else if(dayTime < l.getWaveTime(i)){
+						break;
+					}
+				}
+			});
+		});
+	}
+
+	/**
+	 * spawn wave zombies.
+	 * {@link #tickWave(World, int)}
+	 */
+	public boolean spawnWaveZombies() {
+		//can only spawn in overworld, and peaceful, and wave enable.
+		if(! world.dimension().equals(World.OVERWORLD) || world.getDifficulty() == Difficulty.PEACEFUL || ! ConfigUtil.enableHugeWave()) {
+			return false;
+		}
+		if(InvasionManager.spawnList.isEmpty()) {
+			PVZMod.LOGGER.warn("WaveManager : Why cause spawn list empty ?");
+			return false;
+		}
+		int cnt = this.getSpawnCount();
+		boolean spawned = false;
+		while(cnt >= 15) {//split whole zombie to serveral zombie teams.
+			final int teamCnt = (cnt < 20 ? cnt : 10);
+			spawned |= this.spawnZombieTeam(teamCnt);
+			cnt -= teamCnt;
+		}
+		if(cnt > 0) {
+			spawned |= this.spawnZombieTeam(cnt);
+		}
+		if(spawned) {
+			PlayerUtil.playClientSound(player, SoundRegister.HUGE_WAVE.get());
+		    PlayerUtil.sendSubTitleToPlayer(player, HUGE_WAVE);
+			// TODO 一大波额外生成
+
 //		    PVZFlagData data = PVZFlagData.getGlobalFlagData(world);
 //		    if(data.isZombossDefeated()) {
 //		        this.activateTombStone();
 //		        this.checkAndSummonBungee();
 //		    }
-//		}
-//	}
-//
+		}
+		return spawned;
+	}
+
 //	/**
 //	 * summon tomb stone and activate them to summon zombies.
 //	 * {@link #spawnWaveZombies()}
@@ -143,30 +139,29 @@ public class WaveManager {
 //		}
 //	}
 //
-//	/**
-//	 * reset the huge wave time of each player.
-//	 */
-//	public static void resetPlayerWaveTime(PlayerEntity player) {
-//		player.getCapability(CapabilityHandler.PLAYER_DATA_CAPABILITY).ifPresent(l -> {
-//			OtherStats stats = l.getPlayerData().getOtherStats();
-//			int treeLvl = l.getPlayerData().getResource(Resources.TREE_LVL);
-//			int maxCnt = PlayerUtil.getPlayerWaveCount(treeLvl);
-//			int minCnt = (maxCnt + 1) / 2;
-//			int cnt = player.getRandom().nextInt(maxCnt - minCnt + 1) + minCnt;
-//			int partTime = 21000 / cnt;//not happen at the first 2500 ticks and the last 500 ticks of the day.
-//			for(int i = 0; i < MAX_WAVE_NUM; ++ i) {
-//				if(i < cnt) {
-//					int time = player.getRandom().nextInt(partTime - 2000);
-//					stats.zombieWaveTime[i] = 2500 + (time + i * partTime + 1000);
-//				} else {
-//					stats.zombieWaveTime[i] = 0;
-//				}
-//			}
-//			stats.totalWaveCount = cnt;
-//			syncWaveTime(player);
-//		});
-//	}
-//
+	/**
+	 * reset the huge wave time of each player.
+	 */
+	public static void resetPlayerWaveTime(PlayerEntity player) {
+		final int lvl = PlayerUtil.getResource(player, Resources.TREE_LVL);
+		final int cnt = getPlayerWaveCount(player.getRandom(), lvl);
+		//not happen at the first 2000 ticks and the last 2000 ticks of the day.
+		final int eachTime = 20000 / cnt;
+		for(int i = 0; i < cnt; ++ i){
+			final int offset = 2000 + i * eachTime + player.getRandom().nextInt(eachTime);
+			final int pos = i;
+			PlayerUtil.getOptManager(player).ifPresent(l -> {
+				l.setWaveTime(pos, offset);
+				l.setWaveTriggered(pos, false);
+			});
+		}
+		PlayerUtil.getOptManager(player).ifPresent(l -> l.setTotalWaveCount(cnt));
+	}
+
+	public static void clearWaveTime(PlayerEntity player){
+		PlayerUtil.getOptManager(player).ifPresent(l -> l.setTotalWaveCount(0));
+	}
+
 //	public static void giveInvasionBonusToPlayer(World world, PlayerEntity player) {
 //		if(! PlayerUtil.isPlayerSurvival(player)) return ;//do not effect to creative players.
 //		player.getCapability(CapabilityHandler.PLAYER_DATA_CAPABILITY).ifPresent(l -> {
@@ -203,63 +198,13 @@ public class WaveManager {
 //		}
 //		return ItemStack.EMPTY;
 //	}
-//
-//	/**
-//	 * spawn a zombie invade team.
-//	 * {@link #spawnWaveZombies()}
-//	 */
-//	private boolean spawnZombieTeam(int groupNum, int cnt) {
-//		BlockPos mid = this.findRandomSpawnPos(20);
-//		if(mid == null) {//find spawn position failed.
-//			return false;
-//		}
-//		for(int i = 0; i < cnt; ++ i) {//spawn zombies.
-//			this.spawnList.getRandomItem(world.random).ifPresent(zombie -> {
-//				this.spawnZombie(zombie, mid, 6);
-//			});
-//		}
-//		//spawn yeti zombie at the first team when it's Yeti Invasion.
-//		if(! this.spawned) {
-//			PVZInvasionData data = PVZInvasionData.getOverWorldInvasionData(world);
-//			if(data.hasEvent(InvasionEvents.YETI) && world.random.nextInt(4) == 0) {
-//				PVZZombieEntity yeti = EntityRegister.YETI_ZOMBIE.get().create(world);
-//			    EntityUtil.onEntitySpawn(world, yeti, mid.offset(0, 1, 0));
-//			}
-//		}
-//		//spawn team leader -- flag zombie.
-//		PVZZombieEntity flagZombie = EntityRegister.FLAG_ZOMBIE.get().create(world);
-//		EntityUtil.onEntitySpawn(world, flagZombie, mid.offset(0, 1, 0));
-//		return true;
-//	}
-//
-//	/**
-//	 * spawn zombie surround by center blockpos.
-//	 * @param zombie the type of spawned zombie.
-//	 * @param pos position of the spawn center.
-//	 */
-//	private void spawnZombie(IZombieType zombie, BlockPos pos, int radius) {
-//		final BlockPos blockPos = WorldUtil.getSuitableHeightRandomPos(world, pos, radius);
-//		zombie.getEntityType().ifPresent(l -> {
-//			EntityUtil.onEntitySpawn(world, l.create(world), blockPos.above());
-//		});
-//	}
-//
-//	private void spawnTombStone(BlockPos pos, int min, int max) {
+
+	//	private void spawnTombStone(BlockPos pos, int min, int max) {
 //		final BlockPos blockPos = WorldUtil.getSuitableHeightRandomPos(world, pos, min, max);
 //		TombStoneEntity.spawnTombStone(world, blockPos);
 //	}
-//
-//	/**
-//	 * calculate how many zombies will spawn each wave.
-//	 */
-//	private int getSpawnCount() {
-//		if(this.spawnCnt != 0) return this.spawnCnt;
-//		int maxCnt = SPAWN_COUNT_EACH_WAVE[this.currentWave];
-//		int minCnt = maxCnt / 2;
-//		return this.world.random.nextInt(maxCnt - minCnt + 1) + minCnt;
-//	}
-//
-//	/**
+
+	//	/**
 //	 * calculate how many tombstone will spawn each wave.
 //	 */
 //	private int getTombSpawnCount() {
@@ -267,40 +212,58 @@ public class WaveManager {
 //		final int min = max / 2;
 //		return MathUtil.getRandomMinMax(world.random, min, max);
 //	}
-//
-//	/**
-//	 * update zombie spawn list.
-//	 * {@link #WaveManager(PlayerEntity, int)}
-//	 */
-//	private void updateSpawns() {
-//		PVZInvasionData data = PVZInvasionData.getOverWorldInvasionData(world);
-//		for(IZombieType zombie : ZombieType.getZombies()) {
-//			if(data.hasZombieSpawnEntry(zombie) && zombie.getWaveSpawnWeight() > 0) {
-//				this.spawnList.addItem(zombie, zombie.getWaveSpawnWeight());
-//			}
-//		}
-//	}
 
-//	@SuppressWarnings("deprecation")
-//	@Nullable
-//	private BlockPos findRandomSpawnPos(int chance) {
-//		int range = 16, distance = 32;
-//		for (int i = 0; i < chance; ++i) {
-//			float f = this.world.random.nextFloat() * ((float) Math.PI * 2F);
-//			int dx = MathHelper.floor(MathHelper.cos(f) * distance);
-//			int dz = MathHelper.floor(MathHelper.sin(f) * distance);
-//			int x = this.center.getX() + (dx > 0 ? dx + range : dx - range);
-//			int z = this.center.getZ() + (dz > 0 ? dz + range : dz - range);
-//			int y = this.world.getHeight(Heightmap.Type.WORLD_SURFACE, x, z);
-//			BlockPos pos = new BlockPos(x, y, z);
-//			if (this.world.hasChunksAt(pos.offset(-range, -range, -range), pos.offset(range, range, range))
-//					&& this.world.getChunkSource().isEntityTickingChunk(new ChunkPos(pos))) {
-//				if(world.getBlockState(pos.below()).getFluidState().isEmpty() && world.getBrightness(LightType.BLOCK, pos) < 7) {
-//					return pos;
-//				}
-//			}
-//		}
-//		return null;
-//	}
+	/**
+	 * spawn a zombie invade team.
+	 * {@link #spawnWaveZombies()}
+	 */
+	private boolean spawnZombieTeam(int cnt) {
+		final BlockPos mid = WorldUtil.findRandomSpawnPos(world, player.blockPosition(), 20, 16, 48,
+				b -> suitableInvasionPos(world, b) && world.getBlockState(b.below()).getFluidState().isEmpty());
+		
+		boolean flag = false;
+		if(mid != null) {//find spawn position.
+			for (int i = 0; i < cnt; ++ i){
+				final SpawnType type = InvasionManager.spawnList.getRandomItem(world.random).get();
+				final BlockPos pos = WorldUtil.findRandomSpawnPos(world, mid, 4, 1, 7, b -> type.checkPos(world, b));
+				if(pos != null){
+					flag = true;
+					EntityUtil.onEntitySpawn(world, type.getSpawnType().create(world), pos);
+				}
+			}
+			if(flag){
+				//spawn team leader -- flag zombie.
+				EntityUtil.onEntitySpawn(world, EntityRegister.FLAG_ZOMBIE.get().create(world), mid.offset(0, 1, 0));
+
+				//spawn yeti zombie when it's Yeti Invasion.
+				if(world.random.nextFloat() < InvasionManager.getYetiSpawnChance()){
+					EntityUtil.onEntitySpawn(world, EntityRegister.YETI_ZOMBIE.get().create(world), mid.offset(0, 1, 0));
+				}
+			}
+		}
+		return flag;
+	}
+
+	/**
+	 * calculate how many zombies will spawn each wave.
+	 */
+	private int getSpawnCount() {
+		if(this.spawnCnt != 0) {
+			return this.spawnCnt;
+		}
+		final int maxCnt = SPAWN_COUNT_EACH_WAVE[this.currentWave];
+		final int minCnt = maxCnt / 2;
+		return MathUtil.getRandomMinMax(world.random, minCnt, maxCnt);
+	}
+
+	/**
+	 * max : 10 20 35 50 65 80 100 ...
+	 * min : 20 40 60 80 100
+	 */
+	private static int getPlayerWaveCount(Random random, int lvl){
+		final int max = Math.min(lvl <= 20 ? (lvl + 9) / 10 : lvl <= 80 ? (lvl - 6) / 15 + 2 : lvl / 20 + 3, MAX_WAVE_NUM);
+		final int min = Math.max(1, Math.min(lvl <= 40 ? (lvl + 19) / 20 : (lvl + 39) / 40 + 1, max - 1));
+		return MathUtil.getRandomMinMax(random, min, max);
+	}
 
 }

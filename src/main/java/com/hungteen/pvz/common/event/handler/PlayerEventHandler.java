@@ -1,7 +1,5 @@
 package com.hungteen.pvz.common.event.handler;
 
-import java.util.Optional;
-
 import com.hungteen.pvz.PVZConfig;
 import com.hungteen.pvz.PVZMod;
 import com.hungteen.pvz.api.PVZAPI;
@@ -9,21 +7,21 @@ import com.hungteen.pvz.common.capability.CapabilityHandler;
 import com.hungteen.pvz.common.capability.player.IPlayerDataCapability;
 import com.hungteen.pvz.common.capability.player.PlayerDataManager;
 import com.hungteen.pvz.common.enchantment.EnchantmentUtil;
+import com.hungteen.pvz.common.entity.AbstractPAZEntity;
 import com.hungteen.pvz.common.entity.misc.drop.SunEntity;
 import com.hungteen.pvz.common.entity.plant.PVZPlantEntity;
 import com.hungteen.pvz.common.entity.zombie.PVZZombieEntity;
 import com.hungteen.pvz.common.event.PVZLivingEvents;
 import com.hungteen.pvz.common.event.PVZPlayerEvents;
-import com.hungteen.pvz.common.impl.ZombieType;
 import com.hungteen.pvz.common.item.ItemRegister;
 import com.hungteen.pvz.common.misc.sound.SoundRegister;
+import com.hungteen.pvz.common.world.invasion.MissionManager;
 import com.hungteen.pvz.common.world.invasion.PVZInvasionData;
 import com.hungteen.pvz.compat.patchouli.PVZPatchouliHandler;
 import com.hungteen.pvz.utils.EntityUtil;
 import com.hungteen.pvz.utils.PlayerUtil;
 import com.hungteen.pvz.utils.StringUtil;
 import com.hungteen.pvz.utils.enums.Resources;
-
 import net.minecraft.advancements.CriteriaTriggers;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
@@ -34,6 +32,8 @@ import net.minecraft.util.Hand;
 import net.minecraft.util.math.MathHelper;
 import net.minecraftforge.common.util.LazyOptional;
 import net.minecraftforge.event.entity.living.LivingDeathEvent;
+
+import java.util.Optional;
 
 public class PlayerEventHandler {
 
@@ -69,17 +69,20 @@ public class PlayerEventHandler {
 	}
 	
 	public static void onPlayerKillEntity(PlayerEntity player, DamageSource source, LivingEntity living) {
-		if(living instanceof PVZZombieEntity) {
-			PVZZombieEntity zombie = (PVZZombieEntity) living;
-			PlayerUtil.addResource(player, Resources.TREE_XP, zombie.getZombieType().getXpPoint());
-			onPlayerKillZombie(player, zombie.getZombieType());
+		if(living instanceof AbstractPAZEntity){
+			if(EntityUtil.canTargetEntity(living, player)){
+				PlayerUtil.addResource(player, Resources.TREE_XP, ((AbstractPAZEntity)living).getPAZType().getXpPoint());
+				if(MissionManager.getPlayerMission(player) == MissionManager.MissionType.KILL || MissionManager.getPlayerMission(player) == MissionManager.MissionType.INSTANT_KILL){
+					PlayerUtil.addResource(player, Resources.MISSION_VALUE, 1);
+				}
+			}
 		}
 		CriteriaTriggers.PLAYER_KILLED_ENTITY.trigger((ServerPlayerEntity) player, living, source);
 	}
 	
-	public static void onPlayerKillZombie(PlayerEntity player, ZombieType zombie) {
-		PlayerUtil.addResource(player, Resources.KILL_COUNT, 1);
-	}
+//	public static void onPlayerKillZombie(PlayerEntity player, ZombieType zombie) {
+//		PlayerUtil.addResource(player, Resources.KILL_COUNT, 1);
+//	}
 	
 	/**
 	 * send packet from server to client to sync player's data.

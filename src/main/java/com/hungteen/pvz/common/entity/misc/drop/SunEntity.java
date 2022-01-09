@@ -1,25 +1,18 @@
 package com.hungteen.pvz.common.entity.misc.drop;
 
-import java.util.Map.Entry;
-import java.util.Random;
-
 import com.hungteen.pvz.PVZConfig;
 import com.hungteen.pvz.common.enchantment.EnchantmentRegister;
 import com.hungteen.pvz.common.enchantment.misc.SunMendingEnchantment;
 import com.hungteen.pvz.common.entity.plant.light.SunFlowerEntity;
 import com.hungteen.pvz.common.event.events.PlayerCollectDropEvent;
 import com.hungteen.pvz.common.misc.sound.SoundRegister;
+import com.hungteen.pvz.common.world.invasion.MissionManager;
 import com.hungteen.pvz.register.EntityRegister;
 import com.hungteen.pvz.utils.EntityUtil;
 import com.hungteen.pvz.utils.PlayerUtil;
 import com.hungteen.pvz.utils.enums.Resources;
-
 import net.minecraft.enchantment.EnchantmentHelper;
-import net.minecraft.entity.EntitySize;
-import net.minecraft.entity.EntityType;
-import net.minecraft.entity.MobEntity;
-import net.minecraft.entity.Pose;
-import net.minecraft.entity.SpawnReason;
+import net.minecraft.entity.*;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.inventory.EquipmentSlotType;
 import net.minecraft.item.ItemStack;
@@ -29,6 +22,9 @@ import net.minecraft.world.LightType;
 import net.minecraft.world.World;
 import net.minecraft.world.server.ServerWorld;
 import net.minecraftforge.common.MinecraftForge;
+
+import java.util.Map.Entry;
+import java.util.Random;
 
 public class SunEntity extends DropEntity {
 	
@@ -71,6 +67,9 @@ public class SunEntity extends DropEntity {
                 SunMendingEnchantment.repairItem(entry.getValue(), this.getAmount());
 		    } else {
 		    	PlayerUtil.addResource(player, Resources.SUN_NUM, this.getAmount());
+				if(MissionManager.getPlayerMission(player) == MissionManager.MissionType.COLLECT_SUN){
+					PlayerUtil.addResource(player, Resources.MISSION_VALUE, this.getAmount());
+				}
 		    }
 		    PlayerUtil.playClientSound(player, SoundRegister.SUN_PICK.get());
 		}

@@ -1,0 +1,6 @@
+{
+  "isAssistInvasion": true,
+  "triggerChance": 12,
+  "display_color": "dark_gray",
+  "require_day": 20
+}

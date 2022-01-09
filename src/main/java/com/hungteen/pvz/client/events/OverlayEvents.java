@@ -36,8 +36,9 @@ public class OverlayEvents {
 		    
 		    /* render invasion bar on right lower corner */
 			if(PVZInputEvents.ShowOverlay) {
-				if(PlayerUtil.isPlayerSurvival(mc.player)  && PVZConfig.CLIENT_CONFIG.OverlaySettings.RenderInvasionProgress.get()) {
+				if(PlayerUtil.isPlayerSurvival(mc.player) && PVZConfig.CLIENT_CONFIG.OverlaySettings.RenderInvasionProgress.get()) {
 					PVZOverlayHandler.renderInvasionProgress(ev.getMatrixStack(), ev.getWindow().getGuiScaledWidth(), ev.getWindow().getGuiScaledHeight());
+					PVZOverlayHandler.renderMission(ev.getMatrixStack(), ev.getWindow().getGuiScaledWidth(), ev.getWindow().getGuiScaledHeight());
 				}
 			}
 			

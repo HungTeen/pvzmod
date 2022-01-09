@@ -1,0 +1,18 @@
+{
+  "isAssistInvasion": false,
+  "triggerChance": 60,
+  "bonus": "pvz:all_plants",
+  "display_color": "dark_green",
+  "spawns": [
+    {
+      "entity_type": "pvz:peashooter_zombie",
+      "occur_day": 12,
+      "spawn_weight": 100
+    },
+    {
+      "entity_type": "pvz:wallnut_zombie",
+      "occur_day": 16,
+      "spawn_weight": 100
+    }
+  ]
+}

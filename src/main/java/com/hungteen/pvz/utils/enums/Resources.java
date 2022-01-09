@@ -24,13 +24,17 @@ public enum Resources {
 	/* the tick to control fog display */
 	NO_FOG_TICK(- 9999999, 9999999),
 	/* kill zombie count */
-	KILL_COUNT(0, 9999999),
+//	KILL_COUNT(0, 9999999),
 	/* the chance to use slot machine */
 	LOTTERY_CHANCE(0, 9999999),
 	/* the group of player */
 	GROUP_TYPE(- 2, 2),
 	/* card slot */
-	SLOT_NUM(3, 9)
+	SLOT_NUM(3, 9),
+	/* mission use */
+	MISSION_TYPE(0, 3),
+	MISSION_STAGE(0, 4),
+	MISSION_VALUE(0, 9999999)
 	;
 	
 	/**

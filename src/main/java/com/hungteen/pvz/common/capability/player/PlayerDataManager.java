@@ -12,10 +12,13 @@ import com.hungteen.pvz.common.advancement.trigger.TreeLevelTrigger;
 import com.hungteen.pvz.common.container.shop.MysteryShopContainer;
 import com.hungteen.pvz.common.event.handler.PlayerEventHandler;
 import com.hungteen.pvz.common.item.spawn.card.SummonCardItem;
+import com.hungteen.pvz.common.misc.PVZPacketTypes;
 import com.hungteen.pvz.common.network.PAZStatsPacket;
 import com.hungteen.pvz.common.network.PVZPacketHandler;
 import com.hungteen.pvz.common.network.toclient.CardInventoryPacket;
+import com.hungteen.pvz.common.network.toclient.OtherStatsPacket;
 import com.hungteen.pvz.common.network.toclient.PlayerStatsPacket;
+import com.hungteen.pvz.common.world.invasion.MissionManager;
 import com.hungteen.pvz.common.world.invasion.WaveManager;
 import com.hungteen.pvz.utils.PAZUtil;
 import com.hungteen.pvz.utils.PlayerUtil;
@@ -48,6 +51,13 @@ public class PlayerDataManager {
 	private final Map<IPAZType, Float> pazCardBar = new HashMap<>();
 	/* plant & zombie lock */
 	private final Map<IPAZType, Boolean> pazLocked = new HashMap<>();
+	/* wave */
+	private int[] waveTime = new int[WaveManager.MAX_WAVE_NUM];
+	private boolean[] waveTriggered = new boolean[WaveManager.MAX_WAVE_NUM];
+	private int totalWaveCount;
+	/* mission */
+	private LinkedList<Integer> killQueue = new LinkedList<>();
+	public int killInSecond;
 	/* misc data */
 	public String lastVersion = StringUtil.INIT_VERSION;
 	private final OtherStats otherStats;
@@ -71,6 +81,17 @@ public class PlayerDataManager {
 				this.pazCardBar.put(plant, 0F);
 				this.pazLocked.put(plant, true);
 			});
+		}
+		{//wave.
+			for(int i = 0; i < WaveManager.MAX_WAVE_NUM; ++ i){
+				this.waveTime[i] = 0;
+				this.waveTriggered[i] = false;
+			}
+			this.totalWaveCount = 0;
+		}
+		{
+			this.killQueue.clear();
+			this.killInSecond = 0;
 		}
 		{// init misc data.
 			this.otherStats = new OtherStats(this);
@@ -154,13 +175,29 @@ public class PlayerDataManager {
 				});
 			}
 		}
+		if(baseTag.contains("wave_nbt")){//wave.
+			final CompoundNBT nbt = baseTag.getCompound("wave_nbt");
+			for(int i = 0; i < WaveManager.MAX_WAVE_NUM; ++ i){
+				this.waveTime[i] = nbt.getInt("wave_time_" + i);
+				this.waveTriggered[i] = nbt.getBoolean("wave_triggered_" + i);
+			}
+			this.totalWaveCount = nbt.getInt("wave_count");
+		}
+		if(baseTag.contains("mission_nbt")){
+			final CompoundNBT nbt = baseTag.getCompound("mission_nbt");
+			for(int i = 0; i < MissionManager.KILL_IN_SECOND; ++ i){
+				if(nbt.contains("kill_count" + i)){
+					this.killQueue.add(nbt.getInt("kill_count" + i));
+				}
+			}
+			this.killInSecond = nbt.getInt("kill_in_second");
+		}
 		{// load misc data.
 			if(baseTag.contains("last_join_version")) {
 				this.lastVersion = baseTag.getString("last_join_version");
 			}
 			this.otherStats.loadFromNBT(baseTag);
 		}
-		
 	}
 	
 	/**
@@ -211,6 +248,23 @@ public class PlayerDataManager {
 			});
 			baseTag.put("paz_locks", nbt);
 		}
+		{//wave.
+			final CompoundNBT nbt = new CompoundNBT();
+			for(int i = 0; i < WaveManager.MAX_WAVE_NUM; ++ i){
+				nbt.putInt("wave_time_" + i, this.waveTime[i]);
+				nbt.putBoolean("wave_triggered_" + i, this.waveTriggered[i]);
+			}
+			nbt.putInt("wave_count", this.totalWaveCount);
+			baseTag.put("wave_nbt", nbt);
+		}
+		{//mission.
+			final CompoundNBT nbt = new CompoundNBT();
+			for(int i = 0; i < killQueue.size(); ++ i){
+				nbt.putInt("kill_count" + i, killQueue.get(i));
+			}
+			nbt.putInt("kill_in_second", killInSecond);
+			baseTag.put("mission_nbt", nbt);
+		}
 		{// load misc data.
 			baseTag.putString("last_join_version", this.lastVersion);
 			this.otherStats.saveToNBT(baseTag);
@@ -227,7 +281,7 @@ public class PlayerDataManager {
 				this.setResource(Resources.SUN_NUM, 50);
 			}
 			this.setResource(Resources.NO_FOG_TICK, 0);
-			this.setResource(Resources.KILL_COUNT, 0);
+//			this.setResource(Resources.KILL_COUNT, 0);
 		}
 	}
 	
@@ -277,6 +331,9 @@ public class PlayerDataManager {
 				this.sendPAZLockPacket(player, plant);//lock.
 			});
 		}
+		{//wave.
+			this.sendAllWavePacket(player);
+		}
 	}
 
 	/*
@@ -314,10 +371,10 @@ public class PlayerDataManager {
 		} else if(res == Resources.ENERGY_NUM) {
 			now = MathHelper.clamp(now + num, 0, resources.get(Resources.MAX_ENERGY_NUM));
 			resources.put(Resources.ENERGY_NUM, now);
-		} else {
+		} else{
 			now = MathHelper.clamp(now + num, res.min, res.max);
 			resources.put(res, now);
-			
+
 			if(res == Resources.TREE_LVL) {
 				this.addResource(Resources.SUN_NUM, 0);
 				if(player instanceof ServerPlayerEntity){
@@ -329,6 +386,10 @@ public class PlayerDataManager {
 			} else if(res == Resources.MONEY) {
 				if(player instanceof ServerPlayerEntity){
 					MoneyTrigger.INSTANCE.trigger((ServerPlayerEntity) player, now);
+				}
+			} else if(res == Resources.MISSION_VALUE){
+				if(this.getResource(Resources.MISSION_TYPE) == MissionManager.MissionType.INSTANT_KILL.ordinal()){
+					this.killInSecond ++;
 				}
 			}
 		}
@@ -507,36 +568,115 @@ public class PlayerDataManager {
 			);
 		}
 	}
-	
+
+	/*
+	Operation about wave.
+	 */
+
+	public void setWaveTime(int pos, int data){
+		if(pos >= 0 && pos < WaveManager.MAX_WAVE_NUM) {
+		    this.waveTime[pos] = data;
+		    this.sendWavePacket(player, pos, data);
+		}
+	}
+
+	public void setTotalWaveCount(int cnt){
+		this.totalWaveCount = cnt;
+		this.sendWavePacket(player, -1, cnt);
+	}
+
+	public void setWaveTriggered(int pos, boolean is){
+		if(pos >= 0 && pos < WaveManager.MAX_WAVE_NUM) {
+			this.waveTriggered[pos] = is;
+		    this.sendWaveFlagPacket(player, pos, is);
+		}
+	}
+
+	public int getTotalWaveCount() {
+		return totalWaveCount;
+	}
+
+	public boolean getWaveTriggered(int pos) {
+		return waveTriggered[pos];
+	}
+
+	public int getWaveTime(int pos) {
+		return waveTime[pos];
+	}
+
+	private void sendWavePacket(PlayerEntity player, int pos, int data){
+		if (player instanceof ServerPlayerEntity) {
+			PVZPacketHandler.CHANNEL.send(
+					PacketDistributor.PLAYER.with(() -> {
+						return (ServerPlayerEntity) player;
+					}),
+					new OtherStatsPacket(PVZPacketTypes.WAVE, pos, data)
+			);
+		}
+	}
+
+	private void sendWaveFlagPacket(PlayerEntity player, int pos, boolean flag){
+		if (player instanceof ServerPlayerEntity) {
+			PVZPacketHandler.CHANNEL.send(
+					PacketDistributor.PLAYER.with(() -> {
+						return (ServerPlayerEntity) player;
+					}),
+					new OtherStatsPacket(PVZPacketTypes.WAVE_FLAG, pos, flag)
+			);
+		}
+	}
+
+	private void sendAllWavePacket(PlayerEntity player){
+		for (int i = 0; i < WaveManager.MAX_WAVE_NUM; ++ i){
+			sendWavePacket(player, i, this.waveTime[i]);
+			sendWaveFlagPacket(player, i, this.waveTriggered[i]);
+		}
+		sendWavePacket(player, -1, this.totalWaveCount);
+	}
+
+	/*
+	Operation about Mission.
+	 */
+
+	public void resetMission(MissionManager.MissionType type){
+		this.setResource(Resources.MISSION_TYPE, type.ordinal());
+		this.setResource(Resources.MISSION_VALUE, 0);
+		this.setResource(Resources.MISSION_STAGE, 0);
+		this.killQueue.clear();
+		this.killInSecond = 0;
+	}
+
+	public void updateKillQueue(){
+		if(killQueue.size() < MissionManager.KILL_IN_SECOND){
+			killQueue.push(killInSecond);
+		} else{
+			this.addResource(Resources.MISSION_VALUE, - killQueue.pop());
+			killQueue.push(killInSecond);
+			killInSecond = 0;
+		}
+	}
+
+	public void clearMission(){
+		resetMission(MissionManager.MissionType.EMPTY);
+	}
+
 	public final class OtherStats{
 		
 		@SuppressWarnings("unused")
 		private final PlayerDataManager manager;
-		public int[] zombieWaveTime = new int[WaveManager.MAX_WAVE_NUM];
 		public int[] mysteryGoods = new int[MysteryShopContainer.MAX_MYSTERY_GOOD];
-		public int totalWaveCount;
 		public int playSoundTick;
 		public int updateGoodTick;
 		public int lightLevel;
 		
 		public OtherStats(PlayerDataManager manager) {
 			this.manager = manager;
-			for(int i = 0; i < zombieWaveTime.length; ++ i) {
-				zombieWaveTime[i] = 0;
-			}
-			this.totalWaveCount = 0;
 			this.playSoundTick = 0;
 			this.lightLevel = 0;
 //			MysteryShopContainer.genNextGoods(player);
 		}
 		
 		private void saveToNBT(CompoundNBT baseTag) {
-			CompoundNBT statsNBT = new CompoundNBT();
-			for(int i = 0; i < zombieWaveTime.length; ++ i) {
-				statsNBT.putInt("zombieWaveTime_" + i, zombieWaveTime[i]);
-			}
-			baseTag.put("zombie_wave_time", statsNBT);
-			baseTag.putInt("total_wave_cnt", this.totalWaveCount);
 			baseTag.putInt("base_sound_tick", this.playSoundTick);
 			CompoundNBT tmp = new CompoundNBT();
 			for(int i = 0; i < mysteryGoods.length; ++ i) {
@@ -547,15 +687,6 @@ public class PlayerDataManager {
 		}
 
 		private void loadFromNBT(CompoundNBT baseTag) {
-			if(baseTag.contains("zombie_wave_time")) {
-				CompoundNBT nbt = baseTag.getCompound("zombie_wave_time");
-				for(int i = 0; i < zombieWaveTime.length; ++ i) {
-					zombieWaveTime[i] = nbt.getInt("zombieWaveTime_" + i);
-				}
-			}
-			if(baseTag.contains("total_wave_cnt")) {
-				this.totalWaveCount = baseTag.getInt("total_wave_cnt");
-			}
 			if(baseTag.contains("base_sound_tick")) {
 				this.playSoundTick = baseTag.getInt("base_sound_tick");
 			}

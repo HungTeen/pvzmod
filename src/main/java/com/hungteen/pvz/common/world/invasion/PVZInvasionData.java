@@ -21,7 +21,6 @@ public class PVZInvasionData extends WorldSavedData {
 	private boolean changed = false;
 	private int countDownDay = PVZConfig.COMMON_CONFIG.InvasionSettings.InvasionIntervalLength.get();
 	private int currentDifficulty = 0;
-	private int tick = 0;
 
 	public PVZInvasionData() {
 		super(DATA_NAME);
@@ -38,6 +37,7 @@ public class PVZInvasionData extends WorldSavedData {
 		InvasionManager.spawnResource = this.spawnInvasion;
 		InvasionManager.activeResources.add(this.spawnInvasion);
 		this.setRunning(true);
+		InvasionManager.updateSpawns(InvasionManager.getInvasion(resourceLocation));
 
 		this.setDirty();
 	}

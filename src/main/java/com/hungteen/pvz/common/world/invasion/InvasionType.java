@@ -70,6 +70,10 @@ public class InvasionType {
 		return requireDifficulty;
 	}
 
+	public void setRequireDifficulty(int requireDay) {
+		this.requireDifficulty = requireDay * ConfigUtil.getIncDifficulty();
+	}
+
 	public ITextComponent getText(){
 		return new TranslationTextComponent("invasion.pvz." + this.resourceLocation.getPath()).withStyle(this.getDisplayColor());
 	}

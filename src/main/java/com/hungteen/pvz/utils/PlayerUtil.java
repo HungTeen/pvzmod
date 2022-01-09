@@ -88,7 +88,7 @@ public class PlayerUtil {
 	
 	public static int getResource(PlayerEntity player, Resources res) {
 		final PlayerDataManager manager = getManager(player);
-		return manager != null ? manager.getResource(res) : 0;
+		return manager != null ? manager.getResource(res) : res.min;
 	}
 	
 	public static int getEmptyPos(PlayerEntity player) {

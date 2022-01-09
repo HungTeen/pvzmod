@@ -1,56 +1,78 @@
 package com.hungteen.pvz.common.network.toclient;
 
-import java.util.function.Supplier;
-
-import com.hungteen.pvz.client.cache.ClientPlayerResources;
-
+import com.hungteen.pvz.client.ClientProxy;
+import com.hungteen.pvz.common.misc.PVZPacketTypes;
+import com.hungteen.pvz.utils.PlayerUtil;
 import net.minecraft.network.PacketBuffer;
 import net.minecraftforge.fml.network.NetworkEvent;
 
+import java.util.function.Supplier;
+
 public class OtherStatsPacket{
 
-	private int type;
-	private int pos;
-	private int data;
-	
-	public OtherStatsPacket(int x, int y, int z) {
-		this.type = x;
-		this.pos = y;
-		this.data = z;
+	private final PVZPacketTypes type;
+	private int pos = 0;
+	private int data = 0;
+	private boolean flag = false;
+
+	public OtherStatsPacket(PVZPacketTypes type, int pos, boolean flag) {
+		this.type = type;
+		this.pos = pos;
+		this.flag = flag;
+	}
+
+	public OtherStatsPacket(PVZPacketTypes type, int pos, int data) {
+		this.type = type;
+		this.pos = pos;
+		this.data = data;
 	}
 	
 	public OtherStatsPacket(PacketBuffer buffer) {
-		this.type = buffer.readInt();
+		this.type = PVZPacketTypes.values()[buffer.readInt()];
 		this.pos = buffer.readInt();
 		this.data = buffer.readInt();
+		this.flag = buffer.readBoolean();
 	}
 
 	public void encode(PacketBuffer buffer) {
-		buffer.writeInt(this.type);
+		buffer.writeInt(this.type.ordinal());
 		buffer.writeInt(this.pos);
 		buffer.writeInt(this.data);
+		buffer.writeBoolean(this.flag);
 	}
 
 	public static class Handler {
 		public static void onMessage(OtherStatsPacket message, Supplier<NetworkEvent.Context> ctx) {
 		    ctx.get().enqueueWork(() -> {
-			    if(message.type == 0) {
-			    	if(message.pos == -1) {
-			    		ClientPlayerResources.updateGoodTick = message.data;
-			    	} else {
-			    		ClientPlayerResources.mysteryGoods[message.pos] = message.data;
-			    	}
-			    } else if(message.type == 1) {
-			    	if(message.pos == -1) {
-			    		ClientPlayerResources.totalWaveCount = message.data;
-			    	} else {
-//			    		ClientPlayerResources.zombieWaveTime[message.pos] = message.data;
-			    	}
-			    } else if(message.type == 2) {
-			    	if(message.pos == 0) {
-			    		ClientPlayerResources.lightLevel = message.data;
-			    	}
-			    }
+				switch (message.type){
+					case WAVE:{
+						if(message.pos < 0){
+							PlayerUtil.getOptManager(ClientProxy.MC.player).ifPresent(l -> l.setTotalWaveCount(message.data));
+						} else{
+							PlayerUtil.getOptManager(ClientProxy.MC.player).ifPresent(l -> l.setWaveTime(message.pos, message.data));
+						}
+					}
+					case WAVE_FLAG:{
+						PlayerUtil.getOptManager(ClientProxy.MC.player).ifPresent(l -> l.setWaveTriggered(message.pos, message.flag));
+					}
+				}
+//			    if(message.type == 0) {
+//			    	if(message.pos == -1) {
+//			    		ClientPlayerResources.updateGoodTick = message.data;
+//			    	} else {
+//			    		ClientPlayerResources.mysteryGoods[message.pos] = message.data;
+//			    	}
+//			    } else if(message.type == 1) {
+//			    	if(message.pos == -1) {
+//			    		ClientPlayerResources.totalWaveCount = message.data;
+//			    	} else {
+////			    		ClientPlayerResources.zombieWaveTime[message.pos] = message.data;
+//			    	}
+//			    } else if(message.type == 2) {
+//			    	if(message.pos == 0) {
+//			    		ClientPlayerResources.lightLevel = message.data;
+//			    	}
+//			    }
 		    });
 		    ctx.get().setPacketHandled(true);
 	    }

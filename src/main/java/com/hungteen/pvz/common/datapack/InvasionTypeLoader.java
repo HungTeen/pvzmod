@@ -88,6 +88,10 @@ public class InvasionTypeLoader extends JsonReloadListener {
                     }
                 });
 
+                if(jsonObject.has("require_day")){
+                    invasionType.setRequireDifficulty(JSONUtils.getAsInt(jsonObject, "require_day"));
+                }
+
                 INVASIONS.put(res, invasionType);
 
             } catch (IllegalArgumentException | JsonParseException e) {

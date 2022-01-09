@@ -2,8 +2,6 @@ package com.hungteen.pvz.common.container.shop;
 
 import com.hungteen.pvz.common.capability.CapabilityHandler;
 import com.hungteen.pvz.common.misc.sound.SoundRegister;
-import com.hungteen.pvz.common.network.PVZPacketHandler;
-import com.hungteen.pvz.common.network.toclient.OtherStatsPacket;
 import com.hungteen.pvz.register.ContainerRegister;
 import com.hungteen.pvz.utils.PlayerUtil;
 import com.hungteen.pvz.utils.TradeUtil;
@@ -11,9 +9,7 @@ import com.hungteen.pvz.utils.TradeUtil.DaveGoods;
 import com.hungteen.pvz.utils.enums.Resources;
 
 import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.util.SoundCategory;
-import net.minecraftforge.fml.network.PacketDistributor;
 
 public class MysteryShopContainer extends AbstractDaveShopContainer {
 
@@ -61,22 +57,21 @@ public class MysteryShopContainer extends AbstractDaveShopContainer {
 //	}
 	
 	public static void sendMysteryGoodsPacket(PlayerEntity player, int pos) {
-		player.getCapability(CapabilityHandler.PLAYER_DATA_CAPABILITY).ifPresent((l) -> {
-			if(pos == - 1) {
-				for(int i = 0; i < MAX_MYSTERY_GOOD; ++ i) {
-			        PVZPacketHandler.CHANNEL.send(PacketDistributor.PLAYER.with(() -> {
-				        return (ServerPlayerEntity) player;
-			        }), new OtherStatsPacket(0, i, l.getPlayerData().getOtherStats().mysteryGoods[i]));
-				}
-				PVZPacketHandler.CHANNEL.send(PacketDistributor.PLAYER.with(() -> {
-			        return (ServerPlayerEntity) player;
-		        }), new OtherStatsPacket(0, - 1, l.getPlayerData().getOtherStats().updateGoodTick));
-			} else {
-				PVZPacketHandler.CHANNEL.send(PacketDistributor.PLAYER.with(() -> {
-			        return (ServerPlayerEntity) player;
-		        }), new OtherStatsPacket(0, pos, l.getPlayerData().getOtherStats().mysteryGoods[pos]));
-			}
-		});
+//		player.getCapability(CapabilityHandler.PLAYER_DATA_CAPABILITY).ifPresent((l) -> {
+//			if(pos == - 1) {
+//				for(int i = 0; i < MAX_MYSTERY_GOOD; ++ i) {
+//			        PVZPacketHandler.CHANNEL.send(PacketDistributor.PLAYER.with(() -> {
+//				        return (ServerPlayerEntity) player;
+//			        }), new OtherStatsPacket(0, i, l.getPlayerData().getOtherStats().mysteryGoods[i]));
+//				}
+//				PVZPacketHandler.CHANNEL.send(PacketDistributor.PLAYER.with(() -> {
+//			        return (ServerPlayerEntity) player;
+//		        }), new OtherStatsPacket(0, - 1, l.getPlayerData().getOtherStats().updateGoodTick));
+//			} else {
+//				PVZPacketHandler.CHANNEL.send(PacketDistributor.PLAYER.with(() -> {
+//			        return (ServerPlayerEntity) player;
+//		        }), new OtherStatsPacket(0, pos, l.getPlayerData().getOtherStats().mysteryGoods[pos]));
+//			}
+//		});
 	}
-
 }

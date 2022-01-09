@@ -11,6 +11,10 @@ public class ConfigUtil {
 	public static boolean enableZombieDropParts() {
 		return PVZConfig.COMMON_CONFIG.EntitySettings.ZombieSetting.EnableZombieDropHands.get();
 	}
+
+	public static boolean enableHugeWave(){
+		return PVZConfig.COMMON_CONFIG.InvasionSettings.EnableHugeWave.get();
+	}
 	
 	public static int getPlayerInitialGroup() {
 		return PVZConfig.COMMON_CONFIG.EntitySettings.PlayerInitialGroup.get();

@@ -1,0 +1,38 @@
+{
+  "isAssistInvasion": false,
+  "triggerChance": 80,
+  "bonus": "pvz:roof",
+  "display_color": "gold",
+  "spawns": [
+    {
+      "entity_type": "pvz:normal_zombie",
+      "occur_day": 0,
+      "spawn_weight": 100
+    },
+    {
+      "entity_type": "pvz:conehead_zombie",
+      "occur_day": 2,
+      "spawn_weight": 40
+    },
+    {
+      "entity_type": "pvz:bungee_zombie",
+      "occur_day": 5,
+      "spawn_weight": 20
+    },
+    {
+      "entity_type": "pvz:ladder_zombie",
+      "occur_day": 9,
+      "spawn_weight": 40
+    },
+    {
+      "entity_type": "pvz:catapult_zombie",
+      "occur_day": 14,
+      "spawn_weight": 30
+    },
+    {
+      "entity_type": "pvz:gargantuar",
+      "occur_day": 20,
+      "spawn_weight": 15
+    }
+  ]
+}

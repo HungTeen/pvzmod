@@ -1,6 +1,6 @@
 {
   "isAssistInvasion": false,
-  "triggerChance": 80,
+  "triggerChance": 85,
   "bonus": "pvz:grass_night",
   "display_color": "white",
   "spawns": [

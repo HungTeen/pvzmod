@@ -14,90 +14,6 @@ public class PVZConfig {
             /* Invasion Settings */
             builder.comment("Settings about invasion.").push("Invasion Settings");
             {
-//				builder.comment("Settings about invasion events.").push("Invasion Events Settings");
-//				{
-//					InvasionSettings.BucketInvasionChance = builder
-//							.translation("config.pvz.invasion.bucket_chance")
-//							.comment("The weight to happen Bucket Invasion when it's a zombie invasion day. The larger the more chance.")
-//							.defineInRange("BucketInvasionChance", 100, 1, 1000000);
-//
-//					InvasionSettings.WaterInvasionChance = builder
-//							.translation("config.pvz.invasion.water_chance")
-//							.comment("The weight to happen Water Invasion when it's a zombie invasion day. The larger the more chance.")
-//							.defineInRange("WaterInvasionChance", 90, 1, 1000000);
-//
-//					InvasionSettings.HalloweenInvasionChance = builder
-//							.translation("config.pvz.invasion.halloween_chance")
-//							.comment("The weight to happen Halloween Invasion when it's a zombie invasion day. The larger the more chance.")
-//							.defineInRange("HalloweenInvasionChance", 40, 1, 1000000);
-//
-//					InvasionSettings.NewspaperInvasionChance = builder
-//							.translation("config.pvz.invasion.newspaper_chance")
-//							.comment("The weight to happen Newspaper Invasion when it's a zombie invasion day. The larger the more chance.")
-//							.defineInRange("NewspaperInvasionChance", 90, 1, 1000000);
-//
-//					InvasionSettings.FootballInvasionChance = builder
-//							.translation("config.pvz.invasion.football_chance")
-//							.comment("The weight to happen Football Invasion when it's a zombie invasion day. The larger the more chance.")
-//							.defineInRange("FootballInvasionChance", 90, 1, 1000000);
-//
-//					InvasionSettings.RandomInvasionChance = builder
-//							.translation("config.pvz.invasion.random_chance")
-//							.comment("The weight to happen Random Invasion when it's a zombie invasion day. The larger the more chance.")
-//							.defineInRange("RandomInvasionChance", 100, 1, 1000000);
-//
-//					InvasionSettings.YetiInvasionChance = builder
-//							.translation("config.pvz.invasion.yeti_chance")
-//							.comment("The weight to happen Yeti Invasion when it's a zombie invasion day. The larger the more chance.")
-//							.defineInRange("YetiInvasionChance", 80, 1, 1000000);
-//
-//					InvasionSettings.BungeeInvasionChance = builder
-//							.translation("config.pvz.invasion.bungee_chance")
-//							.comment("The weight to happen Bungee Invasion when it's a zombie invasion day. The larger the more chance.")
-//							.defineInRange("BungeeInvasionChance", 60, 1, 1000000);
-//
-//					InvasionSettings.MetalInvasionChance = builder
-//							.translation("config.pvz.invasion.metal_chance")
-//							.comment("The weight to happen Metal Invasion when it's a zombie invasion day. The larger the more chance.")
-//							.defineInRange("MetalInvasionChance", 70, 1, 1000000);
-//
-//					InvasionSettings.RoofInvasionChance = builder
-//							.translation("config.pvz.invasion.roof_chance")
-//							.comment("The weight to happen Roof Invasion when it's a zombie invasion day. The larger the more chance.")
-//							.defineInRange("RoofInvasionChance", 85, 1, 1000000);
-//
-//					InvasionSettings.GiantInvasionChance = builder
-//							.translation("config.pvz.invasion.giant_chance")
-//							.comment("The weight to happen Giant Invasion when it's a zombie invasion day. The larger the more chance.")
-//							.defineInRange("GiantInvasionChance", 66, 1, 1000000);
-//
-//					InvasionSettings.Zombotany1InvasionChance = builder
-//							.translation("config.pvz.invasion.zombotany1_chance")
-//							.comment("The weight to happen Zombotany I Invasion when it's a zombie invasion day. The larger the more chance.")
-//							.defineInRange("Zombotany1AttackChance", 100, 1, 1000000);
-//
-//					InvasionSettings.Zombotany2InvasionChance = builder
-//							.translation("config.pvz.invasion.zombotany2_chance")
-//							.comment("The weight to happen Zombotany II Invasion when it's a zombie invasion day. The larger the more chance.")
-//							.defineInRange("Zombotany2AttackChance", 75, 1, 1000000);
-//
-//					InvasionSettings.FogInvasionChance = builder
-//							.translation("config.pvz.invasion.fog_chance")
-//							.comment("The related value to happen Fog Event when it's a zombie invasion day. The larger the less chance.")
-//							.defineInRange("FogEventChance", 12, 1, 1000000);
-//
-//					InvasionSettings.MiniInvasionChance = builder
-//							.translation("config.pvz.invasion.mini_chance")
-//							.comment("The related value to happen Mini Event when it's a zombie invasion day. The larger the less chance.")
-//							.defineInRange("MiniEventChance", 10, 1, 1000000);
-//
-//					InvasionSettings.InvisInvasionChance = builder
-//							.translation("config.pvz.invasion.invis_chance")
-//							.comment("The related value to happen Invis Event when it's a zombie invasion day. The larger the less chance.")
-//							.defineInRange("InvisEventChance", 10, 1, 1000000);
-//				}
-//				builder.pop();
-
                 InvasionSettings.SafeDayLength = builder
                         .translation("config.pvz.invasion.safe_day")
                         .comment("If you set to 5, then the first 5 * 20 minutes of the world will not have any zombie invasion event.")
@@ -149,7 +65,6 @@ public class PVZConfig {
             //World Settings
             builder.comment("Settings about global rules.").push("Rule Settings");
             {
-
                 RuleSettings.CanSpawnDefaultMonster = builder
                         .translation("config.pvz.rule.spawn_monster")
                         .comment("if turn to false, there will have no monster of other monsters spawn in overworld except pvz zombies.")

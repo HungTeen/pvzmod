@@ -9,6 +9,7 @@ import net.minecraft.world.World;
 public class SpawnType{
 
     private final EntityType<? extends MobEntity> spawnType;
+    //TODO nbt
     private CompoundNBT nbt = new CompoundNBT();
     private int occurDay;
     private int spawnWeight;
@@ -51,6 +52,9 @@ public class SpawnType{
     }
 
     public boolean checkPos(World world, BlockPos pos){
+        if(! world.getBlockState(pos.below()).isValidSpawn(world, pos.below(), this.spawnType)){
+            return false;
+        }
         if(this.canSpawnInWater){
             return ! world.getBlockState(pos.below()).getFluidState().isEmpty();
         } else{

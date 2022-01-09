@@ -12,8 +12,6 @@ import com.hungteen.pvz.common.event.handler.PlayerEventHandler;
 import com.hungteen.pvz.common.item.tool.plant.BowlingGloveItem;
 import com.hungteen.pvz.common.item.tool.plant.PeaGunItem;
 import com.hungteen.pvz.common.misc.sound.SoundRegister;
-import com.hungteen.pvz.common.network.PVZPacketHandler;
-import com.hungteen.pvz.common.network.toclient.OtherStatsPacket;
 import com.hungteen.pvz.common.potion.EffectRegister;
 import com.hungteen.pvz.utils.PlayerUtil;
 import com.hungteen.pvz.utils.enums.Resources;
@@ -21,7 +19,6 @@ import com.hungteen.pvz.utils.enums.Resources;
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.ShovelItem;
 import net.minecraft.item.SwordItem;
@@ -33,7 +30,6 @@ import net.minecraftforge.event.entity.player.PlayerInteractEvent;
 import net.minecraftforge.eventbus.api.EventPriority;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
-import net.minecraftforge.fml.network.PacketDistributor;
 
 @Mod.EventBusSubscriber(modid=PVZMod.MOD_ID)
 public class PVZPlayerEvents {
@@ -55,12 +51,12 @@ public class PVZPlayerEvents {
 				if(ev.player.hasEffect(EffectRegister.LIGHT_EYE_EFFECT.get())) {
 				     lightLvl = 1 + ev.player.getEffect(EffectRegister.LIGHT_EYE_EFFECT.get()).getAmplifier();
 				}
-				if(lightLvl != l.getPlayerData().getOtherStats().lightLevel) {
-					PVZPacketHandler.CHANNEL.send(PacketDistributor.PLAYER.with(() -> {
-					    return (ServerPlayerEntity) ev.player;
-				    }), new OtherStatsPacket(2, 0, lightLvl));
-					l.getPlayerData().getOtherStats().lightLevel = lightLvl;
-				}
+//				if(lightLvl != l.getPlayerData().getOtherStats().lightLevel) {
+//					PVZPacketHandler.CHANNEL.send(PacketDistributor.PLAYER.with(() -> {
+//					    return (ServerPlayerEntity) ev.player;
+//				    }), new OtherStatsPacket(2, 0, lightLvl));
+//					l.getPlayerData().getOtherStats().lightLevel = lightLvl;
+//				}
 			});
 		} else {
 			SteelLadderBlock.climbUp(ev.player);

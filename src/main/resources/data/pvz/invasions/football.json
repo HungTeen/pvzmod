@@ -1,0 +1,33 @@
+{
+  "isAssistInvasion": false,
+  "triggerChance": 90,
+  "bonus": "pvz:grass_night",
+  "display_color": "black",
+  "spawns": [
+    {
+      "entity_type": "pvz:normal_zombie",
+      "occur_day": 0,
+      "spawn_weight": 100
+    },
+    {
+      "entity_type": "pvz:conehead_zombie",
+      "occur_day": 3,
+      "spawn_weight": 60
+    },
+    {
+      "entity_type": "pvz:dancing_zombie",
+      "occur_day": 7,
+      "spawn_weight": 30
+    },
+    {
+      "entity_type": "pvz:football_zombie",
+      "occur_day": 12,
+      "spawn_weight": 40
+    },
+    {
+      "entity_type": "pvz:giga_football_zombie",
+      "occur_day": 19,
+      "spawn_weight": 25
+    }
+  ]
+}
