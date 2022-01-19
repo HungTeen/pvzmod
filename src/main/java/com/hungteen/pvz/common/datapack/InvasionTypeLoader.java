@@ -81,8 +81,8 @@ public class InvasionTypeLoader extends JsonReloadListener {
                         final int weight = JSONUtils.getAsInt(obj, "spawn_weight", 100);
                         spawnType.setSpawnWeight(weight);
 
-                        final boolean spawnInWater = JSONUtils.getAsBoolean(obj, "spawn_in_water", false);
-                        spawnType.setSpawnInWater(spawnInWater);
+                        final String placeType = JSONUtils.getAsString(obj, "placement", SpawnType.PlaceType.LAND.toString().toLowerCase());
+                        spawnType.setPlaceType(SpawnType.PlaceType.valueOf(placeType.toUpperCase()));
 
                         invasionType.addSpawn(spawnType);
                     }

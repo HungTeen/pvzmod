@@ -47,6 +47,12 @@ public class FragmentSpliceTileEntity extends TileEntity implements ITickableTil
     		SunStorageSaplingItem.setStorageSunAmount(stack, amount);
     	}
     }
+
+	public void clearCraftingSlots(){
+		for(int i = 0; i < 25; ++ i){
+			this.handler.setStackInSlot(i + 2, ItemStack.EMPTY);
+		}
+	}
     
     @Override
     public void load(BlockState state, CompoundNBT compound) {

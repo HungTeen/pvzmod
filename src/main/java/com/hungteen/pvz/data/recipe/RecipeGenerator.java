@@ -1,17 +1,14 @@
 package com.hungteen.pvz.data.recipe;
 
-import java.util.Arrays;
-import java.util.List;
-import java.util.function.Consumer;
-
 import com.hungteen.pvz.api.PVZAPI;
 import com.hungteen.pvz.api.types.IPlantType;
+import com.hungteen.pvz.api.types.IRankType;
 import com.hungteen.pvz.common.block.BlockRegister;
+import com.hungteen.pvz.common.impl.RankTypes;
 import com.hungteen.pvz.common.item.ItemRegister;
 import com.hungteen.pvz.common.item.spawn.card.PlantCardItem;
 import com.hungteen.pvz.common.misc.tag.PVZItemTags;
 import com.hungteen.pvz.utils.StringUtil;
-
 import net.minecraft.data.CookingRecipeBuilder;
 import net.minecraft.data.DataGenerator;
 import net.minecraft.data.IFinishedRecipe;
@@ -26,6 +23,10 @@ import net.minecraft.tags.ItemTags;
 import net.minecraft.util.IItemProvider;
 import net.minecraftforge.common.data.ForgeRecipeProvider;
 
+import java.util.Arrays;
+import java.util.List;
+import java.util.function.Consumer;
+
 public class RecipeGenerator extends ForgeRecipeProvider{
 
 	public RecipeGenerator(DataGenerator generatorIn) {
@@ -34,6 +35,10 @@ public class RecipeGenerator extends ForgeRecipeProvider{
 
 	@Override
     protected void buildShapelessRecipes(Consumer<IFinishedRecipe> consumer) {
+		//template cards.
+		RankTypes.getRanks().forEach(type -> {
+			registerTemplateCard(consumer, type);
+		});
 		//summon card
 		//1-1
 		registerCommonCard(consumer, ItemRegister.PEA_SHOOTER_CARD.get(), PVZItemTags.PEAS);
@@ -143,7 +148,7 @@ public class RecipeGenerator extends ForgeRecipeProvider{
 		final FusionRecipeBuilder builder = FusionRecipeBuilder.shapeless(result);
 		list.forEach(i -> builder.requires(i));
 		if(result instanceof PlantCardItem){
-			builder.requires(((PlantCardItem) result).plantType.getRank().getTemplateCard());
+			builder.requires(((PlantCardItem) result).plantType.getRank().getCardTag());
 		}
 		builder.save(consumer, StringUtil.prefix("card_fusion/" + result.getRegistryName().getPath()));
 	}
@@ -158,7 +163,7 @@ public class RecipeGenerator extends ForgeRecipeProvider{
 					.pattern("AAAAA")
 					.define('A', type.getEnjoyCard().get())
 					.define('B', type.getEssence().getEssenceItem())
-					.define('C', type.getRank().getTemplateCard())
+					.define('C', type.getRank().getCardTag())
 					.unlockedBy("has_essence", has(type.getEssence().getEssenceItem()))
 					.save(consumer, StringUtil.prefix("fragment_splice/" + type.toString() + "_card"));
 		});
@@ -177,16 +182,48 @@ public class RecipeGenerator extends ForgeRecipeProvider{
 	
 	private void registerCommonCard(Consumer<IFinishedRecipe> consumer, PlantCardItem result, Item crop) {
 		final Item essence = result.plantType.getEssence().getEssenceItem();
-		final Item rankCard = result.plantType.getRank().getTemplateCard();
-	    ShapedRecipeBuilder.shaped(result).pattern("AAA").pattern("ABA").pattern("ACA")
-		    .define('A', essence).define('B', crop).define('C', rankCard).unlockedBy("has_essence", has(essence)).save(consumer, StringUtil.prefix("card/" + result.plantType.toString().toLowerCase() + "_card"));
+		final ITag.INamedTag<Item> rankCard = result.plantType.getRank().getCardTag();
+	    ShapedRecipeBuilder.shaped(result)
+				.pattern("AAA")
+				.pattern("ABA")
+				.pattern("ACA")
+				.define('A', essence)
+				.define('B', crop)
+				.define('C', rankCard)
+				.unlockedBy("has_essence", has(essence))
+				.save(consumer, StringUtil.prefix("card/" + result.plantType.toString().toLowerCase() + "_card"));
 	}
 	
 	private void registerCommonCard(Consumer<IFinishedRecipe> consumer, PlantCardItem result, ITag.INamedTag<Item> crop) {
 		final Item essence = result.plantType.getEssence().getEssenceItem();
-		final Item rankCard = result.plantType.getRank().getTemplateCard();
-		ShapedRecipeBuilder.shaped(result).pattern("AAA").pattern("ABA").pattern("ACA")
-		    .define('A', essence).define('B', crop).define('C', rankCard).unlockedBy("has_essence", has(essence)).save(consumer, StringUtil.prefix("card/" + result.plantType.toString().toLowerCase() + "_card"));
+		final ITag.INamedTag<Item> rankCard = result.plantType.getRank().getCardTag();
+		if(rankCard != null){
+			ShapedRecipeBuilder.shaped(result)
+					.pattern("AAA")
+					.pattern("ABA")
+					.pattern("ACA")
+					.define('A', essence)
+					.define('B', crop)
+					.define('C', rankCard)
+					.unlockedBy("has_essence", has(essence))
+					.save(consumer, StringUtil.prefix("card/" + result.plantType.toString().toLowerCase() + "_card"));
+		}
+	}
+
+	private void registerTemplateCard(Consumer<IFinishedRecipe> consumer, IRankType type) {
+		final Item rankCard = type.getTemplateCard();
+		final ITag.INamedTag<Item> material = type.getMaterial();
+		final Item origin = ItemRegister.ORIGIN_ESSENCE.get();
+		if (material != null) {
+			ShapedRecipeBuilder.shaped(rankCard)
+					.pattern("AAA")
+					.pattern("ABA")
+					.pattern("AAA")
+					.define('A', material)
+					.define('B', origin)
+					.unlockedBy("has_origin", has(origin))
+					.save(consumer, StringUtil.prefix("card/template/" + type.getName() + "_card"));
+		}
 	}
 	
 }

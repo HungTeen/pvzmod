@@ -3,6 +3,8 @@ package com.hungteen.pvz.common.impl;
 import com.hungteen.pvz.api.PVZAPI.IPVZAPI;
 import com.hungteen.pvz.api.raid.*;
 import com.hungteen.pvz.api.types.*;
+import com.hungteen.pvz.common.impl.plant.PlantType;
+import com.hungteen.pvz.common.impl.zombie.ZombieType;
 import com.hungteen.pvz.common.item.tool.plant.BowlingGloveItem;
 import com.hungteen.pvz.common.item.tool.plant.PeaGunItem;
 import com.hungteen.pvz.common.world.raid.Raid;
@@ -42,12 +44,27 @@ public class PVZAPIImpl implements IPVZAPI{
 
 	@Override
 	public void registerEssenceType(IEssenceType type) {
-		EssenceType.registerEssence(type);
+		EssenceTypes.registerEssence(type);
 	}
 
 	@Override
 	public void registerEssenceTypes(Collection<IEssenceType> types) {
-		EssenceType.registerEssences(types);
+		types.forEach(type -> EssenceTypes.registerEssence(type));
+	}
+
+	@Override
+	public void registerRankType(IRankType type) {
+		RankTypes.registerRankType(type);
+	}
+
+	@Override
+	public void registerSkillType(ISkillType type) {
+		SkillTypes.registerSkillType(type);
+	}
+
+	@Override
+	public void registerSkillTypes(Collection<ISkillType> types) {
+		types.forEach(type -> registerSkillType(type));
 	}
 
 	@Override
@@ -133,7 +150,7 @@ public class PVZAPIImpl implements IPVZAPI{
 
 	@Override
 	public List<IEssenceType> getEssences() {
-		return EssenceType.getEssences();
+		return EssenceTypes.getEssences();
 	}
 
 	@Override

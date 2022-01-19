@@ -50,10 +50,10 @@ public class HypnoShroomEntity extends PVZPlantEntity implements ICanAttract{
 	}
 	
 	@Override
-	public void die(DamageSource cause) {
-		super.die(cause);
+	public void die(DamageSource source) {
+		super.die(source);
 		if(! level.isClientSide && ! this.canNormalUpdate()) {
-			if(cause instanceof PVZDamageSource && ((PVZDamageSource) cause).isEatDamage()) {
+			if(source instanceof PVZDamageSource && ((PVZDamageSource) source).isEatDamage()) {
 				// TODO 魅惑僵尸
 //				if(this.isPlantInSuperMode()) {
 //					if(cause.getEntity() != null) {

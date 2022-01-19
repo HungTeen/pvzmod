@@ -3,9 +3,8 @@ package com.hungteen.pvz.common.impl.zombie;
 import com.hungteen.pvz.PVZMod;
 import com.hungteen.pvz.api.types.IZombieType;
 import com.hungteen.pvz.client.model.entity.zombie.other.RaZombieModel;
-import com.hungteen.pvz.common.impl.Ranks;
-import com.hungteen.pvz.common.impl.ZombieType;
-import com.hungteen.pvz.register.EntityRegister;
+import com.hungteen.pvz.common.impl.RankTypes;
+import com.hungteen.pvz.common.entity.EntityRegister;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -18,8 +17,7 @@ public final class OtherZombies extends ZombieType {
 	 * egypt.
 	 */
 	public static final ZombieType RA_ZOMBIE = new OtherZombies("ra_zombie", new ZombieFeatures()
-			.difficulty(0).invasionWeight(0).waveWeight(0)
-		    .rank(Ranks.GREEN).xp(10)
+		    .rank(RankTypes.GREEN).xp(10)
 			.entityType(() -> EntityRegister.RA_ZOMBIE.get())
 			.zombieModel(() -> RaZombieModel::new).scale(0.5F)
 	);

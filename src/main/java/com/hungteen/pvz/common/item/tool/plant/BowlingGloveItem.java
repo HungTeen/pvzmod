@@ -14,7 +14,7 @@ import com.hungteen.pvz.common.entity.plant.PVZPlantEntity;
 import com.hungteen.pvz.common.impl.plant.PVZPlants;
 import com.hungteen.pvz.common.item.ItemRegister;
 import com.hungteen.pvz.common.item.PVZItemGroups;
-import com.hungteen.pvz.register.EntityRegister;
+import com.hungteen.pvz.common.entity.EntityRegister;
 import com.hungteen.pvz.utils.PlayerUtil;
 
 import net.minecraft.client.util.ITooltipFlag;

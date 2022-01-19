@@ -1,14 +1,10 @@
 package com.hungteen.pvz.client.gui.screen;
 
-import java.util.List;
-
+import com.hungteen.pvz.client.gui.search.CategoryToggleWidget;
 import com.hungteen.pvz.client.gui.search.OptionSearchGui;
-import com.hungteen.pvz.client.gui.search.SearchCategories;
 import com.hungteen.pvz.client.gui.search.SearchOption;
 import com.hungteen.pvz.common.container.AbstractOptionContainer;
 import com.mojang.blaze3d.matrix.MatrixStack;
-
-import net.minecraft.client.gui.screen.inventory.ContainerScreen;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.inventory.container.ClickType;
 import net.minecraft.inventory.container.Slot;
@@ -16,8 +12,10 @@ import net.minecraft.util.text.ITextComponent;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 
+import java.util.List;
+
 @OnlyIn(Dist.CLIENT)
-public abstract class AbstractOptionScreen<T extends AbstractOptionContainer> extends ContainerScreen<T> {
+public abstract class AbstractOptionScreen<T extends AbstractOptionContainer> extends PVZContainerScreen<T> {
 
 	protected final OptionSearchGui searchGui = new OptionSearchGui();
 	
@@ -51,10 +49,6 @@ public abstract class AbstractOptionScreen<T extends AbstractOptionContainer> ex
 	}
 	
 	@Override
-	protected void renderLabels(MatrixStack p_230451_1_, int p_230451_2_, int p_230451_3_) {
-	}
-	
-	@Override
 	protected boolean hasClickedOutside(double mouseX, double mouseY, int guiLeftIn, int guiTopIn, int mouseButton) {
 		boolean flag = mouseX < guiLeftIn || mouseY < guiTopIn || mouseX >= guiLeftIn + this.imageWidth || mouseY >= guiTopIn + this.imageHeight;
 	    return this.searchGui.hasClickedOutside(mouseX, mouseY, this.leftPos, this.topPos, mouseButton) && flag;
@@ -81,13 +75,15 @@ public abstract class AbstractOptionScreen<T extends AbstractOptionContainer> ex
 		super.removed();
 	}
 
-	@Override
-	protected void renderBg(MatrixStack stack, float partialTicks, int mouseX, int mouseY) {
-	}
-	
+	/**
+	 * is the option unlocked.
+	 */
 	public abstract boolean isOptionUnLocked(SearchOption option);
-	
-	public abstract List<SearchCategories> getSearchCategories();
+
+	/**
+	 * all categories that displayed on left side.
+	 */
+	public abstract List<CategoryToggleWidget.SearchCategories> getSearchCategories();
 	
 
 }

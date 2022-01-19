@@ -8,7 +8,7 @@
       "item": "pvz:scaredy_shroom_card"
     },
     {
-      "item": "pvz:white_card"
+      "tag": "pvz:card/white_cards"
     }
   ],
   "result": {

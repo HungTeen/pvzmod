@@ -4,13 +4,13 @@ import com.hungteen.pvz.api.interfaces.IHasWheel;
 import com.hungteen.pvz.common.entity.PVZMultiPartEntity;
 import com.hungteen.pvz.common.entity.zombie.base.CarZombieEntity;
 import com.hungteen.pvz.common.entity.zombie.part.PVZZombiePartEntity;
-import com.hungteen.pvz.common.impl.ZombieType;
+import com.hungteen.pvz.common.impl.zombie.ZombieType;
 import com.hungteen.pvz.common.impl.zombie.PoolZombies;
 import com.hungteen.pvz.common.misc.damage.PVZDamageSource;
 import com.hungteen.pvz.common.misc.sound.SoundRegister;
 import com.hungteen.pvz.utils.EntityUtil;
 import com.hungteen.pvz.utils.ZombieUtil;
-import com.hungteen.pvz.utils.interfaces.IMultiPartEntity;
+import com.hungteen.pvz.utils.interfaces.IHasMultiPart;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
 import net.minecraft.block.SnowBlock;
@@ -25,7 +25,7 @@ import net.minecraft.world.World;
 
 import java.util.Optional;
 
-public class ZomboniEntity extends CarZombieEntity implements IMultiPartEntity, IHasWheel{
+public class ZomboniEntity extends CarZombieEntity implements IHasMultiPart, IHasWheel{
 	
 	private PVZZombiePartEntity part;
 	

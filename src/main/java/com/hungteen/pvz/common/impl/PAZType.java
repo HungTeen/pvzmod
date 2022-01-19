@@ -4,8 +4,8 @@ import com.hungteen.pvz.PVZMod;
 import com.hungteen.pvz.api.types.ICoolDown;
 import com.hungteen.pvz.api.types.IPAZType;
 import com.hungteen.pvz.api.types.IRankType;
+import com.hungteen.pvz.api.types.ISkillType;
 import com.hungteen.pvz.utils.AlgorithmUtil;
-import com.hungteen.pvz.utils.PAZUtil;
 import com.hungteen.pvz.utils.StringUtil;
 import com.mojang.datafixers.util.Pair;
 import net.minecraft.entity.CreatureEntity;
@@ -24,19 +24,16 @@ public abstract class PAZType implements IPAZType {
     private final String name;
     protected int sunCost = 9999;
     protected int requiredLevel = 100;
-    protected int maxLevel = PAZUtil.DEFAULT_MAX_POINTS;
-    protected int occurDifficulty = 0;
-    protected int randomInvasionWeight = 0;
-    protected int waveSpawnWeight = 0;
     protected int xpPoint = 0;
     protected float renderScale = 0.5F;
     protected ICoolDown coolDown = CoolDowns.DEFAULT;
-    protected IRankType rankType = Ranks.GRAY;
+    protected IRankType rankType = RankTypes.GRAY;
     protected ResourceLocation entityRenderResource;
     protected ResourceLocation lootTable;
     protected Supplier<EntityType<? extends CreatureEntity>> entitySup;
     protected Supplier<? extends Item> summonCardSup;
     protected Supplier<? extends Item> enjoyCardSup;
+    protected List<ISkillType> skills;
 
     protected PAZType(String name){
         this.name = name;
@@ -68,21 +65,6 @@ public abstract class PAZType implements IPAZType {
     }
 
     @Override
-    public int getOccurDifficulty() {
-        return this.occurDifficulty;
-    }
-
-    @Override
-    public int getRandomInvasionWeight() {
-        return this.randomInvasionWeight;
-    }
-
-    @Override
-    public int getWaveSpawnWeight() {
-        return this.waveSpawnWeight;
-    }
-
-    @Override
     public int getXpPoint() {
         return this.xpPoint;
     }
@@ -110,6 +92,11 @@ public abstract class PAZType implements IPAZType {
     @Override
     public Optional<? extends Item> getEnjoyCard() {
         return this.enjoyCardSup == null ? Optional.empty() : Optional.ofNullable(this.enjoyCardSup.get());
+    }
+
+    @Override
+    public List<ISkillType> getSkills() {
+        return skills;
     }
 
     @Override

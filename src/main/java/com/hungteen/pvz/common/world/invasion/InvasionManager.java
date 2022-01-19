@@ -45,7 +45,7 @@ public class InvasionManager {
     public static final Set<ResourceLocation> activeResources = new HashSet<>();
     public static Set<InvasionType> activeInvasions;
     public static int invasionDifficulty = 0;
-    public static boolean isRunning = false;
+    protected static boolean isRunning = false;
     private static int tick = 0;
     private static int spawnCD = 0;
 
@@ -92,7 +92,7 @@ public class InvasionManager {
                         activateZombieAttackEvents(ev.world);
                     } else if (isSafe) {
                         PlayerUtil.sendMsgToAll(ev.world,
-                                new TranslationTextComponent("invasion.pvz.safe_day", Math.ceil(-dif / 24000))
+                                new TranslationTextComponent("invasion.pvz.safe_day", String.format("%.1f", -dif * 1.0 / 24000))
                                         .withStyle(TextFormatting.GREEN));
                     } else {
                         PlayerUtil.sendMsgToAll(ev.world, new TranslationTextComponent("invasion.pvz.count_down", count)
@@ -122,10 +122,7 @@ public class InvasionManager {
     public static void tickSpawn(World world) {
         world.getProfiler().push("Invasion Tick");
         if (++tick >= getSpawnCD(world)) {
-            if (spawnList.isEmpty()) {
-                updateSpawns(getSpawnInvasion());
-            }
-            if (!spawnList.isEmpty()) {
+            if (!getSpawnList().isEmpty()) {
                 final List<ServerPlayerEntity> players = PlayerUtil.getServerPlayers(world).stream().filter(player -> {
                     return suitableInvasionPos(world, player.blockPosition());
                 }).collect(Collectors.toList());
@@ -143,12 +140,12 @@ public class InvasionManager {
         final int maxCount = PVZConfig.COMMON_CONFIG.InvasionSettings.MaxSpawnEachPlayer.get();
         final int current = EntityUtil
                 .getPredicateEntities(player, EntityUtil.getEntityAABB(player, range, range), MobEntity.class, e -> {
-                    return spawnTypes.contains(e.getType());
+                    return isInvasionEntity(e.getType());
                 }).size();
         if (current < maxCount) {
             final int cnt = getSpawnCount(world);
             for (int i = 0; i < cnt; ++i) {
-                final SpawnType type = spawnList.getRandomItem(world.random).get();
+                final SpawnType type = getSpawnList().getRandomItem(world.random).get();
                 final BlockPos pos = WorldUtil.findRandomSpawnPos(world, player.blockPosition(), 10, 8, range,
                         b -> suitableInvasionPos(world, b) && type.checkPos(world, b));
                 if (pos != null) {
@@ -182,10 +179,10 @@ public class InvasionManager {
                 PlayerUtil.getServerPlayers(world).forEach(player -> {
                     getActiveInvasions().forEach(type -> PlayerUtil.sendMsgTo(player, type.getText()));
                 });
-                if (!spawnList.isEmpty()) {
+                if (!getSpawnList().isEmpty()) {
                     final IFormattableTextComponent msg = new StringTextComponent("");
-                    for (int i = 0; i < spawnList.getLen(); ++i) {
-                        final EntityType<?> type = spawnList.getItem(i).getSpawnType();
+                    for (int i = 0; i < getSpawnList().getLen(); ++i) {
+                        final EntityType<?> type = getSpawnList().getItem(i).getSpawnType();
                         final IFormattableTextComponent component = new TranslationTextComponent("entity."
                                 + type.getRegistryName().getNamespace() + "." + type.getRegistryName().getPath());
                         msg.append(i == 0 ? component : new StringTextComponent(",").append(component));
@@ -297,6 +294,20 @@ public class InvasionManager {
         return spawnInvasion == null ? spawnInvasion = getInvasion(spawnResource) : spawnInvasion;
     }
 
+    public static WeightList<SpawnType> getSpawnList(){
+        if(spawnList.isEmpty()){
+            updateSpawns(getSpawnInvasion());
+        }
+        return spawnList;
+    }
+
+    public static boolean isInvasionEntity(EntityType<?> entityType){
+        if(spawnTypes.isEmpty()){
+            updateSpawns(getSpawnInvasion());
+        }
+        return spawnTypes.contains(entityType);
+    }
+
     public static Set<InvasionType> getActiveInvasions() {
         if (activeInvasions == null) {
             activeInvasions = new HashSet<>();
@@ -311,6 +322,10 @@ public class InvasionManager {
             }
         }
         return activeInvasions == null ? new HashSet<>() : activeInvasions;
+    }
+
+    public static boolean isRunning() {
+        return isRunning;
     }
 
     public static Stream<ResourceLocation> getIds() {

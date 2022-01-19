@@ -3,7 +3,7 @@ package com.hungteen.pvz.common.event;
 import com.hungteen.pvz.PVZMod;
 import com.hungteen.pvz.common.entity.zombie.other.CoffinEntity;
 import com.hungteen.pvz.common.event.handler.BlockEventHandler;
-import com.hungteen.pvz.register.EntityRegister;
+import com.hungteen.pvz.common.entity.EntityRegister;
 import com.hungteen.pvz.utils.EntityUtil;
 import net.minecraft.advancements.CriteriaTriggers;
 import net.minecraft.block.Block;

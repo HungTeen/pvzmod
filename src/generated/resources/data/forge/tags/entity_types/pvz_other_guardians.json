@@ -1,0 +1,16 @@
+{
+  "replace": false,
+  "values": [
+    "minecraft:cat",
+    "minecraft:dolphin",
+    "minecraft:fox",
+    "minecraft:wolf",
+    "minecraft:llama",
+    "minecraft:villager",
+    "minecraft:wandering_trader",
+    "minecraft:snow_golem",
+    "minecraft:iron_golem",
+    "minecraft:polar_bear",
+    "minecraft:panda"
+  ]
+}

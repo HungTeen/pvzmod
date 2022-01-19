@@ -4,7 +4,7 @@ import java.util.List;
 
 import com.hungteen.pvz.common.entity.zombie.roof.Edgar090505Entity;
 import com.hungteen.pvz.common.item.PVZItemGroups;
-import com.hungteen.pvz.register.EntityRegister;
+import com.hungteen.pvz.common.entity.EntityRegister;
 import com.hungteen.pvz.utils.EntityUtil;
 
 import net.minecraft.client.util.ITooltipFlag;

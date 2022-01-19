@@ -1,17 +1,16 @@
 package com.hungteen.pvz.client.gui.search;
 
-import java.util.List;
-
 import com.google.common.collect.Lists;
 import com.hungteen.pvz.client.gui.screen.AbstractOptionScreen;
 import com.hungteen.pvz.utils.StringUtil;
 import com.hungteen.pvz.utils.enums.Colors;
 import com.mojang.blaze3d.matrix.MatrixStack;
-
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.widget.ToggleWidget;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
+
+import java.util.List;
 
 @OnlyIn(Dist.CLIENT)
 public class OptionPage {
@@ -40,8 +39,8 @@ public class OptionPage {
 	public void init(Minecraft minecraft, int x, int y) {
 		this.mc = minecraft;
 		for (int i = 0; i < this.buttons.size(); ++i) {
-			int xx = x + this.xOffset + this.size * (i % NUM_PER_ROW);
-			int yy = y + this.yOffset + this.size * (i / NUM_PER_ROW);
+			int xx = 2 + x + this.xOffset + this.size * (i % NUM_PER_ROW);
+			int yy = 2 + y + this.yOffset + this.size * (i / NUM_PER_ROW);
 			this.buttons.get(i).setPosition(xx, yy);
 		}
 		int width = 150;
@@ -97,7 +96,6 @@ public class OptionPage {
 			this.mc.screen.renderComponentTooltip(stack, this.hoveredButton.getToolTipText(this.mc.screen),
 					mouseX, mouseY);
 		}
-
 	}
 
 	public void updateLists(List<SearchOption> list, boolean flag) {
@@ -130,7 +128,7 @@ public class OptionPage {
 		this.backButton.visible = this.totalPages > 1 && this.currentPage > 0;
 	}
 
-	public List<SearchOption> getCurrentList(SearchCategories category) {
+	public List<SearchOption> getCurrentList(CategoryToggleWidget.SearchCategories category) {
 		return SearchOption.getSearchOptionsByCategory(category);
 	}
 

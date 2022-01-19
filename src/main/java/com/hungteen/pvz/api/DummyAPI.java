@@ -57,6 +57,21 @@ public class DummyAPI implements IPVZAPI {
     }
 
     @Override
+    public void registerRankType(IRankType type) {
+
+    }
+
+    @Override
+    public void registerSkillType(ISkillType type) {
+
+    }
+
+    @Override
+    public void registerSkillTypes(Collection<ISkillType> types) {
+
+    }
+
+    @Override
     public void registerCD(ICoolDown type) {
     }
 

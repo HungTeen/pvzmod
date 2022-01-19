@@ -8,7 +8,7 @@
       "item": "pvz:tangle_kelp_card"
     },
     {
-      "item": "pvz:white_card"
+      "tag": "pvz:card/white_cards"
     }
   ],
   "result": {

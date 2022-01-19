@@ -2,7 +2,7 @@ package com.hungteen.pvz.common.world.biome;
 
 import com.hungteen.pvz.common.world.feature.PVZFeatures;
 import com.hungteen.pvz.register.BiomeRegister;
-import com.hungteen.pvz.register.EntityRegister;
+import com.hungteen.pvz.common.entity.EntityRegister;
 import com.hungteen.pvz.utils.BiomeUtil;
 
 import net.minecraft.entity.EntityClassification;

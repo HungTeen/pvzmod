@@ -5,7 +5,7 @@ import com.hungteen.pvz.api.types.IPlantType;
 import com.hungteen.pvz.client.gui.GuiHandler;
 import com.hungteen.pvz.common.block.BlockRegister;
 import com.hungteen.pvz.common.enchantment.EnchantmentRegister;
-import com.hungteen.pvz.common.impl.PlantType;
+import com.hungteen.pvz.common.impl.plant.PlantType;
 import com.hungteen.pvz.common.item.ItemRegister;
 import com.hungteen.pvz.common.potion.PotionRecipeHandler;
 

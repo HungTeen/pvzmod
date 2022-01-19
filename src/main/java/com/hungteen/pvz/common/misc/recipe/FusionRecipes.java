@@ -30,7 +30,7 @@ public enum FusionRecipes {
 //	}
 //	
 //	public static boolean isOptionHasFusionRecipe(SearchOption option) {
-//		if(! option.isPlant()) return false;
+//		if(! option.isPlantType()) return false;
 //		Plants plant = option.getPlant().get();
 //		return PLANT_FUSION_RECIPE.containsKey(plant);
 //	}

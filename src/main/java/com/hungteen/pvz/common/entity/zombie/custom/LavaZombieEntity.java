@@ -2,7 +2,7 @@ package com.hungteen.pvz.common.entity.zombie.custom;
 
 import com.hungteen.pvz.common.entity.ai.navigator.LavaZombiePathNavigator;
 import com.hungteen.pvz.common.entity.zombie.base.SwimmerZombieEntity;
-import com.hungteen.pvz.common.impl.ZombieType;
+import com.hungteen.pvz.common.impl.zombie.ZombieType;
 import com.hungteen.pvz.common.impl.zombie.CustomZombies;
 import com.hungteen.pvz.data.loot.PVZLoot;
 import com.hungteen.pvz.utils.ZombieUtil;

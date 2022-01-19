@@ -10,7 +10,7 @@ import com.hungteen.pvz.client.model.entity.plant.ice.IcebergLettuceModel;
 import com.hungteen.pvz.client.model.entity.plant.light.GoldLeafModel;
 import com.hungteen.pvz.common.impl.*;
 import com.hungteen.pvz.common.item.ItemRegister;
-import com.hungteen.pvz.register.EntityRegister;
+import com.hungteen.pvz.common.entity.EntityRegister;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -20,8 +20,8 @@ public final class OtherPlants extends PlantType {
 	private static final List<IPlantType> LIST = new ArrayList<>();
 	
 	public static final IPlantType ICEBERG_LETTUCE = new OtherPlants("iceberg_lettuce", new PlantFeatures()
-			.cost(1).maxLevel(20).requiredLevel(5)
-			.cd(CoolDowns.LITTLE_FAST).rank(Ranks.WHITE).essence(EssenceType.ICE)
+			.cost(1).requiredLevel(5)
+			.cd(CoolDowns.LITTLE_FAST).rank(RankTypes.WHITE).essence(EssenceTypes.ICE)
 			.entityType(() -> EntityRegister.ICEBERG_LETTUCE.get())
 			.summonCard(() -> ItemRegister.ICEBERG_LETTUCE_CARD.get())
 			.enjoyCard(() -> ItemRegister.ICEBERG_LETTUCE_ENJOY_CARD.get())
@@ -29,8 +29,8 @@ public final class OtherPlants extends PlantType {
 	);
 	
 	public static final IPlantType BONK_CHOY = new OtherPlants("bonk_choy", new PlantFeatures()
-			.cost(175).maxLevel(20).requiredLevel(20)
-			.cd(CoolDowns.LITTLE_FAST).rank(Ranks.BLUE).essence(EssenceType.ENFORCE)
+			.cost(175).requiredLevel(20)
+			.cd(CoolDowns.LITTLE_FAST).rank(RankTypes.BLUE).essence(EssenceTypes.ENFORCE)
 			.entityType(() -> EntityRegister.BONK_CHOY.get())
 			.summonCard(() -> ItemRegister.BONK_CHOY_CARD.get())
 			.enjoyCard(() -> ItemRegister.BONK_CHOY_ENJOY_CARD.get())
@@ -38,8 +38,8 @@ public final class OtherPlants extends PlantType {
 	);
 	
 	public static final IPlantType GOLD_LEAF = new OtherPlants("gold_leaf", new PlantFeatures()
-			.cost(75).maxLevel(20).requiredLevel(70)
-			.cd(CoolDowns.NORMAL).rank(Ranks.BLUE).essence(EssenceType.LIGHT)
+			.cost(75).requiredLevel(70)
+			.cd(CoolDowns.NORMAL).rank(RankTypes.BLUE).essence(EssenceTypes.LIGHT)
 			.entityType(() -> EntityRegister.GOLD_LEAF.get())
 			.summonCard(() -> ItemRegister.GOLD_LEAF_CARD.get())
 			.enjoyCard(() -> ItemRegister.GOLD_LEAF_ENJOY_CARD.get())
@@ -48,8 +48,8 @@ public final class OtherPlants extends PlantType {
 	);
 	
 	public static final IPlantType ANGEL_STAR_FRUIT = new OtherPlants("angel_star_fruit", new PlantFeatures()
-			.cost(225).maxLevel(20).requiredLevel(50)
-			.cd(CoolDowns.LITTLE_FAST).rank(Ranks.PURPLE).essence(EssenceType.APPEASE)
+			.cost(225).requiredLevel(50)
+			.cd(CoolDowns.LITTLE_FAST).rank(RankTypes.PURPLE).essence(EssenceTypes.APPEASE)
 			.entityType(() -> EntityRegister.ANGEL_STAR_FRUIT.get())
 			.summonCard(() -> ItemRegister.ANGEL_STAR_FRUIT_CARD.get())
 			.enjoyCard(() -> ItemRegister.ANGEL_STAR_FRUIT_ENJOY_CARD.get())
@@ -57,8 +57,8 @@ public final class OtherPlants extends PlantType {
 	);
 	
 	public static final IPlantType BAMBOO_LORD = new OtherPlants("bamboo_lord", new PlantFeatures()
-			.cost(75).maxLevel(20).requiredLevel(55)
-			.cd(CoolDowns.NORMAL).rank(Ranks.BLUE).essence(EssenceType.EXPLOSION)
+			.cost(75).requiredLevel(55)
+			.cd(CoolDowns.NORMAL).rank(RankTypes.BLUE).essence(EssenceTypes.EXPLOSION)
 			.entityType(() -> EntityRegister.BAMBOO_LORD.get())
 			.summonCard(() -> ItemRegister.BAMBOO_LORD_CARD.get())
 			.enjoyCard(() -> ItemRegister.BAMBOO_LORD_ENJOY_CARD.get())

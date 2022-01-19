@@ -1,13 +1,12 @@
 package com.hungteen.pvz.utils;
 
-import java.util.Random;
-
 import com.hungteen.pvz.common.entity.plant.base.PlantShooterEntity;
-
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.vector.Vector3d;
+
+import java.util.Random;
 
 public class MathUtil {
 
@@ -23,7 +22,9 @@ public class MathUtil {
 	}
 	
 	/**
-	 * get average amount in (from, to).
+	 * get average amount in (from, to). <br>
+	 * the value at pos 1 is from. <br>
+	 * the value at pos max is to.
 	 */
 	public static int getProgressAverage(int now, int max, int from, int to) {
 		return MathHelper.floor(getProgressAverage(now, max, from, to * 1F));
@@ -35,6 +36,17 @@ public class MathUtil {
 	public static float getProgressAverage(int now, int max, float from, float to) {
 		return getProgressByDif(1, (to - from) / max, now, max, from, to);
 	}
+
+	/**
+	 * from 0 to len, value varies in (from, to).
+	 */
+	public static int getIncreaseAverage(int now, int len, int from, int to){
+		return from + (to - from) * now / len;
+	}
+
+	public static float getIncreaseAverage(int now, int len, float from, float to){
+		return from + (to - from) * now / len;
+	}
 	
 	/**
 	 * gen random from min to max.
@@ -45,7 +57,6 @@ public class MathUtil {
 	
 	/**
 	 * get random from - range to range.
-	 * {@link EntityUtil#onMobEntityRandomPosSpawn(net.minecraft.world.IWorld, net.minecraft.entity.MobEntity, BlockPos, int)}
 	 */
 	public static int getRandomInRange(Random rand, int range) {
 		return rand.nextInt(range << 1 | 1) - range;
@@ -114,6 +125,10 @@ public class MathUtil {
 	
 	public static boolean randDouble(Random rand, double value) {
 		return rand.nextDouble() < value;
+	}
+
+	public static boolean isInArea(int x, int y, int posX, int posY, int xLen, int yLen){
+		return x >= posX && x <= posX + xLen && y >= posY && y <= posY + yLen;
 	}
 	
 }

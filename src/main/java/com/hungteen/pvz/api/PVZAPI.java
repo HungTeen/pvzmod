@@ -73,6 +73,21 @@ public class PVZAPI {
 		void registerEssenceTypes(Collection<IEssenceType> types);
 
 		/**
+		 * register single rank type.
+		 */
+		void registerRankType(IRankType type);
+
+		/**
+		 * register single skill type.
+		 */
+		void registerSkillType(ISkillType type);
+
+		/**
+		 * register skill type list.
+		 */
+		void registerSkillTypes(Collection<ISkillType> types);
+
+		/**
 		 * register single cool down type.
 		 */
 		void registerCD(ICoolDown type);

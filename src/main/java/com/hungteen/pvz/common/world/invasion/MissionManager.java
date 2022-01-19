@@ -126,7 +126,7 @@ public class MissionManager {
     }
 
     public enum MissionType{
-        EMPTY(0),
+        EMPTY(3),
         KILL(10),
         INSTANT_KILL(8),
         COLLECT_SUN(5);

@@ -13,7 +13,7 @@
       "item": "minecraft:melon"
     },
     "C": {
-      "item": "pvz:purple_card"
+      "tag": "pvz:card/purple_cards"
     }
   },
   "result": {

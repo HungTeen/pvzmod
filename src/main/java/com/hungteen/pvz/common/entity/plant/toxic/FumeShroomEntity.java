@@ -66,5 +66,10 @@ public class FumeShroomEntity extends PlantShooterEntity {
 	public IPlantType getPlantType() {
 		return PVZPlants.FUME_SHROOM;
 	}
+
+	@Override
+	public float getAttackDamage() {
+		return 0;
+	}
 	
 }

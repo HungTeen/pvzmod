@@ -3,6 +3,14 @@ package com.hungteen.pvz;
 import com.hungteen.pvz.common.block.BlockRegister;
 import com.hungteen.pvz.common.capability.CapabilityHandler;
 import com.hungteen.pvz.common.enchantment.EnchantmentRegister;
+import com.hungteen.pvz.common.impl.EssenceTypes;
+import com.hungteen.pvz.common.impl.RankTypes;
+import com.hungteen.pvz.common.impl.SkillTypes;
+import com.hungteen.pvz.common.impl.plant.CustomPlants;
+import com.hungteen.pvz.common.impl.plant.MemePlants;
+import com.hungteen.pvz.common.impl.plant.OtherPlants;
+import com.hungteen.pvz.common.impl.plant.PVZPlants;
+import com.hungteen.pvz.common.impl.zombie.*;
 import com.hungteen.pvz.common.item.ItemRegister;
 import com.hungteen.pvz.common.item.misc.PVZSpawnEggItem;
 import com.hungteen.pvz.common.misc.sound.SoundRegister;
@@ -13,7 +21,7 @@ import com.hungteen.pvz.common.recipe.RecipeRegister;
 import com.hungteen.pvz.register.BiomeRegister;
 import com.hungteen.pvz.register.CommonRegister;
 import com.hungteen.pvz.register.ContainerRegister;
-import com.hungteen.pvz.register.EntityRegister;
+import com.hungteen.pvz.common.entity.EntityRegister;
 import com.hungteen.pvz.register.FeatureRegister;
 import com.hungteen.pvz.register.ParticleRegister;
 import com.hungteen.pvz.register.PotionRegister;
@@ -52,6 +60,30 @@ public class RegistryHandler {
 		ContainerRegister.CONTAINER_TYPES.register(bus);
 		PotionRegister.POTIONS.register(bus);
 		RecipeRegister.RECIPE_SERIALIZERS.register(bus);
+	}
+
+	/**
+	 * register paz stuff.
+	 */
+	public static void coreRegister() {
+		//register essences.
+		EssenceTypes.EssenceType.register();
+		//register ranks.
+		RankTypes.RankType.register();
+		//register skills.
+		SkillTypes.SkillType.register();
+		//register plants.
+		PVZPlants.register();
+		CustomPlants.register();
+		MemePlants.register();
+		OtherPlants.register();
+		//register zombies.
+		GrassZombies.register();
+		PoolZombies.register();
+		RoofZombies.register();
+		CustomZombies.register();
+		Zombotanies.register();
+		OtherZombies.register();
 	}
 	
 	/**

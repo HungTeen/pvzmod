@@ -2,7 +2,7 @@ package com.hungteen.pvz.common.world.invasion;
 
 import com.hungteen.pvz.PVZMod;
 import com.hungteen.pvz.common.misc.sound.SoundRegister;
-import com.hungteen.pvz.register.EntityRegister;
+import com.hungteen.pvz.common.entity.EntityRegister;
 import com.hungteen.pvz.utils.*;
 import com.hungteen.pvz.utils.enums.Resources;
 import net.minecraft.entity.player.PlayerEntity;

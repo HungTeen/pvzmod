@@ -3,6 +3,7 @@ package com.hungteen.pvz.data.tag;
 import com.hungteen.pvz.PVZMod;
 import com.hungteen.pvz.common.block.BlockRegister;
 import com.hungteen.pvz.common.block.ores.EssenceOreBlock;
+import com.hungteen.pvz.common.impl.RankTypes;
 import com.hungteen.pvz.common.item.ItemRegister;
 import com.hungteen.pvz.common.item.material.TemplateCardItem;
 import com.hungteen.pvz.common.item.spawn.card.PlantCardItem;
@@ -14,6 +15,7 @@ import net.minecraft.data.DataGenerator;
 import net.minecraft.data.ItemTagsProvider;
 import net.minecraft.item.BlockItem;
 import net.minecraft.item.Item;
+import net.minecraft.item.Items;
 import net.minecraftforge.common.data.ExistingFileHelper;
 import net.minecraftforge.registries.ForgeRegistries;
 
@@ -61,8 +63,21 @@ public class ItemTagGenerator extends ItemTagsProvider{
 			}
 		}
 		this.tag(PVZItemTags.TEMPLATE_CARDS).add(this.getFilterItems(i -> i instanceof TemplateCardItem));
-		this.tag(PVZItemTags.PEA_GUN_BULLETS).add(ItemRegister.PEA.get()).add(ItemRegister.SNOW_PEA.get()).add(ItemRegister.FLAME_PEA.get()).add(ItemRegister.BLUE_FLAME_PEA.get());
+		this.tag(PVZItemTags.PEA_GUN_BULLETS).add(ItemRegister.PEA.get()).add(ItemRegister.SNOW_PEA.get()).add(ItemRegister.FLAME_PEA.get());
 		this.tag(PVZItemTags.REACH_ITEMS).add(ItemRegister.RESOURCE_COLLECTOR.get());
+		this.tag(PVZItemTags.GRAY_MATERIALS).add(Items.STONE, Items.CLAY);
+		this.tag(PVZItemTags.WHITE_MATERIALS).add(Items.IRON_INGOT).add(Items.QUARTZ);
+		this.tag(PVZItemTags.GREEN_MATERIALS).add(Items.EMERALD).add(ItemRegister.ORIGIN_INGOT.get());
+		this.tag(PVZItemTags.BLUE_MATERIALS).add(Items.DIAMOND).add(Items.LAPIS_BLOCK);
+		this.tag(PVZItemTags.PURPLE_MATERIALS).add(ItemRegister.AMETHYST_INGOT.get()).add(Items.CRYING_OBSIDIAN);
+		this.tag(PVZItemTags.GOLD_MATERIALS).add(Items.GOLD_INGOT);
+		this.tag(PVZItemTags.RED_MATERIALS).add(Items.REDSTONE_BLOCK);
+		this.tag(PVZItemTags.BLACK_MATERIALS).add(Items.NETHERITE_SCRAP);
+		RankTypes.getRanks().forEach(rank -> {
+			if(rank.getCardTag() != null){
+				this.tag(rank.getCardTag()).add(ItemRegister.MEGA_CARD.get()).add(rank.getTemplateCard());
+			}
+		});
 	}
 	
 	private Item[] getFilterItems(Predicate<Item> predicate) {

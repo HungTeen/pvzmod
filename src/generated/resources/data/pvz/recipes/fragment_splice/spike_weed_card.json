@@ -15,7 +15,7 @@
       "item": "pvz:spear_essence"
     },
     "C": {
-      "item": "pvz:white_card"
+      "tag": "pvz:card/white_cards"
     }
   },
   "result": {

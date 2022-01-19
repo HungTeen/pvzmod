@@ -11,7 +11,7 @@ import com.hungteen.pvz.common.entity.zombie.base.AbstractBossZombieEntity;
 import com.hungteen.pvz.common.entity.zombie.body.ZombieDropBodyEntity;
 import com.hungteen.pvz.common.entity.zombie.roof.BungeeZombieEntity.BungeeStates;
 import com.hungteen.pvz.common.entity.zombie.roof.BungeeZombieEntity.BungeeTypes;
-import com.hungteen.pvz.common.impl.ZombieType;
+import com.hungteen.pvz.common.impl.zombie.ZombieType;
 import com.hungteen.pvz.common.impl.zombie.CustomZombies;
 import com.hungteen.pvz.common.impl.zombie.GrassZombies;
 import com.hungteen.pvz.common.impl.zombie.PoolZombies;
@@ -19,7 +19,7 @@ import com.hungteen.pvz.common.impl.zombie.RoofZombies;
 import com.hungteen.pvz.common.misc.sound.SoundRegister;
 import com.hungteen.pvz.common.world.data.PVZFlagData;
 import com.hungteen.pvz.data.loot.PVZLoot;
-import com.hungteen.pvz.register.EntityRegister;
+import com.hungteen.pvz.common.entity.EntityRegister;
 import com.hungteen.pvz.utils.EntityUtil;
 import com.hungteen.pvz.utils.MathUtil;
 import com.hungteen.pvz.utils.PlayerUtil;
@@ -274,11 +274,11 @@ public class Edgar090505Entity extends AbstractBossZombieEntity {
     }
 
     @Override
-    public void die(DamageSource cause) {
-        super.die(cause);
+    public void die(DamageSource source) {
+        super.die(source);
         if (!level.isClientSide) {
             this.bossInfo.getPlayers().forEach((player) -> {
-                CriteriaTriggers.PLAYER_KILLED_ENTITY.trigger(player, this, cause);
+                CriteriaTriggers.PLAYER_KILLED_ENTITY.trigger(player, this, source);
             });
             PVZFlagData data = PVZFlagData.getGlobalFlagData(level);
             data.addAdgarDefeatedCount();

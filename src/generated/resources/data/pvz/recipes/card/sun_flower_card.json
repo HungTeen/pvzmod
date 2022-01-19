@@ -13,7 +13,7 @@
       "item": "minecraft:sunflower"
     },
     "C": {
-      "item": "pvz:gray_card"
+      "tag": "pvz:card/gray_cards"
     }
   },
   "result": {

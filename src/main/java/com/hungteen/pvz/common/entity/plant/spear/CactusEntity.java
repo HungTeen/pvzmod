@@ -202,4 +202,9 @@ public class CactusEntity extends PlantShooterEntity {
 		return PVZPlants.CACTUS;
 	}
 
+	@Override
+	public float getAttackDamage() {
+		return 0;
+	}
+
 }

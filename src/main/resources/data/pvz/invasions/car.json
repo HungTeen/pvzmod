@@ -15,14 +15,15 @@
       "spawn_weight": 30
     },
     {
-      "entity_type": "pvz:zomboni_zombie",
+      "entity_type": "pvz:zomboni",
       "occur_day": 6,
       "spawn_weight": 40
     },
     {
       "entity_type": "pvz:bobsle_team",
       "occur_day": 10,
-      "spawn_weight": 20
+      "spawn_weight": 20,
+      "placement": "snow"
     },
     {
       "entity_type": "pvz:catapult_zombie",

@@ -7,6 +7,7 @@ import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 
+import java.util.List;
 import java.util.Optional;
 
 /**
@@ -25,22 +26,6 @@ public interface IPAZType extends IIDType {
 	 * if tree maxLevel doesn't reach requirement, then players can not use its card.
 	 */
 	int getRequiredLevel();
-
-	/**
-	 * get spawn limited difficulty.
-	 * when global difficulty reached, the role can be chosen to spawn.
-	 */
-	int getOccurDifficulty();
-
-	/**
-	 * get choose weight in random invasion.
-	 */
-	int getRandomInvasionWeight();
-
-	/**
-	 * get wave choose weight to spawn.
-	 */
-	int getWaveSpawnWeight();
 
 	/**
 	 * get the experience point of role.
@@ -71,6 +56,8 @@ public interface IPAZType extends IIDType {
 	 * get enjoy card item of type.
 	 */
 	Optional<? extends Item> getEnjoyCard();
+
+	List<ISkillType> getSkills();
 	
 	/**
 	 * get type corresponding id in type list.

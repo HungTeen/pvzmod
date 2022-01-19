@@ -1,35 +1,35 @@
 {
   "items": [
     {
-      "item": "pvz:pea_shooter_card"
+      "item": "pvz:pea_shooter_enjoy_card"
     },
     {
-      "item": "pvz:sun_flower_card"
+      "item": "pvz:sun_flower_enjoy_card"
     },
     {
-      "item": "pvz:cherry_bomb_card"
+      "item": "pvz:cherry_bomb_enjoy_card"
     },
     {
-      "item": "pvz:wall_nut_card"
+      "item": "pvz:wall_nut_enjoy_card"
     },
     {
-      "item": "pvz:potato_mine_card"
+      "item": "pvz:potato_mine_enjoy_card"
     },
     {
-      "item": "pvz:snow_pea_card"
+      "item": "pvz:snow_pea_enjoy_card"
     },
     {
-      "item": "pvz:chomper_card"
+      "item": "pvz:chomper_enjoy_card"
     },
     {
-      "item": "pvz:repeater_card"
+      "item": "pvz:repeater_enjoy_card"
     },
     {
-      "item": "pvz:twin_sunflower_card",
+      "item": "pvz:twin_sunflower_enjoy_card",
       "weight": 5
     },
     {
-      "item": "pvz:gatling_pea_card",
+      "item": "pvz:gatling_pea_enjoy_card",
       "weight": 5
     },
     {

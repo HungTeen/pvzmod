@@ -2,7 +2,7 @@ package com.hungteen.pvz.common.item.spawn;
 
 import com.hungteen.pvz.common.entity.misc.GardenRakeEntity;
 import com.hungteen.pvz.common.item.PVZItemGroups;
-import com.hungteen.pvz.register.EntityRegister;
+import com.hungteen.pvz.common.entity.EntityRegister;
 
 import net.minecraft.entity.SpawnReason;
 import net.minecraft.entity.player.PlayerEntity;

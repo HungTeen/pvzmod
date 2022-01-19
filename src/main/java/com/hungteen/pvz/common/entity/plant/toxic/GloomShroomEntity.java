@@ -73,4 +73,9 @@ public class GloomShroomEntity extends PlantShooterEntity {
 		return PVZPlants.GLOOM_SHROOM;
 	}
 
+	@Override
+	public float getAttackDamage() {
+		return 0;
+	}
+
 }

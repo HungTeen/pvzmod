@@ -1,18 +1,17 @@
 package com.hungteen.pvz.client.gui.search;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import com.hungteen.pvz.client.gui.screen.AbstractOptionScreen;
 import com.hungteen.pvz.utils.StringUtil;
 import com.mojang.blaze3d.matrix.MatrixStack;
-
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.client.gui.widget.Widget;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @OnlyIn(Dist.CLIENT)
 public class OptionWidget extends Widget {
@@ -33,12 +32,14 @@ public class OptionWidget extends Widget {
 		stack.pushPose();
 		Minecraft minecraft = Minecraft.getInstance();
 		minecraft.getTextureManager().bind(OptionSearchGui.TEXTURE);
-//		int posX = ClientPlayerResources.isSearchOptionUnLocked(this.option) ? 29 : 29 + 25;
 		int posX = this.isOptionUnLocked() ? 29 : 29 + 25;
 		int posY = 206;
 		this.blit(stack, this.x, this.y, posX, posY, this.width, this.height);
 		minecraft.getItemRenderer().renderAndDecorateItem(SearchOption.getItemStackByOption(this.option), this.x + 4,
 				this.y + 4);
+		if(! this.isOptionUnLocked()){
+			this.blit(stack, this.x + 8, this.y + 8, 81, 225, 7, 7);
+		}
 		stack.popPose();
 	}
 	
@@ -46,9 +47,9 @@ public class OptionWidget extends Widget {
 		return this.screen.isOptionUnLocked(option);
 	}
 
-	public List<ITextComponent> getToolTipText(Screen p_191772_1_) {
+	public List<ITextComponent> getToolTipText(Screen screen) {
 		List<ITextComponent> list = new ArrayList<>();
-		list.add(SearchOption.getOptionName(option));
+		list.add(option.getType().getText());
 		return list;
 	}
 

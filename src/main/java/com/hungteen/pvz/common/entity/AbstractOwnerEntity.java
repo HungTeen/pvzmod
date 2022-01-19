@@ -1,15 +1,9 @@
 package com.hungteen.pvz.common.entity;
 
-import java.util.Optional;
-import java.util.UUID;
-
-import javax.annotation.Nullable;
-
 import com.hungteen.pvz.api.enums.PVZGroupType;
-import com.hungteen.pvz.api.interfaces.IGroupEntity;
+import com.hungteen.pvz.api.interfaces.IHasGroup;
 import com.hungteen.pvz.api.interfaces.IHasOwner;
 import com.hungteen.pvz.utils.EntityUtil;
-
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.LivingEntity;
@@ -18,7 +12,11 @@ import net.minecraft.nbt.NBTUtil;
 import net.minecraft.world.World;
 import net.minecraft.world.server.ServerWorld;
 
-public abstract class AbstractOwnerEntity extends PVZEntityBase implements IGroupEntity, IHasOwner {
+import javax.annotation.Nullable;
+import java.util.Optional;
+import java.util.UUID;
+
+public abstract class AbstractOwnerEntity extends PVZEntityBase implements IHasGroup, IHasOwner {
 
 	protected Entity owner;
 	protected UUID ownerId;
@@ -70,7 +68,7 @@ public abstract class AbstractOwnerEntity extends PVZEntityBase implements IGrou
 	}
 	
 	public PVZGroupType getInitialEntityGroup() {
-		return PVZGroupType.CREATURES;
+		return PVZGroupType.NEUTRALS;
 	}
 	
 	@Override
@@ -98,7 +96,7 @@ public abstract class AbstractOwnerEntity extends PVZEntityBase implements IGrou
 			this.tickCount = compound.getInt("entity_tick_exist");
 		}
 		if(compound.contains("group_owner_type")) {
-			this.groupType = PVZGroupType.getGroup(compound.getInt("group_owner_type"));
+			this.groupType = EntityGroupHander.getGroup(compound.getInt("group_owner_type"));
 		}
 	}
 

@@ -1,5 +1,6 @@
 package com.hungteen.pvz.common.world.invasion;
 
+import net.minecraft.block.Blocks;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.MobEntity;
 import net.minecraft.nbt.CompoundNBT;
@@ -13,7 +14,7 @@ public class SpawnType{
     private CompoundNBT nbt = new CompoundNBT();
     private int occurDay;
     private int spawnWeight;
-    private boolean canSpawnInWater = false;
+    private PlaceType placeType;
 
     public SpawnType(EntityType<? extends MobEntity> spawnType){
         this.spawnType = spawnType;
@@ -43,22 +44,32 @@ public class SpawnType{
         this.nbt = nbt;
     }
 
-    public void setSpawnInWater(boolean canSpawnInWater) {
-        this.canSpawnInWater = canSpawnInWater;
+    public void setPlaceType(PlaceType placeType) {
+        this.placeType = placeType;
     }
 
-    public boolean canSpawnInWater() {
-        return canSpawnInWater;
+    public PlaceType getPlaceType() {
+        return placeType;
     }
 
     public boolean checkPos(World world, BlockPos pos){
-        if(! world.getBlockState(pos.below()).isValidSpawn(world, pos.below(), this.spawnType)){
-            return false;
-        }
-        if(this.canSpawnInWater){
+        if(getPlaceType() == PlaceType.LAND){
+            return world.getBlockState(pos.below()).isValidSpawn(world, pos.below(), this.spawnType) && world.getBlockState(pos.below()).getFluidState().isEmpty();
+        } else if(getPlaceType() == PlaceType.WATER){
             return ! world.getBlockState(pos.below()).getFluidState().isEmpty();
-        } else{
-            return world.getBlockState(pos.below()).getFluidState().isEmpty();
+        } else if(getPlaceType() == PlaceType.SNOW){
+            return world.getBlockState(pos).getBlock() == Blocks.SNOW || world.getBlockState(pos.below()).getBlock() == Blocks.SNOW_BLOCK;
+        } else if(getPlaceType() == PlaceType.SKY){
+            return true;
         }
+        return false;
+    }
+
+    public enum PlaceType{
+
+        LAND,
+        WATER,
+        SNOW,
+        SKY
     }
 }

@@ -2,12 +2,7 @@ package com.hungteen.pvz.common.entity.misc.drop;
 
 import com.hungteen.pvz.api.interfaces.ICollectible;
 import com.hungteen.pvz.utils.EntityUtil;
-
-import net.minecraft.entity.EntityType;
-import net.minecraft.entity.ILivingEntityData;
-import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.MobEntity;
-import net.minecraft.entity.SpawnReason;
+import net.minecraft.entity.*;
 import net.minecraft.entity.ai.goal.SwimGoal;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.nbt.CompoundNBT;
@@ -99,7 +94,15 @@ public abstract class DropEntity extends MobEntity implements ICollectible {
 	protected void onDropped() {
 		
 	}
-	
+
+	@Override
+	protected void doPush(Entity entityIn) {
+	}
+
+	@Override
+	protected void pushEntities() {
+	}
+
 	@Override
 	public boolean isPickable() {
 		return false;

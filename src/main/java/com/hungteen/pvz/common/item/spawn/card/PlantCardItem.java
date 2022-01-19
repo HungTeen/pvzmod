@@ -3,11 +3,11 @@ package com.hungteen.pvz.common.item.spawn.card;
 import com.hungteen.pvz.PVZMod;
 import com.hungteen.pvz.api.types.ICoolDown;
 import com.hungteen.pvz.api.types.IPlantType;
+import com.hungteen.pvz.api.types.ISkillType;
 import com.hungteen.pvz.common.advancement.trigger.PlayerPlacePlantTrigger;
 import com.hungteen.pvz.common.block.BlockRegister;
 import com.hungteen.pvz.common.enchantment.EnchantmentRegister;
 import com.hungteen.pvz.common.enchantment.card.ImmediateCDEnchantment;
-import com.hungteen.pvz.common.enchantment.card.SunReduceEnchantment;
 import com.hungteen.pvz.common.enchantment.card.plantcard.BreakOutEnchantment;
 import com.hungteen.pvz.common.enchantment.card.plantcard.DenselyPlantEnchantment;
 import com.hungteen.pvz.common.enchantment.card.plantcard.SoillessPlantEnchantment;
@@ -17,8 +17,10 @@ import com.hungteen.pvz.common.entity.plant.magic.ImitaterEntity;
 import com.hungteen.pvz.common.entity.plant.magic.ImitaterEntity.ImitateType;
 import com.hungteen.pvz.common.event.events.SummonCardUseEvent;
 import com.hungteen.pvz.common.impl.CoolDowns;
+import com.hungteen.pvz.common.impl.SkillTypes;
 import com.hungteen.pvz.common.impl.plant.OtherPlants;
 import com.hungteen.pvz.common.impl.plant.PVZPlants;
+import com.hungteen.pvz.common.impl.plant.PlantType;
 import com.hungteen.pvz.common.item.PVZItemGroups;
 import com.hungteen.pvz.common.misc.sound.SoundRegister;
 import com.hungteen.pvz.common.potion.EffectRegister;
@@ -39,6 +41,7 @@ import net.minecraft.item.BlockItemUseContext;
 import net.minecraft.item.ItemGroup;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.ItemUseContext;
+import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.stats.Stats;
 import net.minecraft.util.*;
 import net.minecraft.util.math.BlockPos;
@@ -92,45 +95,17 @@ public class PlantCardItem extends SummonCardItem {
 	@Override
 	public void fillItemCategory(ItemGroup group, NonNullList<ItemStack> list) {
 		if(this.allowdedIn(group)) {
-			list.add(new ItemStack(this));
 			if(group == PVZItemGroups.PVZ_PLANT_CARD) {
 				// insert sort.
-				for(int i = list.size() - 1; i >= 1; -- i) {
-					final ItemStack pre = list.get(i - 1);
-					final ItemStack now = list.get(i);
-					if(needExchange(pre, now)) {
-						final ItemStack tmp = pre.copy();
-						list.set(i - 1, now);
-						list.set(i, tmp);
-					} else {
-						break;
-					}
+				while(list.size() < PlantType.getPlants().size() * 2){
+					list.add(new ItemStack(this));
 				}
+				final int pos = this.isEnjoyCard ? this.plantType.getId() + PlantType.getPlants().size() : this.plantType.getId();
+				list.set(pos, new ItemStack(this));
+			} else{
+				list.add(new ItemStack(this));
 			}
 		}
-	}
-	
-	/**
-	 * first check plantType ID, then check enjoy card. <br>
-	 * large id put forward and enjoy card put backward. <br>
-	 */
-	public static boolean needExchange(ItemStack pre, ItemStack now) {
-		//both are plant card.
-		if(pre.getItem() instanceof PlantCardItem && now.getItem() instanceof PlantCardItem) {
-			if(((PlantCardItem) pre.getItem()).isEnjoyCard && ! ((PlantCardItem) now.getItem()).isEnjoyCard) {
-				return true;
-			}
-			if(! ((PlantCardItem) pre.getItem()).isEnjoyCard && ((PlantCardItem) now.getItem()).isEnjoyCard) {
-				return false;
-			}
-			final IPlantType preType = ((PlantCardItem) pre.getItem()).plantType;
-			final IPlantType nowType = ((PlantCardItem) now.getItem()).plantType;
-			return preType.getId() > nowType.getId();
-		}
-		if(pre.getItem() instanceof PlantCardItem) {
-			return false;
-		}
-		return true;
 	}
 
 	/**
@@ -272,9 +247,8 @@ public class PlantCardItem extends SummonCardItem {
 				return ImitaterCardItem.summonImitater(player, heldStack, plantStack, cardItem, pos, i -> consumer.accept(i));
 			}
 			/* other plant card */
-			final int lvl = PlayerUtil.getPAZPoint(player, plantType);
 			if(! handlePlantEntity(player, plantType, plantStack, pos, plantEntity -> {
-				/* update maxLevel and its owner */
+//				/* update maxLevel and its owner */
 		        plantEntity.onSpawnedByPlayer(player, cardItem.getBasisSunCost(plantStack));
 		        /* other operations */
 		        consumer.accept(plantEntity);
@@ -284,7 +258,7 @@ public class PlantCardItem extends SummonCardItem {
 				return false;
 			}
 	    	/* handle cd and misc */
-		    PlantCardItem.onUsePlantCard(player, heldStack, cardItem, lvl);
+		    PlantCardItem.onUsePlantCard(player, heldStack, cardItem);
 		    return true;
 		}
 		return false;
@@ -322,7 +296,7 @@ public class PlantCardItem extends SummonCardItem {
 		    return true;
 		})) {
 		    /* handle cd and misc */
-		    PlantCardItem.onUsePlantCard(player, heldStack, (PlantCardItem) heldStack.getItem(), 1);
+		    PlantCardItem.onUsePlantCard(player, heldStack, (PlantCardItem) heldStack.getItem());
 		    if(heldStack.getItem() instanceof ImitaterCardItem) {
 		    	if(! ImitaterCardItem.summonImitater(player, heldStack, plantStack, cardItem, pos, (imitater) -> {})){
 		    		return false;
@@ -357,7 +331,6 @@ public class PlantCardItem extends SummonCardItem {
 		}
 		final ItemStack plantStack = getPlantStack(heldStack);
 		final IPlantType plantType = ((PlantCardItem) plantStack.getItem()).plantType;
-		final int lvl = PlayerUtil.getPAZPoint(player, plantType);
 		final int cost = cardItem.getBasisSunCost(plantStack);
 		if(heldStack.getItem() instanceof ImitaterCardItem) {
 			if(checkSunAndSummonPlant(player, heldStack, plantStack, cardItem, plantEntity.blockPosition(), p -> {
@@ -365,7 +338,7 @@ public class PlantCardItem extends SummonCardItem {
 					((ImitaterEntity) p).setImitateType(ImitateType.OUTER);
 					((ImitaterEntity) p).setTargetEntity(plantEntity);
 					((ImitaterEntity) p).setImitateAction(pp -> {
-						pp.onPlaceOuterPlant(plantType, lvl, cost);
+						pp.onPlaceOuterPlant(plantType, cost);
 						BreakOutEnchantment.checkAndBreakOut(pp, plantStack);
 					});
 				}
@@ -382,10 +355,10 @@ public class PlantCardItem extends SummonCardItem {
 			    }
 			    return true;
 		    })) {
-			    plantEntity.onPlaceOuterPlant(plantType, lvl, cost);
+			    plantEntity.onPlaceOuterPlant(plantType, cost);
 			    /* check break out enchantment */
 			    BreakOutEnchantment.checkAndBreakOut(plantEntity, plantStack);
-		        onUsePlantCard(player, heldStack, cardItem, lvl);
+		        onUsePlantCard(player, heldStack, cardItem);
 		        return true;
 			}
 		}
@@ -424,7 +397,7 @@ public class PlantCardItem extends SummonCardItem {
 			return true;
 		} else {/* not consider surrounding plants number */
 		    if(checkSunAndCD(player, cardItem, plantStack, true, p -> true)){
-			    onUsePlantCard(player, heldStack, cardItem, PlayerUtil.getPAZPoint(player, plantType));
+			    onUsePlantCard(player, heldStack, cardItem);
 			    plantEntity.onHealByCard();
 			    return true;
 		    }
@@ -543,13 +516,13 @@ public class PlantCardItem extends SummonCardItem {
 	/**
 	 * deal with cd and misc.
 	 */
-    public static void onUsePlantCard(PlayerEntity player, ItemStack stack, PlantCardItem item, int plantLvl) {
+    public static void onUsePlantCard(PlayerEntity player, ItemStack stack, PlantCardItem item) {
 		MinecraftForge.EVENT_BUS.post(new SummonCardUseEvent(player, stack));
 		if(PlayerUtil.isPlayerSurvival(player)) {
 			if(item.isEnjoyCard) {
 				stack.shrink(1);
 			} else {
-				handlePlantCardCoolDown(player, stack, item, plantLvl);
+				handlePlantCardCoolDown(player, stack, item);
 			}
 		} else {
 			player.getCooldowns().addCooldown(stack.getItem(), 20);
@@ -564,12 +537,12 @@ public class PlantCardItem extends SummonCardItem {
 	/**
 	 * set PlantCard Item cool down.
 	 */
-	public static void handlePlantCardCoolDown(PlayerEntity player, ItemStack stack, PlantCardItem item, int plantLvl) {
+	public static void handlePlantCardCoolDown(PlayerEntity player, ItemStack stack, PlantCardItem item) {
 		/* handle immediate cool down enchantment */
 		if(ImmediateCDEnchantment.canImmediateCD(stack, player.getRandom())) {
 			PlayerUtil.setCardCD(player, item, 20);
 		} else {
-			PlayerUtil.setCardCD(player, item, getPlantCardCD(player, stack, item, plantLvl));
+			PlayerUtil.setCardCD(player, item, getPlantCardCD(player, stack, item));
 		}
 	}
 	
@@ -628,9 +601,23 @@ public class PlantCardItem extends SummonCardItem {
 	 * the cost of plant card without consider range plants count.
 	 */
 	public int getBasisSunCost(ItemStack stack) {
+		//less sun skill boost.
+		final int level = SkillTypes.getSkillLevel(stack.getOrCreateTag(), SkillTypes.LESS_SUN);
+		int vary = (int) SkillTypes.LESS_SUN.getValueAt(level);
+		// Extra skill sun cost.
+		if(stack.getOrCreateTag().contains(SkillTypes.SKILL_TAG)){
+			final CompoundNBT nbt = stack.getOrCreateTag().getCompound(SkillTypes.SKILL_TAG);
+			for (String key : nbt.getAllKeys()) {
+				final ISkillType type = SkillTypes.getSkillType(key);
+				if(type != null && nbt.getInt(key) > 0){
+					vary -= type.getExtraSun();
+				}
+			}
+		}
+
 		if(stack.getItem() instanceof PlantCardItem) {
 			IPlantType plantType = ((PlantCardItem) stack.getItem()).plantType;
-			return Math.max(plantType.getSunCost() - SunReduceEnchantment.getSunReduceNum(stack), 1);
+			return Math.max(plantType.getSunCost() - vary, 1);
 		}
 		return 1;
 	}
@@ -649,8 +636,10 @@ public class PlantCardItem extends SummonCardItem {
 	/**
 	 * get cool down for current plant card.
 	 */
-	private static int getPlantCardCD(PlayerEntity player, ItemStack stack, PlantCardItem item, int plantLvl) {
-		int cd = item.getBasisCoolDown(stack).getCD(plantLvl);
+	private static int getPlantCardCD(PlayerEntity player, ItemStack stack, PlantCardItem item) {
+		final int level = SkillTypes.getSkillLevel(stack.getOrCreateTag(), SkillTypes.FAST_CD);
+		int cd = item.getBasisCoolDown(stack).getCD(level);
+
 		if (player.hasEffect(EffectRegister.EXCITE_EFFECT.get())) {
 			int lvl = player.getEffect(EffectRegister.EXCITE_EFFECT.get()).getAmplifier();
 			float mult = Math.max(0, 0.9f - 0.1f * lvl);

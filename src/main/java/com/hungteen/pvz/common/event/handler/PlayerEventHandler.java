@@ -3,7 +3,6 @@ package com.hungteen.pvz.common.event.handler;
 import com.hungteen.pvz.PVZConfig;
 import com.hungteen.pvz.PVZMod;
 import com.hungteen.pvz.api.PVZAPI;
-import com.hungteen.pvz.api.enums.PVZGroupType;
 import com.hungteen.pvz.common.capability.CapabilityHandler;
 import com.hungteen.pvz.common.capability.player.IPlayerDataCapability;
 import com.hungteen.pvz.common.capability.player.PlayerDataManager;
@@ -16,6 +15,7 @@ import com.hungteen.pvz.common.event.PVZLivingEvents;
 import com.hungteen.pvz.common.event.PVZPlayerEvents;
 import com.hungteen.pvz.common.item.ItemRegister;
 import com.hungteen.pvz.common.misc.sound.SoundRegister;
+import com.hungteen.pvz.common.world.invasion.InvasionManager;
 import com.hungteen.pvz.common.world.invasion.MissionManager;
 import com.hungteen.pvz.common.world.invasion.PVZInvasionData;
 import com.hungteen.pvz.compat.patchouli.PVZPatchouliHandler;
@@ -23,10 +23,8 @@ import com.hungteen.pvz.utils.EntityUtil;
 import com.hungteen.pvz.utils.PlayerUtil;
 import com.hungteen.pvz.utils.StringUtil;
 import com.hungteen.pvz.utils.enums.Resources;
-import net.minecraft.advancements.CriteriaTriggers;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.Hand;
@@ -71,14 +69,15 @@ public class PlayerEventHandler {
 	
 	public static void onPlayerKillEntity(PlayerEntity player, DamageSource source, LivingEntity living) {
 		if(living instanceof AbstractPAZEntity){
-			if(PVZGroupType.checkCanTarget(EntityUtil.getEntityGroup(player), EntityUtil.getEntityGroup(living))){
+			if(EntityUtil.isEnemy(player, living)){
 				PlayerUtil.addResource(player, Resources.TREE_XP, ((AbstractPAZEntity)living).getPAZType().getXpPoint());
-				if(MissionManager.getPlayerMission(player) == MissionManager.MissionType.KILL || MissionManager.getPlayerMission(player) == MissionManager.MissionType.INSTANT_KILL){
-					PlayerUtil.addResource(player, Resources.MISSION_VALUE, 1);
-				}
 			}
 		}
-		CriteriaTriggers.PLAYER_KILLED_ENTITY.trigger((ServerPlayerEntity) player, living, source);
+		if(InvasionManager.isRunning() && InvasionManager.isInvasionEntity(living.getType()) && EntityUtil.isEnemy(player, living)){
+			if(MissionManager.getPlayerMission(player) == MissionManager.MissionType.KILL || MissionManager.getPlayerMission(player) == MissionManager.MissionType.INSTANT_KILL){
+				PlayerUtil.addResource(player, Resources.MISSION_VALUE, 1);
+			}
+		}
 	}
 	
 //	public static void onPlayerKillZombie(PlayerEntity player, ZombieType zombie) {

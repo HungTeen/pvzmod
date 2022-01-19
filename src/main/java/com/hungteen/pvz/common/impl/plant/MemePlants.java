@@ -6,7 +6,7 @@ import com.hungteen.pvz.api.types.IPlantType;
 import com.hungteen.pvz.client.model.entity.plant.magic.StrangeCatModel;
 import com.hungteen.pvz.common.impl.*;
 import com.hungteen.pvz.common.item.ItemRegister;
-import com.hungteen.pvz.register.EntityRegister;
+import com.hungteen.pvz.common.entity.EntityRegister;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -16,8 +16,8 @@ public final class MemePlants extends PlantType {
 	private static final List<IPlantType> LIST = new ArrayList<>();
 	
 	public static final IPlantType STRANGE_CAT = new MemePlants("strange_cat", new PlantFeatures()
-			.cost(300).maxLevel(20).requiredLevel(60)
-			.cd(CoolDowns.HUGE_SLOW).rank(Ranks.PURPLE).essence(EssenceType.MAGIC)
+			.cost(300).requiredLevel(60)
+			.cd(CoolDowns.HUGE_SLOW).rank(RankTypes.PURPLE).essence(EssenceTypes.MAGIC)
 			.entityType(() -> EntityRegister.STRANGE_CAT.get())
 			.summonCard(() -> ItemRegister.STRANGE_CAT_CARD.get())
 			.enjoyCard(() -> ItemRegister.STRANGE_CAT_ENJOY_CARD.get())

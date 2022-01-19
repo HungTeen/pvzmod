@@ -35,7 +35,10 @@ public class ScaredyShroomEntity extends PlantShooterEntity {
 		super.defineSynchedData();
 		this.entityData.define(SCARE_TIME, 0);
 	}
-	
+	@Override
+	public float getAttackDamage() {
+		return 0;
+	}
 	@Override
 	public void normalPlantTick() {
 		super.normalPlantTick();

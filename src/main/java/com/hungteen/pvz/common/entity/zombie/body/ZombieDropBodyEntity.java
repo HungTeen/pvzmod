@@ -8,7 +8,7 @@ import com.hungteen.pvz.api.types.IZombieType;
 import com.hungteen.pvz.common.entity.PVZEntityBase;
 import com.hungteen.pvz.common.entity.zombie.PVZZombieEntity;
 import com.hungteen.pvz.common.entity.zombie.roof.Edgar090505Entity;
-import com.hungteen.pvz.common.impl.ZombieType;
+import com.hungteen.pvz.common.impl.zombie.ZombieType;
 import com.hungteen.pvz.common.impl.zombie.GrassZombies;
 import com.hungteen.pvz.common.impl.zombie.PoolZombies;
 import com.hungteen.pvz.common.impl.zombie.RoofZombies;
@@ -106,7 +106,7 @@ public class ZombieDropBodyEntity extends PVZEntityBase implements IBodyEntity {
 	 */
 	public void specialDropBody(PVZZombieEntity zombie, DamageSource source, BodyType type) {
 		this.updateInfo(zombie, type);
-		final ZombieType zombieType = zombie.getZombieType();
+		final IZombieType zombieType = zombie.getZombieType();
 		if(zombieType == PoolZombies.ZOMBONI || zombieType == RoofZombies.CATAPULT_ZOMBIE) {
 			this.hitUp(zombie, source, 0.5D, 0.5D, 0.5D);
 		}
@@ -194,7 +194,7 @@ public class ZombieDropBodyEntity extends PVZEntityBase implements IBodyEntity {
 		return pos < ZombieType.size() ? ZombieType.getZombies().get(pos) : GrassZombies.NORMAL_ZOMBIE;
 	}
 
-	public void setZombieType(ZombieType type) {
+	public void setZombieType(IZombieType type) {
 		entityData.set(ZOMBIE_TYPE, type.getId());
 	}
 	

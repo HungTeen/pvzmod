@@ -1,18 +1,24 @@
 package com.hungteen.pvz.client.gui.screen;
 
+import com.hungteen.pvz.client.ClientProxy;
+import com.hungteen.pvz.client.gui.widget.DisplayField;
+import com.hungteen.pvz.common.capability.player.PlayerDataManager;
 import com.hungteen.pvz.common.container.CardPackContainer;
+import com.hungteen.pvz.utils.PlayerUtil;
 import com.hungteen.pvz.utils.StringUtil;
+import com.hungteen.pvz.utils.enums.Resources;
 import com.mojang.blaze3d.matrix.MatrixStack;
-
-import net.minecraft.client.gui.screen.inventory.ContainerScreen;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.text.ITextComponent;
+import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 
+import java.util.Arrays;
+
 @OnlyIn(Dist.CLIENT)
-public class CardPackScreen extends ContainerScreen<CardPackContainer>{
+public class CardPackScreen extends PVZContainerScreen<CardPackContainer>{
 	
 	private static final ResourceLocation TEXTURE = StringUtil.prefix("textures/gui/container/card_pack.png");
 	
@@ -20,10 +26,10 @@ public class CardPackScreen extends ContainerScreen<CardPackContainer>{
 		super(screenContainer, inv, titleIn);
 		this.imageWidth = 198;
 		this.imageHeight = 222;
-	}
-
-	@Override
-	protected void renderLabels(MatrixStack p_230451_1_, int p_230451_2_, int p_230451_3_) {
+		this.tips.add(new DisplayField.TipField(3, 3, Arrays.asList(
+			    new TranslationTextComponent("gui.pvz.card_pack.tip1"),
+				new TranslationTextComponent("gui.pvz.card_pack.tip2")
+		)));
 	}
 	
 	@Override
@@ -31,14 +37,14 @@ public class CardPackScreen extends ContainerScreen<CardPackContainer>{
 		stack.pushPose();
         this.minecraft.getTextureManager().bind(TEXTURE);
         blit(stack, this.leftPos, this.topPos, 0, 0, this.imageWidth, this.imageHeight);
-//        int pos = 0;
-//        for(int i = 0; i < Resources.SLOT_NUM.max; ++ i) {
-//        	if(i != ClientPlayerResources.emptySlot) {
-//        		this.itemRenderer.renderGuiItem(ClientPlayerResources.SUMMON_CARDS.get(i), this.leftPos + 18 * pos + 18, this.topPos);
-//        		++ pos;
-//        	}
-//        }
+		final PlayerDataManager manager = PlayerUtil.getManager(ClientProxy.MC.player);
+		if(manager != null){
+			final int cnt = manager.getResource(Resources.SLOT_NUM);
+			blit(stack, this.leftPos + 18 + 18 * cnt, this.topPos + 20, 18, 52, 162 - 18 * cnt, 18);
+		}
         stack.popPose();
+        
+        super.renderBg(stack, partialTicks, mouseX, mouseY);
 	}
 	
 	@Override

@@ -1,18 +1,11 @@
 package com.hungteen.pvz.client.gui.search;
 
-import java.util.List;
-import java.util.Locale;
-import java.util.Optional;
-
-import javax.annotation.Nullable;
-
 import com.google.common.collect.Lists;
 import com.hungteen.pvz.client.gui.screen.AbstractOptionScreen;
 import com.hungteen.pvz.common.container.AbstractOptionContainer;
 import com.hungteen.pvz.utils.AlgorithmUtil;
 import com.hungteen.pvz.utils.StringUtil;
 import com.mojang.blaze3d.matrix.MatrixStack;
-
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.AbstractGui;
 import net.minecraft.client.gui.IGuiEventListener;
@@ -25,6 +18,11 @@ import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.text.StringTextComponent;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
+
+import javax.annotation.Nullable;
+import java.util.List;
+import java.util.Locale;
+import java.util.Optional;
 
 @OnlyIn(Dist.CLIENT)
 public class OptionSearchGui extends AbstractGui implements IRenderable, IGuiEventListener {
@@ -68,7 +66,7 @@ public class OptionSearchGui extends AbstractGui implements IRenderable, IGuiEve
 		this.searchBar.setValue(s);
 		this.page.init(this.mc, this.guiLeft, this.guiTop);
 		this.toggleTabs.clear();
-		for (SearchCategories c : this.screen.getSearchCategories()) {
+		for (CategoryToggleWidget.SearchCategories c : this.screen.getSearchCategories()) {
 			this.toggleTabs.add(new CategoryToggleWidget(c));
 		}
 		if (this.currentTab == null) {
@@ -90,7 +88,7 @@ public class OptionSearchGui extends AbstractGui implements IRenderable, IGuiEve
 		String s = this.searchBar.getValue();
 		if (! s.isEmpty()) {
 			list.removeIf((a) -> {
-				String now = SearchOption.getOptionName(a).getContents().toLowerCase();
+				String now = a.getType().getText().getString();
 				return ! AlgorithmUtil.KMP.kmp(now, s.toLowerCase());
 			});
 
@@ -125,31 +123,11 @@ public class OptionSearchGui extends AbstractGui implements IRenderable, IGuiEve
 
 	private void updateSearch() {
 		String s = this.searchBar.getValue().toLowerCase(Locale.ROOT);
-//		this.pirateRecipe(s);
 		if (!s.equals(this.lastSearch)) {
 			this.updateCollections(false);
 			this.lastSearch = s;
 		}
 	}
-
-	/**
-	 * "Check if we should activate the pirate speak easter egg"
-	 */
-//	private void pirateRecipe(String text) {
-//		if ("excitedze".equals(text)) {
-//			LanguageManager languagemanager = this.mc.getLanguageManager();
-//			Language language = languagemanager.getLanguage("en_pt");
-//			if (languagemanager.getSelected().compareTo(language) == 0) {
-//				return;
-//			}
-//			languagemanager.setSelected(language);
-//			this.mc.options.languageCode = language.getCode();
-//			net.minecraftforge.client.ForgeHooksClient.refreshResources(this.mc,
-//					net.minecraftforge.resource.VanillaResourceType.LANGUAGES);
-//			this.mc.font.func_78275_b(languagemanager.isBidirectional());
-//			this.mc.options.save();
-//		}
-//	}
 
 	public boolean keyReleased(int keyCode, int scanCode, int modifiers) {
 		this.canType = false;

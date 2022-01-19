@@ -5,7 +5,6 @@ import com.hungteen.pvz.common.enchantment.armor.TreeProtectionEnchantment;
 import com.hungteen.pvz.common.enchantment.card.BandageEnchantment;
 import com.hungteen.pvz.common.enchantment.card.CharmEnchantment;
 import com.hungteen.pvz.common.enchantment.card.ImmediateCDEnchantment;
-import com.hungteen.pvz.common.enchantment.card.SunReduceEnchantment;
 import com.hungteen.pvz.common.enchantment.card.plantcard.BreakOutEnchantment;
 import com.hungteen.pvz.common.enchantment.card.plantcard.DenselyPlantEnchantment;
 import com.hungteen.pvz.common.enchantment.card.plantcard.SoillessPlantEnchantment;
@@ -27,7 +26,6 @@ public class EnchantmentRegister {
 
 	public static final DeferredRegister<Enchantment> ENCHANTMENTS = DeferredRegister.create(ForgeRegistries.ENCHANTMENTS, PVZMod.MOD_ID);
 
-	public static final RegistryObject<Enchantment> SUN_COST_REDUCE = ENCHANTMENTS.register("sun_cost_reduce", SunReduceEnchantment::new);
 	public static final RegistryObject<Enchantment> ENERGY_TRANSFER = ENCHANTMENTS.register("energy_transfer", EnergyTransferEnchantment::new);
 	public static final RegistryObject<Enchantment> BREAK_OUT = ENCHANTMENTS.register("break_out", BreakOutEnchantment::new);
 	public static final RegistryObject<Enchantment> TREE_PROTECTION = ENCHANTMENTS.register("tree_protection", TreeProtectionEnchantment::new);

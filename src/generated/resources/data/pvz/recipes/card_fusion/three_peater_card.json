@@ -11,7 +11,7 @@
       "item": "pvz:pea_shooter_card"
     },
     {
-      "item": "pvz:green_card"
+      "tag": "pvz:card/green_cards"
     }
   ],
   "result": {

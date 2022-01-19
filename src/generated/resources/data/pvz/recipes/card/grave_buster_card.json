@@ -13,7 +13,7 @@
       "item": "minecraft:vine"
     },
     "C": {
-      "item": "pvz:white_card"
+      "tag": "pvz:card/white_cards"
     }
   },
   "result": {

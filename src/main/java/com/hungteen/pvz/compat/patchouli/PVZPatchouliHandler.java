@@ -1,14 +1,13 @@
 package com.hungteen.pvz.compat.patchouli;
 
-import java.util.Optional;
-
-import com.hungteen.pvz.common.event.PVZPlayerEvents;
-
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.fml.ModList;
 import net.minecraftforge.registries.ForgeRegistries;
+import vazkii.patchouli.api.PatchouliAPI;
+
+import java.util.Optional;
 
 public class PVZPatchouliHandler {
 
@@ -16,7 +15,6 @@ public class PVZPatchouliHandler {
 	public static final ResourceLocation GUIDE_BOOK = prefix("guide_book");
 	
 	/**
-	 * {@link PVZPlayerEvents#onPlayerGetAdvancement(net.minecraftforge.event.entity.player.AdvancementEvent)}
 	 */
 	public static void giveInitialGuideBook(PlayerEntity player) {
 		if(isPatchouliLoaded()) {
@@ -26,6 +24,19 @@ public class PVZPatchouliHandler {
 				player.addItem(book);
 			});
 		}
+	}
+
+	public static ItemStack getPatchouliGuide(){
+		if(isPatchouliLoaded() && ForgeRegistries.ITEMS.containsKey(GUIDE_BOOK)) {
+			final ItemStack book = new ItemStack(ForgeRegistries.ITEMS.getValue(GUIDE_BOOK), 1);
+			book.getOrCreateTag().putString("patchouli:book", "pvz:pvz_guide");
+			return book;
+		}
+		return ItemStack.EMPTY;
+	}
+
+	public static PatchouliAPI.IPatchouliAPI getPatchouliAPI(){
+		return PatchouliAPI.instance;
 	}
 	
 	public static ResourceLocation prefix(String res) {

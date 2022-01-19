@@ -2,7 +2,7 @@ package com.hungteen.pvz.common.item.tool.zombie;
 
 import com.hungteen.pvz.common.entity.misc.BobsleCarEntity;
 import com.hungteen.pvz.common.item.PVZItemGroups;
-import com.hungteen.pvz.register.EntityRegister;
+import com.hungteen.pvz.common.entity.EntityRegister;
 
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.Item;

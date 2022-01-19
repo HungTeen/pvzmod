@@ -19,31 +19,6 @@ public class PlantLvlCommand {
 	public static void register(CommandDispatcher<CommandSource> dispatcher) {
         LiteralArgumentBuilder<CommandSource> builder = Commands.literal("pazstats").requires((ctx) -> {return ctx.hasPermission(2);});
 		PVZAPI.get().getPAZs().forEach(p -> {
-			// Operations about paz points.
-			builder.then(Commands.literal("point")
-					.then(Commands.literal("add")
-							.then(Commands.argument("targets", EntityArgument.players())
-									.then(Commands.literal(p.getIdentity())
-											.then(Commands.argument("amount", IntegerArgumentType.integer()).executes((command)-> {
-												return addPAZPoint(command.getSource(), EntityArgument.getPlayers(command, "targets"), p, IntegerArgumentType.getInteger(command, "amount"));
-											})))
-									.then(Commands.literal("plants")
-											.then(Commands.argument("amount", IntegerArgumentType.integer()).executes((command)-> {
-												return addPlantPoints(command.getSource(), EntityArgument.getPlayers(command, "targets"), IntegerArgumentType.getInteger(command, "amount"));
-											})))
-									.then(Commands.literal("zombies")
-											.then(Commands.argument("amount", IntegerArgumentType.integer()).executes((command)-> {
-												return addZombiePoints(command.getSource(), EntityArgument.getPlayers(command, "targets"), IntegerArgumentType.getInteger(command, "amount"));
-											})))
-									.then(Commands.literal("all")
-											.then(Commands.argument("amount", IntegerArgumentType.integer()).executes((command)-> {
-												return addAllPoints(command.getSource(), EntityArgument.getPlayers(command, "targets"), IntegerArgumentType.getInteger(command, "amount"));
-											})))))
-					.then(Commands.literal("query")
-							.then(Commands.argument("targets", EntityArgument.players())
-									.then(Commands.literal(p.getIdentity()).executes((command)-> {
-												return queryPAZPoint(command.getSource(), EntityArgument.getPlayers(command, "targets"), p);
-											})))));
 			// Operations of paz locks.
 			builder.then(Commands.literal("lock")
 					.then(Commands.literal("set")
@@ -108,41 +83,5 @@ public class PlantLvlCommand {
 		}
 		return targets.size();
 	}
-
-	private static int addZombiePoints(CommandSource source, Collection<? extends ServerPlayerEntity> targets, int num) {
-		PVZAPI.get().getZombies().forEach(p -> {
-			addPAZPoint(source, targets, p, num);
-		});
-		return targets.size();
-	}
-
-	private static int addPlantPoints(CommandSource source, Collection<? extends ServerPlayerEntity> targets, int num) {
-		PVZAPI.get().getPlants().forEach(p -> {
-			addPAZPoint(source, targets, p, num);
-		});
-		return targets.size();
-	}
 	
-	private static int addAllPoints(CommandSource source, Collection<? extends ServerPlayerEntity> targets, int num) {
-		PVZAPI.get().getPAZs().forEach(p -> {
-			addPAZPoint(source, targets, p, num);
-		});
-		return targets.size();
-	}
-	
-	private static int addPAZPoint(CommandSource source, Collection<? extends ServerPlayerEntity> targets, IPAZType plant, int num) {
-		for(ServerPlayerEntity player : targets) {
-			PlayerUtil.addPAZPoint(player, plant, num);
-			source.sendSuccess(plant.getText().append(" : " + PlayerUtil.getPAZPoint(player, plant)), true);
-		}
-		return targets.size();
-	}
-	
-	private static int queryPAZPoint(CommandSource source, Collection<? extends ServerPlayerEntity> targets, IPAZType plant) {
-		for(ServerPlayerEntity player:targets) {
-			source.sendSuccess(plant.getText().append(" : " + PlayerUtil.getPAZPoint(player, plant)), true);
-		}
-		return targets.size();
-	}
-
 }

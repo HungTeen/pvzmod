@@ -78,11 +78,6 @@ public class PAZStatsPacket {
                         });
                         break;
                     }
-                    case POINT:{
-                        ctx.get().enqueueWork(() -> {
-                            PlayerUtil.addPAZPoint(ClientProxy.MC.player, paz.get(), message.val1);
-                        });
-                    }
                 }
             }
             ctx.get().setPacketHandled(true);

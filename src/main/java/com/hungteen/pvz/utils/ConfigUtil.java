@@ -15,7 +15,11 @@ public class ConfigUtil {
 	public static boolean enableHugeWave(){
 		return PVZConfig.COMMON_CONFIG.InvasionSettings.EnableHugeWave.get();
 	}
-	
+
+	public static boolean isPlantMode(){
+		return getPlayerInitialGroup() > 0;
+	}
+
 	public static int getPlayerInitialGroup() {
 		return PVZConfig.COMMON_CONFIG.EntitySettings.PlayerInitialGroup.get();
 	}

@@ -6,7 +6,6 @@ import com.hungteen.pvz.api.PVZAPI;
 import com.hungteen.pvz.api.events.PlayerLevelChangeEvent;
 import com.hungteen.pvz.api.types.IPAZType;
 import com.hungteen.pvz.common.advancement.trigger.MoneyTrigger;
-import com.hungteen.pvz.common.advancement.trigger.PlantLevelTrigger;
 import com.hungteen.pvz.common.advancement.trigger.SunAmountTrigger;
 import com.hungteen.pvz.common.advancement.trigger.TreeLevelTrigger;
 import com.hungteen.pvz.common.container.shop.MysteryShopContainer;
@@ -20,7 +19,6 @@ import com.hungteen.pvz.common.network.toclient.OtherStatsPacket;
 import com.hungteen.pvz.common.network.toclient.PlayerStatsPacket;
 import com.hungteen.pvz.common.world.invasion.MissionManager;
 import com.hungteen.pvz.common.world.invasion.WaveManager;
-import com.hungteen.pvz.utils.PAZUtil;
 import com.hungteen.pvz.utils.PlayerUtil;
 import com.hungteen.pvz.utils.StringUtil;
 import com.hungteen.pvz.utils.enums.Resources;
@@ -44,8 +42,6 @@ public class PlayerDataManager {
 	/* summon card inventory */
 	private final List<ItemStack> cards = new ArrayList<>();
 	private int emptySlot;
-	/* plant & zombie point */
-	private final Map<IPAZType, Integer> pazPoint = new HashMap<>();
 	/* plant & zombie cd */
 	private final Map<IPAZType, Integer> pazCardCD = new HashMap<>();
 	private final Map<IPAZType, Float> pazCardBar = new HashMap<>();
@@ -77,7 +73,6 @@ public class PlayerDataManager {
 		}
 		{// init about plants & zombies.
 			PVZAPI.get().getPAZs().forEach(plant -> {
-				this.pazPoint.put(plant, 0);
 				this.pazCardCD.put(plant, 0);
 				this.pazCardBar.put(plant, 0F);
 				this.pazLocked.put(plant, true);
@@ -135,19 +130,6 @@ public class PlayerDataManager {
 				if(nbt.contains("current_pos")) {
 					this.emptySlot = nbt.getInt("current_pos");
 				}
-			}
-		}
-		{// load plants & zombies point.
-			if(baseTag.contains("paz_point_info")) {
-			    final CompoundNBT nbt = baseTag.getCompound("paz_point_info");
-				PVZAPI.get().getPAZs().forEach(plant -> {
-				    final CompoundNBT plantTag = (CompoundNBT) nbt.get(plant.getIdentity());
-				    if(plantTag != null) {
-				        if(plantTag.contains("paz_point")) {
-					        this.pazPoint.put(plant, plantTag.getInt("paz_point"));
-				        }
-				    }
-			    });
 			}
 		}
 		{// load plant & zombie card cd.
@@ -225,15 +207,6 @@ public class PlayerDataManager {
 			nbt.putInt("current_pos", this.emptySlot);
 			baseTag.put("card_inventory", nbt);
 		}
-		{// save plant & zombie point.
-			final CompoundNBT nbt = new CompoundNBT();
-			PVZAPI.get().getPAZs().forEach(plant -> {
-		        final CompoundNBT plantNBT = new CompoundNBT();
-				plantNBT.putInt("paz_point", this.getPAZPoint(plant));
-				nbt.put(plant.getIdentity(), plantNBT);
-			});
-			baseTag.put("paz_point_info", nbt);
-		}
 		{// save plant & zombie card cd.
 			final CompoundNBT nbt = new CompoundNBT();
 			PVZAPI.get().getPAZs().forEach(plant -> {
@@ -289,6 +262,7 @@ public class PlayerDataManager {
 			this.setResource(Resources.NO_FOG_TICK, 0);
 //			this.setResource(Resources.KILL_COUNT, 0);
 		}
+		this.syncToClient();
 	}
 	
 	/**
@@ -330,7 +304,6 @@ public class PlayerDataManager {
 		}
 		{// plants & zombies syncs.
 			PVZAPI.get().getPAZs().forEach(plant -> {
-				this.sendPAZPointPacket(player, plant);//level.
 				if(plant.getSummonCard().isPresent()) {//card cd.
 					player.getCooldowns().addCooldown(plant.getSummonCard().get(), this.getPlantCardCD(plant));
 				}
@@ -493,38 +466,6 @@ public class PlayerDataManager {
 					return (ServerPlayerEntity) player;
 				}),
 				new CardInventoryPacket(type, nbt)
-			);
-		}
-	}
-	
-	/*
-	 * Operation about Plant Points.
-	 */
-	
-	public void addPAZPoint(IPAZType plant, int num){
-		final int old = this.getPAZPoint(plant);
-		final int lvl = MathHelper.clamp(old + num, 0, PAZUtil.DEFAULT_MAX_POINTS);
-		this.pazPoint.put(plant, lvl);
-		if(player instanceof ServerPlayerEntity){
-			PlantLevelTrigger.INSTANCE.trigger((ServerPlayerEntity) player, lvl);
-			if(lvl != old){
-				MinecraftForge.EVENT_BUS.post(new PlayerLevelChangeEvent.PAZLevelChangeEvent(player, plant, old, lvl));
-			}
-		}
-		this.sendPAZPointPacket(player, plant);
-	}
-	
-	public int getPAZPoint(IPAZType plant){
-		return this.pazPoint.get(plant);
-	}
-	
-	private void sendPAZPointPacket(PlayerEntity player, IPAZType plant){
-		if (player instanceof ServerPlayerEntity) {
-			PVZPacketHandler.CHANNEL.send(
-				PacketDistributor.PLAYER.with(()->{
-					return (ServerPlayerEntity) player;
-				}),
-				new PAZStatsPacket(PAZStatsPacket.PAZPacketTypes.POINT, plant.getIdentity(), pazPoint.get(plant))
 			);
 		}
 	}

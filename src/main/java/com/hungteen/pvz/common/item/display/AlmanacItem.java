@@ -20,18 +20,17 @@ import net.minecraftforge.fml.network.NetworkHooks;
 public class AlmanacItem extends Item{
 
 	public AlmanacItem() {
-		super(new Properties().tab(PVZItemGroups.PVZ_MISC).stacksTo(1));
+		super(new Properties().tab(PVZItemGroups.PVZ_TOOL).stacksTo(1));
 	}
 
 	@Override
 	public ActionResult<ItemStack> use(World worldIn, PlayerEntity playerIn, Hand handIn) {
-		if(!worldIn.isClientSide&&playerIn instanceof ServerPlayerEntity) {
+		if(!worldIn.isClientSide && playerIn instanceof ServerPlayerEntity) {
 			NetworkHooks.openGui((ServerPlayerEntity) playerIn, new INamedContainerProvider() {
 
 				@Override
-				public Container createMenu(int p_createMenu_1_, PlayerInventory p_createMenu_2_,
-						PlayerEntity p_createMenu_3_) {
-					return new AlmanacContainer(p_createMenu_1_, p_createMenu_3_);
+				public Container createMenu(int id, PlayerInventory inventory, PlayerEntity player) {
+					return new AlmanacContainer(id, player);
 				}
 
 				@Override

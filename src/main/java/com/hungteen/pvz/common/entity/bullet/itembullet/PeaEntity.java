@@ -8,7 +8,7 @@ import com.hungteen.pvz.common.entity.plant.flame.TorchWoodEntity.FlameTypes;
 import com.hungteen.pvz.common.impl.plant.PVZPlants;
 import com.hungteen.pvz.common.item.ItemRegister;
 import com.hungteen.pvz.common.misc.damage.PVZDamageSource;
-import com.hungteen.pvz.register.EntityRegister;
+import com.hungteen.pvz.common.entity.EntityRegister;
 import com.hungteen.pvz.utils.WeaponUtil;
 
 import net.minecraft.entity.Entity;
@@ -103,10 +103,10 @@ public class PeaEntity extends AbstractShootBulletEntity implements IRendersAsIt
 				((IIceEffect) owner).getColdEffect().ifPresent(e -> source.addEffect(e));
 				((IIceEffect) owner).getFrozenEffect().ifPresent(e -> source.addEffect(e));
 			} else if(owner instanceof PlayerEntity) {
-				((PlayerEntity)owner).getCapability(CapabilityHandler.PLAYER_DATA_CAPABILITY).ifPresent((l)->{
-					int lvl = l.getPlayerData().getPAZPoint(PVZPlants.SNOW_PEA);
-					source.addEffect(WeaponUtil.getPeaGunColdEffect(lvl));
-				});
+//				((PlayerEntity)owner).getCapability(CapabilityHandler.PLAYER_DATA_CAPABILITY).ifPresent((l)->{
+//					int lvl = l.getPlayerData().getPAZPoint(PVZPlants.SNOW_PEA);
+//					source.addEffect(WeaponUtil.getPeaGunColdEffect(lvl));
+//				});
 			}
 			target.hurt(source, damage);
 		} else if (this.getPeaState() == State.FIRE || this.getPeaState() == State.BLUE_FIRE) {
@@ -197,9 +197,9 @@ public class PeaEntity extends AbstractShootBulletEntity implements IRendersAsIt
 		if (this.getPeaState() == State.FIRE) {
 			return new ItemStack(ItemRegister.FLAME_PEA.get());
 		}
-		if(this.getPeaState() == State.BLUE_FIRE) {
-			return new ItemStack(ItemRegister.BLUE_FLAME_PEA.get());
-		}
+//		if(this.getPeaState() == State.BLUE_FIRE) {
+//			return new ItemStack(ItemRegister.BLUE_FLAME_PEA.get());
+//		}
 		return new ItemStack(ItemRegister.PEA.get());
 	}
 	

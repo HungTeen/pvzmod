@@ -5,7 +5,7 @@ import java.util.Optional;
 import com.hungteen.pvz.PVZMod;
 import com.hungteen.pvz.common.entity.PVZMultiPartEntity;
 import com.hungteen.pvz.common.entity.zombie.PVZZombieEntity;
-import com.hungteen.pvz.register.EntityRegister;
+import com.hungteen.pvz.common.entity.EntityRegister;
 import com.hungteen.pvz.utils.EntityUtil;
 
 import net.minecraft.entity.EntityType;

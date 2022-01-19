@@ -14,7 +14,7 @@ import com.hungteen.pvz.common.item.spawn.card.PlantCardItem;
 import com.hungteen.pvz.common.misc.sound.SoundRegister;
 import com.hungteen.pvz.common.misc.tag.PVZItemTags;
 import com.hungteen.pvz.common.potion.EffectRegister;
-import com.hungteen.pvz.register.EntityRegister;
+import com.hungteen.pvz.common.entity.EntityRegister;
 import com.hungteen.pvz.utils.EntityUtil;
 import com.hungteen.pvz.utils.PlayerUtil;
 import com.hungteen.pvz.utils.enums.Resources;
@@ -262,8 +262,6 @@ public class PeaGunItem extends Item {
 			return PeaEntity.State.ICE;
 		} else if (item == ItemRegister.FLAME_PEA.get()) {
 			return PeaEntity.State.FIRE;
-		} else if (item == ItemRegister.BLUE_FLAME_PEA.get()) {
-			return PeaEntity.State.BLUE_FIRE;
 		} else {
 			return PeaEntity.State.NORMAL;
 		}

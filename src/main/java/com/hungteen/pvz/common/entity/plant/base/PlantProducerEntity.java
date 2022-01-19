@@ -2,7 +2,7 @@ package com.hungteen.pvz.common.entity.plant.base;
 
 import com.hungteen.pvz.common.entity.misc.drop.SunEntity;
 import com.hungteen.pvz.common.entity.plant.PVZPlantEntity;
-import com.hungteen.pvz.register.EntityRegister;
+import com.hungteen.pvz.common.entity.EntityRegister;
 import com.hungteen.pvz.utils.EntityUtil;
 
 import net.minecraft.entity.CreatureEntity;

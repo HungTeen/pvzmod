@@ -1,18 +1,26 @@
 package com.hungteen.pvz.api.types;
 
 import net.minecraft.item.Item;
+import net.minecraft.tags.ITag;
 
 public interface IRankType {
+
+	String getName();
 
 	/**
 	 * get corresponding template card.
 	 */
 	Item getTemplateCard();
+
+	/**
+	 * get corresponding template card tag.
+	 */
+	ITag.INamedTag<Item> getCardTag();
 	
 	/**
 	 * get corresponding material item.
 	 */
-	Item getMaterial();
+	ITag.INamedTag<Item> getMaterial();
 	
 	/**
 	 * enchant point.

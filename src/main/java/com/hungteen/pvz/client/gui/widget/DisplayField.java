@@ -1,5 +1,6 @@
 package com.hungteen.pvz.client.gui.widget;
 
+import com.hungteen.pvz.utils.MathUtil;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
@@ -28,7 +29,7 @@ public class DisplayField {
 	}
 	
 	public boolean isInField(int posX, int posY) {
-		return posX >= this.x && posX <= this.x + this.width && posY >= this.y && posY <= this.y + this.height;
+		return MathUtil.isInArea(posX, posY, this.x, this.y, this.width, this.height);
 	}
 	
 	public List<ITextComponent> getTexts() {

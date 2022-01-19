@@ -13,7 +13,7 @@
       "tag": "forge:crops/cabbage"
     },
     "C": {
-      "item": "pvz:blue_card"
+      "tag": "pvz:card/blue_cards"
     }
   },
   "result": {

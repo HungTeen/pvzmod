@@ -1,14 +1,16 @@
 package com.hungteen.pvz.common.entity.plant;
 
 import com.hungteen.pvz.PVZMod;
+import com.hungteen.pvz.api.enums.PVZGroupType;
+import com.hungteen.pvz.api.interfaces.IAlmanacEntry;
 import com.hungteen.pvz.api.paz.IPlantEntity;
 import com.hungteen.pvz.api.paz.IPlantInfo;
-import com.hungteen.pvz.api.enums.PVZGroupType;
 import com.hungteen.pvz.api.types.IEssenceType;
 import com.hungteen.pvz.api.types.IPAZType;
 import com.hungteen.pvz.api.types.IPlantType;
 import com.hungteen.pvz.common.advancement.trigger.PlantSuperTrigger;
 import com.hungteen.pvz.common.entity.AbstractPAZEntity;
+import com.hungteen.pvz.common.entity.EntityRegister;
 import com.hungteen.pvz.common.entity.ai.goal.PVZLookRandomlyGoal;
 import com.hungteen.pvz.common.entity.misc.drop.SunEntity;
 import com.hungteen.pvz.common.entity.plant.defence.PumpkinEntity;
@@ -20,18 +22,19 @@ import com.hungteen.pvz.common.entity.plant.magic.CoffeeBeanEntity;
 import com.hungteen.pvz.common.entity.plant.spear.SpikeWeedEntity;
 import com.hungteen.pvz.common.entity.zombie.PVZZombieEntity;
 import com.hungteen.pvz.common.entity.zombie.grass.TombStoneEntity;
-import com.hungteen.pvz.common.entity.zombie.roof.BungeeZombieEntity;
 import com.hungteen.pvz.common.event.handler.PlayerEventHandler;
+import com.hungteen.pvz.common.impl.SkillTypes;
 import com.hungteen.pvz.common.impl.plant.PVZPlants;
 import com.hungteen.pvz.common.item.spawn.card.PlantCardItem;
 import com.hungteen.pvz.common.misc.damage.PVZDamageSource;
 import com.hungteen.pvz.common.potion.EffectRegister;
-import com.hungteen.pvz.register.EntityRegister;
 import com.hungteen.pvz.register.ParticleRegister;
 import com.hungteen.pvz.remove.MetalTypes;
 import com.hungteen.pvz.utils.AlgorithmUtil;
 import com.hungteen.pvz.utils.EntityUtil;
+import com.hungteen.pvz.utils.enums.PAZAlmanacs;
 import com.hungteen.pvz.utils.interfaces.ICanAttract;
+import com.mojang.datafixers.util.Pair;
 import net.minecraft.block.Block;
 import net.minecraft.entity.*;
 import net.minecraft.entity.ai.attributes.AttributeModifierMap;
@@ -54,19 +57,18 @@ import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.vector.Vector3d;
-import net.minecraft.world.DifficultyInstance;
 import net.minecraft.world.GameRules;
-import net.minecraft.world.IServerWorld;
 import net.minecraft.world.World;
+import net.minecraftforge.event.entity.EntityAttributeCreationEvent;
 
 import javax.annotation.Nullable;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 
 public abstract class PVZPlantEntity extends AbstractPAZEntity implements IPlantEntity {
 
 	private static final DataParameter<Integer> SUPER_TIME = EntityDataManager.defineId(PVZPlantEntity.class, DataSerializers.INT);
-	private static final DataParameter<Integer> PLANT_STATES = EntityDataManager.defineId(PVZPlantEntity.class, DataSerializers.INT);
 	private static final DataParameter<Integer> ATTACK_TIME = EntityDataManager.defineId(PVZPlantEntity.class, DataSerializers.INT);
 	private static final DataParameter<Integer> GOLD_TIME = EntityDataManager.defineId(PVZPlantEntity.class, DataSerializers.INT);
 	private static final DataParameter<Integer> BOOST_TIME = EntityDataManager.defineId(PVZPlantEntity.class, DataSerializers.INT);
@@ -103,12 +105,14 @@ public abstract class PVZPlantEntity extends AbstractPAZEntity implements IPlant
 		entityData.define(ATTACK_TIME, 0);
 		entityData.define(GOLD_TIME, 0);
 		entityData.define(BOOST_TIME, 0);
-		entityData.define(PLANT_STATES, 0);
 	}
 
+	/**
+	 * {@link EntityRegister#addEntityAttributes(EntityAttributeCreationEvent)}
+	 */
 	public static AttributeModifierMap createPlantAttributes() {
 		return LivingEntity.createLivingAttributes()
-				.add(Attributes.MAX_HEALTH, 30)
+				.add(Attributes.MAX_HEALTH, 20)
 				.add(Attributes.FOLLOW_RANGE, 40.0D)
 				.add(Attributes.KNOCKBACK_RESISTANCE, 1)
 				.add(Attributes.MOVEMENT_SPEED, 0).build();
@@ -120,34 +124,14 @@ public abstract class PVZPlantEntity extends AbstractPAZEntity implements IPlant
 	}
 	
 	/**
-	 * init attributes with plant lvl.
+	 * spawned by player.
 	 */
+	@Override
 	public void onSpawnedByPlayer(@Nullable PlayerEntity player, int sunCost) {
-		if(player != null) {
-			this.setOwnerUUID(player.getUUID());
-		}
-//		this.updatePlantLevel(lvl);
+		super.onSpawnedByPlayer(player, sunCost);
 		this.getPlantInfo().ifPresent(info -> {
 			info.setSunCost(sunCost);
 		});
-	}
-	
-	@Override
-	public ILivingEntityData finalizeSpawn(IServerWorld worldIn, DifficultyInstance difficultyIn, SpawnReason reason,
-			ILivingEntityData spawnDataIn, CompoundNBT dataTag) {
-		if (! worldIn.isClientSide()) {
-			this.updateAttributes();
-			this.heal(this.getMaxHealth());
-		}
-		return super.finalizeSpawn(worldIn, difficultyIn, reason, spawnDataIn, dataTag);
-	}
-	
-	/**
-	 * update plant attributes when first spawn.
-	 * {@link #finalizeSpawn(IServerWorld, DifficultyInstance, SpawnReason, ILivingEntityData, CompoundNBT)}
-	 */
-	protected void updateAttributes() {
-		this.getAttribute(Attributes.MAX_HEALTH).setBaseValue(this.getLife());
 	}
 
 	@Override
@@ -156,6 +140,7 @@ public abstract class PVZPlantEntity extends AbstractPAZEntity implements IPlant
 		this.level.getProfiler().push("PVZ Plant Tick");
 		this.plantTick();
 		this.level.getProfiler().pop();
+
 		if (this.canNormalUpdate()) {
 			this.level.getProfiler().push("PVZ Normal Plant Tick");
 			this.normalPlantTick();
@@ -168,13 +153,10 @@ public abstract class PVZPlantEntity extends AbstractPAZEntity implements IPlant
 	 */
 	@Override
 	public boolean canNormalUpdate() {
-		if(! EntityUtil.isEntityValid(this)) {
-			return false;
+		if(super.canNormalUpdate()){
+			return ! this.hasMetal() && !this.isPlantSleeping();
 		}
-		if (this.getVehicle() instanceof BungeeZombieEntity || this.hasMetal()) {
-			return false;
-		}
-		return !this.isPlantSleeping() && !EntityUtil.isEntityFrozen(this) && !EntityUtil.isEntityButter(this);
+		return false;
 	}
 
 	/**
@@ -252,6 +234,14 @@ public abstract class PVZPlantEntity extends AbstractPAZEntity implements IPlant
 				EntityUtil.playSound(this, SoundEvents.EXPERIENCE_ORB_PICKUP);
 			}
 		}
+	}
+
+	@Override
+	public void addAlmanacEntries(List<Pair<IAlmanacEntry, Number>> list) {
+		super.addAlmanacEntries(list);
+		list.addAll(Arrays.asList(
+				Pair.of(PAZAlmanacs.HEALTH, this.getSkillValue(SkillTypes.PLANT_MORE_LIFE))
+		));
 	}
 
 	/**
@@ -512,7 +502,7 @@ public abstract class PVZPlantEntity extends AbstractPAZEntity implements IPlant
 
 	@Override
 	protected float getLife() {
-		return 30;
+		return this.getSkillValue(SkillTypes.PLANT_MORE_LIFE);
 	}
 	
 	/**
@@ -552,7 +542,7 @@ public abstract class PVZPlantEntity extends AbstractPAZEntity implements IPlant
 	/**
 	 * {@link PlantCardItem#checkSunAndOuterPlant(PlayerEntity, PVZPlantEntity, PlantCardItem, net.minecraft.item.ItemStack)}
 	 */
-	public void onPlaceOuterPlant(IPlantType type, int lvl, int sunCost) {
+	public void onPlaceOuterPlant(IPlantType type, int sunCost) {
 		if(type.isOuterPlant()) {
 			this.outerPlant = type.getOuterPlant().get();
 			this.outerPlant.setType(type);
@@ -696,9 +686,6 @@ public abstract class PVZPlantEntity extends AbstractPAZEntity implements IPlant
 	public void addAdditionalSaveData(CompoundNBT compound) {
 		super.addAdditionalSaveData(compound);
 		compound.putInt("plant_super_time", this.getSuperTime());
-		if (this.getOwnerUUID().isPresent()) {
-			compound.putUUID("OwnerUUID", this.getOwnerUUID().get());
-		}
 		compound.putInt("plant_attack_time", this.getAttackTime());
 		compound.putInt("plant_gold_time", this.getGoldTime());
 		compound.putInt("plant_boost_time", this.getBoostTime());
@@ -706,8 +693,6 @@ public abstract class PVZPlantEntity extends AbstractPAZEntity implements IPlant
 		PlantInfo.write(this.innerPlant, compound, "inner_plant_info");
 		PlantInfo.write(this.outerPlant, compound, "outer_plant_info");
 		compound.putBoolean("immune_to_weak", this.isImmuneToWeak);
-		compound.putInt("plant_state", this.getPlantState());
-		compound.putInt("plant_exist_tick", this.getExistTick());
 	}
 
 	@Override
@@ -734,7 +719,7 @@ public abstract class PVZPlantEntity extends AbstractPAZEntity implements IPlant
 			this.isImmuneToWeak = compound.getBoolean("immune_to_weak");
 		}
 		if (compound.contains("plant_state")) {
-			this.setPlantState(compound.getInt("plant_state"));
+			this.setPAZState(compound.getInt("plant_state"));
 		}
 	}
 
@@ -788,46 +773,38 @@ public abstract class PVZPlantEntity extends AbstractPAZEntity implements IPlant
 		return entityData.get(SUPER_TIME);
 	}
 
-	public int getPlantState() {
-		return this.entityData.get(PLANT_STATES);
-	}
-
-	public void setPlantState(int state) {
-		this.entityData.set(PLANT_STATES, state);
-	}
-
 	@Override
 	public boolean hasMetal() {
-		return AlgorithmUtil.BitOperator.hasBitOne(this.getPlantState(), LADDER_FLAG);
+		return AlgorithmUtil.BitOperator.hasBitOne(this.getPAZState(), LADDER_FLAG);
 	}
 
 	public void setMetal(boolean flag) {
-		this.setPlantState(AlgorithmUtil.BitOperator.setBit(this.getPlantState(), LADDER_FLAG, flag));
+		this.setPAZState(AlgorithmUtil.BitOperator.setBit(this.getPAZState(), LADDER_FLAG, flag));
 	}
 	
 	@Override
 	public boolean isCharmed() {
-		return AlgorithmUtil.BitOperator.hasBitOne(this.getPlantState(), CHARM_FLAG);
+		return AlgorithmUtil.BitOperator.hasBitOne(this.getPAZState(), CHARM_FLAG);
 	}
 
 	public void setCharmed(boolean flag) {
-		this.setPlantState(AlgorithmUtil.BitOperator.setBit(this.getPlantState(), CHARM_FLAG, flag));
+		this.setPAZState(AlgorithmUtil.BitOperator.setBit(this.getPAZState(), CHARM_FLAG, flag));
 	}
 	
 	public boolean isPlantSleeping() {
-		return AlgorithmUtil.BitOperator.hasBitOne(this.getPlantState(), SLEEP_FLAG);
+		return AlgorithmUtil.BitOperator.hasBitOne(this.getPAZState(), SLEEP_FLAG);
 	}
 	
 	public void setPlantSleeping(boolean flag) {
-		this.setPlantState(AlgorithmUtil.BitOperator.setBit(this.getPlantState(), SLEEP_FLAG, flag));
+		this.setPAZState(AlgorithmUtil.BitOperator.setBit(this.getPAZState(), SLEEP_FLAG, flag));
 	}
 	
 	public boolean hasPumpkin() {
-		return AlgorithmUtil.BitOperator.hasBitOne(this.getPlantState(), PUMPKIN_FLAG);
+		return AlgorithmUtil.BitOperator.hasBitOne(this.getPAZState(), PUMPKIN_FLAG);
 	}
 	
 	public void setPumpkin(boolean flag) {
-		this.setPlantState(AlgorithmUtil.BitOperator.setBit(this.getPlantState(), PUMPKIN_FLAG, flag));
+		this.setPAZState(AlgorithmUtil.BitOperator.setBit(this.getPAZState(), PUMPKIN_FLAG, flag));
 	}
 	
 	@Override

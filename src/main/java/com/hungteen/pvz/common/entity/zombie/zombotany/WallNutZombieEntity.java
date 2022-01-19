@@ -1,6 +1,6 @@
 package com.hungteen.pvz.common.entity.zombie.zombotany;
 
-import com.hungteen.pvz.common.impl.ZombieType;
+import com.hungteen.pvz.common.impl.zombie.ZombieType;
 import com.hungteen.pvz.common.impl.zombie.Zombotanies;
 import com.hungteen.pvz.data.loot.PVZLoot;
 import net.minecraft.entity.CreatureEntity;

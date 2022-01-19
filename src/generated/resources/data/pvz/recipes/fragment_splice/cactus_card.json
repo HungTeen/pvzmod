@@ -15,7 +15,7 @@
       "item": "pvz:spear_essence"
     },
     "C": {
-      "item": "pvz:green_card"
+      "tag": "pvz:card/green_cards"
     }
   },
   "result": {

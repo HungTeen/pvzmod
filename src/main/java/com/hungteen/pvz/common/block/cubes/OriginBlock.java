@@ -4,8 +4,8 @@ import com.hungteen.pvz.PVZConfig;
 import com.hungteen.pvz.api.events.OriginEffectEvent;
 import com.hungteen.pvz.api.types.IEssenceType;
 import com.hungteen.pvz.common.entity.effect.OriginEffectEntity;
-import com.hungteen.pvz.common.impl.EssenceType;
-import com.hungteen.pvz.register.EntityRegister;
+import com.hungteen.pvz.common.impl.EssenceTypes;
+import com.hungteen.pvz.common.entity.EntityRegister;
 import com.hungteen.pvz.utils.EntityUtil;
 import com.hungteen.pvz.utils.enums.Colors;
 
@@ -40,7 +40,7 @@ public class OriginBlock extends Block {
     public static void updateRadiationMap() {
         BLOCK_TO_ESSENCE.clear();
 
-        EssenceType.ESSENCES.forEach(e -> {
+        EssenceTypes.getEssences().forEach(e -> {
             e.getRadiationBlockTag().ifPresent(tag -> {
                 tag.getValues().forEach(b -> {
                     BLOCK_TO_ESSENCE.put(b, e);

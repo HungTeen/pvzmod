@@ -61,6 +61,12 @@ public class CardFusionTileEntity extends TileEntity implements ITickableTileEnt
 			++ this.essenceAmount;
 		}
 	}
+
+	public void clearCraftingSlots(){
+		for(int i = 3; i < 12; ++ i){
+			this.handler.setStackInSlot(i, ItemStack.EMPTY);
+		}
+	}
 	
 	@Override
     public void load(BlockState state, CompoundNBT compound) {

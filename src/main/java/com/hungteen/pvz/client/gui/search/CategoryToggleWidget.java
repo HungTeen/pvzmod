@@ -1,12 +1,11 @@
 package com.hungteen.pvz.client.gui.search;
 
+import com.hungteen.pvz.client.ClientProxy;
 import com.mojang.blaze3d.matrix.MatrixStack;
 import com.mojang.blaze3d.systems.RenderSystem;
-
-import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.widget.ToggleWidget;
-import net.minecraft.client.renderer.ItemRenderer;
 import net.minecraft.item.ItemStack;
+import net.minecraft.item.Items;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 
@@ -21,13 +20,9 @@ public class CategoryToggleWidget extends ToggleWidget {
 		this.initTextureValues(153, 2, 35, 0, OptionSearchGui.TEXTURE);
 	}
 
-	public void startAnimation(Minecraft mc) {
-	}
-
 	public void renderButton(MatrixStack stack, int mouseX, int mouseY, float partialTicks) {
 		stack.pushPose();
-		Minecraft minecraft = Minecraft.getInstance();
-		minecraft.getTextureManager().bind(this.resourceLocation);
+		ClientProxy.MC.getTextureManager().bind(this.resourceLocation);
 		RenderSystem.disableDepthTest();
 		int posX = this.isStateTriggered ? this.x - 2 : this.x;
 		int posY = this.y;
@@ -35,36 +30,31 @@ public class CategoryToggleWidget extends ToggleWidget {
 		int texY = this.isStateTriggered ? this.yTexStart + this.yDiffTex : this.yTexStart;
 		this.blit(stack, posX, posY, texX, texY, this.width, this.height);
 		RenderSystem.enableDepthTest();
-		this.renderIcon(minecraft.getItemRenderer());
+		this.renderCategoryIcon(stack);
 		stack.popPose();
 	}
 
-	private void renderIcon(ItemRenderer renderer) {
-		int i = this.isStateTriggered ? -2 : 0;
-		renderer.renderAndDecorateItem(getRenderItemStack(), this.x + 9 + i, this.y + 5);
-	}
-	
-	private ItemStack getRenderItemStack() {
-		return SearchCategories.getRenderItemStack(this.category);
+	private void renderCategoryIcon(MatrixStack stack) {
+		final int posX = this.x + 9 + (this.isStateTriggered ? -2 : 0);
+		final int posY = this.y + 5;
+		if(this.category == SearchCategories.ALL){
+			ClientProxy.MC.getItemRenderer().renderAndDecorateItem(new ItemStack(Items.COMPASS), posX, posY);
+		} else if(this.category == SearchCategories.PLANTS) {
+			this.blit(stack, posX, posY, 152, 32, 16, 16);
+		} else if(this.category == SearchCategories.ZOMBIES){
+			this.blit(stack, posX, posY, 168, 32, 16, 16);
+		}
 	}
 
 	public SearchCategories getCategory() {
 		return this.category;
 	}
 
-//	public boolean updateVisibility(ClientRecipeBook p_199500_1_) {
-//		List<RecipeList> list = p_199500_1_.getRecipes(this.category);
-//		this.visible = false;
-//		if (list != null) {
-//			for (RecipeList recipelist : list) {
-//				if (recipelist.isNotEmpty() && recipelist.containsValidRecipes()) {
-//					this.visible = true;
-//					break;
-//				}
-//			}
-//		}
-//
-//		return this.visible;
-//	}
+	public enum SearchCategories {
 
+		ALL,
+		PLANTS,
+		ZOMBIES;
+
+	}
 }

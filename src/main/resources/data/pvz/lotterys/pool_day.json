@@ -1,35 +1,35 @@
 {
   "items": [
     {
-      "item": "pvz:lily_pad_card"
+      "item": "pvz:lily_pad_enjoy_card"
     },
     {
-      "item": "pvz:three_peater_card"
+      "item": "pvz:three_peater_enjoy_card"
     },
     {
-      "item": "pvz:squash_card"
+      "item": "pvz:squash_enjoy_card"
     },
     {
-      "item": "pvz:tangle_kelp_card"
+      "item": "pvz:tangle_kelp_enjoy_card"
     },
     {
-      "item": "pvz:jalapeno_card"
+      "item": "pvz:jalapeno_enjoy_card"
     },
     {
-      "item": "pvz:spike_weed_card"
+      "item": "pvz:spike_weed_enjoy_card"
     },
     {
-      "item": "pvz:torch_wood_card"
+      "item": "pvz:torch_wood_enjoy_card"
     },
     {
-      "item": "pvz:tall_nut_card"
+      "item": "pvz:tall_nut_enjoy_card"
     },
     {
-      "item": "pvz:cat_tail_card",
+      "item": "pvz:cat_tail_enjoy_card",
       "weight": 5
     },
     {
-      "item": "pvz:spike_rock_card",
+      "item": "pvz:spike_rock_enjoy_card",
       "weight": 5
     },
     {

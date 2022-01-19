@@ -3,8 +3,9 @@ package com.hungteen.pvz.utils;
 import com.hungteen.pvz.PVZMod;
 import com.hungteen.pvz.api.enums.PVZGroupType;
 import com.hungteen.pvz.api.interfaces.ICanBeCharmed;
-import com.hungteen.pvz.api.interfaces.IGroupEntity;
+import com.hungteen.pvz.api.interfaces.IHasGroup;
 import com.hungteen.pvz.api.interfaces.IHasOwner;
+import com.hungteen.pvz.common.entity.EntityGroupHander;
 import com.hungteen.pvz.common.entity.PVZMultiPartEntity;
 import com.hungteen.pvz.common.entity.ai.goal.attack.PVZZombieAttackGoal;
 import com.hungteen.pvz.common.entity.ai.goal.target.PVZHurtByTargetGoal;
@@ -23,7 +24,7 @@ import com.hungteen.pvz.common.network.PVZPacketHandler;
 import com.hungteen.pvz.common.network.toclient.SpawnParticlePacket;
 import com.hungteen.pvz.common.potion.EffectRegister;
 import com.hungteen.pvz.compat.jade.provider.PVZEntityProvider;
-import com.hungteen.pvz.utils.interfaces.IMultiPartEntity;
+import com.hungteen.pvz.utils.interfaces.IHasMultiPart;
 import it.unimi.dsi.fastutil.ints.IntOpenHashSet;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
@@ -31,7 +32,6 @@ import net.minecraft.entity.*;
 import net.minecraft.entity.ai.attributes.Attributes;
 import net.minecraft.entity.passive.BatEntity;
 import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.entity.projectile.ProjectileHelper;
 import net.minecraft.particles.IParticleData;
 import net.minecraft.potion.EffectInstance;
@@ -364,36 +364,32 @@ public class EntityUtil {
 	 * check can TargetGoal select target as attackTarget.
 	 */
 	public static boolean checkCanEntityBeTarget(Entity attacker, Entity target) {
-		if(attacker == null || target == null) {//prevent crash
+		if(! EntityUtil.isEntityValid(attacker) || ! EntityUtil.isEntityValid(target) || EntityUtil.isOpEntity(target)) {//prevent crash
 			return false;
 		}
 		if(target instanceof PVZMultiPartEntity) {//can attack its owner then can attack it
 			return checkCanEntityBeTarget(attacker, ((PVZMultiPartEntity) target).getOwner());
 		}
-		if(target instanceof PlayerEntity && ! PlayerUtil.isPlayerSurvival((PlayerEntity) target)) {
-			return false;
-		}
 		if(ConfigUtil.isTeamAttackEnable()) {//enable team attack
-			Team team1 = getEntityTeam(attacker.level, attacker);
-			Team team2 = getEntityTeam(attacker.level, target);
+			final Team team1 = getEntityTeam(attacker.level, attacker);
+		    final Team team2 = getEntityTeam(attacker.level, target);
 			if(team1 != null && team2 != null) {
-				boolean change = isEntityCharmed(attacker) ^ isEntityCharmed(target);
-				return change ? team1.isAlliedTo(team2) : ! team1.isAlliedTo(team2);
+				return isEntityCharmed(attacker) ^ isEntityCharmed(target) ? team1.isAlliedTo(team2) : ! team1.isAlliedTo(team2);
 			}
 		}
-		if(attacker instanceof LivingEntity) {
+		if(attacker instanceof LivingEntity) {//target the entity who attack it before.
 			if(target.is(((LivingEntity) attacker).getLastHurtMob()) && checkCanEntityBeAttack(attacker, target)) {
 				return true;
 			}
 		}
-		return PVZGroupType.checkCanTarget(getEntityGroup(attacker), getEntityGroup(target));
+		return EntityGroupHander.checkCanTarget(getEntityGroup(attacker), getEntityGroup(target));
 	}
 	
 	/**
 	 * check can AttackGoal continue to attack target.
 	 */
 	public static boolean checkCanEntityBeAttack(Entity attacker, Entity target) {
-		if(attacker == null || target == null) {//prevent crash
+		if(! EntityUtil.isEntityValid(attacker) || ! EntityUtil.isEntityValid(target)) {//prevent crash
 			return false;
 		}
 		if(target instanceof PVZMultiPartEntity) {//can attack its owner then can attack it
@@ -403,40 +399,36 @@ public class EntityUtil {
 			return false;
 		}
 		if(ConfigUtil.isTeamAttackEnable()) {//enable team attack
-			Team team1 = getEntityTeam(attacker.level, attacker);
-			Team team2 = getEntityTeam(attacker.level, target);
+			final Team team1 = getEntityTeam(attacker.level, attacker);
+			final Team team2 = getEntityTeam(attacker.level, target);
 			if(team1 != null && team2 != null) {
-				boolean change = isEntityCharmed(attacker) ^ isEntityCharmed(target);
-				return change ? team1.isAlliedTo(team2) : ! team1.isAlliedTo(team2);
+				return isEntityCharmed(attacker) ^ isEntityCharmed(target) ? team1.isAlliedTo(team2) : ! team1.isAlliedTo(team2);
 			}
 		}
-		return PVZGroupType.checkCanAttack(getEntityGroup(attacker), getEntityGroup(target));
+		return EntityGroupHander.checkCanAttack(getEntityGroup(attacker), getEntityGroup(target));
 	}
-	
+
 	/**
-	 * get entity's group.
-	 * specially mention : multiparts' group the same as its owner.
-	 * others entity is group 0.
+	 * both entity belong to the same side of group.
 	 */
-	public static PVZGroupType getEntityGroup(Entity entity) {
-		if(entity instanceof ServerPlayerEntity) {// get player's group
-			return PlayerUtil.getPlayerGroupType((ServerPlayerEntity) entity);
-		}
-		if(entity instanceof PVZMultiPartEntity) {
-			return getEntityGroup(((PVZMultiPartEntity) entity).getOwner());
-		}
-		if(entity instanceof IGroupEntity) {
-			return ((IGroupEntity) entity).getEntityGroupType();
-		}
-		if(PVZGroupType.isOtherMonsters(entity)) {
-			return PVZGroupType.OTHER_MONSTERS;
-		}
-		if(PVZGroupType.isOtherGuards(entity)) {
-			return PVZGroupType.OTHER_GURADS;
-		}
-		return PVZGroupType.CREATURES;
+	public static boolean isFriendly(Entity a, Entity b){
+		return (a == null || b == null) ? false : ! EntityGroupHander.checkCanTarget(getEntityGroup(a), getEntityGroup(b));
 	}
-	
+
+	/**
+	 * both entity belong to the same side of group.
+	 */
+	public static boolean isEnemy(Entity a, Entity b){
+		return (a == null || b == null) ? false : EntityGroupHander.checkCanTarget(getEntityGroup(a), getEntityGroup(b));
+	}
+
+	public static PVZGroupType getEntityGroup(Entity entity) {
+		if(entity instanceof PlayerEntity){
+			return EntityGroupHander.getPlayerGroup((PlayerEntity) entity);
+		}
+		return (entity instanceof IHasGroup) ? ((IHasGroup) entity).getEntityGroupType() : EntityGroupHander.getEntityGroupType(entity);
+	}
+
 	/**
 	 * get team of the entity.
 	 * used at {@link #checkCanEntityBeAttack(Entity, Entity)}
@@ -550,7 +542,7 @@ public class EntityUtil {
 			if(owner == null) {// no owner
 				list.add(entity.getId());
 			} else {// get all id for owner's parts
-				IMultiPartEntity parent = ((PVZMultiPartEntity) entity).getParent();
+				IHasMultiPart parent = ((PVZMultiPartEntity) entity).getParent();
 				for(Entity target : parent.getMultiParts()) {
 				    if(target != null) {
 				    	list.add(target.getId());
@@ -558,8 +550,8 @@ public class EntityUtil {
 				}
 				list.add(owner.getId());
 			}
-		} else if(entity instanceof IMultiPartEntity){
-			for(Entity target : ((IMultiPartEntity) entity).getMultiParts()) {
+		} else if(entity instanceof IHasMultiPart){
+			for(Entity target : ((IHasMultiPart) entity).getMultiParts()) {
 			    if(target != null) {
 			    	list.add(target.getId());
 			    }
@@ -665,6 +657,16 @@ public class EntityUtil {
 	 */
 	public static AxisAlignedBB getEntityAABB(Entity entity, double w, double h){
 		return BlockUtil.getAABB(entity.blockPosition(), w, h);
+	}
+
+	/**
+	 * no need to target or attack an op entity.
+	 */
+	public static boolean isOpEntity(Entity entity){
+		if(entity instanceof PlayerEntity && ! PlayerUtil.isPlayerSurvival((PlayerEntity) entity)){
+			return true;
+		}
+		return entity.isInvulnerable();
 	}
 	
 }

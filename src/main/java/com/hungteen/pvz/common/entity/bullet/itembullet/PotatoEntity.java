@@ -3,7 +3,7 @@ package com.hungteen.pvz.common.entity.bullet.itembullet;
 import com.hungteen.pvz.PVZMod;
 import com.hungteen.pvz.common.entity.plant.PVZPlantEntity;
 import com.hungteen.pvz.common.entity.plant.explosion.PotatoMineEntity;
-import com.hungteen.pvz.register.EntityRegister;
+import com.hungteen.pvz.common.entity.EntityRegister;
 import com.hungteen.pvz.utils.PlantUtil;
 
 import net.minecraft.entity.EntityType;

@@ -1,14 +1,16 @@
 package com.hungteen.pvz.common.entity.zombie;
 
 import com.hungteen.pvz.PVZConfig;
-import com.hungteen.pvz.api.paz.IZombieEntity;
 import com.hungteen.pvz.api.enums.BodyType;
 import com.hungteen.pvz.api.enums.PVZGroupType;
+import com.hungteen.pvz.api.paz.IZombieEntity;
 import com.hungteen.pvz.api.types.IPAZType;
+import com.hungteen.pvz.api.types.IZombieType;
 import com.hungteen.pvz.client.particle.ParticleUtil;
 import com.hungteen.pvz.common.advancement.trigger.CharmZombieTrigger;
 import com.hungteen.pvz.common.block.BlockRegister;
 import com.hungteen.pvz.common.entity.AbstractPAZEntity;
+import com.hungteen.pvz.common.entity.EntityRegister;
 import com.hungteen.pvz.common.entity.ai.goal.PVZLookRandomlyGoal;
 import com.hungteen.pvz.common.entity.ai.goal.PVZSwimGoal;
 import com.hungteen.pvz.common.entity.ai.goal.ZombieBreakPlantBlockGoal;
@@ -16,10 +18,9 @@ import com.hungteen.pvz.common.entity.ai.goal.attack.PVZZombieAttackGoal;
 import com.hungteen.pvz.common.entity.ai.goal.target.PVZNearestTargetGoal;
 import com.hungteen.pvz.common.entity.ai.navigator.ZombiePathNavigator;
 import com.hungteen.pvz.common.entity.bullet.AbstractBulletEntity;
-import com.hungteen.pvz.common.entity.misc.bowling.AbstractBowlingEntity;
 import com.hungteen.pvz.common.entity.misc.drop.CoinEntity;
-import com.hungteen.pvz.common.entity.misc.drop.SunEntity;
 import com.hungteen.pvz.common.entity.misc.drop.CoinEntity.CoinType;
+import com.hungteen.pvz.common.entity.misc.drop.SunEntity;
 import com.hungteen.pvz.common.entity.plant.PVZPlantEntity;
 import com.hungteen.pvz.common.entity.plant.enforce.SquashEntity;
 import com.hungteen.pvz.common.entity.plant.magic.HypnoShroomEntity;
@@ -27,21 +28,16 @@ import com.hungteen.pvz.common.entity.plant.spear.SpikeWeedEntity;
 import com.hungteen.pvz.common.entity.zombie.body.ZombieDropBodyEntity;
 import com.hungteen.pvz.common.entity.zombie.roof.BungeeZombieEntity;
 import com.hungteen.pvz.common.event.PVZLivingEvents;
-import com.hungteen.pvz.common.impl.ZombieType;
 import com.hungteen.pvz.common.item.ItemRegister;
 import com.hungteen.pvz.common.misc.damage.PVZDamageSource;
 import com.hungteen.pvz.common.misc.sound.SoundRegister;
 import com.hungteen.pvz.common.potion.EffectRegister;
-import com.hungteen.pvz.data.loot.PVZLoot;
-import com.hungteen.pvz.register.EntityRegister;
 import com.hungteen.pvz.remove.MetalTypes;
 import com.hungteen.pvz.utils.AlgorithmUtil;
 import com.hungteen.pvz.utils.ConfigUtil;
 import com.hungteen.pvz.utils.EntityUtil;
 import com.hungteen.pvz.utils.ZombieUtil;
 import com.hungteen.pvz.utils.interfaces.ICanAttract;
-import com.hungteen.pvz.utils.others.WeightList;
-import com.mojang.datafixers.util.Pair;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
@@ -67,7 +63,6 @@ import net.minecraft.pathfinding.PathNodeType;
 import net.minecraft.potion.EffectInstance;
 import net.minecraft.potion.Effects;
 import net.minecraft.util.DamageSource;
-import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.SoundEvent;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
@@ -81,13 +76,10 @@ import java.util.Optional;
 public abstract class PVZZombieEntity extends AbstractPAZEntity implements IZombieEntity {
 
 	private static final DataParameter<Integer> ZOMBIE_TYPE = EntityDataManager.defineId(PVZZombieEntity.class, DataSerializers.INT);
-	private static final DataParameter<Integer> ZOMBIE_STATES = EntityDataManager.defineId(PVZZombieEntity.class, DataSerializers.INT);
 	private static final DataParameter<Integer> ATTACK_TIME = EntityDataManager.defineId(PVZZombieEntity.class, DataSerializers.INT);
     //negative means rising, positive means perform attack animation.
 	private static final DataParameter<Integer> ANIM_TIME = EntityDataManager.defineId(PVZZombieEntity.class, DataSerializers.INT);
 	protected static final DataParameter<Float> DEFENCE_LIFE = EntityDataManager.defineId(PVZZombieEntity.class, DataSerializers.FLOAT);
-	private static final DataParameter<Integer> ZOMBIE_LEVEL = EntityDataManager.defineId(PVZZombieEntity.class, DataSerializers.INT);
-	protected static WeightList<DropType> dropSpecialList;
 	private static final int CHARM_FLAG = 0;
 	private static final int MINI_FLAG = 1;
 	private static final int HAND_FLAG = 2;
@@ -97,10 +89,8 @@ public abstract class PVZZombieEntity extends AbstractPAZEntity implements IZomb
 	protected boolean needRising = false;
 	protected boolean hasDirectDefence = false;
 	public boolean canCollideWithZombie = true;
-	protected boolean canSpawnDrop = true;
 	protected boolean canLostHand = true;
 	protected boolean canLostHead = true;
-	protected boolean canHelpAttack = true;
 	protected int maxDeathTime = 20;
 	protected int climbUpTick = 0;
 	protected int maxClimbUpTick = 5;
@@ -109,7 +99,6 @@ public abstract class PVZZombieEntity extends AbstractPAZEntity implements IZomb
 		super(type, worldIn);
 		this.refreshDimensions();
 		this.xpReward = (int) (this.getZombieXp() * 2);
-		dropSpecialList = this.getDropSpecialList();
 		this.onLevelChanged();
 		this.setPathfindingMalus(PathNodeType.DANGER_FIRE, 6.0F);
 		this.setPathfindingMalus(PathNodeType.DAMAGE_FIRE, 6.0F);
@@ -122,7 +111,6 @@ public abstract class PVZZombieEntity extends AbstractPAZEntity implements IZomb
 	protected void defineSynchedData() {
 		super.defineSynchedData();
 		entityData.define(ZOMBIE_TYPE, VariantType.NORMAL.ordinal());
-		entityData.define(ZOMBIE_STATES, 0);
 		entityData.define(ATTACK_TIME, 0);
 		entityData.define(DEFENCE_LIFE, 0f);
 		entityData.define(ANIM_TIME, 0);
@@ -287,12 +275,6 @@ public abstract class PVZZombieEntity extends AbstractPAZEntity implements IZomb
 //		this.updateZombieLevel(lvl);
 	}
 	
-//	public void updateZombieLevel(int lvl) {
-//		if(this.getSkills() != lvl) {//maxLevel changed.
-//			this.setSkills(lvl);
-//		}
-//	}
-	
 	/**
 	 * {@link #normalZombieTick()}
 	 */
@@ -394,16 +376,11 @@ public abstract class PVZZombieEntity extends AbstractPAZEntity implements IZomb
 	}
 
 	@Override
-	public void die(DamageSource cause) {
-		super.die(cause);
-		//if zombie was killed by bowling, it will not drop anything.
-		if (cause instanceof PVZDamageSource && ((PVZDamageSource) cause).getDirectEntity() instanceof AbstractBowlingEntity
-				&& ((PVZDamageSource) cause).getDamageCount() > 0) {
-			this.canSpawnDrop = false;
-		}
+	public void die(DamageSource source) {
+		super.die(source);
 		if(ConfigUtil.enableZombieDropParts()) {
 			if(! this.level.isClientSide) {
-			    this.onFallBody(cause);
+			    this.onFallBody(source);
 			}
 		}
 	}
@@ -466,9 +443,9 @@ public abstract class PVZZombieEntity extends AbstractPAZEntity implements IZomb
 	 * {@link #onZombieRemove()}
 	 */
 	protected void spawnSpecialDrops() {
-		dropSpecialList.getRandomItem(this.random).ifPresent(type -> {
-			this.doZombieDrop(type);
-		});
+//		dropSpecialList.getRandomItem(this.random).ifPresent(type -> {
+//			this.doZombieDrop(type);
+//		});
 	}
 
 	/**
@@ -501,22 +478,6 @@ public abstract class PVZZombieEntity extends AbstractPAZEntity implements IZomb
 			break;
 		}
 		}
-	}
-	
-	/**
-	 * init zombie special drop list.
-	 * {@link #PVZZombieEntity(EntityType, World)}
-	 */
-	protected WeightList<DropType> getDropSpecialList(){
-		int p = PVZConfig.COMMON_CONFIG.EntitySettings.ZombieSetting.ZombieDropMultiper.get();
-		int pp = p * p;
-		return WeightList.of(
-				pp * pp,
-				Pair.of(DropType.SILVER, p * p * p),
-				Pair.of(DropType.GOLD, p * p ),
-				Pair.of(DropType.JEWEL, p),
-				Pair.of(DropType.CHOCOLATE, p)
-				);
 	}
 
 	/**
@@ -1037,17 +998,10 @@ public abstract class PVZZombieEntity extends AbstractPAZEntity implements IZomb
 	public float getCurrentMaxHealth() {
 		return this.getDefenceLife() + this.getMaxHealth();
 	}
-	
+
 	@Override
 	public PVZGroupType getEntityGroupType() {
 		return this.isCharmed() ? PVZGroupType.PLANTS : PVZGroupType.ZOMBIES;
-	}
-	
-	/**
-	 * how much xp will it get, when killed by player or plants.
-	 */
-	public float getZombieXp() {
-		return this.getZombieType().getXpPoint();
 	}
 
 	@Override
@@ -1058,7 +1012,7 @@ public abstract class PVZZombieEntity extends AbstractPAZEntity implements IZomb
 	/**
 	 * relate to zombie type.
 	 */
-	public abstract ZombieType getZombieType();
+	public abstract IZombieType getZombieType();
 
 	/* sound */
 	
@@ -1082,20 +1036,12 @@ public abstract class PVZZombieEntity extends AbstractPAZEntity implements IZomb
 		return Optional.empty();
 	}
 	
-	/* loot */
-
-	@Override
-	protected ResourceLocation getDefaultLootTable() {
-		return PVZLoot.NORMAL_ZOMBIE;
-	}
-	
 	/* data */
 	
 	@Override
 	public void addAdditionalSaveData(CompoundNBT compound) {
 		super.addAdditionalSaveData(compound);
 		compound.putInt("zombie_type", this.getVariantType().ordinal());
-		compound.putInt("zombie_states_flag", this.getZombieStates());
 		compound.putInt("zombie_attack_time", this.getAttackTime());
 		compound.putInt("zombie_anim_time", this.getAnimTime());
 		compound.putFloat("defence_life", this.getDefenceLife());
@@ -1106,9 +1052,6 @@ public abstract class PVZZombieEntity extends AbstractPAZEntity implements IZomb
 		super.readAdditionalSaveData(compound);
 		if (compound.contains("zombie_type")) {
 			this.setZombieType(VariantType.values()[compound.getInt("zombie_type")]);
-		}
-		if (compound.contains("zombie_states_flag")) {
-			this.setZombieStates(compound.getInt("zombie_states_flag"));
 		}
 		if (compound.contains("zombie_attack_time")) {
 			this.setAttackTime(compound.getInt("zombie_attack_time"));
@@ -1138,14 +1081,6 @@ public abstract class PVZZombieEntity extends AbstractPAZEntity implements IZomb
 	public void setAnimTime(int cd) {
 		entityData.set(ANIM_TIME, cd);
 	}
-	
-	public int getZombieStates() {
-		return this.entityData.get(ZOMBIE_STATES);
-	}
-
-	public void setZombieStates(int state) {
-		this.entityData.set(ZOMBIE_STATES, state);
-	}
 
 	public float getDefenceLife() {
 		return entityData.get(DEFENCE_LIFE);
@@ -1165,7 +1100,7 @@ public abstract class PVZZombieEntity extends AbstractPAZEntity implements IZomb
 	
 	@Override
 	public boolean isCharmed() {
-		return AlgorithmUtil.BitOperator.hasBitOne(this.getZombieStates(), CHARM_FLAG);
+		return AlgorithmUtil.BitOperator.hasBitOne(this.getPAZState(), CHARM_FLAG);
 	}
 	
 	public void setCharmed(boolean is) {
@@ -1173,7 +1108,7 @@ public abstract class PVZZombieEntity extends AbstractPAZEntity implements IZomb
 	}
 
 	public boolean isMiniZombie() {
-		return AlgorithmUtil.BitOperator.hasBitOne(this.getZombieStates(), MINI_FLAG);
+		return AlgorithmUtil.BitOperator.hasBitOne(this.getPAZState(), MINI_FLAG);
 	}
 	
     public void setMiniZombie(boolean is) {
@@ -1181,7 +1116,7 @@ public abstract class PVZZombieEntity extends AbstractPAZEntity implements IZomb
 	}
     
     public boolean hasHand() {
-		return !AlgorithmUtil.BitOperator.hasBitOne(this.getZombieStates(), HAND_FLAG);
+		return !AlgorithmUtil.BitOperator.hasBitOne(this.getPAZState(), HAND_FLAG);
 	}
 	
     public void lostHand(boolean is) {
@@ -1189,7 +1124,7 @@ public abstract class PVZZombieEntity extends AbstractPAZEntity implements IZomb
 	}
     
     public boolean hasHead() {
-		return !AlgorithmUtil.BitOperator.hasBitOne(this.getZombieStates(), HEAD_FLAG);
+		return !AlgorithmUtil.BitOperator.hasBitOne(this.getPAZState(), HEAD_FLAG);
 	}
 	
     public void lostHead(boolean is) {
@@ -1197,7 +1132,7 @@ public abstract class PVZZombieEntity extends AbstractPAZEntity implements IZomb
 	}
     
     private void setStateByFlag(boolean is, int flag) {
-		this.setZombieStates(AlgorithmUtil.BitOperator.setBit(this.getZombieStates(), flag, is));
+		this.setPAZState(AlgorithmUtil.BitOperator.setBit(this.getPAZState(), flag, is));
 	}
     
 	/**
@@ -1208,17 +1143,6 @@ public abstract class PVZZombieEntity extends AbstractPAZEntity implements IZomb
 		SUPER, //zombie that will drop energy when death.
 		BEARD, //zombie with green beard.(can only own by normal_zombie family)
 		SUN, //zombie that will drop some sun when death.
-	}
-	
-	/**
-	 * Special Drop Types.
-	 */
-	protected enum DropType{
-		COPPER, //drop copper coin.
-		SILVER, //drop silver coin.
-		GOLD,  //drop gold coin.
-		JEWEL, //drop jewel.
-		CHOCOLATE, //drop chocolate.
 	}
 
 }

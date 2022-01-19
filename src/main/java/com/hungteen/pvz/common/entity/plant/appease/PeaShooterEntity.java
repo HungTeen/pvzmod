@@ -4,9 +4,9 @@ import com.hungteen.pvz.api.types.IPlantType;
 import com.hungteen.pvz.common.entity.bullet.AbstractBulletEntity;
 import com.hungteen.pvz.common.entity.bullet.itembullet.PeaEntity;
 import com.hungteen.pvz.common.entity.plant.base.PlantShooterEntity;
+import com.hungteen.pvz.common.impl.SkillTypes;
 import com.hungteen.pvz.common.impl.plant.PVZPlants;
 import com.hungteen.pvz.utils.MathUtil;
-
 import net.minecraft.entity.CreatureEntity;
 import net.minecraft.entity.EntitySize;
 import net.minecraft.entity.EntityType;
@@ -37,22 +37,29 @@ public class PeaShooterEntity extends PlantShooterEntity{
 	
 	@Override
 	protected AbstractBulletEntity createBullet() {
-		return new PeaEntity(this.level, this, this.getShootType(), this.getShootState());
+		final PeaEntity pea = new PeaEntity(this.level, this, this.getShootType(), this.getShootState());
+//		if(this.getRandom().nextFloat() < this.getKBChance()){
+//		}
+		return pea;
 	}
-	
+
+	public float getAttackDamage() {
+		return this.getSkillValue(SkillTypes.PEA_DAMAGE);
+	}
+
+//	public float getBigChance(){
+//		return this.getSkillValue(SkillTypes.BIG_PEA);
+//	}
+//
+//	public float getKBChance(){
+//		return this.getSkillValue(SkillTypes.KB_PEA);
+//	}
+
 	/**
 	 * get how many peas need shoot per tick, when super.
 	 */
 	public int getSuperShootCount() {
-//		final int min = this.isPlantInStage(3) ? 2 : 1;
-//		final int max = this.isPlantInStage(1) ? 2 : 3;
-		return 1;
-//		return MathUtil.getRandomMinMax(getRandom(), min, max);
-	}
-	
-	@Override
-	public EntitySize getDimensions(Pose poseIn) {
-		return EntitySize.scalable(0.8F, 1.5F);
+		return MathUtil.getRandomMinMax(getRandom(), 1, 2);
 	}
 
 	protected PeaEntity.Type getShootType(){
@@ -62,7 +69,7 @@ public class PeaShooterEntity extends PlantShooterEntity{
 	protected PeaEntity.State getShootState(){
 		return PeaEntity.State.NORMAL;
 	}
-	
+
 	@Override
 	public void startShootAttack() {
 		this.setAttackTime(1);
@@ -71,6 +78,11 @@ public class PeaShooterEntity extends PlantShooterEntity{
 	@Override
 	public int getSuperTimeLength() {
 		return 100;
+	}
+
+	@Override
+	public EntitySize getDimensions(Pose poseIn) {
+		return EntitySize.scalable(0.8F, 1.5F);
 	}
 
 	@Override

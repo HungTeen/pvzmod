@@ -9,7 +9,9 @@ import com.hungteen.pvz.common.event.handler.PlayerEventHandler;
 import com.hungteen.pvz.common.misc.damage.PVZDamageSource;
 import com.hungteen.pvz.utils.EntityUtil;
 
+import net.minecraft.advancements.CriteriaTriggers;
 import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraftforge.event.entity.living.LivingDamageEvent;
 import net.minecraftforge.event.entity.living.LivingDeathEvent;
 import net.minecraftforge.event.entity.living.LivingHurtEvent;
@@ -30,6 +32,7 @@ public class PVZLivingEvents {
 				}
 			} else {
 				PlayerEventHandler.onPlayerKillEntity(player, ev.getSource(), ev.getEntityLiving());
+				CriteriaTriggers.PLAYER_KILLED_ENTITY.trigger((ServerPlayerEntity) player, ev.getEntityLiving(), ev.getSource());
 			}
 		}
 		

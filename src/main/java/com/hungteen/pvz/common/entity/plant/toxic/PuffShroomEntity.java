@@ -33,7 +33,10 @@ public class PuffShroomEntity extends PlantShooterEntity {
 			this.performShoot(SHOOT_OFFSET, 0, -0.2F, this.getAttackTime() == 1, FORWARD_SHOOT_ANGLE);
 		}
 	}
-	
+	@Override
+	public float getAttackDamage() {
+		return 0;
+	}
 	@Override
 	protected AbstractBulletEntity createBullet() {
 		return new SporeEntity(this.level, this);

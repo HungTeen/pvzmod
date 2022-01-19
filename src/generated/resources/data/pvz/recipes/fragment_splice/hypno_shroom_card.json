@@ -15,7 +15,7 @@
       "item": "pvz:magic_essence"
     },
     "C": {
-      "item": "pvz:blue_card"
+      "tag": "pvz:card/blue_cards"
     }
   },
   "result": {

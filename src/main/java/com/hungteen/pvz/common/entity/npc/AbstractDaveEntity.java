@@ -3,7 +3,7 @@ package com.hungteen.pvz.common.entity.npc;
 import javax.annotation.Nullable;
 
 import com.hungteen.pvz.api.enums.PVZGroupType;
-import com.hungteen.pvz.api.interfaces.IGroupEntity;
+import com.hungteen.pvz.api.interfaces.IHasGroup;
 import com.hungteen.pvz.common.misc.sound.SoundRegister;
 
 import net.minecraft.entity.CreatureEntity;
@@ -20,7 +20,7 @@ import net.minecraft.util.SoundEvent;
 import net.minecraft.world.World;
 import net.minecraft.world.server.ServerWorld;
 
-public class AbstractDaveEntity extends CreatureEntity implements IGroupEntity {
+public class AbstractDaveEntity extends CreatureEntity implements IHasGroup {
 
 	@Nullable
 	private PlayerEntity customer;
@@ -128,7 +128,7 @@ public class AbstractDaveEntity extends CreatureEntity implements IGroupEntity {
 
 	@Override
 	public PVZGroupType getEntityGroupType() {
-		return PVZGroupType.CREATURES;
+		return PVZGroupType.NEUTRALS;
 	}
 	
 }

@@ -68,9 +68,7 @@ public class CardFusionContainer extends PVZContainer {
 
 	public void onCraft(){
 		this.te.handler.setStackInSlot(2, getResult().copy());
-		for(int i = 3; i < 12; ++ i){
-			this.te.handler.setStackInSlot(i, ItemStack.EMPTY);
-		}
+		this.te.clearCraftingSlots();
 		this.te.sunAmount = 0;
 		this.te.essenceAmount = 0;
 	}

@@ -1,12 +1,16 @@
 package com.hungteen.pvz.common.entity.plant.base;
 
+import com.hungteen.pvz.api.interfaces.IAlmanacEntry;
 import com.hungteen.pvz.common.entity.ai.goal.target.PVZNearestTargetGoal;
 import com.hungteen.pvz.common.entity.bullet.AbstractBulletEntity;
 import com.hungteen.pvz.common.entity.plant.PVZPlantEntity;
 import com.hungteen.pvz.common.entity.plant.appease.StarFruitEntity;
 import com.hungteen.pvz.common.entity.plant.spear.CatTailEntity;
+import com.hungteen.pvz.common.impl.SkillTypes;
 import com.hungteen.pvz.utils.EntityUtil;
+import com.hungteen.pvz.utils.enums.PAZAlmanacs;
 import com.hungteen.pvz.utils.interfaces.IShooter;
+import com.mojang.datafixers.util.Pair;
 import net.minecraft.entity.CreatureEntity;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
@@ -23,7 +27,9 @@ import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.vector.Vector3d;
 import net.minecraft.world.World;
 
+import java.util.Arrays;
 import java.util.EnumSet;
+import java.util.List;
 import java.util.Optional;
 
 public abstract class PlantShooterEntity extends PVZPlantEntity implements IShooter {
@@ -75,7 +81,17 @@ public abstract class PlantShooterEntity extends PVZPlantEntity implements IShoo
 		    this.setAttackTime(this.getAttackTime() - 1);
 		}
 	}
-	
+
+	@Override
+	public void addAlmanacEntries(List<Pair<IAlmanacEntry, Number>> list) {
+		super.addAlmanacEntries(list);
+		list.addAll(Arrays.asList(
+				Pair.of(PAZAlmanacs.BULLET_DAMAGE, this.getSkillValue(SkillTypes.PEA_DAMAGE)),
+				Pair.of(PAZAlmanacs.SHOOT_CD, this.getShootCD()),
+				Pair.of(PAZAlmanacs.SHOOT_RANGE, this.getShootRange())
+		));
+	}
+
 	/**
 	 * shoot pea with offsets.
 	 */
@@ -111,10 +127,7 @@ public abstract class PlantShooterEntity extends PVZPlantEntity implements IShoo
         bullet.setAttackDamage(this.getAttackDamage());
 		level.addFreshEntity(bullet);
 	}
-	
-	/**
-	 * {@link #performShoot(double, double, double, boolean, ShootTypes)}
-	 */
+
 	protected abstract AbstractBulletEntity createBullet();
 	
 	protected SoundEvent getShootSound() {
@@ -128,10 +141,7 @@ public abstract class PlantShooterEntity extends PVZPlantEntity implements IShoo
 	/**
 	 * get shooter bullet attack damage.
 	 */
-	public float getAttackDamage() {
-		return 1;
-//		return MathUtil.getProgressAverage(getSkills(), PlantUtil.MAX_PLANT_LEVEL, 1F, 4F);
-	}
+	public abstract float getAttackDamage();
 	
 	@Override
 	public boolean canPlantTarget(Entity entity) {

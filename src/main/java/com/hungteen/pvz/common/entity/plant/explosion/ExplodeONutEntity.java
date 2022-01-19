@@ -21,8 +21,8 @@ public class ExplodeONutEntity extends WallNutEntity {
 	}
 	
 	@Override
-	public void die(DamageSource cause) {
-		super.die(cause);
+	public void die(DamageSource source) {
+		super.die(source);
 		if(! this.level.isClientSide) {
 			this.explode(this);
 		} else {

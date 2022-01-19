@@ -1,16 +1,9 @@
 package com.hungteen.pvz.common.entity;
 
-import javax.annotation.Nullable;
-
 import com.hungteen.pvz.PVZMod;
 import com.hungteen.pvz.utils.EntityUtil;
-import com.hungteen.pvz.utils.interfaces.IMultiPartEntity;
-
-import net.minecraft.entity.Entity;
-import net.minecraft.entity.EntitySize;
-import net.minecraft.entity.EntityType;
-import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.Pose;
+import com.hungteen.pvz.utils.interfaces.IHasMultiPart;
+import net.minecraft.entity.*;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.network.IPacket;
@@ -24,6 +17,8 @@ import net.minecraft.util.math.vector.Vector3d;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.network.NetworkHooks;
 
+import javax.annotation.Nullable;
+
 public abstract class PVZMultiPartEntity extends Entity {
 
 	private static final DataParameter<Integer> OWNER_ID = EntityDataManager.defineId(PVZMultiPartEntity.class,
@@ -32,7 +27,7 @@ public abstract class PVZMultiPartEntity extends Entity {
 			DataSerializers.FLOAT);
 	private static final DataParameter<Float> HEIGHT = EntityDataManager.defineId(PVZMultiPartEntity.class,
 			DataSerializers.FLOAT);
-	private IMultiPartEntity parent;
+	private IHasMultiPart parent;
 	protected final float MaxHeight;
 	protected final float MaxWidth;
 
@@ -44,8 +39,8 @@ public abstract class PVZMultiPartEntity extends Entity {
 
 	public PVZMultiPartEntity(EntityType<?> entityTypeIn, LivingEntity owner, float sizeX, float sizeY) {
 		super(entityTypeIn, owner.level);
-		if(owner instanceof IMultiPartEntity) {
-			this.parent = (IMultiPartEntity) owner;
+		if(owner instanceof IHasMultiPart) {
+			this.parent = (IHasMultiPart) owner;
 		} else {
 			PVZMod.LOGGER.warn("Error Multipart Owner");
 		}
@@ -96,7 +91,7 @@ public abstract class PVZMultiPartEntity extends Entity {
 		return entity instanceof LivingEntity ? (LivingEntity) entity : null;
 	}
 	
-	public IMultiPartEntity getParent() {
+	public IHasMultiPart getParent() {
 		return this.parent;
 	}
 

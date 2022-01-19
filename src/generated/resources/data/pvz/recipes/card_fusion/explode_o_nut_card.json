@@ -8,7 +8,7 @@
       "item": "pvz:cherry_bomb_card"
     },
     {
-      "item": "pvz:purple_card"
+      "tag": "pvz:card/purple_cards"
     }
   ],
   "result": {

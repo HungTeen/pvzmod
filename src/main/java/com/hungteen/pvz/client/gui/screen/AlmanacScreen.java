@@ -1,322 +1,116 @@
 package com.hungteen.pvz.client.gui.screen;
 
-import java.util.Arrays;
-import java.util.List;
-
-import com.hungteen.pvz.client.cache.ClientPlayerResources;
-import com.hungteen.pvz.client.gui.search.SearchCategories;
+import com.hungteen.pvz.api.interfaces.IAlmanacEntry;
+import com.hungteen.pvz.api.paz.IPAZEntity;
+import com.hungteen.pvz.api.types.IPlantType;
+import com.hungteen.pvz.client.gui.search.CategoryToggleWidget;
 import com.hungteen.pvz.client.gui.search.SearchOption;
 import com.hungteen.pvz.common.container.AlmanacContainer;
+import com.hungteen.pvz.compat.patchouli.PVZPatchouliHandler;
+import com.hungteen.pvz.utils.MathUtil;
+import com.hungteen.pvz.utils.PlayerUtil;
 import com.hungteen.pvz.utils.StringUtil;
 import com.hungteen.pvz.utils.enums.Colors;
 import com.mojang.blaze3d.matrix.MatrixStack;
 import com.mojang.blaze3d.systems.RenderSystem;
-
+import com.mojang.datafixers.util.Pair;
+import net.minecraft.client.Minecraft;
+import net.minecraft.client.renderer.IRenderTypeBuffer;
+import net.minecraft.client.renderer.entity.EntityRendererManager;
+import net.minecraft.entity.CreatureEntity;
+import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerInventory;
+import net.minecraft.item.Item;
+import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.MathHelper;
+import net.minecraft.util.math.vector.Quaternion;
+import net.minecraft.util.math.vector.Vector3f;
 import net.minecraft.util.text.ITextComponent;
+import net.minecraft.util.text.TextFormatting;
 import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
+
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 @OnlyIn(Dist.CLIENT)
 public class AlmanacScreen extends AbstractOptionScreen<AlmanacContainer> {
 
 	public static final ResourceLocation TEXTURE = StringUtil.prefix("textures/gui/container/almanac.png");
-	private int propertyCnt;
+	private static final int MAX_ENTRY_COUNT = 7;
+	private final List<Pair<IAlmanacEntry, Number>> entries = new ArrayList<>();
+	private SearchOption option;
+	private CreatureEntity renderEntity;
+	private int currentPos = 0;
 	
 	public AlmanacScreen(AlmanacContainer screenContainer, PlayerInventory inv, ITextComponent titleIn) {
 		super(screenContainer, inv, titleIn);
-		this.imageWidth = 240;
+		this.imageWidth = 150;
 		this.imageHeight = 200;
+	}
+
+	@Override
+	public boolean mouseScrolled(double p_mouseScrolled_1_, double p_mouseScrolled_3_, double p_mouseScrolled_5_) {
+		if (this.entries.size() > MAX_ENTRY_COUNT) {
+			final int next = (int) ((double) this.currentPos - p_mouseScrolled_5_);
+			this.currentPos = MathHelper.clamp(next, 0, this.entries.size() - MAX_ENTRY_COUNT);
+		}
+		return true;
 	}
 
 	@Override
 	public void render(MatrixStack stack, int mouseX, int mouseY, float partialTicks) {
 		super.render(stack, mouseX, mouseY, partialTicks);
-		this.renderAlmanac(stack);
+		this.renderAlmanac(stack, mouseX, mouseY);
 		this.renderTooltip(stack, mouseX, mouseY);
 	}
 	
-	@Override
-	protected void renderLabels(MatrixStack p_230451_1_, int p_230451_2_, int p_230451_3_) {
-	}
-	
-	protected void renderAlmanac(MatrixStack stack){
-//		if(! this.searchGui.getCurrentOption().isPresent()) return ;
-//		SearchOption option = this.searchGui.getCurrentOption().get();
-//		this.renderTitle(stack, option);
-//		if(! this.isOptionUnLocked(option)) return ;
-//		this.renderLogo(stack, option);
-//		this.renderXpBar(stack, option);
-//		this.renderShortInfo(stack, option);
-//		option.getPlant().ifPresent((plant) -> {
-//			int lvl = ClientPlayerResources.getPlayerPlantCardLvl(plant);
-////			int maxLvl = PlantUtil.getPlantMaxLvl(plant);
-//			this.propertyCnt = 0;
-//			@SuppressWarnings("resource")
-//			World world = Minecraft.getInstance().player.maxLevel;
-//			this.drawProperty(stack, Properties.SUN_COST, PlantUtil.getPlantSunCost(plant));
-//			this.drawProperty(stack, Properties.COOL_DOWN, PlantUtil.getPlantCoolDownTime(plant, lvl));
-//			if(plant.isBlockPlant) {
-//				return ;
-//			} else if(plant.isOuterPlant) {
-//				this.drawProperty(stack, Properties.HEALTH, PlantUtil.PUMPKIN_LIFE);
-//				return ;
-//			}
-//			PVZPlantEntity plantEntity =  PlantUtil.getPlantEntity(world, plant);
-//			plantEntity.setPlantLvl(lvl);
-//			this.drawProperty(stack, Properties.HEALTH, plantEntity.getLife());
-//			switch(plant) {
-//			case PEA_SHOOTER:{
-//				PeaShooterEntity peaShooter = (PeaShooterEntity) plantEntity;
-//				this.drawProperty(stack, Properties.ATTACK_DAMAGE, peaShooter.getAttackDamage());
-//				this.drawProperty(stack, Properties.BULLET_SPEED, peaShooter.getBulletSpeed());
-//				break;
-//			}
-//			case SUN_FLOWER:{
-//				SunFlowerEntity sunFlower = (SunFlowerEntity) plantEntity;
-//				this.drawProperty(stack, Properties.GEN_AMOUNT, sunFlower.getSunAmount());
-//				break;
-//			}
-//			case CHERRY_BOMB:{
-//				CherryBombEntity cherryBomb = (CherryBombEntity) plantEntity;
-//				this.drawProperty(stack, Properties.ATTACK_DAMAGE, cherryBomb.getAttackDamage());
-////				this.drawProperty(stack, Properties.ATTACK_RANGE, cherryBomb.getExpRange());
-//				break;
-//			}
-//			case WALL_NUT:{
-//				break;
-//			}
-//			case POTATO_MINE:{
-//				PotatoMineEntity potatoMine = (PotatoMineEntity) plantEntity;
-//				this.drawProperty(stack, Properties.ATTACK_DAMAGE, potatoMine.getAttackDamage());
-//				break;
-//			}
-//			case SNOW_PEA:{
-//				SnowPeaEntity snowPea = (SnowPeaEntity) plantEntity;
-//				this.drawProperty(stack, Properties.ATTACK_DAMAGE, snowPea.getAttackDamage());
-//				this.drawProperty(stack, Properties.BULLET_SPEED, snowPea.getBulletSpeed());
-//				this.drawProperty(stack, Properties.COLD_EFFECT, snowPea.getColdLvl());
-//				this.drawProperty(stack, Properties.COLD_EFFECT_TIME, snowPea.getColdTick());
-//				break;
-//			}
-//			case CHOMPER:{
-//				ChomperEntity chomper = (ChomperEntity) plantEntity;
-//				this.drawProperty(stack, Properties.ATTACK_DAMAGE, chomper.getAttackDamage());
-//				this.drawProperty(stack, Properties.ATTACK_CD, chomper.getRestCD());
-//				break;
-//			}
-//			case REPEATER:{
-//				RepeaterEntity repeater = (RepeaterEntity) plantEntity;
-//				this.drawProperty(stack, Properties.ATTACK_DAMAGE, repeater.getAttackDamage());
-//				this.drawProperty(stack, Properties.BULLET_SPEED, repeater.getBulletSpeed());
-//				break;
-//			}
-//			case PUFF_SHROOM:{
-//				PuffShroomEntity puffShroom = (PuffShroomEntity) plantEntity;
-//				this.drawProperty(stack, Properties.ATTACK_DAMAGE, puffShroom.getAttackDamage());
-//				break;
-//			}
-//			case SUN_SHROOM:{
-//				SunShroomEntity sunShroom = (SunShroomEntity) plantEntity;
-//				this.drawProperty(stack, Properties.GEN_AMOUNT, sunShroom.getSunAmountInStage(2));
-//				break;
-//			}
-//			case FUME_SHROOM:{
-//				FumeShroomEntity fumeShroom = (FumeShroomEntity) plantEntity;
-//				this.drawProperty(stack, Properties.ATTACK_DAMAGE, fumeShroom.getAttackDamage());
-//				break;
-//			}
-//			case GRAVE_BUSTER:{
-//				GraveBusterEntity graveBuster = (GraveBusterEntity) plantEntity;
-//				this.drawProperty(stack, Properties.KILL_COUNT, graveBuster.getMaxKillCnt());
-//				break;
-//			}
-//			case HYPNO_SHROOM:{
-//				HypnoShroomEntity hypnoShroom = (HypnoShroomEntity) plantEntity;
-//				this.drawProperty(stack, Properties.HEAL_HEALTH, hypnoShroom.getHealHealth());
-//				break;
-//			}
-//			case SCAREDY_SHROOM:{
-//				ScaredyShroomEntity scaredyShroom = (ScaredyShroomEntity) plantEntity;
-//				this.drawProperty(stack, Properties.ATTACK_DAMAGE, scaredyShroom.getAttackDamage());
-//				this.drawProperty(stack, Properties.SCARE_RANGE, scaredyShroom.getScareDistance());
-//				break;
-//			}
-//			case ICE_SHROOM:{
-//				IceShroomEntity iceShroom = (IceShroomEntity) plantEntity;
-//				this.drawProperty(stack, Properties.ATTACK_DAMAGE, iceShroom.getAttackDamage());
-//				this.drawProperty(stack, Properties.FROZEN_EFFECT_TIME, iceShroom.getFrozenTick());
-//				this.drawProperty(stack, Properties.COLD_EFFECT, iceShroom.getColdLvl());
-//				this.drawProperty(stack, Properties.COLD_EFFECT_TIME, iceShroom.getColdTick());
-//				break;
-//			}
-//			case DOOM_SHROOM:{
-//				DoomShroomEntity doomShroom = (DoomShroomEntity) plantEntity;
-//				this.drawProperty(stack, Properties.ATTACK_DAMAGE, doomShroom.getAttackDamage());
-//				break;
-//			}
-//			case LILY_PAD:{
-//				break;
-//			}
-//			case SQUASH:{
-//				SquashEntity squash = (SquashEntity) plantEntity;
-//				this.drawProperty(stack, Properties.ATTACK_DAMAGE, squash.getAttackDamage());
-//				this.drawProperty(stack, Properties.DEATH_CHANCE, squash.getDeathChance() * 1.0f / 100);
-//				break;
-//			}
-//			case THREE_PEATER:{
-//				ThreePeaterEntity threePeater = (ThreePeaterEntity) plantEntity;
-//				this.drawProperty(stack, Properties.ATTACK_DAMAGE, threePeater.getAttackDamage());
-//				this.drawProperty(stack, Properties.BULLET_SPEED, threePeater.getBulletSpeed());
-//				break;
-//			}
-//			case TANGLE_KELP:{
-//				TangleKelpEntity tangleKelp = (TangleKelpEntity) plantEntity;
-//				this.drawProperty(stack, Properties.ATTACK_DAMAGE, tangleKelp.getAttackDamage());
-//				break;
-//			}
-//			case JALAPENO:{
-//				JalapenoEntity jalapeno = (JalapenoEntity) plantEntity;
-//				this.drawProperty(stack, Properties.ATTACK_DAMAGE, jalapeno.getAttackDamage());
-//				break;
-//			}
-//			case SPIKE_WEED:{
-//				SpikeWeedEntity spikeWeed = (SpikeWeedEntity) plantEntity;
-//				this.drawProperty(stack, Properties.ATTACK_DAMAGE, spikeWeed.getAttackDamage());
-//				this.drawProperty(stack, Properties.ATTACK_CD, spikeWeed.getAttackCD());
-//				break;
-//			}
-//			case TORCH_WOOD:{
-//				break;
-//			}
-//			case TALL_NUT:{
-//				break;
-//			}
-//			case PUMPKIN:{
-//				break;
-//			}
-//			case COFFEE_BEAN:{
-//				CoffeeBeanEntity coffeeBean = (CoffeeBeanEntity) plantEntity;
-//				this.drawProperty(stack, Properties.DURATION, coffeeBean.getAwakeTime());
-//				break;
-//			}
-//			case MARIGOLD:{
-//				MariGoldEntity marigold = (MariGoldEntity) plantEntity;
-//				this.drawProperty(stack, Properties.AVE_GEN_AMOUNT, marigold.getAveGenAmount());
-//				break;
-//			}
-//			case GATLING_PEA:{
-//				GatlingPeaEntity gatlingPea = (GatlingPeaEntity) plantEntity;
-//				this.drawProperty(stack, Properties.ATTACK_DAMAGE, gatlingPea.getAttackDamage());
-//				this.drawProperty(stack, Properties.BULLET_SPEED, gatlingPea.getBulletSpeed());
-//				break;
-//			}
-//			case TWIN_SUNFLOWER:{
-//				TwinSunFlowerEntity twinSunflower = (TwinSunFlowerEntity) plantEntity;
-//				this.drawProperty(stack, Properties.GEN_AMOUNT, twinSunflower.getSunAmount() * 2);
-//				break;
-//			}
-//			case WATER_GUARD:{
-//				break;
-//			}
-//			default:{
-//				System.out.println("Warning: forget to fill the almanac info");
-//				break;
-//			}
-//			}
-//		});
-//		option.getZombie().ifPresent((zombie) -> {
-//			
-//		});
-//		if(option.isPlayer()){//for player
-//    		int sunNum = ClientPlayerResources.getPlayerStats(Resources.SUN_NUM);
-//    		int energyNum = ClientPlayerResources.getPlayerStats(Resources.ENERGY_NUM);
-//    		int money = ClientPlayerResources.getPlayerStats(Resources.MONEY);
-//    		int gemNum = ClientPlayerResources.getPlayerStats(Resources.GEM_NUM);
-//    		this.propertyCnt = 0;
-//    		this.drawProperty(stack, Properties.SUN_NUM, sunNum);
-//    		this.drawProperty(stack, Properties.ENERGY_NUM, energyNum);
-//    		this.drawProperty(stack, Properties.MONEY, money);
-//    		this.drawProperty(stack, Properties.GEM_NUM, gemNum);
-//		}
-	}
-	
-	protected void drawProperty(MatrixStack stack, Properties prop, float num) {
-		this.propertyCnt ++;
-		int posX = this.leftPos + 9 + 2 + ((this.propertyCnt & 1) == 1 ? 0 : 110);
-		int posY = this.topPos + 92 + 2 + ((this.propertyCnt - 1) / 2) * 18;
-		String string = prop.getName()+": ";
-		int floorNum = MathHelper.fastFloor(num);
-		if(floorNum == num) {
-			string += floorNum;
-		} else {
-			string += num;
+	protected void renderAlmanac(MatrixStack stack, int mouseX, int mouseY){
+		if(! this.searchGui.getCurrentOption().isPresent()){
+			return ;
 		}
-		StringUtil.drawScaledString(stack, font, string, posX, posY, prop.getColor(), 1f);
+		SearchOption option = this.searchGui.getCurrentOption().get();
+		if(! this.isOptionUnLocked(option)){
+			return ;
+		}
+		this.renderTitle(stack, option);
+		this.renderLogo(stack, option);
+		this.renderBar(stack, option);
+//		InventoryScreen.renderEntityInInventory(this.leftPos, this.topPos, 30, 1, 1, this.minecraft.player);
+//		renderEntityInInventory(this.leftPos + 37, this.topPos + 60, 30F, this.leftPos - mouseX, this.topPos - mouseY, option);
+
+		if(getRenderEntity(option) instanceof IPAZEntity){
+			this.entries.clear();
+			((IPAZEntity) getRenderEntity(option)).addAlmanacEntries(this.entries);
+			for(int i = 0; i < Math.min(this.entries.size(), MAX_ENTRY_COUNT); ++ i){
+				this.currentPos = MathHelper.clamp(this.currentPos, 0, this.entries.size() - 1);
+				drawEntryAt(stack, this.entries.get(this.currentPos + i), i);
+			}
+		}
 	}
-	
-	protected void renderShortInfo(MatrixStack stack, SearchOption a) {
-		if(a.isPlayer()) return ;
-		stack.pushPose();
-//		int posX = this.guiLeft + 82 + 150 / 2;
-//		int posY = this.guiTop + 26 + 2;
-//		for(int i=0;i<4;i++) {
-//			StringUtil.drawCenteredScaledString(font, new TranslationTextComponent("gui.pvz.almanac."+a.toString().toLowerCase()+(i+1)).getFormattedText(), posX, posY, Colors.DARK_BLUE, 0.7f);
-//			posY += 12;
-//		}
-		stack.popPose();
+
+	private void drawEntryAt(MatrixStack stack, Pair<IAlmanacEntry, Number> pair, int pos){
+		final int incHeight = 20;
+		final int posX = this.leftPos + 8 + 2;
+		final int posY = this.topPos + 49 + 5;
+		final String text = pair.getFirst().getText() + " : " + (pair.getSecond() instanceof Float ? String.format("%.2f", pair.getSecond()) : String.format("%d", pair.getSecond()));
+		StringUtil.drawScaledString(stack, font, text, posX, posY + incHeight * pos, Colors.WHITE, 1f);
 	}
-	
-	protected void renderXpBar(MatrixStack stack, SearchOption a) {
-//		stack.pushPose();
-//		int maxLvl = 1, lvl = 1;
-//		Plants p = null;
-//		if(a.isPlant()) {
-//			p = a.getPlant().get();
-//			maxLvl = PlantUtil.getPlantMaxLvl(p);
-//			lvl = ClientPlayerResources.getPlayerPlantCardLvl(p);
-//		} else if(a.isPlayer()) {
-//			maxLvl = PlayerUtil.MAX_TREE_LVL;
-//			lvl = ClientPlayerResources.getPlayerStats(Resources.TREE_LVL);
-//		} else {
-//		}
-//		String lvlInfo = Properties.LVL.getName() + ":" + lvl;
-//		int barWidth = 62, barHeight = 9;
-//		int len = barWidth;
-//		if(maxLvl != lvl && p != null) { 
-//			int xp = ClientPlayerResources.getPlayerPlantCardXp(p);
-//			int maxXp = PlantUtil.getPlantLevelUpXp(p, lvl);
-//			len = RenderUtil.getRenderBarLen(xp, maxXp, barWidth);
-//		} else if(a.isPlayer()) {
-//			int xp = ClientPlayerResources.getPlayerStats(Resources.TREE_XP);
-//			int maxXp = PlayerUtil.getPlayerLevelUpXp(lvl);
-//			len = RenderUtil.getRenderBarLen(xp, maxXp, barWidth);
-//		}
-//		int texX = 0;
-//		int texY = (maxLvl == lvl ? 210 : 200);
-//		stack.pushPose();
-//		stack.translate(0, 0, 100);
-//		this.minecraft.getTextureManager().bind(TEXTURE);
-//		blit(stack, this.leftPos + 9, this.topPos + 66, texX, texY, len, barHeight);
-//		StringUtil.drawCenteredScaledString(stack, this.font, lvlInfo, this.leftPos + 9 + barWidth / 2, this.topPos + 66 + 1, Colors.BLACK, 1f);
-//		stack.popPose();
-//		stack.popPose();
-	}
-	
+
 	protected void renderTitle(MatrixStack stack, SearchOption a) {
 		stack.pushPose();
-		int dx = this.leftPos + 82 + 150 / 2, dy = this.topPos + 10 + 2;
-		StringUtil.drawCenteredScaledString(stack, this.font, SearchOption.getOptionName(a).getString(), dx, dy, Colors.DARK_GREEN, 1.6f);
+		int dx = this.leftPos + 49 + 94 / 2, dy = this.topPos + 9;
+		StringUtil.drawCenteredScaledString(stack, this.font, a.getType().getText().getString(), dx, dy, Colors.WHITE, 1f);
 		stack.popPose();
 	}
 	
 	@SuppressWarnings("deprecation")
 	protected void renderLogo(MatrixStack stack, SearchOption a) {
-		int dx = this.leftPos + 16, dy = this.topPos + 14;
-		int scale = 3;
+		int dx = this.leftPos + 9, dy = this.topPos + 9;
+		int scale = 2;
 		RenderSystem.pushMatrix();
 		RenderSystem.scaled(scale, scale, scale);
 		RenderSystem.translated((dx % scale) * 1.0d / scale , (dy % scale) * 1.0d / scale, 0);
@@ -324,69 +118,165 @@ public class AlmanacScreen extends AbstractOptionScreen<AlmanacContainer> {
 		RenderSystem.popMatrix();
 	}
 
-	@Override
-	protected void renderBg(MatrixStack stack, float partialTicks, int mouseX, int mouseY) {
-		this.minecraft.getTextureManager().bind(TEXTURE);
-		blit(stack, this.leftPos, this.topPos, 0, 0, this.imageWidth, this.imageHeight);
+	protected void renderBar(MatrixStack stack, SearchOption a) {
+		stack.pushPose();
+		//Do not change the position values, if changed pls modify with the below method.
+		final int len = 22;
+		int posX = 53;
+		int posY = 25;
+		{//guide book.
+			ItemStack guideBook = PVZPatchouliHandler.getPatchouliGuide();
+			if(guideBook != ItemStack.EMPTY){
+				this.itemRenderer.renderGuiItem(guideBook, this.leftPos + posX, this.topPos + posY);
+			} else{
+				this.minecraft.getTextureManager().bind(TEXTURE);
+				blit(stack, this.leftPos + posX, this.topPos + posY, 224, 0, 16, 16);
+			}
+		}
+		posX += len;
+		{
+			if(a.getType() instanceof IPlantType){
+				ItemStack itemStack = new ItemStack(((IPlantType) a.getType()).getEssence().getEssenceItem());
+				this.itemRenderer.renderGuiItem(itemStack, this.leftPos + posX, this.topPos + posY);
+			}
+		}
+		posX += len;
+		{
+			this.itemRenderer.renderGuiItem(new ItemStack(a.getType().getRank().getTemplateCard()), this.leftPos + posX, this.topPos + posY);
+		}
+		posX += len;
+		{
+			this.minecraft.getTextureManager().bind(TEXTURE);
+			if(a.getType().getSkills().isEmpty()) {
+				blit(stack, this.leftPos + posX, this.topPos + posY, 224, 16, 16, 16);
+			} else {
+				blit(stack, this.leftPos + posX, this.topPos + posY, 240, 16, 16, 16);
+			}
+		}
+		stack.popPose();
 	}
 
-	private enum Properties{
-		LVL,
-		HEALTH,
-		SUN_COST,
-		COOL_DOWN,
-		ATTACK_DAMAGE,
-		GEN_TIME,
-		GEN_AMOUNT,
-		AVE_GEN_AMOUNT,
-		//cool down per attack
-		ATTACK_CD,
-		//prepare time e.g. potato mine
-		PRE_TIME,
-		ARMOR_HEALTH,
-		SUN_NUM,
-		ENERGY_NUM,
-		MONEY,
-		GEM_NUM,
-		//bullet speed e.g. pea shooter
-		BULLET_SPEED,
-		//cold effect lvl
-		COLD_EFFECT,
-		//cold effect duration
-		COLD_EFFECT_TIME,
-		//frozen effect duration
-		FROZEN_EFFECT_TIME,
-		//death chance for each attack e.g. squash
-		DEATH_CHANCE,
-		ATTACK_RANGE,
-		LIVE_TICK,
-		KILL_COUNT,
-		HEAL_HEALTH,
-		SCARE_RANGE,
-		DURATION;
-		
-		public String getName() {
-			return new TranslationTextComponent("gui.pvz.almanac."+this.toString().toLowerCase()).getString();
-		}
-		
-		public int getColor() {
-			switch (this) {
-//			case SUN_COST: return Colors.YELLOW;
-//			case HEALTH:
-//			case ATTACK_DAMAGE: return Colors.RED;
-			default:return Colors.BLACK;
+	@Override
+	protected void renderTooltip(MatrixStack stack, int mouseX, int mouseY) {
+		super.renderTooltip(stack, mouseX, mouseY);
+		if(this.option != null){
+			final int len = 22;
+			int posX = this.leftPos + 53;
+			int posY = this.topPos + 25;
+			if(MathUtil.isInArea(mouseX, mouseY, posX, posY, 16, 16)){
+
+			}
+			posX += len;
+			if(MathUtil.isInArea(mouseX, mouseY, posX, posY, 16, 16)){
+				
+				if(this.option.getType() instanceof IPlantType){
+					Item item = ((IPlantType) this.option.getType()).getEssence().getEssenceItem();
+					this.minecraft.screen.renderComponentTooltip(stack, Arrays.asList(
+							new TranslationTextComponent("item.pvz." + item.getRegistryName().getPath())
+					), mouseX, mouseY);
+				}
+			}
+			posX += len;
+			if(MathUtil.isInArea(mouseX, mouseY, posX, posY, 16, 16)){
+				this.minecraft.screen.renderComponentTooltip(stack, Arrays.asList(
+						new TranslationTextComponent("item.pvz." + this.option.getType().getRank().getTemplateCard().getRegistryName().getPath())
+				), mouseX, mouseY);
+			}
+			posX += len;
+			if(MathUtil.isInArea(mouseX, mouseY, posX, posY, 16, 16)){
+				List<ITextComponent> list = new ArrayList<>();
+				this.option.getType().getSkills().forEach(skill -> {
+					list.add(skill.getText().withStyle(TextFormatting.GREEN));
+				});
+				if(list.isEmpty()) {
+//					list.add(new TranslationTextComponent("gui.))
+					this.minecraft.screen.renderComponentTooltip(stack, list, mouseX, mouseY);
+				} else {
+					this.minecraft.screen.renderComponentTooltip(stack, list, mouseX, mouseY);
+				}
 			}
 		}
 	}
 
 	@Override
+	protected void renderBg(MatrixStack stack, float partialTicks, int mouseX, int mouseY) {
+		this.minecraft.getTextureManager().bind(TEXTURE);
+		blit(stack, this.leftPos, this.topPos, 0, 0, this.imageWidth, this.imageHeight);
+		if(this.entries.size() <= MAX_ENTRY_COUNT) {
+			blit(stack, this.leftPos + 130, this.topPos + 49, 162, 0, 12, 15);
+		} else {
+			final int len = MathUtil.getBarLen(this.currentPos, this.entries.size() - MAX_ENTRY_COUNT, 143 - 15);
+			blit(stack, this.leftPos + 130, this.topPos + 49 + len, 150, 0, 12, 15);
+		}
+//		InventoryScreen.renderEntityInInventory(this.leftPos, this.topPos, 30, 1, 1, this.minecraft.player);
+	}
+
+	//TODO Display Entity Model on Almanac Screen.
+	public void renderEntityInInventory(int offsetX, int offsetY, float scale, float vecX, float vecY, SearchOption option) {
+		LivingEntity livingEntity = getRenderEntity(option);
+		if(this.getRenderEntity(option) == null){
+			return;
+		}
+		scale /= option.getType().getRenderScale();
+		float f = (float)Math.atan((double)(vecX / 40.0F));
+		float f1 = (float)Math.atan((double)(vecY / 40.0F));
+		RenderSystem.pushMatrix();
+		RenderSystem.translatef((float)offsetX, (float)offsetY, 1000F);
+		RenderSystem.scalef(1.0F, 1.0F, -1.0F);
+		MatrixStack matrixstack = new MatrixStack();
+		matrixstack.translate(0.0D, 0.0D, 1000.0D);
+		matrixstack.scale((float)scale, (float)scale, (float)scale);
+		Quaternion quaternion = Vector3f.ZP.rotationDegrees(180.0F);
+		Quaternion quaternion1 = Vector3f.XP.rotationDegrees(f1 * 20.0F);
+		quaternion.mul(quaternion1);
+		matrixstack.mulPose(quaternion);
+		float f2 = livingEntity.yBodyRot;
+		float f3 = livingEntity.yRot;
+		float f4 = livingEntity.xRot;
+		float f5 = livingEntity.yHeadRotO;
+		float f6 = livingEntity.yHeadRot;
+		livingEntity.yBodyRot = 180.0F + f * 20.0F;
+		livingEntity.yRot = 180.0F + f * 40.0F;
+		livingEntity.xRot = -f1 * 20.0F;
+		livingEntity.yHeadRot = livingEntity.yRot;
+		livingEntity.yHeadRotO = livingEntity.yRot;
+		EntityRendererManager entityrenderermanager = Minecraft.getInstance().getEntityRenderDispatcher();
+		quaternion1.conj();
+		entityrenderermanager.overrideCameraOrientation(quaternion1);
+		entityrenderermanager.setRenderShadow(false);
+		IRenderTypeBuffer.Impl irendertypebuffer$impl = Minecraft.getInstance().renderBuffers().bufferSource();
+		RenderSystem.runAsFancy(() -> {
+			entityrenderermanager.render(livingEntity, 0.0D, 0.0D, 0.0D, 0.0F, 1.0F, matrixstack, irendertypebuffer$impl, 15728880);
+		});
+		irendertypebuffer$impl.endBatch();
+		entityrenderermanager.setRenderShadow(true);
+		livingEntity.yBodyRot = f2;
+		livingEntity.yRot = f3;
+		livingEntity.xRot = f4;
+		livingEntity.yHeadRotO = f5;
+		livingEntity.yHeadRot = f6;
+		RenderSystem.popMatrix();
+	}
+
+	public CreatureEntity getRenderEntity(SearchOption option){
+		if(option.getType().getEntityType().isPresent()) {
+			if (option.equals(this.option)) {
+				return this.renderEntity == null ? this.renderEntity = option.getType().getEntityType().get().create(this.minecraft.level) : this.renderEntity;
+			}
+			this.option = option;
+			return this.renderEntity = option.getType().getEntityType().get().create(this.minecraft.level);
+		}
+		return null;
+	}
+	
+	@Override
 	public boolean isOptionUnLocked(SearchOption option) {
-		return ClientPlayerResources.isAlmanacUnLocked(option);
+		return ! PlayerUtil.isPAZLocked(this.minecraft.player, option.getType());
 	}
 
 	@Override
-	public List<SearchCategories> getSearchCategories() {
-		return Arrays.asList(SearchCategories.ALL, SearchCategories.PLANTS, SearchCategories.ZOMBIES);
+	public List<CategoryToggleWidget.SearchCategories> getSearchCategories() {
+		return Arrays.asList(CategoryToggleWidget.SearchCategories.ALL, CategoryToggleWidget.SearchCategories.PLANTS, CategoryToggleWidget.SearchCategories.ZOMBIES);
 	}
 
 }

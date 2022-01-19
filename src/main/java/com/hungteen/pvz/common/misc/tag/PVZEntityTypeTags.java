@@ -10,11 +10,15 @@ import net.minecraft.util.ResourceLocation;
 public class PVZEntityTypeTags {
 
 	//minecraft
+
 	//forge
-	public static final INamedTag<EntityType<?>> PVZ_PLANT_TARGETS = forgeTag("pvz_plant_targets");
-	public static final INamedTag<EntityType<?>> PVZ_ZOMBIE_TARGETS = forgeTag("pvz_zombie_targets");
-	public static final INamedTag<EntityType<?>> NOT_PVZ_PLANT_TARGETS = forgeTag("not_pvz_plant_targets");
-	public static final INamedTag<EntityType<?>> NOT_PVZ_ZOMBIE_TARGETS = forgeTag("not_pvz_zombie_targets");
+	public static final INamedTag<EntityType<?>> PVZ_PLANT_GROUP_ENTITIES = forgeTag("pvz_plant_group_entities");
+	public static final INamedTag<EntityType<?>> PVZ_ZOMBIE_GROUP_ENTITIES = forgeTag("pvz_zombie_group_entities");
+	public static final INamedTag<EntityType<?>> PVZ_OTHER_MONSTERS = forgeTag("pvz_other_monsters");
+	public static final INamedTag<EntityType<?>> PVZ_OTHER_GUARDIANS = forgeTag("pvz_other_guardians");
+	public static final INamedTag<EntityType<?>> PVZ_NOT_MONSTERS = forgeTag("pvz_not_monsters");
+	public static final INamedTag<EntityType<?>> PVZ_NOT_GUARDIANS = forgeTag("pvz_not_guardians");
+
 	//pvz
 	public static final INamedTag<EntityType<?>> PVZ_PLANTS = pvzTag("pvz_plants");
 	public static final INamedTag<EntityType<?>> PVZ_ZOMBIES = pvzTag("pvz_zombies");

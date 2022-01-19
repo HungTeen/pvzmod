@@ -15,7 +15,7 @@
       "item": "pvz:magic_essence"
     },
     "C": {
-      "item": "pvz:gold_card"
+      "tag": "pvz:card/gold_cards"
     }
   },
   "result": {

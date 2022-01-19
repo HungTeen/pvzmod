@@ -69,7 +69,7 @@ public class FragmentSpliceContainer extends PVZContainer {
 
 	public void onCraft(){
 		this.te.handler.setStackInSlot(1, getResult().copy());
-		this.craftSlots.clearContent();
+		this.te.clearCraftingSlots();
 		this.te.sunAmount = 0;
 	}
 

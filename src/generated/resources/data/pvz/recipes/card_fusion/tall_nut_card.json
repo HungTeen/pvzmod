@@ -8,7 +8,7 @@
       "item": "pvz:wall_nut_card"
     },
     {
-      "item": "pvz:blue_card"
+      "tag": "pvz:card/blue_cards"
     }
   ],
   "result": {

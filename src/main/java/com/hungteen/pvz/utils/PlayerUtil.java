@@ -2,13 +2,12 @@ package com.hungteen.pvz.utils;
 
 import com.hungteen.pvz.api.enums.PVZGroupType;
 import com.hungteen.pvz.api.types.IPAZType;
-import com.hungteen.pvz.client.gui.search.SearchOption;
 import com.hungteen.pvz.common.capability.CapabilityHandler;
 import com.hungteen.pvz.common.capability.player.IPlayerDataCapability;
 import com.hungteen.pvz.common.capability.player.PlayerDataManager;
+import com.hungteen.pvz.common.entity.EntityGroupHander;
 import com.hungteen.pvz.common.item.spawn.card.PlantCardItem;
 import com.hungteen.pvz.common.network.PVZPacketHandler;
-import com.hungteen.pvz.common.network.toclient.AlmanacUnLockPacket;
 import com.hungteen.pvz.common.network.toclient.PlaySoundPacket;
 import com.hungteen.pvz.utils.enums.Resources;
 import net.minecraft.entity.player.PlayerEntity;
@@ -56,14 +55,6 @@ public class PlayerUtil {
 	public static int getPlayerLevelUpXp(int lvl){
 		final int pos = lvl / 5;
 		return pos < TREE_LVL_XP.length ? TREE_LVL_XP[pos] : 200000;
-	}
-	
-	public static int getPlayerWaveCount(int lvl) {
-		if(lvl <= 10) return 1;
-		if(lvl <= 25) return 2;
-		if(lvl <= 40) return 3;
-		if(lvl <= 60) return 4;
-		return 5;
 	}
 
 	@Nullable
@@ -116,15 +107,6 @@ public class PlayerUtil {
 		}
 	}
 	
-	public static void addPAZPoint(PlayerEntity player, IPAZType plant, int num) {
-		getOptManager(player).ifPresent(l -> l.addPAZPoint(plant, num));
-	}
-	
-	public static int getPAZPoint(PlayerEntity player, IPAZType plant) {
-		final PlayerDataManager manager = getManager(player);
-		return manager != null ? manager.getPAZPoint(plant) : 1;
-	}
-	
 	public static void setCardCD(PlayerEntity player, PlantCardItem card, int cd) {
 		player.getCapability(CapabilityHandler.PLAYER_DATA_CAPABILITY).ifPresent(l -> {
 			l.getPlayerData().setPAZCardCD(card.plantType, cd);
@@ -141,27 +123,12 @@ public class PlayerUtil {
 		return manager != null ? manager.isPAZLocked(plant) : true;
 	}
 	
-	public static void unLockAlmanac(PlayerEntity player, SearchOption a) {
-		if (player instanceof ServerPlayerEntity) {
-			PVZPacketHandler.CHANNEL.send(
-				PacketDistributor.PLAYER.with(() -> {
-					return (ServerPlayerEntity) player;
-				}),
-				new AlmanacUnLockPacket(a.ordinal(), true)
-			);
-		}
-	}
-	
 	/**
 	 * get player's group.
 	 * {@link EntityUtil#getEntityGroup(net.minecraft.entity.Entity)}
 	 */
 	public static PVZGroupType getPlayerGroupType(ServerPlayerEntity player) {
-		final IPlayerDataCapability cap = player.getCapability(CapabilityHandler.PLAYER_DATA_CAPABILITY).orElse(null);
-		if(cap != null) {
-			return PVZGroupType.getGroup(cap.getPlayerData().getResource(Resources.GROUP_TYPE));
-		}
-		return PVZGroupType.getGroup(ConfigUtil.getPlayerInitialGroup());// get Group Error !
+		return EntityGroupHander.getPlayerGroup(player);
 	}
 	
 	public static void playClientSound(PlayerEntity player, SoundEvent ev) {

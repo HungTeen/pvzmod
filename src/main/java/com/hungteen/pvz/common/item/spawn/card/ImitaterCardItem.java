@@ -6,7 +6,7 @@ import com.hungteen.pvz.client.render.itemstack.ImitaterCardISTER;
 import com.hungteen.pvz.common.container.ImitaterContainer;
 import com.hungteen.pvz.common.container.inventory.ItemInventory;
 import com.hungteen.pvz.common.entity.plant.magic.ImitaterEntity;
-import com.hungteen.pvz.common.impl.PlantType;
+import com.hungteen.pvz.common.impl.plant.PlantType;
 import com.hungteen.pvz.common.impl.plant.PVZPlants;
 import com.hungteen.pvz.common.item.PVZItemGroups;
 import com.mojang.datafixers.util.Pair;
