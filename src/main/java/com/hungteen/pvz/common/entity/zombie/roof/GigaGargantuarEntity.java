@@ -1,13 +1,10 @@
 package com.hungteen.pvz.common.entity.zombie.roof;
 
-import com.hungteen.pvz.common.impl.zombie.ZombieType;
 import com.hungteen.pvz.common.impl.zombie.RoofZombies;
-import com.hungteen.pvz.data.loot.PVZLoot;
+import com.hungteen.pvz.common.impl.zombie.ZombieType;
 import com.hungteen.pvz.utils.EntityUtil;
 import com.hungteen.pvz.utils.ZombieUtil;
 import net.minecraft.entity.*;
-import net.minecraft.entity.ai.attributes.Attributes;
-import net.minecraft.util.ResourceLocation;
 import net.minecraft.world.World;
 
 public class GigaGargantuarEntity extends GargantuarEntity {
@@ -15,12 +12,6 @@ public class GigaGargantuarEntity extends GargantuarEntity {
 	public GigaGargantuarEntity(EntityType<? extends CreatureEntity> type, World worldIn) {
 		super(type, worldIn);
 		this.isSad = true;
-	}
-	
-	@Override
-	protected void updateAttributes() {
-		super.updateAttributes();
-		this.getAttribute(Attributes.MOVEMENT_SPEED).setBaseValue(ZombieUtil.WALK_LITTLE_SLOW);
 	}
 	
 	@Override
@@ -60,18 +51,18 @@ public class GigaGargantuarEntity extends GargantuarEntity {
 	public float getLife() {
 		return 600;
 	}
-	
+
+	@Override
+	public float getWalkSpeed() {
+		return ZombieUtil.WALK_LITTLE_SLOW;
+	}
+
 	@Override
 	public EntitySize getDimensions(Pose poseIn) {
 		if(this.isMiniZombie()) {
 			return EntitySize.scalable(0.7F, 2F);
 		}
 		return super.getDimensions(poseIn);
-	}
-
-	@Override
-	protected ResourceLocation getDefaultLootTable() {
-		return PVZLoot.GIGA_GARGANTUAR;
 	}
 	
 	@Override

@@ -1,9 +1,8 @@
 package com.hungteen.pvz.common.entity.zombie.grass;
 
 import com.hungteen.pvz.common.entity.zombie.PVZZombieEntity;
-import com.hungteen.pvz.common.impl.zombie.ZombieType;
 import com.hungteen.pvz.common.impl.zombie.GrassZombies;
-import com.hungteen.pvz.data.loot.PVZLoot;
+import com.hungteen.pvz.common.impl.zombie.ZombieType;
 import com.hungteen.pvz.remove.MetalTypes;
 import com.hungteen.pvz.utils.ZombieUtil;
 import com.hungteen.pvz.utils.interfaces.IHasMetal;
@@ -11,44 +10,35 @@ import net.minecraft.entity.CreatureEntity;
 import net.minecraft.entity.EntitySize;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.Pose;
-import net.minecraft.entity.ai.attributes.Attributes;
-import net.minecraft.util.ResourceLocation;
 import net.minecraft.world.World;
 
 public class FootballZombieEntity extends PVZZombieEntity implements IHasMetal {
 
 	public FootballZombieEntity(EntityType<? extends CreatureEntity> type, World worldIn) {
 		super(type, worldIn);
-		this.hasDirectDefence = true;
 		this.canLostHand = false;
 		this.increaseMetal();
 	}
-	
-	@Override
-	protected void updateAttributes() {
-		super.updateAttributes();
-		this.getAttribute(Attributes.MOVEMENT_SPEED).setBaseValue(ZombieUtil.WALK_FAST);
-	}
-	
+
 	@Override
 	public EntitySize getDimensions(Pose poseIn) {
 		if(this.isMiniZombie()) return EntitySize.scalable(0.5f, 0.75f);
 		return EntitySize.scalable(0.8f, 2.4f);
 	}
-	
+
+	@Override
+	public float getWalkSpeed() {
+		return ZombieUtil.WALK_FAST;
+	}
+
 	@Override
 	public float getLife() {
 		return 20;
 	}
 	
 	@Override
-	public float getExtraLife() {
+	public float getInnerLife() {
 		return 140;
-	}
-
-	@Override
-	protected ResourceLocation getDefaultLootTable() {
-		return PVZLoot.FOOTBALL_ZOMBIE;
 	}
 	
 	@Override
@@ -58,17 +48,17 @@ public class FootballZombieEntity extends PVZZombieEntity implements IHasMetal {
 
 	@Override
 	public boolean hasMetal() {
-		return this.getDefenceLife() > 0;
+		return this.getInnerDefenceLife() > 0;
 	}
 
 	@Override
 	public void decreaseMetal() {
-		this.setDefenceLife(0);
+		this.setInnerDefenceLife(0);
 	}
 
 	@Override
 	public void increaseMetal() {
-		this.setDefenceLife(this.getExtraLife());
+		this.setInnerDefenceLife(this.getInnerLife());
 	}
 
 	@Override

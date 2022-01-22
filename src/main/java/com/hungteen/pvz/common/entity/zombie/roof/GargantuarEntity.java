@@ -1,15 +1,14 @@
 package com.hungteen.pvz.common.entity.zombie.roof;
 
+import com.hungteen.pvz.common.entity.EntityRegister;
 import com.hungteen.pvz.common.entity.ai.goal.attack.PVZZombieAttackGoal;
 import com.hungteen.pvz.common.entity.plant.spear.SpikeRockEntity;
 import com.hungteen.pvz.common.entity.zombie.PVZZombieEntity;
 import com.hungteen.pvz.common.entity.zombie.body.ZombieDropBodyEntity;
-import com.hungteen.pvz.common.impl.zombie.ZombieType;
 import com.hungteen.pvz.common.impl.zombie.RoofZombies;
+import com.hungteen.pvz.common.impl.zombie.ZombieType;
 import com.hungteen.pvz.common.misc.damage.PVZDamageSource;
 import com.hungteen.pvz.common.misc.sound.SoundRegister;
-import com.hungteen.pvz.data.loot.PVZLoot;
-import com.hungteen.pvz.common.entity.EntityRegister;
 import com.hungteen.pvz.utils.EntityUtil;
 import com.hungteen.pvz.utils.ZombieUtil;
 import net.minecraft.entity.*;
@@ -20,7 +19,6 @@ import net.minecraft.network.datasync.DataParameter;
 import net.minecraft.network.datasync.DataSerializers;
 import net.minecraft.network.datasync.EntityDataManager;
 import net.minecraft.util.Hand;
-import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.SoundEvent;
 import net.minecraft.world.DifficultyInstance;
 import net.minecraft.world.IServerWorld;
@@ -37,7 +35,6 @@ public class GargantuarEntity extends PVZZombieEntity {
 	
 	public GargantuarEntity(EntityType<? extends CreatureEntity> type, World worldIn) {
 		super(type, worldIn);
-		this.maxDeathTime = 40;
 		this.setIsWholeBody();
 	}
 	
@@ -65,8 +62,8 @@ public class GargantuarEntity extends PVZZombieEntity {
 	}
 	
 	@Override
-	protected void updateAttributes() {
-		super.updateAttributes();
+	protected void initAttributes() {
+		super.initAttributes();
 		this.getAttribute(Attributes.MOVEMENT_SPEED).setBaseValue(ZombieUtil.WALK_SLOW);
 	}
 	
@@ -126,7 +123,7 @@ public class GargantuarEntity extends PVZZombieEntity {
 	}
 	
 	public boolean canThrowImp() {
-		return this.canZombieNormalUpdate() && this.getHealth() / this.getMaxHealth() < 0.5F;
+		return this.canNormalUpdate() && this.getHealth() / this.getMaxHealth() < 0.5F;
 	}
 	
 	@Override
@@ -146,7 +143,17 @@ public class GargantuarEntity extends PVZZombieEntity {
 	public float getLife() {
 		return 300;
 	}
-	
+
+	@Override
+	public int getArmorToughness() {
+		return 5;
+	}
+
+	@Override
+	protected int getDeathTime() {
+		return 40;
+	}
+
 	@Override
 	protected SoundEvent getDeathSound() {
 		return SoundRegister.GARGANTUAR_DEATH.get();
@@ -201,12 +208,7 @@ public class GargantuarEntity extends PVZZombieEntity {
 		return GargantuarType.values()[this.entityData.get(TOOL_TYPE)];
 	}
 	
-	@Override
-	protected ResourceLocation getDefaultLootTable() {
-		return PVZLoot.GARGANTUAR;
-	}
-	
-	public static enum GargantuarType {
+	public enum GargantuarType {
 		POLE,
 		SIGN,
 		DOLL
@@ -262,7 +264,7 @@ public class GargantuarEntity extends PVZZombieEntity {
 		
 		@Override
 		public void tick() {
-			if(this.attacker.canZombieNormalUpdate() && this.attacker.getAttackTime() > 0) {
+			if(this.attacker.canNormalUpdate() && this.attacker.getAttackTime() > 0) {
 				this.attacker.setAttackTime(this.attacker.getAttackTime() - 1);
 				if(this.attacker.getAttackTime() == this.attacker.getCrushCD() * 1 / 3) {
 					this.attacker.doHurtTarget(this.attacker.getTarget());
@@ -303,7 +305,7 @@ public class GargantuarEntity extends PVZZombieEntity {
 		
 		@Override
 		public void tick() {
-			if(this.attacker.canZombieNormalUpdate() && this.attacker.getAttackTime() < 0) {
+			if(this.attacker.canNormalUpdate() && this.attacker.getAttackTime() < 0) {
 				this.attacker.setAttackTime(this.attacker.getAttackTime() + 1);
 				if(this.attacker.hasImp() && - this.attacker.getAttackTime() == this.attacker.getThrowCD() * 1 / 4) {
 					this.attacker.throwImp(this.attacker.getTarget());

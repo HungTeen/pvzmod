@@ -1,6 +1,7 @@
 package com.hungteen.pvz.common.entity.plant.appease;
 
 import com.hungteen.pvz.api.types.IPlantType;
+import com.hungteen.pvz.common.impl.SkillTypes;
 import com.hungteen.pvz.common.impl.plant.PVZPlants;
 import com.hungteen.pvz.utils.MathUtil;
 import net.minecraft.entity.CreatureEntity;
@@ -64,8 +65,8 @@ public class SplitPeaEntity extends PeaShooterEntity{
 	 */
 	private void checkAndChangeFacing() {
 		if(this.getAttackTime() == 1 && ! this.isPlantInSuperMode()) {
-			final int chance = this.isFacingFront() ? this.getDoubleChance() : 100 - this.getDoubleChance();
-			if(this.getRandom().nextInt(100) < chance) {
+			final float chance = this.isFacingFront() ? this.getDoubleChance() : 1 - this.getDoubleChance();
+			if(this.getRandom().nextFloat() < chance) {
 				this.rotateFacing();
 			}
 		}
@@ -78,9 +79,8 @@ public class SplitPeaEntity extends PeaShooterEntity{
 	/**
 	 * Repeater head stay front chance. 
 	 */
-	public int getDoubleChance() {
-		return 20;
-//		return PlantUtil.getPlantAverageProgress(this, 20, 80);
+	public float getDoubleChance() {
+		return this.getSkillValue(SkillTypes.SPLIT_DOUBLE_CHANCE);
 	}
 	
 	@Override

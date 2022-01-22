@@ -1,7 +1,5 @@
 package com.hungteen.pvz.api.paz;
 
-import com.hungteen.pvz.api.types.IEssenceType;
-
 public interface IPlantEntity extends IPAZEntity {
 
     /**
@@ -9,8 +7,5 @@ public interface IPlantEntity extends IPAZEntity {
      */
     void setPumpkin(boolean is);
 
-    /**
-     * which essence does it belong to.
-     */
-    IEssenceType getPlantEssenceType();
+
 }

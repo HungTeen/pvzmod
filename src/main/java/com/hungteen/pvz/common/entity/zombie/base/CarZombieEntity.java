@@ -22,7 +22,6 @@ public abstract class CarZombieEntity extends PVZZombieEntity {
 		this.setIsWholeBody();
 		this.canBeFrozen = false;
 		this.canBeMini = false;
-		this.maxDeathTime = 1;
 	}
 	
 	@Override
@@ -36,7 +35,7 @@ public abstract class CarZombieEntity extends PVZZombieEntity {
 	}
 	
 	@Override
-	protected void onZombieRemove() {
+	protected void onRemoveWhenDeath() {
 		if(! level.isClientSide) {
 			EntityUtil.playSound(this, SoundRegister.CAR_EXPLOSION.get());
 		}
@@ -45,7 +44,7 @@ public abstract class CarZombieEntity extends PVZZombieEntity {
 			    this.level.addParticle(ParticleTypes.EXPLOSION, this.getX(), this.getY(), this.getZ(), 0, 0, 0);
 			}
 		}
-		super.onZombieRemove();
+		super.onRemoveWhenDeath();
 	}
 	
 	
@@ -79,4 +78,8 @@ public abstract class CarZombieEntity extends PVZZombieEntity {
 		return f;
 	}
 
+	@Override
+	protected int getDeathTime() {
+		return 2;
+	}
 }

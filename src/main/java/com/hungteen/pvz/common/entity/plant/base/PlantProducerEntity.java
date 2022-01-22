@@ -1,15 +1,19 @@
 package com.hungteen.pvz.common.entity.plant.base;
 
+import com.hungteen.pvz.api.interfaces.IAlmanacEntry;
 import com.hungteen.pvz.common.entity.misc.drop.SunEntity;
 import com.hungteen.pvz.common.entity.plant.PVZPlantEntity;
-import com.hungteen.pvz.common.entity.EntityRegister;
 import com.hungteen.pvz.utils.EntityUtil;
-
+import com.hungteen.pvz.utils.enums.PAZAlmanacs;
+import com.mojang.datafixers.util.Pair;
 import net.minecraft.entity.CreatureEntity;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.ai.goal.Goal;
 import net.minecraft.util.SoundEvents;
 import net.minecraft.world.World;
+
+import java.util.Arrays;
+import java.util.List;
 
 public abstract class PlantProducerEntity extends PVZPlantEntity {
 
@@ -23,15 +27,21 @@ public abstract class PlantProducerEntity extends PVZPlantEntity {
 		super.registerGoals();
 		this.goalSelector.addGoal(0, new ProducerGenGoal(this));
 	}
-	
+
+	@Override
+	public void addAlmanacEntries(List<Pair<IAlmanacEntry, Number>> list) {
+		super.addAlmanacEntries(list);
+		list.addAll(Arrays.asList(
+				Pair.of(PAZAlmanacs.GEN_CD, this.getGenCD())
+		));
+	}
+
 	/**
 	 * sun produce plant gen sun
 	 * such as sunflower or sunshroom
 	 */
-	protected void genSun(int num){
-		SunEntity sun = EntityRegister.SUN.get().create(this.level);
-		sun.setAmount(num);
-		EntityUtil.onMobEntityRandomPosSpawn(level, sun, blockPosition(), 2);
+	protected void genSun(int num, int cnt){
+		SunEntity.spawnSunsByAmount(level, this.blockPosition(), num, num / cnt, 2);
 		EntityUtil.playSound(this, SoundEvents.EXPERIENCE_ORB_PICKUP);
 	}
 	

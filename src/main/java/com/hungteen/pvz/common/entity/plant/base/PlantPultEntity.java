@@ -1,12 +1,15 @@
 package com.hungteen.pvz.common.entity.plant.base;
 
+import com.hungteen.pvz.api.interfaces.IAlmanacEntry;
 import com.hungteen.pvz.common.entity.ai.goal.attack.PultAttackGoal;
 import com.hungteen.pvz.common.entity.ai.goal.target.PVZNearestTargetGoal;
 import com.hungteen.pvz.common.entity.bullet.PultBulletEntity;
 import com.hungteen.pvz.common.entity.plant.PVZPlantEntity;
 import com.hungteen.pvz.common.misc.sound.SoundRegister;
 import com.hungteen.pvz.utils.EntityUtil;
+import com.hungteen.pvz.utils.enums.PAZAlmanacs;
 import com.hungteen.pvz.utils.interfaces.IPult;
+import com.mojang.datafixers.util.Pair;
 import net.minecraft.entity.CreatureEntity;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
@@ -15,6 +18,8 @@ import net.minecraft.entity.ai.attributes.Attributes;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.world.World;
 
+import java.util.Arrays;
+import java.util.List;
 import java.util.Optional;
 
 public abstract class PlantPultEntity extends PVZPlantEntity implements IPult {
@@ -33,8 +38,8 @@ public abstract class PlantPultEntity extends PVZPlantEntity implements IPult {
 	}
 	
 	@Override
-	protected void updateAttributes() {
-		super.updateAttributes();
+	protected void initAttributes() {
+		super.initAttributes();
 		this.getAttribute(Attributes.FOLLOW_RANGE).setBaseValue(this.getPultRange());
 	}
 	
@@ -109,28 +114,6 @@ public abstract class PlantPultEntity extends PVZPlantEntity implements IPult {
 		return this.getY() + this.getPultHeight() >= target.getY() + target.getBbHeight();
 	}
 	
-	public float getSuperRange() {
-		return 15;
-//		return this.isPlantInStage(1) ? 15 : this.isPlantInStage(2) ? 20 : 25;
-	}
-	
-	public float getAttackDamage() {
-		return 2;
-//		return PlantUtil.getPlantAverageProgress(this, 2F, 8F);
-	}
-	
-	@Override
-	public float getPultRange() {
-		return 30;
-	}
-	
-	/**
-	 * max target height.
-	 */
-	public float getPultHeight() {
-		return 15;
-	}
-	
 	@Override
 	public void startPultAttack() {
 		this.setAttackTime(this.getPultAnimTime());
@@ -146,6 +129,18 @@ public abstract class PlantPultEntity extends PVZPlantEntity implements IPult {
 	public int getPultAnimTime() {
 		return 20;
 	}
+
+	@Override
+	public void addAlmanacEntries(List<Pair<IAlmanacEntry, Number>> list) {
+		super.addAlmanacEntries(list);
+		list.addAll(Arrays.asList(
+				Pair.of(PAZAlmanacs.BULLET_DAMAGE, this.getAttackDamage()),
+				Pair.of(PAZAlmanacs.ATTACK_CD, this.getPultCD()),
+				Pair.of(PAZAlmanacs.ATTACK_RANGE, this.getPultRange())
+		));
+	}
+
+	public abstract float getAttackDamage();
 	
 	@Override
 	public int getPultCD() {
@@ -156,7 +151,23 @@ public abstract class PlantPultEntity extends PVZPlantEntity implements IPult {
 	public int getSuperTimeLength() {
 		return 60;
 	}
-	
+
+	public float getSuperRange() {
+		return 15;
+	}
+
+	@Override
+	public float getPultRange() {
+		return 30;
+	}
+
+	/**
+	 * max target height.
+	 */
+	public float getPultHeight() {
+		return 15;
+	}
+
 	@Override
 	public void readAdditionalSaveData(CompoundNBT compound) {
 		super.readAdditionalSaveData(compound);

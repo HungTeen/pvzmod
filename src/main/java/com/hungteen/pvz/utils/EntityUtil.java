@@ -5,6 +5,7 @@ import com.hungteen.pvz.api.enums.PVZGroupType;
 import com.hungteen.pvz.api.interfaces.ICanBeCharmed;
 import com.hungteen.pvz.api.interfaces.IHasGroup;
 import com.hungteen.pvz.api.interfaces.IHasOwner;
+import com.hungteen.pvz.common.entity.AbstractPAZEntity;
 import com.hungteen.pvz.common.entity.EntityGroupHander;
 import com.hungteen.pvz.common.entity.PVZMultiPartEntity;
 import com.hungteen.pvz.common.entity.ai.goal.attack.PVZZombieAttackGoal;
@@ -152,11 +153,8 @@ public class EntityUtil {
 	 * {@link #getCurrentDefenceHealth(LivingEntity)}
 	 */
 	public static float getCurrentHealth(LivingEntity target) {
-		if(target instanceof PVZZombieEntity) {
-			return ((PVZZombieEntity) target).getCurrentHealth();
-		}
-		if(target instanceof PVZPlantEntity) {
-			return ((PVZPlantEntity) target).getCurrentHealth();
+		if(target instanceof AbstractPAZEntity) {
+			return (float) ((AbstractPAZEntity) target).getCurrentHealth();
 		}
 		return target.getHealth();
 	}
@@ -167,18 +165,15 @@ public class EntityUtil {
 	 * {@link PVZEntityProvider}
 	 */
 	public static float getCurrentDefenceHealth(LivingEntity entity) {
-		return getCurrentHealth(entity) - entity.getHealth();
+		return (float) (getCurrentHealth(entity) - entity.getHealth());
 	}
 	
 	/**
 	 * get the max health the target has currently.
 	 */
 	public static float getCurrentMaxHealth(LivingEntity target) {
-		if(target instanceof PVZZombieEntity) {
-			return ((PVZZombieEntity) target).getCurrentMaxHealth();
-		}
-		if(target instanceof PVZPlantEntity) {
-			return ((PVZPlantEntity) target).getCurrentMaxHealth();
+		if(target instanceof AbstractPAZEntity) {
+			return (float) ((AbstractPAZEntity) target).getCurrentMaxHealth();
 		}
 		return target.getMaxHealth();
 	}
@@ -188,7 +183,7 @@ public class EntityUtil {
 	}
 	
 	public static float getMaxHealthDamage(LivingEntity target, float multiple) {
-		return EntityUtil.getCurrentMaxHealth(target) * multiple;
+		return (float) (EntityUtil.getCurrentMaxHealth(target) * multiple);
 	}
 	
 	/**

@@ -1,14 +1,18 @@
 package com.hungteen.pvz.common.entity.plant.explosion;
 
+import com.hungteen.pvz.api.interfaces.IAlmanacEntry;
 import com.hungteen.pvz.api.types.IPlantType;
 import com.hungteen.pvz.common.entity.ai.goal.target.PVZRandomTargetGoal;
 import com.hungteen.pvz.common.entity.bullet.CornEntity;
 import com.hungteen.pvz.common.entity.plant.PVZPlantEntity;
+import com.hungteen.pvz.common.impl.SkillTypes;
 import com.hungteen.pvz.common.impl.plant.PVZPlants;
 import com.hungteen.pvz.common.item.ItemRegister;
 import com.hungteen.pvz.common.misc.sound.SoundRegister;
 import com.hungteen.pvz.common.network.toserver.EntityInteractPacket;
 import com.hungteen.pvz.utils.EntityUtil;
+import com.hungteen.pvz.utils.enums.PAZAlmanacs;
+import com.mojang.datafixers.util.Pair;
 import net.minecraft.entity.*;
 import net.minecraft.entity.ai.attributes.Attributes;
 import net.minecraft.entity.player.PlayerEntity;
@@ -28,6 +32,7 @@ import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 
 import javax.annotation.Nullable;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 
@@ -54,8 +59,8 @@ public class CobCannonEntity extends PVZPlantEntity {
 		this.entityData.define(CORN_NUM, 1);
 	}
 
-	protected void updateAttributes() {
-		super.updateAttributes();
+	protected void initAttributes() {
+		super.initAttributes();
 		this.getAttribute(Attributes.MOVEMENT_SPEED).setBaseValue(0.25D);
 	}
 
@@ -318,18 +323,25 @@ public class CobCannonEntity extends PVZPlantEntity {
 		return false;
 	}
 
+	@Override
+	public void addAlmanacEntries(List<Pair<IAlmanacEntry, Number>> list) {
+		super.addAlmanacEntries(list);
+		list.addAll(Arrays.asList(
+				Pair.of(PAZAlmanacs.PREPARE_CD, this.getPreCD()),
+				Pair.of(PAZAlmanacs.ATTACK_DAMAGE, this.getAttackDamage())
+		));
+	}
+
 	public int getPreCD() {
 		return 1000;
 	}
 	
 	public int getSuperCornNum() {
-//		return this.getThreeStage(4, 5, 6);
 		return 4;
 	}
 	
 	public float getAttackDamage() {
-//		return this.getAverageProgress(150F, 650F);
-		return 150;
+		return this.getSkillValue(SkillTypes.NORMAL_BOMB_DAMAGE);
 	}
 	
 	public int getAnimCD() {

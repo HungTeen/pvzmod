@@ -60,12 +60,6 @@ public class PoleZombieEntity extends PVZZombieEntity{
 	}
 	
 	@Override
-	protected void updateAttributes() {
-		super.updateAttributes();
-		this.getAttribute(Attributes.MOVEMENT_SPEED).setBaseValue(ZombieUtil.WALK_FAST);
-	}
-	
-	@Override
 	public void onSyncedDataUpdated(DataParameter<?> data) {
 		super.onSyncedDataUpdated(data);
 		if(data.equals(HAS_POLE)) {
@@ -127,9 +121,13 @@ public class PoleZombieEntity extends PVZZombieEntity{
 	 */
 	public int getMaxJumpCount() {
 		return 1;
-//		return this.getSkills();
 	}
-	
+
+	@Override
+	public float getWalkSpeed() {
+		return ZombieUtil.WALK_FAST;
+	}
+
 	@Override
 	public float getLife() {
 		return 50;

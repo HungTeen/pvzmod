@@ -22,12 +22,10 @@ public class WinterMelonEntity extends MelonPultEntity implements IIceEffect {
 
 	public int getColdLvl() {
 		return 7;
-//		return this.getAverageProgress(7, 11);
 	}
 	
 	public int getColdTick() {
 		return 80;
-//		return this.getAverageProgress(80, 160);
 	}
 	
 	@Override

@@ -13,9 +13,23 @@ public class TallNutEntity extends WallNutEntity{
 
 	public TallNutEntity(EntityType<? extends CreatureEntity> type, World worldIn) {
 		super(type, worldIn);
-		this.damageMultiple = 0.5F;
 	}
-	
+
+	@Override
+	public float getSuperLife() {
+		return 500;
+	}
+
+	@Override
+	public int getArmor() {
+		return 15;
+	}
+
+	@Override
+	public int getArmorToughness() {
+		return 10;
+	}
+
 	@Override
 	public EntitySize getDimensions(Pose poseIn) {
 		return new EntitySize(0.9f, 1.9f, false);

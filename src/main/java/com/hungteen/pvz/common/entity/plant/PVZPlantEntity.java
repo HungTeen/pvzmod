@@ -13,8 +13,6 @@ import com.hungteen.pvz.common.entity.AbstractPAZEntity;
 import com.hungteen.pvz.common.entity.EntityRegister;
 import com.hungteen.pvz.common.entity.ai.goal.PVZLookRandomlyGoal;
 import com.hungteen.pvz.common.entity.misc.drop.SunEntity;
-import com.hungteen.pvz.common.entity.plant.defence.PumpkinEntity;
-import com.hungteen.pvz.common.entity.plant.defence.PumpkinEntity.PumpkinInfo;
 import com.hungteen.pvz.common.entity.plant.enforce.SquashEntity;
 import com.hungteen.pvz.common.entity.plant.explosion.DoomShroomEntity;
 import com.hungteen.pvz.common.entity.plant.light.GoldLeafEntity;
@@ -27,6 +25,7 @@ import com.hungteen.pvz.common.impl.SkillTypes;
 import com.hungteen.pvz.common.impl.plant.PVZPlants;
 import com.hungteen.pvz.common.item.spawn.card.PlantCardItem;
 import com.hungteen.pvz.common.misc.damage.PVZDamageSource;
+import com.hungteen.pvz.common.misc.sound.SoundRegister;
 import com.hungteen.pvz.common.potion.EffectRegister;
 import com.hungteen.pvz.register.ParticleRegister;
 import com.hungteen.pvz.remove.MetalTypes;
@@ -49,10 +48,7 @@ import net.minecraft.network.datasync.EntityDataManager;
 import net.minecraft.potion.EffectInstance;
 import net.minecraft.potion.Effects;
 import net.minecraft.tags.FluidTags;
-import net.minecraft.util.ActionResultType;
-import net.minecraft.util.DamageSource;
-import net.minecraft.util.Hand;
-import net.minecraft.util.SoundEvents;
+import net.minecraft.util.*;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
@@ -94,7 +90,6 @@ public abstract class PVZPlantEntity extends AbstractPAZEntity implements IPlant
 
 	public PVZPlantEntity(EntityType<? extends CreatureEntity> type, World worldIn) {
 		super(type, worldIn);
-		this.refreshDimensions();
 		this.innerPlant = new PlantInfo(this.getPlantType());
 	}
 
@@ -111,11 +106,12 @@ public abstract class PVZPlantEntity extends AbstractPAZEntity implements IPlant
 	 * {@link EntityRegister#addEntityAttributes(EntityAttributeCreationEvent)}
 	 */
 	public static AttributeModifierMap createPlantAttributes() {
-		return LivingEntity.createLivingAttributes()
+		return AbstractPAZEntity.createPAZAttributes()
 				.add(Attributes.MAX_HEALTH, 20)
-				.add(Attributes.FOLLOW_RANGE, 40.0D)
+				.add(Attributes.FOLLOW_RANGE, 30.0D)
 				.add(Attributes.KNOCKBACK_RESISTANCE, 1)
-				.add(Attributes.MOVEMENT_SPEED, 0).build();
+				.add(Attributes.MOVEMENT_SPEED, 0)
+				.build();
 	}
 
 	@Override
@@ -153,10 +149,7 @@ public abstract class PVZPlantEntity extends AbstractPAZEntity implements IPlant
 	 */
 	@Override
 	public boolean canNormalUpdate() {
-		if(super.canNormalUpdate()){
-			return ! this.hasMetal() && !this.isPlantSleeping();
-		}
-		return false;
+		return ! this.hasMetal() && !this.isPlantSleeping() && super.canNormalUpdate();
 	}
 
 	/**
@@ -320,19 +313,6 @@ public abstract class PVZPlantEntity extends AbstractPAZEntity implements IPlant
 			return level.isDay();
 		}
 		return false;
-	}
-
-	@Override
-	public boolean hurt(DamageSource source, float amount) {
-		if(level.isClientSide) {
-			return false;
-		} else {
-			if (source instanceof PVZDamageSource) {
-			    this.invulnerableTime = 0;
-			}
-			amount = PumpkinEntity.PumpkinInfo.pumpkinReduceDamage(this, source, amount);
-		    return super.hurt(source, amount);
-		}
 	}
 	
 	/**
@@ -526,15 +506,10 @@ public abstract class PVZPlantEntity extends AbstractPAZEntity implements IPlant
 			if (player != null && player instanceof ServerPlayerEntity) {
 				PlantSuperTrigger.INSTANCE.trigger((ServerPlayerEntity) player, this);
 			}
-			this.getOuterPlantInfo().ifPresent(p -> p.onSuper());
+			this.getOuterPlantInfo().ifPresent(p -> p.onSuper(this));
 		}
 	}
-	
-	@Override
-	public boolean removeWhenFarAway(double distanceToClosestPlayer) {
-		return ! this.getOwnerUUID().isPresent();
-	}
-	
+
 	public boolean canPlaceOuterPlant() {
 		return ! this.getOuterPlantInfo().isPresent();
 	}
@@ -559,7 +534,13 @@ public abstract class PVZPlantEntity extends AbstractPAZEntity implements IPlant
 		this.addEffect(new EffectInstance(Effects.HEAL, 40, 255, true, false));
 		this.getSpawnSound().ifPresent(s -> EntityUtil.playSound(this, s));
 	}
-	
+
+	@Override
+	public void onOuterDefenceBroken() {
+		super.onOuterDefenceBroken();
+		this.removeOuterPlant();
+	}
+
 	/**
 	 * outer plant is shoveled or eaten.
 	 * {@link PlayerEventHandler#onPlantShovelByPlayer(PlayerEntity, PVZPlantEntity, net.minecraft.item.ItemStack)}
@@ -624,38 +605,14 @@ public abstract class PVZPlantEntity extends AbstractPAZEntity implements IPlant
 	}
 
 	/**
-	 * get plant's defence life.
-	 * {@link #getCurrentHealth()}
-	 * {@link #getCurrentMaxHealth()}
-	 */
-	protected float getCurrentDefenceHealth() {
-		if(this.getOuterPlantInfo().isPresent() && this.getOuterPlantInfo().get() instanceof PumpkinInfo) {
-			return ((PumpkinInfo) this.getOuterPlantInfo().get()).getExistHealth();
-		}
-		return 0;
-	}
-	
-	/**
-	 * the total health of plants include defence health. 
-	 * {@link EntityUtil#getCurrentHealth(net.minecraft.entity.LivingEntity)}
-	 */
-	public float getCurrentHealth() {
-		return this.getHealth() + this.getCurrentDefenceHealth();
-	}
-
-	/**
-	 * the total max health of plants include defence health. 
-	 * {@link EntityUtil#getCurrentMaxHealth(net.minecraft.entity.LivingEntity)}
-	 */
-	public float getCurrentMaxHealth() {
-		return this.getMaxHealth() + this.getCurrentDefenceHealth();
-	}
-
-	/**
 	 * check can start super mode currently.
 	 */
 	public boolean canStartSuperMode() {
 		return this.canNormalUpdate() && this.hasSuperMode() && !this.isPlantInSuperMode();
+	}
+
+	public int getSuperTimeLength(){
+		return 0;
 	}
 	
     /**
@@ -679,7 +636,12 @@ public abstract class PVZPlantEntity extends AbstractPAZEntity implements IPlant
 	public boolean hasOwner() {
 		return this.getOwnerUUID().isPresent();
 	}
-	
+
+	@Override
+	public Optional<SoundEvent> getSpawnSound() {
+		return Optional.ofNullable(this.getPlantType().isWaterPlant() ? SoundRegister.PLANT_IN_WATER.get() : SoundRegister.PLANT_ON_GROUND.get());
+	}
+
 	/* data */
 	
 	@Override
@@ -835,7 +797,5 @@ public abstract class PVZPlantEntity extends AbstractPAZEntity implements IPlant
 	 * match entity with plant type.
 	 */
 	public abstract IPlantType getPlantType();
-	
-	public abstract int getSuperTimeLength();
 
 }

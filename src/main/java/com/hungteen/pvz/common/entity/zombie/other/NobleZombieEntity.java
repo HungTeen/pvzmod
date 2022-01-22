@@ -52,7 +52,6 @@ public class NobleZombieEntity extends AbstractBossZombieEntity {
 		this.xpReward = 1000;
 		this.setIsWholeBody();
 		this.canBeFrozen = true;
-		this.hasDirectDefence = true;
 	}
 	
 	@Override
@@ -62,8 +61,8 @@ public class NobleZombieEntity extends AbstractBossZombieEntity {
 	}
 
 	@Override
-	protected void updateAttributes() {
-		super.updateAttributes();
+	protected void initAttributes() {
+		super.initAttributes();
 		this.getAttribute(Attributes.MOVEMENT_SPEED).setBaseValue(ZombieUtil.WALK_VERY_SLOW);
 		this.getAttribute(Attributes.ATTACK_DAMAGE).setBaseValue(ZombieUtil.LITTLE_HIGH);
 	}
@@ -86,7 +85,7 @@ public class NobleZombieEntity extends AbstractBossZombieEntity {
 	@Override
 	public void zombieTick() {
 		super.zombieTick();
-		if(!this.level.isClientSide && ! this.canZombieNormalUpdate()) {
+		if(!this.level.isClientSide && ! this.canNormalUpdate()) {
 			this.setTpTick(- this.maxTpCD);
 		}
 	}
@@ -245,7 +244,7 @@ public class NobleZombieEntity extends AbstractBossZombieEntity {
 	}
 	
 	@Override
-	public float getExtraLife() {
+	public float getInnerLife() {
 		return 1000;
 	}
 

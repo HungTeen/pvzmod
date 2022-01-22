@@ -40,8 +40,8 @@ public class ImpEntity extends PVZZombieEntity {
 	}
 	
 	@Override
-	protected void updateAttributes() {
-		super.updateAttributes();
+	protected void initAttributes() {
+		super.initAttributes();
 		this.getAttribute(Attributes.MOVEMENT_SPEED).setBaseValue(ZombieUtil.WALK_FAST);
 	}
 	
@@ -59,8 +59,8 @@ public class ImpEntity extends PVZZombieEntity {
 	}
 	
 	@Override
-	public boolean canZombieNormalUpdate() {
-		return super.canZombieNormalUpdate() && ! this.isFalling;
+	public boolean canNormalUpdate() {
+		return super.canNormalUpdate() && ! this.isFalling;
 	}
 	
 	@Override

@@ -36,8 +36,8 @@ public class RaZombieEntity extends PVZZombieEntity {
 	}
 
 	@Override
-	protected void updateAttributes() {
-		super.updateAttributes();
+	protected void initAttributes() {
+		super.initAttributes();
 		this.getAttribute(Attributes.MOVEMENT_SPEED).setBaseValue(ZombieUtil.WALK_LITTLE_SLOW);
 	}
 
@@ -104,8 +104,8 @@ public class RaZombieEntity extends PVZZombieEntity {
 	}
 	
 	@Override
-	protected void onZombieRemove() {
-		super.onZombieRemove();
+	protected void onRemoveWhenDeath() {
+		super.onRemoveWhenDeath();
 		if(! level.isClientSide) {
 			SunEntity.spawnSunsByAmount(level, blockPosition(), sunAmount);
 			this.sunAmount = 0;

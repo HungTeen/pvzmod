@@ -4,10 +4,10 @@ import com.hungteen.pvz.PVZMod;
 import com.hungteen.pvz.api.events.LotteryEvent;
 import com.hungteen.pvz.common.container.SlotMachineContainer;
 import com.hungteen.pvz.common.datapack.LotteryTypeLoader;
+import com.hungteen.pvz.common.entity.EntityRegister;
 import com.hungteen.pvz.common.entity.misc.drop.JewelEntity;
 import com.hungteen.pvz.common.entity.misc.drop.SunEntity;
 import com.hungteen.pvz.common.misc.sound.SoundRegister;
-import com.hungteen.pvz.common.entity.EntityRegister;
 import com.hungteen.pvz.register.TileEntityRegister;
 import com.hungteen.pvz.utils.EntityUtil;
 import com.hungteen.pvz.utils.PlayerUtil;
@@ -23,7 +23,6 @@ import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.network.NetworkManager;
 import net.minecraft.network.play.server.SUpdateTileEntityPacket;
 import net.minecraft.tileentity.ITickableTileEntity;
-import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.*;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.TranslationTextComponent;
@@ -39,7 +38,7 @@ import java.util.*;
  * start. 3. randomly get a short list from the default list to form a weight
  * list. 4.
  */
-public class SlotMachineTileEntity extends TileEntity implements ITickableTileEntity, INamedContainerProvider, INameable {
+public class SlotMachineTileEntity extends PVZTileEntity implements ITickableTileEntity, INamedContainerProvider, INameable {
 
 	public final ItemStackHandler handler = new ItemStackHandler(3);
 	/*
@@ -259,14 +258,6 @@ public class SlotMachineTileEntity extends TileEntity implements ITickableTileEn
 			return false;
 		}
 		return !this.isRunning;
-	}
-
-	public boolean isUsableByPlayer(PlayerEntity player) {
-		if (this.level.getBlockEntity(this.worldPosition) != this) {
-			return false;
-		}
-		return player.distanceToSqr((double) this.worldPosition.getX() + 0.5D,
-				(double) this.worldPosition.getY() + 0.5D, (double) this.worldPosition.getZ() + 0.5D) <= 64.0D;
 	}
 
 	public void setPlayer(PlayerEntity player) {

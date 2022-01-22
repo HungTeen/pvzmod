@@ -1,22 +1,16 @@
 package com.hungteen.pvz.common.entity.plant.arma;
 
-import java.util.List;
-
 import com.hungteen.pvz.api.types.IPlantType;
 import com.hungteen.pvz.common.entity.bullet.ButterEntity;
 import com.hungteen.pvz.common.entity.bullet.KernelEntity;
 import com.hungteen.pvz.common.entity.bullet.PultBulletEntity;
 import com.hungteen.pvz.common.entity.plant.PVZPlantEntity;
 import com.hungteen.pvz.common.entity.plant.base.PlantPultEntity;
+import com.hungteen.pvz.common.impl.SkillTypes;
 import com.hungteen.pvz.common.impl.plant.PVZPlants;
 import com.hungteen.pvz.common.potion.EffectRegister;
 import com.hungteen.pvz.utils.EntityUtil;
-
-import net.minecraft.entity.CreatureEntity;
-import net.minecraft.entity.EntitySize;
-import net.minecraft.entity.EntityType;
-import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.Pose;
+import net.minecraft.entity.*;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.network.datasync.DataParameter;
@@ -24,6 +18,8 @@ import net.minecraft.network.datasync.DataSerializers;
 import net.minecraft.network.datasync.EntityDataManager;
 import net.minecraft.potion.EffectInstance;
 import net.minecraft.world.World;
+
+import java.util.List;
 
 public class KernelPultEntity extends PlantPultEntity {
 
@@ -98,7 +94,12 @@ public class KernelPultEntity extends PlantPultEntity {
 	public float getSuperDamage() {
 		return 2 * this.getAttackDamage();
 	};
-	
+
+	@Override
+	public float getAttackDamage() {
+		return this.getSkillValue(SkillTypes.MORE_KERNEL_DAMAGE);
+	}
+
 	public EffectInstance getButterEffect() {
 		return new EffectInstance(EffectRegister.BUTTER_EFFECT.get(), this.getButterDuration(), 1, false, false);
 	}

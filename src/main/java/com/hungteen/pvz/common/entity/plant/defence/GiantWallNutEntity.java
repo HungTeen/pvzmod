@@ -13,20 +13,28 @@ public class GiantWallNutEntity extends TallNutEntity {
 
 	public GiantWallNutEntity(EntityType<? extends CreatureEntity> type, World worldIn) {
 		super(type, worldIn);
-		this.damageMultiple = 0.25F;
 	}
-	
+
+	@Override
+	public int getArmor() {
+		return 20;
+	}
+
+	@Override
+	public int getArmorToughness() {
+		return 20;
+	}
+
+	@Override
+	public float getSuperLife() {
+		return 600;
+	}
+
 	@Override
 	public float getAttractRange() {
 		return 5;
 	}
-	
-	@Override
-	public float getLife() {
-		return 500;
-//		return this.getAverageProgress(500F, 1000F);
-	}
-	
+
 	@Override
 	public boolean canPlaceOuterPlant() {
 		return false;

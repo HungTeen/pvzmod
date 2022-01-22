@@ -1,17 +1,24 @@
 package com.hungteen.pvz.common.entity.plant.enforce;
 
+import com.hungteen.pvz.api.interfaces.IAlmanacEntry;
 import com.hungteen.pvz.api.types.IPlantType;
 import com.hungteen.pvz.common.entity.ai.goal.target.PVZRandomTargetGoal;
 import com.hungteen.pvz.common.entity.plant.PVZPlantEntity;
+import com.hungteen.pvz.common.impl.SkillTypes;
 import com.hungteen.pvz.common.impl.plant.PVZPlants;
 import com.hungteen.pvz.common.misc.damage.PVZDamageSource;
 import com.hungteen.pvz.common.misc.sound.SoundRegister;
 import com.hungteen.pvz.utils.EntityUtil;
+import com.hungteen.pvz.utils.enums.PAZAlmanacs;
+import com.mojang.datafixers.util.Pair;
 import net.minecraft.entity.*;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.math.vector.Vector3d;
 import net.minecraft.world.World;
+
+import java.util.Arrays;
+import java.util.List;
 
 public class SquashEntity extends PVZPlantEntity{
 
@@ -42,7 +49,7 @@ public class SquashEntity extends PVZPlantEntity{
 					if(this.extraChance > 0) {
 						-- this.extraChance;
 					}else {
-						if(this.getRandom().nextInt(100) < this.getDeathChance()) {
+						if(this.getRandom().nextFloat() > this.getAgainChance()) {
 							this.remove();
 						}
 					}
@@ -110,20 +117,26 @@ public class SquashEntity extends PVZPlantEntity{
 	 */
 	protected int getSuperBonusChance(){
 		return 3;
-//		return this.isPlantInStage(1) ? 3 : this.isPlantInStage(2) ? 4 : 5;
 	}
-	
-	public float getAttackDamage(){
-		return 124;
-//		return PlantUtil.getPlantAverageProgress(this, 125, 425);
+
+	@Override
+	public void addAlmanacEntries(List<Pair<IAlmanacEntry, Number>> list) {
+		super.addAlmanacEntries(list);
+		list.addAll(Arrays.asList(
+				Pair.of(PAZAlmanacs.ATTACK_DAMAGE, this.getAttackDamage()),
+				Pair.of(PAZAlmanacs.AGAIN_CHANCE, this.getAgainChance())
+		));
 	}
-	
+
 	/**
 	 * die chance for each smash
 	 */
-	public int getDeathChance(){
-		return 90;
-//		return PlantUtil.getPlantAverageProgress(this, 90, 40);
+	public float getAgainChance(){
+		return this.getSkillValue(SkillTypes.SQUASH_AGAIN);
+	}
+
+	public float getAttackDamage(){
+		return this.getSkillValue(SkillTypes.NORMAL_ENHANCE_STRENGTH);
 	}
 	
 	@Override

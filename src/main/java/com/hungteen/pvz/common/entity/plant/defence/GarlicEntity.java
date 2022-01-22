@@ -2,6 +2,7 @@ package com.hungteen.pvz.common.entity.plant.defence;
 
 import com.hungteen.pvz.api.types.IPlantType;
 import com.hungteen.pvz.common.entity.plant.base.PlantDefenderEntity;
+import com.hungteen.pvz.common.impl.SkillTypes;
 import com.hungteen.pvz.common.impl.plant.PVZPlants;
 import com.hungteen.pvz.common.misc.damage.PVZDamageSource;
 import com.hungteen.pvz.common.misc.sound.SoundRegister;
@@ -52,14 +53,12 @@ public class GarlicEntity extends PlantDefenderEntity {
 	}
 	
 	public float getChangeRange() {
-//		return this.getThreeStage(10, 15, 20);
 		return 2;
 	}
 	
 	@Override
 	public float getLife() {
-		return 100;
-//		return PlantUtil.getPlantAverageProgress(this, 100, 400);
+		return this.getSkillValue(SkillTypes.MORE_GARLIC_LIFE);
 	}
 	
 	@Override
@@ -70,11 +69,6 @@ public class GarlicEntity extends PlantDefenderEntity {
 	@Override
 	public EntitySize getDimensions(Pose poseIn) {
 		return EntitySize.scalable(0.8F, 1.2F);
-	}
-
-	@Override
-	public int getSuperTimeLength() {
-		return 0;
 	}
 	
 	@Override

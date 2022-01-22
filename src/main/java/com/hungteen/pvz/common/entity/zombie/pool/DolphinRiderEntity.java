@@ -47,8 +47,8 @@ public class DolphinRiderEntity extends PVZZombieEntity{
 	}
 	
 	@Override
-	protected void updateAttributes() {
-		super.updateAttributes();
+	protected void initAttributes() {
+		super.initAttributes();
 		this.getAttribute(Attributes.MOVEMENT_SPEED).setBaseValue(ZombieUtil.WATER_FAST);
 	}
 	

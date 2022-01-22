@@ -4,6 +4,7 @@ import com.hungteen.pvz.api.types.IPlantType;
 import com.hungteen.pvz.common.advancement.trigger.EntityEffectAmountTrigger;
 import com.hungteen.pvz.common.entity.plant.PVZPlantEntity;
 import com.hungteen.pvz.common.entity.plant.base.PlantBomberEntity;
+import com.hungteen.pvz.common.impl.SkillTypes;
 import com.hungteen.pvz.common.impl.plant.PVZPlants;
 import com.hungteen.pvz.common.misc.damage.PVZDamageSource;
 import com.hungteen.pvz.common.misc.sound.SoundRegister;
@@ -25,10 +26,10 @@ public class CherryBombEntity extends PlantBomberEntity{
 	public void startBomb(boolean server) {
 		if(server) {
 			int deathCnt = 0;
-			final float range = 4.5F;
+			final float range = getExplodeRange();
 			final AxisAlignedBB aabb = EntityUtil.getEntityAABB(this, range, range);
 			for(Entity target : EntityUtil.getWholeTargetableEntities(this, aabb)) {
-				target.hurt(PVZDamageSource.explode(this), this.getAttackDamage());
+				target.hurt(PVZDamageSource.explode(this), this.getExplodeDamage());
 				if(! EntityUtil.isEntityValid(target)) {
 					++ deathCnt;
 				}
@@ -49,11 +50,16 @@ public class CherryBombEntity extends PlantBomberEntity{
 	
 	/**
 	 * explosion damage.
-	 * {@link #startBomb()}
+	 * {@link #startBomb(boolean server)}
 	 */
-	public float getAttackDamage(){
-		return 150;
-//		return MathUtil.getProgressAverage(this.getSkills(), PlantUtil.MAX_PLANT_LEVEL, 150, 650);
+	@Override
+	public float getExplodeDamage(){
+		return this.getSkillValue(SkillTypes.NORMAL_BOMB_DAMAGE);
+	}
+
+	@Override
+	public float getExplodeRange(){
+		return 4.5F;
 	}
 	
 	@Override

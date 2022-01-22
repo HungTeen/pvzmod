@@ -1,20 +1,27 @@
 package com.hungteen.pvz.common.entity.plant.enforce;
 
+import com.hungteen.pvz.api.interfaces.IAlmanacEntry;
 import com.hungteen.pvz.api.types.IPlantType;
+import com.hungteen.pvz.common.entity.EntityRegister;
 import com.hungteen.pvz.common.entity.ai.goal.target.PVZNearestTargetGoal;
 import com.hungteen.pvz.common.entity.misc.SmallChomperEntity;
 import com.hungteen.pvz.common.entity.plant.PVZPlantEntity;
+import com.hungteen.pvz.common.impl.SkillTypes;
 import com.hungteen.pvz.common.impl.plant.PVZPlants;
 import com.hungteen.pvz.common.misc.damage.PVZDamageSource;
 import com.hungteen.pvz.common.misc.sound.SoundRegister;
-import com.hungteen.pvz.common.entity.EntityRegister;
 import com.hungteen.pvz.utils.EntityUtil;
+import com.hungteen.pvz.utils.enums.PAZAlmanacs;
+import com.mojang.datafixers.util.Pair;
 import net.minecraft.entity.*;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.network.datasync.DataParameter;
 import net.minecraft.network.datasync.DataSerializers;
 import net.minecraft.network.datasync.EntityDataManager;
 import net.minecraft.world.World;
+
+import java.util.Arrays;
+import java.util.List;
 
 public class ChomperEntity extends PVZPlantEntity {
 
@@ -104,12 +111,20 @@ public class ChomperEntity extends PVZPlantEntity {
 		EntityUtil.playSound(this, SoundRegister.CHOMP.get());
 	}
 
+	@Override
+	public void addAlmanacEntries(List<Pair<IAlmanacEntry, Number>> list) {
+		super.addAlmanacEntries(list);
+		list.addAll(Arrays.asList(
+				Pair.of(PAZAlmanacs.ATTACK_DAMAGE, this.getAttackDamage()),
+				Pair.of(PAZAlmanacs.REST_TIME, this.getRestCD())
+		));
+	}
+
 	/**
 	 * max damage to target.
 	 */
 	public float getAttackDamage() {
-		return 150;
-//		return MathUtil.getProgressAverage(this.getSkills(), PlantUtil.MAX_PLANT_LEVEL, 150, 250);
+		return this.getSkillValue(SkillTypes.NORMAL_ENHANCE_STRENGTH);
 	}
 
 	/**
@@ -117,7 +132,6 @@ public class ChomperEntity extends PVZPlantEntity {
 	 */
 	public int getRestCD() {
 		return 800;
-//		return MathUtil.getProgressAverage(this.getSkills(), PlantUtil.MAX_PLANT_LEVEL, 840, 640);
 	}
 
 	/**
@@ -125,7 +139,6 @@ public class ChomperEntity extends PVZPlantEntity {
 	 */
 	public int getSuperAttackCnt() {
 		return 3;
-//		return this.isPlantInStage(1) ? 3 : this.isPlantInStage(2) ? 4 : 5;
 	}
 	
 	/**

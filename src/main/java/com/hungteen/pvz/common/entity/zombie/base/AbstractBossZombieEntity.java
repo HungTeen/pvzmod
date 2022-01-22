@@ -49,7 +49,7 @@ public abstract class AbstractBossZombieEntity extends PVZZombieEntity {
 	@Override
 	public void zombieTick() {
 		super.zombieTick();
-		final float percent = (this.getDefenceLife() + this.getHealth()) / (this.getMaxHealth() + this.getExtraLife());
+		final float percent = EntityUtil.getCurrentHealth(this) / EntityUtil.getCurrentMaxHealth(this);
 		this.bossInfo.setPercent(percent);
 		if(! level.isClientSide) {
 			this.checkAndHeal(percent);

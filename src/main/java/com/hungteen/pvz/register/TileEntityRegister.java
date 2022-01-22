@@ -4,11 +4,7 @@ import com.hungteen.pvz.PVZMod;
 import com.hungteen.pvz.client.render.tileentity.SunConverterTER;
 import com.hungteen.pvz.client.render.tileentity.SunFlowerTrophyTER;
 import com.hungteen.pvz.common.block.BlockRegister;
-import com.hungteen.pvz.common.tileentity.CardFusionTileEntity;
-import com.hungteen.pvz.common.tileentity.FragmentSpliceTileEntity;
-import com.hungteen.pvz.common.tileentity.SlotMachineTileEntity;
-import com.hungteen.pvz.common.tileentity.SunConverterTileEntity;
-import com.hungteen.pvz.common.tileentity.SunFlowerTrophyTileEntity;
+import com.hungteen.pvz.common.tileentity.*;
 
 import net.minecraft.tileentity.TileEntityType;
 import net.minecraftforge.api.distmarker.Dist;
@@ -37,6 +33,9 @@ public class TileEntityRegister {
 	});
 	public static final RegistryObject<TileEntityType<SunFlowerTrophyTileEntity>> SUNFLOWER_TROPHY = TILE_ENTITY_TYPES.register("sunflower_trophy", () -> {
 		return TileEntityType.Builder.of(SunFlowerTrophyTileEntity::new , BlockRegister.SILVER_SUNFLOWER_TROPHY.get(), BlockRegister.GOLD_SUNFLOWER_TROPHY.get(), BlockRegister.DIAMOND_SUNFLOWER_TROPHY.get()).build(null);
+	});
+	public static final RegistryObject<TileEntityType<EssenceAltarTileEntity>> ESSENCE_ALTAR = TILE_ENTITY_TYPES.register("essence_altar", () -> {
+		return TileEntityType.Builder.of(EssenceAltarTileEntity::new , BlockRegister.ESSENCE_ALTAR.get()).build(null);
 	});
 	
 	@OnlyIn(Dist.CLIENT)

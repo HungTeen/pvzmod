@@ -1,25 +1,26 @@
 package com.hungteen.pvz.utils;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.nio.charset.StandardCharsets;
-import java.util.Collections;
-import java.util.List;
-import java.util.Random;
-import java.util.stream.Collectors;
-
 import com.hungteen.pvz.PVZMod;
 import com.mojang.blaze3d.matrix.MatrixStack;
-
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.FontRenderer;
 import net.minecraft.resources.IResource;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.text.StringTextComponent;
 
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.nio.charset.StandardCharsets;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.List;
+import java.util.Random;
+import java.util.stream.Collectors;
+
 public class StringUtil {
 
+	private static final List<String> ROMAN_NUMBERS = Arrays.asList("I", "II", "III", "IV", "V", "VI", "VII", "VIII", "IX", "X");
 	public static final StringTextComponent EMPTY = new StringTextComponent("");
 	public static final ResourceLocation WIDGETS = StringUtil.prefix("textures/gui/widgets.png");
 	public static final String TE_TAG = "BlockEntityTag";
@@ -135,6 +136,13 @@ public class StringUtil {
             }
         }
         return resource;
+	}
+
+	public static String getRomanString(int num){
+		if(num > 0 && num <= 10){
+			return ROMAN_NUMBERS.get(num - 1);
+		}
+		return "";
 	}
 	
 }

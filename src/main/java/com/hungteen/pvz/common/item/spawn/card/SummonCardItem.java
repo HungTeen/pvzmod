@@ -4,13 +4,17 @@ import com.hungteen.pvz.api.types.ICoolDown;
 import com.hungteen.pvz.api.types.IPAZType;
 import com.hungteen.pvz.client.ClientProxy;
 import com.hungteen.pvz.common.impl.CoolDowns;
+import com.hungteen.pvz.common.impl.SkillTypes;
 import com.hungteen.pvz.common.item.PVZItemGroups;
+import com.hungteen.pvz.common.item.PVZRarity;
 import com.hungteen.pvz.utils.PlayerUtil;
+import com.hungteen.pvz.utils.StringUtil;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.enchantment.Enchantment;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
+import net.minecraft.item.Rarity;
 import net.minecraft.util.text.IFormattableTextComponent;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.TextFormatting;
@@ -82,7 +86,27 @@ public abstract class SummonCardItem extends Item{
 			}
 		});
 	}
-	
+
+	public static void appendSkillToolTips(ItemStack stack, List<ITextComponent> tooltip){
+		if(stack.getItem() instanceof SummonCardItem){
+			final IPAZType type = ((SummonCardItem) stack.getItem()).type;
+			type.getSkills().forEach(skill -> {
+				final int lvl = SkillTypes.getSkillLevel(stack, skill);
+				if(lvl > 0){
+					tooltip.add(skill.getText().append(StringUtil.getRomanString(lvl)).withStyle(TextFormatting.DARK_PURPLE));
+				}
+			});
+		}
+	}
+
+	@Override
+	public Rarity getRarity(ItemStack itemStack) {
+		if(itemStack.getItem() instanceof SummonCardItem){
+			return PVZRarity.getRarityByRank(((SummonCardItem) itemStack.getItem()).type.getRank());
+		}
+		return super.getRarity(itemStack);
+	}
+
 	@Override
 	public boolean isEnchantable(ItemStack stack) {
 		return this.getItemStackLimit(stack) == 1 && ! this.isEnjoyCard;

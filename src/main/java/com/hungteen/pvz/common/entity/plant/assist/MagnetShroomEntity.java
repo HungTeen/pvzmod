@@ -1,18 +1,22 @@
 package com.hungteen.pvz.common.entity.plant.assist;
 
 import com.hungteen.pvz.PVZMod;
+import com.hungteen.pvz.api.interfaces.IAlmanacEntry;
 import com.hungteen.pvz.api.types.IPlantType;
 import com.hungteen.pvz.common.entity.ai.goal.target.PVZNearestTargetGoal;
 import com.hungteen.pvz.common.entity.ai.goal.target.PVZTargetGoal;
 import com.hungteen.pvz.common.entity.bullet.itembullet.MetalItemEntity;
 import com.hungteen.pvz.common.entity.bullet.itembullet.MetalItemEntity.MetalStates;
 import com.hungteen.pvz.common.entity.plant.PVZPlantEntity;
+import com.hungteen.pvz.common.impl.SkillTypes;
 import com.hungteen.pvz.common.impl.plant.PVZPlants;
 import com.hungteen.pvz.common.misc.sound.SoundRegister;
 import com.hungteen.pvz.remove.MetalTypes;
 import com.hungteen.pvz.utils.AlgorithmUtil;
 import com.hungteen.pvz.utils.EntityUtil;
+import com.hungteen.pvz.utils.enums.PAZAlmanacs;
 import com.hungteen.pvz.utils.interfaces.IHasMetal;
+import com.mojang.datafixers.util.Pair;
 import net.minecraft.entity.*;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.CompoundNBT;
@@ -22,6 +26,7 @@ import net.minecraft.network.datasync.EntityDataManager;
 import net.minecraft.world.World;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
@@ -43,8 +48,8 @@ public class MagnetShroomEntity extends PVZPlantEntity {
 	@Override
 	protected void registerGoals() {
 		super.registerGoals();
-		this.targetSelector.addGoal(0, new PVZNearestTargetGoal(this, true, false,  12, 12));
-		this.targetSelector.addGoal(1, new TargetLadderGoal(this, true, false, 20));
+		this.targetSelector.addGoal(0, new PVZNearestTargetGoal(this, true, false, this.getAbsorbRange(), this.getAbsorbRange()));
+		this.targetSelector.addGoal(1, new TargetLadderGoal(this, true, false, this.getAbsorbRange()));
 	}
 	
 	@Override
@@ -66,7 +71,7 @@ public class MagnetShroomEntity extends PVZPlantEntity {
 	@Override
 	public void startSuperMode(boolean first) {
 		super.startSuperMode(first);
-		int range = 20;
+		final float range = this.getAbsorbRange();
 		int cnt = this.getSuperDragCnt();
 		EntityUtil.playSound(this, SoundRegister.MAGNET.get());
 		for(LivingEntity target : level.getEntitiesOfClass(LivingEntity.class, EntityUtil.getEntityAABB(this, range, range), (entity) -> {
@@ -90,7 +95,7 @@ public class MagnetShroomEntity extends PVZPlantEntity {
 	public void dragMetal(LivingEntity target) {
 		if(target instanceof IHasMetal) {
 			((IHasMetal) target).decreaseMetal();
-			this.setAttackTime(this.getAttackCD());
+			this.setAttackTime(this.getWorkCD());
 			MetalItemEntity metal = new MetalItemEntity(level, this, ((IHasMetal) target).getMetalType());
 			metal.setPos(target.getX(), target.getY() + target.getEyeHeight(), target.getZ());
 			metal.summonByOwner(this);
@@ -103,17 +108,27 @@ public class MagnetShroomEntity extends PVZPlantEntity {
 	
 	public int getAttackDamage() {
 		return 100;
-//		return this.isPlantInStage(1) ? 100 : this.isPlantInStage(2) ? 200 : 300;
 	}
 	
 	public int getSuperDragCnt() {
-		return 3;
-//		return this.isPlantInStage(1) ? 3 : this.isPlantInStage(2) ? 4 : 5;
+		return 4;
 	}
-	
-	public int getAttackCD() {
-		return 600;
-//		return PlantUtil.getPlantAverageProgress(this, 600, 200);
+
+	@Override
+	public void addAlmanacEntries(List<Pair<IAlmanacEntry, Number>> list) {
+		super.addAlmanacEntries(list);
+		list.addAll(Arrays.asList(
+				Pair.of(PAZAlmanacs.WORK_CD, this.getWorkCD()),
+				Pair.of(PAZAlmanacs.WORK_RANGE, this.getAbsorbRange())
+		));
+	}
+
+	public float getAbsorbRange(){
+		return 15;
+	}
+
+	public int getWorkCD() {
+		return (int) this.getSkillValue(SkillTypes.LESS_WORK_CD);
 	}
 	
 	/**
@@ -174,7 +189,7 @@ public class MagnetShroomEntity extends PVZPlantEntity {
 
 		protected final AlgorithmUtil.EntitySorter sorter;
 
-		public TargetLadderGoal(MobEntity mobIn, boolean checkSight, boolean mustReach, float range) {
+		public TargetLadderGoal(MagnetShroomEntity mobIn, boolean checkSight, boolean mustReach, float range) {
 			super(mobIn, checkSight, mustReach, range, range);
 			this.sorter = new AlgorithmUtil.EntitySorter(mob);
 		}

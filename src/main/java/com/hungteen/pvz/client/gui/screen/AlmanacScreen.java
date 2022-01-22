@@ -262,6 +262,8 @@ public class AlmanacScreen extends AbstractOptionScreen<AlmanacContainer> {
 		if(option.getType().getEntityType().isPresent()) {
 			if (option.equals(this.option)) {
 				return this.renderEntity == null ? this.renderEntity = option.getType().getEntityType().get().create(this.minecraft.level) : this.renderEntity;
+			} else {
+				this.currentPos = 0;
 			}
 			this.option = option;
 			return this.renderEntity = option.getType().getEntityType().get().create(this.minecraft.level);

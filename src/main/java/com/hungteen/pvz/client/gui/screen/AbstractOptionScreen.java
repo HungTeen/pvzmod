@@ -43,7 +43,7 @@ public abstract class AbstractOptionScreen<T extends AbstractOptionContainer> ex
 	public void render(MatrixStack stack, int mouseX, int mouseY, float partialTicks) {
 		this.searchGui.render(stack, mouseX, mouseY, partialTicks);
 		super.render(stack, mouseX, mouseY, partialTicks);
-		this.searchGui.renderGhostRecipe(stack, this.leftPos, this.topPos, true, partialTicks);
+		this.searchGui.getRecipeManager().render(this.minecraft, stack, this.leftPos, this.topPos, partialTicks);
 		this.renderTooltip(stack, mouseX, mouseY);
 		this.searchGui.renderTooltip(stack, this.leftPos, this.topPos, mouseX, mouseY);
 	}

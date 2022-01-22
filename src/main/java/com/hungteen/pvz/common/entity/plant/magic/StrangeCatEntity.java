@@ -1,6 +1,7 @@
 package com.hungteen.pvz.common.entity.plant.magic;
 
 import com.hungteen.pvz.PVZConfig;
+import com.hungteen.pvz.api.interfaces.IAlmanacEntry;
 import com.hungteen.pvz.api.types.IPlantType;
 import com.hungteen.pvz.common.entity.ai.goal.target.PVZNearestTargetGoal;
 import com.hungteen.pvz.common.entity.plant.PVZPlantEntity;
@@ -12,6 +13,8 @@ import com.hungteen.pvz.common.entity.EntityRegister;
 import com.hungteen.pvz.utils.EntityUtil;
 import com.hungteen.pvz.utils.PlantUtil;
 
+import com.hungteen.pvz.utils.enums.PAZAlmanacs;
+import com.mojang.datafixers.util.Pair;
 import net.minecraft.entity.CreatureEntity;
 import net.minecraft.entity.EntitySize;
 import net.minecraft.entity.EntityType;
@@ -20,6 +23,9 @@ import net.minecraft.entity.Pose;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.world.World;
 import net.minecraftforge.event.entity.living.LivingDeathEvent;
+
+import java.util.Arrays;
+import java.util.List;
 
 public class StrangeCatEntity extends PVZPlantEntity {
 
@@ -101,18 +107,25 @@ public class StrangeCatEntity extends PVZPlantEntity {
 	public boolean isResting() {
 		return this.getAttackTime() < 0;
 	}
-	
+
+	@Override
+	public void addAlmanacEntries(List<Pair<IAlmanacEntry, Number>> list) {
+		super.addAlmanacEntries(list);
+		list.addAll(Arrays.asList(
+				Pair.of(PAZAlmanacs.ATTACK_DAMAGE, this.getAttackDamage()),
+				Pair.of(PAZAlmanacs.REST_TIME, REST_CD)
+		));
+	}
+
 	/**
 	 * max damage to target
 	 */
 	public float getAttackDamage() {
 		return 200;
-//		return this.getAverageProgress(200F, 400F);
 	}
 	
 	public int getSuperAttackCount() {
 		return 4;
-//		return this.getThreeStage(4, 5, 6);
 	}
 	
 	@Override

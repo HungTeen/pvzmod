@@ -3,6 +3,7 @@ package com.hungteen.pvz;
 import com.hungteen.pvz.common.block.BlockRegister;
 import com.hungteen.pvz.common.capability.CapabilityHandler;
 import com.hungteen.pvz.common.enchantment.EnchantmentRegister;
+import com.hungteen.pvz.common.entity.PVZAttributes;
 import com.hungteen.pvz.common.impl.EssenceTypes;
 import com.hungteen.pvz.common.impl.RankTypes;
 import com.hungteen.pvz.common.impl.SkillTypes;
@@ -60,6 +61,7 @@ public class RegistryHandler {
 		ContainerRegister.CONTAINER_TYPES.register(bus);
 		PotionRegister.POTIONS.register(bus);
 		RecipeRegister.RECIPE_SERIALIZERS.register(bus);
+		PVZAttributes.ATTRIBUTES.register(bus);
 	}
 
 	/**

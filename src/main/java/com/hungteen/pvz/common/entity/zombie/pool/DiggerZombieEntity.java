@@ -71,8 +71,8 @@ public class DiggerZombieEntity extends PVZZombieEntity implements IHasMetal {
 	}
 	
 	@Override
-	protected void updateAttributes() {
-		super.updateAttributes();
+	protected void initAttributes() {
+		super.initAttributes();
 		this.updateAttributes(this.hasPickaxe());
 	}
 	

@@ -47,6 +47,10 @@ public class EntityGroupHander {
         return PVZGroupType.values()[group + 2];
     }
 
+    public static boolean isMonsterGroup(PVZGroupType groupType){
+        return groupType.ordinal() - 2 < 0;
+    }
+
     public static boolean checkCanAttack(PVZGroupType g1, PVZGroupType g2) {
 		return g1 != g2;
 	}

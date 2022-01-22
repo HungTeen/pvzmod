@@ -29,7 +29,6 @@ public class MournerZombieEntity extends PVZZombieEntity{
 	public MournerZombieEntity(EntityType<? extends CreatureEntity> type, World worldIn) {
 		super(type, worldIn);
 		this.setRightShake(this.getRandom().nextInt(2) == 0 ? true : false);
-		this.maxDeathTime = 0;
 		this.canLostHand = false;
 	}
 	
@@ -40,8 +39,8 @@ public class MournerZombieEntity extends PVZZombieEntity{
 	}
 
 	@Override
-	protected void updateAttributes() {
-		super.updateAttributes();
+	protected void initAttributes() {
+		super.initAttributes();
 		this.getAttribute(Attributes.MOVEMENT_SPEED).setBaseValue(ZombieUtil.WALK_LITTLE_SLOW);
 		this.getAttribute(Attributes.ATTACK_DAMAGE).setBaseValue(ZombieUtil.VERY_LOW);
 	}
@@ -50,7 +49,12 @@ public class MournerZombieEntity extends PVZZombieEntity{
 	public float getLife() {
 		return 48;
 	}
-	
+
+	@Override
+	protected int getDeathTime() {
+		return 1;
+	}
+
 	@Override
 	public boolean doHurtTarget(Entity entityIn) {
 		this.setAttackTime(SHAKE_CD);
@@ -76,7 +80,7 @@ public class MournerZombieEntity extends PVZZombieEntity{
 	}
 	
 	@Override
-	protected void onZombieRemove() {
+	protected void onRemoveWhenDeath() {
 		if(!level.isClientSide) {
 			TombStoneEntity tomb = EntityRegister.TOMB_STONE.get().create(level);
 			ZombieUtil.onZombieSpawn(this, tomb, blockPosition());

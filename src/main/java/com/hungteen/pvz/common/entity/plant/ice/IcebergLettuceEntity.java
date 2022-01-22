@@ -75,17 +75,14 @@ public class IcebergLettuceEntity extends PlantCloserEntity implements IIceEffec
     
     public int getColdLevel() {
 		return 1;
-//    	return MathUtil.getProgressByDif(5, 1, this.getSkills(), PlantUtil.MAX_PLANT_LEVEL, 4, 7);
     }
     
     public int getColdDuration() {
-//    	return this.getAverageProgress(100, 300);
 		return 100;
     }
     
     public float getSuperRange() {
 		return 20;
-//    	return this.getThreeStage(20, 25, 30);
     }
     
 	@Override

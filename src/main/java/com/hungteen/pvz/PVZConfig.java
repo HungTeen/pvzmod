@@ -234,7 +234,7 @@ public class PVZConfig {
                             .comment("the spawn chance of zombie with sun layer(the bigger,the more chance it spawn).")
                             .defineInRange("ZombieSunChance", 1, 0, 40);
 
-                    EntitySettings.ZombieSetting.ZombieDropMultiper = builder
+                    EntitySettings.DropChanceMultiper = builder
                             .translation("config.pvz.zombie.drop_multiper")
                             .comment("the drop chance of coin when zombie die(the bigger,the less chance it spawn).")
                             .defineInRange("ZombieDropMultiper", 10, 3, 100);
@@ -244,10 +244,6 @@ public class PVZConfig {
                             .comment("enable zombies to drop hands and heads when they got hurt(turn false to disable).")
                             .define("EnableZombieDropParts", true);
 
-                    EntitySettings.ZombieSetting.ZombieMaxLevel = builder
-                            .translation("config.pvz.zombie.max_level")
-                            .comment("it can limit zombie's max maxLevel.")
-                            .defineInRange("ZombieMaxLevel", 20, 1, 20);
                 }
                 builder.pop();
 
@@ -418,18 +414,16 @@ public class PVZConfig {
 
             public ForgeConfigSpec.IntValue PlayerInitialGroup;
             public ForgeConfigSpec.IntValue PlayerBaseSunAmount;
+            public ForgeConfigSpec.IntValue DropChanceMultiper;
 
             public static class ZombieSetting {
                 public ForgeConfigSpec.IntValue ZombieSuperChance;
                 public ForgeConfigSpec.IntValue ZombieSunChance;
-                public ForgeConfigSpec.IntValue ZombieDropMultiper;
                 public ForgeConfigSpec.BooleanValue EnableZombieDropHands;
-                public ForgeConfigSpec.IntValue ZombieMaxLevel;
             }
 
             public static class PlantSetting {
                 public ForgeConfigSpec.IntValue StrangeCatCount;
-                public ForgeConfigSpec.IntValue PlantMaxLevel;
             }
 
             public static class EntityLiveTick {

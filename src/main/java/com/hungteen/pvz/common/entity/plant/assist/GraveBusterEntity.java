@@ -1,19 +1,24 @@
 package com.hungteen.pvz.common.entity.plant.assist;
 
+import com.hungteen.pvz.api.interfaces.IAlmanacEntry;
 import com.hungteen.pvz.api.types.IPlantType;
+import com.hungteen.pvz.common.entity.EntityRegister;
 import com.hungteen.pvz.common.entity.ai.goal.target.PVZNearestTargetGoal;
 import com.hungteen.pvz.common.entity.plant.PVZPlantEntity;
 import com.hungteen.pvz.common.entity.zombie.grass.AbstractTombStoneEntity;
 import com.hungteen.pvz.common.impl.plant.PVZPlants;
 import com.hungteen.pvz.common.misc.damage.PVZDamageSource;
 import com.hungteen.pvz.common.misc.sound.SoundRegister;
-import com.hungteen.pvz.common.entity.EntityRegister;
 import com.hungteen.pvz.utils.EntityUtil;
 import com.hungteen.pvz.utils.PlantUtil;
+import com.hungteen.pvz.utils.enums.PAZAlmanacs;
+import com.mojang.datafixers.util.Pair;
 import net.minecraft.entity.*;
 import net.minecraft.entity.ai.goal.Goal;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.world.World;
+
+import java.util.List;
 
 public class GraveBusterEntity extends PVZPlantEntity{
 
@@ -74,15 +79,19 @@ public class GraveBusterEntity extends PVZPlantEntity{
 	public boolean isEatingTomb() {
 		return this.getAttackTime() > 0 && this.getVehicle() instanceof AbstractTombStoneEntity;
 	}
-	
+
+	@Override
+	public void addAlmanacEntries(List<Pair<IAlmanacEntry, Number>> list) {
+		super.addAlmanacEntries(list);
+		list.add(Pair.of(PAZAlmanacs.WORK_TIME, this.getEatTombCD()));
+	}
+
 	public int getEatTombCD() {
 		return 100;
-//		return PlantUtil.getPlantAverageProgress(this, 100, 20);
 	}
 	
 	public int getMaxKillCnt() {
-//		return MathUtil.getProgressByDif(5, 1, this.getSkills(), PlantUtil.MAX_PLANT_LEVEL, 1, 4);
-		return 2;
+		return 1;
 	}
 	
 	/**
@@ -90,7 +99,6 @@ public class GraveBusterEntity extends PVZPlantEntity{
 	 */
 	public int getSuperAttackCnt() {
 		return 2;
-//		return this.isPlantInStage(1) ? 3 : this.isPlantInStage(2) ? 4 : 5;
 	}
 	
 	@Override

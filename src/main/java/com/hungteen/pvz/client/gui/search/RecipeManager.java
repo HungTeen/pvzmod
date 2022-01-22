@@ -1,12 +1,9 @@
 package com.hungteen.pvz.client.gui.search;
 
-import java.util.List;
-
 import com.google.common.collect.Lists;
 import com.mojang.blaze3d.matrix.MatrixStack;
 import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.datafixers.util.Pair;
-
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.AbstractGui;
 import net.minecraft.client.gui.screen.Screen;
@@ -18,21 +15,23 @@ import net.minecraft.util.math.MathHelper;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 
+import java.util.List;
+
 @OnlyIn(Dist.CLIENT)
 public class RecipeManager {
 
 	private final List<RecipeIngredient> ingredients = Lists.newArrayList();
 	private float time;
 
-	public void render(Minecraft mc, MatrixStack stack, int left, int top, boolean p_194188_4_, float p_194188_5_) {
+	public void render(Minecraft mc, MatrixStack stack, int guiLeft, int guiTop, float partialTicks) {
 		stack.pushPose();
 		if (! Screen.hasControlDown()) {
-			this.time += p_194188_5_;
+			this.time += partialTicks;
 		}
 		for (int i = 0; i < this.ingredients.size(); ++i) {
 			RecipeIngredient ingredient = this.ingredients.get(i);
-			int x = ingredient.getX() + left;
-			int y = ingredient.getY() + top;
+			int x = ingredient.getX() + guiLeft;
+			int y = ingredient.getY() + guiTop;
 			AbstractGui.fill(stack, x, y, x + 16, y + 16, 822018048);
 			ItemStack itemstack = ingredient.getItem();
 			ItemRenderer itemrenderer = mc.getItemRenderer();
@@ -45,6 +44,21 @@ public class RecipeManager {
 			}
 		}
 		stack.popPose();
+	}
+
+	public void renderGhostRecipeTooltip(Minecraft mc, MatrixStack stack, int guiLeft, int guiTop, int mouseX, int mouseY) {
+		ItemStack itemstack = null;
+		for (int i = 0; i < this.size(); ++ i) {
+			RecipeIngredient ingredient = this.get(i);
+			int x = ingredient.getX() + guiLeft;
+			int y = ingredient.getY() + guiTop;
+			if (mouseX >= x && mouseY >= y && mouseX < x + 16 && mouseY < y + 16) {
+				itemstack = ingredient.getItem();
+			}
+		}
+		if (itemstack != null && mc.screen != null) {
+			mc.screen.renderComponentTooltip(stack, mc.screen.getTooltipFromItem(itemstack), mouseX, mouseY);
+		}
 	}
 
 	public void clear() {

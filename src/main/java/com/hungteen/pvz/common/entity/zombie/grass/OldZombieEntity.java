@@ -1,11 +1,10 @@
 package com.hungteen.pvz.common.entity.zombie.grass;
 
-import com.hungteen.pvz.common.impl.zombie.ZombieType;
 import com.hungteen.pvz.common.impl.zombie.GrassZombies;
+import com.hungteen.pvz.common.impl.zombie.ZombieType;
 import com.hungteen.pvz.utils.ZombieUtil;
 import net.minecraft.entity.CreatureEntity;
 import net.minecraft.entity.EntityType;
-import net.minecraft.entity.ai.attributes.Attributes;
 import net.minecraft.world.World;
 
 public class OldZombieEntity extends NewspaperZombieEntity{
@@ -13,20 +12,24 @@ public class OldZombieEntity extends NewspaperZombieEntity{
 	public OldZombieEntity(EntityType<? extends CreatureEntity> type, World worldIn) {
 		super(type, worldIn);
 	}
-	
+
 	@Override
-	protected void updateAngry(boolean is) {
-		this.getAttribute(Attributes.MOVEMENT_SPEED).setBaseValue(is ? ZombieUtil.WALK_VERY_FAST : ZombieUtil.WALK_NORMAL);
-		this.getAttribute(Attributes.ATTACK_DAMAGE).setBaseValue(is ? ZombieUtil.NORMAL_DAMAGE : ZombieUtil.LITTLE_LOW);
+	public int getAngryLevel() {
+		return 5;
 	}
-	
+
+	@Override
+	public float getEatDamage() {
+		return ZombieUtil.LITTLE_LOW;
+	}
+
 	@Override
 	public float getLife() {
 		return 90;
 	}
 	
 	@Override
-	public float getPartLife() {
+	public float getOuterLife() {
 		return 40;
 	}
 	

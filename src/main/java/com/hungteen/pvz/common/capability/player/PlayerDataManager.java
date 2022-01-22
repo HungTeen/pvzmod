@@ -259,7 +259,7 @@ public class PlayerDataManager {
 			if(! PVZConfig.COMMON_CONFIG.RuleSettings.KeepSunWhenDie.get()) {
 				this.setResource(Resources.SUN_NUM, 50);
 			}
-			this.setResource(Resources.NO_FOG_TICK, 0);
+//			this.setResource(Resources.NO_FOG_TICK, 0);
 //			this.setResource(Resources.KILL_COUNT, 0);
 		}
 		this.syncToClient();

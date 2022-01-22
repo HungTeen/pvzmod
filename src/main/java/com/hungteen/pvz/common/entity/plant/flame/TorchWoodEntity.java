@@ -1,15 +1,19 @@
 package com.hungteen.pvz.common.entity.plant.flame;
 
+import com.hungteen.pvz.api.interfaces.IAlmanacEntry;
 import com.hungteen.pvz.api.interfaces.ILightEffect;
 import com.hungteen.pvz.api.types.IPlantType;
 import com.hungteen.pvz.common.entity.bullet.itembullet.PeaEntity;
 import com.hungteen.pvz.common.entity.plant.PVZPlantEntity;
+import com.hungteen.pvz.common.impl.SkillTypes;
 import com.hungteen.pvz.common.impl.plant.PVZPlants;
 import com.hungteen.pvz.common.potion.EffectRegister;
 import com.hungteen.pvz.register.ParticleRegister;
 import com.hungteen.pvz.utils.EntityUtil;
 import com.hungteen.pvz.utils.WorldUtil;
 
+import com.hungteen.pvz.utils.enums.PAZAlmanacs;
+import com.mojang.datafixers.util.Pair;
 import net.minecraft.entity.CreatureEntity;
 import net.minecraft.entity.EntitySize;
 import net.minecraft.entity.EntityType;
@@ -22,6 +26,8 @@ import net.minecraft.network.datasync.EntityDataManager;
 import net.minecraft.particles.IParticleData;
 import net.minecraft.potion.EffectInstance;
 import net.minecraft.world.World;
+
+import java.util.List;
 
 public class TorchWoodEntity extends PVZPlantEntity implements ILightEffect {
 
@@ -87,15 +93,25 @@ public class TorchWoodEntity extends PVZPlantEntity implements ILightEffect {
 	public boolean canStartSuperMode() {
 		return super.canStartSuperMode() && this.getFlameType() == FlameTypes.YELLOW;
 	}
-	
+
+	@Override
+	public void addAlmanacEntries(List<Pair<IAlmanacEntry, Number>> list) {
+		super.addAlmanacEntries(list);
+		list.add(Pair.of(PAZAlmanacs.HEAT_PEA_RANGE, this.getHeatRange()));
+	}
+
 	/**
 	 * {@link #heatPeas()}
 	 */
 	public float getHeatRange() {
-		return 1.5F;
-//		return this.isPlantInStage(1) ? 1.5F : this.isPlantInStage(2) ? 2 : 2.5F;
+		return this.getSkillValue(SkillTypes.HEAT_PEA_RANGE);
 	}
-	
+
+	@Override
+	protected float getLife() {
+		return this.getSkillValue(SkillTypes.WOOD_MORE_LIFE);
+	}
+
 	@Override
 	public EntitySize getDimensions(Pose poseIn) {
 		return new EntitySize(0.95f, 1.95f, false);

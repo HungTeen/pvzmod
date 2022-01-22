@@ -1,13 +1,10 @@
 package com.hungteen.pvz.utils;
 
-import com.hungteen.pvz.PVZConfig;
 import com.hungteen.pvz.api.types.IZombieType;
 import com.hungteen.pvz.common.entity.zombie.PVZZombieEntity;
 import com.hungteen.pvz.common.entity.zombie.grass.DancingZombieEntity;
 import com.hungteen.pvz.common.impl.zombie.GrassZombies;
-import com.hungteen.pvz.common.world.invasion.InvasionManager;
 import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.MathHelper;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -19,7 +16,7 @@ public class ZombieUtil {
 			GrassZombies.NORMAL_ZOMBIE, GrassZombies.CONEHEAD_ZOMBIE, GrassZombies.BUCKETHEAD_ZOMBIE, 
 			GrassZombies.SCREENDOOR_ZOMBIE, GrassZombies.NEWSPAPER_ZOMBIE));
 	
-    // zombies speed
+    // move speed
 	public static final float WALK_SUPER_SLOW = 0.15F;
 	public static final float WALK_HUGE_SLOW = 0.16F; 
 	public static final float WALK_VERY_SLOW = 0.17F; 
@@ -34,21 +31,19 @@ public class ZombieUtil {
 	public static final float WATER_FAST = 0.8F;
 	public static final float FLY_FAST = 0.5F;
 
-	// zombies attackDamage
-	public static final float VERY_LOW = 4; 
-	public static final float LOW = 6;
-	public static final float LITTLE_LOW = 8;
-	public static final float NORMAL_DAMAGE = 10; 
-	public static final float LITTLE_HIGH = 20; 
-	public static final float HIGH = 30; 
-	public static final float VERY_HIGH = 50;
-	public static final float HUGE_HIGH = 100; 
-	public static final float SUPER_HIGH = 200; 
-	public static final float GIANT_HIT = 1000; 
-	public static final float BOSS_HIT = 2000; 
+	// attack damage
+	public static final float HUGE_LOW = 3;
+	public static final float VERY_LOW = 4;
+	public static final float LOW = 5;
+	public static final float LITTLE_LOW = 7;
+	public static final float NORMAL_DAMAGE = 10;
+	public static final float LITTLE_HIGH = 15;
+	public static final float HIGH = 20;
+	public static final float VERY_HIGH = 30;
+	public static final float HUGE_HIGH = 50;
+	public static final float SUPER_HIGH = 100;
 
 	// range
-	public static final float NORMAL_FOLLOW_RANGE = 50;
 	public static final float CLOSE_TARGET_RANGE = 40;
 	public static final float LITTLE_CLOSE_TARGET_RANGE = 50;
 	public static final float NORMAL_TARGET_RANGE = 60;
@@ -57,8 +52,6 @@ public class ZombieUtil {
 	public static final float NORMAL_TARGET_HEIGHT = 30;
 	public static final float LITTLE_HIGH_TARGET_HEIGHT = 40;
 	public static final float HIGH_TARGET_HEIGHT = 50;
-	
-	 public static final int MAX_ZOMBIE_LEVEL = 20;
 	
 	/**
 	 * copy some data to new zombie ,which is necessary to implement.
@@ -74,12 +67,12 @@ public class ZombieUtil {
 		EntityUtil.onEntitySpawn(old.level, now, pos);
 	}
 	
-	public static int caculateZombieLevel(PVZZombieEntity zombie) {
-		final int difficulty = InvasionManager.getInvasionDifficulty() - 100;
-		final int maxLevel = PVZConfig.COMMON_CONFIG.EntitySettings.ZombieSetting.ZombieMaxLevel.get();
-		final int minLvl = MathHelper.clamp(difficulty / 50 + 1, 1, maxLevel);
-		final int maxLvl = MathHelper.clamp(difficulty / 30 + 2, 1, maxLevel);
-		return MathUtil.getRandomMinMax(zombie.getRandom(), minLvl, maxLvl);
-	}
+//	public static int caculateZombieLevel(PVZZombieEntity zombie) {
+//		final int difficulty = InvasionManager.getInvasionDifficulty() - 100;
+//		final int maxLevel = PVZConfig.COMMON_CONFIG.EntitySettings.ZombieSetting.ZombieMaxLevel.get();
+//		final int minLvl = MathHelper.clamp(difficulty / 50 + 1, 1, maxLevel);
+//		final int maxLvl = MathHelper.clamp(difficulty / 30 + 2, 1, maxLevel);
+//		return MathUtil.getRandomMinMax(zombie.getRandom(), minLvl, maxLvl);
+//	}
 	
 }

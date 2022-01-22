@@ -1,11 +1,15 @@
 package com.hungteen.pvz.common.entity.plant.spear;
 
+import com.hungteen.pvz.api.interfaces.IAlmanacEntry;
 import com.hungteen.pvz.api.interfaces.IHasWheel;
 import com.hungteen.pvz.api.types.IPlantType;
 import com.hungteen.pvz.common.entity.plant.PVZPlantEntity;
+import com.hungteen.pvz.common.impl.SkillTypes;
 import com.hungteen.pvz.common.impl.plant.PVZPlants;
 import com.hungteen.pvz.common.misc.damage.PVZDamageSource;
 import com.hungteen.pvz.utils.EntityUtil;
+import com.hungteen.pvz.utils.enums.PAZAlmanacs;
+import com.mojang.datafixers.util.Pair;
 import net.minecraft.entity.CreatureEntity;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
@@ -18,6 +22,8 @@ import net.minecraft.util.DamageSource;
 import net.minecraft.world.World;
 
 import javax.annotation.Nonnull;
+import java.util.Arrays;
+import java.util.List;
 
 public class SpikeWeedEntity extends PVZPlantEntity {
 
@@ -110,10 +116,19 @@ public class SpikeWeedEntity extends PVZPlantEntity {
 	public boolean canBeTargetBy(LivingEntity living) {
 		return false;
 	}
-	
+
+	@Override
+	public void addAlmanacEntries(List<Pair<IAlmanacEntry, Number>> list) {
+		super.addAlmanacEntries(list);
+		list.addAll(Arrays.asList(
+				Pair.of(PAZAlmanacs.SPIKE_COUNT, this.getSpikesCount()),
+				Pair.of(PAZAlmanacs.ATTACK_DAMAGE, this.getAttackDamage()),
+				Pair.of(PAZAlmanacs.ATTACK_CD, this.getAttackCD())
+		));
+	}
+
 	public float getAttackDamage(){
-		return 2;
-//		return PlantUtil.getPlantAverageProgress(this, 2F, 6F);
+		return this.getSkillValue(SkillTypes.SPIKE_DAMAGE);
 	}
 	
 	/**
@@ -122,7 +137,6 @@ public class SpikeWeedEntity extends PVZPlantEntity {
 	 */
 	public int getSuperSpikeCount() {
 		return 3;
-//		return this.isPlantInStage(1) ? 3 : this.isPlantInStage(2) ? 6 : 9;
 	}
 	
 	public int getAttackCD() {

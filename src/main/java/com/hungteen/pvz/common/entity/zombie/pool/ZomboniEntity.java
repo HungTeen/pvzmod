@@ -4,8 +4,8 @@ import com.hungteen.pvz.api.interfaces.IHasWheel;
 import com.hungteen.pvz.common.entity.PVZMultiPartEntity;
 import com.hungteen.pvz.common.entity.zombie.base.CarZombieEntity;
 import com.hungteen.pvz.common.entity.zombie.part.PVZZombiePartEntity;
-import com.hungteen.pvz.common.impl.zombie.ZombieType;
 import com.hungteen.pvz.common.impl.zombie.PoolZombies;
+import com.hungteen.pvz.common.impl.zombie.ZombieType;
 import com.hungteen.pvz.common.misc.damage.PVZDamageSource;
 import com.hungteen.pvz.common.misc.sound.SoundRegister;
 import com.hungteen.pvz.utils.EntityUtil;
@@ -16,7 +16,6 @@ import net.minecraft.block.Blocks;
 import net.minecraft.block.SnowBlock;
 import net.minecraft.enchantment.FrostWalkerEnchantment;
 import net.minecraft.entity.*;
-import net.minecraft.entity.ai.attributes.Attributes;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.SoundEvent;
 import net.minecraft.util.math.BlockPos;
@@ -33,12 +32,6 @@ public class ZomboniEntity extends CarZombieEntity implements IHasMultiPart, IHa
 		super(type, worldIn);
 		this.setImmuneAllEffects();
 		this.resetParts();
-	}
-	
-	@Override
-	protected void updateAttributes() {
-		super.updateAttributes();
-		this.getAttribute(Attributes.MOVEMENT_SPEED).setBaseValue(ZombieUtil.WALK_SLOW);
 	}
 	
 	@Override
@@ -109,7 +102,12 @@ public class ZomboniEntity extends CarZombieEntity implements IHasMultiPart, IHa
 	public float getPartOffset() {
 		return 1.2f;
 	}
-	
+
+	@Override
+	public float getWalkSpeed() {
+		return ZombieUtil.WALK_SLOW;
+	}
+
 	@Override
 	public SoundEvent getHurtSound(DamageSource damageSourceIn) {
 		return SoundRegister.METAL_HIT.get();

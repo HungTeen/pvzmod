@@ -90,7 +90,7 @@ public class ClickButtonPacket {
 				} else if(message.type == GuiHandler.ESSENCE_ALTAR) {
 					if(player.containerMenu instanceof EssenceAltarContainer) {
 						EssenceAltarContainer container = (EssenceAltarContainer) player.containerMenu;
-//						container.destroyAllCards();
+						container.learnSkillAt(message.op);
 					}
 				} else if(message.type == GuiHandler.CARD_FUSION) {
 					if(player.containerMenu instanceof CardFusionContainer) {

@@ -51,4 +51,8 @@ public interface IPAZEntity extends IHasOwner, IHasGroup, ICanBeCharmed, ICanBeA
      */
     void addAlmanacEntries(List<Pair<IAlmanacEntry, Number>> list);
 
+    void setOuterDefenceLife(double life);
+
+    void setInnerDefenceLife(double life);
+
 }

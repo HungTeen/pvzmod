@@ -30,7 +30,7 @@ public class PotatoMineRender extends PVZPlantRender<PotatoMineEntity>{
 	public Vector3d getTranslateVec(PotatoMineEntity entity) {
 		final float offsetY = 0.6F;
 		if(entity.isRisingFromDirt()) {
-			final int time = PotatoMineEntity.PREPARE_CD - entity.getExistTick();
+			final int time = entity.getPrepareCD() - entity.getExistTick();
 			return new Vector3d(0, time * offsetY / PotatoMineEntity.RISING_ANIM_CD, 0);
 		}
 		return entity.isMineReady() ? new Vector3d(0, 0, 0) : new Vector3d(0, offsetY, 0);

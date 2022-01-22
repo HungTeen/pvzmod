@@ -30,7 +30,6 @@ import com.hungteen.pvz.common.container.shop.SunShopContainer;
 
 import net.minecraft.client.gui.ScreenManager;
 import net.minecraft.inventory.container.ContainerType;
-import net.minecraft.util.IWorldPosCallable;
 import net.minecraftforge.common.extensions.IForgeContainerType;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.RegistryObject;
@@ -100,7 +99,7 @@ public class ContainerRegister {
 	
 	public static final RegistryObject<ContainerType<EssenceAltarContainer>> ESSENCE_ALTAR = CONTAINER_TYPES.register("essence_altar", () -> {
 		return IForgeContainerType.create((windowId, inv, data) -> {
-            return new EssenceAltarContainer(windowId, inv.player, IWorldPosCallable.create(inv.player.level, data.readBlockPos()));
+            return new EssenceAltarContainer(windowId, inv.player, data.readBlockPos());
         });
 	});
 	

@@ -26,7 +26,7 @@ public interface IPlantInfo {
     /**
      * run when its inner plants in super mode.
      */
-    void onSuper();
+    void onSuper(IPlantEntity plantEntity);
 
     void setType(IPlantType type);
 

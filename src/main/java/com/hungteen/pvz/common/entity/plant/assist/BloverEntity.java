@@ -1,44 +1,43 @@
 package com.hungteen.pvz.common.entity.plant.assist;
 
+import com.hungteen.pvz.api.interfaces.IAlmanacEntry;
 import com.hungteen.pvz.api.types.IPlantType;
-import com.hungteen.pvz.common.entity.plant.base.PlantBomberEntity;
+import com.hungteen.pvz.common.entity.plant.PVZPlantEntity;
 import com.hungteen.pvz.common.entity.zombie.pool.BalloonZombieEntity;
+import com.hungteen.pvz.common.impl.SkillTypes;
 import com.hungteen.pvz.common.impl.plant.PVZPlants;
 import com.hungteen.pvz.common.misc.damage.PVZDamageSource;
 import com.hungteen.pvz.common.misc.sound.SoundRegister;
 import com.hungteen.pvz.utils.EntityUtil;
 import com.hungteen.pvz.utils.MathUtil;
-import com.hungteen.pvz.utils.PlayerUtil;
-import com.hungteen.pvz.utils.enums.Resources;
+import com.hungteen.pvz.utils.enums.PAZAlmanacs;
+import com.mojang.datafixers.util.Pair;
 import net.minecraft.entity.*;
-import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.util.SoundEvent;
 import net.minecraft.util.math.vector.Vector3d;
 import net.minecraft.world.World;
 
+import java.util.Arrays;
+import java.util.List;
 import java.util.Optional;
 
-public class BloverEntity extends PlantBomberEntity {
+public class BloverEntity extends PVZPlantEntity {
 
 	public BloverEntity(EntityType<? extends CreatureEntity> type, World worldIn) {
 		super(type, worldIn);
-	}
-
-	@Override
-	public void startBomb(boolean server) {
 	}
 	
 	@Override
 	protected void normalPlantTick() {
 		super.normalPlantTick();
-		if(! level.isClientSide && this.getAttackTime() == 5) {
+		if(! level.isClientSide && this.getExistTick() == 5) {
 			this.blow();
 		}
 	}
 	
 	public void blow() {
 		if(! this.level.isClientSide) {
-			final float len = 30;
+			final float len = this.getBlowRange();
 			//deal damage.
 			EntityUtil.getTargetableLivings(this, EntityUtil.getEntityAABB(this, len, len)).forEach(target -> {
 				if(EntityUtil.isEntityInSky(target)) {
@@ -50,12 +49,21 @@ public class BloverEntity extends PlantBomberEntity {
 				}
 			});
 			//dispel fog.
-			level.getEntitiesOfClass(PlayerEntity.class, EntityUtil.getEntityAABB(this, len, len), player -> ! EntityUtil.canTargetEntity(this, player)).forEach((player) -> {
-				PlayerUtil.addResource(player, Resources.NO_FOG_TICK, 2400 * this.getForceLevel());
-			});
+//			level.getEntitiesOfClass(PlayerEntity.class, EntityUtil.getEntityAABB(this, len, len), player -> ! EntityUtil.canTargetEntity(this, player)).forEach((player) -> {
+//				PlayerUtil.addResource(player, Resources.NO_FOG_TICK, 2400 * this.getForceLevel());
+//			});
 		}
 	}
-	
+
+	@Override
+	public void addAlmanacEntries(List<Pair<IAlmanacEntry, Number>> list) {
+		super.addAlmanacEntries(list);
+		list.addAll(Arrays.asList(
+				Pair.of(PAZAlmanacs.ATTACK_DAMAGE, this.getAttackDamage()),
+				Pair.of(PAZAlmanacs.ATTACK_RANGE, this.getBlowRange())
+		));
+	}
+
 	@Override
 	public boolean canPlantTarget(Entity entity) {
 		if(entity instanceof BalloonZombieEntity) {
@@ -70,16 +78,17 @@ public class BloverEntity extends PlantBomberEntity {
 	}
 	
 	public float getAttackDamage(){
-		return 10;
-//		return PlantUtil.getPlantAverageProgress(this, 10, 50);
+		return this.getSkillValue(SkillTypes.BLOW_STRENGTH);
 	}
 	
 	public int getForceLevel() {
-//		return this.isPlantInStage(1) ? 1 : this.isPlantInStage(2) ? 2 : 3;
 		return 2;
 	}
-	
-	@Override
+
+	public float getBlowRange(){
+		return 30;
+	}
+
 	public int getReadyTime() {
 		return 40;
 	}

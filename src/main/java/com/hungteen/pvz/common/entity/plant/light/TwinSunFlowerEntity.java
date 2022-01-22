@@ -17,15 +17,17 @@ public class TwinSunFlowerEntity extends SunFlowerEntity{
 
 	@Override
 	public void genSomething() {
-		for(int i = 0; i < 2; ++ i) {
-			this.genSun(this.getSunAmount());
-		}
+		this.genSun(this.getSunAmount(), 2);
+	}
+
+	@Override
+	public int getSunAmount() {
+		return 50;
 	}
 
 	@Override
 	public int getSuperSunAmount() {
 		return 750;
-//		return this.getThreeStage(750, 1000, 1250);
 	}
 	
 	@Override

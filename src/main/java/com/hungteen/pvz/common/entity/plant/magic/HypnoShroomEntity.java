@@ -11,6 +11,7 @@ import net.minecraft.entity.*;
 import net.minecraft.util.DamageSource;
 import net.minecraft.world.World;
 
+//TODO 魅惑菇
 public class HypnoShroomEntity extends PVZPlantEntity implements ICanAttract{
 
 	public HypnoShroomEntity(EntityType<? extends CreatureEntity> type, World worldIn) {

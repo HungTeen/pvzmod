@@ -6,7 +6,6 @@ import com.hungteen.pvz.common.entity.bullet.AbstractBulletEntity;
 import com.hungteen.pvz.common.entity.plant.PVZPlantEntity;
 import com.hungteen.pvz.common.entity.plant.appease.StarFruitEntity;
 import com.hungteen.pvz.common.entity.plant.spear.CatTailEntity;
-import com.hungteen.pvz.common.impl.SkillTypes;
 import com.hungteen.pvz.utils.EntityUtil;
 import com.hungteen.pvz.utils.enums.PAZAlmanacs;
 import com.hungteen.pvz.utils.interfaces.IShooter;
@@ -55,8 +54,8 @@ public abstract class PlantShooterEntity extends PVZPlantEntity implements IShoo
 	}
 	
 	@Override
-	protected void updateAttributes() {
-		super.updateAttributes();
+	protected void initAttributes() {
+		super.initAttributes();
 		this.getAttribute(Attributes.FOLLOW_RANGE).setBaseValue(getShootRange());
 	}
 	
@@ -86,7 +85,7 @@ public abstract class PlantShooterEntity extends PVZPlantEntity implements IShoo
 	public void addAlmanacEntries(List<Pair<IAlmanacEntry, Number>> list) {
 		super.addAlmanacEntries(list);
 		list.addAll(Arrays.asList(
-				Pair.of(PAZAlmanacs.BULLET_DAMAGE, this.getSkillValue(SkillTypes.PEA_DAMAGE)),
+				Pair.of(PAZAlmanacs.BULLET_DAMAGE, this.getAttackDamage()),
 				Pair.of(PAZAlmanacs.SHOOT_CD, this.getShootCD()),
 				Pair.of(PAZAlmanacs.SHOOT_RANGE, this.getShootRange())
 		));

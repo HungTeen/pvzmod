@@ -13,7 +13,6 @@ import net.minecraft.client.gui.IRenderable;
 import net.minecraft.client.gui.widget.TextFieldWidget;
 import net.minecraft.client.resources.I18n;
 import net.minecraft.inventory.container.Slot;
-import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.text.StringTextComponent;
 import net.minecraftforge.api.distmarker.Dist;
@@ -196,27 +195,9 @@ public class OptionSearchGui extends AbstractGui implements IRenderable, IGuiEve
 	 */
 	public void renderTooltip(MatrixStack stack, int guiLeft, int guiTop, int mouseX, int mouseY) {
 		this.page.renderTooltip(stack, mouseX, mouseY);
-	    this.renderGhostRecipeTooltip(stack, guiLeft, guiTop, mouseX, mouseY);
+	    this.recipeManager.renderGhostRecipeTooltip(this.mc, stack, guiLeft, guiTop, mouseX, mouseY);
 	}
 
-	private void renderGhostRecipeTooltip(MatrixStack stack, int guiLeft, int guiTop, int mouseX, int mouseY) {
-		ItemStack itemstack = null;
-		for (int i = 0; i < this.recipeManager.size(); ++i) {
-			RecipeManager.RecipeIngredient ingredient = this.recipeManager.get(i);
-			int x = ingredient.getX() + guiLeft;
-			int y = ingredient.getY() + guiTop;
-			if (mouseX >= x && mouseY >= y && mouseX < x + 16 && mouseY < y + 16) {
-				itemstack = ingredient.getItem();
-			}
-		}
-		if (itemstack != null && this.mc.screen != null) {
-			this.mc.screen.renderComponentTooltip(stack, this.mc.screen.getTooltipFromItem(itemstack), mouseX, mouseY);
-		}
-	}
-
-	public void renderGhostRecipe(MatrixStack stack, int p_191864_1_, int p_191864_2_, boolean p_191864_3_, float p_191864_4_) {
-		this.recipeManager.render(this.mc, stack, p_191864_1_, p_191864_2_, p_191864_3_, p_191864_4_);
-	}
 
 	public void removed() {
 		this.searchBar = null;

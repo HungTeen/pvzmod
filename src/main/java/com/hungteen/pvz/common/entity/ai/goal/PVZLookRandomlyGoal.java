@@ -24,7 +24,7 @@ public class PVZLookRandomlyGoal extends LookRandomlyGoal{
 		if(this.plant instanceof PVZPlantEntity && !((PVZPlantEntity) this.plant).canNormalUpdate()) {
 			return false;
 		}
-		if(this.plant instanceof PVZZombieEntity && !((PVZZombieEntity) this.plant).canZombieNormalUpdate()) {
+		if(this.plant instanceof PVZZombieEntity && !((PVZZombieEntity) this.plant).canNormalUpdate()) {
 			return false;
 		}
 		return true;

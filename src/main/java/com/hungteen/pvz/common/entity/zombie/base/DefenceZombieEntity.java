@@ -11,6 +11,9 @@ import net.minecraft.util.SoundEvent;
 import net.minecraft.util.math.vector.Vector3d;
 import net.minecraft.world.World;
 
+/**
+ * use outer defence life as extra life.
+ */
 public abstract class DefenceZombieEntity extends PVZZombieEntity implements IMultiPartZombie{
 
 	protected PVZHealthPartEntity part;
@@ -60,10 +63,11 @@ public abstract class DefenceZombieEntity extends PVZZombieEntity implements IMu
 	@Override
 	public void onZombieBeMini() {
 		super.onZombieBeMini();
-		if(EntityUtil.isEntityValid(this.part)) {
-			this.part.onOwnerBeMini(this);
-		}
-		this.setDefenceLife(this.getPartLife() * 0.6F);
+		//TODO MINI
+//		if(EntityUtil.isEntityValid(this.part)) {
+//			this.part.onOwnerBeMini(this);
+//		}
+//		this.setInn(this.getOuterLife() * 0.6F);
 	}
 	
 	@Override
@@ -73,16 +77,25 @@ public abstract class DefenceZombieEntity extends PVZZombieEntity implements IMu
 	
 	@Override
 	public boolean canPartsExist() {
-		return this.getDefenceLife() > 0;
+		return this.getOuterDefenceLife() > 0;
 	}
-	
-    public abstract float getPartLife();
-    
-    @Override
-    public float getExtraLife() {
-    	return this.getPartLife();
-    }
-	
+
+	@Override
+	public void onOuterDefenceBroken() {
+		super.onOuterDefenceBroken();
+		if(! this.level.isClientSide){
+			EntityUtil.playSound(this, this.getPartDeathSound());
+		}
+	}
+
+	@Override
+	public void onOuterDefenceHurt() {
+		super.onOuterDefenceHurt();
+		if(! this.level.isClientSide){
+			EntityUtil.playSound(this, this.getPartHurtSound());
+		}
+	}
+
 	protected float getPartHeightOffset() {
 		if(this.isMiniZombie()) return 0.1F;
 		return 0.2f;

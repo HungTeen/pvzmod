@@ -4,6 +4,7 @@ import com.hungteen.pvz.api.types.IPlantType;
 import com.hungteen.pvz.common.entity.misc.DoomFixerEntity;
 import com.hungteen.pvz.common.entity.plant.PVZPlantEntity;
 import com.hungteen.pvz.common.entity.plant.base.PlantBomberEntity;
+import com.hungteen.pvz.common.impl.SkillTypes;
 import com.hungteen.pvz.common.impl.plant.PVZPlants;
 import com.hungteen.pvz.common.misc.damage.PVZDamageSource;
 import com.hungteen.pvz.common.misc.sound.SoundRegister;
@@ -60,13 +61,13 @@ public class DoomShroomEntity extends PlantBomberEntity {
 	public void startBomb(boolean server) {
 		if(server) {
 			//deal damage to targets.
-			final float range = 10.5F;
+			final float range = this.getExplodeRange();
 			final AxisAlignedBB aabb = EntityUtil.getEntityAABB(this, range, range);
 			EntityUtil.getWholeTargetableEntities(this, aabb).forEach(target -> {
 				if(target instanceof EnderDragonEntity) {//make ender_dragon can be damaged by doom shroom. 
-					((EnderDragonEntity) target).hurt(((EntityDamageSource)DamageSource.mobAttack(this)).setThorns().setExplosion(), this.getAttackDamage() * 2);
+					((EnderDragonEntity) target).hurt(((EntityDamageSource)DamageSource.mobAttack(this)).setThorns().setExplosion(), this.getExplodeDamage() * 2);
 				} else {
-					target.hurt(PVZDamageSource.explode(this), this.getAttackDamage());
+					target.hurt(PVZDamageSource.explode(this), this.getExplodeDamage());
 				}
 			});
 			PVZPlantEntity.clearLadders(this, aabb);
@@ -134,10 +135,15 @@ public class DoomShroomEntity extends PlantBomberEntity {
             Block.popResource(this.level, pair.getSecond(), pair.getFirst());
         }
 	}
-	
-	public float getAttackDamage() {
-		return 200;
-//		return PlantUtil.getPlantAverageProgress(this, 200, 800);
+
+	@Override
+	public float getExplodeDamage() {
+		return this.getSkillValue(SkillTypes.HIGH_EXPLODE_DAMAGE);
+	}
+
+	@Override
+	public float getExplodeRange(){
+		return 10.5F;
 	}
 	
 	@Override

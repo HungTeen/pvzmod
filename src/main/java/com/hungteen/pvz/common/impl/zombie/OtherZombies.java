@@ -5,8 +5,10 @@ import com.hungteen.pvz.api.types.IZombieType;
 import com.hungteen.pvz.client.model.entity.zombie.other.RaZombieModel;
 import com.hungteen.pvz.common.impl.RankTypes;
 import com.hungteen.pvz.common.entity.EntityRegister;
+import com.hungteen.pvz.data.loot.PVZLoot;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 public final class OtherZombies extends ZombieType {
@@ -20,6 +22,8 @@ public final class OtherZombies extends ZombieType {
 		    .rank(RankTypes.GREEN).xp(10)
 			.entityType(() -> EntityRegister.RA_ZOMBIE.get())
 			.zombieModel(() -> RaZombieModel::new).scale(0.5F)
+			.loot(PVZLoot.RA_ZOMBIE)
+			.eatCommonSkill(Arrays.asList())
 	);
 	
 	public static void register() {

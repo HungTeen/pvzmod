@@ -31,10 +31,10 @@ import java.util.List;
 
 public class SunConverterBlock extends Block {
 
-	protected static final VoxelShape AABB = Block.box(0.0D, 0.0D, 0.0D, 16.0D, 9.0D, 16.0D);
+	private static final VoxelShape AABB = Block.box(0.0D, 0.0D, 0.0D, 16.0D, 9.0D, 16.0D);
 
 	public SunConverterBlock() {
-		super(Block.Properties.copy(Blocks.IRON_BLOCK).noCollission());
+		super(Block.Properties.copy(Blocks.IRON_BLOCK));
 	}
 
 	@Override

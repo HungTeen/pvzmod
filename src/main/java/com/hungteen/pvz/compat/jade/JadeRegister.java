@@ -18,7 +18,6 @@ public class JadeRegister implements IWailaPlugin {
 	public static final ResourceLocation RENDER_DEFENCE_HEALTH = StringUtil.prefix("render_defence_health");
 	
 	public static final ResourceLocation CONFIG_SHOW_DEFENCE_HEALTH = StringUtil.prefix("show_defence_health");
-	public static final ResourceLocation CONFIG_SHOW_ZOMBIE_REDUCTION = StringUtil.prefix("show_zombie_hurt_reduction");
 	public static final ResourceLocation CONFIG_SHOW_LEVEL = StringUtil.prefix("show_level");
 	public static final ResourceLocation CONFIG_SHOW_OWNER = StringUtil.prefix("show_owner");
 	
@@ -30,7 +29,6 @@ public class JadeRegister implements IWailaPlugin {
 		reg.registerComponentProvider(PVZEntityProvider.INSTANCE, TooltipPosition.BODY, Entity.class);
 		
 		reg.addConfig(CONFIG_SHOW_DEFENCE_HEALTH, true);
-		reg.addConfig(CONFIG_SHOW_ZOMBIE_REDUCTION, true);
 		reg.addConfig(CONFIG_SHOW_LEVEL, true);
 		reg.addConfig(CONFIG_SHOW_OWNER, true);
 		

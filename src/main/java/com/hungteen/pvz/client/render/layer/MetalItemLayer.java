@@ -36,7 +36,7 @@ public class MetalItemLayer <T extends MagnetShroomEntity> extends LayerRenderer
 		}
 		matrixStackIn.pushPose();
 		matrixStackIn.scale(-1, -1, 1);
-		float percent = entityIn.getAttackTime() * 1.0F / entityIn.getAttackCD();
+		float percent = entityIn.getAttackTime() * 1.0F / entityIn.getWorkCD();
 		matrixStackIn.scale(percent, percent, percent);
 		ItemStack itemstack = entityIn.getMetalRenderItem();
 		IBakedModel ibakedmodel = this.itemRenderer.getModel(itemstack, entityIn.level, (LivingEntity) null);

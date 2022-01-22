@@ -9,6 +9,7 @@ import com.hungteen.pvz.common.item.ItemRegister;
 import com.hungteen.pvz.common.entity.EntityRegister;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 public final class MemePlants extends PlantType {
@@ -23,6 +24,7 @@ public final class MemePlants extends PlantType {
 			.enjoyCard(() -> ItemRegister.STRANGE_CAT_ENJOY_CARD.get())
 			.plantModel(() -> StrangeCatModel::new).scale(0.18F)
 			.placement(Placements.ANY)
+			.cdSkill(Arrays.asList(SkillTypes.LESS_SUN))
 	);
 	
 	public static void register() {

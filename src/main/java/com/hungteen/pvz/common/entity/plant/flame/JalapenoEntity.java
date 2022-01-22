@@ -6,6 +6,7 @@ import com.hungteen.pvz.common.entity.misc.ElementBallEntity.ElementTypes;
 import com.hungteen.pvz.common.entity.plant.PVZPlantEntity;
 import com.hungteen.pvz.common.entity.plant.base.PlantBomberEntity;
 import com.hungteen.pvz.common.entity.zombie.zombotany.JalapenoZombieEntity;
+import com.hungteen.pvz.common.impl.SkillTypes;
 import com.hungteen.pvz.common.impl.plant.PVZPlants;
 import com.hungteen.pvz.common.misc.damage.PVZDamageSource;
 import com.hungteen.pvz.common.misc.sound.SoundRegister;
@@ -26,7 +27,7 @@ public class JalapenoEntity extends PlantBomberEntity{
 
 	@Override
 	public void startBomb(boolean server) {
-		final int range = 20;
+		final float range = this.getExplodeRange();
 		if(server) {
 			//deal damage.
 			fireMob(this, range, 1F);
@@ -35,7 +36,7 @@ public class JalapenoEntity extends PlantBomberEntity{
 		    ElementBallEntity.killElementBalls(this, 40, ElementTypes.ICE);
 			EntityUtil.playSound(this, SoundRegister.JALAPENO.get());
 		}
-		clearSnowAndSpawnFlame(this, range);
+		clearSnowAndSpawnFlame(this, (int) range);
 	}
 	
 	/**
@@ -47,7 +48,7 @@ public class JalapenoEntity extends PlantBomberEntity{
 		for(Entity target : EntityUtil.getWholeTargetableEntities(entity, aabb)) {
 			float damage = 0;
 			if(entity instanceof JalapenoEntity) {
-				damage = ((JalapenoEntity) entity).getAttackDamage();
+				damage = ((JalapenoEntity) entity).getExplodeDamage();
 			} else if(entity instanceof JalapenoZombieEntity) {
 				if(target instanceof LivingEntity) {
 					damage = EntityUtil.getMaxHealthDamage((LivingEntity) target, 2);
@@ -108,11 +109,16 @@ public class JalapenoEntity extends PlantBomberEntity{
 		}
 	}
 
-	public float getAttackDamage(){
-		return 150;
-//		return PlantUtil.getPlantAverageProgress(this, 150, 450);
+	@Override
+	public float getExplodeRange() {
+		return 20;
 	}
-	
+
+	@Override
+	public float getExplodeDamage() {
+		return this.getSkillValue(SkillTypes.NORMAL_BOMB_DAMAGE);
+	}
+
 	@Override
 	public EntitySize getDimensions(Pose poseIn) {
 		return EntitySize.scalable(0.7f, 1.5f);
@@ -120,7 +126,7 @@ public class JalapenoEntity extends PlantBomberEntity{
 
 	@Override
 	public int getReadyTime() {
-		return 30;
+		return 20;
 	}
 
 	@Override

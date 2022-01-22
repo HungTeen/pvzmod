@@ -4,6 +4,7 @@ import com.hungteen.pvz.api.types.IPlantType;
 import com.hungteen.pvz.common.entity.bullet.AbstractBulletEntity;
 import com.hungteen.pvz.common.entity.bullet.StarEntity;
 import com.hungteen.pvz.common.entity.plant.base.PlantShooterEntity;
+import com.hungteen.pvz.common.impl.SkillTypes;
 import com.hungteen.pvz.common.impl.plant.PVZPlants;
 import com.hungteen.pvz.common.misc.sound.SoundRegister;
 import com.hungteen.pvz.utils.EntityUtil;
@@ -44,8 +45,7 @@ public class StarFruitEntity extends PlantShooterEntity {
 	
 	@Override
 	public int getSuperTimeLength() {
-		return 1;
-//		return this.isPlantInStage(1) ? 100 : this.isPlantInStage(2) ? 150 : 200;
+		return 100;
 	}
 
 	@Override
@@ -66,8 +66,7 @@ public class StarFruitEntity extends PlantShooterEntity {
 	
 	@Override
 	public float getAttackDamage() {
-		return 2;
-//		return PlantUtil.getPlantAverageProgress(this, 2F, 6F);
+		return this.getSkillValue(SkillTypes.MORE_STAR_DAMAGE);
 	}
 	
 	@Override

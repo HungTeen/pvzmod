@@ -4,13 +4,16 @@ import com.hungteen.pvz.PVZMod;
 import com.hungteen.pvz.api.paz.IZombieEntity;
 import com.hungteen.pvz.api.paz.IZombieModel;
 import com.hungteen.pvz.api.types.ICoolDown;
+import com.hungteen.pvz.api.types.IEssenceType;
 import com.hungteen.pvz.api.types.IRankType;
 import com.hungteen.pvz.api.types.ISkillType;
 import com.hungteen.pvz.api.types.IZombieType;
 import com.hungteen.pvz.common.entity.EntityRegister;
 import com.hungteen.pvz.common.impl.CoolDowns;
+import com.hungteen.pvz.common.impl.EssenceTypes;
 import com.hungteen.pvz.common.impl.PAZType;
 import com.hungteen.pvz.common.impl.RankTypes;
+import com.hungteen.pvz.common.impl.SkillTypes;
 import com.hungteen.pvz.common.world.spawn.SpawnChecker;
 import net.minecraft.entity.CreatureEntity;
 import net.minecraft.entity.EntityType;
@@ -90,6 +93,12 @@ public abstract class ZombieType extends PAZType implements IZombieType {
 	 */
 	protected ResourceLocation getEntityResource() {
 		return new ResourceLocation(this.getModID(), "textures/entity/zombie/" + this.getCategoryName() + "/" + this.toString() + ".png");
+	}
+	
+	@Override
+	public IEssenceType getEssence() {
+		//TODO Essence of Zombies.
+		return EssenceTypes.ORIGIN;
 	}
 	
 	/**
@@ -220,9 +229,24 @@ public abstract class ZombieType extends PAZType implements IZombieType {
 			return this;
 		}
 
-		public ZombieFeatures skill(ISkillType ...skillType){
-			this.skillTypes.addAll(Arrays.asList(skillType));
+		public ZombieFeatures skill(Collection<ISkillType> skills){
+			this.skillTypes.addAll(skills);
 			return this;
+		}
+
+		public ZombieFeatures baseSkill(Collection<ISkillType> skills){
+			this.skillTypes.addAll(Arrays.asList(SkillTypes.TOUGH_BODY, SkillTypes.FAST_CD));
+			return this.skill(skills);
+		}
+
+		public ZombieFeatures commonSkill(Collection<ISkillType> skills){
+			this.skillTypes.addAll(Arrays.asList( SkillTypes.FAST_CD, SkillTypes.ZOMBIE_FAST_MOVE));
+			return this.baseSkill(skills);
+		}
+
+		public ZombieFeatures eatCommonSkill(Collection<ISkillType> skills){
+			this.skillTypes.addAll(Arrays.asList(SkillTypes.HIGH_EAT_DAMAGE));
+			return this.commonSkill(skills);
 		}
 		
 		public ZombieFeatures zombieModel(Supplier<SafeCallable<IZombieModel<? extends IZombieEntity>>> sup) {

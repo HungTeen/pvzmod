@@ -2,6 +2,7 @@ package com.hungteen.pvz.common.entity.plant.defence;
 
 import com.hungteen.pvz.api.types.IPlantType;
 import com.hungteen.pvz.common.entity.plant.base.PlantDefenderEntity;
+import com.hungteen.pvz.common.impl.SkillTypes;
 import com.hungteen.pvz.common.impl.plant.PVZPlants;
 
 import net.minecraft.entity.CreatureEntity;
@@ -18,16 +19,13 @@ public class WallNutEntity extends PlantDefenderEntity{
 	
 	@Override
 	public float getLife() {
-		return 400;
-//		return MathUtil.getProgressAverage(this.getSkills(), PlantUtil.MAX_PLANT_LEVEL, 400, 800);
+		return this.getSkillValue(SkillTypes.NUT_MORE_LIFE);
 	}
 	
 	@Override
 	public float getSuperLife() {
-//		return this.isPlantInStage(1) ? 500 : this.isPlantInStage(2) ? 750 : 1000;
-		return 100;
+		return 400;
 	}
-
 
 	@Override
 	public EntitySize getDimensions(Pose poseIn) {

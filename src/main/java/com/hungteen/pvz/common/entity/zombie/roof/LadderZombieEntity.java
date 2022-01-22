@@ -5,10 +5,9 @@ import com.hungteen.pvz.common.entity.plant.base.PlantDefenderEntity;
 import com.hungteen.pvz.common.entity.zombie.base.DefenceZombieEntity;
 import com.hungteen.pvz.common.entity.zombie.body.ZombieDropBodyEntity;
 import com.hungteen.pvz.common.entity.zombie.part.PVZHealthPartEntity;
-import com.hungteen.pvz.common.impl.zombie.ZombieType;
 import com.hungteen.pvz.common.impl.zombie.RoofZombies;
+import com.hungteen.pvz.common.impl.zombie.ZombieType;
 import com.hungteen.pvz.common.misc.sound.SoundRegister;
-import com.hungteen.pvz.data.loot.PVZLoot;
 import com.hungteen.pvz.remove.MetalTypes;
 import com.hungteen.pvz.utils.ZombieUtil;
 import com.hungteen.pvz.utils.interfaces.IHasMetal;
@@ -16,7 +15,6 @@ import net.minecraft.entity.CreatureEntity;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.ai.attributes.Attributes;
-import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.SoundEvent;
 import net.minecraft.world.World;
 
@@ -24,12 +22,6 @@ public class LadderZombieEntity extends DefenceZombieEntity implements IHasMetal
 	
 	public LadderZombieEntity(EntityType<? extends CreatureEntity> type, World worldIn) {
 		super(type, worldIn);
-	}
-	
-	@Override
-	protected void updateAttributes() {
-		super.updateAttributes();
-		this.getAttribute(Attributes.MOVEMENT_SPEED).setBaseValue(ZombieUtil.WALK_FAST);
 	}
 
 	@Override
@@ -81,7 +73,7 @@ public class LadderZombieEntity extends DefenceZombieEntity implements IHasMetal
 	
 	@Override
 	public boolean hasMetal() {
-		return this.getDefenceLife() > 0;
+		return this.getOuterDefenceLife() > 0;
 	}
 	
 	@Override
@@ -97,13 +89,13 @@ public class LadderZombieEntity extends DefenceZombieEntity implements IHasMetal
 
 	@Override
 	public void decreaseMetal() {
-		this.setDefenceLife(0);
+		this.setOuterDefenceLife(0);
 		this.getAttribute(Attributes.MOVEMENT_SPEED).setBaseValue(ZombieUtil.WALK_NORMAL);
 	}
 
 	@Override
 	public void increaseMetal() {
-		this.setDefenceLife(this.getPartLife());
+		this.setOuterDefenceLife(this.getOuterLife());
 		this.getAttribute(Attributes.MOVEMENT_SPEED).setBaseValue(ZombieUtil.WALK_FAST);
 		this.resetParts();
 	}
@@ -124,13 +116,13 @@ public class LadderZombieEntity extends DefenceZombieEntity implements IHasMetal
 	}
 	
 	@Override
-	public float getPartLife() {
+	public float getOuterLife() {
 		return 250;
 	}
-	
+
 	@Override
-	protected ResourceLocation getDefaultLootTable() {
-		return PVZLoot.LADDER_ZOMBIE;
+	public float getWalkSpeed() {
+		return ZombieUtil.WALK_FAST;
 	}
 
 	@Override

@@ -27,7 +27,6 @@ public class CoffinEntity extends AbstractBossZombieEntity {
 	public CoffinEntity(EntityType<? extends CreatureEntity> type, World worldIn) {
 		super(type, worldIn);
 		this.setIsWholeBody();
-		this.maxDeathTime = 0;
 		this.kickRange = 3;
 	}
 	
@@ -38,8 +37,8 @@ public class CoffinEntity extends AbstractBossZombieEntity {
 	}
 	
 	@Override
-	protected void updateAttributes() {
-		super.updateAttributes();
+	protected void initAttributes() {
+		super.initAttributes();
 		this.getAttribute(Attributes.ATTACK_DAMAGE).setBaseValue(ZombieUtil.LITTLE_LOW);
 		this.getAttribute(Attributes.MOVEMENT_SPEED).setBaseValue(ZombieUtil.WALK_SLOW);
 	}
@@ -73,11 +72,16 @@ public class CoffinEntity extends AbstractBossZombieEntity {
 	}
 
 	@Override
-	protected void onZombieRemove() {
+	protected void onRemoveWhenDeath() {
 		if(!level.isClientSide) {
 		    NobleZombieEntity boss = EntityRegister.NOBLE_ZOMBIE.get().create(level);
 		    this.onBossSummon(boss, blockPosition().above());
 		}
+	}
+
+	@Override
+	protected int getDeathTime() {
+		return 1;
 	}
 
 	@Override

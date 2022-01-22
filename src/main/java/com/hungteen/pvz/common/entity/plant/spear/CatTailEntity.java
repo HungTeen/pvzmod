@@ -8,6 +8,7 @@ import com.hungteen.pvz.common.entity.bullet.ThornEntity.ThornStates;
 import com.hungteen.pvz.common.entity.bullet.ThornEntity.ThornTypes;
 import com.hungteen.pvz.common.entity.plant.base.PlantShooterEntity;
 import com.hungteen.pvz.common.entity.zombie.pool.BalloonZombieEntity;
+import com.hungteen.pvz.common.impl.SkillTypes;
 import com.hungteen.pvz.common.impl.plant.PVZPlants;
 import com.hungteen.pvz.utils.EntityUtil;
 import net.minecraft.entity.*;
@@ -108,18 +109,15 @@ public class CatTailEntity extends PlantShooterEntity {
 	
 	public int getPowerThornCount() {
 		return 1;
-//		return this.getThreeStage(1, 2, 3);
 	}
 	
 	public int getExtraAttackCount() {
 		return 1;
-//		return MathUtil.getProgressByDif(5, 1, this.getSkills(), PlantUtil.MAX_PLANT_LEVEL, 1, 4);
 	}
 	
 	@Override
 	public float getAttackDamage() {
-		return 2;
-//		return this.getAverageProgress(2F, 6F);
+		return this.getSkillValue(SkillTypes.MORE_THORN_DAMAGE);
 	}
 	
 	public int getAnimCD() {

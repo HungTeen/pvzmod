@@ -1,14 +1,18 @@
 package com.hungteen.pvz.common.entity.plant.explosion;
 
+import com.hungteen.pvz.api.interfaces.IAlmanacEntry;
 import com.hungteen.pvz.api.types.IPlantType;
 import com.hungteen.pvz.common.entity.bullet.itembullet.FireCrackerEntity;
 import com.hungteen.pvz.common.entity.misc.FireCrackersEntity;
 import com.hungteen.pvz.common.entity.plant.base.PlantCloserEntity;
+import com.hungteen.pvz.common.impl.SkillTypes;
 import com.hungteen.pvz.common.impl.plant.OtherPlants;
 import com.hungteen.pvz.common.misc.damage.PVZDamageSource;
 import com.hungteen.pvz.common.misc.sound.SoundRegister;
 import com.hungteen.pvz.utils.EntityUtil;
 import com.hungteen.pvz.utils.WorldUtil;
+import com.hungteen.pvz.utils.enums.PAZAlmanacs;
+import com.mojang.datafixers.util.Pair;
 import net.minecraft.entity.*;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
@@ -82,7 +86,13 @@ public class BambooLordEntity extends PlantCloserEntity {
 		}
 		this.remove();
 	}
-	
+
+	@Override
+	public void addAlmanacEntries(List<Pair<IAlmanacEntry, Number>> list) {
+		super.addAlmanacEntries(list);
+		list.add(Pair.of(PAZAlmanacs.EXPLODE_DAMAGE, this.getAttackDamage()));
+	}
+
 	@Override
 	public void startSuperMode(boolean first) {
 		super.startSuperMode(first);
@@ -102,18 +112,15 @@ public class BambooLordEntity extends PlantCloserEntity {
 	}
 	
 	public float getAttackDamage() {
-//		return this.getAverageProgress(60F, 160F);
-		return 50;
+		return this.getSkillValue(SkillTypes.SMALL_BOMB_DAMAGE);
 	}
 	
 	public int getSplitCount() {
 		return 1;
-//		return MathUtil.getProgressByDif(5, 1, this.getSkills(), PlantUtil.MAX_PLANT_LEVEL, 2, 5);
 	}
 	
 	public int getCrackersNum() {
 		return 10;
-//		return this.getThreeStage(10, 15, 20);
 	}
 	
 	@Override

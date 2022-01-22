@@ -280,6 +280,11 @@ public abstract class PlantType extends PAZType implements IPlantType {
 			return this;
 		}
 
+		public PlantFeatures cdSkill(Collection<ISkillType> skills){
+			this.skillTypes.addAll(Arrays.asList(SkillTypes.FAST_CD));
+			return this.skill(skills);
+		}
+
 		public PlantFeatures commonSkill(Collection<ISkillType> skills){
 			this.skillTypes.addAll(Arrays.asList(SkillTypes.PLANT_MORE_LIFE, SkillTypes.FAST_CD));
 			return this.skill(skills);

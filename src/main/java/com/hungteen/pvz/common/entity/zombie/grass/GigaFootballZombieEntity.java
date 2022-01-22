@@ -19,7 +19,6 @@ import net.minecraft.world.World;
 
 public class GigaFootballZombieEntity extends FootballZombieEntity {
 
-	private static final float GIGA_HEALTH = 300;
 	protected boolean isRushing = false;
 	private final int minRushCD = 200;
 	private final int maxRushCD = 600;
@@ -27,22 +26,6 @@ public class GigaFootballZombieEntity extends FootballZombieEntity {
 	public GigaFootballZombieEntity(EntityType<? extends CreatureEntity> type, World worldIn) {
 		super(type, worldIn);
 		this.canCollideWithZombie = false;
-	}
-	
-	@Override
-	protected void updateAttributes() {
-		super.updateAttributes();
-		this.getAttribute(Attributes.ATTACK_DAMAGE).setBaseValue(ZombieUtil.NORMAL_DAMAGE);
-	}
-	
-	@Override
-	public void increaseMetal() {
-		this.setDefenceLife(GIGA_HEALTH);
-	}
-	
-	@Override
-	public MetalTypes getMetalType() {
-		return MetalTypes.GIGA_HELMET;
 	}
 	
 	@Override
@@ -81,7 +64,27 @@ public class GigaFootballZombieEntity extends FootballZombieEntity {
 	protected double getCollideWidthOffset() {
 		return 0.4D;
 	}
-	
+
+	@Override
+	public float getInnerLife() {
+		return 300;
+	}
+
+	@Override
+	public float getEatDamage() {
+		return ZombieUtil.NORMAL_DAMAGE;
+	}
+
+	@Override
+	public float getWalkSpeed() {
+		return ZombieUtil.WALK_HUGE_FAST;
+	}
+
+	@Override
+	public MetalTypes getMetalType() {
+		return MetalTypes.GIGA_HELMET;
+	}
+
 	@Override
 	public boolean canBeCold() {
 		return ! this.isRushing();

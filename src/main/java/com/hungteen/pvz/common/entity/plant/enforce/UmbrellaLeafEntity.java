@@ -1,7 +1,6 @@
 package com.hungteen.pvz.common.entity.plant.enforce;
 
-import java.util.List;
-
+import com.hungteen.pvz.api.interfaces.IAlmanacEntry;
 import com.hungteen.pvz.api.types.IPlantType;
 import com.hungteen.pvz.common.entity.bullet.PultBulletEntity;
 import com.hungteen.pvz.common.entity.plant.PVZPlantEntity;
@@ -9,15 +8,14 @@ import com.hungteen.pvz.common.entity.zombie.roof.BungeeZombieEntity;
 import com.hungteen.pvz.common.impl.plant.PVZPlants;
 import com.hungteen.pvz.common.misc.sound.SoundRegister;
 import com.hungteen.pvz.utils.EntityUtil;
-
-import net.minecraft.entity.CreatureEntity;
-import net.minecraft.entity.Entity;
-import net.minecraft.entity.EntitySize;
-import net.minecraft.entity.EntityType;
-import net.minecraft.entity.Pose;
+import com.hungteen.pvz.utils.enums.PAZAlmanacs;
+import com.mojang.datafixers.util.Pair;
+import net.minecraft.entity.*;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.World;
+
+import java.util.List;
 
 public class UmbrellaLeafEntity extends PVZPlantEntity{
 
@@ -44,7 +42,7 @@ public class UmbrellaLeafEntity extends PVZPlantEntity{
 	 * {@link #normalPlantTick()}
 	 */
 	public void tickLeaf() {
-		final float range = 4.5F;
+		final float range = this.getWorkRange();
 		List<Entity> list = level.getEntitiesOfClass(Entity.class, EntityUtil.getEntityAABB(this, range, range), target -> {
 			if(target instanceof PultBulletEntity || target instanceof BungeeZombieEntity) {
 				return EntityUtil.canTargetEntity(this, target);
@@ -66,6 +64,16 @@ public class UmbrellaLeafEntity extends PVZPlantEntity{
 				((PultBulletEntity) target).pushBack();
 			}
 		});
+	}
+
+	@Override
+	public void addAlmanacEntries(List<Pair<IAlmanacEntry, Number>> list) {
+		super.addAlmanacEntries(list);
+		list.add(Pair.of(PAZAlmanacs.WORK_RANGE, this.getWorkRange()));
+	}
+
+	public float getWorkRange(){
+		return 4.5F;
 	}
 	
 	@Override

@@ -28,14 +28,11 @@ public class ButterPultEntity extends KernelPultEntity {
 	@Override
 	public float getAttackDamage() {
 		return 0.1F;
-//		final int lvl = this.getSkills();
-//		return lvl <= 20 ? 0.1F * lvl : 2;
 	}
 	
 	@Override
 	public int getButterDuration() {
 		return 90;
-//		return PlantUtil.getPlantAverageProgress(this, 80, 240);
 	}
 	
 	@Override

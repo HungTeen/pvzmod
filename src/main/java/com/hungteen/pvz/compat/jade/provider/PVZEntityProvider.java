@@ -1,7 +1,6 @@
 package com.hungteen.pvz.compat.jade.provider;
 
 import com.hungteen.pvz.api.interfaces.IHasOwner;
-import com.hungteen.pvz.common.entity.zombie.PVZZombieEntity;
 import com.hungteen.pvz.compat.jade.JadeRegister;
 import com.hungteen.pvz.utils.EntityUtil;
 import mcp.mobius.waila.api.IEntityAccessor;
@@ -33,9 +32,6 @@ public class PVZEntityProvider implements IEntityComponentProvider {
 			if(config.get(JadeRegister.CONFIG_SHOW_OWNER)) {
 				appendOwner(accessor.getWorld(), accessor.getEntity(), tooltip);
 			}
-			if(config.get(JadeRegister.CONFIG_SHOW_ZOMBIE_REDUCTION)) {
-			    appendZombieHurtReduction(accessor.getEntity(), tooltip);
-			}
 		}
 	}
 	
@@ -54,22 +50,11 @@ public class PVZEntityProvider implements IEntityComponentProvider {
 		if(! (entity instanceof LivingEntity)) {//only use for living.
 			return ;
 		}
-		float health = EntityUtil.getCurrentDefenceHealth((LivingEntity) entity);
+		double health = EntityUtil.getCurrentDefenceHealth((LivingEntity) entity);
 		if(health == 0) {//no need to render if there is no defence health.
 			return ;
 		}
 		tooltip.add(new TranslationTextComponent("tooltip.pvz.defence").append(" : " + String.format("%s", Jade.dfCommas.format(health))).withStyle(TextFormatting.RED));
-	}
-	
-	private void appendZombieHurtReduction(Entity entity, List<ITextComponent> tooltip) {
-		if(! (entity instanceof PVZZombieEntity)) {//only use for zombie.
-			return ;
-		}
-		float percent = ((PVZZombieEntity) entity).getHurtReduction();
-		if(percent == 1) {//no reduction.
-			return ;
-		}
-		tooltip.add(new TranslationTextComponent("tooltip.pvz.reduction").append(" : " + Math.floor(100 * (1 - percent)) + "%").withStyle(TextFormatting.GRAY));
 	}
 	
 }

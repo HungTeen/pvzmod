@@ -1,5 +1,7 @@
 package com.hungteen.pvz.api.types;
 
+import net.minecraft.util.text.IFormattableTextComponent;
+
 public interface ISkillType extends IIDType {
 
     /**
@@ -21,6 +23,11 @@ public interface ISkillType extends IIDType {
      * the max level of the skill.
      */
     int getMaxLevel();
+
+    /**
+     * get description text.
+     */
+    IFormattableTextComponent getDescription();
 
     /**
      * if summon card got this skill, it will raise cost.

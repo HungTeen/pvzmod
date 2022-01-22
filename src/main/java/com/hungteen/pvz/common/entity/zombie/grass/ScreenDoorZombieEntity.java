@@ -3,15 +3,13 @@ package com.hungteen.pvz.common.entity.zombie.grass;
 import com.hungteen.pvz.common.entity.zombie.base.DefenceZombieEntity;
 import com.hungteen.pvz.common.entity.zombie.body.ZombieDropBodyEntity;
 import com.hungteen.pvz.common.entity.zombie.part.PVZHealthPartEntity;
-import com.hungteen.pvz.common.impl.zombie.ZombieType;
 import com.hungteen.pvz.common.impl.zombie.GrassZombies;
+import com.hungteen.pvz.common.impl.zombie.ZombieType;
 import com.hungteen.pvz.common.misc.sound.SoundRegister;
-import com.hungteen.pvz.data.loot.PVZLoot;
 import com.hungteen.pvz.remove.MetalTypes;
 import com.hungteen.pvz.utils.interfaces.IHasMetal;
 import net.minecraft.entity.CreatureEntity;
 import net.minecraft.entity.EntityType;
-import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.SoundEvent;
 import net.minecraft.world.World;
 
@@ -30,17 +28,17 @@ public class ScreenDoorZombieEntity extends DefenceZombieEntity implements IHasM
 	
 	@Override
 	public boolean hasMetal() {
-		return this.getDefenceLife() > 0;
+		return this.getOuterDefenceLife() > 0;
 	}
 
 	@Override
 	public void decreaseMetal() {
-		this.setDefenceLife(0);
+		this.setOuterDefenceLife(0);
 	}
 
 	@Override
 	public void increaseMetal() {
-		this.setDefenceLife(this.getPartLife());
+		this.setOuterDefenceLife(this.getOuterLife());
 		this.resetParts();
 	}
 	
@@ -71,13 +69,8 @@ public class ScreenDoorZombieEntity extends DefenceZombieEntity implements IHasM
 	}
 	
 	@Override
-	public float getPartLife() {
+	public float getOuterLife() {
 		return 200;
-	}
-	
-	@Override
-	protected ResourceLocation getDefaultLootTable() {
-		return PVZLoot.SCREENDOOR_ZOMBIE;
 	}
 
 	@Override

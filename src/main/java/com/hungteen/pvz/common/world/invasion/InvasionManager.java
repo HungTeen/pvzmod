@@ -350,6 +350,14 @@ public class InvasionManager {
         return (isJack && isYeti) ? 0.4F : isYeti ? 0.2F : isJack ? 0.1F : 0;
     }
 
+    public static boolean isInvisInvasion(){
+        return getActiveInvasions().contains(StringUtil.prefix("invis"));
+    }
+
+    public static boolean isMiniInvasion(){
+        return getActiveInvasions().contains(StringUtil.prefix("mini"));
+    }
+
     /**
      * get players out zen garden. TODO Plant Invasion.
      */

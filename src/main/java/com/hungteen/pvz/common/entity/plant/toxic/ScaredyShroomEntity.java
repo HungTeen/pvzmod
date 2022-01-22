@@ -4,6 +4,7 @@ import com.hungteen.pvz.api.types.IPlantType;
 import com.hungteen.pvz.common.entity.bullet.AbstractBulletEntity;
 import com.hungteen.pvz.common.entity.bullet.itembullet.SporeEntity;
 import com.hungteen.pvz.common.entity.plant.base.PlantShooterEntity;
+import com.hungteen.pvz.common.impl.SkillTypes;
 import com.hungteen.pvz.common.impl.plant.PVZPlants;
 import com.hungteen.pvz.common.misc.sound.SoundRegister;
 import com.hungteen.pvz.utils.EntityUtil;
@@ -37,8 +38,9 @@ public class ScaredyShroomEntity extends PlantShooterEntity {
 	}
 	@Override
 	public float getAttackDamage() {
-		return 0;
+		return this.getSkillValue(SkillTypes.SPORE_DAMAGE);
 	}
+
 	@Override
 	public void normalPlantTick() {
 		super.normalPlantTick();

@@ -4,6 +4,7 @@ import com.hungteen.pvz.PVZConfig;
 import com.hungteen.pvz.PVZMod;
 import com.hungteen.pvz.client.events.handler.PVZEntityRenderHandler;
 import com.hungteen.pvz.client.gui.screen.PVZMainMenuScreen;
+import com.hungteen.pvz.common.item.spawn.card.SummonCardItem;
 import com.mojang.blaze3d.matrix.MatrixStack;
 import net.minecraft.client.gui.screen.MainMenuScreen;
 import net.minecraft.client.renderer.IRenderTypeBuffer;
@@ -30,6 +31,7 @@ public class PVZClientEvents {
 	
 	@SubscribeEvent
 	public static void addToolTips(ItemTooltipEvent event) {
+		SummonCardItem.appendSkillToolTips(event.getItemStack(), event.getToolTip());
 	}
 	
 	@SubscribeEvent

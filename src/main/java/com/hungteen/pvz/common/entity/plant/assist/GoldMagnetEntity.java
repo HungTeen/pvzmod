@@ -1,5 +1,6 @@
 package com.hungteen.pvz.common.entity.plant.assist;
 
+import com.hungteen.pvz.api.interfaces.IAlmanacEntry;
 import com.hungteen.pvz.api.types.IPlantType;
 import com.hungteen.pvz.common.entity.misc.drop.CoinEntity;
 import com.hungteen.pvz.common.entity.misc.drop.DropEntity;
@@ -10,7 +11,9 @@ import com.hungteen.pvz.common.impl.plant.PVZPlants;
 import com.hungteen.pvz.common.misc.sound.SoundRegister;
 import com.hungteen.pvz.utils.EntityUtil;
 import com.hungteen.pvz.utils.PlayerUtil;
+import com.hungteen.pvz.utils.enums.PAZAlmanacs;
 import com.hungteen.pvz.utils.enums.Resources;
+import com.mojang.datafixers.util.Pair;
 import net.minecraft.entity.CreatureEntity;
 import net.minecraft.entity.EntitySize;
 import net.minecraft.entity.EntityType;
@@ -19,6 +22,7 @@ import net.minecraft.util.math.vector.Vector3d;
 import net.minecraft.world.World;
 
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 public class GoldMagnetEntity extends PVZPlantEntity {
@@ -100,9 +104,14 @@ public class GoldMagnetEntity extends PVZPlantEntity {
 		drop.remove();
 	}
 
+	@Override
+	public void addAlmanacEntries(List<Pair<IAlmanacEntry, Number>> list) {
+		super.addAlmanacEntries(list);
+		list.add(Pair.of(PAZAlmanacs.WORK_RANGE, this.getSearchRange()));
+	}
+
 	public int getSearchRange() {
-//		return MathUtil.getProgressByDif(4, 2, this.getSkills(), PlantUtil.MAX_PLANT_LEVEL, 8, 16);
-		return 1;
+		return 8;
 	}
 
 	protected boolean checkCanWorkNow() {

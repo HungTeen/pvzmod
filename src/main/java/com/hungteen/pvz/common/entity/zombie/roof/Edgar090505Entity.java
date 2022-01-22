@@ -60,9 +60,7 @@ public class Edgar090505Entity extends AbstractBossZombieEntity {
 
     public Edgar090505Entity(EntityType<? extends CreatureEntity> type, World worldIn) {
         super(type, worldIn);
-        this.maxDeathTime = 60;
         this.refreshCountCD = 10;
-        this.hasDirectDefence = true;
         this.maxZombieSurround = 60;
         this.maxPlantSurround = 60;
         this.kickRange = 6;
@@ -85,8 +83,8 @@ public class Edgar090505Entity extends AbstractBossZombieEntity {
     }
 
     @Override
-    protected void updateAttributes() {
-        super.updateAttributes();
+    protected void initAttributes() {
+        super.initAttributes();
         this.getAttribute(Attributes.MOVEMENT_SPEED).setBaseValue(0);
         this.getAttribute(Attributes.ATTACK_DAMAGE).setBaseValue(ZombieUtil.LITTLE_HIGH);
     }
@@ -374,8 +372,13 @@ public class Edgar090505Entity extends AbstractBossZombieEntity {
     }
 
     @Override
-    public float getExtraLife() {
+    public float getInnerLife() {
         return 10000;
+    }
+
+    @Override
+    protected int getDeathTime() {
+        return 60;
     }
 
     protected int getSummonZombieCD() {

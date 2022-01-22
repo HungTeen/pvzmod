@@ -1,11 +1,13 @@
 package com.hungteen.pvz.common.entity.plant.explosion;
 
+import com.hungteen.pvz.api.interfaces.IAlmanacEntry;
 import com.hungteen.pvz.api.types.IPlantType;
 import com.hungteen.pvz.client.model.entity.plant.explosion.PotatoMineModel;
 import com.hungteen.pvz.common.entity.bullet.itembullet.PotatoEntity;
 import com.hungteen.pvz.common.entity.plant.PVZPlantEntity;
 import com.hungteen.pvz.common.entity.plant.base.PlantCloserEntity;
 import com.hungteen.pvz.common.entity.zombie.pool.DiggerZombieEntity;
+import com.hungteen.pvz.common.impl.SkillTypes;
 import com.hungteen.pvz.common.impl.plant.PVZPlants;
 import com.hungteen.pvz.common.misc.damage.PVZDamageSource;
 import com.hungteen.pvz.common.misc.sound.SoundRegister;
@@ -13,15 +15,19 @@ import com.hungteen.pvz.register.ParticleRegister;
 import com.hungteen.pvz.utils.EntityUtil;
 import com.hungteen.pvz.utils.MathUtil;
 import com.hungteen.pvz.utils.WorldUtil;
+import com.hungteen.pvz.utils.enums.PAZAlmanacs;
+import com.mojang.datafixers.util.Pair;
 import net.minecraft.entity.*;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.vector.Vector3d;
 import net.minecraft.world.World;
 
+import java.util.Arrays;
+import java.util.List;
+
 public class PotatoMineEntity extends PlantCloserEntity{
 
 	public static final int RISING_ANIM_CD = 20;
-	public static final int PREPARE_CD = 240;
 	
 	public PotatoMineEntity(EntityType<? extends CreatureEntity> type, World worldIn) {
 		super(type, worldIn);
@@ -31,7 +37,7 @@ public class PotatoMineEntity extends PlantCloserEntity{
 	protected void normalPlantTick() {
 		super.normalPlantTick();
 		if(! this.level.isClientSide) {
-			if(this.getExistTick() == PREPARE_CD - RISING_ANIM_CD + 1) {
+			if(this.getExistTick() == this.getPrepareCD() - RISING_ANIM_CD + 1) {
 				EntityUtil.playSound(this, SoundRegister.DIRT_RISE.get());
 			}
 		} else {
@@ -43,14 +49,24 @@ public class PotatoMineEntity extends PlantCloserEntity{
 			}
 		}
 	}
-	
+
+	@Override
+	public void addAlmanacEntries(List<Pair<IAlmanacEntry, Number>> list) {
+		super.addAlmanacEntries(list);
+		list.addAll(Arrays.asList(
+				Pair.of(PAZAlmanacs.EXPLODE_DAMAGE, this.getExplodeDamage()),
+				Pair.of(PAZAlmanacs.EXPLODE_DAMAGE, this.getExplodeRange()),
+				Pair.of(PAZAlmanacs.PREPARE_CD, this.getPrepareCD())
+		));
+	}
+
 	@Override
 	public void performAttack(LivingEntity target1) {
 		if(! this.level.isClientSide) {
 			final float range = 1.6F;
 			final AxisAlignedBB aabb = EntityUtil.getEntityAABB(this, range, range);
 			EntityUtil.getWholeTargetableEntities(this, aabb).forEach(target -> {
-				target.hurt(PVZDamageSource.explode(this), this.getAttackDamage());
+				target.hurt(PVZDamageSource.explode(this), this.getExplodeDamage());
 			});
 			PVZPlantEntity.clearLadders(this, aabb);
 			EntityUtil.playSound(this, SoundRegister.POTATO_MINE.get());
@@ -102,27 +118,38 @@ public class PotatoMineEntity extends PlantCloserEntity{
 	}
 	
 	public int getShootNum() {
-//		return this.isPlantInStage(1) ? 3 : this.isPlantInStage(2) ? 4 : 5;
 		return 3;
 	}
-	
+
+	public float getExplodeRange(){
+		return 1.8F;
+	}
+
+	public float getExplodeDamage(){
+		return this.getSkillValue(SkillTypes.NORMAL_BOMB_DAMAGE);
+	}
+
+	public int getPrepareCD(){
+		return (int) this.getSkillValue(SkillTypes.MINE_FAST_PREPARE);
+	}
+
 	/**
 	 */
 	public boolean isMineReady() {
-		return this.getExistTick() > PREPARE_CD;
+		return this.getExistTick() > this.getPrepareCD();
 	}
 	
 	/**
 	 */
 	public boolean isRisingFromDirt() {
-		return this.getExistTick() >= PREPARE_CD - RISING_ANIM_CD && this.getExistTick() <= PREPARE_CD;
+		return this.getExistTick() >= this.getPrepareCD() - RISING_ANIM_CD && this.getExistTick() <= this.getPrepareCD();
 	}
 	
 	/**
 	 * {@link PotatoEntity#onImpact(net.minecraft.util.math.RayTraceResult)}
 	 */
 	public void setRisingFromDirt() {
-		this.setExistTick(PREPARE_CD - RISING_ANIM_CD - 2);
+		this.setExistTick(this.getPrepareCD() - RISING_ANIM_CD - 2);
 	}
 	
 	@Override
@@ -133,11 +160,6 @@ public class PotatoMineEntity extends PlantCloserEntity{
 	@Override
 	public boolean canCheckDistance() {
 		return this.isMineReady();
-	}
-	
-	public float getAttackDamage(){
-		return 125;
-//		return PlantUtil.getPlantAverageProgress(this, 125, 425);
 	}
 	
 	/**

@@ -4,6 +4,7 @@ import com.hungteen.pvz.api.types.IPlantType;
 import com.hungteen.pvz.common.entity.bullet.PultBulletEntity;
 import com.hungteen.pvz.common.entity.bullet.itembullet.CabbageEntity;
 import com.hungteen.pvz.common.entity.plant.base.PlantPultEntity;
+import com.hungteen.pvz.common.impl.SkillTypes;
 import com.hungteen.pvz.common.impl.plant.PVZPlants;
 
 import net.minecraft.entity.CreatureEntity;
@@ -22,11 +23,14 @@ public class CabbagePultEntity extends PlantPultEntity {
 	protected PultBulletEntity createBullet() {
 		return new CabbageEntity(level, this);
 	}
-	
+
+	@Override
+	public float getAttackDamage() {
+		return this.getSkillValue(SkillTypes.MORE_CABBAGE_DAMAGE);
+	}
+
 	@Override
 	public float getSuperDamage() {
-//		final float add = this.getThreeStage(20, 40, 60);
-//		return this.getAttackDamage() + add;
 		return this.getAttackDamage() + 20;
 	}
 	

@@ -1,13 +1,12 @@
 package com.hungteen.pvz.common.entity.zombie.pool;
 
+import com.hungteen.pvz.common.entity.EntityRegister;
 import com.hungteen.pvz.common.entity.PVZMultiPartEntity;
 import com.hungteen.pvz.common.entity.zombie.PVZZombieEntity;
 import com.hungteen.pvz.common.entity.zombie.body.ZombieDropBodyEntity;
 import com.hungteen.pvz.common.entity.zombie.part.PVZZombiePartEntity;
-import com.hungteen.pvz.common.impl.zombie.ZombieType;
 import com.hungteen.pvz.common.impl.zombie.PoolZombies;
-import com.hungteen.pvz.data.loot.PVZLoot;
-import com.hungteen.pvz.common.entity.EntityRegister;
+import com.hungteen.pvz.common.impl.zombie.ZombieType;
 import com.hungteen.pvz.utils.EntityUtil;
 import com.hungteen.pvz.utils.ZombieUtil;
 import com.hungteen.pvz.utils.interfaces.IHasMultiPart;
@@ -18,7 +17,6 @@ import net.minecraft.entity.Pose;
 import net.minecraft.entity.ai.attributes.Attributes;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.util.DamageSource;
-import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.vector.Vector3d;
 import net.minecraft.world.World;
 
@@ -35,7 +33,6 @@ public class BobsleTeamEntity extends PVZZombieEntity implements IHasMultiPart {
 		this.resetParts();
 		this.setImmuneAllEffects();
 		this.canBeMini = false;
-		this.maxDeathTime = 1;
 	}
 	
 	@Override
@@ -44,8 +41,8 @@ public class BobsleTeamEntity extends PVZZombieEntity implements IHasMultiPart {
 	}
 
 	@Override
-	protected void updateAttributes() {
-		super.updateAttributes();
+	protected void initAttributes() {
+		super.initAttributes();
 		this.getAttribute(Attributes.MOVEMENT_SPEED).setBaseValue(ZombieUtil.WALK_VERY_FAST);
 		this.getAttribute(Attributes.ATTACK_DAMAGE).setBaseValue(ZombieUtil.NORMAL_DAMAGE);
 	}
@@ -116,7 +113,7 @@ public class BobsleTeamEntity extends PVZZombieEntity implements IHasMultiPart {
 				++ this.outSnowTick;
 				if(this.outSnowTick > MAX_OUT_SNOW_TICK) {
 					this.onFallBody(DamageSource.DRY_OUT);
-					this.onZombieRemove();
+					this.onRemoveWhenDeath();
 					this.remove();
 				}
 			} else {
@@ -126,7 +123,7 @@ public class BobsleTeamEntity extends PVZZombieEntity implements IHasMultiPart {
 	}
 	
 	@Override
-	protected void onZombieRemove() {
+	protected void onRemoveWhenDeath() {
 		if(! level.isClientSide) {
 			for(int i = 0; i < 4; ++ i) {
 				BobsleZombieEntity zombie = EntityRegister.BOBSLE_ZOMBIE.get().create(level);
@@ -151,7 +148,12 @@ public class BobsleTeamEntity extends PVZZombieEntity implements IHasMultiPart {
 	public float getLife() {
 		return 60;
 	}
-	
+
+	@Override
+	protected int getDeathTime() {
+		return 2;
+	}
+
 	@Override
 	public void readAdditionalSaveData(CompoundNBT compound) {
 		super.readAdditionalSaveData(compound);
@@ -164,11 +166,6 @@ public class BobsleTeamEntity extends PVZZombieEntity implements IHasMultiPart {
 	public void addAdditionalSaveData(CompoundNBT compound) {
 		super.addAdditionalSaveData(compound);
 		compound.putInt("out_snow_tick", this.outSnowTick);
-	}
-	
-	@Override
-	protected ResourceLocation getDefaultLootTable() {
-		return PVZLoot.BOBSLE_TEAM;
 	}
 
 	@Override

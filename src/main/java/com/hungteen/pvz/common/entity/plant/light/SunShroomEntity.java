@@ -1,5 +1,6 @@
 package com.hungteen.pvz.common.entity.plant.light;
 
+import com.hungteen.pvz.api.interfaces.IAlmanacEntry;
 import com.hungteen.pvz.api.types.IPlantType;
 import com.hungteen.pvz.common.entity.misc.drop.SunEntity;
 import com.hungteen.pvz.common.entity.plant.base.PlantProducerEntity;
@@ -7,12 +8,17 @@ import com.hungteen.pvz.common.impl.plant.PVZPlants;
 import com.hungteen.pvz.common.misc.sound.SoundRegister;
 import com.hungteen.pvz.utils.EntityUtil;
 
+import com.hungteen.pvz.utils.enums.PAZAlmanacs;
+import com.mojang.datafixers.util.Pair;
 import net.minecraft.entity.CreatureEntity;
 import net.minecraft.entity.EntitySize;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.Pose;
 import net.minecraft.util.SoundEvents;
 import net.minecraft.world.World;
+
+import java.util.Arrays;
+import java.util.List;
 
 public class SunShroomEntity extends PlantProducerEntity {
 	
@@ -22,10 +28,19 @@ public class SunShroomEntity extends PlantProducerEntity {
 	public SunShroomEntity(EntityType<? extends CreatureEntity> type, World worldIn) {
 		super(type, worldIn);
 	}
-	
+
+	@Override
+	public void addAlmanacEntries(List<Pair<IAlmanacEntry, Number>> list) {
+		super.addAlmanacEntries(list);
+		list.addAll(Arrays.asList(
+				Pair.of(PAZAlmanacs.SMALL_GEN_SUN_AMOUNT, this.getSunAmountInStage(1)),
+				Pair.of(PAZAlmanacs.GEN_SUN_AMOUNT, this.getSunAmountInStage(2))
+		));
+	}
+
 	@Override
 	public void genSomething() {
-		this.genSun(this.getCurrentSunAmount());
+		this.genSun(this.getCurrentSunAmount(), 1);
 	}
 
 	@Override
@@ -37,8 +52,8 @@ public class SunShroomEntity extends PlantProducerEntity {
 	@Override
 	public void startSuperMode(boolean first) {
 		super.startSuperMode(first);
-		if(! this.isInGrowStage(2)) {
-			this.growUpTo(2);
+		if(! this.isInGrowStage(3)) {
+			this.growUpTo(3);
 		}
 	}
 	
@@ -61,37 +76,23 @@ public class SunShroomEntity extends PlantProducerEntity {
 	 * get current sun gen num;
 	 */
 	protected int getCurrentSunAmount() {
-		return
-//				this.isInGrowStage(3) ? this.getSunAmountInStage(3) :
-//			   this.isInGrowStage(2) ? this.getSunAmountInStage(2) :
-			   this.getSunAmountInStage(1);
+		return this.isInGrowStage(3) ? this.getSunAmountInStage(3):
+				this.isInGrowStage(2) ? this.getSunAmountInStage(2) :
+						this.getSunAmountInStage(1);
 	}
 	
 	/**
 	 * get sun amount when grow up.
-	 * use in almanac.
 	 */
 	public int getSunAmountInStage(int stage){
-//		if(stage == 1) {
-//			return this.getSkills() <= 15 ? 15 : 25;
-//		}
-//		if(stage == 2) {
-//			return this.getSkills() <= 5 ? 25 : this.getSkills() <= 10 ? 35 : 50;
-//		}
-		return 75;
+		return stage == 3 ? 35 : stage == 2 ? 25 : 15;
 	}
 	
 	/**
 	 * get normal gen sun amount by maxLevel.
 	 */
 	public int getSuperSunAmount(){
-//		if(this.isPlantInStage(1)) {
-//			return 500;
-//		}
-//		if(this.isPlantInStage(2)) {
-//			return 750;
-//		}
-		return 1000;
+		return 500;
 	}
 
 	@Override

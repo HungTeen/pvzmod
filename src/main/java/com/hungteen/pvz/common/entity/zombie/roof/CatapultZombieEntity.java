@@ -33,8 +33,8 @@ public class CatapultZombieEntity extends CarZombieEntity implements IPult,IHasW
 	}
 	
 	@Override
-	protected void updateAttributes() {
-		super.updateAttributes();
+	protected void initAttributes() {
+		super.initAttributes();
 		this.getAttribute(Attributes.MOVEMENT_SPEED).setBaseValue(ZombieUtil.WALK_LITTLE_SLOW);
 	}
 
@@ -92,7 +92,7 @@ public class CatapultZombieEntity extends CarZombieEntity implements IPult,IHasW
 
 	@Override
 	public boolean shouldPult() {
-		return this.canZombieNormalUpdate() && this.getBallCount() < this.getMaxBallUse();
+		return this.canNormalUpdate() && this.getBallCount() < this.getMaxBallUse();
 	}
 	
 	public boolean checkY(LivingEntity target) {

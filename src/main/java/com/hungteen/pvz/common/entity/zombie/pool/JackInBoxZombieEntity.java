@@ -56,8 +56,8 @@ public class JackInBoxZombieEntity extends PVZZombieEntity implements IHasMetal 
 	}
 	
 	@Override
-	protected void updateAttributes() {
-		super.updateAttributes();
+	protected void initAttributes() {
+		super.initAttributes();
 		this.updateSpeed(true);
 	}
 	

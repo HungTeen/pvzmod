@@ -18,11 +18,6 @@ public interface IPlantType extends IPAZType {
 	 * get (plant type, plant entity interface) pair.
 	 */
 //	Optional<Pair<MobEntity, IPlantEntity>> getPlantEntityType();
-
-	/**
-	 * get the essence type that the plant belongs to.
-	 */
-	IEssenceType getEssence();
 	
 	/**
 	 * get the entity model of plant (Client Side). 

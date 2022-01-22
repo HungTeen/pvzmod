@@ -52,31 +52,17 @@ public class MariGoldEntity extends PlantProducerEntity {
 		}
 		return CoinType.COPPER.money;
 	}
-
-	public float getAveGenAmount() {
-		int silverNum = this.getSilverChance();
-		int goldNum = this.getGoldChance();
-		int copperNum = 100 - silverNum - goldNum;
-		return (silverNum * CoinType.SILVER.money + goldNum * CoinType.GOLD.money + copperNum * CoinType.COPPER.money) * 1.0f / 100;
-	}
 	
 	public int getSilverChance() {
 		return 10;
-//		return PlantUtil.getPlantAverageProgress(this, 10, 50);
 	}
 
 	public int getGoldChance() {
-//		final int lvl = this.getSkills();
-//		if (lvl <= 20) {
-//			final int now = (lvl - 1) / 2;
-//			return now + 1;
-//		}
-		return 10;
+		return 1;
 	}
 
 	public int getSuperGenCnt() {
-		return 3;
-//		return this.getThreeStage(3, 5, 7);
+		return 5;
 	}
 
 	@Override

@@ -1,15 +1,10 @@
 package com.hungteen.pvz.common.block.special;
 
-import java.util.List;
-
-import javax.annotation.Nullable;
-
 import com.hungteen.pvz.common.block.AbstractFacingBlock;
 import com.hungteen.pvz.common.datapack.LotteryTypeLoader;
 import com.hungteen.pvz.common.item.PVZItemGroups;
 import com.hungteen.pvz.common.tileentity.SlotMachineTileEntity;
 import com.hungteen.pvz.utils.StringUtil;
-
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
 import net.minecraft.client.util.ITooltipFlag;
@@ -33,6 +28,9 @@ import net.minecraft.util.text.TextFormatting;
 import net.minecraft.world.IBlockReader;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.network.NetworkHooks;
+
+import javax.annotation.Nullable;
+import java.util.List;
 
 public class SlotMachineBlock extends AbstractFacingBlock {
 
@@ -79,8 +77,7 @@ public class SlotMachineBlock extends AbstractFacingBlock {
 			List<ITextComponent> iTextComponents, ITooltipFlag iTooltipFlag) {
 		super.appendHoverText(stack, iBlockReader, iTextComponents, iTooltipFlag);
 		final String res = getResourceTag(stack).toString();
-		iTextComponents
-				.add(new StringTextComponent(res).withStyle(TextFormatting.GRAY).withStyle(TextFormatting.ITALIC));
+		iTextComponents.add(new StringTextComponent(res).withStyle(TextFormatting.GRAY).withStyle(TextFormatting.ITALIC));
 	}
 
 	public static void setResourceTag(ItemStack stack, ResourceLocation res) {

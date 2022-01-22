@@ -5,6 +5,7 @@ import com.hungteen.pvz.common.advancement.trigger.EntityEffectAmountTrigger;
 import com.hungteen.pvz.common.entity.bullet.AbstractBulletEntity;
 import com.hungteen.pvz.common.entity.bullet.itembullet.SporeEntity;
 import com.hungteen.pvz.common.entity.plant.base.PlantShooterEntity;
+import com.hungteen.pvz.common.impl.SkillTypes;
 import com.hungteen.pvz.common.impl.plant.PVZPlants;
 import com.hungteen.pvz.common.misc.sound.SoundRegister;
 import com.hungteen.pvz.utils.EntityUtil;
@@ -33,9 +34,10 @@ public class PuffShroomEntity extends PlantShooterEntity {
 			this.performShoot(SHOOT_OFFSET, 0, -0.2F, this.getAttackTime() == 1, FORWARD_SHOOT_ANGLE);
 		}
 	}
+
 	@Override
 	public float getAttackDamage() {
-		return 0;
+		return this.getSkillValue(SkillTypes.SPORE_DAMAGE);
 	}
 	@Override
 	protected AbstractBulletEntity createBullet() {
@@ -83,7 +85,6 @@ public class PuffShroomEntity extends PlantShooterEntity {
 	
 	public int getMaxSuperCnt() {
 		return 10;
-//		return this.isPlantInStage(1) ? 10 : this.isPlantInStage(2) ? 15 : 25;
 	}
 	
 	@Override
@@ -103,8 +104,7 @@ public class PuffShroomEntity extends PlantShooterEntity {
 	
 	@Override
 	public float getLife() {
-		return 30;
-//		return MathUtil.getProgressAverage(this.getSkills(), PlantUtil.MAX_PLANT_LEVEL, 30, 50);
+		return 10;
 	}
 	
 	@Override

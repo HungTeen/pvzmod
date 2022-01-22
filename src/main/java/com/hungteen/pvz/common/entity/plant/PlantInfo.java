@@ -32,7 +32,7 @@ public class PlantInfo implements IPlantInfo {
 	}
 
 	@Override
-	public void onSuper() {}
+	public void onSuper(IPlantEntity plantEntity) {}
 
 	/**
 	 * read nbt from plant entity.

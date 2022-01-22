@@ -16,8 +16,8 @@ public class DolphinRiderZombieEntity extends SwimmerZombieEntity{
 	}
 
 	@Override
-	protected void updateAttributes() {
-		super.updateAttributes();
+	protected void initAttributes() {
+		super.initAttributes();
 		this.getAttribute(Attributes.MOVEMENT_SPEED).setBaseValue(ZombieUtil.WALK_VERY_FAST);
 	}
 	

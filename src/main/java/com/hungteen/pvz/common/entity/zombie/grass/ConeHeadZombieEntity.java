@@ -1,15 +1,12 @@
 package com.hungteen.pvz.common.entity.zombie.grass;
 
 import com.hungteen.pvz.client.model.entity.zombie.grass.ConeHeadZombieModel;
-import com.hungteen.pvz.common.impl.zombie.ZombieType;
 import com.hungteen.pvz.common.impl.zombie.GrassZombies;
+import com.hungteen.pvz.common.impl.zombie.ZombieType;
 import com.hungteen.pvz.common.misc.sound.SoundRegister;
-import com.hungteen.pvz.data.loot.PVZLoot;
-
 import net.minecraft.entity.CreatureEntity;
 import net.minecraft.entity.EntityType;
 import net.minecraft.util.DamageSource;
-import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.SoundEvent;
 import net.minecraft.world.World;
 
@@ -17,7 +14,6 @@ public class ConeHeadZombieEntity extends NormalZombieEntity{
 
 	public ConeHeadZombieEntity(EntityType<? extends CreatureEntity> type, World worldIn) {
 		super(type, worldIn);
-		this.hasDirectDefence = true;
 	}
 	
 	@Override
@@ -26,7 +22,7 @@ public class ConeHeadZombieEntity extends NormalZombieEntity{
 	}
 	
 	@Override
-	public float getExtraLife() {
+	public float getInnerLife() {
 		return 40;
 	}
 	
@@ -35,7 +31,7 @@ public class ConeHeadZombieEntity extends NormalZombieEntity{
 	 * {@link ConeHeadZombieModel#updateFreeParts(ConeHeadZombieEntity)} 
 	 */
 	public boolean hasConeHead(int stage) {
-		final float percent = this.getDefenceLife() / this.getExtraLife();
+		final double percent = this.getInnerDefenceLife() / this.getInnerLife();
 		if(stage == 3) {
 			return percent > 2.0f / 3;
 		} else if(stage == 2) {
@@ -48,12 +44,7 @@ public class ConeHeadZombieEntity extends NormalZombieEntity{
 	
 	@Override
 	public SoundEvent getHurtSound(DamageSource damageSourceIn) {
-		return this.getDefenceLife() > 0 ? SoundRegister.PLASTIC_HIT.get() : super.getHurtSound(damageSourceIn);
-	}
-	
-	@Override
-	protected ResourceLocation getDefaultLootTable() {
-		return PVZLoot.CONEHEAD_ZOMBIE;
+		return this.getInnerDefenceLife() > 0 ? SoundRegister.PLASTIC_HIT.get() : super.getHurtSound(damageSourceIn);
 	}
 	
 	@Override

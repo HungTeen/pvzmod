@@ -43,6 +43,11 @@ public interface IPAZType extends IIDType {
 	IRankType getRank();
 
 	/**
+	 * get the essence type that the plant belongs to.
+	 */
+	IEssenceType getEssence();
+
+	/**
 	 * get the entity type of current type.
 	 */
 	Optional<EntityType<? extends CreatureEntity>> getEntityType();

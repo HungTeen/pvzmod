@@ -3,15 +3,16 @@ package com.hungteen.pvz.common.entity.zombie.grass;
 import com.hungteen.pvz.common.entity.zombie.base.DefenceZombieEntity;
 import com.hungteen.pvz.common.entity.zombie.body.ZombieDropBodyEntity;
 import com.hungteen.pvz.common.entity.zombie.part.PVZHealthPartEntity;
-import com.hungteen.pvz.common.impl.zombie.ZombieType;
 import com.hungteen.pvz.common.impl.zombie.GrassZombies;
+import com.hungteen.pvz.common.impl.zombie.ZombieType;
 import com.hungteen.pvz.common.misc.sound.SoundRegister;
+import com.hungteen.pvz.utils.EffectUtil;
 import com.hungteen.pvz.utils.EntityUtil;
+import com.hungteen.pvz.utils.MathUtil;
 import com.hungteen.pvz.utils.ZombieUtil;
 import net.minecraft.entity.CreatureEntity;
 import net.minecraft.entity.EntityType;
-import net.minecraft.entity.ai.attributes.Attributes;
-import net.minecraft.network.datasync.DataParameter;
+import net.minecraft.potion.Effects;
 import net.minecraft.util.SoundEvent;
 import net.minecraft.world.World;
 
@@ -22,9 +23,8 @@ public class NewspaperZombieEntity extends DefenceZombieEntity {
 	}
 	
 	@Override
-	protected void updateAttributes() {
-		super.updateAttributes();
-		this.updateAngry(false);
+	protected void initAttributes() {
+		super.initAttributes();
 	}
 	
 	@Override
@@ -39,21 +39,15 @@ public class NewspaperZombieEntity extends DefenceZombieEntity {
 		if(this.isMiniZombie()) return 0.2F;
 		return 0.7f;
 	}
-	
+
 	@Override
-	public void onSyncedDataUpdated(DataParameter<?> data) {
-		super.onSyncedDataUpdated(data);
-		if(data.equals(DEFENCE_LIFE)) {
-			this.updateAngry(this.isAngry());
-			if(this.isAngry()) {
-				EntityUtil.playSound(this, SoundRegister.ANGRY.get());
-			}
+	public void onOuterDefenceBroken() {
+		super.onOuterDefenceBroken();
+		if(! this.level.isClientSide){
+			this.addEffect(EffectUtil.effect(Effects.MOVEMENT_SPEED, 120000, 1));
+			this.addEffect(EffectUtil.effect(Effects.DAMAGE_BOOST, 120000, MathUtil.getRandomMinMax(this.random, 1, this.getAngryLevel())));
+			EntityUtil.playSound(this, SoundRegister.ANGRY.get());
 		}
-	}
-	
-	protected void updateAngry(boolean is) {
-		this.getAttribute(Attributes.MOVEMENT_SPEED).setBaseValue(is ? ZombieUtil.WALK_LITTLE_FAST : ZombieUtil.WALK_LITTLE_SLOW);
-		this.getAttribute(Attributes.ATTACK_DAMAGE).setBaseValue(is ? ZombieUtil.LOW : ZombieUtil.LITTLE_LOW);
 	}
 	
 	@Override
@@ -71,6 +65,15 @@ public class NewspaperZombieEntity extends DefenceZombieEntity {
 	public SoundEvent getPartDeathSound() {
 		return SoundRegister.PAPER_GONE.get();
 	}
+
+	@Override
+	public float getWalkSpeed() {
+		return ZombieUtil.WALK_LITTLE_SLOW;
+	}
+
+	public int getAngryLevel(){
+		return 3;
+	}
 	
 	@Override
 	public float getLife() {
@@ -78,12 +81,12 @@ public class NewspaperZombieEntity extends DefenceZombieEntity {
 	}
 	
 	@Override
-	public float getPartLife() {
+	public float getOuterLife() {
 		return 10;
 	}
 	
 	public boolean isAngry() {
-		return this.getDefenceLife() == 0;
+		return ! this.canPartsExist();
 	}
 	
 	@Override

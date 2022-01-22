@@ -3,16 +3,15 @@ package com.hungteen.pvz.common.entity.plant.light;
 import com.hungteen.pvz.api.interfaces.ILightEffect;
 import com.hungteen.pvz.api.types.IPlantType;
 import com.hungteen.pvz.common.entity.plant.PVZPlantEntity;
+import com.hungteen.pvz.common.impl.SkillTypes;
 import com.hungteen.pvz.common.impl.plant.PVZPlants;
 import com.hungteen.pvz.common.misc.sound.SoundRegister;
 import com.hungteen.pvz.common.potion.EffectRegister;
 import com.hungteen.pvz.utils.EntityUtil;
-
 import net.minecraft.entity.CreatureEntity;
 import net.minecraft.entity.EntitySize;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.Pose;
-import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.potion.EffectInstance;
 import net.minecraft.util.SoundEvent;
 import net.minecraft.world.World;
@@ -31,7 +30,7 @@ public class PlanternEntity extends PVZPlantEntity implements ILightEffect {
 	protected void normalPlantTick() {
 		super.normalPlantTick();
 		if(! level.isClientSide) {
-			if(this.getExistTick() % EFFECT_CD == 0) {
+			if(this.getExistTick() % EFFECT_CD == 3) {
 				this.giveLightToPlayers();
 			}
 		}
@@ -41,31 +40,19 @@ public class PlanternEntity extends PVZPlantEntity implements ILightEffect {
 	 * {@link #normalPlantTick()}
 	 */
 	private void giveLightToPlayers() {
-		final float range = 30;
-		EntityUtil.getFriendlyLivings(this, EntityUtil.getEntityAABB(this, range, range)).stream()
-		.filter(e -> e instanceof PlayerEntity).forEach(entity -> {
-			entity.addEffect(this.getLightEyeEffect());
+		final float range = this.getEffectRange();
+		EntityUtil.getFriendlyLivings(this, EntityUtil.getEntityAABB(this, range, range)).forEach(entity -> {
+			entity.addEffect(this.createEffect(0, this.getLightEyeTime()));
 		});
 	}
-	
-	@Override
-	public void startSuperMode(boolean first) {
-		super.startSuperMode(first);
-		final float range = 30;
-		EntityUtil.getFriendlyLivings(this, EntityUtil.getEntityAABB(this, range, range)).forEach(entity -> {
-			entity.addEffect(this.createEffect(1, this.getSuperLightEyeTime()));
-		});
-		this.getSpawnSound().ifPresent(s -> EntityUtil.playSound(this, s));
+
+	public float getEffectRange(){
+		return this.getSkillValue(SkillTypes.MORE_LIGHT_RANGE);
 	}
 
 	@Override
 	public EntitySize getDimensions(Pose poseIn) {
 		return EntitySize.scalable(0.75f, 1.7f);
-	}
-
-	@Override
-	public int getSuperTimeLength() {
-		return 20;
 	}
 
 	@Override
@@ -78,13 +65,7 @@ public class PlanternEntity extends PVZPlantEntity implements ILightEffect {
 	}
 	
 	public int getLightEyeTime() {
-		return 4000;
-//		return Math.min(4000, this.getSkills() * 200);
-	}
-	
-	public int getSuperLightEyeTime() {
-		return 3600;
-//		return this.isPlantInStage(1) ? 3600 : this.isPlantInStage(2) ? 7200 : 10800;
+		return 2000;
 	}
 	
 	@Override

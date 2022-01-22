@@ -4,6 +4,7 @@ import com.hungteen.pvz.api.types.IPlantType;
 import com.hungteen.pvz.common.entity.bullet.AbstractBulletEntity;
 import com.hungteen.pvz.common.entity.bullet.StarEntity;
 import com.hungteen.pvz.common.entity.plant.base.PlantShooterEntity;
+import com.hungteen.pvz.common.impl.SkillTypes;
 import com.hungteen.pvz.common.impl.plant.OtherPlants;
 import com.hungteen.pvz.common.misc.sound.SoundRegister;
 import com.hungteen.pvz.utils.EntityUtil;
@@ -60,15 +61,13 @@ public class AngelStarFruitEntity extends PlantShooterEntity {
 		EntityUtil.playSound(this, SoundRegister.SNOW_SHOOT.get());
 	}
 	
-	public int getExtraAttackChance() {
-		return 20;
-//		return PlantUtil.getPlantAverageProgress(this, 20, 80);
+	public float getExtraAttackChance() {
+		return this.getSkillValue(SkillTypes.TEN_STARS);
 	}
 	
 	@Override
 	public float getAttackDamage() {
-		return 2;
-//		return PlantUtil.getPlantAverageProgress(this, 2F, 8F);
+		return this.getSkillValue(SkillTypes.MORE_STAR_DAMAGE);
 	}
 	
 	@Override
@@ -99,8 +98,7 @@ public class AngelStarFruitEntity extends PlantShooterEntity {
 
 	@Override
 	public int getSuperTimeLength() {
-		return 100;
-//		return this.isPlantInStage(1) ? 100 : this.isPlantInStage(2) ? 200 : 300;
+		return 150;
 	}
 	
 	@Override

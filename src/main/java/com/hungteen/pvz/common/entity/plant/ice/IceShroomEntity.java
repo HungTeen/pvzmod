@@ -1,5 +1,6 @@
 package com.hungteen.pvz.common.entity.plant.ice;
 
+import com.hungteen.pvz.api.interfaces.IAlmanacEntry;
 import com.hungteen.pvz.api.interfaces.IIceEffect;
 import com.hungteen.pvz.api.types.IPlantType;
 import com.hungteen.pvz.common.advancement.trigger.EntityEffectAmountTrigger;
@@ -12,6 +13,8 @@ import com.hungteen.pvz.common.misc.sound.SoundRegister;
 import com.hungteen.pvz.common.potion.EffectRegister;
 import com.hungteen.pvz.register.ParticleRegister;
 import com.hungteen.pvz.utils.EntityUtil;
+import com.hungteen.pvz.utils.enums.PAZAlmanacs;
+import com.mojang.datafixers.util.Pair;
 import net.minecraft.entity.*;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.ServerPlayerEntity;
@@ -20,6 +23,8 @@ import net.minecraft.potion.EffectInstance;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.world.World;
 
+import java.util.Arrays;
+import java.util.List;
 import java.util.Optional;
 
 public class IceShroomEntity extends PlantBomberEntity implements IIceEffect{
@@ -32,14 +37,14 @@ public class IceShroomEntity extends PlantBomberEntity implements IIceEffect{
 	public void startBomb(boolean server) {
 		if(server) {
 			//frozen enemies.
-			final float len = 20;
+			final float len = this.getExplodeRange();
 			final AxisAlignedBB aabb = EntityUtil.getEntityAABB(this, len, len);
 			int cnt = 0;
 			for(LivingEntity entity : EntityUtil.getTargetableLivings(this, aabb)) {
 				 PVZDamageSource source = PVZDamageSource.causeIceDamage(this, this);
 				 this.getColdEffect().ifPresent(e -> source.addEffect(e));
 				 this.getFrozenEffect().ifPresent(e -> source.addEffect(e));
-				 entity.hurt(source, this.getAttackDamage());
+				 entity.hurt(source, this.getExplodeDamage());
 				 if(EntityUtil.isEntityCold(entity)) {
 					 ++ cnt;
 				 }
@@ -63,13 +68,27 @@ public class IceShroomEntity extends PlantBomberEntity implements IIceEffect{
 	}
 
 	@Override
+	public void addAlmanacEntries(List<Pair<IAlmanacEntry, Number>> list) {
+		super.addAlmanacEntries(list);
+		list.addAll(Arrays.asList(
+				Pair.of(PAZAlmanacs.COLD_LEVEL, this.getColdLvl()),
+				Pair.of(PAZAlmanacs.COLD_TIME, this.getColdTick()),
+				Pair.of(PAZAlmanacs.FROZEN_LEVEL, this.getFrozenLvl()),
+				Pair.of(PAZAlmanacs.FROZEN_TIME, this.getFrozenTick())
+		));
+	}
+
+	@Override
 	public int getReadyTime() {
-		return 30;
+		return 20;
+	}
+
+	@Override
+	public float getExplodeRange(){
+		return 20;
 	}
 	
-	public float getAttackDamage() {
-//		final int lvl = this.getSkills();
-//		return lvl <= 20 ? 0.1F * lvl : 10F;
+	public float getExplodeDamage() {
 		return 0.1F;
 	}
 	
@@ -79,18 +98,19 @@ public class IceShroomEntity extends PlantBomberEntity implements IIceEffect{
 	}
 	
 	public int getColdLvl() {
-//		return MathUtil.getProgressByDif(4, 1, this.getSkills(), PlantUtil.MAX_PLANT_LEVEL, 3, 7);
 		return 1;
 	}
 	
 	public int getColdTick() {
 		return 0;
-//		return PlantUtil.getPlantAverageProgress(this, 0, 200);
+	}
+
+	public int getFrozenLvl() {
+		return 0;
 	}
 	
 	public int getFrozenTick() {
 		return 100;
-//		return PlantUtil.getPlantAverageProgress(this, 100, 240);
 	}
 	
 	@Override
@@ -100,7 +120,7 @@ public class IceShroomEntity extends PlantBomberEntity implements IIceEffect{
 
 	@Override
 	public Optional<EffectInstance> getFrozenEffect() {
-		return Optional.ofNullable(new EffectInstance(EffectRegister.FROZEN_EFFECT.get(), this.getFrozenTick(), 1, false, false));
+		return Optional.ofNullable(new EffectInstance(EffectRegister.FROZEN_EFFECT.get(), this.getFrozenTick(), this.getFrozenLvl(), false, false));
 	}
 	
 	@Override

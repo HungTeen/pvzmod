@@ -1,16 +1,14 @@
 package com.hungteen.pvz.common.entity.zombie.grass;
 
 import com.hungteen.pvz.client.model.entity.zombie.grass.BucketHeadZombieModel;
-import com.hungteen.pvz.common.impl.zombie.ZombieType;
 import com.hungteen.pvz.common.impl.zombie.GrassZombies;
+import com.hungteen.pvz.common.impl.zombie.ZombieType;
 import com.hungteen.pvz.common.misc.sound.SoundRegister;
-import com.hungteen.pvz.data.loot.PVZLoot;
 import com.hungteen.pvz.remove.MetalTypes;
 import com.hungteen.pvz.utils.interfaces.IHasMetal;
 import net.minecraft.entity.CreatureEntity;
 import net.minecraft.entity.EntityType;
 import net.minecraft.util.DamageSource;
-import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.SoundEvent;
 import net.minecraft.world.World;
 
@@ -18,7 +16,6 @@ public class BucketHeadZombieEntity extends NormalZombieEntity implements IHasMe
 
 	public BucketHeadZombieEntity(EntityType<? extends CreatureEntity> type, World worldIn) {
 		super(type, worldIn);
-		this.hasDirectDefence = true;
 		this.increaseMetal();
 	}
 	
@@ -28,23 +25,23 @@ public class BucketHeadZombieEntity extends NormalZombieEntity implements IHasMe
 	}
 	
 	@Override
-	public float getExtraLife() {
+	public float getInnerLife() {
 		return 110;
 	}
 	
 	@Override
 	public boolean hasMetal() {
-		return this.getDefenceLife() > 0;
+		return this.getInnerDefenceLife() > 0;
 	}
 
 	@Override
 	public void decreaseMetal() {
-		this.setDefenceLife(0);
+		this.setInnerDefenceLife(0);
 	}
 
 	@Override
 	public void increaseMetal() {
-		this.setDefenceLife(this.getExtraLife());
+		this.setInnerDefenceLife(this.getInnerLife());
 	}
 	
 	/**
@@ -52,7 +49,7 @@ public class BucketHeadZombieEntity extends NormalZombieEntity implements IHasMe
 	 * {@link BucketHeadZombieModel#updateFreeParts(BucketHeadZombieEntity)}
 	 */
 	public boolean hasBucketHead(int stage) {
-		final float percent = this.getDefenceLife() / this.getExtraLife();
+		final double percent = this.getInnerDefenceLife() / this.getInnerLife();
 		if(stage == 3) {
 			return percent > 2.0f / 3;
 		} else if(stage == 2) {
@@ -71,11 +68,6 @@ public class BucketHeadZombieEntity extends NormalZombieEntity implements IHasMe
 	@Override
 	public SoundEvent getHurtSound(DamageSource damageSourceIn) {
 		return hasMetal() ? SoundRegister.METAL_HIT.get() : super.getHurtSound(damageSourceIn);
-	}
-	
-	@Override
-	protected ResourceLocation getDefaultLootTable() {
-		return PVZLoot.BUCKETHEAD_ZOMBIE;
 	}
 	
 	@Override

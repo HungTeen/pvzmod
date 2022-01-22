@@ -1,25 +1,31 @@
 package com.hungteen.pvz.common.entity.plant.explosion;
 
+import com.hungteen.pvz.api.interfaces.IAlmanacEntry;
 import com.hungteen.pvz.api.types.IPlantType;
 import com.hungteen.pvz.common.entity.plant.defence.WallNutEntity;
+import com.hungteen.pvz.common.impl.SkillTypes;
 import com.hungteen.pvz.common.impl.plant.PVZPlants;
 import com.hungteen.pvz.common.misc.damage.PVZDamageSource;
 import com.hungteen.pvz.common.misc.sound.SoundRegister;
 import com.hungteen.pvz.register.ParticleRegister;
 import com.hungteen.pvz.utils.EntityUtil;
-
+import com.hungteen.pvz.utils.enums.PAZAlmanacs;
+import com.mojang.datafixers.util.Pair;
 import net.minecraft.entity.CreatureEntity;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
 import net.minecraft.util.DamageSource;
 import net.minecraft.world.World;
 
+import java.util.Arrays;
+import java.util.List;
+
 public class ExplodeONutEntity extends WallNutEntity {
 
 	public ExplodeONutEntity(EntityType<? extends CreatureEntity> type, World worldIn) {
 		super(type, worldIn);
 	}
-	
+
 	@Override
 	public void die(DamageSource source) {
 		super.die(source);
@@ -43,26 +49,37 @@ public class ExplodeONutEntity extends WallNutEntity {
 			EntityUtil.spawnParticle(target, 0);
 		});
 	}
-	
+
 	/**
 	 * explode at specific entity.
 	 */
 	public void explode(Entity entity) {
-		final float range = 4F;
+		final float range = getExplodeRange();
 		EntityUtil.getWholeTargetableEntities(this, EntityUtil.getEntityAABB(entity, range, range)).forEach(target -> {
-			target.hurt(PVZDamageSource.explode(this), this.getAttackDamage());
+			target.hurt(PVZDamageSource.explode(this), this.getExplodeDamage());
 		});
 		EntityUtil.playSound(this, SoundRegister.CHERRY_BOMB.get());
 	}
-	
-	public int getExtraAttackChance() {
-		return 1;
-//		return this.getThreeStage(1, 2, 3);
+
+	@Override
+	public void addAlmanacEntries(List<Pair<IAlmanacEntry, Number>> list) {
+		super.addAlmanacEntries(list);
+		list.addAll(Arrays.asList(
+				Pair.of(PAZAlmanacs.EXPLODE_DAMAGE, this.getExplodeDamage()),
+				Pair.of(PAZAlmanacs.EXPLODE_RANGE, this.getExplodeRange())
+		));
 	}
-	
-	public float getAttackDamage(){
-		return 150F;
-//		return this.getAverageProgress(150F, 650F);
+
+	public int getExtraAttackChance() {
+		return 2;
+	}
+
+	public float getExplodeDamage(){
+		return this.getSkillValue(SkillTypes.NORMAL_BOMB_DAMAGE);
+	}
+
+	public float getExplodeRange(){
+		return 3.8F;
 	}
 	
 	@Override

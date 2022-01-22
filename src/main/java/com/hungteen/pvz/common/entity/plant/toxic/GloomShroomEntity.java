@@ -4,6 +4,7 @@ import com.hungteen.pvz.api.types.IPlantType;
 import com.hungteen.pvz.common.entity.bullet.AbstractBulletEntity;
 import com.hungteen.pvz.common.entity.bullet.FumeEntity;
 import com.hungteen.pvz.common.entity.plant.base.PlantShooterEntity;
+import com.hungteen.pvz.common.impl.SkillTypes;
 import com.hungteen.pvz.common.impl.plant.PVZPlants;
 import com.hungteen.pvz.common.misc.sound.SoundRegister;
 import com.hungteen.pvz.utils.EntityUtil;
@@ -49,16 +50,20 @@ public class GloomShroomEntity extends PlantShooterEntity {
 	
     @Override
 	public int getSuperTimeLength() {
-		return 60;
-//		return this.getThreeStage(60, 80, 100);
+		return 80;
 	}
     
     @Override
     public int getShootCD() {
     	return 8;
     }
-    
-    @Override
+
+	@Override
+	public float getAttackDamage() {
+		return this.getSkillValue(SkillTypes.SPORE_DAMAGE);
+	}
+
+	@Override
 	public float getShootRange() {
 		return 4;
 	}
@@ -71,11 +76,6 @@ public class GloomShroomEntity extends PlantShooterEntity {
     @Override
 	public IPlantType getPlantType() {
 		return PVZPlants.GLOOM_SHROOM;
-	}
-
-	@Override
-	public float getAttackDamage() {
-		return 0;
 	}
 
 }

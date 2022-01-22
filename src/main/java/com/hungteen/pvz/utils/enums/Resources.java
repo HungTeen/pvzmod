@@ -22,7 +22,7 @@ public enum Resources {
 	/* max plant food amount */
 	MAX_ENERGY_NUM(1, 10),
 	/* the tick to control fog display */
-	NO_FOG_TICK(- 9999999, 9999999),
+//	NO_FOG_TICK(- 9999999, 9999999),
 	/* kill zombie count */
 //	KILL_COUNT(0, 9999999),
 	/* the chance to use slot machine */
@@ -45,7 +45,7 @@ public enum Resources {
 		case SUN_NUM: return 50;
 		case LOTTERY_CHANCE: return 10;
 		case GROUP_TYPE: return ConfigUtil.getPlayerInitialGroup();
-		case NO_FOG_TICK: return 0;
+//		case NO_FOG_TICK: return 0;
 		default: return res.min;
 		}
 	}

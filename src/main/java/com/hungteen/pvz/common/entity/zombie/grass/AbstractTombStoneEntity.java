@@ -30,8 +30,8 @@ public abstract class AbstractTombStoneEntity extends PVZZombieEntity {
 	}
 	
 	@Override
-	protected void updateAttributes() {
-		super.updateAttributes();
+	protected void initAttributes() {
+		super.initAttributes();
 		this.getAttribute(Attributes.MOVEMENT_SPEED).setBaseValue(0);
 		this.getAttribute(Attributes.ATTACK_DAMAGE).setBaseValue(0);
 		this.getAttribute(Attributes.FOLLOW_RANGE).setBaseValue(50);

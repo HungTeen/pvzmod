@@ -1,7 +1,9 @@
 package com.hungteen.pvz.common.entity.plant.enforce;
 
+import com.hungteen.pvz.api.interfaces.IAlmanacEntry;
 import com.hungteen.pvz.api.types.IPlantType;
 import com.hungteen.pvz.common.entity.plant.base.PlantCloserEntity;
+import com.hungteen.pvz.common.impl.SkillTypes;
 import com.hungteen.pvz.common.impl.plant.PVZPlants;
 import com.hungteen.pvz.common.misc.damage.PVZDamageSource;
 import com.hungteen.pvz.common.misc.sound.SoundRegister;
@@ -9,6 +11,8 @@ import com.hungteen.pvz.common.entity.EntityRegister;
 import com.hungteen.pvz.utils.EntityUtil;
 import com.hungteen.pvz.utils.PlantUtil;
 
+import com.hungteen.pvz.utils.enums.PAZAlmanacs;
+import com.mojang.datafixers.util.Pair;
 import net.minecraft.entity.CreatureEntity;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntitySize;
@@ -16,6 +20,9 @@ import net.minecraft.entity.EntityType;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.Pose;
 import net.minecraft.world.World;
+
+import java.util.Arrays;
+import java.util.List;
 
 public class TangleKelpEntity extends PlantCloserEntity{
 
@@ -63,15 +70,21 @@ public class TangleKelpEntity extends PlantCloserEntity{
 	public boolean canPlantTarget(Entity entity) {
 		return super.canPlantTarget(entity) && (entity.getVehicle() == null || entity.getVehicle().is(this));
 	}
-	
+
+	@Override
+	public void addAlmanacEntries(List<Pair<IAlmanacEntry, Number>> list) {
+		super.addAlmanacEntries(list);
+		list.addAll(Arrays.asList(
+				Pair.of(PAZAlmanacs.ATTACK_DAMAGE, this.getAttackDamage())
+		));
+	}
+
 	public float getAttackDamage(){
-		return 150;
-//		return PlantUtil.getPlantAverageProgress(this, 150, 350);
+		return this.getSkillValue(SkillTypes.NORMAL_ENHANCE_STRENGTH);
 	}
 	
 	public int getSuperCount(){
 		return 3;
-//		return this.isPlantInStage(1) ? 3 : this.isPlantInStage(2) ? 4 : 5;
 	}
 	
 	@Override

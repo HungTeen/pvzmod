@@ -7,21 +7,14 @@ import com.hungteen.pvz.common.entity.bullet.ThornEntity.ThornStates;
 import com.hungteen.pvz.common.entity.bullet.ThornEntity.ThornTypes;
 import com.hungteen.pvz.common.entity.plant.base.PlantShooterEntity;
 import com.hungteen.pvz.common.entity.zombie.pool.BalloonZombieEntity;
+import com.hungteen.pvz.common.impl.SkillTypes;
 import com.hungteen.pvz.common.impl.plant.PVZPlants;
-import com.hungteen.pvz.common.misc.damage.PVZDamageSource;
 import com.hungteen.pvz.utils.EntityUtil;
-
-import net.minecraft.entity.CreatureEntity;
-import net.minecraft.entity.Entity;
-import net.minecraft.entity.EntitySize;
-import net.minecraft.entity.EntityType;
-import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.Pose;
+import net.minecraft.entity.*;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.network.datasync.DataParameter;
 import net.minecraft.network.datasync.DataSerializers;
 import net.minecraft.network.datasync.EntityDataManager;
-import net.minecraft.util.DamageSource;
 import net.minecraft.world.World;
 
 public class CactusEntity extends PlantShooterEntity {
@@ -89,18 +82,22 @@ public class CactusEntity extends PlantShooterEntity {
 	}
 	
 	
+//	@Override
+//	public boolean hurt(DamageSource source, float amount) {
+//		if(EntityUtil.canAttackEntity(this, source.getEntity())) {
+//			final float damage = this.isCactusPowered() ? this.getAttackDamage() * 4 : this.getAttackDamage() * 2;
+//			source.getEntity().hurt(PVZDamageSource.causeThornDamage(this, this), damage);
+//		}
+//		return super.hurt(source, amount);
+//	}
+
 	@Override
-	public boolean hurt(DamageSource source, float amount) {
-		if(EntityUtil.canAttackEntity(this, source.getEntity())) {
-			final float damage = this.isCactusPowered() ? this.getAttackDamage() * 4 : this.getAttackDamage() * 2;
-			source.getEntity().hurt(PVZDamageSource.causeThornDamage(this, this), damage);
-		}
-		return super.hurt(source, amount);
+	public float getAttackDamage() {
+		return this.getSkillValue(SkillTypes.MORE_THORN_DAMAGE);
 	}
-	
+
 	public int getThornCount() {
-		return 2;
-//		return this.isPlantInStage(1) ? 2 : this.isPlantInStage(2) ? 3 : 4;
+		return 3;
 	}
 	
 	public float getCurrentHeight() {
@@ -200,11 +197,6 @@ public class CactusEntity extends PlantShooterEntity {
 	@Override
 	public IPlantType getPlantType() {
 		return PVZPlants.CACTUS;
-	}
-
-	@Override
-	public float getAttackDamage() {
-		return 0;
 	}
 
 }

@@ -5,6 +5,7 @@ import com.hungteen.pvz.common.entity.bullet.MelonEntity;
 import com.hungteen.pvz.common.entity.bullet.MelonEntity.MelonStates;
 import com.hungteen.pvz.common.entity.bullet.PultBulletEntity;
 import com.hungteen.pvz.common.entity.plant.base.PlantPultEntity;
+import com.hungteen.pvz.common.impl.SkillTypes;
 import com.hungteen.pvz.common.impl.plant.PVZPlants;
 import net.minecraft.entity.CreatureEntity;
 import net.minecraft.entity.EntitySize;
@@ -30,8 +31,7 @@ public class MelonPultEntity extends PlantPultEntity {
 	}
 	
 	public float getAttackDamage() {
-		return 4;
-//		return PlantUtil.getPlantAverageProgress(this, 4F, 16F);
+		return this.getSkillValue(SkillTypes.MORE_MELON_DAMAGE);
 	}
 	
 	@Override

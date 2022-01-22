@@ -7,18 +7,18 @@ import com.hungteen.pvz.api.types.IRankType;
 import com.hungteen.pvz.api.types.ISkillType;
 import com.hungteen.pvz.common.entity.misc.bowling.AbstractBowlingEntity;
 import com.hungteen.pvz.common.entity.zombie.roof.BungeeZombieEntity;
+import com.hungteen.pvz.common.event.PVZLivingEvents;
 import com.hungteen.pvz.common.impl.SkillTypes;
 import com.hungteen.pvz.common.misc.damage.PVZDamageSource;
 import com.hungteen.pvz.utils.EntityUtil;
 import com.hungteen.pvz.utils.enums.PAZAlmanacs;
 import com.hungteen.pvz.utils.others.WeightList;
 import com.mojang.datafixers.util.Pair;
-
-import net.minecraft.command.impl.SummonCommand;
 import net.minecraft.entity.CreatureEntity;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.ILivingEntityData;
 import net.minecraft.entity.SpawnReason;
+import net.minecraft.entity.ai.attributes.AttributeModifierMap;
 import net.minecraft.entity.ai.attributes.Attributes;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.nbt.CompoundNBT;
@@ -26,6 +26,7 @@ import net.minecraft.network.PacketBuffer;
 import net.minecraft.network.datasync.DataParameter;
 import net.minecraft.network.datasync.DataSerializers;
 import net.minecraft.network.datasync.EntityDataManager;
+import net.minecraft.particles.ParticleTypes;
 import net.minecraft.server.management.PreYggdrasilConverter;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.ResourceLocation;
@@ -33,10 +34,15 @@ import net.minecraft.util.SoundEvent;
 import net.minecraft.world.DifficultyInstance;
 import net.minecraft.world.IServerWorld;
 import net.minecraft.world.World;
+import net.minecraftforge.event.entity.living.LivingDamageEvent;
+import net.minecraftforge.event.entity.living.LivingHurtEvent;
 import net.minecraftforge.fml.common.registry.IEntityAdditionalSpawnData;
 
 import javax.annotation.Nullable;
-import java.util.*;
+import java.util.Arrays;
+import java.util.List;
+import java.util.Optional;
+import java.util.UUID;
 
 //TODO 掉落物（金币等等）
 public abstract class AbstractPAZEntity extends CreatureEntity implements IPAZEntity, IEntityAdditionalSpawnData {
@@ -62,7 +68,7 @@ public abstract class AbstractPAZEntity extends CreatureEntity implements IPAZEn
 
     static {
         //init drop list.
-        final int p = PVZConfig.COMMON_CONFIG.EntitySettings.ZombieSetting.ZombieDropMultiper.get();
+        final int p = PVZConfig.COMMON_CONFIG.EntitySettings.DropChanceMultiper.get();
         final int pp = p * p;
         NORMAL_DROP_LIST.addItem(DropType.SILVER, p * p * p);
         NORMAL_DROP_LIST.addItem(DropType.GOLD, p * p);
@@ -91,6 +97,22 @@ public abstract class AbstractPAZEntity extends CreatureEntity implements IPAZEn
         return super.finalizeSpawn(worldIn, difficultyIn, reason, spawnDataIn, dataTag);
     }
 
+    public static AttributeModifierMap.MutableAttribute createPAZAttributes() {
+        return AttributeModifierMap.builder()
+                .add(Attributes.MAX_HEALTH)
+                .add(Attributes.KNOCKBACK_RESISTANCE)
+                .add(Attributes.MOVEMENT_SPEED)
+                .add(Attributes.ARMOR)
+                .add(Attributes.ARMOR_TOUGHNESS)
+                .add(Attributes.ATTACK_DAMAGE)
+                .add(net.minecraftforge.common.ForgeMod.SWIM_SPEED.get())
+                .add(net.minecraftforge.common.ForgeMod.NAMETAG_DISTANCE.get())
+                .add(net.minecraftforge.common.ForgeMod.ENTITY_GRAVITY.get())
+                .add(PVZAttributes.INNER_DEFENCE_HP.get())
+                .add(PVZAttributes.OUTER_DEFENCE_HP.get())
+                ;
+    }
+
     /**
      * final runtime before entity spawn in world.
      */
@@ -99,11 +121,10 @@ public abstract class AbstractPAZEntity extends CreatureEntity implements IPAZEn
             if(tag != null){
                 if(tag.contains(SkillTypes.SKILL_TAG)){
                     this.setSkills(tag.getCompound(SkillTypes.SKILL_TAG));
-                    
                 }
             }
             this.getSpawnSound().ifPresent(s -> EntityUtil.playSound(this, s));
-            this.updateAttributes();
+            this.initAttributes();
         }
     }
 
@@ -115,6 +136,7 @@ public abstract class AbstractPAZEntity extends CreatureEntity implements IPAZEn
             this.setOwnerUUID(player.getUUID());
         }
         this.heal(this.getMaxHealth());
+        this.setPersistenceRequired();//avoid being refreshed by chunk.
     }
 
     @Override
@@ -123,11 +145,6 @@ public abstract class AbstractPAZEntity extends CreatureEntity implements IPAZEn
         this.level.getProfiler().push("PAZ Tick");
         this.pazTick();
         this.level.getProfiler().pop();
-        if (this.canNormalUpdate()) {
-            this.level.getProfiler().push("PAZ Normal Tick");
-            this.normalPAZTick();
-            this.level.getProfiler().pop();
-        }
     }
 
     /**
@@ -137,11 +154,80 @@ public abstract class AbstractPAZEntity extends CreatureEntity implements IPAZEn
 
     }
 
-    /**
-     * only tick when it's in normal state.
-     */
-    public void normalPAZTick(){
+    @Override
+    protected boolean shouldDespawnInPeaceful() {
+        return EntityGroupHander.isMonsterGroup(this.getEntityGroupType());
+    }
 
+    /**
+     * {@link PVZLivingEvents#onLivingHurt(LivingHurtEvent)}
+     */
+    public static void damageOuterDefence(final LivingHurtEvent ev) {
+        float amount = ev.getAmount();
+        if(ev.getEntityLiving() instanceof AbstractPAZEntity){
+            final AbstractPAZEntity pazEntity = (AbstractPAZEntity) ev.getEntityLiving();
+            final double life = pazEntity.getOuterDefenceLife();
+            if(life > 0){
+                if(life > amount){
+                    pazEntity.setOuterDefenceLife(life - amount);
+                    amount = 0;
+                    pazEntity.onOuterDefenceHurt();
+                } else{
+                    amount -= life;
+                    pazEntity.setOuterDefenceLife(0);
+                    pazEntity.onOuterDefenceBroken();
+                }
+            }
+        }
+        ev.setAmount(amount == 0 ? 0.000001F : amount);
+    }
+    
+    /**
+     * {@link PVZLivingEvents#onLivingDamage(LivingDamageEvent)}
+     */
+    public static void damageInnerDefence(final LivingDamageEvent ev) {
+        float amount = ev.getAmount();
+        if(ev.getEntityLiving() instanceof AbstractPAZEntity){
+            final AbstractPAZEntity pazEntity = (AbstractPAZEntity) ev.getEntityLiving();
+            final double life = pazEntity.getInnerDefenceLife();
+            if(life > 0){
+                if(life > amount){
+                    pazEntity.setInnerDefenceLife(life - amount);
+                    amount = 0;
+                    pazEntity.onInnerDefenceHurt();
+                } else{
+                    amount -= life;
+                    pazEntity.setInnerDefenceLife(0);
+                    pazEntity.onInnerDefenceBroken();
+                }
+            }
+        }
+        ev.setAmount(amount == 0 ? 0.000001F : amount);
+    }
+
+    public void onOuterDefenceHurt(){
+
+    }
+
+    public void onOuterDefenceBroken(){
+
+    }
+
+    public void onInnerDefenceHurt(){
+
+    }
+
+    public void onInnerDefenceBroken(){
+
+    }
+
+    @Override
+    public boolean hurt(DamageSource source, float amount) {
+        //can get hurt each attack by pvz damage.
+        if (source instanceof PVZDamageSource) {
+            this.invulnerableTime = 0;
+        }
+        return super.hurt(source, amount);
     }
 
     @Override
@@ -154,16 +240,66 @@ public abstract class AbstractPAZEntity extends CreatureEntity implements IPAZEn
         }
     }
 
+    @Override
+    protected void tickDeath() {
+        ++ this.deathTime;
+        if (this.canRemoveWhenDeath()) {
+            for (int i = 0; i < 5; ++i) {
+                double d0 = this.random.nextGaussian() * 0.02D;
+                double d1 = this.random.nextGaussian() * 0.02D;
+                double d2 = this.random.nextGaussian() * 0.02D;
+                this.level.addParticle(ParticleTypes.POOF, this.getRandomX(1.0D), this.getRandomY(),
+                        this.getRandomZ(1.0D), d0, d1, d2);
+            }
+            this.onRemoveWhenDeath();
+            this.remove();
+        }
+    }
+
+    /**
+     * {@link #tickDeath()}
+     */
+    protected void onRemoveWhenDeath(){
+    }
+
+    protected boolean canRemoveWhenDeath(){
+        return this.deathTime >= this.getDeathTime();
+    }
+
+    protected int getDeathTime(){
+        return 20;
+    }
+
     /**
      * update attributes when first spawn.
      * {@link #finalizeSpawn(CompoundNBT)}
      */
-    protected void updateAttributes() {
+    protected void initAttributes() {
         this.getAttribute(Attributes.MAX_HEALTH).setBaseValue(this.getLife());
+        this.getAttribute(Attributes.ARMOR).setBaseValue(this.getArmor());
+        this.getAttribute(Attributes.ARMOR_TOUGHNESS).setBaseValue(this.getArmorToughness());
+        this.getAttribute(PVZAttributes.INNER_DEFENCE_HP.get()).setBaseValue(this.getInnerLife());
+        this.getAttribute(PVZAttributes.OUTER_DEFENCE_HP.get()).setBaseValue(this.getOuterLife());
     }
 
     /* features */
     protected abstract float getLife();
+
+    protected float getInnerLife(){
+        return 0;
+    }
+
+    protected float getOuterLife(){
+        return 0;
+    }
+
+    public int getArmor() {
+        return 0;
+    }
+
+    public int getArmorToughness() {
+        return 0;
+    }
 
     @Override
     public void addAlmanacEntries(List<Pair<IAlmanacEntry, Number>> list) {
@@ -227,7 +363,7 @@ public abstract class AbstractPAZEntity extends CreatureEntity implements IPAZEn
     /**
      * how much xp will it get, when killed by player or plants.
      */
-    public float getZombieXp() {
+    public int getZombieXp() {
         return this.getPAZType().getXpPoint();
     }
 
@@ -298,7 +434,6 @@ public abstract class AbstractPAZEntity extends CreatureEntity implements IPAZEn
                 this.setExistTick(compound.getInt("paz_exist_tick"));
             }
         }
-        this.updateAttributes();
     }
 
     @Override
@@ -309,6 +444,38 @@ public abstract class AbstractPAZEntity extends CreatureEntity implements IPAZEn
     @Override
     public void writeSpawnData(PacketBuffer buffer) {
 
+    }
+
+    /**
+     * how many health does zombie has.
+     * {@link EntityUtil#getCurrentHealth(net.minecraft.entity.LivingEntity)}
+     */
+    public double getCurrentHealth() {
+        return this.getInnerDefenceLife() + this.getOuterDefenceLife() + this.getHealth();
+    }
+
+    /**
+     * how many max health does zombie have currently.
+     * {@link EntityUtil#getCurrentMaxHealth(net.minecraft.entity.LivingEntity)}
+     */
+    public double getCurrentMaxHealth() {
+        return this.getInnerDefenceLife() + this.getOuterDefenceLife() + this.getMaxHealth();
+    }
+
+    public double getInnerDefenceLife() {
+        return this.getAttributeValue(PVZAttributes.INNER_DEFENCE_HP.get());
+    }
+
+    public void setInnerDefenceLife(double life) {
+        this.getAttribute(PVZAttributes.INNER_DEFENCE_HP.get()).setBaseValue(life);
+    }
+
+    public double getOuterDefenceLife() {
+        return this.getAttributeValue(PVZAttributes.OUTER_DEFENCE_HP.get());
+    }
+
+    public void setOuterDefenceLife(double life) {
+        this.getAttribute(PVZAttributes.OUTER_DEFENCE_HP.get()).setBaseValue(life);
     }
 
     @Override

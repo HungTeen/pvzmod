@@ -2,13 +2,12 @@ package com.hungteen.pvz.common.event;
 
 import com.hungteen.pvz.PVZMod;
 import com.hungteen.pvz.common.enchantment.armor.TreeProtectionEnchantment;
+import com.hungteen.pvz.common.entity.AbstractPAZEntity;
 import com.hungteen.pvz.common.entity.plant.magic.StrangeCatEntity;
-import com.hungteen.pvz.common.entity.zombie.PVZZombieEntity;
 import com.hungteen.pvz.common.event.handler.LivingEventHandler;
 import com.hungteen.pvz.common.event.handler.PlayerEventHandler;
 import com.hungteen.pvz.common.misc.damage.PVZDamageSource;
 import com.hungteen.pvz.utils.EntityUtil;
-
 import net.minecraft.advancements.CriteriaTriggers;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.ServerPlayerEntity;
@@ -49,6 +48,7 @@ public class PVZLivingEvents {
 	public static void onLivingHurt(LivingHurtEvent ev) {
 		if(! ev.getEntityLiving().level.isClientSide) {
 			TreeProtectionEnchantment.handleTreeProtection(ev);
+			AbstractPAZEntity.damageOuterDefence(ev);
 			if(ev.getSource() instanceof PVZDamageSource) {
 				ev.getEntityLiving().invulnerableTime = 0;
 				LivingEventHandler.handleHurtEffects(ev.getEntityLiving(), (PVZDamageSource) ev.getSource());
@@ -60,7 +60,7 @@ public class PVZLivingEvents {
 	
 	@SubscribeEvent
 	public static void onLivingDamage(LivingDamageEvent ev) {
-		PVZZombieEntity.damageZombieDefence(ev);
+		AbstractPAZEntity.damageInnerDefence(ev);
 	}
 	
 }
