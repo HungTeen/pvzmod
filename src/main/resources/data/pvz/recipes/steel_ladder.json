@@ -1,0 +1,20 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "X X",
+    "XYX",
+    "X X"
+  ],
+  "key": {
+    "X": {
+      "tag": "forge:ingots/iron"
+    },
+    "Y": {
+      "item": "pvz:assist_essence"
+    }
+  },
+  "result": {
+    "item": "pvz:steel_ladder",
+    "count": 8
+  }
+}

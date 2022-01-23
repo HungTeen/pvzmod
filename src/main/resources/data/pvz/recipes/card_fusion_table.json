@@ -1,0 +1,29 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "CCC",
+    "XAY",
+    "BBB"
+  ],
+  "key": {
+    "B": {
+      "item": "minecraft:iron_block"
+    },
+    "X": {
+      "item": "pvz:origin_essence"
+    },
+    "Y": {
+      "item": "pvz:light_essence"
+    },
+    "A": {
+      "item": "minecraft:crafting_table"
+    },
+    "C": {
+      "item": "pvz:origin_ingot"
+    }
+  },
+  "result": {
+    "item": "pvz:card_fusion_table",
+    "count": 1
+  }
+}

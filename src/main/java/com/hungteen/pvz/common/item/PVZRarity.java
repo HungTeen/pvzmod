@@ -13,16 +13,24 @@ import net.minecraft.util.text.TextFormatting;
 public class PVZRarity{
 
     public static final Rarity GRAY = Rarity.create("gray", TextFormatting.GRAY);
-    public static final Rarity WHITE = Rarity.create("gray", TextFormatting.WHITE);
-    public static final Rarity GREEN = Rarity.create("gray", TextFormatting.GREEN);
-    public static final Rarity BLUE = Rarity.create("gray", TextFormatting.BLUE);
-    public static final Rarity PURPLE = Rarity.create("gray", TextFormatting.LIGHT_PURPLE);
-    public static final Rarity GOLD = Rarity.create("gray", TextFormatting.GOLD);
-    public static final Rarity RED = Rarity.create("gray", TextFormatting.RED);
-    public static final Rarity BLACK = Rarity.create("gray", TextFormatting.BLACK);
+    public static final Rarity WHITE = Rarity.create("white", TextFormatting.WHITE);
+    public static final Rarity GREEN = Rarity.create("green", TextFormatting.GREEN);
+    public static final Rarity BLUE = Rarity.create("blue", TextFormatting.BLUE);
+    public static final Rarity PURPLE = Rarity.create("purple", TextFormatting.LIGHT_PURPLE);
+    public static final Rarity GOLD = Rarity.create("gold", TextFormatting.GOLD);
+    public static final Rarity RED = Rarity.create("red", TextFormatting.RED);
+    public static final Rarity BLACK = Rarity.create("black", TextFormatting.BLACK);
 
     public static Rarity getRarityByRank(IRankType rankType){
-        return rankType == RankTypes.GRAY ? GRAY : rankType == RankTypes.WHITE ? WHITE : rankType == RankTypes.GREEN ? GREEN : rankType == RankTypes.BLUE ? BLUE : rankType == RankTypes.PURPLE ? PURPLE : rankType == RankTypes.GOLD ? GOLD : rankType == RankTypes.RED ? RED : rankType == RankTypes.BLACK ? BLACK : Rarity.COMMON;
+        return (rankType == RankTypes.GRAY) ? GRAY : 
+        	(rankType == RankTypes.WHITE) ? WHITE : 
+        		(rankType == RankTypes.GREEN) ? GREEN : 
+        			(rankType == RankTypes.BLUE) ? BLUE : 
+        				(rankType == RankTypes.PURPLE) ? PURPLE : 
+        					(rankType == RankTypes.GOLD) ? GOLD : 
+        						(rankType == RankTypes.RED) ? RED : 
+        							(rankType == RankTypes.BLACK) ? BLACK : 
+        								Rarity.COMMON;
     }
 
 }

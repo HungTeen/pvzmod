@@ -1,7 +1,7 @@
 {
   "parent": "minecraft:item/generated",
   "textures": {
-    "layer0": "pvz:item/misc/green_card",
+    "layer0": "pvz:item/misc/blue_card",
     "layer1": "pvz:screenshot/plant/fume_shroom"
   }
 }

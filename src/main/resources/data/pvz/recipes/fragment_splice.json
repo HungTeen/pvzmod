@@ -1,0 +1,26 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "AAA",
+    "PQP",
+    "BBB"
+  ],
+  "key": {
+    "B": {
+      "item": "minecraft:iron_block"
+    },
+    "P": {
+      "item": "pvz:light_essence"
+    },
+    "Q": {
+      "item": "pvz:origin_essence"
+    },
+    "A": {
+      "item": "minecraft:crafting_table"
+    }
+  },
+  "result": {
+    "item": "pvz:fragment_splice",
+    "count": 1
+  }
+}

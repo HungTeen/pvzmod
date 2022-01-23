@@ -6,17 +6,25 @@ import com.hungteen.pvz.common.tileentity.CardFusionTileEntity;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
+import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.inventory.InventoryHelper;
+import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.ActionResultType;
 import net.minecraft.util.Hand;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.BlockRayTraceResult;
+import net.minecraft.util.text.ITextComponent;
+import net.minecraft.util.text.TextFormatting;
+import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraft.world.IBlockReader;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.network.NetworkHooks;
+
+import javax.annotation.Nullable;
+import java.util.List;
 
 public class CardFusionBlock extends AbstractFacingBlock {
 
@@ -32,6 +40,12 @@ public class CardFusionBlock extends AbstractFacingBlock {
 		    NetworkHooks.openGui((ServerPlayerEntity) player, te, pos);
 		}
 		return ActionResultType.SUCCESS;
+	}
+
+	@Override
+	public void appendHoverText(ItemStack itemStack, @Nullable IBlockReader iBlockReader, List<ITextComponent> textComponents, ITooltipFlag tooltipFlag) {
+		super.appendHoverText(itemStack, iBlockReader, textComponents, tooltipFlag);
+		textComponents.add(new TranslationTextComponent("tooltip.pvz.card_fusion_table").withStyle(TextFormatting.GREEN));
 	}
 	
 	@Override

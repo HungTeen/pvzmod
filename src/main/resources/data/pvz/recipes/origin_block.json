@@ -2,15 +2,12 @@
   "type": "minecraft:crafting_shaped",
   "pattern": [
     "XXX",
-    "XYX",
+    "XXX",
     "XXX"
   ],
   "key": {
     "X": {
       "item": "pvz:origin_essence"
-    },
-    "Y": {
-      "tag": "forge:glass"
     }
   },
   "result": {

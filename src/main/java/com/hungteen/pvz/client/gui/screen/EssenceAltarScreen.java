@@ -45,7 +45,8 @@ public class EssenceAltarScreen extends PVZContainerScreen<EssenceAltarContainer
 		this.imageHeight = 166;
 		this.tips.add(new DisplayField.TipField(3, 3, Arrays.asList(
 				new TranslationTextComponent("gui.pvz.essence_altar.tip1"),
-				new TranslationTextComponent("gui.pvz.essence_altar.tip2")
+				new TranslationTextComponent("gui.pvz.essence_altar.tip2"),
+				new TranslationTextComponent("gui.pvz.essence_altar.tip3")
 		)));
 	}
 

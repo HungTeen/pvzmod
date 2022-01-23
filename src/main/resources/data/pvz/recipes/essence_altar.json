@@ -1,19 +1,22 @@
 {
   "type": "minecraft:crafting_shaped",
   "pattern": [
-    "XAX",
-    "XBX",
+    " A ",
+    "XCX",
     "BBB"
   ],
   "key": {
     "B": {
-      "item": "pvz:origin_essence"
+      "item": "minecraft:obsidian"
     },
     "X": {
-      "tag": "forge:glass"
+      "item": "pvz:origin_ingot"
     },
     "A": {
       "item": "pvz:origin_block"
+    },
+    "C": {
+      "item": "minecraft:gold_block"
     }
   },
   "result": {

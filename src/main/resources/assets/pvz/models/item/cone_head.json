@@ -1,6 +1,6 @@
 {
   "parent": "minecraft:item/generated",
   "textures": {
-    "layer0": "pvz:item/blue_flame_pea"
+    "layer0": "pvz:item/cone_head"
   }
 }
