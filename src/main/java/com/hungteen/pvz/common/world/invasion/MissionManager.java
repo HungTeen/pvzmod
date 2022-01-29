@@ -7,7 +7,6 @@ import com.hungteen.pvz.utils.enums.Resources;
 import com.hungteen.pvz.utils.others.WeightList;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.util.text.TranslationTextComponent;
-import net.minecraft.world.World;
 
 import java.util.Random;
 
@@ -19,40 +18,36 @@ public class MissionManager {
     private static final int[] INSTANT_KILL_MISSIONS = new int[]{10, 20, 40, 60, 80};
     private static final int[] COLLECT_SUN_MISSIONS = new int[]{5000, 10000, 15000, 20000, 25000};
 
-    public static void offerMission(PlayerEntity player){
-        final MissionType type = getMission(player.getRandom());
-        PlayerUtil.getOptManager(player).ifPresent(l -> l.resetMission(type));
-    }
-
     /**
      * tick each second.
      */
-    public static void tickMission(World world){
-        PlayerUtil.getServerPlayers(world).stream().filter(player -> player.tickCount % 20 == 5).forEach(player -> {
+    public static void tickMission(Invasion invasion){
+        final PlayerEntity player = invasion.getPlayer();
+        if(player.tickCount % 20 == 5) {
             final MissionType type = getPlayerMission(player);
-            if(type != MissionType.EMPTY){
+            if (type != MissionType.EMPTY) {
                 final int now = PlayerUtil.getResource(player, Resources.MISSION_VALUE);
                 int stage = PlayerUtil.getResource(player, Resources.MISSION_STAGE);
                 int require = getRequireMissionValue(type, stage);
-                while (stage < MAX_MISSION_STAGE && now >= require){
+                while (stage < MAX_MISSION_STAGE && now >= require) {
                     rewardPlayer(player, type, stage);
-                    ++ stage;
+                    ++stage;
                     require = getRequireMissionValue(type, stage);
                 }
-                if(type == MissionType.INSTANT_KILL){
-                    PlayerUtil.getOptManager(player).ifPresent(l -> l.updateKillQueue());
+                if (type == MissionType.INSTANT_KILL) {
+                    PlayerUtil.getOptManager(player).ifPresent(l -> l.getInvasion().updateKillQueue());
                 }
-                if(stage >= MAX_MISSION_STAGE){
+                if (stage >= MAX_MISSION_STAGE) {
                     removeMission(player);
                 } else {
-                	PlayerUtil.setResource(player, Resources.MISSION_STAGE, stage);
+                    PlayerUtil.setResource(player, Resources.MISSION_STAGE, stage);
                 }
             }
-        });
+        }
     }
 
     public static void removeMission(PlayerEntity player){
-        PlayerUtil.getOptManager(player).ifPresent(l -> l.clearMission());
+        PlayerUtil.getOptManager(player).ifPresent(l -> l.getInvasion().clearMission());
     }
 
     public static void rewardPlayer(PlayerEntity player, MissionType type, int stage){

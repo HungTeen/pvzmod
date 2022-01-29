@@ -190,7 +190,7 @@ public class SlotMachineTileEntity extends PVZTileEntity implements ITickableTil
 			for (int i = 0; i < (num == 1 ? 2 : 7); ++i) {
 				JewelEntity jewel = EntityRegister.JEWEL.get().create(this.level);
 				jewel.setAmount(1);
-				EntityUtil.onMobEntityRandomPosSpawn(this.level, jewel, worldPosition, 3);
+				EntityUtil.onEntityRandomPosSpawn(this.level, jewel, worldPosition, 3);
 			}
 			break;
 		}

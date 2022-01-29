@@ -5,43 +5,43 @@
   "display_color": "black",
   "spawns": [
     {
-      "entity_type": "pvz:screen_door_zombie",
-      "occur_day": 3,
+      "entity_type": "pvz:screendoor_zombie",
+      "invasion_level": 10,
       "spawn_weight": 60
     },
     {
       "entity_type": "pvz:pogo_zombie",
-      "occur_day": 5,
+      "invasion_level": 15,
       "spawn_weight": 30
     },
     {
       "entity_type": "pvz:jack_in_box_zombie",
-      "occur_day": 6,
+      "invasion_level": 15,
       "spawn_weight": 40
     },
     {
       "entity_type": "pvz:ladder_zombie",
-      "occur_day": 8,
+      "invasion_level": 20,
       "spawn_weight": 30
     },
     {
       "entity_type": "pvz:buckethead_zombie",
-      "occur_day": 10,
+      "invasion_level": 25,
       "spawn_weight": 20
     },
     {
       "entity_type": "pvz:football_zombie",
-      "occur_day": 12,
+      "invasion_level": 30,
       "spawn_weight": 20
     },
     {
       "entity_type": "pvz:digger_zombie",
-      "occur_day": 15,
+      "invasion_level": 30,
       "spawn_weight": 20
     },
     {
       "entity_type": "pvz:giga_football_zombie",
-      "occur_day": 22,
+      "invasion_level": 45,
       "spawn_weight": 10
     }
   ]

@@ -4,7 +4,7 @@ import javax.annotation.Nonnull;
 
 import com.hungteen.pvz.common.entity.ai.goal.target.PVZNearestTargetGoal;
 import com.hungteen.pvz.common.entity.plant.PVZPlantEntity;
-import com.hungteen.pvz.common.misc.damage.PVZDamageSource;
+import com.hungteen.pvz.common.misc.PVZEntityDamageSource;
 import com.hungteen.pvz.utils.EntityUtil;
 
 import net.minecraft.entity.CreatureEntity;
@@ -75,7 +75,7 @@ public abstract class PlantCloserEntity extends PVZPlantEntity{
 	@Override
 	public boolean isPlantImmuneTo(DamageSource source) {
 		if(this.canBeImmuneToEnforce(source.getEntity())) {
-			return super.isPlantImmuneTo(source) || PVZDamageSource.isEnforceDamage(source);
+			return super.isPlantImmuneTo(source) || PVZEntityDamageSource.isEnforceDamage(source);
 		}
 		return super.isPlantImmuneTo(source);
 	}

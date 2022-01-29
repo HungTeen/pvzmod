@@ -4,7 +4,7 @@ import java.util.List;
 
 import com.hungteen.pvz.common.entity.AbstractOwnerEntity;
 import com.hungteen.pvz.common.item.ItemRegister;
-import com.hungteen.pvz.common.misc.damage.PVZDamageSource;
+import com.hungteen.pvz.common.misc.PVZEntityDamageSource;
 import com.hungteen.pvz.common.misc.sound.SoundRegister;
 import com.hungteen.pvz.common.entity.EntityRegister;
 import com.hungteen.pvz.utils.EntityUtil;
@@ -70,7 +70,7 @@ public class GardenRakeEntity extends AbstractOwnerEntity {
 		this.level.getEntitiesOfClass(Entity.class, this.getBoundingBox().inflate(0.25D), (target) -> {
 	        return EntityUtil.canTargetEntity(this, target);
         }).forEach((target) -> {
-        	target.hurt(PVZDamageSource.normal(this), 180F);
+        	target.hurt(PVZEntityDamageSource.normal(this), 180F);
         });
 		EntityUtil.playSound(this, SoundRegister.SWING.get());
 		this.remove();

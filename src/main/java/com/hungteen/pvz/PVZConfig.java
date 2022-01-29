@@ -34,30 +34,15 @@ public class PVZConfig {
                         .comment("If true, players will be invaded by a huge wave of zombies in zombie invasion day")
                         .define("EnableHugeWave", true);
 
-                InvasionSettings.IncDifficulty = builder
-                        .translation("config.pvz.invasion.dif_inc")
-                        .comment("The inc of difficulty when invasion happen.")
-                        .defineInRange("IncDifficulty", 10, 1, 1000);
-
-                InvasionSettings.DecDifficulty = builder
-                        .translation("config.pvz.invasion.dif_dec")
-                        .comment("how many difficulty will dec when player killed by zombies.")
-                        .defineInRange("DecDifficulty", 3, 1, 1000);
-
-                InvasionSettings.LevelNeedDifficulty = builder
-                        .translation("config.pvz.invasion.level_dif")
-                        .comment("how many difficulty needed to spawn high maxLevel zombie.")
-                        .defineInRange("LevelNeedDifficulty", 1000, 0, 1000000);
-
                 InvasionSettings.MaxSpawnEachPlayer = builder
                         .translation("config.pvz.invasion.spawn_count")
                         .comment("how many amount of entity will spawn to player.")
-                        .defineInRange("MaxSpawnCount", 40, 1, 1000);
+                        .defineInRange("MaxSpawnCount", 50, 1, 1000);
 
                 InvasionSettings.MaxSpawnRange = builder
                         .translation("config.pvz.invasion.spawn_range")
                         .comment("how far can entity spawn in invasion.")
-                        .defineInRange("MaxSpawnRange", 60, 1, 100);
+                        .defineInRange("MaxSpawnRange", 50, 1, 100);
 
             }
             builder.pop();
@@ -359,9 +344,6 @@ public class PVZConfig {
             public ForgeConfigSpec.IntValue InvasionIntervalLength;
             public ForgeConfigSpec.BooleanValue ShowEventMessages;
             public ForgeConfigSpec.BooleanValue EnableHugeWave;
-            public ForgeConfigSpec.IntValue IncDifficulty;
-            public ForgeConfigSpec.IntValue DecDifficulty;
-            public ForgeConfigSpec.IntValue LevelNeedDifficulty;
             public ForgeConfigSpec.IntValue MaxSpawnEachPlayer;
             public ForgeConfigSpec.IntValue MaxSpawnRange;
 

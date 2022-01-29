@@ -7,7 +7,7 @@ import com.hungteen.pvz.common.entity.plant.PVZPlantEntity;
 import com.hungteen.pvz.common.entity.zombie.pool.BalloonZombieEntity;
 import com.hungteen.pvz.common.impl.SkillTypes;
 import com.hungteen.pvz.common.impl.plant.OtherPlants;
-import com.hungteen.pvz.common.misc.damage.PVZDamageSource;
+import com.hungteen.pvz.common.misc.PVZEntityDamageSource;
 import com.hungteen.pvz.common.misc.sound.SoundRegister;
 import com.hungteen.pvz.utils.EntityUtil;
 import com.hungteen.pvz.utils.enums.PAZAlmanacs;
@@ -43,7 +43,7 @@ public class BonkChoyEntity extends PVZPlantEntity {
 			if(this.isPlantInSuperMode() && this.getSuperTime() % 5 == 0) {
 				final float range = 5F;
 				EntityUtil.getTargetableEntities(this, EntityUtil.getEntityAABB(this, range, range)).forEach((target) -> {
-					target.hurt(PVZDamageSource.normal(this), this.getAttackDamage() * 5);
+					target.hurt(PVZEntityDamageSource.normal(this), this.getAttackDamage() * 5);
 					EntityUtil.spawnParticle(target, 7);
 					EntityUtil.playSound(this, SoundRegister.SWING.get());
 				});
@@ -54,7 +54,7 @@ public class BonkChoyEntity extends PVZPlantEntity {
 	public void attackTarget(LivingEntity target) {
 		EntityUtil.playSound(this, SoundRegister.SWING.get());
 		EntityUtil.spawnParticle(target, 7);
-		target.hurt(PVZDamageSource.normal(this), this.getAttackDamage());
+		target.hurt(PVZEntityDamageSource.normal(this), this.getAttackDamage());
 	}
 	
 	@Override

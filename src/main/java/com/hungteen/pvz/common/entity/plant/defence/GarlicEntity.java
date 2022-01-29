@@ -4,7 +4,7 @@ import com.hungteen.pvz.api.types.IPlantType;
 import com.hungteen.pvz.common.entity.plant.base.PlantDefenderEntity;
 import com.hungteen.pvz.common.impl.SkillTypes;
 import com.hungteen.pvz.common.impl.plant.PVZPlants;
-import com.hungteen.pvz.common.misc.damage.PVZDamageSource;
+import com.hungteen.pvz.common.misc.PVZEntityDamageSource;
 import com.hungteen.pvz.common.misc.sound.SoundRegister;
 import com.hungteen.pvz.utils.AlgorithmUtil;
 import com.hungteen.pvz.utils.EntityUtil;
@@ -27,7 +27,7 @@ public class GarlicEntity extends PlantDefenderEntity {
 
 	@Override
 	public boolean hurt(DamageSource source, float amount) {
-		if(source instanceof PVZDamageSource && ((PVZDamageSource) source).isEatDamage() && source.getEntity() instanceof MobEntity) {
+		if(source instanceof PVZEntityDamageSource && ((PVZEntityDamageSource) source).isEatDamage() && source.getEntity() instanceof MobEntity) {
 			this.updateGarlic();
 			if(this.garlic != null) {
 				EntityUtil.playSound(((MobEntity) source.getEntity()), SoundRegister.YUCK.get());

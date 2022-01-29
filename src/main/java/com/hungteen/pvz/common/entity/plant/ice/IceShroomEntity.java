@@ -8,7 +8,7 @@ import com.hungteen.pvz.common.entity.misc.ElementBallEntity;
 import com.hungteen.pvz.common.entity.misc.ElementBallEntity.ElementTypes;
 import com.hungteen.pvz.common.entity.plant.base.PlantBomberEntity;
 import com.hungteen.pvz.common.impl.plant.PVZPlants;
-import com.hungteen.pvz.common.misc.damage.PVZDamageSource;
+import com.hungteen.pvz.common.misc.PVZEntityDamageSource;
 import com.hungteen.pvz.common.misc.sound.SoundRegister;
 import com.hungteen.pvz.common.potion.EffectRegister;
 import com.hungteen.pvz.register.ParticleRegister;
@@ -41,7 +41,7 @@ public class IceShroomEntity extends PlantBomberEntity implements IIceEffect{
 			final AxisAlignedBB aabb = EntityUtil.getEntityAABB(this, len, len);
 			int cnt = 0;
 			for(LivingEntity entity : EntityUtil.getTargetableLivings(this, aabb)) {
-				 PVZDamageSource source = PVZDamageSource.causeIceDamage(this, this);
+				 PVZEntityDamageSource source = PVZEntityDamageSource.causeIceDamage(this, this);
 				 this.getColdEffect().ifPresent(e -> source.addEffect(e));
 				 this.getFrozenEffect().ifPresent(e -> source.addEffect(e));
 				 entity.hurt(source, this.getExplodeDamage());

@@ -1,17 +1,17 @@
 {
   "isAssistInvasion": false,
   "triggerChance": 40,
-  "bonus": "pvz:grass_day",
+  "bonus": "pvz:roof",
   "display_color": "dark_red",
   "spawns": [
     {
       "entity_type": "pvz:gargantuar",
-      "occur_day": 10,
+      "invasion_level": 40,
       "spawn_weight": 100
     },
     {
       "entity_type": "pvz:giga_gargantuar",
-      "occur_day": 15,
+      "invasion_level": 55,
       "spawn_weight": 50
     }
   ]

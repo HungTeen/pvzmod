@@ -3,7 +3,7 @@ package com.hungteen.pvz.common.entity.bullet;
 import java.util.Optional;
 
 import com.hungteen.pvz.common.entity.plant.ice.WinterMelonEntity;
-import com.hungteen.pvz.common.misc.damage.PVZDamageSource;
+import com.hungteen.pvz.common.misc.PVZEntityDamageSource;
 import com.hungteen.pvz.common.misc.sound.SoundRegister;
 import com.hungteen.pvz.common.entity.EntityRegister;
 import com.hungteen.pvz.utils.EntityUtil;
@@ -42,11 +42,11 @@ public class MelonEntity extends PultBulletEntity {
 	@Override
 	protected void dealDamage(Entity target) {
 		if(this.getMelonState() == MelonStates.ICE) {
-			PVZDamageSource source = PVZDamageSource.winterMelon(this, this.getThrower());
+			PVZEntityDamageSource source = PVZEntityDamageSource.winterMelon(this, this.getThrower());
 			this.getColdEffect().ifPresent(e -> source.addEffect(e));
 			target.hurt(source, this.getAttackDamage());
 		} else{
-			target.hurt(PVZDamageSource.melon(this, this.getThrower()), this.getAttackDamage());
+			target.hurt(PVZEntityDamageSource.melon(this, this.getThrower()), this.getAttackDamage());
 		}
 		this.attackEntity = target;
 		this.dealSplashDamage();
@@ -66,11 +66,11 @@ public class MelonEntity extends PultBulletEntity {
 		EntityUtil.getTargetableEntities(this.getOwnerOrSelf(), EntityUtil.getEntityAABB(this, range, range)).forEach(entity -> {
 			if(! entity.is(attackEntity) && this.shouldHit(entity)) {
 				if(this.getMelonState() == MelonStates.ICE) {
-					PVZDamageSource source = PVZDamageSource.winterMelon(this, this.getThrower());
+					PVZEntityDamageSource source = PVZEntityDamageSource.winterMelon(this, this.getThrower());
 					this.getColdEffect().ifPresent(e -> source.addEffect(e));
 					entity.hurt(source, this.getAttackDamage() / 2);
 				} else {
-					PVZDamageSource source = PVZDamageSource.melon(this, this.getThrower());
+					PVZEntityDamageSource source = PVZEntityDamageSource.melon(this, this.getThrower());
 				    entity.hurt(source, this.getAttackDamage() / 2);
 				}
 			}

@@ -23,13 +23,13 @@ public class MariGoldEntity extends PlantProducerEntity {
 	public void genSomething() {
 		CoinEntity coin = EntityRegister.COIN.get().create(level);
 		coin.setAmount(this.getRandomAmount());
-		EntityUtil.onMobEntityRandomPosSpawn(level, coin, blockPosition(), 3);
+		EntityUtil.onEntityRandomPosSpawn(level, coin, blockPosition(), 3);
 	}
 
 	protected void genSpecCoin(CoinType type) {
 		CoinEntity coin = EntityRegister.COIN.get().create(level);
 		coin.setAmountByType(type);
-		EntityUtil.onMobEntityRandomPosSpawn(level, coin, blockPosition(), 3);
+		EntityUtil.onEntityRandomPosSpawn(level, coin, blockPosition(), 3);
 	}
 
 	@Override

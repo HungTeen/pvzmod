@@ -1,6 +1,6 @@
 package com.hungteen.pvz.common.entity.misc.bowling;
 
-import com.hungteen.pvz.common.misc.damage.PVZDamageSource;
+import com.hungteen.pvz.common.misc.PVZEntityDamageSource;
 import com.hungteen.pvz.common.misc.sound.SoundRegister;
 import com.hungteen.pvz.register.ParticleRegister;
 import com.hungteen.pvz.utils.EntityUtil;
@@ -43,7 +43,7 @@ public class ExplosionBowlingEntity extends AbstractBowlingEntity {
 		float len = 2.5F;
 		AxisAlignedBB aabb = EntityUtil.getEntityAABB(this, len, len);
 		EntityUtil.getTargetableEntities(this.getOwnerOrSelf(), aabb).forEach((target) -> {
-			target.hurt(PVZDamageSource.explode(this), 180);
+			target.hurt(PVZEntityDamageSource.explode(this), 180);
 		});
 		EntityUtil.playSound(this, SoundRegister.BOWLING_BOMB.get());
 		this.setBowlingFacing(BowlingFacings.BOMB);

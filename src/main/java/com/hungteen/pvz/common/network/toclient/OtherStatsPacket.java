@@ -47,13 +47,13 @@ public class OtherStatsPacket{
 				switch (message.type){
 					case WAVE:{
 						if(message.pos < 0){
-							PlayerUtil.getOptManager(ClientProxy.MC.player).ifPresent(l -> l.setTotalWaveCount(message.data));
+							PlayerUtil.getOptManager(ClientProxy.MC.player).ifPresent(l -> l.getInvasion().setTotalWaveCount(message.data));
 						} else{
-							PlayerUtil.getOptManager(ClientProxy.MC.player).ifPresent(l -> l.setWaveTime(message.pos, message.data));
+							PlayerUtil.getOptManager(ClientProxy.MC.player).ifPresent(l -> l.getInvasion().setWaveTime(message.pos, message.data));
 						}
 					}
 					case WAVE_FLAG:{
-						PlayerUtil.getOptManager(ClientProxy.MC.player).ifPresent(l -> l.setWaveTriggered(message.pos, message.flag));
+						PlayerUtil.getOptManager(ClientProxy.MC.player).ifPresent(l -> l.getInvasion().setWaveTriggered(message.pos, message.flag));
 					}
 				}
 //			    if(message.type == 0) {

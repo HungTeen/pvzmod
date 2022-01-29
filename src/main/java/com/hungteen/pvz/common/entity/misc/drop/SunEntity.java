@@ -101,7 +101,7 @@ public class SunEntity extends DropEntity {
 	public static void spawnSunRandomly(World world, BlockPos pos, int amount, int dis) {
 		SunEntity sun = EntityRegister.SUN.get().create(world);
 		sun.setAmount(amount);
-		EntityUtil.onMobEntityRandomPosSpawn(world, sun, pos, dis);
+		EntityUtil.onEntityRandomPosSpawn(world, sun, pos, dis);
 	}
 	
 	public static boolean canSunSpawn(EntityType<? extends SunEntity> zombieType, IWorld worldIn, SpawnReason reason, BlockPos pos, Random rand) {

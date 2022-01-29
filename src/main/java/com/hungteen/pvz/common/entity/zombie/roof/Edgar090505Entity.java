@@ -309,7 +309,7 @@ public class Edgar090505Entity extends AbstractBossZombieEntity {
         }).size();
         for (int i = 0; i < 3 + 2 * playerCnt; ++i) {
             JewelEntity jewel = EntityRegister.JEWEL.get().create(level);
-            EntityUtil.onMobEntityRandomPosSpawn(level, jewel, blockPosition().above(5), 4);
+            EntityUtil.onEntityRandomPosSpawn(level, jewel, blockPosition().above(5), 4);
         }
     }
 

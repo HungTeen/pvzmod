@@ -5,7 +5,7 @@ import com.hungteen.pvz.api.types.IPlantType;
 import com.hungteen.pvz.common.advancement.trigger.EntityEffectAmountTrigger;
 import com.hungteen.pvz.common.entity.plant.base.PlantCloserEntity;
 import com.hungteen.pvz.common.impl.plant.OtherPlants;
-import com.hungteen.pvz.common.misc.damage.PVZDamageSource;
+import com.hungteen.pvz.common.misc.PVZEntityDamageSource;
 import com.hungteen.pvz.common.misc.sound.SoundRegister;
 import com.hungteen.pvz.common.potion.EffectRegister;
 import com.hungteen.pvz.utils.EntityUtil;
@@ -57,7 +57,7 @@ public class IcebergLettuceEntity extends PlantCloserEntity implements IIceEffec
 	}
 	
 	private void dealDamageTo(Entity target) {
-		PVZDamageSource source = PVZDamageSource.causeIceDamage(this, this);
+		PVZEntityDamageSource source = PVZEntityDamageSource.causeIceDamage(this, this);
 		this.getColdEffect().ifPresent(e -> source.addEffect(e));
 		this.getFrozenEffect().ifPresent(e -> source.addEffect(e));
 		target.hurt(source, 0.001F);

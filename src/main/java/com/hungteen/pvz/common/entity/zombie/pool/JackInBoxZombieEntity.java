@@ -5,7 +5,7 @@ import com.hungteen.pvz.common.entity.zombie.PVZZombieEntity;
 import com.hungteen.pvz.common.entity.zombie.body.ZombieDropBodyEntity;
 import com.hungteen.pvz.common.impl.zombie.ZombieType;
 import com.hungteen.pvz.common.impl.zombie.PoolZombies;
-import com.hungteen.pvz.common.misc.damage.PVZDamageSource;
+import com.hungteen.pvz.common.misc.PVZEntityDamageSource;
 import com.hungteen.pvz.common.misc.sound.SoundRegister;
 import com.hungteen.pvz.data.loot.PVZLoot;
 import com.hungteen.pvz.remove.MetalTypes;
@@ -95,7 +95,7 @@ public class JackInBoxZombieEntity extends PVZZombieEntity implements IHasMetal 
 		final float range =  5F;
 		final float damageMultiple = 1.5F;
 		EntityUtil.getWholeTargetableEntities(this, EntityUtil.getEntityAABB(this, range, range)).forEach(target -> {
-			final PVZDamageSource source = PVZDamageSource.explode(this);
+			final PVZEntityDamageSource source = PVZEntityDamageSource.explode(this);
 			if(target instanceof LivingEntity) {
 				target.hurt(source, EntityUtil.getMaxHealthDamage((LivingEntity) target, damageMultiple));
 			} else {

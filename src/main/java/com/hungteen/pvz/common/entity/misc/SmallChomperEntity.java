@@ -4,7 +4,7 @@ import java.util.Optional;
 
 import com.hungteen.pvz.common.entity.AbstractOwnerEntity;
 import com.hungteen.pvz.common.entity.plant.enforce.ChomperEntity;
-import com.hungteen.pvz.common.misc.damage.PVZDamageSource;
+import com.hungteen.pvz.common.misc.PVZEntityDamageSource;
 import com.hungteen.pvz.common.misc.sound.SoundRegister;
 import com.hungteen.pvz.utils.EntityUtil;
 
@@ -42,7 +42,7 @@ public class SmallChomperEntity extends AbstractOwnerEntity {
 	protected void performAttack() {
 		Optional.ofNullable(this.getOwner()).ifPresent(owner -> {
 			for(LivingEntity target : EntityUtil.getTargetableLivings(this, EntityUtil.getEntityAABB(this, 1.5F, 2F))) {
-				target.hurt(PVZDamageSource.eat(this, owner), getAttackDamage(owner));
+				target.hurt(PVZEntityDamageSource.eat(this, owner), getAttackDamage(owner));
 			}
 		});
 		EntityUtil.playSound(this, SoundRegister.CHOMP.get());

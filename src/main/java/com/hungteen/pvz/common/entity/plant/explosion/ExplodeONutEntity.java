@@ -5,7 +5,7 @@ import com.hungteen.pvz.api.types.IPlantType;
 import com.hungteen.pvz.common.entity.plant.defence.WallNutEntity;
 import com.hungteen.pvz.common.impl.SkillTypes;
 import com.hungteen.pvz.common.impl.plant.PVZPlants;
-import com.hungteen.pvz.common.misc.damage.PVZDamageSource;
+import com.hungteen.pvz.common.misc.PVZEntityDamageSource;
 import com.hungteen.pvz.common.misc.sound.SoundRegister;
 import com.hungteen.pvz.register.ParticleRegister;
 import com.hungteen.pvz.utils.EntityUtil;
@@ -56,7 +56,7 @@ public class ExplodeONutEntity extends WallNutEntity {
 	public void explode(Entity entity) {
 		final float range = getExplodeRange();
 		EntityUtil.getWholeTargetableEntities(this, EntityUtil.getEntityAABB(entity, range, range)).forEach(target -> {
-			target.hurt(PVZDamageSource.explode(this), this.getExplodeDamage());
+			target.hurt(PVZEntityDamageSource.explode(this), this.getExplodeDamage());
 		});
 		EntityUtil.playSound(this, SoundRegister.CHERRY_BOMB.get());
 	}

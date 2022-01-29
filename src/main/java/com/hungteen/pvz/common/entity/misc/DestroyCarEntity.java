@@ -3,7 +3,7 @@ package com.hungteen.pvz.common.entity.misc;
 import com.hungteen.pvz.common.entity.AbstractOwnerEntity;
 import com.hungteen.pvz.common.entity.plant.PVZPlantEntity;
 import com.hungteen.pvz.common.entity.zombie.roof.Edgar090505Entity;
-import com.hungteen.pvz.common.misc.damage.PVZDamageSource;
+import com.hungteen.pvz.common.misc.PVZEntityDamageSource;
 import com.hungteen.pvz.common.entity.EntityRegister;
 import com.hungteen.pvz.utils.EntityUtil;
 import com.hungteen.pvz.utils.MathUtil;
@@ -65,9 +65,9 @@ public class DestroyCarEntity extends AbstractOwnerEntity {
 		if(! level.isClientSide && this.tickCount % 10 == 0) {
 			EntityUtil.getTargetableEntities(this.getOwnerOrSelf(), this.getBoundingBox().inflate(1F)).forEach((target) -> {
 				if(target instanceof PVZPlantEntity) {
-					target.hurt(PVZDamageSource.causeDeadlyDamage(this, this.getOwner()), EntityUtil.getCurrentMaxHealth((PVZPlantEntity) target) * 2);
+					target.hurt(PVZEntityDamageSource.causeDeadlyDamage(this, this.getOwner()), EntityUtil.getCurrentMaxHealth((PVZPlantEntity) target) * 2);
 				} else {
-					target.hurt(PVZDamageSource.normal(this, this.getOwner()), 5F);
+					target.hurt(PVZEntityDamageSource.normal(this, this.getOwner()), 5F);
 				}
 			});
 		}

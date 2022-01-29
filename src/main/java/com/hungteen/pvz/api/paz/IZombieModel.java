@@ -1,6 +1,6 @@
 package com.hungteen.pvz.api.paz;
 
-import com.hungteen.pvz.api.IBodyEntity;
+import com.hungteen.pvz.api.interfaces.IBodyEntity;
 import com.mojang.blaze3d.matrix.MatrixStack;
 import com.mojang.blaze3d.vertex.IVertexBuilder;
 

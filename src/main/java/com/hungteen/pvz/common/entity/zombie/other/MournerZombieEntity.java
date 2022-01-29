@@ -4,7 +4,7 @@ import com.hungteen.pvz.common.entity.zombie.PVZZombieEntity;
 import com.hungteen.pvz.common.entity.zombie.grass.TombStoneEntity;
 import com.hungteen.pvz.common.impl.zombie.ZombieType;
 import com.hungteen.pvz.common.impl.zombie.CustomZombies;
-import com.hungteen.pvz.common.misc.damage.PVZDamageSource;
+import com.hungteen.pvz.common.misc.PVZEntityDamageSource;
 import com.hungteen.pvz.data.loot.PVZLoot;
 import com.hungteen.pvz.common.entity.EntityRegister;
 import com.hungteen.pvz.utils.EntityUtil;
@@ -60,15 +60,15 @@ public class MournerZombieEntity extends PVZZombieEntity{
 		this.setAttackTime(SHAKE_CD);
 		final float scale = 3;
 		if(! entityIn.isOnGround() && entityIn instanceof LivingEntity) {
-			entityIn.hurt(PVZDamageSource.normal(this), EntityUtil.getMaxHealthDamage((LivingEntity) entityIn, 0.2F));
+			entityIn.hurt(PVZEntityDamageSource.normal(this), EntityUtil.getMaxHealthDamage((LivingEntity) entityIn, 0.2F));
 		}
 		entityIn.setDeltaMovement(0, Math.sqrt(this.getRandom().nextFloat()) * scale, 0);
 		return super.doHurtTarget(entityIn);
 	}
 	
 	@Override
-	protected PVZDamageSource getZombieAttackDamageSource() {
-		return PVZDamageSource.normal(this);
+	protected PVZEntityDamageSource getZombieAttackDamageSource() {
+		return PVZEntityDamageSource.normal(this);
 	}
 
 	@Override

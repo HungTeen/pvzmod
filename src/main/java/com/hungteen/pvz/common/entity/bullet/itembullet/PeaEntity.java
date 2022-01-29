@@ -1,15 +1,12 @@
 package com.hungteen.pvz.common.entity.bullet.itembullet;
 
 import com.hungteen.pvz.api.interfaces.IIceEffect;
-import com.hungteen.pvz.common.capability.CapabilityHandler;
 import com.hungteen.pvz.common.entity.bullet.AbstractShootBulletEntity;
 import com.hungteen.pvz.common.entity.plant.flame.TorchWoodEntity;
 import com.hungteen.pvz.common.entity.plant.flame.TorchWoodEntity.FlameTypes;
-import com.hungteen.pvz.common.impl.plant.PVZPlants;
 import com.hungteen.pvz.common.item.ItemRegister;
-import com.hungteen.pvz.common.misc.damage.PVZDamageSource;
+import com.hungteen.pvz.common.misc.PVZEntityDamageSource;
 import com.hungteen.pvz.common.entity.EntityRegister;
-import com.hungteen.pvz.utils.WeaponUtil;
 
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntitySize;
@@ -95,9 +92,9 @@ public class PeaEntity extends AbstractShootBulletEntity implements IRendersAsIt
 	private void dealPeaDamage(Entity target) {
 		final float damage = this.getAttackDamage();
 		if (this.getPeaState() == State.NORMAL) {// normal pea attack
-			target.hurt(PVZDamageSource.pea(this, this.getThrower()), damage);
+			target.hurt(PVZEntityDamageSource.pea(this, this.getThrower()), damage);
 		} else if (this.getPeaState() == State.ICE) {// snow pea attack
-			PVZDamageSource source = PVZDamageSource.snowPea(this, this.getThrower());
+			PVZEntityDamageSource source = PVZEntityDamageSource.snowPea(this, this.getThrower());
 			LivingEntity owner = this.getThrower();
 			if (owner instanceof IIceEffect) {
 				((IIceEffect) owner).getColdEffect().ifPresent(e -> source.addEffect(e));
@@ -110,7 +107,7 @@ public class PeaEntity extends AbstractShootBulletEntity implements IRendersAsIt
 			}
 			target.hurt(source, damage);
 		} else if (this.getPeaState() == State.FIRE || this.getPeaState() == State.BLUE_FIRE) {
-			target.hurt(PVZDamageSource.flamePea(this, this.getThrower()), damage);
+			target.hurt(PVZEntityDamageSource.flamePea(this, this.getThrower()), damage);
 		}
 	}
 	

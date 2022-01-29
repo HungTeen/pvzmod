@@ -8,10 +8,10 @@ import com.hungteen.pvz.api.raid.IRaidComponent;
 import com.hungteen.pvz.api.raid.ISpawnComponent;
 import com.hungteen.pvz.common.advancement.trigger.RaidTrigger;
 import com.hungteen.pvz.utils.ConfigUtil;
+import com.hungteen.pvz.utils.EntityUtil;
 import com.hungteen.pvz.utils.PlayerUtil;
 import net.minecraft.command.impl.SummonCommand;
 import net.minecraft.entity.Entity;
-import net.minecraft.entity.EntityType;
 import net.minecraft.entity.MobEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.ServerPlayerEntity;
@@ -26,7 +26,6 @@ import net.minecraft.util.text.TextFormatting;
 import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraft.world.BossInfo;
 import net.minecraft.world.Difficulty;
-import net.minecraft.world.World;
 import net.minecraft.world.server.ServerBossInfo;
 import net.minecraft.world.server.ServerWorld;
 import net.minecraftforge.common.MinecraftForge;
@@ -225,26 +224,7 @@ public class Raid {
 	private Entity createEntity(ISpawnComponent spawn) {
 		final IPlacementComponent placement = spawn.getPlacement() != null ? spawn.getPlacement() : this.raid.getPlacement(this.currentWave);
 		final BlockPos pos = placement.getPlacePosition(this.world, this.center);
-		if(! World.isInSpawnableBounds(pos)) {
-			PVZMod.LOGGER.error("Invalid position when trying summon entity !");
-			return null;
-		}
-		final CompoundNBT compound = spawn.getNBT().copy();
-		compound.putString("id", spawn.getSpawnType().getRegistryName().toString());
-		Entity entity = EntityType.loadEntityRecursive(compound, world, e -> {
-			e.moveTo(pos, e.xRot, e.yRot);
-			return e;
-		});
-		if(entity == null) {
-			PVZMod.LOGGER.error("summon entity failed !");
-			return null;
-		} else {
-			if(! world.tryAddFreshEntityWithPassengers(entity)) {
-				PVZMod.LOGGER.error("summon entity duplicated uuid !");
-				return null;
-			}
-		}
-		return entity;
+		return EntityUtil.createWithNBT(this.world, spawn.getSpawnType(), spawn.getNBT(), pos);
 	}
 	
 	/**

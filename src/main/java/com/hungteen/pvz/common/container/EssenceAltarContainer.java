@@ -107,7 +107,8 @@ public class EssenceAltarContainer extends PVZContainer{
 			final Set<String> set = new HashSet<>();
 			final int point = getFragmentCount();
 			getPAZType().get().getSkills().forEach(skill -> {
-				if(! set.contains(skill.getConflictGroup()) && skill.getCostAt(getCurrentSkillLevel(skill)) <= point){
+				final int lvl = getCurrentSkillLevel(skill);
+				if(! set.contains(skill.getConflictGroup()) && lvl < skill.getMaxLevel() && skill.getCostAt(lvl) <= point){
 					list.add(skill);
 					set.add(skill.getConflictGroup());
 				}

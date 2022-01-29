@@ -6,7 +6,7 @@ import com.hungteen.pvz.common.entity.ai.goal.target.PVZRandomTargetGoal;
 import com.hungteen.pvz.common.entity.plant.PVZPlantEntity;
 import com.hungteen.pvz.common.impl.SkillTypes;
 import com.hungteen.pvz.common.impl.plant.PVZPlants;
-import com.hungteen.pvz.common.misc.damage.PVZDamageSource;
+import com.hungteen.pvz.common.misc.PVZEntityDamageSource;
 import com.hungteen.pvz.common.misc.sound.SoundRegister;
 import com.hungteen.pvz.utils.EntityUtil;
 import com.hungteen.pvz.utils.enums.PAZAlmanacs;
@@ -89,7 +89,7 @@ public class SquashEntity extends PVZPlantEntity{
 		EntityUtil.playSound(this, SoundRegister.GROUND_SHAKE.get());
 		final float range = 1F;
 		for(Entity entity : EntityUtil.getWholeTargetableEntities(this, EntityUtil.getEntityAABB(this, range, range))) {
-			entity.hurt(PVZDamageSource.causeCrushDamage(this), this.getAttackDamage());
+			entity.hurt(PVZEntityDamageSource.causeCrushDamage(this), this.getAttackDamage());
 		}
 	}
 	
@@ -141,7 +141,7 @@ public class SquashEntity extends PVZPlantEntity{
 	
 	@Override
 	public boolean isPlantImmuneTo(DamageSource source) {
-		return super.isPlantImmuneTo(source) || PVZDamageSource.isEnforceDamage(source);
+		return super.isPlantImmuneTo(source) || PVZEntityDamageSource.isEnforceDamage(source);
 	}
 	
 	@Override

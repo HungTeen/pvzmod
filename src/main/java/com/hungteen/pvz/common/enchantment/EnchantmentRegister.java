@@ -1,7 +1,6 @@
 package com.hungteen.pvz.common.enchantment;
 
 import com.hungteen.pvz.PVZMod;
-import com.hungteen.pvz.common.enchantment.armor.TreeProtectionEnchantment;
 import com.hungteen.pvz.common.enchantment.card.BandageEnchantment;
 import com.hungteen.pvz.common.enchantment.card.CharmEnchantment;
 import com.hungteen.pvz.common.enchantment.card.ImmediateCDEnchantment;
@@ -28,7 +27,6 @@ public class EnchantmentRegister {
 
 	public static final RegistryObject<Enchantment> ENERGY_TRANSFER = ENCHANTMENTS.register("energy_transfer", EnergyTransferEnchantment::new);
 	public static final RegistryObject<Enchantment> BREAK_OUT = ENCHANTMENTS.register("break_out", BreakOutEnchantment::new);
-	public static final RegistryObject<Enchantment> TREE_PROTECTION = ENCHANTMENTS.register("tree_protection", TreeProtectionEnchantment::new);
 	public static final RegistryObject<Enchantment> CHARM = ENCHANTMENTS.register("charm", CharmEnchantment::new);
 	public static final RegistryObject<Enchantment> SUN_SHOVEL = ENCHANTMENTS.register("sun_shovel", SunShovelEnchantment::new);
 	public static final RegistryObject<Enchantment> SOILLESS_PLANT = ENCHANTMENTS.register("soilless_plant", SoillessPlantEnchantment::new);

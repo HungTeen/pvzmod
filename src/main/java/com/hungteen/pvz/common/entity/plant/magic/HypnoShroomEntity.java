@@ -5,7 +5,7 @@ import com.hungteen.pvz.api.types.IPlantType;
 import com.hungteen.pvz.common.entity.ai.goal.misc.PlantAttractGoal;
 import com.hungteen.pvz.common.entity.plant.PVZPlantEntity;
 import com.hungteen.pvz.common.impl.plant.PVZPlants;
-import com.hungteen.pvz.common.misc.damage.PVZDamageSource;
+import com.hungteen.pvz.common.misc.PVZEntityDamageSource;
 import com.hungteen.pvz.utils.interfaces.ICanAttract;
 import net.minecraft.entity.*;
 import net.minecraft.util.DamageSource;
@@ -54,7 +54,7 @@ public class HypnoShroomEntity extends PVZPlantEntity implements ICanAttract{
 	public void die(DamageSource source) {
 		super.die(source);
 		if(! level.isClientSide && ! this.canNormalUpdate()) {
-			if(source instanceof PVZDamageSource && ((PVZDamageSource) source).isEatDamage()) {
+			if(source instanceof PVZEntityDamageSource && ((PVZEntityDamageSource) source).isEatDamage()) {
 				// TODO 魅惑僵尸
 //				if(this.isPlantInSuperMode()) {
 //					if(cause.getEntity() != null) {

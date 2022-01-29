@@ -12,7 +12,7 @@ public class SpawnType{
     private final EntityType<? extends MobEntity> spawnType;
     //TODO nbt
     private CompoundNBT nbt = new CompoundNBT();
-    private int occurDay;
+    private int invasionLevel;
     private int spawnWeight;
     private PlaceType placeType;
 
@@ -20,8 +20,8 @@ public class SpawnType{
         this.spawnType = spawnType;
     }
 
-    public void setOccurDay(int occurDay) {
-        this.occurDay = occurDay;
+    public void setInvasionLevel(int invasionLevel) {
+        this.invasionLevel = invasionLevel;
     }
 
     public void setSpawnWeight(int spawnWeight) {
@@ -32,8 +32,8 @@ public class SpawnType{
         return spawnType;
     }
 
-    public int getOccurDay() {
-        return occurDay;
+    public int getInvasionLevel() {
+        return invasionLevel;
     }
 
     public int getSpawnWeight() {
@@ -42,6 +42,10 @@ public class SpawnType{
 
     public void setNbt(CompoundNBT nbt) {
         this.nbt = nbt;
+    }
+
+    public CompoundNBT getNbt() {
+        return nbt;
     }
 
     public void setPlaceType(PlaceType placeType) {

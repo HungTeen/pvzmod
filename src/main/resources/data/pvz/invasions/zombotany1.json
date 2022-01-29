@@ -6,12 +6,12 @@
   "spawns": [
     {
       "entity_type": "pvz:peashooter_zombie",
-      "occur_day": 12,
+      "invasion_level": 20,
       "spawn_weight": 100
     },
     {
       "entity_type": "pvz:wallnut_zombie",
-      "occur_day": 16,
+      "invasion_level": 25,
       "spawn_weight": 100
     }
   ]

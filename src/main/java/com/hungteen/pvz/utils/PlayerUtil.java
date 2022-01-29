@@ -9,6 +9,7 @@ import com.hungteen.pvz.common.entity.EntityGroupHander;
 import com.hungteen.pvz.common.item.spawn.card.PlantCardItem;
 import com.hungteen.pvz.common.network.PVZPacketHandler;
 import com.hungteen.pvz.common.network.toclient.PlaySoundPacket;
+import com.hungteen.pvz.common.world.invasion.Invasion;
 import com.hungteen.pvz.utils.enums.Resources;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.ServerPlayerEntity;
@@ -22,6 +23,7 @@ import net.minecraft.world.World;
 import net.minecraftforge.common.util.FakePlayer;
 import net.minecraftforge.fml.network.PacketDistributor;
 
+import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import java.util.List;
 import java.util.Optional;
@@ -121,6 +123,12 @@ public class PlayerUtil {
 	public static boolean isPAZLocked(PlayerEntity player, IPAZType plant) {
 		final PlayerDataManager manager = getManager(player);
 		return manager != null ? manager.isPAZLocked(plant) : true;
+	}
+
+	@Nonnull
+	public static Invasion getInvasion(PlayerEntity player) {
+		final PlayerDataManager manager = getManager(player);
+		return manager != null ? manager.getInvasion() : new Invasion(player);
 	}
 	
 	/**

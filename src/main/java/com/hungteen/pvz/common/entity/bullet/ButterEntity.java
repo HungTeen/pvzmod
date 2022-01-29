@@ -1,7 +1,7 @@
 package com.hungteen.pvz.common.entity.bullet;
 
 import com.hungteen.pvz.common.entity.plant.arma.KernelPultEntity;
-import com.hungteen.pvz.common.misc.damage.PVZDamageSource;
+import com.hungteen.pvz.common.misc.PVZEntityDamageSource;
 import com.hungteen.pvz.common.entity.EntityRegister;
 
 import net.minecraft.entity.Entity;
@@ -22,7 +22,7 @@ public class ButterEntity extends PultBulletEntity {
 	}
 
 	protected void dealDamage(Entity target) {
-		PVZDamageSource source = PVZDamageSource.butter(this, this.getThrower());
+		PVZEntityDamageSource source = PVZEntityDamageSource.butter(this, this.getThrower());
 		if(this.getThrower() instanceof KernelPultEntity) {
 			source.addEffect(((KernelPultEntity) this.getThrower()).getButterEffect());
 		}

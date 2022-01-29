@@ -1,11 +1,11 @@
 package com.hungteen.pvz.common.world.invasion;
 
-import com.hungteen.pvz.utils.ConfigUtil;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.TextFormatting;
 import net.minecraft.util.text.TranslationTextComponent;
 
+import javax.annotation.Nullable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -31,7 +31,7 @@ public class InvasionType {
 
 	public void addSpawn(SpawnType type){
 		this.spawns.add(type);
-		this.requireDifficulty = Math.min(this.requireDifficulty, type.getOccurDay() * ConfigUtil.getIncDifficulty());
+		this.requireDifficulty = Math.min(this.requireDifficulty, type.getInvasionLevel());
 	}
 
 	public List<SpawnType> getSpawns() {
@@ -50,6 +50,7 @@ public class InvasionType {
 		this.bonusResource = bonusResource;
 	}
 
+	@Nullable
 	public ResourceLocation getBonusResource() {
 		return bonusResource;
 	}
@@ -71,7 +72,7 @@ public class InvasionType {
 	}
 
 	public void setRequireDifficulty(int requireDay) {
-		this.requireDifficulty = requireDay * ConfigUtil.getIncDifficulty();
+		this.requireDifficulty = requireDay;
 	}
 
 	public ITextComponent getText(){

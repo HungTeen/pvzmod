@@ -6,27 +6,27 @@
   "spawns": [
     {
       "entity_type": "pvz:normal_zombie",
-      "occur_day": 0,
+      "invasion_level": 1,
       "spawn_weight": 100
     },
     {
       "entity_type": "pvz:newspaper_zombie",
-      "occur_day": 2,
+      "invasion_level": 7,
       "spawn_weight": 60
     },
     {
       "entity_type": "pvz:screendoor_zombie",
-      "occur_day": 5,
+      "invasion_level": "15",
       "spawn_weight": 50
     },
     {
       "entity_type": "pvz:old_zombie",
-      "occur_day": 10,
+      "invasion_level": 25,
       "spawn_weight": 40
     },
     {
       "entity_type": "pvz:sunday_edition_zombie",
-      "occur_day": 20,
+      "invasion_level": 35,
       "spawn_weight": 30
     }
   ]

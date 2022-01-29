@@ -24,7 +24,7 @@ import com.hungteen.pvz.common.event.handler.PlayerEventHandler;
 import com.hungteen.pvz.common.impl.SkillTypes;
 import com.hungteen.pvz.common.impl.plant.PVZPlants;
 import com.hungteen.pvz.common.item.spawn.card.PlantCardItem;
-import com.hungteen.pvz.common.misc.damage.PVZDamageSource;
+import com.hungteen.pvz.common.misc.PVZEntityDamageSource;
 import com.hungteen.pvz.common.misc.sound.SoundRegister;
 import com.hungteen.pvz.common.potion.EffectRegister;
 import com.hungteen.pvz.register.ParticleRegister;
@@ -161,7 +161,7 @@ public abstract class PVZPlantEntity extends AbstractPAZEntity implements IPlant
 		if (!this.level.isClientSide) {
 			if (this.shouldWilt() && this.weakTime <= 0) {
 				this.weakTime = PLANT_WEAK_CD;
-				this.hurt(PVZDamageSource.PLANT_WILT, EntityUtil.getMaxHealthDamage(this, 0.35F));
+				this.hurt(PVZEntityDamageSource.PLANT_WILT, EntityUtil.getMaxHealthDamage(this, 0.35F));
 			}
 			this.weakTime = Math.max(0, this.weakTime - 1);
 		}
@@ -223,7 +223,7 @@ public abstract class PVZPlantEntity extends AbstractPAZEntity implements IPlant
 				this.setGoldTime(0);
 				SunEntity sun = EntityRegister.SUN.get().create(level);
 				sun.setAmount(GoldLeafEntity.getGoldGenAmount(lvl));
-				EntityUtil.onMobEntityRandomPosSpawn(level, sun, blockPosition(), 2);
+				EntityUtil.onEntityRandomPosSpawn(level, sun, blockPosition(), 2);
 				EntityUtil.playSound(this, SoundEvents.EXPERIENCE_ORB_PICKUP);
 			}
 		}
@@ -241,13 +241,13 @@ public abstract class PVZPlantEntity extends AbstractPAZEntity implements IPlant
 	 * check if the plant can stand on the current position.
 	 * {@link #plantTick()}
 	 */
-	protected boolean shouldWilt() {
-		if (! this.isImmuneToWeak && this.getVehicle() == null) {//fit check condition and is allowed to wilt.
+	public boolean shouldWilt() {
+		if (! this.isImmuneToWeak() && this.getVehicle() == null) {//fit check condition and is allowed to wilt.
 			if(this.getPlantType().isWaterPlant()) {//on ground, not in water.
 				return this.isOnGround() && ! this.isInWater() && ! this.level.getFluidState(blockPosition()).getType().is(FluidTags.WATER);
 			}
-			if(this.isInWaterOrBubble()) {
-				return false;
+			if(this.isInWaterOrBubble()) {//can not stay in water.
+				return true;
 			}
 		    final BlockPos pos = Math.abs(this.getY() - this.blockPosition().getY()) <= 0.01D ? this.blockPosition().below() : this.blockPosition();
 		    return ! this.getPlantType().getPlacement().canPlaceOnBlock(level.getBlockState(pos).getBlock());
@@ -385,7 +385,7 @@ public abstract class PVZPlantEntity extends AbstractPAZEntity implements IPlant
 					if (this instanceof PVZPlantEntity && entityIn instanceof PVZPlantEntity
 							&& !EntityUtil.canTargetEntity(this, entityIn)) {
 						if (this.tickCount >= entityIn.tickCount) {
-							this.hurt(PVZDamageSource.PLANT_WILT, EntityUtil.getMaxHealthDamage(this, 0.5F));
+							this.hurt(PVZEntityDamageSource.PLANT_WILT, EntityUtil.getMaxHealthDamage(this, 0.5F));
 						}
 					}
 				}
@@ -458,7 +458,7 @@ public abstract class PVZPlantEntity extends AbstractPAZEntity implements IPlant
 
 	@Override
 	public boolean isInvulnerableTo(DamageSource source) {
-		return this.isPlantImmuneTo(source) && source != DamageSource.OUT_OF_WORLD && !source.isCreativePlayer() && ! source.equals(PVZDamageSource.PLANT_WILT);
+		return this.isPlantImmuneTo(source) && source != DamageSource.OUT_OF_WORLD && !source.isCreativePlayer() && ! source.equals(PVZEntityDamageSource.PLANT_WILT);
 	}
 
 	/**

@@ -7,6 +7,7 @@ import com.hungteen.pvz.common.capability.player.PlayerDataManager;
 import com.hungteen.pvz.common.item.spawn.card.SummonCardItem;
 import com.hungteen.pvz.common.network.PVZPacketHandler;
 import com.hungteen.pvz.common.network.toserver.PVZMouseScrollPacket;
+import com.hungteen.pvz.common.world.invasion.InvasionManager;
 import com.hungteen.pvz.common.world.invasion.MissionManager;
 import com.hungteen.pvz.utils.ConfigUtil;
 import com.hungteen.pvz.utils.MathUtil;
@@ -149,7 +150,7 @@ public class PVZOverlayHandler {
 	
 	public static void renderInvasionProgress(MatrixStack stack, int w, int h) {
 		final PlayerDataManager manager = PlayerUtil.getManager(ClientProxy.MC.player);
-		final int count = manager.getTotalWaveCount();
+		final int count = manager.getInvasion().getTotalWaveCount();
 		if(count == 0){
 			return;
 		}
@@ -164,17 +165,17 @@ public class PVZOverlayHandler {
 		ClientProxy.MC.gui.blit(stack, (int) (w / sz) - WIDTH, (int)(h / sz) - HEIGHT, 0, 0, WIDTH, HEIGHT);
 		
 		final int P_WIDTH = 144, P_HEIGHT = 7;
-		final int dayTime = (int)(ClientProxy.MC.level.getDayTime() % 24000L);
-		final int barlen = MathUtil.getBarLen(dayTime, 24000, P_WIDTH);
-		ClientProxy.MC.gui.blit(stack, (int) (w / sz) - barlen - 7, (int)(h / sz) - HEIGHT + 7, 149 - barlen + 1, 31, barlen, P_HEIGHT);
+		final int dayTime = (int)((ClientProxy.MC.level.getDayTime() - InvasionManager.START_TICK  + 2 + 24000) % 24000L);
+		final int barLen = MathUtil.getBarLen(dayTime, 24000, P_WIDTH);
+		ClientProxy.MC.gui.blit(stack, (int) (w / sz) - barLen - 7, (int)(h / sz) - HEIGHT + 7, 149 - barLen + 1, 31, barLen, P_HEIGHT);
 		
 		for(int i = 0; i < count; ++ i) {
-			final int time = manager.getWaveTime(i);
+			final int time = manager.getInvasion().getWaveTime(i);
 			final int waveLen = MathUtil.getBarLen(time, 24000, P_WIDTH);
 			if(time > dayTime) {
 				ClientProxy.MC.gui.blit(stack, (int) (w / sz) - waveLen - 7, (int)(h / sz) - HEIGHT + 4, 1, 49, 14, 11);
 			} else {
-				if(manager.getWaveTriggered(i)) {
+				if(manager.getInvasion().getWaveTriggered(i)) {
 					ClientProxy.MC.gui.blit(stack, (int) (w / sz) - waveLen - 7, (int)(h / sz) - HEIGHT, 1, 49, 14, 15);
 				} else {
 					ClientProxy.MC.gui.blit(stack, (int) (w / sz) - waveLen - 7, (int)(h / sz) - HEIGHT, 1, 65, 14, 15);
@@ -182,7 +183,7 @@ public class PVZOverlayHandler {
 			}
 		}
 		
-		ClientProxy.MC.gui.blit(stack, (int) (w / sz) - barlen - 11, (int)(h / sz) - HEIGHT + 4, 17, 52, 15, 12);
+		ClientProxy.MC.gui.blit(stack, (int) (w / sz) - barLen - 11, (int)(h / sz) - HEIGHT + 4, 17, 52, 15, 12);
 
 		stack.popPose();
 	}

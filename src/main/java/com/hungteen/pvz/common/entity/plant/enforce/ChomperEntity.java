@@ -8,7 +8,7 @@ import com.hungteen.pvz.common.entity.misc.SmallChomperEntity;
 import com.hungteen.pvz.common.entity.plant.PVZPlantEntity;
 import com.hungteen.pvz.common.impl.SkillTypes;
 import com.hungteen.pvz.common.impl.plant.PVZPlants;
-import com.hungteen.pvz.common.misc.damage.PVZDamageSource;
+import com.hungteen.pvz.common.misc.PVZEntityDamageSource;
 import com.hungteen.pvz.common.misc.sound.SoundRegister;
 import com.hungteen.pvz.utils.EntityUtil;
 import com.hungteen.pvz.utils.enums.PAZAlmanacs;
@@ -103,10 +103,10 @@ public class ChomperEntity extends PVZPlantEntity {
 		final LivingEntity target = this.getTarget();
 		final float damage = this.getAttackDamage();
 		if (EntityUtil.getCurrentHealth(target) <= this.getAttackDamage()) {//can eat to death need rest
-			target.hurt(PVZDamageSource.eat(this), damage);
+			target.hurt(PVZEntityDamageSource.eat(this), damage);
 			this.setRestTick(this.getRestCD());
 		} else {
-			target.hurt(PVZDamageSource.eat(this), damage / 50F);
+			target.hurt(PVZEntityDamageSource.eat(this), damage / 50F);
 		}
 		EntityUtil.playSound(this, SoundRegister.CHOMP.get());
 	}

@@ -1,6 +1,6 @@
 package com.hungteen.pvz.common.entity.bullet;
 
-import com.hungteen.pvz.common.misc.damage.PVZDamageSource;
+import com.hungteen.pvz.common.misc.PVZEntityDamageSource;
 
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntitySize;
@@ -21,7 +21,7 @@ public class BallEntity extends PultBulletEntity {
 
 	@Override
 	protected void dealDamage(Entity target) {
-		target.hurt(PVZDamageSource.ball(this, this.getOwnerOrSelf()), this.getAttackDamage());
+		target.hurt(PVZEntityDamageSource.ball(this, this.getOwnerOrSelf()), this.getAttackDamage());
 	}
 
 }

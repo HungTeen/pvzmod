@@ -2,7 +2,7 @@ package com.hungteen.pvz.client.model.entity.zombie.grass;
 
 import java.util.Optional;
 
-import com.hungteen.pvz.api.IBodyEntity;
+import com.hungteen.pvz.api.interfaces.IBodyEntity;
 import com.hungteen.pvz.api.enums.BodyType;
 import com.hungteen.pvz.client.model.entity.zombie.PVZZombieModel;
 import com.hungteen.pvz.common.entity.zombie.grass.PoleZombieEntity;

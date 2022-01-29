@@ -21,6 +21,7 @@ import com.hungteen.pvz.common.entity.zombie.grass.PoleZombieEntity;
 import com.hungteen.pvz.common.entity.zombie.pool.BalloonZombieEntity;
 import com.hungteen.pvz.common.entity.zombie.pool.BobsleTeamEntity;
 import com.hungteen.pvz.common.event.handler.LivingEventHandler;
+import com.hungteen.pvz.common.misc.PVZEntityDamageSource;
 import com.hungteen.pvz.common.network.PVZPacketHandler;
 import com.hungteen.pvz.common.network.toclient.SpawnParticlePacket;
 import com.hungteen.pvz.common.potion.EffectRegister;
@@ -34,6 +35,7 @@ import net.minecraft.entity.ai.attributes.Attributes;
 import net.minecraft.entity.passive.BatEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.projectile.ProjectileHelper;
+import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.particles.IParticleData;
 import net.minecraft.potion.EffectInstance;
 import net.minecraft.scoreboard.Team;
@@ -44,6 +46,7 @@ import net.minecraft.util.math.vector.Vector3d;
 import net.minecraft.world.IServerWorld;
 import net.minecraft.world.IWorld;
 import net.minecraft.world.World;
+import net.minecraft.world.server.ServerWorld;
 import net.minecraftforge.event.ForgeEventFactory;
 import net.minecraftforge.fml.network.PacketDistributor;
 import net.minecraftforge.fml.network.PacketDistributor.TargetPoint;
@@ -67,6 +70,30 @@ public class EntityUtil {
 		final double dz = b.getZ() - a.getZ();
 		final double dis = Math.sqrt(dx * dx + dz * dz);
 		return new Vector3d(dx / dis, 0, dz / dis);
+	}
+
+	@Nullable
+	public static Entity createWithNBT(World world, EntityType<?> entityType, CompoundNBT nbt, BlockPos pos){
+		if(! World.isInSpawnableBounds(pos)) {
+			PVZMod.LOGGER.error("Invalid position when trying summon entity !");
+			return null;
+		}
+		final CompoundNBT compound = nbt.copy();
+		compound.putString("id", entityType.getRegistryName().toString());
+		Entity entity = EntityType.loadEntityRecursive(compound, world, e -> {
+			e.moveTo(pos, e.xRot, e.yRot);
+			return e;
+		});
+		if(entity == null) {
+			PVZMod.LOGGER.error("summon entity failed !");
+			return null;
+		} else {
+			if(world instanceof ServerWorld && ! ((ServerWorld) world).tryAddFreshEntityWithPassengers(entity)) {
+				PVZMod.LOGGER.error("summon entity duplicated uuid !");
+				return null;
+			}
+		}
+		return entity;
 	}
 	
 	/**
@@ -254,7 +281,7 @@ public class EntityUtil {
 	/**
 	 * spawn in random range position.
 	 */
-	public static void onMobEntityRandomPosSpawn(IWorld world, Entity entity, BlockPos pos, int dis) {
+	public static void onEntityRandomPosSpawn(IWorld world, Entity entity, BlockPos pos, int dis) {
 		pos = pos.offset(MathUtil.getRandomInRange(world.getRandom(), dis), world.getRandom().nextInt(dis) + 1, MathUtil.getRandomInRange(world.getRandom(), dis));
 		onEntitySpawn(world, entity, pos);
 	}
@@ -560,7 +587,7 @@ public class EntityUtil {
 	
 	/**
 	 * add entity potion effect.
-	 * {@link LivingEventHandler#handleHurtEffects(LivingEntity, com.hungteen.pvz.common.misc.damage.PVZDamageSource)}
+	 * {@link LivingEventHandler#handleHurtEffects(LivingEntity, PVZEntityDamageSource)}
 	 */
 	public static void addPotionEffect(Entity entity, EffectInstance effect) {
 		if(entity instanceof PVZMultiPartEntity) {

@@ -6,15 +6,16 @@ import com.hungteen.pvz.common.event.PVZServerEvents;
 import com.hungteen.pvz.common.event.events.InvasionEvent;
 import com.hungteen.pvz.common.misc.sound.SoundRegister;
 import com.hungteen.pvz.register.BiomeRegister;
-import com.hungteen.pvz.utils.*;
+import com.hungteen.pvz.utils.PlayerUtil;
+import com.hungteen.pvz.utils.StringUtil;
 import com.hungteen.pvz.utils.others.WeightList;
-import net.minecraft.entity.EntityType;
-import net.minecraft.entity.MobEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.text.*;
+import net.minecraft.util.text.ITextComponent;
+import net.minecraft.util.text.TextFormatting;
+import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraft.world.Difficulty;
 import net.minecraft.world.World;
 import net.minecraft.world.server.ServerWorld;
@@ -23,7 +24,6 @@ import net.minecraftforge.event.TickEvent;
 
 import java.util.Collection;
 import java.util.HashSet;
-import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
@@ -34,34 +34,20 @@ public class InvasionManager {
             .withStyle(TextFormatting.DARK_RED);
     private static final ITextComponent END = new TranslationTextComponent("invasion.pvz.end")
             .withStyle(TextFormatting.GREEN);
+    public static final ITextComponent HUGE_WAVE = new TranslationTextComponent("invasion.pvz.huge_wave").withStyle(TextFormatting.DARK_RED);
+    public static final int[] SPAWN_COUNT_EACH_WAVE = new int[] {25, 30, 35, 40, 45, 50, 55, 60, 65, 70};
     public static final int PRE_START_TICK = 499;
     public static final int START_TICK = 500;
     public static final int PRE_END_TICK = 99;
     public static final int END_TICK = 100;
-    public static final WeightList<SpawnType> spawnList = new WeightList<>();
-    public static final Set<EntityType<?>> spawnTypes = new HashSet<>();
-    public static ResourceLocation spawnResource;
-    public static InvasionType spawnInvasion;
-    public static final Set<ResourceLocation> activeResources = new HashSet<>();
-    public static Set<InvasionType> activeInvasions;
-    public static int invasionDifficulty = 0;
-    protected static boolean isRunning = false;
-    private static int tick = 0;
-    private static int spawnCD = 0;
+    public static final int MAX_WAVE_NUM = 10;
+    private static final Set<Invasion> INVASIONS = new HashSet<>();
 
     /**
      * only run when world server start.
      * {@link PVZServerEvents#serverInit(net.minecraftforge.fml.event.server.FMLServerStartingEvent)}
      */
     public static void syncStartInvasionCache(ServerWorld world) {
-        final PVZInvasionData data = PVZInvasionData.getOverWorldInvasionData(world);
-        invasionDifficulty = data.getCurrentDifficulty();
-        isRunning = data.isRunning();
-        spawnResource = data.getSpawnInvasion();
-        {
-            activeResources.clear();
-            data.getInvasionResources().forEach(res -> activeResources.add(res));
-        }
     }
 
     /**
@@ -69,9 +55,26 @@ public class InvasionManager {
      * {@link PVZServerEvents#serverShutDown(net.minecraftforge.fml.event.server.FMLServerStoppingEvent)}
      */
     public static void syncEndInvasionCache(ServerWorld world) {
-
     }
 
+    /**
+     * {@link com.hungteen.pvz.common.event.handler.PlayerEventHandler#onPlayerLogin(PlayerEntity)}
+     */
+    public static void addPlayer(PlayerEntity player){
+        INVASIONS.add(PlayerUtil.getInvasion(player));
+    }
+
+    /**
+     * {@link com.hungteen.pvz.common.event.handler.PlayerEventHandler#onPlayerLogout(PlayerEntity)}
+     */
+    public static void removePlayer(PlayerEntity player){
+        INVASIONS.remove(PlayerUtil.getInvasion(player));
+    }
+
+    /**
+     * tick for overworld invasion events.
+     * {@link com.hungteen.pvz.common.event.PVZWorldEvents#onWorldTick(TickEvent.WorldTickEvent)}
+     */
     public static void tick(TickEvent.WorldTickEvent ev) {
         final long dayTime = ev.world.getDayTime() % 24000;
         switch ((int) dayTime) {
@@ -84,7 +87,7 @@ public class InvasionManager {
                 PVZInvasionData data = PVZInvasionData.getOverWorldInvasionData(ev.world);
                 if (!data.hasChanged()) {
                     data.setChanged(true);
-                    deactivateZombieAttackEvents(ev.world, false);// cancel all invasion happened yesterday.
+                    deactivateInvasion(ev.world, false);// cancel all invasion happened yesterday.
                     final long dif = getSafeDayDif(ev.world);
                     final boolean isSafe = (dif < 0);
                     final int count = data.getCountDownDay();
@@ -106,170 +109,85 @@ public class InvasionManager {
                 PVZInvasionData data = PVZInvasionData.getOverWorldInvasionData(ev.world);
                 if (!data.hasChanged()) {
                     data.setChanged(true);
-                    deactivateZombieAttackEvents(ev.world, true);
+                    deactivateInvasion(ev.world, true);
                 }
                 break;
             }
         }
-        // wait for data pack or peaceful mode.
-        if (isRunning && getSpawnInvasion() != null && !(ev.world.getDifficulty() == Difficulty.PEACEFUL)) {
-            tickSpawn(ev.world);
-            WaveManager.tickWave(ev.world, (int) dayTime);
-            MissionManager.tickMission(ev.world);
-        }
-    }
 
-    public static void tickSpawn(World world) {
-        world.getProfiler().push("Invasion Tick");
-        if (++tick >= getSpawnCD(world)) {
-            if (!getSpawnList().isEmpty()) {
-                final List<ServerPlayerEntity> players = PlayerUtil.getServerPlayers(world).stream().filter(player -> {
-                    return suitableInvasionPos(world, player.blockPosition());
-                }).collect(Collectors.toList());
-                for (int i = 0; i < (players.size() + 1) / 2; ++i) {
-                    final int pos = world.random.nextInt(players.size());
-                    tickSpawn(world, players.get(pos));
-                }
-            }
-        }
-        world.getProfiler().pop();
-    }
-
-    public static void tickSpawn(World world, PlayerEntity player) {
-        final int range = PVZConfig.COMMON_CONFIG.InvasionSettings.MaxSpawnRange.get();
-        final int maxCount = PVZConfig.COMMON_CONFIG.InvasionSettings.MaxSpawnEachPlayer.get();
-        final int current = EntityUtil
-                .getPredicateEntities(player, EntityUtil.getEntityAABB(player, range, range), MobEntity.class, e -> {
-                    return isInvasionEntity(e.getType());
-                }).size();
-        if (current < maxCount) {
-            final int cnt = getSpawnCount(world);
-            for (int i = 0; i < cnt; ++i) {
-                final SpawnType type = getSpawnList().getRandomItem(world.random).get();
-                final BlockPos pos = WorldUtil.findRandomSpawnPos(world, player.blockPosition(), 10, 8, range,
-                        b -> suitableInvasionPos(world, b) && type.checkPos(world, b));
-                if (pos != null) {
-                    EntityUtil.onEntitySpawn(world, type.getSpawnType().create(world), pos);
-                }
-            }
-        }
+        INVASIONS.forEach(invasion -> {
+            invasion.tick();
+        });
     }
 
     /**
      * check and activate attack event, do not activate in peaceful mode.
+     * {@link #tick(TickEvent.WorldTickEvent)}
      */
-    private static void activateZombieAttackEvents(World world) {
-        if (world.getDifficulty() != Difficulty.PEACEFUL
-                && !MinecraftForge.EVENT_BUS.post(new InvasionEvent.InvasionStartEvent(world))) {
-            /* notify all players when invasion start */
-            PlayerUtil.getServerPlayers(world).forEach(player -> {
-                PlayerUtil.sendMsgTo(player, START);
-                PlayerUtil.playClientSound(player, SoundRegister.WARN.get());
-                WaveManager.resetPlayerWaveTime(player);
-                MissionManager.offerMission(player);
-            });
-            /* add difficulty */
-            PVZInvasionData data = PVZInvasionData.getOverWorldInvasionData(world);
-            data.addCurrentDifficulty(ConfigUtil.getIncDifficulty());
-            /* choose random spawn event */
-            activateEvent(world, getSpawnEvent(world));
-            /* check assist event */
-            activateAssistEvents(world);
-            if (PVZConfig.COMMON_CONFIG.InvasionSettings.ShowEventMessages.get()) {
-                PlayerUtil.getServerPlayers(world).forEach(player -> {
-                    getActiveInvasions().forEach(type -> PlayerUtil.sendMsgTo(player, type.getText()));
-                });
-                if (!getSpawnList().isEmpty()) {
-                    final IFormattableTextComponent msg = new StringTextComponent("");
-                    for (int i = 0; i < getSpawnList().getLen(); ++i) {
-                        final EntityType<?> type = getSpawnList().getItem(i).getSpawnType();
-                        final IFormattableTextComponent component = new TranslationTextComponent("entity."
-                                + type.getRegistryName().getNamespace() + "." + type.getRegistryName().getPath());
-                        msg.append(i == 0 ? component : new StringTextComponent(",").append(component));
-                    }
-                    PlayerUtil.sendMsgToAll(world, msg);
-                }
-            }
+    public static void activateZombieAttackEvents(World world) {
+        if (world.getDifficulty() != Difficulty.PEACEFUL && !MinecraftForge.EVENT_BUS.post(new InvasionEvent.InvasionStartEvent(world))) {
+            enableInvasion(PlayerUtil.getServerPlayers(world));
         }
     }
 
     /**
-     * deactivate all invasion events.
+     * {@link #activateZombieAttackEvents(World)}
      */
-    public static void deactivateZombieAttackEvents(World world, boolean isNatural) {
-        if (isNatural && isRunning) {// end invasion.
-            PlayerUtil.getServerPlayers(world).forEach(player -> {
+    public static void enableInvasion(Collection<ServerPlayerEntity> players){
+        players.forEach(player -> {
+            final Invasion invasion = PlayerUtil.getInvasion(player);
+            if(! invasion.isRunning()){
+                PlayerUtil.sendMsgTo(player, START);
+                PlayerUtil.playClientSound(player, SoundRegister.WARN.get());
+            }
+            invasion.enable();
+        });
+    }
+
+    /**
+     * deactivate all invasion events.
+     * {@link #tick(TickEvent.WorldTickEvent)}
+     */
+    public static void deactivateInvasion(World world, boolean isNatural) {
+        disableInvasion(PlayerUtil.getServerPlayers(world), isNatural);
+    }
+
+    /**
+     * {@link #deactivateInvasion(World, boolean)}
+     */
+    public static void disableInvasion(Collection<ServerPlayerEntity> players, boolean isNatural){
+        players.forEach(player -> {
+            final Invasion invasion = PlayerUtil.getInvasion(player);
+            if(isNatural && invasion.isRunning()){//send disable msg to player.
                 PlayerUtil.sendMsgTo(player, END);
                 PlayerUtil.playClientSound(player, SoundRegister.WIN_MUSIC.get());
-            });
-        }
-        PlayerUtil.getServerPlayers(world).forEach(player -> {
-            WaveManager.clearWaveTime(player);
-            MissionManager.removeMission(player);
-        });
-        PVZInvasionData.getOverWorldInvasionData(world).clearInvasion();
-        PVZInvasionData.getOverWorldInvasionData(world).setRunning(false);
-    }
-
-    public static void activateEvent(World world, InvasionType type) {
-        if (!type.isAssistInvasion()) {
-            PVZInvasionData.getOverWorldInvasionData(world).setSpawnInvasion(type.resourceLocation);
-            updateSpawns(type);
-        } else {
-            PVZInvasionData.getOverWorldInvasionData(world).addAssistInvasion(type.resourceLocation);
-        }
-    }
-
-    public static void activateAssistEvents(World world) {
-        getInvasionEvents().stream().filter(type -> type.isAssistInvasion() && type.getRequireDifficulty() <= getInvasionDifficulty()).forEach(type -> {
-            if (world.getRandom().nextInt(type.getTriggerChance()) == 0) {
-                activateEvent(world, type);
             }
-        });
-    }
-
-    public static void updateSpawns(InvasionType type) {
-        spawnList.clear();
-        spawnTypes.clear();
-        type.getSpawns().forEach(spawn -> {
-            if (spawn.getOccurDay() * ConfigUtil.getIncDifficulty() <= InvasionManager.getInvasionDifficulty()) {
-                spawnList.addItem(spawn, spawn.getSpawnWeight());
-                spawnTypes.add(spawn.getSpawnType());
-            }
+            invasion.disable();
         });
     }
 
     /**
      * randomly get a spawn invasion event.
+     * {@link Invasion#enable()}
      */
-    private static InvasionType getSpawnEvent(World world) {
-        WeightList<InvasionType> list = new WeightList<>();
-        getInvasionEvents().stream().filter(type -> !type.isAssistInvasion()
-                && type.getRequireDifficulty() <= InvasionManager.getInvasionDifficulty()).forEach(type -> {
+    public static void setSpawnEvent(Invasion invasion) {
+        final WeightList<InvasionType> list = new WeightList<>();
+        getAllSpawnEvents().stream().filter(type -> type.getRequireDifficulty() <= invasion.getInvasionLvl()).forEach(type -> {
             list.addItem(type, type.getTriggerChance());
         });
-        return list.getRandomItem(world.random).get();
+        invasion.setInvasionType(list.getRandomItem(invasion.getRandom()).get());
     }
 
     /**
-     * hard : 5s - 10s normal : 5s - 15s easy : 8s - 15s
+     * randomly activate assist invasion events.
+     * {@link Invasion#enable()}
      */
-    public static int getSpawnCD(World world) {
-        if (spawnCD == 0) {
-            final int max = world.getDifficulty() == Difficulty.HARD ? 200 : 300;
-            final int min = world.getDifficulty() == Difficulty.EASY ? 160 : 100;
-            spawnCD = MathUtil.getRandomMinMax(world.random, min, max);
-        }
-        return world.getDifficulty() == Difficulty.PEACEFUL ? 200 : spawnCD;
-    }
-
-    /**
-     * hard : 2 - 5 normal : 1 - 5 easy : 1 - 4
-     */
-    public static int getSpawnCount(World world) {
-        final int max = world.getDifficulty() == Difficulty.EASY ? 4 : 5;
-        final int min = world.getDifficulty() == Difficulty.HARD ? 2 : 1;
-        return MathUtil.getRandomMinMax(world.random, min, max);
+    public static void setAssistEvent(Invasion invasion) {
+        getAllAssistEvents().stream().filter(type -> type.getRequireDifficulty() <= invasion.getInvasionLvl()).forEach(type -> {
+            if (invasion.getRandom().nextInt(type.getTriggerChance()) == 0) {
+                invasion.setInvasionType(type);
+            }
+        });
     }
 
     /**
@@ -290,72 +208,38 @@ public class InvasionManager {
         return InvasionTypeLoader.INVASIONS.values();
     }
 
-    public static InvasionType getSpawnInvasion() {
-        return spawnInvasion == null ? spawnInvasion = getInvasion(spawnResource) : spawnInvasion;
-    }
-
-    public static WeightList<SpawnType> getSpawnList(){
-        if(spawnList.isEmpty()){
-            updateSpawns(getSpawnInvasion());
-        }
-        return spawnList;
-    }
-
-    public static boolean isInvasionEntity(EntityType<?> entityType){
-        if(spawnTypes.isEmpty()){
-            updateSpawns(getSpawnInvasion());
-        }
-        return spawnTypes.contains(entityType);
-    }
-
-    public static Set<InvasionType> getActiveInvasions() {
-        if (activeInvasions == null) {
-            activeInvasions = new HashSet<>();
-            activeResources.forEach(res -> {
-                final InvasionType type = getInvasion(res);
-                if (type != null) {
-                    activeInvasions.add(type);
-                }
-            });
-            if (isRunning && activeInvasions.isEmpty()) {
-                activeInvasions = null;
-            }
-        }
-        return activeInvasions == null ? new HashSet<>() : activeInvasions;
-    }
-
-    public static boolean isRunning() {
-        return isRunning;
-    }
-
     public static Stream<ResourceLocation> getIds() {
         return InvasionTypeLoader.INVASIONS.keySet().stream();
     }
 
-    public static Collection<InvasionType> getInvasionEvents() {
+    public static Collection<InvasionType> getAllInvasionEvents() {
         return InvasionTypeLoader.INVASIONS.values();
+    }
+
+    public static Collection<InvasionType> getAllSpawnEvents() {
+        return InvasionTypeLoader.INVASIONS.values().stream().filter(type -> ! type.isAssistInvasion()).collect(Collectors.toList());
+    }
+
+    public static Collection<InvasionType> getAllAssistEvents() {
+        return InvasionTypeLoader.INVASIONS.values().stream().filter(type -> type.isAssistInvasion()).collect(Collectors.toList());
     }
 
     public static InvasionType getInvasion(ResourceLocation res) {
         return InvasionTypeLoader.INVASIONS.get(res);
     }
 
-    public static int getInvasionDifficulty() {
-        return invasionDifficulty;
-    }
-
-    public static float getYetiSpawnChance(){
-        final boolean isJack = getActiveInvasions().contains(StringUtil.prefix("jack"));
-        final boolean isYeti = getActiveInvasions().contains(StringUtil.prefix("yeti"));
+    public static float getYetiSpawnChance(Invasion invasion){
+        final boolean isJack = invasion.getActiveInvasions().contains(StringUtil.prefix("jack"));
+        final boolean isYeti = invasion.getActiveInvasions().contains(StringUtil.prefix("yeti"));
         return (isJack && isYeti) ? 0.4F : isYeti ? 0.2F : isJack ? 0.1F : 0;
     }
 
-    public static boolean isInvisInvasion(){
-        return getActiveInvasions().contains(StringUtil.prefix("invis"));
+    public static boolean hasInvisInvasion(Invasion invasion){
+        return invasion.getActiveInvasions().contains(StringUtil.prefix("invis"));
     }
 
-    public static boolean isMiniInvasion(){
-        return getActiveInvasions().contains(StringUtil.prefix("mini"));
+    public static boolean hasMiniInvasion(Invasion invasion){
+        return invasion.getActiveInvasions().contains(StringUtil.prefix("mini"));
     }
 
     /**

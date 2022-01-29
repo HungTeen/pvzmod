@@ -7,7 +7,7 @@ import com.hungteen.pvz.common.entity.ai.goal.target.PVZNearestTargetGoal;
 import com.hungteen.pvz.common.entity.plant.PVZPlantEntity;
 import com.hungteen.pvz.common.entity.zombie.grass.AbstractTombStoneEntity;
 import com.hungteen.pvz.common.impl.plant.PVZPlants;
-import com.hungteen.pvz.common.misc.damage.PVZDamageSource;
+import com.hungteen.pvz.common.misc.PVZEntityDamageSource;
 import com.hungteen.pvz.common.misc.sound.SoundRegister;
 import com.hungteen.pvz.utils.EntityUtil;
 import com.hungteen.pvz.utils.PlantUtil;
@@ -179,7 +179,7 @@ public class GraveBusterEntity extends PVZPlantEntity{
 			if(tick >= this.buster.getEatTombCD()) {
 				this.buster.setAttackTime(0);
 				++ this.buster.killCount;
-				this.target.hurt(PVZDamageSource.eat(this.buster), EntityUtil.getMaxHealthDamage(this.buster.getTarget(), 1.5F));
+				this.target.hurt(PVZEntityDamageSource.eat(this.buster), EntityUtil.getMaxHealthDamage(this.buster.getTarget(), 1.5F));
 			    if(this.buster.killCount >= this.buster.getMaxKillCnt()) {
 					this.buster.remove();
 				}

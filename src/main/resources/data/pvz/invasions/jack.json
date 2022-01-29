@@ -6,27 +6,27 @@
   "spawns": [
     {
       "entity_type": "pvz:normal_zombie",
-      "occur_day": 0,
+      "invasion_level": 1,
       "spawn_weight": 100
     },
     {
       "entity_type": "pvz:jack_in_box_zombie",
-      "occur_day": 3,
+      "invasion_level": 8,
       "spawn_weight": 40
     },
     {
       "entity_type": "pvz:pogo_zombie",
-      "occur_day": 6,
+      "invasion_level": 15,
       "spawn_weight": 40
     },
     {
       "entity_type": "pvz:balloon_zombie",
-      "occur_day": 10,
+      "invasion_level": 20,
       "spawn_weight": 40
     },
     {
       "entity_type": "pvz:digger_zombie",
-      "occur_day": 12,
+      "invasion_level": 28,
       "spawn_weight": 30
     }
   ]

@@ -9,7 +9,7 @@ import com.hungteen.pvz.common.entity.plant.base.PlantCloserEntity;
 import com.hungteen.pvz.common.entity.zombie.pool.DiggerZombieEntity;
 import com.hungteen.pvz.common.impl.SkillTypes;
 import com.hungteen.pvz.common.impl.plant.PVZPlants;
-import com.hungteen.pvz.common.misc.damage.PVZDamageSource;
+import com.hungteen.pvz.common.misc.PVZEntityDamageSource;
 import com.hungteen.pvz.common.misc.sound.SoundRegister;
 import com.hungteen.pvz.register.ParticleRegister;
 import com.hungteen.pvz.utils.EntityUtil;
@@ -66,7 +66,7 @@ public class PotatoMineEntity extends PlantCloserEntity{
 			final float range = 1.6F;
 			final AxisAlignedBB aabb = EntityUtil.getEntityAABB(this, range, range);
 			EntityUtil.getWholeTargetableEntities(this, aabb).forEach(target -> {
-				target.hurt(PVZDamageSource.explode(this), this.getExplodeDamage());
+				target.hurt(PVZEntityDamageSource.explode(this), this.getExplodeDamage());
 			});
 			PVZPlantEntity.clearLadders(this, aabb);
 			EntityUtil.playSound(this, SoundRegister.POTATO_MINE.get());

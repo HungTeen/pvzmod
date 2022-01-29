@@ -28,10 +28,9 @@ import com.hungteen.pvz.common.entity.plant.spear.SpikeWeedEntity;
 import com.hungteen.pvz.common.entity.zombie.body.ZombieDropBodyEntity;
 import com.hungteen.pvz.common.impl.SkillTypes;
 import com.hungteen.pvz.common.item.ItemRegister;
-import com.hungteen.pvz.common.misc.damage.PVZDamageSource;
+import com.hungteen.pvz.common.misc.PVZEntityDamageSource;
 import com.hungteen.pvz.common.misc.sound.SoundRegister;
 import com.hungteen.pvz.common.potion.EffectRegister;
-import com.hungteen.pvz.common.world.invasion.InvasionManager;
 import com.hungteen.pvz.remove.MetalTypes;
 import com.hungteen.pvz.utils.AlgorithmUtil;
 import com.hungteen.pvz.utils.ConfigUtil;
@@ -163,15 +162,15 @@ public abstract class PVZZombieEntity extends AbstractPAZEntity implements IZomb
 				this.setAnimTime(- RISING_CD);
 				this.addEffect(new EffectInstance(Effects.MOVEMENT_SLOWDOWN, RISING_CD + 10, 20, false, false));
 			}
-			if (level.dimension() == World.OVERWORLD) {//update states in special invasion.
-				//zombie rising from dirt can not be mini state.
-				if (! this.needRising && this.canBeMini() && InvasionManager.isMiniInvasion()) {
-					this.onZombieBeMini();
-				}
-				if (this.canBeInvisible() && InvasionManager.isInvisInvasion()) {
-					this.addEffect(new EffectInstance(Effects.INVISIBILITY, 1000000, 10, false, false));
-				}
-			}
+//			if (level.dimension() == World.OVERWORLD) {//update states in special invasion.
+//				//zombie rising from dirt can not be mini state.
+//				if (! this.needRising && this.canBeMini() && InvasionManager.hasMiniInvasion()) {
+//					this.onZombieBeMini();
+//				}
+//				if (this.canBeInvisible() && InvasionManager.hasInvisInvasion()) {
+//					this.addEffect(new EffectInstance(Effects.INVISIBILITY, 1000000, 10, false, false));
+//				}
+//			}
 		}
 	}
 	
@@ -497,7 +496,7 @@ public abstract class PVZZombieEntity extends AbstractPAZEntity implements IZomb
 		return false;
 	}
 
-	protected void dealDamageEffectToZombie(PVZDamageSource source) {
+	protected void dealDamageEffectToZombie(PVZEntityDamageSource source) {
 		if (source.isDefended()) {
 			return;
 		}
@@ -605,8 +604,8 @@ public abstract class PVZZombieEntity extends AbstractPAZEntity implements IZomb
 	 * damage type of zombie.
 	 * {@link #doHurtTarget(Entity)}
 	 */
-	protected PVZDamageSource getZombieAttackDamageSource() {
-		return PVZDamageSource.eat(this);
+	protected PVZEntityDamageSource getZombieAttackDamageSource() {
+		return PVZEntityDamageSource.eat(this);
 	}
 
 	/**
@@ -803,7 +802,7 @@ public abstract class PVZZombieEntity extends AbstractPAZEntity implements IZomb
 	
 	@Override
 	public boolean isInvulnerableTo(DamageSource source) {
-		if(source instanceof PVZDamageSource && ((PVZDamageSource) source).isMustHurt()) {
+		if(source instanceof PVZEntityDamageSource && ((PVZEntityDamageSource) source).isMustHurt()) {
 			return false;
 		}
 		return source != DamageSource.OUT_OF_WORLD && !source.isCreativePlayer() && this.isZombieInvulnerableTo(source);

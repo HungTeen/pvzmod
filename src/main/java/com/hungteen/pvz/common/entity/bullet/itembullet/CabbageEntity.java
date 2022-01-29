@@ -2,7 +2,7 @@ package com.hungteen.pvz.common.entity.bullet.itembullet;
 
 import com.hungteen.pvz.common.entity.bullet.PultBulletEntity;
 import com.hungteen.pvz.common.item.ItemRegister;
-import com.hungteen.pvz.common.misc.damage.PVZDamageSource;
+import com.hungteen.pvz.common.misc.PVZEntityDamageSource;
 import com.hungteen.pvz.common.entity.EntityRegister;
 
 import net.minecraft.entity.Entity;
@@ -33,7 +33,7 @@ public class CabbageEntity extends PultBulletEntity implements IRendersAsItem {
 	}
 
 	protected void dealDamage(Entity target) {
-		target.hurt(PVZDamageSource.cabbage(this, this.getThrower()), this.getAttackDamage());
+		target.hurt(PVZEntityDamageSource.cabbage(this, this.getThrower()), this.getAttackDamage());
 	}
 	
 	@Override

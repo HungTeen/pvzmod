@@ -6,32 +6,32 @@
   "spawns": [
     {
       "entity_type": "pvz:peashooter_zombie",
-      "occur_day": 12,
+      "invasion_level": 20,
       "spawn_weight": 100
     },
     {
       "entity_type": "pvz:wallnut_zombie",
-      "occur_day": 16,
+      "invasion_level": 25,
       "spawn_weight": 100
     },
     {
       "entity_type": "pvz:squash_zombie",
-      "occur_day": 18,
+      "invasion_level": 30,
       "spawn_weight": 60
     },
     {
       "entity_type": "pvz:tallnut_zombie",
-      "occur_day": 21,
+      "invasion_level": 35,
       "spawn_weight": 60
     },
     {
       "entity_type": "pvz:gatlingpea_zombie",
-      "occur_day": 25,
+      "invasion_level": 40,
       "spawn_weight": 50
     },
     {
       "entity_type": "pvz:jalapeno_zombie",
-      "occur_day": 30,
+      "invasion_level": 45,
       "spawn_weight": 40
     }
   ]

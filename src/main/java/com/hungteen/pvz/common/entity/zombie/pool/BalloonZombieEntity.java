@@ -4,7 +4,7 @@ import com.hungteen.pvz.common.entity.ai.navigator.ZombiePathNavigator;
 import com.hungteen.pvz.common.entity.zombie.PVZZombieEntity;
 import com.hungteen.pvz.common.impl.zombie.ZombieType;
 import com.hungteen.pvz.common.impl.zombie.PoolZombies;
-import com.hungteen.pvz.common.misc.damage.PVZDamageSource;
+import com.hungteen.pvz.common.misc.PVZEntityDamageSource;
 import com.hungteen.pvz.common.misc.sound.SoundRegister;
 import com.hungteen.pvz.data.loot.PVZLoot;
 import com.hungteen.pvz.utils.EntityUtil;
@@ -86,8 +86,8 @@ public class BalloonZombieEntity extends PVZZombieEntity {
 		if(source.getDirectEntity() instanceof ArrowEntity) {
 			return true;
 		}
-		if(source instanceof PVZDamageSource) {
-			return ((PVZDamageSource) source).isThornDamage();
+		if(source instanceof PVZEntityDamageSource) {
+			return ((PVZEntityDamageSource) source).isThornDamage();
 		}
 		return false;
 	}

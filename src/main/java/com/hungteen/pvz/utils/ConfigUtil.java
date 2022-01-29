@@ -24,10 +24,6 @@ public class ConfigUtil {
 		return PVZConfig.COMMON_CONFIG.EntitySettings.PlayerInitialGroup.get();
 	}
 	
-	public static int getIncDifficulty() {
-		return PVZConfig.COMMON_CONFIG.InvasionSettings.IncDifficulty.get();
-	}
-	
 	public static int getGenOriginOreChance() {
 		return PVZConfig.COMMON_CONFIG.WorldSettings.GenOriginOreChance.get();
 	}

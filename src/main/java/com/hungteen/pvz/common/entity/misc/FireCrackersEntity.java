@@ -2,7 +2,7 @@ package com.hungteen.pvz.common.entity.misc;
 
 import com.hungteen.pvz.common.entity.AbstractOwnerEntity;
 import com.hungteen.pvz.common.entity.plant.explosion.BambooLordEntity;
-import com.hungteen.pvz.common.misc.damage.PVZDamageSource;
+import com.hungteen.pvz.common.misc.PVZEntityDamageSource;
 import com.hungteen.pvz.common.entity.EntityRegister;
 import com.hungteen.pvz.utils.EntityUtil;
 
@@ -51,7 +51,7 @@ public class FireCrackersEntity extends AbstractOwnerEntity {
 		final float range = 2F;
 		EntityUtil.playSound(this, SoundEvents.GENERIC_EXPLODE);
 		EntityUtil.getTargetableEntities(this, EntityUtil.getEntityAABB(this, range, range)).forEach(target -> {
-			target.hurt(PVZDamageSource.explode(this, this.getOwner()), 50F);
+			target.hurt(PVZEntityDamageSource.explode(this, this.getOwner()), 50F);
 			target.setDeltaMovement(target.getDeltaMovement().add(0, BambooLordEntity.UP_SPEED, 0));
 		});
 		for(int i = 0; i < 2; ++ i) {

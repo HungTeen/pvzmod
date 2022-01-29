@@ -9,7 +9,7 @@ import com.hungteen.pvz.common.entity.misc.bowling.AbstractBowlingEntity;
 import com.hungteen.pvz.common.entity.zombie.roof.BungeeZombieEntity;
 import com.hungteen.pvz.common.event.PVZLivingEvents;
 import com.hungteen.pvz.common.impl.SkillTypes;
-import com.hungteen.pvz.common.misc.damage.PVZDamageSource;
+import com.hungteen.pvz.common.misc.PVZEntityDamageSource;
 import com.hungteen.pvz.utils.EntityUtil;
 import com.hungteen.pvz.utils.enums.PAZAlmanacs;
 import com.hungteen.pvz.utils.others.WeightList;
@@ -80,6 +80,7 @@ public abstract class AbstractPAZEntity extends CreatureEntity implements IPAZEn
     public AbstractPAZEntity(EntityType<? extends CreatureEntity> entityType, World world) {
         super(entityType, world);
         this.refreshDimensions();
+//        this.setPersistenceRequired();
     }
 
     @Override
@@ -101,6 +102,8 @@ public abstract class AbstractPAZEntity extends CreatureEntity implements IPAZEn
         return AttributeModifierMap.builder()
                 .add(Attributes.MAX_HEALTH)
                 .add(Attributes.KNOCKBACK_RESISTANCE)
+                .add(Attributes.ATTACK_KNOCKBACK)
+                .add(Attributes.ATTACK_SPEED)
                 .add(Attributes.MOVEMENT_SPEED)
                 .add(Attributes.ARMOR)
                 .add(Attributes.ARMOR_TOUGHNESS)
@@ -151,7 +154,9 @@ public abstract class AbstractPAZEntity extends CreatureEntity implements IPAZEn
      * tick not consider death.
      */
     public void pazTick(){
-
+        if(! level.isClientSide){
+            this.setExistTick(this.getExistTick() + 1);
+        }
     }
 
     @Override
@@ -224,7 +229,7 @@ public abstract class AbstractPAZEntity extends CreatureEntity implements IPAZEn
     @Override
     public boolean hurt(DamageSource source, float amount) {
         //can get hurt each attack by pvz damage.
-        if (source instanceof PVZDamageSource) {
+        if (source instanceof PVZEntityDamageSource) {
             this.invulnerableTime = 0;
         }
         return super.hurt(source, amount);
@@ -234,8 +239,8 @@ public abstract class AbstractPAZEntity extends CreatureEntity implements IPAZEn
     public void die(DamageSource source) {
         super.die(source);
         //if it was killed by bowling, it will not drop anything.
-        if (source instanceof PVZDamageSource && ((PVZDamageSource) source).getDirectEntity() instanceof AbstractBowlingEntity
-                && ((PVZDamageSource) source).getDamageCount() > 0) {
+        if (source instanceof PVZEntityDamageSource && ((PVZEntityDamageSource) source).getDirectEntity() instanceof AbstractBowlingEntity
+                && ((PVZEntityDamageSource) source).getDamageCount() > 0) {
             this.canSpawnDrop = false;
         }
     }
@@ -324,6 +329,11 @@ public abstract class AbstractPAZEntity extends CreatureEntity implements IPAZEn
                 && ! (this.getVehicle() instanceof BungeeZombieEntity)
                 && ! EntityUtil.isEntityFrozen(this)
                 && ! EntityUtil.isEntityButter(this);
+    }
+
+    @Override
+    public boolean removeWhenFarAway(double p_213397_1_) {
+        return super.removeWhenFarAway(p_213397_1_);
     }
 
     public IRankType getRank() {
@@ -433,6 +443,9 @@ public abstract class AbstractPAZEntity extends CreatureEntity implements IPAZEn
             if(compound.contains("paz_exist_tick")) {
                 this.setExistTick(compound.getInt("paz_exist_tick"));
             }
+        }
+        if(this.getExistTick() < 2){
+            this.initAttributes();
         }
     }
 

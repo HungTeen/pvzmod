@@ -6,7 +6,7 @@ import com.hungteen.pvz.common.entity.plant.PVZPlantEntity;
 import com.hungteen.pvz.common.entity.plant.base.PlantBomberEntity;
 import com.hungteen.pvz.common.impl.SkillTypes;
 import com.hungteen.pvz.common.impl.plant.PVZPlants;
-import com.hungteen.pvz.common.misc.damage.PVZDamageSource;
+import com.hungteen.pvz.common.misc.PVZEntityDamageSource;
 import com.hungteen.pvz.common.misc.sound.SoundRegister;
 import com.hungteen.pvz.common.entity.EntityRegister;
 import com.hungteen.pvz.register.ParticleRegister;
@@ -67,7 +67,7 @@ public class DoomShroomEntity extends PlantBomberEntity {
 				if(target instanceof EnderDragonEntity) {//make ender_dragon can be damaged by doom shroom. 
 					((EnderDragonEntity) target).hurt(((EntityDamageSource)DamageSource.mobAttack(this)).setThorns().setExplosion(), this.getExplodeDamage() * 2);
 				} else {
-					target.hurt(PVZDamageSource.explode(this), this.getExplodeDamage());
+					target.hurt(PVZEntityDamageSource.explode(this), this.getExplodeDamage());
 				}
 			});
 			PVZPlantEntity.clearLadders(this, aabb);

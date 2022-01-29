@@ -1,6 +1,6 @@
 package com.hungteen.pvz.client.model.entity.zombie.pool;
 
-import com.hungteen.pvz.api.IBodyEntity;
+import com.hungteen.pvz.api.interfaces.IBodyEntity;
 import com.hungteen.pvz.client.model.entity.zombie.PVZZombieModel;
 import com.hungteen.pvz.common.entity.zombie.pool.PogoZombieEntity;
 import com.mojang.blaze3d.matrix.MatrixStack;

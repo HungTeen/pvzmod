@@ -1,7 +1,7 @@
 package com.hungteen.pvz.common.block.plants;
 
 import com.hungteen.pvz.common.block.BlockRegister;
-import com.hungteen.pvz.common.misc.damage.PVZDamageSource;
+import com.hungteen.pvz.common.misc.PVZEntityDamageSource;
 import com.hungteen.pvz.utils.MathUtil;
 import com.hungteen.pvz.utils.WorldUtil;
 
@@ -53,7 +53,7 @@ public class ChomperBlock extends BushBlock{
 		if(entityIn instanceof AnimalEntity || entityIn instanceof PlayerEntity) {
 			if(!worldIn.isClientSide) {
 				if(this.RANDOM.nextInt(50) == 0) {
-					entityIn.hurt(PVZDamageSource.CHOMPER_PLANT, 8);
+					entityIn.hurt(PVZEntityDamageSource.CHOMPER_PLANT, 8);
 				}
 			}
 		}

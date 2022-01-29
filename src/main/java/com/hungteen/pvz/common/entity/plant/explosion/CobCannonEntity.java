@@ -289,7 +289,7 @@ public class CobCannonEntity extends PVZPlantEntity {
 	}
 	
 	@Override
-	protected boolean shouldWilt() {
+	public boolean shouldWilt() {
 		return this.isInWaterOrBubble();
 	}
 

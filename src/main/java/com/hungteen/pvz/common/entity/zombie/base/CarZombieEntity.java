@@ -3,7 +3,7 @@ package com.hungteen.pvz.common.entity.zombie.base;
 import com.hungteen.pvz.api.enums.BodyType;
 import com.hungteen.pvz.common.entity.zombie.PVZZombieEntity;
 import com.hungteen.pvz.common.entity.zombie.body.ZombieDropBodyEntity;
-import com.hungteen.pvz.common.misc.damage.PVZDamageSource;
+import com.hungteen.pvz.common.misc.PVZEntityDamageSource;
 import com.hungteen.pvz.common.misc.sound.SoundRegister;
 import com.hungteen.pvz.common.entity.EntityRegister;
 import com.hungteen.pvz.utils.EntityUtil;
@@ -66,8 +66,8 @@ public abstract class CarZombieEntity extends PVZZombieEntity {
 	}
 	
 	@Override
-	protected PVZDamageSource getZombieAttackDamageSource() {
-		return PVZDamageSource.causeCrushDamage(this);
+	protected PVZEntityDamageSource getZombieAttackDamageSource() {
+		return PVZEntityDamageSource.causeCrushDamage(this);
 	}
 	
 	@Override

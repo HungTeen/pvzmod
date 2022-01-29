@@ -8,7 +8,7 @@ import com.hungteen.pvz.common.entity.plant.base.PlantBomberEntity;
 import com.hungteen.pvz.common.entity.zombie.zombotany.JalapenoZombieEntity;
 import com.hungteen.pvz.common.impl.SkillTypes;
 import com.hungteen.pvz.common.impl.plant.PVZPlants;
-import com.hungteen.pvz.common.misc.damage.PVZDamageSource;
+import com.hungteen.pvz.common.misc.PVZEntityDamageSource;
 import com.hungteen.pvz.common.misc.sound.SoundRegister;
 import com.hungteen.pvz.utils.EntityUtil;
 import com.hungteen.pvz.utils.WorldUtil;
@@ -56,7 +56,7 @@ public class JalapenoEntity extends PlantBomberEntity{
 					damage = 100F;
 				}
 			}
-			target.hurt(PVZDamageSource.causeFlameDamage(entity, entity).setExplosion(), damage);
+			target.hurt(PVZEntityDamageSource.causeFlameDamage(entity, entity).setExplosion(), damage);
 		}
 		PVZPlantEntity.clearLadders(entity, aabb);
 	}

@@ -6,31 +6,37 @@
   "spawns": [
     {
       "entity_type": "pvz:normal_zombie",
-      "occur_day": 0,
+      "invasion_level": 1,
       "spawn_weight": 100,
       "placement": "water"
     },
     {
       "entity_type": "pvz:snorkel_zombie",
-      "occur_day": 2,
+      "invasion_level": 5,
       "spawn_weight": 80,
       "placement": "water"
     },
     {
       "entity_type": "pvz:conehead_zombie",
-      "occur_day": 5,
+      "invasion_level": 10,
       "spawn_weight": 60,
       "placement": "water"
     },
     {
       "entity_type": "pvz:dolphin_rider",
-      "occur_day": 9,
+      "invasion_level": 20,
       "spawn_weight": 40,
       "placement": "water"
     },
     {
+      "entity_type": "pvz:buckethead_zombie",
+      "invasion_level": 28,
+      "spawn_weight": 15,
+      "placement": "water"
+    },
+    {
       "entity_type": "pvz:lava_zombie",
-      "occur_day": 18,
+      "invasion_level": 40,
       "spawn_weight": 30,
       "placement": "water"
     }

@@ -6,22 +6,22 @@
   "spawns": [
     {
       "entity_type": "pvz:normal_zombie",
-      "occur_day": 0,
+      "invasion_level": 1,
       "spawn_weight": 100
     },
     {
       "entity_type": "pvz:conehead_zombie",
-      "occur_day": 4,
+      "invasion_level": 7,
       "spawn_weight": 60
     },
     {
       "entity_type": "pvz:pole_zombie",
-      "occur_day": 7,
+      "invasion_level": 15,
       "spawn_weight": 40
     },
     {
       "entity_type": "pvz:buckethead_zombie",
-      "occur_day": 12,
+      "invasion_level": 25,
       "spawn_weight": 30
     }
   ]

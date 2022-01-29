@@ -2,5 +2,5 @@
   "isAssistInvasion": true,
   "triggerChance": 10,
   "display_color": "dark_aqua",
-  "require_day": 20
+  "invasion_level": 50
 }

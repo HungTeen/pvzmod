@@ -1,6 +1,6 @@
 package com.hungteen.pvz.common.entity.bullet;
 
-import com.hungteen.pvz.common.misc.damage.PVZDamageSource;
+import com.hungteen.pvz.common.misc.PVZEntityDamageSource;
 import com.hungteen.pvz.common.entity.EntityRegister;
 
 import net.minecraft.entity.Entity;
@@ -60,7 +60,7 @@ public class StarEntity extends AbstractBulletEntity {
 	}
 	
 	private void dealStarDamage(Entity target) {
-		target.hurt(PVZDamageSource.star(this, this.getThrower()), this.getAttackDamage());
+		target.hurt(PVZEntityDamageSource.star(this, this.getThrower()), this.getAttackDamage());
 	}
 	
 	@Override

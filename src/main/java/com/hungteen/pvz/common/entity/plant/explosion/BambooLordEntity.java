@@ -7,7 +7,7 @@ import com.hungteen.pvz.common.entity.misc.FireCrackersEntity;
 import com.hungteen.pvz.common.entity.plant.base.PlantCloserEntity;
 import com.hungteen.pvz.common.impl.SkillTypes;
 import com.hungteen.pvz.common.impl.plant.OtherPlants;
-import com.hungteen.pvz.common.misc.damage.PVZDamageSource;
+import com.hungteen.pvz.common.misc.PVZEntityDamageSource;
 import com.hungteen.pvz.common.misc.sound.SoundRegister;
 import com.hungteen.pvz.utils.EntityUtil;
 import com.hungteen.pvz.utils.WorldUtil;
@@ -52,7 +52,7 @@ public class BambooLordEntity extends PlantCloserEntity {
 		}
 		final float range = 3F;
 		EntityUtil.getTargetableEntities(this, EntityUtil.getEntityAABB(this, range, range)).forEach((target) -> {
-			target.hurt(PVZDamageSource.explode(this), this.getAttackDamage());
+			target.hurt(PVZEntityDamageSource.explode(this), this.getAttackDamage());
 			target.setDeltaMovement(target.getDeltaMovement().add(0, UP_SPEED, 0));
 		});
 		this.split();

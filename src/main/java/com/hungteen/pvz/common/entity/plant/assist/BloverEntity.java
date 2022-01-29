@@ -6,7 +6,7 @@ import com.hungteen.pvz.common.entity.plant.PVZPlantEntity;
 import com.hungteen.pvz.common.entity.zombie.pool.BalloonZombieEntity;
 import com.hungteen.pvz.common.impl.SkillTypes;
 import com.hungteen.pvz.common.impl.plant.PVZPlants;
-import com.hungteen.pvz.common.misc.damage.PVZDamageSource;
+import com.hungteen.pvz.common.misc.PVZEntityDamageSource;
 import com.hungteen.pvz.common.misc.sound.SoundRegister;
 import com.hungteen.pvz.utils.EntityUtil;
 import com.hungteen.pvz.utils.MathUtil;
@@ -41,7 +41,7 @@ public class BloverEntity extends PVZPlantEntity {
 			//deal damage.
 			EntityUtil.getTargetableLivings(this, EntityUtil.getEntityAABB(this, len, len)).forEach(target -> {
 				if(EntityUtil.isEntityInSky(target)) {
-					target.hurt(PVZDamageSource.normal(this).setMustHurt(), this.getAttackDamage());
+					target.hurt(PVZEntityDamageSource.normal(this).setMustHurt(), this.getAttackDamage());
 					final Vector3d speed = target.getDeltaMovement();
 					final double lvl = this.getForceLevel() * 2.5F;
 					final Vector3d delta = MathUtil.getHorizontalNormalizedVec(this.position(), target.position()).scale(lvl);

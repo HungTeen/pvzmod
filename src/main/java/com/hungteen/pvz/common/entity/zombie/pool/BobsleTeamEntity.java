@@ -128,7 +128,7 @@ public class BobsleTeamEntity extends PVZZombieEntity implements IHasMultiPart {
 			for(int i = 0; i < 4; ++ i) {
 				BobsleZombieEntity zombie = EntityRegister.BOBSLE_ZOMBIE.get().create(level);
 				ZombieUtil.copySummonZombieData(this, zombie);
-				EntityUtil.onMobEntityRandomPosSpawn(level, zombie, this.blockPosition(), 2);
+				EntityUtil.onEntityRandomPosSpawn(level, zombie, this.blockPosition(), 2);
 			}
 		}
 	}

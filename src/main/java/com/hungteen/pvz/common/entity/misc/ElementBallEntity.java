@@ -11,7 +11,7 @@ import com.hungteen.pvz.common.entity.plant.ice.IceShroomEntity;
 import com.hungteen.pvz.common.entity.zombie.PVZZombieEntity;
 import com.hungteen.pvz.common.item.ItemRegister;
 import com.hungteen.pvz.common.item.spawn.card.PlantCardItem;
-import com.hungteen.pvz.common.misc.damage.PVZDamageSource;
+import com.hungteen.pvz.common.misc.PVZEntityDamageSource;
 import com.hungteen.pvz.utils.EntityUtil;
 
 import net.minecraft.entity.Entity;
@@ -120,11 +120,11 @@ public class ElementBallEntity extends AbstractOwnerEntity {
 		}
 	}
 	
-	private PVZDamageSource getAttackSource() {
+	private PVZEntityDamageSource getAttackSource() {
 		if(this.getElementBallType() == ElementTypes.FLAME) {
-			return PVZDamageSource.causeFlameDamage(this, this.getOwner());
+			return PVZEntityDamageSource.causeFlameDamage(this, this.getOwner());
 		}
-		return PVZDamageSource.causeIceDamage(this, this.getOwner());
+		return PVZEntityDamageSource.causeIceDamage(this, this.getOwner());
 	}
 	
 	@Override

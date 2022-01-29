@@ -126,12 +126,12 @@ public class DolphinRiderEntity extends PVZZombieEntity{
 		//summon dolphin rider zombie.
 		DolphinRiderZombieEntity zombie = EntityRegister.DOLPHIN_RIDER_ZOMBIE.get().create(level);
 		ZombieUtil.copySummonZombieData(this, zombie);
-		EntityUtil.onMobEntityRandomPosSpawn(level, zombie, blockPosition(), 1);
+		EntityUtil.onEntityRandomPosSpawn(level, zombie, blockPosition(), 1);
 		zombie.setZombieType(VariantType.NORMAL);
 		//summon zombie dolphin.
 		ZombieDolphinEntity dolphin = EntityRegister.ZOMBIE_DOLPHIN.get().create(level);
 		ZombieUtil.copySummonZombieData(this, dolphin);
-		EntityUtil.onMobEntityRandomPosSpawn(level, dolphin, blockPosition(), 3);
+		EntityUtil.onEntityRandomPosSpawn(level, dolphin, blockPosition(), 3);
 		
 		this.remove();
 	}

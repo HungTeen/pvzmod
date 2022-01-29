@@ -45,8 +45,10 @@ public class InvasionTypeLoader extends JsonReloadListener {
                 final int chance = JSONUtils.getAsInt(jsonObject, "triggerChance", 10);
                 invasionType.setTriggerChance(chance);
 
-                final ResourceLocation bonus = new ResourceLocation(JSONUtils.getAsString(jsonObject, "bonus"));
-                invasionType.setBonusResource(bonus);
+                if(jsonObject.has("bonus")){
+                    final ResourceLocation bonus = new ResourceLocation(JSONUtils.getAsString(jsonObject, "bonus"));
+                    invasionType.setBonusResource(bonus);
+                }
 
                 final String color = JSONUtils.getAsString(jsonObject, "display_color", "white");
                 invasionType.setDisplayColor(TextFormatting.valueOf(color.toUpperCase()));
@@ -73,9 +75,9 @@ public class InvasionTypeLoader extends JsonReloadListener {
                             }
                         }
 
-                        /* occur dif */
-                        final int dif = JSONUtils.getAsInt(obj, "occur_day", 0);
-                        spawnType.setOccurDay(dif);
+                        /* invasion level */
+                        final int dif = JSONUtils.getAsInt(obj, "invasion_level", 1);
+                        spawnType.setInvasionLevel(dif);
 
                         /* spawn weight */
                         final int weight = JSONUtils.getAsInt(obj, "spawn_weight", 100);

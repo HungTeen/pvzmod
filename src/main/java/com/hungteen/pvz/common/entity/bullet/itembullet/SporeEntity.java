@@ -3,7 +3,7 @@ package com.hungteen.pvz.common.entity.bullet.itembullet;
 import com.hungteen.pvz.common.entity.plant.toxic.PuffShroomEntity;
 import com.hungteen.pvz.common.entity.plant.toxic.SeaShroomEntity;
 import com.hungteen.pvz.common.item.ItemRegister;
-import com.hungteen.pvz.common.misc.damage.PVZDamageSource;
+import com.hungteen.pvz.common.misc.PVZEntityDamageSource;
 import com.hungteen.pvz.common.entity.EntityRegister;
 import com.hungteen.pvz.register.ParticleRegister;
 import com.hungteen.pvz.utils.WorldUtil;
@@ -69,7 +69,7 @@ public class SporeEntity extends PVZItemBulletEntity{
 	}
 	
 	private void dealSporeDamage(Entity target) {
-		target.hurt(PVZDamageSource.spore(this, this.getThrower()), this.attackDamage);
+		target.hurt(PVZEntityDamageSource.spore(this, this.getThrower()), this.attackDamage);
 	}
 	
 	@Override

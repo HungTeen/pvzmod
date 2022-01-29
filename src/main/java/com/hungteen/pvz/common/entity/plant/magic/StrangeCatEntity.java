@@ -7,7 +7,7 @@ import com.hungteen.pvz.common.entity.ai.goal.target.PVZNearestTargetGoal;
 import com.hungteen.pvz.common.entity.plant.PVZPlantEntity;
 import com.hungteen.pvz.common.event.PVZLivingEvents;
 import com.hungteen.pvz.common.impl.plant.MemePlants;
-import com.hungteen.pvz.common.misc.damage.PVZDamageSource;
+import com.hungteen.pvz.common.misc.PVZEntityDamageSource;
 import com.hungteen.pvz.common.misc.sound.SoundRegister;
 import com.hungteen.pvz.common.entity.EntityRegister;
 import com.hungteen.pvz.utils.EntityUtil;
@@ -69,7 +69,7 @@ public class StrangeCatEntity extends PVZPlantEntity {
 	 * deal damage
 	 */
 	protected void performAttack(LivingEntity target) {
-		target.hurt(PVZDamageSource.normal(this), this.getAttackDamage());
+		target.hurt(PVZEntityDamageSource.normal(this), this.getAttackDamage());
 		EntityUtil.playSound(this, SoundRegister.BRUH.get());
 		this.setAttackTime(ANIM_CD);
 		this.restTick = REST_CD;
@@ -100,7 +100,7 @@ public class StrangeCatEntity extends PVZPlantEntity {
 		EntityUtil.playSound(this, SoundRegister.BRUH.get());
 		this.setAttackTime(ANIM_CD);
 		EntityUtil.getRandomLivingInRange(level, this, EntityUtil.getEntityAABB(this, 20, 20), getSuperAttackCount()).forEach((target) ->{
-			target.hurt(PVZDamageSource.normal(this), this.getAttackDamage());
+			target.hurt(PVZEntityDamageSource.normal(this), this.getAttackDamage());
 		});
 	}
 	

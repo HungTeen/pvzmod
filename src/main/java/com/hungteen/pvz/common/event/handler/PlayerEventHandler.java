@@ -10,14 +10,12 @@ import com.hungteen.pvz.common.enchantment.EnchantmentUtil;
 import com.hungteen.pvz.common.entity.AbstractPAZEntity;
 import com.hungteen.pvz.common.entity.misc.drop.SunEntity;
 import com.hungteen.pvz.common.entity.plant.PVZPlantEntity;
-import com.hungteen.pvz.common.entity.zombie.PVZZombieEntity;
 import com.hungteen.pvz.common.event.PVZLivingEvents;
 import com.hungteen.pvz.common.event.PVZPlayerEvents;
 import com.hungteen.pvz.common.item.ItemRegister;
 import com.hungteen.pvz.common.misc.sound.SoundRegister;
 import com.hungteen.pvz.common.world.invasion.InvasionManager;
 import com.hungteen.pvz.common.world.invasion.MissionManager;
-import com.hungteen.pvz.common.world.invasion.PVZInvasionData;
 import com.hungteen.pvz.compat.patchouli.PVZPatchouliHandler;
 import com.hungteen.pvz.utils.EntityUtil;
 import com.hungteen.pvz.utils.PlayerUtil;
@@ -66,23 +64,23 @@ public class PlayerEventHandler {
 			stack.hurtAndBreak(3, player, (p) -> {p.broadcastBreakEvent(Hand.MAIN_HAND);});
 		}
 	}
-	
+
+	/**
+	 * server side only.
+	 * {@link PVZLivingEvents#onLivingDeath(LivingDeathEvent)}
+	 */
 	public static void onPlayerKillEntity(PlayerEntity player, DamageSource source, LivingEntity living) {
 		if(living instanceof AbstractPAZEntity){
 			if(EntityUtil.isEnemy(player, living)){
 				PlayerUtil.addResource(player, Resources.TREE_XP, ((AbstractPAZEntity)living).getPAZType().getXpPoint());
 			}
 		}
-		if(InvasionManager.isRunning() && InvasionManager.isInvasionEntity(living.getType()) && EntityUtil.isEnemy(player, living)){
+		if(PlayerUtil.getInvasion(player).isInvasionEntity(living.getType()) && EntityUtil.isEnemy(player, living)){
 			if(MissionManager.getPlayerMission(player) == MissionManager.MissionType.KILL || MissionManager.getPlayerMission(player) == MissionManager.MissionType.INSTANT_KILL){
 				PlayerUtil.addResource(player, Resources.MISSION_VALUE, 1);
 			}
 		}
 	}
-	
-//	public static void onPlayerKillZombie(PlayerEntity player, ZombieType zombie) {
-//		PlayerUtil.addResource(player, Resources.KILL_COUNT, 1);
-//	}
 	
 	/**
 	 * send packet from server to client to sync player's data.
@@ -109,6 +107,7 @@ public class PlayerEventHandler {
 			l.lastVersion = PVZMod.MOD_VERSION;
 		});
 
+		InvasionManager.addPlayer(player);
 		unLockPAZs(player);
 
 //		WaveManager.syncWaveTime(player);
@@ -126,6 +125,7 @@ public class PlayerEventHandler {
 					plData.setPAZCardBar(p, player.getCooldowns().getCooldownPercent(card, 0f));
 				});
 			});
+			InvasionManager.removePlayer(player);
 		});
 	}
 	
@@ -136,12 +136,6 @@ public class PlayerEventHandler {
 		if(player != null && !player.level.isClientSide && PlayerUtil.isValidPlayer(player)) {
 			/* spawn sun around*/
 			spawnSunAroundPlayer(player);
-			
-			/* decrease difficulty */
-			if(ev.getSource().getEntity() instanceof PVZZombieEntity) {//player killed by zombie.
-				PVZInvasionData data = PVZInvasionData.getOverWorldInvasionData(ev.getEntity().level);
-			    data.addCurrentDifficulty(- 1);//decrease difficulty.
-			}
 		}
 	}
 	

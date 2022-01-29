@@ -1,6 +1,6 @@
 package com.hungteen.pvz.client.model.entity.zombie.pool;
 
-import com.hungteen.pvz.api.IBodyEntity;
+import com.hungteen.pvz.api.interfaces.IBodyEntity;
 import com.hungteen.pvz.api.paz.IZombieModel;
 import com.hungteen.pvz.client.model.entity.PVZEntityModel;
 import com.hungteen.pvz.common.entity.zombie.pool.BobsleTeamEntity;

@@ -6,7 +6,7 @@ import com.hungteen.pvz.api.types.IPlantType;
 import com.hungteen.pvz.common.entity.plant.PVZPlantEntity;
 import com.hungteen.pvz.common.impl.SkillTypes;
 import com.hungteen.pvz.common.impl.plant.PVZPlants;
-import com.hungteen.pvz.common.misc.damage.PVZDamageSource;
+import com.hungteen.pvz.common.misc.PVZEntityDamageSource;
 import com.hungteen.pvz.utils.EntityUtil;
 import com.hungteen.pvz.utils.enums.PAZAlmanacs;
 import com.mojang.datafixers.util.Pair;
@@ -75,15 +75,15 @@ public class SpikeWeedEntity extends PVZPlantEntity {
 			((IHasWheel) target).spikeWheelBy(this);
 			this.setSpikeNum(this.getSpikeNum() - 1);
 		} else {
-			target.hurt(PVZDamageSource.causeThornDamage(this), this.getAttackDamage());
+			target.hurt(PVZEntityDamageSource.causeThornDamage(this), this.getAttackDamage());
 		}
 		this.setAttackTime(ATTACK_ANIM_CD);
 	}
 	
 	@Override
 	public boolean hurt(DamageSource source, float amount) {
-		if(source instanceof PVZDamageSource) {
-			if(((PVZDamageSource) source).isCrushDamage()) {
+		if(source instanceof PVZEntityDamageSource) {
+			if(((PVZEntityDamageSource) source).isCrushDamage()) {
 				if(this.getSpikeNum() > 0) {
 					this.setSpikeNum(this.getSpikeNum() - 1);
 					return false;
@@ -101,7 +101,7 @@ public class SpikeWeedEntity extends PVZPlantEntity {
 	
 	@Override
 	public boolean isPlantImmuneTo(DamageSource source) {
-		return super.isPlantImmuneTo(source) || (! (source instanceof PVZDamageSource) && ! source.isProjectile());
+		return super.isPlantImmuneTo(source) || (! (source instanceof PVZEntityDamageSource) && ! source.isProjectile());
 	}
 	
 	@Override

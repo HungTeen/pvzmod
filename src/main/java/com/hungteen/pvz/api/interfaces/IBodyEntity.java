@@ -1,4 +1,4 @@
-package com.hungteen.pvz.api;
+package com.hungteen.pvz.api.interfaces;
 
 import com.hungteen.pvz.api.enums.BodyType;
 import com.hungteen.pvz.api.types.IZombieType;

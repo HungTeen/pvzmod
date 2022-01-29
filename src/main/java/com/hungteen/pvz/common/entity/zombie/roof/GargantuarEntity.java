@@ -7,7 +7,7 @@ import com.hungteen.pvz.common.entity.zombie.PVZZombieEntity;
 import com.hungteen.pvz.common.entity.zombie.body.ZombieDropBodyEntity;
 import com.hungteen.pvz.common.impl.zombie.RoofZombies;
 import com.hungteen.pvz.common.impl.zombie.ZombieType;
-import com.hungteen.pvz.common.misc.damage.PVZDamageSource;
+import com.hungteen.pvz.common.misc.PVZEntityDamageSource;
 import com.hungteen.pvz.common.misc.sound.SoundRegister;
 import com.hungteen.pvz.utils.EntityUtil;
 import com.hungteen.pvz.utils.ZombieUtil;
@@ -102,8 +102,8 @@ public class GargantuarEntity extends PVZZombieEntity {
 	}
 	
 	@Override
-	protected PVZDamageSource getZombieAttackDamageSource() {
-		return PVZDamageSource.causeCrushDamage(this);
+	protected PVZEntityDamageSource getZombieAttackDamageSource() {
+		return PVZEntityDamageSource.causeCrushDamage(this);
 	}
 	
 	@Override

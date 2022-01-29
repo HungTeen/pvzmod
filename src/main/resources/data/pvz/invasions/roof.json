@@ -6,33 +6,38 @@
   "spawns": [
     {
       "entity_type": "pvz:normal_zombie",
-      "occur_day": 0,
+      "invasion_level": 1,
       "spawn_weight": 100
     },
     {
       "entity_type": "pvz:conehead_zombie",
-      "occur_day": 2,
+      "invasion_level": 7,
+      "spawn_weight": 40
+    },
+    {
+      "entity_type": "pvz:ladder_zombie",
+      "invasion_level": 15,
       "spawn_weight": 40
     },
     {
       "entity_type": "pvz:bungee_zombie",
-      "occur_day": 5,
+      "invasion_level": 25,
       "spawn_weight": 20
     },
     {
-      "entity_type": "pvz:ladder_zombie",
-      "occur_day": 9,
-      "spawn_weight": 40
-    },
-    {
       "entity_type": "pvz:catapult_zombie",
-      "occur_day": 14,
+      "invasion_level": 32,
       "spawn_weight": 30
     },
     {
       "entity_type": "pvz:gargantuar",
-      "occur_day": 20,
+      "invasion_level": 40,
       "spawn_weight": 15
+    },
+    {
+      "entity_type": "pvz:giga_gargantuar",
+      "invasion_level": 50,
+      "spawn_weight": 5
     }
   ]
 }

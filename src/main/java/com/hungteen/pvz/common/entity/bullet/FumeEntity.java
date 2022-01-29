@@ -3,7 +3,7 @@ package com.hungteen.pvz.common.entity.bullet;
 import com.hungteen.pvz.common.entity.bullet.itembullet.PVZItemBulletEntity;
 import com.hungteen.pvz.common.entity.plant.toxic.GloomShroomEntity;
 import com.hungteen.pvz.common.item.ItemRegister;
-import com.hungteen.pvz.common.misc.damage.PVZDamageSource;
+import com.hungteen.pvz.common.misc.PVZEntityDamageSource;
 import com.hungteen.pvz.common.entity.EntityRegister;
 import com.hungteen.pvz.register.ParticleRegister;
 import com.hungteen.pvz.utils.WorldUtil;
@@ -92,7 +92,7 @@ public class FumeEntity extends PVZItemBulletEntity{
 	}
 	
 	private void dealFumeDamage(Entity target) {
-		target.hurt(PVZDamageSource.fume(this, this.getThrower()), this.attackDamage);
+		target.hurt(PVZEntityDamageSource.fume(this, this.getThrower()), this.attackDamage);
 		if(!level.isClientSide && this.knockback > 0) {
 			Vector3d speed = target.getDeltaMovement();
 			Vector3d now = this.getDeltaMovement();

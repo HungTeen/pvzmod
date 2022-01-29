@@ -5,7 +5,7 @@ import com.hungteen.pvz.api.types.IPlantType;
 import com.hungteen.pvz.common.entity.plant.base.PlantCloserEntity;
 import com.hungteen.pvz.common.impl.SkillTypes;
 import com.hungteen.pvz.common.impl.plant.PVZPlants;
-import com.hungteen.pvz.common.misc.damage.PVZDamageSource;
+import com.hungteen.pvz.common.misc.PVZEntityDamageSource;
 import com.hungteen.pvz.common.misc.sound.SoundRegister;
 import com.hungteen.pvz.common.entity.EntityRegister;
 import com.hungteen.pvz.utils.EntityUtil;
@@ -42,7 +42,7 @@ public class TangleKelpEntity extends PlantCloserEntity{
 	
 	@Override
 	public void performAttack(LivingEntity target) {
-		target.hurt(PVZDamageSource.normal(this), this.getAttackDamage());
+		target.hurt(PVZEntityDamageSource.normal(this), this.getAttackDamage());
 		this.remove();
 	}
 

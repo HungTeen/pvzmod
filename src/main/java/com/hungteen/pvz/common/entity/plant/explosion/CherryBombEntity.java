@@ -6,7 +6,7 @@ import com.hungteen.pvz.common.entity.plant.PVZPlantEntity;
 import com.hungteen.pvz.common.entity.plant.base.PlantBomberEntity;
 import com.hungteen.pvz.common.impl.SkillTypes;
 import com.hungteen.pvz.common.impl.plant.PVZPlants;
-import com.hungteen.pvz.common.misc.damage.PVZDamageSource;
+import com.hungteen.pvz.common.misc.PVZEntityDamageSource;
 import com.hungteen.pvz.common.misc.sound.SoundRegister;
 import com.hungteen.pvz.register.ParticleRegister;
 import com.hungteen.pvz.utils.EntityUtil;
@@ -29,7 +29,7 @@ public class CherryBombEntity extends PlantBomberEntity{
 			final float range = getExplodeRange();
 			final AxisAlignedBB aabb = EntityUtil.getEntityAABB(this, range, range);
 			for(Entity target : EntityUtil.getWholeTargetableEntities(this, aabb)) {
-				target.hurt(PVZDamageSource.explode(this), this.getExplodeDamage());
+				target.hurt(PVZEntityDamageSource.explode(this), this.getExplodeDamage());
 				if(! EntityUtil.isEntityValid(target)) {
 					++ deathCnt;
 				}

@@ -4,7 +4,7 @@ import com.hungteen.pvz.api.enums.PVZGroupType;
 import com.hungteen.pvz.common.entity.AbstractOwnerEntity;
 import com.hungteen.pvz.common.entity.zombie.PVZZombieEntity;
 import com.hungteen.pvz.common.entity.zombie.other.CoffinEntity;
-import com.hungteen.pvz.common.misc.damage.PVZDamageSource;
+import com.hungteen.pvz.common.misc.PVZEntityDamageSource;
 import com.hungteen.pvz.common.entity.EntityRegister;
 import com.hungteen.pvz.utils.EntityUtil;
 import com.hungteen.pvz.utils.WorldUtil;
@@ -55,7 +55,7 @@ public class ZombieHandEntity extends AbstractOwnerEntity {
 	
 	protected void performAttack() {
 		EntityUtil.getTargetableLivings(this, EntityUtil.getEntityAABB(this, 0.5f, 1f)).forEach(target -> {
-		    target.hurt(PVZDamageSource.normal(this, this.getOwnerOrSelf()), this.getAttackDamage(target));
+		    target.hurt(PVZEntityDamageSource.normal(this, this.getOwnerOrSelf()), this.getAttackDamage(target));
 			target.setPos(target.getX(), target.getY() - 3, target.getZ());
 		});
 	}

@@ -4,7 +4,7 @@ import com.hungteen.pvz.common.advancement.trigger.EntityEffectAmountTrigger;
 import com.hungteen.pvz.common.entity.plant.PVZPlantEntity;
 import com.hungteen.pvz.common.entity.zombie.roof.GargantuarEntity;
 import com.hungteen.pvz.common.item.ItemRegister;
-import com.hungteen.pvz.common.misc.damage.PVZDamageSource;
+import com.hungteen.pvz.common.misc.PVZEntityDamageSource;
 import com.hungteen.pvz.common.misc.sound.SoundRegister;
 import com.hungteen.pvz.common.entity.EntityRegister;
 import com.hungteen.pvz.utils.EntityUtil;
@@ -55,7 +55,7 @@ public class CornEntity extends PultBulletEntity {
 		final float range = 4F;
 		int killCnt = 0;
 		for(Entity entity : EntityUtil.getTargetableEntities(this.getOwnerOrSelf(), EntityUtil.getEntityAABB(this, range, range))) {
-			entity.hurt(PVZDamageSource.corn(this, this.getThrower()), this.attackDamage);
+			entity.hurt(PVZEntityDamageSource.corn(this, this.getThrower()), this.attackDamage);
 			if(! EntityUtil.isEntityValid(entity) && entity instanceof GargantuarEntity) {
 				++ killCnt;
 			}

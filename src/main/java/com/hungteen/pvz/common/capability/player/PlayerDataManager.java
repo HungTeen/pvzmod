@@ -11,14 +11,12 @@ import com.hungteen.pvz.common.advancement.trigger.TreeLevelTrigger;
 import com.hungteen.pvz.common.container.shop.MysteryShopContainer;
 import com.hungteen.pvz.common.event.handler.PlayerEventHandler;
 import com.hungteen.pvz.common.item.spawn.card.SummonCardItem;
-import com.hungteen.pvz.common.misc.PVZPacketTypes;
 import com.hungteen.pvz.common.network.PAZStatsPacket;
 import com.hungteen.pvz.common.network.PVZPacketHandler;
 import com.hungteen.pvz.common.network.toclient.CardInventoryPacket;
-import com.hungteen.pvz.common.network.toclient.OtherStatsPacket;
 import com.hungteen.pvz.common.network.toclient.PlayerStatsPacket;
+import com.hungteen.pvz.common.world.invasion.Invasion;
 import com.hungteen.pvz.common.world.invasion.MissionManager;
-import com.hungteen.pvz.common.world.invasion.WaveManager;
 import com.hungteen.pvz.utils.PlayerUtil;
 import com.hungteen.pvz.utils.StringUtil;
 import com.hungteen.pvz.utils.enums.Resources;
@@ -47,15 +45,8 @@ public class PlayerDataManager {
 	private final Map<IPAZType, Float> pazCardBar = new HashMap<>();
 	/* plant & zombie lock */
 	private final Map<IPAZType, Boolean> pazLocked = new HashMap<>();
-	/* wave */
-	private int[] waveTime = new int[WaveManager.MAX_WAVE_NUM];
-	private boolean[] waveTriggered = new boolean[WaveManager.MAX_WAVE_NUM];
-	private int totalWaveCount;
-	/* mission */
-	private int[] killQueue = new int[MissionManager.KILL_IN_SECOND];
-	public int killInSecond;
-	public int killPos = 0;
 	/* misc data */
+	private final Invasion invasion;
 	public String lastVersion = StringUtil.INIT_VERSION;
 	private final OtherStats otherStats;
 	
@@ -78,21 +69,8 @@ public class PlayerDataManager {
 				this.pazLocked.put(plant, true);
 			});
 		}
-		{//wave.
-			for(int i = 0; i < WaveManager.MAX_WAVE_NUM; ++ i){
-				this.waveTime[i] = 0;
-				this.waveTriggered[i] = false;
-			}
-			this.totalWaveCount = 0;
-		}
-		{
-			for(int i = 0; i < MissionManager.KILL_IN_SECOND; ++ i) {
-				killQueue[i] = 0;
-			}
-			this.killPos = 0;
-			this.killInSecond = 0;
-		}
 		{// init misc data.
+			this.invasion = new Invasion(player);
 			this.otherStats = new OtherStats(this);
 		}
 	}
@@ -161,25 +139,10 @@ public class PlayerDataManager {
 				});
 			}
 		}
-		if(baseTag.contains("wave_nbt")){//wave.
-			final CompoundNBT nbt = baseTag.getCompound("wave_nbt");
-			for(int i = 0; i < WaveManager.MAX_WAVE_NUM; ++ i){
-				this.waveTime[i] = nbt.getInt("wave_time_" + i);
-				this.waveTriggered[i] = nbt.getBoolean("wave_triggered_" + i);
-			}
-			this.totalWaveCount = nbt.getInt("wave_count");
-		}
-		if(baseTag.contains("mission_nbt")){
-			final CompoundNBT nbt = baseTag.getCompound("mission_nbt");
-			for(int i = 0; i < MissionManager.KILL_IN_SECOND; ++ i){
-				if(nbt.contains("kill_count" + i)){
-					this.killQueue[i] = nbt.getInt("kill_count" + i);
-				}
-			}
-			this.killPos = nbt.getInt("kill_pos");
-			this.killInSecond = nbt.getInt("kill_in_second");
-		}
 		{// load misc data.
+			if(baseTag.contains("invasion_data")){
+				this.invasion.load(baseTag.getCompound("invasion_data"));
+			}
 			if(baseTag.contains("last_join_version")) {
 				this.lastVersion = baseTag.getString("last_join_version");
 			}
@@ -226,25 +189,12 @@ public class PlayerDataManager {
 			});
 			baseTag.put("paz_locks", nbt);
 		}
-		{//wave.
-			final CompoundNBT nbt = new CompoundNBT();
-			for(int i = 0; i < WaveManager.MAX_WAVE_NUM; ++ i){
-				nbt.putInt("wave_time_" + i, this.waveTime[i]);
-				nbt.putBoolean("wave_triggered_" + i, this.waveTriggered[i]);
-			}
-			nbt.putInt("wave_count", this.totalWaveCount);
-			baseTag.put("wave_nbt", nbt);
-		}
-		{//mission.
-			final CompoundNBT nbt = new CompoundNBT();
-			for(int i = 0; i < MissionManager.KILL_IN_SECOND; ++ i){
-				nbt.putInt("kill_count" + i, killQueue[i]);
-			}
-			nbt.putInt("kill_pos", this.killPos);
-			nbt.putInt("kill_in_second", killInSecond);
-			baseTag.put("mission_nbt", nbt);
-		}
 		{// load misc data.
+			{
+				final CompoundNBT nbt = new CompoundNBT();
+				this.invasion.save(nbt);
+				baseTag.put("invasion_data", nbt);
+			}
 			baseTag.putString("last_join_version", this.lastVersion);
 			this.otherStats.saveToNBT(baseTag);
 		}
@@ -259,7 +209,6 @@ public class PlayerDataManager {
 			if(! PVZConfig.COMMON_CONFIG.RuleSettings.KeepSunWhenDie.get()) {
 				this.setResource(Resources.SUN_NUM, 50);
 			}
-//			this.setResource(Resources.NO_FOG_TICK, 0);
 //			this.setResource(Resources.KILL_COUNT, 0);
 		}
 		this.syncToClient();
@@ -311,7 +260,7 @@ public class PlayerDataManager {
 			});
 		}
 		{//wave.
-			this.sendAllWavePacket(player);
+			this.invasion.sendAllWavePacket(player);
 		}
 	}
 
@@ -368,7 +317,7 @@ public class PlayerDataManager {
 				}
 			} else if(res == Resources.MISSION_VALUE){
 				if(num > 0 && this.getResource(Resources.MISSION_TYPE) == MissionManager.MissionType.INSTANT_KILL.ordinal()){
-					this.killInSecond ++;
+					++ this.invasion.killInSecond;
 				}
 			}
 		}
@@ -522,98 +471,6 @@ public class PlayerDataManager {
 		}
 	}
 
-	/*
-	Operation about wave.
-	 */
-
-	public void setWaveTime(int pos, int data){
-		if(pos >= 0 && pos < WaveManager.MAX_WAVE_NUM) {
-		    this.waveTime[pos] = data;
-		    this.sendWavePacket(player, pos, data);
-		}
-	}
-
-	public void setTotalWaveCount(int cnt){
-		this.totalWaveCount = cnt;
-		this.sendWavePacket(player, -1, cnt);
-	}
-
-	public void setWaveTriggered(int pos, boolean is){
-		if(pos >= 0 && pos < WaveManager.MAX_WAVE_NUM) {
-			this.waveTriggered[pos] = is;
-		    this.sendWaveFlagPacket(player, pos, is);
-		}
-	}
-
-	public int getTotalWaveCount() {
-		return totalWaveCount;
-	}
-
-	public boolean getWaveTriggered(int pos) {
-		return waveTriggered[pos];
-	}
-
-	public int getWaveTime(int pos) {
-		return waveTime[pos];
-	}
-
-	private void sendWavePacket(PlayerEntity player, int pos, int data){
-		if (player instanceof ServerPlayerEntity) {
-			PVZPacketHandler.CHANNEL.send(
-					PacketDistributor.PLAYER.with(() -> {
-						return (ServerPlayerEntity) player;
-					}),
-					new OtherStatsPacket(PVZPacketTypes.WAVE, pos, data)
-			);
-		}
-	}
-
-	private void sendWaveFlagPacket(PlayerEntity player, int pos, boolean flag){
-		if (player instanceof ServerPlayerEntity) {
-			PVZPacketHandler.CHANNEL.send(
-					PacketDistributor.PLAYER.with(() -> {
-						return (ServerPlayerEntity) player;
-					}),
-					new OtherStatsPacket(PVZPacketTypes.WAVE_FLAG, pos, flag)
-			);
-		}
-	}
-
-	private void sendAllWavePacket(PlayerEntity player){
-		for (int i = 0; i < WaveManager.MAX_WAVE_NUM; ++ i){
-			sendWavePacket(player, i, this.waveTime[i]);
-			sendWaveFlagPacket(player, i, this.waveTriggered[i]);
-		}
-		sendWavePacket(player, -1, this.totalWaveCount);
-	}
-
-	/*
-	Operation about Mission.
-	 */
-
-	public void resetMission(MissionManager.MissionType type){
-		this.setResource(Resources.MISSION_TYPE, type.ordinal());
-		this.setResource(Resources.MISSION_VALUE, 0);
-		this.setResource(Resources.MISSION_STAGE, 0);
-		for(int i = 0; i < MissionManager.KILL_IN_SECOND; ++ i) {
-			this.killQueue[i] = 0;
-		}
-		this.killInSecond = 0;
-	}
-
-	public void updateKillQueue(){
-//		System.out.println(killInSecond);
-		final int next = (killPos + 1) % MissionManager.KILL_IN_SECOND;
-		this.addResource(Resources.MISSION_VALUE, - this.killQueue[next]);
-		this.killQueue[next] = this.killInSecond;
-		this.killPos = next;
-		this.killInSecond = 0;
-	}
-
-	public void clearMission(){
-		resetMission(MissionManager.MissionType.EMPTY);
-	}
-
 	public final class OtherStats{
 		
 		@SuppressWarnings("unused")
@@ -655,7 +512,11 @@ public class PlayerDataManager {
 			}
 		}
 	}
-	
+
+	public Invasion getInvasion(){
+		return this.invasion;
+	}
+
 	public OtherStats getOtherStats() {
 		return this.otherStats;
 	}

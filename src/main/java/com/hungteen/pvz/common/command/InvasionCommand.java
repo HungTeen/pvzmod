@@ -2,8 +2,6 @@ package com.hungteen.pvz.common.command;
 
 import com.hungteen.pvz.common.world.invasion.InvasionManager;
 import com.hungteen.pvz.common.world.invasion.InvasionType;
-import com.hungteen.pvz.common.world.invasion.PVZInvasionData;
-import com.hungteen.pvz.common.world.invasion.WaveManager;
 import com.hungteen.pvz.utils.PlayerUtil;
 import com.mojang.brigadier.CommandDispatcher;
 import com.mojang.brigadier.arguments.BoolArgumentType;
@@ -25,59 +23,42 @@ public class InvasionCommand {
         LiteralArgumentBuilder<CommandSource> builder = Commands.literal("invasion").requires((ctx) -> {return ctx.hasPermission(2);});
 
 		builder.then(Commands.literal("event")
+				.then(Commands.argument("targets", EntityArgument.players())
 				.then(Commands.literal("set")
 						.then(Commands.argument("invasion_type", ResourceLocationArgument.id()).suggests(PVZSuggestionProviders.ALL_INVASIONS)
 								.executes((commond) -> {
-									return setInvasionEvent(commond.getSource(), ResourceLocationArgument.getId(commond, "invasion_type"));
+									return setInvasionEvent(commond.getSource(), EntityArgument.getPlayers(commond, "targets"), ResourceLocationArgument.getId(commond, "invasion_type"));
 								})))
 				.then(Commands.literal("add")
 						.then(Commands.argument("invasion_type", ResourceLocationArgument.id()).suggests(PVZSuggestionProviders.ALL_INVASIONS)
 								.executes((commond) -> {
-									return addInvasionEvent(commond.getSource(), ResourceLocationArgument.getId(commond, "invasion_type"));
+									return addInvasionEvent(commond.getSource(), EntityArgument.getPlayers(commond, "targets"), ResourceLocationArgument.getId(commond, "invasion_type"));
 								})))
 				.then(Commands.literal("remove")
 						.then(Commands.argument("invasion_type", ResourceLocationArgument.id()).suggests(PVZSuggestionProviders.ALL_INVASIONS)
 								.executes((commond) -> {
-									return removeInvasionEvent(commond.getSource(), ResourceLocationArgument.getId(commond, "invasion_type"));
+									return removeInvasionEvent(commond.getSource(), EntityArgument.getPlayers(commond, "targets"), ResourceLocationArgument.getId(commond, "invasion_type"));
 								})))
 				.then(Commands.literal("show")
-						.then(Commands.argument("targets", EntityArgument.players())
-								.executes((commond)->{
-									return showInvasionEvent(commond.getSource(), EntityArgument.getPlayers(commond, "targets"));
-								})))
+						.executes((commond)->{
+							return showInvasionEvent(commond.getSource(), EntityArgument.getPlayers(commond, "targets"));
+						})))
 				.then(Commands.literal("stop")
 						.executes((commond)->{
 							return stopInvasionEvent(commond.getSource());
 						}))
 		);
 
-        builder.then(Commands.literal("difficulty")
-        		.then(Commands.literal("add")
-						.then(Commands.argument("amount", IntegerArgumentType.integer())
-								.executes(commond -> {
-									return addDifficulty(commond.getSource(), IntegerArgumentType.getInteger(commond, "amount"));
-								})))
-		        .then(Commands.literal("set")
-						.then(Commands.argument("amount", IntegerArgumentType.integer())
-								.executes(commond -> {
-									return setDifficulty(commond.getSource(), IntegerArgumentType.getInteger(commond, "amount"));
-								})))
-		        .then(Commands.literal("query")
-						.executes(commond -> {
-							return queryDifficulty(commond.getSource());
-						}))
-		);
-
 		builder.then(Commands.literal("wave")
 				.then(Commands.argument("targets", EntityArgument.players())
-						.then(Commands.literal("start")
-								.then(Commands.argument("wave_num", IntegerArgumentType.integer())
-										.executes(commond -> {
-											return spawnHugeWave(EntityArgument.getPlayers(commond, "targets"), IntegerArgumentType.getInteger(commond, "wave_num"));
-										}).then(Commands.argument("amount", IntegerArgumentType.integer())
-												.executes(command -> {
-													return spawnHugeWave(EntityArgument.getPlayers(command, "targets"), IntegerArgumentType.getInteger(command, "wave_num"), IntegerArgumentType.getInteger(command, "amount"));
-												}))))
+//						.then(Commands.literal("start")
+//								.then(Commands.argument("wave_num", IntegerArgumentType.integer())
+//										.executes(commond -> {
+//											return spawnHugeWave(EntityArgument.getPlayers(commond, "targets"), IntegerArgumentType.getInteger(commond, "wave_num"));
+//										}).then(Commands.argument("amount", IntegerArgumentType.integer())
+//												.executes(command -> {
+//													return spawnHugeWave(EntityArgument.getPlayers(command, "targets"), IntegerArgumentType.getInteger(command, "wave_num"), IntegerArgumentType.getInteger(command, "amount"));
+//												}))))
 						.then(Commands.literal("set")//TODO bug
 								.then(Commands.argument("pos", IntegerArgumentType.integer())
 										.then(Commands.argument("time", IntegerArgumentType.integer())
@@ -93,69 +74,49 @@ public class InvasionCommand {
 
         dispatcher.register(builder);
     }
-	
-	private static int addDifficulty(CommandSource source, int amount) {
-		PVZInvasionData data = PVZInvasionData.getOverWorldInvasionData(source.getLevel());
-		data.addCurrentDifficulty(amount);
-		queryDifficulty(source);
-		return 0;
-	}
-	
-	private static int setDifficulty(CommandSource source, int amount) {
-		PVZInvasionData data = PVZInvasionData.getOverWorldInvasionData(source.getLevel());
-		data.setCurrentDifficulty(amount);
-		queryDifficulty(source);
-		return 0;
-	}
-	
-	private static int queryDifficulty(CommandSource source) {
-		PVZInvasionData data = PVZInvasionData.getOverWorldInvasionData(source.getLevel());
-		source.sendSuccess(new TranslationTextComponent("command.pvz.invasion.difficulty", data.getCurrentDifficulty()), true);
-		return 0;
-	}
 
-	private static int spawnHugeWave(Collection<? extends ServerPlayerEntity> targets, int waveNum) {
-		return spawnHugeWave(targets, waveNum, 0);
-	}
+//	private static int spawnHugeWave(Collection<? extends ServerPlayerEntity> targets, int waveNum) {
+//		return spawnHugeWave(targets, waveNum, 0);
+//	}
 
-	private static int spawnHugeWave(Collection<? extends ServerPlayerEntity> targets, int waveNum, int amount) {
-		targets.forEach(player -> {
-			WaveManager manager = new WaveManager(player, waveNum);
-			if(amount != 0){
-				manager.spawnCnt = amount;
-			}
-			manager.spawnWaveZombies();
-		});
-		return targets.size();
-	}
+//	private static int spawnHugeWave(Collection<? extends ServerPlayerEntity> targets, int waveNum, int amount) {
+//		targets.forEach(player -> {
+//			WaveManager manager = new WaveManager(player, waveNum);
+//			if(amount != 0){
+//				manager.spawnCnt = amount;
+//			}
+//			manager.spawnWaveZombies();
+//		});
+//		return targets.size();
+//	}
 
 	private static int setWaveTime(CommandSource source, Collection<? extends ServerPlayerEntity> targets, int waveNum, int time) {
-		if(waveNum < 0 || waveNum >= WaveManager.MAX_WAVE_NUM) {
+		if(waveNum < 0 || waveNum >= InvasionManager.MAX_WAVE_NUM) {
 			source.sendFailure(new TranslationTextComponent("command.pvz.invasion.out_of_bound"));
 		} else{
 			targets.forEach(player -> {
-				PlayerUtil.getOptManager(player).ifPresent(l -> l.setWaveTime(waveNum, time));
+				PlayerUtil.getOptManager(player).ifPresent(l -> l.getInvasion().setWaveTime(waveNum, time));
 			});
 		}
 		return targets.size();
 	}
 
 	private static int setTriggered(CommandSource source, Collection<? extends ServerPlayerEntity> targets, int waveNum, boolean flag) {
-		if(waveNum < 0 || waveNum >= WaveManager.MAX_WAVE_NUM) {
+		if(waveNum < 0 || waveNum >= InvasionManager.MAX_WAVE_NUM) {
 			source.sendFailure(new TranslationTextComponent("command.pvz.invasion.out_of_bound"));
 		} else{
 			targets.forEach(player -> {
-				PlayerUtil.getOptManager(player).ifPresent(l -> l.setWaveTriggered(waveNum, flag));
+				PlayerUtil.getOptManager(player).ifPresent(l -> l.getInvasion().setWaveTriggered(waveNum, flag));
 			});
 		}
 		return targets.size();
 	}
 
-	public static int setInvasionEvent(CommandSource source, ResourceLocation res) {
+	public static int setInvasionEvent(CommandSource source, Collection<? extends ServerPlayerEntity> targets, ResourceLocation res) {
 		InvasionType type = InvasionManager.getInvasion(res);
 		if(type != null){
 			if(! type.isAssistInvasion()){
-				PVZInvasionData.getOverWorldInvasionData(source.getLevel()).setSpawnInvasion(res);
+				targets.forEach(serverPlayerEntity -> PlayerUtil.getInvasion(serverPlayerEntity).setSpawnInvasion(res));
 				source.sendSuccess(new TranslationTextComponent("command.pvz.invasion.set", res.toString()), true);
 			} else{
 				source.sendFailure(new TranslationTextComponent("command.pvz.invasion.assist", res.toString()));
@@ -166,11 +127,11 @@ public class InvasionCommand {
 		return 0;
 	}
 
-	public static int addInvasionEvent(CommandSource source, ResourceLocation res) {
+	public static int addInvasionEvent(CommandSource source, Collection<? extends ServerPlayerEntity> targets, ResourceLocation res) {
 		InvasionType type = InvasionManager.getInvasion(res);
 		if(type != null){
 			if(type.isAssistInvasion()){
-				PVZInvasionData.getOverWorldInvasionData(source.getLevel()).addAssistInvasion(res);
+				targets.forEach(serverPlayerEntity -> PlayerUtil.getInvasion(serverPlayerEntity).addAssistInvasion(res));
 				source.sendSuccess(new TranslationTextComponent("command.pvz.invasion.add", res.toString()), true);
 			} else{
 				source.sendFailure(new TranslationTextComponent("command.pvz.invasion.spawn", res.toString()));
@@ -181,11 +142,11 @@ public class InvasionCommand {
 		return 0;
 	}
 
-	public static int removeInvasionEvent(CommandSource source, ResourceLocation res) {
+	public static int removeInvasionEvent(CommandSource source, Collection<? extends ServerPlayerEntity> targets, ResourceLocation res) {
 		InvasionType type = InvasionManager.getInvasion(res);
 		if(type != null){
 			if(type.isAssistInvasion()){
-				PVZInvasionData.getOverWorldInvasionData(source.getLevel()).removeAssistInvasion(res);
+				targets.forEach(serverPlayerEntity -> PlayerUtil.getInvasion(serverPlayerEntity).removeAssistInvasion(res));
 				source.sendSuccess(new TranslationTextComponent("command.pvz.invasion.remove", res.toString()), true);
 			} else{
 				source.sendFailure(new TranslationTextComponent("command.pvz.invasion.spawn", res.toString()));
@@ -197,14 +158,14 @@ public class InvasionCommand {
 	}
 	
 	private static int stopInvasionEvent(CommandSource source) {
-		InvasionManager.deactivateZombieAttackEvents(source.getLevel(), false);
+		InvasionManager.deactivateInvasion(source.getLevel(), false);
 		source.sendSuccess(new TranslationTextComponent("command.pvz.invasion.clear"), true);
 		return 0;
 	}
 	
 	private static int showInvasionEvent(CommandSource source, Collection<? extends ServerPlayerEntity> targets) {
 		targets.forEach(player -> {
-			InvasionManager.getActiveInvasions().forEach(type -> {
+			PlayerUtil.getInvasion(player).getActiveInvasions().forEach(type -> {
 				source.sendSuccess(type.getText(), true);
 			});
 		});

@@ -1,6 +1,6 @@
 package com.hungteen.pvz.common.entity.misc.bowling;
 
-import com.hungteen.pvz.common.misc.damage.PVZDamageSource;
+import com.hungteen.pvz.common.misc.PVZEntityDamageSource;
 import com.hungteen.pvz.common.misc.sound.SoundRegister;
 import com.hungteen.pvz.utils.EntityUtil;
 
@@ -28,7 +28,7 @@ public class GiantNutBowlingEntity extends AbstractBowlingEntity {
 			this.hitEntities = new IntOpenHashSet();
 		}
 		if(this.hitEntities != null && ! this.hitEntities.contains(entity.getId())) {
-			entity.hurt(PVZDamageSource.normal(this, this.getOwner()), 200);
+			entity.hurt(PVZEntityDamageSource.normal(this, this.getOwner()), 200);
 			this.hitEntities.add(entity.getId());
 		    EntityUtil.playSound(this, SoundRegister.BOWLING_HIT.get());
 		}

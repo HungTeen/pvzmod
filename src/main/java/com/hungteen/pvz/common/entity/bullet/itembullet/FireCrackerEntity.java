@@ -1,7 +1,7 @@
 package com.hungteen.pvz.common.entity.bullet.itembullet;
 
 import com.hungteen.pvz.common.item.ItemRegister;
-import com.hungteen.pvz.common.misc.damage.PVZDamageSource;
+import com.hungteen.pvz.common.misc.PVZEntityDamageSource;
 import com.hungteen.pvz.common.misc.sound.SoundRegister;
 import com.hungteen.pvz.common.entity.EntityRegister;
 import com.hungteen.pvz.utils.EntityUtil;
@@ -74,7 +74,7 @@ public class FireCrackerEntity extends PVZItemBulletEntity{
 			EntityUtil.playSound(this, SoundRegister.POTATO_MINE.get());
 		    float range = 3F;
 		    EntityUtil.getTargetableEntities(this.getOwnerOrSelf(), EntityUtil.getEntityAABB(this, range, range)).forEach((entity) -> {
-			    entity.hurt(PVZDamageSource.explode(this, this.getThrower()), this.getAttackDamage());
+			    entity.hurt(PVZEntityDamageSource.explode(this, this.getThrower()), this.getAttackDamage());
 		    });
 		    for(int i = 0;i < 3; ++ i) {
 			    EntityUtil.spawnParticle(this, 5);

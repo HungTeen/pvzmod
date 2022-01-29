@@ -2,7 +2,7 @@ package com.hungteen.pvz.common.entity.zombie.grass;
 
 import com.hungteen.pvz.common.impl.zombie.ZombieType;
 import com.hungteen.pvz.common.impl.zombie.GrassZombies;
-import com.hungteen.pvz.common.misc.damage.PVZDamageSource;
+import com.hungteen.pvz.common.misc.PVZEntityDamageSource;
 import com.hungteen.pvz.data.loot.PVZLoot;
 import com.hungteen.pvz.remove.MetalTypes;
 import com.hungteen.pvz.utils.EntityUtil;
@@ -55,7 +55,7 @@ public class GigaFootballZombieEntity extends FootballZombieEntity {
 	@Override
 	protected void doPush(Entity target) {
 		if(this.isRushing() && target instanceof LivingEntity) {
-			target.hurt(PVZDamageSource.causeCrushDamage(this), EntityUtil.getMaxHealthDamage((LivingEntity) target));
+			target.hurt(PVZEntityDamageSource.causeCrushDamage(this), EntityUtil.getMaxHealthDamage((LivingEntity) target));
 			this.updateRush(false);
 		}
 	}

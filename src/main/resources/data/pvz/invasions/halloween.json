@@ -5,18 +5,13 @@
   "display_color": "gold",
   "spawns": [
     {
-      "entity_type": "pvz:normal_zombie",
-      "occur_day": 0,
-      "spawn_weight": 100
-    },
-    {
       "entity_type": "pvz:trick_zombie",
-      "occur_day": 3,
+      "invasion_level": 5,
       "spawn_weight": 60
     },
     {
       "entity_type": "pvz:pumpkin_zombie",
-      "occur_day": 10,
+      "invasion_level": 25,
       "spawn_weight": 40
     }
   ]

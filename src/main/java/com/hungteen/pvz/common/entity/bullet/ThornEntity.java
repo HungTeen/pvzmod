@@ -3,7 +3,7 @@ package com.hungteen.pvz.common.entity.bullet;
 import java.util.List;
 
 import com.hungteen.pvz.common.entity.plant.spear.CatTailEntity;
-import com.hungteen.pvz.common.misc.damage.PVZDamageSource;
+import com.hungteen.pvz.common.misc.PVZEntityDamageSource;
 import com.hungteen.pvz.common.entity.EntityRegister;
 import com.hungteen.pvz.utils.EntityUtil;
 
@@ -167,7 +167,7 @@ public class ThornEntity extends AbstractBulletEntity {
 	}
 
 	protected void dealThornDamage(Entity target) {
-		target.hurt(PVZDamageSource.causeThornDamage(this, this), this.getAttackDamage());
+		target.hurt(PVZEntityDamageSource.causeThornDamage(this, this), this.getAttackDamage());
 	}
 	
 	@Override

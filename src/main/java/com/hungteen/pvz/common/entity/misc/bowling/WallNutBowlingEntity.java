@@ -2,7 +2,7 @@ package com.hungteen.pvz.common.entity.misc.bowling;
 
 import com.hungteen.pvz.common.advancement.trigger.EntityEffectAmountTrigger;
 import com.hungteen.pvz.common.entity.misc.drop.CoinEntity;
-import com.hungteen.pvz.common.misc.damage.PVZDamageSource;
+import com.hungteen.pvz.common.misc.PVZEntityDamageSource;
 import com.hungteen.pvz.common.misc.sound.SoundRegister;
 import com.hungteen.pvz.common.entity.EntityRegister;
 import com.hungteen.pvz.utils.EntityUtil;
@@ -29,9 +29,9 @@ public class WallNutBowlingEntity extends AbstractBowlingEntity {
 		for(int i = 1; i < this.hitCount; ++ i) {
 			CoinEntity coin = EntityRegister.COIN.get().create(level);
 			coin.setAmount(1);
-			EntityUtil.onMobEntityRandomPosSpawn(level, coin, this.blockPosition(), 1);
+			EntityUtil.onEntityRandomPosSpawn(level, coin, this.blockPosition(), 1);
 		}
-		entity.hurt(PVZDamageSource.normal(this, this.getOwner()).setCount(hitCount), 30);
+		entity.hurt(PVZEntityDamageSource.normal(this, this.getOwner()).setCount(hitCount), 30);
 		EntityUtil.playSound(this, SoundRegister.BOWLING_HIT.get());
 		PlayerEntity player = (PlayerEntity) this.getOwner();
 		if(player != null && player instanceof ServerPlayerEntity) {

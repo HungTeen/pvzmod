@@ -7,7 +7,7 @@ import com.hungteen.pvz.common.entity.bullet.BallEntity;
 import com.hungteen.pvz.common.entity.zombie.base.CarZombieEntity;
 import com.hungteen.pvz.common.impl.zombie.ZombieType;
 import com.hungteen.pvz.common.impl.zombie.RoofZombies;
-import com.hungteen.pvz.common.misc.damage.PVZDamageSource;
+import com.hungteen.pvz.common.misc.PVZEntityDamageSource;
 import com.hungteen.pvz.common.misc.sound.SoundRegister;
 import com.hungteen.pvz.common.entity.EntityRegister;
 import com.hungteen.pvz.utils.EntityUtil;
@@ -68,7 +68,7 @@ public class CatapultZombieEntity extends CarZombieEntity implements IPult,IHasW
 	
 	@Override
 	public void spikeWheelBy(LivingEntity entity) {
-		this.hurt(PVZDamageSource.thorns(entity), EntityUtil.getMaxHealthDamage(this, 2));
+		this.hurt(PVZEntityDamageSource.thorns(entity), EntityUtil.getMaxHealthDamage(this, 2));
 	}
 	
 	@Override

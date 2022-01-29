@@ -2,7 +2,7 @@ package com.hungteen.pvz.common.entity.zombie.base;
 
 import com.hungteen.pvz.common.entity.plant.PVZPlantEntity;
 import com.hungteen.pvz.common.entity.zombie.PVZZombieEntity;
-import com.hungteen.pvz.common.misc.damage.PVZDamageSource;
+import com.hungteen.pvz.common.misc.PVZEntityDamageSource;
 import com.hungteen.pvz.utils.EntityUtil;
 import com.hungteen.pvz.utils.ZombieUtil;
 import net.minecraft.entity.CreatureEntity;
@@ -75,7 +75,7 @@ public abstract class AbstractBossZombieEntity extends PVZZombieEntity {
 				if(target instanceof PVZPlantEntity) {
 					target.setHealth(0);
 				} else {
-					target.hurt(PVZDamageSource.normal(this), (float) this.getAttribute(Attributes.ATTACK_DAMAGE).getValue());
+					target.hurt(PVZEntityDamageSource.normal(this), (float) this.getAttribute(Attributes.ATTACK_DAMAGE).getValue());
 					target.setDeltaMovement(target.position().add(0, target.getEyeHeight(), 0).subtract(this.position()).normalize().scale(2F));
 				}
 			});
@@ -115,7 +115,7 @@ public abstract class AbstractBossZombieEntity extends PVZZombieEntity {
 		super.doPush(entityIn);
 		if (! level.isClientSide && entityIn instanceof LivingEntity && EntityUtil.canTargetEntity(this, entityIn)) {
 			if(this.tickCount % 5 == 0) {
-				entityIn.hurt(PVZDamageSource.causeCrushDamage(this), EntityUtil.getMaxHealthDamage((LivingEntity) entityIn, 0.5F));
+				entityIn.hurt(PVZEntityDamageSource.causeCrushDamage(this), EntityUtil.getMaxHealthDamage((LivingEntity) entityIn, 0.5F));
 			}
 		}
 	}

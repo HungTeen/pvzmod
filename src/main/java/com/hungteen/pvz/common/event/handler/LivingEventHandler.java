@@ -3,7 +3,7 @@ package com.hungteen.pvz.common.event.handler;
 import com.hungteen.pvz.common.entity.plant.PVZPlantEntity;
 import com.hungteen.pvz.common.entity.zombie.PVZZombieEntity;
 import com.hungteen.pvz.common.event.PVZLivingEvents;
-import com.hungteen.pvz.common.misc.damage.PVZDamageSource;
+import com.hungteen.pvz.common.misc.PVZEntityDamageSource;
 import com.hungteen.pvz.common.misc.sound.SoundRegister;
 import com.hungteen.pvz.common.potion.EffectRegister;
 import com.hungteen.pvz.utils.EntityUtil;
@@ -18,7 +18,7 @@ public class LivingEventHandler {
 	 * apply potion effects on living.
 	 * {@link PVZLivingEvents#onLivingHurt(net.minecraftforge.event.entity.living.LivingHurtEvent)}
 	 */
-	public static void handleHurtEffects(LivingEntity target, PVZDamageSource source) {
+	public static void handleHurtEffects(LivingEntity target, PVZEntityDamageSource source) {
 		if(! source.isDefended()) {//source not defended by armor.
 			if(source.isFlameDamage()) {
 				if(target.hasEffect(EffectRegister.COLD_EFFECT.get())){
@@ -36,7 +36,7 @@ public class LivingEventHandler {
 	 * handle sound when living hurt.
 	 * {@link PVZLivingEvents#onLivingHurt(net.minecraftforge.event.entity.living.LivingHurtEvent)}
 	 */
-	public static void handleHurtSounds(LivingEntity target, PVZDamageSource source) {
+	public static void handleHurtSounds(LivingEntity target, PVZEntityDamageSource source) {
 		if(source.isEatDamage()) {
 			EntityUtil.playSound(target, SoundRegister.EAT.get());
 		}
