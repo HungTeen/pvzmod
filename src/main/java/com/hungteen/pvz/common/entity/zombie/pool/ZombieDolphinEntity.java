@@ -4,7 +4,7 @@ import com.hungteen.pvz.common.entity.ai.goal.attack.PVZZombieAttackGoal;
 import com.hungteen.pvz.common.entity.zombie.PVZZombieEntity;
 import com.hungteen.pvz.common.impl.zombie.PoolZombies;
 import com.hungteen.pvz.common.impl.zombie.ZombieType;
-import com.hungteen.pvz.common.misc.sound.SoundRegister;
+import com.hungteen.pvz.register.SoundRegister;
 import com.hungteen.pvz.utils.ZombieUtil;
 import net.minecraft.entity.*;
 import net.minecraft.entity.ai.attributes.Attributes;
@@ -57,14 +57,18 @@ public class ZombieDolphinEntity extends PVZZombieEntity {
 	protected void initAttributes() {
 		super.initAttributes();
 		this.getAttribute(Attributes.MOVEMENT_SPEED).setBaseValue(1.2F);
-		this.getAttribute(Attributes.ATTACK_DAMAGE).setBaseValue(ZombieUtil.VERY_LOW);
 	}
 
 	@Override
 	public EntitySize getDimensions(Pose poseIn) {
 		return EntitySize.scalable(1f, 0.7f);
 	}
-	
+
+	@Override
+	public float getEatDamage() {
+		return ZombieUtil.VERY_LOW;
+	}
+
 	@Override
 	public float getLife() {
 		return 12;
@@ -72,7 +76,7 @@ public class ZombieDolphinEntity extends PVZZombieEntity {
 	
 	@Override
 	protected float getWaterSlowDown() {
-		return 0.88f;
+		return 0.89f;
 	}
 	
 	@Override

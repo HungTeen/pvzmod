@@ -2,7 +2,7 @@ package com.hungteen.pvz.common.item.tool.plant;
 
 import com.hungteen.pvz.common.capability.CapabilityHandler;
 import com.hungteen.pvz.common.item.PVZItemGroups;
-import com.hungteen.pvz.common.misc.sound.SoundRegister;
+import com.hungteen.pvz.register.SoundRegister;
 import com.hungteen.pvz.utils.PlayerUtil;
 import com.hungteen.pvz.utils.enums.Resources;
 import net.minecraft.client.util.ITooltipFlag;

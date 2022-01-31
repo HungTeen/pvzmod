@@ -8,7 +8,7 @@ import com.hungteen.pvz.common.entity.plant.PVZPlantEntity;
 import com.hungteen.pvz.common.entity.zombie.grass.AbstractTombStoneEntity;
 import com.hungteen.pvz.common.impl.plant.PVZPlants;
 import com.hungteen.pvz.common.misc.PVZEntityDamageSource;
-import com.hungteen.pvz.common.misc.sound.SoundRegister;
+import com.hungteen.pvz.register.SoundRegister;
 import com.hungteen.pvz.utils.EntityUtil;
 import com.hungteen.pvz.utils.PlantUtil;
 import com.hungteen.pvz.utils.enums.PAZAlmanacs;
@@ -43,7 +43,7 @@ public class GraveBusterEntity extends PVZPlantEntity{
 		if(!this.level.isClientSide) {
 			if(this.isEatingTomb()) {
 			    if(this.getAttackTime() % 20 == 10) {
-				    EntityUtil.playSound(this, SoundRegister.EAT.get());
+				    EntityUtil.playSound(this, SoundRegister.CHOMP.get());
 			    }
 			    this.setExistTick(0);
 			}
@@ -102,7 +102,7 @@ public class GraveBusterEntity extends PVZPlantEntity{
 	}
 	
 	@Override
-	public boolean canPlantTarget(Entity entity) {
+	public boolean canPAZTarget(Entity entity) {
 		return entity instanceof AbstractTombStoneEntity && (entity.getPassengers().isEmpty() || entity.is(this.getVehicle()));
 	}
 	
@@ -150,7 +150,7 @@ public class GraveBusterEntity extends PVZPlantEntity{
 			if(this.buster.isEatingTomb()) {
 				return true;
 			}
-			if(! EntityUtil.isEntityValid(target) || ! this.buster.canPlantTarget(target)) {
+			if(! EntityUtil.isEntityValid(target) || ! this.buster.canPAZTarget(target)) {
 				this.buster.setTarget(null);
 			    this.target = null;
 				return false;

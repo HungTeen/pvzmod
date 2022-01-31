@@ -6,7 +6,7 @@ import com.hungteen.pvz.common.entity.zombie.PVZZombieEntity;
 import com.hungteen.pvz.common.impl.zombie.ZombieType;
 import com.hungteen.pvz.common.impl.plant.PVZPlants;
 import com.hungteen.pvz.common.impl.zombie.PoolZombies;
-import com.hungteen.pvz.common.misc.sound.SoundRegister;
+import com.hungteen.pvz.register.SoundRegister;
 import com.hungteen.pvz.remove.MetalTypes;
 import com.hungteen.pvz.utils.EntityUtil;
 import com.hungteen.pvz.utils.MathUtil;
@@ -67,7 +67,7 @@ public class PogoZombieEntity extends PVZZombieEntity implements IHasMetal {
 		super.attractBy(defender);
 		if(this.hasPogo()) {
 		    this.setPogo(false);
-		    EntityUtil.playSound(this, SoundRegister.WALL_HIT.get());
+		    EntityUtil.playSound(this, SoundRegister.HAMMER_BONK.get());
 		}
 	}
 	

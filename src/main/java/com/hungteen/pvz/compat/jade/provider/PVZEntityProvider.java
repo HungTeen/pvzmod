@@ -1,14 +1,19 @@
 package com.hungteen.pvz.compat.jade.provider;
 
 import com.hungteen.pvz.api.interfaces.IHasOwner;
+import com.hungteen.pvz.api.types.IPAZType;
+import com.hungteen.pvz.common.entity.AbstractPAZEntity;
+import com.hungteen.pvz.common.impl.SkillTypes;
 import com.hungteen.pvz.compat.jade.JadeRegister;
 import com.hungteen.pvz.utils.EntityUtil;
+import com.hungteen.pvz.utils.StringUtil;
 import mcp.mobius.waila.api.IEntityAccessor;
 import mcp.mobius.waila.api.IEntityComponentProvider;
 import mcp.mobius.waila.api.IPluginConfig;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.Pose;
+import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.TextFormatting;
 import net.minecraft.util.text.TranslationTextComponent;
@@ -27,11 +32,15 @@ public class PVZEntityProvider implements IEntityComponentProvider {
 		if(config.get(JadeRegister.CONFIG_SHOW_DEFENCE_HEALTH)) {
 		    appendDefenceHealth(accessor.getEntity(), tooltip);
 		}
+		if(config.get(JadeRegister.CONFIG_SHOW_OWNER)) {
+			appendOwner(accessor.getWorld(), accessor.getEntity(), tooltip);
+		}
+		if(config.get(JadeRegister.CONFIG_SHOW_SKILLS)) {
+			appendSkills(accessor.getWorld(), accessor.getEntity(), tooltip);
+		}
 		//hide info need shift to check.
 		if(accessor.getPlayer().getPose() == Pose.CROUCHING) {
-			if(config.get(JadeRegister.CONFIG_SHOW_OWNER)) {
-				appendOwner(accessor.getWorld(), accessor.getEntity(), tooltip);
-			}
+
 		}
 	}
 	
@@ -55,6 +64,21 @@ public class PVZEntityProvider implements IEntityComponentProvider {
 			return ;
 		}
 		tooltip.add(new TranslationTextComponent("tooltip.pvz.defence").append(" : " + String.format("%s", Jade.dfCommas.format(health))).withStyle(TextFormatting.RED));
+	}
+
+	private void appendSkills(World world, Entity entity, List<ITextComponent> tooltip) {
+		if(entity instanceof AbstractPAZEntity){
+			final IPAZType type = ((AbstractPAZEntity) entity).getPAZType();
+			final CompoundNBT nbt = ((AbstractPAZEntity) entity).getSkills();
+			type.getSkills().forEach(skillType -> {
+				if(nbt != null){
+					final int lvl = SkillTypes.getSkillLevel(nbt, skillType);
+					if(lvl > 0){
+						tooltip.add(skillType.getText().append(StringUtil.getRomanString(lvl)).withStyle(TextFormatting.DARK_PURPLE));
+					}
+				}
+			});
+		}
 	}
 	
 }

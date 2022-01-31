@@ -1,10 +1,10 @@
 package com.hungteen.pvz.common.entity.zombie.grass;
 
-import com.hungteen.pvz.common.impl.zombie.ZombieType;
 import com.hungteen.pvz.common.impl.zombie.GrassZombies;
+import com.hungteen.pvz.common.impl.zombie.ZombieType;
 import com.hungteen.pvz.common.misc.PVZEntityDamageSource;
-import com.hungteen.pvz.data.loot.PVZLoot;
 import com.hungteen.pvz.remove.MetalTypes;
+import com.hungteen.pvz.utils.EffectUtil;
 import com.hungteen.pvz.utils.EntityUtil;
 import com.hungteen.pvz.utils.MathUtil;
 import com.hungteen.pvz.utils.ZombieUtil;
@@ -12,9 +12,8 @@ import net.minecraft.entity.CreatureEntity;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.ai.attributes.Attributes;
 import net.minecraft.nbt.CompoundNBT;
-import net.minecraft.util.ResourceLocation;
+import net.minecraft.potion.Effects;
 import net.minecraft.world.World;
 
 public class GigaFootballZombieEntity extends FootballZombieEntity {
@@ -41,9 +40,10 @@ public class GigaFootballZombieEntity extends FootballZombieEntity {
 	
 	protected void updateRush(boolean is) {
 		this.isRushing = is;
-		this.getAttribute(Attributes.MOVEMENT_SPEED).setBaseValue(is ? ZombieUtil.WALK_HUGE_FAST : ZombieUtil.WALK_FAST);
 		if(! is) {
 			this.setAttackTime(MathUtil.getRandomMinMax(getRandom(), minRushCD, maxRushCD));
+		} else{
+			this.addEffect(EffectUtil.effect(Effects.MOVEMENT_SPEED, 1000000, 1));
 		}
 	}
 	
@@ -77,7 +77,7 @@ public class GigaFootballZombieEntity extends FootballZombieEntity {
 
 	@Override
 	public float getWalkSpeed() {
-		return ZombieUtil.WALK_HUGE_FAST;
+		return ZombieUtil.WALK_FAST;
 	}
 
 	@Override
@@ -116,11 +116,6 @@ public class GigaFootballZombieEntity extends FootballZombieEntity {
 	public void addAdditionalSaveData(CompoundNBT compound) {
 		super.addAdditionalSaveData(compound);
 		compound.putBoolean("is_zombie_rushing", this.isRushing);
-	}
-	
-	@Override
-	protected ResourceLocation getDefaultLootTable() {
-		return PVZLoot.GIGA_FOOTBALL_ZOMBIE;
 	}
 	
 	@Override

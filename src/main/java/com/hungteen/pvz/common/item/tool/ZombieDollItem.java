@@ -1,7 +1,7 @@
 package com.hungteen.pvz.common.item.tool;
 
 import com.hungteen.pvz.common.item.PVZItemGroups;
-import com.hungteen.pvz.common.misc.sound.SoundRegister;
+import com.hungteen.pvz.register.SoundRegister;
 import com.hungteen.pvz.utils.EntityUtil;
 
 import net.minecraft.entity.player.PlayerEntity;
@@ -20,7 +20,7 @@ public class ZombieDollItem extends Item {
 	@Override
 	public ActionResult<ItemStack> use(World worldIn, PlayerEntity playerIn, Hand handIn) {
 		if(! worldIn.isClientSide && handIn == Hand.MAIN_HAND) {
-			EntityUtil.playSound(playerIn, SoundRegister.ZOMBIE_SAY.get());
+			EntityUtil.playSound(playerIn, SoundRegister.ZOMBIE_GROAN.get());
 			return ActionResult.success(playerIn.getItemInHand(handIn));
 		}
 		return super.use(worldIn, playerIn, handIn);

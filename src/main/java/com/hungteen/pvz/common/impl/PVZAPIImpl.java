@@ -7,8 +7,8 @@ import com.hungteen.pvz.common.impl.plant.PlantType;
 import com.hungteen.pvz.common.impl.zombie.ZombieType;
 import com.hungteen.pvz.common.item.tool.plant.BowlingGloveItem;
 import com.hungteen.pvz.common.item.tool.plant.PeaGunItem;
-import com.hungteen.pvz.common.world.raid.Raid;
-import com.hungteen.pvz.common.world.raid.RaidManager;
+import com.hungteen.pvz.common.world.challenge.Challenge;
+import com.hungteen.pvz.common.world.challenge.ChallengeManager;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
 import net.minecraft.util.ResourceLocation;
@@ -79,55 +79,55 @@ public class PVZAPIImpl implements IPVZAPI{
 
 	@Override
 	public void registerSpawnAmount(String name, Class<? extends IAmountComponent> c) {
-		RaidManager.registerSpawnAmount(name, c);
+		ChallengeManager.registerAmountComponent(name, c);
 	}
 
 	@Override
 	public void registerSpawnPlacement(String name, Class<? extends IPlacementComponent> c) {
-		RaidManager.registerSpawnPlacement(name, c);
+		ChallengeManager.registerPlacementComponent(name, c);
 	}
 
 	@Override
 	public void registerReward(String name, Class<? extends IRewardComponent> c) {
-		RaidManager.registerReward(name, c);
+		ChallengeManager.registerRewardComponent(name, c);
 	}
 
 	@Override
-	public void registerRaidType(String name, Class<? extends IRaidComponent> c) {
-		RaidManager.registerRaidType(name, c);
+	public void registerRaidType(String name, Class<? extends IChallengeComponent> c) {
+		ChallengeManager.registerChallengeComponent(name, c);
 	}
 
 	@Override
 	public void registerWaveType(String name, Class<? extends IWaveComponent> c) {
-		RaidManager.registerWaveType(name, c);
+		ChallengeManager.registerWaveComponent(name, c);
 	}
 
 	@Override
 	public void registerSpawnType(String name, Class<? extends ISpawnComponent> c) {
-		RaidManager.registerSpawnType(name, c);
+		ChallengeManager.registerSpawnComponent(name, c);
 	}
 
 	@Override
 	public boolean createRaid(ServerWorld world, ResourceLocation res, BlockPos pos) {
-		if(! RaidManager.hasRaidNearby(world, pos)) {
-			return RaidManager.createRaid(world, res, pos);
+		if(! ChallengeManager.hasRaidNearby(world, pos)) {
+			return ChallengeManager.createRaid(world, res, pos);
 		}
 		return false;
 	}
 
 	@Override
 	public boolean isRaider(ServerWorld world, Entity entity) {
-		return RaidManager.isRaider(world, entity);
+		return ChallengeManager.isRaider(world, entity);
 	}
 
 	@Override
-	public Optional<Raid> getNearByRaid(ServerWorld world, BlockPos pos) {
-		return RaidManager.getRaidNearBy(world, pos);
+	public Optional<Challenge> getNearByRaid(ServerWorld world, BlockPos pos) {
+		return ChallengeManager.getRaidNearBy(world, pos);
 	}
 
 	@Override
-	public Map<ResourceLocation, IRaidComponent> getRaidTypes() {
-		return RaidManager.getRaidTypes();
+	public Map<ResourceLocation, IChallengeComponent> getRaidTypes() {
+		return ChallengeManager.getRaidTypes();
 	}
 
 	@Override

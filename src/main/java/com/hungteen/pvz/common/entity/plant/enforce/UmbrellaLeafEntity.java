@@ -6,7 +6,7 @@ import com.hungteen.pvz.common.entity.bullet.PultBulletEntity;
 import com.hungteen.pvz.common.entity.plant.PVZPlantEntity;
 import com.hungteen.pvz.common.entity.zombie.roof.BungeeZombieEntity;
 import com.hungteen.pvz.common.impl.plant.PVZPlants;
-import com.hungteen.pvz.common.misc.sound.SoundRegister;
+import com.hungteen.pvz.register.SoundRegister;
 import com.hungteen.pvz.utils.EntityUtil;
 import com.hungteen.pvz.utils.enums.PAZAlmanacs;
 import com.mojang.datafixers.util.Pair;
@@ -77,11 +77,11 @@ public class UmbrellaLeafEntity extends PVZPlantEntity{
 	}
 	
 	@Override
-	public boolean canPlantTarget(Entity target) {
+	public boolean canPAZTarget(Entity target) {
 		if(target instanceof BungeeZombieEntity) {
 			return true;
 		}
-		return super.canPlantTarget(target);
+		return super.canPAZTarget(target);
 	}
 	
 	@Override

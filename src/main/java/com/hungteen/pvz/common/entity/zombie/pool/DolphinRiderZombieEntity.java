@@ -1,12 +1,11 @@
 package com.hungteen.pvz.common.entity.zombie.pool;
 
 import com.hungteen.pvz.common.entity.zombie.base.SwimmerZombieEntity;
-import com.hungteen.pvz.common.impl.zombie.ZombieType;
 import com.hungteen.pvz.common.impl.zombie.PoolZombies;
+import com.hungteen.pvz.common.impl.zombie.ZombieType;
 import com.hungteen.pvz.utils.ZombieUtil;
 import net.minecraft.entity.CreatureEntity;
 import net.minecraft.entity.EntityType;
-import net.minecraft.entity.ai.attributes.Attributes;
 import net.minecraft.world.World;
 
 public class DolphinRiderZombieEntity extends SwimmerZombieEntity{
@@ -16,11 +15,10 @@ public class DolphinRiderZombieEntity extends SwimmerZombieEntity{
 	}
 
 	@Override
-	protected void initAttributes() {
-		super.initAttributes();
-		this.getAttribute(Attributes.MOVEMENT_SPEED).setBaseValue(ZombieUtil.WALK_VERY_FAST);
+	public float getWalkSpeed() {
+		return ZombieUtil.WALK_VERY_FAST;
 	}
-	
+
 	@Override
 	public float getLife() {
 		return 30;

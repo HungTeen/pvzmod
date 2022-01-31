@@ -2,14 +2,13 @@ package com.hungteen.pvz.common.entity.zombie.pool;
 
 import com.hungteen.pvz.api.types.IPlantType;
 import com.hungteen.pvz.common.entity.ai.goal.attack.PVZZombieAttackGoal;
-import com.hungteen.pvz.common.entity.ai.goal.target.PVZHurtByTargetGoal;
 import com.hungteen.pvz.common.entity.ai.navigator.ZombieWaterPathNavigator;
 import com.hungteen.pvz.common.entity.plant.PVZPlantEntity;
 import com.hungteen.pvz.common.entity.zombie.PVZZombieEntity;
 import com.hungteen.pvz.common.impl.zombie.ZombieType;
 import com.hungteen.pvz.common.impl.plant.PVZPlants;
 import com.hungteen.pvz.common.impl.zombie.PoolZombies;
-import com.hungteen.pvz.common.misc.sound.SoundRegister;
+import com.hungteen.pvz.register.SoundRegister;
 import com.hungteen.pvz.common.entity.EntityRegister;
 import com.hungteen.pvz.utils.EntityUtil;
 import com.hungteen.pvz.utils.MathUtil;
@@ -57,7 +56,6 @@ public class DolphinRiderEntity extends PVZZombieEntity{
 		this.goalSelector.addGoal(8, new LookRandomlyGoal(this));
 		this.goalSelector.addGoal(7, new RandomWalkingGoal(this, 1.0D));
 		this.goalSelector.addGoal(1, new PVZZombieAttackGoal(this, true));
-		this.targetSelector.addGoal(2, new PVZHurtByTargetGoal(this, 10));
 		this.goalSelector.addGoal(0, new DolphinJumpGoal(this));
 		this.registerTargetGoals();
 	}
@@ -110,7 +108,7 @@ public class DolphinRiderEntity extends PVZZombieEntity{
 	public void attractBy(ICanAttract defender) {
 		super.attractBy(defender);
 		this.separate();
-		EntityUtil.playSound(this, SoundRegister.WALL_HIT.get());
+		EntityUtil.playSound(this, SoundRegister.HAMMER_BONK.get());
 	}
 	
 	@Override

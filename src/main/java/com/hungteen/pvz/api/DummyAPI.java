@@ -3,12 +3,12 @@ package com.hungteen.pvz.api;
 import com.hungteen.pvz.api.PVZAPI.IPVZAPI;
 import com.hungteen.pvz.api.raid.IAmountComponent;
 import com.hungteen.pvz.api.raid.IPlacementComponent;
-import com.hungteen.pvz.api.raid.IRaidComponent;
+import com.hungteen.pvz.api.raid.IChallengeComponent;
 import com.hungteen.pvz.api.raid.IRewardComponent;
 import com.hungteen.pvz.api.raid.ISpawnComponent;
 import com.hungteen.pvz.api.raid.IWaveComponent;
 import com.hungteen.pvz.api.types.*;
-import com.hungteen.pvz.common.world.raid.Raid;
+import com.hungteen.pvz.common.world.challenge.Challenge;
 
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
@@ -132,7 +132,7 @@ public class DummyAPI implements IPVZAPI {
 	}
 
 	@Override
-	public void registerRaidType(String name, Class<? extends IRaidComponent> c) {
+	public void registerRaidType(String name, Class<? extends IChallengeComponent> c) {
 	}
 
 	@Override
@@ -158,12 +158,12 @@ public class DummyAPI implements IPVZAPI {
 	}
 
 	@Override
-	public Optional<Raid> getNearByRaid(ServerWorld world, BlockPos pos) {
+	public Optional<Challenge> getNearByRaid(ServerWorld world, BlockPos pos) {
 		return Optional.empty();
 	}
 
 	@Override
-	public Map<ResourceLocation, IRaidComponent> getRaidTypes() {
+	public Map<ResourceLocation, IChallengeComponent> getRaidTypes() {
 		return new HashMap<>();
 	}
 

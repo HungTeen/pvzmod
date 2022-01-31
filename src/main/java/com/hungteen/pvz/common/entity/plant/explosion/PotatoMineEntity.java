@@ -10,7 +10,7 @@ import com.hungteen.pvz.common.entity.zombie.pool.DiggerZombieEntity;
 import com.hungteen.pvz.common.impl.SkillTypes;
 import com.hungteen.pvz.common.impl.plant.PVZPlants;
 import com.hungteen.pvz.common.misc.PVZEntityDamageSource;
-import com.hungteen.pvz.common.misc.sound.SoundRegister;
+import com.hungteen.pvz.register.SoundRegister;
 import com.hungteen.pvz.register.ParticleRegister;
 import com.hungteen.pvz.utils.EntityUtil;
 import com.hungteen.pvz.utils.MathUtil;
@@ -79,11 +79,11 @@ public class PotatoMineEntity extends PlantCloserEntity{
 	}
 	
 	@Override
-	public boolean canPlantTarget(Entity target) {
+	public boolean canPAZTarget(Entity target) {
 		if(target instanceof DiggerZombieEntity) {
 			return true;
 		}
-		return super.canPlantTarget(target);
+		return super.canPAZTarget(target);
 	}
 	
 	@Override

@@ -64,9 +64,6 @@ public class PVZInvasionData extends WorldSavedData {
 		return nbt;
 	}
 
-	/*
-	 * there is no world has invasion except overworld.
-	 */
 //	public static PVZInvasionData getInvasionData(World worldIn) {
 //		if (!(worldIn instanceof ServerWorld)) {
 //			throw new RuntimeException("Attempted to get the data from a client world. This is wrong.");

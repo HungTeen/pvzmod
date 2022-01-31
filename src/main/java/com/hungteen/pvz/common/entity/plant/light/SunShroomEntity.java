@@ -5,7 +5,7 @@ import com.hungteen.pvz.api.types.IPlantType;
 import com.hungteen.pvz.common.entity.misc.drop.SunEntity;
 import com.hungteen.pvz.common.entity.plant.base.PlantProducerEntity;
 import com.hungteen.pvz.common.impl.plant.PVZPlants;
-import com.hungteen.pvz.common.misc.sound.SoundRegister;
+import com.hungteen.pvz.register.SoundRegister;
 import com.hungteen.pvz.utils.EntityUtil;
 
 import com.hungteen.pvz.utils.enums.PAZAlmanacs;

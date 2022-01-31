@@ -2,7 +2,7 @@ package com.hungteen.pvz.common.event;
 
 import com.hungteen.pvz.PVZMod;
 import com.hungteen.pvz.common.world.invasion.InvasionManager;
-import com.hungteen.pvz.common.world.raid.RaidManager;
+import com.hungteen.pvz.common.world.challenge.ChallengeManager;
 
 import net.minecraft.world.World;
 import net.minecraftforge.event.TickEvent;
@@ -17,7 +17,7 @@ public class PVZWorldEvents {
 		if (ev.phase != TickEvent.Phase.END || ev.world.isClientSide) {
 			return;
 		}
-		RaidManager.tickRaids(ev.world);
+		ChallengeManager.tickRaids(ev.world);
 		if(ev.world.dimension() == World.OVERWORLD) {
 			InvasionManager.tick(ev);
 		}

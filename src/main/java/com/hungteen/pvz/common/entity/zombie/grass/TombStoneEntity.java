@@ -1,15 +1,13 @@
 package com.hungteen.pvz.common.entity.zombie.grass;
 
+import com.hungteen.pvz.common.entity.EntityRegister;
 import com.hungteen.pvz.common.entity.plant.assist.GraveBusterEntity;
 import com.hungteen.pvz.common.entity.zombie.other.NobleZombieEntity;
 import com.hungteen.pvz.common.entity.zombie.roof.Edgar090505Entity;
-import com.hungteen.pvz.common.impl.zombie.ZombieType;
 import com.hungteen.pvz.common.impl.zombie.GrassZombies;
-import com.hungteen.pvz.common.world.invasion.WaveManager;
-import com.hungteen.pvz.common.entity.EntityRegister;
+import com.hungteen.pvz.common.impl.zombie.ZombieType;
 import com.hungteen.pvz.utils.EntityUtil;
 import com.hungteen.pvz.utils.MathUtil;
-
 import net.minecraft.entity.CreatureEntity;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.ai.goal.Goal;
@@ -19,6 +17,7 @@ import net.minecraft.util.DamageSource;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 
+//TODO 墓碑
 public class TombStoneEntity extends AbstractTombStoneEntity {
 
 	protected int waveSummonTick = 0;
@@ -37,9 +36,6 @@ public class TombStoneEntity extends AbstractTombStoneEntity {
 		this.targetSelector.addGoal(0, new NearestAttackableTargetGoal<>(this, Edgar090505Entity.class, true));
 	}
 
-	/**
-	 * {@link WaveManager#activateTombStone()}
-	 */
 	public void activateByWave() {
 		this.waveSummonTick = 40;
 	}

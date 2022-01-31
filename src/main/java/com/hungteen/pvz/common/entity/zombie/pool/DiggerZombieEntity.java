@@ -5,7 +5,9 @@ import com.hungteen.pvz.common.entity.zombie.PVZZombieEntity;
 import com.hungteen.pvz.common.impl.zombie.ZombieType;
 import com.hungteen.pvz.common.impl.zombie.PoolZombies;
 import com.hungteen.pvz.data.loot.PVZLoot;
+import com.hungteen.pvz.register.ParticleRegister;
 import com.hungteen.pvz.remove.MetalTypes;
+import com.hungteen.pvz.utils.WorldUtil;
 import com.hungteen.pvz.utils.ZombieUtil;
 import com.hungteen.pvz.utils.interfaces.ICanAttract;
 import com.hungteen.pvz.utils.interfaces.IHasMetal;
@@ -57,6 +59,10 @@ public class DiggerZombieEntity extends PVZZombieEntity implements IHasMetal {
 			    }
 			} else {
 				this.setAttackTime(MathHelper.clamp(this.getAttackTime() + 1, 0, MAX_OUT_TIME));
+			}
+		} else{
+			if(! this.isNotDigging()){
+				WorldUtil.spawnRandomSpeedParticle(this.level, ParticleRegister.DIRT_BURST_OUT.get(), this.position(), 0.1F);
 			}
 		}
 		this.refreshDimensions();

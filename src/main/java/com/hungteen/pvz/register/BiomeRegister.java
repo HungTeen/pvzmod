@@ -2,7 +2,6 @@ package com.hungteen.pvz.register;
 
 import com.hungteen.pvz.PVZConfig;
 import com.hungteen.pvz.PVZMod;
-import com.hungteen.pvz.RegistryHandler;
 import com.hungteen.pvz.common.world.biome.ZenGardenBiome;
 import com.hungteen.pvz.common.world.gen.GenOres;
 import com.hungteen.pvz.common.world.spawn.EntitySpawnRegister;

@@ -5,7 +5,7 @@ import com.hungteen.pvz.common.entity.zombie.body.ZombieDropBodyEntity;
 import com.hungteen.pvz.common.entity.zombie.part.PVZHealthPartEntity;
 import com.hungteen.pvz.common.impl.zombie.GrassZombies;
 import com.hungteen.pvz.common.impl.zombie.ZombieType;
-import com.hungteen.pvz.common.misc.sound.SoundRegister;
+import com.hungteen.pvz.register.SoundRegister;
 import com.hungteen.pvz.utils.EffectUtil;
 import com.hungteen.pvz.utils.EntityUtil;
 import com.hungteen.pvz.utils.MathUtil;
@@ -46,7 +46,7 @@ public class NewspaperZombieEntity extends DefenceZombieEntity {
 		if(! this.level.isClientSide){
 			this.addEffect(EffectUtil.effect(Effects.MOVEMENT_SPEED, 120000, 1));
 			this.addEffect(EffectUtil.effect(Effects.DAMAGE_BOOST, 120000, MathUtil.getRandomMinMax(this.random, 1, this.getAngryLevel())));
-			EntityUtil.playSound(this, SoundRegister.ANGRY.get());
+			EntityUtil.playSound(this, SoundRegister.ZOMBIE_ANGRY.get());
 		}
 	}
 	
@@ -63,7 +63,7 @@ public class NewspaperZombieEntity extends DefenceZombieEntity {
 	
 	@Override
 	public SoundEvent getPartDeathSound() {
-		return SoundRegister.PAPER_GONE.get();
+		return SoundRegister.PAPER_BROKEN.get();
 	}
 
 	@Override

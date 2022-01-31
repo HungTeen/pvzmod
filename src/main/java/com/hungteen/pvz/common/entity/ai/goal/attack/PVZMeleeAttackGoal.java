@@ -1,14 +1,13 @@
 package com.hungteen.pvz.common.entity.ai.goal.attack;
 
-import java.util.EnumSet;
-
 import com.hungteen.pvz.utils.EntityUtil;
-
 import net.minecraft.entity.CreatureEntity;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.ai.goal.Goal;
 import net.minecraft.pathfinding.Path;
 import net.minecraft.util.math.BlockPos;
+
+import java.util.EnumSet;
 
 public abstract class PVZMeleeAttackGoal extends Goal {
 
@@ -77,7 +76,6 @@ public abstract class PVZMeleeAttackGoal extends Goal {
 
 	@Override
 	public void stop() {
-		this.attacker.setTarget(null);
 		this.attacker.setAggressive(false);
 		this.attacker.getNavigation().stop();
 	}

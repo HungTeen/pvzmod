@@ -8,7 +8,7 @@ import com.hungteen.pvz.common.impl.zombie.ZombieType;
 import com.hungteen.pvz.common.impl.zombie.RoofZombies;
 import com.hungteen.pvz.common.item.ItemRegister;
 import com.hungteen.pvz.common.misc.PVZEntityDamageSource;
-import com.hungteen.pvz.common.misc.sound.SoundRegister;
+import com.hungteen.pvz.register.SoundRegister;
 import com.hungteen.pvz.data.loot.PVZLoot;
 import com.hungteen.pvz.utils.EntityUtil;
 import com.hungteen.pvz.utils.ZombieUtil;
@@ -244,7 +244,7 @@ public class BungeeZombieEntity extends PVZZombieEntity {
 	}
 	
 	@Override
-	public boolean canZombieTarget(Entity target) {
+	public boolean canPAZTarget(Entity target) {
 		return canBungeeSteal(target);
 	}
 	
@@ -335,7 +335,7 @@ public class BungeeZombieEntity extends PVZZombieEntity {
 
 	/**
 	 * can entity be choose as target.
-	 * {@link #canZombieTarget(Entity)}
+	 * {@link #canPAZTarget(Entity)}
 	 */
 	public static boolean canBungeeSteal(Entity target) {
 		//is boss entity.

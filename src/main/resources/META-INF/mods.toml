@@ -12,7 +12,7 @@ logoFile="logo.png"
 displayURL="https://space.bilibili.com/362855464" 
 credits="Men_Tian_Bai, InkyTheSheep, Chompy, XXTT and so on."
 description="A mod that brings Plants vs Zombies to Minecraft !"
-configBackground="pvz:textures/block/origin_block.png"
+configBackground="pvz:textures/block/amethyst_block.png"
 
 [[dependencies.pvz]]
     modId="forge"

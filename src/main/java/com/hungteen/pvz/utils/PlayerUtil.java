@@ -6,7 +6,7 @@ import com.hungteen.pvz.common.capability.CapabilityHandler;
 import com.hungteen.pvz.common.capability.player.IPlayerDataCapability;
 import com.hungteen.pvz.common.capability.player.PlayerDataManager;
 import com.hungteen.pvz.common.entity.EntityGroupHander;
-import com.hungteen.pvz.common.item.spawn.card.PlantCardItem;
+import com.hungteen.pvz.common.item.spawn.card.SummonCardItem;
 import com.hungteen.pvz.common.network.PVZPacketHandler;
 import com.hungteen.pvz.common.network.toclient.PlaySoundPacket;
 import com.hungteen.pvz.common.world.invasion.Invasion;
@@ -109,11 +109,12 @@ public class PlayerUtil {
 		}
 	}
 	
-	public static void setCardCD(PlayerEntity player, PlantCardItem card, int cd) {
-		player.getCapability(CapabilityHandler.PLAYER_DATA_CAPABILITY).ifPresent(l -> {
-			l.getPlayerData().setPAZCardCD(card.plantType, cd);
-		});
-		player.getCooldowns().addCooldown(card, cd);
+	public static void setCardCD(PlayerEntity player, ItemStack stack, int cd) {
+		if(stack.getItem() instanceof SummonCardItem){
+			final IPAZType type = ((SummonCardItem) stack.getItem()).type;
+			PlayerUtil.getOptManager(player).ifPresent(l -> l.setPAZCardCD(type, cd));
+		}
+		player.getCooldowns().addCooldown(stack.getItem(), cd);
 	}
 	
 	public static void setPAZLock(PlayerEntity player, IPAZType plant, boolean is) {

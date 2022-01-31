@@ -5,7 +5,7 @@ import com.hungteen.pvz.common.entity.ai.goal.attack.PultAttackGoal;
 import com.hungteen.pvz.common.entity.ai.goal.target.PVZNearestTargetGoal;
 import com.hungteen.pvz.common.entity.bullet.PultBulletEntity;
 import com.hungteen.pvz.common.entity.plant.PVZPlantEntity;
-import com.hungteen.pvz.common.misc.sound.SoundRegister;
+import com.hungteen.pvz.register.SoundRegister;
 import com.hungteen.pvz.utils.EntityUtil;
 import com.hungteen.pvz.utils.enums.PAZAlmanacs;
 import com.hungteen.pvz.utils.interfaces.IPult;
@@ -67,7 +67,7 @@ public abstract class PlantPultEntity extends PVZPlantEntity implements IPult {
 			bullet.summonByOwner(this);
 			bullet.setAttackDamage(this.isPlantInSuperMode() ? this.getSuperDamage() : this.getAttackDamage());
 	        this.level.addFreshEntity(bullet);
-	        EntityUtil.playSound(this, SoundRegister.PLANT_THROW.get());
+	        EntityUtil.playSound(this, SoundRegister.PULT_THROW.get());
 		});
 	}
 	
@@ -106,8 +106,8 @@ public abstract class PlantPultEntity extends PVZPlantEntity implements IPult {
 	}
 	
 	@Override
-	public boolean canPlantTarget(Entity entity) {
-		return this.checkY(entity) && super.canPlantTarget(entity);
+	public boolean canPAZTarget(Entity entity) {
+		return this.checkY(entity) && super.canPAZTarget(entity);
 	}
 	
 	protected boolean checkY(Entity target) {

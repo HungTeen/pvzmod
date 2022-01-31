@@ -6,7 +6,7 @@ import com.hungteen.pvz.common.advancement.trigger.EntityEffectAmountTrigger;
 import com.hungteen.pvz.common.entity.plant.base.PlantCloserEntity;
 import com.hungteen.pvz.common.impl.plant.OtherPlants;
 import com.hungteen.pvz.common.misc.PVZEntityDamageSource;
-import com.hungteen.pvz.common.misc.sound.SoundRegister;
+import com.hungteen.pvz.register.SoundRegister;
 import com.hungteen.pvz.common.potion.EffectRegister;
 import com.hungteen.pvz.utils.EntityUtil;
 import net.minecraft.entity.*;
@@ -30,7 +30,7 @@ public class IcebergLettuceEntity extends PlantCloserEntity implements IIceEffec
 		for(int i = 0; i < 2; ++ i) {
 			EntityUtil.spawnParticle(this, 5);
 		}
-		EntityUtil.playSound(this, SoundRegister.FROZEN_HIT.get());
+		EntityUtil.playSound(this, SoundRegister.FROZEN.get());
 		this.dealDamageTo(target);
 		this.remove();
 	}
@@ -42,7 +42,7 @@ public class IcebergLettuceEntity extends PlantCloserEntity implements IIceEffec
 		for(int i = 0; i < 2; ++ i) {
 			EntityUtil.spawnParticle(this, 5);
 		}
-		EntityUtil.playSound(this, SoundRegister.FROZEN_HIT.get());
+		EntityUtil.playSound(this, SoundRegister.FROZEN.get());
 		int cnt = 0;
 		for(Entity target : EntityUtil.getTargetableEntities(this, EntityUtil.getEntityAABB(this, range, range))) {
 			this.dealDamageTo(target);

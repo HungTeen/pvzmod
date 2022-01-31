@@ -6,7 +6,7 @@ import javax.annotation.Nullable;
 
 import com.hungteen.pvz.PVZConfig;
 import com.hungteen.pvz.common.entity.AbstractOwnerEntity;
-import com.hungteen.pvz.common.misc.sound.SoundRegister;
+import com.hungteen.pvz.register.SoundRegister;
 import com.hungteen.pvz.utils.EntityUtil;
 
 import it.unimi.dsi.fastutil.ints.IntOpenHashSet;
@@ -61,7 +61,7 @@ public abstract class AbstractBowlingEntity extends AbstractOwnerEntity {
 		super.tick();
 		if (! level.isClientSide) {
 			if(this.tickCount <= 10 && ! this.playSpawnSound) {
-				EntityUtil.playSound(this, SoundRegister.BOWLING_SPAWN.get());
+				EntityUtil.playSound(this, SoundRegister.BOWLING.get());
 				this.playSpawnSound = true;
 			}
 			if(this.tickCount >= this.getMaxLiveTick()) {

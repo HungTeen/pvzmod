@@ -118,11 +118,11 @@ public class CactusEntity extends PlantShooterEntity {
 	}
 	
 	@Override
-	public boolean canPlantTarget(Entity entity) {
+	public boolean canPAZTarget(Entity entity) {
 		if(entity instanceof BalloonZombieEntity) {
 			return true;
 		}
-		return super.canPlantTarget(entity);
+		return super.canPAZTarget(entity);
 	}
 	
 	@Override

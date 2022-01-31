@@ -13,6 +13,7 @@ public class DataPackRegister {
         event.addListener(new PlantType.PlantTypeLoader());
         event.addListener(new LotteryTypeLoader());
         event.addListener(new InvasionTypeLoader());
+        event.addListener(new ChallengeTypeLoader());
     }
 
 }

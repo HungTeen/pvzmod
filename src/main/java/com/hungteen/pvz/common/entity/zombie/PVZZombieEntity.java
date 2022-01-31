@@ -16,7 +16,6 @@ import com.hungteen.pvz.common.entity.ai.goal.PVZSwimGoal;
 import com.hungteen.pvz.common.entity.ai.goal.ZombieBreakPlantBlockGoal;
 import com.hungteen.pvz.common.entity.ai.goal.attack.PVZZombieAttackGoal;
 import com.hungteen.pvz.common.entity.ai.goal.target.PVZNearestTargetGoal;
-import com.hungteen.pvz.common.entity.ai.navigator.ZombiePathNavigator;
 import com.hungteen.pvz.common.entity.bullet.AbstractBulletEntity;
 import com.hungteen.pvz.common.entity.misc.drop.CoinEntity;
 import com.hungteen.pvz.common.entity.misc.drop.CoinEntity.CoinType;
@@ -29,7 +28,7 @@ import com.hungteen.pvz.common.entity.zombie.body.ZombieDropBodyEntity;
 import com.hungteen.pvz.common.impl.SkillTypes;
 import com.hungteen.pvz.common.item.ItemRegister;
 import com.hungteen.pvz.common.misc.PVZEntityDamageSource;
-import com.hungteen.pvz.common.misc.sound.SoundRegister;
+import com.hungteen.pvz.register.SoundRegister;
 import com.hungteen.pvz.common.potion.EffectRegister;
 import com.hungteen.pvz.remove.MetalTypes;
 import com.hungteen.pvz.utils.AlgorithmUtil;
@@ -59,6 +58,7 @@ import net.minecraft.pathfinding.PathNavigator;
 import net.minecraft.pathfinding.PathNodeType;
 import net.minecraft.potion.EffectInstance;
 import net.minecraft.potion.Effects;
+import net.minecraft.tags.FluidTags;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.SoundEvent;
 import net.minecraft.util.math.BlockPos;
@@ -126,7 +126,6 @@ public abstract class PVZZombieEntity extends AbstractPAZEntity implements IZomb
 		this.goalSelector.addGoal(8, new PVZLookRandomlyGoal(this));
 		this.goalSelector.addGoal(7, new RandomWalkingGoal(this, 1.0D));
 		this.goalSelector.addGoal(7, new PVZSwimGoal(this));
-//		this.targetSelector.addGoal(2, new PVZHurtByTargetGoal(this, 10));
 		this.registerAttackGoals();
 		this.registerTargetGoals();
 	}
@@ -148,7 +147,8 @@ public abstract class PVZZombieEntity extends AbstractPAZEntity implements IZomb
 	
 	@Override
 	protected PathNavigator createNavigation(World world) {
-		return new ZombiePathNavigator(this, world);
+		return super.createNavigation(world);
+//		return new ZombiePathNavigator(this, world);
 	}
 	
 	/* handle spawn */
@@ -306,6 +306,15 @@ public abstract class PVZZombieEntity extends AbstractPAZEntity implements IZomb
 		this.addEffect(new EffectInstance(Effects.DAMAGE_BOOST, 1000000, 0, false, false));
 	}
 
+	@Override
+	public boolean canPAZTarget(Entity target) {
+		//do not target entity underwater.
+		if(target.isInWaterOrBubble() && target.getFluidHeight(FluidTags.WATER) + 0.05 > target.getBbHeight()){
+			return false;
+		}
+		return super.canPAZTarget(target);
+	}
+
 	/**
 	 * zombie perform attack CD.
 	 * use for attack goals.
@@ -417,41 +426,6 @@ public abstract class PVZZombieEntity extends AbstractPAZEntity implements IZomb
 			break;
 		}
 		}
-	}
-
-	/**
-	 * check can zombie set target as attackTarget.
-	 */
-	public boolean checkCanZombieTarget(Entity target) {
-		return EntityUtil.checkCanEntityBeTarget(this, target) && this.canZombieTarget(target);
-	}
-	
-	/**
-	 * check can zombie attack target.
-	 */
-	public boolean checkCanZombieAttack(Entity target) {
-		return EntityUtil.checkCanEntityBeAttack(this, target) && this.canZombieTarget(target);
-	}
-	
-	/**
-	 * can zombie be targeted by living, often use for plant's target.
-	 * {@link PVZPlantEntity#canPlantTarget(Entity)}
-	 */
-	public boolean canBeTargetBy(LivingEntity living) {
-		return true;
-	}
-
-	/**
-	 * do not attack spike weed, bungee, plants with steel ladder.
-	 */
-	public boolean canZombieTarget(Entity target) {
-		if(target instanceof PVZPlantEntity) {
-			return ((PVZPlantEntity) target).canBeTargetBy(this);
-		}
-		if(target instanceof PVZZombieEntity) {
-			return ((PVZZombieEntity) target).canBeTargetBy(this);
-		}
-		return true;
 	}
 
 	/**
@@ -793,12 +767,12 @@ public abstract class PVZZombieEntity extends AbstractPAZEntity implements IZomb
 		}
 	}
 	
-	public void healZombie(float health) {
-		final float need1 = this.getMaxHealth() - this.getHealth(); 
-		this.heal(Math.min(need1, health));
-		health -= need1;
-//		this.setDefenceLife(Math.max(this.getInnerLife(), this.getDefenceLife() + health));
-	}
+//	public void healZombie(float health) {
+//		final float need1 = this.getMaxHealth() - this.getHealth();
+//		this.heal(Math.min(need1, health));
+//		health -= need1;
+////		this.setDefenceLife(Math.max(this.getInnerLife(), this.getDefenceLife() + health));
+//	}
 	
 	@Override
 	public boolean isInvulnerableTo(DamageSource source) {
@@ -904,13 +878,13 @@ public abstract class PVZZombieEntity extends AbstractPAZEntity implements IZomb
 	
 	@Override
 	protected SoundEvent getAmbientSound() {
-		return SoundRegister.ZOMBIE_SAY.get();
+		return SoundRegister.ZOMBIE_GROAN.get();
 	}
 
 	@Override
 	public SoundEvent getHurtSound(DamageSource damageSourceIn) {
 		if (damageSourceIn.getDirectEntity() instanceof AbstractBulletEntity) {
-			return SoundRegister.PEA_HIT.get();
+			return SoundRegister.SPLAT.get();
 		}
 		return super.getHurtSound(damageSourceIn);
 	}

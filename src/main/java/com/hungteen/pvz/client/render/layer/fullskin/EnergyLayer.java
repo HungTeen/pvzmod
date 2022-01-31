@@ -17,6 +17,7 @@ public class EnergyLayer <T extends LivingEntity, M extends EntityModel<T>> exte
 
 	public EnergyLayer(IEntityRenderer<T, M> entityRendererIn) {
 		super(entityRendererIn);
+		this.scale = 1.1F;
 	}
 
 	@Override

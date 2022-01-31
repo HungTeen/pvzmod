@@ -4,7 +4,7 @@ import com.hungteen.pvz.api.paz.IPlantEntity;
 import com.hungteen.pvz.api.paz.IPlantInfo;
 import com.hungteen.pvz.api.types.IPlantType;
 import com.hungteen.pvz.common.impl.plant.PlantType;
-import com.hungteen.pvz.common.misc.sound.SoundRegister;
+import com.hungteen.pvz.register.SoundRegister;
 import com.hungteen.pvz.utils.EntityUtil;
 import net.minecraft.entity.Entity;
 import net.minecraft.nbt.CompoundNBT;
@@ -27,7 +27,7 @@ public class PlantInfo implements IPlantInfo {
 	public void placeOn(IPlantEntity plantEntity, int sunCost) {
 		this.setSunCost(sunCost);
 		if(plantEntity instanceof Entity) {
-			EntityUtil.playSound((Entity) plantEntity, SoundRegister.PLANT_ON_GROUND.get());
+			EntityUtil.playSound((Entity) plantEntity, SoundRegister.PLACE_PLANT_GROUND.get());
 		}
 	}
 

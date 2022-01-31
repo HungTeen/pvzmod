@@ -1,0 +1,85 @@
+{
+  "authors": [
+    "hungteen"
+  ],
+  "tags": [
+    "overworld"
+  ],
+  "messages": [
+    {
+      "title": "challenge.pvz.strange_help.msg1"
+    },
+    {
+      "title": "challenge.pvz.strange_help.msg2"
+    },
+    {
+      "title": "challenge.pvz.strange_help.msg3"
+    },
+    {
+      "title": "challenge.pvz.strange_help.msg4"
+    },
+    {
+      "title": "challenge.pvz.strange_help.msg5"
+    }
+  ],
+  "tips": [
+    {
+      "title": "challenge.pvz.strange_help.tip1",
+      "color": "green"
+    }
+  ],
+  "bar_color": "green",
+  "can_trade": false,
+  "placement": {
+    "outer": {
+      "min": 5,
+      "max": 10,
+      "ground": true
+    }
+  },
+  "waves": [
+    {
+      "spawns": [
+        {
+          "entity_type": "pvz:normal_zombie",
+          "spawn_tick": 20,
+          "spawn_amount": {
+            "count": 2
+          }
+        },
+        {
+          "entity_type": "pvz:normal_zombie",
+          "spawn_tick": 200,
+          "spawn_amount": {
+            "count": 3
+          }
+        }
+      ],
+      "duration": 1000
+    },
+    {
+      "spawns": [
+        {
+          "entity_type": "pvz:normal_zombie",
+          "spawn_tick": 30,
+          "spawn_amount": {
+            "count": 4
+          }
+        },
+        {
+          "entity_type": "pvz:normal_zombie",
+          "spawn_tick": 350,
+          "spawn_amount": {
+            "count": 4
+          }
+        }
+      ],
+      "duration": 1000
+    }
+  ],
+  "rewards": {
+    "advancements": {
+      "experience": 1
+    }
+  }
+}

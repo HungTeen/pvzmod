@@ -57,15 +57,19 @@ public class ConfigUtil {
 	}
 
 	public static boolean isRaidEnable() {
-		return PVZConfig.COMMON_CONFIG.WorldSettings.EnableRaid.get();
+		return PVZConfig.COMMON_CONFIG.ChallengeSettings.EnableChallenge.get();
 	}
 
 	public static int getRaidWaitTime() {
-		return PVZConfig.COMMON_CONFIG.WorldSettings.RaidWaitTime.get();
+		return PVZConfig.COMMON_CONFIG.ChallengeSettings.ChallengeWaitTime.get();
 	}
 
 	public static int getRaidRange() {
-		return PVZConfig.COMMON_CONFIG.WorldSettings.RaidRange.get();
+		return PVZConfig.COMMON_CONFIG.ChallengeSettings.ChallengeRange.get();
+	}
+
+	public static int getLimitDamage(){
+		return PVZConfig.COMMON_CONFIG.RuleSettings.MaxDamageLimit.get();
 	}
 	
 }

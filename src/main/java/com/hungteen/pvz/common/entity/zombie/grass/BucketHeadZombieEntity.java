@@ -3,7 +3,7 @@ package com.hungteen.pvz.common.entity.zombie.grass;
 import com.hungteen.pvz.client.model.entity.zombie.grass.BucketHeadZombieModel;
 import com.hungteen.pvz.common.impl.zombie.GrassZombies;
 import com.hungteen.pvz.common.impl.zombie.ZombieType;
-import com.hungteen.pvz.common.misc.sound.SoundRegister;
+import com.hungteen.pvz.register.SoundRegister;
 import com.hungteen.pvz.remove.MetalTypes;
 import com.hungteen.pvz.utils.interfaces.IHasMetal;
 import net.minecraft.entity.CreatureEntity;

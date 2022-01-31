@@ -16,6 +16,7 @@ public class SunLayer <T extends LivingEntity, M extends EntityModel<T>> extends
 
 	public SunLayer(IEntityRenderer<T, M> entityRendererIn) {
 		super(entityRendererIn);
+		this.scale = 1.1F;
 	}
 
 	@Override

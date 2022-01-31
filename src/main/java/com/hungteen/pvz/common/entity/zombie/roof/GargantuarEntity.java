@@ -8,7 +8,7 @@ import com.hungteen.pvz.common.entity.zombie.body.ZombieDropBodyEntity;
 import com.hungteen.pvz.common.impl.zombie.RoofZombies;
 import com.hungteen.pvz.common.impl.zombie.ZombieType;
 import com.hungteen.pvz.common.misc.PVZEntityDamageSource;
-import com.hungteen.pvz.common.misc.sound.SoundRegister;
+import com.hungteen.pvz.register.SoundRegister;
 import com.hungteen.pvz.utils.EntityUtil;
 import com.hungteen.pvz.utils.ZombieUtil;
 import net.minecraft.entity.*;
@@ -68,7 +68,7 @@ public class GargantuarEntity extends PVZZombieEntity {
 	}
 	
 	public void throwImp(LivingEntity target) {
-		EntityUtil.playSound(this, SoundRegister.THROW_IMP.get());
+		EntityUtil.playSound(this, SoundRegister.IMP_HAPPY.get());
 		ImpEntity imp = EntityRegister.IMP.get().create(level);
 		imp.throwByGargantuar(this, target);
 		EntityUtil.onEntitySpawn(level, imp, blockPosition().offset(0, this.getBbHeight(), 0));
@@ -83,11 +83,11 @@ public class GargantuarEntity extends PVZZombieEntity {
 	}
 	
 	@Override
-	public boolean canZombieTarget(Entity target) {
+	public boolean canPAZTarget(Entity target) {
 		if(target instanceof SpikeRockEntity) {
 			return true;
 		}
-		return super.canZombieTarget(target);
+		return super.canPAZTarget(target);
 	}
 	
 	@Override
@@ -161,7 +161,7 @@ public class GargantuarEntity extends PVZZombieEntity {
 	
 	@Override
 	protected SoundEvent getAmbientSound() {
-		return SoundRegister.GARGANTUAR_SAY.get();
+		return SoundRegister.GARGANTUAR_GROAN.get();
 	}
 	
 	@Override

@@ -5,7 +5,7 @@ import java.util.Optional;
 import com.hungteen.pvz.common.entity.AbstractOwnerEntity;
 import com.hungteen.pvz.common.entity.plant.enforce.ChomperEntity;
 import com.hungteen.pvz.common.misc.PVZEntityDamageSource;
-import com.hungteen.pvz.common.misc.sound.SoundRegister;
+import com.hungteen.pvz.register.SoundRegister;
 import com.hungteen.pvz.utils.EntityUtil;
 
 import net.minecraft.entity.Entity;
@@ -45,7 +45,7 @@ public class SmallChomperEntity extends AbstractOwnerEntity {
 				target.hurt(PVZEntityDamageSource.eat(this, owner), getAttackDamage(owner));
 			}
 		});
-		EntityUtil.playSound(this, SoundRegister.CHOMP.get());
+		EntityUtil.playSound(this, SoundRegister.BIG_CHOMP.get());
 	}
 	
 	/**

@@ -11,7 +11,7 @@ import com.hungteen.pvz.common.impl.plant.PVZPlants;
 import com.hungteen.pvz.common.item.ItemRegister;
 import com.hungteen.pvz.common.item.PVZItemGroups;
 import com.hungteen.pvz.common.item.spawn.card.PlantCardItem;
-import com.hungteen.pvz.common.misc.sound.SoundRegister;
+import com.hungteen.pvz.register.SoundRegister;
 import com.hungteen.pvz.common.misc.tag.PVZItemTags;
 import com.hungteen.pvz.common.potion.EffectRegister;
 import com.hungteen.pvz.common.entity.EntityRegister;

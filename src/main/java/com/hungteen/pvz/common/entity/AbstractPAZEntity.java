@@ -11,13 +11,11 @@ import com.hungteen.pvz.common.event.PVZLivingEvents;
 import com.hungteen.pvz.common.impl.SkillTypes;
 import com.hungteen.pvz.common.misc.PVZEntityDamageSource;
 import com.hungteen.pvz.utils.EntityUtil;
+import com.hungteen.pvz.utils.MathUtil;
 import com.hungteen.pvz.utils.enums.PAZAlmanacs;
 import com.hungteen.pvz.utils.others.WeightList;
 import com.mojang.datafixers.util.Pair;
-import net.minecraft.entity.CreatureEntity;
-import net.minecraft.entity.EntityType;
-import net.minecraft.entity.ILivingEntityData;
-import net.minecraft.entity.SpawnReason;
+import net.minecraft.entity.*;
 import net.minecraft.entity.ai.attributes.AttributeModifierMap;
 import net.minecraft.entity.ai.attributes.Attributes;
 import net.minecraft.entity.player.PlayerEntity;
@@ -64,7 +62,7 @@ public abstract class AbstractPAZEntity extends CreatureEntity implements IPAZEn
     protected boolean canBeStealByBungee = true;
     /* misc */
     protected boolean canSpawnDrop = true;
-    protected boolean canHelpAttack = true;
+    protected boolean canHelpAttack = true;// no use ?
 
     static {
         //init drop list.
@@ -114,6 +112,26 @@ public abstract class AbstractPAZEntity extends CreatureEntity implements IPAZEn
                 .add(PVZAttributes.INNER_DEFENCE_HP.get())
                 .add(PVZAttributes.OUTER_DEFENCE_HP.get())
                 ;
+    }
+
+    /**
+     * used in invasion spawn.
+     */
+    public static void randomInitSkills(AbstractPAZEntity pazEntity, int maxLevel){
+        final CompoundNBT skillNBT = new CompoundNBT();
+        final List<ISkillType> skills = pazEntity.getPAZType().getSkills();
+        int point = MathUtil.getRandomMinMax(pazEntity.getRandom(), maxLevel / 2, maxLevel);
+        for(int i = 0; i < 10; ++ i){
+            final ISkillType skillType = skills.get(pazEntity.getRandom().nextInt(skills.size()));
+            int lvl = 0;
+            while(lvl < skillType.getMaxLevel() && skillType.getCostAt(lvl) <= point && pazEntity.getRandom().nextFloat() < 0.8F){
+                point -= skillType.getCostAt(lvl);
+                skillNBT.putInt(skillType.getIdentity(), lvl);
+                ++ lvl;
+            }
+        }
+        pazEntity.setSkills(skillNBT);
+        pazEntity.initAttributes();
     }
 
     /**
@@ -169,7 +187,7 @@ public abstract class AbstractPAZEntity extends CreatureEntity implements IPAZEn
      */
     public static void damageOuterDefence(final LivingHurtEvent ev) {
         float amount = ev.getAmount();
-        if(ev.getEntityLiving() instanceof AbstractPAZEntity){
+        if(ev.getEntityLiving() instanceof AbstractPAZEntity && ((AbstractPAZEntity) ev.getEntityLiving()).canOuterDefend(ev.getSource())){
             final AbstractPAZEntity pazEntity = (AbstractPAZEntity) ev.getEntityLiving();
             final double life = pazEntity.getOuterDefenceLife();
             if(life > 0){
@@ -226,11 +244,56 @@ public abstract class AbstractPAZEntity extends CreatureEntity implements IPAZEn
 
     }
 
+    public boolean canOuterDefend(DamageSource source){
+        return true;
+    }
+
+    /**
+     * check can set target as attackTarget.
+     */
+    public boolean checkCanPAZTarget(Entity target) {
+        return EntityUtil.checkCanEntityBeTarget(this, target) && this.canPAZTarget(target);
+    }
+
+    /**
+     * check can attack target.
+     */
+    public boolean checkCanPAZAttack(Entity target) {
+        return EntityUtil.checkCanEntityBeAttack(this, target) && this.canPAZTarget(target);
+    }
+
+    /**
+     * can be targeted by living, often use for plant's target.
+     * e.g. plants with metal can not be targeted.
+     */
+    public boolean canBeTargetBy(LivingEntity living) {
+        return true;
+    }
+
+    /**
+     * do not attack living.
+     * e.g. spike weed, bungee, plants with steel ladder.
+     */
+    public boolean canPAZTarget(Entity target) {
+        if(target instanceof AbstractPAZEntity){
+            return ((AbstractPAZEntity) target).canBeTargetBy(this);
+        }
+        return true;
+    }
+
     @Override
     public boolean hurt(DamageSource source, float amount) {
         //can get hurt each attack by pvz damage.
         if (source instanceof PVZEntityDamageSource) {
             this.invulnerableTime = 0;
+        }
+        if(source.getEntity() instanceof LivingEntity && EntityUtil.checkCanEntityBeAttack(this, source.getEntity())){
+            //determine whether to change target.
+            if(EntityUtil.isEntityValid(this.getTarget()) && this.getRandom().nextFloat() < 0.4F){
+                if(this.distanceTo(source.getEntity()) < this.distanceTo(this.getTarget())){
+                    this.setTarget((LivingEntity) source.getEntity());
+                }
+            }
         }
         return super.hurt(source, amount);
     }
@@ -285,6 +348,7 @@ public abstract class AbstractPAZEntity extends CreatureEntity implements IPAZEn
         this.getAttribute(Attributes.ARMOR_TOUGHNESS).setBaseValue(this.getArmorToughness());
         this.getAttribute(PVZAttributes.INNER_DEFENCE_HP.get()).setBaseValue(this.getInnerLife());
         this.getAttribute(PVZAttributes.OUTER_DEFENCE_HP.get()).setBaseValue(this.getOuterLife());
+        this.heal(this.getMaxHealth());
     }
 
     /* features */

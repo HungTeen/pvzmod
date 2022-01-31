@@ -28,6 +28,7 @@ public class PVZHealthPartEntity extends PVZZombiePartEntity{
 			}
 			((PVZEntityDamageSource) source).setDefended(true);
 		}
+		this.zombie.hitDefence = true;
 		return super.hurt(source, damage);
 	}
 	

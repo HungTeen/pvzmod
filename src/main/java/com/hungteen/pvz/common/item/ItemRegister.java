@@ -29,7 +29,7 @@ import com.hungteen.pvz.common.item.tool.plant.PeaGunItem;
 import com.hungteen.pvz.common.item.tool.plant.ResourceCollectorItem;
 import com.hungteen.pvz.common.item.tool.plant.SunStorageSaplingItem;
 import com.hungteen.pvz.common.item.tool.zombie.*;
-import com.hungteen.pvz.common.misc.sound.SoundRegister;
+import com.hungteen.pvz.register.SoundRegister;
 import com.hungteen.pvz.common.entity.EntityRegister;
 import com.hungteen.pvz.utils.enums.Colors;
 import com.mojang.datafixers.util.Pair;

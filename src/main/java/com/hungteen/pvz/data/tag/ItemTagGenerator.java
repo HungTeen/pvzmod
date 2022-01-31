@@ -78,6 +78,7 @@ public class ItemTagGenerator extends ItemTagsProvider{
 				this.tag(rank.getCardTag()).add(ItemRegister.MEGA_CARD.get()).add(rank.getTemplateCard());
 			}
 		});
+		this.tag(PVZItemTags.ORIGIN_TOOLS).add(ItemRegister.ORIGIN_SWORD.get()).add(ItemRegister.ORIGIN_PICKAXE.get()).add(ItemRegister.ORIGIN_AXE.get()).add(ItemRegister.ORIGIN_HOE.get()).add(ItemRegister.ORIGIN_SHOVEL.get());
 	}
 	
 	private Item[] getFilterItems(Predicate<Item> predicate) {

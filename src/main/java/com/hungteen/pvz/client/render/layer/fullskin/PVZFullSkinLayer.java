@@ -17,36 +17,40 @@ import net.minecraftforge.api.distmarker.OnlyIn;
 @OnlyIn(Dist.CLIENT)
 public abstract class PVZFullSkinLayer<T extends LivingEntity, M extends EntityModel<T>> extends LayerRenderer<T, M> {
 
-	protected IEntityRenderer<T, M> entityRender;
-	protected EntityModel<T> entityModel;
-	
-	public PVZFullSkinLayer(IEntityRenderer<T, M> entityRendererIn) {
-		super(entityRendererIn);
-		this.entityRender = entityRendererIn;
-		this.entityModel = this.entityRender.getModel();
-	}
+    protected IEntityRenderer<T, M> entityRender;
+    protected EntityModel<T> entityModel;
+    protected float scale = 1F;
 
-	@Override
-	public void render(MatrixStack matrixStackIn, IRenderTypeBuffer bufferIn, int packedLightIn, T entitylivingbaseIn,
-			float limbSwing, float limbSwingAmount, float partialTicks, float ageInTicks, float netHeadYaw,
-			float headPitch) {
-		if (this.canRender(entitylivingbaseIn)) {
-			float f = (float)entitylivingbaseIn.tickCount + partialTicks;
-	        IVertexBuilder ivertexbuilder = bufferIn.getBuffer(RenderType.energySwirl(this.getResourceLocation(entitylivingbaseIn), this.getU(f), this.getV(f)));
-			entityModel.renderToBuffer(matrixStackIn, ivertexbuilder, packedLightIn, OverlayTexture.NO_OVERLAY, 0.5F, 0.5F, 0.5F, 1.0F);
-		}
-	}
+    public PVZFullSkinLayer(IEntityRenderer<T, M> entityRendererIn) {
+        super(entityRendererIn);
+        this.entityRender = entityRendererIn;
+        this.entityModel = this.entityRender.getModel();
+    }
 
-	protected float getU(float f){
-		return 0f;
-	}
-	
-	protected float getV(float f){
-		return 0f;
-	}
-	
-	protected abstract boolean canRender(T entity);
-	
-	protected abstract ResourceLocation getResourceLocation(T entity);
-	
+    @Override
+    public void render(MatrixStack matrixStackIn, IRenderTypeBuffer bufferIn, int packedLightIn, T entitylivingbaseIn,
+                       float limbSwing, float limbSwingAmount, float partialTicks, float ageInTicks, float netHeadYaw,
+                       float headPitch) {
+        if (this.canRender(entitylivingbaseIn)) {
+            matrixStackIn.pushPose();
+            matrixStackIn.scale(this.scale, this.scale, this.scale);
+            float f = (float) entitylivingbaseIn.tickCount + partialTicks;
+            IVertexBuilder ivertexbuilder = bufferIn.getBuffer(RenderType.energySwirl(this.getResourceLocation(entitylivingbaseIn), this.getU(f), this.getV(f)));
+            entityModel.renderToBuffer(matrixStackIn, ivertexbuilder, packedLightIn, OverlayTexture.NO_OVERLAY, 0.5F, 0.5F, 0.5F, 1.0F);
+            matrixStackIn.popPose();
+        }
+    }
+
+    protected float getU(float f) {
+        return 0f;
+    }
+
+    protected float getV(float f) {
+        return 0f;
+    }
+
+    protected abstract boolean canRender(T entity);
+
+    protected abstract ResourceLocation getResourceLocation(T entity);
+
 }

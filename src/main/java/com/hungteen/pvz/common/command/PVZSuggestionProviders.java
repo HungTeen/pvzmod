@@ -1,5 +1,6 @@
 package com.hungteen.pvz.common.command;
 
+import com.hungteen.pvz.common.world.challenge.ChallengeManager;
 import com.hungteen.pvz.common.world.invasion.InvasionManager;
 import com.hungteen.pvz.utils.StringUtil;
 import com.mojang.brigadier.suggestion.SuggestionProvider;
@@ -11,5 +12,9 @@ public class PVZSuggestionProviders {
 
     public static final SuggestionProvider<CommandSource> ALL_INVASIONS = SuggestionProviders.register(StringUtil.prefix("all_invasion"), (commandContext, builder) -> {
         return ISuggestionProvider.suggestResource(InvasionManager.getIds(), builder);
+    });
+
+    public static final SuggestionProvider<CommandSource> ALL_CHALLENGES = SuggestionProviders.register(StringUtil.prefix("all_challenge"), (commandContext, builder) -> {
+        return ISuggestionProvider.suggestResource(ChallengeManager.getIds(), builder);
     });
 }

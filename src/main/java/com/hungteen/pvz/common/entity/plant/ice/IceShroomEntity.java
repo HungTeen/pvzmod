@@ -9,7 +9,7 @@ import com.hungteen.pvz.common.entity.misc.ElementBallEntity.ElementTypes;
 import com.hungteen.pvz.common.entity.plant.base.PlantBomberEntity;
 import com.hungteen.pvz.common.impl.plant.PVZPlants;
 import com.hungteen.pvz.common.misc.PVZEntityDamageSource;
-import com.hungteen.pvz.common.misc.sound.SoundRegister;
+import com.hungteen.pvz.register.SoundRegister;
 import com.hungteen.pvz.common.potion.EffectRegister;
 import com.hungteen.pvz.register.ParticleRegister;
 import com.hungteen.pvz.utils.EntityUtil;
@@ -49,7 +49,7 @@ public class IceShroomEntity extends PlantBomberEntity implements IIceEffect{
 					 ++ cnt;
 				 }
 			}
-			EntityUtil.playSound(this, SoundRegister.FROZEN_HIT.get());
+			EntityUtil.playSound(this, SoundRegister.FROZEN.get());
 			//trigger advancement.
 			final PlayerEntity player = EntityUtil.getEntityOwner(level, this);
 			if(player != null && player instanceof ServerPlayerEntity) {

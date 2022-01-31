@@ -4,14 +4,13 @@ import com.hungteen.pvz.common.entity.plant.assist.GraveBusterEntity;
 import com.hungteen.pvz.common.entity.zombie.PVZZombieEntity;
 import com.hungteen.pvz.common.impl.plant.PVZPlants;
 import com.hungteen.pvz.common.item.spawn.card.PlantCardItem;
+import com.hungteen.pvz.utils.ZombieUtil;
 import com.hungteen.pvz.utils.others.WeightList;
 import net.minecraft.entity.*;
-import net.minecraft.entity.ai.attributes.Attributes;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ActionResultType;
 import net.minecraft.util.Hand;
-import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.SoundEvent;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.vector.Vector3d;
@@ -28,15 +27,17 @@ public abstract class AbstractTombStoneEntity extends PVZZombieEntity {
 		this.canCollideWithZombie = false;
 		this.canHelpAttack = false;
 	}
-	
+
 	@Override
-	protected void initAttributes() {
-		super.initAttributes();
-		this.getAttribute(Attributes.MOVEMENT_SPEED).setBaseValue(0);
-		this.getAttribute(Attributes.ATTACK_DAMAGE).setBaseValue(0);
-		this.getAttribute(Attributes.FOLLOW_RANGE).setBaseValue(50);
+	protected void registerGoals() {
+		//no goals.
 	}
-	
+
+	@Override
+	protected VariantType getSpawnType() {
+		return VariantType.NORMAL;
+	}
+
 	public void tick() {
 		super.tick();
 		if(! this.level.isClientSide) {
@@ -65,7 +66,22 @@ public abstract class AbstractTombStoneEntity extends PVZZombieEntity {
 		}
 		return super.interactAt(player, vec3d, hand);
 	}
-	
+
+	@Override
+	public float getWalkSpeed() {
+		return 0;
+	}
+
+	@Override
+	public float getEatDamage() {
+		return 0;
+	}
+
+	@Override
+	public float getFollowRange() {
+		return ZombieUtil.CLOSE_TARGET_RANGE;
+	}
+
 	@Override
 	public boolean canBeTargetBy(LivingEntity living) {
 		return false;
@@ -93,11 +109,6 @@ public abstract class AbstractTombStoneEntity extends PVZZombieEntity {
 	
 	@Override
 	protected SoundEvent getAmbientSound() {
-		return null;
-	}
-	
-	@Override
-	protected ResourceLocation getDefaultLootTable() {
 		return null;
 	}
 	

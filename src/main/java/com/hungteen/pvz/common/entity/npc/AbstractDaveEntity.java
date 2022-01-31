@@ -4,7 +4,7 @@ import javax.annotation.Nullable;
 
 import com.hungteen.pvz.api.enums.PVZGroupType;
 import com.hungteen.pvz.api.interfaces.IHasGroup;
-import com.hungteen.pvz.common.misc.sound.SoundRegister;
+import com.hungteen.pvz.register.SoundRegister;
 
 import net.minecraft.entity.CreatureEntity;
 import net.minecraft.entity.Entity;
@@ -63,12 +63,12 @@ public class AbstractDaveEntity extends CreatureEntity implements IHasGroup {
 	
 	@Override
 	protected SoundEvent getDeathSound() {
-		return SoundRegister.DAVE_DIE.get();
+		return SoundRegister.DAVE_SCREAM.get();
 	}
 	
 	@Override
 	protected SoundEvent getAmbientSound() {
-		return SoundRegister.DAVE_SAY.get();
+		return SoundRegister.CRAZY_SAY.get();
 	}
 
 	public void setCustomer(@Nullable PlayerEntity player) {

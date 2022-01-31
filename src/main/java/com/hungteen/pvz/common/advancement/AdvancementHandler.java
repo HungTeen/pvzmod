@@ -1,13 +1,6 @@
 package com.hungteen.pvz.common.advancement;
 
-import com.hungteen.pvz.common.advancement.trigger.CharmZombieTrigger;
-import com.hungteen.pvz.common.advancement.trigger.EntityEffectAmountTrigger;
-import com.hungteen.pvz.common.advancement.trigger.MoneyTrigger;
-import com.hungteen.pvz.common.advancement.trigger.PlantLevelTrigger;
-import com.hungteen.pvz.common.advancement.trigger.PlantSuperTrigger;
-import com.hungteen.pvz.common.advancement.trigger.PlayerPlacePlantTrigger;
-import com.hungteen.pvz.common.advancement.trigger.SunAmountTrigger;
-import com.hungteen.pvz.common.advancement.trigger.TreeLevelTrigger;
+import com.hungteen.pvz.common.advancement.trigger.*;
 
 import net.minecraft.advancements.CriteriaTriggers;
 
@@ -22,6 +15,7 @@ public class AdvancementHandler {
 		CriteriaTriggers.register(PlantLevelTrigger.INSTANCE);
 		CriteriaTriggers.register(MoneyTrigger.INSTANCE);
 		CriteriaTriggers.register(PlantSuperTrigger.INSTANCE);
+		CriteriaTriggers.register(ChallengeTrigger.INSTANCE);
 	}
 	
 }

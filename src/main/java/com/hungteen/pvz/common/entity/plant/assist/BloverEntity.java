@@ -7,7 +7,7 @@ import com.hungteen.pvz.common.entity.zombie.pool.BalloonZombieEntity;
 import com.hungteen.pvz.common.impl.SkillTypes;
 import com.hungteen.pvz.common.impl.plant.PVZPlants;
 import com.hungteen.pvz.common.misc.PVZEntityDamageSource;
-import com.hungteen.pvz.common.misc.sound.SoundRegister;
+import com.hungteen.pvz.register.SoundRegister;
 import com.hungteen.pvz.utils.EntityUtil;
 import com.hungteen.pvz.utils.MathUtil;
 import com.hungteen.pvz.utils.enums.PAZAlmanacs;
@@ -65,11 +65,11 @@ public class BloverEntity extends PVZPlantEntity {
 	}
 
 	@Override
-	public boolean canPlantTarget(Entity entity) {
+	public boolean canPAZTarget(Entity entity) {
 		if(entity instanceof BalloonZombieEntity) {
 			return true;
 		}
-		return super.canPlantTarget(entity);
+		return super.canPAZTarget(entity);
 	}
 	
 	@Override

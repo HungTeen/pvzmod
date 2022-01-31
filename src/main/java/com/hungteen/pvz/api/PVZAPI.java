@@ -4,8 +4,8 @@ import com.google.common.base.Suppliers;
 import com.hungteen.pvz.api.raid.*;
 import com.hungteen.pvz.api.types.*;
 import com.hungteen.pvz.common.entity.misc.bowling.AbstractBowlingEntity;
-import com.hungteen.pvz.common.impl.raid.SpawnComponent;
-import com.hungteen.pvz.common.world.raid.Raid;
+import com.hungteen.pvz.common.impl.challenge.SpawnComponent;
+import com.hungteen.pvz.common.world.challenge.Challenge;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
 import net.minecraft.util.ResourceLocation;
@@ -120,7 +120,7 @@ public class PVZAPI {
 		/**
 		 * register new raid type, so that u can read your own json.
 		 */
-		void registerRaidType(String name, Class<? extends IRaidComponent> c);
+		void registerRaidType(String name, Class<? extends IChallengeComponent> c);
 
 		/**
 		 * register new wave type, so that u can read your own json.
@@ -151,12 +151,12 @@ public class PVZAPI {
 		 * get a nearby raid.<br>
 		 * NOTE : there won't have more than one raid in a suitable range.
 		 */
-		Optional<Raid> getNearByRaid(ServerWorld world, BlockPos pos);
+		Optional<Challenge> getNearByRaid(ServerWorld world, BlockPos pos);
 
 		/**
 		 * get all res -> raid component map.
 		 */
-		Map<ResourceLocation, IRaidComponent> getRaidTypes();
+		Map<ResourceLocation, IChallengeComponent> getRaidTypes();
 
 		/* getting stuffs */
 

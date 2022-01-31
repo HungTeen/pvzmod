@@ -7,6 +7,7 @@ import com.hungteen.pvz.utils.EntityUtil;
 import com.hungteen.pvz.utils.interfaces.IMultiPartZombie;
 import net.minecraft.entity.CreatureEntity;
 import net.minecraft.entity.EntityType;
+import net.minecraft.util.DamageSource;
 import net.minecraft.util.SoundEvent;
 import net.minecraft.util.math.vector.Vector3d;
 import net.minecraft.world.World;
@@ -17,6 +18,7 @@ import net.minecraft.world.World;
 public abstract class DefenceZombieEntity extends PVZZombieEntity implements IMultiPartZombie{
 
 	protected PVZHealthPartEntity part;
+	public boolean hitDefence = false;
 	
 	public DefenceZombieEntity(EntityType<? extends CreatureEntity> type, World worldIn) {
 		super(type, worldIn);
@@ -86,6 +88,7 @@ public abstract class DefenceZombieEntity extends PVZZombieEntity implements IMu
 		if(! this.level.isClientSide){
 			EntityUtil.playSound(this, this.getPartDeathSound());
 		}
+		this.hitDefence = false;
 	}
 
 	@Override
@@ -94,6 +97,12 @@ public abstract class DefenceZombieEntity extends PVZZombieEntity implements IMu
 		if(! this.level.isClientSide){
 			EntityUtil.playSound(this, this.getPartHurtSound());
 		}
+		this.hitDefence = false;
+	}
+
+	@Override
+	public boolean canOuterDefend(DamageSource source) {
+		return super.canOuterDefend(source) && this.hitDefence;
 	}
 
 	protected float getPartHeightOffset() {

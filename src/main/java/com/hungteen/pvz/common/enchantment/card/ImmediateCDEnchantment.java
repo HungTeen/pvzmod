@@ -17,9 +17,8 @@ public class ImmediateCDEnchantment extends PVZEnchantment {
 	
 	public static boolean canImmediateCD(ItemStack stack, Random rand) {
 		final int lvl = EnchantmentHelper.getItemEnchantmentLevel(EnchantmentRegister.IMMEDIATE_CD.get(), stack);
-		final float chance = lvl == 1 ? 0.05F :
-			lvl == 2 ? 0.1F : 0.2F;
-		return rand.nextFloat() < chance; 
+		final float chance = (lvl == 1 ? 0.05F : lvl == 2 ? 0.1F : 0.2F);
+		return lvl > 0 && rand.nextFloat() < chance; 
 	}
 
 	@Override

@@ -6,10 +6,11 @@ import com.hungteen.pvz.common.entity.plant.PVZPlantEntity;
 import com.hungteen.pvz.common.entity.zombie.PVZZombieEntity;
 import com.hungteen.pvz.common.entity.zombie.body.ZombieDropBodyEntity;
 import com.hungteen.pvz.common.entity.zombie.pool.DiggerZombieEntity;
-import com.hungteen.pvz.common.impl.zombie.ZombieType;
 import com.hungteen.pvz.common.impl.plant.PVZPlants;
 import com.hungteen.pvz.common.impl.zombie.GrassZombies;
-import com.hungteen.pvz.common.misc.sound.SoundRegister;
+import com.hungteen.pvz.common.impl.zombie.ZombieType;
+import com.hungteen.pvz.register.SoundRegister;
+import com.hungteen.pvz.utils.EffectUtil;
 import com.hungteen.pvz.utils.EntityUtil;
 import com.hungteen.pvz.utils.MathUtil;
 import com.hungteen.pvz.utils.ZombieUtil;
@@ -17,12 +18,12 @@ import com.hungteen.pvz.utils.interfaces.ICanAttract;
 import net.minecraft.entity.CreatureEntity;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.ai.attributes.Attributes;
 import net.minecraft.entity.ai.goal.Goal;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.network.datasync.DataParameter;
 import net.minecraft.network.datasync.DataSerializers;
 import net.minecraft.network.datasync.EntityDataManager;
+import net.minecraft.potion.Effects;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.math.vector.Vector3d;
 import net.minecraft.world.World;
@@ -63,7 +64,7 @@ public class PoleZombieEntity extends PVZZombieEntity{
 	public void onSyncedDataUpdated(DataParameter<?> data) {
 		super.onSyncedDataUpdated(data);
 		if(data.equals(HAS_POLE)) {
-			this.getAttribute(Attributes.MOVEMENT_SPEED).setBaseValue(this.hasPole() ? ZombieUtil.WALK_FAST : ZombieUtil.WALK_NORMAL);
+			this.addEffect(EffectUtil.effect(Effects.MOVEMENT_SLOWDOWN, 1000000, 0));
 		}
 	}
 	
@@ -82,7 +83,7 @@ public class PoleZombieEntity extends PVZZombieEntity{
 		if(this.hasPole()) {
 		    this.setPole(false);
 		    this.setDeltaMovement(0, 0, 0);
-		    EntityUtil.playSound(this, SoundRegister.WALL_HIT.get());
+		    EntityUtil.playSound(this, SoundRegister.HAMMER_BONK.get());
 		}
 	}
 	
@@ -142,7 +143,7 @@ public class PoleZombieEntity extends PVZZombieEntity{
 	
 	/**
 	 * Common plants can not target jumping PoleZombie.
-	 * {@link PVZPlantEntity#checkCanPlantTarget(net.minecraft.entity.Entity)}
+	 * {@link PVZPlantEntity#checkCanPAZTarget(net.minecraft.entity.Entity)}
 	 */
 	public boolean isPoleJumping() {
 		return this.getAttackTime() > 0;

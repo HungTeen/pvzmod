@@ -3,10 +3,10 @@ package com.hungteen.pvz.common.entity.zombie.pool;
 import com.hungteen.pvz.common.capability.CapabilityHandler;
 import com.hungteen.pvz.common.entity.zombie.PVZZombieEntity;
 import com.hungteen.pvz.common.entity.zombie.body.ZombieDropBodyEntity;
-import com.hungteen.pvz.common.impl.zombie.ZombieType;
 import com.hungteen.pvz.common.impl.zombie.PoolZombies;
+import com.hungteen.pvz.common.impl.zombie.ZombieType;
 import com.hungteen.pvz.common.misc.PVZEntityDamageSource;
-import com.hungteen.pvz.common.misc.sound.SoundRegister;
+import com.hungteen.pvz.register.SoundRegister;
 import com.hungteen.pvz.data.loot.PVZLoot;
 import com.hungteen.pvz.remove.MetalTypes;
 import com.hungteen.pvz.utils.EntityUtil;
@@ -14,11 +14,9 @@ import com.hungteen.pvz.utils.MathUtil;
 import com.hungteen.pvz.utils.PlayerUtil;
 import com.hungteen.pvz.utils.ZombieUtil;
 import com.hungteen.pvz.utils.interfaces.IHasMetal;
-
 import net.minecraft.entity.CreatureEntity;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.ai.attributes.Attributes;
 import net.minecraft.entity.ai.goal.Goal;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.network.datasync.DataParameter;
@@ -56,12 +54,6 @@ public class JackInBoxZombieEntity extends PVZZombieEntity implements IHasMetal 
 	}
 	
 	@Override
-	protected void initAttributes() {
-		super.initAttributes();
-		this.updateSpeed(true);
-	}
-	
-	@Override
 	public void normalZombieTick() {
 		super.normalZombieTick();
 		if(! level.isClientSide && this.hasBox()) {
@@ -92,11 +84,11 @@ public class JackInBoxZombieEntity extends PVZZombieEntity implements IHasMetal 
 	 * {@link #normalZombieTick()}
 	 */
 	private void doJackExplode() {
-		final float range =  5F;
+		final float range = 5F;
 		final float damageMultiple = 1.5F;
 		EntityUtil.getWholeTargetableEntities(this, EntityUtil.getEntityAABB(this, range, range)).forEach(target -> {
 			final PVZEntityDamageSource source = PVZEntityDamageSource.explode(this);
-			if(target instanceof LivingEntity) {
+			if (target instanceof LivingEntity) {
 				target.hurt(source, EntityUtil.getMaxHealthDamage((LivingEntity) target, damageMultiple));
 			} else {
 				target.hurt(source, 100);
@@ -104,18 +96,10 @@ public class JackInBoxZombieEntity extends PVZZombieEntity implements IHasMetal 
 		});
 		EntityUtil.playSound(this, SoundRegister.CAR_EXPLOSION.get());
 		Explosion.Mode mode = net.minecraftforge.event.ForgeEventFactory.getMobGriefingEvent(this.level, this) ? Explosion.Mode.DESTROY : Explosion.Mode.NONE;
-		final float strenth = this.level.getDifficulty() == Difficulty.HARD ? 3F : 
-			                  this.level.getDifficulty() == Difficulty.NORMAL ? 2.5F : 2F;
+		final float strenth = this.level.getDifficulty() == Difficulty.HARD ? 3F :
+				this.level.getDifficulty() == Difficulty.NORMAL ? 2.5F : 2F;
 		this.level.explode(this, getX(), getY(), getZ(), strenth, mode);
 		this.remove();
-	}
-	
-	@Override
-	public void onSyncedDataUpdated(DataParameter<?> data) {
-		super.onSyncedDataUpdated(data);
-		if(data.equals(HAS_BOX)) {
-			this.updateSpeed(this.hasBox());
-		}
 	}
 	
 	@Override
@@ -136,15 +120,11 @@ public class JackInBoxZombieEntity extends PVZZombieEntity implements IHasMetal 
 		level.players().stream().filter(player -> this.distanceToSqr(player) <= 150).forEach(player -> {
 			player.getCapability(CapabilityHandler.PLAYER_DATA_CAPABILITY).ifPresent((l) -> {
 				if(l.getPlayerData().getOtherStats().playSoundTick == 0) {
-					PlayerUtil.playClientSound(player, SoundRegister.JACK_SAY.get());
+					PlayerUtil.playClientSound(player, SoundRegister.JACK_MUSIC.get());
 					l.getPlayerData().getOtherStats().playSoundTick = 300;
 				}
 			});
 		});
-	}
-	
-	private void updateSpeed(boolean is) {
-		this.getAttribute(Attributes.MOVEMENT_SPEED).setBaseValue(is ? ZombieUtil.WALK_FAST : ZombieUtil.WALK_LITTLE_FAST);
 	}
 	
 	@Override
@@ -185,7 +165,12 @@ public class JackInBoxZombieEntity extends PVZZombieEntity implements IHasMetal 
 	public float getLife() {
 		return 40;
 	}
-	
+
+	@Override
+	public float getWalkSpeed() {
+		return ZombieUtil.WALK_FAST;
+	}
+
 	/**
 	 * {@link #isZombieInvulnerableTo(DamageSource)}
 	 * {@link #canBeTargetBy(LivingEntity)}

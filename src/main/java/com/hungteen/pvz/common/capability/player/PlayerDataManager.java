@@ -82,15 +82,15 @@ public class PlayerDataManager {
 		{// load player resources.
 			if(baseTag.contains("player_stats")) {//old.
 				CompoundNBT statsTag = baseTag.getCompound("player_stats");
-			    for(Resources res:Resources.values()) {
-			    	if(statsTag.contains("player_"+res.toString())) {
-				        this.resources.put(res, statsTag.getInt("player_"+res.toString()));
+			    for(Resources res : Resources.values()) {
+			    	if(statsTag.contains("player_" + res.toString())) {
+				        this.resources.put(res, statsTag.getInt("player_" + res.toString()));
 			    	}
 			    }
 			}
 			if(baseTag.contains("player_resources")) {//new.
 				CompoundNBT statsTag = baseTag.getCompound("player_resources");
-			    for(Resources res:Resources.values()) {
+			    for(Resources res : Resources.values()) {
 			    	if(statsTag.contains(res.toString().toLowerCase())) {
 				        this.resources.put(res, statsTag.getInt(res.toString().toLowerCase()));
 			    	}
@@ -200,7 +200,10 @@ public class PlayerDataManager {
 		}
 		return baseTag;
 	}
-//	
+
+	/**
+	 * copy player data when clone event happen.
+	 */
 	public void cloneFromExistingPlayerData(PlayerDataManager data, boolean died) {
 		this.loadFromNBT(data.saveToNBT());
 		
@@ -209,9 +212,7 @@ public class PlayerDataManager {
 			if(! PVZConfig.COMMON_CONFIG.RuleSettings.KeepSunWhenDie.get()) {
 				this.setResource(Resources.SUN_NUM, 50);
 			}
-//			this.setResource(Resources.KILL_COUNT, 0);
 		}
-		this.syncToClient();
 	}
 	
 	/**
@@ -239,7 +240,7 @@ public class PlayerDataManager {
 	 * sync data to client side.
 	 * {@link #init()}
 	 */
-	private void syncToClient() {
+	public void syncToClient() {
 		{// player resources.
 		    for(Resources res : Resources.values()) {
 			    this.sendResourcePacket(player, res);

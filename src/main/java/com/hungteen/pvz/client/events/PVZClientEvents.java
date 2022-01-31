@@ -5,9 +5,11 @@ import com.hungteen.pvz.PVZMod;
 import com.hungteen.pvz.client.events.handler.PVZEntityRenderHandler;
 import com.hungteen.pvz.client.gui.screen.PVZMainMenuScreen;
 import com.hungteen.pvz.common.item.spawn.card.SummonCardItem;
+import com.hungteen.pvz.common.misc.tag.PVZItemTags;
 import com.mojang.blaze3d.matrix.MatrixStack;
 import net.minecraft.client.gui.screen.MainMenuScreen;
 import net.minecraft.client.renderer.IRenderTypeBuffer;
+import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.client.event.GuiOpenEvent;
 import net.minecraftforge.client.event.RenderLivingEvent;
@@ -32,6 +34,9 @@ public class PVZClientEvents {
 	@SubscribeEvent
 	public static void addToolTips(ItemTooltipEvent event) {
 		SummonCardItem.appendSkillToolTips(event.getItemStack(), event.getToolTip());
+		if(event.getItemStack().getItem().is(PVZItemTags.ORIGIN_TOOLS)){
+			event.getToolTip().add(new TranslationTextComponent("tooltip.pvz.origin_tools"));
+		}
 	}
 	
 	@SubscribeEvent

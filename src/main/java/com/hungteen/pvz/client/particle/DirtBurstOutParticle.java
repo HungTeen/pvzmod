@@ -10,7 +10,7 @@ public class DirtBurstOutParticle extends PVZNormalParticle{
 
 	public DirtBurstOutParticle(ClientWorld world, double x, double y, double z, double xSpeed, double ySpeed, double zSpeed) {
 		super(world, x, y, z, xSpeed, ySpeed, zSpeed);
-		this.quadSize = 0.1F;
+		this.quadSize = 0.05F;
 		this.lifetime = 30 + this.random.nextInt(30);
 		this.hasPhysics = true;
 		this.gravity = 0.02F;

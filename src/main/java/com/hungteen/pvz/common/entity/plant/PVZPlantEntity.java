@@ -18,14 +18,13 @@ import com.hungteen.pvz.common.entity.plant.explosion.DoomShroomEntity;
 import com.hungteen.pvz.common.entity.plant.light.GoldLeafEntity;
 import com.hungteen.pvz.common.entity.plant.magic.CoffeeBeanEntity;
 import com.hungteen.pvz.common.entity.plant.spear.SpikeWeedEntity;
-import com.hungteen.pvz.common.entity.zombie.PVZZombieEntity;
 import com.hungteen.pvz.common.entity.zombie.grass.TombStoneEntity;
 import com.hungteen.pvz.common.event.handler.PlayerEventHandler;
 import com.hungteen.pvz.common.impl.SkillTypes;
 import com.hungteen.pvz.common.impl.plant.PVZPlants;
 import com.hungteen.pvz.common.item.spawn.card.PlantCardItem;
 import com.hungteen.pvz.common.misc.PVZEntityDamageSource;
-import com.hungteen.pvz.common.misc.sound.SoundRegister;
+import com.hungteen.pvz.register.SoundRegister;
 import com.hungteen.pvz.common.potion.EffectRegister;
 import com.hungteen.pvz.register.ParticleRegister;
 import com.hungteen.pvz.remove.MetalTypes;
@@ -255,25 +254,7 @@ public abstract class PVZPlantEntity extends AbstractPAZEntity implements IPlant
 		return false;
 	}
 
-	/**
-	 * check can plant set target as attackTarget.
-	 */
-	public boolean checkCanPlantTarget(Entity target) {
-		return EntityUtil.checkCanEntityBeTarget(this, target) && this.canPlantTarget(target);
-	}
-	
-	/**
-	 * check can plant attack target.
-	 * {@link EntityUtil#canAttackEntity(Entity, Entity)}
-	 */
-	public boolean checkCanPlantAttack(Entity entity) {
-		return EntityUtil.checkCanEntityBeAttack(this, entity) && this.canPlantTarget(entity);
-	}
-	
-	/**
-	 * can plant be target by living, often use for zombie's target.
-	 * {@link PVZZombieEntity#canZombieTarget(Entity)}
-	 */
+	@Override
 	public boolean canBeTargetBy(LivingEntity living) {
 		return ! this.hasMetal();
 	}
@@ -284,24 +265,19 @@ public abstract class PVZPlantEntity extends AbstractPAZEntity implements IPlant
 	}
 
 	@Override
+	public boolean canOuterDefend(DamageSource source) {
+		//pumpkin can not defend parabola damage.
+		if(source instanceof PVZEntityDamageSource && ((PVZEntityDamageSource) source).isParabola()){
+			return false;
+		}
+		return super.canOuterDefend(source);
+	}
+
+	@Override
 	public void attractBy(ICanAttract defender) {
 		if(defender instanceof LivingEntity){
 			this.setTarget((LivingEntity) defender);
 		}
-	}
-
-	/**
-	 * use to extends for specific plants.
-	 * {@link #checkCanPlantTarget(Entity)}
-	 */
-	public boolean canPlantTarget(Entity target) {
-		if(target instanceof PVZZombieEntity) {
-			return ((PVZZombieEntity) target).canBeTargetBy(this);
-		}
-		if(target instanceof PVZPlantEntity) {
-			return ((PVZPlantEntity) target).canBeTargetBy(this);
-		}
-		return true;
 	}
 
 	/**
@@ -639,7 +615,7 @@ public abstract class PVZPlantEntity extends AbstractPAZEntity implements IPlant
 
 	@Override
 	public Optional<SoundEvent> getSpawnSound() {
-		return Optional.ofNullable(this.getPlantType().isWaterPlant() ? SoundRegister.PLANT_IN_WATER.get() : SoundRegister.PLANT_ON_GROUND.get());
+		return Optional.ofNullable(this.getPlantType().isWaterPlant() ? SoundRegister.PLACE_PLANT_WATER.get() : SoundRegister.PLACE_PLANT_GROUND.get());
 	}
 
 	/* data */

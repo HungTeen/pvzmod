@@ -9,7 +9,7 @@ import com.hungteen.pvz.common.entity.plant.PVZPlantEntity;
 import com.hungteen.pvz.common.impl.SkillTypes;
 import com.hungteen.pvz.common.impl.plant.PVZPlants;
 import com.hungteen.pvz.common.misc.PVZEntityDamageSource;
-import com.hungteen.pvz.common.misc.sound.SoundRegister;
+import com.hungteen.pvz.register.SoundRegister;
 import com.hungteen.pvz.utils.EntityUtil;
 import com.hungteen.pvz.utils.enums.PAZAlmanacs;
 import com.mojang.datafixers.util.Pair;
@@ -108,7 +108,7 @@ public class ChomperEntity extends PVZPlantEntity {
 		} else {
 			target.hurt(PVZEntityDamageSource.eat(this), damage / 50F);
 		}
-		EntityUtil.playSound(this, SoundRegister.CHOMP.get());
+		EntityUtil.playSound(this, SoundRegister.BIG_CHOMP.get());
 	}
 
 	@Override

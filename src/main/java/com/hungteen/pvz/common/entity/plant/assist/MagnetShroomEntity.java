@@ -10,7 +10,7 @@ import com.hungteen.pvz.common.entity.bullet.itembullet.MetalItemEntity.MetalSta
 import com.hungteen.pvz.common.entity.plant.PVZPlantEntity;
 import com.hungteen.pvz.common.impl.SkillTypes;
 import com.hungteen.pvz.common.impl.plant.PVZPlants;
-import com.hungteen.pvz.common.misc.sound.SoundRegister;
+import com.hungteen.pvz.register.SoundRegister;
 import com.hungteen.pvz.remove.MetalTypes;
 import com.hungteen.pvz.utils.AlgorithmUtil;
 import com.hungteen.pvz.utils.EntityUtil;
@@ -75,7 +75,7 @@ public class MagnetShroomEntity extends PVZPlantEntity {
 		int cnt = this.getSuperDragCnt();
 		EntityUtil.playSound(this, SoundRegister.MAGNET.get());
 		for(LivingEntity target : level.getEntitiesOfClass(LivingEntity.class, EntityUtil.getEntityAABB(this, range, range), (entity) -> {
-			return this.checkCanPlantTarget(entity);
+			return this.checkCanPAZTarget(entity);
 		})){
 			if(! (target instanceof IHasMetal)) continue;
 			((IHasMetal) target).decreaseMetal();
@@ -144,7 +144,7 @@ public class MagnetShroomEntity extends PVZPlantEntity {
 	}
 	
 	@Override
-	public boolean canPlantTarget(Entity entity) {
+	public boolean canPAZTarget(Entity entity) {
 		return entity instanceof IHasMetal && ((IHasMetal) entity).hasMetal();
 	}
 	

@@ -2,14 +2,16 @@ package com.hungteen.pvz.common.world.invasion;
 
 import com.hungteen.pvz.PVZConfig;
 import com.hungteen.pvz.PVZMod;
+import com.hungteen.pvz.common.entity.AbstractPAZEntity;
 import com.hungteen.pvz.common.entity.EntityRegister;
 import com.hungteen.pvz.common.misc.PVZPacketTypes;
-import com.hungteen.pvz.common.misc.sound.SoundRegister;
+import com.hungteen.pvz.register.SoundRegister;
 import com.hungteen.pvz.common.network.PVZPacketHandler;
 import com.hungteen.pvz.common.network.toclient.OtherStatsPacket;
 import com.hungteen.pvz.utils.*;
 import com.hungteen.pvz.utils.enums.Resources;
 import com.hungteen.pvz.utils.others.WeightList;
+import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.MobEntity;
 import net.minecraft.entity.player.PlayerEntity;
@@ -121,7 +123,7 @@ public class Invasion {
                         b -> InvasionManager.suitableInvasionPos(world, b) && type.checkPos(world, b));
 
                 if (pos != null) {
-                    EntityUtil.onEntitySpawn(world, type.getSpawnType().create(world), pos);
+                    this.spawnInvader(type, pos);
                 }
             }
         }
@@ -174,7 +176,7 @@ public class Invasion {
                 final BlockPos pos = WorldUtil.findRandomSpawnPos(world, mid, 4, 1, 7, b -> type.checkPos(world, b));
                 if (pos != null) {
                     flag = true;
-                    world.addFreshEntity(EntityUtil.createWithNBT(world, type.getSpawnType(), type.getNbt(), pos));
+                    this.spawnInvader(type, pos);
                 }
             }
             if (flag) {
@@ -188,6 +190,16 @@ public class Invasion {
             }
         }
         return flag;
+    }
+
+
+    private void spawnInvader(SpawnType spawnType, BlockPos pos){
+        Entity entity = EntityUtil.createWithNBT(world, spawnType.getSpawnType(), spawnType.getNbt(), pos);
+        if(entity instanceof AbstractPAZEntity){
+            AbstractPAZEntity.randomInitSkills((AbstractPAZEntity) entity, Math.max(0, this.invasionLvl - spawnType.getInvasionLevel()));
+        }
+        //already add to world.
+//        world.addFreshEntity(entity);
     }
 
     /**

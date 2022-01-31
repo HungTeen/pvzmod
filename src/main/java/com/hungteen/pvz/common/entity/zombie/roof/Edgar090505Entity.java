@@ -1,7 +1,8 @@
 package com.hungteen.pvz.common.entity.zombie.roof;
 
-import com.hungteen.pvz.api.paz.IZombieEntity;
 import com.hungteen.pvz.api.enums.BodyType;
+import com.hungteen.pvz.api.paz.IZombieEntity;
+import com.hungteen.pvz.common.entity.EntityRegister;
 import com.hungteen.pvz.common.entity.ai.goal.target.PVZNearestTargetGoal;
 import com.hungteen.pvz.common.entity.misc.DestroyCarEntity;
 import com.hungteen.pvz.common.entity.misc.ElementBallEntity;
@@ -11,15 +12,9 @@ import com.hungteen.pvz.common.entity.zombie.base.AbstractBossZombieEntity;
 import com.hungteen.pvz.common.entity.zombie.body.ZombieDropBodyEntity;
 import com.hungteen.pvz.common.entity.zombie.roof.BungeeZombieEntity.BungeeStates;
 import com.hungteen.pvz.common.entity.zombie.roof.BungeeZombieEntity.BungeeTypes;
-import com.hungteen.pvz.common.impl.zombie.ZombieType;
-import com.hungteen.pvz.common.impl.zombie.CustomZombies;
-import com.hungteen.pvz.common.impl.zombie.GrassZombies;
-import com.hungteen.pvz.common.impl.zombie.PoolZombies;
-import com.hungteen.pvz.common.impl.zombie.RoofZombies;
-import com.hungteen.pvz.common.misc.sound.SoundRegister;
-import com.hungteen.pvz.common.world.data.PVZFlagData;
+import com.hungteen.pvz.common.impl.zombie.*;
 import com.hungteen.pvz.data.loot.PVZLoot;
-import com.hungteen.pvz.common.entity.EntityRegister;
+import com.hungteen.pvz.register.SoundRegister;
 import com.hungteen.pvz.utils.EntityUtil;
 import com.hungteen.pvz.utils.MathUtil;
 import com.hungteen.pvz.utils.PlayerUtil;
@@ -139,7 +134,7 @@ public class Edgar090505Entity extends AbstractBossZombieEntity {
                     this.resetStealCD();
                 } else if (this.shootBallCD <= 0) {// 5 - 10
                     this.setZomBossState(this.getRandom().nextInt(2) == 0 ? ZomBossStates.FLAME : ZomBossStates.ICE);
-                    EntityUtil.playSound(this, SoundRegister.ZOMBOSS_SHOOT.get());
+                    EntityUtil.playSound(this, SoundRegister.EDGAR_SHOOT.get());
                     this.resetShootBallCD();
                 }
             } else if (this.getZomBossState() == ZomBossStates.FLAME || this.getZomBossState() == ZomBossStates.ICE) {
@@ -278,8 +273,6 @@ public class Edgar090505Entity extends AbstractBossZombieEntity {
             this.bossInfo.getPlayers().forEach((player) -> {
                 CriteriaTriggers.PLAYER_KILLED_ENTITY.trigger(player, this, source);
             });
-            PVZFlagData data = PVZFlagData.getGlobalFlagData(level);
-            data.addAdgarDefeatedCount();
         }
     }
 
@@ -449,12 +442,12 @@ public class Edgar090505Entity extends AbstractBossZombieEntity {
 
     @Override
     public Optional<SoundEvent> getSpawnSound() {
-        return Optional.ofNullable(SoundRegister.ZOMBOSS_LAUGH.get());
+        return Optional.ofNullable(SoundRegister.EDGAR_LAUGH.get());
     }
 
     @Override
     protected SoundEvent getDeathSound() {
-        return SoundRegister.ZOMBOSS_DEATH.get();
+        return SoundRegister.EDGAR_EXPLOSION.get();
     }
 
     @Override

@@ -1,7 +1,7 @@
 {
   "display": {
     "icon": {
-      "item": "pvz:origin_block"
+      "item": "pvz:pea"
     },
     "title": {
       "translate": "advancement.pvz.root"
@@ -10,7 +10,7 @@
       "translate": "advancement.pvz.root.desc"
     },
 	"frame":"task",
-    "background": "pvz:textures/block/origin_block.png",
+    "background": "pvz:textures/block/amethyst_block.png",
     "announce_to_chat": true
   },
   "criteria": {
@@ -25,11 +25,5 @@
     "in_world"
   ]],
   "rewards":{
-    "recipes":[
-	    "pvz:guild_book"
-    ],
-    "loot":[
-        "pvz:rewards/join_overworld"
-    ]
   }
 }

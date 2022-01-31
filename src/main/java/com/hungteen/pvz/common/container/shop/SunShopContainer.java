@@ -2,7 +2,7 @@ package com.hungteen.pvz.common.container.shop;
 
 import com.hungteen.pvz.common.capability.CapabilityHandler;
 import com.hungteen.pvz.common.capability.player.PlayerDataManager;
-import com.hungteen.pvz.common.misc.sound.SoundRegister;
+import com.hungteen.pvz.register.SoundRegister;
 import com.hungteen.pvz.register.ContainerRegister;
 import com.hungteen.pvz.utils.TradeUtil;
 import com.hungteen.pvz.utils.TradeUtil.DaveGoods;
@@ -24,7 +24,7 @@ public class SunShopContainer extends AbstractDaveShopContainer {
 //			System.out.println(TradeUtil.getGoodItemStack(good) + " , " + this.output.getStackInSlot(0));
 			this.output.setItem(0, TradeUtil.getGoodItemStack(good));
 		});
-		this.player.level.playSound(null, this.player, SoundRegister.DAVE_BUY.get(), SoundCategory.AMBIENT, 1f, 1f);
+		this.player.level.playSound(null, this.player, SoundRegister.DAVE_HAPPY.get(), SoundCategory.AMBIENT, 1f, 1f);
 	}
 	
 }

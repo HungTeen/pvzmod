@@ -1,0 +1,20 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "XX ",
+    " Y ",
+    " Y "
+  ],
+  "key": {
+    "Y": {
+      "item": "minecraft:stick"
+    },
+    "X": {
+      "item": "pvz:origin_ingot"
+    }
+  },
+  "result": {
+    "item": "pvz:origin_hoe",
+    "count": 1
+  }
+}

@@ -47,7 +47,27 @@ public class PVZConfig {
             }
             builder.pop();
 
-            //World Settings
+            /* Challenge Settings */
+            builder.comment("Settings about challenge").push("Challenge Settings");
+            {
+                ChallengeSettings.EnableChallenge = builder
+                        .comment("Turn to false, no new challenge will happen, and old challenges will be clear.")
+                        .translation("config.pvz.enable_challenge")
+                        .define("EnableChallenge", true);
+
+                ChallengeSettings.ChallengeWaitTime = builder
+                        .comment("how many ticks will challenge wait to remove, when there is no player in it.")
+                        .translation("config.pvz.challenge_wait_time")
+                        .defineInRange("ChallengeWaitTime", 400, 1, 1000000);
+
+                ChallengeSettings.ChallengeRange = builder
+                        .comment("how far will a player join the raid.")
+                        .translation("config.pvz.challenge_range")
+                        .defineInRange("ChallengeRange", 50, 1, 1000);
+            }
+            builder.pop();
+
+            //World Settings.
             builder.comment("Settings about global rules.").push("Rule Settings");
             {
                 RuleSettings.CanSpawnDefaultMonster = builder
@@ -79,6 +99,11 @@ public class PVZConfig {
                         .translation("config.pvz.rule.keep_sun")
                         .comment("if turn to true, player will keep its sun after death.")
                         .define("KeepSunWhenDie", false);
+
+                RuleSettings.MaxDamageLimit = builder
+                        .translation("config.pvz.rule.max_damage")
+                        .comment("how many damage could plants and zombies deal to other living entity.")
+                        .defineInRange("MaxDamageLimit", 20, 0, 100000);
             }
             builder.pop();
 
@@ -167,26 +192,6 @@ public class PVZConfig {
                             .defineInRange("YetiZombieSpawnWeight", 1, 1, 200);
                 }
                 builder.pop();
-
-                builder.comment("Settings about raid").push("Raid Settings");
-                {
-                    WorldSettings.EnableRaid = builder
-                            .comment("Turn to false, no new raid will happen, and old raids will be clear.")
-                            .translation("config.pvz.enable_raid")
-                            .define("EnableRaid", true);
-
-                    WorldSettings.RaidWaitTime = builder
-                            .comment("how many ticks will raid wait, when there is no player in it.")
-                            .translation("config.pvz.raid_wait_time")
-                            .defineInRange("RaidWaitTime", 400, 1, 1000000);
-
-                    WorldSettings.RaidRange = builder
-                            .comment("how far will a player join the raid.")
-                            .translation("config.pvz.raid_range")
-                            .defineInRange("RaidRange", 50, 1, 1000);
-                }
-                builder.pop();
-
             }
             builder.pop();
 
@@ -332,6 +337,7 @@ public class PVZConfig {
         }
 
         public InvasionSettings InvasionSettings = new InvasionSettings();
+        public ChallengeSettings ChallengeSettings = new ChallengeSettings();
         public RuleSettings RuleSettings = new RuleSettings();
         public WorldSettings WorldSettings = new WorldSettings();
         public EntitySettings EntitySettings = new EntitySettings();
@@ -349,6 +355,12 @@ public class PVZConfig {
 
         }
 
+        public static class ChallengeSettings{
+            public ForgeConfigSpec.BooleanValue EnableChallenge;
+            public ForgeConfigSpec.IntValue ChallengeWaitTime;
+            public ForgeConfigSpec.IntValue ChallengeRange;
+        }
+
         public static class RuleSettings {
             public ForgeConfigSpec.BooleanValue CanSpawnDefaultMonster;
             public ForgeConfigSpec.BooleanValue GiveBeginnerReward;
@@ -356,6 +368,7 @@ public class PVZConfig {
             public ForgeConfigSpec.BooleanValue TeamAttack;
             public ForgeConfigSpec.IntValue LimitPlantCount;
             public ForgeConfigSpec.BooleanValue KeepSunWhenDie;
+            public ForgeConfigSpec.IntValue MaxDamageLimit;
         }
 
         public static class WorldSettings {
@@ -382,10 +395,6 @@ public class PVZConfig {
             public ForgeConfigSpec.IntValue LavaZombieSpawnWeight;
             public ForgeConfigSpec.IntValue GigaTombStoneSpawnWeight;
             public ForgeConfigSpec.IntValue YetiZombieSpawnWeight;
-
-            public ForgeConfigSpec.BooleanValue EnableRaid;
-            public ForgeConfigSpec.IntValue RaidWaitTime;
-            public ForgeConfigSpec.IntValue RaidRange;
         }
 
         public static class EntitySettings {

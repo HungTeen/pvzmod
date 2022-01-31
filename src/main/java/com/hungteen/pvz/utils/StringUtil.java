@@ -34,13 +34,6 @@ public class StringUtil {
 	/*
 	 * for raid level.
 	 */
-	public static final String TYPE = "type";
-	public static final String RAID_TITLE = "title";
-	public static final String WIN_TITLE = "win_title";
-	public static final String LOSS_TITLE = "loss_title";
-	public static final String AUTHORS = "authors";
-	public static final String TAGS = "tags";
-	public static final String DIMENSIONS = "dimensions";
 	public static final String PRE_CD = "pre_tick";
 	public static final String WIN_CD = "win_tick";
 	public static final String LOSS_CD = "loss_tick";

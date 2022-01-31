@@ -1,305 +1,870 @@
 {
-    "sun_pick":{
-        "subtitle": "sound.pvz.sun_pick",
-        "sounds":[{"name":"pvz:entity/drop/sun/sun_pick1"},{"name":"pvz:entity/drop/sun/sun_pick2"}]
-    },
-    "coin_drop":{
-        "subtitle": "sound.pvz.coin_drop",
-        "sounds":[{"name":"pvz:entity/drop/coin/coin_drop"}]
-    },
-    "coin_pick":{
-        "subtitle": "sound.pvz.coin_pick",
-        "sounds":[{"name":"pvz:entity/drop/coin/coin_pick"}]
-    },
-    "jewel_drop":{
-        "subtitle": "sound.pvz.jewel_drop",
-        "sounds":[{"name":"pvz:entity/drop/jewel/jewel_drop"}]
-    },
-    "jewel_pick":{
-        "subtitle": "sound.pvz.jewel_pick",
-        "sounds":[{"name":"pvz:entity/drop/jewel/jewel_pick"}]
-    },
-    "eat":{
-        "subtitle": "sound.pvz.eat",
-        "sounds":[{"name":"pvz:entity/plant/hurt/hurt1"},{"name":"pvz:entity/plant/hurt/hurt2"}]
-    },
-    "zombie_say":{
-        "subtitle": "sound.pvz.zombie_say",
-        "sounds":[{"name":"pvz:entity/zombie/say/say1"},{"name":"pvz:entity/zombie/say/say2"},{"name":"pvz:entity/zombie/say/say3"},{"name":"pvz:entity/zombie/say/say4"}]
-    },
-    "cherry_bomb":{
-        "subtitle": "sound.pvz.cherry_bomb",
-        "sounds":[{"name":"pvz:entity/plant/bomb/cherry_bomb"}]
-    },
-    "plastic_hit":{
-        "subtitle": "sound.pvz.plastic_hit",
-        "sounds":[{"name":"pvz:entity/zombie/hit/plastic1"},{"name":"pvz:entity/zombie/hit/plastic2"}]
-    },
-    "potato_mine":{
-        "subtitle": "sound.pvz.potato_mine",
-        "sounds":[{"name":"pvz:entity/plant/bomb/potato_mine"}]
-    },
-    "frozen_hit":{
-        "subtitle": "sound.pvz.frozen_hit",
-        "sounds":[{"name":"pvz:entity/zombie/hit/frozen"}]
-    },
-    "metal_hit":{
-        "subtitle": "sound.pvz.metal_hit",
-        "sounds":[{"name":"pvz:entity/zombie/hit/metal1"},{"name":"pvz:entity/zombie/hit/metal2"}]
-    },
-    "huge_wave":{
-        "subtitle": "sound.pvz.huge_wave",
-        "sounds":[{"name":"pvz:ambient/huge_wave"}]
-    },
-    "chomp":{
-        "subtitle": "sound.pvz.chomp",
-        "sounds":[{"name":"pvz:entity/plant/attack/chomp"}]
-    },
-    "snow_shoot":{
-        "subtitle": "sound.pvz.snow_shoot",
-        "sounds":[{"name":"pvz:entity/plant/attack/snow_shoot"}]
-    },
-    "dirt_rise":{
-        "subtitle": "sound.pvz.dirt_rise",
-        "sounds":[{"name":"pvz:ambient/dirt_rise"}]
-    },
-    "squash_hmm":{
-        "subtitle": "sound.pvz.squash_hmm",
-        "sounds":[{"name":"pvz:entity/plant/say/squash_hmm"},{"name":"pvz:entity/plant/say/squash_hmm2"}]
-    },
-    "ground_shake":{
-        "subtitle": "sound.pvz.ground_shake",
-        "sounds":[{"name":"pvz:ambient/ground_shake"}]
-    },
-    "drag":{
-        "subtitle": "sound.pvz.drag",
-        "sounds":[{"name":"pvz:entity/plant/attack/drag"}]
-    },
-    "jalapeno":{
-        "subtitle": "sound.pvz.jalapeno",
-        "sounds":[{"name":"pvz:entity/plant/bomb/jalapeno"}]
-    },
-    "car_spawn":{
-        "subtitle": "sound.pvz.car_spawn",
-        "sounds":[{"name":"pvz:entity/zombie/spawn/car_spawn"}]
-    },
-    "car_explosion":{
-        "subtitle": "sound.pvz.car_explosion",
-        "sounds":[{"name":"pvz:entity/zombie/death/car_explosion"}]
-    },
-    "flame_hit":{
-        "subtitle": "sound.pvz.flame_hit",
-        "sounds":[{"name":"pvz:entity/zombie/hit/fire"}]
-    },
-    "dave_say":{
-        "subtitle": "sound.pvz.dave_say",
-        "sounds":[{"name":"pvz:entity/npc/crazy_dave/dave_say1"},{"name":"pvz:entity/npc/crazy_dave/dave_say2"},{"name":"pvz:entity/npc/crazy_dave/dave_say3"}]
-    },
-    "dave_hurt":{
-        "subtitle": "sound.pvz.dave_hurt",
-        "sounds":[{"name":"pvz:entity/npc/crazy_dave/dave_hurt1"},{"name":"pvz:entity/npc/crazy_dave/dave_hurt2"},{"name":"pvz:entity/npc/crazy_dave/dave_hurt3"}]
-    },
-    "dave_buy":{
-        "subtitle": "sound.pvz.dave_buy",
-        "sounds":[{"name":"pvz:entity/npc/crazy_dave/dave_buy"}]
-    },
-    "dave_die":{
-        "subtitle": "sound.pvz.dave_die",
-        "sounds":[{"name":"pvz:entity/npc/crazy_dave/dave_die"}]
-    },
-    "dolphin_say":{
-        "subtitle": "sound.pvz.dolphin_say",
-        "sounds":[{"name":"pvz:entity/zombie/say/dolphin_say"}]
-    },
-    "dolphin_jump":{
-        "subtitle": "sound.pvz.dolphin_jump",
-        "sounds":[{"name":"pvz:entity/zombie/jump/dolphin_jump"}]
-    },
-    "slurp":{
-        "subtitle": "sound.pvz.slurp",
-        "sounds":[{"name":"pvz:entity/zombie/act/slurp"}]
-    },
-    "puff":{
-        "subtitle": "sound.pvz.puff",
-        "sounds":[{"name":"pvz:entity/plant/attack/puff"}]
-    },
-    "plant_grow":{
-        "subtitle": "sound.pvz.plant_grow",
-        "sounds":[{"name":"pvz:entity/plant/plant_grow"}]
-    },
-    "fume":{
-        "subtitle": "sound.pvz.fume",
-        "sounds":[{"name":"pvz:entity/plant/attack/fume"}]
-    },
-    "angry":{
-        "subtitle": "sound.pvz.angry",
-        "sounds":[{"name":"pvz:entity/zombie/act/angry"},{"name":"pvz:entity/zombie/act/angry2"}]
-    },
-    "doom":{
-        "subtitle": "sound.pvz.doom",
-        "sounds":[{"name":"pvz:entity/plant/bomb/doom"}]
-    },
-    "wake_up":{
-        "subtitle": "sound.pvz.wake_up",
-        "sounds":[{"name":"pvz:entity/plant/wake_up"}]
-    },
-    "pea_hit":{
-        "subtitle": "sound.pvz.pea_hit",
-        "sounds":[{"name":"pvz:entity/zombie/hit/splat1"},{"name":"pvz:entity/zombie/hit/splat2"},{"name":"pvz:entity/zombie/hit/splat3"}]
-    },
-    "plant_on_ground":{
-        "subtitle": "sound.pvz.plant_on_ground",
-        "sounds":[{"name":"pvz:entity/plant/plant_ground1"},{"name":"pvz:entity/plant/plant_ground2"}]
-    },
-    "plant_in_water":{
-        "subtitle": "sound.pvz.plant_in_water",
-        "sounds":[{"name":"pvz:entity/plant/plant_water"}]
-    },
-    "paper_gone":{
-        "subtitle": "sound.pvz.paper_gone",
-        "sounds":[{"name":"pvz:entity/zombie/death/paper_gone"}]
-    },
-    "charm":{
-        "subtitle": "sound.pvz.charm",
-        "sounds":[{"name":"pvz:entity/plant/attack/charm"}]
-    },
-    "warn":{
-        "subtitle": "sound.pvz.warn",
-        "sounds":[{"name":"pvz:ambient/warn1"},{"name":"pvz:ambient/warn2"}]
-    },
-    "jack_say":{
-        "subtitle": "sound.pvz.jack_say",
-        "sounds":[{"name":"pvz:entity/zombie/say/jack_say"}]
-    },
-    "jack_surprise":{
-        "subtitle": "sound.pvz.jack_surprise",
-        "sounds":[{"name":"pvz:entity/zombie/act/jack_surprise1"},{"name":"pvz:entity/zombie/act/jack_surprise2"}]
-    },
-    "pogo":{
-        "subtitle": "sound.pvz.pogo",
-        "sounds":[{"name":"pvz:ambient/pogo"}]
-    },
-    "plantern":{
-        "subtitle": "sound.pvz.plantern",
-        "sounds":[{"name":"pvz:entity/plant/effect/plantern"}]
-    },
-    "magnet":{
-        "subtitle": "sound.pvz.magnet",
-        "sounds":[{"name":"pvz:ambient/magnet"}]
-    },
-    "balloon_full":{
-        "subtitle": "sound.pvz.balloon_full",
-        "sounds":[{"name":"pvz:ambient/balloon_full"}]
-    },
-    "balloon_pop":{
-        "subtitle": "sound.pvz.balloon_pop",
-        "sounds":[{"name":"pvz:ambient/balloon_pop"}]
-    },
-    "bruh":{
-        "subtitle": "sound.pvz.bruh",
-        "sounds":[{"name":"pvz:entity/plant/say/bruh"}]
-    },
-    "blover":{
-        "subtitle": "sound.pvz.blover",
-        "sounds":[{"name":"pvz:ambient/blover"}]
-    },
-    "win_music":{
-        "subtitle": "sound.pvz.win_music",
-        "sounds":[{"name":"pvz:ambient/win_music"}]
-    },
-    "slot_machine":{
-        "subtitle": "sound.pvz.slot_machine",
-        "sounds":[{"name":"pvz:ambient/slot_machine"}]
-    },
-    "lose_music":{
-        "subtitle": "sound.pvz.lose_music",
-        "sounds":[{"name":"pvz:ambient/lose_music"}]
-    },
-    "bowling_spawn":{
-        "subtitle": "sound.pvz.bowling_spawn",
-        "sounds":[{"name":"pvz:entity/misc/bowling/bowling_spawn"}]
-    },
-    "bowling_hit":{
-        "subtitle": "sound.pvz.bowling_hit",
-        "sounds":[{"name":"pvz:entity/misc/bowling/bowling_hit"}]
-    },
-    "bowling_bomb":{
-        "subtitle": "sound.pvz.bowling_bomb",
-        "sounds":[{"name":"pvz:entity/misc/bowling/bowling_bomb"}]
-    },
-    "penny_say":{
-        "subtitle": "sound.pvz.penny_say",
-        "sounds":[{"name":"pvz:entity/npc/penny/penny_say1"},{"name":"pvz:entity/npc/penny/penny_say2"},{"name":"pvz:entity/npc/penny/penny_say3"},{"name":"pvz:entity/npc/penny/penny_say4"}]
-    },
-    "lawn_mower":{
-        "subtitle": "sound.pvz.lawn_mower",
-        "sounds":[{"name":"pvz:entity/misc/other/lawn_mower"}]
-    },
-    "plant_throw":{
-        "subtitle": "sound.pvz.plant_throw",
-        "sounds":[{"name":"pvz:entity/plant/attack/plant_throw"},{"name":"pvz:entity/plant/attack/plant_throw2"}]
-    },
-    "bungee_scream":{
-        "subtitle": "sound.pvz.bungee_scream",
-        "sounds":[{"name":"pvz:entity/zombie/act/bungee_scream1"},{"name":"pvz:entity/zombie/act/bungee_scream2"},{"name":"pvz:entity/zombie/act/bungee_scream3"}]
-    },
-    "yuck":{
-        "subtitle": "sound.pvz.yuck",
-        "sounds":[{"name":"pvz:entity/zombie/act/yuck1"},{"name":"pvz:entity/zombie/act/yuck2"}]
-    },
-    "melon_hit":{
-        "subtitle": "sound.pvz.melon_hit",
-        "sounds":[{"name":"pvz:entity/zombie/hit/melon_hit1"},{"name":"pvz:entity/zombie/hit/melon_hit2"}]
-    },
-    "butter_hit":{
-        "subtitle": "sound.pvz.butter",
-        "sounds":[{"name":"pvz:entity/zombie/hit/butter"}]
-    },
-    "basketball":{
-        "subtitle": "sound.pvz.basketball",
-        "sounds":[{"name":"pvz:entity/zombie/act/basketball"}]
-    },
-    "throw_imp":{
-        "subtitle": "sound.pvz.throw_imp",
-        "sounds":[{"name":"pvz:entity/zombie/act/throw_imp"},{"name":"pvz:entity/zombie/act/throw_imp2"}]
-    },
-    "gargantuar_death":{
-        "subtitle": "sound.pvz.gargantuar_death",
-        "sounds":[{"name":"pvz:entity/zombie/death/gargantuar_death"}]
-    },
-    "gargantuar_say":{
-        "subtitle": "sound.pvz.gargantuar_say",
-        "sounds":[{"name":"pvz:entity/zombie/say/lowgroan"},{"name":"pvz:entity/zombie/say/lowgroan2"}]
-    },
-    "swing":{
-        "subtitle": "sound.pvz.swing",
-        "sounds":[{"name":"pvz:entity/plant/attack/swing"}]
-    },
-    "zomboss_death":{
-        "subtitle": "sound.pvz.zomboss_death",
-        "sounds":[{"name":"pvz:entity/zombie/death/zomboss_death"}]
-    },
-    "zomboss_shoot":{
-        "subtitle": "sound.pvz.zomboss_shoot",
-        "sounds":[{"name":"pvz:entity/zombie/act/zomboss_shoot"}]
-    },
-    "zomboss_laugh":{
-        "subtitle": "sound.pvz.zomboss_laugh",
-        "sounds":[{"name":"pvz:entity/zombie/spawn/zomboss_laugh"}]
-    },
-    "zombie_on_your_lawn":{
-        "sounds":[{"name":"pvz:music/zombie_on_your_lawn", "stream":true}]
-    },
-    "cob_launch":{
-        "subtitle": "sound.pvz.cob_launch",
-        "sounds":[{"name":"pvz:entity/plant/attack/cob_launch"}]
-    },
-    "pole_jump":{
-        "subtitle": "sound.pvz.pole_jump",
-        "sounds":[{"name":"pvz:entity/zombie/jump/pole_jump"}]
-    },
-    "wall_hit":{
-        "subtitle": "sound.pvz.wall_hit",
-        "sounds":[{"name":"pvz:entity/zombie/hit/wall_hit"}]
-    }
+  "advancement": {
+    "subtitle": "sound.pvz.advancement",
+    "sounds": [
+      {
+        "name": "pvz:advancement"
+      }
+    ]
+  },
+  "zombie_siren": {
+    "subtitle": "sound.pvz.zombie_siren",
+    "sounds": [
+      {
+        "name": "pvz:zombie_siren"
+      }
+    ]
+  },
+  "plant_siren": {
+    "subtitle": "sound.pvz.plant_siren",
+    "sounds": [
+      {
+        "name": "pvz:plant_siren"
+      }
+    ]
+  },
+  "balloon_inflate": {
+    "subtitle": "sound.pvz.balloon_inflate",
+    "sounds": [
+      {
+        "name": "pvz:balloon_inflate"
+      }
+    ]
+  },
+  "balloon_pop": {
+    "subtitle": "sound.pvz.balloon_pop",
+    "sounds": [
+      {
+        "name": "pvz:balloon_pop"
+      }
+    ]
+  },
+  "basketball": {
+    "subtitle": "sound.pvz.basketball",
+    "sounds": [
+      {
+        "name": "pvz:basketball"
+      }
+    ]
+  },
+  "big_chomp": {
+    "subtitle": "sound.pvz.big_chomp",
+    "sounds": [
+      {
+        "name": "pvz:big_chomp"
+      }
+    ]
+  },
+  "blover": {
+    "subtitle": "sound.pvz.blover",
+    "sounds": [
+      {
+        "name": "pvz:blover"
+      }
+    ]
+  },
+  "pole": {
+    "subtitle": "sound.pvz.pole",
+    "sounds": [
+      {
+        "name": "pvz:pole"
+      }
+    ]
+  },
+  "pole_jump": {
+    "subtitle": "sound.pvz.pole_jump",
+    "sounds": [
+      {
+        "name": "pvz:pole_jump"
+      }
+    ]
+  },
+  "hammer_bonk": {
+    "subtitle": "sound.pvz.hammer_bonk",
+    "sounds": [
+      {
+        "name": "pvz:hammer_bonk"
+      }
+    ]
+  },
+  "edgar_shoot": {
+    "subtitle": "sound.pvz.edgar_shoot",
+    "sounds": [
+      {
+        "name": "pvz:edgar_shoot"
+      }
+    ]
+  },
+  "edgar_explosion": {
+    "subtitle": "sound.pvz.edgar_explosion",
+    "sounds": [
+      {
+        "name": "pvz:edgar_explosion"
+      }
+    ]
+  },
+  "bowling": {
+    "subtitle": "sound.pvz.bowling",
+    "sounds": [
+      {
+        "name": "pvz:bowling"
+      }
+    ]
+  },
+  "bowling_hit": {
+    "subtitle": "sound.pvz.bowling_hit",
+    "sounds": [
+      {
+        "name": "pvz:bowling_hit"
+      }
+    ]
+  },
+  "bug_spray": {
+    "subtitle": "sound.pvz.bug_spray",
+    "sounds": [
+      {
+        "name": "pvz:bug_spray"
+      }
+    ]
+  },
+  "bungee_scream": {
+    "subtitle": "sound.pvz.bungee_scream",
+    "sounds": [
+      {
+        "name": "pvz:bungee_scream1"
+      },
+      {
+        "name": "pvz:bungee_scream2"
+      },
+      {
+        "name": "pvz:bungee_scream3"
+      }
+    ]
+  },
+  "butter": {
+    "subtitle": "sound.pvz.butter",
+    "sounds": [
+      {
+        "name": "pvz:butter"
+      }
+    ]
+  },
+  "no": {
+    "subtitle": "sound.pvz.no",
+    "sounds": [
+      {
+        "name": "pvz:no"
+      }
+    ]
+  },
+  "cherry_bomb": {
+    "subtitle": "sound.pvz.cherry_bomb",
+    "sounds": [
+      {
+        "name": "pvz:cherry_bomb"
+      }
+    ]
+  },
+  "jewel_drop": {
+    "subtitle": "sound.pvz.jewel_drop",
+    "sounds": [
+      {
+        "name": "pvz:jewel_drop"
+      }
+    ]
+  },
+  "chomp": {
+    "subtitle": "sound.pvz.chomp",
+    "sounds": [
+      {
+        "name": "pvz:chomp1"
+      },
+      {
+        "name": "pvz:chomp2"
+      },
+      {
+        "name": "pvz:chomp3"
+      }
+    ]
+  },
+  "cob_launch": {
+    "subtitle": "sound.pvz.cob_launch",
+    "sounds": [
+      {
+        "name": "pvz:cob_launch"
+      }
+    ]
+  },
+  "coin_pick": {
+    "subtitle": "sound.pvz.coin_pick",
+    "sounds": [
+      {
+        "name": "pvz:coin_pick"
+      }
+    ]
+  },
+  "crazy_dave": {
+    "subtitle": "sound.pvz.crazy_dave",
+    "sounds": [
+      {
+        "name": "pvz:crazy_dave"
+      }
+    ]
+  },
+  "crazy_say": {
+    "subtitle": "sound.pvz.crazy_say",
+    "sounds": [
+      {
+        "name": "pvz:crazy_say1"
+      },
+      {
+        "name": "pvz:crazy_say2"
+      },
+      {
+        "name": "pvz:crazy_say3"
+      },
+      {
+        "name": "pvz:crazy_say4"
+      },
+      {
+        "name": "pvz:crazy_say5"
+      },
+      {
+        "name": "pvz:crazy_say6"
+      }
+    ]
+  },
+  "dave_hurt": {
+    "subtitle": "sound.pvz.dave_hurt",
+    "sounds": [
+      {
+        "name": "pvz:dave_hurt1"
+      },
+      {
+        "name": "pvz:dave_hurt2"
+      },
+      {
+        "name": "pvz:dave_hurt3"
+      }
+    ]
+  },
+  "dave_happy": {
+    "subtitle": "sound.pvz.dave_happy",
+    "sounds": [
+      {
+        "name": "pvz:dave_happy1"
+      },
+      {
+        "name": "pvz:dave_happy2"
+      }
+    ]
+  },
+  "dance_music": {
+    "subtitle": "sound.pvz.dance_music",
+    "sounds": [
+      {
+        "name": "pvz:dance_music"
+      }
+    ]
+  },
+  "jewel_pick": {
+    "subtitle": "sound.pvz.jewel_pick",
+    "sounds": [
+      {
+        "name": "pvz:jewel_pick"
+      }
+    ]
+  },
+  "dirt_rise": {
+    "subtitle": "sound.pvz.dirt_rise",
+    "sounds": [
+      {
+        "name": "pvz:dirt_rise1"
+      },
+      {
+        "name": "pvz:dirt_rise2"
+      },
+      {
+        "name": "pvz:dirt_rise3"
+      }
+    ]
+  },
+  "dolphin_say": {
+    "subtitle": "sound.pvz.dolphin_say",
+    "sounds": [
+      {
+        "name": "pvz:dolphin_say"
+      }
+    ]
+  },
+  "dolphin_jump": {
+    "subtitle": "sound.pvz.dolphin_jump",
+    "sounds": [
+      {
+        "name": "pvz:dolphin_jump"
+      }
+    ]
+  },
+  "edgar_laugh": {
+    "subtitle": "sound.pvz.edgar_laugh",
+    "sounds": [
+      {
+        "name": "pvz:edgar_laugh"
+      }
+    ]
+  },
+  "doom_shroom": {
+    "subtitle": "sound.pvz.doom_shroom",
+    "sounds": [
+      {
+        "name": "pvz:doom_shroom"
+      }
+    ]
+  },
+  "coin_drop": {
+    "subtitle": "sound.pvz.coin_drop",
+    "sounds": [
+      {
+        "name": "pvz:coin_drop"
+      }
+    ]
+  },
+  "car_explosion": {
+    "subtitle": "sound.pvz.car_explosion",
+    "sounds": [
+      {
+        "name": "pvz:car_explosion"
+      }
+    ]
+  },
+  "fertilizer": {
+    "subtitle": "sound.pvz.fertilizer",
+    "sounds": [
+      {
+        "name": "pvz:fertilizer"
+      }
+    ]
+  },
+  "final_win": {
+    "subtitle": "sound.pvz.final_win",
+    "sounds": [
+      {
+        "name": "pvz:final_win"
+      }
+    ]
+  },
+  "final_wave": {
+    "subtitle": "sound.pvz.final_wave",
+    "sounds": [
+      {
+        "name": "pvz:final_wave"
+      }
+    ]
+  },
+  "flame_hit": {
+    "subtitle": "sound.pvz.flame_hit",
+    "sounds": [
+      {
+        "name": "pvz:flame_hit"
+      }
+    ]
+  },
+  "drag": {
+    "subtitle": "sound.pvz.drag",
+    "sounds": [
+      {
+        "name": "pvz:drag"
+      }
+    ]
+  },
+  "frozen": {
+    "subtitle": "sound.pvz.frozen",
+    "sounds": [
+      {
+        "name": "pvz:frozen"
+      }
+    ]
+  },
+  "fume": {
+    "subtitle": "sound.pvz.fume",
+    "sounds": [
+      {
+        "name": "pvz:fume"
+      }
+    ]
+  },
+  "ground_shake": {
+    "subtitle": "sound.pvz.ground_shake",
+    "sounds": [
+      {
+        "name": "pvz:ground_shake"
+      }
+    ]
+  },
+  "gargantuar_death": {
+    "subtitle": "sound.pvz.gargantuar_death",
+    "sounds": [
+      {
+        "name": "pvz:gargantuar_death"
+      }
+    ]
+  },
+  "groan": {
+    "subtitle": "sound.pvz.groan",
+    "sounds": [
+      {
+        "name": "pvz:groan1"
+      },
+      {
+        "name": "pvz:groan2"
+      },
+      {
+        "name": "pvz:groan3"
+      },
+      {
+        "name": "pvz:groan4"
+      },
+      {
+        "name": "pvz:groan5"
+      },
+      {
+        "name": "pvz:groan6"
+      }
+    ]
+  },
+  "plant_death": {
+    "subtitle": "sound.pvz.plant_death",
+    "sounds": [
+      {
+        "name": "pvz:plant_death"
+      }
+    ]
+  },
+  "huge_wave": {
+    "subtitle": "sound.pvz.huge_wave",
+    "sounds": [
+      {
+        "name": "pvz:huge_wave"
+      }
+    ]
+  },
+  "robot_move": {
+    "subtitle": "sound.pvz.robot_move",
+    "sounds": [
+      {
+        "name": "pvz:robot_move"
+      }
+    ]
+  },
+  "imp_happy": {
+    "subtitle": "sound.pvz.imp_happy",
+    "sounds": [
+      {
+        "name": "pvz:imp_happy1"
+      },
+      {
+        "name": "pvz:imp_happy"
+      }
+    ]
+  },
+  "jack_music": {
+    "subtitle": "sound.pvz.jack_music",
+    "sounds": [
+      {
+        "name": "pvz:jack_music"
+      }
+    ]
+  },
+  "jack_surprise": {
+    "subtitle": "sound.pvz.jack_surprise",
+    "sounds": [
+      {
+        "name": "pvz:jack_surprise1"
+      },
+      {
+        "name": "pvz:jack_surprise2"
+      }
+    ]
+  },
+  "jalapeno": {
+    "subtitle": "sound.pvz.jalapeno",
+    "sounds": [
+      {
+        "name": "pvz:jalapeno"
+      }
+    ]
+  },
+  "steel_ladder": {
+    "subtitle": "sound.pvz.steel_ladder",
+    "sounds": [
+      {
+        "name": "pvz:steel_ladder"
+      }
+    ]
+  },
+  "lawn_mower": {
+    "subtitle": "sound.pvz.lawn_mower",
+    "sounds": [
+      {
+        "name": "pvz:lawn_mower"
+      }
+    ]
+  },
+  "gargantuar_groan": {
+    "subtitle": "sound.pvz.gargantuar_groan",
+    "sounds": [
+      {
+        "name": "pvz:low_groan1"
+      },
+      {
+        "name": "pvz:low_groan2"
+      }
+    ]
+  },
+  "lose_music": {
+    "subtitle": "sound.pvz.lose_music",
+    "sounds": [
+      {
+        "name": "pvz:lose_music"
+      }
+    ]
+  },
+  "magnet": {
+    "subtitle": "sound.pvz.magnet",
+    "sounds": [
+      {
+        "name": "pvz:magnet"
+      }
+    ]
+  },
+  "melon_hit": {
+    "subtitle": "sound.pvz.melon_hit",
+    "sounds": [
+      {
+        "name": "pvz:melon_hit1"
+      },
+      {
+        "name": "pvz:melon_hit2"
+      }
+    ]
+  },
+  "hypno": {
+    "subtitle": "sound.pvz.hypno",
+    "sounds": [
+      {
+        "name": "pvz:hypno"
+      }
+    ]
+  },
+  "zombie_angry": {
+    "subtitle": "sound.pvz.zombie_angry",
+    "sounds": [
+      {
+        "name": "pvz:zombie_angry1"
+      },
+      {
+        "name": "pvz:zombie_angry2"
+      }
+    ]
+  },
+  "change_paper": {
+    "subtitle": "sound.pvz.change_paper",
+    "sounds": [
+      {
+        "name": "pvz:change_paper"
+      }
+    ]
+  },
+  "paper_broken": {
+    "subtitle": "sound.pvz.paper_broken",
+    "sounds": [
+      {
+        "name": "pvz:paper_broken"
+      }
+    ]
+  },
+  "phonograph": {
+    "subtitle": "sound.pvz.phonograph",
+    "sounds": [
+      {
+        "name": "pvz:phonograph"
+      }
+    ]
+  },
+  "place_plant_ground": {
+    "subtitle": "sound.pvz.place_plant_ground",
+    "sounds": [
+      {
+        "name": "pvz:place_plant_ground1"
+      },
+      {
+        "name": "pvz:place_plant_ground2"
+      }
+    ]
+  },
+  "place_plant_water": {
+    "subtitle": "sound.pvz.place_plant_water",
+    "sounds": [
+      {
+        "name": "pvz:place_plant_water"
+      }
+    ]
+  },
+  "plastic_hit": {
+    "subtitle": "sound.pvz.plastic_hit",
+    "sounds": [
+      {
+        "name": "pvz:plastic_hit1"
+      },
+      {
+        "name": "pvz:plastic_hit2"
+      }
+    ]
+  },
+  "pogo": {
+    "subtitle": "sound.pvz.pogo",
+    "sounds": [
+      {
+        "name": "pvz:pogo"
+      }
+    ]
+  },
+  "sun_pick": {
+    "subtitle": "sound.pvz.sun_pick",
+    "sounds": [
+      {
+        "name": "pvz:sun_pick1"
+      },
+      {
+        "name": "pvz:sun_pick2"
+      }
+    ]
+  },
+  "pool_cleaner": {
+    "subtitle": "sound.pvz.pool_cleaner",
+    "sounds": [
+      {
+        "name": "pvz:pool_cleaner"
+      }
+    ]
+  },
+  "potato_mine": {
+    "subtitle": "sound.pvz.potato_mine",
+    "sounds": [
+      {
+        "name": "pvz:potato_mine"
+      }
+    ]
+  },
+  "prize_drop": {
+    "subtitle": "sound.pvz.prize_drop",
+    "sounds": [
+      {
+        "name": "pvz:prize_drop"
+      }
+    ]
+  },
+  "puff": {
+    "subtitle": "sound.pvz.puff",
+    "sounds": [
+      {
+        "name": "pvz:puff"
+      }
+    ]
+  },
+  "ready": {
+    "subtitle": "sound.pvz.ready",
+    "sounds": [
+      {
+        "name": "pvz:ready"
+      }
+    ]
+  },
+  "dave_scream": {
+    "subtitle": "sound.pvz.dave_scream",
+    "sounds": [
+      {
+        "name": "pvz:dave_scream"
+      }
+    ]
+  },
+  "metal_hit": {
+    "subtitle": "sound.pvz.metal_hit",
+    "sounds": [
+      {
+        "name": "pvz:metal_hit1"
+      },
+      {
+        "name": "pvz:metal_hit2"
+      }
+    ]
+  },
+  "shovel": {
+    "subtitle": "sound.pvz.shovel",
+    "sounds": [
+      {
+        "name": "pvz:shovel"
+      }
+    ]
+  },
+  "slot_machine": {
+    "subtitle": "sound.pvz.slot_machine",
+    "sounds": [
+      {
+        "name": "pvz:slot_machine"
+      }
+    ]
+  },
+  "slurp": {
+    "subtitle": "sound.pvz.slurp",
+    "sounds": [
+      {
+        "name": "pvz:slurp"
+      }
+    ]
+  },
+  "snow_shoot": {
+    "subtitle": "sound.pvz.snow_shoot",
+    "sounds": [
+      {
+        "name": "pvz:snow_shoot"
+      }
+    ]
+  },
+  "splat": {
+    "subtitle": "sound.pvz.splat",
+    "sounds": [
+      {
+        "name": "pvz:splat1"
+      },
+      {
+        "name": "pvz:splat2"
+      },
+      {
+        "name": "pvz:splat3"
+      }
+    ]
+  },
+  "squash_hmm": {
+    "subtitle": "sound.pvz.squash_hmm",
+    "sounds": [
+      {
+        "name": "pvz:squash_hmm1"
+      },
+      {
+        "name": "pvz:squash_hmm2"
+      }
+    ]
+  },
+  "swing": {
+    "subtitle": "sound.pvz.swing",
+    "sounds": [
+      {
+        "name": "pvz:swing"
+      }
+    ]
+  },
+  "pult_throw": {
+    "subtitle": "sound.pvz.pult_throw",
+    "sounds": [
+      {
+        "name": "pvz:pult_throw1"
+      },
+      {
+        "name": "pvz:pult_throw2"
+      }
+    ]
+  },
+  "vase_breaking": {
+    "subtitle": "sound.pvz.vase_breaking",
+    "sounds": [
+      {
+        "name": "pvz:vase_breaking"
+      }
+    ]
+  },
+  "wake_up": {
+    "subtitle": "sound.pvz.wake_up",
+    "sounds": [
+      {
+        "name": "pvz:wake_up"
+      }
+    ]
+  },
+  "win_music": {
+    "subtitle": "sound.pvz.win_music",
+    "sounds": [
+      {
+        "name": "pvz:win_music"
+      }
+    ]
+  },
+  "plant_grow": {
+    "subtitle": "sound.pvz.plant_grow",
+    "sounds": [
+      {
+        "name": "pvz:plant_grow"
+      }
+    ]
+  },
+  "plantern": {
+    "subtitle": "sound.pvz.plantern",
+    "sounds": [
+      {
+        "name": "pvz:plantern"
+      }
+    ]
+  },
+  "yuck": {
+    "subtitle": "sound.pvz.yuck",
+    "sounds": [
+      {
+        "name": "pvz:yuck1"
+      },
+      {
+        "name": "pvz:yuck2"
+      }
+    ]
+  },
+  "car": {
+    "subtitle": "sound.pvz.car",
+    "sounds": [
+      {
+        "name": "pvz:car"
+      }
+    ]
+  },
+  "bruh": {
+    "subtitle": "sound.pvz.bruh",
+    "sounds": [
+      {
+        "name": "pvz:bruh"
+      }
+    ]
+  },
+  "penny_say": {
+    "subtitle": "sound.pvz.penny_say",
+    "sounds": [
+      {
+        "name": "pvz:penny_say1"
+      },
+      {
+        "name": "pvz:penny_say2"
+      },
+      {
+        "name": "pvz:penny_say3"
+      },
+      {
+        "name": "pvz:penny_say4"
+      }
+    ]
+  },
+  "zombie_on_your_lawn": {
+    "sounds": [
+      {
+        "name": "pvz:music/zombie_on_your_lawn",
+        "stream": true
+      }
+    ]
+  }
 }

@@ -9,7 +9,6 @@ import com.hungteen.pvz.common.entity.AbstractPAZEntity;
 import com.hungteen.pvz.common.entity.EntityGroupHander;
 import com.hungteen.pvz.common.entity.PVZMultiPartEntity;
 import com.hungteen.pvz.common.entity.ai.goal.attack.PVZZombieAttackGoal;
-import com.hungteen.pvz.common.entity.ai.goal.target.PVZHurtByTargetGoal;
 import com.hungteen.pvz.common.entity.bullet.AbstractBulletEntity;
 import com.hungteen.pvz.common.entity.misc.LawnMowerEntity;
 import com.hungteen.pvz.common.entity.plant.PVZPlantEntity;
@@ -364,20 +363,20 @@ public class EntityUtil {
 	 */
 	public static boolean canTargetEntity(Entity attacker, Entity target) {
 		if(attacker instanceof PVZZombieEntity) {
-		    return ((PVZZombieEntity) attacker).checkCanZombieTarget(target);
+		    return ((PVZZombieEntity) attacker).checkCanPAZTarget(target);
 		}
 		if(attacker instanceof PVZPlantEntity) {
-	        return ((PVZPlantEntity) attacker).checkCanPlantTarget(target);
+	        return ((PVZPlantEntity) attacker).checkCanPAZTarget(target);
 		}
 		return checkCanEntityBeTarget(attacker, target);
 	}
 	
 	public static boolean canAttackEntity(Entity attacker, Entity target) {
 		if(attacker instanceof PVZZombieEntity) {
-			return ((PVZZombieEntity) attacker).checkCanZombieAttack(target);
+			return ((PVZZombieEntity) attacker).checkCanPAZAttack(target);
 		}
 		if(attacker instanceof PVZPlantEntity) {
-			return ((PVZPlantEntity) attacker).checkCanPlantAttack(target);
+			return ((PVZPlantEntity) attacker).checkCanPAZAttack(target);
 		}
 		return checkCanEntityBeAttack(attacker, target);
 	}

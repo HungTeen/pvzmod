@@ -6,15 +6,20 @@ import net.minecraftforge.event.entity.player.PlayerEvent;
 
 public class SummonCardUseEvent extends PlayerEvent{
 
-	protected ItemStack stack;
+	protected final ItemStack heldStack;
+	protected final ItemStack plantStack;
 	
-	public SummonCardUseEvent(PlayerEntity player, ItemStack stack) {
+	public SummonCardUseEvent(PlayerEntity player, ItemStack heldStack, ItemStack plantStack) {
 		super(player);
-		this.stack = stack;
+		this.heldStack = heldStack;
+		this.plantStack = plantStack;
 	}
 
-	public ItemStack getItemStack() {
-		return this.stack;
+	public ItemStack getHeldStack() {
+		return this.heldStack;
 	}
-	
+
+	public ItemStack getPlantStack() {
+		return plantStack;
+	}
 }

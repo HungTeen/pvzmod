@@ -103,9 +103,14 @@ public class DancingZombieEntity extends PVZZombieEntity{
 	}
 	
 	protected void updateSpeed() {
-		this.getAttribute(Attributes.MOVEMENT_SPEED).setBaseValue(this.getAttackTime() > 0 ? 0 : ZombieUtil.WALK_LITTLE_SLOW);
+		this.getAttribute(Attributes.MOVEMENT_SPEED).setBaseValue(this.getAttackTime() > 0 ? 0 : getWalkSpeed());
 	}
-	
+
+	@Override
+	public float getWalkSpeed() {
+		return ZombieUtil.WALK_LITTLE_SLOW;
+	}
+
 	/**
 	 * can summon extra dancer to fill the place.
 	 * {@link SummonDancerGoal#canUse()}
@@ -147,14 +152,19 @@ public class DancingZombieEntity extends PVZZombieEntity{
 	 * set limit to summon count.
 	 */
 	public int getMaxSummonCnt() {
-		return 40;
+		return 20;
 	}
 	
 	@Override
 	public float getLife() {
 		return 50;
 	}
-	
+
+	@Override
+	public int getArmorToughness() {
+		return 10;
+	}
+
 	@Override
 	public void readAdditionalSaveData(CompoundNBT compound) {
 		super.readAdditionalSaveData(compound);

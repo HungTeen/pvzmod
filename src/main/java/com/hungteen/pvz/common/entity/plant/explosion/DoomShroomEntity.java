@@ -7,7 +7,7 @@ import com.hungteen.pvz.common.entity.plant.base.PlantBomberEntity;
 import com.hungteen.pvz.common.impl.SkillTypes;
 import com.hungteen.pvz.common.impl.plant.PVZPlants;
 import com.hungteen.pvz.common.misc.PVZEntityDamageSource;
-import com.hungteen.pvz.common.misc.sound.SoundRegister;
+import com.hungteen.pvz.register.SoundRegister;
 import com.hungteen.pvz.common.entity.EntityRegister;
 import com.hungteen.pvz.register.ParticleRegister;
 import com.hungteen.pvz.utils.EntityUtil;
@@ -71,7 +71,7 @@ public class DoomShroomEntity extends PlantBomberEntity {
 				}
 			});
 			PVZPlantEntity.clearLadders(this, aabb);
-			EntityUtil.playSound(this, SoundRegister.DOOM.get());
+			EntityUtil.playSound(this, SoundRegister.DOOM_SHROOM.get());
 			//destroy block and spawn drops
 			if(net.minecraftforge.event.ForgeEventFactory.getMobGriefingEvent(this.level, this)) {
 				this.destroyBlocks();

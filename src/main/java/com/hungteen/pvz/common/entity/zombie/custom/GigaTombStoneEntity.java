@@ -1,8 +1,8 @@
 package com.hungteen.pvz.common.entity.zombie.custom;
 
 import com.hungteen.pvz.common.entity.zombie.grass.AbstractTombStoneEntity;
-import com.hungteen.pvz.common.impl.zombie.ZombieType;
 import com.hungteen.pvz.common.impl.zombie.CustomZombies;
+import com.hungteen.pvz.common.impl.zombie.ZombieType;
 import net.minecraft.entity.CreatureEntity;
 import net.minecraft.entity.EntityType;
 import net.minecraft.world.World;

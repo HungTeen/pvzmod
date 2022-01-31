@@ -7,7 +7,7 @@ import com.hungteen.pvz.common.entity.zombie.part.PVZZombiePartEntity;
 import com.hungteen.pvz.common.impl.zombie.PoolZombies;
 import com.hungteen.pvz.common.impl.zombie.ZombieType;
 import com.hungteen.pvz.common.misc.PVZEntityDamageSource;
-import com.hungteen.pvz.common.misc.sound.SoundRegister;
+import com.hungteen.pvz.register.SoundRegister;
 import com.hungteen.pvz.utils.EntityUtil;
 import com.hungteen.pvz.utils.ZombieUtil;
 import com.hungteen.pvz.utils.interfaces.IHasMultiPart;
@@ -109,23 +109,28 @@ public class ZomboniEntity extends CarZombieEntity implements IHasMultiPart, IHa
 	}
 
 	@Override
+	public float getLife() {
+		return 130;
+	}
+
+	@Override
+	public int getArmorToughness() {
+		return 12;
+	}
+
+	@Override
 	public SoundEvent getHurtSound(DamageSource damageSourceIn) {
 		return SoundRegister.METAL_HIT.get();
 	}
 	
 	@Override
 	public Optional<SoundEvent> getSpawnSound() {
-		return Optional.ofNullable(SoundRegister.CAR_SPAWN.get());
+		return Optional.ofNullable(SoundRegister.CAR.get());
 	}
 	
 	@Override
 	public EntitySize getDimensions(Pose poseIn) {
 		return EntitySize.scalable(0.8f, 2.3f);
-	}
-	
-	@Override
-	public float getLife() {
-		return 130;
 	}
 
 	@Override

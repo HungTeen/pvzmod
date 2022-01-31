@@ -6,7 +6,7 @@ import com.hungteen.pvz.api.types.IPlantType;
 import com.hungteen.pvz.common.entity.bullet.itembullet.PeaEntity.State;
 import com.hungteen.pvz.common.entity.plant.appease.PeaShooterEntity;
 import com.hungteen.pvz.common.impl.plant.PVZPlants;
-import com.hungteen.pvz.common.misc.sound.SoundRegister;
+import com.hungteen.pvz.register.SoundRegister;
 import com.hungteen.pvz.common.potion.EffectRegister;
 
 import com.hungteen.pvz.utils.enums.PAZAlmanacs;

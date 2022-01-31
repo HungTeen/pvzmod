@@ -2,11 +2,10 @@ package com.hungteen.pvz.common.entity.zombie.pool;
 
 import com.hungteen.pvz.common.entity.ai.navigator.ZombiePathNavigator;
 import com.hungteen.pvz.common.entity.zombie.PVZZombieEntity;
-import com.hungteen.pvz.common.impl.zombie.ZombieType;
 import com.hungteen.pvz.common.impl.zombie.PoolZombies;
+import com.hungteen.pvz.common.impl.zombie.ZombieType;
 import com.hungteen.pvz.common.misc.PVZEntityDamageSource;
-import com.hungteen.pvz.common.misc.sound.SoundRegister;
-import com.hungteen.pvz.data.loot.PVZLoot;
+import com.hungteen.pvz.register.SoundRegister;
 import com.hungteen.pvz.utils.EntityUtil;
 import com.hungteen.pvz.utils.ZombieUtil;
 import com.hungteen.pvz.utils.interfaces.ICanAttract;
@@ -25,7 +24,6 @@ import net.minecraft.pathfinding.FlyingPathNavigator;
 import net.minecraft.pathfinding.GroundPathNavigator;
 import net.minecraft.pathfinding.PathNavigator;
 import net.minecraft.util.DamageSource;
-import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.SoundEvent;
 import net.minecraft.world.World;
 
@@ -41,7 +39,6 @@ public class BalloonZombieEntity extends PVZZombieEntity {
 	
 	public BalloonZombieEntity(EntityType<? extends CreatureEntity> type, World worldIn) {
 		super(type, worldIn);
-		this.updateBalloonState(true);
 	}
 	
 	@Override
@@ -61,7 +58,6 @@ public class BalloonZombieEntity extends PVZZombieEntity {
 	@Override
 	protected void initAttributes() {
 		super.initAttributes();
-		this.getAttribute(Attributes.MOVEMENT_SPEED).setBaseValue(ZombieUtil.WALK_LITTLE_SLOW);
 		this.getAttribute(Attributes.FLYING_SPEED).setBaseValue(ZombieUtil.FLY_FAST);
 	}
 	
@@ -69,7 +65,8 @@ public class BalloonZombieEntity extends PVZZombieEntity {
 	public void onSyncedDataUpdated(DataParameter<?> data) {
 		super.onSyncedDataUpdated(data);
 		if(data.equals(HAS_BALLOON)) {
-			this.updateBalloonState(this.hasBalloon());
+			this.setNoGravity(this.hasBalloon());
+			this.moveControl = this.hasBalloon() ? FlyController : GroundController;
 		}
 	}
 	
@@ -101,12 +98,6 @@ public class BalloonZombieEntity extends PVZZombieEntity {
 			EntityUtil.playSound(this, SoundRegister.BALLOON_POP.get());
 		}
 		this.setBalloon(false);
-		this.updateBalloonState(false);
-	}
-	
-	private void updateBalloonState(boolean has) {
-		this.setNoGravity(has);
-		this.moveControl = has ? FlyController : GroundController;
 	}
 	
 	@Override
@@ -133,7 +124,12 @@ public class BalloonZombieEntity extends PVZZombieEntity {
 	public float getLife() {
 		return 23;
 	}
-	
+
+	@Override
+	public float getWalkSpeed() {
+		return ZombieUtil.WALK_LITTLE_SLOW;
+	}
+
 	@Override
 	public boolean canBeButtered() {
 		return ! this.hasBalloon();
@@ -165,7 +161,7 @@ public class BalloonZombieEntity extends PVZZombieEntity {
 	
 	@Override
 	public Optional<SoundEvent> getSpawnSound() {
-		return Optional.ofNullable(SoundRegister.BALLOON_FULL.get());
+		return Optional.ofNullable(SoundRegister.BALLOON_INFLATE.get());
 	}
 	
 	@Override
@@ -188,11 +184,6 @@ public class BalloonZombieEntity extends PVZZombieEntity {
 	
 	public boolean hasBalloon() {
 		return this.entityData.get(HAS_BALLOON);
-	}
-	
-	@Override
-	protected ResourceLocation getDefaultLootTable() {
-		return PVZLoot.BALLOON_ZOMBIE;
 	}
 	
     @Override

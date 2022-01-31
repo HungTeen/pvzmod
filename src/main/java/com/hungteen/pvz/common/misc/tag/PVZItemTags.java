@@ -46,6 +46,7 @@ public class PVZItemTags {
 	public static final INamedTag<Item> GOLD_CARDS = pvzTag("card/gold_cards");
 	public static final INamedTag<Item> RED_CARDS = pvzTag("card/red_cards");
 	public static final INamedTag<Item> BLACK_CARDS = pvzTag("card/black_cards");
+	public static final INamedTag<Item> ORIGIN_TOOLS = pvzTag("origin_tools");
 		
 	private static INamedTag<Item> pvzTag(String name){
 		return ItemTags.createOptional(StringUtil.prefix(name));

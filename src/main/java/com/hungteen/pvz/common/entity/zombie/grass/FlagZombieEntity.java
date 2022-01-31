@@ -1,13 +1,10 @@
 package com.hungteen.pvz.common.entity.zombie.grass;
 
-import com.hungteen.pvz.common.impl.zombie.ZombieType;
 import com.hungteen.pvz.common.impl.zombie.GrassZombies;
-import com.hungteen.pvz.data.loot.PVZLoot;
+import com.hungteen.pvz.common.impl.zombie.ZombieType;
 import com.hungteen.pvz.utils.ZombieUtil;
 import net.minecraft.entity.CreatureEntity;
 import net.minecraft.entity.EntityType;
-import net.minecraft.entity.ai.attributes.Attributes;
-import net.minecraft.util.ResourceLocation;
 import net.minecraft.world.World;
 
 public class FlagZombieEntity extends NormalZombieEntity{
@@ -17,19 +14,13 @@ public class FlagZombieEntity extends NormalZombieEntity{
 	}
 
 	@Override
-	protected void initAttributes() {
-		super.initAttributes();
-		this.getAttribute(Attributes.MOVEMENT_SPEED).setBaseValue(ZombieUtil.WALK_LITTLE_FAST);
+	public float getWalkSpeed() {
+		return ZombieUtil.WALK_LITTLE_FAST;
 	}
-	
+
 	@Override
 	public float getLife() {
 		return 19;
-	}
-	
-	@Override
-	protected ResourceLocation getDefaultLootTable() {
-		return PVZLoot.FLAG_ZOMBIE;
 	}
 	
 	@Override

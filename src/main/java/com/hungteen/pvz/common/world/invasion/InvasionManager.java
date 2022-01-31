@@ -4,7 +4,7 @@ import com.hungteen.pvz.PVZConfig;
 import com.hungteen.pvz.common.datapack.InvasionTypeLoader;
 import com.hungteen.pvz.common.event.PVZServerEvents;
 import com.hungteen.pvz.common.event.events.InvasionEvent;
-import com.hungteen.pvz.common.misc.sound.SoundRegister;
+import com.hungteen.pvz.register.SoundRegister;
 import com.hungteen.pvz.register.BiomeRegister;
 import com.hungteen.pvz.utils.PlayerUtil;
 import com.hungteen.pvz.utils.StringUtil;
@@ -138,7 +138,7 @@ public class InvasionManager {
             final Invasion invasion = PlayerUtil.getInvasion(player);
             if(! invasion.isRunning()){
                 PlayerUtil.sendMsgTo(player, START);
-                PlayerUtil.playClientSound(player, SoundRegister.WARN.get());
+                PlayerUtil.playClientSound(player, SoundRegister.ZOMBIE_SIREN.get());
             }
             invasion.enable();
         });

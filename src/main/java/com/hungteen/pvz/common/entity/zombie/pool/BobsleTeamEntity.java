@@ -14,7 +14,6 @@ import net.minecraft.entity.CreatureEntity;
 import net.minecraft.entity.EntitySize;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.Pose;
-import net.minecraft.entity.ai.attributes.Attributes;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.math.vector.Vector3d;
@@ -38,13 +37,6 @@ public class BobsleTeamEntity extends PVZZombieEntity implements IHasMultiPart {
 	@Override
 	public VariantType getVariantType() {
 		return VariantType.NORMAL;
-	}
-
-	@Override
-	protected void initAttributes() {
-		super.initAttributes();
-		this.getAttribute(Attributes.MOVEMENT_SPEED).setBaseValue(ZombieUtil.WALK_VERY_FAST);
-		this.getAttribute(Attributes.ATTACK_DAMAGE).setBaseValue(ZombieUtil.NORMAL_DAMAGE);
 	}
 	
 	@Override
@@ -147,6 +139,16 @@ public class BobsleTeamEntity extends PVZZombieEntity implements IHasMultiPart {
 	@Override
 	public float getLife() {
 		return 60;
+	}
+
+	@Override
+	public float getWalkSpeed() {
+		return ZombieUtil.WALK_VERY_FAST;
+	}
+
+	@Override
+	public float getEatDamage() {
+		return ZombieUtil.NORMAL_DAMAGE;
 	}
 
 	@Override

@@ -4,26 +4,17 @@ import com.hungteen.pvz.PVZMod;
 import com.hungteen.pvz.api.events.PlayerLevelChangeEvent;
 import com.hungteen.pvz.common.block.others.SteelLadderBlock;
 import com.hungteen.pvz.common.capability.CapabilityHandler;
-import com.hungteen.pvz.common.capability.player.PlayerDataManager;
-import com.hungteen.pvz.common.enchantment.EnchantmentRegister;
-import com.hungteen.pvz.common.entity.plant.PVZPlantEntity;
 import com.hungteen.pvz.common.event.events.SummonCardUseEvent;
 import com.hungteen.pvz.common.event.handler.PlayerEventHandler;
 import com.hungteen.pvz.common.item.tool.plant.BowlingGloveItem;
 import com.hungteen.pvz.common.item.tool.plant.PeaGunItem;
-import com.hungteen.pvz.common.misc.sound.SoundRegister;
+import com.hungteen.pvz.register.SoundRegister;
 import com.hungteen.pvz.common.potion.EffectRegister;
 import com.hungteen.pvz.utils.PlayerUtil;
 import com.hungteen.pvz.utils.enums.Resources;
 
-import net.minecraft.enchantment.EnchantmentHelper;
-import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.item.ItemStack;
-import net.minecraft.item.ShovelItem;
-import net.minecraft.item.SwordItem;
 import net.minecraft.util.Hand;
-import net.minecraft.world.World;
 import net.minecraftforge.event.TickEvent;
 import net.minecraftforge.event.entity.player.PlayerEvent;
 import net.minecraftforge.event.entity.player.PlayerInteractEvent;
@@ -80,37 +71,28 @@ public class PVZPlayerEvents {
 
 	@SubscribeEvent
 	public static void onPlayerClone(PlayerEvent.Clone ev) {
-		if (! ev.getPlayer().level.isClientSide) {
-			PlayerEventHandler.clonePlayerData(ev.getOriginal(), ev.getPlayer(), ev.isWasDeath());
+		PlayerEventHandler.clonePlayerData(ev.getOriginal(), ev.getPlayer(), ev.isWasDeath());
+	}
+	
+	@SubscribeEvent
+	public static void onPlayerRespawn(PlayerEvent.PlayerRespawnEvent ev) {
+		if(! ev.getPlayer().level.isClientSide) {
+			PlayerUtil.getOptManager(ev.getPlayer()).ifPresent(l -> l.syncToClient());
+		}
+	}
+	
+	@SubscribeEvent
+	public static void onPlayerRespawn(PlayerEvent.PlayerChangedDimensionEvent ev) {
+		if(! ev.getPlayer().level.isClientSide) {
+			PlayerUtil.getOptManager(ev.getPlayer()).ifPresent(l -> l.syncToClient());
 		}
 	}
 	
 	@SubscribeEvent
 	public static void onPlayerInteract(PlayerInteractEvent.EntityInteractSpecific ev) {
-		World world = ev.getWorld();
-		PlayerEntity player = ev.getPlayer();
-		if(! world.isClientSide && ev.getHand() == Hand.MAIN_HAND) {
-			Entity entity = ev.getTarget();
-			if(entity instanceof PVZPlantEntity && entity.isAlive()) {//still alive
-				PVZPlantEntity plant = (PVZPlantEntity) entity;
-				ItemStack stack = player.getMainHandItem();
-				if(stack.getItem() instanceof SwordItem) {
-					if(EnchantmentHelper.getItemEnchantmentLevel(EnchantmentRegister.ENERGY_TRANSFER.get(), stack) > 0) {
-						if(plant.canStartSuperMode()){
-							player.getCapability(CapabilityHandler.PLAYER_DATA_CAPABILITY).ifPresent((l) -> {
-								PlayerDataManager stats = l.getPlayerData();
-								if(stats.getResource(Resources.ENERGY_NUM) >= 1) {
-									stats.addResource(Resources.ENERGY_NUM, - 1);
-								    plant.startSuperMode(true);
-								}
-							});
-						}
-						
-					}
-				} else if(stack.getItem() instanceof ShovelItem) {
-					PlayerEventHandler.onPlantShovelByPlayer(player, plant, stack);
-				}
-			}
+		if(! ev.getWorld().isClientSide && ev.getHand() == Hand.MAIN_HAND) {
+			PlayerEventHandler.quickRemoveByPlayer(ev.getPlayer(), ev.getTarget(), ev.getPlayer().getMainHandItem());
+			PlayerEventHandler.makeSuperMode(ev.getPlayer(), ev.getTarget(), ev.getPlayer().getMainHandItem());
 		}
 		BowlingGloveItem.onPickUp(ev);
 	}
@@ -136,8 +118,8 @@ public class PVZPlayerEvents {
 //		PlayerEntity player = ev.getPlayer();
 //		if(! player.level.isClientSide) { //unlock almanac
 //			SearchOption a = null;
-//			if(ev.getItemStack().getItem() instanceof PlantCardItem) {// unlock plant card
-//			    IPlantType plant = ((PlantCardItem) ev.getItemStack().getItem()).plantType;
+//			if(ev.getHeldStack().getItem() instanceof PlantCardItem) {// unlock plant card
+//			    IPlantType plant = ((PlantCardItem) ev.getHeldStack().getItem()).plantType;
 //			    a = SearchOption.get(plant);
 //			}
 //			PlayerUtil.unLockAlmanac(player, a);

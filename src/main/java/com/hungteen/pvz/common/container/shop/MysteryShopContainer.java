@@ -1,7 +1,7 @@
 package com.hungteen.pvz.common.container.shop;
 
 import com.hungteen.pvz.common.capability.CapabilityHandler;
-import com.hungteen.pvz.common.misc.sound.SoundRegister;
+import com.hungteen.pvz.register.SoundRegister;
 import com.hungteen.pvz.register.ContainerRegister;
 import com.hungteen.pvz.utils.PlayerUtil;
 import com.hungteen.pvz.utils.TradeUtil;
@@ -32,7 +32,7 @@ public class MysteryShopContainer extends AbstractDaveShopContainer {
 			PlayerUtil.addResource(player, Resources.GEM_NUM, - TradeUtil.getGoodCost(good.setType(type)));
 			this.output.setItem(0, TradeUtil.getGoodItemStack(good.setType(type)));
 		}
-		this.player.level.playSound(null, this.player, SoundRegister.DAVE_BUY.get(), SoundCategory.AMBIENT, 1f, 1f);
+		this.player.level.playSound(null, this.player, SoundRegister.DAVE_HAPPY.get(), SoundCategory.AMBIENT, 1f, 1f);
 	}
 	
 //	public static void genNextGoods(PlayerEntity player) {

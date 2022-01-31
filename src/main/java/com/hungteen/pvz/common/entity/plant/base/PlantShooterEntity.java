@@ -143,8 +143,8 @@ public abstract class PlantShooterEntity extends PVZPlantEntity implements IShoo
 	public abstract float getAttackDamage();
 	
 	@Override
-	public boolean canPlantTarget(Entity entity) {
-		return this.checkY(entity) && super.canPlantTarget(entity);
+	public boolean canPAZTarget(Entity entity) {
+		return this.checkY(entity) && super.canPAZTarget(entity);
 	}
 	
 	@Override

@@ -122,6 +122,8 @@ public class ImitaterCardItem extends PlantCardItem {
 		        /* enchantment effects */
 				enchantPlantEntityByCard(imitater, plantStack);
 		        consumer.accept(imitater);
+		        
+		        PlantCardItem.onUsePlantCard(player, heldStack, plantStack, cardItem);
 			}
 		});
 	}
@@ -179,7 +181,7 @@ public class ImitaterCardItem extends PlantCardItem {
 		if(! opt.isPresent()) {
 			tooltip.add(new TranslationTextComponent("tooltip.pvz.imitater_card.empty").withStyle(TextFormatting.RED));
 		} else {
-			tooltip.add(new TranslationTextComponent("tooltip.pvz.imitater_card.full", opt.get().getText().toString()).withStyle(TextFormatting.LIGHT_PURPLE));
+			tooltip.add(new TranslationTextComponent("tooltip.pvz.imitater_card.full", opt.get().getText().getString()).withStyle(TextFormatting.LIGHT_PURPLE));
 		    super.appendHoverText(getDoubleStack(stack).getSecond(), worldIn, tooltip, flagIn);
 		}
 	}

@@ -81,7 +81,7 @@ public abstract class PlantCloserEntity extends PVZPlantEntity{
 	}
 	
 	protected boolean canBeImmuneToEnforce(Entity entity) {
-		return checkCanPlantTarget(entity);
+		return checkCanPAZTarget(entity);
 	}
 	
 	@Override
