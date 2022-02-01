@@ -7,7 +7,7 @@ import net.minecraft.util.JSONUtils;
 public class ConstantAmount implements IAmountComponent {
 	
 	public static final String NAME = "count";
-	private int cnt;
+	private int cnt = 1;
 	
 	public ConstantAmount() {
 	}

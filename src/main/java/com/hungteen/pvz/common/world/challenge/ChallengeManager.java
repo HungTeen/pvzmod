@@ -4,6 +4,8 @@ import com.google.common.collect.Maps;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.hungteen.pvz.PVZMod;
+import com.hungteen.pvz.common.impl.challenge.reward.ItemRewardComponent;
+import com.hungteen.pvz.common.impl.challenge.reward.UnLockRewardComponent;
 import com.hungteen.pvz.register.RegistryHandler;
 import com.hungteen.pvz.api.events.RaidEvent;
 import com.hungteen.pvz.api.raid.*;
@@ -63,6 +65,8 @@ public class ChallengeManager {
 		registerAmountComponent(RandomAmount.NAME, RandomAmount.class);
 		/* reward */
 		registerRewardComponent(AdvancementRewardComponent.NAME, AdvancementRewardComponent.class);
+		registerRewardComponent(ItemRewardComponent.NAME, ItemRewardComponent.class);
+		registerRewardComponent(UnLockRewardComponent.NAME, UnLockRewardComponent.class);
 	}
 	
 	public static void tickRaids(World world) {
@@ -300,6 +304,23 @@ public class ChallengeManager {
 			}
 		}
 		return placement;
+	}
+
+	public static IAmountComponent readAmount(JsonObject json, String amountTag){
+		JsonObject obj = JSONUtils.getAsJsonObject(json, amountTag);
+		if(obj != null && ! obj.entrySet().isEmpty()) {
+			for(Entry<String, JsonElement> entry : obj.entrySet()) {
+				final IAmountComponent tmp = getAmountComponent(entry.getKey());
+				if(tmp != null) {
+					tmp.readJson(entry.getValue());
+					return tmp;
+				} else {
+					PVZMod.LOGGER.warn("Amount Component : Read Spawn Amount Wrongly");
+				}
+				break;
+			}
+		}
+		return new ConstantAmount();
 	}
 	
 }

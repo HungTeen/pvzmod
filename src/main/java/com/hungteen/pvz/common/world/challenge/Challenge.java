@@ -52,6 +52,7 @@ public class Challenge implements IChallenge {
 	protected int currentSpawn = 0;
 	protected Set<Entity> raiders = new HashSet<>();
 	protected Set<UUID> heroes = new HashSet<>();
+	private boolean firstTick = false;
 	
 	
 	public Challenge(int id, ServerWorld world, ResourceLocation res, BlockPos pos) {
@@ -69,6 +70,7 @@ public class Challenge implements IChallenge {
 		this.tick = nbt.getInt("challenge_tick");
 		this.stopTick = nbt.getInt("stop_tick");
 		this.currentWave = nbt.getInt("current_wave");
+		this.firstTick = nbt.getBoolean("first_tick");
 		{// for raid center position.
 			CompoundNBT tmp = nbt.getCompound("center_pos");
 			this.center = new BlockPos(tmp.getInt("pos_x"), tmp.getInt("pos_y"), tmp.getInt("pos_z"));
@@ -101,6 +103,7 @@ public class Challenge implements IChallenge {
 		nbt.putInt("challenge_tick", this.tick);
 		nbt.putInt("stop_tick", this.stopTick);
 		nbt.putInt("current_wave", this.currentWave);
+		nbt.putBoolean("first_tick", this.firstTick);
 		{// for raid center position.
 			CompoundNBT tmp = new CompoundNBT();
 			tmp.putInt("pos_x", this.center.getX());
@@ -132,15 +135,15 @@ public class Challenge implements IChallenge {
 		if(this.isRemoving() || this.world.players().isEmpty()) {
 			return ;
 		}
-		/* is raid component valid */
-		if(this.getRaidComponent() == null) {
-			this.remove();
-			PVZMod.LOGGER.warn("Challenge Tick Error : Where is the challenge component ?");
-			return ;
-		}
 		/* not allow to be peaceful */
 		if(this.world.getDifficulty() == Difficulty.PEACEFUL) {
 			this.remove();
+			return ;
+		}
+		/* is raid component valid */
+		if(this.getRaidComponent() == null) {
+			this.remove();//TODO 重进导致挑战被移除
+			PVZMod.LOGGER.warn("Challenge Tick Error : Where is the challenge component ?");
 			return ;
 		}
 		this.tickBar();
@@ -182,7 +185,8 @@ public class Challenge implements IChallenge {
 				this.remove();
 			}
 		}
-		if(this.tick == 0 && this.currentWave == 0){//first tick.
+		if(! this.firstTick){//first tick.
+			this.firstTick = true;
 			this.getPlayers().forEach(p -> PlayerUtil.playClientSound(p, this.challenge.getPrepareSound()));
 		}
 		++ this.tick;
