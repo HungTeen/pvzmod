@@ -124,6 +124,11 @@ public class ChallengeManager {
 		return ChallengeTypeLoader.CHALLENGE_MAP.getOrDefault(res, null);
 	}
 
+	@Nullable
+	public static ResourceLocation getResourceByChallenge(IChallengeComponent challengeComponent) {
+		return ChallengeTypeLoader.RES_MAP.getOrDefault(challengeComponent, null);
+	}
+
 	public static Stream<ResourceLocation> getIds() {
 		return ChallengeTypeLoader.CHALLENGE_MAP.keySet().stream();
 	}

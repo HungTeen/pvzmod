@@ -17,6 +17,7 @@ public class PVZCommandHandler {
         ResourceCommand.register(dispatcher);
         PlantLvlCommand.register(dispatcher);
         InvasionCommand.register(dispatcher);
+        ChallengeCommand.register(dispatcher);
     }
     
 }

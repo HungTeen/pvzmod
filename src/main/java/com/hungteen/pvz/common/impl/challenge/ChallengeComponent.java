@@ -6,15 +6,17 @@ import com.google.gson.JsonObject;
 import com.google.gson.JsonSyntaxException;
 import com.hungteen.pvz.PVZMod;
 import com.hungteen.pvz.api.raid.*;
-import com.hungteen.pvz.register.SoundRegister;
 import com.hungteen.pvz.common.world.challenge.ChallengeManager;
+import com.hungteen.pvz.register.SoundRegister;
 import com.hungteen.pvz.utils.enums.Colors;
 import com.mojang.datafixers.util.Pair;
-import net.minecraft.util.*;
+import net.minecraft.util.JSONUtils;
+import net.minecraft.util.RegistryKey;
+import net.minecraft.util.ResourceLocation;
+import net.minecraft.util.SoundEvent;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.text.IFormattableTextComponent;
 import net.minecraft.util.text.ITextComponent;
-import net.minecraft.util.text.TextFormatting;
 import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraft.world.BossInfo.Color;
 import net.minecraft.world.World;
@@ -32,7 +34,7 @@ public class ChallengeComponent implements IChallengeComponent {
 	private Set<String> dimensions = new HashSet<>();
 	private List<String> authors = new ArrayList<>();
 	private final List<Pair<IFormattableTextComponent, Integer>> messages = new ArrayList<>();
-	private final List<IFormattableTextComponent> toolTips = new ArrayList<>();
+	private IFormattableTextComponent name;
 	private IPlacementComponent placement;
 	private ITextComponent title = new TranslationTextComponent("challenge.pvz.title");
 	private ITextComponent winTitle = new TranslationTextComponent("challenge.pvz.win_title");
@@ -50,6 +52,8 @@ public class ChallengeComponent implements IChallengeComponent {
 	private int tradeWeight;
 	/* misc */
 	private boolean showRound;
+	private int recommendLevel;
+	private boolean shouldCloseToCenter;
 	
 	@Override
 	public boolean readJson(JsonObject json) {
@@ -123,23 +127,6 @@ public class ChallengeComponent implements IChallengeComponent {
 				}
 			}
 		}
-		/* tips */
-		{
-			final JsonArray jsonTips = JSONUtils.getAsJsonArray(json, "tips", new JsonArray());
-			if (jsonTips != null) {
-				for(int i = 0; i < jsonTips.size(); ++i) {
-					final JsonElement e = jsonTips.get(i);
-					if (e.isJsonObject()) {
-						final JsonObject obj = e.getAsJsonObject();
-						final String name = JSONUtils.getAsString(obj, "title", null);
-						final TextFormatting color = TextFormatting.valueOf(JSONUtils.getAsString(obj, "color", "red").toUpperCase());
-						if(name != null){
-							this.toolTips.add(new TranslationTextComponent(name).withStyle(color));
-						}
-					}
-				}
-			}
-		}
 		/* raid cd */
 		{
 		    this.winTick = JSONUtils.getAsInt(json, "win_tick", 400);
@@ -156,6 +143,8 @@ public class ChallengeComponent implements IChallengeComponent {
 		}
 		{/* misc */
 			this.showRound = JSONUtils.getAsBoolean(json, "show_round", true);
+			this.recommendLevel = JSONUtils.getAsInt(json, "recommend_level", 1);
+			this.shouldCloseToCenter = JSONUtils.getAsBoolean(json, "close_to_center", true);
 		}
 		/* sounds */
 		{
@@ -235,7 +224,11 @@ public class ChallengeComponent implements IChallengeComponent {
 	public List<ISpawnComponent> getSpawns(int wavePos) {
 		return this.waves.get(this.wavePos(wavePos)).getSpawns();
 	}
-	
+
+	public List<IWaveComponent> getWaves() {
+		return waves;
+	}
+
 	@Override
 	public List<IRewardComponent> getRewards() {
 		return this.rewards;
@@ -272,7 +265,7 @@ public class ChallengeComponent implements IChallengeComponent {
 	}
 	
 	@Override
-	public int getMaxWaveCount() {
+	public int getTotalWaveCount() {
 		return this.waves.size();
 	}
 	
@@ -337,13 +330,18 @@ public class ChallengeComponent implements IChallengeComponent {
 	}
 
 	@Override
-	public List<IFormattableTextComponent> getToolTips(){
-		return Collections.unmodifiableList(this.toolTips);
+	public IFormattableTextComponent getChallengeName(){
+		final ResourceLocation resourceLocation = ChallengeManager.getResourceByChallenge(this);
+		return new TranslationTextComponent("challenge." + resourceLocation.getNamespace() + "." + resourceLocation.getPath() + ".name");
 	}
 
 	@Override
 	public List<Pair<IFormattableTextComponent, Integer>> getMessages(){
 		return Collections.unmodifiableList(this.messages);
+	}
+
+	public int getRecommendLevel() {
+		return recommendLevel;
 	}
 
 	public boolean canTrade() {
@@ -356,6 +354,16 @@ public class ChallengeComponent implements IChallengeComponent {
 
 	public int getTradePrice() {
 		return tradePrice;
+	}
+
+	@Override
+	public boolean showRoundTitle() {
+		return this.showRound;
+	}
+
+	@Override
+	public boolean shouldCloseToCenter() {
+		return this.shouldCloseToCenter;
 	}
 
 	private static class Sorter implements Comparator<ISpawnComponent> {

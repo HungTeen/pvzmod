@@ -127,7 +127,7 @@ public class EntityRegister {
 	public static final RegistryObject<EntityType<CoinEntity>> COIN = registerEntityType(CoinEntity::new, "coin", EntityClassification.MISC);
 	public static final RegistryObject<EntityType<JewelEntity>> JEWEL = registerEntityType(JewelEntity::new, "jewel", EntityClassification.MISC);
 	public static final RegistryObject<EntityType<EnergyEntity>> ENERGY = registerEntityType(EnergyEntity::new, "energy", EntityClassification.MISC, 0.9f, 2f);
-	public static final RegistryObject<EntityType<RewardChestEntity>> REWARD_CHEST = registerEntityType(RewardChestEntity::new, "reward_chest", EntityClassification.MISC, 0.9f, 1f);
+	public static final RegistryObject<EntityType<GiftBoxEntity>> GIFT_BOX = registerEntityType(GiftBoxEntity::new, "gift_box", EntityClassification.MISC, 0.9f, 1f);
 
 	/**
 	 * bullets
@@ -306,7 +306,7 @@ public class EntityRegister {
         RenderingRegistry.registerEntityRenderingHandler(COIN.get(), CoinRender::new);
         RenderingRegistry.registerEntityRenderingHandler(JEWEL.get(),JewelRender::new);
         RenderingRegistry.registerEntityRenderingHandler(ENERGY.get(), EnergyRender::new);
-		RenderingRegistry.registerEntityRenderingHandler(REWARD_CHEST.get(), RewardChestRender::new);
+		RenderingRegistry.registerEntityRenderingHandler(GIFT_BOX.get(), GiftBoxRender::new);
 
 		// bullets
         RenderingRegistry.registerEntityRenderingHandler(PEA.get(), PeaRender::new);

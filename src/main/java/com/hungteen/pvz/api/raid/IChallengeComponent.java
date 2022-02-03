@@ -32,7 +32,7 @@ public interface IChallengeComponent {
 	/**
 	 * how many waves is there.
 	 */
-	int getMaxWaveCount();
+	int getTotalWaveCount();
 	
 	/**
 	 * how long will win state last.
@@ -43,19 +43,32 @@ public interface IChallengeComponent {
 	 * how long will loss state last.
 	 */
 	int getLossTick();
+
+	/**
+	 * the recommended level to defeat the challenge.
+	 */
+	int getRecommendLevel();
 	
 	boolean isWaveFinish(int wavePos, int spawnPos);
 	
 	boolean hasTag(String tag);
 
 	boolean isSuitableDimension(RegistryKey<World> type);
-	
+
+	boolean showRoundTitle();
+
+	boolean shouldCloseToCenter();
+
+	IFormattableTextComponent getChallengeName();
+
 	List<String> getAuthors();
 	
 	/**
 	 * get spawn list of current wave.
 	 */
 	List<ISpawnComponent> getSpawns(int wavePos);
+
+	List<IWaveComponent> getWaves();
 	
 	List<IRewardComponent> getRewards();
 	
@@ -76,8 +89,6 @@ public interface IChallengeComponent {
 	SoundEvent getWinSound();
 	
 	SoundEvent getLossSound();
-
-    List<IFormattableTextComponent> getToolTips();
 
 	List<Pair<IFormattableTextComponent, Integer>> getMessages();
 }

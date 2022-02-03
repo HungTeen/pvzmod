@@ -17,6 +17,7 @@ public class ChallengeTypeLoader extends JsonReloadListener{
 
 	public static final String NAME = "challenge";
 	public static final Map<ResourceLocation, IChallengeComponent> CHALLENGE_MAP = Maps.newHashMap();
+	public static final Map<IChallengeComponent, ResourceLocation> RES_MAP = Maps.newHashMap();
 	private static final Gson GSON = (new GsonBuilder()).create();
 	
 	public ChallengeTypeLoader() {
@@ -27,6 +28,7 @@ public class ChallengeTypeLoader extends JsonReloadListener{
 	public void apply(Map<ResourceLocation, JsonElement> map, IResourceManager manager, IProfiler profiler) {
 		/* refresh */
 		CHALLENGE_MAP.clear();
+		RES_MAP.clear();
 		
 		/* load */
 		map.forEach((res, jsonElement) -> {
@@ -39,6 +41,7 @@ public class ChallengeTypeLoader extends JsonReloadListener{
 	            	return;
 	            }
 	            CHALLENGE_MAP.put(res, challengeType);
+				RES_MAP.put(challengeType, res);
 	         } catch (IllegalArgumentException | JsonParseException e) {
 				PVZMod.LOGGER.error("Parsing error loading challenge {}: {}", res, e.getMessage());
 	         }

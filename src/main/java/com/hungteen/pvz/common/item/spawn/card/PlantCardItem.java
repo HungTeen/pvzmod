@@ -593,6 +593,7 @@ public class PlantCardItem extends SummonCardItem {
 		final int range = 30;
 		final long count = EntityUtil.getFriendlyLivings(player, EntityUtil.getEntityAABB(player, range, range))
 		    .stream().filter(entity -> entity instanceof PVZPlantEntity).count() + 1;
+
 		final long multipy = Math.max(0, (count - ConfigUtil.getLimitPlantCount() - DenselyPlantEnchantment.getExtraPlantNum(stack) + 4) / 5);
 		return (int) Math.min(100000L, this.getBasisSunCost(stack) * (1L << multipy));
 	}
@@ -638,7 +639,6 @@ public class PlantCardItem extends SummonCardItem {
 	private static int getPlantCardCD(PlayerEntity player, ItemStack stack, PlantCardItem item) {
 		final int level = SkillTypes.getSkillLevel(stack, SkillTypes.FAST_CD);
 		int cd = item.getBasisCoolDown(stack).getCD(level);
-		System.out.println(cd);
 
 		if (player.hasEffect(EffectRegister.EXCITE_EFFECT.get())) {
 			int lvl = player.getEffect(EffectRegister.EXCITE_EFFECT.get()).getAmplifier();

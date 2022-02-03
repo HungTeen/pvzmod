@@ -5,7 +5,7 @@ import com.hungteen.pvz.api.interfaces.IChallenge;
 import com.hungteen.pvz.api.raid.IAmountComponent;
 import com.hungteen.pvz.api.raid.IRewardComponent;
 import com.hungteen.pvz.common.entity.EntityRegister;
-import com.hungteen.pvz.common.entity.misc.RewardChestEntity;
+import com.hungteen.pvz.common.entity.misc.GiftBoxEntity;
 import com.hungteen.pvz.common.world.challenge.ChallengeManager;
 import com.mojang.brigadier.exceptions.CommandSyntaxException;
 import com.mojang.datafixers.util.Pair;
@@ -30,7 +30,7 @@ public class ItemRewardComponent implements IRewardComponent {
 
     @Override
     public void rewardGlobally(IChallenge challenge) {
-        RewardChestEntity rewardChestEntity = EntityRegister.REWARD_CHEST.get().create(challenge.getWorld());
+        GiftBoxEntity rewardChestEntity = EntityRegister.GIFT_BOX.get().create(challenge.getWorld());
         NonNullList<ItemStack> stacks = NonNullList.create();
         list.forEach(pair -> {
             final int count = pair.getSecond().getSpawnAmount();

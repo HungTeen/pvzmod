@@ -14,12 +14,11 @@ import com.hungteen.pvz.common.entity.zombie.PVZZombieEntity;
 import com.hungteen.pvz.common.event.PVZLivingEvents;
 import com.hungteen.pvz.common.event.PVZPlayerEvents;
 import com.hungteen.pvz.common.item.ItemRegister;
-import com.hungteen.pvz.register.SoundRegister;
-import com.hungteen.pvz.common.misc.tag.PVZItemTags;
 import com.hungteen.pvz.common.potion.EffectRegister;
 import com.hungteen.pvz.common.world.invasion.InvasionManager;
 import com.hungteen.pvz.common.world.invasion.MissionManager;
 import com.hungteen.pvz.compat.patchouli.PVZPatchouliHandler;
+import com.hungteen.pvz.register.SoundRegister;
 import com.hungteen.pvz.utils.EntityUtil;
 import com.hungteen.pvz.utils.PlayerUtil;
 import com.hungteen.pvz.utils.StringUtil;
@@ -90,7 +89,7 @@ public class PlayerEventHandler {
     public static void makeSuperMode(PlayerEntity player, Entity entity, ItemStack heldStack) {
         if (entity instanceof PVZPlantEntity && EntityUtil.isEntityValid(entity)) {//target must still alive.
             //origin tools or item enchanted with [Energy Transfer] can make this.
-            if (heldStack.getItem().is(PVZItemTags.ORIGIN_TOOLS) || EnchantmentHelper.getItemEnchantmentLevel(EnchantmentRegister.ENERGY_TRANSFER.get(), heldStack) > 0) {
+            if (heldStack.getItem().equals(ItemRegister.ORIGIN_SWORD.get()) || EnchantmentHelper.getItemEnchantmentLevel(EnchantmentRegister.ENERGY_TRANSFER.get(), heldStack) > 0) {
                 //this plant can be super and player has enough energy.
                 if (((PVZPlantEntity) entity).canStartSuperMode() && (! PlayerUtil.isPlayerSurvival(player) || PlayerUtil.getResource(player, Resources.ENERGY_NUM) > 0)) {
                     if(PlayerUtil.isPlayerSurvival(player)) {

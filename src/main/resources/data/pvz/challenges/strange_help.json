@@ -30,6 +30,7 @@
   ],
   "bar_color": "green",
   "can_trade": false,
+  "recommend_level": 1,
   "placement": {
     "outer": {
       "min": 5,

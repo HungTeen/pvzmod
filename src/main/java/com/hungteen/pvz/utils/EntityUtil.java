@@ -362,21 +362,15 @@ public class EntityUtil {
 	 * use for TargetGoal to check if attacker can set target as AttackTarget.
 	 */
 	public static boolean canTargetEntity(Entity attacker, Entity target) {
-		if(attacker instanceof PVZZombieEntity) {
-		    return ((PVZZombieEntity) attacker).checkCanPAZTarget(target);
-		}
-		if(attacker instanceof PVZPlantEntity) {
-	        return ((PVZPlantEntity) attacker).checkCanPAZTarget(target);
+		if(attacker instanceof AbstractPAZEntity) {
+			return ((AbstractPAZEntity) attacker).checkCanPAZTarget(target);
 		}
 		return checkCanEntityBeTarget(attacker, target);
 	}
 	
 	public static boolean canAttackEntity(Entity attacker, Entity target) {
-		if(attacker instanceof PVZZombieEntity) {
-			return ((PVZZombieEntity) attacker).checkCanPAZAttack(target);
-		}
-		if(attacker instanceof PVZPlantEntity) {
-			return ((PVZPlantEntity) attacker).checkCanPAZAttack(target);
+		if(attacker instanceof AbstractPAZEntity) {
+			return ((AbstractPAZEntity) attacker).checkCanPAZAttack(target);
 		}
 		return checkCanEntityBeAttack(attacker, target);
 	}
@@ -437,7 +431,7 @@ public class EntityUtil {
 	}
 
 	/**
-	 * both entity belong to the same side of group.
+	 * both entity belong to different side of group.
 	 */
 	public static boolean isEnemy(Entity a, Entity b){
 		return (a == null || b == null) ? false : EntityGroupHander.checkCanTarget(getEntityGroup(a), getEntityGroup(b));
@@ -504,7 +498,7 @@ public class EntityUtil {
 	 * get friendly entities.
 	 */
 	public static List<LivingEntity> getFriendlyLivings(@Nonnull Entity attacker, AxisAlignedBB aabb){
-		return getPredicateEntities(attacker, aabb, LivingEntity.class, target -> ! canAttackEntity(attacker, target));
+		return getPredicateEntities(attacker, aabb, LivingEntity.class, target -> isFriendly(attacker, target));
 	}
 	
 	/**

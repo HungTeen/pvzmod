@@ -3,7 +3,6 @@ package com.hungteen.pvz.common.impl.challenge.placement;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.hungteen.pvz.api.raid.IPlacementComponent;
-import com.hungteen.pvz.utils.MathUtil;
 import net.minecraft.util.JSONUtils;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
@@ -19,8 +18,10 @@ public class OuterPlacement implements IPlacementComponent {
 	@Override
 	public BlockPos getPlacePosition(World world, BlockPos origin) {
 		this.max = Math.max(this.max, this.min);//prevent wrong json by others.
-		final int dx = (world.getRandom().nextDouble() < 0.5 ? 1 : -1) * MathUtil.getRandomMinMax(world.getRandom(), this.min, this.max);
-		final int dz = (world.getRandom().nextDouble() < 0.5 ? 1 : -1) * MathUtil.getRandomMinMax(world.getRandom(), this.min, this.max);
+		final double radius = world.getRandom().nextDouble() * (this.max - this.min) + this.min;
+		final double delta = world.getRandom().nextDouble() * 2 * 3.14159;
+		final int dx = (int) (radius * Math.sin(delta));
+		final int dz = (int) (radius * Math.cos(delta));
 		final int height = this.onSurface ? world.getHeight(Heightmap.Type.WORLD_SURFACE, origin.getX() + dx, origin.getZ() + dz) : origin.getY();
 		return new BlockPos(origin.getX() + dx, height, origin.getZ() + dz);
 	}

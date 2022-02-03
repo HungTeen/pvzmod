@@ -82,7 +82,7 @@ public class PVZPlayerEvents {
 	}
 	
 	@SubscribeEvent
-	public static void onPlayerRespawn(PlayerEvent.PlayerChangedDimensionEvent ev) {
+	public static void onPlayerChangedDimension(PlayerEvent.PlayerChangedDimensionEvent ev) {
 		if(! ev.getPlayer().level.isClientSide) {
 			PlayerUtil.getOptManager(ev.getPlayer()).ifPresent(l -> l.syncToClient());
 		}
@@ -99,17 +99,10 @@ public class PVZPlayerEvents {
 	
 	@SubscribeEvent
 	public static void onPlayerTreeLevelUp(PlayerLevelChangeEvent ev) {
-		if(! ev.getPlayer().level.isClientSide && ev.isLevelUp()) {
+		if (!ev.getPlayer().level.isClientSide && ev.isLevelUp()) {
 			PlayerEventHandler.unLockPAZs(ev.getPlayer());
 			PlayerUtil.playClientSound(ev.getPlayer(), SoundRegister.PLANT_GROW.get());
-		    PlayerUtil.addResource(ev.getPlayer(), Resources.LOTTERY_CHANCE, 3);
-		}
-	}
-	
-	@SubscribeEvent
-	public static void onPlayerPlantLevelUp(PlayerLevelChangeEvent.PAZLevelChangeEvent ev) {
-		if(! ev.getPlayer().level.isClientSide) {
-			PlayerUtil.addResource(ev.getPlayer(), Resources.TREE_XP, ev.getCurrentLevel() * 2);
+			PlayerUtil.addResource(ev.getPlayer(), Resources.LOTTERY_CHANCE, 3);
 		}
 	}
 	

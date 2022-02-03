@@ -6,6 +6,7 @@ import java.util.Optional;
 import com.hungteen.pvz.api.PVZAPI;
 import com.hungteen.pvz.api.raid.IChallengeComponent;
 import com.hungteen.pvz.client.gui.screen.ChallengeEnvelopeScreen;
+import com.hungteen.pvz.client.gui.screen.ChallengeInfoScreen;
 import com.hungteen.pvz.common.item.ItemRegister;
 import com.hungteen.pvz.common.item.PVZItemGroups;
 import com.hungteen.pvz.common.world.challenge.ChallengeManager;
@@ -66,9 +67,10 @@ public class ChallengeEnvelopeItem extends Item {
 
     @Override
     public void appendHoverText(ItemStack stack, World worldIn, List<ITextComponent> tooltip, ITooltipFlag flagIn) {
+        tooltip.add(new TranslationTextComponent("tooltip.pvz.challenge_envelope").withStyle(TextFormatting.GREEN));
         getRaidComponent(stack).ifPresent(com -> {
             tooltip.add(new StringTextComponent(getChallengeType(stack).toString()).withStyle(TextFormatting.GRAY).withStyle(TextFormatting.ITALIC));
-            com.getToolTips().forEach(text -> tooltip.add(text));
+            tooltip.add(com.getChallengeName().withStyle(TextFormatting.YELLOW).withStyle(TextFormatting.BOLD));
         });
     }
 
@@ -78,7 +80,13 @@ public class ChallengeEnvelopeItem extends Item {
         if (playerIn.getItemInHand(handIn).getItem() instanceof ChallengeEnvelopeItem) {
             if (worldIn.isClientSide) {
                 DistExecutor.unsafeRunWhenOn(Dist.CLIENT, () -> () -> {
-                    Minecraft.getInstance().setScreen(new ChallengeEnvelopeScreen(playerIn.getItemInHand(handIn)));
+                    ChallengeEnvelopeItem.getRaidComponent(playerIn.getItemInHand(handIn)).ifPresent(challengeComponent -> {
+                        if(handIn == Hand.MAIN_HAND){
+                            Minecraft.getInstance().setScreen(new ChallengeEnvelopeScreen(challengeComponent));
+                        } else{
+                            Minecraft.getInstance().setScreen(new ChallengeInfoScreen(challengeComponent));
+                        }
+                    });
                 });
             }
             return ActionResult.success(playerIn.getItemInHand(handIn));

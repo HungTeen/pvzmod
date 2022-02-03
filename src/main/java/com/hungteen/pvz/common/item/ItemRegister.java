@@ -22,6 +22,8 @@ import com.hungteen.pvz.common.item.spawn.ZomBossDollItem;
 import com.hungteen.pvz.common.item.spawn.bullet.FireCrackerItem;
 import com.hungteen.pvz.common.item.spawn.card.ImitaterCardItem;
 import com.hungteen.pvz.common.item.spawn.card.PlantCardItem;
+import com.hungteen.pvz.common.item.tool.mc.OriginShovelItem;
+import com.hungteen.pvz.common.item.tool.mc.OriginSwordItem;
 import com.hungteen.pvz.common.item.tool.plant.CardPackItem;
 import com.hungteen.pvz.common.item.tool.ZombieDollItem;
 import com.hungteen.pvz.common.item.tool.plant.BowlingGloveItem;
@@ -187,8 +189,8 @@ public class ItemRegister {
      */
     
   	/* tools */
-  	public static final RegistryObject<Item> ORIGIN_SWORD = ITEMS.register("origin_sword", () -> new SwordItem(PVZItemTier.ORIGIN, 3, -2.4F, new Item.Properties().tab(PVZItemGroups.PVZ_TOOL)));
-  	public static final RegistryObject<Item> ORIGIN_SHOVEL = ITEMS.register("origin_shovel", () -> new ShovelItem(PVZItemTier.ORIGIN, 1.5F, -3.0F, new Item.Properties().tab(PVZItemGroups.PVZ_TOOL)));
+  	public static final RegistryObject<Item> ORIGIN_SWORD = ITEMS.register("origin_sword", OriginSwordItem::new);
+  	public static final RegistryObject<Item> ORIGIN_SHOVEL = ITEMS.register("origin_shovel", OriginShovelItem::new);
   	public static final RegistryObject<Item> ORIGIN_PICKAXE = ITEMS.register("origin_pickaxe", () -> new PickaxeItem(PVZItemTier.ORIGIN, 1, -2.8F, new Item.Properties().tab(PVZItemGroups.PVZ_TOOL)));
   	public static final RegistryObject<Item> ORIGIN_AXE = ITEMS.register("origin_axe", () -> new AxeItem(PVZItemTier.ORIGIN, 6.0F, -3.1F, new Item.Properties().tab(PVZItemGroups.PVZ_TOOL)));
   	public static final RegistryObject<Item> ORIGIN_HOE = ITEMS.register("origin_hoe", () -> new HoeItem(PVZItemTier.ORIGIN, -2, -1.0F, new Item.Properties().tab(PVZItemGroups.PVZ_TOOL)));

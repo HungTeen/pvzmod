@@ -8,9 +8,12 @@ import com.hungteen.pvz.api.raid.IChallengeComponent;
 import com.hungteen.pvz.api.raid.IPlacementComponent;
 import com.hungteen.pvz.api.raid.ISpawnComponent;
 import com.hungteen.pvz.common.advancement.trigger.ChallengeTrigger;
+import com.hungteen.pvz.common.entity.AbstractPAZEntity;
+import com.hungteen.pvz.common.entity.ai.goal.ChallengeMoveGoal;
 import com.hungteen.pvz.utils.ConfigUtil;
 import com.hungteen.pvz.utils.EntityUtil;
 import com.hungteen.pvz.utils.PlayerUtil;
+import com.hungteen.pvz.utils.enums.Resources;
 import net.minecraft.command.impl.SummonCommand;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.MobEntity;
@@ -38,7 +41,7 @@ import java.util.stream.Collectors;
 public class Challenge implements IChallenge {
 
 	private static final ITextComponent CHALLENGE_NAME_COMPONENT = new TranslationTextComponent("event.minecraft.raid");
-	private static final ITextComponent CHALLENGE_WARN = new TranslationTextComponent("raid.pvz.warn").withStyle(TextFormatting.RED);
+	private static final ITextComponent CHALLENGE_WARN = new TranslationTextComponent("challenge.pvz.warn").withStyle(TextFormatting.RED);
 	private final ServerBossInfo challengeBar = new ServerBossInfo(CHALLENGE_NAME_COMPONENT, BossInfo.Color.RED, BossInfo.Overlay.NOTCHED_10);
 	private final int id;//unique specify id.
 	public final ServerWorld world;
@@ -53,6 +56,7 @@ public class Challenge implements IChallenge {
 	protected Set<Entity> raiders = new HashSet<>();
 	protected Set<UUID> heroes = new HashSet<>();
 	private boolean firstTick = false;
+	private int currentMaxLevel = 0;
 	
 	
 	public Challenge(int id, ServerWorld world, ResourceLocation res, BlockPos pos) {
@@ -196,10 +200,22 @@ public class Challenge implements IChallenge {
 	 * {@link #tick()}
 	 */
 	protected void tickWave() {
+		/* update difficulty level */
+		if(this.getWorld().getDifficulty() == Difficulty.HARD){
+			if(this.tick % 10 == 2){
+				this.currentMaxLevel = 0;
+				this.getPlayers().forEach(p -> {
+					this.currentMaxLevel += PlayerUtil.getResource(p, Resources.TREE_LVL);
+				});
+			}
+		} else {
+			this.currentMaxLevel = 0;
+		}
+
 		/* check spawn entities */
 		final List<ISpawnComponent> spawns = this.challenge.getSpawns(this.currentWave);
 		while(this.currentSpawn < spawns.size() && this.tick >= spawns.get(this.currentSpawn).getSpawnTick()) {
-			this.spawnEntities(spawns.get(this.currentSpawn ++));
+			this.spawnEntities(spawns.get(this.currentSpawn++));
 		}
 		
 		/* update raiders list */
@@ -221,6 +237,14 @@ public class Challenge implements IChallenge {
 				if(entity instanceof MobEntity) {
 					// avoid despawn.
 					((MobEntity) entity).setPersistenceRequired();
+
+					//close to center goal.
+					if (this.getRaidComponent().shouldCloseToCenter()) {
+						((MobEntity) entity).goalSelector.addGoal(0, new ChallengeMoveGoal(((MobEntity) entity), this));
+					}
+				}
+				if(entity instanceof AbstractPAZEntity){//init skills.
+					AbstractPAZEntity.randomInitSkills((AbstractPAZEntity) entity, Math.max(0, this.currentMaxLevel - this.getRaidComponent().getRecommendLevel()));
 				}
 			}
 		}
@@ -321,7 +345,9 @@ public class Challenge implements IChallenge {
 		this.tick = 0;
 		this.status = Status.RUNNING;
 		this.getPlayers().forEach(p -> {
-			PlayerUtil.sendTitleToPlayer(p, new TranslationTextComponent("challenge.pvz.round", this.currentWave + 1).withStyle(TextFormatting.DARK_RED));
+			if(this.getRaidComponent().showRoundTitle()){
+				PlayerUtil.sendTitleToPlayer(p, new TranslationTextComponent("challenge.pvz.round", this.currentWave + 1).withStyle(TextFormatting.DARK_RED));
+			}
 			PlayerUtil.playClientSound(p, this.challenge.getStartWaveSound());
 		});
 	}
@@ -340,7 +366,7 @@ public class Challenge implements IChallenge {
 		this.tick = 0;
 		if(this.canNextWave()) {
 			this.currentSpawn = 0;
-			if(++ this.currentWave >= this.challenge.getMaxWaveCount()) {
+			if(++ this.currentWave >= this.challenge.getTotalWaveCount()) {
 				this.status = Status.VICTORY;
 			} else {
 				this.status = Status.PREPARE;

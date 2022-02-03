@@ -1,0 +1,209 @@
+{
+  "authors": [
+    "hungteen"
+  ],
+  "tags": [
+    "overworld"
+  ],
+  "messages": [
+    {
+      "title": "challenge.pvz.jump_jump_jump.msg1"
+    },
+    {
+      "title": "challenge.pvz.jump_jump_jump.msg2"
+    },
+    {
+      "title": "challenge.pvz.jump_jump_jump.msg3"
+    }
+  ],
+  "tips": [
+    {
+      "title": "challenge.pvz.jump_jump_jump.tip1",
+      "color": "green"
+    }
+  ],
+  "bar_color": "green",
+  "trade_price": 200,
+  "trade_weight": 90,
+  "recommend_level": 30,
+  "placement": {
+    "outer": {
+      "min": 10,
+      "max": 20,
+      "ground": true
+    }
+  },
+  "waves": [
+    {
+      "spawns": [
+        {
+          "entity_type": "pvz:pogo_zombie",
+          "spawn_tick": 60,
+          "spawn_amount": {
+            "random": {
+              "min": 8,
+              "max": 10
+            }
+          }
+        }
+      ],
+      "duration": 440
+    },
+    {
+      "spawns": [
+        {
+          "entity_type": "pvz:pole_zombie",
+          "spawn_tick": 60,
+          "spawn_amount": {
+            "random": {
+              "min": 12,
+              "max": 15
+            }
+          }
+        }
+      ],
+      "duration": 420
+    },
+    {
+      "spawns": [
+        {
+          "entity_type": "pvz:pogo_zombie",
+          "spawn_tick": 40,
+          "spawn_amount": {
+            "random": {
+              "min": 16,
+              "max": 20
+            }
+          }
+        }
+      ],
+      "duration": 600
+    },
+    {
+      "spawns": [
+        {
+          "entity_type": "pvz:pole_zombie",
+          "spawn_tick": 40,
+          "spawn_amount": {
+            "random": {
+              "min": 21,
+              "max": 24
+            }
+          }
+        }
+      ],
+      "duration": 600
+    },
+    {
+      "spawns": [
+        {
+          "entity_type": "pvz:squash_zombie",
+          "spawn_tick": 20,
+          "spawn_amount": {
+            "random": {
+              "min": 12,
+              "max": 15
+            }
+          }
+        }
+      ],
+      "duration": 420
+    },
+    {
+      "spawns": [
+        {
+          "entity_type": "pvz:pole_zombie",
+          "spawn_tick": 20,
+          "spawn_amount": {
+            "random": {
+              "min": 15,
+              "max": 20
+            }
+          }
+        },
+        {
+          "entity_type": "pvz:pogo_zombie",
+          "spawn_tick": 120,
+          "spawn_amount": {
+            "random": {
+              "min": 12,
+              "max": 14
+            }
+          }
+        }
+      ],
+      "duration": 800
+    },
+    {
+      "spawns": [
+        {
+          "entity_type": "pvz:pogo_zombie",
+          "spawn_tick": 20,
+          "spawn_amount": {
+            "random": {
+              "min": 12,
+              "max": 15
+            }
+          }
+        },
+        {
+          "entity_type": "pvz:pole_zombie",
+          "spawn_tick": 100,
+          "spawn_amount": {
+            "random": {
+              "min": 10,
+              "max": 13
+            }
+          }
+        },
+        {
+          "entity_type": "pvz:squash_zombie",
+          "spawn_tick": 250,
+          "spawn_amount": {
+            "random": {
+              "min": 10,
+              "max": 12
+            }
+          }
+        },
+        {
+          "entity_type": "pvz:pole_zombie",
+          "spawn_tick": 400,
+          "spawn_amount": {
+            "random": {
+              "min": 15,
+              "max": 18
+            }
+          }
+        },
+        {
+          "entity_type": "pvz:pogo_zombie",
+          "spawn_tick": 600,
+          "spawn_amount": {
+            "random": {
+              "min": 12,
+              "max": 16
+            }
+          }
+        }
+      ],
+      "duration": 1500
+    }
+  ],
+  "rewards": {
+    "unlocks": [
+      "pvz:squash"
+    ],
+    "items": [
+      {
+        "item": "pvz:squash_enjoy_card",
+        "amount": {
+          "random": {
+            "min": 2,
+            "max": 4
+          }
+        }
+      }
+    ]
+  }
+}

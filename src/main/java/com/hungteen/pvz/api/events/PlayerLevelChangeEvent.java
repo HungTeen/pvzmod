@@ -1,6 +1,5 @@
 package com.hungteen.pvz.api.events;
 
-import com.hungteen.pvz.api.types.IPAZType;
 import com.hungteen.pvz.utils.enums.Resources;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraftforge.event.entity.player.PlayerEvent;
@@ -27,24 +26,6 @@ public class PlayerLevelChangeEvent extends PlayerEvent {
 
 	public boolean isLevelUp(){
 		return this.getCurrentLevel() > this.getOldLevel();
-	}
-
-	/**
-	 * {@link com.hungteen.pvz.common.capability.player.PlayerDataManager#addPAZPoint(IPAZType, int)}
-	 */
-	public static class PAZLevelChangeEvent extends PlayerLevelChangeEvent {
-
-		private final IPAZType type;
-		
-		public PAZLevelChangeEvent(PlayerEntity player, IPAZType type, int oldLevel, int newLevel) {
-			super(player, oldLevel, newLevel);
-			this.type = type;
-		}
-
-		public IPAZType getPAZType(){
-			return this.type;
-		}
-		
 	}
 
 }

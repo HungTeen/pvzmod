@@ -20,11 +20,11 @@ import net.minecraftforge.items.ItemStackHandler;
  * @author: HungTeen
  * @create: 2022-02-01 18:45
  **/
-public class RewardChestEntity extends PVZEntityBase {
+public class GiftBoxEntity extends PVZEntityBase {
 
     private ItemStackHandler handler;
 
-    public RewardChestEntity(EntityType<?> type, World world) {
+    public GiftBoxEntity(EntityType<?> type, World world) {
         super(type, world);
         this.setGlowing(true);
         this.setInvulnerable(true);
@@ -36,12 +36,14 @@ public class RewardChestEntity extends PVZEntityBase {
 
     @Override
     public ActionResultType interactAt(PlayerEntity player, Vector3d vector3d, Hand hand) {
-        if(! this.level.isClientSide && this.handler != null){
-            for(int i = 0; i < this.handler.getSlots(); ++ i){
-                InventoryHelper.dropItemStack(this.level, this.blockPosition().getX(), this.blockPosition().getY(), this.blockPosition().getZ(),
+        if(! this.level.isClientSide) {
+        	if(this.handler != null){
+                for(int i = 0; i < this.handler.getSlots(); ++ i){
+                    InventoryHelper.dropItemStack(this.level, this.blockPosition().getX(), this.blockPosition().getY(), this.blockPosition().getZ(),
                         this.handler.getStackInSlot(i));
-            }
-            EntityUtil.playSound(this, SoundRegister.PRIZE_DROP.get());
+                }
+                EntityUtil.playSound(this, SoundRegister.PRIZE_DROP.get());
+        	}
             this.remove();
         }
         return ActionResultType.SUCCESS;
