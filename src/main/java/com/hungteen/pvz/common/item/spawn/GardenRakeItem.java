@@ -1,9 +1,8 @@
 package com.hungteen.pvz.common.item.spawn;
 
+import com.hungteen.pvz.common.entity.EntityRegister;
 import com.hungteen.pvz.common.entity.misc.GardenRakeEntity;
 import com.hungteen.pvz.common.item.PVZItemGroups;
-import com.hungteen.pvz.common.entity.EntityRegister;
-
 import net.minecraft.entity.SpawnReason;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.Item;
@@ -19,7 +18,7 @@ import net.minecraft.world.server.ServerWorld;
 public class GardenRakeItem extends Item {
 
 	public GardenRakeItem() {
-		super(new Item.Properties().tab(PVZItemGroups.PVZ_MISC));
+		super(new Item.Properties().tab(PVZItemGroups.PVZ_TOOL));
 	}
 	
 	@Override

@@ -1,6 +1,7 @@
 package com.hungteen.pvz.common.entity.zombie.pool;
 
 import com.hungteen.pvz.common.entity.ai.navigator.ZombiePathNavigator;
+import com.hungteen.pvz.common.entity.plant.PVZPlantEntity;
 import com.hungteen.pvz.common.entity.zombie.PVZZombieEntity;
 import com.hungteen.pvz.common.impl.zombie.PoolZombies;
 import com.hungteen.pvz.common.impl.zombie.ZombieType;
@@ -102,12 +103,18 @@ public class BalloonZombieEntity extends PVZZombieEntity {
 	
 	@Override
 	protected boolean isZombieInvulnerableTo(DamageSource source) {
-		return super.isZombieInvulnerableTo(source) || this.hasBalloon();
+		if(this.hasBalloon() && source.isProjectile()){
+			return true;
+		}
+		return super.isZombieInvulnerableTo(source);
 	}
 	
 	@Override
 	public boolean canBeTargetBy(LivingEntity living) {
-		return super.canBeTargetBy(living) && ! this.hasBalloon();
+		if(living instanceof PVZPlantEntity && this.hasBalloon()){
+			return false;
+		}
+		return super.canBeTargetBy(living);
 	}
 	
 	@Override

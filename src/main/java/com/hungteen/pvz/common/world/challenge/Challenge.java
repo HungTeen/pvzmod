@@ -20,7 +20,6 @@ import net.minecraft.entity.MobEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.nbt.CompoundNBT;
-import net.minecraft.nbt.IntNBT;
 import net.minecraft.nbt.ListNBT;
 import net.minecraft.nbt.NBTUtil;
 import net.minecraft.util.ResourceLocation;
@@ -42,7 +41,7 @@ public class Challenge implements IChallenge {
 
 	private static final ITextComponent CHALLENGE_NAME_COMPONENT = new TranslationTextComponent("event.minecraft.raid");
 	private static final ITextComponent CHALLENGE_WARN = new TranslationTextComponent("challenge.pvz.warn").withStyle(TextFormatting.RED);
-	private final ServerBossInfo challengeBar = new ServerBossInfo(CHALLENGE_NAME_COMPONENT, BossInfo.Color.RED, BossInfo.Overlay.NOTCHED_10);
+	private final ServerBossInfo challengeBar = new ServerBossInfo(CHALLENGE_NAME_COMPONENT, BossInfo.Color.RED, BossInfo.Overlay.PROGRESS);
 	private final int id;//unique specify id.
 	public final ServerWorld world;
 	public final ResourceLocation resource;//res to read raid component.
@@ -74,28 +73,25 @@ public class Challenge implements IChallenge {
 		this.tick = nbt.getInt("challenge_tick");
 		this.stopTick = nbt.getInt("stop_tick");
 		this.currentWave = nbt.getInt("current_wave");
+		this.currentSpawn = nbt.getInt("current_spawn");
 		this.firstTick = nbt.getBoolean("first_tick");
 		{// for raid center position.
 			CompoundNBT tmp = nbt.getCompound("center_pos");
 			this.center = new BlockPos(tmp.getInt("pos_x"), tmp.getInt("pos_y"), tmp.getInt("pos_z"));
 		}
 		{// for raiders entity id.
-			ListNBT list = nbt.getList("raiders", 10);
+			ListNBT list = nbt.getList("raiders", 11);
 			for(int i = 0; i < list.size(); ++ i) {
-				final int id = list.getInt(i);
-				final Entity entity = world.getEntity(id);
+				final Entity entity = world.getEntity(NBTUtil.loadUUID(list.get(i)));
 				if(entity != null) {
 					this.raiders.add(entity);
 				}
 			}
 		}
 		{// for heroes uuid.
-			ListNBT list = nbt.getList("heroes", 10);
+			ListNBT list = nbt.getList("heroes", 11);
 			for(int i = 0; i < list.size(); ++ i) {
-				final UUID uuid = NBTUtil.loadUUID(list.getCompound(i));
-				if(uuid != null) {
-					this.heroes.add(uuid);
-				}
+				this.heroes.add(NBTUtil.loadUUID(list.get(i)));
 			}
 		}
 	}
@@ -107,6 +103,7 @@ public class Challenge implements IChallenge {
 		nbt.putInt("challenge_tick", this.tick);
 		nbt.putInt("stop_tick", this.stopTick);
 		nbt.putInt("current_wave", this.currentWave);
+		nbt.putInt("current_spawn", this.currentSpawn);
 		nbt.putBoolean("first_tick", this.firstTick);
 		{// for raid center position.
 			CompoundNBT tmp = new CompoundNBT();
@@ -118,7 +115,7 @@ public class Challenge implements IChallenge {
 		{// for raiders entity id.
 			ListNBT list = new ListNBT();
 			for(Entity entity : this.raiders) {
-				list.add(IntNBT.valueOf(entity.getId()));
+				list.add(NBTUtil.createUUID(entity.getUUID()));
 			}
 			nbt.put("raiders", list);
 		}
@@ -157,7 +154,6 @@ public class Challenge implements IChallenge {
 				this.remove();
 			}
 		}
-//		System.out.println(this.tick + " " + this.stopTick + " " + this.status + " " + this.center);
 		if(this.isPreparing()) {
 			/* prepare state */
 			if(this.tick >= this.challenge.getPrepareCD(this.currentWave)) {

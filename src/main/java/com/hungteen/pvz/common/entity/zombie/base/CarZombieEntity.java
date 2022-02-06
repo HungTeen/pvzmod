@@ -55,7 +55,12 @@ public abstract class CarZombieEntity extends PVZZombieEntity {
 		this.setBodyStates(body);
 		level.addFreshEntity(body);
 	}
-	
+
+	@Override
+	public float getKBValue() {
+		return 1;
+	}
+
 	public boolean isCarShaking() {
 		return this.getHealth() <= this.getMaxHealth() / 4;
 	}

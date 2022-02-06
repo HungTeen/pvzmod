@@ -22,6 +22,7 @@ public class PVZEntityTypeTags {
 	//pvz
 	public static final INamedTag<EntityType<?>> PVZ_PLANTS = pvzTag("pvz_plants");
 	public static final INamedTag<EntityType<?>> PVZ_ZOMBIES = pvzTag("pvz_zombies");
+	public static final INamedTag<EntityType<?>> BUNGEE_SPAWNS = pvzTag("bungee_spawns");
 		
 	private static INamedTag<EntityType<?>> pvzTag(String name){
 		return EntityTypeTags.createOptional(StringUtil.prefix(name));

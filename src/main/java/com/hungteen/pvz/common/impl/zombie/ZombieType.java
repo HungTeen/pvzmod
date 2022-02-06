@@ -3,17 +3,9 @@ package com.hungteen.pvz.common.impl.zombie;
 import com.hungteen.pvz.PVZMod;
 import com.hungteen.pvz.api.paz.IZombieEntity;
 import com.hungteen.pvz.api.paz.IZombieModel;
-import com.hungteen.pvz.api.types.ICoolDown;
-import com.hungteen.pvz.api.types.IEssenceType;
-import com.hungteen.pvz.api.types.IRankType;
-import com.hungteen.pvz.api.types.ISkillType;
-import com.hungteen.pvz.api.types.IZombieType;
+import com.hungteen.pvz.api.types.*;
 import com.hungteen.pvz.common.entity.EntityRegister;
-import com.hungteen.pvz.common.impl.CoolDowns;
-import com.hungteen.pvz.common.impl.EssenceTypes;
-import com.hungteen.pvz.common.impl.PAZType;
-import com.hungteen.pvz.common.impl.RankTypes;
-import com.hungteen.pvz.common.impl.SkillTypes;
+import com.hungteen.pvz.common.impl.*;
 import com.hungteen.pvz.common.world.spawn.SpawnChecker;
 import net.minecraft.entity.CreatureEntity;
 import net.minecraft.entity.EntityType;
@@ -23,9 +15,9 @@ import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.fml.DistExecutor;
-import net.minecraftforge.fml.DistExecutor.SafeCallable;
 
 import java.util.*;
+import java.util.concurrent.Callable;
 import java.util.function.Supplier;
 
 /**
@@ -249,9 +241,9 @@ public abstract class ZombieType extends PAZType implements IZombieType {
 			return this.commonSkill(skills);
 		}
 		
-		public ZombieFeatures zombieModel(Supplier<SafeCallable<IZombieModel<? extends IZombieEntity>>> sup) {
-			this.zombieModel1 = Optional.ofNullable(DistExecutor.safeCallWhenOn(Dist.CLIENT, sup));
-			this.zombieModel2 = Optional.ofNullable(DistExecutor.safeCallWhenOn(Dist.CLIENT, sup));
+		public ZombieFeatures zombieModel(Supplier<Callable<IZombieModel<? extends IZombieEntity>>> sup) {
+			this.zombieModel1 = Optional.ofNullable(DistExecutor.unsafeCallWhenOn(Dist.CLIENT, sup));
+			this.zombieModel2 = Optional.ofNullable(DistExecutor.unsafeCallWhenOn(Dist.CLIENT, sup));
 			return this;
 		}
 		

@@ -7,6 +7,7 @@ import com.hungteen.pvz.api.interfaces.IHasGroup;
 import com.hungteen.pvz.api.interfaces.IHasOwner;
 import com.hungteen.pvz.common.entity.AbstractPAZEntity;
 import com.hungteen.pvz.common.entity.EntityGroupHander;
+import com.hungteen.pvz.common.entity.PVZAttributes;
 import com.hungteen.pvz.common.entity.PVZMultiPartEntity;
 import com.hungteen.pvz.common.entity.ai.goal.attack.PVZZombieAttackGoal;
 import com.hungteen.pvz.common.entity.bullet.AbstractBulletEntity;
@@ -191,7 +192,14 @@ public class EntityUtil {
 	 * {@link PVZEntityProvider}
 	 */
 	public static float getCurrentDefenceHealth(LivingEntity entity) {
-		return (float) (getCurrentHealth(entity) - entity.getHealth());
+		float health = 0;
+		if(entity.getAttribute(PVZAttributes.INNER_DEFENCE_HP.get()) != null) {
+			health += entity.getAttribute(PVZAttributes.INNER_DEFENCE_HP.get()).getValue();
+		}
+		if(entity.getAttribute(PVZAttributes.OUTER_DEFENCE_HP.get()) != null) {
+			health += entity.getAttribute(PVZAttributes.OUTER_DEFENCE_HP.get()).getValue();
+		}
+		return health;
 	}
 	
 	/**
@@ -379,7 +387,7 @@ public class EntityUtil {
 	 * check can TargetGoal select target as attackTarget.
 	 */
 	public static boolean checkCanEntityBeTarget(Entity attacker, Entity target) {
-		if(! EntityUtil.isEntityValid(attacker) || ! EntityUtil.isEntityValid(target) || EntityUtil.isOpEntity(target)) {//prevent crash
+		if(attacker == null || target == null || EntityUtil.isOpEntity(target)) {//prevent crash
 			return false;
 		}
 		if(target instanceof PVZMultiPartEntity) {//can attack its owner then can attack it
@@ -404,7 +412,7 @@ public class EntityUtil {
 	 * check can AttackGoal continue to attack target.
 	 */
 	public static boolean checkCanEntityBeAttack(Entity attacker, Entity target) {
-		if(! EntityUtil.isEntityValid(attacker) || ! EntityUtil.isEntityValid(target)) {//prevent crash
+		if(attacker == null || target == null) {//prevent crash
 			return false;
 		}
 		if(target instanceof PVZMultiPartEntity) {//can attack its owner then can attack it

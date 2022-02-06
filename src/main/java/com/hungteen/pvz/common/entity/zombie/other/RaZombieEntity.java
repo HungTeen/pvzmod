@@ -5,7 +5,7 @@ import com.hungteen.pvz.common.entity.misc.drop.DropEntity.DropStates;
 import com.hungteen.pvz.common.entity.zombie.PVZZombieEntity;
 import com.hungteen.pvz.common.impl.zombie.ZombieType;
 import com.hungteen.pvz.common.impl.zombie.OtherZombies;
-import com.hungteen.pvz.data.loot.PVZLoot;
+import com.hungteen.pvz.common.misc.PVZLoot;
 import com.hungteen.pvz.utils.EntityUtil;
 import com.hungteen.pvz.utils.MathUtil;
 import com.hungteen.pvz.utils.ZombieUtil;

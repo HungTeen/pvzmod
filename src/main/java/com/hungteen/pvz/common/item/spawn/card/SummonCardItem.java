@@ -1,7 +1,5 @@
 package com.hungteen.pvz.common.item.spawn.card;
 
-import java.util.List;
-
 import com.hungteen.pvz.api.types.ICoolDown;
 import com.hungteen.pvz.api.types.IPAZType;
 import com.hungteen.pvz.client.ClientProxy;
@@ -9,9 +7,9 @@ import com.hungteen.pvz.common.impl.CoolDowns;
 import com.hungteen.pvz.common.impl.SkillTypes;
 import com.hungteen.pvz.common.item.PVZItemGroups;
 import com.hungteen.pvz.common.item.PVZRarity;
+import com.hungteen.pvz.register.SoundRegister;
 import com.hungteen.pvz.utils.PlayerUtil;
 import com.hungteen.pvz.utils.StringUtil;
-
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.enchantment.Enchantment;
 import net.minecraft.entity.player.PlayerEntity;
@@ -23,6 +21,8 @@ import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.TextFormatting;
 import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraft.world.World;
+
+import java.util.List;
 
 public abstract class SummonCardItem extends Item{
 
@@ -134,6 +134,7 @@ public abstract class SummonCardItem extends Item{
 		if(! player.level.isClientSide) {
 			PlayerUtil.sendMsgTo(player, error.getTextByArg(arg, TextFormatting.RED));
 			player.getCooldowns().addCooldown(stack.getItem(), 10);
+			PlayerUtil.playClientSound(player, SoundRegister.NO.get());
 		}
 	}
 	protected enum PlacementErrors{

@@ -5,7 +5,7 @@ import com.hungteen.pvz.common.entity.misc.drop.SunEntity;
 import com.hungteen.pvz.common.entity.zombie.pool.SnorkelZombieEntity;
 import com.hungteen.pvz.common.item.ItemRegister;
 import com.hungteen.pvz.register.SoundRegister;
-import com.hungteen.pvz.data.loot.PVZLoot;
+import com.hungteen.pvz.common.misc.PVZLoot;
 import com.hungteen.pvz.common.entity.EntityRegister;
 
 import net.minecraft.entity.AgeableEntity;

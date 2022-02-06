@@ -4,7 +4,7 @@ import com.hungteen.pvz.common.entity.bullet.itembullet.PeaEntity;
 import com.hungteen.pvz.common.impl.zombie.ZombieType;
 import com.hungteen.pvz.common.impl.zombie.Zombotanies;
 import com.hungteen.pvz.common.potion.EffectRegister;
-import com.hungteen.pvz.data.loot.PVZLoot;
+import com.hungteen.pvz.common.misc.PVZLoot;
 import com.hungteen.pvz.utils.EntityUtil;
 import net.minecraft.entity.CreatureEntity;
 import net.minecraft.entity.EntityType;

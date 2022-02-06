@@ -1,8 +1,5 @@
 package com.hungteen.pvz.common.item.display;
 
-import java.util.List;
-import java.util.Optional;
-
 import com.hungteen.pvz.api.PVZAPI;
 import com.hungteen.pvz.api.raid.IChallengeComponent;
 import com.hungteen.pvz.client.gui.screen.ChallengeEnvelopeScreen;
@@ -11,7 +8,6 @@ import com.hungteen.pvz.common.item.ItemRegister;
 import com.hungteen.pvz.common.item.PVZItemGroups;
 import com.hungteen.pvz.common.world.challenge.ChallengeManager;
 import com.hungteen.pvz.utils.PlayerUtil;
-
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.player.PlayerEntity;
@@ -19,12 +15,7 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemGroup;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.ItemUseContext;
-import net.minecraft.util.ActionResult;
-import net.minecraft.util.ActionResultType;
-import net.minecraft.util.Direction;
-import net.minecraft.util.Hand;
-import net.minecraft.util.NonNullList;
-import net.minecraft.util.ResourceLocation;
+import net.minecraft.util.*;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.StringTextComponent;
 import net.minecraft.util.text.TextFormatting;
@@ -34,6 +25,9 @@ import net.minecraft.world.server.ServerWorld;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.fml.DistExecutor;
+
+import java.util.List;
+import java.util.Optional;
 
 public class ChallengeEnvelopeItem extends Item {
 
@@ -67,7 +61,8 @@ public class ChallengeEnvelopeItem extends Item {
 
     @Override
     public void appendHoverText(ItemStack stack, World worldIn, List<ITextComponent> tooltip, ITooltipFlag flagIn) {
-        tooltip.add(new TranslationTextComponent("tooltip.pvz.challenge_envelope").withStyle(TextFormatting.GREEN));
+        tooltip.add(new TranslationTextComponent("tooltip.pvz.challenge_envelope1").withStyle(TextFormatting.GREEN));
+        tooltip.add(new TranslationTextComponent("tooltip.pvz.challenge_envelope2").withStyle(TextFormatting.GREEN));
         getRaidComponent(stack).ifPresent(com -> {
             tooltip.add(new StringTextComponent(getChallengeType(stack).toString()).withStyle(TextFormatting.GRAY).withStyle(TextFormatting.ITALIC));
             tooltip.add(com.getChallengeName().withStyle(TextFormatting.YELLOW).withStyle(TextFormatting.BOLD));

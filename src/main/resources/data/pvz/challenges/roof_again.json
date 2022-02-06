@@ -1,0 +1,117 @@
+{
+  "authors": [
+    "hungteen"
+  ],
+  "tags": [
+    "overworld"
+  ],
+  "bar_color": "black",
+  "trade_price": 400,
+  "trade_weight": 65,
+  "recommend_level": 60,
+  "placement": {
+    "center": {
+      "radius": 10,
+      "ground": true
+    }
+  },
+  "waves": [
+    {
+      "spawns": [
+        {
+          "entity_type": "pvz:giga_gargantuar",
+          "spawn_tick": 20,
+          "spawn_amount": {
+            "random": {
+              "min": 4,
+              "max": 5
+            }
+          }
+        }
+      ],
+      "duration": 800
+    },
+    {
+      "spawns": [
+        {
+          "entity_type": "pvz:edgar_090517",
+          "spawn_tick": 20,
+          "placement": {
+            "center": {
+              "radius": 1,
+              "ground": true
+            }
+          },
+          "spawn_amount": {
+            "count": 1
+          }
+        }
+      ],
+      "duration": 4000
+    }
+  ],
+  "rewards": {
+    "items": [
+      {
+        "item": "pvz:torch_wood_enjoy_card",
+        "amount": {
+          "count": 1
+        }
+      },
+      {
+        "item": "pvz:cat_tail_enjoy_card",
+        "amount": {
+          "random": {
+            "min": 0,
+            "max": 2
+          }
+        }
+      },
+      {
+        "item": "pvz:cob_cannon_enjoy_card",
+        "amount": {
+          "random": {
+            "min": 0,
+            "max": 1
+          }
+        }
+      },
+      {
+        "item": "pvz:spike_rock_enjoy_card",
+        "amount": {
+          "count": 1
+        }
+      },
+      {
+        "item": "pvz:winter_melon_enjoy_card",
+        "amount": {
+          "random": {
+            "min": 0,
+            "max": 1
+          }
+        }
+      },
+      {
+        "item": "pvz:gold_magnet_enjoy_card",
+        "amount": {
+          "random": {
+            "min": 0,
+            "max": 1
+          }
+        }
+      },
+      {
+        "item": "pvz:pea_shooter_enjoy_card",
+        "amount": {
+          "count": 1
+        }
+      },
+      {
+        "item": "pvz:sun_flower_enjoy_card",
+        "amount": {
+          "count": 1
+        }
+      }
+    ]
+  }
+}

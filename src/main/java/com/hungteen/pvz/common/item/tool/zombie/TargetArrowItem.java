@@ -14,7 +14,7 @@ import net.minecraft.world.World;
 public class TargetArrowItem extends ArrowItem {
 
 	public TargetArrowItem() {
-		super(new Item.Properties().tab(PVZItemGroups.PVZ_MISC));
+		super(new Item.Properties().tab(PVZItemGroups.PVZ_TOOL));
 	}
 
 	@Override

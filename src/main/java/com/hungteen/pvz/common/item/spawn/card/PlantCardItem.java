@@ -525,7 +525,7 @@ public class PlantCardItem extends SummonCardItem {
 				handlePlantCardCoolDown(player, heldStack, plantStack, item);
 			}
 		} else {
-			player.getCooldowns().addCooldown(heldStack.getItem(), 20);
+			player.getCooldowns().addCooldown(heldStack.getItem(), 10);
 		}
 		if(player instanceof ServerPlayerEntity) {
 			/* wait for improve */

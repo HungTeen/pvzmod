@@ -24,6 +24,7 @@ import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.fml.DistExecutor;
 
 import java.util.*;
+import java.util.concurrent.Callable;
 import java.util.function.Supplier;
 
 /**
@@ -295,8 +296,8 @@ public abstract class PlantType extends PAZType implements IPlantType {
 			return this.commonSkill(skills);
 		}
 
-		public PlantFeatures plantModel(Supplier<DistExecutor.SafeCallable<IPlantModel<? extends IPlantEntity>>> sup) {
-			this.plantModel = DistExecutor.safeCallWhenOn(Dist.CLIENT, sup);
+		public PlantFeatures plantModel(Supplier<Callable<IPlantModel<? extends IPlantEntity>>> sup) {
+			this.plantModel = DistExecutor.unsafeCallWhenOn(Dist.CLIENT, sup);
 			return this;
 		}
 

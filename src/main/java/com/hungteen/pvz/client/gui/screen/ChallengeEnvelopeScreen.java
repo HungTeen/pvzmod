@@ -32,10 +32,10 @@ public class ChallengeEnvelopeScreen extends Screen{
         this.blit(stack, cornerX, cornerY, 0, 0, this.xSize, this.ySize);
 
 		int midX = this.width / 2;
-		int midY = cornerY + 20;
+		int midY = cornerY + 30;
 		for (Pair<IFormattableTextComponent, Integer> message : challengeComponent.getMessages()) {
-			StringUtil.drawCenteredScaledString(stack, this.font, message.getFirst().getString(), midX, midY, message.getSecond(), 1.5f);
-			midY += 30;
+			StringUtil.drawCenteredScaledString(stack, this.font, message.getFirst().getString(), midX, midY, message.getSecond(), 1.2f);
+			midY += 20;
 		}
         super.render(stack, mouseX, mouseY, partialTicks);
 	}

@@ -26,7 +26,7 @@ import java.util.List;
 public class ChallengeInfoScreen extends Screen{
 
 	public static final ResourceLocation TEXTURE = StringUtil.prefix("textures/gui/container/almanac.png");
-	private static final int MAX_ENTRY_COUNT = 7;
+	private static final int MAX_ENTRY_COUNT = 14;
 	private final List<IFormattableTextComponent> entries = new ArrayList<>();
 	private final IChallengeComponent challengeComponent;
 	private final int xSize = 150;
@@ -96,10 +96,10 @@ public class ChallengeInfoScreen extends Screen{
 			for(int i = 0; i < Math.min(this.entries.size(), MAX_ENTRY_COUNT); ++ i){
 				this.currentPos = MathHelper.clamp(this.currentPos, 0, this.entries.size() - 1);
 				final String text = this.entries.get(this.currentPos + i).getString();
-				final int incHeight = 20;
+				final int incHeight = 10;
 				final int posX = cornerX + 8 + 2;
 				final int posY = cornerY + 49 + 5;
-				StringUtil.drawScaledString(stack, font, text, posX, posY + incHeight * i, Colors.WHITE, 1f);
+				StringUtil.drawScaledString(stack, font, text, posX, posY + incHeight * i, Colors.WHITE, 0.5f);
 			}
 		}
 	}

@@ -7,7 +7,6 @@ import com.hungteen.pvz.api.paz.IZombieEntity;
 import com.hungteen.pvz.api.types.IPAZType;
 import com.hungteen.pvz.api.types.IZombieType;
 import com.hungteen.pvz.client.particle.ParticleUtil;
-import com.hungteen.pvz.common.advancement.trigger.CharmZombieTrigger;
 import com.hungteen.pvz.common.block.BlockRegister;
 import com.hungteen.pvz.common.entity.AbstractPAZEntity;
 import com.hungteen.pvz.common.entity.EntityRegister;
@@ -22,14 +21,13 @@ import com.hungteen.pvz.common.entity.misc.drop.CoinEntity.CoinType;
 import com.hungteen.pvz.common.entity.misc.drop.SunEntity;
 import com.hungteen.pvz.common.entity.plant.PVZPlantEntity;
 import com.hungteen.pvz.common.entity.plant.enforce.SquashEntity;
-import com.hungteen.pvz.common.entity.plant.magic.HypnoShroomEntity;
 import com.hungteen.pvz.common.entity.plant.spear.SpikeWeedEntity;
 import com.hungteen.pvz.common.entity.zombie.body.ZombieDropBodyEntity;
 import com.hungteen.pvz.common.impl.SkillTypes;
 import com.hungteen.pvz.common.item.ItemRegister;
 import com.hungteen.pvz.common.misc.PVZEntityDamageSource;
-import com.hungteen.pvz.register.SoundRegister;
 import com.hungteen.pvz.common.potion.EffectRegister;
+import com.hungteen.pvz.register.SoundRegister;
 import com.hungteen.pvz.remove.MetalTypes;
 import com.hungteen.pvz.utils.AlgorithmUtil;
 import com.hungteen.pvz.utils.ConfigUtil;
@@ -46,7 +44,6 @@ import net.minecraft.entity.ai.attributes.Attributes;
 import net.minecraft.entity.ai.goal.RandomWalkingGoal;
 import net.minecraft.entity.item.ItemEntity;
 import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.item.AxeItem;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
@@ -192,7 +189,7 @@ public abstract class PVZZombieEntity extends AbstractPAZEntity implements IZomb
 		this.getAttribute(Attributes.ATTACK_DAMAGE).setBaseValue(this.getEatDamage());
 		this.getAttribute(Attributes.FOLLOW_RANGE).setBaseValue(this.getFollowRange());
 		this.getAttribute(Attributes.MOVEMENT_SPEED).setBaseValue(this.getWalkSpeed());
-		this.getAttribute(Attributes.KNOCKBACK_RESISTANCE).setBaseValue(0.9);
+		this.getAttribute(Attributes.KNOCKBACK_RESISTANCE).setBaseValue(this.getKBValue());
 	}
 
 	@Override
@@ -565,6 +562,10 @@ public abstract class PVZZombieEntity extends AbstractPAZEntity implements IZomb
 		return ZombieUtil.WALK_NORMAL;
 	}
 
+	public float getKBValue(){
+		return 0.92F;
+	}
+
 	public float getFollowRange(){
 		return ZombieUtil.CLOSE_TARGET_RANGE;
 	}
@@ -747,23 +748,15 @@ public abstract class PVZZombieEntity extends AbstractPAZEntity implements IZomb
 		this.addEffect(effect);
 	}
 
-	/**
-	 * when zombie turn to oppsite charm state charm -> uncharm or uncharm -> charm.
-	 * {@link HypnoShroomEntity#die(DamageSource)}
-	 */
 	@Override
 	public void onCharmedBy(LivingEntity entity) {
-		if(! this.canBeCharmed()) {
-			return ;
-		}
-		PlayerEntity player = EntityUtil.getEntityOwner(level, entity);
-		if (player != null && player instanceof ServerPlayerEntity) {
-			CharmZombieTrigger.INSTANCE.trigger((ServerPlayerEntity) player, this);
-		}
-		this.setCharmed(!this.isCharmed());
-		if (this.getVariantType() == VariantType.SUPER) {
-			this.setZombieType(VariantType.NORMAL);
-			this.dropEnergy();
+		super.onCharmedBy(entity);
+		if(this.canBeCharmed()) {
+			this.setCharmed(!this.isCharmed());
+			if (this.getVariantType() == VariantType.SUPER) {
+				this.setZombieType(VariantType.NORMAL);
+				this.dropEnergy();
+			}
 		}
 	}
 	
@@ -822,10 +815,6 @@ public abstract class PVZZombieEntity extends AbstractPAZEntity implements IZomb
 	}
 	
 	/* misc get */
-
-	public boolean canBeStealByBungee() {
-		return this.canBeStealByBungee;
-	}
 	
 	public boolean canLostHand() {
 		return this.canLostHand;

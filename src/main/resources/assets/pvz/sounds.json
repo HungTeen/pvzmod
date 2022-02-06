@@ -409,8 +409,8 @@
       }
     ]
   },
-  "groan": {
-    "subtitle": "sound.pvz.groan",
+  "zombie_groan": {
+    "subtitle": "sound.pvz.zombie_groan",
     "sounds": [
       {
         "name": "pvz:groan1"

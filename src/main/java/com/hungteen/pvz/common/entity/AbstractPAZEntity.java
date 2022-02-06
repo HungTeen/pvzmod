@@ -5,6 +5,7 @@ import com.hungteen.pvz.api.interfaces.IAlmanacEntry;
 import com.hungteen.pvz.api.paz.IPAZEntity;
 import com.hungteen.pvz.api.types.IRankType;
 import com.hungteen.pvz.api.types.ISkillType;
+import com.hungteen.pvz.common.advancement.trigger.CharmZombieTrigger;
 import com.hungteen.pvz.common.entity.misc.bowling.AbstractBowlingEntity;
 import com.hungteen.pvz.common.entity.zombie.roof.BungeeZombieEntity;
 import com.hungteen.pvz.common.event.PVZLivingEvents;
@@ -19,6 +20,7 @@ import net.minecraft.entity.*;
 import net.minecraft.entity.ai.attributes.AttributeModifierMap;
 import net.minecraft.entity.ai.attributes.Attributes;
 import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.network.PacketBuffer;
 import net.minecraft.network.datasync.DataParameter;
@@ -146,6 +148,7 @@ public abstract class AbstractPAZEntity extends CreatureEntity implements IPAZEn
             }
             this.getSpawnSound().ifPresent(s -> EntityUtil.playSound(this, s));
             this.initAttributes();
+            this.updatePAZStates();
         }
     }
 
@@ -174,6 +177,24 @@ public abstract class AbstractPAZEntity extends CreatureEntity implements IPAZEn
     public void pazTick(){
         if(! level.isClientSide){
             this.setExistTick(this.getExistTick() + 1);
+        }
+    }
+
+    @Override
+    public void onSyncedDataUpdated(DataParameter<?> dataParameter) {
+        super.onSyncedDataUpdated(dataParameter);
+        if(dataParameter.equals(STATES)){
+            this.updatePAZStates();
+        }
+    }
+
+    @Override
+    public void onCharmedBy(@Nullable LivingEntity entity) {
+        if(this.canBeCharmed()){
+            final PlayerEntity player = EntityUtil.getEntityOwner(level, entity);
+            if (player != null && player instanceof ServerPlayerEntity) {
+                CharmZombieTrigger.INSTANCE.trigger((ServerPlayerEntity) player, this);
+            }
         }
     }
 
@@ -351,6 +372,14 @@ public abstract class AbstractPAZEntity extends CreatureEntity implements IPAZEn
         this.heal(this.getMaxHealth());
     }
 
+    /**
+     * update states when first spawn.
+     * {@link #finalizeSpawn(CompoundNBT)}
+     */
+    protected void updatePAZStates(){
+
+    }
+
     /* features */
     protected abstract float getLife();
 
@@ -433,6 +462,11 @@ public abstract class AbstractPAZEntity extends CreatureEntity implements IPAZEn
     public boolean canBeInvisible() {
         return this.canBeInvisible;
     }
+    
+    @Override
+    public boolean canBeStealByBungee() {
+		return this.canBeStealByBungee;
+	}
 
     /**
      * how much xp will it get, when killed by player or plants.
@@ -510,6 +544,7 @@ public abstract class AbstractPAZEntity extends CreatureEntity implements IPAZEn
         }
         if(this.getExistTick() < 2){
             this.initAttributes();
+            this.updatePAZStates();
         }
     }
 
@@ -528,7 +563,7 @@ public abstract class AbstractPAZEntity extends CreatureEntity implements IPAZEn
      * {@link EntityUtil#getCurrentHealth(net.minecraft.entity.LivingEntity)}
      */
     public double getCurrentHealth() {
-        return this.getInnerDefenceLife() + this.getOuterDefenceLife() + this.getHealth();
+        return this.getInnerDefenceLife() + this.getHealth();
     }
 
     /**
@@ -536,7 +571,7 @@ public abstract class AbstractPAZEntity extends CreatureEntity implements IPAZEn
      * {@link EntityUtil#getCurrentMaxHealth(net.minecraft.entity.LivingEntity)}
      */
     public double getCurrentMaxHealth() {
-        return this.getInnerDefenceLife() + this.getOuterDefenceLife() + this.getMaxHealth();
+        return this.getInnerLife() + this.getMaxHealth();
     }
 
     public double getInnerDefenceLife() {

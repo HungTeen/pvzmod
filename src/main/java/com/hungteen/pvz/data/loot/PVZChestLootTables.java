@@ -5,6 +5,7 @@ import java.util.function.Consumer;
 
 import com.hungteen.pvz.common.item.ItemRegister;
 
+import com.hungteen.pvz.common.misc.PVZLoot;
 import net.minecraft.block.Blocks;
 import net.minecraft.item.Items;
 import net.minecraft.loot.ConstantRange;

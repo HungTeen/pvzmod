@@ -1,11 +1,9 @@
 package com.hungteen.pvz.common.entity.bullet;
 
-import java.util.Optional;
-
 import com.hungteen.pvz.PVZMod;
+import com.hungteen.pvz.api.interfaces.ICanPushBack;
 import com.hungteen.pvz.utils.EntityUtil;
 import com.hungteen.pvz.utils.MathUtil;
-
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.LivingEntity;
@@ -17,7 +15,9 @@ import net.minecraft.util.math.RayTraceResult;
 import net.minecraft.util.math.vector.Vector3d;
 import net.minecraft.world.World;
 
-public abstract class PultBulletEntity extends AbstractBulletEntity {
+import java.util.Optional;
+
+public abstract class PultBulletEntity extends AbstractBulletEntity implements ICanPushBack {
 
 	protected int targetChance = 5;
 	protected Optional<LivingEntity> lockTarget = Optional.empty();
@@ -90,7 +90,8 @@ public abstract class PultBulletEntity extends AbstractBulletEntity {
 	protected int getMaxLiveTick() {
 		return 200;
 	}
-	
+
+	@Override
 	public void pushBack() {
 		this.isPushBack = true;
 		this.setDeltaMovement(MathUtil.getRandomFloat(random), this.random.nextFloat() * 2, MathUtil.getRandomFloat(random));

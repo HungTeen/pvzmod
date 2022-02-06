@@ -56,6 +56,12 @@ public class EntityTypeTagGenerator extends EntityTypeTagsProvider{
 		this.tag(PVZEntityTypeTags.PVZ_ZOMBIES)
 				.add(getFilterTypes(type -> type.getCategory() == PVZEntityClassifications.PVZ_ZOMBIE));
 
+		this.tag(PVZEntityTypeTags.BUNGEE_SPAWNS)
+				.add(EntityRegister.NORMAL_ZOMBIE.get())
+				.add(EntityRegister.CONEHEAD_ZOMBIE.get())
+				.add(EntityRegister.BUCKETHEAD_ZOMBIE.get())
+				.add(EntityRegister.LADDER_ZOMBIE.get());
+
 	}
 	
 	@SuppressWarnings("unused")

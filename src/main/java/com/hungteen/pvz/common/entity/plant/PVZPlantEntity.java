@@ -19,14 +19,13 @@ import com.hungteen.pvz.common.entity.plant.light.GoldLeafEntity;
 import com.hungteen.pvz.common.entity.plant.magic.CoffeeBeanEntity;
 import com.hungteen.pvz.common.entity.plant.spear.SpikeWeedEntity;
 import com.hungteen.pvz.common.entity.zombie.grass.TombStoneEntity;
-import com.hungteen.pvz.common.event.handler.PlayerEventHandler;
 import com.hungteen.pvz.common.impl.SkillTypes;
 import com.hungteen.pvz.common.impl.plant.PVZPlants;
 import com.hungteen.pvz.common.item.spawn.card.PlantCardItem;
 import com.hungteen.pvz.common.misc.PVZEntityDamageSource;
-import com.hungteen.pvz.register.SoundRegister;
 import com.hungteen.pvz.common.potion.EffectRegister;
 import com.hungteen.pvz.register.ParticleRegister;
+import com.hungteen.pvz.register.SoundRegister;
 import com.hungteen.pvz.remove.MetalTypes;
 import com.hungteen.pvz.utils.AlgorithmUtil;
 import com.hungteen.pvz.utils.EntityUtil;
@@ -519,7 +518,6 @@ public abstract class PVZPlantEntity extends AbstractPAZEntity implements IPlant
 
 	/**
 	 * outer plant is shoveled or eaten.
-	 * {@link PlayerEventHandler#onPlantShovelByPlayer(PlayerEntity, PVZPlantEntity, net.minecraft.item.ItemStack)}
 	 */
 	public void removeOuterPlant() {
 		this.outerPlant = null;

@@ -6,6 +6,8 @@ import com.mojang.blaze3d.vertex.IVertexBuilder;
 
 import net.minecraft.client.renderer.entity.model.EntityModel;
 import net.minecraft.entity.LivingEntity;
+import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.api.distmarker.OnlyIn;
 
 public interface IZombieModel<T extends LivingEntity & IZombieEntity> {
 
@@ -22,5 +24,6 @@ public interface IZombieModel<T extends LivingEntity & IZombieEntity> {
 	 */
 	void renderBody(IBodyEntity entity, MatrixStack stack, IVertexBuilder buffer, int packedLight, int packedOverlay);
 
+	@OnlyIn(Dist.CLIENT)
 	EntityModel<T> getZombieModel();
 }

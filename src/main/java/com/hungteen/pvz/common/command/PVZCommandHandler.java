@@ -15,7 +15,7 @@ public class PVZCommandHandler {
     public static void init(RegisterCommandsEvent event) {
         CommandDispatcher<CommandSource> dispatcher = event.getDispatcher();
         ResourceCommand.register(dispatcher);
-        PlantLvlCommand.register(dispatcher);
+        PAZCommand.register(dispatcher);
         InvasionCommand.register(dispatcher);
         ChallengeCommand.register(dispatcher);
     }

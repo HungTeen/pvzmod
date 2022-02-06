@@ -587,7 +587,6 @@ public final class PVZPlants extends PlantType {
 			.rank(RankTypes.GOLD).essence(EssenceTypes.MAGIC)
 			.entityType(() -> EntityRegister.IMITATER.get())
 			.summonCard(() -> ItemRegister.IMITATER_CARD.get())
-			.enjoyCard(() -> ItemRegister.IMITATER_ENJOY_CARD.get())
 			.plantModel(() -> ImitaterModel::new).scale(0.9F)
 			.placement(Placements.NONE)
 	);

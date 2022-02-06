@@ -5,29 +5,6 @@
   "tags": [
     "overworld"
   ],
-  "messages": [
-    {
-      "title": "challenge.pvz.strange_help.msg1"
-    },
-    {
-      "title": "challenge.pvz.strange_help.msg2"
-    },
-    {
-      "title": "challenge.pvz.strange_help.msg3"
-    },
-    {
-      "title": "challenge.pvz.strange_help.msg4"
-    },
-    {
-      "title": "challenge.pvz.strange_help.msg5"
-    }
-  ],
-  "tips": [
-    {
-      "title": "challenge.pvz.strange_help.tip1",
-      "color": "green"
-    }
-  ],
   "bar_color": "green",
   "can_trade": false,
   "recommend_level": 1,

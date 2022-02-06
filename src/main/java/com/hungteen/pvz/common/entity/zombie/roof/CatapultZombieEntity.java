@@ -1,27 +1,32 @@
 package com.hungteen.pvz.common.entity.zombie.roof;
 
+import java.util.Optional;
+
 import com.hungteen.pvz.api.interfaces.IHasWheel;
+import com.hungteen.pvz.common.entity.EntityRegister;
 import com.hungteen.pvz.common.entity.ai.goal.attack.PultAttackGoal;
 import com.hungteen.pvz.common.entity.ai.goal.target.PVZRandomTargetGoal;
 import com.hungteen.pvz.common.entity.bullet.BallEntity;
 import com.hungteen.pvz.common.entity.zombie.base.CarZombieEntity;
-import com.hungteen.pvz.common.impl.zombie.ZombieType;
 import com.hungteen.pvz.common.impl.zombie.RoofZombies;
+import com.hungteen.pvz.common.impl.zombie.ZombieType;
 import com.hungteen.pvz.common.misc.PVZEntityDamageSource;
 import com.hungteen.pvz.register.SoundRegister;
-import com.hungteen.pvz.common.entity.EntityRegister;
 import com.hungteen.pvz.utils.EntityUtil;
 import com.hungteen.pvz.utils.ZombieUtil;
 import com.hungteen.pvz.utils.interfaces.IPult;
-import net.minecraft.entity.*;
+
+import net.minecraft.entity.CreatureEntity;
+import net.minecraft.entity.EntitySize;
+import net.minecraft.entity.EntityType;
+import net.minecraft.entity.LivingEntity;
+import net.minecraft.entity.Pose;
 import net.minecraft.entity.ai.attributes.Attributes;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.network.datasync.DataParameter;
 import net.minecraft.network.datasync.DataSerializers;
 import net.minecraft.network.datasync.EntityDataManager;
 import net.minecraft.world.World;
-
-import java.util.Optional;
 
 public class CatapultZombieEntity extends CarZombieEntity implements IPult,IHasWheel {
 
@@ -87,7 +92,7 @@ public class CatapultZombieEntity extends CarZombieEntity implements IPult,IHasW
 	
 	@Override
 	public float getPultRange() {
-		return 40;
+		return 28;
 	}
 
 	@Override
@@ -177,7 +182,7 @@ public class CatapultZombieEntity extends CarZombieEntity implements IPult,IHasW
 		
 		@Override
 		protected boolean checkTarget(LivingEntity target) {
-			return super.checkTarget(target) && this.attacker.distanceToSqr(target) <= PULT_DISTANCE && this.zombie.checkY(target);
+			return super.checkTarget(target) && this.attacker.distanceToSqr(target) <= this.zombie.getPultRange() * this.zombie.getPultRange() && this.zombie.checkY(target);
 		}
 		
 	}

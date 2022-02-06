@@ -65,7 +65,6 @@ public class PAZStatsPacket {
     public static class Handler {
         public static void onMessage(PAZStatsPacket message, Supplier<NetworkEvent.Context> ctx) {
             final Optional<IPAZType> paz = PVZAPI.get().getTypeByID(message.id);
-            //TODO 整合与植物&僵尸有关的发包
             if(! paz.isPresent()){
                 PVZMod.LOGGER.error("PAZPacket : Can not get paz type for {} !", message.id);
             } else if(ctx.get().getDirection().getReceptionSide().isServer()){//server side.
@@ -85,7 +84,6 @@ public class PAZStatsPacket {
     }
 
     public enum PAZPacketTypes{
-        POINT,
         UNLOCK,
     }
 }

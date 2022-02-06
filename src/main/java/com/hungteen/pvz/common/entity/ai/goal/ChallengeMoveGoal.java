@@ -16,12 +16,14 @@ public class ChallengeMoveGoal extends Goal {
     private final MobEntity owner;
     private final Challenge challenge;
     private final BlockPos center;
+    private int tick = 0;
 
     public ChallengeMoveGoal(MobEntity owner, Challenge challenge){
         this.owner = owner;
         this.challenge = challenge;
         this.center = this.challenge.getCenter();
 //        this.setFlags(EnumSet.of(Goal.Flag.MOVE, Goal.Flag.JUMP));
+        //TODO AI重进游戏就没了 
     }
 
     @Override
@@ -32,8 +34,11 @@ public class ChallengeMoveGoal extends Goal {
         if(this.owner.getTarget() != null){
             return false;
         }
-        if(this.owner.distanceToSqr(this.center.getX(), this.center.getY(), this.center.getZ()) < 10){
+        if(this.owner.distanceToSqr(this.center.getX(), this.center.getY(), this.center.getZ()) < 100){
             return false;
+        }
+        if(++ tick < 60) {
+        	return false;
         }
         return true;
     }
@@ -44,10 +49,15 @@ public class ChallengeMoveGoal extends Goal {
     }
 
     public void start() {
-        this.owner.getNavigation().moveTo(this.center.getX(), this.center.getY() + 1, this.center.getZ(), 1F);
+    }
+
+    @Override
+    public void tick() {
+        this.owner.getNavigation().moveTo(this.center.getX(), this.center.getY() + 1, this.center.getZ(), 1);
     }
 
     public void stop() {
+    	this.tick = 0;
         this.owner.getNavigation().stop();
         super.stop();
     }

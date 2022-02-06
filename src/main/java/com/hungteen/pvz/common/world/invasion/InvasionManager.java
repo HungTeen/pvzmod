@@ -1,14 +1,21 @@
 package com.hungteen.pvz.common.world.invasion;
 
+import java.util.Collection;
+import java.util.HashSet;
+import java.util.Set;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
+
 import com.hungteen.pvz.PVZConfig;
 import com.hungteen.pvz.common.datapack.InvasionTypeLoader;
 import com.hungteen.pvz.common.event.PVZServerEvents;
 import com.hungteen.pvz.common.event.events.InvasionEvent;
-import com.hungteen.pvz.register.SoundRegister;
 import com.hungteen.pvz.register.BiomeRegister;
+import com.hungteen.pvz.register.SoundRegister;
 import com.hungteen.pvz.utils.PlayerUtil;
 import com.hungteen.pvz.utils.StringUtil;
 import com.hungteen.pvz.utils.others.WeightList;
+
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.util.ResourceLocation;
@@ -21,12 +28,6 @@ import net.minecraft.world.World;
 import net.minecraft.world.server.ServerWorld;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.TickEvent;
-
-import java.util.Collection;
-import java.util.HashSet;
-import java.util.Set;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 public class InvasionManager {
 
@@ -246,6 +247,6 @@ public class InvasionManager {
      * get players out zen garden. TODO Plant Invasion.
      */
     public static boolean suitableInvasionPos(World world, BlockPos pos){
-        return ! world.getBiomeManager().getBiome(pos).equals(BiomeRegister.ZEN_GARDEN.get());
+        return ! world.getBiomeManager().getBiome(pos).getRegistryName().equals(BiomeRegister.ZEN_GARDEN.get().getRegistryName());
     }
 }

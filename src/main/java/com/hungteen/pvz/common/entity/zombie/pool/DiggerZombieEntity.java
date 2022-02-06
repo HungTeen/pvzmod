@@ -1,10 +1,11 @@
 package com.hungteen.pvz.common.entity.zombie.pool;
 
 import com.hungteen.pvz.common.entity.ai.goal.target.PVZRandomTargetGoal;
+import com.hungteen.pvz.common.entity.plant.PVZPlantEntity;
 import com.hungteen.pvz.common.entity.zombie.PVZZombieEntity;
 import com.hungteen.pvz.common.impl.zombie.ZombieType;
 import com.hungteen.pvz.common.impl.zombie.PoolZombies;
-import com.hungteen.pvz.data.loot.PVZLoot;
+import com.hungteen.pvz.common.misc.PVZLoot;
 import com.hungteen.pvz.register.ParticleRegister;
 import com.hungteen.pvz.remove.MetalTypes;
 import com.hungteen.pvz.utils.WorldUtil;
@@ -89,7 +90,10 @@ public class DiggerZombieEntity extends PVZZombieEntity implements IHasMetal {
 	
 	@Override
 	public boolean canBeTargetBy(LivingEntity living) {
-		return super.canBeTargetBy(living) && this.isNotDigging();
+		if(living instanceof PVZPlantEntity && ! this.isNotDigging()){
+			return false;
+		}
+		return super.canBeTargetBy(living) ;
 	}
 	
 	@Override
@@ -99,7 +103,10 @@ public class DiggerZombieEntity extends PVZZombieEntity implements IHasMetal {
 	
 	@Override
 	protected boolean isZombieInvulnerableTo(DamageSource source) {
-		return super.isZombieInvulnerableTo(source) || ! this.isNotDigging();
+		if(! this.isNotDigging() && source.isProjectile()){
+			return true;
+		}
+		return super.isZombieInvulnerableTo(source);
 	}
 	
 	/**

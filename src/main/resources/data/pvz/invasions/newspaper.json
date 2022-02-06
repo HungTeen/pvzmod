@@ -16,7 +16,7 @@
     },
     {
       "entity_type": "pvz:screendoor_zombie",
-      "invasion_level": "15",
+      "invasion_level": 15,
       "spawn_weight": 50
     },
     {

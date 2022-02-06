@@ -5,23 +5,6 @@
   "tags": [
     "overworld"
   ],
-  "messages": [
-    {
-      "title": "challenge.pvz.jump_jump_jump.msg1"
-    },
-    {
-      "title": "challenge.pvz.jump_jump_jump.msg2"
-    },
-    {
-      "title": "challenge.pvz.jump_jump_jump.msg3"
-    }
-  ],
-  "tips": [
-    {
-      "title": "challenge.pvz.jump_jump_jump.tip1",
-      "color": "green"
-    }
-  ],
   "bar_color": "green",
   "trade_price": 200,
   "trade_weight": 90,

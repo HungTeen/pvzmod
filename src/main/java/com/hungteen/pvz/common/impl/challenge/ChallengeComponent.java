@@ -8,7 +8,6 @@ import com.hungteen.pvz.PVZMod;
 import com.hungteen.pvz.api.raid.*;
 import com.hungteen.pvz.common.world.challenge.ChallengeManager;
 import com.hungteen.pvz.register.SoundRegister;
-import com.hungteen.pvz.utils.enums.Colors;
 import com.mojang.datafixers.util.Pair;
 import net.minecraft.util.JSONUtils;
 import net.minecraft.util.RegistryKey;
@@ -34,7 +33,6 @@ public class ChallengeComponent implements IChallengeComponent {
 	private Set<String> dimensions = new HashSet<>();
 	private List<String> authors = new ArrayList<>();
 	private final List<Pair<IFormattableTextComponent, Integer>> messages = new ArrayList<>();
-	private IFormattableTextComponent name;
 	private IPlacementComponent placement;
 	private ITextComponent title = new TranslationTextComponent("challenge.pvz.title");
 	private ITextComponent winTitle = new TranslationTextComponent("challenge.pvz.win_title");
@@ -108,21 +106,6 @@ public class ChallengeComponent implements IChallengeComponent {
 					final JsonElement e = array.get(i);
 					if(e.isJsonPrimitive()) {
 						this.dimensions.add(e.getAsString());
-					}
-				}
-			}
-		}
-		/* messages */
-		{
-			final JsonArray jsonMsgs = JSONUtils.getAsJsonArray(json, "messages", new JsonArray());
-			for(int i = 0; i < Objects.requireNonNull(jsonMsgs).size(); ++i) {
-				final JsonElement e = jsonMsgs.get(i);
-				if (e.isJsonObject()) {
-					final JsonObject obj = e.getAsJsonObject();
-					final String name = JSONUtils.getAsString(obj, "title", null);
-					final int color = JSONUtils.getAsInt(obj, "color", Colors.BAT_BLACK);
-					if (name != null) {
-						this.messages.add(Pair.of(new TranslationTextComponent(name), color));
 					}
 				}
 			}
@@ -333,6 +316,12 @@ public class ChallengeComponent implements IChallengeComponent {
 	public IFormattableTextComponent getChallengeName(){
 		final ResourceLocation resourceLocation = ChallengeManager.getResourceByChallenge(this);
 		return new TranslationTextComponent("challenge." + resourceLocation.getNamespace() + "." + resourceLocation.getPath() + ".name");
+	}
+
+	@Override
+	public void setMessages(List<Pair<IFormattableTextComponent, Integer>> list) {
+		this.messages.clear();
+		list.forEach(p -> this.messages.add(p));
 	}
 
 	@Override

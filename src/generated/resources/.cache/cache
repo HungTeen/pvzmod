@@ -68,6 +68,9 @@ ecc472a7d99ccc63db1a7d89bfaa7c213bbf0a82 assets/pvz/models/item/defence_ore.json
 98167609bf3898587f7565736a6fc24a7966cacd assets/pvz/models/item/dolphin_rider_zombie_spawn_egg.json
 443cf9a4409e3657d763320df992322b05b99e86 assets/pvz/models/item/doom_shroom_card.json
 6b1a9f400ab9708a8a6337b3ece6148df2578072 assets/pvz/models/item/doom_shroom_enjoy_card.json
+98167609bf3898587f7565736a6fc24a7966cacd assets/pvz/models/item/edgar_090505_spawn_egg.json
+98167609bf3898587f7565736a6fc24a7966cacd assets/pvz/models/item/edgar_090517_spawn_egg.json
+41e4cebbb57a364a8ef1769671bae37d7a91301b assets/pvz/models/item/edgar_doll.json
 57606aaa5baee5e51155236476310da82b47cd9e assets/pvz/models/item/electric_essence.json
 e37fbea58e66a63f8c4a0c277cc84213ef3c1d31 assets/pvz/models/item/electric_ore.json
 98167609bf3898587f7565736a6fc24a7966cacd assets/pvz/models/item/energy_spawn_egg.json
@@ -283,8 +286,6 @@ ab5f977d35145d74e06695c3dfa3fc9693e20291 assets/pvz/models/item/winter_melon_car
 98167609bf3898587f7565736a6fc24a7966cacd assets/pvz/models/item/zombie_dolphin_spawn_egg.json
 434d3b55f13407df971497acd7d209a444602a46 assets/pvz/models/item/zombie_on_your_lawn.json
 98167609bf3898587f7565736a6fc24a7966cacd assets/pvz/models/item/zomboni_spawn_egg.json
-7455e29739b92f90db7858540ce45bd4c0014f49 assets/pvz/models/item/zomboss_doll.json
-98167609bf3898587f7565736a6fc24a7966cacd assets/pvz/models/item/zomboss_spawn_egg.json
 4f9eaea0cdab711996b9f61bd3b26e96010e416d data/forge/tags/blocks/ores/amethyst.json
 948c5ca008d01f57720ebe53e86aef8c189a3e47 data/forge/tags/blocks/plant_suit_block.json
 9ad7ecc994a14801112f6c3885708f1ce00b453a data/forge/tags/entity_types/pvz_not_guardians.json
@@ -507,8 +508,9 @@ c271ce7ac008a2fa0b5c186ca91653613707df7d data/pvz/tags/blocks/radiations/to_ice_
 e528ed32ae5cbee9f37cf36a8f1dc7c564da613b data/pvz/tags/blocks/radiations/to_magic_ores.json
 50e97df35e7309fbd5feb8f4161ce7888cf962ad data/pvz/tags/blocks/radiations/to_spear_ores.json
 9d1ecf63986d71331f6d088921f6d488b3bd2152 data/pvz/tags/blocks/radiations/to_toxic_ores.json
+a0b4b6c3a02e6c7f1620ef90b3d1bf8b31347dfd data/pvz/tags/entity_types/bungee_spawns.json
 1a13ded2c707b9d73eb92891bd45148f1c7a0284 data/pvz/tags/entity_types/pvz_plants.json
-cb9bdc50da994c061213454f4ebc598f1255c819 data/pvz/tags/entity_types/pvz_zombies.json
+6f146e0ef723cc35f67a8c7187c696617d61abb8 data/pvz/tags/entity_types/pvz_zombies.json
 7498e4ba7725ff8646595dabcf205d524aec5ecd data/pvz/tags/items/card/black_cards.json
 66fbb59e9b3f3d09dc82518badcaaa826c4a3279 data/pvz/tags/items/card/black_materials.json
 70cd7ecb6f1a093e5dec0fdbe4f543c079d12fe0 data/pvz/tags/items/card/blue_cards.json
@@ -530,6 +532,5 @@ ac7254c1fbebecd5cdbf71cdc6a8c33267c50cac data/pvz/tags/items/card/white_cards.js
 90c0be098b625d71f68ace96fab39edc87f9653b data/pvz/tags/items/cards/plant_summon_card.json
 b4b7082c521b395f14901163935e3fe13131f3c8 data/pvz/tags/items/cards/template_card.json
 1c9b69b8145e4b24059a787785717e61a3d30fdf data/pvz/tags/items/ores/essence.json
-6acab55352d425774de2c436ae174dd4078c2bdb data/pvz/tags/items/origin_tools.json
 be8bf1d82365f3337ccb9d647a52c73fc2b00709 data/pvz/tags/items/pea_gun_bullets.json
 4ed9160401242be3b0eb925243aeb6bdf813227c data/pvz/tags/items/reach_items.json

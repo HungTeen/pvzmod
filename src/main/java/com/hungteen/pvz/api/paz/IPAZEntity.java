@@ -45,6 +45,8 @@ public interface IPAZEntity extends IHasOwner, IHasGroup, ICanBeCharmed, ICanBeA
      * players can not see it when invisible invasion is coming.
      */
     boolean canBeInvisible();
+    
+    boolean canBeStealByBungee();
 
     /**
      * display in almanac. {@link com.hungteen.pvz.common.item.display.AlmanacItem}

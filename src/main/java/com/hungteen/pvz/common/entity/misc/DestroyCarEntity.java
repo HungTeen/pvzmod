@@ -1,10 +1,7 @@
 package com.hungteen.pvz.common.entity.misc;
 
 import com.hungteen.pvz.common.entity.AbstractOwnerEntity;
-import com.hungteen.pvz.common.entity.plant.PVZPlantEntity;
-import com.hungteen.pvz.common.entity.zombie.roof.Edgar090505Entity;
 import com.hungteen.pvz.common.misc.PVZEntityDamageSource;
-import com.hungteen.pvz.common.entity.EntityRegister;
 import com.hungteen.pvz.utils.EntityUtil;
 import com.hungteen.pvz.utils.MathUtil;
 
@@ -23,15 +20,11 @@ public class DestroyCarEntity extends AbstractOwnerEntity {
 		super(entityTypeIn, worldIn);
 	}
 	
-	public DestroyCarEntity(World worldIn, Edgar090505Entity boss) {
-		super(EntityRegister.DESTROY_CAR.get(), worldIn, boss);
-	}
-	
 	@Override
 	public void tick() {
 		super.tick();
 		if(! level.isClientSide) {
-			if(this.tickCount >= 100) {
+			if(this.tickCount >= 100 || this.isOnGround()) {
 				this.remove();
 			}
 		}
@@ -62,12 +55,10 @@ public class DestroyCarEntity extends AbstractOwnerEntity {
     }
 	
 	private void tickCollision() {
-		if(! level.isClientSide && this.tickCount % 10 == 0) {
+		if(! level.isClientSide && this.tickCount % 15 == 0) {
 			EntityUtil.getTargetableEntities(this.getOwnerOrSelf(), this.getBoundingBox().inflate(1F)).forEach((target) -> {
-				if(target instanceof PVZPlantEntity) {
-					target.hurt(PVZEntityDamageSource.causeDeadlyDamage(this, this.getOwner()), EntityUtil.getCurrentMaxHealth((PVZPlantEntity) target) * 2);
-				} else {
-					target.hurt(PVZEntityDamageSource.normal(this, this.getOwner()), 5F);
+				if(target instanceof LivingEntity) {
+					target.hurt(PVZEntityDamageSource.causeDeadlyDamage(this, this.getOwner()), EntityUtil.getCurrentMaxHealth((LivingEntity) target));
 				}
 			});
 		}

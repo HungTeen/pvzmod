@@ -5,7 +5,7 @@ import com.hungteen.pvz.common.impl.zombie.ZombieType;
 import com.hungteen.pvz.common.impl.zombie.CustomZombies;
 import com.hungteen.pvz.common.item.ItemRegister;
 import com.hungteen.pvz.common.potion.EffectRegister;
-import com.hungteen.pvz.data.loot.PVZLoot;
+import com.hungteen.pvz.common.misc.PVZLoot;
 import com.hungteen.pvz.common.entity.EntityRegister;
 import com.hungteen.pvz.utils.EntityUtil;
 import com.hungteen.pvz.utils.ZombieUtil;

@@ -5,7 +5,7 @@ import java.util.Random;
 
 import com.hungteen.pvz.common.entity.npc.SunDaveEntity;
 import com.hungteen.pvz.common.structure.PVZTemplateComponent;
-import com.hungteen.pvz.data.loot.PVZLoot;
+import com.hungteen.pvz.common.misc.PVZLoot;
 import com.hungteen.pvz.common.entity.EntityRegister;
 import com.hungteen.pvz.register.StructureRegister;
 import com.hungteen.pvz.utils.EntityUtil;

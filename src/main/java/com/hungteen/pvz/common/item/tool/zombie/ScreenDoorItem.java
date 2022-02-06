@@ -1,9 +1,6 @@
 package com.hungteen.pvz.common.item.tool.zombie;
 
-import java.util.List;
-
 import com.hungteen.pvz.common.item.PVZItemGroups;
-
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.item.Item;
@@ -13,10 +10,12 @@ import net.minecraft.item.ShieldItem;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.world.World;
 
+import java.util.List;
+
 public class ScreenDoorItem extends ShieldItem{
 
 	public ScreenDoorItem() {
-		super(new Item.Properties().stacksTo(1).durability(1600).tab(PVZItemGroups.PVZ_MISC));
+		super(new Item.Properties().stacksTo(1).durability(1600).tab(PVZItemGroups.PVZ_TOOL));
 	}
 
 	@Override

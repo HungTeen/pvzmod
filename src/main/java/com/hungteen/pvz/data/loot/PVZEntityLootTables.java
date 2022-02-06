@@ -1,22 +1,18 @@
 package com.hungteen.pvz.data.loot;
 
-import java.util.function.BiConsumer;
-import java.util.function.Consumer;
-
 import com.hungteen.pvz.common.block.BlockRegister;
 import com.hungteen.pvz.common.item.ItemRegister;
-
+import com.hungteen.pvz.common.misc.PVZLoot;
 import net.minecraft.item.Items;
-import net.minecraft.loot.ConstantRange;
-import net.minecraft.loot.ItemLootEntry;
-import net.minecraft.loot.LootPool;
-import net.minecraft.loot.LootTable;
+import net.minecraft.loot.*;
 import net.minecraft.loot.LootTable.Builder;
-import net.minecraft.loot.RandomValueRange;
 import net.minecraft.loot.conditions.RandomChanceWithLooting;
 import net.minecraft.loot.functions.LootingEnchantBonus;
 import net.minecraft.loot.functions.SetCount;
 import net.minecraft.util.ResourceLocation;
+
+import java.util.function.BiConsumer;
+import java.util.function.Consumer;
 
 public class PVZEntityLootTables implements Consumer<BiConsumer<ResourceLocation, LootTable.Builder>> {
 

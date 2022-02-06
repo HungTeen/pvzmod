@@ -1,4 +1,4 @@
-package com.hungteen.pvz.data.loot;
+package com.hungteen.pvz.common.misc;
 
 import com.hungteen.pvz.utils.StringUtil;
 
@@ -6,8 +6,6 @@ import net.minecraft.util.ResourceLocation;
 
 public class PVZLoot {
 
-	//fish
-	public static final ResourceLocation FISHING_ENJOY_CARD = getFishingLootTable("enjoy_card");
 	//chest
 	public static final ResourceLocation DAVE_VILLA_CHEST = getChestLootTable("dave_villa_chest");
 	public static final ResourceLocation BUCKET_HOUSE_CHEST = getChestLootTable("bucket_house_chest");
@@ -38,6 +36,7 @@ public class PVZLoot {
 	public static final ResourceLocation GARGANTUAR = getEntityLootTable("gargantuar");
 	public static final ResourceLocation GIGA_GARGANTUAR = getEntityLootTable("giga_gargantuar");
 	public static final ResourceLocation EDGAR_090505 = getEntityLootTable("edgar_090505");
+	public static final ResourceLocation EDGAR_090517 = getEntityLootTable("edgar_090517");
 	public static final ResourceLocation PEASHOOTER_ZOMBIE = getEntityLootTable("peashooter_zombie");
 	public static final ResourceLocation WALLNUT_ZOMBIE = getEntityLootTable("wallnut_zombie");
 	public static final ResourceLocation GATLINGPEA_ZOMBIE = getEntityLootTable("gatlingpea_zombie");

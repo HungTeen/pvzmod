@@ -5,7 +5,7 @@ import com.hungteen.pvz.api.types.IZombieType;
 import com.hungteen.pvz.client.model.entity.zombie.roof.*;
 import com.hungteen.pvz.common.impl.RankTypes;
 import com.hungteen.pvz.common.entity.EntityRegister;
-import com.hungteen.pvz.data.loot.PVZLoot;
+import com.hungteen.pvz.common.misc.PVZLoot;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -67,8 +67,16 @@ public final class RoofZombies extends ZombieType {
 	public static final ZombieType EDGAR_090505 = new RoofZombies("edgar_090505", new ZombieFeatures()
 		    .rank(RankTypes.MEGA).xp(1000)
 			.entityType(() -> EntityRegister.EDGAR_090505.get())
-			.zombieModel(() -> Edgar090505Model::new).scale(2F)
+			.zombieModel(() -> EdgarRobotModel::new).scale(1.6F)
 			.loot(PVZLoot.EDGAR_090505)
+			.commonSkill(Arrays.asList())
+	);
+
+	public static final ZombieType EDGAR_090517 = new RoofZombies("edgar_090517", new ZombieFeatures()
+			.rank(RankTypes.MEGA).xp(2000)
+			.entityType(() -> EntityRegister.EDGAR_090517.get())
+			.zombieModel(() -> EdgarRobotModel::new).scale(2F)
+			.loot(PVZLoot.EDGAR_090517)
 			.commonSkill(Arrays.asList())
 	);
 	

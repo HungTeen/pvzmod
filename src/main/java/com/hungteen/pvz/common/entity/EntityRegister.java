@@ -227,6 +227,7 @@ public class EntityRegister {
 	public static final RegistryObject<EntityType<ImpEntity>> IMP = registerZombieEntityType(ImpEntity::new, "imp");
 	public static final RegistryObject<EntityType<GigaGargantuarEntity>> GIGA_GARGANTUAR = registerZombieEntityType(GigaGargantuarEntity::new, "giga_gargantuar");
 	public static final RegistryObject<EntityType<Edgar090505Entity>> EDGAR_090505 = registerZombieEntityType(Edgar090505Entity::new, "edgar_090505");
+	public static final RegistryObject<EntityType<Edgar090517Entity>> EDGAR_090517 = registerZombieEntityType(Edgar090517Entity::new, "edgar_090517");
 	public static final RegistryObject<EntityType<PeaShooterZombieEntity>> PEASHOOTER_ZOMBIE = registerZombieEntityType(PeaShooterZombieEntity::new, "peashooter_zombie");
 	public static final RegistryObject<EntityType<GatlingPeaZombieEntity>> GATLINGPEA_ZOMBIE = registerZombieEntityType(GatlingPeaZombieEntity::new, "gatlingpea_zombie");
 	public static final RegistryObject<EntityType<SquashZombieEntity>> SQUASH_ZOMBIE = registerZombieEntityType(SquashZombieEntity::new, "squash_zombie");
@@ -393,7 +394,7 @@ public class EntityRegister {
         RenderingRegistry.registerEntityRenderingHandler(GARGANTUAR.get(), GargantuarRender::new);
         RenderingRegistry.registerEntityRenderingHandler(IMP.get(), ImpRender::new);
         RenderingRegistry.registerEntityRenderingHandler(GIGA_GARGANTUAR.get(), GigaGargantuarRender::new);
-        RenderingRegistry.registerEntityRenderingHandler(EDGAR_090505.get(), Edgar090505Render::new);
+        RenderingRegistry.registerEntityRenderingHandler(EDGAR_090505.get(), EdgarRobotRender::new);
         RenderingRegistry.registerEntityRenderingHandler(PEASHOOTER_ZOMBIE.get(), PeaShooterZombieRender::new);
         RenderingRegistry.registerEntityRenderingHandler(GATLINGPEA_ZOMBIE.get(), GatlingPeaZombieRender::new);
         RenderingRegistry.registerEntityRenderingHandler(SQUASH_ZOMBIE.get(), SquashZombieRender::new);
@@ -401,6 +402,7 @@ public class EntityRegister {
         RenderingRegistry.registerEntityRenderingHandler(WALLNUT_ZOMBIE.get(), WallNutZombieRender::new);
         RenderingRegistry.registerEntityRenderingHandler(TALLNUT_ZOMBIE.get(), TallNutZombieRender::new);
         RenderingRegistry.registerEntityRenderingHandler(GIGA_TOMB_STONE.get(), GigaTombStoneRender::new);
+		RenderingRegistry.registerEntityRenderingHandler(EDGAR_090517.get(), EdgarRobotRender::new);
         
         // plants
         RenderingRegistry.registerEntityRenderingHandler(PEA_SHOOTER.get(), PeaShooterRender::new);

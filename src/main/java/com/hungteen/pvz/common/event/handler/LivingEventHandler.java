@@ -1,14 +1,16 @@
 package com.hungteen.pvz.common.event.handler;
 
-import com.hungteen.pvz.common.entity.AbstractPAZEntity;
+import com.hungteen.pvz.api.paz.IPAZEntity;
+import com.hungteen.pvz.api.paz.IZombieEntity;
 import com.hungteen.pvz.common.entity.zombie.base.AbstractBossZombieEntity;
 import com.hungteen.pvz.common.event.PVZLivingEvents;
 import com.hungteen.pvz.common.misc.PVZEntityDamageSource;
-import com.hungteen.pvz.register.SoundRegister;
 import com.hungteen.pvz.common.potion.EffectRegister;
+import com.hungteen.pvz.register.SoundRegister;
 import com.hungteen.pvz.utils.ConfigUtil;
 import com.hungteen.pvz.utils.EntityUtil;
 import net.minecraft.entity.LivingEntity;
+import net.minecraft.util.DamageSource;
 import net.minecraftforge.event.entity.living.LivingHurtEvent;
 
 public class LivingEventHandler {
@@ -49,10 +51,16 @@ public class LivingEventHandler {
 	 * {@link PVZLivingEvents#onLivingHurt(net.minecraftforge.event.entity.living.LivingHurtEvent)}
 	 */
 	public static void handleHurtDamage(final LivingHurtEvent ev) {
-		if(ev.getSource() instanceof PVZEntityDamageSource && ! (ev.getEntityLiving() instanceof AbstractPAZEntity && ev.getSource().getEntity() instanceof AbstractPAZEntity)){
+		//all paz entity can not deal more than limit damage to other entities.
+		if(ev.getSource() instanceof PVZEntityDamageSource && ! (ev.getEntityLiving() instanceof IPAZEntity && ev.getSource().getEntity() instanceof IPAZEntity)){
 			ev.setAmount(Math.min(ConfigUtil.getLimitDamage(), ev.getAmount()));
 		}
-		if(ev.getAmount() > ev.getEntityLiving().getMaxHealth() * 0.8 && ev.getEntityLiving() instanceof AbstractBossZombieEntity){
+		//(not boss)zombie damage to zombie or both are boss entity.
+		if(ev.getEntityLiving() instanceof IZombieEntity && ev.getSource().getEntity() instanceof IZombieEntity && (! (ev.getSource().getEntity() instanceof AbstractBossZombieEntity) || (ev.getEntityLiving() instanceof AbstractBossZombieEntity))){
+			ev.setAmount(Math.min(100, ev.getAmount()));
+		}
+		//avoid instant kill mod.
+		if(ev.getSource() != DamageSource.OUT_OF_WORLD && ev.getAmount() > ev.getEntityLiving().getMaxHealth() * 0.8 && ev.getEntityLiving() instanceof AbstractBossZombieEntity){
 			ev.setAmount(ConfigUtil.getLimitDamage());
 		}
 	}

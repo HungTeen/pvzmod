@@ -1,6 +1,7 @@
 package com.hungteen.pvz.common.entity.plant.enforce;
 
 import com.hungteen.pvz.api.interfaces.IAlmanacEntry;
+import com.hungteen.pvz.api.interfaces.ICanPushBack;
 import com.hungteen.pvz.api.types.IPlantType;
 import com.hungteen.pvz.common.entity.bullet.PultBulletEntity;
 import com.hungteen.pvz.common.entity.plant.PVZPlantEntity;
@@ -43,11 +44,8 @@ public class UmbrellaLeafEntity extends PVZPlantEntity{
 	 */
 	public void tickLeaf() {
 		final float range = this.getWorkRange();
-		List<Entity> list = level.getEntitiesOfClass(Entity.class, EntityUtil.getEntityAABB(this, range, range), target -> {
-			if(target instanceof PultBulletEntity || target instanceof BungeeZombieEntity) {
-				return EntityUtil.canTargetEntity(this, target);
-			}
-			return false;
+		List<Entity> list = level.getEntitiesOfClass(Entity.class, EntityUtil.getEntityAABB(this, range, range).inflate(0.25), target -> {
+			return EntityUtil.canTargetEntity(this, target);
 		});
 		if(list.isEmpty()) {
 			if(this.inc != -1 && this.getAttackTime() != ANIM_TICK) {
@@ -58,10 +56,8 @@ public class UmbrellaLeafEntity extends PVZPlantEntity{
 		}
 		this.inc = 1;
 		list.forEach(target -> {
-			if(target instanceof BungeeZombieEntity) {
-				((BungeeZombieEntity) target).pushBack();
-			} else if(target instanceof PultBulletEntity){
-				((PultBulletEntity) target).pushBack();
+			if(target instanceof ICanPushBack){
+				((ICanPushBack) target).pushBack();
 			}
 		});
 	}
@@ -78,10 +74,7 @@ public class UmbrellaLeafEntity extends PVZPlantEntity{
 	
 	@Override
 	public boolean canPAZTarget(Entity target) {
-		if(target instanceof BungeeZombieEntity) {
-			return true;
-		}
-		return super.canPAZTarget(target);
+		return target instanceof ICanPushBack;
 	}
 	
 	@Override

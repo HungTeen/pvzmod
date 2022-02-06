@@ -110,31 +110,50 @@ public class PlayerDataManager {
 				}
 			}
 		}
-		{// load plant & zombie card cd.
-			if(baseTag.contains("paz_card_item_cd")) {
-			    final CompoundNBT nbt = baseTag.getCompound("paz_card_item_cd");
-				PVZAPI.get().getPAZs().forEach(plant -> {
-					final CompoundNBT plantNBT = (CompoundNBT) nbt.get(plant.getIdentity());
-					if(plantNBT != null) {
-					    if(plantNBT.contains("paz_card_cd")) {
-						    this.setPAZCardCD(plant, plantNBT.getInt("paz_card_cd"));
-					    }
-					    if(plantNBT.contains("paz_card_bar")) {
-						    this.setPAZCardBar(plant, plantNBT.getInt("paz_card_bar"));
-					    }
-					}
-				});
+		{/* old load method */
+			{// load plant & zombie card cd.
+				if(baseTag.contains("paz_card_item_cd")) {
+					final CompoundNBT nbt = baseTag.getCompound("paz_card_item_cd");
+					PVZAPI.get().getPAZs().forEach(plant -> {
+						final CompoundNBT plantNBT = (CompoundNBT) nbt.get(plant.getIdentity());
+						if(plantNBT != null) {
+							if(plantNBT.contains("paz_card_cd")) {
+								this.pazCardCD.put(plant, plantNBT.getInt("paz_card_cd"));
+							}
+							if(plantNBT.contains("paz_card_bar")) {
+								this.pazCardBar.put(plant, (float) plantNBT.getInt("paz_card_bar"));
+							}
+						}
+					});
+				}
+			}
+			{// load plant & zombie lock.
+				if(baseTag.contains("paz_locks")) {
+					final CompoundNBT nbt = baseTag.getCompound("paz_locks");
+					PVZAPI.get().getPAZs().forEach(plant -> {
+						final CompoundNBT plantNBT = (CompoundNBT) nbt.get(plant.getIdentity());
+						if(plantNBT != null) {
+							if(plantNBT.contains("paz_locked")) {
+								this.pazLocked.put(plant, plantNBT.getBoolean("paz_locked"));
+							}
+						}
+					});
+				}
 			}
 		}
-		{// load plant & zombie lock.
-			if(baseTag.contains("paz_locks")) {
-			    final CompoundNBT nbt = baseTag.getCompound("paz_locks");
+		{// load plant & zombie card cd.
+			if(baseTag.contains("paz_data")) {
+				final CompoundNBT nbt = baseTag.getCompound("paz_data");
 				PVZAPI.get().getPAZs().forEach(plant -> {
-					final CompoundNBT plantNBT = (CompoundNBT) nbt.get(plant.getIdentity());
-					if(plantNBT != null) {
-					    if(plantNBT.contains("paz_locked")) {
-						    this.setPAZLocked(plant, plantNBT.getBoolean("paz_locked"));
-					    }
+					final CompoundNBT plantNBT = nbt.getCompound(plant.getIdentity());
+					if(plantNBT.contains("paz_card_cd")) {
+						this.pazCardCD.put(plant, plantNBT.getInt("paz_card_cd"));
+					}
+					if(plantNBT.contains("paz_card_bar")) {
+						this.pazCardBar.put(plant, (float) plantNBT.getInt("paz_card_bar"));
+					}
+					if(plantNBT.contains("paz_locked")) {
+						this.pazLocked.put(plant, plantNBT.getBoolean("paz_locked"));
 					}
 				});
 			}
@@ -174,20 +193,12 @@ public class PlayerDataManager {
 			final CompoundNBT nbt = new CompoundNBT();
 			PVZAPI.get().getPAZs().forEach(plant -> {
 				final CompoundNBT plantNBT = new CompoundNBT();
-				nbt.putInt("paz_card_cd", this.pazCardCD.get(plant));
-				nbt.putFloat("paz_card_bar", this.pazCardBar.get(plant));
+				plantNBT.putInt("paz_card_cd", this.pazCardCD.get(plant));
+				plantNBT.putFloat("paz_card_bar", this.pazCardBar.get(plant));
+				plantNBT.putBoolean("paz_locked", this.isPAZLocked(plant));
 				nbt.put(plant.getIdentity(), plantNBT);
 			});
-			baseTag.put("paz_card_item_cd", nbt);
-		}
-		{// save plant & zombie lock.
-			final CompoundNBT nbt = new CompoundNBT();
-			PVZAPI.get().getPAZs().forEach(plant -> {
-				final CompoundNBT plantNBT = new CompoundNBT();
-				nbt.putBoolean("paz_locked", this.isPAZLocked(plant));
-				nbt.put(plant.getIdentity(), plantNBT);
-			});
-			baseTag.put("paz_locks", nbt);
+			baseTag.put("paz_data", nbt);
 		}
 		{// load misc data.
 			{

@@ -4,9 +4,7 @@ import com.hungteen.pvz.api.types.IPlantType;
 import com.hungteen.pvz.common.impl.SkillTypes;
 import com.hungteen.pvz.common.impl.plant.PVZPlants;
 import net.minecraft.entity.CreatureEntity;
-import net.minecraft.entity.EntitySize;
 import net.minecraft.entity.EntityType;
-import net.minecraft.entity.Pose;
 import net.minecraft.world.World;
 
 public class SpikeRockEntity extends SpikeWeedEntity {
@@ -25,11 +23,6 @@ public class SpikeRockEntity extends SpikeWeedEntity {
 		return 20;
 	}
 
-	@Override
-	public EntitySize getDimensions(Pose poseIn) {
-		return new EntitySize(0.95f, 0.4f, false);
-	}
-	
 	@Override
 	public IPlantType getPlantType() {
 		return PVZPlants.SPIKE_ROCK;

@@ -10,10 +10,7 @@ import com.hungteen.pvz.common.misc.PVZEntityDamageSource;
 import com.hungteen.pvz.utils.EntityUtil;
 import com.hungteen.pvz.utils.enums.PAZAlmanacs;
 import com.mojang.datafixers.util.Pair;
-import net.minecraft.entity.CreatureEntity;
-import net.minecraft.entity.Entity;
-import net.minecraft.entity.EntityType;
-import net.minecraft.entity.LivingEntity;
+import net.minecraft.entity.*;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.network.datasync.DataParameter;
 import net.minecraft.network.datasync.DataSerializers;
@@ -33,6 +30,7 @@ public class SpikeWeedEntity extends PVZPlantEntity {
 	public SpikeWeedEntity(EntityType<? extends CreatureEntity> type, World worldIn) {
 		super(type, worldIn);
 		this.setSpikeNum(this.getSpikesCount());
+		this.canBeStealByBungee = false;
 	}
 
 	@Override
@@ -173,7 +171,12 @@ public class SpikeWeedEntity extends PVZPlantEntity {
 	public void setSpikeNum(int num) {
 		this.entityData.set(SPIKE_NUM, num);
 	}
-	
+
+	@Override
+	public EntitySize getDimensions(Pose poseIn) {
+		return new EntitySize(0.95f, 0.4f, false);
+	}
+
 	@Override
 	public IPlantType getPlantType() {
 		return PVZPlants.SPIKE_WEED;

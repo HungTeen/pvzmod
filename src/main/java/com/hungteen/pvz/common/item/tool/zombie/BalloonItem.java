@@ -1,11 +1,8 @@
 package com.hungteen.pvz.common.item.tool.zombie;
 
-import java.util.List;
-
-import com.hungteen.pvz.common.capability.CapabilityHandler;
 import com.hungteen.pvz.common.item.PVZItemGroups;
+import com.hungteen.pvz.utils.PlayerUtil;
 import com.hungteen.pvz.utils.enums.Resources;
-
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.Item;
@@ -21,35 +18,36 @@ import net.minecraft.world.World;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 
+import java.util.List;
+
 public class BalloonItem extends Item {
 
-	private static final int sunCost = 25;
-	private static final int effectCD = 200;
-	
-	public BalloonItem() {
-		super(new Item.Properties().stacksTo(1).tab(PVZItemGroups.PVZ_MISC));
-	}
+    private static final int SUN_COST = 25;
+    private static final int EFFECT_CD = 200;
 
-	@Override
-	@OnlyIn(Dist.CLIENT)
-	public void appendHoverText(ItemStack stack, World worldIn, List<ITextComponent> tooltip, ITooltipFlag flagIn) {
-		tooltip.add(new TranslationTextComponent("tooltip.pvz.balloon").withStyle(TextFormatting.AQUA));
-		tooltip.add(new TranslationTextComponent("tooltip.pvz.sun_cost").append(":" + sunCost).withStyle(TextFormatting.YELLOW));
-	}
-	
-	@Override
-	public ActionResult<ItemStack> use(World worldIn, PlayerEntity playerIn, Hand handIn) {
-		if(! playerIn.level.isClientSide) {
-			playerIn.getCapability(CapabilityHandler.PLAYER_DATA_CAPABILITY).ifPresent((l) -> {
-				int num = l.getPlayerData().getResource(Resources.SUN_NUM);
-				if(num >= sunCost) {
-					l.getPlayerData().addResource(Resources.SUN_NUM, - sunCost);
-					playerIn.addEffect(new EffectInstance(Effects.SLOW_FALLING, effectCD, 10));
-					playerIn.getCooldowns().addCooldown(playerIn.getItemInHand(handIn).getItem(), effectCD);
-				}
-			});
-		}
-		return ActionResult.success(playerIn.getItemInHand(handIn));
-	}
+    public BalloonItem() {
+        super(new Item.Properties().stacksTo(1).tab(PVZItemGroups.PVZ_MISC));
+    }
+
+    @Override
+    @OnlyIn(Dist.CLIENT)
+    public void appendHoverText(ItemStack stack, World worldIn, List<ITextComponent> tooltip, ITooltipFlag flagIn) {
+        super.appendHoverText(stack, worldIn, tooltip, flagIn);
+        tooltip.add(new TranslationTextComponent("tooltip.pvz.balloon").withStyle(TextFormatting.AQUA));
+        tooltip.add(new TranslationTextComponent("tooltip.pvz.sun_cost", SUN_COST).withStyle(TextFormatting.YELLOW));
+    }
+
+    @Override
+    public ActionResult<ItemStack> use(World worldIn, PlayerEntity playerIn, Hand handIn) {
+        if(PlayerUtil.getResource(playerIn, Resources.SUN_NUM) >= SUN_COST){
+            if(! playerIn.level.isClientSide){
+                PlayerUtil.addResource(playerIn, Resources.SUN_NUM, - SUN_COST);
+                playerIn.addEffect(new EffectInstance(Effects.SLOW_FALLING, EFFECT_CD, 10));
+                playerIn.getCooldowns().addCooldown(playerIn.getItemInHand(handIn).getItem(), EFFECT_CD + 80);
+            }
+            return ActionResult.success(playerIn.getItemInHand(handIn));
+        }
+        return ActionResult.success(playerIn.getItemInHand(handIn));
+    }
 
 }

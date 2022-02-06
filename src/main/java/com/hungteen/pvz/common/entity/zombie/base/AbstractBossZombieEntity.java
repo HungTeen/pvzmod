@@ -53,15 +53,9 @@ public abstract class AbstractBossZombieEntity extends PVZZombieEntity {
 		this.bossInfo.setPercent(percent);
 		if(! level.isClientSide) {
 			this.checkAndHeal(percent);
-			// TODO 僵王等级没了
 			if(this.tickCount % this.refreshCountCD == 0) {
 				this.nearbyPlantCount = this.getNearbyPlantCount();
 			    this.nearbyZombieCount = this.getNearbyPlantCount();
-//			    if(this.isCharmed()) {
-//			    	this.setSkills(MathHelper.clamp((this.nearbyZombieCount - 15) / 5, 1, ZombieUtil.MAX_ZOMBIE_LEVEL));
-//			    } else {
-//			    	this.setSkills(MathHelper.clamp((this.nearbyPlantCount - 15) / 5, 1, ZombieUtil.MAX_ZOMBIE_LEVEL));
-//			    }
 			}
 			this.kickEnemiesNearby();
 		}
@@ -123,7 +117,6 @@ public abstract class AbstractBossZombieEntity extends PVZZombieEntity {
 	public void onBossSummon(PVZZombieEntity zombie, BlockPos pos) {
 		ZombieUtil.copySummonZombieData(this, zombie);
 		EntityUtil.onEntitySpawn(this.level, zombie, pos);
-		zombie.setSkills(this.getSkills());
 	}
 	
 	protected int getNearbyPlantCount() {
@@ -134,12 +127,17 @@ public abstract class AbstractBossZombieEntity extends PVZZombieEntity {
 	}
 	
 	protected int getNearbyZombieCount() {
-		final float range = 30;
+		final float range = 40;
 		return level.getEntitiesOfClass(PVZZombieEntity.class, EntityUtil.getEntityAABB(this, range, range), (plant) -> {
 			return ! EntityUtil.canTargetEntity(this, plant);
 		}).size();
 	}
-	
+
+	@Override
+	public float getKBValue() {
+		return 1;
+	}
+
 	@Override
 	public boolean removeWhenFarAway(double distanceToClosestPlayer) {
 		return false;

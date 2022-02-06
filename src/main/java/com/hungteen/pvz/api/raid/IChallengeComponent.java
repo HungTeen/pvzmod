@@ -59,6 +59,8 @@ public interface IChallengeComponent {
 
 	boolean shouldCloseToCenter();
 
+	void setMessages(List<Pair<IFormattableTextComponent, Integer>> list);
+
 	IFormattableTextComponent getChallengeName();
 
 	List<String> getAuthors();

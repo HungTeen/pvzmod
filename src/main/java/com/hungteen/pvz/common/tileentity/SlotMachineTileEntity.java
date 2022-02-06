@@ -11,6 +11,7 @@ import com.hungteen.pvz.register.SoundRegister;
 import com.hungteen.pvz.register.TileEntityRegister;
 import com.hungteen.pvz.utils.EntityUtil;
 import com.hungteen.pvz.utils.PlayerUtil;
+import com.hungteen.pvz.utils.StringUtil;
 import com.hungteen.pvz.utils.enums.Resources;
 import com.hungteen.pvz.utils.others.WeightList;
 import net.minecraft.block.BlockState;
@@ -458,6 +459,7 @@ public class SlotMachineTileEntity extends PVZTileEntity implements ITickableTil
 
 	public static class LotteryType {
 
+		public static final ResourceLocation ALL_PLANTS = StringUtil.prefix("all_plants");
 		private final WeightList<SlotType> list = new WeightList<>();
 		private LotteryTypes lotteryTypes = LotteryTypes.NORMAL;
 		private final ResourceLocation res;

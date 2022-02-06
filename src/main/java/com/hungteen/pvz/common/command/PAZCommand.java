@@ -14,7 +14,7 @@ import net.minecraft.entity.player.ServerPlayerEntity;
 
 import java.util.Collection;
 
-public class PlantLvlCommand {
+public class PAZCommand {
 
 	public static void register(CommandDispatcher<CommandSource> dispatcher) {
         LiteralArgumentBuilder<CommandSource> builder = Commands.literal("pazstats").requires((ctx) -> {return ctx.hasPermission(2);});
