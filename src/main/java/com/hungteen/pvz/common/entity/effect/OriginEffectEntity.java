@@ -1,10 +1,13 @@
 package com.hungteen.pvz.common.entity.effect;
 
+import com.hungteen.pvz.common.entity.EntityRegister;
+import com.hungteen.pvz.utils.EntityUtil;
 import net.minecraft.entity.EntityType;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.network.datasync.DataParameter;
 import net.minecraft.network.datasync.DataSerializers;
 import net.minecraft.network.datasync.EntityDataManager;
+import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 
 /**
@@ -18,6 +21,15 @@ public class OriginEffectEntity extends AbstractEffectEntity {
 	public OriginEffectEntity(EntityType<?> type, World world) {
 		super(type, world);
 		this.maxEffectTick = 100;
+	}
+
+	public static void create(World world, BlockPos pos, int color){
+		OriginEffectEntity effectEntity = EntityRegister.ORIGIN_EFFECT.get().create(world);
+		final boolean exist = EntityUtil.hasNearBy(world, pos, 5, e -> e instanceof OriginEffectEntity);
+		if(! exist) {// avoid overlapped.
+			EntityUtil.onEntitySpawn(world, effectEntity, pos);
+			effectEntity.setColor(color);
+		}
 	}
 
 	@Override

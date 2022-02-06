@@ -466,6 +466,10 @@ public class Challenge implements IChallenge {
 		return this.challenge.getAuthors();
 	}
 
+	public Set<Entity> getRaiders(){
+		return this.raiders;
+	}
+
 	@Override
 	public ServerWorld getWorld() {
 		return world;

@@ -4,7 +4,6 @@ import com.hungteen.pvz.PVZMod;
 import com.hungteen.pvz.common.item.ItemRegister;
 import com.hungteen.pvz.common.item.tool.plant.PeaGunItem;
 import com.hungteen.pvz.common.misc.tag.PVZItemTags;
-import com.hungteen.pvz.register.ContainerRegister;
 
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.inventory.Inventory;

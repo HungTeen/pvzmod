@@ -2,7 +2,7 @@ package com.hungteen.pvz.common.entity.bullet.itembullet;
 
 import com.hungteen.pvz.common.item.ItemRegister;
 import com.hungteen.pvz.common.misc.PVZEntityDamageSource;
-import com.hungteen.pvz.register.SoundRegister;
+import com.hungteen.pvz.common.misc.sound.SoundRegister;
 import com.hungteen.pvz.common.entity.EntityRegister;
 import com.hungteen.pvz.utils.EntityUtil;
 

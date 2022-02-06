@@ -4,7 +4,7 @@ import javax.annotation.Nullable;
 
 import com.hungteen.pvz.api.enums.PVZGroupType;
 import com.hungteen.pvz.api.interfaces.IHasGroup;
-import com.hungteen.pvz.register.SoundRegister;
+import com.hungteen.pvz.common.misc.sound.SoundRegister;
 
 import net.minecraft.entity.CreatureEntity;
 import net.minecraft.entity.Entity;

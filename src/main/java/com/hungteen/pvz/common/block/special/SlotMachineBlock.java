@@ -63,7 +63,7 @@ public class SlotMachineBlock extends AbstractFacingBlock {
 
 	@Override
 	public void fillItemCategory(ItemGroup itemGroup, NonNullList<ItemStack> itemStacks) {
-		if (itemGroup.equals(PVZItemGroups.PVZ_TOOL)) {
+		if (itemGroup.equals(PVZItemGroups.PVZ_USEFUL)) {
 			LotteryTypeLoader.LOTTERIES.forEach((res, lottery) -> {
 				final ItemStack stack = new ItemStack(this);
 				setResourceTag(stack, res);

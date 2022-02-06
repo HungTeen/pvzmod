@@ -30,7 +30,7 @@ import net.minecraft.world.World;
 public class SlotMachineItem extends BlockItem {
 
 	public SlotMachineItem() {
-		super(BlockRegister.SLOT_MACHINE.get(), new Item.Properties().tab(PVZItemGroups.PVZ_TOOL));
+		super(BlockRegister.SLOT_MACHINE.get(), new Item.Properties().tab(PVZItemGroups.PVZ_USEFUL));
 	}
 
 	/**

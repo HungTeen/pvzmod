@@ -2,6 +2,7 @@ package com.hungteen.pvz.common.enchantment.misc;
 
 import com.hungteen.pvz.common.enchantment.EnchantmentRegister;
 import com.hungteen.pvz.common.enchantment.PVZEnchantment;
+import com.hungteen.pvz.common.enchantment.PVZEnchantmentTypes;
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.inventory.EquipmentSlotType;
 import net.minecraft.item.ItemStack;
@@ -9,7 +10,7 @@ import net.minecraft.item.ItemStack;
 public class RangeReachEnchantment extends PVZEnchantment {
 
     public RangeReachEnchantment() {
-        super(Rarity.UNCOMMON, EnchantmentRegister.REACH, new EquipmentSlotType[] {EquipmentSlotType.MAINHAND});
+        super(Rarity.UNCOMMON, PVZEnchantmentTypes.REACH, new EquipmentSlotType[] {EquipmentSlotType.MAINHAND});
     }
 
     public static float getReachDistance(ItemStack stack, float range){

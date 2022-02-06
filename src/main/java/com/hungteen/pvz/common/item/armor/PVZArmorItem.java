@@ -14,6 +14,6 @@ import net.minecraft.item.Item;
 public abstract class PVZArmorItem extends ArmorItem {
 
     public PVZArmorItem(IArmorMaterial armorMaterial, EquipmentSlotType slotType) {
-        super(armorMaterial, slotType, new Item.Properties().tab(PVZItemGroups.PVZ_TOOL));
+        super(armorMaterial, slotType, new Item.Properties().tab(PVZItemGroups.PVZ_USEFUL));
     }
 }

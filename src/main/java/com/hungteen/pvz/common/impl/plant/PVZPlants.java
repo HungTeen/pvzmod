@@ -332,7 +332,7 @@ public final class PVZPlants extends PlantType {
 			.summonCard(() -> ItemRegister.PLANTERN_CARD.get())
 			.enjoyCard(() -> ItemRegister.PLANTERN_ENJOY_CARD.get())
 			.plantModel(() -> PlanternModel::new).scale(0.7F)
-			.commonSkill(Arrays.asList(SkillTypes.MORE_LIGHT_RANGE))
+			.commonSkill(Arrays.asList(SkillTypes.MORE_LIGHT_RANGE, SkillTypes.NIGHT_VISION))
 	);
 	
 	public static final IPlantType CACTUS = new PVZPlants("cactus", new PlantFeatures()

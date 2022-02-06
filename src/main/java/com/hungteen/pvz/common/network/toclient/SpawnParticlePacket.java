@@ -2,7 +2,7 @@ package com.hungteen.pvz.common.network.toclient;
 
 import java.util.function.Supplier;
 
-import com.hungteen.pvz.register.ParticleRegister;
+import com.hungteen.pvz.client.particle.ParticleRegister;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.network.PacketBuffer;

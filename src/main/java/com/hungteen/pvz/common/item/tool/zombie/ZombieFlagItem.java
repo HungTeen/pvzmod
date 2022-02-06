@@ -26,7 +26,7 @@ public class ZombieFlagItem extends Item{
 	private static final int EFFECT_CD = 400;
 	
 	public ZombieFlagItem() {
-		super(new Item.Properties().stacksTo(1).tab(PVZItemGroups.PVZ_TOOL).durability(100));
+		super(new Item.Properties().stacksTo(1).tab(PVZItemGroups.PVZ_USEFUL).durability(100));
 	}
 
 	@Override

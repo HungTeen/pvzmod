@@ -24,8 +24,8 @@ import com.hungteen.pvz.common.impl.plant.PVZPlants;
 import com.hungteen.pvz.common.item.spawn.card.PlantCardItem;
 import com.hungteen.pvz.common.misc.PVZEntityDamageSource;
 import com.hungteen.pvz.common.potion.EffectRegister;
-import com.hungteen.pvz.register.ParticleRegister;
-import com.hungteen.pvz.register.SoundRegister;
+import com.hungteen.pvz.client.particle.ParticleRegister;
+import com.hungteen.pvz.common.misc.sound.SoundRegister;
 import com.hungteen.pvz.remove.MetalTypes;
 import com.hungteen.pvz.utils.AlgorithmUtil;
 import com.hungteen.pvz.utils.EntityUtil;
@@ -71,6 +71,7 @@ public abstract class PVZPlantEntity extends AbstractPAZEntity implements IPlant
 	protected static final int CHARM_FLAG = 1;
 	protected static final int SLEEP_FLAG = 2;
 	protected static final int PUMPKIN_FLAG = 3;
+	protected static final int SUPER_FLAG = 4;
 	//handle plant weak, place on wrong block.
 	private static final int PLANT_WEAK_CD = 10;
 	protected boolean isImmuneToWeak = false;
@@ -476,6 +477,7 @@ public abstract class PVZPlantEntity extends AbstractPAZEntity implements IPlant
 	public void startSuperMode(boolean first) {
 		this.setSuperTime(this.getSuperTimeLength());
 		this.heal(this.getMaxHealth());
+		this.setInSuperState(true);
 		if (first) {
 			PlayerEntity player = EntityUtil.getEntityOwner(level, this);
 			if (player != null && player instanceof ServerPlayerEntity) {
@@ -741,6 +743,14 @@ public abstract class PVZPlantEntity extends AbstractPAZEntity implements IPlant
 	
 	public void setPumpkin(boolean flag) {
 		this.setPAZState(AlgorithmUtil.BitOperator.setBit(this.getPAZState(), PUMPKIN_FLAG, flag));
+	}
+
+	public boolean isInSuperState() {
+		return AlgorithmUtil.BitOperator.hasBitOne(this.getPAZState(), SUPER_FLAG);
+	}
+
+	public void setInSuperState(boolean flag) {
+		this.setPAZState(AlgorithmUtil.BitOperator.setBit(this.getPAZState(), SUPER_FLAG, flag));
 	}
 	
 	@Override

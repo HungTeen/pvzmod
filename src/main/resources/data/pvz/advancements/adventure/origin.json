@@ -1,7 +1,7 @@
 {
   "display": {
     "icon": {
-      "item": "pvz:origin_essence"
+      "item": "pvz:origin_block"
     },
     "title": {
       "translate": "advancement.pvz.origin"
@@ -12,16 +12,12 @@
 	"frame":"goal",
     "announce_to_chat": true
   },
-  "parent":"pvz:adventure/root",
+  "parent":"pvz:adventure/essence",
   "criteria": {
     "get_origin": {
-      "trigger": "minecraft:inventory_changed",
+      "trigger": "minecraft:placed_block",
       "conditions": {
-        "items":[
-		  {
-		    "item":"pvz:origin_essence"
-		  }
-		]
+        "block": "pvz:origin_block"
       }
     }
   },
@@ -29,14 +25,5 @@
     "get_origin"
   ]],
   "rewards":{
-    "recipes":[
-        "pvz:origin_block",
-	    "pvz:card/model/gray_card",
-	    "pvz:card/model/white_card",
-	    "pvz:card/model/green_card",
-	    "pvz:card/model/blue_card",
-	    "pvz:card/model/purple_card",
-	    "pvz:card/model/gold_card"
-    ]
   }
 }

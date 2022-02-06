@@ -2,7 +2,6 @@ package com.hungteen.pvz.client.render.entity.effects;
 
 import com.hungteen.pvz.common.entity.effect.OriginEffectEntity;
 import com.hungteen.pvz.utils.AnimationUtil;
-import com.hungteen.pvz.utils.enums.Colors;
 import com.mojang.blaze3d.matrix.MatrixStack;
 import com.mojang.blaze3d.vertex.IVertexBuilder;
 
@@ -28,8 +27,7 @@ public class OriginEffectRender extends EntityRenderer<OriginEffectEntity>{
 	public void render(OriginEffectEntity entityIn, float entityYaw, float partialTicks, MatrixStack matrixStackIn,
 			IRenderTypeBuffer bufferIn, int packedLightIn) {
 		super.render(entityIn, entityYaw, partialTicks, matrixStackIn, bufferIn, packedLightIn);
-//		final int color = entityIn.getColor();
-		final int color = Colors.GREEN;
+		final int color = entityIn.getColor();
 		matrixStackIn.pushPose();
 		final int T = 100;
 		final float len = 1.2F;

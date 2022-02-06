@@ -8,7 +8,7 @@ import com.hungteen.pvz.common.event.events.SummonCardUseEvent;
 import com.hungteen.pvz.common.event.handler.PlayerEventHandler;
 import com.hungteen.pvz.common.item.tool.plant.BowlingGloveItem;
 import com.hungteen.pvz.common.item.tool.plant.PeaGunItem;
-import com.hungteen.pvz.register.SoundRegister;
+import com.hungteen.pvz.common.misc.sound.SoundRegister;
 import com.hungteen.pvz.common.potion.EffectRegister;
 import com.hungteen.pvz.utils.PlayerUtil;
 import com.hungteen.pvz.utils.enums.Resources;

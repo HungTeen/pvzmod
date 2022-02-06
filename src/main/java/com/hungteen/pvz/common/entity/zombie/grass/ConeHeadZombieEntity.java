@@ -3,7 +3,7 @@ package com.hungteen.pvz.common.entity.zombie.grass;
 import com.hungteen.pvz.client.model.entity.zombie.grass.ConeHeadZombieModel;
 import com.hungteen.pvz.common.impl.zombie.GrassZombies;
 import com.hungteen.pvz.common.impl.zombie.ZombieType;
-import com.hungteen.pvz.register.SoundRegister;
+import com.hungteen.pvz.common.misc.sound.SoundRegister;
 import net.minecraft.entity.CreatureEntity;
 import net.minecraft.entity.EntityType;
 import net.minecraft.util.DamageSource;

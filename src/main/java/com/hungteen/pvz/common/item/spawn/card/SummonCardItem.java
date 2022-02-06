@@ -1,13 +1,13 @@
 package com.hungteen.pvz.common.item.spawn.card;
 
+import com.hungteen.pvz.PVZMod;
 import com.hungteen.pvz.api.types.ICoolDown;
 import com.hungteen.pvz.api.types.IPAZType;
-import com.hungteen.pvz.client.ClientProxy;
 import com.hungteen.pvz.common.impl.CoolDowns;
 import com.hungteen.pvz.common.impl.SkillTypes;
 import com.hungteen.pvz.common.item.PVZItemGroups;
 import com.hungteen.pvz.common.item.PVZRarity;
-import com.hungteen.pvz.register.SoundRegister;
+import com.hungteen.pvz.common.misc.sound.SoundRegister;
 import com.hungteen.pvz.utils.PlayerUtil;
 import com.hungteen.pvz.utils.StringUtil;
 import net.minecraft.client.util.ITooltipFlag;
@@ -80,7 +80,7 @@ public abstract class SummonCardItem extends Item{
 	public void appendHoverText(ItemStack stack, World worldIn, List<ITextComponent> tooltip, ITooltipFlag flagIn) {
 		tooltip.add(new TranslationTextComponent("tooltip.pvz.card_sun_cost", getCardSunCost(stack)).withStyle(TextFormatting.YELLOW));
 		tooltip.add(new TranslationTextComponent("tooltip.pvz.card_cd", new TranslationTextComponent(getCardCoolDown(stack).getTranslateKey()).getString()).withStyle(TextFormatting.AQUA));
-		PlayerUtil.getOptManager(ClientProxy.MC.player).ifPresent(m -> {
+		PlayerUtil.getOptManager(PVZMod.PROXY.getPlayer()).ifPresent(m -> {
 			//this paz type is locked.
 			if (m.isPAZLocked(this.type)) {
 				tooltip.add(new TranslationTextComponent("tooltip.pvz.card_required_level", getCardRequiredLevel(stack)).withStyle(TextFormatting.RED));

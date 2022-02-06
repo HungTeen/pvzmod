@@ -1,7 +1,7 @@
 package com.hungteen.pvz.common.item.tool;
 
 import com.hungteen.pvz.common.item.PVZItemGroups;
-import com.hungteen.pvz.register.SoundRegister;
+import com.hungteen.pvz.common.misc.sound.SoundRegister;
 import com.hungteen.pvz.utils.EntityUtil;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.player.PlayerEntity;
@@ -19,7 +19,7 @@ import java.util.List;
 public class ZombieDollItem extends Item {
 
 	public ZombieDollItem() {
-		super(new Item.Properties().tab(PVZItemGroups.PVZ_TOOL).stacksTo(1));
+		super(new Item.Properties().tab(PVZItemGroups.PVZ_USEFUL).stacksTo(1));
 	}
 
 	@Override

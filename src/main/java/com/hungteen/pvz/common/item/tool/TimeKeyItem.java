@@ -20,7 +20,7 @@ import java.util.List;
 public class TimeKeyItem extends Item {
 
     public TimeKeyItem() {
-        super(new Properties().tab(PVZItemGroups.PVZ_TOOL));
+        super(new Properties().tab(PVZItemGroups.PVZ_USEFUL));
     }
 
     @Override

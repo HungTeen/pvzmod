@@ -1,5 +1,5 @@
 {
-  "parent": "pvz:adventure/plant",
+  "parent": "pvz:adventure/first_plant",
   "display": {
     "icon": {
       "item": "pvz:hypno_shroom_enjoy_card"

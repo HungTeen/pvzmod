@@ -1,5 +1,5 @@
 {
-  "parent": "pvz:adventure/root",
+  "parent": "pvz:adventure/origin",
   "display": {
     "icon": {
       "item": "pvz:target_arrow"

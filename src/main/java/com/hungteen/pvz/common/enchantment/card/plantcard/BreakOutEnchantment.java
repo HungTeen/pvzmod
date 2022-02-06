@@ -2,6 +2,7 @@ package com.hungteen.pvz.common.enchantment.card.plantcard;
 
 import com.hungteen.pvz.common.enchantment.EnchantmentRegister;
 import com.hungteen.pvz.common.enchantment.PVZEnchantment;
+import com.hungteen.pvz.common.enchantment.PVZEnchantmentTypes;
 import com.hungteen.pvz.common.entity.plant.PVZPlantEntity;
 
 import net.minecraft.enchantment.EnchantmentHelper;
@@ -11,7 +12,7 @@ import net.minecraft.item.ItemStack;
 public class BreakOutEnchantment extends PVZEnchantment{
 
 	public BreakOutEnchantment() {
-		super(Rarity.VERY_RARE, EnchantmentRegister.PLANT_OR_OUTER_CARD, new EquipmentSlotType[] {EquipmentSlotType.MAINHAND});
+		super(Rarity.VERY_RARE, PVZEnchantmentTypes.PLANT_OR_OUTER_CARD, new EquipmentSlotType[] {EquipmentSlotType.MAINHAND});
 		this.isTradeable = false;
 	}
 

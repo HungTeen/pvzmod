@@ -11,6 +11,7 @@ import com.hungteen.pvz.utils.StringUtil;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.entity.LivingRenderer;
+import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemModelsProperties;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
@@ -49,5 +50,9 @@ public class ClientProxy extends CommonProxy{
 			}
 		});
 	}
-	
+
+	@Override
+	public PlayerEntity getPlayer() {
+		return MC.player;
+	}
 }

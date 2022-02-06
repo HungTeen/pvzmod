@@ -6,7 +6,7 @@ import com.google.gson.JsonObject;
 import com.hungteen.pvz.PVZMod;
 import com.hungteen.pvz.common.impl.challenge.reward.ItemRewardComponent;
 import com.hungteen.pvz.common.impl.challenge.reward.UnLockRewardComponent;
-import com.hungteen.pvz.register.RegistryHandler;
+import com.hungteen.pvz.RegistryHandler;
 import com.hungteen.pvz.api.events.RaidEvent;
 import com.hungteen.pvz.api.raid.*;
 import com.hungteen.pvz.common.datapack.ChallengeTypeLoader;

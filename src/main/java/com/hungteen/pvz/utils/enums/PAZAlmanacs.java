@@ -33,7 +33,8 @@ public enum PAZAlmanacs implements IAlmanacEntry {
     ATTACK_RANGE,
     WORK_CD,
     WORK_RANGE,
-    AWAKE_TIME
+    AWAKE_TIME,
+    EFFECT_TIME
     ;
 
     @Override

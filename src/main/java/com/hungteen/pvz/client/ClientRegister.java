@@ -21,8 +21,8 @@ import com.hungteen.pvz.client.particle.bomb.CherryBombParticle;
 import com.hungteen.pvz.client.particle.bomb.PotatoMineParticle;
 import com.hungteen.pvz.common.block.BlockRegister;
 import com.hungteen.pvz.common.item.ItemRegister;
-import com.hungteen.pvz.register.ParticleRegister;
-import com.hungteen.pvz.register.TileEntityRegister;
+import com.hungteen.pvz.client.particle.ParticleRegister;
+import com.hungteen.pvz.common.tileentity.TileEntityRegister;
 import com.mojang.datafixers.util.Pair;
 
 import net.minecraft.client.Minecraft;

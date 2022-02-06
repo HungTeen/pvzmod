@@ -2,7 +2,6 @@ package com.hungteen.pvz.common.container;
 
 import com.hungteen.pvz.common.block.special.SunConverterBlock;
 import com.hungteen.pvz.common.tileentity.SunConverterTileEntity;
-import com.hungteen.pvz.register.ContainerRegister;
 
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.inventory.container.Container;

@@ -5,10 +5,7 @@ import com.hungteen.pvz.api.events.OriginEffectEvent;
 import com.hungteen.pvz.api.types.IEssenceType;
 import com.hungteen.pvz.common.entity.effect.OriginEffectEntity;
 import com.hungteen.pvz.common.impl.EssenceTypes;
-import com.hungteen.pvz.common.entity.EntityRegister;
-import com.hungteen.pvz.utils.EntityUtil;
 import com.hungteen.pvz.utils.enums.Colors;
-
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.SoundType;
@@ -68,12 +65,7 @@ public class OriginBlock extends Block {
             }
 
             if(success){
-                OriginEffectEntity effectEntity = EntityRegister.ORIGIN_EFFECT.get().create(worldIn);
-                final boolean exist = EntityUtil.hasNearBy(worldIn, pos, 5, e -> e instanceof OriginEffectEntity);
-                if(! exist) {// avoid overlapped
-                	EntityUtil.onEntitySpawn(worldIn, effectEntity, pos);
-                    effectEntity.setColor(Colors.GREEN);
-                }
+                OriginEffectEntity.create(worldIn, pos, Colors.GREEN);
             }
         }
     }

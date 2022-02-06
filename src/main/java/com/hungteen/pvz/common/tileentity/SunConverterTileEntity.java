@@ -8,7 +8,6 @@ import com.hungteen.pvz.common.enchantment.misc.SunMendingEnchantment;
 import com.hungteen.pvz.common.entity.misc.drop.SunEntity;
 import com.hungteen.pvz.common.entity.misc.drop.DropEntity.DropStates;
 import com.hungteen.pvz.common.item.tool.plant.SunStorageSaplingItem;
-import com.hungteen.pvz.register.TileEntityRegister;
 import com.hungteen.pvz.utils.MathUtil;
 
 import net.minecraft.block.BlockState;

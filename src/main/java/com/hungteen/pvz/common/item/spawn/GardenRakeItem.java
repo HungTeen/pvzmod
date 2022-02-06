@@ -18,7 +18,7 @@ import net.minecraft.world.server.ServerWorld;
 public class GardenRakeItem extends Item {
 
 	public GardenRakeItem() {
-		super(new Item.Properties().tab(PVZItemGroups.PVZ_TOOL));
+		super(new Item.Properties().tab(PVZItemGroups.PVZ_USEFUL));
 	}
 	
 	@Override

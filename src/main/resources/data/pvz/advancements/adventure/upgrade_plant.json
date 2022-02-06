@@ -1,0 +1,31 @@
+{
+  "display": {
+    "icon": {
+      "item": "pvz:twin_sunflower_enjoy_card"
+    },
+    "title": {
+      "translate": "advancement.pvz.upgrade_plant"
+    },
+    "description": {
+      "translate": "advancement.pvz.upgrade_plant.desc"
+    },
+	"frame":"task",
+    "announce_to_chat": true
+  },
+  "parent":"pvz:adventure/first_plant",
+  "criteria": {
+    "get_origin": {
+      "trigger": "pvz:player_place_paz",
+      "conditions": {
+        "place_type": "upgrade"
+      }
+    }
+  },
+  "requirements": [[
+    "get_origin"
+  ]],
+  "rewards":{
+    "recipes":[
+    ]
+  }
+}

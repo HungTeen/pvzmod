@@ -2,7 +2,7 @@ package com.hungteen.pvz.common.item.tool.plant;
 
 import com.hungteen.pvz.common.capability.CapabilityHandler;
 import com.hungteen.pvz.common.item.PVZItemGroups;
-import com.hungteen.pvz.register.SoundRegister;
+import com.hungteen.pvz.common.misc.sound.SoundRegister;
 import com.hungteen.pvz.utils.PlayerUtil;
 import com.hungteen.pvz.utils.enums.Resources;
 import net.minecraft.client.util.ITooltipFlag;
@@ -29,13 +29,13 @@ public class SunStorageSaplingItem extends Item {
 	public final boolean isOnce;
 
 	public SunStorageSaplingItem(int num) {
-		super(new Item.Properties().tab(PVZItemGroups.PVZ_TOOL).stacksTo(1));
+		super(new Item.Properties().tab(PVZItemGroups.PVZ_USEFUL).stacksTo(1));
 		this.MAX_STORAGE_NUM = num;
 		this.isOnce = false;
 	}
 	
 	public SunStorageSaplingItem() {
-		super(new Item.Properties().tab(PVZItemGroups.PVZ_TOOL).stacksTo(1));
+		super(new Item.Properties().tab(PVZItemGroups.PVZ_USEFUL).stacksTo(1));
 		this.isOnce = true;
 		this.MAX_STORAGE_NUM = 10000;
 	}

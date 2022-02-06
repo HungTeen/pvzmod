@@ -6,7 +6,7 @@ import com.hungteen.pvz.PVZConfig;
 import com.hungteen.pvz.common.datapack.LotteryTypeLoader;
 import com.hungteen.pvz.common.item.PVZItemGroups;
 import com.hungteen.pvz.common.tileentity.SlotMachineTileEntity;
-import com.hungteen.pvz.register.SoundRegister;
+import com.hungteen.pvz.common.misc.sound.SoundRegister;
 import com.hungteen.pvz.utils.PlayerUtil;
 
 import net.minecraft.client.util.ITooltipFlag;
@@ -24,7 +24,7 @@ import net.minecraft.world.World;
 public class JackBoxItem extends Item {
 
 	public JackBoxItem() {
-		super(new Properties().tab(PVZItemGroups.PVZ_TOOL));
+		super(new Properties().tab(PVZItemGroups.PVZ_USEFUL));
 	}
 	
 	@Override

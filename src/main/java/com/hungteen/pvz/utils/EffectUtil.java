@@ -14,4 +14,8 @@ public class EffectUtil {
         return new EffectInstance(effect, time, lvl, false, false);
     }
 
+    public static EffectInstance viewEffect(Effect effect, int time, int lvl){
+        return new EffectInstance(effect, time, lvl, true, true);
+    }
+
 }

@@ -107,7 +107,7 @@ public class BlockRegister {
 		Arrays.asList(
 				STEEL_LADDER, SUN_CONVERTER, FRAGMENT_SPLICE, ESSENCE_ALTAR, CARD_FUSION_TABLE
 		).forEach(block -> {
-			items.register(new BlockItem(block.get(), new Item.Properties().tab(PVZItemGroups.PVZ_TOOL)).setRegistryName(block.get().getRegistryName()));
+			items.register(new BlockItem(block.get(), new Item.Properties().tab(PVZItemGroups.PVZ_USEFUL)).setRegistryName(block.get().getRegistryName()));
 		});
 
 		items.register(new LilyPadItem().setRegistryName(LILY_PAD.get().getRegistryName()));

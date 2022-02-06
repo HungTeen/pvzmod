@@ -10,6 +10,5 @@ public class ClientPlayerResources{
 	/* summon card inventory */
 	public static final int[] mysteryGoods = new int[MysteryShopContainer.MAX_MYSTERY_GOOD];
 	public static int updateGoodTick;
-	public static int lightLevel = 0;
 	
 }

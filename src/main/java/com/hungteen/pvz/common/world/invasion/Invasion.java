@@ -5,7 +5,7 @@ import com.hungteen.pvz.PVZMod;
 import com.hungteen.pvz.common.entity.AbstractPAZEntity;
 import com.hungteen.pvz.common.entity.EntityRegister;
 import com.hungteen.pvz.common.misc.PVZPacketTypes;
-import com.hungteen.pvz.register.SoundRegister;
+import com.hungteen.pvz.common.misc.sound.SoundRegister;
 import com.hungteen.pvz.common.network.PVZPacketHandler;
 import com.hungteen.pvz.common.network.toclient.OtherStatsPacket;
 import com.hungteen.pvz.utils.*;

@@ -4,7 +4,7 @@ import com.hungteen.pvz.PVZMod;
 import com.hungteen.pvz.api.types.ICoolDown;
 import com.hungteen.pvz.api.types.IPlantType;
 import com.hungteen.pvz.api.types.ISkillType;
-import com.hungteen.pvz.common.advancement.trigger.PlayerPlacePlantTrigger;
+import com.hungteen.pvz.common.advancement.trigger.PlayerPlacePAZTrigger;
 import com.hungteen.pvz.common.block.BlockRegister;
 import com.hungteen.pvz.common.enchantment.EnchantmentRegister;
 import com.hungteen.pvz.common.enchantment.card.ImmediateCDEnchantment;
@@ -22,7 +22,7 @@ import com.hungteen.pvz.common.impl.plant.OtherPlants;
 import com.hungteen.pvz.common.impl.plant.PVZPlants;
 import com.hungteen.pvz.common.impl.plant.PlantType;
 import com.hungteen.pvz.common.item.PVZItemGroups;
-import com.hungteen.pvz.register.SoundRegister;
+import com.hungteen.pvz.common.misc.sound.SoundRegister;
 import com.hungteen.pvz.common.potion.EffectRegister;
 import com.hungteen.pvz.utils.ConfigUtil;
 import com.hungteen.pvz.utils.EntityUtil;
@@ -528,8 +528,11 @@ public class PlantCardItem extends SummonCardItem {
 			player.getCooldowns().addCooldown(heldStack.getItem(), 10);
 		}
 		if(player instanceof ServerPlayerEntity) {
-			/* wait for improve */
-		    PlayerPlacePlantTrigger.INSTANCE.trigger((ServerPlayerEntity) player, item.plantType.getId());
+			if(item.plantType.getUpgradeFrom().isPresent()){
+				PlayerPlacePAZTrigger.INSTANCE.trigger((ServerPlayerEntity) player, PlayerPlacePAZTrigger.PlaceTypes.UPGRADE.toString().toLowerCase(), item.plantType.getIdentity());
+			} else{
+				PlayerPlacePAZTrigger.INSTANCE.trigger((ServerPlayerEntity) player, PlayerPlacePAZTrigger.PlaceTypes.PLANT.toString().toLowerCase(), item.plantType.getIdentity());
+			}
 		}
 		player.awardStat(Stats.ITEM_USED.get(item));
 	}

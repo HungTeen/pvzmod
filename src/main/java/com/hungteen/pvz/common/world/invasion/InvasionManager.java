@@ -1,21 +1,15 @@
 package com.hungteen.pvz.common.world.invasion;
 
-import java.util.Collection;
-import java.util.HashSet;
-import java.util.Set;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
-
 import com.hungteen.pvz.PVZConfig;
+import com.hungteen.pvz.common.advancement.trigger.InvasionTrigger;
 import com.hungteen.pvz.common.datapack.InvasionTypeLoader;
 import com.hungteen.pvz.common.event.PVZServerEvents;
 import com.hungteen.pvz.common.event.events.InvasionEvent;
-import com.hungteen.pvz.register.BiomeRegister;
-import com.hungteen.pvz.register.SoundRegister;
+import com.hungteen.pvz.common.world.biome.BiomeRegister;
+import com.hungteen.pvz.common.misc.sound.SoundRegister;
 import com.hungteen.pvz.utils.PlayerUtil;
 import com.hungteen.pvz.utils.StringUtil;
 import com.hungteen.pvz.utils.others.WeightList;
-
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.util.ResourceLocation;
@@ -28,6 +22,12 @@ import net.minecraft.world.World;
 import net.minecraft.world.server.ServerWorld;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.TickEvent;
+
+import java.util.Collection;
+import java.util.HashSet;
+import java.util.Set;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 public class InvasionManager {
 
@@ -93,7 +93,7 @@ public class InvasionManager {
                     final boolean isSafe = (dif < 0);
                     final int count = data.getCountDownDay();
                     if (!isSafe && !data.hasCountDownDay()) {// no interval and not safe then invade happen !
-                        activateZombieAttackEvents(ev.world);
+                        activateInvasionEvents(ev.world);
                     } else if (isSafe) {
                         PlayerUtil.sendMsgToAll(ev.world,
                                 new TranslationTextComponent("invasion.pvz.safe_day", String.format("%.1f", -dif * 1.0 / 24000))
@@ -125,14 +125,14 @@ public class InvasionManager {
      * check and activate attack event, do not activate in peaceful mode.
      * {@link #tick(TickEvent.WorldTickEvent)}
      */
-    public static void activateZombieAttackEvents(World world) {
+    public static void activateInvasionEvents(World world) {
         if (world.getDifficulty() != Difficulty.PEACEFUL && !MinecraftForge.EVENT_BUS.post(new InvasionEvent.InvasionStartEvent(world))) {
             enableInvasion(PlayerUtil.getServerPlayers(world));
         }
     }
 
     /**
-     * {@link #activateZombieAttackEvents(World)}
+     * {@link #activateInvasionEvents(World)}
      */
     public static void enableInvasion(Collection<ServerPlayerEntity> players){
         players.forEach(player -> {
@@ -140,6 +140,7 @@ public class InvasionManager {
             if(! invasion.isRunning()){
                 PlayerUtil.sendMsgTo(player, START);
                 PlayerUtil.playClientSound(player, SoundRegister.ZOMBIE_SIREN.get());
+                InvasionTrigger.INSTANCE.trigger(player);
             }
             invasion.enable();
         });

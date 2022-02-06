@@ -1,15 +1,14 @@
 package com.hungteen.pvz.common.entity.ai.goal.target;
 
-import java.util.EnumSet;
-
 import com.hungteen.pvz.common.potion.EffectRegister;
 import com.hungteen.pvz.utils.EntityUtil;
-
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.MobEntity;
 import net.minecraft.entity.ai.goal.Goal;
 import net.minecraft.util.math.AxisAlignedBB;
+
+import java.util.EnumSet;
 
 public abstract class PVZTargetGoal extends Goal{
 
@@ -74,8 +73,7 @@ public abstract class PVZTargetGoal extends Goal{
 	protected boolean checkOther(LivingEntity entity) {
 		//invisible entity need closer, except it has light eyes effect.
 		if(this.mustSee && entity.isInvisible() && this.mob.distanceToSqr(entity) > 100 
-				&& (! this.mob.hasEffect(EffectRegister.LIGHT_EYE_EFFECT.get()) 
-				|| this.mob.getEffect(EffectRegister.LIGHT_EYE_EFFECT.get()).getAmplifier() == 0)) {
+				&& ! this.mob.hasEffect(EffectRegister.LIGHT_EYE_EFFECT.get())) {
 			return false;
 		}
 		return true;

@@ -20,7 +20,7 @@ import net.minecraftforge.fml.network.NetworkHooks;
 public class AlmanacItem extends Item{
 
 	public AlmanacItem() {
-		super(new Properties().tab(PVZItemGroups.PVZ_TOOL).stacksTo(1));
+		super(new Properties().tab(PVZItemGroups.PVZ_USEFUL).stacksTo(1));
 	}
 
 	@Override

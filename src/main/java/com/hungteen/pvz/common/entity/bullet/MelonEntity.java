@@ -4,7 +4,7 @@ import java.util.Optional;
 
 import com.hungteen.pvz.common.entity.plant.ice.WinterMelonEntity;
 import com.hungteen.pvz.common.misc.PVZEntityDamageSource;
-import com.hungteen.pvz.register.SoundRegister;
+import com.hungteen.pvz.common.misc.sound.SoundRegister;
 import com.hungteen.pvz.common.entity.EntityRegister;
 import com.hungteen.pvz.utils.EntityUtil;
 

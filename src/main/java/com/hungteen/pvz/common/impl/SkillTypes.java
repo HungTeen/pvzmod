@@ -119,6 +119,12 @@ public class SkillTypes {
             Arrays.asList(3, 4)
     );
 
+    //plantern
+    public static final ISkillType NIGHT_VISION = new SkillType("night_vision",
+            ArrayUtil.getAverageArray(3, 0F, 1200F),
+            Arrays.asList(2, 4)
+    );
+
     //cactus
     public static final ISkillType MORE_THORN_DAMAGE = new SkillType("more_thorn_damage",
             ArrayUtil.getAverageArray(6, 2F, 3.5F),

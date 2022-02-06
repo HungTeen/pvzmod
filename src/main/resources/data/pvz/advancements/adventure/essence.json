@@ -1,0 +1,33 @@
+{
+  "display": {
+    "icon": {
+      "item": "pvz:origin_essence"
+    },
+    "title": {
+      "translate": "advancement.pvz.essence"
+    },
+    "description": {
+      "translate": "advancement.pvz.essence.desc"
+    },
+	"frame":"goal",
+    "announce_to_chat": true
+  },
+  "parent":"pvz:adventure/root",
+  "criteria": {
+    "get_origin": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items":[
+		  {
+		    "item":"pvz:origin_essence"
+		  }
+		]
+      }
+    }
+  },
+  "requirements": [[
+    "get_origin"
+  ]],
+  "rewards":{
+  }
+}

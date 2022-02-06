@@ -51,7 +51,7 @@ public class BowlingGloveItem extends Item {
 	}
 
 	public BowlingGloveItem() {
-		super(new Item.Properties().tab(PVZItemGroups.PVZ_TOOL).rarity(Rarity.UNCOMMON).defaultDurability(666).setISTER(() -> BowlingGloveISTER::new));
+		super(new Item.Properties().tab(PVZItemGroups.PVZ_USEFUL).rarity(Rarity.UNCOMMON).defaultDurability(666).setISTER(() -> BowlingGloveISTER::new));
 	}
 
 	@Override

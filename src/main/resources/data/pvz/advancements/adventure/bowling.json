@@ -1,5 +1,5 @@
 {
-  "parent": "pvz:adventure/plant",
+  "parent": "pvz:adventure/origin",
   "display": {
     "icon": {
       "item": "pvz:bowling_glove"

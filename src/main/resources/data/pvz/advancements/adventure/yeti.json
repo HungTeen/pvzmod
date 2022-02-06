@@ -1,5 +1,5 @@
 {
-  "parent": "pvz:adventure/root",
+  "parent": "pvz:adventure/invasion",
   "display": {
     "icon": {
       "item": "minecraft:snow_block"

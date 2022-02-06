@@ -34,7 +34,7 @@ public class CardPackItem extends Item {
 
 	public static final int SLOT_NUM = 36;
 	public CardPackItem() {
-		super(new Properties().tab(PVZItemGroups.PVZ_TOOL).stacksTo(1));
+		super(new Properties().tab(PVZItemGroups.PVZ_USEFUL).stacksTo(1));
 	}
 
 	@Nonnull

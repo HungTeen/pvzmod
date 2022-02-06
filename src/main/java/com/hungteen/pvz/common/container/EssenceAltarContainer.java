@@ -6,7 +6,6 @@ import com.hungteen.pvz.common.impl.SkillTypes;
 import com.hungteen.pvz.common.item.material.EssenceItem;
 import com.hungteen.pvz.common.item.spawn.card.SummonCardItem;
 import com.hungteen.pvz.common.tileentity.EssenceAltarTileEntity;
-import com.hungteen.pvz.register.ContainerRegister;
 import com.hungteen.pvz.utils.EntityUtil;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.inventory.container.Slot;

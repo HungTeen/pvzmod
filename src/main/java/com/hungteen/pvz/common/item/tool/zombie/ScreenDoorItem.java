@@ -15,7 +15,7 @@ import java.util.List;
 public class ScreenDoorItem extends ShieldItem{
 
 	public ScreenDoorItem() {
-		super(new Item.Properties().stacksTo(1).durability(1600).tab(PVZItemGroups.PVZ_TOOL));
+		super(new Item.Properties().stacksTo(1).durability(1600).tab(PVZItemGroups.PVZ_USEFUL));
 	}
 
 	@Override

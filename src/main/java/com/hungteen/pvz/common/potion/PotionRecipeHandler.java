@@ -1,7 +1,6 @@
 package com.hungteen.pvz.common.potion;
 
 import com.hungteen.pvz.common.item.ItemRegister;
-import com.hungteen.pvz.register.PotionRegister;
 
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;

@@ -1,13 +1,13 @@
 package com.hungteen.pvz.client.render.entity.zombie;
 
-import com.hungteen.pvz.client.cache.ClientPlayerResources;
+import com.hungteen.pvz.PVZMod;
 import com.hungteen.pvz.client.render.entity.PVZCreatureRender;
 import com.hungteen.pvz.client.render.layer.fullskin.CharmLayer;
 import com.hungteen.pvz.client.render.layer.fullskin.EnergyLayer;
 import com.hungteen.pvz.client.render.layer.fullskin.SunLayer;
 import com.hungteen.pvz.client.render.layer.fullskin.SunLightLayer;
 import com.hungteen.pvz.common.entity.zombie.PVZZombieEntity;
-
+import com.hungteen.pvz.common.potion.EffectRegister;
 import net.minecraft.client.renderer.entity.EntityRendererManager;
 import net.minecraft.client.renderer.entity.model.EntityModel;
 import net.minecraft.util.ResourceLocation;
@@ -24,7 +24,7 @@ public abstract class PVZZombieRender <T extends PVZZombieEntity> extends PVZCre
 
 	@Override
 	protected boolean isBodyVisible(T livingEntityIn) {
-		return super.isBodyVisible(livingEntityIn) || ClientPlayerResources.lightLevel > 1;
+		return super.isBodyVisible(livingEntityIn) || PVZMod.PROXY.getPlayer().hasEffect(EffectRegister.LIGHT_EYE_EFFECT.get());
 	}
 	
 	protected void addZombieLayers() {

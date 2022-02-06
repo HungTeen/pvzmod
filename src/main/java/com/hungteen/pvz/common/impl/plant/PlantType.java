@@ -48,7 +48,7 @@ public abstract class PlantType extends PAZType implements IPlantType {
 	private static final Map<EntityType<? extends CreatureEntity>, IPlantType> BY_ENTITY_TYPE = new HashMap<>();
 	/* other data */
 	protected IEssenceType plantEssence = EssenceTypes.APPEASE;
-	protected IPlantModel<? extends IPlantEntity> plantModel;
+	protected Supplier<IPlantModel<? extends IPlantEntity>> plantModelSupplier;
 	protected Supplier<IPlantType> upgradeFrom;
 	protected Supplier<IPlantType> upgradeTo;
 	protected Supplier<Block> plantBlock;
@@ -73,7 +73,7 @@ public abstract class PlantType extends PAZType implements IPlantType {
 		this.skills = features.skillTypes;
 		// unique.
 		this.plantEssence = features.plantEssence;
-		this.plantModel = features.plantModel;
+		this.plantModelSupplier = features.plantModelSupplier;
 		this.upgradeFrom = features.upgradeFrom;
 		this.upgradeTo = features.upgradeTo;
 		this.plantBlock = features.plantBlock;
@@ -93,7 +93,7 @@ public abstract class PlantType extends PAZType implements IPlantType {
 	@Override
 	@OnlyIn(Dist.CLIENT)
 	public Optional<IPlantModel<? extends IPlantEntity>> getPlantModel() {
-		return Optional.ofNullable(this.plantModel);
+		return Optional.ofNullable(this.plantModelSupplier.get());
 	}
 
 	@Override
@@ -222,7 +222,7 @@ public abstract class PlantType extends PAZType implements IPlantType {
 		protected List<ISkillType> skillTypes = new ArrayList<>();
 		//unique.
 		protected IEssenceType plantEssence = EssenceTypes.APPEASE;
-		protected IPlantModel<? extends IPlantEntity> plantModel;
+		protected Supplier<IPlantModel<? extends IPlantEntity>> plantModelSupplier;
 		protected Supplier<IPlantType> upgradeFrom;
 		protected Supplier<IPlantType> upgradeTo;
 		protected Supplier<Block> plantBlock;
@@ -297,7 +297,7 @@ public abstract class PlantType extends PAZType implements IPlantType {
 		}
 
 		public PlantFeatures plantModel(Supplier<Callable<IPlantModel<? extends IPlantEntity>>> sup) {
-			this.plantModel = DistExecutor.unsafeCallWhenOn(Dist.CLIENT, sup);
+			this.plantModelSupplier = () -> DistExecutor.unsafeCallWhenOn(Dist.CLIENT, sup);
 			return this;
 		}
 

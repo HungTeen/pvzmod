@@ -1,14 +1,13 @@
 package com.hungteen.pvz.common.enchantment.misc;
 
-import com.hungteen.pvz.common.enchantment.EnchantmentRegister;
 import com.hungteen.pvz.common.enchantment.PVZEnchantment;
-
+import com.hungteen.pvz.common.enchantment.PVZEnchantmentTypes;
 import net.minecraft.inventory.EquipmentSlotType;
 
 public class SunShovelEnchantment extends PVZEnchantment {
 
 	public SunShovelEnchantment() {
-		super(Rarity.RARE, EnchantmentRegister.SHOVEL, new EquipmentSlotType[] { EquipmentSlotType.OFFHAND, EquipmentSlotType.MAINHAND });
+		super(Rarity.RARE, PVZEnchantmentTypes.SHOVEL, new EquipmentSlotType[] { EquipmentSlotType.OFFHAND, EquipmentSlotType.MAINHAND });
 		this.isTradeable = false;
 	}
 

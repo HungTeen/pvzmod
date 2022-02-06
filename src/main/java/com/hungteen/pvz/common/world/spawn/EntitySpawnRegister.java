@@ -3,7 +3,7 @@ package com.hungteen.pvz.common.world.spawn;
 import com.hungteen.pvz.PVZConfig;
 import com.hungteen.pvz.PVZMod;
 import com.hungteen.pvz.common.entity.misc.drop.SunEntity;
-import com.hungteen.pvz.register.BiomeRegister;
+import com.hungteen.pvz.common.world.biome.BiomeRegister;
 import com.hungteen.pvz.common.entity.EntityRegister;
 import com.hungteen.pvz.utils.BiomeUtil;
 
@@ -96,92 +96,24 @@ public class EntitySpawnRegister {
 	public static void addEntitySpawnToBiome(BiomeLoadingEvent event, RegistryKey<Biome> biomeKey) {
 		if(BiomeUtil.isOverworld(biomeKey)) {
 			if(BiomeUtil.isLand(biomeKey)) {
-				addSpawnToOverworldLand(event);
 				event.getSpawns().addSpawn(EntityClassification.AMBIENT, new Spawners(EntityRegister.SUN.get(), 2 * PVZConfig.COMMON_CONFIG.WorldSettings.SunSpawnWeight.get(), 1, 1));
 				event.getSpawns().addSpawn(EntityClassification.MONSTER, new Spawners(EntityRegister.GIGA_TOMB_STONE.get(), PVZConfig.COMMON_CONFIG.WorldSettings.GigaTombStoneSpawnWeight.get(), 1, 1));
 			}
 			if(BiomeUtil.isDesert(biomeKey)) {
 			}
 			if(BiomeUtil.isOcean(biomeKey)) {
-				addSpawnToOverworldOcean(event);
 //				event.getSpawns().addSpawn(EntityClassification.CREATURE, new Spawners(EntityRegister.FOODIE_ZOMBIE.get(), PVZConfig.COMMON_CONFIG.WorldSettings.EntitySpawnSettings.FoodieZombieSpawnWeight.get(), 1, 1));
 			}
 			if(BiomeUtil.isPlain(biomeKey)) {
 			}
 			if(BiomeUtil.isConiferous(biomeKey)) {
 			}
-			addSpawnToOverworld(event);
 		}
 		if(BiomeUtil.isNether(biomeKey)) {
 			event.getSpawns().addSpawn(EntityClassification.MONSTER, new Spawners(EntityRegister.LAVA_ZOMBIE.get(), PVZConfig.COMMON_CONFIG.WorldSettings.LavaZombieSpawnWeight.get(), 1, 1));
 		}
 		if(BiomeUtil.isTheEnd(biomeKey)) {
 		}
-	}
-	
-	private static void addSpawnToOverworldLand(BiomeLoadingEvent event) {
-		//common zombie spawn
-//		final int p = ConfigUtil.getSpawnMultiple();
-//		EntityClassification ee = EntityClassification.MONSTER;
-//		
-//		event.getSpawns().addSpawn(ee, new Spawners(EntityRegister.YETI_ZOMBIE.get(), 3 * PVZConfig.COMMON_CONFIG.WorldSettings.YetiZombieSpawnWeight.get(), 1, 1));
-//		
-//		event.getSpawns().addSpawn(ee, new Spawners(EntityRegister.NORMAL_ZOMBIE.get(), 100 * p, 1, 2));
-//		event.getSpawns().addSpawn(ee, new Spawners(EntityRegister.CONEHEAD_ZOMBIE.get(), 50 * p, 1, 1));
-//		event.getSpawns().addSpawn(ee, new Spawners(EntityRegister.POLE_ZOMBIE.get(), 30 * p, 1, 1));
-//		event.getSpawns().addSpawn(ee, new Spawners(EntityRegister.BUCKETHEAD_ZOMBIE.get(), 15 * p, 1, 1));
-//
-//		event.getSpawns().addSpawn(ee, new Spawners(EntityRegister.SNORKEL_ZOMBIE.get(), 70 * p, 1, 2));
-//		event.getSpawns().addSpawn(ee, new Spawners(EntityRegister.ZOMBONI.get(), 30 * p, 1, 1));
-//		event.getSpawns().addSpawn(ee, new Spawners(EntityRegister.BOBSLE_TEAM.get(), 25 * p, 1, 1));
-//		event.getSpawns().addSpawn(ee, new Spawners(EntityRegister.LAVA_ZOMBIE.get(), 8 * p, 1, 1));
-//		
-//		event.getSpawns().addSpawn(ee, new Spawners(EntityRegister.PUMPKIN_ZOMBIE.get(), 30 * p, 1, 1));
-//		event.getSpawns().addSpawn(ee, new Spawners(EntityRegister.TRICK_ZOMBIE.get(), 40 * p, 1, 2));
-//
-//		event.getSpawns().addSpawn(ee, new Spawners(EntityRegister.NEWSPAPER_ZOMBIE.get(), 60 * p, 1, 1));
-//		event.getSpawns().addSpawn(ee, new Spawners(EntityRegister.OLD_ZOMBIE.get(), 35 * p, 1, 1));
-//		event.getSpawns().addSpawn(ee, new Spawners(EntityRegister.SUNDAY_EDITION_ZOMBIE.get(), 5 * p, 1, 1));
-//		
-//		event.getSpawns().addSpawn(ee, new Spawners(EntityRegister.SCREENDOOR_ZOMBIE.get(), 35 * p, 1, 1));
-//		event.getSpawns().addSpawn(ee, new Spawners(EntityRegister.FOOTBALL_ZOMBIE.get(), 20 * p, 1, 1));
-//		event.getSpawns().addSpawn(ee, new Spawners(EntityRegister.DANCING_ZOMBIE.get(), 15 * p, 1, 1));
-//		event.getSpawns().addSpawn(ee, new Spawners(EntityRegister.GIGA_FOOTBALL_ZOMBIE.get(), 5 * p, 1, 1));
-//		
-//		event.getSpawns().addSpawn(ee, new Spawners(EntityRegister.JACK_IN_BOX_ZOMBIE.get(), 25 * p, 1, 1));
-//		event.getSpawns().addSpawn(ee, new Spawners(EntityRegister.BALLOON_ZOMBIE.get(), 30 * p, 1, 1));
-//		event.getSpawns().addSpawn(ee, new Spawners(EntityRegister.DIGGER_ZOMBIE.get(), 20 * p, 1, 1));
-//		event.getSpawns().addSpawn(ee, new Spawners(EntityRegister.POGO_ZOMBIE.get(), 30 * p, 1, 1));
-//		
-//		event.getSpawns().addSpawn(ee, new Spawners(EntityRegister.BUNGEE_ZOMBIE.get(), 20 * p, 1, 1));
-//		event.getSpawns().addSpawn(ee, new Spawners(EntityRegister.LADDER_ZOMBIE.get(), 25 * p, 1, 1));
-//		event.getSpawns().addSpawn(ee, new Spawners(EntityRegister.CATAPULT_ZOMBIE.get(), 25 * p, 1, 1));
-//		event.getSpawns().addSpawn(ee, new Spawners(EntityRegister.GARGANTUAR.get(), 18 * p, 1, 1));
-//		event.getSpawns().addSpawn(ee, new Spawners(EntityRegister.GIGA_GARGANTUAR.get(), 5 * p, 1, 1));
-//		
-//		event.getSpawns().addSpawn(ee, new Spawners(EntityRegister.PEASHOOTER_ZOMBIE.get(), 60 * p, 1, 1));
-//		event.getSpawns().addSpawn(ee, new Spawners(EntityRegister.WALLNUT_ZOMBIE.get(), 30 * p, 1, 1));
-//		event.getSpawns().addSpawn(ee, new Spawners(EntityRegister.GATLINGPEA_ZOMBIE.get(), 15 * p, 1, 1));
-//		event.getSpawns().addSpawn(ee, new Spawners(EntityRegister.TALLNUT_ZOMBIE.get(), 20 * p, 1, 1));
-//		event.getSpawns().addSpawn(ee, new Spawners(EntityRegister.SQUASH_ZOMBIE.get(), 15 * p, 1, 1));
-//		event.getSpawns().addSpawn(ee, new Spawners(EntityRegister.JALAPENO_ZOMBIE.get(), 10 * p, 1, 1));
-	}
-	
-	private static void addSpawnToOverworld(BiomeLoadingEvent event) {
-//		//common zombie spawn
-//		final int p = ConfigUtil.getSpawnMultiple();
-//		EntityClassification ee = EntityClassification.MONSTER;
-//				
-//		event.getSpawns().addSpawn(ee, new Spawners(EntityRegister.SNORKEL_ZOMBIE.get(), 70 * p, 1, 2));
-//		event.getSpawns().addSpawn(ee, new Spawners(EntityRegister.LAVA_ZOMBIE.get(), 8 * p, 1, 1));
-	}
-	
-	private static void addSpawnToOverworldOcean(BiomeLoadingEvent event) {
-//		//common zombie spawn
-//		final int p = ConfigUtil.getSpawnMultiple();
-//		EntityClassification ee = EntityClassification.MONSTER;
-//		
-//		event.getSpawns().addSpawn(ee, new Spawners(EntityRegister.DOLPHIN_RIDER.get(), 15 * p, 1, 1));
 	}
 
 }

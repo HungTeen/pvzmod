@@ -22,7 +22,7 @@ import java.util.List;
 public class OriginShovelItem extends ShovelItem {
 
     public OriginShovelItem() {
-        super(PVZItemTier.ORIGIN, 1.5F, -3.0F, new Item.Properties().tab(PVZItemGroups.PVZ_TOOL));
+        super(PVZItemTier.ORIGIN, 1.5F, -3.0F, new Item.Properties().tab(PVZItemGroups.PVZ_USEFUL));
     }
 
     @Override

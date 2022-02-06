@@ -1,8 +1,8 @@
 package com.hungteen.pvz.common.container.shop;
 
 import com.hungteen.pvz.common.capability.CapabilityHandler;
-import com.hungteen.pvz.register.SoundRegister;
-import com.hungteen.pvz.register.ContainerRegister;
+import com.hungteen.pvz.common.misc.sound.SoundRegister;
+import com.hungteen.pvz.common.container.ContainerRegister;
 import com.hungteen.pvz.utils.PlayerUtil;
 import com.hungteen.pvz.utils.TradeUtil;
 import com.hungteen.pvz.utils.TradeUtil.DaveGoods;

@@ -1,5 +1,6 @@
 package com.hungteen.pvz.common.item;
 
+import com.hungteen.pvz.common.enchantment.PVZEnchantmentTypes;
 import net.minecraft.item.ItemGroup;
 import net.minecraft.item.ItemStack;
 
@@ -10,7 +11,8 @@ public class PVZItemGroups {
 		public ItemStack makeIcon() {
 			return new ItemStack(ItemRegister.PEA.get());
 		}
-	};
+
+	}.setEnchantmentCategories(PVZEnchantmentTypes.getPVZEnchantmentTypes());
 	
 	public static final ItemGroup PVZ_PLANT_CARD = new ItemGroup("pvz_plant_card") {
 		@Override
@@ -19,7 +21,7 @@ public class PVZItemGroups {
 		}
 	};
 	
-	public static final ItemGroup PVZ_TOOL = new ItemGroup("pvz_tool") {
+	public static final ItemGroup PVZ_USEFUL = new ItemGroup("pvz_useful") {
 		@Override
 		public ItemStack makeIcon() {
 			return new ItemStack(ItemRegister.PEA_GUN.get());

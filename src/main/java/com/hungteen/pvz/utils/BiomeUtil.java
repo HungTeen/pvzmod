@@ -1,13 +1,6 @@
 package com.hungteen.pvz.utils;
 
-import java.lang.reflect.InvocationTargetException;
-import java.lang.reflect.Method;
-import java.util.HashSet;
-import java.util.Objects;
-import java.util.Set;
-
-import com.hungteen.pvz.register.BiomeRegister;
-
+import com.hungteen.pvz.common.world.biome.BiomeRegister;
 import net.minecraft.util.RegistryKey;
 import net.minecraft.world.biome.Biome;
 import net.minecraft.world.biome.BiomeMaker;
@@ -15,6 +8,12 @@ import net.minecraftforge.common.BiomeDictionary;
 import net.minecraftforge.common.BiomeDictionary.Type;
 import net.minecraftforge.fml.common.ObfuscationReflectionHelper;
 import net.minecraftforge.registries.ForgeRegistries;
+
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
+import java.util.HashSet;
+import java.util.Objects;
+import java.util.Set;
 
 public class BiomeUtil {
 

@@ -1,35 +1,30 @@
 package com.hungteen.pvz.common.entity.plant.flame;
 
 import com.hungteen.pvz.api.interfaces.IAlmanacEntry;
-import com.hungteen.pvz.api.interfaces.ILightEffect;
 import com.hungteen.pvz.api.types.IPlantType;
+import com.hungteen.pvz.client.particle.ParticleRegister;
 import com.hungteen.pvz.common.entity.bullet.itembullet.PeaEntity;
 import com.hungteen.pvz.common.entity.plant.PVZPlantEntity;
 import com.hungteen.pvz.common.impl.SkillTypes;
 import com.hungteen.pvz.common.impl.plant.PVZPlants;
-import com.hungteen.pvz.common.potion.EffectRegister;
-import com.hungteen.pvz.register.ParticleRegister;
 import com.hungteen.pvz.utils.EntityUtil;
 import com.hungteen.pvz.utils.WorldUtil;
-
 import com.hungteen.pvz.utils.enums.PAZAlmanacs;
 import com.mojang.datafixers.util.Pair;
 import net.minecraft.entity.CreatureEntity;
 import net.minecraft.entity.EntitySize;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.Pose;
-import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.network.datasync.DataParameter;
 import net.minecraft.network.datasync.DataSerializers;
 import net.minecraft.network.datasync.EntityDataManager;
 import net.minecraft.particles.IParticleData;
-import net.minecraft.potion.EffectInstance;
 import net.minecraft.world.World;
 
 import java.util.List;
 
-public class TorchWoodEntity extends PVZPlantEntity implements ILightEffect {
+public class TorchWoodEntity extends PVZPlantEntity {
 
 	private static final DataParameter<Integer> FLAME_TYPE = EntityDataManager.defineId(TorchWoodEntity.class, DataSerializers.INT);
 	
@@ -47,9 +42,6 @@ public class TorchWoodEntity extends PVZPlantEntity implements ILightEffect {
 	protected void normalPlantTick() {
 		super.normalPlantTick();
 		if(! level.isClientSide) {
-			if(this.tickCount % 40 == 0) {
-				this.giveLightToPlayers(10);
-			}
 			this.heatPeas();
 		}else {
 			IParticleData particle = ParticleRegister.YELLOW_FLAME.get();
@@ -68,19 +60,6 @@ public class TorchWoodEntity extends PVZPlantEntity implements ILightEffect {
 		level.getEntitiesOfClass(PeaEntity.class, EntityUtil.getEntityAABB(this, range, range)).forEach(pea -> {
 			pea.heatBy(this);
 		});
-	}
-	
-	private void giveLightToPlayers(float range) {
-		level.getEntitiesOfClass(PlayerEntity.class, EntityUtil.getEntityAABB(this, range, range), (player) -> {
-			return ! EntityUtil.canTargetEntity(this, player);
-		}).forEach((player) -> {
-			player.addEffect(getLightEyeEffect());
-		});
-	}
-	
-	@Override
-	public EffectInstance getLightEyeEffect() {
-		return new EffectInstance(EffectRegister.LIGHT_EYE_EFFECT.get(), 100, 0, false, false);
 	}
 	
 	@Override
@@ -149,7 +128,7 @@ public class TorchWoodEntity extends PVZPlantEntity implements ILightEffect {
 		return PVZPlants.TORCH_WOOD;
 	}
 	
-	public static enum FlameTypes{
+	public enum FlameTypes{
 		YELLOW,
 		BLUE,
 		PURPLE

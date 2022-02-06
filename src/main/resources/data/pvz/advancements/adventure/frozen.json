@@ -1,5 +1,5 @@
 {
-  "parent": "pvz:adventure/plant",
+  "parent": "pvz:adventure/first_plant",
   "display": {
     "icon": {
       "item": "pvz:ice_shroom_enjoy_card"
@@ -24,7 +24,7 @@
         },
         "amount":{
           "amount":{
-            "min": 20
+            "min": 25
           }
         }
       }

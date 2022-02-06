@@ -11,12 +11,7 @@ import com.hungteen.pvz.common.enchantment.misc.EnergyTransferEnchantment;
 import com.hungteen.pvz.common.enchantment.misc.RangeReachEnchantment;
 import com.hungteen.pvz.common.enchantment.misc.SunMendingEnchantment;
 import com.hungteen.pvz.common.enchantment.misc.SunShovelEnchantment;
-import com.hungteen.pvz.common.item.spawn.card.PlantCardItem;
-import com.hungteen.pvz.common.item.spawn.card.SummonCardItem;
-import com.hungteen.pvz.common.misc.tag.PVZItemTags;
 import net.minecraft.enchantment.Enchantment;
-import net.minecraft.enchantment.EnchantmentType;
-import net.minecraft.item.ShovelItem;
 import net.minecraftforge.fml.RegistryObject;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
@@ -35,42 +30,5 @@ public class EnchantmentRegister {
 	public static final RegistryObject<Enchantment> IMMEDIATE_CD = ENCHANTMENTS.register("immediate_cd", ImmediateCDEnchantment::new);
 	public static final RegistryObject<Enchantment> RANGE_REACH = ENCHANTMENTS.register("range_reach", RangeReachEnchantment::new);
 	public static final RegistryObject<Enchantment> CARD_HEAL = ENCHANTMENTS.register("bandage", BandageEnchantment::new);
-
-	public static final EnchantmentType SUMMON_CARD = EnchantmentType.create("summon_card", (item) -> {
-		return item instanceof SummonCardItem;
-	});
-
-	public static final EnchantmentType ENTITY_CARD = EnchantmentType.create("entity_card", (item) -> {
-		if(item instanceof PlantCardItem) {
-			return ! ((PlantCardItem) item).plantType.getPlantBlock().isPresent() && ! ((PlantCardItem) item).plantType.isOuterPlant();
-		}
-		return false;
-	});
-	
-	public static final EnchantmentType PLANT_OR_OUTER_CARD = EnchantmentType.create("plant_or_outer_card", (item) -> {
-		if(item instanceof PlantCardItem) {
-			return ! ((PlantCardItem) item).plantType.getPlantBlock().isPresent();
-		}
-		return false;
-	});
-	
-	public static final EnchantmentType NO_OUTER_PLANT_CARD = EnchantmentType.create("no_outer_plant_card", (item) -> {
-		if(item instanceof PlantCardItem) {
-			return ! ((PlantCardItem) item).plantType.isOuterPlant();
-		}
-		return false;
-	});
-	
-	public static final EnchantmentType PLANT_CARD = EnchantmentType.create("plant_card", (item) -> {
-		return item instanceof PlantCardItem;
-	});
-	
-	public static final EnchantmentType SHOVEL = EnchantmentType.create("shovel", (item) -> {
-		return item instanceof ShovelItem;
-	});
-
-	public static final EnchantmentType REACH = EnchantmentType.create("reach", (item) -> {
-		return item.is(PVZItemTags.REACH_ITEMS);
-	});
 	
 }

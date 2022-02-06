@@ -6,10 +6,7 @@ import com.hungteen.pvz.common.block.BlockRegister;
 import com.hungteen.pvz.common.entity.EntityRegister;
 import com.hungteen.pvz.common.impl.EssenceTypes;
 import com.hungteen.pvz.common.impl.RankTypes;
-import com.hungteen.pvz.common.impl.plant.CustomPlants;
-import com.hungteen.pvz.common.impl.plant.MemePlants;
-import com.hungteen.pvz.common.impl.plant.OtherPlants;
-import com.hungteen.pvz.common.impl.plant.PVZPlants;
+import com.hungteen.pvz.common.impl.plant.*;
 import com.hungteen.pvz.common.item.armor.*;
 import com.hungteen.pvz.common.item.display.AlmanacItem;
 import com.hungteen.pvz.common.item.display.ChallengeEnvelopeItem;
@@ -29,7 +26,7 @@ import com.hungteen.pvz.common.item.tool.mc.OriginShovelItem;
 import com.hungteen.pvz.common.item.tool.mc.OriginSwordItem;
 import com.hungteen.pvz.common.item.tool.plant.*;
 import com.hungteen.pvz.common.item.tool.zombie.*;
-import com.hungteen.pvz.register.SoundRegister;
+import com.hungteen.pvz.common.misc.sound.SoundRegister;
 import com.hungteen.pvz.utils.enums.Colors;
 import com.mojang.datafixers.util.Pair;
 import net.minecraft.entity.EntityType;
@@ -181,13 +178,13 @@ public class ItemRegister {
     public static final RegistryObject<Item> JACK_BOX = ITEMS.register("jack_box", JackBoxItem::new);
     public static final RegistryObject<Item> BALLOON = ITEMS.register("balloon", BalloonItem::new);
     public static final RegistryObject<Item> TARGET_ARROW = ITEMS.register("target_arrow", TargetArrowItem::new);
-    public static final RegistryObject<Item> WARNING_SIGN = ITEMS.register("warning_sign", () -> new SwordItem(ItemTier.IRON, 6, - 2.4F, new Item.Properties().tab(PVZItemGroups.PVZ_TOOL).stacksTo(1)));
-    public static final RegistryObject<Item> POLE = ITEMS.register("pole", () -> new AxeItem(ItemTier.IRON, 8, - 3F, new Item.Properties().tab(PVZItemGroups.PVZ_TOOL).stacksTo(1)));
+    public static final RegistryObject<Item> WARNING_SIGN = ITEMS.register("warning_sign", () -> new SwordItem(ItemTier.IRON, 6, - 2.4F, new Item.Properties().tab(PVZItemGroups.PVZ_USEFUL).stacksTo(1)));
+    public static final RegistryObject<Item> POLE = ITEMS.register("pole", () -> new AxeItem(ItemTier.IRON, 8, - 3F, new Item.Properties().tab(PVZItemGroups.PVZ_USEFUL).stacksTo(1)));
     public static final RegistryObject<Item> ORIGIN_SWORD = ITEMS.register("origin_sword", OriginSwordItem::new);
   	public static final RegistryObject<Item> ORIGIN_SHOVEL = ITEMS.register("origin_shovel", OriginShovelItem::new);
-  	public static final RegistryObject<Item> ORIGIN_PICKAXE = ITEMS.register("origin_pickaxe", () -> new PickaxeItem(PVZItemTier.ORIGIN, 1, -2.8F, new Item.Properties().tab(PVZItemGroups.PVZ_TOOL)));
-  	public static final RegistryObject<Item> ORIGIN_AXE = ITEMS.register("origin_axe", () -> new AxeItem(PVZItemTier.ORIGIN, 6.0F, -3.1F, new Item.Properties().tab(PVZItemGroups.PVZ_TOOL)));
-  	public static final RegistryObject<Item> ORIGIN_HOE = ITEMS.register("origin_hoe", () -> new HoeItem(PVZItemTier.ORIGIN, -2, -1.0F, new Item.Properties().tab(PVZItemGroups.PVZ_TOOL)));
+  	public static final RegistryObject<Item> ORIGIN_PICKAXE = ITEMS.register("origin_pickaxe", () -> new PickaxeItem(PVZItemTier.ORIGIN, 1, -2.8F, new Item.Properties().tab(PVZItemGroups.PVZ_USEFUL)));
+  	public static final RegistryObject<Item> ORIGIN_AXE = ITEMS.register("origin_axe", () -> new AxeItem(PVZItemTier.ORIGIN, 6.0F, -3.1F, new Item.Properties().tab(PVZItemGroups.PVZ_USEFUL)));
+  	public static final RegistryObject<Item> ORIGIN_HOE = ITEMS.register("origin_hoe", () -> new HoeItem(PVZItemTier.ORIGIN, -2, -1.0F, new Item.Properties().tab(PVZItemGroups.PVZ_USEFUL)));
     public static final RegistryObject<Item> PEA_GUN = ITEMS.register("pea_gun", PeaGunItem::new);
   	public static final RegistryObject<Item> RESOURCE_COLLECTOR = ITEMS.register("resource_collector", ResourceCollectorItem::new);
   	public static final RegistryObject<Item> BOWLING_GLOVE = ITEMS.register("bowling_glove", BowlingGloveItem::new);
@@ -221,7 +218,7 @@ public class ItemRegister {
     public static final RegistryObject<Item> ZOMBIE_ON_YOUR_LAWN = ITEMS.register("zombie_on_your_lawn", () -> {return
             new MusicDiscItem(0, () -> {
                 return SoundRegister.ZOMBIE_ON_YOUR_LAWN.get();
-            }, new Item.Properties().stacksTo(1).tab(PVZItemGroups.PVZ_TOOL).rarity(Rarity.RARE));
+            }, new Item.Properties().stacksTo(1).tab(PVZItemGroups.PVZ_USEFUL).rarity(Rarity.RARE));
     });
 
   	/*

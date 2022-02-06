@@ -5,7 +5,7 @@ import com.hungteen.pvz.common.enchantment.EnchantmentRegister;
 import com.hungteen.pvz.common.enchantment.misc.SunMendingEnchantment;
 import com.hungteen.pvz.common.entity.plant.light.SunFlowerEntity;
 import com.hungteen.pvz.common.event.events.PlayerCollectDropEvent;
-import com.hungteen.pvz.register.SoundRegister;
+import com.hungteen.pvz.common.misc.sound.SoundRegister;
 import com.hungteen.pvz.common.world.invasion.MissionManager;
 import com.hungteen.pvz.common.entity.EntityRegister;
 import com.hungteen.pvz.utils.EntityUtil;

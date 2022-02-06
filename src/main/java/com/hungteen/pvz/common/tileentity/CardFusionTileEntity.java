@@ -3,7 +3,6 @@ package com.hungteen.pvz.common.tileentity;
 import com.hungteen.pvz.common.container.CardFusionContainer;
 import com.hungteen.pvz.common.item.material.EssenceItem;
 import com.hungteen.pvz.common.item.tool.plant.SunStorageSaplingItem;
-import com.hungteen.pvz.register.TileEntityRegister;
 
 import net.minecraft.block.BlockState;
 import net.minecraft.entity.player.PlayerEntity;

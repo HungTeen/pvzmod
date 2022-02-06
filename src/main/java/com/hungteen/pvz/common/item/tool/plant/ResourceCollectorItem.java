@@ -30,7 +30,7 @@ public class ResourceCollectorItem extends Item{
 	private static final int RANGE_COLLECT_RANGE = 5;
 	
 	public ResourceCollectorItem() {
-		super(new Properties().tab(PVZItemGroups.PVZ_TOOL).stacksTo(1).durability(1200));
+		super(new Properties().tab(PVZItemGroups.PVZ_USEFUL).stacksTo(1).durability(1200));
 	}
 
 	@Override

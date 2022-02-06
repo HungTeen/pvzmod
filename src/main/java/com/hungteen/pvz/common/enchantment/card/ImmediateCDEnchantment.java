@@ -5,6 +5,7 @@ import java.util.Random;
 import com.hungteen.pvz.common.enchantment.EnchantmentRegister;
 import com.hungteen.pvz.common.enchantment.PVZEnchantment;
 
+import com.hungteen.pvz.common.enchantment.PVZEnchantmentTypes;
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.inventory.EquipmentSlotType;
 import net.minecraft.item.ItemStack;
@@ -12,7 +13,7 @@ import net.minecraft.item.ItemStack;
 public class ImmediateCDEnchantment extends PVZEnchantment {
 
 	public ImmediateCDEnchantment() {
-		super(Rarity.UNCOMMON, EnchantmentRegister.SUMMON_CARD, new EquipmentSlotType[] {EquipmentSlotType.MAINHAND});
+		super(Rarity.UNCOMMON, PVZEnchantmentTypes.SUMMON_CARD, new EquipmentSlotType[] {EquipmentSlotType.MAINHAND});
 	}
 	
 	public static boolean canImmediateCD(ItemStack stack, Random rand) {

@@ -1,0 +1,30 @@
+{
+  "parent": "pvz:adventure/root",
+  "display": {
+    "icon": {
+      "item": "minecraft:stone_sword"
+    },
+    "title": {
+      "translate": "advancement.pvz.invasion"
+    },
+    "description": {
+      "translate": "advancement.pvz.invasion.desc"
+    },
+    "frame": "goal",
+    "show_toast": true,
+    "announce_to_chat": true,
+    "hidden": false
+  },
+  "criteria": {
+    "shot_arrow": {
+      "trigger": "pvz:invasion",
+      "conditions": {
+      }
+    }
+  },
+  "requirements": [
+    [
+      "shot_arrow"
+    ]
+  ]
+}

@@ -22,7 +22,7 @@ import java.util.List;
 public class OriginSwordItem extends SwordItem {
 
     public OriginSwordItem() {
-        super(PVZItemTier.ORIGIN, 3, -2.4F, new Item.Properties().tab(PVZItemGroups.PVZ_TOOL));
+        super(PVZItemTier.ORIGIN, 3, -2.4F, new Item.Properties().tab(PVZItemGroups.PVZ_USEFUL));
     }
 
     @Override

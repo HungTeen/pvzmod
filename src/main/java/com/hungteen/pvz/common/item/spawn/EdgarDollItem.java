@@ -14,7 +14,7 @@ import java.util.List;
 public class EdgarDollItem extends Item {
 
 	public EdgarDollItem() {
-		super(new Item.Properties().tab(PVZItemGroups.PVZ_TOOL));
+		super(new Item.Properties().tab(PVZItemGroups.PVZ_USEFUL));
 	}
 	
 //	@Override

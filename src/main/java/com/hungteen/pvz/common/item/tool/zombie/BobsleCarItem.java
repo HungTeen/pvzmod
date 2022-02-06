@@ -17,7 +17,7 @@ import net.minecraft.world.World;
 public class BobsleCarItem extends Item {
 
     public BobsleCarItem() {
-        super(new Properties().tab(PVZItemGroups.PVZ_TOOL).stacksTo(1));
+        super(new Properties().tab(PVZItemGroups.PVZ_USEFUL).stacksTo(1));
     }
 
     @Override

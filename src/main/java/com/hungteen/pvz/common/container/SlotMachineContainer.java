@@ -1,7 +1,6 @@
 package com.hungteen.pvz.common.container;
 
 import com.hungteen.pvz.common.tileentity.SlotMachineTileEntity;
-import com.hungteen.pvz.register.ContainerRegister;
 
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.inventory.container.Container;

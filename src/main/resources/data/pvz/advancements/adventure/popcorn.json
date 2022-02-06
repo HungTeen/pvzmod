@@ -1,5 +1,5 @@
 {
-  "parent": "pvz:adventure/plant",
+  "parent": "pvz:adventure/first_plant",
   "display": {
     "icon": {
       "item": "pvz:cob_cannon_enjoy_card"

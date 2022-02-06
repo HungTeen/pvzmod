@@ -5,7 +5,7 @@ import com.hungteen.pvz.common.entity.plant.toxic.GloomShroomEntity;
 import com.hungteen.pvz.common.item.ItemRegister;
 import com.hungteen.pvz.common.misc.PVZEntityDamageSource;
 import com.hungteen.pvz.common.entity.EntityRegister;
-import com.hungteen.pvz.register.ParticleRegister;
+import com.hungteen.pvz.client.particle.ParticleRegister;
 import com.hungteen.pvz.utils.WorldUtil;
 
 import it.unimi.dsi.fastutil.ints.IntOpenHashSet;

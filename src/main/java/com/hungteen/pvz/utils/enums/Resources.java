@@ -32,6 +32,7 @@ public enum Resources {
 	/* card slot */
 	SLOT_NUM(1, 9),
 	/* mission use */
+	MISSION_FINISH_TIME(0, 9999999),
 	MISSION_TYPE(0, 3),
 	MISSION_STAGE(0, 4),
 	MISSION_VALUE(0, 9999999)

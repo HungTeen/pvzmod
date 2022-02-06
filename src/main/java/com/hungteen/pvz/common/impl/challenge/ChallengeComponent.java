@@ -7,7 +7,7 @@ import com.google.gson.JsonSyntaxException;
 import com.hungteen.pvz.PVZMod;
 import com.hungteen.pvz.api.raid.*;
 import com.hungteen.pvz.common.world.challenge.ChallengeManager;
-import com.hungteen.pvz.register.SoundRegister;
+import com.hungteen.pvz.common.misc.sound.SoundRegister;
 import com.mojang.datafixers.util.Pair;
 import net.minecraft.util.JSONUtils;
 import net.minecraft.util.RegistryKey;

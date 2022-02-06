@@ -1,0 +1,33 @@
+{
+  "parent": "pvz:adventure/invasion",
+  "display": {
+    "icon": {
+      "item": "minecraft:iron_sword"
+    },
+    "title": {
+      "translate": "advancement.pvz.mission_expert"
+    },
+    "description": {
+      "translate": "advancement.pvz.mission_expert.desc"
+    },
+    "frame": "goal",
+    "show_toast": true,
+    "announce_to_chat": true,
+    "hidden": false
+  },
+  "criteria": {
+    "shot_arrow": {
+      "trigger": "pvz:invasion_mission",
+      "conditions": {
+        "amount": {
+          "min": 10
+        }
+      }
+    }
+  },
+  "requirements": [
+    [
+      "shot_arrow"
+    ]
+  ]
+}

@@ -1,7 +1,7 @@
 package com.hungteen.pvz.common.enchantment.card;
 
-import com.hungteen.pvz.common.enchantment.EnchantmentRegister;
 import com.hungteen.pvz.common.enchantment.PVZEnchantment;
+import com.hungteen.pvz.common.enchantment.PVZEnchantmentTypes;
 import net.minecraft.inventory.EquipmentSlotType;
 
 /**
@@ -10,7 +10,7 @@ import net.minecraft.inventory.EquipmentSlotType;
 public class BandageEnchantment extends PVZEnchantment {
 
     public BandageEnchantment() {
-        super(Rarity.VERY_RARE, EnchantmentRegister.SUMMON_CARD, new EquipmentSlotType[] {EquipmentSlotType.MAINHAND});
+        super(Rarity.VERY_RARE, PVZEnchantmentTypes.SUMMON_CARD, new EquipmentSlotType[] {EquipmentSlotType.MAINHAND});
     }
 
     @Override

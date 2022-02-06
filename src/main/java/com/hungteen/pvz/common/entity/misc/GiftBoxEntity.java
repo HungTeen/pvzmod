@@ -1,7 +1,7 @@
 package com.hungteen.pvz.common.entity.misc;
 
 import com.hungteen.pvz.common.entity.PVZEntityBase;
-import com.hungteen.pvz.register.SoundRegister;
+import com.hungteen.pvz.common.misc.sound.SoundRegister;
 import com.hungteen.pvz.utils.EntityUtil;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.player.PlayerEntity;

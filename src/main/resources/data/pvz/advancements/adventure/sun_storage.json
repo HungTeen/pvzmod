@@ -1,8 +1,8 @@
 {
   "display": {
     "icon": {
-      "item": "pvz:sun_storage_sapling",
-      "nbt": "{sun_storage_amount:10000}"
+      "item": "pvz:sun_storage_sapling3",
+      "nbt": "{sun_storage_amount:100000}"
     },
     "title": {
       "translate": "advancement.pvz.sun_storage"
@@ -13,15 +13,15 @@
 	"frame":"challenge",
     "announce_to_chat": true
   },
-  "parent":"pvz:adventure/steel",
+  "parent":"pvz:adventure/origin",
   "criteria": {
     "get_almanac": {
       "trigger": "minecraft:inventory_changed",
       "conditions": {
         "items":[
 		  {
-		    "item":"pvz:sun_storage_sapling",
-		    "nbt": "{sun_storage_amount:10000}"
+		    "item":"pvz:sun_storage_sapling3",
+		    "nbt": "{sun_storage_amount:100000}"
 		  }
 		]
       }
