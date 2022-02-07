@@ -97,10 +97,10 @@ public class ChallengeEnvelopeItem extends Item {
             if(challengeComponent == null){
                 PlayerUtil.sendMsgTo(context.getPlayer(), new TranslationTextComponent("help.pvz.no_challenge").withStyle(TextFormatting.RED));
             } else{
-                if(ChallengeManager.hasRaidNearby((ServerWorld) context.getLevel(), context.getClickedPos().above())){
+                if(ChallengeManager.hasChallengeNearby((ServerWorld) context.getLevel(), context.getClickedPos().above())){
                     PlayerUtil.sendMsgTo(context.getPlayer(), new TranslationTextComponent("help.pvz.full_challenge").withStyle(TextFormatting.RED));
                 } else{
-                    if(ChallengeManager.createRaid((ServerWorld) context.getLevel(), getChallengeType(context.getItemInHand()), context.getClickedPos().above())) {
+                    if(ChallengeManager.createChallenge((ServerWorld) context.getLevel(), getChallengeType(context.getItemInHand()), context.getClickedPos().above())) {
                         if (PlayerUtil.isPlayerSurvival(context.getPlayer())) {
                             context.getItemInHand().shrink(1);
                         }

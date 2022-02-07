@@ -1,19 +1,16 @@
 package com.hungteen.pvz.client.gui.screen.shop;
 
-import java.util.ArrayList;
-import java.util.List;
-
+import com.hungteen.pvz.client.ClientProxy;
+import com.hungteen.pvz.client.gui.GuiHandler;
+import com.hungteen.pvz.client.gui.screen.PVZContainerScreen;
 import com.hungteen.pvz.common.container.shop.AbstractDaveShopContainer;
+import com.hungteen.pvz.common.entity.npc.AbstractDaveEntity;
 import com.hungteen.pvz.common.network.PVZPacketHandler;
 import com.hungteen.pvz.common.network.toserver.ClickButtonPacket;
-import com.hungteen.pvz.utils.PlayerUtil;
 import com.hungteen.pvz.utils.StringUtil;
-import com.hungteen.pvz.utils.TradeUtil.DaveGoods;
 import com.hungteen.pvz.utils.enums.Colors;
-import com.hungteen.pvz.utils.enums.Resources;
 import com.mojang.blaze3d.matrix.MatrixStack;
-
-import net.minecraft.client.gui.screen.inventory.ContainerScreen;
+import com.mojang.datafixers.util.Pair;
 import net.minecraft.client.gui.widget.button.Button;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.util.ResourceLocation;
@@ -23,192 +20,203 @@ import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 
+import javax.annotation.Nullable;
+import java.util.Arrays;
+import java.util.List;
+
 @OnlyIn(Dist.CLIENT)
-public abstract class AbstractDaveShopScreen extends ContainerScreen<AbstractDaveShopContainer> {
+public abstract class AbstractDaveShopScreen extends PVZContainerScreen<AbstractDaveShopContainer> {
 
-	public static final int TRADE_NUM_PER_PAGE = 8;
-	protected final TradeButton[] trades = new TradeButton[TRADE_NUM_PER_PAGE];
-	protected List<TradeType> tradeTypes;
-	protected Button buyButton;
-	private int downHeight;
-	protected DaveGoods selectedGood;
-	protected TradeType selectedTrade;
+    private static final ResourceLocation TEXTURE = StringUtil.prefix("textures/gui/container/shop.png");
+    public static final int TRADE_NUM_PER_PAGE = 8;
+    protected final TradeButton[] trades = new TradeButton[TRADE_NUM_PER_PAGE];
+    protected Button buyButton;
+    private int downHeight;
+    protected int selectedPos;
 
-	public AbstractDaveShopScreen(AbstractDaveShopContainer screenContainer, PlayerInventory inv,
-			ITextComponent titleIn) {
-		super(screenContainer, inv, titleIn);
-		this.imageWidth = 285;
-		this.imageHeight = 195;
-	}
+    public AbstractDaveShopScreen(AbstractDaveShopContainer screenContainer, PlayerInventory inv,
+                                  ITextComponent titleIn) {
+        super(screenContainer, inv, titleIn);
+        this.imageWidth = 285;
+        this.imageHeight = 195;
+    }
 
-	@Override
-	protected void init() {
-		super.init();
-		for (int i = 0; i < TRADE_NUM_PER_PAGE; i++) {
-			this.trades[i] = this.addButton(new TradeButton(this.leftPos + 5, this.topPos + 27 + 20 * i, i,
-					(button) -> {
-						// select the trade
-						if (button instanceof TradeButton) {
-							int id = ((TradeButton) button).getId() + this.downHeight;
-							this.selectedGood = this.getTradeTypes().get(id).good;
-						}
-					}));
-		}
-		this.buyButton = this.addButton(new Button(this.leftPos + 206, this.topPos + 85, 18, 18,
-				new TranslationTextComponent("gui.pvz.dave_shop.buy"), (button) -> {
-					if (this.buyButton.visible) {
-						PVZPacketHandler.CHANNEL
-								.sendToServer(new ClickButtonPacket(this.getShopID(), 0, this.selectedGood.ordinal()));
-					}
-				}));
-		this.buyButton.visible = false;
-		this.tradeTypes = this.getTradeTypes();
-		this.selectedGood = null;
-		this.selectedTrade = null;
-	}
-	
-	@Override
-	protected void renderLabels(MatrixStack p_230451_1_, int p_230451_2_, int p_230451_3_) {
-	}
+    @Override
+    protected void init() {
+        super.init();
+        for (int i = 0; i < TRADE_NUM_PER_PAGE; ++ i) {
+            this.trades[i] = this.addButton(new TradeButton(this.leftPos + 5, this.topPos + 27 + 20 * i, i, (button) -> {
+                // select the trade.
+                if (button instanceof TradeButton) {
+                    this.selectedPos = ((TradeButton) button).getId() + this.downHeight;
+                }
+            }));
+        }
+        this.buyButton = this.addButton(new Button(this.leftPos + 206, this.topPos + 85, 18, 18,
+                new TranslationTextComponent("gui.pvz.dave_shop.buy"), (button) -> {
+            if (this.buyButton.visible) {
+                PVZPacketHandler.CHANNEL.sendToServer(new ClickButtonPacket(this.getShopID(), 0, this.selectedPos));
+            }
+        }));
+        this.buyButton.visible = false;
+    }
 
-	@Override
-	public void render(MatrixStack stack, int mouseX, int mouseY, float partialTicks) {
-		super.render(stack, mouseX, mouseY, partialTicks);
-		this.tradeTypes = this.getTradeTypes();
-		int h = 0;
-		int posX = this.leftPos + 6;
-		int posY = this.topPos + 28;
-		this.renderScroll(stack, this.tradeTypes);
-		for (TradeType type : tradeTypes) {
-			if (h >= downHeight && h < downHeight + TRADE_NUM_PER_PAGE) {
-				this.renderTrade(stack, type, posX, posY);
-				posY += 20;
-			}
-			++h;
-		}
-		for (TradeButton trade : this.trades) {
-			if (trade.isHovered()) {
-				trade.renderToolTip(stack, mouseX, mouseY);
-			}
-			trade.visible = trade.id < tradeTypes.size();
-		}
-		this.selectedTrade = null;
-		for (TradeType trade : this.tradeTypes) {
-			if (this.selectedGood == trade.good) {
-				this.selectedTrade = trade;
-				break;
-			}
-		}
-		if (this.selectedTrade == null) {
-			this.selectedGood = null;
-		}
-		this.buyButton.visible = this.canBuyNow();
-		if (this.selectedGood != null && this.selectedTrade != null) {
-			this.renderDetails(stack);
-		}
-		this.renderTooltip(stack, mouseX, mouseY);
-	}
+    @Override
+    public void render(MatrixStack stack, int mouseX, int mouseY, float partialTicks) {
+        super.render(stack, mouseX, mouseY, partialTicks);
+        final List<AbstractDaveEntity.GoodType> goods = this.getAvailableGoods();
 
-	protected void renderDetails(MatrixStack stack) {
-		StringUtil.drawCenteredScaledString(stack, font, new TranslationTextComponent("gui.pvz.dave_shop." + this.selectedGood.toString().toLowerCase()).getString(), this.leftPos + 117 + 80, this.topPos + 28 + 20, Colors.BLACK, 1.5f);
-	}
+        //avoid crash.
+        this.selectedPos = MathHelper.clamp(this.selectedPos, 0, goods.size() - 1);
+        //render scroll.
+        this.renderScroll(stack, goods);
+        //render trades.
+        int h = 0;
+        int posX = this.leftPos + 6;
+        int posY = this.topPos + 28;
+        for (AbstractDaveEntity.GoodType type : goods) {
+            if (h >= downHeight && h < downHeight + TRADE_NUM_PER_PAGE) {
+                this.renderTrade(stack, type, posX, posY);
+                posY += 20;
+            }
+            ++h;
+        }
+        //update trade buttons.
+        for (TradeButton trade : this.trades) {
+            if (trade.isHovered()) {
+                trade.renderToolTip(stack, mouseX, mouseY);
+            }
+            trade.visible = this.downHeight + trade.id < goods.size();
+        }
+        //update buy button.
+        if(goods.isEmpty()){
+            this.buyButton.visible = false;
+        } else{
+            final AbstractDaveEntity.GoodType goodType = goods.get(this.selectedPos);
+            this.buyButton.visible = (goodType != null && this.menu.canClickBuyButton() && this.getCurrentMoney() >= goodType.getGoodPrice());
+            //update good details.
+            this.renderDetails(stack, goodType);
+        }
+        //tooltips.
+        this.renderTooltip(stack, mouseX, mouseY);
+    }
 
-	protected boolean canBuyNow() {
-		return this.selectedGood != null && this.selectedTrade != null
-				&& PlayerUtil.getResource(this.minecraft.player, Resources.MONEY) >= this.selectedTrade.money
-				&& this.menu.canClickBuyButton();
-	}
+    @Override
+    protected void renderBg(MatrixStack stack, float partialTicks, int mouseX, int mouseY) {
+        stack.pushPose();
+        this.minecraft.getTextureManager().bind(TEXTURE);
+        blit(stack, this.leftPos, this.topPos, this.getBlitOffset(), 0.0F, 0.0F, this.imageWidth, this.imageHeight, 256, 512);
 
-	protected abstract void renderTrade(MatrixStack stack, TradeType trade, int posX, int posY);
+        final int width = 112;
+        final int height = 22;
+        final Pair<Integer, Integer> pair = this.getMoneyBarPos();
+        blit(stack, this.leftPos + 3, this.topPos + 3, this.getBlitOffset(), pair.getFirst(), pair.getSecond(), width, height, 256, 512);
 
-	protected abstract List<TradeType> getTradeTypes();
+        StringUtil.drawCenteredScaledString(stack, font, this.getCurrentMoney() + "", this.leftPos + 25 + 44, this.topPos + 9, Colors.WHITE, 1.4f);
+        StringUtil.drawCenteredScaledString(stack, font, getShopTitle().getString(), this.leftPos + 115 + 82, this.topPos + 6, Colors.BLACK, 1.4f);
+        stack.popPose();
+    }
 
-	protected abstract int getShopID();
-	
-	protected abstract ResourceLocation getTexture();
+    protected void renderDetails(MatrixStack stack, AbstractDaveEntity.GoodType goodType) {
+        if (goodType != null) {
+            StringUtil.drawCenteredScaledString(stack, font, goodType.getGoodDescription().getString(), this.leftPos + 117 + 80, this.topPos + 28 + 20, Colors.BLACK, 1.5f);
+        }
+    }
 
-	private void renderScroll(MatrixStack stack, List<TradeType> types) {
-		int x = (this.width - this.imageWidth) / 2;
-		int y = (this.height - this.imageHeight) / 2;
-		int i = types.size() - TRADE_NUM_PER_PAGE + 1;
-		stack.pushPose();
-		this.minecraft.getTextureManager().bind(this.getTexture());
-		if (i > 1) {
-			int j = 159 - (27 + (i - 1) * 159 / i);
-			int k = 1 + j / i + 159 / i;
-			int len = 133;
-			int i1 = Math.min(len, this.downHeight * k);
-			if (this.downHeight == i - 1) {
-				i1 = 133;
-			}
-			blit(stack, x + 106, y + 27 + i1, this.getBlitOffset(), 0.0F, 195.0F, 6, 27, 256, 512);
-		} else {
-			blit(stack, x + 106, y + 27, this.getBlitOffset(), 6.0F, 195.0F, 6, 27, 256, 512);
-		}
-		stack.popPose();
-	}
+    @Nullable
+    public AbstractDaveEntity.GoodType getSelectedGood(){
+        final List<AbstractDaveEntity.GoodType> goods = this.getAvailableGoods();
+        return goods.size() > 0 ? goods.get(this.selectedPos) : null;
+    }
 
-	@Override
-	public boolean mouseScrolled(double p_mouseScrolled_1_, double p_mouseScrolled_3_, double p_mouseScrolled_5_) {
-		int size = this.getTradeTypes().size();
-		if (size > TRADE_NUM_PER_PAGE) {
-			int next = (int) ((double) this.downHeight - p_mouseScrolled_5_);
-			this.downHeight = MathHelper.clamp(next, 0, size - TRADE_NUM_PER_PAGE);
-		}
-		return true;
-	}
+    protected void renderTrade(MatrixStack stack, AbstractDaveEntity.GoodType trade, int posX, int posY) {
+        StringUtil.drawCenteredScaledString(stack, font, trade.getGoodPrice() + "", posX + 31, posY + 4, Colors.WHITE, 1.2f);
+        final int offsetX = posX + 81;
+        final int offsetY = posY + 1;
+        if(trade.getType().isEnergy()) {
+            this.minecraft.getTextureManager().bind(TEXTURE);
+            blit(stack, offsetX, offsetY, this.getBlitOffset(), 112, 195, 16, 16, 256, 512);
+        } else if(trade.getType().isSlot()){
+            this.minecraft.getTextureManager().bind(TEXTURE);
+            blit(stack, offsetX, offsetY, this.getBlitOffset(), 128, 195, 16, 16, 256, 512);
+        } else if(trade.getType().isMoney()){
+            this.minecraft.getTextureManager().bind(TEXTURE);
+            blit(stack, offsetX, offsetY, this.getBlitOffset(), 144, 195, 16, 16, 256, 512);
+        } else {
+            this.itemRenderer.renderGuiItem(trade.getGood(), offsetX, offsetY);
+        }
+    }
 
-	protected List<ITextComponent> getToolTips(TradeType type) {
-		DaveGoods good = type.good;
-		int num = 1;
-		List<ITextComponent> list = new ArrayList<>();
-		for (int i = 1; i <= num; ++i) {
-			TranslationTextComponent text = new TranslationTextComponent(
-					"gui.pvz.dave_shop." + good.toString().toLowerCase() + i);
-			list.add(text);
-		}
-		return list;
-	}
+    protected int getShopID(){
+        return GuiHandler.SHOP;
+    }
 
-	public List<DaveGoods> getAvailableGoods() {
-		List<DaveGoods> list = new ArrayList<>();
-		for (DaveGoods good : DaveGoods.values()) {
-			if (good.shopId == this.getShopID())
-				list.add(good);
-		}
-		return list;
-	}
+    protected abstract int getCurrentMoney();
 
-	@OnlyIn(Dist.CLIENT)
-	public class TradeButton extends Button {
+    protected abstract Pair<Integer, Integer> getMoneyBarPos();
 
-		final int id;
+    protected abstract ITextComponent getShopTitle();
 
-		public TradeButton(int x, int y, int id, Button.IPressable press) {
-			super(x, y, 100, 20, StringUtil.EMPTY, press);
-			this.id = id;
-			this.visible = false;
-		}
+    private void renderScroll(MatrixStack stack, List<AbstractDaveEntity.GoodType> types) {
+        final int x = (this.width - this.imageWidth) / 2;
+        final int y = (this.height - this.imageHeight) / 2;
+        int i = types.size() - TRADE_NUM_PER_PAGE + 1;
+        stack.pushPose();
+        this.minecraft.getTextureManager().bind(TEXTURE);
+        if (i > 1) {
+            final int j = 159 - (27 + (i - 1) * 159 / i);
+            final int k = 1 + j / i + 159 / i;
+            final int len = 133;
+            int i1 = Math.min(len, this.downHeight * k);
+            if (this.downHeight == i - 1) {
+                i1 = 133;
+            }
+            blit(stack, x + 106, y + 27 + i1, this.getBlitOffset(), 0.0F, 195.0F, 6, 27, 256, 512);
+        } else {
+            blit(stack, x + 106, y + 27, this.getBlitOffset(), 6.0F, 195.0F, 6, 27, 256, 512);
+        }
+        stack.popPose();
+    }
 
-		public int getId() {
-			return this.id;
-		}
+    @Override
+    public boolean mouseScrolled(double p_mouseScrolled_1_, double p_mouseScrolled_3_, double p_mouseScrolled_5_) {
+        final int size = this.getAvailableGoods().size();
+        if (size > TRADE_NUM_PER_PAGE) {
+            int next = (int) ((double) this.downHeight - p_mouseScrolled_5_);
+            this.downHeight = MathHelper.clamp(next, 0, size - TRADE_NUM_PER_PAGE);
+        }
+        return true;
+    }
 
-		public void renderToolTip(MatrixStack stack, int mouseX, int mouseY) {
-			List<ITextComponent> list = getToolTips(tradeTypes.get(this.id + AbstractDaveShopScreen.this.downHeight));
-			AbstractDaveShopScreen.this.renderComponentTooltip(stack, list, mouseX, mouseY);
-		}
-	}
+    public List<AbstractDaveEntity.GoodType> getAvailableGoods() {
+        return this.menu.getValidGoods(ClientProxy.MC.player);
+    }
 
-	public static class TradeType {
-		public DaveGoods good;
-		public int money;
-		public int exp;
+    @OnlyIn(Dist.CLIENT)
+    public class TradeButton extends Button {
 
-		public TradeType(int money, DaveGoods good) {
-			this.good = good;
-			this.money = money;
-		}
-	}
+        final int id;
+
+        public TradeButton(int x, int y, int id, Button.IPressable press) {
+            super(x, y, 100, 20, StringUtil.EMPTY, press);
+            this.id = id;
+            this.visible = false;
+        }
+
+        public int getId() {
+            return this.id;
+        }
+
+        public void renderToolTip(MatrixStack stack, int mouseX, int mouseY) {
+            AbstractDaveEntity.GoodType goodType = AbstractDaveShopScreen.this.getSelectedGood();
+            if(goodType != null) {
+                if (goodType.getType().isItem()) {
+                    AbstractDaveShopScreen.this.renderComponentTooltip(stack, AbstractDaveShopScreen.this.getTooltipFromItem(goodType.getGood()), mouseX, mouseY);
+                } else {
+                    AbstractDaveShopScreen.this.renderComponentTooltip(stack, Arrays.asList(goodType.getGoodDescription()), mouseX, mouseY);
+                }
+            }
+        }
+    }
 
 }

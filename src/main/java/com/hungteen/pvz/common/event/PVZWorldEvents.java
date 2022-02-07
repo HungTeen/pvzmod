@@ -17,7 +17,7 @@ public class PVZWorldEvents {
 		if (ev.phase != TickEvent.Phase.END || ev.world.isClientSide) {
 			return;
 		}
-		ChallengeManager.tickRaids(ev.world);
+		ChallengeManager.tickChallenges(ev.world);
 		if(ev.world.dimension() == World.OVERWORLD) {
 			InvasionManager.tick(ev);
 		}

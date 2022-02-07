@@ -464,6 +464,8 @@ public class SlotMachineTileEntity extends PVZTileEntity implements ITickableTil
 		private final ResourceLocation res;
 		private int slotCount;
 		private int sunCost;
+		private int tradeWeight;
+		private int tradePrice;
 
 		public LotteryType(ResourceLocation res) {
 			this.res = res;
@@ -516,6 +518,22 @@ public class SlotMachineTileEntity extends PVZTileEntity implements ITickableTil
 			for (int i = 0; i < list.size(); ++i) {
 				map.put(list.get(i), i);
 			}
+		}
+
+		public int getTradePrice() {
+			return tradePrice;
+		}
+
+		public int getTradeWeight() {
+			return tradeWeight;
+		}
+
+		public void setTradePrice(int tradePrice) {
+			this.tradePrice = tradePrice;
+		}
+
+		public void setTradeWeight(int tradeWeight) {
+			this.tradeWeight = tradeWeight;
 		}
 
 		public int getSize() {

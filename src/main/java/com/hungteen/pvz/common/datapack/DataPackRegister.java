@@ -14,6 +14,7 @@ public class DataPackRegister {
         event.addListener(new LotteryTypeLoader());
         event.addListener(new InvasionTypeLoader());
         event.addListener(new ChallengeTypeLoader());
+        event.addListener(new TransactionTypeLoader());
     }
 
 }

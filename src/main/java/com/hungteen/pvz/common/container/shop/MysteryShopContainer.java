@@ -1,39 +1,40 @@
 package com.hungteen.pvz.common.container.shop;
 
-import com.hungteen.pvz.common.capability.CapabilityHandler;
-import com.hungteen.pvz.common.misc.sound.SoundRegister;
 import com.hungteen.pvz.common.container.ContainerRegister;
+import com.hungteen.pvz.common.entity.npc.AbstractDaveEntity;
 import com.hungteen.pvz.utils.PlayerUtil;
-import com.hungteen.pvz.utils.TradeUtil;
-import com.hungteen.pvz.utils.TradeUtil.DaveGoods;
 import com.hungteen.pvz.utils.enums.Resources;
-
 import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.util.SoundCategory;
 
 public class MysteryShopContainer extends AbstractDaveShopContainer {
 
 	public static final int MAX_MYSTERY_GOOD = 8;
 	
-	public MysteryShopContainer(int id, PlayerEntity player) {
-		super(ContainerRegister.MYSTERY_SHOP.get(), id, player);
+	public MysteryShopContainer(int id, PlayerEntity player, int entityId) {
+		super(ContainerRegister.MYSTERY_SHOP.get(), id, player, entityId);
 		if(! player.level.isClientSide) {
 			sendMysteryGoodsPacket(player, -1);
 		}
 	}
-	
-	public void buyGood(DaveGoods good, int type) {
-		if(good.toString().toLowerCase().startsWith("enjoy_card")) {
-			int pos = good.toString().toLowerCase().charAt(good.toString().length() - 1) - '0';
-			player.getCapability(CapabilityHandler.PLAYER_DATA_CAPABILITY).ifPresent((l) -> {
-				l.getPlayerData().getOtherStats().mysteryGoods[pos] = - 1;
-				sendMysteryGoodsPacket(player, pos);
-			});
-			PlayerUtil.addResource(player, Resources.GEM_NUM, - TradeUtil.getGoodCost(good.setType(type)));
-			this.output.setItem(0, TradeUtil.getGoodItemStack(good.setType(type)));
-		}
-		this.player.level.playSound(null, this.player, SoundRegister.DAVE_HAPPY.get(), SoundCategory.AMBIENT, 1f, 1f);
+
+	@Override
+	public void buyGood(AbstractDaveEntity.GoodType good) {
+		super.buyGood(good);
+		PlayerUtil.addResource(player, Resources.GEM_NUM, - good.getGoodPrice());
 	}
+
+//	public void buyGood(DaveGoods good, int type) {
+//		if(good.toString().toLowerCase().startsWith("enjoy_card")) {
+//			int pos = good.toString().toLowerCase().charAt(good.toString().length() - 1) - '0';
+//			player.getCapability(CapabilityHandler.PLAYER_DATA_CAPABILITY).ifPresent((l) -> {
+//				l.getPlayerData().getOtherStats().mysteryGoods[pos] = - 1;
+//				sendMysteryGoodsPacket(player, pos);
+//			});
+//			PlayerUtil.addResource(player, Resources.GEM_NUM, - TradeUtil.getGoodCost(good.setType(type)));
+//			this.output.setItem(0, TradeUtil.getGoodItemStack(good.setType(type)));
+//		}
+//		this.player.level.playSound(null, this.player, SoundRegister.DAVE_HAPPY.get(), SoundCategory.AMBIENT, 1f, 1f);
+//	}
 	
 //	public static void genNextGoods(PlayerEntity player) {
 //		player.getCapability(CapabilityHandler.PLAYER_DATA_CAPABILITY).ifPresent((l) -> {

@@ -109,8 +109,8 @@ public class PVZAPIImpl implements IPVZAPI{
 
 	@Override
 	public boolean createRaid(ServerWorld world, ResourceLocation res, BlockPos pos) {
-		if(! ChallengeManager.hasRaidNearby(world, pos)) {
-			return ChallengeManager.createRaid(world, res, pos);
+		if(! ChallengeManager.hasChallengeNearby(world, pos)) {
+			return ChallengeManager.createChallenge(world, res, pos);
 		}
 		return false;
 	}
@@ -122,12 +122,12 @@ public class PVZAPIImpl implements IPVZAPI{
 
 	@Override
 	public Optional<Challenge> getNearByRaid(ServerWorld world, BlockPos pos) {
-		return ChallengeManager.getRaidNearBy(world, pos);
+		return ChallengeManager.getChallengeNearBy(world, pos);
 	}
 
 	@Override
 	public Map<ResourceLocation, IChallengeComponent> getRaidTypes() {
-		return ChallengeManager.getRaidTypes();
+		return ChallengeManager.getChallengeTypes();
 	}
 
 	@Override

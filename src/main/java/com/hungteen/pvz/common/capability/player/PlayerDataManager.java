@@ -5,6 +5,7 @@ import com.hungteen.pvz.PVZConfig;
 import com.hungteen.pvz.api.PVZAPI;
 import com.hungteen.pvz.api.events.PlayerLevelChangeEvent;
 import com.hungteen.pvz.api.types.IPAZType;
+import com.hungteen.pvz.common.advancement.trigger.InvasionMissionTrigger;
 import com.hungteen.pvz.common.advancement.trigger.MoneyTrigger;
 import com.hungteen.pvz.common.advancement.trigger.SunAmountTrigger;
 import com.hungteen.pvz.common.advancement.trigger.TreeLevelTrigger;
@@ -330,6 +331,10 @@ public class PlayerDataManager {
 			} else if(res == Resources.MISSION_VALUE){
 				if(num > 0 && this.getResource(Resources.MISSION_TYPE) == MissionManager.MissionType.INSTANT_KILL.ordinal()){
 					++ this.invasion.killInSecond;
+				}
+			} else if(res == Resources.MISSION_FINISH_TIME){
+				if(player instanceof ServerPlayerEntity){
+					InvasionMissionTrigger.INSTANCE.trigger((ServerPlayerEntity) player, now);
 				}
 			}
 		}

@@ -1,37 +1,22 @@
 package com.hungteen.pvz.common.container.shop;
 
-import com.hungteen.pvz.common.capability.CapabilityHandler;
-import com.hungteen.pvz.common.capability.player.PlayerDataManager;
-import com.hungteen.pvz.common.misc.sound.SoundRegister;
 import com.hungteen.pvz.common.container.ContainerRegister;
-import com.hungteen.pvz.utils.TradeUtil;
-import com.hungteen.pvz.utils.TradeUtil.DaveGoods;
+import com.hungteen.pvz.common.entity.npc.AbstractDaveEntity;
+import com.hungteen.pvz.common.misc.sound.SoundRegister;
+import com.hungteen.pvz.utils.PlayerUtil;
 import com.hungteen.pvz.utils.enums.Resources;
-
 import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.util.SoundCategory;
 
 public class DaveShopContainer extends AbstractDaveShopContainer {
 	
-	public DaveShopContainer(int id, PlayerEntity player) {
-		super(ContainerRegister.DAVE_SHOP.get(), id, player);
+	public DaveShopContainer(int id, PlayerEntity player, int entityId) {
+		super(ContainerRegister.DAVE_SHOP.get(), id, player, entityId);
 	}
 	
-	public void buyGood(DaveGoods good) {
-		if(good == DaveGoods.ENERGY) {
-			player.getCapability(CapabilityHandler.PLAYER_DATA_CAPABILITY).ifPresent((l) -> {
-				PlayerDataManager stats = l.getPlayerData();
-				stats.addResource(Resources.MONEY, - TradeUtil.getEnergyCost(stats.getResource(Resources.MAX_ENERGY_NUM)));
-				stats.addResource(Resources.MAX_ENERGY_NUM, 1);
-			});
-		} else {
-			player.getCapability(CapabilityHandler.PLAYER_DATA_CAPABILITY).ifPresent((l) -> {
-				PlayerDataManager stats = l.getPlayerData();
-				stats.addResource(Resources.MONEY, - TradeUtil.getGoodCost(good));
-				this.output.setItem(0, TradeUtil.getGoodItemStack(good));
-			});
-		}
-		this.player.level.playSound(null, this.player, SoundRegister.DAVE_HAPPY.get(), SoundCategory.AMBIENT, 1f, 1f);
+	public void buyGood(AbstractDaveEntity.GoodType good) {
+		super.buyGood(good);
+		PlayerUtil.addResource(player, Resources.MONEY, - good.getGoodPrice());
+		PlayerUtil.playClientSound(player, SoundRegister.DAVE_HAPPY.get());
 	}
 	
 }

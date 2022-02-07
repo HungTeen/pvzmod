@@ -152,7 +152,7 @@ public class PeaGunItem extends Item {
 		final Inventory inv = getInventory(stack);
 		final IPlantType type = getShootMode(inv.getItem(0));
 		
-		if (living instanceof PlayerEntity && tick > 20 && tick % cd == 0) {
+		if (living instanceof PlayerEntity && tick + 5 < this.getUseDuration(stack) && tick % cd == 0) {
 			if (!MinecraftForge.EVENT_BUS.post(new PeaGunShootEvent((PlayerEntity) living, stack, type))) {
 				this.performShoot(world, (PlayerEntity) living, stack, type);
 			}

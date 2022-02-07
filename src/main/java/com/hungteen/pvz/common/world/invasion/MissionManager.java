@@ -1,13 +1,11 @@
 package com.hungteen.pvz.common.world.invasion;
 
-import com.hungteen.pvz.common.advancement.trigger.InvasionMissionTrigger;
 import com.hungteen.pvz.common.capability.player.PlayerDataManager;
 import com.hungteen.pvz.common.misc.sound.SoundRegister;
 import com.hungteen.pvz.utils.PlayerUtil;
 import com.hungteen.pvz.utils.enums.Resources;
 import com.hungteen.pvz.utils.others.WeightList;
 import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.util.text.TranslationTextComponent;
 
 import java.util.Random;
@@ -42,7 +40,6 @@ public class MissionManager {
                 //finish all mission.
                 if (stage >= MAX_MISSION_STAGE) {
                     PlayerUtil.addResource(player, Resources.MISSION_FINISH_TIME, 1);
-                    InvasionMissionTrigger.INSTANCE.trigger((ServerPlayerEntity) player, PlayerUtil.getResource(player, Resources.MISSION_FINISH_TIME));
                     removeMission(player);
                 } else {
                     PlayerUtil.setResource(player, Resources.MISSION_STAGE, stage);

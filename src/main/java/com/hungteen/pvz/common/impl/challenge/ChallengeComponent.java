@@ -329,18 +329,22 @@ public class ChallengeComponent implements IChallengeComponent {
 		return Collections.unmodifiableList(this.messages);
 	}
 
+	@Override
 	public int getRecommendLevel() {
 		return recommendLevel;
 	}
 
+	@Override
 	public boolean canTrade() {
 		return canTrade;
 	}
 
+	@Override
 	public int getTradeWeight() {
 		return tradeWeight;
 	}
 
+	@Override
 	public int getTradePrice() {
 		return tradePrice;
 	}

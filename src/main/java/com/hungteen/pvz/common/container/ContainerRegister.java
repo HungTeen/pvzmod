@@ -39,13 +39,13 @@ public class ContainerRegister {
 	
 	public static final RegistryObject<ContainerType<DaveShopContainer>> DAVE_SHOP = CONTAINER_TYPES.register("dave_shop", () -> {
 		return IForgeContainerType.create((windowId, inv, data) -> {
-            return new DaveShopContainer(windowId, inv.player);
+            return new DaveShopContainer(windowId, inv.player, data.readInt());
         });
 	});
 	
 	public static final RegistryObject<ContainerType<SunShopContainer>> SUN_SHOP = CONTAINER_TYPES.register("sun_shop", () -> {
 		return IForgeContainerType.create((windowId, inv, data) -> {
-            return new SunShopContainer(windowId, inv.player);
+            return new SunShopContainer(windowId, inv.player, data.readInt());
         });
 	});
 	
@@ -69,13 +69,13 @@ public class ContainerRegister {
 	
 	public static final RegistryObject<ContainerType<PennyShopContainer>> PENNY_SHOP = CONTAINER_TYPES.register("penny_shop", () -> {
 		return IForgeContainerType.create((windowId, inv, data) -> {
-            return new PennyShopContainer(windowId, inv.player);
+            return new PennyShopContainer(windowId, inv.player, data.readInt());
         });
 	});
 	
 	public static final RegistryObject<ContainerType<MysteryShopContainer>> MYSTERY_SHOP = CONTAINER_TYPES.register("mystery_shop", () -> {
 		return IForgeContainerType.create((windowId, inv, data) -> {
-            return new MysteryShopContainer(windowId, inv.player);
+            return new MysteryShopContainer(windowId, inv.player, data.readInt());
         });
 	});
 	

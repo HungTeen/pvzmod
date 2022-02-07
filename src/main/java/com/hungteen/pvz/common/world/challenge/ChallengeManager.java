@@ -69,19 +69,19 @@ public class ChallengeManager {
 		registerRewardComponent(UnLockRewardComponent.NAME, UnLockRewardComponent.class);
 	}
 	
-	public static void tickRaids(World world) {
+	public static void tickChallenges(World world) {
 		if(! world.isClientSide) {
 			final PVZChallengeData data = PVZChallengeData.getInvasionData(world);
 			data.tick();
 		}
 	}
 	
-	public static boolean hasRaidNearby(ServerWorld world, BlockPos pos) {
-		return getRaidNearBy(world, pos).isPresent();
+	public static boolean hasChallengeNearby(ServerWorld world, BlockPos pos) {
+		return getChallengeNearBy(world, pos).isPresent();
 	}
 
-	public static Optional<Challenge> getRaidNearBy(ServerWorld world, BlockPos pos){
-		final List<Challenge> list = getRaids(world);
+	public static Optional<Challenge> getChallengeNearBy(ServerWorld world, BlockPos pos){
+		final List<Challenge> list = getChallenges(world);
 		for(Challenge r : list) {
 			if(Math.abs(r.getCenter().getX() - pos.getX()) <= ConfigUtil.getRaidRange()
 					|| Math.abs(r.getCenter().getY() - pos.getY()) <= ConfigUtil.getRaidRange()
@@ -92,7 +92,7 @@ public class ChallengeManager {
 		return Optional.empty();
 	}
 	
-	public static boolean createRaid(ServerWorld world, ResourceLocation res, BlockPos pos) {
+	public static boolean createChallenge(ServerWorld world, ResourceLocation res, BlockPos pos) {
 		final PVZChallengeData data = PVZChallengeData.getInvasionData(world);
 		Optional<Challenge> opt = data.createChallenge(world, res, pos);
 		opt.ifPresent(r -> {
@@ -101,11 +101,11 @@ public class ChallengeManager {
 		return opt.isPresent();
 	}
 	
-	public static List<Challenge> getRaids(ServerWorld world) {
+	public static List<Challenge> getChallenges(ServerWorld world) {
 		return PVZChallengeData.getInvasionData(world).getChallenges();
 	}
 
-	public static Map<ResourceLocation, IChallengeComponent> getRaidTypes() {
+	public static Map<ResourceLocation, IChallengeComponent> getChallengeTypes() {
 		return Collections.unmodifiableMap(ChallengeTypeLoader.CHALLENGE_MAP);
 	}
 	

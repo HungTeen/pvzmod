@@ -18,6 +18,7 @@ import net.minecraft.resources.IResourceManager;
 import net.minecraft.util.JSONUtils;
 import net.minecraft.util.ResourceLocation;
 
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;
@@ -48,6 +49,12 @@ public class LotteryTypeLoader extends JsonReloadListener {
 
 				final int sunCost = JSONUtils.getAsInt(jsonObject, "sun_cost", 25);
 				lotteryType.setSunCost(sunCost);
+
+				final int price = JSONUtils.getAsInt(jsonObject, "trade_price", 2000);
+				lotteryType.setTradePrice(price);
+
+				final int tradeWeight = JSONUtils.getAsInt(jsonObject, "trade_weight", 100);
+				lotteryType.setTradeWeight(tradeWeight);
 
 				if(lotteryTypes == LotteryTypes.ALL_PLANT_CARDS) {
 					PVZAPI.get().getPlants().forEach(p -> {
@@ -127,5 +134,9 @@ public class LotteryTypeLoader extends JsonReloadListener {
 
 	public static Optional<SlotMachineTileEntity.LotteryType> getLotteryType(ResourceLocation res){
 		return Optional.ofNullable(LOTTERIES.get(res));
+	}
+
+	public static Map<ResourceLocation, SlotMachineTileEntity.LotteryType> getLotteries() {
+		return Collections.unmodifiableMap(LOTTERIES);
 	}
 }

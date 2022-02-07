@@ -1,0 +1,17 @@
+{
+  "good_count": {
+    "random": {
+      "min": 7,
+      "max": 9
+    }
+  },
+  "goods": [
+    {
+      "type": "item",
+      "item": "pvz:imitater_card",
+      "price": 18000,
+      "weight": 80,
+      "limit": 2
+    }
+  ]
+}

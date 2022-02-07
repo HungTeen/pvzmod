@@ -1,0 +1,20 @@
+{
+  "good_count": {
+    "random": {
+      "min": 7,
+      "max": 10
+    }
+  },
+  "goods": [
+    {
+      "type": "money_1",
+      "price": 1,
+      "must": true
+    },
+    {
+      "type": "money_10",
+      "price": 10,
+      "must": true
+    }
+  ]
+}

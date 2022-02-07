@@ -98,7 +98,7 @@ public class TorchWoodEntity extends PVZPlantEntity {
 	
 	@Override
 	public int getSuperTimeLength() {
-		return 20;
+		return 0;
 	}
 	
 	@Override

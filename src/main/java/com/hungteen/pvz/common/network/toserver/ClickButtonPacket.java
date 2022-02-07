@@ -1,20 +1,17 @@
 package com.hungteen.pvz.common.network.toserver;
 
+import java.util.function.Supplier;
+
 import com.hungteen.pvz.client.gui.GuiHandler;
 import com.hungteen.pvz.common.container.CardFusionContainer;
 import com.hungteen.pvz.common.container.EssenceAltarContainer;
 import com.hungteen.pvz.common.container.FragmentSpliceContainer;
 import com.hungteen.pvz.common.container.SlotMachineContainer;
-import com.hungteen.pvz.common.container.shop.DaveShopContainer;
-import com.hungteen.pvz.common.container.shop.MysteryShopContainer;
-import com.hungteen.pvz.common.container.shop.PennyShopContainer;
-import com.hungteen.pvz.common.container.shop.SunShopContainer;
-import com.hungteen.pvz.utils.TradeUtil.DaveGoods;
+import com.hungteen.pvz.common.container.shop.AbstractDaveShopContainer;
+
 import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.network.PacketBuffer;
 import net.minecraftforge.fml.network.NetworkEvent;
-
-import java.util.function.Supplier;
 
 public class ClickButtonPacket {
 
@@ -50,15 +47,9 @@ public class ClickButtonPacket {
 //						inv.currentPage+=message.num;
 //						inv.onPageChange();
 //					}
-				} else if(message.type == GuiHandler.DAVE_SHOP) {
-					if(player.containerMenu instanceof DaveShopContainer) {
-						DaveShopContainer container = (DaveShopContainer) player.containerMenu;
-						container.buyGood(DaveGoods.values()[message.num]);
-					}
-				} else if(message.type == GuiHandler.SUN_SHOP) {
-					if(player.containerMenu instanceof SunShopContainer) {
-						SunShopContainer container = (SunShopContainer) player.containerMenu;
-						container.buyGood(DaveGoods.values()[message.num]);
+				} else if(message.type == GuiHandler.SHOP) {
+					if(player.containerMenu instanceof AbstractDaveShopContainer) {
+						((AbstractDaveShopContainer) player.containerMenu).onSell(message.num);
 					}
 				} else if(message.type == GuiHandler.FRAGMENT_SPLICE) {
 					if(player.containerMenu instanceof FragmentSpliceContainer) {
@@ -77,16 +68,11 @@ public class ClickButtonPacket {
 						}
 
 					}
-				} else if(message.type == GuiHandler.PENNY_SHOP) {
-					if(player.containerMenu instanceof PennyShopContainer) {
-						PennyShopContainer container = (PennyShopContainer) player.containerMenu;
-						container.buyGood(DaveGoods.values()[message.num]);
-					}
 				} else if(message.type == GuiHandler.MYSTERY_SHOP) {
-					if(player.containerMenu instanceof MysteryShopContainer) {
-						MysteryShopContainer container = (MysteryShopContainer) player.containerMenu;
-						container.buyGood(DaveGoods.values()[message.num], message.op);
-					}
+//					if(player.containerMenu instanceof MysteryShopContainer) {
+//						MysteryShopContainer container = (MysteryShopContainer) player.containerMenu;
+//						container.buyGood(DaveGoods.values()[message.num], message.op);
+//					}
 				} else if(message.type == GuiHandler.ESSENCE_ALTAR) {
 					if(player.containerMenu instanceof EssenceAltarContainer) {
 						EssenceAltarContainer container = (EssenceAltarContainer) player.containerMenu;

@@ -44,8 +44,8 @@ public class ChallengeCommand {
 
     private static int addChallenge(CommandSource source, ResourceLocation res, BlockPos pos) {
         if (ChallengeManager.getChallengeByResource(res) != null) {
-            if (!ChallengeManager.hasRaidNearby(source.getLevel(), pos)) {
-                ChallengeManager.createRaid(source.getLevel(), res, pos);
+            if (!ChallengeManager.hasChallengeNearby(source.getLevel(), pos)) {
+                ChallengeManager.createChallenge(source.getLevel(), res, pos);
             } else {
                 source.sendFailure(new TranslationTextComponent("command.pvz.exist"));
             }
@@ -56,7 +56,7 @@ public class ChallengeCommand {
     }
 
     private static int removeNearby(CommandSource source, BlockPos pos) {
-        ChallengeManager.getRaids(source.getLevel()).forEach(raid -> {
+        ChallengeManager.getChallenges(source.getLevel()).forEach(raid -> {
             if (raid.getCenter().closerThan(pos, ConfigUtil.getRaidRange())) {
                 raid.remove();
             }
@@ -65,14 +65,14 @@ public class ChallengeCommand {
     }
 
     private static int removeAll(CommandSource source) {
-        ChallengeManager.getRaids(source.getLevel()).forEach(raid -> {
+        ChallengeManager.getChallenges(source.getLevel()).forEach(raid -> {
             raid.remove();
         });
         return 1;
     }
 
     private static int showAllChallenge(CommandSource source, Collection<? extends ServerPlayerEntity> targets) {
-        ChallengeManager.getRaids(source.getLevel()).forEach(raid -> {
+        ChallengeManager.getChallenges(source.getLevel()).forEach(raid -> {
             targets.forEach(p -> PlayerUtil.sendMsgTo(p, new StringTextComponent(raid.getCenter().toString())));
         });
         return 1;

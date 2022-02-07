@@ -18,6 +18,7 @@ import com.mojang.datafixers.util.Pair;
 import net.minecraft.entity.CreatureEntity;
 import net.minecraft.entity.EntitySize;
 import net.minecraft.entity.EntityType;
+import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.Pose;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.potion.EffectInstance;
@@ -81,9 +82,13 @@ public class PlanternEntity extends PVZPlantEntity implements ILightEffect {
 
 	private void displayAllRaider(){
 		if(this.level instanceof ServerWorld){
-			ChallengeManager.getRaidNearBy((ServerWorld) this.level, this.blockPosition()).ifPresent(challenge -> {
+			ChallengeManager.getChallengeNearBy((ServerWorld) this.level, this.blockPosition()).ifPresent(challenge -> {
 				challenge.getRaiders().forEach(raider -> {
-					raider.setGlowing(true);
+					if(raider instanceof LivingEntity) {
+						((LivingEntity) raider).addEffect(EffectUtil.viewEffect(Effects.GLOWING, 200, 0));
+					} else {
+						raider.setGlowing(true);
+					}
 				});
 			});
 		}

@@ -48,7 +48,14 @@ public interface IChallengeComponent {
 	 * the recommended level to defeat the challenge.
 	 */
 	int getRecommendLevel();
-	
+
+	boolean canTrade();
+
+	int getTradeWeight();
+
+	int getTradePrice();
+
+
 	boolean isWaveFinish(int wavePos, int spawnPos);
 	
 	boolean hasTag(String tag);

@@ -36,7 +36,7 @@ public class BlockModelGenerator extends BlockModelProvider{
 		genCrop(BlockRegister.PEA_PLANT.get(), 7);
 		genCrop(BlockRegister.TOXIC_SHROOM.get(), 3);
 		//up down side
-		Arrays.asList(BlockRegister.FRAGMENT_SPLICE.get(), BlockRegister.SLOT_MACHINE.get()
+		Arrays.asList(BlockRegister.FRAGMENT_SPLICE.get(), BlockRegister.SLOT_MACHINE.get(), BlockRegister.ARMA_ORE.get()
 				).forEach(b -> {
 				topSideBottom(b);
 				});

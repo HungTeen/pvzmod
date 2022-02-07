@@ -33,7 +33,7 @@ public class PVZChallengeData extends WorldSavedData {
 
 	/**
 	 * tick all raid in running.
-	 * {@link ChallengeManager#tickRaids(World)}
+	 * {@link ChallengeManager#tickChallenges(World)}
 	 */
 	public void tick() {
 		Iterator<Challenge> iterator = this.challengeMap.values().iterator();

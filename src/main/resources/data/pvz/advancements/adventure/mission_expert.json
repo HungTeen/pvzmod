@@ -20,7 +20,9 @@
       "trigger": "pvz:invasion_mission",
       "conditions": {
         "amount": {
-          "min": 10
+          "amount": {
+            "min": 10
+          }
         }
       }
     }

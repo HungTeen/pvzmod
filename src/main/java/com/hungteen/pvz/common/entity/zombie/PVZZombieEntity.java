@@ -221,6 +221,12 @@ public abstract class PVZZombieEntity extends AbstractPAZEntity implements IZomb
 				ParticleUtil.spawnSplash(this.level, this.position(), 1);
 			}
 		}
+		//natural spawn zombie will heal in lava.
+		if(! this.level.isClientSide){
+			if(this.isInLava() && this.getExistTick() % 10 == 0 && ! this.getOwnerUUID().isPresent()){
+				this.heal(20);
+			}
+		}
 	}
 
 	/**
