@@ -1,7 +1,0 @@
-{
-	"name": "特殊方块",
-	"description": "慢慢地，植物大战僵尸会添加越来越多$(bred)奇怪的方块$()，这里将介绍如何使用它们。",
-	"icon": "pvz:slot_machine",
-	"sortnum":2
-	//"parent":""
-}

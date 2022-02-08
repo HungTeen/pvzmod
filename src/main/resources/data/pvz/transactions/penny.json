@@ -1,10 +1,11 @@
 {
   "good_count": {
     "random": {
-      "min": 7,
-      "max": 10
+      "min": 1,
+      "max": 3
     }
   },
+  "has_enjoy_card": true,
   "goods": [
     {
       "type": "money_1",
@@ -15,6 +16,44 @@
       "type": "money_10",
       "price": 10,
       "must": true
+    },
+    {
+      "type": "item",
+      "item": "minecraft:enchanted_book",
+      "nbt": "{StoredEnchantments:[{'id':'pvz:soilless_plant', 'lvl':1}]}",
+      "price": 5,
+      "weight": 70,
+      "limit": 2
+    },
+    {
+      "type": "item",
+      "item": "minecraft:enchanted_book",
+      "nbt": "{StoredEnchantments:[{'id':'pvz:charm', 'lvl':1}]}",
+      "price": 3,
+      "weight": 80,
+      "limit": 3
+    },
+    {
+      "type": "item",
+      "item": "minecraft:enchanted_book",
+      "nbt": "{StoredEnchantments:[{'id':'pvz:energy_transfer', 'lvl':1}]}",
+      "price": 2,
+      "weight": 100,
+      "limit": 5
+    },
+    {
+      "type": "item",
+      "item": "pvz:lawn_mower",
+      "price": 4,
+      "weight": 90,
+      "limit": 2
+    },
+    {
+      "type": "item",
+      "item": "pvz:garden_rake",
+      "price": 1,
+      "weight": 100,
+      "limit": 10
     }
   ]
 }

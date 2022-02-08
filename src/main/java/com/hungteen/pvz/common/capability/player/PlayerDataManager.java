@@ -9,7 +9,6 @@ import com.hungteen.pvz.common.advancement.trigger.InvasionMissionTrigger;
 import com.hungteen.pvz.common.advancement.trigger.MoneyTrigger;
 import com.hungteen.pvz.common.advancement.trigger.SunAmountTrigger;
 import com.hungteen.pvz.common.advancement.trigger.TreeLevelTrigger;
-import com.hungteen.pvz.common.container.shop.MysteryShopContainer;
 import com.hungteen.pvz.common.event.handler.PlayerEventHandler;
 import com.hungteen.pvz.common.item.spawn.card.SummonCardItem;
 import com.hungteen.pvz.common.network.PAZStatsPacket;
@@ -492,40 +491,20 @@ public class PlayerDataManager {
 		
 		@SuppressWarnings("unused")
 		private final PlayerDataManager manager;
-		public int[] mysteryGoods = new int[MysteryShopContainer.MAX_MYSTERY_GOOD];
 		public int playSoundTick;
-		public int updateGoodTick;
-		public int lightLevel;
 		
 		public OtherStats(PlayerDataManager manager) {
 			this.manager = manager;
 			this.playSoundTick = 0;
-			this.lightLevel = 0;
-//			MysteryShopContainer.genNextGoods(player);
 		}
 		
 		private void saveToNBT(CompoundNBT baseTag) {
 			baseTag.putInt("base_sound_tick", this.playSoundTick);
-			CompoundNBT tmp = new CompoundNBT();
-			for(int i = 0; i < mysteryGoods.length; ++ i) {
-				tmp.putInt("mystery_good_" + i, mysteryGoods[i]);
-			}
-			baseTag.put("mystery_goods", tmp);
-			baseTag.putInt("update_good_tick", this.updateGoodTick);
 		}
 
 		private void loadFromNBT(CompoundNBT baseTag) {
 			if(baseTag.contains("base_sound_tick")) {
 				this.playSoundTick = baseTag.getInt("base_sound_tick");
-			}
-			if(baseTag.contains("mystery_goods")) {
-				CompoundNBT nbt = baseTag.getCompound("mystery_goods");
-				for(int i = 0; i < mysteryGoods.length; ++ i) {
-					mysteryGoods[i] = nbt.getInt("mystery_good_" + i);
-				}
-			}
-			if(baseTag.contains("update_good_tick")) {
-				this.updateGoodTick = baseTag.getInt("update_good_tick");
 			}
 		}
 	}

@@ -18,6 +18,8 @@ public class AdvancementHandler {
 		CriteriaTriggers.register(ChallengeTrigger.INSTANCE);
 		CriteriaTriggers.register(InvasionTrigger.INSTANCE);
 		CriteriaTriggers.register(InvasionMissionTrigger.INSTANCE);
+		CriteriaTriggers.register(PVZTradeTrigger.INSTANCE);
+		CriteriaTriggers.register(SlotMachineTrigger.INSTANCE);
 	}
 	
 }

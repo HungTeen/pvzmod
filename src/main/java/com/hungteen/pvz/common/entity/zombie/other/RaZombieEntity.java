@@ -107,6 +107,10 @@ public class RaZombieEntity extends PVZZombieEntity {
 	protected void onRemoveWhenDeath() {
 		super.onRemoveWhenDeath();
 		if(! level.isClientSide) {
+			//release all sun.
+			this.sunSet.forEach((sun) -> {
+				sun.setDropState(DropStates.NORMAL);
+			});
 			SunEntity.spawnSunsByAmount(level, blockPosition(), sunAmount);
 			this.sunAmount = 0;
 		}

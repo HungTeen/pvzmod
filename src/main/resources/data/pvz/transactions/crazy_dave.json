@@ -5,6 +5,7 @@
       "max": 8
     }
   },
+  "has_envelope": true,
   "goods": [
     {
       "type": "energy_2",

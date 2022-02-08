@@ -1,0 +1,17 @@
+{
+    "name": "Edgar Robot",
+    "icon": "pvz:edgar_doll",
+    "category": "pvz:start/boss",
+    "pages": [
+        {
+            "type": "text",
+            "text": "$(bred)Edgar-090505 and Edgar-09017$() are robots created by Dr.Edgar, they can be summoned by challenge envelope."
+        },
+        {
+            "type": "text",
+            "text": "$(bred)Edgar Robots$()'s common attack is its $(byellow)ice and fire balls$(). $(baqua)Ice balls$() can only be destroyed by $(bred)jalapeno$(), and $(bred)fire balls$() can only be destroyed by cold $(baqua)ice shroom$(). In addition, it will summon almost $(l)all kinds of invading zombies$(), especially $(bred)bungee zombies$(), so please be careful."
+        }
+    ],
+    "advancement": "pvz:adventure/root",
+    "sortnum": 2
+}

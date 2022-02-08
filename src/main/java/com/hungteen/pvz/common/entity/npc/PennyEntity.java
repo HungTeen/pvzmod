@@ -2,7 +2,9 @@ package com.hungteen.pvz.common.entity.npc;
 
 import com.hungteen.pvz.common.container.provider.PVZContainerProvider;
 import com.hungteen.pvz.common.container.shop.PennyShopContainer;
+import com.hungteen.pvz.common.item.ItemRegister;
 import com.hungteen.pvz.common.misc.sound.SoundRegister;
+import com.hungteen.pvz.utils.StringUtil;
 import net.minecraft.entity.CreatureEntity;
 import net.minecraft.entity.EntitySize;
 import net.minecraft.entity.EntityType;
@@ -11,6 +13,7 @@ import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.inventory.container.Container;
+import net.minecraft.item.ItemStack;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.SoundEvent;
 import net.minecraft.util.SoundEvents;
@@ -24,6 +27,12 @@ public class PennyEntity extends AbstractDaveEntity {
 	public PennyEntity(EntityType<? extends CreatureEntity> type, World worldIn) {
 		super(type, worldIn);
 		this.setInvulnerable(true);
+		this.transactionResource = StringUtil.prefix("penny");
+	}
+
+	@Override
+	protected boolean canOpenShop(PlayerEntity player, ItemStack heldItem) {
+		return heldItem.getItem().equals(ItemRegister.CAR_KEY.get());
 	}
 
 	@Override
@@ -40,40 +49,6 @@ public class PennyEntity extends AbstractDaveEntity {
 			buffer.writeInt(PennyEntity.this.getId());
 		});
 	}
-
-	//	@Override
-//	public ActionResultType interactAt(PlayerEntity player, Vector3d vec3d, Hand hand) {
-//		if (! level.isClientSide && player instanceof ServerPlayerEntity && hand == Hand.MAIN_HAND) {
-//			if(player.getItemInHand(hand).getItem() == ItemRegister.CAR_KEY.get()) {
-//				NetworkHooks.openGui((ServerPlayerEntity) player, new INamedContainerProvider() {
-//				    @Override
-//				    public Container createMenu(int p_createMenu_1_, PlayerInventory p_createMenu_2_, PlayerEntity p_createMenu_3_) {
-//					    return new MysteryShopContainer(p_createMenu_1_, p_createMenu_3_);
-//				    }
-//
-//				    @Override
-//				    public ITextComponent getDisplayName() {
-//					    return new TranslationTextComponent("gui.pvz.mystery_shop.show");
-//				    }
-//			    });
-//				return ActionResultType.SUCCESS;
-//			} else {
-//				NetworkHooks.openGui((ServerPlayerEntity) player, new INamedContainerProvider() {
-//				    @Override
-//				    public Container createMenu(int p_createMenu_1_, PlayerInventory p_createMenu_2_, PlayerEntity p_createMenu_3_) {
-//					    return new PennyShopContainer(p_createMenu_1_, p_createMenu_3_);
-//				    }
-//
-//				    @Override
-//				    public ITextComponent getDisplayName() {
-//					    return new TranslationTextComponent("gui.pvz.penny_shop.show");
-//				    }
-//			    });
-//			}
-//			return ActionResultType.SUCCESS;
-//		}
-//		return ActionResultType.FAIL;
-//	}
 
 	@Override
 	public EntitySize getDimensions(Pose poseIn) {

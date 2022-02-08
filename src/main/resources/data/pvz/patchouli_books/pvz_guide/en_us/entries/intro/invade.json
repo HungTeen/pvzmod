@@ -5,11 +5,11 @@
     "pages": [
         {
             "type": "text",
-            "text": "Maybe you haven't encountered zombies yet, but it doesn't mean that there are no zombies. $(bred)Strange help$() didn't lie to you. From the beginning of the creation of the world, there is a $(bred)SafeDayLength$(). The default SafeDayLength is $(l)5 game days$(), after which $(red)invasion will occur every 1 day in OverWorld$(). SafeDayLength and InvadeInterval can be modified in the config file."
+            "text": "Maybe you haven't encountered zombies yet, but it doesn't mean that there are no zombies. $(bred)Strange help$() didn't lie to you. From the beginning of the creation of the world, there is a $(bred)SafeDayLength$(). The default SafeDayLength is $(l)1 game days$(), after which $(red)invasion will occur every 2 day in OverWorld$(). they can be modified in the config file."
         },
         {
             "type": "text",
-            "text": "$(bred)Zombie invasions$() are based on $(l)days$(). If there is a sign $(bred)<Zombies are coming>$() in the morning, it means that the invasion has begun and it will continue until the end of the day. Zombie Invasion contains various of events, $(bred)Events$() can divided into two types(Spawn Events, Assist Events)."
+            "text": "$(bred)Invasions$() are based on $(l)days$(). If there is a sign $(bred)<Zombies are coming>$() in the morning, it means that the invasion has begun and it will continue until the end of the day. Zombie Invasion contains various of events, $(bred)Events$() can divided into two types(Spawn Events, Assist Events)."
         },
         {
             "type": "text",
@@ -21,23 +21,7 @@
         },
         {
             "type": "text",
-            "text": "Every Zombie Invasion day will give reward players. As long as the player $(bred)kills 50 zombies$() that day, he can get $(borange)50 Money$(), a random $(bgreen)Plant Enjoy Card$() and $(byellow)3 additional chances to draw$().$(br)As long as the player $(bred)kills 200 zombies$() that day, he can get $(borange)200 Money$(), 2 random $(bgreen)Plant Enjoy Cards$() and $(byellow)5 additional chances to draw$()."
-        },
-        {
-            "type": "text",
-            "text": "Current Event list:$(br)$(bred)Bucket invasion$()(Normal, Conehead, Pole, Bucket Zombies).$(br)$(bred)Water invasion$()(Normal, Snorkel, Zomboni, Bobsle Teams, Dolphin Rider, Lava Zombies).$(br)$(bred)Halloween invasion$()(Normal, Pumpkin, Trick Zombies)$(br)$(bred)Newspaper Invasion$()(Normal, Newspaper, Old, SundayEdition Zombies)$(br)$(bred)Football Invasion$()(Normal, ScreenDoor, Football, Dancing, GigaFootball Zombies)$(br)"
-        },
-        {
-            "type": "text",
-            "text": "Current Event list:$(br)$(bred)Yeti Invasion$()(Normal, Jack-In-Box, Baloon, Digger, Pogo Zombies, $(bpurple)low chance to spawn Yeti Zombie When huge wave$().)$(br)$(bred)Fog Invasion$()(Players' Screen will be blocked by fog that night)$(br)$(bred)Roof invasion$()(Normal, Bungee, Ladder, Catapult Zombies, Gargantuar)"
-        },
-        {
-            "type": "text",
-            "text": "Event list that only happen $(bblue)after Adgar-090505 is killed$():$(br)$(bred)Random Invasion$()(Random)$(br)$(bred)Bungee invasion$()(Bungee Zombies)$(br)$(bred)Giant invasion$()(Gargantuar, Sad Gargantuar)$(br)$(bred)Metal invasion$()(Bucket, ScreenDoor, Football, Giga Football, Jack-in-box, Digger, Pogo, Ladder Zombies)$(br)"
-        },
-        {
-            "type": "text",
-            "text": "Event list that only happen $(bblue)after Adgar-090505 is killed$():$(br)$(bred)Invis Invasion$()(Zombies spawned in that day will be invisable)$(br)$(bred)Zombotany Invasion$()(PeaShooter, WallNut, GatlingPea, TallNut, Squash, Jalapeno Zombie)$(br)$(bred)Mini Invasion$()(Zombie spawned in that day will have small size and low health, but faster speed and higher damage)$(br)"
+            "text": "Every Invasion day will randomly give mission to players, including kill invaders, collect sun, instant kill. All Mission have several stage, finish each of stage will get rewards like $(l)Money, Jewel, Lottery Chance$().$(br)"
         }
     ],
     "advancement": "pvz:adventure/root",

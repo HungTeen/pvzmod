@@ -1,0 +1,39 @@
+{
+    "name": "存储阳光",
+    "icon": "pvz:sun_converter",
+    "category": "pvz:start",
+    "pages": [
+        {
+            "type": "spotlight",
+            "item": "pvz:sun_storage_sapling",
+            "title": "储光树苗",
+            "text": "$(byellow)储光树苗$()是一种能为玩家$(bgreen)存储阳光$()的特殊树苗。玩家只需$(l)右击$()食用它就能$(bred)吸收转化它存储的阳光$()，树苗吃完不会$(l)消耗$()。另外，树苗经常放在一些机器的$()能量输入槽$()。"
+        },
+        {
+            "type": "crafting",
+            "recipe": "pvz:food/small_sun_storage_sapling",
+            "title": "低级储光树苗",
+            "text": "基本的储光树苗，最大容量是1000。"
+        },
+        {
+            "type": "crafting",
+            "recipe": "pvz:food/sun_storage_sapling",
+            "title": "储光树苗",
+            "text": "升级版的储光树苗，最大容量是10000。"
+        },
+        {
+            "type": "crafting",
+            "recipe": "pvz:food/large_sun_storage_sapling",
+            "title": "储光树苗",
+            "text": "终极版的储光树苗，最大容量是100000。"
+        },
+        {
+            "type": "spotlight",
+            "item": "pvz:sun_converter",
+            "title": "阳光转化器",
+            "text": "$(byellow)阳光转化器$()能帮助储光树苗吸收阳光。 你只需要把$(l)树苗放在九个槽位的任意一个$()，然后转化器会$(bred)自动吸收周围的阳光$()并传递给储光树苗。"
+        }
+    ],
+    "advancement": "pvz:adventure/root",
+    "sortnum": 10
+}

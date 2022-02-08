@@ -58,7 +58,6 @@ public class Invasion {
     private int invasionLvl;
     private boolean isRunning = false;
     private static int tick = 0;
-    private static int spawnCD = 0;
     private int currentCount = 0;
     /* wave */
     private int[] waveTime = new int[InvasionManager.MAX_WAVE_NUM];
@@ -119,7 +118,7 @@ public class Invasion {
         if (current < maxCount) {
             for (int i = 0; i < this.getSpawnCount(); ++i) {
                 final SpawnType type = getSpawnList().getRandomItem(world.random).get();
-                final BlockPos pos = WorldUtil.findRandomSpawnPos(world, player.blockPosition(), 10, 8, range,
+                final BlockPos pos = WorldUtil.findRandomSpawnPos(world, player.blockPosition(), 10, 12, range,
                         b -> InvasionManager.suitableInvasionPos(world, b) && type.checkPos(world, b));
 
                 if (pos != null) {
@@ -547,23 +546,24 @@ public class Invasion {
     }
 
     /**
-     * hard : 1s normal : 3s easy : 5s
+     * hard : 3s normal : 6s easy : 10s
      * 20 min = 1200 s
      */
     private int getSpawnCD() {
-        if (spawnCD == 0) {
-            final int mid = world.getDifficulty() == Difficulty.HARD ? 20 : world.getDifficulty() == Difficulty.NORMAL ? 60 : 100;
-            this.spawnCD = MathUtil.getRandomMinMax(world.random, -10, 10) + mid;
-        }
-        return world.getDifficulty() == Difficulty.PEACEFUL ? 2000 : spawnCD;
+    	if(world.getDifficulty() == Difficulty.PEACEFUL) {
+    		return 2000;
+    	}
+        final int mid = world.getDifficulty() == Difficulty.HARD ? 60 : world.getDifficulty() == Difficulty.NORMAL ? 120 : 200;
+        final int extra = (this.currentCount < 20 ? 0 : (this.currentCount - 20) * 5);
+        return MathUtil.getRandomMinMax(world.random, -10, 10) + mid + extra;
     }
 
     /**
-     * hard : 3 - 5 normal : 2 - 5 easy : 2 - 3
+     * hard : 2 - 4 normal : 1 - 4 easy : 1 - 3
      */
     private int getSpawnCount() {
-        final int max = world.getDifficulty() == Difficulty.EASY ? 3 : 5;
-        final int min = world.getDifficulty() == Difficulty.HARD ? 3 : 2;
+        final int max = world.getDifficulty() == Difficulty.EASY ? 3 : 4;
+        final int min = world.getDifficulty() == Difficulty.HARD ? 2 : 1;
         return MathUtil.getRandomMinMax(world.random, min, max);
     }
 

@@ -1,0 +1,47 @@
+{
+    "name": "Crafting Plant Card",
+    "icon": "pvz:pea_shooter_card",
+    "category": "pvz:start",
+    "pages": [
+        {
+            "type": "text",
+            "text": "Crafting Summon Cards generally need $(#ff0000)original materials, card templates, and corresponding special essences$(). The crafting materials can be $(l)seeds, summoning cards$(), etc. the card template is corresponding to the $(l)quality$() of the Summon Card. The special essence is generally the essence corresponding to the creature."
+        },
+        {
+            "type": "text",
+            "text": "Crafting Card templates need $(#ff0000)Origin Essences and specific materials$(). Special essences was introduced earlier.The original materials are complicated, because different Summon Cards require different materials. Fortunately, a creature only corresponds to one essence. According to the recipe, just look for the ingredients."  
+        },
+        {
+            "type": "crafting",
+            "recipe": "pvz:card/template/gray_card",
+            "recipe2": "pvz:card/template/white_card",
+            "title": "Card Template"
+        },
+        {
+            "type": "crafting",
+            "recipe": "pvz:card/template/green_card",
+            "recipe2": "pvz:card/template/blue_card",
+            "title": "Card Template"
+        },
+        {
+            "type": "crafting",
+            "recipe": "pvz:card/template/purple_card",
+            "recipe2": "pvz:card/template/gold_card",
+            "title": "Card Template"
+        },
+        {
+            "type": "crafting",
+            "recipe": "pvz:card/template/red_card",
+            "recipe2": "pvz:card/template/black_card",
+            "title": "Card Template"
+        },
+        {
+            "type": "crafting",
+            "recipe": "pvz:card/pea_shooter_card",
+            "title": "PeaShooter Card",
+            "text": "Take $(#ff0000)PeaShooter Card$() as an example. PeaShooter is a creature with $(l)gray quality and appease essence$().So its recipe requires $(l)peas, gray card templates and $(#ff0000)Appease Essence$()."
+        }
+    ],
+    "advancement": "pvz:adventure/origin",
+    "sortnum": 1
+}

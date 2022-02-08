@@ -142,7 +142,7 @@ public class NobleZombieEntity extends AbstractBossZombieEntity {
 		final BlockPos teleportPos = (this.getTarget() == null ? this.blockPosition() : this.getTarget().blockPosition());
 		this.setTpTick(-this.getRandom().nextInt(this.maxTpCD - this.minTpCD + 1) - this.minTpCD);
 		this.teleportToPos(teleportPos.getX(), teleportPos.getY(), teleportPos.getZ());
-		ZombieHandEntity.spawnRangeZombieHands(level, this, 3);
+		ZombieHandEntity.spawnRangeZombieHands(level, this, 2);
 	}
 
 	/**

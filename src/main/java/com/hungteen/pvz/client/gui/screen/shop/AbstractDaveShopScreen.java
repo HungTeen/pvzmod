@@ -81,21 +81,25 @@ public abstract class AbstractDaveShopScreen extends PVZContainerScreen<Abstract
             }
             ++h;
         }
-        //update trade buttons.
-        for (TradeButton trade : this.trades) {
-            if (trade.isHovered()) {
-                trade.renderToolTip(stack, mouseX, mouseY);
-            }
-            trade.visible = this.downHeight + trade.id < goods.size();
-        }
         //update buy button.
         if(goods.isEmpty()){
             this.buyButton.visible = false;
         } else{
-            final AbstractDaveEntity.GoodType goodType = goods.get(this.selectedPos);
+        	final AbstractDaveEntity.GoodType goodType = goods.get(this.selectedPos);
             this.buyButton.visible = (goodType != null && this.menu.canClickBuyButton() && this.getCurrentMoney() >= goodType.getGoodPrice());
             //update good details.
             this.renderDetails(stack, goodType);
+        }
+        //update refresh time.
+        this.menu.getLeftRefreshTime().ifPresent(time -> {
+            StringUtil.drawCenteredScaledString(stack, font, new TranslationTextComponent("gui.pvz.shop.left_time", time).getString(), this.leftPos + 117 + 120, this.topPos + 28, time > 12000 ? Colors.GREEN : time > 1200 ? Colors.YELLOW : Colors.RED, 0.8f);
+        });
+        //update trade buttons.
+        for (TradeButton trade : this.trades) {
+            if (trade.isHovered()) {
+                trade.renderToolTip(stack, goods, mouseX, mouseY);
+            }
+            trade.visible = this.downHeight + trade.id < goods.size();
         }
         //tooltips.
         this.renderTooltip(stack, mouseX, mouseY);
@@ -207,15 +211,18 @@ public abstract class AbstractDaveShopScreen extends PVZContainerScreen<Abstract
             return this.id;
         }
 
-        public void renderToolTip(MatrixStack stack, int mouseX, int mouseY) {
-            AbstractDaveEntity.GoodType goodType = AbstractDaveShopScreen.this.getSelectedGood();
-            if(goodType != null) {
-                if (goodType.getType().isItem()) {
-                    AbstractDaveShopScreen.this.renderComponentTooltip(stack, AbstractDaveShopScreen.this.getTooltipFromItem(goodType.getGood()), mouseX, mouseY);
-                } else {
-                    AbstractDaveShopScreen.this.renderComponentTooltip(stack, Arrays.asList(goodType.getGoodDescription()), mouseX, mouseY);
+        public void renderToolTip(MatrixStack stack, List<AbstractDaveEntity.GoodType> goods, int mouseX, int mouseY) {
+        	final int pos = downHeight + this.getId();
+        	if(pos >= 0 && pos < goods.size()) {
+        		final AbstractDaveEntity.GoodType goodType = goods.get(pos);
+        		if(goodType != null) {
+                    if (goodType.getType().isItem()) {
+                        AbstractDaveShopScreen.this.renderComponentTooltip(stack, AbstractDaveShopScreen.this.getTooltipFromItem(goodType.getGood()), mouseX, mouseY);
+                    } else {
+                        AbstractDaveShopScreen.this.renderComponentTooltip(stack, Arrays.asList(goodType.getGoodDescription()), mouseX, mouseY);
+                    }
                 }
-            }
+        	}
         }
     }
 

@@ -1,0 +1,39 @@
+{
+    "name": "Sun Storage",
+    "icon": "pvz:sun_converter",
+    "category": "pvz:start",
+    "pages": [
+        {
+            "type": "spotlight",
+            "item": "pvz:sun_storage_sapling",
+            "title": "Sun Storage Sapling",
+            "text": "$(byellow)Sun Storage Sapling$() is a kind of sapling that can $(bgreen)storage sun$() for players. Players can $(l)right click$() to eat it and $(bred)absorb its sun$(), and it will $(l)not consume$() after finish eating. Besides, it often used in machine at $()energy input$() slot."
+        },
+        {
+            "type": "crafting",
+            "recipe": "pvz:food/small_sun_storage_sapling",
+            "title": "Low Storage Sapling",
+            "text": "Basic storage sapling, its max storage amount is 1000."
+        },
+        {
+            "type": "crafting",
+            "recipe": "pvz:food/sun_storage_sapling",
+            "title": "Storage Sapling",
+            "text": "Normal storage sapling, its max storage amount is 10000."
+        },
+        {
+            "type": "crafting",
+            "recipe": "pvz:food/large_sun_storage_sapling",
+            "title": "Storage Sapling",
+            "text": "Large storage sapling, its max storage amount is 100000."
+        },
+        {
+            "type": "spotlight",
+            "item": "pvz:sun_converter",
+            "title": "Sun Converter",
+            "text": "$(byellow)Sun Converter$() can help Storage Saplings absorb sun, you just need to $(l)put saplings into the 9 slots$(), and the Converter will $(bred)automatically absorb nearby sun$() and transfer to saplings."
+        }
+    ],
+    "advancement": "pvz:adventure/root",
+    "sortnum": 10
+}

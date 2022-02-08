@@ -40,7 +40,7 @@ public class PVZMod {
 	
     public PVZMod() {
     	{
-    		final Pair<PVZConfig.Common, ForgeConfigSpec> specPair = new ForgeConfigSpec.Builder().configure(PVZConfig.Common::new);
+			final Pair<PVZConfig.Common, ForgeConfigSpec> specPair = new ForgeConfigSpec.Builder().configure(PVZConfig.Common::new);
     		ModLoadingContext.get().registerConfig(Type.COMMON, specPair.getRight());
     		PVZConfig.COMMON_CONFIG = specPair.getLeft();
     	}

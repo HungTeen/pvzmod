@@ -63,6 +63,11 @@ public class TransactionTypeLoader extends JsonReloadListener {
                     }
                 }
 
+                transactionType.setEnvelope(JSONUtils.getAsBoolean(jsonObject, "has_envelope", false));
+                transactionType.setSlotMachine(JSONUtils.getAsBoolean(jsonObject, "has_slot_machine", false));
+                transactionType.setEnjoyCard(JSONUtils.getAsBoolean(jsonObject, "has_enjoy_card", false));
+
+
                 JsonArray array = JSONUtils.getAsJsonArray(jsonObject, "goods", new JsonArray());
                 array.forEach(e -> {
                     if(e.isJsonObject()) {

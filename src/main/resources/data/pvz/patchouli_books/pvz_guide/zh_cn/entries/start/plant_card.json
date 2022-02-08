@@ -1,0 +1,47 @@
+{
+    "name": "合成植物卡",
+    "icon": "pvz:pea_shooter_card",
+    "category": "pvz:start",
+    "pages": [
+        {
+            "type": "text",
+            "text": "召唤卡的合成一般需要$(#ff0000)合成原料、卡的模板、对应的特殊精华$()。合成原料可以是$(l)种子、召唤卡$()等；卡的模板就是召唤卡对应$(l)品质$()的模板，特殊精华一般是该生物的属性对应的精华。"
+        },
+        {
+            "type": "text",
+            "text": "卡模板的合成需要$(l)原始精华和特定材料$()。特殊精华的获取前面介绍过。合成原料比较复杂，不同的召唤卡需要不同的原料。好在一个生物只对应一个精华，$(l)如果你获得了一个精华，你会解锁合成需要该精华的所有召唤卡的配方$()。根据配方的提示，再去寻找原料即可。"  
+        },
+        {
+            "type": "crafting",
+            "recipe": "pvz:card/template/gray_card",
+            "recipe2": "pvz:card/template/white_card",
+            "title": "模板配方"
+        },
+        {
+            "type": "crafting",
+            "recipe": "pvz:card/template/green_card",
+            "recipe2": "pvz:card/template/blue_card",
+            "title": "模板配方"
+        },
+        {
+            "type": "crafting",
+            "recipe": "pvz:card/template/purple_card",
+            "recipe2": "pvz:card/template/gold_card",
+            "title": "模板配方"
+        },
+        {
+            "type": "crafting",
+            "recipe": "pvz:card/template/red_card",
+            "recipe2": "pvz:card/template/black_card",
+            "title": "模板配方"
+        },
+        {
+            "type": "crafting",
+            "recipe": "pvz:card/pea_shooter_card",
+            "title": "豌豆射手卡",
+            "text": "以$(#ff0000)豌豆射手卡$()为例，豌豆射手是$(l)灰色品质、喷射属性$()的生物。所以其合成需要$(l)豌豆、灰卡模板和喷射精华$()。"
+        }
+    ],
+    "advancement": "pvz:adventure/origin",
+    "sortnum": 1
+}

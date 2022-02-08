@@ -3,11 +3,9 @@ package com.hungteen.pvz.common.container;
 import com.hungteen.pvz.PVZMod;
 import com.hungteen.pvz.client.gui.screen.*;
 import com.hungteen.pvz.client.gui.screen.shop.DaveShopScreen;
-import com.hungteen.pvz.client.gui.screen.shop.MysteryShopScreen;
 import com.hungteen.pvz.client.gui.screen.shop.PennyShopScreen;
 import com.hungteen.pvz.client.gui.screen.shop.SunShopScreen;
 import com.hungteen.pvz.common.container.shop.DaveShopContainer;
-import com.hungteen.pvz.common.container.shop.MysteryShopContainer;
 import com.hungteen.pvz.common.container.shop.PennyShopContainer;
 import com.hungteen.pvz.common.container.shop.SunShopContainer;
 import net.minecraft.client.gui.ScreenManager;
@@ -73,12 +71,6 @@ public class ContainerRegister {
         });
 	});
 	
-	public static final RegistryObject<ContainerType<MysteryShopContainer>> MYSTERY_SHOP = CONTAINER_TYPES.register("mystery_shop", () -> {
-		return IForgeContainerType.create((windowId, inv, data) -> {
-            return new MysteryShopContainer(windowId, inv.player, data.readInt());
-        });
-	});
-	
 	public static final RegistryObject<ContainerType<EssenceAltarContainer>> ESSENCE_ALTAR = CONTAINER_TYPES.register("essence_altar", () -> {
 		return IForgeContainerType.create((windowId, inv, data) -> {
             return new EssenceAltarContainer(windowId, inv.player, data.readBlockPos());
@@ -113,7 +105,6 @@ public class ContainerRegister {
         ScreenManager.register(FRAGMENT_SPLICE.get(), FragmentSpliceScreen::new);
         ScreenManager.register(SLOT_MACHINE.get(), SlotMachineScreen::new);
         ScreenManager.register(PENNY_SHOP.get(), PennyShopScreen::new);
-        ScreenManager.register(MYSTERY_SHOP.get(), MysteryShopScreen::new);
         ScreenManager.register(ESSENCE_ALTAR.get(), EssenceAltarScreen::new);
         ScreenManager.register(CARD_FUSION.get(), CardFusionScreen::new);
         ScreenManager.register(IMITATER.get(), ImitaterScreen::new);

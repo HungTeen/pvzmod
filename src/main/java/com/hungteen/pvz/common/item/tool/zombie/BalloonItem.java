@@ -26,7 +26,7 @@ public class BalloonItem extends Item {
     private static final int EFFECT_CD = 200;
 
     public BalloonItem() {
-        super(new Item.Properties().stacksTo(1).tab(PVZItemGroups.PVZ_MISC));
+        super(new Item.Properties().stacksTo(1).tab(PVZItemGroups.PVZ_USEFUL).durability(100));
     }
 
     @Override
@@ -43,7 +43,10 @@ public class BalloonItem extends Item {
             if(! playerIn.level.isClientSide){
                 PlayerUtil.addResource(playerIn, Resources.SUN_NUM, - SUN_COST);
                 playerIn.addEffect(new EffectInstance(Effects.SLOW_FALLING, EFFECT_CD, 10));
-                playerIn.getCooldowns().addCooldown(playerIn.getItemInHand(handIn).getItem(), EFFECT_CD + 80);
+                if(PlayerUtil.isPlayerSurvival(playerIn)) {
+                    playerIn.getCooldowns().addCooldown(playerIn.getItemInHand(handIn).getItem(), EFFECT_CD + 80);
+                    playerIn.getItemInHand(handIn).hurtAndBreak(1, playerIn, p -> p.broadcastBreakEvent(Hand.MAIN_HAND));
+                }
             }
             return ActionResult.success(playerIn.getItemInHand(handIn));
         }

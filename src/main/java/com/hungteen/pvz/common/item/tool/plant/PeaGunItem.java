@@ -326,7 +326,7 @@ public class PeaGunItem extends Item {
 	 */
 	public static boolean isValidMode(ItemStack stack) {
 		if (stack.getItem() instanceof PlantCardItem) {
-			return SHOOT_MODES.contains(((PlantCardItem) stack.getItem()).plantType);
+			return SHOOT_MODES.contains(((PlantCardItem) stack.getItem()).plantType) && ! ((PlantCardItem) stack.getItem()).isEnjoyCard;
 		}
 		return false;
 	}

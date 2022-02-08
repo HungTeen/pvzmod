@@ -215,6 +215,7 @@ public abstract class PVZPlantEntity extends AbstractPAZEntity implements IPlant
 			Block block = this.level.getBlockState(this.blockPosition().below()).getBlock();
 			int lvl = GoldLeafEntity.getBlockGoldLevel(block);
 			if (lvl <= 0) {//not gole tile.
+				this.setGoldTime(0);
 				return;
 			}
 			this.setGoldTime(this.getGoldTime() + 1);

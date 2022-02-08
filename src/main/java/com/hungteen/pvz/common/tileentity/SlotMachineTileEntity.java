@@ -1,7 +1,17 @@
 package com.hungteen.pvz.common.tileentity;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.Optional;
+import java.util.Random;
+
+import javax.annotation.Nullable;
+
 import com.hungteen.pvz.PVZMod;
 import com.hungteen.pvz.api.events.LotteryEvent;
+import com.hungteen.pvz.common.advancement.trigger.SlotMachineTrigger;
 import com.hungteen.pvz.common.container.SlotMachineContainer;
 import com.hungteen.pvz.common.datapack.LotteryTypeLoader;
 import com.hungteen.pvz.common.entity.EntityRegister;
@@ -13,9 +23,12 @@ import com.hungteen.pvz.utils.PlayerUtil;
 import com.hungteen.pvz.utils.StringUtil;
 import com.hungteen.pvz.utils.enums.Resources;
 import com.hungteen.pvz.utils.others.WeightList;
+
 import net.minecraft.block.BlockState;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
+import net.minecraft.entity.player.ServerPlayerEntity;
+import net.minecraft.inventory.InventoryHelper;
 import net.minecraft.inventory.container.Container;
 import net.minecraft.inventory.container.INamedContainerProvider;
 import net.minecraft.item.ItemStack;
@@ -23,15 +36,15 @@ import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.network.NetworkManager;
 import net.minecraft.network.play.server.SUpdateTileEntityPacket;
 import net.minecraft.tileentity.ITickableTileEntity;
-import net.minecraft.util.*;
+import net.minecraft.util.IIntArray;
+import net.minecraft.util.INameable;
+import net.minecraft.util.IntArray;
+import net.minecraft.util.ResourceLocation;
+import net.minecraft.util.SoundCategory;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.common.util.Constants;
-import net.minecraftforge.items.ItemStackHandler;
-
-import javax.annotation.Nullable;
-import java.util.*;
 
 /**
  * 1. get resource of lottery type. 2. press button to choose fast start or slow
@@ -40,7 +53,7 @@ import java.util.*;
  */
 public class SlotMachineTileEntity extends PVZTileEntity implements ITickableTileEntity, INamedContainerProvider, INameable {
 
-	public final ItemStackHandler handler = new ItemStackHandler(3);
+//	public final ItemStackHandler handler = new ItemStackHandler(3);
 	/*
 	 * 0 - 11 : slot types. 12 : change tick. 13 : current pos. 14 : running or not.
 	 * 15 : change cd.
@@ -173,11 +186,12 @@ public class SlotMachineTileEntity extends PVZTileEntity implements ITickableTil
 
 	private void genBonusResult(int id, int num) {
 		final SlotType type = this.getLotteryType().getSlotType(id);
+		
 		switch (type.getSlotTypes()) {
 		case ITEM: {
 			for (int i = 0; i < num; ++i) {
 				final ItemStack newStack = type.stack.get().copy();
-				this.handler.setStackInSlot(i, newStack);
+				InventoryHelper.dropItemStack(level, worldPosition.getX(), worldPosition.getY() + 1, worldPosition.getZ(), newStack);
 			}
 			break;
 		}
@@ -201,6 +215,11 @@ public class SlotMachineTileEntity extends PVZTileEntity implements ITickableTil
 		default:
 			break;
 		}
+
+		if(player instanceof ServerPlayerEntity){
+			SlotMachineTrigger.INSTANCE.trigger((ServerPlayerEntity) player, num, type.getSlotTypes().toString().toLowerCase());
+		}
+
 		this.level.playSound(null, worldPosition, SoundRegister.JEWEL_DROP.get(), SoundCategory.BLOCKS, 1F, 1F);
 	}
 
@@ -247,11 +266,11 @@ public class SlotMachineTileEntity extends PVZTileEntity implements ITickableTil
 
 	private boolean canRun() {
 		// slot is full.
-		for (int i = 0; i < 3; ++i) {
-			if (!this.handler.getStackInSlot(i).isEmpty()) {
-				return false;
-			}
-		}
+//		for (int i = 0; i < 3; ++i) {
+//			if (!this.inv.getItem(i).isEmpty()) {
+//				return false;
+//			}
+//		}
 		// no enough sun or lottery chance.
 		if (PlayerUtil.getResource(this.player, Resources.SUN_NUM) < this.getSunCost()
 				|| PlayerUtil.getResource(this.player, Resources.LOTTERY_CHANCE) <= 0) {
@@ -388,9 +407,9 @@ public class SlotMachineTileEntity extends PVZTileEntity implements ITickableTil
 			}
 		}
 
-		if (compound.contains("slot_machine_result")) {
-			this.handler.deserializeNBT(compound.getCompound("slot_machine_result"));
-		}
+//		if (compound.contains("slot_machine_result")) {
+//			this.inv.fromTag((ListNBT) compound.get("slot_machine_result"));
+//		}
 		
 		if (compound.contains("CustomName", 8)) {
 	         this.name = ITextComponent.Serializer.fromJson(compound.getString("CustomName"));
@@ -417,7 +436,7 @@ public class SlotMachineTileEntity extends PVZTileEntity implements ITickableTil
 			}
 		}
 
-		compound.put("slot_machine_result", this.handler.serializeNBT());
+//		compound.put("slot_machine_result", this.inv.createTag());
 		
 		if (this.name != null) {
 			compound.putString("CustomName", ITextComponent.Serializer.toJson(this.name));

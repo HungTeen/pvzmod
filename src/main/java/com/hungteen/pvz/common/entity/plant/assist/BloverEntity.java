@@ -30,8 +30,12 @@ public class BloverEntity extends PVZPlantEntity {
 	@Override
 	protected void normalPlantTick() {
 		super.normalPlantTick();
-		if(! level.isClientSide && this.getExistTick() == 5) {
-			this.blow();
+		if(! level.isClientSide) {
+			if(this.getExistTick() == 5) {
+			    this.blow();
+			} else if(this.getExistTick() > 60) {
+				this.remove();
+			}
 		}
 	}
 	
@@ -48,10 +52,6 @@ public class BloverEntity extends PVZPlantEntity {
 					target.setDeltaMovement(speed.x + delta.x, speed.y, speed.z + delta.z);
 				}
 			});
-			//dispel fog.
-//			level.getEntitiesOfClass(PlayerEntity.class, EntityUtil.getEntityAABB(this, len, len), player -> ! EntityUtil.canTargetEntity(this, player)).forEach((player) -> {
-//				PlayerUtil.addResource(player, Resources.NO_FOG_TICK, 2400 * this.getForceLevel());
-//			});
 		}
 	}
 

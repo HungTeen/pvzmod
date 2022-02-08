@@ -1,0 +1,33 @@
+{
+  "parent": "pvz:adventure/essence",
+  "display": {
+    "icon": {
+      "item": "pvz:car_key"
+    },
+    "title": {
+      "translate": "advancement.pvz.crazy_dave"
+    },
+    "description": {
+      "translate": "advancement.pvz.crazy_dave.desc"
+    },
+    "frame": "goal",
+    "show_toast": true,
+    "announce_to_chat": true,
+    "hidden": false
+  },
+  "criteria": {
+    "shot_arrow": {
+      "trigger": "pvz:trade",
+      "conditions": {
+        "entity": {
+          "type": "pvz:crazy_dave"
+        }
+      }
+    }
+  },
+  "requirements": [
+    [
+      "shot_arrow"
+    ]
+  ]
+}

@@ -30,7 +30,6 @@ import com.hungteen.pvz.common.world.biome.BiomeRegister;
 import com.hungteen.pvz.common.world.challenge.ChallengeManager;
 import com.hungteen.pvz.common.world.structure.StructureRegister;
 import com.hungteen.pvz.utils.BiomeUtil;
-import com.hungteen.pvz.utils.TradeUtil;
 import net.minecraft.entity.EntityType;
 import net.minecraftforge.event.RegistryEvent;
 import net.minecraftforge.eventbus.api.EventPriority;
@@ -98,7 +97,6 @@ public class RegistryHandler {
     	PVZPacketHandler.init();
     	BiomeRegister.registerBiomes(ev);
     	PotionRecipeHandler.registerPotionRecipes();
-    	TradeUtil.initTrades();
     	MiscRegister.registerCompostable();
     	BiomeUtil.initBiomeSet();
     }

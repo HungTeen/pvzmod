@@ -1,17 +1,21 @@
 package com.hungteen.pvz.common.block.special;
 
+import java.util.List;
+
+import javax.annotation.Nullable;
+
 import com.hungteen.pvz.common.block.AbstractFacingBlock;
 import com.hungteen.pvz.common.datapack.LotteryTypeLoader;
 import com.hungteen.pvz.common.item.PVZItemGroups;
 import com.hungteen.pvz.common.tileentity.SlotMachineTileEntity;
 import com.hungteen.pvz.utils.StringUtil;
+
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.ServerPlayerEntity;
-import net.minecraft.inventory.InventoryHelper;
 import net.minecraft.item.ItemGroup;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.CompoundNBT;
@@ -28,9 +32,6 @@ import net.minecraft.util.text.TextFormatting;
 import net.minecraft.world.IBlockReader;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.network.NetworkHooks;
-
-import javax.annotation.Nullable;
-import java.util.List;
 
 public class SlotMachineBlock extends AbstractFacingBlock {
 
@@ -97,22 +98,6 @@ public class SlotMachineBlock extends AbstractFacingBlock {
 	@Override
 	public TileEntity createTileEntity(BlockState state, IBlockReader world) {
 		return new SlotMachineTileEntity();
-	}
-
-	@SuppressWarnings("deprecation")
-	@Override
-	public void onRemove(BlockState state, World worldIn, BlockPos pos, BlockState newState, boolean isMoving) {
-		if (state.getBlock() != newState.getBlock()) {
-			TileEntity tileentity = worldIn.getBlockEntity(pos);
-			if (tileentity instanceof SlotMachineTileEntity) {
-				SlotMachineTileEntity te = (SlotMachineTileEntity) worldIn.getBlockEntity(pos);
-				for (int i = 0; i < te.handler.getSlots(); ++i) {
-					InventoryHelper.dropItemStack(worldIn, pos.getX(), pos.getY(), pos.getZ(),
-							te.handler.getStackInSlot(i));
-				}
-			}
-			super.onRemove(state, worldIn, pos, newState, isMoving);
-		}
 	}
 
 	public ItemStack getCloneItemStack(IBlockReader p_185473_1_, BlockPos p_185473_2_, BlockState p_185473_3_) {

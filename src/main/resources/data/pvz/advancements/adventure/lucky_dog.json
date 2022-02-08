@@ -1,0 +1,36 @@
+{
+  "parent": "pvz:adventure/slot_machine",
+  "display": {
+    "icon": {
+      "item": "pvz:slot_machine"
+    },
+    "title": {
+      "translate": "advancement.pvz.lucky_dog"
+    },
+    "description": {
+      "translate": "advancement.pvz.lucky_dog.desc"
+    },
+    "frame": "challenge",
+    "show_toast": true,
+    "announce_to_chat": true,
+    "hidden": false
+  },
+  "criteria": {
+    "shot_arrow": {
+      "trigger": "pvz:slot_machine",
+      "conditions": {
+        "amount": {
+          "amount": {
+            "min": 3
+          }
+        },
+        "type": "jewel"
+      }
+    }
+  },
+  "requirements": [
+    [
+      "shot_arrow"
+    ]
+  ]
+}

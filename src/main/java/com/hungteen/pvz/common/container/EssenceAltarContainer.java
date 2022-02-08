@@ -4,6 +4,7 @@ import com.hungteen.pvz.api.types.IPAZType;
 import com.hungteen.pvz.api.types.ISkillType;
 import com.hungteen.pvz.common.impl.SkillTypes;
 import com.hungteen.pvz.common.item.material.EssenceItem;
+import com.hungteen.pvz.common.item.spawn.card.ImitaterCardItem;
 import com.hungteen.pvz.common.item.spawn.card.SummonCardItem;
 import com.hungteen.pvz.common.tileentity.EssenceAltarTileEntity;
 import com.hungteen.pvz.utils.EntityUtil;
@@ -32,7 +33,7 @@ public class EssenceAltarContainer extends PVZContainer{
 		this.addSlot(new SlotItemHandler(this.te.handler, 0, 27, 9){
 			@Override
 			public boolean mayPlace(@Nonnull ItemStack stack) {
-				return super.mayPlace(stack) && stack.getItem() instanceof SummonCardItem && ! ((SummonCardItem) stack.getItem()).isEnjoyCard;
+				return super.mayPlace(stack) && stack.getItem() instanceof SummonCardItem && ! (stack.getItem() instanceof ImitaterCardItem) && ! ((SummonCardItem) stack.getItem()).isEnjoyCard;
 			}
 		});
 

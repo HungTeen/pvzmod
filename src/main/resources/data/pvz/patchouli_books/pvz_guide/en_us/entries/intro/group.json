@@ -1,6 +1,6 @@
 {
     "name": "Group",
-    "icon": "pvz:steel_sword",
+    "icon": "minecraft:iron_sword",
     "category": "pvz:intro",
     "pages": [
         {

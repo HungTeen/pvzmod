@@ -469,7 +469,7 @@ public class PlantCardItem extends SummonCardItem {
 			return false;
 		}
 		/* check lock */
-		if(PlayerUtil.isPAZLocked(player, cardItem.plantType)) {
+		if(! cardItem.isEnjoyCard && PlayerUtil.isPAZLocked(player, cardItem.plantType)) {
 			cardItem.notifyPlayerAndCD(player, stack, PlacementErrors.LOCK_ERROR);
 			return false;
 		}

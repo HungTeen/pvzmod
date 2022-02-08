@@ -140,7 +140,6 @@ d20f63768e25b271d1dc9398860708910659f386 assets/pvz/models/item/ice_essence.json
 be069f34259acac375085ebcee933ea5dd70d4e6 assets/pvz/models/item/iceberg_lettuce_card.json
 10afdc9cd3d8ef9989ce1e63b0736be4d27a16b1 assets/pvz/models/item/iceberg_lettuce_enjoy_card.json
 c5fcfc6996be612892d9c808f11a3be20a077500 assets/pvz/models/item/imitater_card.json
-4150b5deb178e8e860b22cf6151ef716398e1f3f assets/pvz/models/item/imitater_enjoy_card.json
 98167609bf3898587f7565736a6fc24a7966cacd assets/pvz/models/item/imp_spawn_egg.json
 98167609bf3898587f7565736a6fc24a7966cacd assets/pvz/models/item/jack_in_box_zombie_spawn_egg.json
 834e86122d535c1e12fca9e6c410a6233d10f58f assets/pvz/models/item/jalapeno_card.json
@@ -456,7 +455,6 @@ fb03694d743823b05b822bf08059f7bf53424c92 data/pvz/recipes/fragment_splice/gold_m
 4cf6fe0cc3ce00b6d83848413a1f8813c84df7ef data/pvz/recipes/fragment_splice/hypno_shroom_card.json
 34e6e35d95788f7c3c6891d6668c4f0f77a5ff60 data/pvz/recipes/fragment_splice/ice_shroom_card.json
 e852197246eccb9ea26b99766e154a8427c1a2be data/pvz/recipes/fragment_splice/iceberg_lettuce_card.json
-cb3df9030596c11fd66c5d3b6a921ae309b73294 data/pvz/recipes/fragment_splice/imitater_card.json
 00218a01ff91efbc9ac8aa93d1b1e1ebda362717 data/pvz/recipes/fragment_splice/jalapeno_card.json
 89acb298190e678f40ff5a03354e3d8940c37988 data/pvz/recipes/fragment_splice/kernel_pult_card.json
 4b473843576ba68b7770f010e514582702c05802 data/pvz/recipes/fragment_splice/lily_pad_card.json
@@ -527,8 +525,8 @@ f88ddf3a385c12bb6f6ef0981b969c0169c650e6 data/pvz/tags/items/card/red_cards.json
 f9a7b288b3b769cdc6469c21325951937857da74 data/pvz/tags/items/card/red_materials.json
 ac7254c1fbebecd5cdbf71cdc6a8c33267c50cac data/pvz/tags/items/card/white_cards.json
 9c960160d41b9332ee0edbc9c575413711384481 data/pvz/tags/items/card/white_materials.json
-4e1889a03b6102fc96f855bca6a4e96e2479b74b data/pvz/tags/items/cards/plant_card.json
-971073390e073718671a7dee0e6e58bb1e2d4540 data/pvz/tags/items/cards/plant_enjoy_card.json
+56f8117bcb3950cb040682e12e22773caca425af data/pvz/tags/items/cards/plant_card.json
+f04e9b6e570139703ed8382db579193af6878892 data/pvz/tags/items/cards/plant_enjoy_card.json
 90c0be098b625d71f68ace96fab39edc87f9653b data/pvz/tags/items/cards/plant_summon_card.json
 b4b7082c521b395f14901163935e3fe13131f3c8 data/pvz/tags/items/cards/template_card.json
 1c9b69b8145e4b24059a787785717e61a3d30fdf data/pvz/tags/items/ores/essence.json

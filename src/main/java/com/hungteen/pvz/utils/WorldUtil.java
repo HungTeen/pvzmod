@@ -73,10 +73,14 @@ public class WorldUtil {
 	@Nullable
 	public static BlockPos findRandomSpawnPos(World world, BlockPos center, int chance, int minRange, int maxRange, Predicate<BlockPos> predicate) {
 		final int range = minRange, distance = maxRange - minRange;
+		if(distance <= 0) {
+			return null;
+		}
 		for (int i = 0; i < chance; ++i) {
 			final float f = world.random.nextFloat() * ((float) Math.PI * 2F);
-			final int dx = MathHelper.floor(MathHelper.cos(f) * distance);
-			final int dz = MathHelper.floor(MathHelper.sin(f) * distance);
+			final int radius = MathHelper.floor(world.getRandom().nextFloat() * distance);
+			final int dx = MathHelper.floor(MathHelper.cos(f) * radius);
+			final int dz = MathHelper.floor(MathHelper.sin(f) * radius);
 			final int x = center.getX() + (dx > 0 ? dx + range : dx - range);
 			final int z = center.getZ() + (dz > 0 ? dz + range : dz - range);
 			final int y = world.getHeight(Heightmap.Type.WORLD_SURFACE, x, z);

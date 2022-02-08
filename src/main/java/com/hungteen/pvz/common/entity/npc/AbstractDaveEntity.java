@@ -1,15 +1,27 @@
 package com.hungteen.pvz.common.entity.npc;
 
 import com.hungteen.pvz.PVZMod;
+import com.hungteen.pvz.api.PVZAPI;
 import com.hungteen.pvz.api.enums.PVZGroupType;
 import com.hungteen.pvz.api.interfaces.IHasGroup;
 import com.hungteen.pvz.api.raid.IAmountComponent;
+import com.hungteen.pvz.api.raid.IChallengeComponent;
+import com.hungteen.pvz.api.types.IPlantType;
+import com.hungteen.pvz.common.block.BlockRegister;
+import com.hungteen.pvz.common.block.special.SlotMachineBlock;
+import com.hungteen.pvz.common.datapack.LotteryTypeLoader;
 import com.hungteen.pvz.common.datapack.TransactionTypeLoader;
 import com.hungteen.pvz.common.impl.challenge.amount.ConstantAmount;
+import com.hungteen.pvz.common.item.ItemRegister;
+import com.hungteen.pvz.common.item.display.ChallengeEnvelopeItem;
 import com.hungteen.pvz.common.misc.sound.SoundRegister;
+import com.hungteen.pvz.common.tileentity.SlotMachineTileEntity;
+import com.hungteen.pvz.common.world.challenge.ChallengeManager;
+import com.hungteen.pvz.utils.MathUtil;
 import com.hungteen.pvz.utils.PlayerUtil;
 import com.hungteen.pvz.utils.enums.Resources;
 import com.hungteen.pvz.utils.others.WeightList;
+import com.mojang.datafixers.util.Pair;
 import net.minecraft.entity.*;
 import net.minecraft.entity.ai.goal.LookAtGoal;
 import net.minecraft.entity.ai.goal.LookRandomlyGoal;
@@ -38,6 +50,7 @@ public abstract class AbstractDaveEntity extends CreatureEntity implements IHasG
 
 	private static final DataParameter<CompoundNBT> GOODS = EntityDataManager.defineId(AbstractDaveEntity.class, DataSerializers.COMPOUND_TAG);
 	private static final DataParameter<Integer> EXIST_TICK = EntityDataManager.defineId(AbstractDaveEntity.class, DataSerializers.INT);
+	private static final int REFRESH_CD = 24000;
 	protected ResourceLocation transactionResource = null;
 	private final Set<GoodType> set = new HashSet<>();
 	@Nullable
@@ -77,7 +90,7 @@ public abstract class AbstractDaveEntity extends CreatureEntity implements IHasG
 		if(! this.level.isClientSide){
 			this.setExistTick(this.getExistTick() + 1);
 			//TODO bug?
-			if(this.getExistTick() % 24000 == 10){
+			if(this.getLeftRefreshTime() == REFRESH_CD){
 				this.refreshTransactions();
 			}
 		}
@@ -85,7 +98,7 @@ public abstract class AbstractDaveEntity extends CreatureEntity implements IHasG
 
 	@Override
 	public ActionResultType interactAt(PlayerEntity player, Vector3d vec3d, Hand hand) {
-		if (player.getItemInHand(hand).isEmpty()) {
+		if (this.canOpenShop(player, player.getItemInHand(hand))) {
 			if (!level.isClientSide && player instanceof ServerPlayerEntity && ! this.hasCustomer()) {
 				this.openContainer((ServerPlayerEntity) player);
 				this.setCustomer(player);
@@ -122,11 +135,20 @@ public abstract class AbstractDaveEntity extends CreatureEntity implements IHasG
 					final GoodType goodType = list.getRandomItem(this.getRandom()).get();
 					if(! this.set.contains(goodType)){
 						this.addGoodToTransactions(id ++, goodType);
+						this.set.add(goodType);
 					}
 				}
 				this.set.clear();
 
-				this.addExtraTransactions(id);
+				if(type.hasEnvelope()){
+					this.addEnvelopeTrades(id);
+				}
+				if(type.hasSlotMachine()){
+					this.addSlotMachineTrades(id);
+				}
+				if(type.hasEnjoyCard){
+					this.addPlantEnjoyCardTrades(id);
+				}
 				
 				return;
 			}
@@ -166,8 +188,61 @@ public abstract class AbstractDaveEntity extends CreatureEntity implements IHasG
 		this.setGoods(new CompoundNBT());
 	}
 
-	protected void addExtraTransactions(int id){
+	protected void addEnvelopeTrades(int id) {
+		final WeightList<Pair<ResourceLocation, IChallengeComponent>> list = new WeightList<>();
+		final int chance = 6;
 
+		ChallengeManager.getChallengeTypes().entrySet().forEach(entry -> {
+			if(entry.getValue().canTrade()){
+				list.addItem(Pair.of(entry.getKey(), entry.getValue()), entry.getValue().getTradeWeight());
+			}
+		});
+
+		for(int i = 0; i < chance; ++ i){
+			final Pair<ResourceLocation, IChallengeComponent> pair = list.getRandomItem(this.getRandom()).get();
+			final ItemStack envelope = ChallengeEnvelopeItem.setChallengeType(new ItemStack(ItemRegister.CHALLENGE_ENVELOPE.get()), pair.getFirst());
+			final GoodType goodType = new GoodType(GoodTypes.CHALLENGE, envelope, pair.getSecond().getTradePrice(), 100, 1, false);
+			this.addGoodToTransactions(id ++, goodType);
+		}
+	}
+
+	protected void addSlotMachineTrades(int id) {
+		final WeightList<Pair<ResourceLocation, SlotMachineTileEntity.LotteryType>> list = new WeightList<>();
+		final int chance = 2;
+
+		LotteryTypeLoader.getLotteries().entrySet().forEach(entry -> {
+			list.addItem(Pair.of(entry.getKey(), entry.getValue()), entry.getValue().getTradeWeight());
+		});
+
+		for(int i = 0; i < chance; ++ i){
+			final Pair<ResourceLocation, SlotMachineTileEntity.LotteryType> pair = list.getRandomItem(this.getRandom()).get();
+			final ItemStack stack = new ItemStack(BlockRegister.SLOT_MACHINE.get());
+			SlotMachineBlock.setResourceTag(stack, pair.getFirst());
+			final GoodType goodType = new GoodType(GoodTypes.SLOT_MACHINE, stack, pair.getSecond().getTradePrice(), 100, 2, false);
+			this.addGoodToTransactions(id ++, goodType);
+		}
+	}
+
+	public void addPlantEnjoyCardTrades(int id){
+		final WeightList<IPlantType> list = new WeightList<>();
+		final int chance = 7;
+
+		PVZAPI.get().getPlants().forEach(plant -> {
+			if(plant.getEnjoyCard().isPresent()){
+				list.addItem(plant, plant.getRank().getWeight());
+			}
+		});
+
+		for(int i = 0; i < chance; ++ i){
+			final IPlantType plantType = list.getRandomItem(this.getRandom()).get();
+			final int cost = (this.getRandom().nextFloat() < 0.1 ? MathUtil.getRandomInRange(this.getRandom(), 1) + plantType.getRank().getValue() : plantType.getRank().getValue());
+			final GoodType goodType = new GoodType(GoodTypes.SLOT_MACHINE, new ItemStack(plantType.getEnjoyCard().get()), cost, 100, 1, false);
+			this.addGoodToTransactions(id ++, goodType);
+		}
+	}
+
+	public int getLeftRefreshTime(){
+		return REFRESH_CD - (this.getExistTick() - 10 + REFRESH_CD) % REFRESH_CD;
 	}
 
 	protected abstract void openContainer(ServerPlayerEntity player);
@@ -228,6 +303,10 @@ public abstract class AbstractDaveEntity extends CreatureEntity implements IHasG
 	public void die(DamageSource cause) {
 		super.die(cause);
 		this.resetCustomer();
+	}
+
+	protected boolean canOpenShop(PlayerEntity player, ItemStack heldItem){
+		return heldItem.isEmpty();
 	}
 
 	public boolean canBeLeashed(PlayerEntity player) {
@@ -299,9 +378,36 @@ public abstract class AbstractDaveEntity extends CreatureEntity implements IHasG
 		private final List<GoodType> goodTypes = new ArrayList<>();
 		private IAmountComponent goodCount = new ConstantAmount();
 		private final ResourceLocation resourceLocation;
+		private boolean hasEnvelope = false;
+		private boolean hasSlotMachine = false;
+		private boolean hasEnjoyCard = false;
 
 		public TransactionType(ResourceLocation resourceLocation){
 			this.resourceLocation = resourceLocation;
+		}
+
+		public boolean hasEnvelope() {
+			return hasEnvelope;
+		}
+
+		public void setEnvelope(boolean hasEnvelope) {
+			this.hasEnvelope = hasEnvelope;
+		}
+
+		public boolean hasSlotMachine() {
+			return hasSlotMachine;
+		}
+
+		public void setSlotMachine(boolean hasSlotMachine) {
+			this.hasSlotMachine = hasSlotMachine;
+		}
+
+		public boolean hasEnjoyCard() {
+			return hasEnjoyCard;
+		}
+
+		public void setEnjoyCard(boolean hasEnjoyCard) {
+			this.hasEnjoyCard = hasEnjoyCard;
 		}
 
 		public void addGood(GoodType goodType){
@@ -421,8 +527,8 @@ public abstract class AbstractDaveEntity extends CreatureEntity implements IHasG
 		SLOT_8("slot", 8, 90),
 		SLOT_9("slot", 9, 90),
 		SLOT_10("slot", 10, 90),
-		MONEY_1("money", 0, 95),
-		MONEY_10("money", 0, 95),
+		MONEY_1("money", 1000, 95),
+		MONEY_10("money", 10000, 95),
 		CHALLENGE("item", 0, 5),
 		SLOT_MACHINE("item", 0, 6);
 
@@ -434,6 +540,10 @@ public abstract class AbstractDaveEntity extends CreatureEntity implements IHasG
 			this.tag = tag;
 			this.lvl = lvl;
 			this.priority = priority;
+		}
+		
+		public int getLvl() {
+			return lvl;
 		}
 
 		public boolean isValid(PlayerEntity player){
@@ -454,7 +564,7 @@ public abstract class AbstractDaveEntity extends CreatureEntity implements IHasG
 				return new TranslationTextComponent("gui.pvz.shop.more_slot");
 			}
 			if(isMoney()){
-				return new TranslationTextComponent("gui.pvz.shop.money");
+				return new TranslationTextComponent("gui.pvz.shop." + this.toString().toLowerCase());
 			}
 			return stack.getItem().getDescription();
 		}

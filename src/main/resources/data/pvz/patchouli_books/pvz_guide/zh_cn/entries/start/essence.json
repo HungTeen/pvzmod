@@ -23,7 +23,7 @@
             "type": "crafting",
             "recipe": "pvz:origin_block",
             "title": "Origin Block",
-            "text": "这种辐射比较奇怪，对生物没有影响，但它会将其$(l)周围1格以内的特殊方块辐射为对应的精华矿$()。由于其辐射的不稳定性，周围方块被改变的时间也不同。"
+            "text": "这种辐射比较奇怪，对生物没有影响，但它会将其$(l)周围1格以内的特殊方块辐射为对应的精华矿$()。由于其辐射的不稳定性，周围方块被改变的时间也不同。你也能在地表找到一些原始精华矿。"
         },
         {
             "type": "pvz:show_essence",
@@ -49,18 +49,16 @@
             "input_item3": "minecraft:magma_block",
             "input_item4": "minecraft:gravel",
             "input_item5": "minecraft:sandstone",
-            "input_item6": "minecraft:obsidian",
             "output_item0": "pvz:toxic_ore",
             "output_item1": "pvz:assist_ore",
             "output_item2": "pvz:magic_ore",
             "output_item3": "pvz:flame_ore",
             "output_item4": "pvz:spear_ore",
-            "output_item5": "pvz:arma_ore",
-            "output_item6": "pvz:shadow_ore"
+            "output_item5": "pvz:arma_ore"
         },
         {
             "type": "text",
-            "text": "上述列表中并没有包含所有的特殊精华（比如$(#ff0000)闪电精华$()），它的获取方式较为特殊，将在后面的版本更新。由此可见特殊精华目前有14种：$(l)喷射、阳光、爆炸、防御、寒冰、近战、剧毒、辅助、魔法、烈焰、穿透、投掷、暗影$()，以及还无法获得的$(l)闪电$()。"
+            "text": "上述列表中并没有包含所有的特殊精华（比如$(#ff0000)闪电精华$()），它的获取方式较为特殊，将在后面的版本更新。由此可见特殊精华目前有14种：$(l)喷射、阳光、爆炸、防御、寒冰、近战、剧毒、辅助、魔法、烈焰、穿透、投掷$()，以及还无法获得的$(l)闪电、暗影$()。"
         }
     ],
     "advancement": "pvz:adventure/root",

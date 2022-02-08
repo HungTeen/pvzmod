@@ -1,5 +1,9 @@
 package com.hungteen.pvz.data.recipe;
 
+import java.util.Arrays;
+import java.util.List;
+import java.util.function.Consumer;
+
 import com.hungteen.pvz.api.PVZAPI;
 import com.hungteen.pvz.api.types.IPlantType;
 import com.hungteen.pvz.api.types.IRankType;
@@ -9,6 +13,7 @@ import com.hungteen.pvz.common.item.ItemRegister;
 import com.hungteen.pvz.common.item.spawn.card.PlantCardItem;
 import com.hungteen.pvz.common.misc.tag.PVZItemTags;
 import com.hungteen.pvz.utils.StringUtil;
+
 import net.minecraft.data.CookingRecipeBuilder;
 import net.minecraft.data.DataGenerator;
 import net.minecraft.data.IFinishedRecipe;
@@ -22,10 +27,6 @@ import net.minecraft.tags.ITag;
 import net.minecraft.tags.ItemTags;
 import net.minecraft.util.IItemProvider;
 import net.minecraftforge.common.data.ForgeRecipeProvider;
-
-import java.util.Arrays;
-import java.util.List;
-import java.util.function.Consumer;
 
 public class RecipeGenerator extends ForgeRecipeProvider{
 
@@ -155,7 +156,8 @@ public class RecipeGenerator extends ForgeRecipeProvider{
 
 	private void registerFragment(Consumer<IFinishedRecipe> consumer, IPlantType type) {
 		type.getSummonCard().ifPresent(card -> {
-			FragmentRecipeBuilder.shaped(card)
+			if(type.getEnjoyCard().isPresent()) {
+				FragmentRecipeBuilder.shaped(card)
 					.pattern("AAAAA")
 					.pattern("ABBBA")
 					.pattern("ABCBA")
@@ -166,6 +168,8 @@ public class RecipeGenerator extends ForgeRecipeProvider{
 					.define('C', type.getRank().getCardTag())
 					.unlockedBy("has_essence", has(type.getEssence().getEssenceItem()))
 					.save(consumer, StringUtil.prefix("fragment_splice/" + type.toString() + "_card"));
+			}
+			
 		});
 	}
 	

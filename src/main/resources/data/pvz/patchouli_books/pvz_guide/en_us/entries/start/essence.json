@@ -11,13 +11,13 @@
             "type": "spotlight",
             "item": "pvz:origin_ore",
             "title": "Origin Ore",
-            "text": "During the growth of saplings, some saplings may absorb too much energy and overflow. Eventually, the saplings will fail to grow, and an $(#ff0000)Origin Ore$() full of energy will accumulate in the dirt below the saplings.Use a $(l)Diamond-level Pickaxe$() to dig the Origin Ore to obtain a small amount of $(#ff0000)Origin Essences$()."
+            "text": "During the growth of saplings, some saplings may absorb too much energy and overflow. Eventually, the saplings will fail to grow, and an $(#ff0000)Origin Ore$() full of energy will accumulate in the dirt below the saplings.Use a $(l)Diamond-level Pickaxe$() to dig the Origin Ore to obtain a small amount of $(#ff0000)Origin Essences$(). You can also find some ores on the ground."
         },
-        { 
+        {
             "type": "spotlight",
             "item": "pvz:origin_essence",
             "title": "Origin Essence",
-            "text": "$(l)Original Essence$() has a certain amount of $(l)radioactivity$(). It can radiate $(l)plant seeds$() and other items to make them alienate. However, a single original essence is not enough to obtain special essences, and they must be synthesized into $(#ff0000)Original Block$() with strong radiation."
+            "text": "$(l)Origin Essence$() has a certain amount of $(l)radioactivity$(). It can radiate $(l)plant seeds$() and other items to make them alienate. However, a single original essence is not enough to obtain special essences, and they must be synthesized into $(#ff0000)Original Block$() with strong radiation."
         },
         {
             "type": "crafting",
@@ -49,18 +49,16 @@
             "input_item3": "minecraft:magma_block",
             "input_item4": "minecraft:gravel",
             "input_item5": "minecraft:sandstone",
-            "input_item6": "minecraft:obsidian",
             "output_item0": "pvz:toxic_ore",
             "output_item1": "pvz:assist_ore",
             "output_item2": "pvz:magic_ore",
             "output_item3": "pvz:flame_ore",
             "output_item4": "pvz:spear_ore",
-            "output_item5": "pvz:arma_ore",
-            "output_item6": "pvz:shadow_ore"
+            "output_item5": "pvz:arma_ore"
         },
         {
             "type": "text",
-            "text": "The above list does not include all special essences (such as $(#ff0000)Electric Essence$()), which is obtained in a special way and will be updated later. It can be seen that there are currently 14 special essences: $(l)appease, light, explosion, defense, ice, enforce, toxic, assist, magic, flame, spear, arma, shadow, and electric$() which is not yet available."
+            "text": "The above list does not include all special essences (such as $(#ff0000)Electric Essence$()), which is obtained in a special way and will be updated later. It can be seen that there are currently 14 special essences: $(l)appease, light, explosion, defense, ice, enforce, toxic, assist, magic, flame, spear, arma, and electric, shadow$() which is not yet available."
         }
     ],
     "advancement": "pvz:adventure/root",

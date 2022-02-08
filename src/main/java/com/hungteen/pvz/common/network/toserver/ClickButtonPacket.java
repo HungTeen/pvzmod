@@ -68,11 +68,6 @@ public class ClickButtonPacket {
 						}
 
 					}
-				} else if(message.type == GuiHandler.MYSTERY_SHOP) {
-//					if(player.containerMenu instanceof MysteryShopContainer) {
-//						MysteryShopContainer container = (MysteryShopContainer) player.containerMenu;
-//						container.buyGood(DaveGoods.values()[message.num], message.op);
-//					}
 				} else if(message.type == GuiHandler.ESSENCE_ALTAR) {
 					if(player.containerMenu instanceof EssenceAltarContainer) {
 						EssenceAltarContainer container = (EssenceAltarContainer) player.containerMenu;

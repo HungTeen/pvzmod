@@ -1,19 +1,21 @@
 package com.hungteen.pvz.data;
 
-import java.util.Arrays;
-import java.util.HashSet;
-import java.util.Set;
-
 import com.hungteen.pvz.PVZMod;
 import com.hungteen.pvz.common.block.BlockRegister;
 import com.hungteen.pvz.utils.StringUtil;
-
 import net.minecraft.block.Block;
 import net.minecraft.data.DataGenerator;
 import net.minecraftforge.client.model.generators.BlockModelProvider;
 import net.minecraftforge.common.data.ExistingFileHelper;
 import net.minecraftforge.registries.ForgeRegistries;
 
+import java.util.Arrays;
+import java.util.HashSet;
+import java.util.Set;
+
+/**
+ * NO USE
+ */
 public class BlockModelGenerator extends BlockModelProvider{
 
 	private Set<Block> addedBlocks = new HashSet<>();
@@ -36,7 +38,7 @@ public class BlockModelGenerator extends BlockModelProvider{
 		genCrop(BlockRegister.PEA_PLANT.get(), 7);
 		genCrop(BlockRegister.TOXIC_SHROOM.get(), 3);
 		//up down side
-		Arrays.asList(BlockRegister.FRAGMENT_SPLICE.get(), BlockRegister.SLOT_MACHINE.get(), BlockRegister.ARMA_ORE.get()
+		Arrays.asList(BlockRegister.FRAGMENT_SPLICE.get(), BlockRegister.SLOT_MACHINE.get(), BlockRegister.ARMA_ORE.get(), BlockRegister.TOXIC_ORE.get()
 				).forEach(b -> {
 				topSideBottom(b);
 				});

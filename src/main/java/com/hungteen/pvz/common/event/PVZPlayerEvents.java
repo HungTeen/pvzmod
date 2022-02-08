@@ -9,7 +9,6 @@ import com.hungteen.pvz.common.event.handler.PlayerEventHandler;
 import com.hungteen.pvz.common.item.tool.plant.BowlingGloveItem;
 import com.hungteen.pvz.common.item.tool.plant.PeaGunItem;
 import com.hungteen.pvz.common.misc.sound.SoundRegister;
-import com.hungteen.pvz.common.potion.EffectRegister;
 import com.hungteen.pvz.utils.PlayerUtil;
 import com.hungteen.pvz.utils.enums.Resources;
 
@@ -33,21 +32,6 @@ public class PVZPlayerEvents {
 				if(l.getPlayerData().getOtherStats().playSoundTick > 0) {
 				    -- l.getPlayerData().getOtherStats().playSoundTick;
 				}
-				if(l.getPlayerData().getOtherStats().updateGoodTick > 0) {
-				    -- l.getPlayerData().getOtherStats().updateGoodTick;
-				} else {
-//					MysteryShopContainer.genNextGoods(ev.player);
-				}
-				int lightLvl = 0;
-				if(ev.player.hasEffect(EffectRegister.LIGHT_EYE_EFFECT.get())) {
-				     lightLvl = 1 + ev.player.getEffect(EffectRegister.LIGHT_EYE_EFFECT.get()).getAmplifier();
-				}
-//				if(lightLvl != l.getPlayerData().getOtherStats().lightLevel) {
-//					PVZPacketHandler.CHANNEL.send(PacketDistributor.PLAYER.with(() -> {
-//					    return (ServerPlayerEntity) ev.player;
-//				    }), new OtherStatsPacket(2, 0, lightLvl));
-//					l.getPlayerData().getOtherStats().lightLevel = lightLvl;
-//				}
 			});
 		} else {
 			SteelLadderBlock.climbUp(ev.player);

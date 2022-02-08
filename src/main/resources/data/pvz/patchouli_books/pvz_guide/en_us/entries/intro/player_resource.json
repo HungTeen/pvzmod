@@ -13,27 +13,27 @@
         },
         {
             "type": "text",
-            "text": "$(bgreen)Tree Level:$()$(br)It is independent of the default mc level, can also be called the PVZ Level.$(br)$(l)Usage: $()The higher the level is, $(byellow)the higher upper limit of SunNum$() and the stronger of some tools player has.$(br)$(l)Display:$() You must use the $(bred)Almanac$() or command to view.$(br)$(l)Upgrade method:$() player or its plants kill zombies can gain some xp($(red)Except for the zombies not belong to pvzmod$()), and help plant level up too."
+            "text": "$(bgreen)Tree Level:$()$(br)It is independent of the default mc level, can also be called the PVZ Level.$(br)$(l)Usage: $()The higher the level is, $(byellow)the higher upper limit of SunNum$() and the more card you can use.$(br)$(l)Display:$() The upper left corner of the screen or command to view.$(br)$(l)Upgrade method:$() player or its plants kill zombies can gain some xp($(red)Except for the zombies not belong to pvzmod$())."
         },
         {
             "type": "text",
-            "text": "$(byellow)SunNum:$()$(br)$(l)The upper limit of SunNum$() will increase when TreeLevel increases.$(br)$(l)Usage:$() Using $(bred)Summon Cards$() and some tools will consume SunNum.$(br)$(l)Display:$() The upper left corner of the screen, can also be viewed through the $(bread)Almanac$() or command.$(br)$(l)Obtaining method:$() collide with $(l)Sun$() entity or use $(byellow)Sun Collector$() or eat $(byellow)SunStorageSapling$()."
+            "text": "$(byellow)SunNum:$()$(br)$(l)The upper limit of SunNum$() will increase when TreeLevel increases.$(br)$(l)Usage:$() Using $(bred)Summon Cards$() and some tools will consume SunNum.$(br)$(l)Display:$() The upper left corner of the screen or command to view.$(br)$(l)Obtaining method:$() collide with $(l)Sun$() entity or use $(byellow)Resource Collector$() or eat $(byellow)SunStorageSapling$()."
         },
         {
             "type": "text",
-            "text": "$(bgreen)EnergyNum:$()$(br)$(l)the upper limit of energy beans$() can be bought from $(red)Crazy Dave$().$(br)$(l)Usage:$() player using $(bred)sword$() enchanted with $(bpurple)energy transfer$() right click plant will make plant $(bred)in super mode$() and consume energy.$(br)$(l)Display:$() The lower left corner of the screen, can also be viewed through the $(bred)Almanac$() or command.$(br)Obtaining method: collide with $(bgreen)Energy$() entity."
+            "text": "$(bgreen)EnergyNum:$()$(br)$(l)the upper limit of energy beans$() can be bought from $(red)Crazy Dave$().$(br)$(l)Usage:$() player using $(bred)sword$() enchanted with $(bpurple)energy transfer$() right click plant will make plant $(bred)in super mode$() and consume energy.$(br)$(l)Display:$() The lower left corner of the screen or command to view.$(br)Obtaining method: collide with $(bgreen)Energy$() entity or use $(byellow)Resource Collector$()."
         },
         {
             "type": "text",
-            "text": "$(borange)Money:$()$(br)the general currency of shops, its upper limit is 9999999.$(br)$(l)Usage:$() purchase some $(bred)Upgrade Plant Cards$() and tools.$(br)$(l)Display:$() The upper left corner of the screen, can also be viewed through the $(bred)Almanac$() or command.$(br)$(l)Obtaining method:$() collide with $(borange)Coin$() entity."
+            "text": "$(borange)Money:$()$(br)the general currency of shops, its upper limit is 9999999.$(br)$(l)Usage:$() purchase some $(bred)Upgrade Plant Cards$() and tools.$(br)$(l)Display:$() The upper left corner of the screen or command.$(br)$(l)Obtaining method:$() collide with $(borange)Coin$() entity or use $(byellow)Resource Collector$()."
         },
         {
             "type": "text",
-            "text": "$(bblue)GemNum:$()$(br)the special currency of shops, its upper limit is 9999999.$(br)$(l)Usage:$() purchase some $(bred)Plant Enjoy Cards$() and special tools.$(br)$(l)Display:$() The upper left corner of the screen, can be viewed through the $(bred)Almanac$() or command.$(br)$(l)Obtaining method:$() collide with $(bblue)Jewel$() entity."
+            "text": "$(bblue)GemNum:$()$(br)the special currency of shops, its upper limit is 9999999.$(br)$(l)Usage:$() purchase some $(bred)Plant Enjoy Cards$() and special tools.$(br)$(l)Display:$() The upper left corner of the screen or command.$(br)$(l)Obtaining method:$() collide with $(bblue)Jewel$() entity or use $(byellow)Resource Collector$()."
         },
         {
             "type": "text",
-            "text":"$(bred)Tips:$()$(br)$(l)you can use command /playerstats to change or query your resource.$()$(br)$(red)If you can't see jewel num or money on the upper left coner, please press key(left <- or -> right) to toggle display.$()$(br)"
+            "text":"$(bred)Tips:$()$(br)$(l)you can use command /playerstats to change or query your resource.$()$(br)$(red)If you can't see jewel num or money or tree level on the upper left coner, please press key(left <- or -> right) to toggle display.$()$(br)"
         }
     ],
     "advancement": "pvz:adventure/root",

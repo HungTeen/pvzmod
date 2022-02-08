@@ -42,7 +42,10 @@ public class ZombieFlagItem extends Item{
 			if(! playerIn.level.isClientSide){
 				PlayerUtil.addResource(playerIn, Resources.SUN_NUM, - SUN_COST);
 				playerIn.addEffect(new EffectInstance(Effects.MOVEMENT_SPEED, EFFECT_CD, 1));
-				playerIn.getCooldowns().addCooldown(playerIn.getItemInHand(handIn).getItem(), EFFECT_CD + 80);
+				if(PlayerUtil.isPlayerSurvival(playerIn)) {
+					playerIn.getCooldowns().addCooldown(playerIn.getItemInHand(handIn).getItem(), EFFECT_CD + 80);
+					playerIn.getItemInHand(handIn).hurtAndBreak(1, playerIn, p -> p.broadcastBreakEvent(Hand.MAIN_HAND));
+				}
 			}
 			return ActionResult.success(playerIn.getItemInHand(handIn));
 		}

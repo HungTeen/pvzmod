@@ -5,6 +5,10 @@ import net.minecraft.tags.ITag;
 
 public interface IRankType {
 
+    int getWeight();
+
+	int getValue();
+
 	String getName();
 
 	/**

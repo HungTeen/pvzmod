@@ -9,19 +9,23 @@
         },
         {
             "type": "text",
-            "text": "After player $(l)use card$() to summon a creature, $(bred)the creature will treat the player as its owner$(), and the creature's level is the same as the creature's level when its owner planted the creature.$(br)$(bred)If you use Spawn Egg to summon entity, it will not consider you as its owner.$()"
+            "text": "There is an unlocking mechanism for summon card, and many cards are not unlocked when the player's tree level is insufficient. Unlock paths are upgrades, challenge rewards or command.<br>Summon card is After player $(l)use card$() to summon a creature, $(bred)the creature will treat the player as its owner$()."
         },
         {
             "type": "spotlight",
             "item": "pvz:jalapeno_card",
             "title": "Common Card",
-            "text": "$(l)Maximum stack size: 1$()$(br)Can $(bpurple)enchant$()$(br)Need $(baqua)CoolDown$()$(br)Unlimited use$(br)$()The color of card frame is related to its rank."
+            "text": "$(l)Maximum stack size: 1$()$(br)Can $(bpurple)enchant$()$(br)Long $(baqua)CoolDown$()$(br)Unlimited use$(br)$()The color of card frame is related to its rank."
         },
         {
             "type": "spotlight",
             "item": "pvz:jalapeno_enjoy_card",
             "title": "Enjoy Card",
-            "text": "$(l)Maximum stack size: 16$()$(br)Can't $(bpurple)enchant$()$(br)No $(baqua)CoolDown$()$(br)Can only be used once$(br)$()The color of card frame is red."
+            "text": "$(l)Maximum stack size: 16$()$(br)Can't $(bpurple)enchant$()$(br)1s $(baqua)CoolDown$()$(br)Can only be used once$(br)$()The color of card frame is wood."
+        },
+        {
+            "type": "text",
+            "text": "After 0.6 version, the card placement becomes more strict. Only 50 plants can be planted within 30 blocks, after that every 5 more sun cost will be doubled. Densely planting enchantment can slow down this situation."
         },
         {
             "type": "text",

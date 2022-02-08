@@ -19,6 +19,7 @@ import java.util.List;
 public abstract class PlantBomberEntity extends PVZPlantEntity {
 
 	protected boolean hasBombAlamancs = true;
+	
 	public PlantBomberEntity(EntityType<? extends CreatureEntity> type, World worldIn) {
 		super(type, worldIn);
 	}

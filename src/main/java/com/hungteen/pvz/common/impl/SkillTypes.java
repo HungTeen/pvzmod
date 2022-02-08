@@ -187,7 +187,7 @@ public class SkillTypes {
 
     //gold leaf
     public static final ISkillType ADVANCE_GOLD = new SkillType("advance_gold",
-            ArrayUtil.getAverageArray(2, 1F, 3F),
+            ArrayUtil.getAverageArray(3, 1F, 3F),
             Arrays.asList(6, 12)
     );
 

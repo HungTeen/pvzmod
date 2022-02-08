@@ -10,11 +10,6 @@
         {   
             "type": "text",
             "text": "There are various rewards for killing zombies, players can get $(bgreen)TreeXp$() when they and their plants kill zombies. Zombies have chances to drop $(borange)Coins(silver coins, gold coins)$(), $(bblue)Gems$(), $(borange)Chocolate$(), plant seeds, origin essence and so on. If you kill a zombie surrounded by $(bgreen)green light$(), it will definitely drop $(l)Energy$(). If you kill a zombie surrounded by $(byellow)yellow light$(), it will definitely drop $(byellow)Sun$()."
-        },
-        {
-            "type": "crafting",
-            "recipe": "pvz:pvz_zombie",
-            "text": "It can help you know zombies features."
         }
     ],
     "advancement": "pvz:adventure/root",

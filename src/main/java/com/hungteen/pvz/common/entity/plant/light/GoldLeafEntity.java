@@ -4,6 +4,7 @@ import com.hungteen.pvz.api.types.IPlantType;
 import com.hungteen.pvz.common.block.BlockRegister;
 import com.hungteen.pvz.common.block.special.GoldTileBlock;
 import com.hungteen.pvz.common.entity.plant.base.PlantBomberEntity;
+import com.hungteen.pvz.common.impl.SkillTypes;
 import com.hungteen.pvz.common.impl.plant.OtherPlants;
 
 import net.minecraft.block.Block;
@@ -42,7 +43,7 @@ public class GoldLeafEntity extends PlantBomberEntity {
 	}
 	
 	public static int getGoldGenAmount(int lvl) {
-		return lvl == 1 ? 25 : lvl == 2 ? 50 : 75;
+		return lvl == 1 ? 25 : lvl == 2 ? 35 : 50;
 	}
 	
 	/**
@@ -53,8 +54,7 @@ public class GoldLeafEntity extends PlantBomberEntity {
 	}
 	
 	public int getTileLevel() {
-		return 1;
-//		return this.getThreeStage(1, 2, 3);
+		return (int) this.getSkillValue(SkillTypes.ADVANCE_GOLD);
 	}
 
 	@Override

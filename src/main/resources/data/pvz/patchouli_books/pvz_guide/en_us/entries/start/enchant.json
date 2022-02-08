@@ -11,21 +11,9 @@
         },
         {
             "type": "spotlight",
-            "item": "pvz:cherry_bomb_card{'Enchantments':[{'id':'pvz:sun_cost_reduce','lvl':10}]}",
-            "title": "SunCost Reduce",
-            "text": "When PlantCards have $(bred)SunCost Reduce$() Enchantment, The SunCost of using card will reduce. Its max lvl is 10, $(l)Each lvl will have a 5 point reduction$()."
-        },
-        {
-            "type": "spotlight",
             "item": "minecraft:diamond_sword{'Enchantments':[{'id':'pvz:energy_transfer','lvl':1}]}",
             "title": "Energy Transfer",
             "text": "When Swords have $(bred)Energy Transfer$() Enchantment, Players can right click plants to cosume energy num and make plants in super mode. Its max lvl is 1."
-        },
-        {
-            "type": "spotlight",
-            "item": "pvz:football_chestplate{'Enchantments':[{'id':'pvz:tree_protection','lvl':1}]}",
-            "title": "Tree Protection",
-            "text": "When Armor have $(bred)Tree Protection$() Enchantment, damage to the player will not exceed player's max health. Its max lvl is 1."
         },
         {
             "type": "spotlight",
@@ -50,7 +38,20 @@
             "item": "pvz:squash_card{'Enchantments':[{'id':'pvz:soilless_plant','lvl':1}]}",
             "title": "Soilless Plant",
             "text": "When PlantCards have $(bred)Soilless Plant$() Enchantment, the plants summoned are able to survive on every block. Its max lvl is 1."
+        },
+        {
+            "type": "spotlight",
+            "item": "pvz:cabbage_pult_card{'Enchantments':[{'id':'pvz:densely_plant','lvl':1}]}",
+            "title": "Densely Plant",
+            "text": "When PlantCards have $(bred)Densely Plant$() Enchantment, it can place 10 more each level before reach count limit."
+        },
+        {
+            "type": "spotlight",
+            "item": "pvz:cabbage_pult_card{'Enchantments':[{'id':'pvz:immediate_cd','lvl':1}]}",
+            "title": "Immediate CD",
+            "text": "When PlantCards have $(bred)Immediate CD$() Enchantment, card have chance to only have 1 second cool down."
         }
+        
     ],
     "advancement": "pvz:adventure/root",
     "sortnum": 6

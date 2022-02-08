@@ -1,0 +1,17 @@
+{
+    "name": "埃德加机器人",
+    "icon": "pvz:edgar_doll",
+    "category": "pvz:start/boss",
+    "pages": [
+        {
+            "type": "text",
+            "text": "$(bred)埃德加-090505和埃德加-090517$()是僵王博士制造的一批机器人中的一部分，在挑战信中你会碰到他们。"
+        },
+        {
+            "type": "text",
+            "text": "$(bred)埃德加机器人$(共同的攻击方式是它的$(byellow)冰火球$()，$(baqua)冰球$()只能被$(bred)火爆辣椒$()消灭，$(bred)火球$()只能被$(baqua)寒冰菇$()消灭。另外，它会召唤几乎$(l)所有种类的入侵僵尸$()，尤其是$(bred)蹦极僵尸$()，请务必小心。"
+        }
+    ],
+    "advancement": "pvz:adventure/root",
+    "sortnum": 0
+}

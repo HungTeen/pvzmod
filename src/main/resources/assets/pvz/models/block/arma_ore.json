@@ -1,6 +1,8 @@
 {
-    "parent": "block/cube_all",
+    "parent": "minecraft:block/cube_bottom_top",
     "textures": {
-        "all": "pvz:block/arma_ore"
+        "top": "pvz:block/arma_ore_top",
+        "bottom": "pvz:block/arma_ore_bottom",
+        "side": "pvz:block/arma_ore"
     }
 }
