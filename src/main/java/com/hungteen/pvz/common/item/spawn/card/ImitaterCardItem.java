@@ -52,6 +52,10 @@ public class ImitaterCardItem extends PlantCardItem {
 	public ImitaterCardItem() {
 		super(new Item.Properties().tab(PVZItemGroups.PVZ_PLANT_CARD).stacksTo(1).setISTER(() -> ImitaterCardISTER::new), PVZPlants.IMITATER, false);
 	}
+
+	public ImitaterCardItem(boolean isEnjoyCard) {
+		super(new Item.Properties().tab(PVZItemGroups.PVZ_PLANT_CARD).stacksTo(16), PVZPlants.IMITATER, isEnjoyCard);
+	}
 	
 	@Override
 	public ActionResult<ItemStack> use(World world, PlayerEntity player, Hand handIn) {
@@ -169,6 +173,9 @@ public class ImitaterCardItem extends PlantCardItem {
 	
 	@Override
 	public void appendHoverText(ItemStack stack, World worldIn, List<ITextComponent> tooltip, ITooltipFlag flagIn) {
+		if(this.isEnjoyCard){
+			return;
+		}
 		Optional<IPlantType> opt = getImitatePlantType(stack);
 		if(! opt.isPresent()) {
 			tooltip.add(new TranslationTextComponent("tooltip.pvz.imitater_card.empty").withStyle(TextFormatting.RED));

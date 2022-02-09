@@ -59,12 +59,14 @@ public class InvasionCommand {
 //												.executes(command -> {
 //													return spawnHugeWave(EntityArgument.getPlayers(command, "targets"), IntegerArgumentType.getInteger(command, "wave_num"), IntegerArgumentType.getInteger(command, "amount"));
 //												}))))
-						.then(Commands.literal("set")//TODO bug
+						.then(Commands.literal("time")
 								.then(Commands.argument("pos", IntegerArgumentType.integer())
 										.then(Commands.argument("time", IntegerArgumentType.integer())
 												.executes(commond -> {
 													return setWaveTime(commond.getSource(), EntityArgument.getPlayers(commond, "targets"), IntegerArgumentType.getInteger(commond, "amount"), IntegerArgumentType.getInteger(commond, "wave_num"));
-												}))
+												}))))
+						.then(Commands.literal("trigger")
+								.then(Commands.argument("pos", IntegerArgumentType.integer())
 										.then(Commands.argument("flag", BoolArgumentType.bool())
 												.executes(commond -> {
 													return setTriggered(commond.getSource(), EntityArgument.getPlayers(commond, "targets"), IntegerArgumentType.getInteger(commond, "amount"), BoolArgumentType.getBool(commond, "flag"));

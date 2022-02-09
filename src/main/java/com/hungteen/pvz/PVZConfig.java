@@ -17,7 +17,7 @@ public class PVZConfig {
                 InvasionSettings.SafeDayLength = builder
                         .translation("config.pvz.invasion.safe_day")
                         .comment("If you set to 5, then the first 5 * 20 minutes of the world will not have any zombie invasion event.")
-                        .defineInRange("SafeDayLength", 1, 0, 1000000);
+                        .defineInRange("SafeDayLength", 2, 0, 1000000);
 
                 InvasionSettings.InvasionIntervalLength = builder
                         .translation("config.pvz.invasion.interval")
@@ -116,7 +116,7 @@ public class PVZConfig {
                     WorldSettings.GenZenGardenChance = builder
                             .translation("config.pvz.world.zen_garden_chance")
                             .comment("the gen chance of Zen Garden biome(the larger the more chance to see it).")
-                            .defineInRange("GenZenGardenChance", 40, 1, 10000);
+                            .defineInRange("GenZenGardenChance", 20, 1, 10000);
                 }
                 builder.pop();
 

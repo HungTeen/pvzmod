@@ -10,7 +10,6 @@ import net.minecraft.world.World;
 public class SpawnType{
 
     private final EntityType<? extends MobEntity> spawnType;
-    //TODO nbt
     private CompoundNBT nbt = new CompoundNBT();
     private int invasionLevel;
     private int spawnWeight;

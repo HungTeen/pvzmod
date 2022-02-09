@@ -4,6 +4,7 @@ import com.hungteen.pvz.PVZConfig;
 import com.hungteen.pvz.PVZMod;
 import com.hungteen.pvz.common.entity.AbstractPAZEntity;
 import com.hungteen.pvz.common.entity.EntityRegister;
+import com.hungteen.pvz.common.entity.zombie.PVZZombieEntity;
 import com.hungteen.pvz.common.misc.PVZPacketTypes;
 import com.hungteen.pvz.common.misc.sound.SoundRegister;
 import com.hungteen.pvz.common.network.PVZPacketHandler;
@@ -13,11 +14,13 @@ import com.hungteen.pvz.utils.enums.Resources;
 import com.hungteen.pvz.utils.others.WeightList;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
+import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.MobEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.nbt.ListNBT;
+import net.minecraft.potion.Effects;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.text.IFormattableTextComponent;
@@ -115,6 +118,7 @@ public class Invasion {
                 .getPredicateEntities(player, EntityUtil.getEntityAABB(player, range, range), MobEntity.class, e -> {
                     return isInvasionEntity(e.getType());
                 }).size();
+        
         if (current < maxCount) {
             for (int i = 0; i < this.getSpawnCount(); ++i) {
                 final SpawnType type = getSpawnList().getRandomItem(world.random).get();
@@ -196,6 +200,17 @@ public class Invasion {
         Entity entity = EntityUtil.createWithNBT(world, spawnType.getSpawnType(), spawnType.getNbt(), pos);
         if(entity instanceof AbstractPAZEntity){
             AbstractPAZEntity.randomInitSkills((AbstractPAZEntity) entity, Math.max(0, this.invasionLvl - spawnType.getInvasionLevel()));
+        }
+        if(entity instanceof LivingEntity) {
+        	if(InvasionManager.hasInvisInvasion(this)){
+        		((LivingEntity) entity).addEffect(EffectUtil.viewEffect(Effects.INVISIBILITY, 1000000, 1));
+        	}
+        }
+        if(entity instanceof PVZZombieEntity){
+            if(InvasionManager.hasMiniInvasion(this)){
+                ((PVZZombieEntity) entity).setMiniZombie(true);
+                ((PVZZombieEntity) entity).updatePAZStates();
+            }
         }
         //already add to world.
 //        world.addFreshEntity(entity);
@@ -554,7 +569,7 @@ public class Invasion {
     		return 2000;
     	}
         final int mid = world.getDifficulty() == Difficulty.HARD ? 60 : world.getDifficulty() == Difficulty.NORMAL ? 120 : 200;
-        final int extra = (this.currentCount < 20 ? 0 : (this.currentCount - 20) * 5);
+        final int extra = (this.currentCount < 20 ? 0 : (this.currentCount - 30) * 4);
         return MathUtil.getRandomMinMax(world.random, -10, 10) + mid + extra;
     }
 

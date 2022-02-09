@@ -17,7 +17,6 @@ import net.minecraft.entity.*;
 import net.minecraft.util.DamageSource;
 import net.minecraft.world.World;
 
-//TODO 魅惑菇
 public class HypnoShroomEntity extends PVZPlantEntity implements ICanAttract {
 
     public HypnoShroomEntity(EntityType<? extends CreatureEntity> type, World worldIn) {
@@ -59,7 +58,7 @@ public class HypnoShroomEntity extends PVZPlantEntity implements ICanAttract {
     @Override
     public void die(DamageSource source) {
         super.die(source);
-        if (!level.isClientSide && !this.canNormalUpdate()) {
+        if (!level.isClientSide && this.canNormalUpdate()) {
             if (source instanceof PVZEntityDamageSource && ((PVZEntityDamageSource) source).isEatDamage()) {
                 if (this.isPlantInSuperMode()) {
                     if (source.getEntity() != null) {

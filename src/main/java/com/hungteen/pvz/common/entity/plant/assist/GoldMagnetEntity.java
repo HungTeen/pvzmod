@@ -115,7 +115,7 @@ public class GoldMagnetEntity extends PVZPlantEntity {
 	}
 
 	protected boolean checkCanWorkNow() {
-		return this.ownerPlayer != null;
+		return this.getOwnerPlayer().isPresent();
 	}
 
 	@Override

@@ -39,19 +39,11 @@
       "entries": [
         {
           "type": "minecraft:item",
-          "name": "pvz:origin_essence"
-        },
-        {
-          "type": "minecraft:item",
           "name": "pvz:corn_seeds"
         },
         {
           "type": "minecraft:item",
           "name": "minecraft:sunflower"
-        },
-        {
-          "type": "minecraft:item",
-          "name": "pvz:pea"
         },
         {
           "type": "minecraft:item",

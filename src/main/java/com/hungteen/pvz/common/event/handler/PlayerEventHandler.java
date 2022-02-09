@@ -14,6 +14,7 @@ import com.hungteen.pvz.common.entity.zombie.PVZZombieEntity;
 import com.hungteen.pvz.common.event.PVZLivingEvents;
 import com.hungteen.pvz.common.event.PVZPlayerEvents;
 import com.hungteen.pvz.common.item.ItemRegister;
+import com.hungteen.pvz.common.item.tool.mc.OriginShovelItem;
 import com.hungteen.pvz.common.potion.EffectRegister;
 import com.hungteen.pvz.common.world.invasion.InvasionManager;
 import com.hungteen.pvz.common.world.invasion.MissionManager;
@@ -70,6 +71,7 @@ public class PlayerEventHandler {
                     SunEntity.spawnSunsByAmount(player.level, plantEntity.blockPosition(), EnchantmentUtil.getSunShovelAmount(stack, plantEntity.getPlantInfo().get().getSunCost()));
                     plantEntity.remove();
                 }
+                removed = ! (stack.getItem() instanceof OriginShovelItem);
                 EntityUtil.playSound(plantEntity, SoundRegister.PLACE_PLANT_GROUND.get());
 
             } else if(entity instanceof PVZZombieEntity) {

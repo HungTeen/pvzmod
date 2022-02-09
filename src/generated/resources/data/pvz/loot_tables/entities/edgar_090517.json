@@ -6,54 +6,13 @@
       "entries": [
         {
           "type": "minecraft:item",
-          "name": "minecraft:rotten_flesh"
+          "name": "pvz:gold_sunflower_trophy"
         }
       ],
       "conditions": [
         {
           "condition": "minecraft:random_chance_with_looting",
-          "chance": 0.15,
-          "looting_multiplier": 0.01
-        }
-      ],
-      "functions": [
-        {
-          "function": "minecraft:set_count",
-          "count": {
-            "min": 0.0,
-            "max": 2.0,
-            "type": "minecraft:uniform"
-          }
-        },
-        {
-          "function": "minecraft:looting_enchant",
-          "count": {
-            "min": 0.0,
-            "max": 1.0
-          }
-        }
-      ]
-    },
-    {
-      "rolls": 1,
-      "entries": [
-        {
-          "type": "minecraft:item",
-          "name": "pvz:corn_seeds"
-        },
-        {
-          "type": "minecraft:item",
-          "name": "minecraft:sunflower"
-        },
-        {
-          "type": "minecraft:item",
-          "name": "pvz:nut"
-        }
-      ],
-      "conditions": [
-        {
-          "condition": "minecraft:random_chance_with_looting",
-          "chance": 0.01,
+          "chance": 1.0,
           "looting_multiplier": 0.01
         }
       ]
@@ -63,13 +22,29 @@
       "entries": [
         {
           "type": "minecraft:item",
-          "name": "pvz:cone_head"
+          "name": "pvz:zombie_on_your_lawn"
         }
       ],
       "conditions": [
         {
           "condition": "minecraft:random_chance_with_looting",
-          "chance": 0.02,
+          "chance": 1.0,
+          "looting_multiplier": 0.01
+        }
+      ]
+    },
+    {
+      "rolls": 1,
+      "entries": [
+        {
+          "type": "minecraft:item",
+          "name": "pvz:time_source"
+        }
+      ],
+      "conditions": [
+        {
+          "condition": "minecraft:random_chance_with_looting",
+          "chance": 0.6,
           "looting_multiplier": 0.01
         }
       ]

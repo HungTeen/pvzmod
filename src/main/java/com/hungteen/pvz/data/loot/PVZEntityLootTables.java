@@ -26,7 +26,7 @@ public class PVZEntityLootTables implements Consumer<BiConsumer<ResourceLocation
 		t.accept(PVZLoot.FLAG_ZOMBIE, getZombieLootTable()
 				.withPool(LootPool.lootPool().setRolls(ConstantRange.exactly(1))
 				        .add(ItemLootEntry.lootTableItem(ItemRegister.ZOMBIE_FLAG.get()))
-				        .when(RandomChanceWithLooting.randomChanceAndLootingBoost(0.05F, 0.01F))
+				        .when(RandomChanceWithLooting.randomChanceAndLootingBoost(0.02F, 0.01F))
 		));
 		t.accept(PVZLoot.CONEHEAD_ZOMBIE, getZombieLootTable()
 				.withPool(LootPool.lootPool().setRolls(ConstantRange.exactly(1))
@@ -120,7 +120,7 @@ public class PVZEntityLootTables implements Consumer<BiConsumer<ResourceLocation
 				.withPool(LootPool.lootPool().setRolls(ConstantRange.exactly(1))
 				        .add(ItemLootEntry.lootTableItem(ItemRegister.ORIGIN_PICKAXE.get()))
 				        .add(ItemLootEntry.lootTableItem(Items.DIAMOND_PICKAXE))
-				        .when(RandomChanceWithLooting.randomChanceAndLootingBoost(0.04F, 0.01F))
+				        .when(RandomChanceWithLooting.randomChanceAndLootingBoost(0.03F, 0.01F))
 		));
 		t.accept(PVZLoot.RA_ZOMBIE, getLootTable()
 				.withPool(LootPool.lootPool().setRolls(ConstantRange.exactly(1))
@@ -135,7 +135,7 @@ public class PVZEntityLootTables implements Consumer<BiConsumer<ResourceLocation
 		t.accept(PVZLoot.LADDER_ZOMBIE, getLootTable()
 				.withPool(LootPool.lootPool().setRolls(ConstantRange.exactly(1))
 				        .add(ItemLootEntry.lootTableItem(BlockRegister.STEEL_LADDER.get()))
-				        .when(RandomChanceWithLooting.randomChanceAndLootingBoost(0.05F, 0.01F))
+				        .when(RandomChanceWithLooting.randomChanceAndLootingBoost(0.1F, 0.01F))
 		));
 		t.accept(PVZLoot.GARGANTUAR, getLootTable()
 				.withPool(LootPool.lootPool().setRolls(ConstantRange.exactly(1))
@@ -162,6 +162,17 @@ public class PVZEntityLootTables implements Consumer<BiConsumer<ResourceLocation
 						.add(ItemLootEntry.lootTableItem(ItemRegister.TIME_SOURCE.get()))
 						.when(RandomChanceWithLooting.randomChanceAndLootingBoost(0.6F, 0.01F))
 		));
+		t.accept(PVZLoot.EDGAR_090517, getLootTable()
+				.withPool(LootPool.lootPool().setRolls(ConstantRange.exactly(1))
+						.add(ItemLootEntry.lootTableItem(BlockRegister.GOLD_SUNFLOWER_TROPHY.get()))
+						.when(RandomChanceWithLooting.randomChanceAndLootingBoost(1F, 0.01F))
+				).withPool(LootPool.lootPool().setRolls(ConstantRange.exactly(1))
+						.add(ItemLootEntry.lootTableItem(ItemRegister.ZOMBIE_ON_YOUR_LAWN.get()))
+						.when(RandomChanceWithLooting.randomChanceAndLootingBoost(1F, 0.01F))
+				).withPool(LootPool.lootPool().setRolls(ConstantRange.exactly(1))
+						.add(ItemLootEntry.lootTableItem(ItemRegister.TIME_SOURCE.get()))
+						.when(RandomChanceWithLooting.randomChanceAndLootingBoost(0.6F, 0.01F))
+				));
 		t.accept(PVZLoot.PEASHOOTER_ZOMBIE, getLootTable()
 				.withPool(LootPool.lootPool().setRolls(ConstantRange.exactly(1))
 				        .add(ItemLootEntry.lootTableItem(ItemRegister.PEA_SHOOTER_ENJOY_CARD.get()))
@@ -210,10 +221,8 @@ public class PVZEntityLootTables implements Consumer<BiConsumer<ResourceLocation
 	private static LootTable.Builder getZombieLootTable() {
 		return getRottenFleshLootTable()
 				.withPool(LootPool.lootPool().setRolls(ConstantRange.exactly(1))
-				.add(ItemLootEntry.lootTableItem(ItemRegister.ORIGIN_ESSENCE.get()))
 				.add(ItemLootEntry.lootTableItem(ItemRegister.CORN_SEEDS.get()))
 				.add(ItemLootEntry.lootTableItem(Items.SUNFLOWER))
-				.add(ItemLootEntry.lootTableItem(ItemRegister.PEA.get()))
 				.add(ItemLootEntry.lootTableItem(ItemRegister.NUT.get()))
 				.when(RandomChanceWithLooting.randomChanceAndLootingBoost(0.01F, 0.01F)));
 	}

@@ -231,17 +231,17 @@ public class InvasionManager {
     }
 
     public static float getYetiSpawnChance(Invasion invasion){
-        final boolean isJack = invasion.getActiveInvasions().contains(StringUtil.prefix("jack"));
-        final boolean isYeti = invasion.getActiveInvasions().contains(StringUtil.prefix("yeti"));
+        final boolean isJack = invasion.getActiveResources().contains(StringUtil.prefix("jack"));
+        final boolean isYeti = invasion.getActiveResources().contains(StringUtil.prefix("yeti"));
         return (isJack && isYeti) ? 0.4F : isYeti ? 0.2F : isJack ? 0.1F : 0;
     }
 
     public static boolean hasInvisInvasion(Invasion invasion){
-        return invasion.getActiveInvasions().contains(StringUtil.prefix("invis"));
+        return invasion.getActiveResources().contains(StringUtil.prefix("invis"));
     }
 
     public static boolean hasMiniInvasion(Invasion invasion){
-        return invasion.getActiveInvasions().contains(StringUtil.prefix("mini"));
+        return invasion.getActiveResources().contains(StringUtil.prefix("mini"));
     }
 
     /**

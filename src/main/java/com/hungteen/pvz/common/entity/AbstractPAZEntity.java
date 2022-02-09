@@ -418,8 +418,7 @@ public abstract class AbstractPAZEntity extends CreatureEntity implements IPAZEn
      * stay alive, and check other conditions to keep normal tick.
      */
     public boolean canNormalUpdate(){
-        return EntityUtil.isEntityValid(this)
-                && ! (this.getVehicle() instanceof BungeeZombieEntity)
+        return ! (this.getVehicle() instanceof BungeeZombieEntity)
                 && ! EntityUtil.isEntityFrozen(this)
                 && ! EntityUtil.isEntityButter(this);
     }

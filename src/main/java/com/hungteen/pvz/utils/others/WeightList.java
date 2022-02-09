@@ -50,6 +50,12 @@ public class WeightList<T> {
 		this.weightList.clear();
 		this.total = 0;
 	}
+
+	public void addAll(WeightList<T> list){
+		for(int i = 0; i < list.getLen(); ++ i){
+			this.addItem(list.getItem(i), list.getWeight(i));
+		}
+	}
 	
 	public List<T> getItemList(){
 		return this.itemList;
@@ -58,7 +64,11 @@ public class WeightList<T> {
 	public T getItem(int pos){
 		return this.itemList.get(pos);
 	}
-	
+
+	private int getWeight(int pos){
+		return this.weightList.get(pos);
+	}
+
 	/**
 	 * get the weight item randomly.
 	 */

@@ -130,7 +130,12 @@ public class GargantuarEntity extends PVZZombieEntity {
 	public boolean canBreakPlantBlock() {
 		return false;
 	}
-	
+
+	@Override
+	public float getKBValue() {
+		return 1;
+	}
+
 	public int getCrushCD() {
 		return 40;
 	}

@@ -35,7 +35,7 @@ public class MissionManager {
                     require = getRequireMissionValue(type, stage);
                 }
                 if (type == MissionType.INSTANT_KILL) {
-                    PlayerUtil.getOptManager(player).ifPresent(l -> l.getInvasion().updateKillQueue());
+                    invasion.updateKillQueue();
                 }
                 //finish all mission.
                 if (stage >= MAX_MISSION_STAGE) {

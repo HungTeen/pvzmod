@@ -18,6 +18,8 @@ import net.minecraft.world.World;
 
 public abstract class AbstractTombStoneEntity extends PVZZombieEntity {
 
+	protected static final WeightList<DropType> TOMBSTONE_DROP_LIST = new WeightList<>();
+
 	public AbstractTombStoneEntity(EntityType<? extends CreatureEntity> type, World worldIn) {
 		super(type, worldIn);
 		this.setImmuneAllEffects();
@@ -89,7 +91,11 @@ public abstract class AbstractTombStoneEntity extends PVZZombieEntity {
 	
 	@Override
 	protected WeightList<DropType> getDropSpecialList() {
-		return super.getDropSpecialList().setLeftItem(DropType.COPPER);
+		if(TOMBSTONE_DROP_LIST.isEmpty()){
+			TOMBSTONE_DROP_LIST.addAll(super.getDropSpecialList());
+			TOMBSTONE_DROP_LIST.setLeftItem(DropType.COPPER);
+		}
+		return TOMBSTONE_DROP_LIST;
 	}
 
 	@Override

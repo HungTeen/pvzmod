@@ -65,11 +65,10 @@ public abstract class DefenceZombieEntity extends PVZZombieEntity implements IMu
 	@Override
 	public void onZombieBeMini() {
 		super.onZombieBeMini();
-		//TODO MINI
-//		if(EntityUtil.isEntityValid(this.part)) {
-//			this.part.onOwnerBeMini(this);
-//		}
-//		this.setInn(this.getOuterLife() * 0.6F);
+		if(EntityUtil.isEntityValid(this.part)) {
+			this.part.onOwnerBeMini(this);
+		}
+		this.setOuterDefenceLife(this.getOuterLife() * 0.6F);
 	}
 	
 	@Override

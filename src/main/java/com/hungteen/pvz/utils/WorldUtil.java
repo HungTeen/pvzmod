@@ -76,13 +76,12 @@ public class WorldUtil {
 		if(distance <= 0) {
 			return null;
 		}
+		
 		for (int i = 0; i < chance; ++i) {
 			final float f = world.random.nextFloat() * ((float) Math.PI * 2F);
-			final int radius = MathHelper.floor(world.getRandom().nextFloat() * distance);
-			final int dx = MathHelper.floor(MathHelper.cos(f) * radius);
-			final int dz = MathHelper.floor(MathHelper.sin(f) * radius);
-			final int x = center.getX() + (dx > 0 ? dx + range : dx - range);
-			final int z = center.getZ() + (dz > 0 ? dz + range : dz - range);
+			final int radius = MathUtil.getRandomMinMax(world.getRandom(), minRange, maxRange);
+			final int x = center.getX() + MathHelper.floor(MathHelper.cos(f) * radius);
+			final int z = center.getZ() + MathHelper.floor(MathHelper.sin(f) * radius);
 			final int y = world.getHeight(Heightmap.Type.WORLD_SURFACE, x, z);
 			final BlockPos pos = new BlockPos(x, y, z);
 			if (world.hasChunksAt(pos.offset(-range, -range, -range), pos.offset(range, range, range))

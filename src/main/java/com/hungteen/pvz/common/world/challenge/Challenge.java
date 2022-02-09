@@ -143,7 +143,7 @@ public class Challenge implements IChallenge {
 		}
 		/* is raid component valid */
 		if(this.getRaidComponent() == null) {
-			this.remove();//TODO 重进导致挑战被移除
+			this.remove();
 			PVZMod.LOGGER.warn("Challenge Tick Error : Where is the challenge component ?");
 			return ;
 		}

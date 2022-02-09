@@ -26,8 +26,8 @@ import com.hungteen.pvz.common.entity.zombie.body.ZombieDropBodyEntity;
 import com.hungteen.pvz.common.impl.SkillTypes;
 import com.hungteen.pvz.common.item.ItemRegister;
 import com.hungteen.pvz.common.misc.PVZEntityDamageSource;
-import com.hungteen.pvz.common.potion.EffectRegister;
 import com.hungteen.pvz.common.misc.sound.SoundRegister;
+import com.hungteen.pvz.common.potion.EffectRegister;
 import com.hungteen.pvz.remove.MetalTypes;
 import com.hungteen.pvz.utils.AlgorithmUtil;
 import com.hungteen.pvz.utils.ConfigUtil;
@@ -117,7 +117,7 @@ public abstract class PVZZombieEntity extends AbstractPAZEntity implements IZomb
 	    		.add(Attributes.FLYING_SPEED, 0)
 	    		.build();
 	}
-	
+
 	@Override
 	protected void registerGoals() {
 		this.goalSelector.addGoal(8, new PVZLookRandomlyGoal(this));
@@ -159,15 +159,14 @@ public abstract class PVZZombieEntity extends AbstractPAZEntity implements IZomb
 				this.setAnimTime(- RISING_CD);
 				this.addEffect(new EffectInstance(Effects.MOVEMENT_SLOWDOWN, RISING_CD + 10, 20, false, false));
 			}
-//			if (level.dimension() == World.OVERWORLD) {//update states in special invasion.
-//				//zombie rising from dirt can not be mini state.
-//				if (! this.needRising && this.canBeMini() && InvasionManager.hasMiniInvasion()) {
-//					this.onZombieBeMini();
-//				}
-//				if (this.canBeInvisible() && InvasionManager.hasInvisInvasion()) {
-//					this.addEffect(new EffectInstance(Effects.INVISIBILITY, 1000000, 10, false, false));
-//				}
-//			}
+		}
+	}
+
+	@Override
+	public void updatePAZStates() {
+		super.updatePAZStates();
+		if (this.canBeMini() && this.isMiniZombie()) {
+			this.onZombieBeMini();
 		}
 	}
 	
@@ -304,7 +303,6 @@ public abstract class PVZZombieEntity extends AbstractPAZEntity implements IZomb
 		this.setMiniZombie(true);
 		final float healthDec = 0.6F;
 		EntityUtil.setLivingMaxHealthAndHeal(this, this.getMaxHealth() * healthDec);
-		//TODO MINI
 		this.addEffect(new EffectInstance(Effects.MOVEMENT_SPEED, 1000000, 0, false, false));
 		this.addEffect(new EffectInstance(Effects.DAMAGE_BOOST, 1000000, 0, false, false));
 	}

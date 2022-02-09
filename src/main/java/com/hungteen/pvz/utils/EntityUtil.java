@@ -106,14 +106,11 @@ public class EntityUtil {
 		}
 		if(!entity.getType().getRegistryName().getNamespace().equals(PVZMod.MOD_ID) 
 				&& (entity instanceof LivingEntity)) {
-			return ((LivingEntity) entity).getMaxHealth() > 100F;
+			return ((LivingEntity) entity).getMaxHealth() <= 20F;
 		}
 		return true;
 	}
-	
-	/**
-	 * {@link PVZHurtByTargetGoal}
-	 */
+
 	public static boolean canHelpAttackOthers(@Nonnull Entity entity) {
 		if(entity instanceof PVZZombieEntity) {
 			return ((PVZZombieEntity) entity).canHelpAttack();

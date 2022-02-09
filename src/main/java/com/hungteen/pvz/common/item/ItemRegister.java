@@ -322,6 +322,7 @@ public class ItemRegister {
     public static final RegistryObject<PlantCardItem> COB_CANNON_CARD = registerCard(PVZPlants.COB_CANNON, false);
     public static final RegistryObject<PlantCardItem> COB_CANNON_ENJOY_CARD = registerCard(PVZPlants.COB_CANNON, true);
     public static final RegistryObject<PlantCardItem> IMITATER_CARD = ITEMS.register("imitater_card", () -> new ImitaterCardItem());
+    public static final RegistryObject<PlantCardItem> IMITATER_ENJOY_CARD = ITEMS.register("imitater_enjoy_card", () -> new ImitaterCardItem(true));
     public static final RegistryObject<PlantCardItem> WATER_GUARD_CARD = registerCard(CustomPlants.WATER_GUARD, false);
     public static final RegistryObject<PlantCardItem> WATER_GUARD_ENJOY_CARD = registerCard(CustomPlants.WATER_GUARD, true);
     public static final RegistryObject<PlantCardItem> STRANGE_CAT_CARD = registerCard(MemePlants.STRANGE_CAT, false);
