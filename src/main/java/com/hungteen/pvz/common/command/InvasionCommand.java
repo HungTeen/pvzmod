@@ -63,13 +63,13 @@ public class InvasionCommand {
 								.then(Commands.argument("pos", IntegerArgumentType.integer())
 										.then(Commands.argument("time", IntegerArgumentType.integer())
 												.executes(commond -> {
-													return setWaveTime(commond.getSource(), EntityArgument.getPlayers(commond, "targets"), IntegerArgumentType.getInteger(commond, "amount"), IntegerArgumentType.getInteger(commond, "wave_num"));
+													return setWaveTime(commond.getSource(), EntityArgument.getPlayers(commond, "targets"), IntegerArgumentType.getInteger(commond, "pos"), IntegerArgumentType.getInteger(commond, "time"));
 												}))))
 						.then(Commands.literal("trigger")
 								.then(Commands.argument("pos", IntegerArgumentType.integer())
 										.then(Commands.argument("flag", BoolArgumentType.bool())
 												.executes(commond -> {
-													return setTriggered(commond.getSource(), EntityArgument.getPlayers(commond, "targets"), IntegerArgumentType.getInteger(commond, "amount"), BoolArgumentType.getBool(commond, "flag"));
+													return setTriggered(commond.getSource(), EntityArgument.getPlayers(commond, "targets"), IntegerArgumentType.getInteger(commond, "pos"), BoolArgumentType.getBool(commond, "flag"));
 												})))))
 
 		);

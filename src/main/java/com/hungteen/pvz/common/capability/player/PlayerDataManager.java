@@ -11,9 +11,9 @@ import com.hungteen.pvz.common.advancement.trigger.SunAmountTrigger;
 import com.hungteen.pvz.common.advancement.trigger.TreeLevelTrigger;
 import com.hungteen.pvz.common.event.handler.PlayerEventHandler;
 import com.hungteen.pvz.common.item.spawn.card.SummonCardItem;
+import com.hungteen.pvz.common.network.CardInventoryPacket;
 import com.hungteen.pvz.common.network.PAZStatsPacket;
 import com.hungteen.pvz.common.network.PVZPacketHandler;
-import com.hungteen.pvz.common.network.toclient.CardInventoryPacket;
 import com.hungteen.pvz.common.network.toclient.PlayerStatsPacket;
 import com.hungteen.pvz.common.world.invasion.Invasion;
 import com.hungteen.pvz.common.world.invasion.MissionManager;
@@ -261,7 +261,7 @@ public class PlayerDataManager {
 			for(int i = 0; i <= Resources.SLOT_NUM.max; ++ i) {
 				this.sendInventoryPacket(player, i, this.getItemAt(i).save(new CompoundNBT()));
 			}
-			this.setCurrentPos(this.getCurrentPos());
+			this.setCurrentPos(this.getCurrentPos(), true);
 		}
 		{// plants & zombies syncs.
 			PVZAPI.get().getPAZs().forEach(plant -> {
@@ -390,12 +390,12 @@ public class PlayerDataManager {
 			next = (next + (delta > 0 ? -1 : 1) + (maxSlot + 1)) % (maxSlot + 1);
 		}
 		player.setItemInHand(Hand.MAIN_HAND, this.getItemAt(next));
-		this.setCurrentPos(next);
+		this.setCurrentPos(next, true);
 	}
 	
 	public void onSwitchCard() {
 		if(player.getMainHandItem().getItem() instanceof SummonCardItem) {
-		    this.setItemAt(player.getMainHandItem(), this.emptySlot);
+		    this.setItemAt(player.getMainHandItem(), this.emptySlot, true);
 		}
 	}
 	
@@ -403,17 +403,21 @@ public class PlayerDataManager {
 		return this.cards.get(pos);
 	}
 	
-	public void setItemAt(ItemStack stack, int pos) {
+	public void setItemAt(ItemStack stack, int pos, boolean sync) {
 		pos = MathHelper.clamp(pos, 0, this.cards.size() - 1);
 		this.cards.set(pos, stack);
-		this.sendInventoryPacket(player, pos, this.cards.get(pos).save(new CompoundNBT()));
+		if(sync) {
+			this.sendInventoryPacket(player, pos, this.cards.get(pos).save(new CompoundNBT()));
+		}
 	}
 	
-	public void setCurrentPos(int pos) {
+	public void setCurrentPos(int pos, boolean sync) {
 		this.emptySlot = pos;
 		CompoundNBT nbt = new CompoundNBT();
 		nbt.putInt(CardInventoryPacket.FLAG, this.emptySlot);
-		this.sendInventoryPacket(player, -1, nbt);
+		if(sync) {
+			this.sendInventoryPacket(player, -1, nbt);
+		}
 	}
 	
 	public int getCardsSize() {
@@ -432,9 +436,11 @@ public class PlayerDataManager {
 				}),
 				new CardInventoryPacket(type, nbt)
 			);
+		} else{
+			PVZPacketHandler.CHANNEL.sendToServer(new CardInventoryPacket(type, nbt));
 		}
 	}
-	
+
 	/*
 	 * Operation about plant card CD.
 	 * just store data, no need to manually sync to client.

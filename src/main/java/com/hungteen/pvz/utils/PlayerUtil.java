@@ -97,7 +97,7 @@ public class PlayerUtil {
 	public static void setItemStack(PlayerEntity player, ItemStack stack, int pos) {
 		final PlayerDataManager manager = getManager(player);
 		if(manager != null) {
-			manager.setItemAt(stack, pos);
+			manager.setItemAt(stack, pos, true);
 		}
 	}
 	

@@ -101,7 +101,8 @@ public class Invasion {
             world.getProfiler().push("Invasion Wave Tick");
             final int dayTime = (int) world.getDayTime();
             if (this.currentWave < this.getTotalWaveCount() && dayTime == this.getWaveTime(this.currentWave)) {
-                this.setWaveTriggered(this.currentWave++, this.spawnWaveInvaders());//wave spawn.
+            	this.spawnWaveInvaders();
+                this.setWaveTriggered(this.currentWave ++, this.spawnWaveInvaders());//wave spawn.
             }
             world.getProfiler().pop();
 
@@ -138,6 +139,7 @@ public class Invasion {
         if (!PlayerUtil.isPlayerSurvival(player) || !world.dimension().equals(World.OVERWORLD) || world.getDifficulty() == Difficulty.PEACEFUL || !ConfigUtil.enableHugeWave()) {
             return false;
         }
+        
         if (getSpawnList().isEmpty()) {
             PVZMod.LOGGER.warn("WaveManager : Why cause spawn list empty ?");
             return false;
@@ -540,7 +542,12 @@ public class Invasion {
 
     public void updateKillQueue() {
         final int next = (killPos + 1) % MissionManager.KILL_IN_SECOND;
-        PlayerUtil.setResource(player, Resources.MISSION_VALUE, -this.killQueue[next]);
+//        for(int i = 0; i < 10; ++ i) {
+//        	System.out.print(this.killQueue[i] + ", ");
+//        }
+//        System.out.print("Kills : " + PlayerUtil.getResource(player, Resources.MISSION_VALUE) + ", sub : " + this.killQueue[next]);
+//        System.out.println();
+        PlayerUtil.addResource(player, Resources.MISSION_VALUE, - this.killQueue[next]);
         this.killQueue[next] = this.killInSecond;
         this.killPos = next;
         this.killInSecond = 0;

@@ -3,14 +3,13 @@ package com.hungteen.pvz.client.events;
 import com.hungteen.pvz.PVZMod;
 import com.hungteen.pvz.client.ClientProxy;
 import com.hungteen.pvz.client.KeyBindRegister;
+import com.hungteen.pvz.client.events.handler.PVZSwitchSlotHander;
 import com.hungteen.pvz.common.entity.plant.explosion.CobCannonEntity;
 import com.hungteen.pvz.common.item.spawn.card.SummonCardItem;
 import com.hungteen.pvz.common.network.PVZPacketHandler;
 import com.hungteen.pvz.common.network.toserver.EntityInteractPacket;
-import com.hungteen.pvz.common.network.toserver.PVZMouseScrollPacket;
 import com.hungteen.pvz.utils.ConfigUtil;
 import com.hungteen.pvz.utils.EntityUtil;
-
 import net.minecraft.client.Minecraft;
 import net.minecraft.util.Hand;
 import net.minecraftforge.api.distmarker.Dist;
@@ -37,10 +36,10 @@ public class PVZInputEvents {
 			/* change card slot position */
 			if(ClientProxy.MC.player.getItemInHand(Hand.MAIN_HAND).getItem() instanceof SummonCardItem) {
 				if(KeyBindRegister.UP_TOGGLE.consumeClick()) {
-				    changeCardSlot(1F);
+					PVZSwitchSlotHander.changeCardSlot(1F);
 				}
 			    if(KeyBindRegister.DOWN_TOGGLE.consumeClick()) {
-				    changeCardSlot(- 1F);
+					PVZSwitchSlotHander.changeCardSlot(- 1F);
 			    }
 			}
 			
@@ -71,7 +70,7 @@ public class PVZInputEvents {
 		double delta = ev.getScrollDelta();
 		if(delta != 0.0 && EntityUtil.isEntityValid(ClientProxy.MC.player) && KeyBindRegister.SHIFT.isDown()) {
 			if(ClientProxy.MC.player.getMainHandItem().getItem() instanceof SummonCardItem) {
-				changeCardSlot(delta);
+				PVZSwitchSlotHander.changeCardSlot(delta);
 				ev.setCanceled(true);
 			}
 		}
@@ -90,14 +89,6 @@ public class PVZInputEvents {
 			}
 		}
 		CurrentResourcePos = result;
-	}
-	
-	/**
-	 * {@link #onKeyDown(net.minecraftforge.client.event.InputEvent.KeyInputEvent)}
-	 * {@link #onMouseScroll(net.minecraftforge.client.event.InputEvent.MouseScrollEvent)}
-	 */
-	private static void changeCardSlot(double delta) {
-		PVZPacketHandler.CHANNEL.sendToServer(new PVZMouseScrollPacket(delta));
 	}
 	
 	private static boolean checkCurrentPos(int pos) {

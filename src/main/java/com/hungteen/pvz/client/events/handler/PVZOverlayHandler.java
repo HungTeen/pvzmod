@@ -170,7 +170,7 @@ public class PVZOverlayHandler {
 		ClientProxy.MC.gui.blit(stack, (int) (w / sz) - barLen - 7, (int)(h / sz) - HEIGHT + 7, 149 - barLen + 1, 31, barLen, P_HEIGHT);
 		
 		for(int i = 0; i < count; ++ i) {
-			final int time = manager.getInvasion().getWaveTime(i);
+			final int time = (int)((manager.getInvasion().getWaveTime(i) - InvasionManager.START_TICK  + 2 + 24000) % 24000L);
 			final int waveLen = MathUtil.getBarLen(time, 24000, P_WIDTH);
 			if(time > dayTime) {
 				ClientProxy.MC.gui.blit(stack, (int) (w / sz) - waveLen - 7, (int)(h / sz) - HEIGHT + 4, 1, 49, 14, 11);

@@ -14,6 +14,7 @@ import com.hungteen.pvz.common.entity.zombie.PVZZombieEntity;
 import com.hungteen.pvz.common.event.PVZLivingEvents;
 import com.hungteen.pvz.common.event.PVZPlayerEvents;
 import com.hungteen.pvz.common.item.ItemRegister;
+import com.hungteen.pvz.common.item.display.ChallengeEnvelopeItem;
 import com.hungteen.pvz.common.item.tool.mc.OriginShovelItem;
 import com.hungteen.pvz.common.potion.EffectRegister;
 import com.hungteen.pvz.common.world.invasion.InvasionManager;
@@ -141,6 +142,7 @@ public class PlayerEventHandler {
                 }
                 // give patchouli guide book to new join player.
                 PVZPatchouliHandler.giveInitialGuideBook(player);
+                player.addItem(ChallengeEnvelopeItem.getChallengeEnvelope(StringUtil.prefix("strange_help")));
             } else if (!l.lastVersion.equals(PVZMod.MOD_VERSION)) {//version changed.
 
             }
@@ -187,8 +189,12 @@ public class PlayerEventHandler {
         oldPlayer.getCapability(CapabilityHandler.PLAYER_DATA_CAPABILITY).ifPresent(l -> {
         	newPlayer.getCapability(CapabilityHandler.PLAYER_DATA_CAPABILITY).ifPresent(r -> {
         		r.getPlayerData().cloneFromExistingPlayerData(l.getPlayerData(), died);
+        		
         	});
         });
+        
+        InvasionManager.removePlayer(oldPlayer);
+        InvasionManager.addPlayer(newPlayer);
     }
 
     /**
