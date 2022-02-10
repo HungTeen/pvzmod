@@ -1,16 +1,12 @@
 package com.hungteen.pvz.common.container;
 
-import com.hungteen.pvz.common.container.inventory.CardPackItemHandler;
 import com.hungteen.pvz.common.item.ItemRegister;
 import com.hungteen.pvz.common.item.tool.plant.CardPackItem;
-import com.hungteen.pvz.utils.enums.Resources;
-
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.inventory.Inventory;
 import net.minecraft.inventory.container.Slot;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.items.ItemStackHandler;
-import net.minecraftforge.items.SlotItemHandler;
 
 public class CardPackContainer extends PVZContainer {
 
@@ -18,25 +14,25 @@ public class CardPackContainer extends PVZContainer {
 	private ItemStackHandler cardBar;
 	private final PlayerEntity player;
 	private final ItemStack stack;
-	private final int slotNum;
+	private final int slotNum = 0;
 	
 	public CardPackContainer(int id, PlayerEntity player) {
 		super(ContainerRegister.CARD_PACK.get(), id);
 		this.player = player;
 		this.stack = player.getMainHandItem();
 		this.backpack = CardPackItem.getInventory(this.stack);
-		this.slotNum = Resources.SLOT_NUM.max;
-		this.cardBar = new CardPackItemHandler(this.player, this.slotNum);
+//		this.slotNum = Resources.SLOT_NUM.max;
+//		this.cardBar = new CardPackItemHandler(this.player, this.slotNum);
 		
 		/* summon card hot bar */
-		for(int i = 0; i < this.slotNum; ++ i) {
-			this.addSlot(new SlotItemHandler(this.cardBar, i, 19 + 18 * i, 21){
-				@Override
-				public boolean mayPlace(ItemStack stack) {
-					return CardPackItem.isValidItemStack(stack);
-				}
-			});
-		}
+//		for(int i = 0; i < this.slotNum; ++ i) {
+//			this.addSlot(new SlotItemHandler(this.cardBar, i, 19 + 18 * i, 21){
+//				@Override
+//				public boolean mayPlace(ItemStack stack) {
+//					return CardPackItem.isValidItemStack(stack);
+//				}
+//			});
+//		}
 		
 		/* back pack */
 		for(int i = 0; i < 4; ++ i) {

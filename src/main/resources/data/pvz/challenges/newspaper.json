@@ -25,12 +25,12 @@
           "spawn_amount": {
             "random": {
               "min": 15,
-              "max": 20
+              "max": 19
             }
           }
         }
       ],
-      "duration": 500
+      "duration": 600
     },
     {
       "spawns": [
@@ -40,7 +40,7 @@
           "spawn_amount": {
             "random": {
               "min": 15,
-              "max": 20
+              "max": 19
             }
           }
         },
@@ -55,7 +55,7 @@
           }
         }
       ],
-      "duration": 800
+      "duration": 1000
     },
     {
       "spawns": [
@@ -100,7 +100,7 @@
           }
         }
       ],
-      "duration": 1000
+      "duration": 1200
     },
     {
       "spawns": [
@@ -135,7 +135,7 @@
           }
         }
       ],
-      "duration": 1000
+      "duration": 1100
     },
     {
       "spawns": [
@@ -154,8 +154,8 @@
           "spawn_tick": 100,
           "spawn_amount": {
             "random": {
-              "min": 4,
-              "max": 8
+              "min": 5,
+              "max": 7
             }
           }
         },

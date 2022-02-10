@@ -142,6 +142,7 @@ public class PlayerEventHandler {
                 }
                 // give patchouli guide book to new join player.
                 PVZPatchouliHandler.giveInitialGuideBook(player);
+                // give challenge envelope to player.
                 player.addItem(ChallengeEnvelopeItem.getChallengeEnvelope(StringUtil.prefix("strange_help")));
             } else if (!l.lastVersion.equals(PVZMod.MOD_VERSION)) {//version changed.
 
@@ -153,7 +154,6 @@ public class PlayerEventHandler {
         InvasionManager.addPlayer(player);
         unLockPAZs(player);
 
-//		WaveManager.syncWaveTime(player);
     }
 
     /**

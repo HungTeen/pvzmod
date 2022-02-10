@@ -3,12 +3,11 @@ package com.hungteen.pvz.common.world.structure;
 import com.google.common.collect.ImmutableMap;
 import com.hungteen.pvz.PVZConfig;
 import com.hungteen.pvz.PVZMod;
+import com.hungteen.pvz.common.world.biome.BiomeRegister;
 import com.hungteen.pvz.common.world.structure.shop.DaveVillaComponents;
 import com.hungteen.pvz.common.world.structure.shop.DaveVillaStructure;
 import com.hungteen.pvz.common.world.structure.shop.SunTempleComponents;
 import com.hungteen.pvz.common.world.structure.shop.SunTempleStructure;
-import com.hungteen.pvz.common.world.FeatureRegister;
-import com.hungteen.pvz.common.world.biome.BiomeRegister;
 import com.hungteen.pvz.common.world.structure.zombie.*;
 import com.hungteen.pvz.utils.BiomeUtil;
 import com.hungteen.pvz.utils.StringUtil;
@@ -16,6 +15,7 @@ import net.minecraft.util.RegistryKey;
 import net.minecraft.util.registry.Registry;
 import net.minecraft.util.registry.WorldGenRegistries;
 import net.minecraft.world.biome.Biome;
+import net.minecraft.world.biome.Biomes;
 import net.minecraft.world.gen.FlatGenerationSettings;
 import net.minecraft.world.gen.feature.IFeatureConfig;
 import net.minecraft.world.gen.feature.NoFeatureConfig;
@@ -75,7 +75,9 @@ public class StructureRegister {
 				event.getGeneration().addStructureStart(StructureRegister.CONFIGURED_DOLPHIN_HOUSE);
 			}
 			if(BiomeUtil.isPlain(biomeKey)) {
-				event.getGeneration().addStructureStart(StructureRegister.CONFIGURED_DAVE_VILLA);
+				if(biomeKey.equals(Biomes.PLAINS)) {
+					event.getGeneration().addStructureStart(StructureRegister.CONFIGURED_DAVE_VILLA);
+				}
 			}
 			if(BiomeUtil.isConiferous(biomeKey)) {
 				event.getGeneration().addStructureStart(StructureRegister.CONFIGURED_GRAVE_HOUSE);
@@ -85,7 +87,6 @@ public class StructureRegister {
 	
 	/**
 	 * I hate my trash codes.
-	 * {@link FeatureRegister#setupConfiguredFeatures()}
 	 */
 	public static void setupStructures() {
 		{

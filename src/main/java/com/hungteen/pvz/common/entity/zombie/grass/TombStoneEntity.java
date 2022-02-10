@@ -17,7 +17,6 @@ import net.minecraft.util.DamageSource;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 
-//TODO 墓碑
 public class TombStoneEntity extends AbstractTombStoneEntity {
 
 	protected int waveSummonTick = 0;

@@ -1,15 +1,15 @@
 package com.hungteen.pvz.common.network;
 
+import java.util.Optional;
+import java.util.function.Supplier;
+
 import com.hungteen.pvz.PVZMod;
 import com.hungteen.pvz.api.PVZAPI;
 import com.hungteen.pvz.api.types.IPAZType;
-import com.hungteen.pvz.client.ClientProxy;
 import com.hungteen.pvz.utils.PlayerUtil;
+
 import net.minecraft.network.PacketBuffer;
 import net.minecraftforge.fml.network.NetworkEvent;
-
-import java.util.Optional;
-import java.util.function.Supplier;
 
 public class PAZStatsPacket {
 
@@ -73,7 +73,7 @@ public class PAZStatsPacket {
                 switch (message.type){
                     case UNLOCK:{
                         ctx.get().enqueueWork(() -> {
-                            PlayerUtil.setPAZLock(ClientProxy.MC.player, paz.get(), message.is);
+                            PlayerUtil.setPAZLock(PVZMod.PROXY.getPlayer(), paz.get(), message.is);
                         });
                         break;
                     }

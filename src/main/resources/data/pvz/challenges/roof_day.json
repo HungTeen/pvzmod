@@ -39,7 +39,7 @@
           }
         }
       ],
-      "duration": 500
+      "duration": 600
     },
     {
       "spawns": [
@@ -74,7 +74,7 @@
           }
         }
       ],
-      "duration": 600
+      "duration": 700
     },
     {
       "spawns": [
@@ -89,7 +89,7 @@
           }
         }
       ],
-      "duration": 800
+      "duration": 900
     },
     {
       "spawns": [
@@ -124,7 +124,7 @@
           }
         }
       ],
-      "duration": 800
+      "duration": 1000
     },
     {
       "spawns": [

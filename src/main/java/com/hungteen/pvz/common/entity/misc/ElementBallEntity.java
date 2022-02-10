@@ -93,7 +93,7 @@ public class ElementBallEntity extends AbstractOwnerEntity {
 			}
 			if(this.getOwner() == null){
 				++ this.removeTick;
-				if(this.removeTick >= 40){
+				if(this.removeTick >= 15){
 					this.remove();
 				}
 			} else{

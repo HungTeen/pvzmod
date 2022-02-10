@@ -576,7 +576,8 @@ public class Invasion {
     		return 2000;
     	}
         final int mid = world.getDifficulty() == Difficulty.HARD ? 60 : world.getDifficulty() == Difficulty.NORMAL ? 120 : 200;
-        final int extra = (this.currentCount < 20 ? 0 : (this.currentCount - 30) * 4);
+        final int base = this.invasionLvl / 3;
+        final int extra = (this.currentCount < base ? 0 : (this.currentCount - base) * 5);
         return MathUtil.getRandomMinMax(world.random, -10, 10) + mid + extra;
     }
 

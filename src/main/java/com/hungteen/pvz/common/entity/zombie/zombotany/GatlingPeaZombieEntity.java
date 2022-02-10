@@ -25,11 +25,6 @@ public class GatlingPeaZombieEntity extends PeaShooterZombieEntity {
 	}
 	
 	@Override
-	protected ResourceLocation getDefaultLootTable() {
-		return PVZLoot.GATLINGPEA_ZOMBIE;
-	}
-	
-	@Override
 	public ZombieType getZombieType() {
 		return Zombotanies.GATLINGPEA_ZOMBIE;
 	}

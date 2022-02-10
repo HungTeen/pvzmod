@@ -351,13 +351,14 @@ public class BungeeZombieEntity extends PVZZombieEntity implements ICanPushBack 
 	 */
 	public static boolean canBungeeSteal(Entity target) {
 		//is boss entity.
-		if(! (target instanceof LivingEntity) || EntityUtil.isEntityBoss((LivingEntity) target) || isHoldingZombieDoll((LivingEntity) target)) {
+		if((! (target instanceof LivingEntity)) || EntityUtil.isEntityBoss((LivingEntity) target) || isHoldingZombieDoll((LivingEntity) target)) {
 			return false;
 		}
 		if(target instanceof AbstractPAZEntity) {
+			
 			return ((AbstractPAZEntity) target).canBeStealByBungee();
 		}
-		return EntityUtil.getCurrentMaxHealth((LivingEntity) target) < ConfigUtil.getLimitDamage();
+		return EntityUtil.getCurrentMaxHealth((LivingEntity) target) <= ConfigUtil.getLimitDamage();
 	}
 	
 	/**

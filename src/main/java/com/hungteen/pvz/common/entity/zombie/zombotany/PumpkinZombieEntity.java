@@ -40,10 +40,5 @@ public class PumpkinZombieEntity extends AbstractZombotanyEntity {
 	public ZombieType getZombieType() {
 		return Zombotanies.PUMPKIN_ZOMBIE;
 	}
-	
-	@Override
-	protected ResourceLocation getDefaultLootTable() {
-		return PVZLoot.PUMPKIN_ZOMBIE;
-	}
 
 }

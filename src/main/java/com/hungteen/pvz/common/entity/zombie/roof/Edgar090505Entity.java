@@ -93,6 +93,11 @@ public class Edgar090505Entity extends EdgarRobotEntity {
     }
 
     @Override
+    public int getSpawnCount() {
+        return (this.bossInfo.getPlayers().size() + 1) / 2 + 1;
+    }
+
+    @Override
     public float getWalkSpeed() {
         return 0;
     }

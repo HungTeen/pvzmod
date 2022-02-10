@@ -4,9 +4,6 @@ import com.hungteen.pvz.client.ClientProxy;
 import com.hungteen.pvz.client.events.OverlayEvents;
 import com.hungteen.pvz.client.events.PVZInputEvents;
 import com.hungteen.pvz.common.capability.player.PlayerDataManager;
-import com.hungteen.pvz.common.item.spawn.card.SummonCardItem;
-import com.hungteen.pvz.common.network.PVZPacketHandler;
-import com.hungteen.pvz.common.network.toserver.PVZMouseScrollPacket;
 import com.hungteen.pvz.common.world.invasion.InvasionManager;
 import com.hungteen.pvz.common.world.invasion.MissionManager;
 import com.hungteen.pvz.utils.ConfigUtil;
@@ -21,7 +18,6 @@ import com.mojang.blaze3d.systems.RenderSystem;
 import net.minecraft.client.renderer.BufferBuilder;
 import net.minecraft.client.renderer.Tessellator;
 import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
-import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraftforge.api.distmarker.Dist;
@@ -94,59 +90,59 @@ public class PVZOverlayHandler {
 		stack.popPose();
 	}
 	
-	@SuppressWarnings("deprecation")
-	public static void drawCardInventory(PlayerEntity player, MatrixStack stack, int w, int h) {
-		if(player.getMainHandItem().getItem() instanceof SummonCardItem) {
-			final PlayerDataManager manager = PlayerUtil.getManager(ClientProxy.MC.player);
-			if(manager == null ) {
-				return ;
-			}
-			if(! manager.getItemAt(manager.getCurrentPos()).equals(player.getMainHandItem())) {
-				PVZPacketHandler.CHANNEL.sendToServer(new PVZMouseScrollPacket(0));
-			}
-			if(SlotDelay < SLOT_DELAY_CD) {
-				++ SlotDelay;
-			}
-		} else {
-			if(SlotDelay > 0) {
-				-- SlotDelay;
-			}
-		}
-		final PlayerDataManager manager = PlayerUtil.getManager(ClientProxy.MC.player);
-		if(SlotDelay > 0) {
-			final int maxSlot = PlayerUtil.getResource(ClientProxy.MC.player, Resources.SLOT_NUM) + 1;
-			final int totHeight = (SLOT_SIDE - 2) * maxSlot;
-			final int startHeight = (h - totHeight) / 2;
-			final float offset = - 10 + 10F * SlotDelay / SLOT_DELAY_CD;
-			stack.pushPose();
-			RenderSystem.pushMatrix();
-			RenderSystem.enableBlend();
-			
-			ClientProxy.MC.getTextureManager().bind(RESOURCE);
-			stack.translate(offset, 0, 0);
-			/* render slots */
-			for(int i = 0; i < maxSlot; ++ i) {
-				if(i == manager.getCurrentPos()) {
-					ClientProxy.MC.gui.blit(stack, 0, startHeight + i * (SLOT_SIDE - 2), 162, 22, SLOT_SIDE, SLOT_SIDE);
-				} else {
-					ClientProxy.MC.gui.blit(stack, 0, startHeight + i * (SLOT_SIDE - 2), 162, 0, SLOT_SIDE, SLOT_SIDE);
-				}
-			}
-			/* render itemstack */
-			for(int i = 0; i < Math.min(manager.getCardsSize(), maxSlot); ++ i) {
-				RenderSystem.pushMatrix();
-				RenderSystem.translated(offset, 0, 0);
-				ClientProxy.MC.getItemRenderer().renderGuiItem(manager.getItemAt(i), 3, startHeight + 3 + i * (SLOT_SIDE - 2));
-				ClientProxy.MC.getItemRenderer().renderGuiItemDecorations(ClientProxy.MC.font, manager.getItemAt(i), 3, startHeight + 3 + i * (SLOT_SIDE - 2));
-			    RenderSystem.popMatrix();
-			}
-			
-			RenderSystem.disableBlend();
-			RenderSystem.popMatrix();
-			stack.popPose();
-		}
-		
-	}
+//	@SuppressWarnings("deprecation")
+//	public static void drawCardInventory(PlayerEntity player, MatrixStack stack, int w, int h) {
+//		if(player.getMainHandItem().getItem() instanceof SummonCardItem) {
+//			final PlayerDataManager manager = PlayerUtil.getManager(ClientProxy.MC.player);
+//			if(manager == null ) {
+//				return ;
+//			}
+//			if(! manager.getItemAt(manager.getCurrentPos()).equals(player.getMainHandItem())) {
+//				PVZPacketHandler.CHANNEL.sendToServer(new PVZMouseScrollPacket(0));
+//			}
+//			if(SlotDelay < SLOT_DELAY_CD) {
+//				++ SlotDelay;
+//			}
+//		} else {
+//			if(SlotDelay > 0) {
+//				-- SlotDelay;
+//			}
+//		}
+//		final PlayerDataManager manager = PlayerUtil.getManager(ClientProxy.MC.player);
+//		if(SlotDelay > 0) {
+//			final int maxSlot = PlayerUtil.getResource(ClientProxy.MC.player, Resources.SLOT_NUM) + 1;
+//			final int totHeight = (SLOT_SIDE - 2) * maxSlot;
+//			final int startHeight = (h - totHeight) / 2;
+//			final float offset = - 10 + 10F * SlotDelay / SLOT_DELAY_CD;
+//			stack.pushPose();
+//			RenderSystem.pushMatrix();
+//			RenderSystem.enableBlend();
+//			
+//			ClientProxy.MC.getTextureManager().bind(RESOURCE);
+//			stack.translate(offset, 0, 0);
+//			/* render slots */
+//			for(int i = 0; i < maxSlot; ++ i) {
+//				if(i == manager.getCurrentPos()) {
+//					ClientProxy.MC.gui.blit(stack, 0, startHeight + i * (SLOT_SIDE - 2), 162, 22, SLOT_SIDE, SLOT_SIDE);
+//				} else {
+//					ClientProxy.MC.gui.blit(stack, 0, startHeight + i * (SLOT_SIDE - 2), 162, 0, SLOT_SIDE, SLOT_SIDE);
+//				}
+//			}
+//			/* render itemstack */
+//			for(int i = 0; i < Math.min(manager.getCardsSize(), maxSlot); ++ i) {
+//				RenderSystem.pushMatrix();
+//				RenderSystem.translated(offset, 0, 0);
+//				ClientProxy.MC.getItemRenderer().renderGuiItem(manager.getItemAt(i), 3, startHeight + 3 + i * (SLOT_SIDE - 2));
+//				ClientProxy.MC.getItemRenderer().renderGuiItemDecorations(ClientProxy.MC.font, manager.getItemAt(i), 3, startHeight + 3 + i * (SLOT_SIDE - 2));
+//			    RenderSystem.popMatrix();
+//			}
+//			
+//			RenderSystem.disableBlend();
+//			RenderSystem.popMatrix();
+//			stack.popPose();
+//		}
+//		
+//	}
 	
 	public static void renderInvasionProgress(MatrixStack stack, int w, int h) {
 		final PlayerDataManager manager = PlayerUtil.getManager(ClientProxy.MC.player);

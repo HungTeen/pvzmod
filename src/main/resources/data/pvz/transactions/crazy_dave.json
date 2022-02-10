@@ -28,36 +28,6 @@
       "must": true
     },
     {
-      "type": "slot_2",
-      "price": 200,
-      "must": true
-    },
-    {
-      "type": "slot_3",
-      "price": 1000,
-      "must": true
-    },
-    {
-      "type": "slot_4",
-      "price": 3000,
-      "must": true
-    },
-    {
-      "type": "slot_5",
-      "price": 8000,
-      "must": true
-    },
-    {
-      "type": "slot_6",
-      "price": 20000,
-      "must": true
-    },
-    {
-      "type": "slot_7",
-      "price": 32000,
-      "must": true
-    },
-    {
       "type": "item",
       "item": "pvz:almanac",
       "price": 100,

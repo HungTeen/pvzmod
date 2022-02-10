@@ -3,15 +3,12 @@ package com.hungteen.pvz.client.events;
 import com.hungteen.pvz.PVZMod;
 import com.hungteen.pvz.client.ClientProxy;
 import com.hungteen.pvz.client.KeyBindRegister;
-import com.hungteen.pvz.client.events.handler.PVZSwitchSlotHander;
 import com.hungteen.pvz.common.entity.plant.explosion.CobCannonEntity;
-import com.hungteen.pvz.common.item.spawn.card.SummonCardItem;
 import com.hungteen.pvz.common.network.PVZPacketHandler;
 import com.hungteen.pvz.common.network.toserver.EntityInteractPacket;
 import com.hungteen.pvz.utils.ConfigUtil;
-import com.hungteen.pvz.utils.EntityUtil;
+
 import net.minecraft.client.Minecraft;
-import net.minecraft.util.Hand;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.client.event.InputEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
@@ -33,15 +30,15 @@ public class PVZInputEvents {
 				ShowOverlay = ! ShowOverlay;
 			}
 			
-			/* change card slot position */
-			if(ClientProxy.MC.player.getItemInHand(Hand.MAIN_HAND).getItem() instanceof SummonCardItem) {
-				if(KeyBindRegister.UP_TOGGLE.consumeClick()) {
-					PVZSwitchSlotHander.changeCardSlot(1F);
-				}
-			    if(KeyBindRegister.DOWN_TOGGLE.consumeClick()) {
-					PVZSwitchSlotHander.changeCardSlot(- 1F);
-			    }
-			}
+//			/* change card slot position */
+//			if(ClientProxy.MC.player.getItemInHand(Hand.MAIN_HAND).getItem() instanceof SummonCardItem) {
+//				if(KeyBindRegister.UP_TOGGLE.consumeClick()) {
+//					PVZSwitchSlotHander.changeCardSlot(1F);
+//				}
+//			    if(KeyBindRegister.DOWN_TOGGLE.consumeClick()) {
+//					PVZSwitchSlotHander.changeCardSlot(- 1F);
+//			    }
+//			}
 			
 			/* change resource to display */
 			if(KeyBindRegister.LEFT_TOGGLE.consumeClick()) {
@@ -67,13 +64,13 @@ public class PVZInputEvents {
 	
 	@SubscribeEvent
     public static void onMouseScroll(InputEvent.MouseScrollEvent ev) {
-		double delta = ev.getScrollDelta();
-		if(delta != 0.0 && EntityUtil.isEntityValid(ClientProxy.MC.player) && KeyBindRegister.SHIFT.isDown()) {
-			if(ClientProxy.MC.player.getMainHandItem().getItem() instanceof SummonCardItem) {
-				PVZSwitchSlotHander.changeCardSlot(delta);
-				ev.setCanceled(true);
-			}
-		}
+//		double delta = ev.getScrollDelta();
+//		if(delta != 0.0 && EntityUtil.isEntityValid(ClientProxy.MC.player) && KeyBindRegister.SHIFT.isDown()) {
+//			if(ClientProxy.MC.player.getMainHandItem().getItem() instanceof SummonCardItem) {
+//				PVZSwitchSlotHander.changeCardSlot(delta);
+//				ev.setCanceled(true);
+//			}
+//		}
     }
 	
 	/**

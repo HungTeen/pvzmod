@@ -1,18 +1,11 @@
 package com.hungteen.pvz.common.entity.bullet;
 
-import java.util.List;
-
+import com.hungteen.pvz.common.entity.EntityRegister;
 import com.hungteen.pvz.common.entity.plant.spear.CatTailEntity;
 import com.hungteen.pvz.common.misc.PVZEntityDamageSource;
-import com.hungteen.pvz.common.entity.EntityRegister;
 import com.hungteen.pvz.utils.EntityUtil;
-
 import it.unimi.dsi.fastutil.ints.IntOpenHashSet;
-import net.minecraft.entity.Entity;
-import net.minecraft.entity.EntitySize;
-import net.minecraft.entity.EntityType;
-import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.Pose;
+import net.minecraft.entity.*;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.network.datasync.DataParameter;
 import net.minecraft.network.datasync.DataSerializers;
@@ -24,6 +17,8 @@ import net.minecraft.util.math.vector.Vector3d;
 import net.minecraft.world.World;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
+
+import java.util.List;
 
 public class ThornEntity extends AbstractBulletEntity {
 
@@ -94,7 +89,7 @@ public class ThornEntity extends AbstractBulletEntity {
 	public LivingEntity getRandomAttackTarget() {
 		final float range = 40F;
 		List<LivingEntity> list = level.getEntitiesOfClass(LivingEntity.class, EntityUtil.getEntityAABB(this, range, range), entity -> {
-			return ! entity.is(thornTarget) && EntityUtil.canTargetEntity(this.getOwnerOrSelf(), entity);
+			return ! entity.is(thornTarget) && EntityUtil.canSeeEntity(this, entity) && EntityUtil.canTargetEntity(this.getOwnerOrSelf(), entity);
 		});
 		if (list.size() == 0) {
 			return null;
@@ -114,7 +109,6 @@ public class ThornEntity extends AbstractBulletEntity {
 
 	/**
 	 * update target when in guide mode.
-	 * {@link CatTailEntity#normalPlantTick()}
 	 */
 	public void setThornTarget(LivingEntity target) {
 		this.thornTarget = target;
@@ -132,7 +126,6 @@ public class ThornEntity extends AbstractBulletEntity {
 	}
 
 	/**
-	 * {@link CatTailEntity#normalPlantTick()}
 	 */
 	public boolean isInControl() {
 		return this.getThornType() == ThornTypes.GUIDE;
@@ -173,7 +166,7 @@ public class ThornEntity extends AbstractBulletEntity {
 	@Override
 	public float getAttackDamage() {
 		float damage = this.attackDamage;
-		if (this.getThornType() == ThornTypes.AUTO) {
+		if (this.getThornState() == ThornStates.POWER || this.getThornType() == ThornTypes.AUTO) {
 			damage += 10;
 		}
 		return damage;

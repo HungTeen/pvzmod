@@ -85,7 +85,37 @@
           }
         }
       ],
-      "duration": 1200
+      "duration": 1000
+    },
+    {
+      "spawns": [
+        {
+          "entity_type": "pvz:screendoor_zombie",
+          "spawn_tick": 50,
+          "spawn_amount": {
+            "random": {
+              "min": 90,
+              "max": 100
+            }
+          }
+        }
+      ],
+      "duration": 1000
+    },
+    {
+      "spawns": [
+        {
+          "entity_type": "pvz:normal_zombie",
+          "spawn_tick": 50,
+          "spawn_amount": {
+            "random": {
+              "min": 110,
+              "max": 120
+            }
+          }
+        }
+      ],
+      "duration": 1000
     }
   ],
   "rewards": {

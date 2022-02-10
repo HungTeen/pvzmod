@@ -54,6 +54,7 @@ public class PVZZombieAttackGoal extends PVZMeleeAttackGoal {
 					&& this.zombie.canNormalUpdate() && this.attacker.getDeltaMovement().length() <= 0.1D && this.attacker.isOnGround()) {
 				final float random = this.zombie.getRandom().nextFloat();
 				if(random < 0.6) {
+					System.out.println("jump !");
 					Vector3d speed = target.position().subtract(this.attacker.position()).normalize();
 					this.attacker.setDeltaMovement(speed.scale(this.attacker.getRandom().nextDouble() * 0.4 + 0.4).scale(this.attacker.getAttributeValue(Attributes.MOVEMENT_SPEED)));
 				} else if(this.zombie.getLastHurtByMob() != null) {

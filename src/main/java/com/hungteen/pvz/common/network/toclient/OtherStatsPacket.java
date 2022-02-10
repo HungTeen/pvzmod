@@ -1,12 +1,13 @@
 package com.hungteen.pvz.common.network.toclient;
 
-import com.hungteen.pvz.client.ClientProxy;
+import java.util.function.Supplier;
+
+import com.hungteen.pvz.PVZMod;
 import com.hungteen.pvz.common.misc.PVZPacketTypes;
 import com.hungteen.pvz.utils.PlayerUtil;
+
 import net.minecraft.network.PacketBuffer;
 import net.minecraftforge.fml.network.NetworkEvent;
-
-import java.util.function.Supplier;
 
 public class OtherStatsPacket{
 
@@ -47,13 +48,13 @@ public class OtherStatsPacket{
 				switch (message.type){
 					case WAVE:{
 						if(message.pos < 0){
-							PlayerUtil.getOptManager(ClientProxy.MC.player).ifPresent(l -> l.getInvasion().setTotalWaveCount(message.data));
+							PlayerUtil.getOptManager(PVZMod.PROXY.getPlayer()).ifPresent(l -> l.getInvasion().setTotalWaveCount(message.data));
 						} else{
-							PlayerUtil.getOptManager(ClientProxy.MC.player).ifPresent(l -> l.getInvasion().setWaveTime(message.pos, message.data));
+							PlayerUtil.getOptManager(PVZMod.PROXY.getPlayer()).ifPresent(l -> l.getInvasion().setWaveTime(message.pos, message.data));
 						}
 					}
 					case WAVE_FLAG:{
-						PlayerUtil.getOptManager(ClientProxy.MC.player).ifPresent(l -> l.getInvasion().setWaveTriggered(message.pos, message.flag));
+						PlayerUtil.getOptManager(PVZMod.PROXY.getPlayer()).ifPresent(l -> l.getInvasion().setWaveTriggered(message.pos, message.flag));
 					}
 				}
 //			    if(message.type == 0) {

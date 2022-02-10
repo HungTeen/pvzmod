@@ -28,11 +28,6 @@ public class TallNutZombieEntity extends AbstractZombotanyEntity {
 	}
 	
 	@Override
-	protected ResourceLocation getDefaultLootTable() {
-		return PVZLoot.TALLNUT_ZOMBIE;
-	}
-
-	@Override
 	public ZombieType getZombieType() {
 		return Zombotanies.TALLNUT_ZOMBIE;
 	}

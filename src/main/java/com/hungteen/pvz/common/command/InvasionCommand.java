@@ -4,8 +4,6 @@ import com.hungteen.pvz.common.world.invasion.InvasionManager;
 import com.hungteen.pvz.common.world.invasion.InvasionType;
 import com.hungteen.pvz.utils.PlayerUtil;
 import com.mojang.brigadier.CommandDispatcher;
-import com.mojang.brigadier.arguments.BoolArgumentType;
-import com.mojang.brigadier.arguments.IntegerArgumentType;
 import com.mojang.brigadier.builder.LiteralArgumentBuilder;
 import net.minecraft.command.CommandSource;
 import net.minecraft.command.Commands;
@@ -49,8 +47,8 @@ public class InvasionCommand {
 						}))
 		);
 
-		builder.then(Commands.literal("wave")
-				.then(Commands.argument("targets", EntityArgument.players())
+//		builder.then(Commands.literal("wave")
+//				.then(Commands.argument("targets", EntityArgument.players())
 //						.then(Commands.literal("start")
 //								.then(Commands.argument("wave_num", IntegerArgumentType.integer())
 //										.executes(commond -> {
@@ -59,20 +57,20 @@ public class InvasionCommand {
 //												.executes(command -> {
 //													return spawnHugeWave(EntityArgument.getPlayers(command, "targets"), IntegerArgumentType.getInteger(command, "wave_num"), IntegerArgumentType.getInteger(command, "amount"));
 //												}))))
-						.then(Commands.literal("time")
-								.then(Commands.argument("pos", IntegerArgumentType.integer())
-										.then(Commands.argument("time", IntegerArgumentType.integer())
-												.executes(commond -> {
-													return setWaveTime(commond.getSource(), EntityArgument.getPlayers(commond, "targets"), IntegerArgumentType.getInteger(commond, "pos"), IntegerArgumentType.getInteger(commond, "time"));
-												}))))
-						.then(Commands.literal("trigger")
-								.then(Commands.argument("pos", IntegerArgumentType.integer())
-										.then(Commands.argument("flag", BoolArgumentType.bool())
-												.executes(commond -> {
-													return setTriggered(commond.getSource(), EntityArgument.getPlayers(commond, "targets"), IntegerArgumentType.getInteger(commond, "pos"), BoolArgumentType.getBool(commond, "flag"));
-												})))))
+//						.then(Commands.literal("time")
+//								.then(Commands.argument("pos", IntegerArgumentType.integer())
+//										.then(Commands.argument("time", IntegerArgumentType.integer())
+//												.executes(commond -> {
+//													return setWaveTime(commond.getSource(), EntityArgument.getPlayers(commond, "targets"), IntegerArgumentType.getInteger(commond, "pos"), IntegerArgumentType.getInteger(commond, "time"));
+//												}))))
+//						.then(Commands.literal("trigger")
+//								.then(Commands.argument("pos", IntegerArgumentType.integer())
+//										.then(Commands.argument("flag", BoolArgumentType.bool())
+//												.executes(commond -> {
+//													return setTriggered(commond.getSource(), EntityArgument.getPlayers(commond, "targets"), IntegerArgumentType.getInteger(commond, "pos"), BoolArgumentType.getBool(commond, "flag"));
+//												})))))
 
-		);
+//		);
 
         dispatcher.register(builder);
     }

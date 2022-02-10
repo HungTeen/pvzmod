@@ -53,7 +53,7 @@ public class PeaShooterZombieEntity extends AbstractZombotanyEntity {
 	}
 	
 	public float getAttackDamage() {
-		return 3;
+		return 2;
 	}
 	
 	@Override
@@ -90,11 +90,6 @@ public class PeaShooterZombieEntity extends AbstractZombotanyEntity {
 	public void addAdditionalSaveData(CompoundNBT compound) {
 		super.addAdditionalSaveData(compound);
 		compound.putInt("shoot_tick", this.shootTick);
-	}
-	
-	@Override
-	protected ResourceLocation getDefaultLootTable() {
-		return PVZLoot.PEASHOOTER_ZOMBIE;
 	}
 	
 	@Override

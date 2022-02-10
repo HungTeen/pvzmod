@@ -67,8 +67,8 @@ public class CatTailEntity extends PlantShooterEntity {
 	@Override
 	protected AbstractBulletEntity createBullet() {
 		final ThornEntity thorn = new ThornEntity(level, this);
-		thorn.setThornType(this.isPlantInSuperMode() ? ThornTypes.AUTO : ThornTypes.GUIDE);
-		thorn.setThornState(this.getThornShootState());
+		thorn.setThornType(this.getThornShootType());
+		thorn.setThornState(ThornStates.NORMAL);
 		thorn.setExtraHitCount(this.getExtraAttackCount());
 		this.thorns.add(thorn);
 		return thorn;
@@ -88,13 +88,13 @@ public class CatTailEntity extends PlantShooterEntity {
 		this.powerCount += this.getPowerThornCount();
 	}
 	
-	protected ThornStates getThornShootState() {
+	protected ThornTypes getThornShootType() {
 		if(this.powerCount > 0 && this.powerTick == 0) {
 			this.powerTick = this.POWER_CD;
 			-- this.powerCount;
-			return ThornStates.POWER;
+			return ThornTypes.AUTO;
 		}
-		return ThornStates.NORMAL;
+		return ThornTypes.GUIDE;
 	}
 	
 	@Override

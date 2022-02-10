@@ -48,11 +48,6 @@ public class SquashZombieEntity extends AbstractZombotanyEntity {
 	}
 	
 	@Override
-	protected ResourceLocation getDefaultLootTable() {
-		return PVZLoot.SQUASH_ZOMBIE;
-	}
-
-	@Override
 	public ZombieType getZombieType() {
 		return Zombotanies.SQUASH_ZOMBIE;
 	}

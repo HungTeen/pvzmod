@@ -1,6 +1,5 @@
 package com.hungteen.pvz.common.entity.zombie.pool;
 
-import com.hungteen.pvz.common.entity.ai.navigator.ZombiePathNavigator;
 import com.hungteen.pvz.common.entity.plant.PVZPlantEntity;
 import com.hungteen.pvz.common.entity.zombie.PVZZombieEntity;
 import com.hungteen.pvz.common.impl.zombie.PoolZombies;
@@ -52,7 +51,7 @@ public class BalloonZombieEntity extends PVZZombieEntity {
 	protected void registerGoals() {
 		//define at here to avoid crash.
 		this.FlyNavigator = new FlyingPathNavigator(this, level);
-		this.GroundNavigator = new ZombiePathNavigator(this, level);
+		this.GroundNavigator = new GroundPathNavigator(this, level);
 		super.registerGoals();
 	}
 	
@@ -60,6 +59,8 @@ public class BalloonZombieEntity extends PVZZombieEntity {
 	protected void initAttributes() {
 		super.initAttributes();
 		this.getAttribute(Attributes.FLYING_SPEED).setBaseValue(ZombieUtil.FLY_FAST);
+		this.setNoGravity(this.hasBalloon());
+		this.moveControl = this.hasBalloon() ? FlyController : GroundController;
 	}
 	
 	@Override

@@ -25,7 +25,7 @@
           "spawn_amount": {
             "random": {
               "min": 10,
-              "max": 15
+              "max": 14
             }
           }
         },
@@ -34,13 +34,13 @@
           "spawn_tick": 80,
           "spawn_amount": {
             "random": {
-              "min": 3,
+              "min": 4,
               "max": 6
             }
           }
         }
       ],
-      "duration": 500
+      "duration": 540
     },
     {
       "spawns": [
@@ -70,7 +70,7 @@
           "spawn_amount": {
             "random": {
               "min": 4,
-              "max": 7
+              "max": 6
             }
           }
         }
@@ -149,8 +149,8 @@
           "spawn_tick": 100,
           "spawn_amount": {
             "random": {
-              "min": 5,
-              "max": 10
+              "min": 6,
+              "max": 8
             }
           }
         },
@@ -175,7 +175,7 @@
           "spawn_amount": {
             "random": {
               "min": 10,
-              "max": 15
+              "max": 14
             }
           }
         },
@@ -185,7 +185,7 @@
           "spawn_amount": {
             "random": {
               "min": 3,
-              "max": 6
+              "max": 5
             }
           }
         },
@@ -194,7 +194,7 @@
           "spawn_tick": 100,
           "spawn_amount": {
             "random": {
-              "min": 5,
+              "min": 6,
               "max": 10
             }
           }
@@ -219,7 +219,7 @@
           "spawn_tick": 20,
           "spawn_amount": {
             "random": {
-              "min": 10,
+              "min": 11,
               "max": 15
             }
           }
@@ -230,7 +230,7 @@
           "spawn_amount": {
             "random": {
               "min": 8,
-              "max": 12
+              "max": 11
             }
           }
         },
@@ -239,7 +239,7 @@
           "spawn_tick": 200,
           "spawn_amount": {
             "random": {
-              "min": 5,
+              "min": 6,
               "max": 8
             }
           }
@@ -275,7 +275,7 @@
           }
         }
       ],
-      "duration": 2000
+      "duration": 1800
     }
   ],
   "rewards": {

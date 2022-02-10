@@ -54,11 +54,6 @@ public class JalapenoZombieEntity extends AbstractZombotanyEntity {
 	}
 	
 	@Override
-	protected ResourceLocation getDefaultLootTable() {
-		return PVZLoot.JALAPENO_ZOMBIE;
-	}
-
-	@Override
 	public ZombieType getZombieType() {
 		return Zombotanies.JALAPENO_ZOMBIE;
 	}

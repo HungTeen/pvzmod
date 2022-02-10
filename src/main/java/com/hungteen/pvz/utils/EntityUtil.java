@@ -221,11 +221,13 @@ public class EntityUtil {
 	 * entity's health more than 100 is consider as other mod's boss.
 	 */
 	public static boolean isEntityBoss(@Nonnull LivingEntity entity) {
-		if(entity instanceof AbstractBossZombieEntity) {
-			return true;
-		}
-		if(entity instanceof PVZPlantEntity) {
-			return false;
+		if(entity instanceof AbstractPAZEntity) {
+			if(entity instanceof PVZZombieEntity) {
+			    return (entity instanceof AbstractBossZombieEntity);
+		    }
+		    if(entity instanceof PVZPlantEntity) {
+			    return false;
+		    }
 		}
 		return entity.getHealth() > 100F;
 	}

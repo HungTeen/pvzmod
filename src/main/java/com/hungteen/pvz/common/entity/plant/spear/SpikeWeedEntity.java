@@ -59,7 +59,7 @@ public class SpikeWeedEntity extends PVZPlantEntity {
 	 * {@link #normalPlantTick()}
 	 */
 	public void spikeAttack() {
-		final float range = 1F;
+		final float range = 0.6F;
 		EntityUtil.getTargetableEntities(this, EntityUtil.getEntityAABB(this, range, range)).forEach(target -> {
 			this.spikeNormalAttack(target);
 		});
@@ -138,7 +138,7 @@ public class SpikeWeedEntity extends PVZPlantEntity {
 	}
 	
 	public int getAttackCD() {
-		return 40;
+		return 60;
 	}
 	
 	public int getSpikesCount() {

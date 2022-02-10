@@ -30,7 +30,7 @@
           }
         }
       ],
-      "duration": 440
+      "duration": 450
     },
     {
       "spawns": [
@@ -40,12 +40,12 @@
           "spawn_amount": {
             "random": {
               "min": 12,
-              "max": 15
+              "max": 14
             }
           }
         }
       ],
-      "duration": 420
+      "duration": 450
     },
     {
       "spawns": [
@@ -55,7 +55,7 @@
           "spawn_amount": {
             "random": {
               "min": 16,
-              "max": 20
+              "max": 18
             }
           }
         }
@@ -70,7 +70,7 @@
           "spawn_amount": {
             "random": {
               "min": 21,
-              "max": 24
+              "max": 23
             }
           }
         }
@@ -84,13 +84,13 @@
           "spawn_tick": 20,
           "spawn_amount": {
             "random": {
-              "min": 12,
-              "max": 15
+              "min": 10,
+              "max": 12
             }
           }
         }
       ],
-      "duration": 420
+      "duration": 450
     },
     {
       "spawns": [
@@ -99,8 +99,8 @@
           "spawn_tick": 20,
           "spawn_amount": {
             "random": {
-              "min": 15,
-              "max": 20
+              "min": 16,
+              "max": 18
             }
           }
         },
@@ -115,33 +115,13 @@
           }
         }
       ],
-      "duration": 800
+      "duration": 840
     },
     {
       "spawns": [
         {
           "entity_type": "pvz:pogo_zombie",
           "spawn_tick": 20,
-          "spawn_amount": {
-            "random": {
-              "min": 12,
-              "max": 15
-            }
-          }
-        },
-        {
-          "entity_type": "pvz:pole_zombie",
-          "spawn_tick": 100,
-          "spawn_amount": {
-            "random": {
-              "min": 10,
-              "max": 13
-            }
-          }
-        },
-        {
-          "entity_type": "pvz:squash_zombie",
-          "spawn_tick": 250,
           "spawn_amount": {
             "random": {
               "min": 10,
@@ -151,11 +131,31 @@
         },
         {
           "entity_type": "pvz:pole_zombie",
+          "spawn_tick": 100,
+          "spawn_amount": {
+            "random": {
+              "min": 10,
+              "max": 12
+            }
+          }
+        },
+        {
+          "entity_type": "pvz:squash_zombie",
+          "spawn_tick": 250,
+          "spawn_amount": {
+            "random": {
+              "min": 8,
+              "max": 10
+            }
+          }
+        },
+        {
+          "entity_type": "pvz:pole_zombie",
           "spawn_tick": 400,
           "spawn_amount": {
             "random": {
-              "min": 15,
-              "max": 18
+              "min": 12,
+              "max": 15
             }
           }
         },
@@ -165,12 +165,12 @@
           "spawn_amount": {
             "random": {
               "min": 12,
-              "max": 16
+              "max": 14
             }
           }
         }
       ],
-      "duration": 1500
+      "duration": 1800
     }
   ],
   "rewards": {

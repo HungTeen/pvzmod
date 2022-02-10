@@ -40,7 +40,7 @@ import java.util.stream.Collectors;
 public class Challenge implements IChallenge {
 
 	private static final ITextComponent CHALLENGE_NAME_COMPONENT = new TranslationTextComponent("event.minecraft.raid");
-	private static final ITextComponent CHALLENGE_WARN = new TranslationTextComponent("challenge.pvz.warn").withStyle(TextFormatting.RED);
+	private static final ITextComponent CHALLENGE_WARN = new TranslationTextComponent("challenge.pvz.too_far_away").withStyle(TextFormatting.RED);
 	private final ServerBossInfo challengeBar = new ServerBossInfo(CHALLENGE_NAME_COMPONENT, BossInfo.Color.RED, BossInfo.Overlay.PROGRESS);
 	private final int id;//unique specify id.
 	public final ServerWorld world;

@@ -2,9 +2,9 @@ package com.hungteen.pvz.common.network.toclient;
 
 import java.util.function.Supplier;
 
+import com.hungteen.pvz.PVZMod;
 import com.hungteen.pvz.client.particle.ParticleRegister;
 
-import net.minecraft.client.Minecraft;
 import net.minecraft.network.PacketBuffer;
 import net.minecraft.particles.IParticleData;
 import net.minecraft.particles.ParticleTypes;
@@ -65,8 +65,8 @@ public class SpawnParticlePacket {
 		    	} else if(id == 9) {
 		    		particle = ParticleRegister.POP_CORN.get();
 		    	}
-		    	if(particle != null) {
-		    		Minecraft.getInstance().level.addParticle(particle, message.x, message.y, message.z, 0, 0, 0);
+		    	if(particle != null && PVZMod.PROXY.getPlayer() != null) {
+		    		PVZMod.PROXY.getPlayer().level.addParticle(particle, message.x, message.y, message.z, 0, 0, 0);
 		    	}
 		    });
 		    ctx.get().setPacketHandled(true);
