@@ -1,21 +1,14 @@
 package com.hungteen.pvz.client.gui.screen;
 
-import com.hungteen.pvz.client.ClientProxy;
-import com.hungteen.pvz.client.gui.widget.DisplayField;
-import com.hungteen.pvz.common.capability.player.PlayerDataManager;
 import com.hungteen.pvz.common.container.CardPackContainer;
-import com.hungteen.pvz.utils.PlayerUtil;
 import com.hungteen.pvz.utils.StringUtil;
-import com.hungteen.pvz.utils.enums.Resources;
 import com.mojang.blaze3d.matrix.MatrixStack;
+
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.text.ITextComponent;
-import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
-
-import java.util.Arrays;
 
 @OnlyIn(Dist.CLIENT)
 public class CardPackScreen extends PVZContainerScreen<CardPackContainer>{

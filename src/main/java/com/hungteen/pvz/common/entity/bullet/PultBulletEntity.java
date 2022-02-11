@@ -48,7 +48,9 @@ public abstract class PultBulletEntity extends AbstractBulletEntity implements I
 			    final double t1 = speed.y / g;
 			    final double height = speed.y * speed.y / 2 / g;
 			    final double downHeight = this.getY() + height - target.getY() - target.getBbHeight();
-			    if(downHeight < 0) return ;
+			    if(downHeight < 0){
+					return ;
+				}
 			    final double t2 = Math.sqrt(2 * downHeight / g);
 			    final double dx = target.getX() + target.getDeltaMovement().x() * (t1 + t2) - this.getX();
 			    final double dz = target.getZ() + target.getDeltaMovement().z() * (t1 + t2) - this.getZ();
