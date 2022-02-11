@@ -168,6 +168,7 @@ public abstract class PVZZombieEntity extends AbstractPAZEntity implements IZomb
 		if (this.canBeMini() && this.isMiniZombie()) {
 			this.onZombieBeMini();
 		}
+		this.setZombieType(this.getSpawnType());
 	}
 	
 	/**
