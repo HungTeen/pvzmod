@@ -150,7 +150,7 @@ public class PlayerDataManager {
 						this.pazCardCD.put(plant, plantNBT.getInt("paz_card_cd"));
 					}
 					if(plantNBT.contains("paz_card_bar")) {
-						this.pazCardBar.put(plant, (float) plantNBT.getInt("paz_card_bar"));
+						this.pazCardBar.put(plant, plantNBT.getFloat("paz_card_bar"));
 					}
 					if(plantNBT.contains("paz_locked")) {
 						this.pazLocked.put(plant, plantNBT.getBoolean("paz_locked"));
@@ -464,6 +464,19 @@ public class PlayerDataManager {
 	
 	public int getPlantCardCD(IPAZType plant) {
 		return (int) (this.pazCardBar.get(plant) * this.pazCardCD.get(plant));
+	}
+
+	public void saveSummonCardCD(SummonCardItem item, int cd) {
+		this.setPAZCardCD(item.type, cd);
+		this.setPAZCardBar(item.type, 1);
+	}
+
+	public void loadSummonCardCDs() {
+		PVZAPI.get().getPAZs().forEach(paz -> {
+			paz.getSummonCard().ifPresent(item -> {
+				this.player.getCooldowns().addCooldown(item, this.getPlantCardCD(paz));
+			});
+		});
 	}
 
 	/*

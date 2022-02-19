@@ -99,5 +99,9 @@ public class PlantInfo implements IPlantInfo {
 	public int getSunCost() {
 		return this.sunCost;
 	}
+
+	@Override
+	public void onHeal(IPlantEntity plantEntity, float percent) {
+	}
 	
 }

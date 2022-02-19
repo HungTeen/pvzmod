@@ -68,11 +68,7 @@ public class ImitaterEntity extends PlantBomberEntity {
 	}
 	
 	public void imitate(IPlantType plantType) {
-		if(this.imitateType == ImitateType.HEAL) {
-			if(this.targetEntity instanceof PVZPlantEntity) {
-				((PVZPlantEntity) this.targetEntity).onHealByCard();
-			}
-		} else if(this.imitateType == ImitateType.OUTER) {
+		if(this.imitateType == ImitateType.OUTER) {
 			if(this.consumer != null && this.targetEntity instanceof PVZPlantEntity) {
 				this.consumer.accept(((PVZPlantEntity) this.targetEntity));
 			}
@@ -165,7 +161,6 @@ public class ImitaterEntity extends PlantBomberEntity {
 	
 	public static enum ImitateType{
 		SUMMON,
-		HEAL,
 		OUTER
 	}
 

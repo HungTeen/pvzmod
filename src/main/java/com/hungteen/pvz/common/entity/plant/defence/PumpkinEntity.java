@@ -7,6 +7,7 @@ import com.hungteen.pvz.common.entity.plant.PlantInfo;
 import com.hungteen.pvz.common.impl.plant.PVZPlants;
 import net.minecraft.entity.CreatureEntity;
 import net.minecraft.entity.EntityType;
+import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.World;
 
 public class PumpkinEntity extends PVZPlantEntity{
@@ -43,7 +44,12 @@ public class PumpkinEntity extends PVZPlantEntity{
 			plantEntity.setPumpkin(true);
 			plantEntity.setOuterDefenceLife(NORMAL_PUMPKIN_LIFE);
 		}
-		
+
+		@Override
+		public void onHeal(IPlantEntity plantEntity, float percent) {
+			final float max = plantEntity.getOuterDefenceLife() > NORMAL_PUMPKIN_LIFE ? SUPER_PUMPKIN_LIFE : NORMAL_PUMPKIN_LIFE;
+			plantEntity.setOuterDefenceLife(MathHelper.clamp(plantEntity.getOuterDefenceLife() * (1 + percent), 0, max));
+		}
 	}
 	
 

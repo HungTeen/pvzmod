@@ -43,7 +43,7 @@ public class BloverEntity extends PVZPlantEntity {
 		if(! this.level.isClientSide) {
 			final float len = this.getBlowRange();
 			//deal damage.
-			EntityUtil.getTargetableLivings(this, EntityUtil.getEntityAABB(this, len, len)).forEach(target -> {
+			EntityUtil.getWholeTargetableEntities(this, EntityUtil.getEntityAABB(this, len, len)).forEach(target -> {
 				if(EntityUtil.isEntityInSky(target)) {
 					target.hurt(PVZEntityDamageSource.normal(this).setMustHurt(), this.getAttackDamage());
 					final Vector3d speed = target.getDeltaMovement();

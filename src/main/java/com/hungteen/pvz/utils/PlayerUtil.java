@@ -109,10 +109,9 @@ public class PlayerUtil {
 		}
 	}
 	
-	public static void setCardCD(PlayerEntity player, ItemStack stack, int cd) {
+	public static void setItemStackCD(PlayerEntity player, ItemStack stack, int cd) {
 		if(stack.getItem() instanceof SummonCardItem){
-			final IPAZType type = ((SummonCardItem) stack.getItem()).type;
-			PlayerUtil.getOptManager(player).ifPresent(l -> l.setPAZCardCD(type, cd));
+			PlayerUtil.getOptManager(player).ifPresent(l -> l.saveSummonCardCD((SummonCardItem) stack.getItem(), cd));
 		}
 		player.getCooldowns().addCooldown(stack.getItem(), cd);
 	}

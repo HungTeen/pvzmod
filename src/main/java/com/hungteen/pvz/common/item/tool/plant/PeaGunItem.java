@@ -31,10 +31,7 @@ import net.minecraft.inventory.EquipmentSlotType;
 import net.minecraft.inventory.Inventory;
 import net.minecraft.inventory.container.Container;
 import net.minecraft.inventory.container.INamedContainerProvider;
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemStack;
-import net.minecraft.item.Items;
-import net.minecraft.item.UseAction;
+import net.minecraft.item.*;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.util.*;
 import net.minecraft.util.math.vector.Vector3d;
@@ -337,6 +334,11 @@ public class PeaGunItem extends Item {
 
 	public static boolean hasBullet(ItemStack stack) {
 		return !getFirstBullets(stack).isEmpty();
+	}
+
+	@Override
+	public boolean isValidRepairItem(ItemStack stack, ItemStack stack1) {
+		return stack1.getItem().equals(ItemRegister.APPEASE_ESSENCE.get());
 	}
 
 	public static ItemStack getFirstBullets(ItemStack stack) {

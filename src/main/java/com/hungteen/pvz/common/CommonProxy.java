@@ -4,6 +4,8 @@ import net.minecraft.entity.player.PlayerEntity;
 
 public class CommonProxy {
 
+	protected float ladderSpeed = 0;
+
 	public void init() {
 	}
 
@@ -16,6 +18,12 @@ public class CommonProxy {
 	
 	public void setUpClient() {
 		
+	}
+
+	/**
+	 * climp up on client side.
+	 */
+	public void climbUp() {
 	}
 
 	public PlayerEntity getPlayer(){

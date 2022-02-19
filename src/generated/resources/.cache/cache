@@ -113,6 +113,7 @@ e7685c1fbfb708e34fda14e8946bc7b6f713eb31 assets/pvz/models/item/gatling_pea_enjo
 d2c95120ee2b432deefc766c36af08e152f59e20 assets/pvz/models/item/giga_boots.json
 fb94bede4c04dae4cc031356a00b6dbdc116f9c7 assets/pvz/models/item/giga_chestplate.json
 98167609bf3898587f7565736a6fc24a7966cacd assets/pvz/models/item/giga_football_zombie_spawn_egg.json
+98167609bf3898587f7565736a6fc24a7966cacd assets/pvz/models/item/giga_gargantuar_spawn_egg.json
 6207c9e36fbf771a4fd5b289f0eda464312e31f1 assets/pvz/models/item/giga_helmet.json
 6aa2f9d39a868027439ef093cacd67c6a7800fc2 assets/pvz/models/item/giga_leggings.json
 98167609bf3898587f7565736a6fc24a7966cacd assets/pvz/models/item/giga_tomb_stone_spawn_egg.json
@@ -209,7 +210,6 @@ ffbaf9af55d6b26f7d53e6fe413fd3a561e02cf6 assets/pvz/models/item/real_brain.json
 631d894c5634a8b469f807f72daae1377164dbf2 assets/pvz/models/item/red_card.json
 c6ac3e1a6299763d021c75e821e485eb60de0de2 assets/pvz/models/item/repeater_card.json
 378b43bdc4305ecbdffb27797dbae831a47a1460 assets/pvz/models/item/repeater_enjoy_card.json
-98167609bf3898587f7565736a6fc24a7966cacd assets/pvz/models/item/sad_gargantuar_spawn_egg.json
 58215c40a0d54e08f5e1cef17affc187113cd3a5 assets/pvz/models/item/scaredy_shroom_card.json
 c980c3cf72194ba65da8003163bb745877e0940a assets/pvz/models/item/scaredy_shroom_enjoy_card.json
 98167609bf3898587f7565736a6fc24a7966cacd assets/pvz/models/item/screendoor_zombie_spawn_egg.json

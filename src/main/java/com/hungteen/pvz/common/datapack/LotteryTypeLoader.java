@@ -25,45 +25,55 @@ import java.util.Optional;
 
 public class LotteryTypeLoader extends JsonReloadListener {
 
-	public static final Map<ResourceLocation, SlotMachineTileEntity.LotteryType> LOTTERIES = new HashMap<>();
-	private static final Gson GSON = (new GsonBuilder()).create();
-	public static final String NAME = "lottery";
+    public static final Map<ResourceLocation, SlotMachineTileEntity.LotteryType> LOTTERIES = new HashMap<>();
+    public static final Map<ResourceLocation, JsonElement> JSONS = new HashMap<>();
+    private static final Gson GSON = (new GsonBuilder()).create();
+    public static final String NAME = "lottery";
 
 
-	public LotteryTypeLoader() {
-		super(GSON, NAME + "s");
-	}
+    public LotteryTypeLoader() {
+        super(GSON, NAME + "s");
+    }
 
-	@Override
-	protected void apply(Map<ResourceLocation, JsonElement> map, IResourceManager manager, IProfiler profiler) {
-		LOTTERIES.clear();
-		
-		map.forEach((res, jsonElement) -> {
-			try {
-				JsonObject jsonObject = JSONUtils.convertToJsonObject(jsonElement, NAME);
+    @Override
+    protected void apply(Map<ResourceLocation, JsonElement> map, IResourceManager manager, IProfiler profiler) {
+        LOTTERIES.clear();
 
-				final SlotMachineTileEntity.LotteryType lotteryType = new SlotMachineTileEntity.LotteryType(res);
-				final String str = JSONUtils.getAsString(jsonObject, "type", "normal");
-				final SlotMachineTileEntity.LotteryTypes lotteryTypes = SlotMachineTileEntity.LotteryTypes.valueOf(str.toUpperCase());
-				lotteryType.setLotteryTypes(lotteryTypes);
+        map.forEach((res, jsonElement) -> {
+            updateResource(res, jsonElement);
 
-				final int sunCost = JSONUtils.getAsInt(jsonObject, "sun_cost", 25);
-				lotteryType.setSunCost(sunCost);
+            JSONS.put(res, jsonElement);
+        });
 
-				final int price = JSONUtils.getAsInt(jsonObject, "trade_price", 2000);
-				lotteryType.setTradePrice(price);
+        PVZMod.LOGGER.info("Loaded {} custom lottery type", LOTTERIES.size());
+    }
 
-				final int tradeWeight = JSONUtils.getAsInt(jsonObject, "trade_weight", 100);
-				lotteryType.setTradeWeight(tradeWeight);
+    public static void updateResource(ResourceLocation res, JsonElement jsonElement) {
+        try {
+            JsonObject jsonObject = JSONUtils.convertToJsonObject(jsonElement, NAME);
 
-				if(lotteryTypes == LotteryTypes.ALL_PLANT_CARDS) {
-					PVZAPI.get().getPlants().forEach(p -> {
-						p.getEnjoyCard().ifPresent(card -> {
-							final SlotType type = new SlotType(SlotTypes.ITEM);
-							type.setItemStack(new ItemStack(card));
-							lotteryType.addSlotType(type, 10);
-						});
-					});
+            final SlotMachineTileEntity.LotteryType lotteryType = new SlotMachineTileEntity.LotteryType(res);
+            final String str = JSONUtils.getAsString(jsonObject, "type", "normal");
+            final SlotMachineTileEntity.LotteryTypes lotteryTypes = SlotMachineTileEntity.LotteryTypes.valueOf(str.toUpperCase());
+            lotteryType.setLotteryTypes(lotteryTypes);
+
+            final int sunCost = JSONUtils.getAsInt(jsonObject, "sun_cost", 25);
+            lotteryType.setSunCost(sunCost);
+
+            final int price = JSONUtils.getAsInt(jsonObject, "trade_price", 2000);
+            lotteryType.setTradePrice(price);
+
+            final int tradeWeight = JSONUtils.getAsInt(jsonObject, "trade_weight", 100);
+            lotteryType.setTradeWeight(tradeWeight);
+
+            if (lotteryTypes == LotteryTypes.ALL_PLANT_CARDS) {
+                PVZAPI.get().getPlants().forEach(p -> {
+                    p.getEnjoyCard().ifPresent(card -> {
+                        final SlotType type = new SlotType(SlotTypes.ITEM);
+                        type.setItemStack(new ItemStack(card));
+                        lotteryType.addSlotType(type, 10);
+                    });
+                });
 //				} else if(lotteryTypes == LotteryTypes.ALL_ZOMBIE_CARDS) {
 //					PVZAPI.get().getZombies().forEach(p -> {
 //						p.getEnjoyCard().ifPresent(card -> {
@@ -72,71 +82,67 @@ public class LotteryTypeLoader extends JsonReloadListener {
 //							lotteryType.addSlotType(type, 10);
 //						});
 //					});
-				} else if(lotteryTypes == LotteryTypes.ALL_SUMMON_CARDS) {
-					PVZAPI.get().getPAZs().forEach(p -> {
-						p.getEnjoyCard().ifPresent(card -> {
-							final SlotType type = new SlotType(SlotTypes.ITEM);
-							type.setItemStack(new ItemStack(card));
-							lotteryType.addSlotType(type, 10);
-						});
-					});
-				}
-				
-				JsonArray array = JSONUtils.getAsJsonArray(jsonObject, "items", new JsonArray());
-				array.forEach(e -> {
-					if(e.isJsonObject()) {
-						final JsonObject obj  = e.getAsJsonObject();
+            } else if (lotteryTypes == LotteryTypes.ALL_SUMMON_CARDS) {
+                PVZAPI.get().getPAZs().forEach(p -> {
+                    p.getEnjoyCard().ifPresent(card -> {
+                        final SlotType type = new SlotType(SlotTypes.ITEM);
+                        type.setItemStack(new ItemStack(card));
+                        lotteryType.addSlotType(type, 10);
+                    });
+                });
+            }
 
-						final String string = JSONUtils.getAsString(obj, "type", "item");
-						final SlotMachineTileEntity.SlotTypes type = SlotMachineTileEntity.SlotTypes.valueOf(string.toUpperCase());
-						final SlotMachineTileEntity.SlotType slotType = new SlotMachineTileEntity.SlotType(type);
+            JsonArray array = JSONUtils.getAsJsonArray(jsonObject, "items", new JsonArray());
+            array.forEach(e -> {
+                if (e.isJsonObject()) {
+                    final JsonObject obj = e.getAsJsonObject();
 
-						if(type == SlotMachineTileEntity.SlotTypes.ITEM){
-							Item item = JSONUtils.getAsItem(obj, "item");
-							if(obj.has("data")) {
-								throw new JsonParseException("Disallowed data tag found");
-							} else {
-								ItemStack stack = new ItemStack(item);
-								if(obj.has("nbt")) {
-									try {
-										CompoundNBT compoundnbt = JsonToNBT.parseTag(JSONUtils.convertToString(obj.get("nbt"), "nbt"));
-										stack.setTag(compoundnbt);
-									} catch (CommandSyntaxException commandsyntaxexception) {
-										throw new JsonSyntaxException("Invalid nbt tag: " + commandsyntaxexception.getMessage());
-									}
-								}
-								slotType.setItemStack(stack);
-							}
-						}
+                    final String string = JSONUtils.getAsString(obj, "type", "item");
+                    final SlotMachineTileEntity.SlotTypes type = SlotMachineTileEntity.SlotTypes.valueOf(string.toUpperCase());
+                    final SlotMachineTileEntity.SlotType slotType = new SlotMachineTileEntity.SlotType(type);
 
-						int weight = 10;
-						if(obj.has("weight")){
-							weight = JSONUtils.getAsInt(obj, "weight");
-						}
+                    if (type == SlotMachineTileEntity.SlotTypes.ITEM) {
+                        Item item = JSONUtils.getAsItem(obj, "item");
+                        if (obj.has("data")) {
+                            throw new JsonParseException("Disallowed data tag found");
+                        } else {
+                            ItemStack stack = new ItemStack(item);
+                            if (obj.has("nbt")) {
+                                try {
+                                    CompoundNBT compoundnbt = JsonToNBT.parseTag(JSONUtils.convertToString(obj.get("nbt"), "nbt"));
+                                    stack.setTag(compoundnbt);
+                                } catch (CommandSyntaxException commandsyntaxexception) {
+                                    throw new JsonSyntaxException("Invalid nbt tag: " + commandsyntaxexception.getMessage());
+                                }
+                            }
+                            slotType.setItemStack(stack);
+                        }
+                    }
 
-						lotteryType.addSlotType(slotType, weight);
-					}
-				});
-				
-				final int count = JSONUtils.getAsInt(jsonObject, "slot_count", lotteryType.getSize() == 0 ? 10 : lotteryType.getSize());
-				lotteryType.setSlotCount(count);
+                    int weight = 10;
+                    if (obj.has("weight")) {
+                        weight = JSONUtils.getAsInt(obj, "weight");
+                    }
 
-				LOTTERIES.put(res, lotteryType);
+                    lotteryType.addSlotType(slotType, weight);
+                }
+            });
 
-			} catch (IllegalArgumentException | JsonParseException e) {
-				PVZMod.LOGGER.error("Parsing error loading lottery type {}: {}", res, e.getMessage());
-			}
-		});
+            final int count = JSONUtils.getAsInt(jsonObject, "slot_count", lotteryType.getSize() == 0 ? 10 : lotteryType.getSize());
+            lotteryType.setSlotCount(count);
 
-		PVZMod.LOGGER.info("Loaded {} custom lottery type", LOTTERIES.size());
+            LOTTERIES.put(res, lotteryType);
 
-	}
+        } catch (IllegalArgumentException | JsonParseException e) {
+            PVZMod.LOGGER.error("Parsing error loading lottery type {}: {}", res, e.getMessage());
+        }
+    }
 
-	public static Optional<SlotMachineTileEntity.LotteryType> getLotteryType(ResourceLocation res){
-		return Optional.ofNullable(LOTTERIES.get(res));
-	}
+    public static Optional<SlotMachineTileEntity.LotteryType> getLotteryType(ResourceLocation res) {
+        return Optional.ofNullable(LOTTERIES.get(res));
+    }
 
-	public static Map<ResourceLocation, SlotMachineTileEntity.LotteryType> getLotteries() {
-		return Collections.unmodifiableMap(LOTTERIES);
-	}
+    public static Map<ResourceLocation, SlotMachineTileEntity.LotteryType> getLotteries() {
+        return Collections.unmodifiableMap(LOTTERIES);
+    }
 }

@@ -109,10 +109,12 @@ public class SoundRegister {
 
 	//disc
 	public static final RegistryObject<SoundEvent> ZOMBIE_ON_YOUR_LAWN = registerSound("zombie_on_your_lawn");
+	public static final RegistryObject<SoundEvent> ZEN_GARDEN = registerSound("zen_garden");
 
 	private static RegistryObject<SoundEvent> registerSound(String name){
 		return SOUNDS.register(name, ()->{
 			return new SoundEvent(StringUtil.prefix(name));
 		});
 	}
+
 }

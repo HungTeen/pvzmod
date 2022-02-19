@@ -28,6 +28,11 @@ public interface IPlantInfo {
      */
     void onSuper(IPlantEntity plantEntity);
 
+    /**
+     * run when heal by card.
+     */
+    void onHeal(IPlantEntity plantEntity, float percent);
+
     void setType(IPlantType type);
 
     IPlantType getType();

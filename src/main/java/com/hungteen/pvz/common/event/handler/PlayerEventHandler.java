@@ -4,7 +4,6 @@ import com.hungteen.pvz.PVZConfig;
 import com.hungteen.pvz.PVZMod;
 import com.hungteen.pvz.api.PVZAPI;
 import com.hungteen.pvz.common.capability.CapabilityHandler;
-import com.hungteen.pvz.common.capability.player.PlayerDataManager;
 import com.hungteen.pvz.common.enchantment.EnchantmentRegister;
 import com.hungteen.pvz.common.enchantment.EnchantmentUtil;
 import com.hungteen.pvz.common.entity.AbstractPAZEntity;
@@ -16,11 +15,11 @@ import com.hungteen.pvz.common.event.PVZPlayerEvents;
 import com.hungteen.pvz.common.item.ItemRegister;
 import com.hungteen.pvz.common.item.display.ChallengeEnvelopeItem;
 import com.hungteen.pvz.common.item.tool.mc.OriginShovelItem;
+import com.hungteen.pvz.common.misc.sound.SoundRegister;
 import com.hungteen.pvz.common.potion.EffectRegister;
 import com.hungteen.pvz.common.world.invasion.InvasionManager;
 import com.hungteen.pvz.common.world.invasion.MissionManager;
 import com.hungteen.pvz.compat.patchouli.PVZPatchouliHandler;
-import com.hungteen.pvz.common.misc.sound.SoundRegister;
 import com.hungteen.pvz.utils.EntityUtil;
 import com.hungteen.pvz.utils.PlayerUtil;
 import com.hungteen.pvz.utils.StringUtil;
@@ -38,23 +37,7 @@ import net.minecraft.util.math.MathHelper;
 import net.minecraftforge.event.entity.living.LivingDeathEvent;
 import net.minecraftforge.event.entity.player.PlayerInteractEvent;
 
-import java.util.Optional;
-
 public class PlayerEventHandler {
-
-    /**
-     * when tree level is enough, unlock some plants & zombies.
-     */
-    public static void unLockPAZs(PlayerEntity player) {
-        final int level = PlayerUtil.getResource(player, Resources.TREE_LVL);
-        PVZAPI.get().getPAZs().forEach(type -> {
-            if (type.getRequiredLevel() <= level) {
-                PlayerUtil.getOptManager(player).ifPresent(m -> {
-                    m.setPAZLocked(type, false);
-                });
-            }
-        });
-    }
 
     /**
      * run when player right click plantEntity with shovel.
@@ -129,7 +112,7 @@ public class PlayerEventHandler {
      * {@link PVZPlayerEvents#onPlayerLogin(net.minecraftforge.event.entity.player.PlayerEvent.PlayerLoggedInEvent)}
      */
     public static void onPlayerLogin(PlayerEntity player) {
-        Optional.ofNullable(PlayerUtil.getManager(player)).ifPresent(l -> {
+        PlayerUtil.getOptManager(player).ifPresent(l -> {
             l.init();
 
             if (l.lastVersion.equals(StringUtil.INIT_VERSION)) {//first join world.
@@ -151,9 +134,6 @@ public class PlayerEventHandler {
             l.lastVersion = PVZMod.MOD_VERSION;
         });
 
-        InvasionManager.addPlayer(player);
-        unLockPAZs(player);
-
     }
 
     /**
@@ -161,14 +141,13 @@ public class PlayerEventHandler {
      * {@link PVZPlayerEvents#onPlayerLogout(net.minecraftforge.event.entity.player.PlayerEvent.PlayerLoggedOutEvent)}
      */
     public static void onPlayerLogout(PlayerEntity player) {
-        player.getCapability(CapabilityHandler.PLAYER_DATA_CAPABILITY).ifPresent(l -> {
-            PlayerDataManager plData = l.getPlayerData();
+        //save all summon card cool down.
+        PlayerUtil.getOptManager(player).ifPresent(l -> {
             PVZAPI.get().getPAZs().forEach(p -> {
                 p.getSummonCard().ifPresent(card -> {
-                    plData.setPAZCardBar(p, player.getCooldowns().getCooldownPercent(card, 0f));
+                    l.setPAZCardBar(p, player.getCooldowns().getCooldownPercent(card, 0f));
                 });
             });
-            InvasionManager.removePlayer(player);
         });
     }
 
@@ -206,6 +185,20 @@ public class PlayerEventHandler {
         if (amount > 15) {
             SunEntity.spawnSunsByAmount(player.level, player.blockPosition(), spawn, 50, 3);
         }
+    }
+
+    /**
+     * when tree level is enough, unlock some plants & zombies.
+     */
+    public static void unLockPAZs(PlayerEntity player) {
+        final int level = PlayerUtil.getResource(player, Resources.TREE_LVL);
+        PVZAPI.get().getPAZs().forEach(type -> {
+            if (type.getRequiredLevel() <= level) {
+                PlayerUtil.getOptManager(player).ifPresent(m -> {
+                    m.setPAZLocked(type, false);
+                });
+            }
+        });
     }
 
 }

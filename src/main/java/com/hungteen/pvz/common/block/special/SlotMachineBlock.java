@@ -1,15 +1,10 @@
 package com.hungteen.pvz.common.block.special;
 
-import java.util.List;
-
-import javax.annotation.Nullable;
-
 import com.hungteen.pvz.common.block.AbstractFacingBlock;
 import com.hungteen.pvz.common.datapack.LotteryTypeLoader;
 import com.hungteen.pvz.common.item.PVZItemGroups;
 import com.hungteen.pvz.common.tileentity.SlotMachineTileEntity;
 import com.hungteen.pvz.utils.StringUtil;
-
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
 import net.minecraft.client.util.ITooltipFlag;
@@ -32,6 +27,9 @@ import net.minecraft.util.text.TextFormatting;
 import net.minecraft.world.IBlockReader;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.network.NetworkHooks;
+
+import javax.annotation.Nullable;
+import java.util.List;
 
 public class SlotMachineBlock extends AbstractFacingBlock {
 
@@ -103,8 +101,8 @@ public class SlotMachineBlock extends AbstractFacingBlock {
 	public ItemStack getCloneItemStack(IBlockReader p_185473_1_, BlockPos p_185473_2_, BlockState p_185473_3_) {
 		@SuppressWarnings("deprecation")
 		final ItemStack itemstack = super.getCloneItemStack(p_185473_1_, p_185473_2_, p_185473_3_);
-		SlotMachineTileEntity shulkerboxtileentity = (SlotMachineTileEntity) p_185473_1_.getBlockEntity(p_185473_2_);
-		CompoundNBT compoundnbt = shulkerboxtileentity.save(new CompoundNBT());
+		SlotMachineTileEntity blockEntity = (SlotMachineTileEntity) p_185473_1_.getBlockEntity(p_185473_2_);
+		CompoundNBT compoundnbt = blockEntity.save(new CompoundNBT());
 		if (!compoundnbt.isEmpty()) {
 			itemstack.addTagElement(StringUtil.TE_TAG, compoundnbt);
 		}

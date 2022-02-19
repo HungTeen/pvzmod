@@ -28,6 +28,7 @@ import com.hungteen.pvz.client.particle.ParticleRegister;
 import com.hungteen.pvz.common.misc.sound.SoundRegister;
 import com.hungteen.pvz.remove.MetalTypes;
 import com.hungteen.pvz.utils.AlgorithmUtil;
+import com.hungteen.pvz.utils.EffectUtil;
 import com.hungteen.pvz.utils.EntityUtil;
 import com.hungteen.pvz.utils.enums.PAZAlmanacs;
 import com.hungteen.pvz.utils.interfaces.ICanAttract;
@@ -170,7 +171,6 @@ public abstract class PVZPlantEntity extends AbstractPAZEntity implements IPlant
 			this.setSuperTime(Math.max(0, this.getSuperTime() - 1));
 			//handle boost mode(no use for currrent version).
 			this.setBoostTime(Math.max(0, this.getBoostTime() - 1));
-			this.setExistTick(this.getExistTick() + 1);
 			//handler plant's sleep.
 			if (this.shouldPlantRegularSleep()) {
 				this.sleepTime = this.sleepTime <= 1 ? this.sleepTime + 1 : this.sleepTime - 1;
@@ -508,8 +508,13 @@ public abstract class PVZPlantEntity extends AbstractPAZEntity implements IPlant
 	/**
 	 * {@link PlantCardItem#checkSunAndHealPlant(PlayerEntity, PVZPlantEntity, PlantCardItem, ItemStack)}
 	 */
-	public void onHealByCard() {
-		this.addEffect(new EffectInstance(Effects.HEAL, 40, 255, true, false));
+	public void onHealBy(IPlantType plantType, float percent) {
+		if(plantType.isOuterPlant()){
+			this.getOuterPlantInfo().ifPresent(l -> l.onHeal(this, percent));
+		} else{
+			this.heal(this.getLife() * percent);
+		}
+		this.addEffect(EffectUtil.viewEffect(Effects.REGENERATION, 60, 0));
 		this.getSpawnSound().ifPresent(s -> EntityUtil.playSound(this, s));
 	}
 

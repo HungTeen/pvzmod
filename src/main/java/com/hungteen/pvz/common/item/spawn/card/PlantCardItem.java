@@ -7,12 +7,12 @@ import com.hungteen.pvz.api.types.ISkillType;
 import com.hungteen.pvz.common.advancement.trigger.PlayerPlacePAZTrigger;
 import com.hungteen.pvz.common.block.BlockRegister;
 import com.hungteen.pvz.common.enchantment.EnchantmentRegister;
+import com.hungteen.pvz.common.enchantment.card.BandageEnchantment;
 import com.hungteen.pvz.common.enchantment.card.ImmediateCDEnchantment;
 import com.hungteen.pvz.common.enchantment.card.plantcard.BreakOutEnchantment;
 import com.hungteen.pvz.common.enchantment.card.plantcard.DenselyPlantEnchantment;
 import com.hungteen.pvz.common.enchantment.card.plantcard.SoillessPlantEnchantment;
 import com.hungteen.pvz.common.entity.plant.PVZPlantEntity;
-import com.hungteen.pvz.common.entity.plant.base.PlantDefenderEntity;
 import com.hungteen.pvz.common.entity.plant.magic.ImitaterEntity;
 import com.hungteen.pvz.common.entity.plant.magic.ImitaterEntity.ImitateType;
 import com.hungteen.pvz.common.event.events.SummonCardUseEvent;
@@ -377,30 +377,15 @@ public class PlantCardItem extends SummonCardItem {
 		}
 		final ItemStack plantStack = getPlantStack(heldStack);
 		final IPlantType plantType = ((PlantCardItem) plantStack.getItem()).plantType;
-		/* can plant entity be heal or not */
-		if(plantEntity instanceof PlantDefenderEntity) {
-			if(EntityUtil.canAttackEntity(plantEntity, player) || ! plantType.equals(plantEntity.getPlantType())) {
-			    return false;
-			}
-		} else {
+		final float percent = BandageEnchantment.getHealPercent(plantStack);
+		/* the same type or specific outer plant card */
+		if(! plantType.equals(plantEntity.getPlantType()) && ! (plantType.isOuterPlant() && plantEntity.getOuterPlantInfo().isPresent() && plantEntity.getOuterPlantInfo().get().getType().equals(plantType))) {
 			return false;
 		}
-		if(heldStack.getItem() instanceof ImitaterCardItem) {
-			if(checkSunAndSummonPlant(player, heldStack, plantStack, cardItem, plantEntity.blockPosition(), p -> {
-				if(p instanceof ImitaterEntity) {
-					((ImitaterEntity) p).setImitateType(ImitateType.HEAL);
-					((ImitaterEntity) p).setTargetEntity(plantEntity);
-				}
-			})){
+		if(checkSunAndCD(player, cardItem, plantStack, true, p -> true)){
+			onUsePlantCard(player, heldStack, plantStack, cardItem);
+			plantEntity.onHealBy(plantType, percent);
 				return true;
-			}
-			return true;
-		} else {/* not consider surrounding plants number */
-		    if(checkSunAndCD(player, cardItem, plantStack, true, p -> true)){
-			    onUsePlantCard(player, heldStack, plantStack, cardItem);
-			    plantEntity.onHealByCard();
-			    return true;
-		    }
 		}
 		return false;
 	}
@@ -543,9 +528,9 @@ public class PlantCardItem extends SummonCardItem {
 	public static void handlePlantCardCoolDown(PlayerEntity player, ItemStack heldStack, ItemStack plantStack, PlantCardItem item) {
 		/* handle immediate cool down enchantment */
 		if(ImmediateCDEnchantment.canImmediateCD(plantStack, player.getRandom())) {
-			PlayerUtil.setCardCD(player, heldStack, 20);
+			PlayerUtil.setItemStackCD(player, heldStack, 20);
 		} else {
-			PlayerUtil.setCardCD(player, heldStack, getPlantCardCD(player, plantStack, item));
+			PlayerUtil.setItemStackCD(player, heldStack, getPlantCardCD(player, plantStack, item));
 		}
 	}
 	
@@ -606,7 +591,7 @@ public class PlantCardItem extends SummonCardItem {
 	 */
 	public int getBasisSunCost(ItemStack stack) {
 		//less sun skill boost.
-		final int level = SkillTypes.getSkillLevel(stack.getOrCreateTag(), SkillTypes.LESS_SUN);
+		final int level = SkillTypes.getSkillLevel(stack, SkillTypes.LESS_SUN);
 		int vary = (int) SkillTypes.LESS_SUN.getValueAt(level);
 		// Extra skill sun cost.
 		if(stack.getOrCreateTag().contains(SkillTypes.SKILL_TAG)){

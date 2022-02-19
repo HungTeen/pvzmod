@@ -2,17 +2,16 @@ package com.hungteen.pvz.common.event;
 
 import com.hungteen.pvz.PVZMod;
 import com.hungteen.pvz.api.events.PlayerLevelChangeEvent;
-import com.hungteen.pvz.common.block.others.SteelLadderBlock;
 import com.hungteen.pvz.common.capability.CapabilityHandler;
+import com.hungteen.pvz.common.datapack.PVZDataPackManager;
 import com.hungteen.pvz.common.event.events.SummonCardUseEvent;
 import com.hungteen.pvz.common.event.handler.PlayerEventHandler;
 import com.hungteen.pvz.common.item.tool.plant.BowlingGloveItem;
 import com.hungteen.pvz.common.item.tool.plant.PeaGunItem;
 import com.hungteen.pvz.common.misc.sound.SoundRegister;
+import com.hungteen.pvz.common.world.invasion.InvasionManager;
 import com.hungteen.pvz.utils.PlayerUtil;
 import com.hungteen.pvz.utils.enums.Resources;
-
-import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.util.Hand;
 import net.minecraftforge.event.TickEvent;
 import net.minecraftforge.event.entity.player.PlayerEvent;
@@ -27,22 +26,30 @@ public class PVZPlayerEvents {
 	@SubscribeEvent
 	public static void tickPlayer(TickEvent.PlayerTickEvent ev) {
 		if(! ev.player.level.isClientSide) {
+			if (ev.player.tickCount < 2) {
+				PlayerUtil.getOptManager(ev.player).ifPresent(l -> l.loadSummonCardCDs());
+			}
 			PeaGunItem.checkHeadShoot(ev.player);
 			ev.player.getCapability(CapabilityHandler.PLAYER_DATA_CAPABILITY).ifPresent((l) -> {
-				if(l.getPlayerData().getOtherStats().playSoundTick > 0) {
-				    -- l.getPlayerData().getOtherStats().playSoundTick;
+				if (l.getPlayerData().getOtherStats().playSoundTick > 0) {
+					--l.getPlayerData().getOtherStats().playSoundTick;
 				}
 			});
-		} else {
-			SteelLadderBlock.climbUp(ev.player);
 		}
+		PVZMod.PROXY.climbUp();
 	}
 	
 	@SubscribeEvent(priority = EventPriority.HIGHEST)
 	public static void onPlayerLogin(PlayerEvent.PlayerLoggedInEvent ev) {
-		PlayerEntity player = ev.getPlayer();
-		if (! player.level.isClientSide) {
-			PlayerEventHandler.onPlayerLogin(player);
+		if (! ev.getPlayer().level.isClientSide) {
+			PlayerEventHandler.onPlayerLogin(ev.getPlayer());
+
+			InvasionManager.addPlayer(ev.getPlayer());
+
+			PlayerEventHandler.unLockPAZs(ev.getPlayer());
+
+			//sync to client data pack.
+			PVZDataPackManager.sendSyncPacketsTo(ev.getPlayer());
 		}
 	}
 	
@@ -50,6 +57,8 @@ public class PVZPlayerEvents {
 	public static void onPlayerLogout(PlayerEvent.PlayerLoggedOutEvent ev) {
 		if (! ev.getPlayer().level.isClientSide) {
 			PlayerEventHandler.onPlayerLogout(ev.getPlayer());
+
+			InvasionManager.removePlayer(ev.getPlayer());
 		}
 	}
 

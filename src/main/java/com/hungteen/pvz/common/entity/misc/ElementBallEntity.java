@@ -10,13 +10,14 @@ import com.hungteen.pvz.common.item.ItemRegister;
 import com.hungteen.pvz.common.item.spawn.card.PlantCardItem;
 import com.hungteen.pvz.common.misc.PVZEntityDamageSource;
 import com.hungteen.pvz.utils.EntityUtil;
+import com.hungteen.pvz.utils.PlayerUtil;
 import net.minecraft.entity.*;
 import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.network.datasync.DataParameter;
 import net.minecraft.network.datasync.DataSerializers;
 import net.minecraft.network.datasync.EntityDataManager;
-import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.vector.Vector3d;
 import net.minecraft.world.World;
 
@@ -65,8 +66,7 @@ public class ElementBallEntity extends AbstractOwnerEntity {
 			    PlayerEntity player = level.getPlayerByUUID(uuid);
 			    if(player != null) {
 				    PlantCardItem item = (this.getElementBallType() == ElementTypes.FLAME ? ItemRegister.ICE_SHROOM_CARD.get() : ItemRegister.JALAPENO_CARD.get());
-				    float percent = player.getCooldowns().getCooldownPercent(item, 0F);
-				    player.getCooldowns().addCooldown(item, MathHelper.floor(200 * percent));
+					PlayerUtil.setItemStackCD(player, new ItemStack(item), 160);
 			    }
 		    });
 		} 

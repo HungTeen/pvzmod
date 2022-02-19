@@ -866,5 +866,13 @@
         "stream": true
       }
     ]
+  },
+  "zen_garden": {
+    "sounds": [
+      {
+        "name": "pvz:music/zen_garden",
+        "stream": true
+      }
+    ]
   }
 }

@@ -11,9 +11,8 @@ import net.minecraft.item.ItemStack;
 public class DenselyPlantEnchantment extends PVZEnchantment {
 
 	public DenselyPlantEnchantment() {
-		super(Rarity.VERY_RARE, PVZEnchantmentTypes.NO_OUTER_PLANT_CARD, new EquipmentSlotType[] { EquipmentSlotType.OFFHAND, EquipmentSlotType.MAINHAND });
+		super(Rarity.RARE, PVZEnchantmentTypes.NO_OUTER_PLANT_CARD, new EquipmentSlotType[] { EquipmentSlotType.OFFHAND, EquipmentSlotType.MAINHAND });
 		this.isTradeable = false;
-		this.isTreasureOnly = true;
 	}
 	
 	public static int getExtraPlantNum(ItemStack stack) {

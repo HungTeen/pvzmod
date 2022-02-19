@@ -221,6 +221,12 @@ public class ItemRegister {
             }, new Item.Properties().stacksTo(1).tab(PVZItemGroups.PVZ_USEFUL).rarity(Rarity.RARE));
     });
 
+    public static final RegistryObject<Item> ZEN_GARDEN = ITEMS.register("zen_garden", () -> {return
+            new MusicDiscItem(0, () -> {
+                return SoundRegister.ZEN_GARDEN.get();
+            }, new Item.Properties().stacksTo(1).tab(PVZItemGroups.PVZ_USEFUL).rarity(Rarity.RARE));
+    });
+
   	/*
   	 * Items in Plant Cards Tab.
   	 */

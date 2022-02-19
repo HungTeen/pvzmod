@@ -93,6 +93,8 @@ public abstract class PVZZombieEntity extends AbstractPAZEntity implements IZomb
 		this.setPathfindingMalus(PathNodeType.DAMAGE_OTHER, 6.0F);
 		this.setPathfindingMalus(PathNodeType.UNPASSABLE_RAIL, 6.0F);
 		this.setPathfindingMalus(PathNodeType.LEAVES, 4F);
+		
+		this.setZombieType(this.getSpawnType());
 	}
 
 	@Override
@@ -165,21 +167,21 @@ public abstract class PVZZombieEntity extends AbstractPAZEntity implements IZomb
 	@Override
 	public void updatePAZStates() {
 		super.updatePAZStates();
-		if (this.canBeMini() && this.isMiniZombie()) {
-			this.onZombieBeMini();
+		if(! this.level.isClientSide) {
+			if (this.canBeMini() && this.isMiniZombie()) {
+			    this.onZombieBeMini();
+			}
 		}
-		this.setZombieType(this.getSpawnType());
 	}
 	
 	/**
 	 * get current variant type.
 	 * it will be override by @NormalZombieEntity
-	 * {@link #finalizeSpawn(IServerWorld, DifficultyInstance, SpawnReason, ILivingEntityData, CompoundNBT)}
 	 */
 	protected VariantType getSpawnType() {
-		int t = this.getRandom().nextInt(100);
-		int a = PVZConfig.COMMON_CONFIG.EntitySettings.ZombieSetting.ZombieSuperChance.get();
-		int b = PVZConfig.COMMON_CONFIG.EntitySettings.ZombieSetting.ZombieSunChance.get();
+		final int t = this.getRandom().nextInt(100);
+		final int a = PVZConfig.COMMON_CONFIG.EntitySettings.ZombieSetting.ZombieSuperChance.get();
+		final int b = PVZConfig.COMMON_CONFIG.EntitySettings.ZombieSetting.ZombieSunChance.get();
 		return (t < a) ? VariantType.SUPER : (t < a + b) ? VariantType.SUN : VariantType.NORMAL;
 	}
 

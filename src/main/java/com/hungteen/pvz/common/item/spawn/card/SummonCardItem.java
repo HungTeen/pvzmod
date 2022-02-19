@@ -54,7 +54,7 @@ public abstract class SummonCardItem extends Item{
 		}
 		return 1;
 	}
-	
+
 	/**
 	 * get base card cd.
 	 * {@link #appendHoverText(ItemStack, World, List, ITooltipFlag)}
@@ -133,10 +133,11 @@ public abstract class SummonCardItem extends Item{
 	public void notifyPlayerAndCD(PlayerEntity player, ItemStack stack, PlacementErrors error, int arg) {
 		if(! player.level.isClientSide) {
 			PlayerUtil.sendMsgTo(player, error.getTextByArg(arg, TextFormatting.RED));
-			player.getCooldowns().addCooldown(stack.getItem(), 10);
+			PlayerUtil.setItemStackCD(player, stack, 10);
 			PlayerUtil.playClientSound(player, SoundRegister.NO.get());
 		}
 	}
+
 	protected enum PlacementErrors{
 		SUN_ERROR("sun"),
 		CD_ERROR("cd"),

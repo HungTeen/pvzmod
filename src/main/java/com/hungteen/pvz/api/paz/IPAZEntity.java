@@ -57,4 +57,8 @@ public interface IPAZEntity extends IHasOwner, IHasGroup, ICanBeCharmed, ICanBeA
 
     void setInnerDefenceLife(double life);
 
+    double getOuterDefenceLife();
+
+    double getInnerDefenceLife();
+
 }

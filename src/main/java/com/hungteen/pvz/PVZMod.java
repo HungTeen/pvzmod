@@ -4,7 +4,7 @@ import com.hungteen.pvz.client.ClientProxy;
 import com.hungteen.pvz.common.CommonProxy;
 import com.hungteen.pvz.common.advancement.AdvancementHandler;
 import com.hungteen.pvz.common.block.cubes.OriginBlock;
-import com.hungteen.pvz.common.datapack.DataPackRegister;
+import com.hungteen.pvz.common.datapack.PVZDataPackManager;
 import com.hungteen.pvz.common.world.biome.BiomeRegister;
 import com.hungteen.pvz.common.world.feature.GenStructures;
 import net.minecraftforge.common.ForgeConfigSpec;
@@ -31,10 +31,10 @@ public class PVZMod {
 
     // Directly reference a log4j logger.
     public static final Logger LOGGER = LogManager.getLogger();
-    // Mod ID
+    // Mod ID.
 	public static final String MOD_ID = "pvz";
-	// Mod Version
-	public static final String MOD_VERSION = "0.6";
+	// Mod Version.
+	public static final String MOD_VERSION = "0.6.1";
 	// Proxy of Server and Client.
 	public static CommonProxy PROXY = DistExecutor.safeRunForDist(() -> ClientProxy::new, () -> CommonProxy::new);
 	
@@ -56,7 +56,7 @@ public class PVZMod {
     	IEventBus forgeBus = MinecraftForge.EVENT_BUS;
     	forgeBus.addListener(EventPriority.NORMAL, GenStructures::addDimensionalSpacing);
     	forgeBus.addListener(EventPriority.HIGH, BiomeRegister::biomeModification);
-		forgeBus.addListener(EventPriority.NORMAL, DataPackRegister::addReloadListenerEvent);
+		forgeBus.addListener(EventPriority.NORMAL, PVZDataPackManager::addReloadListenerEvent);
     	
     	AdvancementHandler.init();
     	RegistryHandler.coreRegister();
