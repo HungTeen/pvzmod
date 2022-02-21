@@ -1,9 +1,8 @@
 package com.hungteen.pvz.common.item.spawn;
 
-import com.hungteen.pvz.common.entity.misc.LawnMowerEntity;
-import com.hungteen.pvz.common.item.PVZItemGroups;
 import com.hungteen.pvz.common.entity.EntityRegister;
-
+import com.hungteen.pvz.common.entity.misc.LawnMowerEntity;
+import com.hungteen.pvz.common.item.PVZToolItem;
 import net.minecraft.entity.SpawnReason;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.Item;
@@ -16,10 +15,10 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraft.world.server.ServerWorld;
 
-public class LawnMowerItem extends Item {
+public class LawnMowerItem extends PVZToolItem {
 
 	public LawnMowerItem() {
-		super(new Item.Properties().tab(PVZItemGroups.PVZ_MISC));
+		super(new Item.Properties());
 	}
 	
 	@Override

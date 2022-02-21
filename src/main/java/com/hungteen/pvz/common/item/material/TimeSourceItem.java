@@ -1,6 +1,6 @@
 package com.hungteen.pvz.common.item.material;
 
-import com.hungteen.pvz.common.item.PVZItemBase;
+import com.hungteen.pvz.common.item.PVZMiscItem;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.text.ITextComponent;
@@ -16,7 +16,7 @@ import java.util.List;
  * @author: HungTeen
  * @create: 2022-02-05 22:07
  **/
-public class TimeSourceItem extends PVZItemBase {
+public class TimeSourceItem extends PVZMiscItem {
 
     @Override
     public void appendHoverText(ItemStack stack, @Nullable World world, List<ITextComponent> textComponents, ITooltipFlag tooltipFlag) {

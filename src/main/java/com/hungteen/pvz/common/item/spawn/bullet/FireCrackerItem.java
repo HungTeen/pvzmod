@@ -1,9 +1,8 @@
 package com.hungteen.pvz.common.item.spawn.bullet;
 
 import com.hungteen.pvz.common.entity.bullet.itembullet.FireCrackerEntity;
-import com.hungteen.pvz.common.item.PVZItemGroups;
+import com.hungteen.pvz.common.item.PVZToolItem;
 import com.hungteen.pvz.utils.EntityUtil;
-
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
@@ -13,12 +12,12 @@ import net.minecraft.util.SoundEvents;
 import net.minecraft.util.math.vector.Vector3d;
 import net.minecraft.world.World;
 
-public class FireCrackerItem extends Item {
+public class FireCrackerItem extends PVZToolItem {
 
 	private static final int CD = 10;
 	
 	public FireCrackerItem() {
-		super(new Item.Properties().tab(PVZItemGroups.PVZ_MISC));
+		super(new Item.Properties());
 	}
 	
 	@Override

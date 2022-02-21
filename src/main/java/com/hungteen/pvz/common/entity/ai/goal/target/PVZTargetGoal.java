@@ -43,8 +43,14 @@ public abstract class PVZTargetGoal extends Goal{
 	@Override
 	public boolean canContinueToUse() {
 		LivingEntity entity = this.mob.getTarget();
+		//alternative target not exist.
+		if(! EntityUtil.isEntityValid(this.targetMob)) {
+			return false;
+		}
 		if(! EntityUtil.isEntityValid(entity)) {
 			entity = this.targetMob;
+		} else if(! entity.is(this.targetMob)) {
+			this.targetMob = entity;
 		}
 		if(! EntityUtil.isEntityValid(entity)) {
 			return false;

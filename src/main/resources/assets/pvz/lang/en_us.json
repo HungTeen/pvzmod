@@ -107,6 +107,7 @@
     "item.pvz.zombie_doll":"Zombie Doll",
     "item.pvz.edgar_doll": "Edgar Doll",
     "item.pvz.zombie_on_your_lawn":"PVZ Music Disk",
+    "item.pvz.zen_garden": "Zen Garden Disk",
     "item.pvz.card_pack": "Summon Card Pack",
     "_comment2": "--------------------------------------------Block-------------------------------------------",
     "block.pvz.origin_ore":"Origin Ore",
@@ -187,6 +188,7 @@
     "tooltip.pvz.zombie_doll": "持有该玩偶可以让蹦极僵尸",
     "tooltip.pvz.time_source": "十年之后~",
     "item.pvz.zombie_on_your_lawn.desc":"Laura Shigihara - Zombies on your lawn",
+    "item.pvz.zen_garden.desc": "Laura Shigihara - Zen Garden",
     "tooltip.pvz.defence":"Defence HP",
     "tooltip.pvz.owner":"Owner",
     "tooltip.pvz.wait_for_update": "No Use, Wait for update",
@@ -972,9 +974,9 @@
     
     "config.pvz.block.origin_effect_chance":"Value About Origin Spread",
     "config.pvz.block.sapling_turn_chance":"Value About Sapling ",
-    
     "config.pvz.block.pea_drop_chance":"Value About Pea Drop",
     "config.pvz.block.cabbage_drop_chance":"Value About Cabbage Drop",
+    "config.pvz.block.amethyst_anger_chance": "Amehyst Ore Anger Enderman Chance",
     
     "config.pvz.item.jack_surprise_chance":"Value About jack Box",
     

@@ -9,13 +9,13 @@ import net.minecraft.world.World;
 import javax.annotation.Nullable;
 import java.util.List;
 
-public class PVZItemBase extends Item{
+public class PVZMiscItem extends Item{
 
-	public PVZItemBase() {
+	public PVZMiscItem() {
 		super(new Properties().tab(PVZItemGroups.PVZ_MISC));
 	}
 	
-	public PVZItemBase(Properties p) {
+	public PVZMiscItem(Properties p) {
 		super(p.tab(PVZItemGroups.PVZ_MISC));
 	}
 

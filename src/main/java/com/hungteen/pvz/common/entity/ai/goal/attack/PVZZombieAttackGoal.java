@@ -38,7 +38,8 @@ public class PVZZombieAttackGoal extends PVZMeleeAttackGoal {
 			    this.attacker.doHurtTarget(target);
 			}
 		} else {
-			if(this.zombie.canClimbWalls()){
+			//stop move.
+			if(this.zombie.canNormalUpdate() && this.attacker.getDeltaMovement().length() <= 0.1D){
 				this.checkLeapToTarget(target);
 			}
 		}
@@ -50,14 +51,14 @@ public class PVZZombieAttackGoal extends PVZMeleeAttackGoal {
 	 */
 	protected void checkLeapToTarget(LivingEntity target){
 		if(++ this.leapTick >= this.LeapCD){
-			if((this.attacker.getNavigation().getPath() == null || this.attacker.getNavigation().getPath().isDone())
-					&& this.zombie.canNormalUpdate() && this.attacker.getDeltaMovement().length() <= 0.1D && this.attacker.isOnGround()) {
+			if((this.attacker.getNavigation().getPath() == null || this.attacker.getNavigation().getPath().isDone()) && this.attacker.isOnGround()) {
+				//ground jump or change target.
 				final float random = this.zombie.getRandom().nextFloat();
-				if(random < 0.6) {
+				if(random < 0.55) {
 					Vector3d speed = target.position().subtract(this.attacker.position()).normalize();
 					this.attacker.setDeltaMovement(speed.scale(this.attacker.getRandom().nextDouble() * 0.4 + 0.4).scale(this.attacker.getAttributeValue(Attributes.MOVEMENT_SPEED)));
 				} else if(this.zombie.getLastHurtByMob() != null) {
-					if(random < 0.9) {
+					if(random < 0.85) {
 						if(this.zombie.distanceTo(target) >= this.zombie.distanceTo(this.zombie.getLastHurtByMob())) {
 							this.zombie.setTarget(this.zombie.getLastHurtByMob());
 						}
@@ -65,6 +66,10 @@ public class PVZZombieAttackGoal extends PVZMeleeAttackGoal {
 						this.zombie.setTarget(this.zombie.getLastHurtByMob());
 					}
 				}
+				this.leapTick = 0;
+			} else if(this.attacker.isInWater()) {
+				Vector3d speed = target.position().subtract(this.attacker.position()).normalize();
+				this.attacker.setDeltaMovement(speed.scale(this.attacker.getRandom().nextDouble() * 0.3 + 0.2).scale(this.attacker.getAttributeValue(Attributes.MOVEMENT_SPEED)));
 				this.leapTick = 0;
 			}
 		}
