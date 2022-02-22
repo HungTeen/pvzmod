@@ -371,16 +371,6 @@ public abstract class PVZPlantEntity extends AbstractPAZEntity implements IPlant
 	}
 
 	@Override
-	public boolean isPushable() {
-		return false;
-	}
-
-	@Override
-	public boolean isPushedByFluid() {
-		return false;
-	}
-
-	@Override
 	protected void pushEntities() {
 		List<LivingEntity> list = this.level.getEntitiesOfClass(LivingEntity.class, this.getBoundingBox());
 		if (!list.isEmpty()) {

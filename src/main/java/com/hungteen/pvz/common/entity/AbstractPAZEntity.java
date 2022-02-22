@@ -424,6 +424,21 @@ public abstract class AbstractPAZEntity extends CreatureEntity implements IPAZEn
     }
 
     @Override
+    public boolean canBeLeashed(PlayerEntity player) {
+        return false;
+    }
+
+    @Override
+    public boolean isPushable() {
+        return false;
+    }
+
+    @Override
+    public boolean isPushedByFluid() {
+        return false;
+    }
+
+    @Override
     public boolean removeWhenFarAway(double p_213397_1_) {
         return super.removeWhenFarAway(p_213397_1_);
     }
