@@ -67,7 +67,7 @@ public class TombStoneEntity extends AbstractTombStoneEntity {
 //		final List<IZombieType> list = InvasionCache.getOrDefaultZombieList(ZombieUtil.DEFAULT_ZOMBIES);
 //		final IZombieType zombieType = list.get(this.random.nextInt(list.size()));
 //		zombieType.getEntityType().ifPresent(type -> {
-			//TODO 墓碑召唤僵尸
+			//TODO tombstone zombie-summoning
 //			CreatureEntity zombie = type.create(maxLevel);
 //			zombie.setZombieRising();
 //			ZombieUtil.copySummonZombieData(this, zombie);
