@@ -71,7 +71,7 @@ public class NobleZombieEntity extends AbstractBossZombieEntity {
 	public ILivingEntityData finalizeSpawn(IServerWorld worldIn, DifficultyInstance difficultyIn, SpawnReason reason,
 			ILivingEntityData spawnDataIn, CompoundNBT dataTag) {
 		if (! level.isClientSide) {
-			//TODO 贵族等级没了
+			//TODO MournerZombie level deleted
 			EntityUtil.playSound(this, SoundRegister.DIRT_RISE.get());
 			ZombieHandEntity.spawnRangeZombieHands(level, this, 6);
 //			for(int i = 0; i < this.getSkills() / 2 + 5; ++ i) {

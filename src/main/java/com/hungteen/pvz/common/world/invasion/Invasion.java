@@ -157,7 +157,7 @@ public class Invasion {
         if (spawned) {
             PlayerUtil.playClientSound(player, SoundRegister.HUGE_WAVE.get());
             PlayerUtil.sendSubTitleToPlayer(player, InvasionManager.HUGE_WAVE);
-            // TODO 一大波额外生成
+            // TODO extra summon a-huge-wave
 //		    PVZFlagData data = PVZFlagData.getGlobalFlagData(world);
 //		    if(data.isZombossDefeated()) {
 //		        this.activateTombStone();
