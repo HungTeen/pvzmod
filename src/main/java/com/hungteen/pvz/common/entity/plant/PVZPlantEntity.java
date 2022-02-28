@@ -282,7 +282,7 @@ public abstract class PVZPlantEntity extends AbstractPAZEntity implements IPlant
 	}
 
 	/**
-	 * use for shroom's sleep ,need check for later coffee bean update.
+	 * use for shrooms' sleep ,need check for later coffee bean update.
 	 * {@link #plantTick()}
 	 */
 	protected boolean shouldPlantRegularSleep() {
