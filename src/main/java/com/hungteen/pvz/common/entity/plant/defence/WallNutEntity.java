@@ -29,7 +29,7 @@ public class WallNutEntity extends PlantDefenderEntity{
 
 	@Override
 	public EntitySize getDimensions(Pose poseIn) {
-		return EntitySize.scalable(0.8f, 1.3f);
+		return EntitySize.scalable(0.9f, 1.1f);
 	}
 	
 	@Override

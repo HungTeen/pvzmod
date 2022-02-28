@@ -12,7 +12,7 @@ import net.minecraftforge.api.distmarker.OnlyIn;
 public class WallNutRender extends PVZPlantRender<WallNutEntity>{
 
 	public WallNutRender(EntityRendererManager rendererManager) {
-		super(rendererManager, new WallNutModel<WallNutEntity>(), 0.6f);
+		super(rendererManager, new WallNutModel<WallNutEntity>(), 0.55f);
 	}
 
 }
