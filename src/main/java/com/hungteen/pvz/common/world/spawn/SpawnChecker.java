@@ -23,6 +23,11 @@ public class SpawnChecker {
 			SpawnReason reason, BlockPos pos, Random rand) {
 		return checkSpawn(zombieType, worldIn, reason, pos, rand);
 	}
+
+	public static boolean canLavaZombieSpawn(EntityType<? extends PVZZombieEntity> zombieType, IWorld worldIn,
+										 SpawnReason reason, BlockPos pos, Random rand) {
+		return worldIn.getDifficulty() == Difficulty.HARD && checkSpawn(zombieType, worldIn, reason, pos, rand);
+	}
 	
 //	/**
 //	 * is not natural spawn or in invasion spawn list.

@@ -174,6 +174,7 @@ b32a9ed4a7f2d370dab83de64049c2341399ca5f assets/pvz/models/item/magnet_shroom_ca
 98167609bf3898587f7565736a6fc24a7966cacd assets/pvz/models/item/normal_zombie_spawn_egg.json
 14ff08172595a1f9cc74fcff6d4393bba2de4b01 assets/pvz/models/item/nut.json
 953987486f6741d19c018b2a288a517af0cbdf2d assets/pvz/models/item/nut_leaves.json
+3741609e0e80440ff4d466b57fbd441c68e8575c assets/pvz/models/item/nut_log.json
 ad441603b75739a419db086ec7347c54e984bf62 assets/pvz/models/item/nut_sapling.json
 98167609bf3898587f7565736a6fc24a7966cacd assets/pvz/models/item/old_zombie_spawn_egg.json
 cbf32c3622e3f14ad34f546ba3eb201d06c4343f assets/pvz/models/item/origin_axe.json
@@ -305,6 +306,7 @@ a63cfcf7eadd5ff34bf9e006495b86bd0894ed34 data/forge/tags/items/ingots/amethyst.j
 05fb482232b9aa0b3142ea10ff82447d995cc94c data/forge/tags/items/seeds/cabbage.json
 f61963e0035f6c63d9f9a55930d601d81b12780f data/forge/tags/items/seeds/corn.json
 054aeedb6ba1c544a69e5f943c0ac4842a52e878 data/minecraft/tags/blocks/climbable.json
+e4494480458b3aacc4f2cad0a132b1f0272fb8ae data/minecraft/tags/blocks/logs.json
 20992a32bf3980d890c7c4773d2c79344b6d23e8 data/minecraft/tags/items/arrows.json
 fa3446437a0529b1c2a52625b2b087066fbe5b0c data/pvz/loot_tables/blocks/amethyst_block.json
 1a90951b600d5bef5cbfa140df3d7d23e7218e7b data/pvz/loot_tables/blocks/amethyst_ore.json
@@ -334,6 +336,7 @@ eb9f90911f7b9301175a741d9fd01e2ee23125eb data/pvz/loot_tables/blocks/lantern.jso
 48e02e235f481a472848c3daf3640d2891660989 data/pvz/loot_tables/blocks/light_ore.json
 2d888e4966e902d3f2306cffe11fced2f3896f65 data/pvz/loot_tables/blocks/magic_ore.json
 c0fedfbca880395c63fe80f5c6b71c0dce7ac3ea data/pvz/loot_tables/blocks/nut_leaves.json
+3c45c43c37d35f89e88ab0da9d4ec571288e8afd data/pvz/loot_tables/blocks/nut_log.json
 f402a5ae35ed5f3692c13aac9e0e6791e043c918 data/pvz/loot_tables/blocks/nut_sapling.json
 de79c756a8b8505782fb78ab5991a7bdd8e75a25 data/pvz/loot_tables/blocks/origin_block.json
 51b7f8f1705f5254626bbe7cc9ba0c04b70ea988 data/pvz/loot_tables/blocks/origin_ore.json

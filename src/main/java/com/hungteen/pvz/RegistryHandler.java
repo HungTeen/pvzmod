@@ -17,7 +17,7 @@ import com.hungteen.pvz.common.impl.plant.PVZPlants;
 import com.hungteen.pvz.common.impl.zombie.*;
 import com.hungteen.pvz.common.item.ItemRegister;
 import com.hungteen.pvz.common.item.misc.PVZSpawnEggItem;
-import com.hungteen.pvz.common.misc.MiscRegister;
+import com.hungteen.pvz.common.CommonRegister;
 import com.hungteen.pvz.common.misc.sound.SoundRegister;
 import com.hungteen.pvz.common.network.PVZPacketHandler;
 import com.hungteen.pvz.common.potion.EffectRegister;
@@ -97,7 +97,7 @@ public class RegistryHandler {
     	PVZPacketHandler.init();
     	BiomeRegister.registerBiomes(ev);
     	PotionRecipeHandler.registerPotionRecipes();
-    	MiscRegister.registerCompostable();
+    	CommonRegister.registerCompostable();
     	BiomeUtil.initBiomeSet();
     }
 	

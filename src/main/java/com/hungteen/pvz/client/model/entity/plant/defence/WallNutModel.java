@@ -1,8 +1,8 @@
 package com.hungteen.pvz.client.model.entity.plant.defence;
 
+import com.hungteen.pvz.client.model.entity.ComponentModel;
 import com.hungteen.pvz.client.model.entity.plant.PVZPlantModel;
 import com.hungteen.pvz.common.entity.plant.defence.WallNutEntity;
-
 import net.minecraft.client.renderer.entity.model.EntityModel;
 import net.minecraft.client.renderer.model.ModelRenderer;
 
@@ -40,5 +40,25 @@ public class WallNutModel<T extends WallNutEntity> extends PVZPlantModel<T> {
 	@Override
 	public EntityModel<T> getPlantModel() {
 		return this;
+	}
+
+	public static class WallNutArmorModel extends ComponentModel<WallNutEntity> {
+
+		private final ModelRenderer body;
+
+		public WallNutArmorModel() {
+			texWidth = 64;
+			texHeight = 64;
+
+			body = new ModelRenderer(this);
+			body.setPos(0.0F, 24.0F, 0.0F);
+			body.texOffs(0, 0).addBox(-8.0F, -15.0F, -8.0F, 16.0F, 13.0F, 16.0F, 0.0F, false);
+			body.texOffs(0, 29).addBox(-7.0F, -18.0F, -7.0F, 14.0F, 3.0F, 14.0F, 0.0F, false);
+		}
+
+		@Override
+		public ModelRenderer getTotalModel() {
+			return this.body;
+		}
 	}
 }

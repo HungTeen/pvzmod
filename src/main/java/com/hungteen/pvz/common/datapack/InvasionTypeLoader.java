@@ -90,8 +90,8 @@ public class InvasionTypeLoader extends JsonReloadListener {
                     }
                 });
 
-                if(jsonObject.has("require_day")){
-                    invasionType.setRequireDifficulty(JSONUtils.getAsInt(jsonObject, "require_day"));
+                if(jsonObject.has("invasion_level")){
+                    invasionType.setRequireDifficulty(JSONUtils.getAsInt(jsonObject, "invasion_level"));
                 }
 
                 INVASIONS.put(res, invasionType);

@@ -152,6 +152,7 @@
     "block.pvz.silver_sunflower_trophy":"Silver Sunflower Trophy",
     "block.pvz.gold_sunflower_trophy":"Gold Sunflower Trophy",
     "block.pvz.diamond_sunflower_trophy":"Diamond Sunflower Trophy",
+    "block.pvz.nut_log": "Nut Log",
     "_comment3": "--------------------------------------------ToolTip-------------------------------------------",
     "tooltip.pvz.card_sun_cost":"Basic Sun Cost : %d",
     "tooltip.pvz.card_cd":"Basic CD : %s",

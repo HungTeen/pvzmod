@@ -1,10 +1,12 @@
 package com.hungteen.pvz.common.entity.plant.appease;
 
 import com.hungteen.pvz.api.types.IPlantType;
+import com.hungteen.pvz.common.entity.zombie.pool.DiggerZombieEntity;
 import com.hungteen.pvz.common.impl.SkillTypes;
 import com.hungteen.pvz.common.impl.plant.PVZPlants;
 import com.hungteen.pvz.utils.MathUtil;
 import net.minecraft.entity.CreatureEntity;
+import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.network.datasync.DataParameter;
@@ -91,7 +93,20 @@ public class SplitPeaEntity extends PeaShooterEntity{
 	public boolean isFacingFront() {
 		return this.getRoundTick() == 0;
 	}
-	
+
+	@Override
+	public double getMaxShootAngle() {
+		return 5;
+	}
+
+	@Override
+	public boolean canPAZTarget(Entity entity) {
+		if(entity instanceof DiggerZombieEntity){
+			return this.checkY(entity);
+		}
+		return super.canPAZTarget(entity);
+	}
+
 	@Override
 	public void readAdditionalSaveData(CompoundNBT compound) {
 		super.readAdditionalSaveData(compound);
