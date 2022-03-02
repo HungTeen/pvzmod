@@ -93,7 +93,7 @@ public final class PVZPlants extends PlantType {
 			.entityType(() -> EntityRegister.WALL_NUT.get())
 			.summonCard(() -> ItemRegister.WALL_NUT_CARD.get())
 			.enjoyCard(() -> ItemRegister.WALL_NUT_ENJOY_CARD.get())
-			.plantModel(() -> WallNutModel::new).scale(0.4F)
+			.plantModel(() -> WallNutModel::new).scale(1F)
 			.upgradeTo(() -> PVZPlants.GIANT_WALL_NUT)
 			.cdSkill(Arrays.asList(SkillTypes.NUT_MORE_LIFE))
 	);

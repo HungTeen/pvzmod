@@ -35,8 +35,8 @@ public class AbstractbowlingRender<T extends AbstractBowlingEntity> extends Enti
 		matrixStackIn.scale(- 1, - 1, 1);
 		float f = getRenderSize(entityIn);
 		matrixStackIn.scale(f, f, f);
-		matrixStackIn.translate(0.0, - 1.501, 0.0);
-		matrixStackIn.mulPose(Vector3f.YP.rotationDegrees(MathHelper.lerp(partialTicks, entityIn.yRotO, entityIn.yRot) + 180.0F));
+		matrixStackIn.translate(0.0, - 0.0, 0.0);
+		matrixStackIn.mulPose(Vector3f.YP.rotationDegrees(MathHelper.lerp(partialTicks, entityIn.yRotO, entityIn.yRot) + 0.0F));
 //		matrixStackIn.rotate(Vector3f.ZP.rotationDegrees(MathHelper.lerp(partialTicks, entityIn.prevRotationPitch, entityIn.rotationPitch)));
 		matrixStackIn.mulPose(Vector3f.XN.rotationDegrees(- entityIn.tickCount * 15));
         IVertexBuilder ivertexbuilder = bufferIn.getBuffer(this.model.renderType(this.getTextureLocation(entityIn)));
@@ -45,7 +45,7 @@ public class AbstractbowlingRender<T extends AbstractBowlingEntity> extends Enti
 	}
 	
 	protected float getRenderSize(T entity) {
-		return 0.5F;
+		return 1F;
 	}
 	
 	@Override

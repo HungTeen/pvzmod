@@ -45,9 +45,9 @@ public class BowlingGloveItem extends Item {
 	private static final Map<String, BowlingType> BOWLINGS = new HashMap<>();
 	
 	static {
-		registerBowling(PVZPlants.WALL_NUT, () -> EntityRegister.WALL_NUT_BOWLING.get(), 0.2F);
-		registerBowling(PVZPlants.EXPLODE_O_NUT, () -> EntityRegister.EXPLOSION_BOWLING.get(), 0.2F);
-		registerBowling(PVZPlants.GIANT_WALL_NUT, () -> EntityRegister.GIANT_NUT_BOWLING.get(), 0.4F);
+		registerBowling(PVZPlants.WALL_NUT, () -> EntityRegister.WALL_NUT_BOWLING.get(), 1F);
+		registerBowling(PVZPlants.EXPLODE_O_NUT, () -> EntityRegister.EXPLOSION_BOWLING.get(), 1F);
+		registerBowling(PVZPlants.GIANT_WALL_NUT, () -> EntityRegister.GIANT_NUT_BOWLING.get(), 1F);
 	}
 
 	public BowlingGloveItem() {
