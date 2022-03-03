@@ -88,6 +88,7 @@ public class ClientRegister {
 		RenderTypeLookup.setRenderLayer(BlockRegister.TOXIC_SHROOM.get(), RenderType.cutout());
 		RenderTypeLookup.setRenderLayer(BlockRegister.LANTERN.get(), RenderType.translucent());
 		RenderTypeLookup.setRenderLayer(BlockRegister.FLOWER_POT.get(), RenderType.cutout());
+		RenderTypeLookup.setRenderLayer(BlockRegister.LILY_PAD.get(), RenderType.cutout());
 		RenderTypeLookup.setRenderLayer(BlockRegister.CABBAGE.get(), RenderType.cutout());
 		RenderTypeLookup.setRenderLayer(BlockRegister.BUTTER_BLOCK.get(), RenderType.translucent());
 		RenderTypeLookup.setRenderLayer(BlockRegister.CORN.get(), RenderType.cutout());

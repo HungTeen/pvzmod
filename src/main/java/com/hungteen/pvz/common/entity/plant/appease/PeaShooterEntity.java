@@ -82,7 +82,7 @@ public class PeaShooterEntity extends PlantShooterEntity{
 
 	@Override
 	public EntitySize getDimensions(Pose poseIn) {
-		return EntitySize.scalable(0.8F, 1.5F);
+		return EntitySize.scalable(0.7F, 1.3F);
 	}
 
 	@Override
