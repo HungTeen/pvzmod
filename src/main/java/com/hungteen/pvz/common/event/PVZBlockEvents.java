@@ -18,7 +18,7 @@ public class PVZBlockEvents {
 
 	@SubscribeEvent
 	public static void onBlockPlacedBy(BlockEvent.EntityPlaceEvent ev) {
-		//TODO 暂时取消抬棺召唤方式
+		//TODO coffincarriers(Coffin) summoning method deleted temporaryly
 //		BlockPattern blockpattern = BlockPatternBuilder.start().aisle("~^~", "#^#", "~^~").where('#', CachedBlockInfo.hasState(BlockMaterialMatcher.forMaterial(Material.AIR))).where('^', CachedBlockInfo.hasState(BlockStateMatcher.forBlock(Blocks.OBSIDIAN))).where('~', CachedBlockInfo.hasState(BlockStateMatcher.forBlock(Blocks.WITHER_ROSE))).build();
 //		World worldIn = (World) ev.getWorld();
 //		if (!worldIn.isClientSide) {

@@ -17,7 +17,7 @@ public class TallNutEntity extends WallNutEntity{
 
 	@Override
 	public float getSuperLife() {
-		return 500;
+		return 800;
 	}
 
 	@Override
