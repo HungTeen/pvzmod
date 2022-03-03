@@ -46,7 +46,7 @@ public class PeaShooterModel extends PlantShooterModel<PeaShooterEntity> {
 		stick_r1.texOffs(0, 31).addBox(-1.0F, -10.0F, -1.0F, 2.0F, 10.0F, 2.0F, 0.0F, false);
 
 		head = new ModelRenderer(this);
-		head.setPos(-1.0F, 0.0F, 0.0F);
+		head.setPos(-1.0F, -1.0F, 0.0F);
 		body.addChild(head);
 		head.texOffs(30, 0).addBox(-1.0F, -16.0F, -7.0F, 4.0F, 4.0F, 3.0F, 0.0F, false);
 		head.texOffs(44, 0).addBox(-2.0F, -17.0F, -8.0F, 6.0F, 6.0F, 2.0F, 0.0F, false);
