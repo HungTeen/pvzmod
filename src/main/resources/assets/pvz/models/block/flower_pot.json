@@ -5,14 +5,14 @@
 		"1": "pvz:block/flower_pot_top",
 		"2": "pvz:block/flower_pot_bottom",
 		"3": "pvz:block/flower_pot_dirt",
-		"particle": "pvz:block/flowerpot"
+		"particle": "pvz:block/flower_pot"
 	},
 	"elements": [
 		{
 			"from": [4, 0, 4],
 			"to": [12, 7, 12],
 			"faces": {
-				"north": {"uv": [0, 5, 8, 8], "texture": "#0"},
+				"north": {"uv": [0, 2, 8, 8], "texture": "#0"},
 				"east": {"uv": [0, 2, 8, 8], "texture": "#0"},
 				"south": {"uv": [0, 5, 8, 11], "texture": "#0"},
 				"west": {"uv": [0, 2, 8, 8], "texture": "#0"},
