@@ -2,6 +2,7 @@ package com.hungteen.pvz.common.entity.zombie.pool;
 
 import com.hungteen.pvz.common.entity.ai.goal.target.PVZRandomTargetGoal;
 import com.hungteen.pvz.common.entity.plant.PVZPlantEntity;
+import com.hungteen.pvz.common.entity.plant.appease.SplitPeaEntity;
 import com.hungteen.pvz.common.entity.zombie.PVZZombieEntity;
 import com.hungteen.pvz.common.impl.zombie.ZombieType;
 import com.hungteen.pvz.common.impl.zombie.PoolZombies;
@@ -104,7 +105,7 @@ public class DiggerZombieEntity extends PVZZombieEntity implements IHasMetal {
 	@Override
 	protected boolean isZombieInvulnerableTo(DamageSource source) {
 		if(! this.isNotDigging() && source.isProjectile()){
-			return true;
+			return ! (source.getEntity() instanceof SplitPeaEntity);
 		}
 		return super.isZombieInvulnerableTo(source);
 	}

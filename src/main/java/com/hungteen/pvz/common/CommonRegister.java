@@ -1,12 +1,11 @@
-package com.hungteen.pvz.common.misc;
+package com.hungteen.pvz.common;
 
 import com.hungteen.pvz.common.block.BlockRegister;
 import com.hungteen.pvz.common.item.ItemRegister;
-
 import net.minecraft.block.ComposterBlock;
 import net.minecraft.util.IItemProvider;
 
-public class MiscRegister {
+public class CommonRegister {
 
 	public static void registerCompostable() {
 		registerCompostable(0.3F, BlockRegister.NUT_LEAVES.get());

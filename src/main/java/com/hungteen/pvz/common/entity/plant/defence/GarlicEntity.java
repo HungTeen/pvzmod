@@ -30,7 +30,7 @@ public class GarlicEntity extends PlantDefenderEntity {
 		if(source instanceof PVZEntityDamageSource && ((PVZEntityDamageSource) source).isEatDamage() && source.getEntity() instanceof MobEntity) {
 			this.updateGarlic();
 			if(this.garlic != null) {
-				EntityUtil.playSound(((MobEntity) source.getEntity()), SoundRegister.YUCK.get());
+				EntityUtil.playSound(source.getEntity(), SoundRegister.YUCK.get());
 				((MobEntity) source.getEntity()).setTarget(this.garlic);
 			}
 		}
@@ -53,7 +53,7 @@ public class GarlicEntity extends PlantDefenderEntity {
 	}
 	
 	public float getChangeRange() {
-		return 2;
+		return 10;
 	}
 	
 	@Override

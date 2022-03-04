@@ -151,6 +151,7 @@
   "block.pvz.silver_sunflower_trophy": "白银向日葵雕像",
   "block.pvz.gold_sunflower_trophy": "黄金向日葵雕像",
   "block.pvz.diamond_sunflower_trophy": "钻石向日葵雕像",
+  "block.pvz.nut_log": "坚果木",
   "_comment3": "--------------------------------------------工具提示-------------------------------------------",
   "tooltip.pvz.card_sun_cost": "基础阳光消耗 : %d",
   "tooltip.pvz.card_cd": "基础冷却 : %s",

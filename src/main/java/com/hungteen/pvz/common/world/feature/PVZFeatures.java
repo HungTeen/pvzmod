@@ -28,7 +28,7 @@ public class PVZFeatures {
 	public static final BlockClusterFeatureConfig CHOMPER_CONFIG = (new BlockClusterFeatureConfig.Builder(new SimpleBlockStateProvider(BlockRegister.CHOMPER.get().defaultBlockState()), new SimpleBlockPlacer())).tries(64).whitelist(ImmutableSet.of(Blocks.GRASS_BLOCK.getBlock())).noProjection().build();
 	public static final BlockClusterFeatureConfig ORIGIN_ORE_CONFIG = (new BlockClusterFeatureConfig.Builder(new SimpleBlockStateProvider(BlockRegister.ORIGIN_ORE.get().defaultBlockState()), new SimpleBlockPlacer())).xspread(2).zspread(2).tries(64).whitelist(ImmutableSet.of(Blocks.GRASS_BLOCK.getBlock())).noProjection().build();
 	public static final ConfiguredFeature<BaseTreeFeatureConfig, ?> NUT_TREE = Feature.TREE.configured((new BaseTreeFeatureConfig.Builder(
-			new SimpleBlockStateProvider(Blocks.OAK_LOG.defaultBlockState()), 
+			new SimpleBlockStateProvider(BlockRegister.NUT_LOG.get().defaultBlockState()),
 			new SimpleBlockStateProvider(BlockRegister.NUT_LEAVES.get().defaultBlockState()),
 			new BlobFoliagePlacer(FeatureSpread.fixed(2), FeatureSpread.fixed(0), 3), 
 			new StraightTrunkPlacer(5, 5, 4), 

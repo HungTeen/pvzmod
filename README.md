@@ -1,3 +1,4 @@
+[![](http://cf.way2muchnoise.eu/full_411396_downloads.svg)](https://www.curseforge.com/minecraft/mc-mods/hungteens-plants-vs-zombies-mod)
 # HungTeen's Plants vs Zombies mod
 
 ### Current Progress
@@ -6,11 +7,9 @@ Minecraft 1.12.2-0.7.10: Stop updating.
 
 Minecraft 1.15.2-0.5.1: Stop updating.
 
-Minecraft 1.16.5-0.6.1: Developing.
+Minecraft 1.16.5-0.6.2: Developing.
 
-Minecraft 1.17.1-0.6.1: Waiting.
-
-Minecraft 1.18-0.6.1: Waiting.
+Minecraft 1.18.x-0.7: Waiting.
 
 ---
 
