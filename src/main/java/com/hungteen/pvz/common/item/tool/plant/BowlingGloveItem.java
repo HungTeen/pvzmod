@@ -12,31 +12,27 @@ import com.hungteen.pvz.client.render.itemstack.BowlingGloveISTER;
 import com.hungteen.pvz.common.entity.misc.bowling.AbstractBowlingEntity;
 import com.hungteen.pvz.common.entity.plant.PVZPlantEntity;
 import com.hungteen.pvz.common.impl.plant.PVZPlants;
-import com.hungteen.pvz.common.item.ItemRegister;
 import com.hungteen.pvz.common.item.PVZItemGroups;
 import com.hungteen.pvz.common.entity.EntityRegister;
 import com.hungteen.pvz.utils.PlayerUtil;
 
-import net.minecraft.client.util.ITooltipFlag;
-import net.minecraft.entity.Entity;
-import net.minecraft.entity.EntityType;
-import net.minecraft.entity.SpawnReason;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemGroup;
-import net.minecraft.item.ItemStack;
-import net.minecraft.item.ItemUseContext;
-import net.minecraft.item.Rarity;
-import net.minecraft.util.ActionResultType;
+import net.minecraft.ChatFormatting;
+import net.minecraft.network.chat.TranslatableComponent;
+import net.minecraft.world.InteractionHand;
+import net.minecraft.world.InteractionResult;
+import net.minecraft.world.item.*;
+import net.minecraft.server.level.ServerLevel;
+import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.SpawnReason;
+import net.minecraft.util.Mth;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.CreativeModeTab;
+import net.minecraft.world.item.ItemUseContext;
 import net.minecraft.util.Direction;
-import net.minecraft.util.Hand;
 import net.minecraft.util.NonNullList;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.text.ITextComponent;
-import net.minecraft.util.text.TextFormatting;
-import net.minecraft.util.text.TranslationTextComponent;
-import net.minecraft.world.World;
-import net.minecraft.world.server.ServerWorld;
+import net.minecraft.network.chat.Component;
+import net.minecraft.world.level.Level;
 import net.minecraftforge.event.entity.player.PlayerInteractEvent;
 
 /**
@@ -58,22 +54,22 @@ public class BowlingGloveItem extends Item {
 	}
 
 	@Override
-	public ActionResultType useOn(ItemUseContext context) {
-		final World world = context.getLevel();
-		final PlayerEntity player = context.getPlayer();
-		final Hand hand = context.getHand();
+	public InteractionResult useOn(ItemUseContext context) {
+		final Level world = context.getLevel();
+		final Player player = context.getPlayer();
+		final InteractionHand hand = context.getHand();
 		final ItemStack stack = player.getItemInHand(hand);
-		final BlockPos pos = context.getClickedPos();
+		final Mth pos = context.getClickedPos();
 		Optional<BowlingType> type = getBowlingType(stack);
 		if(! type.isPresent()) {
 			if(! world.isClientSide) {
-				PlayerUtil.sendMsgTo(player, new TranslationTextComponent("help.pvz.bowling_glove.empty").withStyle(TextFormatting.RED));
+				PlayerUtil.sendMsgTo(player, new TranslatableComponent("help.pvz.bowling_glove.empty").withStyle(ChatFormatting.RED));
 				player.getCooldowns().addCooldown(this, 20);
 			}
-			return ActionResultType.FAIL;
+			return InteractionResult.FAIL;
 		}
 			
-		BlockPos spawnPos = pos;
+		Mth spawnPos = pos;
 		if (!world.getBlockState(pos).getCollisionShape(world, pos).isEmpty()) {
 			spawnPos = pos.relative(context.getClickedFace());
 		}
@@ -81,13 +77,13 @@ public class BowlingGloveItem extends Item {
 			final EntityType<? extends Entity> entityType = type.get().getEntity();
 			if (entityType == null) {
 				PVZMod.LOGGER.error("BowlingGloveItem Error : no such bowling entity !");
-				return ActionResultType.FAIL;
+				return InteractionResult.FAIL;
 			}
 			if(! world.isClientSide) {
-				final Entity entity = entityType.spawn((ServerWorld) player.level, stack, player, spawnPos, SpawnReason.SPAWN_EGG, true, true);
+				final Entity entity = entityType.spawn((ServerLevel) player.level, stack, player, spawnPos, SpawnReason.SPAWN_EGG, true, true);
 			    if (entity == null || ! (entity instanceof AbstractBowlingEntity)) {
 			    	PVZMod.LOGGER.error("BowlingGloveItem Error : bowling entity spawn error !");
-				    return ActionResultType.FAIL;
+				    return InteractionResult.FAIL;
 			    }
 			    ((AbstractBowlingEntity) entity).summonByOwner(player);
 			    ((AbstractBowlingEntity) entity).shoot(player);
@@ -96,12 +92,12 @@ public class BowlingGloveItem extends Item {
 			    }
 			    if(PlayerUtil.isPlayerSurvival(player)) {
 			    	player.getCooldowns().addCooldown(this, 100);
-			    	stack.hurtAndBreak(1, player, p -> p.broadcastBreakEvent(Hand.MAIN_HAND));
+			    	stack.hurtAndBreak(1, player, p -> p.broadcastBreakEvent(InteractionHand.MAIN_HAND));
 				}
 			}
-			return ActionResultType.SUCCESS;
+			return InteractionResult.SUCCESS;
 		}
-		return ActionResultType.FAIL;
+		return InteractionResult.FAIL;
 	}
 	
 	public static void onPickUp(PlayerInteractEvent.EntityInteractSpecific ev) {
@@ -147,7 +143,7 @@ public class BowlingGloveItem extends Item {
 	}
 
 	@Override
-	public void fillItemCategory(ItemGroup group, NonNullList<ItemStack> items) {
+	public void fillItemCategory(CreativeModeTab group, NonNullList<ItemStack> items) {
 		if (this.allowdedIn(group)) {
 			items.add(new ItemStack(this));
 			BOWLINGS.forEach((s, type) -> {
@@ -157,12 +153,12 @@ public class BowlingGloveItem extends Item {
 	}
 	
 	@Override
-	public void appendHoverText(ItemStack stack, World worldIn, List<ITextComponent> tooltip, ITooltipFlag flagIn) {
+	public void appendHoverText(ItemStack stack, Level worldIn, List<Component> tooltip, TooltipFlag flagIn) {
 		final Optional<BowlingType> plant = getBowlingType(stack);
 		if(! plant.isPresent()) {
-			tooltip.add(new TranslationTextComponent("tooltip.pvz.bowling_glove.empty").withStyle(TextFormatting.GOLD));
+			tooltip.add(new TranslatableComponent("tooltip.pvz.bowling_glove.empty").withStyle(ChatFormatting.GOLD));
 		} else {
-			tooltip.add(new TranslationTextComponent("tooltip.pvz.bowling_glove.full").withStyle(TextFormatting.GOLD).append(plant.get().getType().getText().withStyle(TextFormatting.GREEN)));
+			tooltip.add(new TranslatableComponent("tooltip.pvz.bowling_glove.full").withStyle(ChatFormatting.GOLD).append(plant.get().getType().getText().withStyle(ChatFormatting.GREEN)));
 		}
 	}
 	

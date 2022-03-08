@@ -4,14 +4,14 @@ import javax.annotation.Nullable;
 
 import com.hungteen.pvz.common.entity.zombie.PVZZombieEntity;
 
-import net.minecraft.block.Block;
-import net.minecraft.entity.MobEntity;
-import net.minecraft.entity.ai.goal.MoveToBlockGoal;
-import net.minecraft.util.math.BlockPos;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.entity.MobEntity;
+import net.minecraft.world.entity.ai.goal.MoveToBlockGoal;
+import net.minecraft.util.Mth;
 import net.minecraft.world.IBlockReader;
 import net.minecraft.world.IWorld;
 import net.minecraft.world.IWorldReader;
-import net.minecraft.world.World;
+import net.minecraft.world.level.Level;
 import net.minecraft.world.chunk.ChunkStatus;
 import net.minecraft.world.chunk.IChunk;
 
@@ -69,7 +69,7 @@ public class ZombieBreakPlantBlockGoal extends MoveToBlockGoal {
 	@Override
 	public void tick() {
 		super.tick();
-		World world = zombie.level;
+		Level world = zombie.level;
 		if (this.isEntityNearBy() && this.blockPos != null) {
 			if (this.breakingTime % 2 == 0) {
 				if (this.breakingTime % 6 == 0) {
@@ -104,10 +104,10 @@ public class ZombieBreakPlantBlockGoal extends MoveToBlockGoal {
 		return 60;
 	}
 	
-	public void playBreakingSound(IWorld worldIn, BlockPos pos) {
+	public void playBreakingSound(IWorld worldIn, Mth pos) {
 	}
 
-	public void playBrokenSound(World worldIn, BlockPos pos) {
+	public void playBrokenSound(Level worldIn, Mth pos) {
 	}
 
 	protected boolean isEntityNearBy() {
@@ -120,14 +120,14 @@ public class ZombieBreakPlantBlockGoal extends MoveToBlockGoal {
 	}
 
 	@Nullable
-	private BlockPos findTarget(BlockPos pos, IBlockReader worldIn) {
+	private Mth findTarget(Mth pos, IBlockReader worldIn) {
 		if (worldIn.getBlockState(pos).getBlock() == this.plantBlock) {
 			return pos;
 		} else {
-			BlockPos[] ablockpos = new BlockPos[] { pos.below(), pos.west(), pos.east(), pos.north(), pos.south(),
+			Mth[] ablockpos = new Mth[] { pos.below(), pos.west(), pos.east(), pos.north(), pos.south(),
 					pos.below().below() };
 
-			for (BlockPos blockpos : ablockpos) {
+			for (Mth blockpos : ablockpos) {
 				if (worldIn.getBlockState(blockpos).getBlock() == this.plantBlock) {
 					return blockpos;
 				}
@@ -141,7 +141,7 @@ public class ZombieBreakPlantBlockGoal extends MoveToBlockGoal {
 	 * Return true to set given position as destination
 	 */
 	@SuppressWarnings("deprecation")
-	protected boolean isValidTarget(IWorldReader worldIn, BlockPos pos) {
+	protected boolean isValidTarget(IWorldReader worldIn, Mth pos) {
 		IChunk ichunk = worldIn.getChunk(pos.getX() >> 4, pos.getZ() >> 4, ChunkStatus.FULL, false);
 		if (ichunk == null) {
 			return false;

@@ -7,7 +7,7 @@ import com.google.gson.JsonNull;
 import com.google.gson.JsonObject;
 
 import net.minecraft.advancements.criterion.MinMaxBounds;
-import net.minecraft.entity.player.ServerPlayerEntity;
+import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.util.JSONUtils;
 
 public class AmountPredicate {
@@ -23,7 +23,7 @@ public class AmountPredicate {
 		amount = bound;
 	}
 
-	public boolean test(ServerPlayerEntity player, int amount) {
+	public boolean test(ServerPlayer player, int amount) {
 		if(this == ANY) return true;
 		return this.amount.matches(amount);
 	}

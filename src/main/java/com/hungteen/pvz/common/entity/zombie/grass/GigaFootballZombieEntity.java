@@ -8,13 +8,13 @@ import com.hungteen.pvz.utils.EffectUtil;
 import com.hungteen.pvz.utils.EntityUtil;
 import com.hungteen.pvz.utils.MathUtil;
 import com.hungteen.pvz.utils.ZombieUtil;
-import net.minecraft.entity.CreatureEntity;
-import net.minecraft.entity.Entity;
-import net.minecraft.entity.EntityType;
-import net.minecraft.entity.LivingEntity;
-import net.minecraft.nbt.CompoundNBT;
-import net.minecraft.potion.Effects;
-import net.minecraft.world.World;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.world.entity.CreatureEntity;
+import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.effect.Effects;
+import net.minecraft.world.level.Level;
 
 public class GigaFootballZombieEntity extends FootballZombieEntity {
 
@@ -22,7 +22,7 @@ public class GigaFootballZombieEntity extends FootballZombieEntity {
 	private final int minRushCD = 200;
 	private final int maxRushCD = 600;
 	
-	public GigaFootballZombieEntity(EntityType<? extends CreatureEntity> type, World worldIn) {
+	public GigaFootballZombieEntity(EntityType<? extends CreatureEntity> type, Level worldIn) {
 		super(type, worldIn);
 		this.canCollideWithZombie = false;
 	}
@@ -105,7 +105,7 @@ public class GigaFootballZombieEntity extends FootballZombieEntity {
 	}
 	
 	@Override
-	public void readAdditionalSaveData(CompoundNBT compound) {
+	public void readAdditionalSaveData(CompoundTag compound) {
 		super.readAdditionalSaveData(compound);
 		if(compound.contains("is_zombie_rushing")) {
 			this.isRushing = compound.getBoolean("is_zombie_rushing");
@@ -113,7 +113,7 @@ public class GigaFootballZombieEntity extends FootballZombieEntity {
 	}
 	
 	@Override
-	public void addAdditionalSaveData(CompoundNBT compound) {
+	public void addAdditionalSaveData(CompoundTag compound) {
 		super.addAdditionalSaveData(compound);
 		compound.putBoolean("is_zombie_rushing", this.isRushing);
 	}

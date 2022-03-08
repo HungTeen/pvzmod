@@ -2,8 +2,8 @@ package com.hungteen.pvz.common.network.toserver;
 
 import java.util.function.Supplier;
 
-import net.minecraft.entity.Entity;
-import net.minecraft.entity.player.ServerPlayerEntity;
+import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.world.entity.Entity;
 import net.minecraft.network.PacketBuffer;
 import net.minecraftforge.fml.network.NetworkEvent;
 
@@ -37,7 +37,7 @@ public class UpdateMotionPacket {
 
 	public static class Handler {
 		public static void onMessage(UpdateMotionPacket message, Supplier<NetworkEvent.Context> ctx) {
-			final ServerPlayerEntity player = ctx.get().getSender();
+			final ServerPlayer player = ctx.get().getSender();
 			ctx.get().enqueueWork(()->{
 		    	Entity entity = player.level.getEntity(message.type);
 		    	if(entity != null) {

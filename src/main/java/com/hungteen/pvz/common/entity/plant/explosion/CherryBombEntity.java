@@ -10,15 +10,15 @@ import com.hungteen.pvz.common.misc.PVZEntityDamageSource;
 import com.hungteen.pvz.common.misc.sound.SoundRegister;
 import com.hungteen.pvz.client.particle.ParticleRegister;
 import com.hungteen.pvz.utils.EntityUtil;
-import net.minecraft.entity.*;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.entity.player.ServerPlayerEntity;
+import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.world.entity.*;
+import net.minecraft.world.entity.player.Player;
 import net.minecraft.util.math.AxisAlignedBB;
-import net.minecraft.world.World;
+import net.minecraft.world.level.Level;
 
 public class CherryBombEntity extends PlantBomberEntity{
 
-	public CherryBombEntity(EntityType<? extends CreatureEntity> type, World worldIn) {
+	public CherryBombEntity(EntityType<? extends CreatureEntity> type, Level worldIn) {
 		super(type, worldIn);
 	}
 
@@ -37,9 +37,9 @@ public class CherryBombEntity extends PlantBomberEntity{
 			PVZPlantEntity.clearLadders(this, aabb);
 			EntityUtil.playSound(this, SoundRegister.CHERRY_BOMB.get());
 			//trigger advancement.
-			PlayerEntity owner = EntityUtil.getEntityOwner(level, this);
-			if(owner != null && owner instanceof ServerPlayerEntity) {
-				EntityEffectAmountTrigger.INSTANCE.trigger((ServerPlayerEntity) owner, this, deathCnt);
+			Player owner = EntityUtil.getEntityOwner(level, this);
+			if(owner != null && owner instanceof ServerPlayer) {
+				EntityEffectAmountTrigger.INSTANCE.trigger((ServerPlayer) owner, this, deathCnt);
 			}
 		} else {
 			for(int i = 0; i < 5; ++ i) {

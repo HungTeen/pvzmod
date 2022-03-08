@@ -3,7 +3,7 @@ package com.hungteen.pvz.client.model.entity.plant.ice;
 import com.hungteen.pvz.client.model.entity.plant.PVZPlantModel;
 import com.hungteen.pvz.common.entity.plant.ice.IcebergLettuceEntity;
 
-import net.minecraft.client.renderer.entity.model.EntityModel;
+import net.minecraft.client.model.EntityModel;
 import net.minecraft.client.renderer.model.ModelRenderer;
 
 // Made with Blockbench 3.7.5

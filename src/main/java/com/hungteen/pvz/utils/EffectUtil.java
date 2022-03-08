@@ -1,7 +1,7 @@
 package com.hungteen.pvz.utils;
 
-import net.minecraft.potion.Effect;
-import net.minecraft.potion.EffectInstance;
+import net.minecraft.world.effect.Effect;
+import net.minecraft.world.effect.MobEffectInstance;
 
 /**
  * @program: pvzmod-1.16.5
@@ -10,12 +10,12 @@ import net.minecraft.potion.EffectInstance;
  **/
 public class EffectUtil {
 
-    public static EffectInstance effect(Effect effect, int time, int lvl){
-        return new EffectInstance(effect, time, lvl, false, false);
+    public static MobEffectInstance effect(Effect effect, int time, int lvl){
+        return new MobEffectInstance(effect, time, lvl, false, false);
     }
 
-    public static EffectInstance viewEffect(Effect effect, int time, int lvl){
-        return new EffectInstance(effect, time, lvl, true, true);
+    public static MobEffectInstance viewEffect(Effect effect, int time, int lvl){
+        return new MobEffectInstance(effect, time, lvl, true, true);
     }
 
 }

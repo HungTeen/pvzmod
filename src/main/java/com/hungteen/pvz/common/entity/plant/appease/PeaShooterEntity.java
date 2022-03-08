@@ -7,17 +7,17 @@ import com.hungteen.pvz.common.entity.plant.base.PlantShooterEntity;
 import com.hungteen.pvz.common.impl.SkillTypes;
 import com.hungteen.pvz.common.impl.plant.PVZPlants;
 import com.hungteen.pvz.utils.MathUtil;
-import net.minecraft.entity.CreatureEntity;
-import net.minecraft.entity.EntitySize;
-import net.minecraft.entity.EntityType;
-import net.minecraft.entity.Pose;
-import net.minecraft.world.World;
+import net.minecraft.world.entity.CreatureEntity;
+import net.minecraft.world.entity.EntitySize;
+import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.Pose;
+import net.minecraft.world.level.Level;
 
 public class PeaShooterEntity extends PlantShooterEntity{
 
 	protected static final double SHOOT_OFFSET = 0.2D;//pea position offset
 	
-	public PeaShooterEntity(EntityType<? extends CreatureEntity> type, World worldIn) {
+	public PeaShooterEntity(EntityType<? extends CreatureEntity> type, Level worldIn) {
 		super(type, worldIn);
 	}
 	

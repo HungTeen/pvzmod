@@ -2,9 +2,9 @@ package com.hungteen.pvz.common.item.armor;
 
 import com.hungteen.pvz.common.item.PVZItemGroups;
 import net.minecraft.inventory.EquipmentSlotType;
-import net.minecraft.item.ArmorItem;
-import net.minecraft.item.IArmorMaterial;
-import net.minecraft.item.Item;
+import net.minecraft.world.item.ArmorItem;
+import net.minecraft.world.item.IArmorMaterial;
+import net.minecraft.world.item.Item;
 
 /**
  * @program: pvzmod-1.16.5

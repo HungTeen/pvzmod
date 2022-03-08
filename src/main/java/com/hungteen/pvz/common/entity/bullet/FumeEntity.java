@@ -9,29 +9,29 @@ import com.hungteen.pvz.client.particle.ParticleRegister;
 import com.hungteen.pvz.utils.WorldUtil;
 
 import it.unimi.dsi.fastutil.ints.IntOpenHashSet;
-import net.minecraft.block.Block;
-import net.minecraft.block.BushBlock;
-import net.minecraft.entity.Entity;
-import net.minecraft.entity.EntitySize;
-import net.minecraft.entity.EntityType;
-import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.Pose;
-import net.minecraft.item.ItemStack;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.BushBlock;
+import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.EntitySize;
+import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.Pose;
+import net.minecraft.world.item.ItemStack;
 import net.minecraft.util.math.BlockRayTraceResult;
 import net.minecraft.util.math.EntityRayTraceResult;
 import net.minecraft.util.math.RayTraceResult;
 import net.minecraft.util.math.vector.Vector3d;
-import net.minecraft.world.World;
+import net.minecraft.world.level.Level;
 
 public class FumeEntity extends PVZItemBulletEntity{
 
 	private int knockback = 0;
 	
-	public FumeEntity(EntityType<?> type, World worldIn) {
+	public FumeEntity(EntityType<?> type, Level worldIn) {
 		super(type, worldIn);
 	}
 	
-	public FumeEntity(World worldIn, LivingEntity living) {
+	public FumeEntity(Level worldIn, LivingEntity living) {
 		super(EntityRegister.FUME.get(), worldIn, living);
 	}
 	

@@ -3,18 +3,18 @@ package com.hungteen.pvz.common.entity;
 import com.hungteen.pvz.PVZMod;
 import com.hungteen.pvz.utils.EntityUtil;
 import com.hungteen.pvz.utils.interfaces.IHasMultiPart;
-import net.minecraft.entity.*;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.nbt.CompoundNBT;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.world.InteractionResult;
+import net.minecraft.world.entity.*;
+import net.minecraft.world.entity.player.Player;
 import net.minecraft.network.IPacket;
 import net.minecraft.network.datasync.DataParameter;
 import net.minecraft.network.datasync.DataSerializers;
 import net.minecraft.network.datasync.EntityDataManager;
-import net.minecraft.util.ActionResultType;
 import net.minecraft.util.DamageSource;
-import net.minecraft.util.Hand;
+import net.minecraft.world.InteractionHand;
 import net.minecraft.util.math.vector.Vector3d;
-import net.minecraft.world.World;
+import net.minecraft.world.level.Level;
 import net.minecraftforge.fml.network.NetworkHooks;
 
 import javax.annotation.Nullable;
@@ -31,7 +31,7 @@ public abstract class PVZMultiPartEntity extends Entity {
 	protected final float MaxHeight;
 	protected final float MaxWidth;
 
-	public PVZMultiPartEntity(EntityType<?> entityTypeIn, World worldIn) {
+	public PVZMultiPartEntity(EntityType<?> entityTypeIn, Level worldIn) {
 		super(entityTypeIn, worldIn);
 		this.MaxHeight = 0.5F;
 		this.MaxWidth = 0.5F;
@@ -116,8 +116,8 @@ public abstract class PVZMultiPartEntity extends Entity {
 	}
 
 	@Override
-	public ActionResultType interactAt(PlayerEntity player, Vector3d vec3d, Hand hand) {
-		return ActionResultType.FAIL;
+	public InteractionResult interactAt(Player player, Vector3d vec3d, InteractionHand hand) {
+		return InteractionResult.FAIL;
 	}
 
 	@Override
@@ -131,11 +131,11 @@ public abstract class PVZMultiPartEntity extends Entity {
 	}
 	
 	@Override
-	protected void readAdditionalSaveData(CompoundNBT compound) {
+	protected void readAdditionalSaveData(CompoundTag compound) {
 	}
 
 	@Override
-	protected void addAdditionalSaveData(CompoundNBT compound) {
+	protected void addAdditionalSaveData(CompoundTag compound) {
 	}
 	
 	private int getOwnerId() {

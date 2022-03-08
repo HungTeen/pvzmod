@@ -11,7 +11,7 @@ import com.mojang.brigadier.builder.LiteralArgumentBuilder;
 import net.minecraft.command.CommandSource;
 import net.minecraft.command.Commands;
 import net.minecraft.command.arguments.EntityArgument;
-import net.minecraft.entity.player.ServerPlayerEntity;
+import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.util.text.StringTextComponent;
 
 public class ResourceCommand {
@@ -34,8 +34,8 @@ public class ResourceCommand {
         dispatcher.register(builder);
     }
 	
-	public static int addPlayerResource(CommandSource source,Collection<? extends ServerPlayerEntity> targets,Resources res,int num) {
-		for(ServerPlayerEntity player:targets) {
+	public static int addPlayerResource(CommandSource source, Collection<? extends ServerPlayer> targets, Resources res, int num) {
+		for(ServerPlayer player:targets) {
 			player.getCapability(CapabilityHandler.PLAYER_DATA_CAPABILITY).ifPresent(l -> {
 				l.getPlayerData().addResource(res, num);
 		    	source.sendSuccess(new StringTextComponent(res.getText().getString() + ":" + l.getPlayerData().getResource(res)), true);
@@ -44,8 +44,8 @@ public class ResourceCommand {
 		return targets.size();
 	}
 	
-	public static int queryPlayerResource(CommandSource source,Collection<? extends ServerPlayerEntity> targets,Resources res) {
-		for(ServerPlayerEntity player:targets) {
+	public static int queryPlayerResource(CommandSource source, Collection<? extends ServerPlayer> targets, Resources res) {
+		for(ServerPlayer player:targets) {
 			player.getCapability(CapabilityHandler.PLAYER_DATA_CAPABILITY).ifPresent(l -> {
 		    	source.sendSuccess(new StringTextComponent(res.getText().getString() + ":" + l.getPlayerData().getResource(res)), false);
 		    });
@@ -53,8 +53,8 @@ public class ResourceCommand {
 		return targets.size();
 	}
 	
-	public static int setPlayerResource(CommandSource source, Collection<? extends ServerPlayerEntity> targets, Resources res, int num) {
-		for(ServerPlayerEntity player:targets) {
+	public static int setPlayerResource(CommandSource source, Collection<? extends ServerPlayer> targets, Resources res, int num) {
+		for(ServerPlayer player:targets) {
 			player.getCapability(CapabilityHandler.PLAYER_DATA_CAPABILITY).ifPresent(l -> {
 				l.getPlayerData().setResource(res, num);
 		    	source.sendSuccess(new StringTextComponent(res.getText().getString() + ":" + l.getPlayerData().getResource(res)), true);

@@ -4,11 +4,11 @@ import com.hungteen.pvz.api.types.IPlantType;
 import com.hungteen.pvz.common.impl.plant.PVZPlants;
 import com.hungteen.pvz.utils.AnimationUtil;
 
-import net.minecraft.entity.CreatureEntity;
-import net.minecraft.entity.EntitySize;
-import net.minecraft.entity.EntityType;
-import net.minecraft.entity.Pose;
-import net.minecraft.world.World;
+import net.minecraft.world.entity.CreatureEntity;
+import net.minecraft.world.entity.EntitySize;
+import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.Pose;
+import net.minecraft.world.level.Level;
 
 public class ThreePeaterEntity extends PeaShooterEntity {
 
@@ -16,7 +16,7 @@ public class ThreePeaterEntity extends PeaShooterEntity {
 	private static final double DOWN_OFFSET = - 0.35D;
 	private static final int SUPER_CD = 100;
 	
-	public ThreePeaterEntity(EntityType<? extends CreatureEntity> type, World worldIn) {
+	public ThreePeaterEntity(EntityType<? extends CreatureEntity> type, Level worldIn) {
 		super(type, worldIn);
 	}
 

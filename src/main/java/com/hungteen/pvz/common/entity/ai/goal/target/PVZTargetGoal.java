@@ -2,10 +2,10 @@ package com.hungteen.pvz.common.entity.ai.goal.target;
 
 import com.hungteen.pvz.common.potion.EffectRegister;
 import com.hungteen.pvz.utils.EntityUtil;
-import net.minecraft.entity.Entity;
-import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.MobEntity;
-import net.minecraft.entity.ai.goal.Goal;
+import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.MobEntity;
+import net.minecraft.world.entity.ai.goal.Goal;
 import net.minecraft.util.math.AxisAlignedBB;
 
 import java.util.EnumSet;

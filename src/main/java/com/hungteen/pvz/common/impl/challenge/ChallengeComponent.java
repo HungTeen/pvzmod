@@ -9,16 +9,16 @@ import com.hungteen.pvz.api.raid.*;
 import com.hungteen.pvz.common.world.challenge.ChallengeManager;
 import com.hungteen.pvz.common.misc.sound.SoundRegister;
 import com.mojang.datafixers.util.Pair;
+import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.MutableComponent;
+import net.minecraft.network.chat.TranslatableComponent;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.sounds.SoundEvent;
 import net.minecraft.util.JSONUtils;
 import net.minecraft.util.RegistryKey;
-import net.minecraft.util.ResourceLocation;
-import net.minecraft.util.SoundEvent;
 import net.minecraft.util.math.MathHelper;
-import net.minecraft.util.text.IFormattableTextComponent;
-import net.minecraft.util.text.ITextComponent;
-import net.minecraft.util.text.TranslationTextComponent;
-import net.minecraft.world.BossInfo.Color;
-import net.minecraft.world.World;
+import net.minecraft.world.BossEvent.Color;
+import net.minecraft.world.level.Level;
 import net.minecraftforge.registries.ForgeRegistries;
 
 import java.util.*;
@@ -32,11 +32,11 @@ public class ChallengeComponent implements IChallengeComponent {
 	private Set<String> tags = new HashSet<>();
 	private Set<String> dimensions = new HashSet<>();
 	private List<String> authors = new ArrayList<>();
-	private final List<Pair<IFormattableTextComponent, Integer>> messages = new ArrayList<>();
+	private final List<Pair<MutableComponent, Integer>> messages = new ArrayList<>();
 	private IPlacementComponent placement;
-	private ITextComponent title = new TranslationTextComponent("challenge.pvz.title");
-	private ITextComponent winTitle = new TranslationTextComponent("challenge.pvz.win_title");
-	private ITextComponent lossTitle = new TranslationTextComponent("challenge.pvz.loss_title");
+	private Component title = new TranslatableComponent("challenge.pvz.title");
+	private Component winTitle = new TranslatableComponent("challenge.pvz.win_title");
+	private Component lossTitle = new TranslatableComponent("challenge.pvz.loss_title");
 	private Color barColor = Color.WHITE;
 	private SoundEvent preSound = SoundRegister.READY.get();
 	private SoundEvent waveSound = SoundRegister.HUGE_WAVE.get();
@@ -57,19 +57,19 @@ public class ChallengeComponent implements IChallengeComponent {
 	public boolean readJson(JsonObject json) {
 		/* titles */
 		{
-			final ITextComponent text = ITextComponent.Serializer.fromJson(json.get("title"));
+			final Component text = Component.Serializer.fromJson(json.get("title"));
 		    if(text != null) {
 			    this.title = text;
 		    }
 		}
 		{
-			final ITextComponent text = ITextComponent.Serializer.fromJson(json.get("win_title"));
+			final Component text = Component.Serializer.fromJson(json.get("win_title"));
 		    if(text != null) {
 			    this.winTitle = text;
 		    }
 		}
 		{
-			final ITextComponent text = ITextComponent.Serializer.fromJson(json.get("loss_title"));
+			final Component text = Component.Serializer.fromJson(json.get("loss_title"));
 		    if(text != null) {
 			    this.lossTitle = text;
 		    }
@@ -228,7 +228,7 @@ public class ChallengeComponent implements IChallengeComponent {
 	}
 
 	@Override
-	public boolean isSuitableDimension(RegistryKey<World> type) {
+	public boolean isSuitableDimension(RegistryKey<Level> type) {
 		return this.dimensions.isEmpty() || this.dimensions.contains(type.getRegistryName().toString());
 	}
 
@@ -289,17 +289,17 @@ public class ChallengeComponent implements IChallengeComponent {
 	}
 	
 	@Override
-	public ITextComponent getTitle() {
+	public Component getTitle() {
 		return this.title;
 	}
 	
 	@Override
-	public ITextComponent getWinTitle() {
+	public Component getWinTitle() {
 		return this.winTitle;
 	}
 	
 	@Override
-	public ITextComponent getLossTitle() {
+	public Component getLossTitle() {
 		return this.lossTitle;
 	}
 	
@@ -313,19 +313,19 @@ public class ChallengeComponent implements IChallengeComponent {
 	}
 
 	@Override
-	public IFormattableTextComponent getChallengeName(){
+	public MutableComponent getChallengeName(){
 		final ResourceLocation resourceLocation = ChallengeManager.getResourceByChallenge(this);
-		return new TranslationTextComponent("challenge." + resourceLocation.getNamespace() + "." + resourceLocation.getPath() + ".name");
+		return new TranslatableComponent("challenge." + resourceLocation.getNamespace() + "." + resourceLocation.getPath() + ".name");
 	}
 
 	@Override
-	public void setMessages(List<Pair<IFormattableTextComponent, Integer>> list) {
+	public void setMessages(List<Pair<MutableComponent, Integer>> list) {
 		this.messages.clear();
 		list.forEach(p -> this.messages.add(p));
 	}
 
 	@Override
-	public List<Pair<IFormattableTextComponent, Integer>> getMessages(){
+	public List<Pair<MutableComponent, Integer>> getMessages(){
 		return Collections.unmodifiableList(this.messages);
 	}
 

@@ -12,23 +12,23 @@ import com.hungteen.pvz.utils.EntityUtil;
 import com.hungteen.pvz.utils.MathUtil;
 import com.hungteen.pvz.utils.WorldUtil;
 import com.hungteen.pvz.utils.ZombieUtil;
-import net.minecraft.block.BlockState;
-import net.minecraft.entity.*;
-import net.minecraft.entity.ai.attributes.Attributes;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.nbt.CompoundNBT;
+import net.minecraft.world.level.block.BlockState;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.world.entity.*;
+import net.minecraft.world.entity.ai.attributes.Attributes;
+import net.minecraft.util.Mth;
+import net.minecraft.world.entity.player.Player;
 import net.minecraft.network.datasync.DataParameter;
 import net.minecraft.network.datasync.DataSerializers;
 import net.minecraft.network.datasync.EntityDataManager;
 import net.minecraft.particles.ParticleTypes;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.Direction;
-import net.minecraft.util.ResourceLocation;
-import net.minecraft.util.SoundEvents;
-import net.minecraft.util.math.BlockPos;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.sounds.SoundEvents;
 import net.minecraft.world.DifficultyInstance;
 import net.minecraft.world.IServerWorld;
-import net.minecraft.world.World;
+import net.minecraft.world.level.Level;
 
 import java.util.List;
 
@@ -44,7 +44,7 @@ public class NobleZombieEntity extends AbstractBossZombieEntity {
 	private final int minSleepAttackCD = 360;
 	private final int maxSleepAttackCD = 1000;
 	
-	public NobleZombieEntity(EntityType<? extends CreatureEntity> type, World worldIn) {
+	public NobleZombieEntity(EntityType<? extends CreatureEntity> type, Level worldIn) {
 		super(type, worldIn);
 		this.setAttackTime(this.maxSleepAttackCD / 5);
 		this.summonTick = this.maxSummonTick / 3;
@@ -69,7 +69,7 @@ public class NobleZombieEntity extends AbstractBossZombieEntity {
 
 	@Override
 	public ILivingEntityData finalizeSpawn(IServerWorld worldIn, DifficultyInstance difficultyIn, SpawnReason reason,
-			ILivingEntityData spawnDataIn, CompoundNBT dataTag) {
+			ILivingEntityData spawnDataIn, CompoundTag dataTag) {
 		if (! level.isClientSide) {
 			//TODO MournerZombie level deleted
 			EntityUtil.playSound(this, SoundRegister.DIRT_RISE.get());
@@ -139,7 +139,7 @@ public class NobleZombieEntity extends AbstractBossZombieEntity {
 	 * Skill 1 : Teleport and make explosion
 	 */
 	private void checkAndTeleport() {
-		final BlockPos teleportPos = (this.getTarget() == null ? this.blockPosition() : this.getTarget().blockPosition());
+		final Mth teleportPos = (this.getTarget() == null ? this.blockPosition() : this.getTarget().blockPosition());
 		this.setTpTick(-this.getRandom().nextInt(this.maxTpCD - this.minTpCD + 1) - this.minTpCD);
 		this.teleportToPos(teleportPos.getX(), teleportPos.getY(), teleportPos.getZ());
 		ZombieHandEntity.spawnRangeZombieHands(level, this, 2);
@@ -211,7 +211,7 @@ public class NobleZombieEntity extends AbstractBossZombieEntity {
 	}
 	
 	public void teleportToPos(double x, double y, double z) {
-		BlockPos.Mutable blockpos$mutable = new BlockPos.Mutable(x, y, z);
+		Mth.Mutable blockpos$mutable = new Mth.Mutable(x, y, z);
 		while (blockpos$mutable.getY() > 0
 				&& !this.level.getBlockState(blockpos$mutable).getMaterial().blocksMotion()) {
 			blockpos$mutable.move(Direction.DOWN);
@@ -221,7 +221,7 @@ public class NobleZombieEntity extends AbstractBossZombieEntity {
 		if (flag) {
 			boolean flag2 = this.randomTeleport(x, y, z, true);
 			if (flag2) {
-				this.level.playSound((PlayerEntity) null, this.xo, this.yo, this.zo,
+				this.level.playSound((Player) null, this.xo, this.yo, this.zo,
 						SoundEvents.ENDERMAN_TELEPORT, this.getSoundSource(), 1.0F, 1.0F);
 				this.playSound(SoundEvents.ENDERMAN_TELEPORT, 1.0F, 1.0F);
 			}
@@ -270,7 +270,7 @@ public class NobleZombieEntity extends AbstractBossZombieEntity {
 	}
 
 	@Override
-	public void readAdditionalSaveData(CompoundNBT compound) {
+	public void readAdditionalSaveData(CompoundTag compound) {
 		super.readAdditionalSaveData(compound);
 		if(compound.contains("summon_zombie_tick")) {
 			this.summonTick = compound.getInt("summon_zombie_tick");
@@ -284,7 +284,7 @@ public class NobleZombieEntity extends AbstractBossZombieEntity {
 	}
 
 	@Override
-	public void addAdditionalSaveData(CompoundNBT compound) {
+	public void addAdditionalSaveData(CompoundTag compound) {
 		super.addAdditionalSaveData(compound);
 		compound.putInt("summon_zombie_tick", this.summonTick);
 		compound.putInt("zombie_tp_tick", this.getTpTick());

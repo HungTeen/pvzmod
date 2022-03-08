@@ -7,15 +7,15 @@ import com.hungteen.pvz.common.world.invasion.SpawnType;
 import com.hungteen.pvz.utils.StringUtil;
 import com.mojang.brigadier.exceptions.CommandSyntaxException;
 import net.minecraft.client.resources.JsonReloadListener;
-import net.minecraft.entity.EntityType;
-import net.minecraft.entity.MobEntity;
-import net.minecraft.nbt.CompoundNBT;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.MobEntity;
+import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.JsonToNBT;
 import net.minecraft.profiler.IProfiler;
 import net.minecraft.resources.IResourceManager;
 import net.minecraft.util.JSONUtils;
-import net.minecraft.util.ResourceLocation;
-import net.minecraft.util.text.TextFormatting;
+import net.minecraft.ChatFormatting;
 import net.minecraftforge.registries.ForgeRegistries;
 
 import java.util.HashMap;
@@ -51,7 +51,7 @@ public class InvasionTypeLoader extends JsonReloadListener {
                 }
 
                 final String color = JSONUtils.getAsString(jsonObject, "display_color", "white");
-                invasionType.setDisplayColor(TextFormatting.valueOf(color.toUpperCase()));
+                invasionType.setDisplayColor(ChatFormatting.valueOf(color.toUpperCase()));
 
                 JsonArray array = JSONUtils.getAsJsonArray(jsonObject, "spawns", new JsonArray());
                 array.forEach(e -> {
@@ -68,7 +68,7 @@ public class InvasionTypeLoader extends JsonReloadListener {
                         /* nbt */
                         if(obj.has(StringUtil.ENTITY_NBT)) {
                             try {
-                                final CompoundNBT nbt = JsonToNBT.parseTag(JSONUtils.convertToString(obj.get(StringUtil.ENTITY_NBT), StringUtil.ENTITY_NBT));
+                                final CompoundTag nbt = JsonToNBT.parseTag(JSONUtils.convertToString(obj.get(StringUtil.ENTITY_NBT), StringUtil.ENTITY_NBT));
                                 spawnType.setNbt(nbt);
                             } catch (CommandSyntaxException ee) {
                                 throw new JsonSyntaxException("Invalid nbt tag: " + ee.getMessage());

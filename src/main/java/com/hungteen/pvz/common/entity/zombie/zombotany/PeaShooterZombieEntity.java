@@ -4,21 +4,19 @@ import com.hungteen.pvz.common.entity.bullet.itembullet.PeaEntity;
 import com.hungteen.pvz.common.impl.zombie.ZombieType;
 import com.hungteen.pvz.common.impl.zombie.Zombotanies;
 import com.hungteen.pvz.common.potion.EffectRegister;
-import com.hungteen.pvz.common.misc.PVZLoot;
 import com.hungteen.pvz.utils.EntityUtil;
-import net.minecraft.entity.CreatureEntity;
-import net.minecraft.entity.EntityType;
-import net.minecraft.entity.LivingEntity;
-import net.minecraft.nbt.CompoundNBT;
-import net.minecraft.util.ResourceLocation;
-import net.minecraft.util.SoundEvents;
-import net.minecraft.world.World;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.world.entity.CreatureEntity;
+import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.sounds.SoundEvents;
+import net.minecraft.world.level.Level;
 
 public class PeaShooterZombieEntity extends AbstractZombotanyEntity {
 
 	private int shootTick = 0;
 	
-	public PeaShooterZombieEntity(EntityType<? extends CreatureEntity> type, World worldIn) {
+	public PeaShooterZombieEntity(EntityType<? extends CreatureEntity> type, Level worldIn) {
 		super(type, worldIn);
 	}
 
@@ -79,7 +77,7 @@ public class PeaShooterZombieEntity extends AbstractZombotanyEntity {
 	}
 	
 	@Override
-	public void readAdditionalSaveData(CompoundNBT compound) {
+	public void readAdditionalSaveData(CompoundTag compound) {
 		super.readAdditionalSaveData(compound);
 		if(compound.contains("shoot_tick")) {
 			this.shootTick = compound.getInt("shoot_tick");
@@ -87,7 +85,7 @@ public class PeaShooterZombieEntity extends AbstractZombotanyEntity {
 	}
 	
 	@Override
-	public void addAdditionalSaveData(CompoundNBT compound) {
+	public void addAdditionalSaveData(CompoundTag compound) {
 		super.addAdditionalSaveData(compound);
 		compound.putInt("shoot_tick", this.shootTick);
 	}

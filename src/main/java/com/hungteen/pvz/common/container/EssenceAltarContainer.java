@@ -8,11 +8,11 @@ import com.hungteen.pvz.common.item.spawn.card.ImitaterCardItem;
 import com.hungteen.pvz.common.item.spawn.card.SummonCardItem;
 import com.hungteen.pvz.common.tileentity.EssenceAltarTileEntity;
 import com.hungteen.pvz.utils.EntityUtil;
-import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.sounds.SoundEvents;
+import net.minecraft.world.entity.player.Player;
 import net.minecraft.inventory.container.Slot;
-import net.minecraft.item.ItemStack;
-import net.minecraft.util.SoundEvents;
-import net.minecraft.util.math.BlockPos;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.util.Mth;
 import net.minecraftforge.items.SlotItemHandler;
 
 import javax.annotation.Nonnull;
@@ -22,9 +22,9 @@ public class EssenceAltarContainer extends PVZContainer{
 
 	private static final int LEARN_COST = 4;
 	public final EssenceAltarTileEntity te;
-	private final PlayerEntity player;
+	private final Player player;
 	
-	public EssenceAltarContainer(int id, PlayerEntity player, BlockPos worldPos) {
+	public EssenceAltarContainer(int id, Player player, Mth worldPos) {
 		super(ContainerRegister.ESSENCE_ALTAR.get(), id);
 		this.player = player;
 		this.te = (EssenceAltarTileEntity) player.level.getBlockEntity(worldPos);
@@ -142,7 +142,7 @@ public class EssenceAltarContainer extends PVZContainer{
 	}
 
 	@Override
-    public ItemStack quickMoveStack(PlayerEntity playerIn, int index) {
+    public ItemStack quickMoveStack(Player playerIn, int index) {
 		ItemStack itemstack = ItemStack.EMPTY;
 		Slot slot = this.slots.get(index);
 		if (slot != null && slot.hasItem()) {
@@ -172,7 +172,7 @@ public class EssenceAltarContainer extends PVZContainer{
     }
 
 	@Override
-	public boolean stillValid(PlayerEntity playerIn) {
+	public boolean stillValid(Player playerIn) {
 		return this.te.isUsableByPlayer(playerIn);
 	}
 

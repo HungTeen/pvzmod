@@ -1,7 +1,7 @@
 package com.hungteen.pvz.common.advancement.predicate;
 
 import com.google.gson.JsonElement;
-import net.minecraft.entity.player.ServerPlayerEntity;
+import net.minecraft.server.level.ServerPlayer;
 
 import javax.annotation.Nullable;
 
@@ -18,7 +18,7 @@ public class StringPredicate {
 		this.s = s;
 	}
 
-	public boolean test(ServerPlayerEntity player, String ss) {
+	public boolean test(ServerPlayer player, String ss) {
 		if(this == ANY) return true;
 		return this.s.equals(ss);
 	}

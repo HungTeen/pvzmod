@@ -2,13 +2,13 @@ package com.hungteen.pvz.common.event.events;
 
 import com.hungteen.pvz.common.entity.misc.drop.SunEntity;
 
-import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.world.entity.player.Player;
 import net.minecraftforge.event.entity.player.PlayerEvent;
 import net.minecraftforge.eventbus.api.Cancelable;
 
 public class PlayerCollectDropEvent extends PlayerEvent{
 
-	public PlayerCollectDropEvent(PlayerEntity player) {
+	public PlayerCollectDropEvent(Player player) {
 		super(player);
 	}
 
@@ -21,7 +21,7 @@ public class PlayerCollectDropEvent extends PlayerEvent{
 		
 		protected final SunEntity sun;
 		
-		public PlayerCollectSunEvent(PlayerEntity player, SunEntity sun) {
+		public PlayerCollectSunEvent(Player player, SunEntity sun) {
 			super(player);
 			this.sun = sun;
 		}

@@ -5,7 +5,7 @@ import com.hungteen.pvz.common.entity.plant.arma.ButterPultEntity;
 import com.hungteen.pvz.common.entity.plant.arma.KernelPultEntity;
 import com.hungteen.pvz.common.entity.plant.arma.KernelPultEntity.CornTypes;
 
-import net.minecraft.client.renderer.entity.model.EntityModel;
+import net.minecraft.client.model.EntityModel;
 import net.minecraft.client.renderer.model.ModelRenderer;
 import net.minecraft.util.math.MathHelper;
 

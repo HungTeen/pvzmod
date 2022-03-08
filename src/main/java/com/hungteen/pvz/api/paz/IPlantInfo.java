@@ -1,7 +1,7 @@
 package com.hungteen.pvz.api.paz;
 
 import com.hungteen.pvz.api.types.IPlantType;
-import net.minecraft.nbt.CompoundNBT;
+import net.minecraft.nbt.CompoundTag;
 
 /**
  * used for info data, which owned by both inner plants and outer plants.
@@ -11,12 +11,12 @@ public interface IPlantInfo {
     /**
      * read data from entity nbt.
      */
-    void read(CompoundNBT nbt);
+    void read(CompoundTag nbt);
 
     /**
      * write data to entity nbt.
      */
-    void write(CompoundNBT nbt);
+    void write(CompoundTag nbt);
 
     /**
      * place it on plantEntity.

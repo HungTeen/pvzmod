@@ -4,12 +4,12 @@ import com.google.common.collect.Maps;
 import com.hungteen.pvz.PVZMod;
 import com.hungteen.pvz.api.raid.IChallengeComponent;
 import com.hungteen.pvz.utils.ConfigUtil;
-import net.minecraft.nbt.CompoundNBT;
+import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.ListNBT;
-import net.minecraft.util.ResourceLocation;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.world.World;
-import net.minecraft.world.server.ServerWorld;
+import net.minecraft.server.level.ServerLevel;
+import net.minecraft.util.Mth;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.level.Level;
 import net.minecraft.world.storage.WorldSavedData;
 
 import java.util.Iterator;
@@ -22,18 +22,18 @@ public class PVZChallengeData extends WorldSavedData {
 
 	private static final String DATA_NAME = "ChallengeData";
 	private final Map<Integer, Challenge> challengeMap = Maps.newHashMap();
-	private final ServerWorld world;
+	private final ServerLevel world;
 	private int currentChallengeId = 1;
 	private int tick = 0;
 
-	public PVZChallengeData(ServerWorld world) {
+	public PVZChallengeData(ServerLevel world) {
 		super(DATA_NAME);
 		this.world = world;
 	}
 
 	/**
 	 * tick all raid in running.
-	 * {@link ChallengeManager#tickChallenges(World)}
+	 * {@link ChallengeManager#tickChallenges(Level)}
 	 */
 	public void tick() {
 		Iterator<Challenge> iterator = this.challengeMap.values().iterator();
@@ -57,7 +57,7 @@ public class PVZChallengeData extends WorldSavedData {
 		}
 	}
 	
-	public Optional<Challenge> createChallenge(ServerWorld world, ResourceLocation res, BlockPos pos) {
+	public Optional<Challenge> createChallenge(ServerLevel world, ResourceLocation res, Mth pos) {
 		final int id = this.getUniqueId();
 		IChallengeComponent tmp = ChallengeManager.getChallengeByResource(res);
 		if(tmp != null && tmp.isSuitableDimension(world.dimension())){
@@ -84,25 +84,25 @@ public class PVZChallengeData extends WorldSavedData {
 	}
 
 	@Override
-	public void load(CompoundNBT nbt) {
+	public void load(CompoundTag nbt) {
 		if (nbt.contains("current_id")) {
 			this.currentChallengeId = nbt.getInt("current_id");
 		}
 		final ListNBT raidList = nbt.getList("challenges", 10);
 		for (int i = 0; i < raidList.size(); ++i) {
-			final CompoundNBT tmp = raidList.getCompound(i);
+			final CompoundTag tmp = raidList.getCompound(i);
 			final Challenge raid = new Challenge(world, tmp);
 			this.challengeMap.put(raid.getId(), raid);
 		}
 	}
 
 	@Override
-	public CompoundNBT save(CompoundNBT nbt) {
+	public CompoundTag save(CompoundTag nbt) {
 		nbt.putInt("current_id", this.currentChallengeId);
 
 		final ListNBT raidList = new ListNBT();
 		for (Challenge raid : this.challengeMap.values()) {
-			final CompoundNBT tmp = new CompoundNBT();
+			final CompoundTag tmp = new CompoundTag();
 			raid.save(tmp);
 			raidList.add(tmp);
 		}
@@ -111,11 +111,11 @@ public class PVZChallengeData extends WorldSavedData {
 		return nbt;
 	}
 
-	public static PVZChallengeData getInvasionData(World worldIn) {
-		if (!(worldIn instanceof ServerWorld)) {
+	public static PVZChallengeData getInvasionData(Level worldIn) {
+		if (!(worldIn instanceof ServerLevel)) {
 			throw new RuntimeException("Attempted to get the data from a client world. This is wrong.");
 		}
-		return ((ServerWorld) worldIn).getDataStorage().computeIfAbsent(() -> new PVZChallengeData((ServerWorld) worldIn), DATA_NAME);
+		return ((ServerLevel) worldIn).getDataStorage().computeIfAbsent(() -> new PVZChallengeData((ServerLevel) worldIn), DATA_NAME);
 	}
 
 }

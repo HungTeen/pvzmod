@@ -6,7 +6,7 @@ import com.mojang.blaze3d.matrix.MatrixStack;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.client.gui.widget.Widget;
-import net.minecraft.util.text.ITextComponent;
+import net.minecraft.network.chat.Component;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 
@@ -47,8 +47,8 @@ public class OptionWidget extends Widget {
 		return this.screen.isOptionUnLocked(option);
 	}
 
-	public List<ITextComponent> getToolTipText(Screen screen) {
-		List<ITextComponent> list = new ArrayList<>();
+	public List<Component> getToolTipText(Screen screen) {
+		List<Component> list = new ArrayList<>();
 		list.add(option.getType().getText());
 		return list;
 	}

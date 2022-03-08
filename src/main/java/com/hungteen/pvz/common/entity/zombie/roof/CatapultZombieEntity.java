@@ -16,24 +16,24 @@ import com.hungteen.pvz.utils.EntityUtil;
 import com.hungteen.pvz.utils.ZombieUtil;
 import com.hungteen.pvz.utils.interfaces.IPult;
 
-import net.minecraft.entity.CreatureEntity;
-import net.minecraft.entity.EntitySize;
-import net.minecraft.entity.EntityType;
-import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.Pose;
-import net.minecraft.entity.ai.attributes.Attributes;
-import net.minecraft.nbt.CompoundNBT;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.world.entity.CreatureEntity;
+import net.minecraft.world.entity.EntitySize;
+import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.Pose;
+import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.network.datasync.DataParameter;
 import net.minecraft.network.datasync.DataSerializers;
 import net.minecraft.network.datasync.EntityDataManager;
-import net.minecraft.world.World;
+import net.minecraft.world.level.Level;
 
 public class CatapultZombieEntity extends CarZombieEntity implements IPult,IHasWheel {
 
 	private static final DataParameter<Integer> BALL_COUNT = EntityDataManager.defineId(CatapultZombieEntity.class, DataSerializers.INT);
 	private static final float PULT_DISTANCE = 2000;
 	
-	public CatapultZombieEntity(EntityType<? extends CreatureEntity> type, World worldIn) {
+	public CatapultZombieEntity(EntityType<? extends CreatureEntity> type, Level worldIn) {
 		super(type, worldIn);
 	}
 	
@@ -140,7 +140,7 @@ public class CatapultZombieEntity extends CarZombieEntity implements IPult,IHasW
 	}
     
     @Override
-    public void readAdditionalSaveData(CompoundNBT compound) {
+    public void readAdditionalSaveData(CompoundTag compound) {
     	super.readAdditionalSaveData(compound);
     	if(compound.contains("ball_count")) {
     		this.setBallCount(compound.getInt("ball_count"));
@@ -148,7 +148,7 @@ public class CatapultZombieEntity extends CarZombieEntity implements IPult,IHasW
     }
     
     @Override
-    public void addAdditionalSaveData(CompoundNBT compound) {
+    public void addAdditionalSaveData(CompoundTag compound) {
     	super.addAdditionalSaveData(compound);
     	compound.putInt("ball_count", this.getBallCount());
     }

@@ -6,7 +6,7 @@ import com.hungteen.pvz.common.entity.misc.DuckyTubeEntity;
 import com.hungteen.pvz.utils.StringUtil;
 
 import net.minecraft.client.renderer.entity.EntityRendererManager;
-import net.minecraft.util.ResourceLocation;
+import net.minecraft.resources.ResourceLocation;
 
 public class DuckyTubeRender extends PVZZombieToolRender<DuckyTubeEntity>{
 

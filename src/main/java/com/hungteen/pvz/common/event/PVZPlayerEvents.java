@@ -13,7 +13,7 @@ import com.hungteen.pvz.common.world.invasion.InvasionManager;
 import com.hungteen.pvz.compat.CompatUtil;
 import com.hungteen.pvz.utils.PlayerUtil;
 import com.hungteen.pvz.utils.enums.Resources;
-import net.minecraft.util.Hand;
+import net.minecraft.world.InteractionHand;
 import net.minecraftforge.event.TickEvent;
 import net.minecraftforge.event.entity.player.PlayerEvent;
 import net.minecraftforge.event.entity.player.PlayerInteractEvent;
@@ -85,7 +85,7 @@ public class PVZPlayerEvents {
 	@SubscribeEvent
 	public static void onPlayerInteractSpec(PlayerInteractEvent.EntityInteractSpecific ev) {
 		if(! ev.getWorld().isClientSide){
-			if(ev.getHand() == Hand.MAIN_HAND) {
+			if(ev.getHand() == InteractionHand.MAIN_HAND) {
 				PlayerEventHandler.quickRemoveByPlayer(ev.getPlayer(), ev.getTarget(), ev.getPlayer().getMainHandItem());
 				PlayerEventHandler.makeSuperMode(ev.getPlayer(), ev.getTarget(), ev.getPlayer().getMainHandItem());
 			}

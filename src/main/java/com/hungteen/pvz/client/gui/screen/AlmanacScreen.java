@@ -17,18 +17,18 @@ import com.mojang.datafixers.util.Pair;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.IRenderTypeBuffer;
 import net.minecraft.client.renderer.entity.EntityRendererManager;
-import net.minecraft.entity.CreatureEntity;
-import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.player.PlayerInventory;
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemStack;
-import net.minecraft.util.ResourceLocation;
+import net.minecraft.network.chat.TranslatableComponent;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.entity.CreatureEntity;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.player.PlayerInventory;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ItemStack;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.vector.Quaternion;
 import net.minecraft.util.math.vector.Vector3f;
-import net.minecraft.util.text.ITextComponent;
-import net.minecraft.util.text.TextFormatting;
-import net.minecraft.util.text.TranslationTextComponent;
+import net.minecraft.network.chat.Component;
+import net.minecraft.ChatFormatting;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 
@@ -46,7 +46,7 @@ public class AlmanacScreen extends AbstractOptionScreen<AlmanacContainer> {
 	private CreatureEntity renderEntity;
 	private int currentPos = 0;
 	
-	public AlmanacScreen(AlmanacContainer screenContainer, PlayerInventory inv, ITextComponent titleIn) {
+	public AlmanacScreen(AlmanacContainer screenContainer, PlayerInventory inv, Component titleIn) {
 		super(screenContainer, inv, titleIn);
 		this.imageWidth = 150;
 		this.imageHeight = 200;
@@ -172,21 +172,21 @@ public class AlmanacScreen extends AbstractOptionScreen<AlmanacContainer> {
 				if(this.option.getType() instanceof IPlantType){
 					Item item = ((IPlantType) this.option.getType()).getEssence().getEssenceItem();
 					this.minecraft.screen.renderComponentTooltip(stack, Arrays.asList(
-							new TranslationTextComponent("item.pvz." + item.getRegistryName().getPath())
+							new TranslatableComponent("item.pvz." + item.getRegistryName().getPath())
 					), mouseX, mouseY);
 				}
 			}
 			posX += len;
 			if(MathUtil.isInArea(mouseX, mouseY, posX, posY, 16, 16)){
 				this.minecraft.screen.renderComponentTooltip(stack, Arrays.asList(
-						new TranslationTextComponent("item.pvz." + this.option.getType().getRank().getTemplateCard().getRegistryName().getPath())
+						new TranslatableComponent("item.pvz." + this.option.getType().getRank().getTemplateCard().getRegistryName().getPath())
 				), mouseX, mouseY);
 			}
 			posX += len;
 			if(MathUtil.isInArea(mouseX, mouseY, posX, posY, 16, 16)){
-				List<ITextComponent> list = new ArrayList<>();
+				List<Component> list = new ArrayList<>();
 				this.option.getType().getSkills().forEach(skill -> {
-					list.add(skill.getText().withStyle(TextFormatting.GREEN));
+					list.add(skill.getText().withStyle(ChatFormatting.GREEN));
 				});
 				if(list.isEmpty()) {
 //					list.add(new TranslationTextComponent("gui.))

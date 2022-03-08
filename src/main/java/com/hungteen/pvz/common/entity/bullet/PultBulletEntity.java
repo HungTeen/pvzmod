@@ -4,16 +4,16 @@ import com.hungteen.pvz.PVZMod;
 import com.hungteen.pvz.api.interfaces.ICanPushBack;
 import com.hungteen.pvz.utils.EntityUtil;
 import com.hungteen.pvz.utils.MathUtil;
-import net.minecraft.entity.Entity;
-import net.minecraft.entity.EntityType;
-import net.minecraft.entity.LivingEntity;
-import net.minecraft.nbt.CompoundNBT;
-import net.minecraft.util.math.BlockPos;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.util.Mth;
 import net.minecraft.util.math.EntityRayTraceResult;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.RayTraceResult;
 import net.minecraft.util.math.vector.Vector3d;
-import net.minecraft.world.World;
+import net.minecraft.world.level.Level;
 
 import java.util.Optional;
 
@@ -21,17 +21,17 @@ public abstract class PultBulletEntity extends AbstractBulletEntity implements I
 
 	protected int targetChance = 5;
 	protected Optional<LivingEntity> lockTarget = Optional.empty();
-	protected Optional<BlockPos> lockPos = Optional.empty();
+	protected Optional<Mth> lockPos = Optional.empty();
 	protected float height = 12;
 	protected boolean isPushBack = false;
 	
-	public PultBulletEntity(EntityType<?> type, World worldIn) {
+	public PultBulletEntity(EntityType<?> type, Level worldIn) {
 		super(type, worldIn);
 		this.setNoGravity(false);
 		this.airSlowDown = 1F;
 	}
 	
-	public PultBulletEntity(EntityType<?> type, World worldIn, LivingEntity shooter) {
+	public PultBulletEntity(EntityType<?> type, Level worldIn, LivingEntity shooter) {
 		super(type, worldIn, shooter);
 		this.setNoGravity(false);
 		this.airSlowDown = 1F;
@@ -131,7 +131,7 @@ public abstract class PultBulletEntity extends AbstractBulletEntity implements I
     /**
      * Pult shoot
      */
-    public void shootPultBullet(BlockPos pos) {
+    public void shootPultBullet(Mth pos) {
     	if(pos == null) {
     		PVZMod.LOGGER.warn("No pult target at all !");
     		return ;
@@ -161,7 +161,7 @@ public abstract class PultBulletEntity extends AbstractBulletEntity implements I
 	}
 	
 	@Override
-	public void readAdditionalSaveData(CompoundNBT compound) {
+	public void readAdditionalSaveData(CompoundTag compound) {
 		super.readAdditionalSaveData(compound);
 		if(compound.contains("target_entity_id")) {
 			this.lockTarget = Optional.ofNullable((LivingEntity) level.getEntity(compound.getInt("target_entity_id")));
@@ -172,7 +172,7 @@ public abstract class PultBulletEntity extends AbstractBulletEntity implements I
 	}
 	
 	@Override
-	public void addAdditionalSaveData(CompoundNBT compound) {
+	public void addAdditionalSaveData(CompoundTag compound) {
 		super.addAdditionalSaveData(compound);
 		if(this.lockTarget.isPresent()) {
 			compound.putInt("target_entity_id", this.lockTarget.get().getId());

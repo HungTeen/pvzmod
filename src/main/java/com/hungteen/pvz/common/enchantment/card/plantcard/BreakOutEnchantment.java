@@ -7,7 +7,7 @@ import com.hungteen.pvz.common.entity.plant.PVZPlantEntity;
 
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.inventory.EquipmentSlotType;
-import net.minecraft.item.ItemStack;
+import net.minecraft.world.item.ItemStack;
 
 public class BreakOutEnchantment extends PVZEnchantment{
 

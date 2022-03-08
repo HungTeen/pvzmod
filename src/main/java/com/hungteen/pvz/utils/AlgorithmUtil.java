@@ -4,7 +4,7 @@ import java.util.Comparator;
 
 import com.mojang.datafixers.util.Pair;
 
-import net.minecraft.entity.Entity;
+import net.minecraft.world.entity.Entity;
 
 public class AlgorithmUtil {
 

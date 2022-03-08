@@ -5,23 +5,23 @@ import com.hungteen.pvz.common.misc.sound.SoundRegister;
 import com.hungteen.pvz.utils.PlayerUtil;
 import com.hungteen.pvz.utils.enums.Resources;
 
-import net.minecraft.entity.EntityType;
-import net.minecraft.entity.MobEntity;
-import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.MobEntity;
+import net.minecraft.world.entity.player.Player;
 import net.minecraft.util.math.vector.Vector3d;
-import net.minecraft.world.World;
+import net.minecraft.world.level.Level;
 
 public class EnergyEntity extends DropEntity{
 
 	private int changeVTime = 50;
-	public EnergyEntity(EntityType<? extends MobEntity> type, World worldIn) {
+	public EnergyEntity(EntityType<? extends MobEntity> type, Level worldIn) {
 		super(type, worldIn);
 		this.setAmount(1);//always 1
 		this.setNoGravity(true);
 	}
 
 	@Override
-	public void onCollectedByPlayer(PlayerEntity player) {
+	public void onCollectedByPlayer(Player player) {
 		if(! this.level.isClientSide) {
 			PlayerUtil.addResource(player, Resources.ENERGY_NUM, this.getAmount());
 			PlayerUtil.playClientSound(player, SoundRegister.JEWEL_PICK.get());

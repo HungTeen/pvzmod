@@ -5,14 +5,14 @@ import com.hungteen.pvz.common.block.BlockRegister;
 import com.hungteen.pvz.common.item.ItemRegister;
 import com.hungteen.pvz.utils.EntityUtil;
 import com.hungteen.pvz.utils.PlayerUtil;
-import net.minecraft.block.BlockState;
-import net.minecraft.block.Blocks;
-import net.minecraft.entity.item.ItemEntity;
-import net.minecraft.entity.monster.EndermanEntity;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.item.ItemStack;
+import net.minecraft.world.level.block.BlockState;
+import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.entity.item.ItemEntity;
+import net.minecraft.world.entity.monster.EndermanEntity;
+import net.minecraft.util.Mth;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.ItemStack;
 import net.minecraft.util.math.AxisAlignedBB;
-import net.minecraft.util.math.BlockPos;
 import net.minecraftforge.event.world.BlockEvent;
 
 public class BlockEventHandler {
@@ -33,9 +33,9 @@ public class BlockEventHandler {
 	}
 
 	public static void checkAndDropSeeds(BlockEvent.BreakEvent ev) {
-		PlayerEntity player = ev.getPlayer();
+		Player player = ev.getPlayer();
 		BlockState state = ev.getState();
-		BlockPos pos = ev.getPos();
+		Mth pos = ev.getPos();
 		if(! player.level.isClientSide) {
 			if(state.getBlock() == Blocks.GRASS || state.getBlock() == Blocks.TALL_GRASS) {//break grass
 				if(player.getRandom().nextDouble() < PVZConfig.COMMON_CONFIG.BlockSettings.PeaDropChance.get()) {

@@ -10,14 +10,14 @@ import com.hungteen.pvz.common.impl.zombie.ZombieType;
 import com.hungteen.pvz.utils.EntityUtil;
 import com.hungteen.pvz.utils.ZombieUtil;
 import com.hungteen.pvz.utils.interfaces.IHasMultiPart;
-import net.minecraft.entity.CreatureEntity;
-import net.minecraft.entity.EntitySize;
-import net.minecraft.entity.EntityType;
-import net.minecraft.entity.Pose;
-import net.minecraft.nbt.CompoundNBT;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.world.entity.CreatureEntity;
+import net.minecraft.world.entity.EntitySize;
+import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.Pose;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.math.vector.Vector3d;
-import net.minecraft.world.World;
+import net.minecraft.world.level.Level;
 
 public class BobsleTeamEntity extends PVZZombieEntity implements IHasMultiPart {
 
@@ -26,7 +26,7 @@ public class BobsleTeamEntity extends PVZZombieEntity implements IHasMultiPart {
 	private PVZZombiePartEntity[] parts = new PVZZombiePartEntity[PART_NUM];
 	private int outSnowTick;
 	
-	public BobsleTeamEntity(EntityType<? extends CreatureEntity> type, World worldIn) {
+	public BobsleTeamEntity(EntityType<? extends CreatureEntity> type, Level worldIn) {
 		super(type, worldIn);
 		this.setIsWholeBody();
 		this.resetParts();
@@ -157,7 +157,7 @@ public class BobsleTeamEntity extends PVZZombieEntity implements IHasMultiPart {
 	}
 
 	@Override
-	public void readAdditionalSaveData(CompoundNBT compound) {
+	public void readAdditionalSaveData(CompoundTag compound) {
 		super.readAdditionalSaveData(compound);
 		if(compound.contains("out_snow_tick")) {
 			this.outSnowTick = compound.getInt("out_snow_tick");
@@ -165,7 +165,7 @@ public class BobsleTeamEntity extends PVZZombieEntity implements IHasMultiPart {
 	}
 	
 	@Override
-	public void addAdditionalSaveData(CompoundNBT compound) {
+	public void addAdditionalSaveData(CompoundTag compound) {
 		super.addAdditionalSaveData(compound);
 		compound.putInt("out_snow_tick", this.outSnowTick);
 	}

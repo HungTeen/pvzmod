@@ -8,12 +8,12 @@ import net.minecraft.client.gui.screen.MainMenuScreen;
 import net.minecraft.client.renderer.RenderSkybox;
 import net.minecraft.client.renderer.RenderSkyboxCube;
 import net.minecraft.client.resources.I18n;
-import net.minecraft.util.ResourceLocation;
+import net.minecraft.network.chat.TranslatableComponent;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.SharedConstants;
 import net.minecraft.util.Util;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.vector.Vector3f;
-import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.client.ForgeHooksClient;
@@ -61,7 +61,7 @@ public class PVZMainMenuScreen extends MainMenuScreen {
 		// tip render
 		if(! PVZPatchouliHandler.isPatchouliLoaded()) {
 			stack.pushPose();
-			String tip = new TranslationTextComponent("help.pvz.patchouli").getString();
+			String tip = new TranslatableComponent("help.pvz.patchouli").getString();
 			drawString(stack, this.font, tip, this.width - this.font.width(tip) - 2, this.height - 20, Colors.RED);
 			stack.popPose();
 //			stack.pushPose();

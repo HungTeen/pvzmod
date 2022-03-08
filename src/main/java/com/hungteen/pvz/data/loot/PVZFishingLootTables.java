@@ -5,7 +5,7 @@ import java.util.function.Consumer;
 
 import net.minecraft.loot.LootTable;
 import net.minecraft.loot.LootTable.Builder;
-import net.minecraft.util.ResourceLocation;
+import net.minecraft.resources.ResourceLocation;
 
 public class PVZFishingLootTables implements Consumer<BiConsumer<ResourceLocation, LootTable.Builder>> {
 

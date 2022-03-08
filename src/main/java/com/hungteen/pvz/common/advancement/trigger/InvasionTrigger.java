@@ -6,9 +6,9 @@ import com.hungteen.pvz.utils.StringUtil;
 import net.minecraft.advancements.criterion.AbstractCriterionTrigger;
 import net.minecraft.advancements.criterion.CriterionInstance;
 import net.minecraft.advancements.criterion.EntityPredicate.AndPredicate;
-import net.minecraft.entity.player.ServerPlayerEntity;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.loot.ConditionArrayParser;
-import net.minecraft.util.ResourceLocation;
 
 public class InvasionTrigger extends AbstractCriterionTrigger<InvasionTrigger.Instance> {
 
@@ -27,7 +27,7 @@ public class InvasionTrigger extends AbstractCriterionTrigger<InvasionTrigger.In
         return new Instance(player);
     }
 
-    public void trigger(ServerPlayerEntity player) {
+    public void trigger(ServerPlayer player) {
         this.trigger(player, (instance) -> {
             return instance.test(player);
         });
@@ -39,7 +39,7 @@ public class InvasionTrigger extends AbstractCriterionTrigger<InvasionTrigger.In
             super(ID, player);
         }
 
-        public boolean test(ServerPlayerEntity player) {
+        public boolean test(ServerPlayer player) {
             return true;
         }
 

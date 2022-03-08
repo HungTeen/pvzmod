@@ -5,8 +5,8 @@ import java.util.stream.Collectors;
 
 import com.hungteen.pvz.utils.EntityUtil;
 
-import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.MobEntity;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.MobEntity;
 
 public class PVZRandomTargetGoal extends PVZTargetGoal {
 

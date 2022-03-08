@@ -7,10 +7,10 @@ import com.hungteen.pvz.common.container.PeaGunContainer;
 import com.hungteen.pvz.utils.StringUtil;
 import com.mojang.blaze3d.matrix.MatrixStack;
 
-import net.minecraft.entity.player.PlayerInventory;
-import net.minecraft.util.ResourceLocation;
-import net.minecraft.util.text.ITextComponent;
-import net.minecraft.util.text.TranslationTextComponent;
+import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.TranslatableComponent;
+import net.minecraft.world.entity.player.PlayerInventory;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 
@@ -19,13 +19,13 @@ public class PeaGunScreen extends PVZContainerScreen<PeaGunContainer>{
 	
 	private static final ResourceLocation TEXTURE = StringUtil.prefix("textures/gui/container/pea_gun.png");
 	
-	public PeaGunScreen(PeaGunContainer screenContainer, PlayerInventory inv, ITextComponent titleIn) {
+	public PeaGunScreen(PeaGunContainer screenContainer, PlayerInventory inv, Component titleIn) {
 		super(screenContainer, inv, titleIn);
 		this.imageWidth = 176;
 		this.imageHeight = 187;
 		this.tips.add(new TipField(2, 2, Arrays.asList(
-			new TranslationTextComponent("gui.pvz.pea_gun.tip1"),
-			new TranslationTextComponent("gui.pvz.pea_gun.tip2")
+			new TranslatableComponent("gui.pvz.pea_gun.tip1"),
+			new TranslatableComponent("gui.pvz.pea_gun.tip2")
 		)));
 	}
 

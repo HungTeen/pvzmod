@@ -9,14 +9,14 @@ import com.hungteen.pvz.common.entity.EntityRegister;
 import com.hungteen.pvz.common.world.structure.StructureRegister;
 import com.hungteen.pvz.utils.StringUtil;
 
-import net.minecraft.block.Blocks;
-import net.minecraft.entity.EntityType;
-import net.minecraft.nbt.CompoundNBT;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.entity.EntityType;
+import net.minecraft.nbt.CompoundTag;
 import net.minecraft.tileentity.MobSpawnerTileEntity;
 import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.Rotation;
-import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.Mth;
 import net.minecraft.util.math.ChunkPos;
 import net.minecraft.util.math.MutableBoundingBox;
 import net.minecraft.world.ISeedReader;
@@ -32,7 +32,7 @@ public class BucketHouseComponents {
 
 	public static final ResourceLocation res1 = StringUtil.prefix("zombie_house/bucket_house");
 	
-	public static void generate(TemplateManager manager, BlockPos pos1, Rotation rotation, List<StructurePiece> list, Random rand) {
+	public static void generate(TemplateManager manager, Mth pos1, Rotation rotation, List<StructurePiece> list, Random rand) {
 	      list.add(new BucketHouseComponent(manager, res1, pos1, rotation));
     }
 	
@@ -40,18 +40,18 @@ public class BucketHouseComponents {
 
 		private static final IStructurePieceType type = StructureRegister.BUCKET_HOUSE_PIECE;
 		
-		public BucketHouseComponent(TemplateManager manager, CompoundNBT nbt) {
+		public BucketHouseComponent(TemplateManager manager, CompoundTag nbt) {
 			super(type, manager, nbt);
 		}
 
-		public BucketHouseComponent(TemplateManager manager, ResourceLocation res,BlockPos pos, Rotation rotation) {
+		public BucketHouseComponent(TemplateManager manager, ResourceLocation res, Mth pos, Rotation rotation) {
 			super(type, manager, res, pos, rotation);
 		}
 		
 		@Override
 		public boolean postProcess(ISeedReader worldIn, StructureManager p_230383_2_, ChunkGenerator chunkGeneratorIn, Random randomIn,
-				MutableBoundingBox mutableBoundingBoxIn, ChunkPos chunkPosIn, BlockPos blockPos) {
-			BlockPos mid = BlockPos.ZERO;
+				MutableBoundingBox mutableBoundingBoxIn, ChunkPos chunkPosIn, Mth blockPos) {
+			Mth mid = Mth.ZERO;
 			int dx = 6, dz = 5;
 			switch(rotation) {
 			case CLOCKWISE_90:{mid = this.templatePosition.offset(-dz, 0, dx); break;}
@@ -60,13 +60,13 @@ public class BucketHouseComponents {
 			default:{mid = this.templatePosition.offset(dx, 0, dz); break;}
 			}
 			int height = chunkGeneratorIn.getFirstOccupiedHeight(mid.getX(), mid.getZ(), Heightmap.Type.WORLD_SURFACE_WG);
-			this.templatePosition = new BlockPos(this.templatePosition.getX(), height + 1, this.templatePosition.getZ());
+			this.templatePosition = new Mth(this.templatePosition.getX(), height + 1, this.templatePosition.getZ());
 			return super.postProcess(worldIn, p_230383_2_, chunkGeneratorIn, randomIn, mutableBoundingBoxIn, chunkPosIn, blockPos);
 		}
 		
         @Override
-		protected void handleDataMarker(String function, BlockPos pos, IServerWorld worldIn, Random rand,
-				MutableBoundingBox sbb) {
+		protected void handleDataMarker(String function, Mth pos, IServerWorld worldIn, Random rand,
+                                        MutableBoundingBox sbb) {
 			if(function.equals("bonus_chest1")){
 				this.createChest(worldIn, sbb, rand, pos, PVZLoot.BUCKET_HOUSE_CHEST, null);
 			} else if(function.equals("bonus_chest2")) {

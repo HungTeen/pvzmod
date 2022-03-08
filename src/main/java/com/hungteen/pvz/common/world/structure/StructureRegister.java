@@ -24,7 +24,7 @@ import net.minecraft.world.gen.feature.structure.IStructurePieceType;
 import net.minecraft.world.gen.feature.structure.Structure;
 import net.minecraft.world.gen.settings.DimensionStructuresSettings;
 import net.minecraft.world.gen.settings.StructureSeparationSettings;
-import net.minecraft.world.server.ServerWorld;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraftforge.event.world.BiomeLoadingEvent;
 import net.minecraftforge.fml.RegistryObject;
 import net.minecraftforge.registries.DeferredRegister;
@@ -142,7 +142,7 @@ public class StructureRegister {
 	/**
 	 * used in genStructure
 	 */
-	public static void addStructuresToMap(ServerWorld server, Map<Structure<?>, StructureSeparationSettings> tempMap) {
+	public static void addStructuresToMap(ServerLevel server, Map<Structure<?>, StructureSeparationSettings> tempMap) {
 		Arrays.asList(
 				StructureRegister.BUCKET_HOUSE, StructureRegister.DOLPHIN_HOUSE, StructureRegister.GRAVE_HOUSE, StructureRegister.YETI_HOUSE,
 				StructureRegister.DAVE_VILLA, StructureRegister.SUN_TEMPLE

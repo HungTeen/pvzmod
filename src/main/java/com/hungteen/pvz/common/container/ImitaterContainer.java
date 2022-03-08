@@ -4,19 +4,19 @@ import com.hungteen.pvz.PVZMod;
 import com.hungteen.pvz.common.item.ItemRegister;
 import com.hungteen.pvz.common.item.spawn.card.ImitaterCardItem;
 
-import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.world.entity.player.Player;
 import net.minecraft.inventory.Inventory;
 import net.minecraft.inventory.container.Container;
 import net.minecraft.inventory.container.Slot;
-import net.minecraft.item.ItemStack;
+import net.minecraft.world.item.ItemStack;
 
 public class ImitaterContainer extends Container {
 
 	private Inventory backpack;
-	private final PlayerEntity player;
+	private final Player player;
 	private final ItemStack stack;
 	
-	public ImitaterContainer(int id, PlayerEntity player) {
+	public ImitaterContainer(int id, Player player) {
 		super(ContainerRegister.IMITATER.get(), id);
 		this.player = player;
 		this.stack = this.player.getOffhandItem();
@@ -42,7 +42,7 @@ public class ImitaterContainer extends Container {
 	}
 
 	@Override
-	public ItemStack quickMoveStack(PlayerEntity playerIn, int index) {
+	public ItemStack quickMoveStack(Player playerIn, int index) {
 		ItemStack itemstack = ItemStack.EMPTY;
 		Slot slot = this.slots.get(index);
 		if (slot != null && slot.hasItem()) {
@@ -72,7 +72,7 @@ public class ImitaterContainer extends Container {
 	}
 	
 	@Override
-	public boolean stillValid(PlayerEntity playerIn) {
+	public boolean stillValid(Player playerIn) {
 		if(playerIn.getOffhandItem().getItem() != ItemRegister.IMITATER_CARD.get()) {
 			return false;
 		}

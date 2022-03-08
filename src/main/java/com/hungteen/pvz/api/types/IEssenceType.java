@@ -1,9 +1,9 @@
 package com.hungteen.pvz.api.types;
 
 import com.hungteen.pvz.common.block.cubes.OriginBlock;
-import net.minecraft.block.Block;
-import net.minecraft.item.Item;
-import net.minecraft.tags.ITag;
+import net.minecraft.tags.TagKey;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.item.Item;
 
 import java.util.Optional;
 
@@ -15,7 +15,7 @@ public interface IEssenceType {
 	/**
 	 * tags contain blocks which can interact with {@link OriginBlock} to be radiated.
 	 */
-	Optional<ITag.INamedTag<Block>> getRadiationBlockTag();
+	Optional<TagKey<Block>> getRadiationBlockTag();
 
 	/**
 	 * corresponding block that can be radiated to essence ore.<br>

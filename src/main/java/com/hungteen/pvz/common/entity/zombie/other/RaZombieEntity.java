@@ -9,14 +9,14 @@ import com.hungteen.pvz.common.misc.PVZLoot;
 import com.hungteen.pvz.utils.EntityUtil;
 import com.hungteen.pvz.utils.MathUtil;
 import com.hungteen.pvz.utils.ZombieUtil;
-import net.minecraft.entity.CreatureEntity;
-import net.minecraft.entity.EntityType;
-import net.minecraft.entity.ai.attributes.Attributes;
-import net.minecraft.nbt.CompoundNBT;
-import net.minecraft.util.ResourceLocation;
-import net.minecraft.util.SoundEvents;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.entity.CreatureEntity;
+import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.ai.attributes.Attributes;
+import net.minecraft.sounds.SoundEvents;
 import net.minecraft.util.math.vector.Vector3d;
-import net.minecraft.world.World;
+import net.minecraft.world.level.Level;
 
 import java.util.HashSet;
 import java.util.Set;
@@ -31,7 +31,7 @@ public class RaZombieEntity extends PVZZombieEntity {
 	private int sunAmount = 0;
 	private final double MaxSearchRange = 20;
 
-	public RaZombieEntity(EntityType<? extends CreatureEntity> type, World worldIn) {
+	public RaZombieEntity(EntityType<? extends CreatureEntity> type, Level worldIn) {
 		super(type, worldIn);
 	}
 
@@ -121,7 +121,7 @@ public class RaZombieEntity extends PVZZombieEntity {
 	}
 	
 	@Override
-	public void readAdditionalSaveData(CompoundNBT compound) {
+	public void readAdditionalSaveData(CompoundTag compound) {
 		super.readAdditionalSaveData(compound);
 		if(compound.contains("zombie_search_tick")) {
 			this.searchTick = compound.getInt("zombie_search_tick");
@@ -132,7 +132,7 @@ public class RaZombieEntity extends PVZZombieEntity {
 	}
 	
 	@Override
-	public void addAdditionalSaveData(CompoundNBT compound) {
+	public void addAdditionalSaveData(CompoundTag compound) {
 		super.addAdditionalSaveData(compound);
 		compound.putInt("zombie_search_tick", this.searchTick);
 		compound.putInt("zombie_sun_amount", this.sunAmount);

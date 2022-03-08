@@ -9,11 +9,11 @@ import com.hungteen.pvz.common.impl.plant.PVZPlants;
 import com.hungteen.pvz.common.misc.sound.SoundRegister;
 import com.hungteen.pvz.utils.EntityUtil;
 import net.minecraft.command.arguments.EntityAnchorArgument.Type;
-import net.minecraft.entity.CreatureEntity;
-import net.minecraft.entity.EntitySize;
-import net.minecraft.entity.EntityType;
-import net.minecraft.entity.Pose;
-import net.minecraft.world.World;
+import net.minecraft.world.entity.CreatureEntity;
+import net.minecraft.world.entity.EntitySize;
+import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.Pose;
+import net.minecraft.world.level.Level;
 
 public class StarFruitEntity extends PlantShooterEntity {
 
@@ -21,7 +21,7 @@ public class StarFruitEntity extends PlantShooterEntity {
 	private static final float SHOOT_HEIGHT = 0.2F;
 	public int lightTick = 0;
 	
-	public StarFruitEntity(EntityType<? extends CreatureEntity> type, World worldIn) {
+	public StarFruitEntity(EntityType<? extends CreatureEntity> type, Level worldIn) {
 		super(type, worldIn);
 	}
 	

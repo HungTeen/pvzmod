@@ -5,8 +5,8 @@ import com.hungteen.pvz.common.entity.plant.light.PlanternEntity;
 import com.hungteen.pvz.utils.StringUtil;
 
 import net.minecraft.client.renderer.entity.IEntityRenderer;
-import net.minecraft.client.renderer.entity.model.EntityModel;
-import net.minecraft.util.ResourceLocation;
+import net.minecraft.client.model.EntityModel;
+import net.minecraft.resources.ResourceLocation;
 
 public class PlanternLayerRender extends PVZFullSkinLayer<PlanternEntity, EntityModel<PlanternEntity>>{
 

@@ -2,18 +2,18 @@ package com.hungteen.pvz.common.container;
 
 import com.hungteen.pvz.common.tileentity.SlotMachineTileEntity;
 
-import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.util.Mth;
+import net.minecraft.world.entity.player.Player;
 import net.minecraft.inventory.container.Container;
 import net.minecraft.inventory.container.Slot;
-import net.minecraft.item.ItemStack;
-import net.minecraft.util.math.BlockPos;
+import net.minecraft.world.item.ItemStack;
 
 public class SlotMachineContainer extends Container {
 
 	public final SlotMachineTileEntity te;
-	public final PlayerEntity player;
+	public final Player player;
 	
-	public SlotMachineContainer(int id, PlayerEntity player, BlockPos pos) {
+	public SlotMachineContainer(int id, Player player, Mth pos) {
 		super(ContainerRegister.SLOT_MACHINE.get(), id);
 		this.player = player;
 		this.te = (SlotMachineTileEntity) player.level.getBlockEntity(pos);
@@ -34,7 +34,7 @@ public class SlotMachineContainer extends Container {
 	}
 
 	@Override
-    public ItemStack quickMoveStack(PlayerEntity playerIn, int index) {
+    public ItemStack quickMoveStack(Player playerIn, int index) {
 		ItemStack itemstack = ItemStack.EMPTY;
 		Slot slot = this.slots.get(index);
 //		if (slot != null && slot.hasItem()) {
@@ -64,7 +64,7 @@ public class SlotMachineContainer extends Container {
     }
 	
 	@Override
-	public boolean stillValid(PlayerEntity playerIn) {
+	public boolean stillValid(Player playerIn) {
 		return this.te.isUsableByPlayer(playerIn);
 	}
 

@@ -9,9 +9,9 @@ import net.minecraft.command.CommandSource;
 import net.minecraft.command.Commands;
 import net.minecraft.command.arguments.EntityArgument;
 import net.minecraft.command.arguments.ResourceLocationArgument;
-import net.minecraft.entity.player.ServerPlayerEntity;
-import net.minecraft.util.ResourceLocation;
-import net.minecraft.util.text.TranslationTextComponent;
+import net.minecraft.network.chat.TranslatableComponent;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.server.level.ServerPlayer;
 
 import java.util.Collection;
 
@@ -90,9 +90,9 @@ public class InvasionCommand {
 //		return targets.size();
 //	}
 
-	private static int setWaveTime(CommandSource source, Collection<? extends ServerPlayerEntity> targets, int waveNum, int time) {
+	private static int setWaveTime(CommandSource source, Collection<? extends ServerPlayer> targets, int waveNum, int time) {
 		if(waveNum < 0 || waveNum >= InvasionManager.MAX_WAVE_NUM) {
-			source.sendFailure(new TranslationTextComponent("command.pvz.invasion.out_of_bound"));
+			source.sendFailure(new TranslatableComponent("command.pvz.invasion.out_of_bound"));
 		} else{
 			targets.forEach(player -> {
 				PlayerUtil.getOptManager(player).ifPresent(l -> l.getInvasion().setWaveTime(waveNum, time));
@@ -101,9 +101,9 @@ public class InvasionCommand {
 		return targets.size();
 	}
 
-	private static int setTriggered(CommandSource source, Collection<? extends ServerPlayerEntity> targets, int waveNum, boolean flag) {
+	private static int setTriggered(CommandSource source, Collection<? extends ServerPlayer> targets, int waveNum, boolean flag) {
 		if(waveNum < 0 || waveNum >= InvasionManager.MAX_WAVE_NUM) {
-			source.sendFailure(new TranslationTextComponent("command.pvz.invasion.out_of_bound"));
+			source.sendFailure(new TranslatableComponent("command.pvz.invasion.out_of_bound"));
 		} else{
 			targets.forEach(player -> {
 				PlayerUtil.getOptManager(player).ifPresent(l -> l.getInvasion().setWaveTriggered(waveNum, flag));
@@ -112,58 +112,58 @@ public class InvasionCommand {
 		return targets.size();
 	}
 
-	public static int setInvasionEvent(CommandSource source, Collection<? extends ServerPlayerEntity> targets, ResourceLocation res) {
+	public static int setInvasionEvent(CommandSource source, Collection<? extends ServerPlayer> targets, ResourceLocation res) {
 		InvasionType type = InvasionManager.getInvasion(res);
 		if(type != null){
 			if(! type.isAssistInvasion()){
 				targets.forEach(serverPlayerEntity -> PlayerUtil.getInvasion(serverPlayerEntity).setSpawnInvasion(res));
-				source.sendSuccess(new TranslationTextComponent("command.pvz.invasion.set", res.toString()), true);
+				source.sendSuccess(new TranslatableComponent("command.pvz.invasion.set", res.toString()), true);
 			} else{
-				source.sendFailure(new TranslationTextComponent("command.pvz.invasion.assist", res.toString()));
+				source.sendFailure(new TranslatableComponent("command.pvz.invasion.assist", res.toString()));
 			}
 		} else{
-			source.sendFailure(new TranslationTextComponent("command.pvz.invasion.invalid", res.toString()));
+			source.sendFailure(new TranslatableComponent("command.pvz.invasion.invalid", res.toString()));
 		}
 		return 0;
 	}
 
-	public static int addInvasionEvent(CommandSource source, Collection<? extends ServerPlayerEntity> targets, ResourceLocation res) {
+	public static int addInvasionEvent(CommandSource source, Collection<? extends ServerPlayer> targets, ResourceLocation res) {
 		InvasionType type = InvasionManager.getInvasion(res);
 		if(type != null){
 			if(type.isAssistInvasion()){
 				targets.forEach(serverPlayerEntity -> PlayerUtil.getInvasion(serverPlayerEntity).addAssistInvasion(res));
-				source.sendSuccess(new TranslationTextComponent("command.pvz.invasion.add", res.toString()), true);
+				source.sendSuccess(new TranslatableComponent("command.pvz.invasion.add", res.toString()), true);
 			} else{
-				source.sendFailure(new TranslationTextComponent("command.pvz.invasion.spawn", res.toString()));
+				source.sendFailure(new TranslatableComponent("command.pvz.invasion.spawn", res.toString()));
 			}
 		} else{
-			source.sendFailure(new TranslationTextComponent("command.pvz.invasion.invalid", res.toString()));
+			source.sendFailure(new TranslatableComponent("command.pvz.invasion.invalid", res.toString()));
 		}
 		return 0;
 	}
 
-	public static int removeInvasionEvent(CommandSource source, Collection<? extends ServerPlayerEntity> targets, ResourceLocation res) {
+	public static int removeInvasionEvent(CommandSource source, Collection<? extends ServerPlayer> targets, ResourceLocation res) {
 		InvasionType type = InvasionManager.getInvasion(res);
 		if(type != null){
 			if(type.isAssistInvasion()){
 				targets.forEach(serverPlayerEntity -> PlayerUtil.getInvasion(serverPlayerEntity).removeAssistInvasion(res));
-				source.sendSuccess(new TranslationTextComponent("command.pvz.invasion.remove", res.toString()), true);
+				source.sendSuccess(new TranslatableComponent("command.pvz.invasion.remove", res.toString()), true);
 			} else{
-				source.sendFailure(new TranslationTextComponent("command.pvz.invasion.spawn", res.toString()));
+				source.sendFailure(new TranslatableComponent("command.pvz.invasion.spawn", res.toString()));
 			}
 		} else{
-			source.sendFailure(new TranslationTextComponent("command.pvz.invasion.invalid", res.toString()));
+			source.sendFailure(new TranslatableComponent("command.pvz.invasion.invalid", res.toString()));
 		}
 		return 0;
 	}
 	
 	private static int stopInvasionEvent(CommandSource source) {
 		InvasionManager.deactivateInvasion(source.getLevel(), false);
-		source.sendSuccess(new TranslationTextComponent("command.pvz.invasion.clear"), true);
+		source.sendSuccess(new TranslatableComponent("command.pvz.invasion.clear"), true);
 		return 0;
 	}
 	
-	private static int showInvasionEvent(CommandSource source, Collection<? extends ServerPlayerEntity> targets) {
+	private static int showInvasionEvent(CommandSource source, Collection<? extends ServerPlayer> targets) {
 		targets.forEach(player -> {
 			PlayerUtil.getInvasion(player).getActiveInvasions().forEach(type -> {
 				source.sendSuccess(type.getText(), true);

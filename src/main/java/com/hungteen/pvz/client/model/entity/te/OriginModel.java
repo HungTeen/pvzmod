@@ -5,9 +5,9 @@ package com.hungteen.pvz.client.model.entity.te;// Made with Blockbench 4.1.3
 
 import com.mojang.blaze3d.matrix.MatrixStack;
 import com.mojang.blaze3d.vertex.IVertexBuilder;
-import net.minecraft.client.renderer.entity.model.EntityModel;
+import net.minecraft.client.model.EntityModel;
 import net.minecraft.client.renderer.model.ModelRenderer;
-import net.minecraft.entity.Entity;
+import net.minecraft.world.entity.Entity;
 
 public class OriginModel extends EntityModel<Entity> {
 	private final ModelRenderer total;

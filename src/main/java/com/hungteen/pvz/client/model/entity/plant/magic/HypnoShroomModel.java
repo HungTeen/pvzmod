@@ -3,7 +3,7 @@ package com.hungteen.pvz.client.model.entity.plant.magic;
 import com.hungteen.pvz.client.model.entity.plant.PVZPlantModel;
 import com.hungteen.pvz.common.entity.plant.magic.HypnoShroomEntity;
 
-import net.minecraft.client.renderer.entity.model.EntityModel;
+import net.minecraft.client.model.EntityModel;
 import net.minecraft.client.renderer.model.ModelRenderer;
 
 // Made with Blockbench 3.6.6

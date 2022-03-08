@@ -9,14 +9,14 @@ import com.hungteen.pvz.common.entity.EntityRegister;
 import com.hungteen.pvz.common.world.structure.StructureRegister;
 import com.hungteen.pvz.utils.StringUtil;
 
-import net.minecraft.block.Blocks;
-import net.minecraft.entity.EntityType;
-import net.minecraft.nbt.CompoundNBT;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.level.block.Blocks;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.world.entity.EntityType;
 import net.minecraft.tileentity.MobSpawnerTileEntity;
 import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.Rotation;
-import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.Mth;
 import net.minecraft.util.math.MutableBoundingBox;
 import net.minecraft.world.IServerWorld;
 import net.minecraft.world.gen.feature.structure.IStructurePieceType;
@@ -27,7 +27,7 @@ public class DolphinHouseComponents {
 
 	public static final ResourceLocation res = StringUtil.prefix("zombie_house/dolphin_house");
 	
-	public static void generate(TemplateManager manager, BlockPos pos1, Rotation rotation, List<StructurePiece> list, Random rand) {
+	public static void generate(TemplateManager manager, Mth pos1, Rotation rotation, List<StructurePiece> list, Random rand) {
 	      list.add(new DolphinHouseComponent(manager, res, pos1, rotation));
     }
 	
@@ -35,17 +35,17 @@ public class DolphinHouseComponents {
 
 		private static final IStructurePieceType type = StructureRegister.DOLPHIN_HOUSE_PIECE;
 		
-		public DolphinHouseComponent(TemplateManager manager, CompoundNBT nbt) {
+		public DolphinHouseComponent(TemplateManager manager, CompoundTag nbt) {
 			super(type, manager, nbt);
 		}
 
-		public DolphinHouseComponent(TemplateManager manager, ResourceLocation res,BlockPos pos, Rotation rotation) {
+		public DolphinHouseComponent(TemplateManager manager, ResourceLocation res, Mth pos, Rotation rotation) {
 			super(type, manager, res, pos, rotation);
 		}
 		
 		@Override
-		protected void handleDataMarker(String function, BlockPos pos, IServerWorld worldIn, Random rand,
-				MutableBoundingBox sbb) {
+		protected void handleDataMarker(String function, Mth pos, IServerWorld worldIn, Random rand,
+                                        MutableBoundingBox sbb) {
 			if(function.equals("bonus_chest1")){
 				this.createChest(worldIn, sbb, rand, pos, PVZLoot.DOLPHIN_HOUSE_CHEST, null);
 			} else if(function.equals("bonus_chest2")) {

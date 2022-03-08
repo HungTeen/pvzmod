@@ -4,7 +4,7 @@ import com.hungteen.pvz.api.types.IZombieType;
 import com.hungteen.pvz.common.entity.zombie.PVZZombieEntity;
 import com.hungteen.pvz.common.entity.zombie.grass.DancingZombieEntity;
 import com.hungteen.pvz.common.impl.zombie.GrassZombies;
-import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.Mth;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -62,7 +62,7 @@ public class ZombieUtil {
 		now.setMiniZombie(old.isMiniZombie());
 	}
 	
-	public static void onZombieSpawn(PVZZombieEntity old, PVZZombieEntity now, BlockPos pos) {
+	public static void onZombieSpawn(PVZZombieEntity old, PVZZombieEntity now, Mth pos) {
 		ZombieUtil.copySummonZombieData(old, now);
 		EntityUtil.onEntitySpawn(old.level, now, pos);
 	}

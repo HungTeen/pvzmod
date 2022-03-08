@@ -12,25 +12,25 @@ import com.hungteen.pvz.common.item.PVZItemGroups;
 import com.hungteen.pvz.common.world.challenge.ChallengeManager;
 import com.hungteen.pvz.utils.PlayerUtil;
 
+import net.minecraft.ChatFormatting;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.util.ITooltipFlag;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemGroup;
-import net.minecraft.item.ItemStack;
-import net.minecraft.item.ItemUseContext;
-import net.minecraft.util.ActionResult;
-import net.minecraft.util.ActionResultType;
+import net.minecraft.world.InteractionHand;
+import net.minecraft.world.item.CreativeModeTab;
+import net.minecraft.world.item.TooltipFlag;
+import net.minecraft.network.chat.Component;
+import net.minecraft.server.level.ServerLevel;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.ItemUseContext;
+import net.minecraft.world.InteractionResultHolder;
+import net.minecraft.world.InteractionResult;
 import net.minecraft.util.Direction;
-import net.minecraft.util.Hand;
 import net.minecraft.util.NonNullList;
-import net.minecraft.util.ResourceLocation;
-import net.minecraft.util.text.ITextComponent;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.text.StringTextComponent;
-import net.minecraft.util.text.TextFormatting;
-import net.minecraft.util.text.TranslationTextComponent;
-import net.minecraft.world.World;
-import net.minecraft.world.server.ServerWorld;
+import net.minecraft.network.chat.TranslatableComponent;
+import net.minecraft.world.level.Level;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.fml.DistExecutor;
@@ -62,7 +62,7 @@ public class ChallengeEnvelopeItem extends Item {
     }
 
     @Override
-    public void fillItemCategory(ItemGroup group, NonNullList<ItemStack> items) {
+    public void fillItemCategory(CreativeModeTab group, NonNullList<ItemStack> items) {
         if (this.allowdedIn(group)) {
             PVZAPI.get().getRaidTypes().forEach((res, com) -> {
                 items.add(setChallengeType(new ItemStack(ItemRegister.CHALLENGE_ENVELOPE.get()), res));
@@ -71,23 +71,23 @@ public class ChallengeEnvelopeItem extends Item {
     }
 
     @Override
-    public void appendHoverText(ItemStack stack, World worldIn, List<ITextComponent> tooltip, ITooltipFlag flagIn) {
-        tooltip.add(new TranslationTextComponent("tooltip.pvz.challenge_envelope1").withStyle(TextFormatting.GREEN));
-        tooltip.add(new TranslationTextComponent("tooltip.pvz.challenge_envelope2").withStyle(TextFormatting.GREEN));
+    public void appendHoverText(ItemStack stack, Level worldIn, List<Component> tooltip, TooltipFlag flagIn) {
+        tooltip.add(new TranslatableComponent("tooltip.pvz.challenge_envelope1").withStyle(ChatFormatting.GREEN));
+        tooltip.add(new TranslatableComponent("tooltip.pvz.challenge_envelope2").withStyle(ChatFormatting.GREEN));
         getRaidComponent(stack).ifPresent(com -> {
-            tooltip.add(new StringTextComponent(getChallengeType(stack).toString()).withStyle(TextFormatting.GRAY).withStyle(TextFormatting.ITALIC));
-            tooltip.add(com.getChallengeName().withStyle(TextFormatting.YELLOW).withStyle(TextFormatting.BOLD));
+            tooltip.add(new StringTextComponent(getChallengeType(stack).toString()).withStyle(ChatFormatting.GRAY).withStyle(ChatFormatting.ITALIC));
+            tooltip.add(com.getChallengeName().withStyle(ChatFormatting.YELLOW).withStyle(ChatFormatting.BOLD));
         });
     }
 
     @OnlyIn(Dist.CLIENT)
     @Override
-    public ActionResult<ItemStack> use(World worldIn, PlayerEntity playerIn, Hand handIn) {
+    public InteractionResultHolder<ItemStack> use(Level worldIn, Player playerIn, InteractionHand handIn) {
         if (playerIn.getItemInHand(handIn).getItem() instanceof ChallengeEnvelopeItem) {
             if (worldIn.isClientSide) {
                 DistExecutor.unsafeRunWhenOn(Dist.CLIENT, () -> () -> {
                     ChallengeEnvelopeItem.getRaidComponent(playerIn.getItemInHand(handIn)).ifPresent(challengeComponent -> {
-                        if(handIn == Hand.MAIN_HAND){
+                        if(handIn == InteractionHand.MAIN_HAND){
                             Minecraft.getInstance().setScreen(new ChallengeEnvelopeScreen(challengeComponent));
                         } else{
                             Minecraft.getInstance().setScreen(new ChallengeInfoScreen(challengeComponent));
@@ -95,33 +95,33 @@ public class ChallengeEnvelopeItem extends Item {
                     });
                 });
             }
-            return ActionResult.success(playerIn.getItemInHand(handIn));
+            return InteractionResultHolder.success(playerIn.getItemInHand(handIn));
         }
-        return ActionResult.fail(playerIn.getItemInHand(handIn));
+        return InteractionResultHolder.fail(playerIn.getItemInHand(handIn));
     }
 
     @Override
-    public ActionResultType useOn(ItemUseContext context) {
+    public InteractionResult useOn(ItemUseContext context) {
         if (! context.getLevel().isClientSide && context.getItemInHand().getItem() instanceof ChallengeEnvelopeItem && context.getClickedFace() == Direction.UP) {
             final ResourceLocation res = getChallengeType(context.getItemInHand());
             final IChallengeComponent challengeComponent = ChallengeManager.getChallengeByResource(res);
             if(challengeComponent == null){
-                PlayerUtil.sendMsgTo(context.getPlayer(), new TranslationTextComponent("help.pvz.no_challenge").withStyle(TextFormatting.RED));
+                PlayerUtil.sendMsgTo(context.getPlayer(), new TranslatableComponent("help.pvz.no_challenge").withStyle(ChatFormatting.RED));
             } else{
-                if(ChallengeManager.hasChallengeNearby((ServerWorld) context.getLevel(), context.getClickedPos().above())){
-                    PlayerUtil.sendMsgTo(context.getPlayer(), new TranslationTextComponent("help.pvz.full_challenge").withStyle(TextFormatting.RED));
+                if(ChallengeManager.hasChallengeNearby((ServerLevel) context.getLevel(), context.getClickedPos().above())){
+                    PlayerUtil.sendMsgTo(context.getPlayer(), new TranslatableComponent("help.pvz.full_challenge").withStyle(ChatFormatting.RED));
                 } else{
-                    if(ChallengeManager.createChallenge((ServerWorld) context.getLevel(), getChallengeType(context.getItemInHand()), context.getClickedPos().above())) {
+                    if(ChallengeManager.createChallenge((ServerLevel) context.getLevel(), getChallengeType(context.getItemInHand()), context.getClickedPos().above())) {
                         if (PlayerUtil.isPlayerSurvival(context.getPlayer())) {
                             context.getItemInHand().shrink(1);
                         }
                     } else{
-                        PlayerUtil.sendMsgTo(context.getPlayer(), new TranslationTextComponent("help.pvz.wrong_challenge").withStyle(TextFormatting.RED));
+                        PlayerUtil.sendMsgTo(context.getPlayer(), new TranslatableComponent("help.pvz.wrong_challenge").withStyle(ChatFormatting.RED));
                     }
                 }
             }
         }
-        return ActionResultType.CONSUME;
+        return InteractionResult.CONSUME;
     }
 
 }

@@ -6,14 +6,14 @@ import com.hungteen.pvz.common.entity.bullet.itembullet.MetalItemEntity;
 import com.hungteen.pvz.common.entity.bullet.itembullet.PeaEntity;
 import com.hungteen.pvz.common.entity.bullet.itembullet.SporeEntity;
 import com.hungteen.pvz.common.entity.plant.enforce.SquashEntity;
-import net.minecraft.entity.Entity;
-import net.minecraft.entity.LivingEntity;
-import net.minecraft.potion.EffectInstance;
+import net.minecraft.network.chat.TranslatableComponent;
+import net.minecraft.world.effect.MobEffectInstance;
+import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.EntityDamageSource;
 import net.minecraft.util.math.vector.Vector3d;
-import net.minecraft.util.text.ITextComponent;
-import net.minecraft.util.text.TranslationTextComponent;
+import net.minecraft.network.chat.Component;
 
 import javax.annotation.Nullable;
 import java.util.ArrayList;
@@ -21,7 +21,7 @@ import java.util.List;
 
 public class PVZEntityDamageSource extends EntityDamageSource {
 
-	private final List<EffectInstance> effects = new ArrayList<>();
+	private final List<MobEffectInstance> effects = new ArrayList<>();
 	private Entity attackOwner = null;
 	private Entity attacker = null;
 	private boolean isAppease = false;//shooter.
@@ -186,9 +186,9 @@ public class PVZEntityDamageSource extends EntityDamageSource {
 	}
 
 	@Override
-	public ITextComponent getLocalizedDeathMessage(LivingEntity entityLivingBaseIn) {
+	public Component getLocalizedDeathMessage(LivingEntity entityLivingBaseIn) {
 		String s = "death.attack.pvz." + this.getMsgId();
-		return new TranslationTextComponent(s, entityLivingBaseIn.getDisplayName());
+		return new TranslatableComponent(s, entityLivingBaseIn.getDisplayName());
 	}
 
 	@Override
@@ -219,11 +219,11 @@ public class PVZEntityDamageSource extends EntityDamageSource {
 	}
 	
 	//handle effects.
-	public void addEffect(EffectInstance instance) {
+	public void addEffect(MobEffectInstance instance) {
 		this.effects.add(instance);
 	}
 	
-	public List<EffectInstance> getEffects(){
+	public List<MobEffectInstance> getEffects(){
 		return this.effects;
 	}
 	

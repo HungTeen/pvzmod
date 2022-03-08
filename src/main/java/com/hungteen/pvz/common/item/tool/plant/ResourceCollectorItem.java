@@ -7,20 +7,20 @@ import com.hungteen.pvz.common.enchantment.misc.RangeReachEnchantment;
 import com.hungteen.pvz.common.item.PVZItemGroups;
 import com.hungteen.pvz.utils.EntityUtil;
 
-import net.minecraft.client.util.ITooltipFlag;
-import net.minecraft.entity.Entity;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemStack;
+import net.minecraft.ChatFormatting;
+import net.minecraft.network.chat.TranslatableComponent;
+import net.minecraft.world.item.TooltipFlag;
+import net.minecraft.network.chat.Component;
+import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ItemStack;
 import net.minecraft.stats.Stats;
-import net.minecraft.util.ActionResult;
-import net.minecraft.util.Hand;
+import net.minecraft.world.InteractionResultHolder;
+import net.minecraft.world.InteractionHand;
 import net.minecraft.util.math.EntityRayTraceResult;
 import net.minecraft.util.math.RayTraceResult.Type;
-import net.minecraft.util.text.ITextComponent;
-import net.minecraft.util.text.TextFormatting;
-import net.minecraft.util.text.TranslationTextComponent;
-import net.minecraft.world.World;
+import net.minecraft.world.level.Level;
 
 public class ResourceCollectorItem extends Item{
 
@@ -34,7 +34,7 @@ public class ResourceCollectorItem extends Item{
 	}
 
 	@Override
-	public ActionResult<ItemStack> use(World worldIn, PlayerEntity playerIn, Hand handIn) {
+	public InteractionResultHolder<ItemStack> use(Level worldIn, Player playerIn, InteractionHand handIn) {
 		if(! worldIn.isClientSide) {
 			final ItemStack stack = playerIn.getItemInHand(handIn);
 			if(playerIn.isShiftKeyDown()) {//range collect
@@ -66,9 +66,9 @@ public class ResourceCollectorItem extends Item{
 	}
 
 	@Override
-	public void appendHoverText(ItemStack stack, World worldIn, List<ITextComponent> tooltip, ITooltipFlag flagIn) {
-		tooltip.add(new TranslationTextComponent("tooltip.pvz.resource_collector.use").withStyle(TextFormatting.YELLOW));
-		tooltip.add(new TranslationTextComponent("tooltip.pvz.resource_collector.info", (int) RangeReachEnchantment.getReachDistance(stack, SINGLE_COLLECT_RANGE), (int) RangeReachEnchantment.getReachDistance(stack, RANGE_COLLECT_RANGE)).withStyle(TextFormatting.GREEN));
+	public void appendHoverText(ItemStack stack, Level worldIn, List<Component> tooltip, TooltipFlag flagIn) {
+		tooltip.add(new TranslatableComponent("tooltip.pvz.resource_collector.use").withStyle(ChatFormatting.YELLOW));
+		tooltip.add(new TranslatableComponent("tooltip.pvz.resource_collector.info", (int) RangeReachEnchantment.getReachDistance(stack, SINGLE_COLLECT_RANGE), (int) RangeReachEnchantment.getReachDistance(stack, RANGE_COLLECT_RANGE)).withStyle(ChatFormatting.GREEN));
 	}
 	
 }

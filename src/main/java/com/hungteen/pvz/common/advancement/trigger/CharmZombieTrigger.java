@@ -8,10 +8,10 @@ import net.minecraft.advancements.criterion.AbstractCriterionTrigger;
 import net.minecraft.advancements.criterion.CriterionInstance;
 import net.minecraft.advancements.criterion.EntityPredicate;
 import net.minecraft.advancements.criterion.EntityPredicate.AndPredicate;
-import net.minecraft.entity.Entity;
-import net.minecraft.entity.player.ServerPlayerEntity;
+import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.world.entity.Entity;
 import net.minecraft.loot.ConditionArrayParser;
-import net.minecraft.util.ResourceLocation;
+import net.minecraft.resources.ResourceLocation;
 
 public class CharmZombieTrigger extends AbstractCriterionTrigger<CharmZombieTrigger.Instance> {
 
@@ -31,7 +31,7 @@ public class CharmZombieTrigger extends AbstractCriterionTrigger<CharmZombieTrig
 		return new CharmZombieTrigger.Instance(player, EntityPredicate.fromJson(json.get("entity")));
 	}
 	
-	public void trigger(ServerPlayerEntity player, Entity entity) {
+	public void trigger(ServerPlayer player, Entity entity) {
 		this.trigger(player, (instance) -> {
 			return instance.test(player, entity);
 		});
@@ -46,7 +46,7 @@ public class CharmZombieTrigger extends AbstractCriterionTrigger<CharmZombieTrig
 			this.entity = entity;
 		}
 
-		public boolean test(ServerPlayerEntity player, Entity entity) {
+		public boolean test(ServerPlayer player, Entity entity) {
 			return this.entity.matches(player, entity);
 		}
 

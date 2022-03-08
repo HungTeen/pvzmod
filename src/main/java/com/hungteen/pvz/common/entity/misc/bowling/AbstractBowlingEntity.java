@@ -10,13 +10,13 @@ import com.hungteen.pvz.common.misc.sound.SoundRegister;
 import com.hungteen.pvz.utils.EntityUtil;
 
 import it.unimi.dsi.fastutil.ints.IntOpenHashSet;
-import net.minecraft.entity.Entity;
-import net.minecraft.entity.EntitySize;
-import net.minecraft.entity.EntityType;
-import net.minecraft.entity.Pose;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.entity.projectile.ProjectileHelper;
-import net.minecraft.nbt.CompoundNBT;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.EntitySize;
+import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.Pose;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.entity.projectile.ProjectileHelper;
 import net.minecraft.network.datasync.DataParameter;
 import net.minecraft.network.datasync.DataSerializers;
 import net.minecraft.network.datasync.EntityDataManager;
@@ -25,7 +25,7 @@ import net.minecraft.util.math.EntityRayTraceResult;
 import net.minecraft.util.math.RayTraceContext;
 import net.minecraft.util.math.RayTraceResult;
 import net.minecraft.util.math.vector.Vector3d;
-import net.minecraft.world.World;
+import net.minecraft.world.level.Level;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 
@@ -39,12 +39,12 @@ public abstract class AbstractBowlingEntity extends AbstractOwnerEntity {
 	private boolean playSpawnSound = false;
 	protected int hitCount = 0;
 	
-	public AbstractBowlingEntity(EntityType<?> type, World worldIn) {
+	public AbstractBowlingEntity(EntityType<?> type, Level worldIn) {
 		super(type, worldIn);
 		this.pushthrough = 1F;
 	}
 	
-	public AbstractBowlingEntity(EntityType<?> type, World worldIn, PlayerEntity livingEntityIn) {
+	public AbstractBowlingEntity(EntityType<?> type, Level worldIn, Player livingEntityIn) {
 		this(type, worldIn);
 	}
 	
@@ -137,7 +137,7 @@ public abstract class AbstractBowlingEntity extends AbstractOwnerEntity {
 	
 	protected abstract void dealDamageTo(Entity entity);
 	
-	public void shoot(PlayerEntity player) {
+	public void shoot(Player player) {
 		Direction direction = player.getDirection();
 		this.setDirection(direction);
 		this.yRot = direction.toYRot();
@@ -180,7 +180,7 @@ public abstract class AbstractBowlingEntity extends AbstractOwnerEntity {
 		return PVZConfig.COMMON_CONFIG.EntitySettings.EntityLiveTick.BowlingLiveTick.get();
 	}
 	
-	public void addAdditionalSaveData(CompoundNBT compound) {
+	public void addAdditionalSaveData(CompoundTag compound) {
 		super.addAdditionalSaveData(compound);
 		compound.putInt("bowling_facings", this.getBowlingFacing().ordinal());
 		compound.putInt("bowling_directions", this.getDirection().ordinal());
@@ -191,7 +191,7 @@ public abstract class AbstractBowlingEntity extends AbstractOwnerEntity {
 	/**
 	 * (abstract) Protected helper method to read subclass entity data from NBT.
 	 */
-	public void readAdditionalSaveData(CompoundNBT compound) {
+	public void readAdditionalSaveData(CompoundTag compound) {
 		super.readAdditionalSaveData(compound);
 		if(compound.contains("bowling_facings")) {
 			this.setBowlingFacing(BowlingFacings.values()[compound.getInt("bowling_facings")]);

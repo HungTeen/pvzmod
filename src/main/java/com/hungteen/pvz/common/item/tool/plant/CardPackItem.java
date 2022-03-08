@@ -4,21 +4,21 @@ import com.hungteen.pvz.common.container.CardPackContainer;
 import com.hungteen.pvz.common.container.inventory.ItemInventory;
 import com.hungteen.pvz.common.item.PVZItemGroups;
 import com.hungteen.pvz.common.item.spawn.card.SummonCardItem;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.entity.player.PlayerInventory;
-import net.minecraft.entity.player.ServerPlayerEntity;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.entity.player.PlayerInventory;
 import net.minecraft.inventory.Inventory;
 import net.minecraft.inventory.container.Container;
 import net.minecraft.inventory.container.INamedContainerProvider;
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.CompoundNBT;
-import net.minecraft.util.ActionResult;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.InteractionResultHolder;
 import net.minecraft.util.Direction;
-import net.minecraft.util.Hand;
-import net.minecraft.util.text.ITextComponent;
-import net.minecraft.util.text.TranslationTextComponent;
-import net.minecraft.world.World;
+import net.minecraft.world.InteractionHand;
+import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.TranslatableComponent;
+import net.minecraft.world.level.Level;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.capabilities.ICapabilityProvider;
 import net.minecraftforge.common.util.LazyOptional;
@@ -39,7 +39,7 @@ public class CardPackItem extends Item {
 
 	@Nonnull
 	@Override
-	public ICapabilityProvider initCapabilities(ItemStack stack, CompoundNBT oldCapNbt) {
+	public ICapabilityProvider initCapabilities(ItemStack stack, CompoundTag oldCapNbt) {
 		return new InvProvider(stack);
 	}
 
@@ -57,25 +57,25 @@ public class CardPackItem extends Item {
 	}
 
 	@Override
-	public ActionResult<ItemStack> use(World worldIn, PlayerEntity playerIn, Hand handIn) {
+	public InteractionResultHolder<ItemStack> use(Level worldIn, Player playerIn, InteractionHand handIn) {
 		if (!worldIn.isClientSide) {
-			if (playerIn instanceof ServerPlayerEntity && handIn == Hand.MAIN_HAND) {
-				NetworkHooks.openGui((ServerPlayerEntity) playerIn, new INamedContainerProvider() {
+			if (playerIn instanceof ServerPlayer && handIn == InteractionHand.MAIN_HAND) {
+				NetworkHooks.openGui((ServerPlayer) playerIn, new INamedContainerProvider() {
 					
 					@Override
 					public Container createMenu(int p_createMenu_1_, PlayerInventory p_createMenu_2_,
-							PlayerEntity p_createMenu_3_) {
+							Player p_createMenu_3_) {
 						return new CardPackContainer(p_createMenu_1_, p_createMenu_3_);
 					}
 
 					@Override
-					public ITextComponent getDisplayName() {
-						return new TranslationTextComponent("gui.pvz.card_pack.show");
+					public Component getDisplayName() {
+						return new TranslatableComponent("gui.pvz.card_pack.show");
 					}
 				});
 			}
 		}
-		return ActionResult.success(playerIn.getItemInHand(handIn));
+		return InteractionResultHolder.success(playerIn.getItemInHand(handIn));
 	}
 
 	private static class InvProvider implements ICapabilityProvider {

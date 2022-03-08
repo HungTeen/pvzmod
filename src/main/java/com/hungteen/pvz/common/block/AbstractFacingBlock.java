@@ -1,10 +1,10 @@
 package com.hungteen.pvz.common.block;
 
-import net.minecraft.block.Block;
-import net.minecraft.block.BlockState;
-import net.minecraft.block.HorizontalBlock;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.item.BlockItemUseContext;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.BlockState;
+import net.minecraft.world.level.block.HorizontalBlock;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.BlockItemUseContext;
 import net.minecraft.state.DirectionProperty;
 import net.minecraft.state.StateContainer.Builder;
 import net.minecraft.util.Direction;
@@ -20,7 +20,7 @@ public abstract class AbstractFacingBlock extends Block {
 		this.registerDefaultState(this.stateDefinition.any().setValue(FACING, Direction.NORTH));
 	}
 	
-	public BlockState getStateForPlacement(PlayerEntity player) {
+	public BlockState getStateForPlacement(Player player) {
 		if(player == null) return this.defaultBlockState();
 		return this.defaultBlockState().setValue(FACING, player.getDirection().getOpposite());
 	}

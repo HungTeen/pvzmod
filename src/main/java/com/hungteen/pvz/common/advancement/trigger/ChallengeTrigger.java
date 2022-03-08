@@ -7,9 +7,9 @@ import com.hungteen.pvz.utils.StringUtil;
 import net.minecraft.advancements.criterion.AbstractCriterionTrigger;
 import net.minecraft.advancements.criterion.CriterionInstance;
 import net.minecraft.advancements.criterion.EntityPredicate.AndPredicate;
-import net.minecraft.entity.player.ServerPlayerEntity;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.loot.ConditionArrayParser;
-import net.minecraft.util.ResourceLocation;
 
 public class ChallengeTrigger extends AbstractCriterionTrigger<ChallengeTrigger.Instance> {
 
@@ -29,7 +29,7 @@ public class ChallengeTrigger extends AbstractCriterionTrigger<ChallengeTrigger.
         return new Instance(player, type);
     }
 
-    public void trigger(ServerPlayerEntity player, String s) {
+    public void trigger(ServerPlayer player, String s) {
         this.trigger(player, (instance) -> {
             return instance.test(player, s);
         });
@@ -43,7 +43,7 @@ public class ChallengeTrigger extends AbstractCriterionTrigger<ChallengeTrigger.
             this.type = res;
         }
 
-        public boolean test(ServerPlayerEntity player, String s) {
+        public boolean test(ServerPlayer player, String s) {
             return this.type.test(player, s);
         }
 

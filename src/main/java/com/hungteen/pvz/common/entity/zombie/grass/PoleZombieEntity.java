@@ -15,18 +15,18 @@ import com.hungteen.pvz.utils.EntityUtil;
 import com.hungteen.pvz.utils.MathUtil;
 import com.hungteen.pvz.utils.ZombieUtil;
 import com.hungteen.pvz.utils.interfaces.ICanAttract;
-import net.minecraft.entity.CreatureEntity;
-import net.minecraft.entity.EntityType;
-import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.ai.goal.Goal;
-import net.minecraft.nbt.CompoundNBT;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.world.entity.CreatureEntity;
+import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.ai.goal.Goal;
 import net.minecraft.network.datasync.DataParameter;
 import net.minecraft.network.datasync.DataSerializers;
 import net.minecraft.network.datasync.EntityDataManager;
-import net.minecraft.potion.Effects;
+import net.minecraft.world.effect.Effects;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.math.vector.Vector3d;
-import net.minecraft.world.World;
+import net.minecraft.world.level.Level;
 
 import java.util.EnumSet;
 import java.util.Optional;
@@ -39,7 +39,7 @@ public class PoleZombieEntity extends PVZZombieEntity{
 	protected Vector3d jumpDstPoint = Vector3d.ZERO;
 	protected int pole_jump_cnt;
 	
-	public PoleZombieEntity(EntityType<? extends CreatureEntity> type, World worldIn) {
+	public PoleZombieEntity(EntityType<? extends CreatureEntity> type, Level worldIn) {
 		super(type, worldIn);
 	}
 	
@@ -143,20 +143,20 @@ public class PoleZombieEntity extends PVZZombieEntity{
 	
 	/**
 	 * Common plants can not target jumping PoleZombie.
-	 * {@link PVZPlantEntity#checkCanPAZTarget(net.minecraft.entity.Entity)}
+	 * {@link PVZPlantEntity#checkCanPAZTarget(net.minecraft.world.entity.Entity)}
 	 */
 	public boolean isPoleJumping() {
 		return this.getAttackTime() > 0;
 	}
 	
 	@Override
-	public void readAdditionalSaveData(CompoundNBT compound) {
+	public void readAdditionalSaveData(CompoundTag compound) {
 		super.readAdditionalSaveData(compound);
 		if(compound.contains("zombie_has_pole")) {
 			this.setPole(compound.getBoolean("zombie_has_pole"));
 		}
 		if(compound.contains("jump_dst_point")) {
-			CompoundNBT nbt = compound.getCompound("jump_dst_point");
+			CompoundTag nbt = compound.getCompound("jump_dst_point");
 			this.jumpDstPoint = new Vector3d(nbt.getDouble("XXX"), nbt.getDouble("YYY"), nbt.getDouble("ZZZ"));
 		}
 		if(compound.contains("pole_jump_count")) {
@@ -165,10 +165,10 @@ public class PoleZombieEntity extends PVZZombieEntity{
 	}
 	
 	@Override
-	public void addAdditionalSaveData(CompoundNBT compound) {
+	public void addAdditionalSaveData(CompoundTag compound) {
 		super.addAdditionalSaveData(compound);
 		compound.putBoolean("zombie_has_pole", this.hasPole());
-		final CompoundNBT nbt = new CompoundNBT();
+		final CompoundTag nbt = new CompoundTag();
 		nbt.putDouble("XXX", this.jumpDstPoint.x);
 		nbt.putDouble("YYY", this.jumpDstPoint.y);
 		nbt.putDouble("ZZZ", this.jumpDstPoint.z);

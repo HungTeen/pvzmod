@@ -6,7 +6,7 @@ import com.hungteen.pvz.common.entity.plant.PVZPlantEntity;
 import com.mojang.blaze3d.matrix.MatrixStack;
 import com.mojang.blaze3d.vertex.IVertexBuilder;
 
-import net.minecraft.client.renderer.entity.model.EntityModel;
+import net.minecraft.client.model.EntityModel;
 import net.minecraft.client.renderer.model.ModelRenderer;
 
 public abstract class PVZPlantModel<T extends PVZPlantEntity> extends PVZEntityModel<T> implements IPlantModel<T>{

@@ -7,16 +7,16 @@ import com.hungteen.pvz.common.entity.plant.arma.MelonPultEntity;
 import com.hungteen.pvz.common.impl.plant.PVZPlants;
 import com.hungteen.pvz.common.potion.EffectRegister;
 
-import net.minecraft.entity.CreatureEntity;
-import net.minecraft.entity.EntityType;
-import net.minecraft.potion.EffectInstance;
-import net.minecraft.world.World;
+import net.minecraft.world.effect.MobEffectInstance;
+import net.minecraft.world.entity.CreatureEntity;
+import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.level.Level;
 
 import java.util.Optional;
 
 public class WinterMelonEntity extends MelonPultEntity implements IIceEffect {
 
-	public WinterMelonEntity(EntityType<? extends CreatureEntity> type, World worldIn) {
+	public WinterMelonEntity(EntityType<? extends CreatureEntity> type, Level worldIn) {
 		super(type, worldIn);
 	}
 
@@ -29,12 +29,12 @@ public class WinterMelonEntity extends MelonPultEntity implements IIceEffect {
 	}
 	
 	@Override
-	public Optional<EffectInstance> getColdEffect() {
-		return Optional.ofNullable(new EffectInstance(EffectRegister.COLD_EFFECT.get(), this.getColdTick(), this.getColdLvl(), false, false));
+	public Optional<MobEffectInstance> getColdEffect() {
+		return Optional.ofNullable(new MobEffectInstance(EffectRegister.COLD_EFFECT.get(), this.getColdTick(), this.getColdLvl(), false, false));
 	}
 	
 	@Override
-	public Optional<EffectInstance> getFrozenEffect() {
+	public Optional<MobEffectInstance> getFrozenEffect() {
 		return Optional.empty();
 	}
 	

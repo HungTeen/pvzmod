@@ -2,7 +2,7 @@ package com.hungteen.pvz.compat.jei;
 
 import com.hungteen.pvz.client.ClientProxy;
 import net.minecraft.client.world.ClientWorld;
-import net.minecraft.item.crafting.RecipeManager;
+import net.minecraft.world.item.crafting.RecipeManager;
 
 import java.util.Objects;
 

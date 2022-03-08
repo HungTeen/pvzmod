@@ -3,15 +3,15 @@ package com.hungteen.pvz.common.item.tool;
 import com.hungteen.pvz.common.item.PVZItemGroups;
 import com.hungteen.pvz.common.misc.sound.SoundRegister;
 import com.hungteen.pvz.utils.EntityUtil;
-import net.minecraft.client.util.ITooltipFlag;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemStack;
-import net.minecraft.util.ActionResult;
-import net.minecraft.util.Hand;
-import net.minecraft.util.text.ITextComponent;
-import net.minecraft.util.text.TranslationTextComponent;
-import net.minecraft.world.World;
+import net.minecraft.world.InteractionResultHolder;
+import net.minecraft.world.item.TooltipFlag;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.InteractionHand;
+import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.TranslatableComponent;
+import net.minecraft.world.level.Level;
 
 import javax.annotation.Nullable;
 import java.util.List;
@@ -23,18 +23,18 @@ public class ZombieDollItem extends Item {
 	}
 
 	@Override
-	public void appendHoverText(ItemStack stack, @Nullable World world, List<ITextComponent> textComponents, ITooltipFlag tooltipFlag) {
+	public void appendHoverText(ItemStack stack, @Nullable Level world, List<Component> textComponents, TooltipFlag tooltipFlag) {
 		super.appendHoverText(stack, world, textComponents, tooltipFlag);
-		textComponents.add(new TranslationTextComponent("tooltip.pvz.zombie_doll"));
+		textComponents.add(new TranslatableComponent("tooltip.pvz.zombie_doll"));
 	}
 
 	@Override
-	public ActionResult<ItemStack> use(World worldIn, PlayerEntity playerIn, Hand handIn) {
-		if(handIn == Hand.MAIN_HAND) {
+	public InteractionResultHolder<ItemStack> use(Level worldIn, Player playerIn, InteractionHand handIn) {
+		if(handIn == InteractionHand.MAIN_HAND) {
 			if(! worldIn.isClientSide){
 				EntityUtil.playSound(playerIn, SoundRegister.ZOMBIE_GROAN.get());
 			}
-			return ActionResult.success(playerIn.getItemInHand(handIn));
+			return InteractionResultHolder.success(playerIn.getItemInHand(handIn));
 		}
 		return super.use(worldIn, playerIn, handIn);
 	}

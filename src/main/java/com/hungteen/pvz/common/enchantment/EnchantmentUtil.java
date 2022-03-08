@@ -1,7 +1,7 @@
 package com.hungteen.pvz.common.enchantment;
 
 import net.minecraft.enchantment.EnchantmentHelper;
-import net.minecraft.item.ItemStack;
+import net.minecraft.world.item.ItemStack;
 import net.minecraft.util.math.MathHelper;
 
 public class EnchantmentUtil {

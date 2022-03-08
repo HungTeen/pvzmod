@@ -2,19 +2,19 @@ package com.hungteen.pvz.common.entity.misc;
 
 import com.hungteen.pvz.common.entity.zombie.PVZZombieToolBase;
 
-import net.minecraft.entity.Entity;
-import net.minecraft.entity.EntitySize;
-import net.minecraft.entity.EntityType;
-import net.minecraft.entity.MobEntity;
-import net.minecraft.entity.Pose;
-import net.minecraft.entity.ai.goal.SwimGoal;
-import net.minecraft.world.World;
+import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.EntitySize;
+import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.MobEntity;
+import net.minecraft.world.entity.Pose;
+import net.minecraft.world.entity.ai.goal.SwimGoal;
+import net.minecraft.world.level.Level;
 
 public class DuckyTubeEntity extends PVZZombieToolBase {
 
 //	private static final float UP_SPEED = 0.05f;
 
-	public DuckyTubeEntity(EntityType<? extends MobEntity> type, World worldIn) {
+	public DuckyTubeEntity(EntityType<? extends MobEntity> type, Level worldIn) {
 		super(type, worldIn);
 	}
 

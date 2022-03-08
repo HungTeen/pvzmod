@@ -10,17 +10,17 @@ import com.hungteen.pvz.common.item.PVZRarity;
 import com.hungteen.pvz.common.misc.sound.SoundRegister;
 import com.hungteen.pvz.utils.PlayerUtil;
 import com.hungteen.pvz.utils.StringUtil;
-import net.minecraft.client.util.ITooltipFlag;
+import net.minecraft.ChatFormatting;
+import net.minecraft.network.chat.TranslatableComponent;
+import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.enchantment.Enchantment;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemStack;
-import net.minecraft.item.Rarity;
-import net.minecraft.util.text.IFormattableTextComponent;
-import net.minecraft.util.text.ITextComponent;
-import net.minecraft.util.text.TextFormatting;
-import net.minecraft.util.text.TranslationTextComponent;
-import net.minecraft.world.World;
+import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.MutableComponent;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Rarity;
+import net.minecraft.world.level.Level;
 
 import java.util.List;
 
@@ -46,7 +46,7 @@ public abstract class SummonCardItem extends Item{
 	
 	/**
 	 * get base sun cost.
-	 * {@link #appendHoverText(ItemStack, World, List, ITooltipFlag)}
+	 * {@link #appendHoverText(ItemStack, Level, List, TooltipFlag)}
 	 */
 	public static int getCardSunCost(ItemStack stack) {
 		if(stack.getItem() instanceof PlantCardItem) {
@@ -57,7 +57,7 @@ public abstract class SummonCardItem extends Item{
 
 	/**
 	 * get base card cd.
-	 * {@link #appendHoverText(ItemStack, World, List, ITooltipFlag)}
+	 * {@link #appendHoverText(ItemStack, Level, List, TooltipFlag)}
 	 */
 	public static ICoolDown getCardCoolDown(ItemStack stack) {
 		if(stack.getItem() instanceof PlantCardItem) {
@@ -67,7 +67,7 @@ public abstract class SummonCardItem extends Item{
 	}
 
 	/**
-	 * {@link #appendHoverText(ItemStack, World, List, ITooltipFlag)}
+	 * {@link #appendHoverText(ItemStack, Level, List, TooltipFlag)}
 	 */
 	public static int getCardRequiredLevel(ItemStack stack) {
 		if(stack.getItem() instanceof PlantCardItem) {
@@ -77,24 +77,24 @@ public abstract class SummonCardItem extends Item{
 	}
 	
 	@Override
-	public void appendHoverText(ItemStack stack, World worldIn, List<ITextComponent> tooltip, ITooltipFlag flagIn) {
-		tooltip.add(new TranslationTextComponent("tooltip.pvz.card_sun_cost", getCardSunCost(stack)).withStyle(TextFormatting.YELLOW));
-		tooltip.add(new TranslationTextComponent("tooltip.pvz.card_cd", new TranslationTextComponent(getCardCoolDown(stack).getTranslateKey()).getString()).withStyle(TextFormatting.AQUA));
+	public void appendHoverText(ItemStack stack, Level worldIn, List<Component> tooltip, TooltipFlag flagIn) {
+		tooltip.add(new TranslatableComponent("tooltip.pvz.card_sun_cost", getCardSunCost(stack)).withStyle(ChatFormatting.YELLOW));
+		tooltip.add(new TranslatableComponent("tooltip.pvz.card_cd", new TranslatableComponent(getCardCoolDown(stack).getTranslateKey()).getString()).withStyle(ChatFormatting.AQUA));
 		PlayerUtil.getOptManager(PVZMod.PROXY.getPlayer()).ifPresent(m -> {
 			//this paz type is locked.
 			if (m.isPAZLocked(this.type)) {
-				tooltip.add(new TranslationTextComponent("tooltip.pvz.card_required_level", getCardRequiredLevel(stack)).withStyle(TextFormatting.RED));
+				tooltip.add(new TranslatableComponent("tooltip.pvz.card_required_level", getCardRequiredLevel(stack)).withStyle(ChatFormatting.RED));
 			}
 		});
 	}
 
-	public static void appendSkillToolTips(ItemStack stack, List<ITextComponent> tooltip){
+	public static void appendSkillToolTips(ItemStack stack, List<Component> tooltip){
 		if(stack.getItem() instanceof SummonCardItem){
 			final IPAZType type = ((SummonCardItem) stack.getItem()).type;
 			type.getSkills().forEach(skill -> {
 				final int lvl = SkillTypes.getSkillLevel(stack, skill);
 				if(lvl > 0){
-					tooltip.add(skill.getText().append(StringUtil.getRomanString(lvl)).withStyle(TextFormatting.DARK_PURPLE));
+					tooltip.add(skill.getText().append(StringUtil.getRomanString(lvl)).withStyle(ChatFormatting.DARK_PURPLE));
 				}
 			});
 		}
@@ -123,16 +123,16 @@ public abstract class SummonCardItem extends Item{
 		return 20;//0 ~ 45
 	}
 
-	public void notifyPlayerAndCD(PlayerEntity player, ItemStack stack, PlacementErrors error) {
+	public void notifyPlayerAndCD(Player player, ItemStack stack, PlacementErrors error) {
 		this.notifyPlayerAndCD(player, stack, error, 0);
 	}
 
 	/**
 	 * send helpful info.
 	 */
-	public void notifyPlayerAndCD(PlayerEntity player, ItemStack stack, PlacementErrors error, int arg) {
+	public void notifyPlayerAndCD(Player player, ItemStack stack, PlacementErrors error, int arg) {
 		if(! player.level.isClientSide) {
-			PlayerUtil.sendMsgTo(player, error.getTextByArg(arg, TextFormatting.RED));
+			PlayerUtil.sendMsgTo(player, error.getTextByArg(arg, ChatFormatting.RED));
 			PlayerUtil.setItemStackCD(player, stack, 10);
 			PlayerUtil.playClientSound(player, SoundRegister.NO.get());
 		}
@@ -153,8 +153,8 @@ public abstract class SummonCardItem extends Item{
 			this.info = s;
 		}
 
-		public IFormattableTextComponent getTextByArg(int arg, TextFormatting color){
-			return new TranslationTextComponent("help.pvz."+ this.info, arg).withStyle(color);
+		public MutableComponent getTextByArg(int arg, ChatFormatting color){
+			return new TranslatableComponent("help.pvz."+ this.info, arg).withStyle(color);
 		}
 	}
 	

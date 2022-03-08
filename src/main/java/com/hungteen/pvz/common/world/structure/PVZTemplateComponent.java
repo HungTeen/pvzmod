@@ -1,10 +1,10 @@
 package com.hungteen.pvz.common.world.structure;
 
-import net.minecraft.nbt.CompoundNBT;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.Mirror;
-import net.minecraft.util.ResourceLocation;
+import net.minecraft.util.Mth;
 import net.minecraft.util.Rotation;
-import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.gen.feature.structure.IStructurePieceType;
 import net.minecraft.world.gen.feature.structure.TemplateStructurePiece;
 import net.minecraft.world.gen.feature.template.BlockIgnoreStructureProcessor;
@@ -14,11 +14,11 @@ import net.minecraft.world.gen.feature.template.TemplateManager;
 
 public abstract class PVZTemplateComponent extends TemplateStructurePiece {
 
-	private static final BlockPos STRUCTURE_OFFSET = new BlockPos(0, 0, 0);
+	private static final Mth STRUCTURE_OFFSET = new Mth(0, 0, 0);
 	protected final Rotation rotation;
 	protected final ResourceLocation res;
 	
-	public PVZTemplateComponent(IStructurePieceType type, TemplateManager manager, ResourceLocation res,BlockPos pos, Rotation rotation) {
+	public PVZTemplateComponent(IStructurePieceType type, TemplateManager manager, ResourceLocation res, Mth pos, Rotation rotation) {
 		super(type, 0);
 		this.templatePosition = pos;
 		this.rotation = rotation;
@@ -26,7 +26,7 @@ public abstract class PVZTemplateComponent extends TemplateStructurePiece {
 		this.setUpTemplate(manager);
 	}
 	
-	public PVZTemplateComponent(IStructurePieceType type, TemplateManager manager, CompoundNBT nbt) {
+	public PVZTemplateComponent(IStructurePieceType type, TemplateManager manager, CompoundTag nbt) {
 		super(type, nbt);
 		this.res = new ResourceLocation(nbt.getString("Template"));
 		this.rotation = Rotation.valueOf(nbt.getString("Rot"));
@@ -42,7 +42,7 @@ public abstract class PVZTemplateComponent extends TemplateStructurePiece {
 	}
 	
 	@Override
-	protected void addAdditionalSaveData(CompoundNBT tagCompound) {
+	protected void addAdditionalSaveData(CompoundTag tagCompound) {
 		super.addAdditionalSaveData(tagCompound);
 		tagCompound.putString("Template", this.res.toString());
         tagCompound.putString("Rot", this.rotation.name());

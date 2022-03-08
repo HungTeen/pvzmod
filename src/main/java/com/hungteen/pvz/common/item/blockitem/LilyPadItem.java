@@ -3,16 +3,16 @@ package com.hungteen.pvz.common.item.blockitem;
 import com.hungteen.pvz.common.block.BlockRegister;
 import com.hungteen.pvz.common.item.PVZItemGroups;
 
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.item.BlockItem;
-import net.minecraft.item.ItemStack;
-import net.minecraft.item.ItemUseContext;
-import net.minecraft.util.ActionResult;
-import net.minecraft.util.ActionResultType;
-import net.minecraft.util.Hand;
+import net.minecraft.world.InteractionHand;
+import net.minecraft.world.InteractionResultHolder;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.BlockItem;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.ItemUseContext;
+import net.minecraft.world.InteractionResult;
 import net.minecraft.util.math.BlockRayTraceResult;
 import net.minecraft.util.math.RayTraceContext;
-import net.minecraft.world.World;
+import net.minecraft.world.level.Level;
 
 public class LilyPadItem extends BlockItem {
 
@@ -21,15 +21,15 @@ public class LilyPadItem extends BlockItem {
 	}
 
 	@Override
-	public ActionResultType useOn(ItemUseContext context) {
-		return ActionResultType.PASS;
+	public InteractionResult useOn(ItemUseContext context) {
+		return InteractionResult.PASS;
 	}
 	
-	public ActionResult<ItemStack> use(World p_77659_1_, PlayerEntity p_77659_2_, Hand p_77659_3_) {
+	public InteractionResultHolder<ItemStack> use(Level p_77659_1_, Player p_77659_2_, InteractionHand p_77659_3_) {
 	      BlockRayTraceResult blockraytraceresult = getPlayerPOVHitResult(p_77659_1_, p_77659_2_, RayTraceContext.FluidMode.SOURCE_ONLY);
 	      BlockRayTraceResult blockraytraceresult1 = blockraytraceresult.withPosition(blockraytraceresult.getBlockPos().above());
-	      ActionResultType actionresulttype = super.useOn(new ItemUseContext(p_77659_2_, p_77659_3_, blockraytraceresult1));
-	      return new ActionResult<>(actionresulttype, p_77659_2_.getItemInHand(p_77659_3_));
+	      InteractionResult actionresulttype = super.useOn(new ItemUseContext(p_77659_2_, p_77659_3_, blockraytraceresult1));
+	      return new InteractionResultHolder<>(actionresulttype, p_77659_2_.getItemInHand(p_77659_3_));
 	   }
 
 }

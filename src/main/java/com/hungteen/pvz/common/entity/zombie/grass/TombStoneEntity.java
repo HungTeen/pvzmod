@@ -8,14 +8,14 @@ import com.hungteen.pvz.common.impl.zombie.GrassZombies;
 import com.hungteen.pvz.common.impl.zombie.ZombieType;
 import com.hungteen.pvz.utils.EntityUtil;
 import com.hungteen.pvz.utils.MathUtil;
-import net.minecraft.entity.CreatureEntity;
-import net.minecraft.entity.EntityType;
-import net.minecraft.entity.ai.goal.Goal;
-import net.minecraft.entity.ai.goal.NearestAttackableTargetGoal;
-import net.minecraft.nbt.CompoundNBT;
+import net.minecraft.world.entity.CreatureEntity;
+import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.ai.goal.Goal;
+import net.minecraft.world.entity.ai.goal.NearestAttackableTargetGoal;
+import net.minecraft.nbt.CompoundTag;
 import net.minecraft.util.DamageSource;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.world.World;
+import net.minecraft.util.Mth;
+import net.minecraft.world.level.Level;
 
 public class TombStoneEntity extends AbstractTombStoneEntity {
 
@@ -24,7 +24,7 @@ public class TombStoneEntity extends AbstractTombStoneEntity {
 	private final int MinSummonCD = 360;
 	private final int MaxSummonCD = 1200;
 	
-	public TombStoneEntity(EntityType<? extends CreatureEntity> type, World worldIn) {
+	public TombStoneEntity(EntityType<? extends CreatureEntity> type, Level worldIn) {
 		super(type, worldIn);
 	}
 	
@@ -39,7 +39,7 @@ public class TombStoneEntity extends AbstractTombStoneEntity {
 		this.waveSummonTick = 40;
 	}
 	
-	public static void spawnTombStone(World world, BlockPos pos) {
+	public static void spawnTombStone(Level world, Mth pos) {
 		TombStoneEntity tomb = EntityRegister.TOMB_STONE.get().create(world);
 		tomb.setZombieRising();
 		EntityUtil.onEntitySpawn(world, tomb, pos);
@@ -101,7 +101,7 @@ public class TombStoneEntity extends AbstractTombStoneEntity {
 	}
 	
 	@Override
-	public void readAdditionalSaveData(CompoundNBT compound) {
+	public void readAdditionalSaveData(CompoundTag compound) {
 		super.readAdditionalSaveData(compound);
 		if(compound.contains("wave_summon_tick")) {
 			this.waveSummonTick = compound.getInt("wave_summon_tick");
@@ -109,7 +109,7 @@ public class TombStoneEntity extends AbstractTombStoneEntity {
 	}
 	
 	@Override
-	public void addAdditionalSaveData(CompoundNBT compound) {
+	public void addAdditionalSaveData(CompoundTag compound) {
 		super.addAdditionalSaveData(compound);
 		compound.putInt("wave_summon_tick", this.waveSummonTick);
 	}

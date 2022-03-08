@@ -9,8 +9,8 @@ import com.hungteen.pvz.client.render.layer.fullskin.SunLightLayer;
 import com.hungteen.pvz.common.entity.zombie.PVZZombieEntity;
 import com.hungteen.pvz.common.potion.EffectRegister;
 import net.minecraft.client.renderer.entity.EntityRendererManager;
-import net.minecraft.client.renderer.entity.model.EntityModel;
-import net.minecraft.util.ResourceLocation;
+import net.minecraft.client.model.EntityModel;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.math.vector.Vector3d;
 
 public abstract class PVZZombieRender <T extends PVZZombieEntity> extends PVZCreatureRender<T> {

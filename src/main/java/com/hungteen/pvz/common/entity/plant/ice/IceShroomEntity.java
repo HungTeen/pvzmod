@@ -15,13 +15,13 @@ import com.hungteen.pvz.client.particle.ParticleRegister;
 import com.hungteen.pvz.utils.EntityUtil;
 import com.hungteen.pvz.utils.enums.PAZAlmanacs;
 import com.mojang.datafixers.util.Pair;
-import net.minecraft.entity.*;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.entity.player.ServerPlayerEntity;
+import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.world.effect.MobEffectInstance;
+import net.minecraft.world.entity.*;
+import net.minecraft.world.entity.player.Player;
 import net.minecraft.particles.ParticleTypes;
-import net.minecraft.potion.EffectInstance;
 import net.minecraft.util.math.AxisAlignedBB;
-import net.minecraft.world.World;
+import net.minecraft.world.level.Level;
 
 import java.util.Arrays;
 import java.util.List;
@@ -29,7 +29,7 @@ import java.util.Optional;
 
 public class IceShroomEntity extends PlantBomberEntity implements IIceEffect{
 
-	public IceShroomEntity(EntityType<? extends CreatureEntity> type, World worldIn) {
+	public IceShroomEntity(EntityType<? extends CreatureEntity> type, Level worldIn) {
 		super(type, worldIn);
 	}
 
@@ -51,9 +51,9 @@ public class IceShroomEntity extends PlantBomberEntity implements IIceEffect{
 			}
 			EntityUtil.playSound(this, SoundRegister.FROZEN.get());
 			//trigger advancement.
-			final PlayerEntity player = EntityUtil.getEntityOwner(level, this);
-			if(player != null && player instanceof ServerPlayerEntity) {
-				EntityEffectAmountTrigger.INSTANCE.trigger((ServerPlayerEntity) player, this, cnt);
+			final Player player = EntityUtil.getEntityOwner(level, this);
+			if(player != null && player instanceof ServerPlayer) {
+				EntityEffectAmountTrigger.INSTANCE.trigger((ServerPlayer) player, this, cnt);
 			}
 			//kill flame ball.
 			ElementBallEntity.killElementBalls(this, 40, ElementTypes.FLAME);
@@ -114,13 +114,13 @@ public class IceShroomEntity extends PlantBomberEntity implements IIceEffect{
 	}
 	
 	@Override
-	public Optional<EffectInstance> getColdEffect() {
-		return Optional.ofNullable(new EffectInstance(EffectRegister.COLD_EFFECT.get(), this.getColdTick() + this.getFrozenTick(), this.getColdLvl(), false, false));
+	public Optional<MobEffectInstance> getColdEffect() {
+		return Optional.ofNullable(new MobEffectInstance(EffectRegister.COLD_EFFECT.get(), this.getColdTick() + this.getFrozenTick(), this.getColdLvl(), false, false));
 	}
 
 	@Override
-	public Optional<EffectInstance> getFrozenEffect() {
-		return Optional.ofNullable(new EffectInstance(EffectRegister.FROZEN_EFFECT.get(), this.getFrozenTick(), this.getFrozenLvl(), false, false));
+	public Optional<MobEffectInstance> getFrozenEffect() {
+		return Optional.ofNullable(new MobEffectInstance(EffectRegister.FROZEN_EFFECT.get(), this.getFrozenTick(), this.getFrozenLvl(), false, false));
 	}
 	
 	@Override

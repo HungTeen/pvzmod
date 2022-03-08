@@ -14,17 +14,17 @@ import com.hungteen.pvz.common.impl.zombie.PoolZombies;
 import com.hungteen.pvz.common.impl.zombie.RoofZombies;
 import com.hungteen.pvz.utils.AlgorithmUtil;
 
-import net.minecraft.entity.EntitySize;
-import net.minecraft.entity.EntityType;
-import net.minecraft.entity.Pose;
-import net.minecraft.nbt.CompoundNBT;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.world.entity.EntitySize;
+import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.Pose;
 import net.minecraft.network.datasync.DataParameter;
 import net.minecraft.network.datasync.DataSerializers;
 import net.minecraft.network.datasync.EntityDataManager;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.vector.Vector3d;
-import net.minecraft.world.World;
+import net.minecraft.world.level.Level;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 
@@ -45,7 +45,7 @@ public class ZombieDropBodyEntity extends PVZEntityBase implements IBodyEntity {
 	private int max_exist_tick;
 	private float friction = 0.3F;
 
-	public ZombieDropBodyEntity(EntityType<?> p_i48580_1_, World p_i48580_2_) {
+	public ZombieDropBodyEntity(EntityType<?> p_i48580_1_, Level p_i48580_2_) {
 		super(p_i48580_1_, p_i48580_2_);
 		HEAD_ROT = this.random.nextInt(60) - 30;
 		this.max_exist_tick = MAX_EXIST_TICK;
@@ -163,7 +163,7 @@ public class ZombieDropBodyEntity extends PVZEntityBase implements IBodyEntity {
 	}
 	
 	@Override
-	protected void readAdditionalSaveData(CompoundNBT nbt) {
+	protected void readAdditionalSaveData(CompoundTag nbt) {
 		if (nbt.contains("body_anim_tick")) {
 			this.setAnimTime(nbt.getInt("body_anim_tick"));
 		}
@@ -179,7 +179,7 @@ public class ZombieDropBodyEntity extends PVZEntityBase implements IBodyEntity {
 	}
 
 	@Override
-	protected void addAdditionalSaveData(CompoundNBT nbt) {
+	protected void addAdditionalSaveData(CompoundTag nbt) {
 		nbt.putInt("body_anim_tick", this.getAnimTime());
 		nbt.putInt("body_zombie_type", this.getZombieType().getId());
 		nbt.putInt("body_part_state", this.getBodyState());

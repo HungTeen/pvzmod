@@ -1,9 +1,9 @@
 package com.hungteen.pvz.common.container.inventory;
 
-import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.world.entity.player.Player;
 import net.minecraft.inventory.Inventory;
-import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.CompoundNBT;
+import net.minecraft.world.item.ItemStack;
 import net.minecraft.nbt.ListNBT;
 import net.minecraftforge.common.util.Constants;
 
@@ -25,7 +25,7 @@ public class ItemInventory extends Inventory {
 	}
 
 	@Override
-	public boolean stillValid(PlayerEntity player) {
+	public boolean stillValid(Player player) {
 		return !stack.isEmpty();
 	}
 
@@ -34,7 +34,7 @@ public class ItemInventory extends Inventory {
 		super.setChanged();
 		ListNBT list = new ListNBT();
 		for (int i = 0; i < getContainerSize(); i++) {
-			list.add(getItem(i).save(new CompoundNBT()));
+			list.add(getItem(i).save(new CompoundTag()));
 		}
 		this.stack.getOrCreateTag().put(NAME, list);
 	}

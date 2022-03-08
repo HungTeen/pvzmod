@@ -2,16 +2,16 @@ package com.hungteen.pvz.common.entity.misc.drop;
 
 import com.hungteen.pvz.api.interfaces.ICollectible;
 import com.hungteen.pvz.utils.EntityUtil;
-import net.minecraft.entity.*;
-import net.minecraft.entity.ai.goal.SwimGoal;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.nbt.CompoundNBT;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.world.entity.*;
+import net.minecraft.world.entity.ai.goal.SwimGoal;
+import net.minecraft.world.entity.player.Player;
 import net.minecraft.network.datasync.DataParameter;
 import net.minecraft.network.datasync.DataSerializers;
 import net.minecraft.network.datasync.EntityDataManager;
 import net.minecraft.world.DifficultyInstance;
 import net.minecraft.world.IServerWorld;
-import net.minecraft.world.World;
+import net.minecraft.world.level.Level;
 
 public abstract class DropEntity extends MobEntity implements ICollectible {
 
@@ -19,7 +19,7 @@ public abstract class DropEntity extends MobEntity implements ICollectible {
 	private static final DataParameter<Integer> STATE  = EntityDataManager.defineId(DropEntity.class, DataSerializers.INT);
 	protected int liveTime = 0;
 	
-	public DropEntity(EntityType<? extends MobEntity> type, World worldIn) {
+	public DropEntity(EntityType<? extends MobEntity> type, Level worldIn) {
 		super(type, worldIn);
 		this.setInvulnerable(true);
 	}
@@ -38,7 +38,7 @@ public abstract class DropEntity extends MobEntity implements ICollectible {
 	
 	@Override
 	public ILivingEntityData finalizeSpawn(IServerWorld worldIn, DifficultyInstance difficultyIn, SpawnReason reason,
-			ILivingEntityData spawnDataIn, CompoundNBT dataTag) {
+			ILivingEntityData spawnDataIn, CompoundTag dataTag) {
 		this.onDropped();
 		return super.finalizeSpawn(worldIn, difficultyIn, reason, spawnDataIn, dataTag);
 	}
@@ -59,7 +59,7 @@ public abstract class DropEntity extends MobEntity implements ICollectible {
 	}
 	
 	@Override
-	public void playerTouch(PlayerEntity entityIn) {// collect by colliding with entity.
+	public void playerTouch(Player entityIn) {// collect by colliding with entity.
 		if(this.canCollectBy(entityIn)) {
 			this.onCollect(entityIn);
 		}
@@ -67,13 +67,13 @@ public abstract class DropEntity extends MobEntity implements ICollectible {
 	
 	@Override
 	public boolean canCollectBy(LivingEntity living) {
-		return living instanceof PlayerEntity && EntityUtil.isEntityValid(this) && this.getDropState() != DropStates.STEAL;
+		return living instanceof Player && EntityUtil.isEntityValid(this) && this.getDropState() != DropStates.STEAL;
 	}
 	
 	@Override
 	public void onCollect(LivingEntity living) {
-		if(living instanceof PlayerEntity) {
-			this.onCollectedByPlayer((PlayerEntity) living);
+		if(living instanceof Player) {
+			this.onCollectedByPlayer((Player) living);
 		}
 		this.remove();
 	}
@@ -81,7 +81,7 @@ public abstract class DropEntity extends MobEntity implements ICollectible {
 	/**
 	 * run when collect the drop.
 	 */
-	public abstract void onCollectedByPlayer(PlayerEntity player);
+	public abstract void onCollectedByPlayer(Player player);
 	
 	/**
 	 * drop live tick,read from config file
@@ -127,7 +127,7 @@ public abstract class DropEntity extends MobEntity implements ICollectible {
 	}
 	
 	@Override
-	public void readAdditionalSaveData(CompoundNBT compound) {
+	public void readAdditionalSaveData(CompoundTag compound) {
 		super.readAdditionalSaveData(compound);
 		if(compound.contains("live_time")) {
 			this.liveTime = compound.getInt("live_time");
@@ -141,7 +141,7 @@ public abstract class DropEntity extends MobEntity implements ICollectible {
 	}
 
 	@Override
-	public void addAdditionalSaveData(CompoundNBT compound) {
+	public void addAdditionalSaveData(CompoundTag compound) {
 		super.addAdditionalSaveData(compound);
 		compound.putInt("live_time", this.liveTime);
 		compound.putInt("drop_amount", this.getAmount());

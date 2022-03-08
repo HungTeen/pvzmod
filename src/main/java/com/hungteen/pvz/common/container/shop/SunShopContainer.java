@@ -5,11 +5,11 @@ import com.hungteen.pvz.common.entity.npc.AbstractDaveEntity;
 import com.hungteen.pvz.common.misc.sound.SoundRegister;
 import com.hungteen.pvz.utils.PlayerUtil;
 import com.hungteen.pvz.utils.enums.Resources;
-import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.world.entity.player.Player;
 
 public class SunShopContainer extends AbstractDaveShopContainer {
 	
-	public SunShopContainer(int id, PlayerEntity player, int entityId) {
+	public SunShopContainer(int id, Player player, int entityId) {
 		super(ContainerRegister.SUN_SHOP.get(), id, player, entityId);
 	}
 

@@ -15,12 +15,12 @@ import com.hungteen.pvz.common.world.structure.StructureRegister;
 import com.hungteen.pvz.utils.EntityUtil;
 import com.hungteen.pvz.utils.StringUtil;
 
-import net.minecraft.block.BlockState;
-import net.minecraft.block.Blocks;
-import net.minecraft.nbt.CompoundNBT;
-import net.minecraft.util.ResourceLocation;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.level.block.BlockState;
+import net.minecraft.world.level.block.Blocks;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.util.Mth;
 import net.minecraft.util.Rotation;
-import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.ChunkPos;
 import net.minecraft.util.math.MutableBoundingBox;
 import net.minecraft.world.ISeedReader;
@@ -39,8 +39,8 @@ public class DaveVillaComponents {
 	public static final ResourceLocation res3 = StringUtil.prefix("dave_villa/davevilla3");
 	public static final ResourceLocation res4 = StringUtil.prefix("dave_villa/davevilla4");
 	
-	public static void generate(TemplateManager manager, BlockPos pos1, Rotation rotation, List<StructurePiece> list, Random rand) {
-	      BlockPos pos2,pos3,pos4;
+	public static void generate(TemplateManager manager, Mth pos1, Rotation rotation, List<StructurePiece> list, Random rand) {
+	      Mth pos2,pos3,pos4;
 	      switch (rotation) {
 		  case CLOCKWISE_90:{
 			  pos2=pos1.offset(0, 0, 32);
@@ -77,28 +77,28 @@ public class DaveVillaComponents {
 
         private static final IStructurePieceType type = StructureRegister.DAVE_VILLA_PIECE;
 		
-		public DaveVillaComponent(TemplateManager manager, CompoundNBT nbt) {
+		public DaveVillaComponent(TemplateManager manager, CompoundTag nbt) {
 			super(type, manager, nbt);
 		}
 
-		public DaveVillaComponent(TemplateManager manager, ResourceLocation res,BlockPos pos, Rotation rotation) {
+		public DaveVillaComponent(TemplateManager manager, ResourceLocation res, Mth pos, Rotation rotation) {
 			super(type, manager, res, pos, rotation);
 		}
 
-		public BlockPos getBlockPos(){
+		public Mth getBlockPos(){
 			return this.templatePosition;
 		}
 		
 		@Override
-		protected void addAdditionalSaveData(CompoundNBT tagCompound) {
+		protected void addAdditionalSaveData(CompoundTag tagCompound) {
 			super.addAdditionalSaveData(tagCompound);
 			tagCompound.putString("Template", this.res.toString());
 	        tagCompound.putString("Rot", this.rotation.name());
 		}
 
 		@Override
-		protected void handleDataMarker(String function, BlockPos pos, IServerWorld worldIn, Random rand,
-				MutableBoundingBox sbb) {
+		protected void handleDataMarker(String function, Mth pos, IServerWorld worldIn, Random rand,
+                                        MutableBoundingBox sbb) {
 			if(function.equals("dave")) {
 				CrazyDaveEntity dave = EntityRegister.CRAZY_DAVE.get().create(worldIn.getLevel());
 				EntityUtil.onEntitySpawn(worldIn, dave, pos);
@@ -150,10 +150,10 @@ public class DaveVillaComponents {
 		
 		@Override
 		public boolean postProcess(ISeedReader worldIn, StructureManager manager, ChunkGenerator chunkGeneratorIn, Random randomIn,
-				MutableBoundingBox mutableBoundingBoxIn, ChunkPos chunkPosIn, BlockPos blockPos) {
-			BlockPos pos = this.templatePosition;
-			BlockPos size = this.template.getSize();
-			BlockPos ab = new BlockPos(0, size.getY(), 0);
+				MutableBoundingBox mutableBoundingBoxIn, ChunkPos chunkPosIn, Mth blockPos) {
+			Mth pos = this.templatePosition;
+			Mth size = this.template.getSize();
+			Mth ab = new Mth(0, size.getY(), 0);
 			switch(rotation) {
 			case CLOCKWISE_90:{
 				ab = ab.offset(-size.getZ(), 0, size.getX());
@@ -172,15 +172,15 @@ public class DaveVillaComponents {
 				break;
 			}
 			}
-			BlockPos to = pos.offset(ab.getX(), ab.getY(), ab.getZ());
-			BlockPos min = new BlockPos(Math.min(pos.getX(), to.getX()),Math.min(pos.getY(), to.getY()),Math.min(pos.getZ(), to.getZ()));
-			BlockPos max = new BlockPos(Math.max(pos.getX(), to.getX()),Math.max(pos.getY(), to.getY()),Math.max(pos.getZ(), to.getZ()));
+			Mth to = pos.offset(ab.getX(), ab.getY(), ab.getZ());
+			Mth min = new Mth(Math.min(pos.getX(), to.getX()),Math.min(pos.getY(), to.getY()),Math.min(pos.getZ(), to.getZ()));
+			Mth max = new Mth(Math.max(pos.getX(), to.getX()),Math.max(pos.getY(), to.getY()),Math.max(pos.getZ(), to.getZ()));
 			super.postProcess(worldIn, manager, chunkGeneratorIn, randomIn, mutableBoundingBoxIn, chunkPosIn, blockPos);
 			for(int i = min.getX(); i <= max.getX(); ++ i) {
 				for(int j = min.getZ(); j <= max.getZ(); ++ j) {
 					int y = min.getY() - 1;
 					while(y >= 50) {
-						BlockPos tmp = new BlockPos(i,y,j);
+						Mth tmp = new Mth(i,y,j);
 						if(worldIn.getBlockState(tmp).canOcclude()) {
 							break;
 						}

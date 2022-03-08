@@ -6,26 +6,26 @@ import com.hungteen.pvz.common.item.ItemRegister;
 import com.hungteen.pvz.common.entity.EntityRegister;
 import com.hungteen.pvz.utils.EntityUtil;
 
-import net.minecraft.entity.EntitySize;
-import net.minecraft.entity.EntityType;
-import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.Pose;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.entity.projectile.AbstractArrowEntity;
-import net.minecraft.item.ItemStack;
+import net.minecraft.world.entity.EntitySize;
+import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.Pose;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.entity.projectile.AbstractArrowEntity;
+import net.minecraft.world.item.ItemStack;
 import net.minecraft.network.IPacket;
 import net.minecraft.util.math.EntityRayTraceResult;
 import net.minecraft.util.math.vector.Vector3d;
-import net.minecraft.world.World;
+import net.minecraft.world.level.Level;
 import net.minecraftforge.fml.network.NetworkHooks;
 
 public class TargetArrowEntity extends AbstractArrowEntity {
 
-	public TargetArrowEntity(EntityType<? extends AbstractArrowEntity> type, World worldIn) {
+	public TargetArrowEntity(EntityType<? extends AbstractArrowEntity> type, Level worldIn) {
 		super(type, worldIn);
 	}
 	
-	public TargetArrowEntity(World worldIn, LivingEntity living) {
+	public TargetArrowEntity(Level worldIn, LivingEntity living) {
 		super(EntityRegister.TARGET_ARROW.get(), living, worldIn);
 	}
 	
@@ -52,7 +52,7 @@ public class TargetArrowEntity extends AbstractArrowEntity {
 	
 	@Override
 	protected void onHitEntity(EntityRayTraceResult result) {
-		if(result.getEntity() instanceof LivingEntity && this.getOwner() instanceof PlayerEntity) {// summon bungee
+		if(result.getEntity() instanceof LivingEntity && this.getOwner() instanceof Player) {// summon bungee
 			if(! BungeeZombieEntity.canBungeeSteal(result.getEntity())) {
 				super.onHitEntity(result);
 				return ;

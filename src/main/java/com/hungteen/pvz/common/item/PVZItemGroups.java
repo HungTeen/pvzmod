@@ -1,12 +1,12 @@
 package com.hungteen.pvz.common.item;
 
 import com.hungteen.pvz.common.enchantment.PVZEnchantmentTypes;
-import net.minecraft.item.ItemGroup;
-import net.minecraft.item.ItemStack;
+import net.minecraft.world.item.CreativeModeTab;
+import net.minecraft.world.item.ItemStack;
 
 public class PVZItemGroups {
 
-	public static final ItemGroup PVZ_MISC = new ItemGroup("pvz_misc") {
+	public static final CreativeModeTab PVZ_MISC = new CreativeModeTab("pvz_misc") {
 		@Override
 		public ItemStack makeIcon() {
 			return new ItemStack(ItemRegister.PEA.get());
@@ -14,21 +14,21 @@ public class PVZItemGroups {
 
 	}.setEnchantmentCategories(PVZEnchantmentTypes.getPVZEnchantmentTypes());
 	
-	public static final ItemGroup PVZ_PLANT_CARD = new ItemGroup("pvz_plant_card") {
+	public static final CreativeModeTab PVZ_PLANT_CARD = new CreativeModeTab("pvz_plant_card") {
 		@Override
 		public ItemStack makeIcon() {
 			return new ItemStack(ItemRegister.PEA_SHOOTER_CARD.get());
 		}
 	};
 	
-	public static final ItemGroup PVZ_USEFUL = new ItemGroup("pvz_useful") {
+	public static final CreativeModeTab PVZ_USEFUL = new CreativeModeTab("pvz_useful") {
 		@Override
 		public ItemStack makeIcon() {
 			return new ItemStack(ItemRegister.PEA_GUN.get());
 		}
 	};
 	
-	public static final ItemGroup PVZ_ENVELOPE = new ItemGroup("pvz_envelope") {
+	public static final CreativeModeTab PVZ_ENVELOPE = new CreativeModeTab("pvz_envelope") {
 		@Override
 		public ItemStack makeIcon() {
 			return new ItemStack(ItemRegister.CHALLENGE_ENVELOPE.get());

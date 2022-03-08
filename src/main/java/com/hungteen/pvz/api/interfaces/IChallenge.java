@@ -1,11 +1,11 @@
 package com.hungteen.pvz.api.interfaces;
 
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.world.server.ServerWorld;
+import net.minecraft.server.level.ServerLevel;
+import net.minecraft.util.Mth;
 
 public interface IChallenge {
 
-    BlockPos getCenter();
+    Mth getCenter();
 
-    ServerWorld getWorld();
+    ServerLevel getWorld();
 }

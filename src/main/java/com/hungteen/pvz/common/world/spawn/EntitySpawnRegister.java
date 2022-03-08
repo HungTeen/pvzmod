@@ -7,12 +7,12 @@ import com.hungteen.pvz.common.world.biome.BiomeRegister;
 import com.hungteen.pvz.common.entity.EntityRegister;
 import com.hungteen.pvz.utils.BiomeUtil;
 
-import net.minecraft.block.Blocks;
-import net.minecraft.entity.EntityClassification;
-import net.minecraft.entity.EntitySpawnPlacementRegistry;
-import net.minecraft.entity.EntitySpawnPlacementRegistry.PlacementType;
-import net.minecraft.entity.EntityType;
-import net.minecraft.entity.MobEntity;
+import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.entity.EntityClassification;
+import net.minecraft.world.entity.EntitySpawnPlacementRegistry;
+import net.minecraft.world.entity.EntitySpawnPlacementRegistry.PlacementType;
+import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.MobEntity;
 import net.minecraft.util.RegistryKey;
 import net.minecraft.world.biome.Biome;
 import net.minecraft.world.biome.MobSpawnInfo.Spawners;

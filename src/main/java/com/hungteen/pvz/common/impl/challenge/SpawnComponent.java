@@ -10,11 +10,11 @@ import com.hungteen.pvz.api.raid.ISpawnComponent;
 import com.hungteen.pvz.common.impl.challenge.amount.ConstantAmount;
 import com.hungteen.pvz.common.world.challenge.ChallengeManager;
 import com.mojang.brigadier.exceptions.CommandSyntaxException;
-import net.minecraft.entity.EntityType;
-import net.minecraft.nbt.CompoundNBT;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.entity.EntityType;
+import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.JsonToNBT;
 import net.minecraft.util.JSONUtils;
-import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.registries.ForgeRegistries;
 
 import java.util.Map.Entry;
@@ -24,7 +24,7 @@ public class SpawnComponent implements ISpawnComponent {
 	public static final String NAME = "default";
 	private EntityType<?> entityType;
 	private IAmountComponent spawnAmount = new ConstantAmount();
-	private CompoundNBT nbt = new CompoundNBT();
+	private CompoundTag nbt = new CompoundTag();
 	private IPlacementComponent placement;
 	private int spawnTick;
 	
@@ -88,7 +88,7 @@ public class SpawnComponent implements ISpawnComponent {
 	}
 	
 	@Override
-	public CompoundNBT getNBT() {
+	public CompoundTag getNBT() {
 		return this.nbt;
 	}
 	

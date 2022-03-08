@@ -2,8 +2,8 @@ package com.hungteen.pvz.api.raid;
 
 import com.google.gson.JsonObject;
 
-import net.minecraft.entity.EntityType;
-import net.minecraft.nbt.CompoundNBT;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.world.entity.EntityType;
 
 public interface ISpawnComponent {
 
@@ -19,7 +19,7 @@ public interface ISpawnComponent {
 	
 	IPlacementComponent getPlacement();
 	
-	CompoundNBT getNBT();
+	CompoundTag getNBT();
 	
 	EntityType<?> getSpawnType();
 	

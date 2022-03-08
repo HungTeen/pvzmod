@@ -11,18 +11,18 @@ import com.hungteen.pvz.common.misc.PVZEntityDamageSource;
 import com.hungteen.pvz.common.misc.sound.SoundRegister;
 import com.hungteen.pvz.utils.EntityUtil;
 import com.hungteen.pvz.utils.ZombieUtil;
-import net.minecraft.entity.*;
-import net.minecraft.entity.ai.attributes.Attributes;
-import net.minecraft.entity.ai.goal.Goal;
-import net.minecraft.nbt.CompoundNBT;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.sounds.SoundEvent;
+import net.minecraft.world.InteractionHand;
+import net.minecraft.world.entity.*;
+import net.minecraft.world.entity.ai.attributes.Attributes;
+import net.minecraft.world.entity.ai.goal.Goal;
 import net.minecraft.network.datasync.DataParameter;
 import net.minecraft.network.datasync.DataSerializers;
 import net.minecraft.network.datasync.EntityDataManager;
-import net.minecraft.util.Hand;
-import net.minecraft.util.SoundEvent;
 import net.minecraft.world.DifficultyInstance;
 import net.minecraft.world.IServerWorld;
-import net.minecraft.world.World;
+import net.minecraft.world.level.Level;
 
 import java.util.EnumSet;
 
@@ -33,14 +33,14 @@ public class GargantuarEntity extends PVZZombieEntity {
 	public static final int DEATH_ANIM_CD = 100;
 	public boolean isSad = false;
 	
-	public GargantuarEntity(EntityType<? extends CreatureEntity> type, World worldIn) {
+	public GargantuarEntity(EntityType<? extends CreatureEntity> type, Level worldIn) {
 		super(type, worldIn);
 		this.setIsWholeBody();
 	}
 	
 	@Override
 	public ILivingEntityData finalizeSpawn(IServerWorld worldIn, DifficultyInstance difficultyIn, SpawnReason reason,
-			ILivingEntityData spawnDataIn, CompoundNBT dataTag) {
+			ILivingEntityData spawnDataIn, CompoundTag dataTag) {
 		if(! level.isClientSide) {
 			this.setToolType(GargantuarType.values()[this.getRandom().nextInt(GargantuarType.values().length)]);
 		}
@@ -180,7 +180,7 @@ public class GargantuarEntity extends PVZZombieEntity {
     }
 
 	@Override
-	public void readAdditionalSaveData(CompoundNBT compound) {
+	public void readAdditionalSaveData(CompoundTag compound) {
 		super.readAdditionalSaveData(compound);
 		if(compound.contains("has_imp")) {
 			this.setHasImp(compound.getBoolean("has_imp"));
@@ -191,7 +191,7 @@ public class GargantuarEntity extends PVZZombieEntity {
 	}
 	
 	@Override
-	public void addAdditionalSaveData(CompoundNBT compound) {
+	public void addAdditionalSaveData(CompoundTag compound) {
 		super.addAdditionalSaveData(compound);
 		compound.putBoolean("has_imp", this.hasImp());
 		compound.putInt("weapon_type", this.getToolType().ordinal());
@@ -241,7 +241,7 @@ public class GargantuarEntity extends PVZZombieEntity {
 			double range = this.getAttackReachSqr(target);
 			if (range >= dis && this.attackTick <= 0) {
 				this.attackTick = this.zombie.getAttackCD();
-				this.attacker.swing(Hand.MAIN_HAND);
+				this.attacker.swing(InteractionHand.MAIN_HAND);
 				this.zombie.setAttackTime(GargantuarEntity.this.getCrushCD());
 			}
 		}

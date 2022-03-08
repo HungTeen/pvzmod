@@ -5,19 +5,19 @@ import com.hungteen.pvz.common.misc.sound.SoundRegister;
 import com.hungteen.pvz.client.particle.ParticleRegister;
 import com.hungteen.pvz.utils.EntityUtil;
 
-import net.minecraft.entity.Entity;
-import net.minecraft.entity.EntityType;
-import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.player.Player;
 import net.minecraft.util.math.AxisAlignedBB;
-import net.minecraft.world.World;
+import net.minecraft.world.level.Level;
 
 public class ExplosionBowlingEntity extends AbstractBowlingEntity {
 
-	public ExplosionBowlingEntity(EntityType<?> type, World worldIn) {
+	public ExplosionBowlingEntity(EntityType<?> type, Level worldIn) {
 		super(type, worldIn);
 	}
 
-	public ExplosionBowlingEntity(EntityType<?> type, World worldIn, PlayerEntity entity) {
+	public ExplosionBowlingEntity(EntityType<?> type, Level worldIn, Player entity) {
 		super(type, worldIn, entity);
 	}
 	

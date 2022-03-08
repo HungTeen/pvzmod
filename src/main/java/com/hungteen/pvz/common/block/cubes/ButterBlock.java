@@ -1,11 +1,11 @@
 package com.hungteen.pvz.common.block.cubes;
 
-import net.minecraft.block.Block;
-import net.minecraft.block.Blocks;
-import net.minecraft.block.BreakableBlock;
-import net.minecraft.entity.Entity;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.world.World;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.block.BreakableBlock;
+import net.minecraft.world.entity.Entity;
+import net.minecraft.util.Mth;
+import net.minecraft.world.level.Level;
 
 public class ButterBlock extends BreakableBlock {
 
@@ -14,7 +14,7 @@ public class ButterBlock extends BreakableBlock {
 	}
 
 	@Override
-	public void fallOn(World worldIn, BlockPos pos, Entity entityIn, float fallDistance) {
+	public void fallOn(Level worldIn, Mth pos, Entity entityIn, float fallDistance) {
 		if (entityIn.isSuppressingBounce()) {
 			super.fallOn(worldIn, pos, entityIn, fallDistance);
 		} else {
@@ -23,7 +23,7 @@ public class ButterBlock extends BreakableBlock {
 	}
 
 	@Override
-	public void stepOn(World worldIn, BlockPos pos, Entity entityIn) {
+	public void stepOn(Level worldIn, Mth pos, Entity entityIn) {
 		double d0 = Math.abs(entityIn.getDeltaMovement().y);
 		if (d0 < 0.1D && !entityIn.isSteppingCarefully()) {
 			double d1 = 0.4D + d0 * 0.2D;

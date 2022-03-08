@@ -5,12 +5,12 @@ import com.hungteen.pvz.common.entity.zombie.PVZZombieEntity;
 import com.hungteen.pvz.common.entity.zombie.part.PVZHealthPartEntity;
 import com.hungteen.pvz.utils.EntityUtil;
 import com.hungteen.pvz.utils.interfaces.IMultiPartZombie;
-import net.minecraft.entity.CreatureEntity;
-import net.minecraft.entity.EntityType;
+import net.minecraft.world.entity.CreatureEntity;
+import net.minecraft.world.entity.EntityType;
 import net.minecraft.util.DamageSource;
-import net.minecraft.util.SoundEvent;
+import net.minecraft.sounds.SoundEvent;
 import net.minecraft.util.math.vector.Vector3d;
-import net.minecraft.world.World;
+import net.minecraft.world.level.Level;
 
 /**
  * use outer defence life as extra life.
@@ -20,7 +20,7 @@ public abstract class DefenceZombieEntity extends PVZZombieEntity implements IMu
 	protected PVZHealthPartEntity part;
 	public boolean hitDefence = false;
 	
-	public DefenceZombieEntity(EntityType<? extends CreatureEntity> type, World worldIn) {
+	public DefenceZombieEntity(EntityType<? extends CreatureEntity> type, Level worldIn) {
 		super(type, worldIn);
 		resetParts();
 	}

@@ -14,12 +14,12 @@ import com.hungteen.pvz.utils.PlayerUtil;
 import com.hungteen.pvz.utils.enums.PAZAlmanacs;
 import com.hungteen.pvz.utils.enums.Resources;
 import com.mojang.datafixers.util.Pair;
-import net.minecraft.entity.CreatureEntity;
-import net.minecraft.entity.EntitySize;
-import net.minecraft.entity.EntityType;
-import net.minecraft.entity.Pose;
+import net.minecraft.world.entity.CreatureEntity;
+import net.minecraft.world.entity.EntitySize;
+import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.Pose;
 import net.minecraft.util.math.vector.Vector3d;
-import net.minecraft.world.World;
+import net.minecraft.world.level.Level;
 
 import java.util.HashSet;
 import java.util.List;
@@ -30,7 +30,7 @@ public class GoldMagnetEntity extends PVZPlantEntity {
 	private final Set<DropEntity> coinSet = new HashSet<>();
 	private static final int SEARCH_CD = 60;
 
-	public GoldMagnetEntity(EntityType<? extends CreatureEntity> type, World worldIn) {
+	public GoldMagnetEntity(EntityType<? extends CreatureEntity> type, Level worldIn) {
 		super(type, worldIn);
 	}
 

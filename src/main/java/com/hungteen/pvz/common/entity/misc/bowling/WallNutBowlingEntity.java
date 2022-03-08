@@ -7,19 +7,19 @@ import com.hungteen.pvz.common.misc.sound.SoundRegister;
 import com.hungteen.pvz.common.entity.EntityRegister;
 import com.hungteen.pvz.utils.EntityUtil;
 
-import net.minecraft.entity.Entity;
-import net.minecraft.entity.EntityType;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.entity.player.ServerPlayerEntity;
-import net.minecraft.world.World;
+import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.level.Level;
 
 public class WallNutBowlingEntity extends AbstractBowlingEntity {
 
-	public WallNutBowlingEntity(EntityType<?> type, World worldIn) {
+	public WallNutBowlingEntity(EntityType<?> type, Level worldIn) {
 		super(type, worldIn);
 	}
 	
-	public WallNutBowlingEntity(EntityType<?> type, World worldIn, PlayerEntity entity) {
+	public WallNutBowlingEntity(EntityType<?> type, Level worldIn, Player entity) {
 		super(type, worldIn, entity);
 	}
 
@@ -33,9 +33,9 @@ public class WallNutBowlingEntity extends AbstractBowlingEntity {
 		}
 		entity.hurt(PVZEntityDamageSource.normal(this, this.getOwner()).setCount(hitCount), 30);
 		EntityUtil.playSound(this, SoundRegister.BOWLING_HIT.get());
-		PlayerEntity player = (PlayerEntity) this.getOwner();
-		if(player != null && player instanceof ServerPlayerEntity) {
-			EntityEffectAmountTrigger.INSTANCE.trigger((ServerPlayerEntity) player, this, hitCount);
+		Player player = (Player) this.getOwner();
+		if(player != null && player instanceof ServerPlayer) {
+			EntityEffectAmountTrigger.INSTANCE.trigger((ServerPlayer) player, this, hitCount);
 		}
 	}
 

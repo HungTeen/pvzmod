@@ -4,7 +4,7 @@ import com.hungteen.pvz.common.world.structure.PVZStructureBase;
 import com.mojang.serialization.Codec;
 
 import net.minecraft.util.Rotation;
-import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.Mth;
 import net.minecraft.util.math.MutableBoundingBox;
 import net.minecraft.util.registry.DynamicRegistries;
 import net.minecraft.world.biome.Biome;
@@ -72,7 +72,7 @@ public class DaveVillaStructure extends PVZStructureBase<NoFeatureConfig> {
 	        int h3 = generator.getFirstOccupiedHeight(x + dx, z, Heightmap.Type.WORLD_SURFACE_WG);
 	        int h4 = generator.getFirstOccupiedHeight(x + dx, z + dz, Heightmap.Type.WORLD_SURFACE_WG);
 	        int h = (h1 + h2 + h3 + h4) / 4;
-			BlockPos blockpos = new BlockPos(x, h, z);
+			Mth blockpos = new Mth(x, h, z);
 			DaveVillaComponents.generate(templateManagerIn, blockpos, rotation, this.pieces, this.random);
 			this.calculateBoundingBox();
 		}

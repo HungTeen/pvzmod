@@ -14,23 +14,23 @@ import com.hungteen.pvz.utils.ConfigUtil;
 import com.hungteen.pvz.utils.EntityUtil;
 import com.hungteen.pvz.utils.PlayerUtil;
 import com.hungteen.pvz.utils.enums.Resources;
+import net.minecraft.ChatFormatting;
 import net.minecraft.command.impl.SummonCommand;
-import net.minecraft.entity.Entity;
-import net.minecraft.entity.MobEntity;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.entity.player.ServerPlayerEntity;
-import net.minecraft.nbt.CompoundNBT;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.TranslatableComponent;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.server.level.ServerLevel;
+import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.world.BossEvent;
+import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.MobEntity;
+import net.minecraft.util.Mth;
+import net.minecraft.world.entity.player.Player;
 import net.minecraft.nbt.ListNBT;
 import net.minecraft.nbt.NBTUtil;
-import net.minecraft.util.ResourceLocation;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.text.ITextComponent;
-import net.minecraft.util.text.TextFormatting;
-import net.minecraft.util.text.TranslationTextComponent;
-import net.minecraft.world.BossInfo;
 import net.minecraft.world.Difficulty;
-import net.minecraft.world.server.ServerBossInfo;
-import net.minecraft.world.server.ServerWorld;
+import net.minecraft.server.ServerBossInfo;
 import net.minecraftforge.common.MinecraftForge;
 
 import java.util.*;
@@ -39,14 +39,14 @@ import java.util.stream.Collectors;
 
 public class Challenge implements IChallenge {
 
-	private static final ITextComponent CHALLENGE_NAME_COMPONENT = new TranslationTextComponent("event.minecraft.raid");
-	private static final ITextComponent CHALLENGE_WARN = new TranslationTextComponent("challenge.pvz.too_far_away").withStyle(TextFormatting.RED);
-	private final ServerBossInfo challengeBar = new ServerBossInfo(CHALLENGE_NAME_COMPONENT, BossInfo.Color.RED, BossInfo.Overlay.PROGRESS);
+	private static final Component CHALLENGE_NAME_COMPONENT = new TranslatableComponent("event.minecraft.raid");
+	private static final Component CHALLENGE_WARN = new TranslatableComponent("challenge.pvz.too_far_away").withStyle(ChatFormatting.RED);
+	private final ServerBossInfo challengeBar = new ServerBossInfo(CHALLENGE_NAME_COMPONENT, BossEvent.Color.RED, BossEvent.Overlay.PROGRESS);
 	private final int id;//unique specify id.
-	public final ServerWorld world;
+	public final ServerLevel world;
 	public final ResourceLocation resource;//res to read raid component.
 	protected IChallengeComponent challenge;
-	protected BlockPos center;//raid center block position.
+	protected Mth center;//raid center block position.
 	protected Status status = Status.PREPARE;
 	protected int tick = 0;
 	protected int stopTick = 0;
@@ -58,14 +58,14 @@ public class Challenge implements IChallenge {
 	private int currentMaxLevel = 0;
 	
 	
-	public Challenge(int id, ServerWorld world, ResourceLocation res, BlockPos pos) {
+	public Challenge(int id, ServerLevel world, ResourceLocation res, Mth pos) {
 		this.id = id;
 		this.world = world;
 		this.resource = res;
 		this.center = pos;
 	}
 	
-	public Challenge(ServerWorld world, CompoundNBT nbt) {
+	public Challenge(ServerLevel world, CompoundTag nbt) {
 		this.world = world;
 		this.id = nbt.getInt("challenge_id");
 		this.status = Status.values()[nbt.getInt("challenge_status")];
@@ -76,8 +76,8 @@ public class Challenge implements IChallenge {
 		this.currentSpawn = nbt.getInt("current_spawn");
 		this.firstTick = nbt.getBoolean("first_tick");
 		{// for raid center position.
-			CompoundNBT tmp = nbt.getCompound("center_pos");
-			this.center = new BlockPos(tmp.getInt("pos_x"), tmp.getInt("pos_y"), tmp.getInt("pos_z"));
+			CompoundTag tmp = nbt.getCompound("center_pos");
+			this.center = new Mth(tmp.getInt("pos_x"), tmp.getInt("pos_y"), tmp.getInt("pos_z"));
 		}
 		{// for raiders entity id.
 			ListNBT list = nbt.getList("raiders", 11);
@@ -96,7 +96,7 @@ public class Challenge implements IChallenge {
 		}
 	}
 	
-	public void save(CompoundNBT nbt) {
+	public void save(CompoundTag nbt) {
 		nbt.putInt("challenge_id", this.id);
 		nbt.putInt("challenge_status", this.status.ordinal());
 		nbt.putString("challenge_resource", this.resource.toString());
@@ -106,7 +106,7 @@ public class Challenge implements IChallenge {
 		nbt.putInt("current_spawn", this.currentSpawn);
 		nbt.putBoolean("first_tick", this.firstTick);
 		{// for raid center position.
-			CompoundNBT tmp = new CompoundNBT();
+			CompoundTag tmp = new CompoundTag();
 			tmp.putInt("pos_x", this.center.getX());
 		    tmp.putInt("pos_y", this.center.getY());
 			tmp.putInt("pos_z", this.center.getZ());
@@ -251,7 +251,7 @@ public class Challenge implements IChallenge {
 	 */
 	private Entity createEntity(ISpawnComponent spawn) {
 		final IPlacementComponent placement = spawn.getPlacement() != null ? spawn.getPlacement() : this.challenge.getPlacement(this.currentWave);
-		final BlockPos pos = placement.getPlacePosition(this.world, this.center);
+		final Mth pos = placement.getPlacePosition(this.world, this.center);
 		return EntityUtil.createWithNBT(this.world, spawn.getSpawnType(), spawn.getNBT(), pos);
 	}
 	
@@ -267,7 +267,7 @@ public class Challenge implements IChallenge {
 			this.challengeBar.setName(this.challenge.getTitle());
 			this.challengeBar.setPercent(this.tick * 1.0F / this.challenge.getPrepareCD(this.currentWave));
 		} else if(this.isRunning()) {
-			this.challengeBar.setName(this.challenge.getTitle().copy().append(" - ").append(new TranslationTextComponent("event.minecraft.raid.raiders_remaining", this.raiders.size())));
+			this.challengeBar.setName(this.challenge.getTitle().copy().append(" - ").append(new TranslatableComponent("event.minecraft.raid.raiders_remaining", this.raiders.size())));
 			this.challengeBar.setPercent(1 - this.tick * 1.0F / this.challenge.getLastDuration(this.currentWave));
 		} else if(this.isVictory()) {
 			this.challengeBar.setName(this.challenge.getTitle().copy().append(" - ").append(this.challenge.getWinTitle()));
@@ -281,7 +281,7 @@ public class Challenge implements IChallenge {
 	/**
 	 * player who is alive and in suitable range can be tracked.
 	 */
-	private Predicate<ServerPlayerEntity> validPlayer() {
+	private Predicate<ServerPlayer> validPlayer() {
 		return (player) -> {
 			final int range = ConfigUtil.getRaidRange();
 			return player.isAlive() && Math.abs(player.getX() - this.center.getX()) < range
@@ -294,8 +294,8 @@ public class Challenge implements IChallenge {
 	 * {@link #tickBar()}
 	 */
 	protected void updatePlayers() {
-		final Set<ServerPlayerEntity> oldPlayers = Sets.newHashSet(this.challengeBar.getPlayers());
-		final Set<ServerPlayerEntity> newPlayers = Sets.newHashSet(this.world.getPlayers(this.validPlayer()));
+		final Set<ServerPlayer> oldPlayers = Sets.newHashSet(this.challengeBar.getPlayers());
+		final Set<ServerPlayer> newPlayers = Sets.newHashSet(this.world.getPlayers(this.validPlayer()));
 		
 		/* add new join players */
 		newPlayers.forEach(p -> {
@@ -323,7 +323,7 @@ public class Challenge implements IChallenge {
 			if(! this.isStopping()) {
 				++ this.stopTick;
 				this.heroes.forEach(uuid -> {
-					PlayerEntity player = this.world.getPlayerByUUID(uuid);
+					Player player = this.world.getPlayerByUUID(uuid);
 					if(player != null) {
 						PlayerUtil.sendMsgTo(player, CHALLENGE_WARN);
 					}
@@ -342,7 +342,7 @@ public class Challenge implements IChallenge {
 		this.status = Status.RUNNING;
 		this.getPlayers().forEach(p -> {
 			if(this.getRaidComponent().showRoundTitle()){
-				PlayerUtil.sendTitleToPlayer(p, new TranslationTextComponent("challenge.pvz.round", this.currentWave + 1).withStyle(TextFormatting.DARK_RED));
+				PlayerUtil.sendTitleToPlayer(p, new TranslatableComponent("challenge.pvz.round", this.currentWave + 1).withStyle(ChatFormatting.DARK_RED));
 			}
 			PlayerUtil.playClientSound(p, this.challenge.getStartWaveSound());
 		});
@@ -408,7 +408,7 @@ public class Challenge implements IChallenge {
 		return this.id;
 	}
 	
-	public BlockPos getCenter() {
+	public Mth getCenter() {
 		return this.center;
 	}
 	
@@ -454,7 +454,7 @@ public class Challenge implements IChallenge {
 	/**
 	 * get tracked players by raid bar.
 	 */
-	public List<ServerPlayerEntity> getPlayers(){
+	public List<ServerPlayer> getPlayers(){
 		return this.challengeBar.getPlayers().stream().collect(Collectors.toList());
 	}
 	
@@ -471,7 +471,7 @@ public class Challenge implements IChallenge {
 	}
 
 	@Override
-	public ServerWorld getWorld() {
+	public ServerLevel getWorld() {
 		return world;
 	}
 

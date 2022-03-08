@@ -14,22 +14,22 @@ import com.hungteen.pvz.common.misc.sound.SoundRegister;
 import com.hungteen.pvz.utils.*;
 import com.hungteen.pvz.utils.others.WeightList;
 import net.minecraft.advancements.CriteriaTriggers;
-import net.minecraft.entity.CreatureEntity;
-import net.minecraft.entity.Entity;
-import net.minecraft.entity.EntityType;
-import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.ai.goal.Goal;
-import net.minecraft.entity.ai.goal.LookAtGoal;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.nbt.CompoundNBT;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.world.entity.CreatureEntity;
+import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.ai.goal.Goal;
+import net.minecraft.world.entity.ai.goal.LookAtGoal;
+import net.minecraft.world.entity.player.Player;
 import net.minecraft.network.datasync.DataParameter;
 import net.minecraft.network.datasync.DataSerializers;
 import net.minecraft.network.datasync.EntityDataManager;
 import net.minecraft.particles.ParticleTypes;
 import net.minecraft.util.DamageSource;
-import net.minecraft.util.SoundEvent;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.world.World;
+import net.minecraft.sounds.SoundEvent;
+import net.minecraft.util.Mth;
+import net.minecraft.world.level.Level;
 
 import java.util.Arrays;
 import java.util.List;
@@ -99,7 +99,7 @@ public abstract class EdgarRobotEntity extends AbstractBossZombieEntity {
         }
     }
 
-    public EdgarRobotEntity(EntityType<? extends CreatureEntity> type, World worldIn) {
+    public EdgarRobotEntity(EntityType<? extends CreatureEntity> type, Level worldIn) {
         super(type, worldIn);
         this.setIsWholeBody();
         this.shootBallTick = this.getShootBallCD();
@@ -115,7 +115,7 @@ public abstract class EdgarRobotEntity extends AbstractBossZombieEntity {
 
     @Override
     protected void registerGoals() {
-        this.goalSelector.addGoal(7, new LookAtGoal(this, PlayerEntity.class, 40.0F));
+        this.goalSelector.addGoal(7, new LookAtGoal(this, Player.class, 40.0F));
         registerTargetGoals();
         registerAttackGoals();
     }
@@ -162,7 +162,7 @@ public abstract class EdgarRobotEntity extends AbstractBossZombieEntity {
                     bungee.setBungeeType(BungeeZombieEntity.BungeeTypes.SUMMON);
                     bungee.setBungeeState(BungeeZombieEntity.BungeeStates.DOWN);
                     bungee.setStealTarget(entity);
-                    BlockPos pos = this.getRandom().nextInt(5) == 0 ?
+                    Mth pos = this.getRandom().nextInt(5) == 0 ?
                             WorldUtil.getSuitableHeightRandomPos(this.level, blockPosition(), 20, 40) :
                             WorldUtil.getSuitableHeightRandomPos(this.level, blockPosition(), 3, 8);
                     this.onBossSummon(bungee, pos.above(20));
@@ -345,7 +345,7 @@ public abstract class EdgarRobotEntity extends AbstractBossZombieEntity {
     }
 
     @Override
-    public void readAdditionalSaveData(CompoundNBT compound) {
+    public void readAdditionalSaveData(CompoundTag compound) {
         super.readAdditionalSaveData(compound);
         if (compound.contains("zomboss_state")) {
             this.setRobotState(EdgarStates.values()[compound.getInt("zomboss_state")]);
@@ -365,7 +365,7 @@ public abstract class EdgarRobotEntity extends AbstractBossZombieEntity {
     }
 
     @Override
-    public void addAdditionalSaveData(CompoundNBT compound) {
+    public void addAdditionalSaveData(CompoundTag compound) {
         super.addAdditionalSaveData(compound);
         compound.putInt("zomboss_state", this.getRobotState().ordinal());
         compound.putInt("zomboss_throw_car_tick", this.throwCarTick);

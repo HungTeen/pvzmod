@@ -12,16 +12,16 @@ import com.hungteen.pvz.common.misc.PVZEntityDamageSource;
 import com.hungteen.pvz.common.misc.sound.SoundRegister;
 import com.hungteen.pvz.utils.EntityUtil;
 import com.hungteen.pvz.utils.WorldUtil;
-import net.minecraft.block.Blocks;
-import net.minecraft.entity.*;
+import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.entity.*;
 import net.minecraft.particles.ParticleTypes;
 import net.minecraft.util.math.AxisAlignedBB;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.world.World;
+import net.minecraft.util.Mth;
+import net.minecraft.world.level.Level;
 
 public class JalapenoEntity extends PlantBomberEntity{
 
-	public JalapenoEntity(EntityType<? extends CreatureEntity> type, World worldIn) {
+	public JalapenoEntity(EntityType<? extends CreatureEntity> type, Level worldIn) {
 		super(type, worldIn);
 	}
 
@@ -102,7 +102,7 @@ public class JalapenoEntity extends PlantBomberEntity{
 	 */
 	private static void clearSnow(LivingEntity entity, int dx, int dz) {
 		if(! entity.level.isClientSide) {
-		    final BlockPos pos = entity.blockPosition().offset(dx, 0, dz);
+		    final Mth pos = entity.blockPosition().offset(dx, 0, dz);
 		    if(entity.level.getBlockState(pos).getBlock() == Blocks.SNOW || entity.level.getBlockState(pos).getBlock() == Blocks.SNOW_BLOCK) {
 			    entity.level.setBlockAndUpdate(pos, Blocks.AIR.defaultBlockState());
 		    }

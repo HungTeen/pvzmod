@@ -1,9 +1,9 @@
 package com.hungteen.pvz.common.world.invasion;
 
 import com.hungteen.pvz.PVZConfig;
-import net.minecraft.nbt.CompoundNBT;
-import net.minecraft.world.World;
-import net.minecraft.world.server.ServerWorld;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.server.level.ServerLevel;
+import net.minecraft.world.level.Level;
 import net.minecraft.world.storage.DimensionSavedDataManager;
 import net.minecraft.world.storage.WorldSavedData;
 
@@ -52,13 +52,13 @@ public class PVZInvasionData extends WorldSavedData {
 
 
 	@Override
-	public void load(CompoundNBT nbt) {
+	public void load(CompoundTag nbt) {
 		this.changed = nbt.getBoolean("changed");
 		this.countDownDay = nbt.getInt("count_down_day");
 	}
 
 	@Override
-	public CompoundNBT save(CompoundNBT nbt) {
+	public CompoundTag save(CompoundTag nbt) {
 		nbt.putBoolean("changed", this.changed);
 		nbt.putInt("count_down_day", this.countDownDay);
 		return nbt;
@@ -73,11 +73,11 @@ public class PVZInvasionData extends WorldSavedData {
 //		return storage.computeIfAbsent(PVZInvasionData::new, DATA_NAME);
 //	}
 	
-	public static PVZInvasionData getOverWorldInvasionData(World worldIn) {
-		if (!(worldIn instanceof ServerWorld)) {
+	public static PVZInvasionData getOverWorldInvasionData(Level worldIn) {
+		if (!(worldIn instanceof ServerLevel)) {
 			throw new RuntimeException("Attempted to get the data from a client world. This is wrong.");
 		}
-		final ServerWorld world = worldIn.getServer().getLevel(World.OVERWORLD);
+		final ServerLevel world = worldIn.getServer().getLevel(Level.OVERWORLD);
 		DimensionSavedDataManager storage = world.getDataStorage();
 		return storage.computeIfAbsent(PVZInvasionData::new, DATA_NAME);
 	}

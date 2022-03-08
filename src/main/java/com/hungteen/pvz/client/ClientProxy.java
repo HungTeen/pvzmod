@@ -13,8 +13,8 @@ import com.hungteen.pvz.utils.StringUtil;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.entity.LivingRenderer;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.item.ItemModelsProperties;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.ItemModelsProperties;
 import net.minecraft.util.math.vector.Vector3d;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
@@ -56,7 +56,7 @@ public class ClientProxy extends CommonProxy{
 
 	@Override
 	public void climbUp() {
-		final PlayerEntity player = this.getPlayer();
+		final Player player = this.getPlayer();
 		if(player != null && player.horizontalCollision && player.onClimbable()){
 			//is on steel ladder.
 			if(player.level.getBlockState(player.blockPosition()).getBlock().is(BlockRegister.STEEL_LADDER.get())) {
@@ -72,7 +72,7 @@ public class ClientProxy extends CommonProxy{
 	}
 
 	@Override
-	public PlayerEntity getPlayer() {
+	public Player getPlayer() {
 		return MC.player;
 	}
 }

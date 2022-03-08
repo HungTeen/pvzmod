@@ -1,11 +1,11 @@
 package com.hungteen.pvz.common.entity.ai.goal.attack;
 
 import com.hungteen.pvz.utils.EntityUtil;
-import net.minecraft.entity.CreatureEntity;
-import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.ai.goal.Goal;
+import net.minecraft.world.entity.CreatureEntity;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.ai.goal.Goal;
 import net.minecraft.pathfinding.Path;
-import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.Mth;
 
 import java.util.EnumSet;
 
@@ -62,7 +62,7 @@ public abstract class PVZMeleeAttackGoal extends Goal {
 		LivingEntity living = this.attacker.getTarget();
 		if (! EntityUtil.isEntityValid(living)) return false;
 		if (! this.longMemory) return ! this.attacker.getNavigation().isDone();
-		if (! this.attacker.isWithinRestriction(new BlockPos(living.position()))) {
+		if (! this.attacker.isWithinRestriction(new Mth(living.position()))) {
 			return false;
 		}
 		return EntityUtil.checkCanEntityBeAttack(this.attacker, living);

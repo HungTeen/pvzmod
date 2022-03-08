@@ -2,7 +2,7 @@ package com.hungteen.pvz.utils.interfaces;
 
 import com.hungteen.pvz.common.entity.ai.goal.misc.PlantAttractGoal;
 
-import net.minecraft.entity.LivingEntity;
+import net.minecraft.world.entity.LivingEntity;
 
 /**
  * {@link PlantAttractGoal}

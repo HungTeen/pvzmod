@@ -6,24 +6,24 @@ import com.hungteen.pvz.common.impl.zombie.ZombieType;
 import com.hungteen.pvz.common.impl.zombie.CustomZombies;
 import com.hungteen.pvz.common.misc.PVZLoot;
 import com.hungteen.pvz.utils.ZombieUtil;
-import net.minecraft.block.FlowingFluidBlock;
-import net.minecraft.entity.CreatureEntity;
-import net.minecraft.entity.Entity;
-import net.minecraft.entity.EntityType;
-import net.minecraft.entity.ai.attributes.Attributes;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.level.block.FlowingFluidBlock;
+import net.minecraft.world.entity.CreatureEntity;
+import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.fluid.Fluid;
 import net.minecraft.pathfinding.PathNavigator;
 import net.minecraft.pathfinding.PathNodeType;
 import net.minecraft.tags.FluidTags;
-import net.minecraft.util.ResourceLocation;
-import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.Mth;
 import net.minecraft.util.math.shapes.ISelectionContext;
 import net.minecraft.world.IWorldReader;
-import net.minecraft.world.World;
+import net.minecraft.world.level.Level;
 
 public class LavaZombieEntity extends SwimmerZombieEntity {
 
-	public LavaZombieEntity(EntityType<? extends CreatureEntity> type, World worldIn) {
+	public LavaZombieEntity(EntityType<? extends CreatureEntity> type, Level worldIn) {
 		super(type, worldIn);
 		this.setPathfindingMalus(PathNodeType.LAVA, 0.0F);
 	}
@@ -70,7 +70,7 @@ public class LavaZombieEntity extends SwimmerZombieEntity {
 	}
 
 	@Override
-	public float getWalkTargetValue(BlockPos p_205022_1_, IWorldReader p_205022_2_) {
+	public float getWalkTargetValue(Mth p_205022_1_, IWorldReader p_205022_2_) {
 		if (p_205022_2_.getBlockState(p_205022_1_).getFluidState().is(FluidTags.LAVA)) {
 			return 10.0F;
 		} else {
@@ -84,7 +84,7 @@ public class LavaZombieEntity extends SwimmerZombieEntity {
 	}
 
 	@Override
-	protected PathNavigator createNavigation(World world) {
+	protected PathNavigator createNavigation(Level world) {
 		return new LavaZombiePathNavigator(this, world);
 	}
 

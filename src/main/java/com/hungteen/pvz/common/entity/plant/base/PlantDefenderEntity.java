@@ -7,18 +7,18 @@ import com.hungteen.pvz.common.entity.plant.PVZPlantEntity;
 import com.hungteen.pvz.utils.enums.PAZAlmanacs;
 import com.hungteen.pvz.utils.interfaces.ICanAttract;
 import com.mojang.datafixers.util.Pair;
-import net.minecraft.entity.CreatureEntity;
-import net.minecraft.entity.EntityType;
-import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.MobEntity;
-import net.minecraft.world.World;
+import net.minecraft.world.entity.CreatureEntity;
+import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.MobEntity;
+import net.minecraft.world.level.Level;
 
 import java.util.Arrays;
 import java.util.List;
 
 public abstract class PlantDefenderEntity extends PVZPlantEntity implements ICanAttract {
 
-	public PlantDefenderEntity(EntityType<? extends CreatureEntity> type, World worldIn) {
+	public PlantDefenderEntity(EntityType<? extends CreatureEntity> type, Level worldIn) {
 		super(type, worldIn);
 	}
 	

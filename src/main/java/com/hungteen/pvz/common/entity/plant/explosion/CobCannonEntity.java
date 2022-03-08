@@ -13,21 +13,22 @@ import com.hungteen.pvz.common.network.toserver.EntityInteractPacket;
 import com.hungteen.pvz.utils.EntityUtil;
 import com.hungteen.pvz.utils.enums.PAZAlmanacs;
 import com.mojang.datafixers.util.Pair;
-import net.minecraft.entity.*;
-import net.minecraft.entity.ai.attributes.Attributes;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.entity.projectile.ProjectileHelper;
-import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.CompoundNBT;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.world.InteractionHand;
+import net.minecraft.world.InteractionResult;
+import net.minecraft.world.entity.*;
+import net.minecraft.world.entity.ai.attributes.Attributes;
+import net.minecraft.util.Mth;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.entity.projectile.ProjectileHelper;
+import net.minecraft.world.item.ItemStack;
 import net.minecraft.network.datasync.DataParameter;
 import net.minecraft.network.datasync.DataSerializers;
 import net.minecraft.network.datasync.EntityDataManager;
-import net.minecraft.util.ActionResultType;
-import net.minecraft.util.Hand;
 import net.minecraft.util.math.*;
 import net.minecraft.util.math.RayTraceResult.Type;
 import net.minecraft.util.math.vector.Vector3d;
-import net.minecraft.world.World;
+import net.minecraft.world.level.Level;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 
@@ -41,13 +42,13 @@ public class CobCannonEntity extends PVZPlantEntity {
 	protected static final DataParameter<Integer> CORN_NUM = EntityDataManager.defineId(CobCannonEntity.class,
 			DataSerializers.INT);
 	protected Optional<LivingEntity> lockTarget = Optional.empty();
-	protected Optional<BlockPos> lockPos = Optional.empty();
+	protected Optional<Mth> lockPos = Optional.empty();
 	protected int cornCnt = 0;
 	protected final int MaxCornCnt = 16;
 	protected int preTick = 0;
 	private int climbTick = 0;
 
-	public CobCannonEntity(EntityType<? extends CreatureEntity> type, World worldIn) {
+	public CobCannonEntity(EntityType<? extends CreatureEntity> type, Level worldIn) {
 		super(type, worldIn);
 		this.canCollideWithPlant = false;
 		this.isImmuneToWeak = true;
@@ -101,7 +102,7 @@ public class CobCannonEntity extends PVZPlantEntity {
 	public void checkAndAttack() {
 		//is in player's control and not in attacking.
 		if(this.getAttackTime() == 0 && this.isPlayerRiding()) {
-			final PlayerEntity player = (PlayerEntity) this.getPassengers().get(0);
+			final Player player = (Player) this.getPassengers().get(0);
 			final Vector3d look = player.getLookAngle();
 		    final Vector3d start = player.position().add(0, player.getEyeHeight(), 0);
 		    final double range = 60;
@@ -120,7 +121,7 @@ public class CobCannonEntity extends PVZPlantEntity {
 			    }
 		    } else if(result.getType() == RayTraceResult.Type.BLOCK) {//attack block.
 		    	this.setAttackTime(this.getAnimCD());
-		    	BlockPos pos = new BlockPos(end.x(), end.y(), end.z());
+		    	Mth pos = new Mth(end.x(), end.y(), end.z());
 		    	this.setCornNum(this.getCornNum() - 1);
 		    	this.lockPos = Optional.ofNullable(pos);
 		    }
@@ -166,7 +167,7 @@ public class CobCannonEntity extends PVZPlantEntity {
 	 * shoot to block.
 	 * {@link #startAttack()}
 	 */
-	protected void shootCorn(BlockPos pos) {
+	protected void shootCorn(Mth pos) {
 		CornEntity corn = new CornEntity(level, this);
 		this.onShootCorn(corn);
 		corn.shootPultBullet(pos);
@@ -182,21 +183,21 @@ public class CobCannonEntity extends PVZPlantEntity {
 	}
 	
 	@Override
-	public ActionResultType interactAt(PlayerEntity player, Vector3d vec3d, Hand hand) {
+	public InteractionResult interactAt(Player player, Vector3d vec3d, InteractionHand hand) {
 		if (player.isSecondaryUseActive() || EntityUtil.canTargetEntity(this, player)) {
-			return ActionResultType.FAIL;
+			return InteractionResult.FAIL;
 		}
 		ItemStack stack = player.getItemInHand(hand);
 		if(this.getAttackTime() == 0 && stack.isEmpty()) {
 			if(this.mountTo(player)) {
-				return ActionResultType.SUCCESS;
+				return InteractionResult.SUCCESS;
 			}
 		} else if(stack.getItem() == ItemRegister.CORN.get()) { 
 			if(this.cornCnt < this.MaxCornCnt) {
 			    ++ this.cornCnt;
 			    stack.shrink(Math.min(stack.getCount(), this.MaxCornCnt - this.cornCnt));
 			}
-			return ActionResultType.CONSUME;
+			return InteractionResult.CONSUME;
 		}
 		return super.interactAt(player, vec3d, hand);
 	}
@@ -216,7 +217,7 @@ public class CobCannonEntity extends PVZPlantEntity {
 	 * Gets the EntityRayTraceResult representing the entity hit
 	 */
 	@Nullable
-	protected EntityRayTraceResult rayTraceEntities(World world, PlayerEntity player, double range, Vector3d startVec, Vector3d endVec) {
+	protected EntityRayTraceResult rayTraceEntities(Level world, Player player, double range, Vector3d startVec, Vector3d endVec) {
 		return ProjectileHelper.getEntityHitResult(world, player, startVec, endVec, 
 				player.getBoundingBox().inflate(range), entity -> {
 			return EntityUtil.isEntityValid(entity) && entity instanceof LivingEntity && ! entity.is(this);
@@ -225,7 +226,7 @@ public class CobCannonEntity extends PVZPlantEntity {
 
 	public boolean isPlayerRiding() {
 		for (Entity entity : this.getPassengers()) {
-			if (entity instanceof PlayerEntity)
+			if (entity instanceof Player)
 				return true;
 		}
 		return false;
@@ -237,14 +238,14 @@ public class CobCannonEntity extends PVZPlantEntity {
 	}
 
 	@OnlyIn(Dist.CLIENT)
-	private boolean isRidingPlayer(PlayerEntity player) {
+	private boolean isRidingPlayer(Player player) {
 		return player.getVehicle() != null && player.getVehicle() == this;
 	}
 
 	public void travel(Vector3d p_213352_1_) {
 		if (this.isAlive()) {
 			if (this.isVehicle() && this.isPlayerRiding()) {
-				PlayerEntity player = (PlayerEntity) this.getPassengers().get(0);
+				Player player = (Player) this.getPassengers().get(0);
 				if (player == null) {
 					System.out.println("ERROR : Wrong judge !");
 					return;
@@ -293,7 +294,7 @@ public class CobCannonEntity extends PVZPlantEntity {
 		return this.isInWaterOrBubble();
 	}
 
-	protected boolean mountTo(PlayerEntity player) {
+	protected boolean mountTo(Player player) {
 		if (!this.level.isClientSide) {
 			this.yRot = player.yRot;
 			this.xRot = player.xRot;
@@ -359,7 +360,7 @@ public class CobCannonEntity extends PVZPlantEntity {
 	}
 
 	@Override
-	public void readAdditionalSaveData(CompoundNBT compound) {
+	public void readAdditionalSaveData(CompoundTag compound) {
 		super.readAdditionalSaveData(compound);
 		if (compound.contains("cannon_pre_tick")) {
 			this.preTick = compound.getInt("cannon_pre_tick");
@@ -377,13 +378,13 @@ public class CobCannonEntity extends PVZPlantEntity {
 			}
 		}
 		if(compound.contains("cannon_lock_pos")) {
-			CompoundNBT nbt = compound.getCompound("cannon_lock_pos");
-			this.lockPos = Optional.ofNullable(new BlockPos(nbt.getInt("lock_posX"), nbt.getInt("lock_posY"), nbt.getInt("lock_posZ")));
+			CompoundTag nbt = compound.getCompound("cannon_lock_pos");
+			this.lockPos = Optional.ofNullable(new Mth(nbt.getInt("lock_posX"), nbt.getInt("lock_posY"), nbt.getInt("lock_posZ")));
 		}
 	}
 
 	@Override
-	public void addAdditionalSaveData(CompoundNBT compound) {
+	public void addAdditionalSaveData(CompoundTag compound) {
 		super.addAdditionalSaveData(compound);
 		compound.putInt("cannon_pre_tick", this.preTick);
 		compound.putInt("cannon_corn_num", this.getCornNum());
@@ -392,7 +393,7 @@ public class CobCannonEntity extends PVZPlantEntity {
 			compound.putInt("cannon_lock_target", this.lockTarget.get().getId());
 		}
 		if(this.lockPos.isPresent()) {
-			CompoundNBT nbt = new CompoundNBT();
+			CompoundTag nbt = new CompoundTag();
 			nbt.putInt("lock_posX", this.lockPos.get().getX());
 			nbt.putInt("lock_posY", this.lockPos.get().getY());
 			nbt.putInt("lock_posZ", this.lockPos.get().getZ());

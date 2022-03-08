@@ -34,35 +34,36 @@ import com.hungteen.pvz.utils.ConfigUtil;
 import com.hungteen.pvz.utils.EntityUtil;
 import com.hungteen.pvz.utils.ZombieUtil;
 import com.hungteen.pvz.utils.interfaces.ICanAttract;
-import net.minecraft.block.Block;
-import net.minecraft.block.BlockState;
-import net.minecraft.block.Blocks;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.BlockState;
+import net.minecraft.world.level.block.Blocks;
 import net.minecraft.enchantment.EnchantmentHelper;
-import net.minecraft.entity.*;
-import net.minecraft.entity.ai.attributes.AttributeModifierMap;
-import net.minecraft.entity.ai.attributes.Attributes;
-import net.minecraft.entity.ai.goal.RandomWalkingGoal;
-import net.minecraft.entity.item.ItemEntity;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.item.AxeItem;
-import net.minecraft.item.ItemStack;
-import net.minecraft.item.Items;
-import net.minecraft.nbt.CompoundNBT;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.sounds.SoundEvent;
+import net.minecraft.world.effect.MobEffectInstance;
+import net.minecraft.world.entity.*;
+import net.minecraft.world.entity.ai.attributes.AttributeModifierMap;
+import net.minecraft.world.entity.ai.attributes.Attributes;
+import net.minecraft.world.entity.ai.goal.RandomWalkingGoal;
+import net.minecraft.world.entity.item.ItemEntity;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.AxeItem;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Items;
 import net.minecraft.network.datasync.DataParameter;
 import net.minecraft.network.datasync.DataSerializers;
 import net.minecraft.network.datasync.EntityDataManager;
 import net.minecraft.pathfinding.PathNavigator;
 import net.minecraft.pathfinding.PathNodeType;
-import net.minecraft.potion.EffectInstance;
-import net.minecraft.potion.Effects;
+import net.minecraft.world.effect.Effects;
 import net.minecraft.tags.FluidTags;
 import net.minecraft.tileentity.MobSpawnerTileEntity;
 import net.minecraft.util.DamageSource;
-import net.minecraft.util.SoundEvent;
-import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.Mth;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.vector.Vector3d;
 import net.minecraft.world.*;
+import net.minecraft.world.level.Level;
 
 import java.util.List;
 import java.util.Optional;
@@ -86,7 +87,7 @@ public abstract class PVZZombieEntity extends AbstractPAZEntity implements IZomb
 	protected int climbUpTick = 0;
 	protected int maxClimbUpTick = 5;
 
-	public PVZZombieEntity(EntityType<? extends CreatureEntity> type, World worldIn) {
+	public PVZZombieEntity(EntityType<? extends CreatureEntity> type, Level worldIn) {
 		super(type, worldIn);
 		this.xpReward = this.getZombieXp() / 2;
 		this.setPathfindingMalus(PathNodeType.DANGER_FIRE, 6.0F);
@@ -147,7 +148,7 @@ public abstract class PVZZombieEntity extends AbstractPAZEntity implements IZomb
 	}
 	
 	@Override
-	protected PathNavigator createNavigation(World world) {
+	protected PathNavigator createNavigation(Level world) {
 		return super.createNavigation(world);
 //		return new ZombiePathNavigator(this, world);
 	}
@@ -155,13 +156,13 @@ public abstract class PVZZombieEntity extends AbstractPAZEntity implements IZomb
 	/* handle spawn */
 
 	@Override
-	public void finalizeSpawn(CompoundNBT tag) {
+	public void finalizeSpawn(CompoundTag tag) {
 		super.finalizeSpawn(tag);
 		if(! this.level.isClientSide){
 			this.setZombieType(this.getSpawnType());
 			if(this.needRising) {// rising from dirt.
 				this.setAnimTime(- RISING_CD);
-				this.addEffect(new EffectInstance(Effects.MOVEMENT_SLOWDOWN, RISING_CD + 10, 20, false, false));
+				this.addEffect(new MobEffectInstance(Effects.MOVEMENT_SLOWDOWN, RISING_CD + 10, 20, false, false));
 			}
 		}
 	}
@@ -302,14 +303,14 @@ public abstract class PVZZombieEntity extends AbstractPAZEntity implements IZomb
 	/**
 	 * trigger when zombie be mini state.
 	 * change max health to 60% and give speed effect and damage boost.
-	 * {@link #finalizeSpawn(IServerWorld, DifficultyInstance, SpawnReason, ILivingEntityData, CompoundNBT)}
+	 * {@link #finalizeSpawn(IServerWorld, DifficultyInstance, SpawnReason, ILivingEntityData, CompoundTag)}
 	 */
 	public void onZombieBeMini() {
 		this.setMiniZombie(true);
 		final float healthDec = 0.6F;
 		EntityUtil.setLivingMaxHealthAndHeal(this, this.getMaxHealth() * healthDec);
-		this.addEffect(new EffectInstance(Effects.MOVEMENT_SPEED, 1000000, 0, false, false));
-		this.addEffect(new EffectInstance(Effects.DAMAGE_BOOST, 1000000, 0, false, false));
+		this.addEffect(new MobEffectInstance(Effects.MOVEMENT_SPEED, 1000000, 0, false, false));
+		this.addEffect(new MobEffectInstance(Effects.DAMAGE_BOOST, 1000000, 0, false, false));
 	}
 
 	@Override
@@ -480,7 +481,7 @@ public abstract class PVZZombieEntity extends AbstractPAZEntity implements IZomb
 		if (source.isDefended()) {
 			return;
 		}
-		for (EffectInstance effect : source.getEffects()) {
+		for (MobEffectInstance effect : source.getEffects()) {
 			EntityUtil.addPotionEffect(this, effect);
 		}
 	}
@@ -511,8 +512,8 @@ public abstract class PVZZombieEntity extends AbstractPAZEntity implements IZomb
 				this.setDeltaMovement(this.getDeltaMovement().multiply(0.6D, 1.0D, 0.6D));
 			}
 
-			if (entityIn instanceof PlayerEntity) {
-				PlayerEntity playerentity = (PlayerEntity) entityIn;
+			if (entityIn instanceof Player) {
+				Player playerentity = (Player) entityIn;
 				this.maybeDisableShield(playerentity, this.getMainHandItem(),
 						playerentity.isUsingItem() ? playerentity.getUseItem() : ItemStack.EMPTY);
 			}
@@ -526,7 +527,7 @@ public abstract class PVZZombieEntity extends AbstractPAZEntity implements IZomb
 	/**
 	 * copy from default code.
 	 */
-	private void maybeDisableShield(PlayerEntity p_233655_1_, ItemStack p_233655_2_, ItemStack p_233655_3_) {
+	private void maybeDisableShield(Player p_233655_1_, ItemStack p_233655_2_, ItemStack p_233655_3_) {
 		if (!p_233655_2_.isEmpty() && !p_233655_3_.isEmpty() && p_233655_2_.getItem() instanceof AxeItem
 				&& p_233655_3_.getItem() == Items.SHIELD) {
 			float f = 0.25F + (float) EnchantmentHelper.getBlockEfficiency(this) * 0.05F;
@@ -543,7 +544,7 @@ public abstract class PVZZombieEntity extends AbstractPAZEntity implements IZomb
 	}
 	
 	@Override
-	public float getWalkTargetValue(BlockPos pos, IWorldReader worldIn) {
+	public float getWalkTargetValue(Mth pos, IWorldReader worldIn) {
 		return 9 - worldIn.getBrightness(LightType.BLOCK, pos);
 	}
 	
@@ -711,7 +712,7 @@ public abstract class PVZZombieEntity extends AbstractPAZEntity implements IZomb
 	}
 	
 	@Override
-	public boolean canBeLeashed(PlayerEntity player) {
+	public boolean canBeLeashed(Player player) {
 		return ! EntityUtil.checkCanEntityBeAttack(this, player);
 	}
 	
@@ -742,9 +743,9 @@ public abstract class PVZZombieEntity extends AbstractPAZEntity implements IZomb
 
 	/**
 	 * check can zombie add effect.
-	 * {@link EntityUtil#addPotionEffect(Entity, EffectInstance)}
+	 * {@link EntityUtil#addPotionEffect(Entity, MobEffectInstance)}
 	 */
-	public void checkAndAddPotionEffect(EffectInstance effect) {
+	public void checkAndAddPotionEffect(MobEffectInstance effect) {
 		if (effect.getEffect() == EffectRegister.COLD_EFFECT.get() && !this.canBeCold()) {
 			return;
 		}
@@ -902,7 +903,7 @@ public abstract class PVZZombieEntity extends AbstractPAZEntity implements IZomb
 	/* data */
 	
 	@Override
-	public void addAdditionalSaveData(CompoundNBT compound) {
+	public void addAdditionalSaveData(CompoundTag compound) {
 		super.addAdditionalSaveData(compound);
 		compound.putInt("zombie_type", this.getVariantType().ordinal());
 		compound.putInt("zombie_attack_time", this.getAttackTime());
@@ -910,7 +911,7 @@ public abstract class PVZZombieEntity extends AbstractPAZEntity implements IZomb
 	}
 
 	@Override
-	public void readAdditionalSaveData(CompoundNBT compound) {
+	public void readAdditionalSaveData(CompoundTag compound) {
 		super.readAdditionalSaveData(compound);
 		if (compound.contains("zombie_type")) {
 			this.setZombieType(VariantType.values()[compound.getInt("zombie_type")]);

@@ -1,15 +1,15 @@
 package com.hungteen.pvz.common.tileentity;
 
 import com.hungteen.pvz.common.container.EssenceAltarContainer;
-import net.minecraft.block.BlockState;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.entity.player.PlayerInventory;
+import net.minecraft.world.level.block.BlockState;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.entity.player.PlayerInventory;
 import net.minecraft.inventory.container.Container;
 import net.minecraft.inventory.container.INamedContainerProvider;
-import net.minecraft.nbt.CompoundNBT;
+import net.minecraft.nbt.CompoundTag;
 import net.minecraft.tileentity.ITickableTileEntity;
-import net.minecraft.util.text.ITextComponent;
-import net.minecraft.util.text.TranslationTextComponent;
+import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraftforge.items.ItemStackHandler;
 
 /**
@@ -32,7 +32,7 @@ public class EssenceAltarTileEntity extends PVZTileEntity implements INamedConta
    	}
 
     @Override
-    public void load(BlockState state, CompoundNBT compound) {
+    public void load(BlockState state, CompoundTag compound) {
         super.load(state, compound);
         if (compound.contains("essence_altar_slots")) {
             this.handler.deserializeNBT(compound.getCompound("essence_altar_slots"));
@@ -43,19 +43,19 @@ public class EssenceAltarTileEntity extends PVZTileEntity implements INamedConta
     }
 
     @Override
-    public CompoundNBT save(CompoundNBT compound) {
+    public CompoundTag save(CompoundTag compound) {
         compound.put("essence_altar_slots", this.handler.serializeNBT());
         compound.putInt("tick", this.tick);
         return super.save(compound);
     }
 
     @Override
-    public ITextComponent getDisplayName() {
-        return new TranslationTextComponent("block.pvz.essence_altar");
+    public Component getDisplayName() {
+        return new TranslatableComponent("block.pvz.essence_altar");
     }
 
     @Override
-    public Container createMenu(int id, PlayerInventory inv, PlayerEntity player) {
+    public Container createMenu(int id, PlayerInventory inv, Player player) {
         return new EssenceAltarContainer(id, player, this.worldPosition);
     }
 

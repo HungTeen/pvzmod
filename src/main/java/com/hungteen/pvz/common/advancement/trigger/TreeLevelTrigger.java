@@ -9,9 +9,9 @@ import net.minecraft.advancements.criterion.AbstractCriterionTrigger;
 import net.minecraft.advancements.criterion.CriterionInstance;
 import net.minecraft.advancements.criterion.EntityPredicate;
 import net.minecraft.advancements.criterion.EntityPredicate.AndPredicate;
-import net.minecraft.entity.player.ServerPlayerEntity;
+import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.loot.ConditionArrayParser;
-import net.minecraft.util.ResourceLocation;
+import net.minecraft.resources.ResourceLocation;
 
 public class TreeLevelTrigger extends AbstractCriterionTrigger<TreeLevelTrigger.Instance> {
 
@@ -32,7 +32,7 @@ public class TreeLevelTrigger extends AbstractCriterionTrigger<TreeLevelTrigger.
 		return new Instance(player, amount);
 	}
 
-	public void trigger(ServerPlayerEntity player, int amount) {
+	public void trigger(ServerPlayer player, int amount) {
 		this.trigger(player, (instance) -> {
 			return instance.test(player, amount);
 		});
@@ -46,7 +46,7 @@ public class TreeLevelTrigger extends AbstractCriterionTrigger<TreeLevelTrigger.
 			this.amount = amount;
 		}
 
-		public boolean test(ServerPlayerEntity player, int amount) {
+		public boolean test(ServerPlayer player, int amount) {
 			return this.amount.test(player, amount);
 		}
 

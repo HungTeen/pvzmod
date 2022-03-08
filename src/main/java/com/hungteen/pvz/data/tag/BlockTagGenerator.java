@@ -5,8 +5,8 @@ import com.hungteen.pvz.api.PVZAPI;
 import com.hungteen.pvz.common.block.BlockRegister;
 import com.hungteen.pvz.common.misc.tag.PVZBlockTags;
 
-import net.minecraft.block.Block;
-import net.minecraft.block.Blocks;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.Blocks;
 import net.minecraft.data.BlockTagsProvider;
 import net.minecraft.data.DataGenerator;
 import net.minecraft.tags.BlockTags;

@@ -9,7 +9,7 @@ import com.mojang.brigadier.builder.LiteralArgumentBuilder;
 import net.minecraft.command.CommandSource;
 import net.minecraft.command.Commands;
 import net.minecraft.command.arguments.EntityArgument;
-import net.minecraft.entity.player.ServerPlayerEntity;
+import net.minecraft.server.level.ServerPlayer;
 
 import java.util.Collection;
 
@@ -47,37 +47,37 @@ public class PAZCommand {
         dispatcher.register(builder);
     }
 
-	private static int setZombieLocks(CommandSource source, Collection<? extends ServerPlayerEntity> targets, boolean is) {
+	private static int setZombieLocks(CommandSource source, Collection<? extends ServerPlayer> targets, boolean is) {
 		PVZAPI.get().getZombies().forEach(p -> {
 			setPAZLock(source, targets, p, is);
 		});
 		return targets.size();
 	}
 
-	private static int setPlantLocks(CommandSource source, Collection<? extends ServerPlayerEntity> targets, boolean is) {
+	private static int setPlantLocks(CommandSource source, Collection<? extends ServerPlayer> targets, boolean is) {
 		PVZAPI.get().getPlants().forEach(p -> {
 			setPAZLock(source, targets, p, is);
 		});
 		return targets.size();
 	}
 
-	private static int setAllLocks(CommandSource source, Collection<? extends ServerPlayerEntity> targets, boolean is) {
+	private static int setAllLocks(CommandSource source, Collection<? extends ServerPlayer> targets, boolean is) {
 		PVZAPI.get().getPAZs().forEach(p -> {
 			setPAZLock(source, targets, p, is);
 		});
 		return targets.size();
 	}
 
-	private static int setPAZLock(CommandSource source, Collection<? extends ServerPlayerEntity> targets, IPAZType plant, boolean is) {
-		for(ServerPlayerEntity player : targets) {
+	private static int setPAZLock(CommandSource source, Collection<? extends ServerPlayer> targets, IPAZType plant, boolean is) {
+		for(ServerPlayer player : targets) {
 			PlayerUtil.setPAZLock(player, plant, is);
 			source.sendSuccess(plant.getText().append(" : " + PlayerUtil.isPAZLocked(player, plant)), true);
 		}
 		return targets.size();
 	}
 
-	private static int queryPAZLock(CommandSource source, Collection<? extends ServerPlayerEntity> targets, IPAZType plant) {
-		for(ServerPlayerEntity player:targets) {
+	private static int queryPAZLock(CommandSource source, Collection<? extends ServerPlayer> targets, IPAZType plant) {
+		for(ServerPlayer player:targets) {
 			source.sendSuccess(plant.getText().append(" : " + PlayerUtil.isPAZLocked(player, plant)), true);
 		}
 		return targets.size();

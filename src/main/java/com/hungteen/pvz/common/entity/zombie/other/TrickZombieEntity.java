@@ -9,20 +9,20 @@ import com.hungteen.pvz.common.misc.PVZLoot;
 import com.hungteen.pvz.common.entity.EntityRegister;
 import com.hungteen.pvz.utils.EntityUtil;
 import com.hungteen.pvz.utils.ZombieUtil;
-import net.minecraft.entity.CreatureEntity;
-import net.minecraft.entity.EntitySize;
-import net.minecraft.entity.EntityType;
-import net.minecraft.entity.Pose;
-import net.minecraft.entity.ai.attributes.Attributes;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.util.ActionResultType;
+import net.minecraft.world.InteractionResult;
+import net.minecraft.world.entity.CreatureEntity;
+import net.minecraft.world.entity.EntitySize;
+import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.Pose;
+import net.minecraft.world.entity.ai.attributes.Attributes;
+import net.minecraft.world.entity.player.Player;
 import net.minecraft.util.DamageSource;
-import net.minecraft.util.Hand;
-import net.minecraft.util.ResourceLocation;
-import net.minecraft.util.math.BlockPos;
+import net.minecraft.world.InteractionHand;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.util.Mth;
 import net.minecraft.util.math.vector.Vector3d;
 import net.minecraft.world.Explosion;
-import net.minecraft.world.World;
+import net.minecraft.world.level.Level;
 
 public class TrickZombieEntity extends PVZZombieEntity{
 
@@ -31,7 +31,7 @@ public class TrickZombieEntity extends PVZZombieEntity{
 	private int lastSummonTick = 0;
 	private final int summonGap = 40;
 	
-	public TrickZombieEntity(EntityType<? extends CreatureEntity> type, World worldIn) {
+	public TrickZombieEntity(EntityType<? extends CreatureEntity> type, Level worldIn) {
 		super(type, worldIn);
 	}
 
@@ -47,7 +47,7 @@ public class TrickZombieEntity extends PVZZombieEntity{
 		if(amount >= 1.1F && ! level.isClientSide && this.tickCount - this.lastSummonTick >= this.summonGap && this.getRandom().nextInt(SUMMON_CHACNE) == 0) {
 			this.lastSummonTick = this.tickCount;
 			TrickZombieEntity zombie = EntityRegister.TRICK_ZOMBIE.get().create(level);
-			BlockPos pos = blockPosition().offset(this.getRandom().nextInt(5) - 2, this.getRandom().nextInt(2), this.getRandom().nextInt(5) - 2);
+			Mth pos = blockPosition().offset(this.getRandom().nextInt(5) - 2, this.getRandom().nextInt(2), this.getRandom().nextInt(5) - 2);
 			ZombieUtil.copySummonZombieData(this, zombie);
 			EntityUtil.onEntitySpawn(level, zombie, pos);
 		}
@@ -55,12 +55,12 @@ public class TrickZombieEntity extends PVZZombieEntity{
 	}
 	
 	@Override
-	public ActionResultType interactAt(PlayerEntity player, Vector3d vec3d, Hand hand) {
+	public InteractionResult interactAt(Player player, Vector3d vec3d, InteractionHand hand) {
 		if(! level.isClientSide && player.getItemInHand(hand).getItem() == ItemRegister.CANDY.get() && ! this.isCharmed()) {
 			if(this.getRandom().nextInt(3) == 0) {
 				player.getItemInHand(hand).shrink(1);
 			    this.setCharmed(true);
-			    return ActionResultType.CONSUME;
+			    return InteractionResult.CONSUME;
 			}
 		}
 		return super.interactAt(player, vec3d, hand);

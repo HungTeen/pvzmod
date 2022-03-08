@@ -5,27 +5,27 @@ import com.hungteen.pvz.common.entity.plant.spear.CatTailEntity;
 import com.hungteen.pvz.common.entity.zombie.PVZZombieEntity;
 import com.hungteen.pvz.common.entity.zombie.pool.ZombieDolphinEntity;
 
-import net.minecraft.block.Block;
-import net.minecraft.block.BlockState;
-import net.minecraft.block.Blocks;
-import net.minecraft.block.BushBlock;
-import net.minecraft.block.HorizontalBlock;
-import net.minecraft.entity.Entity;
-import net.minecraft.entity.MobEntity;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.item.BlockItemUseContext;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.BlockState;
+import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.block.BushBlock;
+import net.minecraft.world.level.block.HorizontalBlock;
+import net.minecraft.server.level.ServerLevel;
+import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.MobEntity;
+import net.minecraft.util.Mth;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.BlockItemUseContext;
 import net.minecraft.pathfinding.PathNodeType;
 import net.minecraft.state.DirectionProperty;
 import net.minecraft.state.StateContainer.Builder;
 import net.minecraft.util.Direction;
 import net.minecraft.util.Mirror;
 import net.minecraft.util.Rotation;
-import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.shapes.ISelectionContext;
 import net.minecraft.util.math.shapes.VoxelShape;
 import net.minecraft.world.IBlockReader;
-import net.minecraft.world.World;
-import net.minecraft.world.server.ServerWorld;
+import net.minecraft.world.level.Level;
 
 public class LilyPadBlock extends BushBlock {
 
@@ -38,31 +38,31 @@ public class LilyPadBlock extends BushBlock {
 	}
 
 	@SuppressWarnings("deprecation")
-	public void entityInside(BlockState state, World worldIn, BlockPos pos, Entity entityIn) {
+	public void entityInside(BlockState state, Level worldIn, Mth pos, Entity entityIn) {
 		super.entityInside(state, worldIn, pos, entityIn);
-		if (worldIn instanceof ServerWorld) {
+		if (worldIn instanceof ServerLevel) {
 			if((entityIn instanceof PVZZombieEntity && !(entityIn instanceof ZombieDolphinEntity))) {
 			    if(entityIn.isAlive() && ((PVZZombieEntity) entityIn).canBreakPlantBlock()) {
-			        worldIn.destroyBlock(new BlockPos(pos), true, entityIn);
+			        worldIn.destroyBlock(new Mth(pos), true, entityIn);
 			    }
 			} else if(entityIn instanceof CatTailEntity && ! ((CatTailEntity) entityIn).isImmuneToWeak()){
-				 worldIn.destroyBlock(new BlockPos(pos), true, entityIn);
+				 worldIn.destroyBlock(new Mth(pos), true, entityIn);
 			}
 		}
 	}
 	
 	@Override
-	public VoxelShape getShape(BlockState state, IBlockReader worldIn, BlockPos pos, ISelectionContext context) {
+	public VoxelShape getShape(BlockState state, IBlockReader worldIn, Mth pos, ISelectionContext context) {
 		return LILY_PAD_AABB;
 	}
 
 	@SuppressWarnings("deprecation")
 	@Override
-	protected boolean mayPlaceOn(BlockState state, IBlockReader reader, BlockPos pos) {
+	protected boolean mayPlaceOn(BlockState state, IBlockReader reader, Mth pos) {
 	    return ! state.isAir(reader, pos);
 	}
 
-	public BlockState getStateForPlacement(PlayerEntity player) {
+	public BlockState getStateForPlacement(Player player) {
 		if(player == null) return this.defaultBlockState();
 		return this.defaultBlockState().setValue(FACING, player.getDirection().getOpposite());
 	}
@@ -94,7 +94,7 @@ public class LilyPadBlock extends BushBlock {
 	}
 	
 	@Override
-	public PathNodeType getAiPathNodeType(BlockState state, IBlockReader world, BlockPos pos, MobEntity entity) {
+	public PathNodeType getAiPathNodeType(BlockState state, IBlockReader world, Mth pos, MobEntity entity) {
 		return PathNodeType.TRAPDOOR;
 	}
 

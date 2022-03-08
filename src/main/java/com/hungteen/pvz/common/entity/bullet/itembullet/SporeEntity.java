@@ -8,23 +8,23 @@ import com.hungteen.pvz.common.entity.EntityRegister;
 import com.hungteen.pvz.client.particle.ParticleRegister;
 import com.hungteen.pvz.utils.WorldUtil;
 
-import net.minecraft.entity.Entity;
-import net.minecraft.entity.EntitySize;
-import net.minecraft.entity.EntityType;
-import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.Pose;
-import net.minecraft.item.ItemStack;
+import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.EntitySize;
+import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.Pose;
+import net.minecraft.world.item.ItemStack;
 import net.minecraft.util.math.EntityRayTraceResult;
 import net.minecraft.util.math.RayTraceResult;
-import net.minecraft.world.World;
+import net.minecraft.world.level.Level;
 
 public class SporeEntity extends PVZItemBulletEntity{
 
-	public SporeEntity(EntityType<?> type, World worldIn) {
+	public SporeEntity(EntityType<?> type, Level worldIn) {
 		super(type, worldIn);
 	}
 	
-	public SporeEntity(World worldIn, LivingEntity living) {
+	public SporeEntity(Level worldIn, LivingEntity living) {
 		super(EntityRegister.SPORE.get(), worldIn, living);
 	}
 

@@ -7,9 +7,9 @@ import com.hungteen.pvz.api.interfaces.IChallenge;
 import com.hungteen.pvz.api.raid.IRewardComponent;
 import com.hungteen.pvz.api.types.IPAZType;
 import com.hungteen.pvz.utils.PlayerUtil;
-import net.minecraft.entity.player.ServerPlayerEntity;
-import net.minecraft.util.text.TextFormatting;
-import net.minecraft.util.text.TranslationTextComponent;
+import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.ChatFormatting;
+import net.minecraft.network.chat.TranslatableComponent;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -20,10 +20,10 @@ public class UnLockRewardComponent implements IRewardComponent {
     private final List<IPAZType> list = new ArrayList<>();
 
     @Override
-    public void reward(ServerPlayerEntity player) {
+    public void reward(ServerPlayer player) {
         this.list.forEach(type -> {
             PlayerUtil.setPAZLock(player, type, false);
-            PlayerUtil.sendMsgTo(player, new TranslationTextComponent("challenge.pvz.unlock", type.getText().getString()).withStyle(TextFormatting.GREEN));
+            PlayerUtil.sendMsgTo(player, new TranslatableComponent("challenge.pvz.unlock", type.getText().getString()).withStyle(ChatFormatting.GREEN));
         });
     }
 

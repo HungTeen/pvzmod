@@ -4,7 +4,7 @@ import com.hungteen.pvz.common.world.feature.PVZFeatures;
 import com.hungteen.pvz.common.entity.EntityRegister;
 import com.hungteen.pvz.utils.BiomeUtil;
 
-import net.minecraft.entity.EntityClassification;
+import net.minecraft.world.entity.EntityClassification;
 import net.minecraft.world.biome.Biome;
 import net.minecraft.world.biome.Biome.Category;
 import net.minecraft.world.biome.Biome.RainType;

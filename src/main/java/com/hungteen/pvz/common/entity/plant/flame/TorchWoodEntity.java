@@ -11,16 +11,16 @@ import com.hungteen.pvz.utils.EntityUtil;
 import com.hungteen.pvz.utils.WorldUtil;
 import com.hungteen.pvz.utils.enums.PAZAlmanacs;
 import com.mojang.datafixers.util.Pair;
-import net.minecraft.entity.CreatureEntity;
-import net.minecraft.entity.EntitySize;
-import net.minecraft.entity.EntityType;
-import net.minecraft.entity.Pose;
-import net.minecraft.nbt.CompoundNBT;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.world.entity.CreatureEntity;
+import net.minecraft.world.entity.EntitySize;
+import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.Pose;
 import net.minecraft.network.datasync.DataParameter;
 import net.minecraft.network.datasync.DataSerializers;
 import net.minecraft.network.datasync.EntityDataManager;
 import net.minecraft.particles.IParticleData;
-import net.minecraft.world.World;
+import net.minecraft.world.level.Level;
 
 import java.util.List;
 
@@ -28,7 +28,7 @@ public class TorchWoodEntity extends PVZPlantEntity {
 
 	private static final DataParameter<Integer> FLAME_TYPE = EntityDataManager.defineId(TorchWoodEntity.class, DataSerializers.INT);
 	
-	public TorchWoodEntity(EntityType<? extends CreatureEntity> type, World worldIn) {
+	public TorchWoodEntity(EntityType<? extends CreatureEntity> type, Level worldIn) {
 		super(type, worldIn);
 	}
 	
@@ -102,7 +102,7 @@ public class TorchWoodEntity extends PVZPlantEntity {
 	}
 	
 	@Override
-	public void readAdditionalSaveData(CompoundNBT compound) {
+	public void readAdditionalSaveData(CompoundTag compound) {
 		super.readAdditionalSaveData(compound);
 		if(compound.contains("flame_type")) {
 			this.setFlameType(FlameTypes.values()[compound.getInt("flame_type")]);
@@ -110,7 +110,7 @@ public class TorchWoodEntity extends PVZPlantEntity {
 	}
 	
 	@Override
-	public void addAdditionalSaveData(CompoundNBT compound) {
+	public void addAdditionalSaveData(CompoundTag compound) {
 		super.addAdditionalSaveData(compound);
 		compound.putInt("flame_type", this.getFlameType().ordinal());
 	}

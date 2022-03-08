@@ -8,19 +8,19 @@ import com.hungteen.pvz.common.misc.PVZEntityDamageSource;
 import com.hungteen.pvz.common.misc.sound.SoundRegister;
 import com.hungteen.pvz.utils.EntityUtil;
 
-import net.minecraft.entity.Entity;
-import net.minecraft.entity.EntitySize;
-import net.minecraft.entity.EntityType;
-import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.Pose;
-import net.minecraft.world.World;
+import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.EntitySize;
+import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.Pose;
+import net.minecraft.world.level.Level;
 
 public class SmallChomperEntity extends AbstractOwnerEntity {
 
 	private final int maxLifeTick = 20;
 	private int lifeTick;
 
-	public SmallChomperEntity(EntityType<? extends Entity> entityTypeIn, World worldIn) {
+	public SmallChomperEntity(EntityType<? extends Entity> entityTypeIn, Level worldIn) {
 		super(entityTypeIn, worldIn);
 		this.setInvulnerable(true);
 		this.noPhysics = true;

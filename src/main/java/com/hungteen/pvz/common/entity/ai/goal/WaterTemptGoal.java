@@ -2,12 +2,12 @@ package com.hungteen.pvz.common.entity.ai.goal;
 
 import java.util.EnumSet;
 
-import net.minecraft.entity.CreatureEntity;
-import net.minecraft.entity.EntityPredicate;
-import net.minecraft.entity.ai.goal.Goal;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.item.ItemStack;
-import net.minecraft.item.crafting.Ingredient;
+import net.minecraft.world.entity.CreatureEntity;
+import net.minecraft.world.entity.EntityPredicate;
+import net.minecraft.world.entity.ai.goal.Goal;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.pathfinding.SwimmerPathNavigator;
 
 public class WaterTemptGoal extends Goal {
@@ -20,7 +20,7 @@ public class WaterTemptGoal extends Goal {
 	private double targetZ;
 	private double pitch;
 	private double yaw;
-	protected PlayerEntity closestPlayer;
+	protected Player closestPlayer;
 	private int delayTemptCounter;
 	private boolean isRunning;
 	private final Ingredient temptItem;

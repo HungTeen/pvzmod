@@ -2,11 +2,11 @@ package com.hungteen.pvz.api.interfaces;
 
 import java.util.Optional;
 
-import net.minecraft.potion.EffectInstance;
+import net.minecraft.world.effect.MobEffectInstance;
 
 public interface IIceEffect {
 
-	Optional<EffectInstance> getColdEffect();
+	Optional<MobEffectInstance> getColdEffect();
 	
-	Optional<EffectInstance> getFrozenEffect();
+	Optional<MobEffectInstance> getFrozenEffect();
 }

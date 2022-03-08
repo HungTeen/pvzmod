@@ -1,15 +1,15 @@
 package com.hungteen.pvz.common.world.spawn;
 
 import com.hungteen.pvz.common.entity.zombie.PVZZombieEntity;
-import net.minecraft.entity.CreatureEntity;
-import net.minecraft.entity.EntityType;
-import net.minecraft.entity.MobEntity;
-import net.minecraft.entity.SpawnReason;
-import net.minecraft.util.math.BlockPos;
+import net.minecraft.server.level.ServerLevel;
+import net.minecraft.world.entity.CreatureEntity;
+import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.MobEntity;
+import net.minecraft.world.entity.SpawnReason;
+import net.minecraft.util.Mth;
 import net.minecraft.world.Difficulty;
 import net.minecraft.world.IWorld;
 import net.minecraft.world.LightType;
-import net.minecraft.world.server.ServerWorld;
 
 import java.util.Random;
 
@@ -20,12 +20,12 @@ public class SpawnChecker {
 	 * {@link EntitySpawnRegister#registerEntitySpawns(net.minecraftforge.event.RegistryEvent.Register)}
 	 */
 	public static boolean canZombieSpawn(EntityType<? extends PVZZombieEntity> zombieType, IWorld worldIn,
-			SpawnReason reason, BlockPos pos, Random rand) {
+                                         SpawnReason reason, Mth pos, Random rand) {
 		return checkSpawn(zombieType, worldIn, reason, pos, rand);
 	}
 
 	public static boolean canLavaZombieSpawn(EntityType<? extends PVZZombieEntity> zombieType, IWorld worldIn,
-										 SpawnReason reason, BlockPos pos, Random rand) {
+                                             SpawnReason reason, Mth pos, Random rand) {
 		return worldIn.getDifficulty() == Difficulty.HARD && checkSpawn(zombieType, worldIn, reason, pos, rand);
 	}
 	
@@ -74,14 +74,14 @@ public class SpawnChecker {
 	 * {@link EntitySpawnRegister#registerEntitySpawns(net.minecraftforge.event.RegistryEvent.Register)}
 	 */
 	public static boolean canYetiSpawn(EntityType<? extends PVZZombieEntity> zombieType, IWorld worldIn,
-			SpawnReason reason, BlockPos pos, Random rand) {
-		if(worldIn instanceof ServerWorld && canZombieSpawn(zombieType, worldIn, reason, pos, rand)) {
-			return ((ServerWorld) worldIn).isThundering() && ! ((ServerWorld) worldIn).isDay() && rand.nextInt(3) == 0;
+                                       SpawnReason reason, Mth pos, Random rand) {
+		if(worldIn instanceof ServerLevel && canZombieSpawn(zombieType, worldIn, reason, pos, rand)) {
+			return ((ServerLevel) worldIn).isThundering() && ! ((ServerLevel) worldIn).isDay() && rand.nextInt(3) == 0;
 		}
 		return false;
 	}
 	
-	private static boolean checkSpawn(EntityType<? extends CreatureEntity> zombieType, IWorld worldIn, SpawnReason reason, BlockPos pos, Random rand) {
+	private static boolean checkSpawn(EntityType<? extends CreatureEntity> zombieType, IWorld worldIn, SpawnReason reason, Mth pos, Random rand) {
 		return isDarkEnough(worldIn, pos) && worldIn.getDifficulty() != Difficulty.PEACEFUL && MobEntity.checkMobSpawnRules(zombieType, worldIn, reason, pos, rand);
 	}
 //
@@ -97,7 +97,7 @@ public class SpawnChecker {
 //		return worldIn.getDifficulty() != Difficulty.PEACEFUL && isDarkEnough(worldIn, pos);
 //	}
 	
-	private static boolean isDarkEnough(IWorld worldIn, BlockPos pos) {
+	private static boolean isDarkEnough(IWorld worldIn, Mth pos) {
 		return worldIn.getBrightness(LightType.BLOCK, pos) < 7;
 	}
 	

@@ -16,12 +16,13 @@ import com.hungteen.pvz.utils.MathUtil;
 import com.hungteen.pvz.utils.enums.PAZAlmanacs;
 import com.hungteen.pvz.utils.others.WeightList;
 import com.mojang.datafixers.util.Pair;
-import net.minecraft.entity.*;
-import net.minecraft.entity.ai.attributes.AttributeModifierMap;
-import net.minecraft.entity.ai.attributes.Attributes;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.entity.player.ServerPlayerEntity;
-import net.minecraft.nbt.CompoundNBT;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.sounds.SoundEvent;
+import net.minecraft.world.entity.*;
+import net.minecraft.world.entity.ai.attributes.AttributeModifierMap;
+import net.minecraft.world.entity.ai.attributes.Attributes;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.network.PacketBuffer;
 import net.minecraft.network.datasync.DataParameter;
 import net.minecraft.network.datasync.DataSerializers;
@@ -29,11 +30,10 @@ import net.minecraft.network.datasync.EntityDataManager;
 import net.minecraft.particles.ParticleTypes;
 import net.minecraft.server.management.PreYggdrasilConverter;
 import net.minecraft.util.DamageSource;
-import net.minecraft.util.ResourceLocation;
-import net.minecraft.util.SoundEvent;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.DifficultyInstance;
 import net.minecraft.world.IServerWorld;
-import net.minecraft.world.World;
+import net.minecraft.world.level.Level;
 import net.minecraftforge.event.entity.living.LivingDamageEvent;
 import net.minecraftforge.event.entity.living.LivingHurtEvent;
 import net.minecraftforge.fml.common.registry.IEntityAdditionalSpawnData;
@@ -49,10 +49,10 @@ public abstract class AbstractPAZEntity extends CreatureEntity implements IPAZEn
 
     private static final DataParameter<Optional<UUID>> OWNER_UUID = EntityDataManager.defineId(AbstractPAZEntity.class, DataSerializers.OPTIONAL_UUID);
     private static final DataParameter<Integer> STATES = EntityDataManager.defineId(AbstractPAZEntity.class, DataSerializers.INT);
-    private static final DataParameter<CompoundNBT> SKILLS = EntityDataManager.defineId(AbstractPAZEntity.class, DataSerializers.COMPOUND_TAG);
+    private static final DataParameter<CompoundTag> SKILLS = EntityDataManager.defineId(AbstractPAZEntity.class, DataSerializers.COMPOUND_TAG);
     private static final DataParameter<Integer> EXIST_TICK = EntityDataManager.defineId(AbstractPAZEntity.class, DataSerializers.INT);
     protected static final WeightList<DropType> NORMAL_DROP_LIST = new WeightList<>();
-    protected PlayerEntity ownerPlayer;
+    protected Player ownerPlayer;
     /* states */
     protected boolean canBeCold = true;
     protected boolean canBeFrozen = true;
@@ -77,7 +77,7 @@ public abstract class AbstractPAZEntity extends CreatureEntity implements IPAZEn
         NORMAL_DROP_LIST.setTotal(pp * pp);
     }
 
-    public AbstractPAZEntity(EntityType<? extends CreatureEntity> entityType, World world) {
+    public AbstractPAZEntity(EntityType<? extends CreatureEntity> entityType, Level world) {
         super(entityType, world);
         this.refreshDimensions();
 //        this.setPersistenceRequired();
@@ -87,13 +87,13 @@ public abstract class AbstractPAZEntity extends CreatureEntity implements IPAZEn
     protected void defineSynchedData() {
         super.defineSynchedData();
         this.entityData.define(OWNER_UUID, Optional.empty());
-        this.entityData.define(SKILLS, new CompoundNBT());
+        this.entityData.define(SKILLS, new CompoundTag());
         this.entityData.define(EXIST_TICK, 0);
         this.entityData.define(STATES, 0);
     }
 
     @Override
-    public ILivingEntityData finalizeSpawn(IServerWorld worldIn, DifficultyInstance difficultyIn, SpawnReason reason, ILivingEntityData spawnDataIn, CompoundNBT dataTag) {
+    public ILivingEntityData finalizeSpawn(IServerWorld worldIn, DifficultyInstance difficultyIn, SpawnReason reason, ILivingEntityData spawnDataIn, CompoundTag dataTag) {
         this.finalizeSpawn(dataTag);
         return super.finalizeSpawn(worldIn, difficultyIn, reason, spawnDataIn, dataTag);
     }
@@ -120,7 +120,7 @@ public abstract class AbstractPAZEntity extends CreatureEntity implements IPAZEn
      * used in invasion spawn.
      */
     public static void randomInitSkills(AbstractPAZEntity pazEntity, int maxLevel){
-        final CompoundNBT skillNBT = new CompoundNBT();
+        final CompoundTag skillNBT = new CompoundTag();
         final List<ISkillType> skills = pazEntity.getPAZType().getSkills();
         int point = MathUtil.getRandomMinMax(pazEntity.getRandom(), maxLevel / 2, maxLevel);
         for(int i = 0; i < 10; ++ i){
@@ -139,7 +139,7 @@ public abstract class AbstractPAZEntity extends CreatureEntity implements IPAZEn
     /**
      * final runtime before entity spawn in world.
      */
-    public void finalizeSpawn(CompoundNBT tag){
+    public void finalizeSpawn(CompoundTag tag){
         if (! this.level.isClientSide()) {
             if(tag != null){
                 if(tag.contains(SkillTypes.SKILL_TAG)){
@@ -155,7 +155,7 @@ public abstract class AbstractPAZEntity extends CreatureEntity implements IPAZEn
     /**
      * spawned by player for the first time.
      */
-    public void onSpawnedByPlayer(@Nullable PlayerEntity player, int sunCost) {
+    public void onSpawnedByPlayer(@Nullable Player player, int sunCost) {
         if(player != null) {
             this.setOwnerUUID(player.getUUID());
         }
@@ -191,9 +191,9 @@ public abstract class AbstractPAZEntity extends CreatureEntity implements IPAZEn
     @Override
     public void onCharmedBy(@Nullable LivingEntity entity) {
         if(this.canBeCharmed()){
-            final PlayerEntity player = EntityUtil.getEntityOwner(level, entity);
-            if (player != null && player instanceof ServerPlayerEntity) {
-                CharmZombieTrigger.INSTANCE.trigger((ServerPlayerEntity) player, this);
+            final Player player = EntityUtil.getEntityOwner(level, entity);
+            if (player != null && player instanceof ServerPlayer) {
+                CharmZombieTrigger.INSTANCE.trigger((ServerPlayer) player, this);
             }
         }
     }
@@ -361,7 +361,7 @@ public abstract class AbstractPAZEntity extends CreatureEntity implements IPAZEn
 
     /**
      * update attributes when first spawn.
-     * {@link #finalizeSpawn(CompoundNBT)}
+     * {@link #finalizeSpawn(CompoundTag)}
      */
     protected void initAttributes() {
         this.getAttribute(Attributes.MAX_HEALTH).setBaseValue(this.getLife());
@@ -374,7 +374,7 @@ public abstract class AbstractPAZEntity extends CreatureEntity implements IPAZEn
 
     /**
      * update states when first spawn.
-     * {@link #finalizeSpawn(CompoundNBT)}
+     * {@link #finalizeSpawn(CompoundTag)}
      */
     protected void updatePAZStates(){
 
@@ -424,7 +424,7 @@ public abstract class AbstractPAZEntity extends CreatureEntity implements IPAZEn
     }
 
     @Override
-    public boolean canBeLeashed(PlayerEntity player) {
+    public boolean canBeLeashed(Player player) {
         return false;
     }
 
@@ -505,7 +505,7 @@ public abstract class AbstractPAZEntity extends CreatureEntity implements IPAZEn
     /* data */
 
     @Override
-    public void addAdditionalSaveData(CompoundNBT compound) {
+    public void addAdditionalSaveData(CompoundTag compound) {
         super.addAdditionalSaveData(compound);
         {// save owner uuid.
             if (this.getOwnerUUID().isPresent()) {
@@ -524,7 +524,7 @@ public abstract class AbstractPAZEntity extends CreatureEntity implements IPAZEn
     }
 
     @Override
-    public void readAdditionalSaveData(CompoundNBT compound) {
+    public void readAdditionalSaveData(CompoundTag compound) {
         super.readAdditionalSaveData(compound);
         {// owner uuid.
             UUID ownerUuid;
@@ -574,7 +574,7 @@ public abstract class AbstractPAZEntity extends CreatureEntity implements IPAZEn
 
     /**
      * how many health does zombie has.
-     * {@link EntityUtil#getCurrentHealth(net.minecraft.entity.LivingEntity)}
+     * {@link EntityUtil#getCurrentHealth(net.minecraft.world.entity.LivingEntity)}
      */
     public double getCurrentHealth() {
         return this.getInnerDefenceLife() + this.getHealth();
@@ -582,7 +582,7 @@ public abstract class AbstractPAZEntity extends CreatureEntity implements IPAZEn
 
     /**
      * how many max health does zombie have currently.
-     * {@link EntityUtil#getCurrentMaxHealth(net.minecraft.entity.LivingEntity)}
+     * {@link EntityUtil#getCurrentMaxHealth(net.minecraft.world.entity.LivingEntity)}
      */
     public double getCurrentMaxHealth() {
         return this.getInnerLife() + this.getMaxHealth();
@@ -617,11 +617,11 @@ public abstract class AbstractPAZEntity extends CreatureEntity implements IPAZEn
         this.entityData.set(STATES, state);
     }
 
-    public void setSkills(CompoundNBT nbt) {
+    public void setSkills(CompoundTag nbt) {
         this.entityData.set(SKILLS, nbt);
     }
 
-    public CompoundNBT getSkills() {
+    public CompoundTag getSkills() {
         return this.entityData.get(SKILLS);
     }
 

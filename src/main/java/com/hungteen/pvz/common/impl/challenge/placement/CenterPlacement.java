@@ -5,8 +5,8 @@ import com.google.gson.JsonObject;
 import com.hungteen.pvz.api.raid.IPlacementComponent;
 import com.hungteen.pvz.utils.MathUtil;
 import net.minecraft.util.JSONUtils;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.world.World;
+import net.minecraft.util.Mth;
+import net.minecraft.world.level.Level;
 import net.minecraft.world.gen.Heightmap;
 
 public class CenterPlacement implements IPlacementComponent {
@@ -16,11 +16,11 @@ public class CenterPlacement implements IPlacementComponent {
 	private int radius;
 	
 	@Override
-	public BlockPos getPlacePosition(World world, BlockPos origin) {
+	public Mth getPlacePosition(Level world, Mth origin) {
 		final int dx = MathUtil.getRandomInRange(world.getRandom(), this.radius);
 		final int dz = MathUtil.getRandomInRange(world.getRandom(), this.radius);
 		final int height = this.onSurface ? world.getHeight(Heightmap.Type.WORLD_SURFACE, origin.getX() + dx, origin.getZ() + dz) : origin.getY();
-		return new BlockPos(origin.getX() + dx, height, origin.getZ() + dz);
+		return new Mth(origin.getX() + dx, height, origin.getZ() + dz);
 	}
 	
 	@Override

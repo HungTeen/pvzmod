@@ -13,9 +13,9 @@ import com.hungteen.pvz.utils.EntityUtil;
 import com.hungteen.pvz.utils.WorldUtil;
 import com.hungteen.pvz.utils.enums.PAZAlmanacs;
 import com.mojang.datafixers.util.Pair;
-import net.minecraft.entity.*;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.world.World;
+import net.minecraft.world.entity.*;
+import net.minecraft.util.Mth;
+import net.minecraft.world.level.Level;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -25,7 +25,7 @@ public class BambooLordEntity extends PlantCloserEntity {
 	public static final int UP_CD = 20;
 	public static final float UP_SPEED = 2F;
 	
-	public BambooLordEntity(EntityType<? extends CreatureEntity> type, World worldIn) {
+	public BambooLordEntity(EntityType<? extends CreatureEntity> type, Level worldIn) {
 		super(type, worldIn);
 	}
 
@@ -103,7 +103,7 @@ public class BambooLordEntity extends PlantCloserEntity {
 	
 	protected void generateCracker() {
 		final int range = 10;
-		final BlockPos pos = WorldUtil.getSuitableHeightRandomPos(this.level, this.blockPosition(), range);
+		final Mth pos = WorldUtil.getSuitableHeightRandomPos(this.level, this.blockPosition(), range);
 		FireCrackersEntity entity = new FireCrackersEntity(level, this);
 		entity.setPos(pos.getX(), pos.getY(), pos.getZ());
 		entity.setFuse(10);

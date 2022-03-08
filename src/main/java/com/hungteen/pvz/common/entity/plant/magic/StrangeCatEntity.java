@@ -15,13 +15,13 @@ import com.hungteen.pvz.utils.PlantUtil;
 
 import com.hungteen.pvz.utils.enums.PAZAlmanacs;
 import com.mojang.datafixers.util.Pair;
-import net.minecraft.entity.CreatureEntity;
-import net.minecraft.entity.EntitySize;
-import net.minecraft.entity.EntityType;
-import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.Pose;
-import net.minecraft.nbt.CompoundNBT;
-import net.minecraft.world.World;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.world.entity.CreatureEntity;
+import net.minecraft.world.entity.EntitySize;
+import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.Pose;
+import net.minecraft.world.level.Level;
 import net.minecraftforge.event.entity.living.LivingDeathEvent;
 
 import java.util.Arrays;
@@ -33,7 +33,7 @@ public class StrangeCatEntity extends PVZPlantEntity {
 	public static final int ANIM_CD = 10;
 	private int restTick = REST_CD;
 	
-	public StrangeCatEntity(EntityType<? extends CreatureEntity> type, World worldIn) {
+	public StrangeCatEntity(EntityType<? extends CreatureEntity> type, Level worldIn) {
 		super(type, worldIn);
 		this.isImmuneToWeak = true;
 	}
@@ -139,13 +139,13 @@ public class StrangeCatEntity extends PVZPlantEntity {
 	}
 	
 	@Override
-	public void addAdditionalSaveData(CompoundNBT compound) {
+	public void addAdditionalSaveData(CompoundTag compound) {
 		super.addAdditionalSaveData(compound);
 		compound.putInt("rest_tick", this.restTick);
 	}
 
 	@Override
-	public void readAdditionalSaveData(CompoundNBT compound) {
+	public void readAdditionalSaveData(CompoundTag compound) {
 		super.readAdditionalSaveData(compound);
 		if(compound.contains("rest_tick")) {
 			this.restTick = compound.getInt("rest_tick");

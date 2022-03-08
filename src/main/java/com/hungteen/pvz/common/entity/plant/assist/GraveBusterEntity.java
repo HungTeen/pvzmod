@@ -13,10 +13,10 @@ import com.hungteen.pvz.utils.EntityUtil;
 import com.hungteen.pvz.utils.PlantUtil;
 import com.hungteen.pvz.utils.enums.PAZAlmanacs;
 import com.mojang.datafixers.util.Pair;
-import net.minecraft.entity.*;
-import net.minecraft.entity.ai.goal.Goal;
-import net.minecraft.nbt.CompoundNBT;
-import net.minecraft.world.World;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.world.entity.*;
+import net.minecraft.world.entity.ai.goal.Goal;
+import net.minecraft.world.level.Level;
 
 import java.util.List;
 
@@ -25,7 +25,7 @@ public class GraveBusterEntity extends PVZPlantEntity{
 	private static final int MAX_LIVE_TICK = 100;
 	private int killCount = 0;
 	
-	public GraveBusterEntity(EntityType<? extends CreatureEntity> type, World worldIn) {
+	public GraveBusterEntity(EntityType<? extends CreatureEntity> type, Level worldIn) {
 		super(type, worldIn);
 		this.canCollideWithPlant = false;
 	}
@@ -112,13 +112,13 @@ public class GraveBusterEntity extends PVZPlantEntity{
 	}
 	
 	@Override
-	public void addAdditionalSaveData(CompoundNBT compound) {
+	public void addAdditionalSaveData(CompoundTag compound) {
 		super.addAdditionalSaveData(compound);
 		compound.putInt("kill_cnt", this.killCount);
 	}
 	
 	@Override
-	public void readAdditionalSaveData(CompoundNBT compound) {
+	public void readAdditionalSaveData(CompoundTag compound) {
 		super.readAdditionalSaveData(compound);
 		if(compound.contains("kill_cnt")) {
 			this.killCount = compound.getInt("kill_cnt");

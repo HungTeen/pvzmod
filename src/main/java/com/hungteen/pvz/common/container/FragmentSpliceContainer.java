@@ -5,12 +5,12 @@ import com.hungteen.pvz.common.item.tool.plant.SunStorageSaplingItem;
 import com.hungteen.pvz.common.recipe.RecipeRegister;
 import com.hungteen.pvz.common.recipe.FragmentRecipe;
 import com.hungteen.pvz.common.tileentity.FragmentSpliceTileEntity;
-import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.util.Mth;
+import net.minecraft.world.entity.player.Player;
 import net.minecraft.inventory.CraftingInventory;
 import net.minecraft.inventory.container.Slot;
-import net.minecraft.item.ItemStack;
+import net.minecraft.world.item.ItemStack;
 import net.minecraft.util.IWorldPosCallable;
-import net.minecraft.util.math.BlockPos;
 import net.minecraftforge.items.SlotItemHandler;
 
 import javax.annotation.Nonnull;
@@ -21,9 +21,9 @@ public class FragmentSpliceContainer extends PVZContainer {
 	public final FragmentSpliceTileEntity te;
 	private final CraftingInventory craftSlots = new CraftingInventory(this, 5, 5);
 	private final IWorldPosCallable access;
-	private final PlayerEntity player;
+	private final Player player;
 
-	public FragmentSpliceContainer(int id, PlayerEntity player, BlockPos pos) {
+	public FragmentSpliceContainer(int id, Player player, Mth pos) {
 		super(ContainerRegister.FRAGMENT_SPLICE.get(), id);
 		this.te = (FragmentSpliceTileEntity) player.level.getBlockEntity(pos);
 		this.player = player;
@@ -87,7 +87,7 @@ public class FragmentSpliceContainer extends PVZContainer {
 	}
 
 	@Override
-	public ItemStack quickMoveStack(PlayerEntity playerIn, int index) {
+	public ItemStack quickMoveStack(Player playerIn, int index) {
 		ItemStack itemstack = ItemStack.EMPTY;
 		Slot slot = this.slots.get(index);
 		if (slot != null && slot.hasItem()) {
@@ -125,7 +125,7 @@ public class FragmentSpliceContainer extends PVZContainer {
 	}
 	
 	@Override
-	public boolean stillValid(PlayerEntity playerIn) {
+	public boolean stillValid(Player playerIn) {
 		return stillValid(this.access, player, BlockRegister.FRAGMENT_SPLICE.get());
 	}
 

@@ -8,9 +8,9 @@ import net.minecraft.advancements.criterion.AbstractCriterionTrigger;
 import net.minecraft.advancements.criterion.CriterionInstance;
 import net.minecraft.advancements.criterion.EntityPredicate;
 import net.minecraft.advancements.criterion.EntityPredicate.AndPredicate;
-import net.minecraft.entity.player.ServerPlayerEntity;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.loot.ConditionArrayParser;
-import net.minecraft.util.ResourceLocation;
 
 public class PlayerPlacePAZTrigger extends AbstractCriterionTrigger<PlayerPlacePAZTrigger.Instance> {
 
@@ -30,7 +30,7 @@ public class PlayerPlacePAZTrigger extends AbstractCriterionTrigger<PlayerPlaceP
 		return new PlayerPlacePAZTrigger.Instance(player, StringPredicate.deserialize(json.get("place_type")), StringPredicate.deserialize(json.get("paz_type")));
 	}
 
-	public void trigger(ServerPlayerEntity player, String placeType, String pazType) {
+	public void trigger(ServerPlayer player, String placeType, String pazType) {
 		this.trigger(player, (instance) -> {
 			return instance.test(player, placeType, pazType);
 		});
@@ -47,7 +47,7 @@ public class PlayerPlacePAZTrigger extends AbstractCriterionTrigger<PlayerPlaceP
 			this.pazType = pazType;
 		}
 
-		public boolean test(ServerPlayerEntity player, String placeType, String pazType) {
+		public boolean test(ServerPlayer player, String placeType, String pazType) {
 			return this.placeType.test(player, placeType) && this.pazType.test(player, pazType);
 		}
 

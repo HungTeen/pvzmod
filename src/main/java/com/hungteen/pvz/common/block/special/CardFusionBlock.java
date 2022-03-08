@@ -3,24 +3,24 @@ package com.hungteen.pvz.common.block.special;
 import com.hungteen.pvz.common.block.AbstractFacingBlock;
 import com.hungteen.pvz.common.tileentity.CardFusionTileEntity;
 
-import net.minecraft.block.Block;
-import net.minecraft.block.BlockState;
-import net.minecraft.block.Blocks;
-import net.minecraft.client.util.ITooltipFlag;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.entity.player.ServerPlayerEntity;
+import net.minecraft.ChatFormatting;
+import net.minecraft.world.InteractionHand;
+import net.minecraft.world.item.TooltipFlag;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.BlockState;
+import net.minecraft.world.level.block.Blocks;
+import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.util.Mth;
+import net.minecraft.world.entity.player.Player;
 import net.minecraft.inventory.InventoryHelper;
-import net.minecraft.item.ItemStack;
+import net.minecraft.world.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.ActionResultType;
-import net.minecraft.util.Hand;
-import net.minecraft.util.math.BlockPos;
+import net.minecraft.world.InteractionResult;
 import net.minecraft.util.math.BlockRayTraceResult;
-import net.minecraft.util.text.ITextComponent;
-import net.minecraft.util.text.TextFormatting;
-import net.minecraft.util.text.TranslationTextComponent;
+import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.world.IBlockReader;
-import net.minecraft.world.World;
+import net.minecraft.world.level.Level;
 import net.minecraftforge.fml.network.NetworkHooks;
 
 import javax.annotation.Nullable;
@@ -33,19 +33,19 @@ public class CardFusionBlock extends AbstractFacingBlock {
 	}
 
 	@Override
-	public ActionResultType use(BlockState state, World worldIn, BlockPos pos, PlayerEntity player,
-			Hand handIn, BlockRayTraceResult hit) {
-		if (! worldIn.isClientSide && handIn == Hand.MAIN_HAND) {
+	public InteractionResult use(BlockState state, Level worldIn, Mth pos, Player player,
+								 InteractionHand handIn, BlockRayTraceResult hit) {
+		if (! worldIn.isClientSide && handIn == InteractionHand.MAIN_HAND) {
 			CardFusionTileEntity te = (CardFusionTileEntity) worldIn.getBlockEntity(pos);
-		    NetworkHooks.openGui((ServerPlayerEntity) player, te, pos);
+		    NetworkHooks.openGui((ServerPlayer) player, te, pos);
 		}
-		return ActionResultType.SUCCESS;
+		return InteractionResult.SUCCESS;
 	}
 
 	@Override
-	public void appendHoverText(ItemStack itemStack, @Nullable IBlockReader iBlockReader, List<ITextComponent> textComponents, ITooltipFlag tooltipFlag) {
+	public void appendHoverText(ItemStack itemStack, @Nullable IBlockReader iBlockReader, List<Component> textComponents, TooltipFlag tooltipFlag) {
 		super.appendHoverText(itemStack, iBlockReader, textComponents, tooltipFlag);
-		textComponents.add(new TranslationTextComponent("tooltip.pvz.card_fusion_table").withStyle(TextFormatting.GREEN));
+		textComponents.add(new TranslatableComponent("tooltip.pvz.card_fusion_table").withStyle(ChatFormatting.GREEN));
 	}
 	
 	@Override
@@ -60,7 +60,7 @@ public class CardFusionBlock extends AbstractFacingBlock {
 	
 	@SuppressWarnings("deprecation")
 	@Override
-	public void onRemove(BlockState state, World worldIn, BlockPos pos, BlockState newState, boolean isMoving) {
+	public void onRemove(BlockState state, Level worldIn, Mth pos, BlockState newState, boolean isMoving) {
 		if (state.getBlock() != newState.getBlock()) {
 			TileEntity tileentity = worldIn.getBlockEntity(pos);
 			if (tileentity instanceof CardFusionTileEntity) {

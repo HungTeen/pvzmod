@@ -5,32 +5,32 @@ import com.hungteen.pvz.common.misc.PVZEntityDamageSource;
 import com.hungteen.pvz.utils.MathUtil;
 import com.hungteen.pvz.utils.WorldUtil;
 
-import net.minecraft.block.Block;
-import net.minecraft.block.BlockState;
-import net.minecraft.block.Blocks;
-import net.minecraft.block.BushBlock;
-import net.minecraft.block.HorizontalBlock;
-import net.minecraft.entity.Entity;
-import net.minecraft.entity.MobEntity;
-import net.minecraft.entity.passive.AnimalEntity;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.item.BlockItemUseContext;
-import net.minecraft.item.Items;
+import net.minecraft.world.InteractionResult;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.BlockState;
+import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.block.BushBlock;
+import net.minecraft.world.level.block.HorizontalBlock;
+import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.MobEntity;
+import net.minecraft.world.entity.passive.AnimalEntity;
+import net.minecraft.util.Mth;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.BlockItemUseContext;
+import net.minecraft.world.item.Items;
 import net.minecraft.particles.ParticleTypes;
 import net.minecraft.pathfinding.PathNodeType;
 import net.minecraft.state.DirectionProperty;
 import net.minecraft.state.StateContainer.Builder;
-import net.minecraft.util.ActionResultType;
 import net.minecraft.util.Direction;
-import net.minecraft.util.Hand;
+import net.minecraft.world.InteractionHand;
 import net.minecraft.util.Mirror;
 import net.minecraft.util.Rotation;
-import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.BlockRayTraceResult;
 import net.minecraft.util.math.shapes.ISelectionContext;
 import net.minecraft.util.math.shapes.VoxelShape;
 import net.minecraft.world.IBlockReader;
-import net.minecraft.world.World;
+import net.minecraft.world.level.Level;
 import net.minecraftforge.common.ToolType;
 
 public class ChomperBlock extends BushBlock{
@@ -44,13 +44,13 @@ public class ChomperBlock extends BushBlock{
 	}
 	
 	@Override
-	public VoxelShape getShape(BlockState state, IBlockReader worldIn, BlockPos pos, ISelectionContext context) {
+	public VoxelShape getShape(BlockState state, IBlockReader worldIn, Mth pos, ISelectionContext context) {
 		return SHAPE;
 	}
 
 	@Override
-	public void entityInside(BlockState state, World worldIn, BlockPos pos, Entity entityIn) {
-		if(entityIn instanceof AnimalEntity || entityIn instanceof PlayerEntity) {
+	public void entityInside(BlockState state, Level worldIn, Mth pos, Entity entityIn) {
+		if(entityIn instanceof AnimalEntity || entityIn instanceof Player) {
 			if(!worldIn.isClientSide) {
 				if(this.RANDOM.nextInt(50) == 0) {
 					entityIn.hurt(PVZEntityDamageSource.CHOMPER_PLANT, 8);
@@ -61,8 +61,8 @@ public class ChomperBlock extends BushBlock{
 	
 	@SuppressWarnings("deprecation")
 	@Override
-	public ActionResultType use(BlockState state, World worldIn, BlockPos pos, PlayerEntity player,
-			Hand handIn, BlockRayTraceResult hit) {
+	public InteractionResult use(BlockState state, Level worldIn, Mth pos, Player player,
+                                 InteractionHand handIn, BlockRayTraceResult hit) {
 		if(player.getItemInHand(handIn).getItem() == Items.BONE_MEAL) {
 			if(worldIn.isClientSide) {
 				for(int i = 0 ;i < 5; ++ i) {
@@ -71,7 +71,7 @@ public class ChomperBlock extends BushBlock{
 			}
 			for(int i = -2; i <= 2; ++ i) {
 				for(int k = -2; k <= 2; ++ k) {
-					final BlockPos tmp = WorldUtil.getSuitableHeightPos(worldIn, pos.offset(i, 0, k)).below();
+					final Mth tmp = WorldUtil.getSuitableHeightPos(worldIn, pos.offset(i, 0, k)).below();
 					if(Math.abs(pos.getY() - tmp.getY()) < 5 && mayPlaceOn(worldIn.getBlockState(tmp), worldIn, tmp)) {
 						if(worldIn.isEmptyBlock(tmp.above())){
 							if(! worldIn.isClientSide) {
@@ -84,9 +84,9 @@ public class ChomperBlock extends BushBlock{
 					}
 				}
 			}
-			return ActionResultType.SUCCESS;
+			return InteractionResult.SUCCESS;
 		}
-		return ActionResultType.PASS;
+		return InteractionResult.PASS;
 	}
 	
 	@Override
@@ -112,7 +112,7 @@ public class ChomperBlock extends BushBlock{
 	}
 	
 	@Override
-	public PathNodeType getAiPathNodeType(BlockState state, IBlockReader world, BlockPos pos, MobEntity entity) {
+	public PathNodeType getAiPathNodeType(BlockState state, IBlockReader world, Mth pos, MobEntity entity) {
 		return PathNodeType.DANGER_OTHER;
 	}
 	

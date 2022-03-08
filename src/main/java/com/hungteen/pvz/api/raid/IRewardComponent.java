@@ -2,11 +2,11 @@ package com.hungteen.pvz.api.raid;
 
 import com.google.gson.JsonElement;
 import com.hungteen.pvz.api.interfaces.IChallenge;
-import net.minecraft.entity.player.ServerPlayerEntity;
+import net.minecraft.server.level.ServerPlayer;
 
 public interface IRewardComponent {
 
-	void reward(ServerPlayerEntity player);
+	void reward(ServerPlayer player);
 
 	void rewardGlobally(IChallenge challenge);
 	

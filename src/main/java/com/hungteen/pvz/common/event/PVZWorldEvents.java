@@ -4,7 +4,7 @@ import com.hungteen.pvz.PVZMod;
 import com.hungteen.pvz.common.world.invasion.InvasionManager;
 import com.hungteen.pvz.common.world.challenge.ChallengeManager;
 
-import net.minecraft.world.World;
+import net.minecraft.world.level.Level;
 import net.minecraftforge.event.TickEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
@@ -18,7 +18,7 @@ public class PVZWorldEvents {
 			return;
 		}
 		ChallengeManager.tickChallenges(ev.world);
-		if(ev.world.dimension() == World.OVERWORLD) {
+		if(ev.world.dimension() == Level.OVERWORLD) {
 			InvasionManager.tick(ev);
 		}
 	}

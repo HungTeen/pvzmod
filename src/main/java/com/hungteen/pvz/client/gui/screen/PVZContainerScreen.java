@@ -4,10 +4,10 @@ import com.hungteen.pvz.client.gui.widget.DisplayField;
 import com.hungteen.pvz.utils.StringUtil;
 import com.mojang.blaze3d.matrix.MatrixStack;
 import net.minecraft.client.gui.screen.inventory.ContainerScreen;
-import net.minecraft.entity.player.PlayerInventory;
+import net.minecraft.network.chat.Component;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.entity.player.PlayerInventory;
 import net.minecraft.inventory.container.Container;
-import net.minecraft.util.ResourceLocation;
-import net.minecraft.util.text.ITextComponent;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -17,7 +17,7 @@ public abstract class PVZContainerScreen<T extends Container> extends ContainerS
 	private static final ResourceLocation WIDGETS = StringUtil.prefix("textures/gui/widgets.png");
 	protected final List<DisplayField> tips = new ArrayList<>();
 
-	public PVZContainerScreen(T screenContainer, PlayerInventory inv, ITextComponent titleIn) {
+	public PVZContainerScreen(T screenContainer, PlayerInventory inv, Component titleIn) {
 		super(screenContainer, inv, titleIn);
 	}
 

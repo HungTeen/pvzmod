@@ -4,16 +4,16 @@ import java.util.HashMap;
 
 import com.hungteen.pvz.utils.PlayerUtil;
 
-import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.world.entity.player.Player;
 import net.minecraftforge.items.ItemStackHandler;
 
 public class CardPackItemHandler extends ItemStackHandler {
 	
 	private HashMap<Integer, Integer> map = new HashMap<>();
-	private final PlayerEntity player;
+	private final Player player;
 	private final int slotNum;
 	
-	public CardPackItemHandler(PlayerEntity player, int size) {
+	public CardPackItemHandler(Player player, int size) {
 		super(size);
 		this.player = player;
 		this.slotNum = size;

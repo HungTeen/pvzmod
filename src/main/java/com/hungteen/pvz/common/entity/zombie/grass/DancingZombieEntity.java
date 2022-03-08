@@ -8,19 +8,19 @@ import com.hungteen.pvz.utils.EntityUtil;
 import com.hungteen.pvz.utils.MathUtil;
 import com.hungteen.pvz.utils.WorldUtil;
 import com.hungteen.pvz.utils.ZombieUtil;
-import net.minecraft.entity.CreatureEntity;
-import net.minecraft.entity.Entity;
-import net.minecraft.entity.EntityType;
-import net.minecraft.entity.ai.attributes.Attributes;
-import net.minecraft.entity.ai.goal.Goal;
-import net.minecraft.nbt.CompoundNBT;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.world.effect.MobEffectInstance;
+import net.minecraft.world.entity.CreatureEntity;
+import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.ai.attributes.Attributes;
+import net.minecraft.world.entity.ai.goal.Goal;
 import net.minecraft.network.datasync.DataParameter;
 import net.minecraft.network.datasync.DataSerializers;
 import net.minecraft.network.datasync.EntityDataManager;
-import net.minecraft.potion.EffectInstance;
-import net.minecraft.potion.Effects;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.world.World;
+import net.minecraft.world.effect.Effects;
+import net.minecraft.util.Mth;
+import net.minecraft.world.level.Level;
 
 import java.util.ArrayList;
 import java.util.EnumSet;
@@ -40,7 +40,7 @@ public class DancingZombieEntity extends PVZZombieEntity{
 	private int summonCnt = 0;
 	private int restTick = 0;
 	
-	public DancingZombieEntity(EntityType<? extends CreatureEntity> type, World worldIn) {
+	public DancingZombieEntity(EntityType<? extends CreatureEntity> type, Level worldIn) {
 		super(type, worldIn);
 		this.canCollideWithZombie = false;
 		this.setRestTick();
@@ -83,14 +83,14 @@ public class DancingZombieEntity extends PVZZombieEntity{
 		for(int i = 0; i < MAX_DANCER_NUM; ++ i) {
 			if(! this.Dancers.get(i).isPresent() && this.summonCnt < this.getMaxSummonCnt()) {//no dancer here.
 				BackupDancerEntity dancer = EntityRegister.BACKUP_DANCER.get().create(level);
-				BlockPos pos = WorldUtil.getSuitableHeightPos(level, this.blockPosition().offset(POS_OFFSET[i][0], 0, POS_OFFSET[i][1]));
+				Mth pos = WorldUtil.getSuitableHeightPos(level, this.blockPosition().offset(POS_OFFSET[i][0], 0, POS_OFFSET[i][1]));
 				dancer.setDancingOwner(this);
 				dancer.setZombieRising();
 				ZombieUtil.copySummonZombieData(this, dancer);
 				this.setDancer(i, dancer);
 				++ this.summonCnt;
 				EntityUtil.onEntitySpawn(level, dancer, pos);
-				this.addEffect(new EffectInstance(Effects.MOVEMENT_SLOWDOWN, 40, 5, false, false));
+				this.addEffect(new MobEffectInstance(Effects.MOVEMENT_SLOWDOWN, 40, 5, false, false));
 			}
 		}
 	}
@@ -130,7 +130,7 @@ public class DancingZombieEntity extends PVZZombieEntity{
 	}
 	
 	/**
-	 * {@link #DancingZombieEntity(EntityType, World)}
+	 * {@link #DancingZombieEntity(EntityType, Level)}
 	 */
 	private void clearDancers() {
 		for(int i = 0;i < MAX_DANCER_NUM; ++ i) {
@@ -166,7 +166,7 @@ public class DancingZombieEntity extends PVZZombieEntity{
 	}
 
 	@Override
-	public void readAdditionalSaveData(CompoundNBT compound) {
+	public void readAdditionalSaveData(CompoundTag compound) {
 		super.readAdditionalSaveData(compound);
 		if(compound.contains("zombie_summon_tick")) {
 			this.setSummonTime(compound.getInt("zombie_summon_tick"));
@@ -175,7 +175,7 @@ public class DancingZombieEntity extends PVZZombieEntity{
 			this.restTick = compound.getInt("zombie_rest_tick");
 		}
 		if(compound.contains("dancer_ids")) {
-			CompoundNBT nbt = compound.getCompound("dancer_ids");
+			CompoundTag nbt = compound.getCompound("dancer_ids");
 			for(int i = 0; i < MAX_DANCER_NUM; ++ i) {
 				if(nbt.contains("dancer_" + i)) {
 				    this.setDancer(i, level.getEntity(nbt.getInt("dancer_" + i)));
@@ -185,11 +185,11 @@ public class DancingZombieEntity extends PVZZombieEntity{
 	}
 	
 	@Override
-	public void addAdditionalSaveData(CompoundNBT compound) {
+	public void addAdditionalSaveData(CompoundTag compound) {
 		super.addAdditionalSaveData(compound);
 		compound.putInt("zombie_summon_tick", this.getSummonTime());
 		compound.putInt("zombie_rest_tick", this.restTick);
-		CompoundNBT nbt = new CompoundNBT();
+		CompoundTag nbt = new CompoundTag();
 		for(int i = 0; i < MAX_DANCER_NUM; ++ i) {
 			if(! this.Dancers.get(i).isPresent()) {
 				continue;

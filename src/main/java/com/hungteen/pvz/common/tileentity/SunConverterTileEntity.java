@@ -10,20 +10,20 @@ import com.hungteen.pvz.common.entity.misc.drop.DropEntity.DropStates;
 import com.hungteen.pvz.common.item.tool.plant.SunStorageSaplingItem;
 import com.hungteen.pvz.utils.MathUtil;
 
-import net.minecraft.block.BlockState;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.entity.player.PlayerInventory;
+import net.minecraft.world.level.block.BlockState;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.entity.player.PlayerInventory;
 import net.minecraft.inventory.container.Container;
 import net.minecraft.inventory.container.INamedContainerProvider;
-import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.CompoundNBT;
+import net.minecraft.world.item.ItemStack;
 import net.minecraft.tileentity.ITickableTileEntity;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.IIntArray;
 import net.minecraft.util.IntArray;
 import net.minecraft.util.math.vector.Vector3d;
-import net.minecraft.util.text.ITextComponent;
-import net.minecraft.util.text.TranslationTextComponent;
+import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraftforge.items.ItemStackHandler;
 
 public class SunConverterTileEntity extends TileEntity implements ITickableTileEntity, INamedContainerProvider {
@@ -145,7 +145,7 @@ public class SunConverterTileEntity extends TileEntity implements ITickableTileE
 	/**
 	 * Don't rename this method to canInteractWith due to conflicts with Container
 	 */
-	public boolean isUsableByPlayer(PlayerEntity player) {
+	public boolean isUsableByPlayer(Player player) {
 		if (this.level.getBlockEntity(this.worldPosition) != this) {
 			return false;
 		}
@@ -153,27 +153,27 @@ public class SunConverterTileEntity extends TileEntity implements ITickableTileE
 	}
 
 	@Override
-	public void load(BlockState state, CompoundNBT compound) {
+	public void load(BlockState state, CompoundTag compound) {
     	super.load(state, compound);
 		this.handler.deserializeNBT(compound.getCompound("itemstack_list"));
 		this.tickExist = compound.getInt("exist_tick");
 	}
 
 	@Override
-	public CompoundNBT save(CompoundNBT compound) {
+	public CompoundTag save(CompoundTag compound) {
 		compound.put("itemstack_list", this.handler.serializeNBT());
 		compound.putInt("exist_tick", this.tickExist);
 		return super.save(compound);
 	}
 
 	@Override
-	public Container createMenu(int id, PlayerInventory inv, PlayerEntity player) {
+	public Container createMenu(int id, PlayerInventory inv, Player player) {
 		return new SunConverterContainer(id, player, this.worldPosition);
 	}
 
 	@Override
-	public ITextComponent getDisplayName() {
-		return new TranslationTextComponent("block.pvz.sun_converter");
+	public Component getDisplayName() {
+		return new TranslatableComponent("block.pvz.sun_converter");
 	}
 
 }

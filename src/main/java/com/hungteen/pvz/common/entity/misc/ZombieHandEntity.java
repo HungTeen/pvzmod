@@ -9,19 +9,20 @@ import com.hungteen.pvz.common.entity.EntityRegister;
 import com.hungteen.pvz.utils.EntityUtil;
 import com.hungteen.pvz.utils.WorldUtil;
 
-import net.minecraft.entity.Entity;
-import net.minecraft.entity.EntitySize;
-import net.minecraft.entity.EntityType;
-import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.Pose;
-import net.minecraft.world.World;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.EntitySize;
+import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.Pose;
+import net.minecraft.world.level.Level;
 
 public class ZombieHandEntity extends AbstractOwnerEntity {
 
 	private int lifeTick;
 	private final int maxLifeTick = 40;
 
-	public ZombieHandEntity(EntityType<? extends Entity> entityTypeIn, World worldIn) {
+	public ZombieHandEntity(EntityType<? extends Entity> entityTypeIn, Level worldIn) {
 		super(entityTypeIn, worldIn);
 		this.setInvulnerable(true);
 		this.noPhysics = true;
@@ -41,9 +42,9 @@ public class ZombieHandEntity extends AbstractOwnerEntity {
 	}
 	
 	/**
-	 * {@link CoffinEntity#finalizeSpawn(net.minecraft.world.IServerWorld, net.minecraft.world.DifficultyInstance, net.minecraft.entity.SpawnReason, net.minecraft.entity.ILivingEntityData, net.minecraft.nbt.CompoundNBT)}
+	 * {@link CoffinEntity#finalizeSpawn(net.minecraft.world.IServerWorld, net.minecraft.world.DifficultyInstance, net.minecraft.world.entity.SpawnReason, net.minecraft.world.entity.ILivingEntityData, CompoundTag)}
 	 */
-	public static void spawnRangeZombieHands(World world, PVZZombieEntity zombie, int range) {
+	public static void spawnRangeZombieHands(Level world, PVZZombieEntity zombie, int range) {
 		for(int i = - range; i <= range; ++ i) {
 			for(int j = - range; j <= range; ++ j) {
 				final ZombieHandEntity hand = EntityRegister.ZOMBIE_HAND.get().create(world);

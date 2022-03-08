@@ -1,9 +1,9 @@
 package com.hungteen.pvz.api.interfaces;
 
-import net.minecraft.potion.EffectInstance;
+import net.minecraft.world.effect.MobEffectInstance;
 
 public interface ILightEffect {
 
-	EffectInstance getLightEyeEffect();
+	MobEffectInstance getLightEyeEffect();
 	
 }

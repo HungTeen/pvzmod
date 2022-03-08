@@ -7,19 +7,19 @@ import com.hungteen.pvz.utils.EntityUtil;
 import com.hungteen.pvz.utils.PlayerUtil;
 import com.hungteen.pvz.utils.enums.Resources;
 
-import net.minecraft.entity.EntitySize;
-import net.minecraft.entity.EntityType;
-import net.minecraft.entity.MobEntity;
-import net.minecraft.entity.Pose;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.world.World;
+import net.minecraft.world.entity.EntitySize;
+import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.MobEntity;
+import net.minecraft.world.entity.Pose;
+import net.minecraft.util.Mth;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.level.Level;
 
 public class CoinEntity extends DropEntity {
 
 	public static final int COIN_TYPES = 3;
 
-	public CoinEntity(EntityType<? extends MobEntity> type, World worldIn) {
+	public CoinEntity(EntityType<? extends MobEntity> type, Level worldIn) {
 		super(type, worldIn);
 		this.setAmountByType(this.getRandomType());
 	}
@@ -33,7 +33,7 @@ public class CoinEntity extends DropEntity {
 	}
 
 	@Override
-	public void onCollectedByPlayer(PlayerEntity player) {
+	public void onCollectedByPlayer(Player player) {
 		if (! this.level.isClientSide) {
 			PlayerUtil.addResource(player, Resources.MONEY, this.getAmount());
 			PlayerUtil.playClientSound(player, SoundRegister.COIN_PICK.get());
@@ -51,7 +51,7 @@ public class CoinEntity extends DropEntity {
 	/**
 	 * spawn coin by type.
 	 */
-	public static void spawnCoin(World world, BlockPos pos, CoinType type) {
+	public static void spawnCoin(Level world, Mth pos, CoinType type) {
 		final CoinEntity coin = EntityRegister.COIN.get().create(world);
 		coin.setAmount(type.money);
 		EntityUtil.onEntitySpawn(world, coin, pos);

@@ -6,7 +6,7 @@ package com.hungteen.pvz.client.model.entity.misc;// Made with Blockbench 4.1.3
 import com.hungteen.pvz.common.entity.misc.GiftBoxEntity;
 import com.mojang.blaze3d.matrix.MatrixStack;
 import com.mojang.blaze3d.vertex.IVertexBuilder;
-import net.minecraft.client.renderer.entity.model.EntityModel;
+import net.minecraft.client.model.EntityModel;
 import net.minecraft.client.renderer.model.ModelRenderer;
 
 public class GiftBoxModel extends EntityModel<GiftBoxEntity> {

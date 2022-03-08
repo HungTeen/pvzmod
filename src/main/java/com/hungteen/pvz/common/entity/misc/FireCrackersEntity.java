@@ -6,25 +6,25 @@ import com.hungteen.pvz.common.misc.PVZEntityDamageSource;
 import com.hungteen.pvz.common.entity.EntityRegister;
 import com.hungteen.pvz.utils.EntityUtil;
 
-import net.minecraft.entity.EntityType;
-import net.minecraft.entity.LivingEntity;
-import net.minecraft.nbt.CompoundNBT;
+import net.minecraft.sounds.SoundEvents;
+import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.datasync.DataParameter;
 import net.minecraft.network.datasync.DataSerializers;
 import net.minecraft.network.datasync.EntityDataManager;
-import net.minecraft.util.SoundEvents;
-import net.minecraft.world.World;
+import net.minecraft.world.level.Level;
 
 public class FireCrackersEntity extends AbstractOwnerEntity {
 
 	private static final DataParameter<Integer> FUSE = EntityDataManager.defineId(FireCrackersEntity.class,
 			DataSerializers.INT);
 
-	public FireCrackersEntity(EntityType<?> entityTypeIn, World worldIn) {
+	public FireCrackersEntity(EntityType<?> entityTypeIn, Level worldIn) {
 		super(entityTypeIn, worldIn);
 	}
 
-	public FireCrackersEntity(World worldIn, LivingEntity living) {
+	public FireCrackersEntity(Level worldIn, LivingEntity living) {
 		super(EntityRegister.FIRE_CRACKERS.get(), worldIn, living);
 	}
 
@@ -64,7 +64,7 @@ public class FireCrackersEntity extends AbstractOwnerEntity {
 	}
 	
 	@Override
-	public void readAdditionalSaveData(CompoundNBT compound) {
+	public void readAdditionalSaveData(CompoundTag compound) {
 		super.readAdditionalSaveData(compound);
 		if(compound.contains("fuse_tick")) {
 			this.setFuse(compound.getInt("fuse_tick"));
@@ -72,7 +72,7 @@ public class FireCrackersEntity extends AbstractOwnerEntity {
 	}
 	
 	@Override
-	public void addAdditionalSaveData(CompoundNBT compound) {
+	public void addAdditionalSaveData(CompoundTag compound) {
 		super.addAdditionalSaveData(compound);
 		compound.putInt("fuse_tick", this.getFuse());
 	}

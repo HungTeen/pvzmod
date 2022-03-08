@@ -2,7 +2,7 @@ package com.hungteen.pvz.common.item.material;
 
 import com.hungteen.pvz.api.types.IEssenceType;
 import com.hungteen.pvz.common.item.PVZItemGroups;
-import net.minecraft.item.Item;
+import net.minecraft.world.item.Item;
 
 public class EssenceItem extends Item {
 

@@ -5,16 +5,16 @@ import com.hungteen.pvz.common.entity.AbstractOwnerEntity;
 import com.hungteen.pvz.common.entity.plant.base.PlantShooterEntity;
 import com.hungteen.pvz.utils.EntityUtil;
 import it.unimi.dsi.fastutil.ints.IntOpenHashSet;
-import net.minecraft.block.Block;
-import net.minecraft.block.BushBlock;
-import net.minecraft.entity.Entity;
-import net.minecraft.entity.EntityType;
-import net.minecraft.entity.LivingEntity;
-import net.minecraft.nbt.CompoundNBT;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.BushBlock;
+import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.nbt.CompoundTag;
 import net.minecraft.particles.ParticleTypes;
 import net.minecraft.util.math.*;
 import net.minecraft.util.math.vector.Vector3d;
-import net.minecraft.world.World;
+import net.minecraft.world.level.Level;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 
@@ -26,12 +26,12 @@ public abstract class AbstractBulletEntity extends AbstractOwnerEntity {
 	protected float airSlowDown = 0.99F;
 	protected float attackDamage = 0F;
 	
-	public AbstractBulletEntity(EntityType<?> type, World worldIn) {
+	public AbstractBulletEntity(EntityType<?> type, Level worldIn) {
 		super(type, worldIn);
 		this.setNoGravity(true);
 	}
 
-	public AbstractBulletEntity(EntityType<?> type, World worldIn, LivingEntity livingEntityIn) {
+	public AbstractBulletEntity(EntityType<?> type, Level worldIn, LivingEntity livingEntityIn) {
 		super(type, worldIn, livingEntityIn);
 		this.summonByOwner(livingEntityIn);
 		this.setNoGravity(true);
@@ -241,7 +241,7 @@ public abstract class AbstractBulletEntity extends AbstractOwnerEntity {
 	}
 	
 	@Override
-	public void readAdditionalSaveData(CompoundNBT compound) {
+	public void readAdditionalSaveData(CompoundTag compound) {
 		super.readAdditionalSaveData(compound);
 		if(compound.contains("bullet_attack_damage")) {
 			this.attackDamage = compound.getFloat("bullet_attack_damage");
@@ -249,7 +249,7 @@ public abstract class AbstractBulletEntity extends AbstractOwnerEntity {
 	}
 	
 	@Override
-	public void addAdditionalSaveData(CompoundNBT compound) {
+	public void addAdditionalSaveData(CompoundTag compound) {
 		super.addAdditionalSaveData(compound);
 		compound.putFloat("bullet_attack_damage", this.attackDamage);
 	}

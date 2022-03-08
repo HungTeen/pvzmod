@@ -11,13 +11,13 @@ import com.hungteen.pvz.common.world.structure.StructureRegister;
 import com.hungteen.pvz.utils.EntityUtil;
 import com.hungteen.pvz.utils.StringUtil;
 
-import net.minecraft.block.Blocks;
-import net.minecraft.nbt.CompoundNBT;
+import net.minecraft.world.level.block.Blocks;
+import net.minecraft.nbt.CompoundTag;
 import net.minecraft.tileentity.MobSpawnerTileEntity;
 import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.ResourceLocation;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.Rotation;
-import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.Mth;
 import net.minecraft.util.math.ChunkPos;
 import net.minecraft.util.math.MutableBoundingBox;
 import net.minecraft.world.ISeedReader;
@@ -32,7 +32,7 @@ public class SunTempleComponents {
 
 	public static final ResourceLocation res = StringUtil.prefix("shop/sun_temple");
 	
-	public static void generate(TemplateManager manager, BlockPos pos1, Rotation rotation, List<StructurePiece> list, Random rand) {
+	public static void generate(TemplateManager manager, Mth pos1, Rotation rotation, List<StructurePiece> list, Random rand) {
 	      list.add(new SunTempleComponent(manager, res, pos1, rotation));
     }
 	
@@ -40,23 +40,23 @@ public class SunTempleComponents {
 
 		private static final IStructurePieceType type = StructureRegister.SUN_TEMPLE_PIECE;
 		
-		public SunTempleComponent(TemplateManager manager, CompoundNBT nbt) {
+		public SunTempleComponent(TemplateManager manager, CompoundTag nbt) {
 			super(type, manager, nbt);
 		}
 
-		public SunTempleComponent(TemplateManager manager, ResourceLocation res,BlockPos pos, Rotation rotation) {
+		public SunTempleComponent(TemplateManager manager, ResourceLocation res, Mth pos, Rotation rotation) {
 			super(type, manager, res, pos, rotation);
 		}
 		
 		@Override
 		public boolean postProcess(ISeedReader worldIn, StructureManager manager, ChunkGenerator chunkGeneratorIn, Random randomIn,
-				MutableBoundingBox mutableBoundingBoxIn, ChunkPos chunkPosIn, BlockPos blockPos) {
+				MutableBoundingBox mutableBoundingBoxIn, ChunkPos chunkPosIn, Mth blockPos) {
 			return super.postProcess(worldIn, manager, chunkGeneratorIn, randomIn, mutableBoundingBoxIn, chunkPosIn, blockPos);
 		}
 		
 		@Override
-		protected void handleDataMarker(String function, BlockPos pos, IServerWorld worldIn, Random rand,
-				MutableBoundingBox sbb) {
+		protected void handleDataMarker(String function, Mth pos, IServerWorld worldIn, Random rand,
+                                        MutableBoundingBox sbb) {
 			if(function.equals("spawn")){
 				SunDaveEntity dave = EntityRegister.SUN_DAVE.get().create(worldIn.getLevel());
 				EntityUtil.onEntitySpawn(worldIn, dave, pos.above());

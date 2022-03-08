@@ -2,7 +2,7 @@ package com.hungteen.pvz.common.misc.sound;
 
 import com.hungteen.pvz.PVZMod;
 import com.hungteen.pvz.utils.StringUtil;
-import net.minecraft.util.SoundEvent;
+import net.minecraft.sounds.SoundEvent;
 import net.minecraftforge.fml.RegistryObject;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;

@@ -28,25 +28,26 @@ import com.hungteen.pvz.common.potion.EffectRegister;
 import com.hungteen.pvz.compat.jade.provider.PVZEntityProvider;
 import com.hungteen.pvz.utils.interfaces.IHasMultiPart;
 import it.unimi.dsi.fastutil.ints.IntOpenHashSet;
-import net.minecraft.block.BlockState;
-import net.minecraft.block.Blocks;
-import net.minecraft.entity.*;
-import net.minecraft.entity.ai.attributes.Attributes;
-import net.minecraft.entity.passive.BatEntity;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.entity.projectile.ProjectileHelper;
-import net.minecraft.nbt.CompoundNBT;
+import net.minecraft.world.level.block.BlockState;
+import net.minecraft.world.level.block.Blocks;
+import net.minecraft.server.level.ServerLevel;
+import net.minecraft.world.effect.MobEffectInstance;
+import net.minecraft.world.entity.*;
+import net.minecraft.world.entity.ai.attributes.Attributes;
+import net.minecraft.world.entity.passive.BatEntity;
+import net.minecraft.util.Mth;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.entity.projectile.ProjectileHelper;
+import net.minecraft.nbt.CompoundTag;
 import net.minecraft.particles.IParticleData;
-import net.minecraft.potion.EffectInstance;
 import net.minecraft.scoreboard.Team;
 import net.minecraft.tags.BlockTags;
-import net.minecraft.util.SoundEvent;
+import net.minecraft.sounds.SoundEvent;
 import net.minecraft.util.math.*;
 import net.minecraft.util.math.vector.Vector3d;
 import net.minecraft.world.IServerWorld;
 import net.minecraft.world.IWorld;
-import net.minecraft.world.World;
-import net.minecraft.world.server.ServerWorld;
+import net.minecraft.world.level.Level;
 import net.minecraftforge.event.ForgeEventFactory;
 import net.minecraftforge.fml.network.PacketDistributor;
 import net.minecraftforge.fml.network.PacketDistributor.TargetPoint;
@@ -73,12 +74,12 @@ public class EntityUtil {
 	}
 
 	@Nullable
-	public static Entity createWithNBT(World world, EntityType<?> entityType, CompoundNBT nbt, BlockPos pos){
-		if(! World.isInSpawnableBounds(pos)) {
+	public static Entity createWithNBT(Level world, EntityType<?> entityType, CompoundTag nbt, Mth pos){
+		if(! Level.isInSpawnableBounds(pos)) {
 			PVZMod.LOGGER.error("Invalid position when trying summon entity !");
 			return null;
 		}
-		final CompoundNBT compound = nbt.copy();
+		final CompoundTag compound = nbt.copy();
 		compound.putString("id", entityType.getRegistryName().toString());
 		Entity entity = EntityType.loadEntityRecursive(compound, world, e -> {
 			e.moveTo(pos, e.xRot, e.yRot);
@@ -88,7 +89,7 @@ public class EntityUtil {
 			PVZMod.LOGGER.error("summon entity failed !");
 			return null;
 		} else {
-			if(world instanceof ServerWorld && ! ((ServerWorld) world).tryAddFreshEntityWithPassengers(entity)) {
+			if(world instanceof ServerLevel && ! ((ServerLevel) world).tryAddFreshEntityWithPassengers(entity)) {
 				PVZMod.LOGGER.error("summon entity duplicated uuid !");
 				return null;
 			}
@@ -144,7 +145,7 @@ public class EntityUtil {
 		WorldUtil.spawnRandomSpeedParticle(entity.level, type, entity.position().add(0, entity.getBbHeight(), 0), speed);
 	}
 	
-	public static boolean canDestroyBlock(World world, BlockPos pos, Entity entity) {
+	public static boolean canDestroyBlock(Level world, Mth pos, Entity entity) {
 		return canDestroyBlock(world, pos, world.getBlockState(pos), entity);
 	}
 	
@@ -161,7 +162,7 @@ public class EntityUtil {
 	/**
 	 * {@link StrangeCatEntity#startSuperMode(boolean)}
 	 */
-	public static List<LivingEntity> getRandomLivingInRange(World world, LivingEntity attacker, AxisAlignedBB aabb, int cnt) {
+	public static List<LivingEntity> getRandomLivingInRange(Level world, LivingEntity attacker, AxisAlignedBB aabb, int cnt) {
 		List<LivingEntity> list = new ArrayList<>();
 		for(LivingEntity living : EntityUtil.getTargetableLivings(attacker, aabb)){
 			list.add(living);
@@ -258,7 +259,7 @@ public class EntityUtil {
 	/**
 	 * check can entity destroy the specific block.
 	 */
-	public static boolean canDestroyBlock(World world, BlockPos pos, BlockState state, Entity entity) {
+	public static boolean canDestroyBlock(Level world, Mth pos, BlockState state, Entity entity) {
 		float hardness = state.getDestroySpeed(world, pos);
 		return hardness >= 0f && hardness < 50f && !state.getBlock().isAir(state, world, pos)
 				&& state.getBlock().canEntityDestroy(state, world, pos, entity) && (!(entity instanceof LivingEntity)
@@ -268,7 +269,7 @@ public class EntityUtil {
 	/**
 	 * use to create entity and spawn it in world.
 	 */
-	public static void createEntityAndSpawn(World world, EntityType<?> type, BlockPos pos) {
+	public static void createEntityAndSpawn(Level world, EntityType<?> type, Mth pos) {
 		Entity entity = type.create(world);
 		onEntitySpawn(world, entity, pos);
 	}
@@ -276,7 +277,7 @@ public class EntityUtil {
 	/**
 	 * use to spawn entity in world.
 	 */
-	public static void onEntitySpawn(IWorld world, Entity entity, BlockPos pos) {
+	public static void onEntitySpawn(IWorld world, Entity entity, Mth pos) {
 		entity.setPos(pos.getX() + 0.5, pos.getY(), pos.getZ() + 0.5);
 		if(entity instanceof MobEntity) {
 			((MobEntity) entity).finalizeSpawn((IServerWorld) world, world.getCurrentDifficultyAt(entity.blockPosition()), SpawnReason.SPAWNER, null, null);
@@ -287,7 +288,7 @@ public class EntityUtil {
 	/**
 	 * spawn in random range position.
 	 */
-	public static void onEntityRandomPosSpawn(IWorld world, Entity entity, BlockPos pos, int dis) {
+	public static void onEntityRandomPosSpawn(IWorld world, Entity entity, Mth pos, int dis) {
 		pos = pos.offset(MathUtil.getRandomInRange(world.getRandom(), dis), world.getRandom().nextInt(dis) + 1, MathUtil.getRandomInRange(world.getRandom(), dis));
 		onEntitySpawn(world, entity, pos);
 	}
@@ -296,7 +297,7 @@ public class EntityUtil {
 	 * check if entity is on ground
 	 */
 	public static boolean isOnGround(Entity entity){
-		BlockPos pos = entity.blockPosition().below();
+		Mth pos = entity.blockPosition().below();
 		if(!entity.level.isEmptyBlock(pos) && (entity.getY() - pos.getY()) <= 1.00001) {
 			return true;
 		}
@@ -308,7 +309,7 @@ public class EntityUtil {
 	 * {@link BobsleTeamEntity#zombieTick()}
 	 */
 	public static boolean isOnSnow(Entity entity) {
-		BlockPos pos = entity.blockPosition();
+		Mth pos = entity.blockPosition();
 		return entity.level.getBlockState(pos).is(Blocks.SNOW) || entity.level.getBlockState(pos.below()).is(Blocks.SNOW_BLOCK);
 	}
 	
@@ -317,7 +318,7 @@ public class EntityUtil {
 	 * {@link BobsleTeamEntity#zombieTick()}
 	 */
 	public static boolean isOnIce(Entity entity) {
-		BlockPos pos = entity.blockPosition();
+		Mth pos = entity.blockPosition();
 		return entity.level.getBlockState(pos).is(BlockTags.ICE) || entity.level.getBlockState(pos.below()).is(BlockTags.ICE);
 	}
 	
@@ -357,7 +358,7 @@ public class EntityUtil {
 	 * get the owner of entity
 	 */
 	@Nullable
-	public static PlayerEntity getEntityOwner(World world, @Nullable Entity entity) {
+	public static Player getEntityOwner(Level world, @Nullable Entity entity) {
 		UUID uuid = null;
 		if(entity instanceof IHasOwner) {
 			uuid = ((IHasOwner) entity).getOwnerUUID().orElse(null);
@@ -417,7 +418,7 @@ public class EntityUtil {
 		if(target instanceof PVZMultiPartEntity) {//can attack its owner then can attack it
 			return checkCanEntityBeAttack(attacker, ((PVZMultiPartEntity) target).getOwner());
 		}
-		if(target instanceof PlayerEntity && !PlayerUtil.isPlayerSurvival((PlayerEntity) target)) {
+		if(target instanceof Player && !PlayerUtil.isPlayerSurvival((Player) target)) {
 			return false;
 		}
 		if(ConfigUtil.isTeamAttackEnable()) {//enable team attack
@@ -445,8 +446,8 @@ public class EntityUtil {
 	}
 
 	public static PVZGroupType getEntityGroup(Entity entity) {
-		if(entity instanceof PlayerEntity){
-			return EntityGroupHander.getPlayerGroup((PlayerEntity) entity);
+		if(entity instanceof Player){
+			return EntityGroupHander.getPlayerGroup((Player) entity);
 		}
 		return (entity instanceof IHasGroup) ? ((IHasGroup) entity).getEntityGroupType() : EntityGroupHander.getEntityGroupType(entity);
 	}
@@ -456,12 +457,12 @@ public class EntityUtil {
 	 * used at {@link #checkCanEntityBeAttack(Entity, Entity)}
 	 */
 	@Nullable
-	public static Team getEntityTeam(World world, Entity entity){
-		if(entity instanceof PlayerEntity) {
+	public static Team getEntityTeam(Level world, Entity entity){
+		if(entity instanceof Player) {
 			return entity.getTeam();
 		}
 		if(entity instanceof IHasOwner && ((IHasOwner) entity).getOwnerUUID().isPresent()) {
-			PlayerEntity player = world.getPlayerByUUID(((IHasOwner) entity).getOwnerUUID().get());
+			Player player = world.getPlayerByUUID(((IHasOwner) entity).getOwnerUUID().get());
 			return player == null ? null : player.getTeam();
 		}
 	    return entity.getTeam();
@@ -589,7 +590,7 @@ public class EntityUtil {
 	 * add entity potion effect.
 	 * {@link LivingEventHandler#handleHurtEffects(LivingEntity, PVZEntityDamageSource)}
 	 */
-	public static void addPotionEffect(Entity entity, EffectInstance effect) {
+	public static void addPotionEffect(Entity entity, MobEffectInstance effect) {
 		if(entity instanceof PVZMultiPartEntity) {
 			addPotionEffect(((PVZMultiPartEntity) entity).getOwner(), effect);
 		} else if(entity instanceof PVZZombieEntity) {
@@ -635,7 +636,7 @@ public class EntityUtil {
 		return ! entity.isOnGround() && ! entity.isInWater() && ! entity.isInLava();
 	}
 	
-	public static boolean hasNearBy(World world, BlockPos pos, double r, Predicate<Entity> pre) {
+	public static boolean hasNearBy(Level world, Mth pos, double r, Predicate<Entity> pre) {
 		return world.getEntitiesOfClass(Entity.class, BlockUtil.getAABB(pos, r, r)).stream().filter(target -> {
 			return pre.test(target);
 		}).count() > 0;
@@ -653,7 +654,7 @@ public class EntityUtil {
 	 * used for bullets hit check.
 	 * get predicate entity between start to end. 
 	 */
-	public static EntityRayTraceResult rayTraceEntities(World world, Entity entity, Vector3d startVec, Vector3d endVec, Predicate<Entity> predicate) {
+	public static EntityRayTraceResult rayTraceEntities(Level world, Entity entity, Vector3d startVec, Vector3d endVec, Predicate<Entity> predicate) {
 		return ProjectileHelper.getEntityHitResult(world, entity, startVec, endVec, 
 				entity.getBoundingBox().expandTowards(entity.getDeltaMovement()).inflate(1.0D), predicate);
 	}
@@ -662,7 +663,7 @@ public class EntityUtil {
 	 * used for item ray trace.
 	 * get predicate entity with dis and vec. 
 	 */
-	public static EntityRayTraceResult rayTraceEntities(World world, Entity entity, Vector3d lookVec, double distance, Predicate<Entity> predicate) {
+	public static EntityRayTraceResult rayTraceEntities(Level world, Entity entity, Vector3d lookVec, double distance, Predicate<Entity> predicate) {
 	    final Vector3d startVec = entity.position().add(0, entity.getEyeHeight(), 0);
 	    Vector3d endVec = startVec.add(lookVec.normalize().scale(distance));
 	    RayTraceContext ray = new RayTraceContext(startVec, endVec, RayTraceContext.BlockMode.COLLIDER, RayTraceContext.FluidMode.NONE, entity);
@@ -685,7 +686,7 @@ public class EntityUtil {
 	 * no need to target or attack an op entity.
 	 */
 	public static boolean isOpEntity(Entity entity){
-		if(entity instanceof PlayerEntity && ! PlayerUtil.isPlayerSurvival((PlayerEntity) entity)){
+		if(entity instanceof Player && ! PlayerUtil.isPlayerSurvival((Player) entity)){
 			return true;
 		}
 		return entity.isInvulnerable();

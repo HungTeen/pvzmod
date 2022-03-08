@@ -12,11 +12,11 @@ import com.hungteen.pvz.utils.enums.Colors;
 import com.mojang.blaze3d.matrix.MatrixStack;
 import com.mojang.datafixers.util.Pair;
 import net.minecraft.client.gui.widget.button.Button;
-import net.minecraft.entity.player.PlayerInventory;
-import net.minecraft.util.ResourceLocation;
+import net.minecraft.network.chat.Component;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.entity.player.PlayerInventory;
 import net.minecraft.util.math.MathHelper;
-import net.minecraft.util.text.ITextComponent;
-import net.minecraft.util.text.TranslationTextComponent;
+import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 
@@ -35,7 +35,7 @@ public abstract class AbstractDaveShopScreen extends PVZContainerScreen<Abstract
     protected int selectedPos;
 
     public AbstractDaveShopScreen(AbstractDaveShopContainer screenContainer, PlayerInventory inv,
-                                  ITextComponent titleIn) {
+                                  Component titleIn) {
         super(screenContainer, inv, titleIn);
         this.imageWidth = 285;
         this.imageHeight = 195;
@@ -53,7 +53,7 @@ public abstract class AbstractDaveShopScreen extends PVZContainerScreen<Abstract
             }));
         }
         this.buyButton = this.addButton(new Button(this.leftPos + 206, this.topPos + 85, 18, 18,
-                new TranslationTextComponent("gui.pvz.dave_shop.buy"), (button) -> {
+                new TranslatableComponent("gui.pvz.dave_shop.buy"), (button) -> {
             if (this.buyButton.visible) {
                 PVZPacketHandler.CHANNEL.sendToServer(new ClickButtonPacket(this.getShopID(), 0, this.selectedPos));
             }
@@ -92,7 +92,7 @@ public abstract class AbstractDaveShopScreen extends PVZContainerScreen<Abstract
         }
         //update refresh time.
         this.menu.getLeftRefreshTime().ifPresent(time -> {
-            StringUtil.drawCenteredScaledString(stack, font, new TranslationTextComponent("gui.pvz.shop.left_time", time).getString(), this.leftPos + 117 + 120, this.topPos + 28, time > 12000 ? Colors.GREEN : time > 1200 ? Colors.YELLOW : Colors.RED, 0.8f);
+            StringUtil.drawCenteredScaledString(stack, font, new TranslatableComponent("gui.pvz.shop.left_time", time).getString(), this.leftPos + 117 + 120, this.topPos + 28, time > 12000 ? Colors.GREEN : time > 1200 ? Colors.YELLOW : Colors.RED, 0.8f);
         });
         //update trade buttons.
         for (TradeButton trade : this.trades) {
@@ -159,7 +159,7 @@ public abstract class AbstractDaveShopScreen extends PVZContainerScreen<Abstract
 
     protected abstract Pair<Integer, Integer> getMoneyBarPos();
 
-    protected abstract ITextComponent getShopTitle();
+    protected abstract Component getShopTitle();
 
     private void renderScroll(MatrixStack stack, List<AbstractDaveEntity.GoodType> types) {
         final int x = (this.width - this.imageWidth) / 2;

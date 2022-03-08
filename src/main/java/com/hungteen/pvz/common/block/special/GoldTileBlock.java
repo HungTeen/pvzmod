@@ -1,7 +1,7 @@
 package com.hungteen.pvz.common.block.special;
 
-import net.minecraft.block.Block;
-import net.minecraft.block.Blocks;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.Blocks;
 
 public class GoldTileBlock extends Block {
 

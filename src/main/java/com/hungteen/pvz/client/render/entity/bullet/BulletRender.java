@@ -10,10 +10,10 @@ import net.minecraft.client.renderer.entity.EntityRendererManager;
 import net.minecraft.client.renderer.model.ItemCameraTransforms;
 import net.minecraft.client.renderer.texture.AtlasTexture;
 import net.minecraft.client.renderer.texture.OverlayTexture;
-import net.minecraft.entity.Entity;
-import net.minecraft.entity.IRendersAsItem;
-import net.minecraft.util.ResourceLocation;
-import net.minecraft.util.math.BlockPos;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.IRendersAsItem;
+import net.minecraft.util.Mth;
 import net.minecraft.util.math.vector.Vector3f;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
@@ -35,7 +35,7 @@ public abstract class BulletRender<T extends Entity & IRendersAsItem> extends En
 	}
 
 	@Override
-	protected int getBlockLightLevel(T entityIn, BlockPos pos) {
+	protected int getBlockLightLevel(T entityIn, Mth pos) {
 		return this.fullBright ? 15 : super.getBlockLightLevel(entityIn, pos);
 	}
 

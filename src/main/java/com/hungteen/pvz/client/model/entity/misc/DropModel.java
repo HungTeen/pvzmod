@@ -5,7 +5,7 @@ import com.hungteen.pvz.common.entity.misc.drop.SunEntity;
 import com.mojang.blaze3d.matrix.MatrixStack;
 import com.mojang.blaze3d.vertex.IVertexBuilder;
 
-import net.minecraft.client.renderer.entity.model.EntityModel;
+import net.minecraft.client.model.EntityModel;
 import net.minecraft.client.renderer.model.ModelRenderer;
 
 public class DropModel<T extends DropEntity> extends EntityModel<T> {

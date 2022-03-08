@@ -1,17 +1,17 @@
 package com.hungteen.pvz.common.entity.ai.navigator;
 
-import net.minecraft.entity.MobEntity;
+import net.minecraft.world.entity.MobEntity;
 import net.minecraft.network.DebugPacketSender;
 import net.minecraft.pathfinding.PathFinder;
 import net.minecraft.pathfinding.SwimNodeProcessor;
 import net.minecraft.pathfinding.SwimmerPathNavigator;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.vector.Vector3d;
-import net.minecraft.world.World;
+import net.minecraft.world.level.Level;
 
 public class ZombieWaterPathNavigator extends SwimmerPathNavigator {
 
-	public ZombieWaterPathNavigator(MobEntity p_i45873_1_, World p_i45873_2_) {
+	public ZombieWaterPathNavigator(MobEntity p_i45873_1_, Level p_i45873_2_) {
 		super(p_i45873_1_, p_i45873_2_);
 	}
 

@@ -1,7 +1,7 @@
 package com.hungteen.pvz.common.block.ores;
 
 import com.hungteen.pvz.common.block.BlockRegister;
-import net.minecraft.block.OreBlock;
+import net.minecraft.world.level.block.OreBlock;
 import net.minecraft.util.math.MathHelper;
 
 import java.util.Random;

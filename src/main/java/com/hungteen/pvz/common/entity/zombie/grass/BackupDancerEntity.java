@@ -6,13 +6,13 @@ import com.hungteen.pvz.common.impl.zombie.GrassZombies;
 import com.hungteen.pvz.utils.EntityUtil;
 import com.hungteen.pvz.utils.MathUtil;
 import com.hungteen.pvz.utils.ZombieUtil;
-import net.minecraft.entity.CreatureEntity;
-import net.minecraft.entity.Entity;
-import net.minecraft.entity.EntityType;
-import net.minecraft.entity.ai.attributes.Attributes;
-import net.minecraft.entity.ai.goal.Goal;
-import net.minecraft.nbt.CompoundNBT;
-import net.minecraft.world.World;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.world.entity.CreatureEntity;
+import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.ai.attributes.Attributes;
+import net.minecraft.world.entity.ai.goal.Goal;
+import net.minecraft.world.level.Level;
 
 import java.util.EnumSet;
 import java.util.Optional;
@@ -25,7 +25,7 @@ public class BackupDancerEntity extends PVZZombieEntity{
 	private static final int MAX_REST_CD = 300;
 	private int restTick = 0;
 	
-	public BackupDancerEntity(EntityType<? extends CreatureEntity> type, World worldIn) {
+	public BackupDancerEntity(EntityType<? extends CreatureEntity> type, Level worldIn) {
 		super(type, worldIn);
 		this.canCollideWithZombie = false;
 	}
@@ -87,7 +87,7 @@ public class BackupDancerEntity extends PVZZombieEntity{
 	}
 
     @Override
-    public void readAdditionalSaveData(CompoundNBT compound) {
+    public void readAdditionalSaveData(CompoundTag compound) {
     	super.readAdditionalSaveData(compound);
     	if(compound.contains("zombie_rest_tick")) {
     		this.restTick = compound.getInt("zombie_rest_tick");
@@ -101,7 +101,7 @@ public class BackupDancerEntity extends PVZZombieEntity{
     }
     
     @Override
-    public void addAdditionalSaveData(CompoundNBT compound) {
+    public void addAdditionalSaveData(CompoundTag compound) {
     	super.addAdditionalSaveData(compound);
     	compound.putInt("zombie_rest_tick", this.restTick);
     	this.owner.ifPresent(dancer -> compound.putInt("dancing_owner", dancer.getId()));

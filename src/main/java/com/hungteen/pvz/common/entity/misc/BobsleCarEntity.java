@@ -4,40 +4,40 @@ import javax.annotation.Nullable;
 
 import com.hungteen.pvz.common.item.ItemRegister;
 
-import net.minecraft.block.BlockState;
-import net.minecraft.block.Blocks;
-import net.minecraft.block.LilyPadBlock;
+import net.minecraft.world.InteractionResult;
+import net.minecraft.world.level.block.BlockState;
+import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.block.LilyPadBlock;
 import net.minecraft.client.Minecraft;
-import net.minecraft.entity.Entity;
-import net.minecraft.entity.EntitySize;
-import net.minecraft.entity.EntityType;
-import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.MoverType;
-import net.minecraft.entity.Pose;
-import net.minecraft.entity.passive.AnimalEntity;
-import net.minecraft.entity.passive.WaterMobEntity;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.nbt.CompoundNBT;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.EntitySize;
+import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.MoverType;
+import net.minecraft.world.entity.Pose;
+import net.minecraft.world.entity.passive.AnimalEntity;
+import net.minecraft.world.entity.passive.WaterMobEntity;
+import net.minecraft.util.Mth;
+import net.minecraft.world.entity.player.Player;
 import net.minecraft.network.IPacket;
 import net.minecraft.network.datasync.DataParameter;
 import net.minecraft.network.datasync.DataSerializers;
 import net.minecraft.network.datasync.EntityDataManager;
 import net.minecraft.tags.FluidTags;
-import net.minecraft.util.ActionResultType;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.Direction;
 import net.minecraft.util.EntityPredicates;
-import net.minecraft.util.Hand;
+import net.minecraft.world.InteractionHand;
 import net.minecraft.util.IndirectEntityDamageSource;
 import net.minecraft.util.math.AxisAlignedBB;
-import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.shapes.IBooleanFunction;
 import net.minecraft.util.math.shapes.VoxelShape;
 import net.minecraft.util.math.shapes.VoxelShapes;
 import net.minecraft.util.math.vector.Vector3d;
 import net.minecraft.world.GameRules;
-import net.minecraft.world.World;
+import net.minecraft.world.level.Level;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.fml.network.NetworkHooks;
@@ -63,7 +63,7 @@ public class BobsleCarEntity extends Entity {
 	private double lerpPitch;
 	private float boatGlide;
 
-	public BobsleCarEntity(EntityType<?> entityTypeIn, World worldIn) {
+	public BobsleCarEntity(EntityType<?> entityTypeIn, Level worldIn) {
 		super(entityTypeIn, worldIn);
 		refreshDimensions();
 	}
@@ -118,22 +118,22 @@ public class BobsleCarEntity extends Entity {
 	}
 
 	private boolean checkCanRideOn(Entity entity) {
-		return !(this.getControllingPassenger() instanceof PlayerEntity)
+		return !(this.getControllingPassenger() instanceof Player)
 				&& this.getPassengers().size() < MAX_PASSENGER_SIZE && !entity.isPassenger()
 				&& entity.getBbWidth() < this.getBbWidth() && entity instanceof LivingEntity
-				&& !(entity instanceof WaterMobEntity) && !(entity instanceof PlayerEntity);
+				&& !(entity instanceof WaterMobEntity) && !(entity instanceof Player);
 	}
 
 	@Override
-	public ActionResultType interactAt(PlayerEntity player, Vector3d vec3d, Hand hand) {
+	public InteractionResult interactAt(Player player, Vector3d vec3d, InteractionHand hand) {
 		if (player.isSecondaryUseActive()) {
-			return ActionResultType.FAIL;
+			return InteractionResult.FAIL;
 		}
 		if(! this.level.isClientSide) {
 			player.startRiding(this);
-			return ActionResultType.SUCCESS;
+			return InteractionResult.SUCCESS;
 		} else {
-			return ActionResultType.FAIL;
+			return InteractionResult.FAIL;
 		}
 	}
 
@@ -172,7 +172,7 @@ public class BobsleCarEntity extends Entity {
 	}
 
 	@OnlyIn(Dist.CLIENT)
-	private boolean isRidingPlayer(PlayerEntity player) {
+	private boolean isRidingPlayer(Player player) {
 		return player.getVehicle() != null && player.getVehicle() == this;
 	}
 
@@ -236,8 +236,8 @@ public class BobsleCarEntity extends Entity {
 				this.setTimeSinceHit(10);
 				this.setDamageTaken(this.getDamageTaken() + amount * 10.0F);
 				this.markHurt();
-				boolean flag = source.getEntity() instanceof PlayerEntity
-						&& ((PlayerEntity) source.getEntity()).abilities.instabuild;
+				boolean flag = source.getEntity() instanceof Player
+						&& ((Player) source.getEntity()).abilities.instabuild;
 				if (flag || this.getDamageTaken() > 40.0F) {
 					if (!flag && this.level.getGameRules().getBoolean(GameRules.RULE_DOENTITYDROPS)) {
 						this.spawnAtLocation(ItemRegister.BOBSLE_CAR.get());
@@ -344,7 +344,7 @@ public class BobsleCarEntity extends Entity {
 		VoxelShape voxelshape = VoxelShapes.create(axisalignedbb1);
 		float f = 0.0F;
 		int k1 = 0;
-		BlockPos.Mutable blockpos$mutable = new BlockPos.Mutable();
+		Mth.Mutable blockpos$mutable = new Mth.Mutable();
 
 	      for(int l1 = i; l1 < j; ++l1) {
 	         for(int i2 = i1; i2 < j1; ++i2) {
@@ -377,12 +377,12 @@ public class BobsleCarEntity extends Entity {
 			this.momentum = 0.9F;
 		} else if (this.status == Status.ON_LAND) {
 			this.momentum = this.boatGlide;
-			if (this.getControllingPassenger() instanceof PlayerEntity) {
+			if (this.getControllingPassenger() instanceof Player) {
 				this.boatGlide /= 2.0F;
 			}
 		} else if (this.status == Status.ON_SNOW) {
 			this.momentum = this.boatGlide;
-			if (this.getControllingPassenger() instanceof PlayerEntity) {
+			if (this.getControllingPassenger() instanceof Player) {
 				this.boatGlide /= 2.0F;
 			}
 		}
@@ -442,17 +442,17 @@ public class BobsleCarEntity extends Entity {
 		this.applyYawToEntity(entityToUpdate);
 	}
 
-	protected void addAdditionalSaveData(CompoundNBT compound) {
+	protected void addAdditionalSaveData(CompoundTag compound) {
 	}
 
 	/**
 	 * (abstract) Protected helper method to read subclass entity data from NBT.
 	 */
-	protected void readAdditionalSaveData(CompoundNBT compound) {
+	protected void readAdditionalSaveData(CompoundTag compound) {
 	}
 
 	@SuppressWarnings("deprecation")
-	protected void checkFallDamage(double y, boolean onGroundIn, BlockState state, BlockPos pos) {
+	protected void checkFallDamage(double y, boolean onGroundIn, BlockState state, Mth pos) {
 		if (!this.isPassenger()) {
 			if (onGroundIn) {
 				if (this.fallDistance > 3.0F) {

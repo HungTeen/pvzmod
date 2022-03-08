@@ -6,29 +6,29 @@ import com.hungteen.pvz.common.impl.zombie.PoolZombies;
 import com.hungteen.pvz.common.impl.zombie.ZombieType;
 import com.hungteen.pvz.common.misc.sound.SoundRegister;
 import com.hungteen.pvz.utils.ZombieUtil;
-import net.minecraft.entity.*;
-import net.minecraft.entity.ai.attributes.Attributes;
-import net.minecraft.entity.ai.controller.DolphinLookController;
-import net.minecraft.entity.ai.controller.MovementController;
-import net.minecraft.entity.ai.goal.*;
-import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.sounds.SoundEvent;
+import net.minecraft.sounds.SoundEvents;
+import net.minecraft.world.entity.*;
+import net.minecraft.world.entity.ai.attributes.Attributes;
+import net.minecraft.world.entity.ai.controller.DolphinLookController;
+import net.minecraft.world.entity.ai.controller.MovementController;
+import net.minecraft.world.entity.ai.goal.*;
+import net.minecraft.util.Mth;
+import net.minecraft.world.entity.player.Player;
 import net.minecraft.fluid.FluidState;
 import net.minecraft.pathfinding.PathNavigator;
 import net.minecraft.pathfinding.PathNodeType;
 import net.minecraft.pathfinding.SwimmerPathNavigator;
 import net.minecraft.tags.FluidTags;
 import net.minecraft.util.Direction;
-import net.minecraft.util.SoundEvent;
-import net.minecraft.util.SoundEvents;
-import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.vector.Vector3d;
 import net.minecraft.world.IWorldReader;
-import net.minecraft.world.World;
+import net.minecraft.world.level.Level;
 
 public class ZombieDolphinEntity extends PVZZombieEntity {
 
-	public ZombieDolphinEntity(EntityType<? extends CreatureEntity> type, World worldIn) {
+	public ZombieDolphinEntity(EntityType<? extends CreatureEntity> type, Level worldIn) {
 		super(type, worldIn);
 		this.setPathfindingMalus(PathNodeType.WATER, 0.0F);
 		this.moveControl = new MoveHelperController(this);
@@ -41,7 +41,7 @@ public class ZombieDolphinEntity extends PVZZombieEntity {
 		this.goalSelector.addGoal(0, new BreatheAirGoal(this));
 		this.goalSelector.addGoal(4, new RandomSwimmingGoal(this, 1.0D, 10));
 		this.goalSelector.addGoal(4, new LookRandomlyGoal(this));
-		this.goalSelector.addGoal(5, new LookAtGoal(this, PlayerEntity.class, 2.0F));
+		this.goalSelector.addGoal(5, new LookAtGoal(this, Player.class, 2.0F));
 		this.goalSelector.addGoal(5, new ZombieDolphinJumpGoal(this, 10));
 		this.goalSelector.addGoal(8, new FollowBoatGoal(this));
 		this.goalSelector.addGoal(0, new PVZZombieAttackGoal(this, true));
@@ -114,7 +114,7 @@ public class ZombieDolphinEntity extends PVZZombieEntity {
 	}
 
 	@Override
-	protected PathNavigator createNavigation(World worldIn) {
+	protected PathNavigator createNavigation(Level worldIn) {
 		return new SwimmerPathNavigator(this, worldIn);
 	}
 	
@@ -196,7 +196,7 @@ public class ZombieDolphinEntity extends PVZZombieEntity {
 				Direction direction = this.dolphin.getMotionDirection();
 				int i = direction.getStepX();
 				int j = direction.getStepZ();
-				BlockPos blockpos = this.dolphin.blockPosition();
+				Mth blockpos = this.dolphin.blockPosition();
 
 				for (int k : JUMP_DISTANCES) {
 					if (!this.canJumpTo(blockpos, i, j, k) || !this.isAirAbove(blockpos, i, j, k)) {
@@ -208,14 +208,14 @@ public class ZombieDolphinEntity extends PVZZombieEntity {
 			}
 		}
 
-		private boolean canJumpTo(BlockPos pos, int dx, int dz, int scale) {
-			BlockPos blockpos = pos.offset(dx * scale, 0, dz * scale);
+		private boolean canJumpTo(Mth pos, int dx, int dz, int scale) {
+			Mth blockpos = pos.offset(dx * scale, 0, dz * scale);
 			return this.dolphin.level.getFluidState(blockpos).is(FluidTags.WATER)
 					&& !this.dolphin.level.getBlockState(blockpos).getMaterial().blocksMotion();
 		}
 
 		@SuppressWarnings("deprecation")
-		private boolean isAirAbove(BlockPos pos, int dx, int dz, int scale) {
+		private boolean isAirAbove(Mth pos, int dx, int dz, int scale) {
 			return this.dolphin.level.getBlockState(pos.offset(dx * scale, 1, dz * scale)).isAir()
 					&& this.dolphin.level.getBlockState(pos.offset(dx * scale, 2, dz * scale)).isAir();
 		}

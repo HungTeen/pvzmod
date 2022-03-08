@@ -1,6 +1,6 @@
 package com.hungteen.pvz.api.interfaces;
 
-import net.minecraft.entity.LivingEntity;
+import net.minecraft.world.entity.LivingEntity;
 
 /**
  * implement this to make entity collectible by Collector

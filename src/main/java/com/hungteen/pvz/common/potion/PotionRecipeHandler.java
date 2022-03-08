@@ -2,12 +2,12 @@ package com.hungteen.pvz.common.potion;
 
 import com.hungteen.pvz.common.item.ItemRegister;
 
-import net.minecraft.item.ItemStack;
-import net.minecraft.item.Items;
-import net.minecraft.item.crafting.Ingredient;
-import net.minecraft.potion.Potion;
-import net.minecraft.potion.PotionUtils;
-import net.minecraft.potion.Potions;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Items;
+import net.minecraft.world.item.crafting.Ingredient;
+import net.minecraft.world.effect.Potion;
+import net.minecraft.world.effect.PotionUtils;
+import net.minecraft.world.effect.Potions;
 import net.minecraftforge.common.brewing.BrewingRecipeRegistry;
 
 public class PotionRecipeHandler {

@@ -11,16 +11,16 @@ import com.hungteen.pvz.common.misc.sound.SoundRegister;
 import com.hungteen.pvz.utils.EntityUtil;
 import com.hungteen.pvz.utils.ZombieUtil;
 import com.hungteen.pvz.utils.interfaces.IHasMultiPart;
-import net.minecraft.block.BlockState;
-import net.minecraft.block.Blocks;
-import net.minecraft.block.SnowBlock;
+import net.minecraft.world.level.block.BlockState;
+import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.block.SnowBlock;
 import net.minecraft.enchantment.FrostWalkerEnchantment;
-import net.minecraft.entity.*;
+import net.minecraft.sounds.SoundEvent;
+import net.minecraft.world.entity.*;
 import net.minecraft.util.DamageSource;
-import net.minecraft.util.SoundEvent;
-import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.Mth;
 import net.minecraft.util.math.vector.Vector3d;
-import net.minecraft.world.World;
+import net.minecraft.world.level.Level;
 
 import java.util.Optional;
 
@@ -28,7 +28,7 @@ public class ZomboniEntity extends CarZombieEntity implements IHasMultiPart, IHa
 	
 	private PVZZombiePartEntity part;
 	
-	public ZomboniEntity(EntityType<? extends CreatureEntity> type, World worldIn) {
+	public ZomboniEntity(EntityType<? extends CreatureEntity> type, Level worldIn) {
 		super(type, worldIn);
 		this.setImmuneAllEffects();
 		this.resetParts();
@@ -39,7 +39,7 @@ public class ZomboniEntity extends CarZombieEntity implements IHasMultiPart, IHa
 		super.zombieTick();
 		if(! level.isClientSide) {
 			FrostWalkerEnchantment.onEntityMoved(this, level, this.blockPosition(), 1);
-			BlockPos blockpos = this.blockPosition();
+			Mth blockpos = this.blockPosition();
 			BlockState state = Blocks.SNOW.defaultBlockState().setValue(SnowBlock.LAYERS, 1);
             if ((this.level.isEmptyBlock(blockpos) || level.getBlockState(blockpos).getBlock() == Blocks.SNOW) && state.canSurvive(this.level, blockpos)) {
                this.level.setBlockAndUpdate(blockpos, state);

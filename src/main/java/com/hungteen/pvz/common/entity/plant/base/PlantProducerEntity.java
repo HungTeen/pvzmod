@@ -6,18 +6,18 @@ import com.hungteen.pvz.common.entity.plant.PVZPlantEntity;
 import com.hungteen.pvz.utils.EntityUtil;
 import com.hungteen.pvz.utils.enums.PAZAlmanacs;
 import com.mojang.datafixers.util.Pair;
-import net.minecraft.entity.CreatureEntity;
-import net.minecraft.entity.EntityType;
-import net.minecraft.entity.ai.goal.Goal;
-import net.minecraft.util.SoundEvents;
-import net.minecraft.world.World;
+import net.minecraft.world.entity.CreatureEntity;
+import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.ai.goal.Goal;
+import net.minecraft.sounds.SoundEvents;
+import net.minecraft.world.level.Level;
 
 import java.util.Arrays;
 import java.util.List;
 
 public abstract class PlantProducerEntity extends PVZPlantEntity {
 
-	public PlantProducerEntity(EntityType<? extends CreatureEntity> type, World worldIn) {
+	public PlantProducerEntity(EntityType<? extends CreatureEntity> type, Level worldIn) {
 		super(type, worldIn);
 		this.setAttackTime(200);//the first gen just need 10 seconds CD.
 	}

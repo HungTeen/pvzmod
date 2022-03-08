@@ -21,12 +21,12 @@ import com.hungteen.pvz.common.impl.challenge.placement.OuterPlacement;
 import com.hungteen.pvz.common.impl.challenge.reward.AdvancementRewardComponent;
 import com.hungteen.pvz.utils.ConfigUtil;
 import com.hungteen.pvz.utils.StringUtil;
-import net.minecraft.entity.Entity;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.server.level.ServerLevel;
+import net.minecraft.world.entity.Entity;
 import net.minecraft.util.JSONUtils;
-import net.minecraft.util.ResourceLocation;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.world.World;
-import net.minecraft.world.server.ServerWorld;
+import net.minecraft.util.Mth;
+import net.minecraft.world.level.Level;
 import net.minecraftforge.common.MinecraftForge;
 
 import javax.annotation.Nullable;
@@ -69,18 +69,18 @@ public class ChallengeManager {
 		registerRewardComponent(UnLockRewardComponent.NAME, UnLockRewardComponent.class);
 	}
 	
-	public static void tickChallenges(World world) {
+	public static void tickChallenges(Level world) {
 		if(! world.isClientSide) {
 			final PVZChallengeData data = PVZChallengeData.getInvasionData(world);
 			data.tick();
 		}
 	}
 	
-	public static boolean hasChallengeNearby(ServerWorld world, BlockPos pos) {
+	public static boolean hasChallengeNearby(ServerLevel world, Mth pos) {
 		return getChallengeNearBy(world, pos).isPresent();
 	}
 
-	public static Optional<Challenge> getChallengeNearBy(ServerWorld world, BlockPos pos){
+	public static Optional<Challenge> getChallengeNearBy(ServerLevel world, Mth pos){
 		final List<Challenge> list = getChallenges(world);
 		for(Challenge r : list) {
 			if(Math.abs(r.getCenter().getX() - pos.getX()) <= ConfigUtil.getRaidRange()
@@ -92,7 +92,7 @@ public class ChallengeManager {
 		return Optional.empty();
 	}
 	
-	public static boolean createChallenge(ServerWorld world, ResourceLocation res, BlockPos pos) {
+	public static boolean createChallenge(ServerLevel world, ResourceLocation res, Mth pos) {
 		final PVZChallengeData data = PVZChallengeData.getInvasionData(world);
 		Optional<Challenge> opt = data.createChallenge(world, res, pos);
 		opt.ifPresent(r -> {
@@ -101,7 +101,7 @@ public class ChallengeManager {
 		return opt.isPresent();
 	}
 	
-	public static List<Challenge> getChallenges(ServerWorld world) {
+	public static List<Challenge> getChallenges(ServerLevel world) {
 		return PVZChallengeData.getInvasionData(world).getChallenges();
 	}
 
@@ -109,7 +109,7 @@ public class ChallengeManager {
 		return Collections.unmodifiableMap(ChallengeTypeLoader.CHALLENGE_MAP);
 	}
 	
-	public static boolean isRaider(ServerWorld world, Entity entity) {
+	public static boolean isRaider(ServerLevel world, Entity entity) {
 		final PVZChallengeData data = PVZChallengeData.getInvasionData(world);
 		for(Challenge raid : data.getChallenges()) {
 			if(raid.isRaider(entity)) {

@@ -9,11 +9,11 @@ import com.hungteen.pvz.common.misc.PVZEntityDamageSource;
 import com.hungteen.pvz.common.misc.sound.SoundRegister;
 import com.hungteen.pvz.common.potion.EffectRegister;
 import com.hungteen.pvz.utils.EntityUtil;
-import net.minecraft.entity.*;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.entity.player.ServerPlayerEntity;
-import net.minecraft.potion.EffectInstance;
-import net.minecraft.world.World;
+import net.minecraft.world.effect.MobEffectInstance;
+import net.minecraft.world.entity.*;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.world.level.Level;
 
 import java.util.Optional;
 
@@ -21,7 +21,7 @@ public class IcebergLettuceEntity extends PlantCloserEntity implements IIceEffec
 
 	private static final int FROZEN_TICK = 200;
 	
-	public IcebergLettuceEntity(EntityType<? extends CreatureEntity> type, World worldIn) {
+	public IcebergLettuceEntity(EntityType<? extends CreatureEntity> type, Level worldIn) {
 		super(type, worldIn);
 	}
 
@@ -50,9 +50,9 @@ public class IcebergLettuceEntity extends PlantCloserEntity implements IIceEffec
 				++ cnt;
 			}
 		};
-		PlayerEntity player = EntityUtil.getEntityOwner(level, this);
-		if(player != null && player instanceof ServerPlayerEntity) {
-			EntityEffectAmountTrigger.INSTANCE.trigger((ServerPlayerEntity) player, this, cnt);
+		Player player = EntityUtil.getEntityOwner(level, this);
+		if(player != null && player instanceof ServerPlayer) {
+			EntityEffectAmountTrigger.INSTANCE.trigger((ServerPlayer) player, this, cnt);
 		}
 	}
 	
@@ -64,13 +64,13 @@ public class IcebergLettuceEntity extends PlantCloserEntity implements IIceEffec
 	}
 	
     @Override
-	public Optional<EffectInstance> getColdEffect() {
-		return Optional.ofNullable(new EffectInstance(EffectRegister.COLD_EFFECT.get(), FROZEN_TICK + this.getColdDuration(), this.getColdLevel(), false, false));
+	public Optional<MobEffectInstance> getColdEffect() {
+		return Optional.ofNullable(new MobEffectInstance(EffectRegister.COLD_EFFECT.get(), FROZEN_TICK + this.getColdDuration(), this.getColdLevel(), false, false));
 	}
     
     @Override
-	public Optional<EffectInstance> getFrozenEffect() {
-    	return Optional.ofNullable(new EffectInstance(EffectRegister.FROZEN_EFFECT.get(), FROZEN_TICK, 1, false, false));
+	public Optional<MobEffectInstance> getFrozenEffect() {
+    	return Optional.ofNullable(new MobEffectInstance(EffectRegister.FROZEN_EFFECT.get(), FROZEN_TICK, 1, false, false));
 	}
     
     public int getColdLevel() {

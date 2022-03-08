@@ -2,7 +2,7 @@ package com.hungteen.pvz.common;
 
 import com.hungteen.pvz.common.block.BlockRegister;
 import com.hungteen.pvz.common.item.ItemRegister;
-import net.minecraft.block.ComposterBlock;
+import net.minecraft.world.level.block.ComposterBlock;
 import net.minecraft.util.IItemProvider;
 
 public class CommonRegister {

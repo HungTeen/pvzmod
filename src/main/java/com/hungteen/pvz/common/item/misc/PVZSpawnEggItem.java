@@ -6,14 +6,14 @@ import java.util.Map;
 
 import javax.annotation.Nullable;
 
-import net.minecraft.block.DispenserBlock;
+import net.minecraft.world.level.block.DispenserBlock;
 import net.minecraft.dispenser.DefaultDispenseItemBehavior;
 import net.minecraft.dispenser.IBlockSource;
-import net.minecraft.entity.EntityType;
-import net.minecraft.entity.SpawnReason;
-import net.minecraft.item.ItemStack;
-import net.minecraft.item.SpawnEggItem;
-import net.minecraft.nbt.CompoundNBT;
+import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.SpawnReason;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.SpawnEggItem;
+import net.minecraft.nbt.CompoundTag;
 import net.minecraft.util.Direction;
 import net.minecraftforge.common.util.Lazy;
 import net.minecraftforge.common.util.NonNullSupplier;
@@ -64,7 +64,7 @@ public class PVZSpawnEggItem extends SpawnEggItem{
 	}
 
 	@Override
-	public EntityType<?> getType(@Nullable final CompoundNBT p_208076_1_) {
+	public EntityType<?> getType(@Nullable final CompoundTag p_208076_1_) {
 		return entityTypeSupplier.get();
 	}
 

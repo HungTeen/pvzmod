@@ -6,21 +6,21 @@ import com.hungteen.pvz.common.impl.plant.PVZPlants;
 import com.hungteen.pvz.common.item.spawn.card.PlantCardItem;
 import com.hungteen.pvz.utils.ZombieUtil;
 import com.hungteen.pvz.utils.others.WeightList;
-import net.minecraft.entity.*;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.item.ItemStack;
-import net.minecraft.util.ActionResultType;
-import net.minecraft.util.Hand;
-import net.minecraft.util.SoundEvent;
-import net.minecraft.util.math.BlockPos;
+import net.minecraft.sounds.SoundEvent;
+import net.minecraft.world.InteractionHand;
+import net.minecraft.world.InteractionResult;
+import net.minecraft.world.entity.*;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.util.Mth;
 import net.minecraft.util.math.vector.Vector3d;
-import net.minecraft.world.World;
+import net.minecraft.world.level.Level;
 
 public abstract class AbstractTombStoneEntity extends PVZZombieEntity {
 
 	protected static final WeightList<DropType> TOMBSTONE_DROP_LIST = new WeightList<>();
 
-	public AbstractTombStoneEntity(EntityType<? extends CreatureEntity> type, World worldIn) {
+	public AbstractTombStoneEntity(EntityType<? extends CreatureEntity> type, Level worldIn) {
 		super(type, worldIn);
 		this.setImmuneAllEffects();
 		this.setIsWholeBody();
@@ -43,13 +43,13 @@ public abstract class AbstractTombStoneEntity extends PVZZombieEntity {
 	public void tick() {
 		super.tick();
 		if(! this.level.isClientSide) {
-			BlockPos pos = this.blockPosition();
+			Mth pos = this.blockPosition();
 			this.setPos(pos.getX() + 0.5, this.getY(), pos.getZ() + 0.5);
 		}
 	}
 	
 	@Override
-	public ActionResultType interactAt(PlayerEntity player, Vector3d vec3d, Hand hand) {
+	public InteractionResult interactAt(Player player, Vector3d vec3d, InteractionHand hand) {
 		if (! level.isClientSide) {
 			ItemStack stack = player.getItemInHand(hand);
 			if (stack.getItem() instanceof PlantCardItem) {// plant card right click plant entity
@@ -63,7 +63,7 @@ public abstract class AbstractTombStoneEntity extends PVZZombieEntity {
 				})) {
 					
 				}
-				return ActionResultType.SUCCESS;
+				return InteractionResult.SUCCESS;
 			}
 		}
 		return super.interactAt(player, vec3d, hand);

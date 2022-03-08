@@ -7,11 +7,11 @@ import com.hungteen.pvz.api.types.*;
 import com.hungteen.pvz.common.entity.EntityRegister;
 import com.hungteen.pvz.common.impl.*;
 import com.hungteen.pvz.common.world.spawn.SpawnChecker;
-import net.minecraft.entity.CreatureEntity;
-import net.minecraft.entity.EntityType;
-import net.minecraft.item.Item;
-import net.minecraft.util.ResourceLocation;
-import net.minecraft.util.text.TranslationTextComponent;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.entity.CreatureEntity;
+import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.item.Item;
+import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.fml.DistExecutor;
@@ -148,8 +148,8 @@ public abstract class ZombieType extends PAZType implements IZombieType {
 	/**
 	 * get zombie translation text.
 	 */
-	public TranslationTextComponent getTranslateText() {
-		return new TranslationTextComponent("entity." + this.getModID() + "." + this.toString());
+	public TranslatableComponent getTranslateText() {
+		return new TranslatableComponent("entity." + this.getModID() + "." + this.toString());
 	}
 	
 	/**

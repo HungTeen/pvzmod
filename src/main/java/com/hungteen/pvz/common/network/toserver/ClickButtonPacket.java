@@ -9,7 +9,7 @@ import com.hungteen.pvz.common.container.FragmentSpliceContainer;
 import com.hungteen.pvz.common.container.SlotMachineContainer;
 import com.hungteen.pvz.common.container.shop.AbstractDaveShopContainer;
 
-import net.minecraft.entity.player.ServerPlayerEntity;
+import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.network.PacketBuffer;
 import net.minecraftforge.fml.network.NetworkEvent;
 
@@ -39,7 +39,7 @@ public class ClickButtonPacket {
 
 	public static class Handler {
 		public static void onMessage(ClickButtonPacket message, Supplier<NetworkEvent.Context> ctx) {
-			final ServerPlayerEntity player = ctx.get().getSender();
+			final ServerPlayer player = ctx.get().getSender();
 			ctx.get().enqueueWork(() -> {
 				if (message.type == GuiHandler.PLAYER_INVENTORY) { 
 //					if(player.containerMenu instanceof PlayerInventoryContainer) {

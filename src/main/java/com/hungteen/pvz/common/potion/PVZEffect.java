@@ -1,7 +1,7 @@
 package com.hungteen.pvz.common.potion;
 
-import net.minecraft.potion.Effect;
-import net.minecraft.potion.EffectType;
+import net.minecraft.world.effect.Effect;
+import net.minecraft.world.effect.EffectType;
 
 public class PVZEffect extends Effect{
 

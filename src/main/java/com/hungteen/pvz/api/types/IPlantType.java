@@ -3,7 +3,7 @@ package com.hungteen.pvz.api.types;
 import com.hungteen.pvz.api.paz.IPlantEntity;
 import com.hungteen.pvz.api.paz.IPlantInfo;
 import com.hungteen.pvz.api.paz.IPlantModel;
-import net.minecraft.block.Block;
+import net.minecraft.world.level.block.Block;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 

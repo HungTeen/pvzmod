@@ -15,29 +15,29 @@ import com.hungteen.pvz.utils.ConfigUtil;
 import com.hungteen.pvz.utils.EntityUtil;
 import com.hungteen.pvz.utils.ZombieUtil;
 import com.hungteen.pvz.utils.interfaces.ICanAttract;
-import net.minecraft.block.Blocks;
-import net.minecraft.entity.*;
-import net.minecraft.nbt.CompoundNBT;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.level.block.Blocks;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.world.entity.*;
 import net.minecraft.network.datasync.DataParameter;
 import net.minecraft.network.datasync.DataSerializers;
 import net.minecraft.network.datasync.EntityDataManager;
 import net.minecraft.util.DamageSource;
-import net.minecraft.util.ResourceLocation;
-import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.Mth;
 import net.minecraft.util.math.vector.Vector3d;
-import net.minecraft.world.World;
+import net.minecraft.world.level.Level;
 import net.minecraftforge.registries.ForgeRegistries;
 
 public class BungeeZombieEntity extends PVZZombieEntity implements ICanPushBack {
 
 	private static final DataParameter<Integer> BUNGEE_STATE = EntityDataManager.defineId(BungeeZombieEntity.class, DataSerializers.INT);
 	private static final DataParameter<Integer> BUNGEE_TYPE = EntityDataManager.defineId(BungeeZombieEntity.class, DataSerializers.INT);
-	private static final DataParameter<BlockPos> ORIGIN_POS = EntityDataManager.defineId(BungeeZombieEntity.class, DataSerializers.BLOCK_POS);
+	private static final DataParameter<Mth> ORIGIN_POS = EntityDataManager.defineId(BungeeZombieEntity.class, DataSerializers.BLOCK_POS);
 	protected EntityType<?> entityType;
-	private BlockPos stealPos;
+	private Mth stealPos;
 	private LivingEntity stealTarget;
 	
-	public BungeeZombieEntity(EntityType<? extends CreatureEntity> type, World worldIn) {
+	public BungeeZombieEntity(EntityType<? extends CreatureEntity> type, Level worldIn) {
 		super(type, worldIn);
 		this.canBeMini = false;
 		this.canBeStealByBungee = false;
@@ -50,11 +50,11 @@ public class BungeeZombieEntity extends PVZZombieEntity implements ICanPushBack 
 		super.defineSynchedData();
 		this.entityData.define(BUNGEE_STATE, BungeeStates.WAIT.ordinal());
 		this.entityData.define(BUNGEE_TYPE, BungeeTypes.STEAL.ordinal());
-		this.entityData.define(ORIGIN_POS, BlockPos.ZERO);
+		this.entityData.define(ORIGIN_POS, Mth.ZERO);
 	}
 
 	@Override
-	public void finalizeSpawn(CompoundNBT tag) {
+	public void finalizeSpawn(CompoundTag tag) {
 		super.finalizeSpawn(tag);
 		this.setOriginPos(blockPosition());
 	}
@@ -410,7 +410,7 @@ public class BungeeZombieEntity extends PVZZombieEntity implements ICanPushBack 
 	}
 	
 	@Override
-	public void readAdditionalSaveData(CompoundNBT compound) {
+	public void readAdditionalSaveData(CompoundTag compound) {
 		super.readAdditionalSaveData(compound);
 		if(compound.contains("bungee_state")) {
 			this.setBungeeState(BungeeStates.values()[compound.getInt("bungee_state")]);
@@ -425,17 +425,17 @@ public class BungeeZombieEntity extends PVZZombieEntity implements ICanPushBack 
 			this.entityType = ForgeRegistries.ENTITIES.getValue(new ResourceLocation(compound.getString("summon_type")));
 		}
 		if(compound.contains("steal_pos")) {
-			CompoundNBT nbt = compound.getCompound("steal_pos");
-			this.stealPos = new BlockPos(nbt.getInt("steal_pos_x"), nbt.getInt("steal_pos_y"), nbt.getInt("steal_pos_z"));
+			CompoundTag nbt = compound.getCompound("steal_pos");
+			this.stealPos = new Mth(nbt.getInt("steal_pos_x"), nbt.getInt("steal_pos_y"), nbt.getInt("steal_pos_z"));
 		}
 		if(compound.contains("origin_pos")) {
-			CompoundNBT nbt = compound.getCompound("origin_pos");
-			this.setOriginPos(new BlockPos(nbt.getInt("origin_pos_x"), nbt.getInt("origin_pos_y"), nbt.getInt("origin_pos_z")));
+			CompoundTag nbt = compound.getCompound("origin_pos");
+			this.setOriginPos(new Mth(nbt.getInt("origin_pos_x"), nbt.getInt("origin_pos_y"), nbt.getInt("origin_pos_z")));
 		}
 	}
 	
 	@Override
-	public void addAdditionalSaveData(CompoundNBT compound) {
+	public void addAdditionalSaveData(CompoundTag compound) {
 		super.addAdditionalSaveData(compound);
 		compound.putInt("bungee_state", this.getBungeeState().ordinal());
 		compound.putInt("bungee_type", this.getBungeeType().ordinal());
@@ -446,14 +446,14 @@ public class BungeeZombieEntity extends PVZZombieEntity implements ICanPushBack 
 			compound.putString("summon_type", this.entityType.getRegistryName().toString());
 		}
 		if(this.stealPos != null){
-			CompoundNBT nbt = new CompoundNBT();
+			CompoundTag nbt = new CompoundTag();
 			nbt.putInt("steal_pos_x", this.stealPos.getX());
 			nbt.putInt("steal_pos_y", this.stealPos.getY());
 			nbt.putInt("steal_pos_z", this.stealPos.getZ());
 			compound.put("steal_pos", nbt);
 		}
 		{
-			CompoundNBT nbt = new CompoundNBT();
+			CompoundTag nbt = new CompoundTag();
 			nbt.putInt("origin_pos_x", this.getOriginPos().getX());
 			nbt.putInt("origin_pos_y", this.getOriginPos().getY());
 			nbt.putInt("origin_pos_z", this.getOriginPos().getZ());
@@ -477,11 +477,11 @@ public class BungeeZombieEntity extends PVZZombieEntity implements ICanPushBack 
 		return BungeeTypes.values()[this.entityData.get(BUNGEE_TYPE)];
 	}
 	
-	public BlockPos getOriginPos() {
+	public Mth getOriginPos() {
 		return this.entityData.get(ORIGIN_POS);
 	}
 	
-	public void setOriginPos(BlockPos pos) {
+	public void setOriginPos(Mth pos) {
 		this.entityData.set(ORIGIN_POS, pos);
 	}
 	

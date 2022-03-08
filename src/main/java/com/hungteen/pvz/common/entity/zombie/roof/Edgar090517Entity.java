@@ -6,15 +6,15 @@ import com.hungteen.pvz.common.impl.zombie.RoofZombies;
 import com.hungteen.pvz.common.impl.zombie.ZombieType;
 import com.hungteen.pvz.utils.EntityUtil;
 import com.hungteen.pvz.utils.ZombieUtil;
-import net.minecraft.entity.CreatureEntity;
-import net.minecraft.entity.EntitySize;
-import net.minecraft.entity.EntityType;
-import net.minecraft.entity.Pose;
-import net.minecraft.world.World;
+import net.minecraft.world.entity.CreatureEntity;
+import net.minecraft.world.entity.EntitySize;
+import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.Pose;
+import net.minecraft.world.level.Level;
 
 public class Edgar090517Entity extends Edgar090505Entity {
 
-    public Edgar090517Entity(EntityType<? extends CreatureEntity> type, World worldIn) {
+    public Edgar090517Entity(EntityType<? extends CreatureEntity> type, Level worldIn) {
         super(type, worldIn);
     }
 

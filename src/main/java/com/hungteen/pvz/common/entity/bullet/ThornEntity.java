@@ -5,8 +5,8 @@ import com.hungteen.pvz.common.entity.plant.spear.CatTailEntity;
 import com.hungteen.pvz.common.misc.PVZEntityDamageSource;
 import com.hungteen.pvz.utils.EntityUtil;
 import it.unimi.dsi.fastutil.ints.IntOpenHashSet;
-import net.minecraft.entity.*;
-import net.minecraft.nbt.CompoundNBT;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.world.entity.*;
 import net.minecraft.network.datasync.DataParameter;
 import net.minecraft.network.datasync.DataSerializers;
 import net.minecraft.network.datasync.EntityDataManager;
@@ -14,7 +14,7 @@ import net.minecraft.util.math.EntityRayTraceResult;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.RayTraceResult;
 import net.minecraft.util.math.vector.Vector3d;
-import net.minecraft.world.World;
+import net.minecraft.world.level.Level;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 
@@ -30,11 +30,11 @@ public class ThornEntity extends AbstractBulletEntity {
 	private LivingEntity thornTarget;
 	private int extraHitCount = 0;
 
-	public ThornEntity(EntityType<?> type, World worldIn) {
+	public ThornEntity(EntityType<?> type, Level worldIn) {
 		super(type, worldIn);
 	}
 
-	public ThornEntity(World worldIn, LivingEntity shooter) {
+	public ThornEntity(Level worldIn, LivingEntity shooter) {
 		super(EntityRegister.THORN.get(), worldIn, shooter);
 	}
 
@@ -216,7 +216,7 @@ public class ThornEntity extends AbstractBulletEntity {
 	}
 
 	@Override
-	public void addAdditionalSaveData(CompoundNBT compound) {
+	public void addAdditionalSaveData(CompoundTag compound) {
 		super.addAdditionalSaveData(compound);
 		compound.putInt("thorn_state", this.getThornState().ordinal());
 		compound.putInt("thorn_type", this.getThornType().ordinal());
@@ -224,7 +224,7 @@ public class ThornEntity extends AbstractBulletEntity {
 	}
 
 	@Override
-	public void readAdditionalSaveData(CompoundNBT compound) {
+	public void readAdditionalSaveData(CompoundTag compound) {
 		super.readAdditionalSaveData(compound);
 		if (this.getThrower() != null && this.getThrower() instanceof CatTailEntity && this.isInControl()) {
 			((CatTailEntity) this.getThrower()).thorns.add(this);

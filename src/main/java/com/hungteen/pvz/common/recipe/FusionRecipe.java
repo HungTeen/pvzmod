@@ -6,13 +6,13 @@ import com.google.gson.JsonParseException;
 import com.hungteen.pvz.utils.StringUtil;
 import it.unimi.dsi.fastutil.ints.IntList;
 import net.minecraft.inventory.CraftingInventory;
-import net.minecraft.item.ItemStack;
-import net.minecraft.item.crafting.*;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.crafting.*;
 import net.minecraft.network.PacketBuffer;
 import net.minecraft.util.JSONUtils;
 import net.minecraft.util.NonNullList;
-import net.minecraft.util.ResourceLocation;
-import net.minecraft.world.World;
+import net.minecraft.world.level.Level;
 import net.minecraftforge.registries.ForgeRegistryEntry;
 
 public class FusionRecipe implements ICraftingRecipe {
@@ -57,7 +57,7 @@ public class FusionRecipe implements ICraftingRecipe {
         return this.ingredients;
     }
 
-    public boolean matches(CraftingInventory craftingInventory, World world) {
+    public boolean matches(CraftingInventory craftingInventory, Level world) {
         RecipeItemHelper recipeitemhelper = new RecipeItemHelper();
         java.util.List<ItemStack> inputs = new java.util.ArrayList<>();
         int i = 0;

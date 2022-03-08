@@ -9,32 +9,32 @@ import com.hungteen.pvz.common.misc.sound.SoundRegister;
 import com.hungteen.pvz.common.entity.EntityRegister;
 import com.hungteen.pvz.utils.EntityUtil;
 
-import net.minecraft.entity.Entity;
-import net.minecraft.entity.EntitySize;
-import net.minecraft.entity.EntityType;
-import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.Pose;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.CompoundNBT;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.EntitySize;
+import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.Pose;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.ItemStack;
 import net.minecraft.network.datasync.DataParameter;
 import net.minecraft.network.datasync.DataSerializers;
 import net.minecraft.network.datasync.EntityDataManager;
-import net.minecraft.util.ActionResultType;
-import net.minecraft.util.Hand;
+import net.minecraft.world.InteractionResult;
+import net.minecraft.world.InteractionHand;
 import net.minecraft.util.math.vector.Vector3d;
-import net.minecraft.world.World;
+import net.minecraft.world.level.Level;
 
 public class GardenRakeEntity extends AbstractOwnerEntity {
 	
     private static final DataParameter<Integer> ATTACK_TIME = EntityDataManager.defineId(GardenRakeEntity.class, DataSerializers.INT);
 	
-	public GardenRakeEntity(EntityType<?> entityTypeIn, World worldIn) {
+	public GardenRakeEntity(EntityType<?> entityTypeIn, Level worldIn) {
 		super(entityTypeIn, worldIn);
 		this.setDeltaMovement(Vector3d.ZERO);
 	}
 	
-	public GardenRakeEntity(World worldIn, LivingEntity livingEntityIn) {
+	public GardenRakeEntity(Level worldIn, LivingEntity livingEntityIn) {
 		super(EntityRegister.GARDEN_RAKE.get(), worldIn, livingEntityIn);
 		this.yRot = livingEntityIn.getDirection().toYRot();
 	}
@@ -81,15 +81,15 @@ public class GardenRakeEntity extends AbstractOwnerEntity {
 	}
 	
 	@Override
-	public ActionResultType interactAt(PlayerEntity player, Vector3d vec3d, Hand hand) {
-		if(! this.isStartAttack() && hand == Hand.MAIN_HAND && player.getMainHandItem().isEmpty()) {
+	public InteractionResult interactAt(Player player, Vector3d vec3d, InteractionHand hand) {
+		if(! this.isStartAttack() && hand == InteractionHand.MAIN_HAND && player.getMainHandItem().isEmpty()) {
 			if(! level.isClientSide) {
 				player.addItem(new ItemStack(ItemRegister.GARDEN_RAKE.get()));
 			    this.remove();
 			}
-			return ActionResultType.SUCCESS;
+			return InteractionResult.SUCCESS;
 		}
-		return ActionResultType.FAIL;
+		return InteractionResult.FAIL;
 	}
 	
 	@Override
@@ -105,7 +105,7 @@ public class GardenRakeEntity extends AbstractOwnerEntity {
 		return 10;
 	}
 	
-	public void setPlacer(PlayerEntity player) {
+	public void setPlacer(Player player) {
 		this.setOwner(player);
 		this.yRot = player.getDirection().toYRot();
 	}
@@ -116,7 +116,7 @@ public class GardenRakeEntity extends AbstractOwnerEntity {
 	}
 	
 	@Override
-	public void readAdditionalSaveData(CompoundNBT compound) {
+	public void readAdditionalSaveData(CompoundTag compound) {
 		super.readAdditionalSaveData(compound);
 		if (compound.contains("rake_attack_time")) {
 			this.setAttackTime(compound.getInt("rake_attack_time"));
@@ -124,7 +124,7 @@ public class GardenRakeEntity extends AbstractOwnerEntity {
 	}
 	
 	@Override
-	public void addAdditionalSaveData(CompoundNBT compound) {
+	public void addAdditionalSaveData(CompoundTag compound) {
 		super.addAdditionalSaveData(compound);
 		compound.putInt("rake_attack_time", this.getAttackTime());
 	}

@@ -33,27 +33,26 @@ import com.hungteen.pvz.utils.EntityUtil;
 import com.hungteen.pvz.utils.enums.PAZAlmanacs;
 import com.hungteen.pvz.utils.interfaces.ICanAttract;
 import com.mojang.datafixers.util.Pair;
-import net.minecraft.block.Block;
-import net.minecraft.entity.*;
-import net.minecraft.entity.ai.attributes.AttributeModifierMap;
-import net.minecraft.entity.ai.attributes.Attributes;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.entity.player.ServerPlayerEntity;
-import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.CompoundNBT;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.effect.MobEffectInstance;
+import net.minecraft.world.entity.*;
+import net.minecraft.world.entity.ai.attributes.AttributeModifierMap;
+import net.minecraft.world.entity.ai.attributes.Attributes;
+import net.minecraft.util.Mth;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.datasync.DataParameter;
 import net.minecraft.network.datasync.DataSerializers;
 import net.minecraft.network.datasync.EntityDataManager;
-import net.minecraft.potion.EffectInstance;
-import net.minecraft.potion.Effects;
+import net.minecraft.world.effect.Effects;
 import net.minecraft.tags.FluidTags;
-import net.minecraft.util.*;
 import net.minecraft.util.math.AxisAlignedBB;
-import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.vector.Vector3d;
 import net.minecraft.world.GameRules;
-import net.minecraft.world.World;
+import net.minecraft.world.level.Level;
 import net.minecraftforge.event.entity.EntityAttributeCreationEvent;
 
 import javax.annotation.Nullable;
@@ -88,7 +87,7 @@ public abstract class PVZPlantEntity extends AbstractPAZEntity implements IPlant
 	protected boolean canBeRemove = true;
 	protected boolean canHelpAttack = true;
 
-	public PVZPlantEntity(EntityType<? extends CreatureEntity> type, World worldIn) {
+	public PVZPlantEntity(EntityType<? extends CreatureEntity> type, Level worldIn) {
 		super(type, worldIn);
 		this.innerPlant = new PlantInfo(this.getPlantType());
 	}
@@ -123,7 +122,7 @@ public abstract class PVZPlantEntity extends AbstractPAZEntity implements IPlant
 	 * spawned by player.
 	 */
 	@Override
-	public void onSpawnedByPlayer(@Nullable PlayerEntity player, int sunCost) {
+	public void onSpawnedByPlayer(@Nullable Player player, int sunCost) {
 		super.onSpawnedByPlayer(player, sunCost);
 		this.getPlantInfo().ifPresent(info -> {
 			info.setSunCost(sunCost);
@@ -191,7 +190,7 @@ public abstract class PVZPlantEntity extends AbstractPAZEntity implements IPlant
 		// lock the x and z of plant
 		if (this.shouldLockXZ()) {
 			if (this.getVehicle() == null) {
-				BlockPos pos = this.blockPosition();
+				Mth pos = this.blockPosition();
 				this.setPos(pos.getX() + 0.5, this.getY(), pos.getZ() + 0.5);
 			}
 		}
@@ -249,7 +248,7 @@ public abstract class PVZPlantEntity extends AbstractPAZEntity implements IPlant
 			if(this.isInWaterOrBubble()) {//can not stay in water.
 				return true;
 			}
-		    final BlockPos pos = Math.abs(this.getY() - this.blockPosition().getY()) <= 0.01D ? this.blockPosition().below() : this.blockPosition();
+		    final Mth pos = Math.abs(this.getY() - this.blockPosition().getY()) <= 0.01D ? this.blockPosition().below() : this.blockPosition();
 		    return ! this.getPlantType().getPlacement().canPlaceOnBlock(level.getBlockState(pos).getBlock());
 		}
 		return false;
@@ -294,9 +293,9 @@ public abstract class PVZPlantEntity extends AbstractPAZEntity implements IPlant
 	
 	/**
 	 * check can zombie add effect.
-	 * {@link EntityUtil#addPotionEffect(Entity, EffectInstance)}
+	 * {@link EntityUtil#addPotionEffect(Entity, MobEffectInstance)}
 	 */
-	public void checkAndAddPotionEffect(EffectInstance effect) {
+	public void checkAndAddPotionEffect(MobEffectInstance effect) {
 		if (effect.getEffect() == EffectRegister.COLD_EFFECT.get() && !this.canBeCold()) {
 			return;
 		}
@@ -470,9 +469,9 @@ public abstract class PVZPlantEntity extends AbstractPAZEntity implements IPlant
 		this.heal(this.getMaxHealth());
 		this.setInSuperState(true);
 		if (first) {
-			PlayerEntity player = EntityUtil.getEntityOwner(level, this);
-			if (player != null && player instanceof ServerPlayerEntity) {
-				PlantSuperTrigger.INSTANCE.trigger((ServerPlayerEntity) player, this);
+			Player player = EntityUtil.getEntityOwner(level, this);
+			if (player != null && player instanceof ServerPlayer) {
+				PlantSuperTrigger.INSTANCE.trigger((ServerPlayer) player, this);
 			}
 			this.getOuterPlantInfo().ifPresent(p -> p.onSuper(this));
 		}
@@ -483,7 +482,7 @@ public abstract class PVZPlantEntity extends AbstractPAZEntity implements IPlant
 	}
 	
 	/**
-	 * {@link PlantCardItem#checkSunAndOuterPlant(PlayerEntity, PVZPlantEntity, PlantCardItem, net.minecraft.item.ItemStack)}
+	 * {@link PlantCardItem#checkSunAndOuterPlant(Player, PVZPlantEntity, PlantCardItem, net.minecraft.world.item.ItemStack)}
 	 */
 	public void onPlaceOuterPlant(IPlantType type, int sunCost) {
 		if(type.isOuterPlant()) {
@@ -496,7 +495,7 @@ public abstract class PVZPlantEntity extends AbstractPAZEntity implements IPlant
 	}
 	
 	/**
-	 * {@link PlantCardItem#checkSunAndHealPlant(PlayerEntity, PVZPlantEntity, PlantCardItem, ItemStack)}
+	 * {@link PlantCardItem#checkSunAndHealPlant(Player, PVZPlantEntity, PlantCardItem, ItemStack)}
 	 */
 	public void onHealBy(IPlantType plantType, float percent) {
 		if(plantType.isOuterPlant()){
@@ -535,7 +534,7 @@ public abstract class PVZPlantEntity extends AbstractPAZEntity implements IPlant
 	}
 	
 	@Override
-	public ActionResultType interactAt(PlayerEntity player, Vector3d vec3d, Hand hand) {
+	public ActionResultType interactAt(Player player, Vector3d vec3d, Hand hand) {
 		if (! level.isClientSide) {
 			ItemStack stack = player.getItemInHand(hand);
 			if (stack.getItem() instanceof PlantCardItem) {// plant card right click plant entity
@@ -560,7 +559,7 @@ public abstract class PVZPlantEntity extends AbstractPAZEntity implements IPlant
 
 	/* misc get */
 	
-	public boolean canBeUpgrade(PlayerEntity player) {
+	public boolean canBeUpgrade(Player player) {
 		return this.getPlantType().getUpgradeTo().isPresent();
 	}
 	
@@ -590,7 +589,7 @@ public abstract class PVZPlantEntity extends AbstractPAZEntity implements IPlant
     /**
      * {@link #plantTick()}
      */
-	public Optional<PlayerEntity> getOwnerPlayer() {
+	public Optional<Player> getOwnerPlayer() {
 		if(! this.hasOwner()) {
 			return Optional.empty();
 		}
@@ -617,7 +616,7 @@ public abstract class PVZPlantEntity extends AbstractPAZEntity implements IPlant
 	/* data */
 	
 	@Override
-	public void addAdditionalSaveData(CompoundNBT compound) {
+	public void addAdditionalSaveData(CompoundTag compound) {
 		super.addAdditionalSaveData(compound);
 		compound.putInt("plant_super_time", this.getSuperTime());
 		compound.putInt("plant_attack_time", this.getAttackTime());
@@ -630,7 +629,7 @@ public abstract class PVZPlantEntity extends AbstractPAZEntity implements IPlant
 	}
 
 	@Override
-	public void readAdditionalSaveData(CompoundNBT compound) {
+	public void readAdditionalSaveData(CompoundTag compound) {
 		super.readAdditionalSaveData(compound);
 		if (compound.contains("plant_super_time")) {
 			this.setSuperTime(compound.getInt("plant_super_time"));

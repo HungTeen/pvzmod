@@ -5,10 +5,10 @@ import com.hungteen.pvz.api.PVZAPI;
 import com.hungteen.pvz.api.types.ISkillType;
 import com.hungteen.pvz.utils.ArrayUtil;
 import com.hungteen.pvz.utils.StringUtil;
-import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.CompoundNBT;
-import net.minecraft.util.text.IFormattableTextComponent;
-import net.minecraft.util.text.TranslationTextComponent;
+import net.minecraft.network.chat.TranslatableComponent;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.network.chat.MutableComponent;
 
 import java.util.*;
 
@@ -251,7 +251,7 @@ public class SkillTypes {
         SKILL_MAP.put(type.getIdentity(), type);
     }
 
-    public static int getSkillLevel(CompoundNBT nbt, ISkillType type){
+    public static int getSkillLevel(CompoundTag nbt, ISkillType type){
         if(nbt.contains(type.getIdentity())){
             return nbt.getInt(type.getIdentity());
         }
@@ -260,7 +260,7 @@ public class SkillTypes {
     
     public static int getSkillLevel(ItemStack stack, ISkillType type){
         if(stack.getOrCreateTag().contains(SKILL_TAG)) {
-        	final CompoundNBT tmp = stack.getOrCreateTag().getCompound(SKILL_TAG);
+        	final CompoundTag tmp = stack.getOrCreateTag().getCompound(SKILL_TAG);
         	if(tmp.contains(type.getIdentity())){
         		return tmp.getInt(type.getIdentity());
         	}
@@ -270,23 +270,23 @@ public class SkillTypes {
     
     public static void addSkillLevel(ItemStack stack, ISkillType type, int lvl){
     	if(stack.getOrCreateTag().contains(SKILL_TAG)) {
-    		final CompoundNBT tmp = stack.getOrCreateTag().getCompound(SKILL_TAG);
+    		final CompoundTag tmp = stack.getOrCreateTag().getCompound(SKILL_TAG);
     		tmp.putInt(type.getIdentity(), lvl);
     		stack.getOrCreateTag().put(SKILL_TAG, tmp);
     	} else {
-    		final CompoundNBT tmp = new CompoundNBT();
+    		final CompoundTag tmp = new CompoundTag();
     		tmp.putInt(type.getIdentity(), lvl);
     		stack.getOrCreateTag().put(SKILL_TAG, tmp);
     	}
     }
 
-    public static void addSkillLevel(CompoundNBT nbt, ISkillType type, int lvl){
+    public static void addSkillLevel(CompoundTag nbt, ISkillType type, int lvl){
     	if(nbt.contains(SKILL_TAG)) {
-    		final CompoundNBT tmp = nbt.getCompound(SKILL_TAG);
+    		final CompoundTag tmp = nbt.getCompound(SKILL_TAG);
     		tmp.putInt(type.getIdentity(), lvl);
     		nbt.put(SKILL_TAG, tmp);
     	} else {
-    		final CompoundNBT tmp = new CompoundNBT();
+    		final CompoundTag tmp = new CompoundTag();
     		tmp.putInt(type.getIdentity(), lvl);
     		nbt.put(SKILL_TAG, tmp);
     	}
@@ -335,13 +335,13 @@ public class SkillTypes {
         }
 
         @Override
-        public TranslationTextComponent getText() {
-            return new TranslationTextComponent("skill." + this.getModID() + "." + this.toString());
+        public TranslatableComponent getText() {
+            return new TranslatableComponent("skill." + this.getModID() + "." + this.toString());
         }
 
         @Override
-        public IFormattableTextComponent getDescription() {
-            return new TranslationTextComponent("skill." + this.getModID() + "." + this.toString() + ".desc");
+        public MutableComponent getDescription() {
+            return new TranslatableComponent("skill." + this.getModID() + "." + this.toString() + ".desc");
         }
 
         @Override

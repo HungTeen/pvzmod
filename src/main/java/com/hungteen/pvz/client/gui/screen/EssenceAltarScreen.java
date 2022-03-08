@@ -16,14 +16,14 @@ import com.hungteen.pvz.utils.StringUtil;
 import com.hungteen.pvz.utils.enums.Colors;
 import com.mojang.blaze3d.matrix.MatrixStack;
 import com.mojang.datafixers.util.Pair;
-import net.minecraft.entity.player.PlayerInventory;
+import net.minecraft.network.chat.TranslatableComponent;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.entity.player.PlayerInventory;
 import net.minecraft.inventory.container.ClickType;
 import net.minecraft.inventory.container.Slot;
-import net.minecraft.item.crafting.Ingredient;
-import net.minecraft.util.ResourceLocation;
+import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.util.math.MathHelper;
-import net.minecraft.util.text.ITextComponent;
-import net.minecraft.util.text.TranslationTextComponent;
+import net.minecraft.network.chat.Component;
 
 import java.util.Arrays;
 import java.util.List;
@@ -39,14 +39,14 @@ public class EssenceAltarScreen extends PVZContainerScreen<EssenceAltarContainer
 	private int mouseX;
 	private int mouseY;
 
-	public EssenceAltarScreen(EssenceAltarContainer screenContainer, PlayerInventory inv, ITextComponent titleIn) {
+	public EssenceAltarScreen(EssenceAltarContainer screenContainer, PlayerInventory inv, Component titleIn) {
 		super(screenContainer, inv, titleIn);
 		this.imageWidth = 176;
 		this.imageHeight = 166;
 		this.tips.add(new DisplayField.TipField(3, 3, Arrays.asList(
-				new TranslationTextComponent("gui.pvz.essence_altar.tip1"),
-				new TranslationTextComponent("gui.pvz.essence_altar.tip2"),
-				new TranslationTextComponent("gui.pvz.essence_altar.tip3")
+				new TranslatableComponent("gui.pvz.essence_altar.tip1"),
+				new TranslatableComponent("gui.pvz.essence_altar.tip2"),
+				new TranslatableComponent("gui.pvz.essence_altar.tip3")
 		)));
 	}
 

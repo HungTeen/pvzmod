@@ -2,13 +2,13 @@ package com.hungteen.pvz.common.entity.effect;
 
 import com.hungteen.pvz.common.entity.EntityRegister;
 import com.hungteen.pvz.utils.EntityUtil;
-import net.minecraft.entity.EntityType;
-import net.minecraft.nbt.CompoundNBT;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.world.entity.EntityType;
 import net.minecraft.network.datasync.DataParameter;
 import net.minecraft.network.datasync.DataSerializers;
 import net.minecraft.network.datasync.EntityDataManager;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.world.World;
+import net.minecraft.util.Mth;
+import net.minecraft.world.level.Level;
 
 /**
  * used to display the effect of radiationn of origin block.
@@ -18,12 +18,12 @@ public class OriginEffectEntity extends AbstractEffectEntity {
 	private static final DataParameter<Float> LENGTH = EntityDataManager.defineId(OriginEffectEntity.class, DataSerializers.FLOAT);
 	private static final DataParameter<Integer> COLOR = EntityDataManager.defineId(OriginEffectEntity.class, DataSerializers.INT);
 
-	public OriginEffectEntity(EntityType<?> type, World world) {
+	public OriginEffectEntity(EntityType<?> type, Level world) {
 		super(type, world);
 		this.maxEffectTick = 100;
 	}
 
-	public static void create(World world, BlockPos pos, int color){
+	public static void create(Level world, Mth pos, int color){
 		OriginEffectEntity effectEntity = EntityRegister.ORIGIN_EFFECT.get().create(world);
 		final boolean exist = EntityUtil.hasNearBy(world, pos, 5, e -> e instanceof OriginEffectEntity);
 		if(! exist) {// avoid overlapped.
@@ -40,7 +40,7 @@ public class OriginEffectEntity extends AbstractEffectEntity {
 	}
 
 	@Override
-	public void readAdditionalSaveData(CompoundNBT compound) {
+	public void readAdditionalSaveData(CompoundTag compound) {
 		super.readAdditionalSaveData(compound);
 		if(compound.contains("effect_color")){
 			this.setColor(compound.getInt("effect_color"));
@@ -51,7 +51,7 @@ public class OriginEffectEntity extends AbstractEffectEntity {
 	}
 
 	@Override
-	public void addAdditionalSaveData(CompoundNBT compound) {
+	public void addAdditionalSaveData(CompoundTag compound) {
 		super.addAdditionalSaveData(compound);
 		compound.putInt("effect_color", this.getColor());
 		compound.putFloat("effect_length", this.getLength());

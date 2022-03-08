@@ -1,7 +1,7 @@
 package com.hungteen.pvz.api.events;
 
 import com.hungteen.pvz.utils.enums.Resources;
-import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.world.entity.player.Player;
 import net.minecraftforge.event.entity.player.PlayerEvent;
 
 /**
@@ -12,7 +12,7 @@ public class PlayerLevelChangeEvent extends PlayerEvent {
 	private final int oldLevel;
 	private final int newLevel;
 	
-	public PlayerLevelChangeEvent(PlayerEntity player, int oldlevel, int newLevel) {
+	public PlayerLevelChangeEvent(Player player, int oldlevel, int newLevel) {
 		super(player);
 		this.oldLevel = oldlevel;
 		this.newLevel = newLevel;

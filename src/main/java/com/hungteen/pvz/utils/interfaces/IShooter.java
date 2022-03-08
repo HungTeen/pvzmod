@@ -1,6 +1,6 @@
 package com.hungteen.pvz.utils.interfaces;
 
-import net.minecraft.entity.Entity;
+import net.minecraft.world.entity.Entity;
 
 public interface IShooter {
 

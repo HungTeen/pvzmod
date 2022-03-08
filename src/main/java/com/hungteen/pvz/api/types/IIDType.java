@@ -1,6 +1,6 @@
 package com.hungteen.pvz.api.types;
 
-import net.minecraft.util.text.IFormattableTextComponent;
+import net.minecraft.network.chat.MutableComponent;
 
 /**
  * used for type interfaces which need an identity to store information.
@@ -21,7 +21,7 @@ public interface IIDType {
 	/**
 	 * get translation text.
 	 */
-	IFormattableTextComponent getText();
+	MutableComponent getText();
 	
 	/**
 	 * specific mod id.

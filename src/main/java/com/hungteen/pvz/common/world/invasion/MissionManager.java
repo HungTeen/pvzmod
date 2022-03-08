@@ -5,8 +5,8 @@ import com.hungteen.pvz.common.misc.sound.SoundRegister;
 import com.hungteen.pvz.utils.PlayerUtil;
 import com.hungteen.pvz.utils.enums.Resources;
 import com.hungteen.pvz.utils.others.WeightList;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.util.text.TranslationTextComponent;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.network.chat.TranslatableComponent;
 
 import java.util.Random;
 
@@ -22,7 +22,7 @@ public class MissionManager {
      * tick each second.
      */
     public static void tickMission(Invasion invasion){
-        final PlayerEntity player = invasion.getPlayer();
+        final Player player = invasion.getPlayer();
         if(player.tickCount % 20 == 5) {
             final MissionType type = getPlayerMission(player);
             if (type != MissionType.EMPTY) {
@@ -48,12 +48,12 @@ public class MissionManager {
         }
     }
 
-    public static void removeMission(PlayerEntity player){
+    public static void removeMission(Player player){
         PlayerUtil.getOptManager(player).ifPresent(l -> l.getInvasion().clearMission());
     }
 
-    public static void rewardPlayer(PlayerEntity player, MissionType type, int stage){
-        PlayerUtil.sendMsgTo(player, new TranslationTextComponent("invasion.pvz.mission.finish", stage));
+    public static void rewardPlayer(Player player, MissionType type, int stage){
+        PlayerUtil.sendMsgTo(player, new TranslatableComponent("invasion.pvz.mission.finish", stage));
         if(stage == 0 || stage == 2){
             rewardMoney(player, stage == 0 ? 250 : 500);
         } else if(stage == 1 || stage == 3){
@@ -63,12 +63,12 @@ public class MissionManager {
         }
     }
     
-    private static void rewardMoney(PlayerEntity player, int amount) {
+    private static void rewardMoney(Player player, int amount) {
     	PlayerUtil.addResource(player, Resources.MONEY, amount);
         PlayerUtil.playClientSound(player, SoundRegister.SUN_PICK.get());
     }
 
-    private static void rewardJewel(PlayerEntity player, int amount){
+    private static void rewardJewel(Player player, int amount){
         PlayerUtil.addResource(player, Resources.GEM_NUM, amount);
         PlayerUtil.playClientSound(player, SoundRegister.JEWEL_PICK.get());
     }
@@ -88,7 +88,7 @@ public class MissionManager {
 //        }
 //    }
 
-    private static void rewardLottery(PlayerEntity player, int amount){
+    private static void rewardLottery(Player player, int amount){
         PlayerUtil.addResource(player, Resources.LOTTERY_CHANCE, amount);
         PlayerUtil.playClientSound(player, SoundRegister.SLOT_MACHINE.get());
     }
@@ -103,7 +103,7 @@ public class MissionManager {
         return list.getRandomItem(rand).get();
     }
 
-    public static MissionType getPlayerMission(PlayerEntity player){
+    public static MissionType getPlayerMission(Player player){
         final PlayerDataManager manager = PlayerUtil.getManager(player);
         if(manager != null){
             return MissionType.values()[manager.getResource(Resources.MISSION_TYPE)];

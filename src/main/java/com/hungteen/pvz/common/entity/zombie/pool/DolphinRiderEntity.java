@@ -14,18 +14,18 @@ import com.hungteen.pvz.utils.EntityUtil;
 import com.hungteen.pvz.utils.MathUtil;
 import com.hungteen.pvz.utils.ZombieUtil;
 import com.hungteen.pvz.utils.interfaces.ICanAttract;
-import net.minecraft.entity.*;
-import net.minecraft.entity.ai.attributes.Attributes;
-import net.minecraft.entity.ai.goal.Goal;
-import net.minecraft.entity.ai.goal.LookRandomlyGoal;
-import net.minecraft.entity.ai.goal.RandomWalkingGoal;
-import net.minecraft.nbt.CompoundNBT;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.world.entity.*;
+import net.minecraft.world.entity.ai.attributes.Attributes;
+import net.minecraft.world.entity.ai.goal.Goal;
+import net.minecraft.world.entity.ai.goal.LookRandomlyGoal;
+import net.minecraft.world.entity.ai.goal.RandomWalkingGoal;
 import net.minecraft.pathfinding.PathNavigator;
 import net.minecraft.pathfinding.PathNodeType;
 import net.minecraft.tags.FluidTags;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.math.vector.Vector3d;
-import net.minecraft.world.World;
+import net.minecraft.world.level.Level;
 
 import java.util.EnumSet;
 import java.util.Optional;
@@ -38,7 +38,7 @@ public class DolphinRiderEntity extends PVZZombieEntity{
 	protected Vector3d jumpDstPoint = Vector3d.ZERO;
 	protected int dolphin_jump_cnt;
 	
-	public DolphinRiderEntity(EntityType<? extends CreatureEntity> type, World worldIn) {
+	public DolphinRiderEntity(EntityType<? extends CreatureEntity> type, Level worldIn) {
 		super(type, worldIn);
 		setPathfindingMalus(PathNodeType.WATER, 0);
 		this.setIsWholeBody();
@@ -156,7 +156,7 @@ public class DolphinRiderEntity extends PVZZombieEntity{
 	}
 	
 	@Override
-	protected PathNavigator createNavigation(World worldIn) {
+	protected PathNavigator createNavigation(Level worldIn) {
 		return new ZombieWaterPathNavigator(this, worldIn);
 	}
 	
@@ -182,10 +182,10 @@ public class DolphinRiderEntity extends PVZZombieEntity{
 	}
 	
 	@Override
-	public void readAdditionalSaveData(CompoundNBT compound) {
+	public void readAdditionalSaveData(CompoundTag compound) {
 		super.readAdditionalSaveData(compound);
 		if(compound.contains("jump_dst_point")) {
-			CompoundNBT nbt = compound.getCompound("jump_dst_point");
+			CompoundTag nbt = compound.getCompound("jump_dst_point");
 			this.jumpDstPoint = new Vector3d(nbt.getDouble("XXX"), nbt.getDouble("YYY"), nbt.getDouble("ZZZ"));
 		}
 		if(compound.contains("dolphin_jump_count")) {
@@ -194,9 +194,9 @@ public class DolphinRiderEntity extends PVZZombieEntity{
 	}
 	
 	@Override
-	public void addAdditionalSaveData(CompoundNBT compound) {
+	public void addAdditionalSaveData(CompoundTag compound) {
 		super.addAdditionalSaveData(compound);
-		final CompoundNBT nbt = new CompoundNBT();
+		final CompoundTag nbt = new CompoundTag();
 		nbt.putDouble("XXX", this.jumpDstPoint.x);
 		nbt.putDouble("YYY", this.jumpDstPoint.y);
 		nbt.putDouble("ZZZ", this.jumpDstPoint.z);

@@ -1,13 +1,13 @@
 package com.hungteen.pvz.common.item.tool;
 
 import com.hungteen.pvz.common.item.PVZItemGroups;
-import net.minecraft.client.util.ITooltipFlag;
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemStack;
-import net.minecraft.util.text.ITextComponent;
-import net.minecraft.util.text.TextFormatting;
-import net.minecraft.util.text.TranslationTextComponent;
-import net.minecraft.world.World;
+import net.minecraft.network.chat.TranslatableComponent;
+import net.minecraft.world.item.TooltipFlag;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.network.chat.Component;
+import net.minecraft.ChatFormatting;
+import net.minecraft.world.level.Level;
 
 import javax.annotation.Nullable;
 import java.util.List;
@@ -24,8 +24,8 @@ public class TimeKeyItem extends Item {
     }
 
     @Override
-    public void appendHoverText(ItemStack stack, @Nullable World world, List<ITextComponent> textComponents, ITooltipFlag tooltipFlag) {
+    public void appendHoverText(ItemStack stack, @Nullable Level world, List<Component> textComponents, TooltipFlag tooltipFlag) {
         super.appendHoverText(stack, world, textComponents, tooltipFlag);
-        textComponents.add(new TranslationTextComponent("tooltip.pvz.wait_for_update").withStyle(TextFormatting.DARK_RED));
+        textComponents.add(new TranslatableComponent("tooltip.pvz.wait_for_update").withStyle(ChatFormatting.DARK_RED));
     }
 }

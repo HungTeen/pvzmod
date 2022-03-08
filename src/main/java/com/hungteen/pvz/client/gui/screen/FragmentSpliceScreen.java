@@ -11,10 +11,10 @@ import com.hungteen.pvz.utils.StringUtil;
 import com.hungteen.pvz.utils.enums.Colors;
 import com.mojang.blaze3d.matrix.MatrixStack;
 import net.minecraft.client.gui.widget.button.Button;
-import net.minecraft.entity.player.PlayerInventory;
-import net.minecraft.util.ResourceLocation;
-import net.minecraft.util.text.ITextComponent;
-import net.minecraft.util.text.TranslationTextComponent;
+import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.TranslatableComponent;
+import net.minecraft.world.entity.player.PlayerInventory;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 
@@ -26,22 +26,22 @@ public class FragmentSpliceScreen extends PVZContainerScreen<FragmentSpliceConta
 	private static final ResourceLocation TEXTURE = StringUtil.prefix("textures/gui/container/fragment_splice.png");
 	protected Button craftButton;
 	
-	public FragmentSpliceScreen(FragmentSpliceContainer screenContainer, PlayerInventory inv, ITextComponent titleIn) {
+	public FragmentSpliceScreen(FragmentSpliceContainer screenContainer, PlayerInventory inv, Component titleIn) {
 		super(screenContainer, inv, titleIn);
 		this.imageWidth = 210;
 		this.imageHeight = 225;
 		this.tips.add(new DisplayField.TipField(3, 3, Arrays.asList(
-				new TranslationTextComponent("gui.pvz.fragment_splice.tip1"),
-				new TranslationTextComponent("gui.pvz.fragment_splice.tip2"),
-				new TranslationTextComponent("gui.pvz.fragment_splice.tip3"),
-				new TranslationTextComponent("gui.pvz.fragment_splice.tip4")
+				new TranslatableComponent("gui.pvz.fragment_splice.tip1"),
+				new TranslatableComponent("gui.pvz.fragment_splice.tip2"),
+				new TranslatableComponent("gui.pvz.fragment_splice.tip3"),
+				new TranslatableComponent("gui.pvz.fragment_splice.tip4")
 		)));
 	}
 
 	@Override
 	protected void init() {
 		super.init();
-		this.craftButton = this.addButton(new Button(this.leftPos + 92, this.topPos + 122, 26, 14, new TranslationTextComponent("gui.pvz.fragment_splice"), (button) -> {
+		this.craftButton = this.addButton(new Button(this.leftPos + 92, this.topPos + 122, 26, 14, new TranslatableComponent("gui.pvz.fragment_splice"), (button) -> {
 			if(this.craftButton.visible) {
 			    PVZPacketHandler.CHANNEL.sendToServer(new ClickButtonPacket(GuiHandler.FRAGMENT_SPLICE, 0, 0));
 			}
@@ -53,7 +53,7 @@ public class FragmentSpliceScreen extends PVZContainerScreen<FragmentSpliceConta
 	public void render(MatrixStack stack, int mouseX, int mouseY, float partialTicks) {
 		this.craftButton.visible = this.canCraftNow();
 		super.render(stack, mouseX, mouseY, partialTicks);
-		StringUtil.drawCenteredScaledString(stack, font, new TranslationTextComponent("block.pvz.fragment_splice").getString(), this.leftPos + this.imageWidth / 2, this.topPos + 8, Colors.BLACK, 1F);
+		StringUtil.drawCenteredScaledString(stack, font, new TranslatableComponent("block.pvz.fragment_splice").getString(), this.leftPos + this.imageWidth / 2, this.topPos + 8, Colors.BLACK, 1F);
 		StringUtil.drawCenteredScaledString(stack, font, "" + this.menu.te.array.get(0), this.leftPos + 15, this.topPos + 67, Colors.BLACK, 0.5F);
 		this.renderTooltip(stack, mouseX, mouseY);
     }

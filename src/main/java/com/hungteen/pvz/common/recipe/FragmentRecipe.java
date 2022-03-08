@@ -6,15 +6,15 @@ import com.google.common.collect.Sets;
 import com.google.gson.*;
 import com.hungteen.pvz.utils.StringUtil;
 import net.minecraft.inventory.CraftingInventory;
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemStack;
-import net.minecraft.item.crafting.*;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.crafting.*;
 import net.minecraft.network.PacketBuffer;
 import net.minecraft.util.JSONUtils;
 import net.minecraft.util.NonNullList;
-import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.registry.Registry;
-import net.minecraft.world.World;
+import net.minecraft.world.level.Level;
 import net.minecraftforge.common.crafting.IShapedRecipe;
 
 import java.util.Map;
@@ -73,7 +73,7 @@ public class FragmentRecipe implements ICraftingRecipe, IShapedRecipe<CraftingIn
         return p_194133_1_ >= this.width && p_194133_2_ >= this.height;
     }
 
-    public boolean matches(CraftingInventory p_77569_1_, World p_77569_2_) {
+    public boolean matches(CraftingInventory p_77569_1_, Level p_77569_2_) {
         for(int i = 0; i <= p_77569_1_.getWidth() - this.width; ++i) {
             for(int j = 0; j <= p_77569_1_.getHeight() - this.height; ++j) {
                 if (this.matches(p_77569_1_, i, j, true)) {

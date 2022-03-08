@@ -11,14 +11,14 @@ import com.hungteen.pvz.common.world.structure.StructureRegister;
 import com.hungteen.pvz.utils.EntityUtil;
 import com.hungteen.pvz.utils.StringUtil;
 
-import net.minecraft.block.Blocks;
-import net.minecraft.entity.EntityType;
-import net.minecraft.nbt.CompoundNBT;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.entity.EntityType;
+import net.minecraft.nbt.CompoundTag;
 import net.minecraft.tileentity.MobSpawnerTileEntity;
 import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.ResourceLocation;
+import net.minecraft.util.Mth;
 import net.minecraft.util.Rotation;
-import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.ChunkPos;
 import net.minecraft.util.math.MutableBoundingBox;
 import net.minecraft.world.ISeedReader;
@@ -34,7 +34,7 @@ public class GraveHouseComponents {
 
 	public static final ResourceLocation res = StringUtil.prefix("zombie_house/graveyard");
 	
-	public static void generate(TemplateManager manager, BlockPos pos1, Rotation rotation, List<StructurePiece> list, Random rand) {
+	public static void generate(TemplateManager manager, Mth pos1, Rotation rotation, List<StructurePiece> list, Random rand) {
 	      list.add(new GraveHouseComponent(manager, res, pos1, rotation));
     }
 	
@@ -42,17 +42,17 @@ public class GraveHouseComponents {
 
 		private static final IStructurePieceType type = StructureRegister.GRAVE_HOUSE_PIECE;
 		
-		public GraveHouseComponent(TemplateManager manager, CompoundNBT nbt) {
+		public GraveHouseComponent(TemplateManager manager, CompoundTag nbt) {
 			super(type, manager, nbt);
 		}
 
-		public GraveHouseComponent(TemplateManager manager, ResourceLocation res,BlockPos pos, Rotation rotation) {
+		public GraveHouseComponent(TemplateManager manager, ResourceLocation res, Mth pos, Rotation rotation) {
 			super(type, manager, res, pos, rotation);
 		}
 		
 		@Override
 		public boolean postProcess(ISeedReader worldIn, StructureManager p_230383_2_, ChunkGenerator chunkGeneratorIn, Random randomIn,
-				MutableBoundingBox mutableBoundingBoxIn, ChunkPos chunkPosIn, BlockPos blockPos) {
+				MutableBoundingBox mutableBoundingBoxIn, ChunkPos chunkPosIn, Mth blockPos) {
 			int dx = 15, dz = 15;
 			switch(rotation) {
 			case CLOCKWISE_90:{dx = - 15; break;}
@@ -66,13 +66,13 @@ public class GraveHouseComponents {
 			int h3 = chunkGeneratorIn.getFirstOccupiedHeight(x , z + dz, Heightmap.Type.WORLD_SURFACE_WG);
 			int h4 = chunkGeneratorIn.getFirstOccupiedHeight(x + dx, z + dz, Heightmap.Type.WORLD_SURFACE_WG);
 			int height = Math.min(Math.min(h1, h2), Math.min(h3, h4));
-			this.templatePosition=new BlockPos(x, height, z);
+			this.templatePosition=new Mth(x, height, z);
 			return super.postProcess(worldIn, p_230383_2_, chunkGeneratorIn, randomIn, mutableBoundingBoxIn, chunkPosIn, blockPos);
 		}
 		
 		@Override
-		protected void handleDataMarker(String function, BlockPos pos, IServerWorld worldIn, Random rand,
-				MutableBoundingBox sbb) {
+		protected void handleDataMarker(String function, Mth pos, IServerWorld worldIn, Random rand,
+                                        MutableBoundingBox sbb) {
 			if(function.equals("bonus_chest1")) {
 				this.createChest(worldIn, sbb, rand, pos, PVZLoot.GRAVE_YARD_CHEST, null);
 			} else if(function.equals("bonus_chest2")) {

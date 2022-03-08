@@ -2,8 +2,8 @@ package com.hungteen.pvz.common.entity.ai.goal;
 
 import java.util.EnumSet;
 
-import net.minecraft.entity.MobEntity;
-import net.minecraft.entity.ai.goal.Goal;
+import net.minecraft.world.entity.MobEntity;
+import net.minecraft.world.entity.ai.goal.Goal;
 import net.minecraft.tags.FluidTags;
 
 public class PVZSwimGoal extends Goal {

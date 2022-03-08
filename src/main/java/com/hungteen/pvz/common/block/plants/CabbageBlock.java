@@ -4,19 +4,19 @@ import java.util.Random;
 
 import com.hungteen.pvz.common.item.ItemRegister;
 
-import net.minecraft.block.Block;
-import net.minecraft.block.BlockState;
-import net.minecraft.block.CropsBlock;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.BlockState;
+import net.minecraft.world.level.block.CropsBlock;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraft.state.IntegerProperty;
 import net.minecraft.state.StateContainer;
 import net.minecraft.state.properties.BlockStateProperties;
 import net.minecraft.util.IItemProvider;
-import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.Mth;
 import net.minecraft.util.math.shapes.ISelectionContext;
 import net.minecraft.util.math.shapes.VoxelShape;
 import net.minecraft.world.IBlockReader;
-import net.minecraft.world.World;
-import net.minecraft.world.server.ServerWorld;
+import net.minecraft.world.level.Level;
 
 public class CabbageBlock extends CropsBlock {
 
@@ -44,13 +44,13 @@ public class CabbageBlock extends CropsBlock {
 	}
 
 	@SuppressWarnings("deprecation")
-	public void tick(BlockState state, ServerWorld worldIn, BlockPos pos, Random rand) {
+	public void tick(BlockState state, ServerLevel worldIn, Mth pos, Random rand) {
 		if (rand.nextInt(4) != 0) {
 			super.tick(state, worldIn, pos, rand);
 		}
 	}
 
-	protected int getBonemealAgeIncrease(World worldIn) {
+	protected int getBonemealAgeIncrease(Level worldIn) {
 		return super.getBonemealAgeIncrease(worldIn) / 3;
 	}
 
@@ -58,7 +58,7 @@ public class CabbageBlock extends CropsBlock {
 		builder.add(AGE);
 	}
 
-	public VoxelShape getShape(BlockState state, IBlockReader worldIn, BlockPos pos, ISelectionContext context) {
+	public VoxelShape getShape(BlockState state, IBlockReader worldIn, Mth pos, ISelectionContext context) {
 		return SHAPE[state.getValue(this.getAgeProperty())];
 	}
 

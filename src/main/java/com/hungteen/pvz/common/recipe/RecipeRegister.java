@@ -1,9 +1,9 @@
 package com.hungteen.pvz.common.recipe;
 
 import com.hungteen.pvz.PVZMod;
-import net.minecraft.item.crafting.IRecipeSerializer;
-import net.minecraft.item.crafting.IRecipeType;
-import net.minecraft.item.crafting.ShapedRecipe;
+import net.minecraft.world.item.crafting.IRecipeSerializer;
+import net.minecraft.world.item.crafting.IRecipeType;
+import net.minecraft.world.item.crafting.ShapedRecipe;
 import net.minecraftforge.fml.RegistryObject;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;

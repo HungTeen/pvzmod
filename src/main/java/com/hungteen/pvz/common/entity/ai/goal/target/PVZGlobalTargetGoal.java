@@ -2,8 +2,8 @@ package com.hungteen.pvz.common.entity.ai.goal.target;
 
 import com.hungteen.pvz.utils.EntityUtil;
 
-import net.minecraft.entity.Entity;
-import net.minecraft.entity.MobEntity;
+import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.MobEntity;
 
 public class PVZGlobalTargetGoal extends PVZNearestTargetGoal {
 

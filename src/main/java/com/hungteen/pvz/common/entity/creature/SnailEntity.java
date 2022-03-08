@@ -8,19 +8,19 @@ import com.hungteen.pvz.utils.AlgorithmUtil;
 import com.hungteen.pvz.utils.AlgorithmUtil.EntitySorter;
 import com.hungteen.pvz.utils.EntityUtil;
 
-import net.minecraft.entity.AgeableEntity;
-import net.minecraft.entity.Entity;
-import net.minecraft.entity.EntityType;
-import net.minecraft.entity.ai.goal.Goal;
-import net.minecraft.entity.passive.AnimalEntity;
-import net.minecraft.world.World;
-import net.minecraft.world.server.ServerWorld;
+import net.minecraft.server.level.ServerLevel;
+import net.minecraft.world.entity.AgeableEntity;
+import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.ai.goal.Goal;
+import net.minecraft.world.entity.passive.AnimalEntity;
+import net.minecraft.world.level.Level;
 
 public class SnailEntity extends AnimalEntity {
 
 	protected Optional<Entity> targetEntity = Optional.empty();
 	
-	protected SnailEntity(EntityType<? extends AnimalEntity> type, World worldIn) {
+	protected SnailEntity(EntityType<? extends AnimalEntity> type, Level worldIn) {
 		super(type, worldIn);
 	}
 	
@@ -31,14 +31,14 @@ public class SnailEntity extends AnimalEntity {
 	}
 	
 	@Override
-	public AgeableEntity getBreedOffspring(ServerWorld p_241840_1_, AgeableEntity p_241840_2_) {
+	public AgeableEntity getBreedOffspring(ServerLevel p_241840_1_, AgeableEntity p_241840_2_) {
 		return null;
 	}
 
 	public final class SnailNearestTargetGoal extends Goal {
 
 		private final SnailEntity owner;
-		private final World world;
+		private final Level world;
 		private final float range;
 		private final int targetChance = 10;
 		private final EntitySorter sorter;

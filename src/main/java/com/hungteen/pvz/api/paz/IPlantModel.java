@@ -2,7 +2,7 @@ package com.hungteen.pvz.api.paz;
 
 import com.hungteen.pvz.common.entity.plant.PVZPlantEntity;
 
-import net.minecraft.client.renderer.entity.model.EntityModel;
+import net.minecraft.client.model.EntityModel;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 

@@ -3,14 +3,14 @@ package com.hungteen.pvz.common.world.feature;
 import com.hungteen.pvz.PVZMod;
 import com.hungteen.pvz.common.world.structure.StructureRegister;
 import com.mojang.serialization.Codec;
-import net.minecraft.util.ResourceLocation;
+import net.minecraft.server.level.ServerLevel;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.registry.Registry;
-import net.minecraft.world.World;
+import net.minecraft.world.level.Level;
 import net.minecraft.world.gen.ChunkGenerator;
 import net.minecraft.world.gen.FlatChunkGenerator;
 import net.minecraft.world.gen.feature.structure.Structure;
 import net.minecraft.world.gen.settings.StructureSeparationSettings;
-import net.minecraft.world.server.ServerWorld;
 import net.minecraftforge.event.world.WorldEvent;
 import net.minecraftforge.fml.common.ObfuscationReflectionHelper;
 
@@ -24,8 +24,8 @@ public class GenStructures {
 	
     @SuppressWarnings("resource")
 	public static void addDimensionalSpacing(final WorldEvent.Load event) {
-        if(event.getWorld() instanceof ServerWorld){
-            ServerWorld serverWorld = (ServerWorld)event.getWorld();
+        if(event.getWorld() instanceof ServerLevel){
+            ServerLevel serverWorld = (ServerLevel)event.getWorld();
             /*
              * Skip Terraforged's chunk generator as they are a special case of a mod locking down their chunkgenerator.
              * They will handle your structure spacing for your if you add to WorldGenRegistries.NOISE_GENERATOR_SETTINGS in your structure's registration.
@@ -47,7 +47,7 @@ public class GenStructures {
              * Also that vanilla superflat is really tricky and buggy to work with in my experience.
              */
             if(serverWorld.getChunkSource().getGenerator() instanceof FlatChunkGenerator &&
-                serverWorld.dimension().equals(World.OVERWORLD)){
+                serverWorld.dimension().equals(Level.OVERWORLD)){
                 return;
             }
 

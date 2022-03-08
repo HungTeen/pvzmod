@@ -13,12 +13,12 @@ import com.hungteen.pvz.common.misc.sound.SoundRegister;
 import com.hungteen.pvz.utils.EntityUtil;
 import com.hungteen.pvz.utils.enums.PAZAlmanacs;
 import com.mojang.datafixers.util.Pair;
-import net.minecraft.entity.*;
-import net.minecraft.nbt.CompoundNBT;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.world.entity.*;
 import net.minecraft.network.datasync.DataParameter;
 import net.minecraft.network.datasync.DataSerializers;
 import net.minecraft.network.datasync.EntityDataManager;
-import net.minecraft.world.World;
+import net.minecraft.world.level.Level;
 
 import java.util.Arrays;
 import java.util.List;
@@ -28,7 +28,7 @@ public class ChomperEntity extends PVZPlantEntity {
 	private static final DataParameter<Integer> REST_TICK = EntityDataManager.defineId(ChomperEntity.class, DataSerializers.INT);
     public static final int ATTACK_ANIM_CD = 30;
 	
-	public ChomperEntity(EntityType<? extends CreatureEntity> type, World worldIn) {
+	public ChomperEntity(EntityType<? extends CreatureEntity> type, Level worldIn) {
 		super(type, worldIn);
 	}
 
@@ -158,13 +158,13 @@ public class ChomperEntity extends PVZPlantEntity {
 	}
 
 	@Override
-	public void addAdditionalSaveData(CompoundNBT compound) {
+	public void addAdditionalSaveData(CompoundTag compound) {
 		super.addAdditionalSaveData(compound);
 		compound.putInt("rest_tick", this.getRestTick());
 	}
 
 	@Override
-	public void readAdditionalSaveData(CompoundNBT compound) {
+	public void readAdditionalSaveData(CompoundTag compound) {
 		super.readAdditionalSaveData(compound);
 		if(compound.contains("rest_tick")) {
 			this.setRestTick(compound.getInt("rest_tick"));

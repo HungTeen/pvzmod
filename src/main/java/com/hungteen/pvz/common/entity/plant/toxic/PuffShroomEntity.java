@@ -9,20 +9,20 @@ import com.hungteen.pvz.common.impl.SkillTypes;
 import com.hungteen.pvz.common.impl.plant.PVZPlants;
 import com.hungteen.pvz.common.misc.sound.SoundRegister;
 import com.hungteen.pvz.utils.EntityUtil;
-import net.minecraft.entity.CreatureEntity;
-import net.minecraft.entity.EntitySize;
-import net.minecraft.entity.EntityType;
-import net.minecraft.entity.Pose;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.entity.player.ServerPlayerEntity;
-import net.minecraft.util.SoundEvent;
-import net.minecraft.world.World;
+import net.minecraft.sounds.SoundEvent;
+import net.minecraft.world.entity.CreatureEntity;
+import net.minecraft.world.entity.EntitySize;
+import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.Pose;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.world.level.Level;
 
 public class PuffShroomEntity extends PlantShooterEntity {
 
 	protected static final double SHOOT_OFFSET = 0.1D;
 	
-	public PuffShroomEntity(EntityType<? extends CreatureEntity> type, World worldIn) {
+	public PuffShroomEntity(EntityType<? extends CreatureEntity> type, Level worldIn) {
 		super(type, worldIn);
 	}
 	
@@ -66,9 +66,9 @@ public class PuffShroomEntity extends PlantShooterEntity {
 				    }
 				}
 			}
-			PlayerEntity player = EntityUtil.getEntityOwner(level, this);
-			if(player != null && player instanceof ServerPlayerEntity) {
-				EntityEffectAmountTrigger.INSTANCE.trigger((ServerPlayerEntity) player, this, cnt);
+			Player player = EntityUtil.getEntityOwner(level, this);
+			if(player != null && player instanceof ServerPlayer) {
+				EntityEffectAmountTrigger.INSTANCE.trigger((ServerPlayer) player, this, cnt);
 			}
 		}
 	}

@@ -15,20 +15,20 @@ import com.hungteen.pvz.utils.MathUtil;
 import com.hungteen.pvz.utils.PlayerUtil;
 import com.hungteen.pvz.utils.ZombieUtil;
 import com.hungteen.pvz.utils.interfaces.IHasMetal;
-import net.minecraft.entity.CreatureEntity;
-import net.minecraft.entity.EntityType;
-import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.ai.goal.Goal;
-import net.minecraft.nbt.CompoundNBT;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.world.entity.CreatureEntity;
+import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.ai.goal.Goal;
 import net.minecraft.network.datasync.DataParameter;
 import net.minecraft.network.datasync.DataSerializers;
 import net.minecraft.network.datasync.EntityDataManager;
 import net.minecraft.particles.ParticleTypes;
 import net.minecraft.util.DamageSource;
-import net.minecraft.util.ResourceLocation;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.Difficulty;
 import net.minecraft.world.Explosion;
-import net.minecraft.world.World;
+import net.minecraft.world.level.Level;
 
 public class JackInBoxZombieEntity extends PVZZombieEntity implements IHasMetal {
 
@@ -37,7 +37,7 @@ public class JackInBoxZombieEntity extends PVZZombieEntity implements IHasMetal 
 	private final int MinExplodeTime = 300;
 	private final int MaxExplodeTime = 3000;
 	
-	public JackInBoxZombieEntity(EntityType<? extends CreatureEntity> type, World worldIn) {
+	public JackInBoxZombieEntity(EntityType<? extends CreatureEntity> type, Level worldIn) {
 		super(type, worldIn);
 		this.setExplosionTime();
 	}
@@ -198,7 +198,7 @@ public class JackInBoxZombieEntity extends PVZZombieEntity implements IHasMetal 
 	}
 
 	@Override
-	public void readAdditionalSaveData(CompoundNBT compound) {
+	public void readAdditionalSaveData(CompoundTag compound) {
 		super.readAdditionalSaveData(compound);
 		if(compound.contains("has_jack_box")) {
 			this.setBox(compound.getBoolean("has_jack_box"));
@@ -206,7 +206,7 @@ public class JackInBoxZombieEntity extends PVZZombieEntity implements IHasMetal 
 	}
 	
 	@Override
-	public void addAdditionalSaveData(CompoundNBT compound) {
+	public void addAdditionalSaveData(CompoundTag compound) {
 		super.addAdditionalSaveData(compound);
 		compound.putBoolean("has_jack_box", this.hasBox());
 	}

@@ -6,11 +6,11 @@ import com.hungteen.pvz.api.types.*;
 import com.hungteen.pvz.common.entity.misc.bowling.AbstractBowlingEntity;
 import com.hungteen.pvz.common.impl.challenge.SpawnComponent;
 import com.hungteen.pvz.common.world.challenge.Challenge;
-import net.minecraft.entity.Entity;
-import net.minecraft.entity.EntityType;
-import net.minecraft.util.ResourceLocation;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.world.server.ServerWorld;
+import net.minecraft.server.level.ServerLevel;
+import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.EntityType;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.util.Mth;
 import org.apache.logging.log4j.LogManager;
 
 import java.util.Collection;
@@ -140,18 +140,18 @@ public class PVZAPI {
 		/**
 		 * create a raid event at pos with specific type.
 		 */
-		boolean createRaid(ServerWorld world, ResourceLocation res, BlockPos pos);
+		boolean createRaid(ServerLevel world, ResourceLocation res, Mth pos);
 
 		/**
 		 * it is a raider entity or not.
 		 */
-		boolean isRaider(ServerWorld world, Entity entity);
+		boolean isRaider(ServerLevel world, Entity entity);
 
 		/**
 		 * get a nearby raid.<br>
 		 * NOTE : there won't have more than one raid in a suitable range.
 		 */
-		Optional<Challenge> getNearByRaid(ServerWorld world, BlockPos pos);
+		Optional<Challenge> getNearByRaid(ServerLevel world, Mth pos);
 
 		/**
 		 * get all res -> raid component map.

@@ -1,6 +1,6 @@
 package com.hungteen.pvz.api.types;
 
-import net.minecraft.util.text.IFormattableTextComponent;
+import net.minecraft.network.chat.MutableComponent;
 
 public interface ISkillType extends IIDType {
 
@@ -27,7 +27,7 @@ public interface ISkillType extends IIDType {
     /**
      * get description text.
      */
-    IFormattableTextComponent getDescription();
+    MutableComponent getDescription();
 
     /**
      * if summon card got this skill, it will raise cost.

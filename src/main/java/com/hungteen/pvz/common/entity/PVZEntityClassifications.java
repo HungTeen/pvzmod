@@ -1,6 +1,6 @@
 package com.hungteen.pvz.common.entity;
 
-import net.minecraft.entity.EntityClassification;
+import net.minecraft.world.entity.EntityClassification;
 
 public class PVZEntityClassifications {
 

@@ -9,10 +9,10 @@ import net.minecraft.advancements.criterion.AbstractCriterionTrigger;
 import net.minecraft.advancements.criterion.CriterionInstance;
 import net.minecraft.advancements.criterion.EntityPredicate;
 import net.minecraft.advancements.criterion.EntityPredicate.AndPredicate;
-import net.minecraft.entity.Entity;
-import net.minecraft.entity.player.ServerPlayerEntity;
+import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.world.entity.Entity;
 import net.minecraft.loot.ConditionArrayParser;
-import net.minecraft.util.ResourceLocation;
+import net.minecraft.resources.ResourceLocation;
 
 public class EntityEffectAmountTrigger extends AbstractCriterionTrigger<EntityEffectAmountTrigger.Instance> {
 
@@ -32,7 +32,7 @@ public class EntityEffectAmountTrigger extends AbstractCriterionTrigger<EntityEf
 		return new EntityEffectAmountTrigger.Instance(player, EntityPredicate.fromJson(json.get("entity")), AmountPredicate.deserialize(json.get("amount")));
 	}
 
-	public void trigger(ServerPlayerEntity player, Entity entity, int amount) {
+	public void trigger(ServerPlayer player, Entity entity, int amount) {
 		this.trigger(player, (instance) -> {
 			return instance.test(player, entity, amount);
 		});
@@ -49,7 +49,7 @@ public class EntityEffectAmountTrigger extends AbstractCriterionTrigger<EntityEf
 			this.amount = amount;
 		}
 
-		public boolean test(ServerPlayerEntity player, Entity entity, int amount) {
+		public boolean test(ServerPlayer player, Entity entity, int amount) {
 			return this.entity.matches(player, entity) && this.amount.test(player, amount);
 		}
 

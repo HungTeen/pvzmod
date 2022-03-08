@@ -18,27 +18,26 @@ import com.hungteen.pvz.common.entity.EntityRegister;
 import com.hungteen.pvz.utils.EntityUtil;
 import com.hungteen.pvz.utils.PlayerUtil;
 import com.hungteen.pvz.utils.enums.Resources;
-import net.minecraft.client.util.ITooltipFlag;
+import net.minecraft.network.chat.TranslatableComponent;
+import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.enchantment.Enchantment;
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.enchantment.Enchantments;
-import net.minecraft.entity.Entity;
-import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.entity.player.PlayerInventory;
-import net.minecraft.entity.player.ServerPlayerEntity;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.network.chat.Component;
+import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.entity.player.PlayerInventory;
 import net.minecraft.inventory.EquipmentSlotType;
 import net.minecraft.inventory.Inventory;
 import net.minecraft.inventory.container.Container;
 import net.minecraft.inventory.container.INamedContainerProvider;
-import net.minecraft.item.*;
-import net.minecraft.nbt.CompoundNBT;
-import net.minecraft.util.*;
+import net.minecraft.world.item.*;
 import net.minecraft.util.math.vector.Vector3d;
-import net.minecraft.util.text.ITextComponent;
-import net.minecraft.util.text.TextFormatting;
-import net.minecraft.util.text.TranslationTextComponent;
-import net.minecraft.world.World;
+import net.minecraft.ChatFormatting;
+import net.minecraft.world.level.Level;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.capabilities.ICapabilityProvider;
@@ -75,7 +74,7 @@ public class PeaGunItem extends Item {
 
 	@Nonnull
 	@Override
-	public ICapabilityProvider initCapabilities(ItemStack stack, CompoundNBT oldCapNbt) {
+	public ICapabilityProvider initCapabilities(ItemStack stack, CompoundTag oldCapNbt) {
 		return new InvProvider(stack);
 	}
 
@@ -93,7 +92,7 @@ public class PeaGunItem extends Item {
 	}
 
 	@Override
-	public ActionResult<ItemStack> use(World worldIn, PlayerEntity playerIn, Hand handIn) {
+	public ActionResult<ItemStack> use(Level worldIn, Player playerIn, Hand handIn) {
 		final ItemStack itemStack = playerIn.getItemInHand(handIn);
 		final Inventory inv = getInventory(itemStack);
 
@@ -101,7 +100,7 @@ public class PeaGunItem extends Item {
 			if (itemStack.getDamageValue() == itemStack.getMaxDamage()) {
 				if (!worldIn.isClientSide) {
 					PlayerUtil.sendMsgTo(playerIn,
-							new TranslationTextComponent("help.pvz.broken").withStyle(TextFormatting.RED));
+							new TranslatableComponent("help.pvz.broken").withStyle(ChatFormatting.RED));
 				}
 				playerIn.getCooldowns().addCooldown(this, 20);
 				return ActionResult.fail(itemStack);
@@ -109,7 +108,7 @@ public class PeaGunItem extends Item {
 			if (!hasBullet(itemStack)) {// no bullet.
 				if (!worldIn.isClientSide) {
 					PlayerUtil.sendMsgTo(playerIn,
-							new TranslationTextComponent("help.pvz.no_bullet").withStyle(TextFormatting.RED));
+							new TranslatableComponent("help.pvz.no_bullet").withStyle(ChatFormatting.RED));
 				}
 				playerIn.getCooldowns().addCooldown(this, 20);
 				return ActionResult.fail(itemStack);
@@ -117,25 +116,25 @@ public class PeaGunItem extends Item {
 			if (!hasShootMode(inv.getItem(0))) {// no mode.
 				if (!worldIn.isClientSide) {
 					PlayerUtil.sendMsgTo(playerIn,
-							new TranslationTextComponent("help.pvz.no_shoot_mode").withStyle(TextFormatting.RED));
+							new TranslatableComponent("help.pvz.no_shoot_mode").withStyle(ChatFormatting.RED));
 				}
 				playerIn.getCooldowns().addCooldown(this, 20);
 				return ActionResult.fail(itemStack);
 			}
 			playerIn.startUsingItem(handIn);
 		} else {
-			if (!worldIn.isClientSide && playerIn instanceof ServerPlayerEntity) {
-				NetworkHooks.openGui((ServerPlayerEntity) playerIn, new INamedContainerProvider() {
+			if (!worldIn.isClientSide && playerIn instanceof ServerPlayer) {
+				NetworkHooks.openGui((ServerPlayer) playerIn, new INamedContainerProvider() {
 
 					@Override
 					public Container createMenu(int p_createMenu_1_, PlayerInventory p_createMenu_2_,
-							PlayerEntity p_createMenu_3_) {
+							Player p_createMenu_3_) {
 						return new PeaGunContainer(p_createMenu_1_, p_createMenu_3_);
 					}
 
 					@Override
-					public ITextComponent getDisplayName() {
-						return new TranslationTextComponent("gui.pvz.pea_gun.show");
+					public Component getDisplayName() {
+						return new TranslatableComponent("gui.pvz.pea_gun.show");
 					}
 				});
 			}
@@ -144,14 +143,14 @@ public class PeaGunItem extends Item {
 	}
 
 	@Override
-	public void onUseTick(World world, LivingEntity living, ItemStack stack, int tick) {
+	public void onUseTick(Level world, LivingEntity living, ItemStack stack, int tick) {
 		final int cd = getShootCD(living, stack);
 		final Inventory inv = getInventory(stack);
 		final IPlantType type = getShootMode(inv.getItem(0));
 		
-		if (living instanceof PlayerEntity && tick + 5 < this.getUseDuration(stack) && tick % cd == 0) {
-			if (!MinecraftForge.EVENT_BUS.post(new PeaGunShootEvent((PlayerEntity) living, stack, type))) {
-				this.performShoot(world, (PlayerEntity) living, stack, type);
+		if (living instanceof Player && tick + 5 < this.getUseDuration(stack) && tick % cd == 0) {
+			if (!MinecraftForge.EVENT_BUS.post(new PeaGunShootEvent((Player) living, stack, type))) {
+				this.performShoot(world, (Player) living, stack, type);
 			}
 		}
 	}
@@ -159,7 +158,7 @@ public class PeaGunItem extends Item {
 	/**
 	 * {@link PVZPlayerEvents#tickPlayer(net.minecraftforge.event.TickEvent.PlayerTickEvent)}
 	 */
-	public static void checkHeadShoot(PlayerEntity player) {
+	public static void checkHeadShoot(Player player) {
 		final ItemStack stack = player.getItemBySlot(EquipmentSlotType.HEAD);
 		final Inventory inv = getInventory(stack);
 		
@@ -177,7 +176,7 @@ public class PeaGunItem extends Item {
 	/**
 	 * @param itemStack : pea gun stack.
 	 */
-	public void performShoot(World world, PlayerEntity player, ItemStack itemStack, IPlantType mode) {
+	public void performShoot(Level world, Player player, ItemStack itemStack, IPlantType mode) {
 		final ItemStack stack = getFirstBullets(itemStack);
 
 		if (mode == PVZPlants.PEA_SHOOTER) {
@@ -222,8 +221,8 @@ public class PeaGunItem extends Item {
 		}
 	}
 
-	public void shootPea(World world, PlayerEntity player, IPlantType mode, ItemStack stack, double forwardOffset,
-			double rightOffset, float angle) {
+	public void shootPea(Level world, Player player, IPlantType mode, ItemStack stack, double forwardOffset,
+                         double rightOffset, float angle) {
 		final Vector3d vec = player.getLookAngle();
 		final double deltaX = forwardOffset * vec.x - rightOffset * vec.z;
 		final double deltaZ = forwardOffset * vec.z + rightOffset * vec.x;
@@ -241,7 +240,7 @@ public class PeaGunItem extends Item {
 		world.addFreshEntity(pea);
 	}
 
-	private void shrinkItemStack(PlayerEntity player, ItemStack stack) {
+	private void shrinkItemStack(Player player, ItemStack stack) {
 		final Inventory inv = getInventory(stack);
 		final int pos = getFirstPos(stack);
 		final int lvl = PlayerUtil.getResource(player, Resources.TREE_LVL);
@@ -264,7 +263,7 @@ public class PeaGunItem extends Item {
 		}
 	}
 
-	private PeaEntity.Type getPeaType(PlayerEntity player) {
+	private PeaEntity.Type getPeaType(Player player) {
 		final int lvl = PlayerUtil.getResource(player, Resources.TREE_LVL);
 		final int bigChance = (lvl + 4) / 5;
 		final int hugeChance = bigChance + (lvl + 19) / 20;
@@ -273,8 +272,8 @@ public class PeaGunItem extends Item {
 	}
 
 	@Override
-	public void appendHoverText(ItemStack stack, World worldIn, List<ITextComponent> tooltip, ITooltipFlag flagIn) {
-		tooltip.add(new TranslationTextComponent("tooltip.pvz.pea_gun").withStyle(TextFormatting.GREEN));
+	public void appendHoverText(ItemStack stack, Level worldIn, List<Component> tooltip, TooltipFlag flagIn) {
+		tooltip.add(new TranslatableComponent("tooltip.pvz.pea_gun").withStyle(ChatFormatting.GREEN));
 	}
 
 	@Override

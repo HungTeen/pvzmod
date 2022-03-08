@@ -1,9 +1,9 @@
 package com.hungteen.pvz.common.world.invasion;
 
-import net.minecraft.util.ResourceLocation;
-import net.minecraft.util.text.ITextComponent;
-import net.minecraft.util.text.TextFormatting;
-import net.minecraft.util.text.TranslationTextComponent;
+import net.minecraft.network.chat.Component;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.ChatFormatting;
+import net.minecraft.network.chat.TranslatableComponent;
 
 import javax.annotation.Nullable;
 import java.util.ArrayList;
@@ -21,7 +21,7 @@ public class InvasionType {
 	private final boolean isAssistInvasion;
 	protected int triggerChance = 100;
 	protected ResourceLocation bonusResource;
-	protected TextFormatting displayColor;
+	protected ChatFormatting displayColor;
 	private int requireDifficulty = 0x7fffffff;
 
 	public InvasionType(ResourceLocation resourceLocation, boolean is){
@@ -55,11 +55,11 @@ public class InvasionType {
 		return bonusResource;
 	}
 
-	public void setDisplayColor(TextFormatting displayColor) {
+	public void setDisplayColor(ChatFormatting displayColor) {
 		this.displayColor = displayColor;
 	}
 
-	public TextFormatting getDisplayColor() {
+	public ChatFormatting getDisplayColor() {
 		return displayColor;
 	}
 
@@ -75,7 +75,7 @@ public class InvasionType {
 		this.requireDifficulty = requireDay;
 	}
 
-	public ITextComponent getText(){
-		return new TranslationTextComponent("invasion.pvz." + this.resourceLocation.getPath()).withStyle(this.getDisplayColor());
+	public Component getText(){
+		return new TranslatableComponent("invasion.pvz." + this.resourceLocation.getPath()).withStyle(this.getDisplayColor());
 	}
 }

@@ -4,7 +4,7 @@ import com.hungteen.pvz.api.PVZAPI;
 import com.hungteen.pvz.api.types.IPAZType;
 import com.hungteen.pvz.api.types.IPlantType;
 import com.hungteen.pvz.api.types.IZombieType;
-import net.minecraft.item.ItemStack;
+import net.minecraft.world.item.ItemStack;
 
 import java.util.ArrayList;
 import java.util.HashMap;

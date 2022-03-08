@@ -8,12 +8,12 @@ import com.hungteen.pvz.common.world.challenge.ChallengeManager;
 import com.hungteen.pvz.utils.enums.Colors;
 import com.mojang.datafixers.util.Pair;
 import net.minecraft.client.resources.JsonReloadListener;
+import net.minecraft.network.chat.MutableComponent;
+import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.profiler.IProfiler;
 import net.minecraft.resources.IResourceManager;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.JSONUtils;
-import net.minecraft.util.ResourceLocation;
-import net.minecraft.util.text.IFormattableTextComponent;
-import net.minecraft.util.text.TranslationTextComponent;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -59,11 +59,11 @@ public class ChallengeTypeLoader extends JsonReloadListener{
 			}
 			/* messages */
 			{
-				final List<Pair<IFormattableTextComponent, Integer>> messages = new ArrayList<>();
+				final List<Pair<MutableComponent, Integer>> messages = new ArrayList<>();
 				final JsonArray jsonMsgs = JSONUtils.getAsJsonArray(jsonObject, "messages", null);
 				if(jsonMsgs == null){//no msg, use default.
 					for(int i = 0; i < 6; ++ i){
-						final IFormattableTextComponent component = new TranslationTextComponent("challenge." + res.getNamespace() + "." + res.getPath() + ".msg" + (i + 1));
+						final MutableComponent component = new TranslatableComponent("challenge." + res.getNamespace() + "." + res.getPath() + ".msg" + (i + 1));
 						messages.add(Pair.of(component, Colors.BLACK));
 					}
 				} else{
@@ -74,7 +74,7 @@ public class ChallengeTypeLoader extends JsonReloadListener{
 							final String name = JSONUtils.getAsString(obj, "title", null);
 							final int color = JSONUtils.getAsInt(obj, "color", Colors.BAT_BLACK);
 							if (name != null) {
-								messages.add(Pair.of(new TranslationTextComponent(name), color));
+								messages.add(Pair.of(new TranslatableComponent(name), color));
 							}
 						}
 					}

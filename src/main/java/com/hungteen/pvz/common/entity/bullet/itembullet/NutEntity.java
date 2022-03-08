@@ -5,16 +5,16 @@ import com.hungteen.pvz.common.item.ItemRegister;
 import com.hungteen.pvz.common.entity.EntityRegister;
 import com.hungteen.pvz.utils.EntityUtil;
 
-import net.minecraft.entity.Entity;
-import net.minecraft.entity.EntityType;
-import net.minecraft.item.ItemStack;
+import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.item.ItemStack;
 import net.minecraft.util.math.EntityRayTraceResult;
 import net.minecraft.util.math.RayTraceResult;
-import net.minecraft.world.World;
+import net.minecraft.world.level.Level;
 
 public class NutEntity extends PVZItemBulletEntity {
 
-	public NutEntity(EntityType<?> type, World worldIn) {
+	public NutEntity(EntityType<?> type, Level worldIn) {
 		super(type, worldIn);
 	}
 	

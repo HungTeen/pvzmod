@@ -6,8 +6,8 @@ import com.hungteen.pvz.api.types.IPlantType;
 import com.hungteen.pvz.common.impl.plant.PlantType;
 import com.hungteen.pvz.common.misc.sound.SoundRegister;
 import com.hungteen.pvz.utils.EntityUtil;
-import net.minecraft.entity.Entity;
-import net.minecraft.nbt.CompoundNBT;
+import net.minecraft.world.entity.Entity;
+import net.minecraft.nbt.CompoundTag;
 
 import java.util.Optional;
 
@@ -37,9 +37,9 @@ public class PlantInfo implements IPlantInfo {
 	/**
 	 * read nbt from plant entity.
 	 */
-	public static void read(IPlantInfo info, CompoundNBT compound, String flag) {
+	public static void read(IPlantInfo info, CompoundTag compound, String flag) {
 		if (compound.contains(flag)) {
-			CompoundNBT nbt = compound.getCompound(flag);
+			CompoundTag nbt = compound.getCompound(flag);
 			if(nbt.contains("plant_type")) {
 				final String string = compound.getString("plant_type");
 				Optional<IPlantType> op = PlantType.getPlantByName(string);
@@ -58,16 +58,16 @@ public class PlantInfo implements IPlantInfo {
 	/**
 	 * write nbt to plant entity.
 	 */
-	public static void write(IPlantInfo info, CompoundNBT compound, String flag) {
+	public static void write(IPlantInfo info, CompoundTag compound, String flag) {
 	    if(info != null) {
-	    	CompoundNBT nbt = new CompoundNBT();
+	    	CompoundTag nbt = new CompoundTag();
 		    info.write(nbt);
 		    compound.put(flag, nbt);
 	    }
 	}
 
 	@Override
-	public void read(CompoundNBT nbt) {
+	public void read(CompoundTag nbt) {
 		// no need to read plant type again.
 		if(nbt.contains("sun_cost")) {
 			this.setSunCost(nbt.getInt("sun_cost"));
@@ -75,7 +75,7 @@ public class PlantInfo implements IPlantInfo {
 	}
 
 	@Override
-	public void write(CompoundNBT nbt) {
+	public void write(CompoundTag nbt) {
 		nbt.putString("plant_type", this.type.getIdentity());
 		nbt.putInt("sun_cost", this.getSunCost());
 	}

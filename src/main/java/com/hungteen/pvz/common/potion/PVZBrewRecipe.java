@@ -2,10 +2,10 @@ package com.hungteen.pvz.common.potion;
 
 import javax.annotation.Nonnull;
 
-import net.minecraft.item.ItemStack;
-import net.minecraft.item.crafting.Ingredient;
-import net.minecraft.potion.Potion;
-import net.minecraft.potion.PotionUtils;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.crafting.Ingredient;
+import net.minecraft.world.effect.Potion;
+import net.minecraft.world.effect.PotionUtils;
 import net.minecraftforge.common.brewing.IBrewingRecipe;
 
 public class PVZBrewRecipe implements IBrewingRecipe{

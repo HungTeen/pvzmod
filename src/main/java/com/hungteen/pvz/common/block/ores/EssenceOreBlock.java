@@ -1,8 +1,8 @@
 package com.hungteen.pvz.common.block.ores;
 
 import com.hungteen.pvz.api.types.IEssenceType;
-import net.minecraft.block.Block;
-import net.minecraft.block.Blocks;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.Blocks;
 import net.minecraftforge.common.ToolType;
 
 public class EssenceOreBlock extends PVZOreBlock {

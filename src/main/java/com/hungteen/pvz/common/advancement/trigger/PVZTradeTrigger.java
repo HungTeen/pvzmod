@@ -8,10 +8,10 @@ import net.minecraft.advancements.criterion.AbstractCriterionTrigger;
 import net.minecraft.advancements.criterion.CriterionInstance;
 import net.minecraft.advancements.criterion.EntityPredicate;
 import net.minecraft.advancements.criterion.EntityPredicate.AndPredicate;
-import net.minecraft.entity.Entity;
-import net.minecraft.entity.player.ServerPlayerEntity;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.entity.Entity;
+import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.loot.ConditionArrayParser;
-import net.minecraft.util.ResourceLocation;
 
 public class PVZTradeTrigger extends AbstractCriterionTrigger<PVZTradeTrigger.Instance> {
 
@@ -31,7 +31,7 @@ public class PVZTradeTrigger extends AbstractCriterionTrigger<PVZTradeTrigger.In
 		return new PVZTradeTrigger.Instance(player, EntityPredicate.fromJson(json.get("entity")), AmountPredicate.deserialize(json.get("amount")));
 	}
 
-	public void trigger(ServerPlayerEntity player, Entity entity, int amount) {
+	public void trigger(ServerPlayer player, Entity entity, int amount) {
 		this.trigger(player, (instance) -> {
 			return instance.test(player, entity, amount);
 		});
@@ -48,7 +48,7 @@ public class PVZTradeTrigger extends AbstractCriterionTrigger<PVZTradeTrigger.In
 			this.amount = amount;
 		}
 
-		public boolean test(ServerPlayerEntity player, Entity entity, int amount) {
+		public boolean test(ServerPlayer player, Entity entity, int amount) {
 			return !this.amount.test(player, amount) ? false : this.entity.matches(player, entity);
 		}
 

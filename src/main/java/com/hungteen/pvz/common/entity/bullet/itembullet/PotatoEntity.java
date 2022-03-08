@@ -6,21 +6,21 @@ import com.hungteen.pvz.common.entity.plant.explosion.PotatoMineEntity;
 import com.hungteen.pvz.common.entity.EntityRegister;
 import com.hungteen.pvz.utils.PlantUtil;
 
-import net.minecraft.entity.EntityType;
-import net.minecraft.entity.LivingEntity;
-import net.minecraft.item.ItemStack;
-import net.minecraft.item.Items;
+import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Items;
 import net.minecraft.util.math.RayTraceResult;
-import net.minecraft.world.World;
+import net.minecraft.world.level.Level;
 
 public class PotatoEntity extends PVZItemBulletEntity{
 
-	public PotatoEntity(EntityType<?> type, World worldIn) {
+	public PotatoEntity(EntityType<?> type, Level worldIn) {
 		super(type, worldIn);
 		this.setNoGravity(false);
 	}
 	
-	public PotatoEntity(World worldIn, LivingEntity thrower) {
+	public PotatoEntity(Level worldIn, LivingEntity thrower) {
 		super(EntityRegister.POTATO.get(), worldIn, thrower);
 		this.setNoGravity(false);
 	}

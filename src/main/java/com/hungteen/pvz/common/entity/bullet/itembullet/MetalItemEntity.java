@@ -9,20 +9,20 @@ import com.hungteen.pvz.common.entity.EntityRegister;
 import com.hungteen.pvz.remove.MetalTypes;
 import com.hungteen.pvz.utils.EntityUtil;
 
-import net.minecraft.entity.Entity;
-import net.minecraft.entity.EntitySize;
-import net.minecraft.entity.EntityType;
-import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.Pose;
-import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.CompoundNBT;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.EntitySize;
+import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.Pose;
+import net.minecraft.world.item.ItemStack;
 import net.minecraft.network.datasync.DataParameter;
 import net.minecraft.network.datasync.DataSerializers;
 import net.minecraft.network.datasync.EntityDataManager;
 import net.minecraft.util.math.EntityRayTraceResult;
 import net.minecraft.util.math.RayTraceResult;
 import net.minecraft.util.math.vector.Vector3d;
-import net.minecraft.world.World;
+import net.minecraft.world.level.Level;
 
 public class MetalItemEntity extends PVZItemBulletEntity {
 
@@ -32,11 +32,11 @@ public class MetalItemEntity extends PVZItemBulletEntity {
 			DataSerializers.INT);
 	private ItemStack stack = null;
 	
-	public MetalItemEntity(EntityType<?> type, World worldIn) {
+	public MetalItemEntity(EntityType<?> type, Level worldIn) {
 		super(type, worldIn);
 	}
 	
-	public MetalItemEntity(World worldIn, LivingEntity shooter, MetalTypes metalType) {
+	public MetalItemEntity(Level worldIn, LivingEntity shooter, MetalTypes metalType) {
 		super(EntityRegister.METAL.get(), worldIn, shooter);
 		this.setMetalType(metalType);
 	}
@@ -143,14 +143,14 @@ public class MetalItemEntity extends PVZItemBulletEntity {
 	}
 	
 	@Override
-	public void addAdditionalSaveData(CompoundNBT compound) {
+	public void addAdditionalSaveData(CompoundTag compound) {
 		super.addAdditionalSaveData(compound);
 		compound.putInt("metal_type", this.getMetalType().ordinal());
 		compound.putInt("metal_state", this.getMetalState().ordinal());
 	}
 
 	@Override
-	public void readAdditionalSaveData(CompoundNBT compound) {
+	public void readAdditionalSaveData(CompoundTag compound) {
 		super.readAdditionalSaveData(compound);
 		if(compound.contains("metal_type")) {
 			this.setMetalType(MetalTypes.values()[compound.getInt("metal_type")]);

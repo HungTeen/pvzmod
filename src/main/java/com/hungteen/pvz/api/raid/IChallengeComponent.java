@@ -2,12 +2,12 @@ package com.hungteen.pvz.api.raid;
 
 import com.google.gson.JsonObject;
 import com.mojang.datafixers.util.Pair;
+import net.minecraft.network.chat.MutableComponent;
+import net.minecraft.sounds.SoundEvent;
 import net.minecraft.util.RegistryKey;
-import net.minecraft.util.SoundEvent;
-import net.minecraft.util.text.IFormattableTextComponent;
-import net.minecraft.util.text.ITextComponent;
-import net.minecraft.world.BossInfo;
-import net.minecraft.world.World;
+import net.minecraft.network.chat.Component;
+import net.minecraft.world.BossEvent;
+import net.minecraft.world.level.Level;
 
 import java.util.List;
 
@@ -60,15 +60,15 @@ public interface IChallengeComponent {
 	
 	boolean hasTag(String tag);
 
-	boolean isSuitableDimension(RegistryKey<World> type);
+	boolean isSuitableDimension(RegistryKey<Level> type);
 
 	boolean showRoundTitle();
 
 	boolean shouldCloseToCenter();
 
-	void setMessages(List<Pair<IFormattableTextComponent, Integer>> list);
+	void setMessages(List<Pair<MutableComponent, Integer>> list);
 
-	IFormattableTextComponent getChallengeName();
+	MutableComponent getChallengeName();
 
 	List<String> getAuthors();
 	
@@ -83,13 +83,13 @@ public interface IChallengeComponent {
 	
 	IPlacementComponent getPlacement(int wavePos);
 	
-	ITextComponent getTitle();
+	Component getTitle();
 	
-	ITextComponent getWinTitle();
+	Component getWinTitle();
 	
-	ITextComponent getLossTitle();
+	Component getLossTitle();
 	
-	BossInfo.Color getBarColor();
+	BossEvent.Color getBarColor();
 	
 	SoundEvent getPrepareSound();
 	
@@ -99,5 +99,5 @@ public interface IChallengeComponent {
 	
 	SoundEvent getLossSound();
 
-	List<Pair<IFormattableTextComponent, Integer>> getMessages();
+	List<Pair<MutableComponent, Integer>> getMessages();
 }

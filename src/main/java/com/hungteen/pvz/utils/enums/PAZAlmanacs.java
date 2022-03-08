@@ -1,7 +1,7 @@
 package com.hungteen.pvz.utils.enums;
 
 import com.hungteen.pvz.api.interfaces.IAlmanacEntry;
-import net.minecraft.util.text.TranslationTextComponent;
+import net.minecraft.network.chat.TranslatableComponent;
 
 public enum PAZAlmanacs implements IAlmanacEntry {
 
@@ -39,6 +39,6 @@ public enum PAZAlmanacs implements IAlmanacEntry {
 
     @Override
     public String getText() {
-        return new TranslationTextComponent("almanac.pvz." + this.toString().toLowerCase()).getString();
+        return new TranslatableComponent("almanac.pvz." + this.toString().toLowerCase()).getString();
     }
 }

@@ -12,15 +12,15 @@ import com.hungteen.pvz.utils.EntityUtil;
 import com.hungteen.pvz.utils.PlayerUtil;
 import com.hungteen.pvz.utils.enums.Resources;
 import net.minecraft.enchantment.EnchantmentHelper;
-import net.minecraft.entity.*;
-import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.server.level.ServerLevel;
+import net.minecraft.world.entity.*;
+import net.minecraft.util.Mth;
+import net.minecraft.world.entity.player.Player;
 import net.minecraft.inventory.EquipmentSlotType;
-import net.minecraft.item.ItemStack;
-import net.minecraft.util.math.BlockPos;
+import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.IWorld;
 import net.minecraft.world.LightType;
-import net.minecraft.world.World;
-import net.minecraft.world.server.ServerWorld;
+import net.minecraft.world.level.Level;
 import net.minecraftforge.common.MinecraftForge;
 
 import java.util.Map.Entry;
@@ -30,7 +30,7 @@ public class SunEntity extends DropEntity {
 	
 	private float fall_speed = 0.03f;
 	
-	public SunEntity(EntityType<? extends MobEntity> type, World worldIn) {
+	public SunEntity(EntityType<? extends MobEntity> type, Level worldIn) {
 		super(type, worldIn);
 		this.setAmount(25);//default sun amount (nature spawn)
 		this.setNoGravity(true);
@@ -53,14 +53,14 @@ public class SunEntity extends DropEntity {
 	}
 	
 	@Override
-	public void playerTouch(PlayerEntity entityIn) {
+	public void playerTouch(Player entityIn) {
 		if(!this.level.isClientSide && this.isAlive() && this.getDropState() != DropStates.STEAL) {
 			this.onCollectedByPlayer(entityIn);
 		}
 	}
 	
 	@Override
-	public void onCollectedByPlayer(PlayerEntity player) {
+	public void onCollectedByPlayer(Player player) {
 		if(! level.isClientSide && ! MinecraftForge.EVENT_BUS.post(new PlayerCollectDropEvent.PlayerCollectSunEvent(player, this))) {
 		    Entry<EquipmentSlotType, ItemStack> entry = EnchantmentHelper.getRandomItemWith(EnchantmentRegister.SUN_MENDING.get(), player);
 		    if(entry != null) {
@@ -76,7 +76,7 @@ public class SunEntity extends DropEntity {
 		this.remove();
 	}
 	
-	public static void spawnSunsByAmount(World world, BlockPos pos, int amount) {
+	public static void spawnSunsByAmount(Level world, Mth pos, int amount) {
 		spawnSunsByAmount(world, pos, amount, 75, 1);
 	}
 	
@@ -84,7 +84,7 @@ public class SunEntity extends DropEntity {
 	 * spawn sun in range, each is set to a specific amount.
 	 * {@link SunFlowerEntity#genSuper()} 
 	 */
-	public static void spawnSunsByAmount(World world, BlockPos pos, int amount, int each, int range) {
+	public static void spawnSunsByAmount(Level world, Mth pos, int amount, int each, int range) {
 		while(amount >= each) {
 			amount -= each;
 			spawnSunRandomly(world, pos, each, range);
@@ -98,15 +98,15 @@ public class SunEntity extends DropEntity {
 	/**
 	 * spawn sun entity in range randomly with specific amount.
 	 */
-	public static void spawnSunRandomly(World world, BlockPos pos, int amount, int dis) {
+	public static void spawnSunRandomly(Level world, Mth pos, int amount, int dis) {
 		SunEntity sun = EntityRegister.SUN.get().create(world);
 		sun.setAmount(amount);
 		EntityUtil.onEntityRandomPosSpawn(world, sun, pos, dis);
 	}
 	
-	public static boolean canSunSpawn(EntityType<? extends SunEntity> zombieType, IWorld worldIn, SpawnReason reason, BlockPos pos, Random rand) {
-		if(worldIn instanceof ServerWorld) {
-			return ! ((ServerWorld)worldIn).isRainingAt(pos) && ((ServerWorld)worldIn).isDay() && worldIn.getBrightness(LightType.SKY, pos) >= 15;
+	public static boolean canSunSpawn(EntityType<? extends SunEntity> zombieType, IWorld worldIn, SpawnReason reason, Mth pos, Random rand) {
+		if(worldIn instanceof ServerLevel) {
+			return ! ((ServerLevel)worldIn).isRainingAt(pos) && ((ServerLevel)worldIn).isDay() && worldIn.getBrightness(LightType.SKY, pos) >= 15;
 		}
 		return worldIn.getBrightness(LightType.SKY, pos) >= 15;
 	}

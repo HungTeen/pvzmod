@@ -1,8 +1,8 @@
 package com.hungteen.pvz.compat.patchouli;
 
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.item.ItemStack;
-import net.minecraft.util.ResourceLocation;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.ItemStack;
 import net.minecraftforge.fml.ModList;
 import net.minecraftforge.registries.ForgeRegistries;
 import vazkii.patchouli.api.PatchouliAPI;
@@ -16,7 +16,7 @@ public class PVZPatchouliHandler {
 	
 	/**
 	 */
-	public static void giveInitialGuideBook(PlayerEntity player) {
+	public static void giveInitialGuideBook(Player player) {
 		if(isPatchouliLoaded()) {
 			Optional.ofNullable(ForgeRegistries.ITEMS.getValue(GUIDE_BOOK)).ifPresent(item -> {
 				final ItemStack book = new ItemStack(item, 1);

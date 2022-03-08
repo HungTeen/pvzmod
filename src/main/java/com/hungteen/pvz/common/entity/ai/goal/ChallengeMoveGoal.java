@@ -2,9 +2,9 @@ package com.hungteen.pvz.common.entity.ai.goal;
 
 import com.hungteen.pvz.common.world.challenge.Challenge;
 
-import net.minecraft.entity.MobEntity;
-import net.minecraft.entity.ai.goal.Goal;
-import net.minecraft.util.math.BlockPos;
+import net.minecraft.world.entity.MobEntity;
+import net.minecraft.world.entity.ai.goal.Goal;
+import net.minecraft.util.Mth;
 
 /**
  * @program: pvzmod-1.16.5
@@ -15,7 +15,7 @@ public class ChallengeMoveGoal extends Goal {
 
     private final MobEntity owner;
     private final Challenge challenge;
-    private final BlockPos center;
+    private final Mth center;
     private int tick = 0;
 
     public ChallengeMoveGoal(MobEntity owner, Challenge challenge){

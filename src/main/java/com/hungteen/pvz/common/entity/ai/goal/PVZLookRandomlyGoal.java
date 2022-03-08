@@ -3,8 +3,8 @@ package com.hungteen.pvz.common.entity.ai.goal;
 import com.hungteen.pvz.common.entity.plant.PVZPlantEntity;
 import com.hungteen.pvz.common.entity.zombie.PVZZombieEntity;
 
-import net.minecraft.entity.MobEntity;
-import net.minecraft.entity.ai.goal.LookRandomlyGoal;
+import net.minecraft.world.entity.MobEntity;
+import net.minecraft.world.entity.ai.goal.LookRandomlyGoal;
 
 public class PVZLookRandomlyGoal extends LookRandomlyGoal{
 

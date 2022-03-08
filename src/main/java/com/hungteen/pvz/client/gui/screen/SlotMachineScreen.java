@@ -17,10 +17,10 @@ import com.mojang.blaze3d.matrix.MatrixStack;
 import com.mojang.blaze3d.systems.RenderSystem;
 
 import net.minecraft.client.gui.widget.button.Button;
-import net.minecraft.entity.player.PlayerInventory;
-import net.minecraft.util.ResourceLocation;
-import net.minecraft.util.text.ITextComponent;
-import net.minecraft.util.text.TranslationTextComponent;
+import net.minecraft.network.chat.TranslatableComponent;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.entity.player.PlayerInventory;
+import net.minecraft.network.chat.Component;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 
@@ -31,7 +31,7 @@ public class SlotMachineScreen extends PVZContainerScreen<SlotMachineContainer> 
 	protected Button slowLotteryButton;
 	protected Button fastLotteryButton;
 	
-	public SlotMachineScreen(SlotMachineContainer screenContainer, PlayerInventory inv, ITextComponent titleIn) {
+	public SlotMachineScreen(SlotMachineContainer screenContainer, PlayerInventory inv, Component titleIn) {
 		super(screenContainer, inv, titleIn);
 		this.imageWidth = 176;
 		this.imageHeight = 227;
@@ -41,14 +41,14 @@ public class SlotMachineScreen extends PVZContainerScreen<SlotMachineContainer> 
 	@Override
 	protected void init() {
 		super.init();
-		this.slowLotteryButton = this.addButton(new Button(this.leftPos + 49, this.topPos + 120, 18, 18, new TranslationTextComponent("gui.pvz.slot_machine.slow"), (button) -> {
+		this.slowLotteryButton = this.addButton(new Button(this.leftPos + 49, this.topPos + 120, 18, 18, new TranslatableComponent("gui.pvz.slot_machine.slow"), (button) -> {
 			if(this.slowLotteryButton.visible) {
 			    PVZPacketHandler.CHANNEL.sendToServer(new ClickButtonPacket(GuiHandler.SLOT_MACHINE, 0, 0));
 			}
 		}));
 		this.slowLotteryButton.visible = false;
 
-		this.fastLotteryButton = this.addButton(new Button(this.leftPos + 109, this.topPos + 120, 18, 18, new TranslationTextComponent("gui.pvz.slot_machine.fast"), (button) -> {
+		this.fastLotteryButton = this.addButton(new Button(this.leftPos + 109, this.topPos + 120, 18, 18, new TranslatableComponent("gui.pvz.slot_machine.fast"), (button) -> {
 			if(this.fastLotteryButton.visible) {
 				PVZPacketHandler.CHANNEL.sendToServer(new ClickButtonPacket(GuiHandler.SLOT_MACHINE, 1, 0));
 			}
@@ -67,9 +67,9 @@ public class SlotMachineScreen extends PVZContainerScreen<SlotMachineContainer> 
 		this.tips.forEach(e -> {
 			if(e instanceof DisplayField.TipField){
 				((DisplayField.TipField) e).setTips(Arrays.asList(
-						new TranslationTextComponent("gui.pvz.slot_machine.tip1"),
-						new TranslationTextComponent("gui.pvz.slot_machine.tip2", PlayerUtil.getResource(this.minecraft.player, Resources.SUN_NUM), this.menu.te.getSunCost()),
-						new TranslationTextComponent("gui.pvz.slot_machine.tip3", PlayerUtil.getResource(this.minecraft.player, Resources.LOTTERY_CHANCE))
+						new TranslatableComponent("gui.pvz.slot_machine.tip1"),
+						new TranslatableComponent("gui.pvz.slot_machine.tip2", PlayerUtil.getResource(this.minecraft.player, Resources.SUN_NUM), this.menu.te.getSunCost()),
+						new TranslatableComponent("gui.pvz.slot_machine.tip3", PlayerUtil.getResource(this.minecraft.player, Resources.LOTTERY_CHANCE))
 				));
 			}
 		});

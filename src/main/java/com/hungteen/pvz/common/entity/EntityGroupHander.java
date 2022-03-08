@@ -4,11 +4,11 @@ import com.hungteen.pvz.api.enums.PVZGroupType;
 import com.hungteen.pvz.common.misc.tag.PVZEntityTypeTags;
 import com.hungteen.pvz.utils.PlayerUtil;
 import com.hungteen.pvz.utils.enums.Resources;
-import net.minecraft.entity.Entity;
-import net.minecraft.entity.EntityClassification;
-import net.minecraft.entity.EntityType;
-import net.minecraft.entity.passive.TameableEntity;
-import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.EntityClassification;
+import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.passive.TameableEntity;
+import net.minecraft.world.entity.player.Player;
 import net.minecraft.util.math.MathHelper;
 
 public class EntityGroupHander {
@@ -37,7 +37,7 @@ public class EntityGroupHander {
         return PVZGroupType.NEUTRALS;
     }
 
-    public static PVZGroupType getPlayerGroup(PlayerEntity player){
+    public static PVZGroupType getPlayerGroup(Player player){
         final int group = PlayerUtil.getResource(player, Resources.GROUP_TYPE);
         return getGroup(group);
     }

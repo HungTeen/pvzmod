@@ -1,8 +1,8 @@
 package com.hungteen.pvz.client.model.armor;
 
-import net.minecraft.client.renderer.entity.model.BipedModel;
+import net.minecraft.client.model.BipedModel;
 import net.minecraft.client.renderer.model.ModelRenderer;
-import net.minecraft.entity.LivingEntity;
+import net.minecraft.world.entity.LivingEntity;
 
 // Made with Blockbench 3.6.5
 // Exported for Minecraft version 1.15

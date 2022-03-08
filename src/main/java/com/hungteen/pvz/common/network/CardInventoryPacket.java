@@ -6,8 +6,8 @@ import com.hungteen.pvz.PVZMod;
 import com.hungteen.pvz.utils.PlayerUtil;
 import com.hungteen.pvz.utils.enums.Resources;
 
-import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.CompoundNBT;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.PacketBuffer;
 import net.minecraftforge.fml.network.NetworkEvent;
 
@@ -15,9 +15,9 @@ public class CardInventoryPacket{
 
 	public static final String FLAG = "empty_slot";
 	private final int pos;
-	private final CompoundNBT data;
+	private final CompoundTag data;
 	
-	public CardInventoryPacket(int pos, CompoundNBT data) {
+	public CardInventoryPacket(int pos, CompoundTag data) {
 		this.pos = pos;
 		this.data = data;
 	}

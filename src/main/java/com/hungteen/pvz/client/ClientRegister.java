@@ -2,7 +2,6 @@ package com.hungteen.pvz.client;
 
 import java.util.Map;
 
-import com.hungteen.pvz.client.model.baked.BowlingGloveBakedModel;
 import com.hungteen.pvz.client.model.baked.ImitaterCardBakedModel;
 import com.hungteen.pvz.client.model.baked.PVZBakedModel;
 import com.hungteen.pvz.client.particle.BlueFlameParticle;
@@ -31,8 +30,8 @@ import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.RenderTypeLookup;
 import net.minecraft.client.renderer.model.IBakedModel;
 import net.minecraft.client.renderer.model.ModelResourceLocation;
-import net.minecraft.item.Item;
-import net.minecraft.util.ResourceLocation;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.item.Item;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.client.event.ModelBakeEvent;
 import net.minecraftforge.client.event.ParticleFactoryRegisterEvent;

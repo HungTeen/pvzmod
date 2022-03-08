@@ -5,10 +5,10 @@ import com.hungteen.pvz.client.gui.search.OptionSearchGui;
 import com.hungteen.pvz.client.gui.search.SearchOption;
 import com.hungteen.pvz.common.container.AbstractOptionContainer;
 import com.mojang.blaze3d.matrix.MatrixStack;
-import net.minecraft.entity.player.PlayerInventory;
+import net.minecraft.world.entity.player.PlayerInventory;
 import net.minecraft.inventory.container.ClickType;
 import net.minecraft.inventory.container.Slot;
-import net.minecraft.util.text.ITextComponent;
+import net.minecraft.network.chat.Component;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 
@@ -19,7 +19,7 @@ public abstract class AbstractOptionScreen<T extends AbstractOptionContainer> ex
 
 	protected final OptionSearchGui searchGui = new OptionSearchGui();
 	
-	public AbstractOptionScreen(T screenContainer, PlayerInventory inv, ITextComponent titleIn) {
+	public AbstractOptionScreen(T screenContainer, PlayerInventory inv, Component titleIn) {
 		super(screenContainer, inv, titleIn);
 	}
 

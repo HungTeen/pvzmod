@@ -3,12 +3,12 @@ package com.hungteen.pvz.common.entity.creature;
 import com.hungteen.pvz.api.enums.PVZGroupType;
 import com.hungteen.pvz.api.interfaces.IHasGroup;
 import com.hungteen.pvz.api.interfaces.IHasOwner;
-import net.minecraft.entity.CreatureEntity;
-import net.minecraft.entity.EntityType;
+import net.minecraft.world.entity.CreatureEntity;
+import net.minecraft.world.entity.EntityType;
 import net.minecraft.network.datasync.DataParameter;
 import net.minecraft.network.datasync.DataSerializers;
 import net.minecraft.network.datasync.EntityDataManager;
-import net.minecraft.world.World;
+import net.minecraft.world.level.Level;
 
 import java.util.Optional;
 import java.util.UUID;
@@ -23,7 +23,7 @@ public class GardenPlantEntity extends CreatureEntity implements IHasOwner, IHas
     private static final DataParameter<Integer> AGE = EntityDataManager.defineId(GardenPlantEntity.class, DataSerializers.INT);
     private static final DataParameter<Integer> STATE = EntityDataManager.defineId(GardenPlantEntity.class, DataSerializers.INT);
 
-    public GardenPlantEntity(EntityType<? extends CreatureEntity> entityType, World world) {
+    public GardenPlantEntity(EntityType<? extends CreatureEntity> entityType, Level world) {
         super(entityType, world);
     }
 

@@ -2,15 +2,15 @@ package com.hungteen.pvz.common.entity.bullet;
 
 import com.hungteen.pvz.common.misc.PVZEntityDamageSource;
 
-import net.minecraft.entity.Entity;
-import net.minecraft.entity.EntitySize;
-import net.minecraft.entity.EntityType;
-import net.minecraft.entity.Pose;
-import net.minecraft.world.World;
+import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.EntitySize;
+import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.Pose;
+import net.minecraft.world.level.Level;
 
 public class BallEntity extends PultBulletEntity {
 
-	public BallEntity(EntityType<?> type, World worldIn) {
+	public BallEntity(EntityType<?> type, Level worldIn) {
 		super(type, worldIn);
 	}
 	

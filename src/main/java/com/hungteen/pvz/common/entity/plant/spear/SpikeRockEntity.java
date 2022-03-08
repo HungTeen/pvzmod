@@ -3,13 +3,13 @@ package com.hungteen.pvz.common.entity.plant.spear;
 import com.hungteen.pvz.api.types.IPlantType;
 import com.hungteen.pvz.common.impl.SkillTypes;
 import com.hungteen.pvz.common.impl.plant.PVZPlants;
-import net.minecraft.entity.CreatureEntity;
-import net.minecraft.entity.EntityType;
-import net.minecraft.world.World;
+import net.minecraft.world.entity.CreatureEntity;
+import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.level.Level;
 
 public class SpikeRockEntity extends SpikeWeedEntity {
 
-    public SpikeRockEntity(EntityType<? extends CreatureEntity> type, World worldIn) {
+    public SpikeRockEntity(EntityType<? extends CreatureEntity> type, Level worldIn) {
 		super(type, worldIn);
 		this.setSpikeNum(this.getSpikesCount());
 	}

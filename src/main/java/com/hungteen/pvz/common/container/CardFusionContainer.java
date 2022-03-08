@@ -6,12 +6,12 @@ import com.hungteen.pvz.common.item.tool.plant.SunStorageSaplingItem;
 import com.hungteen.pvz.common.recipe.FusionRecipe;
 import com.hungteen.pvz.common.recipe.RecipeRegister;
 import com.hungteen.pvz.common.tileentity.CardFusionTileEntity;
-import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.util.Mth;
+import net.minecraft.world.entity.player.Player;
 import net.minecraft.inventory.CraftingInventory;
 import net.minecraft.inventory.container.Slot;
-import net.minecraft.item.ItemStack;
+import net.minecraft.world.item.ItemStack;
 import net.minecraft.util.IWorldPosCallable;
-import net.minecraft.util.math.BlockPos;
 import net.minecraftforge.items.SlotItemHandler;
 
 import java.util.Optional;
@@ -21,9 +21,9 @@ public class CardFusionContainer extends PVZContainer {
 	public final CardFusionTileEntity te;
 	private final CraftingInventory craftSlots = new CraftingInventory(this, 3, 3);
 	private final IWorldPosCallable access;
-	private final PlayerEntity player;
+	private final Player player;
 	
-	public CardFusionContainer(int id, PlayerEntity player, BlockPos pos) {
+	public CardFusionContainer(int id, Player player, Mth pos) {
 		super(ContainerRegister.CARD_FUSION.get(), id);
 		this.te = (CardFusionTileEntity) player.level.getBlockEntity(pos);
 		this.player = player;
@@ -87,7 +87,7 @@ public class CardFusionContainer extends PVZContainer {
 	}
 	
 	@Override
-	public ItemStack quickMoveStack(PlayerEntity playerIn, int index) {
+	public ItemStack quickMoveStack(Player playerIn, int index) {
 		ItemStack itemstack = ItemStack.EMPTY;
 		Slot slot = this.slots.get(index);
 		if (slot != null && slot.hasItem()) {
@@ -117,7 +117,7 @@ public class CardFusionContainer extends PVZContainer {
 	}
 
 	@Override
-	public boolean stillValid(PlayerEntity playerIn) {
+	public boolean stillValid(Player playerIn) {
 		return stillValid(this.access, player, BlockRegister.CARD_FUSION_TABLE.get());
 	}
 }

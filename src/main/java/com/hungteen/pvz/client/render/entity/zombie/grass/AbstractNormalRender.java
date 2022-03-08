@@ -6,7 +6,7 @@ import com.hungteen.pvz.client.render.layer.ZombieBeardLayer;
 import com.hungteen.pvz.common.entity.zombie.grass.NormalZombieEntity;
 
 import net.minecraft.client.renderer.entity.EntityRendererManager;
-import net.minecraft.client.renderer.entity.model.EntityModel;
+import net.minecraft.client.model.EntityModel;
 import net.minecraft.util.math.vector.Vector3d;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;

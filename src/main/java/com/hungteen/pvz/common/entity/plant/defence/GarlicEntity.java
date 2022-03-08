@@ -8,9 +8,9 @@ import com.hungteen.pvz.common.misc.PVZEntityDamageSource;
 import com.hungteen.pvz.common.misc.sound.SoundRegister;
 import com.hungteen.pvz.utils.AlgorithmUtil;
 import com.hungteen.pvz.utils.EntityUtil;
-import net.minecraft.entity.*;
+import net.minecraft.world.entity.*;
 import net.minecraft.util.DamageSource;
-import net.minecraft.world.World;
+import net.minecraft.world.level.Level;
 
 import java.util.Collections;
 import java.util.List;
@@ -20,7 +20,7 @@ public class GarlicEntity extends PlantDefenderEntity {
 	protected final AlgorithmUtil.EntitySorter sorter;
 	private GarlicEntity garlic;
 	
-	public GarlicEntity(EntityType<? extends CreatureEntity> type, World worldIn) {
+	public GarlicEntity(EntityType<? extends CreatureEntity> type, Level worldIn) {
 		super(type, worldIn);
 		this.sorter = new AlgorithmUtil.EntitySorter(this);
 	}

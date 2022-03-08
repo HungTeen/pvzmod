@@ -3,7 +3,7 @@ package com.hungteen.pvz.common.block.special;
 import com.hungteen.pvz.common.block.AbstractFacingBlock;
 import com.hungteen.pvz.common.tileentity.SunFlowerTrophyTileEntity;
 
-import net.minecraft.block.BlockState;
+import net.minecraft.world.level.block.BlockState;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.world.IBlockReader;
 

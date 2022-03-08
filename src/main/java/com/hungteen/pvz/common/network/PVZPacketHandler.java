@@ -6,7 +6,7 @@ import com.hungteen.pvz.common.network.toserver.ClickButtonPacket;
 import com.hungteen.pvz.common.network.toserver.EntityInteractPacket;
 import com.hungteen.pvz.common.network.toserver.PVZMouseScrollPacket;
 import com.hungteen.pvz.common.network.toserver.UpdateMotionPacket;
-import net.minecraft.util.ResourceLocation;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraftforge.fml.network.NetworkRegistry;
 import net.minecraftforge.fml.network.simple.SimpleChannel;
 

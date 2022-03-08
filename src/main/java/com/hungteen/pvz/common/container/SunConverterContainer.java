@@ -3,20 +3,20 @@ package com.hungteen.pvz.common.container;
 import com.hungteen.pvz.common.block.special.SunConverterBlock;
 import com.hungteen.pvz.common.tileentity.SunConverterTileEntity;
 
-import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.util.Mth;
+import net.minecraft.world.entity.player.Player;
 import net.minecraft.inventory.container.Container;
 import net.minecraft.inventory.container.Slot;
-import net.minecraft.item.ItemStack;
-import net.minecraft.util.math.BlockPos;
+import net.minecraft.world.item.ItemStack;
 import net.minecraftforge.items.SlotItemHandler;
 
 public class SunConverterContainer extends Container {
 
 	@SuppressWarnings("unused")
-	private final PlayerEntity player;
+	private final Player player;
 	public final SunConverterTileEntity te;
 	
-	public SunConverterContainer(int id, PlayerEntity player, BlockPos pos) {
+	public SunConverterContainer(int id, Player player, Mth pos) {
 		super(ContainerRegister.SUN_CONVERTER.get(), id);
 		this.player = player;
 		this.te = (SunConverterTileEntity) player.level.getBlockEntity(pos);
@@ -46,7 +46,7 @@ public class SunConverterContainer extends Container {
 	}
 
 	@Override
-    public ItemStack quickMoveStack(PlayerEntity playerIn, int index) {
+    public ItemStack quickMoveStack(Player playerIn, int index) {
 		ItemStack itemstack = ItemStack.EMPTY;
 		Slot slot = this.slots.get(index);
 		if (slot != null && slot.hasItem()) {
@@ -76,7 +76,7 @@ public class SunConverterContainer extends Container {
     }
 	
 	@Override
-	public boolean stillValid(PlayerEntity playerIn) {
+	public boolean stillValid(Player playerIn) {
 		return this.te.isUsableByPlayer(playerIn);
 	}
 

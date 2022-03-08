@@ -5,7 +5,7 @@ import com.google.gson.JsonObject;
 import com.hungteen.pvz.api.interfaces.IChallenge;
 import com.hungteen.pvz.api.raid.IRewardComponent;
 import net.minecraft.advancements.AdvancementRewards;
-import net.minecraft.entity.player.ServerPlayerEntity;
+import net.minecraft.server.level.ServerPlayer;
 
 public class AdvancementRewardComponent implements IRewardComponent {
 
@@ -13,7 +13,7 @@ public class AdvancementRewardComponent implements IRewardComponent {
 	private AdvancementRewards reward = AdvancementRewards.EMPTY;
 	
 	@Override
-	public void reward(ServerPlayerEntity player) {
+	public void reward(ServerPlayer player) {
 		this.reward.grant(player);
 	}
 

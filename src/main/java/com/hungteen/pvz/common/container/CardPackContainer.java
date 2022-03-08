@@ -2,21 +2,21 @@ package com.hungteen.pvz.common.container;
 
 import com.hungteen.pvz.common.item.ItemRegister;
 import com.hungteen.pvz.common.item.tool.plant.CardPackItem;
-import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.world.entity.player.Player;
 import net.minecraft.inventory.Inventory;
 import net.minecraft.inventory.container.Slot;
-import net.minecraft.item.ItemStack;
+import net.minecraft.world.item.ItemStack;
 import net.minecraftforge.items.ItemStackHandler;
 
 public class CardPackContainer extends PVZContainer {
 
 	private Inventory backpack;
 	private ItemStackHandler cardBar;
-	private final PlayerEntity player;
+	private final Player player;
 	private final ItemStack stack;
 	private final int slotNum = 0;
 	
-	public CardPackContainer(int id, PlayerEntity player) {
+	public CardPackContainer(int id, Player player) {
 		super(ContainerRegister.CARD_PACK.get(), id);
 		this.player = player;
 		this.stack = player.getMainHandItem();
@@ -52,7 +52,7 @@ public class CardPackContainer extends PVZContainer {
 	}
 	
 	@Override
-	public ItemStack quickMoveStack(PlayerEntity playerIn, int index) {
+	public ItemStack quickMoveStack(Player playerIn, int index) {
 		ItemStack itemstack = ItemStack.EMPTY;
 		Slot slot = this.slots.get(index);
 		if (slot != null && slot.hasItem()) {
@@ -88,7 +88,7 @@ public class CardPackContainer extends PVZContainer {
 	
 
 	@Override
-	public boolean stillValid(PlayerEntity playerIn) {
+	public boolean stillValid(Player playerIn) {
 		return player.getMainHandItem().getItem().equals(ItemRegister.CARD_PACK.get());
 	}
 

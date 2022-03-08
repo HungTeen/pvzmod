@@ -9,9 +9,9 @@ import com.hungteen.pvz.common.entity.misc.GiftBoxEntity;
 import com.hungteen.pvz.common.world.challenge.ChallengeManager;
 import com.mojang.brigadier.exceptions.CommandSyntaxException;
 import com.mojang.datafixers.util.Pair;
-import net.minecraft.entity.player.ServerPlayerEntity;
-import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.CompoundNBT;
+import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.JsonToNBT;
 import net.minecraft.util.JSONUtils;
 import net.minecraft.util.NonNullList;
@@ -25,7 +25,7 @@ public class ItemRewardComponent implements IRewardComponent {
     private final List<Pair<ItemStack, IAmountComponent>> list = new ArrayList<>();
 
     @Override
-    public void reward(ServerPlayerEntity player) {
+    public void reward(ServerPlayer player) {
     }
 
     @Override
@@ -60,7 +60,7 @@ public class ItemRewardComponent implements IRewardComponent {
 
                     if (obj.has("nbt")) {
                         try {
-                            CompoundNBT compoundnbt = JsonToNBT.parseTag(JSONUtils.convertToString(obj.get("nbt"), "nbt"));
+                            CompoundTag compoundnbt = JsonToNBT.parseTag(JSONUtils.convertToString(obj.get("nbt"), "nbt"));
                             stack.setTag(compoundnbt);
                         } catch (CommandSyntaxException commandsyntaxexception) {
                             throw new JsonSyntaxException("Invalid nbt tag: " + commandsyntaxexception.getMessage());

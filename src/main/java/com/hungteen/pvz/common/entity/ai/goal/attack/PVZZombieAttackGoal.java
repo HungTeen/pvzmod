@@ -2,9 +2,9 @@ package com.hungteen.pvz.common.entity.ai.goal.attack;
 
 import com.hungteen.pvz.common.entity.zombie.PVZZombieEntity;
 import com.hungteen.pvz.utils.EntityUtil;
-import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.ai.attributes.Attributes;
-import net.minecraft.util.Hand;
+import net.minecraft.world.InteractionHand;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.util.math.vector.Vector3d;
 
 public class PVZZombieAttackGoal extends PVZMeleeAttackGoal {
@@ -34,7 +34,7 @@ public class PVZZombieAttackGoal extends PVZMeleeAttackGoal {
 		if (range >= dis) {
 			if(this.attackTick <= 0) {
 			    this.attackTick = this.zombie.getAttackCD();
-			    this.attacker.swing(Hand.MAIN_HAND);
+			    this.attacker.swing(InteractionHand.MAIN_HAND);
 			    this.attacker.doHurtTarget(target);
 			}
 		} else {

@@ -12,10 +12,10 @@ import com.hungteen.pvz.utils.EntityUtil;
 import com.hungteen.pvz.utils.MathUtil;
 import com.hungteen.pvz.utils.enums.PAZAlmanacs;
 import com.mojang.datafixers.util.Pair;
-import net.minecraft.entity.*;
-import net.minecraft.util.SoundEvent;
+import net.minecraft.world.entity.*;
+import net.minecraft.sounds.SoundEvent;
 import net.minecraft.util.math.vector.Vector3d;
-import net.minecraft.world.World;
+import net.minecraft.world.level.Level;
 
 import java.util.Arrays;
 import java.util.List;
@@ -23,7 +23,7 @@ import java.util.Optional;
 
 public class BloverEntity extends PVZPlantEntity {
 
-	public BloverEntity(EntityType<? extends CreatureEntity> type, World worldIn) {
+	public BloverEntity(EntityType<? extends CreatureEntity> type, Level worldIn) {
 		super(type, worldIn);
 	}
 	

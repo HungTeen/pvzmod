@@ -1,15 +1,15 @@
 package com.hungteen.pvz.common.entity.ai.navigator;
 
-import net.minecraft.block.Blocks;
-import net.minecraft.entity.MobEntity;
+import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.entity.MobEntity;
 import net.minecraft.pathfinding.GroundPathNavigator;
 import net.minecraft.pathfinding.PathNodeType;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.world.World;
+import net.minecraft.util.Mth;
+import net.minecraft.world.level.Level;
 
 public class LavaZombiePathNavigator extends GroundPathNavigator {
 
-	public LavaZombiePathNavigator(MobEntity p_i45875_1_, World p_i45875_2_) {
+	public LavaZombiePathNavigator(MobEntity p_i45875_1_, Level p_i45875_2_) {
 		super(p_i45875_1_, p_i45875_2_);
 	}
 
@@ -20,7 +20,7 @@ public class LavaZombiePathNavigator extends GroundPathNavigator {
 	}
 
 	@Override
-	public boolean isStableDestination(BlockPos p_188555_1_) {
+	public boolean isStableDestination(Mth p_188555_1_) {
 		return this.level.getBlockState(p_188555_1_).is(Blocks.LAVA) || super.isStableDestination(p_188555_1_);
 	}
 

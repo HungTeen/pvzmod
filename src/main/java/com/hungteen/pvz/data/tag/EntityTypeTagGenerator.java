@@ -6,8 +6,8 @@ import com.hungteen.pvz.common.entity.PVZEntityClassifications;
 import com.hungteen.pvz.common.misc.tag.PVZEntityTypeTags;
 import net.minecraft.data.DataGenerator;
 import net.minecraft.data.EntityTypeTagsProvider;
-import net.minecraft.entity.EntityClassification;
-import net.minecraft.entity.EntityType;
+import net.minecraft.world.entity.EntityClassification;
+import net.minecraft.world.entity.EntityType;
 import net.minecraftforge.common.data.ExistingFileHelper;
 import net.minecraftforge.registries.ForgeRegistries;
 

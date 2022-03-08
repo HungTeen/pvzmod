@@ -9,22 +9,22 @@ import com.hungteen.pvz.common.misc.sound.SoundRegister;
 import com.hungteen.pvz.utils.EntityUtil;
 
 import net.minecraft.command.arguments.EntityAnchorArgument.Type;
-import net.minecraft.entity.Entity;
-import net.minecraft.entity.EntitySize;
-import net.minecraft.entity.EntityType;
-import net.minecraft.entity.Pose;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.CompoundNBT;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.world.InteractionHand;
+import net.minecraft.world.InteractionResult;
+import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.EntitySize;
+import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.Pose;
+import net.minecraft.util.Mth;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.ItemStack;
 import net.minecraft.network.datasync.DataParameter;
 import net.minecraft.network.datasync.DataSerializers;
 import net.minecraft.network.datasync.EntityDataManager;
-import net.minecraft.util.ActionResultType;
-import net.minecraft.util.Hand;
-import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.vector.Vector3d;
-import net.minecraft.world.World;
+import net.minecraft.world.level.Level;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 
@@ -32,7 +32,7 @@ public class LawnMowerEntity extends AbstractOwnerEntity {
 
 	private static final DataParameter<Boolean> START_RUN = EntityDataManager.defineId(LawnMowerEntity.class, DataSerializers.BOOLEAN);
 	
-	public LawnMowerEntity(EntityType<?> entityTypeIn, World worldIn) {
+	public LawnMowerEntity(EntityType<?> entityTypeIn, Level worldIn) {
 		super(entityTypeIn, worldIn);
 		this.setDeltaMovement(Vector3d.ZERO);
 	}
@@ -73,7 +73,7 @@ public class LawnMowerEntity extends AbstractOwnerEntity {
 			}
 		}
 		if(this.tickCount < 5) {
-			BlockPos pos = this.blockPosition();
+			Mth pos = this.blockPosition();
 			this.setPos(pos.getX() + 0.5D, this.getY(), pos.getZ() + 0.5D);
 		}
 		this.tickMove();
@@ -86,15 +86,15 @@ public class LawnMowerEntity extends AbstractOwnerEntity {
 	}
 	
 	@Override
-	public ActionResultType interactAt(PlayerEntity player, Vector3d vec3d, Hand hand) {
-		if(! this.isStartRun() && hand == Hand.MAIN_HAND && player.getMainHandItem().isEmpty()) {
+	public InteractionResult interactAt(Player player, Vector3d vec3d, InteractionHand hand) {
+		if(! this.isStartRun() && hand == InteractionHand.MAIN_HAND && player.getMainHandItem().isEmpty()) {
 			if(! level.isClientSide) {
 				player.addItem(new ItemStack(ItemRegister.LAWN_MOWER.get()));
 			    this.remove();
 			}
-			return ActionResultType.SUCCESS;
+			return InteractionResult.SUCCESS;
 		}
-		return ActionResultType.FAIL;
+		return InteractionResult.FAIL;
 	}
 	
 	@Override
@@ -108,7 +108,7 @@ public class LawnMowerEntity extends AbstractOwnerEntity {
 		EntityUtil.playSound(this, SoundRegister.LAWN_MOWER.get());
 	}
 	
-	public void setPlacer(PlayerEntity player) {
+	public void setPlacer(Player player) {
 		this.setOwner(player);
 		this.yRot = player.getDirection().toYRot();
 	}
@@ -136,7 +136,7 @@ public class LawnMowerEntity extends AbstractOwnerEntity {
 	}
 	
 	@Override
-	public void readAdditionalSaveData(CompoundNBT compound) {
+	public void readAdditionalSaveData(CompoundTag compound) {
 		super.readAdditionalSaveData(compound);
 		if(compound.contains("start_running")) {
 			this.setStartRun(compound.getBoolean("start_running"));
@@ -144,7 +144,7 @@ public class LawnMowerEntity extends AbstractOwnerEntity {
 	}
 	
 	@Override
-	public void addAdditionalSaveData(CompoundNBT compound) {
+	public void addAdditionalSaveData(CompoundTag compound) {
 		super.addAdditionalSaveData(compound);
 		compound.putBoolean("start_running", this.isStartRun());
 	}

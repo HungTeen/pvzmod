@@ -8,11 +8,11 @@ import com.hungteen.pvz.api.types.ISkillType;
 import com.hungteen.pvz.utils.AlgorithmUtil;
 import com.hungteen.pvz.utils.StringUtil;
 import com.mojang.datafixers.util.Pair;
-import net.minecraft.entity.CreatureEntity;
-import net.minecraft.entity.EntityType;
-import net.minecraft.item.Item;
-import net.minecraft.util.ResourceLocation;
-import net.minecraft.util.text.TranslationTextComponent;
+import net.minecraft.network.chat.TranslatableComponent;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.entity.CreatureEntity;
+import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.item.Item;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 
@@ -50,8 +50,8 @@ public abstract class PAZType implements IPAZType {
     }
 
     @Override
-    public TranslationTextComponent getText() {
-        return new TranslationTextComponent("entity." + this.getModID() + "." + this.toString());
+    public TranslatableComponent getText() {
+        return new TranslatableComponent("entity." + this.getModID() + "." + this.toString());
     }
 
     @Override

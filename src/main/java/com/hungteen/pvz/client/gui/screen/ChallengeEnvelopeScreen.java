@@ -5,8 +5,8 @@ import com.hungteen.pvz.utils.StringUtil;
 import com.mojang.blaze3d.matrix.MatrixStack;
 import com.mojang.datafixers.util.Pair;
 import net.minecraft.client.gui.screen.Screen;
-import net.minecraft.util.ResourceLocation;
-import net.minecraft.util.text.IFormattableTextComponent;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.network.chat.MutableComponent;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 
@@ -33,7 +33,7 @@ public class ChallengeEnvelopeScreen extends Screen{
 
 		int midX = this.width / 2;
 		int midY = cornerY + 30;
-		for (Pair<IFormattableTextComponent, Integer> message : challengeComponent.getMessages()) {
+		for (Pair<MutableComponent, Integer> message : challengeComponent.getMessages()) {
 			StringUtil.drawCenteredScaledString(stack, this.font, message.getFirst().getString(), midX, midY, message.getSecond(), 1.2f);
 			midY += 20;
 		}

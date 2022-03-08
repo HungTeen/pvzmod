@@ -10,21 +10,21 @@ import com.hungteen.pvz.common.misc.PVZEntityDamageSource;
 import com.hungteen.pvz.common.potion.EffectRegister;
 import com.hungteen.pvz.utils.EffectUtil;
 
-import net.minecraft.entity.Entity;
-import net.minecraft.entity.EntitySize;
-import net.minecraft.entity.EntityType;
-import net.minecraft.entity.IRendersAsItem;
-import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.Pose;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.CompoundNBT;
+import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.EntitySize;
+import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.IRendersAsItem;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.Pose;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.datasync.DataParameter;
 import net.minecraft.network.datasync.DataSerializers;
 import net.minecraft.network.datasync.EntityDataManager;
 import net.minecraft.util.math.EntityRayTraceResult;
 import net.minecraft.util.math.RayTraceResult;
-import net.minecraft.world.World;
+import net.minecraft.world.level.Level;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 
@@ -36,11 +36,11 @@ public class PeaEntity extends AbstractShootBulletEntity implements IRendersAsIt
 	public TorchWoodEntity torchWood = null;
 	private int power = 0;
 
-	public PeaEntity(EntityType<?> type, World worldIn) {
+	public PeaEntity(EntityType<?> type, Level worldIn) {
 		super(type, worldIn);
 	}
 
-	public PeaEntity(World worldIn, LivingEntity shooter, Type peaType, State peaState) {
+	public PeaEntity(Level worldIn, LivingEntity shooter, Type peaType, State peaState) {
 		super(EntityRegister.PEA.get(), worldIn, shooter);
 		this.setPeaState(peaState);
 		this.setPeaType(peaType);
@@ -101,7 +101,7 @@ public class PeaEntity extends AbstractShootBulletEntity implements IRendersAsIt
 			if (owner instanceof IIceEffect) {
 				((IIceEffect) owner).getColdEffect().ifPresent(e -> source.addEffect(e));
 				((IIceEffect) owner).getFrozenEffect().ifPresent(e -> source.addEffect(e));
-			} else if(owner instanceof PlayerEntity) {
+			} else if(owner instanceof Player) {
 				source.addEffect(EffectUtil.effect(EffectRegister.COLD_EFFECT.get(), 100, 5));
 			}
 			target.hurt(source, damage);
@@ -149,14 +149,14 @@ public class PeaEntity extends AbstractShootBulletEntity implements IRendersAsIt
 	}
 
 	@Override
-	public void addAdditionalSaveData(CompoundNBT compound) {
+	public void addAdditionalSaveData(CompoundTag compound) {
 		super.addAdditionalSaveData(compound);
 		compound.putInt("peaState", this.getPeaState().ordinal());
 		compound.putInt("peaType", this.getPeaType().ordinal());
 	}
 
 	@Override
-	public void readAdditionalSaveData(CompoundNBT compound) {
+	public void readAdditionalSaveData(CompoundTag compound) {
 		super.readAdditionalSaveData(compound);
 		if(compound.contains("peaState")) {
 			this.setPeaState(State.values()[compound.getInt("peaState")]);

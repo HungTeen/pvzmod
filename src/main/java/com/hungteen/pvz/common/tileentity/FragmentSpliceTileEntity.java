@@ -2,19 +2,19 @@ package com.hungteen.pvz.common.tileentity;
 
 import com.hungteen.pvz.common.container.FragmentSpliceContainer;
 import com.hungteen.pvz.common.item.tool.plant.SunStorageSaplingItem;
-import net.minecraft.block.BlockState;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.entity.player.PlayerInventory;
+import net.minecraft.world.level.block.BlockState;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.network.chat.Component;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.entity.player.PlayerInventory;
 import net.minecraft.inventory.container.Container;
 import net.minecraft.inventory.container.INamedContainerProvider;
-import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.CompoundNBT;
+import net.minecraft.world.item.ItemStack;
 import net.minecraft.tileentity.ITickableTileEntity;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.IIntArray;
 import net.minecraft.util.IntArray;
-import net.minecraft.util.text.ITextComponent;
-import net.minecraft.util.text.TranslationTextComponent;
+import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraftforge.items.ItemStackHandler;
 
 public class FragmentSpliceTileEntity extends TileEntity implements ITickableTileEntity, INamedContainerProvider{
@@ -54,27 +54,27 @@ public class FragmentSpliceTileEntity extends TileEntity implements ITickableTil
 	}
     
     @Override
-    public void load(BlockState state, CompoundNBT compound) {
+    public void load(BlockState state, CompoundTag compound) {
     	super.load(state, compound);
     	this.handler.deserializeNBT(compound.getCompound("item_stack_list"));
     	this.sunAmount = compound.getInt("sun_amount");
     }
     
     @Override
-    public CompoundNBT save(CompoundNBT compound) {
+    public CompoundTag save(CompoundTag compound) {
     	compound.put("item_stack_list", this.handler.serializeNBT());
     	compound.putInt("sun_amount", this.sunAmount);
     	return super.save(compound);
     }
     
 	@Override
-	public Container createMenu(int id, PlayerInventory inv, PlayerEntity player) {
+	public Container createMenu(int id, PlayerInventory inv, Player player) {
 		return new FragmentSpliceContainer(id, player, this.worldPosition);
 	}
 
 	@Override
-	public ITextComponent getDisplayName() {
-		return new TranslationTextComponent("gui.pvz.fragment_splice");
+	public Component getDisplayName() {
+		return new TranslatableComponent("gui.pvz.fragment_splice");
 	}
 
 }

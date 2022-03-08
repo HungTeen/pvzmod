@@ -7,9 +7,9 @@ import com.hungteen.pvz.common.capability.player.PlayerDataCapability;
 import com.hungteen.pvz.common.capability.player.PlayerDataProvider;
 import com.hungteen.pvz.common.capability.player.PlayerDataStorage;
 
-import net.minecraft.entity.Entity;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.util.ResourceLocation;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.player.Player;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.capabilities.CapabilityInject;
@@ -30,8 +30,8 @@ public class CapabilityHandler {
 	@SubscribeEvent
     public static void attachCapability(AttachCapabilitiesEvent<Entity> event){
 		Entity entity = event.getObject();
-        if (entity instanceof PlayerEntity){
-        	event.addCapability(new ResourceLocation(PVZMod.MOD_ID, "player_data"), new PlayerDataProvider((PlayerEntity) entity));
+        if (entity instanceof Player){
+        	event.addCapability(new ResourceLocation(PVZMod.MOD_ID, "player_data"), new PlayerDataProvider((Player) entity));
         }
     }
 }

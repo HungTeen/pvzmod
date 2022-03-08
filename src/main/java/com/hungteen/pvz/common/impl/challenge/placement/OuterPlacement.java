@@ -4,8 +4,8 @@ import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.hungteen.pvz.api.raid.IPlacementComponent;
 import net.minecraft.util.JSONUtils;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.world.World;
+import net.minecraft.util.Mth;
+import net.minecraft.world.level.Level;
 import net.minecraft.world.gen.Heightmap;
 
 public class OuterPlacement implements IPlacementComponent {
@@ -16,14 +16,14 @@ public class OuterPlacement implements IPlacementComponent {
 	private int max;
 	
 	@Override
-	public BlockPos getPlacePosition(World world, BlockPos origin) {
+	public Mth getPlacePosition(Level world, Mth origin) {
 		this.max = Math.max(this.max, this.min);//prevent wrong json by others.
 		final double radius = world.getRandom().nextDouble() * (this.max - this.min) + this.min;
 		final double delta = world.getRandom().nextDouble() * 2 * 3.14159;
 		final int dx = (int) (radius * Math.sin(delta));
 		final int dz = (int) (radius * Math.cos(delta));
 		final int height = this.onSurface ? world.getHeight(Heightmap.Type.WORLD_SURFACE, origin.getX() + dx, origin.getZ() + dz) : origin.getY();
-		return new BlockPos(origin.getX() + dx, height, origin.getZ() + dz);
+		return new Mth(origin.getX() + dx, height, origin.getZ() + dz);
 	}
 	
 	@Override

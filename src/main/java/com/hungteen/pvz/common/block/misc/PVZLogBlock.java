@@ -1,9 +1,9 @@
 package com.hungteen.pvz.common.block.misc;
 
-import net.minecraft.block.BlockState;
-import net.minecraft.block.RotatedPillarBlock;
+import net.minecraft.world.level.block.BlockState;
+import net.minecraft.world.level.block.RotatedPillarBlock;
 import net.minecraft.util.Direction;
-import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.Mth;
 import net.minecraft.world.IBlockReader;
 
 /**
@@ -23,12 +23,12 @@ public class PVZLogBlock extends RotatedPillarBlock {
     }
 
     @Override
-    public int getFireSpreadSpeed(BlockState state, IBlockReader world, BlockPos pos, Direction face) {
+    public int getFireSpreadSpeed(BlockState state, IBlockReader world, Mth pos, Direction face) {
         return this.fireSpeed;
     }
 
     @Override
-    public int getFlammability(BlockState state, IBlockReader world, BlockPos pos, Direction face) {
+    public int getFlammability(BlockState state, IBlockReader world, Mth pos, Direction face) {
         return this.burnSpeed;
     }
 }

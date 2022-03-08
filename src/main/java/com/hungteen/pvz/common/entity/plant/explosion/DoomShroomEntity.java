@@ -14,26 +14,26 @@ import com.hungteen.pvz.utils.EntityUtil;
 import com.hungteen.pvz.utils.WorldUtil;
 import com.mojang.datafixers.util.Pair;
 import it.unimi.dsi.fastutil.objects.ObjectArrayList;
-import net.minecraft.block.Block;
-import net.minecraft.block.BlockState;
-import net.minecraft.block.Blocks;
-import net.minecraft.entity.CreatureEntity;
-import net.minecraft.entity.EntitySize;
-import net.minecraft.entity.EntityType;
-import net.minecraft.entity.Pose;
-import net.minecraft.entity.boss.dragon.EnderDragonEntity;
-import net.minecraft.entity.item.ItemEntity;
-import net.minecraft.item.ItemStack;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.BlockState;
+import net.minecraft.world.level.block.Blocks;
+import net.minecraft.server.level.ServerLevel;
+import net.minecraft.world.entity.CreatureEntity;
+import net.minecraft.world.entity.EntitySize;
+import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.Pose;
+import net.minecraft.world.entity.boss.dragon.EnderDragonEntity;
+import net.minecraft.world.entity.item.ItemEntity;
+import net.minecraft.world.item.ItemStack;
 import net.minecraft.loot.LootContext;
 import net.minecraft.loot.LootParameters;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.EntityDamageSource;
+import net.minecraft.util.Mth;
 import net.minecraft.util.math.AxisAlignedBB;
-import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.vector.Vector3d;
-import net.minecraft.world.World;
-import net.minecraft.world.server.ServerWorld;
+import net.minecraft.world.level.Level;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -42,7 +42,7 @@ public class DoomShroomEntity extends PlantBomberEntity {
 
 	public static final float MAX_EXPLOSION_LEVEL = 500;
 	
-	public DoomShroomEntity(EntityType<? extends CreatureEntity> type, World worldIn) {
+	public DoomShroomEntity(EntityType<? extends CreatureEntity> type, Level worldIn) {
 		super(type, worldIn);
 	}
 
@@ -85,8 +85,8 @@ public class DoomShroomEntity extends PlantBomberEntity {
 	
 	@SuppressWarnings("deprecation")
 	protected void destroyBlocks() {
-		ObjectArrayList<Pair<ItemStack, BlockPos>> list = new ObjectArrayList<>();
-		List<BlockPos> posList = new ArrayList<>();
+		ObjectArrayList<Pair<ItemStack, Mth>> list = new ObjectArrayList<>();
+		List<Mth> posList = new ArrayList<>();
 		//lower block positions.
 		final int len = 2;
 		for(int i = - len;i <= len; ++ i) {
@@ -113,11 +113,11 @@ public class DoomShroomEntity extends PlantBomberEntity {
 				return ;
 			}
 			TileEntity tileentity = state.hasTileEntity() ? this.level.getBlockEntity(pos) : null;
-			LootContext.Builder loot = (new LootContext.Builder((ServerWorld)this.level)).withRandom(this.level.random).withParameter(LootParameters.ORIGIN, Vector3d.atCenterOf(pos)).withParameter(LootParameters.TOOL, ItemStack.EMPTY).withOptionalParameter(LootParameters.BLOCK_ENTITY, tileentity).withOptionalParameter(LootParameters.THIS_ENTITY, this);
+			LootContext.Builder loot = (new LootContext.Builder((ServerLevel)this.level)).withRandom(this.level.random).withParameter(LootParameters.ORIGIN, Vector3d.atCenterOf(pos)).withParameter(LootParameters.TOOL, ItemStack.EMPTY).withOptionalParameter(LootParameters.BLOCK_ENTITY, tileentity).withOptionalParameter(LootParameters.THIS_ENTITY, this);
 			loot.withParameter(LootParameters.EXPLOSION_RADIUS, (float)len);
 			state.getDrops(loot).forEach((stack)->{
 				for(int l = 0; l < list.size(); ++l) {
-                    Pair<ItemStack, BlockPos> pair = list.get(l);
+                    Pair<ItemStack, Mth> pair = list.get(l);
                     ItemStack itemstack = pair.getFirst();
                     if (ItemEntity.areMergable(itemstack, stack)) {
                         ItemStack itemstack1 = ItemEntity.merge(itemstack, stack, 16);
@@ -131,7 +131,7 @@ public class DoomShroomEntity extends PlantBomberEntity {
 			});
 			level.setBlock(pos, Blocks.AIR.defaultBlockState(), 3);
 		});
-		for(Pair<ItemStack, BlockPos> pair : list) {
+		for(Pair<ItemStack, Mth> pair : list) {
             Block.popResource(this.level, pair.getSecond(), pair.getFirst());
         }
 	}

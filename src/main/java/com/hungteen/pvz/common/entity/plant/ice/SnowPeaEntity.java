@@ -11,11 +11,11 @@ import com.hungteen.pvz.common.potion.EffectRegister;
 
 import com.hungteen.pvz.utils.enums.PAZAlmanacs;
 import com.mojang.datafixers.util.Pair;
-import net.minecraft.entity.CreatureEntity;
-import net.minecraft.entity.EntityType;
-import net.minecraft.potion.EffectInstance;
-import net.minecraft.util.SoundEvent;
-import net.minecraft.world.World;
+import net.minecraft.sounds.SoundEvent;
+import net.minecraft.world.entity.CreatureEntity;
+import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.effect.MobEffectInstance;
+import net.minecraft.world.level.Level;
 
 import java.util.Arrays;
 import java.util.List;
@@ -23,17 +23,17 @@ import java.util.Optional;
 
 public class SnowPeaEntity extends PeaShooterEntity implements IIceEffect{
 
-	public SnowPeaEntity(EntityType<? extends CreatureEntity> type, World worldIn) {
+	public SnowPeaEntity(EntityType<? extends CreatureEntity> type, Level worldIn) {
 		super(type, worldIn);
 	}
 
 	@Override
-	public Optional<EffectInstance> getColdEffect() {
-		return Optional.ofNullable(new EffectInstance(EffectRegister.COLD_EFFECT.get(), this.getColdTick(), this.getColdLvl(), false, false));
+	public Optional<MobEffectInstance> getColdEffect() {
+		return Optional.ofNullable(new MobEffectInstance(EffectRegister.COLD_EFFECT.get(), this.getColdTick(), this.getColdLvl(), false, false));
 	}
 	
 	@Override
-	public Optional<EffectInstance> getFrozenEffect() {
+	public Optional<MobEffectInstance> getFrozenEffect() {
 		return Optional.empty();
 	}
 

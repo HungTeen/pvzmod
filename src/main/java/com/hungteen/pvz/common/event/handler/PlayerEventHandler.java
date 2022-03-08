@@ -25,14 +25,14 @@ import com.hungteen.pvz.utils.PlayerUtil;
 import com.hungteen.pvz.utils.StringUtil;
 import com.hungteen.pvz.utils.enums.Resources;
 import net.minecraft.enchantment.EnchantmentHelper;
-import net.minecraft.entity.Entity;
-import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.item.ItemStack;
-import net.minecraft.item.ShovelItem;
-import net.minecraft.potion.EffectInstance;
+import net.minecraft.world.InteractionHand;
+import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.ShovelItem;
+import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.util.DamageSource;
-import net.minecraft.util.Hand;
 import net.minecraft.util.math.MathHelper;
 import net.minecraftforge.event.entity.living.LivingDeathEvent;
 import net.minecraftforge.event.entity.player.PlayerInteractEvent;
@@ -43,7 +43,7 @@ public class PlayerEventHandler {
      * run when player right click plantEntity with shovel.
      * {@link PVZPlayerEvents#onPlayerInteract(PlayerInteractEvent.EntityInteractSpecific)}
      */
-    public static void quickRemoveByPlayer(PlayerEntity player, Entity entity, ItemStack stack) {
+    public static void quickRemoveByPlayer(Player player, Entity entity, ItemStack stack) {
         if(! PlayerUtil.isPlayerSurvival(player) || ((entity instanceof AbstractPAZEntity) && player.getUUID().equals(((AbstractPAZEntity) entity).getOwnerUUID().get()))){
             boolean removed = false;
             if(entity instanceof PVZPlantEntity && stack.getItem() instanceof ShovelItem) {
@@ -63,7 +63,7 @@ public class PlayerEventHandler {
             }
             if(removed && PlayerUtil.isPlayerSurvival(player)){
                 stack.hurtAndBreak(3, player, (p) -> {
-                    p.broadcastBreakEvent(Hand.MAIN_HAND);
+                    p.broadcastBreakEvent(InteractionHand.MAIN_HAND);
                 });
             }
         }
@@ -72,7 +72,7 @@ public class PlayerEventHandler {
     /**
      * {@link PVZPlayerEvents#onPlayerInteract(PlayerInteractEvent.EntityInteractSpecific)}
      */
-    public static void makeSuperMode(PlayerEntity player, Entity entity, ItemStack heldStack) {
+    public static void makeSuperMode(Player player, Entity entity, ItemStack heldStack) {
         if (entity instanceof PVZPlantEntity && EntityUtil.isEntityValid(entity)) {//target must still alive.
             //origin tools or item enchanted with [Energy Transfer] can make this.
             if (heldStack.getItem().equals(ItemRegister.ORIGIN_SWORD.get()) || EnchantmentHelper.getItemEnchantmentLevel(EnchantmentRegister.ENERGY_TRANSFER.get(), heldStack) > 0) {
@@ -84,7 +84,7 @@ public class PlayerEventHandler {
                     ((PVZPlantEntity) entity).startSuperMode(true);
                     //player gain plant food effect.
                     final int treeLevel = PlayerUtil.getResource(player, Resources.TREE_LVL);
-                    player.addEffect(new EffectInstance(EffectRegister.ENERGETIC_EFFECT.get(), 100 + (treeLevel + 1) / 2, 0));
+                    player.addEffect(new MobEffectInstance(EffectRegister.ENERGETIC_EFFECT.get(), 100 + (treeLevel + 1) / 2, 0));
                 }
             }
         }
@@ -94,7 +94,7 @@ public class PlayerEventHandler {
      * server side only.
      * {@link PVZLivingEvents#onLivingDeath(LivingDeathEvent)}
      */
-    public static void onPlayerKillEntity(PlayerEntity player, DamageSource source, LivingEntity living) {
+    public static void onPlayerKillEntity(Player player, DamageSource source, LivingEntity living) {
         if (living instanceof AbstractPAZEntity) {
             if (EntityUtil.isEnemy(player, living)) {
                 PlayerUtil.addResource(player, Resources.TREE_XP, ((AbstractPAZEntity) living).getPAZType().getXpPoint());
@@ -111,7 +111,7 @@ public class PlayerEventHandler {
      * send packet from server to client to sync player's data.
      * {@link PVZPlayerEvents#onPlayerLogin(net.minecraftforge.event.entity.player.PlayerEvent.PlayerLoggedInEvent)}
      */
-    public static void onPlayerLogin(PlayerEntity player) {
+    public static void onPlayerLogin(Player player) {
         PlayerUtil.getOptManager(player).ifPresent(l -> {
             l.init();
 
@@ -140,7 +140,7 @@ public class PlayerEventHandler {
      * save card cd.
      * {@link PVZPlayerEvents#onPlayerLogout(net.minecraftforge.event.entity.player.PlayerEvent.PlayerLoggedOutEvent)}
      */
-    public static void onPlayerLogout(PlayerEntity player) {
+    public static void onPlayerLogout(Player player) {
         //save all summon card cool down.
         PlayerUtil.getOptManager(player).ifPresent(l -> {
             PVZAPI.get().getPAZs().forEach(p -> {
@@ -154,7 +154,7 @@ public class PlayerEventHandler {
     /**
      * {@link PVZLivingEvents#onLivingDeath(LivingDeathEvent)}
      */
-    public static void handlePlayerDeath(LivingDeathEvent ev, PlayerEntity player) {
+    public static void handlePlayerDeath(LivingDeathEvent ev, Player player) {
         if (player != null && !player.level.isClientSide && PlayerUtil.isValidPlayer(player)) {
             /* spawn sun around*/
             spawnSunAroundPlayer(player);
@@ -164,7 +164,7 @@ public class PlayerEventHandler {
     /**
      * {@link PVZPlayerEvents#onPlayerClone(net.minecraftforge.event.entity.player.PlayerEvent.Clone)}
      */
-    public static void clonePlayerData(PlayerEntity oldPlayer, PlayerEntity newPlayer, boolean died) {
+    public static void clonePlayerData(Player oldPlayer, Player newPlayer, boolean died) {
         oldPlayer.getCapability(CapabilityHandler.PLAYER_DATA_CAPABILITY).ifPresent(l -> {
         	newPlayer.getCapability(CapabilityHandler.PLAYER_DATA_CAPABILITY).ifPresent(r -> {
         		r.getPlayerData().cloneFromExistingPlayerData(l.getPlayerData(), died);
@@ -177,9 +177,9 @@ public class PlayerEventHandler {
     }
 
     /**
-     * {@link #handlePlayerDeath(LivingDeathEvent, PlayerEntity)}
+     * {@link #handlePlayerDeath(LivingDeathEvent, Player)}
      */
-    private static void spawnSunAroundPlayer(PlayerEntity player) {
+    private static void spawnSunAroundPlayer(Player player) {
         final int amount = PlayerUtil.getResource(player, Resources.SUN_NUM);
         final int spawn = amount > 50 ? MathHelper.clamp((amount - 50) / 10, 25, 250) : 0;
         if (amount > 15) {
@@ -190,7 +190,7 @@ public class PlayerEventHandler {
     /**
      * when tree level is enough, unlock some plants & zombies.
      */
-    public static void unLockPAZs(PlayerEntity player) {
+    public static void unLockPAZs(Player player) {
         final int level = PlayerUtil.getResource(player, Resources.TREE_LVL);
         PVZAPI.get().getPAZs().forEach(type -> {
             if (type.getRequiredLevel() <= level) {

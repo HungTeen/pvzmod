@@ -1,16 +1,16 @@
 package com.hungteen.pvz.common.block.plants;
 
-import net.minecraft.block.*;
-import net.minecraft.block.trees.Tree;
+import net.minecraft.world.level.block.*;
+import net.minecraft.world.level.block.trees.Tree;
 import net.minecraft.state.IntegerProperty;
 import net.minecraft.state.StateContainer;
 import net.minecraft.state.properties.BlockStateProperties;
-import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.Mth;
 import net.minecraft.util.math.shapes.ISelectionContext;
 import net.minecraft.util.math.shapes.VoxelShape;
 import net.minecraft.world.IBlockReader;
-import net.minecraft.world.World;
-import net.minecraft.world.server.ServerWorld;
+import net.minecraft.world.level.Level;
+import net.minecraft.server.level.ServerLevel;
 
 import java.util.Random;
 import java.util.function.Supplier;
@@ -27,11 +27,11 @@ public class PVZSaplingBlock extends BushBlock implements IGrowable {
 		this.treeGrower = grower;
 	}
 
-	public VoxelShape getShape(BlockState state, IBlockReader worldIn, BlockPos pos, ISelectionContext context) {
+	public VoxelShape getShape(BlockState state, IBlockReader worldIn, Mth pos, ISelectionContext context) {
 		return SHAPE;
 	}
 
-	public void randomTick(BlockState state, ServerWorld worldIn, BlockPos pos, Random rand) {
+	public void randomTick(BlockState state, ServerLevel worldIn, Mth pos, Random rand) {
 		if (!worldIn.isAreaLoaded(pos, 1)) {
 			return; // Forge: prevent loading unloaded chunks when checking neighbor's light
 		}
@@ -40,7 +40,7 @@ public class PVZSaplingBlock extends BushBlock implements IGrowable {
 		}
 	}
 
-	public void genTree(ServerWorld p_226942_1_, BlockPos p_226942_2_, BlockState p_226942_3_, Random p_226942_4_) {
+	public void genTree(ServerLevel p_226942_1_, Mth p_226942_2_, BlockState p_226942_3_, Random p_226942_4_) {
 		if (p_226942_3_.getValue(STAGE) == 0) {
 			p_226942_1_.setBlock(p_226942_2_, p_226942_3_.cycle(STAGE), 4);
 		} else {
@@ -52,15 +52,15 @@ public class PVZSaplingBlock extends BushBlock implements IGrowable {
 	/**
 	 * Whether this IGrowable can grow
 	 */
-	public boolean isValidBonemealTarget(IBlockReader worldIn, BlockPos pos, BlockState state, boolean isClient) {
+	public boolean isValidBonemealTarget(IBlockReader worldIn, Mth pos, BlockState state, boolean isClient) {
 		return true;
 	}
 
-	public boolean isBonemealSuccess(World worldIn, Random rand, BlockPos pos, BlockState state) {
+	public boolean isBonemealSuccess(Level worldIn, Random rand, Mth pos, BlockState state) {
 		return (double) worldIn.random.nextFloat() < 0.45D;
 	}
 
-	public void performBonemeal(ServerWorld worldIn, Random rand, BlockPos pos, BlockState state) {
+	public void performBonemeal(ServerLevel worldIn, Random rand, Mth pos, BlockState state) {
 		this.genTree(worldIn, pos, state, rand);
 	}
 

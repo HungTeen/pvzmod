@@ -8,23 +8,23 @@ import com.hungteen.pvz.common.impl.zombie.ZombieType;
 import com.hungteen.pvz.utils.EntityUtil;
 import com.hungteen.pvz.utils.MathUtil;
 import com.hungteen.pvz.utils.ZombieUtil;
-import net.minecraft.block.Blocks;
-import net.minecraft.entity.CreatureEntity;
-import net.minecraft.entity.EntitySize;
-import net.minecraft.entity.EntityType;
-import net.minecraft.entity.Pose;
-import net.minecraft.nbt.CompoundNBT;
+import net.minecraft.world.level.block.Blocks;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.world.entity.CreatureEntity;
+import net.minecraft.world.entity.EntitySize;
+import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.Pose;
 import net.minecraft.network.datasync.DataParameter;
 import net.minecraft.network.datasync.DataSerializers;
 import net.minecraft.network.datasync.EntityDataManager;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.world.World;
+import net.minecraft.util.Mth;
+import net.minecraft.world.level.Level;
 
 public class Edgar090505Entity extends EdgarRobotEntity {
 
-    private static final DataParameter<BlockPos> ORIGIN_POS = EntityDataManager.defineId(Edgar090505Entity.class, DataSerializers.BLOCK_POS);
+    private static final DataParameter<Mth> ORIGIN_POS = EntityDataManager.defineId(Edgar090505Entity.class, DataSerializers.BLOCK_POS);
 
-    public Edgar090505Entity(EntityType<? extends CreatureEntity> type, World worldIn) {
+    public Edgar090505Entity(EntityType<? extends CreatureEntity> type, Level worldIn) {
         super(type, worldIn);
         this.refreshCountCD = 10;
         this.maxZombieSurround = 60;
@@ -36,7 +36,7 @@ public class Edgar090505Entity extends EdgarRobotEntity {
     @Override
     protected void defineSynchedData() {
         super.defineSynchedData();
-        this.entityData.define(ORIGIN_POS, BlockPos.ZERO);
+        this.entityData.define(ORIGIN_POS, Mth.ZERO);
     }
 
     @Override
@@ -49,14 +49,14 @@ public class Edgar090505Entity extends EdgarRobotEntity {
     public void zombieTick() {
         super.zombieTick();
         if (!level.isClientSide) {
-            if (this.getOriginPos() == BlockPos.ZERO) {
+            if (this.getOriginPos() == Mth.ZERO) {
                 this.setOriginPos(this.blockPosition());
             } else {
                 if (MathUtil.getPosDisToVec(getOriginPos(), position()) >= 10) {
                     final int range = 4;
                     for (int i = -range; i <= range; ++i) {
                         for (int j = -range; j <= range; ++j) {
-                            final BlockPos tmp = getOriginPos().offset(i, -1, j);
+                            final Mth tmp = getOriginPos().offset(i, -1, j);
                             if (level.getBlockState(tmp).isAir()) {
                                 level.setBlockAndUpdate(tmp, Blocks.GRASS_BLOCK.defaultBlockState());
                             }
@@ -118,29 +118,29 @@ public class Edgar090505Entity extends EdgarRobotEntity {
     }
 
     @Override
-    public void readAdditionalSaveData(CompoundNBT compound) {
+    public void readAdditionalSaveData(CompoundTag compound) {
         super.readAdditionalSaveData(compound);
         if (compound.contains("origin_pos")) {
-            CompoundNBT nbt = compound.getCompound("origin_pos");
-            this.setOriginPos(new BlockPos(nbt.getInt("origin_pos_x"), nbt.getInt("origin_pos_y"), nbt.getInt("origin_pos_z")));
+            CompoundTag nbt = compound.getCompound("origin_pos");
+            this.setOriginPos(new Mth(nbt.getInt("origin_pos_x"), nbt.getInt("origin_pos_y"), nbt.getInt("origin_pos_z")));
         }
     }
 
     @Override
-    public void addAdditionalSaveData(CompoundNBT compound) {
+    public void addAdditionalSaveData(CompoundTag compound) {
         super.addAdditionalSaveData(compound);
-        CompoundNBT nbt = new CompoundNBT();
+        CompoundTag nbt = new CompoundTag();
         nbt.putInt("origin_pos_x", this.getOriginPos().getX());
         nbt.putInt("origin_pos_y", this.getOriginPos().getY());
         nbt.putInt("origin_pos_z", this.getOriginPos().getZ());
         compound.put("origin_pos", nbt);
     }
 
-    public BlockPos getOriginPos() {
+    public Mth getOriginPos() {
         return this.entityData.get(ORIGIN_POS);
     }
 
-    public void setOriginPos(BlockPos pos) {
+    public void setOriginPos(Mth pos) {
         this.entityData.set(ORIGIN_POS, pos);
     }
 

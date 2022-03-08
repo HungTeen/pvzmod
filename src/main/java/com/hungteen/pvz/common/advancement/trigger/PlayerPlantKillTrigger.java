@@ -9,11 +9,11 @@ import net.minecraft.advancements.criterion.CriterionInstance;
 import net.minecraft.advancements.criterion.DamageSourcePredicate;
 import net.minecraft.advancements.criterion.EntityPredicate;
 import net.minecraft.advancements.criterion.EntityPredicate.AndPredicate;
-import net.minecraft.entity.Entity;
-import net.minecraft.entity.player.ServerPlayerEntity;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.entity.Entity;
+import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.loot.ConditionArrayParser;
 import net.minecraft.util.DamageSource;
-import net.minecraft.util.ResourceLocation;
 
 public class PlayerPlantKillTrigger extends AbstractCriterionTrigger<PlayerPlantKillTrigger.Instance> {
 
@@ -33,7 +33,7 @@ public class PlayerPlantKillTrigger extends AbstractCriterionTrigger<PlayerPlant
 		return new PlayerPlantKillTrigger.Instance(player, EntityPredicate.fromJson(json.get("entity")), DamageSourcePredicate.fromJson(json.get("killing_blow")));
 	}
 
-	public void trigger(ServerPlayerEntity player, Entity entity, DamageSource source) {
+	public void trigger(ServerPlayer player, Entity entity, DamageSource source) {
 		this.trigger(player, (instance) -> {
 			return instance.test(player, entity, source);
 		});
@@ -50,7 +50,7 @@ public class PlayerPlantKillTrigger extends AbstractCriterionTrigger<PlayerPlant
 			this.killingBlow = killingBlow;
 		}
 
-		public boolean test(ServerPlayerEntity player, Entity entity, DamageSource source) {
+		public boolean test(ServerPlayer player, Entity entity, DamageSource source) {
 			return !this.killingBlow.matches(player, source) ? false : this.entity.matches(player, entity);
 		}
 

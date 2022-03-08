@@ -9,28 +9,28 @@ import com.hungteen.pvz.common.misc.sound.SoundRegister;
 import com.hungteen.pvz.common.entity.EntityRegister;
 import com.hungteen.pvz.utils.EntityUtil;
 
-import net.minecraft.entity.Entity;
-import net.minecraft.entity.EntitySize;
-import net.minecraft.entity.EntityType;
-import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.Pose;
-import net.minecraft.entity.item.ItemEntity;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.entity.player.ServerPlayerEntity;
-import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.CompoundNBT;
-import net.minecraft.world.World;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.EntitySize;
+import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.Pose;
+import net.minecraft.world.entity.item.ItemEntity;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.level.Level;
 
 public class CornEntity extends PultBulletEntity {
 
 	public int cornCnt;
 	
-	public CornEntity(EntityType<?> type, World worldIn) {
+	public CornEntity(EntityType<?> type, Level worldIn) {
 		super(type, worldIn);
 		this.height = 20;
 	}
 	
-	public CornEntity(World worldIn, LivingEntity living) {
+	public CornEntity(Level worldIn, LivingEntity living) {
 		super(EntityRegister.CORN.get(), worldIn, living);
 		this.height = 20;
 	}
@@ -61,9 +61,9 @@ public class CornEntity extends PultBulletEntity {
 			}
 		};
 		if(this.getThrower() instanceof PVZPlantEntity) {
-			PlayerEntity player = EntityUtil.getEntityOwner(level, getThrower());
-			if(player != null && player instanceof ServerPlayerEntity) {
-				EntityEffectAmountTrigger.INSTANCE.trigger((ServerPlayerEntity) player, getThrower(), killCnt);
+			Player player = EntityUtil.getEntityOwner(level, getThrower());
+			if(player != null && player instanceof ServerPlayer) {
+				EntityEffectAmountTrigger.INSTANCE.trigger((ServerPlayer) player, getThrower(), killCnt);
 			}
 		}
 		ItemEntity item = new ItemEntity(level, getX(), getY() + 1, getZ(), new ItemStack(ItemRegister.POP_CORN.get(), this.cornCnt));
@@ -90,7 +90,7 @@ public class CornEntity extends PultBulletEntity {
 	}
 	
 	@Override
-	public void readAdditionalSaveData(CompoundNBT compound) {
+	public void readAdditionalSaveData(CompoundTag compound) {
 		super.readAdditionalSaveData(compound);
 		if(compound.contains("cannon_pop_corn_cnt")) {
 			this.cornCnt = compound.getInt("cannon_pop_corn_cnt");
@@ -98,7 +98,7 @@ public class CornEntity extends PultBulletEntity {
 	}
 
 	@Override
-	public void addAdditionalSaveData(CompoundNBT compound) {
+	public void addAdditionalSaveData(CompoundTag compound) {
 		super.addAdditionalSaveData(compound);
 		compound.putInt("cannon_pop_corn_cnt", this.cornCnt);
 	}

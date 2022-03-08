@@ -2,7 +2,7 @@ package com.hungteen.pvz.common.misc;
 
 import com.hungteen.pvz.utils.StringUtil;
 
-import net.minecraft.util.ResourceLocation;
+import net.minecraft.resources.ResourceLocation;
 
 public class PVZLoot {
 

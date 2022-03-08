@@ -24,25 +24,25 @@ import com.hungteen.pvz.utils.StringUtil;
 import com.hungteen.pvz.utils.enums.Resources;
 import com.hungteen.pvz.utils.others.WeightList;
 
-import net.minecraft.block.BlockState;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.entity.player.PlayerInventory;
-import net.minecraft.entity.player.ServerPlayerEntity;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.level.block.BlockState;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.network.chat.Component;
+import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.entity.player.PlayerInventory;
 import net.minecraft.inventory.InventoryHelper;
 import net.minecraft.inventory.container.Container;
 import net.minecraft.inventory.container.INamedContainerProvider;
-import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.CompoundNBT;
+import net.minecraft.world.item.ItemStack;
 import net.minecraft.network.NetworkManager;
 import net.minecraft.network.play.server.SUpdateTileEntityPacket;
 import net.minecraft.tileentity.ITickableTileEntity;
 import net.minecraft.util.IIntArray;
 import net.minecraft.util.INameable;
 import net.minecraft.util.IntArray;
-import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.SoundCategory;
-import net.minecraft.util.text.ITextComponent;
-import net.minecraft.util.text.TranslationTextComponent;
+import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.common.util.Constants;
 
@@ -72,14 +72,14 @@ public class SlotMachineTileEntity extends PVZTileEntity implements ITickableTil
 	private int changeCnt;
 	private int changeTick = 0;
 	private boolean isRunning = false;
-	private PlayerEntity player;
-	private ITextComponent name;
+	private Player player;
+	private Component name;
 
 	public SlotMachineTileEntity() {
 		super(TileEntityRegister.SLOT_MACHINE.get());
 	}
 
-	public void fastStart(PlayerEntity player) {
+	public void fastStart(Player player) {
 		this.onStart(player);
 		this.refreshOptionList();
 		this.genAll();
@@ -95,7 +95,7 @@ public class SlotMachineTileEntity extends PVZTileEntity implements ITickableTil
 		this.level.sendBlockUpdated(worldPosition, getBlockState(), getBlockState(), Constants.BlockFlags.BLOCK_UPDATE);
 	}
 
-	public void slowStart(PlayerEntity player) {
+	public void slowStart(Player player) {
 		this.onStart(player);
 		this.refreshOptionList();
 		this.genNextRow();
@@ -154,7 +154,7 @@ public class SlotMachineTileEntity extends PVZTileEntity implements ITickableTil
 		}
 	}
 
-	private void onStart(PlayerEntity player) {
+	private void onStart(Player player) {
 		if (player == null) {
 			System.out.println("Error : No player bind with Slot Machine !");
 			return;
@@ -216,8 +216,8 @@ public class SlotMachineTileEntity extends PVZTileEntity implements ITickableTil
 			break;
 		}
 
-		if(player instanceof ServerPlayerEntity){
-			SlotMachineTrigger.INSTANCE.trigger((ServerPlayerEntity) player, num, type.getSlotTypes().toString().toLowerCase());
+		if(player instanceof ServerPlayer){
+			SlotMachineTrigger.INSTANCE.trigger((ServerPlayer) player, num, type.getSlotTypes().toString().toLowerCase());
 		}
 
 		this.level.playSound(null, worldPosition, SoundRegister.JEWEL_DROP.get(), SoundCategory.BLOCKS, 1F, 1F);
@@ -279,7 +279,7 @@ public class SlotMachineTileEntity extends PVZTileEntity implements ITickableTil
 		return !this.isRunning;
 	}
 
-	public void setPlayer(PlayerEntity player) {
+	public void setPlayer(Player player) {
 		this.player = player;
 	}
 
@@ -294,31 +294,31 @@ public class SlotMachineTileEntity extends PVZTileEntity implements ITickableTil
 	}
 
 	@Override
-	public Container createMenu(int id, PlayerInventory inv, PlayerEntity player) {
+	public Container createMenu(int id, PlayerInventory inv, Player player) {
 		return new SlotMachineContainer(id, player, this.worldPosition);
 	}
 
-	public void setCustomName(ITextComponent name) {
+	public void setCustomName(Component name) {
 		this.name = name;
 	}
 
 	@Override
-	public ITextComponent getDisplayName() {
+	public Component getDisplayName() {
 		return this.getName();
 	}
 	
 	@Override
-	public ITextComponent getName() {
+	public Component getName() {
 		return this.name != null ? this.name : this.getDefaultName();
 	}
 
 	@Nullable
-	public ITextComponent getCustomName() {
+	public Component getCustomName() {
 		return this.name;
 	}
 
-	public ITextComponent getDefaultName() {
-		return new TranslationTextComponent("block.pvz.slot_machine");
+	public Component getDefaultName() {
+		return new TranslatableComponent("block.pvz.slot_machine");
 	}
 
 	public LotteryType getLotteryType() {
@@ -351,7 +351,7 @@ public class SlotMachineTileEntity extends PVZTileEntity implements ITickableTil
 	}
 
 	@Override
-	public void handleUpdateTag(BlockState state, CompoundNBT tag) {
+	public void handleUpdateTag(BlockState state, CompoundTag tag) {
 		super.handleUpdateTag(state, tag);
 		for (int i = 0; i < 16; ++i) {
 			if (tag.contains("slot_machine_" + i)) {
@@ -365,8 +365,8 @@ public class SlotMachineTileEntity extends PVZTileEntity implements ITickableTil
 	}
 
 	@Override
-	public CompoundNBT getUpdateTag() {
-		CompoundNBT compoundNBT = super.getUpdateTag();
+	public CompoundTag getUpdateTag() {
+		CompoundTag compoundNBT = super.getUpdateTag();
 		for (int i = 0; i < 16; ++i) {
 			compoundNBT.putInt("slot_machine_" + i, this.array.get(i));
 		}
@@ -379,7 +379,7 @@ public class SlotMachineTileEntity extends PVZTileEntity implements ITickableTil
 	}
 
 	@Override
-	public void load(BlockState state, CompoundNBT compound) {
+	public void load(BlockState state, CompoundTag compound) {
 		super.load(state, compound);
 
 		if (compound.contains("change_tick")) {
@@ -412,12 +412,12 @@ public class SlotMachineTileEntity extends PVZTileEntity implements ITickableTil
 //		}
 		
 		if (compound.contains("CustomName", 8)) {
-	         this.name = ITextComponent.Serializer.fromJson(compound.getString("CustomName"));
+	         this.name = Component.Serializer.fromJson(compound.getString("CustomName"));
 	      }
 	}
 
 	@Override
-	public CompoundNBT save(CompoundNBT compound) {
+	public CompoundTag save(CompoundTag compound) {
 		compound.putInt("change_tick", this.changeTick);
 
 		compound.putInt("change_cnt", this.changeCnt);
@@ -439,7 +439,7 @@ public class SlotMachineTileEntity extends PVZTileEntity implements ITickableTil
 //		compound.put("slot_machine_result", this.inv.createTag());
 		
 		if (this.name != null) {
-			compound.putString("CustomName", ITextComponent.Serializer.toJson(this.name));
+			compound.putString("CustomName", Component.Serializer.toJson(this.name));
 	      }
 
 		return super.save(compound);

@@ -5,7 +5,7 @@ import com.hungteen.pvz.client.render.layer.DuckyTubeLayer;
 import com.hungteen.pvz.common.entity.zombie.zombotany.AbstractZombotanyEntity;
 
 import net.minecraft.client.renderer.entity.EntityRendererManager;
-import net.minecraft.client.renderer.entity.model.EntityModel;
+import net.minecraft.client.model.EntityModel;
 import net.minecraft.util.math.vector.Vector3d;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;

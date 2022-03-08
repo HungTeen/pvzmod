@@ -4,8 +4,8 @@ import com.mojang.blaze3d.matrix.MatrixStack;
 
 import net.minecraft.client.renderer.entity.EntityRendererManager;
 import net.minecraft.client.renderer.entity.MobRenderer;
-import net.minecraft.client.renderer.entity.model.EntityModel;
-import net.minecraft.entity.MobEntity;
+import net.minecraft.client.model.EntityModel;
+import net.minecraft.world.entity.MobEntity;
 
 public abstract class PVZZombieToolRender<T extends MobEntity> extends MobRenderer<T, EntityModel<T>>{
 

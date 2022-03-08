@@ -2,7 +2,7 @@ package com.hungteen.pvz.common.world.feature;
 
 import java.util.Random;
 
-import net.minecraft.block.trees.Tree;
+import net.minecraft.world.level.block.trees.Tree;
 import net.minecraft.world.gen.feature.BaseTreeFeatureConfig;
 import net.minecraft.world.gen.feature.ConfiguredFeature;
 

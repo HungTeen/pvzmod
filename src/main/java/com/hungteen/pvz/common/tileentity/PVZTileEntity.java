@@ -1,6 +1,6 @@
 package com.hungteen.pvz.common.tileentity;
 
-import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.world.entity.player.Player;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.tileentity.TileEntityType;
 
@@ -18,7 +18,7 @@ public abstract class PVZTileEntity extends TileEntity {
     /**
      * used by container.
      */
-    public boolean isUsableByPlayer(PlayerEntity player) {
+    public boolean isUsableByPlayer(Player player) {
         if (this.level.getBlockEntity(this.worldPosition) != this) {
             return false;
         }

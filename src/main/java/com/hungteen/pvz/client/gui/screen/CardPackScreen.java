@@ -4,9 +4,9 @@ import com.hungteen.pvz.common.container.CardPackContainer;
 import com.hungteen.pvz.utils.StringUtil;
 import com.mojang.blaze3d.matrix.MatrixStack;
 
-import net.minecraft.entity.player.PlayerInventory;
-import net.minecraft.util.ResourceLocation;
-import net.minecraft.util.text.ITextComponent;
+import net.minecraft.network.chat.Component;
+import net.minecraft.world.entity.player.PlayerInventory;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 
@@ -15,7 +15,7 @@ public class CardPackScreen extends PVZContainerScreen<CardPackContainer>{
 	
 	private static final ResourceLocation TEXTURE = StringUtil.prefix("textures/gui/container/card_pack.png");
 	
-	public CardPackScreen(CardPackContainer screenContainer, PlayerInventory inv, ITextComponent titleIn) {
+	public CardPackScreen(CardPackContainer screenContainer, PlayerInventory inv, Component titleIn) {
 		super(screenContainer, inv, titleIn);
 		this.imageWidth = 198;
 		this.imageHeight = 222;

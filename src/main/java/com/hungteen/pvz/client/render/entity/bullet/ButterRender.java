@@ -4,7 +4,7 @@ import com.hungteen.pvz.client.render.entity.EntityBlockRender;
 import com.hungteen.pvz.common.block.BlockRegister;
 import com.hungteen.pvz.common.entity.bullet.ButterEntity;
 
-import net.minecraft.block.BlockState;
+import net.minecraft.world.level.block.BlockState;
 import net.minecraft.client.renderer.entity.EntityRendererManager;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;

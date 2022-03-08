@@ -5,19 +5,19 @@ import com.hungteen.pvz.common.item.ItemRegister;
 import com.hungteen.pvz.common.item.tool.plant.PeaGunItem;
 import com.hungteen.pvz.common.misc.tag.PVZItemTags;
 
-import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.world.entity.player.Player;
 import net.minecraft.inventory.Inventory;
 import net.minecraft.inventory.container.Container;
 import net.minecraft.inventory.container.Slot;
-import net.minecraft.item.ItemStack;
+import net.minecraft.world.item.ItemStack;
 
 public class PeaGunContainer extends Container {
 
 	private Inventory backpack;
-	private final PlayerEntity player;
+	private final Player player;
 	private final ItemStack stack;
 	
-	public PeaGunContainer(int id, PlayerEntity player) {
+	public PeaGunContainer(int id, Player player) {
 		super(ContainerRegister.PEA_GUN.get(), id);
 		this.player = player;
 		this.stack = this.player.getOffhandItem();
@@ -58,7 +58,7 @@ public class PeaGunContainer extends Container {
 	}
 	
 	@Override
-	public ItemStack quickMoveStack(PlayerEntity playerIn, int index) {
+	public ItemStack quickMoveStack(Player playerIn, int index) {
 		ItemStack itemstack = ItemStack.EMPTY;
 		Slot slot = this.slots.get(index);
 		if (slot != null && slot.hasItem()) {
@@ -93,7 +93,7 @@ public class PeaGunContainer extends Container {
 	
 
 	@Override
-	public boolean stillValid(PlayerEntity playerIn) {
+	public boolean stillValid(Player playerIn) {
 		if(playerIn.getOffhandItem().getItem() != ItemRegister.PEA_GUN.get()) {
 			return false;
 		}

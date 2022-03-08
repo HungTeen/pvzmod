@@ -1,16 +1,16 @@
 package com.hungteen.pvz.common.world.invasion;
 
-import net.minecraft.block.Blocks;
-import net.minecraft.entity.EntityType;
-import net.minecraft.entity.MobEntity;
-import net.minecraft.nbt.CompoundNBT;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.world.World;
+import net.minecraft.world.level.block.Blocks;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.MobEntity;
+import net.minecraft.util.Mth;
+import net.minecraft.world.level.Level;
 
 public class SpawnType{
 
     private final EntityType<? extends MobEntity> spawnType;
-    private CompoundNBT nbt = new CompoundNBT();
+    private CompoundTag nbt = new CompoundTag();
     private int invasionLevel;
     private int spawnWeight;
     private PlaceType placeType;
@@ -39,11 +39,11 @@ public class SpawnType{
         return spawnWeight;
     }
 
-    public void setNbt(CompoundNBT nbt) {
+    public void setNbt(CompoundTag nbt) {
         this.nbt = nbt;
     }
 
-    public CompoundNBT getNbt() {
+    public CompoundTag getNbt() {
         return nbt;
     }
 
@@ -55,7 +55,7 @@ public class SpawnType{
         return placeType;
     }
 
-    public boolean checkPos(World world, BlockPos pos){
+    public boolean checkPos(Level world, Mth pos){
         if(getPlaceType() == PlaceType.LAND){
             return world.getBlockState(pos.below()).isValidSpawn(world, pos.below(), this.spawnType) && world.getBlockState(pos.below()).getFluidState().isEmpty();
         } else if(getPlaceType() == PlaceType.WATER){

@@ -10,12 +10,12 @@ import com.hungteen.pvz.utils.enums.Colors;
 import com.mojang.blaze3d.matrix.MatrixStack;
 import com.mojang.blaze3d.systems.RenderSystem;
 import net.minecraft.client.gui.screen.Screen;
-import net.minecraft.item.ItemStack;
-import net.minecraft.util.ResourceLocation;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.item.ItemStack;
 import net.minecraft.util.math.MathHelper;
-import net.minecraft.util.text.IFormattableTextComponent;
-import net.minecraft.util.text.TextFormatting;
-import net.minecraft.util.text.TranslationTextComponent;
+import net.minecraft.network.chat.MutableComponent;
+import net.minecraft.ChatFormatting;
+import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 
@@ -27,7 +27,7 @@ public class ChallengeInfoScreen extends Screen{
 
 	public static final ResourceLocation TEXTURE = StringUtil.prefix("textures/gui/container/almanac.png");
 	private static final int MAX_ENTRY_COUNT = 14;
-	private final List<IFormattableTextComponent> entries = new ArrayList<>();
+	private final List<MutableComponent> entries = new ArrayList<>();
 	private final IChallengeComponent challengeComponent;
 	private final int xSize = 150;
 	private final int ySize = 200;
@@ -42,9 +42,9 @@ public class ChallengeInfoScreen extends Screen{
 	private void initEntries(IChallengeComponent challengeComponent){
 		for(int i = 0; i < challengeComponent.getTotalWaveCount(); ++ i){
 			final IWaveComponent waveComponent = challengeComponent.getWaves().get(i);
-			this.entries.add(new TranslationTextComponent("gui.pvz.challenge_info.wave", i + 1, waveComponent.getLastDuration()).withStyle(TextFormatting.BOLD).withStyle(TextFormatting.RED));
+			this.entries.add(new TranslatableComponent("gui.pvz.challenge_info.wave", i + 1, waveComponent.getLastDuration()).withStyle(ChatFormatting.BOLD).withStyle(ChatFormatting.RED));
 			challengeComponent.getSpawns(i).forEach(spawn -> {
-				this.entries.add(new TranslationTextComponent("gui.pvz.challenge_info.spawn", spawn.getSpawnTick(), spawn.getSpawnAmount(), spawn.getSpawnType().getDescription().getString()));
+				this.entries.add(new TranslatableComponent("gui.pvz.challenge_info.spawn", spawn.getSpawnTick(), spawn.getSpawnAmount(), spawn.getSpawnType().getDescription().getString()));
 			});
 		}
 	}

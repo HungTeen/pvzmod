@@ -15,20 +15,20 @@ import com.hungteen.pvz.utils.EntityUtil;
 import com.hungteen.pvz.utils.enums.Colors;
 import com.hungteen.pvz.utils.enums.PAZAlmanacs;
 import com.mojang.datafixers.util.Pair;
-import net.minecraft.entity.CreatureEntity;
-import net.minecraft.entity.EntitySize;
-import net.minecraft.entity.EntityType;
-import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.Pose;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.potion.EffectInstance;
-import net.minecraft.potion.Effects;
-import net.minecraft.util.ActionResultType;
-import net.minecraft.util.Hand;
-import net.minecraft.util.SoundEvent;
+import net.minecraft.server.level.ServerLevel;
+import net.minecraft.world.InteractionResult;
+import net.minecraft.world.entity.CreatureEntity;
+import net.minecraft.world.entity.EntitySize;
+import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.Pose;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.effect.MobEffectInstance;
+import net.minecraft.world.effect.Effects;
+import net.minecraft.world.InteractionHand;
+import net.minecraft.sounds.SoundEvent;
 import net.minecraft.util.math.vector.Vector3d;
-import net.minecraft.world.World;
-import net.minecraft.world.server.ServerWorld;
+import net.minecraft.world.level.Level;
 
 import java.util.List;
 import java.util.Optional;
@@ -37,7 +37,7 @@ public class PlanternEntity extends PVZPlantEntity implements ILightEffect {
 
 	private static final int EFFECT_CD = 100;
 	
-	public PlanternEntity(EntityType<? extends CreatureEntity> type, World worldIn) {
+	public PlanternEntity(EntityType<? extends CreatureEntity> type, Level worldIn) {
 		super(type, worldIn);
 	}
 	
@@ -52,8 +52,8 @@ public class PlanternEntity extends PVZPlantEntity implements ILightEffect {
 	}
 
 	@Override
-	public ActionResultType interactAt(PlayerEntity player, Vector3d vec3d, Hand hand) {
-		if(hand == Hand.MAIN_HAND && player.getItemInHand(hand).isEmpty() && this.isInSuperState()){
+	public InteractionResult interactAt(Player player, Vector3d vec3d, InteractionHand hand) {
+		if(hand == InteractionHand.MAIN_HAND && player.getItemInHand(hand).isEmpty() && this.isInSuperState()){
 			if(! this.level.isClientSide){
 				OriginEffectEntity.create(this.level, this.blockPosition().above(), Colors.YELLOW);
                 
@@ -61,7 +61,7 @@ public class PlanternEntity extends PVZPlantEntity implements ILightEffect {
 
 				EntityUtil.playSound(this, this.getSpawnSound().get());
 			}
-			return ActionResultType.SUCCESS;
+			return InteractionResult.SUCCESS;
 		}
 		return super.interactAt(player, vec3d, hand);
 	}
@@ -81,8 +81,8 @@ public class PlanternEntity extends PVZPlantEntity implements ILightEffect {
 	}
 
 	private void displayAllRaider(){
-		if(this.level instanceof ServerWorld){
-			ChallengeManager.getChallengeNearBy((ServerWorld) this.level, this.blockPosition()).ifPresent(challenge -> {
+		if(this.level instanceof ServerLevel){
+			ChallengeManager.getChallengeNearBy((ServerLevel) this.level, this.blockPosition()).ifPresent(challenge -> {
 				challenge.getRaiders().forEach(raider -> {
 					if(raider instanceof LivingEntity) {
 						((LivingEntity) raider).addEffect(EffectUtil.viewEffect(Effects.GLOWING, 200, 0));
@@ -108,7 +108,7 @@ public class PlanternEntity extends PVZPlantEntity implements ILightEffect {
 	}
 
 	@Override
-	public EffectInstance getLightEyeEffect() {
+	public MobEffectInstance getLightEyeEffect() {
 		return EffectUtil.viewEffect(EffectRegister.LIGHT_EYE_EFFECT.get(), this.getLightEyeTime(), 0);
 	}
 

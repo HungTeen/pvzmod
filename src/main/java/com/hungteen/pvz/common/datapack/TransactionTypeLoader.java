@@ -7,14 +7,14 @@ import com.hungteen.pvz.common.entity.npc.AbstractDaveEntity;
 import com.hungteen.pvz.common.world.challenge.ChallengeManager;
 import com.mojang.brigadier.exceptions.CommandSyntaxException;
 import net.minecraft.client.resources.JsonReloadListener;
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.CompoundNBT;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.JsonToNBT;
 import net.minecraft.profiler.IProfiler;
 import net.minecraft.resources.IResourceManager;
 import net.minecraft.util.JSONUtils;
-import net.minecraft.util.ResourceLocation;
 
 import javax.annotation.Nullable;
 import java.util.HashMap;
@@ -96,7 +96,7 @@ public class TransactionTypeLoader extends JsonReloadListener {
                             stack = new ItemStack(item);
                             if(obj.has("nbt")) {
                                 try {
-                                    CompoundNBT compoundnbt = JsonToNBT.parseTag(JSONUtils.convertToString(obj.get("nbt"), "nbt"));
+                                    CompoundTag compoundnbt = JsonToNBT.parseTag(JSONUtils.convertToString(obj.get("nbt"), "nbt"));
                                     stack.setTag(compoundnbt);
                                 } catch (CommandSyntaxException commandsyntaxexception) {
                                     throw new JsonSyntaxException("Invalid nbt tag: " + commandsyntaxexception.getMessage());

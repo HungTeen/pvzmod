@@ -1,18 +1,18 @@
 package com.hungteen.pvz.common.entity.zombie.base;
 
 import com.hungteen.pvz.common.entity.zombie.PVZZombieEntity;
-import net.minecraft.entity.CreatureEntity;
-import net.minecraft.entity.EntitySize;
-import net.minecraft.entity.EntityType;
-import net.minecraft.entity.Pose;
+import net.minecraft.world.entity.CreatureEntity;
+import net.minecraft.world.entity.EntitySize;
+import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.Pose;
 import net.minecraft.pathfinding.PathNodeType;
-import net.minecraft.world.World;
+import net.minecraft.world.level.Level;
 
 public abstract class SwimmerZombieEntity extends PVZZombieEntity{
 
 	private static final float UP_DISTANCE = 10;
 	
-	public SwimmerZombieEntity(EntityType<? extends CreatureEntity> type, World worldIn) {
+	public SwimmerZombieEntity(EntityType<? extends CreatureEntity> type, Level worldIn) {
 		super(type, worldIn);
 		setPathfindingMalus(PathNodeType.WATER, 0);
 	}

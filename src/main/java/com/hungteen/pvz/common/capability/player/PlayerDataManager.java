@@ -20,11 +20,11 @@ import com.hungteen.pvz.common.world.invasion.MissionManager;
 import com.hungteen.pvz.utils.PlayerUtil;
 import com.hungteen.pvz.utils.StringUtil;
 import com.hungteen.pvz.utils.enums.Resources;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.entity.player.ServerPlayerEntity;
-import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.CompoundNBT;
-import net.minecraft.util.Hand;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.InteractionHand;
 import net.minecraft.util.math.MathHelper;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.fml.network.PacketDistributor;
@@ -34,7 +34,7 @@ import java.util.*;
 
 public class PlayerDataManager {
 
-	private final PlayerEntity player;
+	private final Player player;
 	/* player resources */
 	private final HashMap<Resources, Integer> resources = new HashMap<>(Resources.values().length);
 	/* summon card inventory */
@@ -50,7 +50,7 @@ public class PlayerDataManager {
 	public String lastVersion = StringUtil.INIT_VERSION;
 	private final OtherStats otherStats;
 	
-	public PlayerDataManager(PlayerEntity player) {
+	public PlayerDataManager(Player player) {
 		this.player = player;
 		{// init player resources.
 			for(Resources res : Resources.values()) {
@@ -78,10 +78,10 @@ public class PlayerDataManager {
 	/**
 	 * read {@link PlayerDataStorage#readNBT(net.minecraftforge.common.capabilities.Capability, IPlayerDataCapability, net.minecraft.util.Direction, net.minecraft.nbt.INBT)}.
 	 */
-	public void loadFromNBT(CompoundNBT baseTag) {
+	public void loadFromNBT(CompoundTag baseTag) {
 		{// load player resources.
 			if(baseTag.contains("player_stats")) {//old.
-				CompoundNBT statsTag = baseTag.getCompound("player_stats");
+				CompoundTag statsTag = baseTag.getCompound("player_stats");
 			    for(Resources res : Resources.values()) {
 			    	if(statsTag.contains("player_" + res.toString())) {
 				        this.resources.put(res, statsTag.getInt("player_" + res.toString()));
@@ -89,7 +89,7 @@ public class PlayerDataManager {
 			    }
 			}
 			if(baseTag.contains("player_resources")) {//new.
-				CompoundNBT statsTag = baseTag.getCompound("player_resources");
+				CompoundTag statsTag = baseTag.getCompound("player_resources");
 			    for(Resources res : Resources.values()) {
 			    	if(statsTag.contains(res.toString().toLowerCase())) {
 				        this.resources.put(res, statsTag.getInt(res.toString().toLowerCase()));
@@ -99,7 +99,7 @@ public class PlayerDataManager {
 		}
 		{// load card inventory.
 			if(baseTag.contains("card_inventory")) {
-				CompoundNBT nbt = baseTag.getCompound("card_inventory");
+				CompoundTag nbt = baseTag.getCompound("card_inventory");
 				for(int i = 0; i <= Resources.SLOT_NUM.max; ++ i) {
 					if(nbt.contains("slot_" + i)) {
 						this.cards.set(i, ItemStack.of(nbt.getCompound("slot_" + i)));
@@ -113,9 +113,9 @@ public class PlayerDataManager {
 		{/* old load method */
 			{// load plant & zombie card cd.
 				if(baseTag.contains("paz_card_item_cd")) {
-					final CompoundNBT nbt = baseTag.getCompound("paz_card_item_cd");
+					final CompoundTag nbt = baseTag.getCompound("paz_card_item_cd");
 					PVZAPI.get().getPAZs().forEach(plant -> {
-						final CompoundNBT plantNBT = (CompoundNBT) nbt.get(plant.getIdentity());
+						final CompoundTag plantNBT = (CompoundTag) nbt.get(plant.getIdentity());
 						if(plantNBT != null) {
 							if(plantNBT.contains("paz_card_cd")) {
 								this.pazCardCD.put(plant, plantNBT.getInt("paz_card_cd"));
@@ -129,9 +129,9 @@ public class PlayerDataManager {
 			}
 			{// load plant & zombie lock.
 				if(baseTag.contains("paz_locks")) {
-					final CompoundNBT nbt = baseTag.getCompound("paz_locks");
+					final CompoundTag nbt = baseTag.getCompound("paz_locks");
 					PVZAPI.get().getPAZs().forEach(plant -> {
-						final CompoundNBT plantNBT = (CompoundNBT) nbt.get(plant.getIdentity());
+						final CompoundTag plantNBT = (CompoundTag) nbt.get(plant.getIdentity());
 						if(plantNBT != null) {
 							if(plantNBT.contains("paz_locked")) {
 								this.pazLocked.put(plant, plantNBT.getBoolean("paz_locked"));
@@ -143,9 +143,9 @@ public class PlayerDataManager {
 		}
 		{// load plant & zombie card cd.
 			if(baseTag.contains("paz_data")) {
-				final CompoundNBT nbt = baseTag.getCompound("paz_data");
+				final CompoundTag nbt = baseTag.getCompound("paz_data");
 				PVZAPI.get().getPAZs().forEach(plant -> {
-					final CompoundNBT plantNBT = nbt.getCompound(plant.getIdentity());
+					final CompoundTag plantNBT = nbt.getCompound(plant.getIdentity());
 					if(plantNBT.contains("paz_card_cd")) {
 						this.pazCardCD.put(plant, plantNBT.getInt("paz_card_cd"));
 					}
@@ -172,27 +172,27 @@ public class PlayerDataManager {
 	/**
 	 * write {@link PlayerDataStorage#writeNBT(net.minecraftforge.common.capabilities.Capability, IPlayerDataCapability, net.minecraft.util.Direction)}.
 	 */
-	public CompoundNBT saveToNBT() {
-		CompoundNBT baseTag = new CompoundNBT();
+	public CompoundTag saveToNBT() {
+		CompoundTag baseTag = new CompoundTag();
 		{// save player resources.
-			CompoundNBT statsNBT = new CompoundNBT();
+			CompoundTag statsNBT = new CompoundTag();
 			for(Resources res : Resources.values()) {
 				statsNBT.putInt(res.toString().toLowerCase(), resources.get(res));
 			}
 			baseTag.put("player_resources", statsNBT);
 		}
 		{// save card inventory.
-			CompoundNBT nbt = new CompoundNBT();
+			CompoundTag nbt = new CompoundTag();
 			for(int i = 0; i < Resources.SLOT_NUM.max; ++ i) {
-				nbt.put("slot_" + i, this.getItemAt(i).save(new CompoundNBT()));
+				nbt.put("slot_" + i, this.getItemAt(i).save(new CompoundTag()));
 			}
 			nbt.putInt("current_pos", this.emptySlot);
 			baseTag.put("card_inventory", nbt);
 		}
 		{// save plant & zombie card cd.
-			final CompoundNBT nbt = new CompoundNBT();
+			final CompoundTag nbt = new CompoundTag();
 			PVZAPI.get().getPAZs().forEach(plant -> {
-				final CompoundNBT plantNBT = new CompoundNBT();
+				final CompoundTag plantNBT = new CompoundTag();
 				plantNBT.putInt("paz_card_cd", this.pazCardCD.get(plant));
 				plantNBT.putFloat("paz_card_bar", this.pazCardBar.get(plant));
 				plantNBT.putBoolean("paz_locked", this.isPAZLocked(plant));
@@ -202,7 +202,7 @@ public class PlayerDataManager {
 		}
 		{// load misc data.
 			{
-				final CompoundNBT nbt = new CompoundNBT();
+				final CompoundTag nbt = new CompoundTag();
 				this.invasion.save(nbt);
 				baseTag.put("invasion_data", nbt);
 			}
@@ -228,7 +228,7 @@ public class PlayerDataManager {
 	
 	/**
 	 * run when player join world.
-	 * {@link PlayerEventHandler#onPlayerLogin(PlayerEntity)}
+	 * {@link PlayerEventHandler#onPlayerLogin(Player)}
 	 */
 	public void init() {
 		this.syncBounds();
@@ -259,7 +259,7 @@ public class PlayerDataManager {
 		}
 		{// card inventory.
 			for(int i = 0; i <= Resources.SLOT_NUM.max; ++ i) {
-				this.sendInventoryPacket(player, i, this.getItemAt(i).save(new CompoundNBT()));
+				this.sendInventoryPacket(player, i, this.getItemAt(i).save(new CompoundTag()));
 			}
 			this.setCurrentPos(this.getCurrentPos(), true);
 		}
@@ -305,8 +305,8 @@ public class PlayerDataManager {
 		} else if(res == Resources.SUN_NUM) {
 			now = MathHelper.clamp(now + num, 0, PlayerUtil.getPlayerMaxSunNum(resources.get(Resources.TREE_LVL)));
 			resources.put(Resources.SUN_NUM, now);
-			if(player instanceof ServerPlayerEntity){
-				SunAmountTrigger.INSTANCE.trigger((ServerPlayerEntity) player, now);
+			if(player instanceof ServerPlayer){
+				SunAmountTrigger.INSTANCE.trigger((ServerPlayer) player, now);
 			}
 		} else if(res == Resources.ENERGY_NUM) {
 			now = MathHelper.clamp(now + num, 0, resources.get(Resources.MAX_ENERGY_NUM));
@@ -317,23 +317,23 @@ public class PlayerDataManager {
 
 			if(res == Resources.TREE_LVL) {
 				this.addResource(Resources.SUN_NUM, 0);
-				if(player instanceof ServerPlayerEntity){
-					TreeLevelTrigger.INSTANCE.trigger((ServerPlayerEntity) player, now);
+				if(player instanceof ServerPlayer){
+					TreeLevelTrigger.INSTANCE.trigger((ServerPlayer) player, now);
 					if(old != now){
 						MinecraftForge.EVENT_BUS.post(new PlayerLevelChangeEvent(player, old, now));
 					}
 				}
 			} else if(res == Resources.MONEY) {
-				if(player instanceof ServerPlayerEntity){
-					MoneyTrigger.INSTANCE.trigger((ServerPlayerEntity) player, now);
+				if(player instanceof ServerPlayer){
+					MoneyTrigger.INSTANCE.trigger((ServerPlayer) player, now);
 				}
 			} else if(res == Resources.MISSION_VALUE){
 				if(num > 0 && this.getResource(Resources.MISSION_TYPE) == MissionManager.MissionType.INSTANT_KILL.ordinal()){
 					++ this.invasion.killInSecond;
 				}
 			} else if(res == Resources.MISSION_FINISH_TIME){
-				if(player instanceof ServerPlayerEntity){
-					InvasionMissionTrigger.INSTANCE.trigger((ServerPlayerEntity) player, now);
+				if(player instanceof ServerPlayer){
+					InvasionMissionTrigger.INSTANCE.trigger((ServerPlayer) player, now);
 				}
 			}
 		}
@@ -367,11 +367,11 @@ public class PlayerDataManager {
 		}
 	}
 	
-	private void sendResourcePacket(PlayerEntity player, Resources res){
-		if (player instanceof ServerPlayerEntity) {
+	private void sendResourcePacket(Player player, Resources res){
+		if (player instanceof ServerPlayer) {
 			PVZPacketHandler.CHANNEL.send(
 				PacketDistributor.PLAYER.with(() -> {
-					return (ServerPlayerEntity) player;
+					return (ServerPlayer) player;
 				}),
 				new PlayerStatsPacket(res.ordinal(), resources.get(res))
 			);
@@ -389,7 +389,7 @@ public class PlayerDataManager {
 		while(this.getItemAt(next).isEmpty()){
 			next = (next + (delta > 0 ? -1 : 1) + (maxSlot + 1)) % (maxSlot + 1);
 		}
-		player.setItemInHand(Hand.MAIN_HAND, this.getItemAt(next));
+		player.setItemInHand(InteractionHand.MAIN_HAND, this.getItemAt(next));
 		this.setCurrentPos(next, true);
 	}
 	
@@ -407,13 +407,13 @@ public class PlayerDataManager {
 		pos = MathHelper.clamp(pos, 0, this.cards.size() - 1);
 		this.cards.set(pos, stack);
 		if(sync) {
-			this.sendInventoryPacket(player, pos, this.cards.get(pos).save(new CompoundNBT()));
+			this.sendInventoryPacket(player, pos, this.cards.get(pos).save(new CompoundTag()));
 		}
 	}
 	
 	public void setCurrentPos(int pos, boolean sync) {
 		this.emptySlot = pos;
-		CompoundNBT nbt = new CompoundNBT();
+		CompoundTag nbt = new CompoundTag();
 		nbt.putInt(CardInventoryPacket.FLAG, this.emptySlot);
 		if(sync) {
 			this.sendInventoryPacket(player, -1, nbt);
@@ -428,11 +428,11 @@ public class PlayerDataManager {
 		return this.emptySlot;
 	}
 	
-	private void sendInventoryPacket(PlayerEntity player, int type, CompoundNBT nbt) {
-		if (player instanceof ServerPlayerEntity) {
+	private void sendInventoryPacket(Player player, int type, CompoundTag nbt) {
+		if (player instanceof ServerPlayer) {
 			PVZPacketHandler.CHANNEL.send(
 				PacketDistributor.PLAYER.with(() -> {
-					return (ServerPlayerEntity) player;
+					return (ServerPlayer) player;
 				}),
 				new CardInventoryPacket(type, nbt)
 			);
@@ -495,11 +495,11 @@ public class PlayerDataManager {
 		return this.pazLocked.getOrDefault(plant, true);
 	}
 
-	private void sendPAZLockPacket(PlayerEntity player, IPAZType plant){
-		if (player instanceof ServerPlayerEntity) {
+	private void sendPAZLockPacket(Player player, IPAZType plant){
+		if (player instanceof ServerPlayer) {
 			PVZPacketHandler.CHANNEL.send(
 					PacketDistributor.PLAYER.with(() -> {
-						return (ServerPlayerEntity) player;
+						return (ServerPlayer) player;
 					}),
 					new PAZStatsPacket(PAZStatsPacket.PAZPacketTypes.UNLOCK, plant.getIdentity(), this.isPAZLocked(plant))
 			);
@@ -517,11 +517,11 @@ public class PlayerDataManager {
 			this.playSoundTick = 0;
 		}
 		
-		private void saveToNBT(CompoundNBT baseTag) {
+		private void saveToNBT(CompoundTag baseTag) {
 			baseTag.putInt("base_sound_tick", this.playSoundTick);
 		}
 
-		private void loadFromNBT(CompoundNBT baseTag) {
+		private void loadFromNBT(CompoundTag baseTag) {
 			if(baseTag.contains("base_sound_tick")) {
 				this.playSoundTick = baseTag.getInt("base_sound_tick");
 			}
@@ -536,9 +536,9 @@ public class PlayerDataManager {
 		return this.otherStats;
 	}
 
-	protected Optional<ServerPlayerEntity> getServerPlayerOpt(){
-		if(this.player instanceof ServerPlayerEntity){
-			return Optional.ofNullable((ServerPlayerEntity) this.player);
+	protected Optional<ServerPlayer> getServerPlayerOpt(){
+		if(this.player instanceof ServerPlayer){
+			return Optional.ofNullable((ServerPlayer) this.player);
 		}
 		return Optional.empty();
 	}

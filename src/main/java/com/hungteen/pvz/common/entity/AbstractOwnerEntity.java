@@ -4,13 +4,13 @@ import com.hungteen.pvz.api.enums.PVZGroupType;
 import com.hungteen.pvz.api.interfaces.IHasGroup;
 import com.hungteen.pvz.api.interfaces.IHasOwner;
 import com.hungteen.pvz.utils.EntityUtil;
-import net.minecraft.entity.Entity;
-import net.minecraft.entity.EntityType;
-import net.minecraft.entity.LivingEntity;
-import net.minecraft.nbt.CompoundNBT;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.server.level.ServerLevel;
+import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.nbt.NBTUtil;
-import net.minecraft.world.World;
-import net.minecraft.world.server.ServerWorld;
+import net.minecraft.world.level.Level;
 
 import javax.annotation.Nullable;
 import java.util.Optional;
@@ -22,12 +22,12 @@ public abstract class AbstractOwnerEntity extends PVZEntityBase implements IHasG
 	protected UUID ownerId;
 	protected PVZGroupType groupType;
 	
-	public AbstractOwnerEntity(EntityType<?> entityTypeIn, World worldIn) {
+	public AbstractOwnerEntity(EntityType<?> entityTypeIn, Level worldIn) {
 		super(entityTypeIn, worldIn);
 		this.groupType = this.getInitialEntityGroup();
 	}
 	
-	public AbstractOwnerEntity(EntityType<?> type, World worldIn, Entity livingEntityIn) {
+	public AbstractOwnerEntity(EntityType<?> type, Level worldIn, Entity livingEntityIn) {
 		super(type, worldIn);
 		this.summonByOwner(livingEntityIn);
 	}
@@ -52,8 +52,8 @@ public abstract class AbstractOwnerEntity extends PVZEntityBase implements IHasG
 
 	@Nullable
 	public Entity getOwner() {
-		if (EntityUtil.isEntityValid(this.owner) && this.ownerId != null && this.level instanceof ServerWorld) {
-			this.owner = ((ServerWorld) this.level).getEntity(this.ownerId);
+		if (EntityUtil.isEntityValid(this.owner) && this.ownerId != null && this.level instanceof ServerLevel) {
+			this.owner = ((ServerLevel) this.level).getEntity(this.ownerId);
 		}
 		return this.owner;
 	}
@@ -76,7 +76,7 @@ public abstract class AbstractOwnerEntity extends PVZEntityBase implements IHasG
 		return this.groupType;
 	}
 	
-	public void addAdditionalSaveData(CompoundNBT compound) {
+	public void addAdditionalSaveData(CompoundTag compound) {
 		if (this.ownerId != null) {
 			compound.put("owner", NBTUtil.createUUID(this.ownerId));
 		}
@@ -87,7 +87,7 @@ public abstract class AbstractOwnerEntity extends PVZEntityBase implements IHasG
 	/**
 	 * (abstract) Protected helper method to read subclass entity data from NBT.
 	 */
-	public void readAdditionalSaveData(CompoundNBT compound) {
+	public void readAdditionalSaveData(CompoundTag compound) {
 		this.owner = null;
 		if (compound.contains("owner", 10)) {
 			this.ownerId = NBTUtil.loadUUID(compound.getCompound("owner"));

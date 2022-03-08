@@ -2,7 +2,7 @@ package com.hungteen.pvz.common.entity.ai.processor;
 
 import com.hungteen.pvz.common.entity.zombie.base.SwimmerZombieEntity;
 
-import net.minecraft.entity.MobEntity;
+import net.minecraft.world.entity.MobEntity;
 import net.minecraft.pathfinding.PathNodeType;
 import net.minecraft.pathfinding.WalkAndSwimNodeProcessor;
 import net.minecraft.world.Region;

@@ -4,7 +4,7 @@ import com.hungteen.pvz.api.types.ICardPlacement;
 import com.hungteen.pvz.common.block.BlockRegister;
 import com.hungteen.pvz.common.misc.tag.PVZBlockTags;
 
-import net.minecraft.block.Blocks;
+import net.minecraft.world.level.block.Blocks;
 import net.minecraft.tags.BlockTags;
 
 public class Placements {

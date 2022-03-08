@@ -10,20 +10,20 @@ import com.hungteen.pvz.common.misc.sound.SoundRegister;
 import com.hungteen.pvz.utils.EntityUtil;
 import com.hungteen.pvz.utils.enums.PAZAlmanacs;
 import com.mojang.datafixers.util.Pair;
-import net.minecraft.entity.CreatureEntity;
-import net.minecraft.entity.EntitySize;
-import net.minecraft.entity.EntityType;
-import net.minecraft.entity.Pose;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.entity.player.ServerPlayerEntity;
-import net.minecraft.world.World;
+import net.minecraft.world.entity.CreatureEntity;
+import net.minecraft.world.entity.EntitySize;
+import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.Pose;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.world.level.Level;
 
 import java.util.Arrays;
 import java.util.List;
 
 public class CoffeeBeanEntity extends PlantBomberEntity{
 
-	public CoffeeBeanEntity(EntityType<? extends CreatureEntity> type, World worldIn) {
+	public CoffeeBeanEntity(EntityType<? extends CreatureEntity> type, Level worldIn) {
 		super(type, worldIn);
 		this.canCollideWithPlant = false;
 		this.isImmuneToWeak = true;
@@ -45,9 +45,9 @@ public class CoffeeBeanEntity extends PlantBomberEntity{
 					hasEffect = true;
 				}
 			}
-			PlayerEntity player = EntityUtil.getEntityOwner(level, this);
-			if(player != null && player instanceof ServerPlayerEntity) {
-				EntityEffectAmountTrigger.INSTANCE.trigger((ServerPlayerEntity) player, this, awakeCnt);
+			Player player = EntityUtil.getEntityOwner(level, this);
+			if(player != null && player instanceof ServerPlayer) {
+				EntityEffectAmountTrigger.INSTANCE.trigger((ServerPlayer) player, this, awakeCnt);
 			}
 			if(hasEffect) {
 				EntityUtil.playSound(this, SoundRegister.WAKE_UP.get());

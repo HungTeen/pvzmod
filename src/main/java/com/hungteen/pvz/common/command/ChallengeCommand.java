@@ -10,11 +10,11 @@ import net.minecraft.command.Commands;
 import net.minecraft.command.arguments.BlockPosArgument;
 import net.minecraft.command.arguments.EntityArgument;
 import net.minecraft.command.arguments.ResourceLocationArgument;
-import net.minecraft.entity.player.ServerPlayerEntity;
-import net.minecraft.util.ResourceLocation;
-import net.minecraft.util.math.BlockPos;
+import net.minecraft.network.chat.TranslatableComponent;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.util.Mth;
 import net.minecraft.util.text.StringTextComponent;
-import net.minecraft.util.text.TranslationTextComponent;
 
 import java.util.Collection;
 
@@ -42,20 +42,20 @@ public class ChallengeCommand {
         dispatcher.register(builder);
     }
 
-    private static int addChallenge(CommandSource source, ResourceLocation res, BlockPos pos) {
+    private static int addChallenge(CommandSource source, ResourceLocation res, Mth pos) {
         if (ChallengeManager.getChallengeByResource(res) != null) {
             if (!ChallengeManager.hasChallengeNearby(source.getLevel(), pos)) {
                 ChallengeManager.createChallenge(source.getLevel(), res, pos);
             } else {
-                source.sendFailure(new TranslationTextComponent("command.pvz.exist"));
+                source.sendFailure(new TranslatableComponent("command.pvz.exist"));
             }
         } else {
-            source.sendFailure(new TranslationTextComponent("command.pvz.no", res.toString()));
+            source.sendFailure(new TranslatableComponent("command.pvz.no", res.toString()));
         }
         return 1;
     }
 
-    private static int removeNearby(CommandSource source, BlockPos pos) {
+    private static int removeNearby(CommandSource source, Mth pos) {
         ChallengeManager.getChallenges(source.getLevel()).forEach(raid -> {
             if (raid.getCenter().closerThan(pos, ConfigUtil.getRaidRange())) {
                 raid.remove();
@@ -71,7 +71,7 @@ public class ChallengeCommand {
         return 1;
     }
 
-    private static int showAllChallenge(CommandSource source, Collection<? extends ServerPlayerEntity> targets) {
+    private static int showAllChallenge(CommandSource source, Collection<? extends ServerPlayer> targets) {
         ChallengeManager.getChallenges(source.getLevel()).forEach(raid -> {
             targets.forEach(p -> PlayerUtil.sendMsgTo(p, new StringTextComponent(raid.getCenter().toString())));
         });

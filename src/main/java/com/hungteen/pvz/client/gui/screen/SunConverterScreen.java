@@ -8,10 +8,10 @@ import com.hungteen.pvz.utils.StringUtil;
 import com.hungteen.pvz.utils.enums.Colors;
 import com.mojang.blaze3d.matrix.MatrixStack;
 
-import net.minecraft.entity.player.PlayerInventory;
-import net.minecraft.util.ResourceLocation;
-import net.minecraft.util.text.ITextComponent;
-import net.minecraft.util.text.TranslationTextComponent;
+import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.TranslatableComponent;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.entity.player.PlayerInventory;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 
@@ -20,13 +20,13 @@ public class SunConverterScreen extends PVZContainerScreen<SunConverterContainer
 
 	private static final ResourceLocation TEXTURE = new ResourceLocation("textures/gui/container/dispenser.png");
 
-	public SunConverterScreen(SunConverterContainer screenContainer, PlayerInventory inv, ITextComponent titleIn) {
+	public SunConverterScreen(SunConverterContainer screenContainer, PlayerInventory inv, Component titleIn) {
 		super(screenContainer, inv, titleIn);
 		this.imageWidth = 176;
 		this.imageHeight = 166;
 		this.tips.add(new TipField(2, 2, Arrays.asList(
-				new TranslationTextComponent("gui.pvz.sun_converter.tip1"),
-				new TranslationTextComponent("gui.pvz.sun_converter.tip2")
+				new TranslatableComponent("gui.pvz.sun_converter.tip1"),
+				new TranslatableComponent("gui.pvz.sun_converter.tip2")
 		)));
 	}
 
@@ -48,7 +48,7 @@ public class SunConverterScreen extends PVZContainerScreen<SunConverterContainer
 	public void render(MatrixStack stack, int mouseX, int mouseY, float partialTicks) {
 		super.render(stack, mouseX, mouseY, partialTicks);
 		StringUtil.drawCenteredScaledString(stack, font,
-				new TranslationTextComponent("block.pvz.sun_converter").getString(), this.leftPos + this.imageWidth / 2,
+				new TranslatableComponent("block.pvz.sun_converter").getString(), this.leftPos + this.imageWidth / 2,
 				this.topPos + 4, Colors.BLACK, 1F);
 		renderTooltip(stack, mouseX, mouseY);
 	}

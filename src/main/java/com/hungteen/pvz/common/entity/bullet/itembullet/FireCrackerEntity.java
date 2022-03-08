@@ -6,28 +6,28 @@ import com.hungteen.pvz.common.misc.sound.SoundRegister;
 import com.hungteen.pvz.common.entity.EntityRegister;
 import com.hungteen.pvz.utils.EntityUtil;
 
-import net.minecraft.entity.Entity;
-import net.minecraft.entity.EntitySize;
-import net.minecraft.entity.EntityType;
-import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.Pose;
-import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.CompoundNBT;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.EntitySize;
+import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.Pose;
+import net.minecraft.world.item.ItemStack;
 import net.minecraft.util.math.EntityRayTraceResult;
 import net.minecraft.util.math.RayTraceResult;
 import net.minecraft.util.math.vector.Vector3d;
-import net.minecraft.world.World;
+import net.minecraft.world.level.Level;
 
 public class FireCrackerEntity extends PVZItemBulletEntity{
 
 	private static final float SPEED = 1.5F;
 	protected Entity target = null;
 	
-	public FireCrackerEntity(EntityType<?> type, World worldIn) {
+	public FireCrackerEntity(EntityType<?> type, Level worldIn) {
 		super(type, worldIn);
 	}
 	
-	public FireCrackerEntity(World worldIn, LivingEntity owner) {
+	public FireCrackerEntity(Level worldIn, LivingEntity owner) {
 		super(EntityRegister.FIRE_CRACKER.get(), worldIn, owner);
 	}
 	
@@ -88,7 +88,7 @@ public class FireCrackerEntity extends PVZItemBulletEntity{
 	}
 	
 	@Override
-	public void readAdditionalSaveData(CompoundNBT compound) {
+	public void readAdditionalSaveData(CompoundTag compound) {
 		super.readAdditionalSaveData(compound);
 		if(compound.contains("target_entity_id")) {
 			this.target = (Entity) level.getEntity(compound.getInt("target_entity_id"));
@@ -96,7 +96,7 @@ public class FireCrackerEntity extends PVZItemBulletEntity{
 	}
 	
 	@Override
-	public void addAdditionalSaveData(CompoundNBT compound) {
+	public void addAdditionalSaveData(CompoundTag compound) {
 		super.addAdditionalSaveData(compound);
 		if(this.target != null) {
 			compound.putInt("target_entity_id", this.target.getId());
