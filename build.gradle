@@ -113,7 +113,7 @@ repositories {
 }
 
 dependencies {
-    minecraft 'net.minecraftforge:forge:1.18.2-40.0.3'
+    minecraft 'net.minecraftforge:forge:1.18.2-40.0.12'
 
     //https://maven.blamejared.com/vazkii/patchouli/Patchouli/
     compileOnly fg.deobf("vazkii.patchouli:Patchouli:${patchouli_version}:api")

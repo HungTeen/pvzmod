@@ -1,7 +1,0 @@
-{
-	"name": "Boss",
-	"description": "Boss的挑战。",
-	"icon": "pvz:edgar_doll",
-	"sortnum":1,
-	"parent": "pvz:start"
-}

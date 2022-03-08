@@ -1,33 +1,24 @@
 package com.hungteen.pvz.common;
 
-import net.minecraft.world.entity.player.Player;
-
+/**
+ * @program: pvzmod-1.18.x
+ * @author: HungTeen
+ * @create: 2022-03-08 19:59
+ **/
 public class CommonProxy {
 
-	protected float ladderSpeed = 0;
+    public void init() {
+    }
 
-	public void init() {
-	}
+    public void postInit() {
 
-	public void postInit() {
-		
-	}
-	
-	public void setUp() {
-	}
-	
-	public void setUpClient() {
-		
-	}
+    }
 
-	/**
-	 * climp up on client side.
-	 */
-	public void climbUp() {
-	}
+    public void setUp() {
+    }
 
-	public Player getPlayer(){
-		return null;
-	}
-	
+    public void setUpClient() {
+
+    }
+
 }
