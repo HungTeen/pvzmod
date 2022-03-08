@@ -282,8 +282,6 @@ public class EntityRegister {
 	public static final RegistryObject<EntityType<GloomShroomEntity>> GLOOM_SHROOM = registerPlantEntityType(GloomShroomEntity::new, "gloom_shroom");
 	public static final RegistryObject<EntityType<GoldMagnetEntity>> GOLD_MAGNET = registerPlantEntityType(GoldMagnetEntity::new, "gold_magnet");
 	public static final RegistryObject<EntityType<GoldLeafEntity>> GOLD_LEAF = registerPlantEntityType(GoldLeafEntity::new, "gold_leaf");
-	public static final RegistryObject<EntityType<ExplodeONutEntity>> EXPLODE_O_NUT = registerPlantEntityType(ExplodeONutEntity::new, "explode_o_nut");
-	public static final RegistryObject<EntityType<GiantWallNutEntity>> GIANT_WALL_NUT = registerPlantEntityType(GiantWallNutEntity::new, "giant_wall_nut");
 	public static final RegistryObject<EntityType<FlowerPotEntity>> FLOWER_POT = registerPlantEntityType(FlowerPotEntity::new, "flower_pot");
 	public static final RegistryObject<EntityType<CabbagePultEntity>> CABBAGE_PULT = registerPlantEntityType(CabbagePultEntity::new, "cabbage_pult");
 	public static final RegistryObject<EntityType<KernelPultEntity>> KERNEL_PULT = registerPlantEntityType(KernelPultEntity::new, "kernel_pult");
@@ -464,8 +462,6 @@ public class EntityRegister {
         
         RenderingRegistry.registerEntityRenderingHandler(ANGEL_STAR_FRUIT.get(), AngelStarFruitRender::new);
         RenderingRegistry.registerEntityRenderingHandler(GOLD_LEAF.get(), GoldLeafRender::new);
-        RenderingRegistry.registerEntityRenderingHandler(EXPLODE_O_NUT.get(), ExplodeONutRender::new);
-        RenderingRegistry.registerEntityRenderingHandler(GIANT_WALL_NUT.get(), GiantWallNutRender::new);
         RenderingRegistry.registerEntityRenderingHandler(BUTTER_PULT.get(), ButterPultRender::new);
         RenderingRegistry.registerEntityRenderingHandler(BAMBOO_LORD.get(), BambooLordRender::new);
         RenderingRegistry.registerEntityRenderingHandler(ICEBERG_LETTUCE.get(), IcebergLettuceRender::new);

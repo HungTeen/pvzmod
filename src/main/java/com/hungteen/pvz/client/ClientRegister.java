@@ -46,11 +46,11 @@ public class ClientRegister {
 	@SubscribeEvent
 	public static void onModelBaked(ModelBakeEvent ev) {
 		Map<ResourceLocation, IBakedModel> modelRegistry = ev.getModelRegistry();
-		{
-			Pair<IBakedModel, ModelResourceLocation> now = getBakedModel(ev, ItemRegister.BOWLING_GLOVE.get());
-			BowlingGloveBakedModel tmp = new BowlingGloveBakedModel(now.getFirst());
-			modelRegistry.put(now.getSecond(), tmp);
-		}
+//		{
+//			Pair<IBakedModel, ModelResourceLocation> now = getBakedModel(ev, ItemRegister.BOWLING_GLOVE.get());
+//			BowlingGloveBakedModel tmp = new BowlingGloveBakedModel(now.getFirst());
+//			modelRegistry.put(now.getSecond(), tmp);
+//		}
 		{
 			Pair<IBakedModel, ModelResourceLocation> now = getBakedModel(ev, ItemRegister.IMITATER_CARD.get());
 			ImitaterCardBakedModel tmp = new ImitaterCardBakedModel(now.getFirst());

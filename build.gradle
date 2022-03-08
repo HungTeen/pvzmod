@@ -124,6 +124,9 @@ dependencies {
 //    implementation fg.deobf("curse.maven:craid-532546:${craid_version}")
     
     implementation fg.deobf("curse.maven:configured-457570:${configured_version}")
+
+    //ban the annoying mod.
+//    implementation fg.deobf("curse.maven:getinthebucketmod-345984:${bucket_version}")
 }
 
 task apiJar(type: Jar) {

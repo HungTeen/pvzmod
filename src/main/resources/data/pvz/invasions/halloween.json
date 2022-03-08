@@ -6,12 +6,12 @@
   "spawns": [
     {
       "entity_type": "pvz:trick_zombie",
-      "invasion_level": 5,
+      "invasion_level": 20,
       "spawn_weight": 60
     },
     {
       "entity_type": "pvz:pumpkin_zombie",
-      "invasion_level": 25,
+      "invasion_level": 35,
       "spawn_weight": 40
     }
   ]

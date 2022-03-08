@@ -10,6 +10,7 @@ import com.hungteen.pvz.common.item.tool.plant.BowlingGloveItem;
 import com.hungteen.pvz.common.item.tool.plant.PeaGunItem;
 import com.hungteen.pvz.common.misc.sound.SoundRegister;
 import com.hungteen.pvz.common.world.invasion.InvasionManager;
+import com.hungteen.pvz.compat.CompatUtil;
 import com.hungteen.pvz.utils.PlayerUtil;
 import com.hungteen.pvz.utils.enums.Resources;
 import net.minecraft.util.Hand;
@@ -82,12 +83,22 @@ public class PVZPlayerEvents {
 	}
 	
 	@SubscribeEvent
-	public static void onPlayerInteract(PlayerInteractEvent.EntityInteractSpecific ev) {
-		if(! ev.getWorld().isClientSide && ev.getHand() == Hand.MAIN_HAND) {
-			PlayerEventHandler.quickRemoveByPlayer(ev.getPlayer(), ev.getTarget(), ev.getPlayer().getMainHandItem());
-			PlayerEventHandler.makeSuperMode(ev.getPlayer(), ev.getTarget(), ev.getPlayer().getMainHandItem());
+	public static void onPlayerInteractSpec(PlayerInteractEvent.EntityInteractSpecific ev) {
+		if(! ev.getWorld().isClientSide){
+			if(ev.getHand() == Hand.MAIN_HAND) {
+				PlayerEventHandler.quickRemoveByPlayer(ev.getPlayer(), ev.getTarget(), ev.getPlayer().getMainHandItem());
+				PlayerEventHandler.makeSuperMode(ev.getPlayer(), ev.getTarget(), ev.getPlayer().getMainHandItem());
+			}
 		}
 		BowlingGloveItem.onPickUp(ev);
+	}
+
+	@SubscribeEvent(priority = EventPriority.HIGHEST)
+	public static void banBucket(PlayerInteractEvent.EntityInteractSpecific ev) {
+		System.out.println("???");
+		if(! CompatUtil.canBucketEntity(ev.getPlayer().level, ev.getTarget(), ev.getItemStack())){
+			ev.setCanceled(true);
+		}
 	}
 	
 	@SubscribeEvent

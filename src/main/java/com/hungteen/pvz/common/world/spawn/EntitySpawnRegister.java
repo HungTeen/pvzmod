@@ -105,7 +105,7 @@ public class EntitySpawnRegister {
 			if(BiomeUtil.isConiferous(biomeKey)) {
 			}
 		}
-		if(BiomeUtil.isNether(biomeKey)) {
+		if(BiomeUtil.isNetherWaste(biomeKey)) {
 			event.getSpawns().addSpawn(EntityClassification.MONSTER, new Spawners(EntityRegister.LAVA_ZOMBIE.get(), PVZConfig.COMMON_CONFIG.WorldSettings.LavaZombieSpawnWeight.get(), 1, 1));
 		}
 		if(BiomeUtil.isTheEnd(biomeKey)) {

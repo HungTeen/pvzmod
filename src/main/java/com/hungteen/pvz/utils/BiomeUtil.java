@@ -4,6 +4,7 @@ import com.hungteen.pvz.common.world.biome.BiomeRegister;
 import net.minecraft.util.RegistryKey;
 import net.minecraft.world.biome.Biome;
 import net.minecraft.world.biome.BiomeMaker;
+import net.minecraft.world.biome.Biomes;
 import net.minecraftforge.common.BiomeDictionary;
 import net.minecraftforge.common.BiomeDictionary.Type;
 import net.minecraftforge.fml.common.ObfuscationReflectionHelper;
@@ -97,6 +98,10 @@ public class BiomeUtil {
 	
 	public static boolean isNether(RegistryKey<Biome> biomeKey) {
 		return BiomeDictionary.hasType(biomeKey, Type.NETHER);
+	}
+
+	public static boolean isNetherWaste(RegistryKey<Biome> biomeKey) {
+		return biomeKey.equals(Biomes.NETHER_WASTES);
 	}
 	
 	public static boolean isTheEnd(RegistryKey<Biome> biomeKey) {

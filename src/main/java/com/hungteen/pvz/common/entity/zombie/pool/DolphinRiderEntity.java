@@ -99,7 +99,7 @@ public class DolphinRiderEntity extends PVZZombieEntity{
 	public boolean canBeAttractedBy(ICanAttract defender) {
 		if(defender instanceof PVZPlantEntity) {
 			final IPlantType plant = ((PVZPlantEntity) defender).getPlantType();
-			return plant == PVZPlants.TALL_NUT || plant == PVZPlants.GIANT_WALL_NUT;
+			return plant == PVZPlants.TALL_NUT;
 		}
 		return true;
 	}

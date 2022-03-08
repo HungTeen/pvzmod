@@ -16,12 +16,12 @@
     },
     {
       "entity_type": "pvz:pole_zombie",
-      "invasion_level": 15,
+      "invasion_level": 18,
       "spawn_weight": 40
     },
     {
       "entity_type": "pvz:buckethead_zombie",
-      "invasion_level": 25,
+      "invasion_level": 30,
       "spawn_weight": 30
     }
   ]
