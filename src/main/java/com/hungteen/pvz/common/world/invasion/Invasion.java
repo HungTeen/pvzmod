@@ -71,6 +71,8 @@ public class Invasion {
     private int[] killQueue = new int[MissionManager.KILL_IN_SECOND];
     public int killInSecond = 0;
     public int killPos = 0;
+    /* misc */
+    private BlockPos availableSpawnPos;
 
     public Invasion(PlayerEntity player) {
         this.player = player;
@@ -127,6 +129,7 @@ public class Invasion {
                         b -> InvasionManager.suitableInvasionPos(world, b) && type.checkPos(world, b));
 
                 if (pos != null) {
+                	this.availableSpawnPos = pos;
                     this.spawnInvader(type, pos);
                 }
             }
@@ -144,6 +147,7 @@ public class Invasion {
             PVZMod.LOGGER.warn("WaveManager : Why cause spawn list empty ?");
             return false;
         }
+        
         int cnt = this.getSpawnCount(this.currentWave);
         boolean spawned = false;
         while (cnt >= 15) {//split whole zombie to serveral zombie teams.
@@ -171,8 +175,14 @@ public class Invasion {
      * spawn a zombie invade team.
      */
     private boolean spawnZombieTeam(int cnt) {
-        final BlockPos mid = WorldUtil.findRandomSpawnPos(world, player.blockPosition(), 20, 16, 48,
+        BlockPos mid = WorldUtil.findRandomSpawnPos(world, player.blockPosition(), 20, 16, 48,
                 b -> suitableInvasionPos(world, b) && world.getBlockState(b.below()).getFluidState().isEmpty());
+        
+        //improve wave spawn position finding.
+        if(mid == null && this.availableSpawnPos != null && MathUtil.getPosDisToVec(this.availableSpawnPos, this.player.position()) < 1600) {
+        	mid = this.availableSpawnPos;
+            
+        }
 
         boolean flag = false;
         if (mid != null) {//find spawn position.
