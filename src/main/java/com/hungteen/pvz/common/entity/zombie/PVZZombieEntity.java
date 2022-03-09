@@ -56,7 +56,6 @@ import net.minecraft.pathfinding.PathNodeType;
 import net.minecraft.potion.EffectInstance;
 import net.minecraft.potion.Effects;
 import net.minecraft.tags.FluidTags;
-import net.minecraft.tileentity.MobSpawnerTileEntity;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.SoundEvent;
 import net.minecraft.util.math.BlockPos;
@@ -96,7 +95,6 @@ public abstract class PVZZombieEntity extends AbstractPAZEntity implements IZomb
 		this.setPathfindingMalus(PathNodeType.LEAVES, 4F);
 		
 		this.setZombieType(this.getSpawnType());
-		MobSpawnerTileEntity
 	}
 
 	@Override

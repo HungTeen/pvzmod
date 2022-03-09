@@ -82,7 +82,7 @@ public abstract class SummonCardItem extends Item{
 		tooltip.add(new TranslationTextComponent("tooltip.pvz.card_cd", new TranslationTextComponent(getCardCoolDown(stack).getTranslateKey()).getString()).withStyle(TextFormatting.AQUA));
 		PlayerUtil.getOptManager(PVZMod.PROXY.getPlayer()).ifPresent(m -> {
 			//this paz type is locked.
-			if (m.isPAZLocked(this.type)) {
+			if (m.isPAZLocked(this.type) && ! this.isEnjoyCard) {
 				tooltip.add(new TranslationTextComponent("tooltip.pvz.card_required_level", getCardRequiredLevel(stack)).withStyle(TextFormatting.RED));
 			}
 		});

@@ -1,6 +1,7 @@
 package com.hungteen.pvz.compat;
 
 import com.hungteen.pvz.common.entity.AbstractPAZEntity;
+import com.hungteen.pvz.common.entity.misc.GiftBoxEntity;
 import net.minecraft.entity.Entity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
@@ -18,7 +19,7 @@ public class CompatUtil {
      */
     public static boolean canBucketEntity(World world, Entity entity, ItemStack stack){
         if(stack.getItem().equals(Items.BUCKET)){
-            if(entity instanceof AbstractPAZEntity){
+            if(entity instanceof AbstractPAZEntity || entity instanceof GiftBoxEntity){
                 return false;
             }
         }

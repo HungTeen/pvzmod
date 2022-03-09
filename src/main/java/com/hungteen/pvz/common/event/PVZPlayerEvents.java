@@ -95,7 +95,6 @@ public class PVZPlayerEvents {
 
 	@SubscribeEvent(priority = EventPriority.HIGHEST)
 	public static void banBucket(PlayerInteractEvent.EntityInteractSpecific ev) {
-		System.out.println("???");
 		if(! CompatUtil.canBucketEntity(ev.getPlayer().level, ev.getTarget(), ev.getItemStack())){
 			ev.setCanceled(true);
 		}
