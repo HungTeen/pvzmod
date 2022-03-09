@@ -131,7 +131,7 @@ public class CatTailEntity extends PlantShooterEntity {
 
 	@Override
 	public EntitySize getDimensions(Pose poseIn) {
-		return EntitySize.scalable(0.8F, 1.4F);
+		return EntitySize.scalable(0.8F, 1F);
 	}
 	
 	@Override

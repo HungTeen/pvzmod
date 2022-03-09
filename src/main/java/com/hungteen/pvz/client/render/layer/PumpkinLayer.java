@@ -2,9 +2,14 @@ package com.hungteen.pvz.client.render.layer;
 
 import com.hungteen.pvz.PVZMod;
 import com.hungteen.pvz.client.model.entity.plant.defence.PumpkinModel;
+import com.hungteen.pvz.client.model.entity.plant.defence.WallNutModel;
 import com.hungteen.pvz.client.render.entity.plant.PVZPlantRender;
+import com.hungteen.pvz.client.render.layer.component.ComponentLayer;
 import com.hungteen.pvz.common.entity.plant.PVZPlantEntity;
+import com.hungteen.pvz.common.entity.plant.defence.PumpkinEntity;
+import com.hungteen.pvz.common.entity.plant.defence.WallNutEntity;
 import com.hungteen.pvz.common.impl.plant.PVZPlants;
+import com.hungteen.pvz.utils.StringUtil;
 import com.mojang.blaze3d.matrix.MatrixStack;
 import com.mojang.blaze3d.vertex.IVertexBuilder;
 
@@ -16,13 +21,13 @@ import net.minecraft.client.renderer.entity.model.EntityModel;
 import net.minecraft.client.renderer.texture.OverlayTexture;
 import net.minecraft.util.ResourceLocation;
 
-public class PumpkinLayer<T extends PVZPlantEntity> extends LayerRenderer<T, EntityModel<T>>{
+public class PumpkinLayer<T extends PVZPlantEntity> extends ComponentLayer<T>{
 	
 	private PumpkinModel model = new PumpkinModel();
 	private PVZPlantRender<T> plantRender;
 	
 	public PumpkinLayer(IEntityRenderer<T, EntityModel<T>> entityRendererIn) {
-		super(entityRendererIn);
+		super(entityRendererIn,new PumpkinModel());
 		if(entityRendererIn instanceof PVZPlantRender) {
 			this.plantRender = (PVZPlantRender<T>) entityRendererIn;
 		}
@@ -38,7 +43,7 @@ public class PumpkinLayer<T extends PVZPlantEntity> extends LayerRenderer<T, Ent
 		matrixStackIn.pushPose();
 		IVertexBuilder builder = bufferIn.getBuffer(RenderType.entitySolid(this.getRenderTexture(plant)));
 		if(this.plantRender != null) {
-			float scale = 0.6f;
+			float scale = 1f;
 			float plantScale = this.plantRender.getScaleByEntity(plant);
 		    matrixStackIn.scale(scale / plantScale, scale / plantScale, scale / plantScale);
 		    double offsetH = 1.501D;
@@ -50,7 +55,7 @@ public class PumpkinLayer<T extends PVZPlantEntity> extends LayerRenderer<T, Ent
 		matrixStackIn.popPose();
 	}
 	
-	protected ResourceLocation getRenderTexture(T plant) {
+	public ResourceLocation getRenderTexture(T plant) {
 		return PVZPlants.PUMPKIN.getRenderResource();
 	}
 	
