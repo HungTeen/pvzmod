@@ -37,3 +37,4 @@ Disco Party
 The Grandmaster
 Zombies have a brain dream
 Bug
+JEI
