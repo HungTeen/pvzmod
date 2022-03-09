@@ -250,4 +250,9 @@ public class InvasionManager {
     public static boolean suitableInvasionPos(World world, BlockPos pos){
         return ! world.getBiomeManager().getBiome(pos).getRegistryName().equals(BiomeRegister.ZEN_GARDEN.get().getRegistryName());
     }
+
+    public static boolean enableSkills(World world){
+        return world.getDifficulty() == Difficulty.HARD;
+    }
+
 }

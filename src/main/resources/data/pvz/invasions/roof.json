@@ -11,22 +11,22 @@
     },
     {
       "entity_type": "pvz:conehead_zombie",
-      "invasion_level": 7,
+      "invasion_level": 8,
       "spawn_weight": 40
     },
     {
       "entity_type": "pvz:ladder_zombie",
-      "invasion_level": 15,
+      "invasion_level": 16,
       "spawn_weight": 40
     },
     {
       "entity_type": "pvz:bungee_zombie",
-      "invasion_level": 25,
+      "invasion_level": 30,
       "spawn_weight": 20
     },
     {
       "entity_type": "pvz:catapult_zombie",
-      "invasion_level": 32,
+      "invasion_level": 35,
       "spawn_weight": 30
     },
     {
@@ -36,7 +36,7 @@
     },
     {
       "entity_type": "pvz:giga_gargantuar",
-      "invasion_level": 50,
+      "invasion_level": 60,
       "spawn_weight": 5
     }
   ]

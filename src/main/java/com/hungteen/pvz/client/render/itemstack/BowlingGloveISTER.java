@@ -46,10 +46,10 @@ public class BowlingGloveISTER extends ItemStackTileEntityRenderer {
         degree += 4;
         
 		matrixStackIn.pushPose();
-		matrixStackIn.scale(1, - 1, 1);
-		final float f = type.get().getSize();
-		matrixStackIn.scale(f, f, f);
-		matrixStackIn.translate(0.0, - 1.501, 0.0);
+//		matrixStackIn.scale(1, - 1, 1);
+//		final float f = type.get().getSize();
+//		matrixStackIn.scale(f, f, f);
+//		matrixStackIn.translate(0.0, - 1.501, 0.0);
 		matrixStackIn.mulPose(Vector3f.XN.rotationDegrees(- degree));
         IVertexBuilder ivertexbuilder = bufferIn.getBuffer(this.model.renderType(type.get().getType().getRenderResource()));
         this.model.renderToBuffer(matrixStackIn, ivertexbuilder, combinedLightIn, OverlayTexture.NO_OVERLAY, 1.0F, 1.0F, 1.0F, 1.0F);

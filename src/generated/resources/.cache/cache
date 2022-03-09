@@ -77,8 +77,6 @@ e37fbea58e66a63f8c4a0c277cc84213ef3c1d31 assets/pvz/models/item/electric_ore.jso
 ae616290037c09b16fe9e77e1fd63f31c09d190e assets/pvz/models/item/enforce_essence.json
 def3b9e0f91ad67dffdcb110e071097dda4e3e8d assets/pvz/models/item/enforce_ore.json
 7e3b744f29b2a80c2a763abe32beb43991c791a4 assets/pvz/models/item/essence_altar.json
-3a234c171f5c58f1449dc68441d487a1d2a75405 assets/pvz/models/item/explode_o_nut_card.json
-4e9fd2ae1944368a31a85a3361d06352b1b6bc25 assets/pvz/models/item/explode_o_nut_enjoy_card.json
 6e9c5729b281441a864fca0d6d38cdbbef6c3244 assets/pvz/models/item/explosion_essence.json
 a74e2833632919df83a1cf18d15a87c6ac4c86db assets/pvz/models/item/explosion_ore.json
 71d31c3593bb9582447f4061adf93cc5ba2fd5c0 assets/pvz/models/item/fake_brain.json
@@ -108,8 +106,6 @@ d48ec49f14ee55f503fad17944bc55e1f4f64c95 assets/pvz/models/item/garlic_enjoy_car
 a016a9cf2ffd5c021f5c1fdd1204e1ebdb26d4f1 assets/pvz/models/item/gatling_pea_card.json
 e7685c1fbfb708e34fda14e8946bc7b6f713eb31 assets/pvz/models/item/gatling_pea_enjoy_card.json
 98167609bf3898587f7565736a6fc24a7966cacd assets/pvz/models/item/gatlingpea_zombie_spawn_egg.json
-975e80c724c36bc67e40fc606fabcc697dab565b assets/pvz/models/item/giant_wall_nut_card.json
-983152d975753cc3d3865077908937ec362fca92 assets/pvz/models/item/giant_wall_nut_enjoy_card.json
 d2c95120ee2b432deefc766c36af08e152f59e20 assets/pvz/models/item/giga_boots.json
 fb94bede4c04dae4cc031356a00b6dbdc116f9c7 assets/pvz/models/item/giga_chestplate.json
 98167609bf3898587f7565736a6fc24a7966cacd assets/pvz/models/item/giga_football_zombie_spawn_egg.json
@@ -174,6 +170,7 @@ b32a9ed4a7f2d370dab83de64049c2341399ca5f assets/pvz/models/item/magnet_shroom_ca
 98167609bf3898587f7565736a6fc24a7966cacd assets/pvz/models/item/normal_zombie_spawn_egg.json
 14ff08172595a1f9cc74fcff6d4393bba2de4b01 assets/pvz/models/item/nut.json
 953987486f6741d19c018b2a288a517af0cbdf2d assets/pvz/models/item/nut_leaves.json
+3741609e0e80440ff4d466b57fbd441c68e8575c assets/pvz/models/item/nut_log.json
 ad441603b75739a419db086ec7347c54e984bf62 assets/pvz/models/item/nut_sapling.json
 98167609bf3898587f7565736a6fc24a7966cacd assets/pvz/models/item/old_zombie_spawn_egg.json
 cbf32c3622e3f14ad34f546ba3eb201d06c4343f assets/pvz/models/item/origin_axe.json
@@ -305,6 +302,7 @@ a63cfcf7eadd5ff34bf9e006495b86bd0894ed34 data/forge/tags/items/ingots/amethyst.j
 05fb482232b9aa0b3142ea10ff82447d995cc94c data/forge/tags/items/seeds/cabbage.json
 f61963e0035f6c63d9f9a55930d601d81b12780f data/forge/tags/items/seeds/corn.json
 054aeedb6ba1c544a69e5f943c0ac4842a52e878 data/minecraft/tags/blocks/climbable.json
+e4494480458b3aacc4f2cad0a132b1f0272fb8ae data/minecraft/tags/blocks/logs.json
 20992a32bf3980d890c7c4773d2c79344b6d23e8 data/minecraft/tags/items/arrows.json
 fa3446437a0529b1c2a52625b2b087066fbe5b0c data/pvz/loot_tables/blocks/amethyst_block.json
 1a90951b600d5bef5cbfa140df3d7d23e7218e7b data/pvz/loot_tables/blocks/amethyst_ore.json
@@ -334,6 +332,7 @@ eb9f90911f7b9301175a741d9fd01e2ee23125eb data/pvz/loot_tables/blocks/lantern.jso
 48e02e235f481a472848c3daf3640d2891660989 data/pvz/loot_tables/blocks/light_ore.json
 2d888e4966e902d3f2306cffe11fced2f3896f65 data/pvz/loot_tables/blocks/magic_ore.json
 c0fedfbca880395c63fe80f5c6b71c0dce7ac3ea data/pvz/loot_tables/blocks/nut_leaves.json
+3c45c43c37d35f89e88ab0da9d4ec571288e8afd data/pvz/loot_tables/blocks/nut_log.json
 f402a5ae35ed5f3692c13aac9e0e6791e043c918 data/pvz/loot_tables/blocks/nut_sapling.json
 de79c756a8b8505782fb78ab5991a7bdd8e75a25 data/pvz/loot_tables/blocks/origin_block.json
 51b7f8f1705f5254626bbe7cc9ba0c04b70ea988 data/pvz/loot_tables/blocks/origin_ore.json
@@ -423,8 +422,6 @@ a5590d793048418196f1f91b29d793a0eb31385f data/pvz/recipes/card/template/gold_car
 07650cb3aa14191f5c1eda6cf37c859237952507 data/pvz/recipes/card/torch_wood_card.json
 572772c4c04da0e2f0a26a1391ce6342e10f40b5 data/pvz/recipes/card/umbrella_leaf_card.json
 434af86f5471bb6e7d1b4ec5eb0a798b5d802134 data/pvz/recipes/card/wall_nut_card.json
-886163bb26279a7379cf3a42498174cd679938f4 data/pvz/recipes/card_fusion/explode_o_nut_card.json
-de87a3ec32b8190d159956bff5e9cc1a40cd2bc3 data/pvz/recipes/card_fusion/giant_wall_nut_card.json
 83e086edb1832fe4099e20d500082d8d1e25652a data/pvz/recipes/card_fusion/puff_shroom_card.json
 b19d903503f1ce283c5459786297d43fc059e7a2 data/pvz/recipes/card_fusion/repeater_card.json
 218344a133bd51cca47d18f996722d1b92097858 data/pvz/recipes/card_fusion/sea_shroom_card.json
@@ -445,12 +442,10 @@ a6d68c0549c39158fc176b1cb4f43da303f9101b data/pvz/recipes/fragment_splice/cherry
 c875d34c0a10f9ac2339bc40118caf0f604ceeff data/pvz/recipes/fragment_splice/cob_cannon_card.json
 1d47170147160557194459677168789d35681625 data/pvz/recipes/fragment_splice/coffee_bean_card.json
 8f42d3dbe5146cc132601e50ddda824acfd4f547 data/pvz/recipes/fragment_splice/doom_shroom_card.json
-00c1de02752e35e4ea10557c99aa56efd0bdcacd data/pvz/recipes/fragment_splice/explode_o_nut_card.json
 5ca7cf2b9e0ca42775f34c1646094ddb370059ea data/pvz/recipes/fragment_splice/flower_pot_card.json
 53e2d169eab8ffb855334c37d3e11c879c726919 data/pvz/recipes/fragment_splice/fume_shroom_card.json
 b9668a3acabea873c2f96eeee0ac97788cb77171 data/pvz/recipes/fragment_splice/garlic_card.json
 bf53297a20d91703fcd9dc50956c1f9c33e24776 data/pvz/recipes/fragment_splice/gatling_pea_card.json
-ec42b113cff0737d07e2878a83e7230486707299 data/pvz/recipes/fragment_splice/giant_wall_nut_card.json
 208d5d7e0a620287342e323690286834668c879e data/pvz/recipes/fragment_splice/gloom_shroom_card.json
 8cacdb150ed6c767652da35aeeb1e6b1a3c5435a data/pvz/recipes/fragment_splice/gold_leaf_card.json
 fb03694d743823b05b822bf08059f7bf53424c92 data/pvz/recipes/fragment_splice/gold_magnet_card.json
@@ -511,7 +506,7 @@ e528ed32ae5cbee9f37cf36a8f1dc7c564da613b data/pvz/tags/blocks/radiations/to_magi
 50e97df35e7309fbd5feb8f4161ce7888cf962ad data/pvz/tags/blocks/radiations/to_spear_ores.json
 9d1ecf63986d71331f6d088921f6d488b3bd2152 data/pvz/tags/blocks/radiations/to_toxic_ores.json
 a0b4b6c3a02e6c7f1620ef90b3d1bf8b31347dfd data/pvz/tags/entity_types/bungee_spawns.json
-1a13ded2c707b9d73eb92891bd45148f1c7a0284 data/pvz/tags/entity_types/pvz_plants.json
+7407962097b8aeafd5774dedf48a5056de7d6238 data/pvz/tags/entity_types/pvz_plants.json
 6f146e0ef723cc35f67a8c7187c696617d61abb8 data/pvz/tags/entity_types/pvz_zombies.json
 7498e4ba7725ff8646595dabcf205d524aec5ecd data/pvz/tags/items/card/black_cards.json
 66fbb59e9b3f3d09dc82518badcaaa826c4a3279 data/pvz/tags/items/card/black_materials.json
@@ -529,9 +524,9 @@ f88ddf3a385c12bb6f6ef0981b969c0169c650e6 data/pvz/tags/items/card/red_cards.json
 f9a7b288b3b769cdc6469c21325951937857da74 data/pvz/tags/items/card/red_materials.json
 ac7254c1fbebecd5cdbf71cdc6a8c33267c50cac data/pvz/tags/items/card/white_cards.json
 9c960160d41b9332ee0edbc9c575413711384481 data/pvz/tags/items/card/white_materials.json
-4e1889a03b6102fc96f855bca6a4e96e2479b74b data/pvz/tags/items/cards/plant_card.json
-971073390e073718671a7dee0e6e58bb1e2d4540 data/pvz/tags/items/cards/plant_enjoy_card.json
-90c0be098b625d71f68ace96fab39edc87f9653b data/pvz/tags/items/cards/plant_summon_card.json
+a2648776fd5294a6ddba9899f5dc2942dd84487c data/pvz/tags/items/cards/plant_card.json
+3eaa3375e8fed8bfe8dcd92b3be9d24b0606c7ee data/pvz/tags/items/cards/plant_enjoy_card.json
+62393f5420f432762f6b7658448bee8ed24a51f6 data/pvz/tags/items/cards/plant_summon_card.json
 b4b7082c521b395f14901163935e3fe13131f3c8 data/pvz/tags/items/cards/template_card.json
 1c9b69b8145e4b24059a787785717e61a3d30fdf data/pvz/tags/items/ores/essence.json
 be8bf1d82365f3337ccb9d647a52c73fc2b00709 data/pvz/tags/items/pea_gun_bullets.json

@@ -88,9 +88,7 @@ public abstract class AbstractDaveEntity extends CreatureEntity implements IHasG
 	public void tick() {
 		super.tick();
 		if(! this.level.isClientSide){
-			this.setExistTick(this.getExistTick() + 1);
-			//TODO bug?
-			if(this.getLeftRefreshTime() == REFRESH_CD){
+			if(this.getExistTick() == 0 || this.getLeftRefreshTime() <= 0){
 				this.refreshTransactions();
 			}
 		}
@@ -113,6 +111,7 @@ public abstract class AbstractDaveEntity extends CreatureEntity implements IHasG
 	 */
 	public void refreshTransactions(){
 		this.clearTransaction();
+		this.setExistTick(this.level.getGameTime());
 		if(this.transactionResource != null){
 			final TransactionType type = TransactionTypeLoader.getTransactionByRes(this.transactionResource);
 			
@@ -242,7 +241,7 @@ public abstract class AbstractDaveEntity extends CreatureEntity implements IHasG
 	}
 
 	public int getLeftRefreshTime(){
-		return REFRESH_CD - (this.getExistTick() - 10 + REFRESH_CD) % REFRESH_CD;
+		return (int) (this.getExistTick() + REFRESH_CD - this.level.getGameTime());
 	}
 
 	protected abstract void openContainer(ServerPlayerEntity player);
@@ -343,8 +342,8 @@ public abstract class AbstractDaveEntity extends CreatureEntity implements IHasG
 		return this.entityData.get(GOODS);
 	}
 
-	public void setExistTick(int tick){
-		this.entityData.set(EXIST_TICK, tick);
+	public void setExistTick(long tick){
+		this.entityData.set(EXIST_TICK, (int) tick);
 	}
 
 	public int getExistTick(){

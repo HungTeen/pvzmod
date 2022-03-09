@@ -17,7 +17,7 @@
     },
     {
       "entity_type": "pvz:catapult_zombie",
-      "invasion_level": 35,
+      "invasion_level": 40,
       "spawn_weight": 40
     }
   ]

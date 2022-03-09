@@ -123,22 +123,6 @@ public class RecipeGenerator extends ForgeRecipeProvider{
 		), ItemRegister.TALL_NUT_CARD.get());
 
 		registerFusion(consumer, Arrays.asList(
-				ItemRegister.WALL_NUT_CARD.get(),
-				ItemRegister.WALL_NUT_CARD.get(),
-				ItemRegister.WALL_NUT_CARD.get(),
-				ItemRegister.WALL_NUT_CARD.get(),
-				ItemRegister.WALL_NUT_CARD.get(),
-				ItemRegister.WALL_NUT_CARD.get(),
-				ItemRegister.WALL_NUT_CARD.get(),
-				ItemRegister.WALL_NUT_CARD.get()
-		), ItemRegister.GIANT_WALL_NUT_CARD.get());
-
-		registerFusion(consumer, Arrays.asList(
-				ItemRegister.WALL_NUT_CARD.get(),
-				ItemRegister.CHERRY_BOMB_CARD.get()
-				), ItemRegister.EXPLODE_O_NUT_CARD.get());
-
-		registerFusion(consumer, Arrays.asList(
 				ItemRegister.SCAREDY_SHROOM_CARD.get(),
 				ItemRegister.TANGLE_KELP_CARD.get()
 		), ItemRegister.SEA_SHROOM_CARD.get());

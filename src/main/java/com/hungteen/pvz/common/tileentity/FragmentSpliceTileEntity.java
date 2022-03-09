@@ -49,7 +49,8 @@ public class FragmentSpliceTileEntity extends TileEntity implements ITickableTil
 
 	public void clearCraftingSlots(){
 		for(int i = 0; i < 25; ++ i){
-			this.handler.setStackInSlot(i + 2, ItemStack.EMPTY);
+			this.handler.getStackInSlot(i + 2).shrink(1);
+//			this.handler.setStackInSlot(i + 2, ItemStack.EMPTY);
 		}
 	}
     

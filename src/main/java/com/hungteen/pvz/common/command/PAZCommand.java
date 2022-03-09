@@ -5,7 +5,6 @@ import com.hungteen.pvz.api.types.IPAZType;
 import com.hungteen.pvz.utils.PlayerUtil;
 import com.mojang.brigadier.CommandDispatcher;
 import com.mojang.brigadier.arguments.BoolArgumentType;
-import com.mojang.brigadier.arguments.IntegerArgumentType;
 import com.mojang.brigadier.builder.LiteralArgumentBuilder;
 import net.minecraft.command.CommandSource;
 import net.minecraft.command.Commands;
@@ -28,15 +27,15 @@ public class PAZCommand {
 												return setPAZLock(command.getSource(), EntityArgument.getPlayers(command, "targets"), p, BoolArgumentType.getBool(command, "state"));
 											})))
 									.then(Commands.literal("plants")
-											.then(Commands.argument("state", IntegerArgumentType.integer()).executes((command)-> {
+											.then(Commands.argument("state", BoolArgumentType.bool()).executes((command)-> {
 												return setPlantLocks(command.getSource(), EntityArgument.getPlayers(command, "targets"), BoolArgumentType.getBool(command, "state"));
 											})))
 									.then(Commands.literal("zombies")
-											.then(Commands.argument("state", IntegerArgumentType.integer()).executes((command)-> {
+											.then(Commands.argument("state", BoolArgumentType.bool()).executes((command)-> {
 												return setZombieLocks(command.getSource(), EntityArgument.getPlayers(command, "targets"), BoolArgumentType.getBool(command, "state"));
 											})))
 									.then(Commands.literal("all")
-											.then(Commands.argument("state", IntegerArgumentType.integer()).executes((command)-> {
+											.then(Commands.argument("state", BoolArgumentType.bool()).executes((command)-> {
 												return setAllLocks(command.getSource(), EntityArgument.getPlayers(command, "targets"), BoolArgumentType.getBool(command, "state"));
 											})))))
 					.then(Commands.literal("query")

@@ -17,10 +17,10 @@ public enum Resources {
 	GEM_NUM(0, 9999999),
 	/* sun amount, maximum is limited by tree maxLevel*/
 	SUN_NUM(0, 0),
-	/* plant food amount */
-	ENERGY_NUM(0, 0),
 	/* max plant food amount */
 	MAX_ENERGY_NUM(1, 10),
+	/* plant food amount */
+	ENERGY_NUM(0, 0),
 	/* the tick to control fog display */
 //	NO_FOG_TICK(- 9999999, 9999999),
 	/* kill zombie count */

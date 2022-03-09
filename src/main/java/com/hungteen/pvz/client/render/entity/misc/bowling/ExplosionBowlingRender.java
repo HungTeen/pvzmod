@@ -1,10 +1,8 @@
 package com.hungteen.pvz.client.render.entity.misc.bowling;
 
 import com.hungteen.pvz.common.entity.misc.bowling.ExplosionBowlingEntity;
-import com.hungteen.pvz.common.impl.plant.PVZPlants;
 
 import net.minecraft.client.renderer.entity.EntityRendererManager;
-import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 
@@ -15,9 +13,9 @@ public class ExplosionBowlingRender extends AbstractbowlingRender<ExplosionBowli
 		super(renderManager);
 	}
 	
-	@Override
-	public ResourceLocation getTextureLocation(ExplosionBowlingEntity entity) {
-		return PVZPlants.EXPLODE_O_NUT.getRenderResource();
-	}
+//	@Override
+//	public ResourceLocation getTextureLocation(ExplosionBowlingEntity entity) {
+//		return PVZPlants.EXPLODE_O_NUT.getRenderResource();
+//	}
 
 }

@@ -790,7 +790,12 @@ public abstract class PVZZombieEntity extends AbstractPAZEntity implements IZomb
 	public boolean fireImmune() {
 		return true;
 	}
-	
+
+	@Override
+	public boolean ignoreExplosion() {
+		return true;
+	}
+
 	/**
 	 * is zombie still rising from dirt.
 	 */

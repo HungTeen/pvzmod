@@ -1,8 +1,8 @@
 package com.hungteen.pvz.client.model.entity.plant.defence;
 
+import com.hungteen.pvz.client.model.entity.ComponentModel;
 import com.hungteen.pvz.client.model.entity.plant.PVZPlantModel;
 import com.hungteen.pvz.common.entity.plant.defence.WallNutEntity;
-
 import net.minecraft.client.renderer.entity.model.EntityModel;
 import net.minecraft.client.renderer.model.ModelRenderer;
 
@@ -15,25 +15,16 @@ public class WallNutModel<T extends WallNutEntity> extends PVZPlantModel<T> {
 	private final ModelRenderer body;
 
 	public WallNutModel() {
-		texWidth = 256;
-		texHeight = 256;
+		texWidth = 128;
+		texHeight = 128;
 
 		body = new ModelRenderer(this);
-		body.setPos(0.0F, 0.0F, 0.0F);
-		body.texOffs(168, 233).addBox(-11.0F, 23.0F, -11.0F, 22.0F, 1.0F, 22.0F, 0.0F, false);
-		body.texOffs(144, 197).addBox(-14.0F, 21.0F, -14.0F, 28.0F, 2.0F, 28.0F, 0.0F, false);
-		body.texOffs(0, 180).addBox(-16.0F, -23.0F, -16.0F, 32.0F, 44.0F, 32.0F, 0.0F, false);
-		body.texOffs(0, 107).addBox(16.0F, -21.0F, -14.0F, 2.0F, 40.0F, 28.0F, 0.0F, false);
-		body.texOffs(65, 106).addBox(-18.0F, -21.0F, -14.0F, 2.0F, 40.0F, 28.0F, 0.0F, false);
-		body.texOffs(196, 0).addBox(-14.0F, -21.0F, -18.0F, 28.0F, 40.0F, 2.0F, 0.0F, false);
-		body.texOffs(196, 47).addBox(-14.0F, -21.0F, 16.0F, 28.0F, 40.0F, 2.0F, 0.0F, false);
-		body.texOffs(144, 96).addBox(-14.0F, -25.0F, -14.0F, 28.0F, 2.0F, 28.0F, 0.0F, false);
-		body.texOffs(176, 132).addBox(-11.0F, -27.0F, -11.0F, 22.0F, 2.0F, 22.0F, 0.0F, false);
-		body.texOffs(144, 3).addBox(-19.0F, -17.0F, -10.0F, 1.0F, 32.0F, 20.0F, 0.0F, false);
-		body.texOffs(88, 0).addBox(18.0F, -17.0F, -10.0F, 1.0F, 32.0F, 20.0F, 0.0F, false);
-		body.texOffs(30, 47).addBox(-11.0F, -18.0F, -19.0F, 22.0F, 34.0F, 1.0F, 0.0F, false);
-		body.texOffs(2, 4).addBox(-11.0F, -18.0F, 18.0F, 22.0F, 34.0F, 1.0F, 0.0F, false);
-		body.texOffs(187, 166).addBox(-7.0F, -29.0F, -7.0F, 14.0F, 2.0F, 14.0F, 0.0F, false);
+		body.setPos(0.0F, 24.0F, 0.0F);
+		body.texOffs(0, 42).addBox(-5.0F, -1.0F, -5.0F, 10.0F, 1.0F, 10.0F, 0.0F, false);
+		body.texOffs(0, 0).addBox(-7.0F, -14.0F, -7.0F, 14.0F, 13.0F, 14.0F, 0.0F, false);
+		body.texOffs(0, 27).addBox(-6.0F, -17.0F, -6.0F, 12.0F, 3.0F, 12.0F, 0.0F, false);
+		body.texOffs(0, 57).addBox(-7.0F, -14.0F, -6.6F, 14.0F, 13.0F, 1.0F, 0.0F, false);
+		body.texOffs(56, 0).addBox(-3.0F, -12.0F, -3.0F, 6.0F, 6.0F, 6.0F, 0.0F, false);
 	}
 
 	@Override
@@ -49,5 +40,25 @@ public class WallNutModel<T extends WallNutEntity> extends PVZPlantModel<T> {
 	@Override
 	public EntityModel<T> getPlantModel() {
 		return this;
+	}
+
+	public static class WallNutArmorModel extends ComponentModel<WallNutEntity> {
+
+		private final ModelRenderer body;
+
+		public WallNutArmorModel() {
+			texWidth = 64;
+			texHeight = 64;
+
+			body = new ModelRenderer(this);
+			body.setPos(0.0F, 24.0F, 0.0F);
+			body.texOffs(0, 0).addBox(-8.0F, -15.0F, -8.0F, 16.0F, 13.0F, 16.0F, 0.0F, false);
+			body.texOffs(0, 29).addBox(-7.0F, -18.0F, -7.0F, 14.0F, 3.0F, 14.0F, 0.0F, false);
+		}
+
+		@Override
+		public ModelRenderer getTotalModel() {
+			return this.body;
+		}
 	}
 }

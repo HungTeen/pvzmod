@@ -24,8 +24,8 @@ public abstract class PlantShooterModel<T extends PlantShooterEntity> extends PV
 			final int T = PlantShooterEntity.SHOOT_ANIM_CD;
 			final int tick = entity.getShootTick() + T - entity.getShootCD();
 			if(tick >= 0) {
-				this.getHeadModel().ifPresent(m -> m.xRot = AnimationUtil.getUpDownUpDown(tick, T, getMaxRotAngle()));
-				this.getBodyModel().ifPresent(m -> m.xRot = AnimationUtil.getUpDownUpDown(tick, T, - getMaxRotAngle()));
+				this.getHeadModel().ifPresent(m -> m.xRot = AnimationUtil.getUpDownUpDown(tick, T, - getMaxRotAngle()/2));
+				this.getBodyModel().ifPresent(m -> m.xRot = AnimationUtil.getUpDownUpDown(tick, T, getMaxRotAngle()));
 			} 
 		}
 	}

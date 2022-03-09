@@ -187,7 +187,7 @@ public class ItemRegister {
   	public static final RegistryObject<Item> ORIGIN_HOE = ITEMS.register("origin_hoe", () -> new HoeItem(PVZItemTier.ORIGIN, -2, -1.0F, new Item.Properties().tab(PVZItemGroups.PVZ_USEFUL)));
     public static final RegistryObject<Item> PEA_GUN = ITEMS.register("pea_gun", PeaGunItem::new);
   	public static final RegistryObject<Item> RESOURCE_COLLECTOR = ITEMS.register("resource_collector", ResourceCollectorItem::new);
-  	public static final RegistryObject<Item> BOWLING_GLOVE = ITEMS.register("bowling_glove", BowlingGloveItem::new);
+//  	public static final RegistryObject<Item> BOWLING_GLOVE = ITEMS.register("bowling_glove", BowlingGloveItem::new);
   	public static final RegistryObject<Item> SUN_STORAGE_SAPLING = ITEMS.register("sun_storage_sapling", () -> new SunStorageSaplingItem(10000));
   	public static final RegistryObject<Item> SMALL_SUN_STORAGE_SAPLING = ITEMS.register("sun_storage_sapling2", () -> new SunStorageSaplingItem(1000));
   	public static final RegistryObject<Item> LARGE_SUN_STORAGE_SAPLING = ITEMS.register("sun_storage_sapling3", () -> new SunStorageSaplingItem(100000));
@@ -337,10 +337,6 @@ public class ItemRegister {
     public static final RegistryObject<PlantCardItem> GOLD_LEAF_ENJOY_CARD = registerCard(OtherPlants.GOLD_LEAF, true);
     public static final RegistryObject<PlantCardItem> ANGEL_STAR_FRUIT_CARD = registerCard(OtherPlants.ANGEL_STAR_FRUIT, false);
     public static final RegistryObject<PlantCardItem> ANGEL_STAR_FRUIT_ENJOY_CARD = registerCard(OtherPlants.ANGEL_STAR_FRUIT, true);
-    public static final RegistryObject<PlantCardItem> EXPLODE_O_NUT_CARD = registerCard(PVZPlants.EXPLODE_O_NUT, false);
-    public static final RegistryObject<PlantCardItem> EXPLODE_O_NUT_ENJOY_CARD = registerCard(PVZPlants.EXPLODE_O_NUT, true);
-    public static final RegistryObject<PlantCardItem> GIANT_WALL_NUT_CARD = registerCard(PVZPlants.GIANT_WALL_NUT, false);
-    public static final RegistryObject<PlantCardItem> GIANT_WALL_NUT_ENJOY_CARD = registerCard(PVZPlants.GIANT_WALL_NUT, true);
     public static final RegistryObject<PlantCardItem> BUTTER_PULT_CARD = registerCard(CustomPlants.BUTTER_PULT, false);
     public static final RegistryObject<PlantCardItem> BUTTER_PULT_ENJOY_CARD = registerCard(CustomPlants.BUTTER_PULT, true);
     public static final RegistryObject<PlantCardItem> BAMBOO_LORD_CARD = registerCard(OtherPlants.BAMBOO_LORD, false);

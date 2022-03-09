@@ -24,19 +24,19 @@
     },
     {
       "entity_type": "pvz:dolphin_rider",
-      "invasion_level": 20,
+      "invasion_level": 22,
       "spawn_weight": 40,
       "placement": "water"
     },
     {
       "entity_type": "pvz:buckethead_zombie",
-      "invasion_level": 28,
+      "invasion_level": 32,
       "spawn_weight": 15,
       "placement": "water"
     },
     {
       "entity_type": "pvz:lava_zombie",
-      "invasion_level": 40,
+      "invasion_level": 45,
       "spawn_weight": 30,
       "placement": "water"
     }

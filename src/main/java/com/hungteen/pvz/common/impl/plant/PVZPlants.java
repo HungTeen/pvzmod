@@ -93,8 +93,7 @@ public final class PVZPlants extends PlantType {
 			.entityType(() -> EntityRegister.WALL_NUT.get())
 			.summonCard(() -> ItemRegister.WALL_NUT_CARD.get())
 			.enjoyCard(() -> ItemRegister.WALL_NUT_ENJOY_CARD.get())
-			.plantModel(() -> WallNutModel::new).scale(0.4F)
-			.upgradeTo(() -> PVZPlants.GIANT_WALL_NUT)
+			.plantModel(() -> WallNutModel::new).scale(1F)
 			.cdSkill(Arrays.asList(SkillTypes.NUT_MORE_LIFE))
 	);
 	
@@ -402,7 +401,7 @@ public final class PVZPlants extends PlantType {
 	 * roof.
 	 */
 	public static final IPlantType CABBAGE_PULT = new PVZPlants("cabbage_pult", new PlantFeatures()
-			.cost(100).requiredLevel(20)
+			.cost(100).requiredLevel(10)
 			.cd(CoolDowns.VERY_FAST).rank(RankTypes.GREEN).essence(EssenceTypes.ARMA)
 			.entityType(() -> EntityRegister.CABBAGE_PULT.get())
 			.summonCard(() -> ItemRegister.CABBAGE_PULT_CARD.get())
@@ -578,10 +577,6 @@ public final class PVZPlants extends PlantType {
 			.commonSunSkill(Arrays.asList(SkillTypes.NORMAL_BOMB_DAMAGE))
 	);
 	
-	/*
-	 * other
-	 */
-	
 	public static final IPlantType IMITATER = new PVZPlants("imitater", new PlantFeatures()
 			.requiredLevel(60)
 			.rank(RankTypes.GOLD).essence(EssenceTypes.MAGIC)
@@ -590,27 +585,6 @@ public final class PVZPlants extends PlantType {
 			.enjoyCard(() -> ItemRegister.IMITATER_ENJOY_CARD.get())
 			.plantModel(() -> ImitaterModel::new).scale(0.9F)
 			.placement(Placements.NONE)
-	);
-	
-	public static final IPlantType EXPLODE_O_NUT = new PVZPlants("explode_o_nut", new PlantFeatures()
-			.cost(200).requiredLevel(65)
-			.cd(CoolDowns.HUGE_SLOW).rank(RankTypes.PURPLE).essence(EssenceTypes.EXPLOSION)
-			.entityType(() -> EntityRegister.EXPLODE_O_NUT.get())
-			.summonCard(() -> ItemRegister.EXPLODE_O_NUT_CARD.get())
-			.enjoyCard(() -> ItemRegister.EXPLODE_O_NUT_ENJOY_CARD.get())
-			.plantModel(() -> WallNutModel::new).scale(0.4F)
-			.cdSkill(Arrays.asList(SkillTypes.LESS_SUN, SkillTypes.NUT_MORE_LIFE, SkillTypes.NORMAL_BOMB_DAMAGE))
-	);
-	
-	public static final IPlantType GIANT_WALL_NUT = new PVZPlants("giant_wall_nut", new PlantFeatures()
-			.cost(250).requiredLevel(75)
-			.cd(CoolDowns.SUPER_SLOW).rank(RankTypes.RED).essence(EssenceTypes.DEFENCE)
-			.entityType(() -> EntityRegister.GIANT_WALL_NUT.get())
-			.summonCard(() -> ItemRegister.GIANT_WALL_NUT_CARD.get())
-			.enjoyCard(() -> ItemRegister.GIANT_WALL_NUT_ENJOY_CARD.get())
-			.plantModel(() -> WallNutModel::new).scale(1F)
-			.upgradeFrom(() -> PVZPlants.WALL_NUT)
-			.cdSkill(Arrays.asList(SkillTypes.LESS_SUN, SkillTypes.NUT_MORE_LIFE))
 	);
 	
 	public static void register() {

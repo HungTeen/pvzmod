@@ -179,7 +179,7 @@ public class PVZConfig {
                     WorldSettings.LavaZombieSpawnWeight = builder
                             .translation("config.pvz.world.lava_zombie_weight")
                             .comment("spawn weight of LavaZombie at nether.")
-                            .defineInRange("LavaZombieSpawnWeight", 15, 1, 200);
+                            .defineInRange("LavaZombieSpawnWeight", 5, 1, 200);
 
                     WorldSettings.GigaTombStoneSpawnWeight = builder
                             .translation("config.pvz.world.giga_tomb_weight")

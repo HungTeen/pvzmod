@@ -157,7 +157,7 @@ public class Invasion {
         if (spawned) {
             PlayerUtil.playClientSound(player, SoundRegister.HUGE_WAVE.get());
             PlayerUtil.sendSubTitleToPlayer(player, InvasionManager.HUGE_WAVE);
-            // TODO 一大波额外生成
+            // TODO extra summon a-huge-wave
 //		    PVZFlagData data = PVZFlagData.getGlobalFlagData(world);
 //		    if(data.isZombossDefeated()) {
 //		        this.activateTombStone();
@@ -200,7 +200,7 @@ public class Invasion {
 
     private void spawnInvader(SpawnType spawnType, BlockPos pos){
         Entity entity = EntityUtil.createWithNBT(world, spawnType.getSpawnType(), spawnType.getNbt(), pos);
-        if(entity instanceof AbstractPAZEntity){
+        if(InvasionManager.enableSkills(this.world) && entity instanceof AbstractPAZEntity){
             AbstractPAZEntity.randomInitSkills((AbstractPAZEntity) entity, Math.max(0, this.invasionLvl - spawnType.getInvasionLevel()));
         }
         if(entity instanceof LivingEntity) {

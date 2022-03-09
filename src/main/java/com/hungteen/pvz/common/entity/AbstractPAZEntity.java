@@ -44,7 +44,7 @@ import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
-//TODO 掉落物（金币等等）
+//TODO fallen entities (such as coins)
 public abstract class AbstractPAZEntity extends CreatureEntity implements IPAZEntity, IEntityAdditionalSpawnData {
 
     private static final DataParameter<Optional<UUID>> OWNER_UUID = EntityDataManager.defineId(AbstractPAZEntity.class, DataSerializers.OPTIONAL_UUID);

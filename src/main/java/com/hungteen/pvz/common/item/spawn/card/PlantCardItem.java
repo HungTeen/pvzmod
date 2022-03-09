@@ -580,7 +580,11 @@ public class PlantCardItem extends SummonCardItem {
 	public int getCardSunCost(PlayerEntity player, ItemStack stack) {
 		final int range = 30;
 		final long count = EntityUtil.getFriendlyLivings(player, EntityUtil.getEntityAABB(player, range, range))
-		    .stream().filter(entity -> entity instanceof PVZPlantEntity).count() + 1;
+		    .stream().filter(entity -> {
+				return entity instanceof PVZPlantEntity
+						&& ((PVZPlantEntity) entity).getOwnerUUID().isPresent()
+						&& ((PVZPlantEntity) entity).getOwnerUUID().get().equals(player.getUUID());
+			}).count() + 1;
 
 		final long multipy = Math.max(0, (count - ConfigUtil.getLimitPlantCount() - DenselyPlantEnchantment.getExtraPlantNum(stack) + 4) / 5);
 		return (int) Math.min(100000L, this.getBasisSunCost(stack) * (1L << multipy));

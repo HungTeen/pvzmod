@@ -63,7 +63,8 @@ public class CardFusionTileEntity extends TileEntity implements ITickableTileEnt
 
 	public void clearCraftingSlots(){
 		for(int i = 3; i < 12; ++ i){
-			this.handler.setStackInSlot(i, ItemStack.EMPTY);
+			this.handler.getStackInSlot(i).shrink(1);
+//			this.handler.setStackInSlot(i, ItemStack.EMPTY);
 		}
 	}
 	
