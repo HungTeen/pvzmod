@@ -16,7 +16,7 @@ public class CatTailRender extends PVZPlantRender<CatTailEntity>{
 	@Override
 	public Vector3d getTranslateVec(CatTailEntity entity) {
 		if(entity.isInWater()) {
-			return new Vector3d(0, - 2D, 0);
+			return new Vector3d(0, - 0.5D, 0);
 		}
 		return new Vector3d(0, 0, 0);
 	}

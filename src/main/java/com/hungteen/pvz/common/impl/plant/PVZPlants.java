@@ -72,7 +72,7 @@ public final class PVZPlants extends PlantType {
 			.entityType(() -> EntityRegister.SUN_FLOWER.get())
 			.summonCard(() -> ItemRegister.SUN_FLOWER_CARD.get())
 			.enjoyCard(() -> ItemRegister.SUN_FLOWER_ENJOY_CARD.get())
-			.plantModel(() -> SunFlowerModel::new).scale(0.5F)
+			.plantModel(() -> SunFlowerModel::new).scale(1F)
 			.upgradeTo(() -> PVZPlants.TWIN_SUNFLOWER)
 			.commonSkill(Arrays.asList())
 	);
@@ -382,7 +382,7 @@ public final class PVZPlants extends PlantType {
 			.entityType(() -> EntityRegister.PUMPKIN.get())
 			.summonCard(() -> ItemRegister.PUMPKIN_CARD.get())
 			.enjoyCard(() -> ItemRegister.PUMPKIN_ENJOY_CARD.get())
-			.plantModel(() -> PumpkinModel::new).scale(0.6F)
+			//TODO (removed by GrassCarp when remodeling Pumpkin).plantModel(() -> PumpkinModel::new).scale(1F)
 			.cdSkill(Arrays.asList())
 	);
 	
@@ -527,7 +527,7 @@ public final class PVZPlants extends PlantType {
 			.entityType(() -> EntityRegister.CAT_TAIL.get())
 			.summonCard(() -> ItemRegister.CAT_TAIL_CARD.get())
 			.enjoyCard(() -> ItemRegister.CAT_TAIL_ENJOY_CARD.get())
-			.plantModel(() -> CatTailModel::new).scale(0.18F)
+			.plantModel(() -> CatTailModel::new).scale(1F)
 			.commonSunSkill(Arrays.asList(SkillTypes.MORE_THORN_DAMAGE))
 	);
 	
