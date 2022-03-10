@@ -3,6 +3,7 @@ package com.hungteen.pvz.api;
 import com.google.common.base.Suppliers;
 import com.hungteen.pvz.PVZMod;
 import com.hungteen.pvz.api.type.IEssenceType;
+import com.hungteen.pvz.api.type.IRankType;
 import org.apache.logging.log4j.LogManager;
 
 import java.lang.reflect.Constructor;
@@ -35,6 +36,11 @@ public class PVZAPI {
         return LAZY_INSTANCE.get();
     }
 
+    /**
+     * pvz mod has two implemented API. <br>
+     * a dummy one {@link DummyAPI} and a implemented one {@link com.hungteen.pvz.common.impl.PVZAPIImpl} <br>
+     * all implement code are below impl package.
+     */
     public interface IPVZAPI {
 
         /**
@@ -46,6 +52,16 @@ public class PVZAPI {
          * get all registered essence types.
          */
         List<IEssenceType> getEssences();
+
+        /**
+         * register rank type.
+         */
+        void registerRankType(IRankType type);
+
+        /**
+         * get all registered rank types.
+         */
+        List<IRankType> getRanks();
 
     }
 

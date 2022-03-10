@@ -2,16 +2,21 @@ package com.hungteen.pvz.data.tag;
 
 import com.hungteen.pvz.PVZMod;
 import com.hungteen.pvz.api.PVZAPI;
+import com.hungteen.pvz.common.impl.RankTypes;
 import com.hungteen.pvz.common.item.PVZItems;
+import com.hungteen.pvz.common.item.misc.TemplateCardItem;
 import com.hungteen.pvz.common.tag.PVZItemTags;
 import net.minecraft.data.DataGenerator;
 import net.minecraft.data.tags.BlockTagsProvider;
 import net.minecraft.data.tags.ItemTagsProvider;
+import net.minecraft.tags.ItemTags;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.level.block.Block;
+import net.minecraftforge.common.Tags;
 import net.minecraftforge.common.data.ExistingFileHelper;
+import net.minecraftforge.common.data.ForgeItemTagsProvider;
 import net.minecraftforge.registries.ForgeRegistries;
 
 import java.util.Comparator;
@@ -41,7 +46,8 @@ public class ItemTagGen extends ItemTagsProvider {
 //        this.tag(PVZItemTags.CABBAGE_SEEDS).add(ItemRegister.CABBAGE_SEEDS.get());
 //        this.tag(PVZItemTags.CORNS).add(ItemRegister.CORN.get());
 //        this.tag(PVZItemTags.CORN_SEEDS).add(ItemRegister.CORN_SEEDS.get());
-//        this.tag(PVZItemTags.AMETHYST_INGOTS).add(ItemRegister.AMETHYST_INGOT.get());
+        this.tag(PVZItemTags.AMETHYST_INGOTS).add(PVZItems.AMETHYST_INGOT.get());
+
 //        this.tag(PVZItemTags.AMETHYST_ORES).add(BlockRegister.AMETHYST_ORE.get().asItem());
 
         //pvz tag
@@ -49,7 +55,6 @@ public class ItemTagGen extends ItemTagsProvider {
             this.tag(PVZItemTags.ESSENCES).add(e.getEssenceItem());
         });
 
-        System.out.println(PVZAPI.get().getEssences().size());
 //        for (Item item : ForgeRegistries.ITEMS) {
 //            if (item instanceof SummonCardItem) {
 //                if (item instanceof PlantCardItem) {
@@ -67,22 +72,22 @@ public class ItemTagGen extends ItemTagsProvider {
 //                }
 //            }
 //        }
-//        this.tag(PVZItemTags.TEMPLATE_CARDS).add(this.getFilterItems(i -> i instanceof TemplateCardItem));
+        this.tag(PVZItemTags.TEMPLATE_CARDS).add(this.getFilterItems(i -> i instanceof TemplateCardItem));
 //        this.tag(PVZItemTags.PEA_GUN_BULLETS).add(ItemRegister.PEA.get()).add(ItemRegister.SNOW_PEA.get()).add(ItemRegister.FLAME_PEA.get());
 //        this.tag(PVZItemTags.REACH_ITEMS).add(ItemRegister.RESOURCE_COLLECTOR.get());
-//        this.tag(PVZItemTags.GRAY_MATERIALS).add(Items.STONE, Items.CLAY);
-//        this.tag(PVZItemTags.WHITE_MATERIALS).add(Items.IRON_INGOT).add(Items.QUARTZ);
-//        this.tag(PVZItemTags.GREEN_MATERIALS).add(Items.EMERALD).add(ItemRegister.ORIGIN_INGOT.get());
-//        this.tag(PVZItemTags.BLUE_MATERIALS).add(Items.DIAMOND).add(Items.LAPIS_BLOCK);
-//        this.tag(PVZItemTags.PURPLE_MATERIALS).add(ItemRegister.AMETHYST_INGOT.get()).add(Items.CRYING_OBSIDIAN);
-//        this.tag(PVZItemTags.GOLD_MATERIALS).add(Items.GOLD_INGOT);
-//        this.tag(PVZItemTags.RED_MATERIALS).add(Items.REDSTONE_BLOCK);
-//        this.tag(PVZItemTags.BLACK_MATERIALS).add(Items.NETHERITE_SCRAP);
-//        RankTypes.getRanks().forEach(rank -> {
-//            if (rank.getCardTag() != null) {
-//                this.tag(rank.getCardTag()).add(ItemRegister.MEGA_CARD.get()).add(rank.getTemplateCard());
-//            }
-//        });
+        this.tag(PVZItemTags.GRAY_MATERIALS).add(Items.STONE, Items.CLAY);
+        this.tag(PVZItemTags.WHITE_MATERIALS).add(Items.IRON_INGOT).add(Items.QUARTZ);
+        this.tag(PVZItemTags.GREEN_MATERIALS).add(Items.EMERALD).add(PVZItems.ORIGIN_INGOT.get());
+        this.tag(PVZItemTags.BLUE_MATERIALS).add(Items.DIAMOND).add(Items.LAPIS_BLOCK).add(Items.PRISMARINE_CRYSTALS);
+        this.tag(PVZItemTags.PURPLE_MATERIALS).add(PVZItems.AMETHYST_INGOT.get()).add(Items.CRYING_OBSIDIAN).add(Items.AMETHYST_SHARD);
+        this.tag(PVZItemTags.GOLD_MATERIALS).add(Items.GOLD_INGOT);
+        this.tag(PVZItemTags.RED_MATERIALS).add(Items.REDSTONE_BLOCK);
+        this.tag(PVZItemTags.BLACK_MATERIALS).add(Items.NETHERITE_SCRAP);
+        PVZAPI.get().getRanks().forEach(rank -> {
+            if (rank.getCardTag() != null) {
+                this.tag(rank.getCardTag()).add(PVZItems.MEGA_CARD.get()).add(rank.getTemplateCard());
+            }
+        });
     }
 
     private Item[] getFilterItems(Predicate<Item> predicate) {

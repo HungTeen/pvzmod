@@ -14,8 +14,8 @@ import org.apache.commons.lang3.tuple.Pair;
  **/
 public class PVZConfig {
 
-    public static Common COMMON_CONFIG;
-    public static Client CLIENT_CONFIG;
+    private static Common COMMON_CONFIG;
+    private static Client CLIENT_CONFIG;
 
     public static class Common {
 
@@ -88,12 +88,12 @@ public class PVZConfig {
 //                        .translation("config.pvz.rule.beginner_reward")
 //                        .comment("If you set it true, you will get some basic plantcards when you first join world.")
 //                        .define("GiveBeginnerReward", false);
-//
-//                RuleSettings.AllowNaturalTurnOrigin = builder
-//                        .translation("config.pvz.rule.turn_origin")
-//                        .comment("If turn to false, saplings no longer to grow to Origin Ore naturally, except there is a block above it.")
-//                        .define("AllowNaturalTurnOrigin", true);
-//
+
+                RuleSettings.AllowNaturalTurnOrigin = builder
+                        .translation("config.pvz.rule.turn_origin")
+                        .comment("If turn to false, saplings no longer to grow to Origin Ore naturally, except there is a block above it.")
+                        .define("AllowNaturalTurnOrigin", true);
+
 //                RuleSettings.TeamAttack = builder
 //                        .translation("config.pvz.rule.team_attack")
 //                        .comment("if turn to true, when plant's owner is in a team, the plant will attack the entity from other team(include players).")
@@ -166,15 +166,15 @@ public class PVZConfig {
                 builder.comment("Settings about the ore gen.").push("Ore Settings");
                 {
 
-//                    WorldSettings.GenOriginOreChance = builder
-//                            .translation("config.pvz.world.origin_ore_chance")
-//                            .comment("the gen chance of origin ore in overworld(the larger the more chance to see it).")
-//                            .defineInRange("GenOriginOreChance", 5, 1, 10000);
-//
-//                    WorldSettings.GenAmethystOreChance = builder
-//                            .translation("config.pvz.world.amethyst_ore_chance")
-//                            .comment("the gen chance of amethyst ore in the end(the larger the more chance to see it).")
-//                            .defineInRange("GenAmethystOreChance", 15, 1, 10000);
+                    WorldSettings.GenOriginOreChance = builder
+                            .translation("config.pvz.world.origin_ore_chance")
+                            .comment("the gen chance of origin ore in overworld(the larger the more chance to see it).")
+                            .defineInRange("GenOriginOreChance", 5, 1, 10000);
+
+                    WorldSettings.GenAmethystOreChance = builder
+                            .translation("config.pvz.world.amethyst_ore_chance")
+                            .comment("the gen chance of amethyst ore in the end(the larger the more chance to see it).")
+                            .defineInRange("GenAmethystOreChance", 15, 1, 10000);
                 }
                 builder.pop();
 
@@ -304,10 +304,10 @@ public class PVZConfig {
             //Block Settings
             builder.comment("Settings about blocks.").push("Block Settings");
             {
-//                BlockSettings.OriginEffectChance = builder
-//                        .translation("config.pvz.block.origin_effect_chance")
-//                        .comment("The chance to get Essence Ore from Origin Block's effect")
-//                        .defineInRange("OriginEffectChance", 0.25, 0, 1);
+                BlockSettings.OriginEffectChance = builder
+                        .translation("config.pvz.block.origin_effect_chance")
+                        .comment("The chance to get Essence Ore from Origin Block's effect")
+                        .defineInRange("OriginEffectChance", 0.25, 0, 1);
 //
 //                BlockSettings.SaplingTurnChance = builder
 //                        .translation("config.pvz.block.sapling_turn_chance")
@@ -548,6 +548,10 @@ public class PVZConfig {
             ModLoadingContext.get().registerConfig(ModConfig.Type.CLIENT, specPair.getRight());
             PVZConfig.CLIENT_CONFIG = specPair.getLeft();
         }
+    }
+
+    public static double getOriginEffectChance(){
+        return COMMON_CONFIG.BlockSettings.OriginEffectChance.get();
     }
 
 }

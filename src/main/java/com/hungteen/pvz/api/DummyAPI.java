@@ -1,6 +1,7 @@
 package com.hungteen.pvz.api;
 
 import com.hungteen.pvz.api.type.IEssenceType;
+import com.hungteen.pvz.api.type.IRankType;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -24,6 +25,16 @@ public class DummyAPI implements PVZAPI.IPVZAPI {
 
     @Override
     public List<IEssenceType> getEssences() {
+        return new ArrayList<>();
+    }
+
+    @Override
+    public void registerRankType(IRankType type) {
+
+    }
+
+    @Override
+    public List<IRankType> getRanks() {
         return new ArrayList<>();
     }
 }

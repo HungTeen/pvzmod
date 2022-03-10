@@ -1,6 +1,9 @@
 package com.hungteen.pvz.utils;
 
+import net.minecraft.core.BlockPos;
+import net.minecraft.tags.TagKey;
 import net.minecraft.world.level.block.Block;
+import net.minecraft.world.phys.AABB;
 import net.minecraftforge.registries.ForgeRegistries;
 
 import java.util.Comparator;
@@ -22,6 +25,20 @@ public class BlockUtil {
                 .filter(predicate)
                 .sorted(Comparator.comparing(ForgeRegistries.BLOCKS::getKey))
                 .toList();
+    }
+
+    /**
+     * get predicate blocks.
+     */
+    public static List<Block> getTagBlocks(TagKey<Block> tagKey) {
+        return getFilterBlocks(b -> b.builtInRegistryHolder().is(tagKey));
+    }
+
+    /**
+     * get expand collide box.
+     */
+    public static AABB getAABB(BlockPos pos, double w, double h) {
+        return new AABB(pos.getX() - w, pos.getY() - h, pos.getZ() - w, pos.getX() + w, pos.getY() + h, pos.getZ() + w);
     }
 
 }

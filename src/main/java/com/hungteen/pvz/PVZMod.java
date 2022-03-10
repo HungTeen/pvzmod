@@ -4,8 +4,10 @@ import com.hungteen.pvz.client.ClientProxy;
 import com.hungteen.pvz.common.CommonProxy;
 import com.hungteen.pvz.common.PVZSounds;
 import com.hungteen.pvz.common.block.PVZBlocks;
+import com.hungteen.pvz.common.block.cubes.OriginBlock;
 import com.hungteen.pvz.common.entity.PVZEntities;
 import com.hungteen.pvz.common.impl.EssenceTypes;
+import com.hungteen.pvz.common.impl.RankTypes;
 import com.hungteen.pvz.common.item.PVZItems;
 import com.hungteen.pvz.data.DataGenHandler;
 import net.minecraft.world.item.Item;
@@ -72,7 +74,7 @@ public class PVZMod {
 //            PotionRecipeHandler.registerPotionRecipes();
 //            CommonRegister.registerCompostable();
 //            BiomeUtil.initBiomeSet();
-//            OriginBlock.updateRadiationMap();
+            OriginBlock.updateRadiationMap();
         });
     }
 
@@ -86,8 +88,8 @@ public class PVZMod {
     public static void coreRegister() {
         //register essences.
         EssenceTypes.EssenceType.register();
-//        //register ranks.
-//        RankTypes.RankType.register();
+        //register ranks.
+        RankTypes.RankType.register();
 //        //register skills.
 //        SkillTypes.SkillType.register();
 //        //register plants.

@@ -36,6 +36,10 @@ public class Util {
         return new ResourceLocation(PVZMod.MOD_ID, name);
     }
 
+    public static boolean inPVZ(ResourceLocation resourceLocation){
+        return resourceLocation.getNamespace().equals(PVZMod.MOD_ID);
+    }
+
 
     public static String identify(String modId, String name){
         return modId + ":" + name;

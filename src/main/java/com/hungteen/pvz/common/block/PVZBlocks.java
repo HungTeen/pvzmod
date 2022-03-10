@@ -2,14 +2,12 @@ package com.hungteen.pvz.common.block;
 
 import com.hungteen.pvz.PVZMod;
 import com.hungteen.pvz.common.block.cubes.EssenceOreBlock;
+import com.hungteen.pvz.common.block.cubes.OriginBlock;
 import com.hungteen.pvz.common.impl.EssenceTypes;
 import com.hungteen.pvz.common.item.PVZItemTabs;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.Item;
-import net.minecraft.world.level.block.Block;
-import net.minecraft.world.level.block.Blocks;
-import net.minecraft.world.level.block.FlowerPotBlock;
-import net.minecraft.world.level.block.LanternBlock;
+import net.minecraft.world.level.block.*;
 import net.minecraftforge.event.RegistryEvent;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
@@ -48,11 +46,11 @@ public class PVZBlocks {
     public static final RegistryObject<EssenceOreBlock> ARMA_ORE = BLOCKS.register("arma_ore", () -> new EssenceOreBlock(EssenceTypes.ARMA, 0, 1, 3));
     public static final RegistryObject<EssenceOreBlock> ELECTRIC_ORE = BLOCKS.register("electric_ore", () -> new EssenceOreBlock(EssenceTypes.ELECTRIC, 12, 2, 5));
     public static final RegistryObject<EssenceOreBlock> SHADOW_ORE = BLOCKS.register("shadow_ore", () -> new EssenceOreBlock(EssenceTypes.SHADOW, 0, 2, 5));
-//    public static final RegistryObject<PVZOreBlock> AMETHYST_ORE = BLOCKS.register("amethyst_ore",() -> new PVZOreBlock(Block.Properties.copy(Blocks.DIAMOND_ORE).harvestTool(ToolType.PICKAXE).requiresCorrectToolForDrops().harvestLevel(3).strength(4F, 6F)));
-//
-//    //block
-//    public static final RegistryObject<Block> AMETHYST_BLOCK = BLOCKS.register("amethyst_block", () -> new Block(Block.Properties.copy(Blocks.EMERALD_BLOCK).strength(9, 9)));
-//    public static final RegistryObject<Block> ORIGIN_BLOCK = BLOCKS.register("origin_block", OriginBlock::new);
+    public static final RegistryObject<OreBlock> AMETHYST_ORE = BLOCKS.register("amethyst_ore",() -> new OreBlock(Block.Properties.copy(Blocks.DIAMOND_ORE).strength(4F, 6F)));
+
+    //block
+    public static final RegistryObject<Block> AMETHYST_BLOCK = BLOCKS.register("amethyst_block", () -> new Block(Block.Properties.copy(Blocks.EMERALD_BLOCK).strength(9, 9)));
+    public static final RegistryObject<Block> ORIGIN_BLOCK = BLOCKS.register("origin_block", OriginBlock::new);
 //    public static final RegistryObject<Block> BUTTER_BLOCK = BLOCKS.register("butter_block", ButterBlock::new);
 //    public static final RegistryObject<Block> FROZEN_MELON = BLOCKS.register("frozen_melon", () -> new Block(Block.Properties.copy(Blocks.MELON)));
 //    public static final RegistryObject<Block> STEEL_LADDER = BLOCKS.register("steel_ladder", SteelLadderBlock::new);
@@ -94,9 +92,9 @@ public class PVZBlocks {
         IForgeRegistry<Item> items = ev.getRegistry();
 
         Arrays.asList(
-                ORIGIN_ORE, APPEASE_ORE, LIGHT_ORE, EXPLOSION_ORE, DEFENCE_ORE, ICE_ORE, ENFORCE_ORE, TOXIC_ORE, ASSIST_ORE, MAGIC_ORE, FLAME_ORE, SPEAR_ORE, ARMA_ORE, ELECTRIC_ORE, SHADOW_ORE
-//                AMETHYST_ORE,
-//                AMETHYST_BLOCK, ORIGIN_BLOCK, BUTTER_BLOCK, FROZEN_MELON,
+                ORIGIN_ORE, APPEASE_ORE, LIGHT_ORE, EXPLOSION_ORE, DEFENCE_ORE, ICE_ORE, ENFORCE_ORE,
+                TOXIC_ORE, ASSIST_ORE, MAGIC_ORE, FLAME_ORE, SPEAR_ORE, ARMA_ORE, ELECTRIC_ORE, SHADOW_ORE,
+                AMETHYST_ORE, AMETHYST_BLOCK, ORIGIN_BLOCK//, BUTTER_BLOCK, FROZEN_MELON,
 //                NUT_LEAVES, NUT_LOG, NUT_SAPLING, CHOMPER,
 //                LANTERN, FLOWER_POT, GOLD_TILE1, GOLD_TILE2, GOLD_TILE3, SILVER_SUNFLOWER_TROPHY, GOLD_SUNFLOWER_TROPHY, DIAMOND_SUNFLOWER_TROPHY
         ).forEach(block -> {
