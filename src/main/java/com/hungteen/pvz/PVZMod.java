@@ -3,13 +3,17 @@ package com.hungteen.pvz;
 import com.hungteen.pvz.client.ClientProxy;
 import com.hungteen.pvz.common.CommonProxy;
 import com.hungteen.pvz.common.PVZSounds;
+import com.hungteen.pvz.common.advancement.AdvancementHandler;
 import com.hungteen.pvz.common.block.PVZBlocks;
 import com.hungteen.pvz.common.block.cubes.OriginBlock;
+import com.hungteen.pvz.common.capability.CapabilityHandler;
 import com.hungteen.pvz.common.entity.PVZEntities;
 import com.hungteen.pvz.common.impl.EssenceTypes;
 import com.hungteen.pvz.common.impl.RankTypes;
 import com.hungteen.pvz.common.item.PVZItems;
+import com.hungteen.pvz.common.network.PVZPacketHandler;
 import com.hungteen.pvz.data.DataGenHandler;
+import net.minecraft.world.entity.Entity;
 import net.minecraft.world.item.Item;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.eventbus.api.EventPriority;
@@ -48,16 +52,19 @@ public class PVZMod {
         modBus.addListener(EventPriority.NORMAL, PVZMod::setUp);
         modBus.addListener(EventPriority.NORMAL, PVZMod::setUpClient);
         modBus.addListener(EventPriority.NORMAL, DataGenHandler::dataGen);
+        modBus.addListener(EventPriority.NORMAL, CapabilityHandler::registerCapabilities);
         modBus.addGenericListener(Item.class, PVZBlocks::registerBlockItem);
+
         deferredRegister(modBus);
 
         //get forge event bus.
         IEventBus forgeBus = MinecraftForge.EVENT_BUS;
+        forgeBus.addGenericListener(Entity.class, CapabilityHandler::attachCapabilities);
 //        forgeBus.addListener(EventPriority.NORMAL, GenStructures::addDimensionalSpacing);
 //        forgeBus.addListener(EventPriority.HIGH, BiomeRegister::biomeModification);
 //        forgeBus.addListener(EventPriority.NORMAL, PVZDataPackManager::addReloadListenerEvent);
 
-//        AdvancementHandler.init();
+        AdvancementHandler.init();
         PVZConfig.init();
         coreRegister();
     }
@@ -68,14 +75,14 @@ public class PVZMod {
 
     public static void setUp(FMLCommonSetupEvent event) {
         event.enqueueWork(() -> {
-//            CapabilityHandler.registerCapabilities();
-//            PVZPacketHandler.init();
 //            BiomeRegister.registerBiomes(ev);
 //            PotionRecipeHandler.registerPotionRecipes();
 //            CommonRegister.registerCompostable();
 //            BiomeUtil.initBiomeSet();
             OriginBlock.updateRadiationMap();
         });
+
+        PVZPacketHandler.init();
     }
 
     public static void setUpClient(FMLClientSetupEvent event) {

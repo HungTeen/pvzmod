@@ -1,5 +1,7 @@
 package com.hungteen.pvz.common;
 
+import net.minecraft.world.entity.player.Player;
+
 /**
  * @program: pvzmod-1.18.x
  * @author: HungTeen
@@ -14,6 +16,10 @@ public class CommonProxy {
 
     public void setUpClient() {
 
+    }
+
+    public Player getPlayer(){
+        return null;
     }
 
 }

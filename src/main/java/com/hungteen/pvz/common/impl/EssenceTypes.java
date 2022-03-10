@@ -2,7 +2,7 @@ package com.hungteen.pvz.common.impl;
 
 import com.hungteen.pvz.PVZMod;
 import com.hungteen.pvz.api.PVZAPI;
-import com.hungteen.pvz.api.type.IEssenceType;
+import com.hungteen.pvz.api.types.IEssenceType;
 import com.hungteen.pvz.common.block.PVZBlocks;
 import com.hungteen.pvz.common.item.PVZItems;
 import com.hungteen.pvz.common.tag.PVZBlockTags;
@@ -13,7 +13,6 @@ import net.minecraft.world.level.block.Blocks;
 
 import javax.annotation.Nonnull;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 import java.util.function.Supplier;

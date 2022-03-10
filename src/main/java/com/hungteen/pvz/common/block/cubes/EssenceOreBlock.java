@@ -1,12 +1,10 @@
 package com.hungteen.pvz.common.block.cubes;
 
-import com.hungteen.pvz.api.type.IEssenceType;
-import com.hungteen.pvz.common.impl.EssenceTypes;
+import com.hungteen.pvz.api.types.IEssenceType;
 import net.minecraft.util.valueproviders.UniformInt;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.OreBlock;
-import net.minecraft.world.level.block.state.BlockBehaviour;
 
 /**
  * @program: pvzmod-1.18.x

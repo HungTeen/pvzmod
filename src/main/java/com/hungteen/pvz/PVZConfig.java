@@ -94,20 +94,20 @@ public class PVZConfig {
                         .comment("If turn to false, saplings no longer to grow to Origin Ore naturally, except there is a block above it.")
                         .define("AllowNaturalTurnOrigin", true);
 
-//                RuleSettings.TeamAttack = builder
-//                        .translation("config.pvz.rule.team_attack")
-//                        .comment("if turn to true, when plant's owner is in a team, the plant will attack the entity from other team(include players).")
-//                        .define("PlantAttackTeam", false);
-//
+                RuleSettings.TeamAttack = builder
+                        .translation("config.pvz.rule.team_attack")
+                        .comment("if turn to true, when plant's owner is in a team, the plant will attack the entity from other team(include players).")
+                        .define("PlantAttackTeam", false);
+
 //                RuleSettings.LimitPlantCount = builder
 //                        .translation("config.pvz.rule.plant_count")
 //                        .comment("how many plants can you place in 30 x 30 area without increasing cost.")
 //                        .defineInRange("LimitPlantCount", 50, 10, 1000);
-//
-//                RuleSettings.KeepSunWhenDie = builder
-//                        .translation("config.pvz.rule.keep_sun")
-//                        .comment("if turn to true, player will keep its sun after death.")
-//                        .define("KeepSunWhenDie", false);
+
+                RuleSettings.KeepSunWhenDie = builder
+                        .translation("config.pvz.rule.keep_sun")
+                        .comment("if turn to true, player will keep its sun after death.")
+                        .define("KeepSunWhenDie", false);
 //
 //                RuleSettings.MaxDamageLimit = builder
 //                        .translation("config.pvz.rule.max_damage")
@@ -209,15 +209,15 @@ public class PVZConfig {
             {
                 builder.comment("Settings about players.").push("Player Settings");
                 {
-//                    EntitySettings.PlayerInitialGroup = builder
-//                            .translation("config.pvz.player.initial_group")
-//                            .comment("Player Initial Group When they join the world for the first time(-2 means other monsters, -1 means zombies, 0 means neutral creatures, 1 means plants and 2 means other guards).")
-//                            .defineInRange("PlayerInitialGroup", 1, -2, 2);
-//
-//                    EntitySettings.PlayerBaseSunAmount = builder
-//                            .translation("config.pvz.player.initial_sun")
-//                            .comment("players' base sun amount, it will increase when tree maxLevel increasing.")
-//                            .defineInRange("PlayerInitialSun", 950, 100, 10000);
+                    EntitySettings.PlayerInitialGroup = builder
+                            .translation("config.pvz.player.initial_group")
+                            .comment("Player Initial Group When they join the world for the first time(-2 means other monsters, -1 means zombies, 0 means neutral creatures, 1 means plants and 2 means other guards).")
+                            .defineInRange("PlayerInitialGroup", 1, -2, 2);
+
+                    EntitySettings.PlayerBaseSunAmount = builder
+                            .translation("config.pvz.player.initial_sun")
+                            .comment("players' base sun amount, it will increase when tree maxLevel increasing.")
+                            .defineInRange("PlayerInitialSun", 950, 100, 10000);
                 }
                 builder.pop();
 
@@ -462,41 +462,41 @@ public class PVZConfig {
         public Client(ForgeConfigSpec.Builder builder) {
             builder.comment("Overlay Settings").push("Overlay Settings");
             {
-//                OverlaySettings.RenderSunBar = builder
-//                        .comment("turn to false to cancel the display of sun amount bar.")
-//                        .translation("config.pvz.overlay.sun_bar")
-//                        .define("RenderSunAmountBar", true);
-//
-//                OverlaySettings.RenderMoneyBar = builder
-//                        .comment("turn to false to cancel the display of money bar.")
-//                        .translation("config.pvz.overlay.money_bar")
-//                        .define("RenderMoneyBar", true);
-//
-//                OverlaySettings.RenderGemBar = builder
-//                        .comment("turn to false to cancel the display of gem bar.")
-//                        .translation("config.pvz.overlay.gem_bar")
-//                        .define("RenderGemBar", true);
-//
-//                OverlaySettings.RenderTreeLevel = builder
-//                        .comment("turn to false to cancel the display of tree maxLevel bar.")
-//                        .translation("config.pvz.overlay.level_bar")
-//                        .define("RenderTreeLevelBar", true);
-//
-//                OverlaySettings.RenderPlantFoodBar = builder
-//                        .comment("turn to false to cancel the display of plant food bar.")
-//                        .translation("config.pvz.overlay.energy_bar")
-//                        .define("RenderPlantFoodBar", true);
-//
-//                OverlaySettings.RenderInvasionProgress = builder
-//                        .comment("turn to false to cancel the display of invasion progress.")
-//                        .translation("config.pvz.overlay.invasion_bar")
-//                        .define("RenderInvasionProgress", true);
-//
+                OverlaySettings.RenderSunBar = builder
+                        .comment("turn to false to cancel the display of sun amount bar.")
+                        .translation("config.pvz.overlay.sun_bar")
+                        .define("RenderSunBar", true);
+
+                OverlaySettings.RenderMoneyBar = builder
+                        .comment("turn to false to cancel the display of money bar.")
+                        .translation("config.pvz.overlay.money_bar")
+                        .define("RenderMoneyBar", true);
+
+                OverlaySettings.RenderGemBar = builder
+                        .comment("turn to false to cancel the display of gem bar.")
+                        .translation("config.pvz.overlay.gem_bar")
+                        .define("RenderGemBar", true);
+
+                OverlaySettings.RenderTreeLevel = builder
+                        .comment("turn to false to cancel the display of tree maxLevel bar.")
+                        .translation("config.pvz.overlay.level_bar")
+                        .define("RenderTreeLevel", true);
+
+                OverlaySettings.RenderPlantFood = builder
+                        .comment("turn to false to cancel the display of plant food bar.")
+                        .translation("config.pvz.overlay.energy_bar")
+                        .define("RenderPlantFood", true);
+
+                OverlaySettings.RenderInvasionProgress = builder
+                        .comment("turn to false to cancel the display of invasion progress.")
+                        .translation("config.pvz.overlay.invasion_bar")
+                        .define("RenderInvasionProgress", true);
+
 //                OverlaySettings.RenderFog = builder
 //                        .comment("turn to false to cancel the display of fog.")
 //                        .translation("config.pvz.overlay.fog")
 //                        .define("RenderFog", true);
-//
+
 //                OverlaySettings.RenderCardSlots = builder
 //                        .comment("turn to false to cancel the display of summon card slots.")
 //                        .translation("config.pvz.overlay.card_slot")
@@ -507,10 +507,10 @@ public class PVZConfig {
 
             builder.comment("Other Render Settings").push("Other Render Settings");
             {
-//                OtherSettings.ShowPVZMainMenu = builder
-//                        .translation("config.pvz.client.pvz_menu")
-//                        .comment("show pvz main menu")
-//                        .define("ShowPVZMainMenu", true);
+                OtherSettings.ShowPVZMainMenu = builder
+                        .translation("config.pvz.client.pvz_menu")
+                        .comment("show pvz main menu")
+                        .define("ShowPVZMainMenu", true);
             }
             builder.pop();
         }
@@ -523,7 +523,7 @@ public class PVZConfig {
             public ForgeConfigSpec.BooleanValue RenderMoneyBar;
             public ForgeConfigSpec.BooleanValue RenderGemBar;
             public ForgeConfigSpec.BooleanValue RenderTreeLevel;
-            public ForgeConfigSpec.BooleanValue RenderPlantFoodBar;
+            public ForgeConfigSpec.BooleanValue RenderPlantFood;
             public ForgeConfigSpec.BooleanValue RenderInvasionProgress;
             public ForgeConfigSpec.BooleanValue RenderFog;
             public ForgeConfigSpec.BooleanValue RenderCardSlots;
@@ -552,6 +552,38 @@ public class PVZConfig {
 
     public static double getOriginEffectChance(){
         return COMMON_CONFIG.BlockSettings.OriginEffectChance.get();
+    }
+
+    public static int getPlayerInitialGroup(){
+        return COMMON_CONFIG.EntitySettings.PlayerInitialGroup.get();
+    }
+
+    public static boolean shouldKeepSunWhenDie(){
+        return COMMON_CONFIG.RuleSettings.KeepSunWhenDie.get();
+    }
+
+    public static int getBaseSun(){
+        return COMMON_CONFIG.EntitySettings.PlayerBaseSunAmount.get();
+    }
+
+    public static boolean renderSunBar(){
+        return CLIENT_CONFIG.OverlaySettings.RenderSunBar.get();
+    }
+
+    public static boolean renderMoneyBar(){
+        return CLIENT_CONFIG.OverlaySettings.RenderMoneyBar.get();
+    }
+
+    public static boolean renderGemBar(){
+        return CLIENT_CONFIG.OverlaySettings.RenderGemBar.get();
+    }
+
+    public static boolean renderTreeLevel(){
+        return CLIENT_CONFIG.OverlaySettings.RenderTreeLevel.get();
+    }
+
+    public static boolean renderPlantFood(){
+        return CLIENT_CONFIG.OverlaySettings.RenderPlantFood.get();
     }
 
 }

@@ -2,7 +2,7 @@ package com.hungteen.pvz.common.impl;
 
 import com.hungteen.pvz.PVZMod;
 import com.hungteen.pvz.api.PVZAPI;
-import com.hungteen.pvz.api.type.IRankType;
+import com.hungteen.pvz.api.types.IRankType;
 import com.hungteen.pvz.common.item.PVZItems;
 import com.hungteen.pvz.common.tag.PVZItemTags;
 import net.minecraft.tags.TagKey;

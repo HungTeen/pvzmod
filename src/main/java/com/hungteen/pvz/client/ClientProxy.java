@@ -1,6 +1,8 @@
 package com.hungteen.pvz.client;
 
 import com.hungteen.pvz.common.CommonProxy;
+import net.minecraft.client.Minecraft;
+import net.minecraft.world.entity.player.Player;
 import net.minecraftforge.client.event.EntityRenderersEvent;
 
 /**
@@ -10,9 +12,16 @@ import net.minecraftforge.client.event.EntityRenderersEvent;
  **/
 public class ClientProxy extends CommonProxy {
 
+    public static final Minecraft MC = Minecraft.getInstance();
+
     @Override
     public void setUpClient() {
+        PVZKeyBinds.register();
+    }
 
+    @Override
+    public Player getPlayer() {
+        return MC.player;
     }
 
 }

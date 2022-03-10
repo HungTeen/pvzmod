@@ -1,4 +1,4 @@
-package com.hungteen.pvz.api.event;
+package com.hungteen.pvz.api.events;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.level.Level;

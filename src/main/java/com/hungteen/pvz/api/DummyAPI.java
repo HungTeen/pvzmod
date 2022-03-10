@@ -1,7 +1,7 @@
 package com.hungteen.pvz.api;
 
-import com.hungteen.pvz.api.type.IEssenceType;
-import com.hungteen.pvz.api.type.IRankType;
+import com.hungteen.pvz.api.types.IEssenceType;
+import com.hungteen.pvz.api.types.IRankType;
 
 import java.util.ArrayList;
 import java.util.List;

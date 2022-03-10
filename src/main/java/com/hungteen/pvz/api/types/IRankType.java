@@ -1,4 +1,4 @@
-package com.hungteen.pvz.api.type;
+package com.hungteen.pvz.api.types;
 
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.item.Item;

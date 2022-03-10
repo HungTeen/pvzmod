@@ -2,9 +2,8 @@ package com.hungteen.pvz.api;
 
 import com.google.common.base.Suppliers;
 import com.hungteen.pvz.PVZMod;
-import com.hungteen.pvz.api.type.IEssenceType;
-import com.hungteen.pvz.api.type.IRankType;
-import org.apache.logging.log4j.LogManager;
+import com.hungteen.pvz.api.types.IEssenceType;
+import com.hungteen.pvz.api.types.IRankType;
 
 import java.lang.reflect.Constructor;
 import java.util.List;

@@ -1,6 +1,6 @@
 package com.hungteen.pvz.common.item.misc;
 
-import com.hungteen.pvz.api.type.IEssenceType;
+import com.hungteen.pvz.api.types.IEssenceType;
 import com.hungteen.pvz.common.item.PVZMiscItem;
 
 /**
