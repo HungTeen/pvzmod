@@ -37,4 +37,16 @@ public class EntityUtil {
         world.addFreshEntity(entity);
     }
 
+    /**
+     * spawn in random range position.
+     */
+    public static void onEntityRandomPosSpawn(LevelAccessor world, Entity entity, BlockPos pos, int dis) {
+        pos = pos.offset(MathUtil.getRandomInRange(world.getRandom(), dis), world.getRandom().nextInt(dis) + 1, MathUtil.getRandomInRange(world.getRandom(), dis));
+        onEntitySpawn(world, entity, pos);
+    }
+
+    public static boolean isEntityValid(Entity target) {
+        return target != null && target.isAlive();
+    }
+
 }

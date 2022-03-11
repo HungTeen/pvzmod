@@ -228,12 +228,7 @@ public class PlayerDataManager {
 
     private void sendResourcePacket(Player player, Resources res){
         if (player instanceof ServerPlayer) {
-            PVZPacketHandler.CHANNEL.send(
-                    PacketDistributor.PLAYER.with(() -> {
-                        return (ServerPlayer) player;
-                    }),
-                    new PlayerStatsPacket(res.ordinal(), resources.get(res))
-            );
+            PVZPacketHandler.sendToClient((ServerPlayer) player, new PlayerStatsPacket(res.ordinal(), resources.get(res)));
         }
     }
 

@@ -3,7 +3,9 @@ package com.hungteen.pvz.common.network;
 import com.hungteen.pvz.PVZMod;
 import com.hungteen.pvz.utils.Util;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.server.level.ServerPlayer;
 import net.minecraftforge.network.NetworkRegistry;
+import net.minecraftforge.network.PacketDistributor;
 import net.minecraftforge.network.simple.SimpleChannel;
 
 /**
@@ -39,6 +41,10 @@ public class PVZPacketHandler {
 //        CHANNEL.registerMessage(id ++, PAZStatsPacket.class, PAZStatsPacket::encode, PAZStatsPacket::new, PAZStatsPacket.Handler::onMessage);
 //        CHANNEL.registerMessage(id ++, DatapackPacket.class, DatapackPacket::encode, DatapackPacket::new, DatapackPacket.Handler::onMessage);
 
+    }
+
+    public static <MSG> void sendToClient(ServerPlayer serverPlayer, MSG msg){
+        CHANNEL.send(PacketDistributor.PLAYER.with(() -> serverPlayer), msg);
     }
 
     private static int getId(){

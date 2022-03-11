@@ -101,9 +101,7 @@ public class PlayerUtil {
 
     public static void playClientSound(Player player, SoundEvent ev) {
         if(ev != null) {
-            PVZPacketHandler.CHANNEL.send(PacketDistributor.PLAYER.with(() -> {
-                return (ServerPlayer) player;
-            }), new PlaySoundPacket(ev.getRegistryName().toString()));
+            PVZPacketHandler.sendToClient((ServerPlayer) player, new PlaySoundPacket(ev.getRegistryName().toString()));
         }
     }
 

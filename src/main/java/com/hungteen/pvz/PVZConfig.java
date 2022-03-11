@@ -122,10 +122,10 @@ public class PVZConfig {
 
                 builder.comment("Settings about the biome gen.").push("Biome Settings");
                 {
-//                    WorldSettings.GenZenGardenChance = builder
-//                            .translation("config.pvz.world.zen_garden_chance")
-//                            .comment("the gen chance of Zen Garden biome(the larger the more chance to see it).")
-//                            .defineInRange("GenZenGardenChance", 20, 1, 10000);
+                    WorldSettings.GenZenGardenChance = builder
+                            .translation("config.pvz.world.zen_garden_chance")
+                            .comment("the gen chance of Zen Garden biome(the larger the more chance to see it).")
+                            .defineInRange("GenZenGardenChance", 20, 1, 10000);
                 }
                 builder.pop();
 
@@ -166,25 +166,25 @@ public class PVZConfig {
                 builder.comment("Settings about the ore gen.").push("Ore Settings");
                 {
 
-                    WorldSettings.GenOriginOreChance = builder
-                            .translation("config.pvz.world.origin_ore_chance")
-                            .comment("the gen chance of origin ore in overworld(the larger the more chance to see it).")
-                            .defineInRange("GenOriginOreChance", 5, 1, 10000);
+                    WorldSettings.GenOriginOreCount = builder
+                            .translation("config.pvz.world.origin_ore_count")
+                            .comment("how many origin ore in overworld(the larger the more chance to see it).")
+                            .defineInRange("OriginOreGenWeight", 5, 1, 10000);
 
-                    WorldSettings.GenAmethystOreChance = builder
-                            .translation("config.pvz.world.amethyst_ore_chance")
-                            .comment("the gen chance of amethyst ore in the end(the larger the more chance to see it).")
-                            .defineInRange("GenAmethystOreChance", 15, 1, 10000);
+                    WorldSettings.GenAmethystOreCount = builder
+                            .translation("config.pvz.world.amethyst_ore_count")
+                            .comment("how many amethyst ore in the end(the larger the more chance to see it).")
+                            .defineInRange("GenAmethystOreCount", 12, 1, 10000);
                 }
                 builder.pop();
 
                 builder.comment("The Spawn Weight of entity.").push("EntitySpawnWeight");
                 {
-//                    WorldSettings.SunSpawnWeight = builder
-//                            .translation("config.pvz.world.sun_weight")
-//                            .comment("spawn weight of Sun.")
-//                            .defineInRange("SunSpawnWeight", 50, 1, 200);
-//
+                    WorldSettings.SunSpawnWeight = builder
+                            .translation("config.pvz.world.sun_weight")
+                            .comment("spawn weight of Sun.")
+                            .defineInRange("SunSpawnWeight", 50, 1, 200);
+
 //                    WorldSettings.LavaZombieSpawnWeight = builder
 //                            .translation("config.pvz.world.lava_zombie_weight")
 //                            .comment("spawn weight of LavaZombie at nether.")
@@ -258,25 +258,25 @@ public class PVZConfig {
 
                 builder.comment("The Max live time for Entity like sun.").push("EntityLiveTime");
                 {
-//                    EntitySettings.EntityLiveTick.SunLiveTick = builder
-//                            .translation("config.pvz.entity.sun_live_tick")
-//                            .comment("how many ticks can the sun entity live.")
-//                            .defineInRange("SunLiveTick", 400, 1, 1200);
-//
-//                    EntitySettings.EntityLiveTick.CoinLiveTick = builder
-//                            .translation("config.pvz.entity.coin_live_tick")
-//                            .comment("how many ticks can the coin entity live.")
-//                            .defineInRange("CoinLiveTick", 400, 1, 1200);
-//
-//                    EntitySettings.EntityLiveTick.JewelLiveTick = builder
-//                            .translation("config.pvz.entity.jewel_live_tick")
-//                            .comment("how many ticks can the jewel entity live.")
-//                            .defineInRange("JewelLiveTick", 500, 1, 1200);
-//
-//                    EntitySettings.EntityLiveTick.EnergyLiveTick = builder
-//                            .translation("config.pvz.entity.plant_food_live_tick")
-//                            .comment("how many ticks can the energy entity live.")
-//                            .defineInRange("PlantFoodLiveTick", 400, 1, 1200);
+                    EntitySettings.EntityLiveTick.SunLiveTick = builder
+                            .translation("config.pvz.entity.sun_live_tick")
+                            .comment("how many ticks can the sun entity live.")
+                            .defineInRange("SunLiveTick", 400, 1, 1200);
+
+                    EntitySettings.EntityLiveTick.CoinLiveTick = builder
+                            .translation("config.pvz.entity.coin_live_tick")
+                            .comment("how many ticks can the coin entity live.")
+                            .defineInRange("CoinLiveTick", 400, 1, 1200);
+
+                    EntitySettings.EntityLiveTick.JewelLiveTick = builder
+                            .translation("config.pvz.entity.jewel_live_tick")
+                            .comment("how many ticks can the jewel entity live.")
+                            .defineInRange("JewelLiveTick", 500, 1, 1200);
+
+                    EntitySettings.EntityLiveTick.EnergyLiveTick = builder
+                            .translation("config.pvz.entity.plant_food_live_tick")
+                            .comment("how many ticks can the energy entity live.")
+                            .defineInRange("PlantFoodLiveTick", 400, 1, 1200);
 //
 //                    EntitySettings.EntityLiveTick.YetiLiveTick = builder
 //                            .translation("config.pvz.entity.yeti_live_tick")
@@ -394,8 +394,8 @@ public class PVZConfig {
             public ForgeConfigSpec.IntValue YetiHouseDistance;
 
             /* ore gen */
-            public ForgeConfigSpec.IntValue GenAmethystOreChance;
-            public ForgeConfigSpec.IntValue GenOriginOreChance;
+            public ForgeConfigSpec.IntValue GenAmethystOreCount;
+            public ForgeConfigSpec.IntValue GenOriginOreCount;
 
             /* entity spawn */
             public ForgeConfigSpec.IntValue SunSpawnWeight;
@@ -550,6 +550,9 @@ public class PVZConfig {
         }
     }
 
+    /*
+    Common configs.
+     */
     public static double getOriginEffectChance(){
         return COMMON_CONFIG.BlockSettings.OriginEffectChance.get();
     }
@@ -565,6 +568,42 @@ public class PVZConfig {
     public static int getBaseSun(){
         return COMMON_CONFIG.EntitySettings.PlayerBaseSunAmount.get();
     }
+
+    public static int getSunLiveTick(){
+        return COMMON_CONFIG.EntitySettings.EntityLiveTick.SunLiveTick.get();
+    }
+
+    public static int getCoinLiveTick(){
+        return COMMON_CONFIG.EntitySettings.EntityLiveTick.CoinLiveTick.get();
+    }
+
+    public static int getJewelLiveTick(){
+        return COMMON_CONFIG.EntitySettings.EntityLiveTick.JewelLiveTick.get();
+    }
+
+    public static int getEnergyLiveTick(){
+        return COMMON_CONFIG.EntitySettings.EntityLiveTick.EnergyLiveTick.get();
+    }
+
+    public static int getZenGardenWeight(){
+        return COMMON_CONFIG.WorldSettings.GenZenGardenChance.get();
+    }
+
+    public static int getSunSpawnWeight(){
+        return COMMON_CONFIG.WorldSettings.SunSpawnWeight.get();
+    }
+
+    public static int getAmethystOreCount(){
+        return COMMON_CONFIG.WorldSettings.GenAmethystOreCount.get();
+    }
+
+    public static int getOriginOreCount(){
+        return COMMON_CONFIG.WorldSettings.GenOriginOreCount.get();
+    }
+
+    /*
+    Client configs.
+     */
 
     public static boolean renderSunBar(){
         return CLIENT_CONFIG.OverlaySettings.RenderSunBar.get();

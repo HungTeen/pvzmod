@@ -1,4 +1,4 @@
-package com.hungteen.pvz.client.render.entity;
+package com.hungteen.pvz.client.render.entity.effect;
 
 import com.hungteen.pvz.common.entity.effect.OriginEffectEntity;
 import com.hungteen.pvz.utils.AnimationUtil;
@@ -10,6 +10,7 @@ import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.entity.EntityRenderer;
 import net.minecraft.client.renderer.entity.EntityRendererProvider;
+import net.minecraft.client.renderer.entity.ItemEntityRenderer;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;

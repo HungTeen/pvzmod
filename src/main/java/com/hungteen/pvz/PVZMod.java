@@ -2,6 +2,7 @@ package com.hungteen.pvz;
 
 import com.hungteen.pvz.client.ClientProxy;
 import com.hungteen.pvz.common.CommonProxy;
+import com.hungteen.pvz.common.CommonRegister;
 import com.hungteen.pvz.common.PVZSounds;
 import com.hungteen.pvz.common.advancement.AdvancementHandler;
 import com.hungteen.pvz.common.block.PVZBlocks;
@@ -12,10 +13,16 @@ import com.hungteen.pvz.common.impl.EssenceTypes;
 import com.hungteen.pvz.common.impl.RankTypes;
 import com.hungteen.pvz.common.item.PVZItems;
 import com.hungteen.pvz.common.network.PVZPacketHandler;
+import com.hungteen.pvz.common.world.biome.PVZBiomes;
+import com.hungteen.pvz.common.world.feature.PVZFeatures;
+import com.hungteen.pvz.common.world.spawn.SpawnRegister;
 import com.hungteen.pvz.data.DataGenHandler;
+import com.hungteen.pvz.utils.BiomeUtil;
 import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.item.Item;
 import net.minecraftforge.common.MinecraftForge;
+import net.minecraftforge.event.world.BiomeLoadingEvent;
 import net.minecraftforge.eventbus.api.EventPriority;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.fml.DistExecutor;
@@ -53,6 +60,7 @@ public class PVZMod {
         modBus.addListener(EventPriority.NORMAL, PVZMod::setUpClient);
         modBus.addListener(EventPriority.NORMAL, DataGenHandler::dataGen);
         modBus.addListener(EventPriority.NORMAL, CapabilityHandler::registerCapabilities);
+        modBus.addListener(EventPriority.NORMAL, PVZEntities::addEntityAttributes);
         modBus.addGenericListener(Item.class, PVZBlocks::registerBlockItem);
 
         deferredRegister(modBus);
@@ -61,7 +69,7 @@ public class PVZMod {
         IEventBus forgeBus = MinecraftForge.EVENT_BUS;
         forgeBus.addGenericListener(Entity.class, CapabilityHandler::attachCapabilities);
 //        forgeBus.addListener(EventPriority.NORMAL, GenStructures::addDimensionalSpacing);
-//        forgeBus.addListener(EventPriority.HIGH, BiomeRegister::biomeModification);
+        forgeBus.addListener(EventPriority.HIGH, PVZBiomes::biomeModification);
 //        forgeBus.addListener(EventPriority.NORMAL, PVZDataPackManager::addReloadListenerEvent);
 
         AdvancementHandler.init();
@@ -75,11 +83,13 @@ public class PVZMod {
 
     public static void setUp(FMLCommonSetupEvent event) {
         event.enqueueWork(() -> {
-//            BiomeRegister.registerBiomes(ev);
+            PVZBiomes.registerBiomes();
+            PVZFeatures.registerFeatures();
 //            PotionRecipeHandler.registerPotionRecipes();
-//            CommonRegister.registerCompostable();
-//            BiomeUtil.initBiomeSet();
+            CommonRegister.registerCompostable();
+            BiomeUtil.initBiomeSet();
             OriginBlock.updateRadiationMap();
+            SpawnRegister.registerEntitySpawns();
         });
 
         PVZPacketHandler.init();
@@ -124,9 +134,9 @@ public class PVZMod {
         PVZBlocks.BLOCKS.register(bus);
         PVZEntities.ENTITY_TYPES.register(bus);
         PVZSounds.SOUNDS.register(bus);
+        PVZBiomes.BIOMES.register(bus);
 //        ParticleRegister.PARTICLE_TYPES.register(bus);
 //        EffectRegister.EFFECTS.register(bus);
-//        BiomeRegister.BIOMES.register(bus);
 //        FeatureRegister.FEATURES.register(bus);
 //        StructureRegister.STRUCTURE_FEATURES.register(bus);
 //        TileEntityRegister.TILE_ENTITY_TYPES.register(bus);

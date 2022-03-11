@@ -1,21 +1,17 @@
 package com.hungteen.pvz.client;
 
-import com.hungteen.pvz.client.render.entity.OriginEffectRender;
+import com.hungteen.pvz.client.model.PVZModelLayers;
+import com.hungteen.pvz.client.model.misc.DropEntityModel;
+import com.hungteen.pvz.client.render.entity.drop.SunRender;
+import com.hungteen.pvz.client.render.entity.effect.OriginEffectRender;
 import com.hungteen.pvz.common.entity.PVZEntities;
-import com.mojang.datafixers.util.Pair;
-import net.minecraft.client.Minecraft;
-import net.minecraft.client.renderer.RenderType;
-import net.minecraft.client.resources.model.ModelResourceLocation;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.client.model.geom.builders.LayerDefinition;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.client.event.EntityRenderersEvent;
-import net.minecraftforge.client.event.ModelBakeEvent;
 import net.minecraftforge.client.event.ParticleFactoryRegisterEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
-
-import java.util.Map;
 
 /**
  * @program: pvzmod-1.18.x
@@ -27,7 +23,17 @@ public class ClientRegister {
 
     @SubscribeEvent
     public static void registerRenderers(EntityRenderersEvent.RegisterRenderers event) {
+        /* drop entity */
         event.registerEntityRenderer(PVZEntities.ORIGIN_EFFECT.get(), OriginEffectRender::new);
+        /* effect entity */
+        event.registerEntityRenderer(PVZEntities.SUN.get(), SunRender::new);
+    }
+
+    @SubscribeEvent
+    public static void registerRenderers(EntityRenderersEvent.RegisterLayerDefinitions event) {
+        /* drop entity */
+        event.registerLayerDefinition(PVZModelLayers.SUN, DropEntityModel::createBodyLayer);
+        /* effect entity */
     }
 
     @SubscribeEvent
