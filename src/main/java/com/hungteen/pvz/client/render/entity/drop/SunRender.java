@@ -5,8 +5,7 @@ import com.hungteen.pvz.client.model.misc.DropEntityModel;
 import com.hungteen.pvz.common.entity.drop.DropEntity;
 import com.hungteen.pvz.common.entity.drop.Sun;
 import com.hungteen.pvz.utils.Util;
-import net.minecraft.client.model.EntityModel;
-import net.minecraft.client.renderer.entity.CreeperRenderer;
+
 import net.minecraft.client.renderer.entity.EntityRendererProvider;
 import net.minecraft.resources.ResourceLocation;
 
@@ -26,7 +25,7 @@ public class SunRender extends DropEntityRender<Sun> {
 
     @Override
     protected float getScaleByEntity(Sun entity) {
-        return entity.getAmount() * 0.003f + 0.1f;
+        return entity.getAmount() * 0.004f + 0.8f;
     }
 
     @Override

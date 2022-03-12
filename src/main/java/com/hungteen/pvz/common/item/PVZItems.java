@@ -1,18 +1,21 @@
 package com.hungteen.pvz.common.item;
 
 import com.hungteen.pvz.PVZMod;
+import com.hungteen.pvz.common.entity.PVZEntities;
 import com.hungteen.pvz.common.impl.EssenceTypes;
 import com.hungteen.pvz.common.impl.RankTypes;
 import com.hungteen.pvz.common.item.misc.EssenceItem;
 import com.hungteen.pvz.common.item.misc.TemplateCardItem;
+import com.hungteen.pvz.utils.Colors;
 import com.mojang.datafixers.util.Pair;
 import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.Mob;
 import net.minecraft.world.item.*;
+import net.minecraftforge.common.ForgeSpawnEggItem;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
 import net.minecraftforge.registries.RegistryObject;
-import org.jline.utils.Colors;
 
 /**
  * @program: pvzmod-1.18.x
@@ -80,9 +83,11 @@ public class PVZItems {
 //    public static final RegistryObject<Item> TIME_SOURCE = ITEMS.register("time_source", PVZMiscItem::new);
 
     /* spawn eggs */
-//    public static final RegistryObject<PVZSpawnEggItem> SUN_SPAWN_EGG = registerSpawnEgg("sun", EntityRegister.SUN, Colors.YELLOW, Colors.WHITE);
-//    public static final RegistryObject<PVZSpawnEggItem> COIN_SPAWN_EGG = registerSpawnEgg("coin", EntityRegister.COIN, Colors.ORANGE, Colors.GOLD);
-//    public static final RegistryObject<PVZSpawnEggItem> JEWEL_SPAWN_EGG = registerSpawnEgg("jewel", EntityRegister.JEWEL, Colors.LITTLE_AQUA, Colors.BLUE);
+    public static final RegistryObject<ForgeSpawnEggItem> SUN_SPAWN_EGG = registerSpawnEgg("sun", PVZEntities.SUN, Colors.YELLOW, Colors.WHITE);
+    public static final RegistryObject<ForgeSpawnEggItem> COPPER_COIN_SPAWN_EGG = registerSpawnEgg("copper_coin", PVZEntities.COPPER_COIN, Colors.WHITE_COLOR);
+    public static final RegistryObject<ForgeSpawnEggItem> SILVER_COIN_SPAWN_EGG = registerSpawnEgg("gold_coin", PVZEntities.SILVER_COIN, Colors.WHITE_COLOR);
+    public static final RegistryObject<ForgeSpawnEggItem> GOLD_COIN_SPAWN_EGG = registerSpawnEgg("silver_coin", PVZEntities.GOLD_COIN, Colors.WHITE_COLOR);
+//    public static final RegistryObject<ForgeSpawnEggItem> JEWEL_SPAWN_EGG = registerSpawnEgg("jewel", PVZEntities.JEWEL, Colors.WHITE_COLOR);
 //    public static final RegistryObject<PVZSpawnEggItem> ENERGY_SPAWN_EGG = registerSpawnEgg("energy", EntityRegister.ENERGY, Colors.GREEN, Colors.DARK_GREEN);
 //    public static final RegistryObject<PVZSpawnEggItem> FOODIE_ZOMBIE_SPAWN_EGG = registerSpawnEgg("foodie_zombie", EntityRegister.FOODIE_ZOMBIE, Colors.ZOMBIE_SKIN, Colors.WHITE);
 //    public static final RegistryObject<PVZSpawnEggItem> CRAZY_DAVE_SPAWN_EGG = registerSpawnEgg("crazy_dave", EntityRegister.CRAZY_DAVE, Colors.BROWN, Colors.SILVER);
@@ -340,16 +345,16 @@ public class PVZItems {
     /**
      * register spawn eggs
      */
-//    private static RegistryObject<PVZSpawnEggItem> registerSpawnEgg(String name, RegistryObject<? extends EntityType<?>> entityType, int color1, int color2){
-//        return ITEMS.register(name + "_spawn_egg", () -> new PVZSpawnEggItem(entityType, color1, color2, new Item.Properties().tab(PVZItemGroups.PVZ_MISC)));
-//    }
+    private static RegistryObject<ForgeSpawnEggItem> registerSpawnEgg(String name, RegistryObject<? extends EntityType<? extends Mob>> entityType, int color1, int color2){
+        return ITEMS.register(name + "_spawn_egg", () -> new ForgeSpawnEggItem(entityType, color1, color2, new Item.Properties().tab(PVZItemTabs.PVZ_MISC)));
+    }
 
     /**
      * register spawn eggs
      */
-//    private static RegistryObject<PVZSpawnEggItem> registerSpawnEgg(String name, RegistryObject<? extends EntityType<?>> entityType, Pair<Integer, Integer> color){
-//        return ITEMS.register(name + "_spawn_egg", () -> new PVZSpawnEggItem(entityType, color.getFirst(), color.getSecond(), new Item.Properties().tab(PVZItemGroups.PVZ_MISC)));
-//    }
+    private static RegistryObject<ForgeSpawnEggItem> registerSpawnEgg(String name, RegistryObject<? extends EntityType<? extends Mob>> entityType, Pair<Integer, Integer> color){
+        return ITEMS.register(name + "_spawn_egg", () -> new ForgeSpawnEggItem(entityType, color.getFirst(), color.getSecond(), new Item.Properties().tab(PVZItemTabs.PVZ_MISC)));
+    }
 
 //    private static RegistryObject<PlantCardItem> registerCard(IPlantType plant, boolean is){
 //        String name = plant.toString();

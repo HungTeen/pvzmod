@@ -8,6 +8,7 @@ import com.hungteen.pvz.utils.BiomeUtil;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.server.commands.LocateBiomeCommand;
 import net.minecraft.tags.BiomeTags;
+import net.minecraft.world.entity.monster.Creeper;
 import net.minecraft.world.level.biome.*;
 import net.minecraft.world.level.levelgen.GenerationStep;
 import net.minecraftforge.common.BiomeDictionary;
@@ -33,7 +34,7 @@ public class PVZBiomes {
      * {@link PVZMod#setUp(FMLCommonSetupEvent)}
      */
     public static void registerBiomes() {
-        registerBiome(ZEN_GARDEN.get(), BiomeManager.BiomeType.WARM, PVZConfig.getZenGardenWeight(), BiomeDictionary.Type.PLAINS, BiomeDictionary.Type.FOREST, BiomeDictionary.Type.OVERWORLD);
+        registerBiome(ZEN_GARDEN.get(), BiomeManager.BiomeType.WARM, 2000, BiomeDictionary.Type.PLAINS, BiomeDictionary.Type.FOREST, BiomeDictionary.Type.OVERWORLD);
     }
 
     /**

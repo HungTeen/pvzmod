@@ -29,7 +29,6 @@ public class Sun extends DropEntity {
 
     public Sun(EntityType<? extends Mob> type, Level worldIn) {
         super(type, worldIn);
-        this.setAmount(25);//default sun amount (nature spawn)
         this.setNoGravity(true);
     }
 
@@ -39,6 +38,11 @@ public class Sun extends DropEntity {
         if(! this.onGround && ! this.isInWater()) {
             this.setDeltaMovement(this.getDeltaMovement().x(), - FALL_SPEED, this.getDeltaMovement().z());
         }
+    }
+
+    @Override
+    protected int getDefaultAmount() {
+        return 25;
     }
 
     @Override

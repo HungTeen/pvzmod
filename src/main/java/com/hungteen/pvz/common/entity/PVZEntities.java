@@ -1,6 +1,7 @@
 package com.hungteen.pvz.common.entity;
 
 import com.hungteen.pvz.PVZMod;
+import com.hungteen.pvz.common.entity.drop.Coin;
 import com.hungteen.pvz.common.entity.drop.Sun;
 import com.hungteen.pvz.common.entity.effect.OriginEffectEntity;
 import com.hungteen.pvz.utils.Util;
@@ -40,7 +41,9 @@ public class PVZEntities {
      * drop entity.
      */
     public static final RegistryObject<EntityType<Sun>> SUN = registerEntityType(Sun::new, "sun", MobCategory.AMBIENT);
-//    public static final RegistryObject<EntityType<CoinEntity>> COIN = registerEntityType(CoinEntity::new, "coin", EntityClassification.MISC);
+    public static final RegistryObject<EntityType<Coin>> COPPER_COIN = registerEntityType(Coin.CopperCoin::new, "copper_coin", MobCategory.MISC);
+    public static final RegistryObject<EntityType<Coin>> SILVER_COIN = registerEntityType(Coin.SilverCoin::new, "silver_coin", MobCategory.MISC);
+    public static final RegistryObject<EntityType<Coin>> GOLD_COIN = registerEntityType(Coin.GoldCoin::new, "gold_coin", MobCategory.MISC);
 //    public static final RegistryObject<EntityType<JewelEntity>> JEWEL = registerEntityType(JewelEntity::new, "jewel", EntityClassification.MISC);
 //    public static final RegistryObject<EntityType<EnergyEntity>> ENERGY = registerEntityType(EnergyEntity::new, "energy", EntityClassification.MISC, 0.9f, 2f);
 //    public static final RegistryObject<EntityType<GiftBoxEntity>> GIFT_BOX = registerEntityType(GiftBoxEntity::new, "gift_box", EntityClassification.MISC, 0.9f, 1f);
@@ -83,12 +86,12 @@ public class PVZEntities {
 //            });
 //        }
         Arrays.asList(
-                SUN.get()
+                SUN, COPPER_COIN, SILVER_COIN, GOLD_COIN
 //                COIN.get(), JEWEL.get(), ENERGY.get(),
 //                CRAZY_DAVE.get(), SUN_DAVE.get(), PANNEY.get(),
 //                FOODIE_ZOMBIE.get()
         ).forEach(obj -> {
-            ev.put(obj, Mob.createMobAttributes().build());
+            ev.put(obj.get(), Mob.createMobAttributes().build());
         });
     }
 

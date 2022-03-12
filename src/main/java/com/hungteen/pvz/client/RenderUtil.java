@@ -40,4 +40,8 @@ public class RenderUtil {
         stack.popPose();
     }
 
+    public static float getSpin(int tick, float partial) {
+        return (tick + partial) / 20.0F;
+    }
+
 }

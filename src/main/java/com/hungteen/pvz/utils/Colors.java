@@ -88,6 +88,7 @@ public class Colors {
     public static final int WHITE = 16777215;
     public static final int SILVER_FISH = 7237230;
 
+    public static final Pair<Integer,Integer> WHITE_COLOR = new Pair<>(WHITE, WHITE);
     public static final Pair<Integer,Integer> APPEASE_COLOR = new Pair<>(PEA_GREEN, GREEN);
     public static final Pair<Integer,Integer> LIGHT_COLOR = new Pair<>(YELLOW, LITTLE_YELLOW1);
     public static final Pair<Integer,Integer> EXPLOSION_COLOR = new Pair<>(DARK_RED, RED);

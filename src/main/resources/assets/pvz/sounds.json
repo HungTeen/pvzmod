@@ -455,7 +455,10 @@
     "subtitle": "sound.pvz.robot_move",
     "sounds": [
       {
-        "name": "pvz:robot_move"
+        "name": "pvz:robot_move1"
+      },
+      {
+        "name": "pvz:robot_move2"
       }
     ]
   },
