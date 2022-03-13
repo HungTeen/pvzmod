@@ -50,9 +50,9 @@ public class OriginOrbRender extends EntityRenderer<OriginOrb> {
         /*
         Color picked by HungTeen.
          */
-        int red = (int) (89F + Mth.sin(f8) * 19F);
-        int green =  (int) (118F - Mth.sin(f8) * 61F);
-        int blue = (int) (118F + Mth.sin(f8) * 19F);
+        int red = (int) (65F + Mth.sin(f8) * 31F);
+        int green =  160;
+        int blue = (int) (140F + Mth.sin(f8) * 100F);
         stack.translate(0.0D, (double) 0.1F, 0.0D);
         stack.mulPose(this.entityRenderDispatcher.cameraOrientation());
         stack.mulPose(Vector3f.YP.rotationDegrees(180.0F));
