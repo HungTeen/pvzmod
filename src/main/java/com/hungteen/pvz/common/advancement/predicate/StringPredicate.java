@@ -1,38 +1,45 @@
 package com.hungteen.pvz.common.advancement.predicate;
 
 import com.google.gson.JsonElement;
-import net.minecraft.entity.player.ServerPlayerEntity;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonPrimitive;
+import net.minecraft.server.level.ServerPlayer;
 
 import javax.annotation.Nullable;
 
+/**
+ * @program: pvzmod-1.18.x
+ * @author: HungTeen
+ * @create: 2022-03-10 17:07
+ **/
 public class StringPredicate {
 
-	public static final StringPredicate ANY = new StringPredicate();
-	private final String s;
+    public static final StringPredicate ANY = new StringPredicate();
+    private final String text;
 
-	public StringPredicate() {
-		s = "";
-	}
+    public StringPredicate() {
+        text = "";
+    }
 
-	public StringPredicate(String s) {
-		this.s = s;
-	}
+    public StringPredicate(String string) {
+        this.text = string;
+    }
 
-	public boolean test(ServerPlayerEntity player, String ss) {
-		if(this == ANY) return true;
-		return this.s.equals(ss);
-	}
+    public boolean test(ServerPlayer player, String string) {
+        if(this == ANY) return true;
+        return this.text.equals(string);
+    }
 
-	public static StringPredicate deserialize(@Nullable JsonElement element) {
-		if (element != null && element.isJsonPrimitive()) {
-			return new StringPredicate(element.getAsString());
-		} else {
-			return ANY;
-		}
-	}
+    public static StringPredicate deserialize(@Nullable JsonElement element) {
+        if (element != null && element.isJsonPrimitive()) {
+            return new StringPredicate(element.getAsString());
+        } else {
+            return ANY;
+        }
+    }
 
-	public String serialize() {
-		return this.s;
-	}
+    public JsonElement serialize() {
+        return new JsonPrimitive(this.text);
+    }
 
 }

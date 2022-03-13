@@ -1,10 +1,10 @@
 buildscript {
     repositories {
-        maven { url = 'https://files.minecraftforge.net/maven' }
+        maven { url = 'https://maven.minecraftforge.net' }
         mavenCentral()
     }
     dependencies {
-        classpath group: 'net.minecraftforge.gradle', name: 'ForgeGradle', version: '4.1.+', changing: true
+        classpath group: 'net.minecraftforge.gradle', name: 'ForgeGradle', version: '5.1.+', changing: true
     }
 }
 
@@ -24,26 +24,26 @@ version = "${config.mc_version}-${config.mod_version}"
 group = "com.hungteen.${config.mod_id}"
 archivesBaseName = "${config.mod_name}"
 
-java.toolchain.languageVersion = JavaLanguageVersion.of(8)
+java.toolchain.languageVersion = JavaLanguageVersion.of(17)
 
 println('Java: ' + System.getProperty('java.version') + ' JVM: ' + System.getProperty('java.vm.version') + '(' + System.getProperty('java.vendor') + ') Arch: ' + System.getProperty('os.arch'))
 
 minecraft {
-    mappings channel: 'official', version: '1.16.5'
+    mappings channel: 'official', version: '1.18.2'
 
     accessTransformer = file('src/main/resources/META-INF/accesstransformer.cfg')
 
     runs {
         client {
-            
             workingDirectory project.file('run')
+
             property 'forge.logging.markers', 'REGISTRIES'
             property 'forge.logging.console.level', 'debug'
 
             //avoid pachouli mod crash
             property 'mixin.env.remapRefMap', 'true'
             property 'mixin.env.refMapRemappingFile', "${projectDir}/build/createSrgToMcp/output.srg"
-            
+
             mods {
                 pvz {
                     source sourceSets.main
@@ -53,6 +53,7 @@ minecraft {
 
         server {
             workingDirectory project.file('run')
+
             property 'forge.logging.markers', 'REGISTRIES'
             property 'forge.logging.console.level', 'debug'
 
@@ -65,6 +66,7 @@ minecraft {
 
         data {
             workingDirectory project.file('run')
+
             property 'forge.logging.markers', 'REGISTRIES'
             property 'forge.logging.console.level', 'debug'
 
@@ -111,19 +113,21 @@ repositories {
 }
 
 dependencies {
-    minecraft 'net.minecraftforge:forge:1.16.5-36.1.0'
-    
-    compileOnly fg.deobf("vazkii.patchouli:Patchouli:1.16.2-47:api")
-    runtimeOnly fg.deobf("vazkii.patchouli:Patchouli:1.16.2-47")
-    
-    compileOnly fg.deobf("mezz.jei:jei-${mc_version}:${jei_version}:api")
-    runtimeOnly fg.deobf("mezz.jei:jei-${mc_version}:${jei_version}")
-    
-    implementation fg.deobf("curse.maven:jade-324717:${jade_version}")
+    minecraft 'net.minecraftforge:forge:1.18.2-40.0.12'
 
-//    implementation fg.deobf("curse.maven:craid-532546:${craid_version}")
+    //https://maven.blamejared.com/vazkii/patchouli/Patchouli/
+//    compileOnly fg.deobf("vazkii.patchouli:Patchouli:${patchouli_version}:api")
+//    runtimeOnly fg.deobf("vazkii.patchouli:Patchouli:${patchouli_version}")
     
-    implementation fg.deobf("curse.maven:configured-457570:${configured_version}")
+    //https://dvs1.progwml6.com/files/maven/mezz/jei
+//    compileOnly fg.deobf("mezz.jei:jei-${mc_version}:${jei_version}:api")
+//    runtimeOnly fg.deobf("mezz.jei:jei-${mc_version}:${jei_version}")
+    
+    //https://www.curseforge.com/minecraft/mc-mods/jade/files
+//    implementation fg.deobf("curse.maven:jade-324717:${jade_version}")
+    
+    //https://www.curseforge.com/minecraft/mc-mods/configured/files
+//    implementation fg.deobf("curse.maven:configured-457570:${configured_version}")
 }
 
 task apiJar(type: Jar) {
@@ -140,21 +144,11 @@ artifacts {
     archives apiJar
 }
 
-processResources {
-    // replace stuff in mcmod.info, nothing else
-    from(sourceSets.main.resources.srcDirs) {
-        include 'META-INF/mods.toml'
-
-        // replace version and mcversion
-        expand 'version': project.version
-    }
-}
-
-// Example for how to get properties into the manifest for reading by the runtime..
+// Example for how to get properties into the manifest for reading at runtime.
 jar {
     manifest {
         attributes([
-            "Specification-Title": "${config.mod_id}",
+                "Specification-Title": "${config.mod_id}",
             "Specification-Vendor": "${config.mod_owner}",
             "Specification-Version": "1", // We are version 1 of ourselves
             "Implementation-Title": "${config.mod_id}",
@@ -165,11 +159,11 @@ jar {
     }
 }
 
-// Example configuration to allow publishing using the maven-publish task
+// Example configuration to allow publishing using the maven-publish plugin
 // This is the preferred method to reobfuscate your jar file
 jar.finalizedBy('reobfJar')
 // However if you are in a multi-project build, dev time needs unobfed jar files, so you can delay the obfuscation until publishing by doing
-//publish.dependsOn('reobfJar')
+// publish.dependsOn('reobfJar')
 
 publishing {
     publications {
@@ -179,7 +173,7 @@ publishing {
     }
     repositories {
         maven {
-            url "file:///${project.projectDir}/mcmodsrepo"
+            url "file://${project.projectDir}/mcmodsrepo"
         }
     }
 }

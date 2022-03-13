@@ -1,20 +1,24 @@
 package com.hungteen.pvz.api.events;
 
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.world.World;
+import net.minecraft.core.BlockPos;
+import net.minecraft.world.level.Level;
 import net.minecraftforge.eventbus.api.Cancelable;
 import net.minecraftforge.eventbus.api.Event;
 
 /**
+ * @program: pvzmod-1.18.x
+ * @author: HungTeen
+ * @create: 2022-03-10 09:33
+ *
  * fire when origin block grow nearby block to essence ore.
  */
 @Cancelable
 public class OriginEffectEvent extends Event {
 
-    private final World world;
+    private final Level world;
     private final BlockPos pos;
 
-    public OriginEffectEvent(World world, BlockPos pos){
+    public OriginEffectEvent(Level world, BlockPos pos){
         this.world = world;
         this.pos = pos;
     }
@@ -23,7 +27,7 @@ public class OriginEffectEvent extends Event {
         return pos;
     }
 
-    public World getWorld() {
+    public Level getWorld() {
         return world;
     }
 

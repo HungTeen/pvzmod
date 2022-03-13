@@ -1,34 +1,38 @@
 package com.hungteen.pvz.api.types;
 
-import net.minecraft.item.Item;
-import net.minecraft.tags.ITag;
+import net.minecraft.tags.TagKey;
+import net.minecraft.world.item.Item;
 
 public interface IRankType {
 
+    /**
+     * rarity in shop.
+     */
     int getWeight();
 
-	int getValue();
+    /**
+     * how much does it value in shop.
+     */
+    int getPrice();
 
-	String getName();
+    /**
+     * enchant point.
+     */
+    int getEnchantPoint();
 
-	/**
-	 * get corresponding template card.
-	 */
-	Item getTemplateCard();
+    /**
+     * get corresponding template card.
+     */
+    Item getTemplateCard();
 
-	/**
-	 * get corresponding template card tag.
-	 */
-	ITag.INamedTag<Item> getCardTag();
-	
-	/**
-	 * get corresponding material item.
-	 */
-	ITag.INamedTag<Item> getMaterial();
-	
-	/**
-	 * enchant point.
-	 */
-	int getEnchantPoint();
-	
+    /**
+     * get corresponding template card tag.
+     */
+    TagKey<Item> getCardTag();
+
+    /**
+     * get corresponding material item.
+     */
+    TagKey<Item> getMaterial();
+
 }

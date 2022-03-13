@@ -1,15 +1,15 @@
-modLoader="javafml" 
-license="GNU LESSER GENERAL PUBLIC LICENSE" 
-loaderVersion="[36,)" 
+modLoader="javafml"
+license="GNU LESSER GENERAL PUBLIC LICENSE"
+loaderVersion="[40,)"
 issueTrackerURL="https://github.com/HungTeen/pvzmod/issues"
 
 [[mods]]
 modId="pvz"
-version="0.6.1"
+version="0.7"
 displayName="Plants vs Zombies"
 authors="_HungTeen_, Wolf__Crystal, Grass_Carp"
-logoFile="logo.png" 
-displayURL="https://space.bilibili.com/362855464" 
+logoFile="logo.png"
+displayURL="https://space.bilibili.com/362855464"
 credits="Men_Tian_Bai, InkyTheSheep, Chompy, XXTT and so on."
 description="A mod that brings Plants vs Zombies to Minecraft !"
 configBackground="pvz:textures/block/amethyst_block.png"
@@ -17,11 +17,13 @@ configBackground="pvz:textures/block/amethyst_block.png"
 [[dependencies.pvz]]
     modId="forge"
     mandatory=true
-    versionRange="[36.1.0,)"
-    
+    versionRange="[40,)"
+    ordering="NONE"
+    side="BOTH"
+
 [[dependencies.pvz]]
     modId="minecraft"
     mandatory=true
-    versionRange="[1.16,)"
+    versionRange="[1.18.2,1.19)"
     ordering="NONE"
     side="BOTH"

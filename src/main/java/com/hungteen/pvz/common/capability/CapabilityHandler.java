@@ -1,37 +1,37 @@
 package com.hungteen.pvz.common.capability;
 
-
-import com.hungteen.pvz.PVZMod;
-import com.hungteen.pvz.common.capability.player.IPlayerDataCapability;
-import com.hungteen.pvz.common.capability.player.PlayerDataCapability;
-import com.hungteen.pvz.common.capability.player.PlayerDataProvider;
-import com.hungteen.pvz.common.capability.player.PlayerDataStorage;
-
-import net.minecraft.entity.Entity;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.util.ResourceLocation;
-import net.minecraftforge.common.MinecraftForge;
+import com.hungteen.pvz.common.capability.player.IPVZPlayerCapability;
+import com.hungteen.pvz.common.capability.player.PVZPlayerCapProvider;
+import com.hungteen.pvz.common.capability.player.PlayerDataManager;
+import com.hungteen.pvz.utils.Util;
+import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.player.Player;
 import net.minecraftforge.common.capabilities.Capability;
-import net.minecraftforge.common.capabilities.CapabilityInject;
 import net.minecraftforge.common.capabilities.CapabilityManager;
+import net.minecraftforge.common.capabilities.CapabilityToken;
+import net.minecraftforge.common.capabilities.RegisterCapabilitiesEvent;
+import net.minecraftforge.common.util.LazyOptional;
 import net.minecraftforge.event.AttachCapabilitiesEvent;
-import net.minecraftforge.eventbus.api.SubscribeEvent;
 
+/**
+ * @program: pvzmod-1.18.x
+ * @author: HungTeen
+ * @create: 2022-03-10 12:07
+ **/
 public class CapabilityHandler {
-	
-	@CapabilityInject(IPlayerDataCapability.class)
-	public static final Capability<IPlayerDataCapability> PLAYER_DATA_CAPABILITY = null;
 
-	public static void registerCapabilities(){
-		CapabilityManager.INSTANCE.register(IPlayerDataCapability.class, new PlayerDataStorage(), PlayerDataCapability::new);
-		MinecraftForge.EVENT_BUS.register(CapabilityHandler.class);
-	}
-	
-	@SubscribeEvent
-    public static void attachCapability(AttachCapabilitiesEvent<Entity> event){
-		Entity entity = event.getObject();
-        if (entity instanceof PlayerEntity){
-        	event.addCapability(new ResourceLocation(PVZMod.MOD_ID, "player_data"), new PlayerDataProvider((PlayerEntity) entity));
+    public static void registerCapabilities(RegisterCapabilitiesEvent event){
+        event.register(IPVZPlayerCapability.class);
+    }
+
+    public static void attachCapabilities(AttachCapabilitiesEvent<Entity> event){
+        if(event.getObject() instanceof Player){
+            event.addCapability(Util.prefix("player_data"), new PVZPlayerCapProvider((Player) event.getObject()));
         }
     }
+
+    public static LazyOptional<IPVZPlayerCapability> getPlayerData(Player player){
+        return player.getCapability(PVZPlayerCapProvider.PVZ_PLAYER_CAP);
+    }
+
 }

@@ -1,7 +1,0 @@
-{
-	"name": "Boss",
-	"description": "Boss chanllenge.",
-	"icon": "pvz:edgar_doll",
-	"sortnum":1,
-	"parent": "pvz:start"
-}

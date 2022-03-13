@@ -1,45 +1,55 @@
 package com.hungteen.pvz.common.block.cubes;
 
 import com.hungteen.pvz.PVZConfig;
+import com.hungteen.pvz.api.PVZAPI;
 import com.hungteen.pvz.api.events.OriginEffectEvent;
 import com.hungteen.pvz.api.types.IEssenceType;
 import com.hungteen.pvz.common.entity.effect.OriginEffectEntity;
-import com.hungteen.pvz.common.impl.EssenceTypes;
-import com.hungteen.pvz.utils.enums.Colors;
-import net.minecraft.block.Block;
-import net.minecraft.block.BlockState;
-import net.minecraft.block.SoundType;
-import net.minecraft.block.material.Material;
-import net.minecraft.block.material.MaterialColor;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.world.World;
-import net.minecraft.world.server.ServerWorld;
+import com.hungteen.pvz.utils.BlockUtil;
+import com.hungteen.pvz.utils.Colors;
+import net.minecraft.core.BlockPos;
+import net.minecraft.server.level.ServerLevel;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.SoundType;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.material.Material;
+import net.minecraft.world.level.material.MaterialColor;
 import net.minecraftforge.common.MinecraftForge;
-import net.minecraftforge.common.ToolType;
 
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Random;
 
+/**
+ * @program: pvzmod-1.18.x
+ * @author: HungTeen
+ * @create: 2022-03-09 22:44
+ **/
 public class OriginBlock extends Block {
 
     private static final Map<Block, IEssenceType> BLOCK_TO_ESSENCE = new HashMap<>();
     private static final int RADIATION_RANGE = 1;
 
     public OriginBlock() {
-        super(Block.Properties.of(Material.STONE, MaterialColor.COLOR_GREEN).strength(15, 50).harvestLevel(3).harvestTool(ToolType.PICKAXE)
-                .lightLevel(i -> 15).randomTicks().sound(SoundType.ANCIENT_DEBRIS).noOcclusion());
+        super(Block.Properties.of(Material.STONE, MaterialColor.COLOR_GREEN)
+                .strength(15, 50)
+                .lightLevel(i -> 15)
+                .randomTicks()
+                .sound(SoundType.ANCIENT_DEBRIS)
+                .noOcclusion()
+        );
     }
 
     /**
-     * update map when tags change.
+     * update map when tags change and common set up.
      */
     public static void updateRadiationMap() {
         BLOCK_TO_ESSENCE.clear();
 
-        EssenceTypes.getEssences().forEach(e -> {
+        PVZAPI.get().getEssences().forEach(e -> {
             e.getRadiationBlockTag().ifPresent(tag -> {
-                tag.getValues().forEach(b -> {
+                BlockUtil.getTagBlocks(tag).forEach(b -> {
                     BLOCK_TO_ESSENCE.put(b, e);
                 });
             });
@@ -48,7 +58,7 @@ public class OriginBlock extends Block {
 
     @SuppressWarnings("deprecation")
     @Override
-    public void tick(BlockState state, ServerWorld worldIn, BlockPos pos, Random rand) {
+    public void tick(BlockState state, ServerLevel worldIn, BlockPos pos, Random rand) {
         super.tick(state, worldIn, pos, rand);
         if (! worldIn.isClientSide) {
             if (! worldIn.isAreaLoaded(pos, 3)) return;
@@ -57,7 +67,7 @@ public class OriginBlock extends Block {
             for (int i = -r; i <= r; ++i) {
                 for (int j = -r; j <= r; ++j) {
                     for (int k = -r; k <= r; ++k) {
-                        if (rand.nextDouble() < PVZConfig.COMMON_CONFIG.BlockSettings.OriginEffectChance.get()) {
+                        if (rand.nextDouble() < PVZConfig.getOriginEffectChance()) {
                             success |= checkAndGrow(worldIn, pos.getX() + i, pos.getY() + j, pos.getZ() + k);
                         }
                     }
@@ -73,7 +83,7 @@ public class OriginBlock extends Block {
     /**
      * check specific block and grow if matched.
      */
-    private boolean checkAndGrow(World world, int x, int y, int z) {
+    private boolean checkAndGrow(Level world, int x, int y, int z) {
         final BlockPos pos = new BlockPos(x, y, z);
         final BlockState blockstate = world.getBlockState(pos);
         final Block block = blockstate.getBlock();
@@ -87,4 +97,3 @@ public class OriginBlock extends Block {
     }
 
 }
-
