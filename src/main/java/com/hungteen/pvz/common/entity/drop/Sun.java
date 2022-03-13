@@ -3,7 +3,6 @@ package com.hungteen.pvz.common.entity.drop;
 import com.hungteen.pvz.PVZConfig;
 import com.hungteen.pvz.common.PVZSounds;
 import com.hungteen.pvz.common.entity.PVZEntities;
-import com.hungteen.pvz.common.event.events.LivingCollectDropEvent;
 import com.hungteen.pvz.utils.EntityUtil;
 import com.hungteen.pvz.utils.PlayerUtil;
 import com.hungteen.pvz.utils.enums.Resources;
@@ -14,7 +13,7 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.LevelAccessor;
 import net.minecraft.world.level.LightLayer;
-import net.minecraftforge.common.MinecraftForge;
+import net.minecraft.world.phys.Vec3;
 
 import java.util.Random;
 
@@ -23,7 +22,7 @@ import java.util.Random;
  * @author: HungTeen
  * @create: 2022-03-11 09:16
  **/
-public class Sun extends DropEntity {
+public class Sun extends DropEntityBase {
 
     private static final float FALL_SPEED = 0.03F;
 
@@ -37,6 +36,8 @@ public class Sun extends DropEntity {
         super.tick();
         if(! this.onGround && ! this.isInWater()) {
             this.setDeltaMovement(this.getDeltaMovement().x(), - FALL_SPEED, this.getDeltaMovement().z());
+        } else{
+            this.setDeltaMovement(Vec3.ZERO);
         }
     }
 

@@ -1,22 +1,20 @@
 package com.hungteen.pvz.client.model.misc;
 
-import com.hungteen.pvz.common.entity.drop.DropEntity;
+import com.hungteen.pvz.common.entity.drop.DropEntityBase;
 import com.hungteen.pvz.common.entity.drop.Sun;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
 import net.minecraft.client.model.EntityModel;
-import net.minecraft.client.model.geom.ModelLayerLocation;
 import net.minecraft.client.model.geom.ModelPart;
 import net.minecraft.client.model.geom.PartPose;
 import net.minecraft.client.model.geom.builders.*;
-import net.minecraft.resources.ResourceLocation;
 
 /**
  * @program: pvzmod-1.18.x
  * @author: HungTeen
  * @create: 2022-03-11 08:56
  **/
-public class DropEntityModel<T extends DropEntity> extends EntityModel<T> {
+public class DropEntityModel<T extends DropEntityBase> extends EntityModel<T> {
 
     private final ModelPart total;
 

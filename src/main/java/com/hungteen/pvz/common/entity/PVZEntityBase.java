@@ -1,6 +1,5 @@
 package com.hungteen.pvz.common.entity;
 
-import com.mojang.math.Vector3d;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.protocol.Packet;
@@ -18,6 +17,8 @@ import net.minecraftforge.network.NetworkHooks;
  **/
 public abstract class PVZEntityBase extends Entity {
 
+    private boolean firstSpawn = false;
+
     public PVZEntityBase(EntityType<?> type, Level world) {
         super(type, world);
     }
@@ -28,10 +29,12 @@ public abstract class PVZEntityBase extends Entity {
 
     @Override
     protected void readAdditionalSaveData(CompoundTag tag) {
+        this.firstSpawn = tag.getBoolean("first_spawn");
     }
 
     @Override
     protected void addAdditionalSaveData(CompoundTag tag) {
+        tag.putBoolean("first_spawn", this.firstSpawn);
     }
 
     @Override
@@ -40,6 +43,14 @@ public abstract class PVZEntityBase extends Entity {
         if(this.tickCount <= 5) {
             this.refreshDimensions();
         }
+        if(! this.firstSpawn){
+            this.firstSpawn = true;
+            this.onFirstSpawn();
+        }
+    }
+
+    public void onFirstSpawn(){
+
     }
 
     protected void tickMove() {

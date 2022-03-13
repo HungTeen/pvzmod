@@ -1,17 +1,14 @@
 package com.hungteen.pvz.common.world.biome;
 
-import com.hungteen.pvz.common.entity.PVZEntities;
-import com.hungteen.pvz.common.world.feature.PVZFeatures;
 import com.hungteen.pvz.utils.BiomeUtil;
+
 import net.minecraft.data.worldgen.BiomeDefaultFeatures;
-import net.minecraft.data.worldgen.biome.OverworldBiomes;
 import net.minecraft.data.worldgen.placement.VegetationPlacements;
-import net.minecraft.sounds.Musics;
-import net.minecraft.world.entity.MobCategory;
-import net.minecraft.world.entity.MobSpawnType;
-import net.minecraft.world.level.GameRules;
-import net.minecraft.world.level.SpawnData;
-import net.minecraft.world.level.biome.*;
+import net.minecraft.world.level.biome.AmbientMoodSettings;
+import net.minecraft.world.level.biome.Biome;
+import net.minecraft.world.level.biome.BiomeGenerationSettings;
+import net.minecraft.world.level.biome.BiomeSpecialEffects;
+import net.minecraft.world.level.biome.MobSpawnSettings;
 import net.minecraft.world.level.levelgen.GenerationStep;
 
 /**
@@ -38,7 +35,6 @@ public class ZenGardenBiome {
          */
         final MobSpawnSettings.Builder mobBuilder = new MobSpawnSettings.Builder();
         mobBuilder.creatureGenerationProbability(0.07F);
-        mobBuilder.addSpawn(MobCategory.AMBIENT, new MobSpawnSettings.SpawnerData(PVZEntities.SUN.get(), 100, 1, 1));
 
         /*
         Decorations.

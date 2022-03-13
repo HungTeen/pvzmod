@@ -3,6 +3,8 @@ package com.hungteen.pvz.client;
 import com.hungteen.pvz.client.model.PVZModelLayers;
 import com.hungteen.pvz.client.model.misc.DropEntityModel;
 import com.hungteen.pvz.client.render.entity.drop.DropItemRender;
+import com.hungteen.pvz.client.render.entity.drop.OriginOrbRender;
+import com.hungteen.pvz.client.render.entity.drop.PlantFoodRender;
 import com.hungteen.pvz.client.render.entity.drop.SunRender;
 import com.hungteen.pvz.client.render.entity.effect.OriginEffectRender;
 import com.hungteen.pvz.common.entity.PVZEntities;
@@ -29,6 +31,9 @@ public class ClientRegister {
         event.registerEntityRenderer(PVZEntities.COPPER_COIN.get(), DropItemRender::new);
         event.registerEntityRenderer(PVZEntities.SILVER_COIN.get(), DropItemRender::new);
         event.registerEntityRenderer(PVZEntities.GOLD_COIN.get(), DropItemRender::new);
+        event.registerEntityRenderer(PVZEntities.JEWEL.get(), DropItemRender::new);
+        event.registerEntityRenderer(PVZEntities.PLANT_FOOD.get(), PlantFoodRender::new);
+        event.registerEntityRenderer(PVZEntities.ORIGIN_ORB.get(), OriginOrbRender::new);
 
         /* effect entity */
         event.registerEntityRenderer(PVZEntities.ORIGIN_EFFECT.get(), OriginEffectRender::new);
@@ -38,6 +43,7 @@ public class ClientRegister {
     public static void registerRenderers(EntityRenderersEvent.RegisterLayerDefinitions event) {
         /* drop entity */
         event.registerLayerDefinition(PVZModelLayers.SUN, DropEntityModel::createBodyLayer);
+        event.registerLayerDefinition(PVZModelLayers.PLANT_FOOD, DropEntityModel::createBodyLayer);
         /* effect entity */
     }
 

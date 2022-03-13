@@ -1,7 +1,7 @@
 package com.hungteen.pvz.client.render.entity.drop;
 
 import com.hungteen.pvz.client.render.entity.PVZEntityRender;
-import com.hungteen.pvz.common.entity.drop.DropEntity;
+import com.hungteen.pvz.common.entity.drop.DropEntityBase;
 import com.mojang.blaze3d.vertex.PoseStack;
 
 import net.minecraft.client.model.EntityModel;
@@ -13,7 +13,7 @@ import net.minecraft.client.renderer.entity.EntityRendererProvider;
  * @author: HungTeen
  * @create: 2022-03-11 08:56
  **/
-public abstract class DropEntityRender<T extends DropEntity> extends PVZEntityRender<T> {
+public abstract class DropEntityRender<T extends DropEntityBase> extends PVZEntityRender<T> {
 
     public DropEntityRender(EntityRendererProvider.Context context, EntityModel<T> m) {
         super(context, m);

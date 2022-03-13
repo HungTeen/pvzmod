@@ -1,22 +1,12 @@
 package com.hungteen.pvz.common.world.spawn;
 
-import com.hungteen.pvz.PVZConfig;
-import com.hungteen.pvz.common.entity.PVZEntities;
-import com.hungteen.pvz.common.entity.drop.Sun;
 import com.hungteen.pvz.utils.BiomeUtil;
+
 import net.minecraft.resources.ResourceKey;
-import net.minecraft.world.entity.EntityType;
-import net.minecraft.world.entity.MobCategory;
 import net.minecraft.world.entity.SpawnPlacements;
-import net.minecraft.world.entity.animal.Dolphin;
-import net.minecraft.world.entity.monster.Guardian;
 import net.minecraft.world.level.biome.Biome;
-import net.minecraft.world.level.biome.MobSpawnSettings;
 import net.minecraft.world.level.block.Blocks;
-import net.minecraft.world.level.levelgen.Heightmap;
-import net.minecraftforge.event.RegistryEvent;
 import net.minecraftforge.event.world.BiomeLoadingEvent;
-import net.minecraftforge.eventbus.api.SubscribeEvent;
 
 /**
  * @program: pvzmod-1.18.x
@@ -34,7 +24,6 @@ public class SpawnRegister {
     });
 
     public static void registerEntitySpawns() {
-        SpawnPlacements.register(PVZEntities.SUN.get(), IN_SKY, Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, Sun::canSunSpawn);
 //		EntitySpawnPlacementRegistry.register(EntityRegister.FOODIE_ZOMBIE.get(), PlacementType.IN_WATER, Heightmap.Type.MOTION_BLOCKING_NO_LEAVES, FoodieZombieEntity::canSpawn);
 //        EntitySpawnPlacementRegistry.register(EntityRegister.CRAZY_DAVE.get(), PlacementType.ON_GROUND, Heightmap.Type.MOTION_BLOCKING_NO_LEAVES, MobEntity::checkMobSpawnRules);
 //
@@ -91,7 +80,6 @@ public class SpawnRegister {
     public static void addEntitySpawnToBiome(BiomeLoadingEvent event, ResourceKey<Biome> biomeKey) {
         if(BiomeUtil.isOverworld(biomeKey)) {
             if(BiomeUtil.isLand(biomeKey)) {
-                event.getSpawns().addSpawn(MobCategory.AMBIENT, new MobSpawnSettings.SpawnerData(PVZEntities.SUN.get(), 2 * PVZConfig.getSunSpawnWeight(), 1, 1));
 //				event.getSpawns().addSpawn(EntityClassification.MONSTER, new Spawners(EntityRegister.GIGA_TOMB_STONE.get(), PVZConfig.COMMON_CONFIG.WorldSettings.GigaTombStoneSpawnWeight.get(), 1, 1));
             }
             if(BiomeUtil.isDesert(biomeKey)) {

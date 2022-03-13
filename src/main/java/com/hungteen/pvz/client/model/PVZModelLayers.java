@@ -14,6 +14,7 @@ public class PVZModelLayers {
     Drop Entities.
      */
     public static final ModelLayerLocation SUN = register("sun");
+    public static final ModelLayerLocation PLANT_FOOD = register("plant_food");
 
     private static ModelLayerLocation register(String p_171294_) {
         return createLocation(p_171294_, "main");

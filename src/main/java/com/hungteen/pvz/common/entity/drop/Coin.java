@@ -19,7 +19,7 @@ import net.minecraft.world.level.Level;
  * @author: HungTeen
  * @create: 2022-03-12 22:17
  **/
-public abstract class Coin extends DropEntity{
+public abstract class Coin extends DropEntityBase {
 
     public Coin(EntityType<? extends Mob> type, Level worldIn) {
         super(type, worldIn);
@@ -70,7 +70,7 @@ public abstract class Coin extends DropEntity{
 
         @Override
         public ItemStack getRenderStack() {
-            return new ItemStack(PVZItems.COPPER_COIN_SPAWN_EGG.get());
+            return new ItemStack(PVZItems.COPPER_COIN.get());
         }
 
         @Override
@@ -87,7 +87,7 @@ public abstract class Coin extends DropEntity{
 
         @Override
         public ItemStack getRenderStack() {
-            return new ItemStack(PVZItems.SILVER_COIN_SPAWN_EGG.get());
+            return new ItemStack(PVZItems.SILVER_COIN.get());
         }
 
         @Override
@@ -104,7 +104,7 @@ public abstract class Coin extends DropEntity{
 
         @Override
         public ItemStack getRenderStack() {
-            return new ItemStack(PVZItems.GOLD_COIN_SPAWN_EGG.get());
+            return new ItemStack(PVZItems.GOLD_COIN.get());
         }
 
         @Override

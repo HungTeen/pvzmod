@@ -1,8 +1,7 @@
 package com.hungteen.pvz.common.entity;
 
 import com.hungteen.pvz.PVZMod;
-import com.hungteen.pvz.common.entity.drop.Coin;
-import com.hungteen.pvz.common.entity.drop.Sun;
+import com.hungteen.pvz.common.entity.drop.*;
 import com.hungteen.pvz.common.entity.effect.OriginEffectEntity;
 import com.hungteen.pvz.utils.Util;
 import net.minecraft.world.entity.Entity;
@@ -44,8 +43,9 @@ public class PVZEntities {
     public static final RegistryObject<EntityType<Coin>> COPPER_COIN = registerEntityType(Coin.CopperCoin::new, "copper_coin", MobCategory.MISC);
     public static final RegistryObject<EntityType<Coin>> SILVER_COIN = registerEntityType(Coin.SilverCoin::new, "silver_coin", MobCategory.MISC);
     public static final RegistryObject<EntityType<Coin>> GOLD_COIN = registerEntityType(Coin.GoldCoin::new, "gold_coin", MobCategory.MISC);
-//    public static final RegistryObject<EntityType<JewelEntity>> JEWEL = registerEntityType(JewelEntity::new, "jewel", EntityClassification.MISC);
-//    public static final RegistryObject<EntityType<EnergyEntity>> ENERGY = registerEntityType(EnergyEntity::new, "energy", EntityClassification.MISC, 0.9f, 2f);
+    public static final RegistryObject<EntityType<Jewel>> JEWEL = registerEntityType(Jewel::new, "jewel", MobCategory.MISC);
+    public static final RegistryObject<EntityType<PlantFood>> PLANT_FOOD = registerEntityType(PlantFood::new, "plant_food", MobCategory.MISC);
+    public static final RegistryObject<EntityType<OriginOrb>> ORIGIN_ORB = registerEntityType(OriginOrb::new, "origin_orb", MobCategory.MISC);
 //    public static final RegistryObject<EntityType<GiftBoxEntity>> GIFT_BOX = registerEntityType(GiftBoxEntity::new, "gift_box", EntityClassification.MISC, 0.9f, 1f);
 
     /**
@@ -85,14 +85,12 @@ public class PVZEntities {
 //                ev.put(obj, PVZZombieEntity.createZombieAttributes());
 //            });
 //        }
-        Arrays.asList(
-                SUN, COPPER_COIN, SILVER_COIN, GOLD_COIN
-//                COIN.get(), JEWEL.get(), ENERGY.get(),
-//                CRAZY_DAVE.get(), SUN_DAVE.get(), PANNEY.get(),
-//                FOODIE_ZOMBIE.get()
-        ).forEach(obj -> {
-            ev.put(obj.get(), Mob.createMobAttributes().build());
-        });
+//        Arrays.asList(
+////                CRAZY_DAVE.get(), SUN_DAVE.get(), PANNEY.get(),
+////                FOODIE_ZOMBIE.get()
+//        ).forEach(obj -> {
+//            ev.put(obj.get(), Mob.createMobAttributes().build());
+//        });
     }
 
     /**

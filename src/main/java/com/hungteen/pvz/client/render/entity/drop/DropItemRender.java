@@ -1,9 +1,7 @@
 package com.hungteen.pvz.client.render.entity.drop;
 
-import java.util.Random;
-
 import com.hungteen.pvz.client.RenderUtil;
-import com.hungteen.pvz.common.entity.drop.DropEntity;
+import com.hungteen.pvz.common.entity.drop.DropEntityBase;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.math.Vector3f;
 
@@ -24,7 +22,7 @@ import net.minecraft.world.item.ItemStack;
  * @author: HungTeen
  * @create: 2022-03-12 22:31
  **/
-public class DropItemRender extends EntityRenderer<DropEntity> {
+public class DropItemRender extends EntityRenderer<DropEntityBase> {
 
     private final ItemRenderer itemRenderer;
 
@@ -36,7 +34,7 @@ public class DropItemRender extends EntityRenderer<DropEntity> {
     }
 
     @Override
-    public void render(DropEntity dropEntity, float yaw, float partialTicks, PoseStack matrixStackIn, MultiBufferSource bufferSource, int packedLightIn) {
+    public void render(DropEntityBase dropEntity, float yaw, float partialTicks, PoseStack matrixStackIn, MultiBufferSource bufferSource, int packedLightIn) {
         ItemStack itemstack = dropEntity.getRenderStack();
         if(itemstack.isEmpty()){
             return;
@@ -56,7 +54,7 @@ public class DropItemRender extends EntityRenderer<DropEntity> {
         super.render(dropEntity, yaw, partialTicks, matrixStackIn, bufferSource, packedLightIn);
     }
 
-    public ResourceLocation getTextureLocation(DropEntity p_115034_) {
+    public ResourceLocation getTextureLocation(DropEntityBase p_115034_) {
         return TextureAtlas.LOCATION_BLOCKS;
     }
 }

@@ -273,9 +273,9 @@ public class PVZConfig {
                             .comment("how many ticks can the jewel entity live.")
                             .defineInRange("JewelLiveTick", 500, 1, 1200);
 
-                    EntitySettings.EntityLiveTick.EnergyLiveTick = builder
+                    EntitySettings.EntityLiveTick.PlantFoodLiveTick = builder
                             .translation("config.pvz.entity.plant_food_live_tick")
-                            .comment("how many ticks can the energy entity live.")
+                            .comment("how many ticks can the plant food entity live.")
                             .defineInRange("PlantFoodLiveTick", 400, 1, 1200);
 //
 //                    EntitySettings.EntityLiveTick.YetiLiveTick = builder
@@ -430,7 +430,7 @@ public class PVZConfig {
                 public ForgeConfigSpec.IntValue SunLiveTick;
                 public ForgeConfigSpec.IntValue CoinLiveTick;
                 public ForgeConfigSpec.IntValue JewelLiveTick;
-                public ForgeConfigSpec.IntValue EnergyLiveTick;
+                public ForgeConfigSpec.IntValue PlantFoodLiveTick;
                 public ForgeConfigSpec.IntValue YetiLiveTick;
                 public ForgeConfigSpec.IntValue BowlingLiveTick;
                 public ForgeConfigSpec.IntValue LawnMowerLiveTick;
@@ -581,8 +581,8 @@ public class PVZConfig {
         return COMMON_CONFIG.EntitySettings.EntityLiveTick.JewelLiveTick.get();
     }
 
-    public static int getEnergyLiveTick(){
-        return COMMON_CONFIG.EntitySettings.EntityLiveTick.EnergyLiveTick.get();
+    public static int getPlantFoodLiveTick(){
+        return COMMON_CONFIG.EntitySettings.EntityLiveTick.PlantFoodLiveTick.get();
     }
 
     public static int getZenGardenWeight(){

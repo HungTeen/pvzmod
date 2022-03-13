@@ -1,5 +1,6 @@
 package com.hungteen.pvz.common.entity.drop;
 
+import com.hungteen.pvz.common.entity.PVZEntityBase;
 import org.jetbrains.annotations.Nullable;
 
 import com.hungteen.pvz.api.interfaces.ICollectible;
@@ -31,16 +32,16 @@ import net.minecraftforge.common.MinecraftForge;
  * @author: HungTeen
  * @create: 2022-03-11 08:58
  **/
-public abstract class DropEntity extends Mob implements ICollectible {
+public abstract class DropEntityBase extends PVZEntityBase implements ICollectible {
 
     /**
      * how much does it have when being collected.
      */
-    private static final EntityDataAccessor<Integer> AMOUNT = SynchedEntityData.defineId(DropEntity.class, EntityDataSerializers.INT);
-    private static final EntityDataAccessor<Integer> STATE = SynchedEntityData.defineId(DropEntity.class, EntityDataSerializers.INT);
+    private static final EntityDataAccessor<Integer> AMOUNT = SynchedEntityData.defineId(DropEntityBase.class, EntityDataSerializers.INT);
+    private static final EntityDataAccessor<Integer> STATE = SynchedEntityData.defineId(DropEntityBase.class, EntityDataSerializers.INT);
     protected int existTick = 0;
 
-    public DropEntity(EntityType<? extends Mob> type, Level worldIn) {
+    public DropEntityBase(EntityType<? extends Mob> type, Level worldIn) {
         super(type, worldIn);
         this.setInvulnerable(true);
     }
@@ -53,15 +54,9 @@ public abstract class DropEntity extends Mob implements ICollectible {
     }
 
     @Override
-    protected void registerGoals() {
-        this.goalSelector.addGoal(4, new FloatGoal(this));
-    }
-
-    @Nullable
-    @Override
-    public SpawnGroupData finalizeSpawn(ServerLevelAccessor accessor, DifficultyInstance difficultyInstance, MobSpawnType spawnType, @Nullable SpawnGroupData groupData, @Nullable CompoundTag tag) {
+    public void onFirstSpawn() {
+        super.onFirstSpawn();
         this.onDropped();
-        return super.finalizeSpawn(accessor, difficultyInstance, spawnType, groupData, tag);
     }
 
     @Override
@@ -75,12 +70,13 @@ public abstract class DropEntity extends Mob implements ICollectible {
         }
         
         if (! level.isClientSide) {
-            
             //max exist time reach, it will disappear.
             if (this.existTick >= this.getMaxLiveTick()) {
                 this.discard();
             }
         }
+
+        this.tickMove();
     }
 
     /**
@@ -123,14 +119,6 @@ public abstract class DropEntity extends Mob implements ICollectible {
     }
 
     @Override
-    protected void doPush(Entity entityIn) {//can not push by entity.
-    }
-
-    @Override
-    protected void pushEntities() {//can not push by entity.
-    }
-
-    @Override
     public boolean isPickable() {
         return false;
     }
@@ -146,11 +134,6 @@ public abstract class DropEntity extends Mob implements ICollectible {
     @Override
     public boolean causeFallDamage(float distance, float damageMultiplier, DamageSource damageSource) {
         return false;
-    }
-
-    @Override
-    protected void playBlockFallSound() {
-        return;
     }
 
     @Override
