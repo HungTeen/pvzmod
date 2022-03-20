@@ -68,6 +68,8 @@ public class PVZBlocks {
     public static final RegistryObject<Block> NUT_PLANKS = BLOCKS.register("nut_planks", () -> new Block(Block.Properties.copy(Blocks.OAK_PLANKS)));
     public static final RegistryObject<Block> NUT_DOOR = BLOCKS.register("nut_door", () -> new DoorBlock(Block.Properties.copy(Blocks.OAK_DOOR)));
     public static final RegistryObject<Block> NUT_TRAPDOOR = BLOCKS.register("nut_trapdoor", () -> new TrapDoorBlock(Block.Properties.copy(Blocks.OAK_TRAPDOOR)));
+    public static final RegistryObject<Block> NUT_FENCE = BLOCKS.register("nut_fence", () -> new FenceBlock(Block.Properties.copy(Blocks.OAK_FENCE)));
+    public static final RegistryObject<Block> NUT_FENCE_GATE = BLOCKS.register("nut_fence_gate", () -> new FenceGateBlock(Block.Properties.copy(Blocks.OAK_FENCE_GATE)));
 //    public static final RegistryObject<Block> NUT_SAPLING = BLOCKS.register("nut_sapling", () -> new Block(NutTree::new));
 //    public static final RegistryObject<Block> CHOMPER = BLOCKS.register("chomper", ChomperBlock::new);
 //    public static final RegistryObject<LilyPadBlock> LILY_PAD = BLOCKS.register("lily_pad", LilyPadBlock::new);
@@ -99,7 +101,7 @@ public class PVZBlocks {
                 ORIGIN_ORE, APPEASE_ORE, LIGHT_ORE, EXPLOSION_ORE, DEFENCE_ORE, ICE_ORE, ENFORCE_ORE,
                 TOXIC_ORE, ASSIST_ORE, MAGIC_ORE, FLAME_ORE, SPEAR_ORE, ARMA_ORE, ELECTRIC_ORE, SHADOW_ORE,
                 AMETHYST_ORE, AMETHYST_BLOCK, ORIGIN_BLOCK,// ,BUTTER_BLOCK, FROZEN_MELON,
-                NUT_LEAVES, NUT_LEAVES_WITH_NUTS, NUT_LOG, NUT_PLANKS, NUT_DOOR, NUT_TRAPDOOR//, NUT_SAPLING, CHOMPER,
+                NUT_LEAVES, NUT_LEAVES_WITH_NUTS, NUT_LOG, NUT_PLANKS, NUT_DOOR, NUT_TRAPDOOR, NUT_FENCE, NUT_FENCE_GATE//, NUT_SAPLING, CHOMPER,
 //                LANTERN, FLOWER_POT, GOLD_TILE1, GOLD_TILE2, GOLD_TILE3, SILVER_SUNFLOWER_TROPHY, GOLD_SUNFLOWER_TROPHY, DIAMOND_SUNFLOWER_TROPHY
         ).forEach(block -> {
             items.register(new BlockItem(block.get(), new Item.Properties().tab(PVZItemTabs.PVZ_MISC)).setRegistryName(block.get().getRegistryName()));
