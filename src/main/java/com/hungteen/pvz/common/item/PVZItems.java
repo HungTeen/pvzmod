@@ -86,8 +86,8 @@ public class PVZItems {
     /* spawn eggs */
 //    public static final RegistryObject<DropItemEgg> SUN = registerSpawnEgg("sun", PVZEntities.SUN, Colors.YELLOW, Colors.WHITE);
     public static final RegistryObject<DropItemEgg> COPPER_COIN = ITEMS.register("copper_coin", () -> new DropItemEgg(() -> PVZEntities.COPPER_COIN.get()));
-    public static final RegistryObject<DropItemEgg> SILVER_COIN = ITEMS.register("gold_coin", () -> new DropItemEgg(() -> PVZEntities.SILVER_COIN.get()));
-    public static final RegistryObject<DropItemEgg> GOLD_COIN = ITEMS.register("silver_coin", () -> new DropItemEgg(() -> PVZEntities.GOLD_COIN.get()));
+    public static final RegistryObject<DropItemEgg> SILVER_COIN = ITEMS.register("silver_coin", () -> new DropItemEgg(() -> PVZEntities.SILVER_COIN.get()));
+    public static final RegistryObject<DropItemEgg> GOLD_COIN = ITEMS.register("gold_coin", () -> new DropItemEgg(() -> PVZEntities.GOLD_COIN.get()));
     public static final RegistryObject<DropItemEgg> JEWEL = ITEMS.register("jewel", () -> new DropItemEgg(() -> PVZEntities.JEWEL.get()));
 //    public static final RegistryObject<ForgeSpawnEggItem> JEWEL_SPAWN_EGG = registerSpawnEgg("jewel", PVZEntities.JEWEL, Colors.WHITE_COLOR);
 //    public static final RegistryObject<PVZSpawnEggItem> ENERGY_SPAWN_EGG = registerSpawnEgg("energy", EntityRegister.ENERGY, Colors.GREEN, Colors.DARK_GREEN);
