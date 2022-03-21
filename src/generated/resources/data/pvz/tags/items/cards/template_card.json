@@ -1,0 +1,14 @@
+{
+  "replace": false,
+  "values": [
+    "pvz:black_card",
+    "pvz:blue_card",
+    "pvz:gold_card",
+    "pvz:gray_card",
+    "pvz:green_card",
+    "pvz:mega_card",
+    "pvz:purple_card",
+    "pvz:red_card",
+    "pvz:white_card"
+  ]
+}
