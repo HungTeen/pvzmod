@@ -6,7 +6,6 @@
     "pvz:arma_ore",
     "pvz:assist_ore",
     "pvz:defence_ore",
-    "pvz:electric_ore",
     "pvz:enforce_ore",
     "pvz:explosion_ore",
     "pvz:flame_ore",
@@ -14,9 +13,7 @@
     "pvz:light_ore",
     "pvz:magic_ore",
     "pvz:origin_ore",
-    "pvz:shadow_ore",
     "pvz:spear_ore",
-    "pvz:toxic_ore",
     "pvz:amethyst_block",
     "pvz:origin_block"
   ]

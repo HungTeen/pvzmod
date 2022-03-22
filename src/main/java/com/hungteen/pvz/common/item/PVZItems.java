@@ -56,14 +56,14 @@ public class PVZItems {
     public static final RegistryObject<Item> DEFENCE_ESSENCE = ITEMS.register("defence_essence", () -> new EssenceItem(EssenceTypes.DEFENCE));
     public static final RegistryObject<Item> ICE_ESSENCE = ITEMS.register("ice_essence", () -> new EssenceItem(EssenceTypes.ICE));
     public static final RegistryObject<Item> ENFORCE_ESSENCE = ITEMS.register("enforce_essence", () -> new EssenceItem(EssenceTypes.ENFORCE));
-    public static final RegistryObject<Item> TOXIC_ESSENCE = ITEMS.register("toxic_essence", () -> new EssenceItem(EssenceTypes.TOXIC));
+//    public static final RegistryObject<Item> TOXIC_ESSENCE = ITEMS.register("toxic_essence", () -> new EssenceItem(EssenceTypes.TOXIC));
     public static final RegistryObject<Item> ASSIST_ESSENCE = ITEMS.register("assist_essence", () -> new EssenceItem(EssenceTypes.ASSIST));
     public static final RegistryObject<Item> MAGIC_ESSENCE = ITEMS.register("magic_essence", () -> new EssenceItem(EssenceTypes.MAGIC));
     public static final RegistryObject<Item> FLAME_ESSENCE = ITEMS.register("flame_essence", () -> new EssenceItem(EssenceTypes.FLAME));
     public static final RegistryObject<Item> SPEAR_ESSENCE = ITEMS.register("spear_essence", () -> new EssenceItem(EssenceTypes.SPEAR));
     public static final RegistryObject<Item> ARMA_ESSENCE = ITEMS.register("arma_essence", () -> new EssenceItem(EssenceTypes.ARMA));
-    public static final RegistryObject<Item> ELECTRIC_ESSENCE = ITEMS.register("electric_essence", () -> new EssenceItem(EssenceTypes.ELECTRIC));
-    public static final RegistryObject<Item> SHADOW_ESSENCE = ITEMS.register("shadow_essence", () -> new EssenceItem(EssenceTypes.SHADOW));
+//    public static final RegistryObject<Item> ELECTRIC_ESSENCE = ITEMS.register("electric_essence", () -> new EssenceItem(EssenceTypes.ELECTRIC));
+//    public static final RegistryObject<Item> SHADOW_ESSENCE = ITEMS.register("shadow_essence", () -> new EssenceItem(EssenceTypes.SHADOW));
 
     /* ingots */
     public static final RegistryObject<Item> ORIGIN_INGOT = ITEMS.register("origin_ingot", PVZMiscItem::new);

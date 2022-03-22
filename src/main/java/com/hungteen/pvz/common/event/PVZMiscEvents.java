@@ -17,7 +17,6 @@ public class PVZMiscEvents {
 
     @SubscribeEvent
     public static void onTagsChange(TagsUpdatedEvent event){
-        OriginBlock.updateRadiationMap();
     }
 
     @SubscribeEvent

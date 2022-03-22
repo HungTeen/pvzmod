@@ -1,0 +1,9 @@
+{
+  "type": "pvz:radiation",
+  "ingredient": {
+     "item": "minecraft:glowstone"
+  },
+  "result": {
+    "item": "pvz:light_ore"
+  }
+}

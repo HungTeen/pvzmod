@@ -5,20 +5,33 @@ import com.hungteen.pvz.api.PVZAPI;
 import com.hungteen.pvz.api.events.OriginEffectEvent;
 import com.hungteen.pvz.api.types.IEssenceType;
 import com.hungteen.pvz.common.entity.effect.OriginEffectEntity;
+import com.hungteen.pvz.common.recipe.PVZRecipeTypes;
+import com.hungteen.pvz.common.recipe.PVZRecipes;
+import com.hungteen.pvz.common.recipe.RadiationRecipe;
 import com.hungteen.pvz.utils.BlockUtil;
 import com.hungteen.pvz.utils.Colors;
+import com.hungteen.pvz.utils.ItemUtil;
 import net.minecraft.core.BlockPos;
 import net.minecraft.server.level.ServerLevel;
+import net.minecraft.world.SimpleContainer;
+import net.minecraft.world.entity.item.ItemEntity;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.crafting.CampfireCookingRecipe;
+import net.minecraft.world.item.crafting.RecipeType;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.CampfireBlock;
 import net.minecraft.world.level.block.SoundType;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.material.Material;
 import net.minecraft.world.level.material.MaterialColor;
 import net.minecraftforge.common.MinecraftForge;
+import net.minecraftforge.items.ItemStackHandler;
+import org.lwjgl.system.CallbackI;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Optional;
 import java.util.Random;
 
 /**
@@ -28,7 +41,6 @@ import java.util.Random;
  **/
 public class OriginBlock extends Block {
 
-    private static final Map<Block, IEssenceType> BLOCK_TO_ESSENCE = new HashMap<>();
     private static final int RADIATION_RANGE = 1;
 
     public OriginBlock() {
@@ -39,21 +51,6 @@ public class OriginBlock extends Block {
                 .sound(SoundType.ANCIENT_DEBRIS)
                 .noOcclusion()
         );
-    }
-
-    /**
-     * update map when tags change and common set up.
-     */
-    public static void updateRadiationMap() {
-        BLOCK_TO_ESSENCE.clear();
-
-        PVZAPI.get().getEssences().forEach(e -> {
-            e.getRadiationBlockTag().ifPresent(tag -> {
-                BlockUtil.getTagBlocks(tag).forEach(b -> {
-                    BLOCK_TO_ESSENCE.put(b, e);
-                });
-            });
-        });
     }
 
     @SuppressWarnings("deprecation")
@@ -85,15 +82,25 @@ public class OriginBlock extends Block {
      */
     private boolean checkAndGrow(Level world, int x, int y, int z) {
         final BlockPos pos = new BlockPos(x, y, z);
-        final BlockState blockstate = world.getBlockState(pos);
-        final Block block = blockstate.getBlock();
-        if (BLOCK_TO_ESSENCE.containsKey(block)) {
+        Optional<RadiationRecipe> opt = getRadiationRecipe(world, world.getBlockState(pos).getBlock());
+        if(opt.isPresent()){
+            final ItemStack stack = opt.get().getResultItem();
+            Optional<Block> blockOpt = BlockUtil.getBlock(stack.getItem().getRegistryName());
             if(! MinecraftForge.EVENT_BUS.post(new OriginEffectEvent(world, pos))){
-                world.setBlockAndUpdate(pos, BLOCK_TO_ESSENCE.get(block).getEssenceOre().defaultBlockState());
+                if(blockOpt.isPresent()){
+                    world.setBlockAndUpdate(pos, blockOpt.get().defaultBlockState());
+                } else{
+                    ItemUtil.dropItem(world, stack, x + 0.5, y + 0.5, z + 0.5);
+                }
                 return true;
             }
         }
         return false;
+    }
+
+    public static Optional<RadiationRecipe> getRadiationRecipe(Level level, Block block) {
+        final ItemStack stack = new ItemStack(block);
+        return level.getRecipeManager().getRecipeFor(PVZRecipeTypes.RADIATION_RECIPE_TYPE.get(), new SimpleContainer(stack), level);
     }
 
 }
