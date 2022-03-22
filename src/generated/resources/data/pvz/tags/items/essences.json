@@ -8,13 +8,10 @@
     "pvz:defence_essence",
     "pvz:ice_essence",
     "pvz:enforce_essence",
-    "pvz:toxic_essence",
     "pvz:assist_essence",
     "pvz:magic_essence",
     "pvz:flame_essence",
     "pvz:spear_essence",
-    "pvz:arma_essence",
-    "pvz:electric_essence",
-    "pvz:shadow_essence"
+    "pvz:arma_essence"
   ]
 }

@@ -24,26 +24,9 @@ import java.util.Optional;
 public interface IEssenceType {
 
     /**
-     * tags contain blocks which can interact with {@link OriginBlock} to be radiated.
-     */
-    Optional<TagKey<Block>> getRadiationBlockTag();
-
-    /**
-     * corresponding block that can be radiated to essence ore.<br>
-     * players can modify the block tag to add or delete corresponding blocks. <br>
-     * used in tag data gen.
-     */
-    Optional<Block> getRadiationBlock();
-
-    /**
      * corresponding essence item.
      */
     Item getEssenceItem();
-
-    /**
-     * corresponding essence ore.
-     */
-    Block getEssenceOre();
 
 }
 

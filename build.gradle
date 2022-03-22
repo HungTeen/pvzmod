@@ -119,15 +119,15 @@ dependencies {
 //    compileOnly fg.deobf("vazkii.patchouli:Patchouli:${patchouli_version}:api")
 //    runtimeOnly fg.deobf("vazkii.patchouli:Patchouli:${patchouli_version}")
     
-    //https://dvs1.progwml6.com/files/maven/mezz/jei
-//    compileOnly fg.deobf("mezz.jei:jei-${mc_version}:${jei_version}:api")
-//    runtimeOnly fg.deobf("mezz.jei:jei-${mc_version}:${jei_version}")
+//    https://dvs1.progwml6.com/files/maven/mezz/jei
+    compileOnly fg.deobf("mezz.jei:jei-${mc_version}:${jei_version}:api")
+    runtimeOnly fg.deobf("mezz.jei:jei-${mc_version}:${jei_version}")
     
     //https://www.curseforge.com/minecraft/mc-mods/jade/files
 //    implementation fg.deobf("curse.maven:jade-324717:${jade_version}")
     
     //https://www.curseforge.com/minecraft/mc-mods/configured/files
-//    implementation fg.deobf("curse.maven:configured-457570:${configured_version}")
+    implementation fg.deobf("curse.maven:configured-457570:${configured_version}")
 }
 
 task apiJar(type: Jar) {

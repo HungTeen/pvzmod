@@ -13,6 +13,8 @@ import com.hungteen.pvz.common.impl.EssenceTypes;
 import com.hungteen.pvz.common.impl.RankTypes;
 import com.hungteen.pvz.common.item.PVZItems;
 import com.hungteen.pvz.common.network.PVZPacketHandler;
+import com.hungteen.pvz.common.recipe.PVZRecipeTypes;
+import com.hungteen.pvz.common.recipe.PVZRecipes;
 import com.hungteen.pvz.common.world.biome.PVZBiomes;
 import com.hungteen.pvz.common.world.feature.PVZFeatures;
 import com.hungteen.pvz.common.world.spawn.SpawnRegister;
@@ -86,12 +88,12 @@ public class PVZMod {
 
     public static void setUp(FMLCommonSetupEvent event) {
         event.enqueueWork(() -> {
+        	PVZRecipeTypes.registerRecipeTypes();
             PVZBiomes.registerBiomes();
             PVZFeatures.registerFeatures();
 //            PotionRecipeHandler.registerPotionRecipes();
             CommonRegister.registerCompostable();
             BiomeUtil.initBiomeSet();
-            OriginBlock.updateRadiationMap();
             SpawnRegister.registerEntitySpawns();
         });
 
@@ -138,6 +140,7 @@ public class PVZMod {
         PVZEntities.ENTITY_TYPES.register(bus);
         PVZSounds.SOUNDS.register(bus);
         PVZBiomes.BIOMES.register(bus);
+        PVZRecipes.RECIPE_SERIALIZERS.register(bus);
 //        ParticleRegister.PARTICLE_TYPES.register(bus);
 //        EffectRegister.EFFECTS.register(bus);
 //        FeatureRegister.FEATURES.register(bus);
@@ -146,7 +149,6 @@ public class PVZMod {
 //        EnchantmentRegister.ENCHANTMENTS.register(bus);
 //        ContainerRegister.CONTAINER_TYPES.register(bus);
 //        PotionRegister.POTIONS.register(bus);
-//        RecipeRegister.RECIPE_SERIALIZERS.register(bus);
 //        PVZAttributes.ATTRIBUTES.register(bus);
     }
 

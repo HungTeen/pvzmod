@@ -87,17 +87,9 @@ public class BlockTagGen extends BlockTagsProvider {
         this.tag(Tags.Blocks.NEEDS_NETHERITE_TOOL);
 
         /* common tags */
-        PVZAPI.get().getEssences().forEach(e -> {
-            //add to radiation block.
-            e.getRadiationBlockTag().ifPresent(t -> {
-                e.getRadiationBlock().ifPresent(b -> {
-                    this.tag(t).add(b);
-                });
-            });
-            //add to essence ore.
-            this.tag(PVZBlockTags.ESSENCE_ORES).add(e.getEssenceOre());
+        BlockUtil.getFilterBlocks(b -> b instanceof EssenceOreBlock).forEach(block -> {
+            this.tag(PVZBlockTags.ESSENCE_ORES).add(block);
         });
-        this.tag(PVZBlockTags.TO_LIGHT_ORES).add(Blocks.SEA_LANTERN);
 //        this.tag(PVZBlockTags.AMETHYST_ORES).add(BlockRegister.AMETHYST_ORE.get());
 //        this.tag(BlockTags.CLIMBABLE).add(BlockRegister.STEEL_LADDER.get());
 //        this.tag(PVZBlockTags.GOLD_TILES).add(BlockRegister.GOLD_TILE1.get(), BlockRegister.GOLD_TILE2.get(),

@@ -1,0 +1,9 @@
+{
+  "type": "pvz:radiation",
+  "ingredient": {
+     "item": "minecraft:grass_block"
+  },
+  "result": {
+    "item": "pvz:appease_ore"
+  }
+}
