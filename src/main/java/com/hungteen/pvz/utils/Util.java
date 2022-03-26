@@ -42,6 +42,18 @@ public class Util {
         return resourceLocation.getNamespace().equals(PVZMod.MOD_ID);
     }
 
+    public static void debug(String text, Object ... objects){
+        PVZMod.LOGGER.warn(text, objects);
+    }
+
+    public static void warn(String text, Object ... objects){
+        PVZMod.LOGGER.warn(text, objects);
+    }
+
+    public static void error(String text, Object ... objects){
+        PVZMod.LOGGER.error(text, objects);
+    }
+
 
     public static String identify(String modId, String name){
         return modId + ":" + name;

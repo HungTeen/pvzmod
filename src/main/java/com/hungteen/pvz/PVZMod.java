@@ -6,11 +6,11 @@ import com.hungteen.pvz.common.CommonRegister;
 import com.hungteen.pvz.common.PVZSounds;
 import com.hungteen.pvz.common.advancement.AdvancementHandler;
 import com.hungteen.pvz.common.block.PVZBlocks;
-import com.hungteen.pvz.common.block.cubes.OriginBlock;
 import com.hungteen.pvz.common.capability.CapabilityHandler;
 import com.hungteen.pvz.common.entity.PVZEntities;
-import com.hungteen.pvz.common.impl.EssenceTypes;
-import com.hungteen.pvz.common.impl.RankTypes;
+import com.hungteen.pvz.common.impl.type.CDTypes;
+import com.hungteen.pvz.common.impl.type.EssenceTypes;
+import com.hungteen.pvz.common.impl.type.RankTypes;
 import com.hungteen.pvz.common.item.PVZItems;
 import com.hungteen.pvz.common.network.PVZPacketHandler;
 import com.hungteen.pvz.common.recipe.PVZRecipeTypes;
@@ -20,18 +20,12 @@ import com.hungteen.pvz.common.world.feature.PVZFeatures;
 import com.hungteen.pvz.common.world.spawn.SpawnRegister;
 import com.hungteen.pvz.data.DataGenHandler;
 import com.hungteen.pvz.utils.BiomeUtil;
-import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.Entity;
-import net.minecraft.world.entity.EntityType;
-import net.minecraft.world.entity.animal.Dolphin;
-import net.minecraft.world.entity.monster.Creeper;
 import net.minecraft.world.item.Item;
 import net.minecraftforge.common.MinecraftForge;
-import net.minecraftforge.event.world.BiomeLoadingEvent;
 import net.minecraftforge.eventbus.api.EventPriority;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.fml.DistExecutor;
-import net.minecraftforge.fml.ModList;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
 import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
@@ -67,6 +61,7 @@ public class PVZMod {
         modBus.addListener(EventPriority.NORMAL, CapabilityHandler::registerCapabilities);
         modBus.addListener(EventPriority.NORMAL, PVZEntities::addEntityAttributes);
         modBus.addGenericListener(Item.class, PVZBlocks::registerBlockItem);
+        modBus.addGenericListener(Item.class, PVZItems::registerCards);
 
         deferredRegister(modBus);
 
@@ -112,6 +107,8 @@ public class PVZMod {
         EssenceTypes.EssenceType.register();
         //register ranks.
         RankTypes.RankType.register();
+        //register cool down.
+        CDTypes.CDType.register();
 //        //register skills.
 //        SkillTypes.SkillType.register();
 //        //register plants.

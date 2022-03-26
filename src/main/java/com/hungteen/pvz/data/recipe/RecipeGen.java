@@ -2,27 +2,19 @@ package com.hungteen.pvz.data.recipe;
 
 import com.hungteen.pvz.api.PVZAPI;
 import com.hungteen.pvz.api.types.IRankType;
-import com.hungteen.pvz.common.impl.RankTypes;
 import com.hungteen.pvz.common.item.PVZItems;
-import com.hungteen.pvz.common.tag.PVZItemTags;
 import com.hungteen.pvz.utils.Util;
 import net.minecraft.data.DataGenerator;
 import net.minecraft.data.recipes.FinishedRecipe;
 import net.minecraft.data.recipes.RecipeProvider;
 import net.minecraft.data.recipes.ShapedRecipeBuilder;
 import net.minecraft.data.recipes.SimpleCookingRecipeBuilder;
-import net.minecraft.tags.ItemTags;
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.item.Item;
-import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.Items;
 import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.item.crafting.RecipeSerializer;
 import net.minecraft.world.level.ItemLike;
-import net.minecraftforge.common.data.ForgeRecipeProvider;
 
-import java.util.Arrays;
-import java.util.List;
 import java.util.function.Consumer;
 
 /**

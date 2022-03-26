@@ -127,7 +127,7 @@ public class PlayerDataManager {
 //            this.setCurrentPos(this.getCurrentPos(), true);
 //        }
 //        {// plants & zombies syncs.
-//            PVZAPI.get().getPAZs().forEach(plant -> {
+//            PVZAPI.get().getPAZTypes().forEach(plant -> {
 //                if(plant.getSummonCard().isPresent()) {//card cd.
 //                    player.getCooldowns().addCooldown(plant.getSummonCard().get(), this.getPlantCardCD(plant));
 //                }

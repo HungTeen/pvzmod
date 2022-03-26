@@ -3,6 +3,7 @@ package com.hungteen.pvz.common.entity;
 import com.hungteen.pvz.PVZMod;
 import com.hungteen.pvz.common.entity.drop.*;
 import com.hungteen.pvz.common.entity.effect.OriginEffectEntity;
+import com.hungteen.pvz.common.impl.type.PAZType;
 import com.hungteen.pvz.utils.Util;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
@@ -69,10 +70,7 @@ public class PVZEntities {
 
 
     public static void addEntityAttributes(EntityAttributeCreationEvent ev) {
-//        PlantType.initPlants();
-//        ZombieType.initZombies();
-//        PlantType.postInitPlants();
-//        ZombieType.postInitZombies();
+        PAZType.postInit();
 //        //init all plants' attributes.
 //        for(IPlantType p : PlantType.getPlants()) {
 //            p.getEntityType().ifPresent(obj -> {
