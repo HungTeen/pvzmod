@@ -3,22 +3,17 @@ package com.hungteen.pvz.common.entity;
 import com.hungteen.pvz.PVZMod;
 import com.hungteen.pvz.common.entity.drop.*;
 import com.hungteen.pvz.common.entity.effect.OriginEffectEntity;
-import com.hungteen.pvz.common.impl.type.PAZType;
+import com.hungteen.pvz.common.impl.type.PAZTypes;
 import com.hungteen.pvz.utils.Util;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
-import net.minecraft.world.entity.Mob;
 import net.minecraft.world.entity.MobCategory;
-import net.minecraft.world.entity.ambient.AmbientCreature;
 import net.minecraftforge.client.event.EntityRenderersEvent;
-import net.minecraftforge.common.PlantType;
 import net.minecraftforge.event.entity.EntityAttributeCreationEvent;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
 import net.minecraftforge.registries.RegistryObject;
-
-import java.util.Arrays;
 
 /**
  * @program: pvzmod-1.18.x
@@ -70,7 +65,7 @@ public class PVZEntities {
 
 
     public static void addEntityAttributes(EntityAttributeCreationEvent ev) {
-        PAZType.postInit();
+        PAZTypes.postInit();
 //        //init all plants' attributes.
 //        for(IPlantType p : PlantType.getPlants()) {
 //            p.getEntityType().ifPresent(obj -> {

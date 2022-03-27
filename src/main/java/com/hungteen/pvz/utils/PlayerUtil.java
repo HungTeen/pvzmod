@@ -2,14 +2,17 @@ package com.hungteen.pvz.utils;
 
 import com.hungteen.pvz.PVZConfig;
 import com.hungteen.pvz.api.enums.PVZGroupType;
+import com.hungteen.pvz.api.types.base.IPAZType;
 import com.hungteen.pvz.common.capability.CapabilityHandler;
 import com.hungteen.pvz.common.capability.player.IPVZPlayerCapability;
 import com.hungteen.pvz.common.capability.player.PlayerDataManager;
 import com.hungteen.pvz.common.entity.EntityGroupHandler;
+import com.hungteen.pvz.common.item.spawn.card.SummonCardItem;
 import com.hungteen.pvz.common.network.PVZPacketHandler;
 import com.hungteen.pvz.common.network.PlaySoundPacket;
 import com.hungteen.pvz.utils.enums.Resources;
 import net.minecraft.Util;
+import net.minecraft.network.chat.ChatType;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.TextComponent;
 import net.minecraft.network.protocol.game.ClientboundSetSubtitleTextPacket;
@@ -18,6 +21,7 @@ import net.minecraft.server.commands.TitleCommand;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraftforge.common.util.FakePlayer;
 import net.minecraftforge.network.PacketDistributor;
@@ -92,6 +96,22 @@ public class PlayerUtil {
         });
     }
 
+    public static void setItemStackCD(Player player, ItemStack stack, int cd) {
+        if(stack.getItem() instanceof SummonCardItem){
+            PlayerUtil.getOptManager(player).ifPresent(l -> l.saveSummonCardCD((SummonCardItem) stack.getItem(), cd));
+        }
+        player.getCooldowns().addCooldown(stack.getItem(), cd);
+    }
+
+    public static void setPAZLock(Player player, IPAZType plant, boolean is) {
+        PlayerUtil.getOptManager(player).ifPresent(l -> l.setPAZLocked(plant, is));
+    }
+
+    public static boolean isPAZLocked(Player player, IPAZType plant) {
+        final PlayerDataManager manager = getManager(player);
+        return manager != null ? manager.isPAZLocked(plant) : true;
+    }
+
     /**
      * get player's group.
      */
@@ -125,10 +145,17 @@ public class PlayerUtil {
     }
 
     /**
-     * send a message to player.
+     * send a system chat message to player.
      */
     public static void sendMsgTo(Player player, Component text) {
         player.sendMessage(text, Util.NIL_UUID);
+    }
+
+    /**
+     * display some tips to player in the middle bar.
+     */
+    public static void sendTipTo(Player player, Component text) {
+        player.displayClientMessage(text, true);
     }
 
     /**

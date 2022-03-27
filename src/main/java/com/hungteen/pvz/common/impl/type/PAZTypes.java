@@ -1,7 +1,7 @@
 package com.hungteen.pvz.common.impl.type;
 
-import com.hungteen.pvz.PVZMod;
 import com.hungteen.pvz.api.types.ICDType;
+import com.hungteen.pvz.api.types.IPlantType;
 import com.hungteen.pvz.api.types.IRankType;
 import com.hungteen.pvz.api.types.ISkillType;
 import com.hungteen.pvz.api.types.base.IPAZType;
@@ -12,9 +12,10 @@ import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.EntityType;
-import net.minecraft.world.entity.Mob;
+import net.minecraft.world.entity.PathfinderMob;
 import net.minecraft.world.item.Item;
 import net.minecraftforge.event.RegistryEvent;
+import net.minecraftforge.event.entity.EntityAttributeCreationEvent;
 
 import java.util.*;
 import java.util.function.Supplier;
@@ -22,106 +23,22 @@ import java.util.function.Supplier;
 /**
  * @program: pvzmod-1.18.x
  * @author: HungTeen
- * @create: 2022-03-26 15:53
+ * @create: 2022-03-27 17:17
+ *
+ * handler plants and zombies type register.
  **/
-public abstract class PAZType implements IPAZType {
+public class PAZTypes {
+
     /* all registered types */
     private static final List<IPAZType> PAZS = new ArrayList<>();
     /* category -> paz type list */
     private static final Map<String, List<IPAZType>> CATEGORY_MAP = new HashMap<>();
     /* used to confirm no duplicate */
     private static final Set<IPAZType> PAZ_SET = new HashSet<>();
-    /* paz type -> unique id.(dynamic each loading) */
-    private static final Map<IPAZType, Integer> BY_ID = new HashMap<>();
     /* get type by name */
     private static final Map<String, IPAZType> BY_NAME = new HashMap<>();
     /* entity type -> paz type */
-    private static final Map<EntityType<? extends Mob>, IPAZType> BY_ENTITY_TYPE = new HashMap<>();
-    private final String name;
-    protected int sunCost = 9999;
-    protected int xpPoint = 0;
-    protected ICDType coolDown = CDTypes.DEFAULT;
-    protected IRankType rankType = RankTypes.GRAY;
-    protected ResourceLocation entityRenderResource;
-    protected ResourceLocation lootTable;
-    protected Supplier<? extends Item> summonCardSup;
-    protected Supplier<? extends Item> enjoyCardSup;
-    protected Supplier<EntityType<? extends Mob>> entitySup;
-    protected List<ISkillType> skills;
-
-    protected PAZType(String name){
-        this.name = name;
-    }
-
-    @Override
-    public String toString() {
-        return this.name;
-    }
-
-    @Override
-    public String getIdentity() {
-        return Util.identify(this.getModID(), this.toString());
-    }
-
-    @Override
-    public MutableComponent getText() {
-        return new TranslatableComponent("entity." + this.getModID() + "." + this.toString());
-    }
-
-    @Override
-    public int getSunCost() {
-        return this.sunCost;
-    }
-
-    @Override
-    public int getXpPoint() {
-        return this.xpPoint;
-    }
-
-    @Override
-    public ICDType getCoolDown() {
-        return this.coolDown;
-    }
-
-    @Override
-    public IRankType getRank() {
-        return this.rankType;
-    }
-
-    @Override
-    public Optional<EntityType<? extends Mob>> getEntityType() {
-        return this.entitySup == null ? Optional.empty() : Optional.ofNullable(this.entitySup.get());
-    }
-
-    @Override
-    public Optional<? extends Item> getSummonCard() {
-        return this.summonCardSup == null ? Optional.empty() : Optional.ofNullable(this.summonCardSup.get());
-    }
-
-    @Override
-    public Optional<? extends Item> getEnjoyCard() {
-        return this.enjoyCardSup == null ? Optional.empty() : Optional.ofNullable(this.enjoyCardSup.get());
-    }
-
-    @Override
-    public List<ISkillType> getSkills() {
-        return skills;
-    }
-
-    @Override
-    public int getId() {
-        return 0;
-    }
-
-    @Override
-    public ResourceLocation getDefaultResource() {
-        return this.entityRenderResource;
-    }
-
-    @Override
-    public ResourceLocation getLootTable() {
-        return lootTable;
-    }
+    private static final Map<EntityType<? extends PathfinderMob>, IPAZType> BY_ENTITY_TYPE = new HashMap<>();
 
     public static List<IPAZType> getPAZs(){
         return Collections.unmodifiableList(PAZS);
@@ -129,6 +46,7 @@ public abstract class PAZType implements IPAZType {
 
     /**
      * register type.
+     * put type into category.
      */
     public static void registerPAZType(IPAZType type) {
         if(! PAZ_SET.contains(type)) {
@@ -170,13 +88,13 @@ public abstract class PAZType implements IPAZType {
             tmp.forEach(pair -> PAZS.add(pair.getFirst()));
         }
         for(int i = 0; i < PAZS.size(); ++ i) {
-            BY_ID.put(PAZS.get(i), i);
             BY_NAME.put(PAZS.get(i).getIdentity(), PAZS.get(i));
         }
     }
 
     /**
      * to update the map from entity type to type.
+     * {@link com.hungteen.pvz.common.entity.PVZEntities#addEntityAttributes(EntityAttributeCreationEvent)}
      */
     public static void postInit() {
         PAZS.forEach(type -> {
@@ -186,4 +104,108 @@ public abstract class PAZType implements IPAZType {
         });
     }
 
+
+    /**
+     * @program: pvzmod-1.18.x
+     * @author: HungTeen
+     * @create: 2022-03-26 15:53
+     **/
+    public abstract static class PAZType implements IPAZType {
+
+        protected final String name;
+        protected int sunCost = 9999;
+        protected int xpPoint = 0;
+        protected ICDType coolDown = CDTypes.DEFAULT;
+        protected IRankType rankType = RankTypes.GRAY;
+        protected ResourceLocation lootTable;
+        protected Supplier<? extends Item> summonCardSup;
+        protected Supplier<? extends Item> enjoyCardSup;
+        protected Supplier<IPAZType> upgradeFrom;
+        protected Supplier<IPAZType> upgradeTo;
+        protected Supplier<EntityType<? extends PathfinderMob>> entitySup;
+        protected List<ISkillType> skills;
+
+        protected PAZType(String name){
+            this.name = name;
+        }
+
+        /*
+        Attributes that can not modify.
+         */
+
+        @Override
+        public String toString() {
+            return this.name;
+        }
+
+        @Override
+        public String getIdentity() {
+            return Util.identify(this.getModID(), this.toString());
+        }
+
+        @Override
+        public MutableComponent getText() {
+            return new TranslatableComponent("entity." + this.getModID() + "." + this.toString());
+        }
+
+        /*
+        Modifiable attributes.
+         */
+
+        @Override
+        public int getSunCost() {
+            return this.sunCost;
+        }
+
+        @Override
+        public int getXpPoint() {
+            return this.xpPoint;
+        }
+
+        @Override
+        public ICDType getCoolDown() {
+            return this.coolDown;
+        }
+
+        @Override
+        public IRankType getRank() {
+            return this.rankType;
+        }
+
+        @Override
+        public Optional<EntityType<? extends PathfinderMob>> getEntityType() {
+            return this.entitySup == null ? Optional.empty() : Optional.ofNullable(this.entitySup.get());
+        }
+
+        @Override
+        public Optional<? extends Item> getSummonCard() {
+            return this.summonCardSup == null ? Optional.empty() : Optional.ofNullable(this.summonCardSup.get());
+        }
+
+        @Override
+        public Optional<? extends Item> getEnjoyCard() {
+            return this.enjoyCardSup == null ? Optional.empty() : Optional.ofNullable(this.enjoyCardSup.get());
+        }
+
+        @Override
+        public Optional<IPAZType> getUpgradeFrom() {
+            return this.upgradeFrom == null ? Optional.empty() : Optional.ofNullable(this.upgradeFrom.get());
+        }
+
+        @Override
+        public Optional<IPAZType> getUpgradeTo() {
+            return this.upgradeTo == null ? Optional.empty() : Optional.ofNullable(this.upgradeTo.get());
+        }
+
+        @Override
+        public List<ISkillType> getSkills() {
+            return skills;
+        }
+
+        @Override
+        public ResourceLocation getLootTable() {
+            return lootTable;
+        }
+
+    }
 }

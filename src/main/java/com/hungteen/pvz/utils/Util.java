@@ -15,6 +15,8 @@ import java.util.function.Predicate;
  **/
 public class Util {
 
+    public static final String INIT_VERSION = "0.0.0";
+
     public static final ResourceLocation WIDGETS = prefix("textures/gui/widgets.png");
 
     /**

@@ -6,7 +6,7 @@ import com.hungteen.pvz.api.types.IEssenceType;
 import com.hungteen.pvz.api.types.IRankType;
 import com.hungteen.pvz.api.types.base.IPAZType;
 import com.hungteen.pvz.common.impl.type.CDTypes;
-import com.hungteen.pvz.common.impl.type.PAZType;
+import com.hungteen.pvz.common.impl.type.PAZTypes;
 import com.hungteen.pvz.utils.Util;
 
 import java.util.*;
@@ -26,7 +26,7 @@ public class PVZAPIImpl implements PVZAPI.IPVZAPI {
 
     @Override
     public void registerPAZType(IPAZType type) {
-        PAZType.registerPAZType(type);
+        PAZTypes.registerPAZType(type);
     }
 
     @Override
@@ -36,7 +36,7 @@ public class PVZAPIImpl implements PVZAPI.IPVZAPI {
 
     @Override
     public List<IPAZType> getPAZTypes() {
-        return PAZType.getPAZs();
+        return PAZTypes.getPAZs();
     }
 
     @Override

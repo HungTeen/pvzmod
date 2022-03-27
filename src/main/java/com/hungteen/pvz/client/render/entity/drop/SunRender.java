@@ -2,7 +2,7 @@ package com.hungteen.pvz.client.render.entity.drop;
 
 import com.hungteen.pvz.client.model.PVZModelLayers;
 import com.hungteen.pvz.client.model.misc.DropEntityModel;
-import com.hungteen.pvz.common.entity.drop.DropEntityBase;
+import com.hungteen.pvz.common.entity.drop.PVZDrop;
 import com.hungteen.pvz.common.entity.drop.Sun;
 import com.hungteen.pvz.utils.Util;
 
@@ -30,6 +30,6 @@ public class SunRender extends DropEntityRender<Sun> {
 
     @Override
     public ResourceLocation getTextureLocation(Sun entity) {
-        return entity.getDropState() == DropEntityBase.DropStates.STEAL ? RED : YELLOW;
+        return entity.getDropState() == PVZDrop.DropStates.STEAL ? RED : YELLOW;
     }
 }

@@ -22,7 +22,7 @@ import java.util.Random;
  * @author: HungTeen
  * @create: 2022-03-11 09:16
  **/
-public class Sun extends DropEntityBase {
+public class Sun extends PVZDrop {
 
     private static final float FALL_SPEED = 0.03F;
 

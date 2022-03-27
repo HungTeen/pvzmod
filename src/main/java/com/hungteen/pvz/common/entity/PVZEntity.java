@@ -15,11 +15,11 @@ import net.minecraftforge.network.NetworkHooks;
  * @author: HungTeen
  * @create: 2022-03-10 08:59
  **/
-public abstract class PVZEntityBase extends Entity {
+public abstract class PVZEntity extends Entity {
 
     private boolean firstSpawn = false;
 
-    public PVZEntityBase(EntityType<?> type, Level world) {
+    public PVZEntity(EntityType<?> type, Level world) {
         super(type, world);
     }
 

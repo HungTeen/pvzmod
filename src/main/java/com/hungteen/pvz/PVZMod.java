@@ -11,6 +11,7 @@ import com.hungteen.pvz.common.entity.PVZEntities;
 import com.hungteen.pvz.common.impl.type.CDTypes;
 import com.hungteen.pvz.common.impl.type.EssenceTypes;
 import com.hungteen.pvz.common.impl.type.RankTypes;
+import com.hungteen.pvz.common.impl.type.plant.PVZPlants;
 import com.hungteen.pvz.common.item.PVZItems;
 import com.hungteen.pvz.common.network.PVZPacketHandler;
 import com.hungteen.pvz.common.recipe.PVZRecipeTypes;
@@ -111,8 +112,8 @@ public class PVZMod {
         CDTypes.CDType.register();
 //        //register skills.
 //        SkillTypes.SkillType.register();
-//        //register plants.
-//        PVZPlants.register();
+        //register plants.
+        PVZPlants.PVZPlant.register();
 //        CustomPlants.register();
 //        MemePlants.register();
 //        OtherPlants.register();

@@ -1,5 +1,6 @@
 package com.hungteen.pvz.common.item;
 
+import com.hungteen.pvz.common.impl.type.plant.PVZPlants;
 import net.minecraft.world.item.CreativeModeTab;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
@@ -20,12 +21,12 @@ public class PVZItemTabs {
     };
 //    .setEnchantmentCategories(PVZEnchantmentTypes.getPVZEnchantmentTypes());
 
-//    public static final CreativeModeTab PVZ_PLANT_CARD = new CreativeModeTab("pvz_plant_card") {
-//        @Override
-//        public ItemStack makeIcon() {
-//            return new ItemStack(ItemRegister.PEA_SHOOTER_CARD.get());
-//        }
-//    };
+    public static final CreativeModeTab PVZ_PLANT_CARD = new CreativeModeTab("pvz_plant_card") {
+        @Override
+        public ItemStack makeIcon() {
+            return new ItemStack(PVZPlants.SUN_FLOWER.getSummonCard().get());
+        }
+    };
 
     public static final CreativeModeTab PVZ_USEFUL = new CreativeModeTab("pvz_useful") {
         @Override
