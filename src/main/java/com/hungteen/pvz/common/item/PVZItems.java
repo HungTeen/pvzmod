@@ -1,9 +1,12 @@
 package com.hungteen.pvz.common.item;
 
 import com.hungteen.pvz.PVZMod;
+import com.hungteen.pvz.api.PVZAPI;
+import com.hungteen.pvz.api.types.IPlantType;
 import com.hungteen.pvz.common.entity.PVZEntities;
-import com.hungteen.pvz.common.impl.EssenceTypes;
-import com.hungteen.pvz.common.impl.RankTypes;
+import com.hungteen.pvz.common.impl.type.EssenceTypes;
+import com.hungteen.pvz.common.impl.type.PAZType;
+import com.hungteen.pvz.common.impl.type.RankTypes;
 import com.hungteen.pvz.common.item.misc.EssenceItem;
 import com.hungteen.pvz.common.item.misc.TemplateCardItem;
 import com.hungteen.pvz.common.item.spawn.DropItemEgg;
@@ -11,12 +14,17 @@ import com.mojang.datafixers.util.Pair;
 
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.Mob;
+import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.Item;
 import net.minecraftforge.common.ForgeSpawnEggItem;
+import net.minecraftforge.event.RegistryEvent;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
+import net.minecraftforge.registries.IForgeRegistry;
 import net.minecraftforge.registries.RegistryObject;
+
+import java.util.Arrays;
 
 /**
  * @program: pvzmod-1.18.x
@@ -343,6 +351,20 @@ public class PVZItems {
      */
 
 //    public static final RegistryObject<Item> CHALLENGE_ENVELOPE = ITEMS.register("challenge_envelope", ChallengeEnvelopeItem::new);
+
+    /**
+     * register card items.
+     * {@link PVZMod#PVZMod()}
+     */
+    public static void registerCards(RegistryEvent.Register<Item> ev){
+        PAZType.initPAZs();
+
+        PVZAPI.get().getPAZTypes().forEach(type -> {
+            if(type instanceof IPlantType){
+//                ev.getRegistry().register(new BlockItem(block.get(), new Item.Properties().tab(PVZItemTabs.PVZ_MISC)).setRegistryName(block.get().getRegistryName()));
+            }
+        });
+    }
 
     /**
      * register spawn eggs

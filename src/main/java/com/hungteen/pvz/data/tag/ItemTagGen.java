@@ -2,21 +2,15 @@ package com.hungteen.pvz.data.tag;
 
 import com.hungteen.pvz.PVZMod;
 import com.hungteen.pvz.api.PVZAPI;
-import com.hungteen.pvz.common.impl.RankTypes;
 import com.hungteen.pvz.common.item.PVZItems;
 import com.hungteen.pvz.common.item.misc.TemplateCardItem;
 import com.hungteen.pvz.common.tag.PVZItemTags;
 import net.minecraft.data.DataGenerator;
 import net.minecraft.data.tags.BlockTagsProvider;
 import net.minecraft.data.tags.ItemTagsProvider;
-import net.minecraft.tags.ItemTags;
-import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.Items;
-import net.minecraft.world.level.block.Block;
-import net.minecraftforge.common.Tags;
 import net.minecraftforge.common.data.ExistingFileHelper;
-import net.minecraftforge.common.data.ForgeItemTagsProvider;
 import net.minecraftforge.registries.ForgeRegistries;
 
 import java.util.Comparator;

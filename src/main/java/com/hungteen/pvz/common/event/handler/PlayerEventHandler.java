@@ -130,7 +130,7 @@ public class PlayerEventHandler {
     public static void onPlayerLogout(Player player) {
         //save all summon card cool down.
 //        PlayerUtil.getOptManager(player).ifPresent(l -> {
-//            PVZAPI.get().getPAZs().forEach(p -> {
+//            PVZAPI.get().getPAZTypes().forEach(p -> {
 //                p.getSummonCard().ifPresent(card -> {
 //                    l.setPAZCardBar(p, player.getCooldowns().getCooldownPercent(card, 0f));
 //                });
@@ -178,7 +178,7 @@ public class PlayerEventHandler {
 //     */
 //    public static void unLockPAZs(PlayerEntity player) {
 //        final int level = PlayerUtil.getResource(player, Resources.TREE_LVL);
-//        PVZAPI.get().getPAZs().forEach(type -> {
+//        PVZAPI.get().getPAZTypes().forEach(type -> {
 //            if (type.getRequiredLevel() <= level) {
 //                PlayerUtil.getOptManager(player).ifPresent(m -> {
 //                    m.setPAZLocked(type, false);

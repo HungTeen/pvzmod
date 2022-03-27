@@ -1,4 +1,4 @@
-package com.hungteen.pvz.common.impl;
+package com.hungteen.pvz.common.impl.type;
 
 import com.hungteen.pvz.PVZMod;
 import com.hungteen.pvz.api.PVZAPI;
