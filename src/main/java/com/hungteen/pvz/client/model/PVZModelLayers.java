@@ -17,6 +17,11 @@ public class PVZModelLayers {
     public static final ModelLayerLocation PLANT_FOOD = register("plant_food");
 
     /*
+    Animals
+     */
+    public static final ModelLayerLocation GRASS_CARP = register("grass_carp");
+
+    /*
     Plant Entities.
      */
     public static final ModelLayerLocation SUN_FLOWER = register("sun_flower");

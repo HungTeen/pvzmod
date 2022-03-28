@@ -14,9 +14,16 @@ import com.hungteen.pvz.common.item.spawn.DropItemEgg;
 import com.hungteen.pvz.common.item.spawn.card.PlantCardItem;
 import com.mojang.datafixers.util.Pair;
 
+import net.minecraft.sounds.SoundEvents;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.Mob;
+import net.minecraft.world.item.CreativeModeTab;
 import net.minecraft.world.item.Item;
+import net.minecraft.world.item.Items;
+import net.minecraft.world.item.MobBucketItem;
+import net.minecraft.world.level.ClipContext;
+import net.minecraft.world.level.material.Fluid;
+import net.minecraft.world.level.material.Fluids;
 import net.minecraftforge.common.ForgeSpawnEggItem;
 import net.minecraftforge.event.RegistryEvent;
 import net.minecraftforge.eventbus.api.IEventBus;
@@ -86,16 +93,13 @@ public class PVZItems {
     public static final RegistryObject<Item> BLACK_CARD = ITEMS.register("black_card", () -> new TemplateCardItem(RankTypes.BLACK));
     public static final RegistryObject<Item> MEGA_CARD = ITEMS.register("mega_card", () -> new TemplateCardItem(RankTypes.MEGA));
 
-    /* misc */
-//    public static final RegistryObject<Item> TIME_SOURCE = ITEMS.register("time_source", PVZMiscItem::new);
-
     /* spawn eggs */
 //    public static final RegistryObject<DropItemEgg> SUN = registerSpawnEgg("sun", PVZEntities.SUN, Colors.YELLOW, Colors.WHITE);
     public static final RegistryObject<DropItemEgg> COPPER_COIN = ITEMS.register("copper_coin", () -> new DropItemEgg(() -> PVZEntities.COPPER_COIN.get()));
     public static final RegistryObject<DropItemEgg> SILVER_COIN = ITEMS.register("silver_coin", () -> new DropItemEgg(() -> PVZEntities.SILVER_COIN.get()));
     public static final RegistryObject<DropItemEgg> GOLD_COIN = ITEMS.register("gold_coin", () -> new DropItemEgg(() -> PVZEntities.GOLD_COIN.get()));
     public static final RegistryObject<DropItemEgg> JEWEL = ITEMS.register("jewel", () -> new DropItemEgg(() -> PVZEntities.JEWEL.get()));
-//    public static final RegistryObject<ForgeSpawnEggItem> JEWEL_SPAWN_EGG = registerSpawnEgg("jewel", PVZEntities.JEWEL, Colors.WHITE_COLOR);
+    //    public static final RegistryObject<ForgeSpawnEggItem> JEWEL_SPAWN_EGG = registerSpawnEgg("jewel", PVZEntities.JEWEL, Colors.WHITE_COLOR);
 //    public static final RegistryObject<PVZSpawnEggItem> ENERGY_SPAWN_EGG = registerSpawnEgg("energy", EntityRegister.ENERGY, Colors.GREEN, Colors.DARK_GREEN);
 //    public static final RegistryObject<PVZSpawnEggItem> FOODIE_ZOMBIE_SPAWN_EGG = registerSpawnEgg("foodie_zombie", EntityRegister.FOODIE_ZOMBIE, Colors.ZOMBIE_SKIN, Colors.WHITE);
 //    public static final RegistryObject<PVZSpawnEggItem> CRAZY_DAVE_SPAWN_EGG = registerSpawnEgg("crazy_dave", EntityRegister.CRAZY_DAVE, Colors.BROWN, Colors.SILVER);
@@ -150,6 +154,9 @@ public class PVZItems {
 //    public static final RegistryObject<PVZSpawnEggItem> RA_ZOMBIE_SPAWN_EGG = registerSpawnEgg("ra_zombie", EntityRegister.RA_ZOMBIE, Colors.ZOMBIE_COLOR);
 //    public static final RegistryObject<PVZSpawnEggItem> GIGA_TOMB_STONE_SPAWN_EGG = registerSpawnEgg("giga_tomb_stone", EntityRegister.GIGA_TOMB_STONE, Colors.ZOMBIE_COLOR);
 
+    /* misc */
+//    public static final RegistryObject<Item> TIME_SOURCE = ITEMS.register("time_source", PVZMiscItem::new);
+
     /*
      * Items in Food Tab.
      */
@@ -185,7 +192,7 @@ public class PVZItems {
 //    public static final RegistryObject<Item> ORIGIN_HOE = ITEMS.register("origin_hoe", () -> new HoeItem(PVZItemTier.ORIGIN, -2, -1.0F, new Item.Properties().tab(PVZItemGroups.PVZ_USEFUL)));
 //    public static final RegistryObject<Item> PEA_GUN = ITEMS.register("pea_gun", PeaGunItem::new);
 //    public static final RegistryObject<Item> RESOURCE_COLLECTOR = ITEMS.register("resource_collector", ResourceCollectorItem::new);
-    //  	public static final RegistryObject<Item> BOWLING_GLOVE = ITEMS.register("bowling_glove", BowlingGloveItem::new);
+//    public static final RegistryObject<Item> BOWLING_GLOVE = ITEMS.register("bowling_glove", BowlingGloveItem::new);
 //    public static final RegistryObject<Item> SUN_STORAGE_SAPLING = ITEMS.register("sun_storage_sapling", () -> new SunStorageSaplingItem(10000));
 //    public static final RegistryObject<Item> SMALL_SUN_STORAGE_SAPLING = ITEMS.register("sun_storage_sapling2", () -> new SunStorageSaplingItem(1000));
 //    public static final RegistryObject<Item> LARGE_SUN_STORAGE_SAPLING = ITEMS.register("sun_storage_sapling3", () -> new SunStorageSaplingItem(100000));
@@ -226,129 +233,17 @@ public class PVZItems {
 //    });
 
     /*
-     * Items in Plant Cards Tab.
-     */
-
-//    public static final RegistryObject<PlantCardItem> PEA_SHOOTER_CARD = registerCard(PVZPlants.PEA_SHOOTER, false);
-//    public static final RegistryObject<PlantCardItem> PEA_SHOOTER_ENJOY_CARD = registerCard(PVZPlants.PEA_SHOOTER, true);
-//    public static final RegistryObject<PlantCardItem> SUN_FLOWER_CARD = registerCard(PVZPlants.SUN_FLOWER, false);
-//    public static final RegistryObject<PlantCardItem> SUN_FLOWER_ENJOY_CARD = registerCard(PVZPlants.SUN_FLOWER, true);
-//    public static final RegistryObject<PlantCardItem> CHERRY_BOMB_CARD = registerCard(PVZPlants.CHERRY_BOMB, false);
-//    public static final RegistryObject<PlantCardItem> CHERRY_BOMB_ENJOY_CARD = registerCard(PVZPlants.CHERRY_BOMB, true);
-//    public static final RegistryObject<PlantCardItem> WALL_NUT_CARD = registerCard(PVZPlants.WALL_NUT, false);
-//    public static final RegistryObject<PlantCardItem> WALL_NUT_ENJOY_CARD = registerCard(PVZPlants.WALL_NUT, true);
-//    public static final RegistryObject<PlantCardItem> POTATO_MINE_CARD = registerCard(PVZPlants.POTATO_MINE, false);
-//    public static final RegistryObject<PlantCardItem> POTATO_MINE_ENJOY_CARD = registerCard(PVZPlants.POTATO_MINE, true);
-//    public static final RegistryObject<PlantCardItem> SNOW_PEA_CARD = registerCard(PVZPlants.SNOW_PEA, false);
-//    public static final RegistryObject<PlantCardItem> SNOW_PEA_ENJOY_CARD = registerCard(PVZPlants.SNOW_PEA, true);
-//    public static final RegistryObject<PlantCardItem> CHOMPER_CARD = registerCard(PVZPlants.CHOMPER, false);
-//    public static final RegistryObject<PlantCardItem> CHOMPER_ENJOY_CARD = registerCard(PVZPlants.CHOMPER, true);
-//    public static final RegistryObject<PlantCardItem> REPEATER_CARD = registerCard(PVZPlants.REPEATER, false);
-//    public static final RegistryObject<PlantCardItem> REPEATER_ENJOY_CARD = registerCard(PVZPlants.REPEATER, true);
-//    public static final RegistryObject<PlantCardItem> PUFF_SHROOM_CARD = registerCard(PVZPlants.PUFF_SHROOM, false);
-//    public static final RegistryObject<PlantCardItem> PUFF_SHROOM_ENJOY_CARD = registerCard(PVZPlants.PUFF_SHROOM, true);
-//    public static final RegistryObject<PlantCardItem> SUN_SHROOM_CARD = registerCard(PVZPlants.SUN_SHROOM, false);
-//    public static final RegistryObject<PlantCardItem> SUN_SHROOM_ENJOY_CARD = registerCard(PVZPlants.SUN_SHROOM, true);
-//    public static final RegistryObject<PlantCardItem> FUME_SHROOM_CARD = registerCard(PVZPlants.FUME_SHROOM, false);
-//    public static final RegistryObject<PlantCardItem> FUME_SHROOM_ENJOY_CARD = registerCard(PVZPlants.FUME_SHROOM, true);
-//    public static final RegistryObject<PlantCardItem> GRAVE_BUSTER_CARD = registerCard(PVZPlants.GRAVE_BUSTER, false);
-//    public static final RegistryObject<PlantCardItem> GRAVE_BUSTER_ENJOY_CARD = registerCard(PVZPlants.GRAVE_BUSTER, true);
-//    public static final RegistryObject<PlantCardItem> HYPNO_SHROOM_CARD = registerCard(PVZPlants.HYPNO_SHROOM, false);
-//    public static final RegistryObject<PlantCardItem> HYPNO_SHROOM_ENJOY_CARD = registerCard(PVZPlants.HYPNO_SHROOM, true);
-//    public static final RegistryObject<PlantCardItem> SCAREDY_SHROOM_CARD = registerCard(PVZPlants.SCAREDY_SHROOM, false);
-//    public static final RegistryObject<PlantCardItem> SCAREDY_SHROOM_ENJOY_CARD = registerCard(PVZPlants.SCAREDY_SHROOM, true);
-//    public static final RegistryObject<PlantCardItem> ICE_SHROOM_CARD = registerCard(PVZPlants.ICE_SHROOM, false);
-//    public static final RegistryObject<PlantCardItem> ICE_SHROOM_ENJOY_CARD = registerCard(PVZPlants.ICE_SHROOM, true);
-//    public static final RegistryObject<PlantCardItem> DOOM_SHROOM_CARD = registerCard(PVZPlants.DOOM_SHROOM, false);
-//    public static final RegistryObject<PlantCardItem> DOOM_SHROOM_ENJOY_CARD = registerCard(PVZPlants.DOOM_SHROOM, true);
-//    public static final RegistryObject<PlantCardItem> LILY_PAD_CARD = registerCard(PVZPlants.LILY_PAD, false);
-//    public static final RegistryObject<PlantCardItem> LILY_PAD_ENJOY_CARD = registerCard(PVZPlants.LILY_PAD, true);
-//    public static final RegistryObject<PlantCardItem> SQUASH_CARD = registerCard(PVZPlants.SQUASH, false);
-//    public static final RegistryObject<PlantCardItem> SQUASH_ENJOY_CARD = registerCard(PVZPlants.SQUASH, true);
-//    public static final RegistryObject<PlantCardItem> THREE_PEATER_CARD = registerCard(PVZPlants.THREE_PEATER, false);
-//    public static final RegistryObject<PlantCardItem> THREE_PEATER_ENJOY_CARD = registerCard(PVZPlants.THREE_PEATER, true);
-//    public static final RegistryObject<PlantCardItem> TANGLE_KELP_CARD = registerCard(PVZPlants.TANGLE_KELP, false);
-//    public static final RegistryObject<PlantCardItem> TANGLE_KELP_ENJOY_CARD = registerCard(PVZPlants.TANGLE_KELP, true);
-//    public static final RegistryObject<PlantCardItem> JALAPENO_CARD = registerCard(PVZPlants.JALAPENO, false);
-//    public static final RegistryObject<PlantCardItem> JALAPENO_ENJOY_CARD = registerCard(PVZPlants.JALAPENO, true);
-//    public static final RegistryObject<PlantCardItem> SPIKE_WEED_CARD = registerCard(PVZPlants.SPIKE_WEED, false);
-//    public static final RegistryObject<PlantCardItem> SPIKE_WEED_ENJOY_CARD = registerCard(PVZPlants.SPIKE_WEED, true);
-//    public static final RegistryObject<PlantCardItem> TORCH_WOOD_CARD = registerCard(PVZPlants.TORCH_WOOD, false);
-//    public static final RegistryObject<PlantCardItem> TORCH_WOOD_ENJOY_CARD = registerCard(PVZPlants.TORCH_WOOD, true);
-//    public static final RegistryObject<PlantCardItem> TALL_NUT_CARD = registerCard(PVZPlants.TALL_NUT, false);
-//    public static final RegistryObject<PlantCardItem> TALL_NUT_ENJOY_CARD = registerCard(PVZPlants.TALL_NUT, true);
-//    public static final RegistryObject<PlantCardItem> SEA_SHROOM_CARD = registerCard(PVZPlants.SEA_SHROOM, false);
-//    public static final RegistryObject<PlantCardItem> SEA_SHROOM_ENJOY_CARD = registerCard(PVZPlants.SEA_SHROOM, true);
-//    public static final RegistryObject<PlantCardItem> PLANTERN_CARD = registerCard(PVZPlants.PLANTERN, false);
-//    public static final RegistryObject<PlantCardItem> PLANTERN_ENJOY_CARD = registerCard(PVZPlants.PLANTERN, true);
-//    public static final RegistryObject<PlantCardItem> CACTUS_CARD = registerCard(PVZPlants.CACTUS, false);
-//    public static final RegistryObject<PlantCardItem> CACTUS_ENJOY_CARD = registerCard(PVZPlants.CACTUS, true);
-//    public static final RegistryObject<PlantCardItem> BLOVER_CARD = registerCard(PVZPlants.BLOVER, false);
-//    public static final RegistryObject<PlantCardItem> BLOVER_ENJOY_CARD = registerCard(PVZPlants.BLOVER, true);
-//    public static final RegistryObject<PlantCardItem> SPLIT_PEA_CARD = registerCard(PVZPlants.SPLIT_PEA, false);
-//    public static final RegistryObject<PlantCardItem> SPLIT_PEA_ENJOY_CARD = registerCard(PVZPlants.SPLIT_PEA, true);
-//    public static final RegistryObject<PlantCardItem> STAR_FRUIT_CARD = registerCard(PVZPlants.STAR_FRUIT, false);
-//    public static final RegistryObject<PlantCardItem> STAR_FRUIT_ENJOY_CARD = registerCard(PVZPlants.STAR_FRUIT, true);
-//    public static final RegistryObject<PlantCardItem> PUMPKIN_CARD = registerCard(PVZPlants.PUMPKIN, false);
-//    public static final RegistryObject<PlantCardItem> PUMPKIN_ENJOY_CARD = registerCard(PVZPlants.PUMPKIN, true);
-//    public static final RegistryObject<PlantCardItem> MAGNET_SHROOM_CARD = registerCard(PVZPlants.MAGNET_SHROOM, false);
-//    public static final RegistryObject<PlantCardItem> MAGNET_SHROOM_ENJOY_CARD = registerCard(PVZPlants.MAGNET_SHROOM, true);
-//    public static final RegistryObject<PlantCardItem> CABBAGE_PULT_CARD = registerCard(PVZPlants.CABBAGE_PULT, false);
-//    public static final RegistryObject<PlantCardItem> CABBAGE_PULT_ENJOY_CARD = registerCard(PVZPlants.CABBAGE_PULT, true);
-//    public static final RegistryObject<PlantCardItem> FLOWER_POT_CARD = registerCard(PVZPlants.FLOWER_POT, false);
-//    public static final RegistryObject<PlantCardItem> FLOWER_POT_ENJOY_CARD = registerCard(PVZPlants.FLOWER_POT, true);
-//    public static final RegistryObject<PlantCardItem> KERNEL_PULT_CARD = registerCard(PVZPlants.KERNEL_PULT, false);
-//    public static final RegistryObject<PlantCardItem> KERNEL_PULT_ENJOY_CARD = registerCard(PVZPlants.KERNEL_PULT, true);
-//    public static final RegistryObject<PlantCardItem> COFFEE_BEAN_CARD = registerCard(PVZPlants.COFFEE_BEAN, false);
-//    public static final RegistryObject<PlantCardItem> COFFEE_BEAN_ENJOY_CARD = registerCard(PVZPlants.COFFEE_BEAN, true);
-//    public static final RegistryObject<PlantCardItem> GARLIC_CARD = registerCard(PVZPlants.GARLIC, false);
-//    public static final RegistryObject<PlantCardItem> GARLIC_ENJOY_CARD = registerCard(PVZPlants.GARLIC, true);
-//    public static final RegistryObject<PlantCardItem> UMBRELLA_LEAF_CARD = registerCard(PVZPlants.UMBRELLA_LEAF, false);
-//    public static final RegistryObject<PlantCardItem> UMBRELLA_LEAF_ENJOY_CARD = registerCard(PVZPlants.UMBRELLA_LEAF, true);
-//    public static final RegistryObject<PlantCardItem> MARIGOLD_CARD = registerCard(PVZPlants.MARIGOLD, false);
-//    public static final RegistryObject<PlantCardItem> MARIGOLD_ENJOY_CARD = registerCard(PVZPlants.MARIGOLD, true);
-//    public static final RegistryObject<PlantCardItem> MELON_PULT_CARD = registerCard(PVZPlants.MELON_PULT, false);
-//    public static final RegistryObject<PlantCardItem> MELON_PULT_ENJOY_CARD = registerCard(PVZPlants.MELON_PULT, true);
-//    public static final RegistryObject<PlantCardItem> GATLING_PEA_CARD = registerCard(PVZPlants.GATLING_PEA, false);
-//    public static final RegistryObject<PlantCardItem> GATLING_PEA_ENJOY_CARD = registerCard(PVZPlants.GATLING_PEA, true);
-//    public static final RegistryObject<PlantCardItem> TWIN_SUNFLOWER_CARD = registerCard(PVZPlants.TWIN_SUNFLOWER, false);
-//    public static final RegistryObject<PlantCardItem> TWIN_SUNFLOWER_ENJOY_CARD = registerCard(PVZPlants.TWIN_SUNFLOWER, true);
-//    public static final RegistryObject<PlantCardItem> GLOOM_SHROOM_CARD = registerCard(PVZPlants.GLOOM_SHROOM, false);
-//    public static final RegistryObject<PlantCardItem> GLOOM_SHROOM_ENJOY_CARD = registerCard(PVZPlants.GLOOM_SHROOM, true);
-//    public static final RegistryObject<PlantCardItem> CAT_TAIL_CARD = registerCard(PVZPlants.CAT_TAIL, false);
-//    public static final RegistryObject<PlantCardItem> CAT_TAIL_ENJOY_CARD = registerCard(PVZPlants.CAT_TAIL, true);
-//    public static final RegistryObject<PlantCardItem> WINTER_MELON_CARD = registerCard(PVZPlants.WINTER_MELON, false);
-//    public static final RegistryObject<PlantCardItem> WINTER_MELON_ENJOY_CARD = registerCard(PVZPlants.WINTER_MELON, true);
-//    public static final RegistryObject<PlantCardItem> GOLD_MAGNET_CARD = registerCard(PVZPlants.GOLD_MAGNET, false);
-//    public static final RegistryObject<PlantCardItem> GOLD_MAGNET_ENJOY_CARD = registerCard(PVZPlants.GOLD_MAGNET, true);
-//    public static final RegistryObject<PlantCardItem> SPIKE_ROCK_CARD = registerCard(PVZPlants.SPIKE_ROCK, false);
-//    public static final RegistryObject<PlantCardItem> SPIKE_ROCK_ENJOY_CARD = registerCard(PVZPlants.SPIKE_ROCK, true);
-//    public static final RegistryObject<PlantCardItem> COB_CANNON_CARD = registerCard(PVZPlants.COB_CANNON, false);
-//    public static final RegistryObject<PlantCardItem> COB_CANNON_ENJOY_CARD = registerCard(PVZPlants.COB_CANNON, true);
-//    public static final RegistryObject<PlantCardItem> IMITATER_CARD = ITEMS.register("imitater_card", () -> new ImitaterCardItem());
-//    public static final RegistryObject<PlantCardItem> IMITATER_ENJOY_CARD = ITEMS.register("imitater_enjoy_card", () -> new ImitaterCardItem(true));
-//    public static final RegistryObject<PlantCardItem> WATER_GUARD_CARD = registerCard(CustomPlants.WATER_GUARD, false);
-//    public static final RegistryObject<PlantCardItem> WATER_GUARD_ENJOY_CARD = registerCard(CustomPlants.WATER_GUARD, true);
-//    public static final RegistryObject<PlantCardItem> STRANGE_CAT_CARD = registerCard(MemePlants.STRANGE_CAT, false);
-//    public static final RegistryObject<PlantCardItem> STRANGE_CAT_ENJOY_CARD = registerCard(MemePlants.STRANGE_CAT, true);
-//    public static final RegistryObject<PlantCardItem> GOLD_LEAF_CARD = registerCard(OtherPlants.GOLD_LEAF, false);
-//    public static final RegistryObject<PlantCardItem> GOLD_LEAF_ENJOY_CARD = registerCard(OtherPlants.GOLD_LEAF, true);
-//    public static final RegistryObject<PlantCardItem> ANGEL_STAR_FRUIT_CARD = registerCard(OtherPlants.ANGEL_STAR_FRUIT, false);
-//    public static final RegistryObject<PlantCardItem> ANGEL_STAR_FRUIT_ENJOY_CARD = registerCard(OtherPlants.ANGEL_STAR_FRUIT, true);
-//    public static final RegistryObject<PlantCardItem> BUTTER_PULT_CARD = registerCard(CustomPlants.BUTTER_PULT, false);
-//    public static final RegistryObject<PlantCardItem> BUTTER_PULT_ENJOY_CARD = registerCard(CustomPlants.BUTTER_PULT, true);
-//    public static final RegistryObject<PlantCardItem> BAMBOO_LORD_CARD = registerCard(OtherPlants.BAMBOO_LORD, false);
-//    public static final RegistryObject<PlantCardItem> BAMBOO_LORD_ENJOY_CARD = registerCard(OtherPlants.BAMBOO_LORD, true);
-//    public static final RegistryObject<PlantCardItem> ICEBERG_LETTUCE_CARD = registerCard(OtherPlants.ICEBERG_LETTUCE, false);
-//    public static final RegistryObject<PlantCardItem> ICEBERG_LETTUCE_ENJOY_CARD = registerCard(OtherPlants.ICEBERG_LETTUCE, true);
-//    public static final RegistryObject<PlantCardItem> BONK_CHOY_CARD = registerCard(OtherPlants.BONK_CHOY, false);
-//    public static final RegistryObject<PlantCardItem> BONK_CHOY_ENJOY_CARD = registerCard(OtherPlants.BONK_CHOY, true);
-
-    /*
     Challenge Tab.
      */
 
 //    public static final RegistryObject<Item> CHALLENGE_ENVELOPE = ITEMS.register("challenge_envelope", ChallengeEnvelopeItem::new);
+
+    /*
+    Default MC Tabs.
+     */
+    public static final RegistryObject<Item> GRASS_CARP_BUCKET = ITEMS.register("grass_carp_bucket", () -> {
+        return new MobBucketItem(() -> PVZEntities.GRASS_CARP.get(), () -> Fluids.WATER, () -> SoundEvents.BUCKET_EMPTY_AXOLOTL, new Item.Properties().stacksTo(1).tab(CreativeModeTab.TAB_MISC));
+    });
 
     /**
      * register card items.

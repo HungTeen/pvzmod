@@ -2,6 +2,7 @@ package com.hungteen.pvz.common.entity;
 
 import com.hungteen.pvz.PVZMod;
 import com.hungteen.pvz.api.PVZAPI;
+import com.hungteen.pvz.common.entity.animal.GrassCarp;
 import com.hungteen.pvz.common.entity.drop.*;
 import com.hungteen.pvz.common.entity.effect.OriginEffectEntity;
 import com.hungteen.pvz.common.entity.plant.PVZPlant;
@@ -11,6 +12,7 @@ import com.hungteen.pvz.utils.StringUtil;
 import com.hungteen.pvz.utils.Util;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.Mob;
 import net.minecraft.world.entity.MobCategory;
 import net.minecraftforge.client.event.EntityRenderersEvent;
 import net.minecraftforge.event.entity.EntityAttributeCreationEvent;
@@ -18,6 +20,8 @@ import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
 import net.minecraftforge.registries.RegistryObject;
+
+import java.util.Arrays;
 
 /**
  * @program: pvzmod-1.18.x
@@ -37,7 +41,7 @@ public class PVZEntities {
     public static final DeferredRegister<EntityType<?>> ENTITY_TYPES =  DeferredRegister.create(ForgeRegistries.ENTITIES, PVZMod.MOD_ID);
 
     /*
-     * drop entity.
+     Drop entity.
      */
     public static final RegistryObject<EntityType<Sun>> SUN = registerEntityType(Sun::new, "sun", MobCategory.AMBIENT);
     public static final RegistryObject<EntityType<Coin>> COPPER_COIN = registerEntityType(Coin.CopperCoin::new, "copper_coin", MobCategory.MISC);
@@ -49,13 +53,13 @@ public class PVZEntities {
 //    public static final RegistryObject<EntityType<GiftBoxEntity>> GIFT_BOX = registerEntityType(GiftBoxEntity::new, "gift_box", EntityClassification.MISC, 0.9f, 1f);
 
     /*
-     * effects
+     Effects
      */
     public static final RegistryObject<EntityType<OriginEffectEntity>> ORIGIN_EFFECT = registerEntityType(OriginEffectEntity::new, "origin_effect", MobCategory.MISC);
 //    public static final RegistryObject<EntityType<DoomFixerEntity>> DOOM_FIXER = registerEntityType(DoomFixerEntity::new, "doom_fixer", EntityClassification.MISC);
 
     /*
-     * bullets
+     Bullets
      */
 //    public static final RegistryObject<EntityType<PeaEntity>> PEA = registerEntityType(PeaEntity::new, "pea", EntityClassification.MISC);
 //    public static final RegistryObject<EntityType<PotatoEntity>> POTATO = registerEntityType(PotatoEntity::new, "potato", EntityClassification.MISC);
@@ -74,8 +78,13 @@ public class PVZEntities {
 //    public static final RegistryObject<EntityType<CornEntity>> CORN = registerEntityType(CornEntity::new, "corn", EntityClassification.MISC);
 
 
-    /**
-     * plants
+    /*
+    Animals
+     */
+    public static final RegistryObject<EntityType<GrassCarp>> GRASS_CARP = registerEntityType(GrassCarp::new, "grass_carp", MobCategory.WATER_CREATURE);
+
+    /*
+     Plants
      */
 //    public static final RegistryObject<EntityType<PeaShooterEntity>> PEA_SHOOTER = registerPlantEntityType(PeaShooterEntity::new, "pea_shooter");
     public static final RegistryObject<EntityType<SunFlower>> SUN_FLOWER = registerPlantEntityType(SunFlower::new, "sun_flower");
@@ -144,9 +153,11 @@ public class PVZEntities {
                 ev.put(entityType, PVZPAZ.createPAZAttributes().build());
             });
         });
+        //others.
+        ev.put(GRASS_CARP.get(), GrassCarp.createAttributes().build());
 //        Arrays.asList(
-////                CRAZY_DAVE.get(), SUN_DAVE.get(), PANNEY.get(),
-////                FOODIE_ZOMBIE.get()
+//                CRAZY_DAVE.get(), SUN_DAVE.get(), PANNEY.get(),
+//                FOODIE_ZOMBIE.get()
 //        ).forEach(obj -> {
 //            ev.put(obj.get(), Mob.createMobAttributes().build());
 //        });
