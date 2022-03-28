@@ -10,15 +10,10 @@ import com.hungteen.pvz.common.item.PVZItemTabs;
 
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.Item;
-import net.minecraft.world.level.block.Block;
-import net.minecraft.world.level.block.Blocks;
-import net.minecraft.world.level.block.DoorBlock;
-import net.minecraft.world.level.block.FenceBlock;
-import net.minecraft.world.level.block.FenceGateBlock;
-import net.minecraft.world.level.block.LeavesBlock;
-import net.minecraft.world.level.block.OreBlock;
-import net.minecraft.world.level.block.RotatedPillarBlock;
-import net.minecraft.world.level.block.TrapDoorBlock;
+import net.minecraft.world.level.block.*;
+import net.minecraft.world.level.block.state.BlockBehaviour;
+import net.minecraft.world.level.block.state.properties.WoodType;
+import net.minecraft.world.level.material.Material;
 import net.minecraftforge.event.RegistryEvent;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.registries.DeferredRegister;
@@ -72,12 +67,17 @@ public class PVZBlocks {
 //    //plants
     public static final RegistryObject<Block> NUT_LEAVES = BLOCKS.register("nut_leaves", () -> new LeavesBlock(Block.Properties.copy(Blocks.OAK_LEAVES)));
     public static final RegistryObject<Block> NUT_LEAVES_WITH_NUTS = BLOCKS.register("nut_leaves_with_nuts", () -> new LeavesBlock(Block.Properties.copy(Blocks.OAK_LEAVES)));
-    public static final RegistryObject<Block> NUT_LOG = BLOCKS.register("nut_log", () -> new RotatedPillarBlock(Block.Properties.copy(Blocks.OAK_WOOD)));
+    public static final RegistryObject<Block> NUT_LOG = BLOCKS.register("nut_log", () -> new RotatedPillarBlock(Block.Properties.copy(Blocks.OAK_LOG).strength(4.0F)));
+    public static final RegistryObject<Block> STRIPPED_NUT_LOG = BLOCKS.register("stripped_nut_log", () -> new RotatedPillarBlock(Block.Properties.copy(Blocks.STRIPPED_OAK_LOG).strength(4.0F)));
+    public static final RegistryObject<Block> NUT_WOOD = BLOCKS.register("nut_wood", () -> new RotatedPillarBlock(Block.Properties.copy(Blocks.OAK_WOOD).strength(4.0F)));
+    public static final RegistryObject<Block> STRIPPED_NUT_WOOD = BLOCKS.register("stripped_nut_wood", () -> new RotatedPillarBlock(Block.Properties.copy(Blocks.STRIPPED_OAK_WOOD).strength(4.0F)));
     public static final RegistryObject<Block> NUT_PLANKS = BLOCKS.register("nut_planks", () -> new Block(Block.Properties.copy(Blocks.OAK_PLANKS)));
     public static final RegistryObject<Block> NUT_DOOR = BLOCKS.register("nut_door", () -> new DoorBlock(Block.Properties.copy(Blocks.OAK_DOOR)));
     public static final RegistryObject<Block> NUT_TRAPDOOR = BLOCKS.register("nut_trapdoor", () -> new TrapDoorBlock(Block.Properties.copy(Blocks.OAK_TRAPDOOR)));
     public static final RegistryObject<Block> NUT_FENCE = BLOCKS.register("nut_fence", () -> new FenceBlock(Block.Properties.copy(Blocks.OAK_FENCE)));
     public static final RegistryObject<Block> NUT_FENCE_GATE = BLOCKS.register("nut_fence_gate", () -> new FenceGateBlock(Block.Properties.copy(Blocks.OAK_FENCE_GATE)));
+    public static final RegistryObject<Block> NUT_SIGN = BLOCKS.register("nut_sign", () -> new StandingSignBlock(BlockBehaviour.Properties.of(Material.WOOD).noCollission().strength(1.0F).sound(SoundType.WOOD), WoodType.OAK));
+    public static final RegistryObject<Block> NUT_WALL_SIGN = BLOCKS.register("nut_wall_sign", () -> new WallSignBlock(BlockBehaviour.Properties.of(Material.WOOD).noCollission().strength(1.0F).sound(SoundType.WOOD), WoodType.OAK));
 //    public static final RegistryObject<Block> NUT_SAPLING = BLOCKS.register("nut_sapling", () -> new Block(NutTree::new));
 //    public static final RegistryObject<Block> CHOMPER = BLOCKS.register("chomper", ChomperBlock::new);
 //    public static final RegistryObject<LilyPadBlock> LILY_PAD = BLOCKS.register("lily_pad", LilyPadBlock::new);
@@ -110,7 +110,7 @@ public class PVZBlocks {
 //                TOXIC_ORE,
                 ASSIST_ORE, MAGIC_ORE, FLAME_ORE, SPEAR_ORE, ARMA_ORE, //ELECTRIC_ORE, SHADOW_ORE,
                 AMETHYST_ORE, AMETHYST_BLOCK, ORIGIN_BLOCK,// ,BUTTER_BLOCK, FROZEN_MELON,
-                NUT_LEAVES, NUT_LEAVES_WITH_NUTS, NUT_LOG, NUT_PLANKS, NUT_DOOR, NUT_TRAPDOOR, NUT_FENCE, NUT_FENCE_GATE//, NUT_SAPLING, CHOMPER,
+                NUT_LEAVES, NUT_LEAVES_WITH_NUTS, NUT_LOG, STRIPPED_NUT_LOG, NUT_WOOD, STRIPPED_NUT_WOOD, NUT_PLANKS, NUT_DOOR, NUT_TRAPDOOR, NUT_FENCE, NUT_FENCE_GATE//, NUT_SAPLING, CHOMPER,
 //                LANTERN, FLOWER_POT, GOLD_TILE1, GOLD_TILE2, GOLD_TILE3, SILVER_SUNFLOWER_TROPHY, GOLD_SUNFLOWER_TROPHY, DIAMOND_SUNFLOWER_TROPHY
         ).forEach(block -> {
             items.register(new BlockItem(block.get(), new Item.Properties().tab(PVZItemTabs.PVZ_MISC)).setRegistryName(block.get().getRegistryName()));
