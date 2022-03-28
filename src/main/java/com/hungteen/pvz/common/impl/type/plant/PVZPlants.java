@@ -3,16 +3,13 @@ package com.hungteen.pvz.common.impl.type.plant;
 import com.hungteen.pvz.PVZMod;
 import com.hungteen.pvz.api.PVZAPI;
 import com.hungteen.pvz.api.types.IPlantType;
-import com.hungteen.pvz.api.types.IRankType;
 import com.hungteen.pvz.api.types.base.IPAZType;
 import com.hungteen.pvz.common.entity.PVZEntities;
-import com.hungteen.pvz.common.entity.plant.PVZPlant;
 import com.hungteen.pvz.common.impl.type.CDTypes;
 import com.hungteen.pvz.common.impl.type.EssenceTypes;
 import com.hungteen.pvz.common.impl.type.RankTypes;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -21,6 +18,8 @@ import java.util.List;
  * @create: 2022-03-27 17:03
  **/
 public class PVZPlants {
+
+    private static final List<IPAZType> PLANTS = new ArrayList<>();
 
     /*
      * grass day.
@@ -35,12 +34,12 @@ public class PVZPlants {
 //            .entity(() -> PVZEntities.)
 //            .skills(new ArrayList<>());
 
-    public static final IPlantType SUN_FLOWER = new PVZPlant("sun_flower")
+    public static final IPlantType SUN_FLOWER = new PVZPlantType("sun_flower")
             .sunCost(50).xp(10)
             .essence(EssenceTypes.LIGHT)
             .rank(RankTypes.WHITE)
-            .cd(CDTypes.HUGE_FAST)
-//            .entity(() -> PVZEntities.)
+            .cd(CDTypes.LITTLE_SLOW)
+            .entity(() -> PVZEntities.SUN_FLOWER.get())
             .skills(new ArrayList<>());
 
 //    public static final IPlantType CHERRY_BOMB = new PVZPlants("cherry_bomb", new PlantFeatures()
@@ -554,20 +553,18 @@ public class PVZPlants {
 //    );
 
 
-    public static class PVZPlant extends PlantType {
+    public static class PVZPlantType extends PlantType {
 
-        private static final List<IPAZType> PAZS = new ArrayList<>();
-
-        protected PVZPlant(String name) {
+        protected PVZPlantType(String name) {
             super(name);
-            PAZS.add(this);
+            PLANTS.add(this);
         }
 
         /**
          * {@link PVZMod#coreRegister()}
          */
         public static void register() {
-            PAZS.forEach(paz -> PVZAPI.get().registerPAZType(paz));
+            PLANTS.forEach(paz -> PVZAPI.get().registerPAZType(paz));
         }
 
         @Override

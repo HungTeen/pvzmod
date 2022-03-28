@@ -1,9 +1,12 @@
 package com.hungteen.pvz.common.item.spawn.card;
 
-import com.hungteen.pvz.api.types.ICDType;
+import com.hungteen.pvz.PVZMod;
 import com.hungteen.pvz.api.types.base.IPAZType;
 import com.hungteen.pvz.common.PVZSounds;
-import com.hungteen.pvz.common.impl.type.CDTypes;
+import com.hungteen.pvz.common.effect.PVZEffects;
+import com.hungteen.pvz.common.enchantment.EnchantmentHandler;
+import com.hungteen.pvz.common.enchantment.card.ImmediateCDEnchantment;
+import com.hungteen.pvz.common.enchantment.card.SunReductionEnchantment;
 import com.hungteen.pvz.common.item.PVZItemTabs;
 import com.hungteen.pvz.utils.PlayerUtil;
 import com.hungteen.pvz.utils.StringUtil;
@@ -18,7 +21,6 @@ import net.minecraft.world.item.Rarity;
 import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.item.enchantment.Enchantment;
 import net.minecraft.world.level.Level;
-import org.jetbrains.annotations.Nullable;
 
 import java.util.List;
 
@@ -31,6 +33,7 @@ import java.util.List;
  **/
 public class SummonCardItem extends Item{
 
+    protected static final int COMMON_CD = 10;
     public final IPAZType type;
     public final boolean isEnjoyCard;
 
@@ -44,20 +47,56 @@ public class SummonCardItem extends Item{
         this.isEnjoyCard = isEnjoyCard;
     }
 
-    public static int getCardSunCost(ItemStack stack) {
-        if(stack.getItem() instanceof PlantCardItem) {
-            return ((PlantCardItem) stack.getItem()).getBasisSunCost(stack);
-        }
-        return 0;
+    /**
+     * get basic sun cost without consider other condition.
+     */
+    public static int getBaseCost(ItemStack stack) {
+        //TODO Some kinds of skill will add extra sun cost.
+        return (stack.getItem() instanceof SummonCardItem) ? ((SummonCardItem) stack.getItem()).type.getSunCost() : 0;
     }
 
-    public static int getCardCoolDown(ItemStack stack) {
-        ICDType cdType = CDTypes.DEFAULT;
-        if(stack.getItem() instanceof SummonCardItem) {
-           cdType = ((SummonCardItem) stack.getItem());
+    /**
+     * the real sun cost when use card.
+     */
+    public static int getCardCost(Player player, ItemStack stack) {
+        final int cost = getBaseCost(stack);
+        return SunReductionEnchantment.getReductionCost(stack, cost);
+    }
 
+    /**
+     * get basic cool down without consider other condition.
+     */
+    public static int getBaseCD(ItemStack stack) {
+        return (stack.getItem() instanceof SummonCardItem) ? ((SummonCardItem) stack.getItem()).type.getCoolDown() : 0;
+    }
+
+    /**
+     * the real cool down when use card.
+     */
+    public static int getCardCD(Player player, ItemStack stack) {
+        //immediate enchantment effect.
+        if(ImmediateCDEnchantment.canImmediateCD(stack, player.getRandom())){
+            return COMMON_CD;
+        } else{
+            //handle quick charge enchantment.
+            int cd = EnchantmentHandler.getQuickChargeCD(stack, getBaseCD(stack));
+
+            //handle excite effect.
+            if (player.hasEffect(PVZEffects.EXCITE_EFFECT.get())) {
+                final int lvl = player.getEffect(PVZEffects.EXCITE_EFFECT.get()).getAmplifier();
+                final float mult = Math.max(0, 0.9f - 0.1f * lvl);
+                cd = (int) Math.floor(cd * mult);
+            }
+            return cd;
         }
-        return CDTypes.DEFAULT.getCD(1);
+    }
+
+    protected static ItemStack getHeldStack(ItemStack stack) {
+        return ImitaterCardItem.getDoubleStack(stack).getFirst();
+    }
+
+    protected static ItemStack getSummonStack(ItemStack stack) {
+        return ImitaterCardItem.getDoubleStack(stack).getSecond();
     }
 
 //    /**
@@ -72,8 +111,8 @@ public class SummonCardItem extends Item{
 
     @Override
     public void appendHoverText(ItemStack stack, Level worldIn, List<Component> tooltip, TooltipFlag flagIn) {
-        tooltip.add(new TranslatableComponent("tooltip.pvz.card_sun_cost", getCardSunCost(stack)).withStyle(ChatFormatting.YELLOW));
-        tooltip.add(new TranslatableComponent("tooltip.pvz.card_cd", StringUtil.toSecond(getCardCoolDown(stack))).withStyle(ChatFormatting.AQUA));
+//        tooltip.add(new TranslatableComponent("tooltip.pvz.card_sun_cost", getBaseCost(stack)).withStyle(ChatFormatting.YELLOW));
+//        tooltip.add(new TranslatableComponent("tooltip.pvz.card_cd", StringUtil.toSecond(getCardCD(PVZMod.PROXY.getPlayer(), stack))).withStyle(ChatFormatting.AQUA));
 //        PlayerUtil.getOptManager(PVZMod.PROXY.getPlayer()).ifPresent(m -> {
 //            //this paz type is locked.
 //            if (m.isPAZLocked(this.type) && ! this.isEnjoyCard) {
@@ -126,7 +165,7 @@ public class SummonCardItem extends Item{
 
     @Override
     public int getEnchantmentValue() {
-        return 20;//0 ~ 45.
+        return this.type.getRank().getEnchantPoint();
     }
 
     public void notifyPlayerAndCD(Player player, ItemStack stack, PlacementErrors error) {
@@ -139,7 +178,7 @@ public class SummonCardItem extends Item{
     public void notifyPlayerAndCD(Player player, ItemStack stack, PlacementErrors error, int arg) {
         if(! player.level.isClientSide) {
             PlayerUtil.sendTipTo(player, error.getTextByArg(arg, ChatFormatting.RED));
-            PlayerUtil.setItemStackCD(player, stack, 10);
+            PlayerUtil.setItemStackCD(player, stack, COMMON_CD);
             PlayerUtil.playClientSound(player, PVZSounds.NO.get());
         }
     }

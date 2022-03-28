@@ -1,15 +1,16 @@
 package com.hungteen.pvz.common.impl;
 
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+import java.util.Optional;
+
 import com.hungteen.pvz.api.PVZAPI;
-import com.hungteen.pvz.api.types.ICDType;
 import com.hungteen.pvz.api.types.IEssenceType;
 import com.hungteen.pvz.api.types.IRankType;
 import com.hungteen.pvz.api.types.base.IPAZType;
-import com.hungteen.pvz.common.impl.type.CDTypes;
 import com.hungteen.pvz.common.impl.type.PAZTypes;
 import com.hungteen.pvz.utils.Util;
-
-import java.util.*;
 
 /**
  * @program: pvzmod-1.18.x
@@ -22,7 +23,6 @@ public class PVZAPIImpl implements PVZAPI.IPVZAPI {
 
     private static final List<IEssenceType> ESSENCES = new ArrayList<>();
     private static final List<IRankType> RANKS = new ArrayList<>();
-    private static final Map<String, ICDType> CD_MAP = new HashMap<>();
 
     @Override
     public void registerPAZType(IPAZType type) {
@@ -31,7 +31,7 @@ public class PVZAPIImpl implements PVZAPI.IPVZAPI {
 
     @Override
     public Optional<IPAZType> getPAZType(String identity) {
-        return Optional.empty();
+        return PAZTypes.getPAZType(identity);
     }
 
     @Override
@@ -65,20 +65,6 @@ public class PVZAPIImpl implements PVZAPI.IPVZAPI {
     @Override
     public List<IRankType> getRanks() {
         return Collections.unmodifiableList(RANKS);
-    }
-
-    @Override
-    public void registerCoolDown(ICDType type) {
-        if(! CD_MAP.containsKey(type.toString())){
-            CD_MAP.put(type.toString(), type);
-        } else{
-            Util.warn("CD Register : Duplicate Type !");
-        }
-    }
-
-    @Override
-    public Optional<ICDType> getCoolDown(String name) {
-        return Optional.ofNullable(CD_MAP.getOrDefault(name, CDTypes.DEFAULT));
     }
 
 }

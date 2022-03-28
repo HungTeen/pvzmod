@@ -27,6 +27,11 @@ import java.util.function.Supplier;
  * use to extend Plant Types. <br>
  * define your category, same category is allowed. <br>
  * if you want to show in front of that category, then override one with higher priority. <br>
+ *
+ * step 1. new your own plant type at {@link PVZPlants}
+ * step 2. create and register plant entity at {@link com.hungteen.pvz.common.entity.PVZEntities}
+ * step 3. put your entity texture at texture/entity/plant/{plant_name}/{plant_name}.png
+ * step 4. put your item texture at texture/art/plant/{plant_name}.png
  */
 public abstract class PlantType extends PAZTypes.PAZType implements IPlantType {
 
@@ -90,8 +95,8 @@ public abstract class PlantType extends PAZTypes.PAZType implements IPlantType {
         return this;
     }
 
-    public PlantType cd(ICDType type) {
-        this.coolDown = type;
+    public PlantType cd(int cd) {
+        this.coolDown = cd;
         return this;
     }
 

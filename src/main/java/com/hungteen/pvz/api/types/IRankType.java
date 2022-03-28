@@ -5,6 +5,8 @@ import net.minecraft.world.item.Item;
 
 public interface IRankType {
 
+    String getName();
+
     /**
      * rarity in shop.
      */

@@ -1,7 +1,5 @@
 package com.hungteen.pvz.common.impl.type;
 
-import com.hungteen.pvz.api.types.ICDType;
-import com.hungteen.pvz.api.types.IPlantType;
 import com.hungteen.pvz.api.types.IRankType;
 import com.hungteen.pvz.api.types.ISkillType;
 import com.hungteen.pvz.api.types.base.IPAZType;
@@ -44,11 +42,16 @@ public class PAZTypes {
         return Collections.unmodifiableList(PAZS);
     }
 
+    public static Optional<IPAZType> getPAZType(String identity) {
+        return Optional.ofNullable(BY_NAME.get(identity));
+    }
+
     /**
      * register type.
      * put type into category.
      */
     public static void registerPAZType(IPAZType type) {
+//        Util.debug("registering {}.", type);
         if(! PAZ_SET.contains(type)) {
             PAZ_SET.add(type);
             if(CATEGORY_MAP.containsKey(type.getCategoryName())) {
@@ -72,6 +75,7 @@ public class PAZTypes {
         final List<Pair<String, Integer>> categoryList = new ArrayList<>();
         CATEGORY_MAP.keySet().forEach(l -> {
             final IPAZType tmp = CATEGORY_MAP.get(l).get(0);
+            Util.debug("registering categoty {}.", tmp);
             categoryList.add(Pair.of(l, tmp.getSortPriority()));
         });
         //sort category by priority.
@@ -115,7 +119,7 @@ public class PAZTypes {
         protected final String name;
         protected int sunCost = 9999;
         protected int xpPoint = 0;
-        protected ICDType coolDown = CDTypes.DEFAULT;
+        protected int coolDown = 0;
         protected IRankType rankType = RankTypes.GRAY;
         protected ResourceLocation lootTable;
         protected Supplier<? extends Item> summonCardSup;
@@ -163,7 +167,7 @@ public class PAZTypes {
         }
 
         @Override
-        public ICDType getCoolDown() {
+        public int getCoolDown() {
             return this.coolDown;
         }
 

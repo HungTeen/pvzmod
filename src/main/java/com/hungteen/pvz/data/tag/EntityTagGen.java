@@ -1,10 +1,12 @@
 package com.hungteen.pvz.data.tag;
 
 import com.hungteen.pvz.PVZMod;
+import com.hungteen.pvz.common.entity.PVZMobCategories;
 import com.hungteen.pvz.common.tag.PVZEntityTags;
 import net.minecraft.data.DataGenerator;
 import net.minecraft.data.tags.EntityTypeTagsProvider;
 import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.MobCategory;
 import net.minecraftforge.common.data.ExistingFileHelper;
 import net.minecraftforge.registries.ForgeRegistries;
 
@@ -28,36 +30,36 @@ public class EntityTagGen extends EntityTypeTagsProvider {
 
         /* forge tags */
 
-//        //for plant group.
-//        this.tag(PVZEntityTags.PVZ_PLANT_GROUP_ENTITIES).addTag(PVZEntityTypeTags.PVZ_PLANTS);
-//
-//        //for zombie group.
-//        this.tag(PVZEntityTags.PVZ_ZOMBIE_GROUP_ENTITIES).addTag(PVZEntityTypeTags.PVZ_ZOMBIES);
-//
-//        //for other guardians group.
-//        this.tag(PVZEntityTags.PVZ_OTHER_GUARDIANS).add(
-//                EntityType.CAT, EntityType.DOLPHIN, EntityType.FOX, EntityType.WOLF,
-//                EntityType.LLAMA, EntityType.VILLAGER, EntityType.WANDERING_TRADER,
-//                EntityType.SNOW_GOLEM, EntityType.IRON_GOLEM, EntityType.POLAR_BEAR,
-//                EntityType.PANDA
-//        );
-//
-//        //for zombie group.
-//        this.tag(PVZEntityTags.PVZ_OTHER_MONSTERS).add(getFilterTypes(type -> type.getCategory() == EntityClassification.MONSTER));
-//
-//        this.tag(PVZEntityTags.PVZ_NOT_MONSTERS).add(EntityType.PIG);
-//        this.tag(PVZEntityTags.PVZ_NOT_GUARDIANS).add(EntityType.PIG);
-//        /* pvz tags */
-//
-//        // for plant entities.
-//        this.tag(PVZEntityTags.PVZ_PLANTS)
-//                .add(getFilterTypes(type -> type.getCategory() == PVZEntityClassifications.PVZ_PLANT))
+        //for plant group.
+        this.tag(PVZEntityTags.PVZ_PLANT_GROUP_ENTITIES).addTag(PVZEntityTags.PVZ_PLANTS);
+
+        //for zombie group.
+        this.tag(PVZEntityTags.PVZ_ZOMBIE_GROUP_ENTITIES).addTag(PVZEntityTags.PVZ_ZOMBIES);
+
+        //for other guardians group.
+        this.tag(PVZEntityTags.PVZ_OTHER_GUARDIANS).add(
+                EntityType.CAT, EntityType.DOLPHIN, EntityType.FOX, EntityType.WOLF,
+                EntityType.LLAMA, EntityType.VILLAGER, EntityType.WANDERING_TRADER,
+                EntityType.SNOW_GOLEM, EntityType.IRON_GOLEM, EntityType.POLAR_BEAR,
+                EntityType.PANDA
+        );
+
+        //for zombie group.
+        this.tag(PVZEntityTags.PVZ_OTHER_MONSTERS).add(getFilterTypes(type -> type.getCategory() == MobCategory.MONSTER));
+
+        this.tag(PVZEntityTags.PVZ_NOT_MONSTERS).add(EntityType.PIG);
+        this.tag(PVZEntityTags.PVZ_NOT_GUARDIANS).add(EntityType.PIG);
+        /* pvz tags */
+
+        // for plant entities.
+        this.tag(PVZEntityTags.PVZ_PLANTS)
+                .add(getFilterTypes(type -> type.getCategory() == PVZMobCategories.PVZ_PLANT));
 //                .add(EntityRegister.CRAZY_DAVE.get());
-//
-//        // for zombie entities.
-//        this.tag(PVZEntityTags.PVZ_ZOMBIES)
-//                .add(getFilterTypes(type -> type.getCategory() == PVZEntityClassifications.PVZ_ZOMBIE));
-//
+
+        // for zombie entities.
+        this.tag(PVZEntityTags.PVZ_ZOMBIES)
+                .add(getFilterTypes(type -> type.getCategory() == PVZMobCategories.PVZ_ZOMBIE));
+
 //        this.tag(PVZEntityTags.BUNGEE_SPAWNS)
 //                .add(EntityRegister.NORMAL_ZOMBIE.get())
 //                .add(EntityRegister.CONEHEAD_ZOMBIE.get())

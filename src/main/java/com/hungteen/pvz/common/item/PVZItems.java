@@ -359,9 +359,15 @@ public class PVZItems {
 
         PVZAPI.get().getPAZTypes().forEach(type -> {
             if(type instanceof PlantType){
-                ev.getRegistry().register(new PlantCardItem());
-//                ev.getRegistry().register(new BlockItem(block.get(), new Item.Properties().tab(PVZItemTabs.PVZ_MISC)).setRegistryName(block.get().getRegistryName()));
-            }
+                final Item summonCard = new PlantCardItem((IPlantType) type, false).setRegistryName(type.getIdentity() + "_card");
+                final Item enjoyCard = new PlantCardItem((IPlantType) type, true).setRegistryName(type.getIdentity() + "enjoy_card");
+                //bind with type.
+                ((PlantType) type).summonCard(() -> summonCard);
+                ((PlantType) type).enjoyCard(() -> enjoyCard);
+                //register item.
+                ev.getRegistry().register(summonCard);
+                ev.getRegistry().register(enjoyCard);
+;           }
         });
     }
 

@@ -15,7 +15,7 @@ import net.minecraft.world.level.Level;
  **/
 public abstract class PVZPlant extends PVZPAZ implements IPlantEntity {
 
-    public PVZPlant(EntityType<? extends PathfinderMob> entityType, Level level) {
+    public PVZPlant(EntityType<? extends PVZPlant> entityType, Level level) {
         super(entityType, level);
     }
 

@@ -9,8 +9,11 @@ import net.minecraft.network.syncher.SynchedEntityData;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.Mob;
 import net.minecraft.world.entity.PathfinderMob;
+import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
+import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
+import net.minecraftforge.common.ForgeMod;
 
 /**
  * @program: pvzmod-1.18.x
@@ -35,6 +38,28 @@ public abstract class PVZPAZ extends PVZMob implements IPAZEntity {
         this.entityData.define(SKILLS, new CompoundTag());
         this.entityData.define(EXIST_TICK, 0);
         this.entityData.define(STATES, 0);
+    }
+
+    public static AttributeSupplier.Builder createPAZAttributes() {
+        return AttributeSupplier.builder()
+                .add(Attributes.MAX_HEALTH)
+                .add(Attributes.FOLLOW_RANGE)
+                .add(Attributes.KNOCKBACK_RESISTANCE)
+                .add(Attributes.MOVEMENT_SPEED)
+                .add(Attributes.FLYING_SPEED)
+                .add(Attributes.ATTACK_DAMAGE)
+                .add(Attributes.ATTACK_KNOCKBACK)
+                .add(Attributes.ATTACK_SPEED)
+                .add(Attributes.ARMOR)
+                .add(Attributes.ARMOR_TOUGHNESS)
+                .add(Attributes.LUCK)
+                .add(ForgeMod.SWIM_SPEED.get())
+                .add(ForgeMod.NAMETAG_DISTANCE.get())
+                .add(ForgeMod.ENTITY_GRAVITY.get())
+                .add(ForgeMod.REACH_DISTANCE.get())
+//                .add(PVZAttributes.INNER_DEFENCE_HP.get())
+//                .add(PVZAttributes.OUTER_DEFENCE_HP.get())
+                ;
     }
 
     /**

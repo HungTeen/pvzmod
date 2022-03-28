@@ -35,7 +35,7 @@ public interface IPAZType extends IIDType {
     /**
      * get the cool down of summon card of current type.
      */
-    ICDType getCoolDown();
+    int getCoolDown();
 
     /**
      * get the rank of type.
