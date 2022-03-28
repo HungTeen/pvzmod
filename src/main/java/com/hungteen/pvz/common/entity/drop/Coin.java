@@ -19,7 +19,7 @@ import net.minecraft.world.level.Level;
  * @author: HungTeen
  * @create: 2022-03-12 22:17
  **/
-public abstract class Coin extends DropEntityBase {
+public abstract class Coin extends PVZDrop {
 
     public Coin(EntityType<? extends Mob> type, Level worldIn) {
         super(type, worldIn);

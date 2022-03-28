@@ -19,6 +19,8 @@ import java.util.function.Supplier;
  **/
 public class RankTypes {
 
+    private static final List<IRankType> RANK_TYPES = new ArrayList<>();
+
     public static final IRankType GRAY = new RankType(
             "gray",
             15,
@@ -111,7 +113,6 @@ public class RankTypes {
 
     public static class RankType implements IRankType {
 
-        private static final List<IRankType> RANK_TYPES = new ArrayList<>();
         private final String name;
         private final Supplier<Item> cardSuppiler;
         private final Supplier<TagKey<Item>> cardTagSuppiler;
@@ -166,6 +167,11 @@ public class RankTypes {
         @Override
         public int getPrice() {
             return this.price;
+        }
+
+        @Override
+        public String getName() {
+            return name;
         }
 
         @Override

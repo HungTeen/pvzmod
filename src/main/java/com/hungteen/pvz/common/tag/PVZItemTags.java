@@ -1,7 +1,6 @@
 package com.hungteen.pvz.common.tag;
 
 import com.hungteen.pvz.utils.Util;
-import net.minecraft.resources.ResourceLocation;
 import net.minecraft.tags.ItemTags;
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.item.Item;
@@ -29,13 +28,17 @@ public class PVZItemTags {
 
     /* pvz */
     public static final TagKey<Item> ESSENCES = pvzTag("essences");
+    public static final TagKey<Item> ALL_CARDS = pvzTag("cards/all_card");
     public static final TagKey<Item> PLANT_SUMMON_CARDS = pvzTag("cards/plant_summon_card");
     public static final TagKey<Item> PLANT_ENJOY_CARDS = pvzTag("cards/plant_enjoy_card");
     public static final TagKey<Item> PLANT_CARDS = pvzTag("cards/plant_card");
     public static final TagKey<Item> TEMPLATE_CARDS = pvzTag("cards/template_card");
     public static final TagKey<Item> ESSENCE_ORES = pvzTag("ores/essence");
     public static final TagKey<Item> PEA_GUN_BULLETS = pvzTag("pea_gun_bullets");
+    //for enchantment tag.
     public static final TagKey<Item> REACH_ITEMS = pvzTag("reach_items");
+    public static final TagKey<Item> COST_SUN_ITEMS = pvzTag("cost_sun_items");
+    // card materials.
     public static final TagKey<Item> GRAY_MATERIALS = pvzTag("card/gray_materials");
     public static final TagKey<Item> WHITE_MATERIALS = pvzTag("card/white_materials");
     public static final TagKey<Item> GREEN_MATERIALS = pvzTag("card/green_materials");
@@ -44,6 +47,7 @@ public class PVZItemTags {
     public static final TagKey<Item> GOLD_MATERIALS = pvzTag("card/gold_materials");
     public static final TagKey<Item> RED_MATERIALS = pvzTag("card/red_materials");
     public static final TagKey<Item> BLACK_MATERIALS = pvzTag("card/black_materials");
+    // card tags(use to achieve maga card).
     public static final TagKey<Item> GRAY_CARDS = pvzTag("card/gray_cards");
     public static final TagKey<Item> WHITE_CARDS = pvzTag("card/white_cards");
     public static final TagKey<Item> GREEN_CARDS = pvzTag("card/green_cards");

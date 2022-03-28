@@ -118,7 +118,7 @@ public class PlayerEventHandler {
 //
 //            }
 //
-//            l.lastVersion = PVZMod.MOD_VERSION;
+            l.lastVersion = PVZMod.MOD_VERSION;
         });
 
     }

@@ -1,12 +1,16 @@
 package com.hungteen.pvz.client;
 
 import com.hungteen.pvz.client.model.PVZModelLayers;
+import com.hungteen.pvz.client.model.animal.GrassCarpModel;
 import com.hungteen.pvz.client.model.misc.DropEntityModel;
+import com.hungteen.pvz.client.model.plant.SunFlowerModel;
+import com.hungteen.pvz.client.render.entity.animal.GrassCarpRender;
 import com.hungteen.pvz.client.render.entity.drop.DropItemRender;
 import com.hungteen.pvz.client.render.entity.drop.OriginOrbRender;
 import com.hungteen.pvz.client.render.entity.drop.PlantFoodRender;
 import com.hungteen.pvz.client.render.entity.drop.SunRender;
 import com.hungteen.pvz.client.render.entity.effect.OriginEffectRender;
+import com.hungteen.pvz.client.render.entity.plant.SunFlowerRender;
 import com.hungteen.pvz.common.entity.PVZEntities;
 import net.minecraft.client.model.geom.builders.LayerDefinition;
 import net.minecraftforge.api.distmarker.Dist;
@@ -37,6 +41,12 @@ public class ClientRegister {
 
         /* effect entity */
         event.registerEntityRenderer(PVZEntities.ORIGIN_EFFECT.get(), OriginEffectRender::new);
+
+        /* animal */
+        event.registerEntityRenderer(PVZEntities.GRASS_CARP.get(), GrassCarpRender::new);
+
+        /* plant entity */
+        event.registerEntityRenderer(PVZEntities.SUN_FLOWER.get(), SunFlowerRender::new);
     }
 
     @SubscribeEvent
@@ -45,6 +55,11 @@ public class ClientRegister {
         event.registerLayerDefinition(PVZModelLayers.SUN, DropEntityModel::createBodyLayer);
         event.registerLayerDefinition(PVZModelLayers.PLANT_FOOD, DropEntityModel::createBodyLayer);
         /* effect entity */
+
+        /* animal */
+        event.registerLayerDefinition(PVZModelLayers.GRASS_CARP, GrassCarpModel::createBodyLayer);
+        /* plant entity */
+        event.registerLayerDefinition(PVZModelLayers.SUN_FLOWER, SunFlowerModel::createBodyLayer);
     }
 
     @SubscribeEvent

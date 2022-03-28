@@ -1,6 +1,6 @@
 package com.hungteen.pvz.common.item.spawn;
 
-import com.hungteen.pvz.common.entity.drop.DropEntityBase;
+import com.hungteen.pvz.common.entity.drop.PVZDrop;
 import com.hungteen.pvz.common.item.PVZMiscItem;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
@@ -24,9 +24,9 @@ import java.util.function.Supplier;
  **/
 public class DropItemEgg extends PVZMiscItem {
 
-    private final Supplier<EntityType<? extends DropEntityBase>> entityTypeSupplier;
+    private final Supplier<EntityType<? extends PVZDrop>> entityTypeSupplier;
 
-    public DropItemEgg(Supplier<EntityType<? extends DropEntityBase>> entityTypeSupplier) {
+    public DropItemEgg(Supplier<EntityType<? extends PVZDrop>> entityTypeSupplier) {
         this.entityTypeSupplier = entityTypeSupplier;
     }
 

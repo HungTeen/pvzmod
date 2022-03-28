@@ -15,7 +15,7 @@ import net.minecraft.world.level.Level;
  * @author: HungTeen
  * @create: 2022-03-10 09:09
  **/
-public class OriginEffectEntity extends EffectEntityBase {
+public class OriginEffectEntity extends PVZFancy {
 
     private static final EntityDataAccessor<Float> LENGTH = SynchedEntityData.defineId(OriginEffectEntity.class, EntityDataSerializers.FLOAT);
     private static final EntityDataAccessor<Integer> COLOR = SynchedEntityData.defineId(OriginEffectEntity.class, EntityDataSerializers.INT);

@@ -1,6 +1,6 @@
 package com.hungteen.pvz.common.entity.effect;
 
-import com.hungteen.pvz.common.entity.PVZEntityBase;
+import com.hungteen.pvz.common.entity.PVZEntity;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.network.syncher.EntityDataSerializers;
@@ -15,13 +15,13 @@ import net.minecraftforge.api.distmarker.OnlyIn;
  * @author: HungTeen
  * @create: 2022-03-10 08:58
  **/
-public abstract class EffectEntityBase extends PVZEntityBase {
+public abstract class PVZFancy extends PVZEntity {
 
-    private static final EntityDataAccessor<Integer> EXIST_TICK = SynchedEntityData.defineId(EffectEntityBase.class,
+    private static final EntityDataAccessor<Integer> EXIST_TICK = SynchedEntityData.defineId(PVZFancy.class,
             EntityDataSerializers.INT);
     protected int maxEffectTick;
 
-    public EffectEntityBase(EntityType<?> type, Level world) {
+    public PVZFancy(EntityType<?> type, Level world) {
         super(type, world);
     }
 

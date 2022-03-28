@@ -15,7 +15,7 @@ import net.minecraft.world.phys.Vec3;
  * @author: HungTeen
  * @create: 2022-03-13 08:41
  **/
-public class PlantFood extends DropEntityBase {
+public class PlantFood extends PVZDrop {
 
     private static final int CHANGE_SPEED_CD = 40;
 

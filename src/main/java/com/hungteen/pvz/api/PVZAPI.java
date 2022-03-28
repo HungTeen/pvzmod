@@ -2,7 +2,6 @@ package com.hungteen.pvz.api;
 
 import com.google.common.base.Suppliers;
 import com.hungteen.pvz.PVZMod;
-import com.hungteen.pvz.api.types.ICDType;
 import com.hungteen.pvz.api.types.IEssenceType;
 import com.hungteen.pvz.api.types.IRankType;
 import com.hungteen.pvz.api.types.base.IPAZType;
@@ -76,16 +75,6 @@ public class PVZAPI {
          * get all registered rank types.
          */
         List<IRankType> getRanks();
-
-        /**
-         * register CD.
-         */
-        void registerCoolDown(ICDType type);
-
-        /**
-         * get CD by name.
-         */
-        Optional<ICDType> getCoolDown(String name);
 
     }
 

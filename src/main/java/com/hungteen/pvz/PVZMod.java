@@ -1,5 +1,6 @@
 package com.hungteen.pvz;
 
+import com.hungteen.pvz.api.PVZAPI;
 import com.hungteen.pvz.client.ClientProxy;
 import com.hungteen.pvz.common.CommonProxy;
 import com.hungteen.pvz.common.CommonRegister;
@@ -7,10 +8,13 @@ import com.hungteen.pvz.common.PVZSounds;
 import com.hungteen.pvz.common.advancement.AdvancementHandler;
 import com.hungteen.pvz.common.block.PVZBlocks;
 import com.hungteen.pvz.common.capability.CapabilityHandler;
+import com.hungteen.pvz.common.effect.PVZEffects;
+import com.hungteen.pvz.common.effect.PVZPotions;
+import com.hungteen.pvz.common.enchantment.PVZEnchantments;
 import com.hungteen.pvz.common.entity.PVZEntities;
-import com.hungteen.pvz.common.impl.type.CDTypes;
 import com.hungteen.pvz.common.impl.type.EssenceTypes;
 import com.hungteen.pvz.common.impl.type.RankTypes;
+import com.hungteen.pvz.common.impl.type.plant.PVZPlants;
 import com.hungteen.pvz.common.item.PVZItems;
 import com.hungteen.pvz.common.network.PVZPacketHandler;
 import com.hungteen.pvz.common.recipe.PVZRecipeTypes;
@@ -107,12 +111,10 @@ public class PVZMod {
         EssenceTypes.EssenceType.register();
         //register ranks.
         RankTypes.RankType.register();
-        //register cool down.
-        CDTypes.CDType.register();
 //        //register skills.
 //        SkillTypes.SkillType.register();
-//        //register plants.
-//        PVZPlants.register();
+        //register plants.
+        PVZPlants.PVZPlantType.register();
 //        CustomPlants.register();
 //        MemePlants.register();
 //        OtherPlants.register();
@@ -131,21 +133,20 @@ public class PVZMod {
      * {@link PVZMod#PVZMod()}.
      */
     public static void deferredRegister(IEventBus bus) {
-
         PVZItems.ITEMS.register(bus);
         PVZBlocks.BLOCKS.register(bus);
         PVZEntities.ENTITY_TYPES.register(bus);
         PVZSounds.SOUNDS.register(bus);
         PVZBiomes.BIOMES.register(bus);
         PVZRecipes.RECIPE_SERIALIZERS.register(bus);
+        PVZEnchantments.ENCHANTMENTS.register(bus);
+        PVZEffects.EFFECTS.register(bus);
+        PVZPotions.POTIONS.register(bus);
 //        ParticleRegister.PARTICLE_TYPES.register(bus);
-//        EffectRegister.EFFECTS.register(bus);
 //        FeatureRegister.FEATURES.register(bus);
 //        StructureRegister.STRUCTURE_FEATURES.register(bus);
 //        TileEntityRegister.TILE_ENTITY_TYPES.register(bus);
-//        EnchantmentRegister.ENCHANTMENTS.register(bus);
 //        ContainerRegister.CONTAINER_TYPES.register(bus);
-//        PotionRegister.POTIONS.register(bus);
 //        PVZAttributes.ATTRIBUTES.register(bus);
     }
 

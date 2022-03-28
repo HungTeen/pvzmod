@@ -1,10 +1,9 @@
 package com.hungteen.pvz.api.types.base;
 
 import com.hungteen.pvz.api.types.*;
-import com.hungteen.pvz.api.types.base.IIDType;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.EntityType;
-import net.minecraft.world.entity.Mob;
+import net.minecraft.world.entity.PathfinderMob;
 import net.minecraft.world.item.Item;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
@@ -36,7 +35,7 @@ public interface IPAZType extends IIDType {
     /**
      * get the cool down of summon card of current type.
      */
-    ICDType getCoolDown();
+    int getCoolDown();
 
     /**
      * get the rank of type.
@@ -50,8 +49,9 @@ public interface IPAZType extends IIDType {
 
     /**
      * get the entity type of current type.
+     * @return
      */
-    Optional<EntityType<? extends Mob>> getEntityType();
+    Optional<EntityType<? extends PathfinderMob>> getEntityType();
 
     /**
      * get summon card item of type.
@@ -79,12 +79,6 @@ public interface IPAZType extends IIDType {
     List<ISkillType> getSkills();
 
     /**
-     * get type corresponding id in type list.
-     * used to sort card item list.
-     */
-    int getId();
-
-    /**
      * the priority of this group to stay forward in list. <br>
      * larger means higher priority. <br>
      * such as show front in Almanac.
@@ -102,6 +96,9 @@ public interface IPAZType extends IIDType {
     @OnlyIn(Dist.CLIENT)
     ResourceLocation getDefaultResource();
 
+    /**
+     * loot table location.
+     */
     ResourceLocation getLootTable();
 
 }

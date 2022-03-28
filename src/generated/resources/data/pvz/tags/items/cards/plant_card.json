@@ -1,0 +1,7 @@
+{
+  "replace": false,
+  "values": [
+    "#pvz:cards/plant_summon_card",
+    "#pvz:cards/plant_enjoy_card"
+  ]
+}
