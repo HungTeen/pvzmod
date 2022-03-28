@@ -15,6 +15,8 @@ import java.util.function.Predicate;
  **/
 public class Util {
 
+    public static final String INIT_VERSION = "0.0.0";
+
     public static final ResourceLocation WIDGETS = prefix("textures/gui/widgets.png");
 
     /**
@@ -40,6 +42,18 @@ public class Util {
 
     public static boolean inPVZ(ResourceLocation resourceLocation){
         return resourceLocation.getNamespace().equals(PVZMod.MOD_ID);
+    }
+
+    public static void debug(String text, Object ... objects){
+        PVZMod.LOGGER.warn(text, objects);
+    }
+
+    public static void warn(String text, Object ... objects){
+        PVZMod.LOGGER.warn(text, objects);
+    }
+
+    public static void error(String text, Object ... objects){
+        PVZMod.LOGGER.error(text, objects);
     }
 
 

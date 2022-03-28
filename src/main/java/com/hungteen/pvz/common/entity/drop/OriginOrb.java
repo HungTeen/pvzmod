@@ -1,21 +1,16 @@
 package com.hungteen.pvz.common.entity.drop;
 
-import com.hungteen.pvz.PVZConfig;
-import com.hungteen.pvz.common.entity.PVZEntityBase;
-import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
-import net.minecraft.tags.FluidTags;
 import net.minecraft.world.entity.*;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
-import net.minecraft.world.phys.Vec3;
 
 /**
  * @program: pvzmod-1.18.x
  * @author: HungTeen
  * @create: 2022-03-13 08:48
  **/
-public class OriginOrb extends DropEntityBase {
+public class OriginOrb extends PVZDrop {
 
     private Player followingPlayer;
     private int xpCount;

@@ -1,8 +1,10 @@
 package com.hungteen.pvz.data;
 
 import com.hungteen.pvz.PVZMod;
+import com.hungteen.pvz.api.types.IPlantType;
 import com.hungteen.pvz.common.block.PVZBlocks;
 import com.hungteen.pvz.common.item.PVZItems;
+import com.hungteen.pvz.common.item.spawn.card.PlantCardItem;
 import com.hungteen.pvz.utils.Util;
 import net.minecraft.data.DataGenerator;
 import net.minecraft.resources.ResourceLocation;
@@ -76,16 +78,16 @@ public class ItemModelGen extends ItemModelProvider {
             if (i instanceof SpawnEggItem) {//for spawn eggs
                 addedItems.add(i);
                 getBuilder(i.getRegistryName().getPath()).parent(getExistingFile(new ResourceLocation("item/template_spawn_egg")));
-//            } else if (i instanceof PlantCardItem) {//for plant cards
-//                IPlantType plant = ((PlantCardItem) i).plantType;
-//                ResourceLocation plantResource = new ResourceLocation(plant.getModID(), "screenshot/plant/" + plant.toString());
-//                addedItems.add(i);
-//                if (((PlantCardItem) i).isEnjoyCard) {
-//                    ResourceLocation r = StringUtil.prefix("item/misc/mega_card");
-//                    genNormal(i.getRegistryName().getPath(), r, plantResource);
-//                } else {
-//                    genNormal(i.getRegistryName().getPath(), StringUtil.prefix("item/misc/" + plant.getRank().getName() + "_card"), plantResource);
-//                }
+            } else if (i instanceof PlantCardItem) {//for plant cards
+                IPlantType plant = ((PlantCardItem) i).plantType;
+                final ResourceLocation plantResource = new ResourceLocation(plant.getModID(), "art/plant/" + plant.toString());
+                addedItems.add(i);
+                if (((PlantCardItem) i).isEnjoyCard) {
+                    final ResourceLocation r = Util.prefix("item/misc/mega_card");
+                    genNormal(i.getRegistryName().getPath(), r, plantResource);
+                } else {
+                    genNormal(i.getRegistryName().getPath(), Util.prefix("item/misc/" + plant.getRank().getName() + "_card"), plantResource);
+                }
             } else if (i instanceof BlockItem) {
                 addedItems.add(i);
                 genBlockModel(((BlockItem) i).getBlock());

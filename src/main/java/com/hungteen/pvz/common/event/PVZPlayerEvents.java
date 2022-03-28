@@ -21,21 +21,21 @@ import net.minecraftforge.fml.common.Mod;
 @Mod.EventBusSubscriber(modid = PVZMod.MOD_ID)
 public class PVZPlayerEvents {
 
-//    @SubscribeEvent
-//    public static void tickPlayer(TickEvent.PlayerTickEvent ev) {
-//        if(! ev.player.level.isClientSide) {
-//            if (ev.player.tickCount < 2) {
-//                PlayerUtil.getOptManager(ev.player).ifPresent(l -> l.loadSummonCardCDs());
-//            }
+    @SubscribeEvent
+    public static void tickPlayer(TickEvent.PlayerTickEvent ev) {
+        if(! ev.player.level.isClientSide) {
+            if (ev.player.tickCount < 2) {
+                PlayerUtil.getOptManager(ev.player).ifPresent(l -> l.loadSummonCardCDs());
+            }
 //            PeaGunItem.checkHeadShoot(ev.player);
 //            ev.player.getCapability(CapabilityHandler.PLAYER_DATA_CAPABILITY).ifPresent((l) -> {
 //                if (l.getPlayerData().getOtherStats().playSoundTick > 0) {
 //                    --l.getPlayerData().getOtherStats().playSoundTick;
 //                }
 //            });
-//        }
+        }
 //        PVZMod.PROXY.climbUp();
-//    }
+    }
 
     @SubscribeEvent(priority = EventPriority.HIGHEST)
     public static void onPlayerLogin(PlayerEvent.PlayerLoggedInEvent ev) {

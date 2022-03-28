@@ -1,6 +1,6 @@
 package com.hungteen.pvz.common.event.events;
 
-import com.hungteen.pvz.common.entity.drop.DropEntityBase;
+import com.hungteen.pvz.common.entity.drop.PVZDrop;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraftforge.event.entity.living.LivingEvent;
 import net.minecraftforge.eventbus.api.Cancelable;
@@ -16,14 +16,14 @@ import net.minecraftforge.eventbus.api.Cancelable;
 @Cancelable
 public class LivingCollectDropEvent extends LivingEvent {
 
-    protected final DropEntityBase dropEntity;
+    protected final PVZDrop dropEntity;
 
-    public LivingCollectDropEvent(LivingEntity livingEntity, DropEntityBase dropEntity) {
+    public LivingCollectDropEvent(LivingEntity livingEntity, PVZDrop dropEntity) {
         super(livingEntity);
         this.dropEntity = dropEntity;
     }
 
-    public DropEntityBase getDropEntity() {
+    public PVZDrop getDropEntity() {
         return dropEntity;
     }
 }

@@ -4,6 +4,7 @@ import com.mojang.math.Vector3d;
 import net.minecraft.core.BlockPos;
 import net.minecraft.util.Mth;
 import net.minecraft.world.phys.AABB;
+import net.minecraft.world.phys.Vec3;
 
 import java.util.Random;
 
@@ -89,8 +90,8 @@ public class MathUtil {
         return new Vector3d(b.x - a.x, 0, b.z - a.z);
     }
 
-    public static Vector3d toVector(BlockPos pos) {
-        return new Vector3d(pos.getX(), pos.getY(), pos.getZ());
+    public static Vec3 toVector(BlockPos pos) {
+        return new Vec3(pos.getX(), pos.getY(), pos.getZ());
     }
 
     public static Vector3d getVector3dBy2(double x, double z) {

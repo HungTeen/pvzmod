@@ -2,9 +2,11 @@ package com.hungteen.pvz.api;
 
 import com.hungteen.pvz.api.types.IEssenceType;
 import com.hungteen.pvz.api.types.IRankType;
+import com.hungteen.pvz.api.types.base.IPAZType;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 /**
  * @program: pvzmod-1.18.x
@@ -19,8 +21,21 @@ public class DummyAPI implements PVZAPI.IPVZAPI {
 
 
     @Override
-    public void registerEssenceType(IEssenceType type) {
+    public void registerPAZType(IPAZType type) {
+    }
 
+    @Override
+    public Optional<IPAZType> getPAZType(String identity) {
+        return Optional.empty();
+    }
+
+    @Override
+    public List<IPAZType> getPAZTypes() {
+        return new ArrayList<>();
+    }
+
+    @Override
+    public void registerEssenceType(IEssenceType type) {
     }
 
     @Override
@@ -30,7 +45,6 @@ public class DummyAPI implements PVZAPI.IPVZAPI {
 
     @Override
     public void registerRankType(IRankType type) {
-
     }
 
     @Override

@@ -1,11 +1,5 @@
 package com.hungteen.pvz.api.types;
 
-/**
- * @program: pvzmod-1.18.x
- * @author: HungTeen
- * @create: 2022-03-08 21:26
- **/
-
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.level.block.Block;

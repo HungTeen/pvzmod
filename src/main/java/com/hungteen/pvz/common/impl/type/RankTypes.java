@@ -1,4 +1,4 @@
-package com.hungteen.pvz.common.impl;
+package com.hungteen.pvz.common.impl.type;
 
 import com.hungteen.pvz.PVZMod;
 import com.hungteen.pvz.api.PVZAPI;
@@ -18,6 +18,8 @@ import java.util.function.Supplier;
  * @create: 2022-03-09 20:48
  **/
 public class RankTypes {
+
+    private static final List<IRankType> RANK_TYPES = new ArrayList<>();
 
     public static final IRankType GRAY = new RankType(
             "gray",
@@ -111,7 +113,6 @@ public class RankTypes {
 
     public static class RankType implements IRankType {
 
-        private static final List<IRankType> RANK_TYPES = new ArrayList<>();
         private final String name;
         private final Supplier<Item> cardSuppiler;
         private final Supplier<TagKey<Item>> cardTagSuppiler;
@@ -166,6 +167,11 @@ public class RankTypes {
         @Override
         public int getPrice() {
             return this.price;
+        }
+
+        @Override
+        public String getName() {
+            return name;
         }
 
         @Override

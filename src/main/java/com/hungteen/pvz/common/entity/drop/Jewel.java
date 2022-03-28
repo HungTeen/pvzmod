@@ -14,7 +14,7 @@ import net.minecraft.world.level.Level;
  * @author: HungTeen
  * @create: 2022-03-13 08:36
  **/
-public class Jewel extends DropEntityBase {
+public class Jewel extends PVZDrop {
 
     public Jewel(EntityType<? extends Mob> type, Level worldIn) {
         super(type, worldIn);

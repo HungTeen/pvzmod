@@ -5,7 +5,7 @@ import java.util.Arrays;
 import com.hungteen.pvz.PVZMod;
 import com.hungteen.pvz.common.block.cubes.EssenceOreBlock;
 import com.hungteen.pvz.common.block.cubes.OriginBlock;
-import com.hungteen.pvz.common.impl.EssenceTypes;
+import com.hungteen.pvz.common.impl.type.EssenceTypes;
 import com.hungteen.pvz.common.item.PVZItemTabs;
 
 import net.minecraft.world.item.BlockItem;
@@ -101,6 +101,7 @@ public class PVZBlocks {
 
     /**
      * register block items.
+     * {@link PVZMod#PVZMod()}
      */
     public static void registerBlockItem(RegistryEvent.Register<Item> ev){
         IForgeRegistry<Item> items = ev.getRegistry();
