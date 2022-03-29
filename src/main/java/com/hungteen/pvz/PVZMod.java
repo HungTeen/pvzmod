@@ -2,6 +2,7 @@ package com.hungteen.pvz;
 
 import com.hungteen.pvz.api.PVZAPI;
 import com.hungteen.pvz.client.ClientProxy;
+import com.hungteen.pvz.client.particle.PVZParticles;
 import com.hungteen.pvz.common.CommonProxy;
 import com.hungteen.pvz.common.CommonRegister;
 import com.hungteen.pvz.common.PVZSounds;
@@ -142,7 +143,7 @@ public class PVZMod {
         PVZEnchantments.ENCHANTMENTS.register(bus);
         PVZEffects.EFFECTS.register(bus);
         PVZPotions.POTIONS.register(bus);
-//        ParticleRegister.PARTICLE_TYPES.register(bus);
+        PVZParticles.PARTICLE_TYPES.register(bus);
 //        FeatureRegister.FEATURES.register(bus);
 //        StructureRegister.STRUCTURE_FEATURES.register(bus);
 //        TileEntityRegister.TILE_ENTITY_TYPES.register(bus);

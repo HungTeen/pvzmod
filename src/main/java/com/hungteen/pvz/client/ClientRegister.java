@@ -4,6 +4,8 @@ import com.hungteen.pvz.client.model.PVZModelLayers;
 import com.hungteen.pvz.client.model.animal.GrassCarpModel;
 import com.hungteen.pvz.client.model.misc.DropEntityModel;
 import com.hungteen.pvz.client.model.plant.SunFlowerModel;
+import com.hungteen.pvz.client.particle.MelonSliceParticle;
+import com.hungteen.pvz.client.particle.PVZParticles;
 import com.hungteen.pvz.client.render.entity.animal.GrassCarpRender;
 import com.hungteen.pvz.client.render.entity.drop.DropItemRender;
 import com.hungteen.pvz.client.render.entity.drop.OriginOrbRender;
@@ -12,7 +14,9 @@ import com.hungteen.pvz.client.render.entity.drop.SunRender;
 import com.hungteen.pvz.client.render.entity.effect.OriginEffectRender;
 import com.hungteen.pvz.client.render.entity.plant.SunFlowerRender;
 import com.hungteen.pvz.common.entity.PVZEntities;
+import net.minecraft.client.Minecraft;
 import net.minecraft.client.model.geom.builders.LayerDefinition;
+import net.minecraft.client.particle.ParticleEngine;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.client.event.EntityRenderersEvent;
 import net.minecraftforge.client.event.ParticleFactoryRegisterEvent;
@@ -64,7 +68,7 @@ public class ClientRegister {
 
     @SubscribeEvent
     public static void registerFactories(ParticleFactoryRegisterEvent event) {
-//        ParticleManager manager = Minecraft.getInstance().particleEngine;
+        ParticleEngine manager = Minecraft.getInstance().particleEngine;
 //        manager.register(ParticleRegister.RED_BOMB.get(), (sprite) -> {return new CherryBombParticle.Factory(sprite);});
 //        manager.register(ParticleRegister.YELLOW_BOMB.get(), (sprite) -> {return new PotatoMineParticle.Factory(sprite);});
 //        manager.register(ParticleRegister.DIRT_BURST_OUT.get(), (sprite) -> {return new DirtBurstOutParticle.Factory(sprite);});
@@ -75,7 +79,7 @@ public class ClientRegister {
 //        manager.register(ParticleRegister.FUME.get(), (sprite) -> {return new FumeParticle.Factory(sprite);});
 //        manager.register(ParticleRegister.SNOW_FLOWER.get(), (sprite) -> {return new SnowFlowerParticle.Factory(sprite);});
 //        manager.register(ParticleRegister.DOOM.get(), (sprite) -> {return new DoomParticle.Factory(sprite);});
-//        manager.register(ParticleRegister.MELON_SLICE.get(), (sprite) -> {return new MelonSliceParticle.Factory(sprite);});
+        manager.register(PVZParticles.MELON_SLICE.get(), (sprite) -> {return new MelonSliceParticle.Factory(sprite);});
 //        manager.register(ParticleRegister.FROZEN_MELON_SLICE.get(), (sprite) -> {return new FrozenMelonSliceParticle.Factory(sprite);});
 //        manager.register(ParticleRegister.GREEN_SWEEP.get(), (sprite) -> {return new GreenSweepParticle.Factory(sprite);});
 //        manager.register(ParticleRegister.POP_CORN.get(), (sprite) -> {return new PopCornParticle.Factory(sprite);});

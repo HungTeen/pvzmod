@@ -1,14 +1,20 @@
 package com.hungteen.pvz.common.entity.animal;
 
+import com.hungteen.pvz.client.particle.PVZParticles;
+import com.hungteen.pvz.client.particle.ParticleUtil;
 import com.hungteen.pvz.common.entity.PVZEntities;
 import com.hungteen.pvz.common.item.PVZItems;
+import com.hungteen.pvz.common.tag.PVZBlockTags;
 import com.hungteen.pvz.utils.EntityUtil;
 import com.hungteen.pvz.utils.MathUtil;
+import com.hungteen.pvz.utils.WorldUtil;
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.network.syncher.EntityDataSerializers;
 import net.minecraft.network.syncher.SynchedEntityData;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundEvents;
@@ -33,10 +39,15 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.LevelReader;
+import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.block.MossBlock;
 import net.minecraft.world.level.gameevent.GameEvent;
 import net.minecraft.world.level.pathfinder.BlockPathTypes;
 import net.minecraft.world.phys.Vec3;
+import net.minecraftforge.common.ForgeTagHandler;
 import net.minecraftforge.common.IForgeShearable;
+import net.minecraftforge.common.Tags;
+import net.minecraftforge.common.data.ForgeBlockTagsProvider;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
@@ -56,6 +67,7 @@ public class GrassCarp extends Animal implements Bucketable, IForgeShearable {
     public static final Predicate<ItemEntity> ALLOWED_ITEMS = (itemEntity) -> {
         return !itemEntity.hasPickUpDelay() && itemEntity.isAlive() && itemEntity.isInWater();
     };
+    private int nextChangeTick = this.getNextChangeTick();
     private int growHairTick = 0;
 
     public GrassCarp(EntityType<? extends Animal> entityType, Level level) {
@@ -96,7 +108,25 @@ public class GrassCarp extends Animal implements Bucketable, IForgeShearable {
         if(! this.level.isClientSide){
             //grow hair.
             if(this.isBald() && -- this.growHairTick <= 0){
-                this.setBald(true);
+                this.setBald(false);
+            }
+
+            //change blocks.
+            if(-- this.nextChangeTick <= 0) {
+            	final int range = 3;
+            	for(int i = - range; i <= range; ++ i) {
+            		for(int j = - range; j <= range; ++ j) {
+                        for(int h = 0; h <= 2; ++ h){
+                            final BlockPos pos = this.blockPosition().offset(i, h, j);
+                            if(checkBlock(pos)) {
+                                for (int k = - range; k < range; ++k) {
+                                    ParticleUtil.spawnParticles(this.level, ParticleTypes.COMPOSTER, MathUtil.toVector(pos.above()));
+                                }
+                            }
+                        }
+                	}
+            	}
+            	this.nextChangeTick = this.getNextChangeTick();
             }
         }
     }
@@ -142,6 +172,24 @@ public class GrassCarp extends Animal implements Bucketable, IForgeShearable {
         return grassCarp;
     }
 
+    protected boolean checkBlock(BlockPos pos){
+    	if(! this.level.getFluidState(pos.above()).isEmpty()) {
+    		return false;
+    	}
+    	
+        if(this.level.getBlockState(pos).is(PVZBlockTags.DIRT_NO_GRASS)) {
+            this.level.setBlock(pos, Blocks.GRASS_BLOCK.defaultBlockState(), 3);
+            return true;
+        }
+
+        if(this.level.getBlockState(pos).is(Tags.Blocks.STONE)) {
+            this.level.setBlock(pos, Blocks.MOSS_BLOCK.defaultBlockState(), 3);
+            return true;
+        }
+
+        return false;
+    }
+
     @Override
     public boolean isShearable(@NotNull ItemStack item, Level level, BlockPos pos) {
         return ! this.isBald();
@@ -156,10 +204,10 @@ public class GrassCarp extends Animal implements Bucketable, IForgeShearable {
             this.setBald(true);
             this.growHairTick = 1200 + this.random.nextInt(600);
 
-            int i = 1 + this.random.nextInt(3);
+            int count = this.isBaby() ? 1 : MathUtil.getRandomMinMax(this.random, 1, 3);
 
             java.util.List<ItemStack> items = new java.util.ArrayList<>();
-            for (int j = 0; j < i; ++j) {
+            for (int j = 0; j < count; ++j) {
                 items.add(new ItemStack(Items.KELP));
             }
             return items;
@@ -189,6 +237,7 @@ public class GrassCarp extends Animal implements Bucketable, IForgeShearable {
         CompoundTag compoundtag = itemStack.getOrCreateTag();
         compoundtag.putBoolean("Bald", this.isBald());
         compoundtag.putInt("Age", this.getAge());
+        compoundtag.putInt("NextChangeTick", this.nextChangeTick);
     }
 
     public void loadFromBucketTag(CompoundTag tag) {
@@ -199,6 +248,9 @@ public class GrassCarp extends Animal implements Bucketable, IForgeShearable {
         if(tag.contains("Age")){
             this.setAge(tag.getInt("Age"));
         }
+        if(tag.contains("NextChangeTick")) {
+        	this.nextChangeTick = tag.getInt("NextChangeTick");
+        }
     }
 
     @Override
@@ -206,13 +258,21 @@ public class GrassCarp extends Animal implements Bucketable, IForgeShearable {
         super.addAdditionalSaveData(tag);
         tag.putBoolean("Bald", this.isBald());
         tag.putBoolean("FromBucket", this.fromBucket());
+        tag.putInt("NextChangeTick", this.nextChangeTick);
     }
 
     @Override
     public void readAdditionalSaveData(CompoundTag tag) {
         super.readAdditionalSaveData(tag);
-        this.setBald(tag.getBoolean("Bald"));
-        this.setFromBucket(tag.getBoolean("FromBucket"));
+        if(tag.contains("Bald")) {
+        	this.setBald(tag.getBoolean("Bald"));
+        }
+        if(tag.contains("FromBucket")) {
+        	this.setFromBucket(tag.getBoolean("FromBucket"));
+        }
+        if(tag.contains("NextChangeTick")) {
+        	this.nextChangeTick = tag.getInt("NextChangeTick");
+        }
     }
 
     public boolean isBald(){
@@ -286,7 +346,11 @@ public class GrassCarp extends Animal implements Bucketable, IForgeShearable {
 
     @Override
     public EntityDimensions getDimensions(Pose p_21047_) {
-        return EntityDimensions.scalable(0.6F, 0.6F);
+        return EntityDimensions.scalable(0.6F, 0.6F).scale(this.getScale());
+    }
+
+    private int getNextChangeTick(){
+        return MathUtil.getRandomMinMax(this.random, 100, 400);
     }
 
     @Override
@@ -370,6 +434,9 @@ public class GrassCarp extends Animal implements Bucketable, IForgeShearable {
         }
 
         public boolean canUse() {
+        	if(this.grassCarp.isBaby() || ! this.grassCarp.getItemBySlot(EquipmentSlot.MAINHAND).isEmpty()) {
+        		return false;
+        	}
             if (!EntityUtil.isEntityValid(target)) {
                 if (--this.cooldown <= 0) {
                     final List<ItemEntity> list = this.grassCarp.level.getEntitiesOfClass(ItemEntity.class, this.grassCarp.getBoundingBox().inflate(16), ALLOWED_ITEMS);
@@ -417,12 +484,12 @@ public class GrassCarp extends Animal implements Bucketable, IForgeShearable {
         }
 
         public boolean canUse() {
-            return super.canUse() && ! this.grassCarp.getItemBySlot(EquipmentSlot.MAINHAND).isEmpty();
+            return super.canUse() && ! this.grassCarp.isBaby() && ! this.grassCarp.getItemBySlot(EquipmentSlot.MAINHAND).isEmpty();
         }
 
         @Override
         public boolean canContinueToUse() {
-            return super.canContinueToUse() && ! this.grassCarp.getItemBySlot(EquipmentSlot.MAINHAND).isEmpty();
+            return super.canContinueToUse() && ! this.grassCarp.isBaby() && ! this.grassCarp.getItemBySlot(EquipmentSlot.MAINHAND).isEmpty();
         }
 
         protected boolean isValidTarget(LevelReader p_32413_, BlockPos p_32414_) {
@@ -431,7 +498,6 @@ public class GrassCarp extends Animal implements Bucketable, IForgeShearable {
         }
 
         public void tick() {
-//        	if(this.grassCarp.tickCount % 50 == 0) System.out.println(this.grassCarp.distanceToSqr(MathUtil.toVector(this.blockPos)));
             if (this.grassCarp.distanceToSqr(MathUtil.toVector(this.blockPos)) <= 8) {
                 this.drop(this.grassCarp.getItemBySlot(EquipmentSlot.MAINHAND));
                 this.grassCarp.setItemSlot(EquipmentSlot.MAINHAND, ItemStack.EMPTY);
@@ -440,18 +506,14 @@ public class GrassCarp extends Animal implements Bucketable, IForgeShearable {
             }
         }
 
-        private void drop(ItemStack p_28429_) {
-            if (!p_28429_.isEmpty()) {
+        private void drop(ItemStack itemStack) {
+            if (!itemStack.isEmpty()) {
                 double d0 = this.grassCarp.getEyeY() - (double)0.3F;
-                ItemEntity itementity = new ItemEntity(this.grassCarp.level, this.grassCarp.getX(), d0, this.grassCarp.getZ(), p_28429_);
+                ItemEntity itementity = new ItemEntity(this.grassCarp.level, this.grassCarp.getX(), d0, this.grassCarp.getZ(), itemStack);
                 itementity.setPickUpDelay(40);
                 itementity.setThrower(this.grassCarp.getUUID());
-                float f = 0.3F;
-                float f1 = this.grassCarp.random.nextFloat() * ((float)Math.PI * 2F);
-                float f2 = 0.02F * this.grassCarp.random.nextFloat();
                 final Vec3 speed = MathUtil.toVector(this.blockPos).subtract(this.grassCarp.position()).add(0, 1, 0).normalize();
                 itementity.setDeltaMovement(speed.scale(0.5F));
-//                itementity.setDeltaMovement((double)(0.3F * -Mth.sin(this.grassCarp.getYRot() * ((float)Math.PI / 180F)) * Mth.cos(this.grassCarp.getXRot() * ((float)Math.PI / 180F)) + Mth.cos(f1) * f2), (double)(0.3F * Mth.sin(this.grassCarp.getXRot() * ((float)Math.PI / 180F)) * 1.5F), (double)(0.3F * Mth.cos(this.grassCarp.getYRot() * ((float)Math.PI / 180F)) * Mth.cos(this.grassCarp.getXRot() * ((float)Math.PI / 180F)) + Mth.sin(f1) * f2));
                 this.grassCarp.level.addFreshEntity(itementity);
             }
         }

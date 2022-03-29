@@ -1,0 +1,35 @@
+{
+  "parent": "pvz:root",
+  "display": {
+    "icon": {
+      "item": "pvz:grass_carp_bucket"
+    },
+    "title": {
+      "translate": "advancements.pvz.grass_carp.title"
+    },
+    "description": {
+      "translate": "advancements.pvz.grass_carp.desc"
+    },
+    "frame": "task",
+    "show_toast": true,
+    "announce_to_chat": true,
+    "hidden": false
+  },
+  "criteria": {
+    "grass_carp": {
+      "trigger": "minecraft:filled_bucket",
+      "conditions": {
+        "item": {
+          "items": [
+            "pvz:grass_carp_bucket"
+          ]
+        }
+      }
+    }
+  },
+  "requirements": [
+    [
+      "grass_carp"
+    ]
+  ]
+}

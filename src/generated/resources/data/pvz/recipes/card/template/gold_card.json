@@ -1,0 +1,19 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "AAA",
+    "ABA",
+    "AAA"
+  ],
+  "key": {
+    "A": {
+      "tag": "pvz:card/gold_materials"
+    },
+    "B": {
+      "item": "pvz:origin_essence"
+    }
+  },
+  "result": {
+    "item": "pvz:gold_card"
+  }
+}

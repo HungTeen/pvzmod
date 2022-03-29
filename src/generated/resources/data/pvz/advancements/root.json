@@ -1,0 +1,29 @@
+{
+  "display": {
+    "icon": {
+      "item": "minecraft:hay_block"
+    },
+    "title": {
+      "translate": "advancements.pvz.root.title"
+    },
+    "description": {
+      "translate": "advancements.pvz.root.desc"
+    },
+    "frame": "task",
+    "show_toast": false,
+    "announce_to_chat": true,
+    "hidden": false,
+    "background": "pvz:textures/block/amethyst_block.png"
+  },
+  "criteria": {
+    "join_in_world": {
+      "trigger": "minecraft:location",
+      "conditions": {}
+    }
+  },
+  "requirements": [
+    [
+      "join_in_world"
+    ]
+  ]
+}

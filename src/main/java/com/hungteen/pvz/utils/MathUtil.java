@@ -91,7 +91,7 @@ public class MathUtil {
     }
 
     public static Vec3 toVector(BlockPos pos) {
-        return new Vec3(pos.getX(), pos.getY(), pos.getZ());
+        return new Vec3(pos.getX() + 0.5, pos.getY(), pos.getZ() + 0.5);
     }
 
     public static Vector3d getVector3dBy2(double x, double z) {

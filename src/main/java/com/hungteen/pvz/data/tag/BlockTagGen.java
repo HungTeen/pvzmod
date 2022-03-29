@@ -16,6 +16,7 @@ import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.OreBlock;
 import net.minecraftforge.common.Tags;
 import net.minecraftforge.common.data.ExistingFileHelper;
+import net.minecraftforge.common.data.ForgeBlockTagsProvider;
 import net.minecraftforge.registries.ForgeRegistries;
 
 import java.util.ArrayList;
@@ -94,9 +95,13 @@ public class BlockTagGen extends BlockTagsProvider {
 //        this.tag(BlockTags.CLIMBABLE).add(BlockRegister.STEEL_LADDER.get());
 //        this.tag(PVZBlockTags.GOLD_TILES).add(BlockRegister.GOLD_TILE1.get(), BlockRegister.GOLD_TILE2.get(),
 //                BlockRegister.GOLD_TILE3.get());
+        //grass carp can change it into grass block.
+        this.tag(PVZBlockTags.DIRT_NO_GRASS).add(Blocks.DIRT, Blocks.COARSE_DIRT, Blocks.ROOTED_DIRT, Blocks.PODZOL);
         this.tag(PVZBlockTags.PLANT_SUIT_BLOCKS)
 //        .addTag(PVZBlockTags.GOLD_TILES)
-                .add(Blocks.GRASS_BLOCK);
+                .add(Blocks.GRASS_BLOCK)
+                .add(Blocks.MOSS_BLOCK)
+                ;
 //                        BlockRegister.FLOWER_POT.get(), BlockRegister.LILY_PAD.get());
 //        this.tag(BlockTags.LOGS).add(BlockRegister.NUT_LOG.get());
     }

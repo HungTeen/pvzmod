@@ -26,7 +26,7 @@ public class LootTableGen extends LootTableProvider {
 
     private final List<Pair<Supplier<Consumer<BiConsumer<ResourceLocation, LootTable.Builder>>>, LootContextParamSet>> tables = ImmutableList.of(
 //            Pair.of(PVZChestLootTables::new, LootContextParamSets.CHEST),
-//            Pair.of(PVZEntityLootTables::new, LootContextParamSets.ENTITY),
+            Pair.of(EntityLootGen::new, LootContextParamSets.ENTITY),
             Pair.of(BlockLootGen::new, LootContextParamSets.BLOCK)
 //            Pair.of(PVZFishingLootTables::new, LootContextParamSets.FISHING)
     );

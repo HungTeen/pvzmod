@@ -1,21 +1,18 @@
 package com.hungteen.pvz.data.recipe;
 
+import java.util.function.Consumer;
+
 import com.hungteen.pvz.api.PVZAPI;
 import com.hungteen.pvz.api.types.IRankType;
 import com.hungteen.pvz.common.item.PVZItems;
 import com.hungteen.pvz.utils.Util;
+
 import net.minecraft.data.DataGenerator;
 import net.minecraft.data.recipes.FinishedRecipe;
 import net.minecraft.data.recipes.RecipeProvider;
 import net.minecraft.data.recipes.ShapedRecipeBuilder;
-import net.minecraft.data.recipes.SimpleCookingRecipeBuilder;
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.item.Item;
-import net.minecraft.world.item.crafting.Ingredient;
-import net.minecraft.world.item.crafting.RecipeSerializer;
-import net.minecraft.world.level.ItemLike;
-
-import java.util.function.Consumer;
 
 /**
  * @program: pvzmod-1.18.x
@@ -32,6 +29,7 @@ public class RecipeGen extends RecipeProvider {
     protected void buildCraftingRecipes(Consumer<FinishedRecipe> consumer) {
         //template cards.
         PVZAPI.get().getRanks().forEach(type -> {
+        	System.out.println(type.getName());
             registerTemplateCard(consumer, type);
         });
         //summon card
@@ -151,16 +149,16 @@ public class RecipeGen extends RecipeProvider {
 //        });
 //    }
 
-    private void registerStoneSmelting(Consumer<FinishedRecipe> consumer, ItemLike input, ItemLike item, float xp, int time, String name) {
-        SimpleCookingRecipeBuilder.smelting(Ingredient.of(input), item, xp, time).unlockedBy("has_input", has(input)).save(consumer, Util.prefix("smelting/" + name + "_from_smelting"));
-        SimpleCookingRecipeBuilder.blasting(Ingredient.of(input), item, xp, time).unlockedBy("has_input", has(input)).save(consumer, Util.prefix("smelting/" + name + "_from_blasting"));
-    }
-
-    private void registerFoodSmelting(Consumer<FinishedRecipe> consumer, ItemLike input, ItemLike item, float xp, int time, String name) {
-        SimpleCookingRecipeBuilder.smelting(Ingredient.of(input), item, xp, time).unlockedBy("has_input", has(input)).save(consumer, Util.prefix("smelting/" + name));
-        SimpleCookingRecipeBuilder.cooking(Ingredient.of(input), item, xp, time, RecipeSerializer.SMOKING_RECIPE).unlockedBy("has_input", has(input)).save(consumer, Util.prefix("smelting/" + name + "_from_smoking"));
-        SimpleCookingRecipeBuilder.cooking(Ingredient.of(input), item, xp, time, RecipeSerializer.CAMPFIRE_COOKING_RECIPE).unlockedBy("has_input", has(input)).save(consumer, Util.prefix("smelting/" + name + "_from_campfire_cooking"));
-    }
+//    private void registerStoneSmelting(Consumer<FinishedRecipe> consumer, ItemLike input, ItemLike item, float xp, int time, String name) {
+//        SimpleCookingRecipeBuilder.smelting(Ingredient.of(input), item, xp, time).unlockedBy("has_input", has(input)).save(consumer, Util.prefix("smelting/" + name + "_from_smelting"));
+//        SimpleCookingRecipeBuilder.blasting(Ingredient.of(input), item, xp, time).unlockedBy("has_input", has(input)).save(consumer, Util.prefix("smelting/" + name + "_from_blasting"));
+//    }
+//
+//    private void registerFoodSmelting(Consumer<FinishedRecipe> consumer, ItemLike input, ItemLike item, float xp, int time, String name) {
+//        SimpleCookingRecipeBuilder.smelting(Ingredient.of(input), item, xp, time).unlockedBy("has_input", has(input)).save(consumer, Util.prefix("smelting/" + name));
+//        SimpleCookingRecipeBuilder.cooking(Ingredient.of(input), item, xp, time, RecipeSerializer.SMOKING_RECIPE).unlockedBy("has_input", has(input)).save(consumer, Util.prefix("smelting/" + name + "_from_smoking"));
+//        SimpleCookingRecipeBuilder.cooking(Ingredient.of(input), item, xp, time, RecipeSerializer.CAMPFIRE_COOKING_RECIPE).unlockedBy("has_input", has(input)).save(consumer, Util.prefix("smelting/" + name + "_from_campfire_cooking"));
+//    }
 
 //    private void registerCommonCard(Consumer<IFinishedRecipe> consumer, PlantCardItem result, Item crop) {
 //        final Item essence = result.plantType.getEssence().getEssenceItem();
@@ -204,7 +202,7 @@ public class RecipeGen extends RecipeProvider {
                     .define('A', material)
                     .define('B', origin)
                     .unlockedBy("has_origin", has(origin))
-                    .save(consumer, Util.prefix("card/template/" + type.toString() + "_card"));
+                    .save(consumer, Util.prefix("card/template/" + type.getName() + "_card"));
         }
     }
 }

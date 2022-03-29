@@ -19,7 +19,7 @@ public class GrassCarpRender extends PVZMobRender<GrassCarp> {
 
     public GrassCarpRender(EntityRendererProvider.Context rendererManager) {
         super(rendererManager, new GrassCarpModel<>(rendererManager.bakeLayer(PVZModelLayers.GRASS_CARP)), 0);
-//        this.addLayer(new GrassCarpItemLayer(this));
+        this.addLayer(new GrassCarpItemLayer(this));
     }
 
     @Override

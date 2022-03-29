@@ -21,6 +21,7 @@ public class PVZBlockTags {
     //related to essence ores
     public static final TagKey<Block> ESSENCE_ORES = pvzTag("ores/essence");
     public static final TagKey<Block> GOLD_TILES = pvzTag("gold_tile");
+    public static final TagKey<Block> DIRT_NO_GRASS = pvzTag("dirt_no_grass");
 
     private static TagKey<Block> pvzTag(String name){
         return BlockTags.create(Util.prefix(name));
