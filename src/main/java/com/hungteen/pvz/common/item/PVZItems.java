@@ -255,7 +255,7 @@ public class PVZItems {
         PVZAPI.get().getPAZTypes().forEach(type -> {
             if(type instanceof PlantType){
                 final Item summonCard = new PlantCardItem((IPlantType) type, false).setRegistryName(type.getIdentity() + "_card");
-                final Item enjoyCard = new PlantCardItem((IPlantType) type, true).setRegistryName(type.getIdentity() + "enjoy_card");
+                final Item enjoyCard = new PlantCardItem((IPlantType) type, true).setRegistryName(type.getIdentity() + "_enjoy_card");
                 //bind with type.
                 ((PlantType) type).summonCard(() -> summonCard);
                 ((PlantType) type).enjoyCard(() -> enjoyCard);
