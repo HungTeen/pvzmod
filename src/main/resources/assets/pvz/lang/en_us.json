@@ -236,7 +236,11 @@
     "entity.pvz.panney":"Penny",
     "item.pvz.panney_spawn_egg":"Penny Spawn Egg",
     "entity.pvz.sun_dave":"Sun Dave",
-    "item.pvz.sun_dave_spawn_egg":"Sun Dave Spawn Egg",  
+    "item.pvz.sun_dave_spawn_egg":"Sun Dave Spawn Egg",
+
+    "entity.pvz:grass_carp": "Grasscarp",
+    "item.pvz.grass_carp_spawn_egg": "Grasscarp Spawn Egg",
+    "item.pvz.grass_carp_bucket": "Grasscarp Bucket",
     
     "entity.pvz.normal_zombie":"Normal Zombie",
     "item.pvz.normal_zombie_spawn_egg":"Normal Zombie Spawn Egg", 
