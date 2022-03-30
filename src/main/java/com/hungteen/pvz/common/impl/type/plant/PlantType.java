@@ -1,8 +1,6 @@
 package com.hungteen.pvz.common.impl.type.plant;
 
-import com.hungteen.pvz.PVZMod;
-import com.hungteen.pvz.api.interfaces.IPlantEntity;
-import com.hungteen.pvz.api.misc.IPlantInfo;
+import com.hungteen.pvz.api.interfaces.IPlantInfo;
 import com.hungteen.pvz.api.types.*;
 import com.hungteen.pvz.api.types.base.IPAZType;
 import com.hungteen.pvz.common.impl.type.EssenceTypes;

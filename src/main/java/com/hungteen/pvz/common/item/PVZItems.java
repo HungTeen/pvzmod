@@ -83,14 +83,14 @@ public class PVZItems {
     public static final RegistryObject<Item> AMETHYST_INGOT = ITEMS.register("amethyst_ingot", PVZMiscItem::new);
 
     /* card models */
-    public static final RegistryObject<Item> GRAY_CARD = ITEMS.register("gray_card", () -> new TemplateCardItem(RankTypes.GRAY));
+//    public static final RegistryObject<Item> GRAY_CARD = ITEMS.register("gray_card", () -> new TemplateCardItem(RankTypes.GRAY));
     public static final RegistryObject<Item> WHITE_CARD = ITEMS.register("white_card", () -> new TemplateCardItem(RankTypes.WHITE));
     public static final RegistryObject<Item> GREEN_CARD = ITEMS.register("green_card", () -> new TemplateCardItem(RankTypes.GREEN));
     public static final RegistryObject<Item> BLUE_CARD = ITEMS.register("blue_card", () -> new TemplateCardItem(RankTypes.BLUE));
     public static final RegistryObject<Item> PURPLE_CARD = ITEMS.register("purple_card", () -> new TemplateCardItem(RankTypes.PURPLE));
-    public static final RegistryObject<Item> GOLD_CARD = ITEMS.register("gold_card", () -> new TemplateCardItem(RankTypes.GOLD));
-    public static final RegistryObject<Item> RED_CARD = ITEMS.register("red_card", () -> new TemplateCardItem(RankTypes.RED));
-    public static final RegistryObject<Item> BLACK_CARD = ITEMS.register("black_card", () -> new TemplateCardItem(RankTypes.BLACK));
+//    public static final RegistryObject<Item> GOLD_CARD = ITEMS.register("gold_card", () -> new TemplateCardItem(RankTypes.GOLD));
+//    public static final RegistryObject<Item> RED_CARD = ITEMS.register("red_card", () -> new TemplateCardItem(RankTypes.RED));
+//    public static final RegistryObject<Item> BLACK_CARD = ITEMS.register("black_card", () -> new TemplateCardItem(RankTypes.BLACK));
     public static final RegistryObject<Item> MEGA_CARD = ITEMS.register("mega_card", () -> new TemplateCardItem(RankTypes.MEGA));
 
     /* spawn eggs */

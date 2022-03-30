@@ -120,7 +120,7 @@ public class PAZTypes {
         protected int sunCost = 9999;
         protected int xpPoint = 0;
         protected int coolDown = 0;
-        protected IRankType rankType = RankTypes.GRAY;
+        protected IRankType rankType = RankTypes.WHITE;
         protected ResourceLocation lootTable;
         protected Supplier<? extends Item> summonCardSup;
         protected Supplier<? extends Item> enjoyCardSup;

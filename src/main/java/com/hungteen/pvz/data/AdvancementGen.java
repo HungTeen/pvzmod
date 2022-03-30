@@ -1,6 +1,7 @@
 package com.hungteen.pvz.data;
 
 import com.hungteen.pvz.PVZMod;
+import com.hungteen.pvz.common.block.PVZBlocks;
 import com.hungteen.pvz.common.item.PVZItems;
 import com.hungteen.pvz.utils.Util;
 import net.minecraft.advancements.Advancement;
@@ -36,11 +37,23 @@ public class AdvancementGen extends AdvancementProvider {
                 .addCriterion("join_in_world", LocationTrigger.TriggerInstance.located(LocationPredicate.ANY))
                 .save(consumer, prefix("root"));
 
-        Advancement.Builder.advancement()
+        Advancement grassCarp = Advancement.Builder.advancement()
                 .parent(root)
                 .addCriterion("grass_carp", FilledBucketTrigger.TriggerInstance.filledBucket(ItemPredicate.Builder.item().of(PVZItems.GRASS_CARP_BUCKET.get()).build()))
-                .display(PVZItems.GRASS_CARP_BUCKET.get(), title("grass_carp"), desc("grass_carp"), (ResourceLocation)null, FrameType.TASK, true, true, false)
+                .display(PVZItems.GRASS_CARP_BUCKET.get(), title("grass_carp"), desc("grass_carp"), null, FrameType.TASK, true, true, false)
                 .save(consumer, prefix("grass_carp"));
+
+        Advancement essence = Advancement.Builder.advancement()
+                .parent(root)
+                .addCriterion("get_essence", InventoryChangeTrigger.TriggerInstance.hasItems(PVZItems.ORIGIN_ESSENCE.get()))
+                .display(PVZItems.ORIGIN_ESSENCE.get(), title("essence"), desc("essence"), null, FrameType.TASK, true, true, false)
+                .save(consumer, prefix("essence"));
+
+        Advancement origin = Advancement.Builder.advancement()
+                .parent(essence)
+                .addCriterion("place_origin", PlacedBlockTrigger.TriggerInstance.placedBlock(PVZBlocks.ORIGIN_BLOCK.get()))
+                .display(PVZItems.ORIGIN_ESSENCE.get(), title("origin"), desc("origin"), null, FrameType.TASK, true, true, false)
+                .save(consumer, prefix("origin"));
 
     }
 

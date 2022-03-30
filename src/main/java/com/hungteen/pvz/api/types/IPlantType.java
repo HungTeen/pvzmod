@@ -1,10 +1,8 @@
 package com.hungteen.pvz.api.types;
 
-import com.hungteen.pvz.api.misc.IPlantInfo;
+import com.hungteen.pvz.api.interfaces.IPlantInfo;
 import com.hungteen.pvz.api.types.base.IPAZType;
 import net.minecraft.world.level.block.Block;
-import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.api.distmarker.OnlyIn;
 
 import java.util.Optional;
 

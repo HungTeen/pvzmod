@@ -29,7 +29,6 @@ public class RecipeGen extends RecipeProvider {
     protected void buildCraftingRecipes(Consumer<FinishedRecipe> consumer) {
         //template cards.
         PVZAPI.get().getRanks().forEach(type -> {
-        	System.out.println(type.getName());
             registerTemplateCard(consumer, type);
         });
         //summon card

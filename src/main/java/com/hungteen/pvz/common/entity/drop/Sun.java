@@ -1,21 +1,28 @@
 package com.hungteen.pvz.common.entity.drop;
 
+import java.util.Random;
+
 import com.hungteen.pvz.PVZConfig;
 import com.hungteen.pvz.common.PVZSounds;
 import com.hungteen.pvz.common.entity.PVZEntities;
 import com.hungteen.pvz.utils.EntityUtil;
+import com.hungteen.pvz.utils.MathUtil;
 import com.hungteen.pvz.utils.PlayerUtil;
 import com.hungteen.pvz.utils.enums.Resources;
+
 import net.minecraft.core.BlockPos;
 import net.minecraft.server.level.ServerLevel;
-import net.minecraft.world.entity.*;
+import net.minecraft.world.entity.EntityDimensions;
+import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.Mob;
+import net.minecraft.world.entity.MobSpawnType;
+import net.minecraft.world.entity.Pose;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.LevelAccessor;
 import net.minecraft.world.level.LightLayer;
 import net.minecraft.world.phys.Vec3;
-
-import java.util.Random;
 
 /**
  * @program: pvzmod-1.18.x
@@ -24,7 +31,7 @@ import java.util.Random;
  **/
 public class Sun extends PVZDrop {
 
-    private static final float FALL_SPEED = 0.03F;
+    private static final float SUN_FALL_SPEED = 0.03F;
 
     public Sun(EntityType<? extends Mob> type, Level worldIn) {
         super(type, worldIn);
@@ -35,7 +42,13 @@ public class Sun extends PVZDrop {
     public void tick() {
         super.tick();
         if(! this.onGround && ! this.isInWater()) {
-            this.setDeltaMovement(this.getDeltaMovement().x(), - FALL_SPEED, this.getDeltaMovement().z());
+            double speedY = this.getDeltaMovement().y;
+            if(speedY > - SUN_FALL_SPEED){
+                speedY -= SUN_FALL_SPEED / 2;
+            } else{
+                speedY = -SUN_FALL_SPEED;
+            }
+            this.setDeltaMovement(this.getDeltaMovement().x() * 0.94, speedY, this.getDeltaMovement().z() * 0.94);
         } else{
             this.setDeltaMovement(Vec3.ZERO);
         }
@@ -81,24 +94,37 @@ public class Sun extends PVZDrop {
     /**
      * spawn sun in range, each is set to a specific amount.
      */
-    public static void spawnSunsByAmount(Level world, BlockPos pos, int amount, int each, int range) {
+    public static void spawnSunsByAmount(Level world, BlockPos pos, int amount, int each, double speed) {
         while(amount >= each) {
             amount -= each;
-            spawnSunRandomly(world, pos, each, range);
+            dropSunRandomly(world, pos, each, speed);
         }
         if(amount != 0) {
-            spawnSunRandomly(world, pos, amount, range);
+            dropSunRandomly(world, pos, amount, speed);
             amount = 0;
         }
     }
 
+//    /**
+//     * spawn sun entity in range randomly with specific amount.
+//     */
+//    public static void spawnSunRandomly(Level world, BlockPos pos, int amount, int dis) {
+//        final Sun sun = PVZEntities.SUN.get().create(world);
+//        sun.setAmount(amount);
+//        EntityUtil.onEntityRandomPosSpawn(world, sun, pos, dis);
+//    }
+
     /**
-     * spawn sun entity in range randomly with specific amount.
+     * spawn random speed sun entity with specific amount.
      */
-    public static void spawnSunRandomly(Level world, BlockPos pos, int amount, int dis) {
-        Sun sun = PVZEntities.SUN.get().create(world);
+    public static void dropSunRandomly(Level world, BlockPos pos, int amount, double speed) {
+        final Sun sun = PVZEntities.SUN.get().create(world);
         sun.setAmount(amount);
-        EntityUtil.onEntityRandomPosSpawn(world, sun, pos, dis);
+        EntityUtil.onEntitySpawn(world, sun, pos);
+        final double dy = speed * 0.6;
+        final double dx = MathUtil.getRandomFloat(world.getRandom());
+        final double dz = MathUtil.getRandomFloat(world.getRandom());
+        sun.setDeltaMovement(new Vec3(dx, 0, dz).scale(speed).add(0, dy, 0));
     }
 
     public static boolean canSunSpawn(EntityType<? extends Sun> zombieType, LevelAccessor worldIn, MobSpawnType reason, BlockPos pos, Random rand) {

@@ -12,6 +12,7 @@ import com.hungteen.pvz.common.capability.CapabilityHandler;
 import com.hungteen.pvz.common.effect.PVZEffects;
 import com.hungteen.pvz.common.effect.PVZPotions;
 import com.hungteen.pvz.common.enchantment.PVZEnchantments;
+import com.hungteen.pvz.common.entity.PVZAttributes;
 import com.hungteen.pvz.common.entity.PVZEntities;
 import com.hungteen.pvz.common.impl.type.EssenceTypes;
 import com.hungteen.pvz.common.impl.type.RankTypes;
@@ -144,11 +145,11 @@ public class PVZMod {
         PVZEffects.EFFECTS.register(bus);
         PVZPotions.POTIONS.register(bus);
         PVZParticles.PARTICLE_TYPES.register(bus);
+        PVZAttributes.ATTRIBUTES.register(bus);
 //        FeatureRegister.FEATURES.register(bus);
 //        StructureRegister.STRUCTURE_FEATURES.register(bus);
 //        TileEntityRegister.TILE_ENTITY_TYPES.register(bus);
 //        ContainerRegister.CONTAINER_TYPES.register(bus);
-//        PVZAttributes.ATTRIBUTES.register(bus);
     }
 
 }

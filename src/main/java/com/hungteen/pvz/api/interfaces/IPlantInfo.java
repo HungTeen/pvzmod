@@ -1,4 +1,4 @@
-package com.hungteen.pvz.api.misc;
+package com.hungteen.pvz.api.interfaces;
 
 /**
  * @program: pvzmod-1.18.x

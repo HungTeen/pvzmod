@@ -8,6 +8,7 @@ import com.hungteen.pvz.common.enchantment.EnchantmentHandler;
 import com.hungteen.pvz.common.enchantment.card.ImmediateCDEnchantment;
 import com.hungteen.pvz.common.enchantment.card.SunReductionEnchantment;
 import com.hungteen.pvz.common.item.PVZItemTabs;
+import com.hungteen.pvz.common.item.PVZRarities;
 import com.hungteen.pvz.utils.PlayerUtil;
 import com.hungteen.pvz.utils.StringUtil;
 import net.minecraft.ChatFormatting;
@@ -135,9 +136,9 @@ public class SummonCardItem extends Item{
 
     @Override
     public Rarity getRarity(ItemStack itemStack) {
-        //Upgrade Card is Epic !
-        if(itemStack.getItem() instanceof SummonCardItem && ((SummonCardItem) itemStack.getItem()).type.getUpgradeFrom().isPresent()){
-            return Rarity.EPIC;
+        //Upgrade Card is Epic ! Enjoy Card is Mega !
+        if(itemStack.getItem() instanceof SummonCardItem){
+            return ((SummonCardItem) itemStack.getItem()).isEnjoyCard ? PVZRarities.MEGA : ((SummonCardItem) itemStack.getItem()).type.getRank().getRarity();
         }
         return super.getRarity(itemStack);
     }

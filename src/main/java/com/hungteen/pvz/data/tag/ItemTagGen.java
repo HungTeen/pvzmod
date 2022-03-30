@@ -77,14 +77,14 @@ public class ItemTagGen extends ItemTagsProvider {
             }
         });
         //Rank Materials
-        this.tag(PVZItemTags.GRAY_MATERIALS).add(Items.STONE, Items.CLAY);
+//        this.tag(PVZItemTags.GRAY_MATERIALS).add(Items.STONE, Items.CLAY);
         this.tag(PVZItemTags.WHITE_MATERIALS).add(Items.IRON_INGOT).add(Items.QUARTZ);
         this.tag(PVZItemTags.GREEN_MATERIALS).add(Items.EMERALD).add(PVZItems.ORIGIN_INGOT.get());
         this.tag(PVZItemTags.BLUE_MATERIALS).add(Items.DIAMOND).add(Items.LAPIS_BLOCK).add(Items.PRISMARINE_CRYSTALS);
         this.tag(PVZItemTags.PURPLE_MATERIALS).add(PVZItems.AMETHYST_INGOT.get()).add(Items.CRYING_OBSIDIAN).add(Items.AMETHYST_SHARD);
-        this.tag(PVZItemTags.GOLD_MATERIALS).add(Items.GOLD_INGOT);
-        this.tag(PVZItemTags.RED_MATERIALS).add(Items.REDSTONE_BLOCK);
-        this.tag(PVZItemTags.BLACK_MATERIALS).add(Items.NETHERITE_SCRAP);
+//        this.tag(PVZItemTags.GOLD_MATERIALS).add(Items.GOLD_INGOT);
+//        this.tag(PVZItemTags.RED_MATERIALS).add(Items.REDSTONE_BLOCK);
+//        this.tag(PVZItemTags.BLACK_MATERIALS).add(Items.NETHERITE_SCRAP);
 //        for (Item item : ForgeRegistries.ITEMS) {
 //            if (item instanceof BlockItem) {
 //                Block b = ((BlockItem) item).getBlock();

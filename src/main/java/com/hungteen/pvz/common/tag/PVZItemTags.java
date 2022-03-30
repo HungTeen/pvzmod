@@ -39,23 +39,23 @@ public class PVZItemTags {
     public static final TagKey<Item> REACH_ITEMS = pvzTag("reach_items");
     public static final TagKey<Item> COST_SUN_ITEMS = pvzTag("cost_sun_items");
     // card materials.
-    public static final TagKey<Item> GRAY_MATERIALS = pvzTag("card/gray_materials");
+//    public static final TagKey<Item> GRAY_MATERIALS = pvzTag("card/gray_materials");
     public static final TagKey<Item> WHITE_MATERIALS = pvzTag("card/white_materials");
     public static final TagKey<Item> GREEN_MATERIALS = pvzTag("card/green_materials");
     public static final TagKey<Item> BLUE_MATERIALS = pvzTag("card/blue_materials");
     public static final TagKey<Item> PURPLE_MATERIALS = pvzTag("card/purple_materials");
-    public static final TagKey<Item> GOLD_MATERIALS = pvzTag("card/gold_materials");
-    public static final TagKey<Item> RED_MATERIALS = pvzTag("card/red_materials");
-    public static final TagKey<Item> BLACK_MATERIALS = pvzTag("card/black_materials");
+//    public static final TagKey<Item> GOLD_MATERIALS = pvzTag("card/gold_materials");
+//    public static final TagKey<Item> RED_MATERIALS = pvzTag("card/red_materials");
+//    public static final TagKey<Item> BLACK_MATERIALS = pvzTag("card/black_materials");
     // card tags(use to achieve maga card).
-    public static final TagKey<Item> GRAY_CARDS = pvzTag("card/gray_cards");
+//    public static final TagKey<Item> GRAY_CARDS = pvzTag("card/gray_cards");
     public static final TagKey<Item> WHITE_CARDS = pvzTag("card/white_cards");
     public static final TagKey<Item> GREEN_CARDS = pvzTag("card/green_cards");
     public static final TagKey<Item> BLUE_CARDS = pvzTag("card/blue_cards");
     public static final TagKey<Item> PURPLE_CARDS = pvzTag("card/purple_cards");
-    public static final TagKey<Item> GOLD_CARDS = pvzTag("card/gold_cards");
-    public static final TagKey<Item> RED_CARDS = pvzTag("card/red_cards");
-    public static final TagKey<Item> BLACK_CARDS = pvzTag("card/black_cards");
+//    public static final TagKey<Item> GOLD_CARDS = pvzTag("card/gold_cards");
+//    public static final TagKey<Item> RED_CARDS = pvzTag("card/red_cards");
+//    public static final TagKey<Item> BLACK_CARDS = pvzTag("card/black_cards");
 
     private static TagKey<Item> pvzTag(String name){
         return ItemTags.create(Util.prefix(name));

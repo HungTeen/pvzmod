@@ -1,8 +1,6 @@
 package com.hungteen.pvz.common.entity.plant.base;
 
-import com.hungteen.pvz.common.entity.plant.PVZPlant;
 import net.minecraft.world.entity.EntityType;
-import net.minecraft.world.entity.PathfinderMob;
 import net.minecraft.world.level.Level;
 
 /**

@@ -1,0 +1,37 @@
+{
+  "parent": "pvz:root",
+  "display": {
+    "icon": {
+      "item": "pvz:origin_essence"
+    },
+    "title": {
+      "translate": "advancements.pvz.essence.title"
+    },
+    "description": {
+      "translate": "advancements.pvz.essence.desc"
+    },
+    "frame": "task",
+    "show_toast": true,
+    "announce_to_chat": true,
+    "hidden": false
+  },
+  "criteria": {
+    "get_essence": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "pvz:origin_essence"
+            ]
+          }
+        ]
+      }
+    }
+  },
+  "requirements": [
+    [
+      "get_essence"
+    ]
+  ]
+}

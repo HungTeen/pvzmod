@@ -508,11 +508,10 @@ public class GrassCarp extends Animal implements Bucketable, IForgeShearable {
 
         private void drop(ItemStack itemStack) {
             if (!itemStack.isEmpty()) {
-                double d0 = this.grassCarp.getEyeY() - (double)0.3F;
-                ItemEntity itementity = new ItemEntity(this.grassCarp.level, this.grassCarp.getX(), d0, this.grassCarp.getZ(), itemStack);
+                ItemEntity itementity = new ItemEntity(this.grassCarp.level, this.grassCarp.getX(), this.grassCarp.getEyeY(), this.grassCarp.getZ(), itemStack);
                 itementity.setPickUpDelay(40);
                 itementity.setThrower(this.grassCarp.getUUID());
-                final Vec3 speed = MathUtil.toVector(this.blockPos).subtract(this.grassCarp.position()).add(0, 1, 0).normalize();
+                final Vec3 speed = MathUtil.toVector(this.blockPos).subtract(this.grassCarp.position()).add(0, 1.2, 0).normalize();
                 itementity.setDeltaMovement(speed.scale(0.5F));
                 this.grassCarp.level.addFreshEntity(itementity);
             }

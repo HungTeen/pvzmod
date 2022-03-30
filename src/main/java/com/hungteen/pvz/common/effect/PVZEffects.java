@@ -21,7 +21,7 @@ public class PVZEffects {
 
 //    public static final UUID COLD_EFFECT_UUID = UUID.fromString("968019bc-e212-11ea-87d0-0242ac130003");
 //    public static final UUID FROZEN_EFFECT_UUID = UUID.fromString("293e07aa-e213-11ea-87d0-0242ac130003");
-    public static final UUID EXCITE_EFFECT_UUID = UUID.fromString("a211dbca-19f9-11eb-adc1-0242ac120002");
+//    public static final UUID EXCITE_EFFECT_UUID = UUID.fromString("a211dbca-19f9-11eb-adc1-0242ac120002");
 //    public static final UUID LIGHT_EYE_EFFECT_UUID = UUID.fromString("aa7a51c2-3e73-11eb-b378-0242ac130002");
 //    public static final UUID BUTTER_EFFECT_UUID = UUID.fromString("01c75056-5e45-11eb-ae93-0242ac130002");
 //    public static final UUID ENERGETIC_EFFECT_UUID = UUID.fromString("b46170d4-6957-11ec-90d6-0242ac120003");
@@ -48,9 +48,9 @@ public class PVZEffects {
 //        return new PVZEffect(EffectType.HARMFUL, Colors.LITTLE_YELLOW1).addAttributeModifier(Attributes.MOVEMENT_SPEED,
 //                BUTTER_EFFECT_UUID.toString(), -1f, Operation.MULTIPLY_TOTAL);
 //    });
-//
-//    public static final RegistryObject<MobEffect> ENERGETIC_EFFECT = EFFECTS.register("energetic", () -> {
-//        return new PVZEffect(EffectType.BENEFICIAL, Colors.CREEPER_GREEN);
-//    });
+
+    public static final RegistryObject<MobEffect> ENERGETIC_EFFECT = EFFECTS.register("energetic", () -> {
+        return new PVZMobEffect(MobEffectCategory.BENEFICIAL, Colors.CREEPER_GREEN);
+    });
 
 }
