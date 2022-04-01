@@ -42,6 +42,14 @@ public class PVZPlants {
             .entity(() -> PVZEntities.SUN_FLOWER.get())
             .skills(new ArrayList<>());
 
+    public static final IPlantType WALL_NUT = new PVZPlantType("wall_nut")
+            .sunCost(50).xp(30)
+            .essence(EssenceTypes.DEFENCE)
+            .rank(RankTypes.WHITE)
+            .cd(CDTypes.LITTLE_SLOW)
+            .entity(() -> PVZEntities.WALL_NUT.get())
+            .skills(new ArrayList<>());
+
 //    public static final IPlantType CHERRY_BOMB = new PVZPlants("cherry_bomb", new PlantFeatures()
 //            .cost(150).requiredLevel(35)
 //            .cd(CoolDowns.HUGE_SLOW).rank(RankTypes.BLUE).essence(EssenceTypes.EXPLOSION)

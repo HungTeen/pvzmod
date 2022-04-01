@@ -31,6 +31,8 @@ public class PVZModelLayers {
      */
     public static final ModelLayerLocation PEA_SHOOTER = register("pea_shooter");
     public static final ModelLayerLocation SUN_FLOWER = register("sun_flower");
+    public static final ModelLayerLocation WALL_NUT = register("wall_nut");
+    public static final ModelLayerLocation WALL_NUT_ARMOR = register("wall_nut_armor");
 
     private static ModelLayerLocation register(String p_171294_) {
         return createLocation(p_171294_, "main");

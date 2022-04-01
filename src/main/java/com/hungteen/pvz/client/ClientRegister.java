@@ -6,6 +6,7 @@ import com.hungteen.pvz.client.model.bullet.CommonBulletModel;
 import com.hungteen.pvz.client.model.misc.DropEntityModel;
 import com.hungteen.pvz.client.model.plant.PeaShooterModel;
 import com.hungteen.pvz.client.model.plant.SunFlowerModel;
+import com.hungteen.pvz.client.model.plant.WallNutModel;
 import com.hungteen.pvz.client.particle.MelonSliceParticle;
 import com.hungteen.pvz.client.particle.PVZParticles;
 import com.hungteen.pvz.client.render.entity.animal.GrassCarpRender;
@@ -17,6 +18,7 @@ import com.hungteen.pvz.client.render.entity.drop.SunRender;
 import com.hungteen.pvz.client.render.entity.effect.OriginEffectRender;
 import com.hungteen.pvz.client.render.entity.plant.PeaShooterRender;
 import com.hungteen.pvz.client.render.entity.plant.SunFlowerRender;
+import com.hungteen.pvz.client.render.entity.plant.WallNutRender;
 import com.hungteen.pvz.common.entity.PVZEntities;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.model.geom.builders.LayerDefinition;
@@ -59,6 +61,7 @@ public class ClientRegister {
         /* plant entity */
         event.registerEntityRenderer(PVZEntities.PEA_SHOOTER.get(), PeaShooterRender::new);
         event.registerEntityRenderer(PVZEntities.SUN_FLOWER.get(), SunFlowerRender::new);
+        event.registerEntityRenderer(PVZEntities.WALL_NUT.get(), WallNutRender::new);
     }
 
     @SubscribeEvent
@@ -75,6 +78,8 @@ public class ClientRegister {
         /* plant entity */
         event.registerLayerDefinition(PVZModelLayers.PEA_SHOOTER, PeaShooterModel::createBodyLayer);
         event.registerLayerDefinition(PVZModelLayers.SUN_FLOWER, SunFlowerModel::createBodyLayer);
+        event.registerLayerDefinition(PVZModelLayers.WALL_NUT, WallNutModel::createBodyLayer);
+        event.registerLayerDefinition(PVZModelLayers.WALL_NUT_ARMOR, WallNutModel.WallNutArmorModel::createBodyLayer);
     }
 
     @SubscribeEvent

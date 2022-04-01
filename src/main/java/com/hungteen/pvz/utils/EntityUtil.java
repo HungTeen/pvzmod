@@ -201,6 +201,13 @@ public class EntityUtil {
         }
     }
 
+    /**
+     * get AABB by entity's width and height.
+     */
+    public static AABB getEntityAABB(Entity entity, double w, double h){
+        return BlockUtil.getAABB(entity.blockPosition(), w, h);
+    }
+
     public static Random rand(Entity entity){
         return entity.level.random;
     }

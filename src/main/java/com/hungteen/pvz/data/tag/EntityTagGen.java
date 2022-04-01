@@ -49,7 +49,10 @@ public class EntityTagGen extends EntityTypeTagsProvider {
 
         this.tag(PVZEntityTags.PVZ_NOT_MONSTERS).add(EntityType.PIG);
         this.tag(PVZEntityTags.PVZ_NOT_GUARDIANS).add(EntityType.PIG);
-        /* pvz tags */
+
+        /*
+        PVZ Tags.
+         */
 
         // for plant entities.
         this.tag(PVZEntityTags.PVZ_PLANTS)
@@ -59,6 +62,9 @@ public class EntityTagGen extends EntityTypeTagsProvider {
         // for zombie entities.
         this.tag(PVZEntityTags.PVZ_ZOMBIES)
                 .add(getFilterTypes(type -> type.getCategory() == PVZMobCategories.PVZ_ZOMBIE));
+
+        this.tag(PVZEntityTags.IGNORE_ATTRACTS)
+                .add(EntityType.WITHER, EntityType.ENDER_DRAGON);
 
 //        this.tag(PVZEntityTags.BUNGEE_SPAWNS)
 //                .add(EntityRegister.NORMAL_ZOMBIE.get())
