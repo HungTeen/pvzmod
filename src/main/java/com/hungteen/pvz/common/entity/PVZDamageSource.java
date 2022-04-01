@@ -1,5 +1,6 @@
 package com.hungteen.pvz.common.entity;
 
+import com.hungteen.pvz.common.entity.bullet.PeaBullet;
 import net.minecraft.client.renderer.EffectInstance;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.TranslatableComponent;
@@ -53,18 +54,18 @@ public class PVZDamageSource extends EntityDamageSource {
     }
 
     //projectiles
-//    public static PVZDamageSource pea(PeaEntity pea, Entity shooter) {
-//        return (PVZDamageSource) new PVZDamageSource("pea", pea, shooter).setAppease();
-//    }
-//
-//    public static PVZDamageSource snowPea(PeaEntity pea, Entity shooter) {
-//        return (PVZDamageSource) new PVZDamageSource("snow_pea", pea, shooter).setAppease().setIceDamage();
-//    }
-//
-//    public static PVZDamageSource flamePea(PeaEntity pea, Entity shooter) {
-//        return (PVZDamageSource) new PVZDamageSource("flame_pea", pea, shooter).setAppease().setFlameDamage();
-//    }
-//
+    public static PVZDamageSource pea(PeaBullet pea, Entity shooter) {
+        return (PVZDamageSource) new PVZDamageSource("pea", pea, shooter).setAppease();
+    }
+
+    public static PVZDamageSource snowPea(PeaBullet pea, Entity shooter) {
+        return (PVZDamageSource) new PVZDamageSource("snow_pea", pea, shooter).setAppease().setIceDamage();
+    }
+
+    public static PVZDamageSource flamePea(PeaBullet pea, Entity shooter) {
+        return (PVZDamageSource) new PVZDamageSource("flame_pea", pea, shooter).setAppease().setFlameDamage();
+    }
+
 //    public static PVZDamageSource spore(SporeEntity pea, Entity shooter) {
 //        return (PVZDamageSource) new PVZDamageSource("spore", pea, shooter).setAppease();
 //    }

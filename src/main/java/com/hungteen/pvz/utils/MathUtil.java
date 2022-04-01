@@ -86,8 +86,8 @@ public class MathUtil {
 //        return getHorizontalVec(a, b).normalize();
 //    }
 
-    public static Vector3d getHorizontalVec(Vector3d a, Vector3d b) {
-        return new Vector3d(b.x - a.x, 0, b.z - a.z);
+    public static Vec3 getHorizontalVec(Vec3 a, Vec3 b) {
+        return new Vec3(b.x - a.x, 0, b.z - a.z);
     }
 
     public static Vec3 toVector(BlockPos pos) {

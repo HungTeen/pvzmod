@@ -4,6 +4,7 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 
+import net.minecraft.world.entity.*;
 import org.jetbrains.annotations.Nullable;
 
 import com.hungteen.pvz.api.interfaces.IAlmanacEntry;
@@ -24,11 +25,6 @@ import net.minecraft.network.syncher.SynchedEntityData;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.world.DifficultyInstance;
 import net.minecraft.world.damagesource.DamageSource;
-import net.minecraft.world.entity.Entity;
-import net.minecraft.world.entity.EntityType;
-import net.minecraft.world.entity.MobSpawnType;
-import net.minecraft.world.entity.PathfinderMob;
-import net.minecraft.world.entity.SpawnGroupData;
 import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.player.Player;
@@ -159,6 +155,39 @@ public abstract class PVZPAZ extends PVZMob implements IPAZEntity {
 //            }
 //            this.getOuterPlantInfo().ifPresent(p -> p.onEnergetic(this));
 //        }
+    }
+
+    /**
+     * check can set target as attackTarget.
+     */
+    public boolean checkCanPAZTarget(Entity target) {
+        return EntityUtil.checkCanEntityBeTarget(this, target) && this.canPAZTarget(target);
+    }
+
+    /**
+     * check can attack target.
+     */
+    public boolean checkCanPAZAttack(Entity target) {
+        return EntityUtil.checkCanEntityBeAttack(this, target) && this.canPAZTarget(target);
+    }
+
+    /**
+     * can be targeted by living, often use for plant's target.
+     * e.g. plants with metal can not be targeted.
+     */
+    public boolean canBeTargetBy(LivingEntity living) {
+        return true;
+    }
+
+    /**
+     * do not attack living.
+     * e.g. spike weed, bungee, plants with steel ladder.
+     */
+    public boolean canPAZTarget(Entity target) {
+        if(target instanceof PVZPAZ){
+            return ((PVZPAZ) target).canBeTargetBy(this);
+        }
+        return true;
     }
 
     @Override

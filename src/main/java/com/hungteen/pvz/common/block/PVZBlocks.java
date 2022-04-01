@@ -3,6 +3,7 @@ package com.hungteen.pvz.common.block;
 import java.util.Arrays;
 
 import com.hungteen.pvz.PVZMod;
+import com.hungteen.pvz.common.block.crops.PeaCropBlock;
 import com.hungteen.pvz.common.block.cubes.EssenceOreBlock;
 import com.hungteen.pvz.common.block.cubes.OriginBlock;
 import com.hungteen.pvz.common.impl.type.EssenceTypes;
@@ -64,12 +65,12 @@ public class PVZBlocks {
 //    public static final RegistryObject<Block> STEEL_LADDER = BLOCKS.register("steel_ladder", SteelLadderBlock::new);
 //
 //    //crops
-//    public static final RegistryObject<Block> PEA_PLANT = BLOCKS.register("pea_plant", () -> new PeaBlock(Block.Properties.copy(Blocks.WHEAT)));
+    public static final RegistryObject<Block> PEA_CROP = BLOCKS.register("pea_crop", PeaCropBlock::new);
 //    public static final RegistryObject<Block> TOXIC_SHROOM = BLOCKS.register("toxic_shroom", () -> new ToxicShroomBlock(Block.Properties.copy(Blocks.SWEET_BERRY_BUSH)));
 //    public static final RegistryObject<Block> CABBAGE = BLOCKS.register("cabbage", () -> new CabbageBlock(Block.Properties.copy(Blocks.WHEAT)));
 //    public static final RegistryObject<Block> CORN = BLOCKS.register("corn", () -> new CornBlock(Block.Properties.copy(Blocks.WHEAT)));
-//
-//    //plants
+
+    //plants
     public static final RegistryObject<Block> NUT_LEAVES = BLOCKS.register("nut_leaves", () -> new LeavesBlock(Block.Properties.copy(Blocks.OAK_LEAVES)));
     public static final RegistryObject<Block> NUT_LEAVES_WITH_NUTS = BLOCKS.register("nut_leaves_with_nuts", () -> new LeavesBlock(Block.Properties.copy(Blocks.OAK_LEAVES)));
     public static final RegistryObject<Block> NUT_LOG = BLOCKS.register("nut_log", () -> new RotatedPillarBlock(Block.Properties.copy(Blocks.OAK_WOOD)));

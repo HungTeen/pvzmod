@@ -1,5 +1,8 @@
 package com.hungteen.pvz.common.entity.plant.base;
 
+import java.util.List;
+import java.util.Optional;
+
 import com.hungteen.pvz.api.enums.PVZGroupType;
 import com.hungteen.pvz.api.interfaces.IAlmanacEntry;
 import com.hungteen.pvz.api.interfaces.IPlantEntity;
@@ -8,6 +11,7 @@ import com.hungteen.pvz.common.entity.PVZAttributes;
 import com.hungteen.pvz.common.entity.PVZDamageSource;
 import com.hungteen.pvz.common.entity.PVZPAZ;
 import com.mojang.datafixers.util.Pair;
+
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.syncher.EntityDataAccessor;
@@ -21,13 +25,9 @@ import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.Mob;
 import net.minecraft.world.entity.ai.attributes.Attributes;
-import net.minecraft.world.entity.ai.goal.LookAtPlayerGoal;
 import net.minecraft.world.level.GameRules;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.Vec3;
-
-import java.util.List;
-import java.util.Optional;
 
 /**
  * @program: pvzmod-1.18.x
@@ -173,7 +173,7 @@ public abstract class PVZPlant extends PVZPAZ implements IPlantEntity {
     public boolean shouldWilt() {
         if (! this.isImmuneToWilt() && this.getVehicle() == null) {//fit check condition and is allowed to wilt.
             if(this.getPlantType().isWaterPlant()) {//on ground, not in water.
-                return this.isOnGround() && ! this.isInWater() && ! this.level.getFluidState(blockPosition()).getType().is(FluidTags.WATER);
+                return this.isOnGround() && ! this.isInWater() && ! this.level.getFluidState(blockPosition()).is(FluidTags.WATER);
             }
             if(this.isInWaterOrBubble()) {//can not stay in water.
                 return true;

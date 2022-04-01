@@ -3,8 +3,10 @@ package com.hungteen.pvz.common.entity;
 import com.hungteen.pvz.PVZMod;
 import com.hungteen.pvz.api.PVZAPI;
 import com.hungteen.pvz.common.entity.animal.GrassCarp;
+import com.hungteen.pvz.common.entity.bullet.PeaBullet;
 import com.hungteen.pvz.common.entity.drop.*;
 import com.hungteen.pvz.common.entity.effect.OriginEffectEntity;
+import com.hungteen.pvz.common.entity.plant.PeaShooter;
 import com.hungteen.pvz.common.entity.plant.base.PVZPlant;
 import com.hungteen.pvz.common.entity.plant.SunFlower;
 import com.hungteen.pvz.common.impl.type.PAZTypes;
@@ -57,7 +59,7 @@ public class PVZEntities {
     /*
      Bullets
      */
-//    public static final RegistryObject<EntityType<PeaEntity>> PEA = registerEntityType(PeaEntity::new, "pea", EntityClassification.MISC);
+    public static final RegistryObject<EntityType<PeaBullet>> PEA_BULLET = registerEntityType(PeaBullet::new, "pea_bullet", MobCategory.MISC);
 //    public static final RegistryObject<EntityType<PotatoEntity>> POTATO = registerEntityType(PotatoEntity::new, "potato", EntityClassification.MISC);
 //    public static final RegistryObject<EntityType<SporeEntity>> SPORE = registerEntityType(SporeEntity::new, "spore", EntityClassification.MISC);
 //    public static final RegistryObject<EntityType<FumeEntity>> FUME = registerEntityType(FumeEntity::new, "fume", EntityClassification.MISC);
@@ -82,7 +84,7 @@ public class PVZEntities {
     /*
      Plants
      */
-//    public static final RegistryObject<EntityType<PeaShooterEntity>> PEA_SHOOTER = registerPlantEntityType(PeaShooterEntity::new, "pea_shooter");
+    public static final RegistryObject<EntityType<PeaShooter>> PEA_SHOOTER = registerPlantEntityType(PeaShooter::new, "pea_shooter");
     public static final RegistryObject<EntityType<SunFlower>> SUN_FLOWER = registerPlantEntityType(SunFlower::new, "sun_flower");
 //    public static final RegistryObject<EntityType<CherryBombEntity>> CHERRY_BOMB = registerPlantEntityType(CherryBombEntity::new, "cherry_bomb");
 //    public static final RegistryObject<EntityType<WallNutEntity>> WALL_NUT = registerPlantEntityType(WallNutEntity::new, "wall_nut");

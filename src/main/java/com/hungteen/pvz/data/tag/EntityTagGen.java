@@ -68,7 +68,6 @@ public class EntityTagGen extends EntityTypeTagsProvider {
 
     }
 
-    @SuppressWarnings("unused")
     private EntityType<?>[] getFilterTypes(Predicate<EntityType<?>> predicate) {
         return registry.stream()
                 .filter(predicate)

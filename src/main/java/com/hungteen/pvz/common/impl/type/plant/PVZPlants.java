@@ -5,6 +5,7 @@ import com.hungteen.pvz.api.PVZAPI;
 import com.hungteen.pvz.api.types.IPlantType;
 import com.hungteen.pvz.api.types.base.IPAZType;
 import com.hungteen.pvz.common.entity.PVZEntities;
+import com.hungteen.pvz.common.entity.plant.base.PVZPlant;
 import com.hungteen.pvz.common.impl.type.CDTypes;
 import com.hungteen.pvz.common.impl.type.EssenceTypes;
 import com.hungteen.pvz.common.impl.type.RankTypes;
@@ -25,14 +26,13 @@ public class PVZPlants {
      * grass day.
      */
 
-//    public static final IPlantType PEA_SHOOTER = new PVZPlant("pea_shooter")
-//            .sunCost(100)
-//            .xp(10)
-//            .essence(EssenceTypes.APPEASE)
-//            .rank(RankTypes.WHITE)
-//            .cd(CDTypes.HUGE_FAST)
-//            .entity(() -> PVZEntities.)
-//            .skills(new ArrayList<>());
+    public static final IPlantType PEA_SHOOTER = new PVZPlantType("pea_shooter")
+            .sunCost(100).xp(10)
+            .essence(EssenceTypes.APPEASE)
+            .rank(RankTypes.WHITE)
+            .cd(CDTypes.FAST)
+            .entity(() -> PVZEntities.PEA_SHOOTER.get())
+            .skills(new ArrayList<>());
 
     public static final IPlantType SUN_FLOWER = new PVZPlantType("sun_flower")
             .sunCost(50).xp(10)

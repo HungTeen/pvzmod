@@ -113,6 +113,11 @@ public class PVZConfig {
 //                        .translation("config.pvz.rule.max_damage")
 //                        .comment("how many damage could plants and zombies deal to other living entity.")
 //                        .defineInRange("MaxDamageLimit", 20, 0, 100000);
+
+                RuleSettings.BulletIgnoreGroup = builder
+                        .translation("config.pvz.rule.bullet_ignore_group")
+                        .comment("if turn to true, every entity will always damage by bullet, no matter which group you are.")
+                        .define("BulletIgnoreGroup", false);
             }
             builder.pop();
 
@@ -378,6 +383,7 @@ public class PVZConfig {
             public ForgeConfigSpec.IntValue LimitPlantCount;
             public ForgeConfigSpec.BooleanValue KeepSunWhenDie;
             public ForgeConfigSpec.IntValue MaxDamageLimit;
+            public ForgeConfigSpec.BooleanValue BulletIgnoreGroup;
         }
 
         public static class WorldSettings {
@@ -599,6 +605,10 @@ public class PVZConfig {
 
     public static int getOriginOreCount(){
         return COMMON_CONFIG.WorldSettings.GenOriginOreCount.get();
+    }
+
+    public static boolean bulletIngoreGroup(){
+        return COMMON_CONFIG.RuleSettings.BulletIgnoreGroup.get();
     }
 
     /*

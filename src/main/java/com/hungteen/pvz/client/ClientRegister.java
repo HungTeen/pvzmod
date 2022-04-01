@@ -2,16 +2,20 @@ package com.hungteen.pvz.client;
 
 import com.hungteen.pvz.client.model.PVZModelLayers;
 import com.hungteen.pvz.client.model.animal.GrassCarpModel;
+import com.hungteen.pvz.client.model.bullet.CommonBulletModel;
 import com.hungteen.pvz.client.model.misc.DropEntityModel;
+import com.hungteen.pvz.client.model.plant.PeaShooterModel;
 import com.hungteen.pvz.client.model.plant.SunFlowerModel;
 import com.hungteen.pvz.client.particle.MelonSliceParticle;
 import com.hungteen.pvz.client.particle.PVZParticles;
 import com.hungteen.pvz.client.render.entity.animal.GrassCarpRender;
+import com.hungteen.pvz.client.render.entity.bullet.PeaBulletRender;
 import com.hungteen.pvz.client.render.entity.drop.DropItemRender;
 import com.hungteen.pvz.client.render.entity.drop.OriginOrbRender;
 import com.hungteen.pvz.client.render.entity.drop.PlantFoodRender;
 import com.hungteen.pvz.client.render.entity.drop.SunRender;
 import com.hungteen.pvz.client.render.entity.effect.OriginEffectRender;
+import com.hungteen.pvz.client.render.entity.plant.PeaShooterRender;
 import com.hungteen.pvz.client.render.entity.plant.SunFlowerRender;
 import com.hungteen.pvz.common.entity.PVZEntities;
 import net.minecraft.client.Minecraft;
@@ -46,10 +50,14 @@ public class ClientRegister {
         /* effect entity */
         event.registerEntityRenderer(PVZEntities.ORIGIN_EFFECT.get(), OriginEffectRender::new);
 
+        /* bullet */
+        event.registerEntityRenderer(PVZEntities.PEA_BULLET.get(), PeaBulletRender::new);
+
         /* animal */
         event.registerEntityRenderer(PVZEntities.GRASS_CARP.get(), GrassCarpRender::new);
 
         /* plant entity */
+        event.registerEntityRenderer(PVZEntities.PEA_SHOOTER.get(), PeaShooterRender::new);
         event.registerEntityRenderer(PVZEntities.SUN_FLOWER.get(), SunFlowerRender::new);
     }
 
@@ -60,9 +68,12 @@ public class ClientRegister {
         event.registerLayerDefinition(PVZModelLayers.PLANT_FOOD, DropEntityModel::createBodyLayer);
         /* effect entity */
 
+        /* bullet */
+        event.registerLayerDefinition(PVZModelLayers.PEA_BULLET, CommonBulletModel::createBodyLayer);
         /* animal */
         event.registerLayerDefinition(PVZModelLayers.GRASS_CARP, GrassCarpModel::createBodyLayer);
         /* plant entity */
+        event.registerLayerDefinition(PVZModelLayers.PEA_SHOOTER, PeaShooterModel::createBodyLayer);
         event.registerLayerDefinition(PVZModelLayers.SUN_FLOWER, SunFlowerModel::createBodyLayer);
     }
 

@@ -1,6 +1,7 @@
 {
   "replace": false,
   "values": [
+    "pvz:pea_shooter_card",
     "pvz:sun_flower_card"
   ]
 }

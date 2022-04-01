@@ -1,6 +1,7 @@
 {
   "replace": false,
   "values": [
+    "pvz:pea_shooter",
     "pvz:sun_flower"
   ]
 }

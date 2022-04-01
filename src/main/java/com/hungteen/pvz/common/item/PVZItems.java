@@ -3,6 +3,7 @@ package com.hungteen.pvz.common.item;
 import com.hungteen.pvz.PVZMod;
 import com.hungteen.pvz.api.PVZAPI;
 import com.hungteen.pvz.api.types.IPlantType;
+import com.hungteen.pvz.common.block.PVZBlocks;
 import com.hungteen.pvz.common.entity.PVZEntities;
 import com.hungteen.pvz.common.impl.type.EssenceTypes;
 import com.hungteen.pvz.common.impl.type.PAZTypes;
@@ -17,12 +18,7 @@ import com.mojang.datafixers.util.Pair;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.Mob;
-import net.minecraft.world.item.CreativeModeTab;
-import net.minecraft.world.item.Item;
-import net.minecraft.world.item.Items;
-import net.minecraft.world.item.MobBucketItem;
-import net.minecraft.world.level.ClipContext;
-import net.minecraft.world.level.material.Fluid;
+import net.minecraft.world.item.*;
 import net.minecraft.world.level.material.Fluids;
 import net.minecraftforge.common.ForgeSpawnEggItem;
 import net.minecraftforge.event.RegistryEvent;
@@ -48,18 +44,18 @@ public class PVZItems {
      */
 
     /* seeds & crops */
-//    public static final RegistryObject<Item> PEA = ITEMS.register("pea",() -> new BlockItem(BlockRegister.PEA_PLANT.get(), new Item.Properties().tab(PVZItemGroups.PVZ_MISC)));
-//    public static final RegistryObject<Item> NUT = ITEMS.register("nut", PVZMiscItem::new);
+    public static final RegistryObject<Item> PEA = ITEMS.register("pea",() -> new BlockItem(PVZBlocks.PEA_CROP.get(), new Item.Properties().tab(PVZItemTabs.PVZ_MISC)));
+    public static final RegistryObject<Item> NUT = ITEMS.register("nut", PVZMiscItem::new);
 //    public static final RegistryObject<Item> SPORE = ITEMS.register("spore",()-> new BlockItem(BlockRegister.TOXIC_SHROOM.get(),new Item.Properties().tab(PVZItemGroups.PVZ_MISC)));
 //    public static final RegistryObject<Item> CABBAGE_SEEDS = ITEMS.register("cabbage_seeds", () -> new BlockItem(BlockRegister.CABBAGE.get(), new Item.Properties().tab(PVZItemGroups.PVZ_MISC)));
 //    public static final RegistryObject<Item> CORN_SEEDS = ITEMS.register("corn_seeds", () -> new BlockItem(BlockRegister.CORN.get(), new Item.Properties().tab(PVZItemGroups.PVZ_MISC)));
 
     /* materials */
-//    public static final RegistryObject<Item> SNOW_PEA = ITEMS.register("snow_pea", PVZMiscItem::new);
-//    public static final RegistryObject<Item> FLAME_PEA = ITEMS.register("flame_pea", PVZMiscItem::new);
-//    public static final RegistryObject<Item> SMALL_MEAT = ITEMS.register("small_meat", PVZMiscItem::new);
-//    public static final RegistryObject<Item> PEPPER = ITEMS.register("pepper", PVZMiscItem::new);
-//    public static final RegistryObject<Item> FROZEN_MELON_SLICE = ITEMS.register("frozen_melon_slice", PVZMiscItem::new);
+    public static final RegistryObject<Item> SNOW_PEA = ITEMS.register("snow_pea", PVZMiscItem::new);
+    public static final RegistryObject<Item> FLAME_PEA = ITEMS.register("flame_pea", PVZMiscItem::new);
+    public static final RegistryObject<Item> SMALL_MEAT = ITEMS.register("small_meat", PVZMiscItem::new);
+    public static final RegistryObject<Item> PEPPER = ITEMS.register("pepper", PVZMiscItem::new);
+    public static final RegistryObject<Item> FROZEN_MELON_SLICE = ITEMS.register("frozen_melon_slice", PVZMiscItem::new);
 
     /* essences */
     public static final RegistryObject<Item> ORIGIN_ESSENCE = ITEMS.register("origin_essence", () -> new EssenceItem(EssenceTypes.ORIGIN));

@@ -44,12 +44,13 @@ public class ItemModelGen extends ItemModelProvider {
 //                ItemRegister.WARNING_SIGN.get(), ItemRegister.ZOMBIE_DOLL.get(), ItemRegister.POLE.get(),
 //                ItemRegister.BUCKET_HEAD.get(), ItemRegister.RESOURCE_COLLECTOR.get()
         ));
-        //single add
+        //single add to except add by block item.
         Arrays.asList(
-//                ItemRegister.PEA.get(), ItemRegister.SPORE.get(), ItemRegister.CABBAGE_SEEDS.get(), ItemRegister.CORN_SEEDS.get()
+                PVZItems.PEA.get()
+//                ItemRegister.SPORE.get(), ItemRegister.CABBAGE_SEEDS.get(), ItemRegister.CORN_SEEDS.get()
         ).forEach(i -> {
-//            genNormalModel(i);
-//            this.addedItems.add(i);
+            genNormalModel(i);
+            this.addedItems.add(i);
         });
 
         /*

@@ -17,13 +17,19 @@ public class PVZModelLayers {
     public static final ModelLayerLocation PLANT_FOOD = register("plant_food");
 
     /*
-    Animals
+    Bullets.
+     */
+    public static final ModelLayerLocation PEA_BULLET = register("pea_bullet");
+
+    /*
+    Animals.
      */
     public static final ModelLayerLocation GRASS_CARP = register("grass_carp");
 
     /*
     Plant Entities.
      */
+    public static final ModelLayerLocation PEA_SHOOTER = register("pea_shooter");
     public static final ModelLayerLocation SUN_FLOWER = register("sun_flower");
 
     private static ModelLayerLocation register(String p_171294_) {
