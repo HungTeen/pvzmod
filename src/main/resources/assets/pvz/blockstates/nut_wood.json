@@ -1,0 +1,16 @@
+{
+  "variants": {
+    "axis=x": {
+      "model": "pvz:block/nut_wood",
+      "x": 90,
+      "y": 90
+    },
+    "axis=y": {
+      "model": "pvz:block/nut_wood"
+    },
+    "axis=z": {
+      "model": "pvz:block/nut_wood",
+      "x": 90
+    }
+  }
+}
