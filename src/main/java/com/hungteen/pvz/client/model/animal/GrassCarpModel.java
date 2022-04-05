@@ -3,17 +3,14 @@ package com.hungteen.pvz.client.model.animal;// Made with Blockbench 4.1.5
 // Paste this class into your mod and generate all required imports
 
 
-import com.hungteen.pvz.common.entity.animal.GrassCarp;
+import com.hungteen.pvz.common.entity.creature.GrassCarp;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
 
-import net.minecraft.client.model.AxolotlModel;
 import net.minecraft.client.model.EntityModel;
-import net.minecraft.client.model.geom.ModelLayerLocation;
 import net.minecraft.client.model.geom.ModelPart;
 import net.minecraft.client.model.geom.PartPose;
 import net.minecraft.client.model.geom.builders.*;
-import net.minecraft.resources.ResourceLocation;
 
 public class GrassCarpModel<T extends GrassCarp> extends EntityModel<T> {
 

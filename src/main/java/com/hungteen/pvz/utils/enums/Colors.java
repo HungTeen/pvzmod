@@ -1,4 +1,4 @@
-package com.hungteen.pvz.utils;
+package com.hungteen.pvz.utils.enums;
 
 import com.mojang.datafixers.util.Pair;
 

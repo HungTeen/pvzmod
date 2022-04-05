@@ -7,6 +7,8 @@ import com.hungteen.pvz.client.model.misc.DropEntityModel;
 import com.hungteen.pvz.client.model.plant.PeaShooterModel;
 import com.hungteen.pvz.client.model.plant.SunFlowerModel;
 import com.hungteen.pvz.client.model.plant.WallNutModel;
+import com.hungteen.pvz.client.model.zombie.NormalZombieModel;
+import com.hungteen.pvz.client.model.zombie.PVZZombieModel;
 import com.hungteen.pvz.client.particle.MelonSliceParticle;
 import com.hungteen.pvz.client.particle.PVZParticles;
 import com.hungteen.pvz.client.render.entity.animal.GrassCarpRender;
@@ -19,10 +21,14 @@ import com.hungteen.pvz.client.render.entity.effect.OriginEffectRender;
 import com.hungteen.pvz.client.render.entity.plant.PeaShooterRender;
 import com.hungteen.pvz.client.render.entity.plant.SunFlowerRender;
 import com.hungteen.pvz.client.render.entity.plant.WallNutRender;
+import com.hungteen.pvz.client.render.entity.zombie.NormalZombieRender;
+import com.hungteen.pvz.client.render.entity.zombie.ZombieDropPartRender;
 import com.hungteen.pvz.common.entity.PVZEntities;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.model.geom.builders.LayerDefinition;
+import net.minecraft.client.model.HumanoidModel;
+import net.minecraft.client.model.geom.ModelLayers;
 import net.minecraft.client.particle.ParticleEngine;
+import net.minecraft.client.renderer.entity.HumanoidMobRenderer;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.client.event.EntityRenderersEvent;
 import net.minecraftforge.client.event.ParticleFactoryRegisterEvent;
@@ -49,8 +55,9 @@ public class ClientRegister {
         event.registerEntityRenderer(PVZEntities.PLANT_FOOD.get(), PlantFoodRender::new);
         event.registerEntityRenderer(PVZEntities.ORIGIN_ORB.get(), OriginOrbRender::new);
 
-        /* effect entity */
+        /* misc entity */
         event.registerEntityRenderer(PVZEntities.ORIGIN_EFFECT.get(), OriginEffectRender::new);
+        event.registerEntityRenderer(PVZEntities.ZOMBIE_DROP_PART.get(), ZombieDropPartRender::new);
 
         /* bullet */
         event.registerEntityRenderer(PVZEntities.PEA_BULLET.get(), PeaBulletRender::new);
@@ -62,6 +69,9 @@ public class ClientRegister {
         event.registerEntityRenderer(PVZEntities.PEA_SHOOTER.get(), PeaShooterRender::new);
         event.registerEntityRenderer(PVZEntities.SUN_FLOWER.get(), SunFlowerRender::new);
         event.registerEntityRenderer(PVZEntities.WALL_NUT.get(), WallNutRender::new);
+
+        /* zombie entity */
+        event.registerEntityRenderer(PVZEntities.NORMAL_ZOMBIE.get(), NormalZombieRender::new);
     }
 
     @SubscribeEvent
@@ -69,17 +79,22 @@ public class ClientRegister {
         /* drop entity */
         event.registerLayerDefinition(PVZModelLayers.SUN, DropEntityModel::createBodyLayer);
         event.registerLayerDefinition(PVZModelLayers.PLANT_FOOD, DropEntityModel::createBodyLayer);
-        /* effect entity */
+        /* misc entity */
 
         /* bullet */
         event.registerLayerDefinition(PVZModelLayers.PEA_BULLET, CommonBulletModel::createBodyLayer);
+
         /* animal */
         event.registerLayerDefinition(PVZModelLayers.GRASS_CARP, GrassCarpModel::createBodyLayer);
+
         /* plant entity */
         event.registerLayerDefinition(PVZModelLayers.PEA_SHOOTER, PeaShooterModel::createBodyLayer);
         event.registerLayerDefinition(PVZModelLayers.SUN_FLOWER, SunFlowerModel::createBodyLayer);
         event.registerLayerDefinition(PVZModelLayers.WALL_NUT, WallNutModel::createBodyLayer);
         event.registerLayerDefinition(PVZModelLayers.WALL_NUT_ARMOR, WallNutModel.WallNutArmorModel::createBodyLayer);
+
+        /* zombie entity */
+        event.registerLayerDefinition(PVZModelLayers.NORMAL_ZOMBIE, PVZZombieModel::createBodyLayer);
     }
 
     @SubscribeEvent

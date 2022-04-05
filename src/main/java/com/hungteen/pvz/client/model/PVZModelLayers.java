@@ -34,6 +34,11 @@ public class PVZModelLayers {
     public static final ModelLayerLocation WALL_NUT = register("wall_nut");
     public static final ModelLayerLocation WALL_NUT_ARMOR = register("wall_nut_armor");
 
+    /*
+    Zombie Entities.
+     */
+    public static final ModelLayerLocation NORMAL_ZOMBIE = register("normal_zombie");
+
     private static ModelLayerLocation register(String p_171294_) {
         return createLocation(p_171294_, "main");
     }

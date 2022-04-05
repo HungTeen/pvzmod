@@ -17,6 +17,7 @@ import com.hungteen.pvz.common.entity.PVZEntities;
 import com.hungteen.pvz.common.impl.type.EssenceTypes;
 import com.hungteen.pvz.common.impl.type.RankTypes;
 import com.hungteen.pvz.common.impl.type.plant.PVZPlants;
+import com.hungteen.pvz.common.impl.type.zombie.PVZZombies;
 import com.hungteen.pvz.common.item.PVZItems;
 import com.hungteen.pvz.common.network.PVZPacketHandler;
 import com.hungteen.pvz.common.recipe.PVZRecipeTypes;
@@ -120,7 +121,8 @@ public class PVZMod {
 //        CustomPlants.register();
 //        MemePlants.register();
 //        OtherPlants.register();
-//        //register zombies.
+        //register zombies.
+        PVZZombies.PVZZombieType.register();
 //        GrassZombies.register();
 //        PoolZombies.register();
 //        RoofZombies.register();

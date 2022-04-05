@@ -582,7 +582,7 @@ public class PVZPlants {
 
         @Override
         public String getCategoryName() {
-            return "pvz";
+            return "pvz_plant";
         }
 
         @Override

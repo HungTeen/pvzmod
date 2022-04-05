@@ -210,31 +210,6 @@ public abstract class PVZPlant extends PVZPAZ implements IPlantEntity {
 //        ));
     }
 
-    @Override
-    protected void pushEntities() {
-        List<LivingEntity> list = this.level.getEntitiesOfClass(LivingEntity.class, this.getBoundingBox());
-        if (!list.isEmpty()) {
-            int i = this.level.getGameRules().getInt(GameRules.RULE_MAX_ENTITY_CRAMMING);
-            if (i > 0 && list.size() > i - 1 && this.random.nextInt(4) == 0) {
-                int j = 0;
-                for (int k = 0; k < list.size(); ++k) {
-                    if (!((Entity) list.get(k)).isPassenger()) {
-                        ++j;
-                    }
-                }
-                if (j > i - 1) {
-                    this.hurt(DamageSource.CRAMMING, 6.0F);
-                }
-            }
-            for (int l = 0; l < list.size(); ++l) {
-                LivingEntity target = list.get(l);
-                if (! this.is(target) && shouldCollideWithEntity(target)) {// can collide with
-                    this.doPush(target);
-                }
-            }
-        }
-    }
-
     /**
      * common plants collide with common plants, mobs who target them, tombstone.
      * {@link #pushEntities()}
@@ -265,6 +240,9 @@ public abstract class PVZPlant extends PVZPAZ implements IPlantEntity {
 
     @Override
     public void push(Entity entity) {
+        if (this.isSleeping()) {
+            return;
+        }
         if (!this.isPassengerOfSameVehicle(entity)) {
             if (!entity.noPhysics && !this.noPhysics) {
                 double d0 = entity.getX() - this.getX();

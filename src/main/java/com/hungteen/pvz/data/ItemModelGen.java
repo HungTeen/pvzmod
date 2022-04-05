@@ -94,13 +94,14 @@ public class ItemModelGen extends ItemModelProvider {
                 genBlockModel(((BlockItem) i).getBlock());
             }
         }
-        //for hand held item
-//        Arrays.asList(ItemRegister.ORIGIN_AXE.get(), ItemRegister.ORIGIN_HOE.get(), ItemRegister.ORIGIN_PICKAXE.get(), ItemRegister.ORIGIN_SHOVEL.get(),
-//                ItemRegister.ORIGIN_SWORD.get()
-//        ).forEach(i -> {
-//            addedItems.add(i);
-//            genHeld(i.getRegistryName().getPath(), StringUtil.prefix("item/" + i.getRegistryName().getPath()));
-//        });
+
+        //for hand held item.
+        Arrays.asList(PVZItems.ORIGIN_AXE.get(), PVZItems.ORIGIN_HOE.get(), PVZItems.ORIGIN_PICKAXE.get(), PVZItems.ORIGIN_SHOVEL.get(),
+                PVZItems.ORIGIN_SWORD.get()
+        ).forEach(i -> {
+            addedItems.add(i);
+            genHeld(i.getRegistryName().getPath(), Util.prefix("item/" + i.getRegistryName().getPath()));
+        });
         //3 types of sun storage sapling.
 //        genSameModelsWithAdd(ItemRegister.SUN_STORAGE_SAPLING.get(), ItemRegister.SMALL_SUN_STORAGE_SAPLING.get(), ItemRegister.LARGE_SUN_STORAGE_SAPLING.get(), ItemRegister.ONCE_SUN_STORAGE_SAPLING.get());
         //last step for all normal item models.

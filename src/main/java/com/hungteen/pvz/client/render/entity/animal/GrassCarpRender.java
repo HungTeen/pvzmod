@@ -4,9 +4,8 @@ import com.hungteen.pvz.client.model.PVZModelLayers;
 import com.hungteen.pvz.client.model.animal.GrassCarpModel;
 import com.hungteen.pvz.client.render.entity.PVZMobRender;
 import com.hungteen.pvz.client.render.entity.layer.GrassCarpItemLayer;
-import com.hungteen.pvz.common.entity.animal.GrassCarp;
+import com.hungteen.pvz.common.entity.creature.GrassCarp;
 import com.hungteen.pvz.utils.Util;
-import net.minecraft.client.model.EntityModel;
 import net.minecraft.client.renderer.entity.EntityRendererProvider;
 import net.minecraft.resources.ResourceLocation;
 

@@ -1,8 +1,8 @@
 {
   "replace": false,
   "values": [
-    "pvz:pea_shooterenjoy_card",
-    "pvz:sun_flowerenjoy_card",
-    "pvz:wall_nutenjoy_card"
+    "pvz:pea_shooter_enjoy_card",
+    "pvz:sun_flower_enjoy_card",
+    "pvz:wall_nut_enjoy_card"
   ]
 }

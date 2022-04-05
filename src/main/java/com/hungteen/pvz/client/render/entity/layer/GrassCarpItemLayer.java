@@ -1,7 +1,7 @@
 package com.hungteen.pvz.client.render.entity.layer;
 
 import com.hungteen.pvz.client.model.animal.GrassCarpModel;
-import com.hungteen.pvz.common.entity.animal.GrassCarp;
+import com.hungteen.pvz.common.entity.creature.GrassCarp;
 import com.mojang.blaze3d.vertex.PoseStack;
 
 import net.minecraft.client.Minecraft;

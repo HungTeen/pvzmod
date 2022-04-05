@@ -4,7 +4,10 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 
+import net.minecraft.client.renderer.blockentity.SpawnerRenderer;
+import net.minecraft.client.renderer.entity.EntityRenderDispatcher;
 import net.minecraft.world.entity.*;
+import net.minecraft.world.level.GameRules;
 import org.jetbrains.annotations.Nullable;
 
 import com.hungteen.pvz.api.interfaces.IAlmanacEntry;
@@ -196,6 +199,33 @@ public abstract class PVZPAZ extends PVZMob implements IPAZEntity {
     }
 
     @Override
+    protected void pushEntities() {
+        double dd = this.getCollideWidthOffset();
+        List<LivingEntity> list = this.level.getEntitiesOfClass(LivingEntity.class,
+                this.getBoundingBox().inflate(dd, 0, dd));
+        if (!list.isEmpty()) {
+            int i = this.level.getGameRules().getInt(GameRules.RULE_MAX_ENTITY_CRAMMING);
+            if (i > 0 && list.size() > i - 1 && this.random.nextInt(4) == 0) {
+                int j = 0;
+                for (int k = 0; k < list.size(); ++k) {
+                    if (!((Entity) list.get(k)).isPassenger()) {
+                        ++j;
+                    }
+                }
+                if (j > i - 1) {
+                    this.hurt(DamageSource.CRAMMING, 6.0F);
+                }
+            }
+            for (int l = 0; l < list.size(); ++ l) {
+                final LivingEntity target = list.get(l);
+                if (! this.is(target) && this.shouldCollideWithEntity(target)) {// can collide with
+                    this.doPush(target);
+                }
+            }
+        }
+    }
+
+    @Override
     public boolean hurt(DamageSource source, float amount) {
         //can get hurt each attack by pvz damage.
         if (source instanceof PVZDamageSource) {
@@ -283,6 +313,17 @@ public abstract class PVZPAZ extends PVZMob implements IPAZEntity {
                 Pair.of(PAZAlmanacs.SUN_COST, this.getPAZType().getSunCost()),
                 Pair.of(PAZAlmanacs.COOL_DOWN, this.getPAZType().getCoolDown())
         ));
+    }
+
+    /**
+     * check collide.
+     */
+    protected double getCollideWidthOffset() {
+        return 0;
+    }
+
+    protected boolean shouldCollideWithEntity(Entity entity){
+        return true;
     }
 
     /* misc get */
