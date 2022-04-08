@@ -2,15 +2,14 @@ package com.hungteen.pvz.client.render.entity.zombie;
 
 import com.hungteen.pvz.api.types.base.IPAZType;
 import com.hungteen.pvz.common.entity.zombie.drop.ZombieDropPart;
+import com.hungteen.pvz.common.impl.type.zombie.PVZZombies;
 import com.hungteen.pvz.utils.enums.DropPartTypes;
 import com.hungteen.pvz.utils.interfaces.IDropPartModel;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
 import com.mojang.math.Vector3f;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.model.EntityModel;
 import net.minecraft.client.renderer.MultiBufferSource;
-import net.minecraft.client.renderer.entity.EntityRenderDispatcher;
 import net.minecraft.client.renderer.entity.EntityRenderer;
 import net.minecraft.client.renderer.entity.EntityRendererProvider;
 import net.minecraft.client.renderer.texture.OverlayTexture;
@@ -44,12 +43,13 @@ public class ZombieDropPartRender extends EntityRenderer<ZombieDropPart> {
             this.maintainMap(dropEntity);
 
             if(this.entityRenderer instanceof PVZZombieRender){
-                final ResourceLocation resource = dropEntity.getPAZType().getDefaultResource();
+            	
+                final ResourceLocation resource = dropEntity.getOwnerType().getDefaultResource();
                 matrixStackIn.pushPose();
                 matrixStackIn.mulPose(Vector3f.YP.rotationDegrees(Mth.lerp(partialTicks, dropEntity.yRotO, dropEntity.getYRot()) + 180.0F));
-                if(! dropEntity.getDropPartType().equals(DropPartTypes.BODY)) {
+                if(! dropEntity.getDropPartType().equals(DropPartTypes.WHOLE_BODY)) {
                     if(dropEntity.isOnGround()) {
-                        matrixStackIn.mulPose(Vector3f.XN.rotationDegrees(dropEntity.getDropPartType().equals(DropPartTypes.HEAD) ? dropEntity.HEAD_ROT : 90));
+                        matrixStackIn.mulPose(Vector3f.XN.rotationDegrees(dropEntity.getDropPartType().equals(DropPartTypes.HEAD) ? dropEntity.headRotation : 90));
                     } else {
                         matrixStackIn.mulPose(Vector3f.XN.rotationDegrees(- dropEntity.tickCount * 15));
                     }
@@ -57,8 +57,8 @@ public class ZombieDropPartRender extends EntityRenderer<ZombieDropPart> {
                 matrixStackIn.scale(-1, -1, 1);
                 final float sz = dropEntity.isMini() ? PVZZombieRender.MINI_SCALE : 1F;
                 matrixStackIn.scale(sz, sz, sz);
-                matrixStackIn.translate(0.0, (! dropEntity.getDropPartType().equals(DropPartTypes.BODY) ? -1.501 : -1.7), 0.0);
-                if(! dropEntity.getDropPartType().equals(DropPartTypes.BODY)) {
+                matrixStackIn.translate(0.0, (! dropEntity.getDropPartType().equals(DropPartTypes.WHOLE_BODY) ? -1.501 : -1.7), 0.0);
+                if(! dropEntity.getDropPartType().equals(DropPartTypes.WHOLE_BODY)) {
                     IDropPartModel dropPartModel = ((PVZZombieRender) this.entityRenderer).dropPartModel;
                     final VertexConsumer buffer = bufferSource.getBuffer(dropPartModel.getModel().renderType(resource));
                     dropPartModel.tickPartAnim(dropEntity, 0, 0, dropEntity.tickCount + partialTicks, 0, 0);
@@ -76,24 +76,27 @@ public class ZombieDropPartRender extends EntityRenderer<ZombieDropPart> {
     }
 
     protected boolean canRender(ZombieDropPart dropPart){
-        return dropPart.getPAZType() != null && dropPart.getPAZType().getEntityType().isPresent() && ! SET.contains(dropPart);
+//    	dropPart.setDropPartType(DropPartTypes.HEAD);
+//    	dropPart.setOwnerType(PVZZombies.NORMAL_ZOMBIE);
+//    	if(dropPart.getExistTime() % 10 == 0) System.out.println(dropPart.getDropPartType());
+        return dropPart.getOwnerType() != null && dropPart.getOwnerType().getEntityType().isPresent() && ! SET.contains(dropPart);
     }
 
     protected void maintainMap(ZombieDropPart dropPart){
         if(this.entityRenderer != null){
             return;
         }
-        if(RENDER.containsKey(dropPart.getPAZType())){
-            entityRenderer = RENDER.get(dropPart.getPAZType());
+        if(RENDER.containsKey(dropPart.getOwnerType())){
+            entityRenderer = RENDER.get(dropPart.getOwnerType());
             return;
         }
-        final Entity entity = dropPart.getPAZType().getEntityType().get().create(Minecraft.getInstance().level);
+        final Entity entity = dropPart.getOwnerType().getEntityType().get().create(Minecraft.getInstance().level);
         this.entityRenderer = this.entityRenderDispatcher.getRenderer(entity);
         entity.discard();
         if(this.entityRenderer == null){
-            SET.add(dropPart.getPAZType());
+            SET.add(dropPart.getOwnerType());
         } else{
-            RENDER.put(dropPart.getPAZType(), this.entityRenderer);
+            RENDER.put(dropPart.getOwnerType(), this.entityRenderer);
         }
     }
 

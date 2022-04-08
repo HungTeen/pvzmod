@@ -1,39 +1,37 @@
 package com.hungteen.pvz.common.entity.zombie.base;
 
+import java.util.Optional;
+
 import com.hungteen.pvz.PVZConfig;
 import com.hungteen.pvz.api.enums.PVZGroupType;
 import com.hungteen.pvz.api.interfaces.IZombieEntity;
-import com.hungteen.pvz.api.types.IZombieType;
 import com.hungteen.pvz.api.types.base.IPAZType;
-import com.hungteen.pvz.client.particle.ParticleUtil;
 import com.hungteen.pvz.common.PVZSounds;
 import com.hungteen.pvz.common.entity.PVZDamageSource;
+import com.hungteen.pvz.common.entity.PVZEntities;
 import com.hungteen.pvz.common.entity.PVZPAZ;
 import com.hungteen.pvz.common.entity.ai.PVZLookRandomlyGoal;
 import com.hungteen.pvz.common.entity.ai.target.PVZNearestTargetGoal;
 import com.hungteen.pvz.common.entity.bullet.PVZProjectile;
 import com.hungteen.pvz.common.entity.plant.base.PVZPlant;
 import com.hungteen.pvz.common.entity.zombie.ZombieUtil;
-import com.hungteen.pvz.common.impl.type.SkillTypes;
+import com.hungteen.pvz.common.entity.zombie.drop.ZombieDropPart;
+import com.hungteen.pvz.utils.AlgorithmUtil;
 import com.hungteen.pvz.utils.EntityUtil;
-import com.mojang.math.Vector3d;
-import net.minecraft.client.renderer.EffectInstance;
+
+import com.hungteen.pvz.utils.enums.DropPartTypes;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.util.Mth;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.LivingEntity;
-import net.minecraft.world.entity.PathfinderMob;
 import net.minecraft.world.entity.ai.attributes.Attributes;
-import net.minecraft.world.level.GameRules;
+import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.pathfinder.BlockPathTypes;
-import net.minecraft.world.phys.Vec3;
-
-import java.util.List;
-import java.util.Optional;
 
 /**
  * @program: pvzmod-1.18.x
@@ -42,7 +40,17 @@ import java.util.Optional;
  **/
 public abstract class PVZZombie extends PVZPAZ implements IZombieEntity {
 
+    /* state flag */
+    private static final int LEFT_HAND_FLAG = 0;
+    private static final int RIGHT_HAND_FLAG = 1;
+    private static final int HEAD_FLAG = 2;
+    /* collide */
     public boolean canCollideWithZombie = true;
+    /* drop parts */
+    protected boolean checkedLostHand = false;
+    protected boolean checkedLostHead = false;
+    protected boolean canDropBody = false;
+    /* move helper */
     protected int climbUpTick = 0;
     protected int maxClimbUpTick = 5;
 
@@ -177,6 +185,129 @@ public abstract class PVZZombie extends PVZPAZ implements IZombieEntity {
 //                this.climbUpTick = 0;
 //            }
         }
+    }
+
+    @Override
+    public boolean hurt(DamageSource source, float amount) {
+        if(! level.isClientSide) {
+            boolean flag = super.hurt(source, amount);
+            if(this.canLostHand(source, amount) && this.random.nextDouble() < PVZConfig.dropHandChance()){
+                if(this.random.nextDouble() < 0.5){
+                    this.onLostHand(source, amount, true);
+                } else{
+                    this.onLostHand(source, amount, false);
+                }
+            }
+            if(this.canLostHead(source, amount) && this.random.nextDouble() < PVZConfig.dropHeadChance()){
+                this.onLostHead(source, amount);
+            }
+            return flag;
+        }
+        return false;
+    }
+
+    @Override
+    public void die(DamageSource source) {
+        super.die(source);
+        if(this.canDropBody()) {
+            if(! this.level.isClientSide) {
+                this.onFallBody(source);
+            }
+        }
+    }
+
+    @Override
+    protected boolean canRemoveWhenDeath() {
+        return this.canDropBody() || super.canRemoveWhenDeath();
+    }
+
+    @Override
+    protected void onRemoveWhenDeath() {
+        super.onRemoveWhenDeath();
+        if (!level.isClientSide) {
+//            if (this.getVariantType() == VariantType.SUPER) {// drop energy
+//                this.dropEnergy();
+//            } else if (getVariantType() == VariantType.SUN) {
+//                this.dropSun();
+//            } else if (getVariantType() == VariantType.BEARD) {// finish achievement
+//            }
+//            if (this.canSpawnDrop) {
+//                this.spawnSpecialDrops();
+//            }
+        }
+    }
+
+    /**
+     * some zombies are not able to drop hands.
+     * {@link #hurt}
+     */
+    public boolean canLostHand(DamageSource source, float amount) {
+        return amount >= 1F && this.getHealth() < Math.min(40, this.getMaxHealth() * 0.5F);
+    }
+
+    /**
+     * some zombies are not able to drop heads.
+     * {@link #hurt}
+     */
+    public boolean canLostHead(DamageSource source, float amount) {
+        return amount >= 2F && this.getHealth() < Math.min(10, this.getMaxHealth() * 0.1F);
+    }
+
+    /**
+     * some zombies are not able to drop heads.
+     * {@link #hurt}
+     */
+    public boolean canDropBody() {
+        return PVZConfig.enableDropBody() && this.canDropBody;
+    }
+
+    /**
+     * trigger at {@link #hurt(DamageSource, float)}
+     */
+    private void onLostHand(DamageSource source, float amount, boolean right) {
+        ZombieDropPart body = PVZEntities.ZOMBIE_DROP_PART.get().create(level);
+        if(right){
+            this.lostRightHand(true);
+            body.setItemSlot(EquipmentSlot.MAINHAND, this.getMainHandItem().copy());
+            this.setItemSlot(EquipmentSlot.MAINHAND, ItemStack.EMPTY);
+            body.onDrop(this, source, amount, DropPartTypes.RIGHT_HAND);
+        } else{
+            this.lostLeftHand(true);
+            body.setItemSlot(EquipmentSlot.OFFHAND, this.getOffhandItem().copy());
+            this.setItemSlot(EquipmentSlot.OFFHAND, ItemStack.EMPTY);
+            body.onDrop(this, source, amount, DropPartTypes.LEFT_HAND);
+        }
+        level.addFreshEntity(body);
+    }
+
+    /**
+     * trigger at {@link #hurt(DamageSource, float)}
+     */
+    private void onLostHead(DamageSource source, float amount) {
+        this.lostHead(true);
+        ZombieDropPart body = PVZEntities.ZOMBIE_DROP_PART.get().create(level);
+        body.onDrop(this, source, amount, DropPartTypes.HEAD);
+        level.addFreshEntity(body);
+    }
+
+    /**
+     * trigger at {@link #die(DamageSource)}
+     */
+    protected void onFallBody(DamageSource source) {
+        ZombieDropPart body = PVZEntities.ZOMBIE_DROP_PART.get().create(level);
+        body.onDrop(this, source, 0, DropPartTypes.WHOLE_BODY);
+        body.setMaxLiveTick(40);
+        this.setBodyStates(body);
+        level.addFreshEntity(body);
+    }
+
+    /**
+     * set states to body.
+     * such as has paper or not.
+     * {@link #onFallBody(DamageSource)}
+     */
+    protected void setBodyStates(ZombieDropPart body) {
+//        body.setMini(this.isMiniZombie());
     }
 
     @Override
@@ -324,6 +455,52 @@ public abstract class PVZZombie extends PVZPAZ implements IZombieEntity {
 //            return Optional.ofNullable(PVZSounds.DIRT_RISE.get());
 //        }
         return Optional.empty();
+    }
+
+    @Override
+    public void addAdditionalSaveData(CompoundTag compound) {
+        super.addAdditionalSaveData(compound);
+        compound.putBoolean("CheckedLostHand", this.checkedLostHand);
+        compound.putBoolean("CheckedLostHead", this.checkedLostHead);
+    }
+
+    @Override
+    public void readAdditionalSaveData(CompoundTag compound) {
+        super.readAdditionalSaveData(compound);
+        if(compound.contains("CheckedLostHand")){
+            this.checkedLostHand = compound.getBoolean("CheckedLostHand");
+        }
+        if(compound.contains("CheckedLostHead")){
+            this.checkedLostHead = compound.getBoolean("CheckedLostHead");
+        }
+    }
+
+    public boolean hasLeftHand() {
+        return !AlgorithmUtil.BitOperator.hasBitOne(this.getPAZState(), LEFT_HAND_FLAG);
+    }
+
+    public void lostLeftHand(boolean is) {
+        this.setStateByFlag(is, LEFT_HAND_FLAG);
+    }
+
+    public boolean hasRightHand() {
+        return !AlgorithmUtil.BitOperator.hasBitOne(this.getPAZState(), RIGHT_HAND_FLAG);
+    }
+
+    public void lostRightHand(boolean is) {
+        this.setStateByFlag(is, RIGHT_HAND_FLAG);
+    }
+
+    public boolean hasHead() {
+        return !AlgorithmUtil.BitOperator.hasBitOne(this.getPAZState(), HEAD_FLAG);
+    }
+
+    public void lostHead(boolean is) {
+        this.setStateByFlag(is, HEAD_FLAG);
+    }
+
+    private void setStateByFlag(boolean is, int flag) {
+        this.setPAZState(AlgorithmUtil.BitOperator.setBit(this.getPAZState(), flag, is));
     }
 
     @Override

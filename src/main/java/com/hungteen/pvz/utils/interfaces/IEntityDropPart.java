@@ -1,7 +1,7 @@
 package com.hungteen.pvz.utils.interfaces;
 
-import com.hungteen.pvz.api.types.IZombieType;
 import com.hungteen.pvz.api.types.base.IPAZType;
+import com.hungteen.pvz.utils.enums.DropPartTypes;
 
 /**
  * @program: pvzmod-1.18.x
@@ -10,9 +10,9 @@ import com.hungteen.pvz.api.types.base.IPAZType;
  **/
 public interface IEntityDropPart {
 
-    IPAZType getPAZType();
+    IPAZType getOwnerType();
 
-    String getDropPartType();
+    DropPartTypes getDropPartType();
 
     boolean hasHandDefence();
 

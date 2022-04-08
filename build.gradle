@@ -1,16 +1,19 @@
 buildscript {
     repositories {
         maven { url = 'https://maven.minecraftforge.net' }
+        maven { url = 'https://repo.spongepowered.org/repository/maven-public/' }
         mavenCentral()
     }
     dependencies {
         classpath group: 'net.minecraftforge.gradle', name: 'ForgeGradle', version: '5.1.+', changing: true
+        classpath group: 'org.spongepowered', name: 'mixingradle', version: '0.7-SNAPSHOT'
     }
 }
 
 apply plugin: 'net.minecraftforge.gradle'
 apply plugin: 'eclipse'
 apply plugin: 'maven-publish'
+apply plugin: 'org.spongepowered.mixin'
 
 // get config values from gradle.properties.
 ext.configFile = file('gradle.properties')
@@ -115,6 +118,8 @@ repositories {
 dependencies {
     minecraft 'net.minecraftforge:forge:1.18.2-40.0.12'
 
+    annotationProcessor 'org.spongepowered:mixin:0.8.5:processor'
+
     //https://maven.blamejared.com/vazkii/patchouli/Patchouli/
 //    compileOnly fg.deobf("vazkii.patchouli:Patchouli:${patchouli_version}:api")
 //    runtimeOnly fg.deobf("vazkii.patchouli:Patchouli:${patchouli_version}")
@@ -128,6 +133,12 @@ dependencies {
     
     //https://www.curseforge.com/minecraft/mc-mods/configured/files
     implementation fg.deobf("curse.maven:configured-457570:${configured_version}")
+}
+
+mixin {
+    add sourceSets.main, "pvz.refmap.json"
+
+    config "pvz.mixins.json"
 }
 
 task apiJar(type: Jar) {
