@@ -1,10 +1,10 @@
 {
   "replace": false,
   "values": [
-    "pvz:blue_card",
-    "pvz:green_card",
-    "pvz:mega_card",
-    "pvz:purple_card",
-    "pvz:white_card"
+    "pvz:chorus_fruit_card",
+    "pvz:nether_wart_card",
+    "pvz:sapling_card",
+    "pvz:upgrade_card",
+    "pvz:wisdom_card"
   ]
 }

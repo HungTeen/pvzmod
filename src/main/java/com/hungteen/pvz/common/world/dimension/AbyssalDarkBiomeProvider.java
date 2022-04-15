@@ -14,22 +14,21 @@ import net.minecraft.world.level.biome.Climate;
 import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 /**
  * @program: pvzmod-1.18.x
  * @author: HungTeen
  * @create: 2022-04-14 10:13
  **/
-public class DeepDarkBiomeProvider extends BiomeSource {
+public class AbyssalDarkBiomeProvider extends BiomeSource {
 
-    public static final Codec<DeepDarkBiomeProvider> CODEC = RegistryOps.retrieveRegistry(Registry.BIOME_REGISTRY)
-            .xmap(DeepDarkBiomeProvider::new, DeepDarkBiomeProvider::getBiomeRegistry).codec();
+    public static final Codec<AbyssalDarkBiomeProvider> CODEC = RegistryOps.retrieveRegistry(Registry.BIOME_REGISTRY)
+            .xmap(AbyssalDarkBiomeProvider::new, AbyssalDarkBiomeProvider::getBiomeRegistry).codec();
     private final Holder<Biome> biome;
     private final Registry<Biome> biomeRegistry;
     private static final List<ResourceKey<Biome>> SPAWN = Collections.singletonList(Biomes.PLAINS);
 
-    public DeepDarkBiomeProvider(Registry<Biome> biomeRegistry) {
+    public AbyssalDarkBiomeProvider(Registry<Biome> biomeRegistry) {
         super(getStartBiomes(biomeRegistry));
         this.biomeRegistry = biomeRegistry;
         biome = biomeRegistry.getHolderOrThrow(Biomes.PLAINS);

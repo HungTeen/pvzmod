@@ -3,6 +3,7 @@ package com.hungteen.pvz.data.recipe;
 import java.util.function.Consumer;
 
 import com.hungteen.pvz.api.PVZAPI;
+import com.hungteen.pvz.api.types.ICardType;
 import com.hungteen.pvz.api.types.IRankType;
 import com.hungteen.pvz.common.item.PVZItems;
 import com.hungteen.pvz.utils.Util;
@@ -28,7 +29,7 @@ public class RecipeGen extends RecipeProvider {
     @Override
     protected void buildCraftingRecipes(Consumer<FinishedRecipe> consumer) {
         //template cards.
-        PVZAPI.get().getRanks().forEach(type -> {
+        PVZAPI.get().getCardTypes().forEach(type -> {
             registerTemplateCard(consumer, type);
         });
         //summon card
@@ -124,7 +125,7 @@ public class RecipeGen extends RecipeProvider {
 //        final FusionRecipeBuilder builder = FusionRecipeBuilder.shapeless(result);
 //        list.forEach(i -> builder.requires(i));
 //        if (result instanceof PlantCardItem) {
-//            builder.requires(((PlantCardItem) result).plantType.getRank().getCardTag());
+//            builder.requires(((PlantCardItem) result).plantType.getRankType().getCardTag());
 //        }
 //        builder.save(consumer, StringUtil.prefix("card_fusion/" + result.getRegistryName().getPath()));
 //    }
@@ -139,9 +140,9 @@ public class RecipeGen extends RecipeProvider {
 //                        .pattern("ABBBA")
 //                        .pattern("AAAAA")
 //                        .define('A', type.getEnjoyCard().get())
-//                        .define('B', type.getEssence().getEssenceItem())
-//                        .define('C', type.getRank().getCardTag())
-//                        .unlockedBy("has_essence", has(type.getEssence().getEssenceItem()))
+//                        .define('B', type.getEssenceType().getEssenceItem())
+//                        .define('C', type.getRankType().getCardTag())
+//                        .unlockedBy("has_essence", has(type.getEssenceType().getEssenceItem()))
 //                        .save(consumer, StringUtil.prefix("fragment_splice/" + type.toString() + "_card"));
 //            }
 //
@@ -160,8 +161,8 @@ public class RecipeGen extends RecipeProvider {
 //    }
 
 //    private void registerCommonCard(Consumer<IFinishedRecipe> consumer, PlantCardItem result, Item crop) {
-//        final Item essence = result.plantType.getEssence().getEssenceItem();
-//        final ITag.INamedTag<Item> rankCard = result.plantType.getRank().getCardTag();
+//        final Item essence = result.plantType.getEssenceType().getEssenceItem();
+//        final ITag.INamedTag<Item> rankCard = result.plantType.getRankType().getCardTag();
 //        ShapedRecipeBuilder.shaped(result)
 //                .pattern("AAA")
 //                .pattern("ABA")
@@ -174,8 +175,8 @@ public class RecipeGen extends RecipeProvider {
 //    }
 //
 //    private void registerCommonCard(Consumer<FinishedRecipe> consumer, PlantCardItem result, ITag.INamedTag<Item> crop) {
-//        final Item essence = result.plantType.getEssence().getEssenceItem();
-//        final ITag.INamedTag<Item> rankCard = result.plantType.getRank().getCardTag();
+//        final Item essence = result.plantType.getEssenceType().getEssenceItem();
+//        final ITag.INamedTag<Item> rankCard = result.plantType.getRankType().getCardTag();
 //        if (rankCard != null) {
 //            ShapedRecipeBuilder.shaped(result)
 //                    .pattern("AAA")
@@ -189,12 +190,12 @@ public class RecipeGen extends RecipeProvider {
 //        }
 //    }
 
-    private void registerTemplateCard(Consumer<FinishedRecipe> consumer, IRankType type) {
-        final Item rankCard = type.getTemplateCard();
-        final TagKey<Item> material = type.getMaterial();
+    private void registerTemplateCard(Consumer<FinishedRecipe> consumer, ICardType type) {
+        final Item card = type.getTemplateCard();
+        final TagKey<Item> material = type.getMaterialTag();
         final Item origin = PVZItems.ORIGIN_ESSENCE.get();
         if (material != null) {
-            ShapedRecipeBuilder.shaped(rankCard)
+            ShapedRecipeBuilder.shaped(card)
                     .pattern("AAA")
                     .pattern("ABA")
                     .pattern("AAA")

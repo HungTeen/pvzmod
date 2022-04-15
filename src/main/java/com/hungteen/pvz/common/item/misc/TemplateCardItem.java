@@ -1,7 +1,9 @@
 package com.hungteen.pvz.common.item.misc;
 
-import com.hungteen.pvz.api.types.IRankType;
+import com.hungteen.pvz.api.types.ICardType;
 import com.hungteen.pvz.common.item.PVZMiscItem;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Rarity;
 
 /**
  * @program: pvzmod-1.18.x
@@ -10,10 +12,14 @@ import com.hungteen.pvz.common.item.PVZMiscItem;
  **/
 public class TemplateCardItem extends PVZMiscItem {
 
-    public final IRankType Rank;
+    public final ICardType cardType;
 
-    public TemplateCardItem(IRankType rank) {
-        this.Rank = rank;
+    public TemplateCardItem(ICardType cardType) {
+        this.cardType = cardType;
     }
 
+    @Override
+    public Rarity getRarity(ItemStack stack) {
+        return this.cardType.getRarity();
+    }
 }

@@ -116,7 +116,6 @@ public class EssenceTypes {
          * {@link PVZMod#coreRegister()}
          */
         public static void register() {
-            System.out.println(ESSENCE_TYPES.size());
             ESSENCE_TYPES.forEach(e -> PVZAPI.get().registerEssenceType(e));
         }
 

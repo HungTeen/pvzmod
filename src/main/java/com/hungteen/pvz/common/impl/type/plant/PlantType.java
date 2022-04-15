@@ -70,7 +70,7 @@ public abstract class PlantType extends PAZTypes.PAZType implements IPlantType {
     }
 
     @Override
-    public IEssenceType getEssence() {
+    public IEssenceType getEssenceType() {
         return this.plantEssence;
     }
 
@@ -100,6 +100,11 @@ public abstract class PlantType extends PAZTypes.PAZType implements IPlantType {
 
     public PlantType rank(IRankType type) {
         this.rankType = type;
+        return this;
+    }
+
+    public PlantType cardType(ICardType type) {
+        this.cardType = type;
         return this;
     }
 

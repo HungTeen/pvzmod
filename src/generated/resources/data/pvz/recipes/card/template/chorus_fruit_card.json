@@ -7,13 +7,13 @@
   ],
   "key": {
     "A": {
-      "tag": "pvz:card/white_materials"
+      "tag": "pvz:card/chorus_fruit_materials"
     },
     "B": {
       "item": "pvz:origin_essence"
     }
   },
   "result": {
-    "item": "pvz:white_card"
+    "item": "pvz:chorus_fruit_card"
   }
 }

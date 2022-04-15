@@ -16,9 +16,13 @@ import net.minecraft.resources.ResourceLocation;
 public class PeaShooterModel<T extends PeaShooter> extends EntityModel<T> {
 
 	private final ModelPart total;
+	private final ModelPart body;
+	private final ModelPart head;
 
 	public PeaShooterModel(ModelPart root) {
 		this.total = root.getChild("total");
+		this.body = this.total.getChild("body");
+		this.head = this.body.getChild("head");
 	}
 
 	public static LayerDefinition createBodyLayer() {
@@ -27,19 +31,15 @@ public class PeaShooterModel<T extends PeaShooter> extends EntityModel<T> {
 
 		PartDefinition total = partdefinition.addOrReplaceChild("total", CubeListBuilder.create(), PartPose.offset(0.0F, 24.0F, 0.0F));
 
-		PartDefinition body = total.addOrReplaceChild("body", CubeListBuilder.create(), PartPose.offset(0.0F, 0.0F, 0.0F));
+		PartDefinition body = total.addOrReplaceChild("body", CubeListBuilder.create().texOffs(0, 31).addBox(-1.0F, -12.0F, -1.0F, 2.0F, 12.0F, 2.0F, new CubeDeformation(0.0F)), PartPose.offsetAndRotation(0.0F, 0.0F, 0.0F, -0.0873F, 0.0F, 0.0F));
 
-		PartDefinition stick_r1 = body.addOrReplaceChild("stick_r1", CubeListBuilder.create().texOffs(0, 31).addBox(-1.0F, -10.0F, -1.0F, 2.0F, 10.0F, 2.0F, new CubeDeformation(0.0F)), PartPose.offsetAndRotation(0.0F, 0.0F, 0.0F, -0.0873F, 0.0F, 0.0F));
+		PartDefinition head = body.addOrReplaceChild("head", CubeListBuilder.create().texOffs(30, 0).addBox(-2.0F, -5.0F, -8.0F, 4.0F, 4.0F, 3.0F, new CubeDeformation(0.0F))
+				.texOffs(44, 0).addBox(-3.0F, -6.0F, -9.0F, 6.0F, 6.0F, 2.0F, new CubeDeformation(0.0F))
+				.texOffs(0, 0).addBox(-5.0F, -10.0F, -5.0F, 10.0F, 10.0F, 10.0F, new CubeDeformation(0.0F))
+				.texOffs(40, 8).addBox(-2.0F, 0.0F, -2.0F, 4.0F, 3.0F, 4.0F, new CubeDeformation(0.0F)), PartPose.offsetAndRotation(0.0F, -12.0F, 0.0F, 0.0873F, 0.0F, 0.0F));
 
-		PartDefinition head = body.addOrReplaceChild("head", CubeListBuilder.create().texOffs(30, 0).addBox(-1.0F, -16.0F, -7.0F, 4.0F, 4.0F, 3.0F, new CubeDeformation(0.0F))
-		.texOffs(44, 0).addBox(-2.0F, -17.0F, -8.0F, 6.0F, 6.0F, 2.0F, new CubeDeformation(0.0F))
-		.texOffs(0, 0).addBox(-4.0F, -21.0F, -4.0F, 10.0F, 10.0F, 10.0F, new CubeDeformation(0.0F))
-		.texOffs(40, 8).addBox(-1.0F, -11.0F, -1.0F, 4.0F, 3.0F, 4.0F, new CubeDeformation(0.0F)), PartPose.offset(-1.0F, -1.0F, 0.0F));
-
-		PartDefinition hair = head.addOrReplaceChild("hair", CubeListBuilder.create(), PartPose.offset(0.0F, -16.5F, 12.0F));
-
-		PartDefinition leafl_r1 = hair.addOrReplaceChild("leafl_r1", CubeListBuilder.create().texOffs(42, 19).addBox(-1.0F, -0.1F, -4.0F, 4.0F, 6.0F, 1.0F, new CubeDeformation(0.0F))
-		.texOffs(0, 0).addBox(0.0F, -0.5F, -6.0F, 2.0F, 1.0F, 3.0F, new CubeDeformation(0.0F)), PartPose.offsetAndRotation(0.0F, 0.0F, 0.0F, 0.1745F, 0.0F, 0.0F));
+		PartDefinition hair = head.addOrReplaceChild("hair", CubeListBuilder.create().texOffs(0, 0).addBox(0.0F, -0.4429F, 0.0825F, 2.0F, 1.0F, 3.0F, new CubeDeformation(0.0F))
+				.texOffs(42, 19).addBox(-1.0F, -0.0429F, 2.0825F, 4.0F, 6.0F, 1.0F, new CubeDeformation(0.0F)), PartPose.offsetAndRotation(-1.0F, -4.5F, 5.0F, 0.1745F, 0.0F, 0.0F));
 
 		PartDefinition down = total.addOrReplaceChild("down", CubeListBuilder.create(), PartPose.offset(0.0F, 0.0F, 0.0F));
 
@@ -56,11 +56,12 @@ public class PeaShooterModel<T extends PeaShooter> extends EntityModel<T> {
 
 	@Override
 	public void setupAnim(T entity, float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch) {
-		this.total.getChild("body").getChild("head").xRot = headPitch * ((float)Math.PI / 180F);
+		this.head.xRot = headPitch * ((float)Math.PI / 180F);
 	}
 
 	@Override
 	public void renderToBuffer(PoseStack poseStack, VertexConsumer buffer, int packedLight, int packedOverlay, float red, float green, float blue, float alpha) {
 		total.render(poseStack, buffer, packedLight, packedOverlay);
 	}
+
 }

@@ -14,6 +14,7 @@ import com.hungteen.pvz.common.effect.PVZPotions;
 import com.hungteen.pvz.common.enchantment.PVZEnchantments;
 import com.hungteen.pvz.common.entity.PVZAttributes;
 import com.hungteen.pvz.common.entity.PVZEntities;
+import com.hungteen.pvz.common.impl.type.CardTypes;
 import com.hungteen.pvz.common.impl.type.EssenceTypes;
 import com.hungteen.pvz.common.impl.type.RankTypes;
 import com.hungteen.pvz.common.impl.type.plant.PVZPlants;
@@ -112,10 +113,9 @@ public class PVZMod {
      * register paz stuff at {@link PVZMod#PVZMod()}.
      */
     public static void coreRegister() {
-        //register essences.
         EssenceTypes.EssenceType.register();
-        //register ranks.
         RankTypes.RankType.register();
+        CardTypes.CardType.register();
 //        //register skills.
 //        SkillTypes.SkillType.register();
         //register plants.

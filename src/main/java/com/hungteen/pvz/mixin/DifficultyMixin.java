@@ -10,7 +10,7 @@ import org.spongepowered.asm.mixin.injection.Inject;
  * @author: HungTeen
  * @create: 2022-04-06 08:33
  **/
-@Mixin(Difficulty.class)
+//@Mixin(Difficulty.class)
 public class DifficultyMixin {
 
 }

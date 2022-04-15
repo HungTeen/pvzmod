@@ -27,12 +27,12 @@ public class PotatoMineModel<T extends PotatoMine> extends EntityModel<T> {
 
 		PartDefinition total = partdefinition.addOrReplaceChild("total", CubeListBuilder.create(), PartPose.offset(0.0F, 25.0F, 0.0F));
 
-		PartDefinition body = total.addOrReplaceChild("body", CubeListBuilder.create().texOffs(0, 0).addBox(-7.0F, -8.0F, -7.0F, 14.0F, 8.0F, 14.0F, new CubeDeformation(0.0F))
-		.texOffs(0, 25).addBox(0.0F, -12.0F, -1.0F, 0.0F, 4.0F, 2.0F, new CubeDeformation(0.0F))
-		.texOffs(0, 57).addBox(-3.0F, -8.5F, -3.0F, 6.0F, 1.0F, 6.0F, new CubeDeformation(0.0F))
-		.texOffs(14, 27).addBox(-1.0F, -12.0F, 0.0F, 2.0F, 4.0F, 0.0F, new CubeDeformation(0.0F)), PartPose.offsetAndRotation(0.0F, 0.0F, 0.0F, -0.0873F, 0.0F, 0.0F));
+		PartDefinition body = total.addOrReplaceChild("body", CubeListBuilder.create().texOffs(0, 0).addBox(-6.0F, -7.0038F, -5.9128F, 12.0F, 8.0F, 12.0F, new CubeDeformation(0.0F))
+				.texOffs(0, 25).addBox(0.0F, -10.0038F, -0.9128F, 0.0F, 3.0F, 2.0F, new CubeDeformation(0.0F))
+				.texOffs(40, 25).addBox(-3.0F, -7.5038F, -2.9128F, 6.0F, 1.0F, 6.0F, new CubeDeformation(0.0F))
+				.texOffs(14, 27).addBox(-1.0F, -10.0038F, 0.0872F, 2.0F, 3.0F, 0.0F, new CubeDeformation(0.0F)), PartPose.offsetAndRotation(0.0F, 0.0F, 0.0F, -0.0873F, 0.0F, 0.0F));
 
-		PartDefinition light = body.addOrReplaceChild("light", CubeListBuilder.create().texOffs(48, 0).addBox(-2.0F, -16.0F, -2.0F, 4.0F, 4.0F, 4.0F, new CubeDeformation(0.0F)), PartPose.offset(0.0F, 0.0F, 0.0F));
+		PartDefinition light = body.addOrReplaceChild("light", CubeListBuilder.create().texOffs(48, 0).addBox(-2.0F, -14.0038F, -1.9128F, 4.0F, 4.0F, 4.0F, new CubeDeformation(0.0F)), PartPose.offset(0.0F, 0.0F, 0.0F));
 
 		return LayerDefinition.create(meshdefinition, 64, 64);
 	}

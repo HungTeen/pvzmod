@@ -7,13 +7,13 @@
   ],
   "key": {
     "A": {
-      "tag": "pvz:card/purple_materials"
+      "tag": "pvz:card/nether_wart_materials"
     },
     "B": {
       "item": "pvz:origin_essence"
     }
   },
   "result": {
-    "item": "pvz:purple_card"
+    "item": "pvz:nether_wart_card"
   }
 }

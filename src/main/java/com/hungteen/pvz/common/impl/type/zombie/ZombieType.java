@@ -31,7 +31,7 @@ public abstract class ZombieType extends PAZTypes.PAZType implements IZombieType
     }
 
     @Override
-    public IEssenceType getEssence() {
+    public IEssenceType getEssenceType() {
         return this.plantEssence;
     }
 

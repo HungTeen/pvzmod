@@ -1,7 +1,7 @@
 package com.hungteen.pvz.client;
 
 import com.hungteen.pvz.client.model.PVZModelLayers;
-import com.hungteen.pvz.client.model.SurroundDirtModel;
+import com.hungteen.pvz.client.model.component.SurroundDirtModel;
 import com.hungteen.pvz.client.model.animal.GrassCarpModel;
 import com.hungteen.pvz.client.model.bullet.CommonBulletModel;
 import com.hungteen.pvz.client.model.misc.DropEntityModel;
@@ -29,7 +29,6 @@ import com.hungteen.pvz.common.entity.PVZEntities;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.model.HumanoidModel;
 import net.minecraft.client.model.geom.LayerDefinitions;
-import net.minecraft.client.model.geom.ModelLayers;
 import net.minecraft.client.model.geom.builders.LayerDefinition;
 import net.minecraft.client.particle.ParticleEngine;
 import net.minecraftforge.api.distmarker.Dist;

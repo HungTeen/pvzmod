@@ -7,6 +7,7 @@ import com.hungteen.pvz.api.types.base.IPAZType;
 import com.hungteen.pvz.common.entity.PVZEntities;
 import com.hungteen.pvz.common.entity.plant.base.PVZPlant;
 import com.hungteen.pvz.common.impl.type.CDTypes;
+import com.hungteen.pvz.common.impl.type.CardTypes;
 import com.hungteen.pvz.common.impl.type.EssenceTypes;
 import com.hungteen.pvz.common.impl.type.RankTypes;
 
@@ -30,6 +31,7 @@ public class PVZPlants {
             .sunCost(100).xp(10)
             .essence(EssenceTypes.APPEASE)
             .rank(RankTypes.WHITE)
+            .cardType(CardTypes.SAPLING)
             .cd(CDTypes.FAST)
             .entity(() -> PVZEntities.PEA_SHOOTER.get())
             .skills(new ArrayList<>());
@@ -38,6 +40,7 @@ public class PVZPlants {
             .sunCost(50).xp(10)
             .essence(EssenceTypes.LIGHT)
             .rank(RankTypes.WHITE)
+            .cardType(CardTypes.SAPLING)
             .cd(CDTypes.LITTLE_SLOW)
             .entity(() -> PVZEntities.SUN_FLOWER.get())
             .skills(new ArrayList<>());
@@ -45,6 +48,7 @@ public class PVZPlants {
     public static final IPlantType WALL_NUT = new PVZPlantType("wall_nut")
             .sunCost(50).xp(30)
             .essence(EssenceTypes.DEFENCE)
+            .cardType(CardTypes.SAPLING)
             .rank(RankTypes.WHITE)
             .cd(CDTypes.LITTLE_SLOW)
             .entity(() -> PVZEntities.WALL_NUT.get())
@@ -54,6 +58,7 @@ public class PVZPlants {
             .sunCost(25).xp(10)
             .essence(EssenceTypes.EXPLOSION)
             .rank(RankTypes.WHITE)
+            .cardType(CardTypes.SAPLING)
             .cd(CDTypes.NORMAL)
             .entity(() -> PVZEntities.POTATO_MINE.get())
             .skills(new ArrayList<>());

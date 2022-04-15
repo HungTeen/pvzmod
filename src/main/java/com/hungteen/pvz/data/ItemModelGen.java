@@ -87,7 +87,7 @@ public class ItemModelGen extends ItemModelProvider {
                     final ResourceLocation r = Util.prefix("item/misc/mega_card");
                     genNormal(i.getRegistryName().getPath(), r, plantResource);
                 } else {
-                    genNormal(i.getRegistryName().getPath(), Util.prefix("item/misc/" + plant.getRank().getName() + "_card"), plantResource);
+                    genNormal(i.getRegistryName().getPath(), Util.prefix("item/misc/" + plant.getRankType().getName() + "_card"), plantResource);
                 }
             } else if (i instanceof BlockItem) {
                 addedItems.add(i);

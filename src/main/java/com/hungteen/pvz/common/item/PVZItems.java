@@ -6,6 +6,7 @@ import com.hungteen.pvz.api.types.IPlantType;
 import com.hungteen.pvz.common.PVZSounds;
 import com.hungteen.pvz.common.block.PVZBlocks;
 import com.hungteen.pvz.common.entity.PVZEntities;
+import com.hungteen.pvz.common.impl.type.CardTypes;
 import com.hungteen.pvz.common.impl.type.EssenceTypes;
 import com.hungteen.pvz.common.impl.type.PAZTypes;
 import com.hungteen.pvz.common.impl.type.RankTypes;
@@ -85,15 +86,12 @@ public class PVZItems {
     public static final RegistryObject<Item> AMETHYST_INGOT = ITEMS.register("amethyst_ingot", PVZMiscItem::new);
 
     /* card models */
-//    public static final RegistryObject<Item> GRAY_CARD = ITEMS.register("gray_card", () -> new TemplateCardItem(RankTypes.GRAY));
-    public static final RegistryObject<Item> WHITE_CARD = ITEMS.register("white_card", () -> new TemplateCardItem(RankTypes.WHITE));
-    public static final RegistryObject<Item> GREEN_CARD = ITEMS.register("green_card", () -> new TemplateCardItem(RankTypes.GREEN));
-    public static final RegistryObject<Item> BLUE_CARD = ITEMS.register("blue_card", () -> new TemplateCardItem(RankTypes.BLUE));
-    public static final RegistryObject<Item> PURPLE_CARD = ITEMS.register("purple_card", () -> new TemplateCardItem(RankTypes.PURPLE));
-//    public static final RegistryObject<Item> GOLD_CARD = ITEMS.register("gold_card", () -> new TemplateCardItem(RankTypes.GOLD));
-//    public static final RegistryObject<Item> RED_CARD = ITEMS.register("red_card", () -> new TemplateCardItem(RankTypes.RED));
-//    public static final RegistryObject<Item> BLACK_CARD = ITEMS.register("black_card", () -> new TemplateCardItem(RankTypes.BLACK));
-    public static final RegistryObject<Item> MEGA_CARD = ITEMS.register("mega_card", () -> new TemplateCardItem(RankTypes.MEGA));
+    public static final RegistryObject<Item> SAPLING_CARD = ITEMS.register("sapling_card", () -> new TemplateCardItem(CardTypes.SAPLING));
+    public static final RegistryObject<Item> NETHER_WART_CARD = ITEMS.register("nether_wart_card", () -> new TemplateCardItem(CardTypes.NETHER_WART));
+    public static final RegistryObject<Item> CHORUS_FRUIT_CARD = ITEMS.register("chorus_fruit_card", () -> new TemplateCardItem(CardTypes.CHORUS_FRUIT));
+    public static final RegistryObject<Item> UPGRADE_CARD = ITEMS.register("upgrade_card", () -> new TemplateCardItem(CardTypes.UPGRADE));
+    public static final RegistryObject<Item> WISDOM_CARD = ITEMS.register("wisdom_card", () -> new TemplateCardItem(CardTypes.WISDOM));
+    public static final RegistryObject<Item> MEGA_CARD = ITEMS.register("mega_card", PVZMiscItem::new);
 
     /* spawn eggs */
 //    public static final RegistryObject<DropItemEgg> SUN = registerSpawnEgg("sun", PVZEntities.SUN, Colors.YELLOW, Colors.WHITE);
@@ -207,16 +205,13 @@ public class PVZItems {
         PAZTypes.initPAZs();
 
         PVZAPI.get().getPAZTypes().forEach(type -> {
-            //register plant cards.
+            //register plant summon cards.
             if(type instanceof PlantType){
                 final Item summonCard = new PlantCardItem((IPlantType) type, false).setRegistryName(type.getIdentity() + "_card");
-                final Item enjoyCard = new PlantCardItem((IPlantType) type, true).setRegistryName(type.getIdentity() + "_enjoy_card");
                 //bind with type.
                 ((PlantType) type).summonCard(() -> summonCard);
-                ((PlantType) type).enjoyCard(() -> enjoyCard);
                 //register item.
                 ev.getRegistry().register(summonCard);
-                ev.getRegistry().register(enjoyCard);
 ;           }
             //register zombie spawn eggs.
             if(type instanceof ZombieType){
@@ -228,6 +223,17 @@ public class PVZItems {
                 ).setRegistryName(type.getIdentity() + "_spawn_egg");
                 ev.getRegistry().register(spawnEgg);
             }
+        });
+
+        PVZAPI.get().getPAZTypes().forEach(type -> {
+            //register plant enjoy cards.
+            if(type instanceof PlantType){
+                final Item enjoyCard = new PlantCardItem((IPlantType) type, true).setRegistryName(type.getIdentity() + "_enjoy_card");
+                //bind with type.
+                ((PlantType) type).enjoyCard(() -> enjoyCard);
+                //register item.
+                ev.getRegistry().register(enjoyCard);
+             }
         });
     }
 

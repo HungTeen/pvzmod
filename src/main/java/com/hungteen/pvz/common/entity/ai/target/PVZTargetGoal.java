@@ -18,18 +18,23 @@ import java.util.EnumSet;
 public abstract class PVZTargetGoal extends Goal {
 
     protected final Mob mob;
+    protected final Class<? extends LivingEntity> targetClass;
     protected LivingEntity targetMob;
     protected final boolean mustSee;
     protected final boolean mustReach;
     protected int targetChance = 5;
 
     public PVZTargetGoal(Mob mobIn, boolean mustSee, boolean mustReach) {
+        this(mobIn, LivingEntity.class, mustSee, mustReach);
+    }
+
+    public PVZTargetGoal(Mob mobIn, Class<? extends LivingEntity> targetClass, boolean mustSee, boolean mustReach) {
         this.mob = mobIn;
+        this.targetClass = targetClass;
         this.mustSee = mustSee;
         this.mustReach = mustReach;
         this.setFlags(EnumSet.of(Goal.Flag.TARGET));
     }
-
 
     @Override
     public void start() {

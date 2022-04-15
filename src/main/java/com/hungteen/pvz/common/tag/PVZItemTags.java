@@ -38,24 +38,22 @@ public class PVZItemTags {
     //for enchantment tag.
     public static final TagKey<Item> REACH_ITEMS = pvzTag("reach_items");
     public static final TagKey<Item> COST_SUN_ITEMS = pvzTag("cost_sun_items");
-    // card materials.
-//    public static final TagKey<Item> GRAY_MATERIALS = pvzTag("card/gray_materials");
+
+    // Card materials.
     public static final TagKey<Item> WHITE_MATERIALS = pvzTag("card/white_materials");
-    public static final TagKey<Item> GREEN_MATERIALS = pvzTag("card/green_materials");
+    public static final TagKey<Item> GOLD_MATERIALS = pvzTag("card/gold_materials");
     public static final TagKey<Item> BLUE_MATERIALS = pvzTag("card/blue_materials");
-    public static final TagKey<Item> PURPLE_MATERIALS = pvzTag("card/purple_materials");
-//    public static final TagKey<Item> GOLD_MATERIALS = pvzTag("card/gold_materials");
-//    public static final TagKey<Item> RED_MATERIALS = pvzTag("card/red_materials");
-//    public static final TagKey<Item> BLACK_MATERIALS = pvzTag("card/black_materials");
-    // card tags(use to achieve maga card).
-//    public static final TagKey<Item> GRAY_CARDS = pvzTag("card/gray_cards");
-    public static final TagKey<Item> WHITE_CARDS = pvzTag("card/white_cards");
-    public static final TagKey<Item> GREEN_CARDS = pvzTag("card/green_cards");
-    public static final TagKey<Item> BLUE_CARDS = pvzTag("card/blue_cards");
-    public static final TagKey<Item> PURPLE_CARDS = pvzTag("card/purple_cards");
-//    public static final TagKey<Item> GOLD_CARDS = pvzTag("card/gold_cards");
-//    public static final TagKey<Item> RED_CARDS = pvzTag("card/red_cards");
-//    public static final TagKey<Item> BLACK_CARDS = pvzTag("card/black_cards");
+    public static final TagKey<Item> BLACK_MATERIALS = pvzTag("card/black_materials");
+
+    // Template card tags (use to achieve maga card).
+    public static final TagKey<Item> SAPLING_CARDS = pvzTag("card/sapling_cards");
+    public static final TagKey<Item> SAPLING_MATERIALS = pvzTag("card/sapling_materials");
+    public static final TagKey<Item> NETHER_WART_CARDS = pvzTag("card/nether_wart_cards");
+    public static final TagKey<Item> NETHER_WART_MATERIALS = pvzTag("card/nether_wart_materials");
+    public static final TagKey<Item> CHORUS_FRUIT_CARDS = pvzTag("card/chorus_fruit_cards");
+    public static final TagKey<Item> CHORUS_FRUIT_MATERIALS = pvzTag("card/chorus_fruit_materials");
+    public static final TagKey<Item> UPGRADE_CARDS = pvzTag("card/upgrade_cards");
+    public static final TagKey<Item> WISDOM_CARDS = pvzTag("card/wisdom_cards");
 
     private static TagKey<Item> pvzTag(String name){
         return ItemTags.create(Util.prefix(name));

@@ -7,13 +7,13 @@
   ],
   "key": {
     "A": {
-      "tag": "pvz:card/green_materials"
+      "tag": "pvz:card/sapling_materials"
     },
     "B": {
       "item": "pvz:origin_essence"
     }
   },
   "result": {
-    "item": "pvz:green_card"
+    "item": "pvz:sapling_card"
   }
 }

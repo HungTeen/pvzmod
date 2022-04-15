@@ -19,26 +19,6 @@ public interface IRankType {
     int getPrice();
 
     /**
-     * enchant point.
-     */
-    int getEnchantPoint();
-
-    /**
-     * display name color of item.
-     */
-    Rarity getRarity();
-
-    /**
-     * get corresponding template card.
-     */
-    Item getTemplateCard();
-
-    /**
-     * get corresponding template card tag.
-     */
-    TagKey<Item> getCardTag();
-
-    /**
      * get corresponding material item.
      */
     TagKey<Item> getMaterial();

@@ -228,7 +228,8 @@ public abstract class ShooterPlant extends PVZPlant {
 
         @Override
         public boolean canUse() {
-            if(! this.shooter.canShoot()) {//can not shoot because of the shooter itself.
+            //can not shoot because of the shooter itself(such as height limit).
+            if(! this.shooter.canShoot()) {
                 this.shooter.setWorkTick(0);
                 return false;
             }
@@ -262,11 +263,11 @@ public abstract class ShooterPlant extends PVZPlant {
 //                return ;
 //            }
             final int time = this.shooter.getWorkTick();
-            final int T = (int) this.shooter.getCurrentWorkCD();
+            final double T = this.shooter.getCurrentWorkCD();
             if(time >= T) {
                 this.shooter.setWorkTick(0);
             } else {
-                if(time == (int) (T * 3F / 4)) {
+                if(time == (int) (T * 3 / 4)) {
                     this.shooter.startShootAttack();
                 }
                 this.shooter.setWorkTick(time + 1);

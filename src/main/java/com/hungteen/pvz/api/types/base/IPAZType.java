@@ -40,12 +40,17 @@ public interface IPAZType extends IIDType {
     /**
      * get the rank of type.
      */
-    IRankType getRank();
+    IRankType getRankType();
+
+    /**
+     * get its card type.
+     */
+    ICardType getCardType();
 
     /**
      * get the essence type that the plant belongs to.
      */
-    IEssenceType getEssence();
+    IEssenceType getEssenceType();
 
     /**
      * get the entity type of current type.

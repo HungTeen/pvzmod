@@ -1,13 +1,10 @@
 package com.hungteen.pvz.client.render.entity.plant;
 
 import com.hungteen.pvz.client.model.PVZModelLayers;
-import com.hungteen.pvz.client.model.SurroundDirtModel;
+import com.hungteen.pvz.client.model.component.SurroundDirtModel;
 import com.hungteen.pvz.client.model.plant.PotatoMineModel;
-import com.hungteen.pvz.client.model.plant.SunFlowerModel;
-import com.hungteen.pvz.client.model.plant.WallNutModel;
 import com.hungteen.pvz.client.render.entity.layer.SurroundDirtLayer;
 import com.hungteen.pvz.common.entity.plant.PotatoMine;
-import net.minecraft.client.model.EntityModel;
 import net.minecraft.client.renderer.entity.EntityRendererProvider;
 
 /**

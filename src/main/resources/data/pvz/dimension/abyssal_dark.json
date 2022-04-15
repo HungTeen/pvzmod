@@ -1,7 +1,7 @@
 {
-  "type": "pvz:deep_dark",
+  "type": "pvz:abyssal_dark",
   "generator": {
-    "type": "pvz:deep_dark_chunk_gen",
+    "type": "pvz:abyssal_dark_chunk_gen",
     "settings": {
       "base": 65,
       "verticalvariance": 10,

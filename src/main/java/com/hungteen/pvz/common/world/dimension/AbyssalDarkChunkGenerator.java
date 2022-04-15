@@ -1,5 +1,7 @@
 package com.hungteen.pvz.common.world.dimension;
 
+import com.hungteen.pvz.common.world.ChunkManager;
+import com.hungteen.pvz.utils.MathUtil;
 import com.hungteen.pvz.utils.Util;
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
@@ -34,7 +36,7 @@ import java.util.concurrent.Executor;
  * @author: HungTeen
  * @create: 2022-04-14 10:12
  **/
-public class DeepDarkChunkGenerator extends ChunkGenerator {
+public class AbyssalDarkChunkGenerator extends ChunkGenerator {
 
     private static final Codec<Settings> SETTINGS_CODEC = RecordCodecBuilder.create(instance ->
             instance.group(
@@ -43,19 +45,19 @@ public class DeepDarkChunkGenerator extends ChunkGenerator {
                     Codec.FLOAT.fieldOf("horizontalvariance").forGetter(Settings::horizontalVariance)
             ).apply(instance, Settings::new));
 
-    public static final Codec<DeepDarkChunkGenerator> CODEC = RecordCodecBuilder.create(instance ->
+    public static final Codec<AbyssalDarkChunkGenerator> CODEC = RecordCodecBuilder.create(instance ->
             instance.group(
-                    RegistryOps.retrieveRegistry(Registry.STRUCTURE_SET_REGISTRY).forGetter(DeepDarkChunkGenerator::getStructureSetRegistry),
-                    RegistryOps.retrieveRegistry(Registry.BIOME_REGISTRY).forGetter(DeepDarkChunkGenerator::getBiomeRegistry),
-                    SETTINGS_CODEC.fieldOf("settings").forGetter(DeepDarkChunkGenerator::getSettings)
-            ).apply(instance, DeepDarkChunkGenerator::new));
+                    RegistryOps.retrieveRegistry(Registry.STRUCTURE_SET_REGISTRY).forGetter(AbyssalDarkChunkGenerator::getStructureSetRegistry),
+                    RegistryOps.retrieveRegistry(Registry.BIOME_REGISTRY).forGetter(AbyssalDarkChunkGenerator::getBiomeRegistry),
+                    SETTINGS_CODEC.fieldOf("settings").forGetter(AbyssalDarkChunkGenerator::getSettings)
+            ).apply(instance, AbyssalDarkChunkGenerator::new));
 
-    public static final ResourceLocation DEEP_DARK_DIMENSION_SET = Util.prefix("deep_dark_dimension_structure_set");
+    public static final ResourceLocation DEEP_DARK_DIMENSION_SET = Util.prefix("abyssal_dark_dimension_structure_set");
     private final Settings settings;
 
 
-    public DeepDarkChunkGenerator(Registry<StructureSet> structureSetRegistry, Registry<Biome> registry, Settings settings) {
-        super(structureSetRegistry, getSet(structureSetRegistry), new DeepDarkBiomeProvider(registry));
+    public AbyssalDarkChunkGenerator(Registry<StructureSet> structureSetRegistry, Registry<Biome> registry, Settings settings) {
+        super(structureSetRegistry, getSet(structureSetRegistry), new AbyssalDarkBiomeProvider(registry));
         this.settings = settings;
     }
 
@@ -69,7 +71,7 @@ public class DeepDarkChunkGenerator extends ChunkGenerator {
     }
 
     public Registry<Biome> getBiomeRegistry() {
-        return ((DeepDarkBiomeProvider) biomeSource).getBiomeRegistry();
+        return ((AbyssalDarkBiomeProvider) biomeSource).getBiomeRegistry();
     }
 
     public Registry<StructureSet> getStructureSetRegistry() {
@@ -80,36 +82,65 @@ public class DeepDarkChunkGenerator extends ChunkGenerator {
     public void buildSurface(WorldGenRegion region, StructureFeatureManager featureManager, ChunkAccess chunk) {
         BlockState bedrock = Blocks.BEDROCK.defaultBlockState();
         BlockState stone = Blocks.STONE.defaultBlockState();
-        ChunkPos chunkpos = chunk.getPos();
-
+        ChunkPos chunkPos = chunk.getPos();
+//        genChunk(region, chunk, chunkPos.x, chunkPos.z);
         BlockPos.MutableBlockPos pos = new BlockPos.MutableBlockPos();
+        for (int x = 0; x < 16; x++) {
+            for (int z = 0; z < 16; z++) {
+                chunk.setBlockState(pos.set(x, 0, z), bedrock, false);
 
-        int x;
-        int z;
-
-//        for (x = 0; x < 16; x++) {
-//            for (z = 0; z < 16; z++) {
-//                chunk.setBlockState(pos.set(x, -50, z), bedrock, false);
-//            }
-//        }
-
-//        int baseHeight = settings.baseHeight();
-//        float verticalVariance = settings.verticalVariance();
-//        float horizontalVariance = settings.horizontalVariance();
-        for (x = 0; x < 16; x++) {
-            for (z = 0; z < 16; z++) {
-//                int realx = chunkpos.x * 16 + x;
-//                int realz = chunkpos.z * 16 + z;
+                final int height = ChunkManager.getChunkHeight(chunkPos.x, chunkPos.z, x, z) + 1;
 //                int height = getHeightAt(baseHeight, verticalVariance, horizontalVariance, realx, realz);
-//                for (int y = 1 ; y < height ; y++) {
-//                    chunk.setBlockState(pos.set(x, y, z), stone, false);
-//                }
-                chunk.setBlockState(pos.set(x, 50, z), bedrock, false);
-                chunk.setBlockState(pos.set(x, 100, z), stone, false);
-                chunk.setBlockState(pos.set(x, 150, z), stone, false);
+                for (int y = 1; y < height; ++ y) {
+                    chunk.setBlockState(pos.set(x, y, z), stone, false);
+                }
+//                chunk.setBlockState(pos.set(x, 50, z), bedrock, false);
+//                chunk.setBlockState(pos.set(x, 100, z), stone, false);
+//                chunk.setBlockState(pos.set(x, 200, z), stone, false);
             }
         }
     }
+
+//    public void genChunk(WorldGenRegion region, ChunkAccess chunk, int chunkX, int chunkZ) {
+//        int[][][][] arrows = new int[4][4][19][3];
+//        int[][][] blocks = new int[16][300][16];//decide whether a block well be (gen?)ed
+//        double tmp;//temp
+//        for (int x = 0; x < 4; ++x) {
+//            for (int z = 0; z < 4; ++z) {
+//                for (int y = 0; y < 19; ++y) {//used rect coordinates
+//                    arrows[x][z][y][0] = MathUtil.getRandomInRange(region.getRandom(), 8);//x dimention
+//                    arrows[x][z][y][1] = MathUtil.getRandomInRange(region.getRandom(), 8);//z dimention
+//                    arrows[x][z][y][2] = MathUtil.getRandomInRange(region.getRandom(), 8);//y dimention
+//                }
+//            }
+//        }
+////        System.out.println("what");
+//        for (int w = 0; w < 16; ++ w) {//devided into 16 subchunks vertically, marked as w
+//            for (int x = 0; x < 16; ++ x) {
+//                for (int z = 0; z < 16; ++ z) {
+//                    for (int y = 0; y < 16; ++ y) {
+//                        blocks[x][y + w * 16][z] = 0;
+//                        for (int i = 0; i < 4; ++i) {
+//                            for (int j = 0; j < 4; ++j) {
+//                                for (int k = 0; k < 4; ++k) {
+//                                    tmp = 40 - Math.pow(Math.pow(x - (i - 1) * 16 - arrows[i][j][k + w][0], 2)
+//                                            + Math.pow(x - (i - 1) * 16 - arrows[i][j][k + w][1], 2)
+//                                            + Math.pow(x - (i - 1) * 16 - arrows[i][j][k + w][2], 2), 0.5);
+//                                    if (tmp > 0) {
+//                                        blocks[x][y + w * 16][z] +=tmp;
+//                                    }
+//                                }
+//                            }
+//                        }
+//                        if (blocks[x][y + w * 16][z] < 900) {
+//                            chunk.setBlockState(new BlockPos(x, w * 16 + y, z), Blocks.STONE.defaultBlockState(), false);
+//                        }
+//                    }
+//                }
+//            }
+////            System.out.println(blocks[1][1 + w * 16][1]);
+//        }
+//    }
 
     @Override
     public CompletableFuture<ChunkAccess> fillFromNoise(Executor executor, Blender blender, StructureFeatureManager featureManager, ChunkAccess chunkAccess) {
@@ -163,7 +194,7 @@ public class DeepDarkChunkGenerator extends ChunkGenerator {
         BlockState stone = Blocks.STONE.defaultBlockState();
         BlockState[] states = new BlockState[y];
         states[0] = Blocks.BEDROCK.defaultBlockState();
-        for (int i = 1 ; i < y ; i++) {
+        for (int i = 1; i < y; i++) {
             states[i] = stone;
         }
         return new NoiseColumn(levelHeightAccessor.getMinBuildHeight(), states);
@@ -185,12 +216,13 @@ public class DeepDarkChunkGenerator extends ChunkGenerator {
 
     @Override
     public ChunkGenerator withSeed(long seed) {
-        return new DeepDarkChunkGenerator(getStructureSetRegistry(), getBiomeRegistry(), settings);
+        return new AbyssalDarkChunkGenerator(getStructureSetRegistry(), getBiomeRegistry(), settings);
     }
 
     private int getHeightAt(int baseHeight, float verticalVariance, float horizontalVariance, int x, int z) {
         return (int) (baseHeight + Math.sin(x / horizontalVariance) * verticalVariance + Math.cos(z / horizontalVariance) * verticalVariance);
     }
 
-    private record Settings(int baseHeight, float verticalVariance, float horizontalVariance) { }
+    private record Settings(int baseHeight, float verticalVariance, float horizontalVariance) {
+    }
 }

@@ -1,5 +1,6 @@
 package com.hungteen.pvz.common.impl.type;
 
+import com.hungteen.pvz.api.types.ICardType;
 import com.hungteen.pvz.api.types.IRankType;
 import com.hungteen.pvz.api.types.ISkillType;
 import com.hungteen.pvz.api.types.base.IPAZType;
@@ -121,6 +122,7 @@ public class PAZTypes {
         protected int xpPoint = 0;
         protected int coolDown = 0;
         protected IRankType rankType = RankTypes.WHITE;
+        protected ICardType cardType = CardTypes.SAPLING;
         protected ResourceLocation lootTable;
         protected Supplier<? extends Item> summonCardSup;
         protected Supplier<? extends Item> enjoyCardSup;
@@ -172,8 +174,13 @@ public class PAZTypes {
         }
 
         @Override
-        public IRankType getRank() {
+        public IRankType getRankType() {
             return this.rankType;
+        }
+
+        @Override
+        public ICardType getCardType() {
+            return cardType;
         }
 
         @Override

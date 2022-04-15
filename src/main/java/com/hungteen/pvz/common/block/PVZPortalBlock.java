@@ -8,15 +8,11 @@ import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
-import net.minecraft.world.level.block.Blocks;
-import net.minecraft.world.level.block.EndPortalBlock;
 import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.levelgen.Heightmap;
 import net.minecraft.world.level.material.Material;
 import net.minecraft.world.level.material.MaterialColor;
-import net.minecraft.world.phys.shapes.BooleanOp;
-import net.minecraft.world.phys.shapes.Shapes;
 import net.minecraftforge.common.util.ITeleporter;
 
 import java.util.function.Function;
@@ -37,10 +33,10 @@ public class PVZPortalBlock extends Block {
     @Override
     public void entityInside(BlockState state, Level level, BlockPos blockPos, Entity entity) {
         if (level instanceof ServerLevel && entity.canChangeDimensions() && entity instanceof ServerPlayer) {
-            if(level.dimension().equals(PVZDimensions.DEEP_DARK)){
+            if(level.dimension().equals(PVZDimensions.ABYSSAL_DARK)){
                 teleport((ServerPlayer) entity, blockPos.north(), Level.OVERWORLD);
             } else{
-                teleport((ServerPlayer) entity, blockPos.north(), PVZDimensions.DEEP_DARK);
+                teleport((ServerPlayer) entity, blockPos.north(), PVZDimensions.ABYSSAL_DARK);
             }
         }
 

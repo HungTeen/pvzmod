@@ -13,14 +13,14 @@ import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
  **/
 public class PVZDimensions {
 
-    public static final ResourceKey<Level> DEEP_DARK = ResourceKey.create(Registry.DIMENSION_REGISTRY, Util.prefix("deep_dark"));
+    public static final ResourceKey<Level> ABYSSAL_DARK = ResourceKey.create(Registry.DIMENSION_REGISTRY, Util.prefix("abyssal_dark"));
 
     /**
      * {@link com.hungteen.pvz.PVZMod#setUp(FMLCommonSetupEvent)}
      */
     public static void register(){
-        Registry.register(Registry.CHUNK_GENERATOR, Util.prefix("deep_dark_chunk_gen"), DeepDarkChunkGenerator.CODEC);
-        Registry.register(Registry.BIOME_SOURCE, Util.prefix("deep_dark_biomes"), DeepDarkBiomeProvider.CODEC);
+        Registry.register(Registry.CHUNK_GENERATOR, Util.prefix("abyssal_dark_chunk_gen"), AbyssalDarkChunkGenerator.CODEC);
+        Registry.register(Registry.BIOME_SOURCE, Util.prefix("abyssal_dark_biomes"), AbyssalDarkBiomeProvider.CODEC);
 
     }
 }

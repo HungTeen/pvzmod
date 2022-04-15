@@ -18,15 +18,13 @@ import net.minecraft.world.entity.Mob;
 public class PVZNearestTargetGoal extends PVZTargetGoal {
 
     protected final AlgorithmUtil.EntitySorter sorter;
-    protected final Class<? extends LivingEntity> targetClass;
 
     public PVZNearestTargetGoal(Mob mobIn, boolean mustSee, boolean mustReach) {
         this(mobIn, LivingEntity.class, mustSee, mustReach);
     }
 
     public PVZNearestTargetGoal(Mob mobIn, Class<? extends LivingEntity> targetClass, boolean mustSee, boolean mustReach) {
-        super(mobIn, mustSee, mustReach);
-        this.targetClass = targetClass;
+        super(mobIn, targetClass, mustSee, mustReach);
         this.sorter = new AlgorithmUtil.EntitySorter(mob);
     }
 

@@ -11,8 +11,6 @@ import net.minecraft.world.item.enchantment.Enchantment;
  **/
 public class PVZRarities {
 
-    public static final Rarity UNUSUAL = Rarity.create("unusual", ChatFormatting.GREEN);
-
-    public static final Rarity MEGA = Rarity.create("mega", ChatFormatting.RED);
+    public static final Rarity WISDOM = Rarity.create("wisdom", ChatFormatting.DARK_GREEN);
 
 }

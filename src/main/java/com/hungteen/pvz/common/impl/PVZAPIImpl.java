@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.Optional;
 
 import com.hungteen.pvz.api.PVZAPI;
+import com.hungteen.pvz.api.types.ICardType;
 import com.hungteen.pvz.api.types.IEssenceType;
 import com.hungteen.pvz.api.types.IRankType;
 import com.hungteen.pvz.api.types.base.IPAZType;
@@ -22,7 +23,8 @@ import com.hungteen.pvz.utils.Util;
 public class PVZAPIImpl implements PVZAPI.IPVZAPI {
 
     private static final List<IEssenceType> ESSENCES = new ArrayList<>();
-    private static final List<IRankType> RANKS = new ArrayList<>();
+    private static final List<IRankType> RANK_TYPES = new ArrayList<>();
+    private static final List<ICardType> CARD_TYPES = new ArrayList<>();
 
     @Override
     public void registerPAZType(IPAZType type) {
@@ -44,27 +46,41 @@ public class PVZAPIImpl implements PVZAPI.IPVZAPI {
         if (! ESSENCES.contains(type)) {
             ESSENCES.add(type);
         } else{
-            Util.warn("Essence Register : Duplicate Type !");
+            Util.warn("Essence Type Register : Duplicate Type !");
         }
     }
 
     @Override
-    public List<IEssenceType> getEssences() {
+    public List<IEssenceType> getEssenceTypes() {
         return Collections.unmodifiableList(ESSENCES);
     }
 
     @Override
     public void registerRankType(IRankType type) {
-        if(! RANKS.contains(type)){
-            RANKS.add(type);
+        if(! RANK_TYPES.contains(type)){
+            RANK_TYPES.add(type);
         } else{
-            Util.warn("Rank Register : Duplicate Type !");
+            Util.warn("Rank Type Register : Duplicate Type !");
         }
     }
 
     @Override
-    public List<IRankType> getRanks() {
-        return Collections.unmodifiableList(RANKS);
+    public void registerCardType(ICardType type) {
+        if(! CARD_TYPES.contains(type)){
+            CARD_TYPES.add(type);
+        } else{
+            Util.warn("Card Type Register : Duplicate Type !");
+        }
+    }
+
+    @Override
+    public List<IRankType> getRankTypes() {
+        return Collections.unmodifiableList(RANK_TYPES);
+    }
+
+    @Override
+    public List<ICardType> getCardTypes() {
+        return Collections.unmodifiableList(CARD_TYPES);
     }
 
 }

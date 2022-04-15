@@ -1,6 +1,6 @@
 {
   "parent": "minecraft:item/generated",
   "textures": {
-    "layer0": "pvz:item/blue_card"
+    "layer0": "pvz:item/wisdom_card"
   }
 }

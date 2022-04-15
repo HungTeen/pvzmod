@@ -2,7 +2,7 @@
   "parent": "minecraft:recipes/root",
   "rewards": {
     "recipes": [
-      "pvz:card/template/blue_card"
+      "pvz:card/template/chorus_fruit_card"
     ]
   },
   "criteria": {
@@ -21,7 +21,7 @@
     "has_the_recipe": {
       "trigger": "minecraft:recipe_unlocked",
       "conditions": {
-        "recipe": "pvz:card/template/blue_card"
+        "recipe": "pvz:card/template/chorus_fruit_card"
       }
     }
   },

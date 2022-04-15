@@ -1,6 +1,6 @@
 {
   "parent": "minecraft:item/generated",
   "textures": {
-    "layer0": "pvz:item/white_card"
+    "layer0": "pvz:item/chorus_fruit_card"
   }
 }
