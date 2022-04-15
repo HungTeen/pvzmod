@@ -50,6 +50,14 @@ public class PVZPlants {
             .entity(() -> PVZEntities.WALL_NUT.get())
             .skills(new ArrayList<>());
 
+    public static final IPlantType POTATO_MINE = new PVZPlantType("potato_mine")
+            .sunCost(25).xp(10)
+            .essence(EssenceTypes.EXPLOSION)
+            .rank(RankTypes.WHITE)
+            .cd(CDTypes.NORMAL)
+            .entity(() -> PVZEntities.POTATO_MINE.get())
+            .skills(new ArrayList<>());
+
 //    public static final IPlantType CHERRY_BOMB = new PVZPlants("cherry_bomb", new PlantFeatures()
 //            .cost(150).requiredLevel(35)
 //            .cd(CoolDowns.HUGE_SLOW).rank(RankTypes.BLUE).essence(EssenceTypes.EXPLOSION)

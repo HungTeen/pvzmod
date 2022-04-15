@@ -48,7 +48,6 @@ public abstract class PVZPAZ extends PVZMob implements IPAZEntity {
     private static final EntityDataAccessor<Integer> ANIM_TICK = SynchedEntityData.defineId(PVZPAZ.class, EntityDataSerializers.INT);
     protected static final WeightList<DropType> NORMAL_DROP_LIST = new WeightList<>();
     protected Player ownerPlayer;
-    private boolean updateAttributesWhenSpawn = true;
 
     public PVZPAZ(EntityType<? extends PathfinderMob> entityType, Level level) {
         super(entityType, level);
@@ -255,6 +254,7 @@ public abstract class PVZPAZ extends PVZMob implements IPAZEntity {
 
     @Override
     protected void tickDeath() {
+        super.tickDeath();
         ++ this.deathTime;
         if (this.canRemoveWhenDeath()) {
             for (int i = 0; i < 5; ++i) {

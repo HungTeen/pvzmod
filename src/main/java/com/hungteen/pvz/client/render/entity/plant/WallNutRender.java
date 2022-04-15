@@ -34,8 +34,6 @@ public class WallNutRender extends PVZPlantRender<WallNut> {
 
     @Override
     public ResourceLocation getTextureLocation(WallNut entity) {
-//    	final ResourceLocation res = ClientProxy.MC.getBlockRenderer().getBlockModelShaper().getTexture(entity.level.getBlockState(entity.blockPosition().below()), entity.level, entity.blockPosition().below()).getName();
-//        return new ResourceLocation(res.getNamespace(), "textures/" + res.getPath() + ".png");
         final double percent = entity.getHealth() / entity.getMaxHealth();
         return percent > 2 / 3F ? TEX1 : percent > 1 / 3F ? TEX2 : TEX3;
     }

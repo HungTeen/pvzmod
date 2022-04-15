@@ -33,14 +33,26 @@ public class PVZModelLayers {
     public static final ModelLayerLocation SUN_FLOWER = register("sun_flower");
     public static final ModelLayerLocation WALL_NUT = register("wall_nut");
     public static final ModelLayerLocation WALL_NUT_ARMOR = register("wall_nut_armor");
+    public static final ModelLayerLocation POTATO_MINE = register("potato_mine");
+    public static final ModelLayerLocation SURROUND_DIRT = register("surround_dirt");
 
     /*
     Zombie Entities.
      */
     public static final ModelLayerLocation NORMAL_ZOMBIE = register("normal_zombie");
+    public static final ModelLayerLocation NORMAL_ZOMBIE_INNER_ARMOR = registerInnerArmor("normal_zombie");
+    public static final ModelLayerLocation NORMAL_ZOMBIE_OUTER_ARMOR = registerOuterArmor("normal_zombie");
 
     private static ModelLayerLocation register(String p_171294_) {
         return createLocation(p_171294_, "main");
+    }
+
+    private static ModelLayerLocation registerInnerArmor(String p_171299_) {
+        return createLocation(p_171299_, "inner_armor");
+    }
+
+    private static ModelLayerLocation registerOuterArmor(String p_171304_) {
+        return createLocation(p_171304_, "outer_armor");
     }
 
     private static ModelLayerLocation createLocation(String p_171301_, String p_171302_) {

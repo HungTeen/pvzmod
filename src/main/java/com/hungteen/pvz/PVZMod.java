@@ -23,6 +23,7 @@ import com.hungteen.pvz.common.network.PVZPacketHandler;
 import com.hungteen.pvz.common.recipe.PVZRecipeTypes;
 import com.hungteen.pvz.common.recipe.PVZRecipes;
 import com.hungteen.pvz.common.world.biome.PVZBiomes;
+import com.hungteen.pvz.common.world.dimension.PVZDimensions;
 import com.hungteen.pvz.common.world.feature.PVZFeatures;
 import com.hungteen.pvz.common.world.spawn.SpawnRegister;
 import com.hungteen.pvz.data.DataGenHandler;
@@ -97,6 +98,7 @@ public class PVZMod {
             CommonRegister.registerCompostable();
             BiomeUtil.initBiomeSet();
             SpawnRegister.registerEntitySpawns();
+            PVZDimensions.register();
         });
 
         PVZPacketHandler.init();

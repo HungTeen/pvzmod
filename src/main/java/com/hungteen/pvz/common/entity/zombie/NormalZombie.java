@@ -15,22 +15,28 @@ import net.minecraft.world.level.Level;
  **/
 public class NormalZombie extends PVZZombie {
 
-    public NormalZombie(EntityType<? extends PVZPAZ> entityType, Level level) {
-        super(entityType, level);
-    }
+	public NormalZombie(EntityType<? extends PVZPAZ> entityType, Level level) {
+		super(entityType, level);
+	}
 
-    @Override
-    public int getEnergeticDuration() {
-        return 20;
-    }
+	@Override
+	public void normalZombieTick() {
+		super.normalZombieTick();
+		
+	}
 
-    @Override
-    public IZombieType getZombieType() {
-        return PVZZombies.NORMAL_ZOMBIE;
-    }
+	@Override
+	public int getEnergeticDuration() {
+		return 20;
+	}
 
-    @Override
-    protected float getLife() {
-        return 20;
-    }
+	@Override
+	public IZombieType getZombieType() {
+		return PVZZombies.NORMAL_ZOMBIE;
+	}
+
+	@Override
+	protected float getLife() {
+		return 20;
+	}
 }

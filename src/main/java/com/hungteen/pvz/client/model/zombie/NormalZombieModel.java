@@ -8,7 +8,7 @@ import net.minecraft.client.model.geom.ModelPart;
  * @author: HungTeen
  * @create: 2022-04-05 09:51
  **/
-public class NormalZombieModel<T extends NormalZombie> extends PVZZombieModel<T> {
+public class NormalZombieModel<T extends NormalZombie> extends HumanoidZombieModel<T> {
     public NormalZombieModel(ModelPart modelPart) {
         super(modelPart);
     }

@@ -2,7 +2,6 @@ package com.hungteen.pvz.client.render.entity.zombie;
 
 import com.hungteen.pvz.api.types.base.IPAZType;
 import com.hungteen.pvz.common.entity.zombie.drop.ZombieDropPart;
-import com.hungteen.pvz.common.impl.type.zombie.PVZZombies;
 import com.hungteen.pvz.utils.enums.DropPartTypes;
 import com.hungteen.pvz.utils.interfaces.IDropPartModel;
 import com.mojang.blaze3d.vertex.PoseStack;
@@ -42,7 +41,7 @@ public class ZombieDropPartRender extends EntityRenderer<ZombieDropPart> {
         if(this.canRender(dropEntity)){
             this.maintainMap(dropEntity);
 
-            if(this.entityRenderer instanceof PVZZombieRender){
+            if(this.entityRenderer instanceof HumanoidZombieRender){
             	
                 final ResourceLocation resource = dropEntity.getOwnerType().getDefaultResource();
                 matrixStackIn.pushPose();
@@ -55,16 +54,16 @@ public class ZombieDropPartRender extends EntityRenderer<ZombieDropPart> {
                     }
                 }
                 matrixStackIn.scale(-1, -1, 1);
-                final float sz = dropEntity.isMini() ? PVZZombieRender.MINI_SCALE : 1F;
+                final float sz = dropEntity.isMini() ? HumanoidZombieRender.MINI_SCALE : 1F;
                 matrixStackIn.scale(sz, sz, sz);
                 matrixStackIn.translate(0.0, (! dropEntity.getDropPartType().equals(DropPartTypes.WHOLE_BODY) ? -1.501 : -1.7), 0.0);
                 if(! dropEntity.getDropPartType().equals(DropPartTypes.WHOLE_BODY)) {
-                    IDropPartModel dropPartModel = ((PVZZombieRender) this.entityRenderer).dropPartModel;
+                    IDropPartModel dropPartModel = ((HumanoidZombieRender) this.entityRenderer).dropPartModel;
                     final VertexConsumer buffer = bufferSource.getBuffer(dropPartModel.getModel().renderType(resource));
                     dropPartModel.tickPartAnim(dropEntity, 0, 0, dropEntity.tickCount + partialTicks, 0, 0);
                     dropPartModel.renderBody(dropEntity, matrixStackIn, buffer, packedLightIn, OverlayTexture.NO_OVERLAY);
                 } else {
-                    IDropPartModel dropBodyModel = ((PVZZombieRender) this.entityRenderer).dropBodyModel;
+                    IDropPartModel dropBodyModel = ((HumanoidZombieRender) this.entityRenderer).dropBodyModel;
                     final VertexConsumer buffer = bufferSource.getBuffer(dropBodyModel.getModel().renderType(resource));
                     dropBodyModel.tickPartAnim(dropEntity, 0, 0, dropEntity.tickCount + partialTicks, 0, 0);
                     dropBodyModel.renderBody(dropEntity, matrixStackIn, buffer, packedLightIn, OverlayTexture.NO_OVERLAY);

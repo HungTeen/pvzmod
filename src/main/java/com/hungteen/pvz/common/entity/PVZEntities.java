@@ -7,6 +7,7 @@ import com.hungteen.pvz.common.entity.bullet.PeaBullet;
 import com.hungteen.pvz.common.entity.drop.*;
 import com.hungteen.pvz.common.entity.effect.OriginEffectEntity;
 import com.hungteen.pvz.common.entity.plant.PeaShooter;
+import com.hungteen.pvz.common.entity.plant.PotatoMine;
 import com.hungteen.pvz.common.entity.plant.WallNut;
 import com.hungteen.pvz.common.entity.plant.base.PVZPlant;
 import com.hungteen.pvz.common.entity.plant.SunFlower;
@@ -91,6 +92,7 @@ public class PVZEntities {
     public static final RegistryObject<EntityType<PeaShooter>> PEA_SHOOTER = registerPlantEntityType(PeaShooter::new, "pea_shooter");
     public static final RegistryObject<EntityType<SunFlower>> SUN_FLOWER = registerPlantEntityType(SunFlower::new, "sun_flower");
     public static final RegistryObject<EntityType<WallNut>> WALL_NUT = registerPlantEntityType(WallNut::new, "wall_nut");
+    public static final RegistryObject<EntityType<PotatoMine>> POTATO_MINE = registerPlantEntityType(PotatoMine::new, "potato_mine");
 //    public static final RegistryObject<EntityType<CherryBombEntity>> CHERRY_BOMB = registerPlantEntityType(CherryBombEntity::new, "cherry_bomb");
 //    public static final RegistryObject<EntityType<PotatoMineEntity>> POTATO_MINE = registerPlantEntityType(PotatoMineEntity::new, "potato_mine");
 //    public static final RegistryObject<EntityType<SnowPeaEntity>> SNOW_PEA = registerPlantEntityType(SnowPeaEntity::new, "snow_pea");

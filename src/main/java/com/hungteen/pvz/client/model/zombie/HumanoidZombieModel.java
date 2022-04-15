@@ -1,7 +1,6 @@
 package com.hungteen.pvz.client.model.zombie;
 
 import com.hungteen.pvz.common.entity.zombie.base.PVZZombie;
-import com.hungteen.pvz.utils.AnimationUtil;
 import com.hungteen.pvz.utils.interfaces.IEntityDropPart;
 import com.hungteen.pvz.utils.interfaces.IDropPartModel;
 import com.mojang.blaze3d.vertex.PoseStack;
@@ -9,18 +8,18 @@ import com.mojang.blaze3d.vertex.VertexConsumer;
 import net.minecraft.client.model.EntityModel;
 import net.minecraft.client.model.HumanoidModel;
 import net.minecraft.client.model.geom.ModelPart;
-import net.minecraft.client.model.geom.builders.CubeDeformation;
-import net.minecraft.client.model.geom.builders.LayerDefinition;
-import net.minecraft.client.model.geom.builders.MeshDefinition;
+import net.minecraft.client.model.geom.PartPose;
+import net.minecraft.client.model.geom.builders.*;
 
 /**
  * @program: pvzmod-1.18.x
  * @author: HungTeen
  * @create: 2022-04-05 08:18
+ *
  **/
-public class PVZZombieModel<T extends PVZZombie> extends HumanoidModel<T> implements IDropPartModel<T> {
+public class HumanoidZombieModel<T extends PVZZombie> extends HumanoidModel<T> implements IDropPartModel<T> {
 
-    public PVZZombieModel(ModelPart modelPart) {
+    public HumanoidZombieModel(ModelPart modelPart) {
         super(modelPart);
     }
 
@@ -29,7 +28,11 @@ public class PVZZombieModel<T extends PVZZombie> extends HumanoidModel<T> implem
     }
 
     public static LayerDefinition createBodyLayer(int width, int height){
-        return LayerDefinition.create(HumanoidModel.createMesh(CubeDeformation.NONE, 0.0F), width, height);
+        MeshDefinition meshDefinition = HumanoidModel.createMesh(CubeDeformation.NONE, 0.0F);
+        PartDefinition partdefinition = meshDefinition.getRoot();
+        partdefinition.addOrReplaceChild("left_arm", CubeListBuilder.create().texOffs(32, 48).addBox(-1.0F, -2.0F, -2.0F, 4.0F, 12.0F, 4.0F, CubeDeformation.NONE), PartPose.offset(5.0F, 2.0F, 0.0F));
+        partdefinition.addOrReplaceChild("left_leg", CubeListBuilder.create().texOffs(16, 48).addBox(-2.0F, 0.0F, -2.0F, 4.0F, 12.0F, 4.0F, CubeDeformation.NONE), PartPose.offset(1.9F, 12.0F, 0.0F));
+        return LayerDefinition.create(meshDefinition, width, height);
     }
 
     @Override

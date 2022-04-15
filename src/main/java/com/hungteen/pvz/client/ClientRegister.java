@@ -1,14 +1,15 @@
 package com.hungteen.pvz.client;
 
 import com.hungteen.pvz.client.model.PVZModelLayers;
+import com.hungteen.pvz.client.model.SurroundDirtModel;
 import com.hungteen.pvz.client.model.animal.GrassCarpModel;
 import com.hungteen.pvz.client.model.bullet.CommonBulletModel;
 import com.hungteen.pvz.client.model.misc.DropEntityModel;
 import com.hungteen.pvz.client.model.plant.PeaShooterModel;
+import com.hungteen.pvz.client.model.plant.PotatoMineModel;
 import com.hungteen.pvz.client.model.plant.SunFlowerModel;
 import com.hungteen.pvz.client.model.plant.WallNutModel;
-import com.hungteen.pvz.client.model.zombie.NormalZombieModel;
-import com.hungteen.pvz.client.model.zombie.PVZZombieModel;
+import com.hungteen.pvz.client.model.zombie.HumanoidZombieModel;
 import com.hungteen.pvz.client.particle.MelonSliceParticle;
 import com.hungteen.pvz.client.particle.PVZParticles;
 import com.hungteen.pvz.client.render.entity.animal.GrassCarpRender;
@@ -19,6 +20,7 @@ import com.hungteen.pvz.client.render.entity.drop.PlantFoodRender;
 import com.hungteen.pvz.client.render.entity.drop.SunRender;
 import com.hungteen.pvz.client.render.entity.effect.OriginEffectRender;
 import com.hungteen.pvz.client.render.entity.plant.PeaShooterRender;
+import com.hungteen.pvz.client.render.entity.plant.PotatoMineRender;
 import com.hungteen.pvz.client.render.entity.plant.SunFlowerRender;
 import com.hungteen.pvz.client.render.entity.plant.WallNutRender;
 import com.hungteen.pvz.client.render.entity.zombie.NormalZombieRender;
@@ -26,9 +28,10 @@ import com.hungteen.pvz.client.render.entity.zombie.ZombieDropPartRender;
 import com.hungteen.pvz.common.entity.PVZEntities;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.model.HumanoidModel;
+import net.minecraft.client.model.geom.LayerDefinitions;
 import net.minecraft.client.model.geom.ModelLayers;
+import net.minecraft.client.model.geom.builders.LayerDefinition;
 import net.minecraft.client.particle.ParticleEngine;
-import net.minecraft.client.renderer.entity.HumanoidMobRenderer;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.client.event.EntityRenderersEvent;
 import net.minecraftforge.client.event.ParticleFactoryRegisterEvent;
@@ -69,6 +72,7 @@ public class ClientRegister {
         event.registerEntityRenderer(PVZEntities.PEA_SHOOTER.get(), PeaShooterRender::new);
         event.registerEntityRenderer(PVZEntities.SUN_FLOWER.get(), SunFlowerRender::new);
         event.registerEntityRenderer(PVZEntities.WALL_NUT.get(), WallNutRender::new);
+        event.registerEntityRenderer(PVZEntities.POTATO_MINE.get(), PotatoMineRender::new);
 
         /* zombie entity */
         event.registerEntityRenderer(PVZEntities.NORMAL_ZOMBIE.get(), NormalZombieRender::new);
@@ -76,6 +80,9 @@ public class ClientRegister {
 
     @SubscribeEvent
     public static void registerRenderers(EntityRenderersEvent.RegisterLayerDefinitions event) {
+        LayerDefinition INNER_ARMOR = LayerDefinition.create(HumanoidModel.createMesh(LayerDefinitions.INNER_ARMOR_DEFORMATION, 0.0F), 64, 32);
+        LayerDefinition OUTER_ARMOR = LayerDefinition.create(HumanoidModel.createMesh(LayerDefinitions.OUTER_ARMOR_DEFORMATION, 0.0F), 64, 32);
+
         /* drop entity */
         event.registerLayerDefinition(PVZModelLayers.SUN, DropEntityModel::createBodyLayer);
         event.registerLayerDefinition(PVZModelLayers.PLANT_FOOD, DropEntityModel::createBodyLayer);
@@ -92,9 +99,14 @@ public class ClientRegister {
         event.registerLayerDefinition(PVZModelLayers.SUN_FLOWER, SunFlowerModel::createBodyLayer);
         event.registerLayerDefinition(PVZModelLayers.WALL_NUT, WallNutModel::createBodyLayer);
         event.registerLayerDefinition(PVZModelLayers.WALL_NUT_ARMOR, WallNutModel.WallNutArmorModel::createBodyLayer);
+        event.registerLayerDefinition(PVZModelLayers.POTATO_MINE, PotatoMineModel::createBodyLayer);
+        event.registerLayerDefinition(PVZModelLayers.SURROUND_DIRT, SurroundDirtModel::createBodyLayer);
 
         /* zombie entity */
-        event.registerLayerDefinition(PVZModelLayers.NORMAL_ZOMBIE, PVZZombieModel::createBodyLayer);
+        event.registerLayerDefinition(PVZModelLayers.NORMAL_ZOMBIE, HumanoidZombieModel::createBodyLayer);
+        event.registerLayerDefinition(PVZModelLayers.NORMAL_ZOMBIE_INNER_ARMOR, () -> INNER_ARMOR);
+        event.registerLayerDefinition(PVZModelLayers.NORMAL_ZOMBIE_OUTER_ARMOR, () -> OUTER_ARMOR);
+
     }
 
     @SubscribeEvent

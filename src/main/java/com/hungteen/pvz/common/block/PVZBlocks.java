@@ -100,6 +100,7 @@ public class PVZBlocks {
 //    public static final RegistryObject<EssenceAltarBlock> ESSENCE_ALTAR = BLOCKS.register("essence_altar", EssenceAltarBlock::new);
 //    public static final RegistryObject<CardFusionBlock> CARD_FUSION_TABLE = BLOCKS.register("card_fusion_table", CardFusionBlock::new);
 
+    public static final RegistryObject<PVZPortalBlock> DEEP_DARK_PORTAL_BLOCK = BLOCKS.register("deep_dark_portal_block", PVZPortalBlock::new);
     /**
      * register block items.
      * {@link PVZMod#PVZMod()}
