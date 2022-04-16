@@ -95,7 +95,7 @@ public class SunFlower extends ProducerPlant {
     }
 
     @Override
-    public EntityDimensions getDimensions(Pose p_21047_) {
+    public EntityDimensions getDimensions(Pose pose) {
         return EntityDimensions.scalable(0.8F, 1.2F);
     }
 

@@ -1,5 +1,6 @@
 package com.hungteen.pvz.common.entity.ai.target;
 
+import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -9,6 +10,7 @@ import com.hungteen.pvz.utils.EntityUtil;
 
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.Mob;
+import org.jetbrains.annotations.Nullable;
 
 /**
  * @program: pvzmod-1.18.x
@@ -28,25 +30,14 @@ public class PVZNearestTargetGoal extends PVZTargetGoal {
         this.sorter = new AlgorithmUtil.EntitySorter(mob);
     }
 
+    @Nullable
     @Override
-    public boolean canUse() {
-        if (this.targetChance > 0 && this.mob.getRandom().nextInt(this.targetChance) != 0) {
-            return false;
+    protected LivingEntity chooseTarget(List<LivingEntity> list) {
+        if(! list.isEmpty()){
+            Collections.sort(list, this.sorter);
+            return list.get(0);
         }
-        List<LivingEntity> list1 = EntityUtil.getTargetableLivings(this.mob, getAABB()).stream().filter(target -> {
-            return (! this.mustSee || this.checkSenses(target)) && this.checkOther(target);
-        }).collect(Collectors.toList());
-        
-        if (list1.isEmpty()) {
-            return false;
-        }
-        Collections.sort(list1, this.sorter);
-        this.targetMob = list1.get(0);
-        return true;
+        return null;
     }
 
-    @Override
-    protected boolean checkOther(LivingEntity entity) {
-        return super.checkOther(entity) && this.targetClass.isAssignableFrom(entity.getClass());
-    }
 }

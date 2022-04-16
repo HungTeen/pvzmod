@@ -8,7 +8,11 @@ import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.ai.goal.Goal;
 import net.minecraft.world.phys.AABB;
 
+import javax.annotation.Nullable;
+import java.util.Collections;
 import java.util.EnumSet;
+import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * @program: pvzmod-1.18.x
@@ -34,6 +38,23 @@ public abstract class PVZTargetGoal extends Goal {
         this.mustSee = mustSee;
         this.mustReach = mustReach;
         this.setFlags(EnumSet.of(Goal.Flag.TARGET));
+    }
+
+    @Override
+    public boolean canUse() {
+        if (this.targetChance > 0 && this.mob.getRandom().nextInt(this.targetChance) != 0) {
+            return false;
+        }
+        List<LivingEntity> list1 = EntityUtil.getTargetableLivings(this.mob, getAABB()).stream().filter(target -> {
+            return (! this.mustSee || this.checkSenses(target)) && this.checkOther(target);
+        }).collect(Collectors.toList());
+
+        final LivingEntity target = this.chooseTarget(list1);
+        if(target != null){
+            this.targetMob = target;
+            return true;
+        }
+        return false;
     }
 
     @Override
@@ -76,6 +97,11 @@ public abstract class PVZTargetGoal extends Goal {
         this.mob.setTarget(null);
     }
 
+    @Nullable
+    protected LivingEntity chooseTarget(List<LivingEntity> list){
+        return list.isEmpty() ? null : list.get(0);
+    }
+
     protected boolean checkSenses(Entity entity) {
         return this.mob.getSensing().hasLineOfSight(entity);
     }
@@ -86,7 +112,7 @@ public abstract class PVZTargetGoal extends Goal {
 //                && !this.mob.hasEffect(EffectRegister.LIGHT_EYE_EFFECT.get())) {
 //            return false;
 //        }
-        return true;
+        return this.targetClass.isAssignableFrom(entity.getClass());
     }
 
     protected AABB getAABB() {

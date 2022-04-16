@@ -1,0 +1,28 @@
+{
+  "variants": {
+    "age=0": {
+      "model": "pvz:block/pea_0"
+    },
+    "age=1": {
+      "model": "pvz:block/pea_1"
+    },
+    "age=2": {
+      "model": "pvz:block/pea_2"
+    },
+    "age=3": {
+      "model": "pvz:block/pea_3"
+    },
+    "age=4": {
+      "model": "pvz:block/pea_4"
+    },
+    "age=5": {
+      "model": "pvz:block/pea_5"
+    },
+    "age=6": {
+      "model": "pvz:block/pea_6"
+    },
+    "age=7": {
+      "model": "pvz:block/pea_7"
+    }
+  }
+}

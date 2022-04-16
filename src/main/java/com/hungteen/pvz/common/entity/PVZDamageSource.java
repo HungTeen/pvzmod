@@ -178,12 +178,12 @@ public class PVZDamageSource extends EntityDamageSource {
         return causeFlameDamage(attacker, attacker);
     }
 
-//    /**
-//     * {@link SquashEntity#isPlantImmuneTo(DamageSource)}
-//     */
-//    public static boolean isEnforceDamage(DamageSource source) {
-//        return ! source.isProjectile() && ! source.isMagic() && ! source.isExplosion() && ! source.isFire();
-//    }
+    /**
+     * {@link com.hungteen.pvz.common.entity.plant.base.CloseInstantPlant#canBeImmuneToEnforce(Entity)}
+     */
+    public static boolean isEnforceDamage(DamageSource source) {
+        return ! source.isProjectile() && ! source.isMagic() && ! source.isExplosion() && ! source.isFire();
+    }
 
     @Override
     public Component getLocalizedDeathMessage(LivingEntity entityLivingBaseIn) {

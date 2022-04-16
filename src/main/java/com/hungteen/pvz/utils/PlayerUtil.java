@@ -37,34 +37,8 @@ import java.util.Optional;
  **/
 public class PlayerUtil {
 
-    public static final int[] TREE_LVL_XP = new int[] {100, 250, 500, 1000, 2000, 4000, 5000, 6000, 7000, 8000, 10000, 12000, 15000, 18000, 21000, 25000, 30000, 350000, 40000, 50000};
     private static int OLD_PLAYER_LEVEL = 0;
     private static int CACHE_MAX_SUN = 0;
-
-    /**
-     * a1 = 1000, d = 500, inc = 20. <br>
-     * an = n * a1 + (n - 1) * n / 2.<br>
-     * {@link PlayerDataManager#addResource(Resources, int)}
-     */
-    public static int getPlayerMaxSunNum(int lvl) {
-        if(lvl == OLD_PLAYER_LEVEL) {
-            return CACHE_MAX_SUN;
-        } else {
-            final int len = 20;
-            final int n = lvl / len;
-            final int sum = 1000 * n + n * (n - 1) / 2 * 500 + (lvl - len * n) * (50 + n * 25);
-            OLD_PLAYER_LEVEL = lvl;
-            return (CACHE_MAX_SUN = PVZConfig.getBaseSun() + sum);
-        }
-    }
-
-    /**
-     * {@link PlayerDataManager#addResource(Resources, int)}
-     */
-    public static int getPlayerLevelUpXp(int lvl){
-        final int pos = lvl / 5;
-        return pos < TREE_LVL_XP.length ? TREE_LVL_XP[pos] : 100000;
-    }
 
     public static Optional<PlayerDataManager> getOptManager(Player player) {
         return Optional.ofNullable(getManager(player));

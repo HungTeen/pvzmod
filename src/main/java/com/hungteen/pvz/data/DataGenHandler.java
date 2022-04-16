@@ -6,6 +6,7 @@ import com.hungteen.pvz.data.tag.BlockTagGen;
 import com.hungteen.pvz.data.tag.EntityTagGen;
 import com.hungteen.pvz.data.tag.ItemTagGen;
 import net.minecraft.client.renderer.block.model.ItemModelGenerator;
+import net.minecraft.data.models.blockstates.BlockStateGenerator;
 import net.minecraftforge.common.data.ExistingFileHelper;
 import net.minecraftforge.forge.event.lifecycle.GatherDataEvent;
 
@@ -33,8 +34,8 @@ public class DataGenHandler {
 //			ev.getGenerator().addProvider(new USLanguageGenerator(ev.getGenerator()));
             //for model
             ev.getGenerator().addProvider(new ItemModelGen(ev.getGenerator(), ev.getExistingFileHelper()));
-//			ev.getGenerator().addProvider(new BlockModelGenerator(ev.getGenerator(), helper));
+			ev.getGenerator().addProvider(new BlockModelGen(ev.getGenerator(), ev.getExistingFileHelper()));
             //for block state
-//			ev.getGenerator().addProvider(new BlockStateGenerator(ev.getGenerator(), helper));
+			ev.getGenerator().addProvider(new BlockStateGen(ev.getGenerator(), ev.getExistingFileHelper()));
     }
 }

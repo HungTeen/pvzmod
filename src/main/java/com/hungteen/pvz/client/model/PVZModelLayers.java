@@ -35,6 +35,7 @@ public class PVZModelLayers {
     public static final ModelLayerLocation WALL_NUT_ARMOR = register("wall_nut_armor");
     public static final ModelLayerLocation POTATO_MINE = register("potato_mine");
     public static final ModelLayerLocation SURROUND_DIRT = register("surround_dirt");
+    public static final ModelLayerLocation SNOW_PEA = register("snow_pea");
 
     /*
     Zombie Entities.

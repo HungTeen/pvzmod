@@ -2,7 +2,9 @@ package com.hungteen.pvz.common.entity.plant.base;
 
 import com.hungteen.pvz.api.interfaces.IAlmanacEntry;
 import com.hungteen.pvz.common.entity.PVZAttributes;
+import com.hungteen.pvz.common.entity.ai.PVZGoal;
 import com.hungteen.pvz.common.entity.ai.target.PVZNearestTargetGoal;
+import com.hungteen.pvz.common.entity.ai.target.PVZScatterTargetGoal;
 import com.hungteen.pvz.common.entity.bullet.PVZProjectile;
 import com.hungteen.pvz.common.impl.PAZAlmanacs;
 import com.hungteen.pvz.utils.EntityUtil;
@@ -216,7 +218,7 @@ public abstract class ShooterPlant extends PVZPlant {
         compound.putInt("ShootBulletCount", this.powerShootCount);
     }
 
-    static class ShooterAttackGoal extends Goal {
+    static class ShooterAttackGoal extends PVZGoal {
 
         protected final ShooterPlant shooter;
         protected LivingEntity target;
@@ -286,7 +288,7 @@ public abstract class ShooterPlant extends PVZPlant {
 
     }
 
-    protected static class ShooterNearestTargetGoal extends PVZNearestTargetGoal {
+    protected static class ShooterNearestTargetGoal extends PVZScatterTargetGoal {
 
         private final ShooterPlant shooter;
 

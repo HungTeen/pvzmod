@@ -63,6 +63,15 @@ public class PVZPlants {
             .entity(() -> PVZEntities.POTATO_MINE.get())
             .skills(new ArrayList<>());
 
+    public static final IPlantType SNOW_PEA = new PVZPlantType("snow_pea")
+            .sunCost(175).xp(20)
+            .essence(EssenceTypes.ICE)
+            .rank(RankTypes.GOLD)
+            .cardType(CardTypes.SAPLING)
+            .cd(CDTypes.NORMAL)
+            .entity(() -> PVZEntities.SNOW_PEA.get())
+            .skills(new ArrayList<>());
+
 //    public static final IPlantType CHERRY_BOMB = new PVZPlants("cherry_bomb", new PlantFeatures()
 //            .cost(150).requiredLevel(35)
 //            .cd(CoolDowns.HUGE_SLOW).rank(RankTypes.BLUE).essence(EssenceTypes.EXPLOSION)

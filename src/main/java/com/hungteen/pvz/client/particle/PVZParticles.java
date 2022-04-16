@@ -21,7 +21,9 @@ public class PVZParticles {
     //don't forget register particle factory in client register
     public static final DeferredRegister<ParticleType<?>> PARTICLE_TYPES =  DeferredRegister.create(ForgeRegistries.PARTICLE_TYPES, PVZMod.MOD_ID);
 
-//    public static final RegistryObject<BasicParticleType> RED_BOMB = PARTICLE_TYPES.register("red_bomb", ()->{return new BasicParticleType(false);});
+    public static final RegistryObject<SimpleParticleType> POTATO_EXPLOSION = PARTICLE_TYPES.register("potato_explosion", () -> new SimpleParticleType(false));
+
+    //    public static final RegistryObject<BasicParticleType> RED_BOMB = PARTICLE_TYPES.register("red_bomb", ()->{return new BasicParticleType(false);});
 //    public static final RegistryObject<BasicParticleType> YELLOW_BOMB = PARTICLE_TYPES.register("yellow_bomb", ()->{return new BasicParticleType(false);});
 //    public static final RegistryObject<BasicParticleType> DIRT_BURST_OUT = PARTICLE_TYPES.register("dirt_burst_out", ()->{return new BasicParticleType(false);});
 //    public static final RegistryObject<BasicParticleType> YELLOW_FLAME = PARTICLE_TYPES.register("yellow_flame", ()->{return new BasicParticleType(false);});

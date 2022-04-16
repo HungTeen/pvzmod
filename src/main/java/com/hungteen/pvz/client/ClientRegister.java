@@ -5,13 +5,11 @@ import com.hungteen.pvz.client.model.component.SurroundDirtModel;
 import com.hungteen.pvz.client.model.animal.GrassCarpModel;
 import com.hungteen.pvz.client.model.bullet.CommonBulletModel;
 import com.hungteen.pvz.client.model.misc.DropEntityModel;
-import com.hungteen.pvz.client.model.plant.PeaShooterModel;
-import com.hungteen.pvz.client.model.plant.PotatoMineModel;
-import com.hungteen.pvz.client.model.plant.SunFlowerModel;
-import com.hungteen.pvz.client.model.plant.WallNutModel;
+import com.hungteen.pvz.client.model.plant.*;
 import com.hungteen.pvz.client.model.zombie.HumanoidZombieModel;
 import com.hungteen.pvz.client.particle.MelonSliceParticle;
 import com.hungteen.pvz.client.particle.PVZParticles;
+import com.hungteen.pvz.client.particle.multi.PotatoExplosionParticle;
 import com.hungteen.pvz.client.render.entity.animal.GrassCarpRender;
 import com.hungteen.pvz.client.render.entity.bullet.PeaBulletRender;
 import com.hungteen.pvz.client.render.entity.drop.DropItemRender;
@@ -19,10 +17,7 @@ import com.hungteen.pvz.client.render.entity.drop.OriginOrbRender;
 import com.hungteen.pvz.client.render.entity.drop.PlantFoodRender;
 import com.hungteen.pvz.client.render.entity.drop.SunRender;
 import com.hungteen.pvz.client.render.entity.effect.OriginEffectRender;
-import com.hungteen.pvz.client.render.entity.plant.PeaShooterRender;
-import com.hungteen.pvz.client.render.entity.plant.PotatoMineRender;
-import com.hungteen.pvz.client.render.entity.plant.SunFlowerRender;
-import com.hungteen.pvz.client.render.entity.plant.WallNutRender;
+import com.hungteen.pvz.client.render.entity.plant.*;
 import com.hungteen.pvz.client.render.entity.zombie.NormalZombieRender;
 import com.hungteen.pvz.client.render.entity.zombie.ZombieDropPartRender;
 import com.hungteen.pvz.common.entity.PVZEntities;
@@ -72,6 +67,7 @@ public class ClientRegister {
         event.registerEntityRenderer(PVZEntities.SUN_FLOWER.get(), SunFlowerRender::new);
         event.registerEntityRenderer(PVZEntities.WALL_NUT.get(), WallNutRender::new);
         event.registerEntityRenderer(PVZEntities.POTATO_MINE.get(), PotatoMineRender::new);
+        event.registerEntityRenderer(PVZEntities.SNOW_PEA.get(), SnowPeaRender::new);
 
         /* zombie entity */
         event.registerEntityRenderer(PVZEntities.NORMAL_ZOMBIE.get(), NormalZombieRender::new);
@@ -100,6 +96,7 @@ public class ClientRegister {
         event.registerLayerDefinition(PVZModelLayers.WALL_NUT_ARMOR, WallNutModel.WallNutArmorModel::createBodyLayer);
         event.registerLayerDefinition(PVZModelLayers.POTATO_MINE, PotatoMineModel::createBodyLayer);
         event.registerLayerDefinition(PVZModelLayers.SURROUND_DIRT, SurroundDirtModel::createBodyLayer);
+        event.registerLayerDefinition(PVZModelLayers.SNOW_PEA, SnowPeaModel::createBodyLayer);
 
         /* zombie entity */
         event.registerLayerDefinition(PVZModelLayers.NORMAL_ZOMBIE, HumanoidZombieModel::createBodyLayer);
@@ -111,6 +108,8 @@ public class ClientRegister {
     @SubscribeEvent
     public static void registerFactories(ParticleFactoryRegisterEvent event) {
         ParticleEngine manager = Minecraft.getInstance().particleEngine;
+        manager.register(PVZParticles.POTATO_EXPLOSION.get(), (sprite) -> new PotatoExplosionParticle.Provider(sprite));
+
 //        manager.register(ParticleRegister.RED_BOMB.get(), (sprite) -> {return new CherryBombParticle.Factory(sprite);});
 //        manager.register(ParticleRegister.YELLOW_BOMB.get(), (sprite) -> {return new PotatoMineParticle.Factory(sprite);});
 //        manager.register(ParticleRegister.DIRT_BURST_OUT.get(), (sprite) -> {return new DirtBurstOutParticle.Factory(sprite);});

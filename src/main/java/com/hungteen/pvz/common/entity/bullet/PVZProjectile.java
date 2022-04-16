@@ -33,6 +33,7 @@ import net.minecraft.world.phys.EntityHitResult;
 import net.minecraft.world.phys.HitResult;
 import net.minecraft.world.phys.Vec3;
 
+import javax.annotation.Nullable;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -109,8 +110,8 @@ public abstract class PVZProjectile extends Projectile implements IHasGroup, IHa
         double d2 = this.getX() + vec3.x;
         double d0 = this.getY() + vec3.y;
         double d1 = this.getZ() + vec3.z;
-        this.updateRotation();
-        float f;
+        ProjectileUtil.rotateTowardsMovement(this, 0.2F);
+        float f = this.airSlowDown;;
         if (this.isInWater()) {
             for(int i = 0; i < 4; ++i) {
                 float f1 = 0.25F;
@@ -118,14 +119,17 @@ public abstract class PVZProjectile extends Projectile implements IHasGroup, IHa
             }
 
             f = 0.8F;
-        } else {
-            f = this.airSlowDown;
         }
 
-        this.setDeltaMovement(vec3.scale((double)f));
+        this.setDeltaMovement(vec3.scale(f));
+
         if (!this.isNoGravity()) {
             Vec3 vec31 = this.getDeltaMovement();
             this.setDeltaMovement(vec31.x, vec31.y - (double)this.getGravity(), vec31.z);
+        }
+
+        if(this.getTrailParticle() != null){
+            this.level.addParticle(this.getTrailParticle(), d2, d0 + 0.5D, d1, 0.0D, 0.0D, 0.0D);
         }
 
         this.setPos(d2, d0, d1);
@@ -190,19 +194,25 @@ public abstract class PVZProjectile extends Projectile implements IHasGroup, IHa
     @Override
     public void handleEntityEvent(byte id) {
         if (id == 3) {//die event.
-            ParticleOptions particleoptions = this.getHitParticle();
-            if(particleoptions != null){
+            if(this.getHitParticle() != null){
                 for(int i = 0; i < 8; ++i) {
-                    this.level.addParticle(particleoptions, this.getX(), this.getY(), this.getZ(), 0.0D, 0.0D, 0.0D);
+                	final float offsetX = this.random.nextFloat() * 0.4F;
+                    this.level.addParticle(this.getHitParticle(), this.getX() + offsetX, this.getY() + offsetX, this.getZ() + offsetX, 0.0D, 0.0D, 0.0D);
                 }
             }
         }
     }
 
+    @Nullable
     protected ParticleOptions getHitParticle() {
         return null;
 //        ItemStack itemstack = this.getItemRaw();
 //        return (ParticleOptions)(itemstack.isEmpty() ? ParticleTypes.ITEM_SNOWBALL : new ItemParticleOption(ParticleTypes.ITEM, itemstack));
+    }
+
+    @Nullable
+    protected ParticleOptions getTrailParticle() {
+        return null;
     }
 
     /**

@@ -22,11 +22,6 @@ public enum Resources {
     TREE_LVL(1, 200),
 
     /**
-     * xp of tree level, different level might require different xp.
-     */
-    TREE_XP,
-
-    /**
      * the most common currency in pvz, used to trade in shop.
      */
     MONEY(0, 9999999),
@@ -42,14 +37,19 @@ public enum Resources {
     SUN_NUM,
 
     /**
-     * the upper limit of energy num.
+     * the upper limit of sun num.
      */
-    MAX_ENERGY_NUM(1, 10),
+    MAX_SUN_NUM(0, 100000),
 
     /**
      * energy num, many people call it plant food amount.
      */
     ENERGY_NUM(0, 0),
+
+    /**
+     * the upper limit of energy num.
+     */
+    MAX_ENERGY_NUM(1, 10),
 
     /**
      * the chance to use slot machine.
@@ -77,11 +77,11 @@ public enum Resources {
             case SUN_NUM: return 50;
             case LOTTERY_CHANCE: return 10;
             case GROUP_TYPE: return PVZConfig.getPlayerInitialGroup();
+            case MAX_SUN_NUM: return PVZConfig.getPlayerInitialMaxSun();
             default: return res.min;
         }
     }
 
-    public static final int INF = 9999999;
     public final int min;
     public final int max;
 

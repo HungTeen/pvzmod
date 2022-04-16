@@ -2,6 +2,7 @@ package com.hungteen.pvz.common.entity.plant.base;
 
 import com.hungteen.pvz.api.interfaces.IAlmanacEntry;
 import com.hungteen.pvz.common.entity.PVZAttributes;
+import com.hungteen.pvz.common.entity.ai.PVZGoal;
 import com.hungteen.pvz.common.impl.PAZAlmanacs;
 import com.hungteen.pvz.utils.EntityUtil;
 import com.mojang.datafixers.util.Pair;
@@ -38,7 +39,6 @@ public abstract class ProducerPlant extends PVZPlant {
     @Override
     protected void normalPlantTick() {
         super.normalPlantTick();
-        //TODO Sun Flower Particle When Gen Sun.
     }
 
     @Override
@@ -86,7 +86,7 @@ public abstract class ProducerPlant extends PVZPlant {
         return this.getWorkTick() + this.getAnimGenCD() >= this.getCurrentWorkCD() || (EntityUtil.inEnergetic(this) && EntityUtil.getEnergeticTime(this) < this.getAnimGenCD());
     }
 
-    static class ProducerGenGoal extends Goal {
+    static class ProducerGenGoal extends PVZGoal {
 
         private final ProducerPlant producer;
 

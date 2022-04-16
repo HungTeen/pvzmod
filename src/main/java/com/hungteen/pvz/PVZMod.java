@@ -9,6 +9,7 @@ import com.hungteen.pvz.common.PVZSounds;
 import com.hungteen.pvz.common.advancement.AdvancementHandler;
 import com.hungteen.pvz.common.block.PVZBlocks;
 import com.hungteen.pvz.common.capability.CapabilityHandler;
+import com.hungteen.pvz.common.command.PVZCommandHandler;
 import com.hungteen.pvz.common.effect.PVZEffects;
 import com.hungteen.pvz.common.effect.PVZPotions;
 import com.hungteen.pvz.common.enchantment.PVZEnchantments;
@@ -77,6 +78,7 @@ public class PVZMod {
         //get forge event bus.
         IEventBus forgeBus = MinecraftForge.EVENT_BUS;
         forgeBus.addGenericListener(Entity.class, CapabilityHandler::attachCapabilities);
+        forgeBus.addListener(EventPriority.NORMAL, PVZCommandHandler::init);
 //        forgeBus.addListener(EventPriority.NORMAL, GenStructures::addDimensionalSpacing);
         forgeBus.addListener(EventPriority.HIGH, PVZBiomes::biomeModification);
 //        forgeBus.addListener(EventPriority.NORMAL, PVZDataPackManager::addReloadListenerEvent);

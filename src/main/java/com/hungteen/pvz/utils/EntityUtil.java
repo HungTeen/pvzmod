@@ -4,6 +4,7 @@ import com.hungteen.pvz.api.interfaces.IHasOwner;
 import com.hungteen.pvz.common.effect.PVZEffects;
 import com.hungteen.pvz.common.entity.EntityGroupHandler;
 import com.hungteen.pvz.common.entity.PVZPAZ;
+import it.unimi.dsi.fastutil.ints.IntOpenHashSet;
 import net.minecraft.core.BlockPos;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.world.entity.Entity;
@@ -136,6 +137,70 @@ public class EntityUtil {
         return attacker.level.getEntitiesOfClass(tClass, aabb).stream().filter(target -> {
             return ! attacker.equals(target) && predicate.test(target);
         }).collect(Collectors.toList());
+    }
+
+    /**
+     * get final attack entities for explosion or other range attack.
+     * use for every range attack condition.
+     */
+    public static List<Entity> getWholeTargetableEntities(@Nonnull Entity attacker, AABB aabb) {
+        IntOpenHashSet set = new IntOpenHashSet();
+        List<Entity> list = new ArrayList<>();
+        if(attacker == null) return list;//prevent crash.
+        List<Entity> targets = getTargetableEntitiesIngoreCheck(attacker, aabb);
+        //choose owner first.
+        targets.stream().filter(target ->
+//                ! (target instanceof PVZMultiPartEntity) &&
+                ! set.contains(target.getId())).forEach(target -> {
+            set.addAll(getOwnerAndPartsID(target));
+            list.add(target);
+        });
+        //deal with part.
+//        targets.stream().filter(target -> target instanceof PVZMultiPartEntity
+//                && ! set.contains(target.getId())).forEach(target -> {
+//            set.addAll(getOwnerAndPartsID(target));
+//            list.add(target);
+//        });
+        return list;
+    }
+
+    /**
+     * get targetable entities by original check function, often used in explosion. <br>
+     * {@link #getWholeTargetableEntities(Entity, AABB)}
+     */
+    private static List<Entity> getTargetableEntitiesIngoreCheck(@Nonnull Entity attacker, AABB aabb){
+        return getPredicateEntities(attacker, aabb, Entity.class, target -> checkCanEntityBeTarget(attacker, target));
+    }
+
+    /**
+     * get all parts of an entity, so that you can only hit them once.
+     */
+    public static List<Integer> getOwnerAndPartsID(Entity entity){
+        List<Integer> list = new ArrayList<>();
+//        if(entity instanceof PVZMultiPartEntity) {//the entity is a part.
+//            LivingEntity owner = ((PVZMultiPartEntity) entity).getOwner();
+//            if(owner == null) {// no owner
+//                list.add(entity.getId());
+//            } else {// get all id for owner's parts
+//                IHasMultiPart parent = ((PVZMultiPartEntity) entity).getParent();
+//                for(Entity target : parent.getMultiParts()) {
+//                    if(target != null) {
+//                        list.add(target.getId());
+//                    }
+//                }
+//                list.add(owner.getId());
+//            }
+//        } else if(entity instanceof IHasMultiPart){
+//            for(Entity target : ((IHasMultiPart) entity).getMultiParts()) {
+//                if(target != null) {
+//                    list.add(target.getId());
+//                }
+//            }
+//            list.add(entity.getId());
+//        } else {
+            list.add(entity.getId());
+//        }
+        return list;
     }
 
     /**

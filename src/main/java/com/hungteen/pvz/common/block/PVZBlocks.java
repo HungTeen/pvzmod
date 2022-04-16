@@ -3,7 +3,9 @@ package com.hungteen.pvz.common.block;
 import java.util.Arrays;
 
 import com.hungteen.pvz.PVZMod;
-import com.hungteen.pvz.common.block.crops.PeaCropBlock;
+import com.hungteen.pvz.common.block.crops.CabbageBlock;
+import com.hungteen.pvz.common.block.crops.CornBlock;
+import com.hungteen.pvz.common.block.crops.PeaBlock;
 import com.hungteen.pvz.common.block.cubes.EssenceOreBlock;
 import com.hungteen.pvz.common.block.cubes.OriginBlock;
 import com.hungteen.pvz.common.impl.type.EssenceTypes;
@@ -34,7 +36,7 @@ public class PVZBlocks {
      */
     public static final DeferredRegister<Block> BLOCKS = DeferredRegister.create(ForgeRegistries.BLOCKS, PVZMod.MOD_ID);
 
-    // ores.
+    /* Ores */
     public static final RegistryObject<EssenceOreBlock> ORIGIN_ORE = BLOCKS.register("origin_ore", () -> new EssenceOreBlock(EssenceTypes.ORIGIN, 12, 3, 8));
     public static final RegistryObject<EssenceOreBlock> APPEASE_ORE = BLOCKS.register("appease_ore", () -> new EssenceOreBlock(EssenceTypes.APPEASE, 0, 1, 2));
     public static final RegistryObject<EssenceOreBlock> LIGHT_ORE = BLOCKS.register("light_ore", () -> new EssenceOreBlock(EssenceTypes.LIGHT, 12, 2, 5));
@@ -52,37 +54,37 @@ public class PVZBlocks {
 //    public static final RegistryObject<EssenceOreBlock> SHADOW_ORE = BLOCKS.register("shadow_ore", () -> new EssenceOreBlock(EssenceTypes.SHADOW, 0, 2, 5));
     public static final RegistryObject<OreBlock> AMETHYST_ORE = BLOCKS.register("amethyst_ore",() -> new OreBlock(Block.Properties.copy(Blocks.DIAMOND_ORE).strength(4F, 6F)));
 
-    //block
+    /* Cubes */
     public static final RegistryObject<Block> AMETHYST_BLOCK = BLOCKS.register("amethyst_block", () -> new Block(Block.Properties.copy(Blocks.EMERALD_BLOCK).strength(9, 9)));
     public static final RegistryObject<Block> ORIGIN_BLOCK = BLOCKS.register("origin_block", OriginBlock::new);
 //    public static final RegistryObject<Block> BUTTER_BLOCK = BLOCKS.register("butter_block", ButterBlock::new);
 //    public static final RegistryObject<Block> FROZEN_MELON = BLOCKS.register("frozen_melon", () -> new Block(Block.Properties.copy(Blocks.MELON)));
 //    public static final RegistryObject<Block> STEEL_LADDER = BLOCKS.register("steel_ladder", SteelLadderBlock::new);
 //
-//    //crops
-    public static final RegistryObject<Block> PEA_CROP = BLOCKS.register("pea_crop", PeaCropBlock::new);
-//    public static final RegistryObject<Block> TOXIC_SHROOM = BLOCKS.register("toxic_shroom", () -> new ToxicShroomBlock(Block.Properties.copy(Blocks.SWEET_BERRY_BUSH)));
-//    public static final RegistryObject<Block> CABBAGE = BLOCKS.register("cabbage", () -> new CabbageBlock(Block.Properties.copy(Blocks.WHEAT)));
-//    public static final RegistryObject<Block> CORN = BLOCKS.register("corn", () -> new CornBlock(Block.Properties.copy(Blocks.WHEAT)));
-
-    //plants
-    public static final RegistryObject<Block> NUT_LEAVES = BLOCKS.register("nut_leaves", () -> new LeavesBlock(Block.Properties.copy(Blocks.OAK_LEAVES)));
-    public static final RegistryObject<Block> NUT_LEAVES_WITH_NUTS = BLOCKS.register("nut_leaves_with_nuts", () -> new LeavesBlock(Block.Properties.copy(Blocks.OAK_LEAVES)));
-    public static final RegistryObject<Block> NUT_LOG = BLOCKS.register("nut_log", () -> new RotatedPillarBlock(Block.Properties.copy(Blocks.OAK_LOG).strength(4.0F)));
-    public static final RegistryObject<Block> STRIPPED_NUT_LOG = BLOCKS.register("stripped_nut_log", () -> new RotatedPillarBlock(Block.Properties.copy(Blocks.STRIPPED_OAK_LOG).strength(4.0F)));
-    public static final RegistryObject<Block> NUT_WOOD = BLOCKS.register("nut_wood", () -> new RotatedPillarBlock(Block.Properties.copy(Blocks.OAK_WOOD).strength(4.0F)));
-    public static final RegistryObject<Block> STRIPPED_NUT_WOOD = BLOCKS.register("stripped_nut_wood", () -> new RotatedPillarBlock(Block.Properties.copy(Blocks.STRIPPED_OAK_WOOD).strength(4.0F)));
-    public static final RegistryObject<Block> NUT_PLANKS = BLOCKS.register("nut_planks", () -> new Block(Block.Properties.copy(Blocks.OAK_PLANKS)));
-    public static final RegistryObject<Block> NUT_DOOR = BLOCKS.register("nut_door", () -> new DoorBlock(Block.Properties.copy(Blocks.OAK_DOOR)));
-    public static final RegistryObject<Block> NUT_TRAPDOOR = BLOCKS.register("nut_trapdoor", () -> new TrapDoorBlock(Block.Properties.copy(Blocks.OAK_TRAPDOOR)));
-    public static final RegistryObject<Block> NUT_FENCE = BLOCKS.register("nut_fence", () -> new FenceBlock(Block.Properties.copy(Blocks.OAK_FENCE)));
-    public static final RegistryObject<Block> NUT_FENCE_GATE = BLOCKS.register("nut_fence_gate", () -> new FenceGateBlock(Block.Properties.copy(Blocks.OAK_FENCE_GATE)));
-    public static final RegistryObject<Block> NUT_SIGN = BLOCKS.register("nut_sign", () -> new StandingSignBlock(BlockBehaviour.Properties.of(Material.WOOD).noCollission().strength(1.0F).sound(SoundType.WOOD), WoodType.OAK));
-    public static final RegistryObject<Block> NUT_WALL_SIGN = BLOCKS.register("nut_wall_sign", () -> new WallSignBlock(BlockBehaviour.Properties.of(Material.WOOD).noCollission().strength(1.0F).sound(SoundType.WOOD), WoodType.OAK));
-//    public static final RegistryObject<Block> NUT_SAPLING = BLOCKS.register("nut_sapling", () -> new Block(NutTree::new));
+    /* Plants */
+    public static final RegistryObject<CropBlock> PEA = BLOCKS.register("pea", PeaBlock::new);
+//    public static final RegistryObject<CropBlock> TOXIC_SHROOM = BLOCKS.register("toxic_shroom", () -> new ToxicShroomBlock(Block.Properties.copy(Blocks.SWEET_BERRY_BUSH)));
+    public static final RegistryObject<CropBlock> CABBAGE = BLOCKS.register("cabbage", CabbageBlock::new);
+    public static final RegistryObject<CropBlock> CORN = BLOCKS.register("corn", CornBlock::new);
+    //    public static final RegistryObject<Block> NUT_SAPLING = BLOCKS.register("nut_sapling", () -> new Block(NutTree::new));
 //    public static final RegistryObject<Block> CHOMPER = BLOCKS.register("chomper", ChomperBlock::new);
 //    public static final RegistryObject<LilyPadBlock> LILY_PAD = BLOCKS.register("lily_pad", LilyPadBlock::new);
-//
+
+    /* Decorations */
+    public static final RegistryObject<Block> NUT_LEAVES = BLOCKS.register("nut_leaves", () -> new LeavesBlock(Block.Properties.copy(Blocks.OAK_LEAVES)));
+    public static final RegistryObject<Block> NUT_LEAVES_WITH_NUTS = BLOCKS.register("nut_leaves_with_nuts", () -> new LeavesBlock(Block.Properties.copy(Blocks.OAK_LEAVES)));
+    public static final RegistryObject<RotatedPillarBlock> NUT_LOG = BLOCKS.register("nut_log", () -> new RotatedPillarBlock(Block.Properties.copy(Blocks.OAK_LOG).strength(4.0F)));
+    public static final RegistryObject<RotatedPillarBlock> STRIPPED_NUT_LOG = BLOCKS.register("stripped_nut_log", () -> new RotatedPillarBlock(Block.Properties.copy(Blocks.STRIPPED_OAK_LOG).strength(4.0F)));
+    public static final RegistryObject<RotatedPillarBlock> NUT_WOOD = BLOCKS.register("nut_wood", () -> new RotatedPillarBlock(Block.Properties.copy(Blocks.OAK_WOOD).strength(4.0F)));
+    public static final RegistryObject<RotatedPillarBlock> STRIPPED_NUT_WOOD = BLOCKS.register("stripped_nut_wood", () -> new RotatedPillarBlock(Block.Properties.copy(Blocks.STRIPPED_OAK_WOOD).strength(4.0F)));
+    public static final RegistryObject<Block> NUT_PLANKS = BLOCKS.register("nut_planks", () -> new Block(Block.Properties.copy(Blocks.OAK_PLANKS)));
+    public static final RegistryObject<DoorBlock> NUT_DOOR = BLOCKS.register("nut_door", () -> new DoorBlock(Block.Properties.copy(Blocks.OAK_DOOR)));
+    public static final RegistryObject<TrapDoorBlock> NUT_TRAPDOOR = BLOCKS.register("nut_trapdoor", () -> new TrapDoorBlock(Block.Properties.copy(Blocks.OAK_TRAPDOOR)));
+    public static final RegistryObject<FenceBlock> NUT_FENCE = BLOCKS.register("nut_fence", () -> new FenceBlock(Block.Properties.copy(Blocks.OAK_FENCE)));
+    public static final RegistryObject<FenceGateBlock> NUT_FENCE_GATE = BLOCKS.register("nut_fence_gate", () -> new FenceGateBlock(Block.Properties.copy(Blocks.OAK_FENCE_GATE)));
+    public static final RegistryObject<StandingSignBlock> NUT_SIGN = BLOCKS.register("nut_sign", () -> new StandingSignBlock(BlockBehaviour.Properties.of(Material.WOOD).noCollission().strength(1.0F).sound(SoundType.WOOD), WoodType.OAK));
+    public static final RegistryObject<WallSignBlock> NUT_WALL_SIGN = BLOCKS.register("nut_wall_sign", () -> new WallSignBlock(BlockBehaviour.Properties.of(Material.WOOD).noCollission().strength(1.0F).sound(SoundType.WOOD), WoodType.OAK));
+
 //    //special
 //    public static final RegistryObject<Block> LANTERN = BLOCKS.register("lantern", LanternBlock::new);
 //    public static final RegistryObject<FlowerPotBlock> FLOWER_POT = BLOCKS.register("flower_pot", FlowerPotBlock::new);
@@ -100,7 +102,7 @@ public class PVZBlocks {
 //    public static final RegistryObject<EssenceAltarBlock> ESSENCE_ALTAR = BLOCKS.register("essence_altar", EssenceAltarBlock::new);
 //    public static final RegistryObject<CardFusionBlock> CARD_FUSION_TABLE = BLOCKS.register("card_fusion_table", CardFusionBlock::new);
 
-    public static final RegistryObject<PVZPortalBlock> DEEP_DARK_PORTAL_BLOCK = BLOCKS.register("deep_dark_portal_block", PVZPortalBlock::new);
+    public static final RegistryObject<PVZPortalBlock> ABYSSAL_DARK_PORTAL_BLOCK = BLOCKS.register("abyssal_dark_portal_block", PVZPortalBlock::new);
     /**
      * register block items.
      * {@link PVZMod#PVZMod()}
@@ -110,8 +112,7 @@ public class PVZBlocks {
 
         Arrays.asList(
                 ORIGIN_ORE, APPEASE_ORE, LIGHT_ORE, EXPLOSION_ORE, DEFENCE_ORE, ICE_ORE, ENFORCE_ORE,
-//                TOXIC_ORE,
-                ASSIST_ORE, MAGIC_ORE, FLAME_ORE, SPEAR_ORE, ARMA_ORE, //ELECTRIC_ORE, SHADOW_ORE,
+                ASSIST_ORE, MAGIC_ORE, FLAME_ORE, SPEAR_ORE, ARMA_ORE, //TOXIC_ORE, ELECTRIC_ORE, SHADOW_ORE,
                 AMETHYST_ORE, AMETHYST_BLOCK, ORIGIN_BLOCK,// ,BUTTER_BLOCK, FROZEN_MELON,
                 NUT_LEAVES, NUT_LEAVES_WITH_NUTS, NUT_LOG, STRIPPED_NUT_LOG, NUT_WOOD, STRIPPED_NUT_WOOD, NUT_PLANKS, NUT_DOOR, NUT_TRAPDOOR, NUT_FENCE, NUT_FENCE_GATE//, NUT_SAPLING, CHOMPER,
 //                LANTERN, FLOWER_POT, GOLD_TILE1, GOLD_TILE2, GOLD_TILE3, SILVER_SUNFLOWER_TROPHY, GOLD_SUNFLOWER_TROPHY, DIAMOND_SUNFLOWER_TROPHY

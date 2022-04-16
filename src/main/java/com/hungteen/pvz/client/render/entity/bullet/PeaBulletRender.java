@@ -2,10 +2,10 @@ package com.hungteen.pvz.client.render.entity.bullet;
 
 import com.hungteen.pvz.client.model.PVZModelLayers;
 import com.hungteen.pvz.client.model.bullet.CommonBulletModel;
+import com.hungteen.pvz.common.entity.bullet.PVZProjectile.BulletStates;
 import com.hungteen.pvz.common.entity.bullet.PeaBullet;
-import com.hungteen.pvz.utils.StringUtil;
 import com.hungteen.pvz.utils.Util;
-import net.minecraft.client.model.EntityModel;
+
 import net.minecraft.client.renderer.entity.EntityRendererProvider;
 import net.minecraft.resources.ResourceLocation;
 
@@ -16,15 +16,16 @@ import net.minecraft.resources.ResourceLocation;
  **/
 public class PeaBulletRender extends CommonBulletRender<PeaBullet> {
 
-    private static final ResourceLocation COMMON = Util.texture("entity/bullet/pea_bullet.png");
+    private static final ResourceLocation COMMON = Util.texture("entity/bullet/pea/pea_bullet.png");
+    private static final ResourceLocation SNOW_PEA = Util.texture("entity/bullet/pea/snow_pea_bullet.png");
 
     public PeaBulletRender(EntityRendererProvider.Context context) {
-        super(context, new CommonBulletModel(context.bakeLayer(PVZModelLayers.PEA_BULLET)));
+        super(context, new CommonBulletModel<>(context.bakeLayer(PVZModelLayers.PEA_BULLET)));
     }
 
     @Override
     public ResourceLocation getTextureLocation(PeaBullet bullet) {
-        return COMMON;
+        return bullet.getBulletState() == BulletStates.NORMAL ? COMMON : SNOW_PEA;
     }
 
     @Override

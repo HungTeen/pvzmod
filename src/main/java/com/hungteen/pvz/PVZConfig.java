@@ -219,10 +219,10 @@ public class PVZConfig {
                             .comment("Player Initial Group When they join the world for the first time(-2 means other monsters, -1 means zombies, 0 means neutral creatures, 1 means plants and 2 means other guards).")
                             .defineInRange("PlayerInitialGroup", 1, -2, 2);
 
-                    EntitySettings.PlayerBaseSunAmount = builder
+                    EntitySettings.PlayerInitialMaxSun = builder
                             .translation("config.pvz.player.initial_sun")
-                            .comment("players' base sun amount, it will increase when tree maxLevel increasing.")
-                            .defineInRange("PlayerInitialSun", 950, 100, 100000);
+                            .comment("players' base sun amount.")
+                            .defineInRange("PlayerInitialMaxSun", 2000, 100, 100000);
                 }
                 builder.pop();
 
@@ -429,7 +429,7 @@ public class PVZConfig {
             public PlantSetting PlantSetting = new PlantSetting();
 
             public ForgeConfigSpec.IntValue PlayerInitialGroup;
-            public ForgeConfigSpec.IntValue PlayerBaseSunAmount;
+            public ForgeConfigSpec.IntValue PlayerInitialMaxSun;
             public ForgeConfigSpec.IntValue DropChanceMultiper;
 
             public static class ZombieSetting {
@@ -579,12 +579,12 @@ public class PVZConfig {
         return COMMON_CONFIG.EntitySettings.PlayerInitialGroup.get();
     }
 
-    public static boolean shouldKeepSunWhenDie(){
-        return COMMON_CONFIG.RuleSettings.KeepSunWhenDie.get();
+    public static int getPlayerInitialMaxSun(){
+        return COMMON_CONFIG.EntitySettings.PlayerInitialMaxSun.get();
     }
 
-    public static int getBaseSun(){
-        return COMMON_CONFIG.EntitySettings.PlayerBaseSunAmount.get();
+    public static boolean shouldKeepSunWhenDie(){
+        return COMMON_CONFIG.RuleSettings.KeepSunWhenDie.get();
     }
 
     public static int getSunLiveTick(){

@@ -6,11 +6,14 @@ import com.hungteen.pvz.common.item.PVZItems;
 import net.minecraft.core.particles.ItemParticleOption;
 import net.minecraft.core.particles.ParticleOptions;
 import net.minecraft.core.particles.ParticleTypes;
+import net.minecraft.core.particles.SimpleParticleType;
 import net.minecraft.world.entity.*;
 import net.minecraft.world.entity.projectile.Projectile;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.phys.BlockHitResult;
+import org.jetbrains.annotations.Nullable;
 
 /**
  * @program: pvzmod-1.18.x
@@ -103,7 +106,14 @@ public class PeaBullet extends PVZProjectile {
 
     @Override
     protected ParticleOptions getHitParticle() {
-        return this.getBulletState() == BulletStates.NORMAL ? new ItemParticleOption(ParticleTypes.ITEM, new ItemStack(PVZItems.PEA.get())) : null;
+        return this.getBulletState() == BulletStates.NORMAL ? new ItemParticleOption(ParticleTypes.ITEM, new ItemStack(PVZItems.PEA.get())) :
+                this.getBulletState() == BulletStates.ICE ? new ItemParticleOption(ParticleTypes.ITEM, new ItemStack(PVZItems.SNOW_PEA.get())) : null;
+    }
+
+    @Nullable
+    @Override
+    protected ParticleOptions getTrailParticle() {
+        return this.getBulletState() == BulletStates.ICE ? ParticleTypes.SNOWFLAKE : null;
     }
 
     @Override
