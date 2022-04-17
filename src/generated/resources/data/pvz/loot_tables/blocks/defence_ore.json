@@ -25,7 +25,7 @@
                   }
                 }
               ],
-              "name": "pvz:defence_ore"
+              "name": "minecraft:air"
             },
             {
               "type": "minecraft:item",

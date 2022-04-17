@@ -1,11 +1,16 @@
 package com.hungteen.pvz.data;
 
+import java.util.Arrays;
+import java.util.HashSet;
+import java.util.Set;
+
 import com.hungteen.pvz.PVZMod;
 import com.hungteen.pvz.api.types.IPlantType;
 import com.hungteen.pvz.common.block.PVZBlocks;
 import com.hungteen.pvz.common.item.PVZItems;
 import com.hungteen.pvz.common.item.spawn.card.PlantCardItem;
 import com.hungteen.pvz.utils.Util;
+
 import net.minecraft.data.DataGenerator;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.BlockItem;
@@ -16,10 +21,6 @@ import net.minecraftforge.client.model.generators.ItemModelBuilder;
 import net.minecraftforge.client.model.generators.ItemModelProvider;
 import net.minecraftforge.common.data.ExistingFileHelper;
 import net.minecraftforge.registries.ForgeRegistries;
-
-import java.util.Arrays;
-import java.util.HashSet;
-import java.util.Set;
 
 /**
  * @program: pvzmod-1.18.x
@@ -61,10 +62,10 @@ public class ItemModelGen extends ItemModelProvider {
         Block-items with tex in item/
          */
         Arrays.asList(
-                PVZBlocks.NUT_DOOR.get()
+                PVZBlocks.NUT_DOOR.get().asItem(), PVZItems.NUT_SIGN.get()
         ).forEach(i -> {
-            genNormalModel(i.asItem());
-            this.addedItems.add(i.asItem());
+            genNormalModel(i);
+            this.addedItems.add(i);
         });
 
         /*

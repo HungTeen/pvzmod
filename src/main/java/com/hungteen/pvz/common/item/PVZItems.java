@@ -3,13 +3,12 @@ package com.hungteen.pvz.common.item;
 import com.hungteen.pvz.PVZMod;
 import com.hungteen.pvz.api.PVZAPI;
 import com.hungteen.pvz.api.types.IPlantType;
-import com.hungteen.pvz.common.PVZSounds;
+import com.hungteen.pvz.common.sound.PVZSounds;
 import com.hungteen.pvz.common.block.PVZBlocks;
 import com.hungteen.pvz.common.entity.PVZEntities;
 import com.hungteen.pvz.common.impl.type.CardTypes;
 import com.hungteen.pvz.common.impl.type.EssenceTypes;
 import com.hungteen.pvz.common.impl.type.PAZTypes;
-import com.hungteen.pvz.common.impl.type.RankTypes;
 import com.hungteen.pvz.common.impl.type.plant.PlantType;
 import com.hungteen.pvz.common.impl.type.zombie.ZombieType;
 import com.hungteen.pvz.common.item.misc.EssenceItem;
@@ -18,9 +17,7 @@ import com.hungteen.pvz.common.item.spawn.DropItemEgg;
 import com.hungteen.pvz.common.item.spawn.card.PlantCardItem;
 import com.hungteen.pvz.common.item.tool.OriginShovelItem;
 import com.hungteen.pvz.common.item.tool.OriginSwordItem;
-import com.hungteen.pvz.utils.Util;
 import com.hungteen.pvz.utils.enums.Colors;
-import com.mojang.datafixers.util.Pair;
 
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.world.entity.EntityType;
@@ -106,6 +103,10 @@ public class PVZItems {
 //    public static final RegistryObject<PVZSpawnEggItem> PANNEY_SPAWN_EGG = registerSpawnEgg("panney", EntityRegister.PANNEY, Colors.BLUE, Colors.RED);
 //    public static final RegistryObject<PVZSpawnEggItem> SUN_DAVE_SPAWN_EGG = registerSpawnEgg("sun_dave", EntityRegister.SUN_DAVE, Colors.BROWN, Colors.SILVER);
 
+    /* decoration */
+    //TODO Custom Sign, fix Edit bug.
+    public static final RegistryObject<Item> NUT_SIGN = ITEMS.register("nut_sign", () -> new SignItem((new Item.Properties()).stacksTo(16).tab(PVZItemTabs.PVZ_BLOCK), PVZBlocks.NUT_SIGN.get(), PVZBlocks.NUT_WALL_SIGN.get()));
+
     /* misc */
 //    public static final RegistryObject<Item> TIME_SOURCE = ITEMS.register("time_source", PVZMiscItem::new);
 
@@ -123,6 +124,11 @@ public class PVZItems {
 //    public static final RegistryObject<Item> CORN = ITEMS.register("corn", ()->new PVZFoodItem(PVZFoodItem.CORN));
 //    public static final RegistryObject<Item> POP_CORN = ITEMS.register("pop_corn", ()->new PVZFoodItem(PVZFoodItem.POP_CORN));
 //    public static final RegistryObject<Item> TACOS = ITEMS.register("tacos", ()->new PVZFoodItem(PVZFoodItem.TACOS));
+
+    /*
+     * Items in Transport Tab.
+     */
+//    public static final RegistryObject<Item> NUT_BOAT = ITEMS.register("nut_boat", () -> new BoatItem(new Item.Properties()).stacksTo(16).tab(PVZItemTabs.PVZ_BLOCK), PVZBlocks.NUT_SIGN.get(), PVZBlocks.NUT_WALL_SIGN.get()));
 
     /*
      * Items in Tools Tab.

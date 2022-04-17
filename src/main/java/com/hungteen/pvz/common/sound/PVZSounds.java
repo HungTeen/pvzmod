@@ -1,4 +1,4 @@
-package com.hungteen.pvz.common;
+package com.hungteen.pvz.common.sound;
 
 import com.hungteen.pvz.PVZMod;
 import com.hungteen.pvz.utils.Util;

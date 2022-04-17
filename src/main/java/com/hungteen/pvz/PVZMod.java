@@ -1,11 +1,10 @@
 package com.hungteen.pvz;
 
-import com.hungteen.pvz.api.PVZAPI;
 import com.hungteen.pvz.client.ClientProxy;
 import com.hungteen.pvz.client.particle.PVZParticles;
 import com.hungteen.pvz.common.CommonProxy;
 import com.hungteen.pvz.common.CommonRegister;
-import com.hungteen.pvz.common.PVZSounds;
+import com.hungteen.pvz.common.sound.PVZSounds;
 import com.hungteen.pvz.common.advancement.AdvancementHandler;
 import com.hungteen.pvz.common.block.PVZBlocks;
 import com.hungteen.pvz.common.capability.CapabilityHandler;
@@ -21,6 +20,7 @@ import com.hungteen.pvz.common.impl.type.RankTypes;
 import com.hungteen.pvz.common.impl.type.plant.PVZPlants;
 import com.hungteen.pvz.common.impl.type.zombie.PVZZombies;
 import com.hungteen.pvz.common.item.PVZItems;
+import com.hungteen.pvz.common.misc.PVZWoodType;
 import com.hungteen.pvz.common.network.PVZPacketHandler;
 import com.hungteen.pvz.common.recipe.PVZRecipeTypes;
 import com.hungteen.pvz.common.recipe.PVZRecipes;
@@ -109,6 +109,9 @@ public class PVZMod {
 
     public static void setUpClient(FMLClientSetupEvent event) {
         PROXY.setUpClient();
+        event.enqueueWork(() -> {
+            PVZWoodType.register();
+        });
     }
 
     /**

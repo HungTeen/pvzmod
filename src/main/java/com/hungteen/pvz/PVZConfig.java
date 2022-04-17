@@ -323,12 +323,12 @@ public class PVZConfig {
                         .translation("config.pvz.block.origin_effect_chance")
                         .comment("The chance to get Essence Ore from Origin Block's effect")
                         .defineInRange("OriginEffectChance", 0.25, 0, 1);
-//
-//                BlockSettings.SaplingTurnChance = builder
-//                        .translation("config.pvz.block.sapling_turn_chance")
-//                        .comment("The chance when sapling turn to origin ore")
-//                        .defineInRange("SaplingTurnChance", 0.15, 0, 1);
-//
+
+                BlockSettings.SaplingTurnChance = builder
+                        .translation("config.pvz.block.sapling_turn_chance")
+                        .comment("The chance when sapling turn to origin ore")
+                        .defineInRange("SaplingTurnChance", 0.15, 0, 1);
+
 //                BlockSettings.AmethystAngerChance = builder
 //                        .translation("config.pvz.block.amethyst_anger_chance")
 //                        .comment("The chance of anger nearby enderman when break amethyst ore")
@@ -619,6 +619,10 @@ public class PVZConfig {
         return COMMON_CONFIG.WorldSettings.GenOriginOreCount.get();
     }
 
+    public static double getSaplingTurnChance(){
+        return COMMON_CONFIG.BlockSettings.SaplingTurnChance.get();
+    }
+
     public static boolean bulletIngoreGroup(){
         return COMMON_CONFIG.RuleSettings.BulletIgnoreGroup.get();
     }
@@ -633,6 +637,10 @@ public class PVZConfig {
 
     public static boolean enableDropBody(){
         return COMMON_CONFIG.EntitySettings.ZombieSetting.EnableDropBody.get();
+    }
+
+    public static boolean allowNaturalTurnOrigin(){
+        return COMMON_CONFIG.RuleSettings.AllowNaturalTurnOrigin.get();
     }
 
     /*

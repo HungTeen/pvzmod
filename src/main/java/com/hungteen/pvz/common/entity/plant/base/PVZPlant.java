@@ -8,7 +8,7 @@ import com.hungteen.pvz.api.interfaces.IAlmanacEntry;
 import com.hungteen.pvz.api.interfaces.IPlantEntity;
 import com.hungteen.pvz.api.types.base.IPAZType;
 import com.hungteen.pvz.common.entity.PVZAttributes;
-import com.hungteen.pvz.common.entity.PVZDamageSource;
+import com.hungteen.pvz.common.PVZDamageSource;
 import com.hungteen.pvz.common.entity.PVZPAZ;
 import com.mojang.datafixers.util.Pair;
 
@@ -20,14 +20,11 @@ import net.minecraft.network.syncher.SynchedEntityData;
 import net.minecraft.tags.FluidTags;
 import net.minecraft.util.Mth;
 import net.minecraft.world.damagesource.DamageSource;
-import net.minecraft.world.effect.MobEffect;
-import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.Mob;
 import net.minecraft.world.entity.ai.attributes.Attributes;
-import net.minecraft.world.level.GameRules;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.Vec3;
 

@@ -94,6 +94,8 @@ public class ItemTagGen extends ItemTagsProvider {
 //        }
 //        this.tag(PVZItemTags.PEA_GUN_BULLETS).add(ItemRegister.PEA.get()).add(ItemRegister.SNOW_PEA.get()).add(ItemRegister.FLAME_PEA.get());
 //        this.tag(PVZItemTags.REACH_ITEMS).add(ItemRegister.RESOURCE_COLLECTOR.get());
+
+        this.tag(PVZItemTags.SHIELD_ITEMS).add(Items.SHIELD);
     }
 
     private Item[] getFilterItems(Predicate<Item> predicate) {

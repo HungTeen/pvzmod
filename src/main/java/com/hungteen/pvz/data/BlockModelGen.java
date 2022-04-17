@@ -119,6 +119,42 @@ public class BlockModelGen extends BlockModelProvider {
         });
 
         /*
+        Stair Blocks.
+         */
+        Arrays.asList(
+                PVZBlocks.NUT_STAIRS.get()
+        ).forEach(b -> {
+            stair(b);
+        });
+
+        /*
+        Button Blocks.
+         */
+        Arrays.asList(
+                PVZBlocks.NUT_BUTTON.get()
+        ).forEach(b -> {
+            button(b);
+        });
+
+        /*
+        Slab Blocks.
+         */
+        Arrays.asList(
+                PVZBlocks.NUT_SLAB.get()
+        ).forEach(b -> {
+            slab(b);
+        });
+
+        /*
+        Pressure plate Blocks.
+         */
+        Arrays.asList(
+                PVZBlocks.NUT_PRESSURE_PLATE.get()
+        ).forEach(b -> {
+            pressPlate(b);
+        });
+
+        /*
         Blocks with 3 textures(up & down & side).
          */
 //        Arrays.asList(
@@ -243,6 +279,41 @@ public class BlockModelGen extends BlockModelProvider {
         sign(b.getRegistryName().getPath(), res);
         this.addedBlocks.add(b);
     }
+
+    private void stair(Block b){
+        final String realPath = b.getRegistryName().getPath().replace("stairs","planks");
+        final ResourceLocation res = Util.prefix("block/" + realPath);
+        stairs(b.getRegistryName().getPath(), res, res, res);
+        stairsOuter(b.getRegistryName().getPath(), res, res, res);
+        stairsInner(b.getRegistryName().getPath(), res, res, res);
+        this.addedBlocks.add(b);
+    }
+
+    private void button(Block b){
+        final String realPath = b.getRegistryName().getPath().replace("button","planks");
+        final ResourceLocation res = Util.prefix("block/" + realPath);
+        button(b.getRegistryName().getPath(), res);
+        buttonInventory(b.getRegistryName().getPath(), res);
+        buttonPressed(b.getRegistryName().getPath(), res);
+        this.addedBlocks.add(b);
+    }
+
+    private void slab(Block b){
+        final String realPath = b.getRegistryName().getPath().replace("slab","planks");
+        final ResourceLocation res = Util.prefix("block/" + realPath);
+        slab(b.getRegistryName().getPath(), res, res, res);
+        slabTop(b.getRegistryName().getPath(), res, res, res);
+        this.addedBlocks.add(b);
+    }
+
+    private void pressPlate(Block b){
+        final String realPath = b.getRegistryName().getPath().replace("pressure_plate","planks");
+        final ResourceLocation res = Util.prefix("block/" + realPath);
+        pressurePlate(b.getRegistryName().getPath(), res);
+        pressurePlateDown(b.getRegistryName().getPath(), res);
+        this.addedBlocks.add(b);
+    }
+
 
     @Override
     public String getName() {

@@ -4,8 +4,7 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 
-import net.minecraft.client.renderer.blockentity.SpawnerRenderer;
-import net.minecraft.client.renderer.entity.EntityRenderDispatcher;
+import com.hungteen.pvz.common.PVZDamageSource;
 import net.minecraft.world.entity.*;
 import net.minecraft.world.level.GameRules;
 import org.jetbrains.annotations.Nullable;
@@ -48,6 +47,15 @@ public abstract class PVZPAZ extends PVZMob implements IPAZEntity {
     private static final EntityDataAccessor<Integer> ANIM_TICK = SynchedEntityData.defineId(PVZPAZ.class, EntityDataSerializers.INT);
     protected static final WeightList<DropType> NORMAL_DROP_LIST = new WeightList<>();
     protected Player ownerPlayer;
+    /* states */
+//    protected boolean canBeCold = true;
+//    protected boolean canBeFrozen = true;
+//    protected boolean canBeCharm = true;
+//    protected boolean canBeButtered = true;
+//    protected boolean canBeMini = true;
+//    protected boolean canBeInvisible = true;
+//    protected boolean canBeRemove = true;
+//    protected boolean canBeStealByBungee = true;
 
     public PVZPAZ(EntityType<? extends PathfinderMob> entityType, Level level) {
         super(entityType, level);

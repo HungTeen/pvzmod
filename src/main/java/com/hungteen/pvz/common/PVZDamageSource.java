@@ -1,17 +1,18 @@
-package com.hungteen.pvz.common.entity;
+package com.hungteen.pvz.common;
 
 import com.hungteen.pvz.common.entity.bullet.PeaBullet;
-import net.minecraft.client.renderer.EffectInstance;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.damagesource.EntityDamageSource;
+import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.phys.Vec3;
 
 import javax.annotation.Nullable;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 
 /**
@@ -21,7 +22,7 @@ import java.util.List;
  **/
 public class PVZDamageSource extends EntityDamageSource {
 
-    private final List<EffectInstance> effects = new ArrayList<>();
+    private final List<MobEffectInstance> effects = new ArrayList<>();
     private Entity attackOwner = null;
     private Entity attacker = null;
     private boolean isAppease = false;//shooter.
@@ -55,15 +56,15 @@ public class PVZDamageSource extends EntityDamageSource {
 
     //projectiles
     public static PVZDamageSource pea(PeaBullet pea, Entity shooter) {
-        return (PVZDamageSource) new PVZDamageSource("pea", pea, shooter).setAppease();
+        return new PVZDamageSource("pea", pea, shooter).setAppease();
     }
 
     public static PVZDamageSource snowPea(PeaBullet pea, Entity shooter) {
-        return (PVZDamageSource) new PVZDamageSource("snow_pea", pea, shooter).setAppease().setIceDamage();
+        return new PVZDamageSource("snow_pea", pea, shooter).setAppease().setIceDamage();
     }
 
     public static PVZDamageSource flamePea(PeaBullet pea, Entity shooter) {
-        return (PVZDamageSource) new PVZDamageSource("flame_pea", pea, shooter).setAppease().setFlameDamage();
+        return new PVZDamageSource("flame_pea", pea, shooter).setAppease().setFlameDamage();
     }
 
 //    public static PVZDamageSource spore(SporeEntity pea, Entity shooter) {
@@ -220,11 +221,16 @@ public class PVZDamageSource extends EntityDamageSource {
     }
 
     //handle effects.
-    public void addEffect(EffectInstance instance) {
+    public void addEffect(MobEffectInstance instance) {
         this.effects.add(instance);
     }
 
-    public List<EffectInstance> getEffects(){
+    public void setEffects(Collection<MobEffectInstance> instances) {
+        this.effects.clear();
+        instances.forEach(effect -> addEffect(effect));
+    }
+
+    public List<MobEffectInstance> getEffects(){
         return this.effects;
     }
 

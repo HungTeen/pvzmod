@@ -1,0 +1,13 @@
+{
+  "variants": {
+    "type=top": {
+      "model": "pvz:block/nut_slab_top"
+    },
+    "type=bottom": {
+      "model": "pvz:block/nut_slab"
+    },
+    "type=double": {
+      "model": "pvz:block/nut_planks"
+    }
+  }
+}

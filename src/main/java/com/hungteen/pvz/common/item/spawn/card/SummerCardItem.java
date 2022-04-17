@@ -1,4 +1,4 @@
-package com.hungteen.pvz.common.item.spawn;
+package com.hungteen.pvz.common.item.spawn.card;
 
 import com.hungteen.pvz.common.item.PVZUsefulItem;
 import net.minecraft.core.BlockPos;

@@ -1,16 +1,23 @@
 package com.hungteen.pvz.utils;
 
 import com.hungteen.pvz.api.interfaces.IHasOwner;
+import com.hungteen.pvz.common.PVZDamageSource;
 import com.hungteen.pvz.common.effect.PVZEffects;
 import com.hungteen.pvz.common.entity.EntityGroupHandler;
 import com.hungteen.pvz.common.entity.PVZPAZ;
+import com.hungteen.pvz.common.event.handler.LivingEventHandler;
+import com.hungteen.pvz.common.tag.PVZEntityTags;
 import it.unimi.dsi.fastutil.ints.IntOpenHashSet;
+import net.minecraft.client.renderer.EffectInstance;
 import net.minecraft.core.BlockPos;
 import net.minecraft.sounds.SoundEvent;
+import net.minecraft.tags.EntityTypeTags;
+import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.Mob;
 import net.minecraft.world.entity.MobSpawnType;
+import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.LevelAccessor;
@@ -113,6 +120,51 @@ public class EntityUtil {
     }
 
     /**
+     * add entity potion effect.
+     * {@link com.hungteen.pvz.common.CombatManager#handleHurtEffects(LivingEntity, PVZDamageSource)}
+     */
+    public static void addPotionEffect(Entity entity, MobEffectInstance effect) {
+//        if(entity instanceof PVZMultiPartEntity) {
+//            addPotionEffect(((PVZMultiPartEntity) entity).getOwner(), effect);
+//        } else if(entity instanceof PVZZombieEntity) {
+//            ((PVZZombieEntity) entity).checkAndAddPotionEffect(effect);
+//        } else if(entity instanceof PVZPlantEntity){
+//            ((PVZPlantEntity) entity).checkAndAddPotionEffect(effect);
+//        } else if(entity instanceof LivingEntity) {
+//            ((LivingEntity) entity).addEffect(effect);
+//        }
+        if(effect.getEffect().equals(PVZEffects.COLD_EFFECT.get())){
+            if(! entity.getType().is(PVZEntityTags.IGNORE_COLD)){
+                ((LivingEntity) entity).addEffect(effect);
+            }
+        } else{
+            ((LivingEntity) entity).addEffect(effect);
+        }
+    }
+
+    /**
+     * is entity has cold effect.
+     */
+    public static boolean isEntityCold(LivingEntity entity) {
+        return entity.getAttribute(Attributes.MOVEMENT_SPEED).getModifier(PVZEffects.COLD_EFFECT_SPEED_UUID) != null;
+    }
+
+
+//    /**
+//     * is entity has frozen effect.
+//     */
+//    public static boolean isEntityFrozen(LivingEntity entity) {
+//        return entity.getAttribute(Attributes.MOVEMENT_SPEED).getModifier(EffectRegister.FROZEN_EFFECT_UUID) != null;
+//    }
+//
+//    /**
+//     * is entity has butter effect.
+//     */
+//    public static boolean isEntityButter(LivingEntity entity) {
+//        return entity.getAttribute(Attributes.MOVEMENT_SPEED).getModifier(EffectRegister.BUTTER_EFFECT_UUID) != null;
+//    }
+
+    /**
      * get targetable livingentity in range.
      */
     public static List<LivingEntity> getTargetableLivings(@Nonnull Entity attacker, AABB aabb){
@@ -211,6 +263,16 @@ public class EntityUtil {
             return true;
         }
         return entity.isInvulnerable();
+    }
+
+    /**
+     *  turn to true, then entity can be attack each tick.
+     */
+    public static boolean ignoreInvulnerableTime(Entity entity){
+        if(isOpEntity(entity) || entity.getType().is(PVZEntityTags.HAS_INVULNERABLE_TIME)){
+            return false;
+        }
+        return true;
     }
 
     public static boolean inEnergetic(LivingEntity entity){

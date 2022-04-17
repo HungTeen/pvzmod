@@ -1,17 +1,17 @@
 package com.hungteen.pvz.common.entity.bullet;
 
-import com.hungteen.pvz.common.entity.PVZDamageSource;
+import com.hungteen.pvz.api.interfaces.IHasEffects;
+import com.hungteen.pvz.common.PVZDamageSource;
 import com.hungteen.pvz.common.entity.PVZEntities;
 import com.hungteen.pvz.common.item.PVZItems;
 import net.minecraft.core.particles.ItemParticleOption;
 import net.minecraft.core.particles.ParticleOptions;
 import net.minecraft.core.particles.ParticleTypes;
-import net.minecraft.core.particles.SimpleParticleType;
 import net.minecraft.world.entity.*;
+import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.entity.projectile.Projectile;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
-import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.phys.BlockHitResult;
 import org.jetbrains.annotations.Nullable;
 
@@ -48,16 +48,14 @@ public class PeaBullet extends PVZProjectile {
         final float damage = this.getAttackDamage();
         if (this.getBulletState() == BulletStates.NORMAL) {// normal pea attack
             target.hurt(PVZDamageSource.pea(this, this.getOwner()), damage);
-//        } else if (this.getBulletState() == State.ICE) {// snow pea attack
-//            PVZDamageSource source = PVZDamageSource.snowPea(this, this.getThrower());
-//            LivingEntity owner = this.getThrower();
-//            if (owner instanceof IIceEffect) {
-//                ((IIceEffect) owner).getColdEffect().ifPresent(e -> source.addEffect(e));
-//                ((IIceEffect) owner).getFrozenEffect().ifPresent(e -> source.addEffect(e));
-//            } else if (owner instanceof PlayerEntity) {
+        } else if (this.getBulletState() == BulletStates.ICE) {// snow pea attack
+            PVZDamageSource source = PVZDamageSource.snowPea(this, this.getOwner());
+            if (this.getOwner() instanceof IHasEffects) {
+                source.setEffects(((IHasEffects) this.getOwner()).getEffects());
+            } else if (this.getOwner() instanceof Player) {
 //                source.addEffect(EffectUtil.effect(EffectRegister.COLD_EFFECT.get(), 100, 5));
-//            }
-//            target.hurt(source, damage);
+            }
+            target.hurt(source, damage);
 //        } else if (this.getBulletState() == State.FIRE || this.getBulletState() == State.BLUE_FIRE) {
 //            target.hurt(PVZEntityDamageSource.flamePea(this, this.getThrower()), damage);
         }

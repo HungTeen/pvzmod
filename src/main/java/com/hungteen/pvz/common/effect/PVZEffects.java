@@ -22,13 +22,14 @@ public class PVZEffects {
 
     public static final DeferredRegister<MobEffect> EFFECTS = DeferredRegister.create(ForgeRegistries.MOB_EFFECTS, PVZMod.MOD_ID);
 
+    public static final UUID COLD_EFFECT_SPEED_UUID = UUID.fromString("968019bc-e212-11ea-87d0-0242ac130003");
 //    public static final UUID FROZEN_EFFECT_UUID = UUID.fromString("293e07aa-e213-11ea-87d0-0242ac130003");
 //    public static final UUID LIGHT_EYE_EFFECT_UUID = UUID.fromString("aa7a51c2-3e73-11eb-b378-0242ac130002");
 //    public static final UUID BUTTER_EFFECT_UUID = UUID.fromString("01c75056-5e45-11eb-ae93-0242ac130002");
 
     public static final RegistryObject<MobEffect> COLD_EFFECT = EFFECTS.register("cold", () -> {
         return new PVZMobEffect(MobEffectCategory.HARMFUL, Colors.IRIS_BLUE)
-                .addAttributeModifier(Attributes.MOVEMENT_SPEED, "968019bc-e212-11ea-87d0-0242ac130003", -0.05f, AttributeModifier.Operation.MULTIPLY_TOTAL)
+                .addAttributeModifier(Attributes.MOVEMENT_SPEED, COLD_EFFECT_SPEED_UUID.toString(), -0.05f, AttributeModifier.Operation.MULTIPLY_TOTAL)
                 .addAttributeModifier(PVZAttributes.WORK_CD.get(), "b46170d4-6957-11ec-90d6-0242ac120003", 0.05F, AttributeModifier.Operation.MULTIPLY_TOTAL);
     });
 

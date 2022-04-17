@@ -35,9 +35,13 @@ public class PVZItemTags {
     public static final TagKey<Item> TEMPLATE_CARDS = pvzTag("cards/template_card");
     public static final TagKey<Item> ESSENCE_ORES = pvzTag("ores/essence");
     public static final TagKey<Item> PEA_GUN_BULLETS = pvzTag("pea_gun_bullets");
+
     //for enchantment tag.
     public static final TagKey<Item> REACH_ITEMS = pvzTag("reach_items");
     public static final TagKey<Item> COST_SUN_ITEMS = pvzTag("cost_sun_items");
+
+    //special.
+    public static final TagKey<Item> SHIELD_ITEMS = pvzTag("shield_items");
 
     // Card materials.
     public static final TagKey<Item> WHITE_MATERIALS = pvzTag("card/white_materials");
