@@ -1,9 +1,8 @@
 package com.hungteen.pvz.client.render.entity.zombie;
 
-import com.hungteen.pvz.client.model.zombie.HumanoidZombieModel;
+import com.hungteen.pvz.client.model.entity.zombie.HumanoidZombieModel;
 import com.hungteen.pvz.common.entity.zombie.base.PVZZombie;
 import com.hungteen.pvz.utils.interfaces.IDropPartModel;
-import net.minecraft.client.model.EntityModel;
 import net.minecraft.client.renderer.entity.EntityRendererProvider;
 import net.minecraft.client.renderer.entity.HumanoidMobRenderer;
 import net.minecraft.client.renderer.entity.layers.HumanoidArmorLayer;
@@ -34,4 +33,8 @@ public class HumanoidZombieRender<T extends PVZZombie> extends HumanoidMobRender
         return zombie.getPAZType().getDefaultResource();
     }
 
+    @Override
+    protected float getAttackAnim(T entity, float partialTicks) {
+        return super.getAttackAnim(entity, partialTicks);
+    }
 }

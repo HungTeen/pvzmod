@@ -1,9 +1,8 @@
 package com.hungteen.pvz.client.render.entity.plant;
 
 import com.hungteen.pvz.client.model.PVZModelLayers;
-import com.hungteen.pvz.client.model.plant.PeaShooterModel;
+import com.hungteen.pvz.client.model.entity.plant.PeaShooterModel;
 import com.hungteen.pvz.common.entity.plant.PeaShooter;
-import net.minecraft.client.model.EntityModel;
 import net.minecraft.client.renderer.entity.EntityRendererProvider;
 
 /**

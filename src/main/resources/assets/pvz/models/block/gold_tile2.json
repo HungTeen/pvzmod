@@ -1,6 +1,0 @@
-{
-    "parent": "block/cube_all",
-    "textures": {
-        "all": "pvz:block/gold_tile2"
-    }
-}

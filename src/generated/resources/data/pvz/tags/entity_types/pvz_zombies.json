@@ -1,6 +1,7 @@
 {
   "replace": false,
   "values": [
+    "pvz:bucket_head_zombie",
     "pvz:normal_zombie"
   ]
 }

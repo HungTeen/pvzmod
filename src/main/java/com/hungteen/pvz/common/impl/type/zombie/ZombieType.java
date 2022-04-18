@@ -25,6 +25,7 @@ import java.util.function.Supplier;
 public abstract class ZombieType extends PAZTypes.PAZType implements IZombieType {
 
     protected IEssenceType plantEssence = EssenceTypes.APPEASE;
+    protected ResourceLocation resourceLocation;
 
     protected ZombieType(String name) {
         super(name);
@@ -38,7 +39,7 @@ public abstract class ZombieType extends PAZTypes.PAZType implements IZombieType
 
     @Override
     public ResourceLocation getDefaultResource() {
-        return Util.prefix("textures/entity/zombie/" + this.name + "/" + this.name + ".png");
+        return resourceLocation == null ? Util.prefix("textures/entity/zombie/" + this.name + "/" + this.name + ".png") : resourceLocation;
     }
 
     /*
@@ -106,11 +107,16 @@ public abstract class ZombieType extends PAZTypes.PAZType implements IZombieType
     }
 
     /*
-    Plant Only.
+    Zombie Only.
      */
 
     public ZombieType essence(IEssenceType essenceType){
         this.plantEssence = essenceType;
+        return this;
+    }
+
+    public ZombieType res(ResourceLocation resourceLocation){
+        this.resourceLocation = resourceLocation;
         return this;
     }
 

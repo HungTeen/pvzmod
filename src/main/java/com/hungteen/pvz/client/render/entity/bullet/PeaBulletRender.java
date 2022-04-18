@@ -1,7 +1,7 @@
 package com.hungteen.pvz.client.render.entity.bullet;
 
 import com.hungteen.pvz.client.model.PVZModelLayers;
-import com.hungteen.pvz.client.model.bullet.CommonBulletModel;
+import com.hungteen.pvz.client.model.entity.bullet.CommonBulletModel;
 import com.hungteen.pvz.common.entity.bullet.PVZProjectile.BulletStates;
 import com.hungteen.pvz.common.entity.bullet.PeaBullet;
 import com.hungteen.pvz.utils.Util;

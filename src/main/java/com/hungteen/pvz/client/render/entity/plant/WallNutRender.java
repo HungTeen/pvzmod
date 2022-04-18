@@ -1,20 +1,15 @@
 package com.hungteen.pvz.client.render.entity.plant;
 
-import com.hungteen.pvz.client.ClientProxy;
 import com.hungteen.pvz.client.model.PVZModelLayers;
-import com.hungteen.pvz.client.model.misc.ComponentModel;
-import com.hungteen.pvz.client.model.plant.WallNutModel;
+import com.hungteen.pvz.client.model.entity.misc.ComponentModel;
+import com.hungteen.pvz.client.model.entity.plant.WallNutModel;
 import com.hungteen.pvz.client.render.entity.layer.ComponentLayer;
 import com.hungteen.pvz.common.entity.plant.WallNut;
-import com.hungteen.pvz.utils.StringUtil;
 import com.hungteen.pvz.utils.Util;
 import net.minecraft.client.model.EntityModel;
-import net.minecraft.client.model.geom.builders.LayerDefinition;
 import net.minecraft.client.renderer.entity.EntityRendererProvider;
 import net.minecraft.client.renderer.entity.RenderLayerParent;
 import net.minecraft.resources.ResourceLocation;
-
-import java.util.function.Supplier;
 
 /**
  * @program: pvzmod-1.18.x

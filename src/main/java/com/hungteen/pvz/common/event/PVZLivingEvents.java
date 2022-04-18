@@ -69,6 +69,7 @@ public class PVZLivingEvents {
     @SubscribeEvent
     public static void onLivingDamage(LivingDamageEvent ev) {
 //        AbstractPAZEntity.damageInnerDefence(ev);
+    	CombatManager.onLivingBlockDamage(ev);
     }
 
 }

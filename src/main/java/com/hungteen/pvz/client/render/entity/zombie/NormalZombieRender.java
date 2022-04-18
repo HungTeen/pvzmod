@@ -1,9 +1,12 @@
 package com.hungteen.pvz.client.render.entity.zombie;
 
 import com.hungteen.pvz.client.model.PVZModelLayers;
-import com.hungteen.pvz.client.model.zombie.NormalZombieModel;
+import com.hungteen.pvz.client.model.entity.zombie.NormalZombieModel;
 import com.hungteen.pvz.common.entity.zombie.NormalZombie;
+import com.hungteen.pvz.common.impl.type.zombie.PVZZombies;
+
 import net.minecraft.client.renderer.entity.EntityRendererProvider;
+import net.minecraft.resources.ResourceLocation;
 
 /**
  * @program: pvzmod-1.18.x

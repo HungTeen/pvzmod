@@ -2,9 +2,11 @@ package com.hungteen.pvz.common.sound;
 
 import com.hungteen.pvz.common.PVZDamageSource;
 import com.hungteen.pvz.common.event.PVZLivingEvents;
+import com.hungteen.pvz.common.item.PVZItems;
 import com.hungteen.pvz.utils.EntityUtil;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.world.InteractionHand;
+import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.item.ItemStack;
 
@@ -40,6 +42,22 @@ public class SoundManager {
      */
     public static void playShieldBreakSound(LivingEntity entity, ItemStack stack){
         EntityUtil.playSound(entity, SoundEvents.SHIELD_BREAK);
+    }
+
+    /**
+     * {@link com.hungteen.pvz.common.CombatManager#hurtCurrentlyUsedArmor(LivingEntity, EquipmentSlot, ItemStack, float)}
+     */
+    public static void playArmorHurtSound(LivingEntity entity, ItemStack stack){
+    	if(stack.is(PVZItems.BUCKET_HEAD.get())) {
+    		EntityUtil.playSound(entity, PVZSounds.METAL_HIT.get());
+    	}
+    }
+
+    /**
+     * {@link com.hungteen.pvz.common.CombatManager#hurtCurrentlyUsedArmor(LivingEntity, EquipmentSlot, ItemStack, float)}
+     */
+    public static void playArmorBreakSound(LivingEntity entity, ItemStack stack){
+//        EntityUtil.playSound(entity, SoundEvents.SHIELD_BREAK);
     }
 
 }

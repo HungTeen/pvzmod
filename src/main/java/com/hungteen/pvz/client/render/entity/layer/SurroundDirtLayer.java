@@ -1,7 +1,7 @@
 package com.hungteen.pvz.client.render.entity.layer;
 
 import com.hungteen.pvz.client.ClientProxy;
-import com.hungteen.pvz.client.model.misc.ComponentModel;
+import com.hungteen.pvz.client.model.entity.misc.ComponentModel;
 import com.hungteen.pvz.common.entity.plant.base.PVZPlant;
 import net.minecraft.client.model.EntityModel;
 import net.minecraft.client.renderer.entity.RenderLayerParent;

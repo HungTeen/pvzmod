@@ -1,8 +1,8 @@
 package com.hungteen.pvz.client.render.entity.plant;
 
 import com.hungteen.pvz.client.model.PVZModelLayers;
-import com.hungteen.pvz.client.model.component.SurroundDirtModel;
-import com.hungteen.pvz.client.model.plant.PotatoMineModel;
+import com.hungteen.pvz.client.model.entity.component.SurroundDirtModel;
+import com.hungteen.pvz.client.model.entity.plant.PotatoMineModel;
 import com.hungteen.pvz.client.render.entity.layer.PVZLightLayer;
 import com.hungteen.pvz.client.render.entity.layer.SurroundDirtLayer;
 import com.hungteen.pvz.common.entity.plant.PotatoMine;

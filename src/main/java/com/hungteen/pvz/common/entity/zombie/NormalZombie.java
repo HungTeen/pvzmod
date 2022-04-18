@@ -22,7 +22,6 @@ public class NormalZombie extends PVZZombie {
 	@Override
 	public void normalZombieTick() {
 		super.normalZombieTick();
-		
 	}
 
 	@Override

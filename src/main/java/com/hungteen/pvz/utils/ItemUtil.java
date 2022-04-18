@@ -20,4 +20,8 @@ public class ItemUtil {
         return stack.is(PVZItemTags.SHIELD_ITEMS) && stack.isDamageableItem();
     }
 
+    public static boolean isArmorItem(ItemStack stack) {
+        return stack.is(PVZItemTags.ARMOR_ITEMS) && stack.isDamageableItem();
+    }
+
 }

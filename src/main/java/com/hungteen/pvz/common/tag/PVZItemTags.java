@@ -28,11 +28,11 @@ public class PVZItemTags {
 
     /* pvz */
     public static final TagKey<Item> ESSENCES = pvzTag("essences");
-    public static final TagKey<Item> ALL_CARDS = pvzTag("cards/all_card");
-    public static final TagKey<Item> PLANT_SUMMON_CARDS = pvzTag("cards/plant_summon_card");
-    public static final TagKey<Item> PLANT_ENJOY_CARDS = pvzTag("cards/plant_enjoy_card");
-    public static final TagKey<Item> PLANT_CARDS = pvzTag("cards/plant_card");
-    public static final TagKey<Item> TEMPLATE_CARDS = pvzTag("cards/template_card");
+    public static final TagKey<Item> ALL_CARDS = pvzTag("card/all_card");
+    public static final TagKey<Item> PLANT_SUMMON_CARDS = pvzTag("card/plant_summon_card");
+    public static final TagKey<Item> PLANT_ENJOY_CARDS = pvzTag("card/plant_enjoy_card");
+    public static final TagKey<Item> PLANT_CARDS = pvzTag("card/plant_card");
+    public static final TagKey<Item> TEMPLATE_CARDS = pvzTag("card/template_card");
     public static final TagKey<Item> ESSENCE_ORES = pvzTag("ores/essence");
     public static final TagKey<Item> PEA_GUN_BULLETS = pvzTag("pea_gun_bullets");
 
@@ -42,6 +42,7 @@ public class PVZItemTags {
 
     //special.
     public static final TagKey<Item> SHIELD_ITEMS = pvzTag("shield_items");
+    public static final TagKey<Item> ARMOR_ITEMS = pvzTag("armor_items");
 
     // Card materials.
     public static final TagKey<Item> WHITE_MATERIALS = pvzTag("card/white_materials");

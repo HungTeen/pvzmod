@@ -6,12 +6,14 @@ import com.hungteen.pvz.PVZConfig;
 import com.hungteen.pvz.api.enums.PVZGroupType;
 import com.hungteen.pvz.api.interfaces.IZombieEntity;
 import com.hungteen.pvz.api.types.base.IPAZType;
+import com.hungteen.pvz.common.entity.PVZAttributes;
+import com.hungteen.pvz.common.entity.ai.goal.attack.PVZZombieMeleeAttackGoal;
 import com.hungteen.pvz.common.sound.PVZSounds;
 import com.hungteen.pvz.common.PVZDamageSource;
 import com.hungteen.pvz.common.entity.PVZEntities;
 import com.hungteen.pvz.common.entity.PVZPAZ;
-import com.hungteen.pvz.common.entity.ai.PVZLookRandomlyGoal;
-import com.hungteen.pvz.common.entity.ai.target.PVZNearestTargetGoal;
+import com.hungteen.pvz.common.entity.ai.goal.PVZLookRandomlyGoal;
+import com.hungteen.pvz.common.entity.ai.goal.target.PVZNearestTargetGoal;
 import com.hungteen.pvz.common.entity.bullet.PVZProjectile;
 import com.hungteen.pvz.common.entity.plant.base.PVZPlant;
 import com.hungteen.pvz.common.entity.zombie.ZombieUtil;
@@ -24,12 +26,13 @@ import net.minecraft.nbt.CompoundTag;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.util.Mth;
 import net.minecraft.world.damagesource.DamageSource;
-import net.minecraft.world.entity.Entity;
-import net.minecraft.world.entity.EntityType;
-import net.minecraft.world.entity.EquipmentSlot;
-import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.*;
 import net.minecraft.world.entity.ai.attributes.Attributes;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.AxeItem;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Items;
+import net.minecraft.world.item.enchantment.EnchantmentHelper;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.pathfinder.BlockPathTypes;
 
@@ -76,7 +79,7 @@ public abstract class PVZZombie extends PVZPAZ implements IZombieEntity {
      * {@link #registerGoals()}
      */
     protected void registerAttackGoals() {
-//        this.goalSelector.addGoal(3, new PVZZombieAttackGoal(this, true));
+        this.goalSelector.addGoal(3, new PVZZombieMeleeAttackGoal(this, 1F, true));
 //        this.goalSelector.addGoal(6, new ZombieBreakPlantBlockGoal(BlockRegister.FLOWER_POT.get(), this, 1F, 10));
     }
 
@@ -129,6 +132,7 @@ public abstract class PVZZombie extends PVZPAZ implements IZombieEntity {
         this.getAttribute(Attributes.FOLLOW_RANGE).setBaseValue(this.getFollowRange());
         this.getAttribute(Attributes.MOVEMENT_SPEED).setBaseValue(this.getWalkSpeed());
         this.getAttribute(Attributes.KNOCKBACK_RESISTANCE).setBaseValue(this.getKBValue());
+        this.getAttribute(PVZAttributes.WORK_CD.get()).setBaseValue(this.getZombieAttackCD());
     }
 
     @Override
@@ -187,6 +191,58 @@ public abstract class PVZZombie extends PVZPAZ implements IZombieEntity {
         }
     }
 
+    /**
+     * Copy from super {@link Mob#doHurtTarget(Entity)}
+     */
+    @Override
+    public boolean doHurtTarget(Entity entityIn) {
+//        this.setAnimTime(PERFORM_ATTACK_CD);
+
+        // add
+        float f = (float) this.getAttributeValue(Attributes.ATTACK_DAMAGE);
+        float f1 = (float) this.getAttributeValue(Attributes.ATTACK_KNOCKBACK);
+        if (entityIn instanceof LivingEntity) {
+            f += EnchantmentHelper.getDamageBonus(this.getMainHandItem(), ((LivingEntity) entityIn).getMobType());
+            f1 += (float) EnchantmentHelper.getKnockbackBonus(this);
+        }
+
+        int i = EnchantmentHelper.getFireAspect(this);
+        if (i > 0) {
+            entityIn.setSecondsOnFire(i * 4);
+        }
+
+        boolean flag = entityIn.hurt(getZombieAttackDamageSource(), f);
+        if (flag) {
+            if (f1 > 0.0F && entityIn instanceof LivingEntity) {
+                ((LivingEntity)entityIn).knockback((double)(f1 * 0.5F), (double)Mth.sin(this.getYRot() * ((float)Math.PI / 180F)), (double)(-Mth.cos(this.getYRot() * ((float)Math.PI / 180F))));
+                this.setDeltaMovement(this.getDeltaMovement().multiply(0.6D, 1.0D, 0.6D));
+            }
+
+            if (entityIn instanceof Player) {
+                Player player = (Player)entityIn;
+                this.maybeDisableShield(player, this.getMainHandItem(), player.isUsingItem() ? player.getUseItem() : ItemStack.EMPTY);
+            }
+
+            this.doEnchantDamageEffects(this, entityIn);
+            this.setLastHurtMob(entityIn);
+        }
+        return flag;
+    }
+
+    /**
+     * copy from default code.
+     */
+    private void maybeDisableShield(Player player, ItemStack itemStack, ItemStack itemStack1) {
+        if (!itemStack.isEmpty() && !itemStack1.isEmpty() && itemStack.getItem() instanceof AxeItem
+                && itemStack1.getItem() == Items.SHIELD) {
+            float f = 0.25F + (float) EnchantmentHelper.getBlockEfficiency(this) * 0.05F;
+            if (this.random.nextFloat() < f) {
+                player.getCooldowns().addCooldown(Items.SHIELD, 100);
+                this.level.broadcastEntityEvent(player, (byte) 30);
+            }
+        }
+    }
+
     @Override
     public boolean hurt(DamageSource source, float amount) {
         if(! level.isClientSide) {
@@ -235,6 +291,14 @@ public abstract class PVZZombie extends PVZPAZ implements IZombieEntity {
 //                this.spawnSpecialDrops();
 //            }
         }
+    }
+
+    /**
+     * damage type of zombie.
+     * {@link #doHurtTarget(Entity)}
+     */
+    protected PVZDamageSource getZombieAttackDamageSource() {
+        return PVZDamageSource.eat(this);
     }
 
     /**
@@ -398,6 +462,14 @@ public abstract class PVZZombie extends PVZPAZ implements IZombieEntity {
     public int getArmor() {
         return 0;
 //        return (int) this.getSkillValue(SkillTypes.TOUGH_BODY);
+    }
+
+    public int getZombieAttackCD(){
+        return 20;
+    }
+
+    public double getCurrentAttackCD(){
+        return this.getAttribute(PVZAttributes.WORK_CD.get()).getValue();
     }
 
     @Override

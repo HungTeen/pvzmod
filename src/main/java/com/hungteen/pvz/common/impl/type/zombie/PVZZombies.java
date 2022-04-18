@@ -24,9 +24,14 @@ public class PVZZombies {
     private static final List<IPAZType> ZOMBIES = new ArrayList<>();
 
     public static final IZombieType NORMAL_ZOMBIE = new PVZZombies.PVZZombieType("normal_zombie")
-            .xp(10)
             .rank(RankTypes.WHITE)
             .entity(() -> PVZEntities.NORMAL_ZOMBIE.get())
+            .skills(new ArrayList<>());
+
+    public static final IZombieType BUCKET_HEAD_ZOMBIE = new PVZZombies.PVZZombieType("bucket_head_zombie")
+            .rank(RankTypes.GOLD)
+            .entity(() -> PVZEntities.BUCKET_HEAD_ZOMBIE.get())
+            .res(NORMAL_ZOMBIE.getDefaultResource())
             .skills(new ArrayList<>());
 
     public static class PVZZombieType extends ZombieType {

@@ -1,7 +1,7 @@
 package com.hungteen.pvz.common.entity.plant.base;
 
 import com.hungteen.pvz.common.PVZDamageSource;
-import com.hungteen.pvz.common.entity.ai.target.PVZNearestTargetGoal;
+import com.hungteen.pvz.common.entity.ai.goal.target.PVZNearestTargetGoal;
 import com.hungteen.pvz.utils.EntityUtil;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.Entity;

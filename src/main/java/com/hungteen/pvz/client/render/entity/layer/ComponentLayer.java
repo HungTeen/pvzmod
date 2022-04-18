@@ -1,6 +1,6 @@
 package com.hungteen.pvz.client.render.entity.layer;
 
-import com.hungteen.pvz.client.model.misc.ComponentModel;
+import com.hungteen.pvz.client.model.entity.misc.ComponentModel;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
 import net.minecraft.client.model.EntityModel;

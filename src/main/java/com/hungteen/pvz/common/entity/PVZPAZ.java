@@ -12,7 +12,7 @@ import org.jetbrains.annotations.Nullable;
 import com.hungteen.pvz.api.interfaces.IAlmanacEntry;
 import com.hungteen.pvz.api.interfaces.IPAZEntity;
 import com.hungteen.pvz.api.types.ISkillType;
-import com.hungteen.pvz.common.entity.ai.PVZLookRandomlyGoal;
+import com.hungteen.pvz.common.entity.ai.goal.PVZLookRandomlyGoal;
 import com.hungteen.pvz.common.impl.PAZAlmanacs;
 import com.hungteen.pvz.common.impl.type.SkillTypes;
 import com.hungteen.pvz.utils.EntityUtil;

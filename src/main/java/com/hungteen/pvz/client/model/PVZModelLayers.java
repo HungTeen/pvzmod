@@ -11,6 +11,12 @@ import net.minecraft.client.model.geom.ModelLayerLocation;
 public class PVZModelLayers {
 
     /*
+    Common Layers.
+     */
+    public static final ModelLayerLocation BUCKET_INNER_ARMOR = registerInnerArmor("bucket");
+    public static final ModelLayerLocation BUCKET_OUTER_ARMOR = registerOuterArmor("bucket");
+
+    /*
     Drop Entities.
      */
     public static final ModelLayerLocation SUN = register("sun");

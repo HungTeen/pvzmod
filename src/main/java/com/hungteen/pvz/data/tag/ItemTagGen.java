@@ -96,6 +96,8 @@ public class ItemTagGen extends ItemTagsProvider {
 //        this.tag(PVZItemTags.REACH_ITEMS).add(ItemRegister.RESOURCE_COLLECTOR.get());
 
         this.tag(PVZItemTags.SHIELD_ITEMS).add(Items.SHIELD);
+
+        this.tag(PVZItemTags.ARMOR_ITEMS).add(PVZItems.BUCKET_HEAD.get());
     }
 
     private Item[] getFilterItems(Predicate<Item> predicate) {

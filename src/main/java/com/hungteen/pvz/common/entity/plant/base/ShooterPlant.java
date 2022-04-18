@@ -2,15 +2,13 @@ package com.hungteen.pvz.common.entity.plant.base;
 
 import com.hungteen.pvz.api.interfaces.IAlmanacEntry;
 import com.hungteen.pvz.common.entity.PVZAttributes;
-import com.hungteen.pvz.common.entity.ai.PVZGoal;
-import com.hungteen.pvz.common.entity.ai.target.PVZNearestTargetGoal;
-import com.hungteen.pvz.common.entity.ai.target.PVZScatterTargetGoal;
+import com.hungteen.pvz.common.entity.ai.goal.PVZGoal;
+import com.hungteen.pvz.common.entity.ai.goal.target.PVZScatterTargetGoal;
 import com.hungteen.pvz.common.entity.bullet.PVZProjectile;
 import com.hungteen.pvz.common.impl.PAZAlmanacs;
 import com.hungteen.pvz.utils.EntityUtil;
 import com.hungteen.pvz.utils.MathUtil;
 import com.mojang.datafixers.util.Pair;
-import com.mojang.math.Vector3d;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundEvents;

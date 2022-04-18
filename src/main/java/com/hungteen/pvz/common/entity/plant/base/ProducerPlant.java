@@ -2,12 +2,11 @@ package com.hungteen.pvz.common.entity.plant.base;
 
 import com.hungteen.pvz.api.interfaces.IAlmanacEntry;
 import com.hungteen.pvz.common.entity.PVZAttributes;
-import com.hungteen.pvz.common.entity.ai.PVZGoal;
+import com.hungteen.pvz.common.entity.ai.goal.PVZGoal;
 import com.hungteen.pvz.common.impl.PAZAlmanacs;
 import com.hungteen.pvz.utils.EntityUtil;
 import com.mojang.datafixers.util.Pair;
 import net.minecraft.world.entity.EntityType;
-import net.minecraft.world.entity.ai.goal.Goal;
 import net.minecraft.world.level.Level;
 
 import java.util.Arrays;
