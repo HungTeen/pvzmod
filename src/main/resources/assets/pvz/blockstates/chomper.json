@@ -1,8 +1,0 @@
-{
-  "variants": {
-    "facing=north":{"model":"pvz:block/chomper"},
-    "facing=east":{"model":"pvz:block/chomper","y":90},
-    "facing=south":{"model":"pvz:block/chomper","y":180},
-    "facing=west":{"model":"pvz:block/chomper","y":270}
-  }
-}

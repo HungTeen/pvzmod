@@ -1,12 +1,8 @@
 package com.hungteen.pvz.utils;
 
 import com.hungteen.pvz.PVZMod;
-import net.minecraft.resources.ResourceLocation;
-import net.minecraft.world.level.block.Block;
-import net.minecraftforge.registries.ForgeRegistries;
 
-import java.util.Comparator;
-import java.util.function.Predicate;
+import net.minecraft.resources.ResourceLocation;
 
 /**
  * @program: pvzmod-1.18.x
@@ -33,6 +29,9 @@ public class Util {
         return new ResourceLocation("forge", name);
     }
 
+    public static ResourceLocation texture(String location){
+        return prefix("textures/" + location);
+    }
     /**
      * get resource with pvz prefix.
      */

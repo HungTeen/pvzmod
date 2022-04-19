@@ -35,6 +35,11 @@ public abstract class PVZMob extends PathfinderMob implements IHasOwner, IHasGro
         this.entityData.define(OWNER_UUID, Optional.empty());
     }
 
+    @Override
+    protected boolean shouldDespawnInPeaceful() {
+        return EntityGroupHandler.isMonsterGroup(this.getGroupType());
+    }
+
     /* data */
 
     @Override

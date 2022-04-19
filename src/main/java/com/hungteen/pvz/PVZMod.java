@@ -1,25 +1,31 @@
 package com.hungteen.pvz;
 
-import com.hungteen.pvz.api.PVZAPI;
 import com.hungteen.pvz.client.ClientProxy;
+import com.hungteen.pvz.client.particle.PVZParticles;
 import com.hungteen.pvz.common.CommonProxy;
 import com.hungteen.pvz.common.CommonRegister;
-import com.hungteen.pvz.common.PVZSounds;
+import com.hungteen.pvz.common.sound.PVZSounds;
 import com.hungteen.pvz.common.advancement.AdvancementHandler;
 import com.hungteen.pvz.common.block.PVZBlocks;
 import com.hungteen.pvz.common.capability.CapabilityHandler;
+import com.hungteen.pvz.common.command.PVZCommandHandler;
 import com.hungteen.pvz.common.effect.PVZEffects;
 import com.hungteen.pvz.common.effect.PVZPotions;
 import com.hungteen.pvz.common.enchantment.PVZEnchantments;
+import com.hungteen.pvz.common.entity.PVZAttributes;
 import com.hungteen.pvz.common.entity.PVZEntities;
+import com.hungteen.pvz.common.impl.type.CardTypes;
 import com.hungteen.pvz.common.impl.type.EssenceTypes;
 import com.hungteen.pvz.common.impl.type.RankTypes;
 import com.hungteen.pvz.common.impl.type.plant.PVZPlants;
+import com.hungteen.pvz.common.impl.type.zombie.PVZZombies;
 import com.hungteen.pvz.common.item.PVZItems;
+import com.hungteen.pvz.common.misc.PVZWoodType;
 import com.hungteen.pvz.common.network.PVZPacketHandler;
 import com.hungteen.pvz.common.recipe.PVZRecipeTypes;
 import com.hungteen.pvz.common.recipe.PVZRecipes;
 import com.hungteen.pvz.common.world.biome.PVZBiomes;
+import com.hungteen.pvz.common.world.dimension.PVZDimensions;
 import com.hungteen.pvz.common.world.feature.PVZFeatures;
 import com.hungteen.pvz.common.world.spawn.SpawnRegister;
 import com.hungteen.pvz.data.DataGenHandler;
@@ -72,6 +78,7 @@ public class PVZMod {
         //get forge event bus.
         IEventBus forgeBus = MinecraftForge.EVENT_BUS;
         forgeBus.addGenericListener(Entity.class, CapabilityHandler::attachCapabilities);
+        forgeBus.addListener(EventPriority.NORMAL, PVZCommandHandler::init);
 //        forgeBus.addListener(EventPriority.NORMAL, GenStructures::addDimensionalSpacing);
         forgeBus.addListener(EventPriority.HIGH, PVZBiomes::biomeModification);
 //        forgeBus.addListener(EventPriority.NORMAL, PVZDataPackManager::addReloadListenerEvent);
@@ -94,6 +101,7 @@ public class PVZMod {
             CommonRegister.registerCompostable();
             BiomeUtil.initBiomeSet();
             SpawnRegister.registerEntitySpawns();
+            PVZDimensions.register();
         });
 
         PVZPacketHandler.init();
@@ -101,16 +109,18 @@ public class PVZMod {
 
     public static void setUpClient(FMLClientSetupEvent event) {
         PROXY.setUpClient();
+        event.enqueueWork(() -> {
+            PVZWoodType.register();
+        });
     }
 
     /**
      * register paz stuff at {@link PVZMod#PVZMod()}.
      */
     public static void coreRegister() {
-        //register essences.
         EssenceTypes.EssenceType.register();
-        //register ranks.
         RankTypes.RankType.register();
+        CardTypes.CardType.register();
 //        //register skills.
 //        SkillTypes.SkillType.register();
         //register plants.
@@ -118,7 +128,8 @@ public class PVZMod {
 //        CustomPlants.register();
 //        MemePlants.register();
 //        OtherPlants.register();
-//        //register zombies.
+        //register zombies.
+        PVZZombies.PVZZombieType.register();
 //        GrassZombies.register();
 //        PoolZombies.register();
 //        RoofZombies.register();
@@ -142,12 +153,12 @@ public class PVZMod {
         PVZEnchantments.ENCHANTMENTS.register(bus);
         PVZEffects.EFFECTS.register(bus);
         PVZPotions.POTIONS.register(bus);
-//        ParticleRegister.PARTICLE_TYPES.register(bus);
+        PVZParticles.PARTICLE_TYPES.register(bus);
+        PVZAttributes.ATTRIBUTES.register(bus);
 //        FeatureRegister.FEATURES.register(bus);
 //        StructureRegister.STRUCTURE_FEATURES.register(bus);
 //        TileEntityRegister.TILE_ENTITY_TYPES.register(bus);
 //        ContainerRegister.CONTAINER_TYPES.register(bus);
-//        PVZAttributes.ATTRIBUTES.register(bus);
     }
 
 }

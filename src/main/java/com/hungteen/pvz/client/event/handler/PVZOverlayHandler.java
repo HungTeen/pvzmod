@@ -5,18 +5,14 @@ import com.hungteen.pvz.client.ClientProxy;
 import com.hungteen.pvz.client.RenderUtil;
 import com.hungteen.pvz.client.event.OverlayEvents;
 import com.hungteen.pvz.client.event.PVZInputEvents;
-import com.hungteen.pvz.common.capability.player.PlayerDataManager;
-import com.hungteen.pvz.utils.Colors;
 import com.hungteen.pvz.utils.MathUtil;
 import com.hungteen.pvz.utils.PlayerUtil;
 import com.hungteen.pvz.utils.Util;
+import com.hungteen.pvz.utils.enums.Colors;
 import com.hungteen.pvz.utils.enums.Resources;
 import com.mojang.blaze3d.systems.RenderSystem;
-import com.mojang.blaze3d.vertex.BufferBuilder;
 import com.mojang.blaze3d.vertex.PoseStack;
-import net.minecraft.client.gui.screens.inventory.FurnaceScreen;
-import net.minecraft.client.renderer.entity.CreeperRenderer;
-import net.minecraft.client.renderer.entity.layers.CreeperPowerLayer;
+
 import net.minecraft.resources.ResourceLocation;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
@@ -262,7 +258,7 @@ public class PVZOverlayHandler {
      * {@link #renderResources(PoseStack, int, int)}
      */
     private static void renderSunBar(PoseStack stack, int width, int height) {
-        final int max = PlayerUtil.getPlayerMaxSunNum(PlayerUtil.getResource(ClientProxy.MC.player, Resources.TREE_LVL));
+        final int max = PlayerUtil.getResource(ClientProxy.MC.player, Resources.MAX_SUN_NUM);
         final int now = PlayerUtil.getResource(ClientProxy.MC.player, Resources.SUN_NUM);
         final int len = MathUtil.getBarLen(now, max, SUN_BAR_W2);
         final float sz = 0.7F;
@@ -324,23 +320,23 @@ public class PVZOverlayHandler {
      * {@link #renderResources(PoseStack, int, int)}
      */
     private static void renderTreeLevel(PoseStack stack, int width, int height) {
-        final int level = PlayerUtil.getResource(ClientProxy.MC.player, Resources.TREE_LVL);
-        final int max = PlayerUtil.getPlayerLevelUpXp(level);
-        final int now = PlayerUtil.getResource(ClientProxy.MC.player, Resources.TREE_XP);
-        final int len = MathUtil.getBarLen(now, max, 120);
-        final float sz = 0.7F;
-        stack.pushPose();
-        RenderSystem.enableBlend();
-        stack.scale(sz, sz, 1F);
-        RenderUtil.setTexture(RESOURCE);
-
-        ClientProxy.MC.gui.blit(stack, 0, 0, 0, 160, 157, 34);
-        ClientProxy.MC.gui.blit(stack, 34, 3, 34, 194, len, 8);
-
-        RenderUtil.drawCenteredScaledString(stack, ClientProxy.MC.font, "Lv." + level, 52, 18, Colors.WHITE, 1f);
-
-        RenderSystem.disableBlend();
-        stack.popPose();
+//        final int level = PlayerUtil.getResource(ClientProxy.MC.player, Resources.TREE_LVL);
+//        final int max = PlayerUtil.getPlayerLevelUpXp(level);
+//        final int now = PlayerUtil.getResource(ClientProxy.MC.player, Resources.TREE_XP);
+//        final int len = MathUtil.getBarLen(now, max, 120);
+//        final float sz = 0.7F;
+//        stack.pushPose();
+//        RenderSystem.enableBlend();
+//        stack.scale(sz, sz, 1F);
+//        RenderUtil.setTexture(RESOURCE);
+//
+//        ClientProxy.MC.gui.blit(stack, 0, 0, 0, 160, 157, 34);
+//        ClientProxy.MC.gui.blit(stack, 34, 3, 34, 194, len, 8);
+//
+//        RenderUtil.drawCenteredScaledString(stack, ClientProxy.MC.font, "Lv." + level, 52, 18, Colors.WHITE, 1f);
+//
+//        RenderSystem.disableBlend();
+//        stack.popPose();
     }
 
 }

@@ -1,8 +1,0 @@
-{
-    "parent": "minecraft:block/cube_bottom_top",
-    "textures": {
-        "top": "pvz:block/arma_ore_top",
-        "bottom": "pvz:block/arma_ore_bottom",
-        "side": "pvz:block/arma_ore"
-    }
-}

@@ -1,10 +1,8 @@
 package com.hungteen.pvz.client.render.entity.plant;
 
 import com.hungteen.pvz.client.model.PVZModelLayers;
-import com.hungteen.pvz.client.model.plant.SunFlowerModel;
-import com.hungteen.pvz.common.entity.drop.Sun;
+import com.hungteen.pvz.client.model.entity.plant.SunFlowerModel;
 import com.hungteen.pvz.common.entity.plant.SunFlower;
-import net.minecraft.client.model.EntityModel;
 import net.minecraft.client.renderer.entity.EntityRendererProvider;
 
 /**

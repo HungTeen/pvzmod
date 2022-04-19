@@ -3,7 +3,7 @@ package com.hungteen.pvz.common.item.spawn.card;
 import com.hungteen.pvz.PVZMod;
 import com.hungteen.pvz.api.types.IPlantType;
 import com.hungteen.pvz.common.enchantment.card.plant.SoillessPlantEnchantment;
-import com.hungteen.pvz.common.entity.plant.PVZPlant;
+import com.hungteen.pvz.common.entity.plant.base.PVZPlant;
 import com.hungteen.pvz.utils.PlayerUtil;
 import com.hungteen.pvz.utils.enums.Resources;
 import net.minecraft.core.BlockPos;

@@ -31,7 +31,7 @@ public abstract class PVZMobRender <T extends Mob> extends MobRenderer<T, Entity
     }
 
     public float getScaleByEntity(T entity) {
-        return 1F;
+        return entity.getScale();
     }
 
     public Vector3d getTranslateVec(T entity) {

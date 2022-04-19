@@ -99,10 +99,10 @@ public class PVZConfig {
                         .comment("if turn to true, when plant's owner is in a team, the plant will attack the entity from other team(include players).")
                         .define("PlantAttackTeam", false);
 
-//                RuleSettings.LimitPlantCount = builder
-//                        .translation("config.pvz.rule.plant_count")
-//                        .comment("how many plants can you place in 30 x 30 area without increasing cost.")
-//                        .defineInRange("LimitPlantCount", 50, 10, 1000);
+                RuleSettings.LimitPlantCount = builder
+                        .translation("config.pvz.rule.plant_count")
+                        .comment("how many plants can you place in 30 x 30 area without increasing cost.")
+                        .defineInRange("LimitPlantCount", 50, 10, 1000);
 
                 RuleSettings.KeepSunWhenDie = builder
                         .translation("config.pvz.rule.keep_sun")
@@ -113,6 +113,11 @@ public class PVZConfig {
 //                        .translation("config.pvz.rule.max_damage")
 //                        .comment("how many damage could plants and zombies deal to other living entity.")
 //                        .defineInRange("MaxDamageLimit", 20, 0, 100000);
+
+                RuleSettings.BulletIgnoreGroup = builder
+                        .translation("config.pvz.rule.bullet_ignore_group")
+                        .comment("if turn to true, every entity will always damage by bullet, no matter which group you are.")
+                        .define("BulletIgnoreGroup", false);
             }
             builder.pop();
 
@@ -180,10 +185,10 @@ public class PVZConfig {
 
                 builder.comment("The Spawn Weight of entity.").push("EntitySpawnWeight");
                 {
-                    WorldSettings.SunSpawnWeight = builder
-                            .translation("config.pvz.world.sun_weight")
-                            .comment("spawn weight of Sun.")
-                            .defineInRange("SunSpawnWeight", 50, 1, 200);
+//                    WorldSettings.SunSpawnWeight = builder
+//                            .translation("config.pvz.world.sun_weight")
+//                            .comment("spawn weight of Sun.")
+//                            .defineInRange("SunSpawnWeight", 50, 1, 200);
 
 //                    WorldSettings.LavaZombieSpawnWeight = builder
 //                            .translation("config.pvz.world.lava_zombie_weight")
@@ -214,10 +219,10 @@ public class PVZConfig {
                             .comment("Player Initial Group When they join the world for the first time(-2 means other monsters, -1 means zombies, 0 means neutral creatures, 1 means plants and 2 means other guards).")
                             .defineInRange("PlayerInitialGroup", 1, -2, 2);
 
-                    EntitySettings.PlayerBaseSunAmount = builder
+                    EntitySettings.PlayerInitialMaxSun = builder
                             .translation("config.pvz.player.initial_sun")
-                            .comment("players' base sun amount, it will increase when tree maxLevel increasing.")
-                            .defineInRange("PlayerInitialSun", 950, 100, 10000);
+                            .comment("players' base sun amount.")
+                            .defineInRange("PlayerInitialMaxSun", 2000, 100, 100000);
                 }
                 builder.pop();
 
@@ -237,11 +242,21 @@ public class PVZConfig {
 //                            .translation("config.pvz.zombie.drop_multiper")
 //                            .comment("the drop chance of coin when zombie die(the bigger,the less chance it spawn).")
 //                            .defineInRange("ZombieDropMultiper", 10, 3, 100);
-//
-//                    EntitySettings.ZombieSetting.EnableZombieDropHands = builder
-//                            .translation("config.pvz.zombie.drop_part")
-//                            .comment("enable zombies to drop hands and heads when they got hurt(turn false to disable).")
-//                            .define("EnableZombieDropParts", true);
+
+                    EntitySettings.ZombieSetting.DropHandChance = builder
+                            .translation("config.pvz.zombie.drop_hand_chance")
+                            .comment("enable zombies to drop hands when they got hurt(turn 0 to disable).")
+                            .defineInRange("DropHandChance", 0.25, 0, 1);
+
+                    EntitySettings.ZombieSetting.DropHeadChance = builder
+                            .translation("config.pvz.zombie.drop_head_chance")
+                            .comment("enable zombies to drop heads when they got hurt(turn 0 to disable).")
+                            .defineInRange("DropHeadChance", 0.04, 0, 1);
+
+                    EntitySettings.ZombieSetting.EnableDropBody = builder
+                            .translation("config.pvz.zombie.drop_body")
+                            .comment("enable zombies to drop body when they died(turn false to disable).")
+                            .define("EnableDropBody", true);
 
                 }
                 builder.pop();
@@ -261,22 +276,22 @@ public class PVZConfig {
                     EntitySettings.EntityLiveTick.SunLiveTick = builder
                             .translation("config.pvz.entity.sun_live_tick")
                             .comment("how many ticks can the sun entity live.")
-                            .defineInRange("SunLiveTick", 400, 1, 1200);
+                            .defineInRange("SunLiveTick", 500, 1, 100000);
 
                     EntitySettings.EntityLiveTick.CoinLiveTick = builder
                             .translation("config.pvz.entity.coin_live_tick")
                             .comment("how many ticks can the coin entity live.")
-                            .defineInRange("CoinLiveTick", 400, 1, 1200);
+                            .defineInRange("CoinLiveTick", 500, 1, 100000);
 
                     EntitySettings.EntityLiveTick.JewelLiveTick = builder
                             .translation("config.pvz.entity.jewel_live_tick")
                             .comment("how many ticks can the jewel entity live.")
-                            .defineInRange("JewelLiveTick", 500, 1, 1200);
+                            .defineInRange("JewelLiveTick", 600, 1, 100000);
 
                     EntitySettings.EntityLiveTick.PlantFoodLiveTick = builder
                             .translation("config.pvz.entity.plant_food_live_tick")
                             .comment("how many ticks can the plant food entity live.")
-                            .defineInRange("PlantFoodLiveTick", 400, 1, 1200);
+                            .defineInRange("PlantFoodLiveTick", 500, 1, 100000);
 //
 //                    EntitySettings.EntityLiveTick.YetiLiveTick = builder
 //                            .translation("config.pvz.entity.yeti_live_tick")
@@ -308,12 +323,12 @@ public class PVZConfig {
                         .translation("config.pvz.block.origin_effect_chance")
                         .comment("The chance to get Essence Ore from Origin Block's effect")
                         .defineInRange("OriginEffectChance", 0.25, 0, 1);
-//
-//                BlockSettings.SaplingTurnChance = builder
-//                        .translation("config.pvz.block.sapling_turn_chance")
-//                        .comment("The chance when sapling turn to origin ore")
-//                        .defineInRange("SaplingTurnChance", 0.15, 0, 1);
-//
+
+                BlockSettings.SaplingTurnChance = builder
+                        .translation("config.pvz.block.sapling_turn_chance")
+                        .comment("The chance when sapling turn to origin ore")
+                        .defineInRange("SaplingTurnChance", 0.15, 0, 1);
+
 //                BlockSettings.AmethystAngerChance = builder
 //                        .translation("config.pvz.block.amethyst_anger_chance")
 //                        .comment("The chance of anger nearby enderman when break amethyst ore")
@@ -378,6 +393,7 @@ public class PVZConfig {
             public ForgeConfigSpec.IntValue LimitPlantCount;
             public ForgeConfigSpec.BooleanValue KeepSunWhenDie;
             public ForgeConfigSpec.IntValue MaxDamageLimit;
+            public ForgeConfigSpec.BooleanValue BulletIgnoreGroup;
         }
 
         public static class WorldSettings {
@@ -413,13 +429,15 @@ public class PVZConfig {
             public PlantSetting PlantSetting = new PlantSetting();
 
             public ForgeConfigSpec.IntValue PlayerInitialGroup;
-            public ForgeConfigSpec.IntValue PlayerBaseSunAmount;
+            public ForgeConfigSpec.IntValue PlayerInitialMaxSun;
             public ForgeConfigSpec.IntValue DropChanceMultiper;
 
             public static class ZombieSetting {
                 public ForgeConfigSpec.IntValue ZombieSuperChance;
                 public ForgeConfigSpec.IntValue ZombieSunChance;
-                public ForgeConfigSpec.BooleanValue EnableZombieDropHands;
+                public ForgeConfigSpec.DoubleValue DropHandChance;
+                public ForgeConfigSpec.DoubleValue DropHeadChance;
+                public ForgeConfigSpec.BooleanValue EnableDropBody;
             }
 
             public static class PlantSetting {
@@ -561,12 +579,12 @@ public class PVZConfig {
         return COMMON_CONFIG.EntitySettings.PlayerInitialGroup.get();
     }
 
-    public static boolean shouldKeepSunWhenDie(){
-        return COMMON_CONFIG.RuleSettings.KeepSunWhenDie.get();
+    public static int getPlayerInitialMaxSun(){
+        return COMMON_CONFIG.EntitySettings.PlayerInitialMaxSun.get();
     }
 
-    public static int getBaseSun(){
-        return COMMON_CONFIG.EntitySettings.PlayerBaseSunAmount.get();
+    public static boolean shouldKeepSunWhenDie(){
+        return COMMON_CONFIG.RuleSettings.KeepSunWhenDie.get();
     }
 
     public static int getSunLiveTick(){
@@ -589,9 +607,9 @@ public class PVZConfig {
         return COMMON_CONFIG.WorldSettings.GenZenGardenChance.get();
     }
 
-    public static int getSunSpawnWeight(){
-        return COMMON_CONFIG.WorldSettings.SunSpawnWeight.get();
-    }
+//    public static int getSunSpawnWeight(){
+//        return COMMON_CONFIG.WorldSettings.SunSpawnWeight.get();
+//    }
 
     public static int getAmethystOreCount(){
         return COMMON_CONFIG.WorldSettings.GenAmethystOreCount.get();
@@ -599,6 +617,30 @@ public class PVZConfig {
 
     public static int getOriginOreCount(){
         return COMMON_CONFIG.WorldSettings.GenOriginOreCount.get();
+    }
+
+    public static double getSaplingTurnChance(){
+        return COMMON_CONFIG.BlockSettings.SaplingTurnChance.get();
+    }
+
+    public static boolean bulletIngoreGroup(){
+        return COMMON_CONFIG.RuleSettings.BulletIgnoreGroup.get();
+    }
+
+    public static double dropHandChance(){
+        return COMMON_CONFIG.EntitySettings.ZombieSetting.DropHandChance.get();
+    }
+
+    public static double dropHeadChance(){
+        return COMMON_CONFIG.EntitySettings.ZombieSetting.DropHeadChance.get();
+    }
+
+    public static boolean enableDropBody(){
+        return COMMON_CONFIG.EntitySettings.ZombieSetting.EnableDropBody.get();
+    }
+
+    public static boolean allowNaturalTurnOrigin(){
+        return COMMON_CONFIG.RuleSettings.AllowNaturalTurnOrigin.get();
     }
 
     /*

@@ -3,7 +3,6 @@ package com.hungteen.pvz.common.tag;
 import com.hungteen.pvz.utils.Util;
 import net.minecraft.core.Registry;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraft.tags.EntityTypeTags;
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.entity.EntityType;
 
@@ -27,6 +26,10 @@ public class PVZEntityTags {
     /* pvz */
     public static final TagKey<EntityType<?>> PVZ_PLANTS = pvzTag("pvz_plants");
     public static final TagKey<EntityType<?>> PVZ_ZOMBIES = pvzTag("pvz_zombies");
+    public static final TagKey<EntityType<?>> IGNORE_ATTRACTS = pvzTag("ignore_attracts");
+    public static final TagKey<EntityType<?>> IGNORE_COLD = pvzTag("ignore_cold");
+    public static final TagKey<EntityType<?>> IGNORE_FROZEN = pvzTag("ignore_frozen");
+    public static final TagKey<EntityType<?>> HAS_INVULNERABLE_TIME = pvzTag("has_invulnerable_time");
     public static final TagKey<EntityType<?>> BUNGEE_SPAWNS = pvzTag("bungee_spawns");
 
     private static TagKey<EntityType<?>> pvzTag(String name){

@@ -1,0 +1,31 @@
+{
+  "parent": "pvz:essence",
+  "display": {
+    "icon": {
+      "item": "pvz:origin_essence"
+    },
+    "title": {
+      "translate": "advancements.pvz.origin.title"
+    },
+    "description": {
+      "translate": "advancements.pvz.origin.desc"
+    },
+    "frame": "task",
+    "show_toast": true,
+    "announce_to_chat": true,
+    "hidden": false
+  },
+  "criteria": {
+    "place_origin": {
+      "trigger": "minecraft:placed_block",
+      "conditions": {
+        "block": "pvz:origin_block"
+      }
+    }
+  },
+  "requirements": [
+    [
+      "place_origin"
+    ]
+  ]
+}

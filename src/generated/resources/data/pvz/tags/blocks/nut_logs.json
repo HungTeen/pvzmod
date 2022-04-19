@@ -1,0 +1,9 @@
+{
+  "replace": false,
+  "values": [
+    "pvz:nut_log",
+    "pvz:nut_wood",
+    "pvz:stripped_nut_log",
+    "pvz:stripped_nut_wood"
+  ]
+}

@@ -1,5 +1,6 @@
 package com.hungteen.pvz.api;
 
+import com.hungteen.pvz.api.types.ICardType;
 import com.hungteen.pvz.api.types.IEssenceType;
 import com.hungteen.pvz.api.types.IRankType;
 import com.hungteen.pvz.api.types.base.IPAZType;
@@ -39,7 +40,7 @@ public class DummyAPI implements PVZAPI.IPVZAPI {
     }
 
     @Override
-    public List<IEssenceType> getEssences() {
+    public List<IEssenceType> getEssenceTypes() {
         return new ArrayList<>();
     }
 
@@ -48,7 +49,17 @@ public class DummyAPI implements PVZAPI.IPVZAPI {
     }
 
     @Override
-    public List<IRankType> getRanks() {
+    public void registerCardType(ICardType type) {
+
+    }
+
+    @Override
+    public List<IRankType> getRankTypes() {
+        return new ArrayList<>();
+    }
+
+    @Override
+    public List<ICardType> getCardTypes() {
         return new ArrayList<>();
     }
 }

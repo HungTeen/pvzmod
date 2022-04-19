@@ -1,7 +1,6 @@
 package com.hungteen.pvz.data.tag;
 
 import com.hungteen.pvz.PVZMod;
-import com.hungteen.pvz.api.PVZAPI;
 import com.hungteen.pvz.common.block.PVZBlocks;
 import com.hungteen.pvz.common.block.cubes.EssenceOreBlock;
 import com.hungteen.pvz.common.tag.PVZBlockTags;
@@ -10,18 +9,12 @@ import com.hungteen.pvz.utils.Util;
 import net.minecraft.data.DataGenerator;
 import net.minecraft.data.tags.BlockTagsProvider;
 import net.minecraft.tags.BlockTags;
-import net.minecraft.tags.ItemTags;
-import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.OreBlock;
 import net.minecraftforge.common.Tags;
 import net.minecraftforge.common.data.ExistingFileHelper;
-import net.minecraftforge.registries.ForgeRegistries;
 
-import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Comparator;
-import java.util.function.Predicate;
 
 /**
  * @program: pvzmod-1.18.x
@@ -86,6 +79,8 @@ public class BlockTagGen extends BlockTagsProvider {
         /* 4 : netherite level */
         this.tag(Tags.Blocks.NEEDS_NETHERITE_TOOL);
 
+        this.addMCTags();
+
         /* common tags */
         BlockUtil.getFilterBlocks(b -> b instanceof EssenceOreBlock).forEach(block -> {
             this.tag(PVZBlockTags.ESSENCE_ORES).add(block);
@@ -94,11 +89,60 @@ public class BlockTagGen extends BlockTagsProvider {
 //        this.tag(BlockTags.CLIMBABLE).add(BlockRegister.STEEL_LADDER.get());
 //        this.tag(PVZBlockTags.GOLD_TILES).add(BlockRegister.GOLD_TILE1.get(), BlockRegister.GOLD_TILE2.get(),
 //                BlockRegister.GOLD_TILE3.get());
+        //grass carp can change it into grass block.
+        this.tag(PVZBlockTags.DIRT_NO_GRASS).add(Blocks.DIRT, Blocks.COARSE_DIRT, Blocks.ROOTED_DIRT, Blocks.PODZOL);
         this.tag(PVZBlockTags.PLANT_SUIT_BLOCKS)
 //        .addTag(PVZBlockTags.GOLD_TILES)
-                .add(Blocks.GRASS_BLOCK);
+                .add(Blocks.GRASS_BLOCK)
+                .add(Blocks.MOSS_BLOCK)
+                ;
 //                        BlockRegister.FLOWER_POT.get(), BlockRegister.LILY_PAD.get());
 //        this.tag(BlockTags.LOGS).add(BlockRegister.NUT_LOG.get());
+    }
+
+    private void addMCTags(){
+        /* planks */
+        this.tag(BlockTags.PLANKS).add(PVZBlocks.NUT_PLANKS.get());
+
+        /* button */
+        this.tag(BlockTags.BUTTONS).add(PVZBlocks.NUT_BUTTON.get());
+
+        /* stairs */
+        this.tag(BlockTags.WOODEN_STAIRS).add(PVZBlocks.NUT_STAIRS.get());
+
+        /* slab */
+        this.tag(BlockTags.WOODEN_SLABS).add(PVZBlocks.NUT_SLAB.get());
+
+        /* fence */
+        this.tag(BlockTags.FENCES).add(PVZBlocks.NUT_FENCE.get());
+        this.tag(BlockTags.FENCE_GATES).add(PVZBlocks.NUT_FENCE_GATE.get());
+
+        /* door  */
+        this.tag(BlockTags.WOODEN_DOORS).add(PVZBlocks.NUT_DOOR.get());
+
+        /* sapling */
+//        this.tag(BlockTags.SAPLINGS).add(PVZBlocks.NUT_SAPLING.get());
+
+        /* log & wood */
+        this.tag(PVZBlockTags.NUT_LOGS).add(PVZBlocks.NUT_LOG.get(), PVZBlocks.NUT_WOOD.get(), PVZBlocks.STRIPPED_NUT_LOG.get(), PVZBlocks.STRIPPED_NUT_WOOD.get());
+        this.tag(BlockTags.LOGS_THAT_BURN).addTag(PVZBlockTags.NUT_LOGS);
+
+        /* pressure plate */
+        this.tag(BlockTags.WOODEN_PRESSURE_PLATES).add(PVZBlocks.NUT_PRESSURE_PLATE.get());
+
+        /* leaves */
+        this.tag(BlockTags.LEAVES).add(PVZBlocks.NUT_LEAVES.get(), PVZBlocks.NUT_LEAVES_WITH_NUTS.get());
+
+        /* trap door */
+        this.tag(BlockTags.WOODEN_TRAPDOORS).add(PVZBlocks.NUT_TRAPDOOR.get());
+
+        /* sign */
+        this.tag(BlockTags.STANDING_SIGNS).add(PVZBlocks.NUT_SIGN.get());
+        this.tag(BlockTags.WALL_SIGNS).add(PVZBlocks.NUT_WALL_SIGN.get());
+
+        /* crops */
+        this.tag(BlockTags.CROPS).add(PVZBlocks.PEA.get(), PVZBlocks.CABBAGE.get(), PVZBlocks.CORN.get());
+
     }
 
     @Override

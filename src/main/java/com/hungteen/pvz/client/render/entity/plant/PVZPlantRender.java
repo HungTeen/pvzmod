@@ -1,7 +1,7 @@
 package com.hungteen.pvz.client.render.entity.plant;
 
 import com.hungteen.pvz.client.render.entity.PVZMobRender;
-import com.hungteen.pvz.common.entity.plant.PVZPlant;
+import com.hungteen.pvz.common.entity.plant.base.PVZPlant;
 import net.minecraft.client.model.EntityModel;
 import net.minecraft.client.renderer.entity.EntityRendererProvider;
 import net.minecraft.resources.ResourceLocation;

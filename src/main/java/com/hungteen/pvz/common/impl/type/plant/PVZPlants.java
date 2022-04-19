@@ -5,7 +5,9 @@ import com.hungteen.pvz.api.PVZAPI;
 import com.hungteen.pvz.api.types.IPlantType;
 import com.hungteen.pvz.api.types.base.IPAZType;
 import com.hungteen.pvz.common.entity.PVZEntities;
+import com.hungteen.pvz.common.entity.plant.base.PVZPlant;
 import com.hungteen.pvz.common.impl.type.CDTypes;
+import com.hungteen.pvz.common.impl.type.CardTypes;
 import com.hungteen.pvz.common.impl.type.EssenceTypes;
 import com.hungteen.pvz.common.impl.type.RankTypes;
 
@@ -25,21 +27,49 @@ public class PVZPlants {
      * grass day.
      */
 
-//    public static final IPlantType PEA_SHOOTER = new PVZPlant("pea_shooter")
-//            .sunCost(100)
-//            .xp(10)
-//            .essence(EssenceTypes.APPEASE)
-//            .rank(RankTypes.WHITE)
-//            .cd(CDTypes.HUGE_FAST)
-//            .entity(() -> PVZEntities.)
-//            .skills(new ArrayList<>());
+    public static final IPlantType PEA_SHOOTER = new PVZPlantType("pea_shooter")
+            .sunCost(100).xp(10)
+            .essence(EssenceTypes.APPEASE)
+            .rank(RankTypes.WHITE)
+            .cardType(CardTypes.SAPLING)
+            .cd(CDTypes.FAST)
+            .entity(() -> PVZEntities.PEA_SHOOTER.get())
+            .skills(new ArrayList<>());
 
     public static final IPlantType SUN_FLOWER = new PVZPlantType("sun_flower")
             .sunCost(50).xp(10)
             .essence(EssenceTypes.LIGHT)
             .rank(RankTypes.WHITE)
+            .cardType(CardTypes.SAPLING)
             .cd(CDTypes.LITTLE_SLOW)
             .entity(() -> PVZEntities.SUN_FLOWER.get())
+            .skills(new ArrayList<>());
+
+    public static final IPlantType WALL_NUT = new PVZPlantType("wall_nut")
+            .sunCost(50).xp(30)
+            .essence(EssenceTypes.DEFENCE)
+            .cardType(CardTypes.SAPLING)
+            .rank(RankTypes.WHITE)
+            .cd(CDTypes.LITTLE_SLOW)
+            .entity(() -> PVZEntities.WALL_NUT.get())
+            .skills(new ArrayList<>());
+
+    public static final IPlantType POTATO_MINE = new PVZPlantType("potato_mine")
+            .sunCost(25).xp(10)
+            .essence(EssenceTypes.EXPLOSION)
+            .rank(RankTypes.WHITE)
+            .cardType(CardTypes.SAPLING)
+            .cd(CDTypes.NORMAL)
+            .entity(() -> PVZEntities.POTATO_MINE.get())
+            .skills(new ArrayList<>());
+
+    public static final IPlantType SNOW_PEA = new PVZPlantType("snow_pea")
+            .sunCost(175).xp(20)
+            .essence(EssenceTypes.ICE)
+            .rank(RankTypes.GOLD)
+            .cardType(CardTypes.SAPLING)
+            .cd(CDTypes.NORMAL)
+            .entity(() -> PVZEntities.SNOW_PEA.get())
             .skills(new ArrayList<>());
 
 //    public static final IPlantType CHERRY_BOMB = new PVZPlants("cherry_bomb", new PlantFeatures()
@@ -574,7 +604,7 @@ public class PVZPlants {
 
         @Override
         public String getCategoryName() {
-            return "pvz";
+            return "pvz_plant";
         }
 
         @Override

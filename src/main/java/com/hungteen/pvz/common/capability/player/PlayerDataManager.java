@@ -251,10 +251,6 @@ public class PlayerDataManager {
      */
     public void setResource(Resources res, int num) {
         resources.put(res, num);
-        if(res == Resources.TREE_LVL) {
-            resources.put(Resources.TREE_XP, 0);
-            this.addResource(Resources.TREE_XP, 0);
-        }
         this.addResource(res, 0);
     }
 
@@ -262,10 +258,8 @@ public class PlayerDataManager {
         int now = resources.get(res);
         final int old = now;
 
-        if(res == Resources.TREE_XP) {
-            addTreeXp(now, num);
-        } else if(res == Resources.SUN_NUM) {
-            now = Mth.clamp(now + num, 0, PlayerUtil.getPlayerMaxSunNum(resources.get(Resources.TREE_LVL)));
+        if(res == Resources.SUN_NUM) {
+            now = Mth.clamp(now + num, 0, resources.get(Resources.MAX_SUN_NUM));
             resources.put(Resources.SUN_NUM, now);
         } else if(res == Resources.ENERGY_NUM) {
             now = Mth.clamp(now + num, 0, resources.get(Resources.MAX_ENERGY_NUM));
@@ -297,32 +291,6 @@ public class PlayerDataManager {
         }
 
         this.sendResourcePacket(player, res);
-    }
-
-    /**
-     * add tree xp and maxLevel up.
-     */
-    private void addTreeXp(int now, int num) {
-        int lvl = resources.get(Resources.TREE_LVL);
-        if(num > 0) {
-            int req = PlayerUtil.getPlayerLevelUpXp(lvl);
-            while(lvl < Resources.TREE_LVL.max && num + now >= req) {
-                num -= req - now;
-                this.addResource(Resources.TREE_LVL, 1);
-                now = 0;
-                req = PlayerUtil.getPlayerLevelUpXp(lvl);
-            }
-            resources.put(Resources.TREE_XP, num + now);
-        } else {
-            num = - num;
-            while(lvl > 1 && num > now) {
-                num -= now;
-                -- lvl;
-                now = PlayerUtil.getPlayerLevelUpXp(lvl);
-                this.addResource(Resources.TREE_LVL, - 1);
-            }
-            resources.put(Resources.TREE_XP, Math.max(now - num, 0));
-        }
     }
 
     private void sendResourcePacket(Player player, Resources res){

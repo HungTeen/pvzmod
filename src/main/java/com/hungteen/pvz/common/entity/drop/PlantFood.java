@@ -1,7 +1,7 @@
 package com.hungteen.pvz.common.entity.drop;
 
 import com.hungteen.pvz.PVZConfig;
-import com.hungteen.pvz.common.PVZSounds;
+import com.hungteen.pvz.common.sound.PVZSounds;
 import com.hungteen.pvz.utils.MathUtil;
 import com.hungteen.pvz.utils.PlayerUtil;
 import com.hungteen.pvz.utils.enums.Resources;

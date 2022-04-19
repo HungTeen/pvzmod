@@ -1,6 +1,7 @@
 package com.hungteen.pvz.data.tag;
 
 import com.hungteen.pvz.PVZMod;
+import com.hungteen.pvz.common.entity.PVZEntities;
 import com.hungteen.pvz.common.entity.PVZMobCategories;
 import com.hungteen.pvz.common.tag.PVZEntityTags;
 import net.minecraft.data.DataGenerator;
@@ -49,7 +50,10 @@ public class EntityTagGen extends EntityTypeTagsProvider {
 
         this.tag(PVZEntityTags.PVZ_NOT_MONSTERS).add(EntityType.PIG);
         this.tag(PVZEntityTags.PVZ_NOT_GUARDIANS).add(EntityType.PIG);
-        /* pvz tags */
+
+        /*
+        PVZ Tags.
+         */
 
         // for plant entities.
         this.tag(PVZEntityTags.PVZ_PLANTS)
@@ -60,6 +64,15 @@ public class EntityTagGen extends EntityTypeTagsProvider {
         this.tag(PVZEntityTags.PVZ_ZOMBIES)
                 .add(getFilterTypes(type -> type.getCategory() == PVZMobCategories.PVZ_ZOMBIE));
 
+        this.tag(PVZEntityTags.IGNORE_ATTRACTS)
+                .add(EntityType.WITHER, EntityType.ENDER_DRAGON);
+
+        this.tag(PVZEntityTags.IGNORE_COLD)
+                .add(EntityType.SNOW_GOLEM, PVZEntities.SNOW_PEA.get());
+
+        this.tag(PVZEntityTags.HAS_INVULNERABLE_TIME)
+                .add(EntityType.WITHER, EntityType.ENDER_DRAGON);
+
 //        this.tag(PVZEntityTags.BUNGEE_SPAWNS)
 //                .add(EntityRegister.NORMAL_ZOMBIE.get())
 //                .add(EntityRegister.CONEHEAD_ZOMBIE.get())
@@ -68,7 +81,6 @@ public class EntityTagGen extends EntityTypeTagsProvider {
 
     }
 
-    @SuppressWarnings("unused")
     private EntityType<?>[] getFilterTypes(Predicate<EntityType<?>> predicate) {
         return registry.stream()
                 .filter(predicate)

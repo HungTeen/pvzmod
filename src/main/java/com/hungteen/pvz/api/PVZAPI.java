@@ -2,6 +2,7 @@ package com.hungteen.pvz.api;
 
 import com.google.common.base.Suppliers;
 import com.hungteen.pvz.PVZMod;
+import com.hungteen.pvz.api.types.ICardType;
 import com.hungteen.pvz.api.types.IEssenceType;
 import com.hungteen.pvz.api.types.IRankType;
 import com.hungteen.pvz.api.types.base.IPAZType;
@@ -64,7 +65,7 @@ public class PVZAPI {
         /**
          * get all registered essence types.
          */
-        List<IEssenceType> getEssences();
+        List<IEssenceType> getEssenceTypes();
 
         /**
          * register rank type.
@@ -72,9 +73,19 @@ public class PVZAPI {
         void registerRankType(IRankType type);
 
         /**
+         * register rank type.
+         */
+        void registerCardType(ICardType type);
+
+        /**
          * get all registered rank types.
          */
-        List<IRankType> getRanks();
+        List<IRankType> getRankTypes();
+
+        /**
+         * get all registered card types.
+         */
+        List<ICardType> getCardTypes();
 
     }
 

@@ -1,8 +1,6 @@
 package com.hungteen.pvz.common.impl.type.plant;
 
-import com.hungteen.pvz.PVZMod;
-import com.hungteen.pvz.api.interfaces.IPlantEntity;
-import com.hungteen.pvz.api.misc.IPlantInfo;
+import com.hungteen.pvz.api.interfaces.IPlantInfo;
 import com.hungteen.pvz.api.types.*;
 import com.hungteen.pvz.api.types.base.IPAZType;
 import com.hungteen.pvz.common.impl.type.EssenceTypes;
@@ -72,7 +70,7 @@ public abstract class PlantType extends PAZTypes.PAZType implements IPlantType {
     }
 
     @Override
-    public IEssenceType getEssence() {
+    public IEssenceType getEssenceType() {
         return this.plantEssence;
     }
 
@@ -102,6 +100,11 @@ public abstract class PlantType extends PAZTypes.PAZType implements IPlantType {
 
     public PlantType rank(IRankType type) {
         this.rankType = type;
+        return this;
+    }
+
+    public PlantType cardType(ICardType type) {
+        this.cardType = type;
         return this;
     }
 

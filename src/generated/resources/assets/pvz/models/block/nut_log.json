@@ -1,0 +1,7 @@
+{
+  "parent": "minecraft:block/cube_column",
+  "textures": {
+    "side": "pvz:block/nut_log",
+    "end": "pvz:block/nut_log_top"
+  }
+}

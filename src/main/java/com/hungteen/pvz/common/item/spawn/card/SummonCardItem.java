@@ -1,15 +1,13 @@
 package com.hungteen.pvz.common.item.spawn.card;
 
-import com.hungteen.pvz.PVZMod;
 import com.hungteen.pvz.api.types.base.IPAZType;
-import com.hungteen.pvz.common.PVZSounds;
+import com.hungteen.pvz.common.sound.PVZSounds;
 import com.hungteen.pvz.common.effect.PVZEffects;
 import com.hungteen.pvz.common.enchantment.EnchantmentHandler;
 import com.hungteen.pvz.common.enchantment.card.ImmediateCDEnchantment;
 import com.hungteen.pvz.common.enchantment.card.SunReductionEnchantment;
 import com.hungteen.pvz.common.item.PVZItemTabs;
 import com.hungteen.pvz.utils.PlayerUtil;
-import com.hungteen.pvz.utils.StringUtil;
 import net.minecraft.ChatFormatting;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;
@@ -135,9 +133,9 @@ public class SummonCardItem extends Item{
 
     @Override
     public Rarity getRarity(ItemStack itemStack) {
-        //Upgrade Card is Epic !
-        if(itemStack.getItem() instanceof SummonCardItem && ((SummonCardItem) itemStack.getItem()).type.getUpgradeFrom().isPresent()){
-            return Rarity.EPIC;
+        //Upgrade Card is Epic ! Enjoy Card is RARE !
+        if(itemStack.getItem() instanceof SummonCardItem){
+            return ((SummonCardItem) itemStack.getItem()).isEnjoyCard ? Rarity.RARE : ((SummonCardItem) itemStack.getItem()).type.getCardType().getRarity();
         }
         return super.getRarity(itemStack);
     }
@@ -165,7 +163,7 @@ public class SummonCardItem extends Item{
 
     @Override
     public int getEnchantmentValue() {
-        return this.type.getRank().getEnchantPoint();
+        return 15;
     }
 
     public void notifyPlayerAndCD(Player player, ItemStack stack, PlacementErrors error) {

@@ -1,7 +1,7 @@
 package com.hungteen.pvz.client.render.entity.drop;
 
 import com.hungteen.pvz.client.model.PVZModelLayers;
-import com.hungteen.pvz.client.model.misc.DropEntityModel;
+import com.hungteen.pvz.client.model.entity.misc.DropEntityModel;
 import com.hungteen.pvz.common.entity.drop.PlantFood;
 import com.hungteen.pvz.utils.Util;
 import net.minecraft.client.renderer.entity.EntityRendererProvider;

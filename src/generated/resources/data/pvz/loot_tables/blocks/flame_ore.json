@@ -25,7 +25,7 @@
                   }
                 }
               ],
-              "name": "pvz:flame_ore"
+              "name": "minecraft:air"
             },
             {
               "type": "minecraft:item",

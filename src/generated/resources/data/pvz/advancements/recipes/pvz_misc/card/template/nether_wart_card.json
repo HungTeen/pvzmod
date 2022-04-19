@@ -1,0 +1,34 @@
+{
+  "parent": "minecraft:recipes/root",
+  "rewards": {
+    "recipes": [
+      "pvz:card/template/nether_wart_card"
+    ]
+  },
+  "criteria": {
+    "has_origin": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "pvz:origin_essence"
+            ]
+          }
+        ]
+      }
+    },
+    "has_the_recipe": {
+      "trigger": "minecraft:recipe_unlocked",
+      "conditions": {
+        "recipe": "pvz:card/template/nether_wart_card"
+      }
+    }
+  },
+  "requirements": [
+    [
+      "has_origin",
+      "has_the_recipe"
+    ]
+  ]
+}
