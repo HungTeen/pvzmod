@@ -4,6 +4,7 @@ import com.hungteen.pvz.client.ClientProxy;
 import com.hungteen.pvz.client.particle.PVZParticles;
 import com.hungteen.pvz.common.CommonProxy;
 import com.hungteen.pvz.common.CommonRegister;
+import com.hungteen.pvz.common.item.weapon.PeaGunItem;
 import com.hungteen.pvz.common.sound.PVZSounds;
 import com.hungteen.pvz.common.advancement.AdvancementHandler;
 import com.hungteen.pvz.common.block.PVZBlocks;
@@ -121,15 +122,17 @@ public class PVZMod {
         EssenceTypes.EssenceType.register();
         RankTypes.RankType.register();
         CardTypes.CardType.register();
+        PeaGunItem.registerShootModes();
+        PVZPlants.PVZPlantType.register();
+        PVZZombies.PVZZombieType.register();
 //        //register skills.
 //        SkillTypes.SkillType.register();
-        //register plants.
-        PVZPlants.PVZPlantType.register();
+
 //        CustomPlants.register();
 //        MemePlants.register();
 //        OtherPlants.register();
         //register zombies.
-        PVZZombies.PVZZombieType.register();
+
 //        GrassZombies.register();
 //        PoolZombies.register();
 //        RoofZombies.register();

@@ -25,6 +25,9 @@ public class EntityGroupHandler {
      */
     public static PVZGroupType getEntityGroupType(Entity entity){
         final EntityType<?> entityType = entity.getType();
+        if(entity instanceof Player){
+            return getPlayerGroup((Player) entity);
+        }
         // entity in plant group tag is in PLANTS.
         if(entityType.is(PVZEntityTags.PVZ_PLANT_GROUP_ENTITIES)){
             return PVZGroupType.PLANTS;

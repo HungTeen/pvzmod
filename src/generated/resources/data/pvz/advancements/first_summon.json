@@ -1,0 +1,29 @@
+{
+  "parent": "pvz:origin",
+  "display": {
+    "icon": {
+      "item": "pvz:sun_flower_card"
+    },
+    "title": {
+      "translate": "advancements.pvz.first_summon.title"
+    },
+    "description": {
+      "translate": "advancements.pvz.first_summon.desc"
+    },
+    "frame": "task",
+    "show_toast": true,
+    "announce_to_chat": true,
+    "hidden": false
+  },
+  "criteria": {
+    "first_summon": {
+      "trigger": "pvz:use_summon_card",
+      "conditions": {}
+    }
+  },
+  "requirements": [
+    [
+      "first_summon"
+    ]
+  ]
+}

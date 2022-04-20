@@ -111,9 +111,12 @@ c92063108a4ad470671b64b279ab942163a44d92 assets/pvz/models/item/appease_ore.json
 285cd943ca2731f0f2e8a23230e6eed9d1f00e28 assets/pvz/models/item/assist_ore.json
 b87f99b50a097e5464ca23ae2373d38edbf7e9bf assets/pvz/models/item/bucket_head.json
 98167609bf3898587f7565736a6fc24a7966cacd assets/pvz/models/item/bucket_head_zombie_spawn_egg.json
+74b0def6ef3ce0c00961a337baa92429803a2563 assets/pvz/models/item/cabbage.json
 693cf6081c2cc0491ce5691a5847d04b0232f78d assets/pvz/models/item/cabbage_seeds.json
 54ef3134745e270a72ae7fd9e2150c84d8426cda assets/pvz/models/item/chorus_fruit_card.json
+56ee005c22cfe252c46835d9e673c55046e60d42 assets/pvz/models/item/cooked_brain.json
 c0bedf87852a38b27ed1aaa8380f3e4a7264a374 assets/pvz/models/item/copper_coin.json
+7cdcd3ec543b9f27fd58b098fd2ff5c7b76dceb9 assets/pvz/models/item/corn.json
 fcae1ca1d3e67d839f5dddd1df49807f6db598c6 assets/pvz/models/item/corn_seeds.json
 a828c24b7d7b7daf373a0a337542415fbfb15156 assets/pvz/models/item/defence_essence.json
 ecc472a7d99ccc63db1a7d89bfaa7c213bbf0a82 assets/pvz/models/item/defence_ore.json
@@ -121,6 +124,7 @@ ae616290037c09b16fe9e77e1fd63f31c09d190e assets/pvz/models/item/enforce_essence.
 def3b9e0f91ad67dffdcb110e071097dda4e3e8d assets/pvz/models/item/enforce_ore.json
 6e9c5729b281441a864fca0d6d38cdbbef6c3244 assets/pvz/models/item/explosion_essence.json
 a74e2833632919df83a1cf18d15a87c6ac4c86db assets/pvz/models/item/explosion_ore.json
+71d31c3593bb9582447f4061adf93cc5ba2fd5c0 assets/pvz/models/item/fake_brain.json
 49ae85a2aa0b49abc8578d8438d39000ab538423 assets/pvz/models/item/flame_essence.json
 6d22b8817d1c5d217f39c1733061210b9780cbcd assets/pvz/models/item/flame_ore.json
 ac2c05573e621aaece9f6c6e5975cc4197fa790e assets/pvz/models/item/flame_pea.json
@@ -140,6 +144,7 @@ b45f9d1432eda34d4248a5e8ca21e977038009c3 assets/pvz/models/item/magic_essence.js
 14ff08172595a1f9cc74fcff6d4393bba2de4b01 assets/pvz/models/item/nut.json
 329aec2be457f73aa2928787b39fb370499d7ca4 assets/pvz/models/item/nut_button.json
 7b043ef9779eac07311340ef2f20daa52227dc66 assets/pvz/models/item/nut_door.json
+e804fbccfccc82e97234d0526badd449b136ecb1 assets/pvz/models/item/nut_fence.json
 4b566bc1cffd36f6aeb3d7e13912c6004dd8ffba assets/pvz/models/item/nut_fence_gate.json
 953987486f6741d19c018b2a288a517af0cbdf2d assets/pvz/models/item/nut_leaves.json
 c99d0df23b78f77a213df16e9e761ef71161566b assets/pvz/models/item/nut_leaves_with_nuts.json
@@ -149,6 +154,7 @@ c99d0df23b78f77a213df16e9e761ef71161566b assets/pvz/models/item/nut_leaves_with_
 935c1802adab812fec4d4b60cbfc550602a64626 assets/pvz/models/item/nut_sign.json
 b92652ac64d028b8c8edce23bd1574ea0e7768cf assets/pvz/models/item/nut_slab.json
 3b08d08bcd5984df888e26077392ef1075fcb689 assets/pvz/models/item/nut_stairs.json
+011279d4c5de52a07f2f643cf44acd598905b91a assets/pvz/models/item/nut_trapdoor.json
 138eb82cb91c3a7a0e38463bc0826b5058f175bc assets/pvz/models/item/nut_wood.json
 cbf32c3622e3f14ad34f546ba3eb201d06c4343f assets/pvz/models/item/origin_axe.json
 4de53b5f37e77894e92deda39eea257f6622b9f1 assets/pvz/models/item/origin_block.json
@@ -193,7 +199,14 @@ cf32b4155e1d931805bb246f1ad6bf66c3e74a45 data/forge/tags/entity_types/pvz_other_
 c0fa2eccea7adc69ba855b6d3e51b0d3734484f4 data/forge/tags/entity_types/pvz_other_monsters.json
 b80e50edfa9f95ff3b18bf8ec34bb7f10667c701 data/forge/tags/entity_types/pvz_plant_group_entities.json
 3681604815c410df4126b9523c576317b96acb89 data/forge/tags/entity_types/pvz_zombie_group_entities.json
+849f8b3795bb0d272bdb845bc3dee9d2da9617ea data/forge/tags/items/crops/cabbage.json
+afabfd480505416b1f84533349641c40a38568c8 data/forge/tags/items/crops/corn.json
+9e2bc799cea4e37e15204eab47df74df6aaed9d1 data/forge/tags/items/crops/nut.json
+109fd2ad2ba5c4497453c16e9f6a6d856b2d4eb9 data/forge/tags/items/crops/pea.json
 a63cfcf7eadd5ff34bf9e006495b86bd0894ed34 data/forge/tags/items/ingots/amethyst.json
+4f9eaea0cdab711996b9f61bd3b26e96010e416d data/forge/tags/items/ores/amethyst.json
+05fb482232b9aa0b3142ea10ff82447d995cc94c data/forge/tags/items/seeds/cabbage.json
+f61963e0035f6c63d9f9a55930d601d81b12780f data/forge/tags/items/seeds/corn.json
 c1d7e055817c426654ba9650ee5bdcb9d9a07e95 data/minecraft/tags/blocks/buttons.json
 adca6045da96ae56f15bc6ac6b4763220656c34c data/minecraft/tags/blocks/crops.json
 bfa631330e40c71a25b24fe69271c10a106b6c51 data/minecraft/tags/blocks/fence_gates.json
@@ -216,12 +229,14 @@ b9c0a0e39f66e87737de13097a07a0f70509ad96 data/minecraft/tags/blocks/wooden_slabs
 14248c5b813862bba9f2e6efdbd635f71ce1c901 data/minecraft/tags/blocks/wooden_stairs.json
 6cf2e180ca0870cf85a2159f50a33e0743dfd8af data/minecraft/tags/blocks/wooden_trapdoors.json
 1d52fc08fc51d82d83c868e011566d75bb9e20ad data/pvz/advancements/essence.json
+c8216555181bcefe7b83886dd3f710ea74448431 data/pvz/advancements/first_summon.json
 e4f2e1b7946361de1a76abfcec214bae84ffc1fe data/pvz/advancements/grass_carp.json
 b6f4783d5f16f92fbb7d54c2eabb2b741643d76f data/pvz/advancements/origin.json
 fa76c3f56a2010f3aa5a29dfc94426cc0228a80a data/pvz/advancements/recipes/pvz_misc/card/template/chorus_fruit_card.json
 ec1d0c742cec29f3e0e89c09669295e581d0c022 data/pvz/advancements/recipes/pvz_misc/card/template/nether_wart_card.json
 e9921fc3376a41ced7fcad70f7853790ba4e860f data/pvz/advancements/recipes/pvz_misc/card/template/sapling_card.json
 da14c454dee161b21739aacd9132454be76dd08d data/pvz/advancements/root.json
+e9233fa43e1780040e88e44b3a55029a8e4161d0 data/pvz/advancements/taste_brain.json
 b0236c88d54a04f193a3ce2f21a88a99195cf2de data/pvz/loot_tables/blocks/appease_ore.json
 9342398655c084261e6f47d74b341fd75d404f8f data/pvz/loot_tables/blocks/arma_ore.json
 30a83705545094e2571913bc139fe78cb7477c17 data/pvz/loot_tables/blocks/assist_ore.json
@@ -261,4 +276,5 @@ e25eb25174ecc6b629d9364ec37ea1c39a553e00 data/pvz/tags/items/card/template_card.
 55c9bbf6eec4c940fafb8cea663dccc38304006d data/pvz/tags/items/card/upgrade_cards.json
 9c960160d41b9332ee0edbc9c575413711384481 data/pvz/tags/items/card/white_materials.json
 5ccaa07ae7a7e5ffe1f609901169ff145f928159 data/pvz/tags/items/essences.json
+be8bf1d82365f3337ccb9d647a52c73fc2b00709 data/pvz/tags/items/pea_gun_bullets.json
 843b3c60c51aba0ca718bce687a74dd523934d47 data/pvz/tags/items/shield_items.json

@@ -78,6 +78,11 @@ public class PVZAPI {
         void registerCardType(ICardType type);
 
         /**
+         * register pea gun shoot mode.
+         */
+        void registerPeaGunShootMode(String mode);
+
+        /**
          * get all registered rank types.
          */
         List<IRankType> getRankTypes();

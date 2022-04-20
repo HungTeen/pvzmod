@@ -3,8 +3,10 @@ package com.hungteen.pvz.data.tag;
 import com.hungteen.pvz.PVZMod;
 import com.hungteen.pvz.api.PVZAPI;
 import com.hungteen.pvz.api.types.IPlantType;
+import com.hungteen.pvz.common.block.PVZBlocks;
 import com.hungteen.pvz.common.item.PVZItems;
 import com.hungteen.pvz.common.item.misc.TemplateCardItem;
+import com.hungteen.pvz.common.tag.PVZBlockTags;
 import com.hungteen.pvz.common.tag.PVZItemTags;
 import net.minecraft.data.DataGenerator;
 import net.minecraft.data.tags.BlockTagsProvider;
@@ -38,16 +40,15 @@ public class ItemTagGen extends ItemTagsProvider {
         /*
         Forge Tags.
          */
-//        this.tag(PVZItemTags.PEAS).add(ItemRegister.PEA.get());
-//        this.tag(PVZItemTags.NUTS).add(ItemRegister.NUT.get());
+        this.tag(PVZItemTags.PEAS).add(PVZItems.PEA.get());
+        this.tag(PVZItemTags.NUTS).add(PVZItems.NUT.get());
 //        this.tag(PVZItemTags.CHILIPEPPERS).add(ItemRegister.PEPPER.get());
-//        this.tag(PVZItemTags.CABBAGES).add(ItemRegister.CABBAGE.get());
-//        this.tag(PVZItemTags.CABBAGE_SEEDS).add(ItemRegister.CABBAGE_SEEDS.get());
-//        this.tag(PVZItemTags.CORNS).add(ItemRegister.CORN.get());
-//        this.tag(PVZItemTags.CORN_SEEDS).add(ItemRegister.CORN_SEEDS.get());
+        this.tag(PVZItemTags.CABBAGES).add(PVZItems.CABBAGE.get());
+        this.tag(PVZItemTags.CABBAGE_SEEDS).add(PVZItems.CABBAGE_SEEDS.get());
+        this.tag(PVZItemTags.CORNS).add(PVZItems.CORN.get());
+        this.tag(PVZItemTags.CORN_SEEDS).add(PVZItems.CORN_SEEDS.get());
         this.tag(PVZItemTags.AMETHYST_INGOTS).add(PVZItems.AMETHYST_INGOT.get());
-
-//        this.tag(PVZItemTags.AMETHYST_ORES).add(BlockRegister.AMETHYST_ORE.get().asItem());
+        this.tag(PVZItemTags.AMETHYST_ORES).add(PVZBlocks.AMETHYST_ORE.get().asItem());
 
         /*
         PVZ Tags.
@@ -92,12 +93,13 @@ public class ItemTagGen extends ItemTagsProvider {
 //                }
 //            }
 //        }
-//        this.tag(PVZItemTags.PEA_GUN_BULLETS).add(ItemRegister.PEA.get()).add(ItemRegister.SNOW_PEA.get()).add(ItemRegister.FLAME_PEA.get());
-//        this.tag(PVZItemTags.REACH_ITEMS).add(ItemRegister.RESOURCE_COLLECTOR.get());
+
+        //        this.tag(PVZItemTags.REACH_ITEMS).add(ItemRegister.RESOURCE_COLLECTOR.get());
 
         this.tag(PVZItemTags.SHIELD_ITEMS).add(Items.SHIELD);
-
         this.tag(PVZItemTags.ARMOR_ITEMS).add(PVZItems.BUCKET_HEAD.get());
+        this.tag(PVZItemTags.PEA_GUN_BULLETS).add(PVZItems.PEA.get()).add(PVZItems.SNOW_PEA.get()).add(PVZItems.FLAME_PEA.get());
+
     }
 
     private Item[] getFilterItems(Predicate<Item> predicate) {

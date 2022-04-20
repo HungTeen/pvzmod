@@ -1,0 +1,35 @@
+{
+  "parent": "pvz:root",
+  "display": {
+    "icon": {
+      "item": "pvz:fake_brain"
+    },
+    "title": {
+      "translate": "advancements.pvz.taste_brain.title"
+    },
+    "description": {
+      "translate": "advancements.pvz.taste_brain.desc"
+    },
+    "frame": "task",
+    "show_toast": true,
+    "announce_to_chat": true,
+    "hidden": false
+  },
+  "criteria": {
+    "taste_brain": {
+      "trigger": "minecraft:consume_item",
+      "conditions": {
+        "item": {
+          "items": [
+            "pvz:fake_brain"
+          ]
+        }
+      }
+    }
+  },
+  "requirements": [
+    [
+      "taste_brain"
+    ]
+  ]
+}

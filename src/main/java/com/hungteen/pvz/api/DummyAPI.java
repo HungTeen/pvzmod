@@ -54,6 +54,11 @@ public class DummyAPI implements PVZAPI.IPVZAPI {
     }
 
     @Override
+    public void registerPeaGunShootMode(String mode) {
+
+    }
+
+    @Override
     public List<IRankType> getRankTypes() {
         return new ArrayList<>();
     }

@@ -2,7 +2,6 @@ package com.hungteen.pvz.common.item.tool;
 
 import com.hungteen.pvz.common.item.PVZItemTabs;
 import com.hungteen.pvz.common.item.PVZTiers;
-import com.hungteen.pvz.common.item.PVZUsefulItem;
 import net.minecraft.ChatFormatting;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.TranslatableComponent;

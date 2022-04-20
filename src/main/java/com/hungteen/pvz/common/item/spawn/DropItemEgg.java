@@ -1,7 +1,7 @@
 package com.hungteen.pvz.common.item.spawn;
 
 import com.hungteen.pvz.common.entity.drop.PVZDrop;
-import com.hungteen.pvz.common.item.PVZMiscItem;
+import com.hungteen.pvz.common.item.base.PVZMiscItem;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.server.level.ServerLevel;

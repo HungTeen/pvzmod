@@ -1,4 +1,4 @@
-package com.hungteen.pvz.common.event.events;
+package com.hungteen.pvz.api.events;
 
 import com.hungteen.pvz.common.entity.drop.PVZDrop;
 import net.minecraft.world.entity.LivingEntity;

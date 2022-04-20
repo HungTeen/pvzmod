@@ -2,6 +2,7 @@ package com.hungteen.pvz.common.item.spawn.card;
 
 import com.hungteen.pvz.PVZMod;
 import com.hungteen.pvz.api.types.IPlantType;
+import com.hungteen.pvz.common.advancement.trigger.SummonCardUseTrigger;
 import com.hungteen.pvz.common.enchantment.card.plant.SoillessPlantEnchantment;
 import com.hungteen.pvz.common.entity.plant.base.PVZPlant;
 import com.hungteen.pvz.utils.PlayerUtil;
@@ -465,11 +466,7 @@ public class PlantCardItem extends SummonCardItem {
             player.getCooldowns().addCooldown(heldStack.getItem(), 10);
         }
         if(player instanceof ServerPlayer) {
-//            if(item.plantType.getUpgradeFrom().isPresent()){
-//                PlayerPlacePAZTrigger.INSTANCE.trigger((ServerPlayerEntity) player, PlayerPlacePAZTrigger.PlaceTypes.UPGRADE.toString().toLowerCase(), item.plantType.getIdentity());
-//            } else{
-//                PlayerPlacePAZTrigger.INSTANCE.trigger((ServerPlayerEntity) player, PlayerPlacePAZTrigger.PlaceTypes.PLANT.toString().toLowerCase(), item.plantType.getIdentity());
-//            }
+            SummonCardUseTrigger.INSTANCE.trigger((ServerPlayer) player, heldStack, plantStack);
         }
         player.awardStat(Stats.ITEM_USED.get(item));
     }
