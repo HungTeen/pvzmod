@@ -121,7 +121,7 @@ public class Sun extends PVZDrop {
         final Sun sun = PVZEntities.SUN.get().create(world);
         sun.setAmount(amount);
         EntityUtil.onEntitySpawn(world, sun, pos);
-        final double dy = speed * 0.6;
+        final double dy = speed * 0.3+0.2;
         final double dx = MathUtil.getRandomFloat(world.getRandom());
         final double dz = MathUtil.getRandomFloat(world.getRandom());
         sun.setDeltaMovement(new Vec3(dx, 0, dz).scale(speed).add(0, dy, 0));
