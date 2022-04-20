@@ -1,7 +1,9 @@
 package com.hungteen.pvz.data;
 
 import com.hungteen.pvz.PVZMod;
+import com.hungteen.pvz.common.advancement.trigger.SummonCardUseTrigger;
 import com.hungteen.pvz.common.block.PVZBlocks;
+import com.hungteen.pvz.common.impl.type.plant.PVZPlants;
 import com.hungteen.pvz.common.item.PVZItems;
 import com.hungteen.pvz.utils.Util;
 import net.minecraft.advancements.Advancement;
@@ -54,6 +56,18 @@ public class AdvancementGen extends AdvancementProvider {
                 .addCriterion("place_origin", PlacedBlockTrigger.TriggerInstance.placedBlock(PVZBlocks.ORIGIN_BLOCK.get()))
                 .display(PVZItems.ORIGIN_ESSENCE.get(), title("origin"), desc("origin"), null, FrameType.TASK, true, true, false)
                 .save(consumer, prefix("origin"));
+
+        Advancement tasteBrain = Advancement.Builder.advancement()
+                .parent(root)
+                .addCriterion("taste_brain", ConsumeItemTrigger.TriggerInstance.usedItem(PVZItems.FAKE_BRAIN.get()))
+                .display(PVZItems.FAKE_BRAIN.get(), title("taste_brain"), desc("taste_brain"), null, FrameType.TASK, true, true, false)
+                .save(consumer, prefix("taste_brain"));
+
+        Advancement firstSummon = Advancement.Builder.advancement()
+                .parent(origin)
+                .addCriterion("first_summon", SummonCardUseTrigger.Instance.usedCard())
+                .display(PVZPlants.SUN_FLOWER.getSummonCard().get(), title("first_summon"), desc("first_summon"), null, FrameType.TASK, true, true, false)
+                .save(consumer, prefix("first_summon"));
 
     }
 

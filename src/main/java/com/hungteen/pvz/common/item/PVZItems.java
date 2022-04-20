@@ -4,6 +4,10 @@ import com.hungteen.pvz.PVZMod;
 import com.hungteen.pvz.api.PVZAPI;
 import com.hungteen.pvz.api.types.IPlantType;
 import com.hungteen.pvz.common.item.armor.BucketArmorItem;
+import com.hungteen.pvz.common.item.base.PVZFoodItem;
+import com.hungteen.pvz.common.item.base.PVZMiscItem;
+import com.hungteen.pvz.common.item.misc.BrainPatternItem;
+import com.hungteen.pvz.common.item.weapon.PeaGunItem;
 import com.hungteen.pvz.common.sound.PVZSounds;
 import com.hungteen.pvz.common.block.PVZBlocks;
 import com.hungteen.pvz.common.entity.PVZEntities;
@@ -115,14 +119,14 @@ public class PVZItems {
      * Items in Food Tab.
      */
 
-//    public static final RegistryObject<Item> FAKE_BRAIN = ITEMS.register("fake_brain", ()->new PVZFoodItem(PVZFoodItem.FAKE_BRAIN));
-//    public static final RegistryObject<Item> REAL_BRAIN = ITEMS.register("real_brain", ()->new PVZFoodItem(PVZFoodItem.REAL_BRAIN));
+    public static final RegistryObject<Item> FAKE_BRAIN = ITEMS.register("fake_brain", BrainPatternItem::new);
+    public static final RegistryObject<Item> COOKED_BRAIN = ITEMS.register("cooked_brain", () -> new PVZFoodItem(PVZFoods.COOKED_BRAIN));
+    public static final RegistryObject<Item> CABBAGE = ITEMS.register("cabbage", () -> new PVZFoodItem(PVZFoods.CABBAGE));
+    public static final RegistryObject<Item> CORN = ITEMS.register("corn", () -> new PVZFoodItem(PVZFoods.CORN));
+//    public static final RegistryObject<Item> REAL_BRAIN = ITEMS.register("real_brain", () -> new PVZFoodItem(PVZFoods.REAL_BRAIN));
 //    public static final RegistryObject<Item> CANDY = ITEMS.register("candy", ()->new PVZFoodItem(PVZFoodItem.CANDY));
 //    public static final RegistryObject<Item> CHOCOLATE = ITEMS.register("chocolate", ()->new PVZFoodItem(PVZFoodItem.CHOCOLATE));
 //    public static final RegistryObject<Item> PEA_SOUP = ITEMS.register("pea_soup", ()->new SoupItem(new Item.Properties().tab(ItemGroup.TAB_FOOD).food(PVZFoodItem.PEA_SOUP).stacksTo(1)));
-//    public static final RegistryObject<Item> COOKED_BRAIN = ITEMS.register("cooked_brain", ()->new PVZFoodItem(PVZFoodItem.COOKED_BRAIN));
-//    public static final RegistryObject<Item> CABBAGE = ITEMS.register("cabbage", ()->new PVZFoodItem(PVZFoodItem.CABBAGE));
-//    public static final RegistryObject<Item> CORN = ITEMS.register("corn", ()->new PVZFoodItem(PVZFoodItem.CORN));
 //    public static final RegistryObject<Item> POP_CORN = ITEMS.register("pop_corn", ()->new PVZFoodItem(PVZFoodItem.POP_CORN));
 //    public static final RegistryObject<Item> TACOS = ITEMS.register("tacos", ()->new PVZFoodItem(PVZFoodItem.TACOS));
 
@@ -149,7 +153,7 @@ public class PVZItems {
     public static final RegistryObject<Item> ORIGIN_PICKAXE = ITEMS.register("origin_pickaxe", () -> new PickaxeItem(PVZTiers.ORIGIN, 1, -2.8F, new Item.Properties().tab(PVZItemTabs.PVZ_USEFUL)));
     public static final RegistryObject<Item> ORIGIN_AXE = ITEMS.register("origin_axe", () -> new AxeItem(PVZTiers.ORIGIN, 6.0F, -3.1F, new Item.Properties().tab(PVZItemTabs.PVZ_USEFUL)));
     public static final RegistryObject<Item> ORIGIN_HOE = ITEMS.register("origin_hoe", () -> new HoeItem(PVZTiers.ORIGIN, -2, -1.0F, new Item.Properties().tab(PVZItemTabs.PVZ_USEFUL)));
-//    public static final RegistryObject<Item> PEA_GUN = ITEMS.register("pea_gun", PeaGunItem::new);
+    public static final RegistryObject<Item> PEA_GUN = ITEMS.register("pea_gun", PeaGunItem::new);
 //    public static final RegistryObject<Item> RESOURCE_COLLECTOR = ITEMS.register("resource_collector", ResourceCollectorItem::new);
 //    public static final RegistryObject<Item> BOWLING_GLOVE = ITEMS.register("bowling_glove", BowlingGloveItem::new);
 //    public static final RegistryObject<Item> SUN_STORAGE_SAPLING = ITEMS.register("sun_storage_sapling", () -> new SunStorageSaplingItem(10000));

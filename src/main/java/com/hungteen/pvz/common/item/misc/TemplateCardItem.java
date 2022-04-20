@@ -1,7 +1,7 @@
 package com.hungteen.pvz.common.item.misc;
 
 import com.hungteen.pvz.api.types.ICardType;
-import com.hungteen.pvz.common.item.PVZMiscItem;
+import com.hungteen.pvz.common.item.base.PVZMiscItem;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Rarity;
 

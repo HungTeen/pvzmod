@@ -1,8 +1,8 @@
 package com.hungteen.pvz.common.entity.drop;
 
+import com.hungteen.pvz.api.events.LivingCollectDropEvent;
 import com.hungteen.pvz.api.interfaces.ICollectible;
 import com.hungteen.pvz.common.entity.PVZEntity;
-import com.hungteen.pvz.common.event.events.LivingCollectDropEvent;
 import com.hungteen.pvz.utils.EntityUtil;
 
 import net.minecraft.nbt.CompoundTag;

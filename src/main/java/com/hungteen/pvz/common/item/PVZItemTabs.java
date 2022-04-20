@@ -16,7 +16,7 @@ public class PVZItemTabs {
     public static final CreativeModeTab PVZ_MISC = new CreativeModeTab("pvz_misc") {
         @Override
         public ItemStack makeIcon() {
-            return new ItemStack(Items.IRON_INGOT);
+            return new ItemStack(PVZItems.ORIGIN_ESSENCE.get());
         }
 
     };
@@ -40,7 +40,7 @@ public class PVZItemTabs {
     public static final CreativeModeTab PVZ_USEFUL = new CreativeModeTab("pvz_useful") {
         @Override
         public ItemStack makeIcon() {
-            return new ItemStack(Items.IRON_SWORD);
+            return new ItemStack(PVZItems.ORIGIN_SWORD.get());
         }
     };
 

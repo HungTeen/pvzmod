@@ -4,6 +4,7 @@ import com.hungteen.pvz.PVZMod;
 import com.hungteen.pvz.api.events.PlayerLevelChangeEvent;
 import com.hungteen.pvz.common.capability.CapabilityHandler;
 import com.hungteen.pvz.common.event.handler.PlayerEventHandler;
+import com.hungteen.pvz.common.item.weapon.PeaGunItem;
 import com.hungteen.pvz.utils.PlayerUtil;
 import com.hungteen.pvz.utils.enums.Resources;
 import net.minecraftforge.event.TickEvent;
@@ -27,7 +28,7 @@ public class PVZPlayerEvents {
             if (ev.player.tickCount < 2) {
                 PlayerUtil.getOptManager(ev.player).ifPresent(l -> l.loadSummonCardCDs());
             }
-//            PeaGunItem.checkHeadShoot(ev.player);
+            PeaGunItem.checkHeadShoot(ev.player);
 //            ev.player.getCapability(CapabilityHandler.PLAYER_DATA_CAPABILITY).ifPresent((l) -> {
 //                if (l.getPlayerData().getOtherStats().playSoundTick > 0) {
 //                    --l.getPlayerData().getOtherStats().playSoundTick;

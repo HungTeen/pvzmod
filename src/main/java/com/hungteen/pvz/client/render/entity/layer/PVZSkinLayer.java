@@ -1,8 +1,10 @@
 package com.hungteen.pvz.client.render.entity.layer;
 
+import com.hungteen.pvz.client.RenderUtil;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
 import net.minecraft.client.model.EntityModel;
+import net.minecraft.client.model.HumanoidModel;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.entity.RenderLayerParent;
@@ -21,22 +23,22 @@ import net.minecraft.world.entity.PowerableMob;
  **/
 public abstract class PVZSkinLayer<T extends LivingEntity, M extends EntityModel<T>> extends RenderLayer<T, M> {
 
-    private final EntityModel model;
-
     public PVZSkinLayer(RenderLayerParent<T, M> layerParent) {
         super(layerParent);
-        this.model = layerParent.getModel();
     }
 
     @Override
     public void render(PoseStack poseStack, MultiBufferSource bufferSource, int packedLightIn, T entity, float limbSwing, float limbSwingAmount, float partialTicks, float ageInTicks, float netHeadYaw, float headPitch) {
     	if (this.canRender(entity)) {
             float f = (float) entity.tickCount + partialTicks;
-//            model.prepareMobModel(entity, limbSwing, limbSwingAmount, partialTicks);
-            this.getParentModel().copyPropertiesTo(model);
-            final VertexConsumer vertexconsumer = bufferSource.getBuffer(RenderType.energySwirl(this.getTextureLocation(), this.xOffset(f) % 1.0F, f * 0.01F % 1.0F));
-//            model.setupAnim(entity, limbSwing, limbSwingAmount, ageInTicks, netHeadYaw, headPitch);
-            model.renderToBuffer(poseStack, vertexconsumer, packedLightIn, OverlayTexture.NO_OVERLAY, 0.5F, 0.5F, 0.5F, 1.0F);
+            final VertexConsumer vertexconsumer = bufferSource.getBuffer(RenderType.energySwirl(this.getTextureLocation(), 0, 0));
+            if(this.getParentModel() instanceof HumanoidModel) {
+                ((HumanoidModel) this.getParentModel()).hat.visible = false;
+            }
+            this.getParentModel().renderToBuffer(poseStack, vertexconsumer, packedLightIn, OverlayTexture.NO_OVERLAY, 0.5F, 0.5F, 0.5F, 1.0F);
+            if(this.getParentModel() instanceof HumanoidModel) {
+                ((HumanoidModel) this.getParentModel()).hat.visible = true;
+            }
         }
     }
 

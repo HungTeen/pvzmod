@@ -1,7 +1,6 @@
 package com.hungteen.pvz.common.block;
 
 import java.util.Arrays;
-import java.util.function.Supplier;
 
 import com.hungteen.pvz.PVZMod;
 import com.hungteen.pvz.common.block.crops.CabbageBlock;
@@ -13,14 +12,10 @@ import com.hungteen.pvz.common.block.misc.*;
 import com.hungteen.pvz.common.impl.type.EssenceTypes;
 import com.hungteen.pvz.common.item.PVZItemTabs;
 
-import com.hungteen.pvz.common.item.PVZMiscItem;
 import com.hungteen.pvz.common.misc.PVZWoodType;
-import net.minecraft.client.renderer.blockentity.BlockEntityRenderer;
-import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.*;
 import net.minecraft.world.level.block.*;
 import net.minecraft.world.level.block.state.BlockBehaviour;
-import net.minecraft.world.level.block.state.properties.WoodType;
 import net.minecraft.world.level.material.Material;
 import net.minecraftforge.event.RegistryEvent;
 import net.minecraftforge.eventbus.api.IEventBus;

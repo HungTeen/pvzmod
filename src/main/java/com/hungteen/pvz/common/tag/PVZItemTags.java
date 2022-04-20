@@ -27,14 +27,16 @@ public class PVZItemTags {
     public static final TagKey<Item> AMETHYST_ORES = forgeTag("ores/amethyst");
 
     /* pvz */
-    public static final TagKey<Item> ESSENCES = pvzTag("essences");
+    //cards.
     public static final TagKey<Item> ALL_CARDS = pvzTag("card/all_card");
     public static final TagKey<Item> PLANT_SUMMON_CARDS = pvzTag("card/plant_summon_card");
     public static final TagKey<Item> PLANT_ENJOY_CARDS = pvzTag("card/plant_enjoy_card");
     public static final TagKey<Item> PLANT_CARDS = pvzTag("card/plant_card");
     public static final TagKey<Item> TEMPLATE_CARDS = pvzTag("card/template_card");
+
+    //essences.
+    public static final TagKey<Item> ESSENCES = pvzTag("essences");
     public static final TagKey<Item> ESSENCE_ORES = pvzTag("ores/essence");
-    public static final TagKey<Item> PEA_GUN_BULLETS = pvzTag("pea_gun_bullets");
 
     //for enchantment tag.
     public static final TagKey<Item> REACH_ITEMS = pvzTag("reach_items");
@@ -43,6 +45,7 @@ public class PVZItemTags {
     //special.
     public static final TagKey<Item> SHIELD_ITEMS = pvzTag("shield_items");
     public static final TagKey<Item> ARMOR_ITEMS = pvzTag("armor_items");
+    public static final TagKey<Item> PEA_GUN_BULLETS = pvzTag("pea_gun_bullets");
 
     // Card materials.
     public static final TagKey<Item> WHITE_MATERIALS = pvzTag("card/white_materials");

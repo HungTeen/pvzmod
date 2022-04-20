@@ -94,7 +94,7 @@ public class CombatManager {
                 }
                 //effect to attacker.
                 blockUsingShield(entity, damageSource);
-                ev.setAmount(0);
+                ev.setCanceled(true);
             }
         }
     }
@@ -112,7 +112,7 @@ public class CombatManager {
                 }
                 //effect to attacker.
 //                blockUsingArmor(entity, damageSource);
-                ev.setAmount(0);
+                ev.setCanceled(true);
             }
         }
     }

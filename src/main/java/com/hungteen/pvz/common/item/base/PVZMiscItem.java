@@ -1,5 +1,6 @@
-package com.hungteen.pvz.common.item;
+package com.hungteen.pvz.common.item.base;
 
+import com.hungteen.pvz.common.item.PVZItemTabs;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;

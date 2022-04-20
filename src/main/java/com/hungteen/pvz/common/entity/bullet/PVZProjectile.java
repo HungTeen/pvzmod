@@ -218,7 +218,7 @@ public abstract class PVZProjectile extends Projectile implements IHasGroup, IHa
     /**
      * shoot bullet such as pea or spore
      */
-    public void shootPea(Vector3d vec, double speed, double angleOffset) {
+    public void shootPea(Vec3 vec, double speed, double angleOffset) {
         this.shootPea(vec.x, vec.y, vec.z, speed, angleOffset);
     }
 

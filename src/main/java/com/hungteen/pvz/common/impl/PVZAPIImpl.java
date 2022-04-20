@@ -1,9 +1,6 @@
 package com.hungteen.pvz.common.impl;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
 import com.hungteen.pvz.api.PVZAPI;
 import com.hungteen.pvz.api.types.ICardType;
@@ -11,6 +8,7 @@ import com.hungteen.pvz.api.types.IEssenceType;
 import com.hungteen.pvz.api.types.IRankType;
 import com.hungteen.pvz.api.types.base.IPAZType;
 import com.hungteen.pvz.common.impl.type.PAZTypes;
+import com.hungteen.pvz.common.item.weapon.PeaGunItem;
 import com.hungteen.pvz.utils.Util;
 
 /**
@@ -71,6 +69,11 @@ public class PVZAPIImpl implements PVZAPI.IPVZAPI {
         } else{
             Util.warn("Card Type Register : Duplicate Type !");
         }
+    }
+
+    @Override
+    public void registerPeaGunShootMode(String mode) {
+        PeaGunItem.registerShootMode(mode);
     }
 
     @Override
