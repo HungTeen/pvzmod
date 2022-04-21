@@ -7,6 +7,7 @@ import com.hungteen.pvz.common.item.armor.BucketArmorItem;
 import com.hungteen.pvz.common.item.base.PVZFoodItem;
 import com.hungteen.pvz.common.item.base.PVZMiscItem;
 import com.hungteen.pvz.common.item.misc.BrainPatternItem;
+import com.hungteen.pvz.common.item.spawn.SproutItem;
 import com.hungteen.pvz.common.item.weapon.PeaGunItem;
 import com.hungteen.pvz.common.sound.PVZSounds;
 import com.hungteen.pvz.common.block.PVZBlocks;
@@ -154,6 +155,7 @@ public class PVZItems {
     public static final RegistryObject<Item> ORIGIN_AXE = ITEMS.register("origin_axe", () -> new AxeItem(PVZTiers.ORIGIN, 6.0F, -3.1F, new Item.Properties().tab(PVZItemTabs.PVZ_USEFUL)));
     public static final RegistryObject<Item> ORIGIN_HOE = ITEMS.register("origin_hoe", () -> new HoeItem(PVZTiers.ORIGIN, -2, -1.0F, new Item.Properties().tab(PVZItemTabs.PVZ_USEFUL)));
     public static final RegistryObject<Item> PEA_GUN = ITEMS.register("pea_gun", PeaGunItem::new);
+    public static final RegistryObject<Item> COMMON_SPROUT = ITEMS.register("common_sprout", SproutItem::new);
 //    public static final RegistryObject<Item> RESOURCE_COLLECTOR = ITEMS.register("resource_collector", ResourceCollectorItem::new);
 //    public static final RegistryObject<Item> BOWLING_GLOVE = ITEMS.register("bowling_glove", BowlingGloveItem::new);
 //    public static final RegistryObject<Item> SUN_STORAGE_SAPLING = ITEMS.register("sun_storage_sapling", () -> new SunStorageSaplingItem(10000));

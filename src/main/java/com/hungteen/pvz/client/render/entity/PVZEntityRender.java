@@ -17,7 +17,7 @@ import net.minecraft.world.entity.Entity;
  **/
 public abstract class PVZEntityRender<T extends Entity> extends EntityRenderer<T> {
 
-    protected EntityModel<T> model;
+    protected final EntityModel<T> model;
 
     public PVZEntityRender(EntityRendererProvider.Context context, EntityModel<T> m) {
         super(context);
@@ -28,17 +28,23 @@ public abstract class PVZEntityRender<T extends Entity> extends EntityRenderer<T
     public void render(T entityIn, float entityYaw, float partialTicks, PoseStack matrixStackIn,
                        MultiBufferSource bufferIn, int packedLightIn) {
         super.render(entityIn, entityYaw, partialTicks, matrixStackIn, bufferIn, packedLightIn);
-        matrixStackIn.pushPose();
-        matrixStackIn.scale(-1, -1, 1);
-        final float f = getScaleByEntity(entityIn);
-        matrixStackIn.scale(f, f, f);
-        matrixStackIn.translate(0.0, -1.501, 0.0);
-        final Vector3d vec = this.getTranslateVec(entityIn);
-        matrixStackIn.translate(vec.x, vec.y, vec.z);
-        VertexConsumer vertexConsumer = bufferIn.getBuffer(this.model.renderType(this.getTextureLocation(entityIn)));
-        this.model.setupAnim(entityIn, 0, 0, entityIn.tickCount + partialTicks, 0, 0);
-        this.model.renderToBuffer(matrixStackIn, vertexConsumer, packedLightIn, OverlayTexture.NO_OVERLAY, 1.0F, 1.0F, 1.0F, 1.0F);
-        matrixStackIn.popPose();
+        if(canRenderModel(entityIn)){
+            matrixStackIn.pushPose();
+            matrixStackIn.scale(-1, -1, 1);
+            final float f = getScaleByEntity(entityIn);
+            matrixStackIn.scale(f, f, f);
+            matrixStackIn.translate(0.0, -1.501, 0.0);
+            final Vector3d vec = this.getTranslateVec(entityIn);
+            matrixStackIn.translate(vec.x, vec.y, vec.z);
+            VertexConsumer vertexConsumer = bufferIn.getBuffer(this.model.renderType(this.getTextureLocation(entityIn)));
+            this.model.setupAnim(entityIn, 0, 0, entityIn.tickCount + partialTicks, 0, 0);
+            this.model.renderToBuffer(matrixStackIn, vertexConsumer, packedLightIn, OverlayTexture.NO_OVERLAY, 1.0F, 1.0F, 1.0F, 1.0F);
+            matrixStackIn.popPose();
+        }
+    }
+
+    protected boolean canRenderModel(T entityIn){
+        return true;
     }
 
     protected abstract float getScaleByEntity(T entity);

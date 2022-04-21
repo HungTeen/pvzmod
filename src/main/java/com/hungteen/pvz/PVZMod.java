@@ -122,7 +122,6 @@ public class PVZMod {
         EssenceTypes.EssenceType.register();
         RankTypes.RankType.register();
         CardTypes.CardType.register();
-        PeaGunItem.registerShootModes();
         PVZPlants.PVZPlantType.register();
         PVZZombies.PVZZombieType.register();
 //        //register skills.

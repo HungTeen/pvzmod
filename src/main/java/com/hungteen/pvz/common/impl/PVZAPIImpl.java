@@ -72,11 +72,6 @@ public class PVZAPIImpl implements PVZAPI.IPVZAPI {
     }
 
     @Override
-    public void registerPeaGunShootMode(String mode) {
-        PeaGunItem.registerShootMode(mode);
-    }
-
-    @Override
     public List<IRankType> getRankTypes() {
         return Collections.unmodifiableList(RANK_TYPES);
     }

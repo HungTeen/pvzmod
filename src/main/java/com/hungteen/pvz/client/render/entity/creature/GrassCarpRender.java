@@ -1,7 +1,7 @@
-package com.hungteen.pvz.client.render.entity.animal;
+package com.hungteen.pvz.client.render.entity.creature;
 
 import com.hungteen.pvz.client.model.PVZModelLayers;
-import com.hungteen.pvz.client.model.entity.animal.GrassCarpModel;
+import com.hungteen.pvz.client.model.entity.creature.GrassCarpModel;
 import com.hungteen.pvz.client.render.entity.PVZMobRender;
 import com.hungteen.pvz.client.render.entity.layer.GrassCarpItemLayer;
 import com.hungteen.pvz.common.entity.creature.GrassCarp;

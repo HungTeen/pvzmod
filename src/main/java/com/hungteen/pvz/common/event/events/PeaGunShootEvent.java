@@ -1,6 +1,7 @@
-package com.hungteen.pvz.api.events;
+package com.hungteen.pvz.common.event.events;
 
 import com.hungteen.pvz.api.types.IPlantType;
+import com.hungteen.pvz.api.types.base.IPAZType;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraftforge.eventbus.api.Cancelable;
@@ -16,9 +17,9 @@ public class PeaGunShootEvent extends Event {
 
     private final Player player;
     private final ItemStack stack;
-    private final String mode;
+    private final IPAZType mode;
 
-    public PeaGunShootEvent(Player player, ItemStack stack, String mode) {
+    public PeaGunShootEvent(Player player, ItemStack stack, IPAZType mode) {
         this.player = player;
         this.stack = stack;
         this.mode = mode;
@@ -28,7 +29,7 @@ public class PeaGunShootEvent extends Event {
         return player;
     }
 
-    public String getMode() {
+    public IPAZType getMode() {
         return mode;
     }
 

@@ -7,7 +7,7 @@ import com.hungteen.pvz.common.entity.PVZEntities;
 import com.hungteen.pvz.common.entity.bullet.PVZProjectile;
 import com.hungteen.pvz.common.entity.bullet.PeaBullet;
 import com.hungteen.pvz.common.event.PVZPlayerEvents;
-import com.hungteen.pvz.api.events.PeaGunShootEvent;
+import com.hungteen.pvz.common.event.events.PeaGunShootEvent;
 import com.hungteen.pvz.common.effect.PVZEffects;
 import com.hungteen.pvz.common.impl.type.plant.PVZPlants;
 import com.hungteen.pvz.common.item.PVZItemTabs;
@@ -38,6 +38,7 @@ import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.common.MinecraftForge;
 import org.jetbrains.annotations.Nullable;
 
+import javax.annotation.Nonnull;
 import java.util.*;
 import java.util.function.Predicate;
 
@@ -48,10 +49,10 @@ import java.util.function.Predicate;
  **/
 public class PeaGunItem extends ProjectileWeaponItem {
 
-    private static final Set<String> GLOBAL_SHOOT_MODES = new HashSet<>();
-    private static final List<IPAZType> INNER_SHOOT_MODES = Arrays.asList(
+    private static final Set<IPAZType> SHOOT_MODES = new HashSet<>(Arrays.asList(
             PVZPlants.PEA_SHOOTER, PVZPlants.SNOW_PEA
-    );
+    ));
+    private static final IPAZType DEFAULT_MODE = PVZPlants.PEA_SHOOTER;
     private static final String SHOOT_TYPE = "ShootType";
 
     public PeaGunItem() {
@@ -59,38 +60,32 @@ public class PeaGunItem extends ProjectileWeaponItem {
     }
 
     /**
-     * {@link com.hungteen.pvz.common.impl.PVZAPIImpl#registerPeaGunShootMode(String)}
+     * Register Pea Gun Shoot Mode.
      */
-    public static void registerShootMode(String mode) {
-        if (!GLOBAL_SHOOT_MODES.contains(mode)) {
-            GLOBAL_SHOOT_MODES.add(mode);
+    public static void registerShootMode(IPAZType mode) {
+        if (!SHOOT_MODES.contains(mode)) {
+            SHOOT_MODES.add(mode);
         } else {
             Util.warn("Pea Gun Shoot Mode Register : Duplicate !");
         }
     }
 
-    public static Collection<IPAZType> getShootTypes(){
-        return Collections.unmodifiableList(INNER_SHOOT_MODES);
-    }
-
     /**
-     * {@link PVZMod#coreRegister()}
+     * Get All Shoot Modes.
      */
-    public static void registerShootModes() {
-        INNER_SHOOT_MODES.forEach(mode -> PVZAPI.get().registerPeaGunShootMode(mode.getIdentity()));
+    public static boolean validShootModeItem(IPAZType type){
+        return SHOOT_MODES.contains(type);
     }
 
-    public static String getShootMode(ItemStack stack) {
-        return stack.getOrCreateTag().getString(SHOOT_TYPE);
+    @Nonnull
+    public static IPAZType getShootMode(ItemStack stack) {
+        final String mode = stack.getOrCreateTag().getString(SHOOT_TYPE);
+        final Optional<IPAZType> opt = PVZAPI.get().getPAZType(mode);
+        return opt.isPresent() ? (SHOOT_MODES.contains(opt.get()) ? opt.get() : DEFAULT_MODE) : DEFAULT_MODE;
     }
 
-    public static void setShootMode(ItemStack stack, String mode) {
-        stack.getOrCreateTag().putString(SHOOT_TYPE, mode);
-    }
-
-    public static boolean hasShootMode(ItemStack stack) {
-        final String mode = getShootMode(stack);
-        return ! mode.isEmpty() && GLOBAL_SHOOT_MODES.contains(mode);
+    public static void setShootMode(ItemStack stack, IPAZType mode) {
+        stack.getOrCreateTag().putString(SHOOT_TYPE, mode.getIdentity());
     }
 
     /**
@@ -101,8 +96,8 @@ public class PeaGunItem extends ProjectileWeaponItem {
 
         if (stack.getItem() instanceof PeaGunItem && !player.getCooldowns().isOnCooldown(stack.getItem())) {
             final ItemStack bullet = player.getProjectile(stack);
-            final String shootMode = getShootMode(stack);
-            if (!bullet.isEmpty() && !shootMode.isEmpty()) {
+            final IPAZType shootMode = getShootMode(stack);
+            if (!bullet.isEmpty()) {
                 ((PeaGunItem) stack.getItem()).performShoot(player.level, player, stack, shootMode);
                 player.getCooldowns().addCooldown(stack.getItem(), Math.max(10, getShootCD(player, stack)));
             } else {
@@ -115,13 +110,6 @@ public class PeaGunItem extends ProjectileWeaponItem {
     public InteractionResultHolder<ItemStack> use(Level level, Player player, InteractionHand hand) {
         final ItemStack stack = player.getItemInHand(hand);
         final ItemStack bullet = player.getProjectile(stack);
-        if (!hasShootMode(stack)) {
-            if (!level.isClientSide) {
-                PlayerUtil.sendTipTo(player, new TranslatableComponent("help.pvz.no_shoot_mode").withStyle(ChatFormatting.RED));
-                PlayerUtil.setItemStackCD(player, stack, 10);
-            }
-            return InteractionResultHolder.fail(stack);
-        }
         if (bullet.isEmpty()) {
             if (!level.isClientSide) {
                 PlayerUtil.sendTipTo(player, new TranslatableComponent("help.pvz.no_bullet").withStyle(ChatFormatting.RED));
@@ -136,7 +124,7 @@ public class PeaGunItem extends ProjectileWeaponItem {
     @Override
     public void onUsingTick(ItemStack stack, LivingEntity player, int count) {
         final int cd = getShootCD(player, stack);
-        final String shootMode = getShootMode(stack);
+        final IPAZType shootMode = getShootMode(stack);
         if (player instanceof Player && count + 5 < this.getUseDuration(stack) && count % cd == 0) {
             if (!MinecraftForge.EVENT_BUS.post(new PeaGunShootEvent((Player) player, stack, shootMode))) {
                 this.performShoot(player.level, (Player) player, stack, shootMode);
@@ -147,12 +135,12 @@ public class PeaGunItem extends ProjectileWeaponItem {
     /**
      * @param itemStack : pea gun stack.
      */
-    public void performShoot(Level world, Player player, ItemStack itemStack, String mode) {
+    public void performShoot(Level world, Player player, ItemStack itemStack, IPAZType mode) {
         final ItemStack projectile = player.getProjectile(itemStack);
 
-        if (mode.equals(PVZPlants.PEA_SHOOTER.getIdentity())) {
+        if (mode == PVZPlants.PEA_SHOOTER) {
             this.shootPea(world, player, mode, projectile, 0.5, 0, 0);
-        } else if (mode.equals(PVZPlants.SNOW_PEA.getIdentity())) {
+        } else if (mode == PVZPlants.SNOW_PEA) {
             this.shootPea(world, player, mode, projectile, 0.5, 0, 0);
 //        } else if (mode == PVZPlants.REPEATER) {
 //            this.shootPea(world, player, mode, projectile, 0.5, 0, 0);
@@ -185,7 +173,7 @@ public class PeaGunItem extends ProjectileWeaponItem {
         }
 
         SoundEvent soundEvent = SoundEvents.SNOW_GOLEM_SHOOT;
-        if (mode.equals(PVZPlants.SNOW_PEA.getIdentity()) || projectile.is(PVZItems.SNOW_PEA.get())) {
+        if (mode == PVZPlants.SNOW_PEA || projectile.is(PVZItems.SNOW_PEA.get())) {
             soundEvent = PVZSounds.SNOW_SHOOT.get();
             ;
         }
@@ -198,7 +186,7 @@ public class PeaGunItem extends ProjectileWeaponItem {
         }
     }
 
-    public void shootPea(Level world, Player player, String mode, ItemStack stack, double forwardOffset, double rightOffset, float angle) {
+    public void shootPea(Level world, Player player, IPAZType mode, ItemStack stack, double forwardOffset, double rightOffset, float angle) {
         final Vec3 vec = player.getLookAngle();
         final double deltaX = forwardOffset * vec.x - rightOffset * vec.z;
         final double deltaZ = forwardOffset * vec.z + rightOffset * vec.x;
@@ -216,13 +204,13 @@ public class PeaGunItem extends ProjectileWeaponItem {
         world.addFreshEntity(pea);
     }
 
-    private void shrinkItemStack(Player player, ItemStack projectile, String mode) {
+    private void shrinkItemStack(Player player, ItemStack projectile, IPAZType mode) {
         //creative player or energetic player don't consume bullet.
         if (!player.hasEffect(PVZEffects.ENERGETIC_EFFECT.get()) && PlayerUtil.isPlayerSurvival(player)) {
             final boolean infinity = EnchantmentHelper.getItemEnchantmentLevel(Enchantments.INFINITY_ARROWS, projectile) > 0;
             if (infinity) {
                 if (projectile.is(PVZItems.PEA.get()) ||
-                        (projectile.is(PVZItems.SNOW_PEA.get()) && mode.equals(PVZPlants.SNOW_PEA.getIdentity()))) {
+                        (projectile.is(PVZItems.SNOW_PEA.get()) && mode == PVZPlants.SNOW_PEA)) {
                     return;
                 }
             }
@@ -233,8 +221,8 @@ public class PeaGunItem extends ProjectileWeaponItem {
     /**
      * get shoot bullet state.
      */
-    private PVZProjectile.BulletStates getPeaState(String mode, ItemStack bullet) {
-        return mode.equals(PVZPlants.SNOW_PEA.getIdentity()) ? PVZProjectile.BulletStates.ICE :
+    private PVZProjectile.BulletStates getPeaState(IPAZType mode, ItemStack bullet) {
+        return mode == PVZPlants.SNOW_PEA ? PVZProjectile.BulletStates.ICE :
                 bullet.is(PVZItems.SNOW_PEA.get()) ? PVZProjectile.BulletStates.ICE :
                         bullet.is(PVZItems.FLAME_PEA.get()) ? PVZProjectile.BulletStates.FIRE :
                                 PVZProjectile.BulletStates.NORMAL;
@@ -243,15 +231,13 @@ public class PeaGunItem extends ProjectileWeaponItem {
     @Override
     public void appendHoverText(ItemStack stack, @Nullable Level level, List<Component> components, TooltipFlag tooltipFlag) {
         components.add(new TranslatableComponent("tooltip.pvz.pea_gun").withStyle(ChatFormatting.GREEN));
-        if (hasShootMode(stack)) {
-            components.add(new TranslatableComponent("tooltip.pvz.pea_gun_mode." + getShootMode(stack)).withStyle(ChatFormatting.GREEN));
-        }
+        components.add(new TranslatableComponent("tooltip.pvz.pea_gun_mode." + getShootMode(stack)).withStyle(ChatFormatting.GREEN));
     }
 
     @Override
     public void fillItemCategory(CreativeModeTab creativeModeTab, NonNullList<ItemStack> stacks) {
         if (this.allowdedIn(creativeModeTab)) {
-            GLOBAL_SHOOT_MODES.forEach(mode -> {
+            SHOOT_MODES.forEach(mode -> {
                 ItemStack stack = new ItemStack(this);
                 setShootMode(stack, mode);
                 stacks.add(stack);
@@ -302,7 +288,7 @@ public class PeaGunItem extends ProjectileWeaponItem {
     }
 
     @Override
-    public boolean isEnchantable(ItemStack p_41456_) {
+    public boolean isEnchantable(ItemStack stack) {
         return true;
     }
 

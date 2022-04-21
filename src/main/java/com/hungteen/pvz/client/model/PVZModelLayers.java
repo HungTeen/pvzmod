@@ -31,6 +31,7 @@ public class PVZModelLayers {
     Animals.
      */
     public static final ModelLayerLocation GRASS_CARP = register("grass_carp");
+    public static final ModelLayerLocation SPROUT = register("sprout");
 
     /*
     Plant Entities.

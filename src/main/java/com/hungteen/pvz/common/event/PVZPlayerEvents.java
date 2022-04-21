@@ -83,7 +83,7 @@ public class PVZPlayerEvents {
     @SubscribeEvent
     public static void onPlayerInteractSpec(PlayerInteractEvent.EntityInteractSpecific ev) {
         if(! ev.getWorld().isClientSide){
-            PlayerUtil.addResource(ev.getPlayer(), Resources.SUN_NUM, 50);
+//            PlayerUtil.addResource(ev.getPlayer(), Resources.SUN_NUM, 50);
 //            if(ev.getHand() == Hand.MAIN_HAND) {
 //                PlayerEventHandler.quickRemoveByPlayer(ev.getPlayer(), ev.getTarget(), ev.getPlayer().getMainHandItem());
 //                PlayerEventHandler.makeSuperMode(ev.getPlayer(), ev.getTarget(), ev.getPlayer().getMainHandItem());
