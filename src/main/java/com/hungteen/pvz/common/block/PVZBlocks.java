@@ -8,6 +8,7 @@ import com.hungteen.pvz.common.block.crops.CornBlock;
 import com.hungteen.pvz.common.block.crops.PeaBlock;
 import com.hungteen.pvz.common.block.cubes.EssenceOreBlock;
 import com.hungteen.pvz.common.block.cubes.OriginBlock;
+import com.hungteen.pvz.common.block.entity.EssenceAltarBlock;
 import com.hungteen.pvz.common.block.misc.*;
 import com.hungteen.pvz.common.impl.type.EssenceTypes;
 import com.hungteen.pvz.common.item.PVZItemTabs;
@@ -103,7 +104,7 @@ public class PVZBlocks {
 //    public static final RegistryObject<SunConverterBlock> SUN_CONVERTER = BLOCKS.register("sun_converter", SunConverterBlock::new);
 //    public static final RegistryObject<FragmentSpliceBlock> FRAGMENT_SPLICE = BLOCKS.register("fragment_splice", FragmentSpliceBlock::new);
 //    public static final RegistryObject<SlotMachineBlock> SLOT_MACHINE = BLOCKS.register("slot_machine", SlotMachineBlock::new);
-//    public static final RegistryObject<EssenceAltarBlock> ESSENCE_ALTAR = BLOCKS.register("essence_altar", EssenceAltarBlock::new);
+    public static final RegistryObject<EssenceAltarBlock> ESSENCE_ALTAR = BLOCKS.register("essence_altar", EssenceAltarBlock::new);
 //    public static final RegistryObject<CardFusionBlock> CARD_FUSION_TABLE = BLOCKS.register("card_fusion_table", CardFusionBlock::new);
 
     public static final RegistryObject<PVZPortalBlock> ABYSSAL_DARK_PORTAL_BLOCK = BLOCKS.register("abyssal_dark_portal_block", PVZPortalBlock::new);

@@ -1,5 +1,6 @@
 package com.hungteen.pvz.client;
 
+import com.hungteen.pvz.client.gui.screen.EssenceAltarScreen;
 import com.hungteen.pvz.client.model.PVZModelLayers;
 import com.hungteen.pvz.client.model.entity.creature.GrassCarpModel;
 import com.hungteen.pvz.client.model.entity.bullet.CommonBulletModel;
@@ -16,6 +17,7 @@ import com.hungteen.pvz.client.model.item.BucketArmorModel;
 import com.hungteen.pvz.client.particle.MelonSliceParticle;
 import com.hungteen.pvz.client.particle.PVZParticles;
 import com.hungteen.pvz.client.particle.multi.PotatoExplosionParticle;
+import com.hungteen.pvz.client.render.blockentity.EssenceAltarRender;
 import com.hungteen.pvz.client.render.entity.creature.GardenPlantRender;
 import com.hungteen.pvz.client.render.entity.creature.GrassCarpRender;
 import com.hungteen.pvz.client.render.entity.bullet.PeaBulletRender;
@@ -31,13 +33,18 @@ import com.hungteen.pvz.client.render.entity.plant.SunFlowerRender;
 import com.hungteen.pvz.client.render.entity.plant.WallNutRender;
 import com.hungteen.pvz.client.render.entity.zombie.NormalZombieRender;
 import com.hungteen.pvz.client.render.entity.zombie.ZombieDropPartRender;
+import com.hungteen.pvz.common.blockentity.PVZBlockEntities;
 import com.hungteen.pvz.common.entity.PVZEntities;
 
+import com.hungteen.pvz.common.menu.PVZMenus;
+import com.hungteen.pvz.common.misc.PVZWoodType;
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.gui.screens.MenuScreens;
 import net.minecraft.client.model.HumanoidModel;
 import net.minecraft.client.model.geom.LayerDefinitions;
 import net.minecraft.client.model.geom.builders.LayerDefinition;
 import net.minecraft.client.particle.ParticleEngine;
+import net.minecraft.client.renderer.blockentity.BlockEntityRendererProvider;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.client.event.EntityRenderersEvent;
 import net.minecraftforge.client.event.ParticleFactoryRegisterEvent;
@@ -85,6 +92,8 @@ public class ClientRegister {
         /* zombie entity */
         event.registerEntityRenderer(PVZEntities.NORMAL_ZOMBIE.get(), NormalZombieRender::new);
         event.registerEntityRenderer(PVZEntities.BUCKET_HEAD_ZOMBIE.get(), NormalZombieRender::new);
+
+        event.registerBlockEntityRenderer(PVZBlockEntities.ESSENCE_ALTAR.get(), EssenceAltarRender::new);
     }
 
     @SubscribeEvent
@@ -147,7 +156,12 @@ public class ClientRegister {
     }
 
     @SubscribeEvent
-    public static void reigsterRenderType(FMLClientSetupEvent ev){
+    public static void setUpClient(FMLClientSetupEvent ev){
+        ev.enqueueWork(() -> {
+            PVZKeyBinds.register();
+            PVZWoodType.register();
+            registerScreen();
+        });
 //        RenderTypeLookup.setRenderLayer(BlockRegister.PEA_PLANT.get(), RenderType.cutout());
 //        RenderTypeLookup.setRenderLayer(BlockRegister.NUT_LEAVES.get(), RenderType.cutout());
 //        RenderTypeLookup.setRenderLayer(BlockRegister.NUT_SAPLING.get(), RenderType.cutout());
@@ -164,6 +178,21 @@ public class ClientRegister {
 //        RenderTypeLookup.setRenderLayer(BlockRegister.GOLD_SUNFLOWER_TROPHY.get(), RenderType.cutout());
 //        RenderTypeLookup.setRenderLayer(BlockRegister.DIAMOND_SUNFLOWER_TROPHY.get(), RenderType.cutout());
 //        TileEntityRegister.bindRenderers(ev);
+    }
+
+    public static void registerScreen() {
+//        ScreenManager.register(ALMANAC.get(), AlmanacScreen::new);
+//        ScreenManager.register(PEA_GUN.get(), PeaGunScreen::new);
+//        ScreenManager.register(DAVE_SHOP.get(), DaveShopScreen::new);
+//        ScreenManager.register(SUN_SHOP.get(), SunShopScreen::new);
+//        ScreenManager.register(SUN_CONVERTER.get(), SunConverterScreen::new);
+//        ScreenManager.register(FRAGMENT_SPLICE.get(), FragmentSpliceScreen::new);
+//        ScreenManager.register(SLOT_MACHINE.get(), SlotMachineScreen::new);
+//        ScreenManager.register(PENNY_SHOP.get(), PennyShopScreen::new);
+        MenuScreens.register(PVZMenus.ESSENCE_ALTAR.get(), EssenceAltarScreen::new);
+//        ScreenManager.register(CARD_FUSION.get(), CardFusionScreen::new);
+//        ScreenManager.register(IMITATER.get(), ImitaterScreen::new);
+//        ScreenManager.register(CARD_PACK.get(), CardPackScreen::new);
     }
 
 //    private static Pair<IBakedModel, ModelResourceLocation> getBakedModel(ModelBakeEvent ev, Item item) {

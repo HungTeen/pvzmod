@@ -7,7 +7,7 @@ import com.hungteen.pvz.api.interfaces.IHasOwner;
 import com.hungteen.pvz.common.entity.EntityGroupHandler;
 import com.hungteen.pvz.common.entity.plant.base.ShooterPlant;
 import com.hungteen.pvz.utils.EntityUtil;
-import com.mojang.math.Vector3d;
+import com.hungteen.pvz.utils.MathUtil;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.particles.ParticleOptions;
 import net.minecraft.core.particles.ParticleTypes;
@@ -16,12 +16,12 @@ import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.network.syncher.EntityDataSerializers;
 import net.minecraft.network.syncher.SynchedEntityData;
 import net.minecraft.util.Mth;
+import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.projectile.Projectile;
 import net.minecraft.world.entity.projectile.ProjectileUtil;
-import net.minecraft.world.entity.projectile.Snowball;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.entity.BlockEntity;
@@ -32,6 +32,8 @@ import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.EntityHitResult;
 import net.minecraft.world.phys.HitResult;
 import net.minecraft.world.phys.Vec3;
+import net.minecraftforge.common.MinecraftForge;
+import net.minecraftforge.event.entity.living.LivingKnockBackEvent;
 
 import javax.annotation.Nullable;
 import java.util.Optional;
@@ -51,6 +53,7 @@ public abstract class PVZProjectile extends Projectile implements IHasGroup, IHa
     protected boolean canExist = true;
     protected float airSlowDown = 0.99F;
     protected float attackDamage = 0F;
+    protected double bulletSpeed = 1;
 
     public PVZProjectile(EntityType<? extends Projectile> type, Level level) {
         super(type, level);
@@ -189,6 +192,30 @@ public abstract class PVZProjectile extends Projectile implements IHasGroup, IHa
     }
 
     /**
+     * All projectile hurt method must invoke this one !
+     */
+    protected void hurtTarget(Entity target, DamageSource source, float amount){
+        final Vec3 originSpeed = target.getDeltaMovement();
+
+        target.hurt(source, amount);
+
+        if(target instanceof LivingEntity){
+            target.setDeltaMovement(originSpeed);
+            if(this.canKnockBack()){
+                ((LivingEntity) target).knockback(this.getKBStrength(), target.getX() - this.getX(), target.getZ() - this.getZ());
+            }
+        }
+    }
+
+    protected boolean canKnockBack(){
+        return this.getKBStrength() > 0;
+    }
+
+    protected float getKBStrength(){
+        return (float) ((this.bulletSpeed - 1) / 2F);
+    }
+
+    /**
      * handle server to client event.
      */
     @Override
@@ -226,20 +253,23 @@ public abstract class PVZProjectile extends Projectile implements IHasGroup, IHa
      * shoot bullet such as pea or spore
      */
     public void shootPea(double dx, double dy, double dz, double speed, double angleOffset) {
+        this.bulletSpeed = speed;
+
         final double down = this.getShootPeaAngle();
         final double dxz = Math.sqrt(dx * dx + dz * dz);
         if(down != 0){
             dy = Mth.clamp(dy, - dxz / down, dxz / down);//fix dy by angle
         }
-//		System.out.println(dy + "," + dxz);
         final double degree = Mth.atan2(dz, dx) + Math.toRadians(angleOffset);
         dx = Math.cos(degree) * dxz;
         dz = Math.sin(degree) * dxz;
+
         final double totSpeed = Math.sqrt(dxz * dxz + dy * dy);
         this.setDeltaMovement(new Vec3(dx / totSpeed, dy / totSpeed, dz / totSpeed).scale(speed));
     }
 
     public void shootToTarget(LivingEntity target, double speed) {
+        this.bulletSpeed = speed;
         this.setDeltaMovement(target.position().add(0, target.getEyeHeight(), 0).subtract(this.position()).normalize().scale(speed));
     }
 
@@ -283,6 +313,7 @@ public abstract class PVZProjectile extends Projectile implements IHasGroup, IHa
         compound.putInt("GroupType", this.groupType.ordinal());
         compound.putBoolean("CanExist", this.canExist);
         compound.putFloat("AttackDamage", this.attackDamage);
+        compound.putDouble("BulletSpeed", this.bulletSpeed);
         compound.putInt("BulletState", this.getBulletState().ordinal());
         compound.putInt("BulletType", this.getBulletType().ordinal());
     }
@@ -302,6 +333,9 @@ public abstract class PVZProjectile extends Projectile implements IHasGroup, IHa
         }
         if(compound.contains("AttackDamage")){
             this.attackDamage = compound.getFloat("AttackDamage");
+        }
+        if(compound.contains("BulletSpeed")){
+            this.bulletSpeed = compound.getDouble("BulletSpeed");
         }
         if (compound.contains("BulletState")) {
             this.setBulletState(BulletStates.values()[compound.getInt("BulletState")]);

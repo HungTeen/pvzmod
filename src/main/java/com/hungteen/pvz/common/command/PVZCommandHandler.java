@@ -14,7 +14,7 @@ public class PVZCommandHandler {
     public static void init(RegisterCommandsEvent event) {
         CommandDispatcher<CommandSourceStack> dispatcher = event.getDispatcher();
         PlayerStatsCommand.register(dispatcher);
-//        PAZCommand.register(dispatcher);
+        PAZStatsCommand.register(dispatcher);
 //        InvasionCommand.register(dispatcher);
 //        ChallengeCommand.register(dispatcher);
     }

@@ -86,8 +86,11 @@ public class MathUtil {
 //        return getHorizontalVec(a, b).normalize();
 //    }
 
-    public static Vec3 getHorizontalVec(Vec3 a, Vec3 b) {
-        return new Vec3(b.x - a.x, 0, b.z - a.z);
+    /**
+     * vector from a to b.
+     */
+    public static Vec3 getHorizontalVec(Vec3 from, Vec3 to) {
+        return new Vec3(to.x - from.x, 0, to.z - from.z);
     }
 
     public static Vec3 toVector(BlockPos pos) {

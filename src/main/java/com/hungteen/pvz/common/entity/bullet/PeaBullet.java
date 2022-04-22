@@ -46,19 +46,21 @@ public class PeaBullet extends PVZProjectile {
         super.dealDamageTo(target);
         this.canExist = false;
         final float damage = this.getAttackDamage();
-        if (this.getBulletState() == BulletStates.NORMAL) {// normal pea attack
-            target.hurt(PVZDamageSource.pea(this, this.getOwner()), damage);
-        } else if (this.getBulletState() == BulletStates.ICE) {// snow pea attack
-            PVZDamageSource source = PVZDamageSource.snowPea(this, this.getOwner());
+
+        //default normal pea damage.
+        PVZDamageSource source = PVZDamageSource.pea(this, this.getOwner());
+
+        if (this.getBulletState() == BulletStates.ICE) {// snow pea attack
+            source = PVZDamageSource.snowPea(this, this.getOwner());
             if (this.getOwner() instanceof IHasEffects) {
                 source.setEffects(((IHasEffects) this.getOwner()).getEffects());
             } else if (this.getOwner() instanceof Player) {
 //                source.addEffect(EffectUtil.effect(EffectRegister.COLD_EFFECT.get(), 100, 5));
             }
-            target.hurt(source, damage);
 //        } else if (this.getBulletState() == State.FIRE || this.getBulletState() == State.BLUE_FIRE) {
 //            target.hurt(PVZEntityDamageSource.flamePea(this, this.getThrower()), damage);
         }
+        hurtTarget(target, source, damage);
     }
 
 //    /**
@@ -94,11 +96,11 @@ public class PeaBullet extends PVZProjectile {
             damage += 75f;
         }
         // fire
-        if (this.getBulletState() == BulletStates.FIRE) {
-            damage *= 1.5F;
-        } else if (this.getBulletState() == BulletStates.BLUE_FIRE) {
-            damage *= 1.75F;
-        }
+//        if (this.getBulletState() == BulletStates.FIRE) {
+//            damage *= 1.5F;
+//        } else if (this.getBulletState() == BulletStates.BLUE_FIRE) {
+//            damage *= 1.75F;
+//        }
         return damage;
     }
 

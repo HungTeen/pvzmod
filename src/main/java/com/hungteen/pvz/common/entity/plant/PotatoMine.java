@@ -4,6 +4,7 @@ import com.hungteen.pvz.api.interfaces.IAlmanacEntry;
 import com.hungteen.pvz.api.types.IPlantType;
 import com.hungteen.pvz.client.particle.PVZParticles;
 import com.hungteen.pvz.client.particle.ParticleUtil;
+import com.hungteen.pvz.common.impl.type.SkillTypes;
 import com.hungteen.pvz.common.sound.PVZSounds;
 import com.hungteen.pvz.common.PVZDamageSource;
 import com.hungteen.pvz.common.entity.plant.base.CloseInstantPlant;
@@ -116,13 +117,11 @@ public class PotatoMine extends CloseInstantPlant {
     }
 
     public float getExplodeDamage(){
-        return 150;
-//        return this.getSkillValue(SkillTypes.NORMAL_BOMB_DAMAGE);
+        return this.getSkillValue(SkillTypes.POTATO_BOMB_DAMAGE);
     }
 
     public int getPrepareCD(){
-        return 300;
-//        return (int) this.getSkillValue(SkillTypes.MINE_FAST_PREPARE);
+        return (int) this.getSkillValue(SkillTypes.MINE_FAST_PREPARE);
     }
 
     @Override
