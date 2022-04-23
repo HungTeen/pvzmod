@@ -1,7 +1,5 @@
 package com.hungteen.pvz.common.block;
 
-import java.util.Arrays;
-
 import com.hungteen.pvz.PVZMod;
 import com.hungteen.pvz.common.block.crops.CabbageBlock;
 import com.hungteen.pvz.common.block.crops.CornBlock;
@@ -12,9 +10,9 @@ import com.hungteen.pvz.common.block.entity.EssenceAltarBlock;
 import com.hungteen.pvz.common.block.misc.*;
 import com.hungteen.pvz.common.impl.type.EssenceTypes;
 import com.hungteen.pvz.common.item.PVZItemTabs;
-
 import com.hungteen.pvz.common.misc.PVZWoodType;
-import net.minecraft.world.item.*;
+import net.minecraft.world.item.BlockItem;
+import net.minecraft.world.item.Item;
 import net.minecraft.world.level.block.*;
 import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.material.Material;
@@ -24,6 +22,8 @@ import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
 import net.minecraftforge.registries.IForgeRegistry;
 import net.minecraftforge.registries.RegistryObject;
+
+import java.util.Arrays;
 
 /**
  * @program: pvzmod-1.18.x
@@ -120,6 +120,7 @@ public class PVZBlocks {
                 ORIGIN_ORE, APPEASE_ORE, LIGHT_ORE, EXPLOSION_ORE, DEFENCE_ORE, ICE_ORE, ENFORCE_ORE,
                 ASSIST_ORE, MAGIC_ORE, FLAME_ORE, SPEAR_ORE, ARMA_ORE, //TOXIC_ORE, ELECTRIC_ORE, SHADOW_ORE,
                 AMETHYST_ORE, AMETHYST_BLOCK, ORIGIN_BLOCK,// ,BUTTER_BLOCK, FROZEN_MELON,
+                ESSENCE_ALTAR,
                 NUT_LEAVES, NUT_LEAVES_WITH_NUTS, NUT_LOG, STRIPPED_NUT_LOG, NUT_WOOD, STRIPPED_NUT_WOOD, NUT_PLANKS, NUT_DOOR, NUT_TRAPDOOR, NUT_FENCE, NUT_FENCE_GATE, NUT_STAIRS, NUT_BUTTON, NUT_SLAB, NUT_PRESSURE_PLATE//, NUT_SAPLING, CHOMPER,
 //                LANTERN, FLOWER_POT, GOLD_TILE1, GOLD_TILE2, GOLD_TILE3, SILVER_SUNFLOWER_TROPHY, GOLD_SUNFLOWER_TROPHY, DIAMOND_SUNFLOWER_TROPHY
         ).forEach(block -> {

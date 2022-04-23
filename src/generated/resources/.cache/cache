@@ -100,6 +100,7 @@ c460cb2de0d4e7ee3699aceaa9779249f63dc797 assets/pvz/models/block/pea_3.json
 8360f5f362fb063400ad19c8b81734a57459b3b4 assets/pvz/models/block/stripped_nut_log_horizontal.json
 da77753273f5d685f522eeb3a1b18ef2201118f4 assets/pvz/models/block/stripped_nut_wood.json
 9e6bbcb9e2e3c0e79aa69b415906e9b133549174 assets/pvz/models/block/stripped_nut_wood_horizontal.json
+8583eb35a77ccfb457fedff5b448b507ac747a00 assets/pvz/models/item/almanac.json
 cdfa18f235742a97be823540c8780cebd4cc48a0 assets/pvz/models/item/amethyst_block.json
 8536fc26a5d7b0928609c3467d9d73c4399b4947 assets/pvz/models/item/amethyst_ingot.json
 a99d467ffe1e84254381e8283cad85bb42771d17 assets/pvz/models/item/amethyst_ore.json
@@ -114,6 +115,7 @@ b87f99b50a097e5464ca23ae2373d38edbf7e9bf assets/pvz/models/item/bucket_head.json
 74b0def6ef3ce0c00961a337baa92429803a2563 assets/pvz/models/item/cabbage.json
 693cf6081c2cc0491ce5691a5847d04b0232f78d assets/pvz/models/item/cabbage_seeds.json
 54ef3134745e270a72ae7fd9e2150c84d8426cda assets/pvz/models/item/chorus_fruit_card.json
+15131096905495b5558984fd7ee9b62681abc283 assets/pvz/models/item/common_sprout.json
 56ee005c22cfe252c46835d9e673c55046e60d42 assets/pvz/models/item/cooked_brain.json
 c0bedf87852a38b27ed1aaa8380f3e4a7264a374 assets/pvz/models/item/copper_coin.json
 7cdcd3ec543b9f27fd58b098fd2ff5c7b76dceb9 assets/pvz/models/item/corn.json
@@ -122,6 +124,7 @@ a828c24b7d7b7daf373a0a337542415fbfb15156 assets/pvz/models/item/defence_essence.
 ecc472a7d99ccc63db1a7d89bfaa7c213bbf0a82 assets/pvz/models/item/defence_ore.json
 ae616290037c09b16fe9e77e1fd63f31c09d190e assets/pvz/models/item/enforce_essence.json
 def3b9e0f91ad67dffdcb110e071097dda4e3e8d assets/pvz/models/item/enforce_ore.json
+7e3b744f29b2a80c2a763abe32beb43991c791a4 assets/pvz/models/item/essence_altar.json
 6e9c5729b281441a864fca0d6d38cdbbef6c3244 assets/pvz/models/item/explosion_essence.json
 a74e2833632919df83a1cf18d15a87c6ac4c86db assets/pvz/models/item/explosion_ore.json
 71d31c3593bb9582447f4061adf93cc5ba2fd5c0 assets/pvz/models/item/fake_brain.json
@@ -277,4 +280,5 @@ e25eb25174ecc6b629d9364ec37ea1c39a553e00 data/pvz/tags/items/card/template_card.
 9c960160d41b9332ee0edbc9c575413711384481 data/pvz/tags/items/card/white_materials.json
 5ccaa07ae7a7e5ffe1f609901169ff145f928159 data/pvz/tags/items/essences.json
 be8bf1d82365f3337ccb9d647a52c73fc2b00709 data/pvz/tags/items/pea_gun_bullets.json
+b70fe1d397ba8319d88d3f61324b53ec4ee5bfd3 data/pvz/tags/items/reach_items.json
 843b3c60c51aba0ca718bce687a74dd523934d47 data/pvz/tags/items/shield_items.json

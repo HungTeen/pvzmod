@@ -1,7 +1,8 @@
 package com.hungteen.pvz.client.render.blockentity;
 
+import com.hungteen.pvz.client.model.PVZModelLayers;
+import com.hungteen.pvz.client.model.blockentity.FloatOriginModel;
 import com.hungteen.pvz.common.blockentity.EssenceAltarBlockEntity;
-import com.hungteen.pvz.utils.StringUtil;
 import com.hungteen.pvz.utils.Util;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
@@ -11,7 +12,7 @@ import net.minecraft.client.renderer.blockentity.BlockEntityRenderer;
 import net.minecraft.client.renderer.blockentity.BlockEntityRendererProvider;
 import net.minecraft.client.renderer.texture.OverlayTexture;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraft.world.level.block.entity.BlockEntity;
+import net.minecraft.world.entity.Entity;
 
 /**
  * @program: pvzmod-1.18.x
@@ -20,10 +21,11 @@ import net.minecraft.world.level.block.entity.BlockEntity;
  **/
 public class EssenceAltarRender implements BlockEntityRenderer<EssenceAltarBlockEntity> {
 
-    private static final ResourceLocation RES = Util.texture("tileentity/origin.png");
-//    private final OriginModel origin = new OriginModel();
+    private static final ResourceLocation RES = Util.texture("blockentity/float_origin.png");
+    private final FloatOriginModel<Entity> origin;
 
     public EssenceAltarRender(BlockEntityRendererProvider.Context context) {
+        origin = new FloatOriginModel<>(context.bakeLayer(PVZModelLayers.FLOAT_ORIGIN));
     }
 
     @Override
@@ -34,8 +36,8 @@ public class EssenceAltarRender implements BlockEntityRenderer<EssenceAltarBlock
         stack.scale(size, size, size);
         stack.translate(- 0.5 / size, - 2.3D - 0.15 * Math.sin(blockEntity.tick * 0.1), 0.5 / size);
         VertexConsumer builder = bufferIn.getBuffer(RenderType.entityTranslucentCull(RES));
-//        origin.renderToBuffer(stack, builder, combinedLightIn, OverlayTexture.NO_OVERLAY);
-//        origin.setupAnim(null, 0, 0, blockEntity.tick + partialTicks, 0, 0);
+        origin.renderToBuffer(stack, builder, combinedLightIn, OverlayTexture.NO_OVERLAY, 1, 1, 1 ,1);
+        origin.setupAnim(blockEntity.tick + partialTicks);
         stack.popPose();
     }
 

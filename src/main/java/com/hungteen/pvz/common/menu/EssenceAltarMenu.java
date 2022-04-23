@@ -48,7 +48,7 @@ public class EssenceAltarMenu extends PVZMenu{
         this.access = access;
 
         //add summon card slot.
-        this.addSlot(new Slot(this.altarSlots, 0, 27, 9){
+        this.addSlot(new Slot(this.altarSlots, 0, 27, 11){
             @Override
             public boolean mayPlace(@Nonnull ItemStack stack) {
                 return super.mayPlace(stack) && stack.getItem() instanceof SummonCardItem && ! ((SummonCardItem) stack.getItem()).isEnjoyCard;
@@ -56,7 +56,7 @@ public class EssenceAltarMenu extends PVZMenu{
         });
 
         //add enjoy card slot.
-        this.addSlot(new Slot(this.altarSlots, 1, 49, 63){
+        this.addSlot(new Slot(this.altarSlots, 1, 49, 65){
             @Override
             public boolean mayPlace(@Nonnull ItemStack stack) {
                 return super.mayPlace(stack) && stack.getItem() instanceof SummonCardItem && ((SummonCardItem) stack.getItem()).isEnjoyCard;
@@ -64,7 +64,7 @@ public class EssenceAltarMenu extends PVZMenu{
         });
 
         //add essence slot.
-        this.addSlot(new Slot(this.altarSlots, 2, 14, 38){
+        this.addSlot(new Slot(this.altarSlots, 2, 14, 40){
             @Override
             public boolean mayPlace(@Nonnull ItemStack stack) {
                 return super.mayPlace(stack) && stack.getItem() instanceof EssenceItem;
@@ -72,10 +72,10 @@ public class EssenceAltarMenu extends PVZMenu{
         });
 
         //add material slot.
-        this.addSlot(new Slot(this.altarSlots, 3, 40, 38));
+        this.addSlot(new Slot(this.altarSlots, 3, 40, 40));
 
         //player inventory.
-        this.addInventoryAndHotBar(inventory, 8, 84);
+        this.addInventoryAndHotBar(inventory, 8, 88);
 
     }
 
@@ -88,7 +88,6 @@ public class EssenceAltarMenu extends PVZMenu{
     public boolean clickMenuButton(Player player, int id) {
         learnSkillAt(player, id);
         return true;
-//        return super.clickMenuButton(player, id);
     }
 
     public void learnSkillAt(Player player, int pos){

@@ -2,11 +2,7 @@ package com.hungteen.pvz.data;
 
 import com.hungteen.pvz.PVZMod;
 import com.hungteen.pvz.common.block.PVZBlocks;
-import com.hungteen.pvz.common.block.crops.CabbageBlock;
-import com.hungteen.pvz.common.block.crops.CornBlock;
-import com.hungteen.pvz.common.block.crops.PeaBlock;
 import com.hungteen.pvz.utils.Util;
-import com.mojang.datafixers.util.Pair;
 import net.minecraft.data.DataGenerator;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.level.block.Block;
@@ -39,7 +35,7 @@ public class BlockModelGen extends BlockModelProvider {
          */
         addedBlocks.addAll(Arrays.asList(
                 PVZBlocks.NUT_WALL_SIGN.get(),
-                PVZBlocks.ABYSSAL_DARK_PORTAL_BLOCK.get()
+                PVZBlocks.ABYSSAL_DARK_PORTAL_BLOCK.get(), PVZBlocks.ESSENCE_ALTAR.get()
 //                BlockRegister.CARD_FUSION_TABLE.get(), BlockRegister.CHOMPER.get(), BlockRegister.DIAMOND_SUNFLOWER_TROPHY.get(),
 //                BlockRegister.ESSENCE_ALTAR.get(), BlockRegister.FLOWER_POT.get(), BlockRegister.GOLD_SUNFLOWER_TROPHY.get(), BlockRegister.LANTERN.get(),
 //                BlockRegister.LILY_PAD.get(), BlockRegister.SILVER_SUNFLOWER_TROPHY.get(), BlockRegister.STEEL_LADDER.get(), BlockRegister.SUN_CONVERTER.get()

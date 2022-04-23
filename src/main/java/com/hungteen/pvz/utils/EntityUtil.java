@@ -5,13 +5,10 @@ import com.hungteen.pvz.common.PVZDamageSource;
 import com.hungteen.pvz.common.effect.PVZEffects;
 import com.hungteen.pvz.common.entity.EntityGroupHandler;
 import com.hungteen.pvz.common.entity.PVZPAZ;
-import com.hungteen.pvz.common.event.handler.LivingEventHandler;
 import com.hungteen.pvz.common.tag.PVZEntityTags;
 import it.unimi.dsi.fastutil.ints.IntOpenHashSet;
-import net.minecraft.client.renderer.EffectInstance;
 import net.minecraft.core.BlockPos;
 import net.minecraft.sounds.SoundEvent;
-import net.minecraft.tags.EntityTypeTags;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
@@ -19,12 +16,12 @@ import net.minecraft.world.entity.Mob;
 import net.minecraft.world.entity.MobSpawnType;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.entity.projectile.ProjectileUtil;
+import net.minecraft.world.level.ClipContext;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.LevelAccessor;
 import net.minecraft.world.level.ServerLevelAccessor;
-import net.minecraft.world.phys.AABB;
-import net.minecraft.world.phys.Vec3;
-import net.minecraft.world.scores.Team;
+import net.minecraft.world.phys.*;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
@@ -326,6 +323,31 @@ public class EntityUtil {
         if(ev != null) {
             entity.playSound(ev, 1.0F, rand(entity).nextFloat() * 0.2F + 0.9F);
         }
+    }
+
+    /**
+     * used for bullets hit check.
+     * get predicate entity between start to end.
+     */
+    public static EntityHitResult rayTraceEntities(Level world, Entity entity, Vec3 startVec, Vec3 endVec, Predicate<Entity> predicate) {
+        return ProjectileUtil.getEntityHitResult(world, entity, startVec, endVec,
+                entity.getBoundingBox().expandTowards(entity.getDeltaMovement()).inflate(1.0D), predicate);
+    }
+
+    /**
+     * used for item ray trace.
+     * get predicate entity with dis and vec.
+     */
+    public static EntityHitResult rayTraceEntities(Level world, Entity entity, Vec3 lookVec, double distance, Predicate<Entity> predicate) {
+        final Vec3 startVec = entity.position().add(0, entity.getEyeHeight(), 0);
+        Vec3 endVec = startVec.add(lookVec.normalize().scale(distance));
+        ClipContext ray = new ClipContext(startVec, endVec, ClipContext.Block.COLLIDER, ClipContext.Fluid.NONE, entity);
+        BlockHitResult result = world.clip(ray);
+        if(result.getType() != HitResult.Type.MISS) {// hit something
+            endVec = result.getLocation();
+        }
+        return ProjectileUtil.getEntityHitResult(world, entity, startVec, endVec,
+                entity.getBoundingBox().inflate(distance), predicate);
     }
 
     /**

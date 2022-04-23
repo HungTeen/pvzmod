@@ -8,7 +8,6 @@ import com.hungteen.pvz.client.gui.RecipeManager;
 import com.hungteen.pvz.client.gui.widget.DisplayField;
 import com.hungteen.pvz.client.gui.widget.PVZButton;
 import com.hungteen.pvz.common.menu.EssenceAltarMenu;
-import com.hungteen.pvz.utils.MathUtil;
 import com.hungteen.pvz.utils.StringUtil;
 import com.hungteen.pvz.utils.Util;
 import com.hungteen.pvz.utils.enums.Colors;
@@ -47,7 +46,7 @@ public class EssenceAltarScreen extends PVZContainerScreen<EssenceAltarMenu> {
     public EssenceAltarScreen(EssenceAltarMenu screenContainer, Inventory inv, Component titleIn) {
         super(screenContainer, inv, titleIn);
         this.imageWidth = 176;
-        this.imageHeight = 166;
+        this.imageHeight = 170;
         this.tips.add(new DisplayField.TipField(3, 3, Arrays.asList(
                 new TranslatableComponent("gui.pvz.essence_altar.tip1"),
                 new TranslatableComponent("gui.pvz.essence_altar.tip2"),
@@ -79,13 +78,7 @@ public class EssenceAltarScreen extends PVZContainerScreen<EssenceAltarMenu> {
 
         //render scroll bar.
         final int count = this.menu.getAvailableSkills().size();
-        RenderSystem.setShaderTexture(0, Util.WIDGETS);
-        if(count > MAX_ENTRY_COUNT){
-            final int len = MathUtil.getBarLen(this.currentPos, count - MAX_ENTRY_COUNT, 76 - 15);
-            blit(stack, this.leftPos + 156, this.topPos + 5 + len, 15, 0, 12, 15);
-        } else{
-            blit(stack, this.leftPos + 156, this.topPos + 5, 27, 0, 12, 15);
-        }
+        RenderUtil.renderScrollBar(this, stack, this.leftPos + 156, this.topPos + 7, this.currentPos, count, MAX_ENTRY_COUNT, 76);
 
         super.renderBg(stack, partialTicks, mouseX, mouseY);
     }
@@ -106,9 +99,7 @@ public class EssenceAltarScreen extends PVZContainerScreen<EssenceAltarMenu> {
             if(i < count){
                 this.renderEntry(stack, i, skills.get(this.currentPos + i), levels.get(this.currentPos + i));
             }
-
         }
-
 
         if(this.menu.getPAZType().isPresent() && this.tmpType != this.menu.getPAZType().get()){
             this.tmpType = this.menu.getPAZType().get();
@@ -202,7 +193,7 @@ public class EssenceAltarScreen extends PVZContainerScreen<EssenceAltarMenu> {
 
         @Override
         protected Pair<Integer, Integer> getButtonUVOffset() {
-            return Pair.of(0, 38);
+            return Pair.of(0, 19);
         }
     }
 
