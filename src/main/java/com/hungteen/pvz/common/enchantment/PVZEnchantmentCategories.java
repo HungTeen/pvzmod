@@ -24,4 +24,8 @@ public class PVZEnchantmentCategories {
         return item instanceof PlantCardItem;
     });
 
+    public static final EnchantmentCategory REACH = EnchantmentCategory.create("reach", (item) -> {
+        return item.builtInRegistryHolder().is(PVZItemTags.REACH_ITEMS);
+    });
+
 }

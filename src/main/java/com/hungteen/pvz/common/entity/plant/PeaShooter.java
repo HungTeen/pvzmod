@@ -5,6 +5,7 @@ import com.hungteen.pvz.common.entity.bullet.PVZProjectile;
 import com.hungteen.pvz.common.entity.bullet.PeaBullet;
 import com.hungteen.pvz.common.entity.plant.base.PVZPlant;
 import com.hungteen.pvz.common.entity.plant.base.ShooterPlant;
+import com.hungteen.pvz.common.impl.type.SkillTypes;
 import com.hungteen.pvz.common.impl.type.plant.PVZPlants;
 import com.hungteen.pvz.utils.MathUtil;
 import net.minecraft.world.entity.Entity;
@@ -75,7 +76,12 @@ public class PeaShooter extends ShooterPlant {
 
     @Override
     public float getAttackDamage() {
-        return 1.5F;
+        return this.getSkillValue(SkillTypes.PEA_DAMAGE);
+    }
+
+    @Override
+    public float getBulletSpeed() {
+        return this.getSkillValue(SkillTypes.PEA_SPEED_UP);
     }
 
     @Override

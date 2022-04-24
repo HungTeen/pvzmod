@@ -6,7 +6,6 @@ import com.hungteen.pvz.api.types.IPlantType;
 import com.hungteen.pvz.common.block.PVZBlocks;
 import com.hungteen.pvz.common.item.PVZItems;
 import com.hungteen.pvz.common.item.misc.TemplateCardItem;
-import com.hungteen.pvz.common.tag.PVZBlockTags;
 import com.hungteen.pvz.common.tag.PVZItemTags;
 import net.minecraft.data.DataGenerator;
 import net.minecraft.data.tags.BlockTagsProvider;
@@ -94,8 +93,7 @@ public class ItemTagGen extends ItemTagsProvider {
 //            }
 //        }
 
-        //        this.tag(PVZItemTags.REACH_ITEMS).add(ItemRegister.RESOURCE_COLLECTOR.get());
-
+        this.tag(PVZItemTags.REACH_ITEMS).add(PVZItems.ALMANAC.get());
         this.tag(PVZItemTags.SHIELD_ITEMS).add(Items.SHIELD);
         this.tag(PVZItemTags.ARMOR_ITEMS).add(PVZItems.BUCKET_HEAD.get());
         this.tag(PVZItemTags.PEA_GUN_BULLETS).add(PVZItems.PEA.get()).add(PVZItems.SNOW_PEA.get()).add(PVZItems.FLAME_PEA.get());

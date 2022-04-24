@@ -234,10 +234,6 @@ public abstract class PVZPAZ extends PVZMob implements IPAZEntity {
 
     @Override
     public boolean hurt(DamageSource source, float amount) {
-        //can get hurt each attack by pvz damage.
-        if (source instanceof PVZDamageSource) {
-            this.invulnerableTime = 0;
-        }
         //TODO Attack Back.
 //        if(source.getEntity() instanceof LivingEntity && EntityUtil.checkCanEntityBeAttack(this, source.getEntity())){
 //            //determine whether to change target.
@@ -339,6 +335,10 @@ public abstract class PVZPAZ extends PVZMob implements IPAZEntity {
     public float getSkillValue(ISkillType type){
         final int lvl = SkillTypes.getSkillLevel(this.getSkills(), type);
         return type.getValueAt(lvl);
+    }
+
+    public boolean hasSkill(ISkillType type){
+        return SkillTypes.getSkillLevel(this.getSkills(), type) > 0;
     }
 
     /**

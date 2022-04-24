@@ -1,5 +1,6 @@
 package com.hungteen.pvz.common.entity.plant.base;
 
+import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 
@@ -10,6 +11,8 @@ import com.hungteen.pvz.api.types.base.IPAZType;
 import com.hungteen.pvz.common.entity.PVZAttributes;
 import com.hungteen.pvz.common.PVZDamageSource;
 import com.hungteen.pvz.common.entity.PVZPAZ;
+import com.hungteen.pvz.common.impl.PAZAlmanacs;
+import com.hungteen.pvz.common.impl.type.SkillTypes;
 import com.mojang.datafixers.util.Pair;
 
 import net.minecraft.core.BlockPos;
@@ -198,15 +201,15 @@ public abstract class PVZPlant extends PVZPAZ implements IPlantEntity {
 
     @Override
     protected float getLife() {
-        return 20;
+        return this.getSkillValue(SkillTypes.PLANT_MORE_LIFE);
     }
 
     @Override
     public void addAlmanacEntries(List<Pair<IAlmanacEntry, Number>> list) {
         super.addAlmanacEntries(list);
-//        list.addAll(Arrays.asList(
-//                Pair.of(PAZAlmanacs.HEALTH, this.getSkillValue(SkillTypes.PLANT_MORE_LIFE))
-//        ));
+        list.addAll(Arrays.asList(
+                Pair.of(PAZAlmanacs.HEALTH, this.getLife())
+        ));
     }
 
     /**

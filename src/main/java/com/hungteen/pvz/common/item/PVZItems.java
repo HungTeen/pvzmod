@@ -3,12 +3,6 @@ package com.hungteen.pvz.common.item;
 import com.hungteen.pvz.PVZMod;
 import com.hungteen.pvz.api.PVZAPI;
 import com.hungteen.pvz.api.types.IPlantType;
-import com.hungteen.pvz.common.item.armor.BucketArmorItem;
-import com.hungteen.pvz.common.item.base.PVZFoodItem;
-import com.hungteen.pvz.common.item.base.PVZMiscItem;
-import com.hungteen.pvz.common.item.misc.BrainPatternItem;
-import com.hungteen.pvz.common.item.weapon.PeaGunItem;
-import com.hungteen.pvz.common.sound.PVZSounds;
 import com.hungteen.pvz.common.block.PVZBlocks;
 import com.hungteen.pvz.common.entity.PVZEntities;
 import com.hungteen.pvz.common.impl.type.CardTypes;
@@ -16,14 +10,21 @@ import com.hungteen.pvz.common.impl.type.EssenceTypes;
 import com.hungteen.pvz.common.impl.type.PAZTypes;
 import com.hungteen.pvz.common.impl.type.plant.PlantType;
 import com.hungteen.pvz.common.impl.type.zombie.ZombieType;
+import com.hungteen.pvz.common.item.armor.BucketArmorItem;
+import com.hungteen.pvz.common.item.base.PVZFoodItem;
+import com.hungteen.pvz.common.item.base.PVZMiscItem;
 import com.hungteen.pvz.common.item.misc.EssenceItem;
 import com.hungteen.pvz.common.item.misc.TemplateCardItem;
 import com.hungteen.pvz.common.item.spawn.DropItemEgg;
+import com.hungteen.pvz.common.item.spawn.SproutItem;
 import com.hungteen.pvz.common.item.spawn.card.PlantCardItem;
+import com.hungteen.pvz.common.item.tool.AlmanacItem;
 import com.hungteen.pvz.common.item.tool.OriginShovelItem;
 import com.hungteen.pvz.common.item.tool.OriginSwordItem;
+import com.hungteen.pvz.common.item.weapon.PeaGunItem;
+import com.hungteen.pvz.common.misc.PVZBannerPatterns;
+import com.hungteen.pvz.common.sound.PVZSounds;
 import com.hungteen.pvz.utils.enums.Colors;
-
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.Mob;
@@ -114,12 +115,13 @@ public class PVZItems {
 
     /* misc */
 //    public static final RegistryObject<Item> TIME_SOURCE = ITEMS.register("time_source", PVZMiscItem::new);
+    public static final RegistryObject<BannerPatternItem> BRAIN_BANNER_PATTERN = ITEMS.register("brain_banner_pattern", () -> new BannerPatternItem(PVZBannerPatterns.BRAIN, (new Item.Properties()).stacksTo(1).tab(CreativeModeTab.TAB_MISC)));
 
     /*
      * Items in Food Tab.
      */
 
-    public static final RegistryObject<Item> FAKE_BRAIN = ITEMS.register("fake_brain", BrainPatternItem::new);
+    public static final RegistryObject<Item> FAKE_BRAIN = ITEMS.register("fake_brain", () -> new PVZFoodItem(PVZFoods.FAKE_BRAIN));
     public static final RegistryObject<Item> COOKED_BRAIN = ITEMS.register("cooked_brain", () -> new PVZFoodItem(PVZFoods.COOKED_BRAIN));
     public static final RegistryObject<Item> CABBAGE = ITEMS.register("cabbage", () -> new PVZFoodItem(PVZFoods.CABBAGE));
     public static final RegistryObject<Item> CORN = ITEMS.register("corn", () -> new PVZFoodItem(PVZFoods.CORN));
@@ -154,6 +156,7 @@ public class PVZItems {
     public static final RegistryObject<Item> ORIGIN_AXE = ITEMS.register("origin_axe", () -> new AxeItem(PVZTiers.ORIGIN, 6.0F, -3.1F, new Item.Properties().tab(PVZItemTabs.PVZ_USEFUL)));
     public static final RegistryObject<Item> ORIGIN_HOE = ITEMS.register("origin_hoe", () -> new HoeItem(PVZTiers.ORIGIN, -2, -1.0F, new Item.Properties().tab(PVZItemTabs.PVZ_USEFUL)));
     public static final RegistryObject<Item> PEA_GUN = ITEMS.register("pea_gun", PeaGunItem::new);
+    public static final RegistryObject<Item> COMMON_SPROUT = ITEMS.register("common_sprout", SproutItem::new);
 //    public static final RegistryObject<Item> RESOURCE_COLLECTOR = ITEMS.register("resource_collector", ResourceCollectorItem::new);
 //    public static final RegistryObject<Item> BOWLING_GLOVE = ITEMS.register("bowling_glove", BowlingGloveItem::new);
 //    public static final RegistryObject<Item> SUN_STORAGE_SAPLING = ITEMS.register("sun_storage_sapling", () -> new SunStorageSaplingItem(10000));
@@ -161,7 +164,7 @@ public class PVZItems {
 //    public static final RegistryObject<Item> LARGE_SUN_STORAGE_SAPLING = ITEMS.register("sun_storage_sapling3", () -> new SunStorageSaplingItem(100000));
 //    public static final RegistryObject<Item> ONCE_SUN_STORAGE_SAPLING = ITEMS.register("sun_storage_sapling4", SunStorageSaplingItem::new);
 //    public static final RegistryObject<Item> FIRE_CRACKER = ITEMS.register("fire_cracker", FireCrackerItem::new);
-//    public static final RegistryObject<Item> ALMANAC = ITEMS.register("almanac", AlmanacItem::new);
+    public static final RegistryObject<Item> ALMANAC = ITEMS.register("almanac", AlmanacItem::new);
 //    public static final RegistryObject<Item> CARD_PACK = ITEMS.register("card_pack", CardPackItem::new);
 //    public static final RegistryObject<Item> CAR_KEY = ITEMS.register("car_key", PVZToolItem::new);
 //    public static final RegistryObject<Item> LAWN_MOWER = ITEMS.register("lawn_mower", LawnMowerItem::new);

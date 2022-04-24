@@ -17,6 +17,11 @@ public class PVZModelLayers {
     public static final ModelLayerLocation BUCKET_OUTER_ARMOR = registerOuterArmor("bucket");
 
     /*
+    Block Entities.
+     */
+    public static final ModelLayerLocation FLOAT_ORIGIN = register("float_origin");
+
+    /*
     Drop Entities.
      */
     public static final ModelLayerLocation SUN = register("sun");
@@ -31,6 +36,7 @@ public class PVZModelLayers {
     Animals.
      */
     public static final ModelLayerLocation GRASS_CARP = register("grass_carp");
+    public static final ModelLayerLocation SPROUT = register("sprout");
 
     /*
     Plant Entities.

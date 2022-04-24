@@ -5,6 +5,7 @@ import com.hungteen.pvz.PVZMod;
 import com.hungteen.pvz.api.types.ICardType;
 import com.hungteen.pvz.api.types.IEssenceType;
 import com.hungteen.pvz.api.types.IRankType;
+import com.hungteen.pvz.api.types.ISkillType;
 import com.hungteen.pvz.api.types.base.IPAZType;
 
 import java.lang.reflect.Constructor;
@@ -78,9 +79,9 @@ public class PVZAPI {
         void registerCardType(ICardType type);
 
         /**
-         * register pea gun shoot mode.
+         * register skill type.
          */
-        void registerPeaGunShootMode(String mode);
+        void registerSkillType(ISkillType type);
 
         /**
          * get all registered rank types.

@@ -45,6 +45,10 @@ public class PVZPacketHandler {
 
     }
 
+    public static <MSG> void sendToServer(MSG msg){
+        CHANNEL.sendToServer(msg);
+    }
+
     public static <MSG> void sendToClient(ServerPlayer serverPlayer, MSG msg){
         CHANNEL.send(PacketDistributor.PLAYER.with(() -> serverPlayer), msg);
     }

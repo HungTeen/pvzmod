@@ -1,6 +1,7 @@
 package com.hungteen.pvz.common.entity.ai.goal;
 
 import com.hungteen.pvz.common.entity.plant.base.PVZPlant;
+import com.hungteen.pvz.common.entity.zombie.base.PVZZombie;
 import net.minecraft.world.entity.Mob;
 import net.minecraft.world.entity.ai.goal.RandomLookAroundGoal;
 
@@ -27,9 +28,9 @@ public class PVZLookRandomlyGoal extends RandomLookAroundGoal {
         if(this.plant instanceof PVZPlant && !((PVZPlant) this.plant).canNormalUpdate()) {
             return false;
         }
-//        if(this.plant instanceof PVZZombie && !((PVZZombie) this.plant).canNormalUpdate()) {
-//            return false;
-//        }
+        if(this.plant instanceof PVZZombie && !((PVZZombie) this.plant).canNormalUpdate()) {
+            return false;
+        }
         return true;
     }
 

@@ -4,6 +4,7 @@ import com.hungteen.pvz.PVZMod;
 import com.hungteen.pvz.common.enchantment.card.ImmediateCDEnchantment;
 import com.hungteen.pvz.common.enchantment.card.SunReductionEnchantment;
 import com.hungteen.pvz.common.enchantment.card.plant.SoillessPlantEnchantment;
+import com.hungteen.pvz.common.enchantment.misc.RangeReachEnchantment;
 import net.minecraft.world.item.enchantment.Enchantment;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
@@ -27,7 +28,7 @@ public class PVZEnchantments {
 //    public static final RegistryObject<Enchantment> SUN_SHOVEL = ENCHANTMENTS.register("sun_shovel", SunShovelEnchantment::new);
     //    public static final RegistryObject<Enchantment> SUN_MENDING = ENCHANTMENTS.register("sun_mending", SunMendingEnchantment::new);
 //    public static final RegistryObject<Enchantment> DENSELY_PLANT = ENCHANTMENTS.register("densely_plant", DenselyPlantEnchantment::new);
-    //    public static final RegistryObject<Enchantment> RANGE_REACH = ENCHANTMENTS.register("range_reach", RangeReachEnchantment::new);
+        public static final RegistryObject<Enchantment> RANGE_REACH = ENCHANTMENTS.register("range_reach", RangeReachEnchantment::new);
 //    public static final RegistryObject<Enchantment> CARD_HEAL = ENCHANTMENTS.register("bandage", BandageEnchantment::new);
 
 

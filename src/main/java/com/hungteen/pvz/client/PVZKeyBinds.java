@@ -2,7 +2,7 @@ package com.hungteen.pvz.client;
 
 import net.minecraft.client.KeyMapping;
 import net.minecraftforge.client.ClientRegistry;
-import net.minecraftforge.client.settings.KeyBindingMap;
+import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
 
 /**
  * @program: pvzmod-1.18.x
@@ -19,7 +19,7 @@ public class PVZKeyBinds {
 //	public static final KeyBinding SHIFT = new KeyBinding("key.pvz.shift", 340, "key.categories.pvz");
 
     /**
-     * {@link ClientProxy#setUpClient()}
+     * {@link ClientRegister#setUpClient(FMLClientSetupEvent)}
      */
     public static void register() {
         ClientRegistry.registerKeyBinding(SHOW_OVERLAY);

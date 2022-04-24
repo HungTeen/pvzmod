@@ -1,26 +1,24 @@
 package com.hungteen.pvz.common.entity.zombie.base;
 
-import java.util.Optional;
-
 import com.hungteen.pvz.PVZConfig;
 import com.hungteen.pvz.api.enums.PVZGroupType;
 import com.hungteen.pvz.api.interfaces.IZombieEntity;
 import com.hungteen.pvz.api.types.base.IPAZType;
-import com.hungteen.pvz.common.entity.PVZAttributes;
-import com.hungteen.pvz.common.entity.ai.goal.attack.PVZZombieMeleeAttackGoal;
-import com.hungteen.pvz.common.sound.PVZSounds;
 import com.hungteen.pvz.common.PVZDamageSource;
+import com.hungteen.pvz.common.entity.PVZAttributes;
 import com.hungteen.pvz.common.entity.PVZEntities;
+import com.hungteen.pvz.common.entity.PVZMobTypes;
 import com.hungteen.pvz.common.entity.PVZPAZ;
 import com.hungteen.pvz.common.entity.ai.goal.PVZLookRandomlyGoal;
+import com.hungteen.pvz.common.entity.ai.goal.attack.PVZZombieMeleeAttackGoal;
 import com.hungteen.pvz.common.entity.ai.goal.target.PVZNearestTargetGoal;
 import com.hungteen.pvz.common.entity.bullet.PVZProjectile;
 import com.hungteen.pvz.common.entity.plant.base.PVZPlant;
 import com.hungteen.pvz.common.entity.zombie.ZombieUtil;
 import com.hungteen.pvz.common.entity.zombie.drop.ZombieDropPart;
+import com.hungteen.pvz.common.sound.PVZSounds;
 import com.hungteen.pvz.utils.AlgorithmUtil;
 import com.hungteen.pvz.utils.EntityUtil;
-
 import com.hungteen.pvz.utils.enums.DropPartTypes;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.sounds.SoundEvent;
@@ -35,6 +33,8 @@ import net.minecraft.world.item.Items;
 import net.minecraft.world.item.enchantment.EnchantmentHelper;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.pathfinder.BlockPathTypes;
+
+import java.util.Optional;
 
 /**
  * @program: pvzmod-1.18.x
@@ -57,7 +57,7 @@ public abstract class PVZZombie extends PVZPAZ implements IZombieEntity {
     protected int climbUpTick = 0;
     protected int maxClimbUpTick = 5;
 
-    public PVZZombie(EntityType<? extends PVZPAZ> entityType, Level level) {
+    public PVZZombie(EntityType<? extends PVZZombie> entityType, Level level) {
         super(entityType, level);
         this.setPathfindingMalus(BlockPathTypes.DANGER_FIRE, 6.0F);
         this.setPathfindingMalus(BlockPathTypes.DAMAGE_FIRE, 6.0F);
@@ -248,10 +248,16 @@ public abstract class PVZZombie extends PVZPAZ implements IZombieEntity {
         if(! level.isClientSide) {
             boolean flag = super.hurt(source, amount);
             if(this.canLostHand(source, amount) && this.random.nextDouble() < PVZConfig.dropHandChance()){
-                if(this.random.nextDouble() < 0.5){
-                    this.onLostHand(source, amount, true);
-                } else{
+                if(this.hasLeftHand() && this.hasRightHand()){
+                    if(this.random.nextDouble() < 0.5){
+                        this.onLostHand(source, amount, true);
+                    } else{
+                        this.onLostHand(source, amount, false);
+                    }
+                } else if(this.hasLeftHand()){
                     this.onLostHand(source, amount, false);
+                } else if(this.hasRightHand()){
+                    this.onLostHand(source, amount, true);
                 }
             }
             if(this.canLostHead(source, amount) && this.random.nextDouble() < PVZConfig.dropHeadChance()){
@@ -451,7 +457,7 @@ public abstract class PVZZombie extends PVZPAZ implements IZombieEntity {
     }
 
     public float getKBValue(){
-        return 0.92F;
+        return 0.5F;
     }
 
     public float getFollowRange(){
@@ -482,6 +488,11 @@ public abstract class PVZZombie extends PVZPAZ implements IZombieEntity {
 
     protected boolean isZombieInvulnerableTo(DamageSource source) {
         return this.isZombieRising() || (! EntityUtil.isEntityValid(source.getEntity()) && ! source.isMagic());
+    }
+
+    @Override
+    public MobType getMobType() {
+        return PVZMobTypes.ZOMBIE;
     }
 
     /**

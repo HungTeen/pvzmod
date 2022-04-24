@@ -7,8 +7,11 @@ import com.hungteen.pvz.common.enchantment.card.plant.SoillessPlantEnchantment;
 import com.hungteen.pvz.common.entity.plant.base.PVZPlant;
 import com.hungteen.pvz.utils.PlayerUtil;
 import com.hungteen.pvz.utils.enums.Resources;
+import net.minecraft.ChatFormatting;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.stats.Stats;
@@ -18,6 +21,7 @@ import net.minecraft.world.InteractionResultHolder;
 import net.minecraft.world.entity.MobSpawnType;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.item.context.UseOnContext;
 import net.minecraft.world.level.ClipContext;
 import net.minecraft.world.level.Level;
@@ -26,6 +30,7 @@ import net.minecraft.world.phys.BlockHitResult;
 
 import java.util.Arrays;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 import java.util.function.Consumer;
 import java.util.function.Predicate;
@@ -492,12 +497,12 @@ public class PlantCardItem extends SummonCardItem {
 //                        null;
 //    }
 
-//    @Override
-//    public void appendHoverText(ItemStack stack, World worldIn, List<ITextComponent> tooltip, ITooltipFlag flagIn) {
-//        tooltip.add(new TranslationTextComponent("tooltip.pvz.plant_card_info").withStyle(TextFormatting.GREEN));
-//        super.appendHoverText(stack, worldIn, tooltip, flagIn);
-//        final PlantCardItem item = (PlantCardItem) stack.getItem();
-//        if(item != null) {
+    @Override
+    public void appendHoverText(ItemStack stack, Level worldIn, List<Component> tooltip, TooltipFlag flagIn) {
+        tooltip.add(new TranslatableComponent("tooltip.pvz.plant_card_info").withStyle(ChatFormatting.GREEN));
+        super.appendHoverText(stack, worldIn, tooltip, flagIn);
+        final PlantCardItem item = (PlantCardItem) stack.getItem();
+        if(item != null) {
 //            final IPlantType plant = item.plantType;
 //            /* upgrade plant without soilless plant enchantment */
 //            if(! SoillessPlantEnchantment.isSoilless(stack)) {
@@ -515,7 +520,8 @@ public class PlantCardItem extends SummonCardItem {
 //            if(TOOL_TIP_TYPES.contains(plant)) {
 //                tooltip.add(new TranslationTextComponent("tooltip.pvz." + plant.toString().toLowerCase() + "_card").withStyle(TextFormatting.DARK_RED));
 //            }
-//        }
-//    }
+        }
+        appendSkillToolTips(stack, tooltip);
+    }
 
 }

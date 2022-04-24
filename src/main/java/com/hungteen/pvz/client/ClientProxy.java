@@ -17,11 +17,6 @@ public class ClientProxy extends CommonProxy {
     public static final Minecraft MC = Minecraft.getInstance();
 
     @Override
-    public void setUpClient() {
-        PVZKeyBinds.register();
-    }
-
-    @Override
     public void postInit() {
     }
 

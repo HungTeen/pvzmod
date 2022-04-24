@@ -6,9 +6,9 @@ import com.hungteen.pvz.api.PVZAPI;
 import com.hungteen.pvz.api.types.ICardType;
 import com.hungteen.pvz.api.types.IEssenceType;
 import com.hungteen.pvz.api.types.IRankType;
+import com.hungteen.pvz.api.types.ISkillType;
 import com.hungteen.pvz.api.types.base.IPAZType;
 import com.hungteen.pvz.common.impl.type.PAZTypes;
-import com.hungteen.pvz.common.item.weapon.PeaGunItem;
 import com.hungteen.pvz.utils.Util;
 
 /**
@@ -21,8 +21,9 @@ import com.hungteen.pvz.utils.Util;
 public class PVZAPIImpl implements PVZAPI.IPVZAPI {
 
     private static final List<IEssenceType> ESSENCES = new ArrayList<>();
-    private static final List<IRankType> RANK_TYPES = new ArrayList<>();
-    private static final List<ICardType> CARD_TYPES = new ArrayList<>();
+    private static final List<IRankType> RANKS = new ArrayList<>();
+    private static final List<ICardType> CARDS = new ArrayList<>();
+    private static final List<ISkillType> SKILLS = new ArrayList<>();
 
     @Override
     public void registerPAZType(IPAZType type) {
@@ -55,8 +56,8 @@ public class PVZAPIImpl implements PVZAPI.IPVZAPI {
 
     @Override
     public void registerRankType(IRankType type) {
-        if(! RANK_TYPES.contains(type)){
-            RANK_TYPES.add(type);
+        if(! RANKS.contains(type)){
+            RANKS.add(type);
         } else{
             Util.warn("Rank Type Register : Duplicate Type !");
         }
@@ -64,26 +65,30 @@ public class PVZAPIImpl implements PVZAPI.IPVZAPI {
 
     @Override
     public void registerCardType(ICardType type) {
-        if(! CARD_TYPES.contains(type)){
-            CARD_TYPES.add(type);
+        if(! CARDS.contains(type)){
+            CARDS.add(type);
         } else{
             Util.warn("Card Type Register : Duplicate Type !");
         }
     }
 
     @Override
-    public void registerPeaGunShootMode(String mode) {
-        PeaGunItem.registerShootMode(mode);
+    public void registerSkillType(ISkillType type) {
+        if(! SKILLS.contains(type)){
+            SKILLS.add(type);
+        } else{
+            Util.warn("Skill Type Register : Duplicate Type !");
+        }
     }
 
     @Override
     public List<IRankType> getRankTypes() {
-        return Collections.unmodifiableList(RANK_TYPES);
+        return Collections.unmodifiableList(RANKS);
     }
 
     @Override
     public List<ICardType> getCardTypes() {
-        return Collections.unmodifiableList(CARD_TYPES);
+        return Collections.unmodifiableList(CARDS);
     }
 
 }

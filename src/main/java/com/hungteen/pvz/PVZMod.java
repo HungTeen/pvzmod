@@ -4,7 +4,10 @@ import com.hungteen.pvz.client.ClientProxy;
 import com.hungteen.pvz.client.particle.PVZParticles;
 import com.hungteen.pvz.common.CommonProxy;
 import com.hungteen.pvz.common.CommonRegister;
+import com.hungteen.pvz.common.blockentity.PVZBlockEntities;
+import com.hungteen.pvz.common.impl.type.SkillTypes;
 import com.hungteen.pvz.common.item.weapon.PeaGunItem;
+import com.hungteen.pvz.common.menu.PVZMenus;
 import com.hungteen.pvz.common.sound.PVZSounds;
 import com.hungteen.pvz.common.advancement.AdvancementHandler;
 import com.hungteen.pvz.common.block.PVZBlocks;
@@ -67,7 +70,6 @@ public class PVZMod {
         IEventBus modBus = FMLJavaModLoadingContext.get().getModEventBus();
         modBus.addListener(EventPriority.NORMAL, PVZMod::setUpComplete);
         modBus.addListener(EventPriority.NORMAL, PVZMod::setUp);
-        modBus.addListener(EventPriority.NORMAL, PVZMod::setUpClient);
         modBus.addListener(EventPriority.NORMAL, DataGenHandler::dataGen);
         modBus.addListener(EventPriority.NORMAL, CapabilityHandler::registerCapabilities);
         modBus.addListener(EventPriority.NORMAL, PVZEntities::addEntityAttributes);
@@ -108,13 +110,6 @@ public class PVZMod {
         PVZPacketHandler.init();
     }
 
-    public static void setUpClient(FMLClientSetupEvent event) {
-        PROXY.setUpClient();
-        event.enqueueWork(() -> {
-            PVZWoodType.register();
-        });
-    }
-
     /**
      * register paz stuff at {@link PVZMod#PVZMod()}.
      */
@@ -122,11 +117,9 @@ public class PVZMod {
         EssenceTypes.EssenceType.register();
         RankTypes.RankType.register();
         CardTypes.CardType.register();
-        PeaGunItem.registerShootModes();
         PVZPlants.PVZPlantType.register();
         PVZZombies.PVZZombieType.register();
-//        //register skills.
-//        SkillTypes.SkillType.register();
+        SkillTypes.SkillType.register();
 
 //        CustomPlants.register();
 //        MemePlants.register();
@@ -158,10 +151,10 @@ public class PVZMod {
         PVZPotions.POTIONS.register(bus);
         PVZParticles.PARTICLE_TYPES.register(bus);
         PVZAttributes.ATTRIBUTES.register(bus);
+        PVZBlockEntities.TILE_ENTITY_TYPES.register(bus);
+        PVZMenus.CONTAINER_TYPES.register(bus);
 //        FeatureRegister.FEATURES.register(bus);
 //        StructureRegister.STRUCTURE_FEATURES.register(bus);
-//        TileEntityRegister.TILE_ENTITY_TYPES.register(bus);
-//        ContainerRegister.CONTAINER_TYPES.register(bus);
     }
 
 }

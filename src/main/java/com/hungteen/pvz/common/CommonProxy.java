@@ -14,10 +14,6 @@ public class CommonProxy {
 
     }
 
-    public void setUpClient() {
-
-    }
-
     public Player getPlayer(){
         return null;
     }

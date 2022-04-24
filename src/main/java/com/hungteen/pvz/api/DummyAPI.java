@@ -3,6 +3,7 @@ package com.hungteen.pvz.api;
 import com.hungteen.pvz.api.types.ICardType;
 import com.hungteen.pvz.api.types.IEssenceType;
 import com.hungteen.pvz.api.types.IRankType;
+import com.hungteen.pvz.api.types.ISkillType;
 import com.hungteen.pvz.api.types.base.IPAZType;
 
 import java.util.ArrayList;
@@ -54,7 +55,7 @@ public class DummyAPI implements PVZAPI.IPVZAPI {
     }
 
     @Override
-    public void registerPeaGunShootMode(String mode) {
+    public void registerSkillType(ISkillType type) {
 
     }
 

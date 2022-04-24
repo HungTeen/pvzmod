@@ -1,7 +1,12 @@
 package com.hungteen.pvz.data.loot;
 
 import com.hungteen.pvz.PVZMod;
+import com.hungteen.pvz.common.block.PVZBlocks;
+import com.hungteen.pvz.common.block.plant.crops.CabbageBlock;
+import com.hungteen.pvz.common.block.plant.crops.CornBlock;
+import com.hungteen.pvz.common.block.plant.crops.PeaBlock;
 import com.hungteen.pvz.common.block.cubes.EssenceOreBlock;
+import com.hungteen.pvz.common.item.PVZItems;
 import com.hungteen.pvz.utils.BlockUtil;
 import net.minecraft.advancements.critereon.EnchantmentPredicate;
 import net.minecraft.advancements.critereon.ItemPredicate;
@@ -12,18 +17,19 @@ import net.minecraft.world.item.Item;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.enchantment.Enchantments;
 import net.minecraft.world.level.block.Block;
-import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.block.state.properties.IntegerProperty;
 import net.minecraft.world.level.storage.loot.LootPool;
 import net.minecraft.world.level.storage.loot.LootTable;
+import net.minecraft.world.level.storage.loot.entries.LootItem;
+import net.minecraft.world.level.storage.loot.functions.ApplyBonusCount;
+import net.minecraft.world.level.storage.loot.predicates.LootItemBlockStatePropertyCondition;
 import net.minecraft.world.level.storage.loot.predicates.LootItemCondition;
 import net.minecraft.world.level.storage.loot.predicates.MatchTool;
 import net.minecraftforge.registries.ForgeRegistries;
 
 import java.util.Arrays;
-import java.util.Comparator;
 import java.util.HashSet;
 import java.util.Set;
-import java.util.function.Predicate;
 
 /**
  * @program: pvzmod-1.18.x
@@ -53,29 +59,17 @@ public class BlockLootGen extends BlockLoot {
         ));
 
         //essence ores.
-        BlockUtil.getFilterBlocks(block -> block instanceof EssenceOreBlock).forEach(block -> {
-            this.add(block, b -> {
-                return createOreDrop(b, ((EssenceOreBlock) b).essence.getEssenceItem());
-            });
+        BlockUtil.getFilterBlocks(EssenceOreBlock.class::isInstance).stream().map(EssenceOreBlock.class::cast).forEach(block -> {
+            this.add(block, createOreDrop(block, block.essence.getEssenceItem()));
         });
 
-        // drop item like coal ore
-//        Arrays.asList(BlockRegister.ORIGIN_ORE.get(), BlockRegister.APPEASE_ORE.get(), BlockRegister.LIGHT_ORE.get(),
-//                        BlockRegister.EXPLOSION_ORE.get(), BlockRegister.DEFENCE_ORE.get(), BlockRegister.ICE_ORE.get(),
-//                        BlockRegister.ENFORCE_ORE.get(), BlockRegister.TOXIC_ORE.get(), BlockRegister.ASSIST_ORE.get(),
-//                        BlockRegister.MAGIC_ORE.get(), BlockRegister.FLAME_ORE.get(), BlockRegister.SPEAR_ORE.get(),
-//                        BlockRegister.ARMA_ORE.get(), BlockRegister.ELECTRIC_ORE.get(), BlockRegister.SHADOW_ORE.get())
-//                .forEach((object) -> {
-//                    this.add(object, (block) -> createOreDrop(block, object.essence.getEssenceItem()));
-//                });
-//        // crop
-//        this.tmpBuilder = getAgeBuilder(BlockRegister.CABBAGE.get(), 3);
-//        this.add(BlockRegister.CABBAGE.get(),
-//                createCropDrops(BlockRegister.CABBAGE.get(), ItemRegister.CABBAGE.get(), this.tmpBuilder));
-//        this.tmpBuilder = getAgeBuilder(BlockRegister.CORN.get(), 7);
-//        this.add(BlockRegister.CORN.get(),
-//                createCropDrops(BlockRegister.CORN.get(), ItemRegister.CORN.get(), this.tmpBuilder));
-//
+        /*
+        Crops.
+         */
+        this.addCrop(PVZBlocks.PEA.get(), PVZItems.PEA.get(), PeaBlock.AGE, 7);
+        this.addCrop(PVZBlocks.CABBAGE.get(), PVZItems.CABBAGE_SEEDS.get(), PVZItems.CABBAGE.get(), CabbageBlock.AGE, 3);
+        this.addCrop(PVZBlocks.CORN.get(), PVZItems.CORN_SEEDS.get(), PVZItems.CORN.get(), CornBlock.AGE, 3);
+
 //        // leaves
 //        this.add(BlockRegister.NUT_LEAVES.get(), (p_218506_0_) -> {
 //            return createLeavesDrops(p_218506_0_, BlockRegister.NUT_SAPLING.get(), ItemRegister.NUT.get(), NORMAL_LEAVES_SAPLING_CHANCES);
@@ -86,12 +80,12 @@ public class BlockLootGen extends BlockLoot {
 //        this.dropOther(BlockRegister.GOLD_TILE2.get(), Blocks.GOLD_BLOCK);
 //        this.dropOther(BlockRegister.GOLD_TILE3.get(), Blocks.GOLD_BLOCK);
 
-        // other blocks are drop itself
-//        ForgeRegistries.BLOCKS.forEach(block -> {
-//            if (block.getRegistryName().getNamespace().equals(PVZMod.MOD_ID) && !noLootBlocks.contains(block) && !this.knownBlocks.contains(block)) {
-//                this.dropSelf(block);
-//            }
-//        });
+        // other blocks are drop itself.
+        ForgeRegistries.BLOCKS.forEach(block -> {
+            if (block.getRegistryName().getNamespace().equals(PVZMod.MOD_ID) && !noLootBlocks.contains(block) && !this.knownBlocks.contains(block) && block.asItem() != Items.AIR) {
+                this.dropSelf(block);
+            }
+        });
     }
 
     @Override
@@ -105,15 +99,22 @@ public class BlockLootGen extends BlockLoot {
         this.knownBlocks.add(block);
     }
 
-    private static LootTable.Builder createCropDrops(Block block, Item crops, LootItemCondition.Builder bb) {
-        return createCropDrops(block, crops, block.asItem(), bb);
+    /**
+     * Wheat type crops.
+     */
+    protected void addCrop(Block cropBlock, Item cropSeed, Item cropItem, IntegerProperty property, int reachAge){
+        LootItemCondition.Builder builder = LootItemBlockStatePropertyCondition.hasBlockStateProperties(cropBlock).setProperties(StatePropertiesPredicate.Builder.properties().hasProperty(property, reachAge));
+        this.add(cropBlock, createCropDrops(cropBlock, cropItem, cropSeed, builder));
     }
 
-//    private LootItemCondition.Builder getAgeBuilder(Block block, int age) {
-//        return BlockStateProperty.hasBlockStateProperties(block)
-//                .setProperties(StatePropertiesPredicate.Builder.properties().hasProperty(CropsBlock.AGE, age));
-//    }
-//
+    /**
+     * Carrot type crops.
+     */
+    protected void addCrop(Block cropBlock, Item cropItem, IntegerProperty property, int reachAge){
+        LootItemCondition.Builder builder = LootItemBlockStatePropertyCondition.hasBlockStateProperties(cropBlock).setProperties(StatePropertiesPredicate.Builder.properties().hasProperty(property, reachAge));
+        this.add(cropBlock, applyExplosionDecay(cropBlock, LootTable.lootTable().withPool(LootPool.lootPool().add(LootItem.lootTableItem(cropItem))).withPool(LootPool.lootPool().when(builder).add(LootItem.lootTableItem(cropItem).apply(ApplyBonusCount.addBonusBinomialDistributionCount(Enchantments.BLOCK_FORTUNE, 0.5714286F, 3))))));
+    }
+
 //    protected static LootTable.Builder createLeavesDrops(Block p_218526_0_, Block p_218526_1_,
 //                                                         Item drop, float... p_218526_2_) {
 //        return createLeavesDrops(p_218526_0_, p_218526_1_, p_218526_2_)

@@ -2,6 +2,9 @@
   "replace": false,
   "values": [
     "pvz:bucket_head_zombie",
+    "pvz:cone_head_zombie",
+    "pvz:flag_zombie",
+    "pvz:leader_zombie",
     "pvz:normal_zombie"
   ]
 }
