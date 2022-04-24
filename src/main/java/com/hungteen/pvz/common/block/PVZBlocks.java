@@ -1,9 +1,11 @@
 package com.hungteen.pvz.common.block;
 
 import com.hungteen.pvz.PVZMod;
-import com.hungteen.pvz.common.block.crops.CabbageBlock;
-import com.hungteen.pvz.common.block.crops.CornBlock;
-import com.hungteen.pvz.common.block.crops.PeaBlock;
+import com.hungteen.pvz.client.ClientRegister;
+import com.hungteen.pvz.common.block.plant.PVZSaplingBlock;
+import com.hungteen.pvz.common.block.plant.crops.CabbageBlock;
+import com.hungteen.pvz.common.block.plant.crops.CornBlock;
+import com.hungteen.pvz.common.block.plant.crops.PeaBlock;
 import com.hungteen.pvz.common.block.cubes.EssenceOreBlock;
 import com.hungteen.pvz.common.block.cubes.OriginBlock;
 import com.hungteen.pvz.common.block.entity.EssenceAltarBlock;
@@ -11,6 +13,7 @@ import com.hungteen.pvz.common.block.misc.*;
 import com.hungteen.pvz.common.impl.type.EssenceTypes;
 import com.hungteen.pvz.common.item.PVZItemTabs;
 import com.hungteen.pvz.common.misc.PVZWoodType;
+import com.hungteen.pvz.common.world.feature.tree.NutTreeGrower;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.level.block.*;
@@ -29,6 +32,10 @@ import java.util.Arrays;
  * @program: pvzmod-1.18.x
  * @author: HungTeen
  * @create: 2022-03-08 22:45
+ *
+ * Step 1. register blocks. <br>
+ * Step 2. register block items if needed at {@link #registerBlockItem(RegistryEvent.Register)} or register it in {@link com.hungteen.pvz.common.item.PVZItems} manually. <br>
+ * Step 3. register special render layer at {@link ClientRegister#registerBlockRender()} <br>
  **/
 public class PVZBlocks {
 
@@ -67,7 +74,7 @@ public class PVZBlocks {
 //    public static final RegistryObject<CropBlock> TOXIC_SHROOM = BLOCKS.register("toxic_shroom", () -> new ToxicShroomBlock(Block.Properties.copy(Blocks.SWEET_BERRY_BUSH)));
     public static final RegistryObject<CropBlock> CABBAGE = BLOCKS.register("cabbage", CabbageBlock::new);
     public static final RegistryObject<CropBlock> CORN = BLOCKS.register("corn", CornBlock::new);
-    //    public static final RegistryObject<Block> NUT_SAPLING = BLOCKS.register("nut_sapling", () -> new Block(NutTree::new));
+    public static final RegistryObject<Block> NUT_SAPLING = BLOCKS.register("nut_sapling", () -> new PVZSaplingBlock(new NutTreeGrower()));
 //    public static final RegistryObject<Block> CHOMPER = BLOCKS.register("chomper", ChomperBlock::new);
 //    public static final RegistryObject<LilyPadBlock> LILY_PAD = BLOCKS.register("lily_pad", LilyPadBlock::new);
 
@@ -121,7 +128,7 @@ public class PVZBlocks {
                 ASSIST_ORE, MAGIC_ORE, FLAME_ORE, SPEAR_ORE, ARMA_ORE, //TOXIC_ORE, ELECTRIC_ORE, SHADOW_ORE,
                 AMETHYST_ORE, AMETHYST_BLOCK, ORIGIN_BLOCK,// ,BUTTER_BLOCK, FROZEN_MELON,
                 ESSENCE_ALTAR,
-                NUT_LEAVES, NUT_LEAVES_WITH_NUTS, NUT_LOG, STRIPPED_NUT_LOG, NUT_WOOD, STRIPPED_NUT_WOOD, NUT_PLANKS, NUT_DOOR, NUT_TRAPDOOR, NUT_FENCE, NUT_FENCE_GATE, NUT_STAIRS, NUT_BUTTON, NUT_SLAB, NUT_PRESSURE_PLATE//, NUT_SAPLING, CHOMPER,
+                NUT_LEAVES, NUT_LEAVES_WITH_NUTS, NUT_LOG, STRIPPED_NUT_LOG, NUT_WOOD, STRIPPED_NUT_WOOD, NUT_PLANKS, NUT_DOOR, NUT_TRAPDOOR, NUT_FENCE, NUT_FENCE_GATE, NUT_STAIRS, NUT_BUTTON, NUT_SLAB, NUT_PRESSURE_PLATE, NUT_SAPLING//, CHOMPER,
 //                LANTERN, FLOWER_POT, GOLD_TILE1, GOLD_TILE2, GOLD_TILE3, SILVER_SUNFLOWER_TROPHY, GOLD_SUNFLOWER_TROPHY, DIAMOND_SUNFLOWER_TROPHY
         ).forEach(block -> {
 //            register(items, block.get().getRegistryName(), () -> new BlockItem(block.get(), new Item.Properties().tab(PVZItemTabs.PVZ_MISC)));

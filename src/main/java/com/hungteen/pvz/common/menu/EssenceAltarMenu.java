@@ -167,15 +167,14 @@ public class EssenceAltarMenu extends PVZMenu{
                 if (!this.moveItemStackTo(itemstack1, 4, this.slots.size(), true)) {
                     return ItemStack.EMPTY;
                 }
-            } else {
-                if (this.slots.get(0).hasItem() || !this.slots.get(0).mayPlace(itemstack1)) {
+            } else if(slotId < 4 + 27){
+            	if (!this.moveItemStackTo(itemstack1, 0, 4, true) && !this.moveItemStackTo(itemstack1, 4 + 27, this.slots.size(), true)) {
                     return ItemStack.EMPTY;
                 }
-
-                ItemStack itemstack2 = itemstack1.copy();
-                itemstack2.setCount(1);
-                itemstack1.shrink(1);
-                this.slots.get(0).set(itemstack2);
+            } else {
+            	if (!this.moveItemStackTo(itemstack1, 0, 4 + 27, true)) {
+                    return ItemStack.EMPTY;
+                }
             }
 
             if (itemstack1.isEmpty()) {

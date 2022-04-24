@@ -1,5 +1,10 @@
 package com.hungteen.pvz.common.entity.bullet;
 
+import java.util.Optional;
+import java.util.UUID;
+
+import javax.annotation.Nullable;
+
 import com.hungteen.pvz.PVZConfig;
 import com.hungteen.pvz.api.enums.PVZGroupType;
 import com.hungteen.pvz.api.interfaces.IHasGroup;
@@ -7,7 +12,7 @@ import com.hungteen.pvz.api.interfaces.IHasOwner;
 import com.hungteen.pvz.common.entity.EntityGroupHandler;
 import com.hungteen.pvz.common.entity.plant.base.ShooterPlant;
 import com.hungteen.pvz.utils.EntityUtil;
-import com.hungteen.pvz.utils.MathUtil;
+
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.particles.ParticleOptions;
 import net.minecraft.core.particles.ParticleTypes;
@@ -32,12 +37,6 @@ import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.EntityHitResult;
 import net.minecraft.world.phys.HitResult;
 import net.minecraft.world.phys.Vec3;
-import net.minecraftforge.common.MinecraftForge;
-import net.minecraftforge.event.entity.living.LivingKnockBackEvent;
-
-import javax.annotation.Nullable;
-import java.util.Optional;
-import java.util.UUID;
 
 /**
  * @program: pvzmod-1.18.x
@@ -202,7 +201,7 @@ public abstract class PVZProjectile extends Projectile implements IHasGroup, IHa
         if(target instanceof LivingEntity){
             target.setDeltaMovement(originSpeed);
             if(this.canKnockBack()){
-                ((LivingEntity) target).knockback(this.getKBStrength(), target.getX() - this.getX(), target.getZ() - this.getZ());
+                ((LivingEntity) target).knockback(this.getKBStrength(), this.getX() - target.getX(), this.getZ() - target.getZ());
             }
         }
     }

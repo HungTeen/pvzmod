@@ -13,7 +13,6 @@ import com.hungteen.pvz.common.impl.type.zombie.ZombieType;
 import com.hungteen.pvz.common.item.armor.BucketArmorItem;
 import com.hungteen.pvz.common.item.base.PVZFoodItem;
 import com.hungteen.pvz.common.item.base.PVZMiscItem;
-import com.hungteen.pvz.common.item.misc.BrainPatternItem;
 import com.hungteen.pvz.common.item.misc.EssenceItem;
 import com.hungteen.pvz.common.item.misc.TemplateCardItem;
 import com.hungteen.pvz.common.item.spawn.DropItemEgg;
@@ -23,6 +22,7 @@ import com.hungteen.pvz.common.item.tool.AlmanacItem;
 import com.hungteen.pvz.common.item.tool.OriginShovelItem;
 import com.hungteen.pvz.common.item.tool.OriginSwordItem;
 import com.hungteen.pvz.common.item.weapon.PeaGunItem;
+import com.hungteen.pvz.common.misc.PVZBannerPatterns;
 import com.hungteen.pvz.common.sound.PVZSounds;
 import com.hungteen.pvz.utils.enums.Colors;
 import net.minecraft.sounds.SoundEvents;
@@ -115,12 +115,13 @@ public class PVZItems {
 
     /* misc */
 //    public static final RegistryObject<Item> TIME_SOURCE = ITEMS.register("time_source", PVZMiscItem::new);
+    public static final RegistryObject<BannerPatternItem> BRAIN_BANNER_PATTERN = ITEMS.register("brain_banner_pattern", () -> new BannerPatternItem(PVZBannerPatterns.BRAIN, (new Item.Properties()).stacksTo(1).tab(CreativeModeTab.TAB_MISC)));
 
     /*
      * Items in Food Tab.
      */
 
-    public static final RegistryObject<Item> FAKE_BRAIN = ITEMS.register("fake_brain", BrainPatternItem::new);
+    public static final RegistryObject<Item> FAKE_BRAIN = ITEMS.register("fake_brain", () -> new PVZFoodItem(PVZFoods.FAKE_BRAIN));
     public static final RegistryObject<Item> COOKED_BRAIN = ITEMS.register("cooked_brain", () -> new PVZFoodItem(PVZFoods.COOKED_BRAIN));
     public static final RegistryObject<Item> CABBAGE = ITEMS.register("cabbage", () -> new PVZFoodItem(PVZFoods.CABBAGE));
     public static final RegistryObject<Item> CORN = ITEMS.register("corn", () -> new PVZFoodItem(PVZFoods.CORN));

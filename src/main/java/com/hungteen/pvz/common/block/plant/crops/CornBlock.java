@@ -1,4 +1,4 @@
-package com.hungteen.pvz.common.block.crops;
+package com.hungteen.pvz.common.block.plant.crops;
 
 import com.hungteen.pvz.common.item.PVZItems;
 import net.minecraft.core.BlockPos;
@@ -21,9 +21,9 @@ import java.util.Random;
 /**
  * @program: pvzmod-1.18.x
  * @author: HungTeen
- * @create: 2022-04-16 21:51
+ * @create: 2022-04-16 21:52
  **/
-public class CabbageBlock extends CropBlock {
+public class CornBlock extends CropBlock {
 
     public static final IntegerProperty AGE = BlockStateProperties.AGE_3;
     private static final VoxelShape[] SHAPE = new VoxelShape[] {
@@ -33,20 +33,20 @@ public class CabbageBlock extends CropBlock {
             Block.box(0.0D, 0.0D, 0.0D, 16.0D, 8.0D, 16.0D)
     };
 
-    public CabbageBlock() {
+    public CornBlock() {
         super(Block.Properties.copy(Blocks.WHEAT));
     }
 
     @Override
     public void randomTick(BlockState blockState, ServerLevel serverLevel, BlockPos blockPos, Random random) {
-        if(random.nextInt(3) == 0){
+        if(random.nextInt(4) == 0){
             super.randomTick(blockState, serverLevel, blockPos, random);
         }
     }
 
     @Override
     protected int getBonemealAgeIncrease(Level level) {
-        return super.getBonemealAgeIncrease(level) / 2;
+        return super.getBonemealAgeIncrease(level) / 3;
     }
 
     @Override
@@ -71,7 +71,6 @@ public class CabbageBlock extends CropBlock {
 
     @Override
     protected ItemLike getBaseSeedId() {
-        return PVZItems.CABBAGE_SEEDS.get();
+        return PVZItems.CORN_SEEDS.get();
     }
-
 }

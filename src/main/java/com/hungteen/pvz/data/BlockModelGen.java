@@ -171,11 +171,12 @@ public class BlockModelGen extends BlockModelProvider {
         /*
         Blocks with cross style.
          */
-//        Arrays.asList(BlockRegister.NUT_SAPLING.get()
-//        ).forEach(b -> {
-//            cross(b.getRegistryName().getPath(), StringUtil.prefix("block/" + b.getRegistryName().getPath()));
-//            this.addedBlocks.add(b);
-//        });
+        Arrays.asList(
+                PVZBlocks.NUT_SAPLING.get()
+        ).forEach(b -> {
+            cross(b.getRegistryName().getPath(), Util.prefix("block/" + b.getRegistryName().getPath()));
+            this.addedBlocks.add(b);
+        });
 
 
 

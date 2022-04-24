@@ -1,4 +1,4 @@
-package com.hungteen.pvz.common.block.crops;
+package com.hungteen.pvz.common.block.plant.crops;
 
 import com.hungteen.pvz.common.item.PVZItems;
 import net.minecraft.core.BlockPos;

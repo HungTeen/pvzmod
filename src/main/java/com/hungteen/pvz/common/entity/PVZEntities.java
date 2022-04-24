@@ -11,8 +11,7 @@ import com.hungteen.pvz.common.entity.drop.*;
 import com.hungteen.pvz.common.entity.effect.OriginEffectEntity;
 import com.hungteen.pvz.common.entity.plant.*;
 import com.hungteen.pvz.common.entity.plant.base.PVZPlant;
-import com.hungteen.pvz.common.entity.zombie.BucketHeadZombie;
-import com.hungteen.pvz.common.entity.zombie.NormalZombie;
+import com.hungteen.pvz.common.entity.zombie.*;
 import com.hungteen.pvz.common.entity.zombie.base.PVZZombie;
 import com.hungteen.pvz.common.entity.zombie.drop.ZombieDropPart;
 import com.hungteen.pvz.common.impl.type.PAZTypes;
@@ -156,7 +155,10 @@ public class PVZEntities {
     Zombies
      */
     public static final RegistryObject<EntityType<NormalZombie>> NORMAL_ZOMBIE = registerZombieEntityType(NormalZombie::new, "normal_zombie");
+    public static final RegistryObject<EntityType<FlagZombie>> FLAG_ZOMBIE = registerZombieEntityType(FlagZombie::new, "flag_zombie");
+    public static final RegistryObject<EntityType<ConeHeadZombie>> CONE_HEAD_ZOMBIE = registerZombieEntityType(ConeHeadZombie::new, "cone_head_zombie");
     public static final RegistryObject<EntityType<BucketHeadZombie>> BUCKET_HEAD_ZOMBIE = registerZombieEntityType(BucketHeadZombie::new, "bucket_head_zombie");
+    public static final RegistryObject<EntityType<LeaderZombie>> LEADER_ZOMBIE = registerZombieEntityType(LeaderZombie::new, "leader_zombie");
 
 
     public static void addEntityAttributes(EntityAttributeCreationEvent ev) {

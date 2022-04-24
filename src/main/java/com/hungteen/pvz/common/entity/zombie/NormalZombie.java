@@ -1,10 +1,8 @@
 package com.hungteen.pvz.common.entity.zombie;
 
 import com.hungteen.pvz.api.types.IZombieType;
-import com.hungteen.pvz.common.entity.PVZPAZ;
 import com.hungteen.pvz.common.entity.zombie.base.PVZZombie;
 import com.hungteen.pvz.common.impl.type.zombie.PVZZombies;
-
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.level.Level;
 
@@ -15,7 +13,7 @@ import net.minecraft.world.level.Level;
  **/
 public class NormalZombie extends PVZZombie {
 
-	public NormalZombie(EntityType<? extends PVZPAZ> entityType, Level level) {
+	public NormalZombie(EntityType<? extends PVZZombie> entityType, Level level) {
 		super(entityType, level);
 	}
 

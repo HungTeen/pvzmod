@@ -26,6 +26,7 @@ import com.hungteen.pvz.client.render.entity.effect.OriginEffectRender;
 import com.hungteen.pvz.client.render.entity.plant.*;
 import com.hungteen.pvz.client.render.entity.zombie.NormalZombieRender;
 import com.hungteen.pvz.client.render.entity.zombie.ZombieDropPartRender;
+import com.hungteen.pvz.common.block.PVZBlocks;
 import com.hungteen.pvz.common.blockentity.PVZBlockEntities;
 import com.hungteen.pvz.common.entity.PVZEntities;
 import com.hungteen.pvz.common.menu.PVZMenus;
@@ -36,6 +37,8 @@ import net.minecraft.client.model.HumanoidModel;
 import net.minecraft.client.model.geom.LayerDefinitions;
 import net.minecraft.client.model.geom.builders.LayerDefinition;
 import net.minecraft.client.particle.ParticleEngine;
+import net.minecraft.client.renderer.ItemBlockRenderTypes;
+import net.minecraft.client.renderer.RenderType;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.client.event.EntityRenderersEvent;
 import net.minecraftforge.client.event.ParticleFactoryRegisterEvent;
@@ -82,7 +85,10 @@ public class ClientRegister {
 
         /* zombie entity */
         event.registerEntityRenderer(PVZEntities.NORMAL_ZOMBIE.get(), NormalZombieRender::new);
+        event.registerEntityRenderer(PVZEntities.FLAG_ZOMBIE.get(), NormalZombieRender::new);
+        event.registerEntityRenderer(PVZEntities.CONE_HEAD_ZOMBIE.get(), NormalZombieRender::new);
         event.registerEntityRenderer(PVZEntities.BUCKET_HEAD_ZOMBIE.get(), NormalZombieRender::new);
+        event.registerEntityRenderer(PVZEntities.LEADER_ZOMBIE.get(), NormalZombieRender::new);
 
         /* block entity */
         event.registerBlockEntityRenderer(PVZBlockEntities.ESSENCE_ALTAR.get(), EssenceAltarRender::new);
@@ -155,28 +161,31 @@ public class ClientRegister {
         ev.enqueueWork(() -> {
             PVZKeyBinds.register();
             PVZWoodType.register();
+            registerBlockRender();
             registerScreen();
         });
-//        RenderTypeLookup.setRenderLayer(BlockRegister.PEA_PLANT.get(), RenderType.cutout());
-//        RenderTypeLookup.setRenderLayer(BlockRegister.NUT_LEAVES.get(), RenderType.cutout());
+    }
+
+    public static void registerBlockRender(){
+        ItemBlockRenderTypes.setRenderLayer(PVZBlocks.PEA.get(), RenderType.cutout());
+        ItemBlockRenderTypes.setRenderLayer(PVZBlocks.CABBAGE.get(), RenderType.cutout());
+        ItemBlockRenderTypes.setRenderLayer(PVZBlocks.CORN.get(), RenderType.cutout());
+        ItemBlockRenderTypes.setRenderLayer(PVZBlocks.NUT_SAPLING.get(), RenderType.cutout());
+        ItemBlockRenderTypes.setRenderLayer(PVZBlocks.NUT_LEAVES.get(), RenderType.cutout());
 //        RenderTypeLookup.setRenderLayer(BlockRegister.NUT_SAPLING.get(), RenderType.cutout());
 //        RenderTypeLookup.setRenderLayer(BlockRegister.TOXIC_SHROOM.get(), RenderType.cutout());
 //        RenderTypeLookup.setRenderLayer(BlockRegister.LANTERN.get(), RenderType.translucent());
 //        RenderTypeLookup.setRenderLayer(BlockRegister.FLOWER_POT.get(), RenderType.cutout());
 //        RenderTypeLookup.setRenderLayer(BlockRegister.LILY_PAD.get(), RenderType.cutout());
-//        RenderTypeLookup.setRenderLayer(BlockRegister.CABBAGE.get(), RenderType.cutout());
 //        RenderTypeLookup.setRenderLayer(BlockRegister.BUTTER_BLOCK.get(), RenderType.translucent());
-//        RenderTypeLookup.setRenderLayer(BlockRegister.CORN.get(), RenderType.cutout());
 //        RenderTypeLookup.setRenderLayer(BlockRegister.ESSENCE_ALTAR.get(), RenderType.translucent());
 //        RenderTypeLookup.setRenderLayer(BlockRegister.STEEL_LADDER.get(), RenderType.cutout());
 //        RenderTypeLookup.setRenderLayer(BlockRegister.SILVER_SUNFLOWER_TROPHY.get(), RenderType.cutout());
 //        RenderTypeLookup.setRenderLayer(BlockRegister.GOLD_SUNFLOWER_TROPHY.get(), RenderType.cutout());
 //        RenderTypeLookup.setRenderLayer(BlockRegister.DIAMOND_SUNFLOWER_TROPHY.get(), RenderType.cutout());
-//        TileEntityRegister.bindRenderers(ev);
     }
 
     public static void registerScreen() {
-//        ScreenManager.register(ALMANAC.get(), AlmanacScreen::new);
 //        ScreenManager.register(PEA_GUN.get(), PeaGunScreen::new);
 //        ScreenManager.register(DAVE_SHOP.get(), DaveShopScreen::new);
 //        ScreenManager.register(SUN_SHOP.get(), SunShopScreen::new);

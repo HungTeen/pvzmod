@@ -11,6 +11,7 @@ import com.mojang.math.Vector3d;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.MultiBufferSource;
+import net.minecraft.client.renderer.entity.EntityRenderDispatcher;
 import net.minecraft.client.renderer.entity.EntityRendererProvider;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.LivingEntity;
@@ -39,7 +40,12 @@ public class GardenPlantRender <T extends GardenPlant> extends PVZMobRender<T> {
                 final float scale = plant.getRenderScale();
                 matrixStackIn.pushPose();
                 matrixStackIn.scale(scale, scale, scale);
-                Minecraft.getInstance().getEntityRenderDispatcher().render(entity, 0.0D, 0.0D, 0.0D, entityYaw, partialTicks, matrixStackIn, bufferIn, packedLightIn);
+                EntityRenderDispatcher dispatcher = Minecraft.getInstance().getEntityRenderDispatcher();
+//                dispatcher.setRenderHitBoxes(false);
+//                dispatcher.setRenderShadow(false);
+                dispatcher.render(entity, 0.0D, 0.0D, 0.0D, entityYaw, partialTicks, matrixStackIn, bufferIn, packedLightIn);
+//                dispatcher.setRenderHitBoxes(true);
+//                dispatcher.setRenderShadow(true);
                 matrixStackIn.popPose();
             }
         }

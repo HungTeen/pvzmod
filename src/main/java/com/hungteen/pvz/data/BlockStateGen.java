@@ -2,9 +2,9 @@ package com.hungteen.pvz.data;
 
 import com.hungteen.pvz.PVZMod;
 import com.hungteen.pvz.common.block.PVZBlocks;
-import com.hungteen.pvz.common.block.crops.CabbageBlock;
-import com.hungteen.pvz.common.block.crops.CornBlock;
-import com.hungteen.pvz.common.block.crops.PeaBlock;
+import com.hungteen.pvz.common.block.plant.crops.CabbageBlock;
+import com.hungteen.pvz.common.block.plant.crops.CornBlock;
+import com.hungteen.pvz.common.block.plant.crops.PeaBlock;
 import com.hungteen.pvz.utils.Util;
 import com.mojang.datafixers.util.Pair;
 import net.minecraft.data.DataGenerator;

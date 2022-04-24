@@ -59,7 +59,7 @@ public class EssenceAltarScreen extends PVZContainerScreen<EssenceAltarMenu> {
         super.init();
         for(int i = 0; i < MAX_ENTRY_COUNT; ++ i){
             final int pos = i;
-            this.buttons[i] = new EssenceButton(this.leftPos + 69, this.topPos + 5 + 19 * i, button -> {
+            this.buttons[i] = new EssenceButton(this.leftPos + 69, this.topPos + 6 + 19 * i, button -> {
                 if(button.visible) {
                     this.minecraft.gameMode.handleInventoryButtonClick(this.menu.containerId, this.currentPos + pos);
                 }
@@ -188,7 +188,7 @@ public class EssenceAltarScreen extends PVZContainerScreen<EssenceAltarMenu> {
 
         @Override
         protected Pair<Integer, Integer> getButtonUV() {
-            return Pair.of(174, 0);
+            return Pair.of(174, 19);
         }
 
         @Override

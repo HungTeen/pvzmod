@@ -2,14 +2,10 @@ package com.hungteen.pvz.common.impl.type.zombie;
 
 import com.hungteen.pvz.PVZMod;
 import com.hungteen.pvz.api.PVZAPI;
-import com.hungteen.pvz.api.types.IPlantType;
 import com.hungteen.pvz.api.types.IZombieType;
 import com.hungteen.pvz.api.types.base.IPAZType;
 import com.hungteen.pvz.common.entity.PVZEntities;
-import com.hungteen.pvz.common.impl.type.CDTypes;
-import com.hungteen.pvz.common.impl.type.EssenceTypes;
 import com.hungteen.pvz.common.impl.type.RankTypes;
-import com.hungteen.pvz.common.impl.type.plant.PVZPlants;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -28,9 +24,27 @@ public class PVZZombies {
             .entity(() -> PVZEntities.NORMAL_ZOMBIE.get())
             .skills(new ArrayList<>());
 
+    public static final IZombieType FLAG_ZOMBIE = new PVZZombies.PVZZombieType("flag_zombie")
+            .rank(RankTypes.WHITE)
+            .entity(() -> PVZEntities.FLAG_ZOMBIE.get())
+            .res(NORMAL_ZOMBIE.getDefaultResource())
+            .skills(new ArrayList<>());
+
+    public static final IZombieType CONE_HEAD_ZOMBIE = new PVZZombies.PVZZombieType("cone_head_zombie")
+            .rank(RankTypes.WHITE)
+            .entity(() -> PVZEntities.CONE_HEAD_ZOMBIE.get())
+            .res(NORMAL_ZOMBIE.getDefaultResource())
+            .skills(new ArrayList<>());
+
     public static final IZombieType BUCKET_HEAD_ZOMBIE = new PVZZombies.PVZZombieType("bucket_head_zombie")
             .rank(RankTypes.GOLD)
             .entity(() -> PVZEntities.BUCKET_HEAD_ZOMBIE.get())
+            .res(NORMAL_ZOMBIE.getDefaultResource())
+            .skills(new ArrayList<>());
+
+    public static final IZombieType LEADER_ZOMBIE = new PVZZombies.PVZZombieType("leader_zombie")
+            .rank(RankTypes.GOLD)
+            .entity(() -> PVZEntities.LEADER_ZOMBIE.get())
             .res(NORMAL_ZOMBIE.getDefaultResource())
             .skills(new ArrayList<>());
 
