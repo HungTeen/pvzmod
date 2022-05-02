@@ -110,11 +110,13 @@ public class GrassCarp extends Animal implements Bucketable, IForgeShearable {
             	final int range = 3;
             	for(int i = - range; i <= range; ++ i) {
             		for(int j = - range; j <= range; ++ j) {
-                        for(int h = 0; h <= 2; ++ h){
+                        for(int h = -1; h <= 2; ++ h){
                             final BlockPos pos = this.blockPosition().offset(i, h, j);
-                            if(checkBlock(pos)) {
-                                for (int k = - range; k < range; ++k) {
-                                    ParticleUtil.spawnParticles(this.level, ParticleTypes.COMPOSTER, MathUtil.toVector(pos.above()));
+                            if (checkBlock(pos)) {
+                                for (int k = -range; k < range; ++k) {
+                                    ParticleUtil.spawnParticles(this.level, ParticleTypes.COMPOSTER, new Vec3(MathUtil.toVector(pos.above()).x() - 0.5 + (float) random.nextInt(10) / 10,
+                                            MathUtil.toVector(pos.above()).y() + (float) (random.nextInt(3)) / 10,
+                                            MathUtil.toVector(pos.above()).z() - 0.5 + (float) random.nextInt(10) / 10));
                                 }
                             }
                         }
@@ -166,18 +168,19 @@ public class GrassCarp extends Animal implements Bucketable, IForgeShearable {
         return grassCarp;
     }
 
-    protected boolean checkBlock(BlockPos pos){
-    	if(! this.level.getFluidState(pos.above()).isEmpty()) {
-    		return false;
-    	}
-    	
-        if(this.level.getBlockState(pos).is(PVZBlockTags.DIRT_NO_GRASS)) {
-            this.level.setBlock(pos, Blocks.GRASS_BLOCK.defaultBlockState(), 3);
+    protected boolean checkBlock(BlockPos pos) {
+
+        if (this.level.getBlockState(pos).is(PVZBlockTags.DIRT_NO_GRASS)) {
+            if (this.level.getFluidState(pos.above()).isEmpty() & random.nextInt(5) == 1) {
+                this.level.setBlock(pos, Blocks.GRASS_BLOCK.defaultBlockState(), 3);
+            }
             return true;
         }
 
-        if(this.level.getBlockState(pos).is(Tags.Blocks.STONE)) {
-            this.level.setBlock(pos, Blocks.MOSS_BLOCK.defaultBlockState(), 3);
+        if (this.level.getBlockState(pos).is(Tags.Blocks.STONE)) {
+            if (random.nextInt(10) == 1) {
+                this.level.setBlock(pos, Blocks.MOSS_BLOCK.defaultBlockState(), 3);
+            }
             return true;
         }
 
@@ -340,7 +343,7 @@ public class GrassCarp extends Animal implements Bucketable, IForgeShearable {
 
     @Override
     public EntityDimensions getDimensions(Pose p_21047_) {
-        return EntityDimensions.scalable(0.6F, 0.6F).scale(this.getScale());
+        return EntityDimensions.scalable(0.4F, 0.4F).scale(this.getScale());
     }
 
     private int getNextChangeTick(){

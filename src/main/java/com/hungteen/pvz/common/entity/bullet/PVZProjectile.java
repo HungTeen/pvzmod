@@ -222,8 +222,10 @@ public abstract class PVZProjectile extends Projectile implements IHasGroup, IHa
         if (id == 3) {//die event.
             if(this.getHitParticle() != null){
                 for(int i = 0; i < 8; ++i) {
-                	final float offsetX = this.random.nextFloat() * 0.4F;
-                    this.level.addParticle(this.getHitParticle(), this.getX() + offsetX, this.getY() + offsetX, this.getZ() + offsetX, 0.0D, 0.0D, 0.0D);
+                    final float offsetX = this.random.nextFloat() * 0.8F;
+                    final float offsetY = this.random.nextFloat() * 0.8F;
+                    final float offsetZ = this.random.nextFloat() * 0.8F;
+                    this.level.addParticle(this.getHitParticle(), this.getX() + offsetX, this.getY() + offsetY, this.getZ() + offsetZ, 0.0D, 0.0D, 0.0D);
                 }
             }
         }

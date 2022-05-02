@@ -13,6 +13,7 @@ import net.minecraft.resources.RegistryOps;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.WorldGenRegion;
 import net.minecraft.tags.TagKey;
+import net.minecraft.util.Mth;
 import net.minecraft.world.level.*;
 import net.minecraft.world.level.biome.Biome;
 import net.minecraft.world.level.biome.BiomeManager;
@@ -30,6 +31,9 @@ import java.util.List;
 import java.util.Optional;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.Executor;
+
+import static net.minecraft.util.Mth.floor;
+import static net.minecraft.util.Mth.sign;
 
 /**
  * @program: pvzmod-1.18.x
@@ -83,64 +87,46 @@ public class AbyssalDarkChunkGenerator extends ChunkGenerator {
         BlockState bedrock = Blocks.BEDROCK.defaultBlockState();
         BlockState stone = Blocks.STONE.defaultBlockState();
         ChunkPos chunkPos = chunk.getPos();
-//        genChunk(region, chunk, chunkPos.x, chunkPos.z);
         BlockPos.MutableBlockPos pos = new BlockPos.MutableBlockPos();
+
+        final int[] floors = new int[4];
+        floors[0] = 0;
+        floors[1] = 127;
+        floors[2] = 191;
+        floors[3] = 255;
+
+        ChunkManager.Build(chunkPos.x, chunkPos.z, floors);
+
         for (int x = 0; x < 16; x++) {
             for (int z = 0; z < 16; z++) {
-                chunk.setBlockState(pos.set(x, 0, z), bedrock, false);
-
-                final int height = ChunkManager.getChunkHeight(chunkPos.x, chunkPos.z, x, z) + 1;
-//                int height = getHeightAt(baseHeight, verticalVariance, horizontalVariance, realx, realz);
-                for (int y = 1; y < height; ++ y) {
-                    chunk.setBlockState(pos.set(x, y, z), stone, false);
+                for (int l = 1; l < 7; ++ l) {
+                    int height = (int) ChunkManager.getTerrain(chunkPos.x, chunkPos.z, x, z, l-1) + 1;
+                    for (int y = 1; y < height; ++y){
+                        chunk.setBlockState(pos.set(x, floors[l/2] + (((float)l)/2 == l/2 ? -1: 1)*y, z), stone, false);
+                    }
                 }
-//                chunk.setBlockState(pos.set(x, 50, z), bedrock, false);
-//                chunk.setBlockState(pos.set(x, 100, z), stone, false);
-//                chunk.setBlockState(pos.set(x, 200, z), stone, false);
+//
+                int bed = ChunkManager.getBedRock(chunkPos.x, chunkPos.z, x, z, 0);
+                if (bed == 1 | bed == 3) {
+                    chunk.setBlockState(pos.set(x, floors[0]+1, z), bedrock, false);
+                }
+                if (bed == 2 | bed == 3) {
+                    chunk.setBlockState(pos.set(x, floors[0]+2, z), bedrock, false);
+                }
+                bed = ChunkManager.getBedRock(chunkPos.x, chunkPos.z, x, z, 1);
+                if (bed == 1 | bed == 3) {
+                    chunk.setBlockState(pos.set(x, floors[3]-1, z), bedrock, false);
+                }
+                if (bed == 2 | bed == 3) {
+                    chunk.setBlockState(pos.set(x, floors[3]-2, z), bedrock, false);
+                }
+                chunk.setBlockState(pos.set(x, floors[0], z), bedrock, false);
+                chunk.setBlockState(pos.set(x, floors[1], z), bedrock, false);
+                chunk.setBlockState(pos.set(x, floors[2], z), bedrock, false);
+                chunk.setBlockState(pos.set(x, floors[3], z), bedrock, false);
             }
         }
     }
-
-//    public void genChunk(WorldGenRegion region, ChunkAccess chunk, int chunkX, int chunkZ) {
-//        int[][][][] arrows = new int[4][4][19][3];
-//        int[][][] blocks = new int[16][300][16];//decide whether a block well be (gen?)ed
-//        double tmp;//temp
-//        for (int x = 0; x < 4; ++x) {
-//            for (int z = 0; z < 4; ++z) {
-//                for (int y = 0; y < 19; ++y) {//used rect coordinates
-//                    arrows[x][z][y][0] = MathUtil.getRandomInRange(region.getRandom(), 8);//x dimention
-//                    arrows[x][z][y][1] = MathUtil.getRandomInRange(region.getRandom(), 8);//z dimention
-//                    arrows[x][z][y][2] = MathUtil.getRandomInRange(region.getRandom(), 8);//y dimention
-//                }
-//            }
-//        }
-////        System.out.println("what");
-//        for (int w = 0; w < 16; ++ w) {//devided into 16 subchunks vertically, marked as w
-//            for (int x = 0; x < 16; ++ x) {
-//                for (int z = 0; z < 16; ++ z) {
-//                    for (int y = 0; y < 16; ++ y) {
-//                        blocks[x][y + w * 16][z] = 0;
-//                        for (int i = 0; i < 4; ++i) {
-//                            for (int j = 0; j < 4; ++j) {
-//                                for (int k = 0; k < 4; ++k) {
-//                                    tmp = 40 - Math.pow(Math.pow(x - (i - 1) * 16 - arrows[i][j][k + w][0], 2)
-//                                            + Math.pow(x - (i - 1) * 16 - arrows[i][j][k + w][1], 2)
-//                                            + Math.pow(x - (i - 1) * 16 - arrows[i][j][k + w][2], 2), 0.5);
-//                                    if (tmp > 0) {
-//                                        blocks[x][y + w * 16][z] +=tmp;
-//                                    }
-//                                }
-//                            }
-//                        }
-//                        if (blocks[x][y + w * 16][z] < 900) {
-//                            chunk.setBlockState(new BlockPos(x, w * 16 + y, z), Blocks.STONE.defaultBlockState(), false);
-//                        }
-//                    }
-//                }
-//            }
-////            System.out.println(blocks[1][1 + w * 16][1]);
-//        }
-//    }
 
     @Override
     public CompletableFuture<ChunkAccess> fillFromNoise(Executor executor, Blender blender, StructureFeatureManager featureManager, ChunkAccess chunkAccess) {

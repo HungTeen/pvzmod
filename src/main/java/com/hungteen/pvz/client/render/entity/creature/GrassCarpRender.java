@@ -23,6 +23,6 @@ public class GrassCarpRender extends PVZMobRender<GrassCarp> {
 
     @Override
     public ResourceLocation getTextureLocation(GrassCarp p_114482_) {
-        return Util.prefix("textures/entity/animal/grass_carp.png");
+        return Util.prefix("textures/entity/creature/grass_carp.png");
     }
 }
