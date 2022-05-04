@@ -428,7 +428,8 @@ public abstract class PVZZombie extends PVZPAZ implements IZombieEntity {
      * can zombie collide with target.
      * {@link #pushEntities()}
      */
-    protected boolean shouldCollideWithEntity(LivingEntity target) {
+    @Override
+    protected boolean shouldCollideWithEntity(Entity target) {
         if (this.getTarget() == target) {
 //            if (target instanceof SquashEntity || target instanceof SpikeWeedEntity) {
 //                return false;
@@ -447,6 +448,16 @@ public abstract class PVZZombie extends PVZPAZ implements IZombieEntity {
      */
     protected boolean checkCanPushEntity(Entity target) {
         return !(target instanceof PVZPlant);
+    }
+
+    @Override
+    public boolean isCorrectItem(ItemStack stack) {
+        return false;//TODO Hammer.
+    }
+
+    @Override
+    public void onQuickRemove(Entity entity, ItemStack stack) {
+        this.discard();
     }
 
     public float getEatDamage(){

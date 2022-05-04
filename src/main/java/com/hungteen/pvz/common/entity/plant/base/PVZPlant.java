@@ -1,35 +1,39 @@
 package com.hungteen.pvz.common.entity.plant.base;
 
-import java.util.Arrays;
-import java.util.List;
-import java.util.Optional;
-
 import com.hungteen.pvz.api.enums.PVZGroupType;
 import com.hungteen.pvz.api.interfaces.IAlmanacEntry;
 import com.hungteen.pvz.api.interfaces.IPlantEntity;
 import com.hungteen.pvz.api.types.base.IPAZType;
-import com.hungteen.pvz.common.entity.PVZAttributes;
 import com.hungteen.pvz.common.PVZDamageSource;
+import com.hungteen.pvz.common.entity.PVZAttributes;
 import com.hungteen.pvz.common.entity.PVZPAZ;
 import com.hungteen.pvz.common.impl.PAZAlmanacs;
 import com.hungteen.pvz.common.impl.type.SkillTypes;
+import com.hungteen.pvz.common.item.tool.OriginShovelItem;
+import com.hungteen.pvz.common.sound.PVZSounds;
+import com.hungteen.pvz.utils.EntityUtil;
 import com.mojang.datafixers.util.Pair;
-
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.network.syncher.EntityDataSerializers;
 import net.minecraft.network.syncher.SynchedEntityData;
+import net.minecraft.sounds.SoundEvent;
 import net.minecraft.tags.FluidTags;
 import net.minecraft.util.Mth;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
-import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.Mob;
 import net.minecraft.world.entity.ai.attributes.Attributes;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.ShovelItem;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.Vec3;
+
+import java.util.Arrays;
+import java.util.List;
+import java.util.Optional;
 
 /**
  * @program: pvzmod-1.18.x
@@ -47,6 +51,8 @@ public abstract class PVZPlant extends PVZPAZ implements IPlantEntity {
     public boolean canCollideWithPlant = true;
     // handle plant can not leave its first spawn place Ban Get In Bucket !
     protected Optional<BlockPos> stayPos = Optional.empty();
+    // place info.
+    protected int outerSunCost;
 
     public PVZPlant(EntityType<? extends PVZPlant> entityType, Level level) {
         super(entityType, level);
@@ -216,7 +222,8 @@ public abstract class PVZPlant extends PVZPAZ implements IPlantEntity {
      * common plants collide with common plants, mobs who target them, tombstone.
      * {@link #pushEntities()}
      */
-    protected boolean shouldCollideWithEntity(LivingEntity target) {
+    @Override
+    protected boolean shouldCollideWithEntity(Entity target) {
         if (target instanceof PVZPlant) {
             if (!this.canCollideWithPlant || !((PVZPlant) target).canCollideWithPlant) {
                 return false;
@@ -282,6 +289,30 @@ public abstract class PVZPlant extends PVZPAZ implements IPlantEntity {
     }
 
     @Override
+    public boolean isCorrectItem(ItemStack stack) {
+        return stack.getItem() instanceof ShovelItem;
+    }
+
+    @Override
+    public void onQuickRemove(Entity entity, ItemStack stack) {
+//        if (this.getOuterPlantInfo().isPresent()) {//has outer plant, shovel outer plant.
+//            SunEntity.spawnSunsByAmount(player.level, plantEntity.blockPosition(), EnchantmentUtil.getSunShovelAmount(stack, plantEntity.getOuterPlantInfo().get().getSunCost()));
+//            plantEntity.removeOuterPlant();
+//        } else if (plantEntity.getPlantInfo().isPresent()) {
+//            Sun.spawnSunsByAmount(this.level, this.blockPosition(), EnchantmentUtil.getSunShovelAmount(stack, plantEntity.getPlantInfo().get().getSunCost()));
+//            plantEntity.remove();
+//        }
+        //TODO Sun Shovel.
+        EntityUtil.playSound(this, PVZSounds.PLACE_PLANT_GROUND.get());
+        this.discard();
+    }
+
+    @Override
+    public int getQuickRemoveDamage(ItemStack stack) {
+        return (stack.getItem() instanceof OriginShovelItem) ? 0 : super.getQuickRemoveDamage(stack);
+    }
+
+    @Override
     public boolean isInvulnerableTo(DamageSource source) {
         return this.isPlantImmuneTo(source) && source != DamageSource.OUT_OF_WORLD && !source.isCreativePlayer() && ! source.equals(PVZDamageSource.PLANT_WILT);
     }
@@ -330,15 +361,12 @@ public abstract class PVZPlant extends PVZPAZ implements IPlantEntity {
         }
     }
 
-    /* getter setter */
+    @Override
+    public Optional<SoundEvent> getSpawnSound() {
+        return Optional.ofNullable(this.getPlantType().isWaterPlant() ? PVZSounds.PLACE_PLANT_WATER.get() : PVZSounds.PLACE_PLANT_GROUND.get());
+    }
 
-//    public Optional<IPlantInfo> getOuterPlantInfo() {
-//        return Optional.ofNullable(this.outerPlant);
-//    }
-//
-//    public Optional<IPlantInfo> getPlantInfo() {
-//        return Optional.ofNullable(this.innerPlant);
-//    }
+    /* getter setter */
 
     public void setImmuneToWilt(boolean is) {
         this.isImmuneToWilt = is;

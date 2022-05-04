@@ -1,12 +1,18 @@
 package com.hungteen.pvz.common.event;
 
 import com.hungteen.pvz.PVZMod;
-import com.hungteen.pvz.api.events.PlayerLevelChangeEvent;
-import com.hungteen.pvz.common.capability.CapabilityHandler;
+import com.hungteen.pvz.api.interfaces.ICanBeEnergetic;
+import com.hungteen.pvz.api.interfaces.IQuickRemoveEntity;
+import com.hungteen.pvz.common.effect.PVZEffects;
+import com.hungteen.pvz.common.enchantment.PVZEnchantments;
 import com.hungteen.pvz.common.event.handler.PlayerEventHandler;
+import com.hungteen.pvz.common.item.PVZItems;
 import com.hungteen.pvz.common.item.weapon.PeaGunItem;
+import com.hungteen.pvz.utils.EffectUtil;
 import com.hungteen.pvz.utils.PlayerUtil;
 import com.hungteen.pvz.utils.enums.Resources;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.item.enchantment.EnchantmentHelper;
 import net.minecraftforge.event.TickEvent;
 import net.minecraftforge.event.entity.player.PlayerEvent;
 import net.minecraftforge.event.entity.player.PlayerInteractEvent;
@@ -82,12 +88,31 @@ public class PVZPlayerEvents {
 
     @SubscribeEvent
     public static void onPlayerInteractSpec(PlayerInteractEvent.EntityInteractSpecific ev) {
-        if(! ev.getWorld().isClientSide){
-//            PlayerUtil.addResource(ev.getPlayer(), Resources.SUN_NUM, 50);
-//            if(ev.getHand() == Hand.MAIN_HAND) {
-//                PlayerEventHandler.quickRemoveByPlayer(ev.getPlayer(), ev.getTarget(), ev.getPlayer().getMainHandItem());
-//                PlayerEventHandler.makeSuperMode(ev.getPlayer(), ev.getTarget(), ev.getPlayer().getMainHandItem());
-//            }
+        if(! ev.getWorld().isClientSide && ! ev.getPlayer().getCooldowns().isOnCooldown(ev.getItemStack().getItem())){
+            //quick removed by player.
+            if(ev.getTarget() instanceof IQuickRemoveEntity && ((IQuickRemoveEntity) ev.getTarget()).isCorrectItem(ev.getItemStack())) {
+                ((IQuickRemoveEntity) ev.getTarget()).onQuickRemove(ev.getPlayer(), ev.getItemStack());
+                if(PlayerUtil.isPlayerSurvival(ev.getPlayer())){
+                    ev.getItemStack().hurtAndBreak(((IQuickRemoveEntity) ev.getTarget()).getQuickRemoveDamage(ev.getItemStack()), ev.getPlayer(), (p) -> {
+                        p.broadcastBreakEvent(ev.getHand());
+                    });
+                }
+                ev.getPlayer().getCooldowns().addCooldown(ev.getItemStack().getItem(), 10);
+                return;
+            }
+            // use plant food.
+            if (ev.getItemStack().getItem().equals(PVZItems.ORIGIN_SWORD.get()) || EnchantmentHelper.getItemEnchantmentLevel(PVZEnchantments.ENERGY_RELEASE.get(), ev.getItemStack()) > 0) {
+                if (ev.getTarget() instanceof ICanBeEnergetic && ((ICanBeEnergetic) ev.getTarget()).canBeEnergetic() && (!PlayerUtil.isPlayerSurvival(ev.getPlayer()) || PlayerUtil.getResource(ev.getPlayer(), Resources.ENERGY_NUM) > 0)) {
+                    if (PlayerUtil.isPlayerSurvival(ev.getPlayer())) {
+                        PlayerUtil.addResource(ev.getPlayer(), Resources.ENERGY_NUM, -1);
+                    }
+                    ((ICanBeEnergetic) ev.getTarget()).onEnergetic(true);
+                    if (ev.getTarget() instanceof LivingEntity) {
+                        ((LivingEntity) ev.getTarget()).addEffect(EffectUtil.viewEffect(PVZEffects.ENERGETIC_EFFECT.get(), ((ICanBeEnergetic) ev.getTarget()).getEnergeticDuration(), 0));
+                    }
+                    ev.getPlayer().addEffect(EffectUtil.viewEffect(PVZEffects.ENERGETIC_EFFECT.get(), 100, 0));
+                }
+            }
         }
 //        BowlingGloveItem.onPickUp(ev);
     }

@@ -208,8 +208,8 @@ public class PlantCardItem extends SummonCardItem {
 //            }
             /* other plant card */
             if(! handlePlantEntity(player, plantType, plantStack, pos, plantEntity -> {
-//				/* update maxLevel and its owner */
-//                plantEntity.onSpawnedByPlayer(player, cardItem.getBasisSunCost(plantStack));
+				/* update maxLevel and its owner */
+                plantEntity.onSpawnedByPlayer(player, getCardCost(player, plantStack));
                 /* other operations */
                 consumer.accept(plantEntity);
                 /* enchantment effects */

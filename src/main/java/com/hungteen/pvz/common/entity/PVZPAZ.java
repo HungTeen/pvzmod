@@ -45,6 +45,8 @@ public abstract class PVZPAZ extends PVZMob implements IPAZEntity {
     private static final EntityDataAccessor<Integer> ANIM_TICK = SynchedEntityData.defineId(PVZPAZ.class, EntityDataSerializers.INT);
     protected static final WeightList<DropType> NORMAL_DROP_LIST = new WeightList<>();
     protected Player ownerPlayer;
+    // place info.
+    protected int sunCost;
     /* states */
 //    protected boolean canBeCold = true;
 //    protected boolean canBeFrozen = true;
@@ -133,6 +135,18 @@ public abstract class PVZPAZ extends PVZMob implements IPAZEntity {
         this.goalSelector.addGoal(2, new PVZLookRandomlyGoal(this));
     }
 
+    /**
+     * spawned by player for the first time.
+     */
+    public void onSpawnedByPlayer(@Nullable Player player, int sunCost) {
+        if(player != null) {
+            this.setOwnerUUID(player.getUUID());
+        }
+        this.sunCost = sunCost;
+        this.heal(this.getMaxHealth());
+        this.setPersistenceRequired();//avoid being refreshed by chunk.
+    }
+
     @Override
     public void aiStep() {
         super.aiStep();
@@ -161,7 +175,6 @@ public abstract class PVZPAZ extends PVZMob implements IPAZEntity {
 //            if (player != null && player instanceof ServerPlayerEntity) {
 //                PlantSuperTrigger.INSTANCE.trigger((ServerPlayerEntity) player, this);
 //            }
-//            this.getOuterPlantInfo().ifPresent(p -> p.onEnergetic(this));
 //        }
     }
 
@@ -212,7 +225,7 @@ public abstract class PVZPAZ extends PVZMob implements IPAZEntity {
 
     @Override
     public boolean canBeEnergetic() {
-        return this.canNormalUpdate();
+        return this.canNormalUpdate() && ! EntityUtil.inEnergetic(this);
     }
 
     @Override
@@ -305,14 +318,6 @@ public abstract class PVZPAZ extends PVZMob implements IPAZEntity {
     /* features */
     protected abstract float getLife();
 
-//    protected float getInnerLife(){
-//        return 0;
-//    }
-//
-//    protected float getOuterLife(){
-//        return 0;
-//    }
-
     public int getArmor() {
         return 0;
     }
@@ -403,6 +408,7 @@ public abstract class PVZPAZ extends PVZMob implements IPAZEntity {
         compound.put(SkillTypes.SKILL_TAG, this.getSkills());
         compound.putInt("ExistTick", this.getExistTick());
         compound.putInt("AnimTick", this.getAnimTick());
+        compound.putInt("SunCost", this.sunCost);
     }
 
     @Override
@@ -419,6 +425,9 @@ public abstract class PVZPAZ extends PVZMob implements IPAZEntity {
         }
         if(compound.contains("AnimTick")){
             this.setAnimTick(compound.getInt("AnimTick"));
+        }
+        if(compound.contains("SunCost")){
+            this.sunCost = compound.getInt("SunCost");
         }
         //use to update attributes when using data pack.
         if(! compound.contains("UpdateAttributesWhenSpawn") || compound.getBoolean("UpdateAttributesWhenSpawn")){

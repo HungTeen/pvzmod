@@ -10,7 +10,7 @@ import com.hungteen.pvz.api.types.base.IPAZType;
  * an abstract interface above on both plants and zombies entity.<br>
  * plants and zombies have something in common.<br>
  **/
-public interface IPAZEntity extends ICanBeEnergetic, IHasAlmanac {
+public interface IPAZEntity extends ICanBeEnergetic, IHasAlmanac, IQuickRemoveEntity {
 
 
     IPAZType getPAZType();

@@ -36,7 +36,7 @@ public class RenderUtil {
         stack.scale(scale, scale, scale);
 
         final Quaternion quaternion = Vector3f.ZP.rotationDegrees(180.0F);
-        Quaternion quaternion1 = Vector3f.XP.rotationDegrees(-followRotY * 20.0F);
+        Quaternion quaternion1 = Vector3f.XP.rotationDegrees(followRotY * 20.0F);
         quaternion.mul(quaternion1);
         stack.mulPose(quaternion);
 
@@ -52,7 +52,7 @@ public class RenderUtil {
         final float f5 = entity.yHeadRot;
         final float f6 = entity.yHeadRotO;
 
-        final float yaw = -followRotX * 20.0F - (float)yRot;
+        final float yaw = - followRotX * 20.0F + (float) yRot;
         entity.setYRot(yaw);
         entity.setXRot(followRotY * 20.0F);
         entity.yBodyRot = yaw;
@@ -60,7 +60,7 @@ public class RenderUtil {
         entity.yHeadRot = yaw;
         entity.yHeadRotO = yaw;
 
-        quaternion1 = Vector3f.XP.rotationDegrees(followRotY * 20.0F);
+        quaternion1 = Vector3f.XP.rotationDegrees(- followRotY * 20.0F);
         quaternion.mul(quaternion1);
 
         Lighting.setupForEntityInInventory();

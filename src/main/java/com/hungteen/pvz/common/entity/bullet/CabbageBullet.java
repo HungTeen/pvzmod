@@ -2,9 +2,14 @@ package com.hungteen.pvz.common.entity.bullet;
 
 import com.hungteen.pvz.common.PVZDamageSource;
 import com.hungteen.pvz.common.entity.PVZEntities;
+import com.hungteen.pvz.common.item.PVZItems;
+import net.minecraft.core.particles.ItemParticleOption;
+import net.minecraft.core.particles.ParticleOptions;
+import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.*;
 import net.minecraft.world.entity.projectile.Projectile;
+import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 
 /**
@@ -42,6 +47,11 @@ public class CabbageBullet extends PultProjectile{
         }
 
         return damage;
+    }
+
+    @Override
+    protected ParticleOptions getHitParticle() {
+        return new ItemParticleOption(ParticleTypes.ITEM, new ItemStack(PVZItems.CABBAGE.get()));
     }
 
     @Override
