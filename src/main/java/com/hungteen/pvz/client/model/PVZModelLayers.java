@@ -30,7 +30,7 @@ public class PVZModelLayers {
     /*
     Bullets.
      */
-    public static final ModelLayerLocation PEA_BULLET = register("pea_bullet");
+    public static final ModelLayerLocation COMMON_BULLET = register("pea_bullet");
 
     /*
     Animals.
@@ -48,6 +48,7 @@ public class PVZModelLayers {
     public static final ModelLayerLocation POTATO_MINE = register("potato_mine");
     public static final ModelLayerLocation SURROUND_DIRT = register("surround_dirt");
     public static final ModelLayerLocation SNOW_PEA = register("snow_pea");
+    public static final ModelLayerLocation CABBAGE_PULT = register("cabbage_pult");
 
     /*
     Zombie Entities.

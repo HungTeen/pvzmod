@@ -1,24 +1,15 @@
 package com.hungteen.pvz.common.entity;
 
-import java.util.Arrays;
-import java.util.List;
-import java.util.Optional;
-
-import com.hungteen.pvz.common.PVZDamageSource;
-import net.minecraft.world.entity.*;
-import net.minecraft.world.level.GameRules;
-import org.jetbrains.annotations.Nullable;
-
 import com.hungteen.pvz.api.interfaces.IAlmanacEntry;
 import com.hungteen.pvz.api.interfaces.IPAZEntity;
 import com.hungteen.pvz.api.types.ISkillType;
+import com.hungteen.pvz.common.PVZDamageSource;
 import com.hungteen.pvz.common.entity.ai.goal.PVZLookRandomlyGoal;
 import com.hungteen.pvz.common.impl.PAZAlmanacs;
 import com.hungteen.pvz.common.impl.type.SkillTypes;
 import com.hungteen.pvz.utils.EntityUtil;
 import com.hungteen.pvz.utils.misc.WeightList;
 import com.mojang.datafixers.util.Pair;
-
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.syncher.EntityDataAccessor;
@@ -27,12 +18,19 @@ import net.minecraft.network.syncher.SynchedEntityData;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.world.DifficultyInstance;
 import net.minecraft.world.damagesource.DamageSource;
+import net.minecraft.world.entity.*;
 import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.level.GameRules;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.ServerLevelAccessor;
 import net.minecraftforge.common.ForgeMod;
+import org.jetbrains.annotations.Nullable;
+
+import java.util.Arrays;
+import java.util.List;
+import java.util.Optional;
 
 /**
  * @program: pvzmod-1.18.x
@@ -165,6 +163,18 @@ public abstract class PVZPAZ extends PVZMob implements IPAZEntity {
 //            }
 //            this.getOuterPlantInfo().ifPresent(p -> p.onEnergetic(this));
 //        }
+    }
+
+    @Override
+    public boolean isInvulnerableTo(DamageSource source) {
+        if(source instanceof PVZDamageSource && ((PVZDamageSource) source).isMustHurt()) {
+            return false;
+        }
+        return source != DamageSource.OUT_OF_WORLD && !source.isCreativePlayer() && this.isPAZInvulnerableTo(source);
+    }
+
+    public boolean isPAZInvulnerableTo(DamageSource source){
+        return false;
     }
 
     /**

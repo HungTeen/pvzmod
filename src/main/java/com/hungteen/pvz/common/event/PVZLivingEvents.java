@@ -16,8 +16,6 @@ import net.minecraftforge.event.entity.living.LivingHurtEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 
-import java.util.concurrent.CompletableFuture;
-
 /**
  * @program: pvzmod-1.18.x
  * @author: HungTeen
@@ -31,7 +29,7 @@ public class PVZLivingEvents {
         /* handle player or its creature kill entity */
         if(! ev.getEntity().level.isClientSide) {
             Player player = EntityUtil.getEntityOwner(ev.getEntityLiving().level, ev.getSource().getEntity());
-            if(player == null) { //true source has no owner
+            if(player == null) { //true source has no owner.
                 if(ev.getSource().getEntity() instanceof Player) {
                     PlayerEventHandler.onPlayerKillEntity((Player) ev.getSource().getEntity(), ev.getSource(), ev.getEntityLiving());
                 }
@@ -45,15 +43,11 @@ public class PVZLivingEvents {
         if(ev.getEntity() instanceof Player) {
             PlayerEventHandler.handlePlayerDeath(ev, (Player) ev.getEntity());
         }
-
-//        /* strange cat copy */
-//        StrangeCatEntity.handleCopyCat(ev);
     }
 
     @SubscribeEvent
     public static void onLivingHurt(LivingHurtEvent ev) {
         if(! ev.getEntityLiving().level.isClientSide) {
-//            PVZPAZ.damageOuterDefence(ev);
             CombatManager.onLivingBlockHurt(ev);
 
             CombatManager.handleInvulnerableTime(ev.getEntityLiving(), ev.getSource());
@@ -62,13 +56,13 @@ public class PVZLivingEvents {
                 CombatManager.handleHurtEffects(ev.getEntityLiving(), (PVZDamageSource) ev.getSource());
                 SoundManager.handleHurtSounds(ev.getEntityLiving(), (PVZDamageSource) ev.getSource());
             }
+
             LivingEventHandler.handleHurtDamage(ev);
         }
     }
 
     @SubscribeEvent
     public static void onLivingDamage(LivingDamageEvent ev) {
-//        AbstractPAZEntity.damageInnerDefence(ev);
     	CombatManager.onLivingBlockDamage(ev);
     }
 

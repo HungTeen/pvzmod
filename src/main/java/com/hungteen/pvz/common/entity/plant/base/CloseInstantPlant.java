@@ -40,7 +40,7 @@ public abstract class CloseInstantPlant extends PVZPlant {
     protected void normalPlantTick() {
         super.normalPlantTick();
         if(! this.level.isClientSide && this.canCheckDistance()) {
-            if(EntityUtil.isEntityValid(this.getTarget())) {//target is close enough
+            if(EntityUtil.isEntityValid(this.getTarget())) {//target is close enough.
                 this.focusOnTarget(this.getTarget());
                 final int time = this.getAnimTick();
                 if(time >= this.getAnimationCD()) {
@@ -88,7 +88,7 @@ public abstract class CloseInstantPlant extends PVZPlant {
         return super.isPlantImmuneTo(source);
     }
 
-    protected boolean canBeImmuneToEnforce(Entity entity) {
+    public boolean canBeImmuneToEnforce(Entity entity) {
         return checkCanPAZTarget(entity);
     }
 

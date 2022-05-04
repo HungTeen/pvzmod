@@ -5,7 +5,6 @@ import com.hungteen.pvz.api.PVZAPI;
 import com.hungteen.pvz.api.types.IPlantType;
 import com.hungteen.pvz.api.types.base.IPAZType;
 import com.hungteen.pvz.common.entity.PVZEntities;
-import com.hungteen.pvz.common.entity.plant.base.PVZPlant;
 import com.hungteen.pvz.common.impl.type.*;
 
 import java.util.ArrayList;
@@ -69,6 +68,15 @@ public class PVZPlants {
             .cd(CDTypes.NORMAL)
             .entity(() -> PVZEntities.SNOW_PEA.get())
             .skills(Arrays.asList(SkillTypes.PLANT_MORE_LIFE, SkillTypes.PEA_DAMAGE, SkillTypes.PEA_SPEED_UP));
+
+    public static final IPlantType CABBAGE_PULT = new PVZPlantType("cabbage_pult")
+            .sunCost(100).xp(10)
+            .essence(EssenceTypes.ARMA)
+            .rank(RankTypes.WHITE)
+            .cardType(CardTypes.SAPLING)
+            .cd(CDTypes.NORMAL)
+            .entity(() -> PVZEntities.CABBAGE_PULT.get())
+            .skills(Arrays.asList(SkillTypes.PLANT_MORE_LIFE));
 
 //    public static final IPlantType CHERRY_BOMB = new PVZPlants("cherry_bomb", new PlantFeatures()
 //            .cost(150).requiredLevel(35)

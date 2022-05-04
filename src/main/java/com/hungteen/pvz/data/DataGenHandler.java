@@ -29,13 +29,11 @@ public class DataGenHandler {
             ev.getGenerator().addProvider(new LootTableGen(ev.getGenerator()));
             //for advancements.
             ev.getGenerator().addProvider(new AdvancementGen(ev.getGenerator(), ev.getExistingFileHelper()));
-            ///for language
-//			ev.getGenerator().addProvider(new CNLanguageGenerator(ev.getGenerator()));
-//			ev.getGenerator().addProvider(new USLanguageGenerator(ev.getGenerator()));
-            //for model
-            ev.getGenerator().addProvider(new ItemModelGen(ev.getGenerator(), ev.getExistingFileHelper()));
-			ev.getGenerator().addProvider(new BlockModelGen(ev.getGenerator(), ev.getExistingFileHelper()));
             //for block state
 			ev.getGenerator().addProvider(new BlockStateGen(ev.getGenerator(), ev.getExistingFileHelper()));
+            //for model
+			ev.getGenerator().addProvider(new BlockModelGen(ev.getGenerator(), ev.getExistingFileHelper()));
+			ev.getGenerator().addProvider(new ItemModelGen(ev.getGenerator(), ev.getExistingFileHelper()));
+            
     }
 }

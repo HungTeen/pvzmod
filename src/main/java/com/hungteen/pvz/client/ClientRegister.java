@@ -15,6 +15,7 @@ import com.hungteen.pvz.client.particle.MelonSliceParticle;
 import com.hungteen.pvz.client.particle.PVZParticles;
 import com.hungteen.pvz.client.particle.multi.PotatoExplosionParticle;
 import com.hungteen.pvz.client.render.blockentity.EssenceAltarRender;
+import com.hungteen.pvz.client.render.entity.bullet.CabbageBulletRender;
 import com.hungteen.pvz.client.render.entity.bullet.PeaBulletRender;
 import com.hungteen.pvz.client.render.entity.creature.GardenPlantRender;
 import com.hungteen.pvz.client.render.entity.creature.GrassCarpRender;
@@ -71,6 +72,7 @@ public class ClientRegister {
 
         /* bullet */
         event.registerEntityRenderer(PVZEntities.PEA_BULLET.get(), PeaBulletRender::new);
+        event.registerEntityRenderer(PVZEntities.CABBAGE_BULLET.get(), CabbageBulletRender::new);
 
         /* creature */
         event.registerEntityRenderer(PVZEntities.GRASS_CARP.get(), GrassCarpRender::new);
@@ -82,6 +84,7 @@ public class ClientRegister {
         event.registerEntityRenderer(PVZEntities.WALL_NUT.get(), WallNutRender::new);
         event.registerEntityRenderer(PVZEntities.POTATO_MINE.get(), PotatoMineRender::new);
         event.registerEntityRenderer(PVZEntities.SNOW_PEA.get(), SnowPeaRender::new);
+        event.registerEntityRenderer(PVZEntities.CABBAGE_PULT.get(), CabbagePultRender::new);
 
         /* zombie entity */
         event.registerEntityRenderer(PVZEntities.NORMAL_ZOMBIE.get(), NormalZombieRender::new);
@@ -112,7 +115,7 @@ public class ClientRegister {
         /* misc entity */
 
         /* bullet */
-        event.registerLayerDefinition(PVZModelLayers.PEA_BULLET, CommonBulletModel::createBodyLayer);
+        event.registerLayerDefinition(PVZModelLayers.COMMON_BULLET, CommonBulletModel::createBodyLayer);
 
         /* creature */
         event.registerLayerDefinition(PVZModelLayers.GRASS_CARP, GrassCarpModel::createBodyLayer);
@@ -126,6 +129,7 @@ public class ClientRegister {
         event.registerLayerDefinition(PVZModelLayers.POTATO_MINE, PotatoMineModel::createBodyLayer);
         event.registerLayerDefinition(PVZModelLayers.SURROUND_DIRT, SurroundDirtModel::createBodyLayer);
         event.registerLayerDefinition(PVZModelLayers.SNOW_PEA, SnowPeaModel::createBodyLayer);
+        event.registerLayerDefinition(PVZModelLayers.CABBAGE_PULT, CabbagePultModel::createBodyLayer);
 
         /* zombie entity */
         event.registerLayerDefinition(PVZModelLayers.NORMAL_ZOMBIE, HumanoidZombieModel::createBodyLayer);

@@ -1,5 +1,6 @@
 package com.hungteen.pvz.common;
 
+import com.hungteen.pvz.common.entity.bullet.CabbageBullet;
 import com.hungteen.pvz.common.entity.bullet.PeaBullet;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.TranslatableComponent;
@@ -55,15 +56,17 @@ public class PVZDamageSource extends EntityDamageSource {
     }
 
     //projectiles
-    public static PVZDamageSource pea(PeaBullet pea, Entity shooter) {
+    public static DamageSource pea(PeaBullet pea, Entity shooter) {
         return new PVZDamageSource("pea", pea, shooter).setAppease();
     }
 
-    public static PVZDamageSource snowPea(PeaBullet pea, Entity shooter) {
-        return new PVZDamageSource("snow_pea", pea, shooter).setAppease().setIceDamage();
+    public static DamageSource snowPea(PeaBullet pea, Entity shooter, Collection<MobEffectInstance> effects) {
+        PVZDamageSource source = new PVZDamageSource("snow_pea", pea, shooter).setAppease().setIceDamage();
+        source.setEffects(effects);
+        return source;
     }
 
-    public static PVZDamageSource flamePea(PeaBullet pea, Entity shooter) {
+    public static DamageSource flamePea(PeaBullet pea, Entity shooter) {
         return new PVZDamageSource("flame_pea", pea, shooter).setAppease().setFlameDamage();
     }
 
@@ -82,10 +85,10 @@ public class PVZDamageSource extends EntityDamageSource {
 //    public static PVZDamageSource metal(MetalItemEntity pea, Entity shooter) {
 //        return (PVZDamageSource) new PVZDamageSource("metal", pea, shooter).setAppease();
 //    }
-//
-//    public static PVZDamageSource cabbage(CabbageEntity pea, Entity shooter) {
-//        return (PVZDamageSource) new PVZDamageSource("cabbage", pea, shooter).setParabola();
-//    }
+
+    public static PVZDamageSource cabbage(CabbageBullet cabbageBullet, Entity shooter) {
+        return (PVZDamageSource) new PVZDamageSource("cabbage", cabbageBullet, shooter).setParabola();
+    }
 //
 //    public static PVZDamageSource kernel(KernelEntity pea, Entity shooter) {
 //        return (PVZDamageSource) new PVZDamageSource("kernel", pea, shooter).setParabola();

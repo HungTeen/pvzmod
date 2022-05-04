@@ -7,6 +7,7 @@ import com.hungteen.pvz.common.item.PVZItems;
 import net.minecraft.core.particles.ItemParticleOption;
 import net.minecraft.core.particles.ParticleOptions;
 import net.minecraft.core.particles.ParticleTypes;
+import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.*;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.entity.projectile.Projectile;
@@ -48,12 +49,11 @@ public class PeaBullet extends PVZProjectile {
         final float damage = this.getAttackDamage();
 
         //default normal pea damage.
-        PVZDamageSource source = PVZDamageSource.pea(this, this.getOwner());
+        DamageSource source = PVZDamageSource.pea(this, this.getOwner());
 
         if (this.getBulletState() == BulletStates.ICE) {// snow pea attack
-            source = PVZDamageSource.snowPea(this, this.getOwner());
             if (this.getOwner() instanceof IHasEffects) {
-                source.setEffects(((IHasEffects) this.getOwner()).getEffects());
+                source = PVZDamageSource.snowPea(this, this.getOwner(), ((IHasEffects) this.getOwner()).getEffects());
             } else if (this.getOwner() instanceof Player) {
 //                source.addEffect(EffectUtil.effect(EffectRegister.COLD_EFFECT.get(), 100, 5));
             }

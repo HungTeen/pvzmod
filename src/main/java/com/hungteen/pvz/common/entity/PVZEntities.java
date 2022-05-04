@@ -2,6 +2,7 @@ package com.hungteen.pvz.common.entity;
 
 import com.hungteen.pvz.PVZMod;
 import com.hungteen.pvz.api.PVZAPI;
+import com.hungteen.pvz.common.entity.bullet.CabbageBullet;
 import com.hungteen.pvz.common.entity.creature.GrassCarp;
 import com.hungteen.pvz.common.entity.bullet.PeaBullet;
 import com.hungteen.pvz.common.entity.creature.garden.CommonGardenPlant;
@@ -66,6 +67,7 @@ public class PVZEntities {
      Bullets
      */
     public static final RegistryObject<EntityType<PeaBullet>> PEA_BULLET = registerEntityType(PeaBullet::new, "pea_bullet", MobCategory.MISC);
+    public static final RegistryObject<EntityType<CabbageBullet>> CABBAGE_BULLET = registerEntityType(CabbageBullet::new, "cabbage_bullet", MobCategory.MISC);
 //    public static final RegistryObject<EntityType<PotatoEntity>> POTATO = registerEntityType(PotatoEntity::new, "potato", EntityClassification.MISC);
 //    public static final RegistryObject<EntityType<SporeEntity>> SPORE = registerEntityType(SporeEntity::new, "spore", EntityClassification.MISC);
 //    public static final RegistryObject<EntityType<FumeEntity>> FUME = registerEntityType(FumeEntity::new, "fume", EntityClassification.MISC);
@@ -96,6 +98,7 @@ public class PVZEntities {
     public static final RegistryObject<EntityType<WallNut>> WALL_NUT = registerPlantEntityType(WallNut::new, "wall_nut");
     public static final RegistryObject<EntityType<PotatoMine>> POTATO_MINE = registerPlantEntityType(PotatoMine::new, "potato_mine");
     public static final RegistryObject<EntityType<SnowPea>> SNOW_PEA = registerPlantEntityType(SnowPea::new, "snow_pea");
+    public static final RegistryObject<EntityType<CabbagePult>> CABBAGE_PULT = registerPlantEntityType(CabbagePult::new, "cabbage_pult");
 //    public static final RegistryObject<EntityType<CherryBombEntity>> CHERRY_BOMB = registerPlantEntityType(CherryBombEntity::new, "cherry_bomb");
 //    public static final RegistryObject<EntityType<PotatoMineEntity>> POTATO_MINE = registerPlantEntityType(PotatoMineEntity::new, "potato_mine");
 //    public static final RegistryObject<EntityType<SnowPeaEntity>> SNOW_PEA = registerPlantEntityType(SnowPeaEntity::new, "snow_pea");

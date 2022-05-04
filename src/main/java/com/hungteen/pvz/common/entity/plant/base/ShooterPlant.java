@@ -2,12 +2,13 @@ package com.hungteen.pvz.common.entity.plant.base;
 
 import com.hungteen.pvz.api.interfaces.IAlmanacEntry;
 import com.hungteen.pvz.common.entity.PVZAttributes;
-import com.hungteen.pvz.common.entity.ai.goal.PVZGoal;
+import com.hungteen.pvz.common.entity.ai.goal.attack.PVZRangeAttackGoal;
 import com.hungteen.pvz.common.entity.ai.goal.target.PVZScatterTargetGoal;
 import com.hungteen.pvz.common.entity.bullet.PVZProjectile;
 import com.hungteen.pvz.common.impl.PAZAlmanacs;
 import com.hungteen.pvz.utils.EntityUtil;
 import com.hungteen.pvz.utils.MathUtil;
+import com.hungteen.pvz.utils.interfaces.IRangeAttackEntity;
 import com.mojang.datafixers.util.Pair;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.sounds.SoundEvent;
@@ -17,13 +18,11 @@ import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.ai.attributes.Attributes;
-import net.minecraft.world.entity.ai.goal.Goal;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.Vec3;
 
 import javax.annotation.Nonnull;
 import java.util.Arrays;
-import java.util.EnumSet;
 import java.util.List;
 import java.util.Optional;
 
@@ -34,7 +33,7 @@ import java.util.Optional;
  *
  * WorkTick used in Shooting AI <br>
  **/
-public abstract class ShooterPlant extends PVZPlant {
+public abstract class ShooterPlant extends PVZPlant implements IRangeAttackEntity {
 
     public static final float BACK_SHOOT_ANGLE = 180;
     public static final float FORWARD_LEFT_SHOOT_ANGLE = -7.5F;
@@ -82,11 +81,6 @@ public abstract class ShooterPlant extends PVZPlant {
      * shoot bullet.
      */
     protected abstract void shootBullet(@Nonnull Entity target);
-
-    /**
-     * normal shoot attack, mostly add some shoot.
-     */
-    public abstract void startShootAttack();
 
     @Override
     public void addAlmanacEntries(List<Pair<IAlmanacEntry, Number>> list) {
@@ -190,7 +184,8 @@ public abstract class ShooterPlant extends PVZPlant {
     /**
      * check weather the shooter can shoot currently.
      */
-    public boolean canShoot() {
+    @Override
+    public boolean canAttack() {
         return this.canNormalUpdate();
     }
 
@@ -213,76 +208,57 @@ public abstract class ShooterPlant extends PVZPlant {
     public void addAdditionalSaveData(CompoundTag compound) {
         super.addAdditionalSaveData(compound);
         compound.putInt("ShootCount", this.shootCount);
-        compound.putInt("ShootBulletCount", this.powerShootCount);
+        compound.putInt("PowerShootCount", this.powerShootCount);
     }
 
-    static class ShooterAttackGoal extends PVZGoal {
+    @Override
+    public void setAttackTick(int tick) {
+        this.setWorkTick(tick);
+    }
 
-        protected final ShooterPlant shooter;
-        protected LivingEntity target;
+    @Override
+    public int getAttackTick() {
+        return this.getWorkTick();
+    }
+
+    @Override
+    public double getCurrentAttackCD() {
+        return this.getCurrentWorkCD();
+    }
+
+    @Override
+    public int getStartAttackTick() {
+        return (int) (this.getCurrentAttackCD() - SHOOT_ANIM_CD * 0.25F);
+    }
+
+    static class ShooterAttackGoal extends PVZRangeAttackGoal<ShooterPlant> {
 
         public ShooterAttackGoal(ShooterPlant shooter) {
-            this.shooter = shooter;
-            this.setFlags(EnumSet.of(Goal.Flag.MOVE, Goal.Flag.LOOK));
-        }
-
-        @Override
-        public boolean canUse() {
-            //can not shoot because of the shooter itself(such as height limit).
-            if(! this.shooter.canShoot()) {
-                this.shooter.setWorkTick(0);
-                return false;
-            }
-            this.target = this.shooter.getTarget();
-            if(! this.checkTarget()) {//can not shoot because of its target.
-                this.target = null;
-                this.shooter.setTarget(null);
-                return false;
-            }
-            return true;
-        }
-
-        @Override
-        public boolean canContinueToUse() {
-            return this.canUse();
-        }
-
-        @Override
-        public void stop() {
-            this.shooter.setWorkTick(0);
+            super(shooter);
         }
 
         @Override
         public void tick() {
 //            if(! (this.shooter instanceof StarFruitEntity)) {//star fruit don't need to look at target.
-                this.shooter.getLookControl().setLookAt(this.target, 30.0F, 30.0F);
+//                this.attacker.getLookControl().setLookAt(this.target, 30.0F, 30.0F);
 //            }
 //            if(this.shooter.isPlantInSuperMode()) {
 //                this.shooter.startShootAttack();
 //                this.shooter.setShootTick(0);
 //                return ;
 //            }
-            final int time = this.shooter.getWorkTick();
-            final double T = this.shooter.getCurrentWorkCD();
-            if(time >= T) {
-                this.shooter.setWorkTick(0);
-            } else {
-                if(time == (int) (T * 3 / 4)) {
-                    this.shooter.startShootAttack();
-                }
-                this.shooter.setWorkTick(time + 1);
-            }
+            super.tick();
         }
 
-        private boolean checkTarget() {
-            if(EntityUtil.canAttackEntity(this.shooter, this.target)) {
-//                if(this.shooter instanceof CatTailEntity) {
-//                    return EntityUtil.canSeeEntity(this.shooter, this.target);
-//                }
-                return this.shooter.getSensing().hasLineOfSight(this.target);
-            }
-            return false;
-        }
+//        private boolean checkTarget() {
+//            if(EntityUtil.canAttackEntity(this.shooter, this.target)) {
+////                if(this.shooter instanceof CatTailEntity) {
+////                    return EntityUtil.canSeeEntity(this.shooter, this.target);
+////                }
+////                return this.shooter.getSensing().hasLineOfSight(this.target);
+////            }
+//            return false;
+//        }
 
     }
 

@@ -98,7 +98,7 @@ public class PotatoMine extends CloseInstantPlant {
     }
 
     @Override
-    protected boolean canBeImmuneToEnforce(Entity entity) {
+	public boolean canBeImmuneToEnforce(Entity entity) {
         return super.canBeImmuneToEnforce(entity) && (this.isMineReady() || this.isRisingFromDirt());
     }
 

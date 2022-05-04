@@ -90,7 +90,7 @@ public class SkillTypes {
 
     //peashooter.
     public static final ISkillType PEA_SPEED_UP = new SkillType("pea_speed_up",
-            ArrayUtil.getAverageArray(3, 1.2F, 1.8F),
+            ArrayUtil.getAverageArray(3, 1.2F, 2F),
             Arrays.asList(3, 5)
     );
 
@@ -103,8 +103,7 @@ public class SkillTypes {
     //wall nut.
     public static final ISkillType EXPLOSION_NUT = new SkillType("explosion_nut",
             ArrayUtil.getAverageArray(3, 0, 200F),
-            Arrays.asList(5, 10),
-            true
+            Arrays.asList(5, 10)
     );
 
     //wall nut.

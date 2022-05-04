@@ -31,8 +31,8 @@ public class BiomeUtil {
 
     public static void initBiomeSet() {
         for(Biome biome : ForgeRegistries.BIOMES) {
-            if(biome == PVZBiomes.ZEN_GARDEN.get()) continue;//zen garden will not be add
             ResourceKey<Biome> biomeKey = getKey(biome);
+            if(biomeKey.equals(PVZBiomes.ZEN_GARDEN)) continue;//zen garden will not be add
             if(isOverworld(biomeKey)) {
                 if(isLand(biomeKey)) {
                     OVERWORLD_LAND.add(biome);

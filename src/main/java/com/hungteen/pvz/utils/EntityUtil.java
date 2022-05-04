@@ -331,7 +331,7 @@ public class EntityUtil {
      */
     public static EntityHitResult rayTraceEntities(Level world, Entity entity, Vec3 startVec, Vec3 endVec, Predicate<Entity> predicate) {
         return ProjectileUtil.getEntityHitResult(world, entity, startVec, endVec,
-                entity.getBoundingBox().expandTowards(entity.getDeltaMovement()).inflate(1.0D), predicate);
+                entity.getBoundingBox().expandTowards(entity.getDeltaMovement()).inflate(0.5D), predicate);
     }
 
     /**

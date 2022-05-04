@@ -44,6 +44,12 @@ public class CombatManager {
      * Wearing armor tag item to block damage.
      */
     public static void onLivingBlockDamage(LivingDamageEvent ev) {
+        //wearing helmet will decrease throw damage by 20%.
+        if(ev.getSource() instanceof PVZDamageSource && ((PVZDamageSource) ev.getSource()).isParabola()){
+            if(! ev.getEntityLiving().getItemBySlot(EquipmentSlot.HEAD).isEmpty()){
+                ev.setAmount(ev.getAmount() * 0.8F);
+            }
+        }
         for (EquipmentSlot value : EquipmentSlot.values()) {
             if (ItemUtil.isArmorItem(ev.getEntityLiving().getItemBySlot(value))) {
                 blockDamage(ev, value);
@@ -69,7 +75,7 @@ public class CombatManager {
      */
     public static void handleHurtEffects(LivingEntity target, PVZDamageSource source) {
         if (!source.isDefended()) {//source not defended by armor.
-            if (source.isFlameDamage()) {
+            if (source.isFlameDamage() || source.isFire()) {
                 if (target.hasEffect(PVZEffects.COLD_EFFECT.get())) {
                     target.removeEffect(PVZEffects.COLD_EFFECT.get());
                 }

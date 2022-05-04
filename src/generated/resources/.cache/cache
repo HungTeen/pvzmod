@@ -61,7 +61,6 @@ ee490dbba02a58fe49ea260883ad9254d695f980 assets/pvz/models/block/nut_door_bottom
 710d7dadb7ce2bacad1ab643999569ebac87f1ba assets/pvz/models/block/nut_door_top.json
 4f49b482513bf747ddcc4c8f13f09399554f79ad assets/pvz/models/block/nut_door_top_hinge.json
 e9859cb006008d11bbcf2091a15cebe49c810c2a assets/pvz/models/block/nut_fence_gate.json
-e9859cb006008d11bbcf2091a15cebe49c810c2a assets/pvz/models/block/nut_fence_gate_gate.json
 d4bc8b72057c9fdf111f45a8b16b525cc84e6d0f assets/pvz/models/block/nut_fence_gate_open.json
 6468edd7f38eab4d87c1f4bfbafc909fd1bffa3a assets/pvz/models/block/nut_fence_gate_wall.json
 502313652b9802dd9e37a332c854149064950a1d assets/pvz/models/block/nut_fence_gate_wall_open.json
@@ -75,7 +74,7 @@ bf0a55a12379a525800a6b753023069795bcd10d assets/pvz/models/block/nut_log.json
 f327966b61eb67609711c25a1ce51be43e5c01b8 assets/pvz/models/block/nut_planks.json
 26d64ff3c3c1d9892371e95430aa2cd81f13a6ee assets/pvz/models/block/nut_pressure_plate.json
 0fe62895dfeb3f16d77248f0faf73511c672a493 assets/pvz/models/block/nut_pressure_plate_down.json
-86fc23ddfc2782a228fbaa9a5f149ffac3da74c2 assets/pvz/models/block/nut_sapling.json
+58adc7c4dcf5f1d4a7df8992b283460d141e23ef assets/pvz/models/block/nut_sapling.json
 db1ac672cedc6c88bcbcb5449b738329fbbc2cf6 assets/pvz/models/block/nut_sign.json
 c832f0dcd0ac0e5277e29acc36312eca3ca8bcc1 assets/pvz/models/block/nut_slab.json
 8f6a9bf48b0111a77dcdee2264f2b4b0d9a0d406 assets/pvz/models/block/nut_slab_top.json
@@ -116,6 +115,8 @@ c92063108a4ad470671b64b279ab942163a44d92 assets/pvz/models/item/appease_ore.json
 b87f99b50a097e5464ca23ae2373d38edbf7e9bf assets/pvz/models/item/bucket_head.json
 98167609bf3898587f7565736a6fc24a7966cacd assets/pvz/models/item/bucket_head_zombie_spawn_egg.json
 74b0def6ef3ce0c00961a337baa92429803a2563 assets/pvz/models/item/cabbage.json
+57a5c896f1babf33c0bad3a42fc189b7542f9a96 assets/pvz/models/item/cabbage_pult_card.json
+90e981b57e0f6ba894e8fc8e43f0d9e6d5815ad7 assets/pvz/models/item/cabbage_pult_enjoy_card.json
 693cf6081c2cc0491ce5691a5847d04b0232f78d assets/pvz/models/item/cabbage_seeds.json
 54ef3134745e270a72ae7fd9e2150c84d8426cda assets/pvz/models/item/chorus_fruit_card.json
 15131096905495b5558984fd7ee9b62681abc283 assets/pvz/models/item/common_sprout.json
@@ -294,7 +295,7 @@ c7cfc29be68536d789b870cbfaaeec78a9c5f97a data/pvz/loot_tables/entities/grass_car
 46b8e0e749ec277d9ca423dc559bb02affcfa655 data/pvz/tags/entity_types/has_invulnerable_time.json
 46b8e0e749ec277d9ca423dc559bb02affcfa655 data/pvz/tags/entity_types/ignore_attracts.json
 267d6fc3778961a28b74eae2d5893677223c0e75 data/pvz/tags/entity_types/ignore_cold.json
-489b061207f7b179e4aebdadec604d103625528a data/pvz/tags/entity_types/pvz_plants.json
+416bcef373ada03466adb0b959a2ca1027603fd9 data/pvz/tags/entity_types/pvz_plants.json
 eaf7d0ccf51543b8ef3b3515117ae620f0a3c9a7 data/pvz/tags/entity_types/pvz_zombies.json
 4d9f065837dcdbae16f424ec8eb4253a37034562 data/pvz/tags/items/armor_items.json
 f84467e912358eda8f5bcd9ede86d6a7479bb6fb data/pvz/tags/items/card/all_card.json
@@ -304,8 +305,8 @@ fee4ad52382fea6df208c56fe4d15eb3867fbd16 data/pvz/tags/items/card/chorus_fruit_c
 ccf55ee576147856b91baecda4eefc792c7a6119 data/pvz/tags/items/card/gold_materials.json
 0171b8b6f8a62669bc678e248ebad7dd834b8f78 data/pvz/tags/items/card/nether_wart_cards.json
 7bac6647929b6a457296076df996c33d14207016 data/pvz/tags/items/card/plant_card.json
-98401ebc81bf24c68571edf83045f75c07e01a53 data/pvz/tags/items/card/plant_enjoy_card.json
-4b7d092f67fa25679b97d7363729022b49caaf4a data/pvz/tags/items/card/plant_summon_card.json
+cce87f200c7439c0a6d4a16e30c172c9a8320348 data/pvz/tags/items/card/plant_enjoy_card.json
+bc73d28144d4506a5da8862335ef8e6d8cab20d7 data/pvz/tags/items/card/plant_summon_card.json
 bcfa9e4da2baef723a564c53cb07a3a7d8f79f8b data/pvz/tags/items/card/sapling_cards.json
 e25eb25174ecc6b629d9364ec37ea1c39a553e00 data/pvz/tags/items/card/template_card.json
 55c9bbf6eec4c940fafb8cea663dccc38304006d data/pvz/tags/items/card/upgrade_cards.json

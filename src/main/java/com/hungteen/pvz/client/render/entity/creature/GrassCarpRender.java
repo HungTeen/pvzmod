@@ -16,6 +16,7 @@ import net.minecraft.resources.ResourceLocation;
  **/
 public class GrassCarpRender extends PVZMobRender<GrassCarp> {
 
+    private static final ResourceLocation RES = Util.prefix("textures/entity/creature/grass_carp.png");
     public GrassCarpRender(EntityRendererProvider.Context rendererManager) {
         super(rendererManager, new GrassCarpModel<>(rendererManager.bakeLayer(PVZModelLayers.GRASS_CARP)), 0);
         this.addLayer(new GrassCarpItemLayer(this));
@@ -23,6 +24,6 @@ public class GrassCarpRender extends PVZMobRender<GrassCarp> {
 
     @Override
     public ResourceLocation getTextureLocation(GrassCarp p_114482_) {
-        return Util.prefix("textures/entity/animal/grass_carp.png");
+        return RES;
     }
 }

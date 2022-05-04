@@ -166,8 +166,9 @@ public abstract class PVZZombie extends PVZPAZ implements IZombieEntity {
 //        }
         //natural spawn zombie will heal in lava.
         if(! this.level.isClientSide){
-            if(this.isInLava() && this.getExistTick() % 10 == 0 && ! this.getOwnerUUID().isPresent()){
-                this.heal(20);
+            //copy from vanilla code.
+            if (this.getRemainingFireTicks() % 20 == 0 && !this.isInLava()) {
+                this.hurt(DamageSource.ON_FIRE, 1.0F);
             }
         }
     }
@@ -479,14 +480,10 @@ public abstract class PVZZombie extends PVZPAZ implements IZombieEntity {
     }
 
     @Override
-    public boolean isInvulnerableTo(DamageSource source) {
-        if(source instanceof PVZDamageSource && ((PVZDamageSource) source).isMustHurt()) {
-            return false;
+    public boolean isPAZInvulnerableTo(DamageSource source) {
+        if(source.isFire() && (source == DamageSource.IN_FIRE || source == DamageSource.LAVA || source == DamageSource.HOT_FLOOR)){
+            return true;
         }
-        return source != DamageSource.OUT_OF_WORLD && !source.isCreativePlayer() && this.isZombieInvulnerableTo(source);
-    }
-
-    protected boolean isZombieInvulnerableTo(DamageSource source) {
         return this.isZombieRising() || (! EntityUtil.isEntityValid(source.getEntity()) && ! source.isMagic());
     }
 
@@ -506,6 +503,15 @@ public abstract class PVZZombie extends PVZPAZ implements IZombieEntity {
     @Override
     public boolean fireImmune() {
         return true;
+    }
+
+    /**
+     * copy from vanilla code to enable fire animation.
+     */
+    @Override
+    public boolean isOnFire() {
+        boolean flag = this.level != null && this.level.isClientSide;
+        return this.getRemainingFireTicks() > 0 || flag && this.getSharedFlag(0);
     }
 
     @Override

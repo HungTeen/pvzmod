@@ -30,7 +30,7 @@ public class PeaShooter extends ShooterPlant {
     }
 
     @Override
-    public void startShootAttack() {
+    public void startAttack(@Nonnull Entity target) {
         ++ this.shootCount;
     }
 
