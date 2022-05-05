@@ -46,7 +46,7 @@ public class CabbageBlock extends CropBlock {
 
     @Override
     protected int getBonemealAgeIncrease(Level level) {
-        return super.getBonemealAgeIncrease(level) / 2;
+        return super.getBonemealAgeIncrease(level) / 3;
     }
 
     @Override
