@@ -1,6 +1,7 @@
 {
   "replace": false,
   "values": [
+    "pvz:cone_head",
     "pvz:bucket_head"
   ]
 }

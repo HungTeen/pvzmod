@@ -11,6 +11,7 @@ import com.hungteen.pvz.client.model.entity.misc.DropEntityModel;
 import com.hungteen.pvz.client.model.entity.plant.*;
 import com.hungteen.pvz.client.model.entity.zombie.HumanoidZombieModel;
 import com.hungteen.pvz.client.model.item.BucketArmorModel;
+import com.hungteen.pvz.client.model.item.ConeArmorModel;
 import com.hungteen.pvz.client.particle.MelonSliceParticle;
 import com.hungteen.pvz.client.particle.PVZParticles;
 import com.hungteen.pvz.client.particle.multi.PotatoExplosionParticle;
@@ -84,7 +85,9 @@ public class ClientRegister {
         event.registerEntityRenderer(PVZEntities.WALL_NUT.get(), WallNutRender::new);
         event.registerEntityRenderer(PVZEntities.POTATO_MINE.get(), PotatoMineRender::new);
         event.registerEntityRenderer(PVZEntities.SNOW_PEA.get(), SnowPeaRender::new);
+        event.registerEntityRenderer(PVZEntities.REPEATER.get(), RepeaterRender::new);
         event.registerEntityRenderer(PVZEntities.CABBAGE_PULT.get(), CabbagePultRender::new);
+        event.registerEntityRenderer(PVZEntities.ICEBERG_LETTUCE.get(), IcebergLettuceRender::new);
 
         /* zombie entity */
         event.registerEntityRenderer(PVZEntities.NORMAL_ZOMBIE.get(), NormalZombieRender::new);
@@ -103,6 +106,8 @@ public class ClientRegister {
         LayerDefinition OUTER_ARMOR = LayerDefinition.create(HumanoidModel.createMesh(LayerDefinitions.OUTER_ARMOR_DEFORMATION, 0.0F), 64, 32);
 
         /* common */
+        event.registerLayerDefinition(PVZModelLayers.CONE_INNER_ARMOR, () -> ConeArmorModel.createBodyLayer(LayerDefinitions.INNER_ARMOR_DEFORMATION));
+        event.registerLayerDefinition(PVZModelLayers.CONE_OUTER_ARMOR, () -> ConeArmorModel.createBodyLayer(LayerDefinitions.OUTER_ARMOR_DEFORMATION));
         event.registerLayerDefinition(PVZModelLayers.BUCKET_INNER_ARMOR, () -> BucketArmorModel.createBodyLayer(LayerDefinitions.INNER_ARMOR_DEFORMATION));
         event.registerLayerDefinition(PVZModelLayers.BUCKET_OUTER_ARMOR, () -> BucketArmorModel.createBodyLayer(LayerDefinitions.OUTER_ARMOR_DEFORMATION));
 
@@ -129,7 +134,9 @@ public class ClientRegister {
         event.registerLayerDefinition(PVZModelLayers.POTATO_MINE, PotatoMineModel::createBodyLayer);
         event.registerLayerDefinition(PVZModelLayers.SURROUND_DIRT, SurroundDirtModel::createBodyLayer);
         event.registerLayerDefinition(PVZModelLayers.SNOW_PEA, SnowPeaModel::createBodyLayer);
+        event.registerLayerDefinition(PVZModelLayers.REPEATER, RepeaterModel::createBodyLayer);
         event.registerLayerDefinition(PVZModelLayers.CABBAGE_PULT, CabbagePultModel::createBodyLayer);
+        event.registerLayerDefinition(PVZModelLayers.ICEBERG_LETTUCE, IcebergLettuceModel::createBodyLayer);
 
         /* zombie entity */
         event.registerLayerDefinition(PVZModelLayers.NORMAL_ZOMBIE, HumanoidZombieModel::createBodyLayer);

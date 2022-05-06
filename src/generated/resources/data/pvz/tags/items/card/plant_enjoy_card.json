@@ -1,11 +1,13 @@
 {
   "replace": false,
   "values": [
-    "pvz:pea_shooter_enjoy_card",
+    "minecraft:air",
     "pvz:sun_flower_enjoy_card",
     "pvz:wall_nut_enjoy_card",
     "pvz:potato_mine_enjoy_card",
     "pvz:snow_pea_enjoy_card",
-    "pvz:cabbage_pult_enjoy_card"
+    "pvz:pea_shooter_enjoy_card",
+    "pvz:cabbage_pult_enjoy_card",
+    "pvz:iceberg_lettuce_enjoy_card"
   ]
 }

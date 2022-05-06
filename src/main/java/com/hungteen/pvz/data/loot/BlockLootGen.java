@@ -2,10 +2,10 @@ package com.hungteen.pvz.data.loot;
 
 import com.hungteen.pvz.PVZMod;
 import com.hungteen.pvz.common.block.PVZBlocks;
+import com.hungteen.pvz.common.block.cubes.EssenceOreBlock;
 import com.hungteen.pvz.common.block.plant.crops.CabbageBlock;
 import com.hungteen.pvz.common.block.plant.crops.CornBlock;
 import com.hungteen.pvz.common.block.plant.crops.PeaBlock;
-import com.hungteen.pvz.common.block.cubes.EssenceOreBlock;
 import com.hungteen.pvz.common.item.PVZItems;
 import com.hungteen.pvz.utils.BlockUtil;
 import net.minecraft.advancements.critereon.EnchantmentPredicate;
@@ -22,9 +22,11 @@ import net.minecraft.world.level.storage.loot.LootPool;
 import net.minecraft.world.level.storage.loot.LootTable;
 import net.minecraft.world.level.storage.loot.entries.LootItem;
 import net.minecraft.world.level.storage.loot.functions.ApplyBonusCount;
+import net.minecraft.world.level.storage.loot.predicates.BonusLevelTableCondition;
 import net.minecraft.world.level.storage.loot.predicates.LootItemBlockStatePropertyCondition;
 import net.minecraft.world.level.storage.loot.predicates.LootItemCondition;
 import net.minecraft.world.level.storage.loot.predicates.MatchTool;
+import net.minecraft.world.level.storage.loot.providers.number.ConstantValue;
 import net.minecraftforge.registries.ForgeRegistries;
 
 import java.util.Arrays;
@@ -58,7 +60,9 @@ public class BlockLootGen extends BlockLoot {
 //                BlockRegister.SLOT_MACHINE.get()
         ));
 
-        //essence ores.
+        /*
+        Essence ores.
+         */
         BlockUtil.getFilterBlocks(EssenceOreBlock.class::isInstance).stream().map(EssenceOreBlock.class::cast).forEach(block -> {
             this.add(block, createOreDrop(block, block.essence.getEssenceItem()));
         });
@@ -70,10 +74,12 @@ public class BlockLootGen extends BlockLoot {
         this.addCrop(PVZBlocks.CABBAGE.get(), PVZItems.CABBAGE_SEEDS.get(), PVZItems.CABBAGE.get(), CabbageBlock.AGE, 3);
         this.addCrop(PVZBlocks.CORN.get(), PVZItems.CORN_SEEDS.get(), PVZItems.CORN.get(), CornBlock.AGE, 3);
 
-//        // leaves
-//        this.add(BlockRegister.NUT_LEAVES.get(), (p_218506_0_) -> {
-//            return createLeavesDrops(p_218506_0_, BlockRegister.NUT_SAPLING.get(), ItemRegister.NUT.get(), NORMAL_LEAVES_SAPLING_CHANCES);
-//        });
+        /*
+        Leaves.
+         */
+        this.addLeavesDrops(PVZBlocks.NUT_LEAVES.get(), PVZBlocks.NUT_SAPLING.get(), NORMAL_LEAVES_SAPLING_CHANCES);
+        this.addLeavesDrops(PVZBlocks.NUT_LEAVES_WITH_NUTS.get(), PVZBlocks.NUT_SAPLING.get(), PVZItems.NUT.get(), NORMAL_LEAVES_SAPLING_CHANCES);
+
 //
 //        // misc
 //        this.dropOther(BlockRegister.GOLD_TILE1.get(), Blocks.GOLD_BLOCK);
@@ -115,9 +121,24 @@ public class BlockLootGen extends BlockLoot {
         this.add(cropBlock, applyExplosionDecay(cropBlock, LootTable.lootTable().withPool(LootPool.lootPool().add(LootItem.lootTableItem(cropItem))).withPool(LootPool.lootPool().when(builder).add(LootItem.lootTableItem(cropItem).apply(ApplyBonusCount.addBonusBinomialDistributionCount(Enchantments.BLOCK_FORTUNE, 0.5714286F, 3))))));
     }
 
-//    protected static LootTable.Builder createLeavesDrops(Block p_218526_0_, Block p_218526_1_,
+    protected void addLeavesDrops(Block block, Block sapling, float... chance) {
+        this.add(block, createLeavesDrops(block, sapling, chance));
+    }
+
+    protected void addLeavesDrops(Block block, Block sapling, Item seed, float... chance) {
+        this.add(block, createLeavesDrops(block, sapling, chance).withPool(
+                LootPool.lootPool()
+                        .setRolls(ConstantValue.exactly(1.0F))
+                        .when(HAS_NO_SHEARS_OR_SILK_TOUCH)
+                        .add(applyExplosionCondition(block, LootItem.lootTableItem(seed))
+                                .when(BonusLevelTableCondition.bonusLevelFlatChance(Enchantments.BLOCK_FORTUNE, 0.6F, 0.7F, 0.8F, 0.9F, 1F))
+                        )
+        ));
+    }
+
+//    protected static LootTable.Builder addLeavesDrops(Block p_218526_0_, Block p_218526_1_,
 //                                                         Item drop, float... p_218526_2_) {
-//        return createLeavesDrops(p_218526_0_, p_218526_1_, p_218526_2_)
+//        return addLeavesDrops(p_218526_0_, p_218526_1_, p_218526_2_)
 //                .withPool(LootPool.lootPool().setRolls(ConstantRange.exactly(1)).when(HAS_NO_SHEARS_OR_SILK_TOUCH)
 //                        .add(applyExplosionCondition(p_218526_0_, ItemLootEntry.lootTableItem(drop))
 //                                .when(TableBonus.bonusLevelFlatChance(Enchantments.BLOCK_FORTUNE, 0.01F, 0.015F,

@@ -13,8 +13,11 @@ public class PVZModelLayers {
     /*
     Common Layers.
      */
+    public static final ModelLayerLocation CONE_INNER_ARMOR = registerInnerArmor("cone");
+    public static final ModelLayerLocation CONE_OUTER_ARMOR = registerOuterArmor("cone");
     public static final ModelLayerLocation BUCKET_INNER_ARMOR = registerInnerArmor("bucket");
     public static final ModelLayerLocation BUCKET_OUTER_ARMOR = registerOuterArmor("bucket");
+
 
     /*
     Block Entities.
@@ -48,7 +51,9 @@ public class PVZModelLayers {
     public static final ModelLayerLocation POTATO_MINE = register("potato_mine");
     public static final ModelLayerLocation SURROUND_DIRT = register("surround_dirt");
     public static final ModelLayerLocation SNOW_PEA = register("snow_pea");
+    public static final ModelLayerLocation REPEATER = register("repeater");
     public static final ModelLayerLocation CABBAGE_PULT = register("cabbage_pult");
+    public static final ModelLayerLocation ICEBERG_LETTUCE = register("iceberg_lettuce");
 
     /*
     Zombie Entities.

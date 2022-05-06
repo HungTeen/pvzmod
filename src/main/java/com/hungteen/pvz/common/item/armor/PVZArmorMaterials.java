@@ -2,7 +2,6 @@ package com.hungteen.pvz.common.item.armor;
 
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundEvents;
-import net.minecraft.util.LazyLoadedValue;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.item.ArmorMaterial;
 import net.minecraft.world.item.Items;
@@ -17,7 +16,9 @@ import java.util.function.Supplier;
  **/
 public enum PVZArmorMaterials implements ArmorMaterial {
 
-    BUCKET("bucket", 100, new int[]{3, 6, 8, 3}, 15, SoundEvents.ARMOR_EQUIP_IRON, 0F, 0.1F, () -> Ingredient.of(Items.IRON_INGOT), true),
+    CONE("cone", 30, new int[]{1, 2, 3, 1}, 15, SoundEvents.ARMOR_EQUIP_LEATHER, 0F, 0.05F, () -> Ingredient.of(Items.LEATHER), true),
+
+    BUCKET("bucket", 100, new int[]{2, 5, 6, 2}, 9, SoundEvents.ARMOR_EQUIP_IRON, 0F, 0.1F, () -> Ingredient.of(Items.IRON_INGOT), true),
 
     FOOTBALL("football", 50, new int[] {3, 6, 8 ,3}, 15, SoundEvents.ARMOR_EQUIP_IRON, 0.5F, 0.1F, () -> {
         return Ingredient.of(Items.IRON_INGOT);

@@ -6,6 +6,7 @@ import com.hungteen.pvz.api.types.IPlantType;
 import com.hungteen.pvz.api.types.base.IPAZType;
 import com.hungteen.pvz.common.entity.PVZEntities;
 import com.hungteen.pvz.common.impl.type.*;
+import com.hungteen.pvz.utils.enums.CDTypes;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -29,7 +30,7 @@ public class PVZPlants {
             .essence(EssenceTypes.APPEASE)
             .rank(RankTypes.WHITE)
             .cardType(CardTypes.SAPLING)
-            .cd(CDTypes.FAST)
+            .cd(CDTypes.VERY_FAST)
             .entity(() -> PVZEntities.PEA_SHOOTER.get())
             .skills(Arrays.asList(SkillTypes.PLANT_MORE_LIFE, SkillTypes.PEA_DAMAGE, SkillTypes.PEA_SPEED_UP));
 
@@ -38,7 +39,7 @@ public class PVZPlants {
             .essence(EssenceTypes.LIGHT)
             .rank(RankTypes.WHITE)
             .cardType(CardTypes.SAPLING)
-            .cd(CDTypes.LITTLE_SLOW)
+            .cd(CDTypes.FAST)
             .entity(() -> PVZEntities.SUN_FLOWER.get())
             .skills(Arrays.asList(SkillTypes.PLANT_MORE_LIFE));
 
@@ -65,8 +66,17 @@ public class PVZPlants {
             .essence(EssenceTypes.ICE)
             .rank(RankTypes.GOLD)
             .cardType(CardTypes.SAPLING)
-            .cd(CDTypes.NORMAL)
+            .cd(CDTypes.VERY_FAST)
             .entity(() -> PVZEntities.SNOW_PEA.get())
+            .skills(Arrays.asList(SkillTypes.PLANT_MORE_LIFE, SkillTypes.PEA_DAMAGE, SkillTypes.PEA_SPEED_UP));
+
+    public static final IPlantType REPEATER = new PVZPlantType("repeater")
+            .sunCost(225).xp(20)
+            .essence(EssenceTypes.APPEASE)
+            .rank(RankTypes.BLUE)
+            .cardType(CardTypes.SAPLING)
+            .cd(CDTypes.VERY_FAST)
+            .entity(() -> PVZEntities.REPEATER.get())
             .skills(Arrays.asList(SkillTypes.PLANT_MORE_LIFE, SkillTypes.PEA_DAMAGE, SkillTypes.PEA_SPEED_UP));
 
     public static final IPlantType CABBAGE_PULT = new PVZPlantType("cabbage_pult")
@@ -74,8 +84,17 @@ public class PVZPlants {
             .essence(EssenceTypes.ARMA)
             .rank(RankTypes.WHITE)
             .cardType(CardTypes.SAPLING)
-            .cd(CDTypes.NORMAL)
+            .cd(CDTypes.VERY_FAST)
             .entity(() -> PVZEntities.CABBAGE_PULT.get())
+            .skills(Arrays.asList(SkillTypes.PLANT_MORE_LIFE));
+
+    public static final IPlantType ICEBERG_LETTUCE = new PVZPlantType("iceberg_lettuce")
+            .sunCost(0).xp(10)
+            .essence(EssenceTypes.ICE)
+            .rank(RankTypes.WHITE)
+            .cardType(CardTypes.SAPLING)
+            .cd(CDTypes.LITTLE_FAST)
+            .entity(() -> PVZEntities.ICEBERG_LETTUCE.get())
             .skills(Arrays.asList(SkillTypes.PLANT_MORE_LIFE));
 
 //    public static final IPlantType CHERRY_BOMB = new PVZPlants("cherry_bomb", new PlantFeatures()

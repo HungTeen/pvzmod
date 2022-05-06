@@ -18,6 +18,11 @@ public class FlagZombie extends NormalZombie{
     }
 
     @Override
+    protected float getLife() {
+        return 20;
+    }
+
+    @Override
     public IZombieType getZombieType() {
         return PVZZombies.FLAG_ZOMBIE;
     }

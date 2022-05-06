@@ -50,7 +50,9 @@ public class SoundManager {
     public static void playArmorHurtSound(LivingEntity entity, ItemStack stack){
     	if(stack.is(PVZItems.BUCKET_HEAD.get())) {
     		EntityUtil.playSound(entity, PVZSounds.METAL_HIT.get());
-    	}
+    	} else if(stack.is(PVZItems.CONE_HEAD.get())){
+            EntityUtil.playSound(entity, PVZSounds.PLASTIC_HIT.get());
+        }
     }
 
     /**

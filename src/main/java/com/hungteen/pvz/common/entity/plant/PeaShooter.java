@@ -37,7 +37,7 @@ public class PeaShooter extends ShooterPlant {
     @Override
     public void shootBullet(@Nonnull Entity target) {
         if(this.shootCount > 5){
-            final int cnt = MathUtil.getRandomMinMax(this.random, 1, 2);
+            final int cnt = MathUtil.getRandomMinMax(this.random, 1, 3);
             for(int i = 0; i < cnt; ++ i) {
                 final float offset = MathUtil.getRandomFloat(getRandom()) / 3;
                 final float offsetH = MathUtil.getRandomFloat(getRandom()) / 3;

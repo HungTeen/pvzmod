@@ -2,8 +2,10 @@
   "replace": false,
   "values": [
     "pvz:cabbage_pult",
+    "pvz:iceberg_lettuce",
     "pvz:pea_shooter",
     "pvz:potato_mine",
+    "pvz:repeater",
     "pvz:snow_pea",
     "pvz:sun_flower",
     "pvz:wall_nut"

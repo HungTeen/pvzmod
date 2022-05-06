@@ -28,12 +28,13 @@ public class NormalZombie extends PVZZombie {
 	}
 
 	@Override
+	protected float getLife() {
+		return 16;
+	}
+
+	@Override
 	public IZombieType getZombieType() {
 		return PVZZombies.NORMAL_ZOMBIE;
 	}
 
-	@Override
-	protected float getLife() {
-		return 20;
-	}
 }

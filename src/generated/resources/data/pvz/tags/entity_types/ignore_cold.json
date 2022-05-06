@@ -1,7 +1,6 @@
 {
   "replace": false,
   "values": [
-    "minecraft:snow_golem",
-    "pvz:snow_pea"
+    "#pvz:ignore_frozen"
   ]
 }

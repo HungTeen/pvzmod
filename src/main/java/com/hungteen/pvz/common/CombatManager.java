@@ -79,9 +79,9 @@ public class CombatManager {
                 if (target.hasEffect(PVZEffects.COLD_EFFECT.get())) {
                     target.removeEffect(PVZEffects.COLD_EFFECT.get());
                 }
-//                if(target.hasEffect(PVZEffects.FROZEN_EFFECT.get())){
-//                    target.removeEffect(PVZEffects.FROZEN_EFFECT.get());
-//                }
+                if(target.hasEffect(PVZEffects.FROZEN_EFFECT.get())){
+                    target.removeEffect(PVZEffects.FROZEN_EFFECT.get());
+                }
             }
             source.getEffects().forEach(effect -> EntityUtil.addPotionEffect(target, effect));
         }

@@ -11,6 +11,7 @@ import com.hungteen.pvz.common.impl.type.PAZTypes;
 import com.hungteen.pvz.common.impl.type.plant.PlantType;
 import com.hungteen.pvz.common.impl.type.zombie.ZombieType;
 import com.hungteen.pvz.common.item.armor.BucketArmorItem;
+import com.hungteen.pvz.common.item.armor.ConeArmorItem;
 import com.hungteen.pvz.common.item.base.PVZFoodItem;
 import com.hungteen.pvz.common.item.base.PVZMiscItem;
 import com.hungteen.pvz.common.item.misc.EssenceItem;
@@ -174,7 +175,7 @@ public class PVZItems {
 //    public static final RegistryObject<Item> TIME_KEY_TO_DEEP = ITEMS.register("time_key_to_deep", TimeKeyItem::new);
 
     /* armor */
-//    public static final RegistryObject<Item> CONE_HEAD = ITEMS.register("cone_head", () -> new ConeArmorItem(ArmorMaterial.LEATHER, EquipmentSlotType.HEAD));
+    public static final RegistryObject<Item> CONE_HEAD = ITEMS.register("cone_head", ConeArmorItem::new);
     public static final RegistryObject<Item> BUCKET_HEAD = ITEMS.register("bucket_head", BucketArmorItem::new);
 //    public static final RegistryObject<Item> FOOTBALL_HELMET = ITEMS.register("football_helmet", () -> new FootballArmorItem(PVZArmorMaterial.FOOTBALL, EquipmentSlotType.HEAD));
 //    public static final RegistryObject<Item> FOOTBALL_CHESTPLATE = ITEMS.register("football_chestplate", () -> new FootballArmorItem(PVZArmorMaterial.FOOTBALL, EquipmentSlotType.CHEST));

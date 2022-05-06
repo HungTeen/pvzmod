@@ -67,8 +67,10 @@ public class EntityTagGen extends EntityTypeTagsProvider {
         this.tag(PVZEntityTags.IGNORE_ATTRACTS)
                 .add(EntityType.WITHER, EntityType.ENDER_DRAGON);
 
-        this.tag(PVZEntityTags.IGNORE_COLD)
-                .add(EntityType.SNOW_GOLEM, PVZEntities.SNOW_PEA.get());
+        this.tag(PVZEntityTags.IGNORE_FROZEN)
+                .add(EntityType.SNOW_GOLEM, PVZEntities.SNOW_PEA.get(), PVZEntities.ICEBERG_LETTUCE.get());
+
+        this.tag(PVZEntityTags.IGNORE_COLD).addTag(PVZEntityTags.IGNORE_FROZEN);
 
         this.tag(PVZEntityTags.HAS_INVULNERABLE_TIME)
                 .add(EntityType.WITHER, EntityType.ENDER_DRAGON);

@@ -95,7 +95,7 @@ public class ItemTagGen extends ItemTagsProvider {
 
         this.tag(PVZItemTags.REACH_ITEMS).add(PVZItems.ALMANAC.get());
         this.tag(PVZItemTags.SHIELD_ITEMS).add(Items.SHIELD);
-        this.tag(PVZItemTags.ARMOR_ITEMS).add(PVZItems.BUCKET_HEAD.get());
+        this.tag(PVZItemTags.ARMOR_ITEMS).add(PVZItems.CONE_HEAD.get(), PVZItems.BUCKET_HEAD.get());
         this.tag(PVZItemTags.PEA_GUN_BULLETS).add(PVZItems.PEA.get()).add(PVZItems.SNOW_PEA.get()).add(PVZItems.FLAME_PEA.get());
 
     }

@@ -134,6 +134,10 @@ public class EntityUtil {
             if(! entity.getType().is(PVZEntityTags.IGNORE_COLD)){
                 ((LivingEntity) entity).addEffect(effect);
             }
+        } else if(effect.getEffect().equals(PVZEffects.FROZEN_EFFECT.get())){
+            if(! entity.getType().is(PVZEntityTags.IGNORE_FROZEN)){
+                ((LivingEntity) entity).addEffect(effect);
+            }
         } else{
             ((LivingEntity) entity).addEffect(effect);
         }

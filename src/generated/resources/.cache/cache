@@ -119,6 +119,7 @@ b87f99b50a097e5464ca23ae2373d38edbf7e9bf assets/pvz/models/item/bucket_head.json
 693cf6081c2cc0491ce5691a5847d04b0232f78d assets/pvz/models/item/cabbage_seeds.json
 54ef3134745e270a72ae7fd9e2150c84d8426cda assets/pvz/models/item/chorus_fruit_card.json
 15131096905495b5558984fd7ee9b62681abc283 assets/pvz/models/item/common_sprout.json
+de9492c004a1dfe0f76143a3dc520424aff11e5e assets/pvz/models/item/cone_head.json
 98167609bf3898587f7565736a6fc24a7966cacd assets/pvz/models/item/cone_head_zombie_spawn_egg.json
 56ee005c22cfe252c46835d9e673c55046e60d42 assets/pvz/models/item/cooked_brain.json
 c0bedf87852a38b27ed1aaa8380f3e4a7264a374 assets/pvz/models/item/copper_coin.json
@@ -141,6 +142,8 @@ d59731096249a443a6f4172b1d382620fa0bcd64 assets/pvz/models/item/gold_coin.json
 ca456899bf1d9fb370f6c09fb17df65eade1e7f0 assets/pvz/models/item/grass_carp_bucket.json
 d20f63768e25b271d1dc9398860708910659f386 assets/pvz/models/item/ice_essence.json
 7d1fe5bc3480001826ef58492531e0a1808fc441 assets/pvz/models/item/ice_ore.json
+03941e74d358528b376cf331322d0e7378dac54d assets/pvz/models/item/iceberg_lettuce_card.json
+3e81d7567f6d16dfc0845dd057bd5a451ff1baab assets/pvz/models/item/iceberg_lettuce_enjoy_card.json
 98505b812c4a1af74ced72f805010951098fb6d0 assets/pvz/models/item/jewel.json
 98167609bf3898587f7565736a6fc24a7966cacd assets/pvz/models/item/leader_zombie_spawn_egg.json
 5a827ae80b9631332f32f2a881180cd431902d4b assets/pvz/models/item/light_essence.json
@@ -176,7 +179,7 @@ c4b0bf2da837f6e0283c0ad725ee82e481d31819 assets/pvz/models/item/origin_pickaxe.j
 59daa66203fe2f0098b2d35be61243be9b237200 assets/pvz/models/item/origin_shovel.json
 eb173b7230187a63b9772a1ffa637f149479a0f4 assets/pvz/models/item/origin_sword.json
 8620a99cbf460706021151de853f1e93eb8cc883 assets/pvz/models/item/pea.json
-77e8d9ddfd7bc2282c83ec597d85e332dfa4a7be assets/pvz/models/item/pea_shooter_card.json
+83a7ad87d5866fc3fefc915a41d116cc1d5f7437 assets/pvz/models/item/pea_shooter_card.json
 8dc15787c91dd7e99bc83b6f9c7d5b34897c15ae assets/pvz/models/item/pea_shooter_enjoy_card.json
 f6cf2e1a86d8c9763d22448151cda7bd9f804e8f assets/pvz/models/item/pepper.json
 1d29c630bc799ca19f836aa6695215dc62810382 assets/pvz/models/item/potato_mine_card.json
@@ -293,10 +296,11 @@ c7cfc29be68536d789b870cbfaaeec78a9c5f97a data/pvz/loot_tables/entities/grass_car
 129787785f6f8003d3727713324ee588e33111a2 data/pvz/tags/blocks/ores/essence.json
 46b8e0e749ec277d9ca423dc559bb02affcfa655 data/pvz/tags/entity_types/has_invulnerable_time.json
 46b8e0e749ec277d9ca423dc559bb02affcfa655 data/pvz/tags/entity_types/ignore_attracts.json
-267d6fc3778961a28b74eae2d5893677223c0e75 data/pvz/tags/entity_types/ignore_cold.json
-416bcef373ada03466adb0b959a2ca1027603fd9 data/pvz/tags/entity_types/pvz_plants.json
+2e4cc2b2907045fced61fc16b6345e762f7f10ae data/pvz/tags/entity_types/ignore_cold.json
+c9553d14f0bc7177c51070683949651c9224a0ed data/pvz/tags/entity_types/ignore_frozen.json
+22cdc19db97336381be0b10c4de6770d56186acf data/pvz/tags/entity_types/pvz_plants.json
 eaf7d0ccf51543b8ef3b3515117ae620f0a3c9a7 data/pvz/tags/entity_types/pvz_zombies.json
-4d9f065837dcdbae16f424ec8eb4253a37034562 data/pvz/tags/items/armor_items.json
+44f2c72b6e9551cf71251f59a9f04483f5e0d1b2 data/pvz/tags/items/armor_items.json
 f84467e912358eda8f5bcd9ede86d6a7479bb6fb data/pvz/tags/items/card/all_card.json
 66fbb59e9b3f3d09dc82518badcaaa826c4a3279 data/pvz/tags/items/card/black_materials.json
 0390f9d1cef0000d1a81d07a3f22de838cc4855d data/pvz/tags/items/card/blue_materials.json
@@ -304,8 +308,8 @@ fee4ad52382fea6df208c56fe4d15eb3867fbd16 data/pvz/tags/items/card/chorus_fruit_c
 ccf55ee576147856b91baecda4eefc792c7a6119 data/pvz/tags/items/card/gold_materials.json
 0171b8b6f8a62669bc678e248ebad7dd834b8f78 data/pvz/tags/items/card/nether_wart_cards.json
 7bac6647929b6a457296076df996c33d14207016 data/pvz/tags/items/card/plant_card.json
-cce87f200c7439c0a6d4a16e30c172c9a8320348 data/pvz/tags/items/card/plant_enjoy_card.json
-bc73d28144d4506a5da8862335ef8e6d8cab20d7 data/pvz/tags/items/card/plant_summon_card.json
+bbbf875d8df5bf3f7ec1c37c484d3d8099bdfe84 data/pvz/tags/items/card/plant_enjoy_card.json
+86ece6027b0b4ce654a1daa71486906f1dfb4208 data/pvz/tags/items/card/plant_summon_card.json
 bcfa9e4da2baef723a564c53cb07a3a7d8f79f8b data/pvz/tags/items/card/sapling_cards.json
 e25eb25174ecc6b629d9364ec37ea1c39a553e00 data/pvz/tags/items/card/template_card.json
 55c9bbf6eec4c940fafb8cea663dccc38304006d data/pvz/tags/items/card/upgrade_cards.json
