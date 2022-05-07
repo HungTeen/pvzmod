@@ -2,6 +2,7 @@
   "replace": false,
   "values": [
     "pvz:amethyst_ore",
-    "pvz:amethyst_block"
+    "pvz:amethyst_block",
+    "pvz:essence_altar"
   ]
 }

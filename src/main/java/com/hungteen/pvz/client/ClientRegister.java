@@ -8,6 +8,7 @@ import com.hungteen.pvz.client.model.entity.component.SurroundDirtModel;
 import com.hungteen.pvz.client.model.entity.creature.GrassCarpModel;
 import com.hungteen.pvz.client.model.entity.creature.SproutModel;
 import com.hungteen.pvz.client.model.entity.misc.DropEntityModel;
+import com.hungteen.pvz.client.model.entity.misc.FrozenModel;
 import com.hungteen.pvz.client.model.entity.plant.*;
 import com.hungteen.pvz.client.model.entity.zombie.HumanoidZombieModel;
 import com.hungteen.pvz.client.model.item.BucketArmorModel;
@@ -86,7 +87,9 @@ public class ClientRegister {
         event.registerEntityRenderer(PVZEntities.POTATO_MINE.get(), PotatoMineRender::new);
         event.registerEntityRenderer(PVZEntities.SNOW_PEA.get(), SnowPeaRender::new);
         event.registerEntityRenderer(PVZEntities.REPEATER.get(), RepeaterRender::new);
+        event.registerEntityRenderer(PVZEntities.LILY_PAD.get(), LilyPadRender::new);
         event.registerEntityRenderer(PVZEntities.CABBAGE_PULT.get(), CabbagePultRender::new);
+        event.registerEntityRenderer(PVZEntities.FLOWER_POT.get(), FlowerPotRender::new);
         event.registerEntityRenderer(PVZEntities.ICEBERG_LETTUCE.get(), IcebergLettuceRender::new);
 
         /* zombie entity */
@@ -143,6 +146,8 @@ public class ClientRegister {
         event.registerLayerDefinition(PVZModelLayers.NORMAL_ZOMBIE_INNER_ARMOR, () -> INNER_ARMOR);
         event.registerLayerDefinition(PVZModelLayers.NORMAL_ZOMBIE_OUTER_ARMOR, () -> OUTER_ARMOR);
 
+        /* misc */
+        event.registerLayerDefinition(PVZModelLayers.FROZEN, FrozenModel::createBodyLayer);
     }
 
     @SubscribeEvent
@@ -183,11 +188,9 @@ public class ClientRegister {
         ItemBlockRenderTypes.setRenderLayer(PVZBlocks.CORN.get(), RenderType.cutout());
         ItemBlockRenderTypes.setRenderLayer(PVZBlocks.NUT_SAPLING.get(), RenderType.cutout());
         ItemBlockRenderTypes.setRenderLayer(PVZBlocks.NUT_LEAVES.get(), RenderType.cutout());
-//        RenderTypeLookup.setRenderLayer(BlockRegister.NUT_SAPLING.get(), RenderType.cutout());
-//        RenderTypeLookup.setRenderLayer(BlockRegister.TOXIC_SHROOM.get(), RenderType.cutout());
 //        RenderTypeLookup.setRenderLayer(BlockRegister.LANTERN.get(), RenderType.translucent());
-//        RenderTypeLookup.setRenderLayer(BlockRegister.FLOWER_POT.get(), RenderType.cutout());
-//        RenderTypeLookup.setRenderLayer(BlockRegister.LILY_PAD.get(), RenderType.cutout());
+        ItemBlockRenderTypes.setRenderLayer(PVZBlocks.FLOWER_POT.get(), RenderType.cutout());
+        ItemBlockRenderTypes.setRenderLayer(PVZBlocks.LILY_PAD.get(), RenderType.cutout());
 //        RenderTypeLookup.setRenderLayer(BlockRegister.BUTTER_BLOCK.get(), RenderType.translucent());
 //        RenderTypeLookup.setRenderLayer(BlockRegister.ESSENCE_ALTAR.get(), RenderType.translucent());
 //        RenderTypeLookup.setRenderLayer(BlockRegister.STEEL_LADDER.get(), RenderType.cutout());

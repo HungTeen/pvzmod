@@ -70,9 +70,15 @@ public abstract class ShooterPlant extends PVZPlant implements IRangeAttackEntit
     public void normalPlantTick() {
         super.normalPlantTick();
         //when having target then attack !
-        if(! this.level.isClientSide && this.getTarget() != null) {
-            if(this.shootCount > 0 || this.powerShootCount > 0){
-                this.shootBullet(this.getTarget());
+        if(! this.level.isClientSide){
+            //decrease plant food bonus shoot.
+            if(! EntityUtil.inEnergetic(this) && this.shootCount > 5){
+                -- this.shootCount;
+            }
+            if(this.getTarget() != null) {
+                if (this.shootCount > 0 || this.powerShootCount > 0) {
+                    this.shootBullet(this.getTarget());
+                }
             }
         }
     }

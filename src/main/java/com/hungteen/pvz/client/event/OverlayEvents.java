@@ -20,7 +20,7 @@ public class OverlayEvents {
     @SubscribeEvent
     public static void onPostRenderOverlay(RenderGameOverlayEvent.Post ev) {
         if(ev.getType() == RenderGameOverlayEvent.ElementType.ALL){
-            if(! ClientProxy.MC.options.hideGui && ClientProxy.MC.screen == null && PVZInputEvents.ShowOverlay && ClientProxy.MC.player != null && ! ClientProxy.MC.player.isSpectator()){
+            if(! ClientProxy.MC.options.hideGui && ClientProxy.MC.screen == null && InputEvents.ShowOverlay && ClientProxy.MC.player != null && ! ClientProxy.MC.player.isSpectator()){
                 /* render resources on left upper corner */
                 if(! ClientProxy.MC.options.renderDebug){
                     PVZOverlayHandler.renderResources(ev.getMatrixStack(), ev.getWindow().getGuiScaledWidth(), ev.getWindow().getGuiScaledHeight());

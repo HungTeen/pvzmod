@@ -2,14 +2,16 @@ package com.hungteen.pvz.common.block;
 
 import com.hungteen.pvz.PVZMod;
 import com.hungteen.pvz.client.ClientRegister;
-import com.hungteen.pvz.common.block.plant.PVZSaplingBlock;
-import com.hungteen.pvz.common.block.plant.crops.CabbageBlock;
-import com.hungteen.pvz.common.block.plant.crops.CornBlock;
-import com.hungteen.pvz.common.block.plant.crops.PeaBlock;
 import com.hungteen.pvz.common.block.cubes.EssenceOreBlock;
 import com.hungteen.pvz.common.block.cubes.OriginBlock;
 import com.hungteen.pvz.common.block.entity.EssenceAltarBlock;
 import com.hungteen.pvz.common.block.misc.*;
+import com.hungteen.pvz.common.block.plant.FlowerPotBlock;
+import com.hungteen.pvz.common.block.plant.LilyPadBlock;
+import com.hungteen.pvz.common.block.plant.PVZSaplingBlock;
+import com.hungteen.pvz.common.block.plant.crops.CabbageBlock;
+import com.hungteen.pvz.common.block.plant.crops.CornBlock;
+import com.hungteen.pvz.common.block.plant.crops.PeaBlock;
 import com.hungteen.pvz.common.impl.type.EssenceTypes;
 import com.hungteen.pvz.common.item.PVZItemTabs;
 import com.hungteen.pvz.common.misc.PVZWoodType;
@@ -76,7 +78,8 @@ public class PVZBlocks {
     public static final RegistryObject<CropBlock> CORN = BLOCKS.register("corn", CornBlock::new);
     public static final RegistryObject<Block> NUT_SAPLING = BLOCKS.register("nut_sapling", () -> new PVZSaplingBlock(new NutTreeGrower()));
 //    public static final RegistryObject<Block> CHOMPER = BLOCKS.register("chomper", ChomperBlock::new);
-//    public static final RegistryObject<LilyPadBlock> LILY_PAD = BLOCKS.register("lily_pad", LilyPadBlock::new);
+    public static final RegistryObject<LilyPadBlock> LILY_PAD = BLOCKS.register("lily_pad", LilyPadBlock::new);
+    public static final RegistryObject<FlowerPotBlock> FLOWER_POT = BLOCKS.register("flower_pot", FlowerPotBlock::new);
 
     /* Decorations */
     public static final RegistryObject<Block> NUT_LEAVES = BLOCKS.register("nut_leaves", () -> new PVZLeavesBlock(Block.Properties.copy(Blocks.OAK_LEAVES)));
@@ -99,7 +102,6 @@ public class PVZBlocks {
 
 //    //special
 //    public static final RegistryObject<Block> LANTERN = BLOCKS.register("lantern", LanternBlock::new);
-//    public static final RegistryObject<FlowerPotBlock> FLOWER_POT = BLOCKS.register("flower_pot", FlowerPotBlock::new);
 //    public static final RegistryObject<GoldTileBlock> GOLD_TILE1 = BLOCKS.register("gold_tile1", () -> new GoldTileBlock(1));
 //    public static final RegistryObject<GoldTileBlock> GOLD_TILE2 = BLOCKS.register("gold_tile2", () -> new GoldTileBlock(2));
 //    public static final RegistryObject<GoldTileBlock> GOLD_TILE3 = BLOCKS.register("gold_tile3", () -> new GoldTileBlock(3));
@@ -124,31 +126,27 @@ public class PVZBlocks {
         IForgeRegistry<Item> items = ev.getRegistry();
 
         Arrays.asList(
-                ORIGIN_ORE, APPEASE_ORE, LIGHT_ORE, EXPLOSION_ORE, DEFENCE_ORE, ICE_ORE, ENFORCE_ORE,
-                ASSIST_ORE, MAGIC_ORE, FLAME_ORE, SPEAR_ORE, ARMA_ORE, //TOXIC_ORE, ELECTRIC_ORE, SHADOW_ORE,
-                AMETHYST_ORE, AMETHYST_BLOCK, ORIGIN_BLOCK,// ,BUTTER_BLOCK, FROZEN_MELON,
+                //ores.
+                ORIGIN_ORE, APPEASE_ORE, LIGHT_ORE, EXPLOSION_ORE, DEFENCE_ORE, ICE_ORE, ENFORCE_ORE, ASSIST_ORE, MAGIC_ORE, FLAME_ORE, SPEAR_ORE, ARMA_ORE, //TOXIC_ORE, ELECTRIC_ORE, SHADOW_ORE,
+                AMETHYST_ORE,
+                //nuts.
+                NUT_LEAVES, NUT_LEAVES_WITH_NUTS, NUT_LOG, STRIPPED_NUT_LOG, NUT_WOOD, STRIPPED_NUT_WOOD, NUT_PLANKS, NUT_DOOR, NUT_TRAPDOOR, NUT_FENCE, NUT_FENCE_GATE, NUT_STAIRS, NUT_BUTTON, NUT_SLAB, NUT_PRESSURE_PLATE, NUT_SAPLING,
+                //cube.
+                AMETHYST_BLOCK, ORIGIN_BLOCK,// ,BUTTER_BLOCK, FROZEN_MELON,
+                //special.
                 ESSENCE_ALTAR,
-                NUT_LEAVES, NUT_LEAVES_WITH_NUTS, NUT_LOG, STRIPPED_NUT_LOG, NUT_WOOD, STRIPPED_NUT_WOOD, NUT_PLANKS, NUT_DOOR, NUT_TRAPDOOR, NUT_FENCE, NUT_FENCE_GATE, NUT_STAIRS, NUT_BUTTON, NUT_SLAB, NUT_PRESSURE_PLATE, NUT_SAPLING//, CHOMPER,
-//                LANTERN, FLOWER_POT, GOLD_TILE1, GOLD_TILE2, GOLD_TILE3, SILVER_SUNFLOWER_TROPHY, GOLD_SUNFLOWER_TROPHY, DIAMOND_SUNFLOWER_TROPHY
+                //misc
+                FLOWER_POT
+                //, CHOMPER,//,STEEL_LADDER, SUN_CONVERTER, FRAGMENT_SPLICE,  CARD_FUSION_TABLE
+                // LANTERN, , GOLD_TILE1, GOLD_TILE2, GOLD_TILE3, SILVER_SUNFLOWER_TROPHY, GOLD_SUNFLOWER_TROPHY, DIAMOND_SUNFLOWER_TROPHY
         ).forEach(block -> {
 //            register(items, block.get().getRegistryName(), () -> new BlockItem(block.get(), new Item.Properties().tab(PVZItemTabs.PVZ_MISC)));
             items.register(new BlockItem(block.get(), new Item.Properties().tab(PVZItemTabs.PVZ_BLOCK)).setRegistryName(block.get().getRegistryName()));
         });
 
-
-//        Arrays.asList(
-//                STEEL_LADDER, SUN_CONVERTER, FRAGMENT_SPLICE, ESSENCE_ALTAR, CARD_FUSION_TABLE
-//        ).forEach(block -> {
-//            items.register(new BlockItem(block.get(), new Item.Properties().tab(PVZItemTabs.PVZ_USEFUL)).setRegistryName(block.get().getRegistryName()));
-//        });
-
-//        items.register(new LilyPadItem().setRegistryName(LILY_PAD.get().getRegistryName()));
 //        items.register(new SlotMachineItem().setRegistryName(SLOT_MACHINE.get().getRegistryName()));
 
     }
 
-//    private static void register(IForgeRegistry<Item> items, ResourceLocation res, Supplier<Item> sup){
-//        items.register(sup.get().setRegistryName(res));
-//    }
 
 }

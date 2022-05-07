@@ -51,7 +51,7 @@ public class PVZItems {
     public static final DeferredRegister<Item> ITEMS = DeferredRegister.create(ForgeRegistries.ITEMS, PVZMod.MOD_ID);
 
     /*
-     * Items in Misc Tabs.
+    PVZ Items in Misc Tabs.
      */
 
     /* seeds & crops */
@@ -67,6 +67,7 @@ public class PVZItems {
     public static final RegistryObject<Item> SMALL_MEAT = ITEMS.register("small_meat", PVZMiscItem::new);
     public static final RegistryObject<Item> PEPPER = ITEMS.register("pepper", PVZMiscItem::new);
     public static final RegistryObject<Item> FROZEN_MELON_SLICE = ITEMS.register("frozen_melon_slice", PVZMiscItem::new);
+//    public static final RegistryObject<Item> TIME_SOURCE = ITEMS.register("time_source", PVZMiscItem::new);
 
     /* essences */
     public static final RegistryObject<Item> ORIGIN_ESSENCE = ITEMS.register("origin_essence", () -> new EssenceItem(EssenceTypes.ORIGIN));
@@ -97,6 +98,26 @@ public class PVZItems {
     public static final RegistryObject<Item> WISDOM_CARD = ITEMS.register("wisdom_card", () -> new TemplateCardItem(CardTypes.WISDOM));
     public static final RegistryObject<Item> MEGA_CARD = ITEMS.register("mega_card", PVZMiscItem::new);
 
+    /* bucket */
+    public static final RegistryObject<Item> GRASS_CARP_BUCKET = ITEMS.register("grass_carp_bucket", () -> {
+        return new MobBucketItem(() -> PVZEntities.GRASS_CARP.get(), () -> Fluids.WATER, () -> SoundEvents.BUCKET_EMPTY_AXOLOTL, new Item.Properties().stacksTo(1).tab(PVZItemTabs.PVZ_MISC));
+    });
+
+    /* banner pattern */
+    public static final RegistryObject<BannerPatternItem> BRAIN_BANNER_PATTERN = ITEMS.register("brain_banner_pattern", () -> new BannerPatternItem(PVZBannerPatterns.BRAIN, (new Item.Properties()).stacksTo(1).tab(PVZItemTabs.PVZ_MISC)));
+
+    /* music disc */
+    public static final RegistryObject<Item> ZOMBIE_ON_YOUR_LAWN = ITEMS.register("zombie_on_your_lawn", () -> {return
+            new RecordItem(0, () -> {
+                return PVZSounds.ZOMBIE_ON_YOUR_LAWN.get();
+            }, new Item.Properties().stacksTo(1).tab(PVZItemTabs.PVZ_MISC).rarity(Rarity.RARE));
+    });
+    public static final RegistryObject<Item> ZEN_GARDEN = ITEMS.register("zen_garden", () -> {return
+            new RecordItem(0, () -> {
+                return PVZSounds.ZEN_GARDEN.get();
+            }, new Item.Properties().stacksTo(1).tab(PVZItemTabs.PVZ_MISC).rarity(Rarity.RARE));
+    });
+
     /* spawn eggs */
 //    public static final RegistryObject<DropItemEgg> SUN = registerSpawnEgg("sun", PVZEntities.SUN, Colors.YELLOW, Colors.WHITE);
     public static final RegistryObject<DropItemEgg> COPPER_COIN = ITEMS.register("copper_coin", () -> new DropItemEgg(() -> PVZEntities.COPPER_COIN.get()));
@@ -110,36 +131,17 @@ public class PVZItems {
 //    public static final RegistryObject<PVZSpawnEggItem> PANNEY_SPAWN_EGG = registerSpawnEgg("panney", EntityRegister.PANNEY, Colors.BLUE, Colors.RED);
 //    public static final RegistryObject<PVZSpawnEggItem> SUN_DAVE_SPAWN_EGG = registerSpawnEgg("sun_dave", EntityRegister.SUN_DAVE, Colors.BROWN, Colors.SILVER);
 
+    /*
+    PVZ Block Item Tabs.
+     */
+
     /* decoration */
+    public static final RegistryObject<Item> LILY_PAD = ITEMS.register("lily_pad", () -> new WaterLilyBlockItem(PVZBlocks.LILY_PAD.get(), new Item.Properties().stacksTo(16).tab(PVZItemTabs.PVZ_BLOCK)));
     //TODO Custom Sign, fix Edit bug.
     public static final RegistryObject<Item> NUT_SIGN = ITEMS.register("nut_sign", () -> new SignItem((new Item.Properties()).stacksTo(16).tab(PVZItemTabs.PVZ_BLOCK), PVZBlocks.NUT_SIGN.get(), PVZBlocks.NUT_WALL_SIGN.get()));
 
-    /* misc */
-//    public static final RegistryObject<Item> TIME_SOURCE = ITEMS.register("time_source", PVZMiscItem::new);
-    public static final RegistryObject<BannerPatternItem> BRAIN_BANNER_PATTERN = ITEMS.register("brain_banner_pattern", () -> new BannerPatternItem(PVZBannerPatterns.BRAIN, (new Item.Properties()).stacksTo(1).tab(CreativeModeTab.TAB_MISC)));
-
     /*
-     * Items in Food Tab.
-     */
-
-    public static final RegistryObject<Item> FAKE_BRAIN = ITEMS.register("fake_brain", () -> new PVZFoodItem(PVZFoods.FAKE_BRAIN));
-    public static final RegistryObject<Item> COOKED_BRAIN = ITEMS.register("cooked_brain", () -> new PVZFoodItem(PVZFoods.COOKED_BRAIN));
-    public static final RegistryObject<Item> CABBAGE = ITEMS.register("cabbage", () -> new PVZFoodItem(PVZFoods.CABBAGE));
-    public static final RegistryObject<Item> CORN = ITEMS.register("corn", () -> new PVZFoodItem(PVZFoods.CORN));
-//    public static final RegistryObject<Item> REAL_BRAIN = ITEMS.register("real_brain", () -> new PVZFoodItem(PVZFoods.REAL_BRAIN));
-//    public static final RegistryObject<Item> CANDY = ITEMS.register("candy", ()->new PVZFoodItem(PVZFoodItem.CANDY));
-//    public static final RegistryObject<Item> CHOCOLATE = ITEMS.register("chocolate", ()->new PVZFoodItem(PVZFoodItem.CHOCOLATE));
-//    public static final RegistryObject<Item> PEA_SOUP = ITEMS.register("pea_soup", ()->new SoupItem(new Item.Properties().tab(ItemGroup.TAB_FOOD).food(PVZFoodItem.PEA_SOUP).stacksTo(1)));
-//    public static final RegistryObject<Item> POP_CORN = ITEMS.register("pop_corn", ()->new PVZFoodItem(PVZFoodItem.POP_CORN));
-//    public static final RegistryObject<Item> TACOS = ITEMS.register("tacos", ()->new PVZFoodItem(PVZFoodItem.TACOS));
-
-    /*
-     * Items in Transport Tab.
-     */
-//    public static final RegistryObject<Item> NUT_BOAT = ITEMS.register("nut_boat", () -> new BoatItem(new Item.Properties()).stacksTo(16).tab(PVZItemTabs.PVZ_BLOCK), PVZBlocks.NUT_SIGN.get(), PVZBlocks.NUT_WALL_SIGN.get()));
-
-    /*
-     * Items in Tools Tab.
+    PVZ Useful Tab.
      */
 
     /* tools */
@@ -186,31 +188,33 @@ public class PVZItems {
 //    public static final RegistryObject<Item> GIGA_LEGGINGS = ITEMS.register("giga_leggings", () -> new GigaArmorItem(PVZArmorMaterial.GIGA, EquipmentSlotType.LEGS));
 //    public static final RegistryObject<Item> GIGA_BOOTS = ITEMS.register("giga_boots", () -> new GigaArmorItem(PVZArmorMaterial.GIGA, EquipmentSlotType.FEET));
 
-    /* music disc */
-    public static final RegistryObject<Item> ZOMBIE_ON_YOUR_LAWN = ITEMS.register("zombie_on_your_lawn", () -> {return
-            new RecordItem(0, () -> {
-                return PVZSounds.ZOMBIE_ON_YOUR_LAWN.get();
-            }, new Item.Properties().stacksTo(1).tab(PVZItemTabs.PVZ_USEFUL).rarity(Rarity.RARE));
-    });
-
-    public static final RegistryObject<Item> ZEN_GARDEN = ITEMS.register("zen_garden", () -> {return
-            new RecordItem(0, () -> {
-                return PVZSounds.ZEN_GARDEN.get();
-            }, new Item.Properties().stacksTo(1).tab(PVZItemTabs.PVZ_USEFUL).rarity(Rarity.RARE));
-    });
-
     /*
-    Challenge Tab.
+    PVZ Challenge Tab.
      */
 
 //    public static final RegistryObject<Item> CHALLENGE_ENVELOPE = ITEMS.register("challenge_envelope", ChallengeEnvelopeItem::new);
 
     /*
-    Default MC Tabs.
+    MC Food Tab.
      */
-    public static final RegistryObject<Item> GRASS_CARP_BUCKET = ITEMS.register("grass_carp_bucket", () -> {
-        return new MobBucketItem(() -> PVZEntities.GRASS_CARP.get(), () -> Fluids.WATER, () -> SoundEvents.BUCKET_EMPTY_AXOLOTL, new Item.Properties().stacksTo(1).tab(CreativeModeTab.TAB_MISC));
-    });
+
+    public static final RegistryObject<Item> FAKE_BRAIN = ITEMS.register("fake_brain", () -> new PVZFoodItem(PVZFoods.FAKE_BRAIN));
+    public static final RegistryObject<Item> COOKED_BRAIN = ITEMS.register("cooked_brain", () -> new PVZFoodItem(PVZFoods.COOKED_BRAIN));
+    public static final RegistryObject<Item> CABBAGE = ITEMS.register("cabbage", () -> new PVZFoodItem(PVZFoods.CABBAGE));
+    public static final RegistryObject<Item> CORN = ITEMS.register("corn", () -> new PVZFoodItem(PVZFoods.CORN));
+//    public static final RegistryObject<Item> REAL_BRAIN = ITEMS.register("real_brain", () -> new PVZFoodItem(PVZFoods.REAL_BRAIN));
+//    public static final RegistryObject<Item> CANDY = ITEMS.register("candy", ()->new PVZFoodItem(PVZFoodItem.CANDY));
+//    public static final RegistryObject<Item> CHOCOLATE = ITEMS.register("chocolate", ()->new PVZFoodItem(PVZFoodItem.CHOCOLATE));
+//    public static final RegistryObject<Item> PEA_SOUP = ITEMS.register("pea_soup", ()->new SoupItem(new Item.Properties().tab(ItemGroup.TAB_FOOD).food(PVZFoodItem.PEA_SOUP).stacksTo(1)));
+//    public static final RegistryObject<Item> POP_CORN = ITEMS.register("pop_corn", ()->new PVZFoodItem(PVZFoodItem.POP_CORN));
+//    public static final RegistryObject<Item> TACOS = ITEMS.register("tacos", ()->new PVZFoodItem(PVZFoodItem.TACOS));
+
+    /*
+    MC Transport Tab.
+     */
+//    public static final RegistryObject<Item> NUT_BOAT = ITEMS.register("nut_boat", () -> new BoatItem(new Item.Properties()).stacksTo(16).tab(PVZItemTabs.PVZ_BLOCK), PVZBlocks.NUT_SIGN.get(), PVZBlocks.NUT_WALL_SIGN.get()));
+
+
 
     /**
      * register card items.

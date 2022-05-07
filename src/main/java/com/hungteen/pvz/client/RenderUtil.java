@@ -10,6 +10,8 @@ import com.mojang.math.Vector3f;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Font;
 import net.minecraft.client.gui.screens.Screen;
+import net.minecraft.client.model.geom.ModelLayerLocation;
+import net.minecraft.client.model.geom.ModelPart;
 import net.minecraft.client.renderer.GameRenderer;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.entity.EntityRenderDispatcher;
@@ -130,6 +132,10 @@ public class RenderUtil {
 
     public static float getSpin(int tick, float partial) {
         return (tick + partial) / 20.0F;
+    }
+
+    public static ModelPart getModelRoot(ModelLayerLocation location){
+        return ClientProxy.MC.getEntityModels().bakeLayer(location);
     }
 
 }

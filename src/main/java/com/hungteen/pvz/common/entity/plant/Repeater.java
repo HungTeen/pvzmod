@@ -28,13 +28,13 @@ public class Repeater extends PeaShooter{
     @Override
     public void onEnergetic(boolean first) {
         super.onEnergetic(first);
-        this.shootCount += 20;
-        this.powerShootCount += 2;
+        this.shootCount = 120;
+        this.powerShootCount = 2;
     }
 
     @Override
     public int getEnergeticDuration() {
-        return 120;
+        return 300;
     }
 
     @Override

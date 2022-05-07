@@ -122,14 +122,14 @@ public class BlockModelGen extends BlockModelProvider {
 //            stair(b);
 //        });
 //
-//        /*
-//        Button Blocks.
-//         */
-//        Arrays.asList(
-//                PVZBlocks.NUT_BUTTON.get()
-//        ).forEach(b -> {
-//            button(b);
-//        });
+        /*
+        Button Blocks.
+         */
+        Arrays.asList(
+                PVZBlocks.NUT_BUTTON.get()
+        ).forEach(b -> {
+            button(b);
+        });
 //
 //        /*
 //        Slab Blocks.
@@ -285,9 +285,7 @@ public class BlockModelGen extends BlockModelProvider {
     private void button(Block b){
         final String realPath = b.getRegistryName().getPath().replace("button","planks");
         final ResourceLocation res = Util.prefix("block/" + realPath);
-        button(b.getRegistryName().getPath(), res);
-        buttonInventory(b.getRegistryName().getPath(), res);
-        buttonPressed(b.getRegistryName().getPath(), res);
+        buttonInventory(b.getRegistryName().getPath() + "_inventory", res);
         this.addedBlocks.add(b);
     }
 

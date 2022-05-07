@@ -2,7 +2,9 @@
   "replace": false,
   "values": [
     "pvz:cabbage_pult",
+    "pvz:flower_pot",
     "pvz:iceberg_lettuce",
+    "pvz:lily_pad",
     "pvz:pea_shooter",
     "pvz:potato_mine",
     "pvz:repeater",

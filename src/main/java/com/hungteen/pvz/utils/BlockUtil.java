@@ -7,9 +7,7 @@ import net.minecraft.world.level.block.Block;
 import net.minecraft.world.phys.AABB;
 import net.minecraftforge.registries.ForgeRegistries;
 
-import java.util.Comparator;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 import java.util.function.Predicate;
 
 /**
@@ -18,6 +16,11 @@ import java.util.function.Predicate;
  * @create: 2022-03-09 10:44
  **/
 public class BlockUtil {
+
+    /*
+    Axe Strip.
+     */
+    public static final Map<Block, Block> STRIPPABLES = new HashMap<>();
 
     /**
      * get predicate blocks.

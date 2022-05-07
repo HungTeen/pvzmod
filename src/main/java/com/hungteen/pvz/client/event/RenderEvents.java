@@ -1,6 +1,7 @@
 package com.hungteen.pvz.client.event;
 
 import com.hungteen.pvz.PVZMod;
+import com.hungteen.pvz.client.event.handler.PVZEntityRenderHandler;
 import com.hungteen.pvz.common.entity.creature.garden.GardenPlant;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.client.event.RenderLivingEvent;
@@ -17,11 +18,19 @@ public class RenderEvents {
 
     @SubscribeEvent
     public static void livingPreRender(RenderLivingEvent.Pre event){
+        PVZEntityRenderHandler.checkAndRenderFrozenIce(event.getEntity(), event.getPoseStack(), event.getMultiBufferSource(), event.getPackedLight());
         if(event.getEntity() instanceof GardenPlant){
             if(! ((GardenPlant) event.getEntity()).isSprout()){
                 event.setCanceled(true);
             }
         }
     }
+
+//    public static void onRenderLiving(RenderLivingEvent.Pre event){
+////		ev.getMatrixStack().rotate(Vector3f.ZP.rotationDegrees(180F));
+////        PVZEntityRenderHandler.checkBungeeHandStand(ev.getEntity(), stack);
+//
+////        PVZEntityRenderHandler.checkAndRenderButter(ev.getRenderer(), ev.getEntity(), stack, buffer, light);
+//    }
 
 }

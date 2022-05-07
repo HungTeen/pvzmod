@@ -60,7 +60,7 @@ public class PVZMod {
     // Mod Version.
     public static final String MOD_VERSION = "0.7";
     // Proxy of Server and Client.
-    public static CommonProxy PROXY = DistExecutor.safeRunForDist(() -> ClientProxy::new, () -> CommonProxy::new);
+    public static CommonProxy PROXY = DistExecutor.unsafeRunForDist(() -> ClientProxy::new, () -> CommonProxy::new);
 
     public PVZMod() {
         //get mod event bus.
@@ -99,6 +99,7 @@ public class PVZMod {
             PVZFeatures.registerFeatures();
 //            PotionRecipeHandler.registerPotionRecipes();
             CommonRegister.registerCompostable();
+            CommonRegister.registerAxeStrips();
             BiomeUtil.initBiomeSet();
             SpawnRegister.registerEntitySpawns();
             PVZDimensions.register();

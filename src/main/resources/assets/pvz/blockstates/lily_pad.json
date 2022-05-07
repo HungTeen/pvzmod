@@ -1,0 +1,8 @@
+{
+  "variants": {
+    "facing=north":{"model":"pvz:block/lily_pad","y":180},
+    "facing=east":{"model":"pvz:block/lily_pad","y":270},
+    "facing=south":{"model":"pvz:block/lily_pad"},
+    "facing=west":{"model":"pvz:block/lily_pad","y":90}
+  }
+}

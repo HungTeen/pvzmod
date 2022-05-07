@@ -2,6 +2,8 @@
   "replace": false,
   "values": [
     "minecraft:grass_block",
-    "minecraft:moss_block"
+    "minecraft:moss_block",
+    "pvz:lily_pad",
+    "pvz:flower_pot"
   ]
 }

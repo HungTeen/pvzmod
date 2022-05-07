@@ -1,6 +1,5 @@
 package com.hungteen.pvz.api.types;
 
-import com.hungteen.pvz.api.interfaces.IPlantInfo;
 import com.hungteen.pvz.api.types.base.IPAZType;
 import net.minecraft.world.level.block.Block;
 
@@ -40,6 +39,6 @@ public interface IPlantType extends IPAZType {
      * the outer type : it's not an entity, but a render layer. <br>
      * such as Pumpkin.
      */
-    Optional<IPlantInfo> getOuterPlant();
+    boolean isOuterPlant();
 
 }

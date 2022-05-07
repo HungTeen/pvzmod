@@ -4,7 +4,7 @@ import com.hungteen.pvz.PVZConfig;
 import com.hungteen.pvz.client.ClientProxy;
 import com.hungteen.pvz.client.RenderUtil;
 import com.hungteen.pvz.client.event.OverlayEvents;
-import com.hungteen.pvz.client.event.PVZInputEvents;
+import com.hungteen.pvz.client.event.InputEvents;
 import com.hungteen.pvz.utils.MathUtil;
 import com.hungteen.pvz.utils.PlayerUtil;
 import com.hungteen.pvz.utils.Util;
@@ -41,7 +41,7 @@ public class PVZOverlayHandler {
      * {@link OverlayEvents#onPostRenderOverlay(net.minecraftforge.client.event.RenderGameOverlayEvent.Post)}
      */
     public static void renderResources(PoseStack stack, int width, int height) {
-        final int pos = PVZInputEvents.CurrentResourcePos;
+        final int pos = InputEvents.CurrentResourcePos;
         if(pos == 0 && PVZConfig.renderSunBar()) {
             renderSunBar(stack, width, height);
         } else if(pos == 1 && PVZConfig.renderMoneyBar()) {

@@ -4,7 +4,6 @@ import com.hungteen.pvz.PVZConfig;
 import com.hungteen.pvz.PVZMod;
 import com.hungteen.pvz.client.ClientProxy;
 import com.hungteen.pvz.client.PVZKeyBinds;
-import com.hungteen.pvz.common.network.PVZPacketHandler;
 import net.minecraft.client.Minecraft;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.client.event.InputEvent;
@@ -17,7 +16,7 @@ import net.minecraftforge.fml.common.Mod;
  * @create: 2022-03-10 17:49
  **/
 @Mod.EventBusSubscriber(modid = PVZMod.MOD_ID, value = Dist.CLIENT)
-public class PVZInputEvents {
+public class InputEvents {
 
     private static final int SWITCH_NUM = 4;
     public static boolean ShowOverlay = true;

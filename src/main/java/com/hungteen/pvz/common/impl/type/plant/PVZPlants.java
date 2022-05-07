@@ -4,6 +4,7 @@ import com.hungteen.pvz.PVZMod;
 import com.hungteen.pvz.api.PVZAPI;
 import com.hungteen.pvz.api.types.IPlantType;
 import com.hungteen.pvz.api.types.base.IPAZType;
+import com.hungteen.pvz.common.block.PVZBlocks;
 import com.hungteen.pvz.common.entity.PVZEntities;
 import com.hungteen.pvz.common.impl.type.*;
 import com.hungteen.pvz.utils.enums.CDTypes;
@@ -79,6 +80,15 @@ public class PVZPlants {
             .entity(() -> PVZEntities.REPEATER.get())
             .skills(Arrays.asList(SkillTypes.PLANT_MORE_LIFE, SkillTypes.PEA_DAMAGE, SkillTypes.PEA_SPEED_UP));
 
+    public static final IPlantType LILY_PAD = new PVZPlantType("lily_pad")
+            .sunCost(25).xp(1)
+            .essence(EssenceTypes.ASSIST)
+            .rank(RankTypes.WHITE)
+            .cardType(CardTypes.SAPLING)
+            .cd(CDTypes.VERY_FAST)
+            .entity(() -> PVZEntities.LILY_PAD.get())
+            .block(() -> PVZBlocks.LILY_PAD.get());
+
     public static final IPlantType CABBAGE_PULT = new PVZPlantType("cabbage_pult")
             .sunCost(100).xp(10)
             .essence(EssenceTypes.ARMA)
@@ -87,6 +97,15 @@ public class PVZPlants {
             .cd(CDTypes.VERY_FAST)
             .entity(() -> PVZEntities.CABBAGE_PULT.get())
             .skills(Arrays.asList(SkillTypes.PLANT_MORE_LIFE));
+
+    public static final IPlantType FLOWER_POT = new PVZPlantType("flower_pot")
+            .sunCost(25).xp(1)
+            .essence(EssenceTypes.ASSIST)
+            .rank(RankTypes.WHITE)
+            .cardType(CardTypes.SAPLING)
+            .cd(CDTypes.VERY_FAST)
+            .entity(() -> PVZEntities.FLOWER_POT.get())
+            .block(() -> PVZBlocks.FLOWER_POT.get());
 
     public static final IPlantType ICEBERG_LETTUCE = new PVZPlantType("iceberg_lettuce")
             .sunCost(0).xp(10)

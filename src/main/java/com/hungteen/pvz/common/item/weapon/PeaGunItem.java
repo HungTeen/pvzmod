@@ -1,14 +1,13 @@
 package com.hungteen.pvz.common.item.weapon;
 
-import com.hungteen.pvz.PVZMod;
 import com.hungteen.pvz.api.PVZAPI;
 import com.hungteen.pvz.api.types.base.IPAZType;
+import com.hungteen.pvz.common.effect.PVZEffects;
 import com.hungteen.pvz.common.entity.PVZEntities;
 import com.hungteen.pvz.common.entity.bullet.PVZProjectile;
 import com.hungteen.pvz.common.entity.bullet.PeaBullet;
 import com.hungteen.pvz.common.event.PVZPlayerEvents;
 import com.hungteen.pvz.common.event.events.PeaGunShootEvent;
-import com.hungteen.pvz.common.effect.PVZEffects;
 import com.hungteen.pvz.common.impl.type.plant.PVZPlants;
 import com.hungteen.pvz.common.item.PVZItemTabs;
 import com.hungteen.pvz.common.item.PVZItems;
@@ -50,7 +49,7 @@ import java.util.function.Predicate;
 public class PeaGunItem extends ProjectileWeaponItem {
 
     private static final Set<IPAZType> SHOOT_MODES = new HashSet<>(Arrays.asList(
-            PVZPlants.PEA_SHOOTER, PVZPlants.SNOW_PEA
+            PVZPlants.PEA_SHOOTER, PVZPlants.SNOW_PEA, PVZPlants.REPEATER
     ));
     private static final IPAZType DEFAULT_MODE = PVZPlants.PEA_SHOOTER;
     private static final String SHOOT_TYPE = "ShootType";
@@ -142,9 +141,9 @@ public class PeaGunItem extends ProjectileWeaponItem {
             this.shootPea(world, player, mode, projectile, 0.5, 0, 0);
         } else if (mode == PVZPlants.SNOW_PEA) {
             this.shootPea(world, player, mode, projectile, 0.5, 0, 0);
-//        } else if (mode == PVZPlants.REPEATER) {
-//            this.shootPea(world, player, mode, projectile, 0.5, 0, 0);
-//            this.shootPea(world, player, mode, projectile, 0, 0, 0);
+        } else if (mode == PVZPlants.REPEATER) {
+            this.shootPea(world, player, mode, projectile, 0.5, 0, 0);
+            this.shootPea(world, player, mode, projectile, 0, 0, 0);
 //        } else if (mode == PVZPlants.THREE_PEATER) {
 //            this.shootPea(world, player, mode, projectile, 0.25, -0.25, -15);
 //            this.shootPea(world, player, mode, projectile, 0.25, 0, 0);

@@ -61,7 +61,7 @@ public class ItemModelGen extends ItemModelProvider {
         Fence.
          */
         Arrays.asList(
-                PVZBlocks.NUT_FENCE.get()
+                PVZBlocks.NUT_FENCE.get(), PVZBlocks.NUT_BUTTON.get()
         ).forEach(block -> {
             genBlockModel(block, block.getRegistryName().getPath() + "_inventory");
         });
@@ -79,7 +79,8 @@ public class ItemModelGen extends ItemModelProvider {
         Block-items with tex in item/
          */
         Arrays.asList(
-                PVZBlocks.NUT_DOOR.get().asItem(), PVZItems.NUT_SIGN.get()
+                PVZBlocks.NUT_DOOR.get().asItem(), PVZItems.NUT_SIGN.get(),
+                PVZBlocks.LILY_PAD.get().asItem(), PVZBlocks.FLOWER_POT.get().asItem()
         ).forEach(i -> {
             genNormalModel(i);
             this.addedItems.add(i);

@@ -1,12 +1,14 @@
 package com.hungteen.pvz.common.entity.drop;
 
 import com.hungteen.pvz.PVZConfig;
+import com.hungteen.pvz.common.item.PVZItems;
 import com.hungteen.pvz.common.sound.PVZSounds;
 import com.hungteen.pvz.utils.PlayerUtil;
 import com.hungteen.pvz.utils.enums.Resources;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.world.entity.*;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 
 /**
@@ -39,6 +41,11 @@ public class Jewel extends PVZDrop {
     @Override
     protected int getDefaultAmount() {
         return 1;
+    }
+
+    @Override
+    public ItemStack getRenderStack() {
+        return new ItemStack(PVZItems.JEWEL.get());
     }
 
     @Override

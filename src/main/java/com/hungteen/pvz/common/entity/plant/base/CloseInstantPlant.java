@@ -27,7 +27,7 @@ public abstract class CloseInstantPlant extends PVZPlant {
     @Override
     protected void registerGoals() {
         super.registerGoals();
-        this.targetSelector.addGoal(0, new CloseNearestTargetGoal(this, true, false));
+        this.targetSelector.addGoal(0, new CloseNearestTargetGoal(this, true, false, this.getTargetChance()));
     }
 
     @Override
@@ -107,11 +107,15 @@ public abstract class CloseInstantPlant extends PVZPlant {
         return 10;
     }
 
+    protected int getTargetChance(){
+        return 20;
+    }
+
     private static class CloseNearestTargetGoal extends PVZNearestTargetGoal {
 
-        public CloseNearestTargetGoal(Mob mobIn, boolean mustSee, boolean mustReach) {
+        public CloseNearestTargetGoal(Mob mobIn, boolean mustSee, boolean mustReach, int chance) {
             super(mobIn, mustSee, mustReach);
-            this.targetChance = 30;
+            this.targetChance = chance;
         }
 
     }

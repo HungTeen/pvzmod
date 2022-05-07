@@ -150,6 +150,12 @@ public class EntityUtil {
         return entity.getAttribute(Attributes.MOVEMENT_SPEED).getModifier(PVZEffects.COLD_EFFECT_SPEED_UUID) != null;
     }
 
+    /**
+     * is entity has cold effect.
+     */
+    public static boolean isEntityFrozen(LivingEntity entity) {
+        return entity.getAttribute(Attributes.MOVEMENT_SPEED).getModifier(PVZEffects.FROZEN_EFFECT_UUID) != null;
+    }
 
 //    /**
 //     * is entity has frozen effect.

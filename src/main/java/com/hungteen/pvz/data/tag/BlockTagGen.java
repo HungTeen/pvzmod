@@ -35,7 +35,7 @@ public class BlockTagGen extends BlockTagsProvider {
             this.tag(BlockTags.MINEABLE_WITH_PICKAXE).add(b);
         });
         Arrays.asList(
-                PVZBlocks.AMETHYST_BLOCK, PVZBlocks.ORIGIN_BLOCK
+                PVZBlocks.AMETHYST_BLOCK, PVZBlocks.ORIGIN_BLOCK, PVZBlocks.ESSENCE_ALTAR
         ).forEach(b -> {
             this.tag(BlockTags.MINEABLE_WITH_PICKAXE).add(b.get());
         });
@@ -71,7 +71,8 @@ public class BlockTagGen extends BlockTagsProvider {
 
         /* 3 : diamond level */
         Arrays.asList(
-                PVZBlocks.AMETHYST_ORE, PVZBlocks.AMETHYST_BLOCK
+                PVZBlocks.AMETHYST_ORE, PVZBlocks.AMETHYST_BLOCK,
+                PVZBlocks.ESSENCE_ALTAR
         ).forEach(b -> {
             this.tag(BlockTags.NEEDS_DIAMOND_TOOL).add(b.get());
         });
@@ -85,7 +86,7 @@ public class BlockTagGen extends BlockTagsProvider {
         BlockUtil.getFilterBlocks(b -> b instanceof EssenceOreBlock).forEach(block -> {
             this.tag(PVZBlockTags.ESSENCE_ORES).add(block);
         });
-//        this.tag(PVZBlockTags.AMETHYST_ORES).add(BlockRegister.AMETHYST_ORE.get());
+        this.tag(PVZBlockTags.AMETHYST_ORES).add(PVZBlocks.AMETHYST_ORE.get());
 //        this.tag(BlockTags.CLIMBABLE).add(BlockRegister.STEEL_LADDER.get());
 //        this.tag(PVZBlockTags.GOLD_TILES).add(BlockRegister.GOLD_TILE1.get(), BlockRegister.GOLD_TILE2.get(),
 //                BlockRegister.GOLD_TILE3.get());
@@ -93,11 +94,9 @@ public class BlockTagGen extends BlockTagsProvider {
         this.tag(PVZBlockTags.DIRT_NO_GRASS).add(Blocks.DIRT, Blocks.COARSE_DIRT, Blocks.ROOTED_DIRT, Blocks.PODZOL);
         this.tag(PVZBlockTags.PLANT_SUIT_BLOCKS)
 //        .addTag(PVZBlockTags.GOLD_TILES)
-                .add(Blocks.GRASS_BLOCK)
-                .add(Blocks.MOSS_BLOCK)
+                .add(Blocks.GRASS_BLOCK, Blocks.MOSS_BLOCK)
+                .add(PVZBlocks.LILY_PAD.get(), PVZBlocks.FLOWER_POT.get())
                 ;
-//                        BlockRegister.FLOWER_POT.get(), BlockRegister.LILY_PAD.get());
-//        this.tag(BlockTags.LOGS).add(BlockRegister.NUT_LOG.get());
     }
 
     private void addMCTags(){
@@ -121,7 +120,7 @@ public class BlockTagGen extends BlockTagsProvider {
         this.tag(BlockTags.WOODEN_DOORS).add(PVZBlocks.NUT_DOOR.get());
 
         /* sapling */
-//        this.tag(BlockTags.SAPLINGS).add(PVZBlocks.NUT_SAPLING.get());
+        this.tag(BlockTags.SAPLINGS).add(PVZBlocks.NUT_SAPLING.get());
 
         /* log & wood */
         this.tag(PVZBlockTags.NUT_LOGS).add(PVZBlocks.NUT_LOG.get(), PVZBlocks.NUT_WOOD.get(), PVZBlocks.STRIPPED_NUT_LOG.get(), PVZBlocks.STRIPPED_NUT_WOOD.get());

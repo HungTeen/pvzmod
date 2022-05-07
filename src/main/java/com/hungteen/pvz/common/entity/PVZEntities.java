@@ -99,7 +99,9 @@ public class PVZEntities {
     public static final RegistryObject<EntityType<PotatoMine>> POTATO_MINE = registerPlantEntityType(PotatoMine::new, "potato_mine");
     public static final RegistryObject<EntityType<SnowPea>> SNOW_PEA = registerPlantEntityType(SnowPea::new, "snow_pea");
     public static final RegistryObject<EntityType<Repeater>> REPEATER = registerPlantEntityType(Repeater::new, "repeater");
+    public static final RegistryObject<EntityType<LilyPad>> LILY_PAD = registerPlantEntityType(LilyPad::new, "lily_pad");
     public static final RegistryObject<EntityType<CabbagePult>> CABBAGE_PULT = registerPlantEntityType(CabbagePult::new, "cabbage_pult");
+    public static final RegistryObject<EntityType<FlowerPot>> FLOWER_POT = registerPlantEntityType(FlowerPot::new, "flower_pot");
     public static final RegistryObject<EntityType<IcebergLettuce>> ICEBERG_LETTUCE = registerPlantEntityType(IcebergLettuce::new, "iceberg_lettuce");
 //    public static final RegistryObject<EntityType<CherryBombEntity>> CHERRY_BOMB = registerPlantEntityType(CherryBombEntity::new, "cherry_bomb");
 //    public static final RegistryObject<EntityType<PotatoMineEntity>> POTATO_MINE = registerPlantEntityType(PotatoMineEntity::new, "potato_mine");

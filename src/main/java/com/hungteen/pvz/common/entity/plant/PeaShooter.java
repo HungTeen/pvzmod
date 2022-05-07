@@ -71,7 +71,7 @@ public class PeaShooter extends ShooterPlant {
     @Override
     public void onEnergetic(boolean first) {
         super.onEnergetic(first);
-        this.shootCount += 100;
+        this.shootCount = 100;
     }
 
     @Override
@@ -86,7 +86,7 @@ public class PeaShooter extends ShooterPlant {
 
     @Override
     public int getEnergeticDuration() {
-        return 100;
+        return 200;
     }
 
     @Override

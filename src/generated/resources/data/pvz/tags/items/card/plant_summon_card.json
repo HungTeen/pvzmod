@@ -1,13 +1,15 @@
 {
   "replace": false,
   "values": [
-    "minecraft:air",
+    "pvz:pea_shooter_card",
     "pvz:sun_flower_card",
     "pvz:wall_nut_card",
     "pvz:potato_mine_card",
     "pvz:snow_pea_card",
-    "pvz:pea_shooter_card",
+    "pvz:repeater_card",
+    "pvz:lily_pad_card",
     "pvz:cabbage_pult_card",
+    "pvz:flower_pot_card",
     "pvz:iceberg_lettuce_card"
   ]
 }

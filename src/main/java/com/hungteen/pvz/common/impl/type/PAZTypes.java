@@ -129,7 +129,7 @@ public class PAZTypes {
         protected Supplier<IPAZType> upgradeFrom;
         protected Supplier<IPAZType> upgradeTo;
         protected Supplier<EntityType<? extends PathfinderMob>> entitySup;
-        protected List<ISkillType> skills;
+        protected List<ISkillType> skills = new ArrayList<>();
 
         protected PAZType(String name){
             this.name = name;

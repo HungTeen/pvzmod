@@ -62,6 +62,11 @@ public class PVZModelLayers {
     public static final ModelLayerLocation NORMAL_ZOMBIE_INNER_ARMOR = registerInnerArmor("normal_zombie");
     public static final ModelLayerLocation NORMAL_ZOMBIE_OUTER_ARMOR = registerOuterArmor("normal_zombie");
 
+    /*
+    Misc Layers
+     */
+    public static final ModelLayerLocation FROZEN = register("frozen");
+
     private static ModelLayerLocation register(String p_171294_) {
         return createLocation(p_171294_, "main");
     }
