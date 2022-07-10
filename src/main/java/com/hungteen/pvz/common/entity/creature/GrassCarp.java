@@ -110,11 +110,13 @@ public class GrassCarp extends Animal implements Bucketable, IForgeShearable {
             	final int range = 3;
             	for(int i = - range; i <= range; ++ i) {
             		for(int j = - range; j <= range; ++ j) {
-                        for(int h = 0; h <= 2; ++ h){
-                            final BlockPos pos = this.blockPosition().offset(i, h, j);
-                            if(checkBlock(pos)) {
-                                for (int k = - range; k < range; ++k) {
-                                    ParticleUtil.spawnParticles(this.level, ParticleTypes.COMPOSTER, MathUtil.toVector(pos.above()));
+                        for(int h = -1; h <= 2; ++ h){
+                            if (random.nextInt(5) == 1) {
+                                final BlockPos pos = this.blockPosition().offset(i, h, j);
+                                if (checkBlock(pos)) {
+                                    for (int k = -range; k < range; ++k) {
+                                        ParticleUtil.spawnParticles(this.level, ParticleTypes.COMPOSTER, new Vec3(pos.above().getX() + ((float)random.nextInt(10))/10, pos.above().getY(), pos.above().getZ() + ((float)random.nextInt(10))/10));
+                                    }
                                 }
                             }
                         }
@@ -196,7 +198,7 @@ public class GrassCarp extends Animal implements Bucketable, IForgeShearable {
         this.gameEvent(GameEvent.SHEAR, player);
         if (!level.isClientSide) {
             this.setBald(true);
-            this.growHairTick = 1200 + this.random.nextInt(600);
+            this.growHairTick = 400 + this.random.nextInt(600);
 
             int count = this.isBaby() ? 1 : MathUtil.getRandomMinMax(this.random, 1, 3);
 
@@ -340,11 +342,11 @@ public class GrassCarp extends Animal implements Bucketable, IForgeShearable {
 
     @Override
     public EntityDimensions getDimensions(Pose p_21047_) {
-        return EntityDimensions.scalable(0.6F, 0.6F).scale(this.getScale());
+        return EntityDimensions.scalable(0.4F, 0.4F).scale(this.getScale());
     }
 
     private int getNextChangeTick(){
-        return MathUtil.getRandomMinMax(this.random, 100, 400);
+        return MathUtil.getRandomMinMax(this.random, 100, 300);
     }
 
     @Override
@@ -461,6 +463,7 @@ public class GrassCarp extends Animal implements Bucketable, IForgeShearable {
         public void tick() {
             if (this.grassCarp.distanceTo(this.target) <= 2) {
                 this.grassCarp.setItemSlot(EquipmentSlot.MAINHAND, this.target.getItem());
+                setGuaranteedDrop(EquipmentSlot.MAINHAND);
                 this.target.discard();
             } else {
                 this.grassCarp.getNavigation().moveTo(this.target, 1F);

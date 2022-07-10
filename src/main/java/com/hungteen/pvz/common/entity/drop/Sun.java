@@ -83,7 +83,7 @@ public class Sun extends PVZDrop {
     @Override
     public EntityDimensions getDimensions(Pose poseIn) {
         int amount = this.getAmount(); //25 0.6
-        float w = amount * 1f / 200 + 0.3f, h = amount * 1f / 75 + 0.1f;
+        float w = amount * 1f / 150 + 0.3f, h = amount * 1f / 150 + 0.3f;
         return EntityDimensions.scalable(w, h);//max(0.8w,1.5h), min(0.4w,0.3h).
     }
 

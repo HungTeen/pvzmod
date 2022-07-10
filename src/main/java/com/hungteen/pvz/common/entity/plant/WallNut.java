@@ -56,7 +56,7 @@ public class WallNut extends DefenderPlant {
 
     @Override
     public EntityDimensions getDimensions(Pose poseIn) {
-        return EntityDimensions.scalable(0.9f, 1.1f);
+        return EntityDimensions.scalable(0.85f, 1.1f);
     }
 
     @Override
