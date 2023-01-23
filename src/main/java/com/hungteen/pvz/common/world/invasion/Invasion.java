@@ -4,6 +4,7 @@ import com.hungteen.pvz.PVZConfig;
 import com.hungteen.pvz.PVZMod;
 import com.hungteen.pvz.common.entity.AbstractPAZEntity;
 import com.hungteen.pvz.common.entity.EntityRegister;
+import com.hungteen.pvz.common.entity.plant.PVZPlantEntity;
 import com.hungteen.pvz.common.entity.zombie.PVZZombieEntity;
 import com.hungteen.pvz.common.misc.PVZPacketTypes;
 import com.hungteen.pvz.common.misc.sound.SoundRegister;
@@ -117,12 +118,16 @@ public class Invasion {
     public void spawnInvaders() {
         final int range = PVZConfig.COMMON_CONFIG.InvasionSettings.MaxSpawnRange.get();
         final int maxCount = PVZConfig.COMMON_CONFIG.InvasionSettings.MaxSpawnEachPlayer.get();
+        final long count = EntityUtil.getFriendlyLivings(player, EntityUtil.getEntityAABB(player, range, range))
+                .stream().filter(entity -> {
+                    return entity instanceof PVZPlantEntity;
+                }).count() + 1;
         final int current = EntityUtil
                 .getPredicateEntities(player, EntityUtil.getEntityAABB(player, range, range), MobEntity.class, e -> {
                     return isInvasionEntity(e.getType());
                 }).size();
-        
-        if (current < maxCount) {
+
+        if (current < maxCount*(0.2 + 0.8 * (count > 15 ? 1 : count / 15))) {
             for (int i = 0; i < this.getSpawnCount(); ++i) {
                 final SpawnType type = getSpawnList().getRandomItem(world.random).get();
                 final BlockPos pos = WorldUtil.findRandomSpawnPos(world, player.blockPosition(), 10, 12, range,

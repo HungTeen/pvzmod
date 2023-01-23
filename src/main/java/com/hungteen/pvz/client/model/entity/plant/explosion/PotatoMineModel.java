@@ -13,48 +13,75 @@ import net.minecraft.client.renderer.model.ModelRenderer;
 
 public class PotatoMineModel extends PVZPlantModel<PotatoMineEntity> {
 	private final ModelRenderer total;
+	private final ModelRenderer dirt;
+	private final ModelRenderer ne;
+	private final ModelRenderer sw;
+	private final ModelRenderer se;
+	private final ModelRenderer nw;
 	private final ModelRenderer body;
-	private final ModelRenderer bone;
-	private final ModelRenderer string;
 	private final ModelRenderer red;
 	private final ModelRenderer white;
 
 	public PotatoMineModel() {
-		texWidth = 128;
-		texHeight = 128;
+		texWidth = 64;
+		texHeight = 64;
 
 		total = new ModelRenderer(this);
-		total.setPos(0.0F, 17.0F, 0.0F);
-		
+		total.setPos(0.0F, 25.0F, 0.0F);
+
+
+		dirt = new ModelRenderer(this);
+		dirt.setPos(0.0F, 0.0F, 0.0F);
+		total.addChild(dirt);
+
+
+		ne = new ModelRenderer(this);
+		ne.setPos(0.0F, 0.0F, 0.0F);
+		dirt.addChild(ne);
+		ne.texOffs(5, 56).addBox(-6.5F, -4.0F, -6.5F, 2.0F, 3.0F, 2.0F, 0.0F, true);
+		ne.texOffs(4, 55).addBox(-4.5F, -2.0F, -6.5F, 1.0F, 1.0F, 2.0F, 0.0F, true);
+		ne.texOffs(5, 57).addBox(-2.5F, -2.0F, -6.5F, 2.0F, 1.0F, 2.0F, 0.0F, true);
+		ne.texOffs(0, 58).addBox(-6.5F, -3.0F, -4.5F, 2.0F, 2.0F, 3.0F, 0.0F, true);
+
+		sw = new ModelRenderer(this);
+		sw.setPos(0.0F, 0.0F, 0.0F);
+		dirt.addChild(sw);
+		sw.texOffs(2, 51).addBox(0.5F, -2.0F, 4.5F, 3.0F, 1.0F, 2.0F, 0.0F, true);
+		sw.texOffs(2, 59).addBox(3.5F, -3.0F, 3.5F, 3.0F, 2.0F, 3.0F, 0.0F, true);
+		sw.texOffs(5, 55).addBox(4.5F, -2.0F, 0.5F, 2.0F, 1.0F, 3.0F, 0.0F, true);
+
+		se = new ModelRenderer(this);
+		se.setPos(0.0F, 0.0F, 0.0F);
+		dirt.addChild(se);
+		se.texOffs(1, 55).addBox(-6.5F, -4.0F, 3.5F, 4.0F, 3.0F, 3.0F, 0.0F, true);
+		se.texOffs(0, 58).addBox(-6.5F, -2.0F, -0.5F, 3.0F, 1.0F, 4.0F, 0.0F, true);
+		se.texOffs(4, 52).addBox(-2.5F, -2.0F, 4.5F, 1.0F, 1.0F, 2.0F, 0.0F, true);
+
+		nw = new ModelRenderer(this);
+		nw.setPos(0.0F, 0.0F, 0.0F);
+		dirt.addChild(nw);
+		nw.texOffs(1, 55).addBox(4.5F, -3.0F, -6.5F, 2.0F, 2.0F, 3.0F, 0.0F, true);
+		nw.texOffs(0, 53).addBox(1.5F, -2.0F, -6.5F, 3.0F, 1.0F, 2.0F, 0.0F, true);
+		nw.texOffs(2, 58).addBox(5.5F, -2.0F, -3.5F, 1.0F, 1.0F, 2.0F, 0.0F, true);
 
 		body = new ModelRenderer(this);
 		body.setPos(0.0F, 0.0F, 0.0F);
 		total.addChild(body);
-		body.texOffs(1, 105).addBox(-10.0F, 5.0F, -10.0F, 20.0F, 2.0F, 20.0F, 0.0F, false);
-		body.texOffs(4, 82).addBox(-9.0F, 2.0F, -9.0F, 18.0F, 3.0F, 18.0F, 0.0F, false);
-		body.texOffs(4, 61).addBox(-8.0F, -1.0F, -8.0F, 16.0F, 3.0F, 16.0F, 0.0F, false);
-		body.texOffs(78, 2).addBox(-6.0F, -2.0F, -6.0F, 12.0F, 1.0F, 12.0F, 0.0F, false);
-		body.texOffs(21, 24).addBox(-3.0F, -3.0F, -3.0F, 6.0F, 1.0F, 6.0F, 0.0F, false);
-
-		bone = new ModelRenderer(this);
-		bone.setPos(0.0F, 0.0F, 0.0F);
-		body.addChild(bone);
-		
-
-		string = new ModelRenderer(this);
-		string.setPos(0.0F, 0.0F, 0.0F);
-		total.addChild(string);
-		string.texOffs(8, 34).addBox(-1.0F, -8.0F, -1.0F, 2.0F, 5.0F, 2.0F, 0.0F, false);
+		setRotationAngle(body, -0.0873F, 0.0F, 0.0F);
+		body.texOffs(0, 0).addBox(-6.0F, -7.0038F, -5.9128F, 12.0F, 8.0F, 12.0F, 0.0F, false);
+		body.texOffs(0, 25).addBox(0.0F, -10.0038F, -0.9128F, 0.0F, 3.0F, 2.0F, 0.0F, false);
+		body.texOffs(40, 25).addBox(-3.0F, -7.5038F, -2.9128F, 6.0F, 1.0F, 6.0F, 0.0F, false);
+		body.texOffs(14, 27).addBox(-1.0F, -10.0038F, 0.0872F, 2.0F, 3.0F, 0.0F, 0.0F, false);
 
 		red = new ModelRenderer(this);
 		red.setPos(0.0F, 0.0F, 0.0F);
-		string.addChild(red);
-		red.texOffs(111, 22).addBox(-2.0F, -12.0F, -2.0F, 4.0F, 4.0F, 4.0F, 0.0F, false);
+		body.addChild(red);
+		red.texOffs(48, 8).addBox(-2.0F, -14.0F, -2.0F, 4.0F, 4.0F, 4.0F, 0.0F, false);
 
 		white = new ModelRenderer(this);
 		white.setPos(0.0F, 0.0F, 0.0F);
-		string.addChild(white);
-		white.texOffs(110, 34).addBox(-2.0F, -12.0F, -2.0F, 4.0F, 4.0F, 4.0F, 0.0F, false);
+		body.addChild(white);
+		white.texOffs(48, 0).addBox(-2.0F, -14.0038F, -1.9128F, 4.0F, 4.0F, 4.0F, 0.0F, false);
 	}
 
 	@Override
@@ -63,7 +90,7 @@ public class PotatoMineModel extends PVZPlantModel<PotatoMineEntity> {
 		final int current = entity.getExistTick() % T;
 		final boolean flag = (current < (T >> 1));
 		this.red.visible = flag;
-		this.white.visible = ! flag;
+		this.white.visible = !flag;
 	}
 
 	@Override

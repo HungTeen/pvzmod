@@ -9,6 +9,8 @@ import com.hungteen.pvz.common.container.FragmentSpliceContainer;
 import com.hungteen.pvz.common.container.SlotMachineContainer;
 import com.hungteen.pvz.common.container.shop.AbstractDaveShopContainer;
 
+import com.hungteen.pvz.utils.PlayerUtil;
+import com.hungteen.pvz.utils.enums.Resources;
 import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.network.PacketBuffer;
 import net.minecraftforge.fml.network.NetworkEvent;
@@ -61,7 +63,7 @@ public class ClickButtonPacket {
 				} else if(message.type == GuiHandler.SLOT_MACHINE) {
 					if(player.containerMenu instanceof SlotMachineContainer) {
 						SlotMachineContainer container = (SlotMachineContainer) player.containerMenu;
-						if(message.op == 0){
+						if(message.op == 0 && PlayerUtil.getResource(player, Resources.LOTTERY_CHANCE) > 0){
 							container.te.slowStart(player);
 						} else{
 							container.te.fastStart(player);

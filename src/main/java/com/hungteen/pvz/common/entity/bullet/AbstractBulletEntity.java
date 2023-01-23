@@ -1,5 +1,6 @@
 package com.hungteen.pvz.common.entity.bullet;
 
+import com.hungteen.pvz.PVZMod;
 import com.hungteen.pvz.api.enums.PVZGroupType;
 import com.hungteen.pvz.common.entity.AbstractOwnerEntity;
 import com.hungteen.pvz.common.entity.plant.base.PlantShooterEntity;
@@ -57,8 +58,15 @@ public abstract class AbstractBulletEntity extends AbstractOwnerEntity {
 		    if(entityRay != null) {
 			    result = entityRay;
 		    }
-		    if(result != null && result.getType() != RayTraceResult.Type.MISS && !net.minecraftforge.event.ForgeEventFactory.onProjectileImpact(this, result)) {//on hit 
+		    if(result.getType() != RayTraceResult.Type.MISS && !net.minecraftforge.event.ForgeEventFactory.onProjectileImpact(this, result)) {//on hit
 			    this.onImpact(result);
+				if (result.getType() == RayTraceResult.Type.ENTITY) {//bullet merging
+					Entity entity = ((EntityRayTraceResult)result).getEntity();
+					if (entity.getClass().getName().equals(this.getClass().getName())) {
+						((AbstractBulletEntity) entity).setAttackDamage(this.getAttackDamage()+((AbstractBulletEntity)entity).getAttackDamage());
+						this.remove();
+					}
+				}
 		    }
 		}
 		this.tickMove();
@@ -71,8 +79,8 @@ public abstract class AbstractBulletEntity extends AbstractOwnerEntity {
 	@Nullable
 	protected EntityRayTraceResult rayTraceEntities(Vector3d startVec, Vector3d endVec) {
 		return EntityUtil.rayTraceEntities(level, this, startVec, endVec, entity -> 
-		    entity.isPickable() && shouldHit(entity) && (this.hitEntities == null || !this.hitEntities.contains(entity.getId())
-		));
+		    (entity.isPickable() && shouldHit(entity) && (this.hitEntities == null || !this.hitEntities.contains(entity.getId())) || entity.getClass().getName().equals(this.getClass().getName()))
+		);
 	}
 	
 	/**

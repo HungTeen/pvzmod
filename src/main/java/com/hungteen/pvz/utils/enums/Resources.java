@@ -12,9 +12,9 @@ public enum Resources {
 	/* xp of player tree maxLevel */
 	TREE_XP(0, 0),
 	/* money, common currency */
-	MONEY(0, 9999999),
+	MONEY(0, 1000000),
 	/* jewel, special currency */
-	GEM_NUM(0, 9999999),
+	GEM_NUM(0, 1000000),
 	/* sun amount, maximum is limited by tree maxLevel*/
 	SUN_NUM(0, 0),
 	/* max plant food amount */

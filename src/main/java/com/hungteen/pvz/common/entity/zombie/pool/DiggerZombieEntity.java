@@ -1,8 +1,12 @@
 package com.hungteen.pvz.common.entity.zombie.pool;
 
+import com.hungteen.pvz.client.model.entity.plant.arma.MelonPultModel;
 import com.hungteen.pvz.common.entity.ai.goal.target.PVZRandomTargetGoal;
 import com.hungteen.pvz.common.entity.plant.PVZPlantEntity;
 import com.hungteen.pvz.common.entity.plant.appease.SplitPeaEntity;
+import com.hungteen.pvz.common.entity.plant.arma.MelonPultEntity;
+import com.hungteen.pvz.common.entity.plant.base.PlantPultEntity;
+import com.hungteen.pvz.common.entity.plant.ice.WinterMelonEntity;
 import com.hungteen.pvz.common.entity.zombie.PVZZombieEntity;
 import com.hungteen.pvz.common.impl.zombie.ZombieType;
 import com.hungteen.pvz.common.impl.zombie.PoolZombies;
@@ -15,6 +19,7 @@ import com.hungteen.pvz.utils.interfaces.ICanAttract;
 import com.hungteen.pvz.utils.interfaces.IHasMetal;
 import net.minecraft.entity.*;
 import net.minecraft.entity.ai.attributes.Attributes;
+import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.network.datasync.DataParameter;
 import net.minecraft.network.datasync.DataSerializers;
@@ -85,7 +90,7 @@ public class DiggerZombieEntity extends PVZZombieEntity implements IHasMetal {
 	}
 	
 	private void updateAttributes(boolean has){
-		this.getAttribute(Attributes.ATTACK_DAMAGE).setBaseValue(has ? ZombieUtil.NORMAL_DAMAGE : ZombieUtil.LOW);
+		this.getAttribute(Attributes.ATTACK_DAMAGE).setBaseValue(has ? ZombieUtil.LOW : ZombieUtil.HUGE_LOW);
 		this.getAttribute(Attributes.MOVEMENT_SPEED).setBaseValue(has ? ZombieUtil.WALK_LITTLE_FAST : ZombieUtil.WALK_LITTLE_SLOW);
 	}
 	
@@ -105,7 +110,7 @@ public class DiggerZombieEntity extends PVZZombieEntity implements IHasMetal {
 	@Override
 	protected boolean isZombieInvulnerableTo(DamageSource source) {
 		if(! this.isNotDigging() && source.isProjectile()){
-			return ! (source.getEntity() instanceof SplitPeaEntity);
+			return ! (source.getEntity() instanceof SplitPeaEntity || source.getEntity() instanceof PlayerEntity || source.getEntity() instanceof MelonPultEntity || source.getEntity() instanceof WinterMelonEntity);
 		}
 		return super.isZombieInvulnerableTo(source);
 	}

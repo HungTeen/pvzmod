@@ -139,7 +139,7 @@ public class SkillTypes {
 
     //split pea.
     public static final ISkillType SPLIT_DOUBLE_CHANCE = new SkillType("split_double_chance",
-            ArrayUtil.getAverageArray(4, 0.2F, 0.8F),
+            ArrayUtil.getAverageArray(5, 0.2F, 0.8F),
             Arrays.asList(2, 3, 5, 7)
     );
 

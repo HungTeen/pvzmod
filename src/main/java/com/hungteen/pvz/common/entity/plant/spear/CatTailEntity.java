@@ -89,7 +89,7 @@ public class CatTailEntity extends PlantShooterEntity {
 	}
 	
 	protected ThornTypes getThornShootType() {
-		if(this.powerCount > 0 && this.powerTick == 0) {
+		if (this.powerCount > 0 && this.powerTick == 0) {
 			this.powerTick = this.POWER_CD;
 			-- this.powerCount;
 			return ThornTypes.AUTO;
@@ -136,7 +136,7 @@ public class CatTailEntity extends PlantShooterEntity {
 	
 	@Override
 	public float getShootRange() {
-		return 40;
+		return 80;
 	}
 	
 	@Override

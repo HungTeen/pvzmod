@@ -8,6 +8,8 @@ import com.hungteen.pvz.api.raid.IChallengeComponent;
 import com.hungteen.pvz.api.raid.IPlacementComponent;
 import com.hungteen.pvz.api.raid.ISpawnComponent;
 import com.hungteen.pvz.common.advancement.trigger.ChallengeTrigger;
+import com.hungteen.pvz.common.capability.challenge.RaiderDataProvider;
+import com.hungteen.pvz.common.capability.player.PlayerDataProvider;
 import com.hungteen.pvz.common.entity.AbstractPAZEntity;
 import com.hungteen.pvz.common.entity.ai.goal.ChallengeMoveGoal;
 import com.hungteen.pvz.utils.ConfigUtil;
@@ -16,12 +18,12 @@ import com.hungteen.pvz.utils.PlayerUtil;
 import com.hungteen.pvz.utils.enums.Resources;
 import net.minecraft.command.impl.SummonCommand;
 import net.minecraft.entity.Entity;
+import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.MobEntity;
+import net.minecraft.entity.Pose;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.ServerPlayerEntity;
-import net.minecraft.nbt.CompoundNBT;
-import net.minecraft.nbt.ListNBT;
-import net.minecraft.nbt.NBTUtil;
+import net.minecraft.nbt.*;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.text.ITextComponent;
@@ -32,6 +34,9 @@ import net.minecraft.world.Difficulty;
 import net.minecraft.world.server.ServerBossInfo;
 import net.minecraft.world.server.ServerWorld;
 import net.minecraftforge.common.MinecraftForge;
+import net.minecraftforge.event.AttachCapabilitiesEvent;
+import net.minecraftforge.event.TickEvent;
+import net.minecraftforge.eventbus.api.SubscribeEvent;
 
 import java.util.*;
 import java.util.function.Predicate;
@@ -50,6 +55,7 @@ public class Challenge implements IChallenge {
 	protected Status status = Status.PREPARE;
 	protected int tick = 0;
 	protected int stopTick = 0;
+	protected int waitTick = 0;
 	protected int currentWave = 0;
 	protected int currentSpawn = 0;
 	protected Set<Entity> raiders = new HashSet<>();
@@ -163,7 +169,11 @@ public class Challenge implements IChallenge {
 			/* running state */
 			if(this.tick >= this.challenge.getLastDuration(this.currentWave)
 					|| (this.raiders.isEmpty() && this.challenge.isWaveFinish(this.currentWave, this.currentSpawn))) {
-				this.checkNextWave();
+				if (this.waitTick > 20) {
+					this.checkNextWave();
+				} else{
+					this.waitTick ++;
+				}
 			}
 			if(this.isLoss()) {//fail to start next wave.
 				this.onLoss();
@@ -218,9 +228,12 @@ public class Challenge implements IChallenge {
 		Iterator<Entity> it = this.raiders.iterator();
 		while(it.hasNext()) {
 			Entity entity = it.next();
-			if(! entity.isAlive()) {
+			if(entity.getPose() == Pose.DYING){
 				it.remove();
 			}
+		}
+		if (raiders.size() > 0){
+			waitTick = 0;
 		}
 	}
 	
@@ -268,7 +281,7 @@ public class Challenge implements IChallenge {
 			this.challengeBar.setPercent(this.tick * 1.0F / this.challenge.getPrepareCD(this.currentWave));
 		} else if(this.isRunning()) {
 			this.challengeBar.setName(this.challenge.getTitle().copy().append(" - ").append(new TranslationTextComponent("event.minecraft.raid.raiders_remaining", this.raiders.size())));
-			this.challengeBar.setPercent(1 - this.tick * 1.0F / this.challenge.getLastDuration(this.currentWave));
+			this.challengeBar.setPercent((1 - this.tick * 1.0F / this.challenge.getLastDuration(this.currentWave)) > 0 ? (1 - this.tick * 1.0F / this.challenge.getLastDuration(this.currentWave)) : 0);
 		} else if(this.isVictory()) {
 			this.challengeBar.setName(this.challenge.getTitle().copy().append(" - ").append(this.challenge.getWinTitle()));
 			this.challengeBar.setPercent(1F);

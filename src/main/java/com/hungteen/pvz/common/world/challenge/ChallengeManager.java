@@ -118,6 +118,16 @@ public class ChallengeManager {
 		}
 		return false;
 	}
+
+	public static Challenge getEntityChallenge(ServerWorld world, Entity entity) {
+		final PVZChallengeData data = PVZChallengeData.getInvasionData(world);
+		for(Challenge raid : data.getChallenges()) {
+			if(raid.isRaider(entity)) {
+				return raid;
+			}
+		}
+		return null;
+	}
 	
 	@Nullable
 	public static IChallengeComponent getChallengeByResource(ResourceLocation res) {

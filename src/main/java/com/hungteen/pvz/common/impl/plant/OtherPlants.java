@@ -21,12 +21,12 @@ public final class OtherPlants extends PlantType {
 	private static final List<IPlantType> LIST = new ArrayList<>();
 	
 	public static final IPlantType ICEBERG_LETTUCE = new OtherPlants("iceberg_lettuce", new PlantFeatures()
-			.cost(1).requiredLevel(5)
+			.cost(10).requiredLevel(5)
 			.cd(CoolDowns.LITTLE_FAST).rank(RankTypes.GRAY).essence(EssenceTypes.ICE)
 			.entityType(() -> EntityRegister.ICEBERG_LETTUCE.get())
 			.summonCard(() -> ItemRegister.ICEBERG_LETTUCE_CARD.get())
 			.enjoyCard(() -> ItemRegister.ICEBERG_LETTUCE_ENJOY_CARD.get())
-			.plantModel(() -> IcebergLettuceModel::new).scale(0.5F)
+			.plantModel(() -> IcebergLettuceModel::new).scale(1F)
 			.commonSkill(Arrays.asList())
 	);
 	

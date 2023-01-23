@@ -12,36 +12,48 @@ import net.minecraft.client.renderer.model.ModelRenderer;
 
 
 public class HypnoShroomModel extends PVZPlantModel<HypnoShroomEntity> {
-	private final ModelRenderer body;
+	private final ModelRenderer total;
+	private final ModelRenderer reye;
+	private final ModelRenderer leye;
 	private final ModelRenderer hat;
 
 	public HypnoShroomModel() {
-		texWidth = 128;
-		texHeight = 128;
+		texWidth = 64;
+		texHeight = 64;
 
-		body = new ModelRenderer(this);
-		body.setPos(0.0F, 24.0F, 0.0F);
-		body.texOffs(63, 86).addBox(-8.0F, -25.0F, -8.0F, 16.0F, 25.0F, 16.0F, 0.0F, false);
+		total = new ModelRenderer(this);
+		total.setPos(0.0F, 24.0F, 0.0F);
+		total.texOffs(0, 32).addBox(-4.0F, -7.0F, -4.0F, 8.0F, 7.0F, 8.0F, 0.0F, false);
+
+		reye = new ModelRenderer(this);
+		reye.setPos(-3.0F, -4.0F, -4.25F);
+		total.addChild(reye);
+		reye.texOffs(0, 0).addBox(-2.0F, -2.0F, 0.0F, 4.0F, 4.0F, 0.0F, 0.0F, false);
+
+		leye = new ModelRenderer(this);
+		leye.setPos(3.0F, -4.0F, -4.25F);
+		total.addChild(leye);
+		leye.texOffs(0, 4).addBox(-2.0F, -2.0F, 0.0F, 4.0F, 4.0F, 0.0F, 0.0F, false);
 
 		hat = new ModelRenderer(this);
-		hat.setPos(0.0F, -26.0F, 0.0F);
-		body.addChild(hat);
-		setRotationAngle(hat, -0.0873F, 0.0F, 0.0F);
-		hat.texOffs(1, 1).addBox(-12.0F, -6.0F, -12.0F, 24.0F, 8.0F, 24.0F, 0.0F, false);
-		hat.texOffs(1, 66).addBox(-7.0F, -20.0F, -7.0F, 14.0F, 6.0F, 14.0F, 0.0F, false);
-		hat.texOffs(1, 35).addBox(-10.0F, -14.0F, -10.0F, 20.0F, 8.0F, 20.0F, 0.0F, false);
-		hat.texOffs(2, 90).addBox(-4.0F, -24.0F, -4.0F, 8.0F, 4.0F, 8.0F, 0.0F, false);
-		hat.texOffs(4, 107).addBox(-2.0F, -26.0F, -2.0F, 4.0F, 2.0F, 4.0F, 0.0F, false);
+		hat.setPos(0.0F, -10.0F, 0.0F);
+		total.addChild(hat);
+		hat.texOffs(0, 0).addBox(-6.0F, -1.0F, -6.0F, 12.0F, 5.0F, 12.0F, 0.0F, false);
+		hat.texOffs(0, 17).addBox(-5.0F, -6.0F, -5.0F, 10.0F, 5.0F, 10.0F, 0.0F, false);
+		hat.texOffs(30, 17).addBox(-3.0F, -9.0F, -3.0F, 6.0F, 3.0F, 6.0F, 0.0F, false);
 	}
 
 	@Override
 	public void setupAnim(HypnoShroomEntity entity, float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch){
 		this.hat.yRot = ageInTicks / 30;
+//		this.leye.zRot = entity.getExistTick() / 10f;
+//		this.reye.zRot = entity.getExistTick() / 10f;
+
 	}
 
 	@Override
 	public ModelRenderer getPlantWholeBody() {
-		return this.body;
+		return this.total;
 	}
 
 	@Override

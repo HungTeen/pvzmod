@@ -48,7 +48,7 @@ public class TorchWoodEntity extends PVZPlantEntity {
 			if(this.getFlameType() == FlameTypes.BLUE) {
 				particle = ParticleRegister.BLUE_FLAME.get();
 			}
-			WorldUtil.spawnRandomSpeedParticle(this.level, particle, this.position().add(0, 1.5F, 0), 0.1F);
+			WorldUtil.spawnRandomSpeedParticle(this.level, particle, this.position().add(0, 1.2F, 0), 0.1F);
 		}
 	}
 	
@@ -93,7 +93,7 @@ public class TorchWoodEntity extends PVZPlantEntity {
 
 	@Override
 	public EntitySize getDimensions(Pose poseIn) {
-		return new EntitySize(0.95f, 1.95f, false);
+		return new EntitySize(0.95f, 1.5f, false);
 	}
 	
 	@Override

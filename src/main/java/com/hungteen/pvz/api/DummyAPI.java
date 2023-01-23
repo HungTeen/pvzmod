@@ -157,6 +157,11 @@ public class DummyAPI implements IPVZAPI {
 		return false;
 	}
 
+    @Override
+    public Challenge getEntityChallenge(ServerWorld world, Entity entity) {
+        return null;
+    }
+
 	@Override
 	public Optional<Challenge> getNearByRaid(ServerWorld world, BlockPos pos) {
 		return Optional.empty();

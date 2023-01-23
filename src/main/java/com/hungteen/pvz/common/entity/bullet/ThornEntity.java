@@ -20,6 +20,9 @@ import net.minecraftforge.api.distmarker.OnlyIn;
 
 import java.util.List;
 
+import static java.lang.Math.*;
+import static net.minecraft.util.math.MathHelper.sign;
+
 public class ThornEntity extends AbstractBulletEntity {
 
 	private static final DataParameter<Integer> THORN_TYPE = EntityDataManager.defineId(ThornEntity.class,
@@ -62,7 +65,9 @@ public class ThornEntity extends AbstractBulletEntity {
 			//change speed.
 			if (this.getThornType() == ThornTypes.GUIDE || this.getThornType() == ThornTypes.AUTO) {
 				if (vec != Vector3d.ZERO) {
-					this.setDeltaMovement(vec.scale(this.getBulletSpeed()));
+					Vector3d sub = vec.subtract(this.getDeltaMovement().normalize());
+					Vector3d cut = sub.scale(0.04);
+					this.setDeltaMovement(this.getDeltaMovement().add(cut).normalize().scale(this.getBulletSpeed()));
 				}
 			}
 			if (this.getThornType() == ThornTypes.AUTO) {
