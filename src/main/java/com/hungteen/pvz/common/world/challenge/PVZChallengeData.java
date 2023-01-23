@@ -152,9 +152,4 @@ public class PVZChallengeData extends WorldSavedData {
 		return ((ServerWorld) worldIn).getDataStorage().computeIfAbsent(() -> new PVZChallengeData((ServerWorld) worldIn), DATA_NAME);
 	}
 
-	@SubscribeEvent
-	public static void attachCapability(AttachCapabilitiesEvent<Entity> event){
-		event.addCapability(new ResourceLocation(PVZMod.MOD_ID, "challenge_data"), new RaiderDataProvider(0));
-	}
-
 }

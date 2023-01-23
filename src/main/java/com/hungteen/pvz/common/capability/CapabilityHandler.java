@@ -4,6 +4,7 @@ package com.hungteen.pvz.common.capability;
 import com.hungteen.pvz.PVZMod;
 import com.hungteen.pvz.common.capability.challenge.IRaiderDataCapability;
 import com.hungteen.pvz.common.capability.challenge.RaiderDataCapability;
+import com.hungteen.pvz.common.capability.challenge.RaiderDataProvider;
 import com.hungteen.pvz.common.capability.challenge.RaiderDataStorage;
 import com.hungteen.pvz.common.capability.player.IPlayerDataCapability;
 import com.hungteen.pvz.common.capability.player.PlayerDataCapability;
@@ -39,5 +40,6 @@ public class CapabilityHandler {
         if (entity instanceof PlayerEntity){
         	event.addCapability(new ResourceLocation(PVZMod.MOD_ID, "player_data"), new PlayerDataProvider((PlayerEntity) entity));
         }
+		event.addCapability(new ResourceLocation(PVZMod.MOD_ID, "challenge_data"), new RaiderDataProvider(0));
     }
 }

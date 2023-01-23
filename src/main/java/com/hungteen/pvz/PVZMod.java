@@ -60,7 +60,6 @@ public class PVZMod {
     	forgeBus.addListener(EventPriority.NORMAL, GenStructures::addDimensionalSpacing);
     	forgeBus.addListener(EventPriority.HIGH, BiomeRegister::biomeModification);
 		forgeBus.addListener(EventPriority.NORMAL, PVZDataPackManager::addReloadListenerEvent);
-		forgeBus.addGenericListener(Entity.class, EventPriority.NORMAL, PVZChallengeData::attachCapability);
     	
     	AdvancementHandler.init();
     	RegistryHandler.coreRegister();
