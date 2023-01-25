@@ -1,5 +1,6 @@
 package com.hungteen.pvz.common.entity.bullet;
 
+import com.hungteen.pvz.PVZConfig;
 import com.hungteen.pvz.PVZMod;
 import com.hungteen.pvz.api.enums.PVZGroupType;
 import com.hungteen.pvz.common.entity.AbstractOwnerEntity;
@@ -26,6 +27,7 @@ public abstract class AbstractBulletEntity extends AbstractOwnerEntity {
 	protected IntOpenHashSet hitEntities;
 	protected float airSlowDown = 0.99F;
 	protected float attackDamage = 0F;
+	public boolean bulletmerge = PVZConfig.COMMON_CONFIG.EntitySettings.PlantSetting.PlantBulletMerge.get();
 	
 	public AbstractBulletEntity(EntityType<?> type, World worldIn) {
 		super(type, worldIn);
@@ -60,7 +62,7 @@ public abstract class AbstractBulletEntity extends AbstractOwnerEntity {
 		    }
 		    if(result.getType() != RayTraceResult.Type.MISS && !net.minecraftforge.event.ForgeEventFactory.onProjectileImpact(this, result)) {//on hit
 			    this.onImpact(result);
-				if (result.getType() == RayTraceResult.Type.ENTITY) {//bullet merging
+				if (result.getType() == RayTraceResult.Type.ENTITY && bulletmerge) {//bullet merging
 					Entity entity = ((EntityRayTraceResult)result).getEntity();
 					if (entity.getClass().getName().equals(this.getClass().getName())) {
 						((AbstractBulletEntity) entity).setAttackDamage(this.getAttackDamage()+((AbstractBulletEntity)entity).getAttackDamage());

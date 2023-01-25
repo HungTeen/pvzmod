@@ -244,6 +244,11 @@ public class PVZConfig {
                             .comment("the max number StrangeCats can copy themselves in a range of 20 * 20.")
                             .defineInRange("StrangeCatCount", 10, 0, 100);
 
+                    EntitySettings.PlantSetting.PlantBulletMerge = builder
+                            .translation("config.pvz.plant.plant_bullet_merge")
+                            .comment("whether two same bullets merge into one when coincide.")
+                            .define("PlantBulletMerge", false);
+
                 }
                 builder.pop();
 
@@ -307,7 +312,7 @@ public class PVZConfig {
 
                 BlockSettings.AmethystAngerChance = builder
                         .translation("config.pvz.block.amethyst_anger_chance")
-                        .comment("The chance of anger nearby enderman when break amethyst ore")
+                        .comment("The chance to anger nearby endermen when break amethyst ore")
                         .defineInRange("AmethystAngerChance", 0.4, 0, 1);
 
                 builder.comment("Setting about break blocks.").push("Break Block Setting");
@@ -415,6 +420,7 @@ public class PVZConfig {
 
             public static class PlantSetting {
                 public ForgeConfigSpec.IntValue StrangeCatCount;
+                public ForgeConfigSpec.BooleanValue PlantBulletMerge;
             }
 
             public static class EntityLiveTick {

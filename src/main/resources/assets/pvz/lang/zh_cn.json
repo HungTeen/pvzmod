@@ -959,6 +959,7 @@
   "config.pvz.zombie.max_level": "僵尸最高等级",
 
   "config.pvz.plant.strange_cat_count": "奇怪猫最大复制数",
+  "config.pvz.plant.plant_bullet_merge": "合并重合的植物子弹",
 
   "config.pvz.entity.sun_live_tick": "阳光存活时间",
   "config.pvz.entity.coin_live_tick": "钱币存活时间",

@@ -963,6 +963,7 @@
     "config.pvz.zombie.max_level":"Zombie Max Level",
     
     "config.pvz.plant.strange_cat_count":"Max Strange Cat Count",
+    "config.pvz.plant.plant_bullet_merge": "Merge Bullets when Coincide",
     
     "config.pvz.entity.sun_live_tick":"Exist Tick of Sun",
     "config.pvz.entity.coin_live_tick":"Exist Tick of Coin",

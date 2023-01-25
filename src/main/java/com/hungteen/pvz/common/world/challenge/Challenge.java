@@ -164,14 +164,14 @@ public class Challenge implements IChallenge {
 			/* prepare state */
 			if(this.tick >= this.challenge.getPrepareCD(this.currentWave)) {
 				this.waveStart();
+				this.waitTick = 0;
 			}
 		} else if(this.isRunning()) {
 			/* running state */
-			if(this.tick >= this.challenge.getLastDuration(this.currentWave)
-					|| (this.raiders.isEmpty() && this.challenge.isWaveFinish(this.currentWave, this.currentSpawn))) {
-				if (this.waitTick > 20) {
+			if(this.tick >= this.challenge.getLastDuration(this.currentWave) || canNextWave()) {
+				if (this.waitTick > 20 || !canNextWave()) {
 					this.checkNextWave();
-				} else{
+				} else if (canNextWave()) {
 					this.waitTick ++;
 				}
 			}
@@ -231,9 +231,6 @@ public class Challenge implements IChallenge {
 			if(entity.getPose() == Pose.DYING){
 				it.remove();
 			}
-		}
-		if (raiders.size() > 0){
-			waitTick = 0;
 		}
 	}
 	
@@ -365,7 +362,7 @@ public class Challenge implements IChallenge {
 	 * check can start next wave or not.
 	 */
 	public boolean canNextWave() {
-		return this.raiders.isEmpty();
+		return (this.raiders.isEmpty() && this.challenge.isWaveFinish(this.currentWave, this.currentSpawn));
 	}
 	
 	/**
