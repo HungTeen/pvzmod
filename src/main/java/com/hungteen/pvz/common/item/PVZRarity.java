@@ -19,7 +19,7 @@ public class PVZRarity{
     public static final Rarity PURPLE = Rarity.create("purple", TextFormatting.LIGHT_PURPLE);
     public static final Rarity GOLD = Rarity.create("gold", TextFormatting.GOLD);
     public static final Rarity RED = Rarity.create("red", TextFormatting.RED);
-    public static final Rarity BLACK = Rarity.create("black", TextFormatting.BLACK);
+    public static final Rarity BLACK = Rarity.create("black", TextFormatting.DARK_GRAY);
 
     public static Rarity getRarityByRank(IRankType rankType){
         return (rankType == RankTypes.GRAY) ? GRAY : 

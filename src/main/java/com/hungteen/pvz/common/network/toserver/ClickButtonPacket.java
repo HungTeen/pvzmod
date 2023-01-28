@@ -13,6 +13,8 @@ import com.hungteen.pvz.utils.PlayerUtil;
 import com.hungteen.pvz.utils.enums.Resources;
 import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.network.PacketBuffer;
+import net.minecraft.util.text.TextFormatting;
+import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraftforge.fml.network.NetworkEvent;
 
 public class ClickButtonPacket {
@@ -62,13 +64,16 @@ public class ClickButtonPacket {
 					}
 				} else if(message.type == GuiHandler.SLOT_MACHINE) {
 					if(player.containerMenu instanceof SlotMachineContainer) {
-						SlotMachineContainer container = (SlotMachineContainer) player.containerMenu;
-						if(message.op == 0 && PlayerUtil.getResource(player, Resources.LOTTERY_CHANCE) > 0){
-							container.te.slowStart(player);
-						} else{
-							container.te.fastStart(player);
+						if (PlayerUtil.getResource(player,Resources.LOTTERY_CHANCE) > 0) {
+							SlotMachineContainer container = (SlotMachineContainer) player.containerMenu;
+							if (message.op == 0) {
+								container.te.slowStart(player);
+							} else {
+								container.te.fastStart(player);
+							}
+						} else {
+							PlayerUtil.sendMsgTo(player, new TranslationTextComponent("help.pvz.out_of_lottery_chance").withStyle(TextFormatting.RED));
 						}
-
 					}
 				} else if(message.type == GuiHandler.ESSENCE_ALTAR) {
 					if(player.containerMenu instanceof EssenceAltarContainer) {

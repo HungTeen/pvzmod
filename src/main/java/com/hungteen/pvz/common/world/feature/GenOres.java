@@ -27,12 +27,16 @@ public class GenOres {
 				event.getGeneration().addFeature(GenerationStage.Decoration.UNDERGROUND_ORES,
 						FeatureRegister.CONFIGURED_ORIGIN_ORE);
 			}
+			if(BiomeUtil.isOverworld(biomeKey)) {
+				event.getGeneration().addFeature(GenerationStage.Decoration.UNDERGROUND_ORES,
+						FeatureRegister.CONFIGURED_LUNAR_STONE);
+			}
 		}
 	}
 
 	public static final class FillerBlockType {
 		public static final RuleTest END_STONE = new BlockMatchRuleTest(Blocks.END_STONE);
-		
+		public static final RuleTest STONE = new BlockMatchRuleTest(Blocks.STONE);
 		public static final RuleTest GRASS = new BlockMatchRuleTest(Blocks.GRASS_BLOCK);
 	}
 

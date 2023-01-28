@@ -21,8 +21,8 @@ public final class OtherPlants extends PlantType {
 	private static final List<IPlantType> LIST = new ArrayList<>();
 	
 	public static final IPlantType ICEBERG_LETTUCE = new OtherPlants("iceberg_lettuce", new PlantFeatures()
-			.cost(10).requiredLevel(5)
-			.cd(CoolDowns.LITTLE_FAST).rank(RankTypes.GRAY).essence(EssenceTypes.ICE)
+			.cost(10).requiredLevel(3)
+			.cd(CoolDowns.LITTLE_FAST).rank(RankTypes.WHITE).essence(EssenceTypes.ICE)
 			.entityType(() -> EntityRegister.ICEBERG_LETTUCE.get())
 			.summonCard(() -> ItemRegister.ICEBERG_LETTUCE_CARD.get())
 			.enjoyCard(() -> ItemRegister.ICEBERG_LETTUCE_ENJOY_CARD.get())
@@ -31,8 +31,8 @@ public final class OtherPlants extends PlantType {
 	);
 	
 	public static final IPlantType BONK_CHOY = new OtherPlants("bonk_choy", new PlantFeatures()
-			.cost(175).requiredLevel(20)
-			.cd(CoolDowns.LITTLE_FAST).rank(RankTypes.PURPLE).essence(EssenceTypes.ENFORCE)
+			.cost(175).requiredLevel(6)
+			.cd(CoolDowns.LITTLE_FAST).rank(RankTypes.BLUE).essence(EssenceTypes.ENFORCE)
 			.entityType(() -> EntityRegister.BONK_CHOY.get())
 			.summonCard(() -> ItemRegister.BONK_CHOY_CARD.get())
 			.enjoyCard(() -> ItemRegister.BONK_CHOY_ENJOY_CARD.get())
@@ -41,8 +41,8 @@ public final class OtherPlants extends PlantType {
 	);
 	
 	public static final IPlantType GOLD_LEAF = new OtherPlants("gold_leaf", new PlantFeatures()
-			.cost(75).requiredLevel(70)
-			.cd(CoolDowns.NORMAL).rank(RankTypes.PURPLE).essence(EssenceTypes.LIGHT)
+			.cost(75).requiredLevel(26)
+			.cd(CoolDowns.NORMAL).rank(RankTypes.BLUE).essence(EssenceTypes.LIGHT)
 			.entityType(() -> EntityRegister.GOLD_LEAF.get())
 			.summonCard(() -> ItemRegister.GOLD_LEAF_CARD.get())
 			.enjoyCard(() -> ItemRegister.GOLD_LEAF_ENJOY_CARD.get())
@@ -52,7 +52,7 @@ public final class OtherPlants extends PlantType {
 	);
 	
 	public static final IPlantType ANGEL_STAR_FRUIT = new OtherPlants("angel_star_fruit", new PlantFeatures()
-			.cost(225).requiredLevel(50)
+			.cost(225).requiredLevel(46)
 			.cd(CoolDowns.LITTLE_FAST).rank(RankTypes.PURPLE).essence(EssenceTypes.APPEASE)
 			.entityType(() -> EntityRegister.ANGEL_STAR_FRUIT.get())
 			.summonCard(() -> ItemRegister.ANGEL_STAR_FRUIT_CARD.get())
@@ -62,7 +62,7 @@ public final class OtherPlants extends PlantType {
 	);
 	
 	public static final IPlantType BAMBOO_LORD = new OtherPlants("bamboo_lord", new PlantFeatures()
-			.cost(75).requiredLevel(55)
+			.cost(75).requiredLevel(6)
 			.cd(CoolDowns.NORMAL).rank(RankTypes.BLUE).essence(EssenceTypes.EXPLOSION)
 			.entityType(() -> EntityRegister.BAMBOO_LORD.get())
 			.summonCard(() -> ItemRegister.BAMBOO_LORD_CARD.get())

@@ -22,6 +22,7 @@ public class PVZMiscEvents {
     @SubscribeEvent
     public static void addTrades(WandererTradesEvent event){
         event.getGenericTrades().add(new BasicTrade(8, new ItemStack(ItemRegister.SPORE.get()), 8, 5));
+        event.getGenericTrades().add(new BasicTrade(1, new ItemStack(Items.BLUE_ICE), 12, 5));
         event.getRareTrades().add(new BasicTrade(24, new ItemStack(Items.MYCELIUM), 4, 15));
     }
 

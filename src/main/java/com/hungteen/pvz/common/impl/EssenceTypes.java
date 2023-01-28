@@ -53,7 +53,7 @@ public class EssenceTypes {
 			"light",
 			() -> ItemRegister.LIGHT_ESSENCE.get(),
 			() -> BlockRegister.LIGHT_ORE.get(),
-			() -> Blocks.GLOWSTONE,
+			() -> BlockRegister.LUNAR_STONE.get(),//Blocks.GLOWSTONE,
 	        PVZBlockTags.TO_LIGHT_ORES
 	);
 	

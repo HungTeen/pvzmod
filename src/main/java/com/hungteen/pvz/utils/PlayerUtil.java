@@ -28,8 +28,7 @@ import javax.annotation.Nullable;
 import java.util.List;
 import java.util.Optional;
 
-import static java.lang.Math.log;
-import static java.lang.Math.round;
+import static java.lang.Math.*;
 
 public class PlayerUtil {
 
@@ -58,7 +57,7 @@ public class PlayerUtil {
 	 * {@link PlayerDataManager#addResource(Resources, int)}
 	 */
 	public static int getPlayerLevelUpXp(int lvl){
-		return (int) round(80+600*log(lvl)+lvl*50);
+		return (int) round(80+400*log10(lvl)+lvl*30);
 	}
 
 	@Nullable

@@ -177,7 +177,7 @@ public abstract class AbstractBowlingEntity extends AbstractOwnerEntity {
 	}
 
 	protected int getMaxLiveTick() {
-		return PVZConfig.COMMON_CONFIG.EntitySettings.EntityLiveTick.BowlingLiveTick.get();
+		return 0;//return PVZConfig.COMMON_CONFIG.EntitySettings.EntityLiveTick.BowlingLiveTick.get();
 	}
 	
 	public void addAdditionalSaveData(CompoundNBT compound) {

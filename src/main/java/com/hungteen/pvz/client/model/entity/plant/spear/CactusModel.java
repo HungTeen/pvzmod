@@ -1037,7 +1037,7 @@ public class CactusModel extends PlantShooterModel<CactusEntity> {
 			this.spikes7.visible = ! powered;
 			this.blue_spikes7.visible = powered;
 		}
-		super.setupAnim(entity, limbSwing, limbSwingAmount, ageInTicks, netHeadYaw, headPitch);
+//		super.setupAnim(entity, limbSwing, limbSwingAmount, ageInTicks, netHeadYaw, headPitch);
 	}
 
 	@Override

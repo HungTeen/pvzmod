@@ -204,9 +204,9 @@ public class RecipeGenerator extends ForgeRecipeProvider{
 		final Item origin = ItemRegister.ORIGIN_ESSENCE.get();
 		if (material != null) {
 			ShapedRecipeBuilder.shaped(rankCard)
-					.pattern("AAA")
+					.pattern(" A ")
 					.pattern("ABA")
-					.pattern("AAA")
+					.pattern(" A ")
 					.define('A', material)
 					.define('B', origin)
 					.unlockedBy("has_origin", has(origin))

@@ -93,7 +93,7 @@ public class Invasion {
      */
     public void tick() {
         // wait for data pack or peaceful mode.
-        if (this.isRunning() && this.getSpawnInvasion() != null && this.world.getDifficulty() != Difficulty.PEACEFUL) {
+        if (this.isRunning() && this.getSpawnInvasion() != null && this.world.getDifficulty() != Difficulty.PEACEFUL && !player.isSpectator()) {
             world.getProfiler().push("Invasion Spawn Tick");
             if (++tick >= this.getSpawnCD() && !this.getSpawnList().isEmpty()) {
                 this.spawnInvaders();
@@ -316,7 +316,7 @@ public class Invasion {
     /**
      * start invasion.
      * send random mission to player.
-     * {@link InvasionManager#enableInvasion(Collection)}
+     * {@link InvasionManager#enableInvasion(ServerPlayerEntity)}
      */
     public void enable() {
     	this.invasionLvl = PlayerUtil.getResource(player, Resources.TREE_LVL);

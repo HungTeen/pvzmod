@@ -19,6 +19,11 @@ public class PVZConfig {
                         .comment("If you set to 5, then the first 5 * 20 minutes of the world will not have any zombie invasion event.")
                         .defineInRange("SafeDayLength", 2, 0, 1000000);
 
+                InvasionSettings.ScatterInvasions = builder
+                        .translation("config.pvz.invasion.scatter_invasions")
+                        .comment("If on, invasions of different players will happen in different days.")
+                        .define("ScatterInvasions", false);
+
                 InvasionSettings.InvasionIntervalLength = builder
                         .translation("config.pvz.invasion.interval")
                         .comment("The interval day length between each invasion.")
@@ -95,6 +100,11 @@ public class PVZConfig {
                         .comment("how many plants can you place in 30 x 30 area without increasing cost.")
                         .defineInRange("LimitPlantCount", 50, 10, 1000);
 
+                RuleSettings.NeedUnlockToPlant = builder
+                        .translation("config.pvz.rule.unlock_plant")
+                        .comment("if on, plant needs to be unlocked before planting.")
+                        .define("NeedUnlockToPlant", true);
+
                 RuleSettings.KeepSunWhenDie = builder
                         .translation("config.pvz.rule.keep_sun")
                         .comment("if turn to true, player will keep its sun after death.")
@@ -166,6 +176,11 @@ public class PVZConfig {
                             .translation("config.pvz.world.amethyst_ore_chance")
                             .comment("the gen chance of amethyst ore in the end(the larger the more chance to see it).")
                             .defineInRange("GenAmethystOreChance", 15, 1, 10000);
+
+                    WorldSettings.GenLunarStoneChance = builder
+                            .translation("config.pvz.world.lunar_stone_chance")
+                            .comment("the gen chance of lunar stone in overworld(the larger the more chance to see it).")
+                            .defineInRange("GenLunarStoneChance", 30, 1, 10000);
                 }
                 builder.pop();
 
@@ -174,7 +189,7 @@ public class PVZConfig {
                     WorldSettings.SunSpawnWeight = builder
                             .translation("config.pvz.world.sun_weight")
                             .comment("spawn weight of Sun.")
-                            .defineInRange("SunSpawnWeight", 50, 1, 200);
+                            .defineInRange("SunSpawnWeight", 100, 1, 200);
 
                     WorldSettings.LavaZombieSpawnWeight = builder
                             .translation("config.pvz.world.lava_zombie_weight")
@@ -279,11 +294,6 @@ public class PVZConfig {
                             .comment("how many ticks can yeti entity live(how long will it stay).")
                             .defineInRange("YetiLiveTick", 2400, 1, 1000000);
 
-                    EntitySettings.EntityLiveTick.BowlingLiveTick = builder
-                            .translation("config.pvz.entity.bowling_live_tick")
-                            .comment("how many ticks can bowling entity live.")
-                            .defineInRange("BowlingLiveTick", 300, 1, 1000000);
-
                     EntitySettings.EntityLiveTick.LawnMowerLiveTick = builder
                             .translation("config.pvz.entity.lawn_mower_live_tick")
                             .comment("how many ticks can lawnmower entity live.")
@@ -352,6 +362,7 @@ public class PVZConfig {
         public static class InvasionSettings {
             /* misc */
             public ForgeConfigSpec.IntValue SafeDayLength;
+            public ForgeConfigSpec.BooleanValue ScatterInvasions;
             public ForgeConfigSpec.IntValue InvasionIntervalLength;
             public ForgeConfigSpec.BooleanValue ShowEventMessages;
             public ForgeConfigSpec.BooleanValue EnableHugeWave;
@@ -372,6 +383,7 @@ public class PVZConfig {
             public ForgeConfigSpec.BooleanValue AllowNaturalTurnOrigin;
             public ForgeConfigSpec.BooleanValue TeamAttack;
             public ForgeConfigSpec.IntValue LimitPlantCount;
+            public ForgeConfigSpec.BooleanValue NeedUnlockToPlant;
             public ForgeConfigSpec.BooleanValue KeepSunWhenDie;
             public ForgeConfigSpec.IntValue MaxDamageLimit;
         }
@@ -391,6 +403,7 @@ public class PVZConfig {
 
             /* ore gen */
             public ForgeConfigSpec.IntValue GenAmethystOreChance;
+            public ForgeConfigSpec.IntValue GenLunarStoneChance;
             public ForgeConfigSpec.IntValue GenOriginOreChance;
 
             /* entity spawn */
@@ -429,7 +442,6 @@ public class PVZConfig {
                 public ForgeConfigSpec.IntValue JewelLiveTick;
                 public ForgeConfigSpec.IntValue EnergyLiveTick;
                 public ForgeConfigSpec.IntValue YetiLiveTick;
-                public ForgeConfigSpec.IntValue BowlingLiveTick;
                 public ForgeConfigSpec.IntValue LawnMowerLiveTick;
                 public ForgeConfigSpec.IntValue ElementBallLiveTick;
             }

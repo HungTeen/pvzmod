@@ -70,8 +70,8 @@ public class TrickZombieEntity extends PVZZombieEntity{
 	protected void dropAllDeathLoot(DamageSource damageSourceIn) {
 		if(! this.hasEffect(EffectRegister.COLD_EFFECT.get()) && ! this.isCharmed()) {
 			if(this.getRandom().nextInt(EXPLOSION_CHANCE) == 0) {
-				Explosion.Mode mode = net.minecraftforge.event.ForgeEventFactory.getMobGriefingEvent(this.level, this) ? Explosion.Mode.DESTROY : Explosion.Mode.NONE;
-				this.level.explode(this, getX(), getY(), getZ(), 0.5f, mode);
+//				Explosion.Mode mode = net.minecraftforge.event.ForgeEventFactory.getMobGriefingEvent(this.level, this) ? Explosion.Mode.DESTROY : Explosion.Mode.NONE;
+				this.level.explode(this, getX(), getY(), getZ(), 0.5f, Explosion.Mode.NONE);
 			}
 		}
 		super.dropAllDeathLoot(damageSourceIn);
@@ -90,7 +90,7 @@ public class TrickZombieEntity extends PVZZombieEntity{
 	
 	@Override
 	public float getLife() {
-		return 10;
+		return 6;
 	}
 
 	@Override

@@ -61,7 +61,7 @@ public class LavaZombieEntity extends SwimmerZombieEntity {
 
 	@Override
 	public float getLife() {
-		return 360;
+		return 80;
 	}
 
 	@Override

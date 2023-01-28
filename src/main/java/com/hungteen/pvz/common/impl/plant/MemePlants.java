@@ -17,7 +17,7 @@ public final class MemePlants extends PlantType {
 	private static final List<IPlantType> LIST = new ArrayList<>();
 	
 	public static final IPlantType STRANGE_CAT = new MemePlants("strange_cat", new PlantFeatures()
-			.cost(300).requiredLevel(60)
+			.cost(300).requiredLevel(58)
 			.cd(CoolDowns.HUGE_SLOW).rank(RankTypes.PURPLE).essence(EssenceTypes.MAGIC)
 			.entityType(() -> EntityRegister.STRANGE_CAT.get())
 			.summonCard(() -> ItemRegister.STRANGE_CAT_CARD.get())

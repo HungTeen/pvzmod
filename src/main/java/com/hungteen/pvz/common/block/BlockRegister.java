@@ -57,6 +57,7 @@ public class BlockRegister {
 	public static final RegistryObject<Block> AMETHYST_BLOCK = BLOCKS.register("amethyst_block", () -> new Block(Block.Properties.copy(Blocks.EMERALD_BLOCK).strength(9, 9))); 
 	public static final RegistryObject<Block> ORIGIN_BLOCK = BLOCKS.register("origin_block", OriginBlock::new);
 	public static final RegistryObject<Block> BUTTER_BLOCK = BLOCKS.register("butter_block", ButterBlock::new);
+	public static final RegistryObject<Block> LUNAR_STONE = BLOCKS.register("lunar_stone", () -> new Block(Block.Properties.copy(Blocks.EMERALD_BLOCK).strength(9, 9).lightLevel(i -> 6)));
 	public static final RegistryObject<Block> FROZEN_MELON = BLOCKS.register("frozen_melon", () -> new Block(Block.Properties.copy(Blocks.MELON)));
 	public static final RegistryObject<Block> STEEL_LADDER = BLOCKS.register("steel_ladder", SteelLadderBlock::new);
 	
@@ -101,7 +102,7 @@ public class BlockRegister {
 				ORIGIN_ORE, APPEASE_ORE, LIGHT_ORE, EXPLOSION_ORE, DEFENCE_ORE, ICE_ORE, ENFORCE_ORE, TOXIC_ORE, ASSIST_ORE, MAGIC_ORE, FLAME_ORE, SPEAR_ORE, ARMA_ORE, ELECTRIC_ORE, SHADOW_ORE, AMETHYST_ORE,
 				AMETHYST_BLOCK, ORIGIN_BLOCK, BUTTER_BLOCK, FROZEN_MELON, 
 				NUT_LEAVES, NUT_LOG, NUT_SAPLING, CHOMPER,
-				LANTERN, FLOWER_POT, GOLD_TILE1, GOLD_TILE2, GOLD_TILE3, SILVER_SUNFLOWER_TROPHY, GOLD_SUNFLOWER_TROPHY, DIAMOND_SUNFLOWER_TROPHY
+				LANTERN, FLOWER_POT, GOLD_TILE1, GOLD_TILE2, GOLD_TILE3, LUNAR_STONE, SILVER_SUNFLOWER_TROPHY, GOLD_SUNFLOWER_TROPHY, DIAMOND_SUNFLOWER_TROPHY
 		).forEach(block -> {
 			items.register(new BlockItem(block.get(), new Item.Properties().tab(PVZItemGroups.PVZ_MISC)).setRegistryName(block.get().getRegistryName()));
 		});
