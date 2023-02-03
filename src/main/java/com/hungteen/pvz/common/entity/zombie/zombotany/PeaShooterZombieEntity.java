@@ -71,7 +71,7 @@ public class PeaShooterZombieEntity extends AbstractZombotanyEntity {
 	}
 	
 	protected int getShootCD() {
-		return 30;
+		return 80;
 	}
 	
 	protected int getShootNum() {

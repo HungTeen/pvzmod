@@ -1,0 +1,20 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    " X ",
+    "XYX",
+    " X "
+  ],
+  "key": {
+    "Y": {
+      "item": "minecraft:redstone"
+    },
+    "X": {
+      "item": "pvz:origin_essence"
+    }
+  },
+  "result": {
+    "item": "pvz:garden_compass",
+    "count": 1
+  }
+}

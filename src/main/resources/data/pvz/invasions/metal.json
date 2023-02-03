@@ -5,6 +5,11 @@
   "display_color": "black",
   "spawns": [
     {
+      "entity_type": "pvz:normal_zombie",
+      "invasion_level": 1,
+      "spawn_weight": 100
+    },
+    {
       "entity_type": "pvz:screendoor_zombie",
       "invasion_level": 15,
       "spawn_weight": 60

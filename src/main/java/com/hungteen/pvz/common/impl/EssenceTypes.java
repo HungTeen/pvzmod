@@ -77,7 +77,7 @@ public class EssenceTypes {
 			"ice",
 			() -> ItemRegister.ICE_ESSENCE.get(),
 			() -> BlockRegister.ICE_ORE.get(),
-			() -> Blocks.BLUE_ICE,
+			() -> Blocks.SNOW_BLOCK,
 			PVZBlockTags.TO_ICE_ORES
 	);
 	

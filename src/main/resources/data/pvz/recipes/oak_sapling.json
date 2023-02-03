@@ -1,20 +1,15 @@
 {
-  "type": "minecraft:crafting_shaped",
-  "pattern": [
-    " X ",
-    "XBX",
-    " X "
-  ],
-  "key": {
-    "X": {
-      "item":"minecraft:dead_bush"
+  "type": "minecraft:crafting_shapeless",
+  "ingredients": [
+    {
+      "item": "minecraft:dead_bush"
     },
-    "B": {
-      "item":"pvz:origin_essence"
+    {
+      "item": "pvz:origin_essence"
     }
-  },
+  ],
   "result": {
-    "item": "minecraft:oak_sapling",
-    "count": 4
+    "item": "pvz:oak_sapling",
+    "count": 1
   }
 }

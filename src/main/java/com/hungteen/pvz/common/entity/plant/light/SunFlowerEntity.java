@@ -65,7 +65,7 @@ public class SunFlowerEntity extends PlantProducerEntity{
 	
 	@Override
 	public EntitySize getDimensions(Pose poseIn) {
-		return EntitySize.scalable(0.8f, 1.65f);
+		return EntitySize.scalable(0.8f, 1.3f);
 	}
 	
 	@Override

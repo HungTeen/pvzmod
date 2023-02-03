@@ -113,6 +113,9 @@ public class Invasion {
             MissionManager.tickMission(this);
             world.getProfiler().pop();
         }
+        if (world.getDayTime() > 15000 && world.getDayTime() < 22000){
+
+        }
     }
 
     public void spawnInvaders() {

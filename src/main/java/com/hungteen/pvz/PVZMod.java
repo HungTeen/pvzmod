@@ -5,6 +5,7 @@ import com.hungteen.pvz.common.CommonProxy;
 import com.hungteen.pvz.common.advancement.AdvancementHandler;
 import com.hungteen.pvz.common.block.cubes.OriginBlock;
 import com.hungteen.pvz.common.datapack.PVZDataPackManager;
+import com.hungteen.pvz.common.item.tool.GardenCompassItem;
 import com.hungteen.pvz.common.world.biome.BiomeRegister;
 import com.hungteen.pvz.common.world.challenge.Challenge;
 import com.hungteen.pvz.common.world.challenge.PVZChallengeData;
@@ -60,6 +61,7 @@ public class PVZMod {
     	forgeBus.addListener(EventPriority.NORMAL, GenStructures::addDimensionalSpacing);
     	forgeBus.addListener(EventPriority.HIGH, BiomeRegister::biomeModification);
 		forgeBus.addListener(EventPriority.NORMAL, PVZDataPackManager::addReloadListenerEvent);
+		forgeBus.addListener(EventPriority.NORMAL, GardenCompassItem::disturb);
     	
     	AdvancementHandler.init();
     	RegistryHandler.coreRegister();

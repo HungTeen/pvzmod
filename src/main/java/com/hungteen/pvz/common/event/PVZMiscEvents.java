@@ -1,6 +1,7 @@
 package com.hungteen.pvz.common.event;
 
 import com.hungteen.pvz.PVZMod;
+import com.hungteen.pvz.common.block.BlockRegister;
 import com.hungteen.pvz.common.block.cubes.OriginBlock;
 import com.hungteen.pvz.common.item.ItemRegister;
 import net.minecraft.item.ItemStack;
@@ -21,8 +22,10 @@ public class PVZMiscEvents {
 
     @SubscribeEvent
     public static void addTrades(WandererTradesEvent event){
-        event.getGenericTrades().add(new BasicTrade(8, new ItemStack(ItemRegister.SPORE.get()), 8, 5));
-        event.getGenericTrades().add(new BasicTrade(1, new ItemStack(Items.BLUE_ICE), 12, 5));
+        event.getRareTrades().add(new BasicTrade(8, new ItemStack(ItemRegister.SPORE.get()), 8, 5));
+        event.getGenericTrades().add(new BasicTrade(1, new ItemStack(Items.BAMBOO), 12, 8));
+        event.getGenericTrades().add(new BasicTrade(1, new ItemStack(Items.SUNFLOWER), 12, 8));
+        event.getGenericTrades().add(new BasicTrade(1, new ItemStack(BlockRegister.CHOMPER.get()), 12, 8));
         event.getRareTrades().add(new BasicTrade(24, new ItemStack(Items.MYCELIUM), 4, 15));
     }
 

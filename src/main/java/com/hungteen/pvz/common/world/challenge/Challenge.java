@@ -228,7 +228,7 @@ public class Challenge implements IChallenge {
 		Iterator<Entity> it = this.raiders.iterator();
 		while(it.hasNext()) {
 			Entity entity = it.next();
-			if(entity.getPose() == Pose.DYING){
+			if (!entity.isAlive()){
 				it.remove();
 			}
 		}

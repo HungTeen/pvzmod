@@ -528,6 +528,7 @@ public abstract class PVZPlantEntity extends AbstractPAZEntity implements IPlant
 	public void onPlantUpgrade(PVZPlantEntity plantEntity) {
 		// keep old plant's outer plant, such as pumpkin.
 		plantEntity.outerPlant = this.outerPlant;
+		plantEntity.setOuterDefenceLife(this.getOuterDefenceLife());
 		// keep sleep of plant
 		plantEntity.sleepTime = this.sleepTime;
 		// remove old plant itself

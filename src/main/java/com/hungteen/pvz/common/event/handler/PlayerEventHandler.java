@@ -201,7 +201,7 @@ public class PlayerEventHandler {
                     if (m.isPAZLocked(type)){
                         m.setPAZLocked(type, false);
                         if (ConfigUtil.needUnlockToPlant()) {
-                            PlayerUtil.sendMsgTo(player, new TranslationTextComponent("help.pvz.is_unlocked", new TranslationTextComponent("entity."+type.getModID()+"."+ type)).withStyle(TextFormatting.GREEN));
+                            PlayerUtil.sendMsgTo(player, new TranslationTextComponent("entity."+type.getModID()+"."+ type).append(new TranslationTextComponent("help.pvz.is_unlocked")).withStyle(TextFormatting.GREEN));
                         }
                     }
                 });

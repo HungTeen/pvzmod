@@ -1,5 +1,7 @@
 package com.hungteen.pvz.common.entity.zombie.other;
 
+import com.hungteen.pvz.common.capability.CapabilityHandler;
+import com.hungteen.pvz.common.capability.challenge.RaiderDataCapability;
 import com.hungteen.pvz.common.entity.misc.ZombieHandEntity;
 import com.hungteen.pvz.common.entity.zombie.base.AbstractBossZombieEntity;
 import com.hungteen.pvz.common.impl.zombie.ZombieType;
@@ -7,6 +9,8 @@ import com.hungteen.pvz.common.impl.zombie.CustomZombies;
 import com.hungteen.pvz.common.misc.sound.SoundRegister;
 import com.hungteen.pvz.common.misc.PVZLoot;
 import com.hungteen.pvz.common.entity.EntityRegister;
+import com.hungteen.pvz.common.world.challenge.Challenge;
+import com.hungteen.pvz.common.world.challenge.ChallengeManager;
 import com.hungteen.pvz.utils.EntityUtil;
 import com.hungteen.pvz.utils.ZombieUtil;
 import net.minecraft.entity.*;
@@ -19,6 +23,7 @@ import net.minecraft.util.ResourceLocation;
 import net.minecraft.world.DifficultyInstance;
 import net.minecraft.world.IServerWorld;
 import net.minecraft.world.World;
+import net.minecraft.world.server.ServerWorld;
 
 public class CoffinEntity extends AbstractBossZombieEntity {
 
@@ -76,6 +81,11 @@ public class CoffinEntity extends AbstractBossZombieEntity {
 		if(!level.isClientSide) {
 		    NobleZombieEntity boss = EntityRegister.NOBLE_ZOMBIE.get().create(level);
 		    this.onBossSummon(boss, blockPosition().above());
+			this.getCapability(CapabilityHandler.RAIDER_DATA_CAPABILITY).ifPresent(x ->{
+				boss.getCapability(CapabilityHandler.RAIDER_DATA_CAPABILITY).ifPresent(y ->{
+					y.setChallengeID(x.getChallengeID());
+				});
+			});
 		}
 	}
 

@@ -17,7 +17,7 @@ public class PVZConfig {
                 InvasionSettings.SafeDayLength = builder
                         .translation("config.pvz.invasion.safe_day")
                         .comment("If you set to 5, then the first 5 * 20 minutes of the world will not have any zombie invasion event.")
-                        .defineInRange("SafeDayLength", 2, 0, 1000000);
+                        .defineInRange("SafeDayLength", 4, 0, 1000000);
 
                 InvasionSettings.ScatterInvasions = builder
                         .translation("config.pvz.invasion.scatter_invasions")
@@ -42,7 +42,7 @@ public class PVZConfig {
                 InvasionSettings.MaxSpawnEachPlayer = builder
                         .translation("config.pvz.invasion.spawn_count")
                         .comment("how many amount of entity will spawn to player.")
-                        .defineInRange("MaxSpawnCount", 50, 1, 1000);
+                        .defineInRange("MaxSpawnCount", 30, 1, 1000);
 
                 InvasionSettings.MaxSpawnRange = builder
                         .translation("config.pvz.invasion.spawn_range")
@@ -194,7 +194,7 @@ public class PVZConfig {
                     WorldSettings.LavaZombieSpawnWeight = builder
                             .translation("config.pvz.world.lava_zombie_weight")
                             .comment("spawn weight of LavaZombie at nether.")
-                            .defineInRange("LavaZombieSpawnWeight", 5, 1, 200);
+                            .defineInRange("LavaZombieSpawnWeight", 10, 1, 200);
 
                     WorldSettings.GigaTombStoneSpawnWeight = builder
                             .translation("config.pvz.world.giga_tomb_weight")
@@ -204,7 +204,7 @@ public class PVZConfig {
                     WorldSettings.YetiZombieSpawnWeight = builder
                             .translation("config.pvz.world.yeti_zombie_weight")
                             .comment("spawn weight of YetiZombie in overworld when thunder.")
-                            .defineInRange("YetiZombieSpawnWeight", 1, 1, 200);
+                            .defineInRange("YetiZombieSpawnWeight", 2, 1, 200);
                 }
                 builder.pop();
             }
@@ -223,7 +223,7 @@ public class PVZConfig {
                     EntitySettings.PlayerBaseSunAmount = builder
                             .translation("config.pvz.player.initial_sun")
                             .comment("players' base sun amount, it will increase when tree maxLevel increasing.")
-                            .defineInRange("PlayerInitialSun", 950, 100, 10000);
+                            .defineInRange("PlayerInitialSun", 800, 100, 10000);
                 }
                 builder.pop();
 
@@ -248,6 +248,11 @@ public class PVZConfig {
                             .translation("config.pvz.zombie.drop_part")
                             .comment("enable zombies to drop hands and heads when they got hurt(turn false to disable).")
                             .define("EnableZombieDropParts", true);
+
+                    EntitySettings.ZombieSetting.JackinboxBreak = builder
+                            .translation("config.pvz.zombie.jack_break")
+                            .comment("if on, jack-in-box zombie will break blocks nearby when explode.")
+                            .define("JackInBoxZombieBreakBlocks", false);
 
                 }
                 builder.pop();
@@ -429,6 +434,7 @@ public class PVZConfig {
                 public ForgeConfigSpec.IntValue ZombieSuperChance;
                 public ForgeConfigSpec.IntValue ZombieSunChance;
                 public ForgeConfigSpec.BooleanValue EnableZombieDropHands;
+                public ForgeConfigSpec.BooleanValue JackinboxBreak;
             }
 
             public static class PlantSetting {

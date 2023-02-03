@@ -352,7 +352,7 @@ public abstract class PVZZombieEntity extends AbstractPAZEntity implements IZomb
 
 	@Override
 	protected boolean canRemoveWhenDeath() {
-		return ConfigUtil.enableZombieDropParts() || super.canRemoveWhenDeath();
+		return (ConfigUtil.enableZombieDropParts() && !level.isClientSide) || super.canRemoveWhenDeath();//changed
 	}
 
 	@Override

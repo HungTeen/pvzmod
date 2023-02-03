@@ -7,9 +7,12 @@ public class ConfigUtil {
 	public static boolean isTeamAttackEnable() {
 		return PVZConfig.COMMON_CONFIG.RuleSettings.TeamAttack.get();
 	}
-	
+
 	public static boolean enableZombieDropParts() {
 		return PVZConfig.COMMON_CONFIG.EntitySettings.ZombieSetting.EnableZombieDropHands.get();
+	}
+	public static boolean jackinboxBreak() {
+		return PVZConfig.COMMON_CONFIG.EntitySettings.ZombieSetting.JackinboxBreak.get();
 	}
 
 	public static boolean enableHugeWave(){

@@ -93,7 +93,7 @@ public class EntitySpawnRegister {
 		if(BiomeUtil.isOverworld(biomeKey)) {
 			event.getSpawns().addSpawn(EntityClassification.AMBIENT, new Spawners(EntityRegister.SUN.get(), 2 * PVZConfig.COMMON_CONFIG.WorldSettings.SunSpawnWeight.get(), 1, 1));
 			if(BiomeUtil.isLand(biomeKey)) {
-//				event.getSpawns().addSpawn(EntityClassification.MONSTER, new Spawners(EntityRegister.GIGA_TOMB_STONE.get(), PVZConfig.COMMON_CONFIG.WorldSettings.GigaTombStoneSpawnWeight.get(), 1, 1));
+				event.getSpawns().addSpawn(EntityClassification.MONSTER, new Spawners(EntityRegister.GIGA_TOMB_STONE.get(), PVZConfig.COMMON_CONFIG.WorldSettings.GigaTombStoneSpawnWeight.get(), 1, 1));
 			}
 			if(BiomeUtil.isDesert(biomeKey)) {
 			}

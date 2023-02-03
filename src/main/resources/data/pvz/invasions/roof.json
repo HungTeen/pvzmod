@@ -11,7 +11,7 @@
     },
     {
       "entity_type": "pvz:conehead_zombie",
-      "invasion_level": 8,
+      "invasion_level": 4,
       "spawn_weight": 40
     },
     {

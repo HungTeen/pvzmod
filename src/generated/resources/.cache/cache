@@ -373,7 +373,7 @@ fc62f280ca7b4b2ed500f952d26dfd56a46001ad data/pvz/loot_tables/entities/giga_foot
 306ffb7276f8054018dc058deb50ed3ceebfd435 data/pvz/loot_tables/entities/lava_zombie.json
 4a9614dec81be0ebcfaf52a670fd6c07061c7639 data/pvz/loot_tables/entities/mourner_zombie.json
 137c7170f72b85909ea0b51af9b7cc50881fcfa0 data/pvz/loot_tables/entities/noble_zombie.json
-ee83abaf77da1415071371a3912e32c7dec282f0 data/pvz/loot_tables/entities/normal_zombie.json
+2d88f152a2c38c1fd9e37d5afeee65f2e412a57a data/pvz/loot_tables/entities/normal_zombie.json
 ce0f3486e587403a4b6b3b586aaba1e6c76b1c57 data/pvz/loot_tables/entities/peashooter_zombie.json
 03cd2f6a445f6192aa0eaa3ce1c5e3a20d6dcd69 data/pvz/loot_tables/entities/pumpkin_zombie.json
 b46d8a8b9a7772bcd0ec41968dc2ff2c6deae781 data/pvz/loot_tables/entities/ra_zombie.json
@@ -502,7 +502,7 @@ fce553c8267a8301de6323f436a2347e4d512c27 data/pvz/tags/blocks/radiations/to_arma
 1f70ed4ddc878bada5e43d3c44a34157806beda8 data/pvz/tags/blocks/radiations/to_enforce_ores.json
 f9a7b288b3b769cdc6469c21325951937857da74 data/pvz/tags/blocks/radiations/to_explosion_ores.json
 d479449e102666b62401e14276bacbb9a2ea7ea3 data/pvz/tags/blocks/radiations/to_flame_ores.json
-c271ce7ac008a2fa0b5c186ca91653613707df7d data/pvz/tags/blocks/radiations/to_ice_ores.json
+b35d6a6bc869418371526a7e0a94d255d79a2b33 data/pvz/tags/blocks/radiations/to_ice_ores.json
 f0dff80dfd53d12ed19778909c8dc417401cdac3 data/pvz/tags/blocks/radiations/to_light_ores.json
 e528ed32ae5cbee9f37cf36a8f1dc7c564da613b data/pvz/tags/blocks/radiations/to_magic_ores.json
 50e97df35e7309fbd5feb8f4161ce7888cf962ad data/pvz/tags/blocks/radiations/to_spear_ores.json

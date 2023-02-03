@@ -4,7 +4,6 @@ import com.google.common.collect.Maps;
 import com.hungteen.pvz.PVZMod;
 import com.hungteen.pvz.api.raid.IChallengeComponent;
 import com.hungteen.pvz.common.capability.CapabilityHandler;
-import com.hungteen.pvz.common.capability.challenge.RaiderDataProvider;
 import com.hungteen.pvz.utils.ConfigUtil;
 import net.minecraft.entity.Entity;
 import net.minecraft.nbt.CompoundNBT;
@@ -14,7 +13,7 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraft.world.server.ServerWorld;
 import net.minecraft.world.storage.WorldSavedData;
-import net.minecraftforge.event.AttachCapabilitiesEvent;
+import net.minecraftforge.event.entity.EntityTravelToDimensionEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 
 import java.util.Iterator;
@@ -152,4 +151,12 @@ public class PVZChallengeData extends WorldSavedData {
 		return ((ServerWorld) worldIn).getDataStorage().computeIfAbsent(() -> new PVZChallengeData((ServerWorld) worldIn), DATA_NAME);
 	}
 
+//	@SubscribeEvent
+//	public static void cancelRaidersChangeDimensions(EntityTravelToDimensionEvent ev){
+//		ev.getEntity().getCapability(CapabilityHandler.RAIDER_DATA_CAPABILITY).ifPresent(x -> {
+//			if (x.getChallengeID() > 0){
+//				ev.setCanceled(true);
+//			}
+//		});
+//	}
 }

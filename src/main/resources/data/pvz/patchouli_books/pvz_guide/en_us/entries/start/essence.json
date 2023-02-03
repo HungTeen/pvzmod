@@ -32,7 +32,7 @@
             "input_item2": "pvz:lunar_stone",
             "input_item3": "minecraft:redstone_block",
             "input_item4": "minecraft:granite",
-            "input_item5": "minecraft:blue_ice",
+            "input_item5": "minecraft:snow_block",
             "input_item6": "minecraft:andesite",
             "output_item1": "pvz:appease_ore",
             "output_item2": "pvz:light_ore",

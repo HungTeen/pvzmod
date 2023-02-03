@@ -43,6 +43,11 @@ public class SunEntity extends DropEntity {
 			this.setDeltaMovement(this.getDeltaMovement().x(), - fall_speed, this.getDeltaMovement().z());
 		}
 	}
+
+	public int getIcon() {
+		final int value = this.getAmount();
+		return value < 6 ? 0 : value < 16 ? 1 : value < 26 ? 2 : 3;
+	}//new added mark
 	
 	@Override
 	public EntitySize getDimensions(Pose poseIn) {

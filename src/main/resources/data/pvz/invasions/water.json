@@ -13,13 +13,13 @@
     {
       "entity_type": "pvz:snorkel_zombie",
       "invasion_level": 5,
-      "spawn_weight": 80,
+      "spawn_weight": 40,
       "placement": "water"
     },
     {
       "entity_type": "pvz:conehead_zombie",
-      "invasion_level": 10,
-      "spawn_weight": 60,
+      "invasion_level": 6,
+      "spawn_weight": 80,
       "placement": "water"
     },
     {

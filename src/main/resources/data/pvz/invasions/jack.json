@@ -11,7 +11,7 @@
     },
     {
       "entity_type": "pvz:jack_in_box_zombie",
-      "invasion_level": 8,
+      "invasion_level": 23,
       "spawn_weight": 40
     },
     {
