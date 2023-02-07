@@ -61,7 +61,9 @@ public class SpawnType{
         } else if(getPlaceType() == PlaceType.WATER){
             return ! world.getBlockState(pos.below()).getFluidState().isEmpty();
         } else if(getPlaceType() == PlaceType.SNOW){
-            return world.getBlockState(pos).getBlock() == Blocks.SNOW || world.getBlockState(pos.below()).getBlock() == Blocks.SNOW_BLOCK;
+            return world.getBlockState(pos.below()).getBlock() == Blocks.SNOW || world.getBlockState(pos.below()).getBlock() == Blocks.SNOW_BLOCK;
+        } else if(getPlaceType() == PlaceType.SNOW_AND_LAND){
+            return world.getBlockState(pos.below()).getBlock() == Blocks.SNOW || (world.getBlockState(pos.below()).isValidSpawn(world, pos.below(), this.spawnType) && world.getBlockState(pos.below()).getFluidState().isEmpty());
         } else if(getPlaceType() == PlaceType.SKY){
             return true;
         }
@@ -73,6 +75,7 @@ public class SpawnType{
         LAND,
         WATER,
         SNOW,
-        SKY
+        SKY,
+        SNOW_AND_LAND
     }
 }

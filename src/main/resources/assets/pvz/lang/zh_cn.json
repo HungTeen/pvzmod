@@ -966,6 +966,7 @@
   "config.pvz.zombie.drop_part": "僵尸掉落残肢",
   "config.pvz.zombie.max_level": "僵尸最高等级",
   "config.pvz.zombie.jack_break": "小丑僵尸破坏地形",
+  "config.pvz.zombie.immune_damage": "僵尸免疫环境伤害",
 
   "config.pvz.plant.strange_cat_count": "奇怪猫最大复制数",
   "config.pvz.plant.plant_bullet_merge": "合并重合的植物子弹",

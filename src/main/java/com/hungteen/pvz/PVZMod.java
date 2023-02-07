@@ -61,7 +61,6 @@ public class PVZMod {
     	forgeBus.addListener(EventPriority.NORMAL, GenStructures::addDimensionalSpacing);
     	forgeBus.addListener(EventPriority.HIGH, BiomeRegister::biomeModification);
 		forgeBus.addListener(EventPriority.NORMAL, PVZDataPackManager::addReloadListenerEvent);
-		forgeBus.addListener(EventPriority.NORMAL, GardenCompassItem::disturb);
     	
     	AdvancementHandler.init();
     	RegistryHandler.coreRegister();

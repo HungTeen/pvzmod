@@ -14,6 +14,9 @@ public class ConfigUtil {
 	public static boolean jackinboxBreak() {
 		return PVZConfig.COMMON_CONFIG.EntitySettings.ZombieSetting.JackinboxBreak.get();
 	}
+	public static boolean immuineToDamage() {
+		return PVZConfig.COMMON_CONFIG.EntitySettings.ZombieSetting.ImmuneDamage.get();
+	}
 
 	public static boolean enableHugeWave(){
 		return PVZConfig.COMMON_CONFIG.InvasionSettings.EnableHugeWave.get();

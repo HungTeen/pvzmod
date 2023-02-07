@@ -254,6 +254,11 @@ public class PVZConfig {
                             .comment("if on, jack-in-box zombie will break blocks nearby when explode.")
                             .define("JackInBoxZombieBreakBlocks", false);
 
+                    EntitySettings.ZombieSetting.ImmuneDamage = builder
+                            .translation("config.pvz.zombie.immune_damage")
+                            .comment("if on, fire & explode damages will not hurt most of the zombies.")
+                            .define("ImmuneToEnvironmentDamage", true);
+
                 }
                 builder.pop();
 
@@ -435,6 +440,7 @@ public class PVZConfig {
                 public ForgeConfigSpec.IntValue ZombieSunChance;
                 public ForgeConfigSpec.BooleanValue EnableZombieDropHands;
                 public ForgeConfigSpec.BooleanValue JackinboxBreak;
+                public ForgeConfigSpec.BooleanValue ImmuneDamage;
             }
 
             public static class PlantSetting {

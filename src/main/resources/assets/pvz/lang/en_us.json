@@ -970,6 +970,7 @@
     "config.pvz.zombie.drop_part":"Zombie Body Drop",
     "config.pvz.zombie.max_level":"Zombie Max Level",
     "config.pvz.zombie.jack_break": "Jack-in-Box Zombies break Blocks",
+    "config.pvz.zombie.immune_damage": "Immune to Environment Damage",
     
     "config.pvz.plant.strange_cat_count":"Max Strange Cat Count",
     "config.pvz.plant.plant_bullet_merge": "Merge Bullets when Coincide",

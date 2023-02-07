@@ -788,12 +788,12 @@ public abstract class PVZZombieEntity extends AbstractPAZEntity implements IZomb
 	
 	@Override
 	public boolean fireImmune() {
-		return true;
+		return !ConfigUtil.immuineToDamage();
 	}
 
 	@Override
 	public boolean ignoreExplosion() {
-		return true;
+		return !ConfigUtil.immuineToDamage();
 	}
 
 	/**

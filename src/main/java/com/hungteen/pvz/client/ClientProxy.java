@@ -27,6 +27,7 @@ import net.minecraft.item.ItemModelsProperties;
 import net.minecraft.item.ItemStack;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.util.Direction;
+import net.minecraft.util.Hand;
 import net.minecraft.util.RegistryKey;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockPos;
@@ -36,6 +37,7 @@ import net.minecraft.util.registry.Registry;
 import net.minecraft.world.World;
 import net.minecraft.world.biome.Biome;
 import net.minecraft.world.biome.Biomes;
+import net.minecraft.world.server.ServerWorld;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 
@@ -76,6 +78,7 @@ public class ClientProxy extends CommonProxy {
         ItemModelsProperties.register(ItemRegister.GARDEN_COMPASS.get(), StringUtil.prefix("angle"), new IItemPropertyGetter() {
             private final Angle wobble = new Angle();
             private final Angle wobbleRandom = new Angle();
+            private int tick = 0;
             private BlockPos pos = null;
 
             public float call(ItemStack p_call_1_, @Nullable ClientWorld p_call_2_, @Nullable LivingEntity p_call_3_) {
@@ -129,7 +132,7 @@ public class ClientProxy extends CommonProxy {
 
             @Nullable
             private BlockPos getPointPosition(ItemStack itemstack) {
-                return ((GardenCompassItem) itemstack.getItem()).pos;
+                return GardenCompassItem.getPos(itemstack);
             }
 
             private double getFrameRotation(ItemFrameEntity p_239441_1_) {
