@@ -1,0 +1,200 @@
+{
+  "authors": [
+    "hungteen"
+  ],
+  "tags": [
+    "overworld"
+  ],
+  "bar_color": "green",
+  "trade_price": 40,
+  "trade_weight": 100,
+  "recommend_level": 20,
+  "placement": {
+    "outer": {
+      "min": 1,
+      "max": 5,
+      "ground": true
+    }
+  },
+  "waves": [
+    {
+      "spawns": [
+        {
+          "entity_type": "pvz:screendoor_zombie",
+          "spawn_tick": 20,
+          "spawn_amount": {
+            "random": {
+              "min": 5,
+              "max": 5
+            }
+          }
+        },
+        {
+          "entity_type": "pvz:giga_football_zombie",
+          "spawn_tick": 80,
+          "spawn_amount": {
+            "random": {
+              "min": 3,
+              "max": 3
+            }
+          }
+        },
+        {
+          "entity_type": "pvz:wallnut_zombie",
+          "spawn_tick": 140,
+          "spawn_amount": {
+            "random": {
+              "min": 8,
+              "max": 8
+            }
+          }
+        },
+        {
+          "entity_type": "pvz:peashooter_zombie",
+          "spawn_tick": 200,
+          "spawn_amount": {
+            "random": {
+              "min": 15,
+              "max": 15
+            }
+          }
+        },
+        {
+          "entity_type": "pvz:bungee_zombie",
+          "spawn_tick": 260,
+          "spawn_amount": {
+            "random": {
+              "min": 10,
+              "max": 10
+            }
+          }
+        }
+      ],
+      "duration": 8000
+    },
+    {
+      "spawns": [
+        {
+          "entity_type": "pvz:football_zombie",
+          "spawn_tick": 20,
+          "spawn_amount": {
+            "random": {
+              "min": 10,
+              "max": 10
+            }
+          }
+        },
+        {
+          "entity_type": "pvz:giga_football_zombie",
+          "spawn_tick": 80,
+          "spawn_amount": {
+            "random": {
+              "min": 5,
+              "max": 5
+            }
+          }
+        },
+        {
+          "entity_type": "pvz:sunday_edition_zombie",
+          "spawn_tick": 140,
+          "spawn_amount": {
+            "random": {
+              "min": 6,
+              "max": 6
+            }
+          }
+        },
+        {
+          "entity_type": "pvz:tallnut_zombie",
+          "spawn_tick": 200,
+          "spawn_amount": {
+            "random": {
+              "min": 8,
+              "max": 8
+            }
+          }
+        },
+        {
+          "entity_type": "pvz:gatlingpea_zombie",
+          "spawn_tick": 260,
+          "spawn_amount": {
+            "random": {
+              "min": 10,
+              "max": 10
+            }
+          }
+        },
+        {
+          "entity_type": "pvz:squash_zombie",
+          "spawn_tick": 320,
+          "spawn_amount": {
+            "random": {
+              "min": 8,
+              "max": 8
+            }
+          }
+        },
+        {
+          "entity_type": "pvz:giga_gargantuar",
+          "spawn_tick": 380,
+          "spawn_amount": {
+            "random": {
+              "min": 2,
+              "max": 2
+            }
+          }
+        },
+        {
+          "entity_type": "pvz:bungee_zombie",
+          "spawn_tick": 440,
+          "spawn_amount": {
+            "random": {
+              "min": 4,
+              "max": 4
+            }
+          }
+        },
+        {
+          "entity_type": "pvz:trick_zombie",
+          "spawn_tick": 500,
+          "spawn_amount": {
+            "random": {
+              "min": 10,
+              "max": 10
+            }
+          }
+        }
+      ],
+      "duration": 8000
+    }
+  ],
+  "rewards": {
+    "unlocks": [
+      "pvz:magnet_shroom",
+      "pvz:coffee_bean"
+    ],
+    "items": [
+      {
+        "item": "pvz:coffee_bean_card",
+        "amount": {
+          "count": 1
+        }
+      },
+      {
+        "item": "pvz:tall_nut_card",
+        "amount": {
+          "count": 1
+        }
+      },
+      {
+        "item": "pvz:target_arrow",
+        "amount": {
+          "random": {
+            "min": 16,
+            "max": 32
+          }
+        }
+      }
+    ]
+  }
+}
