@@ -1,13 +1,16 @@
 package com.hungteen.pvz.common.entity.zombie.grass;
 
+import com.hungteen.pvz.api.types.IZombieType;
 import com.hungteen.pvz.common.entity.EntityRegister;
 import com.hungteen.pvz.common.entity.plant.assist.GraveBusterEntity;
+import com.hungteen.pvz.common.entity.zombie.PVZZombieEntity;
 import com.hungteen.pvz.common.entity.zombie.other.NobleZombieEntity;
 import com.hungteen.pvz.common.entity.zombie.roof.Edgar090505Entity;
 import com.hungteen.pvz.common.impl.zombie.GrassZombies;
 import com.hungteen.pvz.common.impl.zombie.ZombieType;
 import com.hungteen.pvz.utils.EntityUtil;
 import com.hungteen.pvz.utils.MathUtil;
+import com.hungteen.pvz.utils.ZombieUtil;
 import net.minecraft.entity.CreatureEntity;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.ai.goal.Goal;
@@ -16,6 +19,8 @@ import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
+
+import java.util.List;
 
 public class TombStoneEntity extends AbstractTombStoneEntity {
 
@@ -64,15 +69,17 @@ public class TombStoneEntity extends AbstractTombStoneEntity {
 	 * {@link TombStoneSummonZombieGoal} and {@link #normalZombieTick()}
 	 */
 	public void summonZombie() {
-//		final List<IZombieType> list = InvasionCache.getOrDefaultZombieList(ZombieUtil.DEFAULT_ZOMBIES);
-//		final IZombieType zombieType = list.get(this.random.nextInt(list.size()));
-//		zombieType.getEntityType().ifPresent(type -> {
-			//TODO tombstone zombie-summoning
-//			CreatureEntity zombie = type.create(maxLevel);
-//			zombie.setZombieRising();
-//			ZombieUtil.copySummonZombieData(this, zombie);
-//			EntityUtil.onEntitySpawn(maxLevel, zombie, blockPosition());
-//		});
+		final List<IZombieType> list = ZombieUtil.DEFAULT_ZOMBIES;
+		final IZombieType type = list.get(this.random.nextInt(list.size()));
+		type.getEntityType().ifPresent( t -> {
+				CreatureEntity zombie = t.create(this.level);
+				if (zombie instanceof PVZZombieEntity){
+					((PVZZombieEntity)zombie).setZombieRising();
+					ZombieUtil.copySummonZombieData(this, (PVZZombieEntity) zombie);
+				}
+				EntityUtil.onEntitySpawn(this.level, zombie, blockPosition());
+			}
+		);
 	}
 	
 	/**
