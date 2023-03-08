@@ -1,6 +1,7 @@
 package com.hungteen.pvz.common.entity;
 
 import com.hungteen.pvz.PVZConfig;
+import com.hungteen.pvz.PVZMod;
 import com.hungteen.pvz.api.interfaces.IAlmanacEntry;
 import com.hungteen.pvz.api.paz.IPAZEntity;
 import com.hungteen.pvz.api.types.IRankType;
@@ -11,6 +12,7 @@ import com.hungteen.pvz.common.entity.zombie.roof.BungeeZombieEntity;
 import com.hungteen.pvz.common.event.PVZLivingEvents;
 import com.hungteen.pvz.common.impl.SkillTypes;
 import com.hungteen.pvz.common.misc.PVZEntityDamageSource;
+import com.hungteen.pvz.utils.ConfigUtil;
 import com.hungteen.pvz.utils.EntityUtil;
 import com.hungteen.pvz.utils.MathUtil;
 import com.hungteen.pvz.utils.enums.PAZAlmanacs;
@@ -31,6 +33,7 @@ import net.minecraft.server.management.PreYggdrasilConverter;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.SoundEvent;
+import net.minecraft.util.math.vector.Vector3d;
 import net.minecraft.world.DifficultyInstance;
 import net.minecraft.world.IServerWorld;
 import net.minecraft.world.World;
@@ -61,10 +64,12 @@ public abstract class AbstractPAZEntity extends CreatureEntity implements IPAZEn
     protected boolean canBeMini = true;
     protected boolean canBeInvisible = true;
     protected boolean canBeRemove = true;
+    protected boolean canDespawn = true;
     protected boolean canBeStealByBungee = true;
     /* misc */
     protected boolean canSpawnDrop = true;
     protected boolean canHelpAttack = true;// no use ?
+    public boolean canGiveXP = false;
 
     static {
         //init drop list.
@@ -160,7 +165,13 @@ public abstract class AbstractPAZEntity extends CreatureEntity implements IPAZEn
             this.setOwnerUUID(player.getUUID());
         }
         this.heal(this.getMaxHealth());
-        this.setPersistenceRequired();//avoid being refreshed by chunk.
+    }
+
+    @Override
+    public void checkDespawn() {
+        if (this.canDespawn){
+            super.checkDespawn();
+        }
     }
 
     @Override
@@ -514,6 +525,7 @@ public abstract class AbstractPAZEntity extends CreatureEntity implements IPAZEn
         }
         {// states.
             compound.putInt("paz_states", this.getPAZState());
+            compound.putBoolean("can_despawn", this.canDespawn);
         }
         {// save paz skills.
             compound.put(SkillTypes.SKILL_TAG, this.getSkills());
@@ -544,6 +556,11 @@ public abstract class AbstractPAZEntity extends CreatureEntity implements IPAZEn
         {
             if(compound.contains("paz_states")){
                 this.setPAZState(compound.getInt("paz_states"));
+            }
+            if(compound.contains("can_despawn")){
+                this.canDespawn = compound.getBoolean("can_despawn");
+            } else{
+                this.canDespawn = false;
             }
         }
         {// paz skills.

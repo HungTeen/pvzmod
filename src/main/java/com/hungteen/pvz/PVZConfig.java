@@ -80,6 +80,16 @@ public class PVZConfig {
                         .comment("if turn to false, there will have no monster of other monsters spawn in overworld except pvz zombies.")
                         .define("CanSpawnDefaultMonster", true);
 
+                RuleSettings.AllZombieGiveXP = builder
+                        .translation("config.pvz.rule.all_zombie_give_xp")
+                        .comment("if turn to false, only invasion zombies will give tree xp.")
+                        .define("AllZombieGiveXP", false);
+
+                RuleSettings.DespawnOwnedEntityRange = builder
+                        .translation("config.pvz.rule.despawn_owned_entity_range")
+                        .comment("plants summoned by players will be naturally despawned if the distance to player's spawn point is farther than this number.")
+                        .defineInRange("DespawnOwnedEntityRange", 1000, -1, 100000);
+
                 RuleSettings.GiveBeginnerReward = builder
                         .translation("config.pvz.rule.beginner_reward")
                         .comment("If you set it true, you will get some basic plantcards when you first join world.")
@@ -274,6 +284,11 @@ public class PVZConfig {
                             .comment("whether two same bullets merge into one when coincide.")
                             .define("PlantBulletMerge", false);
 
+                    EntitySettings.PlantSetting.PlantMinimumLiveTick = builder
+                            .translation("config.pvz.plant.plant_minimum_live_tick")
+                            .comment("plants won't despawn before living for this long.")
+                            .defineInRange("PlantMinimumLiveTick", 2000, 0, 10000000);
+
                 }
                 builder.pop();
 
@@ -282,7 +297,7 @@ public class PVZConfig {
                     EntitySettings.EntityLiveTick.SunLiveTick = builder
                             .translation("config.pvz.entity.sun_live_tick")
                             .comment("how many ticks can the sun entity live.")
-                            .defineInRange("SunLiveTick", 400, 1, 1200);
+                            .defineInRange("SunLiveTick", 500, 1, 1200);
 
                     EntitySettings.EntityLiveTick.CoinLiveTick = builder
                             .translation("config.pvz.entity.coin_live_tick")
@@ -389,6 +404,8 @@ public class PVZConfig {
 
         public static class RuleSettings {
             public ForgeConfigSpec.BooleanValue CanSpawnDefaultMonster;
+            public ForgeConfigSpec.BooleanValue AllZombieGiveXP;
+            public ForgeConfigSpec.IntValue DespawnOwnedEntityRange;
             public ForgeConfigSpec.BooleanValue GiveBeginnerReward;
             public ForgeConfigSpec.BooleanValue AllowNaturalTurnOrigin;
             public ForgeConfigSpec.BooleanValue TeamAttack;
@@ -446,6 +463,7 @@ public class PVZConfig {
             public static class PlantSetting {
                 public ForgeConfigSpec.IntValue StrangeCatCount;
                 public ForgeConfigSpec.BooleanValue PlantBulletMerge;
+                public ForgeConfigSpec.IntValue PlantMinimumLiveTick;
             }
 
             public static class EntityLiveTick {

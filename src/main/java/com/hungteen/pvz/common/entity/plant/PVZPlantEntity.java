@@ -28,6 +28,7 @@ import com.hungteen.pvz.client.particle.ParticleRegister;
 import com.hungteen.pvz.common.misc.sound.SoundRegister;
 import com.hungteen.pvz.remove.MetalTypes;
 import com.hungteen.pvz.utils.AlgorithmUtil;
+import com.hungteen.pvz.utils.ConfigUtil;
 import com.hungteen.pvz.utils.EffectUtil;
 import com.hungteen.pvz.utils.EntityUtil;
 import com.hungteen.pvz.utils.enums.PAZAlmanacs;
@@ -141,6 +142,15 @@ public abstract class PVZPlantEntity extends AbstractPAZEntity implements IPlant
 			this.level.getProfiler().push("PVZ Normal Plant Tick");
 			this.normalPlantTick();
 			this.level.getProfiler().pop();
+		}
+
+		if (!level.isClientSide()){
+			getOwnerPlayer().ifPresent(p -> {
+				Vector3d self = this.getPosition(0);
+				BlockPos owner = ((ServerPlayerEntity) p).getRespawnPosition() == null ? new BlockPos(0, 0, 0): ((ServerPlayerEntity) p).getRespawnPosition();
+				this.canDespawn = this.tickCount > ConfigUtil.getPlantMinimumTick() &&
+					owner.distSqr(self.x(), self.y(), self.z(), true) > ConfigUtil.despawnOwnedEntityRange() * ConfigUtil.despawnOwnedEntityRange();
+			});
 		}
 	}
 	

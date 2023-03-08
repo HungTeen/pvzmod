@@ -1,0 +1,12 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "ingredients": [
+    {
+      "item": "pvz:origin_block"
+    }
+  ],
+  "result": {
+    "item": "pvz:origin_essence",
+    "count": 4
+  }
+}

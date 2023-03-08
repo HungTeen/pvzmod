@@ -55,7 +55,7 @@ public class GigaFootballZombieEntity extends FootballZombieEntity {
 	@Override
 	protected void doPush(Entity target) {
 		if(this.isRushing() && target instanceof LivingEntity) {
-			target.hurt(PVZEntityDamageSource.causeCrushDamage(this), EntityUtil.getMaxHealthDamage((LivingEntity) target));
+			target.hurt(PVZEntityDamageSource.causeCrushDamage(this), EntityUtil.getMaxHealthDamage((LivingEntity) target, 0.3F));
 			this.updateRush(false);
 		}
 	}
@@ -72,7 +72,7 @@ public class GigaFootballZombieEntity extends FootballZombieEntity {
 
 	@Override
 	public float getEatDamage() {
-		return ZombieUtil.NORMAL_DAMAGE;
+		return ZombieUtil.LITTLE_LOW;
 	}
 
 	@Override

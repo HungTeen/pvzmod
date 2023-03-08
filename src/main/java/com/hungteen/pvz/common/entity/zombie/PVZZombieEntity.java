@@ -386,7 +386,7 @@ public abstract class PVZZombieEntity extends AbstractPAZEntity implements IZomb
 	protected void dropSun() {
 		int num = this.getRandom().nextInt(8) + 3;
 		for (int i = 0; i < num; ++i) {
-			SunEntity.spawnSunRandomly(level, blockPosition().above(), 25, 2);
+			SunEntity.dropSunRandomly(level, blockPosition().above(), 25, 2);
 		}
 	}
 	

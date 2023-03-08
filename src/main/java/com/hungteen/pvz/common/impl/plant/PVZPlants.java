@@ -68,7 +68,7 @@ public final class PVZPlants extends PlantType {
 	
 	public static final IPlantType SUN_FLOWER = new PVZPlants("sun_flower", new PlantFeatures()
 			.cost(50).requiredLevel(1)
-			.cd(CoolDowns.FAST).rank(RankTypes.WHITE).essence(EssenceTypes.LIGHT)
+			.cd(CoolDowns.NORMAL).rank(RankTypes.WHITE).essence(EssenceTypes.LIGHT)
 			.entityType(() -> EntityRegister.SUN_FLOWER.get())
 			.summonCard(() -> ItemRegister.SUN_FLOWER_CARD.get())
 			.enjoyCard(() -> ItemRegister.SUN_FLOWER_ENJOY_CARD.get())

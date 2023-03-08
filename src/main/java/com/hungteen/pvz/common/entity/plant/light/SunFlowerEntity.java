@@ -31,7 +31,7 @@ public class SunFlowerEntity extends PlantProducerEntity{
 
 	@Override
 	public void genSuper() {
-		SunEntity.spawnSunsByAmount(level, blockPosition(), this.getSuperSunAmount(), 100, 3);
+		SunEntity.spawnSunsByAmount(level, blockPosition(), this.getSuperSunAmount(), 100, 1);
 		EntityUtil.playSound(this, SoundEvents.EXPERIENCE_ORB_PICKUP);
 	}
 
@@ -58,9 +58,9 @@ public class SunFlowerEntity extends PlantProducerEntity{
 	}
 	
 	@Override
-	public int getGenCD() {//slow down 4 times at night or rain.
-		final int time = 500;
-		return this.level.isDay() && ! this.level.isRaining() ? time : 4 * time;
+	public int getGenCD() {
+		final int time = 250;
+		return this.level.isDay() ?(this.level.isRaining() ? 2 * time : time) : 3 * time;
 	}
 	
 	@Override

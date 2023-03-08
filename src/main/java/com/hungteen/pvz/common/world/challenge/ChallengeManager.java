@@ -84,8 +84,8 @@ public class ChallengeManager {
 		final List<Challenge> list = getChallenges(world);
 		for(Challenge r : list) {
 			if(Math.abs(r.getCenter().getX() - pos.getX()) <= ConfigUtil.getRaidRange()
-					|| Math.abs(r.getCenter().getY() - pos.getY()) <= ConfigUtil.getRaidRange()
-					|| Math.abs(r.getCenter().getZ() - pos.getZ()) <= ConfigUtil.getRaidRange()) {
+					&& Math.abs(r.getCenter().getY() - pos.getY()) <= ConfigUtil.getRaidRange()
+					&& Math.abs(r.getCenter().getZ() - pos.getZ()) <= ConfigUtil.getRaidRange()) {
 				return Optional.ofNullable(r);
 			}
 		}

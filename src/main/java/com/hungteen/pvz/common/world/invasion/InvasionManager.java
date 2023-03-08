@@ -37,7 +37,7 @@ public class InvasionManager {
     private static final ITextComponent END = new TranslationTextComponent("invasion.pvz.end")
             .withStyle(TextFormatting.GREEN);
     public static final ITextComponent HUGE_WAVE = new TranslationTextComponent("invasion.pvz.huge_wave").withStyle(TextFormatting.DARK_RED);
-    public static final int[] SPAWN_COUNT_EACH_WAVE = new int[] {10, 13, 17, 22, 26, 34, 40, 42, 44, 46};
+    public static final int[] SPAWN_COUNT_EACH_WAVE = new int[] {10, 12, 16, 20, 24, 30, 36, 42, 44, 46};
     public static final int PRE_START_TICK = 499;
     public static final int START_TICK = 500;
     public static final int PRE_END_TICK = 99;

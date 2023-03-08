@@ -35,9 +35,9 @@ public class ZombieUtil {
 	public static final float HUGE_LOW = 3;
 	public static final float VERY_LOW = 4;
 	public static final float LOW = 5;
-	public static final float LITTLE_LOW = 7;
-	public static final float NORMAL_DAMAGE = 10;
-	public static final float LITTLE_HIGH = 15;
+	public static final float LITTLE_LOW = 6;
+	public static final float NORMAL_DAMAGE = 8;
+	public static final float LITTLE_HIGH = 12;
 	public static final float HIGH = 20;
 	public static final float VERY_HIGH = 30;
 	public static final float HUGE_HIGH = 50;

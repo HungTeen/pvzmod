@@ -21,7 +21,7 @@
     },
     {
       "entity_type": "pvz:old_zombie",
-      "invasion_level": 30,
+      "invasion_level": 45,
       "spawn_weight": 40
     },
     {

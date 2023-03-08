@@ -29,14 +29,12 @@ import net.minecraft.util.text.StringTextComponent;
 import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraft.world.Difficulty;
 import net.minecraft.world.World;
+import net.minecraftforge.common.util.TriPredicate;
 import net.minecraftforge.event.TickEvent;
 import net.minecraftforge.fml.network.PacketDistributor;
 
 import javax.annotation.Nullable;
-import java.util.Collection;
-import java.util.HashSet;
-import java.util.Random;
-import java.util.Set;
+import java.util.*;
 
 import static com.hungteen.pvz.common.world.invasion.InvasionManager.suitableInvasionPos;
 
@@ -102,9 +100,9 @@ public class Invasion {
             world.getProfiler().pop();
 
             world.getProfiler().push("Invasion Wave Tick");
-            final int dayTime = (int) world.getDayTime();
-            if (this.currentWave < this.getTotalWaveCount() && dayTime == this.getWaveTime(this.currentWave)) {
-            	this.spawnWaveInvaders();
+            final int time = (int)world.getDayTime()%24000;
+            if (time == this.getWaveTime(this.currentWave) && this.currentWave < this.getTotalWaveCount() && this.getWaveTime(this.currentWave) > 0) {
+                this.spawnWaveInvaders();
                 this.setWaveTriggered(this.currentWave ++, this.spawnWaveInvaders());//wave spawn.
             }
             world.getProfiler().pop();
@@ -113,27 +111,30 @@ public class Invasion {
             MissionManager.tickMission(this);
             world.getProfiler().pop();
         }
-        if (world.getDayTime() > 15000 && world.getDayTime() < 22000){
-
-        }
     }
 
-    public void spawnInvaders() {
+    public boolean currentSituation(TriPredicate<Integer, Integer, Integer> predicate){
         final int range = PVZConfig.COMMON_CONFIG.InvasionSettings.MaxSpawnRange.get();
-        final int maxCount = PVZConfig.COMMON_CONFIG.InvasionSettings.MaxSpawnEachPlayer.get();
-        final long count = EntityUtil.getFriendlyLivings(player, EntityUtil.getEntityAABB(player, range, range))
+        final int maxzombieCount = PVZConfig.COMMON_CONFIG.InvasionSettings.MaxSpawnEachPlayer.get();
+        final int plantcount = (int) EntityUtil.getFriendlyLivings(player, EntityUtil.getEntityAABB(player, range, range))
                 .stream().filter(entity -> {
                     return entity instanceof PVZPlantEntity;
                 }).count() + 1;
-        final int current = EntityUtil
+        final int zombiecount = EntityUtil
                 .getPredicateEntities(player, EntityUtil.getEntityAABB(player, range, range), MobEntity.class, e -> {
                     return isInvasionEntity(e.getType());
                 }).size();
+        return predicate.test(plantcount, zombiecount, maxzombieCount);
+    }
 
-        if (current < maxCount*(0.2 + 0.8 * (count > 15 ? 1 : count / 15))) {
+    public void spawnInvaders() {
+        if (currentSituation((p, z, m) -> {
+            this.currentCount = Math.min(z, m);
+            return z < m*(0.2 + 0.8 * (p > 15 ? 1 : p / 15));
+        })) {
             for (int i = 0; i < this.getSpawnCount(); ++i) {
                 final SpawnType type = getSpawnList().getRandomItem(world.random).get();
-                final BlockPos pos = WorldUtil.findRandomSpawnPos(world, player.blockPosition(), 10, 12, range,
+                final BlockPos pos = WorldUtil.findRandomSpawnPos(world, player.blockPosition(), 10, 12, PVZConfig.COMMON_CONFIG.InvasionSettings.MaxSpawnRange.get(),
                         b -> InvasionManager.suitableInvasionPos(world, b) && type.checkPos(world, b));
 
                 if (pos != null) {
@@ -142,21 +143,26 @@ public class Invasion {
                 }
             }
         }
-        this.currentCount = Math.min(current, maxCount);
     }
 
     public boolean spawnWaveInvaders() {
         //can only spawn in overworld, and peaceful, and wave enable.
-        if (!PlayerUtil.isPlayerSurvival(player) || !world.dimension().equals(World.OVERWORLD) || world.getDifficulty() == Difficulty.PEACEFUL || !ConfigUtil.enableHugeWave()) {
+        if (player.isSpectator() || !world.dimension().equals(World.OVERWORLD) || world.getDifficulty() == Difficulty.PEACEFUL || !ConfigUtil.enableHugeWave()) {
+            PVZMod.LOGGER.info("wave "+ currentWave +" zombies of "+player.getName().getString()+" failed for some case at " + (int) world.getDayTime());
             return false;
         }
-        
+        if (currentSituation((p, z, m) -> p < z / 2)) {
+            PVZMod.LOGGER.info("wave "+ currentWave +" zombies of "+ player.getName().getString() +" cancelled for too few plants nearby.");
+            return false;
+        }
         if (getSpawnList().isEmpty()) {
-            PVZMod.LOGGER.warn("WaveManager : Why cause spawn list empty ?");
+            PVZMod.LOGGER.warn("WaveManager : Why is spawn list empty ?");
             return false;
         }
-        
+
         int cnt = this.getSpawnCount(this.currentWave);
+
+
         boolean spawned = false;
         while (cnt >= 15) {//split whole zombie to serveral zombie teams.
             final int teamCnt = (cnt < 20 ? cnt : 10);
@@ -176,6 +182,7 @@ public class Invasion {
 //		        this.checkAndSummonBungee();
 //		    }
         }
+        PVZMod.LOGGER.info("wave "+ currentWave +" zombies of "+player.getName().getString()+" launched at "+(int) world.getDayTime());
         return spawned;
     }
 
@@ -218,8 +225,11 @@ public class Invasion {
 
     private void spawnInvader(SpawnType spawnType, BlockPos pos){
         Entity entity = EntityUtil.createWithNBT(world, spawnType.getSpawnType(), spawnType.getNbt(), pos);
-        if(InvasionManager.enableSkills(this.world) && entity instanceof AbstractPAZEntity){
-            AbstractPAZEntity.randomInitSkills((AbstractPAZEntity) entity, Math.max(0, this.invasionLvl - spawnType.getInvasionLevel()));
+        if (entity instanceof AbstractPAZEntity){
+            ((AbstractPAZEntity) entity).canGiveXP = true;
+            if(InvasionManager.enableSkills(this.world)){
+                AbstractPAZEntity.randomInitSkills((AbstractPAZEntity) entity, Math.max(0, this.invasionLvl - spawnType.getInvasionLevel()));
+            }
         }
         if(entity instanceof LivingEntity) {
         	if(InvasionManager.hasInvisInvasion(this)){
@@ -241,7 +251,7 @@ public class Invasion {
      */
     private int getSpawnCount(int currentWave) {
         final int maxCnt = InvasionManager.SPAWN_COUNT_EACH_WAVE[currentWave];
-        final int minCnt = maxCnt / 2;
+        final int minCnt = maxCnt * 2 / 3;
         return MathUtil.getRandomMinMax(world.random, minCnt, maxCnt);
     }
 

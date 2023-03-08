@@ -40,7 +40,7 @@ public class PeaShooterZombieEntity extends AbstractZombotanyEntity {
 	
 	private void shootPea() {
 		LivingEntity target = this.getTarget();
-		if(target == null) {
+		if(target == null || this.isAlive()) {
 			return ;
 		}
 		PeaEntity pea = new PeaEntity(level, this, PeaEntity.Type.NORMAL, PeaEntity.State.NORMAL);

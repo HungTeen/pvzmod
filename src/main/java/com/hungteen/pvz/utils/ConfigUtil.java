@@ -52,9 +52,15 @@ public class ConfigUtil {
 	public static int getLimitPlantCount() {
 		return PVZConfig.COMMON_CONFIG.RuleSettings.LimitPlantCount.get();
 	}
+	public static int despawnOwnedEntityRange() {
+		return PVZConfig.COMMON_CONFIG.RuleSettings.DespawnOwnedEntityRange.get();
+	}
 
 	public static boolean needUnlockToPlant() {
 		return PVZConfig.COMMON_CONFIG.RuleSettings.NeedUnlockToPlant.get();
+	}
+	public static boolean AllZombieGiveXP() {
+		return PVZConfig.COMMON_CONFIG.RuleSettings.AllZombieGiveXP.get();
 	}
 
 	public static boolean renderSunBar() {
@@ -88,5 +94,8 @@ public class ConfigUtil {
 	public static int getLimitDamage(){
 		return PVZConfig.COMMON_CONFIG.RuleSettings.MaxDamageLimit.get();
 	}
-	
+
+	public static int getPlantMinimumTick(){
+		return PVZConfig.COMMON_CONFIG.EntitySettings.PlantSetting.PlantMinimumLiveTick.get();
+	}
 }

@@ -54,7 +54,7 @@ public class GigaGargantuarEntity extends GargantuarEntity {
 
 	@Override
 	public float getWalkSpeed() {
-		return ZombieUtil.WALK_LITTLE_SLOW;
+		return ZombieUtil.WALK_SLOW;
 	}
 
 	@Override

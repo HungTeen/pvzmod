@@ -26,7 +26,7 @@ import net.minecraft.world.World;
 
 public class TrickZombieEntity extends PVZZombieEntity{
 
-	public static final int EXPLOSION_CHANCE = 8;
+	public static final int EXPLOSION_CHANCE = 5;
 	public static final int SUMMON_CHACNE = 5;
 	private int lastSummonTick = 0;
 	private final int summonGap = 40;
@@ -39,7 +39,7 @@ public class TrickZombieEntity extends PVZZombieEntity{
 	protected void initAttributes() {
 		super.initAttributes();
 		this.getAttribute(Attributes.MOVEMENT_SPEED).setBaseValue(ZombieUtil.WALK_LITTLE_FAST);
-		this.getAttribute(Attributes.ATTACK_DAMAGE).setBaseValue(ZombieUtil.NORMAL_DAMAGE);
+		this.getAttribute(Attributes.ATTACK_DAMAGE).setBaseValue(ZombieUtil.HUGE_LOW);
 	}
 	
 	@Override

@@ -26,7 +26,7 @@
     },
     {
       "entity_type": "pvz:digger_zombie",
-      "invasion_level": 23,
+      "invasion_level": 35,
       "spawn_weight": 20
     },
     {
@@ -41,7 +41,7 @@
     },
     {
       "entity_type": "pvz:football_zombie",
-      "invasion_level": 35,
+      "invasion_level": 28,
       "spawn_weight": 20
     },
     {

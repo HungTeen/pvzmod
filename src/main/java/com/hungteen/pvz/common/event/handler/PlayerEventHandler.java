@@ -99,7 +99,7 @@ public class PlayerEventHandler {
      */
     public static void onPlayerKillEntity(PlayerEntity player, DamageSource source, LivingEntity living) {
         if (living instanceof AbstractPAZEntity) {
-            if (EntityUtil.isEnemy(player, living)) {
+            if (EntityUtil.isEnemy(player, living) && (((AbstractPAZEntity) living).canGiveXP || ConfigUtil.AllZombieGiveXP())) {
                 PlayerUtil.addResource(player, Resources.TREE_XP, ((AbstractPAZEntity) living).getPAZType().getXpPoint());
             }
         }
