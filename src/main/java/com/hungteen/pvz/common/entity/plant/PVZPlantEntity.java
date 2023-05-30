@@ -146,7 +146,7 @@ public abstract class PVZPlantEntity extends AbstractPAZEntity implements IPlant
 
 		if (!level.isClientSide()){
 			getOwnerPlayer().ifPresent(p -> {
-				Vector3d self = this.getPosition(0);
+				Vector3d self = this.position();
 				BlockPos owner = ((ServerPlayerEntity) p).getRespawnPosition() == null ? new BlockPos(0, 0, 0): ((ServerPlayerEntity) p).getRespawnPosition();
 				this.canDespawn = this.tickCount > ConfigUtil.getPlantMinimumTick() &&
 					owner.distSqr(self.x(), self.y(), self.z(), true) > ConfigUtil.despawnOwnedEntityRange() * ConfigUtil.despawnOwnedEntityRange();
