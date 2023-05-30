@@ -35,14 +35,14 @@ public class SunFlowerTrophyTER extends TileEntityRenderer<SunFlowerTrophyTileEn
 		if(block == null) return ;
 		matrixStackIn.pushPose();
 		matrixStackIn.scale(- 1, - 1, 1);
-		float size = 0.4F;
+		float size = 1F;
 		matrixStackIn.scale(size, size, size);
-		matrixStackIn.translate(- 1.25D, - 3.4D, 1.25D);
+		matrixStackIn.translate(- 0.5D, -2.25D, 0.5D);
 		Direction facing = tileEntityIn.getBlockState().getValue(AbstractFacingBlock.FACING);
 		if(facing == Direction.SOUTH) matrixStackIn.mulPose(Vector3f.YP.rotationDegrees(180));
 		else if(facing == Direction.WEST) matrixStackIn.mulPose(Vector3f.YP.rotationDegrees(- 90));
 		else if(facing == Direction.EAST) matrixStackIn.mulPose(Vector3f.YP.rotationDegrees(90));
-		IVertexBuilder builder = bufferIn.getBuffer(RenderType.entitySolid(getResourceByBlock(block)));
+		IVertexBuilder builder = bufferIn.getBuffer(RenderType.entityTranslucent(getResourceByBlock(block)));
 		this.model.renderToBuffer(matrixStackIn, builder, 200, OverlayTexture.NO_OVERLAY, 1F, 1F, 1F, 1F);
 		
 		matrixStackIn.popPose();

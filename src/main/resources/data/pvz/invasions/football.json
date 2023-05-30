@@ -5,19 +5,9 @@
   "display_color": "black",
   "spawns": [
     {
-      "entity_type": "pvz:normal_zombie",
-      "invasion_level": 1,
-      "spawn_weight": 100
-    },
-    {
       "entity_type": "pvz:screendoor_zombie",
-      "invasion_level": 7,
-      "spawn_weight": 60
-    },
-    {
-      "entity_type": "pvz:dancing_zombie",
       "invasion_level": 15,
-      "spawn_weight": 30
+      "spawn_weight": 60
     },
     {
       "entity_type": "pvz:football_zombie",
@@ -25,8 +15,13 @@
       "spawn_weight": 40
     },
     {
+      "entity_type": "pvz:dancing_zombie",
+      "invasion_level": 35,
+      "spawn_weight": 30
+    },
+    {
       "entity_type": "pvz:giga_football_zombie",
-      "invasion_level": 40,
+      "invasion_level": 50,
       "spawn_weight": 25
     }
   ]

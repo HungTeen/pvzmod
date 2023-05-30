@@ -5,8 +5,12 @@ import com.hungteen.pvz.common.CommonProxy;
 import com.hungteen.pvz.common.advancement.AdvancementHandler;
 import com.hungteen.pvz.common.block.cubes.OriginBlock;
 import com.hungteen.pvz.common.datapack.PVZDataPackManager;
+import com.hungteen.pvz.common.item.tool.GardenCompassItem;
 import com.hungteen.pvz.common.world.biome.BiomeRegister;
+import com.hungteen.pvz.common.world.challenge.Challenge;
+import com.hungteen.pvz.common.world.challenge.PVZChallengeData;
 import com.hungteen.pvz.common.world.feature.GenStructures;
+import net.minecraft.entity.Entity;
 import net.minecraftforge.common.ForgeConfigSpec;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.eventbus.api.EventPriority;
@@ -34,12 +38,12 @@ public class PVZMod {
     // Mod ID.
 	public static final String MOD_ID = "pvz";
 	// Mod Version.
-	public static final String MOD_VERSION = "0.6.1";
+	public static final String MOD_VERSION = "0.6.3";
 	// Proxy of Server and Client.
 	public static CommonProxy PROXY = DistExecutor.safeRunForDist(() -> ClientProxy::new, () -> CommonProxy::new);
 	
     public PVZMod() {
-    	{
+		{
 			final Pair<PVZConfig.Common, ForgeConfigSpec> specPair = new ForgeConfigSpec.Builder().configure(PVZConfig.Common::new);
     		ModLoadingContext.get().registerConfig(Type.COMMON, specPair.getRight());
     		PVZConfig.COMMON_CONFIG = specPair.getLeft();

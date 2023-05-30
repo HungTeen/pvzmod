@@ -16,17 +16,17 @@
     },
     {
       "entity_type": "pvz:screendoor_zombie",
-      "invasion_level": 15,
+      "invasion_level": 20,
       "spawn_weight": 50
     },
     {
       "entity_type": "pvz:old_zombie",
-      "invasion_level": 25,
+      "invasion_level": 45,
       "spawn_weight": 40
     },
     {
       "entity_type": "pvz:sunday_edition_zombie",
-      "invasion_level": 35,
+      "invasion_level": 45,
       "spawn_weight": 30
     }
   ]

@@ -28,9 +28,11 @@ import javax.annotation.Nullable;
 import java.util.List;
 import java.util.Optional;
 
+import static java.lang.Math.*;
+
 public class PlayerUtil {
 
-	public static final int[] TREE_LVL_XP = new int[] {100, 250, 500, 1000, 2000, 4000, 8000, 12500, 18000, 25000, 32000, 40000, 50000, 63000, 75000, 88000, 100000, 120000, 150000, 180000}; 
+//	public static final int[] TREE_LVL_XP = new int[] {100, 250, 500, 1000, 2000, 4000, 5000, 6000, 7000, 8000, 10000, 12000, 15000, 18000, 21000, 25000, 30000, 350000, 40000, 50000};
 	private static int OLD_PLAYER_LEVEL = 0;
 	private static int CACHE_MAX_SUN = 0;
 	
@@ -55,8 +57,7 @@ public class PlayerUtil {
 	 * {@link PlayerDataManager#addResource(Resources, int)}
 	 */
 	public static int getPlayerLevelUpXp(int lvl){
-		final int pos = lvl / 5;
-		return pos < TREE_LVL_XP.length ? TREE_LVL_XP[pos] : 200000;
+		return (int) round(80+400*log10(lvl)+lvl*30);
 	}
 
 	@Nullable

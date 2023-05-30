@@ -64,6 +64,14 @@
         {
           "type": "minecraft:item",
           "name": "pvz:zombie_doll"
+        },
+        {
+          "type": "minecraft:item",
+          "name": "minecraft:bamboo"
+        },
+        {
+          "type": "minecraft:item",
+          "name": "pvz:almanac"
         }
       ],
       "conditions": [

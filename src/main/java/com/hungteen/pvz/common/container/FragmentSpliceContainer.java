@@ -1,10 +1,12 @@
 package com.hungteen.pvz.common.container;
 
 import com.hungteen.pvz.common.block.BlockRegister;
+import com.hungteen.pvz.common.item.spawn.card.SummonCardItem;
 import com.hungteen.pvz.common.item.tool.plant.SunStorageSaplingItem;
 import com.hungteen.pvz.common.recipe.RecipeRegister;
 import com.hungteen.pvz.common.recipe.FragmentRecipe;
 import com.hungteen.pvz.common.tileentity.FragmentSpliceTileEntity;
+import com.hungteen.pvz.utils.PlayerUtil;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.inventory.CraftingInventory;
 import net.minecraft.inventory.container.Slot;
@@ -67,9 +69,13 @@ public class FragmentSpliceContainer extends PVZContainer {
 	}
 
 	public void onCraft(){
-		this.te.handler.setStackInSlot(1, getResult().copy());
+		final ItemStack result = getResult().copy();
+		this.te.handler.setStackInSlot(1, result);
 		this.te.clearCraftingSlots();
 		this.te.sunAmount = 0;
+		if(result.getItem() instanceof SummonCardItem){
+			PlayerUtil.setPAZLock(this.player, ((SummonCardItem) result.getItem()).type, false);
+		}
 	}
 
 	public ItemStack getResult(){

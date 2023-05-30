@@ -14,98 +14,66 @@ import net.minecraft.util.math.MathHelper;
 
 public class MelonPultModel extends PVZPlantModel<MelonPultEntity> {
 	private final ModelRenderer total;
-	private final ModelRenderer leaves;
-	private final ModelRenderer leave1;
-	private final ModelRenderer leave2;
-	private final ModelRenderer leave3;
-	private final ModelRenderer leave4;
-	private final ModelRenderer body;
+	private final ModelRenderer nw_r1;
+	private final ModelRenderer sw_r1;
+	private final ModelRenderer se_r1;
+	private final ModelRenderer ne_r1;
 	private final ModelRenderer pult;
-	private final ModelRenderer basket;
+	private final ModelRenderer bone;
 	private final ModelRenderer melon;
-	private final ModelRenderer cube_r1;
-	private final ModelRenderer face;
 
 	public MelonPultModel() {
-		texWidth = 128;
-		texHeight = 128;
+		texWidth = 64;
+		texHeight = 64;
 
 		total = new ModelRenderer(this);
-		total.setPos(0.0F, 23.75F, 0.0F);
-		
+		total.setPos(0.0F, 24.0F, 0.0F);
+		total.texOffs(0, 0).addBox(-7.0F, -10.5F, -5.0F, 14.0F, 10.0F, 10.0F, 0.0F, false);
+		total.texOffs(32, 44).addBox(-7.0F, -8.0F, -5.2F, 14.0F, 2.0F, 0.0F, 0.0F, false);
 
-		leaves = new ModelRenderer(this);
-		leaves.setPos(0.0F, 0.25F, 0.0F);
-		total.addChild(leaves);
-		
+		nw_r1 = new ModelRenderer(this);
+		nw_r1.setPos(0.0F, 0.0F, 0.0F);
+		total.addChild(nw_r1);
+		setRotationAngle(nw_r1, -0.0873F, 0.0F, -0.0873F);
+		nw_r1.texOffs(29, 0).addBox(-1.0F, 0.0F, -8.0F, 11.0F, 0.0F, 9.0F, 0.0F, false);
 
-		leave1 = new ModelRenderer(this);
-		leave1.setPos(-9.0F, 0.0F, -9.0F);
-		leaves.addChild(leave1);
-		leave1.texOffs(48, 97).addBox(0.0F, -1.0F, 2.0F, 3.0F, 1.0F, 3.0F, 0.0F, false);
-		leave1.texOffs(60, 98).addBox(-1.0F, -1.0F, 1.0F, 2.0F, 1.0F, 2.0F, -0.1F, false);
+		sw_r1 = new ModelRenderer(this);
+		sw_r1.setPos(0.0F, 0.0F, 0.0F);
+		total.addChild(sw_r1);
+		setRotationAngle(sw_r1, 0.0873F, 0.0F, -0.0873F);
+		sw_r1.texOffs(13, 47).addBox(-1.0F, 0.0F, -1.0F, 11.0F, 0.0F, 9.0F, 0.0F, false);
 
-		leave2 = new ModelRenderer(this);
-		leave2.setPos(6.0F, 0.0F, -5.0F);
-		leaves.addChild(leave2);
-		leave2.texOffs(68, 97).addBox(0.0F, -1.0F, -2.0F, 3.0F, 1.0F, 3.0F, 0.0F, false);
-		leave2.texOffs(78, 97).addBox(2.0F, -1.0F, -3.0F, 2.0F, 1.0F, 2.0F, -0.1F, false);
+		se_r1 = new ModelRenderer(this);
+		se_r1.setPos(0.0F, 0.0F, 0.0F);
+		total.addChild(se_r1);
+		setRotationAngle(se_r1, 0.0873F, 0.0F, 0.0873F);
+		se_r1.texOffs(-9, 47).addBox(-10.0F, 0.0F, -1.0F, 11.0F, 0.0F, 9.0F, 0.0F, false);
 
-		leave3 = new ModelRenderer(this);
-		leave3.setPos(-2.0F, 0.0F, 2.0F);
-		leaves.addChild(leave3);
-		leave3.texOffs(0, 85).addBox(-7.0F, -1.0F, 2.0F, 3.0F, 1.0F, 3.0F, 0.0F, false);
-		leave3.texOffs(0, 82).addBox(-8.0F, -1.0F, 4.0F, 2.0F, 1.0F, 2.0F, -0.1F, false);
-
-		leave4 = new ModelRenderer(this);
-		leave4.setPos(2.0F, 0.0F, 2.0F);
-		leaves.addChild(leave4);
-		leave4.texOffs(8, 80).addBox(4.0F, -1.0F, 2.0F, 3.0F, 1.0F, 3.0F, 0.0F, false);
-		leave4.texOffs(0, 79).addBox(6.0F, -1.0F, 4.0F, 2.0F, 1.0F, 2.0F, -0.1F, false);
-
-		body = new ModelRenderer(this);
-		body.setPos(0.0F, 1.0F, 0.0F);
-		total.addChild(body);
-		body.texOffs(0, 106).addBox(-8.0F, -11.0F, -6.0F, 16.0F, 10.0F, 12.0F, -0.2F, false);
-		body.texOffs(100, 112).addBox(-6.5F, -9.5F, -6.25F, 13.0F, 7.0F, 1.0F, -0.2F, false);
-		body.texOffs(56, 112).addBox(-8.25F, -9.5F, -4.5F, 1.0F, 7.0F, 9.0F, -0.2F, false);
-		body.texOffs(76, 112).addBox(7.25F, -9.5F, -4.5F, 1.0F, 7.0F, 9.0F, -0.2F, false);
-		body.texOffs(100, 120).addBox(-6.5F, -9.5F, 5.25F, 13.0F, 7.0F, 1.0F, -0.2F, false);
-		body.texOffs(84, 102).addBox(-6.5F, -11.25F, -4.5F, 13.0F, 1.0F, 9.0F, -0.2F, false);
-		body.texOffs(49, 101).addBox(-6.5F, -1.75F, -4.5F, 13.0F, 1.0F, 9.0F, -0.2F, false);
+		ne_r1 = new ModelRenderer(this);
+		ne_r1.setPos(0.0F, 0.0F, 0.0F);
+		total.addChild(ne_r1);
+		setRotationAngle(ne_r1, -0.0873F, 0.0F, 0.0873F);
+		ne_r1.texOffs(39, 18).addBox(-10.0F, 0.0F, -8.0F, 11.0F, 0.0F, 9.0F, 0.0F, false);
 
 		pult = new ModelRenderer(this);
-		pult.setPos(0.0F, -6.5F, 6.0F);
+		pult.setPos(0.0F, -7.0F, 0.0F);
 		total.addChild(pult);
-		pult.texOffs(102, 80).addBox(-1.0F, -1.0F, -1.5F, 2.0F, 2.0F, 11.0F, -0.2F, false);
-		pult.texOffs(75, 89).addBox(-1.0F, -1.0F, 8.5F, 2.0F, 2.0F, 5.0F, -0.4F, false);
+		setRotationAngle(pult, 0.3927F, 0.0F, 0.0F);
+		pult.texOffs(38, 51).addBox(-1.0F, -1.0F, -1.0F, 2.0F, 2.0F, 11.0F, 0.0F, false);
 
-		basket = new ModelRenderer(this);
-		basket.setPos(0.0F, 0.75F, 1.75F);
-		pult.addChild(basket);
-		basket.texOffs(96, 93).addBox(-4.0F, 0.0F, 12.0F, 8.0F, 1.0F, 8.0F, 0.0F, false);
-		basket.texOffs(0, 103).addBox(-4.0F, -2.0F, 11.0F, 8.0F, 2.0F, 1.0F, 0.0F, false);
-		basket.texOffs(0, 100).addBox(-4.0F, -2.0F, 20.0F, 8.0F, 2.0F, 1.0F, 0.0F, false);
-		basket.texOffs(34, 79).addBox(-5.0F, -2.0F, 11.0F, 1.0F, 2.0F, 10.0F, 0.0F, false);
-		basket.texOffs(51, 83).addBox(4.0F, -2.0F, 11.0F, 1.0F, 2.0F, 10.0F, 0.0F, false);
+		bone = new ModelRenderer(this);
+		bone.setPos(0.0F, 0.0F, 9.0F);
+		pult.addChild(bone);
+		setRotationAngle(bone, -0.2182F, 0.0F, 0.0F);
+		bone.texOffs(48, 9).addBox(-1.0F, -1.0F, -2.0F, 2.0F, 2.0F, 5.0F, 0.0F, false);
+		bone.texOffs(0, 20).addBox(-5.0F, -2.0F, 3.0F, 10.0F, 5.0F, 10.0F, 0.0F, false);
+		bone.texOffs(0, 44).addBox(-4.0F, -2.0F, 4.0F, 8.0F, 4.0F, 8.0F, 0.0F, false);
 
 		melon = new ModelRenderer(this);
-		melon.setPos(-0.5F, 0.0F, 12.5F);
-		basket.addChild(melon);
-		setRotationAngle(melon, 0.3054F, 0.0F, 0.0F);
-		
-
-		cube_r1 = new ModelRenderer(this);
-		cube_r1.setPos(0.0F, 0.0F, 0.0F);
-		melon.addChild(cube_r1);
-		setRotationAngle(cube_r1, -0.0873F, 0.0F, 0.0F);
-		cube_r1.texOffs(10, 82).addBox(-3.0F, -6.0541F, -0.2441F, 7.0F, 6.0F, 10.0F, -0.3F, false);
-
-		face = new ModelRenderer(this);
-		face.setPos(0.0F, 0.75F, -2.25F);
-		total.addChild(face);
-		face.texOffs(0, 114).addBox(-4.0F, -7.5F, -4.3F, 2.0F, 3.0F, 1.0F, -0.45F, false);
-		face.texOffs(0, 110).addBox(2.0F, -7.5F, -4.3F, 2.0F, 3.0F, 1.0F, -0.45F, false);
+		melon.setPos(0.0F, -5.5F, 8.0F);
+		bone.addChild(melon);
+		setRotationAngle(melon, -0.6545F, 0.0F, 0.0F);
+		melon.texOffs(32, 27).addBox(-4.0F, -3.5F, -3.0F, 8.0F, 9.0F, 8.0F, 0.0F, false);
 	}
 
 	@Override

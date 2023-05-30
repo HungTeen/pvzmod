@@ -120,6 +120,10 @@ public class PVZAPIImpl implements IPVZAPI{
 		return ChallengeManager.isRaider(world, entity);
 	}
 
+	public Challenge getEntityChallenge(ServerWorld world, Entity entity){
+		return ChallengeManager.getEntityChallenge(world, entity);
+	}
+
 	@Override
 	public Optional<Challenge> getNearByRaid(ServerWorld world, BlockPos pos) {
 		return ChallengeManager.getChallengeNearBy(world, pos);

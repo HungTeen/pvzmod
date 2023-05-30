@@ -1,6 +1,6 @@
 {
   "isAssistInvasion": false,
-  "triggerChance": 40,
+  "triggerChance": 10,
   "bonus": "pvz:roof",
   "display_color": "dark_red",
   "spawns": [

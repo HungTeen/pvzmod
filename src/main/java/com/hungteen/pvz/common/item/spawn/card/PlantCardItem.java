@@ -454,19 +454,26 @@ public class PlantCardItem extends SummonCardItem {
 			return false;
 		}
 		/* check lock */
-		if(! cardItem.isEnjoyCard && PlayerUtil.isPAZLocked(player, cardItem.plantType)) {
-			cardItem.notifyPlayerAndCD(player, stack, PlacementErrors.LOCK_ERROR);
+		if(! cardItem.isEnjoyCard && (PlayerUtil.isPAZLocked(player, cardItem.plantType) && ConfigUtil.needUnlockToPlant() && !player.isCreative())) {
+			cardItem.notifyPlayerAndCD(player, stack, PlacementErrors.LOCK_ERROR, cardItem.plantType.getRequiredLevel());
 			return false;
 		}
 		/* whether consider surrounding plants number */
 		final int sunCost = ignore ? cardItem.getBasisSunCost(stack) : cardItem.getCardSunCost(player, stack);
 		/* check sun */
-		if(sunCost > PlayerUtil.getResource(player, Resources.SUN_NUM)) {
-			cardItem.notifyPlayerAndCD(player, stack, PlacementErrors.SUN_ERROR, sunCost);
+		if(sunCost > PlayerUtil.getResource(player, Resources.SUN_NUM) && !player.isCreative()) {
+			if (sunCost == cardItem.getBasisSunCost(stack)) {
+				cardItem.notifyPlayerAndCD(player, stack, PlacementErrors.SUN_ERROR, sunCost);
+			}
+			else {
+				cardItem.notifyPlayerAndCD(player, stack, PlacementErrors.MULTIPLE_SUN_ERROR, sunCost);
+			}
 			return false;
 		}
 		if(pre.test(player)) {
-			PlayerUtil.addResource(player, Resources.SUN_NUM, - sunCost);
+			if (! player.isCreative()){
+				PlayerUtil.addResource(player, Resources.SUN_NUM, - sunCost);
+			}
 			return true;
 		}
 		return false;
@@ -580,7 +587,11 @@ public class PlantCardItem extends SummonCardItem {
 	public int getCardSunCost(PlayerEntity player, ItemStack stack) {
 		final int range = 30;
 		final long count = EntityUtil.getFriendlyLivings(player, EntityUtil.getEntityAABB(player, range, range))
-		    .stream().filter(entity -> entity instanceof PVZPlantEntity).count() + 1;
+		    .stream().filter(entity -> {
+				return entity instanceof PVZPlantEntity
+						&& ((PVZPlantEntity) entity).getOwnerUUID().isPresent()
+						&& ((PVZPlantEntity) entity).getOwnerUUID().get().equals(player.getUUID());
+			}).count() + 1;
 
 		final long multipy = Math.max(0, (count - ConfigUtil.getLimitPlantCount() - DenselyPlantEnchantment.getExtraPlantNum(stack) + 4) / 5);
 		return (int) Math.min(100000L, this.getBasisSunCost(stack) * (1L << multipy));

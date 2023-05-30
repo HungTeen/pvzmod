@@ -8,6 +8,7 @@ import com.hungteen.pvz.common.impl.SkillTypes;
 import com.hungteen.pvz.common.item.PVZItemGroups;
 import com.hungteen.pvz.common.item.PVZRarity;
 import com.hungteen.pvz.common.misc.sound.SoundRegister;
+import com.hungteen.pvz.utils.ConfigUtil;
 import com.hungteen.pvz.utils.PlayerUtil;
 import com.hungteen.pvz.utils.StringUtil;
 import net.minecraft.client.util.ITooltipFlag;
@@ -82,7 +83,7 @@ public abstract class SummonCardItem extends Item{
 		tooltip.add(new TranslationTextComponent("tooltip.pvz.card_cd", new TranslationTextComponent(getCardCoolDown(stack).getTranslateKey()).getString()).withStyle(TextFormatting.AQUA));
 		PlayerUtil.getOptManager(PVZMod.PROXY.getPlayer()).ifPresent(m -> {
 			//this paz type is locked.
-			if (m.isPAZLocked(this.type)) {
+			if (m.isPAZLocked(this.type) && ! this.isEnjoyCard && ConfigUtil.needUnlockToPlant()) {
 				tooltip.add(new TranslationTextComponent("tooltip.pvz.card_required_level", getCardRequiredLevel(stack)).withStyle(TextFormatting.RED));
 			}
 		});
@@ -140,6 +141,7 @@ public abstract class SummonCardItem extends Item{
 
 	protected enum PlacementErrors{
 		SUN_ERROR("sun"),
+		MULTIPLE_SUN_ERROR("multiple_sun"),
 		CD_ERROR("cd"),
 		LOCK_ERROR("lock"),
 		UPGRADE_ERROR("upgrade"),

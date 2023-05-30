@@ -79,6 +79,9 @@ public class BungeeZombieEntity extends PVZZombieEntity implements ICanPushBack 
 	public void normalZombieTick() {
 		super.normalZombieTick();
 		if(! level.isClientSide) {
+			if (tickCount > 1000 && tickCount % 80 == 0 && this.canDespawn && this.getBungeeState() == BungeeStates.WAIT){
+				this.remove();
+			}
 			//being push back by umbrella leaf.
 			if(this.getBungeeState() == BungeeStates.PUSH_BACK) {
 				this.setAttackTime(this.getAttackTime() - 1);
@@ -140,7 +143,7 @@ public class BungeeZombieEntity extends PVZZombieEntity implements ICanPushBack 
 		} else if(this.getBungeeState() == BungeeStates.UP) {
 			this.setAttackTime(this.getAttackTime() - 1);
 			this.moveBackToOrigin();
-			if(this.getStealTarget() != null && this.getAttackTime() < - 60) {
+			if(this.getStealTarget() != null && this.getAttackTime() < - 100) {
 				this.dealDamageAndRemove();
 				return ;
 			}
@@ -198,7 +201,7 @@ public class BungeeZombieEntity extends PVZZombieEntity implements ICanPushBack 
 			this.setAttackTime(this.getAttackTime() - 1);
 			this.moveBackToOrigin();
 			this.getStealTarget().startRiding(this);
-			if(this.getAttackTime() < - 60) {
+			if(this.getAttackTime() < - 100) {
 				this.dealDamageAndRemove();
 				return ;
 			}
@@ -291,7 +294,7 @@ public class BungeeZombieEntity extends PVZZombieEntity implements ICanPushBack 
 	}
 	
 	private void dealDamageAndRemove() {
-		this.getStealTarget().hurt(PVZEntityDamageSource.causeDeadlyDamage(this, this), EntityUtil.getMaxHealthDamage(this.getStealTarget()));
+//		this.getStealTarget().hurt(PVZEntityDamageSource.causeDeadlyDamage(this, this), EntityUtil.getMaxHealthDamage(this.getStealTarget()));//removed by GrassCarp.
 		this.remove();
 	}
 	

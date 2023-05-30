@@ -6,18 +6,18 @@
   "spawns": [
     {
       "entity_type": "pvz:zomboni",
-      "invasion_level": 25,
+      "invasion_level": 40,
       "spawn_weight": 40
     },
     {
       "entity_type": "pvz:bobsle_team",
-      "invasion_level": 30,
+      "invasion_level": 45,
       "spawn_weight": 20,
       "placement": "snow"
     },
     {
       "entity_type": "pvz:catapult_zombie",
-      "invasion_level": 35,
+      "invasion_level": 40,
       "spawn_weight": 40
     }
   ]

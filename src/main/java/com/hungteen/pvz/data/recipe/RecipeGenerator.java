@@ -123,22 +123,6 @@ public class RecipeGenerator extends ForgeRecipeProvider{
 		), ItemRegister.TALL_NUT_CARD.get());
 
 		registerFusion(consumer, Arrays.asList(
-				ItemRegister.WALL_NUT_CARD.get(),
-				ItemRegister.WALL_NUT_CARD.get(),
-				ItemRegister.WALL_NUT_CARD.get(),
-				ItemRegister.WALL_NUT_CARD.get(),
-				ItemRegister.WALL_NUT_CARD.get(),
-				ItemRegister.WALL_NUT_CARD.get(),
-				ItemRegister.WALL_NUT_CARD.get(),
-				ItemRegister.WALL_NUT_CARD.get()
-		), ItemRegister.GIANT_WALL_NUT_CARD.get());
-
-		registerFusion(consumer, Arrays.asList(
-				ItemRegister.WALL_NUT_CARD.get(),
-				ItemRegister.CHERRY_BOMB_CARD.get()
-				), ItemRegister.EXPLODE_O_NUT_CARD.get());
-
-		registerFusion(consumer, Arrays.asList(
 				ItemRegister.SCAREDY_SHROOM_CARD.get(),
 				ItemRegister.TANGLE_KELP_CARD.get()
 		), ItemRegister.SEA_SHROOM_CARD.get());
@@ -220,9 +204,9 @@ public class RecipeGenerator extends ForgeRecipeProvider{
 		final Item origin = ItemRegister.ORIGIN_ESSENCE.get();
 		if (material != null) {
 			ShapedRecipeBuilder.shaped(rankCard)
-					.pattern("AAA")
+					.pattern(" A ")
 					.pattern("ABA")
-					.pattern("AAA")
+					.pattern(" A ")
 					.define('A', material)
 					.define('B', origin)
 					.unlockedBy("has_origin", has(origin))

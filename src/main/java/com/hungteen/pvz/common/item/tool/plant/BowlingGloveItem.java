@@ -39,15 +39,18 @@ import net.minecraft.world.World;
 import net.minecraft.world.server.ServerWorld;
 import net.minecraftforge.event.entity.player.PlayerInteractEvent;
 
+/**
+ * TODO bowling glove
+ * @author 86152
+ *
+ */
 public class BowlingGloveItem extends Item {
 
 	public static final String BOWLING_STRING = "bowling_type";
 	private static final Map<String, BowlingType> BOWLINGS = new HashMap<>();
 	
 	static {
-		registerBowling(PVZPlants.WALL_NUT, () -> EntityRegister.WALL_NUT_BOWLING.get(), 0.2F);
-		registerBowling(PVZPlants.EXPLODE_O_NUT, () -> EntityRegister.EXPLOSION_BOWLING.get(), 0.2F);
-		registerBowling(PVZPlants.GIANT_WALL_NUT, () -> EntityRegister.GIANT_NUT_BOWLING.get(), 0.4F);
+		registerBowling(PVZPlants.WALL_NUT, () -> EntityRegister.WALL_NUT_BOWLING.get(), 1F);
 	}
 
 	public BowlingGloveItem() {
@@ -102,20 +105,20 @@ public class BowlingGloveItem extends Item {
 	}
 	
 	public static void onPickUp(PlayerInteractEvent.EntityInteractSpecific ev) {
-		if(ev.getItemStack().getItem().equals(ItemRegister.BOWLING_GLOVE.get())) {
-			if(ev.getTarget() instanceof PVZPlantEntity) {
-			    final PVZPlantEntity plantEntity = (PVZPlantEntity) ev.getTarget();
-			    if(isBowlingPlant(plantEntity)) {
-				    setBowlingType(ev.getItemStack(), plantEntity.getPlantType());
-				    ev.getTarget().remove();
-				    return ;
-			    }
-			}
-		    if(! ev.getSide().isClient()) {
-			    PlayerUtil.sendMsgTo(ev.getPlayer(), new TranslationTextComponent("help.pvz.bowling_glove.fail").withStyle(TextFormatting.RED));
-			    ev.getPlayer().getCooldowns().addCooldown(ev.getItemStack().getItem(), 20);
-		    }
-		}
+//		if(ev.getItemStack().getItem().equals(ItemRegister.BOWLING_GLOVE.get())) {
+//			if(ev.getTarget() instanceof PVZPlantEntity) {
+//			    final PVZPlantEntity plantEntity = (PVZPlantEntity) ev.getTarget();
+//			    if(isBowlingPlant(plantEntity)) {
+//				    setBowlingType(ev.getItemStack(), plantEntity.getPlantType());
+//				    ev.getTarget().remove();
+//				    return ;
+//			    }
+//			}
+//		    if(! ev.getSide().isClient()) {
+//			    PlayerUtil.sendMsgTo(ev.getPlayer(), new TranslationTextComponent("help.pvz.bowling_glove.fail").withStyle(TextFormatting.RED));
+//			    ev.getPlayer().getCooldowns().addCooldown(ev.getItemStack().getItem(), 20);
+//		    }
+//		}
 	}
 	
 	/**

@@ -102,7 +102,7 @@ public abstract class PlantShooterEntity extends PVZPlantEntity implements IShoo
             final double deltaZ = forwardOffset * vec.z + rightOffset * vec.x;
             final AbstractBulletEntity bullet = this.createBullet();
             bullet.setPos(this.getX() + deltaX, this.getY() + deltaY, this.getZ() + deltaZ);
-            bullet.shootPea(vec.x, target.getY() + target.getBbHeight() - bullet.getY(), vec.z, this.getBulletSpeed(), angleOffset);
+            bullet.shootPea(target.getX() - bullet.getX(), target.getY() + target.getBbHeight() - bullet.getY(), target.getZ() - bullet.getZ(), this.getBulletSpeed(), angleOffset);
             if(needSound) {
             	EntityUtil.playSound(this, this.getShootSound());
             }

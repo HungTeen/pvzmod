@@ -115,7 +115,10 @@
     "subtitle": "sound.pvz.bowling_hit",
     "sounds": [
       {
-        "name": "pvz:bowling_hit"
+        "name": "pvz:bowling_hit1"
+      },
+      {
+        "name": "pvz:bowling_hit2"
       }
     ]
   },

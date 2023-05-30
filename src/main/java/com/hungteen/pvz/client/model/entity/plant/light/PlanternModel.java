@@ -14,145 +14,73 @@ import net.minecraft.client.renderer.model.ModelRenderer;
 public class PlanternModel extends PVZPlantModel<PlanternEntity> {
 	private final ModelRenderer total;
 	private final ModelRenderer head;
-	private final ModelRenderer Eyes;
-	private final ModelRenderer light;
-	private final ModelRenderer body;
-	private final ModelRenderer bone2;
-	private final ModelRenderer cube_r1;
-	private final ModelRenderer cube_r2;
-	private final ModelRenderer cube_r3;
-	private final ModelRenderer cube_r4;
-	private final ModelRenderer cube_r5;
-	private final ModelRenderer cube_r6;
+	private final ModelRenderer bottom;
+	private final ModelRenderer stick1;
+	private final ModelRenderer stick2;
+	private final ModelRenderer stick3;
+	private final ModelRenderer stick4;
+	private final ModelRenderer stick5;
+	private final ModelRenderer stick6;
 
 	public PlanternModel() {
 		texWidth = 128;
 		texHeight = 128;
 
 		total = new ModelRenderer(this);
-		total.setPos(-1.0F, 24.0F, 0.0F);
-		
+		total.setPos(0.0F, 24.0F, 0.0F);
+
 
 		head = new ModelRenderer(this);
-		head.setPos(2.0F, -20.0F, -1.0F);
+		head.setPos(0.0F, 0.0F, 0.0F);
 		total.addChild(head);
-		head.texOffs(25, 55).addBox(-4.0F, -6.0F, -2.5F, 6.0F, 6.0F, 7.0F, 0.0F, false);
-		head.texOffs(0, 60).addBox(-4.0F, -6.5F, -2.0F, 6.0F, 7.0F, 6.0F, 0.0F, false);
-		head.texOffs(60, 28).addBox(-4.0F, -6.0F, -2.0F, 6.0F, 6.0F, 6.0F, 0.3F, false);
-		head.texOffs(51, 55).addBox(-4.5F, -6.0F, -2.0F, 7.0F, 6.0F, 6.0F, 0.0F, false);
+		head.texOffs(0, 0).addBox(-2.0F, -33.0F, -2.0F, 4.0F, 4.0F, 4.0F, 0.0F, false);
+		head.texOffs(42, 47).addBox(-6.0F, -29.0F, 0.0F, 12.0F, 3.0F, 0.0F, 0.0F, false);
+		head.texOffs(42, 32).addBox(0.0F, -29.0F, -6.0F, 0.0F, 3.0F, 12.0F, 0.0F, false);
+		head.texOffs(0, 23).addBox(-9.0F, -26.0F, -9.0F, 18.0F, 3.0F, 18.0F, 0.0F, false);
+		head.texOffs(0, 0).addBox(-9.5F, -23.0F, -9.5F, 19.0F, 4.0F, 19.0F, 0.0F, false);
+		head.texOffs(45, 53).addBox(-5.5F, -25.0F, -5.5F, 11.0F, 11.0F, 11.0F, 0.0F, false);
+		head.texOffs(0, 64).addBox(-5.0F, -25.0F, -5.0F, 10.0F, 11.0F, 10.0F, 0.0F, false);
+		head.texOffs(0, 44).addBox(-7.0F, -14.0F, -7.0F, 14.0F, 6.0F, 14.0F, 0.0F, false);
+		head.texOffs(89, 0).addBox(-2.0F, -14.0F, -2.0F, 4.0F, 8.0F, 4.0F, 0.0F, false);
 
-		Eyes = new ModelRenderer(this);
-		Eyes.setPos(-2.0F, -2.0F, -5.0F);
-		head.addChild(Eyes);
-		Eyes.texOffs(0, 44).addBox(-1.0F, -2.5F, 2.0F, 1.0F, 3.0F, 1.0F, 0.0F, false);
-		Eyes.texOffs(42, 4).addBox(2.0F, -2.5F, 2.0F, 1.0F, 3.0F, 1.0F, 0.0F, false);
+		bottom = new ModelRenderer(this);
+		bottom.setPos(0.0F, 0.0F, 0.0F);
+		total.addChild(bottom);
+		bottom.texOffs(42, 50).addBox(-5.0F, -3.0F, 0.0F, 10.0F, 3.0F, 0.0F, 0.0F, false);
+		bottom.texOffs(0, 0).addBox(0.0F, -3.0F, -5.0F, 0.0F, 3.0F, 10.0F, 0.0F, false);
+		bottom.texOffs(89, 12).addBox(-2.0F, -6.0F, -2.0F, 4.0F, 6.0F, 4.0F, 0.0F, false);
 
-		light = new ModelRenderer(this);
-		light.setPos(0.0F, -17.0F, 0.0F);
-		total.addChild(light);
-		light.texOffs(21, 105).addBox(-4.0F, -12.0F, -5.0F, 10.0F, 12.0F, 0.0F, 0.0F, false);
-		light.texOffs(0, 95).addBox(-4.0F, -12.0F, -5.0F, 0.0F, 12.0F, 10.0F, 0.0F, false);
-		light.texOffs(43, 105).addBox(-4.0F, -12.0F, 5.0F, 10.0F, 12.0F, 0.0F, 0.0F, false);
-		light.texOffs(65, 95).addBox(6.0F, -12.0F, -5.0F, 0.0F, 12.0F, 10.0F, 0.0F, false);
+		stick1 = new ModelRenderer(this);
+		stick1.setPos(0.0F, 0.0F, 0.0F);
+		total.addChild(stick1);
+		stick1.texOffs(106, 0).addBox(-2.0F, -9.0F, -2.0F, 4.0F, 9.0F, 4.0F, -0.01F, false);
 
-		body = new ModelRenderer(this);
-		body.setPos(0.0F, 0.0F, 0.0F);
-		total.addChild(body);
-		body.texOffs(60, 44).addBox(-2.0F, -14.0F, -3.0F, 6.0F, 4.0F, 6.0F, 0.0F, false);
-		body.texOffs(72, 0).addBox(-1.5F, -10.0F, -2.5F, 5.0F, 2.0F, 5.0F, 0.2F, false);
-		body.texOffs(46, 67).addBox(-1.5F, -10.0F, -2.5F, 5.0F, 10.0F, 5.0F, 0.0F, false);
-		body.texOffs(0, 51).addBox(-3.0F, -15.0F, -4.0F, 8.0F, 1.0F, 8.0F, 0.0F, false);
-		body.texOffs(42, 0).addBox(-4.0F, -17.0F, -5.0F, 10.0F, 2.0F, 10.0F, 0.0F, false);
-		body.texOffs(30, 44).addBox(-4.0F, -32.0F, -5.0F, 10.0F, 1.0F, 10.0F, 0.5F, false);
-		body.texOffs(40, 16).addBox(-4.0F, -33.5F, -5.0F, 10.0F, 2.0F, 10.0F, 0.0F, false);
-		body.texOffs(0, 38).addBox(-4.0F, -35.0F, -5.0F, 10.0F, 3.0F, 10.0F, -0.5F, false);
-		body.texOffs(30, 30).addBox(-4.0F, -36.5F, -5.0F, 10.0F, 4.0F, 10.0F, -1.0F, false);
-		body.texOffs(26, 72).addBox(-5.0F, -17.0F, -5.0F, 1.0F, 1.0F, 10.0F, 0.0F, false);
-		body.texOffs(66, 67).addBox(-5.0F, -30.0F, -5.0F, 1.0F, 1.0F, 10.0F, 0.0F, false);
-		body.texOffs(70, 12).addBox(6.0F, -17.0F, -5.0F, 1.0F, 1.0F, 10.0F, 0.0F, false);
-		body.texOffs(14, 68).addBox(6.0F, -30.0F, -5.0F, 1.0F, 1.0F, 10.0F, 0.0F, false);
-		body.texOffs(26, 68).addBox(-4.0F, -17.0F, 5.0F, 10.0F, 1.0F, 1.0F, 0.0F, false);
-		body.texOffs(40, 28).addBox(-4.0F, -30.0F, 5.0F, 10.0F, 1.0F, 1.0F, 0.0F, false);
-		body.texOffs(56, 14).addBox(-4.0F, -17.0F, -6.0F, 10.0F, 1.0F, 1.0F, 0.0F, false);
-		body.texOffs(42, 12).addBox(-4.0F, -30.0F, -6.0F, 10.0F, 1.0F, 1.0F, 0.0F, false);
-		body.texOffs(66, 78).addBox(6.0F, -30.0F, -6.0F, 1.0F, 14.0F, 1.0F, 0.0F, false);
-		body.texOffs(8, 78).addBox(6.0F, -30.0F, 5.0F, 1.0F, 14.0F, 1.0F, 0.0F, false);
-		body.texOffs(0, 53).addBox(-4.0F, -18.0F, -6.0F, 1.0F, 1.0F, 1.0F, 0.0F, false);
-		body.texOffs(36, 51).addBox(5.0F, -18.0F, -6.0F, 1.0F, 1.0F, 1.0F, 0.0F, false);
-		body.texOffs(46, 4).addBox(5.0F, -29.0F, -6.0F, 1.0F, 1.0F, 1.0F, 0.0F, false);
-		body.texOffs(30, 44).addBox(5.0F, -29.0F, 5.0F, 1.0F, 1.0F, 1.0F, 0.0F, false);
-		body.texOffs(4, 44).addBox(-4.0F, -29.0F, 5.0F, 1.0F, 1.0F, 1.0F, 0.0F, false);
-		body.texOffs(28, 51).addBox(5.0F, -18.0F, 5.0F, 1.0F, 1.0F, 1.0F, 0.0F, false);
-		body.texOffs(24, 51).addBox(-4.0F, -18.0F, 5.0F, 1.0F, 1.0F, 1.0F, 0.0F, false);
-		body.texOffs(4, 51).addBox(-5.0F, -18.0F, 4.0F, 1.0F, 1.0F, 1.0F, 0.0F, false);
-		body.texOffs(0, 51).addBox(-5.0F, -18.0F, -5.0F, 1.0F, 1.0F, 1.0F, 0.0F, false);
-		body.texOffs(34, 46).addBox(-5.0F, -29.0F, -5.0F, 1.0F, 1.0F, 1.0F, 0.0F, false);
-		body.texOffs(30, 46).addBox(-5.0F, -29.0F, 4.0F, 1.0F, 1.0F, 1.0F, 0.0F, false);
-		body.texOffs(48, 8).addBox(6.0F, -18.0F, -5.0F, 1.0F, 1.0F, 1.0F, 0.0F, false);
-		body.texOffs(4, 46).addBox(6.0F, -29.0F, -5.0F, 1.0F, 1.0F, 1.0F, 0.0F, false);
-		body.texOffs(34, 44).addBox(6.0F, -29.0F, 4.0F, 1.0F, 1.0F, 1.0F, 0.0F, false);
-		body.texOffs(46, 6).addBox(6.0F, -18.0F, 4.0F, 1.0F, 1.0F, 1.0F, 0.0F, false);
-		body.texOffs(32, 51).addBox(-4.0F, -29.0F, -6.0F, 1.0F, 1.0F, 1.0F, 0.0F, false);
-		body.texOffs(0, 78).addBox(-5.0F, -30.0F, -6.0F, 1.0F, 14.0F, 1.0F, 0.0F, false);
-		body.texOffs(4, 78).addBox(-5.0F, -30.0F, 5.0F, 1.0F, 14.0F, 1.0F, 0.0F, false);
-		body.texOffs(0, 0).addBox(-6.0F, -31.001F, -7.0F, 14.0F, 2.0F, 14.0F, 0.0F, false);
-		body.texOffs(71, 54).addBox(-2.0F, -36.0F, -3.0F, 6.0F, 1.0F, 6.0F, 0.0F, false);
-		body.texOffs(0, 73).addBox(-1.0F, -36.5F, -2.0F, 4.0F, 1.0F, 4.0F, 0.0F, false);
+		stick2 = new ModelRenderer(this);
+		stick2.setPos(0.0F, 0.0F, 0.0F);
+		total.addChild(stick2);
+		stick2.texOffs(106, 0).addBox(-2.0F, -9.0F, -2.0F, 4.0F, 9.0F, 4.0F, -0.01F, false);
 
-		bone2 = new ModelRenderer(this);
-		bone2.setPos(2.0F, -37.0F, -1.0F);
-		body.addChild(bone2);
-		bone2.texOffs(0, 16).addBox(-2.0F, -2.5F, 0.0F, 2.0F, 3.0F, 2.0F, 0.0F, false);
-		bone2.texOffs(0, 38).addBox(-2.0F, -2.0F, 0.0F, 2.0F, 2.0F, 2.0F, 0.2F, false);
-		bone2.texOffs(0, 9).addBox(-2.5F, -2.0F, 0.0F, 3.0F, 2.0F, 2.0F, 0.0F, false);
-		bone2.texOffs(0, 0).addBox(-2.0F, -2.0F, -0.5F, 2.0F, 2.0F, 3.0F, 0.0F, false);
-		bone2.texOffs(4, 38).addBox(6.0F, 6.0F, 8.0F, 2.0F, 0.0F, 2.0F, 0.0F, false);
-		bone2.texOffs(4, 23).addBox(-10.0F, 6.0F, 8.0F, 2.0F, 0.0F, 2.0F, 0.0F, false);
-		bone2.texOffs(0, 23).addBox(-10.0F, 6.0F, -8.0F, 2.0F, 0.0F, 2.0F, 0.0F, false);
-		bone2.texOffs(4, 16).addBox(6.0F, 6.0F, -8.0F, 2.0F, 0.0F, 2.0F, 0.0F, false);
+		stick3 = new ModelRenderer(this);
+		stick3.setPos(0.0F, 0.0F, 0.0F);
+		total.addChild(stick3);
+		stick3.texOffs(106, 0).addBox(-2.0F, -9.0F, -2.0F, 4.0F, 9.0F, 4.0F, -0.01F, false);
 
-		cube_r1 = new ModelRenderer(this);
-		cube_r1.setPos(8.0F, 7.0F, -9.0F);
-		bone2.addChild(cube_r1);
-		setRotationAngle(cube_r1, 0.3491F, 0.0F, 0.0F);
-		cube_r1.texOffs(8, 2).addBox(-1.0F, -0.6F, -0.5F, 2.0F, 0.0F, 2.0F, 0.0F, false);
-		cube_r1.texOffs(6, 9).addBox(-19.0F, -0.6F, -0.5F, 2.0F, 0.0F, 2.0F, 0.0F, false);
+		stick4 = new ModelRenderer(this);
+		stick4.setPos(0.0F, 0.0F, 0.0F);
+		total.addChild(stick4);
+		stick4.texOffs(106, 0).addBox(-2.0F, -9.0F, -2.0F, 4.0F, 9.0F, 4.0F, -0.01F, false);
 
-		cube_r2 = new ModelRenderer(this);
-		cube_r2.setPos(-10.0F, 6.0F, 10.0F);
-		bone2.addChild(cube_r2);
-		setRotationAngle(cube_r2, -0.3491F, 0.0F, 0.0F);
-		cube_r2.texOffs(5, 0).addBox(-1.0F, -0.0009F, 0.0F, 2.0F, 0.0F, 2.0F, 0.0F, false);
-		cube_r2.texOffs(8, 11).addBox(17.0F, -0.0009F, 0.0F, 2.0F, 0.0F, 2.0F, 0.0F, false);
+		stick5 = new ModelRenderer(this);
+		stick5.setPos(0.0F, 0.0F, 0.0F);
+		total.addChild(stick5);
+		stick5.texOffs(106, 0).addBox(-2.0F, -9.0F, -2.0F, 4.0F, 9.0F, 4.0F, -0.01F, false);
 
-		cube_r3 = new ModelRenderer(this);
-		cube_r3.setPos(-3.0F, 36.0F, 3.0F);
-		bone2.addChild(cube_r3);
-		setRotationAngle(cube_r3, 0.0F, 0.5672F, 0.0F);
-		cube_r3.texOffs(42, 0).addBox(-2.0F, -1.0F, 0.0F, 3.0F, 1.0F, 1.0F, 0.0F, false);
-		cube_r3.texOffs(0, 7).addBox(-4.0F, 0.0F, 0.0F, 5.0F, 1.0F, 1.0F, 0.0F, false);
-
-		cube_r4 = new ModelRenderer(this);
-		cube_r4.setPos(1.0F, 36.0F, 3.0F);
-		bone2.addChild(cube_r4);
-		setRotationAngle(cube_r4, 0.0F, -0.5672F, 0.0F);
-		cube_r4.texOffs(1, 29).addBox(-1.0F, -1.0F, 0.0F, 3.0F, 1.0F, 1.0F, 0.0F, false);
-		cube_r4.texOffs(1, 33).addBox(-1.0F, 0.0F, 0.0F, 5.0F, 1.0F, 1.0F, 0.0F, false);
-
-		cube_r5 = new ModelRenderer(this);
-		cube_r5.setPos(1.0F, 36.0F, -2.0F);
-		bone2.addChild(cube_r5);
-		setRotationAngle(cube_r5, 0.0F, 0.7854F, 0.0F);
-		cube_r5.texOffs(30, 38).addBox(-2.0F, -1.0F, 0.0F, 3.0F, 1.0F, 1.0F, 0.0F, false);
-		cube_r5.texOffs(1, 26).addBox(-2.0F, 0.0F, 0.0F, 5.0F, 1.0F, 1.0F, 0.0F, false);
-
-		cube_r6 = new ModelRenderer(this);
-		cube_r6.setPos(-3.0F, 36.0F, -2.0F);
-		bone2.addChild(cube_r6);
-		setRotationAngle(cube_r6, 0.0F, -0.7854F, 0.0F);
-		cube_r6.texOffs(0, 42).addBox(-1.0F, -1.0F, 0.0F, 3.0F, 1.0F, 1.0F, 0.0F, false);
-		cube_r6.texOffs(0, 5).addBox(-3.0F, 0.0F, 0.0F, 5.0F, 1.0F, 1.0F, 0.0F, false);
+		stick6 = new ModelRenderer(this);
+		stick6.setPos(0.0F, 0.0F, 0.0F);
+		total.addChild(stick6);
+		stick6.texOffs(106, 0).addBox(-2.0F, -9.0F, -2.0F, 4.0F, 9.0F, 4.0F, -0.01F, false);
 	}
+
 
 	@Override
 	public void setupAnim(PlanternEntity entity, float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch){

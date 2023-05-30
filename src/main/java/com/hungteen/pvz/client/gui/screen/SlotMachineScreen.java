@@ -41,14 +41,14 @@ public class SlotMachineScreen extends PVZContainerScreen<SlotMachineContainer> 
 	@Override
 	protected void init() {
 		super.init();
-		this.slowLotteryButton = this.addButton(new Button(this.leftPos + 49, this.topPos + 120, 18, 18, new TranslationTextComponent("gui.pvz.slot_machine.slow"), (button) -> {
+		this.slowLotteryButton = this.addButton(new Button(this.leftPos + 13, this.topPos + 119, 62, 20, new TranslationTextComponent("gui.pvz.slot_machine.slow"), (button) -> {
 			if(this.slowLotteryButton.visible) {
 			    PVZPacketHandler.CHANNEL.sendToServer(new ClickButtonPacket(GuiHandler.SLOT_MACHINE, 0, 0));
 			}
 		}));
 		this.slowLotteryButton.visible = false;
 
-		this.fastLotteryButton = this.addButton(new Button(this.leftPos + 109, this.topPos + 120, 18, 18, new TranslationTextComponent("gui.pvz.slot_machine.fast"), (button) -> {
+		this.fastLotteryButton = this.addButton(new Button(this.leftPos + 102, this.topPos + 119, 62, 20, new TranslationTextComponent("gui.pvz.slot_machine.fast"), (button) -> {
 			if(this.fastLotteryButton.visible) {
 				PVZPacketHandler.CHANNEL.sendToServer(new ClickButtonPacket(GuiHandler.SLOT_MACHINE, 1, 0));
 			}

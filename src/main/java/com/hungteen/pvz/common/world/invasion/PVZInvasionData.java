@@ -1,6 +1,8 @@
 package com.hungteen.pvz.common.world.invasion;
 
 import com.hungteen.pvz.PVZConfig;
+import com.hungteen.pvz.utils.ConfigUtil;
+import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.world.World;
 import net.minecraft.world.server.ServerWorld;
@@ -43,11 +45,19 @@ public class PVZInvasionData extends WorldSavedData {
 	}
 
 	public int getCountDownDay() {
-		return this.countDownDay;
+		return this.countDownDay; //reflect actual count only when ConfigUtil.scatteredInvasions() set false
+	}
+
+	public int getCountDownDay(PlayerEntity player) {
+		return ConfigUtil.scatteredInvasions() ? (int)(player.getUUID().getMostSignificantBits()+countDownDay) % PVZConfig.COMMON_CONFIG.InvasionSettings.InvasionIntervalLength.get() : getCountDownDay();
 	}
 	
 	public boolean hasCountDownDay() {
-		return this.getCountDownDay() > 0;
+		return this.getCountDownDay() <= 0; //reflect actual count only when ConfigUtil.scatteredInvasions() set false
+	}
+
+	public boolean hasCountDownDay(PlayerEntity player){
+		return ConfigUtil.scatteredInvasions() ? (player.getUUID().getMostSignificantBits()+countDownDay) % PVZConfig.COMMON_CONFIG.InvasionSettings.InvasionIntervalLength.get() <= 0 : hasCountDownDay() ;
 	}
 
 

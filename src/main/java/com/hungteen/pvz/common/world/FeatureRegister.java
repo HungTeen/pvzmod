@@ -23,6 +23,7 @@ public class FeatureRegister {
 			PVZMod.MOD_ID);
 
 	public static ConfiguredFeature<?, ?> CONFIGURED_AMETHYST_ORE;
+	public static ConfiguredFeature<?, ?> CONFIGURED_LUNAR_STONE;
 	public static ConfiguredFeature<?, ?> CONFIGURED_ORIGIN_ORE;
 	public static ConfiguredFeature<?, ?> CONFIGURED_DOUBLE_ORIGIN_ORE;
 	
@@ -48,8 +49,12 @@ public class FeatureRegister {
 	
 	private static void setupOres() {
 		CONFIGURED_AMETHYST_ORE = Feature.ORE.configured(new OreFeatureConfig(
-				GenOres.FillerBlockType.END_STONE, BlockRegister.AMETHYST_ORE.get().defaultBlockState(), 4))
+						GenOres.FillerBlockType.END_STONE, BlockRegister.AMETHYST_ORE.get().defaultBlockState(), 4))
 				.range(128).count(ConfigUtil.getGenAmethystOreChance()).squared();
+
+		CONFIGURED_LUNAR_STONE = Feature.ORE.configured(new OreFeatureConfig(
+						GenOres.FillerBlockType.STONE, BlockRegister.LUNAR_STONE.get().defaultBlockState(), 4))
+				.range(128).count(ConfigUtil.getGenLunarStoneChance()).squared();
 		
 		CONFIGURED_ORIGIN_ORE = Feature.ORE.configured(new OreFeatureConfig(
 				GenOres.FillerBlockType.GRASS, BlockRegister.ORIGIN_ORE.get().defaultBlockState(), 4))

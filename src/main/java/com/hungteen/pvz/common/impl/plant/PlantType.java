@@ -213,7 +213,7 @@ public abstract class PlantType extends PAZType implements IPlantType {
 		protected int xpPoint = 0;
 		protected float renderScale = 0.5F;
 		protected ICoolDown coolDown = CoolDowns.DEFAULT;
-		protected IRankType rankType = RankTypes.GRAY;
+		protected IRankType rankType = RankTypes.WHITE;
 		protected ResourceLocation entityRenderResource;
 		protected ResourceLocation lootTable;
 		protected Supplier<EntityType<? extends CreatureEntity>> entitySup;

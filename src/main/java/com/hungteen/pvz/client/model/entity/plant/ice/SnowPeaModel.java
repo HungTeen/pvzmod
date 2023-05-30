@@ -14,20 +14,20 @@ import net.minecraft.client.renderer.model.ModelRenderer;
 
 public class SnowPeaModel extends PlantShooterModel<SnowPeaEntity> {
 	private final ModelRenderer total;
-	private final ModelRenderer leaves;
 	private final ModelRenderer body;
 	private final ModelRenderer head;
-	private final ModelRenderer bone;
-	private final ModelRenderer bone2;
-	private final ModelRenderer bone3;
-	private final ModelRenderer bone4;
-	private final ModelRenderer bone5;
-	private final ModelRenderer bone6;
-	private final ModelRenderer bone7;
-	private final ModelRenderer bone8;
-	private final ModelRenderer bone9;
-	private final ModelRenderer bone10;
-	private final ModelRenderer bone11;
+	private final ModelRenderer hair;
+	private final ModelRenderer u_r1;
+	private final ModelRenderer m_r1;
+	private final ModelRenderer wu_r1;
+	private final ModelRenderer wd_r1;
+	private final ModelRenderer ed_r1;
+	private final ModelRenderer eu_r1;
+	private final ModelRenderer down;
+	private final ModelRenderer n_r1;
+	private final ModelRenderer w_r1;
+	private final ModelRenderer e_r1;
+	private final ModelRenderer s_r1;
 
 	public SnowPeaModel() {
 		texWidth = 64;
@@ -35,100 +35,93 @@ public class SnowPeaModel extends PlantShooterModel<SnowPeaEntity> {
 
 		total = new ModelRenderer(this);
 		total.setPos(0.0F, 24.0F, 0.0F);
-		
 
-		leaves = new ModelRenderer(this);
-		leaves.setPos(1.0F, 0.0F, 0.0F);
-		total.addChild(leaves);
-		leaves.texOffs(14, 30).addBox(0.0F, -1.0F, -1.0F, 2.0F, 1.0F, 2.0F, 0.0F, false);
-		leaves.texOffs(13, 36).addBox(-2.0F, -1.0F, 1.0F, 2.0F, 1.0F, 2.0F, 0.0F, false);
-		leaves.texOffs(1, 30).addBox(-2.0F, -1.0F, -3.0F, 2.0F, 1.0F, 2.0F, 0.0F, false);
-		leaves.texOffs(1, 35).addBox(-4.0F, -1.0F, -1.0F, 2.0F, 1.0F, 2.0F, 0.0F, false);
-		leaves.texOffs(2, 45).addBox(2.0F, -1.0F, -2.0F, 3.0F, 1.0F, 4.0F, 0.0F, false);
-		leaves.texOffs(0, 55).addBox(-3.0F, -1.0F, 3.0F, 4.0F, 1.0F, 3.0F, 0.0F, false);
-		leaves.texOffs(41, 1).addBox(-7.0F, -1.0F, -2.0F, 3.0F, 1.0F, 4.0F, 0.0F, false);
-		leaves.texOffs(42, 30).addBox(-3.0F, -1.0F, -6.0F, 4.0F, 1.0F, 3.0F, 0.0F, false);
 
 		body = new ModelRenderer(this);
 		body.setPos(0.0F, 0.0F, 0.0F);
 		total.addChild(body);
-		body.texOffs(25, 36).addBox(-1.0F, -15.0F, -2.0F, 2.0F, 1.0F, 2.0F, 0.0F, false);
-		body.texOffs(24, 40).addBox(0.0F, -15.0F, -1.0F, 2.0F, 1.0F, 2.0F, 0.0F, false);
-		body.texOffs(23, 44).addBox(-2.0F, -15.0F, -1.0F, 2.0F, 1.0F, 2.0F, 0.0F, false);
-		body.texOffs(25, 31).addBox(-1.0F, -15.0F, 0.0F, 2.0F, 1.0F, 2.0F, 0.0F, false);
-		body.texOffs(55, 47).addBox(-1.0F, -14.0F, -1.0F, 2.0F, 14.0F, 2.0F, 0.0F, false);
+		setRotationAngle(body, -0.0873F, 0.0F, 0.0F);
+		body.texOffs(0, 31).addBox(-1.0F, -12.0F, -1.0F, 2.0F, 12.0F, 2.0F, 0.0F, false);
 
 		head = new ModelRenderer(this);
-		head.setPos(0.0F, -15.0F, 0.0F);
+		head.setPos(0.0F, -12.0F, 0.0F);
 		body.addChild(head);
-		head.texOffs(38, 15).addBox(-2.0F, -4.0F, -7.0F, 4.0F, 4.0F, 2.0F, 0.0F, false);
-		head.texOffs(1, 19).addBox(-1.0F, -3.0F, -5.0F, 2.0F, 2.0F, 1.0F, 0.0F, false);
-		head.texOffs(0, 1).addBox(-4.0F, -8.0F, -4.0F, 8.0F, 8.0F, 8.0F, 0.0F, false);
+		setRotationAngle(head, 0.0873F, 0.0F, 0.0F);
+		head.texOffs(30, 0).addBox(-2.0F, -5.0F, -8.0F, 4.0F, 4.0F, 3.0F, 0.0F, false);
+		head.texOffs(44, 0).addBox(-3.0F, -6.0F, -9.0F, 6.0F, 6.0F, 2.0F, 0.0F, false);
+		head.texOffs(0, 0).addBox(-5.0F, -10.0F, -5.0F, 10.0F, 10.0F, 10.0F, 0.0F, false);
+		head.texOffs(40, 8).addBox(-2.0F, 0.0F, -2.0F, 4.0F, 6.0F, 4.0F, 0.0F, false);
 
-		bone = new ModelRenderer(this);
-		bone.setPos(0.0F, -4.0F, 4.0F);
-		head.addChild(bone);
-		setRotationAngle(bone, 0.0F, 0.0F, -0.7854F);
-		
+		hair = new ModelRenderer(this);
+		hair.setPos(-1.0F, -4.5F, 5.0F);
+		head.addChild(hair);
+		hair.texOffs(0, 56).addBox(-2.0F, -3.5F, 0.0F, 6.0F, 6.0F, 2.0F, 0.0F, false);
+		hair.texOffs(2, 49).addBox(-1.0F, 0.5F, -1.0F, 3.0F, 3.0F, 4.0F, 0.0F, false);
 
-		bone2 = new ModelRenderer(this);
-		bone2.setPos(0.0F, 0.0F, 0.0F);
-		bone.addChild(bone2);
-		bone2.texOffs(37, 46).addBox(-1.0F, -1.0F, 0.0F, 2.0F, 2.0F, 5.0F, 0.0F, false);
+		u_r1 = new ModelRenderer(this);
+		u_r1.setPos(0.5F, -1.0F, 0.0F);
+		hair.addChild(u_r1);
+		setRotationAngle(u_r1, 0.2618F, -0.1745F, 0.0873F);
+		u_r1.texOffs(16, 55).addBox(-1.5F, -1.5F, 0.0F, 3.0F, 3.0F, 6.0F, 0.0F, false);
 
-		bone3 = new ModelRenderer(this);
-		bone3.setPos(0.0F, 0.0F, 5.0F);
-		bone2.addChild(bone3);
-		setRotationAngle(bone3, 0.0F, -0.7854F, 0.0F);
-		bone3.texOffs(37, 46).addBox(-1.0F, -1.0F, -1.0F, 2.0F, 2.0F, 2.0F, 0.0F, false);
+		m_r1 = new ModelRenderer(this);
+		m_r1.setPos(2.5F, -1.0F, 0.0F);
+		hair.addChild(m_r1);
+		setRotationAngle(m_r1, -0.1745F, 0.2618F, 0.0F);
+		m_r1.texOffs(32, 49).addBox(-1.5F, -1.5F, -1.0F, 3.0F, 3.0F, 5.0F, 0.0F, false);
 
-		bone4 = new ModelRenderer(this);
-		bone4.setPos(-1.0F, 0.0F, 0.0F);
-		bone.addChild(bone4);
-		setRotationAngle(bone4, 0.0F, -0.7854F, 0.0F);
-		bone4.texOffs(37, 46).addBox(-1.0F, -1.0F, 0.0F, 2.0F, 2.0F, 5.0F, 0.0F, false);
+		wu_r1 = new ModelRenderer(this);
+		wu_r1.setPos(3.5F, -3.0F, 0.0F);
+		hair.addChild(wu_r1);
+		setRotationAngle(wu_r1, 0.5236F, 0.2618F, 0.0F);
+		wu_r1.texOffs(48, 56).addBox(-1.5F, -1.5F, -1.0F, 3.0F, 3.0F, 5.0F, 0.0F, false);
 
-		bone5 = new ModelRenderer(this);
-		bone5.setPos(0.0F, 0.0F, 5.0F);
-		bone4.addChild(bone5);
-		setRotationAngle(bone5, 0.0F, -0.7854F, 0.0F);
-		bone5.texOffs(37, 46).addBox(-1.0F, -1.0F, -1.0F, 2.0F, 2.0F, 2.0F, 0.0F, false);
+		wd_r1 = new ModelRenderer(this);
+		wd_r1.setPos(3.5F, 2.0F, 0.0F);
+		hair.addChild(wd_r1);
+		setRotationAngle(wd_r1, -0.5236F, 0.5236F, 0.0F);
+		wd_r1.texOffs(48, 48).addBox(-1.5F, -1.5F, -1.0F, 3.0F, 3.0F, 5.0F, 0.0F, false);
 
-		bone6 = new ModelRenderer(this);
-		bone6.setPos(0.0F, 0.0F, 0.0F);
-		bone.addChild(bone6);
-		setRotationAngle(bone6, 0.7854F, 0.0F, 0.0F);
-		bone6.texOffs(37, 46).addBox(-1.0F, -2.0F, 0.0F, 2.0F, 2.0F, 5.0F, 0.0F, false);
+		ed_r1 = new ModelRenderer(this);
+		ed_r1.setPos(-1.5F, 2.0F, 0.0F);
+		hair.addChild(ed_r1);
+		setRotationAngle(ed_r1, -0.4363F, -0.5236F, 0.0F);
+		ed_r1.texOffs(16, 47).addBox(-1.5F, -1.5F, -1.0F, 3.0F, 3.0F, 5.0F, 0.0F, false);
 
-		bone7 = new ModelRenderer(this);
-		bone7.setPos(0.0F, -1.0F, 5.0F);
-		bone6.addChild(bone7);
-		setRotationAngle(bone7, -0.7854F, 0.0F, 0.0F);
-		bone7.texOffs(37, 46).addBox(-1.0F, -1.0F, -1.0F, 2.0F, 2.0F, 2.0F, 0.0F, false);
+		eu_r1 = new ModelRenderer(this);
+		eu_r1.setPos(-1.5F, -3.0F, 0.0F);
+		hair.addChild(eu_r1);
+		setRotationAngle(eu_r1, 0.5236F, -0.5236F, 0.0F);
+		eu_r1.texOffs(34, 57).addBox(-1.5F, -1.5F, 0.0F, 3.0F, 3.0F, 4.0F, 0.0F, false);
 
-		bone8 = new ModelRenderer(this);
-		bone8.setPos(0.0F, 0.0F, 0.0F);
-		bone.addChild(bone8);
-		setRotationAngle(bone8, 0.0F, 0.7854F, 0.0F);
-		bone8.texOffs(37, 46).addBox(0.0F, -1.0F, 0.0F, 2.0F, 2.0F, 5.0F, 0.0F, false);
+		down = new ModelRenderer(this);
+		down.setPos(0.0F, 0.0F, 0.0F);
+		total.addChild(down);
 
-		bone9 = new ModelRenderer(this);
-		bone9.setPos(0.0F, 0.0F, 5.0F);
-		bone8.addChild(bone9);
-		setRotationAngle(bone9, 0.0F, -0.7854F, 0.0F);
-		bone9.texOffs(37, 46).addBox(-0.2929F, -1.0F, -1.7071F, 2.0F, 2.0F, 2.0F, 0.0F, false);
 
-		bone10 = new ModelRenderer(this);
-		bone10.setPos(0.0F, 0.0F, 0.0F);
-		bone.addChild(bone10);
-		setRotationAngle(bone10, -0.7854F, 0.0F, 0.0F);
-		bone10.texOffs(37, 46).addBox(-1.0F, 0.0F, 0.0F, 2.0F, 2.0F, 5.0F, 0.0F, false);
+		n_r1 = new ModelRenderer(this);
+		n_r1.setPos(0.0F, 0.8F, 0.0F);
+		down.addChild(n_r1);
+		setRotationAngle(n_r1, -0.1745F, -0.7854F, 0.0F);
+		n_r1.texOffs(4, 20).addBox(-2.0F, -1.0F, -7.0F, 4.0F, 1.0F, 6.0F, 0.0F, false);
 
-		bone11 = new ModelRenderer(this);
-		bone11.setPos(0.0F, 1.0F, 5.0F);
-		bone10.addChild(bone11);
-		setRotationAngle(bone11, -0.7854F, 0.0F, 0.0F);
-		bone11.texOffs(37, 46).addBox(-1.0F, -1.0F, -1.0F, 2.0F, 2.0F, 2.0F, 0.0F, false);
+		w_r1 = new ModelRenderer(this);
+		w_r1.setPos(0.0F, 0.8F, 0.0F);
+		down.addChild(w_r1);
+		setRotationAngle(w_r1, 0.1745F, -0.7854F, -0.1745F);
+		w_r1.texOffs(6, 27).addBox(1.0F, -1.0F, -2.0F, 6.0F, 1.0F, 4.0F, 0.0F, false);
+
+		e_r1 = new ModelRenderer(this);
+		e_r1.setPos(0.0F, 0.8F, 0.0F);
+		down.addChild(e_r1);
+		setRotationAngle(e_r1, -0.1745F, -0.7854F, 0.1745F);
+		e_r1.texOffs(26, 27).addBox(-7.0F, -1.0F, -2.0F, 6.0F, 1.0F, 4.0F, 0.0F, false);
+
+		s_r1 = new ModelRenderer(this);
+		s_r1.setPos(0.0F, 0.8F, 0.0F);
+		down.addChild(s_r1);
+		setRotationAngle(s_r1, 0.1745F, -0.7854F, 0.0F);
+		s_r1.texOffs(24, 20).addBox(-2.0F, -1.0F, 1.0F, 4.0F, 1.0F, 6.0F, 0.0F, false);
 	}
 
 	@Override

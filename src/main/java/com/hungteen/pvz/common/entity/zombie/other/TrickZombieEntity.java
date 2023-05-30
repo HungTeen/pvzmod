@@ -26,7 +26,7 @@ import net.minecraft.world.World;
 
 public class TrickZombieEntity extends PVZZombieEntity{
 
-	public static final int EXPLOSION_CHANCE = 8;
+	public static final int EXPLOSION_CHANCE = 5;
 	public static final int SUMMON_CHACNE = 5;
 	private int lastSummonTick = 0;
 	private final int summonGap = 40;
@@ -39,7 +39,7 @@ public class TrickZombieEntity extends PVZZombieEntity{
 	protected void initAttributes() {
 		super.initAttributes();
 		this.getAttribute(Attributes.MOVEMENT_SPEED).setBaseValue(ZombieUtil.WALK_LITTLE_FAST);
-		this.getAttribute(Attributes.ATTACK_DAMAGE).setBaseValue(ZombieUtil.NORMAL_DAMAGE);
+		this.getAttribute(Attributes.ATTACK_DAMAGE).setBaseValue(ZombieUtil.HUGE_LOW);
 	}
 	
 	@Override
@@ -70,8 +70,8 @@ public class TrickZombieEntity extends PVZZombieEntity{
 	protected void dropAllDeathLoot(DamageSource damageSourceIn) {
 		if(! this.hasEffect(EffectRegister.COLD_EFFECT.get()) && ! this.isCharmed()) {
 			if(this.getRandom().nextInt(EXPLOSION_CHANCE) == 0) {
-				Explosion.Mode mode = net.minecraftforge.event.ForgeEventFactory.getMobGriefingEvent(this.level, this) ? Explosion.Mode.DESTROY : Explosion.Mode.NONE;
-				this.level.explode(this, getX(), getY(), getZ(), 0.5f, mode);
+//				Explosion.Mode mode = net.minecraftforge.event.ForgeEventFactory.getMobGriefingEvent(this.level, this) ? Explosion.Mode.DESTROY : Explosion.Mode.NONE;
+				this.level.explode(this, getX(), getY(), getZ(), 0.5f, Explosion.Mode.NONE);
 			}
 		}
 		super.dropAllDeathLoot(damageSourceIn);
@@ -90,7 +90,7 @@ public class TrickZombieEntity extends PVZZombieEntity{
 	
 	@Override
 	public float getLife() {
-		return 10;
+		return 6;
 	}
 
 	@Override

@@ -55,7 +55,7 @@ public abstract class AbstractBossZombieEntity extends PVZZombieEntity {
 			this.checkAndHeal(percent);
 			if(this.tickCount % this.refreshCountCD == 0) {
 				this.nearbyPlantCount = this.getNearbyPlantCount();
-			    this.nearbyZombieCount = this.getNearbyPlantCount();
+			    this.nearbyZombieCount = this.getNearbyZombieCount();
 			}
 			this.kickEnemiesNearby();
 		}

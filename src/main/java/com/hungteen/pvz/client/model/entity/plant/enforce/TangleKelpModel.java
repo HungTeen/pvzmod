@@ -13,24 +13,20 @@ import net.minecraft.client.renderer.model.ModelRenderer;
 
 public class TangleKelpModel extends PVZPlantModel<TangleKelpEntity> {
 	private final ModelRenderer total;
-	private final ModelRenderer body;
-	private final ModelRenderer hand;
-	private final ModelRenderer hand2;
-	private final ModelRenderer tangle1;
-	private final ModelRenderer bone;
-	private final ModelRenderer tangle2;
-	private final ModelRenderer bone2;
-	private final ModelRenderer bone3;
-	private final ModelRenderer tangle3;
-	private final ModelRenderer bone4;
-	private final ModelRenderer bone5;
-	private final ModelRenderer bone8;
-	private final ModelRenderer tangle4;
-	private final ModelRenderer bone6;
-	private final ModelRenderer bone7;
-	private final ModelRenderer tangle5;
-	private final ModelRenderer tangle6;
-	private final ModelRenderer tangle7;
+	private final ModelRenderer c1;
+	private final ModelRenderer c2;
+	private final ModelRenderer f1;
+	private final ModelRenderer n_r1;
+	private final ModelRenderer s_r1;
+	private final ModelRenderer f2;
+	private final ModelRenderer n_r2;
+	private final ModelRenderer s_r2;
+	private final ModelRenderer f3;
+	private final ModelRenderer n_r3;
+	private final ModelRenderer s_r3;
+	private final ModelRenderer f4;
+	private final ModelRenderer n_r4;
+	private final ModelRenderer s_r4;
 
 	public TangleKelpModel() {
 		texWidth = 128;
@@ -38,117 +34,108 @@ public class TangleKelpModel extends PVZPlantModel<TangleKelpEntity> {
 
 		total = new ModelRenderer(this);
 		total.setPos(0.0F, 24.0F, 0.0F);
-		
+		total.texOffs(94, 0).addBox(-4.5F, -8.0F, -4.0F, 9.0F, 8.0F, 8.0F, 0.0F, false);
+		total.texOffs(104, 16).addBox(-3.0F, -2.0F, -3.0F, 6.0F, 8.0F, 6.0F, 0.0F, false);
 
-		body = new ModelRenderer(this);
-		body.setPos(0.0F, 0.0F, 0.0F);
-		total.addChild(body);
-		body.texOffs(71, 107).addBox(-8.0F, -8.0F, -6.0F, 16.0F, 8.0F, 12.0F, 0.0F, false);
+		c1 = new ModelRenderer(this);
+		c1.setPos(0.0F, 0.0F, 0.0F);
+		total.addChild(c1);
+		c1.texOffs(0, 0).addBox(-5.5F, -18.0F, -5.0F, 11.0F, 19.0F, 10.0F, 0.0F, false);
 
-		hand = new ModelRenderer(this);
-		hand.setPos(-8.0F, -2.0F, 0.0F);
-		total.addChild(hand);
-		setRotationAngle(hand, 0.0F, 0.0F, 0.9599F);
-		hand.texOffs(100, 101).addBox(-11.0F, -2.0F, -1.0F, 11.0F, 2.0F, 2.0F, 0.0F, false);
+		c2 = new ModelRenderer(this);
+		c2.setPos(0.0F, 0.0F, 0.0F);
+		total.addChild(c2);
+		c2.texOffs(0, 29).addBox(-5.5F, -18.0F, -5.0F, 11.0F, 19.0F, 10.0F, 0.0F, false);
 
-		hand2 = new ModelRenderer(this);
-		hand2.setPos(8.0F, -2.0F, 0.0F);
-		total.addChild(hand2);
-		setRotationAngle(hand2, 0.0F, 0.0F, -0.9599F);
-		hand2.texOffs(101, 94).addBox(0.0F, -2.0F, -1.0F, 11.0F, 2.0F, 2.0F, 0.0F, false);
+		f1 = new ModelRenderer(this);
+		f1.setPos(0.0F, 0.0F, 0.0F);
+		total.addChild(f1);
+		f1.texOffs(54, -10).addBox(0.0F, -22.0F, -5.0F, 0.0F, 16.0F, 10.0F, 0.0F, false);
 
-		tangle1 = new ModelRenderer(this);
-		tangle1.setPos(-6.0F, -8.0F, -4.0F);
-		total.addChild(tangle1);
-		setRotationAngle(tangle1, -0.2618F, 0.0F, 0.4363F);
-		tangle1.texOffs(118, 80).addBox(-1.0F, -9.0F, -1.0F, 2.0F, 10.0F, 2.0F, 0.0F, false);
+		n_r1 = new ModelRenderer(this);
+		n_r1.setPos(0.0F, -11.0F, 0.0F);
+		f1.addChild(n_r1);
+		setRotationAngle(n_r1, -0.4363F, 0.0F, 0.0F);
+		n_r1.texOffs(48, 0).addBox(-8.0F, -11.0F, 0.0F, 16.0F, 22.0F, 0.0F, 0.0F, false);
 
-		bone = new ModelRenderer(this);
-		bone.setPos(0.3054F, -8.1762F, 0.0F);
-		tangle1.addChild(bone);
-		setRotationAngle(bone, 0.0F, 0.0F, -0.4363F);
-		bone.texOffs(106, 79).addBox(-1.0223F, -11.4531F, -1.0F, 2.0F, 11.0F, 2.0F, 0.0F, false);
+		s_r1 = new ModelRenderer(this);
+		s_r1.setPos(0.0F, -11.0F, 0.0F);
+		f1.addChild(s_r1);
+		setRotationAngle(s_r1, 0.4363F, 0.0F, 0.0F);
+		s_r1.texOffs(48, 44).addBox(-8.0F, -11.0F, 0.0F, 16.0F, 22.0F, 0.0F, 0.0F, false);
 
-		tangle2 = new ModelRenderer(this);
-		tangle2.setPos(5.0F, -8.0F, -3.0F);
-		total.addChild(tangle2);
-		setRotationAngle(tangle2, -0.1745F, 0.0F, -0.3491F);
-		tangle2.texOffs(118, 66).addBox(-1.0F, -8.0F, -1.0F, 2.0F, 9.0F, 2.0F, 0.0F, false);
+		f2 = new ModelRenderer(this);
+		f2.setPos(0.0F, 0.0F, 0.0F);
+		total.addChild(f2);
+		f2.texOffs(54, 12).addBox(0.0F, -22.0F, -5.0F, 0.0F, 16.0F, 10.0F, 0.0F, false);
 
-		bone2 = new ModelRenderer(this);
-		bone2.setPos(0.342F, -7.9397F, 0.0F);
-		tangle2.addChild(bone2);
-		setRotationAngle(bone2, 0.0F, 0.0F, 0.9599F);
-		bone2.texOffs(107, 68).addBox(-0.8192F, -4.9353F, -1.0F, 2.0F, 6.0F, 2.0F, 0.0F, false);
+		n_r2 = new ModelRenderer(this);
+		n_r2.setPos(0.0F, -11.0F, 0.0F);
+		f2.addChild(n_r2);
+		setRotationAngle(n_r2, -0.4363F, 0.0F, 0.0F);
+		n_r2.texOffs(48, 22).addBox(-8.0F, -11.0F, 0.0F, 16.0F, 22.0F, 0.0F, 0.0F, false);
 
-		bone3 = new ModelRenderer(this);
-		bone3.setPos(-0.8192F, -4.4264F, 0.0F);
-		bone2.addChild(bone3);
-		setRotationAngle(bone3, 0.0F, 0.0F, -1.2217F);
-		bone3.texOffs(69, 105).addBox(-0.8378F, -4.2947F, -1.0F, 2.0F, 6.0F, 2.0F, 0.0F, false);
+		s_r2 = new ModelRenderer(this);
+		s_r2.setPos(0.0F, -11.0F, 0.0F);
+		f2.addChild(s_r2);
+		setRotationAngle(s_r2, 0.4363F, 0.0F, 0.0F);
+		s_r2.texOffs(48, 66).addBox(-8.0F, -11.0F, 0.0F, 16.0F, 22.0F, 0.0F, 0.0F, false);
 
-		tangle3 = new ModelRenderer(this);
-		tangle3.setPos(-1.0F, -8.0F, 3.0F);
-		total.addChild(tangle3);
-		setRotationAngle(tangle3, 0.2566F, 0.0298F, -0.3478F);
-		tangle3.texOffs(86, 92).addBox(-0.0603F, -5.6632F, -1.0594F, 2.0F, 7.0F, 2.0F, 0.0F, false);
+		f3 = new ModelRenderer(this);
+		f3.setPos(0.0F, 0.0F, 0.0F);
+		total.addChild(f3);
+		f3.texOffs(54, 34).addBox(0.0F, -22.0F, -5.0F, 0.0F, 16.0F, 10.0F, 0.0F, false);
 
-		bone4 = new ModelRenderer(this);
-		bone4.setPos(0.0F, -7.0143F, -0.1632F);
-		tangle3.addChild(bone4);
-		setRotationAngle(bone4, 0.0F, 0.0F, -0.2618F);
-		bone4.texOffs(70, 91).addBox(-0.4761F, -4.1929F, -0.8962F, 2.0F, 6.0F, 2.0F, 0.0F, false);
+		n_r3 = new ModelRenderer(this);
+		n_r3.setPos(0.0F, -11.0F, 0.0F);
+		f3.addChild(n_r3);
+		setRotationAngle(n_r3, -0.4363F, 0.0F, 0.0F);
+		n_r3.texOffs(48, 44).addBox(-8.0F, -11.0F, 0.0F, 16.0F, 22.0F, 0.0F, 0.0F, false);
 
-		bone5 = new ModelRenderer(this);
-		bone5.setPos(-1.2754F, -7.342F, -0.5397F);
-		bone4.addChild(bone5);
-		setRotationAngle(bone5, 0.6109F, 0.0F, -0.0436F);
-		bone5.texOffs(90, 78).addBox(0.6612F, -0.4517F, -2.4783F, 2.0F, 4.0F, 2.0F, 0.0F, false);
+		s_r3 = new ModelRenderer(this);
+		s_r3.setPos(0.0F, -11.0F, 0.0F);
+		f3.addChild(s_r3);
+		setRotationAngle(s_r3, 0.4363F, 0.0F, 0.0F);
+		s_r3.texOffs(48, 0).addBox(-8.0F, -11.0F, 0.0F, 16.0F, 22.0F, 0.0F, 0.0F, false);
 
-		bone8 = new ModelRenderer(this);
-		bone8.setPos(0.0F, 0.0F, 0.0F);
-		bone5.addChild(bone8);
-		setRotationAngle(bone8, 0.0F, 0.0F, -0.829F);
-		bone8.texOffs(0, 0).addBox(0.7797F, 0.1824F, -2.4783F, 3.0F, 2.0F, 2.0F, 0.0F, false);
+		f4 = new ModelRenderer(this);
+		f4.setPos(0.0F, 0.0F, 0.0F);
+		total.addChild(f4);
+		f4.texOffs(54, 56).addBox(0.0F, -22.0F, -5.0F, 0.0F, 16.0F, 10.0F, 0.0F, false);
 
-		tangle4 = new ModelRenderer(this);
-		tangle4.setPos(5.0F, -8.0F, 1.0F);
-		total.addChild(tangle4);
-		setRotationAngle(tangle4, -0.5236F, 0.0F, -0.3491F);
-		tangle4.texOffs(75, 74).addBox(-1.0F, -9.0F, -1.0F, 2.0F, 10.0F, 2.0F, 0.0F, false);
+		n_r4 = new ModelRenderer(this);
+		n_r4.setPos(0.0F, -11.0F, 0.0F);
+		f4.addChild(n_r4);
+		setRotationAngle(n_r4, -0.4363F, 0.0F, 0.0F);
+		n_r4.texOffs(48, 66).addBox(-8.0F, -11.0F, 0.0F, 16.0F, 22.0F, 0.0F, 0.0F, false);
 
-		bone6 = new ModelRenderer(this);
-		bone6.setPos(0.342F, -7.9397F, 0.0F);
-		tangle4.addChild(bone6);
-		setRotationAngle(bone6, 0.0F, 0.0F, -0.6109F);
-		bone6.texOffs(91, 65).addBox(-0.8528F, -5.4912F, -1.0F, 2.0F, 5.0F, 2.0F, 0.0F, false);
-
-		bone7 = new ModelRenderer(this);
-		bone7.setPos(-1.419F, -5.208F, -0.171F);
-		bone6.addChild(bone7);
-		setRotationAngle(bone7, 0.0F, 0.0F, -0.8727F);
-		bone7.texOffs(75, 60).addBox(-0.1336F, -4.2162F, -0.829F, 2.0F, 6.0F, 2.0F, 0.0F, false);
-
-		tangle5 = new ModelRenderer(this);
-		tangle5.setPos(0.0F, -8.0F, -3.0F);
-		total.addChild(tangle5);
-		setRotationAngle(tangle5, -0.4363F, 0.0F, 0.0F);
-		tangle5.texOffs(61, 69).addBox(-1.0F, -4.0F, -1.0F, 2.0F, 5.0F, 2.0F, 0.0F, false);
-
-		tangle6 = new ModelRenderer(this);
-		tangle6.setPos(-6.0F, -8.0F, 3.0F);
-		total.addChild(tangle6);
-		tangle6.texOffs(56, 82).addBox(-1.0F, -11.0F, -1.0F, 2.0F, 12.0F, 2.0F, 0.0F, false);
-
-		tangle7 = new ModelRenderer(this);
-		tangle7.setPos(7.0F, -9.0F, 4.0F);
-		total.addChild(tangle7);
-		setRotationAngle(tangle7, 0.4363F, 0.0F, 0.0F);
-		tangle7.texOffs(52, 105).addBox(-1.0F, -8.0F, -1.0F, 2.0F, 10.0F, 2.0F, 0.0F, false);
+		s_r4 = new ModelRenderer(this);
+		s_r4.setPos(0.0F, -11.0F, 0.0F);
+		f4.addChild(s_r4);
+		setRotationAngle(s_r4, 0.4363F, 0.0F, 0.0F);
+		s_r4.texOffs(48, 22).addBox(-8.0F, -11.0F, 0.0F, 16.0F, 22.0F, 0.0F, 0.0F, false);
 	}
 
 	@Override
 	public void setupAnim(TangleKelpEntity entity, float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch){
+		this.c1.visible = entity.getExistTick() % 12 > 6;
+		this.c2.visible = entity.getExistTick() % 12 <= 6;
+		this.f1.visible = false;
+		this.f2.visible = false;
+		this.f3.visible = false;
+		this.f4.visible = false;
+		if (entity.getExistTick() % 12 < 3) {
+			this.f1.visible = true;
+		}
+		else if (entity.getExistTick() % 12 < 6) {
+			this.f2.visible = true;
+		}
+		else if (entity.getExistTick() % 12 < 9) {
+			this.f3.visible = true;
+		}
+		else {
+			this.f4.visible = true;
+		}
 	}
 
 	@Override

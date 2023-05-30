@@ -23,7 +23,7 @@ public class ChallengeMoveGoal extends Goal {
         this.challenge = challenge;
         this.center = this.challenge.getCenter();
 //        this.setFlags(EnumSet.of(Goal.Flag.MOVE, Goal.Flag.JUMP));
-        //TODO AI重进游戏就没了 
+        //TODO AI disappearance when entering the game again
     }
 
     @Override

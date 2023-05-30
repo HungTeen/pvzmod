@@ -33,10 +33,8 @@ public class PVZBlockTags {
 	public static final INamedTag<Block> TO_ARMA_ORES = pvzTag("radiations/to_arma_ores");
 	public static final INamedTag<Block> TO_ELECTRIC_ORES = pvzTag("radiations/to_electric_ores");
 	public static final INamedTag<Block> TO_SHADOW_ORES = pvzTag("radiations/to_shadow_ores");
-
-
 	public static final INamedTag<Block> GOLD_TILES = pvzTag("gold_tile");
-		
+
 	private static INamedTag<Block> pvzTag(String name){
         return BlockTags.createOptional(StringUtil.prefix(name));
     }

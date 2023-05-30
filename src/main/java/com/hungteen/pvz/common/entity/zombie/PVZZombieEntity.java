@@ -352,7 +352,7 @@ public abstract class PVZZombieEntity extends AbstractPAZEntity implements IZomb
 
 	@Override
 	protected boolean canRemoveWhenDeath() {
-		return ConfigUtil.enableZombieDropParts() || super.canRemoveWhenDeath();
+		return (ConfigUtil.enableZombieDropParts() && !level.isClientSide) || super.canRemoveWhenDeath();//changed
 	}
 
 	@Override
@@ -386,7 +386,7 @@ public abstract class PVZZombieEntity extends AbstractPAZEntity implements IZomb
 	protected void dropSun() {
 		int num = this.getRandom().nextInt(8) + 3;
 		for (int i = 0; i < num; ++i) {
-			SunEntity.spawnSunRandomly(level, blockPosition().above(), 25, 2);
+			SunEntity.dropSunRandomly(level, blockPosition().above(), 25, 2);
 		}
 	}
 	
@@ -788,9 +788,14 @@ public abstract class PVZZombieEntity extends AbstractPAZEntity implements IZomb
 	
 	@Override
 	public boolean fireImmune() {
-		return true;
+		return !ConfigUtil.immuineToDamage();
 	}
-	
+
+	@Override
+	public boolean ignoreExplosion() {
+		return !ConfigUtil.immuineToDamage();
+	}
+
 	/**
 	 * is zombie still rising from dirt.
 	 */

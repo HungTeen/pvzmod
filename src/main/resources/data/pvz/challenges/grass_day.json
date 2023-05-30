@@ -241,8 +241,7 @@
   "rewards": {
     "unlocks": [
       "pvz:cherry_bomb",
-      "pvz:chomper",
-      "pvz:repeater"
+      "pvz:chomper"
     ],
     "items": [
       {

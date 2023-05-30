@@ -20,6 +20,7 @@ import com.hungteen.pvz.common.potion.EffectRegister;
 import com.hungteen.pvz.common.world.invasion.InvasionManager;
 import com.hungteen.pvz.common.world.invasion.MissionManager;
 import com.hungteen.pvz.compat.patchouli.PVZPatchouliHandler;
+import com.hungteen.pvz.utils.ConfigUtil;
 import com.hungteen.pvz.utils.EntityUtil;
 import com.hungteen.pvz.utils.PlayerUtil;
 import com.hungteen.pvz.utils.StringUtil;
@@ -34,6 +35,8 @@ import net.minecraft.potion.EffectInstance;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.Hand;
 import net.minecraft.util.math.MathHelper;
+import net.minecraft.util.text.TextFormatting;
+import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraftforge.event.entity.living.LivingDeathEvent;
 import net.minecraftforge.event.entity.player.PlayerInteractEvent;
 
@@ -41,10 +44,10 @@ public class PlayerEventHandler {
 
     /**
      * run when player right click plantEntity with shovel.
-     * {@link PVZPlayerEvents#onPlayerInteract(PlayerInteractEvent.EntityInteractSpecific)}
+     * {@link PVZPlayerEvents#onPlayerInteractSpec(PlayerInteractEvent.EntityInteractSpecific)}
      */
     public static void quickRemoveByPlayer(PlayerEntity player, Entity entity, ItemStack stack) {
-        if(! PlayerUtil.isPlayerSurvival(player) || ((entity instanceof AbstractPAZEntity) && player.getUUID().equals(((AbstractPAZEntity) entity).getOwnerUUID().get()))){
+        if(! PlayerUtil.isPlayerSurvival(player) || ((entity instanceof AbstractPAZEntity) && ((AbstractPAZEntity)entity).getOwnerUUID().isPresent() && player.getUUID().equals(((AbstractPAZEntity) entity).getOwnerUUID().get()))){
             boolean removed = false;
             if(entity instanceof PVZPlantEntity && stack.getItem() instanceof ShovelItem) {
                 final PVZPlantEntity plantEntity = (PVZPlantEntity) entity;
@@ -70,7 +73,7 @@ public class PlayerEventHandler {
     }
 
     /**
-     * {@link PVZPlayerEvents#onPlayerInteract(PlayerInteractEvent.EntityInteractSpecific)}
+     * {@link PVZPlayerEvents#onPlayerInteractSpec(PlayerInteractEvent.EntityInteractSpecific)}
      */
     public static void makeSuperMode(PlayerEntity player, Entity entity, ItemStack heldStack) {
         if (entity instanceof PVZPlantEntity && EntityUtil.isEntityValid(entity)) {//target must still alive.
@@ -96,7 +99,7 @@ public class PlayerEventHandler {
      */
     public static void onPlayerKillEntity(PlayerEntity player, DamageSource source, LivingEntity living) {
         if (living instanceof AbstractPAZEntity) {
-            if (EntityUtil.isEnemy(player, living)) {
+            if (EntityUtil.isEnemy(player, living) && (((AbstractPAZEntity) living).canGiveXP || ConfigUtil.AllZombieGiveXP())) {
                 PlayerUtil.addResource(player, Resources.TREE_XP, ((AbstractPAZEntity) living).getPAZType().getXpPoint());
             }
         }
@@ -195,7 +198,12 @@ public class PlayerEventHandler {
         PVZAPI.get().getPAZs().forEach(type -> {
             if (type.getRequiredLevel() <= level) {
                 PlayerUtil.getOptManager(player).ifPresent(m -> {
-                    m.setPAZLocked(type, false);
+                    if (m.isPAZLocked(type)){
+                        m.setPAZLocked(type, false);
+                        if (ConfigUtil.needUnlockToPlant()) {
+                            PlayerUtil.sendMsgTo(player, new TranslationTextComponent("entity."+type.getModID()+"."+ type).append(new TranslationTextComponent("help.pvz.is_unlocked")).withStyle(TextFormatting.GREEN));
+                        }
+                    }
                 });
             }
         });

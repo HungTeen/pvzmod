@@ -1,6 +1,7 @@
 package com.hungteen.pvz.common.entity.zombie.pool;
 
 import com.hungteen.pvz.common.capability.CapabilityHandler;
+import com.hungteen.pvz.common.entity.plant.PVZPlantEntity;
 import com.hungteen.pvz.common.entity.zombie.PVZZombieEntity;
 import com.hungteen.pvz.common.entity.zombie.body.ZombieDropBodyEntity;
 import com.hungteen.pvz.common.impl.zombie.PoolZombies;
@@ -9,10 +10,7 @@ import com.hungteen.pvz.common.misc.PVZEntityDamageSource;
 import com.hungteen.pvz.common.misc.sound.SoundRegister;
 import com.hungteen.pvz.common.misc.PVZLoot;
 import com.hungteen.pvz.remove.MetalTypes;
-import com.hungteen.pvz.utils.EntityUtil;
-import com.hungteen.pvz.utils.MathUtil;
-import com.hungteen.pvz.utils.PlayerUtil;
-import com.hungteen.pvz.utils.ZombieUtil;
+import com.hungteen.pvz.utils.*;
 import com.hungteen.pvz.utils.interfaces.IHasMetal;
 import net.minecraft.entity.CreatureEntity;
 import net.minecraft.entity.EntityType;
@@ -84,20 +82,17 @@ public class JackInBoxZombieEntity extends PVZZombieEntity implements IHasMetal 
 	 * {@link #normalZombieTick()}
 	 */
 	private void doJackExplode() {
-		final float range = 5F;
-		final float damageMultiple = 1.5F;
+		final float range = 3.5F;
 		EntityUtil.getWholeTargetableEntities(this, EntityUtil.getEntityAABB(this, range, range)).forEach(target -> {
 			final PVZEntityDamageSource source = PVZEntityDamageSource.explode(this);
-			if (target instanceof LivingEntity) {
-				target.hurt(source, EntityUtil.getMaxHealthDamage((LivingEntity) target, damageMultiple));
-			} else {
-				target.hurt(source, 100);
+			if (target instanceof PVZPlantEntity) {
+				target.hurt(source, EntityUtil.getMaxHealthDamage((LivingEntity) target));
 			}
 		});
 		EntityUtil.playSound(this, SoundRegister.CAR_EXPLOSION.get());
-		Explosion.Mode mode = net.minecraftforge.event.ForgeEventFactory.getMobGriefingEvent(this.level, this) ? Explosion.Mode.DESTROY : Explosion.Mode.NONE;
-		final float strenth = this.level.getDifficulty() == Difficulty.HARD ? 3F :
-				this.level.getDifficulty() == Difficulty.NORMAL ? 2.5F : 2F;
+		Explosion.Mode mode = (net.minecraftforge.event.ForgeEventFactory.getMobGriefingEvent(this.level, this) && ConfigUtil.jackinboxBreak()) ? Explosion.Mode.DESTROY : Explosion.Mode.NONE;
+		final float strenth = this.level.getDifficulty() == Difficulty.HARD ? 2.4F :
+				this.level.getDifficulty() == Difficulty.NORMAL ? 2F : 1.6F;
 		this.level.explode(this, getX(), getY(), getZ(), strenth, mode);
 		this.remove();
 	}
@@ -146,7 +141,7 @@ public class JackInBoxZombieEntity extends PVZZombieEntity implements IHasMetal 
 		if(this.getTarget() == null) {//no target not explode.
 			return false;
 		}
-		return this.distanceToSqr(this.getTarget()) <= 100;
+		return this.distanceToSqr(this.getTarget()) <= 50;
 	}
 	
 	@Override

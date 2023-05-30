@@ -11,21 +11,21 @@ public abstract class PlantShooterModel<T extends PlantShooterEntity> extends PV
 
 	@Override
 	public void setupAnim(T entity, float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch){
-		this.getHeadModel().ifPresent(m -> m.xRot = 0);
-		this.getBodyModel().ifPresent(m -> m.xRot = 0);
+		this.getHeadModel().ifPresent(m -> m.xRot = 0.1f);
+		this.getBodyModel().ifPresent(m -> m.xRot = -0.1f);
 		if(entity.isPlantInSuperMode()) {
 			final int T = PlantShooterEntity.SHOOT_ANIM_CD;
 			final int tick = entity.getSuperTime() % T;
 			if(tick >= 0) {
-				this.getHeadModel().ifPresent(m -> m.xRot = AnimationUtil.getUpDownUpDown(tick, T, getMaxRotAngle() / 5));
-				this.getBodyModel().ifPresent(m -> m.xRot = AnimationUtil.getUpDownUpDown(tick, T, - getMaxRotAngle() / 5));
+				this.getHeadModel().ifPresent(m -> m.xRot = AnimationUtil.getUpDownUpDown(tick, T, getMaxRotAngle() / 5) + 0.1f);
+				this.getBodyModel().ifPresent(m -> m.xRot = AnimationUtil.getUpDownUpDown(tick, T, - getMaxRotAngle() / 5) - 0.1f);
 			} 
 		} else {
 			final int T = PlantShooterEntity.SHOOT_ANIM_CD;
 			final int tick = entity.getShootTick() + T - entity.getShootCD();
 			if(tick >= 0) {
-				this.getHeadModel().ifPresent(m -> m.xRot = AnimationUtil.getUpDownUpDown(tick, T, getMaxRotAngle()));
-				this.getBodyModel().ifPresent(m -> m.xRot = AnimationUtil.getUpDownUpDown(tick, T, - getMaxRotAngle()));
+				this.getHeadModel().ifPresent(m -> m.xRot = AnimationUtil.getUpDownUpDown(tick, T, - getMaxRotAngle()/2 ) + 0.1f);
+				this.getBodyModel().ifPresent(m -> m.xRot = AnimationUtil.getUpDownUpDown(tick, T, getMaxRotAngle()) - 0.1f);
 			} 
 		}
 	}

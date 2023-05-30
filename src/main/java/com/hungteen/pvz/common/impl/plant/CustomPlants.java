@@ -21,8 +21,8 @@ public final class CustomPlants extends PlantType {
 	private static final List<IPlantType> LIST = new ArrayList<>();
 	
 	public static final IPlantType WATER_GUARD = new CustomPlants("water_guard", new PlantFeatures().isWaterPlant()
-			.cost(50).requiredLevel(15)
-			.cd(CoolDowns.LITTLE_SLOW).rank(RankTypes.GRAY).essence(EssenceTypes.DEFENCE)
+			.cost(50).requiredLevel(4)
+			.cd(CoolDowns.LITTLE_SLOW).rank(RankTypes.WHITE).essence(EssenceTypes.DEFENCE)
 			.entityType(() -> EntityRegister.WATER_GUARD.get())
 			.summonCard(() -> ItemRegister.WATER_GUARD_CARD.get())
 			.enjoyCard(() -> ItemRegister.WATER_GUARD_ENJOY_CARD.get())
@@ -31,8 +31,8 @@ public final class CustomPlants extends PlantType {
 	);
 	
 	public static final IPlantType BUTTER_PULT = new CustomPlants("butter_pult", new PlantFeatures()
-			.cost(275).requiredLevel(75)
-			.cd(CoolDowns.NORMAL).rank(RankTypes.RED).essence(EssenceTypes.ARMA)
+			.cost(275).requiredLevel(56)
+			.cd(CoolDowns.NORMAL).rank(RankTypes.BLACK).essence(EssenceTypes.ARMA)
 			.entityType(() -> EntityRegister.BUTTER_PULT.get())
 			.summonCard(() -> ItemRegister.BUTTER_PULT_CARD.get())
 			.enjoyCard(() -> ItemRegister.BUTTER_PULT_ENJOY_CARD.get())

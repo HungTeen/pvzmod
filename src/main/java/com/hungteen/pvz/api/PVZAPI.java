@@ -148,6 +148,11 @@ public class PVZAPI {
 		boolean isRaider(ServerWorld world, Entity entity);
 
 		/**
+		 * get the challenge of an entity. if not in any, return null.
+		 */
+		Challenge getEntityChallenge(ServerWorld world, Entity entity);
+
+		/**
 		 * get a nearby raid.<br>
 		 * NOTE : there won't have more than one raid in a suitable range.
 		 */

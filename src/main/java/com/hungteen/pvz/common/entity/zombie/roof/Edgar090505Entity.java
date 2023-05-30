@@ -27,7 +27,7 @@ public class Edgar090505Entity extends EdgarRobotEntity {
     public Edgar090505Entity(EntityType<? extends CreatureEntity> type, World worldIn) {
         super(type, worldIn);
         this.refreshCountCD = 10;
-        this.maxZombieSurround = 60;
+        this.maxZombieSurround = 40;
         this.maxPlantSurround = 50;
         this.kickRange = 6;
         this.setIsWholeBody();

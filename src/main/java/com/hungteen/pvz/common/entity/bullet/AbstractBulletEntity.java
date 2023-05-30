@@ -1,12 +1,11 @@
 package com.hungteen.pvz.common.entity.bullet;
 
-import javax.annotation.Nullable;
-
+import com.hungteen.pvz.PVZConfig;
+import com.hungteen.pvz.PVZMod;
 import com.hungteen.pvz.api.enums.PVZGroupType;
 import com.hungteen.pvz.common.entity.AbstractOwnerEntity;
 import com.hungteen.pvz.common.entity.plant.base.PlantShooterEntity;
 import com.hungteen.pvz.utils.EntityUtil;
-
 import it.unimi.dsi.fastutil.ints.IntOpenHashSet;
 import net.minecraft.block.Block;
 import net.minecraft.block.BushBlock;
@@ -15,21 +14,20 @@ import net.minecraft.entity.EntityType;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.particles.ParticleTypes;
-import net.minecraft.util.math.BlockRayTraceResult;
-import net.minecraft.util.math.EntityRayTraceResult;
-import net.minecraft.util.math.MathHelper;
-import net.minecraft.util.math.RayTraceContext;
-import net.minecraft.util.math.RayTraceResult;
+import net.minecraft.util.math.*;
 import net.minecraft.util.math.vector.Vector3d;
 import net.minecraft.world.World;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
+
+import javax.annotation.Nullable;
 
 public abstract class AbstractBulletEntity extends AbstractOwnerEntity {
 
 	protected IntOpenHashSet hitEntities;
 	protected float airSlowDown = 0.99F;
 	protected float attackDamage = 0F;
+	public boolean bulletmerge = PVZConfig.COMMON_CONFIG.EntitySettings.PlantSetting.PlantBulletMerge.get();
 	
 	public AbstractBulletEntity(EntityType<?> type, World worldIn) {
 		super(type, worldIn);
@@ -62,8 +60,15 @@ public abstract class AbstractBulletEntity extends AbstractOwnerEntity {
 		    if(entityRay != null) {
 			    result = entityRay;
 		    }
-		    if(result != null && result.getType() != RayTraceResult.Type.MISS && !net.minecraftforge.event.ForgeEventFactory.onProjectileImpact(this, result)) {//on hit 
+		    if(result.getType() != RayTraceResult.Type.MISS && !net.minecraftforge.event.ForgeEventFactory.onProjectileImpact(this, result)) {//on hit
 			    this.onImpact(result);
+				if (result.getType() == RayTraceResult.Type.ENTITY && bulletmerge) {//bullet merging
+					Entity entity = ((EntityRayTraceResult)result).getEntity();
+					if (entity.getClass().getName().equals(this.getClass().getName())) {
+						((AbstractBulletEntity) entity).setAttackDamage(this.getAttackDamage()+((AbstractBulletEntity)entity).getAttackDamage());
+						this.remove();
+					}
+				}
 		    }
 		}
 		this.tickMove();
@@ -76,8 +81,8 @@ public abstract class AbstractBulletEntity extends AbstractOwnerEntity {
 	@Nullable
 	protected EntityRayTraceResult rayTraceEntities(Vector3d startVec, Vector3d endVec) {
 		return EntityUtil.rayTraceEntities(level, this, startVec, endVec, entity -> 
-		    entity.isPickable() && shouldHit(entity) && (this.hitEntities == null || !this.hitEntities.contains(entity.getId())
-		));
+		    (entity.isPickable() && shouldHit(entity) && (this.hitEntities == null || !this.hitEntities.contains(entity.getId())) || entity.getClass().getName().equals(this.getClass().getName()))
+		);
 	}
 	
 	/**
@@ -146,11 +151,15 @@ public abstract class AbstractBulletEntity extends AbstractOwnerEntity {
 	public void shootPea(double dx, double dy, double dz, double speed, double angleOffset) {
 		final double down = this.getShootPeaAngle();
 		final double dxz = Math.sqrt(dx * dx + dz * dz);
-		dy = MathHelper.clamp(dy, - dxz / down, dxz / down);//fix dy by angle
+		if(down != 0){
+			dy = MathHelper.clamp(dy, - dxz / down, dxz / down);//fix dy by angle
+		}
+//		System.out.println(dy + "," + dxz);
 		final double degree = MathHelper.atan2(dz, dx) + Math.toRadians(angleOffset);
 		dx = Math.cos(degree) * dxz;
 		dz = Math.sin(degree) * dxz;
-		this.setDeltaMovement(new Vector3d(dx, dy, dz).normalize().scale(speed));
+		final double totSpeed = Math.sqrt(dxz * dxz + dy * dy);
+		this.setDeltaMovement(new Vector3d(dx / totSpeed, dy / totSpeed, dz / totSpeed).scale(speed));
 	}
 	
 	public void shootToTarget(LivingEntity target, double speed) {
@@ -207,7 +216,7 @@ public abstract class AbstractBulletEntity extends AbstractOwnerEntity {
 		if (this.getThrower() instanceof PlantShooterEntity) {
 			return ((PlantShooterEntity) this.getThrower()).getMaxShootAngle();
 		}
-		return 0.01;
+		return 0;
 	}
 	
 	/**

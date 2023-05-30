@@ -17,7 +17,12 @@ public class PVZConfig {
                 InvasionSettings.SafeDayLength = builder
                         .translation("config.pvz.invasion.safe_day")
                         .comment("If you set to 5, then the first 5 * 20 minutes of the world will not have any zombie invasion event.")
-                        .defineInRange("SafeDayLength", 2, 0, 1000000);
+                        .defineInRange("SafeDayLength", 4, 0, 1000000);
+
+                InvasionSettings.ScatterInvasions = builder
+                        .translation("config.pvz.invasion.scatter_invasions")
+                        .comment("If on, invasions of different players will happen in different days.")
+                        .define("ScatterInvasions", false);
 
                 InvasionSettings.InvasionIntervalLength = builder
                         .translation("config.pvz.invasion.interval")
@@ -37,7 +42,7 @@ public class PVZConfig {
                 InvasionSettings.MaxSpawnEachPlayer = builder
                         .translation("config.pvz.invasion.spawn_count")
                         .comment("how many amount of entity will spawn to player.")
-                        .defineInRange("MaxSpawnCount", 50, 1, 1000);
+                        .defineInRange("MaxSpawnCount", 30, 1, 1000);
 
                 InvasionSettings.MaxSpawnRange = builder
                         .translation("config.pvz.invasion.spawn_range")
@@ -75,6 +80,16 @@ public class PVZConfig {
                         .comment("if turn to false, there will have no monster of other monsters spawn in overworld except pvz zombies.")
                         .define("CanSpawnDefaultMonster", true);
 
+                RuleSettings.AllZombieGiveXP = builder
+                        .translation("config.pvz.rule.all_zombie_give_xp")
+                        .comment("if turn to false, only invasion zombies will give tree xp.")
+                        .define("AllZombieGiveXP", false);
+
+                RuleSettings.DespawnOwnedEntityRange = builder
+                        .translation("config.pvz.rule.despawn_owned_entity_range")
+                        .comment("plants summoned by players will be naturally despawned if the distance to player's spawn point is farther than this number.")
+                        .defineInRange("DespawnOwnedEntityRange", 1000, -1, 100000);
+
                 RuleSettings.GiveBeginnerReward = builder
                         .translation("config.pvz.rule.beginner_reward")
                         .comment("If you set it true, you will get some basic plantcards when you first join world.")
@@ -94,6 +109,11 @@ public class PVZConfig {
                         .translation("config.pvz.rule.plant_count")
                         .comment("how many plants can you place in 30 x 30 area without increasing cost.")
                         .defineInRange("LimitPlantCount", 50, 10, 1000);
+
+                RuleSettings.NeedUnlockToPlant = builder
+                        .translation("config.pvz.rule.unlock_plant")
+                        .comment("if on, plant needs to be unlocked before planting.")
+                        .define("NeedUnlockToPlant", true);
 
                 RuleSettings.KeepSunWhenDie = builder
                         .translation("config.pvz.rule.keep_sun")
@@ -166,6 +186,11 @@ public class PVZConfig {
                             .translation("config.pvz.world.amethyst_ore_chance")
                             .comment("the gen chance of amethyst ore in the end(the larger the more chance to see it).")
                             .defineInRange("GenAmethystOreChance", 15, 1, 10000);
+
+                    WorldSettings.GenLunarStoneChance = builder
+                            .translation("config.pvz.world.lunar_stone_chance")
+                            .comment("the gen chance of lunar stone in overworld(the larger the more chance to see it).")
+                            .defineInRange("GenLunarStoneChance", 30, 1, 10000);
                 }
                 builder.pop();
 
@@ -174,12 +199,12 @@ public class PVZConfig {
                     WorldSettings.SunSpawnWeight = builder
                             .translation("config.pvz.world.sun_weight")
                             .comment("spawn weight of Sun.")
-                            .defineInRange("SunSpawnWeight", 50, 1, 200);
+                            .defineInRange("SunSpawnWeight", 100, 1, 200);
 
                     WorldSettings.LavaZombieSpawnWeight = builder
                             .translation("config.pvz.world.lava_zombie_weight")
                             .comment("spawn weight of LavaZombie at nether.")
-                            .defineInRange("LavaZombieSpawnWeight", 15, 1, 200);
+                            .defineInRange("LavaZombieSpawnWeight", 10, 1, 200);
 
                     WorldSettings.GigaTombStoneSpawnWeight = builder
                             .translation("config.pvz.world.giga_tomb_weight")
@@ -189,7 +214,7 @@ public class PVZConfig {
                     WorldSettings.YetiZombieSpawnWeight = builder
                             .translation("config.pvz.world.yeti_zombie_weight")
                             .comment("spawn weight of YetiZombie in overworld when thunder.")
-                            .defineInRange("YetiZombieSpawnWeight", 1, 1, 200);
+                            .defineInRange("YetiZombieSpawnWeight", 2, 1, 200);
                 }
                 builder.pop();
             }
@@ -208,7 +233,7 @@ public class PVZConfig {
                     EntitySettings.PlayerBaseSunAmount = builder
                             .translation("config.pvz.player.initial_sun")
                             .comment("players' base sun amount, it will increase when tree maxLevel increasing.")
-                            .defineInRange("PlayerInitialSun", 950, 100, 10000);
+                            .defineInRange("PlayerInitialSun", 800, 100, 10000);
                 }
                 builder.pop();
 
@@ -234,6 +259,16 @@ public class PVZConfig {
                             .comment("enable zombies to drop hands and heads when they got hurt(turn false to disable).")
                             .define("EnableZombieDropParts", true);
 
+                    EntitySettings.ZombieSetting.JackinboxBreak = builder
+                            .translation("config.pvz.zombie.jack_break")
+                            .comment("if on, jack-in-box zombie will break blocks nearby when explode.")
+                            .define("JackInBoxZombieBreakBlocks", false);
+
+                    EntitySettings.ZombieSetting.ImmuneDamage = builder
+                            .translation("config.pvz.zombie.immune_damage")
+                            .comment("if on, fire & explode damages will not hurt most of the zombies.")
+                            .define("ImmuneToEnvironmentDamage", true);
+
                 }
                 builder.pop();
 
@@ -244,6 +279,16 @@ public class PVZConfig {
                             .comment("the max number StrangeCats can copy themselves in a range of 20 * 20.")
                             .defineInRange("StrangeCatCount", 10, 0, 100);
 
+                    EntitySettings.PlantSetting.PlantBulletMerge = builder
+                            .translation("config.pvz.plant.plant_bullet_merge")
+                            .comment("whether two same bullets merge into one when coincide.")
+                            .define("PlantBulletMerge", false);
+
+                    EntitySettings.PlantSetting.PlantMinimumLiveTick = builder
+                            .translation("config.pvz.plant.plant_minimum_live_tick")
+                            .comment("plants won't despawn before living for this long.")
+                            .defineInRange("PlantMinimumLiveTick", 2000, 0, 10000000);
+
                 }
                 builder.pop();
 
@@ -252,7 +297,7 @@ public class PVZConfig {
                     EntitySettings.EntityLiveTick.SunLiveTick = builder
                             .translation("config.pvz.entity.sun_live_tick")
                             .comment("how many ticks can the sun entity live.")
-                            .defineInRange("SunLiveTick", 400, 1, 1200);
+                            .defineInRange("SunLiveTick", 500, 1, 1200);
 
                     EntitySettings.EntityLiveTick.CoinLiveTick = builder
                             .translation("config.pvz.entity.coin_live_tick")
@@ -273,11 +318,6 @@ public class PVZConfig {
                             .translation("config.pvz.entity.yeti_live_tick")
                             .comment("how many ticks can yeti entity live(how long will it stay).")
                             .defineInRange("YetiLiveTick", 2400, 1, 1000000);
-
-                    EntitySettings.EntityLiveTick.BowlingLiveTick = builder
-                            .translation("config.pvz.entity.bowling_live_tick")
-                            .comment("how many ticks can bowling entity live.")
-                            .defineInRange("BowlingLiveTick", 300, 1, 1000000);
 
                     EntitySettings.EntityLiveTick.LawnMowerLiveTick = builder
                             .translation("config.pvz.entity.lawn_mower_live_tick")
@@ -307,7 +347,7 @@ public class PVZConfig {
 
                 BlockSettings.AmethystAngerChance = builder
                         .translation("config.pvz.block.amethyst_anger_chance")
-                        .comment("The chance of anger nearby enderman when break amethyst ore")
+                        .comment("The chance to anger nearby endermen when break amethyst ore")
                         .defineInRange("AmethystAngerChance", 0.4, 0, 1);
 
                 builder.comment("Setting about break blocks.").push("Break Block Setting");
@@ -347,6 +387,7 @@ public class PVZConfig {
         public static class InvasionSettings {
             /* misc */
             public ForgeConfigSpec.IntValue SafeDayLength;
+            public ForgeConfigSpec.BooleanValue ScatterInvasions;
             public ForgeConfigSpec.IntValue InvasionIntervalLength;
             public ForgeConfigSpec.BooleanValue ShowEventMessages;
             public ForgeConfigSpec.BooleanValue EnableHugeWave;
@@ -363,10 +404,13 @@ public class PVZConfig {
 
         public static class RuleSettings {
             public ForgeConfigSpec.BooleanValue CanSpawnDefaultMonster;
+            public ForgeConfigSpec.BooleanValue AllZombieGiveXP;
+            public ForgeConfigSpec.IntValue DespawnOwnedEntityRange;
             public ForgeConfigSpec.BooleanValue GiveBeginnerReward;
             public ForgeConfigSpec.BooleanValue AllowNaturalTurnOrigin;
             public ForgeConfigSpec.BooleanValue TeamAttack;
             public ForgeConfigSpec.IntValue LimitPlantCount;
+            public ForgeConfigSpec.BooleanValue NeedUnlockToPlant;
             public ForgeConfigSpec.BooleanValue KeepSunWhenDie;
             public ForgeConfigSpec.IntValue MaxDamageLimit;
         }
@@ -386,6 +430,7 @@ public class PVZConfig {
 
             /* ore gen */
             public ForgeConfigSpec.IntValue GenAmethystOreChance;
+            public ForgeConfigSpec.IntValue GenLunarStoneChance;
             public ForgeConfigSpec.IntValue GenOriginOreChance;
 
             /* entity spawn */
@@ -411,10 +456,14 @@ public class PVZConfig {
                 public ForgeConfigSpec.IntValue ZombieSuperChance;
                 public ForgeConfigSpec.IntValue ZombieSunChance;
                 public ForgeConfigSpec.BooleanValue EnableZombieDropHands;
+                public ForgeConfigSpec.BooleanValue JackinboxBreak;
+                public ForgeConfigSpec.BooleanValue ImmuneDamage;
             }
 
             public static class PlantSetting {
                 public ForgeConfigSpec.IntValue StrangeCatCount;
+                public ForgeConfigSpec.BooleanValue PlantBulletMerge;
+                public ForgeConfigSpec.IntValue PlantMinimumLiveTick;
             }
 
             public static class EntityLiveTick {
@@ -423,7 +472,6 @@ public class PVZConfig {
                 public ForgeConfigSpec.IntValue JewelLiveTick;
                 public ForgeConfigSpec.IntValue EnergyLiveTick;
                 public ForgeConfigSpec.IntValue YetiLiveTick;
-                public ForgeConfigSpec.IntValue BowlingLiveTick;
                 public ForgeConfigSpec.IntValue LawnMowerLiveTick;
                 public ForgeConfigSpec.IntValue ElementBallLiveTick;
             }

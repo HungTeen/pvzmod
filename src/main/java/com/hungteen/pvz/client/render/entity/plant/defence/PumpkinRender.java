@@ -12,7 +12,7 @@ import net.minecraftforge.api.distmarker.OnlyIn;
 public class PumpkinRender extends PVZPlantRender<PumpkinEntity>{
 
 	public PumpkinRender(EntityRendererManager rendererManager) {
-		super(rendererManager, new PumpkinModel(), 0.6f);
+		super(rendererManager, new PumpkinModel(), 1f);
 	}
 
 }

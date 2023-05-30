@@ -7,166 +7,118 @@ import net.minecraft.client.renderer.entity.model.EntityModel;
 import net.minecraft.client.renderer.model.ModelRenderer;
 import net.minecraft.util.math.MathHelper;
 
-// Made with Blockbench 3.7.4
-// Exported for Minecraft version 1.15
+// Made with Blockbench 4.1.3
+// Exported for Minecraft version 1.15 - 1.16 with Mojang mappings
 // Paste this class into your mod and generate all required imports
 
 
 public class CatTailModel extends PVZPlantModel<CatTailEntity> {
-	private final ModelRenderer total;
-	private final ModelRenderer body;
-	private final ModelRenderer bone4;
-	private final ModelRenderer bone5;
-	private final ModelRenderer bone6;
-	private final ModelRenderer legs;
+	private final ModelRenderer bone;
+	private final ModelRenderer buttom;
+	private final ModelRenderer head;
+	private final ModelRenderer hat_r1;
 	private final ModelRenderer left_ear;
-	private final ModelRenderer bone3;
-	private final ModelRenderer bone2;
+	private final ModelRenderer in_r1;
+	private final ModelRenderer lear_r1;
 	private final ModelRenderer right_ear;
-	private final ModelRenderer bone7;
-	private final ModelRenderer bone8;
+	private final ModelRenderer in_r2;
+	private final ModelRenderer rear_r1;
 	private final ModelRenderer tail;
-	private final ModelRenderer tail1;
-	private final ModelRenderer tail2;
-	private final ModelRenderer tail3;
-	private final ModelRenderer tail4;
-	private final ModelRenderer tail5;
-	private final ModelRenderer bone10;
-	private final ModelRenderer bone11;
-	private final ModelRenderer tail6;
+	private final ModelRenderer spike_r1;
+	private final ModelRenderer sec_r1;
+	private final ModelRenderer fir_r1;
 
 	public CatTailModel() {
-		texWidth = 512;
-		texHeight = 512;
+		texWidth = 64;
+		texHeight = 64;
 
-		total = new ModelRenderer(this);
-		total.setPos(0.0F, 24.0F, 0.0F);
-		
+		bone = new ModelRenderer(this);
+		bone.setPos(0.0F, 24.0F, 0.0F);
 
-		body = new ModelRenderer(this);
-		body.setPos(0.0F, 0.0F, 0.0F);
-		total.addChild(body);
-		body.texOffs(256, 384).addBox(-33.3301F, -68.0F, -32.0F, 64.0F, 64.0F, 64.0F, 0.0F, false);
 
-		bone4 = new ModelRenderer(this);
-		bone4.setPos(0.0F, 4.0F, 0.0F);
-		body.addChild(bone4);
-		
+		buttom = new ModelRenderer(this);
+		buttom.setPos(0.0F, 0.0F, 0.0F);
+		bone.addChild(buttom);
+		buttom.texOffs(24, 12).addBox(-6.0F, -2.0F, -8.0F, 6.0F, 2.0F, 6.0F, 0.0F, false);
+		buttom.texOffs(26, 29).addBox(0.0F, -2.0F, 1.0F, 5.0F, 2.0F, 5.0F, 0.0F, false);
+		buttom.texOffs(0, 28).addBox(1.0F, -1.0F, -7.0F, 6.0F, 1.0F, 6.0F, 0.0F, false);
+		buttom.texOffs(26, 22).addBox(-7.0F, -1.0F, 0.0F, 6.0F, 1.0F, 6.0F, 0.0F, false);
 
-		bone5 = new ModelRenderer(this);
-		bone5.setPos(35.0F, -68.0F, -32.0F);
-		bone4.addChild(bone5);
-		setRotationAngle(bone5, -0.2618F, 0.0F, 0.0F);
-		bone5.texOffs(367, 0).addBox(-71.3301F, 0.0F, 0.0F, 3.0F, 10.0F, 70.0F, 0.0F, false);
-		bone5.texOffs(214, 0).addBox(-4.3301F, 0.0F, 0.0F, 3.0F, 10.0F, 70.0F, 0.0F, false);
+		head = new ModelRenderer(this);
+		head.setPos(0.0F, 0.0F, 0.0F);
+		bone.addChild(head);
+		head.texOffs(0, 12).addBox(-4.0F, -9.0F, -5.0F, 8.0F, 8.0F, 8.0F, 0.0F, false);
+		head.texOffs(32, 0).addBox(-2.0F, -3.0F, -5.5F, 4.0F, 2.0F, 1.0F, 0.0F, false);
+		head.texOffs(0, 7).addBox(-1.0F, -3.05F, -5.7F, 2.0F, 1.0F, 2.0F, 0.0F, false);
 
-		bone6 = new ModelRenderer(this);
-		bone6.setPos(0.0F, 0.0F, 0.0F);
-		bone4.addChild(bone6);
-		bone6.texOffs(288, 11).addBox(-36.3301F, -49.8827F, 31.6148F, 70.0F, 10.0F, 4.0F, 0.0F, false);
-		bone6.texOffs(294, 40).addBox(-36.3301F, -68.0F, -35.0F, 70.0F, 10.0F, 3.0F, 0.0F, false);
-
-		legs = new ModelRenderer(this);
-		legs.setPos(0.0F, 0.0F, 0.0F);
-		total.addChild(legs);
-		legs.texOffs(368, 338).addBox(-43.3301F, -4.0F, 6.0F, 36.0F, 4.0F, 36.0F, 0.0F, false);
-		legs.texOffs(368, 298).addBox(4.6699F, -4.0F, 6.0F, 36.0F, 4.0F, 36.0F, 0.0F, false);
-		legs.texOffs(368, 258).addBox(-43.3301F, -4.0F, -42.0F, 36.0F, 4.0F, 36.0F, 0.0F, false);
-		legs.texOffs(367, 217).addBox(4.6699F, -4.0F, -42.0F, 36.0F, 4.0F, 36.0F, 0.0F, false);
+		hat_r1 = new ModelRenderer(this);
+		hat_r1.setPos(0.0F, -6.0F, -1.0F);
+		head.addChild(hat_r1);
+		setRotationAngle(hat_r1, -0.2618F, 0.0F, 0.0F);
+		hat_r1.texOffs(0, 0).addBox(-5.0F, -1.0F, -5.0F, 10.0F, 2.0F, 10.0F, 0.0F, false);
 
 		left_ear = new ModelRenderer(this);
-		left_ear.setPos(32.0F, -66.0F, -6.0F);
-		total.addChild(left_ear);
-		setRotationAngle(left_ear, 0.0F, 0.0F, 0.8727F);
-		
+		left_ear.setPos(0.0F, -6.0F, -1.0F);
+		head.addChild(left_ear);
 
-		bone3 = new ModelRenderer(this);
-		bone3.setPos(0.0F, 0.0F, 0.0F);
-		left_ear.addChild(bone3);
-		bone3.texOffs(479, 302).addBox(-15.0486F, -5.4591F, -3.999F, 9.0F, 20.0F, 8.0F, 0.0F, false);
 
-		bone2 = new ModelRenderer(this);
-		bone2.setPos(0.0F, 0.0F, 0.0F);
-		left_ear.addChild(bone2);
-		setRotationAngle(bone2, 0.0F, 0.0F, 0.8727F);
-		bone2.texOffs(459, 0).addBox(-13.855F, 1.0189F, -4.0F, 19.0F, 7.0F, 8.0F, 0.0F, false);
+		in_r1 = new ModelRenderer(this);
+		in_r1.setPos(2.5F, -4.5F, 2.5F);
+		left_ear.addChild(in_r1);
+		setRotationAngle(in_r1, 0.1745F, 0.0F, 0.1745F);
+		in_r1.texOffs(44, 18).addBox(-1.4F, -1.9F, -6.6F, 3.0F, 3.0F, 3.0F, 0.0F, false);
+		in_r1.texOffs(43, 6).addBox(-1.3F, -1.9F, -6.5F, 3.0F, 3.0F, 3.0F, 0.0F, false);
+
+		lear_r1 = new ModelRenderer(this);
+		lear_r1.setPos(0.0F, 0.0F, 0.0F);
+		left_ear.addChild(lear_r1);
+		setRotationAngle(lear_r1, -0.2618F, 0.5236F, 0.0F);
+		lear_r1.texOffs(0, 0).addBox(3.0F, -5.0F, -2.0F, 2.0F, 4.0F, 3.0F, 0.0F, false);
 
 		right_ear = new ModelRenderer(this);
-		right_ear.setPos(-35.0F, -66.0F, -6.0F);
-		total.addChild(right_ear);
-		setRotationAngle(right_ear, 0.0F, 0.0F, -0.8727F);
-		
+		right_ear.setPos(0.0F, -6.0F, -1.0F);
+		head.addChild(right_ear);
 
-		bone7 = new ModelRenderer(this);
-		bone7.setPos(0.0F, 0.0F, 0.0F);
-		right_ear.addChild(bone7);
-		bone7.texOffs(479, 262).addBox(6.0486F, -5.4591F, -3.99F, 9.0F, 20.0F, 8.0F, 0.0F, true);
 
-		bone8 = new ModelRenderer(this);
-		bone8.setPos(0.0F, 0.0F, 0.0F);
-		right_ear.addChild(bone8);
-		setRotationAngle(bone8, 0.0F, 0.0F, -0.8727F);
-		bone8.texOffs(459, 32).addBox(-5.145F, 1.0189F, -4.0F, 19.0F, 7.0F, 8.0F, 0.0F, true);
+		in_r2 = new ModelRenderer(this);
+		in_r2.setPos(-2.5F, -4.5F, 2.5F);
+		right_ear.addChild(in_r2);
+		setRotationAngle(in_r2, 0.1745F, 0.0F, -0.1745F);
+		in_r2.texOffs(42, 12).addBox(-1.6F, -1.9F, -6.6F, 3.0F, 3.0F, 3.0F, 0.0F, false);
+		in_r2.texOffs(42, 0).addBox(-1.7F, -1.9F, -6.5F, 3.0F, 3.0F, 3.0F, 0.0F, false);
+
+		rear_r1 = new ModelRenderer(this);
+		rear_r1.setPos(0.0F, 0.0F, 0.0F);
+		right_ear.addChild(rear_r1);
+		setRotationAngle(rear_r1, -0.2618F, -0.5236F, 0.0F);
+		rear_r1.texOffs(32, 36).addBox(-5.0F, -5.0F, -2.0F, 2.0F, 4.0F, 3.0F, 0.0F, false);
 
 		tail = new ModelRenderer(this);
-		tail.setPos(0.0F, -24.8669F, 35.9447F);
-		total.addChild(tail);
-		
+		tail.setPos(0.0F, -1.5F, 3.0F);
+		bone.addChild(tail);
 
-		tail1 = new ModelRenderer(this);
-		tail1.setPos(0.0F, 9.8669F, -7.9447F);
-		tail.addChild(tail1);
-		tail1.texOffs(6, 448).addBox(-5.3301F, -5.0F, -5.0F, 8.0F, 8.0F, 37.0F, 0.0F, false);
 
-		tail2 = new ModelRenderer(this);
-		tail2.setPos(0.0F, 6.7538F, 22.5237F);
-		tail.addChild(tail2);
-		setRotationAngle(tail2, -0.8727F, 0.0F, 0.0F);
-		tail2.texOffs(304, 323).addBox(-5.32F, -29.2438F, -2.3326F, 8.0F, 32.0F, 8.0F, 0.0F, false);
+		spike_r1 = new ModelRenderer(this);
+		spike_r1.setPos(0.0F, -2.18F, 3.95F);
+		tail.addChild(spike_r1);
+		setRotationAngle(spike_r1, 2.2253F, 0.0F, 0.0F);
+		spike_r1.texOffs(0, 35).addBox(-1.0F, 1.18F, 6.05F, 2.0F, 2.0F, 5.0F, 0.0F, false);
+		spike_r1.texOffs(15, 28).addBox(-0.5F, 1.68F, 3.05F, 1.0F, 1.0F, 9.0F, 0.0F, false);
 
-		tail3 = new ModelRenderer(this);
-		tail3.setPos(0.0F, -23.3801F, 21.2917F);
-		tail.addChild(tail3);
-		setRotationAngle(tail3, -1.6581F, 0.0F, 0.0F);
-		tail3.texOffs(222, 331).addBox(-5.3301F, -28.5396F, -11.7591F, 8.0F, 8.0F, 25.0F, 0.0F, false);
+		sec_r1 = new ModelRenderer(this);
+		sec_r1.setPos(0.0F, -0.59F, 2.05F);
+		tail.addChild(sec_r1);
+		setRotationAngle(sec_r1, 1.4399F, 0.0F, 0.0F);
+		sec_r1.texOffs(30, 4).addBox(-0.5F, 0.39F, 0.95F, 1.0F, 1.0F, 5.0F, 0.0F, false);
 
-		tail4 = new ModelRenderer(this);
-		tail4.setPos(0.0F, -21.0F, 1.0F);
-		tail.addChild(tail4);
-		setRotationAngle(tail4, 0.2618F, 0.0F, 0.0F);
-		tail4.texOffs(168, 372).addBox(-5.3301F, -2.336F, 43.0566F, 8.0F, 4.0F, 8.0F, 0.0F, false);
-
-		tail5 = new ModelRenderer(this);
-		tail5.setPos(2.6699F, -19.5361F, -3.1281F);
-		tail.addChild(tail5);
-		setRotationAngle(tail5, 0.2618F, 0.0F, 0.0F);
-		
-
-		bone10 = new ModelRenderer(this);
-		bone10.setPos(0.0F, 0.0F, 0.0F);
-		tail5.addChild(bone10);
-		bone10.texOffs(0, 0).addBox(-7.2426F, -28.9745F, 43.9555F, 6.0F, 27.0F, 7.0F, 0.0F, false);
-		bone10.texOffs(0, 0).addBox(-7.2426F, -28.9745F, 51.4408F, 6.0F, 27.0F, 7.0F, 0.0F, false);
-		bone10.texOffs(0, 0).addBox(-11.4853F, -28.9745F, 48.1982F, 7.0F, 27.0F, 6.0F, 0.0F, false);
-		bone10.texOffs(0, 0).addBox(-4.0F, -28.9745F, 48.1982F, 7.0F, 27.0F, 6.0F, 0.0F, false);
-
-		bone11 = new ModelRenderer(this);
-		bone11.setPos(0.0F, 0.0F, 0.0F);
-		tail5.addChild(bone11);
-		setRotationAngle(bone11, 0.0F, 0.7854F, 0.0F);
-		bone11.texOffs(0, 0).addBox(-42.2026F, -28.9745F, 25.9599F, 6.0F, 27.0F, 7.0F, 0.0F, false);
-		bone11.texOffs(0, 0).addBox(-42.2026F, -28.9745F, 33.4452F, 6.0F, 27.0F, 7.0F, 0.0F, false);
-		bone11.texOffs(0, 0).addBox(-46.4452F, -28.9745F, 30.2026F, 7.0F, 27.0F, 6.0F, 0.0F, false);
-		bone11.texOffs(0, 0).addBox(-38.9599F, -28.9745F, 30.2026F, 7.0F, 27.0F, 6.0F, 0.0F, false);
-
-		tail6 = new ModelRenderer(this);
-		tail6.setPos(-2.0F, -61.0F, 39.0F);
-		tail.addChild(tail6);
-		setRotationAngle(tail6, -0.2618F, -0.1745F, -0.6981F);
-		tail6.texOffs(377, 272).addBox(4.6394F, -8.0881F, -8.206F, 4.0F, 4.0F, 4.0F, 0.0F, false);
-		tail6.texOffs(368, 225).addBox(7.6394F, -10.0881F, -10.206F, 3.0F, 3.0F, 3.0F, 0.0F, false);
-		tail6.texOffs(475, 226).addBox(-1.3606F, -6.0881F, -6.206F, 8.0F, 8.0F, 8.0F, 0.0F, false);
+		fir_r1 = new ModelRenderer(this);
+		fir_r1.setPos(0.0F, 1.5F, -3.0F);
+		tail.addChild(fir_r1);
+		setRotationAngle(fir_r1, 0.2618F, 0.0F, 0.0F);
+		fir_r1.texOffs(9, 35).addBox(-0.5F, -2.0F, 3.0F, 1.0F, 1.0F, 4.0F, 0.0F, false);
 	}
+
+
 
 	@Override
 	public void setupAnim(CatTailEntity entity, float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch){
@@ -177,7 +129,7 @@ public class CatTailModel extends PVZPlantModel<CatTailEntity> {
 
 	@Override
 	public ModelRenderer getPlantWholeBody() {
-		return this.total;
+		return this.bone;
 	}
 
 	@Override

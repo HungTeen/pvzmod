@@ -47,29 +47,38 @@
           }
         }
       ],
-      "duration": 3000
+      "duration": 9000
     }
   ],
   "rewards": {
     "items": [
       {
-        "item": "pvz:twin_sunflower_enjoy_card",
+        "item": "pvz:amethyst_ingot",
         "amount": {
-          "count": 1
+          "count": 3
         }
       },
       {
         "item": "pvz:repeater_enjoy_card",
         "amount": {
-          "count": 1
+          "count": 2
         }
       },
       {
         "item": "pvz:gatling_pea_enjoy_card",
         "amount": {
           "random": {
-            "min": 0,
-            "max": 1
+            "min": 1,
+            "max": 3
+          }
+        }
+      },
+      {
+        "item": "pvz:winter_melon_enjoy_card",
+        "amount": {
+          "random": {
+            "min": 1,
+            "max": 3
           }
         }
       },
@@ -95,8 +104,8 @@
         "item": "pvz:cactus_enjoy_card",
         "amount": {
           "random": {
-            "min": 1,
-            "max": 3
+            "min": 3,
+            "max": 5
           }
         }
       }

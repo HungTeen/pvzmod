@@ -61,7 +61,7 @@ public class SunTempleComponents {
 				SunDaveEntity dave = EntityRegister.SUN_DAVE.get().create(worldIn.getLevel());
 				EntityUtil.onEntitySpawn(worldIn, dave, pos.above());
 			} else if(function.equals("chest")) {
-				this.createChest(worldIn, sbb, rand, pos.above(), PVZLoot.BUCKET_HOUSE_CHEST, null);
+				this.createChest(worldIn, sbb, rand, pos.above(), PVZLoot.SUN_TEMPLE_CHEST, null);
 				worldIn.setBlock(pos, Blocks.SPAWNER.defaultBlockState(), 2);
 				TileEntity te = worldIn.getBlockEntity(pos);
 				if(te instanceof MobSpawnerTileEntity) {

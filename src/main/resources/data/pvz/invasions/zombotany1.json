@@ -11,7 +11,7 @@
     },
     {
       "entity_type": "pvz:wallnut_zombie",
-      "invasion_level": 25,
+      "invasion_level": 15,
       "spawn_weight": 100
     }
   ]

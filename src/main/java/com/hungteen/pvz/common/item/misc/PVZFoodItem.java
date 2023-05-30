@@ -9,9 +9,9 @@ import net.minecraft.potion.Effects;
 @SuppressWarnings("deprecation")
 public class PVZFoodItem extends Item{
 
-	public static final Food FAKE_BRAIN = (new Food.Builder()).nutrition(7).saturationMod(0.7F).build();
+	public static final Food FAKE_BRAIN = (new Food.Builder()).nutrition(5).saturationMod(0.7F).build();
 	
-	public static final Food REAL_BRAIN = (new Food.Builder()).nutrition(6).saturationMod(0.5F).effect(new EffectInstance(Effects.CONFUSION, 200, 1), 1.0f).build();
+	public static final Food REAL_BRAIN = (new Food.Builder()).nutrition(5).saturationMod(0.5F).effect(new EffectInstance(Effects.CONFUSION, 200, 1), 1.0f).build();
 	public static final Food CANDY = (new Food.Builder()).nutrition(1).saturationMod(0.4F).build();
 	public static final Food CHOCOLATE = (new Food.Builder()).nutrition(3).saturationMod(1F).build();
 	public static final Food PEA_SOUP = (new Food.Builder()).nutrition(5).saturationMod(0.6f).build();
