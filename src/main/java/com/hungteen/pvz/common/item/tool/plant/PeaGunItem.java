@@ -3,6 +3,8 @@ package com.hungteen.pvz.common.item.tool.plant;
 import com.hungteen.pvz.api.types.IPlantType;
 import com.hungteen.pvz.common.container.PeaGunContainer;
 import com.hungteen.pvz.common.container.inventory.ItemInventory;
+import com.hungteen.pvz.common.enchantment.EnchantmentRegister;
+import com.hungteen.pvz.common.enchantment.PVZEnchantment;
 import com.hungteen.pvz.common.entity.bullet.itembullet.PeaEntity;
 import com.hungteen.pvz.common.event.PVZPlayerEvents;
 import com.hungteen.pvz.common.event.events.PeaGunShootEvent;
@@ -246,7 +248,8 @@ public class PeaGunItem extends Item {
 		final int pos = getFirstPos(stack);
 		final int lvl = PlayerUtil.getResource(player, Resources.TREE_LVL);
 		boolean flag = EnchantmentHelper.getItemEnchantmentLevel(Enchantments.INFINITY_ARROWS, stack) > 0;
-		if (player.hasEffect(EffectRegister.ENERGETIC_EFFECT.get()) || ! PlayerUtil.isPlayerSurvival(player) || (flag && player.getRandom().nextInt(100) < 50 + (lvl + 9) / 10)) {
+		if (player.hasEffect(EffectRegister.ENERGETIC_EFFECT.get()) || ! PlayerUtil.isPlayerSurvival(player) || flag) {
+			//*0.6.4 removed working probability of infinity enchantment
 		} else {
 			inv.removeItem(pos, 1);
 		}
@@ -280,7 +283,9 @@ public class PeaGunItem extends Item {
 	@Override
 	public boolean canApplyAtEnchantingTable(ItemStack stack, Enchantment enchantment) {
 		return enchantment == Enchantments.QUICK_CHARGE || enchantment == Enchantments.INFINITY_ARROWS
-				|| enchantment == Enchantments.POWER_ARROWS || enchantment == Enchantments.UNBREAKING;
+				|| enchantment == Enchantments.POWER_ARROWS || enchantment == Enchantments.UNBREAKING
+				|| enchantment == Enchantments.MENDING || enchantment == EnchantmentRegister.SUN_MENDING.get();
+		//*0.6.4 added two mending enchantments.
 	}
 
 	@Override

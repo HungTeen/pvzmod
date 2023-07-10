@@ -130,7 +130,8 @@ public class Invasion {
     public void spawnInvaders() {
         if (currentSituation((p, z, m) -> {
             this.currentCount = Math.min(z, m);
-            return z < m*(0.2 + 0.8 * (p > 15 ? 1 : p / 15));
+            return z < m*(0.2 + 0.8 * (p > 25 ? 1 : (p / 25)*(p / 25)));
+            //*0.6.4 to lower difficulty when player lacks plants around.
         })) {
             for (int i = 0; i < this.getSpawnCount(); ++i) {
                 final SpawnType type = getSpawnList().getRandomItem(world.random).get();

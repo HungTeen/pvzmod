@@ -19,6 +19,7 @@ import net.minecraft.world.World;
 public abstract class AbstractTombStoneEntity extends PVZZombieEntity {
 
 	protected static final WeightList<DropType> TOMBSTONE_DROP_LIST = new WeightList<>();
+	protected int lifeRange = 2000;
 
 	public AbstractTombStoneEntity(EntityType<? extends CreatureEntity> type, World worldIn) {
 		super(type, worldIn);
@@ -41,10 +42,17 @@ public abstract class AbstractTombStoneEntity extends PVZZombieEntity {
 	}
 
 	public void tick() {
+		if(! this.level.isClientSide && this.onGround && this.getVehicle() == null) {
+			this.setDeltaMovement(new Vector3d(0,this.getDeltaMovement().y,0));
+			//*0.6.4 prevent tombstones from getting knocked back.
+		}
 		super.tick();
 		if(! this.level.isClientSide) {
 			BlockPos pos = this.blockPosition();
 			this.setPos(pos.getX() + 0.5, this.getY(), pos.getZ() + 0.5);
+			if (-- lifeRange < 0 && ((int) level.getDayTime() < 12000 ? random.nextInt(500) == 0 : random.nextInt(100) == 0) && level.getNearestPlayer(this, 20) != null){
+				this.remove();
+			}//*0.6.4 to avoid tombstones from accumulating.
 		}
 	}
 	

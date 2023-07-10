@@ -241,11 +241,12 @@ public class PlantCardItem extends SummonCardItem {
 	 */
 	public static boolean checkSunAndSummonPlant(PlayerEntity player, ItemStack heldStack, ItemStack plantStack, PlantCardItem cardItem, BlockPos pos, Consumer<PVZPlantEntity> consumer) {
 		final IPlantType plantType = cardItem.plantType;
-		if(checkSunAndCD(player, cardItem, plantStack, false, p -> true)){
 			/* handle imitater card */
-			if(heldStack.getItem() instanceof ImitaterCardItem) {
-				return ImitaterCardItem.summonImitater(player, heldStack, plantStack, cardItem, pos, i -> consumer.accept(i));
-			}
+		if(heldStack.getItem() instanceof ImitaterCardItem && checkSunAndCD(player, (ImitaterCardItem) heldStack.getItem(), plantStack, false, p -> true)) {
+			//*0.6.4 separately checkSunAndCD to fix imitator cd calculation bug.
+			return ImitaterCardItem.summonImitater(player, heldStack, plantStack, cardItem, pos, i -> consumer.accept(i));
+		}
+		if(checkSunAndCD(player, cardItem, plantStack, false, p -> true)){
 			/* other plant card */
 			if(! handlePlantEntity(player, plantType, plantStack, pos, plantEntity -> {
 //				/* update maxLevel and its owner */

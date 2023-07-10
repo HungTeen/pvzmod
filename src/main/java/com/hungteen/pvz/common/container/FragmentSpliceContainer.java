@@ -1,6 +1,8 @@
 package com.hungteen.pvz.common.container;
 
+import com.hungteen.pvz.api.types.IPAZType;
 import com.hungteen.pvz.common.block.BlockRegister;
+import com.hungteen.pvz.common.impl.PAZType;
 import com.hungteen.pvz.common.item.spawn.card.SummonCardItem;
 import com.hungteen.pvz.common.item.tool.plant.SunStorageSaplingItem;
 import com.hungteen.pvz.common.recipe.RecipeRegister;
@@ -13,6 +15,8 @@ import net.minecraft.inventory.container.Slot;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.IWorldPosCallable;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.text.TextFormatting;
+import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraftforge.items.SlotItemHandler;
 
 import javax.annotation.Nonnull;
@@ -73,8 +77,11 @@ public class FragmentSpliceContainer extends PVZContainer {
 		this.te.handler.setStackInSlot(1, result);
 		this.te.clearCraftingSlots();
 		this.te.sunAmount = 0;
-		if(result.getItem() instanceof SummonCardItem){
-			PlayerUtil.setPAZLock(this.player, ((SummonCardItem) result.getItem()).type, false);
+		if(result.getItem() instanceof SummonCardItem && PlayerUtil.isPAZLocked(this.player, ((SummonCardItem) result.getItem()).type)){
+			IPAZType type = ((SummonCardItem) result.getItem()).type;
+			PlayerUtil.setPAZLock(this.player, type, false);
+			//*0.6.4 add unlock tip.
+			PlayerUtil.sendMsgTo(player, new TranslationTextComponent("entity."+type.getModID()+"."+ type).append(new TranslationTextComponent("help.pvz.is_unlocked")).withStyle(TextFormatting.GREEN));
 		}
 	}
 

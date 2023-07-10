@@ -14,6 +14,7 @@ import com.hungteen.pvz.common.entity.EntityRegister;
 import com.hungteen.pvz.common.entity.ai.goal.PVZLookRandomlyGoal;
 import com.hungteen.pvz.common.entity.misc.drop.SunEntity;
 import com.hungteen.pvz.common.entity.plant.enforce.SquashEntity;
+import com.hungteen.pvz.common.entity.plant.explosion.CobCannonEntity;
 import com.hungteen.pvz.common.entity.plant.explosion.DoomShroomEntity;
 import com.hungteen.pvz.common.entity.plant.light.GoldLeafEntity;
 import com.hungteen.pvz.common.entity.plant.magic.CoffeeBeanEntity;
@@ -131,6 +132,14 @@ public abstract class PVZPlantEntity extends AbstractPAZEntity implements IPlant
 		});
 	}
 
+	@Override
+	public void tick(){
+		if(! this.level.isClientSide && this.onGround && this.getVehicle() == null && ! (this instanceof CobCannonEntity)) {
+			this.setDeltaMovement(new Vector3d(0,this.getDeltaMovement().y,0));
+			//*0.6.4 prevent plants from getting knocked back. May this cause problems?
+		}
+		super.tick();
+	}
 	@Override
 	public void pazTick() {
 		super.pazTick();

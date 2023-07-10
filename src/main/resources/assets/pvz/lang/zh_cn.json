@@ -135,6 +135,7 @@
   "block.pvz.nut_sapling": "坚果树苗",
   "block.pvz.nut_leaves": "坚果树叶",
   "block.pvz.chomper": "食人花",
+  "block.pvz.steel_block": "Steel Block",
   "block.pvz.amethyst_block": "紫晶块",
   "block.pvz.origin_block": "原始精华块",
   "block.pvz.gold_tile1": "一级黄金瓷砖",
@@ -157,7 +158,7 @@
   "_comment3": "--------------------------------------------工具提示-------------------------------------------",
   "tooltip.pvz.card_sun_cost": "基础阳光消耗 : %d",
   "tooltip.pvz.card_cd": "基础冷却 : %s",
-  "tooltip.pvz.card_required_level":"要求等级 : %d",
+  "tooltip.pvz.card_required_level": "要求等级 : %d",
   "tooltip.pvz.plant_card_info": "【植物卡】 : 右击召唤植物",
   "tooltip.pvz.upgrade_card": "只能种植于%s",
   "tooltip.pvz.doom_shroom_card": "注意此植物会严重破坏地形，尤其是地表上方 !",
@@ -176,9 +177,9 @@
   "tooltip.pvz.sun_storage_sapling.once": "一次性使用，不能再储存更多阳光",
   "tooltip.pvz.sun_converter": "阳光吸收装置",
   "tooltip.pvz.fragment_splice": "一个将体验卡合成为植物卡的机器装置",
-  "tooltip.pvz.steel_ladder":"比普通梯子具有更快的攀爬速度",
-  "tooltip.pvz.card_fusion_table":"一个将召唤卡融合为其他召唤卡的机器装置",
-  "tooltip.pvz.essence_altar":"用于强化召唤卡的祭坛",
+  "tooltip.pvz.steel_ladder": "比普通梯子具有更快的攀爬速度",
+  "tooltip.pvz.card_fusion_table": "一个将召唤卡融合为其他召唤卡的机器装置",
+  "tooltip.pvz.essence_altar": "用于强化召唤卡的祭坛",
   "tooltip.pvz.origin_sword": "右击植物可直接使用能量豆",
   "tooltip.pvz.origin_shovel": "右击植物可不消耗耐久铲除",
   "tooltip.pvz.challenge_envelope1": "在比较平坦空旷的地表，对着方块上方右击开始挑战",
@@ -203,10 +204,10 @@
   "item.pvz.jewel_spawn_egg": "宝石刷怪蛋",
   "entity.pvz.energy": "能量豆",
   "item.pvz.energy_spawn_egg": "能量豆刷怪蛋",
-  
+
   "entity.pvz.pea": "豌豆",
   "entity.pvz.potato": "土豆",
-  
+
   "entity.pvz.ducky_tube": "鸭子救生圈",
   "entity.pvz.bobsle_car": "雪橇车",
   "entity.pvz.zombie_part": "僵尸防具",
@@ -215,14 +216,13 @@
 
   "entity.pvz.foodie_zombie": "吃货僵尸",
   "item.pvz.foodie_zombie_spawn_egg": "吃货僵尸刷怪蛋",
-  
   "entity.pvz.crazy_dave": "疯狂戴夫",
   "item.pvz.crazy_dave_spawn_egg": "疯狂戴夫刷怪蛋",
   "entity.pvz.panney": "潘妮",
   "item.pvz.panney_spawn_egg": "潘妮刷怪蛋",
   "entity.pvz.sun_dave": "阳光戴夫",
   "item.pvz.sun_dave_spawn_egg": "阳光戴夫刷怪蛋",
-  
+
   "entity.pvz.normal_zombie": "普通僵尸",
   "item.pvz.normal_zombie_spawn_egg": "普通僵尸刷怪蛋",
   "entity.pvz.flag_zombie": "旗帜僵尸",
@@ -319,7 +319,7 @@
   "item.pvz.ra_zombie_spawn_egg": "太阳神僵尸刷怪蛋",
   "entity.pvz.giga_tomb_stone": "狂暴墓碑",
   "item.pvz.giga_tomb_stone_spawn_egg": "狂暴墓碑刷怪蛋",
-  
+
   "entity.pvz.pea_shooter": "豌豆射手",
   "item.pvz.pea_shooter_spawn_egg": "豌豆射手刷怪蛋",
   "item.pvz.pea_shooter_card": "豌豆射手卡",
@@ -681,7 +681,7 @@
   "gui.pvz.shop.money_10": "10000金钱",
   "gui.pvz.shop.left_time": "剩余刷新时间：%d",
   "gui.pvz.dave_shop.title": "戴夫的商店",
-  "gui.pvz.dave_shop.buy":"购买",
+  "gui.pvz.dave_shop.buy": "购买",
   "gui.pvz.sun_shop.title": "阳光商店",
   "gui.pvz.penny_shop.title": "潘妮商店",
   "_comment7": "--------------------------------------------成就-------------------------------------------",
@@ -775,6 +775,7 @@
   "resource.pvz.energy_num": "能量豆数",
   "resource.pvz.max_energy_num": "能量豆上限",
   "resource.pvz.no_fog_tick": "无雾时间",
+  "resource.pvz.kill_count": "击杀计数",
   "resource.pvz.lottery_chance": "抽奖次数",
   "resource.pvz.group_type": "玩家阵营",
   "resource.pvz.slot_num": "快捷卡槽",
@@ -808,7 +809,7 @@
   "invasion.pvz.mission.collect_sun": "收集%d阳光",
   "invasion.pvz.mission.instant_kill": "10秒内击杀%d敌人",
 
-  "help.pvz.patchouli":"建议安装帕秋莉手册模组",
+  "help.pvz.patchouli": "建议安装帕秋莉手册模组",
   "help.pvz.upgrade": "高级植物要种在对应植物上 ！",
   "help.pvz.ground": "该植物不能种在此处 ！",
   "help.pvz.outer": "该植物只能种在植物上 ！",
@@ -945,15 +946,18 @@
   "config.pvz.rule.max_damage": "植物和僵尸对其他生物的最大伤害",
 
   "config.pvz.world.zen_garden_chance": "禅境花园权重",
+
   "config.pvz.world.dave_villa_distance": "戴夫别墅间隔距离",
   "config.pvz.world.bucket_house_distance": "铁桶小屋间隔距离",
   "config.pvz.world.dolphin_house_distance": "海豚小屋间隔距离",
   "config.pvz.world.grave_house_distance": "墓地小屋间隔距离",
   "config.pvz.world.sun_temple_distance": "太阳神庙间隔距离",
   "config.pvz.world.yeti_house_distance": "雪人小屋间隔距离",
+
   "config.pvz.world.origin_ore_chance": "原始精华矿权重",
-  "config.pvz.world.amethyst_ore_chance": "紫晶矿权重",
   "config.pvz.world.lunar_stone_chance": "夜明石权重",
+  "config.pvz.world.amethyst_ore_chance": "紫晶矿权重",
+
   "config.pvz.world.sun_weight": "阳光权重",
   "config.pvz.world.lava_zombie_weight": "潜岩浆僵尸权重",
   "config.pvz.world.giga_tomb_weight": "狂暴墓碑权重",
@@ -985,9 +989,9 @@
 
   "config.pvz.block.origin_effect_chance": "原始精华块蔓延参数",
   "config.pvz.block.sapling_turn_chance": "树苗转化参数",
-  "config.pvz.block.amethyst_anger_chance": "紫晶矿激怒概率",
   "config.pvz.block.pea_drop_chance": "豌豆掉落参数",
   "config.pvz.block.cabbage_drop_chance": "卷心菜掉落参数",
+  "config.pvz.block.amethyst_anger_chance": "紫晶矿激怒概率",
 
   "config.pvz.item.jack_surprise_chance": "玩偶匣爆炸参数",
 
@@ -1004,7 +1008,9 @@
 
   "config.waila.plugin_pvz": "植物大战僵尸",
   "config.waila.plugin_pvz.show_defence_health": "显示额外血量",
+  "config.waila.plugin_pvz.show_level": "显示等级",
   "config.waila.plugin_pvz.show_owner": "显示主人",
+  "config.waila.plugin_pvz.show_zombie_hurt_reduction": "显示伤害减免",
   "_comment17": "--------------------------------------------图鉴-------------------------------------------",
   "almanac.pvz.health": "生命值",
   "almanac.pvz.sun_cost": "阳光花费",
@@ -1079,6 +1085,8 @@
   "skill.pvz.more_star_damage.desc": "增加星星果的伤害",
   "skill.pvz.less_work_cd": "效率",
   "skill.pvz.less_work_cd.desc": "加快磁力菇工作速度",
+  "skill.pvz.more_cabbage_damage": "投掷训练",
+  "skill.pvz.more_cabbage_damage.desc": "增加卷心菜的伤害",
   "skill.pvz.more_kernel_damage": "投掷训练",
   "skill.pvz.more_kernel_damage.desc": "增加玉米粒的伤害",
   "skill.pvz.more_garlic_life": "更多血量",
@@ -1089,8 +1097,6 @@
   "skill.pvz.more_swing_damage.desc": "增加菜问的攻击力",
   "skill.pvz.advance_gold": "金砖",
   "skill.pvz.advance_gold.desc": "提高黄金瓷砖的等级",
-  "skill.pvz.more_cabbage_damage": "投掷训练",
-  "skill.pvz.more_cabbage_damage.desc": "增加卷心菜的伤害",
   "skill.pvz.ten_stars": "观星",
   "skill.pvz.ten_stars.desc": "提高发射更多星星的概率",
   "skill.pvz.small_bomb_damage": "爆炸训练",

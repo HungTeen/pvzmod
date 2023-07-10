@@ -41,8 +41,8 @@ public class PVZConfig {
 
                 InvasionSettings.MaxSpawnEachPlayer = builder
                         .translation("config.pvz.invasion.spawn_count")
-                        .comment("how many amount of entity will spawn to player.")
-                        .defineInRange("MaxSpawnCount", 30, 1, 1000);
+                        .comment("how many amount of entity will spawn to player when the plant amount reaches the limit.")
+                        .defineInRange("LimitSpawnCount", 30, 1, 1000);
 
                 InvasionSettings.MaxSpawnRange = builder
                         .translation("config.pvz.invasion.spawn_range")
@@ -88,7 +88,7 @@ public class PVZConfig {
                 RuleSettings.DespawnOwnedEntityRange = builder
                         .translation("config.pvz.rule.despawn_owned_entity_range")
                         .comment("plants summoned by players will be naturally despawned if the distance to player's spawn point is farther than this number.")
-                        .defineInRange("DespawnOwnedEntityRange", 1000, -1, 100000);
+                        .defineInRange("DespawnOwnedEntityRange", 1000000, -1, 1000000);
 
                 RuleSettings.GiveBeginnerReward = builder
                         .translation("config.pvz.rule.beginner_reward")
@@ -266,7 +266,7 @@ public class PVZConfig {
 
                     EntitySettings.ZombieSetting.ImmuneDamage = builder
                             .translation("config.pvz.zombie.immune_damage")
-                            .comment("if on, fire & explode damages will not hurt most of the zombies.")
+                            .comment("if on, environmental damage sources won't hurt the zombies.")
                             .define("ImmuneToEnvironmentDamage", true);
 
                 }

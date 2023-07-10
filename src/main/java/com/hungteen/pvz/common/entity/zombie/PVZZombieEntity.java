@@ -225,7 +225,7 @@ public abstract class PVZZombieEntity extends AbstractPAZEntity implements IZomb
 		}
 		//natural spawn zombie will heal in lava.
 		if(! this.level.isClientSide){
-			if(this.isInLava() && this.getExistTick() % 10 == 0 && ! this.getOwnerUUID().isPresent()){
+			if(ConfigUtil.immuineToDamage() && this.isInLava() && this.getExistTick() % 10 == 0 && ! this.getOwnerUUID().isPresent()){
 				this.heal(20);
 			}
 		}
@@ -776,10 +776,10 @@ public abstract class PVZZombieEntity extends AbstractPAZEntity implements IZomb
 	
 	@Override
 	public boolean isInvulnerableTo(DamageSource source) {
-		if(source instanceof PVZEntityDamageSource && ((PVZEntityDamageSource) source).isMustHurt()) {
+		if(ConfigUtil.immuineToDamage() && source instanceof PVZEntityDamageSource && ((PVZEntityDamageSource) source).isMustHurt()) {
 			return false;
 		}
-		return source != DamageSource.OUT_OF_WORLD && !source.isCreativePlayer() && this.isZombieInvulnerableTo(source);
+		return this.isInvulnerable() && source != DamageSource.OUT_OF_WORLD && !source.isCreativePlayer() && this.isZombieInvulnerableTo(source);
 	}
 	
 	protected boolean isZombieInvulnerableTo(DamageSource source) {
@@ -788,12 +788,13 @@ public abstract class PVZZombieEntity extends AbstractPAZEntity implements IZomb
 	
 	@Override
 	public boolean fireImmune() {
-		return !ConfigUtil.immuineToDamage();
+        //0.6.4 in EntityRegister.registerZombieEntityType() deleted .fileImmuine()
+		return ConfigUtil.immuineToDamage();
 	}
 
 	@Override
 	public boolean ignoreExplosion() {
-		return !ConfigUtil.immuineToDamage();
+		return ConfigUtil.immuineToDamage();
 	}
 
 	/**
