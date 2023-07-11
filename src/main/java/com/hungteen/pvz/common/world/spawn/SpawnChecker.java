@@ -28,6 +28,11 @@ public class SpawnChecker {
 										 SpawnReason reason, BlockPos pos, Random rand) {
 		return worldIn.getDifficulty() == Difficulty.HARD && checkSpawn(zombieType, worldIn, reason, pos, rand);
 	}
+
+	public static boolean canTombStoneSpawn(EntityType<? extends PVZZombieEntity> zombieType, IWorld worldIn,
+										 SpawnReason reason, BlockPos pos, Random rand) {
+		return (int) worldIn.dayTime() % 24000 > 14000 && checkSpawn(zombieType, worldIn, reason, pos, rand);
+	}
 	
 //	/**
 //	 * is not natural spawn or in invasion spawn list.
