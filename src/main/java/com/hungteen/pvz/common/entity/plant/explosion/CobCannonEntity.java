@@ -51,6 +51,7 @@ public class CobCannonEntity extends PVZPlantEntity {
 		super(type, worldIn);
 		this.canCollideWithPlant = false;
 		this.isImmuneToWeak = true;
+		this.root = false;
 	}
 
 	@Override

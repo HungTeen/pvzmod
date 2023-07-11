@@ -42,7 +42,7 @@ public class PVZConfig {
                 InvasionSettings.MaxSpawnEachPlayer = builder
                         .translation("config.pvz.invasion.spawn_count")
                         .comment("how many amount of entity will spawn to player when the plant amount reaches the limit.")
-                        .defineInRange("LimitSpawnCount", 30, 1, 1000);
+                        .defineInRange("MaxSpawnCount", 30, 1, 1000);
 
                 InvasionSettings.MaxSpawnRange = builder
                         .translation("config.pvz.invasion.spawn_range")

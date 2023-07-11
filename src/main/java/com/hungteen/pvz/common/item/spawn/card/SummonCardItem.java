@@ -134,7 +134,8 @@ public abstract class SummonCardItem extends Item{
 	public void notifyPlayerAndCD(PlayerEntity player, ItemStack stack, PlacementErrors error, int arg) {
 		if(! player.level.isClientSide) {
 			PlayerUtil.sendMsgTo(player, error.getTextByArg(arg, TextFormatting.RED));
-			PlayerUtil.setItemStackCD(player, stack, 10);
+//			PlayerUtil.setItemStackCD(player, stack, 10);
+			//*0.6.4 to fix imitator cd calculation bug.
 			PlayerUtil.playClientSound(player, SoundRegister.NO.get());
 		}
 	}

@@ -89,6 +89,7 @@ public abstract class PVZPlantEntity extends AbstractPAZEntity implements IPlant
 	protected IPlantInfo outerPlant;
 	protected boolean canBeRemove = true;
 	protected boolean canHelpAttack = true;
+	protected boolean root = true;
 
 	public PVZPlantEntity(EntityType<? extends CreatureEntity> type, World worldIn) {
 		super(type, worldIn);
@@ -134,7 +135,7 @@ public abstract class PVZPlantEntity extends AbstractPAZEntity implements IPlant
 
 	@Override
 	public void tick(){
-		if(! this.level.isClientSide && this.onGround && this.getVehicle() == null && ! (this instanceof CobCannonEntity)) {
+		if(! this.level.isClientSide && this.onGround && this.getVehicle() == null && !this.root) {
 			this.setDeltaMovement(new Vector3d(0,this.getDeltaMovement().y,0));
 			//*0.6.4 prevent plants from getting knocked back. May this cause problems?
 		}
